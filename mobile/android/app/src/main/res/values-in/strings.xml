@@ -192,8 +192,7 @@
     <string name="signin_create_note">Kami akan mengirim kode lewat email untuk mengonfirmasi alamat ini. Kamu hanya perlu melakukannya sekali.</string>
     <string name="signin_password_choose">Kamu sudah masuk. Pilih kata sandi untuk lain kali.</string>
     <string name="signin_password_save">Simpan kata sandi</string>
-    <string name="signin_password_save_failed">Kamu sudah masuk, tetapi kami tidak bisa menyimpan kata sandinya. Coba lagi, atau atur nanti di Pengaturan.</string>
-    <string name="signin_password_skip">Lewati dulu</string>
+    <string name="signin_password_save_failed">Kami tidak bisa menyimpan kata sandinya. Coba lagi.</string>
     <string name="signin_password_submit">Masuk</string>
     <string name="signin_provider_unavailable">Belum tersedia</string>
     <string name="signin_failed">Gagal masuk. Coba lagi, ya?</string>
@@ -212,10 +211,6 @@
     <string name="account_delete">Hapus akun</string>
     <string name="account_delete_confirm">Hapus akunmu? Kredit, langganan, dan data masukmu akan dihapus. Putusan dan versimu dalam kasus juga ikut hilang: tulisanmu beserta nama-namanya dihapus, dan tautan berbaginya tidak berfungsi lagi.</string>
     <string name="account_delete_yes">Ya, hapus</string>
-    <string name="account_password_set">Atur kata sandi</string>
-    <string name="account_password_change">Ubah kata sandi</string>
-    <string name="account_password_current">Kata sandi saat ini</string>
-    <string name="account_password_saved">Kata sandi tersimpan.</string>
     <string name="account_delete_cancel">Tetap simpan akunku</string>
     <string name="account_delete_failed">Akun belum bisa dihapus sekarang. Coba lagi, ya?</string>
     <string name="account_sign_in_prompt">Masuk untuk melihat langganan dan kreditmu.</string>
@@ -409,9 +404,8 @@
     <string name="home_says">Kata %1$s:</string>
     <string name="home_my_side">Versiku:</string>
     <string name="home_other_side">Versi dia:</string>
-    <string name="appeal_lead">Ada yang kurang atau salah? Tambahkan sekali, dan hakim akan menilai ulang semuanya. Memakai 1 putusan.</string>
-    <string name="appeal_label">Konteksmu</string>
-    <string name="appeal_placeholder">Apa yang terlewat oleh hakim?</string>
+    <string name="appeal_lead">Memakai 1 putusan.</string>
+    <string name="appeal_placeholder">Apa yang terlewat oleh hakim? Fakta, pesan, atau apa yang sebenarnya disepakati.</string>
     <string name="appeal_submit">Nilai ulang dengan konteksku</string>
     <string name="appeal_sending">Menganonimkan konteksmu…</string>
     <string name="appeal_judging">Hakim sedang menilai ulang semuanya…</string>
@@ -431,7 +425,6 @@
     <string name="appeal_previous">Putusan sebelumnya</string>
     <string name="appeal_failed">Penilaian ulang gagal. Kreditmu sudah kembali; kamu bisa coba lagi.</string>
     <string name="appeal_refused">Hakim menolak menilai ulang dengan konteks itu. Kreditmu sudah kembali.</string>
-    <string name="appeal_lead_verdict">Ada yang kurang atau salah? Tambahkan, dan hakim akan menilai ulang semuanya. Tiap kali memakai 1 putusan, maksimal dua kali per putusan.</string>
     <string name="appeal_history">Riwayat putusan</string>
     <string name="pricing_premium_f5">Bukti tangkapan layar, dibaca lalu dibuang, tanpa biaya tambahan</string>
     <string name="pricing_premium_f6">Tambah konteks setelah putusan dan minta dinilai ulang (1 putusan)</string>
@@ -561,7 +554,6 @@
     </plurals>
     <string name="app_history_offline_remove">Kamu sedang offline. Sambungkan ke internet untuk menghapus.</string>
     <string name="app_pricing_free_account">Masuk dengan Apple, Google, atau email</string>
-    <string name="app_context_label">Konteks (opsional)</string>
     <string name="app_pricing_context">Gambar konteks dibaca lalu dibuang, tanpa biaya tambahan</string>
     <string name="app_pricing_headline">Putusan pertamamu kami traktir.</string>
     <string name="app_pricing_sub">Buat akun dan putusan pertamamu gratis, lengkap dengan semua fitur. Setelah itu, pilih paket atau berlangganan bulanan.</string>
@@ -682,9 +674,7 @@
     <string name="app_verdict_claims">Alur pikir tiap pihak</string>
     <string name="app_verdict_back">Putusan</string>
     <string name="app_appeal_title">Tambah konteks &amp; banding</string>
-    <string name="app_appeal_intro">Ada yang terlewat oleh hakim? Tambahkan, dan mereka akan memutuskan ulang. Putusan pertama tetap tercatat.</string>
-    <string name="app_appeal_ask">Apa yang perlu mereka tahu?</string>
-    <string name="app_appeal_placeholder">Fakta, pesan, atau apa yang sebenarnya disepakati.</string>
+    <string name="app_appeal_placeholder">Apa yang terlewat oleh hakim? Fakta, pesan, atau apa yang sebenarnya disepakati.</string>
     <string name="app_appeal_cost">Memakai 1 putusan. Bisa dilakukan dua kali per putusan. Sisa %1$s kali.</string>
     <string name="app_appeal_cost_case">Memakai 1 putusan. Bisa dilakukan sekali per kasus.</string>
     <string name="app_appeal_submit">Nilai ulang</string>

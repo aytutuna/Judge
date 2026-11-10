@@ -197,8 +197,7 @@
     <string name="signin_create_note">Lähetämme sinulle koodin sähköpostiin osoitteen vahvistamiseksi. Se tarvitsee tehdä vain kerran.</string>
     <string name="signin_password_choose">Olet kirjautunut sisään. Valitse salasana seuraavaa kertaa varten.</string>
     <string name="signin_password_save">Tallenna salasana</string>
-    <string name="signin_password_save_failed">Olet kirjautunut sisään, mutta salasanan tallennus epäonnistui. Yritä uudelleen tai aseta se myöhemmin Asetuksissa.</string>
-    <string name="signin_password_skip">Ohita toistaiseksi</string>
+    <string name="signin_password_save_failed">Salasanan tallennus epäonnistui. Yritä uudelleen.</string>
     <string name="signin_password_submit">Kirjaudu</string>
     <string name="signin_provider_unavailable">Ei vielä käytettävissä</string>
     <string name="signin_failed">Kirjautuminen ei onnistunut. Yritä uudelleen.</string>
@@ -217,10 +216,6 @@
     <string name="account_delete">Poista tili</string>
     <string name="account_delete_confirm">Poistetaanko tilisi? Tuomiosaldosi, tilauksesi ja kirjautumistietosi poistetaan. Tuomiosi ja osuutesi jutuista poistetaan: kirjoittamasi teksti ja nimet pyyhitään, ja niiden jakolinkit lakkaavat toimimasta.</string>
     <string name="account_delete_yes">Kyllä, poista</string>
-    <string name="account_password_set">Aseta salasana</string>
-    <string name="account_password_change">Vaihda salasana</string>
-    <string name="account_password_current">Nykyinen salasana</string>
-    <string name="account_password_saved">Salasana tallennettu.</string>
     <string name="account_delete_cancel">Älä poista</string>
     <string name="account_delete_failed">Tilin poistaminen ei onnistunut juuri nyt. Yritä uudelleen.</string>
     <string name="account_sign_in_prompt">Kirjaudu, niin näet tilauksesi ja saldosi.</string>
@@ -417,9 +412,8 @@
     <string name="home_says">%1$s sanoo:</string>
     <string name="home_my_side">Minun puoleni:</string>
     <string name="home_other_side">Toisen puoli:</string>
-    <string name="appeal_lead">Puuttuuko jotain, tai onko jotain väärin? Lisää se kerran, niin tuomarit käyvät kaiken läpi uudelleen. Maksaa 1 tuomion.</string>
-    <string name="appeal_label">Lisätietosi</string>
-    <string name="appeal_placeholder">Mitä tuomarit eivät huomanneet?</string>
+    <string name="appeal_lead">Käyttää 1 tuomion.</string>
+    <string name="appeal_placeholder">Mitä tuomarit eivät huomanneet? Fakta, viesti tai se, mistä oikeasti sovittiin.</string>
     <string name="appeal_submit">Ratkaise uudelleen</string>
     <string name="appeal_sending">Anonymisoidaan lisätietojasi…</string>
     <string name="appeal_judging">Tuomarit käyvät kaiken läpi uudelleen…</string>
@@ -439,7 +433,6 @@
     <string name="appeal_previous">Aiempi tuomio</string>
     <string name="appeal_failed">Uudelleenratkaisu ei onnistunut. Tuomio palautettiin saldoosi; voit yrittää uudelleen.</string>
     <string name="appeal_refused">Tuomarit eivät suostuneet ratkaisemaan uudelleen noilla tiedoilla. Tuomio palautettiin saldoosi.</string>
-    <string name="appeal_lead_verdict">Puuttuuko jotain, tai onko jotain väärin? Lisää se, niin tuomarit käyvät kaiken läpi uudelleen. Joka kerta maksaa 1 tuomion, ja samaan tuomioon voit lisätä tietoa enintään kahdesti.</string>
     <string name="appeal_history">Tuomiohistoria</string>
     <string name="pricing_premium_f5">Kuvakaappaukset todisteiksi: luetaan ja heitetään pois, ei lisämaksua</string>
     <string name="pricing_premium_f6">Lisää tietoa tuomion jälkeen, niin asia ratkaistaan uudelleen (1 tuomio)</string>
@@ -577,7 +570,6 @@
     </plurals>
     <string name="app_history_offline_remove">Verkkoyhteys puuttuu. Poistaminen vaatii yhteyden.</string>
     <string name="app_pricing_free_account">Kirjaudu Applella, Googlella tai sähköpostilla</string>
-    <string name="app_context_label">Lisätiedot (valinnainen)</string>
     <string name="app_pricing_context">Lisätietokuvat luetaan ja heitetään sitten pois, ilman lisämaksua</string>
     <string name="app_pricing_headline">Ensimmäinen tuomio on meiltä.</string>
     <string name="app_pricing_sub">Luo tili, niin ensimmäinen tuomiosi on ilmainen kaikkine ominaisuuksineen. Sen jälkeen voit valita paketin tai kuukausitilauksen.</string>
@@ -699,9 +691,7 @@
     <string name="app_verdict_claims">Miten kumpikin puoli päätyi kantaansa</string>
     <string name="app_verdict_back">Tuomio</string>
     <string name="app_appeal_title">Lisää tietoa ja pyydä uusi tuomio</string>
-    <string name="app_appeal_intro">Jäikö tuomareilta jotain huomaamatta? Lisää se, niin he ratkaisevat uudelleen. Ensimmäinen tuomio jää näkyviin.</string>
-    <string name="app_appeal_ask">Mitä tuomareiden pitäisi tietää?</string>
-    <string name="app_appeal_placeholder">Fakta, viesti tai se, mistä oikeasti sovittiin.</string>
+    <string name="app_appeal_placeholder">Mitä tuomarit eivät huomanneet? Fakta, viesti tai se, mistä oikeasti sovittiin.</string>
     <string name="app_appeal_cost">Käyttää 1 tuomion. Voit tehdä tämän kahdesti tuomiota kohden; jäljellä %1$s.</string>
     <string name="app_appeal_cost_case">Käyttää 1 tuomion. Voit tehdä tämän kerran juttua kohden.</string>
     <string name="app_appeal_submit">Ratkaise uudelleen</string>

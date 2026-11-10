@@ -192,8 +192,7 @@
     <string name="signin_create_note">Kami akan e-melkan kod kepada anda untuk mengesahkan alamat ini. Anda hanya perlu berbuat demikian sekali.</string>
     <string name="signin_password_choose">Anda telah log masuk. Pilih kata laluan untuk kali seterusnya.</string>
     <string name="signin_password_save">Simpan kata laluan</string>
-    <string name="signin_password_save_failed">Anda telah log masuk, tetapi kami tidak dapat menyimpan kata laluan. Cuba lagi, atau tetapkan kemudian dalam Tetapan.</string>
-    <string name="signin_password_skip">Langkau buat masa ini</string>
+    <string name="signin_password_save_failed">Kami tidak dapat menyimpan kata laluan. Cuba lagi.</string>
     <string name="signin_password_submit">Log masuk</string>
     <string name="signin_provider_unavailable">Belum tersedia</string>
     <string name="signin_failed">Log masuk tidak berjaya. Boleh cuba lagi?</string>
@@ -212,10 +211,6 @@
     <string name="account_delete">Padam akaun</string>
     <string name="account_delete_confirm">Padam akaun anda? Kredit, pelan dan butiran log masuk anda akan dipadam. Keputusan anda dan versi anda dalam kes akan dibuang: apa yang anda tulis dan nama-nama akan dihapuskan, dan pautan kongsinya tidak lagi berfungsi.</string>
     <string name="account_delete_yes">Ya, padam</string>
-    <string name="account_password_set">Tetapkan kata laluan</string>
-    <string name="account_password_change">Tukar kata laluan</string>
-    <string name="account_password_current">Kata laluan semasa</string>
-    <string name="account_password_saved">Kata laluan disimpan.</string>
     <string name="account_delete_cancel">Kekalkan akaun saya</string>
     <string name="account_delete_failed">Kami tidak dapat memadam akaun sekarang. Boleh cuba lagi?</string>
     <string name="account_sign_in_prompt">Log masuk untuk melihat pelan dan kredit anda.</string>
@@ -409,9 +404,8 @@
     <string name="home_says">%1$s berkata:</string>
     <string name="home_my_side">Versi saya:</string>
     <string name="home_other_side">Versi dia:</string>
-    <string name="appeal_lead">Ada yang tertinggal atau salah? Anda boleh menambahnya sekali, dan hakim akan meneliti semuanya semula. Kosnya 1 keputusan.</string>
-    <string name="appeal_label">Konteks anda</string>
-    <string name="appeal_placeholder">Apa yang hakim terlepas pandang?</string>
+    <string name="appeal_lead">Menggunakan 1 keputusan.</string>
+    <string name="appeal_placeholder">Apa yang hakim terlepas pandang? Satu fakta, satu mesej, atau apa yang sebenarnya dipersetujui.</string>
     <string name="appeal_submit">Nilai semula dengan konteks</string>
     <string name="appeal_sending">Mengeluarkan nama daripada konteks anda…</string>
     <string name="appeal_judging">Hakim sedang meneliti semuanya semula…</string>
@@ -431,7 +425,6 @@
     <string name="appeal_previous">Keputusan terdahulu</string>
     <string name="appeal_failed">Penilaian semula tidak berjaya. Kredit anda sudah dikembalikan; anda boleh cuba lagi.</string>
     <string name="appeal_refused">Hakim tidak mahu menilai semula dengan konteks itu. Kredit anda sudah dikembalikan.</string>
-    <string name="appeal_lead_verdict">Ada yang tertinggal atau salah? Tambahkan dan hakim akan meneliti semuanya semula. Setiap kali kosnya 1 keputusan, maksimum dua kali bagi setiap keputusan.</string>
     <string name="appeal_history">Sejarah keputusan</string>
     <string name="pricing_premium_f5">Bukti tangkapan skrin, dibaca kemudian dibuang, tanpa kos tambahan</string>
     <string name="pricing_premium_f6">Tambah konteks selepas keputusan dan minta ia dinilai semula (1 keputusan)</string>
@@ -561,7 +554,6 @@
     </plurals>
     <string name="app_history_offline_remove">Anda di luar talian. Sambungan diperlukan untuk membuang keputusan.</string>
     <string name="app_pricing_free_account">Log masuk dengan Apple, Google atau e-mel</string>
-    <string name="app_context_label">Konteks (pilihan)</string>
     <string name="app_pricing_context">Imej konteks dibaca kemudian dibuang, tanpa kos tambahan</string>
     <string name="app_pricing_headline">Keputusan pertama anda, kami belanja.</string>
     <string name="app_pricing_sub">Buat akaun dan keputusan pertama anda percuma, lengkap dengan semua ciri. Selepas itu, pilih pek atau langgan bulanan.</string>
@@ -682,9 +674,7 @@
     <string name="app_verdict_claims">Bagaimana setiap pihak sampai ke situ</string>
     <string name="app_verdict_back">Keputusan</string>
     <string name="app_appeal_title">Tambah konteks &amp; buat rayuan</string>
-    <string name="app_appeal_intro">Ada yang hakim terlepas pandang? Tambahkan dan mereka akan memutuskan semula. Keputusan pertama kekal dalam rekod.</string>
-    <string name="app_appeal_ask">Apa yang hakim perlu tahu?</string>
-    <string name="app_appeal_placeholder">Satu fakta, satu mesej, atau apa yang sebenarnya dipersetujui.</string>
+    <string name="app_appeal_placeholder">Apa yang hakim terlepas pandang? Satu fakta, satu mesej, atau apa yang sebenarnya dipersetujui.</string>
     <string name="app_appeal_cost">Menggunakan 1 keputusan. Anda boleh buat ini dua kali bagi setiap keputusan; tinggal %1$s kali lagi.</string>
     <string name="app_appeal_cost_case">Menggunakan 1 keputusan. Anda boleh buat ini sekali bagi setiap kes.</string>
     <string name="app_appeal_submit">Nilai semula</string>

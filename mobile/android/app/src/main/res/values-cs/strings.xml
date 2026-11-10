@@ -207,8 +207,7 @@
     <string name="signin_create_note">Pošleme ti e-mailem kód, abychom potvrdili tuto adresu. Stačí to udělat jednou.</string>
     <string name="signin_password_choose">Jsi přihlášen(a). Vyber si heslo na příště.</string>
     <string name="signin_password_save">Uložit heslo</string>
-    <string name="signin_password_save_failed">Jsi přihlášen(a), ale heslo se nepodařilo uložit. Zkus to znovu, nebo si ho nastav později v Nastavení.</string>
-    <string name="signin_password_skip">Zatím přeskočit</string>
+    <string name="signin_password_save_failed">Heslo se nepodařilo uložit. Zkus to znovu.</string>
     <string name="signin_password_submit">Přihlásit se</string>
     <string name="signin_provider_unavailable">Zatím nedostupné</string>
     <string name="signin_failed">Přihlášení se nepovedlo. Zkusíš to znovu?</string>
@@ -227,10 +226,6 @@
     <string name="account_delete">Smazat účet</string>
     <string name="account_delete_confirm">Smazat účet? Tvoje kredity, plán a přihlašovací údaje se smažou. Tvoje verdikty a tvoje pohledy v případech se odstraní: tvoje texty i jména se vymažou a sdílené odkazy přestanou fungovat.</string>
     <string name="account_delete_yes">Ano, smazat</string>
-    <string name="account_password_set">Nastavit heslo</string>
-    <string name="account_password_change">Změnit heslo</string>
-    <string name="account_password_current">Současné heslo</string>
-    <string name="account_password_saved">Heslo je uloženo.</string>
     <string name="account_delete_cancel">Ponechat účet</string>
     <string name="account_delete_failed">Účet se teď nepodařilo smazat. Zkusíš to znovu?</string>
     <string name="account_sign_in_prompt">Přihlas se a uvidíš svůj plán a kredity.</string>
@@ -433,9 +428,8 @@
     <string name="home_says">%1$s říká:</string>
     <string name="home_my_side">Můj pohled:</string>
     <string name="home_other_side">Pohled druhé strany:</string>
-    <string name="appeal_lead">Něco chybí nebo nesedí? Doplň to jednou a soudci se na všechno podívají znovu. Stojí to 1 verdikt.</string>
-    <string name="appeal_label">Tvůj kontext</string>
-    <string name="appeal_placeholder">Co soudcům uniklo?</string>
+    <string name="appeal_lead">Stojí 1 verdikt.</string>
+    <string name="appeal_placeholder">Co soudcům uniklo? Fakt, zpráva nebo to, na čem byla doopravdy dohoda.</string>
     <string name="appeal_submit">Znovu soudit s kontextem</string>
     <string name="appeal_sending">Anonymizujeme tvůj kontext…</string>
     <string name="appeal_judging">Soudci se na všechno dívají znovu…</string>
@@ -455,7 +449,6 @@
     <string name="appeal_previous">Dřívější verdikt</string>
     <string name="appeal_failed">Nové posouzení neproběhlo. Kredit se ti vrátil; můžeš to zkusit znovu.</string>
     <string name="appeal_refused">S tímhle kontextem soudci znovu soudit odmítli. Kredit se ti vrátil.</string>
-    <string name="appeal_lead_verdict">Něco chybí nebo nesedí? Doplň to a soudci se na všechno podívají znovu. Pokaždé to stojí 1 verdikt, nejvýš dvakrát u jednoho verdiktu.</string>
     <string name="appeal_history">Historie verdiktu</string>
     <string name="pricing_premium_f5">Snímky obrazovky jako důkaz: přečteme a zahodíme, bez příplatku</string>
     <string name="pricing_premium_f6">Doplnění kontextu po verdiktu a nové posouzení (1 verdikt)</string>
@@ -609,7 +602,6 @@
     </plurals>
     <string name="app_history_offline_remove">Nejsi online. K odstranění potřebuješ připojení.</string>
     <string name="app_pricing_free_account">Přihlas se přes Apple, Google nebo e-mail</string>
-    <string name="app_context_label">Kontext (volitelné)</string>
     <string name="app_pricing_context">Obrázky s kontextem se přečtou a pak zahodí, bez příplatku</string>
     <string name="app_pricing_headline">První verdikt máš od nás.</string>
     <string name="app_pricing_sub">Založ si účet a první verdikt máš zdarma, se vším všudy. Potom si vyber balíček nebo měsíční plán.</string>
@@ -733,9 +725,7 @@
     <string name="app_verdict_claims">Jak k tomu každá strana došla</string>
     <string name="app_verdict_back">Verdikt</string>
     <string name="app_appeal_title">Doplnit kontext a odvolat se</string>
-    <string name="app_appeal_intro">Soudcům něco uniklo? Doplň to a rozhodnou znovu. Původní verdikt zůstane v historii.</string>
-    <string name="app_appeal_ask">Co by měli vědět?</string>
-    <string name="app_appeal_placeholder">Fakt, zpráva nebo to, na čem byla doopravdy dohoda.</string>
+    <string name="app_appeal_placeholder">Co soudcům uniklo? Fakt, zpráva nebo to, na čem byla doopravdy dohoda.</string>
     <string name="app_appeal_cost">Stojí 1 verdikt. U jednoho verdiktu to jde dvakrát; zbývající pokusy: %1$s.</string>
     <string name="app_appeal_cost_case">Stojí 1 verdikt. U jednoho případu to jde jen jednou.</string>
     <string name="app_appeal_submit">Soudit znovu</string>

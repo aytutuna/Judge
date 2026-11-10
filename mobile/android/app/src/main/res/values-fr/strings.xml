@@ -202,8 +202,7 @@
     <string name="signin_create_note">Nous t\'enverrons un code par e-mail pour confirmer cette adresse. Tu n\'as à le faire qu\'une seule fois.</string>
     <string name="signin_password_choose">Tu es connecté. Choisis un mot de passe pour la prochaine fois.</string>
     <string name="signin_password_save">Enregistrer le mot de passe</string>
-    <string name="signin_password_save_failed">Tu es connecté, mais nous n\'avons pas pu enregistrer le mot de passe. Réessaie, ou définis-le plus tard dans les réglages.</string>
-    <string name="signin_password_skip">Passer pour l\'instant</string>
+    <string name="signin_password_save_failed">Nous n\'avons pas pu enregistrer le mot de passe. Réessaie.</string>
     <string name="signin_password_submit">Se connecter</string>
     <string name="signin_provider_unavailable">Pas encore disponible</string>
     <string name="signin_failed">Impossible de te connecter. Tu veux bien réessayer ?</string>
@@ -222,10 +221,6 @@
     <string name="account_delete">Supprimer le compte</string>
     <string name="account_delete_confirm">Supprimer ton compte ? Tes crédits, ton offre et tes informations de connexion seront effacés. Tes verdicts et tes versions dans les dossiers seront supprimés : ce que tu as écrit et les noms seront effacés, et leurs liens de partage cesseront de fonctionner.</string>
     <string name="account_delete_yes">Oui, supprimer</string>
-    <string name="account_password_set">Définir un mot de passe</string>
-    <string name="account_password_change">Changer le mot de passe</string>
-    <string name="account_password_current">Mot de passe actuel</string>
-    <string name="account_password_saved">Mot de passe enregistré.</string>
     <string name="account_delete_cancel">Garder mon compte</string>
     <string name="account_delete_failed">Impossible de supprimer le compte pour l’instant. Tu veux bien réessayer ?</string>
     <string name="account_sign_in_prompt">Connecte-toi pour voir ton offre et tes crédits.</string>
@@ -425,9 +420,8 @@
     <string name="home_says">%1$s dit :</string>
     <string name="home_my_side">Ma version :</string>
     <string name="home_other_side">Sa version :</string>
-    <string name="appeal_lead">Il manque quelque chose ou il y a une erreur ? Précise-le une fois et les juges réexaminent tout. Ça coûte 1 verdict.</string>
-    <string name="appeal_label">Ton contexte</string>
-    <string name="appeal_placeholder">Qu’est-ce que les juges ont raté ?</string>
+    <string name="appeal_lead">Coûte 1 verdict.</string>
+    <string name="appeal_placeholder">Qu’est-ce que les juges ont raté ? Un fait, un message ou ce qui avait vraiment été convenu.</string>
     <string name="appeal_submit">Rejuger avec mon contexte</string>
     <string name="appeal_sending">Anonymisation de ton contexte…</string>
     <string name="appeal_judging">Les juges réexaminent tout…</string>
@@ -447,7 +441,6 @@
     <string name="appeal_previous">Verdict précédent</string>
     <string name="appeal_failed">Le nouveau jugement n’a pas abouti. Ton crédit t’a été rendu ; tu peux réessayer.</string>
     <string name="appeal_refused">Les juges ont refusé de rejuger avec ce contexte. Ton crédit t’a été rendu.</string>
-    <string name="appeal_lead_verdict">Il manque quelque chose ou il y a une erreur ? Précise-le et les juges réexaminent tout. Chaque ajout coûte 1 verdict, deux fois maximum par verdict.</string>
     <string name="appeal_history">Historique du verdict</string>
     <string name="pricing_premium_f5">Captures d’écran comme preuves, lues puis jetées, sans supplément</string>
     <string name="pricing_premium_f6">Ajoute du contexte après un verdict et fais rejuger (1 verdict)</string>
@@ -593,7 +586,6 @@
     </plurals>
     <string name="app_history_offline_remove">Tu es hors ligne. Il faut une connexion pour supprimer.</string>
     <string name="app_pricing_free_account">Connecte-toi avec Apple, Google ou par e-mail</string>
-    <string name="app_context_label">Contexte (facultatif)</string>
     <string name="app_pricing_context">Les images de contexte sont lues puis jetées, sans frais en plus</string>
     <string name="app_pricing_headline">Ton premier verdict est offert.</string>
     <string name="app_pricing_sub">Crée un compte et ton premier verdict est gratuit, avec toutes les fonctionnalités. Ensuite, choisis un pack ou passe à l’abonnement mensuel.</string>
@@ -716,9 +708,7 @@
     <string name="app_verdict_claims">Comment chaque camp en est arrivé là</string>
     <string name="app_verdict_back">Verdict</string>
     <string name="app_appeal_title">Ajouter du contexte et faire appel</string>
-    <string name="app_appeal_intro">Les juges ont raté quelque chose ? Ajoute-le et ils tranchent à nouveau. Le premier verdict reste dans l’historique.</string>
-    <string name="app_appeal_ask">Que doivent savoir les juges ?</string>
-    <string name="app_appeal_placeholder">Un fait, un message ou ce qui avait vraiment été convenu.</string>
+    <string name="app_appeal_placeholder">Qu’est-ce que les juges ont raté ? Un fait, un message ou ce qui avait vraiment été convenu.</string>
     <string name="app_appeal_cost">Coûte 1 verdict. Tu peux le faire deux fois par verdict ; il t’en reste %1$s.</string>
     <string name="app_appeal_cost_case">Coûte 1 verdict. Tu peux le faire une fois par dossier.</string>
     <string name="app_appeal_submit">Rejuger</string>

@@ -207,8 +207,7 @@
     <string name="signin_create_note">Ми надішлемо вам код на пошту, щоб підтвердити цю адресу. Це потрібно зробити лише один раз.</string>
     <string name="signin_password_choose">Ви увійшли. Виберіть пароль на наступний раз.</string>
     <string name="signin_password_save">Зберегти пароль</string>
-    <string name="signin_password_save_failed">Ви увійшли, але пароль зберегти не вдалося. Спробуйте ще раз або задайте його пізніше в налаштуваннях.</string>
-    <string name="signin_password_skip">Поки пропустити</string>
+    <string name="signin_password_save_failed">Не вдалося зберегти пароль. Спробуйте ще раз.</string>
     <string name="signin_password_submit">Увійти</string>
     <string name="signin_provider_unavailable">Поки недоступно</string>
     <string name="signin_failed">Не вдалося ввійти. Спробуєш ще раз?</string>
@@ -227,10 +226,6 @@
     <string name="account_delete">Видалити акаунт</string>
     <string name="account_delete_confirm">Видалити акаунт? Твій баланс вердиктів, тариф і дані для входу буде видалено. Твої вердикти й твої версії у справах буде прибрано: написане тобою та імена зітруться, а посилання для поширення перестануть працювати.</string>
     <string name="account_delete_yes">Так, видалити</string>
-    <string name="account_password_set">Задати пароль</string>
-    <string name="account_password_change">Змінити пароль</string>
-    <string name="account_password_current">Поточний пароль</string>
-    <string name="account_password_saved">Пароль збережено.</string>
     <string name="account_delete_cancel">Залишити акаунт</string>
     <string name="account_delete_failed">Зараз не вдалося видалити акаунт. Спробуєш ще раз?</string>
     <string name="account_sign_in_prompt">Увійди, щоб побачити свій тариф і баланс вердиктів.</string>
@@ -433,9 +428,8 @@
     <string name="home_says">%1$s каже:</string>
     <string name="home_my_side">Моя версія:</string>
     <string name="home_other_side">Версія іншої сторони:</string>
-    <string name="appeal_lead">Щось пропущено чи неправильно? Додай це один раз, і судді переглянуть усе заново. Коштує 1 вердикт.</string>
-    <string name="appeal_label">Твій контекст</string>
-    <string name="appeal_placeholder">Що пропустили судді?</string>
+    <string name="appeal_lead">Спише 1 вердикт.</string>
+    <string name="appeal_placeholder">Що пропустили судді? Факт, повідомлення або те, про що насправді домовилися.</string>
     <string name="appeal_submit">Переглянути з моїм контекстом</string>
     <string name="appeal_sending">Прибираємо імена з твого контексту…</string>
     <string name="appeal_judging">Судді переглядають усе заново…</string>
@@ -455,7 +449,6 @@
     <string name="appeal_previous">Попередній вердикт</string>
     <string name="appeal_failed">Перегляд не вдався. Вердикт повернуто на баланс, можна спробувати ще раз.</string>
     <string name="appeal_refused">Судді відмовилися переглядати справу з таким контекстом. Вердикт повернуто на баланс.</string>
-    <string name="appeal_lead_verdict">Щось пропущено чи неправильно? Додай це, і судді переглянуть усе заново. Кожен перегляд коштує 1 вердикт, не більше двох разів на вердикт.</string>
     <string name="appeal_history">Історія вердикту</string>
     <string name="pricing_premium_f5">Скриншоти як докази: прочитали й викинули, без доплати</string>
     <string name="pricing_premium_f6">Додати контекст після вердикту й отримати перегляд (1 вердикт)</string>
@@ -609,7 +602,6 @@
     </plurals>
     <string name="app_history_offline_remove">Немає інтернету. Щоб видалити, потрібне з’єднання.</string>
     <string name="app_pricing_free_account">Увійди через Apple, Google або пошту</string>
-    <string name="app_context_label">Контекст (необов’язково)</string>
     <string name="app_pricing_context">Картинки з контекстом читаються і відразу видаляються, без доплати</string>
     <string name="app_pricing_headline">Перший вердикт — за наш рахунок.</string>
     <string name="app_pricing_sub">Створи акаунт, і перший вердикт буде безкоштовним, з усіма функціями. Далі обери пакет або оформи підписку.</string>
@@ -733,9 +725,7 @@
     <string name="app_verdict_claims">Як кожна сторона до цього дійшла</string>
     <string name="app_verdict_back">Вердикт</string>
     <string name="app_appeal_title">Додати контекст і оскаржити</string>
-    <string name="app_appeal_intro">Судді щось пропустили? Додай це, і вони переглянуть справу. Перший вердикт залишиться в історії.</string>
-    <string name="app_appeal_ask">Що їм варто знати?</string>
-    <string name="app_appeal_placeholder">Факт, повідомлення або те, про що насправді домовилися.</string>
+    <string name="app_appeal_placeholder">Що пропустили судді? Факт, повідомлення або те, про що насправді домовилися.</string>
     <string name="app_appeal_cost">Спише 1 вердикт. Для одного вердикту це можна зробити двічі. Залишилося спроб: %1$s.</string>
     <string name="app_appeal_cost_case">Спише 1 вердикт. В одній справі це можна зробити один раз.</string>
     <string name="app_appeal_submit">Переглянути справу</string>

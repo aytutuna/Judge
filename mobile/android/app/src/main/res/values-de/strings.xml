@@ -197,8 +197,7 @@
     <string name="signin_create_note">Wir schicken dir einen Code, um diese Adresse zu bestätigen. Das musst du nur einmal tun.</string>
     <string name="signin_password_choose">Du bist angemeldet. Wähle ein Passwort für das nächste Mal.</string>
     <string name="signin_password_save">Passwort speichern</string>
-    <string name="signin_password_save_failed">Du bist angemeldet, aber das Passwort konnte nicht gespeichert werden. Versuche es erneut oder lege es später in den Einstellungen fest.</string>
-    <string name="signin_password_skip">Vorerst überspringen</string>
+    <string name="signin_password_save_failed">Das Passwort konnte nicht gespeichert werden. Versuche es erneut.</string>
     <string name="signin_password_submit">Anmelden</string>
     <string name="signin_provider_unavailable">Noch nicht verfügbar</string>
     <string name="signin_failed">Die Anmeldung hat nicht geklappt. Versuchst du es noch mal?</string>
@@ -217,10 +216,6 @@
     <string name="account_delete">Konto löschen</string>
     <string name="account_delete_confirm">Konto löschen? Deine Credits, dein Tarif und deine Anmeldedaten werden gelöscht. Deine Urteile und deine Beiträge zu Fällen werden entfernt: Was du geschrieben hast und die Namen werden gelöscht, und die geteilten Links funktionieren nicht mehr.</string>
     <string name="account_delete_yes">Ja, löschen</string>
-    <string name="account_password_set">Passwort festlegen</string>
-    <string name="account_password_change">Passwort ändern</string>
-    <string name="account_password_current">Aktuelles Passwort</string>
-    <string name="account_password_saved">Passwort gespeichert.</string>
     <string name="account_delete_cancel">Konto behalten</string>
     <string name="account_delete_failed">Wir konnten das Konto gerade nicht löschen. Versuchst du es noch mal?</string>
     <string name="account_sign_in_prompt">Melde dich an, um deinen Tarif und deine Credits zu sehen.</string>
@@ -417,9 +412,8 @@
     <string name="home_says">%1$s sagt:</string>
     <string name="home_my_side">Meine Seite:</string>
     <string name="home_other_side">Die andere Seite:</string>
-    <string name="appeal_lead">Fehlt etwas oder stimmt etwas nicht? Ergänze es einmal, und die Richter sehen sich alles noch mal an. Kostet 1 Urteil.</string>
-    <string name="appeal_label">Dein Kontext</string>
-    <string name="appeal_placeholder">Was haben die Richter übersehen?</string>
+    <string name="appeal_lead">Kostet 1 Urteil.</string>
+    <string name="appeal_placeholder">Was haben die Richter übersehen? Ein Fakt, eine Nachricht oder was wirklich abgemacht war.</string>
     <string name="appeal_submit">Neu beurteilen lassen</string>
     <string name="appeal_sending">Dein Kontext wird anonymisiert…</string>
     <string name="appeal_judging">Die Richter sehen sich alles noch mal an…</string>
@@ -439,7 +433,6 @@
     <string name="appeal_previous">Früheres Urteil</string>
     <string name="appeal_failed">Das neue Urteil hat nicht geklappt. Dein Credit ist wieder da; du kannst es noch mal versuchen.</string>
     <string name="appeal_refused">Die Richter wollten mit diesem Kontext nicht neu urteilen. Dein Credit ist wieder da.</string>
-    <string name="appeal_lead_verdict">Fehlt etwas oder stimmt etwas nicht? Ergänze es, und die Richter sehen sich alles noch mal an. Das kostet jedes Mal 1 Urteil, höchstens zweimal pro Urteil.</string>
     <string name="appeal_history">Verlauf des Urteils</string>
     <string name="pricing_premium_f5">Screenshots als Belege, gelesen und dann gelöscht, ohne Aufpreis</string>
     <string name="pricing_premium_f6">Nach einem Urteil Kontext ergänzen und neu beurteilen lassen (1 Urteil)</string>
@@ -577,7 +570,6 @@
     </plurals>
     <string name="app_history_offline_remove">Du bist offline. Zum Entfernen brauchst du eine Verbindung.</string>
     <string name="app_pricing_free_account">Mit Apple, Google oder E-Mail anmelden</string>
-    <string name="app_context_label">Kontext (optional)</string>
     <string name="app_pricing_context">Kontextbilder werden gelesen und dann verworfen, ohne Aufpreis</string>
     <string name="app_pricing_headline">Dein erstes Urteil geht auf uns.</string>
     <string name="app_pricing_sub">Erstell ein Konto, und dein erstes Urteil ist gratis, mit allen Funktionen. Danach wählst du ein Paket oder das Monatsabo.</string>
@@ -699,9 +691,7 @@
     <string name="app_verdict_claims">Wie jede Seite zu ihrer Sicht kam</string>
     <string name="app_verdict_back">Urteil</string>
     <string name="app_appeal_title">Einspruch mit neuem Kontext</string>
-    <string name="app_appeal_intro">Haben die Richter etwas übersehen? Ergänze es, und sie urteilen neu. Das erste Urteil bleibt erhalten.</string>
-    <string name="app_appeal_ask">Was sollten sie wissen?</string>
-    <string name="app_appeal_placeholder">Ein Fakt, eine Nachricht oder was wirklich abgemacht war.</string>
+    <string name="app_appeal_placeholder">Was haben die Richter übersehen? Ein Fakt, eine Nachricht oder was wirklich abgemacht war.</string>
     <string name="app_appeal_cost">Kostet 1 Urteil. Das geht zweimal pro Urteil, noch %1$s übrig.</string>
     <string name="app_appeal_cost_case">Kostet 1 Urteil. Das geht einmal pro Fall.</string>
     <string name="app_appeal_submit">Neu beurteilen lassen</string>

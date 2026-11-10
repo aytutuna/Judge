@@ -197,8 +197,7 @@
     <string name="signin_create_note">ഈ വിലാസം സ്ഥിരീകരിക്കാൻ ഞങ്ങൾ നിങ്ങൾക്ക് ഇമെയിലിൽ ഒരു കോഡ് അയയ്ക്കും. ഇത് ഒരു തവണ മാത്രം ചെയ്താൽ മതി.</string>
     <string name="signin_password_choose">നിങ്ങൾ സൈൻ ഇൻ ചെയ്തു. അടുത്ത തവണയ്ക്കായി ഒരു പാസ്‌വേഡ് തിരഞ്ഞെടുക്കുക.</string>
     <string name="signin_password_save">പാസ്‌വേഡ് സേവ് ചെയ്യുക</string>
-    <string name="signin_password_save_failed">നിങ്ങൾ സൈൻ ഇൻ ചെയ്തു, പക്ഷേ പാസ്‌വേഡ് സേവ് ചെയ്യാനായില്ല. വീണ്ടും ശ്രമിക്കുക, അല്ലെങ്കിൽ പിന്നീട് ക്രമീകരണങ്ങളിൽ സജ്ജമാക്കുക.</string>
-    <string name="signin_password_skip">ഇപ്പോൾ ഒഴിവാക്കുക</string>
+    <string name="signin_password_save_failed">പാസ്‌വേഡ് സേവ് ചെയ്യാനായില്ല. വീണ്ടും ശ്രമിക്കുക.</string>
     <string name="signin_password_submit">സൈൻ ഇൻ</string>
     <string name="signin_provider_unavailable">ഇതുവരെ ലഭ്യമല്ല</string>
     <string name="signin_failed">സൈൻ ഇൻ ചെയ്യിക്കാനായില്ല. ഒന്നുകൂടി ശ്രമിക്കാമോ?</string>
@@ -217,10 +216,6 @@
     <string name="account_delete">അക്കൗണ്ട് ഡിലീറ്റ് ചെയ്യൂ</string>
     <string name="account_delete_confirm">അക്കൗണ്ട് ഡിലീറ്റ് ചെയ്യണോ? നിങ്ങളുടെ ക്രെഡിറ്റുകളും പ്ലാനും സൈൻ-ഇൻ വിവരങ്ങളും ഡിലീറ്റ് ആകും. നിങ്ങളുടെ വിധികളും കേസുകളിലെ നിങ്ങളുടെ ഭാഗങ്ങളും നീക്കം ചെയ്യും: നിങ്ങൾ എഴുതിയതും പേരുകളും മായ്ക്കും, അവയുടെ ഷെയർ ലിങ്കുകൾ പ്രവർത്തിക്കാതാകും.</string>
     <string name="account_delete_yes">അതെ, ഡിലീറ്റ് ചെയ്യൂ</string>
-    <string name="account_password_set">പാസ്‌വേഡ് സജ്ജമാക്കുക</string>
-    <string name="account_password_change">പാസ്‌വേഡ് മാറ്റുക</string>
-    <string name="account_password_current">നിലവിലെ പാസ്‌വേഡ്</string>
-    <string name="account_password_saved">പാസ്‌വേഡ് സേവ് ചെയ്തു.</string>
     <string name="account_delete_cancel">അക്കൗണ്ട് നിലനിർത്തൂ</string>
     <string name="account_delete_failed">ഇപ്പോൾ അക്കൗണ്ട് ഡിലീറ്റ് ചെയ്യാനായില്ല. ഒന്നുകൂടി ശ്രമിക്കാമോ?</string>
     <string name="account_sign_in_prompt">നിങ്ങളുടെ പ്ലാനും ക്രെഡിറ്റുകളും കാണാൻ സൈൻ ഇൻ ചെയ്യൂ.</string>
@@ -417,9 +412,8 @@
     <string name="home_says">%1$s പറയുന്നത്:</string>
     <string name="home_my_side">എന്റെ ഭാഗം:</string>
     <string name="home_other_side">അവരുടെ ഭാഗം:</string>
-    <string name="appeal_lead">എന്തെങ്കിലും വിട്ടുപോയോ, തെറ്റിയോ? ഒരു തവണ അത് ചേർക്കാം, ജഡ്ജിമാർ എല്ലാം വീണ്ടും പരിശോധിക്കും. ചെലവ് 1 വിധി.</string>
-    <string name="appeal_label">നിങ്ങൾ ചേർക്കുന്ന വിവരം</string>
-    <string name="appeal_placeholder">ജഡ്ജിമാർ എന്താണ് കാണാതെ പോയത്?</string>
+    <string name="appeal_lead">1 വിധി ഉപയോഗിക്കും.</string>
+    <string name="appeal_placeholder">ജഡ്ജിമാർ എന്താണ് കാണാതെ പോയത്? ഒരു വസ്തുത, ഒരു മെസേജ്, അല്ലെങ്കിൽ ശരിക്കും പറഞ്ഞുറപ്പിച്ചത് എന്താണെന്ന്.</string>
     <string name="appeal_submit">ഈ വിവരം ചേർത്ത് വീണ്ടും വിധിക്കൂ</string>
     <string name="appeal_sending">നിങ്ങൾ ചേർത്തതിൽ നിന്ന് പേരുകൾ നീക്കുന്നു…</string>
     <string name="appeal_judging">ജഡ്ജിമാർ എല്ലാം വീണ്ടും പരിശോധിക്കുന്നു…</string>
@@ -439,7 +433,6 @@
     <string name="appeal_previous">മുമ്പത്തെ വിധി</string>
     <string name="appeal_failed">വീണ്ടും വിധിക്കാനായില്ല. നിങ്ങളുടെ ക്രെഡിറ്റ് തിരികെ കിട്ടി; വീണ്ടും ശ്രമിക്കാം.</string>
     <string name="appeal_refused">ആ വിവരം വെച്ച് വീണ്ടും വിധിക്കാൻ ജഡ്ജിമാർ തയ്യാറായില്ല. നിങ്ങളുടെ ക്രെഡിറ്റ് തിരികെ കിട്ടി.</string>
-    <string name="appeal_lead_verdict">എന്തെങ്കിലും വിട്ടുപോയോ, തെറ്റിയോ? അത് ചേർത്താൽ ജഡ്ജിമാർ എല്ലാം വീണ്ടും പരിശോധിക്കും. ഓരോ തവണയും 1 വിധി ചെലവാകും, ഒരു വിധിക്ക് രണ്ടുതവണ വരെ.</string>
     <string name="appeal_history">വിധിയുടെ ചരിത്രം</string>
     <string name="pricing_premium_f5">സ്ക്രീൻഷോട്ട് തെളിവ്: വായിച്ചശേഷം കളയും, അധിക ചെലവില്ല</string>
     <string name="pricing_premium_f6">വിധിക്ക് ശേഷം കൂടുതൽ വിവരം ചേർത്ത് വീണ്ടും വിധിപ്പിക്കാം (1 വിധി)</string>
@@ -577,7 +570,6 @@
     </plurals>
     <string name="app_history_offline_remove">നിങ്ങൾ ഓഫ്‌ലൈനാണ്. നീക്കം ചെയ്യാൻ കണക്ഷൻ വേണം.</string>
     <string name="app_pricing_free_account">Apple, Google അല്ലെങ്കിൽ ഇമെയിൽ വഴി സൈൻ ഇൻ ചെയ്യൂ</string>
-    <string name="app_context_label">വിവരം (ഓപ്ഷണൽ)</string>
     <string name="app_pricing_context">വിവര ചിത്രങ്ങൾ വായിച്ച ശേഷം കളയും, അധിക ചെലവില്ല</string>
     <string name="app_pricing_headline">ആദ്യ വിധി ഞങ്ങളുടെ വക.</string>
     <string name="app_pricing_sub">അക്കൗണ്ട് തുടങ്ങൂ, എല്ലാ ഫീച്ചറുകളോടും കൂടിയ ആദ്യ വിധി സൗജന്യം. അതിനുശേഷം ഒരു പായ്ക്ക് എടുക്കൂ, അല്ലെങ്കിൽ പ്രതിമാസ പ്ലാനിലേക്ക് മാറൂ.</string>
@@ -699,9 +691,7 @@
     <string name="app_verdict_claims">ഓരോ ഭാഗവും ആ നിലപാടിൽ എത്തിയത് എങ്ങനെ</string>
     <string name="app_verdict_back">വിധി</string>
     <string name="app_appeal_title">കൂടുതൽ വിവരം ചേർത്ത് അപ്പീൽ ചെയ്യൂ</string>
-    <string name="app_appeal_intro">ജഡ്ജിമാർ എന്തെങ്കിലും കാണാതെ പോയോ? അത് ചേർത്താൽ അവർ വീണ്ടും വിധി പറയും. ആദ്യത്തെ വിധി രേഖയിൽ തന്നെ ഉണ്ടാകും.</string>
-    <string name="app_appeal_ask">ജഡ്ജിമാർ എന്താണ് അറിയേണ്ടത്?</string>
-    <string name="app_appeal_placeholder">ഒരു വസ്തുത, ഒരു മെസേജ്, അല്ലെങ്കിൽ ശരിക്കും പറഞ്ഞുറപ്പിച്ചത് എന്താണെന്ന്.</string>
+    <string name="app_appeal_placeholder">ജഡ്ജിമാർ എന്താണ് കാണാതെ പോയത്? ഒരു വസ്തുത, ഒരു മെസേജ്, അല്ലെങ്കിൽ ശരിക്കും പറഞ്ഞുറപ്പിച്ചത് എന്താണെന്ന്.</string>
     <string name="app_appeal_cost">1 വിധി ഉപയോഗിക്കും. ഒരു വിധിക്ക് രണ്ടുതവണ ഇത് ചെയ്യാം; ബാക്കി: %1$s.</string>
     <string name="app_appeal_cost_case">1 വിധി ഉപയോഗിക്കും. ഒരു കേസിൽ ഒരിക്കൽ മാത്രമേ ഇത് ചെയ്യാനാകൂ.</string>
     <string name="app_appeal_submit">വീണ്ടും വിധിക്കൂ</string>

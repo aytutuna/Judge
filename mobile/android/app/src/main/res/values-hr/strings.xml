@@ -202,8 +202,7 @@
     <string name="signin_create_note">Poslat ćemo ti kod e-poštom kako bismo potvrdili ovu adresu. To trebaš napraviti samo jednom.</string>
     <string name="signin_password_choose">Prijavljen si. Odaberi lozinku za sljedeći put.</string>
     <string name="signin_password_save">Spremi lozinku</string>
-    <string name="signin_password_save_failed">Prijavljen si, ali lozinku nismo mogli spremiti. Pokušaj ponovno ili je postavi kasnije u Postavkama.</string>
-    <string name="signin_password_skip">Preskoči za sada</string>
+    <string name="signin_password_save_failed">Lozinku nismo mogli spremiti. Pokušaj ponovno.</string>
     <string name="signin_password_submit">Prijavi se</string>
     <string name="signin_provider_unavailable">Još nije dostupno</string>
     <string name="signin_failed">Nismo te uspjeli prijaviti. Možeš pokušati ponovno?</string>
@@ -222,10 +221,6 @@
     <string name="account_delete">Izbriši račun</string>
     <string name="account_delete_confirm">Želiš izbrisati račun? Brišu se tvoji krediti, plan i podaci za prijavu. Tvoje presude i tvoje strane u slučajevima uklanjaju se: tvoji tekstovi i imena brišu se, a njihove poveznice za dijeljenje prestaju raditi.</string>
     <string name="account_delete_yes">Da, izbriši</string>
-    <string name="account_password_set">Postavi lozinku</string>
-    <string name="account_password_change">Promijeni lozinku</string>
-    <string name="account_password_current">Trenutna lozinka</string>
-    <string name="account_password_saved">Lozinka je spremljena.</string>
     <string name="account_delete_cancel">Zadrži račun</string>
     <string name="account_delete_failed">Trenutačno ne možemo izbrisati račun. Možeš pokušati ponovno?</string>
     <string name="account_sign_in_prompt">Prijavi se da vidiš svoj plan i kredite.</string>
@@ -425,9 +420,8 @@
     <string name="home_says">%1$s kaže:</string>
     <string name="home_my_side">Moja strana:</string>
     <string name="home_other_side">Druga strana:</string>
-    <string name="appeal_lead">Nešto nedostaje ili nije točno? Dodaj to jednom i suci će ponovno pogledati sve. Troši 1 presudu.</string>
-    <string name="appeal_label">Tvoj kontekst</string>
-    <string name="appeal_placeholder">Što su suci propustili?</string>
+    <string name="appeal_lead">Troši 1 presudu.</string>
+    <string name="appeal_placeholder">Što su suci propustili? Neka činjenica, poruka ili ono što je zapravo dogovoreno.</string>
     <string name="appeal_submit">Presudi ponovno</string>
     <string name="appeal_sending">Anonimiziramo tvoj kontekst…</string>
     <string name="appeal_judging">Suci ponovno gledaju sve…</string>
@@ -447,7 +441,6 @@
     <string name="appeal_previous">Ranija presuda</string>
     <string name="appeal_failed">Ponovno presuđivanje nije uspjelo. Kredit ti je vraćen; možeš pokušati ponovno.</string>
     <string name="appeal_refused">Suci nisu htjeli ponovno presuditi s tim kontekstom. Kredit ti je vraćen.</string>
-    <string name="appeal_lead_verdict">Nešto nedostaje ili nije točno? Dodaj to i suci će ponovno pogledati sve. Svaki put troši 1 presudu, najviše dvaput po presudi.</string>
     <string name="appeal_history">Povijest presude</string>
     <string name="pricing_premium_f5">Snimke zaslona kao dokaz: pročitamo ih pa bacimo, bez doplate</string>
     <string name="pricing_premium_f6">Dodaj kontekst nakon presude i traži novu odluku (1 presuda)</string>
@@ -593,7 +586,6 @@
     </plurals>
     <string name="app_history_offline_remove">Nemaš pristup internetu. Za uklanjanje je potrebna veza.</string>
     <string name="app_pricing_free_account">Prijavi se s Appleom, Googleom ili e-poštom</string>
-    <string name="app_context_label">Kontekst (neobavezno)</string>
     <string name="app_pricing_context">Slike konteksta se pročitaju pa odbace, bez dodatnog troška</string>
     <string name="app_pricing_headline">Prvu presudu častimo.</string>
     <string name="app_pricing_sub">Otvori račun i prva presuda je besplatna, sa svim mogućnostima. Nakon toga odaberi paket ili prijeđi na mjesečni plan.</string>
@@ -716,9 +708,7 @@
     <string name="app_verdict_claims">Kako svaka strana dolazi do svog stava</string>
     <string name="app_verdict_back">Presuda</string>
     <string name="app_appeal_title">Dodaj kontekst i uloži žalbu</string>
-    <string name="app_appeal_intro">Suci su nešto propustili? Dodaj to i ponovno će presuditi. Prva presuda ostaje zabilježena.</string>
-    <string name="app_appeal_ask">Što bi trebali znati?</string>
-    <string name="app_appeal_placeholder">Neka činjenica, poruka ili ono što je zapravo dogovoreno.</string>
+    <string name="app_appeal_placeholder">Što su suci propustili? Neka činjenica, poruka ili ono što je zapravo dogovoreno.</string>
     <string name="app_appeal_cost">Troši 1 presudu. To možeš napraviti dvaput po presudi; preostalo: %1$s.</string>
     <string name="app_appeal_cost_case">Troši 1 presudu. To možeš napraviti jednom po slučaju.</string>
     <string name="app_appeal_submit">Presudi ponovno</string>

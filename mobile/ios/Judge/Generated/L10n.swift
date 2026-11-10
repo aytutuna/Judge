@@ -327,7 +327,6 @@ enum L10n {
     static func signinPasswordChoose(_ lang: AppLang) -> String { string("signin.passwordChoose", lang) }
     static func signinPasswordSave(_ lang: AppLang) -> String { string("signin.passwordSave", lang) }
     static func signinPasswordSaveFailed(_ lang: AppLang) -> String { string("signin.passwordSaveFailed", lang) }
-    static func signinPasswordSkip(_ lang: AppLang) -> String { string("signin.passwordSkip", lang) }
     static func signinPasswordSubmit(_ lang: AppLang) -> String { string("signin.passwordSubmit", lang) }
     static func signinProviderUnavailable(_ lang: AppLang) -> String { string("signin.providerUnavailable", lang) }
     static func signinFailed(_ lang: AppLang) -> String { string("signin.failed", lang) }
@@ -346,10 +345,6 @@ enum L10n {
     static func accountDelete(_ lang: AppLang) -> String { string("account.delete", lang) }
     static func accountDeleteConfirm(_ lang: AppLang) -> String { string("account.deleteConfirm", lang) }
     static func accountDeleteYes(_ lang: AppLang) -> String { string("account.deleteYes", lang) }
-    static func accountPasswordSet(_ lang: AppLang) -> String { string("account.passwordSet", lang) }
-    static func accountPasswordChange(_ lang: AppLang) -> String { string("account.passwordChange", lang) }
-    static func accountPasswordCurrent(_ lang: AppLang) -> String { string("account.passwordCurrent", lang) }
-    static func accountPasswordSaved(_ lang: AppLang) -> String { string("account.passwordSaved", lang) }
     static func accountDeleteCancel(_ lang: AppLang) -> String { string("account.deleteCancel", lang) }
     static func accountDeleteFailed(_ lang: AppLang) -> String { string("account.deleteFailed", lang) }
     static func accountSignInPrompt(_ lang: AppLang) -> String { string("account.signInPrompt", lang) }
@@ -538,7 +533,6 @@ enum L10n {
     static func homeMySide(_ lang: AppLang) -> String { string("home.mySide", lang) }
     static func homeOtherSide(_ lang: AppLang) -> String { string("home.otherSide", lang) }
     static func appealLead(_ lang: AppLang) -> String { string("appeal.lead", lang) }
-    static func appealLabel(_ lang: AppLang) -> String { string("appeal.label", lang) }
     static func appealPlaceholder(_ lang: AppLang) -> String { string("appeal.placeholder", lang) }
     static func appealSubmit(_ lang: AppLang) -> String { string("appeal.submit", lang) }
     static func appealSending(_ lang: AppLang) -> String { string("appeal.sending", lang) }
@@ -559,7 +553,6 @@ enum L10n {
     static func appealPrevious(_ lang: AppLang) -> String { string("appeal.previous", lang) }
     static func appealFailed(_ lang: AppLang) -> String { string("appeal.failed", lang) }
     static func appealRefused(_ lang: AppLang) -> String { string("appeal.refused", lang) }
-    static func appealLeadVerdict(_ lang: AppLang) -> String { string("appeal.leadVerdict", lang) }
     static func appealHistory(_ lang: AppLang) -> String { string("appeal.history", lang) }
     static func pricingPremiumF5(_ lang: AppLang) -> String { string("pricing.premium.f5", lang) }
     static func pricingPremiumF6(_ lang: AppLang) -> String { string("pricing.premium.f6", lang) }
@@ -673,7 +666,6 @@ enum L10n {
     static func appHistoryRemoveFailed(_ lang: AppLang, n: Int) -> String { plural("app.history.removeFailed", lang, n) }
     static func appHistoryOfflineRemove(_ lang: AppLang) -> String { string("app.history.offlineRemove", lang) }
     static func appPricingFreeAccount(_ lang: AppLang) -> String { string("app.pricing.free.account", lang) }
-    static func appContextLabel(_ lang: AppLang) -> String { string("app.context.label", lang) }
     static func appPricingContext(_ lang: AppLang) -> String { string("app.pricing.context", lang) }
     static func appPricingHeadline(_ lang: AppLang) -> String { string("app.pricing.headline", lang) }
     static func appPricingSub(_ lang: AppLang) -> String { string("app.pricing.sub", lang) }
@@ -792,8 +784,6 @@ enum L10n {
     static func appVerdictClaims(_ lang: AppLang) -> String { string("app.verdict.claims", lang) }
     static func appVerdictBack(_ lang: AppLang) -> String { string("app.verdict.back", lang) }
     static func appAppealTitle(_ lang: AppLang) -> String { string("app.appeal.title", lang) }
-    static func appAppealIntro(_ lang: AppLang) -> String { string("app.appeal.intro", lang) }
-    static func appAppealAsk(_ lang: AppLang) -> String { string("app.appeal.ask", lang) }
     static func appAppealPlaceholder(_ lang: AppLang) -> String { string("app.appeal.placeholder", lang) }
     static func appAppealCost(_ lang: AppLang, left: String) -> String { format("app.appeal.cost", lang, left) }
     static func appAppealCostCase(_ lang: AppLang) -> String { string("app.appeal.costCase", lang) }
@@ -999,7 +989,6 @@ enum L10n {
         "signin.passwordChoose",
         "signin.passwordSave",
         "signin.passwordSaveFailed",
-        "signin.passwordSkip",
         "signin.passwordSubmit",
         "signin.providerUnavailable",
         "signin.failed",
@@ -1014,10 +1003,6 @@ enum L10n {
         "account.delete",
         "account.deleteConfirm",
         "account.deleteYes",
-        "account.passwordSet",
-        "account.passwordChange",
-        "account.passwordCurrent",
-        "account.passwordSaved",
         "account.deleteCancel",
         "account.deleteFailed",
         "account.signInPrompt",
@@ -1187,7 +1172,6 @@ enum L10n {
         "home.mySide",
         "home.otherSide",
         "appeal.lead",
-        "appeal.label",
         "appeal.placeholder",
         "appeal.submit",
         "appeal.sending",
@@ -1207,7 +1191,6 @@ enum L10n {
         "appeal.previous",
         "appeal.failed",
         "appeal.refused",
-        "appeal.leadVerdict",
         "appeal.history",
         "pricing.premium.f5",
         "pricing.premium.f6",
@@ -1308,7 +1291,6 @@ enum L10n {
         "app.history.phoneOnlyNote",
         "app.history.offlineRemove",
         "app.pricing.free.account",
-        "app.context.label",
         "app.pricing.context",
         "app.pricing.headline",
         "app.pricing.sub",
@@ -1415,8 +1397,6 @@ enum L10n {
         "app.verdict.claims",
         "app.verdict.back",
         "app.appeal.title",
-        "app.appeal.intro",
-        "app.appeal.ask",
         "app.appeal.placeholder",
         "app.appeal.costCase",
         "app.appeal.submit",

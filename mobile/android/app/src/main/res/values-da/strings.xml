@@ -197,8 +197,7 @@
     <string name="signin_create_note">Vi sender dig en kode på mail for at bekræfte adressen. Du skal kun gøre det én gang.</string>
     <string name="signin_password_choose">Du er logget ind. Vælg en adgangskode til næste gang.</string>
     <string name="signin_password_save">Gem adgangskode</string>
-    <string name="signin_password_save_failed">Du er logget ind, men vi kunne ikke gemme adgangskoden. Prøv igen, eller indstil den senere i Indstillinger.</string>
-    <string name="signin_password_skip">Spring over for nu</string>
+    <string name="signin_password_save_failed">Vi kunne ikke gemme adgangskoden. Prøv igen.</string>
     <string name="signin_password_submit">Log ind</string>
     <string name="signin_provider_unavailable">Ikke tilgængeligt endnu</string>
     <string name="signin_failed">Vi kunne ikke logge dig ind. Vil du prøve igen?</string>
@@ -217,10 +216,6 @@
     <string name="account_delete">Slet konto</string>
     <string name="account_delete_confirm">Vil du slette din konto? Dine kreditter, din plan og dine loginoplysninger bliver slettet. Dine domme og dine sider i sager bliver fjernet: det, du skrev, og navnene bliver slettet, og deres delingslinks holder op med at virke.</string>
     <string name="account_delete_yes">Ja, slet den</string>
-    <string name="account_password_set">Indstil en adgangskode</string>
-    <string name="account_password_change">Skift adgangskode</string>
-    <string name="account_password_current">Nuværende adgangskode</string>
-    <string name="account_password_saved">Adgangskoden er gemt.</string>
     <string name="account_delete_cancel">Behold min konto</string>
     <string name="account_delete_failed">Vi kunne ikke slette kontoen lige nu. Vil du prøve igen?</string>
     <string name="account_sign_in_prompt">Log ind for at se din plan og dine kreditter.</string>
@@ -417,9 +412,8 @@
     <string name="home_says">%1$s siger:</string>
     <string name="home_my_side">Min side:</string>
     <string name="home_other_side">Den andens side:</string>
-    <string name="appeal_lead">Mangler der noget, eller er noget forkert? Tilføj det én gang, så kigger dommerne på det hele igen. Det koster 1 dom.</string>
-    <string name="appeal_label">Din kontekst</string>
-    <string name="appeal_placeholder">Hvad overså dommerne?</string>
+    <string name="appeal_lead">Koster 1 dom.</string>
+    <string name="appeal_placeholder">Hvad overså dommerne? Et faktum, en besked eller det, I faktisk aftalte.</string>
     <string name="appeal_submit">Døm igen med min kontekst</string>
     <string name="appeal_sending">Anonymiserer din kontekst…</string>
     <string name="appeal_judging">Dommerne kigger på det hele igen…</string>
@@ -439,7 +433,6 @@
     <string name="appeal_previous">Tidligere dom</string>
     <string name="appeal_failed">Den nye bedømmelse gik ikke igennem. Du har fået din kredit tilbage; du kan prøve igen.</string>
     <string name="appeal_refused">Dommerne ville ikke dømme igen med den kontekst. Du har fået din kredit tilbage.</string>
-    <string name="appeal_lead_verdict">Mangler der noget, eller er noget forkert? Tilføj det, så kigger dommerne på det hele igen. Det koster 1 dom hver gang, højst to gange pr. dom.</string>
     <string name="appeal_history">Domshistorik</string>
     <string name="pricing_premium_f5">Skærmbilleder som bevismateriale, læst og derefter smidt ud, uden ekstra betaling</string>
     <string name="pricing_premium_f6">Tilføj kontekst efter en dom, og få sagen dømt igen (1 dom)</string>
@@ -577,7 +570,6 @@
     </plurals>
     <string name="app_history_offline_remove">Du er offline. Du skal have forbindelse for at fjerne domme.</string>
     <string name="app_pricing_free_account">Log ind med Apple, Google eller e-mail</string>
-    <string name="app_context_label">Kontekst (valgfrit)</string>
     <string name="app_pricing_context">Billeder som kontekst bliver læst og derefter smidt væk, uden ekstra pris</string>
     <string name="app_pricing_headline">Din første dom er på husets regning.</string>
     <string name="app_pricing_sub">Opret en konto, så er din første dom gratis, med alle funktioner. Derefter vælger du en pakke eller et månedsabonnement.</string>
@@ -699,9 +691,7 @@
     <string name="app_verdict_claims">Hvordan hver side kom frem til det</string>
     <string name="app_verdict_back">Dom</string>
     <string name="app_appeal_title">Tilføj kontekst og ank</string>
-    <string name="app_appeal_intro">Har dommerne overset noget? Tilføj det, så dømmer de igen. Den første dom bliver gemt.</string>
-    <string name="app_appeal_ask">Hvad skal de vide?</string>
-    <string name="app_appeal_placeholder">Et faktum, en besked eller det, I faktisk aftalte.</string>
+    <string name="app_appeal_placeholder">Hvad overså dommerne? Et faktum, en besked eller det, I faktisk aftalte.</string>
     <string name="app_appeal_cost">Koster 1 dom. Du kan gøre det to gange pr. dom; du har %1$s tilbage.</string>
     <string name="app_appeal_cost_case">Koster 1 dom. Du kan gøre det én gang pr. sag.</string>
     <string name="app_appeal_submit">Døm igen</string>

@@ -202,8 +202,7 @@
     <string name="signin_create_note">Vamos enviar-te um código por e-mail para confirmar este endereço. Só precisas de o fazer uma vez.</string>
     <string name="signin_password_choose">Iniciaste sessão. Escolhe uma palavra-passe para a próxima vez.</string>
     <string name="signin_password_save">Guardar palavra-passe</string>
-    <string name="signin_password_save_failed">Iniciaste sessão, mas não conseguimos guardar a palavra-passe. Tenta de novo ou define-a mais tarde nas Definições.</string>
-    <string name="signin_password_skip">Saltar por agora</string>
+    <string name="signin_password_save_failed">Não conseguimos guardar a palavra-passe. Tenta de novo.</string>
     <string name="signin_password_submit">Entrar</string>
     <string name="signin_provider_unavailable">Ainda não disponível</string>
     <string name="signin_failed">Não conseguimos iniciar a tua sessão. Tentas outra vez?</string>
@@ -222,10 +221,6 @@
     <string name="account_delete">Apagar conta</string>
     <string name="account_delete_confirm">Apagar a tua conta? Os teus créditos, o plano e os dados de acesso são apagados. Os teus veredictos e os teus lados dos casos são removidos: o que escreveste e os nomes são apagados, e os links de partilha deixam de funcionar.</string>
     <string name="account_delete_yes">Sim, apagar</string>
-    <string name="account_password_set">Definir uma palavra-passe</string>
-    <string name="account_password_change">Alterar palavra-passe</string>
-    <string name="account_password_current">Palavra-passe atual</string>
-    <string name="account_password_saved">Palavra-passe guardada.</string>
     <string name="account_delete_cancel">Manter a conta</string>
     <string name="account_delete_failed">Não conseguimos apagar a conta agora. Tentas outra vez?</string>
     <string name="account_sign_in_prompt">Entra para veres o teu plano e os teus créditos.</string>
@@ -425,9 +420,8 @@
     <string name="home_says">%1$s diz:</string>
     <string name="home_my_side">O meu lado:</string>
     <string name="home_other_side">O outro lado:</string>
-    <string name="appeal_lead">Falta alguma coisa ou há algo errado? Acrescenta-o uma vez e os juízes voltam a analisar tudo. Custa 1 veredicto.</string>
-    <string name="appeal_label">O teu contexto</string>
-    <string name="appeal_placeholder">O que é que escapou aos juízes?</string>
+    <string name="appeal_lead">Gasta 1 veredicto.</string>
+    <string name="appeal_placeholder">O que é que escapou aos juízes? Um facto, uma mensagem ou o que ficou mesmo combinado.</string>
     <string name="appeal_submit">Julgar de novo com isto</string>
     <string name="appeal_sending">A anonimizar o teu contexto…</string>
     <string name="appeal_judging">Os juízes estão a rever tudo…</string>
@@ -447,7 +441,6 @@
     <string name="appeal_previous">Veredicto anterior</string>
     <string name="appeal_failed">O novo julgamento não avançou. O teu crédito foi devolvido; podes tentar outra vez.</string>
     <string name="appeal_refused">Os juízes recusaram-se a julgar de novo com esse contexto. O teu crédito foi devolvido.</string>
-    <string name="appeal_lead_verdict">Falta alguma coisa ou há algo errado? Acrescenta-o e os juízes voltam a analisar tudo. Cada vez custa 1 veredicto, até duas vezes por veredicto.</string>
     <string name="appeal_history">Histórico do veredicto</string>
     <string name="pricing_premium_f5">Capturas de ecrã como prova, lidas e depois apagadas, sem custo extra</string>
     <string name="pricing_premium_f6">Acrescentar contexto depois de um veredicto e pedir novo julgamento (1 veredicto)</string>
@@ -593,7 +586,6 @@
     </plurals>
     <string name="app_history_offline_remove">Estás sem internet. É preciso ligação para remover.</string>
     <string name="app_pricing_free_account">Entra com a Apple, o Google ou o e-mail</string>
-    <string name="app_context_label">Contexto (opcional)</string>
     <string name="app_pricing_context">As imagens de contexto são lidas e depois descartadas, sem custo extra</string>
     <string name="app_pricing_headline">O primeiro veredicto é por nossa conta.</string>
     <string name="app_pricing_sub">Cria uma conta e o primeiro veredicto é grátis, com todas as funcionalidades. Depois, escolhe um pacote ou passa ao plano mensal.</string>
@@ -716,9 +708,7 @@
     <string name="app_verdict_claims">Como cada lado lá chegou</string>
     <string name="app_verdict_back">Decisão</string>
     <string name="app_appeal_title">Acrescentar contexto e recorrer</string>
-    <string name="app_appeal_intro">Escapou alguma coisa aos juízes? Acrescenta-a e eles decidem de novo. A primeira decisão fica registada.</string>
-    <string name="app_appeal_ask">O que é que eles devem saber?</string>
-    <string name="app_appeal_placeholder">Um facto, uma mensagem ou o que ficou mesmo combinado.</string>
+    <string name="app_appeal_placeholder">O que é que escapou aos juízes? Um facto, uma mensagem ou o que ficou mesmo combinado.</string>
     <string name="app_appeal_cost">Gasta 1 veredicto. Podes fazê-lo duas vezes por decisão (ainda tens %1$s).</string>
     <string name="app_appeal_cost_case">Gasta 1 veredicto. Só podes fazê-lo uma vez por caso.</string>
     <string name="app_appeal_submit">Julgar de novo</string>

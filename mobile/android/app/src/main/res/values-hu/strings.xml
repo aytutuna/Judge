@@ -197,8 +197,7 @@
     <string name="signin_create_note">E-mailben küldünk egy kódot, hogy megerősítsd ezt a címet. Ezt csak egyszer kell megtenned.</string>
     <string name="signin_password_choose">Be vagy jelentkezve. Válassz jelszót a következő alkalomra.</string>
     <string name="signin_password_save">Jelszó mentése</string>
-    <string name="signin_password_save_failed">Be vagy jelentkezve, de a jelszót nem sikerült elmenteni. Próbáld újra, vagy állítsd be később a Beállításokban.</string>
-    <string name="signin_password_skip">Kihagyás egyelőre</string>
+    <string name="signin_password_save_failed">A jelszót nem sikerült elmenteni. Próbáld újra.</string>
     <string name="signin_password_submit">Belépés</string>
     <string name="signin_provider_unavailable">Még nem elérhető</string>
     <string name="signin_failed">Nem sikerült a belépés. Megpróbálod újra?</string>
@@ -217,10 +216,6 @@
     <string name="account_delete">Fiók törlése</string>
     <string name="account_delete_confirm">Törlöd a fiókodat? A kreditjeid, az előfizetésed és a belépési adataid törlődnek. Az ítéleteidet és az ügyekben beküldött verzióidat eltávolítjuk: amit írtál, azt a nevekkel együtt töröljük, a megosztási linkjeik pedig megszűnnek működni.</string>
     <string name="account_delete_yes">Igen, törlöm</string>
-    <string name="account_password_set">Jelszó beállítása</string>
-    <string name="account_password_change">Jelszó módosítása</string>
-    <string name="account_password_current">Jelenlegi jelszó</string>
-    <string name="account_password_saved">Jelszó elmentve.</string>
     <string name="account_delete_cancel">Megtartom a fiókot</string>
     <string name="account_delete_failed">Most nem sikerült törölni a fiókot. Megpróbálod újra?</string>
     <string name="account_sign_in_prompt">Lépj be, hogy lásd az előfizetésedet és a kreditjeidet.</string>
@@ -417,9 +412,8 @@
     <string name="home_says">%1$s szerint:</string>
     <string name="home_my_side">Az én verzióm:</string>
     <string name="home_other_side">Az ő verziója:</string>
-    <string name="appeal_lead">Hiányzik vagy téves valami? Add hozzá egyszer, és a bírák mindent újra átnéznek. Ez 1 ítéletbe kerül.</string>
-    <string name="appeal_label">A kiegészítésed</string>
-    <string name="appeal_placeholder">Mi kerülte el a bírák figyelmét?</string>
+    <string name="appeal_lead">1 ítéletbe kerül.</string>
+    <string name="appeal_placeholder">Mi kerülte el a bírák figyelmét? Egy tény, egy üzenet vagy az, hogy miben állapodtatok meg valójában.</string>
     <string name="appeal_submit">Újraítélés kiegészítéssel</string>
     <string name="appeal_sending">Kivesszük a neveket a kiegészítésedből…</string>
     <string name="appeal_judging">A bírák mindent újra átnéznek…</string>
@@ -439,7 +433,6 @@
     <string name="appeal_previous">Korábbi ítélet</string>
     <string name="appeal_failed">Az újraítélés nem sikerült. Visszakaptad a kreditedet, megpróbálhatod újra.</string>
     <string name="appeal_refused">A bírák ezzel a kiegészítéssel nem voltak hajlandók újra dönteni. Visszakaptad a kreditedet.</string>
-    <string name="appeal_lead_verdict">Hiányzik vagy téves valami? Add hozzá, és a bírák mindent újra átnéznek. Alkalmanként 1 ítéletbe kerül, ítéletenként legfeljebb kétszer.</string>
     <string name="appeal_history">Az ítélet előzményei</string>
     <string name="pricing_premium_f5">Képernyőképek bizonyítéknak: beolvassuk, aztán eldobjuk, felár nélkül</string>
     <string name="pricing_premium_f6">Kiegészítés az ítélet után, újraítéléssel (1 ítélet)</string>
@@ -577,7 +570,6 @@
     </plurals>
     <string name="app_history_offline_remove">Nincs internetkapcsolat. Eltávolítani csak online lehet.</string>
     <string name="app_pricing_free_account">Belépés Apple-lel, Google-lal vagy e-maillel</string>
-    <string name="app_context_label">Kiegészítés (nem kötelező)</string>
     <string name="app_pricing_context">A kiegészítő képeket elolvassuk, aztán eldobjuk, felár nélkül</string>
     <string name="app_pricing_headline">Az első ítélet ajándék.</string>
     <string name="app_pricing_sub">Hozz létre egy fiókot, és az első ítéleted ingyenes, minden funkcióval. Utána válassz csomagot, vagy fizess elő havonta.</string>
@@ -699,9 +691,7 @@
     <string name="app_verdict_claims">Így érvelt a két fél</string>
     <string name="app_verdict_back">Ítélet</string>
     <string name="app_appeal_title">Kiegészítés és fellebbezés</string>
-    <string name="app_appeal_intro">Valami elkerülte a bírák figyelmét? Add hozzá, és újra döntenek. Az első ítélet is megmarad.</string>
-    <string name="app_appeal_ask">Mit kellene tudniuk?</string>
-    <string name="app_appeal_placeholder">Egy tény, egy üzenet vagy az, hogy miben állapodtatok meg valójában.</string>
+    <string name="app_appeal_placeholder">Mi kerülte el a bírák figyelmét? Egy tény, egy üzenet vagy az, hogy miben állapodtatok meg valójában.</string>
     <string name="app_appeal_cost">1 ítéletbe kerül. Ítéletenként kétszer teheted meg, ebből még %1$s maradt.</string>
     <string name="app_appeal_cost_case">1 ítéletbe kerül. Ügyenként egyszer teheted meg.</string>
     <string name="app_appeal_submit">Újraítélés</string>

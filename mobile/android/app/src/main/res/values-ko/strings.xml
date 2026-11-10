@@ -192,8 +192,7 @@
     <string name="signin_create_note">이 주소를 확인하기 위해 이메일로 코드를 보내드려요. 한 번만 하면 돼요.</string>
     <string name="signin_password_choose">로그인했어요. 다음을 위해 비밀번호를 정해 주세요.</string>
     <string name="signin_password_save">비밀번호 저장</string>
-    <string name="signin_password_save_failed">로그인은 됐지만 비밀번호를 저장하지 못했어요. 다시 시도하거나 나중에 설정에서 정해 주세요.</string>
-    <string name="signin_password_skip">지금은 건너뛰기</string>
+    <string name="signin_password_save_failed">비밀번호를 저장하지 못했어요. 다시 시도해 주세요.</string>
     <string name="signin_password_submit">로그인</string>
     <string name="signin_provider_unavailable">아직 이용할 수 없어요</string>
     <string name="signin_failed">로그인하지 못했어요. 다시 한번 해 볼까요?</string>
@@ -212,10 +211,6 @@
     <string name="account_delete">계정 삭제</string>
     <string name="account_delete_confirm">계정을 삭제할까요? 크레딧, 요금제, 로그인 정보가 삭제돼요. 내 판결과 사건 속 내 입장도 지워져요. 쓴 글과 이름이 삭제되고, 공유 링크도 더 이상 열리지 않아요.</string>
     <string name="account_delete_yes">네, 삭제할게요</string>
-    <string name="account_password_set">비밀번호 설정</string>
-    <string name="account_password_change">비밀번호 변경</string>
-    <string name="account_password_current">현재 비밀번호</string>
-    <string name="account_password_saved">비밀번호를 저장했어요.</string>
     <string name="account_delete_cancel">계정 유지</string>
     <string name="account_delete_failed">지금은 계정을 삭제하지 못했어요. 다시 한번 해 볼까요?</string>
     <string name="account_sign_in_prompt">로그인하면 요금제와 크레딧을 볼 수 있어요.</string>
@@ -409,9 +404,8 @@
     <string name="home_says">%1$s의 말:</string>
     <string name="home_my_side">내 입장:</string>
     <string name="home_other_side">상대방 입장:</string>
-    <string name="appeal_lead">빠졌거나 잘못된 내용이 있나요? 한 번 추가할 수 있고, 추가하면 판사들이 전부 다시 살펴봐요. 판결 1회를 사용해요.</string>
-    <string name="appeal_label">추가할 내용</string>
-    <string name="appeal_placeholder">판사들이 놓친 게 뭔가요?</string>
+    <string name="appeal_lead">판결 1회를 사용해요.</string>
+    <string name="appeal_placeholder">판사들이 놓친 게 뭔가요? 사실, 주고받은 메시지, 실제로 합의한 내용 등</string>
     <string name="appeal_submit">맥락 추가하고 다시 판결</string>
     <string name="appeal_sending">추가한 맥락을 익명 처리하는 중…</string>
     <string name="appeal_judging">판사들이 전부 다시 살펴보는 중…</string>
@@ -431,7 +425,6 @@
     <string name="appeal_previous">이전 판결</string>
     <string name="appeal_failed">다시 판결하지 못했어요. 크레딧을 돌려 드렸으니 다시 시도해 보세요.</string>
     <string name="appeal_refused">판사들이 이 맥락으로는 다시 판결하지 않기로 했어요. 크레딧을 돌려 드렸어요.</string>
-    <string name="appeal_lead_verdict">빠졌거나 잘못된 내용이 있나요? 추가하면 판사들이 전부 다시 살펴봐요. 한 번에 판결 1회를 사용하고, 판결 하나당 최대 두 번까지 할 수 있어요.</string>
     <string name="appeal_history">판결 기록</string>
     <string name="pricing_premium_f5">스크린샷 증거: 읽은 뒤 바로 폐기, 추가 요금 없음</string>
     <string name="pricing_premium_f6">판결 후 맥락을 추가해 다시 판결 받기 (판결 1회)</string>
@@ -561,7 +554,6 @@
     </plurals>
     <string name="app_history_offline_remove">오프라인 상태예요. 삭제하려면 인터넷 연결이 필요해요.</string>
     <string name="app_pricing_free_account">Apple, Google 또는 이메일로 로그인</string>
-    <string name="app_context_label">추가 내용 (선택)</string>
     <string name="app_pricing_context">추가 내용 이미지는 읽은 뒤 바로 버려져요. 추가 비용은 없어요</string>
     <string name="app_pricing_headline">첫 판결은 저희가 쏠게요.</string>
     <string name="app_pricing_sub">계정을 만들면 첫 판결을 모든 기능 그대로 무료로 받을 수 있어요. 그다음엔 팩을 고르거나 월간 요금제를 이용해 보세요.</string>
@@ -682,9 +674,7 @@
     <string name="app_verdict_claims">양쪽이 그 주장에 이른 과정</string>
     <string name="app_verdict_back">판결</string>
     <string name="app_appeal_title">내용 추가·재심 요청</string>
-    <string name="app_appeal_intro">판사들이 놓친 게 있나요? 추가하면 판사들이 다시 판결해요. 첫 판결은 기록에 남아요.</string>
-    <string name="app_appeal_ask">판사들이 뭘 알아야 할까요?</string>
-    <string name="app_appeal_placeholder">사실, 주고받은 메시지, 실제로 합의한 내용 등</string>
+    <string name="app_appeal_placeholder">판사들이 놓친 게 뭔가요? 사실, 주고받은 메시지, 실제로 합의한 내용 등</string>
     <string name="app_appeal_cost">판결 1회를 사용해요. 판결 하나에 두 번까지 할 수 있고, %1$s회 남았어요.</string>
     <string name="app_appeal_cost_case">판결 1회를 사용해요. 사건 하나에 한 번만 할 수 있어요.</string>
     <string name="app_appeal_submit">다시 판결 받기</string>

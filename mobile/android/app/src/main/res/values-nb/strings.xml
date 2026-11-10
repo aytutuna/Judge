@@ -197,8 +197,7 @@
     <string name="signin_create_note">Vi sender deg en kode på e-post for å bekrefte adressen. Du trenger bare å gjøre det én gang.</string>
     <string name="signin_password_choose">Du er logget inn. Velg et passord til neste gang.</string>
     <string name="signin_password_save">Lagre passord</string>
-    <string name="signin_password_save_failed">Du er logget inn, men vi kunne ikke lagre passordet. Prøv igjen, eller angi det senere i Innstillinger.</string>
-    <string name="signin_password_skip">Hopp over for nå</string>
+    <string name="signin_password_save_failed">Vi klarte ikke å lagre passordet. Prøv igjen.</string>
     <string name="signin_password_submit">Logg inn</string>
     <string name="signin_provider_unavailable">Ikke tilgjengelig ennå</string>
     <string name="signin_failed">Vi fikk ikke logget deg inn. Vil du prøve igjen?</string>
@@ -217,10 +216,6 @@
     <string name="account_delete">Slett konto</string>
     <string name="account_delete_confirm">Vil du slette kontoen din? Kredittene, abonnementet og innloggingsdetaljene dine slettes. Dommene dine og sidene dine i saker fjernes: det du skrev og navnene slettes, og delingslenkene slutter å virke.</string>
     <string name="account_delete_yes">Ja, slett den</string>
-    <string name="account_password_set">Angi et passord</string>
-    <string name="account_password_change">Endre passord</string>
-    <string name="account_password_current">Nåværende passord</string>
-    <string name="account_password_saved">Passordet er lagret.</string>
     <string name="account_delete_cancel">Behold kontoen</string>
     <string name="account_delete_failed">Vi fikk ikke slettet kontoen akkurat nå. Vil du prøve igjen?</string>
     <string name="account_sign_in_prompt">Logg inn for å se abonnementet og kredittene dine.</string>
@@ -417,9 +412,8 @@
     <string name="home_says">%1$s sier:</string>
     <string name="home_my_side">Min side:</string>
     <string name="home_other_side">Den andres side:</string>
-    <string name="appeal_lead">Mangler noe, eller er noe feil? Legg det til én gang, så ser dommerne på alt på nytt. Koster 1 dom.</string>
-    <string name="appeal_label">Konteksten din</string>
-    <string name="appeal_placeholder">Hva gikk dommerne glipp av?</string>
+    <string name="appeal_lead">Koster 1 dom.</string>
+    <string name="appeal_placeholder">Hva gikk dommerne glipp av? Et faktum, en melding eller hva dere faktisk ble enige om.</string>
     <string name="appeal_submit">Døm på nytt med min kontekst</string>
     <string name="appeal_sending">Anonymiserer konteksten din…</string>
     <string name="appeal_judging">Dommerne ser på alt på nytt…</string>
@@ -439,7 +433,6 @@
     <string name="appeal_previous">Tidligere dom</string>
     <string name="appeal_failed">Den nye dømmingen gikk ikke gjennom. Du har fått kreditten tilbake og kan prøve igjen.</string>
     <string name="appeal_refused">Dommerne ville ikke dømme på nytt med den konteksten. Du har fått kreditten tilbake.</string>
-    <string name="appeal_lead_verdict">Mangler noe, eller er noe feil? Legg det til, så ser dommerne på alt på nytt. Hver gang koster 1 dom, opptil to ganger per dom.</string>
     <string name="appeal_history">Domshistorikk</string>
     <string name="pricing_premium_f5">Skjermbilder som bevis, lest og så kastet, uten ekstra kostnad</string>
     <string name="pricing_premium_f6">Legg til kontekst etter en dom og få den dømt på nytt (1 dom)</string>
@@ -577,7 +570,6 @@
     </plurals>
     <string name="app_history_offline_remove">Du er ikke på nett. Du trenger nettforbindelse for å fjerne dommer.</string>
     <string name="app_pricing_free_account">Logg inn med Apple, Google eller e-post</string>
-    <string name="app_context_label">Kontekst (valgfritt)</string>
     <string name="app_pricing_context">Kontekstbilder blir lest og deretter kastet, uten ekstra kostnad</string>
     <string name="app_pricing_headline">Den første dommen spanderer vi.</string>
     <string name="app_pricing_sub">Opprett en konto, så er den første dommen gratis, med alle funksjoner. Etter det velger du en pakke eller går over til månedsabonnement.</string>
@@ -699,9 +691,7 @@
     <string name="app_verdict_claims">Hvordan hver side kom fram til det</string>
     <string name="app_verdict_back">Dom</string>
     <string name="app_appeal_title">Legg til kontekst og anke</string>
-    <string name="app_appeal_intro">Gikk dommerne glipp av noe? Legg det til, så dømmer de på nytt. Den første dommen blir liggende i historikken.</string>
-    <string name="app_appeal_ask">Hva bør de vite?</string>
-    <string name="app_appeal_placeholder">Et faktum, en melding eller hva dere faktisk ble enige om.</string>
+    <string name="app_appeal_placeholder">Hva gikk dommerne glipp av? Et faktum, en melding eller hva dere faktisk ble enige om.</string>
     <string name="app_appeal_cost">Koster 1 dom. Du kan gjøre dette to ganger per dom (%1$s igjen).</string>
     <string name="app_appeal_cost_case">Koster 1 dom. Du kan gjøre dette én gang per sak.</string>
     <string name="app_appeal_submit">Døm på nytt</string>

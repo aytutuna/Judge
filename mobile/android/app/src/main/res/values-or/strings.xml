@@ -197,8 +197,7 @@
     <string name="signin_create_note">ଏହି ଠିକଣା ନିଶ୍ଚିତ କରିବାକୁ ଆମେ ଆପଣଙ୍କୁ ଇମେଲରେ ଏକ କୋଡ୍ ପଠାଇବୁ। ଏହା କେବଳ ଥରେ କରିବାକୁ ପଡ଼ିବ।</string>
     <string name="signin_password_choose">ଆପଣ ସାଇନ୍ ଇନ୍ କରିଛନ୍ତି। ପରବର୍ତ୍ତୀ ଥର ପାଇଁ ଏକ ପାସୱାର୍ଡ ବାଛନ୍ତୁ।</string>
     <string name="signin_password_save">ପାସୱାର୍ଡ ସାଇତନ୍ତୁ</string>
-    <string name="signin_password_save_failed">ଆପଣ ସାଇନ୍ ଇନ୍ କରିଛନ୍ତି, କିନ୍ତୁ ପାସୱାର୍ଡ ସାଇତିହେଲା ନାହିଁ। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ, ଅଥବା ପରେ ସେଟିଂସରେ ଠିକ୍ କରନ୍ତୁ।</string>
-    <string name="signin_password_skip">ଏବେ ଛାଡ଼ନ୍ତୁ</string>
+    <string name="signin_password_save_failed">ପାସୱାର୍ଡ ସାଇତିହେଲା ନାହିଁ। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="signin_password_submit">ସାଇନ୍ ଇନ୍</string>
     <string name="signin_provider_unavailable">ଏବେ ଉପଲବ୍ଧ ନାହିଁ</string>
     <string name="signin_failed">ସାଇନ୍ ଇନ୍ କରାଇପାରିଲୁ ନାହିଁ। ପୁଣି ଥରେ ଚେଷ୍ଟା କରିବେ?</string>
@@ -217,10 +216,6 @@
     <string name="account_delete">ଆକାଉଣ୍ଟ ଡିଲିଟ୍ କରନ୍ତୁ</string>
     <string name="account_delete_confirm">ଆକାଉଣ୍ଟ ଡିଲିଟ୍ କରିବେ? ଆପଣଙ୍କ କ୍ରେଡିଟ୍, ପ୍ଲାନ୍ ଓ ସାଇନ୍ ଇନ୍ ବିବରଣୀ ଡିଲିଟ୍ ହେବ। ଆପଣଙ୍କ ରାୟ ଓ ମାମଲାରେ ଆପଣଙ୍କ କଥା ହଟିଯିବ: ଆପଣ ଯାହା ଲେଖିଥିଲେ ଓ ନାମଗୁଡ଼ିକ ଲିଭିଯିବ, ଆଉ ସେଗୁଡ଼ିକର ସେୟାର୍ ଲିଙ୍କ୍ କାମ କରିବ ନାହିଁ।</string>
     <string name="account_delete_yes">ହଁ, ଡିଲିଟ୍ କରନ୍ତୁ</string>
-    <string name="account_password_set">ପାସୱାର୍ଡ ଠିକ୍ କରନ୍ତୁ</string>
-    <string name="account_password_change">ପାସୱାର୍ଡ ବଦଳାନ୍ତୁ</string>
-    <string name="account_password_current">ବର୍ତ୍ତମାନର ପାସୱାର୍ଡ</string>
-    <string name="account_password_saved">ପାସୱାର୍ଡ ସାଇତାଗଲା।</string>
     <string name="account_delete_cancel">ଆକାଉଣ୍ଟ ରହୁ</string>
     <string name="account_delete_failed">ଏବେ ଆକାଉଣ୍ଟ ଡିଲିଟ୍ କରିପାରିଲୁ ନାହିଁ। ପୁଣି ଥରେ ଚେଷ୍ଟା କରିବେ?</string>
     <string name="account_sign_in_prompt">ପ୍ଲାନ୍ ଓ କ୍ରେଡିଟ୍ ଦେଖିବାକୁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ।</string>
@@ -417,9 +412,8 @@
     <string name="home_says">%1$s କହନ୍ତି:</string>
     <string name="home_my_side">ମୋ କଥା:</string>
     <string name="home_other_side">ତାଙ୍କ କଥା:</string>
-    <string name="appeal_lead">କିଛି ବାକି ରହିଲା ବା ଭୁଲ ହେଲା? ଥରେ ଯୋଡ଼ନ୍ତୁ, ବିଚାରକମାନେ ସବୁକିଛି ପୁଣି ଦେଖିବେ। 1ଟି ରାୟ ଖର୍ଚ୍ଚ ହେବ।</string>
-    <string name="appeal_label">ଆପଣଙ୍କ ବିବରଣୀ</string>
-    <string name="appeal_placeholder">ବିଚାରକମାନେ କ\'ଣ ଛାଡ଼ିଦେଲେ?</string>
+    <string name="appeal_lead">ଏଥିରେ 1ଟି ରାୟ ଖର୍ଚ୍ଚ ହୁଏ।</string>
+    <string name="appeal_placeholder">ବିଚାରକମାନେ କ\'ଣ ଛାଡ଼ିଦେଲେ? କୌଣସି ତଥ୍ୟ, ମେସେଜ୍, ବା ଅସଲରେ କ\'ଣ ସ୍ଥିର ହୋଇଥିଲା।</string>
     <string name="appeal_submit">ମୋ ବିବରଣୀ ସହ ପୁଣି ବିଚାର କରନ୍ତୁ</string>
     <string name="appeal_sending">ଆପଣଙ୍କ ବିବରଣୀ ନାମହୀନ କରୁଛୁ…</string>
     <string name="appeal_judging">ବିଚାରକମାନେ ସବୁକିଛି ପୁଣି ଦେଖୁଛନ୍ତି…</string>
@@ -439,7 +433,6 @@
     <string name="appeal_previous">ଆଗର ରାୟ</string>
     <string name="appeal_failed">ପୁଣି ବିଚାର ହୋଇପାରିଲା ନାହିଁ। ଆପଣଙ୍କ କ୍ରେଡିଟ୍ ଫେରିଆସିଛି; ପୁଣି ଚେଷ୍ଟା କରିପାରିବେ।</string>
     <string name="appeal_refused">ବିଚାରକମାନେ ସେହି ବିବରଣୀ ସହ ପୁଣି ବିଚାର କରିବାକୁ ମନା କଲେ। ଆପଣଙ୍କ କ୍ରେଡିଟ୍ ଫେରିଆସିଛି।</string>
-    <string name="appeal_lead_verdict">କିଛି ବାକି ରହିଲା ବା ଭୁଲ ହେଲା? ଯୋଡ଼ନ୍ତୁ, ବିଚାରକମାନେ ସବୁକିଛି ପୁଣି ଦେଖିବେ। ପ୍ରତି ଥର 1ଟି ରାୟ ଖର୍ଚ୍ଚ ହୁଏ, ଗୋଟିଏ ରାୟରେ ସର୍ବାଧିକ ଦୁଇ ଥର।</string>
     <string name="appeal_history">ରାୟର ଇତିହାସ</string>
     <string name="pricing_premium_f5">ସ୍କ୍ରିନସଟ୍ ପ୍ରମାଣ: ପଢ଼ି ଫିଙ୍ଗିଦିଆଯାଏ, କୌଣସି ଅତିରିକ୍ତ ଖର୍ଚ୍ଚ ନାହିଁ</string>
     <string name="pricing_premium_f6">ରାୟ ପରେ ବିବରଣୀ ଯୋଡ଼ି ପୁଣି ବିଚାର (1ଟି ରାୟ)</string>
@@ -577,7 +570,6 @@
     </plurals>
     <string name="app_history_offline_remove">ଆପଣ ଅଫଲାଇନ୍ ଅଛନ୍ତି। ହଟାଇବାକୁ ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ଦରକାର।</string>
     <string name="app_pricing_free_account">Apple, Google ବା ଇମେଲ୍ ସହ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ</string>
-    <string name="app_context_label">ବିବରଣୀ (ଇଚ୍ଛାଧୀନ)</string>
     <string name="app_pricing_context">ବିବରଣୀର ଛବି ପଢ଼ି ପରେ ଫିଙ୍ଗି ଦିଆଯାଏ, ଅତିରିକ୍ତ ଖର୍ଚ୍ଚ ନାହିଁ</string>
     <string name="app_pricing_headline">ପ୍ରଥମ ରାୟ ଆମ ତରଫରୁ।</string>
     <string name="app_pricing_sub">ଆକାଉଣ୍ଟ ଖୋଲନ୍ତୁ, ପ୍ରଥମ ରାୟ ସବୁ ସୁବିଧା ସହ ମାଗଣା। ତା\'ପରେ ଗୋଟେ ପ୍ୟାକ୍ ବାଛନ୍ତୁ ବା ମାସିକ ପ୍ଲାନ୍ ନିଅନ୍ତୁ।</string>
@@ -699,9 +691,7 @@
     <string name="app_verdict_claims">ପ୍ରତ୍ୟେକ ପକ୍ଷ ନିଜ ମତରେ କେମିତି ପହଞ୍ଚିଲେ</string>
     <string name="app_verdict_back">ରାୟ</string>
     <string name="app_appeal_title">ବିବରଣୀ ଯୋଡ଼ି ପୁଣି ବିଚାର</string>
-    <string name="app_appeal_intro">ବିଚାରକମାନେ କିଛି ଛାଡ଼ିଦେଲେ କି? ତାହା ଯୋଡ଼ନ୍ତୁ, ସେମାନେ ପୁଣି ରାୟ ଦେବେ। ପ୍ରଥମ ରାୟ ରେକର୍ଡରେ ରହିବ।</string>
-    <string name="app_appeal_ask">ସେମାନଙ୍କୁ କ\'ଣ ଜାଣିବା ଦରକାର?</string>
-    <string name="app_appeal_placeholder">କୌଣସି ତଥ୍ୟ, ମେସେଜ୍, ବା ଅସଲରେ କ\'ଣ ସ୍ଥିର ହୋଇଥିଲା।</string>
+    <string name="app_appeal_placeholder">ବିଚାରକମାନେ କ\'ଣ ଛାଡ଼ିଦେଲେ? କୌଣସି ତଥ୍ୟ, ମେସେଜ୍, ବା ଅସଲରେ କ\'ଣ ସ୍ଥିର ହୋଇଥିଲା।</string>
     <string name="app_appeal_cost">ଏଥିରେ 1ଟି ରାୟ ଖର୍ଚ୍ଚ ହୁଏ। ଗୋଟିଏ ରାୟରେ ଏହା ଦୁଇ ଥର କରିପାରିବେ; ଆଉ %1$s ଥର ବାକି।</string>
     <string name="app_appeal_cost_case">ଏଥିରେ 1ଟି ରାୟ ଖର୍ଚ୍ଚ ହୁଏ। ଗୋଟିଏ ମାମଲାରେ ଏହା ଥରେ କରିପାରିବେ।</string>
     <string name="app_appeal_submit">ପୁଣି ବିଚାର କରାନ୍ତୁ</string>

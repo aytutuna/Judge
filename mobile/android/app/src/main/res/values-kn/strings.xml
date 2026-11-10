@@ -197,8 +197,7 @@
     <string name="signin_create_note">ಈ ವಿಳಾಸವನ್ನು ದೃಢೀಕರಿಸಲು ನಾವು ನಿಮಗೆ ಇಮೇಲ್‌ನಲ್ಲಿ ಒಂದು ಕೋಡ್ ಕಳುಹಿಸುತ್ತೇವೆ. ಇದನ್ನು ಒಮ್ಮೆ ಮಾತ್ರ ಮಾಡಬೇಕು.</string>
     <string name="signin_password_choose">ನೀವು ಸೈನ್ ಇನ್ ಆಗಿದ್ದೀರಿ. ಮುಂದಿನ ಬಾರಿಗೆ ಒಂದು ಪಾಸ್‌ವರ್ಡ್ ಆರಿಸಿ.</string>
     <string name="signin_password_save">ಪಾಸ್‌ವರ್ಡ್ ಉಳಿಸಿ</string>
-    <string name="signin_password_save_failed">ನೀವು ಸೈನ್ ಇನ್ ಆಗಿದ್ದೀರಿ, ಆದರೆ ಪಾಸ್‌ವರ್ಡ್ ಉಳಿಸಲು ಆಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ, ಅಥವಾ ನಂತರ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಹೊಂದಿಸಿ.</string>
-    <string name="signin_password_skip">ಈಗ ಬಿಟ್ಟುಬಿಡಿ</string>
+    <string name="signin_password_save_failed">ಪಾಸ್‌ವರ್ಡ್ ಉಳಿಸಲು ಆಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
     <string name="signin_password_submit">ಸೈನ್ ಇನ್ ಮಾಡಿ</string>
     <string name="signin_provider_unavailable">ಇನ್ನೂ ಲಭ್ಯವಿಲ್ಲ</string>
     <string name="signin_failed">ಸೈನ್ ಇನ್ ಆಗಲಿಲ್ಲ. ಇನ್ನೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸುತ್ತೀರಾ?</string>
@@ -217,10 +216,6 @@
     <string name="account_delete">ಖಾತೆ ಅಳಿಸಿ</string>
     <string name="account_delete_confirm">ನಿಮ್ಮ ಖಾತೆ ಅಳಿಸಬೇಕೇ? ನಿಮ್ಮ ಕ್ರೆಡಿಟ್‌ಗಳು, ಪ್ಲಾನ್ ಮತ್ತು ಸೈನ್ ಇನ್ ವಿವರಗಳು ಅಳಿಸಿಹೋಗುತ್ತವೆ. ನಿಮ್ಮ ತೀರ್ಪುಗಳು ಮತ್ತು ಕೇಸ್‌ಗಳಲ್ಲಿನ ನಿಮ್ಮ ಕಡೆಯ ಮಾತುಗಳನ್ನು ತೆಗೆದುಹಾಕಲಾಗುತ್ತದೆ: ನೀವು ಬರೆದದ್ದು ಮತ್ತು ಹೆಸರುಗಳು ಅಳಿಸಿಹೋಗುತ್ತವೆ, ಅವುಗಳ ಹಂಚಿಕೆ ಲಿಂಕ್‌ಗಳು ಕೆಲಸ ಮಾಡುವುದನ್ನು ನಿಲ್ಲಿಸುತ್ತವೆ.</string>
     <string name="account_delete_yes">ಹೌದು, ಅಳಿಸಿ</string>
-    <string name="account_password_set">ಪಾಸ್‌ವರ್ಡ್ ಹೊಂದಿಸಿ</string>
-    <string name="account_password_change">ಪಾಸ್‌ವರ್ಡ್ ಬದಲಿಸಿ</string>
-    <string name="account_password_current">ಪ್ರಸ್ತುತ ಪಾಸ್‌ವರ್ಡ್</string>
-    <string name="account_password_saved">ಪಾಸ್‌ವರ್ಡ್ ಉಳಿಸಲಾಗಿದೆ.</string>
     <string name="account_delete_cancel">ಖಾತೆ ಇರಲಿ</string>
     <string name="account_delete_failed">ಈಗ ಖಾತೆ ಅಳಿಸಲು ಆಗಲಿಲ್ಲ. ಇನ್ನೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸುತ್ತೀರಾ?</string>
     <string name="account_sign_in_prompt">ನಿಮ್ಮ ಪ್ಲಾನ್ ಮತ್ತು ಕ್ರೆಡಿಟ್‌ಗಳನ್ನು ನೋಡಲು ಸೈನ್ ಇನ್ ಮಾಡಿ.</string>
@@ -417,9 +412,8 @@
     <string name="home_says">%1$s ಹೇಳುವುದು:</string>
     <string name="home_my_side">ನನ್ನ ಕಡೆಯ ಮಾತು:</string>
     <string name="home_other_side">ಅವರ ಕಡೆಯ ಮಾತು:</string>
-    <string name="appeal_lead">ಏನಾದರೂ ಬಿಟ್ಟುಹೋಗಿದೆಯೇ ಅಥವಾ ತಪ್ಪಾಗಿದೆಯೇ? ಒಮ್ಮೆ ಸೇರಿಸಿ, ತೀರ್ಪುಗಾರರು ಎಲ್ಲವನ್ನೂ ಮತ್ತೆ ನೋಡುತ್ತಾರೆ. ಇದಕ್ಕೆ 1 ತೀರ್ಪು ಖರ್ಚಾಗುತ್ತದೆ.</string>
-    <string name="appeal_label">ನಿಮ್ಮ ವಿವರ</string>
-    <string name="appeal_placeholder">ತೀರ್ಪುಗಾರರು ಏನನ್ನು ಗಮನಿಸಲಿಲ್ಲ?</string>
+    <string name="appeal_lead">ಇದಕ್ಕೆ 1 ತೀರ್ಪು ಖರ್ಚಾಗುತ್ತದೆ.</string>
+    <string name="appeal_placeholder">ತೀರ್ಪುಗಾರರು ಏನನ್ನು ಗಮನಿಸಲಿಲ್ಲ? ಒಂದು ಸಂಗತಿ, ಒಂದು ಮೆಸೇಜ್, ಅಥವಾ ನಿಜವಾಗಿ ಏನು ಒಪ್ಪಂದ ಆಗಿತ್ತು ಎನ್ನುವುದು.</string>
     <string name="appeal_submit">ನನ್ನ ವಿವರದೊಂದಿಗೆ ಮರುತೀರ್ಪು ಕೊಡಿ</string>
     <string name="appeal_sending">ನಿಮ್ಮ ವಿವರದಿಂದ ಹೆಸರುಗಳನ್ನು ತೆಗೆಯುತ್ತಿದ್ದೇವೆ…</string>
     <string name="appeal_judging">ತೀರ್ಪುಗಾರರು ಎಲ್ಲವನ್ನೂ ಮತ್ತೆ ನೋಡುತ್ತಿದ್ದಾರೆ…</string>
@@ -439,7 +433,6 @@
     <string name="appeal_previous">ಹಿಂದಿನ ತೀರ್ಪು</string>
     <string name="appeal_failed">ಮರುತೀರ್ಪು ಆಗಲಿಲ್ಲ. ನಿಮ್ಮ ಕ್ರೆಡಿಟ್ ವಾಪಸ್ ಬಂದಿದೆ; ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಬಹುದು.</string>
     <string name="appeal_refused">ಆ ವಿವರದೊಂದಿಗೆ ಮರುತೀರ್ಪು ಕೊಡಲು ತೀರ್ಪುಗಾರರು ಒಪ್ಪಲಿಲ್ಲ. ನಿಮ್ಮ ಕ್ರೆಡಿಟ್ ವಾಪಸ್ ಬಂದಿದೆ.</string>
-    <string name="appeal_lead_verdict">ಏನಾದರೂ ಬಿಟ್ಟುಹೋಗಿದೆಯೇ ಅಥವಾ ತಪ್ಪಾಗಿದೆಯೇ? ಸೇರಿಸಿ, ತೀರ್ಪುಗಾರರು ಎಲ್ಲವನ್ನೂ ಮತ್ತೆ ನೋಡುತ್ತಾರೆ. ಪ್ರತಿ ಸಲಕ್ಕೂ 1 ತೀರ್ಪು ಖರ್ಚಾಗುತ್ತದೆ, ಒಂದು ತೀರ್ಪಿಗೆ ಗರಿಷ್ಠ ಎರಡು ಸಲ.</string>
     <string name="appeal_history">ತೀರ್ಪಿನ ಇತಿಹಾಸ</string>
     <string name="pricing_premium_f5">ಸ್ಕ್ರೀನ್‌ಶಾಟ್ ಪುರಾವೆ, ಓದಿದ ನಂತರ ಬಿಸಾಡಲಾಗುತ್ತದೆ, ಹೆಚ್ಚುವರಿ ಶುಲ್ಕವಿಲ್ಲ</string>
     <string name="pricing_premium_f6">ತೀರ್ಪಿನ ನಂತರ ಹೆಚ್ಚಿನ ವಿವರ ಸೇರಿಸಿ ಮರುತೀರ್ಪು ಪಡೆಯಿರಿ (1 ತೀರ್ಪು)</string>
@@ -577,7 +570,6 @@
     </plurals>
     <string name="app_history_offline_remove">ನೀವು ಆಫ್‌ಲೈನ್ ಇದ್ದೀರಿ. ತೆಗೆದುಹಾಕಲು ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕ ಬೇಕು.</string>
     <string name="app_pricing_free_account">Apple, Google ಅಥವಾ ಇಮೇಲ್ ಮೂಲಕ ಸೈನ್ ಇನ್ ಮಾಡಿ</string>
-    <string name="app_context_label">ವಿವರ (ಐಚ್ಛಿಕ)</string>
     <string name="app_pricing_context">ವಿವರದ ಚಿತ್ರಗಳನ್ನು ಓದಿ ನಂತರ ಎಸೆಯಲಾಗುತ್ತದೆ, ಹೆಚ್ಚುವರಿ ವೆಚ್ಚವಿಲ್ಲ</string>
     <string name="app_pricing_headline">ನಿಮ್ಮ ಮೊದಲ ತೀರ್ಪು ನಮ್ಮ ಕಡೆಯಿಂದ ಉಚಿತ.</string>
     <string name="app_pricing_sub">ಖಾತೆ ತೆರೆಯಿರಿ, ನಿಮ್ಮ ಮೊದಲ ತೀರ್ಪು ಎಲ್ಲಾ ಸೌಲಭ್ಯಗಳ ಸಮೇತ ಉಚಿತ. ಅದರ ನಂತರ ಒಂದು ಪ್ಯಾಕ್ ಆರಿಸಿ ಅಥವಾ ಮಾಸಿಕ ಪ್ಲಾನ್ ತೆಗೆದುಕೊಳ್ಳಿ.</string>
@@ -699,9 +691,7 @@
     <string name="app_verdict_claims">ಪ್ರತಿ ಕಡೆಯವರು ಆ ನಿಲುವಿಗೆ ಹೇಗೆ ಬಂದರು</string>
     <string name="app_verdict_back">ತೀರ್ಪು</string>
     <string name="app_appeal_title">ವಿವರ ಸೇರಿಸಿ ಮರುತೀರ್ಪು ಪಡೆಯಿರಿ</string>
-    <string name="app_appeal_intro">ತೀರ್ಪುಗಾರರು ಏನನ್ನಾದರೂ ಗಮನಿಸಲಿಲ್ಲವೇ? ಅದನ್ನು ಸೇರಿಸಿ, ಅವರು ಮತ್ತೆ ತೀರ್ಪು ಕೊಡುತ್ತಾರೆ. ಮೊದಲ ತೀರ್ಪು ದಾಖಲೆಯಲ್ಲಿ ಉಳಿಯುತ್ತದೆ.</string>
-    <string name="app_appeal_ask">ಅವರಿಗೆ ಏನು ಗೊತ್ತಿರಬೇಕು?</string>
-    <string name="app_appeal_placeholder">ಒಂದು ಸಂಗತಿ, ಒಂದು ಮೆಸೇಜ್, ಅಥವಾ ನಿಜವಾಗಿ ಏನು ಒಪ್ಪಂದ ಆಗಿತ್ತು ಎನ್ನುವುದು.</string>
+    <string name="app_appeal_placeholder">ತೀರ್ಪುಗಾರರು ಏನನ್ನು ಗಮನಿಸಲಿಲ್ಲ? ಒಂದು ಸಂಗತಿ, ಒಂದು ಮೆಸೇಜ್, ಅಥವಾ ನಿಜವಾಗಿ ಏನು ಒಪ್ಪಂದ ಆಗಿತ್ತು ಎನ್ನುವುದು.</string>
     <string name="app_appeal_cost">ಇದಕ್ಕೆ 1 ತೀರ್ಪು ಖರ್ಚಾಗುತ್ತದೆ. ಒಂದು ತೀರ್ಪಿಗೆ ಇದನ್ನು ಎರಡು ಸಲ ಮಾಡಬಹುದು; ಇನ್ನೂ %1$s ಸಲ ಬಾಕಿ ಇದೆ.</string>
     <string name="app_appeal_cost_case">ಇದಕ್ಕೆ 1 ತೀರ್ಪು ಖರ್ಚಾಗುತ್ತದೆ. ಒಂದು ಕೇಸ್‌ಗೆ ಇದನ್ನು ಒಮ್ಮೆ ಮಾತ್ರ ಮಾಡಬಹುದು.</string>
     <string name="app_appeal_submit">ಮರುತೀರ್ಪು ಕೊಡಿ</string>

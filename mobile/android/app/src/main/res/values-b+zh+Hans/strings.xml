@@ -192,8 +192,7 @@
     <string name="signin_create_note">我们会通过邮件发送验证码来确认此地址，只需做这一次。</string>
     <string name="signin_password_choose">你已登录。请为下次选一个密码。</string>
     <string name="signin_password_save">保存密码</string>
-    <string name="signin_password_save_failed">你已登录，但密码没能保存。请重试，或稍后在设置中设定。</string>
-    <string name="signin_password_skip">暂时跳过</string>
+    <string name="signin_password_save_failed">密码没能保存。请重试。</string>
     <string name="signin_password_submit">登录</string>
     <string name="signin_provider_unavailable">暂未开放</string>
     <string name="signin_failed">登录没成功，再试一次吧？</string>
@@ -212,10 +211,6 @@
     <string name="account_delete">删除账号</string>
     <string name="account_delete_confirm">确定删除账号吗？你的次数、套餐和登录信息都会被删除。你的裁决和你在案子中的说法也会被删除：你写的内容和名字都会被抹去，分享链接也会失效。</string>
     <string name="account_delete_yes">是的，删除</string>
-    <string name="account_password_set">设置密码</string>
-    <string name="account_password_change">修改密码</string>
-    <string name="account_password_current">当前密码</string>
-    <string name="account_password_saved">密码已保存。</string>
     <string name="account_delete_cancel">保留我的账号</string>
     <string name="account_delete_failed">暂时没能删除账号，再试一次吧？</string>
     <string name="account_sign_in_prompt">登录后查看你的套餐和次数。</string>
@@ -409,9 +404,8 @@
     <string name="home_says">%1$s说：</string>
     <string name="home_my_side">我的说法：</string>
     <string name="home_other_side">对方的说法：</string>
-    <string name="appeal_lead">有遗漏或说错了？补充一次，评委会把所有内容重新看一遍。消耗 1 次裁决。</string>
-    <string name="appeal_label">你的补充</string>
-    <string name="appeal_placeholder">评委漏掉了什么？</string>
+    <string name="appeal_lead">消耗 1 次裁决。</string>
+    <string name="appeal_placeholder">评委漏掉了什么？一个事实、一条消息，或者你们当初到底是怎么约定的。</string>
     <string name="appeal_submit">带上补充重新裁决</string>
     <string name="appeal_sending">正在匿名处理你的补充……</string>
     <string name="appeal_judging">评委正在重新审视所有内容……</string>
@@ -431,7 +425,6 @@
     <string name="appeal_previous">之前的裁决</string>
     <string name="appeal_failed">重新裁决没有成功。次数已退还，你可以重试。</string>
     <string name="appeal_refused">评委不愿根据这条补充重新裁决。次数已退还。</string>
-    <string name="appeal_lead_verdict">有遗漏或说错了？补充进来，评委会把所有内容重新看一遍。每次消耗 1 次裁决，每份裁决最多两次。</string>
     <string name="appeal_history">裁决记录</string>
     <string name="pricing_premium_f5">截图证据：读完即丢，不额外收费</string>
     <string name="pricing_premium_f6">裁决后补充说明，重新裁决（消耗 1 次裁决）</string>
@@ -561,7 +554,6 @@
     </plurals>
     <string name="app_history_offline_remove">你现在没联网，删除需要网络连接。</string>
     <string name="app_pricing_free_account">用 Apple、Google 或邮箱登录</string>
-    <string name="app_context_label">补充说明（可选）</string>
     <string name="app_pricing_context">补充说明的图片读完即丢，不另外收费</string>
     <string name="app_pricing_headline">第一次裁决，我们请客。</string>
     <string name="app_pricing_sub">注册账号，第一次裁决免费，所有功能都能用。之后可以买次数包，或者按月订阅。</string>
@@ -682,9 +674,7 @@
     <string name="app_verdict_claims">双方是怎么得出结论的</string>
     <string name="app_verdict_back">裁决</string>
     <string name="app_appeal_title">补充说明，申请重审</string>
-    <string name="app_appeal_intro">评委漏掉了什么？补充进来，评委就会重新裁决。原来的裁决会保留在记录里。</string>
-    <string name="app_appeal_ask">评委还需要知道什么？</string>
-    <string name="app_appeal_placeholder">一个事实、一条消息，或者你们当初到底是怎么约定的。</string>
+    <string name="app_appeal_placeholder">评委漏掉了什么？一个事实、一条消息，或者你们当初到底是怎么约定的。</string>
     <string name="app_appeal_cost">消耗 1 次裁决。每份裁决最多补充两次，你还能补充 %1$s 次。</string>
     <string name="app_appeal_cost_case">消耗 1 次裁决。每个案子只能补充一次。</string>
     <string name="app_appeal_submit">重新裁决</string>

@@ -197,8 +197,7 @@
     <string name="signin_create_note">Θα σου στείλουμε έναν κωδικό με email για να επιβεβαιώσουμε τη διεύθυνση. Χρειάζεται να το κάνεις μόνο μία φορά.</string>
     <string name="signin_password_choose">Συνδέθηκες. Διάλεξε έναν κωδικό για την επόμενη φορά.</string>
     <string name="signin_password_save">Αποθήκευση κωδικού</string>
-    <string name="signin_password_save_failed">Συνδέθηκες, αλλά δεν μπορέσαμε να αποθηκεύσουμε τον κωδικό. Δοκίμασε ξανά ή όρισέ τον αργότερα στις Ρυθμίσεις.</string>
-    <string name="signin_password_skip">Παράλειψη προς το παρόν</string>
+    <string name="signin_password_save_failed">Δεν μπορέσαμε να αποθηκεύσουμε τον κωδικό. Δοκίμασε ξανά.</string>
     <string name="signin_password_submit">Σύνδεση</string>
     <string name="signin_provider_unavailable">Δεν είναι διαθέσιμο ακόμα</string>
     <string name="signin_failed">Δεν μπορέσαμε να σε συνδέσουμε. Δοκιμάζεις ξανά;</string>
@@ -217,10 +216,6 @@
     <string name="account_delete">Διαγραφή λογαριασμού</string>
     <string name="account_delete_confirm">Να διαγραφεί ο λογαριασμός σου; Το υπόλοιπο αποφάσεων, το πρόγραμμα και τα στοιχεία σύνδεσης διαγράφονται. Οι αποφάσεις σου και οι πλευρές σου στις υποθέσεις αφαιρούνται: ό,τι έγραψες και τα ονόματα σβήνονται και οι σύνδεσμοι κοινοποίησης σταματούν να λειτουργούν.</string>
     <string name="account_delete_yes">Ναι, διάγραψέ τον</string>
-    <string name="account_password_set">Ορισμός κωδικού</string>
-    <string name="account_password_change">Αλλαγή κωδικού</string>
-    <string name="account_password_current">Τρέχων κωδικός</string>
-    <string name="account_password_saved">Ο κωδικός αποθηκεύτηκε.</string>
     <string name="account_delete_cancel">Κράτα τον λογαριασμό μου</string>
     <string name="account_delete_failed">Δεν μπορέσαμε να διαγράψουμε τον λογαριασμό τώρα. Δοκιμάζεις ξανά;</string>
     <string name="account_sign_in_prompt">Συνδέσου για να δεις το πρόγραμμα και το υπόλοιπό σου.</string>
@@ -417,9 +412,8 @@
     <string name="home_says">%1$s λέει:</string>
     <string name="home_my_side">Η δική μου πλευρά:</string>
     <string name="home_other_side">Η άλλη πλευρά:</string>
-    <string name="appeal_lead">Λείπει κάτι ή είναι λάθος; Πρόσθεσέ το μία φορά και οι κριτές ξανακοιτάζουν τα πάντα. Κοστίζει 1 απόφαση.</string>
-    <string name="appeal_label">Οι πληροφορίες σου</string>
-    <string name="appeal_placeholder">Τι τους ξέφυγε;</string>
+    <string name="appeal_lead">Κοστίζει 1 απόφαση.</string>
+    <string name="appeal_placeholder">Τι τους ξέφυγε; Ένα γεγονός, ένα μήνυμα ή τι ακριβώς είχατε συμφωνήσει.</string>
     <string name="appeal_submit">Νέα κρίση με τις πληροφορίες μου</string>
     <string name="appeal_sending">Ανωνυμοποιούμε τις πληροφορίες σου…</string>
     <string name="appeal_judging">Οι κριτές ξανακοιτάζουν τα πάντα…</string>
@@ -439,7 +433,6 @@
     <string name="appeal_previous">Προηγούμενη απόφαση</string>
     <string name="appeal_failed">Η νέα κρίση δεν ολοκληρώθηκε. Η χρέωση ακυρώθηκε· μπορείς να ξαναδοκιμάσεις.</string>
     <string name="appeal_refused">Οι κριτές δεν δέχτηκαν νέα κρίση με αυτές τις πληροφορίες. Η χρέωση ακυρώθηκε.</string>
-    <string name="appeal_lead_verdict">Λείπει κάτι ή είναι λάθος; Πρόσθεσέ το και οι κριτές ξανακοιτάζουν τα πάντα. Κάθε φορά κοστίζει 1 απόφαση, έως δύο φορές ανά απόφαση.</string>
     <string name="appeal_history">Ιστορικό απόφασης</string>
     <string name="pricing_premium_f5">Στιγμιότυπα οθόνης ως στοιχεία, που διαβάζονται και μετά πετιούνται, χωρίς επιπλέον χρέωση</string>
     <string name="pricing_premium_f6">Πρόσθεσε πληροφορίες μετά την απόφαση και ζήτα νέα κρίση (1 απόφαση)</string>
@@ -577,7 +570,6 @@
     </plurals>
     <string name="app_history_offline_remove">Είσαι εκτός σύνδεσης. Για να αφαιρέσεις αποφάσεις χρειάζεσαι σύνδεση στο ίντερνετ.</string>
     <string name="app_pricing_free_account">Σύνδεση με Apple, Google ή email</string>
-    <string name="app_context_label">Πληροφορίες (προαιρετικά)</string>
     <string name="app_pricing_context">Οι εικόνες με πληροφορίες διαβάζονται και μετά πετιούνται, χωρίς επιπλέον κόστος</string>
     <string name="app_pricing_headline">Την πρώτη απόφαση την κερνάμε εμείς.</string>
     <string name="app_pricing_sub">Φτιάξε λογαριασμό και η πρώτη σου απόφαση είναι δωρεάν, με όλες τις λειτουργίες. Μετά διαλέγεις πακέτο ή μηνιαίο πρόγραμμα.</string>
@@ -699,9 +691,7 @@
     <string name="app_verdict_claims">Πώς έφτασε εκεί κάθε πλευρά</string>
     <string name="app_verdict_back">Απόφαση</string>
     <string name="app_appeal_title">Νέες πληροφορίες, νέα κρίση</string>
-    <string name="app_appeal_intro">Κάτι ξέφυγε από τους κριτές; Πρόσθεσέ το και θα κρίνουν ξανά. Η πρώτη απόφαση μένει καταγεγραμμένη.</string>
-    <string name="app_appeal_ask">Τι πρέπει να ξέρουν;</string>
-    <string name="app_appeal_placeholder">Ένα γεγονός, ένα μήνυμα ή τι ακριβώς είχατε συμφωνήσει.</string>
+    <string name="app_appeal_placeholder">Τι τους ξέφυγε; Ένα γεγονός, ένα μήνυμα ή τι ακριβώς είχατε συμφωνήσει.</string>
     <string name="app_appeal_cost">Κοστίζει 1 απόφαση. Μπορείς να το κάνεις δύο φορές για κάθε απόφαση· απομένουν %1$s.</string>
     <string name="app_appeal_cost_case">Κοστίζει 1 απόφαση. Μπορείς να το κάνεις μία φορά για κάθε υπόθεση.</string>
     <string name="app_appeal_submit">Νέα κρίση</string>

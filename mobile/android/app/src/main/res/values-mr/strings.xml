@@ -197,8 +197,7 @@
     <string name="signin_create_note">हा पत्ता पडताळण्यासाठी आम्ही तुम्हाला ईमेलवर एक कोड पाठवू. हे फक्त एकदाच करावे लागेल.</string>
     <string name="signin_password_choose">तुम्ही साइन इन केले आहे. पुढच्या वेळेसाठी एक पासवर्ड निवडा.</string>
     <string name="signin_password_save">पासवर्ड जतन करा</string>
-    <string name="signin_password_save_failed">तुम्ही साइन इन केले आहे, पण पासवर्ड जतन करता आला नाही. पुन्हा प्रयत्न करा किंवा नंतर सेटिंग्जमध्ये ठरवा.</string>
-    <string name="signin_password_skip">सध्या वगळा</string>
+    <string name="signin_password_save_failed">पासवर्ड जतन करता आला नाही. पुन्हा प्रयत्न करा.</string>
     <string name="signin_password_submit">साइन इन करा</string>
     <string name="signin_provider_unavailable">अजून उपलब्ध नाही</string>
     <string name="signin_failed">साइन इन करता आले नाही. पुन्हा प्रयत्न कराल का?</string>
@@ -217,10 +216,6 @@
     <string name="account_delete">खाते डिलीट करा</string>
     <string name="account_delete_confirm">तुमचे खाते डिलीट करायचे? तुमचे क्रेडिट, प्लॅन आणि साइन-इनची माहिती डिलीट होईल. तुमचे निकाल आणि प्रकरणांतल्या तुमच्या बाजू काढून टाकल्या जातील: तुम्ही लिहिलेले आणि नावे पुसली जातील, आणि त्यांच्या शेअर लिंक चालणे बंद होईल.</string>
     <string name="account_delete_yes">हो, डिलीट करा</string>
-    <string name="account_password_set">पासवर्ड ठरवा</string>
-    <string name="account_password_change">पासवर्ड बदला</string>
-    <string name="account_password_current">सध्याचा पासवर्ड</string>
-    <string name="account_password_saved">पासवर्ड जतन केला.</string>
     <string name="account_delete_cancel">खाते राहू द्या</string>
     <string name="account_delete_failed">आत्ता खाते डिलीट करता आले नाही. पुन्हा प्रयत्न कराल का?</string>
     <string name="account_sign_in_prompt">तुमचा प्लॅन आणि क्रेडिट पाहण्यासाठी साइन इन करा.</string>
@@ -417,9 +412,8 @@
     <string name="home_says">%1$sचे म्हणणे:</string>
     <string name="home_my_side">माझी बाजू:</string>
     <string name="home_other_side">त्यांची बाजू:</string>
-    <string name="appeal_lead">काही राहिले किंवा चुकले? एकदा ते जोडा, आणि परीक्षक सगळे पुन्हा पाहतील. यासाठी 1 निकाल लागतो.</string>
-    <string name="appeal_label">तुमची माहिती</string>
-    <string name="appeal_placeholder">परीक्षकांचे काय सुटले?</string>
+    <string name="appeal_lead">यासाठी 1 निकाल लागतो.</string>
+    <string name="appeal_placeholder">परीक्षकांचे काय सुटले? एखादे तथ्य, एखादा मेसेज, किंवा प्रत्यक्षात काय ठरले होते ते.</string>
     <string name="appeal_submit">माझ्या माहितीसह पुन्हा निकाल द्या</string>
     <string name="appeal_sending">तुमची माहिती निनावी करत आहोत…</string>
     <string name="appeal_judging">परीक्षक सगळे पुन्हा पाहत आहेत…</string>
@@ -439,7 +433,6 @@
     <string name="appeal_previous">आधीचा निकाल</string>
     <string name="appeal_failed">पुन्हा निकाल देता आला नाही. तुमचे क्रेडिट परत आले; पुन्हा प्रयत्न करू शकता.</string>
     <string name="appeal_refused">त्या माहितीसह परीक्षकांनी पुन्हा निकाल द्यायला नकार दिला. तुमचे क्रेडिट परत आले.</string>
-    <string name="appeal_lead_verdict">काही राहिले किंवा चुकले? ते जोडा, आणि परीक्षक सगळे पुन्हा पाहतील. प्रत्येक वेळी 1 निकाल लागतो, एका निकालासाठी जास्तीत जास्त दोनदा.</string>
     <string name="appeal_history">निकालांचा इतिहास</string>
     <string name="pricing_premium_f5">स्क्रीनशॉटचे पुरावे: वाचून झाले की टाकून दिले जातात, जादा शुल्क नाही</string>
     <string name="pricing_premium_f6">निकालानंतर माहिती जोडा आणि पुन्हा निकाल मिळवा (1 निकाल)</string>
@@ -577,7 +570,6 @@
     </plurals>
     <string name="app_history_offline_remove">तुम्ही ऑफलाइन आहात. काढून टाकण्यासाठी कनेक्शन लागते.</string>
     <string name="app_pricing_free_account">Apple, Google किंवा ईमेलने साइन इन करा</string>
-    <string name="app_context_label">माहिती (ऐच्छिक)</string>
     <string name="app_pricing_context">माहितीची चित्रे वाचून टाकून दिली जातात, कोणताही जादा खर्च नाही</string>
     <string name="app_pricing_headline">पहिला निकाल आमच्याकडून.</string>
     <string name="app_pricing_sub">खाते उघडा, तुमचा पहिला निकाल सगळ्या सुविधांसह मोफत. त्यानंतर एखादा पॅक निवडा किंवा मासिक प्लॅन घ्या.</string>
@@ -699,9 +691,7 @@
     <string name="app_verdict_claims">प्रत्येक बाजू आपल्या मतापर्यंत कशी पोहोचली</string>
     <string name="app_verdict_back">निकाल</string>
     <string name="app_appeal_title">माहिती जोडून फेरविचार मागा</string>
-    <string name="app_appeal_intro">परीक्षकांकडून काही सुटले? ते जोडा, म्हणजे परीक्षक पुन्हा निकाल देतील. पहिला निकाल नोंदीत राहतो.</string>
-    <string name="app_appeal_ask">त्यांना काय कळायला हवे?</string>
-    <string name="app_appeal_placeholder">एखादे तथ्य, एखादा मेसेज, किंवा प्रत्यक्षात काय ठरले होते ते.</string>
+    <string name="app_appeal_placeholder">परीक्षकांचे काय सुटले? एखादे तथ्य, एखादा मेसेज, किंवा प्रत्यक्षात काय ठरले होते ते.</string>
     <string name="app_appeal_cost">यासाठी 1 निकाल लागतो. एका निकालासाठी हे दोनदा करता येते; %1$s शिल्लक.</string>
     <string name="app_appeal_cost_case">यासाठी 1 निकाल लागतो. एका प्रकरणात हे एकदाच करता येते.</string>
     <string name="app_appeal_submit">पुन्हा निकाल द्या</string>

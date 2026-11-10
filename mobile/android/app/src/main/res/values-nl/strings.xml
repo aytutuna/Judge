@@ -197,8 +197,7 @@
     <string name="signin_create_note">We mailen je een code om dit adres te bevestigen. Dat hoef je maar één keer te doen.</string>
     <string name="signin_password_choose">Je bent ingelogd. Kies een wachtwoord voor de volgende keer.</string>
     <string name="signin_password_save">Wachtwoord opslaan</string>
-    <string name="signin_password_save_failed">Je bent ingelogd, maar we konden het wachtwoord niet opslaan. Probeer het opnieuw of stel het later in bij Instellingen.</string>
-    <string name="signin_password_skip">Nu overslaan</string>
+    <string name="signin_password_save_failed">We konden het wachtwoord niet opslaan. Probeer het opnieuw.</string>
     <string name="signin_password_submit">Inloggen</string>
     <string name="signin_provider_unavailable">Nog niet beschikbaar</string>
     <string name="signin_failed">Inloggen lukte niet. Wil je het nog eens proberen?</string>
@@ -217,10 +216,6 @@
     <string name="account_delete">Account verwijderen</string>
     <string name="account_delete_confirm">Je account verwijderen? Je credits, abonnement en inloggegevens worden gewist. Je uitspraken en jouw kant in zaken worden verwijderd: wat je schreef en de namen worden gewist, en de deellinks werken niet meer.</string>
     <string name="account_delete_yes">Ja, verwijderen</string>
-    <string name="account_password_set">Wachtwoord instellen</string>
-    <string name="account_password_change">Wachtwoord wijzigen</string>
-    <string name="account_password_current">Huidig wachtwoord</string>
-    <string name="account_password_saved">Wachtwoord opgeslagen.</string>
     <string name="account_delete_cancel">Account houden</string>
     <string name="account_delete_failed">We konden het account nu niet verwijderen. Wil je het nog eens proberen?</string>
     <string name="account_sign_in_prompt">Log in om je abonnement en credits te zien.</string>
@@ -417,9 +412,8 @@
     <string name="home_says">%1$s zegt:</string>
     <string name="home_my_side">Mijn kant:</string>
     <string name="home_other_side">De andere kant:</string>
-    <string name="appeal_lead">Mist er iets of klopt er iets niet? Vul het één keer aan en de rechters kijken opnieuw naar alles. Kost 1 uitspraak.</string>
-    <string name="appeal_label">Jouw aanvulling</string>
-    <string name="appeal_placeholder">Wat hebben de rechters gemist?</string>
+    <string name="appeal_lead">Kost 1 uitspraak.</string>
+    <string name="appeal_placeholder">Wat hebben de rechters gemist? Een feit, een bericht of wat er echt is afgesproken.</string>
     <string name="appeal_submit">Opnieuw laten beoordelen</string>
     <string name="appeal_sending">Je aanvulling anonimiseren…</string>
     <string name="appeal_judging">De rechters kijken opnieuw naar alles…</string>
@@ -439,7 +433,6 @@
     <string name="appeal_previous">Eerdere uitspraak</string>
     <string name="appeal_failed">Het opnieuw beoordelen is niet gelukt. Je credit is terug; je kunt het nog eens proberen.</string>
     <string name="appeal_refused">De rechters wilden met die aanvulling niet opnieuw oordelen. Je credit is terug.</string>
-    <string name="appeal_lead_verdict">Mist er iets of klopt er iets niet? Vul het aan en de rechters kijken opnieuw naar alles. Elke keer kost 1 uitspraak, maximaal twee keer per uitspraak.</string>
     <string name="appeal_history">Eerdere uitspraken</string>
     <string name="pricing_premium_f5">Screenshots als bewijs: gelezen en daarna weggegooid, zonder extra kosten</string>
     <string name="pricing_premium_f6">Na een uitspraak iets aanvullen en opnieuw laten beoordelen (1 uitspraak)</string>
@@ -577,7 +570,6 @@
     </plurals>
     <string name="app_history_offline_remove">Je bent offline. Om te verwijderen heb je een verbinding nodig.</string>
     <string name="app_pricing_free_account">Log in met Apple, Google of e-mail</string>
-    <string name="app_context_label">Aanvulling (optioneel)</string>
     <string name="app_pricing_context">Afbeeldingen bij de aanvulling worden gelezen en daarna weggegooid, zonder extra kosten</string>
     <string name="app_pricing_headline">Je eerste uitspraak is van het huis.</string>
     <string name="app_pricing_sub">Maak een account aan en je eerste uitspraak is gratis, met alles erop en eraan. Daarna kies je een bundel of neem je een maandabonnement.</string>
@@ -699,9 +691,7 @@
     <string name="app_verdict_claims">Hoe elke kant tot zijn standpunt kwam</string>
     <string name="app_verdict_back">Uitspraak</string>
     <string name="app_appeal_title">Iets aanvullen</string>
-    <string name="app_appeal_intro">Hebben de rechters iets gemist? Vul het aan en ze oordelen opnieuw. De eerste uitspraak blijft bewaard.</string>
-    <string name="app_appeal_ask">Wat moeten ze weten?</string>
-    <string name="app_appeal_placeholder">Een feit, een bericht of wat er echt is afgesproken.</string>
+    <string name="app_appeal_placeholder">Wat hebben de rechters gemist? Een feit, een bericht of wat er echt is afgesproken.</string>
     <string name="app_appeal_cost">Kost 1 uitspraak. Dit kan twee keer per uitspraak; nog %1$s over.</string>
     <string name="app_appeal_cost_case">Kost 1 uitspraak. Dit kan één keer per zaak.</string>
     <string name="app_appeal_submit">Opnieuw laten beoordelen</string>

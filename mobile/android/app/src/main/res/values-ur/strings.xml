@@ -197,8 +197,7 @@
     <string name="signin_create_note">اس پتے کی تصدیق کے لیے ہم آپ کو ای میل پر ایک کوڈ بھیجیں گے۔ یہ صرف ایک بار کرنا ہوگا۔</string>
     <string name="signin_password_choose">آپ سائن اِن ہو گئے ہیں۔ اگلی بار کے لیے پاس ورڈ چنیں۔</string>
     <string name="signin_password_save">پاس ورڈ محفوظ کریں</string>
-    <string name="signin_password_save_failed">آپ سائن اِن ہو گئے ہیں، لیکن پاس ورڈ محفوظ نہ ہو سکا۔ دوبارہ کوشش کریں یا بعد میں سیٹنگز میں مقرر کریں۔</string>
-    <string name="signin_password_skip">فی الحال چھوڑیں</string>
+    <string name="signin_password_save_failed">پاس ورڈ محفوظ نہ ہو سکا۔ دوبارہ کوشش کریں۔</string>
     <string name="signin_password_submit">سائن ان کریں</string>
     <string name="signin_provider_unavailable">ابھی دستیاب نہیں</string>
     <string name="signin_failed">ہم آپ کو سائن ان نہیں کر سکے۔ ذرا دوبارہ کوشش کر کے دیکھیں۔</string>
@@ -217,10 +216,6 @@
     <string name="account_delete">اکاؤنٹ حذف کریں</string>
     <string name="account_delete_confirm">اپنا اکاؤنٹ حذف کریں؟ آپ کے کریڈٹس، پلان اور سائن ان کی تفصیلات حذف ہو جائیں گی۔ آپ کے فیصلے اور کیسوں میں آپ کی باتیں ہٹا دی جائیں گی: آپ کا لکھا ہوا اور نام مٹا دیے جائیں گے، اور ان کے شیئر لنکس کام کرنا بند کر دیں گے۔</string>
     <string name="account_delete_yes">ہاں، حذف کر دیں</string>
-    <string name="account_password_set">پاس ورڈ مقرر کریں</string>
-    <string name="account_password_change">پاس ورڈ تبدیل کریں</string>
-    <string name="account_password_current">موجودہ پاس ورڈ</string>
-    <string name="account_password_saved">پاس ورڈ محفوظ ہو گیا۔</string>
     <string name="account_delete_cancel">اکاؤنٹ رہنے دیں</string>
     <string name="account_delete_failed">ابھی اکاؤنٹ حذف نہیں ہو سکا۔ ذرا دوبارہ کوشش کر کے دیکھیں۔</string>
     <string name="account_sign_in_prompt">اپنا پلان اور کریڈٹس دیکھنے کے لیے سائن ان کریں۔</string>
@@ -417,9 +412,8 @@
     <string name="home_says">%1$s کا کہنا ہے:</string>
     <string name="home_my_side">میری بات:</string>
     <string name="home_other_side">ان کی بات:</string>
-    <string name="appeal_lead">کچھ رہ گیا یا غلط ہے؟ ایک بار شامل کریں اور جج سب کچھ دوبارہ دیکھیں گے۔ قیمت: 1 فیصلہ۔</string>
-    <string name="appeal_label">آپ کی تفصیل</string>
-    <string name="appeal_placeholder">ججوں سے کیا رہ گیا؟</string>
+    <string name="appeal_lead">اس میں 1 فیصلہ استعمال ہوتا ہے۔</string>
+    <string name="appeal_placeholder">ججوں سے کیا رہ گیا؟ کوئی حقیقت، کوئی میسج، یا یہ کہ اصل میں کیا طے ہوا تھا۔</string>
     <string name="appeal_submit">میری تفصیل کے ساتھ دوبارہ فیصلہ</string>
     <string name="appeal_sending">آپ کی تفصیل سے نام ہٹا رہے ہیں…</string>
     <string name="appeal_judging">جج سب کچھ دوبارہ دیکھ رہے ہیں…</string>
@@ -439,7 +433,6 @@
     <string name="appeal_previous">پچھلا فیصلہ</string>
     <string name="appeal_failed">دوبارہ فیصلہ نہیں ہو سکا۔ آپ کا کریڈٹ واپس آ گیا ہے؛ آپ پھر سے کوشش کر سکتے ہیں۔</string>
     <string name="appeal_refused">جج اس تفصیل کے ساتھ دوبارہ فیصلہ کرنے پر تیار نہیں ہوئے۔ آپ کا کریڈٹ واپس آ گیا ہے۔</string>
-    <string name="appeal_lead_verdict">کچھ رہ گیا یا غلط ہے؟ شامل کریں اور جج سب کچھ دوبارہ دیکھیں گے۔ ہر بار 1 فیصلہ لگتا ہے، ایک فیصلے پر زیادہ سے زیادہ دو بار۔</string>
     <string name="appeal_history">فیصلوں کی تاریخ</string>
     <string name="pricing_premium_f5">اسکرین شاٹس بطور ثبوت، پڑھ کر ضائع، کوئی اضافی خرچ نہیں</string>
     <string name="pricing_premium_f6">فیصلے کے بعد مزید تفصیل شامل کر کے دوبارہ فیصلہ (1 فیصلہ)</string>
@@ -577,7 +570,6 @@
     </plurals>
     <string name="app_history_offline_remove">آپ آف لائن ہیں۔ ہٹانے کے لیے کنکشن ضروری ہے۔</string>
     <string name="app_pricing_free_account">Apple، Google یا ای میل سے سائن ان کریں</string>
-    <string name="app_context_label">تفصیل (اختیاری)</string>
     <string name="app_pricing_context">تفصیل کی تصویریں پڑھ کر پھینک دی جاتی ہیں، کوئی اضافی خرچ نہیں</string>
     <string name="app_pricing_headline">پہلا فیصلہ ہماری طرف سے۔</string>
     <string name="app_pricing_sub">اکاؤنٹ بنائیں اور پہلا فیصلہ مفت پائیں، تمام فیچرز کے ساتھ۔ اس کے بعد کوئی پیک لیں یا ماہانہ پلان۔</string>
@@ -699,9 +691,7 @@
     <string name="app_verdict_claims">ہر طرف اپنے نتیجے تک کیسے پہنچی</string>
     <string name="app_verdict_back">فیصلہ</string>
     <string name="app_appeal_title">مزید تفصیل اور نظرثانی</string>
-    <string name="app_appeal_intro">ججوں سے کچھ رہ گیا؟ شامل کریں اور وہ دوبارہ فیصلہ کریں گے۔ پہلا فیصلہ ریکارڈ پر رہے گا۔</string>
-    <string name="app_appeal_ask">انہیں کیا پتا ہونا چاہیے؟</string>
-    <string name="app_appeal_placeholder">کوئی حقیقت، کوئی میسج، یا یہ کہ اصل میں کیا طے ہوا تھا۔</string>
+    <string name="app_appeal_placeholder">ججوں سے کیا رہ گیا؟ کوئی حقیقت، کوئی میسج، یا یہ کہ اصل میں کیا طے ہوا تھا۔</string>
     <string name="app_appeal_cost">اس میں 1 فیصلہ استعمال ہوتا ہے۔ ہر فیصلے پر یہ دو بار ہو سکتا ہے؛ باقی: %1$s۔</string>
     <string name="app_appeal_cost_case">اس میں 1 فیصلہ استعمال ہوتا ہے۔ ہر کیس میں یہ ایک بار ہو سکتا ہے۔</string>
     <string name="app_appeal_submit">دوبارہ فیصلہ کروائیں</string>

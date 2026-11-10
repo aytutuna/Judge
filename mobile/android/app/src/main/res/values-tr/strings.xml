@@ -197,8 +197,7 @@
     <string name="signin_create_note">Bu adresi doğrulamak için sana bir kod e-postalayacağız. Bunu yalnızca bir kez yapman yeterli.</string>
     <string name="signin_password_choose">Giriş yaptın. Bir dahaki sefer için bir parola seç.</string>
     <string name="signin_password_save">Parolayı kaydet</string>
-    <string name="signin_password_save_failed">Giriş yaptın ama parolayı kaydedemedik. Tekrar dene ya da sonra Ayarlar\'dan belirle.</string>
-    <string name="signin_password_skip">Şimdilik geç</string>
+    <string name="signin_password_save_failed">Parolayı kaydedemedik. Tekrar dene.</string>
     <string name="signin_password_submit">Giriş yap</string>
     <string name="signin_provider_unavailable">Henüz kullanılamıyor</string>
     <string name="signin_failed">Giriş yapamadık. Bir daha dener misin?</string>
@@ -217,10 +216,6 @@
     <string name="account_delete">Hesabı sil</string>
     <string name="account_delete_confirm">Hesabın silinsin mi? Kredilerin, planın ve giriş bilgilerin silinir. Kararların ve davalardaki tarafların kaldırılır: yazdıkların ve isimler silinir, paylaşım bağlantıları da çalışmaz olur.</string>
     <string name="account_delete_yes">Evet, sil</string>
-    <string name="account_password_set">Parola belirle</string>
-    <string name="account_password_change">Parolayı değiştir</string>
-    <string name="account_password_current">Şu anki parola</string>
-    <string name="account_password_saved">Parola kaydedildi.</string>
     <string name="account_delete_cancel">Hesabım kalsın</string>
     <string name="account_delete_failed">Hesabı şu an silemedik. Bir daha dener misin?</string>
     <string name="account_sign_in_prompt">Planını ve kredilerini görmek için giriş yap.</string>
@@ -417,9 +412,8 @@
     <string name="home_says">%1$s diyor ki:</string>
     <string name="home_my_side">Benim tarafım:</string>
     <string name="home_other_side">Onun tarafı:</string>
-    <string name="appeal_lead">Eksik ya da yanlış bir şey mi var? Bir kez ekle, yargıçlar her şeye yeniden baksın. 1 karar hakkı kullanır.</string>
-    <string name="appeal_label">Eklemek istediğin bilgi</string>
-    <string name="appeal_placeholder">Yargıçlar neyi kaçırdı?</string>
+    <string name="appeal_lead">1 karar hakkı kullanır.</string>
+    <string name="appeal_placeholder">Yargıçlar neyi kaçırdı? Bir detay, bir mesaj ya da gerçekte ne kararlaştırıldığı.</string>
     <string name="appeal_submit">Bilgimle yeniden yargıla</string>
     <string name="appeal_sending">Bilgini anonimleştiriyoruz…</string>
     <string name="appeal_judging">Yargıçlar her şeye yeniden bakıyor…</string>
@@ -439,7 +433,6 @@
     <string name="appeal_previous">Önceki karar</string>
     <string name="appeal_failed">Yeniden yargılama gerçekleşmedi. Kredin geri döndü, tekrar deneyebilirsin.</string>
     <string name="appeal_refused">Yargıçlar bu bilgiyle yeniden yargılamayı reddetti. Kredin geri döndü.</string>
-    <string name="appeal_lead_verdict">Eksik ya da yanlış bir şey mi var? Ekle, yargıçlar her şeye yeniden baksın. Her seferinde 1 karar hakkı kullanır, bir karar için en fazla iki kez.</string>
     <string name="appeal_history">Karar geçmişi</string>
     <string name="pricing_premium_f5">Ekran görüntüsü kanıtı: okunur, sonra atılır, ek ücret yok</string>
     <string name="pricing_premium_f6">Karardan sonra bilgi ekleyip yeniden yargılatma (1 karar)</string>
@@ -577,7 +570,6 @@
     </plurals>
     <string name="app_history_offline_remove">Çevrimdışısın. Kaldırmak için bağlantı gerekir.</string>
     <string name="app_pricing_free_account">Apple, Google ya da e-postayla giriş yap</string>
-    <string name="app_context_label">Ayrıntı (isteğe bağlı)</string>
     <string name="app_pricing_context">Ayrıntı görselleri okunur, sonra atılır, ekstra ücret yok</string>
     <string name="app_pricing_headline">İlk karar bizden.</string>
     <string name="app_pricing_sub">Hesap açtığında ilk kararın bütün özellikleriyle ücretsiz. Sonrasında bir paket seç ya da aylık plana geç.</string>
@@ -699,9 +691,7 @@
     <string name="app_verdict_claims">Her taraf görüşüne nasıl vardı</string>
     <string name="app_verdict_back">Karar</string>
     <string name="app_appeal_title">Ayrıntı ekle ve itiraz et</string>
-    <string name="app_appeal_intro">Yargıçların kaçırdığı bir şey mi var? Ekle, yeniden karar versinler. İlk karar kayıtta kalır.</string>
-    <string name="app_appeal_ask">Neyi bilmeleri gerekiyor?</string>
-    <string name="app_appeal_placeholder">Bir olgu, bir mesaj ya da aslında neyde anlaştığınız.</string>
+    <string name="app_appeal_placeholder">Yargıçlar neyi kaçırdı? Bir detay, bir mesaj ya da gerçekte ne kararlaştırıldığı.</string>
     <string name="app_appeal_cost">1 karar hakkı kullanır. Bunu bir karar için iki kez yapabilirsin; %1$s hakkın kaldı.</string>
     <string name="app_appeal_cost_case">1 karar hakkı kullanır. Bunu bir dava için bir kez yapabilirsin.</string>
     <string name="app_appeal_submit">Yeniden yargılat</string>

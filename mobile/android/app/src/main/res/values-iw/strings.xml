@@ -202,8 +202,7 @@
     <string name="signin_create_note">נשלח לך קוד במייל כדי לאמת את הכתובת הזו. צריך לעשות זאת פעם אחת בלבד.</string>
     <string name="signin_password_choose">התחברת. בחר סיסמה לפעם הבאה.</string>
     <string name="signin_password_save">שמירת הסיסמה</string>
-    <string name="signin_password_save_failed">התחברת, אבל לא הצלחנו לשמור את הסיסמה. נסה שוב או הגדר אותה מאוחר יותר בהגדרות.</string>
-    <string name="signin_password_skip">דלג לעכשיו</string>
+    <string name="signin_password_save_failed">לא הצלחנו לשמור את הסיסמה. נסה שוב.</string>
     <string name="signin_password_submit">התחברות</string>
     <string name="signin_provider_unavailable">עוד לא זמין</string>
     <string name="signin_failed">לא הצלחנו לחבר אותך. אפשר לנסות שוב?</string>
@@ -222,10 +221,6 @@
     <string name="account_delete">מחיקת החשבון</string>
     <string name="account_delete_confirm">למחוק את החשבון? הקרדיטים, התוכנית ופרטי ההתחברות יימחקו. פסקי הדין שלך והצדדים שלך בתיקים יוסרו: מה שכתבת והשמות יימחקו, וקישורי השיתוף שלהם יפסיקו לעבוד.</string>
     <string name="account_delete_yes">כן, למחוק</string>
-    <string name="account_password_set">הגדרת סיסמה</string>
-    <string name="account_password_change">שינוי סיסמה</string>
-    <string name="account_password_current">הסיסמה הנוכחית</string>
-    <string name="account_password_saved">הסיסמה נשמרה.</string>
     <string name="account_delete_cancel">להשאיר את החשבון</string>
     <string name="account_delete_failed">לא הצלחנו למחוק את החשבון כרגע. אפשר לנסות שוב?</string>
     <string name="account_sign_in_prompt">צריך להתחבר כדי לראות את התוכנית והקרדיטים.</string>
@@ -425,9 +420,8 @@
     <string name="home_says">לדברי %1$s:</string>
     <string name="home_my_side">הצד שלי:</string>
     <string name="home_other_side">הצד השני:</string>
-    <string name="appeal_lead">משהו חסר או לא נכון? אפשר להוסיף אותו פעם אחת, והשופטים יבחנו הכול מחדש. זה עולה פסק דין אחד.</string>
-    <string name="appeal_label">ההקשר שלך</string>
-    <string name="appeal_placeholder">מה השופטים פספסו?</string>
+    <string name="appeal_lead">עולה פסק דין אחד.</string>
+    <string name="appeal_placeholder">מה השופטים פספסו? עובדה, הודעה או על מה בעצם סיכמתם.</string>
     <string name="appeal_submit">לשפוט מחדש עם ההקשר שלי</string>
     <string name="appeal_sending">מסירים את השמות מההקשר שלך…</string>
     <string name="appeal_judging">השופטים בוחנים הכול מחדש…</string>
@@ -447,7 +441,6 @@
     <string name="appeal_previous">פסק הדין הקודם</string>
     <string name="appeal_failed">השיפוט מחדש לא הצליח. הקרדיט חזר לחשבון, אפשר לנסות שוב.</string>
     <string name="appeal_refused">השופטים סירבו לשפוט מחדש עם ההקשר הזה. הקרדיט חזר לחשבון.</string>
-    <string name="appeal_lead_verdict">משהו חסר או לא נכון? אפשר להוסיף אותו, והשופטים יבחנו הכול מחדש. כל פעם עולה פסק דין אחד, עד פעמיים לכל פסק דין.</string>
     <string name="appeal_history">היסטוריית פסק הדין</string>
     <string name="pricing_premium_f5">צילומי מסך כראיה: נקראים ואז נזרקים, בלי תוספת תשלום</string>
     <string name="pricing_premium_f6">הוספת הקשר אחרי פסק הדין ושיפוט מחדש (פסק דין אחד)</string>
@@ -593,7 +586,6 @@
     </plurals>
     <string name="app_history_offline_remove">אין חיבור לאינטרנט, ובלי חיבור אי אפשר להסיר.</string>
     <string name="app_pricing_free_account">התחברות עם Apple, Google או אימייל</string>
-    <string name="app_context_label">הקשר (אופציונלי)</string>
     <string name="app_pricing_context">תמונות הקשר נקראות ואז נזרקות, בלי תוספת תשלום</string>
     <string name="app_pricing_headline">פסק הדין הראשון עלינו.</string>
     <string name="app_pricing_sub">פותחים חשבון, ופסק הדין הראשון בחינם, עם כל האפשרויות. אחר כך אפשר לבחור חבילה או תוכנית חודשית.</string>
@@ -716,9 +708,7 @@
     <string name="app_verdict_claims">איך כל צד הגיע לשם</string>
     <string name="app_verdict_back">הכרעה</string>
     <string name="app_appeal_title">הוספת הקשר וערעור</string>
-    <string name="app_appeal_intro">השופטים פספסו משהו? אפשר להוסיף אותו, והם יכריעו מחדש. ההכרעה הראשונה נשמרת בהיסטוריה.</string>
-    <string name="app_appeal_ask">מה חשוב שהשופטים יידעו?</string>
-    <string name="app_appeal_placeholder">עובדה, הודעה או על מה בעצם סיכמתם.</string>
+    <string name="app_appeal_placeholder">מה השופטים פספסו? עובדה, הודעה או על מה בעצם סיכמתם.</string>
     <string name="app_appeal_cost">עולה פסק דין אחד. אפשר לעשות את זה פעמיים לכל הכרעה. נשארו: %1$s.</string>
     <string name="app_appeal_cost_case">עולה פסק דין אחד. אפשר לעשות את זה פעם אחת בכל תיק.</string>
     <string name="app_appeal_submit">להכריע מחדש</string>

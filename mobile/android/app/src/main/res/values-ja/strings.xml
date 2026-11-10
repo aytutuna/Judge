@@ -192,8 +192,7 @@
     <string name="signin_create_note">このアドレスを確認するため、コードをメールで送ります。必要なのは一度だけです。</string>
     <string name="signin_password_choose">ログインしました。次回のためにパスワードを決めてください。</string>
     <string name="signin_password_save">パスワードを保存</string>
-    <string name="signin_password_save_failed">ログインはできましたが、パスワードを保存できませんでした。もう一度試すか、あとで設定から決めてください。</string>
-    <string name="signin_password_skip">今はスキップ</string>
+    <string name="signin_password_save_failed">パスワードを保存できませんでした。もう一度試してください。</string>
     <string name="signin_password_submit">ログイン</string>
     <string name="signin_provider_unavailable">まだ利用できません</string>
     <string name="signin_failed">ログインできませんでした。もう一度お試しください。</string>
@@ -212,10 +211,6 @@
     <string name="account_delete">アカウントを削除</string>
     <string name="account_delete_confirm">アカウントを削除しますか？　クレジット、プラン、ログイン情報は削除されます。あなたの判定と、ケースでのあなたの言い分も削除され、書いた内容と名前は消去されて、シェア用リンクも使えなくなります。</string>
     <string name="account_delete_yes">削除する</string>
-    <string name="account_password_set">パスワードを設定</string>
-    <string name="account_password_change">パスワードを変更</string>
-    <string name="account_password_current">現在のパスワード</string>
-    <string name="account_password_saved">パスワードを保存しました。</string>
     <string name="account_delete_cancel">アカウントを残す</string>
     <string name="account_delete_failed">いまはアカウントを削除できませんでした。もう一度お試しください。</string>
     <string name="account_sign_in_prompt">プランとクレジットを見るにはログインしてください。</string>
@@ -409,9 +404,8 @@
     <string name="home_says">%1$sの言い分：</string>
     <string name="home_my_side">私の言い分：</string>
     <string name="home_other_side">相手の言い分：</string>
-    <string name="appeal_lead">抜けや間違いがありますか？　一度だけ補足すると、審査員がすべてをもう一度見直します。判定1回分を使います。</string>
-    <string name="appeal_label">補足</string>
-    <string name="appeal_placeholder">審査員が見落としたことは？</string>
+    <string name="appeal_lead">判定1回分を使います。</string>
+    <string name="appeal_placeholder">審査員が見落としたことは？事実、やりとりしたメッセージ、実際に取り決めたことなど。</string>
     <string name="appeal_submit">補足して再判定</string>
     <string name="appeal_sending">補足を匿名化しています…</string>
     <string name="appeal_judging">審査員がすべてを見直しています…</string>
@@ -431,7 +425,6 @@
     <string name="appeal_previous">以前の判定</string>
     <string name="appeal_failed">再判定できませんでした。クレジットは戻ったので、もう一度試せます。</string>
     <string name="appeal_refused">審査員はこの補足での再判定を見送りました。クレジットは戻りました。</string>
-    <string name="appeal_lead_verdict">抜けや間違いがありますか？　補足すると、審査員がすべてをもう一度見直します。1回ごとに判定1回分を使い、1つの判定につき2回までです。</string>
     <string name="appeal_history">判定の履歴</string>
     <string name="pricing_premium_f5">スクショを証拠に。読み取ったら破棄、追加料金なし</string>
     <string name="pricing_premium_f6">判定のあとに補足して再判定（判定1回分）</string>
@@ -561,7 +554,6 @@
     </plurals>
     <string name="app_history_offline_remove">オフラインのため削除できません。接続してからもう一度お試しください。</string>
     <string name="app_pricing_free_account">Apple、Google、またはメールアドレスでログイン</string>
-    <string name="app_context_label">補足（任意）</string>
     <string name="app_pricing_context">補足の画像は読み取ったあと破棄されます。追加料金はかかりません</string>
     <string name="app_pricing_headline">最初の判定は無料です。</string>
     <string name="app_pricing_sub">アカウントを作成すると、最初の判定はすべての機能つきで無料。その後はパックか月額プランを選べます。</string>
@@ -682,9 +674,7 @@
     <string name="app_verdict_claims">それぞれの主張の筋道</string>
     <string name="app_verdict_back">判定</string>
     <string name="app_appeal_title">補足して再判定</string>
-    <string name="app_appeal_intro">審査員が見落としたことがありますか？　補足すると、もう一度判定します。最初の判定も記録に残ります。</string>
-    <string name="app_appeal_ask">審査員に伝えたいことは？</string>
-    <string name="app_appeal_placeholder">事実、やりとりしたメッセージ、実際に取り決めたことなど。</string>
+    <string name="app_appeal_placeholder">審査員が見落としたことは？事実、やりとりしたメッセージ、実際に取り決めたことなど。</string>
     <string name="app_appeal_cost">判定1回分を使います。1つの判定につき2回まで補足でき、残りは%1$s回です。</string>
     <string name="app_appeal_cost_case">判定1回分を使います。1つのケースにつき1回だけ補足できます。</string>
     <string name="app_appeal_submit">再判定する</string>

@@ -197,8 +197,7 @@
     <string name="signin_create_note">இந்த முகவரியை உறுதிசெய்ய மின்னஞ்சலில் ஒரு குறியீட்டை அனுப்புவோம். இதை ஒருமுறை மட்டும் செய்தால் போதும்.</string>
     <string name="signin_password_choose">நீங்கள் உள்நுழைந்துவிட்டீர்கள். அடுத்த முறைக்கு ஒரு கடவுச்சொல்லைத் தேர்ந்தெடுங்கள்.</string>
     <string name="signin_password_save">கடவுச்சொல்லைச் சேமி</string>
-    <string name="signin_password_save_failed">நீங்கள் உள்நுழைந்துவிட்டீர்கள், ஆனால் கடவுச்சொல்லைச் சேமிக்க முடியவில்லை. மீண்டும் முயலுங்கள், அல்லது பிறகு அமைப்புகளில் அமையுங்கள்.</string>
-    <string name="signin_password_skip">இப்போதைக்குத் தவிர்</string>
+    <string name="signin_password_save_failed">கடவுச்சொல்லைச் சேமிக்க முடியவில்லை. மீண்டும் முயலவும்.</string>
     <string name="signin_password_submit">உள்நுழைக</string>
     <string name="signin_provider_unavailable">இன்னும் கிடைக்கவில்லை</string>
     <string name="signin_failed">உள்நுழைய முடியவில்லை. மீண்டும் முயல்கிறீர்களா?</string>
@@ -217,10 +216,6 @@
     <string name="account_delete">கணக்கை நீக்கு</string>
     <string name="account_delete_confirm">உங்கள் கணக்கை நீக்கவா? உங்கள் கிரெடிட்கள், பிளான், உள்நுழைவு விவரங்கள் நீக்கப்படும். உங்கள் தீர்ப்புகளும் வழக்குகளில் உங்கள் தரப்புகளும் அகற்றப்படும்: நீங்கள் எழுதியவையும் பெயர்களும் அழிக்கப்படும், அவற்றின் பகிர்வு லிங்க்குகள் வேலை செய்யாது.</string>
     <string name="account_delete_yes">ஆம், நீக்கு</string>
-    <string name="account_password_set">கடவுச்சொல்லை அமை</string>
-    <string name="account_password_change">கடவுச்சொல்லை மாற்று</string>
-    <string name="account_password_current">தற்போதைய கடவுச்சொல்</string>
-    <string name="account_password_saved">கடவுச்சொல் சேமிக்கப்பட்டது.</string>
     <string name="account_delete_cancel">கணக்கு இருக்கட்டும்</string>
     <string name="account_delete_failed">இப்போது கணக்கை நீக்க முடியவில்லை. மீண்டும் முயல்கிறீர்களா?</string>
     <string name="account_sign_in_prompt">உங்கள் பிளானையும் கிரெடிட்களையும் பார்க்க உள்நுழையுங்கள்.</string>
@@ -417,9 +412,8 @@
     <string name="home_says">%1$s சொல்வது:</string>
     <string name="home_my_side">என் தரப்பு:</string>
     <string name="home_other_side">மறுதரப்பு:</string>
-    <string name="appeal_lead">ஏதாவது விடுபட்டதா, தவறா? ஒருமுறை சேருங்கள், நடுவர்கள் எல்லாவற்றையும் மீண்டும் பார்ப்பார்கள். 1 தீர்ப்பு செலவாகும்.</string>
-    <string name="appeal_label">நீங்கள் சேர்க்கும் தகவல்</string>
-    <string name="appeal_placeholder">நடுவர்கள் எதைத் தவறவிட்டார்கள்?</string>
+    <string name="appeal_lead">1 தீர்ப்பு செலவாகும்.</string>
+    <string name="appeal_placeholder">நடுவர்கள் எதைத் தவறவிட்டார்கள்? ஒரு விவரம், ஒரு மெசேஜ், அல்லது உண்மையில் என்ன ஒப்புக்கொள்ளப்பட்டது என்பது.</string>
     <string name="appeal_submit">என் தகவலுடன் மறுதீர்ப்பு</string>
     <string name="appeal_sending">உங்கள் தகவலில் பெயர்களை மறைக்கிறோம்…</string>
     <string name="appeal_judging">நடுவர்கள் எல்லாவற்றையும் மீண்டும் பார்க்கிறார்கள்…</string>
@@ -439,7 +433,6 @@
     <string name="appeal_previous">முந்தைய தீர்ப்பு</string>
     <string name="appeal_failed">மறுதீர்ப்பு நடக்கவில்லை. உங்கள் கிரெடிட் திரும்ப வந்துவிட்டது; மீண்டும் முயலலாம்.</string>
     <string name="appeal_refused">அந்தத் தகவலுடன் மறுதீர்ப்பு செய்ய நடுவர்கள் மறுத்துவிட்டார்கள். உங்கள் கிரெடிட் திரும்ப வந்துவிட்டது.</string>
-    <string name="appeal_lead_verdict">ஏதாவது விடுபட்டதா, தவறா? சேருங்கள், நடுவர்கள் எல்லாவற்றையும் மீண்டும் பார்ப்பார்கள். ஒவ்வொரு முறையும் 1 தீர்ப்பு செலவாகும், ஒரு தீர்ப்புக்கு அதிகபட்சம் இரண்டு முறை.</string>
     <string name="appeal_history">தீர்ப்பு வரலாறு</string>
     <string name="pricing_premium_f5">ஸ்கிரீன்ஷாட் ஆதாரம்: படித்த பின் அழிக்கப்படும், கூடுதல் கட்டணம் இல்லை</string>
     <string name="pricing_premium_f6">தீர்ப்புக்குப் பின் தகவல் சேர்த்து மறுதீர்ப்பு (1 தீர்ப்பு)</string>
@@ -577,7 +570,6 @@
     </plurals>
     <string name="app_history_offline_remove">நீங்கள் ஆஃப்லைனில் இருக்கிறீர்கள். நீக்க இணைப்பு தேவை.</string>
     <string name="app_pricing_free_account">Apple, Google அல்லது ஈமெயில் மூலம் உள்நுழையுங்கள்</string>
-    <string name="app_context_label">தகவல் (விருப்பம்)</string>
     <string name="app_pricing_context">தகவல் படங்கள் படிக்கப்பட்டு பிறகு தூக்கியெறியப்படும், கூடுதல் செலவு இல்லை</string>
     <string name="app_pricing_headline">முதல் தீர்ப்பு எங்கள் செலவில்.</string>
     <string name="app_pricing_sub">கணக்கைத் தொடங்குங்கள், முதல் தீர்ப்பு எல்லா அம்சங்களுடனும் இலவசம். அதன் பிறகு ஒரு பேக்கைத் தேர்ந்தெடுங்கள் அல்லது மாதாந்திர பிளானுக்கு மாறுங்கள்.</string>
@@ -699,9 +691,7 @@
     <string name="app_verdict_claims">ஒவ்வொரு தரப்பும் அந்த முடிவுக்கு எப்படி வந்தது</string>
     <string name="app_verdict_back">தீர்ப்பு</string>
     <string name="app_appeal_title">தகவல் சேர்த்து மறுதீர்ப்பு</string>
-    <string name="app_appeal_intro">நடுவர்கள் எதையாவது தவறவிட்டார்களா? அதைச் சேருங்கள், அவர்கள் மீண்டும் தீர்ப்பளிப்பார்கள். முதல் தீர்ப்பும் பதிவில் இருக்கும்.</string>
-    <string name="app_appeal_ask">அவர்கள் எதைத் தெரிந்துகொள்ள வேண்டும்?</string>
-    <string name="app_appeal_placeholder">ஒரு விவரம், ஒரு மெசேஜ், அல்லது உண்மையில் என்ன ஒப்புக்கொள்ளப்பட்டது என்பது.</string>
+    <string name="app_appeal_placeholder">நடுவர்கள் எதைத் தவறவிட்டார்கள்? ஒரு விவரம், ஒரு மெசேஜ், அல்லது உண்மையில் என்ன ஒப்புக்கொள்ளப்பட்டது என்பது.</string>
     <string name="app_appeal_cost">1 தீர்ப்பு செலவாகும். ஒரு தீர்ப்புக்கு இதை இரண்டு முறை செய்யலாம்; இன்னும் %1$s முறை மீதம்.</string>
     <string name="app_appeal_cost_case">1 தீர்ப்பு செலவாகும். ஒரு வழக்குக்கு இதை ஒருமுறை மட்டுமே செய்யலாம்.</string>
     <string name="app_appeal_submit">மறுதீர்ப்பு பெறுக</string>

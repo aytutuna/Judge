@@ -202,8 +202,7 @@
     <string name="signin_create_note">Îți vom trimite un cod pe e-mail pentru a confirma această adresă. Trebuie să faci asta o singură dată.</string>
     <string name="signin_password_choose">Ești conectat. Alege o parolă pentru data viitoare.</string>
     <string name="signin_password_save">Salvează parola</string>
-    <string name="signin_password_save_failed">Ești conectat, dar nu am putut salva parola. Încearcă din nou sau setează-o mai târziu în Setări.</string>
-    <string name="signin_password_skip">Omite deocamdată</string>
+    <string name="signin_password_save_failed">Nu am putut salva parola. Încearcă din nou.</string>
     <string name="signin_password_submit">Conectează-te</string>
     <string name="signin_provider_unavailable">Încă nu e disponibil</string>
     <string name="signin_failed">N-am reușit să te conectăm. Mai încerci o dată?</string>
@@ -222,10 +221,6 @@
     <string name="account_delete">Șterge contul</string>
     <string name="account_delete_confirm">Îți ștergi contul? Creditele, planul și datele de conectare vor fi șterse. Verdictele tale și părțile tale din cazuri vor fi eliminate: ce ai scris și numele se șterg, iar linkurile lor de distribuire nu vor mai funcționa.</string>
     <string name="account_delete_yes">Da, șterge-l</string>
-    <string name="account_password_set">Setează o parolă</string>
-    <string name="account_password_change">Schimbă parola</string>
-    <string name="account_password_current">Parola actuală</string>
-    <string name="account_password_saved">Parola a fost salvată.</string>
     <string name="account_delete_cancel">Păstrez contul</string>
     <string name="account_delete_failed">N-am putut șterge contul acum. Mai încerci o dată?</string>
     <string name="account_sign_in_prompt">Conectează-te ca să-ți vezi planul și creditele.</string>
@@ -425,9 +420,8 @@
     <string name="home_says">%1$s spune:</string>
     <string name="home_my_side">Partea mea:</string>
     <string name="home_other_side">Cealaltă parte:</string>
-    <string name="appeal_lead">Lipsește ceva sau e greșit? Poți adăuga context o singură dată, iar judecătorii se uită din nou la tot. Costă 1 verdict.</string>
-    <string name="appeal_label">Contextul tău</string>
-    <string name="appeal_placeholder">Ce le-a scăpat judecătorilor?</string>
+    <string name="appeal_lead">Folosește 1 verdict.</string>
+    <string name="appeal_placeholder">Ce le-a scăpat judecătorilor? Un fapt, un mesaj sau ce ați stabilit cu adevărat.</string>
     <string name="appeal_submit">Judecă din nou cu contextul meu</string>
     <string name="appeal_sending">Îți anonimizăm contextul…</string>
     <string name="appeal_judging">Judecătorii se uită din nou la tot…</string>
@@ -447,7 +441,6 @@
     <string name="appeal_previous">Verdictul anterior</string>
     <string name="appeal_failed">Rejudecarea n-a mers. Ți-ai primit creditul înapoi; poți încerca din nou.</string>
     <string name="appeal_refused">Judecătorii n-au vrut să judece din nou cu acest context. Ți-ai primit creditul înapoi.</string>
-    <string name="appeal_lead_verdict">Lipsește ceva sau e greșit? Adaugă context și judecătorii se uită din nou la tot. De fiecare dată costă 1 verdict, de cel mult două ori pentru același verdict.</string>
     <string name="appeal_history">Istoricul verdictului</string>
     <string name="pricing_premium_f5">Capturi de ecran ca dovezi, citite și apoi aruncate, fără cost în plus</string>
     <string name="pricing_premium_f6">Adaugi context după un verdict și ceri o rejudecare (1 verdict)</string>
@@ -593,7 +586,6 @@
     </plurals>
     <string name="app_history_offline_remove">Ești offline. Ca să elimini verdicte, ai nevoie de conexiune.</string>
     <string name="app_pricing_free_account">Conectează-te cu Apple, Google sau prin e-mail</string>
-    <string name="app_context_label">Context (opțional)</string>
     <string name="app_pricing_context">Imaginile de context sunt citite și apoi aruncate, fără cost în plus</string>
     <string name="app_pricing_headline">Primul verdict e din partea casei.</string>
     <string name="app_pricing_sub">Fă-ți un cont și primul verdict e gratuit, cu toate funcțiile. După aceea, alege un pachet sau treci pe planul lunar.</string>
@@ -716,9 +708,7 @@
     <string name="app_verdict_claims">Cum a ajuns fiecare parte la poziția ei</string>
     <string name="app_verdict_back">Verdict</string>
     <string name="app_appeal_title">Adaugă context și contestă</string>
-    <string name="app_appeal_intro">Le-a scăpat ceva judecătorilor? Adaugă-l și vor judeca din nou. Primul verdict rămâne în istoric.</string>
-    <string name="app_appeal_ask">Ce ar trebui să știe?</string>
-    <string name="app_appeal_placeholder">Un fapt, un mesaj sau ce ați stabilit cu adevărat.</string>
+    <string name="app_appeal_placeholder">Ce le-a scăpat judecătorilor? Un fapt, un mesaj sau ce ați stabilit cu adevărat.</string>
     <string name="app_appeal_cost">Folosește 1 verdict. Poți face asta de două ori pentru același verdict; mai ai %1$s.</string>
     <string name="app_appeal_cost_case">Folosește 1 verdict. Poți face asta o singură dată pe caz.</string>
     <string name="app_appeal_submit">Judecă din nou</string>

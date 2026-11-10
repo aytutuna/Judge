@@ -217,8 +217,7 @@
     <string name="signin_create_note">سنرسل لك رمزًا بالبريد لتأكيد هذا العنوان. تحتاج إلى ذلك مرة واحدة فقط.</string>
     <string name="signin_password_choose">سجّلت الدخول. اختر كلمة مرور للمرة القادمة.</string>
     <string name="signin_password_save">حفظ كلمة المرور</string>
-    <string name="signin_password_save_failed">سجّلت الدخول، لكن تعذّر حفظ كلمة المرور. حاول مرة أخرى أو عيّنها لاحقًا من الإعدادات.</string>
-    <string name="signin_password_skip">تخطَّ الآن</string>
+    <string name="signin_password_save_failed">تعذّر حفظ كلمة المرور. حاول مرة أخرى.</string>
     <string name="signin_password_submit">تسجيل الدخول</string>
     <string name="signin_provider_unavailable">غير متاح بعد</string>
     <string name="signin_failed">لم نتمكن من تسجيل دخولك. هلّا حاولت مرة أخرى؟</string>
@@ -237,10 +236,6 @@
     <string name="account_delete">حذف الحساب</string>
     <string name="account_delete_confirm">هل تريد حذف حسابك؟ سيُحذف رصيدك وخطتك وبيانات تسجيل الدخول. وستُزال أحكامك ورواياتك في القضايا: يُمحى ما كتبته والأسماء، وتتوقف روابط مشاركتها عن العمل.</string>
     <string name="account_delete_yes">نعم، احذفه</string>
-    <string name="account_password_set">تعيين كلمة مرور</string>
-    <string name="account_password_change">تغيير كلمة المرور</string>
-    <string name="account_password_current">كلمة المرور الحالية</string>
-    <string name="account_password_saved">تم حفظ كلمة المرور.</string>
     <string name="account_delete_cancel">الإبقاء على حسابي</string>
     <string name="account_delete_failed">تعذّر حذف الحساب الآن. هلّا حاولت مرة أخرى؟</string>
     <string name="account_sign_in_prompt">سجّل الدخول لترى خطتك ورصيدك.</string>
@@ -449,9 +444,8 @@
     <string name="home_says">رواية %1$s:</string>
     <string name="home_my_side">روايتي:</string>
     <string name="home_other_side">رواية الطرف الآخر:</string>
-    <string name="appeal_lead">هل هناك شيء ناقص أو خاطئ؟ أضفه مرة واحدة، وسيعيد القضاة النظر في كل شيء. يكلّف حكمًا واحدًا.</string>
-    <string name="appeal_label">توضيحك</string>
-    <string name="appeal_placeholder">ما الذي فات القضاة؟</string>
+    <string name="appeal_lead">يستهلك حكمًا واحدًا.</string>
+    <string name="appeal_placeholder">ما الذي فات القضاة؟ حقيقة، أو رسالة، أو ما اتفقتما عليه فعلًا.</string>
     <string name="appeal_submit">إعادة الحكم مع توضيحي</string>
     <string name="appeal_sending">نحذف الأسماء من توضيحك…</string>
     <string name="appeal_judging">القضاة يعيدون النظر في كل شيء…</string>
@@ -471,7 +465,6 @@
     <string name="appeal_previous">الحكم السابق</string>
     <string name="appeal_failed">لم تكتمل إعادة النظر في الحكم. عاد الحكم المخصوم إلى رصيدك، ويمكنك المحاولة مجددًا.</string>
     <string name="appeal_refused">رفض القضاة إعادة النظر بهذا التوضيح. عاد الحكم المخصوم إلى رصيدك.</string>
-    <string name="appeal_lead_verdict">هل هناك شيء ناقص أو خاطئ؟ أضفه وسيعيد القضاة النظر في كل شيء. كل مرة تكلّف حكمًا واحدًا، وبحد أقصى مرتين لكل حكم.</string>
     <string name="appeal_history">سجل الأحكام</string>
     <string name="pricing_premium_f5">أدلة من لقطات الشاشة، تُقرأ ثم تُحذف، دون تكلفة إضافية</string>
     <string name="pricing_premium_f6">إضافة توضيح بعد الحكم وإعادة الحكم مقابل حكم واحد</string>
@@ -641,7 +634,6 @@
     </plurals>
     <string name="app_history_offline_remove">أنت غير متصل بالإنترنت. يحتاج الحذف إلى اتصال.</string>
     <string name="app_pricing_free_account">سجّل الدخول باستخدام Apple أو Google أو البريد الإلكتروني</string>
-    <string name="app_context_label">توضيح (اختياري)</string>
     <string name="app_pricing_context">صور التوضيح تُقرأ ثم تُحذف، دون أي تكلفة إضافية</string>
     <string name="app_pricing_headline">حكمك الأول على حسابنا.</string>
     <string name="app_pricing_sub">أنشئ حسابًا واحصل على أول حكم مجانًا، بكل المزايا. بعد ذلك، اختر باقة أو اشترك شهريًا.</string>
@@ -767,9 +759,7 @@
     <string name="app_verdict_claims">كيف وصل كل طرف إلى رأيه</string>
     <string name="app_verdict_back">الحكم</string>
     <string name="app_appeal_title">إضافة توضيح والاعتراض على الحكم</string>
-    <string name="app_appeal_intro">هل فات القضاة شيء؟ أضفه وسيحكمون من جديد. ويبقى الحكم الأول في السجل.</string>
-    <string name="app_appeal_ask">ما الذي ينبغي أن يعرفوه؟</string>
-    <string name="app_appeal_placeholder">حقيقة، أو رسالة، أو ما اتفقتما عليه فعلًا.</string>
+    <string name="app_appeal_placeholder">ما الذي فات القضاة؟ حقيقة، أو رسالة، أو ما اتفقتما عليه فعلًا.</string>
     <string name="app_appeal_cost">يستهلك حكمًا واحدًا. يمكنك فعل ذلك مرتين لكل حكم؛ المتبقي: %1$s.</string>
     <string name="app_appeal_cost_case">يستهلك حكمًا واحدًا. يمكنك فعل ذلك مرة واحدة لكل قضية.</string>
     <string name="app_appeal_submit">إعادة الحكم</string>

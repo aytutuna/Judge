@@ -192,8 +192,7 @@
     <string name="signin_create_note">เราจะส่งรหัสไปทางอีเมลเพื่อยืนยันที่อยู่นี้ ทำเพียงครั้งเดียวเท่านั้น</string>
     <string name="signin_password_choose">คุณลงชื่อเข้าใช้แล้ว เลือกรหัสผ่านไว้ใช้ครั้งหน้า</string>
     <string name="signin_password_save">บันทึกรหัสผ่าน</string>
-    <string name="signin_password_save_failed">คุณลงชื่อเข้าใช้แล้ว แต่เราบันทึกรหัสผ่านไม่ได้ ลองอีกครั้ง หรือตั้งค่าภายหลังในการตั้งค่า</string>
-    <string name="signin_password_skip">ข้ามไปก่อน</string>
+    <string name="signin_password_save_failed">บันทึกรหัสผ่านไม่ได้ ลองอีกครั้ง</string>
     <string name="signin_password_submit">เข้าสู่ระบบ</string>
     <string name="signin_provider_unavailable">ยังไม่พร้อมใช้งาน</string>
     <string name="signin_failed">เข้าสู่ระบบไม่สำเร็จ ลองอีกครั้งนะ</string>
@@ -212,10 +211,6 @@
     <string name="account_delete">ลบบัญชี</string>
     <string name="account_delete_confirm">ลบบัญชีของคุณไหม? เครดิต แพ็กเกจ และข้อมูลการเข้าสู่ระบบจะถูกลบทั้งหมด คำตัดสินและฝั่งของคุณในเคสต่าง ๆ ก็จะถูกลบด้วย สิ่งที่คุณเขียนและชื่อจะหายไป และลิงก์แชร์ของรายการเหล่านั้นจะใช้ไม่ได้อีก</string>
     <string name="account_delete_yes">ใช่ ลบเลย</string>
-    <string name="account_password_set">ตั้งรหัสผ่าน</string>
-    <string name="account_password_change">เปลี่ยนรหัสผ่าน</string>
-    <string name="account_password_current">รหัสผ่านปัจจุบัน</string>
-    <string name="account_password_saved">บันทึกรหัสผ่านแล้ว</string>
     <string name="account_delete_cancel">เก็บบัญชีไว้</string>
     <string name="account_delete_failed">ตอนนี้ลบบัญชีไม่ได้ ลองอีกครั้งนะ</string>
     <string name="account_sign_in_prompt">เข้าสู่ระบบเพื่อดูแพ็กเกจและเครดิตของคุณ</string>
@@ -409,9 +404,8 @@
     <string name="home_says">%1$s บอกว่า:</string>
     <string name="home_my_side">ฝั่งของฉัน:</string>
     <string name="home_other_side">ฝั่งของเขา:</string>
-    <string name="appeal_lead">มีอะไรขาดหรือผิดไปไหม? เพิ่มได้ 1 ครั้ง แล้วกรรมการจะดูทุกอย่างใหม่อีกรอบ ใช้คำตัดสิน 1 ครั้ง</string>
-    <string name="appeal_label">รายละเอียดของคุณ</string>
-    <string name="appeal_placeholder">กรรมการพลาดอะไรไป?</string>
+    <string name="appeal_lead">ใช้คำตัดสิน 1 ครั้ง</string>
+    <string name="appeal_placeholder">กรรมการพลาดอะไรไป? ข้อเท็จจริง ข้อความแชต หรือสิ่งที่ตกลงกันไว้จริง ๆ</string>
     <string name="appeal_submit">ตัดสินใหม่พร้อมบริบทของฉัน</string>
     <string name="appeal_sending">กำลังซ่อนชื่อในบริบทของคุณ…</string>
     <string name="appeal_judging">กรรมการกำลังดูทุกอย่างใหม่อีกรอบ…</string>
@@ -431,7 +425,6 @@
     <string name="appeal_previous">คำตัดสินก่อนหน้า</string>
     <string name="appeal_failed">ตัดสินใหม่ไม่สำเร็จ ได้เครดิตคืนแล้ว ลองใหม่ได้เลย</string>
     <string name="appeal_refused">กรรมการไม่ยอมตัดสินใหม่ด้วยบริบทนั้น ได้เครดิตคืนแล้ว</string>
-    <string name="appeal_lead_verdict">มีอะไรขาดหรือผิดไปไหม? เพิ่มเข้าไป แล้วกรรมการจะดูทุกอย่างใหม่อีกรอบ แต่ละครั้งใช้คำตัดสิน 1 ครั้ง ทำได้สูงสุด 2 ครั้งต่อคำตัดสิน</string>
     <string name="appeal_history">ประวัติคำตัดสิน</string>
     <string name="pricing_premium_f5">หลักฐานจากภาพหน้าจอ อ่านแล้วทิ้ง ไม่มีค่าใช้จ่ายเพิ่ม</string>
     <string name="pricing_premium_f6">เพิ่มบริบทหลังมีคำตัดสินแล้วให้ตัดสินใหม่ (ใช้คำตัดสิน 1 ครั้ง)</string>
@@ -561,7 +554,6 @@
     </plurals>
     <string name="app_history_offline_remove">คุณออฟไลน์อยู่ ต้องต่ออินเทอร์เน็ตก่อนถึงจะลบได้</string>
     <string name="app_pricing_free_account">เข้าสู่ระบบด้วย Apple, Google หรืออีเมล</string>
-    <string name="app_context_label">รายละเอียด (ไม่บังคับ)</string>
     <string name="app_pricing_context">รูปที่เพิ่มจะถูกอ่านแล้วทิ้ง ไม่มีค่าใช้จ่ายเพิ่ม</string>
     <string name="app_pricing_headline">คำตัดสินแรก เราเลี้ยงเอง</string>
     <string name="app_pricing_sub">สร้างบัญชีแล้วรับคำตัดสินแรกฟรี ใช้ได้ทุกฟีเจอร์ หลังจากนั้นเลือกแพ็กเครดิตหรือสมัครรายเดือน</string>
@@ -682,9 +674,7 @@
     <string name="app_verdict_claims">แต่ละฝั่งคิดมาถึงจุดนี้ได้ยังไง</string>
     <string name="app_verdict_back">คำตัดสิน</string>
     <string name="app_appeal_title">เพิ่มรายละเอียดและขอตัดสินใหม่</string>
-    <string name="app_appeal_intro">กรรมการพลาดอะไรไปไหม? เพิ่มเข้ามา แล้วกรรมการจะตัดสินใหม่ คำตัดสินแรกจะยังอยู่ในประวัติ</string>
-    <string name="app_appeal_ask">กรรมการควรรู้อะไรเพิ่ม?</string>
-    <string name="app_appeal_placeholder">ข้อเท็จจริง ข้อความแชต หรือสิ่งที่ตกลงกันไว้จริง ๆ</string>
+    <string name="app_appeal_placeholder">กรรมการพลาดอะไรไป? ข้อเท็จจริง ข้อความแชต หรือสิ่งที่ตกลงกันไว้จริง ๆ</string>
     <string name="app_appeal_cost">ใช้คำตัดสิน 1 ครั้ง ทำแบบนี้ได้ 2 ครั้งต่อคำตัดสิน เหลืออีก %1$s ครั้ง</string>
     <string name="app_appeal_cost_case">ใช้คำตัดสิน 1 ครั้ง ทำแบบนี้ได้ 1 ครั้งต่อเคส</string>
     <string name="app_appeal_submit">ตัดสินใหม่</string>

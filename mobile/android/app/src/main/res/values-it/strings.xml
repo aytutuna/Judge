@@ -202,8 +202,7 @@
     <string name="signin_create_note">Ti invieremo un codice via email per confermare questo indirizzo. Basta farlo una volta sola.</string>
     <string name="signin_password_choose">Hai effettuato l\'accesso. Scegli una password per la prossima volta.</string>
     <string name="signin_password_save">Salva la password</string>
-    <string name="signin_password_save_failed">Hai effettuato l\'accesso, ma non siamo riusciti a salvare la password. Riprova oppure impostala più tardi nelle Impostazioni.</string>
-    <string name="signin_password_skip">Salta per ora</string>
+    <string name="signin_password_save_failed">Non siamo riusciti a salvare la password. Riprova.</string>
     <string name="signin_password_submit">Accedi</string>
     <string name="signin_provider_unavailable">Non ancora disponibile</string>
     <string name="signin_failed">Non siamo riusciti a farti accedere. Riprovi?</string>
@@ -222,10 +221,6 @@
     <string name="account_delete">Elimina account</string>
     <string name="account_delete_confirm">Vuoi eliminare il tuo account? Crediti, piano e dati di accesso vengono cancellati. I tuoi verdetti e le tue versioni nei casi vengono rimossi: quello che hai scritto e i nomi vengono cancellati, e i link di condivisione smettono di funzionare.</string>
     <string name="account_delete_yes">Sì, eliminalo</string>
-    <string name="account_password_set">Imposta una password</string>
-    <string name="account_password_change">Cambia password</string>
-    <string name="account_password_current">Password attuale</string>
-    <string name="account_password_saved">Password salvata.</string>
     <string name="account_delete_cancel">Tieni l\'account</string>
     <string name="account_delete_failed">Al momento non siamo riusciti a eliminare l\'account. Riprovi?</string>
     <string name="account_sign_in_prompt">Accedi per vedere il tuo piano e i tuoi crediti.</string>
@@ -425,9 +420,8 @@
     <string name="home_says">%1$s dice:</string>
     <string name="home_my_side">La mia versione:</string>
     <string name="home_other_side">La versione dell\'altra persona:</string>
-    <string name="appeal_lead">Manca qualcosa o c\'è un errore? Aggiungilo una volta e i giudici riesaminano tutto. Costa 1 verdetto.</string>
-    <string name="appeal_label">Il tuo contesto</string>
-    <string name="appeal_placeholder">Cosa è sfuggito ai giudici?</string>
+    <string name="appeal_lead">Costa 1 verdetto.</string>
+    <string name="appeal_placeholder">Cosa è sfuggito ai giudici? Un fatto, un messaggio o quello che avevate davvero concordato.</string>
     <string name="appeal_submit">Rivaluta con il mio contesto</string>
     <string name="appeal_sending">Anonimizziamo il tuo contesto…</string>
     <string name="appeal_judging">I giudici stanno riesaminando tutto…</string>
@@ -447,7 +441,6 @@
     <string name="appeal_previous">Verdetto precedente</string>
     <string name="appeal_failed">La rivalutazione non è andata a buon fine. Il tuo credito è tornato; puoi riprovare.</string>
     <string name="appeal_refused">I giudici non hanno voluto rivalutare con quel contesto. Il tuo credito è tornato.</string>
-    <string name="appeal_lead_verdict">Manca qualcosa o c\'è un errore? Aggiungilo e i giudici riesaminano tutto. Ogni volta costa 1 verdetto, fino a due volte per verdetto.</string>
     <string name="appeal_history">Storico del verdetto</string>
     <string name="pricing_premium_f5">Screenshot come prove, letti e poi buttati via, senza costi extra</string>
     <string name="pricing_premium_f6">Aggiungi contesto dopo un verdetto e fallo rivalutare (1 verdetto)</string>
@@ -593,7 +586,6 @@
     </plurals>
     <string name="app_history_offline_remove">Sei offline. Per rimuovere serve una connessione.</string>
     <string name="app_pricing_free_account">Accedi con Apple, Google o email</string>
-    <string name="app_context_label">Contesto (facoltativo)</string>
     <string name="app_pricing_context">Le immagini di contesto vengono lette e poi buttate, senza costi in più</string>
     <string name="app_pricing_headline">Il primo verdetto lo offriamo noi.</string>
     <string name="app_pricing_sub">Crea un account e il primo verdetto è gratis, con tutte le funzioni. Poi scegli un pacchetto o passa al piano mensile.</string>
@@ -716,9 +708,7 @@
     <string name="app_verdict_claims">Il ragionamento di ciascuna parte</string>
     <string name="app_verdict_back">Verdetto</string>
     <string name="app_appeal_title">Aggiungi contesto e fai appello</string>
-    <string name="app_appeal_intro">Ai giudici è sfuggito qualcosa? Aggiungilo e decideranno di nuovo. Il primo verdetto resta agli atti.</string>
-    <string name="app_appeal_ask">Cosa dovrebbero sapere?</string>
-    <string name="app_appeal_placeholder">Un fatto, un messaggio o quello che avevate davvero concordato.</string>
+    <string name="app_appeal_placeholder">Cosa è sfuggito ai giudici? Un fatto, un messaggio o quello che avevate davvero concordato.</string>
     <string name="app_appeal_cost">Costa 1 verdetto. Puoi farlo due volte per verdetto (rimanenti: %1$s).</string>
     <string name="app_appeal_cost_case">Costa 1 verdetto. Puoi farlo una volta per caso.</string>
     <string name="app_appeal_submit">Fai decidere di nuovo</string>

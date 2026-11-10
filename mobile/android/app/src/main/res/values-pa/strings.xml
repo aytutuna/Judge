@@ -197,8 +197,7 @@
     <string name="signin_create_note">ਇਸ ਪਤੇ ਦੀ ਪੁਸ਼ਟੀ ਲਈ ਅਸੀਂ ਤੁਹਾਨੂੰ ਈਮੇਲ ਤੇ ਇੱਕ ਕੋਡ ਭੇਜਾਂਗੇ। ਇਹ ਸਿਰਫ਼ ਇੱਕ ਵਾਰ ਕਰਨਾ ਪਵੇਗਾ।</string>
     <string name="signin_password_choose">ਤੁਸੀਂ ਸਾਈਨ ਇਨ ਹੋ ਗਏ ਹੋ। ਅਗਲੀ ਵਾਰ ਲਈ ਇੱਕ ਪਾਸਵਰਡ ਚੁਣੋ।</string>
     <string name="signin_password_save">ਪਾਸਵਰਡ ਸੰਭਾਲੋ</string>
-    <string name="signin_password_save_failed">ਤੁਸੀਂ ਸਾਈਨ ਇਨ ਹੋ ਗਏ ਹੋ, ਪਰ ਪਾਸਵਰਡ ਸੰਭਾਲਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ, ਜਾਂ ਬਾਅਦ ਵਿੱਚ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਤੈਅ ਕਰੋ।</string>
-    <string name="signin_password_skip">ਹੁਣ ਲਈ ਛੱਡੋ</string>
+    <string name="signin_password_save_failed">ਪਾਸਵਰਡ ਸੰਭਾਲਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
     <string name="signin_password_submit">ਸਾਈਨ ਇਨ ਕਰੋ</string>
     <string name="signin_provider_unavailable">ਹਾਲੇ ਉਪਲਬਧ ਨਹੀਂ</string>
     <string name="signin_failed">ਅਸੀਂ ਤੁਹਾਨੂੰ ਸਾਈਨ ਇਨ ਨਹੀਂ ਕਰ ਸਕੇ। ਇੱਕ ਵਾਰ ਫਿਰ ਕੋਸ਼ਿਸ਼ ਕਰੋਗੇ?</string>
@@ -217,10 +216,6 @@
     <string name="account_delete">ਖਾਤਾ ਮਿਟਾਓ</string>
     <string name="account_delete_confirm">ਆਪਣਾ ਖਾਤਾ ਮਿਟਾਉਣਾ ਹੈ? ਤੁਹਾਡੇ ਕ੍ਰੈਡਿਟ, ਪਲਾਨ ਅਤੇ ਸਾਈਨ ਇਨ ਦੇ ਵੇਰਵੇ ਮਿਟ ਜਾਣਗੇ। ਤੁਹਾਡੇ ਫ਼ੈਸਲੇ ਅਤੇ ਕੇਸਾਂ ਵਿੱਚ ਤੁਹਾਡੇ ਪੱਖ ਹਟ ਜਾਣਗੇ: ਜੋ ਤੁਸੀਂ ਲਿਖਿਆ ਅਤੇ ਨਾਂ ਮਿਟ ਜਾਣਗੇ, ਅਤੇ ਉਨ੍ਹਾਂ ਦੇ ਸਾਂਝੇ ਲਿੰਕ ਕੰਮ ਕਰਨਾ ਬੰਦ ਕਰ ਦੇਣਗੇ।</string>
     <string name="account_delete_yes">ਹਾਂ, ਮਿਟਾ ਦਿਓ</string>
-    <string name="account_password_set">ਪਾਸਵਰਡ ਤੈਅ ਕਰੋ</string>
-    <string name="account_password_change">ਪਾਸਵਰਡ ਬਦਲੋ</string>
-    <string name="account_password_current">ਮੌਜੂਦਾ ਪਾਸਵਰਡ</string>
-    <string name="account_password_saved">ਪਾਸਵਰਡ ਸੰਭਾਲਿਆ ਗਿਆ।</string>
     <string name="account_delete_cancel">ਖਾਤਾ ਰਹਿਣ ਦਿਓ</string>
     <string name="account_delete_failed">ਇਸ ਵੇਲੇ ਖਾਤਾ ਨਹੀਂ ਮਿਟ ਸਕਿਆ। ਇੱਕ ਵਾਰ ਫਿਰ ਕੋਸ਼ਿਸ਼ ਕਰੋਗੇ?</string>
     <string name="account_sign_in_prompt">ਆਪਣਾ ਪਲਾਨ ਅਤੇ ਕ੍ਰੈਡਿਟ ਦੇਖਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ।</string>
@@ -417,9 +412,8 @@
     <string name="home_says">%1$s ਦਾ ਕਹਿਣਾ ਹੈ:</string>
     <string name="home_my_side">ਮੇਰਾ ਪੱਖ:</string>
     <string name="home_other_side">ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ:</string>
-    <string name="appeal_lead">ਕੁਝ ਰਹਿ ਗਿਆ ਜਾਂ ਗ਼ਲਤ ਹੈ? ਇੱਕ ਵਾਰ ਜੋੜੋ ਅਤੇ ਜੱਜ ਸਾਰਾ ਕੁਝ ਦੁਬਾਰਾ ਦੇਖਣਗੇ। ਇਸ ’ਤੇ 1 ਫ਼ੈਸਲਾ ਲੱਗਦਾ ਹੈ।</string>
-    <string name="appeal_label">ਤੁਹਾਡਾ ਵੇਰਵਾ</string>
-    <string name="appeal_placeholder">ਜੱਜਾਂ ਤੋਂ ਕੀ ਰਹਿ ਗਿਆ?</string>
+    <string name="appeal_lead">ਇਸ ’ਤੇ 1 ਫ਼ੈਸਲਾ ਲੱਗਦਾ ਹੈ।</string>
+    <string name="appeal_placeholder">ਜੱਜਾਂ ਤੋਂ ਕੀ ਰਹਿ ਗਿਆ? ਕੋਈ ਤੱਥ, ਕੋਈ ਮੈਸੇਜ, ਜਾਂ ਅਸਲ ਵਿੱਚ ਕੀ ਤੈਅ ਹੋਇਆ ਸੀ।</string>
     <string name="appeal_submit">ਮੇਰੇ ਵੇਰਵੇ ਨਾਲ ਦੁਬਾਰਾ ਫ਼ੈਸਲਾ ਕਰੋ</string>
     <string name="appeal_sending">ਤੁਹਾਡੇ ਵੇਰਵੇ ਵਿੱਚੋਂ ਨਾਂ ਕੱਢ ਰਹੇ ਹਾਂ…</string>
     <string name="appeal_judging">ਜੱਜ ਸਾਰਾ ਕੁਝ ਦੁਬਾਰਾ ਦੇਖ ਰਹੇ ਹਨ…</string>
@@ -439,7 +433,6 @@
     <string name="appeal_previous">ਪਹਿਲਾਂ ਵਾਲਾ ਫ਼ੈਸਲਾ</string>
     <string name="appeal_failed">ਦੁਬਾਰਾ ਫ਼ੈਸਲਾ ਨਹੀਂ ਹੋ ਸਕਿਆ। ਤੁਹਾਡਾ ਕ੍ਰੈਡਿਟ ਵਾਪਸ ਆ ਗਿਆ ਹੈ; ਤੁਸੀਂ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰ ਸਕਦੇ ਹੋ।</string>
     <string name="appeal_refused">ਜੱਜਾਂ ਨੇ ਉਸ ਵੇਰਵੇ ਨਾਲ ਦੁਬਾਰਾ ਫ਼ੈਸਲਾ ਕਰਨ ਤੋਂ ਨਾਂਹ ਕਰ ਦਿੱਤੀ। ਤੁਹਾਡਾ ਕ੍ਰੈਡਿਟ ਵਾਪਸ ਆ ਗਿਆ ਹੈ।</string>
-    <string name="appeal_lead_verdict">ਕੁਝ ਰਹਿ ਗਿਆ ਜਾਂ ਗ਼ਲਤ ਹੈ? ਜੋੜ ਦਿਓ ਅਤੇ ਜੱਜ ਸਾਰਾ ਕੁਝ ਦੁਬਾਰਾ ਦੇਖਣਗੇ। ਹਰ ਵਾਰ 1 ਫ਼ੈਸਲਾ ਲੱਗਦਾ ਹੈ, ਇੱਕ ਫ਼ੈਸਲੇ ’ਤੇ ਵੱਧ ਤੋਂ ਵੱਧ ਦੋ ਵਾਰ।</string>
     <string name="appeal_history">ਫ਼ੈਸਲੇ ਦਾ ਇਤਿਹਾਸ</string>
     <string name="pricing_premium_f5">ਸਬੂਤ ਵਜੋਂ ਸਕ੍ਰੀਨਸ਼ਾਟ, ਪੜ੍ਹਨ ਤੋਂ ਬਾਅਦ ਸੁੱਟ ਦਿੱਤੇ ਜਾਂਦੇ ਹਨ, ਕੋਈ ਵਾਧੂ ਖ਼ਰਚਾ ਨਹੀਂ</string>
     <string name="pricing_premium_f6">ਫ਼ੈਸਲੇ ਤੋਂ ਬਾਅਦ ਵੇਰਵਾ ਜੋੜੋ ਅਤੇ ਦੁਬਾਰਾ ਫ਼ੈਸਲਾ ਕਰਵਾਓ (1 ਫ਼ੈਸਲਾ)</string>
@@ -577,7 +570,6 @@
     </plurals>
     <string name="app_history_offline_remove">ਤੁਸੀਂ ਆਫ਼ਲਾਈਨ ਹੋ। ਹਟਾਉਣ ਲਈ ਕਨੈਕਸ਼ਨ ਚਾਹੀਦਾ ਹੈ।</string>
     <string name="app_pricing_free_account">Apple, Google ਜਾਂ ਈਮੇਲ ਨਾਲ ਸਾਈਨ ਇਨ ਕਰੋ</string>
-    <string name="app_context_label">ਵੇਰਵਾ (ਵਿਕਲਪਿਕ)</string>
     <string name="app_pricing_context">ਵੇਰਵੇ ਦੀਆਂ ਤਸਵੀਰਾਂ ਪੜ੍ਹ ਕੇ ਸੁੱਟ ਦਿੱਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ, ਕੋਈ ਵਾਧੂ ਖ਼ਰਚਾ ਨਹੀਂ</string>
     <string name="app_pricing_headline">ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਸਾਡੇ ਵੱਲੋਂ।</string>
     <string name="app_pricing_sub">ਖਾਤਾ ਬਣਾਓ ਅਤੇ ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਮੁਫ਼ਤ ਪਾਓ, ਸਾਰੀਆਂ ਸਹੂਲਤਾਂ ਸਮੇਤ। ਉਸ ਤੋਂ ਬਾਅਦ ਕੋਈ ਪੈਕ ਚੁਣੋ ਜਾਂ ਮਹੀਨਾਵਾਰ ਪਲਾਨ ਲਓ।</string>
@@ -699,9 +691,7 @@
     <string name="app_verdict_claims">ਹਰ ਪੱਖ ਆਪਣੀ ਗੱਲ ਤੱਕ ਕਿਵੇਂ ਪਹੁੰਚਿਆ</string>
     <string name="app_verdict_back">ਫ਼ੈਸਲਾ</string>
     <string name="app_appeal_title">ਵੇਰਵਾ ਜੋੜੋ ਅਤੇ ਅਪੀਲ ਕਰੋ</string>
-    <string name="app_appeal_intro">ਜੱਜਾਂ ਤੋਂ ਕੁਝ ਰਹਿ ਗਿਆ? ਜੋੜ ਦਿਓ ਅਤੇ ਉਹ ਦੁਬਾਰਾ ਫ਼ੈਸਲਾ ਕਰਨਗੇ। ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਰਿਕਾਰਡ ਵਿੱਚ ਰਹੇਗਾ।</string>
-    <string name="app_appeal_ask">ਉਨ੍ਹਾਂ ਨੂੰ ਕੀ ਪਤਾ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ?</string>
-    <string name="app_appeal_placeholder">ਕੋਈ ਤੱਥ, ਕੋਈ ਮੈਸੇਜ, ਜਾਂ ਅਸਲ ਵਿੱਚ ਕੀ ਤੈਅ ਹੋਇਆ ਸੀ।</string>
+    <string name="app_appeal_placeholder">ਜੱਜਾਂ ਤੋਂ ਕੀ ਰਹਿ ਗਿਆ? ਕੋਈ ਤੱਥ, ਕੋਈ ਮੈਸੇਜ, ਜਾਂ ਅਸਲ ਵਿੱਚ ਕੀ ਤੈਅ ਹੋਇਆ ਸੀ।</string>
     <string name="app_appeal_cost">ਇਸ ’ਤੇ 1 ਫ਼ੈਸਲਾ ਲੱਗਦਾ ਹੈ। ਹਰ ਫ਼ੈਸਲੇ ’ਤੇ ਤੁਸੀਂ ਇਹ ਦੋ ਵਾਰ ਕਰ ਸਕਦੇ ਹੋ; ਬਾਕੀ: %1$s।</string>
     <string name="app_appeal_cost_case">ਇਸ ’ਤੇ 1 ਫ਼ੈਸਲਾ ਲੱਗਦਾ ਹੈ। ਹਰ ਕੇਸ ਵਿੱਚ ਤੁਸੀਂ ਇਹ ਇੱਕੋ ਵਾਰ ਕਰ ਸਕਦੇ ਹੋ।</string>
     <string name="app_appeal_submit">ਦੁਬਾਰਾ ਫ਼ੈਸਲਾ ਕਰਵਾਓ</string>

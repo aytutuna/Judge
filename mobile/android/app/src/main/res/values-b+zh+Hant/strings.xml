@@ -192,8 +192,7 @@
     <string name="signin_create_note">我們會用電子郵件寄送驗證碼來確認此地址，只需做這一次。</string>
     <string name="signin_password_choose">你已登入。請為下次選一個密碼。</string>
     <string name="signin_password_save">儲存密碼</string>
-    <string name="signin_password_save_failed">你已登入，但密碼未能儲存。請重試，或稍後在設定中設定。</string>
-    <string name="signin_password_skip">暫時略過</string>
+    <string name="signin_password_save_failed">密碼未能儲存。請重試。</string>
     <string name="signin_password_submit">登入</string>
     <string name="signin_provider_unavailable">尚未開放</string>
     <string name="signin_failed">登入失敗，可以再試一次嗎？</string>
@@ -212,10 +211,6 @@
     <string name="account_delete">刪除帳號</string>
     <string name="account_delete_confirm">要刪除帳號嗎？你的額度、方案和登入資料都會刪除。你的判決和你在案子中的說法也會移除：你寫的內容和名字都會清除，分享連結也會失效。</string>
     <string name="account_delete_yes">是，刪除</string>
-    <string name="account_password_set">設定密碼</string>
-    <string name="account_password_change">變更密碼</string>
-    <string name="account_password_current">目前的密碼</string>
-    <string name="account_password_saved">密碼已儲存。</string>
     <string name="account_delete_cancel">保留我的帳號</string>
     <string name="account_delete_failed">暫時無法刪除帳號，可以再試一次嗎？</string>
     <string name="account_sign_in_prompt">登入即可查看你的方案和額度。</string>
@@ -409,9 +404,8 @@
     <string name="home_says">%1$s說：</string>
     <string name="home_my_side">我的說法：</string>
     <string name="home_other_side">對方的說法：</string>
-    <string name="appeal_lead">有遺漏或錯誤嗎？補充一次，評審會重新看過全部內容。會用掉 1 次判決。</string>
-    <string name="appeal_label">你的補充</string>
-    <string name="appeal_placeholder">評審漏掉了什麼？</string>
+    <string name="appeal_lead">會用掉 1 次判決。</string>
+    <string name="appeal_placeholder">評審漏掉了什麼？一個事實、一則訊息，或你們當初真正說好的事。</string>
     <string name="appeal_submit">加上補充重新判決</string>
     <string name="appeal_sending">正在匿名化你的補充…</string>
     <string name="appeal_judging">評審正在重新檢視全部內容…</string>
@@ -431,7 +425,6 @@
     <string name="appeal_previous">先前的判決</string>
     <string name="appeal_failed">重新判決沒有成功。額度已退回，你可以再試一次。</string>
     <string name="appeal_refused">評審不願根據這項補充重新判決。額度已退回。</string>
-    <string name="appeal_lead_verdict">有遺漏或錯誤嗎？補充之後，評審會重新看過全部內容。每次用掉 1 次判決，每個判決最多兩次。</string>
     <string name="appeal_history">判決紀錄</string>
     <string name="pricing_premium_f5">截圖證據：讀取後即丟棄，不另外收費</string>
     <string name="pricing_premium_f6">判決後補充說明並重新判決（1 次判決）</string>
@@ -561,7 +554,6 @@
     </plurals>
     <string name="app_history_offline_remove">你目前離線，移除需要網路連線。</string>
     <string name="app_pricing_free_account">用 Apple、Google 或電子郵件登入</string>
-    <string name="app_context_label">補充說明（選填）</string>
     <string name="app_pricing_context">補充說明的圖片讀完即丟，不另外收費</string>
     <string name="app_pricing_headline">第一次判決，我們請客。</string>
     <string name="app_pricing_sub">建立帳號，第一次判決免費，所有功能都能用。之後可以買額度包，或改用月費方案。</string>
@@ -682,9 +674,7 @@
     <string name="app_verdict_claims">雙方怎麼得出自己的看法</string>
     <string name="app_verdict_back">判決</string>
     <string name="app_appeal_title">補充說明並重新判決</string>
-    <string name="app_appeal_intro">評審漏掉了什麼嗎？補充之後，他們會重新判決。原本的判決會留在紀錄中。</string>
-    <string name="app_appeal_ask">評審需要知道什麼？</string>
-    <string name="app_appeal_placeholder">一個事實、一則訊息，或你們當初真正說好的事。</string>
+    <string name="app_appeal_placeholder">評審漏掉了什麼？一個事實、一則訊息，或你們當初真正說好的事。</string>
     <string name="app_appeal_cost">會用掉 1 次判決。每個判決可以補充兩次；還剩 %1$s 次。</string>
     <string name="app_appeal_cost_case">會用掉 1 次判決。每個案子只能補充一次。</string>
     <string name="app_appeal_submit">重新判決</string>

@@ -202,8 +202,7 @@
     <string name="signin_create_note">T\'enviarem un codi per correu per confirmar aquesta adreça. Només ho has de fer una vegada.</string>
     <string name="signin_password_choose">Has iniciat la sessió. Tria una contrasenya per a la propera vegada.</string>
     <string name="signin_password_save">Desa la contrasenya</string>
-    <string name="signin_password_save_failed">Has iniciat la sessió, però no hem pogut desar la contrasenya. Torna-ho a provar o defineix-la més tard a Configuració.</string>
-    <string name="signin_password_skip">Omet per ara</string>
+    <string name="signin_password_save_failed">No hem pogut desar la contrasenya. Torna-ho a provar.</string>
     <string name="signin_password_submit">Inicia sessió</string>
     <string name="signin_provider_unavailable">Encara no disponible</string>
     <string name="signin_failed">No hem pogut iniciar la teva sessió. Ho tornes a provar?</string>
@@ -222,10 +221,6 @@
     <string name="account_delete">Elimina el compte</string>
     <string name="account_delete_confirm">Vols eliminar el compte? S\'esborraran els teus crèdits, el pla i les dades d\'inici de sessió. Els teus veredictes i les teves versions dels casos s\'eliminaran: s\'esborrarà tot el que vas escriure, noms inclosos, i els seus enllaços per compartir deixaran de funcionar.</string>
     <string name="account_delete_yes">Sí, elimina\'l</string>
-    <string name="account_password_set">Defineix una contrasenya</string>
-    <string name="account_password_change">Canvia la contrasenya</string>
-    <string name="account_password_current">Contrasenya actual</string>
-    <string name="account_password_saved">S\'ha desat la contrasenya.</string>
     <string name="account_delete_cancel">Em quedo el compte</string>
     <string name="account_delete_failed">Ara mateix no hem pogut eliminar el compte. Ho tornes a provar?</string>
     <string name="account_sign_in_prompt">Inicia sessió per veure el teu pla i els crèdits.</string>
@@ -425,9 +420,8 @@
     <string name="home_says">%1$s diu:</string>
     <string name="home_my_side">La meva versió:</string>
     <string name="home_other_side">La versió de l\'altra persona:</string>
-    <string name="appeal_lead">Hi falta alguna cosa o hi ha algun error? Afegeix-ho un cop i els jutges ho tornaran a mirar tot. Costa 1 veredicte.</string>
-    <string name="appeal_label">El teu context</string>
-    <string name="appeal_placeholder">Què s\'han deixat els jutges?</string>
+    <string name="appeal_lead">Gasta 1 veredicte.</string>
+    <string name="appeal_placeholder">Què s\'han deixat els jutges? Un fet, un missatge o el que realment vau acordar.</string>
     <string name="appeal_submit">Torna a jutjar amb el meu context</string>
     <string name="appeal_sending">Anonimitzant el teu context…</string>
     <string name="appeal_judging">Els jutges ho tornen a mirar tot…</string>
@@ -447,7 +441,6 @@
     <string name="appeal_previous">Veredicte anterior</string>
     <string name="appeal_failed">No s\'ha pogut tornar a jutjar. T\'hem tornat el crèdit; ho pots tornar a provar.</string>
     <string name="appeal_refused">Els jutges no han volgut tornar a jutjar amb aquest context. T\'hem tornat el crèdit.</string>
-    <string name="appeal_lead_verdict">Hi falta alguna cosa o hi ha algun error? Afegeix-ho i els jutges ho tornaran a mirar tot. Cada vegada costa 1 veredicte, fins a dues vegades per veredicte.</string>
     <string name="appeal_history">Historial del veredicte</string>
     <string name="pricing_premium_f5">Captures com a prova, llegides i després descartades, sense cost addicional</string>
     <string name="pricing_premium_f6">Afegeix context després d\'un veredicte i fes que es torni a jutjar (1 veredicte)</string>
@@ -593,7 +586,6 @@
     </plurals>
     <string name="app_history_offline_remove">No tens connexió. Per eliminar cal estar connectat.</string>
     <string name="app_pricing_free_account">Inicia sessió amb Apple, Google o el correu</string>
-    <string name="app_context_label">Context (opcional)</string>
     <string name="app_pricing_context">Imatges de context, llegides i després esborrades, sense cost addicional</string>
     <string name="app_pricing_headline">El primer veredicte, et convidem.</string>
     <string name="app_pricing_sub">Crea un compte i el primer veredicte és gratis, amb totes les funcions. Després, tria un paquet o passa\'t al pla mensual.</string>
@@ -716,9 +708,7 @@
     <string name="app_verdict_claims">Com hi ha arribat cada part</string>
     <string name="app_verdict_back">Veredicte</string>
     <string name="app_appeal_title">Afegeix context i apel·la</string>
-    <string name="app_appeal_intro">Els jutges s\'han deixat alguna cosa? Afegeix-la i tornaran a jutjar. El primer veredicte queda registrat.</string>
-    <string name="app_appeal_ask">Què haurien de saber?</string>
-    <string name="app_appeal_placeholder">Un fet, un missatge o el que realment vau acordar.</string>
+    <string name="app_appeal_placeholder">Què s\'han deixat els jutges? Un fet, un missatge o el que realment vau acordar.</string>
     <string name="app_appeal_cost">Gasta 1 veredicte. Pots fer-ho dues vegades per veredicte (restants: %1$s).</string>
     <string name="app_appeal_cost_case">Gasta 1 veredicte. Pots fer-ho un cop per cas.</string>
     <string name="app_appeal_submit">Torna a jutjar</string>

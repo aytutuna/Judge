@@ -192,8 +192,7 @@
     <string name="signin_create_note">Chúng tôi sẽ gửi cho bạn một mã qua email để xác nhận địa chỉ này. Bạn chỉ cần làm một lần.</string>
     <string name="signin_password_choose">Bạn đã đăng nhập. Hãy chọn một mật khẩu cho lần sau.</string>
     <string name="signin_password_save">Lưu mật khẩu</string>
-    <string name="signin_password_save_failed">Bạn đã đăng nhập, nhưng chúng tôi không lưu được mật khẩu. Hãy thử lại, hoặc đặt sau trong Cài đặt.</string>
-    <string name="signin_password_skip">Bỏ qua lúc này</string>
+    <string name="signin_password_save_failed">Chúng tôi không lưu được mật khẩu. Hãy thử lại.</string>
     <string name="signin_password_submit">Đăng nhập</string>
     <string name="signin_provider_unavailable">Chưa khả dụng</string>
     <string name="signin_failed">Chưa đăng nhập được. Bạn thử lại nhé?</string>
@@ -212,10 +211,6 @@
     <string name="account_delete">Xóa tài khoản</string>
     <string name="account_delete_confirm">Xóa tài khoản của bạn? Lượt, gói và thông tin đăng nhập sẽ bị xóa. Các phán quyết và phần của bạn trong các vụ sẽ bị gỡ: nội dung bạn viết và các tên bị xóa, liên kết chia sẻ cũng ngừng hoạt động.</string>
     <string name="account_delete_yes">Có, xóa đi</string>
-    <string name="account_password_set">Đặt mật khẩu</string>
-    <string name="account_password_change">Đổi mật khẩu</string>
-    <string name="account_password_current">Mật khẩu hiện tại</string>
-    <string name="account_password_saved">Đã lưu mật khẩu.</string>
     <string name="account_delete_cancel">Giữ tài khoản</string>
     <string name="account_delete_failed">Chưa xóa được tài khoản lúc này. Bạn thử lại nhé?</string>
     <string name="account_sign_in_prompt">Đăng nhập để xem gói và số lượt của bạn.</string>
@@ -409,9 +404,8 @@
     <string name="home_says">%1$s nói:</string>
     <string name="home_my_side">Phía tôi:</string>
     <string name="home_other_side">Phía bên kia:</string>
-    <string name="appeal_lead">Thiếu hoặc sai gì à? Bổ sung một lần và ban giám khảo sẽ xem lại toàn bộ. Tốn 1 lượt.</string>
-    <string name="appeal_label">Thông tin bổ sung</string>
-    <string name="appeal_placeholder">Ban giám khảo đã bỏ sót điều gì?</string>
+    <string name="appeal_lead">Dùng 1 lượt.</string>
+    <string name="appeal_placeholder">Ban giám khảo đã bỏ sót điều gì? Một sự thật, một tin nhắn hoặc điều hai bên đã thật sự thỏa thuận.</string>
     <string name="appeal_submit">Xét lại với thông tin của tôi</string>
     <string name="appeal_sending">Đang ẩn tên trong thông tin bổ sung…</string>
     <string name="appeal_judging">Ban giám khảo đang xem lại toàn bộ…</string>
@@ -431,7 +425,6 @@
     <string name="appeal_previous">Phán quyết trước</string>
     <string name="appeal_failed">Chưa xét lại được. Lượt của bạn đã được hoàn lại; bạn có thể thử lại.</string>
     <string name="appeal_refused">Ban giám khảo không chịu xét lại với thông tin đó. Lượt của bạn đã được hoàn lại.</string>
-    <string name="appeal_lead_verdict">Thiếu hoặc sai gì à? Bổ sung vào và ban giám khảo sẽ xem lại toàn bộ. Mỗi lần tốn 1 lượt, tối đa hai lần cho một phán quyết.</string>
     <string name="appeal_history">Lịch sử phán quyết</string>
     <string name="pricing_premium_f5">Bằng chứng ảnh chụp màn hình, đọc xong là bỏ, không tốn thêm</string>
     <string name="pricing_premium_f6">Bổ sung thông tin sau phán quyết để được xét lại (1 lượt)</string>
@@ -561,7 +554,6 @@
     </plurals>
     <string name="app_history_offline_remove">Bạn đang mất mạng. Cần có kết nối mới gỡ được.</string>
     <string name="app_pricing_free_account">Đăng nhập bằng Apple, Google hoặc email</string>
-    <string name="app_context_label">Thông tin thêm (không bắt buộc)</string>
     <string name="app_pricing_context">Ảnh thông tin thêm được đọc rồi bỏ đi, không tốn thêm phí</string>
     <string name="app_pricing_headline">Phán quyết đầu tiên, chúng tôi mời.</string>
     <string name="app_pricing_sub">Tạo tài khoản là có ngay phán quyết đầu tiên miễn phí, đủ mọi tính năng. Sau đó, chọn một gói lượt hoặc dùng gói tháng.</string>
@@ -682,9 +674,7 @@
     <string name="app_verdict_claims">Mỗi bên đi đến kết luận thế nào</string>
     <string name="app_verdict_back">Phán quyết</string>
     <string name="app_appeal_title">Bổ sung thông tin và xét lại</string>
-    <string name="app_appeal_intro">Ban giám khảo bỏ sót điều gì? Bổ sung vào và họ sẽ phân xử lại. Phán quyết đầu tiên vẫn được lưu lại.</string>
-    <string name="app_appeal_ask">Họ cần biết thêm điều gì?</string>
-    <string name="app_appeal_placeholder">Một sự thật, một tin nhắn hoặc điều hai bên đã thật sự thỏa thuận.</string>
+    <string name="app_appeal_placeholder">Ban giám khảo đã bỏ sót điều gì? Một sự thật, một tin nhắn hoặc điều hai bên đã thật sự thỏa thuận.</string>
     <string name="app_appeal_cost">Dùng 1 lượt. Mỗi phán quyết được bổ sung tối đa hai lần; bạn còn %1$s lần.</string>
     <string name="app_appeal_cost_case">Dùng 1 lượt. Mỗi vụ chỉ được bổ sung một lần.</string>
     <string name="app_appeal_submit">Phân xử lại</string>

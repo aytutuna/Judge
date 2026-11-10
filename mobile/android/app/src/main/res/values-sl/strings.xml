@@ -207,8 +207,7 @@
     <string name="signin_create_note">Po e-pošti vam bomo poslali kodo za potrditev tega naslova. To morate storiti le enkrat.</string>
     <string name="signin_password_choose">Prijavljeni ste. Izberite geslo za naslednjič.</string>
     <string name="signin_password_save">Shrani geslo</string>
-    <string name="signin_password_save_failed">Prijavljeni ste, vendar gesla nismo mogli shraniti. Poskusite znova ali ga nastavite pozneje v Nastavitvah.</string>
-    <string name="signin_password_skip">Zaenkrat preskoči</string>
+    <string name="signin_password_save_failed">Gesla nismo mogli shraniti. Poskusite znova.</string>
     <string name="signin_password_submit">Prijavi se</string>
     <string name="signin_provider_unavailable">Še ni na voljo</string>
     <string name="signin_failed">Prijava ni uspela. Poskusiš znova?</string>
@@ -227,10 +226,6 @@
     <string name="account_delete">Izbriši račun</string>
     <string name="account_delete_confirm">Želiš izbrisati račun? Krediti, naročnina in podatki za prijavo se izbrišejo. Tvoje razsodbe in tvoje plati v sporih se odstranijo: napisano besedilo in imena se izbrišejo, njihove povezave za deljenje pa prenehajo delovati.</string>
     <string name="account_delete_yes">Da, izbriši</string>
-    <string name="account_password_set">Nastavi geslo</string>
-    <string name="account_password_change">Spremeni geslo</string>
-    <string name="account_password_current">Trenutno geslo</string>
-    <string name="account_password_saved">Geslo je shranjeno.</string>
     <string name="account_delete_cancel">Obdrži račun</string>
     <string name="account_delete_failed">Računa trenutno nismo mogli izbrisati. Poskusiš znova?</string>
     <string name="account_sign_in_prompt">Prijavi se in poglej svojo naročnino in kredite.</string>
@@ -433,9 +428,8 @@
     <string name="home_says">%1$s pravi:</string>
     <string name="home_my_side">Moja plat:</string>
     <string name="home_other_side">Plat druge osebe:</string>
-    <string name="appeal_lead">Kaj manjka ali je narobe? Dodaj enkrat in sodniki bodo znova pregledali vse. Stane 1 razsodbo.</string>
-    <string name="appeal_label">Tvoj kontekst</string>
-    <string name="appeal_placeholder">Kaj so sodniki spregledali?</string>
+    <string name="appeal_lead">Porabi 1 razsodbo.</string>
+    <string name="appeal_placeholder">Kaj so sodniki spregledali? Dejstvo, sporočilo ali to, kar je bilo v resnici dogovorjeno.</string>
     <string name="appeal_submit">Znova razsodi s tem</string>
     <string name="appeal_sending">Anonimiziramo tvoj kontekst…</string>
     <string name="appeal_judging">Sodniki znova pregledujejo vse…</string>
@@ -455,7 +449,6 @@
     <string name="appeal_previous">Prejšnja razsodba</string>
     <string name="appeal_failed">Ponovna presoja ni uspela. Kredit ti je vrnjen; lahko poskusiš znova.</string>
     <string name="appeal_refused">Sodniki s tem kontekstom niso hoteli znova razsojati. Kredit ti je vrnjen.</string>
-    <string name="appeal_lead_verdict">Kaj manjka ali je narobe? Dodaj in sodniki bodo znova pregledali vse. Vsakič stane 1 razsodbo, največ dvakrat na razsodbo.</string>
     <string name="appeal_history">Zgodovina razsodbe</string>
     <string name="pricing_premium_f5">Dokazi s posnetkov zaslona: preberemo jih in zavržemo, brez doplačila</string>
     <string name="pricing_premium_f6">Dodaj kontekst po razsodbi in dobi ponovno presojo (1 razsodba)</string>
@@ -609,7 +602,6 @@
     </plurals>
     <string name="app_history_offline_remove">Ni povezave s spletom. Za odstranitev jo potrebuješ.</string>
     <string name="app_pricing_free_account">Prijavi se z Apple, Googlom ali e-pošto</string>
-    <string name="app_context_label">Kontekst (neobvezno)</string>
     <string name="app_pricing_context">Slike konteksta se preberejo in zavržejo, brez dodatnih stroškov</string>
     <string name="app_pricing_headline">Prva razsodba gre na naš račun.</string>
     <string name="app_pricing_sub">Ustvari račun in prva razsodba je brezplačna, z vsemi funkcijami. Potem izberi paket ali mesečno naročnino.</string>
@@ -733,9 +725,7 @@
     <string name="app_verdict_claims">Kako je vsaka plat prišla do sklepa</string>
     <string name="app_verdict_back">Razsodba</string>
     <string name="app_appeal_title">Dodaj kontekst za ponovno presojo</string>
-    <string name="app_appeal_intro">So sodniki kaj spregledali? Dodaj to in znova bodo razsodili. Prva razsodba ostane zabeležena.</string>
-    <string name="app_appeal_ask">Kaj bi morali vedeti?</string>
-    <string name="app_appeal_placeholder">Dejstvo, sporočilo ali to, kar je bilo v resnici dogovorjeno.</string>
+    <string name="app_appeal_placeholder">Kaj so sodniki spregledali? Dejstvo, sporočilo ali to, kar je bilo v resnici dogovorjeno.</string>
     <string name="app_appeal_cost">Porabi 1 razsodbo. Pri eni razsodbi lahko to narediš dvakrat – še na voljo: %1$s.</string>
     <string name="app_appeal_cost_case">Porabi 1 razsodbo. Pri enem sporu lahko to narediš enkrat.</string>
     <string name="app_appeal_submit">Znova razsodi</string>

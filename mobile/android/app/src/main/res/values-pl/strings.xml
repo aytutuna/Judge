@@ -207,8 +207,7 @@
     <string name="signin_create_note">Wyślemy ci e-mailem kod, aby potwierdzić ten adres. Wystarczy to zrobić raz.</string>
     <string name="signin_password_choose">Jesteś zalogowany. Wybierz hasło na następny raz.</string>
     <string name="signin_password_save">Zapisz hasło</string>
-    <string name="signin_password_save_failed">Jesteś zalogowany, ale nie udało się zapisać hasła. Spróbuj ponownie albo ustaw je później w Ustawieniach.</string>
-    <string name="signin_password_skip">Pomiń na razie</string>
+    <string name="signin_password_save_failed">Nie udało się zapisać hasła. Spróbuj ponownie.</string>
     <string name="signin_password_submit">Zaloguj się</string>
     <string name="signin_provider_unavailable">Jeszcze niedostępne</string>
     <string name="signin_failed">Nie udało się zalogować. Spróbujesz jeszcze raz?</string>
@@ -227,10 +226,6 @@
     <string name="account_delete">Usuń konto</string>
     <string name="account_delete_confirm">Usunąć konto? Usuniemy twoją pulę werdyktów, plan i dane logowania. Twoje werdykty i twoje wersje w sprawach też znikną: wymażemy twoje teksty i imiona, a linki do udostępniania przestaną działać.</string>
     <string name="account_delete_yes">Tak, usuń</string>
-    <string name="account_password_set">Ustaw hasło</string>
-    <string name="account_password_change">Zmień hasło</string>
-    <string name="account_password_current">Obecne hasło</string>
-    <string name="account_password_saved">Hasło zapisane.</string>
     <string name="account_delete_cancel">Zostaw moje konto</string>
     <string name="account_delete_failed">Nie udało się teraz usunąć konta. Spróbujesz jeszcze raz?</string>
     <string name="account_sign_in_prompt">Zaloguj się, żeby zobaczyć swój plan i pulę werdyktów.</string>
@@ -433,9 +428,8 @@
     <string name="home_says">%1$s mówi:</string>
     <string name="home_my_side">Moja wersja:</string>
     <string name="home_other_side">Wersja drugiej strony:</string>
-    <string name="appeal_lead">Czegoś brakuje albo coś się nie zgadza? Możesz to raz dopisać, a sędziowie przyjrzą się wszystkiemu od nowa. Kosztuje to 1 werdykt.</string>
-    <string name="appeal_label">Twój kontekst</string>
-    <string name="appeal_placeholder">Co umknęło sędziom?</string>
+    <string name="appeal_lead">Zużywa 1 werdykt.</string>
+    <string name="appeal_placeholder">Co umknęło sędziom? Fakt, wiadomość albo to, na co naprawdę się umówiliście.</string>
     <string name="appeal_submit">Oceń ponownie z kontekstem</string>
     <string name="appeal_sending">Anonimizujemy twój kontekst…</string>
     <string name="appeal_judging">Sędziowie przyglądają się wszystkiemu od nowa…</string>
@@ -455,7 +449,6 @@
     <string name="appeal_previous">Wcześniejszy werdykt</string>
     <string name="appeal_failed">Ponowna ocena się nie udała. Werdykt wrócił do twojej puli, możesz spróbować jeszcze raz.</string>
     <string name="appeal_refused">Sędziowie odmówili ponownej oceny z tym kontekstem. Werdykt wrócił do twojej puli.</string>
-    <string name="appeal_lead_verdict">Czegoś brakuje albo coś się nie zgadza? Dodaj to, a sędziowie przyjrzą się wszystkiemu od nowa. Każde dodanie kontekstu kosztuje 1 werdykt i można je zrobić najwyżej dwa razy na werdykt.</string>
     <string name="appeal_history">Historia werdyktu</string>
     <string name="pricing_premium_f5">Zrzuty ekranu jako dowody – odczytane, a potem usunięte, bez dopłat</string>
     <string name="pricing_premium_f6">Dodanie kontekstu po werdykcie i ponowna ocena (1 werdykt)</string>
@@ -609,7 +602,6 @@
     </plurals>
     <string name="app_history_offline_remove">Jesteś offline. Usuwanie wymaga połączenia z internetem.</string>
     <string name="app_pricing_free_account">Zaloguj się przez Apple, Google albo e-mail</string>
-    <string name="app_context_label">Kontekst (opcjonalnie)</string>
     <string name="app_pricing_context">Obrazy z kontekstem są czytane, a potem wyrzucane, bez dodatkowych kosztów</string>
     <string name="app_pricing_headline">Pierwszy werdykt na nasz koszt.</string>
     <string name="app_pricing_sub">Załóż konto, a pierwszy werdykt dostaniesz za darmo, ze wszystkimi funkcjami. Potem wybierz pakiet albo plan miesięczny.</string>
@@ -733,9 +725,7 @@
     <string name="app_verdict_claims">Jak każda strona do tego doszła</string>
     <string name="app_verdict_back">Werdykt</string>
     <string name="app_appeal_title">Dodaj kontekst i odwołaj się</string>
-    <string name="app_appeal_intro">Sędziowie coś przeoczyli? Dodaj to, a ocenią sprawę jeszcze raz. Pierwszy werdykt zostaje w historii.</string>
-    <string name="app_appeal_ask">Co powinni wiedzieć?</string>
-    <string name="app_appeal_placeholder">Fakt, wiadomość albo to, na co naprawdę się umówiliście.</string>
+    <string name="app_appeal_placeholder">Co umknęło sędziom? Fakt, wiadomość albo to, na co naprawdę się umówiliście.</string>
     <string name="app_appeal_cost">Zużywa 1 werdykt. Przy każdym werdykcie możesz to zrobić dwa razy (zostało: %1$s).</string>
     <string name="app_appeal_cost_case">Zużywa 1 werdykt. W każdej sprawie możesz to zrobić tylko raz.</string>
     <string name="app_appeal_submit">Oceń ponownie</string>

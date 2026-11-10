@@ -197,8 +197,7 @@
     <string name="signin_create_note">We\'ll email you a code to confirm this address. You only need to do this once.</string>
     <string name="signin_password_choose">You\'re signed in. Choose a password for next time.</string>
     <string name="signin_password_save">Save password</string>
-    <string name="signin_password_save_failed">You\'re signed in, but we couldn\'t save the password. Try again, or set it later in Settings.</string>
-    <string name="signin_password_skip">Skip for now</string>
+    <string name="signin_password_save_failed">We couldn\'t save the password. Try again.</string>
     <string name="signin_password_submit">Sign in</string>
     <string name="signin_provider_unavailable">Not available yet</string>
     <string name="signin_failed">We couldn\'t sign you in. Mind trying again?</string>
@@ -217,10 +216,6 @@
     <string name="account_delete">Delete account</string>
     <string name="account_delete_confirm">Delete your account? Your credits, plan and sign-in details are deleted. Your verdicts and your sides of cases are removed: what you wrote and the names are erased, and their share links stop working.</string>
     <string name="account_delete_yes">Yes, delete it</string>
-    <string name="account_password_set">Set a password</string>
-    <string name="account_password_change">Change password</string>
-    <string name="account_password_current">Current password</string>
-    <string name="account_password_saved">Password saved.</string>
     <string name="account_delete_cancel">Keep my account</string>
     <string name="account_delete_failed">We couldn\'t delete the account just now. Mind trying again?</string>
     <string name="account_sign_in_prompt">Sign in to see your plan and credits.</string>
@@ -417,9 +412,8 @@
     <string name="home_says">%1$s says:</string>
     <string name="home_my_side">My side:</string>
     <string name="home_other_side">Their side:</string>
-    <string name="appeal_lead">Something missing or wrong? Add it once and the judges look at everything again. Costs 1 verdict.</string>
-    <string name="appeal_label">Your context</string>
-    <string name="appeal_placeholder">What did the judges miss?</string>
+    <string name="appeal_lead">Uses 1 verdict.</string>
+    <string name="appeal_placeholder">What did the judges miss? A fact, a message, or what was actually agreed.</string>
     <string name="appeal_submit">Re-judge with my context</string>
     <string name="appeal_sending">Anonymizing your context…</string>
     <string name="appeal_judging">The judges are looking at everything again…</string>
@@ -439,7 +433,6 @@
     <string name="appeal_previous">Earlier verdict</string>
     <string name="appeal_failed">The re-judge didn\'t go through. Your credit is back; you can try again.</string>
     <string name="appeal_refused">The judges wouldn\'t re-judge with that context. Your credit is back.</string>
-    <string name="appeal_lead_verdict">Something missing or wrong? Add it and the judges look at everything again. Each time costs 1 verdict, up to twice per verdict.</string>
     <string name="appeal_history">Verdict history</string>
     <string name="pricing_premium_f5">Screenshot evidence, read and then thrown away, at no extra cost</string>
     <string name="pricing_premium_f6">Add context after a verdict and get it re-judged (1 verdict)</string>
@@ -577,7 +570,6 @@
     </plurals>
     <string name="app_history_offline_remove">You\'re offline. Removing needs a connection.</string>
     <string name="app_pricing_free_account">Sign in with Apple, Google or email</string>
-    <string name="app_context_label">Context (optional)</string>
     <string name="app_pricing_context">Context images, read and then thrown away, at no extra cost</string>
     <string name="app_pricing_headline">Your first verdict is on us.</string>
     <string name="app_pricing_sub">Create an account and your first verdict is free, with every feature. After that, pick a pack or go monthly.</string>
@@ -699,9 +691,7 @@
     <string name="app_verdict_claims">How each side got there</string>
     <string name="app_verdict_back">Ruling</string>
     <string name="app_appeal_title">Add context &amp; appeal</string>
-    <string name="app_appeal_intro">Something the judges missed? Add it and they rule again. The first ruling stays on record.</string>
-    <string name="app_appeal_ask">What should they know?</string>
-    <string name="app_appeal_placeholder">A fact, a message, or what was actually agreed.</string>
+    <string name="app_appeal_placeholder">What did the judges miss? A fact, a message, or what was actually agreed.</string>
     <string name="app_appeal_cost">Uses 1 verdict. You can do this twice per ruling; %1$s left.</string>
     <string name="app_appeal_cost_case">Uses 1 verdict. You can do this once per case.</string>
     <string name="app_appeal_submit">Rule again</string>

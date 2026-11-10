@@ -202,8 +202,7 @@
     <string name="signin_create_note">Vamos enviar um código por e-mail para confirmar este endereço. Você só precisa fazer isso uma vez.</string>
     <string name="signin_password_choose">Você entrou. Escolha uma senha para a próxima vez.</string>
     <string name="signin_password_save">Salvar senha</string>
-    <string name="signin_password_save_failed">Você entrou, mas não conseguimos salvar a senha. Tente de novo ou defina-a depois em Ajustes.</string>
-    <string name="signin_password_skip">Pular por enquanto</string>
+    <string name="signin_password_save_failed">Não conseguimos salvar a senha. Tente de novo.</string>
     <string name="signin_password_submit">Entrar</string>
     <string name="signin_provider_unavailable">Ainda não disponível</string>
     <string name="signin_failed">Não conseguimos fazer seu login. Pode tentar de novo?</string>
@@ -222,10 +221,6 @@
     <string name="account_delete">Excluir conta</string>
     <string name="account_delete_confirm">Excluir sua conta? Seus créditos, seu plano e seus dados de login são apagados. Seus vereditos e o seu lado em cada caso são removidos: o que você escreveu e os nomes são apagados, e os links de compartilhamento param de funcionar.</string>
     <string name="account_delete_yes">Sim, excluir</string>
-    <string name="account_password_set">Definir uma senha</string>
-    <string name="account_password_change">Alterar senha</string>
-    <string name="account_password_current">Senha atual</string>
-    <string name="account_password_saved">Senha salva.</string>
     <string name="account_delete_cancel">Manter minha conta</string>
     <string name="account_delete_failed">Não conseguimos excluir a conta agora. Pode tentar de novo?</string>
     <string name="account_sign_in_prompt">Entre para ver seu plano e seus créditos.</string>
@@ -425,9 +420,8 @@
     <string name="home_says">%1$s diz:</string>
     <string name="home_my_side">Meu lado:</string>
     <string name="home_other_side">O lado da outra pessoa:</string>
-    <string name="appeal_lead">Faltou algo ou tem algo errado? Adicione uma vez e os juízes olham tudo de novo. Custa 1 veredito.</string>
-    <string name="appeal_label">Seu contexto</string>
-    <string name="appeal_placeholder">O que os juízes deixaram passar?</string>
+    <string name="appeal_lead">Usa 1 veredito.</string>
+    <string name="appeal_placeholder">O que os juízes deixaram passar? Um fato, uma mensagem ou o que foi combinado de verdade.</string>
     <string name="appeal_submit">Rejulgar com meu contexto</string>
     <string name="appeal_sending">Anonimizando seu contexto…</string>
     <string name="appeal_judging">Os juízes estão olhando tudo de novo…</string>
@@ -447,7 +441,6 @@
     <string name="appeal_previous">Veredito anterior</string>
     <string name="appeal_failed">O novo julgamento não foi concluído. Seu crédito voltou; você pode tentar de novo.</string>
     <string name="appeal_refused">Os juízes não quiseram rejulgar com esse contexto. Seu crédito voltou.</string>
-    <string name="appeal_lead_verdict">Faltou algo ou tem algo errado? Adicione e os juízes olham tudo de novo. Cada vez custa 1 veredito, até duas vezes por veredito.</string>
     <string name="appeal_history">Histórico do veredito</string>
     <string name="pricing_premium_f5">Prints como prova, lidos e depois descartados, sem custo extra</string>
     <string name="pricing_premium_f6">Adicione contexto depois de um veredito e peça um novo julgamento (1 veredito)</string>
@@ -593,7 +586,6 @@
     </plurals>
     <string name="app_history_offline_remove">Você está sem internet. Para remover, é preciso ter conexão.</string>
     <string name="app_pricing_free_account">Entre com Apple, Google ou e-mail</string>
-    <string name="app_context_label">Contexto (opcional)</string>
     <string name="app_pricing_context">Imagens de contexto são lidas e depois descartadas, sem custo extra</string>
     <string name="app_pricing_headline">Seu primeiro veredito é por nossa conta.</string>
     <string name="app_pricing_sub">Crie uma conta e seu primeiro veredito sai grátis, com todos os recursos. Depois, escolha um pacote ou vá de plano mensal.</string>
@@ -716,9 +708,7 @@
     <string name="app_verdict_claims">Como cada lado chegou lá</string>
     <string name="app_verdict_back">Veredito</string>
     <string name="app_appeal_title">Adicionar contexto e recorrer</string>
-    <string name="app_appeal_intro">Os juízes deixaram passar alguma coisa? Adicione e eles decidem de novo. O primeiro veredito fica registrado.</string>
-    <string name="app_appeal_ask">O que eles precisam saber?</string>
-    <string name="app_appeal_placeholder">Um fato, uma mensagem ou o que foi combinado de verdade.</string>
+    <string name="app_appeal_placeholder">O que os juízes deixaram passar? Um fato, uma mensagem ou o que foi combinado de verdade.</string>
     <string name="app_appeal_cost">Usa 1 veredito. Você pode fazer isso duas vezes por veredito. Restantes: %1$s.</string>
     <string name="app_appeal_cost_case">Usa 1 veredito. Você pode fazer isso uma vez por caso.</string>
     <string name="app_appeal_submit">Rejulgar</string>

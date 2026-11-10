@@ -197,8 +197,7 @@
     <string name="signin_create_note">इस पते की पुष्टि के लिए हम आपको ईमेल पर एक कोड भेजेंगे। यह बस एक बार करना होगा।</string>
     <string name="signin_password_choose">आप साइन इन हैं। अगली बार के लिए एक पासवर्ड चुनें।</string>
     <string name="signin_password_save">पासवर्ड सहेजें</string>
-    <string name="signin_password_save_failed">आप साइन इन हैं, लेकिन पासवर्ड सहेजा नहीं जा सका। फिर कोशिश करें, या बाद में सेटिंग में तय करें।</string>
-    <string name="signin_password_skip">अभी छोड़ें</string>
+    <string name="signin_password_save_failed">पासवर्ड सहेजा नहीं जा सका। फिर कोशिश करें।</string>
     <string name="signin_password_submit">साइन इन करें</string>
     <string name="signin_provider_unavailable">अभी उपलब्ध नहीं</string>
     <string name="signin_failed">साइन इन नहीं हो पाया। एक बार फिर कोशिश करें?</string>
@@ -217,10 +216,6 @@
     <string name="account_delete">अकाउंट डिलीट करें</string>
     <string name="account_delete_confirm">अपना अकाउंट डिलीट करें? आपके क्रेडिट, प्लान और साइन इन की जानकारी मिट जाएगी। आपके फ़ैसले और केस में आपकी बातें हटा दी जाएँगी: आपका लिखा हुआ और नाम मिट जाएँगे, और उनके शेयर लिंक काम करना बंद कर देंगे।</string>
     <string name="account_delete_yes">हाँ, डिलीट करें</string>
-    <string name="account_password_set">पासवर्ड तय करें</string>
-    <string name="account_password_change">पासवर्ड बदलें</string>
-    <string name="account_password_current">मौजूदा पासवर्ड</string>
-    <string name="account_password_saved">पासवर्ड सहेज लिया गया।</string>
     <string name="account_delete_cancel">अकाउंट रहने दें</string>
     <string name="account_delete_failed">अभी अकाउंट डिलीट नहीं हो पाया। एक बार फिर कोशिश करें?</string>
     <string name="account_sign_in_prompt">अपना प्लान और क्रेडिट देखने के लिए साइन इन करें।</string>
@@ -417,9 +412,8 @@
     <string name="home_says">%1$s का कहना है:</string>
     <string name="home_my_side">मेरी बात:</string>
     <string name="home_other_side">उनकी बात:</string>
-    <string name="appeal_lead">कुछ छूट गया या ग़लत है? एक बार जोड़ें और जज सब कुछ फिर से देखेंगे। इसमें 1 फ़ैसला लगता है।</string>
-    <string name="appeal_label">आपकी जानकारी</string>
-    <string name="appeal_placeholder">जजों से क्या छूट गया?</string>
+    <string name="appeal_lead">इसमें 1 फ़ैसला लगता है।</string>
+    <string name="appeal_placeholder">जजों से क्या छूट गया? कोई तथ्य, कोई मैसेज, या असल में क्या तय हुआ था।</string>
     <string name="appeal_submit">मेरी जानकारी के साथ दोबारा फ़ैसला करें</string>
     <string name="appeal_sending">आपकी जानकारी से नाम हटा रहे हैं…</string>
     <string name="appeal_judging">जज सब कुछ फिर से देख रहे हैं…</string>
@@ -439,7 +433,6 @@
     <string name="appeal_previous">पिछला फ़ैसला</string>
     <string name="appeal_failed">दोबारा फ़ैसला नहीं हो पाया। आपका क्रेडिट वापस आ गया है; आप फिर कोशिश कर सकते हैं।</string>
     <string name="appeal_refused">जजों ने इस जानकारी के साथ दोबारा फ़ैसला करने से मना कर दिया। आपका क्रेडिट वापस आ गया है।</string>
-    <string name="appeal_lead_verdict">कुछ छूट गया या ग़लत है? जोड़ दें, जज सब कुछ फिर से देखेंगे। हर बार 1 फ़ैसला लगता है, एक फ़ैसले पर ज़्यादा से ज़्यादा दो बार।</string>
     <string name="appeal_history">फ़ैसलों का इतिहास</string>
     <string name="pricing_premium_f5">स्क्रीनशॉट सबूत: पढ़े जाते हैं, फिर फेंक दिए जाते हैं, बिना किसी अलग ख़र्च के</string>
     <string name="pricing_premium_f6">फ़ैसले के बाद जानकारी जोड़ें और दोबारा फ़ैसला करवाएँ (1 फ़ैसला)</string>
@@ -577,7 +570,6 @@
     </plurals>
     <string name="app_history_offline_remove">आप ऑफ़लाइन हैं। हटाने के लिए इंटरनेट कनेक्शन चाहिए।</string>
     <string name="app_pricing_free_account">Apple, Google या ईमेल से साइन इन करें</string>
-    <string name="app_context_label">जानकारी (वैकल्पिक)</string>
     <string name="app_pricing_context">जानकारी की तस्वीरें पढ़कर फेंक दी जाती हैं, बिना किसी अतिरिक्त खर्च के</string>
     <string name="app_pricing_headline">पहला फ़ैसला हमारी तरफ़ से।</string>
     <string name="app_pricing_sub">अकाउंट बनाइए और पहला फ़ैसला मुफ़्त पाइए, सारी सुविधाओं के साथ। उसके बाद कोई पैक चुनें या मासिक प्लान लें।</string>
@@ -699,9 +691,7 @@
     <string name="app_verdict_claims">हर पक्ष यहाँ तक कैसे पहुँचा</string>
     <string name="app_verdict_back">फ़ैसला</string>
     <string name="app_appeal_title">जानकारी जोड़कर अपील करें</string>
-    <string name="app_appeal_intro">जजों से कुछ छूट गया? उसे जोड़ें और जज दोबारा फ़ैसला करेंगे। पहला फ़ैसला भी रिकॉर्ड में रहेगा।</string>
-    <string name="app_appeal_ask">जजों को क्या पता होना चाहिए?</string>
-    <string name="app_appeal_placeholder">कोई तथ्य, कोई मैसेज, या असल में क्या तय हुआ था।</string>
+    <string name="app_appeal_placeholder">जजों से क्या छूट गया? कोई तथ्य, कोई मैसेज, या असल में क्या तय हुआ था।</string>
     <string name="app_appeal_cost">इसमें 1 फ़ैसला लगता है। एक फ़ैसले पर आप ऐसा दो बार कर सकते हैं; अभी %1$s बार बाकी।</string>
     <string name="app_appeal_cost_case">इसमें 1 फ़ैसला लगता है। एक केस में आप ऐसा एक बार कर सकते हैं।</string>
     <string name="app_appeal_submit">दोबारा फ़ैसला करवाएँ</string>

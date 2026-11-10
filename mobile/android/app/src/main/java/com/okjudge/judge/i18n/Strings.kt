@@ -260,7 +260,6 @@ class Strings(private val res: Resources) {
     val signinPasswordChoose: String get() = res.getString(R.string.signin_password_choose)
     val signinPasswordSave: String get() = res.getString(R.string.signin_password_save)
     val signinPasswordSaveFailed: String get() = res.getString(R.string.signin_password_save_failed)
-    val signinPasswordSkip: String get() = res.getString(R.string.signin_password_skip)
     val signinPasswordSubmit: String get() = res.getString(R.string.signin_password_submit)
     val signinProviderUnavailable: String get() = res.getString(R.string.signin_provider_unavailable)
     val signinFailed: String get() = res.getString(R.string.signin_failed)
@@ -279,10 +278,6 @@ class Strings(private val res: Resources) {
     val accountDelete: String get() = res.getString(R.string.account_delete)
     val accountDeleteConfirm: String get() = res.getString(R.string.account_delete_confirm)
     val accountDeleteYes: String get() = res.getString(R.string.account_delete_yes)
-    val accountPasswordSet: String get() = res.getString(R.string.account_password_set)
-    val accountPasswordChange: String get() = res.getString(R.string.account_password_change)
-    val accountPasswordCurrent: String get() = res.getString(R.string.account_password_current)
-    val accountPasswordSaved: String get() = res.getString(R.string.account_password_saved)
     val accountDeleteCancel: String get() = res.getString(R.string.account_delete_cancel)
     val accountDeleteFailed: String get() = res.getString(R.string.account_delete_failed)
     val accountSignInPrompt: String get() = res.getString(R.string.account_sign_in_prompt)
@@ -471,7 +466,6 @@ class Strings(private val res: Resources) {
     val homeMySide: String get() = res.getString(R.string.home_my_side)
     val homeOtherSide: String get() = res.getString(R.string.home_other_side)
     val appealLead: String get() = res.getString(R.string.appeal_lead)
-    val appealLabel: String get() = res.getString(R.string.appeal_label)
     val appealPlaceholder: String get() = res.getString(R.string.appeal_placeholder)
     val appealSubmit: String get() = res.getString(R.string.appeal_submit)
     val appealSending: String get() = res.getString(R.string.appeal_sending)
@@ -492,7 +486,6 @@ class Strings(private val res: Resources) {
     val appealPrevious: String get() = res.getString(R.string.appeal_previous)
     val appealFailed: String get() = res.getString(R.string.appeal_failed)
     val appealRefused: String get() = res.getString(R.string.appeal_refused)
-    val appealLeadVerdict: String get() = res.getString(R.string.appeal_lead_verdict)
     val appealHistory: String get() = res.getString(R.string.appeal_history)
     val pricingPremiumF5: String get() = res.getString(R.string.pricing_premium_f5)
     val pricingPremiumF6: String get() = res.getString(R.string.pricing_premium_f6)
@@ -606,7 +599,6 @@ class Strings(private val res: Resources) {
     fun appHistoryRemoveFailed(n: Int): String = res.getQuantityString(R.plurals.app_history_remove_failed, n, n.toString())
     val appHistoryOfflineRemove: String get() = res.getString(R.string.app_history_offline_remove)
     val appPricingFreeAccount: String get() = res.getString(R.string.app_pricing_free_account)
-    val appContextLabel: String get() = res.getString(R.string.app_context_label)
     val appPricingContext: String get() = res.getString(R.string.app_pricing_context)
     val appPricingHeadline: String get() = res.getString(R.string.app_pricing_headline)
     val appPricingSub: String get() = res.getString(R.string.app_pricing_sub)
@@ -725,8 +717,6 @@ class Strings(private val res: Resources) {
     val appVerdictClaims: String get() = res.getString(R.string.app_verdict_claims)
     val appVerdictBack: String get() = res.getString(R.string.app_verdict_back)
     val appAppealTitle: String get() = res.getString(R.string.app_appeal_title)
-    val appAppealIntro: String get() = res.getString(R.string.app_appeal_intro)
-    val appAppealAsk: String get() = res.getString(R.string.app_appeal_ask)
     val appAppealPlaceholder: String get() = res.getString(R.string.app_appeal_placeholder)
     fun appAppealCost(left: String): String = res.getString(R.string.app_appeal_cost, left)
     val appAppealCostCase: String get() = res.getString(R.string.app_appeal_cost_case)
@@ -931,7 +921,6 @@ class Strings(private val res: Resources) {
             "signin.passwordChoose" -> R.string.signin_password_choose
             "signin.passwordSave" -> R.string.signin_password_save
             "signin.passwordSaveFailed" -> R.string.signin_password_save_failed
-            "signin.passwordSkip" -> R.string.signin_password_skip
             "signin.passwordSubmit" -> R.string.signin_password_submit
             "signin.providerUnavailable" -> R.string.signin_provider_unavailable
             "signin.failed" -> R.string.signin_failed
@@ -946,10 +935,6 @@ class Strings(private val res: Resources) {
             "account.delete" -> R.string.account_delete
             "account.deleteConfirm" -> R.string.account_delete_confirm
             "account.deleteYes" -> R.string.account_delete_yes
-            "account.passwordSet" -> R.string.account_password_set
-            "account.passwordChange" -> R.string.account_password_change
-            "account.passwordCurrent" -> R.string.account_password_current
-            "account.passwordSaved" -> R.string.account_password_saved
             "account.deleteCancel" -> R.string.account_delete_cancel
             "account.deleteFailed" -> R.string.account_delete_failed
             "account.signInPrompt" -> R.string.account_sign_in_prompt
@@ -1119,7 +1104,6 @@ class Strings(private val res: Resources) {
             "home.mySide" -> R.string.home_my_side
             "home.otherSide" -> R.string.home_other_side
             "appeal.lead" -> R.string.appeal_lead
-            "appeal.label" -> R.string.appeal_label
             "appeal.placeholder" -> R.string.appeal_placeholder
             "appeal.submit" -> R.string.appeal_submit
             "appeal.sending" -> R.string.appeal_sending
@@ -1139,7 +1123,6 @@ class Strings(private val res: Resources) {
             "appeal.previous" -> R.string.appeal_previous
             "appeal.failed" -> R.string.appeal_failed
             "appeal.refused" -> R.string.appeal_refused
-            "appeal.leadVerdict" -> R.string.appeal_lead_verdict
             "appeal.history" -> R.string.appeal_history
             "pricing.premium.f5" -> R.string.pricing_premium_f5
             "pricing.premium.f6" -> R.string.pricing_premium_f6
@@ -1240,7 +1223,6 @@ class Strings(private val res: Resources) {
             "app.history.phoneOnlyNote" -> R.string.app_history_phone_only_note
             "app.history.offlineRemove" -> R.string.app_history_offline_remove
             "app.pricing.free.account" -> R.string.app_pricing_free_account
-            "app.context.label" -> R.string.app_context_label
             "app.pricing.context" -> R.string.app_pricing_context
             "app.pricing.headline" -> R.string.app_pricing_headline
             "app.pricing.sub" -> R.string.app_pricing_sub
@@ -1347,8 +1329,6 @@ class Strings(private val res: Resources) {
             "app.verdict.claims" -> R.string.app_verdict_claims
             "app.verdict.back" -> R.string.app_verdict_back
             "app.appeal.title" -> R.string.app_appeal_title
-            "app.appeal.intro" -> R.string.app_appeal_intro
-            "app.appeal.ask" -> R.string.app_appeal_ask
             "app.appeal.placeholder" -> R.string.app_appeal_placeholder
             "app.appeal.costCase" -> R.string.app_appeal_cost_case
             "app.appeal.submit" -> R.string.app_appeal_submit

@@ -197,8 +197,7 @@
     <string name="signin_create_note">এই ঠিকানা নিশ্চিত করতে আমরা আপনাকে ইমেইলে একটি কোড পাঠাব। এটা শুধু একবারই করতে হবে।</string>
     <string name="signin_password_choose">আপনি সাইন ইন করেছেন। পরের বারের জন্য একটি পাসওয়ার্ড বেছে নিন।</string>
     <string name="signin_password_save">পাসওয়ার্ড সংরক্ষণ করুন</string>
-    <string name="signin_password_save_failed">আপনি সাইন ইন করেছেন, কিন্তু পাসওয়ার্ড সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন, অথবা পরে সেটিংসে ঠিক করুন।</string>
-    <string name="signin_password_skip">এখন বাদ দিন</string>
+    <string name="signin_password_save_failed">পাসওয়ার্ডটি সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন।</string>
     <string name="signin_password_submit">সাইন ইন</string>
     <string name="signin_provider_unavailable">এখনও পাওয়া যাচ্ছে না</string>
     <string name="signin_failed">সাইন ইন করানো গেল না। আরেকবার চেষ্টা করবেন?</string>
@@ -217,10 +216,6 @@
     <string name="account_delete">অ্যাকাউন্ট মুছুন</string>
     <string name="account_delete_confirm">অ্যাকাউন্ট মুছে ফেলবেন? আপনার ক্রেডিট, প্ল্যান আর সাইন-ইনের তথ্য মুছে যাবে। আপনার রায় আর মামলায় আপনার বক্তব্য সরিয়ে ফেলা হবে: আপনার লেখা আর নামগুলো মুছে যাবে, আর সেগুলোর শেয়ার লিংক কাজ করা বন্ধ করবে।</string>
     <string name="account_delete_yes">হ্যাঁ, মুছে ফেলুন</string>
-    <string name="account_password_set">পাসওয়ার্ড ঠিক করুন</string>
-    <string name="account_password_change">পাসওয়ার্ড বদলান</string>
-    <string name="account_password_current">বর্তমান পাসওয়ার্ড</string>
-    <string name="account_password_saved">পাসওয়ার্ড সংরক্ষিত হয়েছে।</string>
     <string name="account_delete_cancel">অ্যাকাউন্ট থাকুক</string>
     <string name="account_delete_failed">এই মুহূর্তে অ্যাকাউন্টটা মোছা গেল না। আরেকবার চেষ্টা করবেন?</string>
     <string name="account_sign_in_prompt">আপনার প্ল্যান আর ক্রেডিট দেখতে সাইন ইন করুন।</string>
@@ -417,9 +412,8 @@
     <string name="home_says">%1$s বলছে:</string>
     <string name="home_my_side">আমার বক্তব্য:</string>
     <string name="home_other_side">অন্যজনের বক্তব্য:</string>
-    <string name="appeal_lead">কিছু বাদ পড়েছে বা ভুল হয়েছে? একবার যোগ করুন, বিচারকেরা সবকিছু আবার দেখবেন। খরচ 1টি রায়।</string>
-    <string name="appeal_label">আপনার নতুন তথ্য</string>
-    <string name="appeal_placeholder">বিচারকেরা কী মিস করেছেন?</string>
+    <string name="appeal_lead">এতে 1টি রায় খরচ হয়।</string>
+    <string name="appeal_placeholder">বিচারকেরা কী মিস করেছেন? একটা তথ্য, একটা মেসেজ বা আসলে কী ঠিক হয়েছিল।</string>
     <string name="appeal_submit">নতুন তথ্যসহ আবার বিচার করান</string>
     <string name="appeal_sending">আপনার নতুন তথ্য থেকে নাম সরাচ্ছি…</string>
     <string name="appeal_judging">বিচারকেরা সবকিছু আবার দেখছেন…</string>
@@ -439,7 +433,6 @@
     <string name="appeal_previous">আগের রায়</string>
     <string name="appeal_failed">নতুন করে বিচার করা গেল না। আপনার ক্রেডিট ফেরত এসেছে; আবার চেষ্টা করতে পারেন।</string>
     <string name="appeal_refused">এই তথ্য নিয়ে বিচারকেরা আবার বিচার করতে রাজি হননি। আপনার ক্রেডিট ফেরত এসেছে।</string>
-    <string name="appeal_lead_verdict">কিছু বাদ পড়েছে বা ভুল হয়েছে? যোগ করুন, বিচারকেরা সবকিছু আবার দেখবেন। প্রতিবার খরচ 1টি রায়, একটা রায়ে সর্বোচ্চ দুবার।</string>
     <string name="appeal_history">রায়ের ইতিহাস</string>
     <string name="pricing_premium_f5">স্ক্রিনশট প্রমাণ, পড়ে নিয়ে ফেলে দেওয়া হয়, কোনো বাড়তি খরচ ছাড়া</string>
     <string name="pricing_premium_f6">রায়ের পর নতুন তথ্য যোগ করে আবার বিচার (1টি রায়)</string>
@@ -577,7 +570,6 @@
     </plurals>
     <string name="app_history_offline_remove">আপনি অফলাইনে আছেন। সরিয়ে ফেলতে ইন্টারনেট সংযোগ লাগবে।</string>
     <string name="app_pricing_free_account">Apple, Google বা ইমেইল দিয়ে সাইন ইন করুন</string>
-    <string name="app_context_label">নতুন তথ্য (ঐচ্ছিক)</string>
     <string name="app_pricing_context">নতুন তথ্যের ছবি পড়া হয়, তারপর মুছে ফেলা হয়, বাড়তি খরচ ছাড়াই</string>
     <string name="app_pricing_headline">প্রথম রায়টা আমাদের তরফ থেকে।</string>
     <string name="app_pricing_sub">অ্যাকাউন্ট খুললেই প্রথম রায় ফ্রি, সব ফিচারসহ। এরপর একটা প্যাক বেছে নিন বা মাসিক প্ল্যান নিন।</string>
@@ -699,9 +691,7 @@
     <string name="app_verdict_claims">প্রত্যেক পক্ষ কীভাবে সেখানে পৌঁছাল</string>
     <string name="app_verdict_back">রায়</string>
     <string name="app_appeal_title">নতুন তথ্য যোগ করে আপিল করুন</string>
-    <string name="app_appeal_intro">বিচারকেরা কিছু মিস করেছেন? সেটা যোগ করুন, তাঁরা আবার রায় দেবেন। প্রথম রায়টাও রেকর্ডে থেকে যাবে।</string>
-    <string name="app_appeal_ask">তাঁদের কী জানা দরকার?</string>
-    <string name="app_appeal_placeholder">একটা তথ্য, একটা মেসেজ বা আসলে কী ঠিক হয়েছিল।</string>
+    <string name="app_appeal_placeholder">বিচারকেরা কী মিস করেছেন? একটা তথ্য, একটা মেসেজ বা আসলে কী ঠিক হয়েছিল।</string>
     <string name="app_appeal_cost">এতে 1টি রায় খরচ হয়। একটা রায়ে এটা দুবার করা যায়; আর %1$sবার বাকি।</string>
     <string name="app_appeal_cost_case">এতে 1টি রায় খরচ হয়। একটা মামলায় এটা একবারই করা যায়।</string>
     <string name="app_appeal_submit">আবার বিচার করান</string>
