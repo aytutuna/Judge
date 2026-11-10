@@ -58,8 +58,8 @@ const TRIAL_SPEED = 110;
 // the cast does around them. Two sides are as they always were; with three or
 // four the row is wider, so the anonymizer, the fact-checker and the review
 // pair stand further out, and walkers go round a wider ring.
-type Stand = { at: Partial<Record<Side, Point>>; look: Partial<Record<Side, "right" | "left" | "down">> };
-const STAND: Record<number, Stand> = {
+export type Stand = { at: Partial<Record<Side, Point>>; look: Partial<Record<Side, "right" | "left" | "down">> };
+export const STAND: Record<number, Stand> = {
   2: { at: { a: { x: 149, y: 100 }, b: { x: 171, y: 100 } }, look: { a: "right", b: "left" } },
   3: {
     at: { a: { x: 132, y: 104 }, c: { x: 160, y: 97 }, b: { x: 188, y: 104 } },
@@ -70,7 +70,7 @@ const STAND: Record<number, Stand> = {
     look: { a: "right", c: "right", d: "left", b: "left" },
   },
 };
-const SPOTS = {
+export const SPOTS = {
   2: { a: { x: 128, y: 108 }, b: { x: 192, y: 108 }, atk: { x: 192, y: 124 }, adj: { x: 128, y: 124 }, ring: { x: 30, y: 22 } },
   many: { a: { x: 108, y: 118 }, b: { x: 212, y: 118 }, atk: { x: 214, y: 124 }, adj: { x: 106, y: 124 }, ring: { x: 46, y: 24 } },
 };
