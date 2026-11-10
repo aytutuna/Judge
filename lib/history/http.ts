@@ -12,6 +12,8 @@ import { API_ERROR_STATUS, apiErrorBody, type ApiErrorCode } from "@/lib/api-err
 import { lookupViewer } from "@/lib/bearer-guard";
 import { CASE_EXPIRY_DAYS, type PartyLetter } from "@/lib/case-types";
 import { inviteHash, inviteToken } from "@/lib/cases/invite";
+import { acceptsManySides } from "@/lib/cases/capability";
+import { partiesFor } from "@/lib/multi";
 import { maybeSweepCases } from "@/lib/cases/sweep";
 import { casesEnabled } from "@/lib/features";
 import { caseHistoryState, excerptOf, verdictHistoryState } from "@/lib/history-state";
@@ -113,8 +115,9 @@ function jobRow(r: HistoryJobRow): HistoryRow {
 /** The respondent's page token, only while it still opens the case (a
  * rotated server secret derives a different one). */
 function liveToken(r: HistoryCaseRow): string | null {
-  const token = inviteToken(r.id, r.inviteNonce);
-  return token && inviteHash(token) === r.inviteHash ? token : null;
+  const own = r.viewerParty !== "b" && r.viewerInviteNonce !== null;
+  const token = inviteToken(r.id, own ? (r.viewerInviteNonce as string) : r.inviteNonce);
+  return token && inviteHash(token) === (own ? r.viewerInviteHash : r.inviteHash) ? token : null;
 }
 
 async function names(r: HistoryCaseRow, party: PartyLetter): Promise<NameMapping[]> {
@@ -126,7 +129,9 @@ async function names(r: HistoryCaseRow, party: PartyLetter): Promise<NameMapping
   }
 }
 
-async function caseRow(r: HistoryCaseRow, party: PartyLetter, now: Date): Promise<HistoryRow> {
+async function caseRow(r: HistoryCaseRow, now: Date): Promise<HistoryRow> {
+  const party = r.viewerParty;
+  const many = r.sides > 2 && r.mode !== "one_sided";
   const derived = caseHistoryState(
     {
       party,
@@ -134,6 +139,8 @@ async function caseRow(r: HistoryCaseRow, party: PartyLetter, now: Date): Promis
       expiresAt: r.expiresAt,
       removedA: r.removedAAt !== null,
       removedB: r.removedBAt !== null,
+      removedC: r.removedCAt !== null,
+      removedD: r.removedDAt !== null,
       ownerSideMissing: party === "a" && r.sideStart === null,
       respondentAnswered: r.respondentClaimNonce !== null,
       appeals: r.appeals,
@@ -142,7 +149,7 @@ async function caseRow(r: HistoryCaseRow, party: PartyLetter, now: Date): Promis
     now,
   );
   const ownRemoved = derived.state === "removed";
-  const token = party === "b" ? liveToken(r) : null;
+  const token = party !== "a" ? liveToken(r) : null;
   const headline = ownRemoved ? null : (r.latestResult?.headline ?? null);
   return {
     kind: "case",
@@ -159,6 +166,8 @@ async function caseRow(r: HistoryCaseRow, party: PartyLetter, now: Date): Promis
     expiresAt: derived.state === "waiting" ? r.expiresAt : null,
     removed: r.removedAt !== null,
     inviteToken: token,
+    ...(many ? { parties: partiesFor(r.sides) } : {}),
+    ...(many && r.latestResult?.parties && !ownRemoved ? { winner: r.latestResult.winner ?? null } : {}),
   };
 }
 
@@ -192,14 +201,15 @@ export function historyHandler(req: Request): Promise<NextResponse> {
       limit: take,
       cursor,
       cases,
+      manySides: acceptsManySides(req),
     });
     // Each source holds its own newest limit+1, so the newest limit of the
     // union are all here.
     const merged = [
       ...verdicts.map((r) => ({ kind: "verdict" as const, id: r.id, at: r.at, build: () => verdictRow(r) })),
       ...jobs.map((r) => ({ kind: "verdict" as const, id: r.id, at: r.at, build: () => jobRow(r) })),
-      ...started.map((r) => ({ kind: "case" as const, id: r.id, at: r.at, build: () => caseRow(r, "a", now) })),
-      ...answered.map((r) => ({ kind: "case" as const, id: r.id, at: r.at, build: () => caseRow(r, "b", now) })),
+      ...started.map((r) => ({ kind: "case" as const, id: r.id, at: r.at, build: () => caseRow(r, now) })),
+      ...answered.map((r) => ({ kind: "case" as const, id: r.id, at: r.at, build: () => caseRow(r, now) })),
     ].sort(compareHistory);
     const page = merged.slice(0, limit);
     const items = await Promise.all(page.map((x) => x.build()));

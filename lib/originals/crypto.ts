@@ -15,6 +15,7 @@
  * on as before. Logs never carry content.
  */
 
+import type { PartyLetter as CaseParty } from "@/lib/case-types";
 import { createCipheriv, createDecipheriv, createHash, randomBytes, timingSafeEqual } from "node:crypto";
 import { OWNER_TOKEN_PATTERN } from "@/lib/originals-types";
 
@@ -44,7 +45,7 @@ export class OriginalsCryptoError extends Error {
 export const aad = {
   original: (subject: string) => `judge:originals:v1:${subject}`,
   verdictDisplay: (verdictId: string) => `judge:display:v1:verdict:${verdictId}`,
-  caseDisplay: (caseId: string, party: "a" | "b") => `judge:display:v1:case:${caseId}:${party}`,
+  caseDisplay: (caseId: string, party: CaseParty) => `judge:display:v1:case:${caseId}:${party}`,
   signInToken: (provider: string, clientId: string, userId: string) =>
     `judge:signin-token:v1:${provider}:${clientId}:${userId}`,
 };

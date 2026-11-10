@@ -3,6 +3,7 @@
  * Server only.
  */
 
+import type { PartyLetter as CaseParty } from "@/lib/case-types";
 import type { CaseRow } from "@/lib/cases/db";
 import { mergeNameMaps, type CaseOriginalEntry, type OriginalPayload } from "@/lib/originals-types";
 import type { NameMapping } from "@/lib/types";
@@ -26,8 +27,8 @@ export type PartyOriginals = {
   names: NameMapping[] | null;
 };
 
-export async function partyOriginals(row: CaseRow, party: "a" | "b"): Promise<PartyOriginals> {
-  const removed = Boolean(party === "a" ? row.removedAAt : row.removedBAt);
+export async function partyOriginals(row: CaseRow, party: CaseParty): Promise<PartyOriginals> {
+  const removed = Boolean({ a: row.removedAAt, b: row.removedBAt, c: row.removedCAt, d: row.removedDAt }[party]);
   const [side, appeal] = await Promise.all([
     entry(subjects.side(row.id, party), removed),
     entry(subjects.appeal(row.id, party), removed),
@@ -45,11 +46,14 @@ export async function partyOriginals(row: CaseRow, party: "a" | "b"): Promise<Pa
  * other party's only while names are on (what the share page shows). */
 export function caseDisplayNames(
   row: CaseRow,
-  party: "a" | "b",
+  party: CaseParty,
   proven: boolean,
-): { a: string | null; b: string | null } {
+): { a: string | null; b: string | null; c?: string | null; d?: string | null } {
   if (!proven) return { a: null, b: null };
-  const own = openCaseDisplayName(row, party);
-  const other = row.namesVisible ? openCaseDisplayName(row, party === "a" ? "b" : "a") : null;
-  return party === "a" ? { a: own, b: other } : { a: other, b: own };
+  const name = (p: CaseParty) => (p === party ? openCaseDisplayName(row, p) : row.namesVisible ? openCaseDisplayName(row, p) : null);
+  return {
+    a: name("a"),
+    b: name("b"),
+    ...(row.sides > 2 ? { c: name("c"), ...(row.sides > 3 ? { d: name("d") } : {}) } : {}),
+  };
 }

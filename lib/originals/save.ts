@@ -8,6 +8,7 @@
  * never costs the user their verdict: it falls back to the plain save.
  */
 
+import type { PartyLetter as CaseParty } from "@/lib/case-types";
 import type { InStatement, InValue } from "@libsql/client";
 import { saveVerdict, STORED_FRAMEWORK } from "@/lib/db";
 import { entitlementWriteBatch, type StatementGuard } from "@/lib/entitlements";
@@ -31,7 +32,7 @@ export function sealOriginal(subject: string, payload: OriginalPayload): { seale
 }
 
 /** A case party's sealed display name, or null for none (or no key). */
-export function sealCaseDisplay(caseId: string, party: "a" | "b", name: string | null | undefined): { sealed: string; kid: string } | null {
+export function sealCaseDisplay(caseId: string, party: CaseParty, name: string | null | undefined): { sealed: string; kid: string } | null {
   if (!name) return null;
   const sealed = sealJson({ v: 1, name }, aad.caseDisplay(caseId, party));
   if (!sealed) console.warn(`[originals] not stored subject=case:${caseId}:display:${party} reason=no_key`);
@@ -43,7 +44,7 @@ export function sealCaseDisplay(caseId: string, party: "a" | "b", name: string |
  * party per case), unless it was removed. */
 export function caseOriginalStatement(
   caseId: string,
-  party: "a" | "b",
+  party: CaseParty,
   kind: "side" | "appeal",
   payload: OriginalPayload,
   guard: StatementGuard,

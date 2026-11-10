@@ -41,7 +41,7 @@ export type DisplayNames = {
 /** Display names plus the owner's switch, as the owner sees them. */
 export type DisplayState = DisplayNames & { namesVisible: boolean };
 
-export type RemovalReason = "owner" | "party_a" | "party_b" | "account_deleted" | "operator";
+export type RemovalReason = "owner" | "party_a" | "party_b" | "party_c" | "party_d" | "account_deleted" | "operator";
 
 /** "stored": readable; "not_stored": legacy or no key at the time; "removed":
  * blanked on request; "unreadable": decryption failed (logged). */
@@ -239,7 +239,7 @@ export type MineResponse = {
   display: DisplayState;
   suggested: { a: string | null };
   removed: { at: string; reason: RemovalReason | null } | null;
-  case: { id: string; party: "a" | "b" } | null;
+  case: { id: string; party: "a" | "b" | "c" | "d" } | null;
   via: "session" | "token";
   /** The writer has saved the share-page names (or switched them off)
    * before: clients do not prompt for them again before a share. */
@@ -266,4 +266,4 @@ export type OwnerVerdictListResponse = { verdicts: OwnerVerdictSummary[]; next: 
 
 /** GET /api/v1/cases/{id}/originals and /respond/{token}/originals */
 export type CaseOriginalEntry = { status: OriginalStatus; original: OriginalPayload | null };
-export type CaseOriginalsResponse = { party: "a" | "b"; side: CaseOriginalEntry; appeal: CaseOriginalEntry | null };
+export type CaseOriginalsResponse = { party: "a" | "b" | "c" | "d"; side: CaseOriginalEntry; appeal: CaseOriginalEntry | null };

@@ -15,12 +15,13 @@
  * `Cache-Control: no-store`. Server only.
  */
 
+import type { PartyLetter as CaseParty } from "@/lib/case-types";
 import { NextResponse } from "next/server";
 import { API_ERROR_STATUS, apiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
 import { isSameOrigin, type ViewerSession } from "@/lib/auth";
 import { deadBearerResponse, lookupViewer } from "@/lib/bearer-guard";
-import { getCase, type CaseRow } from "@/lib/cases/db";
-import { claimMatches } from "@/lib/cases/invite";
+import { getCase, getInvites, type CaseRow } from "@/lib/cases/db";
+import { partyOfViewer } from "@/lib/cases/party";
 import { clientIp } from "@/lib/client-ip";
 import { getVerdict } from "@/lib/db";
 import { entitlementWriteBatch } from "@/lib/entitlements";
@@ -101,7 +102,7 @@ function claimHeader(req: Request): string | null {
 }
 
 type Owner =
-  | { meta: VerdictMeta; via: "session" | "token"; viewer: ViewerSession | null; caseParty: { row: CaseRow; party: "a" | "b" } | null }
+  | { meta: VerdictMeta; via: "session" | "token"; viewer: ViewerSession | null; caseParty: { row: CaseRow; party: CaseParty } | null }
   | { response: NextResponse };
 
 /** Who is asking, checked against the verdict's owner. 404 for everyone else. */
@@ -130,10 +131,7 @@ async function ownerOf(req: Request, id: string, write: boolean): Promise<Owner>
     const row = meta.caseId ? await getCase(meta.caseId) : null;
     if (!row) return { response: fail("not_found") };
     const viewerId = viewer?.user.id ?? null;
-    let party: "a" | "b" | null = null;
-    if (viewerId && viewerId === row.ownerId) party = "a";
-    else if (row.mode === "two_sided" && viewerId && viewerId === row.respondentUserId) party = "b";
-    else if (row.mode === "two_sided" && viewerId !== row.ownerId && claimMatches(row, claimHeader(req))) party = "b";
+    const party: CaseParty | null = partyOfViewer(row, await getInvites(row.id), viewerId, claimHeader(req));
     if (!party) return { response: fail("not_found") };
     if (!sessionWriteOk()) return { response: fail("bad_origin") };
     return { meta, via: "session", viewer, caseParty: { row, party } };

@@ -35,7 +35,7 @@ export type HistoryItem = {
   at: string;
   role: "owner" | "respondent";
   /** The viewer's party. */
-  party: "a" | "b";
+  party: "a" | "b" | "c" | "d";
   title: string | null;
   /** Null: nothing known beyond the title (an entry of this browser's). */
   state: HistoryState | null;

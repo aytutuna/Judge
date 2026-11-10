@@ -9,6 +9,7 @@
  * (replayRemoval). Server only.
  */
 
+import type { PartyLetter as CaseParty } from "@/lib/case-types";
 import type { InStatement } from "@libsql/client";
 import { getCase, type CaseRow } from "@/lib/cases/db";
 import { entitlementWriteBatch, refundStatements } from "@/lib/entitlements";
@@ -95,14 +96,14 @@ export async function operatorRemoveVerdict(
  * columns): the case row, that party's originals, and every verdict of
  * those cases, each guarded by the case row actually carrying the removal. */
 function caseSideStatements(
-  party: "a" | "b",
+  party: CaseParty,
   where: string,
   whereArgs: string[],
   reason: RemovalReason,
   nowIso: string,
 ): InStatement[] {
-  const col = party === "a" ? "removed_a_at" : "removed_b_at";
-  const display = party === "a" ? "display_a_sealed" : "display_b_sealed";
+  const col = `removed_${party}_at`;
+  const display = `display_${party}_sealed`;
   const ids = `SELECT id FROM cases WHERE ${where} AND ${col} IS NOT NULL`;
   return [
     {
@@ -146,7 +147,7 @@ export type CaseRemovalResult = { ok: true; row: CaseRow; removedAt: string } | 
  */
 export async function removeCaseSide(
   row: CaseRow,
-  party: "a" | "b",
+  party: CaseParty,
   reason: RemovalReason,
   now: Date = new Date(),
   opts: RemovalOptions & { ignoreBusy?: boolean } = {},
@@ -160,7 +161,7 @@ export async function removeCaseSide(
 
 async function removeCaseSideOnce(
   row: CaseRow,
-  party: "a" | "b",
+  party: CaseParty,
   reason: RemovalReason,
   now: Date,
   ignoreBusy: boolean,
@@ -185,7 +186,7 @@ async function removeCaseSideOnce(
   const rs = await entitlementWriteBatch([...refund, ...side]);
   const fresh = await getCase(row.id);
   if (!fresh) return { ok: false, code: "not_found" };
-  const removedAt = party === "a" ? fresh.removedAAt : fresh.removedBAt;
+  const removedAt = { a: fresh.removedAAt, b: fresh.removedBAt, c: fresh.removedCAt, d: fresh.removedDAt }[party];
   if (rs[refund.length].rowsAffected === 1 && removedAt) return { ok: true, row: fresh, removedAt };
   return removedAt ? { ok: true, row: fresh, removedAt } : { ok: false, code: "in_progress" };
 }
@@ -208,8 +209,9 @@ export async function removeUserData(userId: string, now: Date = new Date(), opt
   const db = await getDb();
   const waiting = await db.execute({
     sql: `SELECT id, reservation_id FROM cases
-          WHERE respondent_user_id = ? AND reservation_id IS NOT NULL AND status = 'awaiting_respondent'`,
-    args: [userId],
+          WHERE (respondent_user_id = ? OR id IN (SELECT case_id FROM case_invites WHERE user_id = ?))
+            AND reservation_id IS NOT NULL AND status = 'awaiting_respondent'`,
+    args: [userId, userId],
   });
   const refunds = waiting.rows.flatMap((r) =>
     refundStatements(String(r.reservation_id), nowIso, {
@@ -241,10 +243,14 @@ export async function removeUserData(userId: string, now: Date = new Date(), opt
     },
     ...caseSideStatements("a", "owner_id = ?", [userId], "account_deleted", nowIso),
     ...caseSideStatements("b", "respondent_user_id = ?", [userId], "account_deleted", nowIso),
+    ...(["c", "d"] as const).flatMap((p) =>
+      caseSideStatements(p, `id IN (SELECT case_id FROM case_invites WHERE party = '${p}' AND user_id = ?)`, [userId], "account_deleted", nowIso),
+    ),
     {
       sql: "UPDATE cases SET respondent_user_id = NULL, respondent_claim_nonce = NULL WHERE respondent_user_id = ?",
       args: [userId],
     },
+    { sql: "UPDATE case_invites SET user_id = NULL, claim_nonce = NULL WHERE user_id = ?", args: [userId] },
     { sql: "UPDATE case_appeals SET user_id = NULL WHERE user_id = ?", args: [userId] },
   ]);
   if (opts.log !== false) {

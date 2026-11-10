@@ -19,6 +19,8 @@ export type CaseFacts = {
   expiresAt: string;
   removedA: boolean;
   removedB: boolean;
+  removedC?: boolean;
+  removedD?: boolean;
   /** The owner never wrote their side (it started as a link). */
   ownerSideMissing: boolean;
   respondentAnswered: boolean;
@@ -37,8 +39,9 @@ const settled = (state: HistoryState, verdict: FinalVerdict | null = null): Deri
 });
 
 export function caseHistoryState(f: CaseFacts, now: Date): DerivedState {
-  const own = f.party === "a" ? f.removedA : f.removedB;
-  const other = f.party === "a" ? f.removedB : f.removedA;
+  const removed = { a: f.removedA, b: f.removedB, c: f.removedC ?? false, d: f.removedD ?? false };
+  const own = removed[f.party];
+  const other = (["a", "b", "c", "d"] as const).some((p) => p !== f.party && removed[p]);
   const latest = f.latest?.verdict ?? null;
   if (own) return settled("removed");
   if (other) return settled("removed_by_other", latest);
@@ -103,6 +106,8 @@ export function historyStateFromView(view: CaseView, now: Date): DerivedState {
       expiresAt: view.expiresAt,
       removedA: view.removed?.parties.includes("a") ?? false,
       removedB: view.removed?.parties.includes("b") ?? false,
+      removedC: view.removed?.parties.includes("c") ?? false,
+      removedD: view.removed?.parties.includes("d") ?? false,
       ownerSideMissing: view.ownerSideMissing,
       respondentAnswered: view.respondentAnswered,
       appeals: view.appeals,
