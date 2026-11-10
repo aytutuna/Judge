@@ -27,7 +27,6 @@ const vi: AppLocale = {
     "app.history.removeFailed": "Không gỡ được {n} phán quyết. Kiểm tra kết nối rồi thử lại nhé.",
     "app.history.offlineRemove": "Bạn đang mất mạng. Cần có kết nối mới gỡ được.",
     "app.pricing.free.account": "Đăng nhập bằng Apple, Google hoặc email",
-    "app.context.label": "Thông tin thêm (không bắt buộc)",
     "app.pricing.context": "Ảnh thông tin thêm được đọc rồi bỏ đi, không tốn thêm phí",
     "app.pricing.headline": "Phán quyết đầu tiên, chúng tôi mời.",
     "app.pricing.sub":
@@ -166,10 +165,7 @@ const vi: AppLocale = {
     "app.verdict.claims": "Mỗi bên đi đến kết luận thế nào",
     "app.verdict.back": "Phán quyết",
     "app.appeal.title": "Bổ sung thông tin và xét lại",
-    "app.appeal.intro":
-      "Ban giám khảo bỏ sót điều gì? Bổ sung vào và họ sẽ phân xử lại. Phán quyết đầu tiên vẫn được lưu lại.",
-    "app.appeal.ask": "Họ cần biết thêm điều gì?",
-    "app.appeal.placeholder": "Một sự thật, một tin nhắn hoặc điều hai bên đã thật sự thỏa thuận.",
+    "app.appeal.placeholder": "Ban giám khảo đã bỏ sót điều gì? Một sự thật, một tin nhắn hoặc điều hai bên đã thật sự thỏa thuận.",
     "app.appeal.cost": "Dùng 1 lượt. Mỗi phán quyết được bổ sung tối đa hai lần; bạn còn {left} lần.",
     "app.appeal.costCase": "Dùng 1 lượt. Mỗi vụ chỉ được bổ sung một lần.",
     "app.appeal.submit": "Phân xử lại",

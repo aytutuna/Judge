@@ -189,7 +189,6 @@ export function useVerdictAppeal({
           signInHref={`/signin?next=${encodeURIComponent(`/v/${id}`)}`}
           draft={draft}
           evidence={evidence}
-          lead="appeal.leadVerdict"
         />
       ) : null,
   };

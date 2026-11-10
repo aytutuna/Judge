@@ -347,8 +347,7 @@ const da: Locale = {
     "signin.createNote": "Vi sender dig en kode på mail for at bekræfte adressen. Du skal kun gøre det én gang.",
     "signin.passwordChoose": "Du er logget ind. Vælg en adgangskode til næste gang.",
     "signin.passwordSave": "Gem adgangskode",
-    "signin.passwordSaveFailed": "Du er logget ind, men vi kunne ikke gemme adgangskoden. Prøv igen, eller indstil den senere i Indstillinger.",
-    "signin.passwordSkip": "Spring over for nu",
+    "signin.passwordSaveFailed": "Vi kunne ikke gemme adgangskoden. Prøv igen.",
     "signin.passwordSubmit": "Log ind",
     "signin.rateLimited": "For mange forsøg. Vent et minut, og prøv igen.",
     "signin.serviceDown": "Login er ikke tilgængeligt lige nu. Prøv igen senere.",
@@ -376,10 +375,6 @@ const da: Locale = {
     "account.deleteConfirm":
       "Vil du slette din konto? Dine kreditter, din plan og dine loginoplysninger bliver slettet. Dine domme og dine sider i sager bliver fjernet: det, du skrev, og navnene bliver slettet, og deres delingslinks holder op med at virke.",
     "account.deleteYes": "Ja, slet den",
-    "account.passwordSet": "Indstil en adgangskode",
-    "account.passwordChange": "Skift adgangskode",
-    "account.passwordCurrent": "Nuværende adgangskode",
-    "account.passwordSaved": "Adgangskoden er gemt.",
     "account.deleteCancel": "Behold min konto",
     "account.deleted": "Din konto er slettet. Du bliver sendt til forsiden…",
     "account.deleteFailed": "Vi kunne ikke slette kontoen lige nu. Vil du prøve igen?",
@@ -634,9 +629,8 @@ const da: Locale = {
     "pairs.lastSlice.b":
       "Man kan ikke kalde det sit og så lade det ligge i to timer. Det lå bare og blev koldt, så jeg spiste det.",
     "appeal.lead":
-      "Mangler der noget, eller er noget forkert? Tilføj det én gang, så kigger dommerne på det hele igen. Det koster 1 dom.",
-    "appeal.label": "Din kontekst",
-    "appeal.placeholder": "Hvad overså dommerne?",
+      "Koster 1 dom.",
+    "appeal.placeholder": "Hvad overså dommerne? Et faktum, en besked eller det, I faktisk aftalte.",
     "appeal.submit": "Døm igen med min kontekst",
     "appeal.sending": "Anonymiserer din kontekst…",
     "appeal.judging": "Dommerne kigger på det hele igen…",
@@ -656,8 +650,6 @@ const da: Locale = {
     "appeal.previous": "Tidligere dom",
     "appeal.failed": "Den nye bedømmelse gik ikke igennem. Du har fået din kredit tilbage; du kan prøve igen.",
     "appeal.refused": "Dommerne ville ikke dømme igen med den kontekst. Du har fået din kredit tilbage.",
-    "appeal.leadVerdict":
-      "Mangler der noget, eller er noget forkert? Tilføj det, så kigger dommerne på det hele igen. Det koster 1 dom hver gang, højst to gange pr. dom.",
     "appeal.history": "Domshistorik",
     "faq.both.q": "Kan den anden fortælle sin side?",
     "faq.both.a":

@@ -346,8 +346,7 @@ const hr: Locale = {
     "signin.createNote": "Poslat ćemo ti kod e-poštom kako bismo potvrdili ovu adresu. To trebaš napraviti samo jednom.",
     "signin.passwordChoose": "Prijavljen si. Odaberi lozinku za sljedeći put.",
     "signin.passwordSave": "Spremi lozinku",
-    "signin.passwordSaveFailed": "Prijavljen si, ali lozinku nismo mogli spremiti. Pokušaj ponovno ili je postavi kasnije u Postavkama.",
-    "signin.passwordSkip": "Preskoči za sada",
+    "signin.passwordSaveFailed": "Lozinku nismo mogli spremiti. Pokušaj ponovno.",
     "signin.passwordSubmit": "Prijavi se",
     "signin.rateLimited": "Previše pokušaja. Pričekaj minutu pa pokušaj ponovno.",
     "signin.serviceDown": "Prijava trenutačno nije dostupna. Pokušaj ponovno kasnije.",
@@ -375,10 +374,6 @@ const hr: Locale = {
     "account.deleteConfirm":
       "Želiš izbrisati račun? Brišu se tvoji krediti, plan i podaci za prijavu. Tvoje presude i tvoje strane u slučajevima uklanjaju se: tvoji tekstovi i imena brišu se, a njihove poveznice za dijeljenje prestaju raditi.",
     "account.deleteYes": "Da, izbriši",
-    "account.passwordSet": "Postavi lozinku",
-    "account.passwordChange": "Promijeni lozinku",
-    "account.passwordCurrent": "Trenutna lozinka",
-    "account.passwordSaved": "Lozinka je spremljena.",
     "account.deleteCancel": "Zadrži račun",
     "account.deleted": "Račun je izbrisan. Vodimo te na početnu stranicu…",
     "account.deleteFailed": "Trenutačno ne možemo izbrisati račun. Možeš pokušati ponovno?",
@@ -631,9 +626,8 @@ const hr: Locale = {
     "pairs.lastSlice.b":
       "Ne možeš reći „moj je“ i onda ga ne taknuti dva sata. Samo je stajao i hladio se, pa sam ga pojela.",
     "appeal.lead":
-      "Nešto nedostaje ili nije točno? Dodaj to jednom i suci će ponovno pogledati sve. Troši 1 presudu.",
-    "appeal.label": "Tvoj kontekst",
-    "appeal.placeholder": "Što su suci propustili?",
+      "Troši 1 presudu.",
+    "appeal.placeholder": "Što su suci propustili? Neka činjenica, poruka ili ono što je zapravo dogovoreno.",
     "appeal.submit": "Presudi ponovno",
     "appeal.sending": "Anonimiziramo tvoj kontekst…",
     "appeal.judging": "Suci ponovno gledaju sve…",
@@ -653,8 +647,6 @@ const hr: Locale = {
     "appeal.previous": "Ranija presuda",
     "appeal.failed": "Ponovno presuđivanje nije uspjelo. Kredit ti je vraćen; možeš pokušati ponovno.",
     "appeal.refused": "Suci nisu htjeli ponovno presuditi s tim kontekstom. Kredit ti je vraćen.",
-    "appeal.leadVerdict":
-      "Nešto nedostaje ili nije točno? Dodaj to i suci će ponovno pogledati sve. Svaki put troši 1 presudu, najviše dvaput po presudi.",
     "appeal.history": "Povijest presude",
     "faq.both.q": "Može li i druga osoba ispričati svoju stranu?",
     "faq.both.a":

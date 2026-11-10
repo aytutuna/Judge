@@ -28,7 +28,6 @@ const nl: AppLocale = {
     "app.history.removeFailed": "{n} ervan konden niet worden verwijderd. Check je verbinding en probeer het opnieuw.",
     "app.history.offlineRemove": "Je bent offline. Om te verwijderen heb je een verbinding nodig.",
     "app.pricing.free.account": "Log in met Apple, Google of e-mail",
-    "app.context.label": "Aanvulling (optioneel)",
     "app.pricing.context":
       "Afbeeldingen bij de aanvulling worden gelezen en daarna weggegooid, zonder extra kosten",
     "app.pricing.headline": "Je eerste uitspraak is van het huis.",
@@ -171,10 +170,7 @@ const nl: AppLocale = {
     "app.verdict.claims": "Hoe elke kant tot zijn standpunt kwam",
     "app.verdict.back": "Uitspraak",
     "app.appeal.title": "Iets aanvullen",
-    "app.appeal.intro":
-      "Hebben de rechters iets gemist? Vul het aan en ze oordelen opnieuw. De eerste uitspraak blijft bewaard.",
-    "app.appeal.ask": "Wat moeten ze weten?",
-    "app.appeal.placeholder": "Een feit, een bericht of wat er echt is afgesproken.",
+    "app.appeal.placeholder": "Wat hebben de rechters gemist? Een feit, een bericht of wat er echt is afgesproken.",
     "app.appeal.cost": "Kost 1 uitspraak. Dit kan twee keer per uitspraak; nog {left} over.",
     "app.appeal.costCase": "Kost 1 uitspraak. Dit kan één keer per zaak.",
     "app.appeal.submit": "Opnieuw laten beoordelen",

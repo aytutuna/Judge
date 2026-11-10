@@ -346,8 +346,7 @@ const sk: Locale = {
     "signin.createNote": "Pošleme vám e-mailom kód na potvrdenie tejto adresy. Stačí to urobiť raz.",
     "signin.passwordChoose": "Ste prihlásený. Vyberte si heslo na nabudúce.",
     "signin.passwordSave": "Uložiť heslo",
-    "signin.passwordSaveFailed": "Ste prihlásený, ale heslo sa nepodarilo uložiť. Skúste to znova alebo si ho nastavte neskôr v Nastaveniach.",
-    "signin.passwordSkip": "Zatiaľ preskočiť",
+    "signin.passwordSaveFailed": "Heslo sa nepodarilo uložiť. Skúste to znova.",
     "signin.passwordSubmit": "Prihlásiť sa",
     "signin.rateLimited": "Priveľa pokusov. Počkaj minútu a skús to znova.",
     "signin.serviceDown": "Prihlásenie teraz nie je dostupné. Skús to neskôr.",
@@ -375,10 +374,6 @@ const sk: Locale = {
     "account.deleteConfirm":
       "Zrušiť účet? Tvoje kredity, plán a prihlasovacie údaje sa vymažú. Tvoje verdikty a tvoje verzie v prípadoch sa odstránia: tvoje texty a mená sa vymažú a ich odkazy na zdieľanie prestanú fungovať.",
     "account.deleteYes": "Áno, zrušiť",
-    "account.passwordSet": "Nastaviť heslo",
-    "account.passwordChange": "Zmeniť heslo",
-    "account.passwordCurrent": "Súčasné heslo",
-    "account.passwordSaved": "Heslo je uložené.",
     "account.deleteCancel": "Ponechať účet",
     "account.deleted": "Tvoj účet je zrušený. Presmerúvame ťa na domovskú stránku…",
     "account.deleteFailed": "Účet sa teraz nepodarilo zrušiť. Skúsiš to znova?",
@@ -633,9 +628,8 @@ const sk: Locale = {
     "pairs.lastSlice.b":
       "Nemôžeš si niečo zabrať a potom sa toho dve hodiny ani nedotknúť. Ležalo to tam a chladlo, tak som to zjedla.",
     "appeal.lead":
-      "Niečo chýba alebo nesedí? Doplň to raz a sudcovia všetko posúdia znova. Stojí to 1 verdikt.",
-    "appeal.label": "Tvoj kontext",
-    "appeal.placeholder": "Čo sudcom ušlo?",
+      "Stojí 1 verdikt.",
+    "appeal.placeholder": "Čo sudcom ušlo? Fakt, správa alebo to, na čom ste sa naozaj dohodli.",
     "appeal.submit": "Posúdiť znova s mojím kontextom",
     "appeal.sending": "Anonymizujem tvoj kontext…",
     "appeal.judging": "Sudcovia znova prechádzajú všetko…",
@@ -655,8 +649,6 @@ const sk: Locale = {
     "appeal.previous": "Predchádzajúci verdikt",
     "appeal.failed": "Nové posúdenie sa nepodarilo. Kredit sa ti vrátil; môžeš to skúsiť znova.",
     "appeal.refused": "Sudcovia s týmto kontextom odmietli posúdiť spor znova. Kredit sa ti vrátil.",
-    "appeal.leadVerdict":
-      "Niečo chýba alebo nesedí? Doplň to a sudcovia všetko posúdia znova. Zakaždým to stojí 1 verdikt, najviac dvakrát na verdikt.",
     "appeal.history": "História verdiktu",
     "faq.both.q": "Môže druhá strana napísať svoju verziu?",
     "faq.both.a":

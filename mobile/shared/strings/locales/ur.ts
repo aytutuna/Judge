@@ -29,7 +29,6 @@ const ur: AppLocale = {
     "app.history.removeFailed": "ان میں سے {n} نہیں ہٹ سکے۔ اپنا کنکشن چیک کر کے دوبارہ کوشش کریں۔",
     "app.history.offlineRemove": "آپ آف لائن ہیں۔ ہٹانے کے لیے کنکشن ضروری ہے۔",
     "app.pricing.free.account": "Apple، Google یا ای میل سے سائن ان کریں",
-    "app.context.label": "تفصیل (اختیاری)",
     "app.pricing.context": "تفصیل کی تصویریں پڑھ کر پھینک دی جاتی ہیں، کوئی اضافی خرچ نہیں",
     "app.pricing.headline": "پہلا فیصلہ ہماری طرف سے۔",
     "app.pricing.sub":
@@ -168,9 +167,7 @@ const ur: AppLocale = {
     "app.verdict.claims": "ہر طرف اپنے نتیجے تک کیسے پہنچی",
     "app.verdict.back": "فیصلہ",
     "app.appeal.title": "مزید تفصیل اور نظرثانی",
-    "app.appeal.intro": "ججوں سے کچھ رہ گیا؟ شامل کریں اور وہ دوبارہ فیصلہ کریں گے۔ پہلا فیصلہ ریکارڈ پر رہے گا۔",
-    "app.appeal.ask": "انہیں کیا پتا ہونا چاہیے؟",
-    "app.appeal.placeholder": "کوئی حقیقت، کوئی میسج، یا یہ کہ اصل میں کیا طے ہوا تھا۔",
+    "app.appeal.placeholder": "ججوں سے کیا رہ گیا؟ کوئی حقیقت، کوئی میسج، یا یہ کہ اصل میں کیا طے ہوا تھا۔",
     "app.appeal.cost": "اس میں 1 فیصلہ استعمال ہوتا ہے۔ ہر فیصلے پر یہ دو بار ہو سکتا ہے؛ باقی: {left}۔",
     "app.appeal.costCase": "اس میں 1 فیصلہ استعمال ہوتا ہے۔ ہر کیس میں یہ ایک بار ہو سکتا ہے۔",
     "app.appeal.submit": "دوبارہ فیصلہ کروائیں",

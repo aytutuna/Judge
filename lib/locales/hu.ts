@@ -347,8 +347,7 @@ const hu: Locale = {
     "signin.createNote": "E-mailben küldünk egy kódot, hogy megerősítsd ezt a címet. Ezt csak egyszer kell megtenned.",
     "signin.passwordChoose": "Be vagy jelentkezve. Válassz jelszót a következő alkalomra.",
     "signin.passwordSave": "Jelszó mentése",
-    "signin.passwordSaveFailed": "Be vagy jelentkezve, de a jelszót nem sikerült elmenteni. Próbáld újra, vagy állítsd be később a Beállításokban.",
-    "signin.passwordSkip": "Kihagyás egyelőre",
+    "signin.passwordSaveFailed": "A jelszót nem sikerült elmenteni. Próbáld újra.",
     "signin.passwordSubmit": "Belépés",
     "signin.rateLimited": "Túl sok próbálkozás. Várj egy percet, és próbáld újra.",
     "signin.serviceDown": "A belépés most nem érhető el. Próbáld újra később.",
@@ -376,10 +375,6 @@ const hu: Locale = {
     "account.deleteConfirm":
       "Törlöd a fiókodat? A kreditjeid, az előfizetésed és a belépési adataid törlődnek. Az ítéleteidet és az ügyekben beküldött verzióidat eltávolítjuk: amit írtál, azt a nevekkel együtt töröljük, a megosztási linkjeik pedig megszűnnek működni.",
     "account.deleteYes": "Igen, törlöm",
-    "account.passwordSet": "Jelszó beállítása",
-    "account.passwordChange": "Jelszó módosítása",
-    "account.passwordCurrent": "Jelenlegi jelszó",
-    "account.passwordSaved": "Jelszó elmentve.",
     "account.deleteCancel": "Megtartom a fiókot",
     "account.deleted": "A fiókodat töröltük. Visszaviszünk a kezdőlapra…",
     "account.deleteFailed": "Most nem sikerült törölni a fiókot. Megpróbálod újra?",
@@ -638,9 +633,8 @@ const hu: Locale = {
     "pairs.lastSlice.b":
       "Nem lehet lestoppolni valamit, aztán két órán át hozzá se nyúlni. Csak ott hűlt, úgyhogy megettem.",
     "appeal.lead":
-      "Hiányzik vagy téves valami? Add hozzá egyszer, és a bírák mindent újra átnéznek. Ez 1 ítéletbe kerül.",
-    "appeal.label": "A kiegészítésed",
-    "appeal.placeholder": "Mi kerülte el a bírák figyelmét?",
+      "1 ítéletbe kerül.",
+    "appeal.placeholder": "Mi kerülte el a bírák figyelmét? Egy tény, egy üzenet vagy az, hogy miben állapodtatok meg valójában.",
     "appeal.submit": "Újraítélés kiegészítéssel",
     "appeal.sending": "Kivesszük a neveket a kiegészítésedből…",
     "appeal.judging": "A bírák mindent újra átnéznek…",
@@ -660,8 +654,6 @@ const hu: Locale = {
     "appeal.previous": "Korábbi ítélet",
     "appeal.failed": "Az újraítélés nem sikerült. Visszakaptad a kreditedet, megpróbálhatod újra.",
     "appeal.refused": "A bírák ezzel a kiegészítéssel nem voltak hajlandók újra dönteni. Visszakaptad a kreditedet.",
-    "appeal.leadVerdict":
-      "Hiányzik vagy téves valami? Add hozzá, és a bírák mindent újra átnéznek. Alkalmanként 1 ítéletbe kerül, ítéletenként legfeljebb kétszer.",
     "appeal.history": "Az ítélet előzményei",
     "faq.both.q": "A másik fél is elmondhatja a saját verzióját?",
     "faq.both.a":

@@ -346,8 +346,7 @@ const id: Locale = {
     "signin.createNote": "Kami akan mengirim kode lewat email untuk mengonfirmasi alamat ini. Kamu hanya perlu melakukannya sekali.",
     "signin.passwordChoose": "Kamu sudah masuk. Pilih kata sandi untuk lain kali.",
     "signin.passwordSave": "Simpan kata sandi",
-    "signin.passwordSaveFailed": "Kamu sudah masuk, tetapi kami tidak bisa menyimpan kata sandinya. Coba lagi, atau atur nanti di Pengaturan.",
-    "signin.passwordSkip": "Lewati dulu",
+    "signin.passwordSaveFailed": "Kami tidak bisa menyimpan kata sandinya. Coba lagi.",
     "signin.passwordSubmit": "Masuk",
     "signin.rateLimited": "Terlalu banyak percobaan. Tunggu satu menit, lalu coba lagi.",
     "signin.serviceDown": "Fitur masuk sedang tidak tersedia. Coba lagi nanti.",
@@ -375,10 +374,6 @@ const id: Locale = {
     "account.deleteConfirm":
       "Hapus akunmu? Kredit, langganan, dan data masukmu akan dihapus. Putusan dan versimu dalam kasus juga ikut hilang: tulisanmu beserta nama-namanya dihapus, dan tautan berbaginya tidak berfungsi lagi.",
     "account.deleteYes": "Ya, hapus",
-    "account.passwordSet": "Atur kata sandi",
-    "account.passwordChange": "Ubah kata sandi",
-    "account.passwordCurrent": "Kata sandi saat ini",
-    "account.passwordSaved": "Kata sandi tersimpan.",
     "account.deleteCancel": "Tetap simpan akunku",
     "account.deleted": "Akunmu sudah dihapus. Kamu akan dibawa ke beranda…",
     "account.deleteFailed": "Akun belum bisa dihapus sekarang. Coba lagi, ya?",
@@ -633,9 +628,8 @@ const id: Locale = {
     "pairs.lastSlice.b":
       "Nggak bisa dong bilang “punyaku” terus dianggurin dua jam. Pizzanya dibiarkan sampai dingin, jadi aku makan saja.",
     "appeal.lead":
-      "Ada yang kurang atau salah? Tambahkan sekali, dan hakim akan menilai ulang semuanya. Memakai 1 putusan.",
-    "appeal.label": "Konteksmu",
-    "appeal.placeholder": "Apa yang terlewat oleh hakim?",
+      "Memakai 1 putusan.",
+    "appeal.placeholder": "Apa yang terlewat oleh hakim? Fakta, pesan, atau apa yang sebenarnya disepakati.",
     "appeal.submit": "Nilai ulang dengan konteksku",
     "appeal.sending": "Menganonimkan konteksmu…",
     "appeal.judging": "Hakim sedang menilai ulang semuanya…",
@@ -655,8 +649,6 @@ const id: Locale = {
     "appeal.previous": "Putusan sebelumnya",
     "appeal.failed": "Penilaian ulang gagal. Kreditmu sudah kembali; kamu bisa coba lagi.",
     "appeal.refused": "Hakim menolak menilai ulang dengan konteks itu. Kreditmu sudah kembali.",
-    "appeal.leadVerdict":
-      "Ada yang kurang atau salah? Tambahkan, dan hakim akan menilai ulang semuanya. Tiap kali memakai 1 putusan, maksimal dua kali per putusan.",
     "appeal.history": "Riwayat putusan",
     "faq.both.q": "Bisakah lawan debatku menceritakan versinya?",
     "faq.both.a":

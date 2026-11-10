@@ -339,8 +339,7 @@ const en = {
   "signin.createNote": "We'll email you a code to confirm this address. You only need to do this once.",
   "signin.passwordChoose": "You're signed in. Choose a password for next time.",
   "signin.passwordSave": "Save password",
-  "signin.passwordSaveFailed": "You're signed in, but we couldn't save the password. Try again, or set it later in Settings.",
-  "signin.passwordSkip": "Skip for now",
+  "signin.passwordSaveFailed": "We couldn't save the password. Try again.",
   "signin.passwordSubmit": "Sign in",
   "signin.rateLimited": "Too many tries. Wait a minute and try again.",
   "signin.serviceDown": "Sign-in isn't available right now. Try again later.",
@@ -368,10 +367,6 @@ const en = {
   "account.deleteConfirm":
     "Delete your account? Your credits, plan and sign-in details are deleted. Your verdicts and your sides of cases are removed: what you wrote and the names are erased, and their share links stop working.",
   "account.deleteYes": "Yes, delete it",
-  "account.passwordSet": "Set a password",
-  "account.passwordChange": "Change password",
-  "account.passwordCurrent": "Current password",
-  "account.passwordSaved": "Password saved.",
   "account.deleteCancel": "Keep my account",
   "account.deleted": "Your account is deleted. Taking you to the home page…",
   "account.deleteFailed": "We couldn't delete the account just now. Mind trying again?",
@@ -626,9 +621,8 @@ const en = {
   "pairs.lastSlice.b":
     "You can't call dibs and then not touch it for two hours. It was just sitting there going cold, so I ate it.",
   "appeal.lead":
-    "Something missing or wrong? Add it once and the judges look at everything again. Costs 1 verdict.",
-  "appeal.label": "Your context",
-  "appeal.placeholder": "What did the judges miss?",
+    "Uses 1 verdict.",
+  "appeal.placeholder": "What did the judges miss? A fact, a message, or what was actually agreed.",
   "appeal.submit": "Re-judge with my context",
   "appeal.sending": "Anonymizing your context…",
   "appeal.judging": "The judges are looking at everything again…",
@@ -648,8 +642,6 @@ const en = {
   "appeal.previous": "Earlier verdict",
   "appeal.failed": "The re-judge didn't go through. Your credit is back; you can try again.",
   "appeal.refused": "The judges wouldn't re-judge with that context. Your credit is back.",
-  "appeal.leadVerdict":
-    "Something missing or wrong? Add it and the judges look at everything again. Each time costs 1 verdict, up to twice per verdict.",
   "appeal.history": "Verdict history",
   "faq.both.q": "Can the other person tell their side?",
   "faq.both.a":

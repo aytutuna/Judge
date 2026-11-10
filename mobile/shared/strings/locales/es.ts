@@ -30,7 +30,6 @@ const es: AppLocale = {
     "app.history.removeFailed": "No se pudieron eliminar {n} veredictos. Revisa tu conexión e inténtalo de nuevo.",
     "app.history.offlineRemove": "Estás sin conexión. Conéctate a internet para eliminar.",
     "app.pricing.free.account": "Inicia sesión con Apple, Google o tu correo",
-    "app.context.label": "Contexto (opcional)",
     "app.pricing.context":
       "Las imágenes de contexto se leen y luego se descartan, sin coste adicional",
     "app.pricing.headline": "Tu primer veredicto corre por nuestra cuenta.",
@@ -171,10 +170,7 @@ const es: AppLocale = {
     "app.verdict.claims": "Cómo llegó cada parte a su postura",
     "app.verdict.back": "Veredicto",
     "app.appeal.title": "Añadir contexto y apelar",
-    "app.appeal.intro":
-      "¿Se les pasó algo a los jueces? Añádelo y volverán a decidir. La primera decisión queda registrada.",
-    "app.appeal.ask": "¿Qué deberían saber?",
-    "app.appeal.placeholder": "Un dato, un mensaje o lo que de verdad se acordó.",
+    "app.appeal.placeholder": "¿Qué se les pasó a los jueces? Un dato, un mensaje o lo que de verdad se acordó.",
     "app.appeal.cost": "Usa 1 veredicto. Puedes hacerlo dos veces por decisión. Apelaciones restantes: {left}.",
     "app.appeal.costCase": "Usa 1 veredicto. Puedes hacerlo una vez por caso.",
     "app.appeal.submit": "Volver a juzgar",

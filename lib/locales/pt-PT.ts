@@ -346,8 +346,7 @@ const ptPT: Locale = {
     "signin.createNote": "Vamos enviar-te um código por e-mail para confirmar este endereço. Só precisas de o fazer uma vez.",
     "signin.passwordChoose": "Iniciaste sessão. Escolhe uma palavra-passe para a próxima vez.",
     "signin.passwordSave": "Guardar palavra-passe",
-    "signin.passwordSaveFailed": "Iniciaste sessão, mas não conseguimos guardar a palavra-passe. Tenta de novo ou define-a mais tarde nas Definições.",
-    "signin.passwordSkip": "Saltar por agora",
+    "signin.passwordSaveFailed": "Não conseguimos guardar a palavra-passe. Tenta de novo.",
     "signin.passwordSubmit": "Entrar",
     "signin.rateLimited": "Demasiadas tentativas. Espera um minuto e tenta outra vez.",
     "signin.serviceDown": "O início de sessão não está disponível neste momento. Tenta mais tarde.",
@@ -375,10 +374,6 @@ const ptPT: Locale = {
     "account.deleteConfirm":
       "Apagar a tua conta? Os teus créditos, o plano e os dados de acesso são apagados. Os teus veredictos e os teus lados dos casos são removidos: o que escreveste e os nomes são apagados, e os links de partilha deixam de funcionar.",
     "account.deleteYes": "Sim, apagar",
-    "account.passwordSet": "Definir uma palavra-passe",
-    "account.passwordChange": "Alterar palavra-passe",
-    "account.passwordCurrent": "Palavra-passe atual",
-    "account.passwordSaved": "Palavra-passe guardada.",
     "account.deleteCancel": "Manter a conta",
     "account.deleted": "A tua conta foi apagada. A levar-te para a página inicial…",
     "account.deleteFailed": "Não conseguimos apagar a conta agora. Tentas outra vez?",
@@ -633,9 +628,8 @@ const ptPT: Locale = {
     "pairs.lastSlice.b":
       "Não podes dizer que é tua e depois não lhe tocar durante duas horas. Estava ali a arrefecer, por isso comi-a.",
     "appeal.lead":
-      "Falta alguma coisa ou há algo errado? Acrescenta-o uma vez e os juízes voltam a analisar tudo. Custa 1 veredicto.",
-    "appeal.label": "O teu contexto",
-    "appeal.placeholder": "O que é que escapou aos juízes?",
+      "Gasta 1 veredicto.",
+    "appeal.placeholder": "O que é que escapou aos juízes? Um facto, uma mensagem ou o que ficou mesmo combinado.",
     "appeal.submit": "Julgar de novo com isto",
     "appeal.sending": "A anonimizar o teu contexto…",
     "appeal.judging": "Os juízes estão a rever tudo…",
@@ -655,8 +649,6 @@ const ptPT: Locale = {
     "appeal.previous": "Veredicto anterior",
     "appeal.failed": "O novo julgamento não avançou. O teu crédito foi devolvido; podes tentar outra vez.",
     "appeal.refused": "Os juízes recusaram-se a julgar de novo com esse contexto. O teu crédito foi devolvido.",
-    "appeal.leadVerdict":
-      "Falta alguma coisa ou há algo errado? Acrescenta-o e os juízes voltam a analisar tudo. Cada vez custa 1 veredicto, até duas vezes por veredicto.",
     "appeal.history": "Histórico do veredicto",
     "faq.both.q": "A outra pessoa pode contar o lado dela?",
     "faq.both.a":

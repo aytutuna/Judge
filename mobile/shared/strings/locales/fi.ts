@@ -28,7 +28,6 @@ const fi: AppLocale = {
     "app.history.removeFailed": "{n} tuomion poistaminen ei onnistunut. Tarkista yhteys ja yritä uudelleen.",
     "app.history.offlineRemove": "Verkkoyhteys puuttuu. Poistaminen vaatii yhteyden.",
     "app.pricing.free.account": "Kirjaudu Applella, Googlella tai sähköpostilla",
-    "app.context.label": "Lisätiedot (valinnainen)",
     "app.pricing.context": "Lisätietokuvat luetaan ja heitetään sitten pois, ilman lisämaksua",
     "app.pricing.headline": "Ensimmäinen tuomio on meiltä.",
     "app.pricing.sub":
@@ -166,10 +165,7 @@ const fi: AppLocale = {
     "app.verdict.claims": "Miten kumpikin puoli päätyi kantaansa",
     "app.verdict.back": "Tuomio",
     "app.appeal.title": "Lisää tietoa ja pyydä uusi tuomio",
-    "app.appeal.intro":
-      "Jäikö tuomareilta jotain huomaamatta? Lisää se, niin he ratkaisevat uudelleen. Ensimmäinen tuomio jää näkyviin.",
-    "app.appeal.ask": "Mitä tuomareiden pitäisi tietää?",
-    "app.appeal.placeholder": "Fakta, viesti tai se, mistä oikeasti sovittiin.",
+    "app.appeal.placeholder": "Mitä tuomarit eivät huomanneet? Fakta, viesti tai se, mistä oikeasti sovittiin.",
     "app.appeal.cost": "Käyttää 1 tuomion. Voit tehdä tämän kahdesti tuomiota kohden; jäljellä {left}.",
     "app.appeal.costCase": "Käyttää 1 tuomion. Voit tehdä tämän kerran juttua kohden.",
     "app.appeal.submit": "Ratkaise uudelleen",

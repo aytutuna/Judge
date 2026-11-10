@@ -346,8 +346,7 @@ const it: Locale = {
     "signin.createNote": "Ti invieremo un codice via email per confermare questo indirizzo. Basta farlo una volta sola.",
     "signin.passwordChoose": "Hai effettuato l'accesso. Scegli una password per la prossima volta.",
     "signin.passwordSave": "Salva la password",
-    "signin.passwordSaveFailed": "Hai effettuato l'accesso, ma non siamo riusciti a salvare la password. Riprova oppure impostala più tardi nelle Impostazioni.",
-    "signin.passwordSkip": "Salta per ora",
+    "signin.passwordSaveFailed": "Non siamo riusciti a salvare la password. Riprova.",
     "signin.passwordSubmit": "Accedi",
     "signin.rateLimited": "Troppi tentativi. Aspetta un minuto e riprova.",
     "signin.serviceDown": "Al momento l'accesso non è disponibile. Riprova più tardi.",
@@ -376,10 +375,6 @@ const it: Locale = {
     "account.deleteConfirm":
       "Vuoi eliminare il tuo account? Crediti, piano e dati di accesso vengono cancellati. I tuoi verdetti e le tue versioni nei casi vengono rimossi: quello che hai scritto e i nomi vengono cancellati, e i link di condivisione smettono di funzionare.",
     "account.deleteYes": "Sì, eliminalo",
-    "account.passwordSet": "Imposta una password",
-    "account.passwordChange": "Cambia password",
-    "account.passwordCurrent": "Password attuale",
-    "account.passwordSaved": "Password salvata.",
     "account.deleteCancel": "Tieni l'account",
     "account.deleted": "Il tuo account è stato eliminato. Ti riportiamo alla home…",
     "account.deleteFailed": "Al momento non siamo riusciti a eliminare l'account. Riprovi?",
@@ -638,9 +633,8 @@ const it: Locale = {
     "pairs.lastSlice.b":
       "Non puoi dire “è mia” e poi non toccarla per due ore. Era lì che si raffreddava, quindi l'ho mangiata io.",
     "appeal.lead":
-      "Manca qualcosa o c'è un errore? Aggiungilo una volta e i giudici riesaminano tutto. Costa 1 verdetto.",
-    "appeal.label": "Il tuo contesto",
-    "appeal.placeholder": "Cosa è sfuggito ai giudici?",
+      "Costa 1 verdetto.",
+    "appeal.placeholder": "Cosa è sfuggito ai giudici? Un fatto, un messaggio o quello che avevate davvero concordato.",
     "appeal.submit": "Rivaluta con il mio contesto",
     "appeal.sending": "Anonimizziamo il tuo contesto…",
     "appeal.judging": "I giudici stanno riesaminando tutto…",
@@ -660,8 +654,6 @@ const it: Locale = {
     "appeal.previous": "Verdetto precedente",
     "appeal.failed": "La rivalutazione non è andata a buon fine. Il tuo credito è tornato; puoi riprovare.",
     "appeal.refused": "I giudici non hanno voluto rivalutare con quel contesto. Il tuo credito è tornato.",
-    "appeal.leadVerdict":
-      "Manca qualcosa o c'è un errore? Aggiungilo e i giudici riesaminano tutto. Ogni volta costa 1 verdetto, fino a due volte per verdetto.",
     "appeal.history": "Storico del verdetto",
     "faq.both.q": "Anche l'altra persona può raccontare la sua versione?",
     "faq.both.a":

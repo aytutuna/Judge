@@ -31,7 +31,6 @@ const hr: AppLocale = {
     "app.history.removeFailed": "Nismo uspjeli ukloniti {n} presuda. Provjeri vezu i pokušaj ponovno.",
     "app.history.offlineRemove": "Nemaš pristup internetu. Za uklanjanje je potrebna veza.",
     "app.pricing.free.account": "Prijavi se s Appleom, Googleom ili e-poštom",
-    "app.context.label": "Kontekst (neobavezno)",
     "app.pricing.context": "Slike konteksta se pročitaju pa odbace, bez dodatnog troška",
     "app.pricing.headline": "Prvu presudu častimo.",
     "app.pricing.sub":
@@ -169,10 +168,7 @@ const hr: AppLocale = {
     "app.verdict.claims": "Kako svaka strana dolazi do svog stava",
     "app.verdict.back": "Presuda",
     "app.appeal.title": "Dodaj kontekst i uloži žalbu",
-    "app.appeal.intro":
-      "Suci su nešto propustili? Dodaj to i ponovno će presuditi. Prva presuda ostaje zabilježena.",
-    "app.appeal.ask": "Što bi trebali znati?",
-    "app.appeal.placeholder": "Neka činjenica, poruka ili ono što je zapravo dogovoreno.",
+    "app.appeal.placeholder": "Što su suci propustili? Neka činjenica, poruka ili ono što je zapravo dogovoreno.",
     "app.appeal.cost": "Troši 1 presudu. To možeš napraviti dvaput po presudi; preostalo: {left}.",
     "app.appeal.costCase": "Troši 1 presudu. To možeš napraviti jednom po slučaju.",
     "app.appeal.submit": "Presudi ponovno",

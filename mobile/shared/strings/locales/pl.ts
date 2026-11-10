@@ -30,7 +30,6 @@ const pl: AppLocale = {
     "app.history.removeFailed": "Nie udało się usunąć {n} z nich. Sprawdź połączenie i spróbuj ponownie.",
     "app.history.offlineRemove": "Jesteś offline. Usuwanie wymaga połączenia z internetem.",
     "app.pricing.free.account": "Zaloguj się przez Apple, Google albo e-mail",
-    "app.context.label": "Kontekst (opcjonalnie)",
     "app.pricing.context":
       "Obrazy z kontekstem są czytane, a potem wyrzucane, bez dodatkowych kosztów",
     "app.pricing.headline": "Pierwszy werdykt na nasz koszt.",
@@ -171,10 +170,7 @@ const pl: AppLocale = {
     "app.verdict.claims": "Jak każda strona do tego doszła",
     "app.verdict.back": "Werdykt",
     "app.appeal.title": "Dodaj kontekst i odwołaj się",
-    "app.appeal.intro":
-      "Sędziowie coś przeoczyli? Dodaj to, a ocenią sprawę jeszcze raz. Pierwszy werdykt zostaje w historii.",
-    "app.appeal.ask": "Co powinni wiedzieć?",
-    "app.appeal.placeholder": "Fakt, wiadomość albo to, na co naprawdę się umówiliście.",
+    "app.appeal.placeholder": "Co umknęło sędziom? Fakt, wiadomość albo to, na co naprawdę się umówiliście.",
     "app.appeal.cost": "Zużywa 1 werdykt. Przy każdym werdykcie możesz to zrobić dwa razy (zostało: {left}).",
     "app.appeal.costCase": "Zużywa 1 werdykt. W każdej sprawie możesz to zrobić tylko raz.",
     "app.appeal.submit": "Oceń ponownie",

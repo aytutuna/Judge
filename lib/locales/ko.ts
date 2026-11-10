@@ -345,8 +345,7 @@ const ko: Locale = {
     "signin.createNote": "이 주소를 확인하기 위해 이메일로 코드를 보내드려요. 한 번만 하면 돼요.",
     "signin.passwordChoose": "로그인했어요. 다음을 위해 비밀번호를 정해 주세요.",
     "signin.passwordSave": "비밀번호 저장",
-    "signin.passwordSaveFailed": "로그인은 됐지만 비밀번호를 저장하지 못했어요. 다시 시도하거나 나중에 설정에서 정해 주세요.",
-    "signin.passwordSkip": "지금은 건너뛰기",
+    "signin.passwordSaveFailed": "비밀번호를 저장하지 못했어요. 다시 시도해 주세요.",
     "signin.passwordSubmit": "로그인",
     "signin.rateLimited": "시도 횟수가 너무 많아요. 1분 정도 기다렸다가 다시 시도해 주세요.",
     "signin.serviceDown": "지금은 로그인할 수 없어요. 나중에 다시 시도해 주세요.",
@@ -374,10 +373,6 @@ const ko: Locale = {
     "account.deleteConfirm":
       "계정을 삭제할까요? 크레딧, 요금제, 로그인 정보가 삭제돼요. 내 판결과 사건 속 내 입장도 지워져요. 쓴 글과 이름이 삭제되고, 공유 링크도 더 이상 열리지 않아요.",
     "account.deleteYes": "네, 삭제할게요",
-    "account.passwordSet": "비밀번호 설정",
-    "account.passwordChange": "비밀번호 변경",
-    "account.passwordCurrent": "현재 비밀번호",
-    "account.passwordSaved": "비밀번호를 저장했어요.",
     "account.deleteCancel": "계정 유지",
     "account.deleted": "계정이 삭제됐어요. 홈으로 이동할게요…",
     "account.deleteFailed": "지금은 계정을 삭제하지 못했어요. 다시 한번 해 볼까요?",
@@ -614,9 +609,8 @@ const ko: Locale = {
     "pairs.lastSlice.bName": "나연",
     "pairs.lastSlice.b": "찜만 해 놓고 두 시간 동안 손도 안 대면 어떡해요. 그냥 식어 가고 있길래 제가 먹었어요.",
     "appeal.lead":
-      "빠졌거나 잘못된 내용이 있나요? 한 번 추가할 수 있고, 추가하면 판사들이 전부 다시 살펴봐요. 판결 1회를 사용해요.",
-    "appeal.label": "추가할 내용",
-    "appeal.placeholder": "판사들이 놓친 게 뭔가요?",
+      "판결 1회를 사용해요.",
+    "appeal.placeholder": "판사들이 놓친 게 뭔가요? 사실, 주고받은 메시지, 실제로 합의한 내용 등",
     "appeal.submit": "맥락 추가하고 다시 판결",
     "appeal.sending": "추가한 맥락을 익명 처리하는 중…",
     "appeal.judging": "판사들이 전부 다시 살펴보는 중…",
@@ -636,8 +630,6 @@ const ko: Locale = {
     "appeal.previous": "이전 판결",
     "appeal.failed": "다시 판결하지 못했어요. 크레딧을 돌려 드렸으니 다시 시도해 보세요.",
     "appeal.refused": "판사들이 이 맥락으로는 다시 판결하지 않기로 했어요. 크레딧을 돌려 드렸어요.",
-    "appeal.leadVerdict":
-      "빠졌거나 잘못된 내용이 있나요? 추가하면 판사들이 전부 다시 살펴봐요. 한 번에 판결 1회를 사용하고, 판결 하나당 최대 두 번까지 할 수 있어요.",
     "appeal.history": "판결 기록",
     "faq.both.q": "상대방도 자기 입장을 말할 수 있나요?",
     "faq.both.a":

@@ -30,7 +30,6 @@ const ro: AppLocale = {
     "app.history.removeFailed": "N-am putut elimina {n} dintre ele. Verifică-ți conexiunea și încearcă din nou.",
     "app.history.offlineRemove": "Ești offline. Ca să elimini verdicte, ai nevoie de conexiune.",
     "app.pricing.free.account": "Conectează-te cu Apple, Google sau prin e-mail",
-    "app.context.label": "Context (opțional)",
     "app.pricing.context": "Imaginile de context sunt citite și apoi aruncate, fără cost în plus",
     "app.pricing.headline": "Primul verdict e din partea casei.",
     "app.pricing.sub":
@@ -170,10 +169,7 @@ const ro: AppLocale = {
     "app.verdict.claims": "Cum a ajuns fiecare parte la poziția ei",
     "app.verdict.back": "Verdict",
     "app.appeal.title": "Adaugă context și contestă",
-    "app.appeal.intro":
-      "Le-a scăpat ceva judecătorilor? Adaugă-l și vor judeca din nou. Primul verdict rămâne în istoric.",
-    "app.appeal.ask": "Ce ar trebui să știe?",
-    "app.appeal.placeholder": "Un fapt, un mesaj sau ce ați stabilit cu adevărat.",
+    "app.appeal.placeholder": "Ce le-a scăpat judecătorilor? Un fapt, un mesaj sau ce ați stabilit cu adevărat.",
     "app.appeal.cost": "Folosește 1 verdict. Poți face asta de două ori pentru același verdict; mai ai {left}.",
     "app.appeal.costCase": "Folosește 1 verdict. Poți face asta o singură dată pe caz.",
     "app.appeal.submit": "Judecă din nou",

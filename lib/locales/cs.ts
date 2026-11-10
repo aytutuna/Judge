@@ -343,8 +343,7 @@ const cs: Locale = {
     "signin.createNote": "Pošleme ti e-mailem kód, abychom potvrdili tuto adresu. Stačí to udělat jednou.",
     "signin.passwordChoose": "Jsi přihlášen(a). Vyber si heslo na příště.",
     "signin.passwordSave": "Uložit heslo",
-    "signin.passwordSaveFailed": "Jsi přihlášen(a), ale heslo se nepodařilo uložit. Zkus to znovu, nebo si ho nastav později v Nastavení.",
-    "signin.passwordSkip": "Zatím přeskočit",
+    "signin.passwordSaveFailed": "Heslo se nepodařilo uložit. Zkus to znovu.",
     "signin.passwordSubmit": "Přihlásit se",
     "signin.rateLimited": "Příliš mnoho pokusů. Počkej minutu a zkus to znovu.",
     "signin.serviceDown": "Přihlášení teď není dostupné. Zkus to později.",
@@ -372,10 +371,6 @@ const cs: Locale = {
     "account.deleteConfirm":
       "Smazat účet? Tvoje kredity, plán a přihlašovací údaje se smažou. Tvoje verdikty a tvoje pohledy v případech se odstraní: tvoje texty i jména se vymažou a sdílené odkazy přestanou fungovat.",
     "account.deleteYes": "Ano, smazat",
-    "account.passwordSet": "Nastavit heslo",
-    "account.passwordChange": "Změnit heslo",
-    "account.passwordCurrent": "Současné heslo",
-    "account.passwordSaved": "Heslo je uloženo.",
     "account.deleteCancel": "Ponechat účet",
     "account.deleted": "Účet je smazaný. Přesměrujeme tě na úvodní stránku…",
     "account.deleteFailed": "Účet se teď nepodařilo smazat. Zkusíš to znovu?",
@@ -630,9 +625,8 @@ const cs: Locale = {
     "pairs.lastSlice.b":
       "Nemůžeš si něco zabrat a pak na to dvě hodiny nesáhnout. Jen to tam leželo a chladlo, tak jsem to snědla.",
     "appeal.lead":
-      "Něco chybí nebo nesedí? Doplň to jednou a soudci se na všechno podívají znovu. Stojí to 1 verdikt.",
-    "appeal.label": "Tvůj kontext",
-    "appeal.placeholder": "Co soudcům uniklo?",
+      "Stojí 1 verdikt.",
+    "appeal.placeholder": "Co soudcům uniklo? Fakt, zpráva nebo to, na čem byla doopravdy dohoda.",
     "appeal.submit": "Znovu soudit s kontextem",
     "appeal.sending": "Anonymizujeme tvůj kontext…",
     "appeal.judging": "Soudci se na všechno dívají znovu…",
@@ -652,8 +646,6 @@ const cs: Locale = {
     "appeal.previous": "Dřívější verdikt",
     "appeal.failed": "Nové posouzení neproběhlo. Kredit se ti vrátil; můžeš to zkusit znovu.",
     "appeal.refused": "S tímhle kontextem soudci znovu soudit odmítli. Kredit se ti vrátil.",
-    "appeal.leadVerdict":
-      "Něco chybí nebo nesedí? Doplň to a soudci se na všechno podívají znovu. Pokaždé to stojí 1 verdikt, nejvýš dvakrát u jednoho verdiktu.",
     "appeal.history": "Historie verdiktu",
     "faq.both.q": "Může druhá strana napsat, jak to vidí ona?",
     "faq.both.a":

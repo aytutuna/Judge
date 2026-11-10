@@ -30,7 +30,6 @@ const ca: AppLocale = {
     "app.history.removeFailed": "No n'hem pogut eliminar {n}. Comprova la connexió i torna-ho a provar.",
     "app.history.offlineRemove": "No tens connexió. Per eliminar cal estar connectat.",
     "app.pricing.free.account": "Inicia sessió amb Apple, Google o el correu",
-    "app.context.label": "Context (opcional)",
     "app.pricing.context":
       "Imatges de context, llegides i després esborrades, sense cost addicional",
     "app.pricing.headline": "El primer veredicte, et convidem.",
@@ -171,10 +170,7 @@ const ca: AppLocale = {
     "app.verdict.claims": "Com hi ha arribat cada part",
     "app.verdict.back": "Veredicte",
     "app.appeal.title": "Afegeix context i apel·la",
-    "app.appeal.intro":
-      "Els jutges s'han deixat alguna cosa? Afegeix-la i tornaran a jutjar. El primer veredicte queda registrat.",
-    "app.appeal.ask": "Què haurien de saber?",
-    "app.appeal.placeholder": "Un fet, un missatge o el que realment vau acordar.",
+    "app.appeal.placeholder": "Què s'han deixat els jutges? Un fet, un missatge o el que realment vau acordar.",
     "app.appeal.cost": "Gasta 1 veredicte. Pots fer-ho dues vegades per veredicte (restants: {left}).",
     "app.appeal.costCase": "Gasta 1 veredicte. Pots fer-ho un cop per cas.",
     "app.appeal.submit": "Torna a jutjar",

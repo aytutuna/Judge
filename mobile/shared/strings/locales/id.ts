@@ -29,7 +29,6 @@ const id: AppLocale = {
     "app.history.removeFailed": "{n} putusan gagal dihapus. Cek koneksimu, lalu coba lagi.",
     "app.history.offlineRemove": "Kamu sedang offline. Sambungkan ke internet untuk menghapus.",
     "app.pricing.free.account": "Masuk dengan Apple, Google, atau email",
-    "app.context.label": "Konteks (opsional)",
     "app.pricing.context": "Gambar konteks dibaca lalu dibuang, tanpa biaya tambahan",
     "app.pricing.headline": "Putusan pertamamu kami traktir.",
     "app.pricing.sub":
@@ -170,10 +169,7 @@ const id: AppLocale = {
     "app.verdict.claims": "Alur pikir tiap pihak",
     "app.verdict.back": "Putusan",
     "app.appeal.title": "Tambah konteks & banding",
-    "app.appeal.intro":
-      "Ada yang terlewat oleh hakim? Tambahkan, dan mereka akan memutuskan ulang. Putusan pertama tetap tercatat.",
-    "app.appeal.ask": "Apa yang perlu mereka tahu?",
-    "app.appeal.placeholder": "Fakta, pesan, atau apa yang sebenarnya disepakati.",
+    "app.appeal.placeholder": "Apa yang terlewat oleh hakim? Fakta, pesan, atau apa yang sebenarnya disepakati.",
     "app.appeal.cost": "Memakai 1 putusan. Bisa dilakukan dua kali per putusan. Sisa {left} kali.",
     "app.appeal.costCase": "Memakai 1 putusan. Bisa dilakukan sekali per kasus.",
     "app.appeal.submit": "Nilai ulang",

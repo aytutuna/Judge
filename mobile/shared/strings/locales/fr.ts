@@ -30,7 +30,6 @@ const fr: AppLocale = {
     "app.history.removeFailed": "Impossible d’en supprimer {n}. Vérifie ta connexion et réessaie.",
     "app.history.offlineRemove": "Tu es hors ligne. Il faut une connexion pour supprimer.",
     "app.pricing.free.account": "Connecte-toi avec Apple, Google ou par e-mail",
-    "app.context.label": "Contexte (facultatif)",
     "app.pricing.context": "Les images de contexte sont lues puis jetées, sans frais en plus",
     "app.pricing.headline": "Ton premier verdict est offert.",
     "app.pricing.sub":
@@ -170,10 +169,7 @@ const fr: AppLocale = {
     "app.verdict.claims": "Comment chaque camp en est arrivé là",
     "app.verdict.back": "Verdict",
     "app.appeal.title": "Ajouter du contexte et faire appel",
-    "app.appeal.intro":
-      "Les juges ont raté quelque chose ? Ajoute-le et ils tranchent à nouveau. Le premier verdict reste dans l’historique.",
-    "app.appeal.ask": "Que doivent savoir les juges ?",
-    "app.appeal.placeholder": "Un fait, un message ou ce qui avait vraiment été convenu.",
+    "app.appeal.placeholder": "Qu’est-ce que les juges ont raté ? Un fait, un message ou ce qui avait vraiment été convenu.",
     "app.appeal.cost": "Coûte 1 verdict. Tu peux le faire deux fois par verdict ; il t’en reste {left}.",
     "app.appeal.costCase": "Coûte 1 verdict. Tu peux le faire une fois par dossier.",
     "app.appeal.submit": "Rejuger",

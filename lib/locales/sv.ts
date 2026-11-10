@@ -347,8 +347,7 @@ const sv: Locale = {
     "signin.createNote": "Vi mejlar dig en kod för att bekräfta adressen. Det behöver du bara göra en gång.",
     "signin.passwordChoose": "Du är inloggad. Välj ett lösenord till nästa gång.",
     "signin.passwordSave": "Spara lösenord",
-    "signin.passwordSaveFailed": "Du är inloggad, men vi kunde inte spara lösenordet. Försök igen eller ange det senare i Inställningar.",
-    "signin.passwordSkip": "Hoppa över för nu",
+    "signin.passwordSaveFailed": "Vi kunde inte spara lösenordet. Försök igen.",
     "signin.passwordSubmit": "Logga in",
     "signin.rateLimited": "För många försök. Vänta en minut och försök igen.",
     "signin.serviceDown": "Det går inte att logga in just nu. Försök igen senare.",
@@ -377,10 +376,6 @@ const sv: Locale = {
     "account.deleteConfirm":
       "Radera ditt konto? Dina krediter, ditt abonnemang och dina inloggningsuppgifter raderas. Dina domar och dina sidor i tvåsidiga fall tas bort: det du skrev och namnen raderas, och deras delningslänkar slutar fungera.",
     "account.deleteYes": "Ja, radera det",
-    "account.passwordSet": "Ange ett lösenord",
-    "account.passwordChange": "Byt lösenord",
-    "account.passwordCurrent": "Nuvarande lösenord",
-    "account.passwordSaved": "Lösenordet har sparats.",
     "account.deleteCancel": "Behåll mitt konto",
     "account.deleted": "Ditt konto är raderat. Du skickas till startsidan…",
     "account.deleteFailed": "Vi kunde inte radera kontot just nu. Vill du försöka igen?",
@@ -632,9 +627,8 @@ const sv: Locale = {
     "pairs.lastSlice.b":
       "Man kan inte paxa något och sedan inte röra det på två timmar. Den låg bara där och kallnade, så jag åt upp den.",
     "appeal.lead":
-      "Saknas något eller blev något fel? Lägg till det en gång så går domarna igenom allt igen. Kostar 1 dom.",
-    "appeal.label": "Din komplettering",
-    "appeal.placeholder": "Vad missade domarna?",
+      "Kostar 1 dom.",
+    "appeal.placeholder": "Vad missade domarna? Ett faktum, ett meddelande eller vad ni faktiskt kom överens om.",
     "appeal.submit": "Döm om med min komplettering",
     "appeal.sending": "Anonymiserar din komplettering…",
     "appeal.judging": "Domarna går igenom allt igen…",
@@ -654,8 +648,6 @@ const sv: Locale = {
     "appeal.previous": "Tidigare dom",
     "appeal.failed": "Omprövningen gick inte igenom. Du har fått tillbaka krediten och kan försöka igen.",
     "appeal.refused": "Domarna ville inte pröva om med den kompletteringen. Du har fått tillbaka krediten.",
-    "appeal.leadVerdict":
-      "Saknas något eller blev något fel? Lägg till det så går domarna igenom allt igen. Varje gång kostar 1 dom, högst två gånger per dom.",
     "appeal.history": "Domens historik",
     "faq.both.q": "Kan den andra personen berätta sin sida?",
     "faq.both.a":

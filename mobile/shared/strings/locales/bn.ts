@@ -28,7 +28,6 @@ const bn: AppLocale = {
     "app.history.removeFailed": "{n}টি রায় সরিয়ে ফেলা গেল না। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।",
     "app.history.offlineRemove": "আপনি অফলাইনে আছেন। সরিয়ে ফেলতে ইন্টারনেট সংযোগ লাগবে।",
     "app.pricing.free.account": "Apple, Google বা ইমেইল দিয়ে সাইন ইন করুন",
-    "app.context.label": "নতুন তথ্য (ঐচ্ছিক)",
     "app.pricing.context": "নতুন তথ্যের ছবি পড়া হয়, তারপর মুছে ফেলা হয়, বাড়তি খরচ ছাড়াই",
     "app.pricing.headline": "প্রথম রায়টা আমাদের তরফ থেকে।",
     "app.pricing.sub":
@@ -165,10 +164,7 @@ const bn: AppLocale = {
     "app.verdict.claims": "প্রত্যেক পক্ষ কীভাবে সেখানে পৌঁছাল",
     "app.verdict.back": "রায়",
     "app.appeal.title": "নতুন তথ্য যোগ করে আপিল করুন",
-    "app.appeal.intro":
-      "বিচারকেরা কিছু মিস করেছেন? সেটা যোগ করুন, তাঁরা আবার রায় দেবেন। প্রথম রায়টাও রেকর্ডে থেকে যাবে।",
-    "app.appeal.ask": "তাঁদের কী জানা দরকার?",
-    "app.appeal.placeholder": "একটা তথ্য, একটা মেসেজ বা আসলে কী ঠিক হয়েছিল।",
+    "app.appeal.placeholder": "বিচারকেরা কী মিস করেছেন? একটা তথ্য, একটা মেসেজ বা আসলে কী ঠিক হয়েছিল।",
     "app.appeal.cost": "এতে 1টি রায় খরচ হয়। একটা রায়ে এটা দুবার করা যায়; আর {left}বার বাকি।",
     "app.appeal.costCase": "এতে 1টি রায় খরচ হয়। একটা মামলায় এটা একবারই করা যায়।",
     "app.appeal.submit": "আবার বিচার করান",

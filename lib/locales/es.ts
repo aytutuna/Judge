@@ -346,8 +346,7 @@ const es: Locale = {
     "signin.createNote": "Te enviaremos un código por correo para confirmar esta dirección. Solo tendrás que hacerlo una vez.",
     "signin.passwordChoose": "Ya iniciaste sesión. Elige una contraseña para la próxima vez.",
     "signin.passwordSave": "Guardar contraseña",
-    "signin.passwordSaveFailed": "Iniciaste sesión, pero no pudimos guardar la contraseña. Inténtalo de nuevo o defínela más tarde en Ajustes.",
-    "signin.passwordSkip": "Omitir por ahora",
+    "signin.passwordSaveFailed": "No pudimos guardar la contraseña. Inténtalo de nuevo.",
     "signin.passwordSubmit": "Iniciar sesión",
     "signin.rateLimited": "Demasiados intentos. Espera un minuto y vuelve a intentarlo.",
     "signin.serviceDown": "El inicio de sesión no está disponible ahora mismo. Inténtalo más tarde.",
@@ -375,10 +374,6 @@ const es: Locale = {
     "account.deleteConfirm":
       "¿Eliminar tu cuenta? Se borran tus créditos, tu plan y tus datos de inicio de sesión. Se eliminan tus veredictos y tus versiones de los casos: se borran lo que escribiste y los nombres, y sus enlaces para compartir dejan de funcionar.",
     "account.deleteYes": "Sí, eliminarla",
-    "account.passwordSet": "Crear una contraseña",
-    "account.passwordChange": "Cambiar contraseña",
-    "account.passwordCurrent": "Contraseña actual",
-    "account.passwordSaved": "Contraseña guardada.",
     "account.deleteCancel": "Conservar mi cuenta",
     "account.deleted": "Tu cuenta se ha eliminado. Te llevamos a la página de inicio…",
     "account.deleteFailed": "No pudimos eliminar la cuenta en este momento. ¿Lo intentas de nuevo?",
@@ -635,9 +630,8 @@ const es: Locale = {
     "pairs.lastSlice.b":
       "No puedes decir que es tuya y luego no tocarla en dos horas. Estaba ahí enfriándose, así que me la comí.",
     "appeal.lead":
-      "¿Falta algo o hay algo mal? Añádelo una vez y los jueces vuelven a revisarlo todo. Cuesta 1 veredicto.",
-    "appeal.label": "Tu contexto",
-    "appeal.placeholder": "¿Qué se les pasó a los jueces?",
+      "Usa 1 veredicto.",
+    "appeal.placeholder": "¿Qué se les pasó a los jueces? Un dato, un mensaje o lo que de verdad se acordó.",
     "appeal.submit": "Volver a juzgar con mi contexto",
     "appeal.sending": "Anonimizando tu contexto…",
     "appeal.judging": "Los jueces están revisándolo todo de nuevo…",
@@ -657,8 +651,6 @@ const es: Locale = {
     "appeal.previous": "Veredicto anterior",
     "appeal.failed": "No se pudo volver a juzgar. Te hemos devuelto el crédito; puedes intentarlo otra vez.",
     "appeal.refused": "Los jueces no quisieron volver a juzgar con ese contexto. Te hemos devuelto el crédito.",
-    "appeal.leadVerdict":
-      "¿Falta algo o hay algo mal? Añádelo y los jueces vuelven a revisarlo todo. Cada vez cuesta 1 veredicto, hasta dos veces por veredicto.",
     "appeal.history": "Historial del veredicto",
     "faq.both.q": "¿La otra persona puede contar su versión?",
     "faq.both.a":

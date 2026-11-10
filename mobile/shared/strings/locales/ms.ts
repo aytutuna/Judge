@@ -30,7 +30,6 @@ const ms: AppLocale = {
     "app.history.removeFailed": "{n} keputusan tidak dapat dibuang. Semak sambungan anda dan cuba lagi.",
     "app.history.offlineRemove": "Anda di luar talian. Sambungan diperlukan untuk membuang keputusan.",
     "app.pricing.free.account": "Log masuk dengan Apple, Google atau e-mel",
-    "app.context.label": "Konteks (pilihan)",
     "app.pricing.context": "Imej konteks dibaca kemudian dibuang, tanpa kos tambahan",
     "app.pricing.headline": "Keputusan pertama anda, kami belanja.",
     "app.pricing.sub":
@@ -170,10 +169,7 @@ const ms: AppLocale = {
     "app.verdict.claims": "Bagaimana setiap pihak sampai ke situ",
     "app.verdict.back": "Keputusan",
     "app.appeal.title": "Tambah konteks & buat rayuan",
-    "app.appeal.intro":
-      "Ada yang hakim terlepas pandang? Tambahkan dan mereka akan memutuskan semula. Keputusan pertama kekal dalam rekod.",
-    "app.appeal.ask": "Apa yang hakim perlu tahu?",
-    "app.appeal.placeholder": "Satu fakta, satu mesej, atau apa yang sebenarnya dipersetujui.",
+    "app.appeal.placeholder": "Apa yang hakim terlepas pandang? Satu fakta, satu mesej, atau apa yang sebenarnya dipersetujui.",
     "app.appeal.cost":
       "Menggunakan 1 keputusan. Anda boleh buat ini dua kali bagi setiap keputusan; tinggal {left} kali lagi.",
     "app.appeal.costCase": "Menggunakan 1 keputusan. Anda boleh buat ini sekali bagi setiap kes.",

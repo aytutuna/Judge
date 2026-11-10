@@ -346,8 +346,7 @@ const nb: Locale = {
     "signin.createNote": "Vi sender deg en kode på e-post for å bekrefte adressen. Du trenger bare å gjøre det én gang.",
     "signin.passwordChoose": "Du er logget inn. Velg et passord til neste gang.",
     "signin.passwordSave": "Lagre passord",
-    "signin.passwordSaveFailed": "Du er logget inn, men vi kunne ikke lagre passordet. Prøv igjen, eller angi det senere i Innstillinger.",
-    "signin.passwordSkip": "Hopp over for nå",
+    "signin.passwordSaveFailed": "Vi klarte ikke å lagre passordet. Prøv igjen.",
     "signin.passwordSubmit": "Logg inn",
     "signin.rateLimited": "For mange forsøk. Vent et minutt og prøv igjen.",
     "signin.serviceDown": "Innlogging er ikke tilgjengelig akkurat nå. Prøv igjen senere.",
@@ -375,10 +374,6 @@ const nb: Locale = {
     "account.deleteConfirm":
       "Vil du slette kontoen din? Kredittene, abonnementet og innloggingsdetaljene dine slettes. Dommene dine og sidene dine i saker fjernes: det du skrev og navnene slettes, og delingslenkene slutter å virke.",
     "account.deleteYes": "Ja, slett den",
-    "account.passwordSet": "Angi et passord",
-    "account.passwordChange": "Endre passord",
-    "account.passwordCurrent": "Nåværende passord",
-    "account.passwordSaved": "Passordet er lagret.",
     "account.deleteCancel": "Behold kontoen",
     "account.deleted": "Kontoen din er slettet. Sender deg til forsiden…",
     "account.deleteFailed": "Vi fikk ikke slettet kontoen akkurat nå. Vil du prøve igjen?",
@@ -632,9 +627,8 @@ const nb: Locale = {
     "pairs.lastSlice.b":
       "Du kan ikke tinge noe og så la det ligge urørt i to timer. Det lå bare der og ble kaldt, så jeg spiste det.",
     "appeal.lead":
-      "Mangler noe, eller er noe feil? Legg det til én gang, så ser dommerne på alt på nytt. Koster 1 dom.",
-    "appeal.label": "Konteksten din",
-    "appeal.placeholder": "Hva gikk dommerne glipp av?",
+      "Koster 1 dom.",
+    "appeal.placeholder": "Hva gikk dommerne glipp av? Et faktum, en melding eller hva dere faktisk ble enige om.",
     "appeal.submit": "Døm på nytt med min kontekst",
     "appeal.sending": "Anonymiserer konteksten din…",
     "appeal.judging": "Dommerne ser på alt på nytt…",
@@ -654,8 +648,6 @@ const nb: Locale = {
     "appeal.previous": "Tidligere dom",
     "appeal.failed": "Den nye dømmingen gikk ikke gjennom. Du har fått kreditten tilbake og kan prøve igjen.",
     "appeal.refused": "Dommerne ville ikke dømme på nytt med den konteksten. Du har fått kreditten tilbake.",
-    "appeal.leadVerdict":
-      "Mangler noe, eller er noe feil? Legg det til, så ser dommerne på alt på nytt. Hver gang koster 1 dom, opptil to ganger per dom.",
     "appeal.history": "Domshistorikk",
     "faq.both.q": "Kan den andre fortelle sin side?",
     "faq.both.a":

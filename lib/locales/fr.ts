@@ -346,8 +346,7 @@ const fr: Locale = {
     "signin.createNote": "Nous t'enverrons un code par e-mail pour confirmer cette adresse. Tu n'as à le faire qu'une seule fois.",
     "signin.passwordChoose": "Tu es connecté. Choisis un mot de passe pour la prochaine fois.",
     "signin.passwordSave": "Enregistrer le mot de passe",
-    "signin.passwordSaveFailed": "Tu es connecté, mais nous n'avons pas pu enregistrer le mot de passe. Réessaie, ou définis-le plus tard dans les réglages.",
-    "signin.passwordSkip": "Passer pour l'instant",
+    "signin.passwordSaveFailed": "Nous n'avons pas pu enregistrer le mot de passe. Réessaie.",
     "signin.passwordSubmit": "Se connecter",
     "signin.rateLimited": "Trop de tentatives. Attends une minute et réessaie.",
     "signin.serviceDown": "La connexion n’est pas disponible pour l’instant. Réessaie plus tard.",
@@ -375,10 +374,6 @@ const fr: Locale = {
     "account.deleteConfirm":
       "Supprimer ton compte ? Tes crédits, ton offre et tes informations de connexion seront effacés. Tes verdicts et tes versions dans les dossiers seront supprimés : ce que tu as écrit et les noms seront effacés, et leurs liens de partage cesseront de fonctionner.",
     "account.deleteYes": "Oui, supprimer",
-    "account.passwordSet": "Définir un mot de passe",
-    "account.passwordChange": "Changer le mot de passe",
-    "account.passwordCurrent": "Mot de passe actuel",
-    "account.passwordSaved": "Mot de passe enregistré.",
     "account.deleteCancel": "Garder mon compte",
     "account.deleted": "Ton compte a été supprimé. Retour à l’accueil…",
     "account.deleteFailed": "Impossible de supprimer le compte pour l’instant. Tu veux bien réessayer ?",
@@ -635,9 +630,8 @@ const fr: Locale = {
     "pairs.lastSlice.b":
       "Tu ne peux pas réserver une part et ne pas y toucher pendant deux heures. Elle était là à refroidir, alors je l’ai mangée.",
     "appeal.lead":
-      "Il manque quelque chose ou il y a une erreur ? Précise-le une fois et les juges réexaminent tout. Ça coûte 1 verdict.",
-    "appeal.label": "Ton contexte",
-    "appeal.placeholder": "Qu’est-ce que les juges ont raté ?",
+      "Coûte 1 verdict.",
+    "appeal.placeholder": "Qu’est-ce que les juges ont raté ? Un fait, un message ou ce qui avait vraiment été convenu.",
     "appeal.submit": "Rejuger avec mon contexte",
     "appeal.sending": "Anonymisation de ton contexte…",
     "appeal.judging": "Les juges réexaminent tout…",
@@ -657,8 +651,6 @@ const fr: Locale = {
     "appeal.previous": "Verdict précédent",
     "appeal.failed": "Le nouveau jugement n’a pas abouti. Ton crédit t’a été rendu ; tu peux réessayer.",
     "appeal.refused": "Les juges ont refusé de rejuger avec ce contexte. Ton crédit t’a été rendu.",
-    "appeal.leadVerdict":
-      "Il manque quelque chose ou il y a une erreur ? Précise-le et les juges réexaminent tout. Chaque ajout coûte 1 verdict, deux fois maximum par verdict.",
     "appeal.history": "Historique du verdict",
     "faq.both.q": "L’autre personne peut-elle donner sa version ?",
     "faq.both.a":

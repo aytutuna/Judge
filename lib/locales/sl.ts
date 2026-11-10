@@ -346,8 +346,7 @@ const sl: Locale = {
     "signin.createNote": "Po e-pošti vam bomo poslali kodo za potrditev tega naslova. To morate storiti le enkrat.",
     "signin.passwordChoose": "Prijavljeni ste. Izberite geslo za naslednjič.",
     "signin.passwordSave": "Shrani geslo",
-    "signin.passwordSaveFailed": "Prijavljeni ste, vendar gesla nismo mogli shraniti. Poskusite znova ali ga nastavite pozneje v Nastavitvah.",
-    "signin.passwordSkip": "Zaenkrat preskoči",
+    "signin.passwordSaveFailed": "Gesla nismo mogli shraniti. Poskusite znova.",
     "signin.passwordSubmit": "Prijavi se",
     "signin.rateLimited": "Preveč poskusov. Počakaj minuto in poskusi znova.",
     "signin.serviceDown": "Prijava trenutno ni na voljo. Poskusi pozneje.",
@@ -375,10 +374,6 @@ const sl: Locale = {
     "account.deleteConfirm":
       "Želiš izbrisati račun? Krediti, naročnina in podatki za prijavo se izbrišejo. Tvoje razsodbe in tvoje plati v sporih se odstranijo: napisano besedilo in imena se izbrišejo, njihove povezave za deljenje pa prenehajo delovati.",
     "account.deleteYes": "Da, izbriši",
-    "account.passwordSet": "Nastavi geslo",
-    "account.passwordChange": "Spremeni geslo",
-    "account.passwordCurrent": "Trenutno geslo",
-    "account.passwordSaved": "Geslo je shranjeno.",
     "account.deleteCancel": "Obdrži račun",
     "account.deleted": "Račun je izbrisan. Preusmerjamo te na domačo stran…",
     "account.deleteFailed": "Računa trenutno nismo mogli izbrisati. Poskusiš znova?",
@@ -634,9 +629,8 @@ const sl: Locale = {
     "pairs.lastSlice.b":
       "Ne moreš si rezervirati kosa in se ga potem dve uri ne dotakniti. Kar ležal je tam in se hladil, zato sem ga pojedla.",
     "appeal.lead":
-      "Kaj manjka ali je narobe? Dodaj enkrat in sodniki bodo znova pregledali vse. Stane 1 razsodbo.",
-    "appeal.label": "Tvoj kontekst",
-    "appeal.placeholder": "Kaj so sodniki spregledali?",
+      "Porabi 1 razsodbo.",
+    "appeal.placeholder": "Kaj so sodniki spregledali? Dejstvo, sporočilo ali to, kar je bilo v resnici dogovorjeno.",
     "appeal.submit": "Znova razsodi s tem",
     "appeal.sending": "Anonimiziramo tvoj kontekst…",
     "appeal.judging": "Sodniki znova pregledujejo vse…",
@@ -656,8 +650,6 @@ const sl: Locale = {
     "appeal.previous": "Prejšnja razsodba",
     "appeal.failed": "Ponovna presoja ni uspela. Kredit ti je vrnjen; lahko poskusiš znova.",
     "appeal.refused": "Sodniki s tem kontekstom niso hoteli znova razsojati. Kredit ti je vrnjen.",
-    "appeal.leadVerdict":
-      "Kaj manjka ali je narobe? Dodaj in sodniki bodo znova pregledali vse. Vsakič stane 1 razsodbo, največ dvakrat na razsodbo.",
     "appeal.history": "Zgodovina razsodbe",
     "faq.both.q": "Lahko tudi druga oseba pove svojo plat?",
     "faq.both.a":

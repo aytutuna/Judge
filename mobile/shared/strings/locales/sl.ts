@@ -31,7 +31,6 @@ const sl: AppLocale = {
     "app.history.removeFailed": "{n} razsodb ni bilo mogoče odstraniti. Preveri povezavo in poskusi znova.",
     "app.history.offlineRemove": "Ni povezave s spletom. Za odstranitev jo potrebuješ.",
     "app.pricing.free.account": "Prijavi se z Apple, Googlom ali e-pošto",
-    "app.context.label": "Kontekst (neobvezno)",
     "app.pricing.context": "Slike konteksta se preberejo in zavržejo, brez dodatnih stroškov",
     "app.pricing.headline": "Prva razsodba gre na naš račun.",
     "app.pricing.sub":
@@ -183,11 +182,8 @@ const sl: AppLocale = {
     "app.verdict.claims": "Kako je vsaka plat prišla do sklepa",
     "app.verdict.back": "Razsodba",
     "app.appeal.title": "Dodaj kontekst za ponovno presojo",
-    "app.appeal.intro":
-      "So sodniki kaj spregledali? Dodaj to in znova bodo razsodili. Prva razsodba ostane zabeležena.",
-    "app.appeal.ask": "Kaj bi morali vedeti?",
     "app.appeal.placeholder":
-      "Dejstvo, sporočilo ali to, kar je bilo v resnici dogovorjeno.",
+      "Kaj so sodniki spregledali? Dejstvo, sporočilo ali to, kar je bilo v resnici dogovorjeno.",
     "app.appeal.cost":
       "Porabi 1 razsodbo. Pri eni razsodbi lahko to narediš dvakrat – še na voljo: {left}.",
     "app.appeal.costCase":

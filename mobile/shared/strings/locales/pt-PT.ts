@@ -28,7 +28,6 @@ const ptPT: AppLocale = {
     "app.history.removeFailed": "Não conseguimos remover {n} deles. Verifica a ligação e tenta outra vez.",
     "app.history.offlineRemove": "Estás sem internet. É preciso ligação para remover.",
     "app.pricing.free.account": "Entra com a Apple, o Google ou o e-mail",
-    "app.context.label": "Contexto (opcional)",
     "app.pricing.context": "As imagens de contexto são lidas e depois descartadas, sem custo extra",
     "app.pricing.headline": "O primeiro veredicto é por nossa conta.",
     "app.pricing.sub":
@@ -167,10 +166,7 @@ const ptPT: AppLocale = {
     "app.verdict.claims": "Como cada lado lá chegou",
     "app.verdict.back": "Decisão",
     "app.appeal.title": "Acrescentar contexto e recorrer",
-    "app.appeal.intro":
-      "Escapou alguma coisa aos juízes? Acrescenta-a e eles decidem de novo. A primeira decisão fica registada.",
-    "app.appeal.ask": "O que é que eles devem saber?",
-    "app.appeal.placeholder": "Um facto, uma mensagem ou o que ficou mesmo combinado.",
+    "app.appeal.placeholder": "O que é que escapou aos juízes? Um facto, uma mensagem ou o que ficou mesmo combinado.",
     "app.appeal.cost": "Gasta 1 veredicto. Podes fazê-lo duas vezes por decisão (ainda tens {left}).",
     "app.appeal.costCase": "Gasta 1 veredicto. Só podes fazê-lo uma vez por caso.",
     "app.appeal.submit": "Julgar de novo",

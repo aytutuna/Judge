@@ -30,7 +30,6 @@ const sv: AppLocale = {
     "app.history.removeFailed": "Det gick inte att ta bort {n} av dem. Kolla din uppkoppling och försök igen.",
     "app.history.offlineRemove": "Du är offline. Du måste vara uppkopplad för att ta bort.",
     "app.pricing.free.account": "Logga in med Apple, Google eller e-post",
-    "app.context.label": "Komplettering (valfritt)",
     "app.pricing.context": "Bilder till kompletteringen läses och kastas sedan, utan extra kostnad",
     "app.pricing.headline": "Din första dom bjuder vi på.",
     "app.pricing.sub":
@@ -168,9 +167,7 @@ const sv: AppLocale = {
     "app.verdict.claims": "Hur varje sida resonerade",
     "app.verdict.back": "Domen",
     "app.appeal.title": "Komplettera och döm om",
-    "app.appeal.intro": "Missade domarna något? Lägg till det så dömer de igen. Den första domen finns kvar.",
-    "app.appeal.ask": "Vad behöver de veta?",
-    "app.appeal.placeholder": "Ett faktum, ett meddelande eller vad ni faktiskt kom överens om.",
+    "app.appeal.placeholder": "Vad missade domarna? Ett faktum, ett meddelande eller vad ni faktiskt kom överens om.",
     "app.appeal.cost": "Kostar 1 dom. Du kan komplettera två gånger per dom ({left} kvar).",
     "app.appeal.costCase": "Kostar 1 dom. Du kan komplettera en gång per fall.",
     "app.appeal.submit": "Döm om",

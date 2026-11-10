@@ -32,7 +32,6 @@ const ar: AppLocale = {
     "app.history.offlineRemove": "أنت غير متصل بالإنترنت. يحتاج الحذف إلى اتصال.",
     "app.pricing.free.account":
       "سجّل الدخول باستخدام Apple أو Google أو البريد الإلكتروني",
-    "app.context.label": "توضيح (اختياري)",
     "app.pricing.context": "صور التوضيح تُقرأ ثم تُحذف، دون أي تكلفة إضافية",
     "app.pricing.headline": "حكمك الأول على حسابنا.",
     "app.pricing.sub":
@@ -184,10 +183,7 @@ const ar: AppLocale = {
     "app.verdict.claims": "كيف وصل كل طرف إلى رأيه",
     "app.verdict.back": "الحكم",
     "app.appeal.title": "إضافة توضيح والاعتراض على الحكم",
-    "app.appeal.intro":
-      "هل فات القضاة شيء؟ أضفه وسيحكمون من جديد. ويبقى الحكم الأول في السجل.",
-    "app.appeal.ask": "ما الذي ينبغي أن يعرفوه؟",
-    "app.appeal.placeholder": "حقيقة، أو رسالة، أو ما اتفقتما عليه فعلًا.",
+    "app.appeal.placeholder": "ما الذي فات القضاة؟ حقيقة، أو رسالة، أو ما اتفقتما عليه فعلًا.",
     "app.appeal.cost":
       "يستهلك حكمًا واحدًا. يمكنك فعل ذلك مرتين لكل حكم؛ المتبقي: {left}.",
     "app.appeal.costCase":

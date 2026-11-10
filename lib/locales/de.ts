@@ -346,8 +346,7 @@ const de: Locale = {
     "signin.createNote": "Wir schicken dir einen Code, um diese Adresse zu bestätigen. Das musst du nur einmal tun.",
     "signin.passwordChoose": "Du bist angemeldet. Wähle ein Passwort für das nächste Mal.",
     "signin.passwordSave": "Passwort speichern",
-    "signin.passwordSaveFailed": "Du bist angemeldet, aber das Passwort konnte nicht gespeichert werden. Versuche es erneut oder lege es später in den Einstellungen fest.",
-    "signin.passwordSkip": "Vorerst überspringen",
+    "signin.passwordSaveFailed": "Das Passwort konnte nicht gespeichert werden. Versuche es erneut.",
     "signin.passwordSubmit": "Anmelden",
     "signin.rateLimited": "Zu viele Versuche. Warte eine Minute und versuch es dann noch mal.",
     "signin.serviceDown": "Die Anmeldung ist gerade nicht verfügbar. Versuch es später noch mal.",
@@ -376,10 +375,6 @@ const de: Locale = {
     "account.deleteConfirm":
       "Konto löschen? Deine Credits, dein Tarif und deine Anmeldedaten werden gelöscht. Deine Urteile und deine Beiträge zu Fällen werden entfernt: Was du geschrieben hast und die Namen werden gelöscht, und die geteilten Links funktionieren nicht mehr.",
     "account.deleteYes": "Ja, löschen",
-    "account.passwordSet": "Passwort festlegen",
-    "account.passwordChange": "Passwort ändern",
-    "account.passwordCurrent": "Aktuelles Passwort",
-    "account.passwordSaved": "Passwort gespeichert.",
     "account.deleteCancel": "Konto behalten",
     "account.deleted": "Dein Konto ist gelöscht. Wir bringen dich zur Startseite…",
     "account.deleteFailed": "Wir konnten das Konto gerade nicht löschen. Versuchst du es noch mal?",
@@ -639,9 +634,8 @@ const de: Locale = {
     "pairs.lastSlice.b":
       "Du kannst nicht „meins!“ rufen und es dann zwei Stunden nicht anrühren. Es lag nur rum und wurde kalt, also hab ich’s gegessen.",
     "appeal.lead":
-      "Fehlt etwas oder stimmt etwas nicht? Ergänze es einmal, und die Richter sehen sich alles noch mal an. Kostet 1 Urteil.",
-    "appeal.label": "Dein Kontext",
-    "appeal.placeholder": "Was haben die Richter übersehen?",
+      "Kostet 1 Urteil.",
+    "appeal.placeholder": "Was haben die Richter übersehen? Ein Fakt, eine Nachricht oder was wirklich abgemacht war.",
     "appeal.submit": "Neu beurteilen lassen",
     "appeal.sending": "Dein Kontext wird anonymisiert…",
     "appeal.judging": "Die Richter sehen sich alles noch mal an…",
@@ -661,8 +655,6 @@ const de: Locale = {
     "appeal.previous": "Früheres Urteil",
     "appeal.failed": "Das neue Urteil hat nicht geklappt. Dein Credit ist wieder da; du kannst es noch mal versuchen.",
     "appeal.refused": "Die Richter wollten mit diesem Kontext nicht neu urteilen. Dein Credit ist wieder da.",
-    "appeal.leadVerdict":
-      "Fehlt etwas oder stimmt etwas nicht? Ergänze es, und die Richter sehen sich alles noch mal an. Das kostet jedes Mal 1 Urteil, höchstens zweimal pro Urteil.",
     "appeal.history": "Verlauf des Urteils",
     "faq.both.q": "Kann die andere Person ihre Version erzählen?",
     "faq.both.a":

@@ -27,7 +27,6 @@ const hu: AppLocale = {
     "app.history.removeFailed": "{n} ítéletet nem sikerült eltávolítani. Ellenőrizd az internetkapcsolatot, és próbáld újra.",
     "app.history.offlineRemove": "Nincs internetkapcsolat. Eltávolítani csak online lehet.",
     "app.pricing.free.account": "Belépés Apple-lel, Google-lal vagy e-maillel",
-    "app.context.label": "Kiegészítés (nem kötelező)",
     "app.pricing.context": "A kiegészítő képeket elolvassuk, aztán eldobjuk, felár nélkül",
     "app.pricing.headline": "Az első ítélet ajándék.",
     "app.pricing.sub":
@@ -165,9 +164,7 @@ const hu: AppLocale = {
     "app.verdict.claims": "Így érvelt a két fél",
     "app.verdict.back": "Ítélet",
     "app.appeal.title": "Kiegészítés és fellebbezés",
-    "app.appeal.intro": "Valami elkerülte a bírák figyelmét? Add hozzá, és újra döntenek. Az első ítélet is megmarad.",
-    "app.appeal.ask": "Mit kellene tudniuk?",
-    "app.appeal.placeholder": "Egy tény, egy üzenet vagy az, hogy miben állapodtatok meg valójában.",
+    "app.appeal.placeholder": "Mi kerülte el a bírák figyelmét? Egy tény, egy üzenet vagy az, hogy miben állapodtatok meg valójában.",
     "app.appeal.cost": "1 ítéletbe kerül. Ítéletenként kétszer teheted meg, ebből még {left} maradt.",
     "app.appeal.costCase": "1 ítéletbe kerül. Ügyenként egyszer teheted meg.",
     "app.appeal.submit": "Újraítélés",

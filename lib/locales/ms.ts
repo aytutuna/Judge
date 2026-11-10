@@ -347,8 +347,7 @@ const ms: Locale = {
     "signin.createNote": "Kami akan e-melkan kod kepada anda untuk mengesahkan alamat ini. Anda hanya perlu berbuat demikian sekali.",
     "signin.passwordChoose": "Anda telah log masuk. Pilih kata laluan untuk kali seterusnya.",
     "signin.passwordSave": "Simpan kata laluan",
-    "signin.passwordSaveFailed": "Anda telah log masuk, tetapi kami tidak dapat menyimpan kata laluan. Cuba lagi, atau tetapkan kemudian dalam Tetapan.",
-    "signin.passwordSkip": "Langkau buat masa ini",
+    "signin.passwordSaveFailed": "Kami tidak dapat menyimpan kata laluan. Cuba lagi.",
     "signin.passwordSubmit": "Log masuk",
     "signin.rateLimited": "Terlalu banyak cubaan. Tunggu seminit dan cuba lagi.",
     "signin.serviceDown": "Log masuk tidak tersedia buat masa ini. Cuba lagi nanti.",
@@ -376,10 +375,6 @@ const ms: Locale = {
     "account.deleteConfirm":
       "Padam akaun anda? Kredit, pelan dan butiran log masuk anda akan dipadam. Keputusan anda dan versi anda dalam kes akan dibuang: apa yang anda tulis dan nama-nama akan dihapuskan, dan pautan kongsinya tidak lagi berfungsi.",
     "account.deleteYes": "Ya, padam",
-    "account.passwordSet": "Tetapkan kata laluan",
-    "account.passwordChange": "Tukar kata laluan",
-    "account.passwordCurrent": "Kata laluan semasa",
-    "account.passwordSaved": "Kata laluan disimpan.",
     "account.deleteCancel": "Kekalkan akaun saya",
     "account.deleted": "Akaun anda sudah dipadam. Membawa anda ke laman utama…",
     "account.deleteFailed": "Kami tidak dapat memadam akaun sekarang. Boleh cuba lagi?",
@@ -638,9 +633,8 @@ const ms: Locale = {
     "pairs.lastSlice.b":
       "Takkanlah cop lepas tu dua jam tak sentuh. Dah sejuk terbiar kat situ, jadi saya makanlah.",
     "appeal.lead":
-      "Ada yang tertinggal atau salah? Anda boleh menambahnya sekali, dan hakim akan meneliti semuanya semula. Kosnya 1 keputusan.",
-    "appeal.label": "Konteks anda",
-    "appeal.placeholder": "Apa yang hakim terlepas pandang?",
+      "Menggunakan 1 keputusan.",
+    "appeal.placeholder": "Apa yang hakim terlepas pandang? Satu fakta, satu mesej, atau apa yang sebenarnya dipersetujui.",
     "appeal.submit": "Nilai semula dengan konteks",
     "appeal.sending": "Mengeluarkan nama daripada konteks anda…",
     "appeal.judging": "Hakim sedang meneliti semuanya semula…",
@@ -660,8 +654,6 @@ const ms: Locale = {
     "appeal.previous": "Keputusan terdahulu",
     "appeal.failed": "Penilaian semula tidak berjaya. Kredit anda sudah dikembalikan; anda boleh cuba lagi.",
     "appeal.refused": "Hakim tidak mahu menilai semula dengan konteks itu. Kredit anda sudah dikembalikan.",
-    "appeal.leadVerdict":
-      "Ada yang tertinggal atau salah? Tambahkan dan hakim akan meneliti semuanya semula. Setiap kali kosnya 1 keputusan, maksimum dua kali bagi setiap keputusan.",
     "appeal.history": "Sejarah keputusan",
     "faq.both.q": "Bolehkah pihak satu lagi ceritakan versinya?",
     "faq.both.a":

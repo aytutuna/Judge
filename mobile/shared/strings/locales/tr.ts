@@ -27,7 +27,6 @@ const tr: AppLocale = {
     "app.history.removeFailed": "{n} karar kaldırılamadı. Bağlantını kontrol edip tekrar dene.",
     "app.history.offlineRemove": "Çevrimdışısın. Kaldırmak için bağlantı gerekir.",
     "app.pricing.free.account": "Apple, Google ya da e-postayla giriş yap",
-    "app.context.label": "Ayrıntı (isteğe bağlı)",
     "app.pricing.context": "Ayrıntı görselleri okunur, sonra atılır, ekstra ücret yok",
     "app.pricing.headline": "İlk karar bizden.",
     "app.pricing.sub":
@@ -161,9 +160,7 @@ const tr: AppLocale = {
     "app.verdict.claims": "Her taraf görüşüne nasıl vardı",
     "app.verdict.back": "Karar",
     "app.appeal.title": "Ayrıntı ekle ve itiraz et",
-    "app.appeal.intro": "Yargıçların kaçırdığı bir şey mi var? Ekle, yeniden karar versinler. İlk karar kayıtta kalır.",
-    "app.appeal.ask": "Neyi bilmeleri gerekiyor?",
-    "app.appeal.placeholder": "Bir olgu, bir mesaj ya da aslında neyde anlaştığınız.",
+    "app.appeal.placeholder": "Yargıçlar neyi kaçırdı? Bir detay, bir mesaj ya da gerçekte ne kararlaştırıldığı.",
     "app.appeal.cost": "1 karar hakkı kullanır. Bunu bir karar için iki kez yapabilirsin; {left} hakkın kaldı.",
     "app.appeal.costCase": "1 karar hakkı kullanır. Bunu bir dava için bir kez yapabilirsin.",
     "app.appeal.submit": "Yeniden yargılat",

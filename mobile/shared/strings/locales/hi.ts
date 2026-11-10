@@ -28,7 +28,6 @@ const hi: AppLocale = {
     "app.history.removeFailed": "इनमें से {n} नहीं हटाए जा सके। इंटरनेट कनेक्शन जाँचकर फिर कोशिश करें।",
     "app.history.offlineRemove": "आप ऑफ़लाइन हैं। हटाने के लिए इंटरनेट कनेक्शन चाहिए।",
     "app.pricing.free.account": "Apple, Google या ईमेल से साइन इन करें",
-    "app.context.label": "जानकारी (वैकल्पिक)",
     "app.pricing.context": "जानकारी की तस्वीरें पढ़कर फेंक दी जाती हैं, बिना किसी अतिरिक्त खर्च के",
     "app.pricing.headline": "पहला फ़ैसला हमारी तरफ़ से।",
     "app.pricing.sub":
@@ -165,9 +164,7 @@ const hi: AppLocale = {
     "app.verdict.claims": "हर पक्ष यहाँ तक कैसे पहुँचा",
     "app.verdict.back": "फ़ैसला",
     "app.appeal.title": "जानकारी जोड़कर अपील करें",
-    "app.appeal.intro": "जजों से कुछ छूट गया? उसे जोड़ें और जज दोबारा फ़ैसला करेंगे। पहला फ़ैसला भी रिकॉर्ड में रहेगा।",
-    "app.appeal.ask": "जजों को क्या पता होना चाहिए?",
-    "app.appeal.placeholder": "कोई तथ्य, कोई मैसेज, या असल में क्या तय हुआ था।",
+    "app.appeal.placeholder": "जजों से क्या छूट गया? कोई तथ्य, कोई मैसेज, या असल में क्या तय हुआ था।",
     "app.appeal.cost": "इसमें 1 फ़ैसला लगता है। एक फ़ैसले पर आप ऐसा दो बार कर सकते हैं; अभी {left} बार बाकी।",
     "app.appeal.costCase": "इसमें 1 फ़ैसला लगता है। एक केस में आप ऐसा एक बार कर सकते हैं।",
     "app.appeal.submit": "दोबारा फ़ैसला करवाएँ",

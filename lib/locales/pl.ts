@@ -349,8 +349,7 @@ const pl: Locale = {
     "signin.createNote": "Wyślemy ci e-mailem kod, aby potwierdzić ten adres. Wystarczy to zrobić raz.",
     "signin.passwordChoose": "Jesteś zalogowany. Wybierz hasło na następny raz.",
     "signin.passwordSave": "Zapisz hasło",
-    "signin.passwordSaveFailed": "Jesteś zalogowany, ale nie udało się zapisać hasła. Spróbuj ponownie albo ustaw je później w Ustawieniach.",
-    "signin.passwordSkip": "Pomiń na razie",
+    "signin.passwordSaveFailed": "Nie udało się zapisać hasła. Spróbuj ponownie.",
     "signin.passwordSubmit": "Zaloguj się",
     "signin.rateLimited": "Za dużo prób. Odczekaj minutę i spróbuj ponownie.",
     "signin.serviceDown": "Logowanie jest teraz niedostępne. Spróbuj później.",
@@ -378,10 +377,6 @@ const pl: Locale = {
     "account.deleteConfirm":
       "Usunąć konto? Usuniemy twoją pulę werdyktów, plan i dane logowania. Twoje werdykty i twoje wersje w sprawach też znikną: wymażemy twoje teksty i imiona, a linki do udostępniania przestaną działać.",
     "account.deleteYes": "Tak, usuń",
-    "account.passwordSet": "Ustaw hasło",
-    "account.passwordChange": "Zmień hasło",
-    "account.passwordCurrent": "Obecne hasło",
-    "account.passwordSaved": "Hasło zapisane.",
     "account.deleteCancel": "Zostaw moje konto",
     "account.deleted": "Konto usunięte. Przenosimy cię na stronę główną…",
     "account.deleteFailed": "Nie udało się teraz usunąć konta. Spróbujesz jeszcze raz?",
@@ -641,9 +636,8 @@ const pl: Locale = {
     "pairs.lastSlice.b":
       "Nie możesz czegoś zaklepać, a potem nie tknąć tego przez dwie godziny. Leżał tam i stygł, więc go zjadłam.",
     "appeal.lead":
-      "Czegoś brakuje albo coś się nie zgadza? Możesz to raz dopisać, a sędziowie przyjrzą się wszystkiemu od nowa. Kosztuje to 1 werdykt.",
-    "appeal.label": "Twój kontekst",
-    "appeal.placeholder": "Co umknęło sędziom?",
+      "Zużywa 1 werdykt.",
+    "appeal.placeholder": "Co umknęło sędziom? Fakt, wiadomość albo to, na co naprawdę się umówiliście.",
     "appeal.submit": "Oceń ponownie z kontekstem",
     "appeal.sending": "Anonimizujemy twój kontekst…",
     "appeal.judging": "Sędziowie przyglądają się wszystkiemu od nowa…",
@@ -663,8 +657,6 @@ const pl: Locale = {
     "appeal.previous": "Wcześniejszy werdykt",
     "appeal.failed": "Ponowna ocena się nie udała. Werdykt wrócił do twojej puli, możesz spróbować jeszcze raz.",
     "appeal.refused": "Sędziowie odmówili ponownej oceny z tym kontekstem. Werdykt wrócił do twojej puli.",
-    "appeal.leadVerdict":
-      "Czegoś brakuje albo coś się nie zgadza? Dodaj to, a sędziowie przyjrzą się wszystkiemu od nowa. Każde dodanie kontekstu kosztuje 1 werdykt i można je zrobić najwyżej dwa razy na werdykt.",
     "appeal.history": "Historia werdyktu",
     "faq.both.q": "Czy druga osoba może opowiedzieć swoją wersję?",
     "faq.both.a":

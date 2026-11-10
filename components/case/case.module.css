@@ -257,8 +257,12 @@
   outline: 3px solid var(--terra-ink);
   outline-offset: 0;
 }
-.short {
-  min-height: 110px;
+.tall {
+  min-height: 220px;
+}
+.countEnd {
+  align-self: flex-end;
+  font-size: 13px;
 }
 .facts {
   display: flex;

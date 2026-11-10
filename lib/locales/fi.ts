@@ -346,8 +346,7 @@ const fi: Locale = {
     "signin.createNote": "Lähetämme sinulle koodin sähköpostiin osoitteen vahvistamiseksi. Se tarvitsee tehdä vain kerran.",
     "signin.passwordChoose": "Olet kirjautunut sisään. Valitse salasana seuraavaa kertaa varten.",
     "signin.passwordSave": "Tallenna salasana",
-    "signin.passwordSaveFailed": "Olet kirjautunut sisään, mutta salasanan tallennus epäonnistui. Yritä uudelleen tai aseta se myöhemmin Asetuksissa.",
-    "signin.passwordSkip": "Ohita toistaiseksi",
+    "signin.passwordSaveFailed": "Salasanan tallennus epäonnistui. Yritä uudelleen.",
     "signin.passwordSubmit": "Kirjaudu",
     "signin.rateLimited": "Liian monta yritystä. Odota minuutti ja yritä uudelleen.",
     "signin.serviceDown": "Kirjautuminen ei ole juuri nyt käytettävissä. Yritä myöhemmin uudelleen.",
@@ -375,10 +374,6 @@ const fi: Locale = {
     "account.deleteConfirm":
       "Poistetaanko tilisi? Tuomiosaldosi, tilauksesi ja kirjautumistietosi poistetaan. Tuomiosi ja osuutesi jutuista poistetaan: kirjoittamasi teksti ja nimet pyyhitään, ja niiden jakolinkit lakkaavat toimimasta.",
     "account.deleteYes": "Kyllä, poista",
-    "account.passwordSet": "Aseta salasana",
-    "account.passwordChange": "Vaihda salasana",
-    "account.passwordCurrent": "Nykyinen salasana",
-    "account.passwordSaved": "Salasana tallennettu.",
     "account.deleteCancel": "Älä poista",
     "account.deleted": "Tilisi on poistettu. Siirrytään etusivulle…",
     "account.deleteFailed": "Tilin poistaminen ei onnistunut juuri nyt. Yritä uudelleen.",
@@ -633,9 +628,8 @@ const fi: Locale = {
     "pairs.lastSlice.b":
       "Ei voi varata palaa ja sitten jättää sitä koskematta kahdeksi tunniksi. Se vain jäähtyi siinä, joten söin sen.",
     "appeal.lead":
-      "Puuttuuko jotain, tai onko jotain väärin? Lisää se kerran, niin tuomarit käyvät kaiken läpi uudelleen. Maksaa 1 tuomion.",
-    "appeal.label": "Lisätietosi",
-    "appeal.placeholder": "Mitä tuomarit eivät huomanneet?",
+      "Käyttää 1 tuomion.",
+    "appeal.placeholder": "Mitä tuomarit eivät huomanneet? Fakta, viesti tai se, mistä oikeasti sovittiin.",
     "appeal.submit": "Ratkaise uudelleen",
     "appeal.sending": "Anonymisoidaan lisätietojasi…",
     "appeal.judging": "Tuomarit käyvät kaiken läpi uudelleen…",
@@ -655,8 +649,6 @@ const fi: Locale = {
     "appeal.previous": "Aiempi tuomio",
     "appeal.failed": "Uudelleenratkaisu ei onnistunut. Tuomio palautettiin saldoosi; voit yrittää uudelleen.",
     "appeal.refused": "Tuomarit eivät suostuneet ratkaisemaan uudelleen noilla tiedoilla. Tuomio palautettiin saldoosi.",
-    "appeal.leadVerdict":
-      "Puuttuuko jotain, tai onko jotain väärin? Lisää se, niin tuomarit käyvät kaiken läpi uudelleen. Joka kerta maksaa 1 tuomion, ja samaan tuomioon voit lisätä tietoa enintään kahdesti.",
     "appeal.history": "Tuomiohistoria",
     "faq.both.q": "Voiko toinen osapuoli kertoa oman puolensa?",
     "faq.both.a":

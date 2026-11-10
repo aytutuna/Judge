@@ -346,8 +346,7 @@ const ja: Locale = {
     "signin.createNote": "このアドレスを確認するため、コードをメールで送ります。必要なのは一度だけです。",
     "signin.passwordChoose": "ログインしました。次回のためにパスワードを決めてください。",
     "signin.passwordSave": "パスワードを保存",
-    "signin.passwordSaveFailed": "ログインはできましたが、パスワードを保存できませんでした。もう一度試すか、あとで設定から決めてください。",
-    "signin.passwordSkip": "今はスキップ",
+    "signin.passwordSaveFailed": "パスワードを保存できませんでした。もう一度試してください。",
     "signin.passwordSubmit": "ログイン",
     "signin.rateLimited": "試行回数が多すぎます。1分ほど待ってから、もう一度お試しください。",
     "signin.serviceDown": "いまはログインできません。しばらくしてからもう一度お試しください。",
@@ -375,10 +374,6 @@ const ja: Locale = {
     "account.deleteConfirm":
       "アカウントを削除しますか？　クレジット、プラン、ログイン情報は削除されます。あなたの判定と、ケースでのあなたの言い分も削除され、書いた内容と名前は消去されて、シェア用リンクも使えなくなります。",
     "account.deleteYes": "削除する",
-    "account.passwordSet": "パスワードを設定",
-    "account.passwordChange": "パスワードを変更",
-    "account.passwordCurrent": "現在のパスワード",
-    "account.passwordSaved": "パスワードを保存しました。",
     "account.deleteCancel": "アカウントを残す",
     "account.deleted": "アカウントを削除しました。トップページに移動します…",
     "account.deleteFailed": "いまはアカウントを削除できませんでした。もう一度お試しください。",
@@ -616,9 +611,8 @@ const ja: Locale = {
     "pairs.lastSlice.bName": "美羽",
     "pairs.lastSlice.b": "「俺の」って言っておいて、2時間も手をつけないのはなしでしょ。ずっと置きっぱなしで冷めてたから、食べちゃった。",
     "appeal.lead":
-      "抜けや間違いがありますか？　一度だけ補足すると、審査員がすべてをもう一度見直します。判定1回分を使います。",
-    "appeal.label": "補足",
-    "appeal.placeholder": "審査員が見落としたことは？",
+      "判定1回分を使います。",
+    "appeal.placeholder": "審査員が見落としたことは？事実、やりとりしたメッセージ、実際に取り決めたことなど。",
     "appeal.submit": "補足して再判定",
     "appeal.sending": "補足を匿名化しています…",
     "appeal.judging": "審査員がすべてを見直しています…",
@@ -638,8 +632,6 @@ const ja: Locale = {
     "appeal.previous": "以前の判定",
     "appeal.failed": "再判定できませんでした。クレジットは戻ったので、もう一度試せます。",
     "appeal.refused": "審査員はこの補足での再判定を見送りました。クレジットは戻りました。",
-    "appeal.leadVerdict":
-      "抜けや間違いがありますか？　補足すると、審査員がすべてをもう一度見直します。1回ごとに判定1回分を使い、1つの判定につき2回までです。",
     "appeal.history": "判定の履歴",
     "faq.both.q": "相手も自分の言い分を書けますか？",
     "faq.both.a":

@@ -31,7 +31,6 @@ const nb: AppLocale = {
     "app.history.removeFailed": "Vi fikk ikke fjernet {n} av dem. Sjekk tilkoblingen og prøv igjen.",
     "app.history.offlineRemove": "Du er ikke på nett. Du trenger nettforbindelse for å fjerne dommer.",
     "app.pricing.free.account": "Logg inn med Apple, Google eller e-post",
-    "app.context.label": "Kontekst (valgfritt)",
     "app.pricing.context": "Kontekstbilder blir lest og deretter kastet, uten ekstra kostnad",
     "app.pricing.headline": "Den første dommen spanderer vi.",
     "app.pricing.sub":
@@ -185,11 +184,8 @@ const nb: AppLocale = {
     "app.verdict.claims": "Hvordan hver side kom fram til det",
     "app.verdict.back": "Dom",
     "app.appeal.title": "Legg til kontekst og anke",
-    "app.appeal.intro":
-      "Gikk dommerne glipp av noe? Legg det til, så dømmer de på nytt. Den første dommen blir liggende i historikken.",
-    "app.appeal.ask": "Hva bør de vite?",
     "app.appeal.placeholder":
-      "Et faktum, en melding eller hva dere faktisk ble enige om.",
+      "Hva gikk dommerne glipp av? Et faktum, en melding eller hva dere faktisk ble enige om.",
     "app.appeal.cost":
       "Koster 1 dom. Du kan gjøre dette to ganger per dom ({left} igjen).",
     "app.appeal.costCase": "Koster 1 dom. Du kan gjøre dette én gang per sak.",

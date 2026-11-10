@@ -28,7 +28,6 @@ const de: AppLocale = {
     "app.history.removeFailed": "{n} davon konnten nicht entfernt werden. Prüf deine Verbindung und versuch es noch mal.",
     "app.history.offlineRemove": "Du bist offline. Zum Entfernen brauchst du eine Verbindung.",
     "app.pricing.free.account": "Mit Apple, Google oder E-Mail anmelden",
-    "app.context.label": "Kontext (optional)",
     "app.pricing.context": "Kontextbilder werden gelesen und dann verworfen, ohne Aufpreis",
     "app.pricing.headline": "Dein erstes Urteil geht auf uns.",
     "app.pricing.sub":
@@ -169,10 +168,7 @@ const de: AppLocale = {
     "app.verdict.claims": "Wie jede Seite zu ihrer Sicht kam",
     "app.verdict.back": "Urteil",
     "app.appeal.title": "Einspruch mit neuem Kontext",
-    "app.appeal.intro":
-      "Haben die Richter etwas übersehen? Ergänze es, und sie urteilen neu. Das erste Urteil bleibt erhalten.",
-    "app.appeal.ask": "Was sollten sie wissen?",
-    "app.appeal.placeholder": "Ein Fakt, eine Nachricht oder was wirklich abgemacht war.",
+    "app.appeal.placeholder": "Was haben die Richter übersehen? Ein Fakt, eine Nachricht oder was wirklich abgemacht war.",
     "app.appeal.cost": "Kostet 1 Urteil. Das geht zweimal pro Urteil, noch {left} übrig.",
     "app.appeal.costCase": "Kostet 1 Urteil. Das geht einmal pro Fall.",
     "app.appeal.submit": "Neu beurteilen lassen",

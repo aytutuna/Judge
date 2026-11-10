@@ -29,7 +29,6 @@ const sk: AppLocale = {
     "app.history.removeFailed": "{n} z nich sa nepodarilo odstrániť. Skontroluj pripojenie a skús to znova.",
     "app.history.offlineRemove": "Si offline. Na odstránenie potrebuješ pripojenie.",
     "app.pricing.free.account": "Prihlás sa cez Apple, Google alebo e-mail",
-    "app.context.label": "Kontext (nepovinné)",
     "app.pricing.context": "Obrázky s kontextom sa prečítajú a potom zahodia, bez príplatku",
     "app.pricing.headline": "Prvý verdikt ide na nás.",
     "app.pricing.sub":
@@ -167,9 +166,7 @@ const sk: AppLocale = {
     "app.verdict.claims": "Ako k tomu každá strana dospela",
     "app.verdict.back": "Verdikt",
     "app.appeal.title": "Doplniť kontext a odvolať sa",
-    "app.appeal.intro": "Sudcom niečo ušlo? Doplň to a rozhodnú znova. Prvý verdikt zostane v histórii.",
-    "app.appeal.ask": "Čo by mali vedieť?",
-    "app.appeal.placeholder": "Fakt, správa alebo to, na čom ste sa naozaj dohodli.",
+    "app.appeal.placeholder": "Čo sudcom ušlo? Fakt, správa alebo to, na čom ste sa naozaj dohodli.",
     "app.appeal.cost": "Stojí 1 verdikt. Pri jednom verdikte sa to dá dvakrát; zostávajúce pokusy: {left}.",
     "app.appeal.costCase": "Stojí 1 verdikt. Pri jednom prípade sa to dá len raz.",
     "app.appeal.submit": "Posúdiť znova",

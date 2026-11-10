@@ -346,8 +346,7 @@ const nl: Locale = {
     "signin.createNote": "We mailen je een code om dit adres te bevestigen. Dat hoef je maar één keer te doen.",
     "signin.passwordChoose": "Je bent ingelogd. Kies een wachtwoord voor de volgende keer.",
     "signin.passwordSave": "Wachtwoord opslaan",
-    "signin.passwordSaveFailed": "Je bent ingelogd, maar we konden het wachtwoord niet opslaan. Probeer het opnieuw of stel het later in bij Instellingen.",
-    "signin.passwordSkip": "Nu overslaan",
+    "signin.passwordSaveFailed": "We konden het wachtwoord niet opslaan. Probeer het opnieuw.",
     "signin.passwordSubmit": "Inloggen",
     "signin.rateLimited": "Te veel pogingen. Wacht een minuutje en probeer het opnieuw.",
     "signin.serviceDown": "Inloggen lukt nu even niet. Probeer het later opnieuw.",
@@ -376,10 +375,6 @@ const nl: Locale = {
     "account.deleteConfirm":
       "Je account verwijderen? Je credits, abonnement en inloggegevens worden gewist. Je uitspraken en jouw kant in zaken worden verwijderd: wat je schreef en de namen worden gewist, en de deellinks werken niet meer.",
     "account.deleteYes": "Ja, verwijderen",
-    "account.passwordSet": "Wachtwoord instellen",
-    "account.passwordChange": "Wachtwoord wijzigen",
-    "account.passwordCurrent": "Huidig wachtwoord",
-    "account.passwordSaved": "Wachtwoord opgeslagen.",
     "account.deleteCancel": "Account houden",
     "account.deleted": "Je account is verwijderd. We brengen je naar de startpagina…",
     "account.deleteFailed": "We konden het account nu niet verwijderen. Wil je het nog eens proberen?",
@@ -637,9 +632,8 @@ const nl: Locale = {
     "pairs.lastSlice.b":
       "Je kunt niet roepen dat het van jou is en het dan twee uur laten liggen. Het lag daar maar koud te worden, dus ik heb het opgegeten.",
     "appeal.lead":
-      "Mist er iets of klopt er iets niet? Vul het één keer aan en de rechters kijken opnieuw naar alles. Kost 1 uitspraak.",
-    "appeal.label": "Jouw aanvulling",
-    "appeal.placeholder": "Wat hebben de rechters gemist?",
+      "Kost 1 uitspraak.",
+    "appeal.placeholder": "Wat hebben de rechters gemist? Een feit, een bericht of wat er echt is afgesproken.",
     "appeal.submit": "Opnieuw laten beoordelen",
     "appeal.sending": "Je aanvulling anonimiseren…",
     "appeal.judging": "De rechters kijken opnieuw naar alles…",
@@ -659,8 +653,6 @@ const nl: Locale = {
     "appeal.previous": "Eerdere uitspraak",
     "appeal.failed": "Het opnieuw beoordelen is niet gelukt. Je credit is terug; je kunt het nog eens proberen.",
     "appeal.refused": "De rechters wilden met die aanvulling niet opnieuw oordelen. Je credit is terug.",
-    "appeal.leadVerdict":
-      "Mist er iets of klopt er iets niet? Vul het aan en de rechters kijken opnieuw naar alles. Elke keer kost 1 uitspraak, maximaal twee keer per uitspraak.",
     "appeal.history": "Eerdere uitspraken",
     "faq.both.q": "Kan de ander ook zijn of haar kant vertellen?",
     "faq.both.a":

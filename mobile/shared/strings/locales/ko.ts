@@ -26,7 +26,6 @@ const ko: AppLocale = {
     "app.history.removeFailed": "{n}건을 삭제하지 못했어요. 인터넷 연결을 확인하고 다시 시도해 주세요.",
     "app.history.offlineRemove": "오프라인 상태예요. 삭제하려면 인터넷 연결이 필요해요.",
     "app.pricing.free.account": "Apple, Google 또는 이메일로 로그인",
-    "app.context.label": "추가 내용 (선택)",
     "app.pricing.context": "추가 내용 이미지는 읽은 뒤 바로 버려져요. 추가 비용은 없어요",
     "app.pricing.headline": "첫 판결은 저희가 쏠게요.",
     "app.pricing.sub":
@@ -162,9 +161,7 @@ const ko: AppLocale = {
     "app.verdict.claims": "양쪽이 그 주장에 이른 과정",
     "app.verdict.back": "판결",
     "app.appeal.title": "내용 추가·재심 요청",
-    "app.appeal.intro": "판사들이 놓친 게 있나요? 추가하면 판사들이 다시 판결해요. 첫 판결은 기록에 남아요.",
-    "app.appeal.ask": "판사들이 뭘 알아야 할까요?",
-    "app.appeal.placeholder": "사실, 주고받은 메시지, 실제로 합의한 내용 등",
+    "app.appeal.placeholder": "판사들이 놓친 게 뭔가요? 사실, 주고받은 메시지, 실제로 합의한 내용 등",
     "app.appeal.cost": "판결 1회를 사용해요. 판결 하나에 두 번까지 할 수 있고, {left}회 남았어요.",
     "app.appeal.costCase": "판결 1회를 사용해요. 사건 하나에 한 번만 할 수 있어요.",
     "app.appeal.submit": "다시 판결 받기",

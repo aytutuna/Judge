@@ -346,8 +346,7 @@ const ro: Locale = {
     "signin.createNote": "Îți vom trimite un cod pe e-mail pentru a confirma această adresă. Trebuie să faci asta o singură dată.",
     "signin.passwordChoose": "Ești conectat. Alege o parolă pentru data viitoare.",
     "signin.passwordSave": "Salvează parola",
-    "signin.passwordSaveFailed": "Ești conectat, dar nu am putut salva parola. Încearcă din nou sau setează-o mai târziu în Setări.",
-    "signin.passwordSkip": "Omite deocamdată",
+    "signin.passwordSaveFailed": "Nu am putut salva parola. Încearcă din nou.",
     "signin.passwordSubmit": "Conectează-te",
     "signin.rateLimited": "Prea multe încercări. Așteaptă un minut și încearcă din nou.",
     "signin.serviceDown": "Conectarea nu e disponibilă acum. Încearcă mai târziu.",
@@ -376,10 +375,6 @@ const ro: Locale = {
     "account.deleteConfirm":
       "Îți ștergi contul? Creditele, planul și datele de conectare vor fi șterse. Verdictele tale și părțile tale din cazuri vor fi eliminate: ce ai scris și numele se șterg, iar linkurile lor de distribuire nu vor mai funcționa.",
     "account.deleteYes": "Da, șterge-l",
-    "account.passwordSet": "Setează o parolă",
-    "account.passwordChange": "Schimbă parola",
-    "account.passwordCurrent": "Parola actuală",
-    "account.passwordSaved": "Parola a fost salvată.",
     "account.deleteCancel": "Păstrez contul",
     "account.deleted": "Contul tău a fost șters. Te ducem la pagina principală…",
     "account.deleteFailed": "N-am putut șterge contul acum. Mai încerci o dată?",
@@ -637,9 +632,8 @@ const ro: Locale = {
     "pairs.lastSlice.b":
       "Nu poți s-o declari a ta și apoi să n-o atingi două ore. Stătea acolo și se răcea, așa că am mâncat-o eu.",
     "appeal.lead":
-      "Lipsește ceva sau e greșit? Poți adăuga context o singură dată, iar judecătorii se uită din nou la tot. Costă 1 verdict.",
-    "appeal.label": "Contextul tău",
-    "appeal.placeholder": "Ce le-a scăpat judecătorilor?",
+      "Folosește 1 verdict.",
+    "appeal.placeholder": "Ce le-a scăpat judecătorilor? Un fapt, un mesaj sau ce ați stabilit cu adevărat.",
     "appeal.submit": "Judecă din nou cu contextul meu",
     "appeal.sending": "Îți anonimizăm contextul…",
     "appeal.judging": "Judecătorii se uită din nou la tot…",
@@ -659,8 +653,6 @@ const ro: Locale = {
     "appeal.previous": "Verdictul anterior",
     "appeal.failed": "Rejudecarea n-a mers. Ți-ai primit creditul înapoi; poți încerca din nou.",
     "appeal.refused": "Judecătorii n-au vrut să judece din nou cu acest context. Ți-ai primit creditul înapoi.",
-    "appeal.leadVerdict":
-      "Lipsește ceva sau e greșit? Adaugă context și judecătorii se uită din nou la tot. De fiecare dată costă 1 verdict, de cel mult două ori pentru același verdict.",
     "appeal.history": "Istoricul verdictului",
     "faq.both.q": "Poate și cealaltă persoană să-și spună varianta?",
     "faq.both.a":

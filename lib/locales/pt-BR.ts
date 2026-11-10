@@ -346,8 +346,7 @@ const ptBR: Locale = {
     "signin.createNote": "Vamos enviar um código por e-mail para confirmar este endereço. Você só precisa fazer isso uma vez.",
     "signin.passwordChoose": "Você entrou. Escolha uma senha para a próxima vez.",
     "signin.passwordSave": "Salvar senha",
-    "signin.passwordSaveFailed": "Você entrou, mas não conseguimos salvar a senha. Tente de novo ou defina-a depois em Ajustes.",
-    "signin.passwordSkip": "Pular por enquanto",
+    "signin.passwordSaveFailed": "Não conseguimos salvar a senha. Tente de novo.",
     "signin.passwordSubmit": "Entrar",
     "signin.rateLimited": "Muitas tentativas. Espere um minuto e tente de novo.",
     "signin.serviceDown": "O login não está disponível agora. Tente de novo mais tarde.",
@@ -375,10 +374,6 @@ const ptBR: Locale = {
     "account.deleteConfirm":
       "Excluir sua conta? Seus créditos, seu plano e seus dados de login são apagados. Seus vereditos e o seu lado em cada caso são removidos: o que você escreveu e os nomes são apagados, e os links de compartilhamento param de funcionar.",
     "account.deleteYes": "Sim, excluir",
-    "account.passwordSet": "Definir uma senha",
-    "account.passwordChange": "Alterar senha",
-    "account.passwordCurrent": "Senha atual",
-    "account.passwordSaved": "Senha salva.",
     "account.deleteCancel": "Manter minha conta",
     "account.deleted": "Sua conta foi excluída. Levando você para a página inicial…",
     "account.deleteFailed": "Não conseguimos excluir a conta agora. Pode tentar de novo?",
@@ -633,9 +628,8 @@ const ptBR: Locale = {
     "pairs.lastSlice.b":
       "Não vale falar que é seu e passar duas horas sem encostar. Estava lá esfriando, aí eu comi.",
     "appeal.lead":
-      "Faltou algo ou tem algo errado? Adicione uma vez e os juízes olham tudo de novo. Custa 1 veredito.",
-    "appeal.label": "Seu contexto",
-    "appeal.placeholder": "O que os juízes deixaram passar?",
+      "Usa 1 veredito.",
+    "appeal.placeholder": "O que os juízes deixaram passar? Um fato, uma mensagem ou o que foi combinado de verdade.",
     "appeal.submit": "Rejulgar com meu contexto",
     "appeal.sending": "Anonimizando seu contexto…",
     "appeal.judging": "Os juízes estão olhando tudo de novo…",
@@ -655,8 +649,6 @@ const ptBR: Locale = {
     "appeal.previous": "Veredito anterior",
     "appeal.failed": "O novo julgamento não foi concluído. Seu crédito voltou; você pode tentar de novo.",
     "appeal.refused": "Os juízes não quiseram rejulgar com esse contexto. Seu crédito voltou.",
-    "appeal.leadVerdict":
-      "Faltou algo ou tem algo errado? Adicione e os juízes olham tudo de novo. Cada vez custa 1 veredito, até duas vezes por veredito.",
     "appeal.history": "Histórico do veredito",
     "faq.both.q": "A outra pessoa pode contar o lado dela?",
     "faq.both.a":

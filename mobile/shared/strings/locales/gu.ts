@@ -32,7 +32,6 @@ const gu: AppLocale = {
     "app.history.removeFailed": "એમાંથી {n} દૂર ન થઈ શક્યા. કનેક્શન તપાસીને ફરી પ્રયાસ કરો.",
     "app.history.offlineRemove": "તમે ઑફલાઇન છો. દૂર કરવા કનેક્શન જોઈએ.",
     "app.pricing.free.account": "Apple, Google કે ઈમેલથી સાઇન ઇન કરો",
-    "app.context.label": "વિગત (વૈકલ્પિક)",
     "app.pricing.context": "વિગતની છબીઓ વંચાય છે અને પછી ફેંકી દેવાય છે, કોઈ વધારાનો ખર્ચ નથી",
     "app.pricing.headline": "તમારો પહેલો ચુકાદો અમારા તરફથી.",
     "app.pricing.sub":
@@ -183,11 +182,8 @@ const gu: AppLocale = {
     "app.verdict.claims": "દરેક બાજુ આ તારણ પર કેવી રીતે પહોંચી",
     "app.verdict.back": "ચુકાદો",
     "app.appeal.title": "વિગત ઉમેરો અને અપીલ કરો",
-    "app.appeal.intro":
-      "જજ કંઈ ચૂકી ગયા? એ ઉમેરો અને તેઓ ફરી ફેંસલો કરશે. પહેલો ચુકાદો રેકૉર્ડમાં રહે છે.",
-    "app.appeal.ask": "જજોને શું ખબર હોવી જોઈએ?",
     "app.appeal.placeholder":
-      "કોઈ હકીકત, કોઈ મેસેજ, કે ખરેખર શું નક્કી થયું હતું.",
+      "જજ શું ચૂકી ગયા? કોઈ હકીકત, કોઈ મેસેજ, કે ખરેખર શું નક્કી થયું હતું.",
     "app.appeal.cost":
       "આમાં 1 ચુકાદો વપરાશે. એક ચુકાદામાં આવું બે વાર કરી શકાય; હજી {left} વાર બાકી.",
     "app.appeal.costCase":

@@ -27,7 +27,6 @@ const ja: AppLocale = {
     "app.history.removeFailed": "{n}件を削除できませんでした。接続を確認して、もう一度お試しください。",
     "app.history.offlineRemove": "オフラインのため削除できません。接続してからもう一度お試しください。",
     "app.pricing.free.account": "Apple、Google、またはメールアドレスでログイン",
-    "app.context.label": "補足（任意）",
     "app.pricing.context": "補足の画像は読み取ったあと破棄されます。追加料金はかかりません",
     "app.pricing.headline": "最初の判定は無料です。",
     "app.pricing.sub":
@@ -160,9 +159,7 @@ const ja: AppLocale = {
     "app.verdict.claims": "それぞれの主張の筋道",
     "app.verdict.back": "判定",
     "app.appeal.title": "補足して再判定",
-    "app.appeal.intro": "審査員が見落としたことがありますか？　補足すると、もう一度判定します。最初の判定も記録に残ります。",
-    "app.appeal.ask": "審査員に伝えたいことは？",
-    "app.appeal.placeholder": "事実、やりとりしたメッセージ、実際に取り決めたことなど。",
+    "app.appeal.placeholder": "審査員が見落としたことは？事実、やりとりしたメッセージ、実際に取り決めたことなど。",
     "app.appeal.cost": "判定1回分を使います。1つの判定につき2回まで補足でき、残りは{left}回です。",
     "app.appeal.costCase": "判定1回分を使います。1つのケースにつき1回だけ補足できます。",
     "app.appeal.submit": "再判定する",

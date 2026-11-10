@@ -347,8 +347,7 @@ const vi: Locale = {
     "signin.createNote": "Chúng tôi sẽ gửi cho bạn một mã qua email để xác nhận địa chỉ này. Bạn chỉ cần làm một lần.",
     "signin.passwordChoose": "Bạn đã đăng nhập. Hãy chọn một mật khẩu cho lần sau.",
     "signin.passwordSave": "Lưu mật khẩu",
-    "signin.passwordSaveFailed": "Bạn đã đăng nhập, nhưng chúng tôi không lưu được mật khẩu. Hãy thử lại, hoặc đặt sau trong Cài đặt.",
-    "signin.passwordSkip": "Bỏ qua lúc này",
+    "signin.passwordSaveFailed": "Chúng tôi không lưu được mật khẩu. Hãy thử lại.",
     "signin.passwordSubmit": "Đăng nhập",
     "signin.rateLimited": "Bạn thử quá nhiều lần rồi. Đợi một phút rồi thử lại nhé.",
     "signin.serviceDown": "Tạm thời chưa thể đăng nhập. Thử lại sau nhé.",
@@ -377,10 +376,6 @@ const vi: Locale = {
     "account.deleteConfirm":
       "Xóa tài khoản của bạn? Lượt, gói và thông tin đăng nhập sẽ bị xóa. Các phán quyết và phần của bạn trong các vụ sẽ bị gỡ: nội dung bạn viết và các tên bị xóa, liên kết chia sẻ cũng ngừng hoạt động.",
     "account.deleteYes": "Có, xóa đi",
-    "account.passwordSet": "Đặt mật khẩu",
-    "account.passwordChange": "Đổi mật khẩu",
-    "account.passwordCurrent": "Mật khẩu hiện tại",
-    "account.passwordSaved": "Đã lưu mật khẩu.",
     "account.deleteCancel": "Giữ tài khoản",
     "account.deleted": "Đã xóa tài khoản. Đang đưa bạn về trang chủ…",
     "account.deleteFailed": "Chưa xóa được tài khoản lúc này. Bạn thử lại nhé?",
@@ -632,9 +627,8 @@ const vi: Locale = {
     "pairs.lastSlice.b":
       "Xí rồi để đó hai tiếng không đụng tới thì không tính. Nó nằm đó nguội ngắt, nên mình ăn luôn.",
     "appeal.lead":
-      "Thiếu hoặc sai gì à? Bổ sung một lần và ban giám khảo sẽ xem lại toàn bộ. Tốn 1 lượt.",
-    "appeal.label": "Thông tin bổ sung",
-    "appeal.placeholder": "Ban giám khảo đã bỏ sót điều gì?",
+      "Dùng 1 lượt.",
+    "appeal.placeholder": "Ban giám khảo đã bỏ sót điều gì? Một sự thật, một tin nhắn hoặc điều hai bên đã thật sự thỏa thuận.",
     "appeal.submit": "Xét lại với thông tin của tôi",
     "appeal.sending": "Đang ẩn tên trong thông tin bổ sung…",
     "appeal.judging": "Ban giám khảo đang xem lại toàn bộ…",
@@ -654,8 +648,6 @@ const vi: Locale = {
     "appeal.previous": "Phán quyết trước",
     "appeal.failed": "Chưa xét lại được. Lượt của bạn đã được hoàn lại; bạn có thể thử lại.",
     "appeal.refused": "Ban giám khảo không chịu xét lại với thông tin đó. Lượt của bạn đã được hoàn lại.",
-    "appeal.leadVerdict":
-      "Thiếu hoặc sai gì à? Bổ sung vào và ban giám khảo sẽ xem lại toàn bộ. Mỗi lần tốn 1 lượt, tối đa hai lần cho một phán quyết.",
     "appeal.history": "Lịch sử phán quyết",
     "faq.both.q": "Người kia có được kể phần của họ không?",
     "faq.both.a":

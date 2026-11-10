@@ -39,7 +39,6 @@ export const APP_EN = {
   "app.history.removeFailed": "Couldn't remove {n} of them. Check your connection and try again.",
   "app.history.offlineRemove": "You're offline. Removing needs a connection.",
   "app.pricing.free.account": "Sign in with Apple, Google or email",
-  "app.context.label": "Context (optional)",
   "app.pricing.context": "Context images, read and then thrown away, at no extra cost",
   "app.pricing.headline": "Your first verdict is on us.",
   "app.pricing.sub":
@@ -190,9 +189,7 @@ export const APP_EN = {
   "app.verdict.back": "Ruling",
   // Adding context to a ruling (one-sided verdicts and cases).
   "app.appeal.title": "Add context & appeal",
-  "app.appeal.intro": "Something the judges missed? Add it and they rule again. The first ruling stays on record.",
-  "app.appeal.ask": "What should they know?",
-  "app.appeal.placeholder": "A fact, a message, or what was actually agreed.",
+  "app.appeal.placeholder": "What did the judges miss? A fact, a message, or what was actually agreed.",
   "app.appeal.cost": "Uses 1 verdict. You can do this twice per ruling; {left} left.",
   "app.appeal.costCase": "Uses 1 verdict. You can do this once per case.",
   "app.appeal.submit": "Rule again",

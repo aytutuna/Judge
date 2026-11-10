@@ -28,7 +28,6 @@ const he: AppLocale = {
     "app.history.removeFailed": "לא הצלחנו להסיר {n} מהם. כדאי לבדוק את החיבור ולנסות שוב.",
     "app.history.offlineRemove": "אין חיבור לאינטרנט, ובלי חיבור אי אפשר להסיר.",
     "app.pricing.free.account": "התחברות עם Apple, Google או אימייל",
-    "app.context.label": "הקשר (אופציונלי)",
     "app.pricing.context": "תמונות הקשר נקראות ואז נזרקות, בלי תוספת תשלום",
     "app.pricing.headline": "פסק הדין הראשון עלינו.",
     "app.pricing.sub":
@@ -164,9 +163,7 @@ const he: AppLocale = {
     "app.verdict.claims": "איך כל צד הגיע לשם",
     "app.verdict.back": "הכרעה",
     "app.appeal.title": "הוספת הקשר וערעור",
-    "app.appeal.intro": "השופטים פספסו משהו? אפשר להוסיף אותו, והם יכריעו מחדש. ההכרעה הראשונה נשמרת בהיסטוריה.",
-    "app.appeal.ask": "מה חשוב שהשופטים יידעו?",
-    "app.appeal.placeholder": "עובדה, הודעה או על מה בעצם סיכמתם.",
+    "app.appeal.placeholder": "מה השופטים פספסו? עובדה, הודעה או על מה בעצם סיכמתם.",
     "app.appeal.cost": "עולה פסק דין אחד. אפשר לעשות את זה פעמיים לכל הכרעה. נשארו: {left}.",
     "app.appeal.costCase": "עולה פסק דין אחד. אפשר לעשות את זה פעם אחת בכל תיק.",
     "app.appeal.submit": "להכריע מחדש",

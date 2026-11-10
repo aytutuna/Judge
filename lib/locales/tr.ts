@@ -351,8 +351,7 @@ const tr: Locale = {
     "signin.createNote": "Bu adresi doğrulamak için sana bir kod e-postalayacağız. Bunu yalnızca bir kez yapman yeterli.",
     "signin.passwordChoose": "Giriş yaptın. Bir dahaki sefer için bir parola seç.",
     "signin.passwordSave": "Parolayı kaydet",
-    "signin.passwordSaveFailed": "Giriş yaptın ama parolayı kaydedemedik. Tekrar dene ya da sonra Ayarlar'dan belirle.",
-    "signin.passwordSkip": "Şimdilik geç",
+    "signin.passwordSaveFailed": "Parolayı kaydedemedik. Tekrar dene.",
     "signin.passwordSubmit": "Giriş yap",
     "signin.rateLimited": "Çok fazla deneme oldu. Bir dakika bekleyip tekrar dene.",
     "signin.serviceDown": "Giriş şu an kullanılamıyor. Daha sonra tekrar dene.",
@@ -381,10 +380,6 @@ const tr: Locale = {
     "account.deleteConfirm":
       "Hesabın silinsin mi? Kredilerin, planın ve giriş bilgilerin silinir. Kararların ve davalardaki tarafların kaldırılır: yazdıkların ve isimler silinir, paylaşım bağlantıları da çalışmaz olur.",
     "account.deleteYes": "Evet, sil",
-    "account.passwordSet": "Parola belirle",
-    "account.passwordChange": "Parolayı değiştir",
-    "account.passwordCurrent": "Şu anki parola",
-    "account.passwordSaved": "Parola kaydedildi.",
     "account.deleteCancel": "Hesabım kalsın",
     "account.deleted": "Hesabın silindi. Ana sayfaya dönüyoruz…",
     "account.deleteFailed": "Hesabı şu an silemedik. Bir daha dener misin?",
@@ -639,9 +634,8 @@ const tr: Locale = {
     "pairs.lastSlice.b":
       "\"Benim\" deyip iki saat dokunmamak olmaz. Orada soğuyup duruyordu, ben de yedim.",
     "appeal.lead":
-      "Eksik ya da yanlış bir şey mi var? Bir kez ekle, yargıçlar her şeye yeniden baksın. 1 karar hakkı kullanır.",
-    "appeal.label": "Eklemek istediğin bilgi",
-    "appeal.placeholder": "Yargıçlar neyi kaçırdı?",
+      "1 karar hakkı kullanır.",
+    "appeal.placeholder": "Yargıçlar neyi kaçırdı? Bir detay, bir mesaj ya da gerçekte ne kararlaştırıldığı.",
     "appeal.submit": "Bilgimle yeniden yargıla",
     "appeal.sending": "Bilgini anonimleştiriyoruz…",
     "appeal.judging": "Yargıçlar her şeye yeniden bakıyor…",
@@ -661,8 +655,6 @@ const tr: Locale = {
     "appeal.previous": "Önceki karar",
     "appeal.failed": "Yeniden yargılama gerçekleşmedi. Kredin geri döndü, tekrar deneyebilirsin.",
     "appeal.refused": "Yargıçlar bu bilgiyle yeniden yargılamayı reddetti. Kredin geri döndü.",
-    "appeal.leadVerdict":
-      "Eksik ya da yanlış bir şey mi var? Ekle, yargıçlar her şeye yeniden baksın. Her seferinde 1 karar hakkı kullanır, bir karar için en fazla iki kez.",
     "appeal.history": "Karar geçmişi",
     "faq.both.q": "Diğer kişi de kendi tarafını anlatabilir mi?",
     "faq.both.a":

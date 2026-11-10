@@ -347,8 +347,7 @@ const ca: Locale = {
     "signin.createNote": "T'enviarem un codi per correu per confirmar aquesta adreça. Només ho has de fer una vegada.",
     "signin.passwordChoose": "Has iniciat la sessió. Tria una contrasenya per a la propera vegada.",
     "signin.passwordSave": "Desa la contrasenya",
-    "signin.passwordSaveFailed": "Has iniciat la sessió, però no hem pogut desar la contrasenya. Torna-ho a provar o defineix-la més tard a Configuració.",
-    "signin.passwordSkip": "Omet per ara",
+    "signin.passwordSaveFailed": "No hem pogut desar la contrasenya. Torna-ho a provar.",
     "signin.passwordSubmit": "Inicia sessió",
     "signin.rateLimited": "Massa intents. Espera un minut i torna-ho a provar.",
     "signin.serviceDown": "Ara mateix no es pot iniciar sessió. Torna-ho a provar més tard.",
@@ -376,10 +375,6 @@ const ca: Locale = {
     "account.deleteConfirm":
       "Vols eliminar el compte? S'esborraran els teus crèdits, el pla i les dades d'inici de sessió. Els teus veredictes i les teves versions dels casos s'eliminaran: s'esborrarà tot el que vas escriure, noms inclosos, i els seus enllaços per compartir deixaran de funcionar.",
     "account.deleteYes": "Sí, elimina'l",
-    "account.passwordSet": "Defineix una contrasenya",
-    "account.passwordChange": "Canvia la contrasenya",
-    "account.passwordCurrent": "Contrasenya actual",
-    "account.passwordSaved": "S'ha desat la contrasenya.",
     "account.deleteCancel": "Em quedo el compte",
     "account.deleted": "S'ha eliminat el compte. Et portem a la pàgina d'inici…",
     "account.deleteFailed": "Ara mateix no hem pogut eliminar el compte. Ho tornes a provar?",
@@ -638,9 +633,8 @@ const ca: Locale = {
     "pairs.lastSlice.b":
       "No pots dir que és teu i després passar-te dues hores sense tocar-lo. Era allà refredant-se, així que me'l vaig menjar.",
     "appeal.lead":
-      "Hi falta alguna cosa o hi ha algun error? Afegeix-ho un cop i els jutges ho tornaran a mirar tot. Costa 1 veredicte.",
-    "appeal.label": "El teu context",
-    "appeal.placeholder": "Què s'han deixat els jutges?",
+      "Gasta 1 veredicte.",
+    "appeal.placeholder": "Què s'han deixat els jutges? Un fet, un missatge o el que realment vau acordar.",
     "appeal.submit": "Torna a jutjar amb el meu context",
     "appeal.sending": "Anonimitzant el teu context…",
     "appeal.judging": "Els jutges ho tornen a mirar tot…",
@@ -660,8 +654,6 @@ const ca: Locale = {
     "appeal.previous": "Veredicte anterior",
     "appeal.failed": "No s'ha pogut tornar a jutjar. T'hem tornat el crèdit; ho pots tornar a provar.",
     "appeal.refused": "Els jutges no han volgut tornar a jutjar amb aquest context. T'hem tornat el crèdit.",
-    "appeal.leadVerdict":
-      "Hi falta alguna cosa o hi ha algun error? Afegeix-ho i els jutges ho tornaran a mirar tot. Cada vegada costa 1 veredicte, fins a dues vegades per veredicte.",
     "appeal.history": "Historial del veredicte",
     "faq.both.q": "L'altra persona pot explicar la seva versió?",
     "faq.both.a":

@@ -30,7 +30,6 @@ const cs: AppLocale = {
     "app.history.removeFailed": "{n} z nich se nepodařilo odstranit. Zkontroluj připojení a zkus to znovu.",
     "app.history.offlineRemove": "Nejsi online. K odstranění potřebuješ připojení.",
     "app.pricing.free.account": "Přihlas se přes Apple, Google nebo e-mail",
-    "app.context.label": "Kontext (volitelné)",
     "app.pricing.context": "Obrázky s kontextem se přečtou a pak zahodí, bez příplatku",
     "app.pricing.headline": "První verdikt máš od nás.",
     "app.pricing.sub":
@@ -167,9 +166,7 @@ const cs: AppLocale = {
     "app.verdict.claims": "Jak k tomu každá strana došla",
     "app.verdict.back": "Verdikt",
     "app.appeal.title": "Doplnit kontext a odvolat se",
-    "app.appeal.intro": "Soudcům něco uniklo? Doplň to a rozhodnou znovu. Původní verdikt zůstane v historii.",
-    "app.appeal.ask": "Co by měli vědět?",
-    "app.appeal.placeholder": "Fakt, zpráva nebo to, na čem byla doopravdy dohoda.",
+    "app.appeal.placeholder": "Co soudcům uniklo? Fakt, zpráva nebo to, na čem byla doopravdy dohoda.",
     "app.appeal.cost": "Stojí 1 verdikt. U jednoho verdiktu to jde dvakrát; zbývající pokusy: {left}.",
     "app.appeal.costCase": "Stojí 1 verdikt. U jednoho případu to jde jen jednou.",
     "app.appeal.submit": "Soudit znovu",

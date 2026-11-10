@@ -191,7 +191,6 @@ export function AppealSection({
   onSignIn,
   draft,
   evidence = true,
-  lead = "appeal.lead",
 }: {
   lang: Lang;
   view: AppealSubject;
@@ -202,8 +201,6 @@ export function AppealSection({
   draft: AppealDraft | null;
   /** Show the screenshot picker (the deployment offers evidence). */
   evidence?: boolean;
-  /** The line under the form's title (a verdict takes two rounds). */
-  lead?: Key;
 }) {
   const fieldId = useId();
   const area = appealArea(view);
@@ -252,7 +249,7 @@ export function AppealSection({
       <h2 id="appeal-title" className={styles.h2}>
         {t(lang, "appeal.title")}
       </h2>
-      <p className={styles.note}>{t(lang, lead)}</p>
+      <p className={styles.note}>{t(lang, "appeal.lead")}</p>
       {area.failed ? (
         <p className={styles.banner}>{t(lang, area.failed === "refused" ? "appeal.refused" : "appeal.failed")}</p>
       ) : null}
@@ -264,24 +261,22 @@ export function AppealSection({
         }}
       >
         <div className={styles.field}>
-          <label htmlFor={fieldId} className={styles.fieldLabel}>
-            <span>{t(lang, "appeal.label")}</span>
-            <span className={styles.count} aria-hidden>
-              {count.toLocaleString(langTag(lang))} / {MAX_APPEAL_CHARS.toLocaleString(langTag(lang))}
-            </span>
-          </label>
           <textarea
             id={fieldId}
-            className={`${styles.textarea} ${styles.short}`}
+            aria-label={t(lang, "appeal.title")}
+            className={`${styles.textarea} ${styles.tall}`}
             value={draft.text}
             onChange={(e) => draft.setText(e.target.value)}
             placeholder={t(lang, "appeal.placeholder")}
             maxLength={MAX_APPEAL_CHARS}
             minLength={MIN_APPEAL_CHARS}
-            rows={4}
+            rows={8}
             readOnly={draft.sending}
             aria-describedby={draft.error ? "appeal-error" : undefined}
           />
+          <span className={`${styles.count} ${styles.countEnd}`} aria-hidden>
+            {count.toLocaleString(langTag(lang))} / {MAX_APPEAL_CHARS.toLocaleString(langTag(lang))}
+          </span>
         </div>
         {evidence ? (
           <EvidencePicker
