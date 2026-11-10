@@ -170,8 +170,8 @@ async function reset() {
 }
 
 describe("party checks widened on a database from the two-sided era", () => {
-  let before: Record<string, Record<string, unknown>[]> = {};
-  let indexesBefore: Record<string, { name: string; sql: string | null }[]> = {};
+  const before: Record<string, Record<string, unknown>[]> = {};
+  const indexesBefore: Record<string, { name: string; sql: string | null }[]> = {};
 
   it("keeps every row and index and the old invite link", async () => {
     const db = await getDb();
