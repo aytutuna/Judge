@@ -119,6 +119,8 @@ const mr: Locale = {
     verdictAria: "निकाल: {label}",
     "party.a": "पक्ष A",
     "party.b": "पक्ष B",
+    "party.c": "पक्ष C",
+    "party.d": "पक्ष D",
     "party.youLabel": "{label} (तुम्ही)",
     you: "तुम्ही",
     "shared.subtitle": "कोणीतरी हा निकाल शेअर केला आहे",

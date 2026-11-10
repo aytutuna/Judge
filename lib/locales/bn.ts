@@ -119,6 +119,8 @@ const bn: Locale = {
     verdictAria: "রায়: {label}",
     "party.a": "পক্ষ A",
     "party.b": "পক্ষ B",
+    "party.c": "পক্ষ C",
+    "party.d": "পক্ষ D",
     "party.youLabel": "{label} (আপনি)",
     you: "আপনি",
     "shared.subtitle": "কেউ এই রায়টা শেয়ার করেছেন",

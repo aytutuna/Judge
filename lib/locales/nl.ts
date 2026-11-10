@@ -119,6 +119,8 @@ const nl: Locale = {
     verdictAria: "Uitspraak: {label}",
     "party.a": "Partij A",
     "party.b": "Partij B",
+    "party.c": "Partij C",
+    "party.d": "Partij D",
     "party.youLabel": "{label} (jij)",
     you: "Jij",
     "shared.subtitle": "Iemand heeft deze uitspraak gedeeld",

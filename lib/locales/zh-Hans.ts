@@ -118,6 +118,8 @@ const zhHans: Locale = {
     verdictAria: "裁决：{label}",
     "party.a": "当事人A",
     "party.b": "当事人B",
+    "party.c": "当事人C",
+    "party.d": "当事人D",
     "party.youLabel": "{label}（你）",
     you: "你",
     "shared.subtitle": "有人分享了这份裁决",

@@ -119,6 +119,8 @@ const ja: Locale = {
     verdictAria: "判定：{label}",
     "party.a": "当事者A",
     "party.b": "当事者B",
+    "party.c": "当事者C",
+    "party.d": "当事者D",
     "party.youLabel": "{label}（あなた）",
     you: "あなた",
     "shared.subtitle": "誰かがこの判定をシェアしました",

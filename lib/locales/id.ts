@@ -119,6 +119,8 @@ const id: Locale = {
     verdictAria: "Putusan: {label}",
     "party.a": "Pihak A",
     "party.b": "Pihak B",
+    "party.c": "Pihak C",
+    "party.d": "Pihak D",
     "party.youLabel": "{label} (kamu)",
     you: "Kamu",
     "shared.subtitle": "Seseorang membagikan putusan ini",

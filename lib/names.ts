@@ -185,8 +185,7 @@ export function partyNames(
 
 /** "Party C" in `lang`: what an unnamed side is called. */
 export function partyLabel(lang: Lang, party: PartyId): string {
-  if (party === "a" || party === "b") return t(lang, `party.${party}`);
-  return `${(PARTY_LABELS[lang] ?? PARTY_LABELS.en)[0].slice(0, -1)}${party.toUpperCase()}`;
+  return t(lang, `party.${party}`);
 }
 
 /**

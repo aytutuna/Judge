@@ -119,6 +119,8 @@ const ms: Locale = {
     verdictAria: "Keputusan: {label}",
     "party.a": "Pihak A",
     "party.b": "Pihak B",
+    "party.c": "Pihak C",
+    "party.d": "Pihak D",
     "party.youLabel": "{label} (anda)",
     you: "Anda",
     "shared.subtitle": "Seseorang berkongsi keputusan ini",

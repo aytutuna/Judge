@@ -111,6 +111,8 @@ const en = {
   verdictAria: "Verdict: {label}",
   "party.a": "Party A",
   "party.b": "Party B",
+  "party.c": "Party C",
+  "party.d": "Party D",
   "party.youLabel": "{label} (you)",
   you: "You",
   "shared.subtitle": "Someone shared this ruling",

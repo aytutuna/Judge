@@ -119,6 +119,8 @@ const hu: Locale = {
     verdictAria: "Ítélet: {label}",
     "party.a": "Fél A",
     "party.b": "Fél B",
+    "party.c": "Fél C",
+    "party.d": "Fél D",
     "party.youLabel": "{label} (te)",
     you: "Te",
     "shared.subtitle": "Valaki megosztotta ezt az ítéletet",

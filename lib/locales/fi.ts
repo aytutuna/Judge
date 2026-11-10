@@ -119,6 +119,8 @@ const fi: Locale = {
     verdictAria: "Tuomio: {label}",
     "party.a": "Osapuoli A",
     "party.b": "Osapuoli B",
+    "party.c": "Osapuoli C",
+    "party.d": "Osapuoli D",
     "party.youLabel": "{label} (sinä)",
     you: "Sinä",
     "shared.subtitle": "Joku jakoi tämän tuomion",

@@ -123,6 +123,8 @@ const tr: Locale = {
     verdictAria: "Karar: {label}",
     "party.a": "Taraf A",
     "party.b": "Taraf B",
+    "party.c": "Taraf C",
+    "party.d": "Taraf D",
     "party.youLabel": "{label} (sen)",
     you: "Sen",
     "shared.subtitle": "Biri bu kararı paylaştı",

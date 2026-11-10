@@ -119,6 +119,8 @@ const sv: Locale = {
     verdictAria: "Dom: {label}",
     "party.a": "Part A",
     "party.b": "Part B",
+    "party.c": "Part C",
+    "party.d": "Part D",
     "party.youLabel": "{label} (du)",
     you: "Du",
     "shared.subtitle": "Någon delade den här domen",

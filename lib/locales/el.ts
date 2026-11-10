@@ -119,6 +119,8 @@ const el: Locale = {
     verdictAria: "Απόφαση: {label}",
     "party.a": "Πλευρά A",
     "party.b": "Πλευρά B",
+    "party.c": "Πλευρά C",
+    "party.d": "Πλευρά D",
     "party.youLabel": "{label} (εσύ)",
     you: "Εσύ",
     "shared.subtitle": "Κάποιος μοιράστηκε αυτή την απόφαση",

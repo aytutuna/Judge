@@ -119,6 +119,8 @@ const ru: Locale = {
     verdictAria: "Вердикт: {label}",
     "party.a": "Сторона A",
     "party.b": "Сторона B",
+    "party.c": "Сторона C",
+    "party.d": "Сторона D",
     "party.youLabel": "{label} (вы)",
     you: "Вы",
     "shared.subtitle": "Кто-то поделился этим вердиктом",

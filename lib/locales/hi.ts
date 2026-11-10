@@ -119,6 +119,8 @@ const hi: Locale = {
     verdictAria: "फ़ैसला: {label}",
     "party.a": "पक्ष A",
     "party.b": "पक्ष B",
+    "party.c": "पक्ष C",
+    "party.d": "पक्ष D",
     "party.youLabel": "{label} (आप)",
     you: "आप",
     "shared.subtitle": "किसी ने यह फ़ैसला शेयर किया है",

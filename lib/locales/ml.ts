@@ -119,6 +119,8 @@ const ml: Locale = {
     verdictAria: "വിധി: {label}",
     "party.a": "കക്ഷി A",
     "party.b": "കക്ഷി B",
+    "party.c": "കക്ഷി C",
+    "party.d": "കക്ഷി D",
     "party.youLabel": "{label} (നിങ്ങൾ)",
     you: "നിങ്ങൾ",
     "shared.subtitle": "ആരോ ഈ വിധി പങ്കിട്ടു",

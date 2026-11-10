@@ -119,6 +119,8 @@ const ta: Locale = {
     verdictAria: "தீர்ப்பு: {label}",
     "party.a": "தரப்பு A",
     "party.b": "தரப்பு B",
+    "party.c": "தரப்பு C",
+    "party.d": "தரப்பு D",
     "party.youLabel": "{label} (நீங்கள்)",
     you: "நீங்கள்",
     "shared.subtitle": "ஒருவர் இந்தத் தீர்ப்பைப் பகிர்ந்துள்ளார்",

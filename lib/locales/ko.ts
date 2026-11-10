@@ -119,6 +119,8 @@ const ko: Locale = {
     verdictAria: "판결: {label}",
     "party.a": "당사자 A",
     "party.b": "당사자 B",
+    "party.c": "당사자 C",
+    "party.d": "당사자 D",
     "party.youLabel": "{label} (나)",
     you: "나",
     "shared.subtitle": "누군가 이 판결을 공유했어요",

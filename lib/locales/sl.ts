@@ -119,6 +119,8 @@ const sl: Locale = {
     verdictAria: "Razsodba: {label}",
     "party.a": "Stranka A",
     "party.b": "Stranka B",
+    "party.c": "Stranka C",
+    "party.d": "Stranka D",
     "party.youLabel": "{label} (ti)",
     you: "Ti",
     "shared.subtitle": "Nekdo je delil to razsodbo",

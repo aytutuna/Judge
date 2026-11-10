@@ -119,6 +119,8 @@ const uk: Locale = {
     verdictAria: "Вердикт: {label}",
     "party.a": "Сторона A",
     "party.b": "Сторона B",
+    "party.c": "Сторона C",
+    "party.d": "Сторона D",
     "party.youLabel": "{label} (ти)",
     you: "Ти",
     "shared.subtitle": "Хтось поділився цим вердиктом",

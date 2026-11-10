@@ -119,6 +119,8 @@ const de: Locale = {
     verdictAria: "Urteil: {label}",
     "party.a": "Partei A",
     "party.b": "Partei B",
+    "party.c": "Partei C",
+    "party.d": "Partei D",
     "party.youLabel": "{label} (du)",
     you: "Du",
     "shared.subtitle": "Jemand hat dieses Urteil geteilt",

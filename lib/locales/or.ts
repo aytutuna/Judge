@@ -119,6 +119,8 @@ const or: Locale = {
     verdictAria: "ରାୟ: {label}",
     "party.a": "ପକ୍ଷ A",
     "party.b": "ପକ୍ଷ B",
+    "party.c": "ପକ୍ଷ C",
+    "party.d": "ପକ୍ଷ D",
     "party.youLabel": "{label} (ଆପଣ)",
     you: "ଆପଣ",
     "shared.subtitle": "କେହି ଜଣେ ଏହି ରାୟ ସେୟାର୍ କରିଛନ୍ତି",

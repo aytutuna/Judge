@@ -119,6 +119,8 @@ const ar: Locale = {
     verdictAria: "الحكم: {label}",
     "party.a": "الطرف A",
     "party.b": "الطرف B",
+    "party.c": "الطرف C",
+    "party.d": "الطرف D",
     "party.youLabel": "{label} (أنت)",
     you: "أنت",
     "shared.subtitle": "شارك أحدهم هذا الحكم",

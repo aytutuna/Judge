@@ -119,6 +119,8 @@ const sk: Locale = {
     verdictAria: "Verdikt: {label}",
     "party.a": "Strana A",
     "party.b": "Strana B",
+    "party.c": "Strana C",
+    "party.d": "Strana D",
     "party.youLabel": "{label} (ty)",
     you: "Ty",
     "shared.subtitle": "Niekto zdieľal tento verdikt",

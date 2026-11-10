@@ -60,6 +60,8 @@ export const WEB_KEYS: readonly string[] = [
   "verdictAria",
   "party.a",
   "party.b",
+  "party.c",
+  "party.d",
   "you",
   "notFound.title",
   "notFound.body",

@@ -119,6 +119,8 @@ const kn: Locale = {
     verdictAria: "ತೀರ್ಪು: {label}",
     "party.a": "ಪಕ್ಷ A",
     "party.b": "ಪಕ್ಷ B",
+    "party.c": "ಪಕ್ಷ C",
+    "party.d": "ಪಕ್ಷ D",
     "party.youLabel": "{label} (ನೀವು)",
     you: "ನೀವು",
     "shared.subtitle": "ಯಾರೋ ಈ ತೀರ್ಪನ್ನು ಹಂಚಿಕೊಂಡಿದ್ದಾರೆ",

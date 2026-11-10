@@ -119,6 +119,8 @@ const ptPT: Locale = {
     verdictAria: "Veredicto: {label}",
     "party.a": "Parte A",
     "party.b": "Parte B",
+    "party.c": "Parte C",
+    "party.d": "Parte D",
     "party.youLabel": "{label} (tu)",
     you: "Tu",
     "shared.subtitle": "Alguém partilhou esta decisão",

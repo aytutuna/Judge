@@ -119,6 +119,8 @@ const hr: Locale = {
     verdictAria: "Presuda: {label}",
     "party.a": "Strana A",
     "party.b": "Strana B",
+    "party.c": "Strana C",
+    "party.d": "Strana D",
     "party.youLabel": "{label} (ti)",
     you: "Ti",
     "shared.subtitle": "Netko je podijelio ovu presudu",

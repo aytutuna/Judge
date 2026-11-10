@@ -119,6 +119,8 @@ const ur: Locale = {
     verdictAria: "فیصلہ: {label}",
     "party.a": "فریق A",
     "party.b": "فریق B",
+    "party.c": "فریق C",
+    "party.d": "فریق D",
     "party.youLabel": "{label} (آپ)",
     you: "آپ",
     "shared.subtitle": "کسی نے یہ فیصلہ شیئر کیا ہے",

@@ -119,6 +119,8 @@ const pa: Locale = {
     verdictAria: "ਫ਼ੈਸਲਾ: {label}",
     "party.a": "ਧਿਰ A",
     "party.b": "ਧਿਰ B",
+    "party.c": "ਧਿਰ C",
+    "party.d": "ਧਿਰ D",
     "party.youLabel": "{label} (ਤੁਸੀਂ)",
     you: "ਤੁਸੀਂ",
     "shared.subtitle": "ਕਿਸੇ ਨੇ ਇਹ ਫ਼ੈਸਲਾ ਸਾਂਝਾ ਕੀਤਾ ਹੈ",

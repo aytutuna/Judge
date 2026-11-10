@@ -119,6 +119,8 @@ const te: Locale = {
     verdictAria: "తీర్పు: {label}",
     "party.a": "పక్షం A",
     "party.b": "పక్షం B",
+    "party.c": "పక్షం C",
+    "party.d": "పక్షం D",
     "party.youLabel": "{label} (మీరు)",
     you: "మీరు",
     "shared.subtitle": "ఎవరో ఈ తీర్పును షేర్ చేశారు",

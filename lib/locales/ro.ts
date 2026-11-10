@@ -119,6 +119,8 @@ const ro: Locale = {
     verdictAria: "Verdict: {label}",
     "party.a": "Partea A",
     "party.b": "Partea B",
+    "party.c": "Partea C",
+    "party.d": "Partea D",
     "party.youLabel": "{label} (tu)",
     you: "Tu",
     "shared.subtitle": "Cineva a distribuit acest verdict",

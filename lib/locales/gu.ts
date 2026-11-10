@@ -119,6 +119,8 @@ const gu: Locale = {
     verdictAria: "ચુકાદો: {label}",
     "party.a": "પક્ષ A",
     "party.b": "પક્ષ B",
+    "party.c": "પક્ષ C",
+    "party.d": "પક્ષ D",
     "party.youLabel": "{label} (તમે)",
     you: "તમે",
     "shared.subtitle": "કોઈએ આ ચુકાદો શેર કર્યો છે",

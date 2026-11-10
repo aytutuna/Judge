@@ -119,6 +119,8 @@ const th: Locale = {
     verdictAria: "คำตัดสิน: {label}",
     "party.a": "ฝ่าย A",
     "party.b": "ฝ่าย B",
+    "party.c": "ฝ่าย C",
+    "party.d": "ฝ่าย D",
     "party.youLabel": "{label} (คุณ)",
     you: "คุณ",
     "shared.subtitle": "มีคนแชร์คำตัดสินนี้มา",

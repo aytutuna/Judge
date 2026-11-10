@@ -119,6 +119,8 @@ const he: Locale = {
     verdictAria: "פסק הדין: {label}",
     "party.a": "צד A",
     "party.b": "צד B",
+    "party.c": "צד C",
+    "party.d": "צד D",
     "party.youLabel": "{label} (את/ה)",
     you: "את/ה",
     "shared.subtitle": "מישהו שיתף את פסק הדין הזה",

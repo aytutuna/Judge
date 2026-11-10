@@ -119,6 +119,8 @@ const pl: Locale = {
     verdictAria: "Werdykt: {label}",
     "party.a": "Strona A",
     "party.b": "Strona B",
+    "party.c": "Strona C",
+    "party.d": "Strona D",
     "party.youLabel": "{label} (ty)",
     you: "Ty",
     "shared.subtitle": "Ktoś udostępnił ten werdykt",

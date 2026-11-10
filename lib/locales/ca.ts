@@ -119,6 +119,8 @@ const ca: Locale = {
     verdictAria: "Veredicte: {label}",
     "party.a": "Part A",
     "party.b": "Part B",
+    "party.c": "Part C",
+    "party.d": "Part D",
     "party.youLabel": "{label} (tu)",
     you: "Tu",
     "shared.subtitle": "Algú ha compartit aquest veredicte",
