@@ -80,7 +80,7 @@ export function CaseNames({
   onView: (view: CaseView) => void;
 }) {
   const inputId = useId();
-  const mine = view.yourParty === "a" ? view.display.a : view.display.b;
+  const mine = view.display[view.yourParty] ?? null;
   const [name, setName] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);

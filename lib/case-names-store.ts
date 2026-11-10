@@ -74,7 +74,7 @@ export function saveCaseNames(caseId: string, party: PartyLetter, map: readonly 
 
 /** After a case is deleted: its names go too. */
 export function forgetCaseNames(caseId: string): void {
-  for (const party of ["a", "b"] as const) {
+  for (const party of ["a", "b", "c", "d"] as const) {
     const key = namesKey(caseId, party);
     cache.delete(key);
     try {

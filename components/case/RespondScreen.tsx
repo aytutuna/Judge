@@ -12,6 +12,7 @@ import { trackApiError } from "@/lib/analytics/client";
 import { apiErrorMessage, languageName, t, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { langTag } from "@/lib/langs";
+import type { SelfParty } from "@/lib/names";
 import {
   clearPendingInvite,
   rememberPendingInvite,
@@ -213,6 +214,7 @@ export function RespondPanel({
   const stage = respondStage(view);
   const current = view.verdicts.at(-1) ?? null;
   const ownSide = view.sides.filter((s) => s.party === view.yourParty);
+  const selfParty = view.yourParty.toUpperCase() as SelfParty;
 
   if (stage === "own_invite") {
     return <p className={styles.banner}>{t(lang, "respond.ownInvite")}</p>;
@@ -432,7 +434,7 @@ export function RespondPanel({
           shareId={view.removed ? undefined : current.id}
           lang={lang}
           fresh={fresh}
-          selfParty="B"
+          selfParty={selfParty}
           viewerIsSelfParty
           focusAppeal={focusAppeal}
         />
@@ -445,7 +447,7 @@ export function RespondPanel({
         draft={appeal}
         evidence={evidence}
       />
-      <VerdictHistory lang={lang} verdicts={view.verdicts} linked={!view.removed} names={names} selfParty="B" />
+      <VerdictHistory lang={lang} verdicts={view.verdicts} linked={!view.removed} names={names} selfParty={selfParty} />
       {ownTools}
       <AccountsRead
         lang={lang}
@@ -476,7 +478,7 @@ export function RespondScreen({ token }: { token: string }) {
   const view = load.view;
   const caseId = view?.id ?? null;
   if (caseId !== null && caseId !== knownId) setKnownId(caseId);
-  const localNames = useCaseNames(caseId, "b");
+  const localNames = useCaseNames(caseId, view?.yourParty ?? "b");
   // The server's encrypted copy when this browser proves it is Party B
   // (claim or bound account); this browser's names for older cases.
   const names = view?.names ?? localNames;
@@ -497,7 +499,7 @@ export function RespondScreen({ token }: { token: string }) {
     token,
     lang,
     (next, map, claimSecret) => {
-      saveCaseNames(next.id, "b", map);
+      saveCaseNames(next.id, next.yourParty, map);
       saveClaim(next.id, claimSecret);
       setView(next);
     },
@@ -558,7 +560,7 @@ export function RespondScreen({ token }: { token: string }) {
     endpoint: `/api/v1/respond/${encodeURIComponent(token)}/appeals`,
     lang,
     onSent: (res) => {
-      saveCaseNames(caseId ?? "", "b", res.name_map ?? []);
+      saveCaseNames(caseId ?? "", view?.yourParty ?? "b", res.name_map ?? []);
       setView(res.case);
     },
     claim,
