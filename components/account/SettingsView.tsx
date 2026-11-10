@@ -8,7 +8,7 @@ import { setGame, useGame } from "@/lib/game";
 import { setTheme, useTheme, type Theme } from "@/lib/theme";
 import { signInOffered, useViewer } from "@/lib/use-viewer";
 import { LangPicker } from "../LangPicker";
-import { AccountSection } from "./AccountView";
+import { AccountSection, SignOutRow } from "./AccountView";
 import styles from "./AccountPages.module.css";
 import { PageShell } from "./PageShell";
 
@@ -27,8 +27,8 @@ const LINKS: { href: string; label: Key }[] = [
 
 const OUT = "M7 17 17 7M8 7h9v9";
 
-/** /settings: the account, language, appearance and the legal links, in the
- * order of the apps' Settings tab. */
+/** /settings: the account, language, appearance, the legal links and sign
+ * out, in the order of the apps' Settings tab. */
 export function SettingsView() {
   const lang = useLang();
   const theme = useTheme();
@@ -134,6 +134,8 @@ export function SettingsView() {
           ))}
         </ul>
       </nav>
+
+      <SignOutRow />
 
       <p className={styles.footNote}>{t(lang, "footer.note")}</p>
     </PageShell>

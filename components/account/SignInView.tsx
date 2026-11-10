@@ -158,7 +158,6 @@ export type SignInPanelProps = {
   onShowPassword: () => void;
   onSignInPassword: () => void;
   onSavePassword: () => void;
-  onSkipPassword: () => void;
   onProvider: (p: "apple" | "google") => void;
   onToggleEmail: () => void;
   onEmail: (value: string) => void;
@@ -194,7 +193,6 @@ export function SignInPanel({
   onShowPassword,
   onSignInPassword,
   onSavePassword,
-  onSkipPassword,
   onProvider,
   onToggleEmail,
   onEmail,
@@ -293,9 +291,6 @@ export function SignInPanel({
             {t(lang, "signin.passwordSave")}
           </button>
         </form>
-        <button type="button" className={styles.textBtn} disabled={pending} onClick={onSkipPassword}>
-          {t(lang, "signin.passwordSkip")}
-        </button>
       </div>
     );
   }
@@ -702,14 +697,26 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
       return;
     }
     keepSentTo(null);
-    if (!byPassword || mode === "code") {
+    if (!byPassword) {
       await finish();
     } else if (mode === "create" && password !== "") {
       await storePassword();
-    } else {
-      // Forgot password, or a create whose tab was reloaded: ask for it now.
+    } else if (mode === "forgot" || (await needsPassword())) {
+      // Forgot password, a create whose tab was reloaded, or a code sign-in
+      // to an account with no password yet: choose one before going on.
       setChoosing(true);
       setPending(false);
+    } else {
+      await finish();
+    }
+  }
+
+  async function needsPassword(): Promise<boolean> {
+    const { fetchMe } = await import("@/lib/auth-client");
+    try {
+      return (await fetchMe()).needsPassword === true;
+    } catch {
+      return false;
     }
   }
 
@@ -802,7 +809,6 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
         onShowPassword={() => setShowPassword((v) => !v)}
         onSignInPassword={() => void signInPassword()}
         onSavePassword={() => void storePassword()}
-        onSkipPassword={() => void finish()}
         onProvider={(p) => void provider(p)}
         onToggleEmail={() => setEmailOpen((o) => !o)}
         onEmail={setEmail}

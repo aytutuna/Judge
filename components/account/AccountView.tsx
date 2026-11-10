@@ -8,7 +8,6 @@ import { useLang } from "@/lib/lang";
 import { langTag } from "@/lib/langs";
 import { markSignedOut, useViewer, type ViewerState } from "@/lib/use-viewer";
 import styles from "./AccountPages.module.css";
-import { PasswordRow } from "./PasswordRow";
 
 /** How long the "account deleted" note stays before going home. */
 const DELETED_HOLD_MS = 1800;
@@ -25,40 +24,11 @@ export function openConfirm(
   safe?.focus();
 }
 
-export type AccountPanelProps = {
-  lang: Lang;
-  viewer: ViewerState;
-  deleting: boolean;
-  deleted: boolean;
-  deleteError: string | null;
-  onSignOut: () => void;
-  onDelete: () => void;
-};
+const OUT = "M7 17 17 7M8 7h9v9";
 
-/** Everything in the Settings account section, stateless apart from the
- * confirm dialog, so tests can render each state from a mocked /me. */
-export function AccountPanel({
-  lang,
-  viewer,
-  deleting,
-  deleted,
-  deleteError,
-  onSignOut,
-  onDelete,
-}: AccountPanelProps) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  const cancelRef = useRef<HTMLButtonElement>(null);
-
-  if (deleted) {
-    return (
-      <div className={styles.card}>
-        <p className={styles.ok} role="status">
-          {t(lang, "account.deleted")}
-        </p>
-      </div>
-    );
-  }
-
+/** What stands in for the account until there is a signed-in viewer to show:
+ * the loading, failed and signed-out cards. Null once there is one. */
+function noAccount(lang: Lang, viewer: ViewerState, next: string) {
   if (viewer.status === "idle" || viewer.status === "loading") {
     return (
       <div className={styles.card}>
@@ -68,7 +38,6 @@ export function AccountPanel({
       </div>
     );
   }
-
   if (viewer.status === "error" || !viewer.me) {
     return (
       <div className={styles.card}>
@@ -78,26 +47,40 @@ export function AccountPanel({
       </div>
     );
   }
-
-  const user = viewer.me.user;
-  if (!user) {
+  if (!viewer.me.user) {
     return (
       <div className={styles.card}>
         <p className={styles.muted}>{t(lang, "account.signInPrompt")}</p>
-        <Link href="/signin?next=%2Faccount" className={`${styles.btn} ${styles.primary}`}>
+        <Link href={`/signin?next=${encodeURIComponent(next)}`} className={`${styles.btn} ${styles.primary}`}>
           {t(lang, "nav.signIn")}
         </Link>
       </div>
     );
   }
+  return null;
+}
 
-  const e = viewer.me.entitlement;
+/** The Settings account section: who is signed in (a row that opens the
+ * account page), credits, plan and Pricing. Stateless, so tests can render
+ * each state from a mocked /me. */
+export function AccountPanel({ lang, viewer }: { lang: Lang; viewer: ViewerState }) {
+  const missing = noAccount(lang, viewer, "/settings");
+  if (missing) return missing;
+  const user = viewer.me?.user;
+  if (!user) return null;
+
+  const e = viewer.me?.entitlement;
   const sub = e?.subscription ?? null;
 
   return (
     <>
       <section className={styles.card} aria-labelledby="account-plan">
-        <p className={styles.muted}>{t(lang, "account.signedInAs", { email: user.email })}</p>
+        <Link href="/settings/account" className={styles.option}>
+          <span>{t(lang, "account.signedInAs", { email: user.email })}</span>
+          <svg viewBox="0 0 24 24" aria-hidden className={styles.out}>
+            <path d={OUT} fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </Link>
         <h2 id="account-plan" className="sr-only">
           {t(lang, "account.plan")}
         </h2>
@@ -135,15 +118,45 @@ export function AccountPanel({
           <Link href="/pricing" className={`${styles.btn} ${styles.primary}`}>
             {t(lang, e?.canUsePremium ? "nav.pricing" : "account.getPremium")}
           </Link>
-          <button type="button" className={`${styles.btn} ${styles.secondary}`} onClick={onSignOut}>
-            {t(lang, "account.signOut")}
-          </button>
         </div>
       </section>
+    </>
+  );
+}
 
-      {viewer.config?.signIn.password && typeof viewer.me.hasPassword === "boolean" ? (
-        <PasswordRow lang={lang} email={user.email} hasPassword={viewer.me.hasPassword} />
-      ) : null}
+export type AccountDetailProps = {
+  lang: Lang;
+  viewer: ViewerState;
+  deleting: boolean;
+  deleted: boolean;
+  deleteError: string | null;
+  onDelete: () => void;
+};
+
+/** /settings/account: the email and deleting the account. */
+export function AccountDetailPanel({ lang, viewer, deleting, deleted, deleteError, onDelete }: AccountDetailProps) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const cancelRef = useRef<HTMLButtonElement>(null);
+
+  if (deleted) {
+    return (
+      <div className={styles.card}>
+        <p className={styles.ok} role="status">
+          {t(lang, "account.deleted")}
+        </p>
+      </div>
+    );
+  }
+  const missing = noAccount(lang, viewer, "/settings/account");
+  if (missing) return missing;
+  const user = viewer.me?.user;
+  if (!user) return null;
+
+  return (
+    <>
+      <section className={styles.card}>
+        <p className={styles.muted}>{t(lang, "account.signedInAs", { email: user.email })}</p>
+      </section>
 
       <section className={styles.card}>
         {deleteError ? (
@@ -192,9 +205,37 @@ export function AccountPanel({
   );
 }
 
-/** Plan, credits and monthly allowance, sign out, delete: the Settings
- * page's account section, with its own state. */
+/** Plan, credits and monthly allowance: the Settings page's account section. */
 export function AccountSection() {
+  return <AccountPanel lang={useLang()} viewer={useViewer()} />;
+}
+
+/** Sign out, the last row of Settings; nothing while signed out. */
+export function SignOutRow() {
+  const lang = useLang();
+  const viewer = useViewer();
+  if (!viewer.me?.user) return null;
+
+  async function signOut() {
+    try {
+      const { signOut: run } = await import("@/lib/auth-client");
+      await run();
+    } finally {
+      markSignedOut();
+    }
+  }
+
+  return (
+    <section className={styles.card}>
+      <button type="button" className={`${styles.btn} ${styles.secondary}`} onClick={() => void signOut()}>
+        {t(lang, "account.signOut")}
+      </button>
+    </section>
+  );
+}
+
+/** The account page's own state: the delete request and what follows it. */
+export function AccountDetailSection() {
   const lang = useLang();
   const router = useRouter();
   const viewer = useViewer();
@@ -207,15 +248,6 @@ export function AccountSection() {
     const id = setTimeout(() => router.replace("/"), DELETED_HOLD_MS);
     return () => clearTimeout(id);
   }, [deleted, router]);
-
-  async function signOut() {
-    try {
-      const { signOut: run } = await import("@/lib/auth-client");
-      await run();
-    } finally {
-      markSignedOut();
-    }
-  }
 
   async function remove() {
     setDeleting(true);
@@ -234,13 +266,12 @@ export function AccountSection() {
   }
 
   return (
-    <AccountPanel
+    <AccountDetailPanel
       lang={lang}
       viewer={viewer}
       deleting={deleting}
       deleted={deleted}
       deleteError={deleteError}
-      onSignOut={() => void signOut()}
       onDelete={() => void remove()}
     />
   );
