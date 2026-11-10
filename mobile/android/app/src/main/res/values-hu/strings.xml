@@ -92,6 +92,8 @@
     <string name="verdict_aria">Ítélet: %1$s</string>
     <string name="party_a">Fél A</string>
     <string name="party_b">Fél B</string>
+    <string name="party_c">Fél C</string>
+    <string name="party_d">Fél D</string>
     <string name="you">Te</string>
     <string name="error_fallback">Valami hiba történt. Megpróbálod újra?</string>
     <string name="error_not_configured">A bíró még nincs beállítva. Próbáld újra később.</string>
@@ -306,6 +308,10 @@
     <string name="case_judge_now_yes">Igen, döntsenek most</string>
     <string name="case_judge_expired_confirm">Kérsz ítéletet csak a te verziód alapján? Ez 1 ítéletbe kerül.</string>
     <string name="case_judge_expired_yes">Igen, mehet (1 ítélet)</string>
+    <string name="case_side_waiting">Várakozik</string>
+    <string name="case_side_answered">Válaszolt</string>
+    <string name="case_judge_answered">Ítélet a válaszoló felek alapján</string>
+    <string name="case_judge_answered_confirm">Kérsz ítéletet a válaszoló felek alapján? A többi meghívó lezárul, és ők már nem válaszolhatnak.</string>
     <string name="case_cancel">Mégse</string>
     <string name="case_retry">Újrapróbálás</string>
     <string name="case_failed_body">Visszakaptad a kreditedet. Most újra megpróbálhatod.</string>
@@ -314,9 +320,13 @@
     <string name="case_accounts">Ki mit mondott a bíráknak</string>
     <string name="case_account_a">Fél A beszámolója</string>
     <string name="case_account_b">Fél B beszámolója</string>
+    <string name="case_account_c">Fél C beszámolója</string>
+    <string name="case_account_d">Fél D beszámolója</string>
     <string name="case_account_you">A te beszámolód (%1$s)</string>
     <string name="case_context_a">Fél A kiegészítése</string>
     <string name="case_context_b">Fél B kiegészítése</string>
+    <string name="case_context_c">Fél C kiegészítése</string>
+    <string name="case_context_d">Fél D kiegészítése</string>
     <string name="case_context_you">A te kiegészítésed (%1$s)</string>
     <string name="case_evidence_item">%1$s. kép, ahogy a bírák olvassák</string>
     <string name="case_not_yet">Még nem válaszolt.</string>
@@ -393,6 +403,7 @@
     <string name="home_your_placeholder">Mi a gond?</string>
     <string name="home_add_context">Kiegészítés hozzáadása</string>
     <string name="home_add_their_side">Add hozzá az ő verzióját</string>
+    <string name="home_add_side">Újabb fél hozzáadása</string>
     <string name="home_remove_their_side">Vedd ki az ő verzióját</string>
     <string name="home_send_link">Küldj linket</string>
     <string name="home_clear">Törlés</string>

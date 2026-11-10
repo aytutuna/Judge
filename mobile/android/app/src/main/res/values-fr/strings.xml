@@ -93,6 +93,8 @@
     <string name="verdict_aria">Verdict : %1$s</string>
     <string name="party_a">Partie A</string>
     <string name="party_b">Partie B</string>
+    <string name="party_c">Partie C</string>
+    <string name="party_d">Partie D</string>
     <string name="you">Toi</string>
     <string name="error_fallback">Quelque chose a coincé. Tu veux bien réessayer ?</string>
     <string name="error_not_configured">Le juge n’est pas encore prêt. Réessaie plus tard.</string>
@@ -313,6 +315,10 @@
     <string name="case_judge_now_yes">Oui, juger maintenant</string>
     <string name="case_judge_expired_confirm">Obtenir un verdict sur ta seule version ? Ça utilise 1 verdict.</string>
     <string name="case_judge_expired_yes">Oui, utiliser 1 verdict</string>
+    <string name="case_side_waiting">En attente</string>
+    <string name="case_side_answered">A répondu</string>
+    <string name="case_judge_answered">Juger avec les camps qui ont répondu</string>
+    <string name="case_judge_answered_confirm">Obtenir un verdict avec les camps qui ont répondu ? Les autres invitations se ferment et ces personnes ne pourront plus répondre.</string>
     <string name="case_cancel">Annuler</string>
     <string name="case_retry">Réessayer</string>
     <string name="case_failed_body">Ton crédit t’a été rendu. Tu peux réessayer maintenant.</string>
@@ -321,9 +327,13 @@
     <string name="case_accounts">Ce que chaque camp a dit aux juges</string>
     <string name="case_account_a">La version de Partie A</string>
     <string name="case_account_b">La version de Partie B</string>
+    <string name="case_account_c">La version de Partie C</string>
+    <string name="case_account_d">La version de Partie D</string>
     <string name="case_account_you">Ta version (%1$s)</string>
     <string name="case_context_a">Partie A a ajouté du contexte</string>
     <string name="case_context_b">Partie B a ajouté du contexte</string>
+    <string name="case_context_c">Partie C a ajouté du contexte</string>
+    <string name="case_context_d">Partie D a ajouté du contexte</string>
     <string name="case_context_you">Contexte que tu as ajouté (%1$s)</string>
     <string name="case_evidence_item">Image %1$s, telle que les juges l’ont lue</string>
     <string name="case_not_yet">Pas encore de réponse.</string>
@@ -401,6 +411,7 @@
     <string name="home_your_placeholder">C’est quoi, le problème ?</string>
     <string name="home_add_context">Ajouter du contexte</string>
     <string name="home_add_their_side">Ajouter sa version</string>
+    <string name="home_add_side">Ajouter un autre camp</string>
     <string name="home_remove_their_side">Retirer sa version</string>
     <string name="home_send_link">Envoie-lui un lien</string>
     <string name="home_clear">Effacer</string>

@@ -92,6 +92,8 @@
     <string name="verdict_aria">Απόφαση: %1$s</string>
     <string name="party_a">Πλευρά A</string>
     <string name="party_b">Πλευρά B</string>
+    <string name="party_c">Πλευρά C</string>
+    <string name="party_d">Πλευρά D</string>
     <string name="you">Εσύ</string>
     <string name="error_fallback">Κάτι πήγε στραβά. Δοκιμάζεις ξανά;</string>
     <string name="error_not_configured">Οι κριτές δεν είναι ακόμα έτοιμοι. Δοκίμασε ξανά αργότερα.</string>
@@ -306,6 +308,10 @@
     <string name="case_judge_now_yes">Ναι, κρίνε τώρα</string>
     <string name="case_judge_expired_confirm">Θέλεις απόφαση μόνο με τη δική σου πλευρά; Χρεώνεται 1 απόφαση.</string>
     <string name="case_judge_expired_yes">Ναι, χρέωσε 1 απόφαση</string>
+    <string name="case_side_waiting">Σε αναμονή</string>
+    <string name="case_side_answered">Απάντησε</string>
+    <string name="case_judge_answered">Κρίση με τις πλευρές που απάντησαν</string>
+    <string name="case_judge_answered_confirm">Θέλεις απόφαση με τις πλευρές που απάντησαν; Οι υπόλοιπες προσκλήσεις κλείνουν και αυτά τα άτομα δεν θα μπορούν πια να απαντήσουν.</string>
     <string name="case_cancel">Άκυρο</string>
     <string name="case_retry">Δοκίμασε ξανά</string>
     <string name="case_failed_body">Η χρέωση ακυρώθηκε. Μπορείς να ξαναδοκιμάσεις τώρα.</string>
@@ -314,9 +320,13 @@
     <string name="case_accounts">Τι είπε κάθε πλευρά στους κριτές</string>
     <string name="case_account_a">Η εκδοχή της Πλευράς A</string>
     <string name="case_account_b">Η εκδοχή της Πλευράς B</string>
+    <string name="case_account_c">Η εκδοχή της Πλευράς C</string>
+    <string name="case_account_d">Η εκδοχή της Πλευράς D</string>
     <string name="case_account_you">Η δική σου εκδοχή (%1$s)</string>
     <string name="case_context_a">Η Πλευρά A πρόσθεσε πληροφορίες</string>
     <string name="case_context_b">Η Πλευρά B πρόσθεσε πληροφορίες</string>
+    <string name="case_context_c">Η Πλευρά C πρόσθεσε πληροφορίες</string>
+    <string name="case_context_d">Η Πλευρά D πρόσθεσε πληροφορίες</string>
     <string name="case_context_you">Πληροφορίες που πρόσθεσες (%1$s)</string>
     <string name="case_evidence_item">Εικόνα %1$s, όπως τη διάβασαν οι κριτές</string>
     <string name="case_not_yet">Δεν έχει απαντήσει ακόμα.</string>
@@ -393,6 +403,7 @@
     <string name="home_your_placeholder">Ποιο είναι το πρόβλημα;</string>
     <string name="home_add_context">Πρόσθεσε πληροφορίες</string>
     <string name="home_add_their_side">Πρόσθεσε την άλλη πλευρά</string>
+    <string name="home_add_side">Πρόσθεσε άλλη μία πλευρά</string>
     <string name="home_remove_their_side">Αφαίρεσε την άλλη πλευρά</string>
     <string name="home_send_link">Στείλε σύνδεσμο</string>
     <string name="home_clear">Καθαρισμός</string>

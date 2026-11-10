@@ -92,6 +92,8 @@
     <string name="verdict_aria">తీర్పు: %1$s</string>
     <string name="party_a">పక్షం A</string>
     <string name="party_b">పక్షం B</string>
+    <string name="party_c">పక్షం C</string>
+    <string name="party_d">పక్షం D</string>
     <string name="you">మీరు</string>
     <string name="error_fallback">ఏదో పొరపాటు జరిగింది. ఇంకోసారి ప్రయత్నిస్తారా?</string>
     <string name="error_not_configured">జడ్జి ఇంకా సెటప్ కాలేదు. కాసేపాగి మళ్లీ ప్రయత్నించండి.</string>
@@ -306,6 +308,10 @@
     <string name="case_judge_now_yes">అవును, ఇప్పుడే జడ్జ్ చేయండి</string>
     <string name="case_judge_expired_confirm">మీ వైపు కథ మీదే తీర్పు కావాలా? దీనికి 1 తీర్పు ఖర్చవుతుంది.</string>
     <string name="case_judge_expired_yes">అవును, 1 తీర్పు వాడండి</string>
+    <string name="case_side_waiting">ఎదురుచూస్తోంది</string>
+    <string name="case_side_answered">జవాబిచ్చారు</string>
+    <string name="case_judge_answered">జవాబిచ్చిన వైపులతో జడ్జ్ చేయండి</string>
+    <string name="case_judge_answered_confirm">జవాబిచ్చిన వైపులతో తీర్పు కావాలా? మిగిలిన ఆహ్వానాలు మూసుకుపోతాయి, వాళ్లు ఇక జవాబివ్వలేరు.</string>
     <string name="case_cancel">రద్దు</string>
     <string name="case_retry">మళ్లీ ప్రయత్నించండి</string>
     <string name="case_failed_body">మీ క్రెడిట్ తిరిగి వచ్చింది. ఇప్పుడే మళ్లీ ప్రయత్నించొచ్చు.</string>
@@ -314,9 +320,13 @@
     <string name="case_accounts">ఒక్కో వైపు జడ్జీలకు ఏం చెప్పారు</string>
     <string name="case_account_a">పక్షం A కథనం</string>
     <string name="case_account_b">పక్షం B కథనం</string>
+    <string name="case_account_c">పక్షం C కథనం</string>
+    <string name="case_account_d">పక్షం D కథనం</string>
     <string name="case_account_you">మీ కథనం (%1$s)</string>
     <string name="case_context_a">పక్షం A వివరాలు జోడించారు</string>
     <string name="case_context_b">పక్షం B వివరాలు జోడించారు</string>
+    <string name="case_context_c">పక్షం C వివరాలు జోడించారు</string>
+    <string name="case_context_d">పక్షం D వివరాలు జోడించారు</string>
     <string name="case_context_you">మీరు జోడించిన వివరాలు (%1$s)</string>
     <string name="case_evidence_item">ఇమేజ్ %1$s, జడ్జీలు చదివినట్టు</string>
     <string name="case_not_yet">వాళ్లు ఇంకా జవాబివ్వలేదు.</string>
@@ -393,6 +403,7 @@
     <string name="home_your_placeholder">సమస్య ఏంటి?</string>
     <string name="home_add_context">వివరాలు జోడించండి</string>
     <string name="home_add_their_side">వాళ్ల వైపు కథ జోడించండి</string>
+    <string name="home_add_side">మరో వైపు జోడించండి</string>
     <string name="home_remove_their_side">వాళ్ల వైపు కథ తీసేయండి</string>
     <string name="home_send_link">లింక్ పంపండి</string>
     <string name="home_clear">క్లియర్ చేయండి</string>

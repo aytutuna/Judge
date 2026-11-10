@@ -93,6 +93,8 @@
     <string name="verdict_aria">Veredicte: %1$s</string>
     <string name="party_a">Part A</string>
     <string name="party_b">Part B</string>
+    <string name="party_c">Part C</string>
+    <string name="party_d">Part D</string>
     <string name="you">Tu</string>
     <string name="error_fallback">Alguna cosa ha fallat. Ho tornes a provar?</string>
     <string name="error_not_configured">El jutge encara no està configurat. Torna-ho a provar més tard.</string>
@@ -313,6 +315,10 @@
     <string name="case_judge_now_yes">Sí, jutja-ho ara</string>
     <string name="case_judge_expired_confirm">Vols un veredicte només amb la teva versió? Gastarà 1 veredicte.</string>
     <string name="case_judge_expired_yes">Sí, gasta 1 veredicte</string>
+    <string name="case_side_waiting">Esperant</string>
+    <string name="case_side_answered">Ha respost</string>
+    <string name="case_judge_answered">Jutja amb les parts que han respost</string>
+    <string name="case_judge_answered_confirm">Vols un veredicte amb les parts que han respost? Les altres invitacions es tanquen i aquestes persones ja no podran respondre.</string>
     <string name="case_cancel">Cancel·la</string>
     <string name="case_retry">Torna-ho a provar</string>
     <string name="case_failed_body">T\'hem tornat el crèdit. Ja ho pots tornar a provar.</string>
@@ -321,9 +327,13 @@
     <string name="case_accounts">Què ha explicat cada part als jutges</string>
     <string name="case_account_a">Versió de Part A</string>
     <string name="case_account_b">Versió de Part B</string>
+    <string name="case_account_c">Versió de Part C</string>
+    <string name="case_account_d">Versió de Part D</string>
     <string name="case_account_you">La teva versió (%1$s)</string>
     <string name="case_context_a">Context afegit per Part A</string>
     <string name="case_context_b">Context afegit per Part B</string>
+    <string name="case_context_c">Context afegit per Part C</string>
+    <string name="case_context_d">Context afegit per Part D</string>
     <string name="case_context_you">Context que has afegit (%1$s)</string>
     <string name="case_evidence_item">Imatge %1$s, tal com la llegeixen els jutges</string>
     <string name="case_not_yet">Encara no ha respost.</string>
@@ -401,6 +411,7 @@
     <string name="home_your_placeholder">Quin és el problema?</string>
     <string name="home_add_context">Afegeix context</string>
     <string name="home_add_their_side">Afegeix la seva versió</string>
+    <string name="home_add_side">Afegeix una altra part</string>
     <string name="home_remove_their_side">Treu la seva versió</string>
     <string name="home_send_link">Envia-li un enllaç</string>
     <string name="home_clear">Esborra</string>

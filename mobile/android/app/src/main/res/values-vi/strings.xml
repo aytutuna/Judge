@@ -91,6 +91,8 @@
     <string name="verdict_aria">Phán quyết: %1$s</string>
     <string name="party_a">Bên A</string>
     <string name="party_b">Bên B</string>
+    <string name="party_c">Bên C</string>
+    <string name="party_d">Bên D</string>
     <string name="you">Bạn</string>
     <string name="error_fallback">Có lỗi xảy ra. Bạn thử lại nhé?</string>
     <string name="error_not_configured">Giám khảo chưa được thiết lập. Thử lại sau nhé.</string>
@@ -299,6 +301,10 @@
     <string name="case_judge_now_yes">Có, phân xử ngay</string>
     <string name="case_judge_expired_confirm">Nhận phán quyết chỉ dựa trên lời kể của bạn? Việc này dùng 1 lượt.</string>
     <string name="case_judge_expired_yes">Có, dùng 1 lượt</string>
+    <string name="case_side_waiting">Đang chờ</string>
+    <string name="case_side_answered">Đã trả lời</string>
+    <string name="case_judge_answered">Phân xử theo các phía đã trả lời</string>
+    <string name="case_judge_answered_confirm">Nhận phán quyết theo các phía đã trả lời? Các lời mời còn lại sẽ đóng và những người đó không trả lời được nữa.</string>
     <string name="case_cancel">Hủy</string>
     <string name="case_retry">Thử lại</string>
     <string name="case_failed_body">Lượt của bạn đã được hoàn lại. Bạn có thể thử lại ngay.</string>
@@ -307,9 +313,13 @@
     <string name="case_accounts">Mỗi bên đã kể gì với giám khảo</string>
     <string name="case_account_a">Lời kể của Bên A</string>
     <string name="case_account_b">Lời kể của Bên B</string>
+    <string name="case_account_c">Lời kể của Bên C</string>
+    <string name="case_account_d">Lời kể của Bên D</string>
     <string name="case_account_you">Lời kể của bạn (%1$s)</string>
     <string name="case_context_a">Bên A đã bổ sung thông tin</string>
     <string name="case_context_b">Bên B đã bổ sung thông tin</string>
+    <string name="case_context_c">Bên C đã bổ sung thông tin</string>
+    <string name="case_context_d">Bên D đã bổ sung thông tin</string>
     <string name="case_context_you">Thông tin bạn bổ sung (%1$s)</string>
     <string name="case_evidence_item">Ảnh %1$s, như giám khảo đã đọc</string>
     <string name="case_not_yet">Người kia chưa trả lời.</string>
@@ -385,6 +395,7 @@
     <string name="home_your_placeholder">Có chuyện gì vậy?</string>
     <string name="home_add_context">Bổ sung thông tin</string>
     <string name="home_add_their_side">Thêm phía bên kia</string>
+    <string name="home_add_side">Thêm một phía nữa</string>
     <string name="home_remove_their_side">Bỏ phía bên kia</string>
     <string name="home_send_link">Gửi liên kết</string>
     <string name="home_clear">Xóa</string>

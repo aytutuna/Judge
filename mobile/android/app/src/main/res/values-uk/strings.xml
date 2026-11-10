@@ -94,6 +94,8 @@
     <string name="verdict_aria">Вердикт: %1$s</string>
     <string name="party_a">Сторона A</string>
     <string name="party_b">Сторона B</string>
+    <string name="party_c">Сторона C</string>
+    <string name="party_d">Сторона D</string>
     <string name="you">Ти</string>
     <string name="error_fallback">Щось пішло не так. Спробуєш ще раз?</string>
     <string name="error_not_configured">Суддю ще не налаштовано. Спробуй пізніше.</string>
@@ -320,6 +322,10 @@
     <string name="case_judge_now_yes">Так, судити зараз</string>
     <string name="case_judge_expired_confirm">Отримати вердикт лише за твоєю версією? Це спише 1 вердикт.</string>
     <string name="case_judge_expired_yes">Так, списати 1 вердикт</string>
+    <string name="case_side_waiting">Чекаємо</string>
+    <string name="case_side_answered">Відповів(ла)</string>
+    <string name="case_judge_answered">Судити за сторонами, які відповіли</string>
+    <string name="case_judge_answered_confirm">Отримати вердикт за сторонами, які відповіли? Інші запрошення закриються, і ці люди вже не зможуть відповісти.</string>
     <string name="case_cancel">Скасувати</string>
     <string name="case_retry">Спробувати ще раз</string>
     <string name="case_failed_body">Вердикт повернуто на баланс. Можна спробувати ще раз.</string>
@@ -328,9 +334,13 @@
     <string name="case_accounts">Що кожна сторона розповіла суддям</string>
     <string name="case_account_a">Розповідь Сторони A</string>
     <string name="case_account_b">Розповідь Сторони B</string>
+    <string name="case_account_c">Розповідь Сторони C</string>
+    <string name="case_account_d">Розповідь Сторони D</string>
     <string name="case_account_you">Твоя розповідь (%1$s)</string>
     <string name="case_context_a">Контекст від Сторони A</string>
     <string name="case_context_b">Контекст від Сторони B</string>
+    <string name="case_context_c">Контекст від Сторони C</string>
+    <string name="case_context_d">Контекст від Сторони D</string>
     <string name="case_context_you">Твій контекст (%1$s)</string>
     <string name="case_evidence_item">Зображення %1$s, як його прочитали судді</string>
     <string name="case_not_yet">Відповіді ще немає.</string>
@@ -409,6 +419,7 @@
     <string name="home_your_placeholder">У чому проблема?</string>
     <string name="home_add_context">Додати контекст</string>
     <string name="home_add_their_side">Додати іншу сторону</string>
+    <string name="home_add_side">Додати ще одну сторону</string>
     <string name="home_remove_their_side">Прибрати іншу сторону</string>
     <string name="home_send_link">Надіслати посилання</string>
     <string name="home_clear">Очистити</string>

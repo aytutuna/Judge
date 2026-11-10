@@ -92,6 +92,8 @@
     <string name="verdict_aria">ತೀರ್ಪು: %1$s</string>
     <string name="party_a">ಪಕ್ಷ A</string>
     <string name="party_b">ಪಕ್ಷ B</string>
+    <string name="party_c">ಪಕ್ಷ C</string>
+    <string name="party_d">ಪಕ್ಷ D</string>
     <string name="you">ನೀವು</string>
     <string name="error_fallback">ಏನೋ ತಪ್ಪಾಯಿತು. ಇನ್ನೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸುತ್ತೀರಾ?</string>
     <string name="error_not_configured">ತೀರ್ಪುಗಾರರು ಇನ್ನೂ ಸಿದ್ಧರಾಗಿಲ್ಲ. ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ.</string>
@@ -306,6 +308,10 @@
     <string name="case_judge_now_yes">ಹೌದು, ಈಗಲೇ ತೀರ್ಪು ಕೊಡಿ</string>
     <string name="case_judge_expired_confirm">ನಿಮ್ಮ ಕಡೆಯ ಮಾತಿನ ಮೇಲೆಯೇ ತೀರ್ಪು ಪಡೆಯಬೇಕೇ? ಇದಕ್ಕೆ 1 ತೀರ್ಪು ಖರ್ಚಾಗುತ್ತದೆ.</string>
     <string name="case_judge_expired_yes">ಹೌದು, 1 ತೀರ್ಪು ಬಳಸಿ</string>
+    <string name="case_side_waiting">ಕಾಯುತ್ತಿದೆ</string>
+    <string name="case_side_answered">ಉತ್ತರಿಸಿದ್ದಾರೆ</string>
+    <string name="case_judge_answered">ಉತ್ತರಿಸಿದವರ ಮಾತಿನ ಮೇಲೆ ತೀರ್ಪು ಕೊಡಿ</string>
+    <string name="case_judge_answered_confirm">ಉತ್ತರಿಸಿದವರ ಆಧಾರದ ಮೇಲೆ ತೀರ್ಪು ಬೇಕೇ? ಉಳಿದ ಆಹ್ವಾನಗಳು ಮುಚ್ಚುತ್ತವೆ, ಅವರಿಗೆ ಇನ್ನು ಉತ್ತರಿಸಲು ಆಗುವುದಿಲ್ಲ.</string>
     <string name="case_cancel">ರದ್ದುಮಾಡಿ</string>
     <string name="case_retry">ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
     <string name="case_failed_body">ನಿಮ್ಮ ಕ್ರೆಡಿಟ್ ವಾಪಸ್ ಬಂದಿದೆ. ಈಗ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಬಹುದು.</string>
@@ -314,9 +320,13 @@
     <string name="case_accounts">ಪ್ರತಿ ಕಡೆಯವರು ತೀರ್ಪುಗಾರರಿಗೆ ಹೇಳಿದ್ದು</string>
     <string name="case_account_a">ಪಕ್ಷ A ಹೇಳಿದ್ದು</string>
     <string name="case_account_b">ಪಕ್ಷ B ಹೇಳಿದ್ದು</string>
+    <string name="case_account_c">ಪಕ್ಷ C ಹೇಳಿದ್ದು</string>
+    <string name="case_account_d">ಪಕ್ಷ D ಹೇಳಿದ್ದು</string>
     <string name="case_account_you">ನೀವು ಹೇಳಿದ್ದು (%1$s)</string>
     <string name="case_context_a">ಪಕ್ಷ A ಸೇರಿಸಿದ ವಿವರ</string>
     <string name="case_context_b">ಪಕ್ಷ B ಸೇರಿಸಿದ ವಿವರ</string>
+    <string name="case_context_c">ಪಕ್ಷ C ಸೇರಿಸಿದ ವಿವರ</string>
+    <string name="case_context_d">ಪಕ್ಷ D ಸೇರಿಸಿದ ವಿವರ</string>
     <string name="case_context_you">ನೀವು ಸೇರಿಸಿದ ವಿವರ (%1$s)</string>
     <string name="case_evidence_item">ಚಿತ್ರ %1$s, ತೀರ್ಪುಗಾರರು ಓದಿದಂತೆ</string>
     <string name="case_not_yet">ಅವರು ಇನ್ನೂ ಉತ್ತರಿಸಿಲ್ಲ.</string>
@@ -393,6 +403,7 @@
     <string name="home_your_placeholder">ಸಮಸ್ಯೆ ಏನು?</string>
     <string name="home_add_context">ವಿವರ ಸೇರಿಸಿ</string>
     <string name="home_add_their_side">ಅವರ ಕಡೆ ಸೇರಿಸಿ</string>
+    <string name="home_add_side">ಇನ್ನೊಂದು ಕಡೆ ಸೇರಿಸಿ</string>
     <string name="home_remove_their_side">ಅವರ ಕಡೆ ತೆಗೆದುಹಾಕಿ</string>
     <string name="home_send_link">ಲಿಂಕ್ ಕಳುಹಿಸಿ</string>
     <string name="home_clear">ತೆರವುಗೊಳಿಸಿ</string>

@@ -92,6 +92,8 @@
     <string name="verdict_aria">Dom: %1$s</string>
     <string name="party_a">Part A</string>
     <string name="party_b">Part B</string>
+    <string name="party_c">Part C</string>
+    <string name="party_d">Part D</string>
     <string name="you">Du</string>
     <string name="error_fallback">Noget gik galt. Vil du prøve igen?</string>
     <string name="error_not_configured">Dommeren er ikke sat op endnu. Prøv igen senere.</string>
@@ -306,6 +308,10 @@
     <string name="case_judge_now_yes">Ja, døm nu</string>
     <string name="case_judge_expired_confirm">Vil du have en dom på din side alene? Det bruger 1 dom.</string>
     <string name="case_judge_expired_yes">Ja, brug 1 dom</string>
+    <string name="case_side_waiting">Venter</string>
+    <string name="case_side_answered">Har svaret</string>
+    <string name="case_judge_answered">Døm med de sider, der har svaret</string>
+    <string name="case_judge_answered_confirm">Vil du have en dom fra de sider, der har svaret? De andre invitationer lukker, og de kan ikke svare længere.</string>
     <string name="case_cancel">Annullér</string>
     <string name="case_retry">Prøv igen</string>
     <string name="case_failed_body">Du har fået din kredit tilbage. Du kan prøve igen nu.</string>
@@ -314,9 +320,13 @@
     <string name="case_accounts">Det, hver side fortalte dommerne</string>
     <string name="case_account_a">Part A\'s version</string>
     <string name="case_account_b">Part B\'s version</string>
+    <string name="case_account_c">Part C\'s version</string>
+    <string name="case_account_d">Part D\'s version</string>
     <string name="case_account_you">Din version (%1$s)</string>
     <string name="case_context_a">Part A tilføjede kontekst</string>
     <string name="case_context_b">Part B tilføjede kontekst</string>
+    <string name="case_context_c">Part C tilføjede kontekst</string>
+    <string name="case_context_d">Part D tilføjede kontekst</string>
     <string name="case_context_you">Kontekst, du tilføjede (%1$s)</string>
     <string name="case_evidence_item">Billede %1$s, som dommerne læste det</string>
     <string name="case_not_yet">Den anden har ikke svaret endnu.</string>
@@ -393,6 +403,7 @@
     <string name="home_your_placeholder">Hvad er problemet?</string>
     <string name="home_add_context">Tilføj kontekst</string>
     <string name="home_add_their_side">Tilføj den andens side</string>
+    <string name="home_add_side">Tilføj en side mere</string>
     <string name="home_remove_their_side">Fjern den andens side</string>
     <string name="home_send_link">Send et link</string>
     <string name="home_clear">Ryd</string>

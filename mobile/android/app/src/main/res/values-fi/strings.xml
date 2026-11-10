@@ -92,6 +92,8 @@
     <string name="verdict_aria">Tuomio: %1$s</string>
     <string name="party_a">Osapuoli A</string>
     <string name="party_b">Osapuoli B</string>
+    <string name="party_c">Osapuoli C</string>
+    <string name="party_d">Osapuoli D</string>
     <string name="you">Sinä</string>
     <string name="error_fallback">Jokin meni pieleen. Yritä uudelleen.</string>
     <string name="error_not_configured">Tuomaria ei ole vielä otettu käyttöön. Yritä myöhemmin uudelleen.</string>
@@ -306,6 +308,10 @@
     <string name="case_judge_now_yes">Kyllä, ratkaise nyt</string>
     <string name="case_judge_expired_confirm">Haluatko tuomion pelkän oman puolesi perusteella? Tämä käyttää 1 tuomion.</string>
     <string name="case_judge_expired_yes">Kyllä, käytä 1 tuomio</string>
+    <string name="case_side_waiting">Odottaa</string>
+    <string name="case_side_answered">Vastannut</string>
+    <string name="case_judge_answered">Ratkaise vastanneiden puolilla</string>
+    <string name="case_judge_answered_confirm">Haluatko tuomion vastanneiden puolilla? Muut kutsut sulkeutuvat, eivätkä he voi enää vastata.</string>
     <string name="case_cancel">Peruuta</string>
     <string name="case_retry">Yritä uudelleen</string>
     <string name="case_failed_body">Tuomio palautettiin saldoosi. Voit yrittää nyt uudelleen.</string>
@@ -314,9 +320,13 @@
     <string name="case_accounts">Mitä kumpikin kertoi tuomareille</string>
     <string name="case_account_a">Osapuoli A kertoo</string>
     <string name="case_account_b">Osapuoli B kertoo</string>
+    <string name="case_account_c">Osapuoli C kertoo</string>
+    <string name="case_account_d">Osapuoli D kertoo</string>
     <string name="case_account_you">Sinä kerrot (%1$s)</string>
     <string name="case_context_a">Osapuoli A lisäsi tietoa</string>
     <string name="case_context_b">Osapuoli B lisäsi tietoa</string>
+    <string name="case_context_c">Osapuoli C lisäsi tietoa</string>
+    <string name="case_context_d">Osapuoli D lisäsi tietoa</string>
     <string name="case_context_you">Lisäämäsi tieto (%1$s)</string>
     <string name="case_evidence_item">Kuva %1$s sellaisena kuin tuomarit sen lukivat</string>
     <string name="case_not_yet">Ei vielä vastausta.</string>
@@ -393,6 +403,7 @@
     <string name="home_your_placeholder">Mikä ongelma on?</string>
     <string name="home_add_context">Lisää tietoa</string>
     <string name="home_add_their_side">Lisää toisen puoli</string>
+    <string name="home_add_side">Lisää vielä yksi puoli</string>
     <string name="home_remove_their_side">Poista toisen puoli</string>
     <string name="home_send_link">Lähetä linkki</string>
     <string name="home_clear">Tyhjennä</string>

@@ -92,6 +92,8 @@
     <string name="verdict_aria">Dom: %1$s</string>
     <string name="party_a">Part A</string>
     <string name="party_b">Part B</string>
+    <string name="party_c">Part C</string>
+    <string name="party_d">Part D</string>
     <string name="you">Du</string>
     <string name="error_fallback">Något gick fel. Vill du försöka igen?</string>
     <string name="error_not_configured">Domaren är inte igång än. Försök igen senare.</string>
@@ -306,6 +308,10 @@
     <string name="case_judge_now_yes">Ja, döm nu</string>
     <string name="case_judge_expired_confirm">Vill du få en dom på bara din sida? Det kostar 1 dom.</string>
     <string name="case_judge_expired_yes">Ja, använd 1 dom</string>
+    <string name="case_side_waiting">Väntar</string>
+    <string name="case_side_answered">Har svarat</string>
+    <string name="case_judge_answered">Döm med sidorna som har svarat</string>
+    <string name="case_judge_answered_confirm">Vill du få en dom från sidorna som har svarat? De andra inbjudningarna stängs och de kan inte svara längre.</string>
     <string name="case_cancel">Avbryt</string>
     <string name="case_retry">Försök igen</string>
     <string name="case_failed_body">Du har fått tillbaka krediten. Du kan försöka igen nu.</string>
@@ -314,9 +320,13 @@
     <string name="case_accounts">Vad varje sida berättade för domarna</string>
     <string name="case_account_a">Part A:s berättelse</string>
     <string name="case_account_b">Part B:s berättelse</string>
+    <string name="case_account_c">Part C:s berättelse</string>
+    <string name="case_account_d">Part D:s berättelse</string>
     <string name="case_account_you">Din berättelse (%1$s)</string>
     <string name="case_context_a">Part A kompletterade</string>
     <string name="case_context_b">Part B kompletterade</string>
+    <string name="case_context_c">Part C kompletterade</string>
+    <string name="case_context_d">Part D kompletterade</string>
     <string name="case_context_you">Din komplettering (%1$s)</string>
     <string name="case_evidence_item">Bild %1$s, som domarna läste den</string>
     <string name="case_not_yet">Den andra har inte svarat än.</string>
@@ -393,6 +403,7 @@
     <string name="home_your_placeholder">Vad är problemet?</string>
     <string name="home_add_context">Komplettera</string>
     <string name="home_add_their_side">Lägg till den andras sida</string>
+    <string name="home_add_side">Lägg till ännu en sida</string>
     <string name="home_remove_their_side">Ta bort den andras sida</string>
     <string name="home_send_link">Skicka en länk</string>
     <string name="home_clear">Rensa</string>

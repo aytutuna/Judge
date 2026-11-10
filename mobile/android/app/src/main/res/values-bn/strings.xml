@@ -92,6 +92,8 @@
     <string name="verdict_aria">রায়: %1$s</string>
     <string name="party_a">পক্ষ A</string>
     <string name="party_b">পক্ষ B</string>
+    <string name="party_c">পক্ষ C</string>
+    <string name="party_d">পক্ষ D</string>
     <string name="you">আপনি</string>
     <string name="error_fallback">কিছু একটা গোলমাল হয়েছে। আরেকবার চেষ্টা করবেন?</string>
     <string name="error_not_configured">বিচারক এখনও সেট আপ হয়নি। পরে আবার চেষ্টা করুন।</string>
@@ -306,6 +308,10 @@
     <string name="case_judge_now_yes">হ্যাঁ, এখনই রায় দিন</string>
     <string name="case_judge_expired_confirm">শুধু আপনার বক্তব্যের ভিত্তিতে রায় চান? এতে 1টি রায় খরচ হবে।</string>
     <string name="case_judge_expired_yes">হ্যাঁ, 1টি রায় খরচ করুন</string>
+    <string name="case_side_waiting">অপেক্ষায়</string>
+    <string name="case_side_answered">উত্তর দিয়েছেন</string>
+    <string name="case_judge_answered">যাঁরা উত্তর দিয়েছেন তাঁদের বক্তব্যে রায় দিন</string>
+    <string name="case_judge_answered_confirm">যাঁরা উত্তর দিয়েছেন তাঁদের নিয়ে রায় চান? বাকি আমন্ত্রণ বন্ধ হয়ে যাবে, তাঁরা আর উত্তর দিতে পারবেন না।</string>
     <string name="case_cancel">বাতিল</string>
     <string name="case_retry">আবার চেষ্টা করুন</string>
     <string name="case_failed_body">আপনার ক্রেডিট ফেরত এসেছে। এখন আবার চেষ্টা করতে পারেন।</string>
@@ -314,9 +320,13 @@
     <string name="case_accounts">কোন পক্ষ বিচারকদের কী বলেছে</string>
     <string name="case_account_a">পক্ষ A-এর বক্তব্য</string>
     <string name="case_account_b">পক্ষ B-এর বক্তব্য</string>
+    <string name="case_account_c">পক্ষ C-এর বক্তব্য</string>
+    <string name="case_account_d">পক্ষ D-এর বক্তব্য</string>
     <string name="case_account_you">আপনার বক্তব্য (%1$s)</string>
     <string name="case_context_a">পক্ষ A-এর যোগ করা নতুন তথ্য</string>
     <string name="case_context_b">পক্ষ B-এর যোগ করা নতুন তথ্য</string>
+    <string name="case_context_c">পক্ষ C-এর যোগ করা নতুন তথ্য</string>
+    <string name="case_context_d">পক্ষ D-এর যোগ করা নতুন তথ্য</string>
     <string name="case_context_you">আপনার যোগ করা নতুন তথ্য (%1$s)</string>
     <string name="case_evidence_item">ছবি %1$s, বিচারকেরা যেভাবে পড়েছেন</string>
     <string name="case_not_yet">অন্যজন এখনও উত্তর দেননি।</string>
@@ -393,6 +403,7 @@
     <string name="home_your_placeholder">সমস্যাটা কী?</string>
     <string name="home_add_context">নতুন তথ্য যোগ করুন</string>
     <string name="home_add_their_side">অন্যজনের বক্তব্য যোগ করুন</string>
+    <string name="home_add_side">আরও একটি পক্ষ যোগ করুন</string>
     <string name="home_remove_their_side">অন্যজনের বক্তব্য সরান</string>
     <string name="home_send_link">লিংক পাঠান</string>
     <string name="home_clear">মুছুন</string>

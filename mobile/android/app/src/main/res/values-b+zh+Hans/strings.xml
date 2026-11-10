@@ -91,6 +91,8 @@
     <string name="verdict_aria">裁决：%1$s</string>
     <string name="party_a">当事人A</string>
     <string name="party_b">当事人B</string>
+    <string name="party_c">当事人C</string>
+    <string name="party_d">当事人D</string>
     <string name="you">你</string>
     <string name="error_fallback">出了点问题，再试一次吧？</string>
     <string name="error_not_configured">评判服务还没配置好，请稍后再试。</string>
@@ -299,6 +301,10 @@
     <string name="case_judge_now_yes">是的，现在裁决</string>
     <string name="case_judge_expired_confirm">只凭你一方的说法裁决吗？这会消耗 1 次裁决。</string>
     <string name="case_judge_expired_yes">是的，用 1 次</string>
+    <string name="case_side_waiting">等待中</string>
+    <string name="case_side_answered">已回复</string>
+    <string name="case_judge_answered">按已回复的各方裁决</string>
+    <string name="case_judge_answered_confirm">现在就按已回复的各方裁决吗？其余邀请会关闭，那些人将无法再回复。</string>
     <string name="case_cancel">取消</string>
     <string name="case_retry">重试</string>
     <string name="case_failed_body">次数已退还，你现在可以重试。</string>
@@ -307,9 +313,13 @@
     <string name="case_accounts">双方各自对评委说了什么</string>
     <string name="case_account_a">当事人A的说法</string>
     <string name="case_account_b">当事人B的说法</string>
+    <string name="case_account_c">当事人C的说法</string>
+    <string name="case_account_d">当事人D的说法</string>
     <string name="case_account_you">你的说法（%1$s）</string>
     <string name="case_context_a">当事人A补充了说明</string>
     <string name="case_context_b">当事人B补充了说明</string>
+    <string name="case_context_c">当事人C补充了说明</string>
+    <string name="case_context_d">当事人D补充了说明</string>
     <string name="case_context_you">你补充的说明（%1$s）</string>
     <string name="case_evidence_item">图片 %1$s（评委读到的内容）</string>
     <string name="case_not_yet">对方还没回复。</string>
@@ -385,6 +395,7 @@
     <string name="home_your_placeholder">怎么了？</string>
     <string name="home_add_context">补充说明</string>
     <string name="home_add_their_side">添加对方的说法</string>
+    <string name="home_add_side">再添加一方</string>
     <string name="home_remove_their_side">移除对方的说法</string>
     <string name="home_send_link">发个链接</string>
     <string name="home_clear">清空</string>

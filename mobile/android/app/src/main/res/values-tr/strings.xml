@@ -92,6 +92,8 @@
     <string name="verdict_aria">Karar: %1$s</string>
     <string name="party_a">Taraf A</string>
     <string name="party_b">Taraf B</string>
+    <string name="party_c">Taraf C</string>
+    <string name="party_d">Taraf D</string>
     <string name="you">Sen</string>
     <string name="error_fallback">Bir şey ters gitti. Bir daha dener misin?</string>
     <string name="error_not_configured">Yargıç henüz kurulmamış. Biraz sonra yeniden dene.</string>
@@ -306,6 +308,10 @@
     <string name="case_judge_now_yes">Evet, şimdi karar ver</string>
     <string name="case_judge_expired_confirm">Sadece kendi tarafına göre karar mı istiyorsun? Bu, 1 karar hakkı kullanır.</string>
     <string name="case_judge_expired_yes">Evet, 1 hak kullan</string>
+    <string name="case_side_waiting">Bekliyor</string>
+    <string name="case_side_answered">Cevapladı</string>
+    <string name="case_judge_answered">Cevaplayan taraflarla karar ver</string>
+    <string name="case_judge_answered_confirm">Cevaplayan taraflarla bir karar mı istiyorsun? Diğer davetler kapanır, o kişiler artık cevap veremez.</string>
     <string name="case_cancel">Vazgeç</string>
     <string name="case_retry">Tekrar dene</string>
     <string name="case_failed_body">Kredin geri döndü. Şimdi tekrar deneyebilirsin.</string>
@@ -314,9 +320,13 @@
     <string name="case_accounts">Her taraf yargıçlara ne anlattı</string>
     <string name="case_account_a">Taraf A\'nın anlatımı</string>
     <string name="case_account_b">Taraf B\'nin anlatımı</string>
+    <string name="case_account_c">Taraf C\'nin anlatımı</string>
+    <string name="case_account_d">Taraf D\'nin anlatımı</string>
     <string name="case_account_you">Senin anlatımın (%1$s)</string>
     <string name="case_context_a">Taraf A\'nın eklediği bilgi</string>
     <string name="case_context_b">Taraf B\'nin eklediği bilgi</string>
+    <string name="case_context_c">Taraf C\'nin eklediği bilgi</string>
+    <string name="case_context_d">Taraf D\'nin eklediği bilgi</string>
     <string name="case_context_you">Senin eklediğin bilgi (%1$s)</string>
     <string name="case_evidence_item">%1$s. görsel, yargıçların okuduğu hâliyle</string>
     <string name="case_not_yet">Henüz cevap vermedi.</string>
@@ -393,6 +403,7 @@
     <string name="home_your_placeholder">Sorun ne?</string>
     <string name="home_add_context">Ayrıntı ekle</string>
     <string name="home_add_their_side">Karşı tarafı ekle</string>
+    <string name="home_add_side">Bir taraf daha ekle</string>
     <string name="home_remove_their_side">Karşı tarafı kaldır</string>
     <string name="home_send_link">Bağlantı gönder</string>
     <string name="home_clear">Temizle</string>

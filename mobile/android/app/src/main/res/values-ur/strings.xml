@@ -92,6 +92,8 @@
     <string name="verdict_aria">فیصلہ: %1$s</string>
     <string name="party_a">فریق A</string>
     <string name="party_b">فریق B</string>
+    <string name="party_c">فریق C</string>
+    <string name="party_d">فریق D</string>
     <string name="you">آپ</string>
     <string name="error_fallback">کچھ گڑبڑ ہو گئی۔ ذرا دوبارہ کوشش کر کے دیکھیں۔</string>
     <string name="error_not_configured">Judge ابھی تیار نہیں۔ بعد میں دوبارہ کوشش کریں۔</string>
@@ -306,6 +308,10 @@
     <string name="case_judge_now_yes">ہاں، ابھی فیصلہ کریں</string>
     <string name="case_judge_expired_confirm">صرف اپنی بات پر فیصلہ لیں؟ اس میں 1 فیصلہ استعمال ہوگا۔</string>
     <string name="case_judge_expired_yes">ہاں، 1 فیصلہ استعمال کریں</string>
+    <string name="case_side_waiting">انتظار میں</string>
+    <string name="case_side_answered">جواب دے دیا</string>
+    <string name="case_judge_answered">جواب دینے والوں کی بات پر فیصلہ کریں</string>
+    <string name="case_judge_answered_confirm">جواب دینے والوں کی بنیاد پر فیصلہ لیں؟ باقی دعوتی لنک بند ہو جائیں گے اور وہ جواب نہیں دے سکیں گے۔</string>
     <string name="case_cancel">منسوخ کریں</string>
     <string name="case_retry">دوبارہ کوشش کریں</string>
     <string name="case_failed_body">آپ کا کریڈٹ واپس آ گیا ہے۔ آپ ابھی دوبارہ کوشش کر سکتے ہیں۔</string>
@@ -314,9 +320,13 @@
     <string name="case_accounts">ہر طرف نے ججوں کو کیا بتایا</string>
     <string name="case_account_a">فریق A کا بیان</string>
     <string name="case_account_b">فریق B کا بیان</string>
+    <string name="case_account_c">فریق C کا بیان</string>
+    <string name="case_account_d">فریق D کا بیان</string>
     <string name="case_account_you">آپ کا بیان (%1$s)</string>
     <string name="case_context_a">فریق A نے مزید تفصیل دی</string>
     <string name="case_context_b">فریق B نے مزید تفصیل دی</string>
+    <string name="case_context_c">فریق C نے مزید تفصیل دی</string>
+    <string name="case_context_d">فریق D نے مزید تفصیل دی</string>
     <string name="case_context_you">آپ کی دی ہوئی تفصیل (%1$s)</string>
     <string name="case_evidence_item">تصویر %1$s، جیسے ججوں نے پڑھی</string>
     <string name="case_not_yet">انہوں نے ابھی جواب نہیں دیا۔</string>
@@ -393,6 +403,7 @@
     <string name="home_your_placeholder">مسئلہ کیا ہے؟</string>
     <string name="home_add_context">تفصیل شامل کریں</string>
     <string name="home_add_their_side">ان کی بات شامل کریں</string>
+    <string name="home_add_side">ایک اور فریق شامل کریں</string>
     <string name="home_remove_their_side">ان کی بات ہٹائیں</string>
     <string name="home_send_link">لنک بھیجیں</string>
     <string name="home_clear">صاف کریں</string>

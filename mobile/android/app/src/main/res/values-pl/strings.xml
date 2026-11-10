@@ -94,6 +94,8 @@
     <string name="verdict_aria">Werdykt: %1$s</string>
     <string name="party_a">Strona A</string>
     <string name="party_b">Strona B</string>
+    <string name="party_c">Strona C</string>
+    <string name="party_d">Strona D</string>
     <string name="you">Ty</string>
     <string name="error_fallback">Coś poszło nie tak. Spróbujesz jeszcze raz?</string>
     <string name="error_not_configured">Sędzia nie jest jeszcze gotowy. Spróbuj później.</string>
@@ -320,6 +322,10 @@
     <string name="case_judge_now_yes">Tak, oceń teraz</string>
     <string name="case_judge_expired_confirm">Chcesz werdykt tylko na podstawie swojej wersji? To zużyje 1 werdykt.</string>
     <string name="case_judge_expired_yes">Tak, użyj 1 werdyktu</string>
+    <string name="case_side_waiting">Czeka</string>
+    <string name="case_side_answered">Odpowiedział(a)</string>
+    <string name="case_judge_answered">Oceń na podstawie stron, które odpowiedziały</string>
+    <string name="case_judge_answered_confirm">Chcesz werdykt na podstawie stron, które odpowiedziały? Pozostałe zaproszenia się zamkną i te osoby nie będą mogły już odpowiedzieć.</string>
     <string name="case_cancel">Anuluj</string>
     <string name="case_retry">Spróbuj ponownie</string>
     <string name="case_failed_body">Werdykt wrócił do twojej puli. Możesz spróbować ponownie.</string>
@@ -328,9 +334,13 @@
     <string name="case_accounts">Co każda strona powiedziała sędziom</string>
     <string name="case_account_a">Relacja Strony A</string>
     <string name="case_account_b">Relacja Strony B</string>
+    <string name="case_account_c">Relacja Strony C</string>
+    <string name="case_account_d">Relacja Strony D</string>
     <string name="case_account_you">Twoja relacja (%1$s)</string>
     <string name="case_context_a">Kontekst od Strony A</string>
     <string name="case_context_b">Kontekst od Strony B</string>
+    <string name="case_context_c">Kontekst od Strony C</string>
+    <string name="case_context_d">Kontekst od Strony D</string>
     <string name="case_context_you">Twój dodatkowy kontekst (%1$s)</string>
     <string name="case_evidence_item">Obraz %1$s, tak jak czytają go sędziowie</string>
     <string name="case_not_yet">Druga strona jeszcze nie odpowiedziała.</string>
@@ -409,6 +419,7 @@
     <string name="home_your_placeholder">O co chodzi?</string>
     <string name="home_add_context">Dodaj kontekst</string>
     <string name="home_add_their_side">Dodaj drugą stronę</string>
+    <string name="home_add_side">Dodaj kolejną stronę</string>
     <string name="home_remove_their_side">Usuń drugą stronę</string>
     <string name="home_send_link">Wyślij link</string>
     <string name="home_clear">Wyczyść</string>

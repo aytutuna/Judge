@@ -96,6 +96,8 @@
     <string name="verdict_aria">الحكم: %1$s</string>
     <string name="party_a">الطرف A</string>
     <string name="party_b">الطرف B</string>
+    <string name="party_c">الطرف C</string>
+    <string name="party_d">الطرف D</string>
     <string name="you">أنت</string>
     <string name="error_fallback">حدث خطأ ما. هلّا حاولت مرة أخرى؟</string>
     <string name="error_not_configured">القاضي غير مُعدّ بعد. حاول لاحقًا.</string>
@@ -334,6 +336,10 @@
     <string name="case_judge_now_yes">نعم، أريد الحكم الآن</string>
     <string name="case_judge_expired_confirm">هل تريد حكمًا على روايتك وحدها؟ سيستهلك هذا حكمًا واحدًا.</string>
     <string name="case_judge_expired_yes">نعم، استخدم حكمًا واحدًا</string>
+    <string name="case_side_waiting">بانتظار الرد</string>
+    <string name="case_side_answered">ردّ</string>
+    <string name="case_judge_answered">الحكم بروايات من ردّوا</string>
+    <string name="case_judge_answered_confirm">هل تريد حكمًا من الأطراف التي ردّت؟ ستُغلق الدعوات الأخرى ولن يتمكن أصحابها من الرد.</string>
     <string name="case_cancel">إلغاء</string>
     <string name="case_retry">إعادة المحاولة</string>
     <string name="case_failed_body">عاد الحكم المخصوم إلى رصيدك. يمكنك المحاولة مجددًا الآن.</string>
@@ -342,9 +348,13 @@
     <string name="case_accounts">ما رواه كل طرف للقضاة</string>
     <string name="case_account_a">رواية الطرف A</string>
     <string name="case_account_b">رواية الطرف B</string>
+    <string name="case_account_c">رواية الطرف C</string>
+    <string name="case_account_d">رواية الطرف D</string>
     <string name="case_account_you">روايتك (%1$s)</string>
     <string name="case_context_a">توضيح أضافه الطرف A</string>
     <string name="case_context_b">توضيح أضافه الطرف B</string>
+    <string name="case_context_c">توضيح أضافه الطرف C</string>
+    <string name="case_context_d">توضيح أضافه الطرف D</string>
     <string name="case_context_you">التوضيح الذي أضفته (%1$s)</string>
     <string name="case_evidence_item">الصورة %1$s، كما قرأها القضاة</string>
     <string name="case_not_yet">لم يصل الرد بعد.</string>
@@ -425,6 +435,7 @@
     <string name="home_your_placeholder">ما المشكلة؟</string>
     <string name="home_add_context">أضف توضيحًا</string>
     <string name="home_add_their_side">أضف رواية الطرف الآخر</string>
+    <string name="home_add_side">أضف طرفًا آخر</string>
     <string name="home_remove_their_side">أزل رواية الطرف الآخر</string>
     <string name="home_send_link">أرسل له رابطًا</string>
     <string name="home_clear">مسح</string>

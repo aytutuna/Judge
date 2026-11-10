@@ -166,6 +166,8 @@ class Strings(private val res: Resources) {
     fun verdictAria(label: String): String = res.getString(R.string.verdict_aria, label)
     val partyA: String get() = res.getString(R.string.party_a)
     val partyB: String get() = res.getString(R.string.party_b)
+    val partyC: String get() = res.getString(R.string.party_c)
+    val partyD: String get() = res.getString(R.string.party_d)
     val you: String get() = res.getString(R.string.you)
     val errorFallback: String get() = res.getString(R.string.error_fallback)
     val errorNotConfigured: String get() = res.getString(R.string.error_not_configured)
@@ -362,6 +364,10 @@ class Strings(private val res: Resources) {
     val caseJudgeNowYes: String get() = res.getString(R.string.case_judge_now_yes)
     val caseJudgeExpiredConfirm: String get() = res.getString(R.string.case_judge_expired_confirm)
     val caseJudgeExpiredYes: String get() = res.getString(R.string.case_judge_expired_yes)
+    val caseSideWaiting: String get() = res.getString(R.string.case_side_waiting)
+    val caseSideAnswered: String get() = res.getString(R.string.case_side_answered)
+    val caseJudgeAnswered: String get() = res.getString(R.string.case_judge_answered)
+    val caseJudgeAnsweredConfirm: String get() = res.getString(R.string.case_judge_answered_confirm)
     val caseCancel: String get() = res.getString(R.string.case_cancel)
     val caseRetry: String get() = res.getString(R.string.case_retry)
     val caseFailedBody: String get() = res.getString(R.string.case_failed_body)
@@ -370,9 +376,13 @@ class Strings(private val res: Resources) {
     val caseAccounts: String get() = res.getString(R.string.case_accounts)
     val caseAccountA: String get() = res.getString(R.string.case_account_a)
     val caseAccountB: String get() = res.getString(R.string.case_account_b)
+    val caseAccountC: String get() = res.getString(R.string.case_account_c)
+    val caseAccountD: String get() = res.getString(R.string.case_account_d)
     fun caseAccountYou(label: String): String = res.getString(R.string.case_account_you, label)
     val caseContextA: String get() = res.getString(R.string.case_context_a)
     val caseContextB: String get() = res.getString(R.string.case_context_b)
+    val caseContextC: String get() = res.getString(R.string.case_context_c)
+    val caseContextD: String get() = res.getString(R.string.case_context_d)
     fun caseContextYou(label: String): String = res.getString(R.string.case_context_you, label)
     fun caseEvidenceItem(n: String): String = res.getString(R.string.case_evidence_item, n)
     val caseNotYet: String get() = res.getString(R.string.case_not_yet)
@@ -446,6 +456,7 @@ class Strings(private val res: Resources) {
     val homeYourPlaceholder: String get() = res.getString(R.string.home_your_placeholder)
     val homeAddContext: String get() = res.getString(R.string.home_add_context)
     val homeAddTheirSide: String get() = res.getString(R.string.home_add_their_side)
+    val homeAddSide: String get() = res.getString(R.string.home_add_side)
     val homeRemoveTheirSide: String get() = res.getString(R.string.home_remove_their_side)
     val homeSendLink: String get() = res.getString(R.string.home_send_link)
     val homeClear: String get() = res.getString(R.string.home_clear)
@@ -835,6 +846,8 @@ class Strings(private val res: Resources) {
             "trial.refereePrefix" -> R.string.trial_referee_prefix
             "party.a" -> R.string.party_a
             "party.b" -> R.string.party_b
+            "party.c" -> R.string.party_c
+            "party.d" -> R.string.party_d
             "you" -> R.string.you
             "errorFallback" -> R.string.error_fallback
             "error.not_configured" -> R.string.error_not_configured
@@ -1012,6 +1025,10 @@ class Strings(private val res: Resources) {
             "case.judgeNow.yes" -> R.string.case_judge_now_yes
             "case.judgeExpired.confirm" -> R.string.case_judge_expired_confirm
             "case.judgeExpired.yes" -> R.string.case_judge_expired_yes
+            "case.side.waiting" -> R.string.case_side_waiting
+            "case.side.answered" -> R.string.case_side_answered
+            "case.judgeAnswered" -> R.string.case_judge_answered
+            "case.judgeAnswered.confirm" -> R.string.case_judge_answered_confirm
             "case.cancel" -> R.string.case_cancel
             "case.retry" -> R.string.case_retry
             "case.failedBody" -> R.string.case_failed_body
@@ -1020,8 +1037,12 @@ class Strings(private val res: Resources) {
             "case.accounts" -> R.string.case_accounts
             "case.accountA" -> R.string.case_account_a
             "case.accountB" -> R.string.case_account_b
+            "case.accountC" -> R.string.case_account_c
+            "case.accountD" -> R.string.case_account_d
             "case.contextA" -> R.string.case_context_a
             "case.contextB" -> R.string.case_context_b
+            "case.contextC" -> R.string.case_context_c
+            "case.contextD" -> R.string.case_context_d
             "case.notYet" -> R.string.case_not_yet
             "case.answered" -> R.string.case_answered
             "case.judgingAlone" -> R.string.case_judging_alone
@@ -1084,6 +1105,7 @@ class Strings(private val res: Resources) {
             "home.yourPlaceholder" -> R.string.home_your_placeholder
             "home.addContext" -> R.string.home_add_context
             "home.addTheirSide" -> R.string.home_add_their_side
+            "home.addSide" -> R.string.home_add_side
             "home.removeTheirSide" -> R.string.home_remove_their_side
             "home.sendLink" -> R.string.home_send_link
             "home.clear" -> R.string.home_clear

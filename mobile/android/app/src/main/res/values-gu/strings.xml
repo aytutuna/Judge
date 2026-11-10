@@ -92,6 +92,8 @@
     <string name="verdict_aria">ચુકાદો: %1$s</string>
     <string name="party_a">પક્ષ A</string>
     <string name="party_b">પક્ષ B</string>
+    <string name="party_c">પક્ષ C</string>
+    <string name="party_d">પક્ષ D</string>
     <string name="you">તમે</string>
     <string name="error_fallback">કંઈક ગરબડ થઈ. ફરી પ્રયાસ કરશો?</string>
     <string name="error_not_configured">જજ હજી સેટ નથી થયા. થોડી વાર પછી પ્રયાસ કરો.</string>
@@ -306,6 +308,10 @@
     <string name="case_judge_now_yes">હા, હમણાં ચુકાદો આપો</string>
     <string name="case_judge_expired_confirm">ફક્ત તમારી બાજુ પરથી ચુકાદો લેવો છે? આમાં 1 ચુકાદો વપરાશે.</string>
     <string name="case_judge_expired_yes">હા, 1 ચુકાદો વાપરો</string>
+    <string name="case_side_waiting">રાહ જોઈએ છીએ</string>
+    <string name="case_side_answered">જવાબ આપ્યો</string>
+    <string name="case_judge_answered">જવાબ આપનારની બાજુઓ પરથી ચુકાદો</string>
+    <string name="case_judge_answered_confirm">જેમણે જવાબ આપ્યો તેમના પરથી ચુકાદો લેવો છે? બાકીનાં આમંત્રણ બંધ થશે અને તેઓ જવાબ નહીં આપી શકે.</string>
     <string name="case_cancel">રદ કરો</string>
     <string name="case_retry">ફરી પ્રયાસ કરો</string>
     <string name="case_failed_body">તમારી ક્રેડિટ પાછી આવી ગઈ. હવે ફરી પ્રયાસ કરી શકો છો.</string>
@@ -314,9 +320,13 @@
     <string name="case_accounts">દરેક બાજુએ જજોને શું કહ્યું</string>
     <string name="case_account_a">પક્ષ Aની વાત</string>
     <string name="case_account_b">પક્ષ Bની વાત</string>
+    <string name="case_account_c">પક્ષ Cની વાત</string>
+    <string name="case_account_d">પક્ષ Dની વાત</string>
     <string name="case_account_you">તમારી વાત (%1$s)</string>
     <string name="case_context_a">પક્ષ A તરફથી ઉમેરેલી વિગત</string>
     <string name="case_context_b">પક્ષ B તરફથી ઉમેરેલી વિગત</string>
+    <string name="case_context_c">પક્ષ C તરફથી ઉમેરેલી વિગત</string>
+    <string name="case_context_d">પક્ષ D તરફથી ઉમેરેલી વિગત</string>
     <string name="case_context_you">તમે ઉમેરેલી વિગત (%1$s)</string>
     <string name="case_evidence_item">ઇમેજ %1$s, જજોએ વાંચી એ રીતે</string>
     <string name="case_not_yet">એમણે હજી જવાબ આપ્યો નથી.</string>
@@ -393,6 +403,7 @@
     <string name="home_your_placeholder">સમસ્યા શું છે?</string>
     <string name="home_add_context">વિગત ઉમેરો</string>
     <string name="home_add_their_side">એમની વાત ઉમેરો</string>
+    <string name="home_add_side">વધુ એક બાજુ ઉમેરો</string>
     <string name="home_remove_their_side">એમની વાત કાઢી નાખો</string>
     <string name="home_send_link">લિંક મોકલો</string>
     <string name="home_clear">સાફ કરો</string>

@@ -91,6 +91,8 @@
     <string name="verdict_aria">คำตัดสิน: %1$s</string>
     <string name="party_a">ฝ่าย A</string>
     <string name="party_b">ฝ่าย B</string>
+    <string name="party_c">ฝ่าย C</string>
+    <string name="party_d">ฝ่าย D</string>
     <string name="you">คุณ</string>
     <string name="error_fallback">มีอะไรผิดพลาดนิดหน่อย ลองอีกครั้งนะ</string>
     <string name="error_not_configured">ระบบตัดสินยังไม่พร้อม ลองใหม่ภายหลังนะ</string>
@@ -299,6 +301,10 @@
     <string name="case_judge_now_yes">ใช่ ตัดสินเลย</string>
     <string name="case_judge_expired_confirm">ขอคำตัดสินจากฝั่งของคุณอย่างเดียวไหม? จะใช้คำตัดสิน 1 ครั้ง</string>
     <string name="case_judge_expired_yes">ใช่ ใช้คำตัดสิน 1 ครั้ง</string>
+    <string name="case_side_waiting">กำลังรอ</string>
+    <string name="case_side_answered">ตอบแล้ว</string>
+    <string name="case_judge_answered">ตัดสินจากฝั่งที่ตอบแล้ว</string>
+    <string name="case_judge_answered_confirm">ขอคำตัดสินจากฝั่งที่ตอบแล้วไหม? คำเชิญอื่นจะปิด และคนเหล่านั้นจะตอบไม่ได้แล้ว</string>
     <string name="case_cancel">ยกเลิก</string>
     <string name="case_retry">ลองอีกครั้ง</string>
     <string name="case_failed_body">ได้เครดิตคืนแล้ว ลองใหม่ได้เลย</string>
@@ -307,9 +313,13 @@
     <string name="case_accounts">สิ่งที่แต่ละฝ่ายเล่าให้กรรมการฟัง</string>
     <string name="case_account_a">เรื่องเล่าของฝ่าย A</string>
     <string name="case_account_b">เรื่องเล่าของฝ่าย B</string>
+    <string name="case_account_c">เรื่องเล่าของฝ่าย C</string>
+    <string name="case_account_d">เรื่องเล่าของฝ่าย D</string>
     <string name="case_account_you">เรื่องเล่าของคุณ (%1$s)</string>
     <string name="case_context_a">ฝ่าย A เพิ่มบริบท</string>
     <string name="case_context_b">ฝ่าย B เพิ่มบริบท</string>
+    <string name="case_context_c">ฝ่าย C เพิ่มบริบท</string>
+    <string name="case_context_d">ฝ่าย D เพิ่มบริบท</string>
     <string name="case_context_you">บริบทที่คุณเพิ่ม (%1$s)</string>
     <string name="case_evidence_item">ภาพที่ %1$s แบบที่กรรมการอ่าน</string>
     <string name="case_not_yet">อีกฝ่ายยังไม่ตอบ</string>
@@ -385,6 +395,7 @@
     <string name="home_your_placeholder">มีปัญหาอะไร?</string>
     <string name="home_add_context">เพิ่มรายละเอียด</string>
     <string name="home_add_their_side">เพิ่มฝั่งของเขา</string>
+    <string name="home_add_side">เพิ่มอีกฝั่ง</string>
     <string name="home_remove_their_side">ลบฝั่งของเขา</string>
     <string name="home_send_link">ส่งลิงก์</string>
     <string name="home_clear">ล้าง</string>

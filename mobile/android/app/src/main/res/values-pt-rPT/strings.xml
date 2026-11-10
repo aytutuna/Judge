@@ -93,6 +93,8 @@
     <string name="verdict_aria">Veredicto: %1$s</string>
     <string name="party_a">Parte A</string>
     <string name="party_b">Parte B</string>
+    <string name="party_c">Parte C</string>
+    <string name="party_d">Parte D</string>
     <string name="you">Tu</string>
     <string name="error_fallback">Algo correu mal. Tentas outra vez?</string>
     <string name="error_not_configured">O juiz ainda não está configurado. Tenta mais tarde.</string>
@@ -313,6 +315,10 @@
     <string name="case_judge_now_yes">Sim, julgar já</string>
     <string name="case_judge_expired_confirm">Obter um veredicto só com o teu lado? Isto gasta 1 veredicto.</string>
     <string name="case_judge_expired_yes">Sim, gastar 1 veredicto</string>
+    <string name="case_side_waiting">À espera</string>
+    <string name="case_side_answered">Respondeu</string>
+    <string name="case_judge_answered">Julgar com os lados que responderam</string>
+    <string name="case_judge_answered_confirm">Obter um veredicto com os lados que responderam? Os outros convites fecham e essas pessoas deixam de poder responder.</string>
     <string name="case_cancel">Cancelar</string>
     <string name="case_retry">Tentar outra vez</string>
     <string name="case_failed_body">O teu crédito foi devolvido. Já podes tentar outra vez.</string>
@@ -321,9 +327,13 @@
     <string name="case_accounts">O que cada lado contou aos juízes</string>
     <string name="case_account_a">Relato de Parte A</string>
     <string name="case_account_b">Relato de Parte B</string>
+    <string name="case_account_c">Relato de Parte C</string>
+    <string name="case_account_d">Relato de Parte D</string>
     <string name="case_account_you">O teu relato (%1$s)</string>
     <string name="case_context_a">Parte A acrescentou contexto</string>
     <string name="case_context_b">Parte B acrescentou contexto</string>
+    <string name="case_context_c">Parte C acrescentou contexto</string>
+    <string name="case_context_d">Parte D acrescentou contexto</string>
     <string name="case_context_you">Contexto que acrescentaste (%1$s)</string>
     <string name="case_evidence_item">Imagem %1$s, tal como os juízes a leram</string>
     <string name="case_not_yet">Ainda não respondeu.</string>
@@ -401,6 +411,7 @@
     <string name="home_your_placeholder">Qual é o problema?</string>
     <string name="home_add_context">Acrescentar contexto</string>
     <string name="home_add_their_side">Adicionar o outro lado</string>
+    <string name="home_add_side">Adicionar outro lado</string>
     <string name="home_remove_their_side">Remover o outro lado</string>
     <string name="home_send_link">Enviar um link</string>
     <string name="home_clear">Limpar</string>

@@ -91,6 +91,8 @@
     <string name="verdict_aria">判決：%1$s</string>
     <string name="party_a">當事人A</string>
     <string name="party_b">當事人B</string>
+    <string name="party_c">當事人C</string>
+    <string name="party_d">當事人D</string>
     <string name="you">你</string>
     <string name="error_fallback">出了點問題，可以再試一次嗎？</string>
     <string name="error_not_configured">評審還沒準備好，請稍後再試。</string>
@@ -299,6 +301,10 @@
     <string name="case_judge_now_yes">是，現在判決</string>
     <string name="case_judge_expired_confirm">只根據你的說法判決？這會用掉 1 次判決。</string>
     <string name="case_judge_expired_yes">是，用掉 1 次判決</string>
+    <string name="case_side_waiting">等待中</string>
+    <string name="case_side_answered">已回覆</string>
+    <string name="case_judge_answered">依已回覆的各方判決</string>
+    <string name="case_judge_answered_confirm">現在就依已回覆的各方判決？其餘邀請會關閉，那些人就不能再回覆了。</string>
     <string name="case_cancel">取消</string>
     <string name="case_retry">再試一次</string>
     <string name="case_failed_body">你的額度已退回，現在可以再試一次。</string>
@@ -307,9 +313,13 @@
     <string name="case_accounts">雙方各自對評審說了什麼</string>
     <string name="case_account_a">當事人A的說法</string>
     <string name="case_account_b">當事人B的說法</string>
+    <string name="case_account_c">當事人C的說法</string>
+    <string name="case_account_d">當事人D的說法</string>
     <string name="case_account_you">你的說法（%1$s）</string>
     <string name="case_context_a">當事人A的補充說明</string>
     <string name="case_context_b">當事人B的補充說明</string>
+    <string name="case_context_c">當事人C的補充說明</string>
+    <string name="case_context_d">當事人D的補充說明</string>
     <string name="case_context_you">你的補充說明（%1$s）</string>
     <string name="case_evidence_item">圖片 %1$s（評審讀到的版本）</string>
     <string name="case_not_yet">對方還沒回覆。</string>
@@ -385,6 +395,7 @@
     <string name="home_your_placeholder">怎麼了？</string>
     <string name="home_add_context">補充說明</string>
     <string name="home_add_their_side">新增對方的說法</string>
+    <string name="home_add_side">再新增一方</string>
     <string name="home_remove_their_side">移除對方的說法</string>
     <string name="home_send_link">傳個連結</string>
     <string name="home_clear">清空</string>

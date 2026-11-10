@@ -93,6 +93,8 @@
     <string name="verdict_aria">פסק הדין: %1$s</string>
     <string name="party_a">צד A</string>
     <string name="party_b">צד B</string>
+    <string name="party_c">צד C</string>
+    <string name="party_d">צד D</string>
     <string name="you">את/ה</string>
     <string name="error_fallback">משהו השתבש. אפשר לנסות שוב?</string>
     <string name="error_not_configured">השופט עוד לא מוגדר. אפשר לנסות שוב מאוחר יותר.</string>
@@ -313,6 +315,10 @@
     <string name="case_judge_now_yes">כן, להכריע עכשיו</string>
     <string name="case_judge_expired_confirm">לקבל פסק דין רק לפי הצד שלך? זה עולה פסק דין אחד.</string>
     <string name="case_judge_expired_yes">כן, להשתמש בפסק דין אחד</string>
+    <string name="case_side_waiting">ממתין</string>
+    <string name="case_side_answered">ענה</string>
+    <string name="case_judge_answered">להכריע לפי הצדדים שענו</string>
+    <string name="case_judge_answered_confirm">לקבל פסק דין לפי הצדדים שענו? שאר ההזמנות ייסגרו, והם לא יוכלו עוד לענות.</string>
     <string name="case_cancel">ביטול</string>
     <string name="case_retry">לנסות שוב</string>
     <string name="case_failed_body">הקרדיט חזר לחשבון. אפשר לנסות שוב עכשיו.</string>
@@ -321,9 +327,13 @@
     <string name="case_accounts">מה כל צד סיפר לשופטים</string>
     <string name="case_account_a">הגרסה של צד A</string>
     <string name="case_account_b">הגרסה של צד B</string>
+    <string name="case_account_c">הגרסה של צד C</string>
+    <string name="case_account_d">הגרסה של צד D</string>
     <string name="case_account_you">הגרסה שלך (%1$s)</string>
     <string name="case_context_a">הקשר נוסף מצד A</string>
     <string name="case_context_b">הקשר נוסף מצד B</string>
+    <string name="case_context_c">הקשר נוסף מצד C</string>
+    <string name="case_context_d">הקשר נוסף מצד D</string>
     <string name="case_context_you">ההקשר שהוספת (%1$s)</string>
     <string name="case_evidence_item">תמונה %1$s, כפי שהשופטים קראו אותה</string>
     <string name="case_not_yet">עוד לא התקבלה תשובה.</string>
@@ -401,6 +411,7 @@
     <string name="home_your_placeholder">מה הבעיה?</string>
     <string name="home_add_context">להוסיף הקשר</string>
     <string name="home_add_their_side">להוסיף את הצד השני</string>
+    <string name="home_add_side">להוסיף צד נוסף</string>
     <string name="home_remove_their_side">להסיר את הצד השני</string>
     <string name="home_send_link">לשלוח קישור</string>
     <string name="home_clear">ניקוי</string>

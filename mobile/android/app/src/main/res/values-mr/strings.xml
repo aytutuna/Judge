@@ -92,6 +92,8 @@
     <string name="verdict_aria">निकाल: %1$s</string>
     <string name="party_a">पक्ष A</string>
     <string name="party_b">पक्ष B</string>
+    <string name="party_c">पक्ष C</string>
+    <string name="party_d">पक्ष D</string>
     <string name="you">तुम्ही</string>
     <string name="error_fallback">काहीतरी चुकले. पुन्हा प्रयत्न कराल का?</string>
     <string name="error_not_configured">परीक्षक अजून तयार नाहीत. थोड्या वेळाने पुन्हा प्रयत्न करा.</string>
@@ -306,6 +308,10 @@
     <string name="case_judge_now_yes">हो, आत्ताच निकाल द्या</string>
     <string name="case_judge_expired_confirm">फक्त तुमच्या बाजूवर निकाल हवा? यासाठी 1 निकाल लागेल.</string>
     <string name="case_judge_expired_yes">हो, 1 निकाल वापरा</string>
+    <string name="case_side_waiting">वाट पाहत आहोत</string>
+    <string name="case_side_answered">उत्तर दिले</string>
+    <string name="case_judge_answered">ज्यांनी उत्तर दिले त्यांच्या बाजूंवर निकाल द्या</string>
+    <string name="case_judge_answered_confirm">ज्यांनी उत्तर दिले त्यांच्यावर निकाल हवा? बाकीची निमंत्रणे बंद होतील आणि त्यांना उत्तर देता येणार नाही.</string>
     <string name="case_cancel">रद्द करा</string>
     <string name="case_retry">पुन्हा प्रयत्न करा</string>
     <string name="case_failed_body">तुमचे क्रेडिट परत आले. आता पुन्हा प्रयत्न करू शकता.</string>
@@ -314,9 +320,13 @@
     <string name="case_accounts">प्रत्येक बाजूने परीक्षकांना काय सांगितले</string>
     <string name="case_account_a">पक्ष Aचे म्हणणे</string>
     <string name="case_account_b">पक्ष Bचे म्हणणे</string>
+    <string name="case_account_c">पक्ष Cचे म्हणणे</string>
+    <string name="case_account_d">पक्ष Dचे म्हणणे</string>
     <string name="case_account_you">तुमचे म्हणणे (%1$s)</string>
     <string name="case_context_a">पक्ष Aने जोडलेली माहिती</string>
     <string name="case_context_b">पक्ष Bने जोडलेली माहिती</string>
+    <string name="case_context_c">पक्ष Cने जोडलेली माहिती</string>
+    <string name="case_context_d">पक्ष Dने जोडलेली माहिती</string>
     <string name="case_context_you">तुम्ही जोडलेली माहिती (%1$s)</string>
     <string name="case_evidence_item">फोटो %1$s, परीक्षकांनी वाचला तसा</string>
     <string name="case_not_yet">त्यांनी अजून उत्तर दिलेले नाही.</string>
@@ -393,6 +403,7 @@
     <string name="home_your_placeholder">समस्या काय आहे?</string>
     <string name="home_add_context">माहिती जोडा</string>
     <string name="home_add_their_side">त्यांची बाजू जोडा</string>
+    <string name="home_add_side">आणखी एक बाजू जोडा</string>
     <string name="home_remove_their_side">त्यांची बाजू काढा</string>
     <string name="home_send_link">लिंक पाठवा</string>
     <string name="home_clear">साफ करा</string>

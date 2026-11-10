@@ -92,6 +92,8 @@
     <string name="verdict_aria">ରାୟ: %1$s</string>
     <string name="party_a">ପକ୍ଷ A</string>
     <string name="party_b">ପକ୍ଷ B</string>
+    <string name="party_c">ପକ୍ଷ C</string>
+    <string name="party_d">ପକ୍ଷ D</string>
     <string name="you">ଆପଣ</string>
     <string name="error_fallback">କିଛି ଗଡ଼ବଡ଼ ହେଲା। ପୁଣି ଥରେ ଚେଷ୍ଟା କରିବେ?</string>
     <string name="error_not_configured">ବିଚାରକ ଏବେ ସେଟ୍ ହୋଇନାହାନ୍ତି। ପରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>
@@ -306,6 +308,10 @@
     <string name="case_judge_now_yes">ହଁ, ଏବେ ରାୟ ଦିଅନ୍ତୁ</string>
     <string name="case_judge_expired_confirm">କେବଳ ଆପଣଙ୍କ କଥା ଆଧାରରେ ରାୟ ନେବେ? ଏଥିରେ 1ଟି ରାୟ ଖର୍ଚ୍ଚ ହେବ।</string>
     <string name="case_judge_expired_yes">ହଁ, 1ଟି ରାୟ ଖର୍ଚ୍ଚ କରନ୍ତୁ</string>
+    <string name="case_side_waiting">ଅପେକ୍ଷାରେ</string>
+    <string name="case_side_answered">ଉତ୍ତର ଦେଇଛନ୍ତି</string>
+    <string name="case_judge_answered">ଉତ୍ତର ଦେଇଥିବା ପକ୍ଷଙ୍କ କଥା ଶୁଣି ରାୟ ଦିଅନ୍ତୁ</string>
+    <string name="case_judge_answered_confirm">ଉତ୍ତର ଦେଇଥିବା ପକ୍ଷଙ୍କ ଆଧାରରେ ରାୟ ନେବେ? ଅନ୍ୟ ନିମନ୍ତ୍ରଣ ବନ୍ଦ ହେବ, ସେମାନେ ଆଉ ଉତ୍ତର ଦେଇପାରିବେ ନାହିଁ।</string>
     <string name="case_cancel">ବାତିଲ୍</string>
     <string name="case_retry">ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="case_failed_body">ଆପଣଙ୍କ କ୍ରେଡିଟ୍ ଫେରିଆସିଛି। ଏବେ ପୁଣି ଚେଷ୍ଟା କରିପାରିବେ।</string>
@@ -314,9 +320,13 @@
     <string name="case_accounts">ପ୍ରତ୍ୟେକ ପକ୍ଷ ବିଚାରକମାନଙ୍କୁ କ\'ଣ କହିଲେ</string>
     <string name="case_account_a">ପକ୍ଷ A ଯାହା କହିଲେ</string>
     <string name="case_account_b">ପକ୍ଷ B ଯାହା କହିଲେ</string>
+    <string name="case_account_c">ପକ୍ଷ C ଯାହା କହିଲେ</string>
+    <string name="case_account_d">ପକ୍ଷ D ଯାହା କହିଲେ</string>
     <string name="case_account_you">ଆପଣ ଯାହା କହିଲେ (%1$s)</string>
     <string name="case_context_a">ପକ୍ଷ A ଯୋଡ଼ିଥିବା ବିବରଣୀ</string>
     <string name="case_context_b">ପକ୍ଷ B ଯୋଡ଼ିଥିବା ବିବରଣୀ</string>
+    <string name="case_context_c">ପକ୍ଷ C ଯୋଡ଼ିଥିବା ବିବରଣୀ</string>
+    <string name="case_context_d">ପକ୍ଷ D ଯୋଡ଼ିଥିବା ବିବରଣୀ</string>
     <string name="case_context_you">ଆପଣ ଯୋଡ଼ିଥିବା ବିବରଣୀ (%1$s)</string>
     <string name="case_evidence_item">ଛବି %1$s, ବିଚାରକମାନେ ଯେମିତି ପଢ଼ିଲେ</string>
     <string name="case_not_yet">ସେ ଏଯାଏଁ ଉତ୍ତର ଦେଇନାହାନ୍ତି।</string>
@@ -393,6 +403,7 @@
     <string name="home_your_placeholder">ସମସ୍ୟା କ\'ଣ?</string>
     <string name="home_add_context">ବିବରଣୀ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="home_add_their_side">ତାଙ୍କ କଥା ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="home_add_side">ଆଉ ଏକ ପକ୍ଷ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="home_remove_their_side">ତାଙ୍କ କଥା ହଟାନ୍ତୁ</string>
     <string name="home_send_link">ଲିଙ୍କ୍ ପଠାନ୍ତୁ</string>
     <string name="home_clear">ସଫା କରନ୍ତୁ</string>

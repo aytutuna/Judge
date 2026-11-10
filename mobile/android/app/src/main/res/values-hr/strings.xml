@@ -93,6 +93,8 @@
     <string name="verdict_aria">Presuda: %1$s</string>
     <string name="party_a">Strana A</string>
     <string name="party_b">Strana B</string>
+    <string name="party_c">Strana C</string>
+    <string name="party_d">Strana D</string>
     <string name="you">Ti</string>
     <string name="error_fallback">Nešto je pošlo po zlu. Možeš pokušati ponovno?</string>
     <string name="error_not_configured">Sudac još nije postavljen. Pokušaj ponovno kasnije.</string>
@@ -313,6 +315,10 @@
     <string name="case_judge_now_yes">Da, presudi sada</string>
     <string name="case_judge_expired_confirm">Želiš presudu samo na temelju svoje strane? To troši 1 presudu.</string>
     <string name="case_judge_expired_yes">Da, potroši 1 presudu</string>
+    <string name="case_side_waiting">Čeka se</string>
+    <string name="case_side_answered">Odgovorio/la</string>
+    <string name="case_judge_answered">Presudi na temelju strana koje su odgovorile</string>
+    <string name="case_judge_answered_confirm">Želiš presudu na temelju strana koje su odgovorile? Ostali pozivi se zatvaraju i te osobe više ne mogu odgovoriti.</string>
     <string name="case_cancel">Odustani</string>
     <string name="case_retry">Pokušaj ponovno</string>
     <string name="case_failed_body">Kredit ti je vraćen. Možeš pokušati ponovno.</string>
@@ -321,9 +327,13 @@
     <string name="case_accounts">Što je svaka strana rekla sucima</string>
     <string name="case_account_a">Kako to vidi Strana A</string>
     <string name="case_account_b">Kako to vidi Strana B</string>
+    <string name="case_account_c">Kako to vidi Strana C</string>
+    <string name="case_account_d">Kako to vidi Strana D</string>
     <string name="case_account_you">Kako to vidiš ti (%1$s)</string>
     <string name="case_context_a">Dodatni kontekst: Strana A</string>
     <string name="case_context_b">Dodatni kontekst: Strana B</string>
+    <string name="case_context_c">Dodatni kontekst: Strana C</string>
+    <string name="case_context_d">Dodatni kontekst: Strana D</string>
     <string name="case_context_you">Tvoj dodatni kontekst (%1$s)</string>
     <string name="case_evidence_item">%1$s. slika, onako kako su je suci pročitali</string>
     <string name="case_not_yet">Odgovor još nije stigao.</string>
@@ -401,6 +411,7 @@
     <string name="home_your_placeholder">Što je problem?</string>
     <string name="home_add_context">Dodaj kontekst</string>
     <string name="home_add_their_side">Dodaj drugu stranu</string>
+    <string name="home_add_side">Dodaj još jednu stranu</string>
     <string name="home_remove_their_side">Ukloni drugu stranu</string>
     <string name="home_send_link">Pošalji poveznicu</string>
     <string name="home_clear">Očisti</string>

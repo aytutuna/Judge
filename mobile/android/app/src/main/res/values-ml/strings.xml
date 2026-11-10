@@ -92,6 +92,8 @@
     <string name="verdict_aria">വിധി: %1$s</string>
     <string name="party_a">കക്ഷി A</string>
     <string name="party_b">കക്ഷി B</string>
+    <string name="party_c">കക്ഷി C</string>
+    <string name="party_d">കക്ഷി D</string>
     <string name="you">നിങ്ങൾ</string>
     <string name="error_fallback">എന്തോ പിശക് പറ്റി. ഒന്നുകൂടി ശ്രമിക്കാമോ?</string>
     <string name="error_not_configured">ജഡ്ജിയെ ഇതുവരെ സെറ്റ് ചെയ്തിട്ടില്ല. പിന്നീട് ശ്രമിക്കൂ.</string>
@@ -306,6 +308,10 @@
     <string name="case_judge_now_yes">അതെ, ഇപ്പോൾ വിധിക്കൂ</string>
     <string name="case_judge_expired_confirm">നിങ്ങളുടെ ഭാഗം മാത്രം വെച്ച് വിധി വേണോ? ഇതിന് 1 വിധി ഉപയോഗിക്കും.</string>
     <string name="case_judge_expired_yes">അതെ, 1 വിധി ഉപയോഗിക്കൂ</string>
+    <string name="case_side_waiting">കാത്തിരിക്കുന്നു</string>
+    <string name="case_side_answered">മറുപടി നൽകി</string>
+    <string name="case_judge_answered">മറുപടി നൽകിയവരെ വെച്ച് വിധിക്കൂ</string>
+    <string name="case_judge_answered_confirm">മറുപടി നൽകിയവരെ വെച്ച് വിധി വേണോ? ബാക്കി ക്ഷണങ്ങൾ അടയും, അവർക്ക് പിന്നെ മറുപടി നൽകാനാകില്ല.</string>
     <string name="case_cancel">റദ്ദാക്കൂ</string>
     <string name="case_retry">വീണ്ടും ശ്രമിക്കൂ</string>
     <string name="case_failed_body">നിങ്ങളുടെ ക്രെഡിറ്റ് തിരികെ കിട്ടി. ഇപ്പോൾ വീണ്ടും ശ്രമിക്കാം.</string>
@@ -314,9 +320,13 @@
     <string name="case_accounts">ഓരോ ഭാഗവും ജഡ്ജിമാരോട് പറഞ്ഞത്</string>
     <string name="case_account_a">കക്ഷി A പറഞ്ഞത്</string>
     <string name="case_account_b">കക്ഷി B പറഞ്ഞത്</string>
+    <string name="case_account_c">കക്ഷി C പറഞ്ഞത്</string>
+    <string name="case_account_d">കക്ഷി D പറഞ്ഞത്</string>
     <string name="case_account_you">നിങ്ങൾ പറഞ്ഞത് (%1$s)</string>
     <string name="case_context_a">കക്ഷി A ചേർത്ത വിവരം</string>
     <string name="case_context_b">കക്ഷി B ചേർത്ത വിവരം</string>
+    <string name="case_context_c">കക്ഷി C ചേർത്ത വിവരം</string>
+    <string name="case_context_d">കക്ഷി D ചേർത്ത വിവരം</string>
     <string name="case_context_you">നിങ്ങൾ ചേർത്ത വിവരം (%1$s)</string>
     <string name="case_evidence_item">ചിത്രം %1$s, ജഡ്ജിമാർ വായിച്ച രൂപത്തിൽ</string>
     <string name="case_not_yet">അവർ ഇതുവരെ മറുപടി നൽകിയിട്ടില്ല.</string>
@@ -393,6 +403,7 @@
     <string name="home_your_placeholder">എന്താണ് പ്രശ്നം?</string>
     <string name="home_add_context">വിവരം ചേർക്കൂ</string>
     <string name="home_add_their_side">അവരുടെ ഭാഗം ചേർക്കൂ</string>
+    <string name="home_add_side">മറ്റൊരു ഭാഗം കൂടി ചേർക്കൂ</string>
     <string name="home_remove_their_side">അവരുടെ ഭാഗം നീക്കൂ</string>
     <string name="home_send_link">ലിങ്ക് അയയ്ക്കൂ</string>
     <string name="home_clear">മായ്ക്കൂ</string>

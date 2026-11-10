@@ -91,6 +91,8 @@
     <string name="verdict_aria">Keputusan: %1$s</string>
     <string name="party_a">Pihak A</string>
     <string name="party_b">Pihak B</string>
+    <string name="party_c">Pihak C</string>
+    <string name="party_d">Pihak D</string>
     <string name="you">Anda</string>
     <string name="error_fallback">Ada yang tidak kena. Boleh cuba lagi?</string>
     <string name="error_not_configured">Hakim belum disediakan lagi. Cuba lagi nanti.</string>
@@ -299,6 +301,10 @@
     <string name="case_judge_now_yes">Ya, nilai sekarang</string>
     <string name="case_judge_expired_confirm">Dapatkan keputusan berdasarkan versi anda sahaja? Ini menggunakan 1 keputusan.</string>
     <string name="case_judge_expired_yes">Ya, guna 1 keputusan</string>
+    <string name="case_side_waiting">Menunggu</string>
+    <string name="case_side_answered">Sudah menjawab</string>
+    <string name="case_judge_answered">Nilai dengan pihak yang sudah menjawab</string>
+    <string name="case_judge_answered_confirm">Mahu keputusan daripada pihak yang sudah menjawab? Jemputan lain akan ditutup dan mereka tidak boleh menjawab lagi.</string>
     <string name="case_cancel">Batal</string>
     <string name="case_retry">Cuba lagi</string>
     <string name="case_failed_body">Kredit anda sudah dikembalikan. Anda boleh cuba lagi sekarang.</string>
@@ -307,9 +313,13 @@
     <string name="case_accounts">Apa yang setiap pihak beritahu hakim</string>
     <string name="case_account_a">Cerita Pihak A</string>
     <string name="case_account_b">Cerita Pihak B</string>
+    <string name="case_account_c">Cerita Pihak C</string>
+    <string name="case_account_d">Cerita Pihak D</string>
     <string name="case_account_you">Cerita anda (%1$s)</string>
     <string name="case_context_a">Pihak A menambah konteks</string>
     <string name="case_context_b">Pihak B menambah konteks</string>
+    <string name="case_context_c">Pihak C menambah konteks</string>
+    <string name="case_context_d">Pihak D menambah konteks</string>
     <string name="case_context_you">Konteks yang anda tambah (%1$s)</string>
     <string name="case_evidence_item">Imej %1$s, seperti yang dibaca hakim</string>
     <string name="case_not_yet">Dia belum menjawab lagi.</string>
@@ -385,6 +395,7 @@
     <string name="home_your_placeholder">Apa masalahnya?</string>
     <string name="home_add_context">Tambah konteks</string>
     <string name="home_add_their_side">Tambah versi dia</string>
+    <string name="home_add_side">Tambah satu lagi pihak</string>
     <string name="home_remove_their_side">Buang versi dia</string>
     <string name="home_send_link">Hantar pautan</string>
     <string name="home_clear">Kosongkan</string>

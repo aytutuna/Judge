@@ -91,6 +91,8 @@
     <string name="verdict_aria">판결: %1$s</string>
     <string name="party_a">당사자 A</string>
     <string name="party_b">당사자 B</string>
+    <string name="party_c">당사자 C</string>
+    <string name="party_d">당사자 D</string>
     <string name="you">나</string>
     <string name="error_fallback">문제가 생겼어요. 다시 한번 해 볼까요?</string>
     <string name="error_not_configured">아직 판사가 준비되지 않았어요. 나중에 다시 시도해 주세요.</string>
@@ -299,6 +301,10 @@
     <string name="case_judge_now_yes">네, 지금 판결</string>
     <string name="case_judge_expired_confirm">내 입장만으로 판결을 받을까요? 판결 1회를 사용해요.</string>
     <string name="case_judge_expired_yes">네, 1회 사용</string>
+    <string name="case_side_waiting">기다리는 중</string>
+    <string name="case_side_answered">답변함</string>
+    <string name="case_judge_answered">답변한 입장들로 판결</string>
+    <string name="case_judge_answered_confirm">답변한 입장들로 판결을 받을까요? 나머지 초대는 닫히고 그 사람들은 더 이상 답할 수 없어요.</string>
     <string name="case_cancel">취소</string>
     <string name="case_retry">다시 시도</string>
     <string name="case_failed_body">크레딧을 돌려 드렸어요. 지금 다시 시도할 수 있어요.</string>
@@ -307,9 +313,13 @@
     <string name="case_accounts">양쪽이 판사들에게 한 이야기</string>
     <string name="case_account_a">당사자 A의 이야기</string>
     <string name="case_account_b">당사자 B의 이야기</string>
+    <string name="case_account_c">당사자 C의 이야기</string>
+    <string name="case_account_d">당사자 D의 이야기</string>
     <string name="case_account_you">내 이야기 (%1$s)</string>
     <string name="case_context_a">당사자 A가 추가한 맥락</string>
     <string name="case_context_b">당사자 B가 추가한 맥락</string>
+    <string name="case_context_c">당사자 C가 추가한 맥락</string>
+    <string name="case_context_d">당사자 D가 추가한 맥락</string>
     <string name="case_context_you">내가 추가한 맥락 (%1$s)</string>
     <string name="case_evidence_item">판사들이 읽은 이미지 %1$s</string>
     <string name="case_not_yet">상대방이 아직 답하지 않았어요.</string>
@@ -385,6 +395,7 @@
     <string name="home_your_placeholder">무슨 일이에요?</string>
     <string name="home_add_context">내용 추가</string>
     <string name="home_add_their_side">상대방 입장 추가</string>
+    <string name="home_add_side">입장 하나 더 추가</string>
     <string name="home_remove_their_side">상대방 입장 삭제</string>
     <string name="home_send_link">링크 보내기</string>
     <string name="home_clear">지우기</string>

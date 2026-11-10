@@ -92,6 +92,8 @@
     <string name="verdict_aria">தீர்ப்பு: %1$s</string>
     <string name="party_a">தரப்பு A</string>
     <string name="party_b">தரப்பு B</string>
+    <string name="party_c">தரப்பு C</string>
+    <string name="party_d">தரப்பு D</string>
     <string name="you">நீங்கள்</string>
     <string name="error_fallback">ஏதோ தவறாகிவிட்டது. மீண்டும் முயல்கிறீர்களா?</string>
     <string name="error_not_configured">நடுவர் இன்னும் தயாராகவில்லை. பிறகு முயலுங்கள்.</string>
@@ -306,6 +308,10 @@
     <string name="case_judge_now_yes">ஆம், இப்போதே தீர்ப்பு</string>
     <string name="case_judge_expired_confirm">உங்கள் தரப்பை மட்டும் வைத்துத் தீர்ப்பு வேண்டுமா? இதற்கு 1 தீர்ப்பு செலவாகும்.</string>
     <string name="case_judge_expired_yes">ஆம், 1 தீர்ப்பைச் செலவிடு</string>
+    <string name="case_side_waiting">காத்திருக்கிறது</string>
+    <string name="case_side_answered">பதிலளித்துவிட்டார்</string>
+    <string name="case_judge_answered">பதிலளித்த தரப்புகளை வைத்துத் தீர்ப்பு</string>
+    <string name="case_judge_answered_confirm">பதிலளித்த தரப்புகளை வைத்துத் தீர்ப்பு வேண்டுமா? மற்ற அழைப்புகள் மூடப்படும், அவர்களால் இனி பதில் அளிக்க முடியாது.</string>
     <string name="case_cancel">ரத்துசெய்</string>
     <string name="case_retry">மீண்டும் முயல்க</string>
     <string name="case_failed_body">உங்கள் கிரெடிட் திரும்ப வந்துவிட்டது. இப்போது மீண்டும் முயலலாம்.</string>
@@ -314,9 +320,13 @@
     <string name="case_accounts">ஒவ்வொரு தரப்பும் நடுவர்களிடம் சொன்னது</string>
     <string name="case_account_a">தரப்பு A சொன்னது</string>
     <string name="case_account_b">தரப்பு B சொன்னது</string>
+    <string name="case_account_c">தரப்பு C சொன்னது</string>
+    <string name="case_account_d">தரப்பு D சொன்னது</string>
     <string name="case_account_you">நீங்கள் சொன்னது (%1$s)</string>
     <string name="case_context_a">தரப்பு A சேர்த்த தகவல்</string>
     <string name="case_context_b">தரப்பு B சேர்த்த தகவல்</string>
+    <string name="case_context_c">தரப்பு C சேர்த்த தகவல்</string>
+    <string name="case_context_d">தரப்பு D சேர்த்த தகவல்</string>
     <string name="case_context_you">நீங்கள் சேர்த்த தகவல் (%1$s)</string>
     <string name="case_evidence_item">படம் %1$s, நடுவர்கள் படித்தபடி</string>
     <string name="case_not_yet">மற்றவர் இன்னும் பதில் அளிக்கவில்லை.</string>
@@ -393,6 +403,7 @@
     <string name="home_your_placeholder">என்ன பிரச்சினை?</string>
     <string name="home_add_context">தகவல் சேர்க்கவும்</string>
     <string name="home_add_their_side">மறுதரப்பைச் சேர்க்கவும்</string>
+    <string name="home_add_side">இன்னொரு தரப்பைச் சேர்க்கவும்</string>
     <string name="home_remove_their_side">மறுதரப்பை நீக்கவும்</string>
     <string name="home_send_link">லிங்க் அனுப்புங்க</string>
     <string name="home_clear">அழி</string>

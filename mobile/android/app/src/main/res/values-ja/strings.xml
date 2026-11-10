@@ -91,6 +91,8 @@
     <string name="verdict_aria">判定：%1$s</string>
     <string name="party_a">当事者A</string>
     <string name="party_b">当事者B</string>
+    <string name="party_c">当事者C</string>
+    <string name="party_d">当事者D</string>
     <string name="you">あなた</string>
     <string name="error_fallback">うまくいきませんでした。もう一度お試しください。</string>
     <string name="error_not_configured">審査員の準備がまだできていません。しばらくしてからお試しください。</string>
@@ -299,6 +301,10 @@
     <string name="case_judge_now_yes">いま判定する</string>
     <string name="case_judge_expired_confirm">あなたの言い分だけで判定しますか？　判定1回分を使います。</string>
     <string name="case_judge_expired_yes">判定1回分を使う</string>
+    <string name="case_side_waiting">返事待ち</string>
+    <string name="case_side_answered">回答済み</string>
+    <string name="case_judge_answered">回答した人の言い分で判定する</string>
+    <string name="case_judge_answered_confirm">回答した人の言い分で判定しますか？　ほかの招待は締め切られ、その人たちはもう回答できなくなります。</string>
     <string name="case_cancel">キャンセル</string>
     <string name="case_retry">もう一度試す</string>
     <string name="case_failed_body">クレジットは戻りました。いますぐもう一度試せます。</string>
@@ -307,9 +313,13 @@
     <string name="case_accounts">それぞれが審査員に伝えたこと</string>
     <string name="case_account_a">当事者Aの言い分</string>
     <string name="case_account_b">当事者Bの言い分</string>
+    <string name="case_account_c">当事者Cの言い分</string>
+    <string name="case_account_d">当事者Dの言い分</string>
     <string name="case_account_you">あなたの言い分（%1$s）</string>
     <string name="case_context_a">当事者Aの補足</string>
     <string name="case_context_b">当事者Bの補足</string>
+    <string name="case_context_c">当事者Cの補足</string>
+    <string name="case_context_d">当事者Dの補足</string>
     <string name="case_context_you">あなたの補足（%1$s）</string>
     <string name="case_evidence_item">画像%1$s（審査員が読んだ形）</string>
     <string name="case_not_yet">まだ返事がありません。</string>
@@ -385,6 +395,7 @@
     <string name="home_your_placeholder">何があったの？</string>
     <string name="home_add_context">補足を追加</string>
     <string name="home_add_their_side">相手の言い分を追加</string>
+    <string name="home_add_side">別の立場を追加</string>
     <string name="home_remove_their_side">相手の言い分を削除</string>
     <string name="home_send_link">リンクを送る</string>
     <string name="home_clear">クリア</string>

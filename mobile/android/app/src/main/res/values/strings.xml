@@ -92,6 +92,8 @@
     <string name="verdict_aria">Verdict: %1$s</string>
     <string name="party_a">Party A</string>
     <string name="party_b">Party B</string>
+    <string name="party_c">Party C</string>
+    <string name="party_d">Party D</string>
     <string name="you">You</string>
     <string name="error_fallback">Something went wrong. Mind trying again?</string>
     <string name="error_not_configured">The judge isn\'t set up yet. Try again later.</string>
@@ -306,6 +308,10 @@
     <string name="case_judge_now_yes">Yes, judge it now</string>
     <string name="case_judge_expired_confirm">Get a verdict on your side alone? This uses 1 verdict.</string>
     <string name="case_judge_expired_yes">Yes, use 1 verdict</string>
+    <string name="case_side_waiting">Waiting</string>
+    <string name="case_side_answered">Answered</string>
+    <string name="case_judge_answered">Judge with the sides that answered</string>
+    <string name="case_judge_answered_confirm">Get a verdict from the sides that have answered? The other invites close and those people can\'t answer anymore.</string>
     <string name="case_cancel">Cancel</string>
     <string name="case_retry">Try again</string>
     <string name="case_failed_body">Your credit is back. You can try again now.</string>
@@ -314,9 +320,13 @@
     <string name="case_accounts">What each side told the judges</string>
     <string name="case_account_a">Party A\'s account</string>
     <string name="case_account_b">Party B\'s account</string>
+    <string name="case_account_c">Party C\'s account</string>
+    <string name="case_account_d">Party D\'s account</string>
     <string name="case_account_you">Your account (%1$s)</string>
     <string name="case_context_a">Party A added context</string>
     <string name="case_context_b">Party B added context</string>
+    <string name="case_context_c">Party C added context</string>
+    <string name="case_context_d">Party D added context</string>
     <string name="case_context_you">Context you added (%1$s)</string>
     <string name="case_evidence_item">Image %1$s, as the judges read it</string>
     <string name="case_not_yet">They haven\'t answered yet.</string>
@@ -393,6 +403,7 @@
     <string name="home_your_placeholder">What\'s the problem?</string>
     <string name="home_add_context">Add context</string>
     <string name="home_add_their_side">Add their side</string>
+    <string name="home_add_side">Add another side</string>
     <string name="home_remove_their_side">Remove their side</string>
     <string name="home_send_link">Send them a link</string>
     <string name="home_clear">Clear</string>

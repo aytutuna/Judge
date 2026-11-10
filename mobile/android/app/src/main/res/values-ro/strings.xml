@@ -93,6 +93,8 @@
     <string name="verdict_aria">Verdict: %1$s</string>
     <string name="party_a">Partea A</string>
     <string name="party_b">Partea B</string>
+    <string name="party_c">Partea C</string>
+    <string name="party_d">Partea D</string>
     <string name="you">Tu</string>
     <string name="error_fallback">Ceva n-a mers. Mai încerci o dată?</string>
     <string name="error_not_configured">Judecătorul nu e configurat încă. Încearcă mai târziu.</string>
@@ -313,6 +315,10 @@
     <string name="case_judge_now_yes">Da, judecă acum</string>
     <string name="case_judge_expired_confirm">Vrei un verdict doar pe partea ta? Asta folosește 1 verdict.</string>
     <string name="case_judge_expired_yes">Da, folosește 1 verdict</string>
+    <string name="case_side_waiting">Așteaptă</string>
+    <string name="case_side_answered">A răspuns</string>
+    <string name="case_judge_answered">Judecă cu părțile care au răspuns</string>
+    <string name="case_judge_answered_confirm">Vrei o hotărâre cu părțile care au răspuns? Celelalte invitații se închid și acele persoane nu vor mai putea răspunde.</string>
     <string name="case_cancel">Anulează</string>
     <string name="case_retry">Încearcă din nou</string>
     <string name="case_failed_body">Ți-ai primit creditul înapoi. Poți încerca din nou acum.</string>
@@ -321,9 +327,13 @@
     <string name="case_accounts">Ce le-a spus fiecare parte judecătorilor</string>
     <string name="case_account_a">Varianta Părții A</string>
     <string name="case_account_b">Varianta Părții B</string>
+    <string name="case_account_c">Varianta Părții C</string>
+    <string name="case_account_d">Varianta Părții D</string>
     <string name="case_account_you">Varianta ta (%1$s)</string>
     <string name="case_context_a">Context adăugat de Partea A</string>
     <string name="case_context_b">Context adăugat de Partea B</string>
+    <string name="case_context_c">Context adăugat de Partea C</string>
+    <string name="case_context_d">Context adăugat de Partea D</string>
     <string name="case_context_you">Context adăugat de tine (%1$s)</string>
     <string name="case_evidence_item">Imaginea %1$s, așa cum au citit-o judecătorii</string>
     <string name="case_not_yet">Încă n-a răspuns.</string>
@@ -401,6 +411,7 @@
     <string name="home_your_placeholder">Care e problema?</string>
     <string name="home_add_context">Adaugă context</string>
     <string name="home_add_their_side">Adaugă cealaltă parte</string>
+    <string name="home_add_side">Adaugă încă o parte</string>
     <string name="home_remove_their_side">Elimină cealaltă parte</string>
     <string name="home_send_link">Trimite un link</string>
     <string name="home_clear">Șterge</string>

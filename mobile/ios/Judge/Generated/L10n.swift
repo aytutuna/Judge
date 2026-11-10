@@ -233,6 +233,8 @@ enum L10n {
     static func verdictAria(_ lang: AppLang, label: String) -> String { format("verdictAria", lang, label) }
     static func partyA(_ lang: AppLang) -> String { string("party.a", lang) }
     static func partyB(_ lang: AppLang) -> String { string("party.b", lang) }
+    static func partyC(_ lang: AppLang) -> String { string("party.c", lang) }
+    static func partyD(_ lang: AppLang) -> String { string("party.d", lang) }
     static func you(_ lang: AppLang) -> String { string("you", lang) }
     static func errorFallback(_ lang: AppLang) -> String { string("errorFallback", lang) }
     static func errorNotConfigured(_ lang: AppLang) -> String { string("error.not_configured", lang) }
@@ -429,6 +431,10 @@ enum L10n {
     static func caseJudgeNowYes(_ lang: AppLang) -> String { string("case.judgeNow.yes", lang) }
     static func caseJudgeExpiredConfirm(_ lang: AppLang) -> String { string("case.judgeExpired.confirm", lang) }
     static func caseJudgeExpiredYes(_ lang: AppLang) -> String { string("case.judgeExpired.yes", lang) }
+    static func caseSideWaiting(_ lang: AppLang) -> String { string("case.side.waiting", lang) }
+    static func caseSideAnswered(_ lang: AppLang) -> String { string("case.side.answered", lang) }
+    static func caseJudgeAnswered(_ lang: AppLang) -> String { string("case.judgeAnswered", lang) }
+    static func caseJudgeAnsweredConfirm(_ lang: AppLang) -> String { string("case.judgeAnswered.confirm", lang) }
     static func caseCancel(_ lang: AppLang) -> String { string("case.cancel", lang) }
     static func caseRetry(_ lang: AppLang) -> String { string("case.retry", lang) }
     static func caseFailedBody(_ lang: AppLang) -> String { string("case.failedBody", lang) }
@@ -437,9 +443,13 @@ enum L10n {
     static func caseAccounts(_ lang: AppLang) -> String { string("case.accounts", lang) }
     static func caseAccountA(_ lang: AppLang) -> String { string("case.accountA", lang) }
     static func caseAccountB(_ lang: AppLang) -> String { string("case.accountB", lang) }
+    static func caseAccountC(_ lang: AppLang) -> String { string("case.accountC", lang) }
+    static func caseAccountD(_ lang: AppLang) -> String { string("case.accountD", lang) }
     static func caseAccountYou(_ lang: AppLang, label: String) -> String { format("case.accountYou", lang, label) }
     static func caseContextA(_ lang: AppLang) -> String { string("case.contextA", lang) }
     static func caseContextB(_ lang: AppLang) -> String { string("case.contextB", lang) }
+    static func caseContextC(_ lang: AppLang) -> String { string("case.contextC", lang) }
+    static func caseContextD(_ lang: AppLang) -> String { string("case.contextD", lang) }
     static func caseContextYou(_ lang: AppLang, label: String) -> String { format("case.contextYou", lang, label) }
     static func caseEvidenceItem(_ lang: AppLang, n: String) -> String { format("case.evidenceItem", lang, n) }
     static func caseNotYet(_ lang: AppLang) -> String { string("case.notYet", lang) }
@@ -513,6 +523,7 @@ enum L10n {
     static func homeYourPlaceholder(_ lang: AppLang) -> String { string("home.yourPlaceholder", lang) }
     static func homeAddContext(_ lang: AppLang) -> String { string("home.addContext", lang) }
     static func homeAddTheirSide(_ lang: AppLang) -> String { string("home.addTheirSide", lang) }
+    static func homeAddSide(_ lang: AppLang) -> String { string("home.addSide", lang) }
     static func homeRemoveTheirSide(_ lang: AppLang) -> String { string("home.removeTheirSide", lang) }
     static func homeSendLink(_ lang: AppLang) -> String { string("home.sendLink", lang) }
     static func homeClear(_ lang: AppLang) -> String { string("home.clear", lang) }
@@ -903,6 +914,8 @@ enum L10n {
         "trial.refereePrefix",
         "party.a",
         "party.b",
+        "party.c",
+        "party.d",
         "you",
         "errorFallback",
         "error.not_configured",
@@ -1080,6 +1093,10 @@ enum L10n {
         "case.judgeNow.yes",
         "case.judgeExpired.confirm",
         "case.judgeExpired.yes",
+        "case.side.waiting",
+        "case.side.answered",
+        "case.judgeAnswered",
+        "case.judgeAnswered.confirm",
         "case.cancel",
         "case.retry",
         "case.failedBody",
@@ -1088,8 +1105,12 @@ enum L10n {
         "case.accounts",
         "case.accountA",
         "case.accountB",
+        "case.accountC",
+        "case.accountD",
         "case.contextA",
         "case.contextB",
+        "case.contextC",
+        "case.contextD",
         "case.notYet",
         "case.answered",
         "case.judgingAlone",
@@ -1152,6 +1173,7 @@ enum L10n {
         "home.yourPlaceholder",
         "home.addContext",
         "home.addTheirSide",
+        "home.addSide",
         "home.removeTheirSide",
         "home.sendLink",
         "home.clear",

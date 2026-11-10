@@ -94,6 +94,8 @@
     <string name="verdict_aria">Verdikt: %1$s</string>
     <string name="party_a">Strana A</string>
     <string name="party_b">Strana B</string>
+    <string name="party_c">Strana C</string>
+    <string name="party_d">Strana D</string>
     <string name="you">Ty</string>
     <string name="error_fallback">Niečo sa pokazilo. Skúsiš to znova?</string>
     <string name="error_not_configured">Sudca ešte nie je nastavený. Skús to neskôr.</string>
@@ -320,6 +322,10 @@
     <string name="case_judge_now_yes">Áno, rozsúdiť hneď</string>
     <string name="case_judge_expired_confirm">Chceš verdikt len podľa svojej verzie? Použije sa 1 verdikt.</string>
     <string name="case_judge_expired_yes">Áno, použiť 1 verdikt</string>
+    <string name="case_side_waiting">Čaká sa</string>
+    <string name="case_side_answered">Odpovedal(a)</string>
+    <string name="case_judge_answered">Rozsúdiť podľa strán, ktoré odpovedali</string>
+    <string name="case_judge_answered_confirm">Chceš verdikt podľa strán, ktoré odpovedali? Ostatné pozvánky sa uzavrú a títo ľudia už nebudú môcť odpovedať.</string>
     <string name="case_cancel">Zrušiť</string>
     <string name="case_retry">Skúsiť znova</string>
     <string name="case_failed_body">Kredit sa ti vrátil. Môžeš to skúsiť znova.</string>
@@ -328,9 +334,13 @@
     <string name="case_accounts">Čo každá strana povedala sudcom</string>
     <string name="case_account_a">Ako to vidí Strana A</string>
     <string name="case_account_b">Ako to vidí Strana B</string>
+    <string name="case_account_c">Ako to vidí Strana C</string>
+    <string name="case_account_d">Ako to vidí Strana D</string>
     <string name="case_account_you">Tvoja verzia (%1$s)</string>
     <string name="case_context_a">Strana A doplnila kontext</string>
     <string name="case_context_b">Strana B doplnila kontext</string>
+    <string name="case_context_c">Strana C doplnila kontext</string>
+    <string name="case_context_d">Strana D doplnila kontext</string>
     <string name="case_context_you">Tvoj doplnený kontext (%1$s)</string>
     <string name="case_evidence_item">Obrázok %1$s tak, ako ho čítajú sudcovia</string>
     <string name="case_not_yet">Druhá strana ešte neodpovedala.</string>
@@ -409,6 +419,7 @@
     <string name="home_your_placeholder">V čom je problém?</string>
     <string name="home_add_context">Pridať kontext</string>
     <string name="home_add_their_side">Pridať verziu druhej strany</string>
+    <string name="home_add_side">Pridať ďalšiu stranu</string>
     <string name="home_remove_their_side">Odstrániť verziu druhej strany</string>
     <string name="home_send_link">Poslať odkaz</string>
     <string name="home_clear">Vymazať</string>

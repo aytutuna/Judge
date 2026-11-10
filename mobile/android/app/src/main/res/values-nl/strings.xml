@@ -92,6 +92,8 @@
     <string name="verdict_aria">Uitspraak: %1$s</string>
     <string name="party_a">Partij A</string>
     <string name="party_b">Partij B</string>
+    <string name="party_c">Partij C</string>
+    <string name="party_d">Partij D</string>
     <string name="you">Jij</string>
     <string name="error_fallback">Er ging iets mis. Wil je het nog eens proberen?</string>
     <string name="error_not_configured">De rechter is nog niet ingesteld. Probeer het later nog eens.</string>
@@ -306,6 +308,10 @@
     <string name="case_judge_now_yes">Ja, nu beoordelen</string>
     <string name="case_judge_expired_confirm">Een uitspraak op alleen jouw kant? Dit kost 1 uitspraak.</string>
     <string name="case_judge_expired_yes">Ja, gebruik 1 uitspraak</string>
+    <string name="case_side_waiting">Wacht</string>
+    <string name="case_side_answered">Heeft geantwoord</string>
+    <string name="case_judge_answered">Beoordelen met de kanten die geantwoord hebben</string>
+    <string name="case_judge_answered_confirm">Een uitspraak van de kanten die geantwoord hebben? De andere uitnodigingen sluiten en die mensen kunnen niet meer antwoorden.</string>
     <string name="case_cancel">Annuleren</string>
     <string name="case_retry">Opnieuw proberen</string>
     <string name="case_failed_body">Je credit is terug. Je kunt het nu opnieuw proberen.</string>
@@ -314,9 +320,13 @@
     <string name="case_accounts">Wat elke kant de rechters vertelde</string>
     <string name="case_account_a">Het verhaal van Partij A</string>
     <string name="case_account_b">Het verhaal van Partij B</string>
+    <string name="case_account_c">Het verhaal van Partij C</string>
+    <string name="case_account_d">Het verhaal van Partij D</string>
     <string name="case_account_you">Jouw verhaal (%1$s)</string>
     <string name="case_context_a">Aanvulling van Partij A</string>
     <string name="case_context_b">Aanvulling van Partij B</string>
+    <string name="case_context_c">Aanvulling van Partij C</string>
+    <string name="case_context_d">Aanvulling van Partij D</string>
     <string name="case_context_you">Jouw aanvulling (%1$s)</string>
     <string name="case_evidence_item">Afbeelding %1$s, zoals de rechters die lazen</string>
     <string name="case_not_yet">De ander heeft nog niet geantwoord.</string>
@@ -393,6 +403,7 @@
     <string name="home_your_placeholder">Wat is het probleem?</string>
     <string name="home_add_context">Iets aanvullen</string>
     <string name="home_add_their_side">Kant van de ander toevoegen</string>
+    <string name="home_add_side">Nog een kant toevoegen</string>
     <string name="home_remove_their_side">Kant van de ander verwijderen</string>
     <string name="home_send_link">Stuur een link</string>
     <string name="home_clear">Wissen</string>
