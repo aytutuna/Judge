@@ -10,7 +10,9 @@ import { fromRow } from "../components/shell/useHistory";
 import type { CaseView } from "../lib/case-types";
 import { parseDraft } from "../lib/draft";
 import type { HistoryRow } from "../lib/history-types";
-import { t } from "../lib/i18n";
+import { loadLocales, t } from "../lib/i18n";
+import { ENABLED, PARTY_LABELS } from "../lib/langs";
+import { partyLabel } from "../lib/names";
 import { joinSides, manySidesOk } from "../lib/sides";
 import type { PartyId, VerdictResult } from "../lib/types";
 import { OWNER_NAMES, caseView } from "./ui-case-fixtures";
@@ -303,5 +305,17 @@ describe("owner case page with a link per side", () => {
     expect(out).toContain(t("en", "case.judgeAnswered"));
     expect(out).toContain(t("en", "case.judgeAnswered.confirm").replace(/'/g, "&#x27;"));
     expect(owner(view({ canJudgeAnswered: false }))).toContain(t("en", "case.judgeNow"));
+  });
+});
+
+describe("party labels", () => {
+  it("C and D read like A and B in every language", async () => {
+    await loadLocales();
+    for (const lang of ENABLED) {
+      const word = (PARTY_LABELS[lang] ?? PARTY_LABELS.en)[0].slice(0, -1);
+      expect(partyLabel(lang, "a"), lang).toBe(`${word}A`);
+      expect(partyLabel(lang, "c"), lang).toBe(`${word}C`);
+      expect(partyLabel(lang, "d"), lang).toBe(`${word}D`);
+    }
   });
 });
