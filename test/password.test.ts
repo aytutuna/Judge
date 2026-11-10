@@ -375,7 +375,13 @@ describe("POST /api/v1/me/password", () => {
       args: ["credential", "race@example.com"],
     });
     expect(Number(rs.rows[0].n)).toBe(1);
-    expect((await signInPassword("race@example.com", "second password")).status).toBe(200);
+    // Which request reaches the writer first depends on timing; the later
+    // one wins, and only its password works.
+    const signIns = [
+      (await signInPassword("race@example.com", "first password")).status,
+      (await signInPassword("race@example.com", "second password")).status,
+    ];
+    expect(signIns.filter((s) => s === 200)).toHaveLength(1);
   });
 
   it("limits attempts per account", async () => {
