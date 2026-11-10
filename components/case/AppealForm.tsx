@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useId, useMemo, useState } from "react";
+import { apiFetch } from "@/lib/api-fetch";
 import type { Entitlement } from "@/lib/account-types";
 import type { CaseAppealView, CaseView } from "@/lib/case-types";
 import { MAX_APPEAL_CHARS, MAX_EVIDENCE_PER_APPEAL, MIN_APPEAL_CHARS } from "@/lib/case-types";
@@ -94,7 +95,7 @@ export function useAppealDraft<R extends { entitlement?: Entitlement }>({
     });
     try {
       if (prepare) await prepare();
-      const res = await fetch(endpoint, {
+      const res = await apiFetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json", "Idempotency-Key": keyFor(body) },
         body: claim ? JSON.stringify({ ...(JSON.parse(body) as object), claim }) : body,

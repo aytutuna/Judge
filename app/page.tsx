@@ -11,6 +11,7 @@ import { ENDING_MAX_MS } from "@/components/court/story";
 import { AppShell } from "@/components/shell/AppShell";
 import { refreshHistory, useHistory } from "@/components/shell/useHistory";
 import styles from "@/components/home/page.module.css";
+import { apiFetch } from "@/lib/api-fetch";
 import { MAX_EVIDENCE_PER_SIDE, type CreateCaseResponse } from "@/lib/case-types";
 import { saveCaseNames } from "@/lib/case-names-store";
 import { firstNameOf } from "@/lib/originals-types";
@@ -257,7 +258,7 @@ export default function Home() {
    */
   async function awaitVerdict(accepted: VerdictAcceptedResponse, signal: AbortSignal): Promise<VerdictResponse | null> {
     const outcome = await pollVerdict(accepted.id, {
-      fetch: (url, init) => fetch(url, init),
+      fetch: (url, init) => apiFetch(url, init),
       sleep: wakefulSleep,
       ownerToken: accepted.owner_token ?? null,
       firstDelayMs: accepted.pollAfterMs,
@@ -305,7 +306,7 @@ export default function Home() {
     setChecking(true);
     let found: ClarifyQuestion[] = [];
     try {
-      const res = await fetch("/api/v1/clarify", {
+      const res = await apiFetch("/api/v1/clarify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ argument: input.argument, lang }),
@@ -362,7 +363,7 @@ export default function Home() {
     const waitUntil = Date.now() + IN_PROGRESS_WAIT_MS;
     try {
       for (;;) {
-        const res = await fetch("/api/v1/verdict", {
+        const res = await apiFetch("/api/v1/verdict", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -431,7 +432,7 @@ export default function Home() {
     });
     const key = keyFor(body);
     try {
-      const res = await fetch("/api/v1/cases", {
+      const res = await apiFetch("/api/v1/cases", {
         method: "POST",
         headers: { "Content-Type": "application/json", "Idempotency-Key": key },
         body,

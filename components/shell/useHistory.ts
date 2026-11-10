@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useSyncExternalStore } from "react";
+import { apiFetch } from "@/lib/api-fetch";
 import type { CaseView } from "@/lib/case-types";
 import {
   addAnswered,
@@ -201,7 +202,7 @@ function emit(next: ServerState | null): void {
 
 async function fetchPage(cursor: string | null): Promise<HistoryResponse> {
   const q = `limit=${PAGE}${cursor ? `&cursor=${encodeURIComponent(cursor)}` : ""}`;
-  const res = await fetch(`/api/v1/me/history?${q}`, { cache: "no-store" });
+  const res = await apiFetch(`/api/v1/me/history?${q}`, { cache: "no-store" });
   if (!res.ok) throw new Error(String(res.status));
   return (await res.json()) as HistoryResponse;
 }
@@ -312,7 +313,7 @@ function forget(id: string): void {
  * should be tried again on a later page load (throttled, offline). */
 async function lookUp(id: string): Promise<boolean> {
   const path = `/api/v1/verdicts/${encodeURIComponent(id)}`;
-  const poll = await fetch(path, { cache: "no-store" });
+  const poll = await apiFetch(path, { cache: "no-store" });
   if (poll.status === 404) {
     forget(id);
     return true;
@@ -328,7 +329,7 @@ async function lookUp(id: string): Promise<boolean> {
     return false;
   }
   // Ready or removed: the writer's view has the names and the date.
-  const res = await fetch(`${path}/mine`, { cache: "no-store", headers: ownerHeaders(loadOwnerToken(id)) });
+  const res = await apiFetch(`${path}/mine`, { cache: "no-store", headers: ownerHeaders(loadOwnerToken(id)) });
   if (res.status === 404) {
     forget(id);
     return true;
@@ -349,7 +350,7 @@ async function lookUp(id: string): Promise<boolean> {
 async function lookUpAnswered(row: HistoryRow): Promise<boolean> {
   const claim = loadClaim(row.id);
   if (!row.inviteToken) return true;
-  const res = await fetch(`/api/v1/respond/${row.inviteToken}`, {
+  const res = await apiFetch(`/api/v1/respond/${row.inviteToken}`, {
     cache: "no-store",
     headers: claim ? { "Respondent-Claim": claim } : {},
   });

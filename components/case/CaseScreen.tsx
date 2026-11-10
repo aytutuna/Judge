@@ -11,6 +11,7 @@ import type {
   InviteResponse,
   PartyLetter,
 } from "@/lib/case-types";
+import { apiFetch } from "@/lib/api-fetch";
 import { forgetCaseNames, saveCaseNames, useCaseNames } from "@/lib/case-names-store";
 import { trackApiError } from "@/lib/analytics/client";
 import { apiErrorMessage, t, tWithDate, type Key, type Lang } from "@/lib/i18n";
@@ -563,7 +564,7 @@ export function CaseScreen({ id }: { id: string }) {
     setBusy(true);
     setActionError(null);
     try {
-      const res = await fetch(`${base}${path}`, init);
+      const res = await apiFetch(`${base}${path}`, init);
       const json: unknown = await res.json().catch(() => null);
       if (!res.ok) {
         trackApiError(json, res.status);
@@ -580,11 +581,11 @@ export function CaseScreen({ id }: { id: string }) {
     }
   }
 
-  async function judge(onlyMine: boolean) {
+  async function judge(mode: "only_mine" | "answered") {
     const json = (await post("/judge", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(onlyMine ? { mode: "only_mine" } : {}),
+      body: JSON.stringify({ mode }),
     })) as CaseResponse | null;
     if (json?.case) setView(json.case);
   }
@@ -656,8 +657,8 @@ export function CaseScreen({ id }: { id: string }) {
         busy={busy}
         actionError={actionError}
         resetDone={resetDone}
-        onJudgeNow={() => void judge(true)}
-        onRetry={() => void judge(false)}
+        onJudgeNow={() => void judge(view.canJudgeAnswered ? "answered" : "only_mine")}
+        onRetry={() => void judge("only_mine")}
         onReset={() => void reset()}
         onRemove={() => void remove()}
         appeal={appeal}

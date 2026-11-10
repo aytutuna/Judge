@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { apiFetch } from "@/lib/api-fetch";
 import { apiErrorMessage, t, type Lang } from "@/lib/i18n";
 import type { MineResponse, OriginalPayload, OriginalStatus, RemovalResponse } from "@/lib/originals-types";
 import { forgetOwnerToken, ownerHeaders } from "@/lib/owner-store";
@@ -24,7 +25,7 @@ export function useMine(id: string, token: string | null | undefined, signedIn: 
     const ctrl = new AbortController();
     void (async () => {
       try {
-        const res = await fetch(`/api/v1/verdicts/${encodeURIComponent(id)}/mine`, {
+        const res = await apiFetch(`/api/v1/verdicts/${encodeURIComponent(id)}/mine`, {
           cache: "no-store",
           signal: ctrl.signal,
           headers: { Accept: "application/json", ...ownerHeaders(token) },
@@ -153,7 +154,7 @@ export function OwnerPanel({
     setBusy(true);
     setError(null);
     try {
-      const res = await fetch(`/api/v1/verdicts/${encodeURIComponent(mine.id)}/${path}`, {
+      const res = await apiFetch(`/api/v1/verdicts/${encodeURIComponent(mine.id)}/${path}`, {
         method: "POST",
         headers: { "Content-Type": "application/json", ...ownerHeaders(token) },
         body: JSON.stringify(body),

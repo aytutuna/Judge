@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { apiFetch } from "@/lib/api-fetch";
 import type { Lang } from "@/lib/i18n";
 import { ownerHeaders } from "@/lib/owner-store";
 import type { NameMapping, StoredVerdictResponse, VerdictAppealView, VerdictResult } from "@/lib/types";
@@ -25,7 +26,7 @@ const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve,
  * null for anyone but the writer, undefined when it could not be read. */
 async function fetchRounds(id: string, token: string | null, signal: AbortSignal): Promise<Rounds | null | undefined> {
   try {
-    const res = await fetch(`/api/v1/verdicts/${encodeURIComponent(id)}`, {
+    const res = await apiFetch(`/api/v1/verdicts/${encodeURIComponent(id)}`, {
       cache: "no-store",
       signal,
       headers: { Accept: "application/json", ...ownerHeaders(token) },
@@ -118,7 +119,7 @@ export function useVerdictAppeal({
     if (!judging) return;
     const ctrl = new AbortController();
     void (async () => {
-      const outcome = await pollVerdict(judging, { fetch: (url, init) => fetch(url, init), sleep, signal: ctrl.signal });
+      const outcome = await pollVerdict(judging, { fetch: (url, init) => apiFetch(url, init), sleep, signal: ctrl.signal });
       if (ctrl.signal.aborted) return;
       if (outcome.kind === "ready") {
         const next = { id: outcome.body.id, result: outcome.body.result, createdAt: outcome.body.createdAt };
@@ -138,7 +139,7 @@ export function useVerdictAppeal({
   }, [focusTick]);
 
   const claimFirst = async () => {
-    const res = await fetch(`/api/v1/verdicts/${encodeURIComponent(id)}/claim`, {
+    const res = await apiFetch(`/api/v1/verdicts/${encodeURIComponent(id)}/claim`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...ownerHeaders(token) },
       body: "{}",

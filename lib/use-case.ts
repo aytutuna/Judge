@@ -1,3 +1,4 @@
+import { apiFetch } from "@/lib/api-fetch";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CaseView } from "./case-types";
 
@@ -81,7 +82,7 @@ export function useCase(
       let res: Response;
       try {
         const extra = headerKey ? (JSON.parse(headerKey) as Record<string, string>) : {};
-        res = await fetch(url, { cache: "no-store", signal: ctrl.signal, headers: { Accept: "application/json", ...extra } });
+        res = await apiFetch(url, { cache: "no-store", signal: ctrl.signal, headers: { Accept: "application/json", ...extra } });
       } catch {
         if (ctrl.signal.aborted) return;
         failures.current += 1;

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
+import { apiFetch } from "@/lib/api-fetch";
 import type { AppealResponse, CaseRemovalResponse, CaseView, RespondResponse } from "@/lib/case-types";
 import { MAX_EVIDENCE_PER_SIDE } from "@/lib/case-types";
 import { forgetCaseNames, saveCaseNames, useCaseNames } from "@/lib/case-names-store";
@@ -127,7 +128,7 @@ function useRespondForm(
       ...(shownName ? { displayName: shownName } : {}),
     };
     try {
-      const res = await fetch(`/api/v1/respond/${encodeURIComponent(token)}`, {
+      const res = await apiFetch(`/api/v1/respond/${encodeURIComponent(token)}`, {
         method: "POST",
         headers: { "Content-Type": "application/json", "Idempotency-Key": keyFor(JSON.stringify(payload)) },
         body: JSON.stringify({ ...payload, ...(check ? { turnstileToken: check } : {}) }),
@@ -506,7 +507,7 @@ export function RespondScreen({ token }: { token: string }) {
   async function removeSide() {
     setRemoveError(null);
     try {
-      const res = await fetch(`${base}/removal`, {
+      const res = await apiFetch(`${base}/removal`, {
         method: "POST",
         headers: { "Content-Type": "application/json", ...(claimHeaders ?? {}) },
         body: JSON.stringify({ confirm: "remove", ...(claim ? { claim } : {}) }),
@@ -528,7 +529,7 @@ export function RespondScreen({ token }: { token: string }) {
     if (!caseId || !claim || !view) return;
     setKeepError(null);
     try {
-      const res = await fetch(`/api/v1/cases/${encodeURIComponent(caseId)}/claim`, {
+      const res = await apiFetch(`/api/v1/cases/${encodeURIComponent(caseId)}/claim`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ claim }),

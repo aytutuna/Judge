@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useMemo, useState } from "react";
+import { apiFetch } from "@/lib/api-fetch";
 import type { SideResponse } from "@/lib/case-types";
 import { MAX_EVIDENCE_PER_SIDE } from "@/lib/case-types";
 import { trackApiError } from "@/lib/analytics/client";
@@ -50,7 +51,7 @@ export function useSideDraft({
     setError(null);
     const body = JSON.stringify({ text: trimmed, ...(evidence.tokens.length ? { evidence: evidence.tokens } : {}) });
     try {
-      const res = await fetch(endpoint, {
+      const res = await apiFetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json", "Idempotency-Key": keyFor(body) },
         body,

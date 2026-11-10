@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useState } from "react";
+import { apiFetch } from "@/lib/api-fetch";
 import type { CaseResponse, CaseView } from "@/lib/case-types";
 import { apiErrorMessage, t, type Lang } from "@/lib/i18n";
 import type { CaseOriginalsResponse } from "@/lib/originals-types";
@@ -22,7 +23,7 @@ export function useCaseOriginals(
     void (async () => {
       try {
         const extra = headerKey ? (JSON.parse(headerKey) as Record<string, string>) : {};
-        const res = await fetch(`${base}/originals`, {
+        const res = await apiFetch(`${base}/originals`, {
           cache: "no-store",
           signal: ctrl.signal,
           headers: { Accept: "application/json", ...extra },
@@ -92,7 +93,7 @@ export function CaseNames({
     setError(null);
     setSaved(false);
     try {
-      const res = await fetch(`${base}/display`, {
+      const res = await apiFetch(`${base}/display`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json", ...(headers ?? {}) },
         body: JSON.stringify({ ...body, ...patch }),
