@@ -687,6 +687,7 @@ const sk: Locale = {
     "unavailable.cta": "Prejsť na Judge",
     "error.removed": "Toto bolo odstránené. Odkaz už nefunguje.",
     "error.names_unavailable": "Mená sa teraz nedajú uložiť. Skús to neskôr.",
+    "error.update_required": "Tento prípad má viac ako dve strany. Aktualizuj aplikáciu, aby si ho otvoril.",
     "verdict.remove": "Odstrániť tento verdikt",
     "verdict.remove.confirm":
       "Odstrániť svoj text, mená a zobrazované mená? Odkaz na zdieľanie a jeho náhľadový obrázok sa prestanú načítavať pre všetkých (náhľady, ktoré už boli poslané v chatoch, sa môžu zobrazovať, kým ich tieto aplikácie neobnovia). Nedá sa to vrátiť späť.",

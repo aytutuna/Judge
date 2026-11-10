@@ -693,6 +693,7 @@ const de: Locale = {
     "unavailable.cta": "Zu Judge",
     "error.removed": "Das wurde entfernt. Der Link funktioniert nicht mehr.",
     "error.names_unavailable": "Namen können gerade nicht gespeichert werden. Versuch es später noch mal.",
+    "error.update_required": "Dieser Fall hat mehr als zwei Seiten. Aktualisiere die App, um ihn zu öffnen.",
     "verdict.remove": "Dieses Urteil entfernen",
     "verdict.remove.confirm":
       "Was du geschrieben hast, die Namen und die Anzeigenamen entfernen? Der geteilte Link und sein Vorschaubild laden dann für niemanden mehr (Vorschauen, die schon in Chats gepostet wurden, können sichtbar bleiben, bis diese Apps sie aktualisieren). Das lässt sich nicht rückgängig machen.",

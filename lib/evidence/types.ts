@@ -8,7 +8,10 @@ import type { EvidenceKind, NameMapping } from "@/lib/types";
 export type VerifiedEvidence = { kind: EvidenceKind; transcript: string };
 
 /** Who a token was issued to. */
-export type EvidenceAudience = { type: "user"; userId: string } | { type: "respondent"; caseId: string };
+export type EvidenceAudience =
+  | { type: "user"; userId: string }
+  /** `party` is left out for side B (every token already issued stays valid). */
+  | { type: "respondent"; caseId: string; party?: "c" | "d" };
 
 /** A persisted name fingerprint of a case. */
 export type KnownPerson = { label: string; key: string };
@@ -43,4 +46,4 @@ export type AnonymizedSubmission = {
   people: KnownPerson[];
 };
 
-export type EvidenceGroup = { party: "a" | "b" | null; idPrefix: string; items: VerifiedEvidence[] };
+export type EvidenceGroup = { party: "a" | "b" | "c" | "d" | null; idPrefix: string; items: VerifiedEvidence[] };

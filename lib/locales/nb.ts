@@ -686,6 +686,7 @@ const nb: Locale = {
     "unavailable.cta": "Gå til Judge",
     "error.removed": "Dette er fjernet. Lenken virker ikke lenger.",
     "error.names_unavailable": "Navn kan ikke lagres akkurat nå. Prøv igjen senere.",
+    "error.update_required": "Denne saken har mer enn to sider. Oppdater appen for å åpne den.",
     "verdict.remove": "Fjern denne dommen",
     "verdict.remove.confirm":
       "Vil du fjerne det du skrev, navnene og visningsnavnene? Delingslenken slutter å virke, og forhåndsvisningsbildet vises ikke lenger for noen (forhåndsvisninger som allerede er lagt ut i chatter, kan fortsatt vises til appene oppdaterer dem). Dette kan ikke angres.",

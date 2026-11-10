@@ -687,6 +687,7 @@ const id: Locale = {
     "unavailable.cta": "Ke Judge",
     "error.removed": "Ini sudah dihapus. Tautannya sudah tidak berfungsi.",
     "error.names_unavailable": "Nama belum bisa disimpan sekarang. Coba lagi nanti.",
+    "error.update_required": "Kasus ini punya lebih dari dua pihak. Perbarui aplikasi untuk membukanya.",
     "verdict.remove": "Hapus putusan ini",
     "verdict.remove.confirm":
       "Hapus tulisanmu, nama-nama, dan nama tampilannya? Tautan berbagi dan gambar pratinjaunya tidak akan bisa dimuat lagi oleh siapa pun (pratinjau yang sudah terkirim di chat mungkin masih terlihat sampai aplikasinya memperbaruinya). Ini tidak bisa dibatalkan.",

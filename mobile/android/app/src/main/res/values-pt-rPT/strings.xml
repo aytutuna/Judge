@@ -448,6 +448,7 @@
     <string name="removed_cta">Tira a tua própria teima</string>
     <string name="error_removed">Isto foi removido. O link já não funciona.</string>
     <string name="error_names_unavailable">Não é possível guardar os nomes agora. Tenta mais tarde.</string>
+    <string name="error_update_required">Este caso tem mais de dois lados. Atualiza a app para o abrir.</string>
     <string name="verdict_remove">Remover este veredicto</string>
     <string name="verdict_remove_confirm">Remover o que escreveste, os nomes e os nomes a mostrar? O link de partilha e a imagem de pré-visualização deixam de abrir para toda a gente (as pré-visualizações já publicadas em conversas podem continuar a aparecer até essas apps as atualizarem). Isto não pode ser desfeito.</string>
     <string name="verdict_remove_yes">Sim, remover</string>

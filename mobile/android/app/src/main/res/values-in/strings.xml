@@ -432,6 +432,7 @@
     <string name="removed_cta">Tuntaskan perdebatanmu sendiri</string>
     <string name="error_removed">Ini sudah dihapus. Tautannya sudah tidak berfungsi.</string>
     <string name="error_names_unavailable">Nama belum bisa disimpan sekarang. Coba lagi nanti.</string>
+    <string name="error_update_required">Kasus ini punya lebih dari dua pihak. Perbarui aplikasi untuk membukanya.</string>
     <string name="verdict_remove">Hapus putusan ini</string>
     <string name="verdict_remove_confirm">Hapus tulisanmu, nama-nama, dan nama tampilannya? Tautan berbagi dan gambar pratinjaunya tidak akan bisa dimuat lagi oleh siapa pun (pratinjau yang sudah terkirim di chat mungkin masih terlihat sampai aplikasinya memperbaruinya). Ini tidak bisa dibatalkan.</string>
     <string name="verdict_remove_yes">Ya, hapus</string>

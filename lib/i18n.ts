@@ -683,6 +683,7 @@ const en = {
   "unavailable.cta": "Go to Judge",
   "error.removed": "This was removed. Its link no longer works.",
   "error.names_unavailable": "Names can't be saved right now. Try again later.",
+  "error.update_required": "This case has more than two sides. Update the app to open it.",
   "verdict.remove": "Remove this verdict",
   "verdict.remove.confirm":
     "Remove what you wrote, the names and the display names? The share link and its preview image stop loading for everyone (previews already posted in chats may still show until those apps refresh them). This can't be undone.",
@@ -1088,6 +1089,7 @@ export const ERROR_KEY_BY_CODE: Partial<Record<string, Key>> = {
   anonymize_failed: "error.anonymize_failed",
   removed: "error.removed",
   names_unavailable: "error.names_unavailable",
+  update_required: "error.update_required",
   age_blocked: "error.age_blocked",
   age_unconfirmed: "error.age_unconfirmed",
   password_wrong: "error.password_wrong",

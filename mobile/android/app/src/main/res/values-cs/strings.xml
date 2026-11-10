@@ -456,6 +456,7 @@
     <string name="removed_cta">Nech rozsoudit svůj spor</string>
     <string name="error_removed">Tohle bylo odstraněno. Odkaz už nefunguje.</string>
     <string name="error_names_unavailable">Jména teď nejde uložit. Zkus to později.</string>
+    <string name="error_update_required">Tento případ má více než dvě strany. Aktualizuj aplikaci, abys ho otevřel.</string>
     <string name="verdict_remove">Odstranit tento verdikt</string>
     <string name="verdict_remove_confirm">Odstranit tvůj text, jména i zobrazovaná jména? Sdílený odkaz a jeho náhledový obrázek se přestanou načítat pro všechny (náhledy, které už byly vložené do chatů, se můžou zobrazovat dál, dokud je tyto aplikace neobnoví). Tohle nejde vrátit.</string>
     <string name="verdict_remove_yes">Ano, odstranit</string>

@@ -440,6 +440,7 @@
     <string name="removed_cta">Få avgjort din egen diskusjon</string>
     <string name="error_removed">Dette er fjernet. Lenken virker ikke lenger.</string>
     <string name="error_names_unavailable">Navn kan ikke lagres akkurat nå. Prøv igjen senere.</string>
+    <string name="error_update_required">Denne saken har mer enn to sider. Oppdater appen for å åpne den.</string>
     <string name="verdict_remove">Fjern denne dommen</string>
     <string name="verdict_remove_confirm">Vil du fjerne det du skrev, navnene og visningsnavnene? Delingslenken slutter å virke, og forhåndsvisningsbildet vises ikke lenger for noen (forhåndsvisninger som allerede er lagt ut i chatter, kan fortsatt vises til appene oppdaterer dem). Dette kan ikke angres.</string>
     <string name="verdict_remove_yes">Ja, fjern den</string>

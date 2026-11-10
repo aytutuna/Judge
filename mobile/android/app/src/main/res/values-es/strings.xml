@@ -448,6 +448,7 @@
     <string name="removed_cta">Resuelve tu propia discusión</string>
     <string name="error_removed">Esto se ha eliminado. Su enlace ya no funciona.</string>
     <string name="error_names_unavailable">Ahora mismo no se pueden guardar los nombres. Inténtalo más tarde.</string>
+    <string name="error_update_required">Este caso tiene más de dos partes. Actualiza la app para abrirlo.</string>
     <string name="verdict_remove">Eliminar este veredicto</string>
     <string name="verdict_remove_confirm">¿Eliminar lo que escribiste, los nombres y los nombres visibles? El enlace para compartir y su imagen de vista previa dejarán de cargarse para todos (las vistas previas ya publicadas en chats pueden seguir viéndose hasta que esas apps las actualicen). No se puede deshacer.</string>
     <string name="verdict_remove_yes">Sí, eliminarlo</string>

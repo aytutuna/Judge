@@ -687,6 +687,7 @@ const ptPT: Locale = {
     "unavailable.cta": "Ir para o Judge",
     "error.removed": "Isto foi removido. O link já não funciona.",
     "error.names_unavailable": "Não é possível guardar os nomes agora. Tenta mais tarde.",
+    "error.update_required": "Este caso tem mais de dois lados. Atualiza a app para o abrir.",
     "verdict.remove": "Remover este veredicto",
     "verdict.remove.confirm":
       "Remover o que escreveste, os nomes e os nomes a mostrar? O link de partilha e a imagem de pré-visualização deixam de abrir para toda a gente (as pré-visualizações já publicadas em conversas podem continuar a aparecer até essas apps as atualizarem). Isto não pode ser desfeito.",

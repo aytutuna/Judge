@@ -693,6 +693,7 @@ const tr: Locale = {
     "unavailable.cta": "Judge'a git",
     "error.removed": "Bu kaldırıldı. Bağlantısı artık çalışmıyor.",
     "error.names_unavailable": "İsimler şu an kaydedilemiyor. Daha sonra tekrar dene.",
+    "error.update_required": "Bu davada ikiden fazla taraf var. Açmak için uygulamayı güncelle.",
     "verdict.remove": "Bu kararı kaldır",
     "verdict.remove.confirm":
       "Yazdıkların, isimler ve görünen adlar kaldırılsın mı? Paylaşım bağlantısı ve önizleme görseli herkes için açılmaz olur (sohbetlerde önceden paylaşılmış önizlemeler, o uygulamalar yenileyene kadar görünmeye devam edebilir). Bu geri alınamaz.",

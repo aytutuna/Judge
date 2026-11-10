@@ -456,6 +456,7 @@
     <string name="removed_cta">Розсудити свою суперечку</string>
     <string name="error_removed">Це видалено. Посилання більше не працює.</string>
     <string name="error_names_unavailable">Зараз не вдається зберегти імена. Спробуй пізніше.</string>
+    <string name="error_update_required">У цій справі більше двох сторін. Онови застосунок, щоб відкрити її.</string>
     <string name="verdict_remove">Видалити цей вердикт</string>
     <string name="verdict_remove_confirm">Видалити написане тобою, імена й відображувані імена? Посилання для поширення та його зображення-прев’ю перестануть відкриватися для всіх (прев’ю, які вже надіслали в чати, можуть показуватися, доки ці застосунки їх не оновлять). Цю дію не можна скасувати.</string>
     <string name="verdict_remove_yes">Так, видалити</string>

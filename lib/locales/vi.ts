@@ -686,6 +686,7 @@ const vi: Locale = {
     "unavailable.cta": "Đến Judge",
     "error.removed": "Nội dung này đã bị gỡ. Liên kết không còn hoạt động.",
     "error.names_unavailable": "Hiện chưa lưu được tên. Thử lại sau nhé.",
+    "error.update_required": "Vụ này có hơn hai bên. Hãy cập nhật ứng dụng để mở.",
     "verdict.remove": "Gỡ phán quyết này",
     "verdict.remove.confirm":
       "Gỡ nội dung bạn viết, các tên và tên hiển thị? Liên kết chia sẻ và ảnh xem trước sẽ không tải được nữa với mọi người (các bản xem trước đã đăng trong đoạn chat có thể vẫn hiện cho đến khi ứng dụng làm mới). Không thể hoàn tác.",

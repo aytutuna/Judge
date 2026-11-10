@@ -688,6 +688,7 @@ const da: Locale = {
     "unavailable.cta": "Gå til Judge",
     "error.removed": "Den er fjernet. Linket virker ikke længere.",
     "error.names_unavailable": "Navne kan ikke gemmes lige nu. Prøv igen senere.",
+    "error.update_required": "Denne sag har mere end to sider. Opdater appen for at åbne den.",
     "verdict.remove": "Fjern denne dom",
     "verdict.remove.confirm":
       "Vil du fjerne det, du skrev, navnene og de viste navne? Delingslinket og dets forhåndsvisning holder op med at virke for alle (forhåndsvisninger, der allerede er sendt i chats, kan stadig blive vist, indtil de apps opdaterer dem). Det kan ikke fortrydes.",

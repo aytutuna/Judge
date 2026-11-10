@@ -440,6 +440,7 @@
     <string name="removed_cta">Leg je eigen discussie voor</string>
     <string name="error_removed">Dit is verwijderd. De link werkt niet meer.</string>
     <string name="error_names_unavailable">Namen kunnen nu niet worden opgeslagen. Probeer het later opnieuw.</string>
+    <string name="error_update_required">Deze zaak heeft meer dan twee kanten. Werk de app bij om hem te openen.</string>
     <string name="verdict_remove">Deze uitspraak verwijderen</string>
     <string name="verdict_remove_confirm">Wat je schreef, de namen en de weergavenamen verwijderen? De deellink en de previewafbeelding laden voor niemand meer (previews die al in chats zijn gedeeld, kunnen zichtbaar blijven tot die apps ze vernieuwen). Dit kan niet ongedaan worden gemaakt.</string>
     <string name="verdict_remove_yes">Ja, verwijderen</string>

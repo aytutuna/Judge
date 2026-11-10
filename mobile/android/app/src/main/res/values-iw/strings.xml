@@ -448,6 +448,7 @@
     <string name="removed_cta">להכריע בוויכוח משלך</string>
     <string name="error_removed">זה הוסר. הקישור כבר לא עובד.</string>
     <string name="error_names_unavailable">אי אפשר לשמור שמות כרגע. אפשר לנסות שוב מאוחר יותר.</string>
+    <string name="error_update_required">בתיק הזה יש יותר משני צדדים. עדכנו את האפליקציה כדי לפתוח אותו.</string>
     <string name="verdict_remove">הסרת פסק הדין</string>
     <string name="verdict_remove_confirm">להסיר את מה שכתבת, את השמות ואת שמות התצוגה? קישור השיתוף ותמונת התצוגה המקדימה שלו יפסיקו להיטען לכולם (תצוגות מקדימות שכבר פורסמו בצ\'אטים עשויות להמשיך להופיע עד שהאפליקציות האלה ירעננו אותן). אי אפשר לבטל את זה.</string>
     <string name="verdict_remove_yes">כן, להסיר</string>

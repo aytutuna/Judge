@@ -693,6 +693,7 @@ const ms: Locale = {
     "unavailable.cta": "Pergi ke Judge",
     "error.removed": "Ini sudah dibuang. Pautannya tidak lagi berfungsi.",
     "error.names_unavailable": "Nama tidak dapat disimpan sekarang. Cuba lagi nanti.",
+    "error.update_required": "Kes ini mempunyai lebih daripada dua pihak. Kemas kini apl untuk membukanya.",
     "verdict.remove": "Buang keputusan ini",
     "verdict.remove.confirm":
       "Buang apa yang anda tulis, nama-nama dan nama paparan? Pautan kongsi dan imej pratontonnya akan berhenti dimuatkan untuk semua orang (pratonton yang sudah disiarkan dalam sembang mungkin masih kelihatan sehingga aplikasi itu menyegarkannya). Tindakan ini tidak boleh dibatalkan.",

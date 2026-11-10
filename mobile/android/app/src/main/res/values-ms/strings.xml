@@ -432,6 +432,7 @@
     <string name="removed_cta">Selesaikan pertikaian anda sendiri</string>
     <string name="error_removed">Ini sudah dibuang. Pautannya tidak lagi berfungsi.</string>
     <string name="error_names_unavailable">Nama tidak dapat disimpan sekarang. Cuba lagi nanti.</string>
+    <string name="error_update_required">Kes ini mempunyai lebih daripada dua pihak. Kemas kini apl untuk membukanya.</string>
     <string name="verdict_remove">Buang keputusan ini</string>
     <string name="verdict_remove_confirm">Buang apa yang anda tulis, nama-nama dan nama paparan? Pautan kongsi dan imej pratontonnya akan berhenti dimuatkan untuk semua orang (pratonton yang sudah disiarkan dalam sembang mungkin masih kelihatan sehingga aplikasi itu menyegarkannya). Tindakan ini tidak boleh dibatalkan.</string>
     <string name="verdict_remove_yes">Ya, buang</string>

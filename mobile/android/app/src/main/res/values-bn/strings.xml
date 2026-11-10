@@ -440,6 +440,7 @@
     <string name="removed_cta">আপনার নিজের তর্কের ফয়সালা করুন</string>
     <string name="error_removed">এটা সরিয়ে ফেলা হয়েছে। এর লিংক আর কাজ করে না।</string>
     <string name="error_names_unavailable">এই মুহূর্তে নাম সেভ করা যাচ্ছে না। পরে আবার চেষ্টা করুন।</string>
+    <string name="error_update_required">এই কেসে দুইয়ের বেশি পক্ষ আছে। খুলতে অ্যাপ আপডেট করুন।</string>
     <string name="verdict_remove">এই রায়টা সরিয়ে ফেলুন</string>
     <string name="verdict_remove_confirm">আপনার লেখা, নামগুলো আর প্রদর্শিত নামগুলো সরিয়ে ফেলবেন? শেয়ার লিংক আর তার প্রিভিউ ছবি সবার জন্য খোলা বন্ধ হয়ে যাবে (চ্যাটে আগেই পোস্ট হওয়া প্রিভিউ সেই অ্যাপগুলো রিফ্রেশ না করা পর্যন্ত দেখা যেতে পারে)। এটা আর ফেরানো যাবে না।</string>
     <string name="verdict_remove_yes">হ্যাঁ, সরিয়ে ফেলুন</string>

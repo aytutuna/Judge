@@ -692,6 +692,7 @@ const hu: Locale = {
     "unavailable.cta": "Irány a Judge",
     "error.removed": "Ezt eltávolították. A linkje már nem működik.",
     "error.names_unavailable": "A neveket most nem lehet menteni. Próbáld újra később.",
+    "error.update_required": "Ebben az ügyben kettőnél több fél van. Frissítsd az appot a megnyitáshoz.",
     "verdict.remove": "Ítélet eltávolítása",
     "verdict.remove.confirm":
       "Eltávolítod, amit írtál, a neveket és a megjelenített neveket? A megosztási link és az előnézeti képe senkinek sem töltődik be többé (a csetekben már kiküldött előnézetek még látszhatnak, amíg az adott app nem frissíti őket). Ez nem vonható vissza.",

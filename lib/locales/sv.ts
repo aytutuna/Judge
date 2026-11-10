@@ -686,6 +686,7 @@ const sv: Locale = {
     "unavailable.cta": "Gå till Judge",
     "error.removed": "Det här har tagits bort. Länken fungerar inte längre.",
     "error.names_unavailable": "Namn kan inte sparas just nu. Försök igen senare.",
+    "error.update_required": "Det här fallet har fler än två sidor. Uppdatera appen för att öppna det.",
     "verdict.remove": "Ta bort den här domen",
     "verdict.remove.confirm":
       "Ta bort det du skrev, namnen och visningsnamnen? Delningslänken och dess förhandsbild laddas inte längre för någon (förhandsvisningar som redan delats i chattar kan synas tills apparna uppdaterar dem). Det går inte att ångra.",

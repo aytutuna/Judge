@@ -41,6 +41,9 @@ export const API_ERROR_STATUS = {
   removed: 410,
   /** A display-name write while this server has no originals key. */
   names_unavailable: 503,
+  /** A case with three or four sides, opened by an app that does not send
+   * the Judge-Sides header (older builds): it would label the sides wrongly. */
+  update_required: 426,
   /** The account belongs to someone under 18 (POST /api/v1/me/age). */
   age_blocked: 403,
   /** Starting a verdict or case before confirming the account holder is 18+. */

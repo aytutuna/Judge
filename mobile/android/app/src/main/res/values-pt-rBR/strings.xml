@@ -448,6 +448,7 @@
     <string name="removed_cta">Resolva a sua discussão</string>
     <string name="error_removed">Isto foi removido. O link não funciona mais.</string>
     <string name="error_names_unavailable">Não dá para salvar nomes agora. Tente de novo mais tarde.</string>
+    <string name="error_update_required">Este caso tem mais de dois lados. Atualize o app para abri-lo.</string>
     <string name="verdict_remove">Remover este veredito</string>
     <string name="verdict_remove_confirm">Remover o que você escreveu, os nomes e os nomes de exibição? O link de compartilhamento e a imagem de prévia param de carregar para todo mundo (prévias já postadas em conversas podem continuar aparecendo até esses apps atualizarem). Não dá para desfazer.</string>
     <string name="verdict_remove_yes">Sim, remover</string>

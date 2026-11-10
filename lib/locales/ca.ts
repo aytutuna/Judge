@@ -692,6 +692,7 @@ const ca: Locale = {
     "unavailable.cta": "Ves a Judge",
     "error.removed": "Això s'ha eliminat. El seu enllaç ja no funciona.",
     "error.names_unavailable": "Ara mateix no es poden desar els noms. Torna-ho a provar més tard.",
+    "error.update_required": "Aquest cas té més de dues parts. Actualitza l'aplicació per obrir-lo.",
     "verdict.remove": "Elimina aquest veredicte",
     "verdict.remove.confirm":
       "Vols eliminar el que vas escriure, els noms i els noms visibles? L'enllaç per compartir i la imatge de previsualització deixaran de carregar-se per a tothom (les previsualitzacions ja publicades en xats poden continuar apareixent fins que aquestes apps les actualitzin). No es pot desfer.",

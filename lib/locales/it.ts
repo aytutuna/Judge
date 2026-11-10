@@ -692,6 +692,7 @@ const it: Locale = {
     "unavailable.cta": "Vai su Judge",
     "error.removed": "È stato rimosso. Il suo link non funziona più.",
     "error.names_unavailable": "Al momento non è possibile salvare i nomi. Riprova più tardi.",
+    "error.update_required": "Questo caso ha più di due parti. Aggiorna l'app per aprirlo.",
     "verdict.remove": "Rimuovi questo verdetto",
     "verdict.remove.confirm":
       "Vuoi rimuovere quello che hai scritto, i nomi e i nomi visualizzati? Il link di condivisione e la sua immagine di anteprima smetteranno di caricarsi per tutti (le anteprime già pubblicate nelle chat potrebbero restare visibili finché quelle app non le aggiornano). Non si può annullare.",

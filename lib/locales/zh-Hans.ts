@@ -645,6 +645,7 @@ const zhHans: Locale = {
     "unavailable.cta": "前往 Judge",
     "error.removed": "已被删除，链接已失效。",
     "error.names_unavailable": "暂时无法保存名字，请稍后再试。",
+    "error.update_required": "这个案件有两方以上。请更新应用后再打开。",
     "verdict.remove": "删除这份裁决",
     "verdict.remove.confirm":
       "删除你写的内容、名字和显示名称？分享链接及其预览图将对所有人失效（已经发到聊天里的预览，在这些应用刷新前可能仍会显示）。此操作无法撤销。",

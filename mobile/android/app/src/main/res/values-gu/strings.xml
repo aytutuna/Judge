@@ -440,6 +440,7 @@
     <string name="removed_cta">તમારા વિવાદનો ફેંસલો કરાવો</string>
     <string name="error_removed">આ દૂર કરાયું છે. એની લિંક હવે ચાલતી નથી.</string>
     <string name="error_names_unavailable">અત્યારે નામ સેવ થઈ શકતાં નથી. પછીથી પ્રયાસ કરો.</string>
+    <string name="error_update_required">આ કેસમાં બે કરતાં વધુ પક્ષ છે. ખોલવા માટે એપ અપડેટ કરો.</string>
     <string name="verdict_remove">આ ચુકાદો દૂર કરો</string>
     <string name="verdict_remove_confirm">તમે લખેલું, નામ અને ડિસ્પ્લે નામ દૂર કરવાં છે? શેર લિંક અને એની પ્રીવ્યૂ ઇમેજ બધા માટે ખૂલતી બંધ થઈ જશે (ચૅટમાં પહેલેથી મુકાયેલા પ્રીવ્યૂ, એ ઍપ રિફ્રેશ ન કરે ત્યાં સુધી દેખાઈ શકે). આ પાછું વાળી નહીં શકાય.</string>
     <string name="verdict_remove_yes">હા, દૂર કરો</string>

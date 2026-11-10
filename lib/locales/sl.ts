@@ -688,6 +688,7 @@ const sl: Locale = {
     "unavailable.cta": "Pojdi na Judge",
     "error.removed": "To je odstranjeno. Povezava ne deluje več.",
     "error.names_unavailable": "Imen trenutno ni mogoče shraniti. Poskusi pozneje.",
+    "error.update_required": "Ta primer ima več kot dve strani. Posodobi aplikacijo, da ga odpreš.",
     "verdict.remove": "Odstrani to razsodbo",
     "verdict.remove.confirm":
       "Želiš odstraniti napisano besedilo, imena in prikazna imena? Povezava za deljenje in njena slika za predogled se nehata nalagati za vse (predogledi, ki so že objavljeni v klepetih, so lahko še vidni, dokler jih te aplikacije ne osvežijo). Tega ni mogoče razveljaviti.",

@@ -448,6 +448,7 @@
     <string name="removed_cta">Lămurește-ți și tu disputa</string>
     <string name="error_removed">Asta a fost eliminat. Linkul nu mai funcționează.</string>
     <string name="error_names_unavailable">Numele nu pot fi salvate acum. Încearcă mai târziu.</string>
+    <string name="error_update_required">Acest caz are mai mult de două părți. Actualizează aplicația ca să-l deschizi.</string>
     <string name="verdict_remove">Elimină acest verdict</string>
     <string name="verdict_remove_confirm">Elimini ce ai scris, numele și numele afișate? Linkul de distribuire și imaginea de previzualizare nu se mai încarcă pentru nimeni (previzualizările deja postate în conversații pot apărea în continuare până când acele aplicații le reîmprospătează). Acțiunea nu poate fi anulată.</string>
     <string name="verdict_remove_yes">Da, elimină-l</string>

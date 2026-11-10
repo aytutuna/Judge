@@ -472,6 +472,7 @@
     <string name="removed_cta">احسم خلافك أنت</string>
     <string name="error_removed">تم حذف هذا. رابطه لم يعد يعمل.</string>
     <string name="error_names_unavailable">لا يمكن حفظ الأسماء الآن. حاول لاحقًا.</string>
+    <string name="error_update_required">هذه القضية فيها أكثر من طرفين. حدّث التطبيق لفتحها.</string>
     <string name="verdict_remove">حذف هذا الحكم</string>
     <string name="verdict_remove_confirm">هل تريد حذف ما كتبته والأسماء وأسماء العرض؟ سيتوقف رابط المشاركة وصورة معاينته عن العمل للجميع (المعاينات المنشورة مسبقًا في المحادثات قد تظل ظاهرة حتى تحدّثها تلك التطبيقات). لا يمكن التراجع عن ذلك.</string>
     <string name="verdict_remove_yes">نعم، احذفه</string>

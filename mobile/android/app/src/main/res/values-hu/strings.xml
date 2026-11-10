@@ -440,6 +440,7 @@
     <string name="removed_cta">Dönts el te is egy vitát</string>
     <string name="error_removed">Ezt eltávolították. A linkje már nem működik.</string>
     <string name="error_names_unavailable">A neveket most nem lehet menteni. Próbáld újra később.</string>
+    <string name="error_update_required">Ebben az ügyben kettőnél több fél van. Frissítsd az appot a megnyitáshoz.</string>
     <string name="verdict_remove">Ítélet eltávolítása</string>
     <string name="verdict_remove_confirm">Eltávolítod, amit írtál, a neveket és a megjelenített neveket? A megosztási link és az előnézeti képe senkinek sem töltődik be többé (a csetekben már kiküldött előnézetek még látszhatnak, amíg az adott app nem frissíti őket). Ez nem vonható vissza.</string>
     <string name="verdict_remove_yes">Igen, eltávolítom</string>

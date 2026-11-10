@@ -440,6 +440,7 @@
     <string name="removed_cta">Ratkaise oma kiistasi</string>
     <string name="error_removed">Tämä on poistettu. Sen linkki ei enää toimi.</string>
     <string name="error_names_unavailable">Nimiä ei voi tallentaa juuri nyt. Yritä myöhemmin uudelleen.</string>
+    <string name="error_update_required">Tässä jutussa on yli kaksi osapuolta. Päivitä sovellus avataksesi sen.</string>
     <string name="verdict_remove">Poista tämä tuomio</string>
     <string name="verdict_remove_confirm">Poistetaanko kirjoittamasi teksti, nimet ja näyttönimet? Jakolinkki ja sen esikatselukuva lakkaavat latautumasta kaikille (keskusteluihin jo jaetut esikatselut voivat näkyä, kunnes sovellukset päivittävät ne). Tätä ei voi perua.</string>
     <string name="verdict_remove_yes">Kyllä, poista</string>

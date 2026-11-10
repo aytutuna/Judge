@@ -432,6 +432,7 @@
     <string name="removed_cta">自分の揉めごとも判定してもらう</string>
     <string name="error_removed">これは削除されました。リンクはもう使えません。</string>
     <string name="error_names_unavailable">いまは名前を保存できません。しばらくしてからお試しください。</string>
+    <string name="error_update_required">このケースには3人以上の立場があります。開くにはアプリを更新してください。</string>
     <string name="verdict_remove">この判定を削除</string>
     <string name="verdict_remove_confirm">書いた内容、名前、表示名を削除しますか？　シェア用リンクとプレビュー画像は、誰が開いても表示されなくなります（チャットにすでに投稿されたプレビューは、そのアプリが更新するまで表示されることがあります）。この操作は取り消せません。</string>
     <string name="verdict_remove_yes">削除する</string>

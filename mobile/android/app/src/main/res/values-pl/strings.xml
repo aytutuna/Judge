@@ -456,6 +456,7 @@
     <string name="removed_cta">Rozstrzygnij własny spór</string>
     <string name="error_removed">To zostało usunięte. Link już nie działa.</string>
     <string name="error_names_unavailable">Nie można teraz zapisać imion. Spróbuj później.</string>
+    <string name="error_update_required">Ta sprawa ma więcej niż dwie strony. Zaktualizuj aplikację, żeby ją otworzyć.</string>
     <string name="verdict_remove">Usuń ten werdykt</string>
     <string name="verdict_remove_confirm">Usunąć twój tekst, imiona i nazwy wyświetlane? Link do udostępniania i jego obrazek podglądu przestaną się wczytywać dla wszystkich (podglądy wysłane już na czatach mogą być widoczne, dopóki te aplikacje ich nie odświeżą). Tego nie da się cofnąć.</string>
     <string name="verdict_remove_yes">Tak, usuń</string>

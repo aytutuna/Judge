@@ -456,6 +456,7 @@
     <string name="removed_cta">Rozsúď svoj vlastný spor</string>
     <string name="error_removed">Toto bolo odstránené. Odkaz už nefunguje.</string>
     <string name="error_names_unavailable">Mená sa teraz nedajú uložiť. Skús to neskôr.</string>
+    <string name="error_update_required">Tento prípad má viac ako dve strany. Aktualizuj aplikáciu, aby si ho otvoril.</string>
     <string name="verdict_remove">Odstrániť tento verdikt</string>
     <string name="verdict_remove_confirm">Odstrániť svoj text, mená a zobrazované mená? Odkaz na zdieľanie a jeho náhľadový obrázok sa prestanú načítavať pre všetkých (náhľady, ktoré už boli poslané v chatoch, sa môžu zobrazovať, kým ich tieto aplikácie neobnovia). Nedá sa to vrátiť späť.</string>
     <string name="verdict_remove_yes">Áno, odstrániť</string>

@@ -691,6 +691,7 @@ const nl: Locale = {
     "unavailable.cta": "Naar Judge",
     "error.removed": "Dit is verwijderd. De link werkt niet meer.",
     "error.names_unavailable": "Namen kunnen nu niet worden opgeslagen. Probeer het later opnieuw.",
+    "error.update_required": "Deze zaak heeft meer dan twee kanten. Werk de app bij om hem te openen.",
     "verdict.remove": "Deze uitspraak verwijderen",
     "verdict.remove.confirm":
       "Wat je schreef, de namen en de weergavenamen verwijderen? De deellink en de previewafbeelding laden voor niemand meer (previews die al in chats zijn gedeeld, kunnen zichtbaar blijven tot die apps ze vernieuwen). Dit kan niet ongedaan worden gemaakt.",

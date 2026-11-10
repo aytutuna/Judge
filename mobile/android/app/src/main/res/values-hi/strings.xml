@@ -440,6 +440,7 @@
     <string name="removed_cta">अपनी बहस सुलझवाएँ</string>
     <string name="error_removed">इसे हटा दिया गया है। इसका लिंक अब काम नहीं करता।</string>
     <string name="error_names_unavailable">अभी नाम सेव नहीं हो सकते। थोड़ी देर बाद कोशिश करें।</string>
+    <string name="error_update_required">इस केस में दो से ज़्यादा पक्ष हैं। इसे खोलने के लिए ऐप अपडेट करें।</string>
     <string name="verdict_remove">यह फ़ैसला हटाएँ</string>
     <string name="verdict_remove_confirm">आपका लिखा हुआ, नाम और दिखने वाले नाम हटा दें? शेयर लिंक और उसकी प्रीव्यू इमेज सबके लिए खुलना बंद हो जाएँगे (चैट में पहले से भेजे गए प्रीव्यू तब तक दिख सकते हैं जब तक वे ऐप उन्हें रीफ़्रेश न करें)। इसे पहले जैसा नहीं किया जा सकता।</string>
     <string name="verdict_remove_yes">हाँ, हटाएँ</string>

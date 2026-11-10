@@ -493,6 +493,7 @@ class Strings(private val res: Resources) {
     val removedCta: String get() = res.getString(R.string.removed_cta)
     val errorRemoved: String get() = res.getString(R.string.error_removed)
     val errorNamesUnavailable: String get() = res.getString(R.string.error_names_unavailable)
+    val errorUpdateRequired: String get() = res.getString(R.string.error_update_required)
     val verdictRemove: String get() = res.getString(R.string.verdict_remove)
     val verdictRemoveConfirm: String get() = res.getString(R.string.verdict_remove_confirm)
     val verdictRemoveYes: String get() = res.getString(R.string.verdict_remove_yes)
@@ -1128,6 +1129,7 @@ class Strings(private val res: Resources) {
             "removed.cta" -> R.string.removed_cta
             "error.removed" -> R.string.error_removed
             "error.names_unavailable" -> R.string.error_names_unavailable
+            "error.update_required" -> R.string.error_update_required
             "verdict.remove" -> R.string.verdict_remove
             "verdict.remove.confirm" -> R.string.verdict_remove_confirm
             "verdict.remove.yes" -> R.string.verdict_remove_yes

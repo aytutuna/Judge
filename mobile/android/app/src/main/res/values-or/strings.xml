@@ -440,6 +440,7 @@
     <string name="removed_cta">ନିଜ ବିବାଦ ମେଣ୍ଟାନ୍ତୁ</string>
     <string name="error_removed">ଏହା ହଟାଯାଇଛି। ଏହାର ଲିଙ୍କ୍ ଆଉ କାମ କରୁନାହିଁ।</string>
     <string name="error_names_unavailable">ଏବେ ନାମ ସେଭ୍ ହୋଇପାରୁନାହିଁ। ପରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>
+    <string name="error_update_required">ଏହି କେସ୍‌ରେ ଦୁଇରୁ ଅଧିକ ପକ୍ଷ ଅଛନ୍ତି। ଖୋଲିବାକୁ ଆପ୍ ଅପଡେଟ୍ କରନ୍ତୁ।</string>
     <string name="verdict_remove">ଏହି ରାୟ ହଟାନ୍ତୁ</string>
     <string name="verdict_remove_confirm">ଆପଣ ଯାହା ଲେଖିଥିଲେ, ନାମ ଓ ପ୍ରଦର୍ଶିତ ନାମ ହଟାଇବେ? ସେୟାର୍ ଲିଙ୍କ୍ ଓ ତାହାର ପ୍ରିଭ୍ୟୁ ଛବି ସମସ୍ତଙ୍କ ପାଇଁ ଖୋଲିବା ବନ୍ଦ ହେବ (ଚାଟ୍‌ରେ ଆଗରୁ ପୋଷ୍ଟ ହୋଇଥିବା ପ୍ରିଭ୍ୟୁ ସେହି ଆପ୍ ରିଫ୍ରେସ୍ ନ କରିବା ଯାଏଁ ଦେଖାଯାଇପାରେ)। ଏହାକୁ ଆଉ ଫେରାଇହେବ ନାହିଁ।</string>
     <string name="verdict_remove_yes">ହଁ, ହଟାନ୍ତୁ</string>

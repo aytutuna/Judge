@@ -432,6 +432,7 @@
     <string name="removed_cta">你也來評評理</string>
     <string name="error_removed">這個內容已被移除，連結已失效。</string>
     <string name="error_names_unavailable">目前無法儲存名字，請稍後再試。</string>
+    <string name="error_update_required">這個案件有兩方以上。請更新應用程式後再開啟。</string>
     <string name="verdict_remove">移除這個判決</string>
     <string name="verdict_remove_confirm">要移除你寫的內容、名字和顯示名稱嗎？分享連結和預覽圖會對所有人失效（已經貼在聊天裡的預覽，可能要等那些 App 更新後才會消失）。這個動作無法復原。</string>
     <string name="verdict_remove_yes">是，移除</string>

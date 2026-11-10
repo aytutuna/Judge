@@ -696,6 +696,7 @@ const pl: Locale = {
     "unavailable.cta": "Przejdź do Judge",
     "error.removed": "To zostało usunięte. Link już nie działa.",
     "error.names_unavailable": "Nie można teraz zapisać imion. Spróbuj później.",
+    "error.update_required": "Ta sprawa ma więcej niż dwie strony. Zaktualizuj aplikację, żeby ją otworzyć.",
     "verdict.remove": "Usuń ten werdykt",
     "verdict.remove.confirm":
       "Usunąć twój tekst, imiona i nazwy wyświetlane? Link do udostępniania i jego obrazek podglądu przestaną się wczytywać dla wszystkich (podglądy wysłane już na czatach mogą być widoczne, dopóki te aplikacje ich nie odświeżą). Tego nie da się cofnąć.",

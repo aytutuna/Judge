@@ -646,6 +646,7 @@ const zhHant: Locale = {
     "unavailable.cta": "前往 Judge",
     "error.removed": "這個內容已被移除，連結已失效。",
     "error.names_unavailable": "目前無法儲存名字，請稍後再試。",
+    "error.update_required": "這個案件有兩方以上。請更新應用程式後再開啟。",
     "verdict.remove": "移除這個判決",
     "verdict.remove.confirm":
       "要移除你寫的內容、名字和顯示名稱嗎？分享連結和預覽圖會對所有人失效（已經貼在聊天裡的預覽，可能要等那些 App 更新後才會消失）。這個動作無法復原。",

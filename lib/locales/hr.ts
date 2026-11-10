@@ -685,6 +685,7 @@ const hr: Locale = {
     "unavailable.cta": "Idi na Judge",
     "error.removed": "Ovo je uklonjeno. Poveznica više ne radi.",
     "error.names_unavailable": "Imena se trenutačno ne mogu spremiti. Pokušaj ponovno kasnije.",
+    "error.update_required": "Ovaj slučaj ima više od dvije strane. Ažuriraj aplikaciju da ga otvoriš.",
     "verdict.remove": "Ukloni ovu presudu",
     "verdict.remove.confirm":
       "Želiš ukloniti svoj tekst, imena i prikazana imena? Poveznica za dijeljenje i njezina slika pregleda prestaju se učitavati za sve (pregledi već objavljeni u razgovorima mogu se i dalje prikazivati dok ih te aplikacije ne osvježe). Ovo se ne može poništiti.",

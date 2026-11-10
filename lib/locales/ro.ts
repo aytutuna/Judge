@@ -691,6 +691,7 @@ const ro: Locale = {
     "unavailable.cta": "Mergi la Judge",
     "error.removed": "Asta a fost eliminat. Linkul nu mai funcționează.",
     "error.names_unavailable": "Numele nu pot fi salvate acum. Încearcă mai târziu.",
+    "error.update_required": "Acest caz are mai mult de două părți. Actualizează aplicația ca să-l deschizi.",
     "verdict.remove": "Elimină acest verdict",
     "verdict.remove.confirm":
       "Elimini ce ai scris, numele și numele afișate? Linkul de distribuire și imaginea de previzualizare nu se mai încarcă pentru nimeni (previzualizările deja postate în conversații pot apărea în continuare până când acele aplicații le reîmprospătează). Acțiunea nu poate fi anulată.",

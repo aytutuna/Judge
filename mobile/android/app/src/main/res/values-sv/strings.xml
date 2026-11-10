@@ -440,6 +440,7 @@
     <string name="removed_cta">Avgör ditt eget bråk</string>
     <string name="error_removed">Det här har tagits bort. Länken fungerar inte längre.</string>
     <string name="error_names_unavailable">Namn kan inte sparas just nu. Försök igen senare.</string>
+    <string name="error_update_required">Det här fallet har fler än två sidor. Uppdatera appen för att öppna det.</string>
     <string name="verdict_remove">Ta bort den här domen</string>
     <string name="verdict_remove_confirm">Ta bort det du skrev, namnen och visningsnamnen? Delningslänken och dess förhandsbild laddas inte längre för någon (förhandsvisningar som redan delats i chattar kan synas tills apparna uppdaterar dem). Det går inte att ångra.</string>
     <string name="verdict_remove_yes">Ja, ta bort den</string>

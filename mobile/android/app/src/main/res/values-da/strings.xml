@@ -440,6 +440,7 @@
     <string name="removed_cta">Få afgjort din egen diskussion</string>
     <string name="error_removed">Den er fjernet. Linket virker ikke længere.</string>
     <string name="error_names_unavailable">Navne kan ikke gemmes lige nu. Prøv igen senere.</string>
+    <string name="error_update_required">Denne sag har mere end to sider. Opdater appen for at åbne den.</string>
     <string name="verdict_remove">Fjern denne dom</string>
     <string name="verdict_remove_confirm">Vil du fjerne det, du skrev, navnene og de viste navne? Delingslinket og dets forhåndsvisning holder op med at virke for alle (forhåndsvisninger, der allerede er sendt i chats, kan stadig blive vist, indtil de apps opdaterer dem). Det kan ikke fortrydes.</string>
     <string name="verdict_remove_yes">Ja, fjern den</string>

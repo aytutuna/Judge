@@ -440,6 +440,7 @@
     <string name="removed_cta">Kläre deinen eigenen Streit</string>
     <string name="error_removed">Das wurde entfernt. Der Link funktioniert nicht mehr.</string>
     <string name="error_names_unavailable">Namen können gerade nicht gespeichert werden. Versuch es später noch mal.</string>
+    <string name="error_update_required">Dieser Fall hat mehr als zwei Seiten. Aktualisiere die App, um ihn zu öffnen.</string>
     <string name="verdict_remove">Dieses Urteil entfernen</string>
     <string name="verdict_remove_confirm">Was du geschrieben hast, die Namen und die Anzeigenamen entfernen? Der geteilte Link und sein Vorschaubild laden dann für niemanden mehr (Vorschauen, die schon in Chats gepostet wurden, können sichtbar bleiben, bis diese Apps sie aktualisieren). Das lässt sich nicht rückgängig machen.</string>
     <string name="verdict_remove_yes">Ja, entfernen</string>

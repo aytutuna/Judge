@@ -687,6 +687,7 @@ const fi: Locale = {
     "unavailable.cta": "Siirry Judgeen",
     "error.removed": "Tämä on poistettu. Sen linkki ei enää toimi.",
     "error.names_unavailable": "Nimiä ei voi tallentaa juuri nyt. Yritä myöhemmin uudelleen.",
+    "error.update_required": "Tässä jutussa on yli kaksi osapuolta. Päivitä sovellus avataksesi sen.",
     "verdict.remove": "Poista tämä tuomio",
     "verdict.remove.confirm":
       "Poistetaanko kirjoittamasi teksti, nimet ja näyttönimet? Jakolinkki ja sen esikatselukuva lakkaavat latautumasta kaikille (keskusteluihin jo jaetut esikatselut voivat näkyä, kunnes sovellukset päivittävät ne). Tätä ei voi perua.",

@@ -17,6 +17,7 @@ import {
 } from "./types";
 
 export const CASE_EXPIRY_DAYS = 7;
+export const MAX_CASE_SIDES = 4;
 export const MAX_EVIDENCE_PER_SIDE = 3;
 export const MAX_EVIDENCE_PER_APPEAL = 1;
 export const MAX_IMAGES_PER_UPLOAD = 3;
@@ -45,6 +46,9 @@ export const CreateCaseRequest = z
     evidence: EvidenceTokens.max(MAX_EVIDENCE_PER_SIDE).optional(),
     /** How the owner appears on the case's share pages; empty or null = "Party A". */
     displayName: z.union([z.literal(""), DisplayNameInput]).nullable().optional(),
+    /** 3 or 4 for a case with that many sides: B, C and D each get their own
+     * invite link. Left out (or 2) is the usual case. */
+    sides: z.number().int().min(2).max(MAX_CASE_SIDES).optional(),
   })
   .refine((v) => v.text !== undefined || !v.evidence?.length, {
     path: ["evidence"],
@@ -69,7 +73,9 @@ export const RespondRequest = z.object({
 });
 export type RespondRequest = z.infer<typeof RespondRequest>;
 
-export const JudgeNowRequest = z.object({ mode: z.literal("only_mine").optional() });
+/** only_mine: judge side A alone. answered: with three or four sides, judge
+ * the sides that answered (A, B and C... in order, at least two). */
+export const JudgeNowRequest = z.object({ mode: z.enum(["only_mine", "answered"]).optional() });
 export type JudgeNowRequest = z.infer<typeof JudgeNowRequest>;
 
 export const AppealRequest = z.object({
@@ -86,6 +92,10 @@ export type AppealRequest = z.infer<typeof AppealRequest>;
 
 /** POST /api/v1/cases/{id}/claim: the `respondent_claim` from answering signed out. */
 export const CaseClaimRequest = z.object({ claim: z.string().max(64) });
+
+/** POST /api/v1/cases/{id}/invite: which side's link to replace (default b). */
+export const RotateInviteRequest = z.object({ party: z.enum(["b", "c", "d"]).optional() });
+export type RotateInviteRequest = z.infer<typeof RotateInviteRequest>;
 export type CaseClaimRequest = z.infer<typeof CaseClaimRequest>;
 
 export const EvidenceJsonUpload = z.object({
@@ -114,7 +124,13 @@ export type EvidenceUploadResponse = { items: EvidenceItemResult[] };
 export type CaseStatus = "awaiting_respondent" | "judging" | "judged" | "failed" | "expired";
 export type CaseMode = "two_sided" | "one_sided";
 export type CaseRole = "owner" | "respondent";
-export type PartyLetter = "a" | "b";
+export type PartyLetter = "a" | "b" | "c" | "d";
+/** Clients that do not send SIDES_HEADER only ever see cases with 2 sides. */
+/** Request header of a client that can show a case with three or four sides
+ * ("Judge-Sides: 4"). Without it, such a case answers `update_required`
+ * (and stays out of the case list), so an older app never shows a verdict or
+ * a respond page it would mislabel. */
+export const SIDES_HEADER = "Judge-Sides";
 export type AppealStatus = "judging" | "judged" | "failed";
 export type AppealBlock =
   | "signin_required"
@@ -166,6 +182,15 @@ export type CaseVerdictView = {
   createdAt: string;
 };
 
+/** One invited side as the owner sees it. */
+export type CaseInviteView = {
+  party: PartyLetter;
+  status: "waiting" | "answered" | "closed";
+  /** The owner's link for this side while it waits; null once answered or closed. */
+  inviteUrl: string | null;
+  answeredAt: string | null;
+};
+
 export type CaseView = {
   id: string;
   role: CaseRole;
@@ -180,6 +205,11 @@ export type CaseView = {
   expiresAt: string;
   judgedAt: string | null;
   respondentAnswered: boolean;
+  /** Only with three or four sides: A to C or A to D. */
+  parties?: PartyLetter[];
+  /** Only with three or four sides, for the owner: side B to D with their
+   * links and whether they answered. `inviteUrl` below stays side B's. */
+  invites?: CaseInviteView[];
   /** Owner only, while awaiting the respondent. */
   inviteUrl: string | null;
   /** Respondent role only: the signed-in viewer is the case owner. */
@@ -190,6 +220,9 @@ export type CaseView = {
   verdicts: CaseVerdictView[];
   appeals: CaseAppealView[];
   canJudgeNow: boolean;
+  /** Only with three or four sides, owner: the answers in so far are enough
+   * to judge without the rest (POST .../judge { "mode": "answered" }). */
+  canJudgeAnswered?: boolean;
   /** The case has no side A yet (the owner sent the link before writing)
    * and nothing was removed. */
   ownerSideMissing: boolean;
@@ -202,7 +235,7 @@ export type CaseView = {
    * or the viewer is not proven to be that party. */
   names: NameMapping[] | null;
   /** The names each party chose for the share pages, and the owner's switch. */
-  display: { namesVisible: boolean; a: string | null; b: string | null };
+  display: { namesVisible: boolean; a: string | null; b: string | null; c?: string | null; d?: string | null };
   /** Set once a party removed their side: every link of the case is closed. */
   removed: { at: string; parties: PartyLetter[] } | null;
   /** Status of the viewer's own side original. */
@@ -224,6 +257,8 @@ export type CaseSummary = {
   createdAt: string;
   expiresAt: string;
   respondentAnswered: boolean;
+  /** Only with three or four sides. */
+  parties?: PartyLetter[];
   /** Latest verdict, anonymized. */
   verdict: FinalVerdict | null;
   headline: string | null;
@@ -259,7 +294,7 @@ export type AppealResponse = {
   entitlement?: Entitlement;
   replayed?: boolean;
 };
-export type InviteResponse = { inviteUrl: string };
+export type InviteResponse = { inviteUrl: string; party?: PartyLetter };
 /** DELETE /api/v1/cases/{id}: kept for older clients; it runs the owner's
  * removal (nothing is deleted). */
 export type DeleteCaseResponse = { deleted: true; removed: true; removedAt: string };

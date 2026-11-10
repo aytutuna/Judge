@@ -684,6 +684,7 @@ const cs: Locale = {
     "unavailable.cta": "Přejít na Judge",
     "error.removed": "Tohle bylo odstraněno. Odkaz už nefunguje.",
     "error.names_unavailable": "Jména teď nejde uložit. Zkus to později.",
+    "error.update_required": "Tento případ má více než dvě strany. Aktualizuj aplikaci, abys ho otevřel.",
     "verdict.remove": "Odstranit tento verdikt",
     "verdict.remove.confirm":
       "Odstranit tvůj text, jména i zobrazovaná jména? Sdílený odkaz a jeho náhledový obrázek se přestanou načítat pro všechny (náhledy, které už byly vložené do chatů, se můžou zobrazovat dál, dokud je tyto aplikace neobnoví). Tohle nejde vrátit.",

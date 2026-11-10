@@ -440,6 +440,7 @@
     <string name="removed_cta">Settle your own argument</string>
     <string name="error_removed">This was removed. Its link no longer works.</string>
     <string name="error_names_unavailable">Names can\'t be saved right now. Try again later.</string>
+    <string name="error_update_required">This case has more than two sides. Update the app to open it.</string>
     <string name="verdict_remove">Remove this verdict</string>
     <string name="verdict_remove_confirm">Remove what you wrote, the names and the display names? The share link and its preview image stop loading for everyone (previews already posted in chats may still show until those apps refresh them). This can\'t be undone.</string>
     <string name="verdict_remove_yes">Yes, remove it</string>

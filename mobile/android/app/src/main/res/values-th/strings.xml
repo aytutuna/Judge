@@ -432,6 +432,7 @@
     <string name="removed_cta">ให้ตัดสินเรื่องของคุณ</string>
     <string name="error_removed">รายการนี้ถูกลบแล้ว ลิงก์ใช้ไม่ได้อีก</string>
     <string name="error_names_unavailable">ตอนนี้บันทึกชื่อไม่ได้ ลองใหม่ภายหลัง</string>
+    <string name="error_update_required">เคสนี้มีมากกว่าสองฝ่าย อัปเดตแอปเพื่อเปิดดู</string>
     <string name="verdict_remove">ลบคำตัดสินนี้</string>
     <string name="verdict_remove_confirm">ลบสิ่งที่คุณเขียน ชื่อ และชื่อที่แสดงไหม? ลิงก์แชร์และภาพตัวอย่างจะโหลดไม่ได้สำหรับทุกคน (ภาพตัวอย่างที่โพสต์ในแชตไปแล้วอาจยังแสดงอยู่จนกว่าแอปเหล่านั้นจะรีเฟรช) ย้อนกลับไม่ได้</string>
     <string name="verdict_remove_yes">ใช่ ลบเลย</string>

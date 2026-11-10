@@ -440,6 +440,7 @@
     <string name="removed_cta">ਆਪਣੀ ਬਹਿਸ ਦਾ ਨਿਬੇੜਾ ਕਰਾਓ</string>
     <string name="error_removed">ਇਹ ਹਟਾ ਦਿੱਤਾ ਗਿਆ ਹੈ। ਇਸ ਦਾ ਲਿੰਕ ਹੁਣ ਕੰਮ ਨਹੀਂ ਕਰਦਾ।</string>
     <string name="error_names_unavailable">ਇਸ ਵੇਲੇ ਨਾਂ ਸੇਵ ਨਹੀਂ ਹੋ ਸਕਦੇ। ਬਾਅਦ ਵਿੱਚ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
+    <string name="error_update_required">ਇਸ ਕੇਸ ਵਿੱਚ ਦੋ ਤੋਂ ਵੱਧ ਧਿਰਾਂ ਹਨ। ਖੋਲ੍ਹਣ ਲਈ ਐਪ ਅੱਪਡੇਟ ਕਰੋ।</string>
     <string name="verdict_remove">ਇਹ ਫ਼ੈਸਲਾ ਹਟਾਓ</string>
     <string name="verdict_remove_confirm">ਤੁਹਾਡੀ ਲਿਖਤ, ਨਾਂ ਅਤੇ ਦਿਖਣ ਵਾਲੇ ਨਾਂ ਹਟਾਉਣੇ ਹਨ? ਸਾਂਝਾ ਲਿੰਕ ਅਤੇ ਉਸ ਦੀ ਪ੍ਰੀਵਿਊ ਤਸਵੀਰ ਸਭ ਲਈ ਖੁੱਲ੍ਹਣੇ ਬੰਦ ਹੋ ਜਾਣਗੇ (ਚੈਟਾਂ ਵਿੱਚ ਪਹਿਲਾਂ ਹੀ ਭੇਜੇ ਪ੍ਰੀਵਿਊ ਉਦੋਂ ਤੱਕ ਦਿਖ ਸਕਦੇ ਹਨ ਜਦੋਂ ਤੱਕ ਉਹ ਐਪਾਂ ਉਨ੍ਹਾਂ ਨੂੰ ਤਾਜ਼ਾ ਨਹੀਂ ਕਰਦੀਆਂ)। ਇਹ ਵਾਪਸ ਨਹੀਂ ਹੋ ਸਕਦਾ।</string>
     <string name="verdict_remove_yes">ਹਾਂ, ਹਟਾ ਦਿਓ</string>

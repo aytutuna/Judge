@@ -448,6 +448,7 @@
     <string name="removed_cta">Riješi i svoju raspravu</string>
     <string name="error_removed">Ovo je uklonjeno. Poveznica više ne radi.</string>
     <string name="error_names_unavailable">Imena se trenutačno ne mogu spremiti. Pokušaj ponovno kasnije.</string>
+    <string name="error_update_required">Ovaj slučaj ima više od dvije strane. Ažuriraj aplikaciju da ga otvoriš.</string>
     <string name="verdict_remove">Ukloni ovu presudu</string>
     <string name="verdict_remove_confirm">Želiš ukloniti svoj tekst, imena i prikazana imena? Poveznica za dijeljenje i njezina slika pregleda prestaju se učitavati za sve (pregledi već objavljeni u razgovorima mogu se i dalje prikazivati dok ih te aplikacije ne osvježe). Ovo se ne može poništiti.</string>
     <string name="verdict_remove_yes">Da, ukloni</string>

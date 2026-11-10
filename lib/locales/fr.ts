@@ -689,6 +689,7 @@ const fr: Locale = {
     "unavailable.cta": "Aller sur Judge",
     "error.removed": "Ce contenu a été supprimé. Son lien ne fonctionne plus.",
     "error.names_unavailable": "Impossible d’enregistrer les noms pour l’instant. Réessaie plus tard.",
+    "error.update_required": "Ce dossier a plus de deux parties. Mets l’appli à jour pour l’ouvrir.",
     "verdict.remove": "Supprimer ce verdict",
     "verdict.remove.confirm":
       "Supprimer ce que tu as écrit, les noms et les noms affichés ? Le lien de partage et son image d’aperçu ne s’afficheront plus pour personne (les aperçus déjà publiés dans des conversations peuvent rester visibles jusqu’à ce que ces applis les actualisent). Cette action est irréversible.",

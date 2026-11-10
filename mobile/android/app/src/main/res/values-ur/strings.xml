@@ -440,6 +440,7 @@
     <string name="removed_cta">اپنی بحث کا فیصلہ کروائیں</string>
     <string name="error_removed">یہ ہٹا دیا گیا ہے۔ اس کا لنک اب کام نہیں کرتا۔</string>
     <string name="error_names_unavailable">ابھی نام محفوظ نہیں ہو سکتے۔ بعد میں دوبارہ کوشش کریں۔</string>
+    <string name="error_update_required">اس کیس میں دو سے زیادہ فریق ہیں۔ کھولنے کے لیے ایپ اپ ڈیٹ کریں۔</string>
     <string name="verdict_remove">یہ فیصلہ ہٹائیں</string>
     <string name="verdict_remove_confirm">آپ کا لکھا ہوا، نام اور ڈسپلے نام ہٹا دیں؟ شیئر لنک اور اس کی پریویو تصویر سب کے لیے لوڈ ہونا بند ہو جائیں گے (چیٹس میں پہلے سے پوسٹ ہوئے پریویو تب تک دکھ سکتے ہیں جب تک وہ ایپس انہیں ریفریش نہ کریں)۔ یہ واپس نہیں ہو سکتا۔</string>
     <string name="verdict_remove_yes">ہاں، ہٹا دیں</string>

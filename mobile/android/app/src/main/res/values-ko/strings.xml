@@ -432,6 +432,7 @@
     <string name="removed_cta">내 논쟁도 판결 받기</string>
     <string name="error_removed">삭제된 항목이에요. 링크가 더 이상 열리지 않아요.</string>
     <string name="error_names_unavailable">지금은 이름을 저장할 수 없어요. 나중에 다시 시도해 주세요.</string>
+    <string name="error_update_required">이 사건에는 당사자가 둘보다 많아요. 열려면 앱을 업데이트해 주세요.</string>
     <string name="verdict_remove">이 판결 삭제</string>
     <string name="verdict_remove_confirm">쓴 글, 이름, 표시 이름을 삭제할까요? 공유 링크와 미리보기 이미지가 모두에게 열리지 않게 돼요(이미 대화방에 올라간 미리보기는 해당 앱이 새로 고칠 때까지 보일 수 있어요). 되돌릴 수 없어요.</string>
     <string name="verdict_remove_yes">네, 삭제할게요</string>

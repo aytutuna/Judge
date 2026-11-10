@@ -448,6 +448,7 @@
     <string name="removed_cta">Fais trancher ton propre débat</string>
     <string name="error_removed">Ce contenu a été supprimé. Son lien ne fonctionne plus.</string>
     <string name="error_names_unavailable">Impossible d’enregistrer les noms pour l’instant. Réessaie plus tard.</string>
+    <string name="error_update_required">Ce dossier a plus de deux parties. Mets l’appli à jour pour l’ouvrir.</string>
     <string name="verdict_remove">Supprimer ce verdict</string>
     <string name="verdict_remove_confirm">Supprimer ce que tu as écrit, les noms et les noms affichés ? Le lien de partage et son image d’aperçu ne s’afficheront plus pour personne (les aperçus déjà publiés dans des conversations peuvent rester visibles jusqu’à ce que ces applis les actualisent). Cette action est irréversible.</string>
     <string name="verdict_remove_yes">Oui, supprimer</string>

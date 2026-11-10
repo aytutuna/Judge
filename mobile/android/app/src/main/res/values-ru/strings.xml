@@ -456,6 +456,7 @@
     <string name="removed_cta">Рассудите свой спор</string>
     <string name="error_removed">Это удалено. Ссылка больше не работает.</string>
     <string name="error_names_unavailable">Сейчас имена сохранить нельзя. Попробуйте позже.</string>
+    <string name="error_update_required">В этом деле больше двух сторон. Обновите приложение, чтобы открыть его.</string>
     <string name="verdict_remove">Удалить этот вердикт</string>
     <string name="verdict_remove_confirm">Удалить написанное вами, имена и отображаемые имена? Ссылка и картинка предпросмотра перестанут открываться у всех (превью, уже отправленные в чаты, могут показываться, пока эти приложения их не обновят). Отменить это нельзя.</string>
     <string name="verdict_remove_yes">Да, удалить</string>

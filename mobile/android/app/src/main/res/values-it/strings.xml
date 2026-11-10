@@ -448,6 +448,7 @@
     <string name="removed_cta">Fai giudicare la tua discussione</string>
     <string name="error_removed">È stato rimosso. Il suo link non funziona più.</string>
     <string name="error_names_unavailable">Al momento non è possibile salvare i nomi. Riprova più tardi.</string>
+    <string name="error_update_required">Questo caso ha più di due parti. Aggiorna l\'app per aprirlo.</string>
     <string name="verdict_remove">Rimuovi questo verdetto</string>
     <string name="verdict_remove_confirm">Vuoi rimuovere quello che hai scritto, i nomi e i nomi visualizzati? Il link di condivisione e la sua immagine di anteprima smetteranno di caricarsi per tutti (le anteprime già pubblicate nelle chat potrebbero restare visibili finché quelle app non le aggiornano). Non si può annullare.</string>
     <string name="verdict_remove_yes">Sì, rimuovilo</string>

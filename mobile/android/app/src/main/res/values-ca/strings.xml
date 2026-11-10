@@ -448,6 +448,7 @@
     <string name="removed_cta">Resol la teva pròpia discussió</string>
     <string name="error_removed">Això s\'ha eliminat. El seu enllaç ja no funciona.</string>
     <string name="error_names_unavailable">Ara mateix no es poden desar els noms. Torna-ho a provar més tard.</string>
+    <string name="error_update_required">Aquest cas té més de dues parts. Actualitza l\'aplicació per obrir-lo.</string>
     <string name="verdict_remove">Elimina aquest veredicte</string>
     <string name="verdict_remove_confirm">Vols eliminar el que vas escriure, els noms i els noms visibles? L\'enllaç per compartir i la imatge de previsualització deixaran de carregar-se per a tothom (les previsualitzacions ja publicades en xats poden continuar apareixent fins que aquestes apps les actualitzin). No es pot desfer.</string>
     <string name="verdict_remove_yes">Sí, elimina\'l</string>

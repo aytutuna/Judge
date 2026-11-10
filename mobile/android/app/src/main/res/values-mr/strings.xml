@@ -440,6 +440,7 @@
     <string name="removed_cta">तुमचाही वाद सोडवा</string>
     <string name="error_removed">हे काढून टाकले आहे. त्याची लिंक आता चालत नाही.</string>
     <string name="error_names_unavailable">नावे आत्ता सेव्ह करता येत नाहीत. नंतर पुन्हा प्रयत्न करा.</string>
+    <string name="error_update_required">या केसमध्ये दोनपेक्षा जास्त पक्ष आहेत. उघडण्यासाठी अ‍ॅप अपडेट करा.</string>
     <string name="verdict_remove">हा निकाल काढून टाका</string>
     <string name="verdict_remove_confirm">तुम्ही लिहिलेले, नावे आणि दिसणारी नावे काढून टाकायची? शेअर लिंक आणि तिची प्रिव्ह्यू इमेज सगळ्यांसाठी उघडणे बंद होईल (चॅटमध्ये आधीच पोस्ट झालेले प्रिव्ह्यू ती ॲप्स रिफ्रेश करेपर्यंत दिसू शकतात). हे परत आणता येणार नाही.</string>
     <string name="verdict_remove_yes">हो, काढून टाका</string>

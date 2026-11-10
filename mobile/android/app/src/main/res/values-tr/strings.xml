@@ -440,6 +440,7 @@
     <string name="removed_cta">Sen de kendi tartışmanı çözdür</string>
     <string name="error_removed">Bu kaldırıldı. Bağlantısı artık çalışmıyor.</string>
     <string name="error_names_unavailable">İsimler şu an kaydedilemiyor. Daha sonra tekrar dene.</string>
+    <string name="error_update_required">Bu davada ikiden fazla taraf var. Açmak için uygulamayı güncelle.</string>
     <string name="verdict_remove">Bu kararı kaldır</string>
     <string name="verdict_remove_confirm">Yazdıkların, isimler ve görünen adlar kaldırılsın mı? Paylaşım bağlantısı ve önizleme görseli herkes için açılmaz olur (sohbetlerde önceden paylaşılmış önizlemeler, o uygulamalar yenileyene kadar görünmeye devam edebilir). Bu geri alınamaz.</string>
     <string name="verdict_remove_yes">Evet, kaldır</string>
