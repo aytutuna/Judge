@@ -2,11 +2,18 @@
 
 import { useEffect, useId, useMemo } from "react";
 import { track } from "@/lib/analytics/client";
-import type { NameMapping, VerdictResult } from "@/lib/types";
+import type { NameMapping, PartyId, VerdictResult } from "@/lib/types";
 import { languageName, t, type Lang } from "@/lib/i18n";
 import { langDir } from "@/lib/langs";
 import { useLang } from "@/lib/lang";
-import { consistentSelfMap, partyNames, personalizeResult, resolveParties, type SelfParty } from "@/lib/names";
+import {
+  consistentSelfMap,
+  partyNames,
+  partyNamesFor,
+  personalizeResult,
+  resolveParties,
+  type SelfParty,
+} from "@/lib/names";
 import { verdictLang } from "@/lib/content-lang";
 import { useVerdictTranslation, type TranslationView } from "@/lib/use-translation";
 import { ShareButtons } from "./ShareButtons";
@@ -135,10 +142,19 @@ export function VerdictView({
   }, [view.result, nameMap, selfLang, selfParty, opts, selfDisplayName]);
   const named = partyNames(shown.nameMap, lang, selfLang, selfParty, viewerIsSelfParty || shown.selfDropped, opts);
   const selfLabel = shown.selfName ? t(lang, "party.youLabel", { label: shown.selfName }) : null;
-  const nameA = selfLabel && selfParty === "A" ? selfLabel : named.nameA;
-  const nameB = selfLabel && selfParty === "B" ? selfLabel : named.nameB;
-  const aIsSelf = named.aIsSelf || Boolean(selfLabel && selfParty === "A");
-  const bIsSelf = named.bIsSelf || Boolean(selfLabel && selfParty === "B");
+  const manyParties = view.result.parties;
+  // Three or four sides: every side's name, the viewer's own marked.
+  const sideNames = useMemo(() => {
+    if (!manyParties) return undefined;
+    const names = partyNamesFor(manyParties, shown.nameMap, lang, selfLang, selfParty, viewerIsSelfParty || shown.selfDropped, opts);
+    const own = selfParty.toLowerCase() as PartyId;
+    if (selfLabel && names[own]) names[own] = { name: selfLabel, self: true };
+    return names;
+  }, [manyParties, shown.nameMap, shown.selfDropped, lang, selfLang, selfParty, viewerIsSelfParty, opts, selfLabel]);
+  const nameA = sideNames?.a.name ?? (selfLabel && selfParty === "A" ? selfLabel : named.nameA);
+  const nameB = sideNames?.b.name ?? (selfLabel && selfParty === "B" ? selfLabel : named.nameB);
+  const aIsSelf = sideNames?.a.self ?? (named.aIsSelf || Boolean(selfLabel && selfParty === "A"));
+  const bIsSelf = sideNames?.b.self ?? (named.bIsSelf || Boolean(selfLabel && selfParty === "B"));
   const result = useMemo(
     () => personalizeResult(view.result, shown.nameMap, selfLang, selfParty, opts),
     [view.result, shown.nameMap, selfLang, selfParty, opts],
@@ -150,10 +166,11 @@ export function VerdictView({
   );
   const loading = view.status === "loading";
   const labelId = useId();
-  const parties = { nameA, nameB, aIsSelf, bIsSelf };
+  const parties = { nameA, nameB, aIsSelf, bIsSelf, sides: sideNames };
+  const you = selfParty.toLowerCase() as PartyId;
 
   return (
-    <div className="flex flex-col gap-3 min-w-0" data-you={selfParty === "B" ? "b" : "a"}>
+    <div className="flex flex-col gap-3 min-w-0" data-you={you}>
       {shareId ? (
         <ShareButtons
           shareId={shareId}
@@ -168,8 +185,8 @@ export function VerdictView({
           <AppealOutcomeBanner
             appeal={result.appeal}
             lang={lang}
-            byName={result.appeal.by === "a" ? nameA : nameB}
-            bySelf={result.appeal.by === "a" ? aIsSelf : bIsSelf}
+            byName={sideNames?.[result.appeal.by].name ?? (result.appeal.by === "a" ? nameA : nameB)}
+            bySelf={sideNames?.[result.appeal.by].self ?? (result.appeal.by === "a" ? aIsSelf : bIsSelf)}
             focus={focusAppeal}
           />
         </div>
@@ -185,6 +202,8 @@ export function VerdictView({
         restoredNames={restoredNames}
         top={shareId ? <TranslationNote view={view} lang={lang} /> : null}
         you={selfParty === "B" ? "b" : "a"}
+        sideNames={sideNames}
+        viewer={publicNames ? null : you}
         busy={loading}
         highlight={fresh}
         animate

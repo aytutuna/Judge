@@ -1,11 +1,12 @@
 import type { ReactNode } from "react";
-import type { VerdictResult } from "@/lib/types";
+import type { PartyId, VerdictResult } from "@/lib/types";
 import { t, type Lang } from "@/lib/i18n";
 import { langDir } from "@/lib/langs";
 import type { Party } from "@/lib/palette";
 import { hyphenRuns } from "@/lib/text";
-import { confidenceLabel, leanShare, tugFinal, verdictLabel } from "@/lib/verdict-display";
+import { confidenceLabel, leanShare, manyLabel, outcomeFor, tugFinal, verdictLabel } from "@/lib/verdict-display";
 import { BalanceFallback } from "../scene/BalanceFallback";
+import { OtherLines, SideList, isMany, type SideNames } from "./ManySides";
 import { VoteDots, voteOf } from "./VoteDots";
 import { WhyBlock } from "./WhyBlock";
 import styles from "./verdict.module.css";
@@ -84,6 +85,9 @@ function LeanBar({ share, nameA, nameB, lang }: { share: number; nameA: string; 
  * - `animate`: the live entrance (the card rises). Pure CSS; reduced motion
  *   shows the final state.
  * - `you`: the viewer's party, drawn green.
+ * - `sideNames` and `viewer`: a verdict with three or four sides lists every
+ *   side instead of the two names, the balance and the lean bar; its ruling is
+ *   green when `viewer` won, red when another side did.
  */
 export function VerdictCard({
   result,
@@ -96,6 +100,8 @@ export function VerdictCard({
   restoredNames = [],
   top,
   you = null,
+  sideNames,
+  viewer = null,
   highlight = false,
   busy = false,
   animate = false,
@@ -113,36 +119,48 @@ export function VerdictCard({
   restoredNames?: readonly string[];
   top?: ReactNode;
   you?: Party | null;
+  sideNames?: SideNames;
+  viewer?: PartyId | null;
   highlight?: boolean;
   busy?: boolean;
   animate?: boolean;
   headingAs?: "h2" | "h3";
 }) {
-  const label = verdictLabel(result, nameA, nameB, aIsSelf, bIsSelf, lang);
+  const many = sideNames && isMany(result) ? result : null;
+  const label = many && sideNames ? manyLabel(many, sideNames, lang) : verdictLabel(result, nameA, nameB, aIsSelf, bIsSelf, lang);
   const confidence = confidenceLabel(lang, result);
   const share = leanShare(result);
   const refused = Boolean(result.model_refused);
-  const win = result.verdict === "side_a" ? "a" : result.verdict === "side_b" ? "b" : undefined;
+  const win = many ? undefined : result.verdict === "side_a" ? "a" : result.verdict === "side_b" ? "b" : undefined;
+  const tone = many ? (outcomeFor(result, viewer) ?? undefined) : undefined;
   // Real names that may open a conditional clause; never the "Sen"/"You" label.
   const keepCase = [aIsSelf ? "" : nameA, bIsSelf ? "" : nameB, ...restoredNames];
   const cls = [styles.shell, animate && styles.animate, highlight && styles.fresh].filter(Boolean).join(" ");
 
   return (
     <article className={cls} aria-labelledby={labelId}>
-      <div className={styles.scene}>
-        <BalanceFallback tugA={refused ? 50 : tugFinal(result)} you={you} />
-      </div>
+      {many ? null : (
+        <div className={styles.scene}>
+          <BalanceFallback tugA={refused ? 50 : tugFinal(result)} you={you} />
+        </div>
+      )}
       {top}
       <div className={busy ? `${styles.body} ${styles.busy}` : styles.body} aria-busy={busy}>
-        <Names nameA={nameA} nameB={nameB} lang={lang} />
-        {share !== null ? <LeanBar share={share} nameA={nameA} nameB={nameB} lang={lang} /> : null}
+        {many && sideNames ? (
+          <SideList result={many} names={sideNames} />
+        ) : (
+          <>
+            <Names nameA={nameA} nameB={nameB} lang={lang} />
+            {share !== null ? <LeanBar share={share} nameA={nameA} nameB={nameB} lang={lang} /> : null}
+          </>
+        )}
 
         <div className={styles.ruleLine}>
-          <span className={styles.ruleLabel} data-win={win} aria-hidden>
+          <span className={styles.ruleLabel} data-win={win} data-tone={tone} aria-hidden>
             {label}
           </span>
           <span className={styles.ruleMeta}>
-            <VoteDots votes={result.runs.map(voteOf)} />
+            <VoteDots votes={many ? (result.votes ?? []).filter((v) => v === "other") : result.runs.map(voteOf)} />
             {confidence}
           </span>
         </div>
@@ -167,6 +185,7 @@ export function VerdictCard({
         </Heading>
 
         {!refused && result.why ? <WhyBlock title={t(lang, "why")} text={result.why} /> : null}
+        {many && sideNames && !refused ? <OtherLines result={many} names={sideNames} /> : null}
 
         {result.verdict === "split" && result.split_points?.length ? (
           <div className={styles.branches}>

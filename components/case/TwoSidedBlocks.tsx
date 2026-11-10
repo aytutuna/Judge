@@ -1,5 +1,6 @@
 import { t, type Lang } from "@/lib/i18n";
-import type { DisputedFact, VerdictResult } from "@/lib/types";
+import type { Dispute, DisputedFact, PartyId, VerdictResult } from "@/lib/types";
+import type { SideNames } from "../verdict/ManySides";
 import styles from "./case.module.css";
 
 /** Display caps (the server normalizes the same; a second guard for stored
@@ -8,11 +9,25 @@ const MAX_AGREED = 5;
 const MAX_DISPUTED = 4;
 const MAX_WOULD_CHANGE = 3;
 
-export type PartyLabels = { nameA: string; nameB: string; aIsSelf: boolean; bIsSelf: boolean };
+export type PartyLabels = {
+  nameA: string;
+  nameB: string;
+  aIsSelf: boolean;
+  bIsSelf: boolean;
+  /** Every side's name, on a verdict with three or four. */
+  sides?: SideNames;
+};
+
+const CLAIM_CLASS: Record<PartyId, string> = {
+  a: styles.claimA,
+  b: styles.claimB,
+  c: styles.claimC,
+  d: styles.claimD,
+};
 
 /** Whether a result carries anything for the two-sided blocks. */
 export function hasTwoSidedBlocks(r: VerdictResult): boolean {
-  return Boolean(r.agreed_facts?.length || r.disputed_facts?.length || r.would_change?.length);
+  return Boolean(r.agreed_facts?.length || r.disputed_facts?.length || r.disputes?.length || r.would_change?.length);
 }
 
 function findingText(lang: Lang, d: DisputedFact, p: PartyLabels): string {
@@ -22,6 +37,13 @@ function findingText(lang: Lang, d: DisputedFact, p: PartyLabels): string {
   return t(lang, d.finding === "a" ? "twoSided.finding.a" : "twoSided.finding.b", {
     name: d.finding === "a" ? p.nameA : p.nameB,
   });
+}
+
+function disputeFinding(lang: Lang, d: Dispute, names: SideNames): string {
+  if (d.finding === "unsettled") return t(lang, "twoSided.finding.unsettled");
+  const side = names[d.finding];
+  if (!side) return t(lang, "twoSided.finding.unsettled");
+  return side.self ? t(lang, "twoSided.finding.self") : t(lang, "twoSided.finding.a", { name: side.name });
 }
 
 function DecisiveGlyph() {
@@ -62,9 +84,11 @@ export function TwoSidedFacts({
 }) {
   const agreed = (result.agreed_facts ?? []).filter((s) => s.trim()).slice(0, MAX_AGREED);
   const disputed = (result.disputed_facts ?? []).slice(0, MAX_DISPUTED);
+  const many = parties.sides ? (result.disputes ?? []).slice(0, MAX_DISPUTED) : [];
   // At most one decisive marker, as the server promises.
   const decisiveAt = disputed.findIndex((d) => d.decisive);
-  if (agreed.length === 0 && disputed.length === 0) return null;
+  const manyDecisiveAt = many.findIndex((d) => d.decisive);
+  if (agreed.length === 0 && disputed.length === 0 && many.length === 0) return null;
   return (
     <div className={`${styles.ts} ${styles.tsCard}`}>
       {agreed.length > 0 ? (
@@ -80,6 +104,41 @@ export function TwoSidedFacts({
                   <i />
                 </span>
                 <span>{fact}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+      {many.length > 0 && parties.sides ? (
+        <section className={styles.ts} aria-labelledby="ts-disputed">
+          <h3 id="ts-disputed" className={styles.tsTitle}>
+            {t(lang, "twoSided.disputed")}
+          </h3>
+          <ul className={styles.disputes}>
+            {many.map((d, i) => (
+              <li key={i} className={styles.dispute} data-decisive={i === manyDecisiveAt ? "" : undefined}>
+                <div className={styles.disputeTop}>
+                  {i === manyDecisiveAt ? (
+                    <span className={styles.decisive}>
+                      <DecisiveGlyph />
+                      {t(lang, "twoSided.decisive")}
+                    </span>
+                  ) : null}
+                  <span className={styles.finding} data-finding={d.finding}>
+                    {disputeFinding(lang, d, parties.sides as SideNames)}
+                  </span>
+                </div>
+                <p className={styles.disputeFact}>{d.fact}</p>
+                <dl className={styles.claims}>
+                  {d.positions
+                    .filter((p) => parties.sides?.[p.party])
+                    .map((p) => (
+                      <div key={p.party} className={`${styles.claimRow} ${CLAIM_CLASS[p.party]}`}>
+                        <dt>{parties.sides?.[p.party].name}</dt>
+                        <dd>{p.says}</dd>
+                      </div>
+                    ))}
+                </dl>
               </li>
             ))}
           </ul>
@@ -128,7 +187,12 @@ export function TwoSidedFacts({
  * count otherwise. Null when no image was read. */
 export function evidenceNote(result: VerdictResult, lang: Lang): string | null {
   const used = result.evidence_used;
-  if (!used || used.a + used.b === 0) return null;
+  if (!used) return null;
+  if (result.parties) {
+    const n = used.a + used.b + (used.c ?? 0) + (used.d ?? 0);
+    return n ? t(lang, "evidence.usedOne", { n }) : null;
+  }
+  if (used.a + used.b === 0) return null;
   return result.two_sided
     ? t(lang, "evidence.used", { a: used.a, b: used.b })
     : t(lang, "evidence.usedOne", { n: used.a + used.b });

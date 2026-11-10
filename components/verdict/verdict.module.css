@@ -191,6 +191,10 @@
 }
 .ruleLabel[data-win="a"] { color: var(--party-a-ink); }
 .ruleLabel[data-win="b"] { color: var(--party-b-ink); }
+/* Three or four sides: green when the viewer's side wins, red when another
+   does, and neutral on a share page, which cannot know the viewer. */
+.ruleLabel[data-tone="win"] { color: var(--sage-ink); }
+.ruleLabel[data-tone="lose"] { color: var(--terra-ink); }
 .ruleMeta {
   margin-inline-start: auto;
   display: inline-flex;
@@ -214,6 +218,8 @@
 }
 .dotA { background: var(--party-a-strong); }
 .dotB { background: var(--party-b-strong); }
+.dotC { background: var(--party-c-strong); }
+.dotD { background: var(--party-d-strong); }
 .dotOther {
   background: transparent;
   box-shadow: inset 0 0 0 1.5px var(--ink);
@@ -478,6 +484,12 @@
 .tile[data-party="b"] {
   background: var(--party-b-tint);
 }
+.tile[data-party="c"] {
+  background: var(--party-c-tint);
+}
+.tile[data-party="d"] {
+  background: var(--party-d-tint);
+}
 .tile p {
   margin: 4px 0 0;
   color: var(--ink);
@@ -496,6 +508,12 @@
   text-transform: uppercase;
   white-space: nowrap;
   color: var(--party-a-ink);
+}
+.tile[data-party="c"] .tileName {
+  color: var(--party-c-ink);
+}
+.tile[data-party="d"] .tileName {
+  color: var(--party-d-ink);
 }
 .tile[data-party="b"] .tileName {
   color: var(--party-b-ink);
@@ -530,6 +548,14 @@
 .claimTagB {
   background: var(--party-b-tint);
   color: var(--party-b-ink);
+}
+.claimTag[data-party="c"] {
+  background: var(--party-c-tint);
+  color: var(--party-c-ink);
+}
+.claimTag[data-party="d"] {
+  background: var(--party-d-tint);
+  color: var(--party-d-ink);
 }
 
 .factList {
@@ -684,6 +710,115 @@
 }
 
 @media (forced-colors: active) {
-  .dotA, .dotB, .leanFill, .avatar, .factCheck { forced-color-adjust: none; }
+  .dotA, .dotB, .dotC, .dotD, .leanFill, .avatar, .sideAvatar, .factCheck { forced-color-adjust: none; }
   .dotOther { box-shadow: inset 0 0 0 1.5px CanvasText; }
+}
+
+/* ---------- Three or four sides ---------- */
+.sideList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sideRow {
+  --side-ink: var(--party-a-ink);
+  --side-tint: var(--party-a-tint);
+  --side-strong: var(--party-a-strong);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 8px 12px 8px 8px;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  background: var(--ivory-2);
+}
+.sideRow[data-party="b"] {
+  --side-ink: var(--party-b-ink);
+  --side-tint: var(--party-b-tint);
+  --side-strong: var(--party-b-strong);
+}
+.sideRow[data-party="c"] {
+  --side-ink: var(--party-c-ink);
+  --side-tint: var(--party-c-tint);
+  --side-strong: var(--party-c-strong);
+}
+.sideRow[data-party="d"] {
+  --side-ink: var(--party-d-ink);
+  --side-tint: var(--party-d-tint);
+  --side-strong: var(--party-d-strong);
+}
+.sideRow[data-winner] {
+  border-color: var(--side-strong);
+  background: var(--side-tint);
+}
+.sideAvatar {
+  width: 28px;
+  height: 28px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--side-ink);
+  color: var(--paper);
+  font-size: 12px;
+  font-weight: 700;
+}
+.sideName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--ink-2);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.sideRow[data-winner] .sideName {
+  color: var(--ink);
+  font-weight: 700;
+}
+.winMark {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  color: var(--side-ink);
+}
+.others {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.other {
+  --side-ink: var(--party-a-ink);
+  --side-tint: var(--party-a-tint);
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: var(--side-tint);
+  color: var(--ink);
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+.other[data-party="b"] {
+  --side-ink: var(--party-b-ink);
+  --side-tint: var(--party-b-tint);
+}
+.other[data-party="c"] {
+  --side-ink: var(--party-c-ink);
+  --side-tint: var(--party-c-tint);
+}
+.other[data-party="d"] {
+  --side-ink: var(--party-d-ink);
+  --side-tint: var(--party-d-tint);
+}
+.otherName {
+  color: var(--side-ink);
+  font-weight: 700;
 }

@@ -7,6 +7,7 @@ import { cruxStyle } from "@/lib/crux-style";
 import { stripLeadingEmoji } from "@/lib/text";
 import { leanTally, panelSummary } from "@/lib/verdict-display";
 import { FactCheckList } from "../FactCheckList";
+import { isMany } from "./ManySides";
 import { TwoSidedFacts, WouldChangeBlock, evidenceNote, type PartyLabels } from "../case/TwoSidedBlocks";
 import styles from "./verdict.module.css";
 
@@ -159,12 +160,18 @@ export function VerdictDetails({
 
   const { nameA, nameB, aIsSelf, bIsSelf } = parties;
   const map = result.argument_map;
-  const hasSides = Boolean(map.bedrock_a || map.bedrock_b || map.side_a.length || map.side_b.length);
+  const sideNames = parties.sides;
+  const manySides = sideNames && isMany(result) ? (result.sides ?? []) : null;
+  const hasSides = manySides
+    ? manySides.some((s) => s.bedrock || s.claims.length)
+    : Boolean(map.bedrock_a || map.bedrock_b || map.side_a.length || map.side_b.length);
   const lean = result.lean;
   const leanIsSelf = lean ? (lean.party === "a" ? aIsSelf : bIsSelf) : false;
   const leanName = lean ? (lean.party === "a" ? nameA : nameB) : "";
   const twoSided = result.two_sided === true;
-  const hasTwoSidedFacts = twoSided && Boolean(result.agreed_facts?.length || result.disputed_facts?.length);
+  const hasTwoSidedFacts =
+    (twoSided || manySides !== null) &&
+    Boolean(result.agreed_facts?.length || result.disputed_facts?.length || (manySides && result.disputes?.length));
   const evidenceLine = evidenceNote(result, lang);
   const bestTitle = bestPointTitle(lang, result, parties);
   const rows = [
@@ -241,7 +248,33 @@ export function VerdictDetails({
           </Detail>
         ) : null}
 
-        {hasSides ? (
+        {hasSides && manySides && sideNames ? (
+          <Detail title={t(lang, "card.sides")}>
+            <div className={styles.tiles}>
+              {manySides
+                .filter((s) => s.bedrock)
+                .map((s) => (
+                  <div key={s.party} className={styles.tile} data-party={s.party}>
+                    <span className={styles.tileName}>{sideNames[s.party].name}</span>
+                    <p>{s.bedrock}</p>
+                  </div>
+                ))}
+            </div>
+            <h4 className={styles.sectionTitle}>{t(lang, "card.claims")}</h4>
+            <ul className={styles.claimList}>
+              {manySides.flatMap((s) =>
+                s.claims.map((c, i) => (
+                  <li key={`${s.party}${i}`} className={styles.claim}>
+                    <span className={styles.claimTag} data-party={s.party}>
+                      {s.party.toUpperCase()} · {t(lang, KIND_KEY[c.kind])}
+                    </span>
+                    <span>{c.claim}</span>
+                  </li>
+                )),
+              )}
+            </ul>
+          </Detail>
+        ) : hasSides ? (
           <Detail title={t(lang, "card.sides")}>
             {map.bedrock_a || map.bedrock_b ? (
               <div className={styles.tiles}>
@@ -319,7 +352,11 @@ export function VerdictDetails({
               n: result.runs.length,
             })}{" "}
             {result.runs
-              .map((r) => (r === "side_a" ? nameA : r === "side_b" ? nameB : t(lang, VOTE_KEY[r])))
+              .map((r, i) => {
+                const vote = manySides && sideNames ? (result.votes?.[i] ?? "other") : null;
+                if (vote) return vote === "other" ? t(lang, "vote.split") : sideNames?.[vote]?.name;
+                return r === "side_a" ? nameA : r === "side_b" ? nameB : t(lang, VOTE_KEY[r]);
+              })
               .join(" · ")}
             {result.tier === "premium" ? (
               <>

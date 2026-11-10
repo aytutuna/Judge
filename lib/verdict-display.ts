@@ -1,5 +1,5 @@
 import { t, type Lang } from "./i18n";
-import type { Lean, VerdictResult } from "./types";
+import type { Lean, PartyId, VerdictResult } from "./types";
 
 /**
  * Display helpers shared by the verdict card, the share page, the OG image
@@ -31,6 +31,23 @@ export function verdictLabel(
     case "too_close":
       return t(lang, "verdict.tooClose");
   }
+}
+
+/** The ruling of a verdict with three or four sides: who is right, or too
+ * close to call. `names` has every side's display name and whether it is the
+ * viewer. (`verdict` on such a result is only the older projection.) */
+export function manyLabel(r: VerdictResult, names: Record<PartyId, { name: string; self: boolean }>, lang: Lang): string {
+  const side = r.winner ? names[r.winner] : null;
+  if (!side) return t(lang, "verdict.tooClose");
+  return side.self ? t(lang, "verdict.winSelf") : t(lang, "verdict.win", { name: side.name });
+}
+
+/** How the ruling reads from the viewer's side: green when their own side
+ * won, red when another did, none when it was too close or nobody is
+ * looking (a share page). */
+export function outcomeFor(r: VerdictResult, viewer: PartyId | null): "win" | "lose" | null {
+  if (!r.winner || !viewer) return null;
+  return r.winner === viewer ? "win" : "lose";
 }
 
 /** How many judge runs reached the final verdict. Null when there is no

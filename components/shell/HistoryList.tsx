@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { saveDraftForSignIn } from "@/lib/draft";
 import { t, tWithDate, type Lang } from "@/lib/i18n";
+import { partyLabel } from "@/lib/names";
 import type { HistoryItem, HistoryView } from "./useHistory";
 import styles from "./shell.module.css";
 
@@ -31,6 +32,11 @@ export function groupHistory(items: HistoryItem[], now: number): HistoryGroup[] 
 /** The ruling from the viewer's side: "You're right", "{name} is right",
  * or the outcome itself. */
 function rulingLabel(lang: Lang, item: HistoryItem): string {
+  if (item.winner !== undefined) {
+    if (item.winner === null) return t(lang, "verdict.tooClose");
+    if (item.winner === item.party) return item.self ? t(lang, "verdict.win", { name: item.self }) : t(lang, "verdict.winSelf");
+    return t(lang, "verdict.win", { name: item.other ?? partyLabel(lang, item.winner) });
+  }
   switch (item.verdict) {
     case "side_a":
     case "side_b": {
@@ -79,6 +85,9 @@ export function stateLabel(lang: Lang, item: HistoryItem): string | null {
 
 /** Green when the ruling went the viewer's way, red when it went the other's. */
 export function tone(item: HistoryItem): "yours" | "theirs" | undefined {
+  if (item.state === "ready" && item.winner !== undefined) {
+    return item.winner === null ? undefined : item.winner === item.party ? "yours" : "theirs";
+  }
   if (item.state !== "ready" || (item.verdict !== "side_a" && item.verdict !== "side_b")) return undefined;
   return item.verdict === (item.party === "a" ? "side_a" : "side_b") ? "yours" : "theirs";
 }

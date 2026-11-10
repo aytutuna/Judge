@@ -24,7 +24,7 @@ import { historyKey, type HistoryResponse, type HistoryRow, type HistoryState } 
 import { localizeLabelsAuto, resolveParties, restoreNames, textLang } from "@/lib/names";
 import { firstNameOf, type MineResponse } from "@/lib/originals-types";
 import { loadClaim } from "@/lib/respondent-store";
-import type { FinalVerdict, NameMapping } from "@/lib/types";
+import type { FinalVerdict, NameMapping, PartyId } from "@/lib/types";
 import type { VerdictPollResponse } from "@/lib/verdict-poll";
 import { loadOwnerToken, ownerHeaders, ownerTokenIds } from "@/lib/owner-store";
 import type { ViewerState } from "@/lib/use-viewer";
@@ -41,8 +41,12 @@ export type HistoryItem = {
   /** Null: nothing known beyond the title (an entry of this browser's). */
   state: HistoryState | null;
   verdict: FinalVerdict | null;
-  /** First names from the viewer's own map: the other party, and the viewer
-   * when they wrote about themselves by name. */
+  /** The winning side of a verdict with three or four, null when too close;
+   * absent otherwise. `verdict` is only the older projection there. */
+  winner?: PartyId | null;
+  /** First names from the viewer's own map: the winner (or the other party in
+   * a two-sided verdict), and the viewer when they wrote about themselves by
+   * name. */
   other: string | null;
   self: string | null;
   yourMove: boolean;
@@ -92,8 +96,8 @@ function hrefOf(row: HistoryRow): string | null {
 export function fromRow(row: HistoryRow): HistoryItem {
   const text = row.headline ?? row.excerpt;
   const lang = textLang(text ?? "");
-  const own = row.party === "a" ? "A" : "B";
-  const parties = resolveParties(row.nameMap, lang, own);
+  const own = row.party.toUpperCase() as "A" | "B" | "C" | "D";
+  const parties = resolveParties(row.nameMap, lang, own, row.parties ? { sides: row.parties.length } : {});
   const named = (letter: string) => {
     const p = parties.get(letter);
     return p && !p.self ? (firstNameOf(p.name) ?? p.name) : null;
@@ -107,7 +111,8 @@ export function fromRow(row: HistoryRow): HistoryItem {
     title: text ? localizeLabelsAuto(restoreNames(text, parties, lang)) : null,
     state: row.state,
     verdict: row.verdict,
-    other: named(own === "A" ? "B" : "A"),
+    ...(row.parties && row.winner !== undefined ? { winner: row.winner } : {}),
+    other: row.winner ? named(row.winner.toUpperCase()) : named(own === "A" ? "B" : "A"),
     // In a case the viewer is known to be their party: "You're right" even
     // when they named themselves.
     self: row.kind === "verdict" ? named(own) : null,
