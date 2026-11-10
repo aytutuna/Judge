@@ -27,9 +27,10 @@ export function blurOnTapOutside(
 export function useBlurOnTapOutside(on = true) {
   useEffect(() => {
     if (!on) return;
-    const onDown = (e: PointerEvent) => blurOnTapOutside(e.pointerType, document.activeElement as HTMLElement | null, e.target as Element | null);
-    document.addEventListener("pointerdown", onDown);
-    return () => document.removeEventListener("pointerdown", onDown);
+    // pointerup, not pointerdown: a drag to scroll ends in pointercancel, so the keyboard stays until the tap.
+    const onTap = (e: PointerEvent) => blurOnTapOutside(e.pointerType, document.activeElement as HTMLElement | null, e.target as Element | null);
+    document.addEventListener("pointerup", onTap);
+    return () => document.removeEventListener("pointerup", onTap);
   }, [on]);
 }
 
