@@ -397,6 +397,35 @@ describe("POST /api/v1/me/password", () => {
   });
 });
 
+describe("needsPassword in /me", () => {
+  const needs = async (token: string) => ((await (await me(token)).json()) as { needsPassword: boolean }).needsPassword;
+
+  it("is true after a code sign-in until a password is set", async () => {
+    const sent = emailOn();
+    const token = await codeSignIn(sent, "needs@example.com");
+    expect(await needs(token)).toBe(true);
+    await setPassword(token, { password: "first password" });
+    expect(await needs(token)).toBe(false);
+  });
+
+  it("is false for the review account, which signs in with its fixed code", async () => {
+    emailOn();
+    vi.stubEnv("REVIEW_ACCOUNT_EMAIL", "review2@example.com");
+    vi.stubEnv("REVIEW_ACCOUNT_CODE", "482915");
+    expect((await sendCode("review2@example.com")).status).toBe(200);
+    const res = await post("/sign-in/email-otp", { email: "review2@example.com", otp: "482915" });
+    expect(res.status).toBe(200);
+    expect(await needs(((await res.json()) as { token: string }).token)).toBe(false);
+  });
+
+  it("is false when the deployment has no passwords", async () => {
+    const sent = emailOn();
+    const token = await codeSignIn(sent, "off@example.com");
+    vi.stubEnv("RESEND_API_KEY", "");
+    expect(await needs(token)).toBe(false);
+  });
+});
+
 describe("the emailed code", () => {
   it("answers 503 unavailable when the email service refuses it, for known and unknown addresses", async () => {
     const sent = emailOn();

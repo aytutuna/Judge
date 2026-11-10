@@ -4,12 +4,14 @@ import { keepBlock } from "@/lib/age";
 import { forgetUser } from "@/lib/analytics/db";
 import { apiErrorBody } from "@/lib/api-errors";
 import {
+  authProviders,
   clearSessionCookieHeaders,
   deleteAuthUser,
   getViewer,
   isSameOrigin,
   resolveViewer,
   retryWelcomeCredit,
+  reviewAccount,
   welcomeClaim,
 } from "@/lib/auth";
 import { deadBearerResponse } from "@/lib/bearer-guard";
@@ -38,11 +40,15 @@ export async function GET(req: Request): Promise<NextResponse> {
     if (entitlement.credits === 0 && !entitlement.subscription && (await missedWelcome(viewer.user.id))) {
       entitlement = await getEntitlement(viewer.user.id);
     }
+    const password = await hasPassword(viewer.user.id);
     const body: MeResponse = {
       user: viewer.user,
       entitlement,
       age: viewer.age,
-      hasPassword: await hasPassword(viewer.user.id),
+      hasPassword: password,
+      // The store review account signs in with its fixed code and never gets a password.
+      needsPassword:
+        authProviders(req).password && !password && reviewAccount()?.email !== viewer.user.email.toLowerCase(),
     };
     return NextResponse.json(body, { headers: NO_STORE });
   } catch (e) {
