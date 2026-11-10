@@ -139,6 +139,16 @@
   --side-tint: var(--party-b-tint);
   --side-strong: var(--party-b-strong);
 }
+.card[data-side="C"] {
+  --side-ink: var(--party-c-ink);
+  --side-tint: var(--party-c-tint);
+  --side-strong: var(--party-c-strong);
+}
+.card[data-side="D"] {
+  --side-ink: var(--party-d-ink);
+  --side-tint: var(--party-d-tint);
+  --side-strong: var(--party-d-strong);
+}
 .card:focus-within {
   border-color: color-mix(in srgb, var(--side-strong) 95%, transparent);
   box-shadow: 0 0 12px color-mix(in srgb, var(--side-strong) 60%, transparent);

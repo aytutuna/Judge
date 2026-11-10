@@ -25,6 +25,15 @@
   --side-tint: var(--party-b-tint);
 }
 
+.tile[data-side="C"] {
+  --side-ink: var(--party-c-ink);
+  --side-tint: var(--party-c-tint);
+}
+.tile[data-side="D"] {
+  --side-ink: var(--party-d-ink);
+  --side-tint: var(--party-d-tint);
+}
+
 .name {
   margin: 0 0 4px;
   color: var(--side-ink);

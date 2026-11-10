@@ -16,6 +16,8 @@ export type Draft = {
   mineName?: string;
   otherName?: string;
   theirsOpen?: boolean;
+  /** Sides C and D, when added. */
+  more?: { text: string; name: string }[];
 };
 
 export const DRAFT_KEY = "verdict-draft";
@@ -79,7 +81,7 @@ export function parseDraft(raw: string): Draft | null {
     return null;
   }
   if (typeof v !== "object" || v === null) return null;
-  const { argument, otherSide, mineName, otherName, theirsOpen } = v as Record<string, unknown>;
+  const { argument, otherSide, mineName, otherName, theirsOpen, more } = v as Record<string, unknown>;
   if (typeof argument !== "string" || argument.length > MAX_DRAFT) return null;
   if (otherSide !== undefined && (typeof otherSide !== "string" || otherSide.length > MAX_DRAFT)) return null;
   if (!argument.trim() && !(otherSide as string | undefined)?.trim()) return null;
@@ -88,5 +90,19 @@ export function parseDraft(raw: string): Draft | null {
   if (typeof mineName === "string" && mineName.length <= MAX_NAME) draft.mineName = mineName;
   if (typeof otherName === "string" && otherName.length <= MAX_NAME) draft.otherName = otherName;
   if (theirsOpen === true) draft.theirsOpen = true;
+  const extra = parseMore(more);
+  if (extra.length) draft.more = extra;
   return draft;
+}
+
+/** Sides C and D as stored; a malformed entry ends the list. */
+function parseMore(v: unknown): { text: string; name: string }[] {
+  if (!Array.isArray(v)) return [];
+  const out: { text: string; name: string }[] = [];
+  for (const e of v.slice(0, 2)) {
+    const { text, name } = (e ?? {}) as Record<string, unknown>;
+    if (typeof text !== "string" || text.length > MAX_DRAFT) break;
+    out.push({ text, name: typeof name === "string" && name.length <= MAX_NAME ? name : "" });
+  }
+  return out;
 }

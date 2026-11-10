@@ -22,7 +22,7 @@ import { startHistory } from "@/lib/history-store";
 import { apiErrorMessage, t } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { resetScene } from "@/lib/scene-bridge";
-import { EXAMPLES, MAX_ARGUMENT, inviteTextOk, joinSides } from "@/lib/sides";
+import { EXAMPLES, MAX_ARGUMENT, inviteTextOk, joinSides, manySidesOk, type SideInput } from "@/lib/sides";
 import type { Clarification, ClarifyResponse, VerdictApiResponse, VerdictResponse } from "@/lib/types";
 import { applyEntitlement, refreshViewer, useViewer } from "@/lib/use-viewer";
 import { pollVerdict, RESPOND_ASYNC, type VerdictAcceptedResponse } from "@/lib/verdict-poll";
@@ -77,7 +77,17 @@ type PremiumInput = {
   evidence: string[];
   mine: JudgedSide | null;
   theirs: JudgedSide | null;
+  /** Sides C and D. */
+  more: JudgedSide[];
 };
+
+/** The typed sides A to D as the verdict request takes them. */
+function typedSides(input: PremiumInput) {
+  return [input.mine, input.theirs, ...input.more].map((s) => ({
+    text: s?.text ?? "",
+    ...(s?.name.trim() ? { name: s.name.trim() } : {}),
+  }));
+}
 
 /** Signed-in screenshot uploads (the respondent's page uses its own). */
 const EVIDENCE_ENDPOINT = "/api/v1/evidence";
@@ -96,6 +106,8 @@ export default function Home() {
   // Null: the account's first name until they type.
   const [mineName, setMineName] = useState<string | null>(null);
   const [otherName, setOtherName] = useState("");
+  // Sides C and D, added under theirs; they exist only while theirs is open.
+  const [more, setMore] = useState<SideInput[]>([]);
   const [phase, setPhase] = useState<Phase>("form");
   const [error, setError] = useState<string | null>(null);
   const [response, setResponse] = useState<VerdictResponse | null>(null);
@@ -173,6 +185,7 @@ export default function Home() {
     setTheirsOpen(Boolean(draft.otherSide) || draft.theirsOpen === true);
     if (draft.mineName !== undefined) setMineName(draft.mineName);
     setOtherName(draft.otherName ?? "");
+    setMore(draft.otherSide && draft.more ? draft.more : []);
   }, []);
 
   // The index has to exist before the first addHistory, or the verdicts
@@ -191,19 +204,22 @@ export default function Home() {
               ...(mineName !== null ? { mineName } : {}),
               ...(otherName ? { otherName } : {}),
               ...(theirsOpen ? { theirsOpen } : {}),
+              ...(more.length ? { more } : {}),
             },
       ),
-    [argument, otherSide, mineName, otherName, theirsOpen, phase],
+    [argument, otherSide, mineName, otherName, theirsOpen, more, phase],
   );
 
   const shownMineName = mineName ?? firstNameOf(viewer.me?.user?.name) ?? "";
-  const joined = joinSides(lang, { text: argument, name: shownMineName }, { text: otherSide, name: otherName });
+  const joined = joinSides(lang, { text: argument, name: shownMineName }, { text: otherSide, name: otherName }, more);
 
   // Until /me answers, a click could send a signed-in writer to sign in.
   // If it failed, the server decides (401 when signed out).
   const viewerKnown = viewer.status === "ready" || viewer.status === "error";
   const canSubmit =
-    argument.trim().length + otherSide.trim().length >= 20 &&
+    (more.length
+      ? manySidesOk([{ text: argument, name: "" }, { text: otherSide, name: "" }, ...more])
+      : argument.trim().length + otherSide.trim().length >= 20) &&
     joined.length <= MAX_ARGUMENT &&
     viewerKnown &&
     !holding &&
@@ -212,7 +228,7 @@ export default function Home() {
   // A link needs a side worth judging, or none at all (the other person can
   // write theirs first); text with a few words or only images does not count.
   const canInvite =
-    !theirsOpen &&
+    (!theirsOpen || (!otherSide.trim() && more.every((s) => !s.text.trim()))) &&
     viewerKnown &&
     !holding &&
     !(evidenceOn && evidence.busy) &&
@@ -297,6 +313,7 @@ export default function Home() {
       evidence: evidenceOn ? evidence.tokens : [],
       mine: argument.trim() ? { name: shownMineName, text: argument.trim() } : null,
       theirs: otherSide.trim() ? { name: otherName, text: otherSide.trim() } : null,
+      more: more.map((s) => ({ name: s.name, text: s.text.trim() })),
     };
     const signal = threadSignal();
     premiumInput.current = input;
@@ -358,6 +375,7 @@ export default function Home() {
       lang,
       ...(clarifications ? { clarifications } : {}),
       ...(input.evidence.length ? { evidence: input.evidence } : {}),
+      ...(input.more.length ? { sides: typedSides(input) } : {}),
     });
     const key = keyFor(body);
     const waitUntil = Date.now() + IN_PROGRESS_WAIT_MS;
@@ -429,6 +447,7 @@ export default function Home() {
       lang,
       ...(tokens.length ? { evidence: tokens } : {}),
       ...(name ? { displayName: name } : {}),
+      ...(theirsOpen ? { sides: 2 + more.length } : {}),
     });
     const key = keyFor(body);
     try {
@@ -480,6 +499,7 @@ export default function Home() {
     setArgument("");
     setOtherSide("");
     setOtherName("");
+    setMore([]);
     setTheirsOpen(false);
     if (mineName !== null && mineName === exampleName.current) setMineName(null);
     exampleName.current = null;
@@ -512,6 +532,7 @@ export default function Home() {
   function removeTheirs() {
     setOtherSide("");
     setOtherName("");
+    setMore([]);
     setTheirsOpen(false);
     if (mineName !== null && mineName === exampleName.current) setMineName(null);
     exampleName.current = null;
@@ -527,6 +548,7 @@ export default function Home() {
     setArgument(t(lang, `pairs.${id}.a`));
     setOtherName(t(lang, `pairs.${id}.bName`));
     setOtherSide(t(lang, `pairs.${id}.b`));
+    setMore([]);
     setTheirsOpen(true);
     setError(null);
   }
@@ -594,6 +616,7 @@ export default function Home() {
               lang={lang}
               mine={judged.mine}
               theirs={judged.theirs}
+              more={judged.more}
               accepted={accepted}
               done={response !== null}
               result={response?.result ?? null}
@@ -614,6 +637,11 @@ export default function Home() {
               theirsOpen={theirsOpen}
               onAddTheirs={() => setTheirsOpen(true)}
               onRemoveTheirs={removeTheirs}
+              more={more}
+              onMoreText={(i, text) => setMore((m) => m.map((s, j) => (j === i ? { ...s, text } : s)))}
+              onMoreName={(i, name) => setMore((m) => m.map((s, j) => (j === i ? { ...s, name } : s)))}
+              onAddMore={() => setMore((m) => [...m, { text: "", name: "" }])}
+              onRemoveMore={() => setMore((m) => m.slice(0, -1))}
               length={joined.length}
               blank={!argument && !theirsOpen && evidence.items.length === 0}
               onClear={reset}

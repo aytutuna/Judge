@@ -183,6 +183,12 @@ export function partyNames(
   };
 }
 
+/** "Party C" in `lang`: what an unnamed side is called. */
+export function partyLabel(lang: Lang, party: PartyId): string {
+  if (party === "a" || party === "b") return t(lang, `party.${party}`);
+  return `${(PARTY_LABELS[lang] ?? PARTY_LABELS.en)[0].slice(0, -1)}${party.toUpperCase()}`;
+}
+
 /**
  * Display names for a verdict with 3 or 4 sides, keyed by party letter
  * ("a" to "d"). The narrator's entry makes the viewer's own party "you".
@@ -199,12 +205,11 @@ export function partyNamesFor(
   opts: NameOptions = {},
 ): Record<PartyId, { name: string; self: boolean }> {
   const resolved = resolveParties(nameMap, selfLang, selfParty, { ...opts, sides: parties.length });
-  const word = (PARTY_LABELS[lang] ?? PARTY_LABELS.en)[0].slice(0, -1);
   const out = {} as Record<PartyId, { name: string; self: boolean }>;
   for (const id of parties) {
     const letter = id.toUpperCase();
     const found = resolved.get(letter);
-    const label = `${word}${letter}`;
+    const label = partyLabel(lang, id);
     const mark = viewerKnown && selfParty === letter && !found;
     out[id] = found
       ? { name: found.self ? t(lang, "you") : found.name, self: found.self }
