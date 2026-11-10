@@ -64,14 +64,21 @@ export type Summary = {
   escalated: boolean;
   /** Judges called in for a close one; the first round is the usual three. */
   extra: number;
-  winner: "a" | "b" | null;
+  winner: "a" | "b" | "c" | "d" | null;
   trial: CruxTrialOutcome | null;
 };
 
 export function summarize(result: VerdictResult): Summary {
   const { votes } = sceneVerdictFrom(result);
   const escalated = !!result.escalated;
-  const winner = result.verdict === "side_a" ? "a" : result.verdict === "side_b" ? "b" : null;
+  // With three or four sides `verdict` is only the older projection.
+  const winner = result.parties
+    ? (result.winner ?? null)
+    : result.verdict === "side_a"
+      ? "a"
+      : result.verdict === "side_b"
+        ? "b"
+        : null;
   return {
     votes,
     escalated,

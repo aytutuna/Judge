@@ -35,6 +35,7 @@ export function JudgingStory({
   accepted,
   done,
   result,
+  sides = 2,
   onFinished,
 }: {
   lang: Lang;
@@ -42,6 +43,8 @@ export function JudgingStory({
   accepted: boolean;
   done: boolean;
   result: VerdictResult | null;
+  /** How many sides the case has (the result's own count once it is in). */
+  sides?: number;
   onFinished: () => void;
 }) {
   const reduced = useReducedMotion();
@@ -111,6 +114,7 @@ export function JudgingStory({
             extra: summary?.extra ?? 0,
             winner: summary?.winner ?? null,
             trial: summary?.trial ?? null,
+            ...(result?.parties || sides > 2 ? { sides: result?.parties?.length ?? sides } : {}),
           }}
         />
       ) : null}
