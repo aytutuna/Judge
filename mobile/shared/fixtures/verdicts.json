@@ -459,6 +459,526 @@
       "name_map": []
     }
   },
+  "manySidedResponses": {
+    "three_win_c": {
+      "id": "many3win01",
+      "result": {
+        "verdict": "too_close",
+        "dispute_type": "definitional",
+        "headline": "Party C's rota is the only one all three can keep",
+        "crux": "Whether the dishes follow a rota or a mood.",
+        "split_points": null,
+        "conditional": null,
+        "argument_map": {
+          "side_a": [
+            {
+              "claim": "Skipped",
+              "kind": "logic"
+            }
+          ],
+          "side_b": [
+            {
+              "claim": "Skipped",
+              "kind": "logic"
+            }
+          ],
+          "bedrock_a": "Skipped",
+          "bedrock_b": "Skipped"
+        },
+        "facts_relied_on": [
+          "Person E wrote the rota down"
+        ],
+        "losing_side_best_point": "",
+        "confidence": 3,
+        "runs": [
+          "split",
+          "split",
+          "side_a"
+        ],
+        "demo": false,
+        "lang": "en",
+        "parties": [
+          "a",
+          "b",
+          "c"
+        ],
+        "winner": "c",
+        "votes": [
+          "c",
+          "c",
+          "a"
+        ],
+        "why": "Party C's rota is the only plan that covers weekends too. Party A and Party B each solve half the week.",
+        "sides": [
+          {
+            "party": "a",
+            "claims": [
+              {
+                "claim": "Party A says the dishes are done on weekdays",
+                "kind": "fact"
+              }
+            ],
+            "bedrock": "A rota only works if it is kept"
+          },
+          {
+            "party": "b",
+            "claims": [
+              {
+                "claim": "Party B says the weekend is for resting",
+                "kind": "value"
+              }
+            ],
+            "bedrock": "Rest comes before chores"
+          },
+          {
+            "party": "c",
+            "claims": [
+              {
+                "claim": "Party C says Person E agreed to a rota",
+                "kind": "fact"
+              }
+            ],
+            "bedrock": "Agreements bind"
+          }
+        ],
+        "others": [
+          {
+            "party": "a",
+            "line": "Party A only covers weekdays."
+          },
+          {
+            "party": "b",
+            "line": "Party B leaves the weekend to luck."
+          }
+        ]
+      },
+      "name_map": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Deniz",
+          "replacement": "Party B"
+        },
+        {
+          "original": "Cem",
+          "replacement": "Party C"
+        }
+      ]
+    },
+    "four_win_d_separate_accounts": {
+      "id": "many4win01",
+      "result": {
+        "verdict": "too_close",
+        "dispute_type": "definitional",
+        "headline": "Party D shows the old list was never fair",
+        "crux": "Who has done how many turns since March.",
+        "split_points": null,
+        "conditional": null,
+        "argument_map": {
+          "side_a": [
+            {
+              "claim": "Skipped",
+              "kind": "logic"
+            }
+          ],
+          "side_b": [
+            {
+              "claim": "Skipped",
+              "kind": "logic"
+            }
+          ],
+          "bedrock_a": "Skipped",
+          "bedrock_b": "Skipped"
+        },
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "losing_side_best_point": "",
+        "confidence": 4,
+        "runs": [
+          "split",
+          "split",
+          "split",
+          "side_a",
+          "split"
+        ],
+        "demo": false,
+        "lang": "en",
+        "parties": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "winner": "d",
+        "votes": [
+          "d",
+          "d",
+          "d",
+          "a",
+          "d"
+        ],
+        "why": "Four accounts disagree about who agreed to what. Party D's count of the turns is the one the others never dispute.",
+        "escalated": true,
+        "two_sided": true,
+        "agreed_facts": [
+          "There was a list on the fridge in March.",
+          "Person E did the dishes twice."
+        ],
+        "disputes": [
+          {
+            "fact": "Who agreed to the rota",
+            "positions": [
+              {
+                "party": "a",
+                "says": "Party A says everyone agreed"
+              },
+              {
+                "party": "c",
+                "says": "Party C says only Party A did"
+              },
+              {
+                "party": "d",
+                "says": "Party D says nobody asked"
+              }
+            ],
+            "finding": "d",
+            "decisive": true
+          },
+          {
+            "fact": "Whether the list was updated in April",
+            "positions": [
+              {
+                "party": "b",
+                "says": "Party B says Party B updated it"
+              },
+              {
+                "party": "a",
+                "says": "Party A says nobody did"
+              }
+            ],
+            "finding": "unsettled",
+            "decisive": false
+          }
+        ],
+        "would_change": [
+          "A dated copy of the list"
+        ],
+        "evidence_used": {
+          "a": 1,
+          "b": 0,
+          "c": 1,
+          "d": 0
+        },
+        "sides": [
+          {
+            "party": "a",
+            "claims": [
+              {
+                "claim": "Party A says the dishes are done on weekdays",
+                "kind": "fact"
+              }
+            ],
+            "bedrock": "A rota only works if it is kept"
+          },
+          {
+            "party": "b",
+            "claims": [
+              {
+                "claim": "Party B says the weekend is for resting",
+                "kind": "value"
+              }
+            ],
+            "bedrock": "Rest comes before chores"
+          },
+          {
+            "party": "c",
+            "claims": [
+              {
+                "claim": "Party C says Person E agreed to a rota",
+                "kind": "fact"
+              }
+            ],
+            "bedrock": "Agreements bind"
+          },
+          {
+            "party": "d",
+            "claims": [
+              {
+                "claim": "Party D says the list was never fair",
+                "kind": "logic"
+              }
+            ],
+            "bedrock": "Fairness is the point"
+          }
+        ],
+        "others": [
+          {
+            "party": "a",
+            "line": "Party A's list was never agreed."
+          },
+          {
+            "party": "b",
+            "line": "Party B did not take part."
+          },
+          {
+            "party": "c",
+            "line": "Party C relies on Party A's word."
+          }
+        ]
+      },
+      "name_map": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Deniz",
+          "replacement": "Party B"
+        },
+        {
+          "original": "Cem",
+          "replacement": "Party C"
+        },
+        {
+          "original": "Mina",
+          "replacement": "Party D"
+        },
+        {
+          "original": "Sarah",
+          "replacement": "Person E"
+        }
+      ]
+    },
+    "three_too_close": {
+      "id": "many3tie01",
+      "result": {
+        "verdict": "too_close",
+        "dispute_type": "definitional",
+        "headline": "Three fair rotas, and nothing to choose between them",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "split_points": null,
+        "conditional": null,
+        "argument_map": {
+          "side_a": [
+            {
+              "claim": "Skipped",
+              "kind": "logic"
+            }
+          ],
+          "side_b": [
+            {
+              "claim": "Skipped",
+              "kind": "logic"
+            }
+          ],
+          "bedrock_a": "Skipped",
+          "bedrock_b": "Skipped"
+        },
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "losing_side_best_point": "",
+        "confidence": 1,
+        "runs": [
+          "side_a",
+          "split",
+          "split"
+        ],
+        "demo": false,
+        "lang": "en",
+        "parties": [
+          "a",
+          "b",
+          "c"
+        ],
+        "winner": null,
+        "votes": [
+          "a",
+          "other",
+          "c"
+        ],
+        "sides": [
+          {
+            "party": "a",
+            "claims": [
+              {
+                "claim": "Party A says the dishes are done on weekdays",
+                "kind": "fact"
+              }
+            ],
+            "bedrock": "A rota only works if it is kept"
+          },
+          {
+            "party": "b",
+            "claims": [
+              {
+                "claim": "Party B says the weekend is for resting",
+                "kind": "value"
+              }
+            ],
+            "bedrock": "Rest comes before chores"
+          },
+          {
+            "party": "c",
+            "claims": [
+              {
+                "claim": "Party C says Person E agreed to a rota",
+                "kind": "fact"
+              }
+            ],
+            "bedrock": "Agreements bind"
+          }
+        ],
+        "others": []
+      },
+      "name_map": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Deniz",
+          "replacement": "Party B"
+        },
+        {
+          "original": "Cem",
+          "replacement": "Party C"
+        }
+      ]
+    },
+    "four_win_a": {
+      "id": "many4win02",
+      "result": {
+        "verdict": "side_a",
+        "dispute_type": "definitional",
+        "headline": "Party A kept the rota, so the dishes are Party B's to do",
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "split_points": null,
+        "conditional": null,
+        "argument_map": {
+          "side_a": [
+            {
+              "claim": "Skipped",
+              "kind": "logic"
+            }
+          ],
+          "side_b": [
+            {
+              "claim": "Skipped",
+              "kind": "logic"
+            }
+          ],
+          "bedrock_a": "Skipped",
+          "bedrock_b": "Skipped"
+        },
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "losing_side_best_point": "",
+        "confidence": 3,
+        "runs": [
+          "side_a",
+          "side_a",
+          "side_b"
+        ],
+        "demo": false,
+        "lang": "en",
+        "parties": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "winner": "a",
+        "votes": [
+          "a",
+          "a",
+          "b"
+        ],
+        "sides": [
+          {
+            "party": "a",
+            "claims": [
+              {
+                "claim": "Party A says the dishes are done on weekdays",
+                "kind": "fact"
+              }
+            ],
+            "bedrock": "A rota only works if it is kept"
+          },
+          {
+            "party": "b",
+            "claims": [
+              {
+                "claim": "Party B says the weekend is for resting",
+                "kind": "value"
+              }
+            ],
+            "bedrock": "Rest comes before chores"
+          },
+          {
+            "party": "c",
+            "claims": [
+              {
+                "claim": "Party C says Person E agreed to a rota",
+                "kind": "fact"
+              }
+            ],
+            "bedrock": "Agreements bind"
+          },
+          {
+            "party": "d",
+            "claims": [
+              {
+                "claim": "Party D says the list was never fair",
+                "kind": "logic"
+              }
+            ],
+            "bedrock": "Fairness is the point"
+          }
+        ],
+        "others": [
+          {
+            "party": "b",
+            "line": "Party B skipped three weekends."
+          },
+          {
+            "party": "c",
+            "line": "Party C joined late."
+          },
+          {
+            "party": "d",
+            "line": "Party D never took a turn."
+          }
+        ]
+      },
+      "name_map": [
+        {
+          "original": "I",
+          "replacement": "Party A"
+        },
+        {
+          "original": "Deniz",
+          "replacement": "Party B"
+        },
+        {
+          "original": "Cem",
+          "replacement": "Party C"
+        },
+        {
+          "original": "Mina",
+          "replacement": "Party D"
+        },
+        {
+          "original": "Sarah",
+          "replacement": "Person E"
+        }
+      ]
+    }
+  },
   "translateResponse": {
     "id": "abc123DEF0",
     "lang": "tr",

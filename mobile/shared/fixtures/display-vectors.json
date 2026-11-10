@@ -779,6 +779,1226 @@
       }
     }
   ],
+  "manySided": [
+    {
+      "sample": "three_win_c",
+      "lang": "en",
+      "selfLang": "en",
+      "parties": [
+        "a",
+        "b",
+        "c"
+      ],
+      "winner": "c",
+      "names": {
+        "a": {
+          "name": "You",
+          "self": true
+        },
+        "b": {
+          "name": "Deniz",
+          "self": false
+        },
+        "c": {
+          "name": "Cem",
+          "self": false
+        }
+      },
+      "namesAsViewer": {
+        "a": {
+          "a": {
+            "name": "Party A (you)",
+            "self": true
+          },
+          "b": {
+            "name": "Party B",
+            "self": false
+          },
+          "c": {
+            "name": "Party C",
+            "self": false
+          }
+        },
+        "b": {
+          "a": {
+            "name": "Party A",
+            "self": false
+          },
+          "b": {
+            "name": "Party B (you)",
+            "self": true
+          },
+          "c": {
+            "name": "Party C",
+            "self": false
+          }
+        },
+        "c": {
+          "a": {
+            "name": "Party A",
+            "self": false
+          },
+          "b": {
+            "name": "Party B",
+            "self": false
+          },
+          "c": {
+            "name": "Party C (you)",
+            "self": true
+          }
+        }
+      },
+      "label": "Cem is right",
+      "confidence": "Confidence 2 of 3",
+      "tugA": 50,
+      "outcomes": {
+        "a": "lose",
+        "b": "lose",
+        "c": "win"
+      },
+      "outcomeWithoutViewer": null,
+      "personalized": {
+        "headline": "Cem's rota is the only one all three can keep",
+        "why": "Cem's rota is the only plan that covers weekends too. You and Deniz each solve half the week.",
+        "crux": "Whether the dishes follow a rota or a mood.",
+        "facts_relied_on": [
+          "Person E wrote the rota down"
+        ],
+        "sides": [
+          {
+            "party": "a",
+            "claims": [
+              "You say the dishes are done on weekdays"
+            ],
+            "bedrock": "A rota only works if it is kept"
+          },
+          {
+            "party": "b",
+            "claims": [
+              "Deniz says the weekend is for resting"
+            ],
+            "bedrock": "Rest comes before chores"
+          },
+          {
+            "party": "c",
+            "claims": [
+              "Cem says Person E agreed to a rota"
+            ],
+            "bedrock": "Agreements bind"
+          }
+        ],
+        "others": [
+          {
+            "party": "a",
+            "line": "Party A only covers weekdays."
+          },
+          {
+            "party": "b",
+            "line": "Deniz leaves the weekend to luck."
+          }
+        ],
+        "disputes": [],
+        "agreed_facts": null,
+        "would_change": null
+      }
+    },
+    {
+      "sample": "three_win_c",
+      "lang": "tr",
+      "selfLang": "en",
+      "parties": [
+        "a",
+        "b",
+        "c"
+      ],
+      "winner": "c",
+      "names": {
+        "a": {
+          "name": "Sen",
+          "self": true
+        },
+        "b": {
+          "name": "Deniz",
+          "self": false
+        },
+        "c": {
+          "name": "Cem",
+          "self": false
+        }
+      },
+      "namesAsViewer": {
+        "a": {
+          "a": {
+            "name": "Taraf A (sen)",
+            "self": true
+          },
+          "b": {
+            "name": "Taraf B",
+            "self": false
+          },
+          "c": {
+            "name": "Taraf C",
+            "self": false
+          }
+        },
+        "b": {
+          "a": {
+            "name": "Taraf A",
+            "self": false
+          },
+          "b": {
+            "name": "Taraf B (sen)",
+            "self": true
+          },
+          "c": {
+            "name": "Taraf C",
+            "self": false
+          }
+        },
+        "c": {
+          "a": {
+            "name": "Taraf A",
+            "self": false
+          },
+          "b": {
+            "name": "Taraf B",
+            "self": false
+          },
+          "c": {
+            "name": "Taraf C (sen)",
+            "self": true
+          }
+        }
+      },
+      "label": "Cem haklı",
+      "confidence": "Güven: 3 üzerinden 2",
+      "tugA": 50,
+      "outcomes": {
+        "a": "lose",
+        "b": "lose",
+        "c": "win"
+      },
+      "outcomeWithoutViewer": null,
+      "personalized": {
+        "headline": "Cem's rota is the only one all three can keep",
+        "why": "Cem's rota is the only plan that covers weekends too. You and Deniz each solve half the week.",
+        "crux": "Whether the dishes follow a rota or a mood.",
+        "facts_relied_on": [
+          "Person E wrote the rota down"
+        ],
+        "sides": [
+          {
+            "party": "a",
+            "claims": [
+              "You say the dishes are done on weekdays"
+            ],
+            "bedrock": "A rota only works if it is kept"
+          },
+          {
+            "party": "b",
+            "claims": [
+              "Deniz says the weekend is for resting"
+            ],
+            "bedrock": "Rest comes before chores"
+          },
+          {
+            "party": "c",
+            "claims": [
+              "Cem says Person E agreed to a rota"
+            ],
+            "bedrock": "Agreements bind"
+          }
+        ],
+        "others": [
+          {
+            "party": "a",
+            "line": "Party A only covers weekdays."
+          },
+          {
+            "party": "b",
+            "line": "Deniz leaves the weekend to luck."
+          }
+        ],
+        "disputes": [],
+        "agreed_facts": null,
+        "would_change": null
+      }
+    },
+    {
+      "sample": "four_win_d_separate_accounts",
+      "lang": "en",
+      "selfLang": "en",
+      "parties": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "winner": "d",
+      "names": {
+        "a": {
+          "name": "You",
+          "self": true
+        },
+        "b": {
+          "name": "Deniz",
+          "self": false
+        },
+        "c": {
+          "name": "Cem",
+          "self": false
+        },
+        "d": {
+          "name": "Mina",
+          "self": false
+        }
+      },
+      "namesAsViewer": {
+        "a": {
+          "a": {
+            "name": "Party A (you)",
+            "self": true
+          },
+          "b": {
+            "name": "Party B",
+            "self": false
+          },
+          "c": {
+            "name": "Party C",
+            "self": false
+          },
+          "d": {
+            "name": "Party D",
+            "self": false
+          }
+        },
+        "b": {
+          "a": {
+            "name": "Party A",
+            "self": false
+          },
+          "b": {
+            "name": "Party B (you)",
+            "self": true
+          },
+          "c": {
+            "name": "Party C",
+            "self": false
+          },
+          "d": {
+            "name": "Party D",
+            "self": false
+          }
+        },
+        "c": {
+          "a": {
+            "name": "Party A",
+            "self": false
+          },
+          "b": {
+            "name": "Party B",
+            "self": false
+          },
+          "c": {
+            "name": "Party C (you)",
+            "self": true
+          },
+          "d": {
+            "name": "Party D",
+            "self": false
+          }
+        },
+        "d": {
+          "a": {
+            "name": "Party A",
+            "self": false
+          },
+          "b": {
+            "name": "Party B",
+            "self": false
+          },
+          "c": {
+            "name": "Party C",
+            "self": false
+          },
+          "d": {
+            "name": "Party D (you)",
+            "self": true
+          }
+        }
+      },
+      "label": "Mina is right",
+      "confidence": "Confidence 4 of 5",
+      "tugA": 50,
+      "outcomes": {
+        "a": "lose",
+        "b": "lose",
+        "c": "lose",
+        "d": "win"
+      },
+      "outcomeWithoutViewer": null,
+      "personalized": {
+        "headline": "Mina shows the old list was never fair",
+        "why": "Four accounts disagree about who agreed to what. Mina's count of the turns is the one the others never dispute.",
+        "crux": "Who has done how many turns since March.",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "sides": [
+          {
+            "party": "a",
+            "claims": [
+              "You say the dishes are done on weekdays"
+            ],
+            "bedrock": "A rota only works if it is kept"
+          },
+          {
+            "party": "b",
+            "claims": [
+              "Deniz says the weekend is for resting"
+            ],
+            "bedrock": "Rest comes before chores"
+          },
+          {
+            "party": "c",
+            "claims": [
+              "Cem says Sarah agreed to a rota"
+            ],
+            "bedrock": "Agreements bind"
+          },
+          {
+            "party": "d",
+            "claims": [
+              "Mina says the list was never fair"
+            ],
+            "bedrock": "Fairness is the point"
+          }
+        ],
+        "others": [
+          {
+            "party": "a",
+            "line": "Your list was never agreed."
+          },
+          {
+            "party": "b",
+            "line": "Deniz did not take part."
+          },
+          {
+            "party": "c",
+            "line": "Cem relies on your word."
+          }
+        ],
+        "disputes": [
+          {
+            "fact": "Who agreed to the rota",
+            "positions": [
+              {
+                "party": "a",
+                "says": "You say everyone agreed"
+              },
+              {
+                "party": "c",
+                "says": "Cem says only you did"
+              },
+              {
+                "party": "d",
+                "says": "Mina says nobody asked"
+              }
+            ]
+          },
+          {
+            "fact": "Whether the list was updated in April",
+            "positions": [
+              {
+                "party": "b",
+                "says": "Deniz says Deniz updated it"
+              },
+              {
+                "party": "a",
+                "says": "You say nobody did"
+              }
+            ]
+          }
+        ],
+        "agreed_facts": [
+          "There was a list on the fridge in March.",
+          "Sarah did the dishes twice."
+        ],
+        "would_change": [
+          "A dated copy of the list"
+        ]
+      }
+    },
+    {
+      "sample": "four_win_d_separate_accounts",
+      "lang": "tr",
+      "selfLang": "en",
+      "parties": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "winner": "d",
+      "names": {
+        "a": {
+          "name": "Sen",
+          "self": true
+        },
+        "b": {
+          "name": "Deniz",
+          "self": false
+        },
+        "c": {
+          "name": "Cem",
+          "self": false
+        },
+        "d": {
+          "name": "Mina",
+          "self": false
+        }
+      },
+      "namesAsViewer": {
+        "a": {
+          "a": {
+            "name": "Taraf A (sen)",
+            "self": true
+          },
+          "b": {
+            "name": "Taraf B",
+            "self": false
+          },
+          "c": {
+            "name": "Taraf C",
+            "self": false
+          },
+          "d": {
+            "name": "Taraf D",
+            "self": false
+          }
+        },
+        "b": {
+          "a": {
+            "name": "Taraf A",
+            "self": false
+          },
+          "b": {
+            "name": "Taraf B (sen)",
+            "self": true
+          },
+          "c": {
+            "name": "Taraf C",
+            "self": false
+          },
+          "d": {
+            "name": "Taraf D",
+            "self": false
+          }
+        },
+        "c": {
+          "a": {
+            "name": "Taraf A",
+            "self": false
+          },
+          "b": {
+            "name": "Taraf B",
+            "self": false
+          },
+          "c": {
+            "name": "Taraf C (sen)",
+            "self": true
+          },
+          "d": {
+            "name": "Taraf D",
+            "self": false
+          }
+        },
+        "d": {
+          "a": {
+            "name": "Taraf A",
+            "self": false
+          },
+          "b": {
+            "name": "Taraf B",
+            "self": false
+          },
+          "c": {
+            "name": "Taraf C",
+            "self": false
+          },
+          "d": {
+            "name": "Taraf D (sen)",
+            "self": true
+          }
+        }
+      },
+      "label": "Mina haklı",
+      "confidence": "Güven: 5 üzerinden 4",
+      "tugA": 50,
+      "outcomes": {
+        "a": "lose",
+        "b": "lose",
+        "c": "lose",
+        "d": "win"
+      },
+      "outcomeWithoutViewer": null,
+      "personalized": {
+        "headline": "Mina shows the old list was never fair",
+        "why": "Four accounts disagree about who agreed to what. Mina's count of the turns is the one the others never dispute.",
+        "crux": "Who has done how many turns since March.",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "sides": [
+          {
+            "party": "a",
+            "claims": [
+              "You say the dishes are done on weekdays"
+            ],
+            "bedrock": "A rota only works if it is kept"
+          },
+          {
+            "party": "b",
+            "claims": [
+              "Deniz says the weekend is for resting"
+            ],
+            "bedrock": "Rest comes before chores"
+          },
+          {
+            "party": "c",
+            "claims": [
+              "Cem says Sarah agreed to a rota"
+            ],
+            "bedrock": "Agreements bind"
+          },
+          {
+            "party": "d",
+            "claims": [
+              "Mina says the list was never fair"
+            ],
+            "bedrock": "Fairness is the point"
+          }
+        ],
+        "others": [
+          {
+            "party": "a",
+            "line": "Your list was never agreed."
+          },
+          {
+            "party": "b",
+            "line": "Deniz did not take part."
+          },
+          {
+            "party": "c",
+            "line": "Cem relies on your word."
+          }
+        ],
+        "disputes": [
+          {
+            "fact": "Who agreed to the rota",
+            "positions": [
+              {
+                "party": "a",
+                "says": "You say everyone agreed"
+              },
+              {
+                "party": "c",
+                "says": "Cem says only you did"
+              },
+              {
+                "party": "d",
+                "says": "Mina says nobody asked"
+              }
+            ]
+          },
+          {
+            "fact": "Whether the list was updated in April",
+            "positions": [
+              {
+                "party": "b",
+                "says": "Deniz says Deniz updated it"
+              },
+              {
+                "party": "a",
+                "says": "You say nobody did"
+              }
+            ]
+          }
+        ],
+        "agreed_facts": [
+          "There was a list on the fridge in March.",
+          "Sarah did the dishes twice."
+        ],
+        "would_change": [
+          "A dated copy of the list"
+        ]
+      }
+    },
+    {
+      "sample": "three_too_close",
+      "lang": "en",
+      "selfLang": "en",
+      "parties": [
+        "a",
+        "b",
+        "c"
+      ],
+      "winner": null,
+      "names": {
+        "a": {
+          "name": "You",
+          "self": true
+        },
+        "b": {
+          "name": "Deniz",
+          "self": false
+        },
+        "c": {
+          "name": "Cem",
+          "self": false
+        }
+      },
+      "namesAsViewer": {
+        "a": {
+          "a": {
+            "name": "Party A (you)",
+            "self": true
+          },
+          "b": {
+            "name": "Party B",
+            "self": false
+          },
+          "c": {
+            "name": "Party C",
+            "self": false
+          }
+        },
+        "b": {
+          "a": {
+            "name": "Party A",
+            "self": false
+          },
+          "b": {
+            "name": "Party B (you)",
+            "self": true
+          },
+          "c": {
+            "name": "Party C",
+            "self": false
+          }
+        },
+        "c": {
+          "a": {
+            "name": "Party A",
+            "self": false
+          },
+          "b": {
+            "name": "Party B",
+            "self": false
+          },
+          "c": {
+            "name": "Party C (you)",
+            "self": true
+          }
+        }
+      },
+      "label": "Too close to call",
+      "confidence": "Judges split",
+      "tugA": 50,
+      "outcomes": {
+        "a": null,
+        "b": null,
+        "c": null
+      },
+      "outcomeWithoutViewer": null,
+      "personalized": {
+        "headline": "Three fair rotas, and nothing to choose between them",
+        "why": null,
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "sides": [
+          {
+            "party": "a",
+            "claims": [
+              "You say the dishes are done on weekdays"
+            ],
+            "bedrock": "A rota only works if it is kept"
+          },
+          {
+            "party": "b",
+            "claims": [
+              "Deniz says the weekend is for resting"
+            ],
+            "bedrock": "Rest comes before chores"
+          },
+          {
+            "party": "c",
+            "claims": [
+              "Cem says Person E agreed to a rota"
+            ],
+            "bedrock": "Agreements bind"
+          }
+        ],
+        "others": [],
+        "disputes": [],
+        "agreed_facts": null,
+        "would_change": null
+      }
+    },
+    {
+      "sample": "three_too_close",
+      "lang": "tr",
+      "selfLang": "en",
+      "parties": [
+        "a",
+        "b",
+        "c"
+      ],
+      "winner": null,
+      "names": {
+        "a": {
+          "name": "Sen",
+          "self": true
+        },
+        "b": {
+          "name": "Deniz",
+          "self": false
+        },
+        "c": {
+          "name": "Cem",
+          "self": false
+        }
+      },
+      "namesAsViewer": {
+        "a": {
+          "a": {
+            "name": "Taraf A (sen)",
+            "self": true
+          },
+          "b": {
+            "name": "Taraf B",
+            "self": false
+          },
+          "c": {
+            "name": "Taraf C",
+            "self": false
+          }
+        },
+        "b": {
+          "a": {
+            "name": "Taraf A",
+            "self": false
+          },
+          "b": {
+            "name": "Taraf B (sen)",
+            "self": true
+          },
+          "c": {
+            "name": "Taraf C",
+            "self": false
+          }
+        },
+        "c": {
+          "a": {
+            "name": "Taraf A",
+            "self": false
+          },
+          "b": {
+            "name": "Taraf B",
+            "self": false
+          },
+          "c": {
+            "name": "Taraf C (sen)",
+            "self": true
+          }
+        }
+      },
+      "label": "Başa baş, karar çıkmadı",
+      "confidence": "Yargıçlar bölündü",
+      "tugA": 50,
+      "outcomes": {
+        "a": null,
+        "b": null,
+        "c": null
+      },
+      "outcomeWithoutViewer": null,
+      "personalized": {
+        "headline": "Three fair rotas, and nothing to choose between them",
+        "why": null,
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "sides": [
+          {
+            "party": "a",
+            "claims": [
+              "You say the dishes are done on weekdays"
+            ],
+            "bedrock": "A rota only works if it is kept"
+          },
+          {
+            "party": "b",
+            "claims": [
+              "Deniz says the weekend is for resting"
+            ],
+            "bedrock": "Rest comes before chores"
+          },
+          {
+            "party": "c",
+            "claims": [
+              "Cem says Person E agreed to a rota"
+            ],
+            "bedrock": "Agreements bind"
+          }
+        ],
+        "others": [],
+        "disputes": [],
+        "agreed_facts": null,
+        "would_change": null
+      }
+    },
+    {
+      "sample": "four_win_a",
+      "lang": "en",
+      "selfLang": "en",
+      "parties": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "winner": "a",
+      "names": {
+        "a": {
+          "name": "You",
+          "self": true
+        },
+        "b": {
+          "name": "Deniz",
+          "self": false
+        },
+        "c": {
+          "name": "Cem",
+          "self": false
+        },
+        "d": {
+          "name": "Mina",
+          "self": false
+        }
+      },
+      "namesAsViewer": {
+        "a": {
+          "a": {
+            "name": "Party A (you)",
+            "self": true
+          },
+          "b": {
+            "name": "Party B",
+            "self": false
+          },
+          "c": {
+            "name": "Party C",
+            "self": false
+          },
+          "d": {
+            "name": "Party D",
+            "self": false
+          }
+        },
+        "b": {
+          "a": {
+            "name": "Party A",
+            "self": false
+          },
+          "b": {
+            "name": "Party B (you)",
+            "self": true
+          },
+          "c": {
+            "name": "Party C",
+            "self": false
+          },
+          "d": {
+            "name": "Party D",
+            "self": false
+          }
+        },
+        "c": {
+          "a": {
+            "name": "Party A",
+            "self": false
+          },
+          "b": {
+            "name": "Party B",
+            "self": false
+          },
+          "c": {
+            "name": "Party C (you)",
+            "self": true
+          },
+          "d": {
+            "name": "Party D",
+            "self": false
+          }
+        },
+        "d": {
+          "a": {
+            "name": "Party A",
+            "self": false
+          },
+          "b": {
+            "name": "Party B",
+            "self": false
+          },
+          "c": {
+            "name": "Party C",
+            "self": false
+          },
+          "d": {
+            "name": "Party D (you)",
+            "self": true
+          }
+        }
+      },
+      "label": "You're right",
+      "confidence": "Confidence 2 of 3",
+      "tugA": 50,
+      "outcomes": {
+        "a": "win",
+        "b": "lose",
+        "c": "lose",
+        "d": "lose"
+      },
+      "outcomeWithoutViewer": null,
+      "personalized": {
+        "headline": "You kept the rota, so the dishes are Deniz's to do",
+        "why": null,
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "sides": [
+          {
+            "party": "a",
+            "claims": [
+              "You say the dishes are done on weekdays"
+            ],
+            "bedrock": "A rota only works if it is kept"
+          },
+          {
+            "party": "b",
+            "claims": [
+              "Deniz says the weekend is for resting"
+            ],
+            "bedrock": "Rest comes before chores"
+          },
+          {
+            "party": "c",
+            "claims": [
+              "Cem says Sarah agreed to a rota"
+            ],
+            "bedrock": "Agreements bind"
+          },
+          {
+            "party": "d",
+            "claims": [
+              "Mina says the list was never fair"
+            ],
+            "bedrock": "Fairness is the point"
+          }
+        ],
+        "others": [
+          {
+            "party": "b",
+            "line": "Deniz skipped three weekends."
+          },
+          {
+            "party": "c",
+            "line": "Cem joined late."
+          },
+          {
+            "party": "d",
+            "line": "Mina never took a turn."
+          }
+        ],
+        "disputes": [],
+        "agreed_facts": null,
+        "would_change": null
+      }
+    },
+    {
+      "sample": "four_win_a",
+      "lang": "tr",
+      "selfLang": "en",
+      "parties": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "winner": "a",
+      "names": {
+        "a": {
+          "name": "Sen",
+          "self": true
+        },
+        "b": {
+          "name": "Deniz",
+          "self": false
+        },
+        "c": {
+          "name": "Cem",
+          "self": false
+        },
+        "d": {
+          "name": "Mina",
+          "self": false
+        }
+      },
+      "namesAsViewer": {
+        "a": {
+          "a": {
+            "name": "Taraf A (sen)",
+            "self": true
+          },
+          "b": {
+            "name": "Taraf B",
+            "self": false
+          },
+          "c": {
+            "name": "Taraf C",
+            "self": false
+          },
+          "d": {
+            "name": "Taraf D",
+            "self": false
+          }
+        },
+        "b": {
+          "a": {
+            "name": "Taraf A",
+            "self": false
+          },
+          "b": {
+            "name": "Taraf B (sen)",
+            "self": true
+          },
+          "c": {
+            "name": "Taraf C",
+            "self": false
+          },
+          "d": {
+            "name": "Taraf D",
+            "self": false
+          }
+        },
+        "c": {
+          "a": {
+            "name": "Taraf A",
+            "self": false
+          },
+          "b": {
+            "name": "Taraf B",
+            "self": false
+          },
+          "c": {
+            "name": "Taraf C (sen)",
+            "self": true
+          },
+          "d": {
+            "name": "Taraf D",
+            "self": false
+          }
+        },
+        "d": {
+          "a": {
+            "name": "Taraf A",
+            "self": false
+          },
+          "b": {
+            "name": "Taraf B",
+            "self": false
+          },
+          "c": {
+            "name": "Taraf C",
+            "self": false
+          },
+          "d": {
+            "name": "Taraf D (sen)",
+            "self": true
+          }
+        }
+      },
+      "label": "Sen haklısın",
+      "confidence": "Güven: 3 üzerinden 2",
+      "tugA": 50,
+      "outcomes": {
+        "a": "win",
+        "b": "lose",
+        "c": "lose",
+        "d": "lose"
+      },
+      "outcomeWithoutViewer": null,
+      "personalized": {
+        "headline": "You kept the rota, so the dishes are Deniz's to do",
+        "why": null,
+        "crux": "Whether 'sandwich' follows shape or everyday use.",
+        "facts_relied_on": [
+          "Major menus list hot dogs separately from sandwiches"
+        ],
+        "sides": [
+          {
+            "party": "a",
+            "claims": [
+              "You say the dishes are done on weekdays"
+            ],
+            "bedrock": "A rota only works if it is kept"
+          },
+          {
+            "party": "b",
+            "claims": [
+              "Deniz says the weekend is for resting"
+            ],
+            "bedrock": "Rest comes before chores"
+          },
+          {
+            "party": "c",
+            "claims": [
+              "Cem says Sarah agreed to a rota"
+            ],
+            "bedrock": "Agreements bind"
+          },
+          {
+            "party": "d",
+            "claims": [
+              "Mina says the list was never fair"
+            ],
+            "bedrock": "Fairness is the point"
+          }
+        ],
+        "others": [
+          {
+            "party": "b",
+            "line": "Deniz skipped three weekends."
+          },
+          {
+            "party": "c",
+            "line": "Cem joined late."
+          },
+          {
+            "party": "d",
+            "line": "Mina never took a turn."
+          }
+        ],
+        "disputes": [],
+        "agreed_facts": null,
+        "would_change": null
+      }
+    }
+  ],
   "names": [
     {
       "case": "empty",

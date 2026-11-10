@@ -51,6 +51,202 @@
       "index": 5
     }
   ],
+  "summaries": [
+    {
+      "sample": "win_a_self",
+      "sides": 2,
+      "summary": {
+        "votes": [
+          "a",
+          "a",
+          "b"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "a",
+        "trial": "survived"
+      }
+    },
+    {
+      "sample": "win_b_named",
+      "sides": 2,
+      "summary": {
+        "votes": [
+          "b",
+          "b",
+          "b"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "b",
+        "trial": null
+      }
+    },
+    {
+      "sample": "lean_b_majority_escalated",
+      "sides": 2,
+      "summary": {
+        "votes": [
+          "a",
+          "b",
+          "other",
+          "b",
+          "b"
+        ],
+        "escalated": true,
+        "extra": 2,
+        "winner": null,
+        "trial": null
+      }
+    },
+    {
+      "sample": "lean_tie",
+      "sides": 2,
+      "summary": {
+        "votes": [
+          "a",
+          "b"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": null,
+        "trial": null
+      }
+    },
+    {
+      "sample": "conditional",
+      "sides": 2,
+      "summary": {
+        "votes": [
+          "other",
+          "other",
+          "other"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": null,
+        "trial": null
+      }
+    },
+    {
+      "sample": "split",
+      "sides": 2,
+      "summary": {
+        "votes": [
+          "other",
+          "other",
+          "a"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": null,
+        "trial": null
+      }
+    },
+    {
+      "sample": "overturned_tr",
+      "sides": 2,
+      "summary": {
+        "votes": [
+          "a",
+          "a",
+          "b"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "a",
+        "trial": "overturned"
+      }
+    },
+    {
+      "sample": "refused",
+      "sides": 2,
+      "summary": {
+        "votes": [],
+        "escalated": false,
+        "extra": 0,
+        "winner": null,
+        "trial": null
+      }
+    },
+    {
+      "sample": "premium_factcheck",
+      "sides": 2,
+      "summary": {
+        "votes": [
+          "a",
+          "a",
+          "b"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "a",
+        "trial": null
+      }
+    },
+    {
+      "sample": "three_win_c",
+      "sides": 3,
+      "summary": {
+        "votes": [
+          "c",
+          "c",
+          "a"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "c",
+        "trial": null
+      }
+    },
+    {
+      "sample": "four_win_d_separate_accounts",
+      "sides": 4,
+      "summary": {
+        "votes": [
+          "d",
+          "d",
+          "d",
+          "a",
+          "d"
+        ],
+        "escalated": true,
+        "extra": 2,
+        "winner": "d",
+        "trial": null
+      }
+    },
+    {
+      "sample": "three_too_close",
+      "sides": 3,
+      "summary": {
+        "votes": [
+          "a",
+          "other",
+          "c"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": null,
+        "trial": null
+      }
+    },
+    {
+      "sample": "four_win_a",
+      "sides": 4,
+      "summary": {
+        "votes": [
+          "a",
+          "a",
+          "b"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "a",
+        "trial": null
+      }
+    }
+  ],
   "endings": [
     {
       "name": "unanimous",
@@ -645,6 +841,199 @@
         }
       ],
       "finishAt": 15850
+    },
+    {
+      "name": "three_sides_c_wins",
+      "fromWaiting": 5,
+      "summary": {
+        "votes": [
+          "c",
+          "c",
+          "a"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "c",
+        "trial": null
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 450,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 3510,
+          "beat": "final",
+          "line": {
+            "key": "story.agree",
+            "vars": {
+              "n": 2,
+              "total": 3
+            }
+          }
+        },
+        {
+          "at": 3510,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 5410
+    },
+    {
+      "name": "four_sides_d_wins_escalated",
+      "fromWaiting": 5,
+      "summary": {
+        "votes": [
+          "d",
+          "a",
+          "d",
+          "c",
+          "d"
+        ],
+        "escalated": true,
+        "extra": 2,
+        "winner": "d",
+        "trial": null
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 450,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 3310,
+          "beat": "more",
+          "line": {
+            "key": "story.closeCall"
+          }
+        },
+        {
+          "at": 5910,
+          "beat": "vote2",
+          "line": null
+        },
+        {
+          "at": 7350,
+          "beat": "final",
+          "line": {
+            "key": "story.agree",
+            "vars": {
+              "n": 3,
+              "total": 5
+            }
+          }
+        },
+        {
+          "at": 7350,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 9250
+    },
+    {
+      "name": "four_sides_no_majority",
+      "fromWaiting": 5,
+      "summary": {
+        "votes": [
+          "a",
+          "other",
+          "c"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": null,
+        "trial": null
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 450,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 3510,
+          "beat": "final",
+          "line": {
+            "key": "story.split"
+          }
+        },
+        {
+          "at": 3510,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 5410
+    },
+    {
+      "name": "four_sides_trial",
+      "fromWaiting": 5,
+      "summary": {
+        "votes": [
+          "c",
+          "d",
+          "c"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "c",
+        "trial": "survived"
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 450,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 3510,
+          "beat": "trial",
+          "line": {
+            "key": "trial.survived"
+          }
+        },
+        {
+          "at": 8310,
+          "beat": "final",
+          "line": {
+            "key": "story.agree",
+            "vars": {
+              "n": 2,
+              "total": 3
+            }
+          }
+        },
+        {
+          "at": 8310,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 10210
     },
     {
       "name": "reduced",
