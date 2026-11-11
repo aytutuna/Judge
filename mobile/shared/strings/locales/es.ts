@@ -102,52 +102,6 @@ const es: AppLocale = {
     "app.home.addTheirSide": "Añadir la otra versión",
     "app.home.removeTheirSide": "Quitar la otra versión",
     "app.home.clear": "Borrar",
-    "app.example.dishwasher.aName": "Carmen",
-    "app.example.dishwasher.a":
-      "Otra vez pusiste los platos hondos en la parte de arriba. Ahí nunca salen limpios; para eso está la de abajo.",
-    "app.example.dishwasher.bName": "Javier",
-    "app.example.dishwasher.b":
-      "Caben perfectamente arriba y así queda libre la parte de abajo para las ollas. Llevo años cargándolo así y nunca ha salido nada sucio.",
-    "app.example.bill.aName": "Laura",
-    "app.example.bill.a":
-      "Yo no bebí nada, así que no debería pagar una cuarta parte del vino. Dividir la comida a partes iguales me parece bien.",
-    "app.example.bill.bName": "Pablo",
-    "app.example.bill.b":
-      "Siempre lo dividimos entre cuatro y ya. Calcular cada vez quién pidió qué es un lío, y además la diferencia es mínima.",
-    "app.example.thermostat.aName": "Sofía",
-    "app.example.thermostat.a":
-      "Aquí dentro hace 19 grados y tengo frío incluso con sudadera. Poner la calefacción a 22 no es ninguna locura.",
-    "app.example.thermostat.bName": "Andrés",
-    "app.example.thermostat.b":
-      "Con 22 grados hace demasiado calor para dormir. Tú puedes abrigarte más; yo ya no me puedo quitar nada.",
-    "app.example.roadTrip.aName": "Elena",
-    "app.example.roadTrip.a": "A la ida conduje yo las seis horas. Lo justo es que tú conduzcas a la vuelta.",
-    "app.example.roadTrip.bName": "Miguel",
-    "app.example.roadTrip.b":
-      "Antes de salir dije que odio conducir de noche, y salimos a las siete de la tarde. En el próximo viaje conduzco yo por las mañanas.",
-    "app.example.seat.aName": "Paula",
-    "app.example.seat.a":
-      "Mi asiento se reclina, así que lo reclino. Es un vuelo nocturno y todo el mundo está intentando dormir.",
-    "app.example.seat.bName": "Daniel",
-    "app.example.seat.b":
-      "Mido un metro noventa y ya tengo las rodillas pegadas a tu asiento. Por lo menos podrías preguntar antes de echarlo del todo hacia atrás.",
-    "app.example.spoiler.aName": "Valeria",
-    "app.example.spoiler.a":
-      "Me dijiste quién era el asesino antes de que empezara a ver el último capítulo. Llevaba toda la semana esperándolo.",
-    "app.example.spoiler.bName": "Mateo",
-    "app.example.spoiler.b":
-      "Salió hace tres semanas y dijiste que ya habías terminado la serie. No puedo estar pendiente de por dónde va cada uno.",
-    "app.example.jacket.aName": "Marta",
-    "app.example.jacket.a": "Te llevaste mi chaqueta vaquera al concierto sin preguntarme. Volvió oliendo a humo.",
-    "app.example.jacket.bName": "Sergio",
-    "app.example.jacket.b":
-      "Estaba colgada junto a la puerta y nunca te la pones. Te habría preguntado, pero estabas dormida y yo ya llegaba tarde.",
-    "app.example.lastSlice.aName": "Tomás",
-    "app.example.lastSlice.a":
-      "Dije que la última porción era para mí antes de que empezara la película. Todo el mundo me oyó.",
-    "app.example.lastSlice.bName": "Camila",
-    "app.example.lastSlice.b":
-      "No puedes decir que es tuya y luego no tocarla en dos horas. Estaba ahí enfriándose, así que me la comí.",
     "app.case.waitingKicker": "Caso · en espera",
     "app.case.waitingFor": "Esperando a {name}",
     "app.case.waitingLead":

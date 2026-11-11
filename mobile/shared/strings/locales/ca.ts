@@ -102,52 +102,6 @@ const ca: AppLocale = {
     "app.home.addTheirSide": "Afegeix la seva versió",
     "app.home.removeTheirSide": "Treu la seva versió",
     "app.home.clear": "Esborra",
-    "app.example.dishwasher.aName": "Jordi",
-    "app.example.dishwasher.a":
-      "Has tornat a posar els bols a la cistella de dalt del rentaplats. Allà dalt no surten mai nets; per això hi ha la de baix.",
-    "app.example.dishwasher.bName": "Núria",
-    "app.example.dishwasher.b":
-      "Hi caben perfectament, i així la de baix queda lliure per a les olles. Fa anys que el carrego així i mai no ha sortit res brut.",
-    "app.example.bill.aName": "Clara",
-    "app.example.bill.a":
-      "Jo no he begut res, així que no em toca pagar una quarta part del vi. Dividir el menjar a parts iguals ja em va bé.",
-    "app.example.bill.bName": "Marc",
-    "app.example.bill.b":
-      "Sempre ho dividim entre quatre i prou. Calcular cada vegada qui ha pres què és un maldecap, i tampoc no hi ha tanta diferència.",
-    "app.example.thermostat.aName": "Aina",
-    "app.example.thermostat.a":
-      "Aquí dins fa 19 graus i tinc fred fins i tot amb la dessuadora. Pujar la calefacció a 22 no és cap bogeria.",
-    "app.example.thermostat.bName": "Pol",
-    "app.example.thermostat.b":
-      "A 22 graus fa massa calor per dormir. Tu pots abrigar-te més; jo ja no em puc treure res més.",
-    "app.example.roadTrip.aName": "Arnau",
-    "app.example.roadTrip.a": "Vaig conduir jo les sis hores de l'anada. El més just és que tu condueixis a la tornada.",
-    "app.example.roadTrip.bName": "Júlia",
-    "app.example.roadTrip.b":
-      "Abans de sortir ja et vaig dir que odio conduir de nit, i marxem a les 7 del vespre. Al pròxim viatge, els matins condueixo jo.",
-    "app.example.seat.aName": "Oriol",
-    "app.example.seat.a": "El meu seient es reclina, així que el reclino. És un vol de nit i tothom intenta dormir.",
-    "app.example.seat.bName": "Marina",
-    "app.example.seat.b":
-      "Faig 1,90 i ja tinc els genolls clavats al teu seient. Com a mínim podries preguntar abans de tirar-lo del tot enrere.",
-    "app.example.spoiler.aName": "Mireia",
-    "app.example.spoiler.a":
-      "Em vas dir qui era l'assassí abans que comencés l'últim capítol. Feia tota la setmana que l'esperava.",
-    "app.example.spoiler.bName": "Pere",
-    "app.example.spoiler.b":
-      "Va sortir fa tres setmanes i em vas dir que ja l'havies acabat. No puc estar pendent de per on va cadascú.",
-    "app.example.jacket.aName": "Ona",
-    "app.example.jacket.a":
-      "Et vas posar la meva jaqueta texana per anar al concert sense preguntar-m'ho. Me la vas tornar fent pudor de fum.",
-    "app.example.jacket.bName": "Guillem",
-    "app.example.jacket.b":
-      "Estava penjada al costat de la porta i no te la poses mai. T'ho hauria preguntat, però dormies i jo ja feia tard.",
-    "app.example.lastSlice.aName": "Roger",
-    "app.example.lastSlice.a":
-      "Abans que comencés la pel·li vaig dir que l'últim tros de pizza era meu. Tothom em va sentir.",
-    "app.example.lastSlice.bName": "Carla",
-    "app.example.lastSlice.b":
-      "No pots dir que és teu i després passar-te dues hores sense tocar-lo. Era allà refredant-se, així que me'l vaig menjar.",
     "app.case.waitingKicker": "Cas · en espera",
     "app.case.waitingFor": "Esperant {name}",
     "app.case.waitingLead":

@@ -98,50 +98,6 @@ const hu: AppLocale = {
     "app.home.addTheirSide": "Add hozzá az ő verzióját",
     "app.home.removeTheirSide": "Vedd ki az ő verzióját",
     "app.home.clear": "Törlés",
-    "app.example.dishwasher.aName": "Kata",
-    "app.example.dishwasher.a":
-      "Már megint a felső kosárba raktad a tálakat. Ott sosem lesznek tiszták, arra való az alsó.",
-    "app.example.dishwasher.bName": "Ádám",
-    "app.example.dishwasher.b":
-      "Simán elférnek fent, és így az alsó kosár szabad marad a lábasoknak. Évek óta így pakolom, és még soha semmi nem jött ki koszosan.",
-    "app.example.bill.aName": "Eszter",
-    "app.example.bill.a":
-      "Én nem ittam semmit, úgyhogy nem kéne kifizetnem a bor negyedét. Az ételt nyugodtan osszuk el egyenlően.",
-    "app.example.bill.bName": "Máté",
-    "app.example.bill.b":
-      "Mindig négyfelé osztjuk, és kész. Minden alkalommal kiszámolni, ki mit evett, macerás, és amúgy sem nagy a különbség.",
-    "app.example.thermostat.aName": "Zsófi",
-    "app.example.thermostat.a":
-      "19 fok van itt bent, és még kapucnis pulóverben is fázom. Nem őrültség feltekerni 22-re.",
-    "app.example.thermostat.bName": "Péter",
-    "app.example.thermostat.b":
-      "22 fokban nem lehet aludni, az már túl meleg. Te fel tudsz venni még egy réteget, én viszont már nem tudok mit levenni.",
-    "app.example.roadTrip.aName": "Dávid",
-    "app.example.roadTrip.a": "Odafelé végig én vezettem, mind a hat órát. Az az igazságos, ha visszafelé te vezetsz.",
-    "app.example.roadTrip.bName": "Lilla",
-    "app.example.roadTrip.b":
-      "Már indulás előtt mondtam, hogy utálok éjszaka vezetni, és este hétkor indulunk. A következő úton majd én vezetek reggelente.",
-    "app.example.seat.aName": "Nóra",
-    "app.example.seat.a": "Az ülésem hátradönthető, úgyhogy hátradöntöm. Éjszakai járaton vagyunk, mindenki aludni próbál.",
-    "app.example.seat.bName": "Bálint",
-    "app.example.seat.b":
-      "190 centi vagyok, és a térdem már így is az ülésednek nyomódik. Legalább megkérdezhetnéd, mielőtt teljesen hátradöntöd.",
-    "app.example.spoiler.aName": "Fanni",
-    "app.example.spoiler.a":
-      "Elárultad, ki a gyilkos, mielőtt egyáltalán elkezdtem volna az utolsó részt. Egész héten erre vártam.",
-    "app.example.spoiler.bName": "Levente",
-    "app.example.spoiler.b":
-      "Három hete jött ki, és azt mondtad, már a végére értél. Nem tudom fejben tartani, ki hol tart.",
-    "app.example.jacket.aName": "Dani",
-    "app.example.jacket.a": "Meg sem kérdeztél, csak felvetted a farmerdzsekimet a koncertre. Füstszagúan kaptam vissza.",
-    "app.example.jacket.bName": "Lili",
-    "app.example.jacket.b":
-      "Az ajtó mellett lógott, és sosem hordod. Megkérdeztelek volna, de aludtál, én meg már késésben voltam.",
-    "app.example.lastSlice.aName": "Marci",
-    "app.example.lastSlice.a": "Még a film előtt lestoppoltam az utolsó szeletet. Mindenki hallotta.",
-    "app.example.lastSlice.bName": "Panni",
-    "app.example.lastSlice.b":
-      "Nem lehet lestoppolni valamit, aztán két órán át hozzá se nyúlni. Csak ott hűlt, úgyhogy megettem.",
     "app.case.waitingKicker": "Ügy · válaszra vár",
     "app.case.waitingFor": "{name} válaszára várunk",
     "app.case.waitingLead":

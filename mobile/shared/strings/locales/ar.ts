@@ -113,54 +113,6 @@ const ar: AppLocale = {
     "app.home.addTheirSide": "أضف رواية الطرف الآخر",
     "app.home.removeTheirSide": "أزل رواية الطرف الآخر",
     "app.home.clear": "مسح",
-    "app.example.dishwasher.aName": "ليلى",
-    "app.example.dishwasher.a":
-      "وضعت الأوعية في الرف العلوي مرة أخرى. لا تخرج من هناك نظيفة أبدًا، والرف السفلي موجود لهذا بالذات.",
-    "app.example.dishwasher.bName": "كريم",
-    "app.example.dishwasher.b":
-      "الرف العلوي يتّسع لها تمامًا، وهكذا يبقى السفلي فارغًا للقدور. أرتّب غسالة الصحون بهذه الطريقة منذ سنوات، ولم يخرج منها شيء متّسخًا.",
-    "app.example.bill.aName": "هند",
-    "app.example.bill.a":
-      "لم أطلب أي مشروب، فلا يصح أن أدفع ربع ثمن المشروبات. أما تقسيم ثمن الطعام بالتساوي فلا مانع عندي.",
-    "app.example.bill.bName": "يوسف",
-    "app.example.bill.b":
-      "نحن نقسم الفاتورة على أربعة دائمًا. حساب مَن أخذ ماذا في كل مرة متعب، والفرق ليس كبيرًا أصلًا.",
-    "app.example.thermostat.aName": "سلمى",
-    "app.example.thermostat.a":
-      "الحرارة هنا 19 درجة، وأشعر بالبرد حتى وأنا ألبس كنزة. رفع التدفئة إلى 22 ليس مبالغة.",
-    "app.example.thermostat.bName": "خالد",
-    "app.example.thermostat.b":
-      "على 22 درجة لا يمكن النوم من الحر. يمكنك أن ترتدي طبقة إضافية، أما أنا فلم يبقَ عليّ ما أخلعه.",
-    "app.example.roadTrip.aName": "طارق",
-    "app.example.roadTrip.a":
-      "أنا مَن قاد السيارة طوال الساعات الست في الذهاب. من العدل أن تقودي أنتِ في العودة.",
-    "app.example.roadTrip.bName": "دينا",
-    "app.example.roadTrip.b":
-      "قلت لك قبل أن ننطلق إنني أكره القيادة ليلًا، ونحن سنغادر في السابعة مساءً. سأتولى القيادة في الصباح في الرحلة القادمة.",
-    "app.example.seat.aName": "رنا",
-    "app.example.seat.a":
-      "مقعدي يميل إلى الخلف، لذلك أُميله. الرحلة ليلية والجميع يحاولون النوم.",
-    "app.example.seat.bName": "فارس",
-    "app.example.seat.b":
-      "طولي 190 سم، وركبتاي ملتصقتان بمقعدك أصلًا. كان يمكنك على الأقل أن تسألي قبل أن تُميليه إلى آخره.",
-    "app.example.spoiler.aName": "مريم",
-    "app.example.spoiler.a":
-      "أخبرتني مَن القاتل قبل أن أبدأ الحلقة الأخيرة أصلًا. كنت أنتظرها طوال الأسبوع.",
-    "app.example.spoiler.bName": "زياد",
-    "app.example.spoiler.b":
-      "عُرضت قبل ثلاثة أسابيع، وقلت إنك أنهيتها. لا أستطيع أن أتابع أين وصل كل واحد.",
-    "app.example.jacket.aName": "أحمد",
-    "app.example.jacket.a":
-      "لبستِ سترتي الجينز إلى الحفل دون أن تستأذنيني، وأعدتِها ورائحة الدخان تفوح منها.",
-    "app.example.jacket.bName": "لينا",
-    "app.example.jacket.b":
-      "كانت معلّقة عند الباب، وأنت لا تلبسها أبدًا. كنت سأستأذنك، لكنك كنت نائمًا وأنا متأخرة أصلًا.",
-    "app.example.lastSlice.aName": "علي",
-    "app.example.lastSlice.a":
-      "قبل أن يبدأ الفيلم قلت: «القطعة الأخيرة لي». الجميع سمعني.",
-    "app.example.lastSlice.bName": "يارا",
-    "app.example.lastSlice.b":
-      "لا يصح أن تقول «هذه لي» ثم لا تلمسها ساعتين. ظلّت في مكانها تبرد، فأكلتها أنا.",
     "app.case.waitingKicker": "قضية · بانتظار الرد",
     "app.case.waitingFor": "بانتظار {name}",
     "app.case.waitingLead":

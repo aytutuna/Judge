@@ -101,49 +101,6 @@ const cs: AppLocale = {
     "app.home.addTheirSide": "Přidat pohled druhé strany",
     "app.home.removeTheirSide": "Odebrat pohled druhé strany",
     "app.home.clear": "Vymazat",
-    "app.example.dishwasher.aName": "Lucie",
-    "app.example.dishwasher.a":
-      "Zase jsi dal misky do horního koše. Tam se nikdy pořádně neumyjí, od toho je přece dolní koš.",
-    "app.example.dishwasher.bName": "Tomáš",
-    "app.example.dishwasher.b":
-      "Nahoru se vejdou v pohodě a dole zůstane místo na hrnce. Takhle myčku plním už roky a ještě nikdy nic nezůstalo špinavé.",
-    "app.example.bill.aName": "Petra",
-    "app.example.bill.a":
-      "Nic jsem nepila, tak bych neměla platit čtvrtinu vína. Jídlo klidně rozdělme rovným dílem.",
-    "app.example.bill.bName": "Jakub",
-    "app.example.bill.b":
-      "Vždycky to prostě dělíme na čtyři. Pokaždé počítat, kdo měl co, je otrava, a ten rozdíl stejně není nijak velký.",
-    "app.example.thermostat.aName": "Klára",
-    "app.example.thermostat.a": "Je tu 19 stupňů a je mi zima i v mikině. Pustit topení na 22 není žádné šílenství.",
-    "app.example.thermostat.bName": "Martin",
-    "app.example.thermostat.b":
-      "Při 22 stupních je na spaní moc teplo. Ty si můžeš vzít další vrstvu, já už ze sebe nic sundat nemůžu.",
-    "app.example.roadTrip.aName": "Vojta",
-    "app.example.roadTrip.a": "Cestou tam jsem řídil celých šest hodin. Je jen fér, abys nás zpátky odvezla ty.",
-    "app.example.roadTrip.bName": "Eliška",
-    "app.example.roadTrip.b":
-      "Ještě před odjezdem jsem říkala, že nesnáším řízení v noci, a my vyrážíme v sedm večer. Příště beru všechny ranní jízdy já.",
-    "app.example.seat.aName": "Adéla",
-    "app.example.seat.a": "Moje sedadlo se dá sklopit, tak ho sklápím. Je to noční let a všichni se snaží spát.",
-    "app.example.seat.bName": "Filip",
-    "app.example.seat.b":
-      "Měřím metr devadesát a kolena už teď opírám o tvoje sedadlo. Mohla ses aspoň zeptat, než jsi ho sklopila úplně dozadu.",
-    "app.example.spoiler.aName": "Karolína",
-    "app.example.spoiler.a":
-      "Prozradil jsi mi vraha, ještě než jsem pustila poslední díl. Celý týden jsem se na něj těšila.",
-    "app.example.spoiler.bName": "Lukáš",
-    "app.example.spoiler.b":
-      "Vyšlo to před třemi týdny a říkala jsi, že to máš dokoukané. Nemůžu hlídat, kdo je u kterého dílu.",
-    "app.example.jacket.aName": "David",
-    "app.example.jacket.a": "Vzala sis moji džínovou bundu na koncert a ani ses nezeptala. Vrátila se celá načichlá kouřem.",
-    "app.example.jacket.bName": "Anna",
-    "app.example.jacket.b":
-      "Visela u dveří a ty ji nikdy nenosíš. Zeptala bych se, ale spal jsi a já už jsem nestíhala.",
-    "app.example.lastSlice.aName": "Matěj",
-    "app.example.lastSlice.a": "Ještě než začal film, řekl jsem, že poslední kousek je můj. Všichni to slyšeli.",
-    "app.example.lastSlice.bName": "Kristýna",
-    "app.example.lastSlice.b":
-      "Nemůžeš si něco zabrat a pak na to dvě hodiny nesáhnout. Jen to tam leželo a chladlo, tak jsem to snědla.",
     "app.case.waitingKicker": "Případ · čekáme",
     "app.case.waitingFor": "Čekáme na odpověď: {name}",
     "app.case.waitingLead":

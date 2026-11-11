@@ -103,51 +103,6 @@ const it: AppLocale = {
     "app.home.addTheirSide": "Aggiungi la sua versione",
     "app.home.removeTheirSide": "Togli la sua versione",
     "app.home.clear": "Cancella",
-    "app.example.dishwasher.aName": "Sara",
-    "app.example.dishwasher.a":
-      "Hai messo di nuovo le scodelle nel cestello di sopra. Lì non vengono mai pulite, il cestello di sotto serve apposta.",
-    "app.example.dishwasher.bName": "Matteo",
-    "app.example.dishwasher.b":
-      "Ci stanno benissimo, e così sotto resta posto per le pentole. Lo carico così da anni e non è mai uscito niente sporco.",
-    "app.example.bill.aName": "Elena",
-    "app.example.bill.a":
-      "Io non ho bevuto niente, quindi non devo pagare un quarto del vino. Per il cibo, alla romana mi va benissimo.",
-    "app.example.bill.bName": "Davide",
-    "app.example.bill.b":
-      "Abbiamo sempre diviso per quattro e basta. Rifare ogni volta il conto di chi ha preso cosa è una seccatura, e tanto la differenza è minima.",
-    "app.example.thermostat.aName": "Martina",
-    "app.example.thermostat.a":
-      "Qui dentro ci sono 19 gradi e ho freddo anche con la felpa. Alzare il termostato a 22 non è una follia.",
-    "app.example.thermostat.bName": "Simone",
-    "app.example.thermostat.b":
-      "Con 22 gradi non si riesce a dormire, fa troppo caldo. Tu puoi metterti un'altra maglia, io più di così non posso togliermi niente.",
-    "app.example.roadTrip.aName": "Federico",
-    "app.example.roadTrip.a": "All'andata ho guidato io per tutte e sei le ore. È giusto che al ritorno guidi tu.",
-    "app.example.roadTrip.bName": "Alessia",
-    "app.example.roadTrip.b":
-      "Prima di partire ti avevo detto che odio guidare di notte, e ripartiamo alle sette di sera. Al prossimo viaggio guido io la mattina.",
-    "app.example.seat.aName": "Giorgia",
-    "app.example.seat.a": "Il mio sedile si reclina, quindi lo reclino. È un volo notturno e tutti cercano di dormire.",
-    "app.example.seat.bName": "Tommaso",
-    "app.example.seat.b":
-      "Sono alto 1,90 e ho già le ginocchia schiacciate contro il tuo sedile. Potevi almeno chiedere prima di abbassarlo fino in fondo.",
-    "app.example.spoiler.aName": "Anna",
-    "app.example.spoiler.a":
-      "Mi hai detto chi era l'assassino prima ancora che iniziassi l'ultima puntata. L'aspettavo da tutta la settimana.",
-    "app.example.spoiler.bName": "Lorenzo",
-    "app.example.spoiler.b":
-      "È uscita tre settimane fa e mi avevi detto di averla finita. Non posso sapere a che punto è ognuno.",
-    "app.example.jacket.aName": "Riccardo",
-    "app.example.jacket.a":
-      "Hai messo il mio giubbotto di jeans per andare al concerto senza chiedermelo. È tornato che puzzava di fumo.",
-    "app.example.jacket.bName": "Sofia",
-    "app.example.jacket.b":
-      "Era appeso vicino alla porta e tu non lo metti mai. Te l'avrei chiesto, ma dormivi e io ero già in ritardo.",
-    "app.example.lastSlice.aName": "Pietro",
-    "app.example.lastSlice.a": "Prima che iniziasse il film ho detto “l'ultima fetta è mia”. L'hanno sentito tutti.",
-    "app.example.lastSlice.bName": "Francesca",
-    "app.example.lastSlice.b":
-      "Non puoi dire “è mia” e poi non toccarla per due ore. Era lì che si raffreddava, quindi l'ho mangiata io.",
     "app.case.waitingKicker": "Caso · in attesa",
     "app.case.waitingFor": "In attesa di {name}",
     "app.case.waitingLead":

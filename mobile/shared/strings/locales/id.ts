@@ -100,53 +100,6 @@ const id: AppLocale = {
     "app.home.addTheirSide": "Tambah versi dia",
     "app.home.removeTheirSide": "Hapus versi dia",
     "app.home.clear": "Bersihkan",
-    "app.example.dishwasher.aName": "Rina",
-    "app.example.dishwasher.a":
-      "Kamu menumpuk mangkuk basah di rak piring lagi. Kalau ditumpuk begitu, mangkuknya nggak pernah kering. Taruh telungkup satu-satu, dong.",
-    "app.example.dishwasher.bName": "Budi",
-    "app.example.dishwasher.b":
-      "Ditumpuk begitu lebih hemat tempat, jadi sisa raknya bisa buat wajan. Aku sudah bertahun-tahun begini dan nggak pernah ada yang bau.",
-    "app.example.bill.aName": "Dewi",
-    "app.example.bill.a":
-      "Aku cuma minum air putih, jadi kenapa harus ikut bayar seperempat harga kopi kalian? Kalau makanannya dibagi rata, aku nggak keberatan.",
-    "app.example.bill.bName": "Andi",
-    "app.example.bill.b":
-      "Dari dulu kita selalu bagi empat. Menghitung siapa pesan apa tiap kali itu ribet, lagian bedanya juga nggak seberapa.",
-    "app.example.thermostat.aName": "Ayu",
-    "app.example.thermostat.a":
-      "AC-nya disetel 18 derajat dan aku kedinginan padahal sudah pakai hoodie. Menaikkannya ke 24 itu nggak berlebihan.",
-    "app.example.thermostat.bName": "Fajar",
-    "app.example.thermostat.b":
-      "24 derajat terlalu gerah buat tidur. Kamu bisa pakai selimut, tapi aku nggak bisa lepas apa-apa lagi.",
-    "app.example.roadTrip.aName": "Rizky",
-    "app.example.roadTrip.a":
-      "Waktu berangkat, aku yang menyetir enam jam penuh. Adil dong kalau pulangnya kamu yang menyetir.",
-    "app.example.roadTrip.bName": "Intan",
-    "app.example.roadTrip.b":
-      "Sebelum berangkat aku sudah bilang aku benci menyetir malam, dan kita pulang jam 7 malam. Lain kali, biar aku yang menyetir pas pagi.",
-    "app.example.seat.aName": "Nadia",
-    "app.example.seat.a":
-      "Kursiku bisa direbahkan, jadi ya aku rebahkan. Ini penerbangan malam, semua orang juga mau tidur.",
-    "app.example.seat.bName": "Yoga",
-    "app.example.seat.b":
-      "Tinggiku 190 cm dan lututku sudah menempel ke kursimu. Paling nggak tanya dulu sebelum merebahkannya sampai mentok.",
-    "app.example.spoiler.aName": "Wulan",
-    "app.example.spoiler.a":
-      "Kamu kasih tahu siapa pembunuhnya padahal aku belum mulai nonton episode terakhir. Aku sudah menunggunya seminggu penuh.",
-    "app.example.spoiler.bName": "Bima",
-    "app.example.spoiler.b":
-      "Episodenya sudah keluar tiga minggu lalu dan kamu bilang sudah selesai nonton. Aku nggak bisa ingat semua orang sudah nonton sampai mana.",
-    "app.example.jacket.aName": "Tika",
-    "app.example.jacket.a": "Kamu pakai jaket jinku ke konser tanpa izin. Pas dikembalikan, jaketnya bau asap rokok.",
-    "app.example.jacket.bName": "Reza",
-    "app.example.jacket.b":
-      "Jaketnya tergantung dekat pintu dan kamu nggak pernah pakai. Tadinya aku mau minta izin, tapi kamu lagi tidur dan aku sudah telat.",
-    "app.example.lastSlice.aName": "Eko",
-    "app.example.lastSlice.a":
-      "Sebelum filmnya mulai, aku sudah bilang “potongan terakhir punyaku”. Semua orang dengar.",
-    "app.example.lastSlice.bName": "Lia",
-    "app.example.lastSlice.b":
-      "Nggak bisa dong bilang “punyaku” terus dianggurin dua jam. Pizzanya dibiarkan sampai dingin, jadi aku makan saja.",
     "app.case.waitingKicker": "Kasus · menunggu",
     "app.case.waitingFor": "Menunggu {name}",
     "app.case.waitingLead":

@@ -99,53 +99,6 @@ const de: AppLocale = {
     "app.home.addTheirSide": "Gegenseite hinzufügen",
     "app.home.removeTheirSide": "Gegenseite entfernen",
     "app.home.clear": "Leeren",
-    "app.example.dishwasher.aName": "Julia",
-    "app.example.dishwasher.a":
-      "Du hast die Schüsseln schon wieder oben eingeräumt. Da werden sie nie richtig sauber, dafür ist doch der untere Korb da.",
-    "app.example.dishwasher.bName": "Felix",
-    "app.example.dishwasher.b":
-      "Die passen oben gut rein, und unten bleibt Platz für die Töpfe. Ich räume die Spülmaschine seit Jahren so ein, und noch nie ist was dreckig rausgekommen.",
-    "app.example.bill.aName": "Anna",
-    "app.example.bill.a":
-      "Ich hab nichts getrunken, also zahle ich auch kein Viertel vom Wein. Das Essen können wir gern gleichmäßig aufteilen.",
-    "app.example.bill.bName": "Max",
-    "app.example.bill.b":
-      "Wir teilen doch immer einfach durch vier. Jedes Mal auszurechnen, wer was hatte, nervt, und so groß ist der Unterschied auch nicht.",
-    "app.example.thermostat.aName": "Laura",
-    "app.example.thermostat.a":
-      "Hier drin sind 19 Grad, und mir ist sogar im Hoodie kalt. Die Heizung auf 22 zu drehen ist doch nicht übertrieben.",
-    "app.example.thermostat.bName": "Jan",
-    "app.example.thermostat.b":
-      "Bei 22 Grad kann man nicht schlafen, viel zu warm. Du kannst dir noch was anziehen, ich kann nichts mehr ausziehen.",
-    "app.example.roadTrip.aName": "Sarah",
-    "app.example.roadTrip.a": "Ich bin auf der Hinfahrt die ganzen sechs Stunden gefahren. Da ist es nur fair, wenn du uns zurückfährst.",
-    "app.example.roadTrip.bName": "David",
-    "app.example.roadTrip.b":
-      "Ich hab schon vor der Abfahrt gesagt, dass ich nachts nicht gern fahre, und wir fahren um 19 Uhr los. Auf der nächsten Reise übernehme ich dafür die Fahrten am Morgen.",
-    "app.example.seat.aName": "Lisa",
-    "app.example.seat.a":
-      "Meine Lehne lässt sich zurückstellen, also stelle ich sie zurück. Es ist ein Nachtflug, und alle versuchen zu schlafen.",
-    "app.example.seat.bName": "Tobias",
-    "app.example.seat.b":
-      "Ich bin 1,90 m groß, und meine Knie drücken jetzt schon gegen deinen Sitz. Du könntest wenigstens fragen, bevor du die Lehne ganz nach hinten kippst.",
-    "app.example.spoiler.aName": "Mia",
-    "app.example.spoiler.a":
-      "Du hast mir verraten, wer der Mörder ist, bevor ich mit der letzten Folge überhaupt angefangen hatte. Ich hab mich die ganze Woche darauf gefreut.",
-    "app.example.spoiler.bName": "Paul",
-    "app.example.spoiler.b":
-      "Die Folge kam vor drei Wochen raus, und du hast gesagt, du bist durch. Ich kann mir nicht merken, wer gerade bei welcher Folge ist.",
-    "app.example.jacket.aName": "Leon",
-    "app.example.jacket.a":
-      "Du hast meine Jeansjacke ungefragt zum Konzert angezogen. Sie kam total verraucht zurück.",
-    "app.example.jacket.bName": "Hannah",
-    "app.example.jacket.b":
-      "Sie hing an der Garderobe, und du trägst sie nie. Ich hätte ja gefragt, aber du hast geschlafen, und ich war eh schon spät dran.",
-    "app.example.lastSlice.aName": "Niklas",
-    "app.example.lastSlice.a":
-      "Ich hab schon vor dem Film gesagt: „Das letzte Stück Pizza ist meins!“ Alle haben es gehört.",
-    "app.example.lastSlice.bName": "Sophie",
-    "app.example.lastSlice.b":
-      "Du kannst nicht „meins!“ rufen und es dann zwei Stunden nicht anrühren. Es lag nur rum und wurde kalt, also hab ich’s gegessen.",
     "app.case.waitingKicker": "Fall · wartet",
     "app.case.waitingFor": "Warten auf {name}",
     "app.case.waitingLead":

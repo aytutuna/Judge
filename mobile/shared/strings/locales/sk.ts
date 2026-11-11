@@ -100,50 +100,6 @@ const sk: AppLocale = {
     "app.home.addTheirSide": "Pridať verziu druhej strany",
     "app.home.removeTheirSide": "Odstrániť verziu druhej strany",
     "app.home.clear": "Vymazať",
-    "app.example.dishwasher.aName": "Lucia",
-    "app.example.dishwasher.a":
-      "Zase si dal misky do horného koša. Tam sa nikdy poriadne neumyjú, na to je predsa dolný kôš.",
-    "app.example.dishwasher.bName": "Peter",
-    "app.example.dishwasher.b":
-      "Hore sa zmestia v pohode a dole ostane miesto na hrnce. Takto umývačku plním už roky a ešte nikdy z nej nič nevyšlo špinavé.",
-    "app.example.bill.aName": "Zuzana",
-    "app.example.bill.a":
-      "Nič som nepila, tak by som nemala platiť štvrtinu vína. Jedlo si pokojne rozdeľme rovným dielom.",
-    "app.example.bill.bName": "Marek",
-    "app.example.bill.b":
-      "Vždy to proste delíme na štyroch. Zakaždým rátať, kto mal čo, je otrava, a ten rozdiel aj tak nie je veľký.",
-    "app.example.thermostat.aName": "Jana",
-    "app.example.thermostat.a": "Je tu 19 stupňov a je mi zima aj v mikine. Dať kúrenie na 22 predsa nie je žiadne šialenstvo.",
-    "app.example.thermostat.bName": "Michal",
-    "app.example.thermostat.b":
-      "Pri 22 stupňoch je na spanie priveľmi teplo. Ty si môžeš obliecť ďalšiu vrstvu, ja už zo seba nemám čo dať dole.",
-    "app.example.roadTrip.aName": "Juraj",
-    "app.example.roadTrip.a": "Cestou tam som šoféroval celých šesť hodín. Je len fér, aby si nás späť odviezla ty.",
-    "app.example.roadTrip.bName": "Simona",
-    "app.example.roadTrip.b":
-      "Ešte pred odchodom som hovorila, že neznášam šoférovanie v noci, a my vyrážame o siedmej večer. Nabudúce si zoberiem všetky ranné jazdy ja.",
-    "app.example.seat.aName": "Veronika",
-    "app.example.seat.a": "Moje sedadlo sa dá sklopiť, tak ho sklápam. Je to nočný let a všetci sa snažia spať.",
-    "app.example.seat.bName": "Lukáš",
-    "app.example.seat.b":
-      "Mám 190 centimetrov a kolená mám už teraz zapreté o tvoje sedadlo. Mohla si sa aspoň opýtať, skôr než si ho sklopila úplne dozadu.",
-    "app.example.spoiler.aName": "Kristína",
-    "app.example.spoiler.a":
-      "Prezradil si mi, kto je vrah, ešte predtým, ako som si pustila poslednú časť. Celý týždeň som sa na ňu tešila.",
-    "app.example.spoiler.bName": "Patrik",
-    "app.example.spoiler.b":
-      "Vyšlo to pred tromi týždňami a hovorila si, že to máš dopozerané. Nemôžem predsa sledovať, kto má čo dopozerané.",
-    "app.example.jacket.aName": "Tomáš",
-    "app.example.jacket.a":
-      "Zobrala si si moju džínsovú bundu na koncert a ani si sa neopýtala. Vrátila sa mi celá presiaknutá dymom.",
-    "app.example.jacket.bName": "Ema",
-    "app.example.jacket.b":
-      "Visela pri dverách a ty ju nikdy nenosíš. Opýtala by som sa, ale spal si a ja som už meškala.",
-    "app.example.lastSlice.aName": "Matej",
-    "app.example.lastSlice.a": "Ešte pred začiatkom filmu som povedal, že posledný kúsok je môj. Všetci to počuli.",
-    "app.example.lastSlice.bName": "Natália",
-    "app.example.lastSlice.b":
-      "Nemôžeš si niečo zabrať a potom sa toho dve hodiny ani nedotknúť. Ležalo to tam a chladlo, tak som to zjedla.",
     "app.case.waitingKicker": "Prípad · čaká sa",
     "app.case.waitingFor": "Čaká sa na odpoveď: {name}",
     "app.case.waitingLead":

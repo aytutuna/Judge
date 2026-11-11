@@ -102,51 +102,6 @@ const ro: AppLocale = {
     "app.home.addTheirSide": "Adaugă cealaltă parte",
     "app.home.removeTheirSide": "Elimină cealaltă parte",
     "app.home.clear": "Șterge",
-    "app.example.dishwasher.aName": "Ioana",
-    "app.example.dishwasher.a":
-      "Iar ai pus bolurile în coșul de sus. Acolo nu ies niciodată curate, coșul de jos e pentru asta.",
-    "app.example.dishwasher.bName": "Mihai",
-    "app.example.dishwasher.b":
-      "Încap foarte bine sus și rămâne loc jos pentru oale. Le pun așa de ani de zile și n-a ieșit nimic murdar.",
-    "app.example.bill.aName": "Elena",
-    "app.example.bill.a":
-      "N-am băut nimic, deci n-ar trebui să plătesc un sfert din vin. Mâncarea s-o împărțim egal, cu asta n-am nicio problemă.",
-    "app.example.bill.bName": "Vlad",
-    "app.example.bill.b":
-      "Mereu împărțim nota la patru și gata. E o bătaie de cap să socotim de fiecare dată cine ce a luat, iar diferența oricum nu e mare.",
-    "app.example.thermostat.aName": "Irina",
-    "app.example.thermostat.a":
-      "Sunt 19 grade aici și mi-e frig și cu hanoracul pe mine. Nu e o nebunie să dăm căldura la 22.",
-    "app.example.thermostat.bName": "Radu",
-    "app.example.thermostat.b":
-      "La 22 de grade e mult prea cald ca să dormi. Tu poți să mai pui ceva pe tine, eu n-am ce să mai dau jos.",
-    "app.example.roadTrip.aName": "Cristina",
-    "app.example.roadTrip.a": "Eu am condus toate cele șase ore la dus. E corect să conduci tu la întoarcere.",
-    "app.example.roadTrip.bName": "Bogdan",
-    "app.example.roadTrip.b":
-      "Ți-am zis înainte de plecare că urăsc să conduc noaptea, iar noi plecăm la 7 seara. Data viitoare conduc eu dimineața.",
-    "app.example.seat.aName": "Diana",
-    "app.example.seat.a": "Scaunul meu se lasă pe spate, așa că îl las. E zbor de noapte și toată lumea încearcă să doarmă.",
-    "app.example.seat.bName": "Sorin",
-    "app.example.seat.b":
-      "Am 1,90 m și am deja genunchii lipiți de scaunul tău. Puteai măcar să întrebi înainte să-l lași complet pe spate.",
-    "app.example.spoiler.aName": "Maria",
-    "app.example.spoiler.a":
-      "Mi-ai zis cine e criminalul înainte să încep măcar ultimul episod. L-am așteptat toată săptămâna.",
-    "app.example.spoiler.bName": "Tudor",
-    "app.example.spoiler.b":
-      "A ieșit acum trei săptămâni și mi-ai zis că l-ai terminat. Nu pot să țin minte unde a ajuns fiecare.",
-    "app.example.jacket.aName": "Ștefan",
-    "app.example.jacket.a":
-      "Mi-ai luat geaca de blugi la concert fără să mă întrebi. Mi-ai adus-o înapoi mirosind a fum.",
-    "app.example.jacket.bName": "Alina",
-    "app.example.jacket.b":
-      "Era agățată lângă ușă și tu n-o porți niciodată. Te-aș fi întrebat, dar dormeai, iar eu deja întârziam.",
-    "app.example.lastSlice.aName": "Matei",
-    "app.example.lastSlice.a": "Am zis „ultima felie e a mea” înainte să înceapă filmul. Toată lumea m-a auzit.",
-    "app.example.lastSlice.bName": "Carmen",
-    "app.example.lastSlice.b":
-      "Nu poți s-o declari a ta și apoi să n-o atingi două ore. Stătea acolo și se răcea, așa că am mâncat-o eu.",
     "app.case.waitingKicker": "Caz · în așteptare",
     "app.case.waitingFor": "Așteptăm răspuns de la {name}",
     "app.case.waitingLead":

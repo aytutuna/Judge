@@ -98,51 +98,6 @@ const vi: AppLocale = {
     "app.home.addTheirSide": "Thêm phía bên kia",
     "app.home.removeTheirSide": "Bỏ phía bên kia",
     "app.home.clear": "Xóa",
-    "app.example.dishwasher.aName": "Linh",
-    "app.example.dishwasher.a":
-      "Bạn lại xếp bát lên ngăn trên rồi. Để trên đó rửa chẳng bao giờ sạch, ngăn dưới là để xếp bát mà.",
-    "app.example.dishwasher.bName": "Tuấn",
-    "app.example.dishwasher.b":
-      "Để trên vừa khít mà, lại chừa ngăn dưới cho xoong nồi. Mình xếp kiểu này mấy năm rồi, có cái nào ra mà còn bẩn đâu.",
-    "app.example.bill.aName": "Mai",
-    "app.example.bill.a":
-      "Mình có uống giọt nào đâu, sao lại phải trả một phần tư tiền bia. Đồ ăn chia đều thì mình không ý kiến.",
-    "app.example.bill.bName": "Khoa",
-    "app.example.bill.b":
-      "Tụi mình lúc nào cũng chia bốn mà. Lần nào cũng ngồi tính ai ăn gì uống gì thì mệt lắm, mà chênh nhau có bao nhiêu đâu.",
-    "app.example.thermostat.aName": "Hà",
-    "app.example.thermostat.a":
-      "Phòng đang 29°C, mình nóng toát mồ hôi. Hạ điều hòa xuống 25°C có gì quá đâu.",
-    "app.example.thermostat.bName": "Nam",
-    "app.example.thermostat.b":
-      "25°C thì lạnh quá, ngủ không nổi. Bạn nóng thì bật thêm quạt, còn mình đắp chăn rồi mà vẫn lạnh.",
-    "app.example.roadTrip.aName": "Phong",
-    "app.example.roadTrip.a": "Lúc đi mình lái suốt sáu tiếng. Lúc về bạn lái mới công bằng.",
-    "app.example.roadTrip.bName": "Vy",
-    "app.example.roadTrip.b":
-      "Trước khi đi mình đã nói là rất ghét lái xe ban đêm, mà 7 giờ tối mới lên đường về. Chuyến sau mình sẽ lái mấy chặng buổi sáng.",
-    "app.example.seat.aName": "Thảo",
-    "app.example.seat.a": "Ghế mình ngả được thì mình ngả. Chuyến bay đêm, ai cũng đang cố ngủ.",
-    "app.example.seat.bName": "Dũng",
-    "app.example.seat.b":
-      "Mình cao 1m90, đầu gối đã tì sát vào lưng ghế bạn rồi. Ít ra bạn cũng nên hỏi trước khi ngả hết cỡ chứ.",
-    "app.example.spoiler.aName": "Ngọc",
-    "app.example.spoiler.a":
-      "Mình còn chưa mở tập cuối thì bạn đã nói ai là hung thủ. Mình chờ tập đó cả tuần đấy.",
-    "app.example.spoiler.bName": "Huy",
-    "app.example.spoiler.b":
-      "Phim ra ba tuần rồi, bạn còn bảo là xem xong rồi mà. Mình đâu nhớ nổi ai đang xem tới đâu.",
-    "app.example.jacket.aName": "Quân",
-    "app.example.jacket.a":
-      "Bạn mặc áo khoác jean của mình đi xem ca nhạc mà không hỏi. Lúc trả lại thì ám mùi khói thuốc.",
-    "app.example.jacket.bName": "Hương",
-    "app.example.jacket.b":
-      "Nó treo ngay cạnh cửa, mà bạn có bao giờ mặc đâu. Mình cũng định hỏi, nhưng bạn đang ngủ còn mình thì đang trễ giờ.",
-    "app.example.lastSlice.aName": "Bảo",
-    "app.example.lastSlice.a": "Mình xí miếng pizza cuối từ trước khi phim chiếu. Cả đám đều nghe.",
-    "app.example.lastSlice.bName": "My",
-    "app.example.lastSlice.b":
-      "Xí rồi để đó hai tiếng không đụng tới thì không tính. Nó nằm đó nguội ngắt, nên mình ăn luôn.",
     "app.case.waitingKicker": "Vụ · đang chờ",
     "app.case.waitingFor": "Đang chờ {name}",
     "app.case.waitingLead":

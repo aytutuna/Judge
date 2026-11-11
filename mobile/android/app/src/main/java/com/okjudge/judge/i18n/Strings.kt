@@ -665,38 +665,6 @@ class Strings(private val res: Resources) {
     val appHomeAddTheirSide: String get() = res.getString(R.string.app_home_add_their_side)
     val appHomeRemoveTheirSide: String get() = res.getString(R.string.app_home_remove_their_side)
     val appHomeClear: String get() = res.getString(R.string.app_home_clear)
-    val appExampleDishwasherAName: String get() = res.getString(R.string.app_example_dishwasher_a_name)
-    val appExampleDishwasherA: String get() = res.getString(R.string.app_example_dishwasher_a)
-    val appExampleDishwasherBName: String get() = res.getString(R.string.app_example_dishwasher_b_name)
-    val appExampleDishwasherB: String get() = res.getString(R.string.app_example_dishwasher_b)
-    val appExampleBillAName: String get() = res.getString(R.string.app_example_bill_a_name)
-    val appExampleBillA: String get() = res.getString(R.string.app_example_bill_a)
-    val appExampleBillBName: String get() = res.getString(R.string.app_example_bill_b_name)
-    val appExampleBillB: String get() = res.getString(R.string.app_example_bill_b)
-    val appExampleThermostatAName: String get() = res.getString(R.string.app_example_thermostat_a_name)
-    val appExampleThermostatA: String get() = res.getString(R.string.app_example_thermostat_a)
-    val appExampleThermostatBName: String get() = res.getString(R.string.app_example_thermostat_b_name)
-    val appExampleThermostatB: String get() = res.getString(R.string.app_example_thermostat_b)
-    val appExampleRoadTripAName: String get() = res.getString(R.string.app_example_road_trip_a_name)
-    val appExampleRoadTripA: String get() = res.getString(R.string.app_example_road_trip_a)
-    val appExampleRoadTripBName: String get() = res.getString(R.string.app_example_road_trip_b_name)
-    val appExampleRoadTripB: String get() = res.getString(R.string.app_example_road_trip_b)
-    val appExampleSeatAName: String get() = res.getString(R.string.app_example_seat_a_name)
-    val appExampleSeatA: String get() = res.getString(R.string.app_example_seat_a)
-    val appExampleSeatBName: String get() = res.getString(R.string.app_example_seat_b_name)
-    val appExampleSeatB: String get() = res.getString(R.string.app_example_seat_b)
-    val appExampleSpoilerAName: String get() = res.getString(R.string.app_example_spoiler_a_name)
-    val appExampleSpoilerA: String get() = res.getString(R.string.app_example_spoiler_a)
-    val appExampleSpoilerBName: String get() = res.getString(R.string.app_example_spoiler_b_name)
-    val appExampleSpoilerB: String get() = res.getString(R.string.app_example_spoiler_b)
-    val appExampleJacketAName: String get() = res.getString(R.string.app_example_jacket_a_name)
-    val appExampleJacketA: String get() = res.getString(R.string.app_example_jacket_a)
-    val appExampleJacketBName: String get() = res.getString(R.string.app_example_jacket_b_name)
-    val appExampleJacketB: String get() = res.getString(R.string.app_example_jacket_b)
-    val appExampleLastSliceAName: String get() = res.getString(R.string.app_example_last_slice_a_name)
-    val appExampleLastSliceA: String get() = res.getString(R.string.app_example_last_slice_a)
-    val appExampleLastSliceBName: String get() = res.getString(R.string.app_example_last_slice_b_name)
-    val appExampleLastSliceB: String get() = res.getString(R.string.app_example_last_slice_b)
     val appCaseWaitingKicker: String get() = res.getString(R.string.app_case_waiting_kicker)
     fun appCaseWaitingFor(name: String): String = res.getString(R.string.app_case_waiting_for, name)
     fun appCaseWaitingLead(name: String): String = res.getString(R.string.app_case_waiting_lead, name)
@@ -1283,38 +1251,6 @@ class Strings(private val res: Resources) {
             "app.home.addTheirSide" -> R.string.app_home_add_their_side
             "app.home.removeTheirSide" -> R.string.app_home_remove_their_side
             "app.home.clear" -> R.string.app_home_clear
-            "app.example.dishwasher.aName" -> R.string.app_example_dishwasher_a_name
-            "app.example.dishwasher.a" -> R.string.app_example_dishwasher_a
-            "app.example.dishwasher.bName" -> R.string.app_example_dishwasher_b_name
-            "app.example.dishwasher.b" -> R.string.app_example_dishwasher_b
-            "app.example.bill.aName" -> R.string.app_example_bill_a_name
-            "app.example.bill.a" -> R.string.app_example_bill_a
-            "app.example.bill.bName" -> R.string.app_example_bill_b_name
-            "app.example.bill.b" -> R.string.app_example_bill_b
-            "app.example.thermostat.aName" -> R.string.app_example_thermostat_a_name
-            "app.example.thermostat.a" -> R.string.app_example_thermostat_a
-            "app.example.thermostat.bName" -> R.string.app_example_thermostat_b_name
-            "app.example.thermostat.b" -> R.string.app_example_thermostat_b
-            "app.example.roadTrip.aName" -> R.string.app_example_road_trip_a_name
-            "app.example.roadTrip.a" -> R.string.app_example_road_trip_a
-            "app.example.roadTrip.bName" -> R.string.app_example_road_trip_b_name
-            "app.example.roadTrip.b" -> R.string.app_example_road_trip_b
-            "app.example.seat.aName" -> R.string.app_example_seat_a_name
-            "app.example.seat.a" -> R.string.app_example_seat_a
-            "app.example.seat.bName" -> R.string.app_example_seat_b_name
-            "app.example.seat.b" -> R.string.app_example_seat_b
-            "app.example.spoiler.aName" -> R.string.app_example_spoiler_a_name
-            "app.example.spoiler.a" -> R.string.app_example_spoiler_a
-            "app.example.spoiler.bName" -> R.string.app_example_spoiler_b_name
-            "app.example.spoiler.b" -> R.string.app_example_spoiler_b
-            "app.example.jacket.aName" -> R.string.app_example_jacket_a_name
-            "app.example.jacket.a" -> R.string.app_example_jacket_a
-            "app.example.jacket.bName" -> R.string.app_example_jacket_b_name
-            "app.example.jacket.b" -> R.string.app_example_jacket_b
-            "app.example.lastSlice.aName" -> R.string.app_example_last_slice_a_name
-            "app.example.lastSlice.a" -> R.string.app_example_last_slice_a
-            "app.example.lastSlice.bName" -> R.string.app_example_last_slice_b_name
-            "app.example.lastSlice.b" -> R.string.app_example_last_slice_b
             "app.case.waitingKicker" -> R.string.app_case_waiting_kicker
             "app.case.waitingLeadAnon" -> R.string.app_case_waiting_lead_anon
             "app.case.stepYou" -> R.string.app_case_step_you
