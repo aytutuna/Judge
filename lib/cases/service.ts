@@ -62,6 +62,7 @@ import { meteredStep, runAppealJudging, runCaseJudging } from "./judging";
 import type { Venue } from "@/lib/venues";
 import { notifyOwnerSideWaiting } from "./notify";
 import { scheduleJudging } from "./schedule";
+import { seatHolds } from "./seats";
 import { effectiveStatus, expireStatements, materializeExpiry } from "./sweep";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -297,8 +298,8 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
         ],
       },
       ...extra.map((e) => ({
-        sql: `INSERT INTO case_invites (case_id, party, invite_nonce, invite_hash, created_at, updated_at, legacy)
-              SELECT ?, ?, ?, ?, ?, ?, 0 WHERE ${guard.sql}`,
+        sql: `INSERT INTO case_invites (case_id, party, invite_nonce, invite_hash, created_at, updated_at)
+              SELECT ?, ?, ?, ?, ?, ? WHERE ${guard.sql}`,
         args: [caseId, e.party, e.nonce, e.hash, nowIso, nowIso, ...guard.args],
       })),
       ...(sub ? submissionStatements(caseId, "a", sub, guard, nowIso, null) : []),
@@ -340,8 +341,20 @@ export type RespondInput = {
   rawText?: string;
   /** How the respondent wants to appear on the share pages (null = Party B). */
   displayName?: string | null;
+  /** The nonce of the seat this answer was proven through; the store only
+   * applies while that seat still has it. */
+  seatNonce?: string;
   now?: Date;
 };
+
+/** The extra condition that ties a store to the seat it was proven through. */
+export function seatGuard(party: string, nonce: string | undefined): { sql: string; args: string[] } {
+  if (!nonce) return { sql: "", args: [] };
+  return {
+    sql: ` AND EXISTS (SELECT 1 FROM case_seats WHERE case_id = cases.id AND party = '${party}' AND nonce = ?)`,
+    args: [nonce],
+  };
+}
 
 export type RespondResult =
   | { ok: true; row: CaseRow; nameMap: NameMapping[]; claim: string | null; replayed: boolean }
@@ -407,7 +420,7 @@ export async function respondToCase(input: RespondInput): Promise<RespondResult>
     };
     // Side B's author: the signed-in account, else whoever holds the claim
     // secret derived from this nonce (returned in this response).
-    const claimNonce = bundle.seats.find((s) => s.party === "b")?.nonce ?? newInviteNonce();
+    const claimNonce = input.seatNonce ?? newInviteNonce();
     const display = sealCaseDisplay(row.id, "b", input.displayName);
     const original = caseOriginalStatement(
       row.id,
@@ -422,7 +435,8 @@ export async function respondToCase(input: RespondInput): Promise<RespondResult>
     // 10-minute crash clock. Without it the answer is only stored: the case
     // keeps waiting, the unit stays held until the invite expires, and the
     // token only guards this batch's rows.
-    const store: InStatement = ownerWrote
+    const held = seatGuard("b", input.seatNonce);
+    const stored: { sql: string; args: (string | number | null)[] } = ownerWrote
       ? {
           sql: `UPDATE cases SET status = 'judging', mode = 'two_sided', judging_token = ?, judging_started_at = ?,
                   respondent_idem = ?, respondent_user_id = ?, respondent_claim_nonce = ?,
@@ -439,6 +453,7 @@ export async function respondToCase(input: RespondInput): Promise<RespondResult>
                   AND ${sideExists("a", false)} AND ${sideExists("b", false)}`,
           args: [token, ...bindings],
         };
+    const store: InStatement = { sql: stored.sql + held.sql, args: [...stored.args, ...held.args] };
     let won = false;
     try {
       const rs = await entitlementWriteBatch([
@@ -459,6 +474,7 @@ export async function respondToCase(input: RespondInput): Promise<RespondResult>
       return { ok: true, row: fresh, nameMap: sub.nameMap, claim: claimFor(fresh), replayed: false };
     }
     if (fresh.removedAt) return { ok: false, code: "removed" };
+    if (input.seatNonce && !(await seatHolds(row.id, "b", input.seatNonce))) return { ok: false, code: "case_closed" };
     // Side A may have landed while this was being anonymized: go again with
     // it in the roster. Anything else that changed closes the case.
     if (attempt === 0 && effectiveStatus(fresh, now) === "awaiting_respondent") {

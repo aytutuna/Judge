@@ -177,6 +177,7 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
     ...(many ? { parties: allParties } : {}),
     ...(invites ? { invites } : {}),
     ...(live ? { live } : {}),
+    ...(live && status === "awaiting_respondent" ? { canRotate: live.some((l) => l.state === "waiting") } : {}),
     inviteUrl: owner && status === "awaiting_respondent" && unanswered ? ctx.inviteUrl : null,
     ownInvite: ctx.role === "respondent" && ctx.ownInvite,
     sides,

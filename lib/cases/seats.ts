@@ -9,13 +9,11 @@
  * it, can be taken over once no free side is left: a link opened in a chat
  * app's own browser and then again in the phone's browser must not lock the
  * person out. Any request carrying the seat's claim counts as a touch.
- *
- * A side that still has an unused per-side link from before the shared link
- * (case_invites.legacy) is not handed out here; that link's holder gets it.
  */
 
 import type { CaseLiveSide } from "@/lib/case-types";
 import { partiesFor } from "@/lib/multi";
+import { openCaseDisplayName } from "@/lib/originals/display";
 import { caseDb, respondentOf, type CaseBundle, type CaseRow, type InviteRow, type SeatRow } from "./db";
 import { claimMatches, newInviteNonce, respondentClaim } from "./invite";
 
@@ -36,7 +34,10 @@ export function liveSides(
   now: Date,
 ): CaseLiveSide[] {
   return invitedParties(c.row).map((party) => {
-    if (c.sides.some((s) => s.party === party)) return { party, state: "answered" as const };
+    if (c.sides.some((s) => s.party === party)) {
+      const name = openCaseDisplayName(c.row, party);
+      return { party, state: "answered" as const, ...(name ? { name } : {}) };
+    }
     const seat = c.seats.find((s) => s.party === party);
     if (!seat) return { party, state: "waiting" as const };
     const typing = seat.typingAt !== null && now.getTime() - Date.parse(seat.typingAt) < TYPING_MS;
@@ -80,13 +81,16 @@ function openSides(bundle: CaseBundle, now: Date, only?: Invited): { party: Invi
     if (only && party !== only) continue;
     if (sides.some((s) => s.party === party)) continue;
     if (respondentOf(row, invites, party).claimNonce !== null) continue;
-    const reserved = invites.some((i) => i.party === party && i.legacy && i.answeredAt === null && i.claimNonce === null);
-    if (reserved && !only) continue;
     const seat = seats.find((s) => s.party === party);
     if (!seat) free.push({ party });
     else if (idle(seat, now)) stale.push({ party, seat });
   }
   return [...free, ...stale];
+}
+
+/** Whether `party` is free to take: nobody answered it and its seat is empty or idle. */
+export function sideIsOpen(bundle: CaseBundle, now: Date, party: Invited): boolean {
+  return openSides(bundle, now, party).length > 0;
 }
 
 /** The side the next opener would get, or null when the case is full. */
@@ -163,6 +167,16 @@ export async function recordTyping(caseId: string, party: Invited, now: Date): P
             AND NOT EXISTS (SELECT 1 FROM case_sides WHERE case_id = ? AND party = ?)`,
     args: [nowIso, nowIso, caseId, party, caseId, party],
   });
+}
+
+/** Whether the seat of `party` still has `nonce` (it was not taken over meanwhile). */
+export async function seatHolds(caseId: string, party: Invited, nonce: string): Promise<boolean> {
+  const db = await caseDb();
+  const rs = await db.execute({
+    sql: "SELECT 1 FROM case_seats WHERE case_id = ? AND party = ? AND nonce = ?",
+    args: [caseId, party, nonce],
+  });
+  return rs.rows.length > 0;
 }
 
 /** Keeps the seat of `party` from looking idle; any request that proved the claim calls it. */

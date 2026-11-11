@@ -196,7 +196,12 @@ export type CaseInviteView = {
 /** Where one invited side stands, live: not opened, opened (took the side),
  * typing now (a heartbeat in the last few seconds), or answered. */
 export type LiveState = "waiting" | "opened" | "typing" | "answered";
-export type CaseLiveSide = { party: "b" | "c" | "d"; state: LiveState };
+export type CaseLiveSide = {
+  party: "b" | "c" | "d";
+  state: LiveState;
+  /** The name that side chose for itself, once it has answered. */
+  name?: string;
+};
 
 export type CaseView = {
   id: string;
@@ -222,6 +227,8 @@ export type CaseView = {
   invites?: CaseInviteView[];
   /** Owner only: each invited side's live state. Absent for a respondent. */
   live?: CaseLiveSide[];
+  /** Owner only: a new link can still be made (some side has no seat yet). */
+  canRotate?: boolean;
   /** Owner only, while a side is still open: the one link for everyone.
    * Every entry of `invites` carries the same URL for older apps. */
   inviteUrl: string | null;

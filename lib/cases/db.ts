@@ -71,7 +71,6 @@ const SCHEMA = [
     answered_at     TEXT,
     created_at      TEXT NOT NULL,
     updated_at      TEXT NOT NULL,
-    legacy          INTEGER NOT NULL DEFAULT 1,
     PRIMARY KEY (case_id, party)
   )`,
   "CREATE INDEX IF NOT EXISTS case_invites_user ON case_invites (user_id) WHERE user_id IS NOT NULL",
@@ -163,7 +162,7 @@ export async function ensureCaseTables(): Promise<void> {
     .batch(SCHEMA, "write")
     .then(() => addClaimColumn(client))
     .then(() => addCaseColumns(client))
-    .then(() => addInviteLegacyColumn(client))
+    .then(() => addSeatSeenColumn(client))
     .then(() => dropLangCheck(client))
     .then(() => widenPartyChecks(client))
     .then(
@@ -190,13 +189,12 @@ async function addClaimColumn(db: Client): Promise<void> {
   }
 }
 
-/** case_invites.legacy: 1 for per-side links that may have been sent before
- * the one shared link existed, 0 for rows made with it (never handed out). */
-async function addInviteLegacyColumn(db: Client): Promise<void> {
-  const info = await db.execute("PRAGMA table_info(case_invites)");
-  if (info.rows.some((r) => String(r.name) === "legacy")) return;
+/** Adds case_seats.seen_at to seat tables created before it existed. */
+async function addSeatSeenColumn(db: Client): Promise<void> {
+  const info = await db.execute("PRAGMA table_info(case_seats)");
+  if (info.rows.some((r) => String(r.name) === "seen_at")) return;
   try {
-    await db.execute("ALTER TABLE case_invites ADD COLUMN legacy INTEGER NOT NULL DEFAULT 1");
+    await db.execute("ALTER TABLE case_seats ADD COLUMN seen_at TEXT");
   } catch (e) {
     const message = e instanceof Error ? e.message : String(e);
     if (!/duplicate column name/i.test(message)) throw e;
@@ -333,8 +331,6 @@ export type InviteRow = {
   userId: string | null;
   claimNonce: string | null;
   answeredAt: string | null;
-  /** A per-side link that may already be out there. */
-  legacy: boolean;
 };
 
 /** A side taken by opening the shared link, answered or not. */
@@ -458,7 +454,6 @@ function mapInvite(r: Row): InviteRow {
     userId: strOrNull(r.user_id),
     claimNonce: strOrNull(r.claim_nonce),
     answeredAt: strOrNull(r.answered_at),
-    legacy: Number(r.legacy) !== 0,
   };
 }
 

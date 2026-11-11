@@ -20,6 +20,7 @@ import { newInviteNonce } from "./invite";
 import { meteredStep, runCaseJudging } from "./judging";
 import { notifyOwnerSideWaiting } from "./notify";
 import { scheduleJudging } from "./schedule";
+import { seatHolds } from "./seats";
 import {
   anonymizeFailure,
   boundElsewhere,
@@ -27,6 +28,7 @@ import {
   labelsInUse,
   originalPayload,
   rosterContext,
+  seatGuard,
   sidesOption,
   submissionStatements,
   type Failure,
@@ -42,9 +44,7 @@ const LABEL: Record<PartyLetter, "Party A" | "Party B" | "Party C" | "Party D"> 
 };
 const MAX_TRIES = 3;
 
-/** `viaSeat`: the caller holds this side's seat, so its nonce is the claim.
- * An answer through an older per-side link never inherits a seat. */
-export type RespondSideInput = Omit<RespondInput, "row"> & { row: CaseRow; party: "b" | "c" | "d"; viaSeat?: boolean };
+export type RespondSideInput = Omit<RespondInput, "row"> & { row: CaseRow; party: "b" | "c" | "d" };
 
 export type RespondSideResult =
   | { ok: true; row: CaseRow; nameMap: NameMapping[]; claim: string | null; replayed: boolean }
@@ -116,7 +116,7 @@ export async function respondToSide(input: RespondSideInput): Promise<RespondSid
       sql: "EXISTS (SELECT 1 FROM cases WHERE id = ? AND judging_token = ?)",
       args: [row.id, token],
     };
-    const claimNonce = (input.viaSeat ? bundle.seats.find((s) => s.party === party)?.nonce : undefined) ?? newInviteNonce();
+    const claimNonce = input.seatNonce ?? newInviteNonce();
     const display = sealCaseDisplay(row.id, party, input.displayName);
     const original = caseOriginalStatement(
       row.id,
@@ -154,9 +154,10 @@ export async function respondToSide(input: RespondSideInput): Promise<RespondSid
         whereArgs.push(input.userId);
       }
     }
+    const held = seatGuard(party, input.seatNonce);
     const store: InStatement = {
-      sql: `UPDATE cases SET ${sets.join(", ")} WHERE ${where.join(" AND ")}`,
-      args: [...setArgs, ...whereArgs],
+      sql: `UPDATE cases SET ${sets.join(", ")} WHERE ${where.join(" AND ")}${held.sql}`,
+      args: [...setArgs, ...whereArgs, ...held.args],
     };
     const bind: InStatement[] =
       party === "b"
@@ -191,6 +192,7 @@ export async function respondToSide(input: RespondSideInput): Promise<RespondSid
       return { ok: true, row: fresh, nameMap: sub.nameMap, claim, replayed: false };
     }
     if (fresh.removedAt) return { ok: false, code: "removed" };
+    if (input.seatNonce && !(await seatHolds(row.id, party, input.seatNonce))) return { ok: false, code: "case_closed" };
     // Another side landed while this one was being anonymized: go again with
     // it in the roster (and start judging if this is now the last one).
     if (effectiveStatus(fresh, now) === "awaiting_respondent") {

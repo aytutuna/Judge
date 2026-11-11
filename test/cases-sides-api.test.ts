@@ -936,53 +936,131 @@ describe("one link for every side", () => {
 describe("links that were sent before the one link", () => {
   const TEXT = (who: string) => `${who} answers through the link, with enough words to count as an answer.`;
 
-  /** A case whose C and D links count as already sent. */
-  async function older(o: string, sides: number) {
-    const made = await createMany(o, sides);
-    const db = await getDb();
-    await db.execute({ sql: "UPDATE case_invites SET legacy = 1 WHERE case_id = ?", args: [made.data.case.id] });
-    return made;
-  }
-
-  it("never hands the claim of a seated or answered side to a forwarded link", async () => {
+  it("takes its side by seat, and a forwarded copy finds the side taken", async () => {
     const o = await owner(2);
-    const { data, links } = await older(o, 3);
+    const { data, links } = await createMany(o, 3);
     const carol = await openLink(links.c, uid("carol"));
     expect([carol.party, carol.claim === null]).toEqual(["c", false]);
 
     const stranger = await openLink(links.c, uid("eve"));
-    expect([stranger.res.status, stranger.party, stranger.claim]).toEqual([200, "c", null]);
+    expect(stranger.res.status).toBe(409);
+    expect((await view(links.c, uid("eve"))).res.status).toBe(409);
     expect((await respondAs(links.c, uid("eve"), TEXT("Eve"))).status).toBe(409);
     expect(await count("SELECT count(*) AS n FROM case_sides WHERE case_id = ?", [data.case.id])).toBe(1);
 
     const answered = await respondAs(links.c, undefined, TEXT("Carol"), undefined, carol.claim!);
     expect(answered.status).toBe(202);
     expect((await body<{ respondent_claim?: string }>(answered)).respondent_claim).toBe(carol.claim);
-    const late = await openLink(links.c, uid("eve"));
-    expect([late.res.status, late.claim]).toEqual([200, null]);
+    expect((await openLink(links.c, uid("eve"))).res.status).toBe(409);
     expect((await openLink(links.c, undefined, carol.claim!)).claim).toBe(carol.claim);
   });
 
-  it("still gives the side to the first person to answer through its link", async () => {
+  it("still gives the side to the first person to answer through it", async () => {
     const o = await owner(2);
-    const { links } = await older(o, 3);
+    const { links } = await createMany(o, 3);
     const res = await respondAs(links.c, undefined, TEXT("Carol"));
     expect(res.status).toBe(202);
     const claim = (await body<{ respondent_claim?: string }>(res)).respondent_claim;
     expect(claim).toBeTruthy();
-    expect((await openLink(links.c, uid("eve"))).claim).toBeNull();
+    expect((await openLink(links.c, uid("eve"))).res.status).toBe(409);
     expect((await openLink(links.c, undefined, claim)).claim).toBe(claim);
   });
 
-  it("keeps the shared link off a side whose own link may be out", async () => {
+  it("lets a quiet seat on it be taken over, so a second browser is not locked out", async () => {
     const o = await owner(2);
-    const { shared, links } = await older(o, 3);
+    const { data, links } = await createMany(o, 3);
+    const db = await getDb();
+    const old = new Date(Date.now() - 45 * 60_000).toISOString();
+    const first = await openLink(links.c);
+    await db.execute({ sql: "UPDATE case_seats SET opened_at = ?, seen_at = ? WHERE case_id = ?", args: [old, old, data.case.id] });
+    const second = await openLink(links.c);
+    expect([second.party, second.claim === first.claim]).toEqual(["c", false]);
+    expect((await respondAs(links.c, undefined, TEXT("Late"), undefined, first.claim!)).status).toBe(409);
+  });
+
+  it("does not keep the shared link off a side whose own link is out", async () => {
+    const o = await owner(2);
+    const { shared } = await createMany(o, 3);
     expect((await openLink(shared, uid("bob"))).party).toBe("b");
-    expect((await openLink(shared, uid("eve"))).res.status).toBe(409);
-    expect((await respondAs(shared, uid("eve"), TEXT("Eve"))).status).toBe(409);
-    expect((await openLink(links.c, uid("carol"))).party).toBe("c");
+    expect((await openLink(shared, uid("carol"))).party).toBe("c");
   });
 });
+
+describe("an answer is stored under the seat that was proven", () => {
+  it("does not let a takeover between the proof and the store own a three-sided answer", async () => {
+    const o = await owner(2);
+    const { data, shared } = await createMany(o, 3);
+    const db = await getDb();
+    const old = new Date(Date.now() - 45 * 60_000).toISOString();
+    await openLink(shared);
+    await openLink(shared);
+    const bundle = await loadCaseBundle((await getCase(data.case.id))!);
+    const stale = bundle.seats.find((s) => s.party === "c")!;
+    await db.execute({ sql: "UPDATE case_seats SET opened_at = ?, seen_at = ? WHERE case_id = ? AND party = 'c'", args: [old, old, data.case.id] });
+    const taker = await openLink(shared);
+    expect(taker.party).toBe("c");
+
+    const { respondToSide } = await import("../lib/cases/sides");
+    const res = await respondToSide({
+      row: (await getCase(data.case.id))!,
+      party: "c",
+      userId: null,
+      text: "Answer from the person who lost the seat, with enough words to count.",
+      evidence: [],
+      origin: ORIGIN,
+      seatNonce: stale.nonce,
+    });
+    expect(res).toMatchObject({ ok: false, code: "case_closed" });
+    expect(await count("SELECT count(*) AS n FROM case_sides WHERE case_id = ?", [data.case.id])).toBe(1);
+    expect((await respondAs(shared, undefined, TEXT_C, undefined, taker.claim!)).status).toBe(202);
+  });
+
+  it("does the same for side B of a two-sided case", async () => {
+    const o = await owner(2);
+    const { data } = await create(o);
+    const token = tokenOf(data.case);
+    const db = await getDb();
+    const old = new Date(Date.now() - 45 * 60_000).toISOString();
+    const first = await http.respondOpenHandler(req("POST", `/api/v1/respond/${token}/open`, { ip: ip() }), token);
+    expect(first.status).toBe(200);
+    const stale = (await loadCaseBundle((await getCase(data.case.id))!)).seats[0];
+    await db.execute({ sql: "UPDATE case_seats SET opened_at = ?, seen_at = ? WHERE case_id = ?", args: [old, old, data.case.id] });
+    expect((await http.respondOpenHandler(req("POST", `/api/v1/respond/${token}/open`, { ip: ip() }), token)).status).toBe(200);
+
+    const { respondToCase } = await import("../lib/cases/service");
+    const res = await respondToCase({
+      row: (await getCase(data.case.id))!,
+      userId: null,
+      text: "Answer from the person who lost the seat, with enough words to count.",
+      evidence: [],
+      origin: ORIGIN,
+      seatNonce: stale.nonce,
+    });
+    expect(res).toMatchObject({ ok: false, code: "case_closed" });
+    expect(await count("SELECT count(*) AS n FROM case_sides WHERE case_id = ? AND party = 'b'", [data.case.id])).toBe(0);
+  });
+});
+
+describe("keeping a seat alive", () => {
+  it("counts a screenshot upload as activity", async () => {
+    vi.stubEnv("EVIDENCE_ENABLED", "1");
+    const o = await owner(2);
+    const { data, shared } = await createMany(o, 3);
+    const db = await getDb();
+    const old = new Date(Date.now() - 45 * 60_000).toISOString();
+    const bob = await openLink(shared);
+    await db.execute({ sql: "UPDATE case_seats SET opened_at = ?, seen_at = ? WHERE case_id = ?", args: [old, old, data.case.id] });
+    const res = await http.respondEvidenceHandler(
+      req("POST", `/api/v1/respond/${shared}/evidence`, { headers: { ...SIDES, "respondent-claim": bob.claim! }, ip: ip() }),
+      shared,
+    );
+    expect(res.status).toBe(200);
+    const rows = (await db.execute({ sql: "SELECT seen_at FROM case_seats WHERE case_id = ?", args: [data.case.id] })).rows;
+    expect(String(rows[0].seen_at) > old).toBe(true);
+  });
+});
+
+const TEXT_C = "Carol answers on the seat she holds now, with enough words to count.";
 
 describe("rotating the one link", () => {
   const rotate = (o: string, id: string) =>
@@ -1021,10 +1099,12 @@ describe("rotating the one link", () => {
     const o = await owner(2);
     const { data, shared } = await createMany(o, 3);
     await openLink(shared, uid("bob"));
+    expect((await ownerView(o, data.case.id)).canRotate).toBe(true);
     const res = await rotate(o, data.case.id);
     expect(res.status).toBe(200);
     const link = (await body<{ inviteUrl: string }>(res)).inviteUrl.split("/r/")[1];
     await openLink(link, uid("carol"));
+    expect((await ownerView(o, data.case.id)).canRotate).toBe(false);
     expect((await rotate(o, data.case.id)).status).toBe(409);
   });
 });
