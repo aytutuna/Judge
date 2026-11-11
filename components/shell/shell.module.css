@@ -1,34 +1,11 @@
-/* App shell: the site header and footer around the page, and below 960px
-   a menu button in the header that opens the side panel. */
+/* App shell: the site header and footer around the page, with a menu button
+   in the header that opens the side panel. */
 
 .shell {
   flex: 1;
   display: flex;
   flex-direction: column;
   min-width: 0;
-}
-
-.headerLink {
-  display: none;
-  align-items: center;
-  min-height: 40px;
-  padding: 0 12px;
-  border-radius: var(--radius-chip);
-  color: var(--ink-2);
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: none;
-  white-space: nowrap;
-  transition:
-    background-color var(--dur-1),
-    color var(--dur-1);
-}
-.headerLink:hover {
-  background: color-mix(in srgb, var(--ink) 6%, transparent);
-  color: var(--ink);
-}
-.headerLink[aria-current="page"] {
-  color: var(--ink);
 }
 
 .gamify {
@@ -139,19 +116,29 @@ html:not([data-game="off"]) .gamify {
   flex-direction: column;
   padding: calc(20px + env(safe-area-inset-top)) 12px calc(22px + env(safe-area-inset-bottom));
   background: var(--ivory-2);
-  overflow-y: auto;
+  overflow: hidden;
   animation: panel-in 0.24s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 [dir="rtl"] .panel {
   --from: 100%;
 }
 .panel ul {
-  flex: 1;
   display: flex;
   flex-direction: column;
+  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
+}
+/* The list scrolls on its own so New, the profile and Settings stay put. */
+.menuList {
+  flex: 1;
+  min-height: 0;
+  margin: 0 -12px;
+  padding: 0 12px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 .menuRow {
   display: flex;
@@ -181,36 +168,23 @@ html:not([data-game="off"]) .gamify {
   flex: none;
   color: var(--ink-2);
 }
-.menuHeadingWrap {
-  margin: 0;
-  font: inherit;
-}
 .menuHeading {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   min-height: 44px;
-  margin-top: 8px;
+  margin: 8px 0;
   padding: 0 12px;
   border-bottom: 1px solid var(--line);
   color: var(--muted);
+  font: inherit;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.04em;
-  text-decoration: none;
 }
-.menuHeading svg {
-  width: 14px;
-  height: 14px;
-}
-.menuHeading[aria-current="page"] {
-  color: var(--ink);
-}
-.panel li + li:has(> .recent) {
-  margin-top: 8px;
+.menuList > section:first-child .menuHeading {
+  margin-top: 0;
 }
 .menuEnd {
-  margin-top: auto;
   padding-top: 12px;
 }
 .profile {
@@ -293,6 +267,8 @@ html:not([data-game="off"]) .gamify {
   background: var(--paper);
   color: var(--ink);
   text-decoration: none;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 56px;
 }
 .recent[data-tone="yours"] {
   border-color: var(--sage-strong);
@@ -355,16 +331,7 @@ html:not([data-game="off"]) .gamify {
   }
 }
 
-@media (min-width: 960px) {
-  .headerLink {
-    display: inline-flex;
-  }
-  .menuButton {
-    display: none;
-  }
-}
-
-/* ---------- Verdicts ---------- */
+/* ---------- Menu list notes ---------- */
 
 .local {
   margin: 0 0 8px;
@@ -378,82 +345,6 @@ html:not([data-game="off"]) .gamify {
   text-underline-offset: 3px;
 }
 
-.history {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.group {
-  margin: 16px 0 4px;
-  font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--muted);
-}
-
-.rows {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid var(--line);
-}
-.rows li {
-  border-bottom: 1px solid var(--line);
-}
-
-.row {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  min-height: 48px;
-  padding: 13px 4px;
-  color: var(--ink);
-  font-size: 15px;
-  line-height: 1.4;
-  text-decoration: none;
-}
-a.row:hover .title {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.row[data-removed] {
-  opacity: 0.6;
-}
-
-.title {
-  flex: 1;
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-
-.state {
-  flex: none;
-  max-width: 45%;
-  color: var(--muted);
-  font-size: 13px;
-  text-align: end;
-}
-.state[data-tone="yours"] {
-  color: var(--sage-ink);
-}
-.state[data-tone="theirs"] {
-  color: var(--terra-ink);
-}
-
-.tags {
-  display: block;
-  margin-top: 2px;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.move {
-  display: block;
-  color: var(--ink);
-  font-weight: 600;
-}
-
 .note {
   margin: 8px 0;
   color: var(--muted);
@@ -461,9 +352,9 @@ a.row:hover .title {
 }
 
 .more {
-  align-self: flex-start;
+  display: block;
+  margin: 12px auto 4px;
   min-height: 40px;
-  margin-top: 8px;
   padding: 0 16px;
   border: 1px solid var(--line-2);
   border-radius: var(--radius-chip);

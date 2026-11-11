@@ -8,7 +8,6 @@ import { useViewer } from "@/lib/use-viewer";
 const SCREENS: [RegExp, string][] = [
   [/^\/$/, "home"],
   [/^\/(c|r)(\/|$)/, "case_detail"],
-  [/^\/verdicts$/, "verdicts"],
   [/^\/v\//, "verdict"],
   [/^\/(account|settings)$/, "settings"],
   [/^\/pricing$/, "pricing"],

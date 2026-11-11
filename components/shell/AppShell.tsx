@@ -1,9 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, type ReactNode } from "react";
-import { t, type Lang } from "@/lib/i18n";
+import type { Lang } from "@/lib/i18n";
 import { langDir } from "@/lib/langs";
 import { AgeGate } from "../AgeGate";
 import { SiteFooter, SiteHeader, SkipLink } from "../SiteChrome";
@@ -68,13 +67,6 @@ export function AppShell({
         lead={tabs ? <SideMenu lang={lang} pathname={pathname} onHome={onHome} /> : undefined}
       >
         <GamifyButton lang={lang} />
-        <Link
-          href="/verdicts"
-          className={styles.headerLink}
-          aria-current={pathname === "/verdicts" ? "page" : undefined}
-        >
-          {t(lang, "nav.verdicts")}
-        </Link>
       </SiteHeader>
       {children}
       {footer ? <SiteFooter lang={lang} toggle={toggle} /> : null}

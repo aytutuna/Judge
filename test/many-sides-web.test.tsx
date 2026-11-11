@@ -5,7 +5,7 @@ import { HomeForm, type HomeFormProps } from "../components/home/HomeForm";
 import { JudgingScreen } from "../components/JudgingScreen";
 import { VerdictView } from "../components/VerdictView";
 import { summarize } from "../components/court/story";
-import { stateLabel, tone } from "../components/shell/HistoryList";
+import { stateLabel, tone } from "../components/shell/history-labels";
 import { fromRow } from "../components/shell/useHistory";
 import type { CaseView } from "../lib/case-types";
 import { parseDraft } from "../lib/draft";

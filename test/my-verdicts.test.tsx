@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
-import { HistoryList, groupHistory, stateLabel, titleOf } from "../components/shell/HistoryList";
+import { stateLabel, titleOf } from "../components/shell/history-labels";
 import { Panel, SideMenu } from "../components/shell/SideMenu";
 import { fromRow, mergeHistory, type HistoryItem } from "../components/shell/useHistory";
 import type { HistoryRow } from "../lib/history-types";
@@ -9,8 +9,6 @@ import { t } from "../lib/i18n";
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/'/g, "&#x27;");
 
-// Local time, so the day boundaries hold in any time zone.
-const NOW = new Date(2026, 9, 23, 15, 0).getTime();
 const at = (daysAgo: number, hour = 9) => new Date(2026, 9, 23 - daysAgo, hour).toISOString();
 
 const row = (over: Partial<HistoryRow> & { id: string }): HistoryRow => ({
@@ -74,35 +72,11 @@ const ROWS: HistoryRow[] = [
 ];
 const ITEMS: HistoryItem[] = ROWS.map(fromRow);
 
-function list(over: Partial<ComponentProps<typeof HistoryList>> = {}): string {
-  return renderToStaticMarkup(
-    <HistoryList
-      lang="en"
-      history={{ items: ITEMS, status: "ready", more: false, loadingMore: false }}
-      now={NOW}
-      {...over}
-    />,
-  );
-}
-
 function menu(over: Partial<ComponentProps<typeof Panel>> = {}): string {
   return renderToStaticMarkup(<Panel lang="en" pathname="/" onClosed={() => {}} {...over} />);
 }
 
 const label = (over: Partial<HistoryRow> & { id: string }) => stateLabel("en", fromRow(row(over)));
-
-describe("groupHistory", () => {
-  it("splits today, the six days before and earlier, leaving out empty groups", () => {
-    const groups = groupHistory(ITEMS, NOW);
-    expect(groups.map((g) => [g.key, g.items.map((i) => i.id)])).toEqual([
-      ["today", ["today1", "case1"]],
-      ["week", ["week1", "week2"]],
-      ["earlier", ["old1", "gone", "gonecase"]],
-    ]);
-    expect(groupHistory(ITEMS.slice(4), NOW).map((g) => g.key)).toEqual(["earlier"]);
-    expect(groupHistory([], NOW)).toEqual([]);
-  });
-});
 
 describe("stateLabel", () => {
   it("says each state in plain words, naming the other side from your own names", () => {
@@ -134,18 +108,38 @@ describe("stateLabel", () => {
   });
 });
 
-describe("HistoryList", () => {
-  it("shows the date headings in order", () => {
-    const html = list();
-    const heads = ["shell.today", "shell.week", "shell.earlier"].map((k) =>
-      html.indexOf(`>${t("en", k as "shell.today")}</h2>`),
-    );
-    expect(heads.every((i) => i > 0)).toBe(true);
-    expect([...heads].sort((a, b) => a - b)).toEqual(heads);
+function listed(history: Record<string, unknown> = {}, over: Partial<ComponentProps<typeof Panel>> = {}): string {
+  mocked.history = { items: ITEMS, status: "ready", more: false, loadingMore: false, loadMore: () => {}, ...history };
+  try {
+    return menu(over);
+  } finally {
+    mocked.history = null;
+  }
+}
+
+describe("the menu's lists", () => {
+  it("splits verdicts and links under their headings, Verdicts first", () => {
+    const html = listed();
+    const verdicts = html.indexOf(`>${t("en", "nav.verdicts")}</h2>`);
+    const links = html.indexOf(`>${t("en", "nav.links")}</h2>`);
+    expect(verdicts).toBeGreaterThan(0);
+    expect(links).toBeGreaterThan(verdicts);
+    expect(html.indexOf('href="/v/today1"')).toBeLessThan(links);
+    expect(html.indexOf('href="/c/case1"')).toBeGreaterThan(links);
+    expect(html).not.toContain('href="/verdicts"');
+  });
+
+  it("hides a section with no items", () => {
+    const verdictsOnly = listed({ items: ITEMS.filter((i) => i.kind === "verdict") });
+    expect(verdictsOnly).toContain(`>${t("en", "nav.verdicts")}</h2>`);
+    expect(verdictsOnly).not.toContain(`>${t("en", "nav.links")}</h2>`);
+    const linksOnly = listed({ items: ITEMS.filter((i) => i.kind === "case") });
+    expect(linksOnly).not.toContain(`>${t("en", "nav.verdicts")}</h2>`);
+    expect(linksOnly).toContain(`>${t("en", "nav.links")}</h2>`);
   });
 
   it("links verdicts and cases, each with its state, names put back", () => {
-    const html = list();
+    const html = listed();
     expect(html).toContain('href="/v/today1"');
     expect(html).toContain('href="/c/case1"');
     expect(html).toContain("Waiting for Deniz to answer");
@@ -153,47 +147,34 @@ describe("HistoryList", () => {
     expect(html).toContain(t("en", "verdict.split"));
     // An untitled case falls back to its date.
     expect(html).toContain(esc(t("en", "case.list.untitled", { date: "October 17" })));
-    expect(html).not.toContain("aria-current");
   });
 
   it("does not link a verdict still being judged, or one that was removed", () => {
-    const html = list();
+    const html = listed();
     expect(html).not.toContain('href="/v/old1"');
     expect(html).toContain("Judges thinking");
     expect(html).not.toContain('href="/v/gone"');
   });
 
   it("mutes removed items; a removed verdict says so once", () => {
-    const html = list();
+    const html = listed();
     expect(html).toMatch(/<span class="[^"]*" data-removed="">/);
     expect(html).toMatch(/<a [^>]*data-removed=""[^>]*href="\/c\/gonecase"/);
     expect(html).toContain("Removed by Deniz");
     expect(html.split(">Removed<").length - 1).toBe(1);
   });
 
-  it("marks a case you answered, opens it on its invite page, and tags your turn and added context", () => {
+  it("opens a case you answered on its invite page, and does not link one whose invite is closed", () => {
     const rows = [
-      row({
-        id: "ans",
-        kind: "case",
-        role: "respondent",
-        party: "b",
-        nameMap: RESPONDENT_MAP,
-        inviteToken: TOKEN,
-        verdict: "side_b",
-        contextAdded: true,
-      }),
+      row({ id: "ans", kind: "case", role: "respondent", party: "b", nameMap: RESPONDENT_MAP, inviteToken: TOKEN, verdict: "side_b" }),
       row({ id: "dead", kind: "case", role: "respondent", party: "b", inviteToken: null, at: at(0, 7) }),
       row({ id: "retry", kind: "case", state: "failed", yourMove: true, verdict: null, at: at(0, 6) }),
     ];
-    const html = list({ history: { items: rows.map(fromRow), status: "ready", more: false, loadingMore: false } });
+    const html = listed({ items: rows.map(fromRow) });
     expect(html).toContain(`href="/r/${TOKEN}"`);
     expect(html).not.toContain("/c/ans");
     expect(html).not.toContain("/c/dead");
-    expect(html.split("You answered").length - 1).toBe(2);
-    expect(html).toContain("After new context");
     expect(html).toContain('data-tone="yours"');
-    expect(html).toContain("Your turn");
     expect(html).toContain('href="/c/retry"');
   });
 
@@ -203,39 +184,39 @@ describe("HistoryList", () => {
     expect(items.map((i) => i.id)).toEqual(["mine", "today1", "local", "case1", "week1", "week2", "old1", "gone", "gonecase"]);
   });
 
-  it("signed out: this browser's list with a sign-in line back to the page", () => {
-    const html = list({ signIn: true });
-    expect(html).toContain(t("en", "shell.local"));
-    expect(html).toContain(`href="/signin?next=${encodeURIComponent("/verdicts")}"`);
-    expect(html).toContain('href="/v/today1"');
-    expect(list()).not.toContain("/signin");
+  it("signed out: says the list is this browser's, with a sign-in link back to the page", () => {
+    mocked.viewer = { status: "ready", me: { user: null }, config: { signIn: { apple: false, google: true, email: false, dev: false } } };
+    try {
+      const html = listed({}, { pathname: "/v/abc" });
+      expect(html).toContain(t("en", "shell.local"));
+      expect(html).toContain(`href="/signin?next=${encodeURIComponent("/v/abc")}"`);
+      expect(html).toContain('href="/v/today1"');
+    } finally {
+      mocked.viewer = null;
+    }
+    expect(listed()).not.toContain(t("en", "shell.local"));
   });
 
   it("says when there is nothing yet, or that it is still loading", () => {
-    const empty = list({ history: { items: [], status: "ready", more: false, loadingMore: false } });
+    const empty = listed({ items: [] });
     expect(empty).toContain(t("en", "shell.empty"));
-    expect(empty).not.toContain("<h2");
-    const loading = list({ history: { items: [], status: "loading", more: false, loadingMore: false } });
-    expect(loading).toMatch(/role="status"[^>]*>Loading your history…/);
-    expect(list({ history: { items: [], status: "error", more: false, loadingMore: false } })).toContain(
-      esc(t("en", "shell.loadFailed")),
-    );
+    expect(empty).not.toContain("<section");
+    expect(listed({ items: [], status: "loading" })).toMatch(/role="status"[^>]*>Loading your history…/);
+    expect(listed({ items: [], status: "error" })).toContain(esc(t("en", "shell.loadFailed")));
   });
 
-  it("offers more while a cursor is left, disabled while it loads", () => {
-    expect(list({ history: { items: ITEMS, status: "ready", more: true, loadingMore: false } })).toContain(
-      t("en", "shell.loadMore"),
-    );
-    const busy = list({ history: { items: ITEMS, status: "ready", more: true, loadingMore: true } });
-    expect(busy).toMatch(/<button[^>]*disabled=""[^>]*>Loading your history…/);
-    expect(list()).not.toContain(t("en", "shell.loadMore"));
+  it("offers more at the end while a cursor is left, disabled while it loads", () => {
+    const more = listed({ more: true });
+    expect(more).toContain(t("en", "shell.loadMore"));
+    expect(more.indexOf(t("en", "shell.loadMore"))).toBeGreaterThan(more.indexOf('href="/c/case1"'));
+    expect(listed({ more: true, loadingMore: true })).toMatch(/<button[^>]*disabled=""[^>]*>Loading your history…/);
+    expect(listed()).not.toContain(t("en", "shell.loadMore"));
   });
 
   it("speaks Turkish", () => {
-    const html = list({ lang: "tr", signIn: true });
-    expect(html).toContain(t("tr", "shell.today"));
+    const html = listed({}, { lang: "tr" });
+    expect(html).toContain(`>${t("tr", "nav.links")}</h2>`);
     expect(html).toContain(t("tr", "history.state.waiting", { name: "Deniz" }));
-    expect(html).toContain(t("tr", "shell.localSignIn"));
   });
 });
 
@@ -247,57 +228,37 @@ describe("SideMenu", () => {
     expect(html).not.toContain("<dialog");
   });
 
-  it("lists New, Verdicts and Settings and marks the open page", () => {
+  it("lists New and Settings and marks the open page", () => {
     const html = menu();
     expect(html).toContain(`aria-label="${t("en", "nav.tabs")}"`);
-    for (const href of ["/", "/verdicts", "/settings"]) expect(html).toContain(`href="${href}"`);
+    for (const href of ["/", "/settings"]) expect(html).toContain(`href="${href}"`);
+    expect(html).not.toContain('href="/verdicts"');
     expect(html.match(/aria-current="page"/g)).toHaveLength(1);
     expect(html).toMatch(/aria-current="page" href="\/"/);
-    expect(menu({ pathname: "/verdicts" })).toMatch(/aria-current="page" href="\/verdicts"/);
     expect(menu({ pathname: "/settings" })).toMatch(/aria-current="page" href="\/settings"/);
     expect(menu({ pathname: "/v/abc" })).not.toContain("aria-current");
-    expect(html.indexOf('href="/settings"')).toBeGreaterThan(html.indexOf('href="/verdicts"'));
   });
 
-  it("closes with the scrim, labelled Cancel, and shows no recent rows without history", () => {
-    const html = menu();
-    expect(html).toContain(`aria-label="${t("en", "case.cancel")}"`);
-    expect(html.match(/<li/g)).toHaveLength(3);
+  it("closes with the scrim, labelled Cancel", () => {
+    expect(menu()).toContain(`aria-label="${t("en", "case.cancel")}"`);
   });
 
-  it("lists the newest five items with the Verdicts titles, linked where they have a page", () => {
-    const rows = [...ROWS, row({ id: "extra1" }), row({ id: "extra2" })];
-    const items = rows.map(fromRow);
-    mocked.history = { items, status: "ready", more: false, loadingMore: false };
-    try {
-      const html = menu();
-      expect(html.match(/<li/g)).toHaveLength(3 + 5);
-      for (const item of items.slice(0, 5)) expect(html).toContain(titleOf("en", item));
-      expect(html).not.toContain(titleOf("en", items[5]));
-      const first = items[0];
-      expect(first.href).toBeTruthy();
-      expect(html).toContain(`href="${first.href}"`);
-      mocked.history = { items: [{ ...first, href: null }], status: "ready", more: false, loadingMore: false };
-      const unlinked = menu();
-      expect(unlinked).toContain("data-removed");
-      expect(unlinked).not.toContain(`href="${first.href}"`);
-      mocked.history = { items, status: "loading", more: false, loadingMore: false };
-      expect(menu().match(/<li/g)).toHaveLength(3);
-    } finally {
-      mocked.history = null;
-    }
+  it("lists every item, not just the newest few, with the profile after the lists", () => {
+    const items = Array.from({ length: 30 }, (_, i) => fromRow(row({ id: `many${i}`, headline: `Many ${i}` })));
+    const html = listed({ items });
+    for (const item of items) expect(html).toContain(titleOf("en", item));
+    expect(html.indexOf("Many 29")).toBeLessThan(html.indexOf("aria-controls="));
   });
 
   it("speaks Turkish", () => {
     const html = menu({ lang: "tr" });
     for (const k of ["nav.new", "nav.settings"] as const) expect(html).toContain(`>${t("tr", k)}</a>`);
-    expect(html).toContain(`>${t("tr", "nav.verdicts")}<svg`);
   });
 
   it("puts the profile above Settings, with Pricing and Sign in behind it", () => {
     const html = menu();
     const profile = html.indexOf('aria-controls=');
-    expect(profile).toBeGreaterThan(html.indexOf('href="/verdicts"'));
+    expect(profile).toBeGreaterThan(html.indexOf('href="/"'));
     expect(html.indexOf('href="/settings"')).toBeGreaterThan(profile);
     expect(html).toContain(t("en", "nav.account"));
     expect(html).toMatch(/hidden=""[^>]*>[^]*href="\/pricing"/);
@@ -318,14 +279,14 @@ describe("SideMenu", () => {
     }
   });
 
-  it("makes each recent verdict its own tinted card and keeps the result in words", () => {
+  it("makes each verdict its own tinted card and keeps the result in words", () => {
     const items = [
       row({ id: "w", verdict: "side_a" }),
       row({ id: "l", verdict: "side_b" }),
       row({ id: "s", verdict: "split" }),
       row({ id: "j", state: "judging", verdict: null }),
     ].map(fromRow);
-    mocked.history = { items, status: "ready", more: false, loadingMore: false };
+    mocked.history = { items, status: "ready", more: false, loadingMore: false, loadMore: () => {} };
     try {
       const html = menu();
       expect(html.match(/data-tone="yours"/g)).toHaveLength(1);
