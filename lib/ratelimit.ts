@@ -167,6 +167,8 @@ export type UserBucket =
   | "evidence"
   | "welcome_evidence"
   | "case_evidence"
+  | "case_typing"
+  | "case_live"
   | "verdict_owner"
   | "history_list"
   | "apple_code"
@@ -197,6 +199,13 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
   welcome_evidence: [{ limit: 5, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:wevday" }],
   /** Keyed "case:<id>:b": respondent uploads per case. */
   case_evidence: [{ limit: 12, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:c:evday" }],
+  /** Keyed "case:<id>:<party>": the typing heartbeat, one every 3 seconds at most. */
+  case_typing: [{ limit: 30, windowMs: MINUTE_MS, redisWindow: "1 m", prefix: "verdict:c:ty1m" }],
+  /** The owner's live states of the cases still waiting, polled while the menu is open. */
+  case_live: [
+    { limit: 300, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:lv10m" },
+    { limit: 3000, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:lvday" },
+  ],
   /** A writer reading or changing their own verdicts and case sides (session). */
   verdict_owner: [
     { limit: 60, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:vo10m" },
@@ -233,6 +242,7 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
  * address). */
 export type IpBucket =
   | "respond_submit"
+  | "respond_open"
   | "respond_evidence"
   | "verdict_owner"
   | "verdict_poll"
@@ -243,6 +253,10 @@ export const IP_LIMITS: Record<IpBucket, readonly UserWindow[]> = {
   respond_submit: [
     { limit: 5, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:rs10m" },
     { limit: 20, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:ip:rsday" },
+  ],
+  respond_open: [
+    { limit: 20, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:ro10m" },
+    { limit: 100, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:ip:roday" },
   ],
   respond_evidence: [
     { limit: 15, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:re10m" },

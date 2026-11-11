@@ -251,6 +251,7 @@ export async function removeUserData(userId: string, now: Date = new Date(), opt
       args: [userId],
     },
     { sql: "UPDATE case_invites SET user_id = NULL, claim_nonce = NULL WHERE user_id = ?", args: [userId] },
+    { sql: "UPDATE case_seats SET user_id = NULL WHERE user_id = ?", args: [userId] },
     { sql: "UPDATE case_appeals SET user_id = NULL WHERE user_id = ?", args: [userId] },
   ]);
   if (opts.log !== false) {

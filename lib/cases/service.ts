@@ -407,7 +407,7 @@ export async function respondToCase(input: RespondInput): Promise<RespondResult>
     };
     // Side B's author: the signed-in account, else whoever holds the claim
     // secret derived from this nonce (returned in this response).
-    const claimNonce = newInviteNonce();
+    const claimNonce = bundle.seats.find((s) => s.party === "b")?.nonce ?? newInviteNonce();
     const display = sealCaseDisplay(row.id, "b", input.displayName);
     const original = caseOriginalStatement(
       row.id,
@@ -773,32 +773,20 @@ async function judgeAnswered(
 
 export type RotateResult = { ok: true; row: CaseRow; token: string } | Failure<"case_closed" | "unavailable" | "removed">;
 
-export async function rotateInvite(row: CaseRow, now: Date = new Date(), party: PartyLetter = "b"): Promise<RotateResult> {
+export async function rotateInvite(row: CaseRow, now: Date = new Date()): Promise<RotateResult> {
   if (row.removedAt) return { ok: false, code: "removed" };
   if (effectiveStatus(row, now) !== "awaiting_respondent") return { ok: false, code: "case_closed" };
-  if (party === "a" || partiesFor(row.sides).indexOf(party) < 0) return { ok: false, code: "case_closed" };
   const nonce = newInviteNonce();
   const token = inviteToken(row.id, nonce);
   if (!token) return { ok: false, code: "unavailable" };
   const nowIso = now.toISOString();
-  if (party !== "b") {
-    const rs = await entitlementWriteBatch([
-      {
-        sql: `UPDATE case_invites SET invite_nonce = ?, invite_hash = ?, updated_at = ?
-              WHERE case_id = ? AND party = ? AND answered_at IS NULL
-                AND EXISTS (SELECT 1 FROM cases WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL)
-                AND ${sideExists(party, false).replace("cases.id", "case_invites.case_id")}`,
-        args: [nonce, inviteHash(token), nowIso, row.id, party, row.id, nowIso],
-      },
-    ]);
-    if (rs[0].rowsAffected !== 1) return { ok: false, code: "case_closed" };
-    return { ok: true, row: (await getCase(row.id)) ?? row, token };
-  }
+  // The one link stays live while any side has not answered; sides that
+  // already took a seat keep it, since their claim does not depend on the link.
   const rs = await entitlementWriteBatch([
     {
       sql: `UPDATE cases SET invite_nonce = ?, invite_hash = ?, updated_at = ?
             WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL
-              AND ${sideExists("b", false)}`,
+              AND (SELECT COUNT(*) FROM case_sides WHERE case_id = cases.id AND party <> 'a') < sides - 1`,
       args: [nonce, inviteHash(token), nowIso, row.id, nowIso],
     },
   ]);

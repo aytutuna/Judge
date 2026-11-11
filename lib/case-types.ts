@@ -193,6 +193,11 @@ export type CaseInviteView = {
   answeredAt: string | null;
 };
 
+/** Where one invited side stands, live: not opened, opened (took the side),
+ * typing now (a heartbeat in the last few seconds), or answered. */
+export type LiveState = "waiting" | "opened" | "typing" | "answered";
+export type CaseLiveSide = { party: "b" | "c" | "d"; state: LiveState };
+
 export type CaseView = {
   id: string;
   role: CaseRole;
@@ -215,7 +220,10 @@ export type CaseView = {
   /** Only with three or four sides, for the owner: side B to D with their
    * links and whether they answered. `inviteUrl` below stays side B's. */
   invites?: CaseInviteView[];
-  /** Owner only, while awaiting the respondent. */
+  /** Owner only: each invited side's live state. Absent for a respondent. */
+  live?: CaseLiveSide[];
+  /** Owner only, while a side is still open: the one link for everyone.
+   * Every entry of `invites` carries the same URL for older apps. */
   inviteUrl: string | null;
   /** Respondent role only: the signed-in viewer is the case owner. */
   ownInvite: boolean;
@@ -300,6 +308,11 @@ export type AppealResponse = {
   entitlement?: Entitlement;
   replayed?: boolean;
 };
+/** POST /api/v1/respond/{token}/open: the opener takes the next open side.
+ * The claim secret goes back as Respondent-Claim from then on. */
+export type OpenResponse = { case: CaseView; respondent_claim: string | null };
+/** GET /api/v1/cases/live: the owner's cases that wait on someone. */
+export type LiveCasesResponse = { cases: { id: string; sides: CaseLiveSide[] }[] };
 export type InviteResponse = { inviteUrl: string; party?: PartyLetter };
 /** DELETE /api/v1/cases/{id}: kept for older clients; it runs the owner's
  * removal (nothing is deleted). */

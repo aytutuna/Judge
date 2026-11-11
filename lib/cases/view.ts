@@ -35,6 +35,7 @@ import { partiesFor } from "@/lib/multi";
 import type { OriginalStatus } from "@/lib/originals-types";
 import type { NameMapping } from "@/lib/types";
 import { respondentOf, type CaseBundle, type CaseListRow, type EvidenceRow } from "./db";
+import { liveSides } from "./seats";
 import { effectiveStatus } from "./sweep";
 
 export type ViewContext = {
@@ -46,8 +47,6 @@ export type ViewContext = {
   ownInvite: boolean;
   /** Respondent role: which side the link is for (default b). */
   party?: PartyLetter;
-  /** Owner, three or four sides: the re-derived link of each waiting side. */
-  inviteUrls?: Partial<Record<PartyLetter, string>>;
   /** Why the viewer cannot appeal right now (null = allowed). */
   appealBlock: AppealBlock | null;
   /** Respondent role: side B is bound to the signed-in viewer. */
@@ -151,11 +150,15 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
           return {
             party,
             status: inviteStatus,
-            inviteUrl: inviteStatus === "waiting" ? (ctx.inviteUrls?.[party] ?? null) : null,
+            inviteUrl: inviteStatus === "waiting" ? ctx.inviteUrl : null,
             answeredAt: answered?.submittedAt ?? null,
           };
         })
       : undefined;
+
+  const live = ctx.role === "owner" && !row.removedAt ? liveSides(bundle, ctx.now) : undefined;
+  const unanswered = live?.some((l) => l.state !== "answered") ?? false;
+  const owner = ctx.role === "owner";
 
   return {
     id: row.id,
@@ -172,7 +175,8 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
     respondentAnswered,
     ...(many ? { parties: allParties } : {}),
     ...(invites ? { invites } : {}),
-    inviteUrl: ctx.role === "owner" && status === "awaiting_respondent" && !respondentAnswered ? ctx.inviteUrl : null,
+    ...(live ? { live } : {}),
+    inviteUrl: owner && status === "awaiting_respondent" && unanswered ? ctx.inviteUrl : null,
     ownInvite: ctx.role === "respondent" && ctx.ownInvite,
     sides,
     verdicts,
@@ -184,7 +188,7 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
       ? { allowed: false, blockedBy: "not_judged" }
       : { allowed: ctx.appealBlock === null, blockedBy: ctx.appealBlock },
     lastError: status === "failed" ? row.lastError : null,
-    pollAfterMs: judging ? CASE_POLL_MS : null,
+    pollAfterMs: judging || (owner && status === "awaiting_respondent" && unanswered) ? CASE_POLL_MS : null,
     names: ctx.originals?.names ?? null,
     display: {
       namesVisible: row.namesVisible,

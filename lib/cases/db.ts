@@ -74,6 +74,19 @@ const SCHEMA = [
     PRIMARY KEY (case_id, party)
   )`,
   "CREATE INDEX IF NOT EXISTS case_invites_user ON case_invites (user_id) WHERE user_id IS NOT NULL",
+  // Who opened the one shared link and took a side before answering. The
+  // nonce is the claim secret's, kept when the answer lands; typing_at is the
+  // last heartbeat and only ever says "typing", never what.
+  `CREATE TABLE IF NOT EXISTS case_seats (
+    case_id    TEXT NOT NULL,
+    party      TEXT NOT NULL CHECK (party IN ('b','c','d')),
+    nonce      TEXT NOT NULL,
+    user_id    TEXT,
+    opened_at  TEXT NOT NULL,
+    typing_at  TEXT,
+    PRIMARY KEY (case_id, party)
+  )`,
+  "CREATE INDEX IF NOT EXISTS case_seats_user ON case_seats (user_id) WHERE user_id IS NOT NULL",
   `CREATE TABLE IF NOT EXISTS case_sides (
     case_id       TEXT NOT NULL,
     party         TEXT NOT NULL CHECK (party IN ('a','b','c','d')),
@@ -300,6 +313,16 @@ export type InviteRow = {
   answeredAt: string | null;
 };
 
+/** A side taken by opening the shared link, answered or not. */
+export type SeatRow = {
+  caseId: string;
+  party: "b" | "c" | "d";
+  nonce: string;
+  userId: string | null;
+  openedAt: string;
+  typingAt: string | null;
+};
+
 export type SideRow = { party: PartyLetter; text: string; submittedAt: string };
 
 export type EvidenceRow = {
@@ -346,6 +369,7 @@ export type CaseBundle = {
   people: KnownPerson[];
   /** Sides C and D, when the case has them. */
   invites: InviteRow[];
+  seats: SeatRow[];
 };
 
 const str = (v: unknown): string => String(v);
@@ -411,6 +435,17 @@ function mapInvite(r: Row): InviteRow {
   };
 }
 
+function mapSeat(r: Row): SeatRow {
+  return {
+    caseId: str(r.case_id),
+    party: str(r.party) as SeatRow["party"],
+    nonce: str(r.nonce),
+    userId: strOrNull(r.user_id),
+    openedAt: str(r.opened_at),
+    typingAt: strOrNull(r.typing_at),
+  };
+}
+
 function mapAppeal(r: Row): AppealRow {
   return {
     id: str(r.id),
@@ -443,22 +478,32 @@ export async function getCaseByInviteHash(hash: string): Promise<CaseRow | null>
   return rs.rows[0] ? mapCase(rs.rows[0]) : null;
 }
 
-/** The case behind an invite link, and which side the link is for: the
- * case's own link is side B's, any other is a row of case_invites. */
-export async function getCaseByAnyInviteHash(hash: string): Promise<{ row: CaseRow; party: "b" | "c" | "d" } | null> {
+/** The case behind an invite link. The case's own link is the shared one
+ * (`shared`; the side comes from whoever opens it, B until someone else
+ * holds it). Any other is an older per-side link, a row of case_invites,
+ * that keeps its side. */
+export async function getCaseByAnyInviteHash(
+  hash: string,
+): Promise<{ row: CaseRow; party: "b" | "c" | "d"; shared: boolean } | null> {
   const db = await caseDb();
   const own = await getCaseByInviteHash(hash);
-  if (own) return { row: own, party: "b" };
+  if (own) return { row: own, party: "b", shared: true };
   const rs = await db.execute({ sql: "SELECT case_id, party FROM case_invites WHERE invite_hash = ?", args: [hash] });
   if (!rs.rows[0]) return null;
   const row = await getCase(str(rs.rows[0].case_id));
-  return row ? { row, party: str(rs.rows[0].party) as "c" | "d" } : null;
+  return row ? { row, party: str(rs.rows[0].party) as "c" | "d", shared: false } : null;
 }
 
 export async function getInvites(caseId: string): Promise<InviteRow[]> {
   const db = await caseDb();
   const rs = await db.execute({ sql: "SELECT * FROM case_invites WHERE case_id = ? ORDER BY party", args: [caseId] });
   return rs.rows.map(mapInvite);
+}
+
+export async function getSeats(caseId: string): Promise<SeatRow[]> {
+  const db = await caseDb();
+  const rs = await db.execute({ sql: "SELECT * FROM case_seats WHERE case_id = ? ORDER BY party", args: [caseId] });
+  return rs.rows.map(mapSeat);
 }
 
 /** Who answered for `party` and how they are bound. Side B's live in the
@@ -499,7 +544,7 @@ export async function hasSide(caseId: string, party: PartyLetter): Promise<boole
 export async function loadCaseBundle(row: CaseRow): Promise<CaseBundle> {
   const db = await caseDb();
   const id = row.id;
-  const [sides, evidence, appeals, verdicts, people, invites] = await Promise.all([
+  const [sides, evidence, appeals, verdicts, people, invites, seats] = await Promise.all([
     db.execute({ sql: "SELECT party, text, submitted_at FROM case_sides WHERE case_id = ? ORDER BY party", args: [id] }),
     db.execute({
       sql: `SELECT id, party, appeal_id, seq, kind, transcript FROM case_evidence
@@ -515,6 +560,7 @@ export async function loadCaseBundle(row: CaseRow): Promise<CaseBundle> {
     }),
     db.execute({ sql: "SELECT name_key, label FROM case_people WHERE case_id = ?", args: [id] }),
     db.execute({ sql: "SELECT * FROM case_invites WHERE case_id = ? ORDER BY party", args: [id] }),
+    db.execute({ sql: "SELECT * FROM case_seats WHERE case_id = ? ORDER BY party", args: [id] }),
   ]);
   return {
     row,
@@ -545,7 +591,37 @@ export async function loadCaseBundle(row: CaseRow): Promise<CaseBundle> {
     }),
     people: people.rows.map((r) => ({ key: str(r.name_key), label: str(r.label) })),
     invites: invites.rows.map(mapInvite),
+    seats: seats.rows.map(mapSeat),
   };
+}
+
+/** The owner's cases still waiting on someone, with who answered and who
+ * took a seat, for the live states. */
+export async function listWaitingCases(
+  ownerId: string,
+  nowIso: string,
+  limit: number,
+): Promise<{ row: CaseRow; sides: { party: PartyLetter }[]; seats: SeatRow[] }[]> {
+  const db = await caseDb();
+  const rs = await db.execute({
+    sql: `SELECT * FROM cases WHERE owner_id = ? AND status = 'awaiting_respondent' AND expires_at > ?
+            AND removed_at IS NULL AND mode IS NOT 'one_sided'
+          ORDER BY created_at DESC, id DESC LIMIT ?`,
+    args: [ownerId, nowIso, limit],
+  });
+  const rows = rs.rows.map(mapCase);
+  if (rows.length === 0) return [];
+  const marks = rows.map(() => "?").join(",");
+  const ids = rows.map((r) => r.id);
+  const [sides, seats] = await Promise.all([
+    db.execute({ sql: `SELECT case_id, party FROM case_sides WHERE case_id IN (${marks})`, args: ids }),
+    db.execute({ sql: `SELECT * FROM case_seats WHERE case_id IN (${marks})`, args: ids }),
+  ]);
+  return rows.map((row) => ({
+    row,
+    sides: sides.rows.filter((r) => str(r.case_id) === row.id).map((r) => ({ party: str(r.party) as PartyLetter })),
+    seats: seats.rows.filter((r) => str(r.case_id) === row.id).map(mapSeat),
+  }));
 }
 
 export type CaseListRow = CaseRow & {

@@ -103,7 +103,7 @@ function appeal(over: Partial<AppealRow> = {}): AppealRow {
 }
 
 function bundle(over: Partial<CaseBundle> = {}): CaseBundle {
-  return { row: row(), sides: [SIDES[0]], evidence: [], appeals: [], verdicts: [], people: [], invites: [], ...over };
+  return { row: row(), sides: [SIDES[0]], evidence: [], appeals: [], verdicts: [], people: [], invites: [], seats: [], ...over };
 }
 
 const judged = (mode: "two_sided" | "one_sided", over: Partial<CaseBundle> = {}) =>
@@ -231,10 +231,11 @@ describe("CaseView visibility", () => {
     expect(owner.sides.map((s) => s.party)).toEqual(["a"]);
     expect(owner.inviteUrl).toBe("http://x/r/tok");
     expect(owner.canJudgeNow).toBe(true);
-    expect(owner.pollAfterMs).toBeNull();
+    expect(owner.pollAfterMs).toBe(3000);
     const resp = buildCaseView(b, ctx("respondent", { ownInvite: true }));
     expect(resp.sides).toEqual([]);
     expect(resp.inviteUrl).toBeNull();
+    expect(resp.pollAfterMs).toBeNull();
     expect(resp.ownInvite).toBe(true);
     expect(resp.canJudgeNow).toBe(false);
   });

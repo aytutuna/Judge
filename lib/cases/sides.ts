@@ -114,7 +114,7 @@ export async function respondToSide(input: RespondSideInput): Promise<RespondSid
       sql: "EXISTS (SELECT 1 FROM cases WHERE id = ? AND judging_token = ?)",
       args: [row.id, token],
     };
-    const claimNonce = newInviteNonce();
+    const claimNonce = bundle.seats.find((s) => s.party === party)?.nonce ?? newInviteNonce();
     const display = sealCaseDisplay(row.id, party, input.displayName);
     const original = caseOriginalStatement(
       row.id,
