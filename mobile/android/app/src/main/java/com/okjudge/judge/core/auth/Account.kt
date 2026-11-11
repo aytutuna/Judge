@@ -38,6 +38,8 @@ enum class SignInError {
     PASSWORD_WRONG,
     PASSWORD_SHORT,
     PASSWORD_SAVE_FAILED,
+    /** The server takes no password for this account (the review account): the sign-in stands without one. */
+    PASSWORD_NOT_TAKEN,
     CURRENT_PASSWORD_WRONG,
     CURRENT_PASSWORD_REQUIRED,
     RATE_LIMITED,
@@ -461,6 +463,7 @@ class Account(
 
         fun passwordSaveError(e: UiError): SignInError = common(e) ?: (e as UiError.Api).let {
             when (it.code) {
+                "invalid" -> if (it.status == 403) SignInError.PASSWORD_NOT_TAKEN else SignInError.PASSWORD_SAVE_FAILED
                 "too_short", "too_long" -> SignInError.PASSWORD_SHORT
                 "password_wrong" -> SignInError.CURRENT_PASSWORD_WRONG
                 "password_required" -> SignInError.CURRENT_PASSWORD_REQUIRED

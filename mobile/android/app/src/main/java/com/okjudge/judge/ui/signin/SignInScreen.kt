@@ -197,7 +197,7 @@ fun errorText(s: Strings, error: SignInError): String = when (error) {
     SignInError.CODE_TOO_MANY -> s.appSigninCodeTooMany
     SignInError.PASSWORD_WRONG -> s.signinPasswordWrong
     SignInError.PASSWORD_SHORT -> s.signinPasswordShort
-    SignInError.PASSWORD_SAVE_FAILED -> s.signinPasswordSaveFailed
+    SignInError.PASSWORD_SAVE_FAILED, SignInError.PASSWORD_NOT_TAKEN -> s.signinPasswordSaveFailed
     SignInError.CURRENT_PASSWORD_WRONG -> s.errorPasswordWrong
     SignInError.CURRENT_PASSWORD_REQUIRED -> s.errorPasswordRequired
     SignInError.RATE_LIMITED -> s.appSigninRateLimited

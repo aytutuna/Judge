@@ -312,6 +312,19 @@ class SignInViewModelTest {
     }
 
     @Test
+    fun createAccount_whenTheServerTakesNoPassword_stillSignsIn() = runBlocking {
+        withPasswords()
+        routes.always(SEND_CODE, json(200, """{"success":true}"""))
+        routes.on(VERIFY_CODE, Routes.grant("code-session"))
+        routes.on(SET_PASSWORD, json(403, """{"code":"invalid"}"""))
+        val vm = vm()
+        vm.throughTheCode(SignInMode.CREATE, "made-up-pass")
+        val done =vm.await { it.done }
+        assertNull(done.error)
+        assertEquals(1, routes.requestsTo(SET_PASSWORD).size)
+    }
+
+    @Test
     fun codeMode_whenMeCannotBeRead_justSignsIn() = runBlocking {
         withPasswords()
         routes.always(Routes.ME, json(503, """{"code":"unavailable"}"""))
