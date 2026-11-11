@@ -1,0 +1,1052 @@
+{
+  "dishwasher": {
+    "title": "🍽️ Misky v hornom koši",
+    "aName": "Lucia",
+    "a": "Zase si dal misky do horného koša. Tam sa nikdy poriadne neumyjú, na to je predsa dolný kôš.",
+    "bName": "Peter",
+    "b": "Hore sa zmestia v pohode a dole ostane miesto na hrnce. Takto umývačku plním už roky a ešte nikdy z nej nič nevyšlo špinavé."
+  },
+  "bill": {
+    "title": "🍷 Delenie účtu v reštaurácii",
+    "aName": "Zuzana",
+    "a": "Nič som nepila, tak by som nemala platiť štvrtinu vína. Jedlo si pokojne rozdeľme rovným dielom.",
+    "bName": "Marek",
+    "b": "Vždy to proste delíme na štyroch. Zakaždým rátať, kto mal čo, je otrava, a ten rozdiel aj tak nie je veľký."
+  },
+  "thermostat": {
+    "title": "🌡️ Boj o termostat",
+    "aName": "Jana",
+    "a": "Je tu 19 stupňov a je mi zima aj v mikine. Dať kúrenie na 22 predsa nie je žiadne šialenstvo.",
+    "bName": "Michal",
+    "b": "Pri 22 stupňoch je na spanie priveľmi teplo. Ty si môžeš obliecť ďalšiu vrstvu, ja už zo seba nemám čo dať dole."
+  },
+  "roadTrip": {
+    "title": "🚗 Kto šoféruje domov",
+    "aName": "Juraj",
+    "a": "Cestou tam som šoféroval celých šesť hodín. Je len fér, aby si nás späť odviezla ty.",
+    "bName": "Simona",
+    "b": "Ešte pred odchodom som hovorila, že neznášam šoférovanie v noci, a my vyrážame o siedmej večer. Nabudúce si zoberiem všetky ranné jazdy ja."
+  },
+  "seat": {
+    "title": "💺 Sklopené sedadlo v nočnom lete",
+    "aName": "Veronika",
+    "a": "Moje sedadlo sa dá sklopiť, tak ho sklápam. Je to nočný let a všetci sa snažia spať.",
+    "bName": "Lukáš",
+    "b": "Mám 190 centimetrov a kolená mám už teraz zapreté o tvoje sedadlo. Mohla si sa aspoň opýtať, skôr než si ho sklopila úplne dozadu."
+  },
+  "spoiler": {
+    "title": "🎬 Spoiler z finále",
+    "aName": "Kristína",
+    "a": "Prezradil si mi, kto je vrah, ešte predtým, ako som si pustila poslednú časť. Celý týždeň som sa na ňu tešila.",
+    "bName": "Patrik",
+    "b": "Vyšlo to pred tromi týždňami a hovorila si, že to máš dopozerané. Nemôžem predsa sledovať, kto má čo dopozerané."
+  },
+  "jacket": {
+    "title": "🧥 Požičaná rifľová bunda",
+    "aName": "Tomáš",
+    "a": "Zobrala si si moju džínsovú bundu na koncert a ani si sa neopýtala. Vrátila sa mi celá presiaknutá dymom.",
+    "bName": "Ema",
+    "b": "Visela pri dverách a ty ju nikdy nenosíš. Opýtala by som sa, ale spal si a ja som už meškala."
+  },
+  "lastSlice": {
+    "title": "🍕 Posledný kúsok pizze",
+    "aName": "Matej",
+    "a": "Ešte pred začiatkom filmu som povedal, že posledný kúsok je môj. Všetci to počuli.",
+    "bName": "Natália",
+    "b": "Nemôžeš si niečo zabrať a potom sa toho dve hodiny ani nedotknúť. Ležalo to tam a chladlo, tak som to zjedla."
+  },
+  "sundayPlans": {
+    "title": "🛋️ Celá nedeľa na gauči",
+    "aName": "Katarína",
+    "a": "Je to jediný deň, kedy máme obaja voľno, a ja by som chcela ísť na túru. Presedieť celú nedeľu na gauči mi príde ako škoda.",
+    "bName": "Ondrej",
+    "b": "Celý týždeň driem a v nedeľu si dobíjam baterky. Na túru môžeme ísť o týždeň, dnes chcem s tebou len nič nerobiť."
+  },
+  "anniversaryGift": {
+    "title": "🎁 Koľko minúť na darček",
+    "aName": "Ivan",
+    "a": "Dohodli sme sa, že darčeky budú do 50 eur, a ty si mi kúpila hodinky. Teraz vyzerám, akoby som sa vôbec nesnažil.",
+    "bName": "Dominika",
+    "b": "Videla som ich a hneď som na teba pomyslela. Boli v zľave a číslo, na ktorom sme sa dohodli pred rokmi, mi predsa nemôže brániť, aby som bola štedrá."
+  },
+  "couplePhoto": {
+    "title": "📸 Fotka zverejnená bez opýtania",
+    "aName": "Barbora",
+    "a": "Dal si našu fotku z pláže na internet a ja som ju ešte ani nevidela. Vyzerám na nej príšerne a bola by som povedala nie.",
+    "bName": "Adam",
+    "b": "Mne sa na nej páčiš a chcel som sa podeliť o pekný deň. Netušil som, že ťa to takto rozruší."
+  },
+  "phoneInBed": {
+    "title": "📱 Mobily v posteli",
+    "aName": "Michaela",
+    "a": "Ľahneme si do postele a ty hodinu scrolluješ, kým ja tu len tak ležím. Chcela by som sa rozprávať, alebo aspoň spolu zaspať.",
+    "bName": "Roman",
+    "b": "Takto sa po dlhom dni uvoľním. Rozprávať sa môžeme, ale nechcem pravidlá kvôli mobilu, ktorý len držím v ruke."
+  },
+  "movieTurns": {
+    "title": "🍿 Kto vyberá film",
+    "aName": "Lenka",
+    "a": "Minule som vyberala ja a aj predminule. Teraz si na rade ty, a ty si práve štyridsať minút opakoval, že nič ti nepripadá dobré.",
+    "bName": "Dávid",
+    "b": "Vybral by som, keby ma niečo lákalo. Ty vyberieš vždy veci, ktoré sa mi páčia menej, tak radšej mlčím."
+  },
+  "slowReply": {
+    "title": "💬 Hodiny čakania na odpoveď",
+    "aName": "Nikola",
+    "a": "Napísala som ti jednoduchú otázku na obed a ozval si sa o ôsmej večer. Rýchla odpoveď by ťa nič nestála.",
+    "bName": "Filip",
+    "b": "Celý deň som mal porady a mobil v taške. Neignoroval som ťa, len to nebolo naliehavé."
+  },
+  "bedSide": {
+    "title": "🛏️ Čia je ktorá strana postele",
+    "aName": "Alena",
+    "a": "Šesť rokov spím pri okne. Teraz, keď sme sa presťahovali, si zabral moju stranu skôr, než som sa stihla vybaliť.",
+    "bName": "Jozef",
+    "b": "V tejto izbe je posteľ pri opačnej stene, takže sa strany vymenili. Môžeme sa vrátiť k starému, len som na to nemyslel."
+  },
+  "surpriseParty": {
+    "title": "🎈 Prekvapenie, ktoré nechcel",
+    "aName": "Petra",
+    "a": "Celé som to zorganizovala na tvoje narodeniny a pozvala som všetkých. Celý večer si vyzeral nešťastne.",
+    "bName": "Boris",
+    "b": "Pred pár mesiacmi som ti povedal, že neznášam prekvapenia a veľké davy. Oceňujem tvoju snahu, ale nepočúvala si ma."
+  },
+  "toothpaste": {
+    "title": "🪥 Stláčanie zubnej pasty",
+    "aName": "Silvia",
+    "a": "Tubu stláčaš v strede a necháš ju plochú a skrútenú. Je to maličkosť, viem, ale nachádzam ju každé jedno ráno.",
+    "bName": "Marcel",
+    "b": "Nakoniec z nej vyjde všetko rovnako. Nechápem, prečo by mala existovať nejaká správna strana stláčania."
+  },
+  "blanket": {
+    "title": "🛌 Zlodej periny",
+    "aName": "Denisa",
+    "a": "Každú noc sa zakukleš do celej periny a ja sa budím premrznutá. Je to ako spať vedľa buritá.",
+    "bName": "Samuel",
+    "b": "Aj mne je zima a nerobím to naschvál. Mohli by sme radšej kúpiť druhú perinu, než ma obviňovať."
+  },
+  "lateDinner": {
+    "title": "🍝 Večera o deviatej",
+    "aName": "Monika",
+    "a": "Povedal si, že budeš doma o šiestej, a prišiel si o deviatej. Cestoviny, čo som uvarila, sú studené a som hladná ako vlk.",
+    "bName": "Rastislav",
+    "b": "Predĺžil sa mi hovor a nemohol som ho len tak zložiť. Dal by som ti vedieť, ale vybil sa mi telefón."
+  },
+  "dateBill": {
+    "title": "💳 Kto platí na rande",
+    "aName": "Tereza",
+    "a": "Boli sme spolu von asi dvanásťkrát a ty ani raz nesiahneš po účte. Chcela by som, aby sme sa striedali.",
+    "bName": "Viktor",
+    "b": "Teraz zarábam viac ako ty a rád to zaplatím. Netušil som, že ti to vadí, len sa nechcem hádať o účte."
+  },
+  "quietHours": {
+    "title": "🔇 Nočný kľud po desiatej",
+    "aName": "Eva",
+    "a": "Mám skorú zmenu a o jedenástej cez stenu počujem tvoj videohovor. Potrebujem, aby si to stíšil.",
+    "bName": "Dušan",
+    "b": "Môj tím je v inom časovom pásme, takže neskoro je jediný čas, kedy to ide. Dám si slúchadlá, ale ty by si si mohla dať štuple do uší."
+  },
+  "fridgeShelf": {
+    "title": "🧊 Čia je táto polička",
+    "aName": "Emil",
+    "a": "Svoju poličku v chladničke som si popísal a ty si na ňu aj tak dala zvyšky. Na tvojej je miesta dosť.",
+    "bName": "Radka",
+    "b": "Moja polička bola plná a tvoja nádoba bola poloprázdna. Je to len jedna noc, nič som ti nebrala."
+  },
+  "overnightGuest": {
+    "title": "🚪 Hosť, ktorý zostane celý týždeň",
+    "aName": "Hana",
+    "a": "Tvoj kamarát už šiesty deň býva v obývačke a nikto sa ma nepýtal. Chcela by som svoj byt späť.",
+    "bName": "Kamil",
+    "b": "Nemá teraz kde bývať a nemá kam ísť. Hovoril som ti, že zostane pár nocí, a na nákupy prispieva."
+  },
+  "sharedShampoo": {
+    "title": "🧴 Používanie môjho šampónu",
+    "aName": "Miriam",
+    "a": "Môj šampón je drahší a v pondelok bol skoro plný. Do piatka je takmer preč a ty si jediný, kto sa tu okrem mňa sprchuje.",
+    "bName": "Erik",
+    "b": "Použil som ho len trochu, dvakrát. Ak je to také dôležité, dávaj si ho do izby, myslel som, že veci v kúpeľni sú spoločné."
+  },
+  "dirtyPan": {
+    "title": "🍳 Panvica namočená v drezu",
+    "aName": "Ľubomír",
+    "a": "Tá panvica je v drezu od utorka a už začína zapáchať. Kto varí, mal by ju aj umyť.",
+    "bName": "Sabína",
+    "b": "Chcela som ju umyť, až sa ešte chvíľu namočí. Ty necháš taniere v drezu aj dva dni a ja som nič nepovedala."
+  },
+  "dryerLaundry": {
+    "title": "🧺 Prádlo v sušičke",
+    "aName": "Ivana",
+    "a": "Prišla som dolu a moje čisté oblečenie ležalo na stole v kope, lebo si potreboval sušičku. Bolo ešte vlhké.",
+    "bName": "Igor",
+    "b": "Program sa skončil už pred hodinou a ja som mal čakajúce pranie. Prosím ťa, vyber si veci, keď zapípa."
+  },
+  "loudMusic": {
+    "title": "🎧 Hudba cez stenu",
+    "aName": "Matúš",
+    "a": "Je tri hodiny popoludní, sobota, a som vo vlastnej izbe. Nemyslím si, že by som mal potrebovať slúchadlá vo vlastnom byte.",
+    "bName": "Klaudia",
+    "b": "Basy mi trasú stolom, keď sa snažím učiť. Nikto ťa nežiada, aby si prestal, len to trochu stlm."
+  },
+  "longShower": {
+    "title": "🚿 Dochádza teplá voda",
+    "aName": "Šimon",
+    "a": "Tvoje sprchy trvajú štyridsať minút a keď som na rade ja, teplá voda je vždy preč. Desať minút na každého by bolo fér.",
+    "bName": "Linda",
+    "b": "Čas si nemerám a je to jediné miesto, kde si môžem oddýchnuť. Mohli by sme sa striedať, kto ide prvý."
+  },
+  "lightsOn": {
+    "title": "💡 Všade svietia svetlá",
+    "aName": "Soňa",
+    "a": "Prejdem bytom a všade sa svieti, aj v izbách, kde nikto nie je. Účty sa delia, takže sú to aj moje peniaze.",
+    "bName": "Norbert",
+    "b": "Mám rád, keď je svetlo, a celý večer chodím z izby do izby. Zhasínať a zapínať celý večer je rovnako otravné."
+  },
+  "parcels": {
+    "title": "📦 Balíky na chodbe",
+    "aName": "Viera",
+    "a": "Na chodbe máš naskladaných šesť krabíc a každý deň sa o ne potknem. Prosím, odnes si ich do izby.",
+    "bName": "Richard",
+    "b": "Čakám, kým ich odnesiem na poštu, a mal som veľa práce. Sú tam len štyri dni."
+  },
+  "houseplant": {
+    "title": "🪴 Kto polieva kvetinu",
+    "aName": "Gabriela",
+    "a": "Kvetinu do obývačky som kúpila ja a polievam ju každý týždeň. Teraz vyzerá ako paličky, lebo si ju presunul do tmavého kúta.",
+    "bName": "Pavol",
+    "b": "Zavadzala pri telke a myslel som, že kút je v poriadku. Netušil som, že sú rastliny také citlivé."
+  },
+  "lateArrival": {
+    "title": "⏰ Zasa štyridsať minút meškania",
+    "aName": "Martin",
+    "a": "Dohodli sme sa na siedmej a ja som sedel v reštaurácii sám skoro do ôsmej. Už je to tretíkrát.",
+    "bName": "Alexandra",
+    "b": "Meškal autobus a písala som ti. Mohol si si objednať drink, namiesto toho, aby si sa hneval."
+  },
+  "cancelledPlans": {
+    "title": "🙅 Zrušené hodinu vopred",
+    "aName": "Zdenka",
+    "a": "Prispôsobila som celý deň, aby sme sa videli, a ty si to hodinu vopred zrušil jednou správou. Nie je to prvýkrát.",
+    "bName": "Štefan",
+    "b": "Bol som vyčerpaný a bol by som otrasná spoločnosť. Myslel som, že je férovejšie to povedať, než sa tam dotrepať."
+  },
+  "borrowedBook": {
+    "title": "📚 Kniha, ktorá sa nevrátila",
+    "aName": "Henrieta",
+    "a": "Tú knihu som ti požičala minulú jar a ubehol už rok. Bola podpísaná a pýtala som si ju už dvakrát.",
+    "bName": "Tibor",
+    "b": "Mám ju niekde, sľubujem, asi v nejakej krabici zo sťahovania. Nájdem ju, nemusíš mi to stále pripomínať."
+  },
+  "mutedChat": {
+    "title": "🔕 Stlmená skupinová konverzácia",
+    "aName": "Terézia",
+    "a": "Stlmil si našu skupinovú konverzáciu a dvakrát si prepásol zmenu plánu. Všetci sme na teba čakali na nesprávnom mieste.",
+    "bName": "Branislav",
+    "b": "Chodí tam dvesto správ denne, väčšinou memy. Prečítal by som tie dôležité, keby mi to nezabralo hodinu."
+  },
+  "birthdayDinner": {
+    "title": "🎂 Platenie narodeninovej večere",
+    "aName": "Marián",
+    "a": "Je to moja narodeninová večera a kvôli drahému vínu vyšiel účet na 90 eur na hlavu. Myslel by som si, že oslávenec neplatí.",
+    "bName": "Dana",
+    "b": "Všetko vždy delíme rovným dielom medzi celú partiu a všetci to vedia. A podnik si vybral ty."
+  },
+  "plusOne": {
+    "title": "💍 Sprievod na svadbu",
+    "aName": "Lívia",
+    "a": "Na pozvánke je len moje meno, ale môj partner by bol po dvoch rokoch doma sám. Zoberiem ho aj tak.",
+    "bName": "Adrián",
+    "b": "Miesto má pevný limit a každé miesto nás stojí veľa. Je mi to ľúto, ale nemôžem robiť výnimku pre jedného."
+  },
+  "chargerBorrow": {
+    "title": "🔌 Požičaná nabíjačka",
+    "aName": "Ladislav",
+    "a": "To je už tretia moja nabíjačka, ktorá sa stratila u teba. Chcem ich späť, nie ďalšie prepáč.",
+    "bName": "Zita",
+    "b": "Všetky vyzerajú rovnako, tak naozaj zabúdam, ktorá je čia. V piatok prinesiem celú tašku."
+  },
+  "auxCord": {
+    "title": "🎵 Kto vyberá hudbu v aute",
+    "aName": "Oliver",
+    "a": "Šoférujem ja, takže hudbu vyberám ja. Je to dlhá cesta a ja som ten, kto musí zostať hore.",
+    "bName": "Paulína",
+    "b": "Dnes si pustil ten istý album trikrát. Aj spolujazdec má právo na slovo, takto funguje každý výlet autom."
+  },
+  "karaoke": {
+    "title": "🎤 Pesnička, ktorá neskončí",
+    "aName": "Janka",
+    "a": "Zaspieval si deväť pesničiek a my ostatní jednu. Mikrofón má kolovať po izbe.",
+    "bName": "Tomáš",
+    "b": "Nikto iný sa nezapísal do zoznamu, tak som vyplnil medzery. Fakt som si myslel, že sa všetci bavia."
+  },
+  "uninvited": {
+    "title": "🙈 Vynechaná zo zoznamu pozvaných",
+    "aName": "Žaneta",
+    "a": "Videla som fotky z tvojej párty a nebola som pozvaná, hoci som bola na každej predtým. Naozaj ma to zabolelo.",
+    "bName": "Jakub",
+    "b": "Bola to malá akcia pre kolegov z práce, len desať ľudí. S tebou to nemalo nič spoločné, ani som si nemyslel, že by si chcela prísť."
+  },
+  "holidayHost": {
+    "title": "🎄 Kto robí vianočnú večeru",
+    "aName": "Beáta",
+    "a": "Rodinnú večeru robíme u nás už štyri roky po sebe. Je na rade niekto iný a ja by som chcela sviatky bez varenia.",
+    "bName": "Anton",
+    "b": "Mama nezvláda schody a my máme najväčší stôl. Nikto iný sa neponúkol, tak som si myslel, že to spravíme znova."
+  },
+  "dailyCalls": {
+    "title": "📞 Telefonát každý deň",
+    "aName": "Ľubica",
+    "a": "Mama mi volá každý deň okolo šiestej a čaká polhodinový rozhovor. Mám ju rada, ale niekedy na to nemám náladu.",
+    "bName": "Daniel",
+    "b": "Býva sama a ten hovor je najlepšia časť jej dňa. Mohla by si jej povedať, že v hektické dni napíšeš správu."
+  },
+  "bedtimeKids": {
+    "title": "🌙 Spánok cez školský týždeň",
+    "aName": "Iveta",
+    "a": "Náš syn má osem rokov a o ôsmej by mal spať. Nechal si ho pozerať futbal a teraz je v škole na zničenie.",
+    "bName": "Rudolf",
+    "b": "Bol to jeden zápas a bol z neho nadšený. Neskorý večer raz za čas mu neublíži a je to pre neho niečo výnimočné."
+  },
+  "borrowedSweater": {
+    "title": "👚 Sestra, ktorá mi lúpi skriňu",
+    "aName": "Júlia",
+    "a": "Zobrala si mi zelený sveter bez opýtania a išla si v ňom na párty. Vrátil sa zafľakovaný a ja som ho ešte ani raz nemala na sebe.",
+    "bName": "Nina",
+    "b": "Celý život som si od teba požičiavala veci a nevadilo ti to. Dám ho vyčistiť, ale robíš z toho veľkú vec."
+  },
+  "familyRecipe": {
+    "title": "🥘 Babkin recept",
+    "aName": "Marta",
+    "a": "Babkina polievka mala vždy lyžicu paradajkového pretlaku a je to napísané jej rukou. Ty si ho vynechal a tvrdíš, že je to rovnaký recept.",
+    "bName": "Roland",
+    "b": "Mne chutí ľahšie bez neho a takto si ju pamätám. Je to stále jej recept, len trochu vylepšený."
+  },
+  "dadRide": {
+    "title": "🚙 Odvoz otca na letisko",
+    "aName": "Vojtech",
+    "a": "Otca som viezol minule a aj predminule. Môžeš tentoraz ráno ty zobrať ten skorý let, namiesto objednávania taxíka?",
+    "bName": "Kamila",
+    "b": "Je to dve hodiny tam a späť a ja musím byť o šiestej v práci. Taxík zaplatím, len na to nemám čas."
+  },
+  "familyChat": {
+    "title": "👨‍👩‍👧 Reťazové správy v rodinnej skupine",
+    "aName": "Adriana",
+    "a": "Ujo stále preposiela tie reťazové správy a videá celej rodine. Nemôžem medzi nimi nájsť nič skutočné.",
+    "bName": "Ján",
+    "b": "Len sa snaží byť súčasťou skupiny a zasmiať sa. Možno mu povedať slovko, ale stlmiť ho mi príde nemilé."
+  },
+  "tvRemote": {
+    "title": "📺 Schovaný ovládač",
+    "aName": "Vladimír",
+    "a": "Keď si sadnem k zápasu, ovládač zmizne a beží rozprávka. Je to už druhýkrát tento týždeň.",
+    "bName": "Eliška",
+    "b": "Je to moja obľúbená hodina v telke a tvoj zápas trvá celé popoludnie. Môžeme sa striedať, ale celé popoludnie ti nedám."
+  },
+  "seatingChart": {
+    "title": "🍽️ Kto sedí na konci stola",
+    "aName": "Dominik",
+    "a": "Na tom konci stola sedím na každej rodinnej večeri odmalička. Teraz si tam sadol tvoj frajer a nikto nič nepovedal.",
+    "bName": "Mária",
+    "b": "Sadol si prvý a je to hosť. Je to stolička a nabudúce sa môžeme vymeniť."
+  },
+  "teenPhone": {
+    "title": "🧒 Mobil pri večeri",
+    "aName": "Alžbeta",
+    "a": "Večera je jediný čas, keď sedíme spolu ako rodina. Pätnásť minút bez telefónu nie je veľa.",
+    "bName": "Kristián",
+    "b": "Len pozerám, či mi kamarát odpísal. Ty máš tiež telefón pri stole, keď ti píšu z práce."
+  },
+  "meetingEmail": {
+    "title": "📧 Porada, ktorá mohla byť mailom",
+    "aName": "Renáta",
+    "a": "Hodinu sme sedeli na hovore, aby sme sa dozvedeli to, čo sa zmestí do troch riadkov. To je hodina, ktorú som mohla stráviť dokončením správy.",
+    "bName": "Vlado",
+    "b": "Všetci sú zaneprázdnení, ale na hovore sa ľudia môžu pýtať hneď. Mail by rozbehol päť samostatných vlákien."
+  },
+  "microwaveFish": {
+    "title": "🐟 Ryba v kancelárskej mikrovlnke",
+    "aName": "Božena",
+    "a": "Ohrial si lososa v spoločnej mikrovlnke a celé poschodie to páchne do tretej. Prosím, prines si niečo iné.",
+    "bName": "Ľuboš",
+    "b": "Je to môj jediný poriadny obed a nemám veľa peňazí na donášku. Iní ohrievajú kari a nikto nepovie ani slovo."
+  },
+  "stolenLunch": {
+    "title": "🥪 Niekto zjedol môj obed",
+    "aName": "Fero",
+    "a": "Na vrecku bolo moje meno a sendvič bol do obeda preč. Tipujem, že si videla, kto ho vzal.",
+    "bName": "Ľudmila",
+    "b": "Nič som nevidela a nechcem nikoho obviňovať. Možno je lístok na chladničke milší prvý krok."
+  },
+  "replyAll": {
+    "title": "📨 Odpoveď všetkým vo firme",
+    "aName": "Ivo",
+    "a": "Odpísala si všetkým, všetkým dvesto ľuďom, 'vďaka!' Teraz mám v schránke štyridsať ďalších takých.",
+    "bName": "Emília",
+    "b": "Chcela som byť slušná a tlačidlo bolo hneď tam. Je to drobná chyba a nikomu to naozaj neublížilo."
+  },
+  "officeCold": {
+    "title": "❄️ Ľadová kancelária",
+    "aName": "Rebeka",
+    "a": "Klimatizácia je nastavená tak nízko, že v júli sedím za stolom v kabáte. Pár stupňov teplejšie by nikomu neublížilo.",
+    "bName": "Vlastimil",
+    "b": "Mne je teplo a slnko mi svieti na stranu celé popoludnie. Ak ti je zima, deka je jednoduchšia ako to, aby sme sa potili my ostatní."
+  },
+  "openOfficeHeadphones": {
+    "title": "🎧 Slúchadlá v open spaci",
+    "aName": "Slavomír",
+    "a": "Mám slúchadlá, aby som sa sústredil, a ľudia ma každých pár minút oťukávajú s rýchlou otázkou. Rozbíja mi to myšlienky.",
+    "bName": "Marcela",
+    "b": "Ťažko sa dá poznať, či si naozaj zaneprázdnený. Najprv napísať správu by bolo príliš pomalé, keď odpoveď trvá desať sekúnd."
+  },
+  "emptyCoffee": {
+    "title": "☕ Posledná šálka kávy",
+    "aName": "Július",
+    "a": "Nalila si si poslednú kávu a prázdnu kanvicu si nechala na platničke. Nová káva sa robí dve minúty.",
+    "bName": "Anežka",
+    "b": "Meškala som na hovor a fakt som si nevšimla, že je to posledná šálka. Ďalšiu uvarím ja, sľubujem."
+  },
+  "ideaCredit": {
+    "title": "💡 Čí to bol nápad",
+    "aName": "Vincent",
+    "a": "Nový rozvrh som navrhol v marci a ty si ho šéfovi predstavila ako svoj. Stačilo by poďakovanie.",
+    "bName": "Lea",
+    "b": "Rozoberali sme to spolu a ja som to s tímom rozpracovala. Myslela som, že všetci súhlasíme, že je to spoločná práca."
+  },
+  "fridayDeadline": {
+    "title": "📅 Termín stanovený na piatok",
+    "aName": "Andrea",
+    "a": "Povedal si, že mi svoju časť pošleš do piatka, a je pondelok. Všetci ostatní na to čakali a musela som sa pýtať dvakrát.",
+    "bName": "Karol",
+    "b": "Padol na mňa väčší projekt a musel som si vybrať. Mal som ti to povedať skôr, ale dnes to budeš mať."
+  },
+  "deskLunch": {
+    "title": "🥗 Obed pri stole",
+    "aName": "Ernest",
+    "a": "Nikto v tomto tíme si už nerobí poriadnu obedňajšiu pauzu a začína sa to brať ako samozrejmosť. Chcel by som, aby sme o dvanástej odišli od stola.",
+    "bName": "Zlatica",
+    "b": "Jem pri práci a idem kvôli tomu domov skôr. Prestávky sú fajn, ale radšej by som si to určila sama."
+  },
+  "calendarInvite": {
+    "title": "🗓️ Stretnutia bez programu",
+    "aName": "Vanda",
+    "a": "V tvojej pozvánke stálo 'pokec' bez programu a zabralo mi to štyridsaťpäť minút rána. Povedz mi prosím najprv, o čo ide.",
+    "bName": "Alojz",
+    "b": "Mal to byť len rozhovor a nakoniec sme vyriešili dva problémy. Formálny program by ten rozhovor zabil."
+  },
+  "rentSplit": {
+    "title": "🏠 Delenie nájmu podľa veľkosti izby",
+    "aName": "Alica",
+    "a": "Moja izba je najmenšia a nemá skriňu, ale platím rovnako ako ty. Myslím, že najväčšia izba by mala stáť viac.",
+    "bName": "Zdenko",
+    "b": "Pri podpise zmluvy sme sa dohodli na rovnakých tretinách. Prepočítavať čísla zakaždým, keď niekto z nás niečo cíti, je chaos."
+  },
+  "smallLoan": {
+    "title": "💵 Desať eur z obeda",
+    "aName": "Eduard",
+    "a": "Minulý mesiac som ti zaplatil obed a aj minulý týždeň. Dokopy je to tridsať a ani slovo som o tom nepočul.",
+    "bName": "Dorota",
+    "b": "Myslela som, že sme si kvit po káve. Nevadí mi platiť, len mi povedz sumu a pošlem ti ju ešte dnes."
+  },
+  "tipping": {
+    "title": "🧾 Koľko dať sprepitné",
+    "aName": "Helena",
+    "a": "Obsluha bola pomalá a jedlo studené. Nechám desať percent, nie dvadsať.",
+    "bName": "Gregor",
+    "b": "Podnik bol plný a čašník bol zjavne preťažený. Sprepitné je pre nich veľmi dôležité a pre nás to nie je veľa navyše."
+  },
+  "streamingShare": {
+    "title": "📺 Zdieľaný účet na streamovanie",
+    "aName": "Dagmar",
+    "a": "Streamovací balík platím ja a teraz ho používa aj polovica tvojich kamarátov. Chcela by som, aby prispeli alebo si zaplatili vlastný.",
+    "bName": "Andrej",
+    "b": "Stojí to rovnako, či ho používajú dvaja alebo piati. Pýtať niekoľko eur od každého by bolo trápne."
+  },
+  "taxiSplit": {
+    "title": "🚕 Delenie taxíka domov",
+    "aName": "Dáša",
+    "a": "Tvoja zastávka bola prvá a moja o pätnásť minút ďalej, a predsa sme sa o taxík podelili na polovicu. Nepripadá mi to celkom fér.",
+    "bName": "Radovan",
+    "b": "Šli sme jedným autom a odišli sme spolu. Počítať to po kilometroch pri dvadsiatich eurách je už trochu moc."
+  },
+  "groupGift": {
+    "title": "🎀 Spoločný darček",
+    "aName": "Bibiana",
+    "a": "Všetci dávajú po dvadsať eur na darček pre učiteľku, ale ja som študentka a je to pre mňa veľa. Môžem dať desať?",
+    "bName": "Teodor",
+    "b": "Darček je už objednaný za túto cenu a menší podiel znamená, že to musí doplatiť niekto iný. Chápem ťa, ale je to nepríjemné."
+  },
+  "groceryList": {
+    "title": "🛒 Delenie nákupu",
+    "aName": "Pavlína",
+    "a": "Kupuješ chrumky a luxusný syr a pridávaš to do spoločnej sumy. Ja jem len základné veci, takže by som nemala platiť polovicu.",
+    "bName": "Rado",
+    "b": "Syr si môžeš zjesť kedykoľvek. Bol to spoločný účet od začiatku a nevediem na to tabuľku."
+  },
+  "bigPurchase": {
+    "title": "🛍️ Veľký nákup bez slova",
+    "aName": "Stela",
+    "a": "Kúpil si si nový herný monitor za 400 eur práve v týždni, keď sme šetrili na výlet. Mohol si sa ma opýtať.",
+    "bName": "Milan",
+    "b": "Zaplatil som ho z vlastných vreckových a čakal som naň rok. Nemyslel som si, že potrebujem povolenie."
+  },
+  "subscriptions": {
+    "title": "💳 Zrušenie zabudnutých predplatných",
+    "aName": "Jaro",
+    "a": "Platíme štyri aplikácie, ktoré ani jeden z nás neotvára. Zrušme ich a peniaze dajme na dovolenku.",
+    "bName": "Oľga",
+    "b": "Som si istá, že aspoň dve z nich čoskoro použijem. Môžeme ich nechať do konca mesiaca a potom sa rozhodnúť?"
+  },
+  "restaurantChoice": {
+    "title": "🍜 Kde dnes večer jesť",
+    "aName": "Zoltán",
+    "a": "Tento týždeň som trikrát povedal ramen a ty si zakaždým povedala jasné, a potom si vybrala niečo iné. Chcel by som tam ísť.",
+    "bName": "Nataša",
+    "b": "Keď sme tam došli, nemala som chuť na rezance. Nabudúce povedz miesto a ja sa zaviažem ešte pred odchodom."
+  },
+  "cerealMilk": {
+    "title": "🥣 Najprv mlieko, potom vločky",
+    "aName": "Karin",
+    "a": "Najprv naleješ mlieko a potom pridáš vločky. Je to zle a rozmoknú ti skôr, než ich dojedieš.",
+    "bName": "Ela",
+    "b": "Mne to tak chutí a hneď to zjem. Nemusíš sa pozerať, len ma nechaj vychutnať si raňajky."
+  },
+  "ketchup": {
+    "title": "🍳 Kečup na vajíčkach",
+    "aName": "Lujza",
+    "a": "Dal si kečup na dokonale pripravenú omeletu. To je plytvanie dobrými vajíčkami a ja sa na to nemôžem pozerať.",
+    "bName": "Ignác",
+    "b": "Takto ich jem od detstva a chutí mi to. Je to môj tanier, ty si jedz svoj, ako chceš."
+  },
+  "pizzaCrust": {
+    "title": "🍕 Nedojedený okraj pizze",
+    "aName": "Timotej",
+    "a": "Zješ stred a okraj necháš na tanieri zakaždým. A to je najlepšia časť, ide do koša.",
+    "bName": "Mirka",
+    "b": "Okraj je tvrdý a dovtedy som už sýta. Ak ho chceš, zober si ho, nebudem sa nútiť."
+  },
+  "coffeeTea": {
+    "title": "☕ Káva alebo čaj ráno",
+    "aName": "Arpád",
+    "a": "Povedala si, že čaj je len horúca voda s listami, a potom si si pýtala dúšok mojej kávy. Chcel by som ospravedlnenie.",
+    "bName": "Hedviga",
+    "b": "Vôňa kávy sa mi páči viac než chuť. A čaj pijem, lebo ma upokojuje, nemusíš ma presviedčať."
+  },
+  "spiceLevel": {
+    "title": "🌶️ Koľko pálivosti je moc",
+    "aName": "Cyril",
+    "a": "Chcela si 'jemné' a potom si si vysypala polovicu čili oleja na tanier. Teraz kašle celý stôl.",
+    "bName": "Anna",
+    "b": "Jemné pre mňa nie je jemné pre teba a nevedela som, že stôl zdieľa. Nabudúce si objednám osobitnú misku."
+  },
+  "leftovers": {
+    "title": "🥡 Vyhodené zvyšky",
+    "aName": "Slávka",
+    "a": "To kari som si šetrila na obed a ty si ho vyhodil, lebo bolo dva dni v chladničke. Bolo úplne v poriadku.",
+    "bName": "Gabriel",
+    "b": "Myslel som, že tam leží príliš dlho, a nechcel som, aby sa niekto otrávil. Nahradím ti ho, prepáč."
+  },
+  "cilantro": {
+    "title": "🌿 Koriander vo všetkom",
+    "aName": "Valéria",
+    "a": "Do jedla si dal zasa koriander, hoci vieš, že mi chutí ako mydlo. Nedá sa to celé vybrať.",
+    "bName": "Dalibor",
+    "b": "Recept ho vyžaduje a jedlo potrebuje tú sviežosť. Nabudúce ti ho dám bokom do misky."
+  },
+  "tooSalty": {
+    "title": "🧂 Priveľa soli v polievke",
+    "aName": "Adela",
+    "a": "Polievku si posolil skôr, ako si ju ochutnal, a teraz je príliš slaná na jedenie. Chcela by som začať nanovo s čerstvým hrncom.",
+    "bName": "Jaroslav",
+    "b": "Mne chutí akurát a soľ vždy pridávam nakoniec. Zalej ju trochou vody, to sa dá ľahko napraviť."
+  },
+  "doubleDip": {
+    "title": "🥨 Namáčanie dva razy na párty",
+    "aName": "Cecília",
+    "a": "Videla som, ako si odhryzol chipsu a znova ju namočil do spoločnej misky. Teraz si z nej nechcem nič vziať.",
+    "bName": "Robo",
+    "b": "Bolo to jedno namočenie a nikto iný to nevidel. Robíš z toho obrovskú vec, zober si čistú lyžicu."
+  },
+  "pastaShape": {
+    "title": "🍝 Cestoviny, ktoré nie sú špagety",
+    "aName": "Sandra",
+    "a": "Táto omáčka je na dlhé cestoviny a ty si ju urobil s krátkymi. Je to jednoducho iné jedlo.",
+    "bName": "Henrich",
+    "b": "V skrini sme mali len penne a chutí to dobre. Naozaj tak záleží na tom, aký tvar to má?"
+  },
+  "hotdog": {
+    "title": "🌭 Je hot dog sendvič?",
+    "aName": "Robert",
+    "a": "Hot dog je náplň v rozrezanom chlebe, takže je to sendvič. Koniec debaty.",
+    "bName": "Lukáš",
+    "b": "Je to samostatná vec. Nikto si neobjedná sendvič a nečaká hot dog a v žiadnom menu to nie je medzi sendvičmi."
+  },
+  "trashDay": {
+    "title": "🗑️ Vynášanie smetí",
+    "aName": "Zdeno",
+    "a": "Kôš pretéka od stredy a posledné štyri razy som ho vynášal ja. Si na rade ty.",
+    "bName": "Amália",
+    "b": "Ja vynášam triedený odpad a bioodpad, a to sa tiež počíta. Spravme poriadny rozpis, aby sme prestali počítať."
+  },
+  "foldTowels": {
+    "title": "🧺 Správny spôsob skladania uterákov",
+    "aName": "Edo",
+    "a": "Práve som poskladal všetky uteráky na tretiny, lebo ty ich skladáš na polovicu a nezmestia sa do police.",
+    "bName": "Karla",
+    "b": "Sú to uteráky a o minútu sa použijú. Nebudem sa učiť skladací systém kvôli nim."
+  },
+  "vacuumSchedule": {
+    "title": "🧹 Ako často vysávať",
+    "aName": "Ružena",
+    "a": "Vysávam dvakrát do týždňa a ešte som ťa nevidela, že by si sa ho dotkol. Trocha vlasov na podlahe mi naozaj lezie na nervy.",
+    "bName": "Leo",
+    "b": "Mne to vyzerá dobre raz za týždeň a ty to robíš viac, než treba. Nedele rád zoberiem, ak ostatné necháš."
+  },
+  "whoCooks": {
+    "title": "🍲 Varenie každý večer",
+    "aName": "Žofia",
+    "a": "Tento mesiac som varila večeru päť dní zo siedmich. Chcela by som, aby sme varenie rozdelili rovnomernejšie.",
+    "bName": "Paľo",
+    "b": "Nie som v tom taký dobrý a teba to baví viac. Ale máš pravdu, vyberme si dva dni a ja sa zlepším."
+  },
+  "makeBed": {
+    "title": "🛏️ Ustieľanie postele",
+    "aName": "Gizela",
+    "a": "Vstaneš, prikrývky necháš v kope a povieš, že to nemá zmysel, lebo ich dnes večer zasa rozhádžeme. Izba potom vyzerá neupratane.",
+    "bName": "Nikolas",
+    "b": "Z domu odchádzam skôr ja a zaberie to dve minúty, ktoré nemám. Ak ti na tom tak záleží, urob to, keď vstaneš ty."
+  },
+  "toiletSeat": {
+    "title": "🚽 Záchodová doska",
+    "aName": "Anita",
+    "a": "Už trikrát som vošla v tme na záchod a doska bola hore. Spustiť ju nie je ťažké.",
+    "bName": "Radim",
+    "b": "Keď je hore, je menej vecí na dotýkanie a o polnoci na to nemyslím. Ak ťa to otravuje, pokúsim sa pamätať."
+  },
+  "toiletPaper": {
+    "title": "🧻 Cez vrch alebo spod",
+    "aName": "Danka",
+    "a": "Rolka sa má dávať tak, aby papier išiel cez vrch. Ty si ju zavesil naopak a ja musím zakaždým siahať dozadu.",
+    "bName": "Albín",
+    "b": "Na funkcii to nič nemení, tak si vyber, čo chceš. Nebudem ju prevešiavať len kvôli tvojmu zvyku."
+  },
+  "laundryColours": {
+    "title": "👕 Farebné s bielym v pračke",
+    "aName": "Tobiáš",
+    "a": "Moja biela košeľa vyšla z prania ružová, lebo si tam hodila červený uterák. A tú košeľu som nosil do práce.",
+    "bName": "Lydia",
+    "b": "Ponáhľala som sa a malé pranie trvá príliš dlho. Kúpim ti novú, ale bola to úprimná chyba."
+  },
+  "washCar": {
+    "title": "🚗 Upratovanie spoločného auta",
+    "aName": "Tadeáš",
+    "a": "Zadné sedadlo je plné obalov a je tam hrnček od kávy z minulého týždňa. Auto zdieľame, takže by sme si mali deliť aj upratovanie.",
+    "bName": "Dina",
+    "b": "Auto čistím vždy, keď je blízko k neporiadku. Nemyslela som, že pár obalov sa počíta, urobím to cez víkend."
+  },
+  "beachOrCity": {
+    "title": "🏖️ Pláž alebo mestský výlet",
+    "aName": "Ľudovít",
+    "a": "Chcem týždeň ležať pri mori a nič neplánovať. Minulú dovolenku sme prešli všetky múzeá.",
+    "bName": "Terka",
+    "b": "Po dvoch dňoch na lehátku sa nudím. Chcela by som vidieť niečo nové, aj keby sme zvládli len polovicu mesta."
+  },
+  "airportEarly": {
+    "title": "✈️ Ako skoro prísť na letisko",
+    "aName": "Mariana",
+    "a": "Tri hodiny pred odletom je strašne skoro. Budeme len hodiny sedieť pri bráne s kávou.",
+    "bName": "Ctibor",
+    "b": "Fronty môžu byť dlhé a ja sa pri lietaní bojím. Radšej počkám, než sa ponáhľam, a zmeškať let by stálo oveľa viac."
+  },
+  "campingHotel": {
+    "title": "⛺ Stan alebo hotel",
+    "aName": "Brigita",
+    "a": "Rezervovala som nám kemp na víkend a ty teraz tvrdíš, že by si radšej bol v hoteli. Dohodli sme sa na tom na jar.",
+    "bName": "Eugen",
+    "b": "Predpoveď hlási dážď celý víkend a mokrý stan nie je oddych. Rád pôjdem kempovať, keď bude lepšie počasie."
+  },
+  "packingLight": {
+    "title": "🧳 Jeden kufor pre každého",
+    "aName": "Noemi",
+    "a": "Dohodli sme sa len na príručnej batožine a tá tvoja váži tonu. Máš tam tri páry topánok.",
+    "bName": "Slavo",
+    "b": "Rád mám na výber a ty si zbalila kabát, ktorý nepotrebuješ. Ak zaplatíme za jeden odbavený kufor, zaplatím ho ja."
+  },
+  "mapOrGps": {
+    "title": "🗺️ Dôvera v navigáciu",
+    "aName": "Bohdan",
+    "a": "Navigácia hovorila doľava a ty si odbočila doprava, lebo si myslíš, že poznáš skratku. Stratili sme dvadsať minút.",
+    "bName": "Rózia",
+    "b": "Túto cestu som išla stokrát a aplikácia nevie o výlukách. Minule som mala pravdu."
+  },
+  "leaveTime": {
+    "title": "🕗 Kedy odísť",
+    "aName": "Karolína",
+    "a": "Povedala som, že odídeme o ôsmej, aby sme sa vyhli zápche, a ty si o pol deviatej ešte v sprche. Vždy sa to stane.",
+    "bName": "Maroš",
+    "b": "Párty sa začína o desiatej, takže odchod o ôsmej je strašne skoro. Plánuješ na najhoršiu zápchu a potom sa ponáhľam ja."
+  },
+  "sleepIn": {
+    "title": "🌅 Víkendové vstávanie",
+    "aName": "Elena",
+    "a": "Je sobota a ty si hore o šiestej a robíš hluk v kuchyni. Jediné ráno, keď môžem pospať, a je preč.",
+    "bName": "Rafael",
+    "b": "Moje telo sa budí skoro a snažil som sa byť potichu. Ležať a pozerať do stropu mi tiež nepomáha."
+  },
+  "dinnerReservation": {
+    "title": "🕰️ Rezervácia stola na večeru",
+    "aName": "Izák",
+    "a": "Rezervovala si stôl na pol šiestu a je piatok. Nikto nejedáva tak skoro a ja som mal iné plány.",
+    "bName": "Tamara",
+    "b": "Bol to posledný voľný čas a prišli by sme o neho. Pýtala som sa ťa, ale bol si zaneprázdnený a neodpovedal si."
+  },
+  "boardGameRules": {
+    "title": "🎲 Pravidlá, ktoré si nikto nepamätá",
+    "aName": "Brano",
+    "a": "Celý večer hráš túto hru zle a teraz vyhrávaš. Chcel by som sa vrátiť a odohrať kolá znova.",
+    "bName": "Sára",
+    "b": "Na začiatku sme si spolu prečítali pravidlá a nikto nenamietal. Pravidlá nemôžeš meniť, keď prehrávaš."
+  },
+  "houseRules": {
+    "title": "💰 Domáce pravidlá v Monopoly",
+    "aName": "Eliáš",
+    "a": "Pokutové peniaze dávam do stredu, takže ten, kto najbližšie stane na Voľnom parkovisku, ich vyhrá. To je skutočné pravidlo.",
+    "bName": "Ľubka",
+    "b": "V pravidlách to nie je a hra sa kvôli tomu naťahuje na celú noc. Hrajme to tak, ako je to vytlačené."
+  },
+  "fantasyTrade": {
+    "title": "🏆 Nefér výmena vo fantasy lige",
+    "aName": "Radoslav",
+    "a": "Vymenila si mi zraneného hráča za môjho najlepšieho útočníka a ja som súhlasil bez kontroly. Je to nefér výmena, tak ju zrušme.",
+    "bName": "Františka",
+    "b": "Súhlasil si písomne a v čase dohody bola výmena fér. Kontrolovať je tvoja práca, nie moja."
+  },
+  "lineCall": {
+    "title": "🎾 Vonku alebo dnu",
+    "aName": "Marko",
+    "a": "Tá lopta bola jasne vonku a ty celý zápas tvrdíš, že bola dnu. Chcem, aby sa ten bod zopakoval.",
+    "bName": "Jolana",
+    "b": "Bola som bližšie k čiare a videla som, že sa dotkla okraja. Z druhého konca kurtu to posúdiť nemôžeš."
+  },
+  "controllerTurns": {
+    "title": "🎮 Kto je na rade s ovládačom",
+    "aName": "Jerguš",
+    "a": "Ovládač máš už hodinu a zakaždým, keď sa pýtam, povieš ešte jedno kolo. Takto sa predsa nestriedame.",
+    "bName": "Priska",
+    "b": "Bola som v polovici levelu a nemohla som prestať. Hneď po tomto ti ho dám, sľubujem."
+  },
+  "teamCaptain": {
+    "title": "⚽ Výber tímov",
+    "aName": "Gabo",
+    "a": "Najprv si vybrala všetkých svojich kamarátov a mne zasa zostali slabší hráči. Chcel by som vyvážené tímy.",
+    "bName": "Anka",
+    "b": "Takto hráme roky a nikdy si sa nesťažoval. Ak chceš férové tímy, rozlosujme ich ťahaním mien."
+  },
+  "cardCheating": {
+    "title": "🃏 Skrytá karta",
+    "aName": "Ruben",
+    "a": "Videl som, ako si pri poslednom kole vzala kartu zo spodku balíčka. Ak takto vyhrávaš, končím s hraním.",
+    "bName": "Miška",
+    "b": "Jednu som pustila a zodvihla, to je všetko. Celý večer si nahnevaný, že prehrávaš, a teraz ma obviňuješ."
+  },
+  "trashTalk": {
+    "title": "🏀 Doberanie na ihrisku",
+    "aName": "Denis",
+    "a": "Trocha doberania počas hry patrí k zábave. Po jednej poznámke si stíchla a trucuješ, a ja som len žartoval.",
+    "bName": "Kornélia",
+    "b": "Jedna vec je, keď žartuješ o hre, a iná, keď je to o mne. Chcem len, aby sme to držali v dobrom."
+  },
+  "gameSave": {
+    "title": "💾 Prepísaný uložený stav",
+    "aName": "Kornel",
+    "a": "Na tom uloženom stave som strávil tridsať hodín a ty si cez neho začala novú hru. Teraz je preč.",
+    "bName": "Lina",
+    "b": "Bol tam len jeden slot a vyzeral nepoužitý. Opýtala by som sa, ale nebol si doma a chcela som si to len vyskúšať."
+  },
+  "loserPays": {
+    "title": "🎳 Kto prehrá, platí pizzu",
+    "aName": "Braňo",
+    "a": "Povedali sme, že kto prehrá, platí, a ty si prehrala o dve kolky. Dohoda je dohoda, tak vytiahni peňaženku.",
+    "bName": "Katka",
+    "b": "Myslela som to ako vtip a myslela som, že to vieš. Nabudúce kolo zaplatím ja, ak chceš."
+  },
+  "pickleball": {
+    "title": "🏓 Kto počíta skóre",
+    "aName": "Gloria",
+    "a": "Rátala som osem ku šiestim a ty tvrdíš, že je sedem ku siedmim. Stále zabúdame skóre a kazí nám to hru.",
+    "bName": "Dalimil",
+    "b": "Počítal som každé podanie a som si istý. Poďme ten bod proste zopakovať a hrať ďalej."
+  },
+  "dogCouch": {
+    "title": "🐕 Pes na gauči",
+    "aName": "Marína",
+    "a": "Dohodli sme sa, že psy nepatria na gauč, a ja prídem domov a nájdem ho rozvaleného na ňom. Vankúše sú plné chlpov.",
+    "bName": "Dodo",
+    "b": "Vyzerá tak šťastne a je tam len keď pozeráme telku. Poťah sa dá oprať a robí z neho súčasť rodiny."
+  },
+  "walkingDuty": {
+    "title": "🦮 Kto vyvedie psa",
+    "aName": "Hanka",
+    "a": "Ranné aj večerné prechádzky robím od víkendu a zajtra mám prezentáciu. Dnes večer si na rade ty.",
+    "bName": "Vilo",
+    "b": "Leje ako z krhly a práve som si sadol. Dlhú prechádzku si dám v sobotu, nemôžeme dnes vynechať?"
+  },
+  "catNames": {
+    "title": "🐈 Meno pre nové mača",
+    "aName": "Pavla",
+    "a": "Našla som ju ja a volám ju Sušienka. Tvoje meno pre ňu je Pán Chlpáč Veľkolepý a to veterinárovi nepoviem.",
+    "bName": "Kuba",
+    "b": "Pri tom sa zakaždým zasmejem a ona už na to počúva. Sušienka je pekné, ale tak sa volá každá druhá mačka."
+  },
+  "catKeyboard": {
+    "title": "🐱 Mačka na pracovnom stole",
+    "aName": "Marika",
+    "a": "Počas porád mi chodí po klávesnici a ty ju podporuješ maškrtami. Teraz si myslí, že môj stôl je jej posteľ.",
+    "bName": "Ľuboslav",
+    "b": "Všetci na hovore ju milujú a ona len hľadá spoločnosť. Ak ti to vadí, môžeš zavrieť dvere."
+  },
+  "feedingTime": {
+    "title": "🥫 Mačka kŕmená dvakrát",
+    "aName": "Julián",
+    "a": "Dal som mačke večeru o šiestej a ty si ju nakŕmila znova o siedmej. Už je trochu zaoblená.",
+    "bName": "Aneta",
+    "b": "Mňaukala na mňa a myslela som, že ju nikto nenakŕmil. Lístok na chladničke by tomu zabránil."
+  },
+  "vetCosts": {
+    "title": "🐾 Delenie účtu od veterinára",
+    "aName": "Ľudo",
+    "a": "Účet od veterinára bol 120 eur a zaplatil som ho celý ja, lebo som objednával ja. Psa si adoptovala so mnou, tak by sme to mali rozdeliť.",
+    "bName": "Šarlota",
+    "b": "Zaplatila by som, keby si mi to povedal pred návštevou. Pošli mi bloček a prepošlem ti polovicu."
+  },
+  "offLeash": {
+    "title": "🌳 Pes bez vôdzky v parku",
+    "aName": "Ľuba",
+    "a": "Tvoj pes pribehol k môjmu šteniatku bez varovania a je z toho nervózny. Na tabuli je napísané, že v tejto zóne treba mať psa na vôdzke.",
+    "bName": "Mišo",
+    "b": "Je priateľský a chcel len pozdraviť. Držím ho nablízku a všetci ostatní tu svoje psy púšťajú."
+  },
+  "petInBed": {
+    "title": "🐶 Pes v posteli",
+    "aName": "Sofia",
+    "a": "Zaberá pol matraca a ja sa budím s labkou v tvári. Chcela by som mať posteľ zase len pre nás.",
+    "bName": "Konštantín",
+    "b": "Sám je úzkostlivý a vedľa nás spí lepšie. Radšej budem mať menej miesta, než ho celú noc počúvať plakať."
+  },
+  "puppyName": {
+    "title": "🐕‍🦺 Výber mena pre šteňa",
+    "aName": "Rišo",
+    "a": "Už týždeň mu hovoríme len šteňa, lebo sa nevieme dohodnúť. Ja hlasujem za Rocky a sedí mu to dokonale.",
+    "bName": "Margita",
+    "b": "Je pokojný a pomalý, takže Rocky znie hlúpo. Mne sa páči Pepi a hodí sa mu k jeho škvrnám."
+  },
+  "fishSitter": {
+    "title": "🐠 Kto nakŕmi ryby",
+    "aName": "Tatiana",
+    "a": "Pred mesiacom som ťa poprosila, aby si nám nakŕmil ryby, kým budeme preč. Hovoríš, že si to zabudol vybaviť, a výlet je zajtra.",
+    "bName": "Alfréd",
+    "b": "Myslel som, že sa ponúkla susedka, a nechcel som to zdvojovať. Dnes večer sa môžem opýtať sestry, býva blízko."
+  },
+  "birdNoise": {
+    "title": "🦜 Papagáj, ktorý neprestane",
+    "aName": "Vladislav",
+    "a": "Tvoj papagáj kričí každé ráno o šiestej a ja potom už nezaspím. Bývam hneď vedľa teba.",
+    "bName": "Flóra",
+    "b": "Je to vták a pozdravuje slnko. Presuniem klietku do pokojnejšej izby, je mi to ľúto."
+  },
+  "wifiPassword": {
+    "title": "🔐 Heslo na wifi pre každého",
+    "aName": "Radko",
+    "a": "Heslo na wifi si dala každému, kto k nám prišiel, a teraz je to pomalé, keď pracujem. Chcel by som ho zmeniť.",
+    "bName": "Evelína",
+    "b": "Je nezdvorilé odmietnuť hostí a nikto to nevyužíva až tak veľmi. Ak ti to vadí, vytvor hosťovskú sieť."
+  },
+  "tvVolume": {
+    "title": "🔊 Boj o hlasitosť",
+    "aName": "Stano",
+    "a": "Pozeráš všetko na hlasitosti 40 a ja počujem každé slovo z kuchyne. Zapni si radšej titulky.",
+    "bName": "Viola",
+    "b": "Zle počujem a pri nižšej hlasitosti mi unikajú dialógy. Pri titulkoch musím čítať, nie pozerať."
+  },
+  "phoneAtDinner": {
+    "title": "📵 Mobily na stole v reštaurácii",
+    "aName": "Leona",
+    "a": "Boli sme po mesiaci prvýkrát večer vonku a ty si kontroloval telefón každých päť minút. Cítila som sa, akoby som sedela sama.",
+    "bName": "Peťo",
+    "b": "Čakal som správu o tom, že brat pristál. Mal som ti to povedať, ale nechcel som ťa znepokojovať."
+  },
+  "notificationSound": {
+    "title": "🔔 Zvuky oznámení v knižnici",
+    "aName": "Edita",
+    "a": "Tvoj telefón pípa každých tridsať sekúnd a niektorí z nás sa učia. Prepni ho prosím na tichý režim.",
+    "bName": "Maxim",
+    "b": "Je na vibráciách a je mi to veľmi ľúto. Nevšimol som si, že mám zapnutý zvuk, už sa to nestane."
+  },
+  "darkMode": {
+    "title": "🌗 Tmavý alebo svetlý režim",
+    "aName": "Jaromír",
+    "a": "Spoločný tablet si v noci prepla na svetlý režim a páli ma do očí. Večer sme sa dohodli na tmavom.",
+    "bName": "Otília",
+    "b": "V tmavom režime nič neprečítam, text sa rozmazáva. Pred spaním ho prepnem späť, ale cez deň ho potrebujem."
+  },
+  "smartSpeaker": {
+    "title": "🗣️ Reproduktor, ktorý počúva",
+    "aName": "Gustáv",
+    "a": "Dala si do našej spálne inteligentný reproduktor a nie je mi príjemné, že počúva. Chcel by som ho presunúť do kuchyne.",
+    "bName": "Libuša",
+    "b": "Používam ho len na budík a počasie. Kuchyňa je príliš ďaleko, ale v noci môžem vypnúť mikrofón."
+  },
+  "tabsOpen": {
+    "title": "🗂️ Dvesto otvorených kariet",
+    "aName": "Patrícia",
+    "a": "Keď si požičiam tvoj notebook, je otvorených sto kariet a všetko sa seká. Zatvorenie pár by ho zrýchlilo.",
+    "bName": "Artúr",
+    "b": "Každá z nich je niečo, čo potrebujem, a presne viem, kde je ktorá. Je to organizovaný chaos."
+  },
+  "photoStorage": {
+    "title": "🖼️ Zdieľané cloudové úložisko",
+    "aName": "Laura",
+    "a": "Tvoje videá zaplnili naše spoločné úložisko a ja si nemôžem zálohovať fotky. Zmaž niektoré, alebo si zaplať vlastné.",
+    "bName": "Konrád",
+    "b": "Sú to samé rodinné videá a nechcem o ne prísť. Presuniem ich na disk, ale daj mi pár dní."
+  },
+  "videoCallCamera": {
+    "title": "📹 Kamera pri videohovoroch",
+    "aName": "Hilda",
+    "a": "Náš týždenný rodinný hovor je jediný čas, keď sa vidíme, a ty máš stále vypnutú kameru. Je to ako rozprávať sa so stenou.",
+    "bName": "Dobromil",
+    "b": "Väčšinou varím alebo som v pyžame. Stále som tam a počúvam, a nemyslím si, že kamera je podstatná."
+  },
+  "doorbellCamera": {
+    "title": "🚪 Kamera na zvončeku",
+    "aName": "Miroslava",
+    "a": "Namontoval si kameru, ktorá sleduje celý chodník pred domom, a vidia ju aj susedia. Chcela by som ju natočiť inam.",
+    "bName": "Tedo",
+    "b": "Minulú zimu nám ukradli dva balíky a nahráva len našu verandu. Rád ju trochu naklonim nižšie."
+  },
+  "holdDoor": {
+    "title": "🤝 Pridržanie dverí",
+    "aName": "Viliam",
+    "a": "Pridržal som dvere celej skupine a ani jeden z nich nepoďakoval. Slušnosť zaberie sekundu.",
+    "bName": "Jasmína",
+    "b": "Ľudia sa ponáhľajú a nie vždy si to všimnú. Mal by si to robiť preto, že je to milé, nie preto, že čakáš poďakovanie."
+  },
+  "elevatorSpot": {
+    "title": "🛗 Státie pred výťahom",
+    "aName": "Gita",
+    "a": "Čakala som na výťah a ty si sa predral dnu práve, keď sa otvoril. Bola som tu jasne prvá.",
+    "bName": "Mikuláš",
+    "b": "Mal som kočík a výťah bol pre mňa jediná možnosť. Nevidel som ťa, je mi to ľúto, ale naozaj som ho potreboval."
+  },
+  "cuttingQueue": {
+    "title": "🧍 Predbiehanie v rade",
+    "aName": "Uršuľa",
+    "a": "Prešiel si rovno k pultu, kým my ostatní čakáme dvadsať minút. Za mnou je rad.",
+    "bName": "Imrich",
+    "b": "Potrebujem sa len rýchlo opýtať a nič som si neobjednával. Nevedel som, že tento rad je na to."
+  },
+  "busPhone": {
+    "title": "🚌 Hlasný telefonát v autobuse",
+    "aName": "Darina",
+    "a": "Už dvadsať minút telefonuješ na hlasitý odposluch a všetci sme počuli celý tvoj deň. Slúchadlo by bolo milé.",
+    "bName": "Sebastián",
+    "b": "Je to naliehavý hovor a spojenie je zlé, takže potrebujem reproduktor. Skrátim to, netreba byť hrubá."
+  },
+  "shoesInside": {
+    "title": "👟 Topánky v dome",
+    "aName": "Zora",
+    "a": "Vyzuj sa prosím pri dverách, v interiéri topánky nenosíme. Práve som umývala podlahu.",
+    "bName": "Pavel",
+    "b": "Je suchý deň a podrážky sú čisté. Nie som na to zvyknutý, ale vyzuť sa, ak ti na tom tak záleží."
+  },
+  "armrest": {
+    "title": "💪 Delenie opierky",
+    "aName": "Nataniel",
+    "a": "Obe opierky si mala celý film a moja ruka visí vo vzduchu. Prostredné sedadlo má obe, také je pravidlo.",
+    "bName": "Jasna",
+    "b": "Sedím pri okne a moje lakte potrebujú miesto. Nevedela som, že existuje pravidlo, posuniem sa."
+  },
+  "lateRsvp": {
+    "title": "✉️ Odpoveď na pozvánku na poslednú chvíľu",
+    "aName": "Radmila",
+    "a": "Všetkých som poprosila, aby odpovedali do prvého, a ty si súhlasil až deň predtým. Jedlo som už objednala pre pätnástich.",
+    "bName": "Jakub",
+    "b": "Do vtedy som nevedel, aké budem mať zmeny v práci. Jedna osoba navyše pri stole nezaškodí a priniesol som dezert."
+  },
+  "thankYouNote": {
+    "title": "💌 Ďakovné lístky",
+    "aName": "Etela",
+    "a": "Svadba tvojho bratranca bola pred mesiacom a o našom darčeku nepadlo ani slovo. Lístok nič nestojí.",
+    "bName": "Bohuš",
+    "b": "Pravdepodobne ešte vybavujú sto darčekov. Správa nie je koniec sveta, daj im čas."
+  },
+  "regift": {
+    "title": "🎁 Darček ďalej",
+    "aName": "Stanka",
+    "a": "Zistila som, že šál, ktorý som od teba dostala, bol darček, ktorý ti niekto dal skôr. Pripadalo mi to, akoby som bola až druhá.",
+    "bName": "Lubor",
+    "b": "Bol krásny a mne nesedel. Myslel som, že ti pristane viac a dal by som ti ho aj tak."
+  },
+  "partyDrink": {
+    "title": "🍾 Čo priniesť na oslavu",
+    "aName": "Dušana",
+    "a": "Prišiel si na večeru s prázdnymi rukami a ja som varila dva dni. Fľaša alebo kvety by boli milé.",
+    "bName": "Vojto",
+    "b": "Povedala si, že mám priniesť len seba, a ja som ťa vzal za slovo. Nabudúce prinesiem niečo dobré."
+  },
+  "escalator": {
+    "title": "⬆️ Státie na eskalátore",
+    "aName": "Berta",
+    "a": "Postavil si sa na ľavú stranu a zablokoval všetkých, ktorí chceli ísť hore pešo. Pravidlo je, že vpravo sa stojí a vľavo ide.",
+    "bName": "Alexander",
+    "b": "Nesiem ťažké tašky a chcem sa tam dostať bezpečne. Nemusím sa ponáhľať pre nikoho."
+  },
+  "cinemaTalk": {
+    "title": "🎞️ Šepkanie počas filmu",
+    "aName": "Klement",
+    "a": "Počas celého filmu si svojej kamarátke šepkala vysvetlenie každej scény. Zaplatil som za film, nie za priebežný komentár.",
+    "bName": "Larisa",
+    "b": "Seriál nepozná a len som jej pomáhala pochopiť dej. Prestanem, ak ti to naozaj vadilo."
+  },
+  "neighbourMusic": {
+    "title": "🔈 Sused s neskorou párty",
+    "aName": "Agáta",
+    "a": "Tvoja párty bola o jednej v noci ešte stále hlasná a niektorí z nás ráno pracujú. Malé upozornenie by bolo slušné.",
+    "bName": "Stanislav",
+    "b": "Povedal som to v dome a je to jedna noc v roku. Poprosím ľudí, aby šli dnu, ale všetci sa bavia."
+  },
+  "socks": {
+    "title": "🧦 Ponožky na zemi",
+    "aName": "Ľubomíra",
+    "a": "Pár tvojich ponožiek je pri posteli, ďalší pri gauči a jedna v predsieni. Zbieram ich každý deň.",
+    "bName": "Benjamín",
+    "b": "Sú to len ponožky a znova si ich obujem. Dám ich do koša, ale nemusíš ich rátať."
+  },
+  "cafeSeat": {
+    "title": "☕ Držanie miesta notebookom",
+    "aName": "Johana",
+    "a": "Tvoj notebook drží ten stôl už hodinu a ty si niekde odišiel. Kaviareň je plná a ľudia stoja.",
+    "bName": "Kajetán",
+    "b": "Vyšiel som len vybaviť hovor a hneď som sa vracal. Nechať tašku je spôsob, akým si každý drží miesto."
+  },
+  "groupProject": {
+    "title": "🎓 Skupinový projekt, ktorý nikto nezačal",
+    "aName": "Tea",
+    "a": "Projekt je o týždeň a celú osnovu som napísala sama. Potrebujem, aby každý z vás urobil svoju časť do piatka.",
+    "bName": "Oskar",
+    "b": "Pred ním mám dve skúšky a hovoril som ti, že moje časti budú neskôr. Môžem ich spraviť cez víkend."
+  },
+  "puzzle": {
+    "title": "🧩 Dokončené puzzle",
+    "aName": "Gabika",
+    "a": "Na tom puzzle som pracovala týždeň a ty si zložil posledných dvadsať dielikov, keď som bola preč. Chcela som ho dokončiť sama.",
+    "bName": "Hugo",
+    "b": "Ležalo na stole a uniesol ma to. Nevedel som, že pre teba toľko znamená, prepáč."
+  },
+  "hedge": {
+    "title": "🌿 Živý plot od suseda",
+    "aName": "Bohdana",
+    "a": "Tvoj živý plot prerástol cez chodník a musím vystúpiť na cestu, aby som prešla. Je to tak od jari.",
+    "bName": "Jonáš",
+    "b": "Chcel som ho zastrihnúť a počasie bolo hrozné. Spravím to v nedeľu, mohla si len zaklopať."
+  }
+}

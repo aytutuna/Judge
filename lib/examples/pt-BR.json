@@ -1,0 +1,1052 @@
+{
+  "dishwasher": {
+    "title": "🍽️ Tigelas na parte de cima",
+    "aName": "Ana",
+    "a": "Você colocou as tigelas na parte de cima de novo. Lá em cima elas nunca saem limpas. É para isso que serve a parte de baixo.",
+    "bName": "Pedro",
+    "b": "Elas cabem direitinho lá em cima, e assim a parte de baixo fica livre para as panelas. Coloco desse jeito há anos e nunca saiu nada sujo."
+  },
+  "bill": {
+    "title": "🍷 Dividir a conta do restaurante",
+    "aName": "Camila",
+    "a": "Eu não bebi nada, então não devia pagar um quarto do vinho. Dividir a comida por igual, tudo bem.",
+    "bName": "Lucas",
+    "b": "A gente sempre divide por quatro e pronto. Ficar calculando quem pediu o quê toda vez é um saco, e a diferença nem é tão grande."
+  },
+  "thermostat": {
+    "title": "🌡️ A guerra do ar-condicionado",
+    "aName": "Juliana",
+    "a": "O ar está em 19 graus e eu estou com frio até de moletom. Subir para 22 não é nenhum absurdo.",
+    "bName": "Rafael",
+    "b": "Com 22 graus não dá para dormir, fica quente demais. Você pode vestir mais alguma coisa, eu não tenho mais o que tirar."
+  },
+  "roadTrip": {
+    "title": "🚗 Quem dirige na volta",
+    "aName": "Fernanda",
+    "a": "Eu dirigi as seis horas da ida inteirinhas. Nada mais justo do que você dirigir na volta.",
+    "bName": "Bruno",
+    "b": "Antes da viagem eu avisei que odeio dirigir à noite, e a gente vai sair às sete. Na próxima viagem eu pego os trechos de manhã."
+  },
+  "seat": {
+    "title": "💺 Reclinar a poltrona no voo noturno",
+    "aName": "Larissa",
+    "a": "Minha poltrona reclina, então eu vou reclinar. É um voo noturno e todo mundo está tentando dormir.",
+    "bName": "Thiago",
+    "b": "Eu tenho 1,90 m e meus joelhos já estão encostados na sua poltrona. Você podia pelo menos perguntar antes de reclinar tudo."
+  },
+  "spoiler": {
+    "title": "🎬 Spoiler do final da série",
+    "aName": "Beatriz",
+    "a": "Você me contou quem era o assassino antes mesmo de eu começar o último episódio. Passei a semana inteira esperando esse episódio.",
+    "bName": "Gabriel",
+    "b": "Saiu faz três semanas e você disse que já tinha terminado. Não dá para eu ficar controlando em que episódio cada um está."
+  },
+  "jacket": {
+    "title": "🧥 A jaqueta jeans emprestada",
+    "aName": "Mateus",
+    "a": "Você foi ao show com a minha jaqueta jeans sem pedir. Ela voltou com cheiro de cigarro.",
+    "bName": "Letícia",
+    "b": "Estava pendurada perto da porta e você nunca usa. Eu teria pedido, mas você estava dormindo e eu já estava atrasada."
+  },
+  "lastSlice": {
+    "title": "🍕 Quem pega o último pedaço",
+    "aName": "Gustavo",
+    "a": "Eu falei “o último pedaço é meu” antes de o filme começar. Todo mundo ouviu.",
+    "bName": "Mariana",
+    "b": "Não vale falar que é seu e passar duas horas sem encostar. Estava lá esfriando, aí eu comi."
+  },
+  "sundayPlans": {
+    "title": "🛋️ Domingo inteiro no sofá",
+    "aName": "Renata",
+    "a": "É o único dia em que nós dois estamos de folga e eu queria fazer uma trilha. Passar tudo no sofá parece desperdício.",
+    "bName": "Diego",
+    "b": "Eu trabalho muito a semana toda e o domingo é o dia de recarregar. A gente faz a trilha no próximo fim de semana, hoje eu só quero ficar sem fazer nada com você."
+  },
+  "anniversaryGift": {
+    "title": "🎁 Quanto gastar no presente",
+    "aName": "Marcos",
+    "a": "A gente combinou de gastar no máximo 200 reais, e você me deu um relógio. Agora pareço que nem me esforcei.",
+    "bName": "Elaine",
+    "b": "Eu vi e lembrei de você. Estava em promoção, e um valor que a gente combinou anos atrás não devia me impedir de ser generosa."
+  },
+  "couplePhoto": {
+    "title": "📸 Postar nossa foto sem perguntar",
+    "aName": "Sofia",
+    "a": "Você postou nossa foto da praia e eu nem tinha visto ainda. Eu saí péssima e teria dito que não.",
+    "bName": "Caio",
+    "b": "Eu acho que você está linda e quis compartilhar um dia bom. Não imaginei que ia te chatear tanto."
+  },
+  "phoneInBed": {
+    "title": "📱 Celular na cama",
+    "aName": "Nina",
+    "a": "A gente deita e você fica uma hora rolando a tela enquanto eu fico aqui olhando o teto. Eu queria conversar, ou pelo menos dormir junto com você.",
+    "bName": "Otávio",
+    "b": "É assim que eu desacelero depois de um dia longo. Pode conversar comigo, mas não quero regra pra um celular que eu só estou segurando."
+  },
+  "movieTurns": {
+    "title": "🍿 De quem é a vez de escolher o filme",
+    "aName": "Clara",
+    "a": "Eu escolhi da última vez e da anterior. Agora é sua vez, e você passou quarenta minutos dizendo que nada te anima.",
+    "bName": "Tomás",
+    "b": "Eu escolheria se tivesse alguma coisa que eu quisesse ver. Você sempre pega coisas de que eu gosto menos, aí eu fico quieto."
+  },
+  "slowReply": {
+    "title": "💬 Horas esperando uma resposta",
+    "aName": "Zoe",
+    "a": "Mandei uma pergunta simples ao meio-dia e você só respondeu às oito da noite. Uma resposta rápida não custava nada.",
+    "bName": "Enzo",
+    "b": "Passei o dia em reunião e o celular ficou na bolsa. Não era ignorar você, só não era urgente."
+  },
+  "bedSide": {
+    "title": "🛏️ De quem é o lado da cama",
+    "aName": "Rosa",
+    "a": "Faz seis anos que eu durmo do lado da janela. Agora que a gente mudou, você ocupou o meu lado antes mesmo de eu desencaixotar as coisas.",
+    "bName": "Pedro",
+    "b": "A cama fica na outra parede neste quarto, então os lados se inverteram. Não me importo de trocar de volta, só não pensei nisso."
+  },
+  "surpriseParty": {
+    "title": "🎈 Festa surpresa que ele não queria",
+    "aName": "Lívia",
+    "a": "Eu planejei tudo para o seu aniversário e convidei todo mundo. Você ficou com cara de infeliz a noite inteira.",
+    "bName": "Gabriel",
+    "b": "Eu te falei meses atrás que odeio surpresa e aglomeração. Agradeço o esforço, mas você não me ouviu."
+  },
+  "toothpaste": {
+    "title": "🪥 Como apertar a pasta de dente",
+    "aName": "Íris",
+    "a": "Você aperta o tubo no meio e deixa ele achatado e todo torcido. É bobagem, eu sei, mas eu encontro isso toda manhã.",
+    "bName": "Kauã",
+    "b": "No fim a pasta sai do mesmo jeito. Não vejo por que existe um lugar certo de apertar."
+  },
+  "blanket": {
+    "title": "🛌 O ladrão de cobertor",
+    "aName": "Daniela",
+    "a": "Toda noite você se enrola na coberta inteira e eu acordo congelando. Parece que eu durmo do lado de um rolinho primavera.",
+    "bName": "Marcelo",
+    "b": "Eu também sinto frio e não faço de propósito. A gente podia comprar outra coberta em vez de me culpar."
+  },
+  "lateDinner": {
+    "title": "🍝 Jantar às nove",
+    "aName": "Paula",
+    "a": "Você disse que chegava às seis e entrou às nove. O macarrão que eu fiz esfriou e eu estou morrendo de fome.",
+    "bName": "Roberto",
+    "b": "Uma ligação se estendeu e eu não podia simplesmente desligar. Eu teria avisado, mas meu celular descarregou."
+  },
+  "dateBill": {
+    "title": "💳 Quem paga nos encontros",
+    "aName": "Yasmin",
+    "a": "A gente já saiu umas doze vezes e você nunca pega a conta. Eu queria que a gente se revezasse.",
+    "bName": "Willian",
+    "b": "Eu ganho mais que você agora e fico feliz de pagar. Não sabia que isso te incomodava, só não quero brigar por causa de conta."
+  },
+  "quietHours": {
+    "title": "🔇 Silêncio depois das dez",
+    "aName": "Olívia",
+    "a": "Eu entro cedo no trabalho e escuto sua chamada de vídeo pela parede às onze da noite. Preciso que você fale mais baixo.",
+    "bName": "Rui",
+    "b": "Minha equipe está em outro fuso, então tarde é o único horário que dá. Eu uso fone, mas você também podia usar protetor de ouvido."
+  },
+  "fridgeShelf": {
+    "title": "🧊 De quem é essa prateleira",
+    "aName": "Vitor",
+    "a": "Eu coloquei etiqueta na minha prateleira da geladeira e mesmo assim você guardou suas sobras nela. Tem bastante espaço na sua.",
+    "bName": "Mirela",
+    "b": "A minha estava cheia e o seu pote estava pela metade. É só por uma noite, eu não estava pegando nada."
+  },
+  "overnightGuest": {
+    "title": "🚪 O hóspede que fica a semana toda",
+    "aName": "Elisa",
+    "a": "Seu amigo está na sala há seis dias e ninguém me perguntou nada. Eu queria meu apartamento de volta.",
+    "bName": "Teo",
+    "b": "Ele está sem lugar fixo e não tem para onde ir. Eu falei que ficava algumas noites, e ele está ajudando nas compras do mercado."
+  },
+  "sharedShampoo": {
+    "title": "🧴 Usando o meu shampoo",
+    "aName": "Júlia",
+    "a": "Meu shampoo é caro e estava quase cheio na segunda. Na sexta já está quase no fim, e você é a única outra pessoa que toma banho aqui.",
+    "bName": "Davi",
+    "b": "Eu usei só um pouquinho, duas vezes. Se é tão importante, guarda no seu quarto, achei que as coisas do banheiro fossem de todo mundo."
+  },
+  "dirtyPan": {
+    "title": "🍳 A panela deixada de molho",
+    "aName": "Hugo",
+    "a": "Essa panela está na pia desde terça e já está começando a cheirar. Quem cozinha deveria lavar.",
+    "bName": "Nora",
+    "b": "Eu ia lavar quando ficasse mais um tempo de molho. Você deixou prato aqui por dois dias e eu não falei nada."
+  },
+  "dryerLaundry": {
+    "title": "🧺 Roupa esquecida na secadora",
+    "aName": "Sara",
+    "a": "Desci e achei minha roupa limpa amontoada na mesa porque você precisava da secadora. Ainda estava úmida.",
+    "bName": "Iago",
+    "b": "O ciclo tinha acabado fazia uma hora e eu tinha uma leva esperando. Por favor, tira suas coisas quando apitar."
+  },
+  "loudMusic": {
+    "title": "🎧 Música através da parede",
+    "aName": "Felipe",
+    "a": "São três da tarde de um sábado e eu estou no meu quarto. Não acho que eu deveria precisar de fone na minha própria casa.",
+    "bName": "Tessa",
+    "b": "O grave faz minha mesa tremer enquanto eu tento estudar. Ninguém está pedindo para você parar, só abaixa um pouquinho."
+  },
+  "longShower": {
+    "title": "🚿 Acabou a água quente",
+    "aName": "Amir",
+    "a": "Seus banhos duram quarenta minutos e a água quente sempre acabou quando chega a minha vez. Dez minutos para cada um seria justo.",
+    "bName": "Bete",
+    "b": "Eu não cronometro e é o único lugar onde eu consigo relaxar. A gente podia se revezar para ver quem toma banho primeiro."
+  },
+  "lightsOn": {
+    "title": "💡 Todas as luzes acesas",
+    "aName": "Greta",
+    "a": "Eu passo e todas as luzes do apartamento estão acesas, até nos cômodos vazios. A conta é dividida, então o dinheiro também é meu.",
+    "bName": "Sérgio",
+    "b": "Eu gosto de ambiente claro e entro e saio dos cômodos a noite toda. Ficar ligando e desligando o tempo todo também é chato."
+  },
+  "parcels": {
+    "title": "📦 Encomendas acumulando no corredor",
+    "aName": "Nádia",
+    "a": "Tem seis caixas suas empilhadas no corredor e eu tropeço nelas todo dia. Por favor, leva para o seu quarto.",
+    "bName": "Oscar",
+    "b": "Estou esperando para devolver no correio e tenho andado ocupado. Elas estão aí só há quatro dias."
+  },
+  "houseplant": {
+    "title": "🪴 Quem rega a planta",
+    "aName": "Cláudia",
+    "a": "Eu comprei a planta para a sala e reguei toda semana. Agora ela parece um graveto porque você levou para o canto escuro.",
+    "bName": "Paulo",
+    "b": "Ela estava na frente da TV e achei que o canto não tinha problema. Eu não sabia que planta era tão frágil."
+  },
+  "lateArrival": {
+    "title": "⏰ Quarenta minutos atrasada de novo",
+    "aName": "Daniel",
+    "a": "A gente combinou às sete e eu fiquei sozinho no restaurante até vinte pras oito. É a terceira vez que você faz isso.",
+    "bName": "Bruna",
+    "b": "O ônibus atrasou e eu te mandei mensagem. Você podia ter pedido uma bebida em vez de ficar bravo."
+  },
+  "cancelledPlans": {
+    "title": "🙅 Cancelar uma hora antes",
+    "aName": "Rute",
+    "a": "Eu reorganizei meu dia inteiro para te ver e você cancelou com uma mensagem uma hora antes. Não é a primeira vez.",
+    "bName": "Carlos",
+    "b": "Eu estava exausto e ia ser uma péssima companhia. Achei mais gentil avisar do que me arrastar até lá."
+  },
+  "borrowedBook": {
+    "title": "📚 O livro que nunca voltou",
+    "aName": "Isabela",
+    "a": "Eu te emprestei aquele livro na primavera passada e já faz um ano. Era autografado, e eu já cobrei duas vezes.",
+    "bName": "Adriano",
+    "b": "Eu tenho ele em algum lugar, juro, provavelmente numa caixa da mudança. Vou achar, você não precisa ficar tocando nesse assunto."
+  },
+  "mutedChat": {
+    "title": "🔕 Silenciar o grupo",
+    "aName": "Helena",
+    "a": "Você silenciou o nosso grupo e perdeu duas mudanças de plano. A gente teve que esperar você no lugar errado.",
+    "bName": "Vítor",
+    "b": "Chegam duzentas mensagens por dia, quase tudo meme. Eu leria as importantes se não levasse uma hora."
+  },
+  "birthdayDinner": {
+    "title": "🎂 Pagar o jantar de aniversário",
+    "aName": "Kenji",
+    "a": "É o jantar do meu aniversário e a conta deu 450 reais para cada um por causa do vinho caro. Achei que o aniversariante não pagasse.",
+    "bName": "Sasha",
+    "b": "A gente sempre divide tudo igualmente entre o grupo todo, todo mundo sabe disso. E o lugar foi você que escolheu."
+  },
+  "plusOne": {
+    "title": "💍 Acompanhante no casamento",
+    "aName": "Bianca",
+    "a": "No convite só tem o meu nome, mas meu namorado de dois anos ficaria sozinho em casa. Vou levar ele mesmo assim.",
+    "bName": "Quitéria",
+    "b": "O salão tem um limite rígido e cada lugar nos custa caro. Desculpa, mas não posso abrir exceção para uma pessoa."
+  },
+  "chargerBorrow": {
+    "title": "🔌 O carregador que você pegou",
+    "aName": "Francisco",
+    "a": "Esse é o terceiro carregador meu que some na sua casa. Eu quero eles de volta, não mais um desculpa.",
+    "bName": "Lola",
+    "b": "São todos iguais, então eu esqueço de quem é cada um. Sexta eu levo uma sacola cheia."
+  },
+  "auxCord": {
+    "title": "🎵 Quem manda na música do carro",
+    "aName": "Tarcísio",
+    "a": "Eu estou dirigindo, então eu escolho a música. A estrada é longa e sou eu que preciso ficar acordado.",
+    "bName": "Emília",
+    "b": "Você colocou o mesmo disco três vezes hoje. Quem vai de carona também tem voz, é assim em toda viagem."
+  },
+  "karaoke": {
+    "title": "🎤 A música que não acabava",
+    "aName": "Gisele",
+    "a": "Você cantou nove músicas e o resto de nós cantou uma cada. O microfone tem que passar pela sala toda.",
+    "bName": "Max",
+    "b": "Ninguém mais colocou o nome na lista, então eu preenchi os buracos. Sério, achei que todo mundo estava curtindo."
+  },
+  "uninvited": {
+    "title": "🙈 Fora da lista de convidados",
+    "aName": "Selma",
+    "a": "Vi as fotos da sua festa e eu não fui convidada, mesmo tendo ido em todas as outras. Doeu de verdade.",
+    "bName": "João",
+    "b": "Foi uma coisa pequena para o pessoal do trabalho, só dez pessoas. Não teve nada a ver com você, nem imaginei que você ia querer ir."
+  },
+  "holidayHost": {
+    "title": "🦃 Quem recebe a ceia",
+    "aName": "Marta",
+    "a": "A gente recebeu a ceia da família quatro anos seguidos. Agora é a vez de outra pessoa, e eu adoraria um Natal sem cozinhar.",
+    "bName": "Péricles",
+    "b": "A mamãe não consegue subir escada e a nossa casa tem a mesa maior. Ninguém mais se ofereceu, então achei que a gente faria de novo."
+  },
+  "dailyCalls": {
+    "title": "📞 Ligação todo santo dia",
+    "aName": "Letícia",
+    "a": "A mamãe liga todo dia por volta das seis e espera uma conversa de meia hora. Eu amo ela, mas às vezes eu não estou a fim.",
+    "bName": "Jonas",
+    "b": "Ela mora sozinha e essa ligação é a melhor parte do dia dela. Nos dias corridos você podia avisar que manda mensagem."
+  },
+  "bedtimeKids": {
+    "title": "🌙 Hora de dormir em dia de aula",
+    "aName": "Ingrid",
+    "a": "Nosso filho tem oito anos e devia estar dormindo às oito. Você deixou ele ficar acordado pelo jogo e agora ele está um trapo na escola.",
+    "bName": "Luís",
+    "b": "Foi um jogo só e ele estava tão animado. Uma noite mais tarde de vez em quando não faz mal, e para ele é especial."
+  },
+  "borrowedSweater": {
+    "title": "👚 A irmã que mexe no meu armário",
+    "aName": "Alice",
+    "a": "Você pegou meu suéter verde sem pedir e usou numa festa. Voltou manchado e eu nunca tinha usado.",
+    "bName": "Priscila",
+    "b": "Eu peguei coisas suas a vida inteira e você nunca ligou. Eu mando lavar, mas você está fazendo drama."
+  },
+  "familyRecipe": {
+    "title": "🥘 A receita da vovó",
+    "aName": "Elif",
+    "a": "A sopa da vovó sempre levava uma colher de extrato de tomate, e está escrito na letra dela. Você tirou e disse que era a mesma receita.",
+    "bName": "Murilo",
+    "b": "Acho que fica mais leve sem, e é assim que eu lembro. Continua sendo a receita dela, só que um pouquinho melhorada."
+  },
+  "dadRide": {
+    "title": "🚙 Levar o pai ao aeroporto",
+    "aName": "Samuel",
+    "a": "Eu levei o pai da última vez e da anterior. Dá para você ir no voo cedo dessa vez em vez de chamar um táxi?",
+    "bName": "Helô",
+    "b": "São duas horas de ida e volta e eu tenho que estar no trabalho às seis. Eu pago o táxi, só não tenho tempo."
+  },
+  "familyChat": {
+    "title": "👨‍👩‍👧 Correntes no grupo da família",
+    "aName": "Rita",
+    "a": "O tio fica encaminhando aquelas correntes e vídeos para o grupo da família inteira. Não acho nada de útil no meio disso tudo.",
+    "bName": "Teodoro",
+    "b": "Ele só quer fazer parte e rir um pouco com a gente. Talvez uma conversa rápida, mas silenciar ele parece maldade."
+  },
+  "tvRemote": {
+    "title": "📺 Esconder o controle remoto",
+    "aName": "Nelson",
+    "a": "Toda vez que eu sento para ver o jogo, o controle sumiu e está passando desenho. É a segunda vez só nesta semana.",
+    "bName": "Madalena",
+    "b": "É a minha hora favorita da TV e o seu jogo passa a tarde inteira. A gente pode se revezar, mas você não pode ficar com a tarde toda."
+  },
+  "seatingChart": {
+    "title": "🍽️ Quem senta na cabeceira",
+    "aName": "Gustavo",
+    "a": "Eu sento naquela ponta em todo jantar de família desde pequeno. Agora seu namorado sentou lá e ninguém falou nada.",
+    "bName": "Tatiana",
+    "b": "Ele sentou primeiro, e é convidado. É só uma cadeira, e na próxima a gente troca."
+  },
+  "teenPhone": {
+    "title": "🧒 Celular na mesa do jantar",
+    "aName": "Débora",
+    "a": "O jantar é o único momento em que a gente senta junto como família. Quinze minutos sem o celular não é pedir muito.",
+    "bName": "Eduardo",
+    "b": "Eu só estou vendo se um amigo respondeu. Você também mexe no seu na mesa quando o trabalho manda mensagem."
+  },
+  "meetingEmail": {
+    "title": "📧 Reunião que podia ser e-mail",
+    "aName": "Paula",
+    "a": "A gente passou uma hora em chamada para ouvir o que cabia em três linhas. Era uma hora que eu podia ter usado para terminar o relatório.",
+    "bName": "Rogério",
+    "b": "Todo mundo está ocupado, mas na chamada dá para tirar dúvida na hora. Um e-mail ia abrir cinco conversas separadas."
+  },
+  "microwaveFish": {
+    "title": "🐟 Peixe no micro-ondas do escritório",
+    "aName": "Vanda",
+    "a": "Você esquentou salmão no micro-ondas coletivo e o andar inteiro fica com esse cheiro até as três. Por favor, traz outra coisa.",
+    "bName": "Dimitri",
+    "b": "É o meu único almoço decente e eu não tenho muito dinheiro para comer fora. Tem gente que esquenta comida com tempero forte e ninguém fala nada."
+  },
+  "stolenLunch": {
+    "title": "🥪 Alguém comeu meu almoço",
+    "aName": "Bernardo",
+    "a": "Meu nome estava na sacola e o sanduíche sumiu antes do meio-dia. Imagino que você viu quem pegou.",
+    "bName": "Fiona",
+    "b": "Eu não vi nada e não quero acusar ninguém. Talvez um bilhete na geladeira seja um primeiro passo mais gentil."
+  },
+  "replyAll": {
+    "title": "📨 Responder a empresa inteira",
+    "aName": "Evandro",
+    "a": "Você respondeu para todo mundo, as duzentas pessoas, com um \"valeu!\". Agora minha caixa de entrada tem mais quarenta desses.",
+    "bName": "Joana",
+    "b": "Eu quis ser educada e o botão estava ali. É um errinho, e ninguém saiu prejudicado."
+  },
+  "officeCold": {
+    "title": "❄️ O escritório gelado",
+    "aName": "Rebeca",
+    "a": "O ar-condicionado está tão baixo que eu uso casaco na mesa em pleno verão. Uns graus a mais não fariam mal a ninguém.",
+    "bName": "Anderson",
+    "b": "Eu sou quente e o sol bate no meu lado a tarde toda. Se você está com frio, um cobertor é mais fácil do que o resto de nós suar."
+  },
+  "openOfficeHeadphones": {
+    "title": "🎧 Fone de ouvido no escritório aberto",
+    "aName": "Lauro",
+    "a": "Eu uso fone para me concentrar e as pessoas me cutucam a cada poucos minutos com uma pergunta rápida. Isso quebra meu raciocínio.",
+    "bName": "Carmen",
+    "b": "É difícil saber se você está mesmo ocupado. Mandar mensagem antes seria lento demais quando a resposta leva dez segundos."
+  },
+  "emptyCoffee": {
+    "title": "☕ A última xícara de café",
+    "aName": "Tiago",
+    "a": "Você serviu o resto da garrafa e deixou a vazia na base. Passar um café novo leva dois minutos.",
+    "bName": "Lúcia",
+    "b": "Eu estava atrasada para uma chamada e nem percebi que era a última xícara. Eu faço o próximo, prometo."
+  },
+  "ideaCredit": {
+    "title": "💡 De quem foi a ideia",
+    "aName": "Sérgio",
+    "a": "Eu sugeri o novo cronograma em março e você apresentou pro chefe como se fosse seu. Um obrigado já teria bastado.",
+    "bName": "Cátia",
+    "b": "A gente conversou junto e eu desenvolvi com a equipe. Achei que todo mundo concordava que era um trabalho de todos."
+  },
+  "fridayDeadline": {
+    "title": "📅 Prazo para sexta",
+    "aName": "Mônica",
+    "a": "Você disse que mandava a sua parte até sexta e já é segunda. Todo mundo estava esperando isso, e eu tive que cobrar duas vezes.",
+    "bName": "Ahmed",
+    "b": "Caiu um projeto maior no meu colo e eu tive que escolher. Devia ter avisado antes, mas hoje ela chega até você."
+  },
+  "deskLunch": {
+    "title": "🥗 Almoço na mesa de trabalho",
+    "aName": "Henrique",
+    "a": "Ninguém mais da equipe faz uma pausa de verdade para almoçar e isso está começando a virar obrigação. Eu queria que a gente saísse ao meio-dia.",
+    "bName": "Yuki",
+    "b": "Eu como enquanto trabalho e saio mais cedo por causa disso. Pausa é bom, mas prefiro decidir por mim mesma."
+  },
+  "calendarInvite": {
+    "title": "🗓️ Reunião sem pauta",
+    "aName": "Silvia",
+    "a": "Seu convite dizia só \"bater um papo\", sem pauta, e levou quarenta e cinco minutos da minha manhã. Me fala antes do que se trata, por favor.",
+    "bName": "Breno",
+    "b": "A ideia era uma conversa, e a gente acabou resolvendo dois problemas. Uma pauta formal ia matar o papo."
+  },
+  "rentSplit": {
+    "title": "🏠 Dividir o aluguel pelo tamanho do quarto",
+    "aName": "Aline",
+    "a": "Meu quarto é o menor e não tem armário, mas eu pago o mesmo que você. Acho que o quarto maior devia custar mais.",
+    "bName": "Zeca",
+    "b": "A gente combinou três partes iguais quando assinou o contrato. Refazer a conta toda vez que alguém tem uma sensação vira bagunça."
+  },
+  "smallLoan": {
+    "title": "💵 Cinquenta reais do almoço",
+    "aName": "Renan",
+    "a": "Eu paguei seu almoço mês passado e de novo semana passada. Dá 150 reais, e eu não ouvi uma palavra sobre isso.",
+    "bName": "Dora",
+    "b": "Achei que a gente estava quite depois da rodada de café. Não me importo de pagar, só me fala o valor que eu mando hoje."
+  },
+  "tipping": {
+    "title": "🧾 Quanto deixar de gorjeta",
+    "aName": "Helena",
+    "a": "O atendimento foi lento e a comida chegou fria. Eu vou pagar só os 10% do serviço e nada além disso.",
+    "bName": "Olavo",
+    "b": "O lugar estava lotado e o garçom claramente estava sobrecarregado. A gorjeta faz muita diferença pra eles e pra gente é pouco a mais."
+  },
+  "streamingShare": {
+    "title": "📺 Dividir a conta de streaming",
+    "aName": "Maria",
+    "a": "Eu pago o plano de streaming e agora metade dos seus amigos usa também. Queria que eles ajudassem a pagar ou fizessem a própria conta.",
+    "bName": "André",
+    "b": "Custa o mesmo se duas ou cinco pessoas usam. Pedir uns reais de cada um só ia ficar constrangedor."
+  },
+  "taxiSplit": {
+    "title": "🚕 Dividir o táxi na volta",
+    "aName": "Lívia",
+    "a": "Você desceu primeiro e eu fui quinze minutos mais longe, mas a gente dividiu a corrida no meio. Eu acho isso meio injusto.",
+    "bName": "Cláudio",
+    "b": "A gente foi no mesmo carro e saiu junto. Calcular por quilômetro uma corrida de 40 reais é exagero."
+  },
+  "groupGift": {
+    "title": "🎀 O presente coletivo",
+    "aName": "Ivone",
+    "a": "Todo mundo vai dar 50 reais para o presente da professora, mas eu sou estudante e pra mim é muito. Posso dar 25?",
+    "bName": "Valter",
+    "b": "O presente já foi encomendado nesse valor, e uma parte menor significa que outra pessoa cobre a diferença. Eu entendo, mas fica chato."
+  },
+  "groceryList": {
+    "title": "🛒 Dividir as compras do mercado",
+    "aName": "Patrícia",
+    "a": "Você compra petisco e queijo chique e joga no total da casa. Eu só como o básico, então não devia pagar metade.",
+    "bName": "Rafael",
+    "b": "Pode comer o queijo quando quiser. A conta sempre foi da casa e eu não vou ficar fazendo planilha."
+  },
+  "bigPurchase": {
+    "title": "🛍️ Uma compra grande sem avisar",
+    "aName": "Estela",
+    "a": "Você comprou um monitor gamer de 1500 reais justo na semana em que a gente estava juntando dinheiro para a viagem. Podia ter me perguntado.",
+    "bName": "Nelson",
+    "b": "Saiu do meu dinheiro pessoal, e eu esperava por ele há um ano. Não achei que precisava de permissão."
+  },
+  "subscriptions": {
+    "title": "💳 Cancelar as assinaturas esquecidas",
+    "aName": "Júlio",
+    "a": "A gente paga quatro aplicativos que nenhum dos dois abre. Vamos cancelar e usar o dinheiro na viagem de férias.",
+    "bName": "Olga",
+    "b": "Tenho certeza de que vou usar pelo menos dois deles em breve. A gente pode manter até o fim do mês antes de decidir?"
+  },
+  "restaurantChoice": {
+    "title": "🍜 Onde comer hoje à noite",
+    "aName": "Hiro",
+    "a": "Eu falei lámen três vezes esta semana e você disse \"beleza\" todas as vezes, e depois escolheu outra coisa. Eu queria que a gente fosse.",
+    "bName": "Beatriz",
+    "b": "Quando a gente chegou lá eu não estava com vontade de macarrão. Da próxima, fala um lugar e eu me comprometo antes de sair."
+  },
+  "cerealMilk": {
+    "title": "🥣 Leite antes do cereal",
+    "aName": "Patrick",
+    "a": "Você coloca o leite primeiro e depois o cereal. Está errado, e ele amolece antes de você terminar.",
+    "bName": "Jéssica",
+    "b": "Eu gosto assim e como logo. Você não precisa ficar olhando, só me deixa curtir meu café da manhã."
+  },
+  "ketchup": {
+    "title": "🍳 Ketchup nos ovos",
+    "aName": "Luísa",
+    "a": "Você põe ketchup num omelete perfeitamente no ponto. É desperdício de ovo bom, e eu não consigo olhar.",
+    "bName": "Duda",
+    "b": "Eu como assim desde criança e gosto do sabor. O prato é meu, você come o seu do jeito que quiser."
+  },
+  "pizzaCrust": {
+    "title": "🍕 Deixar a borda da pizza",
+    "aName": "Tiago",
+    "a": "Você come o miolo e deixa a borda no prato toda vez. É a melhor parte e vai para o lixo.",
+    "bName": "Gabi",
+    "b": "A borda é dura e eu já estou cheia nessa hora. Se você quer, pega, eu não vou me forçar."
+  },
+  "coffeeTea": {
+    "title": "☕ Café ou chá de manhã",
+    "aName": "Arthur",
+    "a": "Você disse que chá é só água quente com folha e depois pediu um gole do meu café. Eu quero um pedido de desculpas.",
+    "bName": "Heloísa",
+    "b": "Eu gosto mais do cheiro do café do que do gosto. E tomo chá porque é calmo, não preciso que me convençam."
+  },
+  "spiceLevel": {
+    "title": "🌶️ Quando a pimenta é demais",
+    "aName": "Diego",
+    "a": "Você pediu \"suave\" e depois despejou metade da pimenta no prato. Agora a mesa inteira está tossindo.",
+    "bName": "Ana",
+    "b": "O suave pra mim não é o suave pra você, e eu não sabia que a mesa ia dividir. Da próxima eu peço uma tigela separada."
+  },
+  "leftovers": {
+    "title": "🥡 Jogar fora as sobras",
+    "aName": "Mônica",
+    "a": "Eu estava guardando aquele curry para o almoço e você jogou fora porque estava dois dias na geladeira. Estava ótimo.",
+    "bName": "Cauã",
+    "b": "Achei que já estava lá há tempo demais e não queria que ninguém passasse mal. Eu reponho, desculpa."
+  },
+  "cilantro": {
+    "title": "🌿 Coentro em tudo",
+    "aName": "Vera",
+    "a": "Você pôs coentro no prato de novo, mesmo sabendo que para mim tem gosto de sabão. Eu não consigo tirar tudo.",
+    "bName": "Marcos",
+    "b": "A receita pede e o prato precisa desse frescor. Da próxima eu deixo numa tigelinha do lado."
+  },
+  "tooSalty": {
+    "title": "🧂 Sal demais na sopa",
+    "aName": "Fabiana",
+    "a": "Você salgou a sopa antes de provar e agora está salgada demais para comer. Eu queria começar de novo com uma panela nova.",
+    "bName": "Jair",
+    "b": "Para mim está no ponto, e eu sempre ponho o sal no final. Põe um pouco de água, é fácil de resolver."
+  },
+  "doubleDip": {
+    "title": "🥨 Molhar duas vezes na festa",
+    "aName": "Cora",
+    "a": "Eu vi você dar uma mordida no salgadinho e molhar de novo no pote de todo mundo. Agora eu não quero mais nada de lá.",
+    "bName": "Beto",
+    "b": "Foi uma vez só e ninguém mais viu. Você está fazendo um drama, pega uma colher limpa."
+  },
+  "pastaShape": {
+    "title": "🍝 Macarrão que não é espaguete",
+    "aName": "Giulia",
+    "a": "Esse molho é para massa comprida, e você fez com massa curta. Simplesmente não é o mesmo prato.",
+    "bName": "Henrique",
+    "b": "A gente só tinha penne no armário, e está gostoso. Importa tanto assim o formato?"
+  },
+  "hotdog": {
+    "title": "🌭 Cachorro-quente é sanduíche?",
+    "aName": "Robson",
+    "a": "Cachorro-quente é um recheio dentro de pão cortado, então é sanduíche. Fim de papo.",
+    "bName": "Samuel",
+    "b": "É outra coisa. Ninguém pede um sanduíche esperando um cachorro-quente, e nenhum cardápio coloca ele na categoria de sanduíches."
+  },
+  "trashDay": {
+    "title": "🗑️ Tirar o lixo",
+    "aName": "Carlos",
+    "a": "A lixeira está transbordando desde quarta e eu levei o lixo nas últimas quatro vezes. É a sua vez.",
+    "bName": "Amélia",
+    "b": "Eu levo a reciclagem e o lixo orgânico, e isso também conta. Vamos fazer uma escala de verdade para a gente parar de ficar contando."
+  },
+  "foldTowels": {
+    "title": "🧺 O jeito certo de dobrar toalha",
+    "aName": "Nando",
+    "a": "Eu acabei de redobrar todas as toalhas em três partes porque você dobra no meio e elas não cabem na prateleira.",
+    "bName": "Carla",
+    "b": "São toalhas e vão ser usadas daqui a pouco. Não vou aprender um sistema de dobra para elas."
+  },
+  "vacuumSchedule": {
+    "title": "🧹 De quanto em quanto tempo passar aspirador",
+    "aName": "Fátima",
+    "a": "Eu passo aspirador duas vezes por semana e nunca vi você encostar nele. Um pouco de cabelo no chão me incomoda de verdade.",
+    "bName": "Leonardo",
+    "b": "Para mim uma vez por semana está bom, e você faz mais do que precisa. Eu passo aos domingos, se você deixar o resto de lado."
+  },
+  "whoCooks": {
+    "title": "🍲 Cozinhar toda noite",
+    "aName": "Marina",
+    "a": "Eu cozinhei cinco noites em sete neste mês. Queria dividir melhor a cozinha.",
+    "bName": "Paulo",
+    "b": "Eu não sou tão bom nisso e você gosta mais. Mas você tem razão, vamos escolher duas noites e eu vou melhorando."
+  },
+  "makeBed": {
+    "title": "🛏️ Arrumar a cama",
+    "aName": "Gabriela",
+    "a": "Você levanta, deixa a coberta amontoada e diz que não adianta porque a gente vai bagunçar de novo à noite. Isso deixa o quarto com cara de bagunça.",
+    "bName": "Natan",
+    "b": "Eu saio primeiro para o trabalho e isso leva dois minutos que eu não tenho. Se é tão importante pra você, arruma quando levantar."
+  },
+  "toiletSeat": {
+    "title": "🚽 A tampa do vaso",
+    "aName": "Ana Clara",
+    "a": "Entrei no banheiro no escuro três vezes e a tampa estava levantada. Abaixar não é difícil.",
+    "bName": "Gregório",
+    "b": "Deixar levantada é menos coisa para encostar, e à meia-noite eu não estou pensando nisso. Se te incomoda, eu tento lembrar."
+  },
+  "toiletPaper": {
+    "title": "🧻 Para cima ou para baixo",
+    "aName": "Dayane",
+    "a": "O rolo vai com o papel saindo por cima. Você pendurou ao contrário e eu preciso esticar o braço toda vez.",
+    "bName": "Alberto",
+    "b": "Não faz diferença nenhuma no funcionamento, então escolhe o que você preferir. Não vou pendurar de novo só para combinar com o seu hábito."
+  },
+  "laundryColours": {
+    "title": "👕 Misturar cores na máquina",
+    "aName": "Wesley",
+    "a": "Minha camisa branca saiu da máquina rosa porque você jogou a toalha vermelha junto. Era uma camisa que eu usava no trabalho.",
+    "bName": "Lídia",
+    "b": "Eu estava com pressa e lavar pouca roupa demora demais. Eu compro outra, mas foi um erro sem querer."
+  },
+  "washCar": {
+    "title": "🚗 Limpar o carro que a gente divide",
+    "aName": "Ismael",
+    "a": "O banco de trás está cheio de embalagem e tem um copo de café da semana passada. A gente divide o carro, então devia dividir a limpeza.",
+    "bName": "Dina",
+    "b": "Eu limpo o carro sempre que está quase uma bagunça. Não achei que umas embalagens contassem, eu faço isso neste fim de semana."
+  },
+  "beachOrCity": {
+    "title": "🏖️ Praia ou viagem pela cidade",
+    "aName": "Sven",
+    "a": "Eu quero uma semana deitado à beira-mar, sem plano nenhum. Na última viagem a gente passou o tempo todo andando por museus.",
+    "bName": "Raquel",
+    "b": "Eu enjoo depois de dois dias numa espreguiçadeira. Queria conhecer alguma coisa nova, nem que a gente veja só metade da cidade."
+  },
+  "airportEarly": {
+    "title": "✈️ Com que antecedência chegar ao aeroporto",
+    "aName": "Oksana",
+    "a": "Três horas antes do voo é cedo demais. A gente vai ficar sentado no portão tomando café por uma eternidade.",
+    "bName": "Hamza",
+    "b": "A fila pode ser grande e eu tenho medo de voar. Prefiro esperar a correr, e perder o voo sairia bem mais caro."
+  },
+  "campingHotel": {
+    "title": "⛺ Barraca ou hotel",
+    "aName": "Bárbara",
+    "a": "Eu reservei um camping para o fim de semana e agora você diz que prefere hotel. A gente combinou isso na primavera.",
+    "bName": "Colin",
+    "b": "A previsão é de chuva o fim de semana todo e barraca molhada não é relaxante. Eu vou acampar numa boa quando o tempo melhorar."
+  },
+  "packingLight": {
+    "title": "🧳 Uma mala para cada um",
+    "aName": "Nur",
+    "a": "A gente combinou só bagagem de mão e a sua pesa uma tonelada. Tem três pares de sapato aí dentro.",
+    "bName": "Estêvão",
+    "b": "Eu gosto de ter opções e você levou um casaco que não vai usar. Se a gente pagar uma mala despachada, eu cubro."
+  },
+  "mapOrGps": {
+    "title": "🗺️ Confiar no GPS",
+    "aName": "Beto",
+    "a": "O aplicativo mandou virar à esquerda e você virou à direita, porque acha que conhece um atalho. A gente perdeu vinte minutos.",
+    "bName": "Rosana",
+    "b": "Eu já passei por essa estrada cem vezes e o aplicativo não sabe da obra. Da última vez eu tinha razão."
+  },
+  "leaveTime": {
+    "title": "🕗 A que horas sair",
+    "aName": "Kátia",
+    "a": "Eu falei que a gente devia sair às oito para pegar o trânsito livre e você ainda está no banho às oito e meia. Sempre acontece isso.",
+    "bName": "Matheus",
+    "b": "A festa começa às dez, então sair às oito é cedo demais. Você planeja para o pior trânsito e no fim sou eu que fico correndo."
+  },
+  "sleepIn": {
+    "title": "🌅 Hora de acordar no fim de semana",
+    "aName": "Eliane",
+    "a": "É sábado e você está de pé às seis fazendo barulho na cozinha. A única manhã em que eu posso dormir, e já era.",
+    "bName": "Ravi",
+    "b": "Meu corpo acorda cedo e eu estava tentando fazer silêncio. Ficar deitado olhando para o teto também não ajuda."
+  },
+  "dinnerReservation": {
+    "title": "🕰️ Reservar a mesa do jantar",
+    "aName": "Isaac",
+    "a": "Você reservou a mesa para as cinco e meia e é sexta-feira. Ninguém janta tão cedo, e eu tinha outros planos.",
+    "bName": "Tilda",
+    "b": "Era o único horário que sobrou e eu ia perder. Eu perguntei, mas você estava ocupado e não respondeu."
+  },
+  "boardGameRules": {
+    "title": "🎲 Regras que ninguém lembra",
+    "aName": "Brandon",
+    "a": "Você jogou errado a noite inteira e agora está ganhando. Eu queria voltar e refazer as jogadas.",
+    "bName": "Sienna",
+    "b": "A gente leu o manual juntos no começo e ninguém reclamou. Não dá para mudar as regras quando se está perdendo."
+  },
+  "houseRules": {
+    "title": "💰 Regra da casa no Banco Imobiliário",
+    "aName": "Eliseu",
+    "a": "Eu coloco o dinheiro das multas no meio, e quem cair na Parada Livre leva tudo. Essa é a regra de verdade.",
+    "bName": "Hazel",
+    "b": "O manual não fala isso, e o jogo dura a noite inteira. Vamos jogar como está impresso."
+  },
+  "fantasyTrade": {
+    "title": "⚽ Troca injusta no fantasy",
+    "aName": "Douglas",
+    "a": "Você me trocou um jogador machucado pelo meu melhor atacante, e eu aceitei sem conferir. A troca é injusta, então vamos desfazer.",
+    "bName": "Francine",
+    "b": "Você concordou por escrito e a troca era justa quando a gente fez. Conferir é trabalho seu, não meu."
+  },
+  "lineCall": {
+    "title": "🎾 Fora ou dentro",
+    "aName": "Martim",
+    "a": "Aquela bola foi claramente fora e você disse a partida inteira que foi dentro. Eu quero repetir o ponto.",
+    "bName": "Joelma",
+    "b": "Eu estava mais perto da linha e vi ela tocar na beirada. Você não consegue marcar lá do outro lado da quadra."
+  },
+  "controllerTurns": {
+    "title": "🎮 De quem é a vez no controle",
+    "aName": "Zé",
+    "a": "Você está com o controle há uma hora e toda vez que eu peço diz \"só mais uma partida\". Não é assim que funciona a vez.",
+    "bName": "Priscila",
+    "b": "Eu estava no meio de uma fase e não dava para parar. Passo para você logo depois dessa, prometo."
+  },
+  "teamCaptain": {
+    "title": "⚽ Escolher os times",
+    "aName": "Gabriel",
+    "a": "Você escolheu todos os seus amigos primeiro e me deixou de novo com os jogadores mais fracos. Eu queria que os times fossem equilibrados.",
+    "bName": "Amanda",
+    "b": "A gente joga assim há anos e você nunca reclamou. Se quer times justos, sorteia pelos nomes."
+  },
+  "cardCheating": {
+    "title": "🃏 A carta escondida",
+    "aName": "Rubens",
+    "a": "Eu vi você tirar uma carta do fundo do baralho na última mão. Se é assim que você ganha, eu não jogo mais.",
+    "bName": "Mei",
+    "b": "Eu deixei uma cair e peguei, só isso. Você está de cara fechada por perder a noite inteira e agora me acusa."
+  },
+  "trashTalk": {
+    "title": "🏀 Provocação na quadra",
+    "aName": "Domingos",
+    "a": "Uma provocação durante o jogo faz parte da graça. Você ficou quieta e emburrada depois de um comentário, e eu só estava brincando.",
+    "bName": "Carina",
+    "b": "Uma coisa é brincar com o jogo, outra é brincar comigo. Eu só quero que a gente mantenha o clima gentil."
+  },
+  "gameSave": {
+    "title": "💾 Sobrescrever o save",
+    "aName": "Ciro",
+    "a": "Eu passei trinta horas nesse save e você começou um jogo novo por cima. Agora ele sumiu.",
+    "bName": "Lina",
+    "b": "Só tinha um espaço e parecia vazio. Eu teria perguntado, mas você não estava em casa e eu só queria testar."
+  },
+  "loserPays": {
+    "title": "🎳 Quem perde paga a pizza",
+    "aName": "Boris",
+    "a": "A gente combinou que quem perdesse pagava, e você perdeu por dois pinos. Combinado é combinado, então pega a carteira.",
+    "bName": "Camila",
+    "b": "Eu falei de brincadeira e achei que você sabia. Eu pago a próxima rodada, se você preferir assim."
+  },
+  "pickleball": {
+    "title": "🎾 Quem marca o placar",
+    "aName": "Glória",
+    "a": "Eu contei oito a seis, e você diz que é sete a sete. A gente vive esquecendo o placar e isso estraga o jogo.",
+    "bName": "Denílson",
+    "b": "Eu contei cada saque e tenho certeza. Vamos só repetir o ponto e continuar."
+  },
+  "dogCouch": {
+    "title": "🐕 O cachorro no sofá",
+    "aName": "Márcia",
+    "a": "A gente combinou que cachorro não sobe no sofá, e eu chego em casa e encontro ele esparramado lá. As almofadas estão cobertas de pelo.",
+    "bName": "Heitor",
+    "b": "Ele fica tão feliz e só sobe enquanto a gente vê TV. A capa é lavável, e isso faz ele parte da família."
+  },
+  "walkingDuty": {
+    "title": "🦮 Quem passeia com o cachorro",
+    "aName": "Hanna",
+    "a": "Eu fiz os passeios da manhã e da noite desde o fim de semana e amanhã tenho uma apresentação. Hoje é a sua vez.",
+    "bName": "Vítor",
+    "b": "Está caindo o mundo e eu acabei de sentar. Eu faço o passeio longo no sábado, não dá para pular hoje?"
+  },
+  "catNames": {
+    "title": "🐈 Escolher o nome da gatinha",
+    "aName": "Pietra",
+    "a": "Fui eu que achei ela e vou chamar de Biscoito. O seu nome para ela é Sir Fofuchento, e eu não vou falar isso para um veterinário.",
+    "bName": "Kléber",
+    "b": "Eu rio toda vez e ela já atende. Biscoito é bonito, mas todo gato chama assim."
+  },
+  "catKeyboard": {
+    "title": "🐱 A gata na mesa de trabalho",
+    "aName": "Maíra",
+    "a": "Ela anda em cima do meu teclado durante as reuniões e você incentiva com petisco. Agora ela acha que minha mesa é a cama dela.",
+    "bName": "Tadeu",
+    "b": "Todo mundo na chamada adora ela, e ela só quer companhia. Fecha a porta se te incomoda."
+  },
+  "feedingTime": {
+    "title": "🥫 Alimentar o gato duas vezes",
+    "aName": "Jun",
+    "a": "Eu dei a janta do gato às seis e você deu de novo às sete. Ela está ficando meio gordinha.",
+    "bName": "Alícia",
+    "b": "Ela estava miando para mim e achei que ninguém tinha dado comida. Um bilhete na geladeira resolveria isso."
+  },
+  "vetCosts": {
+    "title": "🐾 Dividir a conta do veterinário",
+    "aName": "Renato",
+    "a": "A conta do veterinário foi 600 reais e eu paguei tudo porque marquei a consulta. Você adotou o cachorro comigo, então a gente devia dividir.",
+    "bName": "Cheila",
+    "b": "Eu teria pago se você tivesse me falado antes da consulta. Me manda o recibo que eu transfiro metade."
+  },
+  "offLeash": {
+    "title": "🌳 Sem coleira no parque",
+    "aName": "Geni",
+    "a": "Seu cachorro correu até o meu filhote sem avisar e ele é medroso. A placa diz que aqui é obrigatório usar guia.",
+    "bName": "Mitchel",
+    "b": "Ele é amigável e só queria dar oi. Eu fico de olho nele, e todo mundo aqui solta o seu."
+  },
+  "petInBed": {
+    "title": "🐶 O cachorro na cama",
+    "aName": "Selena",
+    "a": "Ele ocupa metade do colchão e eu acordo com uma pata na cara. Eu queria ter a cama só para a gente de novo.",
+    "bName": "Cauê",
+    "b": "Ele fica ansioso sozinho e dorme melhor do nosso lado. Prefiro perder espaço a ouvir ele chorar a noite toda."
+  },
+  "puppyName": {
+    "title": "🐕‍🦺 Escolher o nome do filhote",
+    "aName": "Rogério",
+    "a": "A gente chama ele de \"o filhote\" há uma semana porque não concorda. Eu voto em Foguete e combina perfeitamente com ele.",
+    "bName": "Margarida",
+    "b": "Ele é calmo e lento, então Foguete soa ridículo. Eu gosto de Pimenta, e combina com as pintinhas dele."
+  },
+  "fishSitter": {
+    "title": "🐠 Quem alimenta os peixes",
+    "aName": "Teresa",
+    "a": "Há um mês eu te pedi para dar comida aos peixes enquanto a gente está fora. Você diz que esqueceu de resolver, e a viagem é amanhã.",
+    "bName": "Alfredo",
+    "b": "Achei que a sua vizinha tinha se oferecido e não quis duplicar. Eu peço para minha irmã hoje à noite, ela mora perto."
+  },
+  "birdNoise": {
+    "title": "🦜 O papagaio que não para",
+    "aName": "Nelson",
+    "a": "Seu papagaio grita às seis da manhã todo dia e eu não consigo voltar a dormir. Eu moro colado em você.",
+    "bName": "Fátima",
+    "b": "Ele é um bicho e está cumprimentando o sol. Vou levar a gaiola para um cômodo mais quieto, desculpa por isso."
+  },
+  "wifiPassword": {
+    "title": "🔐 Passar a senha do wifi",
+    "aName": "Robson",
+    "a": "Você deu a senha do wifi para todo mundo que veio aqui, e agora fica lento quando eu trabalho. Eu queria trocar.",
+    "bName": "Eva",
+    "b": "É feio negar para visita, e ninguém usa tanto assim. Se te incomoda, cria uma rede para convidados."
+  },
+  "tvVolume": {
+    "title": "🔊 A guerra do volume",
+    "aName": "Sérgio",
+    "a": "Você assiste a tudo no volume 40 e eu escuto cada palavra da cozinha. Usa a legenda, por favor.",
+    "bName": "Neide",
+    "b": "Eu não escuto bem e perco o diálogo no volume mais baixo. Com legenda eu fico lendo, não assistindo."
+  },
+  "phoneAtDinner": {
+    "title": "📵 Celular em cima da mesa do restaurante",
+    "aName": "Lídia",
+    "a": "A gente saiu pela primeira vez em um mês e você olhou o celular a cada cinco minutos. Senti que estava sentada sozinha.",
+    "bName": "Pedro",
+    "b": "Eu esperava uma mensagem sobre o pouso do voo do meu irmão. Devia ter falado, mas não quis te preocupar."
+  },
+  "notificationSound": {
+    "title": "🔔 Som de notificação na biblioteca",
+    "aName": "Eveline",
+    "a": "Seu celular apita a cada trinta segundos e tem gente estudando aqui. Coloca no silencioso, por favor.",
+    "bName": "Mohamed",
+    "b": "Agora está no vibrar, e peço desculpa mesmo. Eu não percebi que o som estava ligado, não vai se repetir."
+  },
+  "darkMode": {
+    "title": "🌗 Modo escuro ou modo claro",
+    "aName": "Jonas",
+    "a": "Você deixou o tablet da casa no modo claro à noite e isso queima meus olhos. A gente combinou o escuro à noite.",
+    "bName": "Odete",
+    "b": "Eu não consigo ler nada no modo escuro, as letras ficam borradas. Eu volto antes de dormir, mas de dia eu preciso dele."
+  },
+  "smartSpeaker": {
+    "title": "🗣️ A caixa de som inteligente que escuta",
+    "aName": "Gedeão",
+    "a": "Você colocou uma caixa inteligente no nosso quarto e me incomoda ela ficar escutando. Eu queria que fosse para a cozinha.",
+    "bName": "Lívia",
+    "b": "Eu só uso para despertador e previsão do tempo. A cozinha é longe demais, mas posso desligar o microfone à noite."
+  },
+  "tabsOpen": {
+    "title": "🗂️ Duzentas abas abertas",
+    "aName": "Paola",
+    "a": "Toda vez que eu pego seu notebook tem cem abas abertas e ele fica se arrastando. Fechar algumas deixaria mais rápido.",
+    "bName": "Artur",
+    "b": "Cada uma dessas é uma coisa de que eu preciso, e sei exatamente onde está cada uma. É uma bagunça organizada."
+  },
+  "photoStorage": {
+    "title": "🖼️ Dividir o armazenamento na nuvem",
+    "aName": "Lorena",
+    "a": "Seus vídeos encheram o nosso espaço compartilhado e eu não consigo fazer backup das minhas fotos. Apaga alguns ou paga o seu próprio.",
+    "bName": "Kofi",
+    "b": "São todos vídeos de família e eu não quero perder. Eu passo para um HD, mas me dá uns dias."
+  },
+  "videoCallCamera": {
+    "title": "📹 Câmera ligada na chamada de vídeo",
+    "aName": "Helga",
+    "a": "A nossa chamada semanal de família é o único momento em que a gente se vê, e você mantém a câmera desligada. Parece que estou falando com a parede.",
+    "bName": "Dílson",
+    "b": "Normalmente estou cozinhando ou de pijama. Eu continuo ali ouvindo, e acho que a câmera não é o ponto."
+  },
+  "doorbellCamera": {
+    "title": "🚪 A câmera da campainha",
+    "aName": "Mara",
+    "a": "Você instalou uma câmera que filma a calçada da frente inteira, e os vizinhos também veem. Eu queria que ela apontasse para outro lado.",
+    "bName": "Teodoro",
+    "b": "No inverno passado levaram duas encomendas nossas, e ela só filma o nosso portão. Eu inclino um pouco para baixo numa boa."
+  },
+  "holdDoor": {
+    "title": "🚪 Segurar a porta",
+    "aName": "Wilson",
+    "a": "Eu segurei a porta para um grupo inteiro e nenhum deles agradeceu. Custa um segundo ser educado.",
+    "bName": "Yasmin",
+    "b": "As pessoas estão com pressa e nem sempre notam. Você devia fazer porque é gentil, não porque espera agradecimento."
+  },
+  "elevatorSpot": {
+    "title": "🛗 Parar na frente do elevador",
+    "aName": "Glória",
+    "a": "Eu estava esperando o elevador e você entrou na frente assim que abriu. Eu estava claramente aqui primeiro.",
+    "bName": "Matias",
+    "b": "Eu estava com um carrinho de bebê e o elevador era a única opção. Não vi você, desculpa, mas eu realmente precisava."
+  },
+  "cuttingQueue": {
+    "title": "🧍 Furar a fila",
+    "aName": "Úrsula",
+    "a": "Você foi direto para o balcão enquanto o resto de nós esperou vinte minutos. Tem fila atrás de mim.",
+    "bName": "Idris",
+    "b": "Eu só preciso fazer uma pergunta rápida e não ia pedir nada. Não percebi que essa era a fila para isso."
+  },
+  "busPhone": {
+    "title": "🚌 Ligação em voz alta no ônibus",
+    "aName": "Dolores",
+    "a": "O homem atrás de mim está no viva-voz há vinte minutos e a gente ouviu o dia inteiro dele. Um fone seria gentil.",
+    "bName": "Samir",
+    "b": "É uma ligação urgente e o sinal está ruim, então preciso do viva-voz. Eu fico breve, não precisa ser grosseira."
+  },
+  "shoesInside": {
+    "title": "👟 Sapato dentro de casa",
+    "aName": "Hye-jin",
+    "a": "Tira o sapato na porta, aqui a gente não anda de sapato dentro de casa. Acabei de limpar o chão.",
+    "bName": "Pavel",
+    "b": "O dia está seco e a sola está limpa. Eu não estou acostumado, mas tiro se é tão importante assim."
+  },
+  "armrest": {
+    "title": "💪 Dividir o apoio de braço",
+    "aName": "Nilton",
+    "a": "Você ficou com os dois apoios o filme inteiro e meu braço está no ar. Quem senta no meio fica com os dois, essa é a regra.",
+    "bName": "Jade",
+    "b": "Eu estou do lado da janela e meus cotovelos precisam de espaço. Não sabia que tinha regra, eu me ajeito."
+  },
+  "lateRsvp": {
+    "title": "✉️ Confirmar presença em cima da hora",
+    "aName": "Greta",
+    "a": "Eu pedi para todo mundo responder até o dia primeiro e você só disse sim na véspera. Eu já tinha encomendado comida para quinze.",
+    "bName": "Tobias",
+    "b": "Eu não tinha certeza do meu plantão até então. Mais uma pessoa na mesa não faz mal, e eu trouxe uma sobremesa."
+  },
+  "thankYouNote": {
+    "title": "💌 Cartão de agradecimento",
+    "aName": "Edite",
+    "a": "O casamento da sua prima foi há um mês e não tivemos uma palavra sobre o nosso presente. Um bilhete não custa nada.",
+    "bName": "Bruno",
+    "b": "Elas ainda devem estar se organizando com cem presentes. Uma mensagem não é o fim do mundo, dá um tempo."
+  },
+  "regift": {
+    "title": "🎁 Presente repassado",
+    "aName": "Samanta",
+    "a": "Descobri que o cachecol que ganhei de você foi um presente que alguém te deu antes. Senti que foi uma lembrança de última hora.",
+    "bName": "Leandro",
+    "b": "Era lindo, e não combinava comigo. Achei que ia combinar mais com você, e eu teria te dado de qualquer jeito."
+  },
+  "partyDrink": {
+    "title": "🍾 Levar alguma coisa para a festa",
+    "aName": "Délia",
+    "a": "Você chegou no jantar sem nada, e eu cozinhei dois dias. Uma garrafa ou umas flores teriam sido legais.",
+    "bName": "Wagner",
+    "b": "Você disse que era só levar eu mesmo, e eu acreditei. Da próxima eu levo algo bom."
+  },
+  "escalator": {
+    "title": "⬆️ Parar na escada rolante",
+    "aName": "Brígida",
+    "a": "Você ficou do lado esquerdo e bloqueou todo mundo que queria subir andando. A regra é parar na direita e andar pela esquerda.",
+    "bName": "André",
+    "b": "Estou com sacolas pesadas e só quero chegar em segurança. Não preciso correr por causa da pressa dos outros."
+  },
+  "cinemaTalk": {
+    "title": "🎞️ Cochicho durante o filme",
+    "aName": "Cláudio",
+    "a": "Você explicou cada cena para a sua amiga em voz baixa o filme inteiro. Eu paguei para assistir, não para ouvir comentário o tempo todo.",
+    "bName": "Leila",
+    "b": "Ela é nova na série e eu só estava ajudando ela a acompanhar a história. Paro se incomodou de verdade."
+  },
+  "neighbourMusic": {
+    "title": "🔈 Vizinho com festa até tarde",
+    "aName": "Ada",
+    "a": "Sua festa ainda estava alta à uma da manhã e tem gente aqui que trabalha cedo. Um aviso teria sido educado.",
+    "bName": "Estanislau",
+    "b": "Eu avisei o prédio, e é uma noite por ano. Peço para o pessoal entrar, mas todo mundo está se divertindo."
+  },
+  "socks": {
+    "title": "🧦 Meias no chão",
+    "aName": "Lúcia",
+    "a": "Tem um par de meias suas do lado da cama, outro perto do sofá e uma no corredor. Eu pego elas todo dia.",
+    "bName": "Bernardo",
+    "b": "São só meias e eu vou usar de novo. Coloco no cesto, mas você não precisa ficar contando."
+  },
+  "cafeSeat": {
+    "title": "☕ Guardar lugar com o notebook",
+    "aName": "Joana",
+    "a": "Seu notebook segura aquela mesa há uma hora e você foi para outro lugar. A cafeteria está lotada e tem gente em pé.",
+    "bName": "Karim",
+    "b": "Eu só saí para atender uma ligação e já voltava. Deixar uma bolsa é como todo mundo guarda lugar."
+  },
+  "groupProject": {
+    "title": "🎓 Trabalho em grupo que ninguém começou",
+    "aName": "Tainá",
+    "a": "O trabalho é para daqui a uma semana e eu escrevi o roteiro inteiro sozinha. Preciso que cada um faça a sua parte até sexta.",
+    "bName": "Olavo",
+    "b": "Eu tenho duas provas antes e avisei que minhas partes viriam mais tarde. Eu faço no fim de semana."
+  },
+  "puzzle": {
+    "title": "🧩 Terminar o meu quebra-cabeça",
+    "aName": "Graça",
+    "a": "Eu estava montando aquele quebra-cabeça havia uma semana e você encaixou as últimas vinte peças enquanto eu estava fora. Eu queria terminar sozinha.",
+    "bName": "Henrique",
+    "b": "Estava em cima da mesa e eu me empolguei. Não sabia que significava tanto para você, desculpa."
+  },
+  "hedge": {
+    "title": "🌿 A cerca viva do vizinho",
+    "aName": "Bárbara",
+    "a": "Sua cerca viva cresceu por cima da calçada e eu tenho que pisar na rua para passar. Está assim desde a primavera.",
+    "bName": "Joel",
+    "b": "Eu estava para podar e o tempo tem estado horrível. Faço no domingo, você podia ter batido na minha porta."
+  }
+}

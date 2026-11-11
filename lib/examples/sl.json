@@ -1,0 +1,1052 @@
+{
+  "dishwasher": {
+    "title": "🍽️ Sklede v zgornji košari",
+    "aName": "Ana",
+    "a": "Sklede si spet zložil v zgornjo košaro. Tam se nikoli ne pomijejo do konca, za to je spodnja.",
+    "bName": "Matic",
+    "b": "Zgoraj čisto lepo gredo, spodaj pa ostane prostor za lonce. Pomivalni stroj tako polnim že leta in še nikoli ni nič ostalo umazano."
+  },
+  "bill": {
+    "title": "🍷 Delitev računa v restavraciji",
+    "aName": "Petra",
+    "a": "Nisem nič pila, zato ne bi smela plačati četrtine vina. Hrano pa lahko razdelimo na enake dele, s tem se strinjam.",
+    "bName": "Jure",
+    "b": "Vedno vse razdelimo na štiri. Vsakič računati, kdo je kaj imel, je muka, razlika pa tako ali tako ni velika."
+  },
+  "thermostat": {
+    "title": "🌡️ Vojna za termostat",
+    "aName": "Nina",
+    "a": "Tukaj je 19 stopinj in me zebe celo v puloverju s kapuco. Gretje naviti na 22 res ni nič pretiranega.",
+    "bName": "Gašper",
+    "b": "Pri 22 stopinjah se ne da spati, prevroče je. Ti lahko oblečeš še eno plast, jaz pa ne morem sleči ničesar več."
+  },
+  "roadTrip": {
+    "title": "🚗 Kdo vozi domov",
+    "aName": "Tina",
+    "a": "Celih šest ur tja sem vozila jaz. Pošteno je, da nazaj voziš ti.",
+    "bName": "Rok",
+    "b": "Že pred odhodom sem rekel, da ponoči ne maram voziti, odhajamo pa ob sedmih zvečer. Na naslednjem izletu bom zjutraj vozil jaz."
+  },
+  "seat": {
+    "title": "💺 Nagib sedeža na nočnem letu",
+    "aName": "Sara",
+    "a": "Moj sedež se da nagniti, zato ga nagnem. Nočni let je, vsi poskušajo spati.",
+    "bName": "Blaž",
+    "b": "Visok sem 1,91 m in s koleni že tako tiščim v tvoj sedež. Lahko bi vsaj vprašala, preden ga spustiš čisto nazaj."
+  },
+  "spoiler": {
+    "title": "🎬 Spoiler za finale",
+    "aName": "Maja",
+    "a": "Povedal si mi, kdo je morilec, še preden sem sploh začela zadnjo epizodo. Ves teden sem čakala nanjo.",
+    "bName": "Jan",
+    "b": "Serija je izšla pred tremi tedni, ti pa si rekla, da si jo že pogledala do konca. Ne morem si zapomniti, do kod je kdo prišel."
+  },
+  "jacket": {
+    "title": "🧥 Izposojena jeans jakna",
+    "aName": "Matej",
+    "a": "Mojo jeans jakno si oblekla na koncert, ne da bi me vprašala. Vrnila si jo vso smrdečo po dimu.",
+    "bName": "Eva",
+    "b": "Visela je pri vratih, ti pa je nikoli ne nosiš. Vprašala bi te, ampak si spal, jaz pa sem že tako zamujala."
+  },
+  "lastSlice": {
+    "title": "🍕 Zadnji kos pice je moj",
+    "aName": "Nejc",
+    "a": "Še pred filmom sem rekel: „Zadnji kos je moj.“ Vsi so slišali.",
+    "bName": "Lara",
+    "b": "Ne moreš si rezervirati kosa in se ga potem dve uri ne dotakniti. Kar ležal je tam in se hladil, zato sem ga pojedla."
+  },
+  "sundayPlans": {
+    "title": "🛋️ Cela nedelja na kavču",
+    "aName": "Katja",
+    "a": "Edini dan je, ko sva oba prosta, in rada bi šla na pohod. Cel dan preležati na kavču se mi zdi zapravljen.",
+    "bName": "Luka",
+    "b": "Cel teden garam in v nedeljo se spočijem. Na pohod gremo lahko naslednji vikend, danes pa si želim samo nič početi skupaj s tabo."
+  },
+  "anniversaryGift": {
+    "title": "🎁 Koliko zapraviti za darilo",
+    "aName": "Miha",
+    "a": "Zmenila sva se, da darila ne bodo dražja od 50 evrov, ti pa si mi kupila uro. Zdaj izpadam, kot da se nisem nič potrudil.",
+    "bName": "Eva",
+    "b": "Zagledala sem jo in pomislila nate. Bila je v akciji, številka, ki sva jo določila pred leti, pa mi ne sme preprečiti, da bi bila radodarna."
+  },
+  "couplePhoto": {
+    "title": "📸 Objava najine fotke brez vprašanja",
+    "aName": "Sabina",
+    "a": "Najino fotko s plaže si objavil, še preden sem jo sploh videla. Na njej grozno izgledam in rekla bi ne.",
+    "bName": "Domen",
+    "b": "Zdiš se mi odlična in hotel sem deliti lep dan. Nisem vedel, da te bo to tako užalostilo."
+  },
+  "phoneInBed": {
+    "title": "📱 Telefon v postelji",
+    "aName": "Nina",
+    "a": "Greva v posteljo in ti eno uro skrolaš, jaz pa ležim zraven. Rada bi se pogovarjala ali pa vsaj skupaj zaspala.",
+    "bName": "Anže",
+    "b": "Tako se sprostim po napornem dnevu. Pogovarjava se lahko, nočem pa pravil za telefon, ki ga samo držim v roki."
+  },
+  "movieTurns": {
+    "title": "🍿 Kdo izbere film",
+    "aName": "Klara",
+    "a": "Prejšnjič sem izbirala jaz in tudi predprejšnjič. Zdaj si ti na vrsti, ti pa že štirideset minut govoriš, da se ti nič ne zdi dobro.",
+    "bName": "Tomaž",
+    "b": "Izbral bi, če bi si želel kaj pogledati. Ti vedno izbereš stvari, ki so mi manj všeč, zato raje molčim."
+  },
+  "slowReply": {
+    "title": "💬 Ure čakanja na odgovor",
+    "aName": "Zala",
+    "a": "Opoldne sem ti poslala čisto preprosto vprašanje, odgovor pa sem dobila ob osmih zvečer. Hiter odgovor te ne bi nič stal.",
+    "bName": "Žiga",
+    "b": "Ves dan sem imel sestanke, telefon pa v torbi. Nisem te ignoriral, samo ni bilo nujno."
+  },
+  "bedSide": {
+    "title": "🛏️ Čigava je ta stran postelje",
+    "aName": "Rozalija",
+    "a": "Vseh šest let spim ob oknu. Zdaj, ko smo se preselili, si mi zasedel mojo stran, še preden sem sploh razpakirala.",
+    "bName": "Peter",
+    "b": "Postelja stoji ob drugi steni, zato sta se strani zamenjali. Rad se zamenjam nazaj, samo nisem pomislil na to."
+  },
+  "surpriseParty": {
+    "title": "🎈 Presenečenje, ki ga ni hotel",
+    "aName": "Lea",
+    "a": "Pripravila sem vse za tvoj rojstni dan in povabila vse. Ves večer si bil videti čisto nesrečen.",
+    "bName": "Gregor",
+    "b": "Že pred meseci sem ti rekel, da sovražim presenečenja in velike množice. Cenim trud, ampak me nisi poslušala."
+  },
+  "toothpaste": {
+    "title": "🪥 Stiskanje zobne paste",
+    "aName": "Iris",
+    "a": "Tubo stiskaš na sredini in jo pustiš ploščato in zvito. Vem, da je malenkost, ampak to najdem vsako jutro.",
+    "bName": "Klemen",
+    "b": "Na koncu vse pride ven na isti način. Ne razumem, zakaj bi bilo pravo mesto za stiskanje."
+  },
+  "blanket": {
+    "title": "🛌 Tat odeje",
+    "aName": "Dana",
+    "a": "Vsako noč se zaviješ v celo odejo in jaz se zbudim zmrznjena. Kot da bi spala ob burritu.",
+    "bName": "Miran",
+    "b": "Tudi meni je mrzlo in tega ne počnem namenoma. Raje kupiva še eno odejo, namesto da krivdo vališ name."
+  },
+  "lateDinner": {
+    "title": "🍝 Večerja ob devetih",
+    "aName": "Kamila",
+    "a": "Rekel si, da boš doma do šestih, v vrata pa si stopil ob devetih. Testenine, ki sem jih skuhala, so mrzle, jaz pa sem sestradana.",
+    "bName": "Robert",
+    "b": "Klic se je zavlekel in ga nisem mogel kar prekiniti. Sporočil bi ti, pa se mi je telefon izpraznil."
+  },
+  "dateBill": {
+    "title": "💳 Kdo plača na zmenkih",
+    "aName": "Jasna",
+    "a": "Že ducat krat sva šla ven in ti nikoli ne seževa po računu. Rada bi, da bi se menjavala.",
+    "bName": "Vid",
+    "b": "Trenutno zaslužim več kot ti in z veseljem plačam. Nisem vedel, da te to moti, samo ne maram se prerekati zaradi računa."
+  },
+  "quietHours": {
+    "title": "🔇 Nočni mir po desetih",
+    "aName": "Olivija",
+    "a": "Imam zgodnjo izmeno, tvoj video klic pa slišim skozi steno ob enajstih. Prosim, utišaj se.",
+    "bName": "Rajko",
+    "b": "Moja ekipa je v drugem časovnem pasu, zato gre samo pozno. Bom uporabljal slušalke, ti pa bi lahko uporabljala ušesne čepke."
+  },
+  "fridgeShelf": {
+    "title": "🧊 Čigava je ta polica",
+    "aName": "Primož",
+    "a": "Svojo polico v hladilniku sem označil, ti pa na njo še vedno daješ ostanke. Na svoji imaš dovolj prostora.",
+    "bName": "Mina",
+    "b": "Moja polica je bila polna, tvoja posoda pa napol prazna. Samo za eno noč je, nisem ti nič vzela."
+  },
+  "overnightGuest": {
+    "title": "🚪 Gost, ki ostane cel teden",
+    "aName": "Ela",
+    "a": "Tvoj prijatelj že šest dni spi v dnevni sobi in me nihče ni vprašal. Rada bi nazaj svoje stanovanje.",
+    "bName": "Teo",
+    "b": "Ostal je brez stanovanja in nima kam. Rekel sem ti, da bo ostal nekaj noči, zdaj pa plačuje del hrane."
+  },
+  "sharedShampoo": {
+    "title": "🧴 Uporaba mojega šampona",
+    "aName": "Julija",
+    "a": "Moj šampon je drag in v ponedeljek je bil skoraj poln. Do petka ga je skoraj zmanjkalo, tu pa se razen mene tušira samo še ti.",
+    "bName": "Andraž",
+    "b": "Porabil sem ga samo malo, dvakrat. Če ti je tako pomemben, ga nesi v svojo sobo, mislil sem, da so stvari v kopalnici skupne."
+  },
+  "dirtyPan": {
+    "title": "🍳 Ponev, ki se namaka",
+    "aName": "Bojan",
+    "a": "Ta ponev je v umivalniku že od torka in začenja smrdeti. Kdor kuha, naj jo tudi pomije.",
+    "bName": "Nora",
+    "b": "Pomila jo bom, ko se bo še malo namakala. Ti si tu pustil krožnike dva dni in nisem nič rekla."
+  },
+  "dryerLaundry": {
+    "title": "🧺 Oblačila v sušilnem stroju",
+    "aName": "Maša",
+    "a": "Prišla sem dol in moja čista oblačila našla v kupu na mizi, ker si potreboval sušilnik. Bila so še vlažna.",
+    "bName": "Ivan",
+    "b": "Program je bil končan že uro nazaj, jaz pa sem imel pranje na čakanju. Prosim, samo vzemi svoje stvari ven, ko zapiska."
+  },
+  "loudMusic": {
+    "title": "🎧 Glasba skozi steno",
+    "aName": "Filip",
+    "a": "V soboto je tri popoldne in sem v svoji sobi. Ne mislim, da bi moral imeti slušalke v svojem domu.",
+    "bName": "Tesa",
+    "b": "Bas mi trese mizo, ko se poskušam učiti. Nihče ne zahteva, da nehaš, samo malo stišaj."
+  },
+  "longShower": {
+    "title": "🚿 Zmanjkalo tople vode",
+    "aName": "Amir",
+    "a": "Tvoji tuši trajajo štirideset minut in ko sem jaz na vrsti, tople vode vedno zmanjka. Po deset minut vsak bi bilo pošteno.",
+    "bName": "Beti",
+    "b": "Ne merim časa in to je edino mesto, kjer se lahko sprostim. Lahko bi se menjavala, kdo gre prvi."
+  },
+  "lightsOn": {
+    "title": "💡 Vse luči prižgane",
+    "aName": "Greta",
+    "a": "Pridem mimo in v stanovanju gori vsaka luč, tudi v sobah, kjer nikogar ni. Račune delimo, torej je to tudi moj denar.",
+    "bName": "Sandi",
+    "b": "Rad imam svetlo in ves večer hodim iz sobe v sobo. Prižiganje in ugašanje vso noč je prav tako moteče."
+  },
+  "parcels": {
+    "title": "📦 Paketi se kopičijo v veži",
+    "aName": "Nadja",
+    "a": "V veži imaš zloženih šest škatel in vsak dan se spotikam ob njih. Prosim, nesi jih v svojo sobo.",
+    "bName": "Oskar",
+    "b": "Čakam, da jih odnesem nazaj na pošto, pa sem bil zaseden. Tam so šele štiri dni."
+  },
+  "houseplant": {
+    "title": "🪴 Kdo zaliva rastlino",
+    "aName": "Vesna",
+    "a": "Rastlino sem kupila za dnevno sobo in jo vsak teden zalivam. Zdaj je videti kot palica, ker si jo prestavil v temen kot.",
+    "bName": "Pavel",
+    "b": "Zastirala je televizor in mislil sem, da je kot v redu. Nisem vedel, da so rastline tako občutljive."
+  },
+  "lateArrival": {
+    "title": "⏰ Spet štirideset minut zamude",
+    "aName": "Daniel",
+    "a": "Dogovorila sva se za sedmo, jaz pa sem do osmih manj dvajset sedel sam v restavraciji. To je že tretjič.",
+    "bName": "Mija",
+    "b": "Avtobus je zamudil in sem ti pisala. Lahko bi naročil pijačo, namesto da si jezen."
+  },
+  "cancelledPlans": {
+    "title": "🙅 Odpoved eno uro prej",
+    "aName": "Ruta",
+    "a": "Prilagodila sem cel dan, da bi te videla, ti pa si eno uro prej odpovedal z enim samim sporočilom. Ni prvič.",
+    "bName": "Karlo",
+    "b": "Bil sem izčrpan in bi bil grozna družba. Zdelo se mi je bolj prijazno, da ti to povem, kot da se vlečem tja."
+  },
+  "borrowedBook": {
+    "title": "📚 Knjiga, ki se ni vrnila",
+    "aName": "Ines",
+    "a": "To knjigo sem ti posodila lani spomladi in minilo je že leto. Bila je podpisana, jaz pa sem te že dvakrat vprašala.",
+    "bName": "Adam",
+    "b": "Imam jo nekje, obljubim, verjetno v škatli od selitve. Bom našel, ni treba, da me ves čas spominjaš."
+  },
+  "mutedChat": {
+    "title": "🔕 Utišan skupinski klepet",
+    "aName": "Hana",
+    "a": "Utišal si skupinski klepet in zamudil dve spremembi dogovora. Vsi smo morali čakati nate na napačnem kraju.",
+    "bName": "Vito",
+    "b": "Pošlje dvesto sporočil na dan, večinoma memov. Prebral bi tista pomembna, če ne bi trajalo cele ure."
+  },
+  "birthdayDinner": {
+    "title": "🎂 Plačilo rojstnodnevne večerje",
+    "aName": "Kenan",
+    "a": "Moja rojstnodnevna večerja je in račun je zaradi dragega vina znesel 90 evrov na osebo. Mislil bi, da slavljenec ne plača.",
+    "bName": "Saša",
+    "b": "Vedno vse razdelimo enakomerno med vso družbo in to vsi vedo. Poleg tega si ti izbral lokal."
+  },
+  "plusOne": {
+    "title": "💍 Spremljevalec na poroki",
+    "aName": "Bela",
+    "a": "Na vabilu je samo moje ime, moj partner pa bi bil po dveh letih sam doma. Vseeno ga bom pripeljala.",
+    "bName": "Kaja",
+    "b": "Prostor ima strogo omejitev in vsak sedež nas stane veliko. Žal ne morem narediti izjeme za eno osebo."
+  },
+  "chargerBorrow": {
+    "title": "🔌 Polnilec, ki si ga izposodila",
+    "aName": "Franci",
+    "a": "To je že tretji moj polnilec, ki je pri tebi izginil. Rad bi jih nazaj, ne še enega opravičila.",
+    "bName": "Lara",
+    "b": "Vsi so videti enaki, zato iskreno pozabim, kateri je čigav. V petek prinesem cel kup."
+  },
+  "auxCord": {
+    "title": "🎵 Kdo ureja glasbo v avtu",
+    "aName": "Tarik",
+    "a": "Vozim jaz, zato izbiram glasbo. Pot je dolga in jaz moram ostati buden.",
+    "bName": "Ema",
+    "b": "Danes si trikrat predvajal isti album. Tudi sopotnik ima pravico do besede, tako je na vsakem izletu."
+  },
+  "karaoke": {
+    "title": "🎤 Pesem, ki se ni končala",
+    "aName": "Gina",
+    "a": "Zapel si devet pesmi, mi drugi pa vsak po eno. Mikrofon naj bi krožil po sobi.",
+    "bName": "Maks",
+    "b": "Nihče drug se ni vpisal na seznam, zato sem zapolnil vrzeli. Iskreno, mislil sem, da vsem ugaja."
+  },
+  "uninvited": {
+    "title": "🙈 Izpuščena z vabil",
+    "aName": "Selma",
+    "a": "Videla sem fotke z vaše zabave in nisem bila povabljena, čeprav sem bila na vseh prejšnjih. Res me je prizadelo.",
+    "bName": "Tilen",
+    "b": "Bilo je nekaj majhnega za sodelavce, samo deset ljudi. Nima nobene zveze s tabo, nisem mislil, da bi sploh želela priti."
+  },
+  "holidayHost": {
+    "title": "🍗 Kdo gosti praznično kosilo",
+    "aName": "Marta",
+    "a": "Družinsko kosilo gostimo že štiri leta zapored. Nekdo drug je na vrsti in rada bi praznik, na katerem ne kuham.",
+    "bName": "Peter",
+    "b": "Mama ne zmore stopnic in pri nas je največja miza. Nihče drug se ni ponudil, zato sem mislil, da bomo spet mi."
+  },
+  "dailyCalls": {
+    "title": "📞 Klic vsak dan",
+    "aName": "Lea",
+    "a": "Mama kliče vsak dan okoli šestih in pričakuje polurni klepet. Imam jo rada, ampak včasih mi preprosto ni do tega.",
+    "bName": "Jošt",
+    "b": "Živi sama in ta klic je najlepši del njenega dne. Rečeš ji lahko, da ji pišeš, ko imaš veliko dela."
+  },
+  "bedtimeKids": {
+    "title": "🌙 Ura za spanje med tednom",
+    "aName": "Ingrid",
+    "a": "Najin sin ima osem let in bi moral ob osmih spati. Ti si mu pustil, da je gledal nogomet, zdaj pa je v šoli čisto uničen.",
+    "bName": "Aleš",
+    "b": "Bila je ena tekma in bil je tako navdušen. Kakšna pozna ura zdaj in zdaj mu ne bo škodila, zanj je to nekaj posebnega."
+  },
+  "borrowedSweater": {
+    "title": "👚 Sestra, ki mi prebira omaro",
+    "aName": "Alenka",
+    "a": "Vzela si mi zeleni pulover brez vprašanja in ga oblekla na zabavo. Vrnila si ga umazanega, jaz pa ga še nikoli nisem nosila.",
+    "bName": "Pia",
+    "b": "Vse življenje sem si izposojala tvoje stvari in te ni motilo. Dala ga bom v čiščenje, ampak delaš veliko afero."
+  },
+  "familyRecipe": {
+    "title": "🥘 Babičin recept",
+    "aName": "Neža",
+    "a": "Babičina juha je vedno imela žlico paradižnikove paste in to je zapisano z njeno roko. Ti si jo izpustil in rekel, da je isti recept.",
+    "bName": "Marko",
+    "b": "Zdi se mi, da je brez nje lažja, in tako se je spominjam. Še vedno je njen recept, samo malo izboljšan."
+  },
+  "dadRide": {
+    "title": "🚙 Vožnja očeta na letališče",
+    "aName": "Sašo",
+    "a": "Očeta sem peljal zadnjič in že pred tem. Lahko tokrat ti odpelješ zgodnji let, namesto da naročiš taksi?",
+    "bName": "Lana",
+    "b": "Dve uri vožnje sta tja in nazaj, jaz pa moram biti ob šestih v službi. Taksi bom plačala, samo časa nimam."
+  },
+  "familyChat": {
+    "title": "👨‍👩‍👧 Verižna sporočila v družinski skupini",
+    "aName": "Rina",
+    "a": "Stric vsem v družinsko skupino pošilja verižna sporočila in videe. Med njimi ne najdem ničesar resničnega.",
+    "bName": "Teodor",
+    "b": "Samo poskuša biti del družbe in deliti smeh. Morda mu lahko rečeš besedo, utišati pa ga se mi zdi neprijazno."
+  },
+  "tvRemote": {
+    "title": "📺 Skrivanje daljinca",
+    "aName": "Nik",
+    "a": "Kadarkoli sedem pred tekmo, daljinca ni in teče risanka. To je že drugič ta teden.",
+    "bName": "Mateja",
+    "b": "To je moja najljubša ura televizije, tvoja tekma pa traja vse popoldne. Lahko se menjava, ne moreš pa imeti cel popoldan zase."
+  },
+  "seatingChart": {
+    "title": "🍽️ Kdo sedi na koncu mize",
+    "aName": "Gašper",
+    "a": "Na tistem koncu sedim pri vsaki družinski večerji že od otroštva. Zdaj ga je zasedel tvoj fant in nihče ni nič rekel.",
+    "bName": "Tara",
+    "b": "Prvi je sedel in je gost. To je samo stol, naslednjič se lahko zamenjava."
+  },
+  "teenPhone": {
+    "title": "🧒 Telefon pri večerji",
+    "aName": "Darja",
+    "a": "Večerja je edini čas, ko sedimo skupaj kot družina. Petnajst minut brez telefona ni veliko, kar prosim.",
+    "bName": "Eli",
+    "b": "Samo pogledam, ali je prijatelj odgovoril. Tudi ti si na svojem pri mizi, ko ti piše služba."
+  },
+  "meetingEmail": {
+    "title": "📧 Sestanek, ki bi bil lahko e-pošta",
+    "aName": "Paula",
+    "a": "Eno uro smo bili na klicu zaradi nečesa, kar bi stalo v treh vrsticah. To je ura, ki bi jo lahko porabila za dokončanje poročila.",
+    "bName": "Gregor",
+    "b": "Vsi so zasedeni, ampak klic ljudem omogoča, da takoj postavijo vprašanja. E-pošta bi sprožila pet ločenih niti."
+  },
+  "microwaveFish": {
+    "title": "🐟 Riba v pisarniški mikrovalovki",
+    "aName": "Vanda",
+    "a": "V skupni mikrovalovki si pogreval lososa in vse nadstropje smrdi po njem do treh. Prosim, prinesi kaj drugega.",
+    "bName": "Dimitrij",
+    "b": "To je moje edino pravo kosilo in nimam veliko denarja za hrano za s seboj. Drugi pogrevajo curry in nihče ne reče besede."
+  },
+  "stolenLunch": {
+    "title": "🥪 Nekdo mi je pojedel malico",
+    "aName": "Boris",
+    "a": "Na vrečki je bilo moje ime, sendvič pa je do poldneva izginil. Verjetno si videla, kdo ga je vzel.",
+    "bName": "Fani",
+    "b": "Nisem videla ničesar in nočem nikogar obtoževati. Mogoče je listek na hladilniku prijaznejši prvi korak."
+  },
+  "replyAll": {
+    "title": "📨 Odgovor vsem v podjetju",
+    "aName": "Evgen",
+    "a": "Vsem, vseh dvesto ljudem, si odgovorila z „hvala!“. Zdaj imam v poštnem predalu še štirideset takih.",
+    "bName": "Jana",
+    "b": "Hotela sem biti vljudna in gumb je bil kar tam. To je majhna napaka in nikomur zares ne škodi."
+  },
+  "officeCold": {
+    "title": "❄️ Ledena pisarna",
+    "aName": "Rebeka",
+    "a": "Klimatska naprava je nastavljena tako nizko, da sem julija za mizo v plašču. Nekaj stopinj topleje nikomur ne bi škodilo.",
+    "bName": "Anil",
+    "b": "Meni je vroče in sonce me obseva ves popoldan. Če ti je hladno, je odeja lažja rešitev, kot da se mi drugi potimo."
+  },
+  "openOfficeHeadphones": {
+    "title": "🎧 Slušalke v odprti pisarni",
+    "aName": "Luka",
+    "a": "Nosim slušalke, da se zberem, ljudje pa me vsakih nekaj minut s kratkim vprašanjem potrkajo po rami. To mi prekine tok misli.",
+    "bName": "Karmen",
+    "b": "Težko je vedeti, ali si res zaseden. Sporočilo bi bilo prepočasno, ko je odgovor stvar desetih sekund."
+  },
+  "emptyCoffee": {
+    "title": "☕ Zadnja skodelica kave",
+    "aName": "Tereza",
+    "a": "Natočil si zadnjo kavo iz vrča in prazen pustil na grelniku. Nov vrč je narejen v dveh minutah.",
+    "bName": "Lucija",
+    "b": "Zamujala sem na klic in iskreno nisem opazila, da je zadnja skodelica. Naslednjo bom skuhala jaz, obljubim."
+  },
+  "ideaCredit": {
+    "title": "💡 Čigava je bila ideja",
+    "aName": "Sunil",
+    "a": "Nov urnik sem predlagal marca, ti pa si ga šefu predstavila kot svojega. Hvala bi bila dovolj.",
+    "bName": "Katja",
+    "b": "O tem sva se pogovarjala skupaj in z ekipo sem ga razvila. Mislila sem, da se vsi strinjamo, da je skupno delo."
+  },
+  "fridayDeadline": {
+    "title": "📅 Rok do petka",
+    "aName": "Monika",
+    "a": "Rekel si, da mi boš svoj del poslal do petka, zdaj pa je ponedeljek. Vsi drugi so čakali na to, jaz pa sem morala vprašati dvakrat.",
+    "bName": "Ahmed",
+    "b": "Zgrmel je na mene večji projekt in sem moral izbirati. Moral bi ti povedati prej, a dobiš ga še danes."
+  },
+  "deskLunch": {
+    "title": "🥗 Kosilo za mizo",
+    "aName": "Hinko",
+    "a": "V tej ekipi nihče več ne vzame pravega odmora za kosilo in že se zdi, da se to pričakuje. Rad bi, da opoldne vsi odstopimo od računalnika.",
+    "bName": "Yuki",
+    "b": "Jem med delom in zato grem prej domov. Odmori so v redu, ampak raje se odločam sama."
+  },
+  "calendarInvite": {
+    "title": "🗓️ Sestanki brez dnevnega reda",
+    "aName": "Silvija",
+    "a": "V tvojem vabilu je pisalo „pogovor“ brez dnevnega reda in vzelo mi je petinštirideset minut jutra. Prosim, najprej mi povej, za kaj gre.",
+    "bName": "Bruno",
+    "b": "Mišljeno je bilo kot klepet in na koncu sva rešila dva problema. Uraden dnevni red bi pokončal pogovor."
+  },
+  "rentSplit": {
+    "title": "🏠 Delitev najemnine po velikosti sobe",
+    "aName": "Ana",
+    "a": "Moja soba je najmanjša in nima omare, plačujem pa enako kot ti. Mislim, da bi morala biti največja soba dražja.",
+    "bName": "Žan",
+    "b": "Ob podpisu pogodbe smo se zmenili za enake tretjine. Preračunavanje vsakič, ko ima kdo od nas občutek, je zmedeno."
+  },
+  "smallLoan": {
+    "title": "💵 Deset evrov od kosila",
+    "aName": "Simon",
+    "a": "Prejšnji mesec sem ti plačal kosilo in še prejšnji teden. Skupaj je trideset evrov, jaz pa o tem nisem slišal besede.",
+    "bName": "Dora",
+    "b": "Mislila sem, da sva kvit po kavi. Ne motim se plačati, samo povej mi znesek in ga pošljem še danes."
+  },
+  "tipping": {
+    "title": "🧾 Koliko dati napitnine",
+    "aName": "Helena",
+    "a": "Postrežba je bila počasna in hrana mrzla. Pustim deset odstotkov, ne dvajset.",
+    "bName": "Oliver",
+    "b": "Lokal je bil poln in natakar je bil očitno preobremenjen. Njim napitnina veliko pomeni, nam pa ni veliko več."
+  },
+  "streamingShare": {
+    "title": "📺 Deljenje računa za pretočne vsebine",
+    "aName": "Maria",
+    "a": "Plačujem naročnino za pretakanje, zdaj pa jo uporablja še polovica tvojih prijateljev. Rada bi, da prispevajo ali si omislijo svojo.",
+    "bName": "Andrej",
+    "b": "Stane enako, ne glede na to, ali jo uporabljajo dva ali pet ljudi. Prositi vsakega za nekaj evrov bi bilo samo neprijetno."
+  },
+  "taxiSplit": {
+    "title": "🚕 Delitev taksija domov",
+    "aName": "Lidija",
+    "a": "Tvoja postaja je bila prva, moja pa petnajst minut dlje, vseeno pa sva vozovnino razdelila na pol. Mislim, da to ni čisto pošteno.",
+    "bName": "Kristjan",
+    "b": "Delila sva isti avto in šla skupaj. Računati po kilometrih za dvajset evrov je malo preveč."
+  },
+  "groupGift": {
+    "title": "🎀 Skupno darilo",
+    "aName": "Ivana",
+    "a": "Vsi prispevamo po dvajset evrov za darilo za učiteljico, jaz pa sem študentka in to zame ni malo. Lahko dam deset?",
+    "bName": "Valter",
+    "b": "Darilo je že naročeno po tej ceni in manjši delež pomeni, da ga bo nekdo drug moral pokriti. Razumem te, ampak je nerodno."
+  },
+  "groceryList": {
+    "title": "🛒 Delitev stroškov nakupa",
+    "aName": "Penelopa",
+    "a": "Kupuješ prigrizke in fin sir ter ga dodaješ k skupnemu računu. Jaz jem samo osnovne stvari, zato ne bi smela plačati polovice.",
+    "bName": "Ravi",
+    "b": "Sir lahko poješ kadarkoli. Račun je bil od začetka skupen in jaz ne vodim preglednice."
+  },
+  "bigPurchase": {
+    "title": "🛍️ Velik nakup brez besede",
+    "aName": "Stela",
+    "a": "Kupil si nov monitor za igranje za 400 evrov, in to ravno v tednu, ko sva varčevala za izlet. Lahko bi me vprašal.",
+    "bName": "Nejc",
+    "b": "Plačal sem ga iz svojega denarja za zabavo in nanj čakam že leto dni. Nisem mislil, da potrebujem dovoljenje."
+  },
+  "subscriptions": {
+    "title": "💳 Odpoved pozabljenih naročnin",
+    "aName": "Jaka",
+    "a": "Plačujeva štiri aplikacije, ki jih nobeden ne odpre. Odpovejva jih in denar damo za počitnice.",
+    "bName": "Ola",
+    "b": "Prepričana sem, da bom vsaj dve kmalu uporabila. Lahko jih obdrživa do konca meseca, preden se odločiva?"
+  },
+  "restaurantChoice": {
+    "title": "🍜 Kje jesti nocoj",
+    "aName": "Hiro",
+    "a": "Ta teden sem trikrat rekel ramen in vsakič si rekla v redu, potem pa izbrala nekaj drugega. Rad bi šel tja.",
+    "bName": "Beatrika",
+    "b": "Ko sva prišla, mi ni bilo do rezancev. Naslednjič reci lokal in se zavežem, še preden greva od doma."
+  },
+  "cerealMilk": {
+    "title": "🥣 Mleko pred kosmiči",
+    "aName": "Patrik",
+    "a": "Najprej natočiš mleko in šele nato daš kosmiče. To je narobe in se razmoči, še preden poješ.",
+    "bName": "Jerneja",
+    "b": "Tako mi je všeč in pojem jih takoj. Ni treba gledati, pusti me, da uživam v zajtrku."
+  },
+  "ketchup": {
+    "title": "🍳 Kečap na jajcih",
+    "aName": "Luiza",
+    "a": "Na popolno pripravljeno omleto daš kečap. To je zapravljanje dobrih jajc in ne morem gledati.",
+    "bName": "Dušan",
+    "b": "Tako jih jem že od otroštva in mi je okus všeč. Moj krožnik je, ti svojega jej, kakor hočeš."
+  },
+  "pizzaCrust": {
+    "title": "🍕 Pizza brez roba",
+    "aName": "Timotej",
+    "a": "Poješ sredino in rob pustiš na krožniku vsakič. To je najboljši del in gre v smeti.",
+    "bName": "Gaja",
+    "b": "Rob je trd in takrat sem že sita. Če ga hočeš, kar vzemi, ne bom se silila."
+  },
+  "coffeeTea": {
+    "title": "☕ Kava ali čaj zjutraj",
+    "aName": "Aljaž",
+    "a": "Rekla si, da je čaj samo vroča listna voda, potem pa vprašala za požirek moje kave. Želim si opravičila.",
+    "bName": "Heidi",
+    "b": "Bolj mi je všeč vonj kave kot njen okus. Čaj pijem, ker pomirja, ni me treba prepričevati."
+  },
+  "spiceLevel": {
+    "title": "🌶️ Kdaj je preveč pekoče",
+    "aName": "Diego",
+    "a": "Naročila si „blago“ in potem polila pol steklenice čilijevega olja na svoj krožnik. Zdaj kašlja cela miza.",
+    "bName": "Anja",
+    "b": "Blago zame ni blago zate in nisem vedela, da si miza deli. Naslednjič naročim posebno skledo."
+  },
+  "leftovers": {
+    "title": "🥡 Metanje ostankov v smeti",
+    "aName": "Mona",
+    "a": "Karij sem prihranila za kosilo, ti pa si ga zavrgel, ker je bil dva dni v hladilniku. Bil je čisto v redu.",
+    "bName": "Anton",
+    "b": "Zdelo se mi je, da je tam že predolgo, in nisem hotel, da bi kdo zbolel. Nadomestim ga, oprosti."
+  },
+  "cilantro": {
+    "title": "🌿 Koriander v vsem",
+    "aName": "Vera",
+    "a": "Spet si dal koriander v jed, čeprav veš, da mi diši po milu. Ne morem ga vsega izbrati ven.",
+    "bName": "Gal",
+    "b": "Recept ga zahteva in jed potrebuje svežino. Naslednjič ga dam v skledico ob strani."
+  },
+  "tooSalty": {
+    "title": "🧂 Preveč soli v juhi",
+    "aName": "Frida",
+    "a": "Juho si posolil, še preden si jo poskusil, zdaj pa je preslana za jesti. Rada bi začela znova s svežim loncem.",
+    "bName": "Jakob",
+    "b": "Meni je ravno prav in vedno solim na koncu. Vmešaj malo vode, to se zlahka popravi."
+  },
+  "doubleDip": {
+    "title": "🥨 Dvojno pomakanje na zabavi",
+    "aName": "Kora",
+    "a": "Videla sem, da si ugriznil čips in ga spet pomočil v skupno skledo. Zdaj nočem ničesar od tam.",
+    "bName": "Bojan",
+    "b": "Bil je en pomak in nihče drug ni videl. Delaš veliko stvar iz tega, vzemi si čisto žlico."
+  },
+  "pastaShape": {
+    "title": "🍝 Testenine, ki niso špageti",
+    "aName": "Tjaša",
+    "a": "Ta omaka je namenjena dolgim rezancem, ti pa si jo naredil s kratkimi. To preprosto ni ista jed.",
+    "bName": "Henrik",
+    "b": "V omari so bili samo peresniki in okus je v redu. Ali je res tako pomembno, kakšne oblike so?"
+  },
+  "hotdog": {
+    "title": "🌭 Je hrenovka v žemlji sendvič",
+    "aName": "Tadej",
+    "a": "Hrenovka v žemlji je nadev v narezanem kruhu, torej je sendvič. Konec zgodbe.",
+    "bName": "Samo",
+    "b": "To je nekaj svojega. Nihče ne naroči sendviča in pričakuje hrenovke, nobeden jedilnik je ne uvršča med sendviče."
+  },
+  "trashDay": {
+    "title": "🗑️ Iznašanje smeti",
+    "aName": "Tinkara",
+    "a": "Koš prekipeva od srede in zadnjih štirikrat sem ga odnesla jaz. Zdaj si ti na vrsti.",
+    "bName": "Ambrož",
+    "b": "Jaz odnašam embalažo in bio odpadke, to tudi šteje. Naredimo pravi razpored, da nehava šteti."
+  },
+  "foldTowels": {
+    "title": "🧺 Pravilni način zlaganja brisač",
+    "aName": "Nace",
+    "a": "Pravkar sem vse brisače prelagal na tretjine, ker jih ti zlagaš na pol in se ne prilegajo na polico.",
+    "bName": "Karla",
+    "b": "To so brisače in jih čez minuto porabimo. Ne bom se učila sistema zlaganja zanje."
+  },
+  "vacuumSchedule": {
+    "title": "🧹 Kako pogosto sesati",
+    "aName": "Vida",
+    "a": "Sesam dvakrat na teden in nikoli te nisem videla, da bi se ga dotaknil. Malo las na tleh mi res gre na živce.",
+    "bName": "Leon",
+    "b": "Zdi se mi v redu enkrat na teden in ti delaš več, kot je treba. Z veseljem sesam ob nedeljah, ostalo pa prepusti meni."
+  },
+  "whoCooks": {
+    "title": "🍲 Kuhanje vsak večer",
+    "aName": "Mojca",
+    "a": "Ta mesec sem kuhala večerjo petkrat od sedmih večerov. Rada bi si kuhanje bolj enakomerno razdelila.",
+    "bName": "Pavle",
+    "b": "Nisem tako dober v tem in tebi je bolj všeč. Ampak prav imaš, izberiva dva večera in se bom izboljšal."
+  },
+  "makeBed": {
+    "title": "🛏️ Postiljanje postelje",
+    "aName": "Gabrijela",
+    "a": "Vstaneš, odeje pustiš v kupu in rečeš, da nima smisla, ker jo bova ponoči spet zmečkala. Soba zaradi tega izgleda neurejeno.",
+    "bName": "Uroš",
+    "b": "Jaz prvi odhajam v službo in to vzame dve minuti, ki jih nimam. Če ti je tako pomembno, jo postelji, ko vstaneš."
+  },
+  "toiletSeat": {
+    "title": "🚽 Deska na straniščni školjki",
+    "aName": "Anika",
+    "a": "Trikrat sem v temi stopila v kopalnico in deska je bila gor. Spustiti jo ni težko.",
+    "bName": "Grega",
+    "b": "Če je gor, se je manj dotakniti in ob polnoči ne razmišljam o tem. Če te moti, se bom poskušal spomniti."
+  },
+  "toiletPaper": {
+    "title": "🧻 Papir čez ali pod",
+    "aName": "Dasa",
+    "a": "Rola se obesi tako, da papir pride čez vrh. Ti si jo obesil narobe in vsakič moram seči okoli.",
+    "bName": "Albin",
+    "b": "Na delovanje nima nobenega vpliva, zato izberi, kar ti je ljubše. Ne bom je obešal znova samo zaradi tvoje navade."
+  },
+  "laundryColours": {
+    "title": "👕 Barvno perilo v pralnem stroju",
+    "aName": "Vili",
+    "a": "Moja bela srajca je prišla iz pranja rožnata, ker si vrgla zraven rdečo brisačo. To je srajca, ki sem jo nosil v službo.",
+    "bName": "Liljana",
+    "b": "Mudilo se mi je in majhno pranje traja predolgo. Kupim ti novo, ampak bila je iskrena napaka."
+  },
+  "washCar": {
+    "title": "🚗 Čiščenje skupnega avta",
+    "aName": "Ismail",
+    "a": "Zadnji sedež je poln papirčkov in skodelice kave od prejšnjega tedna. Avto si delimo, torej si moramo deliti tudi čiščenje.",
+    "bName": "Dina",
+    "b": "Avto očistim, kadar je blizu tega, da je v neredu. Nisem mislila, da nekaj papirčkov šteje, ta vikend ga bom pospravila."
+  },
+  "beachOrCity": {
+    "title": "🏖️ Morje ali mestni oddih",
+    "aName": "Sven",
+    "a": "Želim si tedna ob morju, brez načrtov. Prejšnji izlet sva hodila po muzejih.",
+    "bName": "Rahela",
+    "b": "Po dveh dneh na ležalniku mi postane dolgčas. Rada bi videla kaj novega, tudi če si ogledava samo pol mesta."
+  },
+  "airportEarly": {
+    "title": "✈️ Kako zgodaj na letališče",
+    "aName": "Oksana",
+    "a": "Tri ure pred letom je veliko prezgodaj. Samo dolgo bova sedela pri izhodu s kavo.",
+    "bName": "Hamza",
+    "b": "Vrste so lahko dolge in jaz se bojim letenja. Raje čakam, kot da hitim, zamujen let pa bi stal veliko več."
+  },
+  "campingHotel": {
+    "title": "⛺ Šotor ali hotel",
+    "aName": "Brina",
+    "a": "Rezervirala sem nama kamp za vikend, ti pa zdaj praviš, da bi raje v hotel. O tem sva se dogovorila spomladi.",
+    "bName": "Cene",
+    "b": "Napoved kaže dež cel vikend in moker šotor ni sproščujoč. Z veseljem grem kampirat, ko bo vreme boljše."
+  },
+  "packingLight": {
+    "title": "🧳 En kovček na osebo",
+    "aName": "Neli",
+    "a": "Dogovorila sva se za samo ročno prtljago in tvoja tehta tono. Notri imaš tri pare čevljev.",
+    "bName": "Stefan",
+    "b": "Rad imam izbiro, ti pa si pospravila plašč, ki ga ne boš potrebovala. Če plačava en oddan kovček, ga plačam jaz."
+  },
+  "mapOrGps": {
+    "title": "🗺️ Zaupanje v navigacijo",
+    "aName": "Boštjan",
+    "a": "Aplikacija je rekla levo, ti pa si zavila desno, ker misliš, da poznaš bližnjico. Izgubila sva dvajset minut.",
+    "bName": "Rozi",
+    "b": "To cesto sem prevozila že stokrat in aplikacija ne ve za dela na cesti. Prejšnjič sem imela prav."
+  },
+  "leaveTime": {
+    "title": "🕗 Ob kateri uri odidemo",
+    "aName": "Karolina",
+    "a": "Rekla sem, da odideva ob osmih, da ujameva gnečo, ti pa si ob pol devetih še vedno pod tušem. Vedno je isto.",
+    "bName": "Mark",
+    "b": "Zabava se začne ob desetih, zato je odhod ob osmih veliko prezgodaj. Ti računaš z najhujšo gnečo, potem pa se jaz mudim."
+  },
+  "sleepIn": {
+    "title": "🌅 Ura zbujanja ob koncu tedna",
+    "aName": "Elena",
+    "a": "Sobota je in ti si ob šestih že pokonci in ropotaš v kuhinji. Edino jutro, ko lahko spim dlje, in ga ni več.",
+    "bName": "Marjan",
+    "b": "Moje telo se zbudi zgodaj in trudil sem se biti tiho. Tudi ležanje in zrenje v strop ne pomaga."
+  },
+  "dinnerReservation": {
+    "title": "🕰️ Rezervacija mize za večerjo",
+    "aName": "Izak",
+    "a": "Mizo si rezervirala za pol šestih in je petek. Nihče ne je tako zgodaj, jaz pa sem imel že druge načrte.",
+    "bName": "Tilda",
+    "b": "To je bil edini preostali termin in bi ga izgubila. Vprašala sem te, ti pa si bil zaseden in nisi odgovoril."
+  },
+  "boardGameRules": {
+    "title": "🎲 Pravila, ki si jih nihče ne zapomni",
+    "aName": "Branko",
+    "a": "Ves večer igraš to igro narobe in zdaj zmagaš. Rad bi se vrnil in ponovil poteze.",
+    "bName": "Sinja",
+    "b": "Navodila sva prebrala skupaj na začetku in nihče ni ugovarjal. Pravil ne moreš spreminjati, ko izgubljaš."
+  },
+  "houseRules": {
+    "title": "💰 Hišna pravila pri Monopoliju",
+    "aName": "Aleks",
+    "a": "Denar od kazni dam na sredino, tako da ga dobi naslednji, ki pristane na Brezplačnem parkirišču. To je pravo pravilo.",
+    "bName": "Hedvika",
+    "b": "V navodilih tega ne piše in zaradi tega igra traja cel večer. Igrajva, kot je natisnjeno."
+  },
+  "fantasyTrade": {
+    "title": "🏈 Nepoštena menjava v fantazijski ligi",
+    "aName": "Dejan",
+    "a": "Zamenjal si mi poškodovanega igralca za mojega najboljšega tekača in rekel sem da, ne da bi preveril. Menjava je nepoštena, zato jo razveljavimo.",
+    "bName": "Franja",
+    "b": "Pisno si se strinjal in ob dogovoru je bila menjava poštena. Preverjanje je tvoje delo, ne moje."
+  },
+  "lineCall": {
+    "title": "🎾 Aut ali ne",
+    "aName": "Martin",
+    "a": "Ta žoga je bila jasno zunaj in ti si celo tekmo trdila, da je notri. Rad bi, da se točka ponovi.",
+    "bName": "Jolanda",
+    "b": "Bila sem bliže črti in videla sem, da se je dotaknila roba. Z drugega konca igrišča tega ne moreš soditi."
+  },
+  "controllerTurns": {
+    "title": "🎮 Kdo je na vrsti za igralno ploščo",
+    "aName": "Zoran",
+    "a": "Ploščo imaš že uro in vsakič, ko vprašam, rečeš „še en krog“. Tako ne deluje menjava.",
+    "bName": "Priska",
+    "b": "Bila sem sredi ravni in nisem mogla nehati. Takoj po tej ti jo dam, obljubim."
+  },
+  "teamCaptain": {
+    "title": "⚽ Izbiranje ekip",
+    "aName": "Bogdan",
+    "a": "Najprej si izbrala vse svoje prijatelje in mene spet pustila s slabšimi igralci. Rad bi, da so ekipe uravnotežene.",
+    "bName": "Alja",
+    "b": "Tako smo igrali leta in se nikoli nisi pritoževal. Če hočeš poštene ekipe, jih izžrebaj z vlečenjem imen."
+  },
+  "cardCheating": {
+    "title": "🃏 Skrita karta",
+    "aName": "Robi",
+    "a": "Videl sem, da si med zadnjo roko vzela karto s spodnjega dela kupa. Če tako zmagaš, ne igram več.",
+    "bName": "Mei",
+    "b": "Ena mi je padla in sem jo pobrala, to je vse. Ves večer si kisel, ker izgubljaš, zdaj pa me obtožuješ."
+  },
+  "trashTalk": {
+    "title": "🏀 Zbadanje na igrišču",
+    "aName": "Dominik",
+    "a": "Malo zbadanja med igro je del zabave. Po enem komentarju si utihnila in se vsa užalila, jaz pa sem se samo šalil.",
+    "bName": "Karina",
+    "b": "Eno je, ko se šališ o igri, drugo, ko gre zame. Samo rada bi, da ostajamo prijazni."
+  },
+  "gameSave": {
+    "title": "💾 Prepis shranjene igre",
+    "aName": "Kolja",
+    "a": "Na tisti shranjeni igri sem preživel trideset ur, ti pa si začela novo igro čez njo. Zdaj je izginila.",
+    "bName": "Lina",
+    "b": "Bilo je samo eno mesto in je bilo videti neuporabljeno. Vprašala bi, ampak nisi bil doma in sem hotela samo poskusiti."
+  },
+  "loserPays": {
+    "title": "🎳 Poraženec plača pico",
+    "aName": "Borut",
+    "a": "Rekla sva, da poraženec plača, ti pa si izgubila za dve kegli. Dogovor je dogovor, zato prosim vzemi denarnico.",
+    "bName": "Kristina",
+    "b": "Rekla sem za šalo in mislila sem, da veš. Naslednji krog plačam jaz, če ti je bolj všeč."
+  },
+  "pickleball": {
+    "title": "🏓 Kdo šteje točke",
+    "aName": "Gloria",
+    "a": "Štela sem osem proti šest, ti pa praviš, da je sedem proti sedem. Venomer pozabljava rezultat in to uniči igro.",
+    "bName": "Denis",
+    "b": "Štel sem vsak servis in sem prepričan. Rekimo, da ponovimo točko, in nadaljujva."
+  },
+  "dogCouch": {
+    "title": "🐕 Pes na kavču",
+    "aName": "Marija",
+    "a": "Dogovorili smo se, da psi ne smejo na kavč, jaz pa pridem domov in ga najdem raztegnjenega po njem. Blazine so polne dlak.",
+    "bName": "Igor",
+    "b": "Tako srečen je videti in je tam samo, ko gledamo televizijo. Prevleka je pralna in zaradi tega je del družine."
+  },
+  "walkingDuty": {
+    "title": "🦮 Kdo pelje psa na sprehod",
+    "aName": "Špela",
+    "a": "Od vikenda opravljam jutranje in večerne sprehode, jutri pa imam predstavitev. Nocoj si ti na vrsti.",
+    "bName": "Viktor",
+    "b": "Lije kot iz škafa in komaj sem sedel. V soboto bom šel na dolg sprehod, ali lahko nocoj izpustiva?"
+  },
+  "catNames": {
+    "title": "🐈 Ime za novo mačko",
+    "aName": "Pia",
+    "a": "Jaz sem jo našla in ime ji bo Piškot. Tvoje ime zanjo je Gospod Puhek, tega pa veterinarju ne bom rekla.",
+    "bName": "Matevž",
+    "b": "Vsakič me nasmeji in že reagira na to ime. Piškot je lepo, ampak vsaka mačka se tako imenuje."
+  },
+  "catKeyboard": {
+    "title": "🐱 Mačka na delovni mizi",
+    "aName": "Majda",
+    "a": "Hodi mi po tipkovnici med sestanki in ti jo spodbujaš z priboljški. Zdaj misli, da je moja miza njena postelja.",
+    "bName": "Urban",
+    "b": "Vsi na klicu jo imajo radi in išče samo družbo. Zapreš lahko vrata, če te moti."
+  },
+  "feedingTime": {
+    "title": "🥫 Dvakratno hranjenje mačke",
+    "aName": "Jure",
+    "a": "Mački sem dal večerjo ob šestih, ti pa si jo nahranila še ob sedmih. Postaja malo debela.",
+    "bName": "Alicija",
+    "b": "Mijavkala je name in sem mislila, da je nihče ni nahranil. Listek na hladilniku bi to preprečil."
+  },
+  "vetCosts": {
+    "title": "🐾 Delitev računa za veterinarja",
+    "aName": "Rene",
+    "a": "Račun pri veterinarju je bil 280 evrov in sem ga plačal vsega jaz, ker sem naročil. Psa sva posvojila skupaj, zato ga razdelimo.",
+    "bName": "Cvetka",
+    "b": "Plačala bi, če bi mi povedal pred terminom. Pošlji mi račun in ti nakažem polovico."
+  },
+  "offLeash": {
+    "title": "🌳 Pes brez povodca v parku",
+    "aName": "Barbara",
+    "a": "Tvoj pes je brez opozorila stekel k mojemu mladiču in ta je prestrašen. Na tabli piše, da je na tem območju obvezen povodec.",
+    "bName": "Mitja",
+    "b": "Prijazen je in je samo hotel pozdraviti. Držim ga blizu, vsi drugi tukaj pa svoje spuščajo."
+  },
+  "petInBed": {
+    "title": "🐶 Pes v postelji",
+    "aName": "Selena",
+    "a": "Zasede pol vzmetnice in zbudim se s taco v obrazu. Rada bi spet imela posteljo sama zase.",
+    "bName": "Karel",
+    "b": "Sam je tesnoben in ob nama bolje spi. Raje izgubim nekaj prostora kot da ga poslušam jokati vso noč."
+  },
+  "puppyName": {
+    "title": "🐕‍🦺 Izbira imena za mladička",
+    "aName": "Rado",
+    "a": "Že teden dni mu pravimo „mali“, ker se ne moreva dogovoriti. Glasujem za Raketa in popolnoma mu pristaja.",
+    "bName": "Margita",
+    "b": "Miren je in počasen, zato se mi Raket zdi smešno. Jaz imam rada Poperja in ustreza njegovim pegam."
+  },
+  "fishSitter": {
+    "title": "🐠 Kdo hrani ribice",
+    "aName": "Tea",
+    "a": "Pred mesecem sem te prosila, naj nahraniš ribice, ko nas ne bo. Praviš, da si pozabil to urediti, izlet pa je jutri.",
+    "bName": "Aljoša",
+    "b": "Mislil sem, da se je ponudila tvoja soseda, in nisem hotel podvajati. Nocoj lahko vprašam sestro, živi blizu."
+  },
+  "birdNoise": {
+    "title": "🦜 Papiga, ki ne neha",
+    "aName": "Silvo",
+    "a": "Tvoja papiga se vsako jutro ob šestih dere in ne morem več zaspati. Živim tik ob tebi.",
+    "bName": "Fatima",
+    "b": "Ptica je in pozdravlja sonce. Kletko bom premaknila v mirnejšo sobo, žal mi je."
+  },
+  "wifiPassword": {
+    "title": "🔐 Deljenje gesla za wifi",
+    "aName": "Robert",
+    "a": "Geslo za wifi si dala vsem, ki so prišli na obisk, zdaj pa je počasno, ko delam. Rad bi ga zamenjal.",
+    "bName": "Eva",
+    "b": "Nevljudno je zavrniti goste in nihče v resnici ne porabi veliko. Če te moti, naredi gostujoče omrežje."
+  },
+  "tvVolume": {
+    "title": "🔊 Vojna za glasnost",
+    "aName": "Sandi",
+    "a": "Vse gledaš na glasnosti 40 in v kuhinji slišim vsako besedo. Prosim, uporabi podnapise.",
+    "bName": "Pepca",
+    "b": "Slabo slišim in pri nižjih nastavitvah zamudim dialog. Zaradi podnapisov berem, ne gledam."
+  },
+  "phoneAtDinner": {
+    "title": "📵 Telefoni na mizi v restavraciji",
+    "aName": "Lidija",
+    "a": "Bila sva na prvem večernem izletu po mesecu dni in ti si vsakih pet minut pogledal telefon. Počutila sem se, kot da sedim sama.",
+    "bName": "Peter",
+    "b": "Čakal sem sporočilo, da je bratovo letalo pristalo. Moral bi ti povedati, ampak te nisem hotel skrbeti."
+  },
+  "notificationSound": {
+    "title": "🔔 Zvoki obvestil v knjižnici",
+    "aName": "Evelina",
+    "a": "Tvoj telefon zapiska vsakih trideset sekund, nekateri pa se učimo. Prosim, daj ga na tiho.",
+    "bName": "Mohamed",
+    "b": "Zdaj je na vibriranju in zelo mi je žal. Nisem opazil, da je zvok vklopljen, zato se ne bo ponovilo."
+  },
+  "darkMode": {
+    "title": "🌗 Temni ali svetli način",
+    "aName": "Jaspar",
+    "a": "Skupni tablici si ponoči nastavila svetli način in peče me v oči. Dogovorila sva se za temnega zvečer.",
+    "bName": "Odeta",
+    "b": "V temnem načinu ne morem ničesar brati, besedilo se zamegli. Pred spanjem ga preklopim nazaj, čez dan ga pa potrebujem."
+  },
+  "smartSpeaker": {
+    "title": "🗣️ Pametni zvočnik, ki posluša",
+    "aName": "Gideon",
+    "a": "V spalnico si dala pametni zvočnik in ni mi prijetno, da posluša. Rad bi, da ga prestaviš v kuhinjo.",
+    "bName": "Liva",
+    "b": "Uporabljam ga samo za budilko in vreme. Kuhinja je predaleč, lahko pa ponoči izklopim mikrofon."
+  },
+  "tabsOpen": {
+    "title": "🗂️ Dvesto odprtih zavihkov",
+    "aName": "Pavla",
+    "a": "Kadar si izposodim tvoj prenosnik, je odprtih sto zavihkov in je počasen. Če bi jih nekaj zaprl, bi bil hitrejši.",
+    "bName": "Artur",
+    "b": "Vsak od njih je nekaj, kar potrebujem, in točno vem, kje je kateri. To je organiziran kaos."
+  },
+  "photoStorage": {
+    "title": "🖼️ Deljen prostor v oblaku",
+    "aName": "Lorena",
+    "a": "Tvoji posnetki so napolnili najin skupni prostor in ne morem varnostno kopirati fotk. Prosim, kakšnega izbriši ali plačaj svoj prostor.",
+    "bName": "Kofi",
+    "b": "Vsi so družinski posnetki in ne želim jih izgubiti. Prestavim jih na disk, ampak daj mi nekaj dni."
+  },
+  "videoCallCamera": {
+    "title": "📹 Kamera pri videoklicih",
+    "aName": "Helga",
+    "a": "Naš tedenski družinski klic je edini čas, ko se vidimo, ti pa imaš kamero ugasnjeno. Kot da bi govorila z zidom.",
+    "bName": "Dilan",
+    "b": "Navadno kuham ali sem v pižami. Vseeno sem tam in poslušam, kamera se mi ne zdi bistvena."
+  },
+  "doorbellCamera": {
+    "title": "🚪 Kamera na zvoncu",
+    "aName": "Mara",
+    "a": "Namestil si kamero, ki gleda celo pot do vhoda, vidijo pa jo tudi sosedje. Rada bi, da jo obrneš drugam.",
+    "bName": "Vlado",
+    "b": "Lani pozimi so nama ukradli dva paketa, snema pa samo najin prag. Z veseljem jo malo nagnem navzdol."
+  },
+  "holdDoor": {
+    "title": "🚪 Držanje vrat",
+    "aName": "Vinko",
+    "a": "Držal sem vrata celi skupini in nihče ni rekel hvala. Za vljudnost je potrebna ena sekunda.",
+    "bName": "Jasmina",
+    "b": "Ljudje se mudi in ne opazijo vedno. Naredi to, ker je prijazno, ne zato, ker pričakuješ zahvalo."
+  },
+  "elevatorSpot": {
+    "title": "🛗 Stanje pred dvigalom",
+    "aName": "Gloria",
+    "a": "Čakala sem na dvigalo in si se vrinil prav ko se je odprlo. Jasno sem bila prva.",
+    "bName": "Matej",
+    "b": "Imel sem otroški voziček in dvigalo je bila moja edina pot. Nisem te videl, žal mi je, ampak res sem ga potreboval."
+  },
+  "cuttingQueue": {
+    "title": "🧍 Prehitevanje v vrsti",
+    "aName": "Uršula",
+    "a": "Šel si naravnost k pultu, medtem ko smo mi drugi čakali dvajset minut. Za mano je vrsta.",
+    "bName": "Idris",
+    "b": "Samo kratko vprašanje imam in nisem naročal. Nisem vedel, da je to vrsta zanj."
+  },
+  "busPhone": {
+    "title": "🚌 Glasen klic na avtobusu",
+    "aName": "Dorotea",
+    "a": "Moški za mano je že dvajset minut na zvočniku in vsi smo slišali ves njegov dan. Slušalke bi bile prijazne.",
+    "bName": "Samir",
+    "b": "Klic je nujen in zveza je slaba, zato potrebujem zvočnik. Bom na kratko, ni treba biti nesramen."
+  },
+  "shoesInside": {
+    "title": "👟 Čevlji v hiši",
+    "aName": "Zarja",
+    "a": "Prosim, sezuj se pri vratih, čevljev ne nosimo v hiši. Ravnokar sem pomila tla.",
+    "bName": "Ciril",
+    "b": "Suh dan je in podplati so čisti. Tega nisem vajen, ampak se bom sezul, če ti je tako pomembno."
+  },
+  "armrest": {
+    "title": "💪 Deljenje naslonjala za roke",
+    "aName": "Nolan",
+    "a": "Cel film imaš obe naslonjali in moja roka visi v zraku. Srednji sedež dobi obe, to je pravilo.",
+    "bName": "Jadranka",
+    "b": "Sedim ob oknu in komolci potrebujejo prostor. Nisem vedela, da je pravilo, se bom premaknila."
+  },
+  "lateRsvp": {
+    "title": "✉️ Odgovor na vabilo v zadnjem trenutku",
+    "aName": "Greta",
+    "a": "Prosila sem vse, naj odgovorijo do prvega, ti pa si šele dan prej rekel, da prideš. Hrano sem že naročila za petnajst.",
+    "bName": "Tobija",
+    "b": "Do takrat nisem vedel, kdaj imam izmeno. Ena oseba več za mizo ne more škoditi, poleg tega sem prinesel sladico."
+  },
+  "thankYouNote": {
+    "title": "💌 Zahvalna pisma",
+    "aName": "Edita",
+    "a": "Poroka tvoje sestrične je bila pred mesecem in o najinem darilu nismo slišali niti besede. Zahvala nič ne stane.",
+    "bName": "Branko",
+    "b": "Verjetno še vedno dohajajo sto daril. Sporočilo ni konec sveta, daj jim čas."
+  },
+  "regift": {
+    "title": "🎁 Podarjanje podarjenega",
+    "aName": "Sabina",
+    "a": "Izvedela sem, da je bil šal, ki sem ga dobila od tebe, darilo, ki ga je nekdo prej podaril tebi. Počutila sem se kot izbira za silo.",
+    "bName": "Leon",
+    "b": "Bil je lep in meni ni pristajal. Mislil sem, da bo tebi bolj, in bi ti ga podaril vseeno."
+  },
+  "partyDrink": {
+    "title": "🍾 Kaj prinesti na večerjo",
+    "aName": "Delfina",
+    "a": "Prišel si na večerjo s popolnoma praznimi rokami, jaz pa sem dva dni kuhala. Steklenica ali cvetje bi bila lepa.",
+    "bName": "Vojko",
+    "b": "Rekla si, naj prinesem samo sebe, in sem te vzel za besedo. Naslednjič prinesem kaj dobrega."
+  },
+  "escalator": {
+    "title": "⬆️ Stanje na tekočih stopnicah",
+    "aName": "Brigita",
+    "a": "Stal si na levi in oviral vse, ki so hoteli hoditi navzgor. Pravilo je: stoji desno, hodi levo.",
+    "bName": "Andrej",
+    "b": "Nosim težke vrečke in želim samo varno priti gor. Ni mi treba hiteti zaradi nikogaršnjega urnika."
+  },
+  "cinemaTalk": {
+    "title": "🎞️ Šepetanje med filmom",
+    "aName": "Klemen",
+    "a": "Ves film si prijateljici v šepetu razlagala vsako sceno. Plačal sem za ogled filma, ne za tekoči komentar.",
+    "bName": "Leila",
+    "b": "Serije še ne pozna in sem ji samo pomagala slediti zgodbi. Nehala bom, če te je res motilo."
+  },
+  "neighbourMusic": {
+    "title": "🔈 Sosed s poznim žurom",
+    "aName": "Ada",
+    "a": "Vaša zabava je bila ob eni zjutraj še vedno glasna, nekateri pa zjutraj delamo. Malo opozorila bi bilo vljudno.",
+    "bName": "Stane",
+    "b": "Obvestil sem hišni svet in to je ena noč v letu. Prosil bom ljudi, naj gredo noter, ampak vsi se zabavajo."
+  },
+  "socks": {
+    "title": "🧦 Nogavice po tleh",
+    "aName": "Lucija",
+    "a": "Par tvojih nogavic je ob postelji, še ena ob kavču in ena v veži. Pobiram jih vsak dan.",
+    "bName": "Benjamin",
+    "b": "So samo nogavice in jih bom spet nosil. Dal jih bom v košaro, ampak ni jih treba šteti."
+  },
+  "cafeSeat": {
+    "title": "☕ Rezerviranje mesta z računalnikom",
+    "aName": "Joana",
+    "a": "Tvoj prenosnik drži tisto mizo že eno uro, ti pa si šel drugam. Lokal je poln in ljudje stojijo.",
+    "bName": "Karim",
+    "b": "Samo ven sem stopil na klic in sem se takoj vračal. Torba na stolu je način, kako vsi rezervirajo mesto."
+  },
+  "groupProject": {
+    "title": "🎓 Skupinski projekt, ki ga nihče ni začel",
+    "aName": "Tesa",
+    "a": "Projekt je treba oddati čez en teden in sama sem napisala celoten oris. Rabim, da vsak do petka naredi svoj del.",
+    "bName": "Olaf",
+    "b": "Pred tem imam dva izpita in sem ti povedal, da bodo moji deli prišli pozneje. Lahko jih naredim čez vikend."
+  },
+  "puzzle": {
+    "title": "🧩 Dokončanje moje sestavljanke",
+    "aName": "Grega",
+    "a": "Teden dni sem delala na tisti sestavljanki, ti pa si vstavil zadnjih dvajset kosov, ko me ni bilo. Hotela sem jo dokončati sama.",
+    "bName": "Hubert",
+    "b": "Ležala je na mizi in sem se zanesel. Nisem vedel, da ti toliko pomeni, žal mi je."
+  },
+  "hedge": {
+    "title": "🌿 Sosedova živa meja",
+    "aName": "Barbara",
+    "a": "Tvoja živa meja je prerasla pot in moram stopiti na cesto, da pridem mimo. Tako je že od pomladi.",
+    "bName": "Jože",
+    "b": "Mislil sem jo obrezati, pa je bilo vreme grozno. V nedeljo jo bom, lahko bi samo potrkala."
+  }
+}

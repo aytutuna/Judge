@@ -1,0 +1,1052 @@
+{
+  "dishwasher": {
+    "title": "🍽️ Els bols a la cistella de dalt",
+    "aName": "Jordi",
+    "a": "Has tornat a posar els bols a la cistella de dalt del rentaplats. Allà dalt no surten mai nets; per això hi ha la de baix.",
+    "bName": "Núria",
+    "b": "Hi caben perfectament, i així la de baix queda lliure per a les olles. Fa anys que el carrego així i mai no ha sortit res brut."
+  },
+  "bill": {
+    "title": "🍷 Dividir el compte del restaurant",
+    "aName": "Clara",
+    "a": "Jo no he begut res, així que no em toca pagar una quarta part del vi. Dividir el menjar a parts iguals ja em va bé.",
+    "bName": "Marc",
+    "b": "Sempre ho dividim entre quatre i prou. Calcular cada vegada qui ha pres què és un maldecap, i tampoc no hi ha tanta diferència."
+  },
+  "thermostat": {
+    "title": "🌡️ La guerra del termòstat",
+    "aName": "Aina",
+    "a": "Aquí dins fa 19 graus i tinc fred fins i tot amb la dessuadora. Pujar la calefacció a 22 no és cap bogeria.",
+    "bName": "Pol",
+    "b": "A 22 graus fa massa calor per dormir. Tu pots abrigar-te més; jo ja no em puc treure res més."
+  },
+  "roadTrip": {
+    "title": "🚗 Qui condueix de tornada",
+    "aName": "Arnau",
+    "a": "Vaig conduir jo les sis hores de l'anada. El més just és que tu condueixis a la tornada.",
+    "bName": "Júlia",
+    "b": "Abans de sortir ja et vaig dir que odio conduir de nit, i marxem a les 7 del vespre. Al pròxim viatge, els matins condueixo jo."
+  },
+  "seat": {
+    "title": "💺 Reclinar el seient en un vol de nit",
+    "aName": "Oriol",
+    "a": "El meu seient es reclina, així que el reclino. És un vol de nit i tothom intenta dormir.",
+    "bName": "Marina",
+    "b": "Faig 1,90 i ja tinc els genolls clavats al teu seient. Com a mínim podries preguntar abans de tirar-lo del tot enrere."
+  },
+  "spoiler": {
+    "title": "🎬 Un espòiler del final",
+    "aName": "Mireia",
+    "a": "Em vas dir qui era l'assassí abans que comencés l'últim capítol. Feia tota la setmana que l'esperava.",
+    "bName": "Pere",
+    "b": "Va sortir fa tres setmanes i em vas dir que ja l'havies acabat. No puc estar pendent de per on va cadascú."
+  },
+  "jacket": {
+    "title": "🧥 La jaqueta texana que et vaig deixar",
+    "aName": "Ona",
+    "a": "Et vas posar la meva jaqueta texana per anar al concert sense preguntar-m'ho. Me la vas tornar fent pudor de fum.",
+    "bName": "Guillem",
+    "b": "Estava penjada al costat de la porta i no te la poses mai. T'ho hauria preguntat, però dormies i jo ja feia tard."
+  },
+  "lastSlice": {
+    "title": "🍕 L'últim tros de pizza",
+    "aName": "Roger",
+    "a": "Abans que comencés la pel·li vaig dir que l'últim tros de pizza era meu. Tothom em va sentir.",
+    "bName": "Carla",
+    "b": "No pots dir que és teu i després passar-te dues hores sense tocar-lo. Era allà refredant-se, així que me'l vaig menjar."
+  },
+  "sundayPlans": {
+    "title": "🛋️ Un diumenge sencer al sofà",
+    "aName": "Laia",
+    "a": "És l'únic dia que tenim lliure tots dos i m'agradaria anar a caminar per la muntanya. Passar-lo tot al sofà em sembla un malbaratament.",
+    "bName": "Biel",
+    "b": "Treballo dur tota la setmana i el diumenge és quan recarrego piles. Ja farem la ruta el cap de setmana que ve, avui només vull no fer res amb tu."
+  },
+  "anniversaryGift": {
+    "title": "🎁 Quant gastar en un regal",
+    "aName": "Xavier",
+    "a": "Havíem quedat que els regals no passarien dels 50 euros, i m'has comprat un rellotge. Ara sembla que jo no m'hi he esforçat.",
+    "bName": "Anna",
+    "b": "El vaig veure i vaig pensar en tu. Estava rebaixat, i un límit que vam posar fa anys no m'ha d'impedir ser generosa."
+  },
+  "couplePhoto": {
+    "title": "📸 Penjar la nostra foto sense preguntar",
+    "aName": "Berta",
+    "a": "Has penjat la foto de la platja i jo ni l'havia vista. Hi surto fatal i t'hauria dit que no.",
+    "bName": "Dani",
+    "b": "A mi em sembla que hi surts genial i volia compartir un dia molt bo. No sabia que t'ho agafaries tan malament."
+  },
+  "phoneInBed": {
+    "title": "📱 El mòbil al llit",
+    "aName": "Neus",
+    "a": "Ens ficam al llit i tu et passes una hora mirant el mòbil mentre jo m'estic aquí. M'agradaria parlar, o almenys adormir-nos junts.",
+    "bName": "Àlex",
+    "b": "Així em desconnecto després d'un dia llarg. Parlar, quan vulguis, però no vull normes sobre un mòbil que només tinc a la mà."
+  },
+  "movieTurns": {
+    "title": "🍿 A qui li toca triar la pel·li",
+    "aName": "Maria",
+    "a": "L'última vegada vaig triar jo, i l'anterior també. Ara et toca a tu, i fa quaranta minuts que dius que res et ve de gust.",
+    "bName": "Joan",
+    "b": "Triaria si hi hagués res que volgués veure. Sempre poses coses que m'agraden menys, i per això em quedo callat."
+  },
+  "slowReply": {
+    "title": "💬 Esperar hores una resposta",
+    "aName": "Eva",
+    "a": "Et vaig fer una pregunta senzilla al migdia i m'has contestat a les vuit. Una resposta ràpida no t'hauria costat res.",
+    "bName": "Sergi",
+    "b": "Vaig estar en reunions tot el dia i tenia el mòbil a la bossa. No et feia cas ni de bon tros, simplement no era urgent."
+  },
+  "bedSide": {
+    "title": "🛏️ De qui és aquest costat del llit",
+    "aName": "Rosa",
+    "a": "Fa sis anys sencers que dormo al costat de la finestra. Ara que ens hem mudat, t'has quedat el meu costat abans que hagués desfet ni les maletes.",
+    "bName": "Quim",
+    "b": "En aquesta habitació el llit és a l'altra paret, així que els costats s'han girat. Si vols, canviem, és que no hi havia pensat."
+  },
+  "surpriseParty": {
+    "title": "🎈 Una festa sorpresa que no volia",
+    "aName": "Lídia",
+    "a": "Ho vaig organitzar tot pel teu aniversari i vaig convidar tothom. Has fet cara d'enterrament tota la nit.",
+    "bName": "Gerard",
+    "b": "Fa mesos que et vaig dir que odio les sorpreses i els llocs plens de gent. Agraeixo l'esforç, però no em vas fer cas."
+  },
+  "toothpaste": {
+    "title": "🪥 Com s'espremen la pasta de dents",
+    "aName": "Cristina",
+    "a": "Espremes el tub pel mig i el deixes pla i retorçat. És una tonteria, ja ho sé, però me'l trobo cada matí.",
+    "bName": "Pau",
+    "b": "Al final surt igual de tota manera. No entenc per què hi hauria d'haver un lloc correcte per espremer-lo."
+  },
+  "blanket": {
+    "title": "🛌 El lladre de manta",
+    "aName": "Judit",
+    "a": "Cada nit t'embolliques amb tota la manta i jo em desperto morta de fred. És com dormir al costat d'un caneló.",
+    "bName": "Ramon",
+    "b": "Jo també tinc fred i no ho faig a posta. Potser podríem comprar una altra manta en lloc de fer-me la culpa a mi."
+  },
+  "lateDinner": {
+    "title": "🍝 Sopar a les nou",
+    "aName": "Mercè",
+    "a": "Vas dir que series a casa a les sis i has arribat a les nou. La pasta que he fet s'ha refredat i em moro de gana.",
+    "bName": "Oscar",
+    "b": "Una trucada es va allargar i no podia penjar sense més. T'hauria avisat, però m'he quedat sense bateria."
+  },
+  "dateBill": {
+    "title": "💳 Qui paga a les cites",
+    "aName": "Sílvia",
+    "a": "Hem sortit unes dotze vegades i mai no fas cap gest per pagar. M'agradaria que ens ho anéssim repartint.",
+    "bName": "Jan",
+    "b": "Ara guanyo més que tu i m'agrada convidar. No sabia que et molestava, simplement no vull discutir per un compte."
+  },
+  "quietHours": {
+    "title": "🔇 Silenci després de les deu",
+    "aName": "Aitana",
+    "a": "Demà començo d'hora i se't sent la videotrucada per la paret a les onze. Necessito que parlis més baix.",
+    "bName": "Raül",
+    "b": "El meu equip és en un altre fus horari i només em va bé tard. Em posaré els auriculars, però tu també et pots posar taps."
+  },
+  "fridgeShelf": {
+    "title": "🧊 De qui és aquest prestatge",
+    "aName": "Lluc",
+    "a": "Vaig etiquetar el meu prestatge de la nevera i tu hi has tornat a deixar les sobres. Al teu hi ha lloc de sobres.",
+    "bName": "Alba",
+    "b": "El meu estava ple i el teu tàper era mig buit. És només per una nit, no t'estava agafant res."
+  },
+  "overnightGuest": {
+    "title": "🚪 Un convidat que es queda tota la setmana",
+    "aName": "Emma",
+    "a": "El teu amic fa sis dies que dorm al menjador i ningú no m'ha preguntat res. Vull recuperar el meu pis.",
+    "bName": "Albert",
+    "b": "Està entre dos pisos i no té on anar. Et vaig dir que es quedaria unes nits, i col·labora amb la compra."
+  },
+  "sharedShampoo": {
+    "title": "🧴 Fer servir el meu xampú",
+    "aName": "Mariona",
+    "a": "El meu xampú és car i dilluns estava gairebé ple. Ara, divendres, ja se n'ha acabat quasi tot, i a part de mi només et dutxes tu.",
+    "bName": "David",
+    "b": "Només n'he fet servir una mica, dues vegades. Si és tan important, guarda'l a la teva habitació, jo pensava que les coses del bany eren de tots."
+  },
+  "dirtyPan": {
+    "title": "🍳 La paella deixada en remull",
+    "aName": "Hug",
+    "a": "Aquesta paella fa des de dimarts a la pica i ja comença a fer pudor. Qui cuina l'hauria de rentar.",
+    "bName": "Noa",
+    "b": "La rentaria quan hagués estat una mica més en remull. Tu fa dos dies que deixes plats aquí i jo no he dit res."
+  },
+  "dryerLaundry": {
+    "title": "🧺 La roba oblidada a l'assecadora",
+    "aName": "Sara",
+    "a": "He baixat i m'he trobat la roba neta amuntegada damunt la taula perquè necessitaves l'assecadora. Encara estava humida.",
+    "bName": "Ivan",
+    "b": "El cicle feia una hora que havia acabat i jo tenia la bugada esperant. Si us plau, treu les teves coses quan soni el timbre."
+  },
+  "loudMusic": {
+    "title": "🎧 La música a través de la paret",
+    "aName": "Fèlix",
+    "a": "Són les tres de la tarda d'un dissabte i soc a la meva habitació. No crec que hagi de portar auriculars a casa meva.",
+    "bName": "Teresa",
+    "b": "Els greus em fan tremolar l'escriptori quan intento estudiar. Ningú no et demana que ho deixis, només que abaixis una mica el volum."
+  },
+  "longShower": {
+    "title": "🚿 Es gasta l'aigua calenta",
+    "aName": "Amir",
+    "a": "Les teves dutxes duren quaranta minuts i, quan em toca a mi, ja no queda aigua calenta. Deu minuts cadascú seria just.",
+    "bName": "Montse",
+    "b": "No em cronometro i és l'únic lloc on puc relaxar-me. Potser podríem anar alternant qui s'hi dutxa primer."
+  },
+  "lightsOn": {
+    "title": "💡 Tots els llums encesos",
+    "aName": "Gal·la",
+    "a": "Passo per tot el pis i hi ha tots els llums encesos, fins i tot a les habitacions on no hi ha ningú. Les factures es reparteixen, així que són també els meus diners.",
+    "bName": "Jaume",
+    "b": "M'agrada que hi hagi llum i vaig entrant i sortint d'habitacions tota la tarda. Encendre i apagar tota la nit és igual de pesat."
+  },
+  "parcels": {
+    "title": "📦 Paquets amuntegats al rebedor",
+    "aName": "Nadia",
+    "a": "Hi ha sis caixes teves apilades al passadís i hi ensopego cada dia. Si us plau, porta-les a la teva habitació.",
+    "bName": "Eloi",
+    "b": "Estic esperant per tornar-les a Correus i he anat enfeinat. Només fa quatre dies que són aquí."
+  },
+  "houseplant": {
+    "title": "🪴 Qui rega la planta",
+    "aName": "Georgina",
+    "a": "Vaig comprar la planta per al menjador i la rego cada setmana. Ara sembla un pal perquè l'has canviat al racó fosc.",
+    "bName": "Pablo",
+    "b": "Tapava la tele i em va semblar que al racó estaria bé. No sabia que les plantes fossin tan delicades."
+  },
+  "lateArrival": {
+    "title": "⏰ Quaranta minuts tard un altre cop",
+    "aName": "Daniel",
+    "a": "Havíem quedat a les set i m'he estat al restaurant tot sol fins a un quart de vuit i deu. Ja és la tercera vegada que ho fas.",
+    "bName": "Mia",
+    "b": "L'autobús va endarrerir-se i et vaig escriure. Podies haver demanat alguna cosa per beure en lloc d'enfadar-te."
+  },
+  "cancelledPlans": {
+    "title": "🙅 Anul·lar una hora abans",
+    "aName": "Rut",
+    "a": "Vaig reorganitzar tot el dia per veure't i m'ho has anul·lat amb un missatge una hora abans. No és la primera vegada.",
+    "bName": "Carles",
+    "b": "Estava mort de cansament i hauria estat una companyia pèssima. Vaig pensar que era millor dir-t'ho que arrossegar-me fins allà."
+  },
+  "borrowedBook": {
+    "title": "📚 Un llibre que no va tornar mai",
+    "aName": "Isabel",
+    "a": "Aquell llibre te'l vaig deixar la primavera passada i ja fa un any. Estava signat, i t'ho he demanat dues vegades.",
+    "bName": "Adrià",
+    "b": "El tinc per algun lloc, t'ho prometo, segurament en una caixa de la mudança. El trobaré, no cal que m'ho recordis cada dos per tres."
+  },
+  "mutedChat": {
+    "title": "🔕 Silenciar el grup",
+    "aName": "Helena",
+    "a": "Has silenciat el nostre grup i t'has perdut dos canvis de pla. Hem hagut d'esperar-te tots al lloc equivocat.",
+    "bName": "Víctor",
+    "b": "Hi arriben dos-cents missatges al dia, sobretot memes. Llegiria els importants si no em portés una hora."
+  },
+  "birthdayDinner": {
+    "title": "🎂 Pagar el sopar d'aniversari",
+    "aName": "Roc",
+    "a": "És el meu sopar d'aniversari i el compte ha sortit a 40 euros per cap pel vi tan car. Pensava que el convidat d'honor no pagava.",
+    "bName": "Anaïs",
+    "b": "Sempre dividim tot a parts iguals entre tot el grup, i ho sap tothom. A més, el lloc el vas triar tu."
+  },
+  "plusOne": {
+    "title": "💍 Un acompanyant al casament",
+    "aName": "Bruna",
+    "a": "A la invitació només hi surt el meu nom, però la meva parella, amb qui porto dos anys, es quedaria sola a casa. Vindrà amb mi igualment.",
+    "bName": "Quirze",
+    "b": "El local té un límit estricte i cada cadira ens costa molt. Ho sento, però no puc fer una excepció per una sola persona."
+  },
+  "chargerBorrow": {
+    "title": "🔌 El carregador que et vas endur",
+    "aName": "Francesc",
+    "a": "Aquest és el tercer carregador meu que desapareix a casa teva. Els vull de tornada, no un altre ho sento.",
+    "bName": "Lola",
+    "b": "Són tots iguals i de debò que no sé de qui és cadascun. Divendres et porto una bossa plena."
+  },
+  "auxCord": {
+    "title": "🎵 Qui porta la música al cotxe",
+    "aName": "Tarik",
+    "a": "Conduint jo, trio jo la música. El camí és llarg i el que s'ha de mantenir despert soc jo.",
+    "bName": "Emma",
+    "b": "Avui has posat el mateix disc tres vegades. El copilot també hi té veu, així funciona qualsevol viatge."
+  },
+  "karaoke": {
+    "title": "🎤 La cançó que no s'acabava",
+    "aName": "Gina",
+    "a": "Has cantat nou cançons i la resta només n'hem cantat una cadascú. El micro ha de passar per tota la sala.",
+    "bName": "Max",
+    "b": "Ningú més s'ha apuntat a la llista i he omplert els forats. De debò, pensava que us ho estàveu passant bé."
+  },
+  "uninvited": {
+    "title": "🙈 Fora de la llista de convidats",
+    "aName": "Gemma",
+    "a": "He vist les fotos de la teva festa i no m'havies convidat, tot i que he vingut a totes les altres. M'ha fet molt de mal.",
+    "bName": "Jon",
+    "b": "Era una cosa petita per als companys de la feina, només deu persones. No tenia res a veure amb tu, no pensava que volguessis venir."
+  },
+  "holidayHost": {
+    "title": "🦃 Qui fa el dinar de Nadal",
+    "aName": "Marta",
+    "a": "Fa quatre anys seguits que fem nosaltres el dinar de família. Ara toca a algú altre, i m'agradaria uns Nadals sense cuinar.",
+    "bName": "Pere",
+    "b": "La mare no pot amb les escales i a casa nostra hi ha la taula més gran. Ningú més s'ha ofert, així que vaig pensar que ho tornaríem a fer."
+  },
+  "dailyCalls": {
+    "title": "📞 Una trucada cada dia",
+    "aName": "Laura",
+    "a": "La mare truca cada dia cap a les sis i espera una conversa de mitja hora. L'estimo, però a vegades no tinc ganes.",
+    "bName": "Josep",
+    "b": "Viu sola i aquesta trucada és el millor moment del seu dia. Als dies de feina li pots dir que li escriuràs un missatge."
+  },
+  "bedtimeKids": {
+    "title": "🌙 L'hora d'anar a dormir entre setmana",
+    "aName": "Ingrid",
+    "a": "El nostre fill té vuit anys i hauria de dormir a les vuit. L'has deixat despert per veure el futbol i ara va fet un mort a l'escola.",
+    "bName": "Lluís",
+    "b": "Va ser un sol partit i estava tan il·lusionat. Una nit tard de tant en tant no li farà mal, i per a ell és especial."
+  },
+  "borrowedSweater": {
+    "title": "👚 Una germana que m'espolsa l'armari",
+    "aName": "Alícia",
+    "a": "T'has endut el meu jersei verd sense preguntar i te l'has posat per anar a una festa. M'ha tornat tacat i jo encara no l'havia estrenat.",
+    "bName": "Paula",
+    "b": "Tota la vida t'he agafat coses i mai t'ha importat. El portaré a la tintoreria, però ho estàs fent més gran del que és."
+  },
+  "familyRecipe": {
+    "title": "🥘 La recepta de l'àvia",
+    "aName": "Elisenda",
+    "a": "La sopa de l'àvia sempre portava una cullerada de tomàquet concentrat, i està escrit amb la seva lletra. Tu l'has omès i dius que és la mateixa recepta.",
+    "bName": "Martí",
+    "b": "Em sembla que sense això és més lleugera, i així és com la recordo. Continua sent la seva recepta, només una mica millorada."
+  },
+  "dadRide": {
+    "title": "🚙 Portar el pare a l'aeroport",
+    "aName": "Samuel",
+    "a": "L'última vegada vaig portar el pare jo, i l'anterior també. Pots fer-ho tu aquest cop, el vol d'hora, en lloc de demanar un taxi?",
+    "bName": "Helga",
+    "b": "Són dues hores d'anada i tornada i a les sis he de ser a la feina. Pagaré el taxi, és que no puc perdre tant de temps."
+  },
+  "familyChat": {
+    "title": "👨‍👩‍👧 Missatges en cadena al grup de la família",
+    "aName": "Rita",
+    "a": "L'oncle no para de reenviar aquests missatges en cadena i vídeos a tot el grup de la família. Entre tot això no trobo res de veritat.",
+    "bName": "Teodor",
+    "b": "Només vol formar part del grup i compartir una rialla. Potser sí que li podem dir alguna cosa, però silenciar-lo em sembla poc amable."
+  },
+  "tvRemote": {
+    "title": "📺 Amagar el comandament",
+    "aName": "Nil",
+    "a": "Cada cop que m'assec a veure el partit, el comandament ha desaparegut i hi ha uns dibuixos animats. Ja és la segona vegada aquesta setmana.",
+    "bName": "Magda",
+    "b": "És la meva hora preferida de tele i el teu partit dura tota la tarda. Podem anar fent torns, però no et pots quedar tota la tarda."
+  },
+  "seatingChart": {
+    "title": "🍽️ Qui seu al cap de taula",
+    "aName": "Gustau",
+    "a": "Des que era petit m'assec en aquell cap de taula a tots els dinars de família. Ara hi ha seguda la teva parella i ningú no ha dit res.",
+    "bName": "Tània",
+    "b": "Va seure primer, i és un convidat. És només una cadira, i la propera vegada ens podem canviar."
+  },
+  "teenPhone": {
+    "title": "🧒 El mòbil a taula",
+    "aName": "Dolors",
+    "a": "El sopar és l'únic moment que seiem tots junts com a família. Quinze minuts sense mòbil no és gaire demanar.",
+    "bName": "Eric",
+    "b": "Només miro si un amic m'ha respost. Tu també l'agafes a taula quan t'escriuen de la feina."
+  },
+  "meetingEmail": {
+    "title": "📧 Una reunió que podia ser un correu",
+    "aName": "Pilar",
+    "a": "Hem estat una hora en una trucada per saber el que cabia en tres línies. Una hora que podria haver dedicat a acabar l'informe.",
+    "bName": "Gregori",
+    "b": "Tothom va ocupat, però en una trucada la gent pot preguntar a l'acte. Un correu hauria obert cinc fils diferents."
+  },
+  "microwaveFish": {
+    "title": "🐟 Peix al microones de l'oficina",
+    "aName": "Vanessa",
+    "a": "Has escalfat salmó al microones comú i fins a les tres tota la planta fa aquella olor. Si us plau, porta una altra cosa.",
+    "bName": "Dídac",
+    "b": "És l'únic dinar de debò que faig i no tinc gaires diners per menjar fora. Altres escalfen curri i ningú no diu res."
+  },
+  "stolenLunch": {
+    "title": "🥪 Algú s'ha menjat el meu dinar",
+    "aName": "Bernat",
+    "a": "La bossa duia el meu nom i el sandvitx ja no hi era al migdia. Suposo que has vist qui se l'ha endut.",
+    "bName": "Fina",
+    "b": "No he vist res, i no vull acusar ningú. Potser un paper a la nevera seria un primer pas més amable."
+  },
+  "replyAll": {
+    "title": "📨 Respondre a tota l'empresa",
+    "aName": "Enric",
+    "a": "Has respost a tothom, a les dues-centes persones, amb un 'gràcies!'. Ara tinc la safata plena d'altres quaranta com aquest.",
+    "bName": "Joana",
+    "b": "Volia ser educada i el botó era allà mateix. És un error petit, i en realitat no ha fet mal a ningú."
+  },
+  "officeCold": {
+    "title": "❄️ L'oficina gelada",
+    "aName": "Rebeca",
+    "a": "L'aire condicionat està tan baix que al juliol vaig amb abric a la taula. Uns graus més no farien mal a ningú.",
+    "bName": "Aleix",
+    "b": "Jo tinc calor i el sol em toca tota la tarda. Si tens fred, és més fàcil posar-se una manta que suar la resta."
+  },
+  "openOfficeHeadphones": {
+    "title": "🎧 Auriculars a l'oficina oberta",
+    "aName": "Genís",
+    "a": "Porto auriculars per concentrar-me i cada pocs minuts em piquen per una pregunta ràpida. Em talla el fil.",
+    "bName": "Carme",
+    "b": "És difícil saber si estàs ocupat de veritat. Un missatge abans seria massa lent quan la resposta es fa en deu segons."
+  },
+  "emptyCoffee": {
+    "title": "☕ L'última tassa de cafè",
+    "aName": "Teresa",
+    "a": "T'has servit l'últim cafè de la cafetera i has deixat la jarra buida al foc. Una cafetera nova són dos minuts.",
+    "bName": "Lluc",
+    "b": "Anava tard per a una trucada i de debò no m'he adonat que era l'última tassa. La propera la faig jo, t'ho prometo."
+  },
+  "ideaCredit": {
+    "title": "💡 De qui va ser la idea",
+    "aName": "Soni",
+    "a": "Vaig proposar el nou horari al març i tu el vas presentar al cap com si fos teu. Un gràcies hauria estat suficient.",
+    "bName": "Cati",
+    "b": "Ho vam parlar junts i el vaig desenvolupar amb l'equip. Pensava que tots havíem acordat que era feina de tots."
+  },
+  "fridayDeadline": {
+    "title": "📅 Un termini per divendres",
+    "aName": "Mònica",
+    "a": "Vas dir que m'enviaries la teva part per divendres i ja és dilluns. Tothom estava esperant això, i t'ho he hagut de demanar dues vegades.",
+    "bName": "Ferran",
+    "b": "Se'm va ficar a sobre un projecte més gran i vaig haver de triar. T'ho hauria d'haver dit abans, però avui ho tindràs."
+  },
+  "deskLunch": {
+    "title": "🥗 Dinar a la taula",
+    "aName": "Hèctor",
+    "a": "A aquest equip ja ningú no para a dinar de veritat i comença a semblar que s'espera. M'agradaria que a migdia ens aixequéssim tots.",
+    "bName": "Teo",
+    "b": "Jo menjo mentre treballo i així marxo abans. Les pauses estan bé, però prefereixo decidir-ho jo."
+  },
+  "calendarInvite": {
+    "title": "🗓️ Reunions sense ordre del dia",
+    "aName": "Silvana",
+    "a": "A la teva invitació només posava «posar-nos al dia» i m'ha ocupat tres quarts d'hora del matí. Digue'm primer de què va.",
+    "bName": "Bru",
+    "b": "Era per xerrar i hem acabat resolent dos problemes. Un ordre del dia formal hauria matat la conversa."
+  },
+  "rentSplit": {
+    "title": "🏠 Repartir el lloguer segons la mida de l'habitació",
+    "aName": "Ariadna",
+    "a": "La meva habitació és la més petita i no té armari, però pago el mateix que tu. Crec que la més gran hauria de costar més.",
+    "bName": "Ignasi",
+    "b": "Vam quedar en tres parts iguals quan vam signar el contracte. Refer els números cada cop que algú té una sensació acaba sent un embolic."
+  },
+  "smallLoan": {
+    "title": "💵 Deu euros del dinar",
+    "aName": "Rubén",
+    "a": "El mes passat et vaig pagar el dinar i la setmana passada una altra vegada. Ja són trenta euros i no he sentit ni una paraula.",
+    "bName": "Dora",
+    "b": "Pensava que estàvem en paus després del cafè. No tinc cap problema a pagar, digues-me la xifra i t'ho envio avui."
+  },
+  "tipping": {
+    "title": "🧾 Quanta propina deixar",
+    "aName": "Carolina",
+    "a": "El servei ha estat lent i el menjar fred. Deixaré un deu per cent, no un vint.",
+    "bName": "Òscar",
+    "b": "El local estava ple i el cambrer anava ben desbordat. Per a ells la propina compta molt i per a nosaltres no és gaire més."
+  },
+  "streamingShare": {
+    "title": "📺 Compartir el compte de sèries",
+    "aName": "Rosó",
+    "a": "Jo pago el pla de les plataformes i ara la meitat dels teus amics també l'utilitza. Voldria que hi posessin diners o que es fessin el seu.",
+    "bName": "Andreu",
+    "b": "Costa el mateix si l'utilitzen dues persones que cinc. Demanar-los uns euros a cadascú seria incòmode."
+  },
+  "taxiSplit": {
+    "title": "🚕 Dividir el taxi de tornada",
+    "aName": "Ester",
+    "a": "La teva parada era la primera i la meva era quinze minuts més enllà, i tot i això dividim la tarifa per la meitat. No em sembla gaire just.",
+    "bName": "Cesc",
+    "b": "Anàvem al mateix cotxe i hem marxat junts. Calcular-ho per quilòmetre per vint euros és una mica massa."
+  },
+  "groupGift": {
+    "title": "🎀 El regal col·lectiu",
+    "aName": "Ivet",
+    "a": "Tothom hi posa vint euros pel regal de la mestra, però jo soc estudiant i per a mi és molt. Puc posar-n'hi deu?",
+    "bName": "Valentí",
+    "b": "El regal ja està encarregat a aquest preu, i si poses menys algú altre ho ha de cobrir. Ho entenc, però és incòmode."
+  },
+  "groceryList": {
+    "title": "🛒 Repartir la compra",
+    "aName": "Pepi",
+    "a": "Compres snacks i formatge car i ho afegeixes al total compartit. Jo només menjo el bàsic, així que no hauria de pagar la meitat.",
+    "bName": "Marçal",
+    "b": "Pots menjar-te el formatge quan vulguis. Des del principi era un compte comú i no penso portar un full de càlcul."
+  },
+  "bigPurchase": {
+    "title": "🛍️ Una compra gran sense dir res",
+    "aName": "Estel·la",
+    "a": "T'has comprat un monitor de jocs de 400 euros just la setmana que estalviàvem per al viatge. M'ho podies haver preguntat.",
+    "bName": "Isaac",
+    "b": "Ha sortit dels meus diners per a mi, i feia un any que l'esperava. No vaig pensar que necessités permís."
+  },
+  "subscriptions": {
+    "title": "💳 Donar de baixa subscripcions oblidades",
+    "aName": "Gerard",
+    "a": "Paguem quatre aplicacions que cap dels dos no obre. Cancel·lem-les i posem els diners per a les vacances.",
+    "bName": "Olga",
+    "b": "Segur que n'utilitzaré almenys dues aviat. Les podem deixar fins a final de mes i després decidim?"
+  },
+  "restaurantChoice": {
+    "title": "🍜 On sopem aquesta nit",
+    "aName": "Jofre",
+    "a": "Aquesta setmana he dit tres cops ramen i tu has dit que sí cada vegada, i després has triat una altra cosa. M'agradaria que hi anéssim.",
+    "bName": "Beatriu",
+    "b": "Quan hi hem arribat no tenia ganes de fideus. La propera vegada digues un lloc i m'hi comprometo abans de sortir."
+  },
+  "cerealMilk": {
+    "title": "🥣 La llet abans dels cereals",
+    "aName": "Xavi",
+    "a": "Primer poses la llet i després els cereals. Està malament, i es posen tous abans que acabis.",
+    "bName": "Sònia",
+    "b": "M'agrada així i me'ls menjo de seguida. No cal que miris, deixa'm gaudir de l'esmorzar."
+  },
+  "ketchup": {
+    "title": "🍳 Ketchup als ous",
+    "aName": "Lluïsa",
+    "a": "Poses ketchup en una truita perfectament feta. És un malbaratament d'ous bons i no ho puc veure.",
+    "bName": "Joel",
+    "b": "Els menjo així des que era petit i m'agrada el gust. És el meu plat, tu menja el teu com vulguis."
+  },
+  "pizzaCrust": {
+    "title": "🍕 Deixar la vora de la pizza",
+    "aName": "Toni",
+    "a": "Et menges el mig i deixes la vora al plat cada cop. És la millor part i se'n va a les escombraries.",
+    "bName": "Elna",
+    "b": "La vora és dura i a aquelles alçades ja estic plena. Si la vols, pren-la, no em forçaré."
+  },
+  "coffeeTea": {
+    "title": "☕ Cafè o te al matí",
+    "aName": "Arnau",
+    "a": "Vas dir que el te és només aigua calenta amb fulles i després m'has demanat un glop del meu cafè. M'agradaria una disculpa.",
+    "bName": "Eulàlia",
+    "b": "M'agrada més l'olor del cafè que el gust. I bec te perquè em calma, no cal que em convencis."
+  },
+  "spiceLevel": {
+    "title": "🌶️ Quan és massa picant",
+    "aName": "Diego",
+    "a": "Has demanat «suau» i després t'has tirat mig oli de xili al plat. Ara tota la taula tus.",
+    "bName": "Mar",
+    "b": "El suau per a mi no és el suau per a tu, i no sabia que la taula ho compartia. La propera vegada demanaré un bol a part."
+  },
+  "leftovers": {
+    "title": "🥡 Llençar les sobres",
+    "aName": "Roser",
+    "a": "Guardava aquell curri per a dinar i l'has llençat perquè feia dos dies que era a la nevera. Estava bé.",
+    "bName": "Salvador",
+    "b": "Em va semblar que feia massa temps que hi era i no volia que ningú es posés malalt. Te'l tornaré a fer, perdona."
+  },
+  "cilantro": {
+    "title": "🌿 Coriandre a tot arreu",
+    "aName": "Vera",
+    "a": "Has tornat a posar coriandre al plat, tot i que saps que a mi em sap a sabó. No el puc treure tot.",
+    "bName": "Marc",
+    "b": "La recepta el porta i el plat necessita aquesta frescor. La propera vegada el deixaré en un bol a part."
+  },
+  "tooSalty": {
+    "title": "🧂 Massa sal a la sopa",
+    "aName": "Flora",
+    "a": "Has salat la sopa abans de tastar-la i ara està massa salada per menjar-la. Voldria tornar a començar amb una olla nova.",
+    "bName": "Eduard",
+    "b": "A mi em sembla bé, i la sal sempre l'afegeixo al final. Hi poses una mica d'aigua i ja està."
+  },
+  "doubleDip": {
+    "title": "🥨 Mullar dues vegades a la festa",
+    "aName": "Coral",
+    "a": "T'he vist pegar una queixalada a una patata i tornar-la a mullar a la salsa comuna. Ara ja no en vull res.",
+    "bName": "Sebastià",
+    "b": "Va ser una sola vegada i ningú més ho va veure. T'ho estàs prenent massa a la tremenda, agafa una cullera neta."
+  },
+  "pastaShape": {
+    "title": "🍝 Pasta que no és espagueti",
+    "aName": "Gisela",
+    "a": "Aquesta salsa és per a pasta llarga i l'has feta amb curta. Simplement no és el mateix plat.",
+    "bName": "Miquel",
+    "b": "A l'armari només hi havia macarrons i tampoc no té mal gust. De debò importa tant quina forma tingui?"
+  },
+  "hotdog": {
+    "title": "🌭 Un frankfurt és un entrepà?",
+    "aName": "Roger",
+    "a": "Un frankfurt és un farcit dins de pa tallat, així que és un entrepà. Punt.",
+    "bName": "Lluís",
+    "b": "És una altra cosa. Ningú no demana un entrepà i s'espera un frankfurt, i cap carta el posa als entrepans."
+  },
+  "trashDay": {
+    "title": "🗑️ Treure les escombraries",
+    "aName": "Josep",
+    "a": "El cubell desborda des de dimecres i les últimes quatre vegades l'he tret jo. Et toca a tu.",
+    "bName": "Amèlia",
+    "b": "Jo trec el reciclatge i l'orgànic, i també compta. Fem un quadrant de veritat i deixem de comptar."
+  },
+  "foldTowels": {
+    "title": "🧺 La manera correcta de plegar tovalloles",
+    "aName": "Ernest",
+    "a": "Acabo de tornar a plegar totes les tovalloles en tres parts perquè tu les plegues per la meitat i no caben al prestatge.",
+    "bName": "Maite",
+    "b": "Són tovalloles i les faràs servir d'aquí a un minut. No penso aprendre un sistema de plegat per a elles."
+  },
+  "vacuumSchedule": {
+    "title": "🧹 Cada quan passar l'aspiradora",
+    "aName": "Mateu",
+    "a": "Jo passo l'aspiradora dos cops per setmana i a tu mai no t'he vist tocar-la. Una mica de cabell a terra em treu de polleguera.",
+    "bName": "Leo",
+    "b": "A mi em sembla bé un cop per setmana, i tu ho fas més del necessari. Jo faig els diumenges, si em deixes la resta."
+  },
+  "whoCooks": {
+    "title": "🍲 Cuinar cada nit",
+    "aName": "Meritxell",
+    "a": "Aquest mes he fet el sopar cinc nits de cada set. M'agradaria repartir la cuina de manera més justa.",
+    "bName": "Quico",
+    "b": "Jo no hi soc tan bo i tu t'ho passes millor. Però tens raó, escollim dues nits i ja milloraré."
+  },
+  "makeBed": {
+    "title": "🛏️ Fer el llit",
+    "aName": "Gemma",
+    "a": "T'aixeques, deixes els llençols en un munt i dius que no val la pena perquè aquesta nit el tornarem a desfer. L'habitació sembla un desastre.",
+    "bName": "Ismael",
+    "b": "Soc jo qui marxa primer a la feina i són dos minuts que no tinc. Si t'importa tant, fes-ho tu quan t'aixequis."
+  },
+  "toiletSeat": {
+    "title": "🚽 La tapa del vàter",
+    "aName": "Irene",
+    "a": "Ja he entrat tres cops al bany a les fosques i la tapa estava aixecada. Abaixar-la no és difícil.",
+    "bName": "Gregori",
+    "b": "Deixar-la aixecada és menys per tocar, i a mitjanit no hi penso. Si et molesta, intentaré recordar-ho."
+  },
+  "toiletPaper": {
+    "title": "🧻 Per damunt o per sota",
+    "aName": "Dàlia",
+    "a": "El rotllo va amb el paper sortint per damunt. L'has penjat al revés i cada cop he d'esforçar-me per arribar-hi.",
+    "bName": "Ricard",
+    "b": "Funciona igual de qualsevol manera, així que tria el que vulguis. No el tornaré a penjar només per fer-ho com tu."
+  },
+  "laundryColours": {
+    "title": "👕 Barrejar colors a la bugada",
+    "aName": "Aleix",
+    "a": "La meva camisa blanca ha sortit rosa de la rentadora perquè hi has posat la tovallola vermella. Era una camisa que em posava per anar a la feina.",
+    "bName": "Elena",
+    "b": "Anava amb pressa i una rentadora petita triga massa. Te'n compraré una de nova, però va ser un error sense mala intenció."
+  },
+  "washCar": {
+    "title": "🚗 Netejar el cotxe compartit",
+    "aName": "Ismael",
+    "a": "El seient de darrere és ple de papers d'embolcall i hi ha una tassa de cafè de fa una setmana. El cotxe és de tots dos, així que la neteja també.",
+    "bName": "Dina",
+    "b": "Jo netejo el cotxe sempre que està a punt de ser un desastre. No pensava que uns quants papers comptessin, ho faré aquest cap de setmana."
+  },
+  "beachOrCity": {
+    "title": "🏖️ Platja o escapada a una ciutat",
+    "aName": "Magí",
+    "a": "Jo vull una setmana estirat vora el mar, sense res planejat. L'últim viatge el vam passar voltant per museus.",
+    "bName": "Raquel",
+    "b": "Després de dos dies en una gandula m'avorreixo. M'agradaria veure alguna cosa nova, encara que només fem la meitat de la ciutat."
+  },
+  "airportEarly": {
+    "title": "✈️ Amb quanta antelació arribar a l'aeroport",
+    "aName": "Olívia",
+    "a": "Tres hores abans del vol és massa d'hora. Ens passarem una eternitat asseguts a la porta d'embarcament amb un cafè.",
+    "bName": "Bernabé",
+    "b": "Les cues poden ser llargues i jo tinc por de volar. Prefereixo esperar que anar amb pressa, i perdre el vol costaria molt més."
+  },
+  "campingHotel": {
+    "title": "⛺ Tenda o hotel",
+    "aName": "Blanca",
+    "a": "Et vaig reservar un càmping per al cap de setmana i ara em dius que preferiries un hotel. Ho havíem acordat a la primavera.",
+    "bName": "Cebrià",
+    "b": "Diu que plourà tot el cap de setmana i una tenda mullada no és gens relaxant. Hi aniria encantat quan faci millor temps."
+  },
+  "packingLight": {
+    "title": "🧳 Una maleta cadascú",
+    "aName": "Nora",
+    "a": "Vam quedar en només equipatge de mà i el teu pesa una barbaritat. Hi has posat tres parells de sabates.",
+    "bName": "Esteve",
+    "b": "M'agrada tenir opcions, i tu has portat un abric que no necessitaràs. Si paguem una maleta facturada, ho pago jo."
+  },
+  "mapOrGps": {
+    "title": "🗺️ Fiar-se del GPS",
+    "aName": "Bartomeu",
+    "a": "L'aplicació deia d'anar a l'esquerra i tu has girat a la dreta perquè creus que coneixes un camí més curt. Hem perdut vint minuts.",
+    "bName": "Remei",
+    "b": "He fet aquesta carretera cent vegades i l'aplicació no sap res de les obres. L'última vegada tenia raó."
+  },
+  "leaveTime": {
+    "title": "🕗 A quina hora sortir",
+    "aName": "Sandra",
+    "a": "Vaig dir de sortir a les vuit per evitar la cua i a dos quarts de nou encara ets a la dutxa. Sempre passa el mateix.",
+    "bName": "Marcel",
+    "b": "La festa comença a les deu, així que sortir a les vuit és massa d'hora. Tu comptes amb el pitjor trànsit i després soc jo qui acaba corrent."
+  },
+  "sleepIn": {
+    "title": "🌅 L'hora de llevar-se el cap de setmana",
+    "aName": "Eli",
+    "a": "És dissabte i ja ets dempeus a les sis fent soroll a la cuina. L'únic matí que puc dormir, i s'ha acabat.",
+    "bName": "Pep",
+    "b": "El meu cos es desperta d'hora i intentava no fer soroll. Estar-me al llit mirant el sostre tampoc no m'ajuda."
+  },
+  "dinnerReservation": {
+    "title": "🕰️ Reservar la taula per sopar",
+    "aName": "Abel",
+    "a": "Has reservat la taula a dos quarts de sis i és divendres. Ningú no sopa tan d'hora, i jo ja tenia altres plans.",
+    "bName": "Tina",
+    "b": "Era l'única hora que quedava i l'hauria perdut. Et vaig preguntar, però estaves ocupat i no em vas contestar."
+  },
+  "boardGameRules": {
+    "title": "🎲 Normes que ningú recorda",
+    "aName": "Artur",
+    "a": "Has jugat malament tota la tarda i ara estàs guanyant. Voldria tornar enrere i repetir els torns.",
+    "bName": "Sònia",
+    "b": "Hem llegit les instruccions junts al principi i ningú s'hi va oposar. No pots canviar les normes quan vas perdent."
+  },
+  "houseRules": {
+    "title": "💰 Normes pròpies al Monopoly",
+    "aName": "Gabriel",
+    "a": "Jo poso les multes al mig, així que qui caigui al pàrquing gratuït se les queda. Aquesta és la norma de veritat.",
+    "bName": "Elisa",
+    "b": "Les instruccions no diuen això, i fa que la partida duri tota la nit. Juguem-la tal com està escrita."
+  },
+  "fantasyTrade": {
+    "title": "🏈 Un intercanvi injust a la lliga virtual",
+    "aName": "Narcís",
+    "a": "M'has canviat un jugador lesionat pel meu millor davanter, i he dit que sí sense comprovar-ho. És un intercanvi injust, desfem-lo.",
+    "bName": "Fran",
+    "b": "Ho vas acceptar per escrit i quan ho vam fer el tracte era just. Comprovar-ho és feina teva, no meva."
+  },
+  "lineCall": {
+    "title": "🎾 Fora o dins",
+    "aName": "Martí",
+    "a": "Aquella pilota era clarament fora i tot el partit m'estàs dient que era dins. M'agradaria repetir el punt.",
+    "bName": "Aurora",
+    "b": "Jo era més a prop de la línia i la vaig veure tocar la vora. No ho pots cantar des de l'altre cap de la pista."
+  },
+  "controllerTurns": {
+    "title": "🎮 A qui li toca el comandament",
+    "aName": "Nan",
+    "a": "Fa una hora que tens el comandament i cada cop que te'l demano dius «una altra partida». Els torns no funcionen així.",
+    "bName": "Priscil·la",
+    "b": "Estava enmig d'un nivell i no podia parar. Te'l dono just en acabar aquest, t'ho prometo."
+  },
+  "teamCaptain": {
+    "title": "⚽ Triar els equips",
+    "aName": "Genís",
+    "a": "Has triat primer tots els teus amics i m'has deixat amb els més fluixos un altre cop. Voldria que els equips fossin equilibrats.",
+    "bName": "Anaïs",
+    "b": "Fa anys que juguem així i mai no t'havies queixat. Si vols equips justos, els fem sortejant noms."
+  },
+  "cardCheating": {
+    "title": "🃏 Una carta amagada",
+    "aName": "Ruben",
+    "a": "T'he vist agafar una carta del fons de la baralla a l'última mà. Si així és com guanyes, jo ja no hi jugo.",
+    "bName": "Maia",
+    "b": "Se me'n va caure una i la vaig recollir, res més. Tota la nit has estat de mal humor per perdre i ara m'acuses a mi."
+  },
+  "trashTalk": {
+    "title": "🏀 Provocacions a la pista",
+    "aName": "Domènec",
+    "a": "Una mica de broma durant el partit forma part de la gràcia. Després d'un sol comentari t'has quedat callada i emmurriada, i només era una broma.",
+    "bName": "Carina",
+    "b": "Una cosa és riure's del joc i una altra és fer-ho de mi. Només vull que ho mantinguem amable."
+  },
+  "gameSave": {
+    "title": "💾 Sobreescriure la partida guardada",
+    "aName": "Eudald",
+    "a": "Hi havia invertit trenta hores, en aquella partida guardada, i hi has començat un joc nou al damunt. Ara ja no hi és.",
+    "bName": "Lina",
+    "b": "Només hi havia una ranura i semblava buida. T'ho hauria preguntat, però no eres a casa i només volia provar-ho."
+  },
+  "loserPays": {
+    "title": "🎳 Qui perd paga la pizza",
+    "aName": "Borja",
+    "a": "Vam dir que qui perdés pagava, i has perdut per dues bitlles. Un tracte és un tracte, així que treu la cartera.",
+    "bName": "Camil·la",
+    "b": "Ho vaig dir de broma i pensava que ho sabies. La propera ronda la pago jo, si ho prefereixes."
+  },
+  "pickleball": {
+    "title": "🏓 Qui porta el marcador",
+    "aName": "Glòria",
+    "a": "Jo vaig comptar vuit a sis, i tu dius que és set iguals. Se'ns oblida el marcador i ens espatlla el joc.",
+    "bName": "Dionís",
+    "b": "He anat comptant tots els serveis i n'estic segur. Diguem que el punt es repeteix i continuem."
+  },
+  "dogCouch": {
+    "title": "🐕 El gos al sofà",
+    "aName": "Maura",
+    "a": "Havíem dit que els gossos no pujaven al sofà, i arribo a casa i me'l trobo estirat a tot el llarg. Els coixins són plens de pèl.",
+    "bName": "Lleó",
+    "b": "Té una cara tan feliç i només hi puja mentre mirem la tele. La funda es renta, i així se sent part de la família."
+  },
+  "walkingDuty": {
+    "title": "🦮 Qui treu el gos",
+    "aName": "Hanna",
+    "a": "Des del cap de setmana he fet jo els passejos del matí i de la nit i demà tinc una presentació. Aquesta nit et toca a tu.",
+    "bName": "Ivo",
+    "b": "Plou a bots i acabo de seure. El passeig llarg el faré dissabte, no podem saltar-nos el d'aquesta nit?"
+  },
+  "catNames": {
+    "title": "🐈 Posar nom a la gateta",
+    "aName": "Pia",
+    "a": "L'he trobat jo i l'anomeno Galeta. El teu nom per a ella és Sir Peluix, i no el diré mai al veterinari.",
+    "bName": "Conrad",
+    "b": "Em fa riure cada cop i ja respon. Galeta és bonic, però a mig món li posen aquest nom."
+  },
+  "catKeyboard": {
+    "title": "🐱 El gat a la taula de la feina",
+    "aName": "Montserrat",
+    "a": "Em passa pel teclat durant les reunions i tu l'animes amb llaminadures. Ara pensa que la meva taula és el seu llit.",
+    "bName": "Tomàs",
+    "b": "A tothom a la trucada li encanta, i només busca companyia. Si et molesta, pots tancar la porta."
+  },
+  "feedingTime": {
+    "title": "🥫 Donar de menjar al gat dues vegades",
+    "aName": "Jana",
+    "a": "Li vaig donar el sopar al gat a les sis i tu li has tornat a donar a les set. Ja s'està posant una mica rodó.",
+    "bName": "Irina",
+    "b": "Em miolava i vaig pensar que ningú li havia donat. Una nota a la nevera ho solucionaria."
+  },
+  "vetCosts": {
+    "title": "🐾 Repartir la factura del veterinari",
+    "aName": "Nolasc",
+    "a": "La factura del veterinari ha estat de 120 euros i l'he pagada jo perquè vaig demanar l'hora. Vas adoptar el gos amb mi, així que l'hem de dividir.",
+    "bName": "Xènia",
+    "b": "L'hauria pagat si m'ho haguessis dit abans de la visita. Envia'm el rebut i et transfereixo la meitat."
+  },
+  "offLeash": {
+    "title": "🌳 Deixar anar el gos al parc",
+    "aName": "Cinta",
+    "a": "El teu gos ha corregut cap al meu cadell sense avisar i ell està espantat. El cartell diu que en aquesta zona cal anar amb corretja.",
+    "bName": "Rafel",
+    "b": "És amistós i només volia saludar. El tinc a prop, i tots els altres d'aquí deixen anar el seu."
+  },
+  "petInBed": {
+    "title": "🐶 El gos al llit",
+    "aName": "Serena",
+    "a": "Ocupa mig matalàs i em desperto amb una pota a la cara. M'agradaria tornar a tenir el llit només per a nosaltres.",
+    "bName": "Cugat",
+    "b": "Sol s'angoixa i dorm millor al nostre costat. Prefereixo perdre una mica d'espai que sentir-lo plorar tota la nit."
+  },
+  "puppyName": {
+    "title": "🐕‍🦺 Triar el nom del cadell",
+    "aName": "Rossend",
+    "a": "Fa una setmana que li diem «el cadell» perquè no ens posem d'acord. Jo voto per Coet i li escau perfectament.",
+    "bName": "Margalida",
+    "b": "És tranquil i lent, així que Coet sona ridícul. A mi m'agrada Pebre, que va bé amb les seves pigues."
+  },
+  "fishSitter": {
+    "title": "🐠 Qui dóna menjar als peixos",
+    "aName": "Candela",
+    "a": "Fa un mes que et vaig demanar que els donessis menjar als peixos mentre som fora. Dius que t'has descuidat d'arreglar-ho, i el viatge és demà.",
+    "bName": "Alfons",
+    "b": "Vaig pensar que ho havia ofert la teva veïna i no volia duplicar-ho. Aquesta nit li ho puc demanar a la meva germana, que viu a prop."
+  },
+  "birdNoise": {
+    "title": "🦜 El lloro que no calla",
+    "aName": "Nèstor",
+    "a": "El teu lloro grinyola cada matí a les sis i no puc tornar a dormir. Visc just al costat teu.",
+    "bName": "Fàtima",
+    "b": "És un ocell i saluda el sol. Canviaré la gàbia a una habitació més tranquil·la, em sap greu."
+  },
+  "wifiPassword": {
+    "title": "🔐 Donar la contrasenya del wifi",
+    "aName": "Robert",
+    "a": "Has donat la contrasenya del wifi a tothom qui ha vingut i ara va lent quan treballo. Voldria canviar-la.",
+    "bName": "Sofia",
+    "b": "És de mala educació negar-ho als convidats, i ningú no en gasta tant. Si et molesta, fes una xarxa per a visites."
+  },
+  "tvVolume": {
+    "title": "🔊 La guerra del volum",
+    "aName": "Valerià",
+    "a": "Mires tot al volum 40 i des de la cuina sento cada paraula. Posa subtítols, si us plau.",
+    "bName": "Pepa",
+    "b": "No hi sento bé i em perdo els diàlegs amb el volum més baix. Els subtítols em fan llegir, no mirar."
+  },
+  "phoneAtDinner": {
+    "title": "📵 Mòbils a la taula del restaurant",
+    "aName": "Vinyet",
+    "a": "Sortíem la primera nit d'un mes i has mirat el mòbil cada cinc minuts. M'he sentit com si hi fos sola.",
+    "bName": "Aniol",
+    "b": "Esperava un missatge sobre l'aterratge del vol del meu germà. Ho hauria d'haver dit, però no et volia preocupar."
+  },
+  "notificationSound": {
+    "title": "🔔 Sons de notificació a la biblioteca",
+    "aName": "Eulàlia",
+    "a": "El teu mòbil fa ding cada trenta segons i alguns estem estudiant. Posa'l en silenci, si us plau.",
+    "bName": "Mohamed",
+    "b": "Ara el tinc en vibració, i ho sento molt. No m'havia adonat que el so estava activat, no tornarà a passar."
+  },
+  "darkMode": {
+    "title": "🌗 Mode fosc o mode clar",
+    "aName": "Alexandre",
+    "a": "Has posat la tauleta compartida en mode clar a la nit i em crema els ulls. Havíem quedat que al vespre fos fosc.",
+    "bName": "Odet",
+    "b": "En mode fosc no puc llegir res, el text s'emboirna. El tornaré a canviar abans d'anar a dormir, però de dia el necessito."
+  },
+  "smartSpeaker": {
+    "title": "🗣️ L'altaveu intel·ligent que escolta",
+    "aName": "Gedeó",
+    "a": "Has posat un altaveu intel·ligent a l'habitació i no estic còmode que ens escolti. Voldria que el portessis a la cuina.",
+    "bName": "Lia",
+    "b": "Només el faig servir per a les alarmes i el temps. La cuina és massa lluny, però de nit puc apagar el micròfon."
+  },
+  "tabsOpen": {
+    "title": "🗂️ Dues-centes pestanyes obertes",
+    "aName": "Nerea",
+    "a": "Cada cop que et demano l'ordinador hi ha cent pestanyes obertes i va a pas de tortuga. Si en tanquessis algunes aniria més ràpid.",
+    "bName": "Gaspar",
+    "b": "Totes són coses que necessito i sé exactament on és cadascuna. És un caos organitzat."
+  },
+  "photoStorage": {
+    "title": "🖼️ Compartir l'emmagatzematge al núvol",
+    "aName": "Lorena",
+    "a": "Els teus vídeos han omplert el nostre espai compartit i no puc fer còpia de les meves fotos. Esborra'n alguns o paga el teu.",
+    "bName": "Cosme",
+    "b": "Són tots vídeos de la família i no vull perdre'ls. Els passaré a un disc, però dona'm uns dies."
+  },
+  "videoCallCamera": {
+    "title": "📹 La càmera encesa a les videotrucades",
+    "aName": "Estefania",
+    "a": "La trucada familiar de cada setmana és l'únic moment que ens veiem i tu tens la càmera apagada. És com parlar amb una paret.",
+    "bName": "Telm",
+    "b": "Normalment estic cuinant o en pijama. Hi soc igualment i escolto, i no crec que la càmera sigui el més important."
+  },
+  "doorbellCamera": {
+    "title": "🚪 La càmera del timbre",
+    "aName": "Mara",
+    "a": "Has instal·lat una càmera que vigila tot el camí d'entrada, i també la veuen els veïns. M'agradaria que l'orientessis cap a un altre lloc.",
+    "bName": "Tomeu",
+    "b": "L'hivern passat ens van robar dos paquets, i només grava el nostre porxo. Estic disposat a inclinar-la una mica cap avall."
+  },
+  "holdDoor": {
+    "title": "🚪 Aguantar la porta",
+    "aName": "Ventura",
+    "a": "He aguantat la porta a un grup sencer i cap d'ells no m'ha donat les gràcies. Costa un segon ser educat.",
+    "bName": "Yasmina",
+    "b": "La gent va amb pressa i no sempre se n'adona. Ho has de fer perquè és amable, no perquè esperis agraïment."
+  },
+  "elevatorSpot": {
+    "title": "🛗 Col·locar-se davant l'ascensor",
+    "aName": "Rut",
+    "a": "Esperava l'ascensor i t'hi has colat just quan s'ha obert. Jo hi era clarament abans.",
+    "bName": "Matias",
+    "b": "Duia un cotxet i l'ascensor era l'única manera. No et vaig veure, perdona, però el necessitava de debò."
+  },
+  "cuttingQueue": {
+    "title": "🧍 Colar-se a la cua",
+    "aName": "Úrsula",
+    "a": "Has anat directe al taulell mentre la resta esperem fa vint minuts. Darrere meu hi ha una cua.",
+    "bName": "Idris",
+    "b": "Només tinc una pregunta ràpida i no anava a demanar. No sabia que aquesta era la cua per a això."
+  },
+  "busPhone": {
+    "title": "🚌 Una trucada en veu alta a l'autobús",
+    "aName": "Consol",
+    "a": "L'home de darrere fa vint minuts que parla amb l'altaveu i tots hem sentit el seu dia sencer. Uns auriculars serien un detall.",
+    "bName": "Salomó",
+    "b": "És una trucada urgent i hi ha mala cobertura, així que necessito l'altaveu. Seré breu, no cal ser maleducat."
+  },
+  "shoesInside": {
+    "title": "👟 Sabates dins de casa",
+    "aName": "Cèlia",
+    "a": "Treu-te les sabates a l'entrada, aquí dins no en portem. Acabo de rentar el terra.",
+    "bName": "Pavel",
+    "b": "Avui fa un dia sec i les soles són netes. No hi estic acostumat, però me les trauré si t'importa tant."
+  },
+  "armrest": {
+    "title": "💪 Compartir el braç de la butaca",
+    "aName": "Ot",
+    "a": "Has tingut tots dos braços de la butaca tota la pel·lícula i el meu braç penja a l'aire. El del mig té els dos, aquesta és la norma.",
+    "bName": "Jordina",
+    "b": "Estic al costat de la finestra i necessito lloc pels colzes. No sabia que hi hagués cap norma, em faré a un costat."
+  },
+  "lateRsvp": {
+    "title": "✉️ Respondre la invitació a l'últim moment",
+    "aName": "Greta",
+    "a": "Vaig demanar que tothom contestés abans de l'u i tu només has dit que sí el dia abans. Ja havia encarregat el menjar per a quinze.",
+    "bName": "Tobies",
+    "b": "Fins aleshores no sabia el torn de feina. Una persona més a la taula no fa mal, i he portat un postre."
+  },
+  "thankYouNote": {
+    "title": "💌 Notes d'agraïment",
+    "aName": "Eduarda",
+    "a": "El casament del teu cosí va ser fa un mes i no hem sentit ni una paraula sobre el nostre regal. Una nota no costa res.",
+    "bName": "Brau",
+    "b": "Segurament encara estan al dia amb cent regals. Un missatge no és el final del món, dona'ls temps."
+  },
+  "regift": {
+    "title": "🎁 Tornar a regalar un regal",
+    "aName": "Samanta",
+    "a": "M'he assabentat que la bufanda que em vas regalar l'hi havia regalat abans algú altre a tu. He sentit que era una cosa de passada.",
+    "bName": "Leandre",
+    "b": "Era preciosa i a mi no em quedava bé. Vaig pensar que et quedaria millor a tu, i te l'hauria regalat igualment."
+  },
+  "partyDrink": {
+    "title": "🍾 Portar alguna cosa a la festa",
+    "aName": "Delia",
+    "a": "Has vingut a sopar sense res de res, i jo havia cuinat dos dies. Una ampolla o unes flors haurien estat un detall.",
+    "bName": "Wifred",
+    "b": "Vas dir que només portés a mi mateix i et vaig creure. La propera vegada portaré alguna cosa bona."
+  },
+  "escalator": {
+    "title": "⬆️ Quedar-se quiet a l'escala mecànica",
+    "aName": "Brigit",
+    "a": "T'has quedat a l'esquerra i has bloquejat tothom qui volia pujar caminant. La norma és: quiet a la dreta i caminar per l'esquerra.",
+    "bName": "Àngel",
+    "b": "Porto bosses pesades i només vull arribar sense caure. No m'he de afanyar pels horaris dels altres."
+  },
+  "cinemaTalk": {
+    "title": "🎞️ Xiuxiuejar durant la pel·lícula",
+    "aName": "Climent",
+    "a": "Has anat explicant cada escena a la teva amiga en veu baixa durant tota la pel·lícula. He pagat per veure-la, no per sentir un comentari continu.",
+    "bName": "Leila",
+    "b": "Ella és nova a la sèrie i només l'ajudava a seguir l'argument. Ho deixaré si de veritat t'ha molestat."
+  },
+  "neighbourMusic": {
+    "title": "🔈 Un veí amb una festa fins tard",
+    "aName": "Ada",
+    "a": "La teva festa encara sonava a la una de la matinada i alguns treballem al matí. Un avís previ hauria estat de bona educació.",
+    "bName": "Estanislau",
+    "b": "Ho vaig dir a la comunitat, i és una nit a l'any. Demanaré que entrin a dins, però tothom s'ho està passant bé."
+  },
+  "socks": {
+    "title": "🧦 Mitjons a terra",
+    "aName": "Lúcia",
+    "a": "Hi ha un parell dels teus mitjons al costat del llit, un altre al costat del sofà i un més al passadís. Cada dia els recullo jo.",
+    "bName": "Benet",
+    "b": "Només són mitjons i me'ls tornaré a posar. Els deixaré al cistell, però no cal que els comptis."
+  },
+  "cafeSeat": {
+    "title": "☕ Guardar un seient amb l'ordinador",
+    "aName": "Violeta",
+    "a": "Fa una hora que el teu ordinador guarda aquesta taula i tu has anat a un altre lloc. El local és ple i hi ha gent dempeus.",
+    "bName": "Karim",
+    "b": "Només he sortit a respondre una trucada i tornava de seguida. Deixar una bossa és com tothom guarda lloc."
+  },
+  "groupProject": {
+    "title": "🎓 Un treball de grup que ningú no ha començat",
+    "aName": "Teia",
+    "a": "El treball s'ha d'entregar d'aquí a una setmana i jo he escrit tot l'esquema sola. Necessito que cadascú faci la seva part per divendres.",
+    "bName": "Oleguer",
+    "b": "Tinc dos exàmens abans i ja us vaig dir que les meves parts arribarien tard. Les puc fer durant el cap de setmana."
+  },
+  "puzzle": {
+    "title": "🧩 Acabar el meu trencaclosques",
+    "aName": "Gràcia",
+    "a": "Feia una setmana que hi treballava, en aquell trencaclosques, i has posat les últimes vint peces mentre jo era fora. Volia acabar-lo jo.",
+    "bName": "Aurelià",
+    "b": "Estava damunt la taula i m'hi he deixat endur. No sabia que et feia tanta il·lusió, em sap greu."
+  },
+  "hedge": {
+    "title": "🌿 La bardissa del veí",
+    "aName": "Bàrbara",
+    "a": "La teva bardissa ha crescut per damunt del camí i he de baixar a la carretera per passar. Fa així des de la primavera.",
+    "bName": "Ponç",
+    "b": "Feia temps que volia tallar-la i el temps ha estat horrible. Ho faré diumenge, també podies haver trucat a la porta."
+  }
+}

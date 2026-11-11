@@ -1,0 +1,1052 @@
+{
+  "dishwasher": {
+    "title": "🍽️ Mangkuk di rak atas",
+    "aName": "Rina",
+    "a": "Kamu menumpuk mangkuk basah di rak piring lagi. Kalau ditumpuk begitu, mangkuknya nggak pernah kering. Taruh telungkup satu-satu, dong.",
+    "bName": "Budi",
+    "b": "Ditumpuk begitu lebih hemat tempat, jadi sisa raknya bisa buat wajan. Aku sudah bertahun-tahun begini dan nggak pernah ada yang bau."
+  },
+  "bill": {
+    "title": "🍷 Patungan bayar makan",
+    "aName": "Dewi",
+    "a": "Aku cuma minum air putih, jadi kenapa harus ikut bayar seperempat harga kopi kalian? Kalau makanannya dibagi rata, aku nggak keberatan.",
+    "bName": "Andi",
+    "b": "Dari dulu kita selalu bagi empat. Menghitung siapa pesan apa tiap kali itu ribet, lagian bedanya juga nggak seberapa."
+  },
+  "thermostat": {
+    "title": "🌡️ Rebutan suhu AC",
+    "aName": "Ayu",
+    "a": "AC-nya disetel 18 derajat dan aku kedinginan padahal sudah pakai hoodie. Menaikkannya ke 24 itu nggak berlebihan.",
+    "bName": "Fajar",
+    "b": "24 derajat terlalu gerah buat tidur. Kamu bisa pakai selimut, tapi aku nggak bisa lepas apa-apa lagi."
+  },
+  "roadTrip": {
+    "title": "🚗 Siapa yang nyetir pulang",
+    "aName": "Rizky",
+    "a": "Waktu berangkat, aku yang menyetir enam jam penuh. Adil dong kalau pulangnya kamu yang menyetir.",
+    "bName": "Intan",
+    "b": "Sebelum berangkat aku sudah bilang aku benci menyetir malam, dan kita pulang jam 7 malam. Lain kali, biar aku yang menyetir pas pagi."
+  },
+  "seat": {
+    "title": "💺 Menyandarkan kursi di pesawat malam",
+    "aName": "Nadia",
+    "a": "Kursiku bisa direbahkan, jadi ya aku rebahkan. Ini penerbangan malam, semua orang juga mau tidur.",
+    "bName": "Yoga",
+    "b": "Tinggiku 190 cm dan lututku sudah menempel ke kursimu. Paling nggak tanya dulu sebelum merebahkannya sampai mentok."
+  },
+  "spoiler": {
+    "title": "🎬 Bocoran episode terakhir",
+    "aName": "Wulan",
+    "a": "Kamu kasih tahu siapa pembunuhnya padahal aku belum mulai nonton episode terakhir. Aku sudah menunggunya seminggu penuh.",
+    "bName": "Bima",
+    "b": "Episodenya sudah keluar tiga minggu lalu dan kamu bilang sudah selesai nonton. Aku nggak bisa ingat semua orang sudah nonton sampai mana."
+  },
+  "jacket": {
+    "title": "🧥 Jaket jin yang dipinjam",
+    "aName": "Tika",
+    "a": "Kamu pakai jaket jinku ke konser tanpa izin. Pas dikembalikan, jaketnya bau asap rokok.",
+    "bName": "Reza",
+    "b": "Jaketnya tergantung dekat pintu dan kamu nggak pernah pakai. Tadinya aku mau minta izin, tapi kamu lagi tidur dan aku sudah telat."
+  },
+  "lastSlice": {
+    "title": "🍕 Rebutan potongan terakhir",
+    "aName": "Eko",
+    "a": "Sebelum filmnya mulai, aku sudah bilang “potongan terakhir punyaku”. Semua orang dengar.",
+    "bName": "Lia",
+    "b": "Nggak bisa dong bilang “punyaku” terus dianggurin dua jam. Pizzanya dibiarkan sampai dingin, jadi aku makan saja."
+  },
+  "sundayPlans": {
+    "title": "🛋️ Seharian di sofa pas hari Minggu",
+    "aName": "Maya",
+    "a": "Cuma hari ini kita berdua sama-sama libur, dan aku pengin hiking. Habiskan semuanya di sofa rasanya sayang banget.",
+    "bName": "Dimas",
+    "b": "Seminggu penuh aku kerja keras, dan hari Minggu itu waktuku isi tenaga. Hiking minggu depan saja, hari ini aku cuma mau santai bareng kamu."
+  },
+  "anniversaryGift": {
+    "title": "🎁 Berapa budget buat hadiah",
+    "aName": "Gilang",
+    "a": "Kita kan sepakat hadiah maksimal 500 ribu, tapi kamu beliin aku jam tangan. Sekarang aku kelihatan nggak berusaha apa-apa.",
+    "bName": "Salsa",
+    "b": "Aku lihat jam itu dan langsung kepikiran kamu. Lagi diskon juga, dan angka yang kita tentukan bertahun-tahun lalu nggak seharusnya melarang aku royal."
+  },
+  "couplePhoto": {
+    "title": "📸 Posting foto kita tanpa izin",
+    "aName": "Sinta",
+    "a": "Kamu upload foto pantai kita padahal aku belum lihat fotonya. Aku jelek banget di situ dan pasti bakal bilang jangan.",
+    "bName": "Rendra",
+    "b": "Menurutku kamu cantik dan aku cuma mau bagi hari yang menyenangkan. Aku nggak tahu kamu bakal sekesal ini."
+  },
+  "phoneInBed": {
+    "title": "📱 Main HP di tempat tidur",
+    "aName": "Laras",
+    "a": "Kita sudah naik ke kasur dan kamu scroll sejam sementara aku cuma berbaring. Aku pengin ngobrol, atau paling nggak tidur bareng.",
+    "bName": "Hendra",
+    "b": "Ini caraku santai setelah hari yang panjang. Kamu boleh ngajak ngobrol, tapi aku nggak mau ada aturan soal HP yang cuma kupegang."
+  },
+  "movieTurns": {
+    "title": "🍿 Giliran siapa pilih film",
+    "aName": "Citra",
+    "a": "Aku yang milih terakhir kali, dan sebelumnya juga. Sekarang giliranmu, tapi kamu malah empat puluh menit bilang nggak ada yang menarik.",
+    "bName": "Arif",
+    "b": "Aku pasti milih kalau ada yang mau kutonton. Kamu selalu pilih yang kurang kusuka, makanya aku diam."
+  },
+  "slowReply": {
+    "title": "💬 Nunggu balasan chat berjam-jam",
+    "aName": "Putri",
+    "a": "Aku kirim pertanyaan simpel jam dua belas siang dan baru dibalas jam delapan malam. Balas cepat nggak akan rugi apa-apa buat kamu.",
+    "bName": "Galih",
+    "b": "Aku rapat seharian dan HP-ku di dalam tas. Bukannya nyuekin kamu, cuma memang nggak mendesak."
+  },
+  "bedSide": {
+    "title": "🛏️ Sisi kasur siapa",
+    "aName": "Wati",
+    "a": "Selama enam tahun ini aku selalu tidur dekat jendela. Sekarang kita pindah, kamu sudah ambil sisiku bahkan sebelum aku selesai beres-beres.",
+    "bName": "Joko",
+    "b": "Di kamar ini kasurnya nempel di dinding seberang, jadi sisinya kebalik. Aku nggak keberatan tukeran lagi, cuma tadi nggak kepikiran."
+  },
+  "surpriseParty": {
+    "title": "🎈 Pesta kejutan yang nggak diinginkan",
+    "aName": "Lina",
+    "a": "Aku sudah merencanakan semuanya buat ulang tahunmu dan mengundang semua orang. Kamu kelihatan murung sepanjang malam.",
+    "bName": "Gani",
+    "b": "Berbulan-bulan lalu aku sudah bilang benci kejutan dan keramaian. Aku menghargai usahamu, tapi kamu nggak dengerin."
+  },
+  "toothpaste": {
+    "title": "🪥 Cara mencet pasta gigi",
+    "aName": "Indah",
+    "a": "Kamu mencet tubenya di tengah dan ditinggal gepeng dan melintir. Memang sepele sih, tapi tiap pagi aku lihat itu.",
+    "bName": "Bayu",
+    "b": "Ujung-ujungnya keluarnya sama saja. Aku nggak ngerti kenapa ada tempat yang benar buat mencet."
+  },
+  "blanket": {
+    "title": "🛌 Si pencuri selimut",
+    "aName": "Dian",
+    "a": "Tiap malam kamu menggulung diri pakai seluruh selimut dan aku bangun kedinginan. Rasanya tidur di samping lontong.",
+    "bName": "Rudi",
+    "b": "Aku juga kedinginan dan nggak sengaja kok. Mending kita beli selimut kedua daripada menyalahkan aku."
+  },
+  "lateDinner": {
+    "title": "🍝 Makan malam jam sembilan",
+    "aName": "Ratna",
+    "a": "Katamu pulang jam enam, tapi sampai rumah jam sembilan. Pasta yang kumasak sudah dingin dan aku kelaparan.",
+    "bName": "Yudi",
+    "b": "Telepon kerjaan molor dan aku nggak bisa asal menutup. Aku pasti ngabarin, tapi HP-ku mati."
+  },
+  "dateBill": {
+    "title": "💳 Siapa yang bayar pas kencan",
+    "aName": "Anisa",
+    "a": "Kita sudah jalan belasan kali dan kamu nggak pernah mengeluarkan dompet. Aku pengin kita gantian.",
+    "bName": "Teguh",
+    "b": "Penghasilanku lebih besar daripada kamu sekarang dan aku senang membayarnya. Aku nggak tahu kamu keberatan, aku cuma nggak mau berdebat soal bon."
+  },
+  "quietHours": {
+    "title": "🔇 Jam tenang setelah jam sepuluh",
+    "aName": "Kartika",
+    "a": "Besok aku shift pagi, dan suara video call-mu tembus tembok jam sebelas malam. Tolong pelankan suaranya.",
+    "bName": "Ilham",
+    "b": "Timku beda zona waktu, jadi cuma malam yang cocok. Aku pakai headset, tapi kamu juga bisa pakai penyumbat telinga."
+  },
+  "fridgeShelf": {
+    "title": "🧊 Rak ini punya siapa",
+    "aName": "Bagas",
+    "a": "Rak kulkasku sudah kuberi label, tapi kamu tetap menaruh sisa makananmu di situ. Rakmu sendiri masih banyak ruang.",
+    "bName": "Mira",
+    "b": "Rakku penuh dan wadahmu isinya tinggal separuh. Cuma semalam, aku kan nggak mengambil apa-apa."
+  },
+  "overnightGuest": {
+    "title": "🚪 Tamu yang menginap seminggu",
+    "aName": "Ratih",
+    "a": "Temanmu sudah enam hari tidur di ruang tengah dan nggak ada yang nanya aku. Aku mau apartemenku kembali.",
+    "bName": "Nanda",
+    "b": "Dia lagi nggak punya tempat tinggal dan nggak ada tempat lain. Aku bilang dia cuma menginap beberapa malam, dan dia ikut patungan belanja."
+  },
+  "sharedShampoo": {
+    "title": "🧴 Pakai sampoku",
+    "aName": "Sekar",
+    "a": "Sampoku itu mahal dan hari Senin hampir penuh. Hari Jumat sudah mau habis, padahal cuma kamu yang mandi di sini selain aku.",
+    "bName": "Danu",
+    "b": "Aku cuma pakai sedikit, dua kali. Kalau memang sepenting itu, simpan saja di kamarmu, kukira barang kamar mandi dipakai bareng."
+  },
+  "dirtyPan": {
+    "title": "🍳 Wajan yang direndam",
+    "aName": "Haris",
+    "a": "Wajan itu sudah di bak cuci sejak Selasa dan mulai bau. Siapa yang masak, dia yang cuci.",
+    "bName": "Mega",
+    "b": "Aku mau mencucinya nanti, biar rendamannya lebih lama. Kamu juga sudah dua hari ninggalin piring di sini dan aku nggak bilang apa-apa."
+  },
+  "dryerLaundry": {
+    "title": "🧺 Baju ditinggal di mesin pengering",
+    "aName": "Sari",
+    "a": "Aku turun dan menemukan baju bersihku ditumpuk di meja karena kamu butuh mesin pengeringnya. Bajunya masih lembap.",
+    "bName": "Ivan",
+    "b": "Putarannya sudah selesai sejam yang lalu dan aku punya cucian yang menunggu. Tolong ambil barangmu pas bunyi bel."
+  },
+  "loudMusic": {
+    "title": "🎧 Musik tembus tembok",
+    "aName": "Fikri",
+    "a": "Sekarang jam tiga sore hari Sabtu dan aku di kamarku sendiri. Menurutku aku nggak perlu pakai headphone di rumah sendiri.",
+    "bName": "Tari",
+    "b": "Bassnya menggetarkan mejaku pas aku lagi belajar. Nggak ada yang nyuruh kamu berhenti, cuma kecilkan sedikit."
+  },
+  "longShower": {
+    "title": "🚿 Air panas habis",
+    "aName": "Amir",
+    "a": "Mandimu empat puluh menit dan air panas selalu habis pas giliranku. Sepuluh menit per orang itu adil.",
+    "bName": "Bela",
+    "b": "Aku nggak menghitung waktu dan cuma di situ aku bisa rileks. Mungkin kita bisa gantian siapa yang duluan."
+  },
+  "lightsOn": {
+    "title": "💡 Semua lampu dinyalakan",
+    "aName": "Gita",
+    "a": "Aku lewat dan semua lampu di rumah menyala, bahkan di ruangan yang nggak ada orangnya. Tagihannya dibagi, jadi itu uangku juga.",
+    "bName": "Sandi",
+    "b": "Aku suka yang terang dan sepanjang malam keluar masuk ruangan. Menyalakan dan mematikan lampu terus-terusan sama menyebalkannya."
+  },
+  "parcels": {
+    "title": "📦 Paket menumpuk di lorong",
+    "aName": "Dinda",
+    "a": "Ada enam kardus milikmu ditumpuk di lorong dan tiap hari aku tersandung. Tolong bawa ke kamarmu.",
+    "bName": "Rangga",
+    "b": "Aku mau membawanya ke kantor pos buat diretur, tapi aku sibuk. Baru empat hari kok di situ."
+  },
+  "houseplant": {
+    "title": "🪴 Siapa yang menyiram tanaman",
+    "aName": "Wening",
+    "a": "Aku yang beli tanaman itu buat ruang tamu dan tiap minggu aku siram. Sekarang tinggal kayak ranting karena kamu pindahin ke pojok yang gelap.",
+    "bName": "Pandu",
+    "b": "Tanamannya menghalangi TV dan kupikir pojok itu nggak masalah. Aku nggak tahu tanaman serapuh itu."
+  },
+  "lateArrival": {
+    "title": "⏰ Telat empat puluh menit lagi",
+    "aName": "Danu",
+    "a": "Kita janjian jam tujuh dan aku duduk sendirian di restoran sampai jam delapan kurang dua puluh. Ini sudah ketiga kalinya kamu begini.",
+    "bName": "Mira",
+    "b": "Busnya telat dan aku sudah ngabarin kamu. Kamu kan bisa pesan minum, daripada marah-marah."
+  },
+  "cancelledPlans": {
+    "title": "🙅 Batal sejam sebelumnya",
+    "aName": "Ruli",
+    "a": "Aku mengatur ulang seharianku buat ketemu kamu, tapi kamu batalin lewat satu pesan sejam sebelumnya. Ini bukan yang pertama kali.",
+    "bName": "Carlo",
+    "b": "Aku capek banget dan pasti jadi teman yang membosankan. Kupikir lebih baik bilang terus terang daripada memaksakan diri datang."
+  },
+  "borrowedBook": {
+    "title": "📚 Buku yang nggak balik-balik",
+    "aName": "Isma",
+    "a": "Buku itu kupinjamkan musim semi lalu dan sudah setahun. Itu ada tanda tangannya, dan sudah dua kali aku nanya.",
+    "bName": "Adit",
+    "b": "Ada kok di suatu tempat, janji, mungkin di kardus waktu pindahan. Nanti kucari, kamu nggak usah terus-terusan nagih."
+  },
+  "mutedChat": {
+    "title": "🔕 Membisukan grup chat",
+    "aName": "Hesti",
+    "a": "Kamu membisukan grup chat kita dan ketinggalan rencana yang berubah dua kali. Kita semua jadi nunggu kamu di tempat yang salah.",
+    "bName": "Vino",
+    "b": "Isinya dua ratus pesan sehari, kebanyakan meme. Aku baca yang penting kalau nggak makan waktu sejam."
+  },
+  "birthdayDinner": {
+    "title": "🎂 Siapa yang bayar makan ulang tahun",
+    "aName": "Kevin",
+    "a": "Ini makan malam ulang tahunku, tapi tagihannya 900 ribu per orang gara-gara winenya mahal. Kukira yang berulang tahun nggak perlu bayar.",
+    "bName": "Sasa",
+    "b": "Kita selalu bagi rata sama seluruh grup, semua orang juga tahu itu. Kamu yang milih tempatnya juga."
+  },
+  "plusOne": {
+    "title": "💍 Bawa pasangan ke pernikahan",
+    "aName": "Bela",
+    "a": "Di undangan cuma ada namaku, padahal pacarku yang sudah dua tahun bakal sendirian di rumah. Aku tetap bakal bawa dia.",
+    "bName": "Kania",
+    "b": "Gedungnya punya batas jumlah yang ketat dan tiap kursi mahal buat kami. Maaf, aku nggak bisa bikin pengecualian buat satu orang."
+  },
+  "chargerBorrow": {
+    "title": "🔌 Charger yang kamu pinjam",
+    "aName": "Fandi",
+    "a": "Itu charger ketigaku yang hilang di tempatmu. Aku mau semuanya balik, bukan maaf lagi.",
+    "bName": "Lolita",
+    "b": "Bentuknya mirip semua, jadi jujur aku lupa mana punya siapa. Hari Jumat kubawakan sekantong."
+  },
+  "auxCord": {
+    "title": "🎵 Siapa yang pegang musik di mobil",
+    "aName": "Tegar",
+    "a": "Aku yang nyetir, jadi aku yang milih musik. Jalannya panjang dan aku yang harus tetap melek.",
+    "bName": "Ema",
+    "b": "Kamu muter album yang sama tiga kali hari ini. Penumpang juga punya hak suara, begitu aturan tiap road trip."
+  },
+  "karaoke": {
+    "title": "🎤 Lagu yang nggak selesai-selesai",
+    "aName": "Gita",
+    "a": "Kamu sudah nyanyi sembilan lagu dan kami yang lain masing-masing cuma satu. Mikrofonnya itu harusnya gantian keliling ruangan.",
+    "bName": "Maxi",
+    "b": "Nggak ada yang lain daftar di antrean, jadi aku isi kekosongannya. Jujur aku kira semua orang senang."
+  },
+  "uninvited": {
+    "title": "🙈 Nggak masuk daftar undangan",
+    "aName": "Selma",
+    "a": "Aku lihat foto pestamu dan aku nggak diundang, padahal aku datang ke semua pestamu sebelumnya. Sakit banget rasanya.",
+    "bName": "Jono",
+    "b": "Itu acara kecil buat teman kantorku, cuma sepuluh orang. Nggak ada hubungannya sama kamu, aku nggak mengira kamu mau datang."
+  },
+  "holidayHost": {
+    "title": "🦃 Siapa yang jadi tuan rumah Lebaran",
+    "aName": "Marta",
+    "a": "Kita sudah jadi tuan rumah acara keluarga empat tahun berturut-turut. Sekarang giliran orang lain, dan aku pengin liburan tanpa masak.",
+    "bName": "Pras",
+    "b": "Ibu nggak kuat naik tangga dan meja kita yang paling besar. Nggak ada yang menawarkan diri, jadi kukira kita lagi."
+  },
+  "dailyCalls": {
+    "title": "📞 Ditelepon tiap hari",
+    "aName": "Lia",
+    "a": "Ibu menelepon tiap hari sekitar jam enam dan berharap ngobrol setengah jam. Aku sayang dia, tapi kadang aku memang lagi nggak sanggup.",
+    "bName": "Yoyo",
+    "b": "Dia tinggal sendirian dan telepon itu bagian terbaik harinya. Kamu bisa bilang nanti kirim pesan kalau lagi sibuk."
+  },
+  "bedtimeKids": {
+    "title": "🌙 Jam tidur anak hari sekolah",
+    "aName": "Ingrid",
+    "a": "Anak kita delapan tahun dan harusnya sudah tidur jam delapan. Kamu biarkan dia begadang nonton bola, sekarang dia lesu di sekolah.",
+    "bName": "Luki",
+    "b": "Cuma satu pertandingan dan dia senang banget. Sesekali tidur malam nggak bakal bikin dia kenapa-kenapa, dan itu spesial buat dia."
+  },
+  "borrowedSweater": {
+    "title": "👚 Adik yang suka mengacak lemariku",
+    "aName": "Alya",
+    "a": "Kamu mengambil sweter hijauku tanpa izin dan memakainya ke pesta. Baliknya sudah bernoda, padahal aku sendiri belum pernah memakainya.",
+    "bName": "Priya",
+    "b": "Seumur hidup aku pinjam barang darimu dan kamu nggak pernah keberatan. Nanti kulaundry, tapi kamu membesar-besarkan."
+  },
+  "familyRecipe": {
+    "title": "🥘 Resep Nenek",
+    "aName": "Elisa",
+    "a": "Sup Nenek itu selalu pakai satu sendok pasta tomat, dan itu tertulis dengan tulisan tangannya. Kamu menghilangkannya dan bilang resepnya sama.",
+    "bName": "Merdi",
+    "b": "Menurutku rasanya lebih ringan tanpa itu, dan begitulah yang kuingat. Tetap resep Nenek, cuma sedikit diperbaiki."
+  },
+  "dadRide": {
+    "title": "🚙 Antar Ayah ke bandara",
+    "aName": "Sandi",
+    "a": "Aku yang antar Ayah terakhir kali, dan sebelumnya juga. Bisa nggak kamu antar penerbangan pagi kali ini, jangan pesan taksi?",
+    "bName": "Hana",
+    "b": "Pulang-pergi dua jam dan aku harus sampai kerja jam enam. Taksinya kubayarin, aku cuma nggak punya waktu."
+  },
+  "familyChat": {
+    "title": "👨‍👩‍👧 Pesan berantai di grup keluarga",
+    "aName": "Rina",
+    "a": "Om terus-terusan meneruskan pesan berantai dan video ke seluruh grup keluarga. Aku nggak bisa menemukan yang beneran di antaranya.",
+    "bName": "Teddy",
+    "b": "Dia cuma pengin jadi bagian grup dan berbagi tawa. Mungkin ditegur sebentar, tapi membisukannya kelihatan nggak baik."
+  },
+  "tvRemote": {
+    "title": "📺 Remote yang disembunyikan",
+    "aName": "Nanda",
+    "a": "Tiap aku duduk mau nonton pertandingan, remotenya hilang dan yang tayang kartun. Ini kedua kalinya minggu ini.",
+    "bName": "Mawar",
+    "b": "Itu jam tontonan favoritku dan pertandinganmu berlangsung sepanjang sore. Kita bisa gantian, tapi kamu nggak boleh ambil seluruh sore."
+  },
+  "seatingChart": {
+    "title": "🍽️ Siapa yang duduk di ujung meja",
+    "aName": "Gusti",
+    "a": "Aku duduk di ujung itu tiap makan malam keluarga sejak kecil. Sekarang pacarmu mengambilnya dan nggak ada yang bilang apa-apa.",
+    "bName": "Tari",
+    "b": "Dia duduk duluan, dan dia tamu. Cuma kursi, dan kita bisa tukar tempat lain kali."
+  },
+  "teenPhone": {
+    "title": "🧒 HP di meja makan",
+    "aName": "Dewi",
+    "a": "Makan malam itu satu-satunya waktu kita duduk bareng sebagai keluarga. Lima belas menit tanpa HP bukan permintaan yang besar.",
+    "bName": "Eli",
+    "b": "Aku cuma ngecek apa temanku sudah balas. Kamu juga main HP di meja kalau kantor ngirim pesan."
+  },
+  "meetingEmail": {
+    "title": "📧 Rapat yang cukup lewat email",
+    "aName": "Paulina",
+    "a": "Kita habiskan sejam rapat online buat mendengar isi yang muat dalam tiga baris. Sejam itu bisa kupakai menyelesaikan laporan.",
+    "bName": "Gregorius",
+    "b": "Semua orang sibuk, tapi rapat memungkinkan orang bertanya langsung. Email bakal memunculkan lima percakapan terpisah."
+  },
+  "microwaveFish": {
+    "title": "🐟 Ikan di microwave kantor",
+    "aName": "Wandi",
+    "a": "Kamu menghangatkan salmon di microwave bersama dan seisi lantai bau sampai jam tiga. Tolong bawa yang lain.",
+    "bName": "Dimas",
+    "b": "Itu satu-satunya makan siang yang layak buatku dan uangku nggak banyak buat beli makanan di luar. Orang lain menghangatkan kari dan nggak ada yang bilang apa-apa."
+  },
+  "stolenLunch": {
+    "title": "🥪 Ada yang makan bekalku",
+    "aName": "Bambang",
+    "a": "Ada namaku di kantongnya dan sandwichnya hilang sebelum siang. Kurasa kamu lihat siapa yang mengambilnya.",
+    "bName": "Fitria",
+    "b": "Aku nggak lihat apa-apa, dan aku nggak mau menuduh siapa pun. Mungkin tulis catatan di kulkas itu langkah pertama yang lebih baik."
+  },
+  "replyAll": {
+    "title": "📨 Balas ke semua orang kantor",
+    "aName": "Evi",
+    "a": "Kamu membalas ke semua orang, dua ratus orang, dengan 'makasih!'. Sekarang kotak masukku ketambahan empat puluh balasan begitu.",
+    "bName": "Joko",
+    "b": "Aku mau sopan dan tombolnya ada di situ. Kesalahan kecil, dan nggak ada yang benar-benar dirugikan."
+  },
+  "officeCold": {
+    "title": "❄️ Kantor yang dingin banget",
+    "aName": "Rebeka",
+    "a": "AC-nya disetel serendah itu sampai aku pakai jaket tebal di mejaku. Naik beberapa derajat nggak akan menyakiti siapa pun.",
+    "bName": "Anto",
+    "b": "Aku gampang gerah dan mataharinya mengenai sisiku sepanjang sore. Kalau kamu kedinginan, selimut lebih gampang daripada kami semua kepanasan."
+  },
+  "openOfficeHeadphones": {
+    "title": "🎧 Headphone di kantor terbuka",
+    "aName": "Lukman",
+    "a": "Aku pakai headphone supaya fokus, tapi orang menepukku tiap beberapa menit buat pertanyaan singkat. Itu memutus alur pikiranku.",
+    "bName": "Karmila",
+    "b": "Susah tahu kamu beneran sibuk atau nggak. Kirim pesan dulu terlalu lambat kalau jawabannya cuma sepuluh detik."
+  },
+  "emptyCoffee": {
+    "title": "☕ Secangkir kopi terakhir",
+    "aName": "Tono",
+    "a": "Kamu menuang sisa kopi terakhir dan meninggalkan tekonya kosong di pemanas. Bikin seteko baru cuma dua menit.",
+    "bName": "Lusi",
+    "b": "Aku telat buat rapat online dan jujur nggak sadar itu cangkir terakhir. Yang berikutnya aku yang bikin, janji."
+  },
+  "ideaCredit": {
+    "title": "💡 Ide siapa sebenarnya",
+    "aName": "Sutrisno",
+    "a": "Aku mengusulkan jadwal baru itu bulan Maret dan kamu mempresentasikannya ke bos seolah-olah idemu. Ucapan terima kasih saja sudah cukup.",
+    "bName": "Kartini",
+    "b": "Kita membicarakannya bersama dan aku mengembangkannya dengan tim. Kupikir kita semua setuju itu kerja bersama."
+  },
+  "fridayDeadline": {
+    "title": "📅 Tenggat hari Jumat",
+    "aName": "Monika",
+    "a": "Kamu bilang bakal kirim bagianmu hari Jumat, dan sekarang sudah Senin. Semua orang menunggu ini, dan aku harus nanya dua kali.",
+    "bName": "Ahmad",
+    "b": "Ada proyek yang lebih besar menimpaku dan aku harus memilih. Harusnya aku bilang lebih awal, tapi hari ini sampai ke kamu."
+  },
+  "deskLunch": {
+    "title": "🥗 Makan siang di meja kerja",
+    "aName": "Hendro",
+    "a": "Di tim ini sudah nggak ada yang istirahat makan siang beneran, dan lama-lama dianggap wajar. Aku pengin kita keluar dari meja jam dua belas.",
+    "bName": "Yuni",
+    "b": "Aku makan sambil kerja dan jadi bisa pulang lebih cepat. Istirahat boleh-boleh saja, tapi aku lebih suka menentukan sendiri."
+  },
+  "calendarInvite": {
+    "title": "🗓️ Rapat tanpa agenda",
+    "aName": "Silvia",
+    "a": "Undanganmu cuma tulis 'ngobrol santai' tanpa agenda dan makan empat puluh lima menit pagiku. Tolong bilang dulu soal apa.",
+    "bName": "Bonar",
+    "b": "Maksudnya cuma ngobrol, dan akhirnya kita menyelesaikan dua masalah. Agenda resmi malah bikin obrolannya mati."
+  },
+  "rentSplit": {
+    "title": "🏠 Bagi uang sewa menurut luas kamar",
+    "aName": "Anita",
+    "a": "Kamarku paling kecil dan nggak ada lemari, tapi bayarku sama dengan kamu. Menurutku kamar paling besar harusnya bayar lebih.",
+    "bName": "Zaki",
+    "b": "Waktu tanda tangan kontrak kita sepakat bagi tiga sama rata. Menghitung ulang tiap kali salah satu dari kita merasa nggak enak itu bikin ribet."
+  },
+  "smallLoan": {
+    "title": "💵 Seratus ribu dari makan siang",
+    "aName": "Rian",
+    "a": "Bulan lalu aku yang bayarin makan siangmu, dan minggu lalu lagi. Totalnya tiga ratus ribu dan kamu belum ngomong apa-apa.",
+    "bName": "Dorma",
+    "b": "Kukira kita sudah impas setelah giliran beli kopi. Aku nggak keberatan bayar, sebut saja angkanya dan hari ini kutransfer."
+  },
+  "tipping": {
+    "title": "🧾 Berapa tip yang pantas",
+    "aName": "Heni",
+    "a": "Pelayanannya lambat dan makanannya dingin. Aku kasih sepuluh persen, bukan dua puluh.",
+    "bName": "Oka",
+    "b": "Tempatnya penuh dan pelayannya jelas kewalahan. Tip penting banget buat mereka dan buat kita nggak seberapa."
+  },
+  "streamingShare": {
+    "title": "📺 Patungan akun streaming",
+    "aName": "Mariana",
+    "a": "Aku yang bayar paket streaming dan sekarang setengah temanmu ikut pakai. Aku mau mereka patungan atau bikin akun sendiri.",
+    "bName": "Aldo",
+    "b": "Harganya sama saja mau dua atau lima orang yang pakai. Minta uang sedikit dari tiap orang malah canggung."
+  },
+  "taxiSplit": {
+    "title": "🚕 Bagi ongkos taksi pulang",
+    "aName": "Lisna",
+    "a": "Kamu turun duluan dan aku masih lima belas menit lagi, tapi ongkosnya kita bagi dua. Menurutku itu kurang adil.",
+    "bName": "Candra",
+    "b": "Kita satu mobil dan berangkat bareng. Menghitung per kilometer buat dua ratus ribu itu terlalu berlebihan."
+  },
+  "groupGift": {
+    "title": "🎀 Kado patungan",
+    "aName": "Ika",
+    "a": "Semua orang patungan dua puluh lima ribu buat kado guru kita, tapi aku masih pelajar dan itu lumayan banyak buatku. Boleh aku kasih lima belas ribu?",
+    "bName": "Wahyu",
+    "b": "Kadonya sudah dipesan dengan harga segitu, dan kalau bagianmu lebih kecil, orang lain yang nombok. Aku ngerti, tapi jadi canggung."
+  },
+  "groceryList": {
+    "title": "🛒 Bagi belanjaan bulanan",
+    "aName": "Pipit",
+    "a": "Kamu beli camilan dan keju mahal terus dimasukkan ke total bareng. Aku cuma makan yang biasa-biasa, jadi nggak seharusnya bayar setengah.",
+    "bName": "Rafi",
+    "b": "Kamu boleh makan kejunya kapan saja. Dari awal ini kan tagihan bersama dan aku nggak mau bikin catatan spreadsheet."
+  },
+  "bigPurchase": {
+    "title": "🛍️ Beli barang mahal tanpa bilang",
+    "aName": "Stefi",
+    "a": "Kamu beli monitor gaming baru empat juta di minggu yang sama waktu kita lagi nabung buat liburan. Kamu bisa nanya aku dulu.",
+    "bName": "Nico",
+    "b": "Itu dari uang jajanku sendiri, dan aku sudah nunggu setahun. Kupikir aku nggak perlu izin."
+  },
+  "subscriptions": {
+    "title": "💳 Berhenti langganan yang terlupa",
+    "aName": "Juli",
+    "a": "Kita bayar empat aplikasi yang nggak pernah dibuka. Yuk batalkan dan uangnya kita pakai buat liburan.",
+    "bName": "Olivia",
+    "b": "Aku yakin bakal pakai paling nggak dua di antaranya sebentar lagi. Boleh kita pertahankan sampai akhir bulan sebelum memutuskan?"
+  },
+  "restaurantChoice": {
+    "title": "🍜 Makan di mana malam ini",
+    "aName": "Hilman",
+    "a": "Minggu ini sudah tiga kali aku bilang ramen dan tiap kali kamu jawab oke, terus milih yang lain. Aku pengin kita beneran ke sana.",
+    "bName": "Bia",
+    "b": "Pas sampai sana aku lagi nggak mood makan mi. Lain kali sebut saja tempatnya dan aku komit sebelum berangkat."
+  },
+  "cerealMilk": {
+    "title": "🥣 Susu dulu baru sereal",
+    "aName": "Panji",
+    "a": "Kamu menuang susu dulu baru memasukkan serealnya. Itu salah, dan serealnya jadi lembek sebelum habis.",
+    "bName": "Jesi",
+    "b": "Aku suka begitu dan langsung kumakan. Kamu nggak perlu lihat, biarkan aku menikmati sarapanku."
+  },
+  "ketchup": {
+    "title": "🍳 Saus tomat di telur",
+    "aName": "Lulu",
+    "a": "Kamu menuang saus tomat di omelet yang sudah matang sempurna. Itu menyia-nyiakan telur yang bagus, dan aku nggak tega lihatnya.",
+    "bName": "Dodi",
+    "b": "Dari kecil aku makan begini dan aku suka rasanya. Ini piringku, kamu makan punyamu semaumu."
+  },
+  "pizzaCrust": {
+    "title": "🍕 Pinggiran pizza ditinggal",
+    "aName": "Tomi",
+    "a": "Kamu makan bagian tengahnya dan meninggalkan pinggirannya di piring tiap kali. Itu bagian terenak dan malah masuk tong sampah.",
+    "bName": "Gemi",
+    "b": "Pinggirannya keras dan aku sudah kenyang pas sampai situ. Kalau mau, ambil saja, aku nggak mau memaksakan diri."
+  },
+  "coffeeTea": {
+    "title": "☕ Kopi atau teh di pagi hari",
+    "aName": "Arjun",
+    "a": "Kamu bilang teh itu cuma air rebusan daun, terus minta seteguk kopiku. Aku minta maaf dari kamu.",
+    "bName": "Hesti",
+    "b": "Aku lebih suka bau kopi daripada rasanya. Dan aku minum teh karena menenangkan, nggak perlu dibujuk."
+  },
+  "spiceLevel": {
+    "title": "🌶️ Seberapa pedas itu kepedasan",
+    "aName": "Diki",
+    "a": "Kamu minta 'nggak pedas' terus menuang setengah minyak cabai ke piringmu. Sekarang seisi meja terbatuk-batuk.",
+    "bName": "Annisa",
+    "b": "Nggak pedas buatku beda dengan buatmu, dan aku nggak tahu mejanya dipakai bareng. Lain kali kupesan mangkuk terpisah."
+  },
+  "leftovers": {
+    "title": "🥡 Membuang sisa makanan",
+    "aName": "Monik",
+    "a": "Aku menyimpan kari itu buat makan siang dan kamu membuangnya karena sudah dua hari di kulkas. Itu masih bagus.",
+    "bName": "Kelvin",
+    "b": "Kupikir sudah kelamaan di sana, dan aku nggak mau ada yang sakit perut. Akan kuganti, maaf ya."
+  },
+  "cilantro": {
+    "title": "🌿 Daun ketumbar di semua masakan",
+    "aName": "Vero",
+    "a": "Kamu memasukkan daun ketumbar lagi ke masakan, padahal kamu tahu rasanya seperti sabun buatku. Aku nggak bisa menyingkirkan semuanya.",
+    "bName": "Marlon",
+    "b": "Resepnya memang pakai itu dan masakannya butuh kesegarannya. Lain kali kutaruh di mangkuk terpisah."
+  },
+  "tooSalty": {
+    "title": "🧂 Sup terlalu asin",
+    "aName": "Fira",
+    "a": "Kamu menggarami sup sebelum dicicipi dan sekarang terlalu asin untuk dimakan. Aku mau mulai lagi dengan panci baru.",
+    "bName": "Jaka",
+    "b": "Rasanya pas buatku, dan aku selalu menambahkan garam di akhir. Tambah air saja, gampang kok."
+  },
+  "doubleDip": {
+    "title": "🥨 Mencelup dua kali di pesta",
+    "aName": "Cinta",
+    "a": "Aku lihat kamu menggigit keripik dan mencelupkannya lagi ke mangkuk bersama. Sekarang aku nggak mau makan apa-apa dari situ.",
+    "bName": "Bobi",
+    "b": "Cuma sekali celup dan nggak ada yang lihat. Kamu membesar-besarkan, ambil saja sendok bersih."
+  },
+  "pastaShape": {
+    "title": "🍝 Pasta yang bukan spageti",
+    "aName": "Giska",
+    "a": "Saus ini harusnya buat mi panjang, dan kamu bikin pakai yang pendek. Itu jelas bukan masakan yang sama.",
+    "bName": "Hendri",
+    "b": "Di lemari cuma ada penne, dan rasanya enak-enak saja. Memangnya sepenting itu bentuknya?"
+  },
+  "hotdog": {
+    "title": "🌭 Hot dog itu sandwich bukan?",
+    "aName": "Robi",
+    "a": "Hot dog itu isian di dalam roti yang dibelah, jadi itu sandwich. Titik.",
+    "bName": "Samsul",
+    "b": "Itu makanan tersendiri. Nggak ada yang pesan sandwich dan mengharapkan hot dog, dan nggak ada menu yang menaruhnya di bagian sandwich."
+  },
+  "trashDay": {
+    "title": "🗑️ Membuang sampah",
+    "aName": "Candra",
+    "a": "Tong sampahnya sudah meluber sejak Rabu dan empat kali terakhir aku yang membuangnya. Sekarang giliranmu.",
+    "bName": "Amel",
+    "b": "Aku yang membuang sampah daur ulang dan kompos, dan itu juga dihitung. Mari bikin jadwal yang jelas biar kita berhenti menghitung-hitung."
+  },
+  "foldTowels": {
+    "title": "🧺 Cara melipat handuk yang benar",
+    "aName": "Nino",
+    "a": "Barusan aku melipat ulang semua handuk jadi tiga bagian karena kamu melipatnya jadi dua dan nggak muat di rak.",
+    "bName": "Karla",
+    "b": "Itu cuma handuk dan semenit lagi dipakai. Aku nggak mau mempelajari sistem melipat buat itu."
+  },
+  "vacuumSchedule": {
+    "title": "🧹 Seberapa sering menyedot debu",
+    "aName": "Fitri",
+    "a": "Aku menyedot debu dua kali seminggu dan nggak pernah lihat kamu menyentuhnya. Rambut di lantai itu beneran mengganggu aku.",
+    "bName": "Leo",
+    "b": "Menurutku seminggu sekali sudah bersih, dan kamu melakukannya lebih dari yang perlu. Aku senang kalau Minggu jadi bagianku, sisanya biar kamu."
+  },
+  "whoCooks": {
+    "title": "🍲 Masak tiap malam",
+    "aName": "Mawar",
+    "a": "Bulan ini aku yang masak makan malam lima dari tujuh hari. Aku pengin kita berbagi masak lebih merata.",
+    "bName": "Paulus",
+    "b": "Aku nggak sejago kamu dan kamu lebih menikmatinya. Tapi kamu benar, kita pilih dua malam dan aku akan belajar."
+  },
+  "makeBed": {
+    "title": "🛏️ Merapikan tempat tidur",
+    "aName": "Gita",
+    "a": "Kamu bangun, meninggalkan selimut menumpuk dan bilang nggak ada gunanya karena nanti malam berantakan lagi. Kamar jadi kelihatan berantakan.",
+    "bName": "Nata",
+    "b": "Aku yang berangkat kerja duluan, dan butuh dua menit yang nggak kupunya. Kalau sepenting itu buatmu, rapikan saja pas kamu bangun."
+  },
+  "toiletSeat": {
+    "title": "🚽 Dudukan toilet",
+    "aName": "Annisa",
+    "a": "Tiga kali aku masuk kamar mandi dalam gelap dan dudukannya terangkat. Menurunkannya itu nggak susah.",
+    "bName": "Gunawan",
+    "b": "Dibiarkan naik itu lebih sedikit yang disentuh, dan aku nggak kepikiran jam dua belas malam. Kalau memang mengganggu, aku coba ingat."
+  },
+  "toiletPaper": {
+    "title": "🧻 Gulungan tisu dari atas atau bawah",
+    "aName": "Desi",
+    "a": "Gulungan itu dipasang dengan kertas keluar dari atas. Kamu memasangnya terbalik dan aku harus meraih memutar tiap kali.",
+    "bName": "Aldi",
+    "b": "Cara kerjanya sama saja, jadi pilih yang kamu suka. Aku nggak mau memasang ulang cuma biar sesuai kebiasaanmu."
+  },
+  "laundryColours": {
+    "title": "👕 Cucian warna dicampur",
+    "aName": "Wawan",
+    "a": "Kemeja putihku keluar dari mesin cuci jadi pink karena kamu memasukkan handuk merah. Itu kemeja yang kupakai ke kantor.",
+    "bName": "Lidya",
+    "b": "Aku buru-buru dan nyuci sedikit-sedikit kelamaan. Nanti kubelikan yang baru, tapi itu murni nggak sengaja."
+  },
+  "washCar": {
+    "title": "🚗 Membersihkan mobil bersama",
+    "aName": "Ismail",
+    "a": "Kursi belakang penuh bungkus bekas dan gelas kopi dari minggu lalu. Mobilnya kita pakai bareng, jadi bersihinnya juga bareng.",
+    "bName": "Dina",
+    "b": "Aku membersihkan mobil tiap kali sudah hampir berantakan. Kupikir beberapa bungkus belum dihitung, nanti akhir pekan kubersihkan."
+  },
+  "beachOrCity": {
+    "title": "🏖️ Liburan ke pantai atau keliling kota",
+    "aName": "Surya",
+    "a": "Aku pengin seminggu tiduran di pinggir laut tanpa rencana apa-apa. Liburan kita yang lalu isinya keliling museum.",
+    "bName": "Rahmi",
+    "b": "Aku bosan setelah dua hari di kursi pantai. Aku pengin lihat sesuatu yang baru, walau cuma setengah kotanya."
+  },
+  "airportEarly": {
+    "title": "✈️ Seberapa awal sampai bandara",
+    "aName": "Okta",
+    "a": "Tiga jam sebelum penerbangan itu terlalu awal. Kita cuma duduk di gerbang keberangkatan sambil ngopi lama banget.",
+    "bName": "Hamzah",
+    "b": "Antriannya bisa panjang dan aku penakut kalau terbang. Aku lebih baik menunggu daripada buru-buru, dan ketinggalan pesawat jauh lebih mahal."
+  },
+  "campingHotel": {
+    "title": "⛺ Tenda atau hotel",
+    "aName": "Brenda",
+    "a": "Aku sudah memesan tempat kemah buat akhir pekan dan sekarang kamu bilang lebih suka menginap di hotel. Kita sepakat soal ini dari musim semi.",
+    "bName": "Kolin",
+    "b": "Ramalan cuaca bilang hujan sepanjang akhir pekan dan tenda basah itu nggak menenangkan. Aku senang berkemah kalau cuacanya lebih bagus."
+  },
+  "packingLight": {
+    "title": "🧳 Satu koper masing-masing",
+    "aName": "Nurul",
+    "a": "Kita sepakat cuma bawa tas kabin dan punyamu berat banget. Ada tiga pasang sepatu di dalamnya.",
+    "bName": "Stevan",
+    "b": "Aku suka punya banyak pilihan dan kamu membawa mantel yang nggak bakal terpakai. Kalau kita bayar satu bagasi, aku yang tanggung."
+  },
+  "mapOrGps": {
+    "title": "🗺️ Percaya pada GPS",
+    "aName": "Bertus",
+    "a": "Aplikasi petanya bilang belok kiri dan kamu malah belok kanan karena kamu kira tahu jalan pintas. Kita sudah kehilangan dua puluh menit.",
+    "bName": "Rosi",
+    "b": "Aku sudah ratusan kali lewat jalan ini dan aplikasinya nggak tahu ada perbaikan jalan. Terakhir kali aku benar."
+  },
+  "leaveTime": {
+    "title": "🕗 Jam berapa berangkat",
+    "aName": "Kania",
+    "a": "Aku bilang kita berangkat jam delapan biar nggak macet, dan kamu masih mandi jam setengah sembilan. Selalu begini.",
+    "bName": "Mahesa",
+    "b": "Pestanya mulai jam sepuluh, jadi berangkat jam delapan terlalu awal. Kamu merencanakan macet terparah dan akhirnya aku yang buru-buru."
+  },
+  "sleepIn": {
+    "title": "🌅 Jam bangun akhir pekan",
+    "aName": "Elsa",
+    "a": "Sekarang hari Sabtu dan kamu sudah bangun jam enam bikin berisik di dapur. Satu-satunya pagi aku bisa tidur lama, dan hilang.",
+    "bName": "Rafli",
+    "b": "Badanku bangun pagi dan aku sudah berusaha pelan-pelan. Berbaring menatap langit-langit juga nggak membantu."
+  },
+  "dinnerReservation": {
+    "title": "🕰️ Memesan meja makan malam",
+    "aName": "Isak",
+    "a": "Kamu memesan meja jam setengah enam padahal hari Jumat. Nggak ada yang makan sepagi itu, dan aku sudah punya rencana lain.",
+    "bName": "Tilda",
+    "b": "Itu satu-satunya slot yang tersisa dan nanti hilang. Aku sudah nanya kamu, tapi kamu sibuk dan nggak menjawab."
+  },
+  "boardGameRules": {
+    "title": "🎲 Aturan yang nggak ada yang ingat",
+    "aName": "Bram",
+    "a": "Kamu main game ini salah sepanjang malam dan sekarang kamu menang. Aku mau kembali dan mengulang giliran-giliran itu.",
+    "bName": "Sisca",
+    "b": "Kita baca buku aturannya bareng di awal dan nggak ada yang keberatan. Kamu nggak bisa mengubah aturan pas lagi kalah."
+  },
+  "houseRules": {
+    "title": "💰 Aturan rumahan di Monopoli",
+    "aName": "Eliot",
+    "a": "Aku menaruh uang denda di tengah, jadi siapa yang berhenti di Parkir Gratis berikutnya mendapatkannya. Itu aturan yang sebenarnya.",
+    "bName": "Hesti",
+    "b": "Buku aturannya nggak bilang begitu, dan itu bikin permainan berlangsung semalaman. Main saja seperti yang tertulis."
+  },
+  "fantasyTrade": {
+    "title": "🏈 Tukar pemain yang nggak adil",
+    "aName": "Dwiki",
+    "a": "Kamu menukar pemain cederaku dengan pelari terbaikku, dan aku bilang ya tanpa ngecek. Itu tukar yang nggak adil, jadi batalkan.",
+    "bName": "Franda",
+    "b": "Kamu sudah setuju tertulis dan kesepakatannya adil waktu kita bikin. Ngecek itu tugasmu, bukan tugasku."
+  },
+  "lineCall": {
+    "title": "🎾 Out atau masuk",
+    "aName": "Martin",
+    "a": "Bolanya jelas keluar dan kamu terus bilang masuk sepanjang pertandingan. Aku mau poinnya diulang.",
+    "bName": "Jelita",
+    "b": "Aku lebih dekat dengan garis dan melihat bolanya menyentuh tepinya. Kamu nggak bisa menilai dari ujung lapangan satunya."
+  },
+  "controllerTurns": {
+    "title": "🎮 Giliran siapa pegang stik",
+    "aName": "Zainal",
+    "a": "Kamu sudah sejam pegang stiknya dan tiap kutanya kamu bilang 'satu ronde lagi'. Bukan begitu cara gantian.",
+    "bName": "Prisca",
+    "b": "Aku lagi di tengah level dan nggak bisa berhenti. Habis yang ini langsung kukasih ke kamu, janji."
+  },
+  "teamCaptain": {
+    "title": "⚽ Memilih tim",
+    "aName": "Gatot",
+    "a": "Kamu memilih semua temanmu dulu dan meninggalkanku dengan pemain yang lebih lemah lagi. Aku mau timnya seimbang.",
+    "bName": "Anjani",
+    "b": "Kita main begini bertahun-tahun dan kamu nggak pernah protes. Kalau mau tim yang adil, acak saja dengan undian nama."
+  },
+  "cardCheating": {
+    "title": "🃏 Kartu yang disembunyikan",
+    "aName": "Ruben",
+    "a": "Aku lihat kamu mengambil kartu dari bawah tumpukan waktu ronde terakhir. Kalau begitu caramu menang, aku berhenti main.",
+    "bName": "Meilani",
+    "b": "Aku menjatuhkan satu dan memungutnya, itu saja. Kamu uring-uringan gara-gara kalah sepanjang malam, dan sekarang menuduhku."
+  },
+  "trashTalk": {
+    "title": "🏀 Ejek-ejekan di lapangan",
+    "aName": "Dominikus",
+    "a": "Sedikit ledekan pas main itu bagian dari serunya. Kamu jadi diam dan cemberut cuma gara-gara satu komentar, padahal aku cuma bercanda.",
+    "bName": "Karina",
+    "b": "Beda kalau kamu bercanda soal permainannya, dan lain lagi kalau soal diriku. Aku cuma mau kita tetap saling baik."
+  },
+  "gameSave": {
+    "title": "💾 Menimpa file save",
+    "aName": "Kusuma",
+    "a": "Aku menghabiskan tiga puluh jam di file save itu dan kamu mulai game baru di atasnya. Sekarang hilang.",
+    "bName": "Lina",
+    "b": "Slotnya cuma satu dan kelihatannya nggak terpakai. Aku pasti bertanya, tapi kamu nggak di rumah dan aku cuma mau coba."
+  },
+  "loserPays": {
+    "title": "🎳 Yang kalah bayar pizza",
+    "aName": "Boris",
+    "a": "Kita sepakat yang kalah bayar, dan kamu kalah dua pin. Janji ya janji, jadi tolong keluarkan dompetmu.",
+    "bName": "Kamila",
+    "b": "Aku mengatakannya sebagai bercanda dan kupikir kamu tahu itu. Kutraktir ronde berikutnya kalau kamu lebih suka begitu."
+  },
+  "pickleball": {
+    "title": "🏓 Siapa yang mencatat skor",
+    "aName": "Gloria",
+    "a": "Aku menghitung delapan lawan enam, dan kamu bilang tujuh sama. Kita terus lupa skornya dan itu merusak permainan.",
+    "bName": "Denny",
+    "b": "Aku menghitung tiap servis dan aku yakin. Ulang saja poinnya dan lanjut."
+  },
+  "dogCouch": {
+    "title": "🐕 Anjing di sofa",
+    "aName": "Murni",
+    "a": "Kita sepakat anjing nggak boleh naik sofa, dan aku pulang menemukan dia terbaring di situ. Bantalnya penuh bulu.",
+    "bName": "Dodo",
+    "b": "Dia kelihatan senang banget dan cuma di situ pas kita nonton TV. Sarungnya bisa dicuci, dan itu membuatnya bagian dari keluarga."
+  },
+  "walkingDuty": {
+    "title": "🦮 Siapa yang ajak jalan anjing",
+    "aName": "Hana",
+    "a": "Sejak akhir pekan aku yang jalan pagi dan sore, dan besok aku ada presentasi. Malam ini giliranmu.",
+    "bName": "Victor",
+    "b": "Hujannya deras dan aku baru saja duduk. Aku akan jalan jauh hari Sabtu, nggak bisa dilewatkan malam ini?"
+  },
+  "catNames": {
+    "title": "🐈 Memberi nama anak kucing",
+    "aName": "Piaw",
+    "a": "Aku yang menemukannya dan aku memanggilnya Biskuit. Namamu buat dia Tuan Bulu Lebat, dan aku nggak akan menyebutnya begitu ke dokter hewan.",
+    "bName": "Kurnia",
+    "b": "Itu bikin aku tertawa tiap kali dan dia sudah menyahut. Biskuit bagus tapi kucing semua orang namanya itu."
+  },
+  "catKeyboard": {
+    "title": "🐱 Kucing di meja kerja",
+    "aName": "Maya",
+    "a": "Dia melintasi keyboardku saat rapat dan kamu mendorongnya dengan camilan. Sekarang dia kira mejaku tempat tidurnya.",
+    "bName": "Tono",
+    "b": "Semua orang di panggilan suka dia, dan dia cuma cari teman. Kamu bisa menutup pintu kalau terganggu."
+  },
+  "feedingTime": {
+    "title": "🥫 Kucing diberi makan dua kali",
+    "aName": "Junaidi",
+    "a": "Aku memberi kucing makan malam jam enam dan kamu memberinya lagi jam tujuh. Dia jadi agak gemuk.",
+    "bName": "Alisa",
+    "b": "Dia mengeong padaku dan kupikir belum ada yang memberi makan. Catatan di kulkas bisa mencegah ini."
+  },
+  "vetCosts": {
+    "title": "🐾 Bagi biaya dokter hewan",
+    "aName": "Reza",
+    "a": "Tagihan dokter hewan dua koma delapan juta dan aku bayar semuanya karena aku yang mendaftar. Kamu mengadopsi anjingnya bersamaku, jadi kita bagi dua.",
+    "bName": "Sherly",
+    "b": "Aku pasti bayar kalau kamu bilang sebelum janjinya. Kirimkan kuitansinya dan kutransfer setengahnya."
+  },
+  "offLeash": {
+    "title": "🌳 Tanpa tali di taman",
+    "aName": "Gayatri",
+    "a": "Anjingmu berlari ke anakku yang masih kecil tanpa peringatan dan dia jadi takut. Papan di sini bilang anjing harus pakai tali di area ini.",
+    "bName": "Mitra",
+    "b": "Dia ramah dan cuma mau menyapa. Aku menjaganya tetap dekat, dan yang lain di sini juga melepasnya."
+  },
+  "petInBed": {
+    "title": "🐶 Anjing di tempat tidur",
+    "aName": "Selena",
+    "a": "Dia memakan setengah kasur dan aku bangun dengan kaki di wajahku. Aku pengin tempat tidurnya buat kita berdua lagi.",
+    "bName": "Cakra",
+    "b": "Dia cemas kalau sendirian dan tidurnya lebih nyenyak di dekat kita. Aku lebih rela kehilangan ruang daripada dengar dia menangis semalaman."
+  },
+  "puppyName": {
+    "title": "🐕‍🦺 Memilih nama anak anjing",
+    "aName": "Rosiana",
+    "a": "Sudah seminggu kita memanggilnya 'si kecil' karena nggak bisa sepakat. Aku pilih Roket dan itu cocok banget buat dia.",
+    "bName": "Margareta",
+    "b": "Dia tenang dan lambat, jadi Roket kedengaran lucu. Aku suka Lada, cocok sama bintik-bintiknya."
+  },
+  "fishSitter": {
+    "title": "🐠 Siapa yang kasih makan ikan",
+    "aName": "Tutik",
+    "a": "Sebulan lalu aku minta kamu memberi makan ikan selama kita pergi. Kamu bilang lupa mengurusnya, padahal perjalanannya besok.",
+    "bName": "Alfian",
+    "b": "Kukira tetanggamu sudah menawarkan, dan aku nggak mau dobel. Malam ini bisa kutanya kakakku, dia tinggal dekat."
+  },
+  "birdNoise": {
+    "title": "🦜 Beo yang nggak berhenti bersuara",
+    "aName": "Nurdin",
+    "a": "Beomu berkicau jam enam tiap pagi dan aku nggak bisa tidur lagi. Aku tinggal tepat di sebelahmu.",
+    "bName": "Fatimah",
+    "b": "Dia burung dan dia menyapa matahari. Kandangnya akan kupindah ke ruangan yang lebih tenang, maaf ya."
+  },
+  "wifiPassword": {
+    "title": "🔐 Memberikan sandi wifi",
+    "aName": "Robi",
+    "a": "Kamu memberikan sandi wifi ke semua orang yang datang, dan sekarang lemot waktu aku kerja. Aku mau mengganti sandinya.",
+    "bName": "Evi",
+    "b": "Menolak tamu itu nggak sopan, dan sebenarnya nggak ada yang memakai banyak. Kalau mengganggu, bikin jaringan tamu saja."
+  },
+  "tvVolume": {
+    "title": "🔊 Perang volume TV",
+    "aName": "Sutan",
+    "a": "Kamu menonton semuanya di volume 40 dan aku dengar tiap katanya dari dapur. Tolong pakai subtitle.",
+    "bName": "Peni",
+    "b": "Pendengaranku kurang bagus, dan aku ketinggalan dialog di volume yang lebih rendah. Subtitle membuatku membaca, bukan menonton."
+  },
+  "phoneAtDinner": {
+    "title": "📵 HP di meja restoran",
+    "aName": "Lidia",
+    "a": "Ini malam keluar kita yang pertama dalam sebulan dan kamu mengecek HP tiap lima menit. Rasanya aku duduk sendirian.",
+    "bName": "Pieter",
+    "b": "Aku menunggu kabar soal pesawat adikku mendarat. Seharusnya aku bilang, tapi nggak mau bikin kamu khawatir."
+  },
+  "notificationSound": {
+    "title": "🔔 Bunyi notifikasi di perpustakaan",
+    "aName": "Evelin",
+    "a": "HP-mu berbunyi tiap tiga puluh detik dan sebagian dari kami lagi belajar. Tolong ganti ke senyap.",
+    "bName": "Muhamad",
+    "b": "Sekarang sudah getar, dan aku minta maaf banget. Aku nggak sadar suaranya nyala, jadi nggak akan terulang."
+  },
+  "darkMode": {
+    "title": "🌗 Mode gelap atau mode terang",
+    "aName": "Jaya",
+    "a": "Kamu mengubah tablet bersama ke mode terang pas malam dan mataku perih. Kita sepakat mode gelap di malam hari.",
+    "bName": "Odilia",
+    "b": "Aku nggak bisa membaca apa-apa di mode gelap, tulisannya jadi buram. Akan kuganti sebelum tidur, tapi siang hari aku butuh itu."
+  },
+  "smartSpeaker": {
+    "title": "🗣️ Speaker pintar yang mendengarkan",
+    "aName": "Gedeon",
+    "a": "Kamu menaruh speaker pintar di kamar kita dan aku nggak nyaman dia mendengarkan. Aku mau dipindah ke dapur.",
+    "bName": "Livi",
+    "b": "Aku cuma memakainya buat alarm dan cuaca. Dapur terlalu jauh, tapi aku bisa mematikan mikrofonnya malam hari."
+  },
+  "tabsOpen": {
+    "title": "🗂️ Dua ratus tab terbuka",
+    "aName": "Paramita",
+    "a": "Tiap aku pinjam laptopmu ada seratus tab terbuka dan jadi lambat. Menutup beberapa akan membuatnya lebih cepat.",
+    "bName": "Arif",
+    "b": "Semua itu hal yang kubutuhkan, dan aku tahu persis letak masing-masing. Ini kekacauan yang teratur."
+  },
+  "photoStorage": {
+    "title": "🖼️ Berbagi penyimpanan awan",
+    "aName": "Lorna",
+    "a": "Videomu memenuhi penyimpanan kita bersama dan aku nggak bisa mencadangkan fotoku. Tolong hapus sebagian, atau bayar sendiri.",
+    "bName": "Koko",
+    "b": "Itu semua video keluarga dan aku nggak mau kehilangan. Nanti kupindah ke harddisk, tapi kasih aku beberapa hari."
+  },
+  "videoCallCamera": {
+    "title": "📹 Kamera nyala pas video call",
+    "aName": "Helga",
+    "a": "Video call keluarga mingguan itu satu-satunya waktu kita saling lihat, dan kamu terus mematikan kameranya. Rasanya seperti ngomong sama tembok.",
+    "bName": "Dika",
+    "b": "Aku biasanya lagi masak atau masih pakai piama. Aku tetap ada dan mendengarkan, dan menurutku bukan kameranya intinya."
+  },
+  "doorbellCamera": {
+    "title": "🚪 Kamera bel pintu",
+    "aName": "Marni",
+    "a": "Kamu memasang kamera yang mengawasi seluruh jalan depan, dan tetangga juga bisa terlihat. Aku mau sudutnya diarahkan menjauh.",
+    "bName": "Tedi",
+    "b": "Dua paketku dicuri musim hujan lalu, dan kamera ini cuma merekam teras kita sendiri. Aku mau memiringkannya sedikit ke bawah."
+  },
+  "holdDoor": {
+    "title": "🚪 Menahan pintu",
+    "aName": "Winarto",
+    "a": "Aku menahan pintu buat sekelompok orang, dan nggak satu pun bilang terima kasih. Sopan itu cuma butuh sedetik.",
+    "bName": "Yasmin",
+    "b": "Orang-orang terburu-buru dan nggak selalu sadar. Kamu melakukannya karena baik, bukan karena mengharapkan ucapan terima kasih."
+  },
+  "elevatorSpot": {
+    "title": "🛗 Berdiri di depan lift",
+    "aName": "Gina",
+    "a": "Aku menunggu lift dan kamu menyerobot tepat saat pintunya terbuka. Aku jelas datang duluan.",
+    "bName": "Matius",
+    "b": "Aku bawa kereta bayi dan lift satu-satunya jalanku. Aku nggak lihat kamu, maaf, tapi aku benar-benar butuh."
+  },
+  "cuttingQueue": {
+    "title": "🧍 Menyerobot antrean",
+    "aName": "Ursula",
+    "a": "Kamu langsung jalan ke loket sementara kami menunggu dua puluh menit. Ada antrean di belakangku.",
+    "bName": "Idrus",
+    "b": "Aku cuma mau bertanya sebentar dan nggak memesan. Aku nggak sadar ini antrean buat itu."
+  },
+  "busPhone": {
+    "title": "🚌 Telepon keras di bus",
+    "aName": "Dorotea",
+    "a": "Pria di belakangku sudah dua puluh menit pakai speaker dan kami semua mendengar seluruh ceritanya hari ini. Pakai headset itu baik.",
+    "bName": "Samuel",
+    "b": "Ini telepon penting dan sinyalnya jelek, jadi aku perlu speaker. Aku bakal singkat, nggak usah ketus."
+  },
+  "shoesInside": {
+    "title": "👟 Sepatu di dalam rumah",
+    "aName": "Hesti",
+    "a": "Tolong lepas sepatumu di pintu, kita nggak memakainya di dalam. Aku baru saja mengepel lantainya.",
+    "bName": "Pandu",
+    "b": "Hari ini kering dan solnya bersih. Aku belum terbiasa, tapi akan kulepas kalau sepenting itu."
+  },
+  "armrest": {
+    "title": "💪 Berbagi sandaran tangan",
+    "aName": "Nolang",
+    "a": "Kamu pakai kedua sandaran tangan sepanjang film dan lenganku menggantung di udara. Kursi tengah dapat dua, itu aturannya.",
+    "bName": "Jati",
+    "b": "Aku di sisi jendela dan sikuku butuh tempat. Aku nggak tahu ada aturannya, aku geser."
+  },
+  "lateRsvp": {
+    "title": "✉️ Membalas undangan di menit terakhir",
+    "aName": "Gerta",
+    "a": "Aku minta semua orang membalas paling lambat tanggal satu dan kamu baru bilang ya sehari sebelumnya. Aku sudah memesan makanan buat lima belas orang.",
+    "bName": "Tobi",
+    "b": "Aku belum yakin soal jadwal kerjaku sampai saat itu. Satu orang lagi di meja nggak masalah, dan aku bawa puding."
+  },
+  "thankYouNote": {
+    "title": "💌 Ucapan terima kasih",
+    "aName": "Edi",
+    "a": "Pernikahan sepupumu sebulan lalu dan kita belum dapat kabar sedikit pun soal hadiah kita. Ucapan terima kasih nggak butuh biaya.",
+    "bName": "Bryan",
+    "b": "Mereka mungkin masih mengurus seratus hadiah. Kabar lewat pesan bukan akhir dunia, kasih mereka waktu."
+  },
+  "regift": {
+    "title": "🎁 Hadiah yang diberikan lagi",
+    "aName": "Samira",
+    "a": "Aku baru tahu syal dari kamu itu hadiah yang diberikan orang lain ke kamu lebih dulu. Rasanya aku cuma pikiran belakangan.",
+    "bName": "Leo",
+    "b": "Syalnya bagus, tapi nggak cocok buatku. Kupikir lebih cocok buatmu, dan aku tetap akan memberikannya padamu."
+  },
+  "partyDrink": {
+    "title": "🍾 Bawa sesuatu ke pesta",
+    "aName": "Delima",
+    "a": "Kamu datang ke acara makan malam dengan tangan kosong, padahal aku masak dua hari. Sebotol minuman atau bunga pasti menyenangkan.",
+    "bName": "Wawan",
+    "b": "Kamu bilang bawa diri saja, dan aku menganggapnya begitu. Lain kali aku bawa sesuatu yang bagus."
+  },
+  "escalator": {
+    "title": "⬆️ Berdiri di eskalator",
+    "aName": "Brigit",
+    "a": "Kamu berdiri di sisi kiri dan menghalangi semua orang yang mau jalan naik. Aturannya, berdiri di kanan dan jalan di kiri.",
+    "bName": "Anders",
+    "b": "Aku membawa tas berat dan cuma mau sampai dengan selamat. Aku nggak perlu terburu-buru demi jadwal orang lain."
+  },
+  "cinemaTalk": {
+    "title": "🎞️ Berbisik pas nonton film",
+    "aName": "Kliwon",
+    "a": "Kamu menjelaskan tiap adegan ke temanmu dengan berbisik sepanjang film. Aku bayar buat menonton, bukan mendengar komentar terus-menerus.",
+    "bName": "Laila",
+    "b": "Dia baru kenal serialnya dan aku cuma membantunya mengikuti alur. Aku berhenti kalau memang mengganggu."
+  },
+  "neighbourMusic": {
+    "title": "🔈 Tetangga pesta sampai larut",
+    "aName": "Ade",
+    "a": "Pestamu masih berisik jam satu pagi dan sebagian dari kami kerja pagi. Pemberitahuan sedikit pasti lebih sopan.",
+    "bName": "Santo",
+    "b": "Aku sudah lapor ke pengurus gedung, dan ini cuma semalam dalam setahun. Aku minta orang-orang pindah ke dalam, tapi semua orang lagi senang."
+  },
+  "socks": {
+    "title": "🧦 Kaus kaki di lantai",
+    "aName": "Lusi",
+    "a": "Ada sepasang kaus kakimu di samping tempat tidur, satu lagi di dekat sofa dan satu di lorong. Tiap hari aku memungutinya.",
+    "bName": "Beni",
+    "b": "Itu cuma kaus kaki dan nanti kupakai lagi. Kumasukkan ke keranjang, tapi kamu nggak perlu menghitungnya."
+  },
+  "cafeSeat": {
+    "title": "☕ Menjaga kursi dengan laptop",
+    "aName": "Joana",
+    "a": "Laptopmu menahan meja itu sejam dan kamu pergi ke tempat lain. Kafenya penuh dan orang-orang berdiri.",
+    "bName": "Karim",
+    "b": "Aku cuma keluar buat menerima telepon dan langsung balik. Meninggalkan tas itu cara semua orang menjaga kursi."
+  },
+  "groupProject": {
+    "title": "🎓 Tugas kelompok yang belum dimulai",
+    "aName": "Tasya",
+    "a": "Tugasnya dikumpulkan seminggu lagi dan aku sendirian menulis seluruh kerangkanya. Aku butuh kalian masing-masing menyelesaikan bagian sebelum Jumat.",
+    "bName": "Oki",
+    "b": "Aku ada dua ujian sebelum itu dan sudah bilang bagianku akan telat. Bisa kukerjakan akhir pekan."
+  },
+  "puzzle": {
+    "title": "🧩 Menyelesaikan puzzle-ku",
+    "aName": "Gracia",
+    "a": "Aku mengerjakan puzzle itu seminggu dan kamu memasang dua puluh keping terakhir waktu aku keluar. Aku mau menyelesaikannya sendiri.",
+    "bName": "Harun",
+    "b": "Itu tergeletak di meja dan aku keasyikan. Aku nggak tahu itu sepenting itu buatmu, maaf."
+  },
+  "hedge": {
+    "title": "🌿 Pagar tanaman tetangga",
+    "aName": "Barbara",
+    "a": "Pagar tanamanmu sudah tumbuh melewati jalan setapak dan aku harus melangkah ke jalan raya buat lewat. Sudah begini sejak musim semi.",
+    "bName": "Yoel",
+    "b": "Aku sudah mau memangkasnya tapi cuacanya buruk banget. Hari Minggu kukerjakan, kamu tinggal mengetuk pintuku saja."
+  }
+}

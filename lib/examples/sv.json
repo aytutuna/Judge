@@ -1,0 +1,1052 @@
+{
+  "dishwasher": {
+    "title": "🍽️ Skålar i överkorgen",
+    "aName": "Emma",
+    "a": "Du har ställt skålarna i överkorgen igen. Där uppe blir de aldrig rena – det är ju det underkorgen är till för.",
+    "bName": "Johan",
+    "b": "De får plats fint där uppe, och då blir underkorgen ledig för kastrullerna. Jag har plockat in disken så här i flera år och allt har blivit rent."
+  },
+  "bill": {
+    "title": "🍷 Dela på notan",
+    "aName": "Sara",
+    "a": "Jag drack ingenting, så jag borde inte betala en fjärdedel av vinet. Att dela lika på maten går bra för mig.",
+    "bName": "Erik",
+    "b": "Vi delar alltid bara på fyra. Att räkna ut vem som tog vad varje gång är jobbigt, och det är ändå ingen stor skillnad."
+  },
+  "thermostat": {
+    "title": "🌡️ Kriget om termostaten",
+    "aName": "Linnea",
+    "a": "Det är 19 grader här inne och jag fryser fast jag har luvtröja på mig. Att höja till 22 är väl inte orimligt.",
+    "bName": "Anton",
+    "b": "22 grader är alldeles för varmt att sova i. Du kan ta på dig ett lager till, jag kan inte ta av mig mer."
+  },
+  "roadTrip": {
+    "title": "🚗 Vem kör hem",
+    "aName": "Ida",
+    "a": "Jag körde hela vägen dit, sex timmar. Det är bara rättvist att du kör hem.",
+    "bName": "Viktor",
+    "b": "Jag sa innan vi åkte att jag hatar att köra i mörker, och vi åker sju i kväll. Nästa gång kör jag på morgnarna."
+  },
+  "seat": {
+    "title": "💺 Fälla sätet på nattflyget",
+    "aName": "Klara",
+    "a": "Mitt säte går att fälla bakåt, så jag fäller det. Det är ett nattflyg och alla försöker sova.",
+    "bName": "Filip",
+    "b": "Jag är 191 cm lång och knäna trycker redan mot ditt säte. Du kunde åtminstone fråga innan du fäller det ända bak."
+  },
+  "spoiler": {
+    "title": "🎬 Spoiler om finalen",
+    "aName": "Wilma",
+    "a": "Du berättade vem mördaren var innan jag ens hade börjat på sista avsnittet. Jag hade väntat på det hela veckan.",
+    "bName": "Axel",
+    "b": "Det kom ut för tre veckor sedan och du sa att du hade sett klart. Jag kan inte hålla koll på hur långt alla har kommit."
+  },
+  "jacket": {
+    "title": "🧥 Den lånade jeansjackan",
+    "aName": "Albin",
+    "a": "Du hade på dig min jeansjacka på konserten utan att fråga. Den luktade rök när jag fick tillbaka den.",
+    "bName": "Ebba",
+    "b": "Den hängde vid dörren och du använder den aldrig. Jag hade frågat, men du sov och jag var redan sen."
+  },
+  "lastSlice": {
+    "title": "🍕 Paxa sista biten",
+    "aName": "Lucas",
+    "a": "Jag paxade sista pizzabiten innan filmen började. Alla hörde mig.",
+    "bName": "Alva",
+    "b": "Man kan inte paxa något och sedan inte röra det på två timmar. Den låg bara där och kallnade, så jag åt upp den."
+  },
+  "sundayPlans": {
+    "title": "🛋️ Hela söndagen i soffan",
+    "aName": "Hanna",
+    "a": "Det är den enda dagen vi är lediga båda två och jag vill gå på vandring. Det känns som slöseri att ligga i soffan hela dagen.",
+    "bName": "Dev",
+    "b": "Jag jobbar hårt hela veckan och söndagen är min dag för att ladda batterierna. Vi kan vandra nästa helg, i dag vill jag bara göra ingenting med dig."
+  },
+  "anniversaryGift": {
+    "title": "🎁 Hur mycket en present får kosta",
+    "aName": "Marcus",
+    "a": "Vi kom överens om att hålla presenterna under 500 kronor, och så köpte du en klocka till mig. Nu känns det som att jag inte ansträngde mig.",
+    "bName": "Elena",
+    "b": "Jag såg den och tänkte på dig. Den var på rea, och en gräns vi bestämde för flera år sedan ska inte hindra mig från att vara generös."
+  },
+  "couplePhoto": {
+    "title": "📸 Lade ut vårt kort utan att fråga",
+    "aName": "Sofia",
+    "a": "Du la ut vår strandbild på nätet och jag hade inte ens hunnit se den. Jag ser hemsk ut på den och jag hade sagt nej.",
+    "bName": "Jakob",
+    "b": "Jag tycker att du ser jättebra ut och ville dela en fin dag. Jag visste inte att du skulle bli så ledsen."
+  },
+  "phoneInBed": {
+    "title": "📱 Mobilen i sängen",
+    "aName": "Nina",
+    "a": "Vi går och lägger oss och du scrollar i en timme medan jag ligger där. Jag vill prata, eller åtminstone somna tillsammans.",
+    "bName": "Omar",
+    "b": "Det är så jag varvar ner efter en lång dag. Vi kan gärna prata, men jag vill inte ha regler för en mobil jag bara håller i handen."
+  },
+  "movieTurns": {
+    "title": "🍿 Vems tur att välja film",
+    "aName": "Klara",
+    "a": "Jag valde sist, och gången innan det. Nu är det din tur, och du har suttit i fyrtio minuter och sagt att ingenting låter bra.",
+    "bName": "Tomas",
+    "b": "Jag hade valt om det fanns något jag ville se. Du väljer alltid sånt jag gillar mindre, så jag säger inget."
+  },
+  "slowReply": {
+    "title": "💬 Vänta i timmar på svar",
+    "aName": "Zoe",
+    "a": "Jag skickade en enkel fråga vid tolv och fick svar klockan åtta. Ett snabbt svar hade inte kostat dig något.",
+    "bName": "Emil",
+    "b": "Jag satt i möten hela dagen och mobilen låg i väskan. Jag ignorerade dig inte, det var bara inte bråttom."
+  },
+  "bedSide": {
+    "title": "🛏️ Vems sida av sängen",
+    "aName": "Rosa",
+    "a": "Jag har legat närmast fönstret i alla sex åren. Nu när vi har flyttat tog du min sida innan jag ens hade packat upp.",
+    "bName": "Per",
+    "b": "Sängen står vid den andra väggen i det här rummet, så sidorna blev omkastade. Jag byter gärna tillbaka, jag tänkte bara inte på det."
+  },
+  "surpriseParty": {
+    "title": "🎈 En överraskningsfest han inte ville ha",
+    "aName": "Lena",
+    "a": "Jag planerade hela kalaset till din födelsedag och bjöd in alla. Du såg olycklig ut hela kvällen.",
+    "bName": "Gabriel",
+    "b": "Jag sa för flera månader sedan att jag hatar överraskningar och stora folkmassor. Jag uppskattar att du försökte, men du lyssnade inte."
+  },
+  "toothpaste": {
+    "title": "🪥 Att klämma tandkrämen",
+    "aName": "Iris",
+    "a": "Du klämmer tuben på mitten och lämnar den platt och vriden. Det är en småsak, jag vet, men jag hittar den varje morgon.",
+    "bName": "Kajsa",
+    "b": "Det kommer ut på samma sätt till slut. Jag fattar inte varför det skulle finnas ett rätt ställe att klämma."
+  },
+  "blanket": {
+    "title": "🛌 Täckestjuven",
+    "aName": "Dana",
+    "a": "Varje natt rullar du in dig i hela täcket och jag vaknar och fryser. Det är som att sova bredvid en burrito.",
+    "bName": "Mikael",
+    "b": "Jag fryser också och jag gör det inte med flit. Vi kunde köpa ett täcke till i stället för att skylla på mig."
+  },
+  "lateDinner": {
+    "title": "🍝 Middag klockan nio",
+    "aName": "Camilla",
+    "a": "Du sa att du skulle vara hemma vid sex och kom in vid nio. Pastan jag lagade är kall och jag är jättehungrig.",
+    "bName": "Robert",
+    "b": "Ett samtal drog ut på tiden och jag kunde inte bara lägga på. Jag hade hört av mig, men mobilen dog."
+  },
+  "dateBill": {
+    "title": "💳 Vem betalar på dejter",
+    "aName": "Yasmin",
+    "a": "Vi har gått ut ett dussin gånger och du sträcker dig aldrig efter notan. Jag vill att vi turas om.",
+    "bName": "Wilhelm",
+    "b": "Jag tjänar mer än du just nu och betalar gärna. Jag visste inte att det störde dig, jag vill bara inte bråka om en nota."
+  },
+  "quietHours": {
+    "title": "🔇 Tyst efter tio",
+    "aName": "Olivia",
+    "a": "Jag har ett tidigt skift och hör ditt videosamtal genom väggen klockan elva. Du måste prata lägre.",
+    "bName": "Raj",
+    "b": "Mitt team sitter i en annan tidszon, så sent är den enda tiden som funkar. Jag tar hörlurar, men du kan ju också ha öronproppar."
+  },
+  "fridgeShelf": {
+    "title": "🧊 Vems hylla är det här",
+    "aName": "Lukas",
+    "a": "Jag har märkt min hylla i kylen och du ställer ändå dina rester där. Det finns gott om plats på din.",
+    "bName": "Mina",
+    "b": "Min hylla var full och din burk var halvtom. Det var en natt, jag tog ingenting."
+  },
+  "overnightGuest": {
+    "title": "🚪 En gäst som bor hos oss en hel vecka",
+    "aName": "Ella",
+    "a": "Din kompis har bott i vardagsrummet i sex dagar nu och ingen frågade mig. Jag vill ha tillbaka min lägenhet.",
+    "bName": "Teo",
+    "b": "Han är mellan två boenden och har ingenstans att ta vägen. Jag sa att han skulle stanna några nätter, och han bidrar till matkassen."
+  },
+  "sharedShampoo": {
+    "title": "🧴 Du använder mitt schampo",
+    "aName": "Julia",
+    "a": "Mitt schampo är dyrt och det var nästan fullt i måndags. På fredag är det nästan slut och du är den enda andra som duschar här.",
+    "bName": "Daniel",
+    "b": "Jag tog bara lite, två gånger. Om det är så viktigt, ställ det på ditt rum, jag trodde att badrumssaker var gemensamma."
+  },
+  "dirtyPan": {
+    "title": "🍳 Pannan som står i blöt",
+    "aName": "Hugo",
+    "a": "Pannan har stått i diskhon sedan tisdag och börjar lukta. Den som lagar maten ska diska den.",
+    "bName": "Nora",
+    "b": "Jag tänkte ta den när den hade stått i blöt lite längre. Du har lämnat tallrikar här i två dagar och jag har inte sagt något."
+  },
+  "dryerLaundry": {
+    "title": "🧺 Kläder kvar i torktumlaren",
+    "aName": "Sara",
+    "a": "Jag kom ner och hittade mina rena kläder i en hög på bordet för att du behövde torktumlaren. De var fortfarande fuktiga.",
+    "bName": "Ivan",
+    "b": "Programmet hade varit klart i en timme och jag hade en tvätt som väntade. Ta bara ut dina saker när det pipar."
+  },
+  "loudMusic": {
+    "title": "🎧 Musik genom väggen",
+    "aName": "Felix",
+    "a": "Klockan är tre på en lördag eftermiddag och jag sitter i mitt eget rum. Jag tycker inte att jag ska behöva hörlurar i mitt eget hem.",
+    "bName": "Tess",
+    "b": "Basen skakar mitt skrivbord när jag försöker plugga. Ingen ber dig sluta, bara sänka ett snäpp."
+  },
+  "longShower": {
+    "title": "🚿 Varmvattnet tar slut",
+    "aName": "Amir",
+    "a": "Dina duschar tar fyrtio minuter och varmvattnet är alltid slut när det är min tur. Tio minuter var vore rättvist.",
+    "bName": "Beata",
+    "b": "Jag tar inte tid och det är det enda stället där jag kan slappna av. Vi kunde turas om att gå först."
+  },
+  "lightsOn": {
+    "title": "💡 Alla lampor tända",
+    "aName": "Greta",
+    "a": "Jag går igenom lägenheten och varenda lampa är tänd, även i rum där ingen är. Elräkningen delas, så det är mina pengar också.",
+    "bName": "Sven",
+    "b": "Jag gillar det ljust och jag går in och ut ur rum hela kvällen. Att tända och släcka hela tiden är lika irriterande."
+  },
+  "parcels": {
+    "title": "📦 Paket som hopar sig i hallen",
+    "aName": "Nadia",
+    "a": "Det står sex lådor av dig i hallen och jag snubblar över dem varje dag. Ta in dem på ditt rum.",
+    "bName": "Oscar",
+    "b": "Jag ska lämna tillbaka dem på postkontoret och har haft fullt upp. De har bara stått där i fyra dagar."
+  },
+  "houseplant": {
+    "title": "🪴 Vem vattnar växten",
+    "aName": "Wilma",
+    "a": "Jag köpte växten till vardagsrummet och har vattnat den varje vecka. Nu ser den ut som en pinne för att du flyttade den till det mörka hörnet.",
+    "bName": "Pablo",
+    "b": "Den stod i vägen för tv:n och jag trodde att hörnet funkade. Jag visste inte att växter var så ömtåliga."
+  },
+  "lateArrival": {
+    "title": "⏰ Fyrtio minuter sen igen",
+    "aName": "Daniel",
+    "a": "Vi sa sju och jag satt ensam på restaurangen till tjugo i åtta. Det här är tredje gången du gör så.",
+    "bName": "Mia",
+    "b": "Bussen var sen och jag skickade ett sms. Du kunde ha beställt en dryck i stället för att vara arg."
+  },
+  "cancelledPlans": {
+    "title": "🙅 Avbokade en timme innan",
+    "aName": "Ruth",
+    "a": "Jag la om hela min dag för att träffa dig och du avbokade med ett meddelande en timme innan. Det är inte första gången.",
+    "bName": "Carlos",
+    "b": "Jag var helt slut och hade varit dåligt sällskap. Jag tyckte det var snällare att säga det än att släpa mig dit."
+  },
+  "borrowedBook": {
+    "title": "📚 Boken som aldrig kom tillbaka",
+    "aName": "Isak",
+    "a": "Jag lånade ut den där boken i våras och nu har det gått ett år. Den var signerad och jag har frågat två gånger.",
+    "bName": "Adam",
+    "b": "Jag har den någonstans, jag lovar, förmodligen i en flyttkartong. Jag hittar den, du behöver inte ta upp det hela tiden."
+  },
+  "mutedChat": {
+    "title": "🔕 Tystade gruppchatten",
+    "aName": "Hanna",
+    "a": "Du tystade vår gruppchatt och missade att planen ändrades två gånger. Vi fick alla stå och vänta på dig på fel ställe.",
+    "bName": "Vilgot",
+    "b": "Den skickar tvåhundra meddelanden om dagen, mest memes. Jag hade läst de viktiga om det inte tog en timme."
+  },
+  "birthdayDinner": {
+    "title": "🎂 Betala för födelsedagsmiddagen",
+    "aName": "Kenny",
+    "a": "Det är min födelsedagsmiddag och notan blev 900 kronor var på grund av det dyra vinet. Jag trodde att hedersgästen slapp betala.",
+    "bName": "Sasha",
+    "b": "Vi delar alltid lika på allt i hela gänget, det vet alla. Du valde ju stället också."
+  },
+  "plusOne": {
+    "title": "💍 En plus-etta på bröllopet",
+    "aName": "Bella",
+    "a": "På inbjudan står bara mitt namn, men min sambo sedan två år skulle sitta ensam hemma. Jag tar med honom ändå.",
+    "bName": "Frida",
+    "b": "Lokalen har ett hårt tak och varje plats kostar oss mycket. Jag är ledsen, men jag kan inte göra ett undantag för en person."
+  },
+  "chargerBorrow": {
+    "title": "🔌 Laddaren du lånade",
+    "aName": "Fredrik",
+    "a": "Det är den tredje laddaren av mig som har försvunnit hos dig. Jag vill ha tillbaka dem, inte ännu ett förlåt.",
+    "bName": "Lotta",
+    "b": "De ser ju likadana ut, så jag glömmer ärligt talat vems som är vems. Jag tar med en påse med dem på fredag."
+  },
+  "auxCord": {
+    "title": "🎵 Vem bestämmer bilmusiken",
+    "aName": "Tariq",
+    "a": "Jag kör så jag väljer musiken. Det är en lång väg och det är jag som måste hålla mig vaken.",
+    "bName": "Emma",
+    "b": "Du har spelat samma album tre gånger i dag. Passageraren får också säga sitt, så funkar alla bilresor."
+  },
+  "karaoke": {
+    "title": "🎤 Låten som aldrig tog slut",
+    "aName": "Gina",
+    "a": "Du har sjungit nio låtar och vi andra en var. Mikrofonen ska gå runt i rummet.",
+    "bName": "Max",
+    "b": "Ingen annan skrev upp sig på listan, så jag fyllde luckorna. Jag trodde ärligt talat att alla tyckte det var kul."
+  },
+  "uninvited": {
+    "title": "🙈 Utelämnad från gästlistan",
+    "aName": "Selma",
+    "a": "Jag såg bilderna från din fest och jag var inte bjuden, fast jag har varit på alla tidigare. Det gjorde riktigt ont.",
+    "bName": "Jonas",
+    "b": "Det var en liten grej för mina arbetskamrater, bara tio personer. Det hade inget med dig att göra, jag trodde inte att du ens ville komma."
+  },
+  "holidayHost": {
+    "title": "🦃 Vem står värd för julmiddagen",
+    "aName": "Marta",
+    "a": "Vi har varit värdar för släktmiddagen fyra år i rad. Nu är det någon annans tur, och jag vill ha en helg där jag slipper laga mat.",
+    "bName": "Peter",
+    "b": "Mamma klarar inte trappan och vi har det största bordet. Ingen annan har erbjudit sig, så jag antog att vi tar den igen."
+  },
+  "dailyCalls": {
+    "title": "📞 Ett samtal varje dag",
+    "aName": "Lea",
+    "a": "Mamma ringer varje dag vid sex och förväntar sig en halvtimmes prat. Jag älskar henne, men ibland orkar jag helt enkelt inte.",
+    "bName": "Josef",
+    "b": "Hon bor ensam och det samtalet är höjdpunkten på hennes dag. Du kan säga att du skickar ett sms de dagar du har mycket att göra."
+  },
+  "bedtimeKids": {
+    "title": "🌙 Läggdags på skolkvällar",
+    "aName": "Ingrid",
+    "a": "Vår son är åtta och ska sova klockan åtta. Du lät honom vara uppe för fotbollen och nu är han helt slut i skolan.",
+    "bName": "Lukas",
+    "b": "Det var en enda match och han var så peppad. En sen kväll ibland skadar inte honom, och det är något speciellt för honom."
+  },
+  "borrowedSweater": {
+    "title": "👚 Systern som plundrar min garderob",
+    "aName": "Alice",
+    "a": "Du tog min gröna tröja utan att fråga och hade den på en fest. Den kom tillbaka fläckig och jag hade inte ens använt den.",
+    "bName": "Priya",
+    "b": "Jag har lånat saker av dig hela livet och du har aldrig haft något emot det. Jag lämnar in den på tvätt, men du gör en stor grej av det."
+  },
+  "familyRecipe": {
+    "title": "🥘 Mormors recept",
+    "aName": "Elin",
+    "a": "Mormors soppa hade alltid en sked tomatpuré i, och det står med hennes handstil. Du lät bli den och sa att det var samma recept.",
+    "bName": "Måns",
+    "b": "Jag tycker den smakar lättare utan, och så minns jag den. Det är fortfarande hennes recept, bara lite förbättrat."
+  },
+  "dadRide": {
+    "title": "🚙 Skjutsa pappa till flygplatsen",
+    "aName": "Samuel",
+    "a": "Jag skjutsade pappa sist, och gången innan. Kan du ta morgonflyget den här gången i stället för att beställa taxi?",
+    "bName": "Hedda",
+    "b": "Det är två timmar fram och tillbaka och jag ska vara på jobbet klockan sex. Jag betalar taxin, jag har bara inte tid."
+  },
+  "familyChat": {
+    "title": "👨‍👩‍👧 Kedjemeddelanden i familjechatten",
+    "aName": "Rebecka",
+    "a": "Farbror skickar hela tiden vidare de där kedjemeddelandena och filmerna till hela familjechatten. Jag hittar inget på riktigt bland dem.",
+    "bName": "Teodor",
+    "b": "Han försöker bara vara med i gänget och dela ett skratt. Du kan säga till honom, men att tysta honom känns orättvist."
+  },
+  "tvRemote": {
+    "title": "📺 Gömda fjärrkontrollen",
+    "aName": "Niklas",
+    "a": "Varje gång jag sätter mig för matchen har fjärren försvunnit och det går ett barnprogram. Det är andra gången den här veckan.",
+    "bName": "Maja",
+    "b": "Det är min favorittimme på tv och din match pågår hela eftermiddagen. Vi kan turas om, men du kan inte ta hela eftermiddagen."
+  },
+  "seatingChart": {
+    "title": "🍽️ Vem sitter vid bordsänden",
+    "aName": "Gustav",
+    "a": "Jag har suttit i den änden på varje familjemiddag sedan jag var liten. Nu tog din kille den och ingen sa något.",
+    "bName": "Tara",
+    "b": "Han satte sig först, och han är gäst. Det är en stol, vi kan byta plats nästa gång."
+  },
+  "teenPhone": {
+    "title": "🧒 Mobilen vid middagsbordet",
+    "aName": "Doris",
+    "a": "Middagen är den enda stunden vi sitter tillsammans som familj. Femton minuter utan mobilen är väl inte för mycket begärt.",
+    "bName": "Elias",
+    "b": "Jag kollar bara om en kompis har svarat. Du sitter också på din vid bordet när jobbet skickar sms."
+  },
+  "meetingEmail": {
+    "title": "📧 Ett möte som kunde ha varit ett mejl",
+    "aName": "Paula",
+    "a": "Vi satt en timme i ett samtal för att få höra något som ryms i tre rader. Det är en timme jag kunde ha använt till att göra klart rapporten.",
+    "bName": "Göran",
+    "b": "Alla har fullt upp, men i ett samtal kan folk ställa frågor direkt. Ett mejl hade gett fem olika trådar."
+  },
+  "microwaveFish": {
+    "title": "🐟 Fisk i kontorets mikro",
+    "aName": "Wanda",
+    "a": "Du värmde lax i den gemensamma mikron och hela våningen luktar fisk till klockan tre. Ta med något annat.",
+    "bName": "Dmitri",
+    "b": "Det är min enda riktiga lunch och jag har inte råd med mycket takeaway. Andra värmer curry och ingen säger ett ord."
+  },
+  "stolenLunch": {
+    "title": "🥪 Någon åt upp min lunch",
+    "aName": "Bertil",
+    "a": "Mitt namn stod på påsen och mackan var borta före tolv. Jag gissar att du såg vem som tog den.",
+    "bName": "Fiona",
+    "b": "Jag såg ingenting och jag vill inte anklaga någon. Kanske är en lapp på kylen ett vänligare första steg."
+  },
+  "replyAll": {
+    "title": "📨 Svara alla i hela företaget",
+    "aName": "Erik",
+    "a": "Du svarade till alla, tvåhundra personer, med ”tack!”. Nu har jag fyrtio såna till i inkorgen.",
+    "bName": "Johanna",
+    "b": "Jag ville vara artig och knappen låg precis där. Det är ett litet misstag och ingen har tagit skada."
+  },
+  "officeCold": {
+    "title": "❄️ Det iskalla kontoret",
+    "aName": "Rebecka",
+    "a": "Luftkonditioneringen står så lågt att jag har jacka på mig vid skrivbordet i juli. Ett par grader varmare skulle inte skada någon.",
+    "bName": "Anil",
+    "b": "Jag blir varm av mig och solen skiner på min sida hela eftermiddagen. Om du fryser är en filt enklare än att vi andra ska svettas."
+  },
+  "openOfficeHeadphones": {
+    "title": "🎧 Hörlurar i kontorslandskapet",
+    "aName": "Lars",
+    "a": "Jag har hörlurar på för att kunna fokusera och folk knackar mig på axeln med en snabb fråga var femte minut. Det bryter min tankegång.",
+    "bName": "Carmen",
+    "b": "Det är svårt att veta om du verkligen har fullt upp. Att skriva först hade tagit för lång tid när svaret tar tio sekunder."
+  },
+  "emptyCoffee": {
+    "title": "☕ Sista koppen kaffe",
+    "aName": "Torsten",
+    "a": "Du hällde upp det sista ur kannan och lämnade den tomma på plattan. En ny kanna tar två minuter.",
+    "bName": "Lucia",
+    "b": "Jag var sen till ett samtal och märkte ärligt talat inte att det var sista koppen. Jag brygger nästa, jag lovar."
+  },
+  "ideaCredit": {
+    "title": "💡 Vems idé var det",
+    "aName": "Sune",
+    "a": "Jag föreslog det nya schemat i mars och du presenterade det för chefen som ditt eget. Ett tack hade räckt.",
+    "bName": "Kajsa",
+    "b": "Vi pratade igenom det tillsammans och jag utvecklade det med gruppen. Jag trodde vi var överens om att det var ett gemensamt arbete."
+  },
+  "fridayDeadline": {
+    "title": "📅 Deadline på fredag",
+    "aName": "Monika",
+    "a": "Du sa att du skulle skicka din del senast fredag och nu är det måndag. Alla andra väntade på det här och jag fick fråga två gånger.",
+    "bName": "Ahmed",
+    "b": "Ett större projekt landade hos mig och jag fick prioritera. Jag skulle ha sagt det tidigare, men du får det i dag."
+  },
+  "deskLunch": {
+    "title": "🥗 Lunch vid skrivbordet",
+    "aName": "Henrik",
+    "a": "Ingen i teamet tar en riktig lunchrast längre och det börjar kännas som att det förväntas. Jag vill att vi går ifrån klockan tolv.",
+    "bName": "Yuki",
+    "b": "Jag äter medan jag jobbar och går hem tidigare för det. Raster är bra, men jag vill helst bestämma själv."
+  },
+  "calendarInvite": {
+    "title": "🗓️ Möten utan agenda",
+    "aName": "Sylvia",
+    "a": "Din inbjudan sa ”snabb avstämning” utan agenda och tog fyrtiofem minuter av min förmiddag. Berätta vad det gäller först.",
+    "bName": "Bruno",
+    "b": "Det var tänkt som ett samtal, och vi löste två problem. En formell agenda hade dödat det."
+  },
+  "rentSplit": {
+    "title": "🏠 Dela hyran efter rumsstorlek",
+    "aName": "Ana",
+    "a": "Mitt rum är det minsta och har ingen garderob, men jag betalar lika mycket som du. Jag tycker att det största rummet ska kosta mer.",
+    "bName": "Zacharias",
+    "b": "Vi kom överens om lika delar när vi skrev på kontraktet. Det blir rörigt om vi räknar om varje gång någon av oss känner något."
+  },
+  "smallLoan": {
+    "title": "💵 Pengarna från lunchen",
+    "aName": "Rasmus",
+    "a": "Jag la ut för din lunch förra månaden och igen förra veckan. Det blir tre hundra, och jag har inte hört ett ord om det.",
+    "bName": "Dora",
+    "b": "Jag trodde vi var kvitt efter fikarundan. Jag betalar gärna, säg bara summan så swishar jag i dag."
+  },
+  "tipping": {
+    "title": "🧾 Hur mycket dricks",
+    "aName": "Helena",
+    "a": "Servicen var långsam och maten var kall. Jag lämnar tio procent, inte femton.",
+    "bName": "Olof",
+    "b": "Stället var fullpackat och servitören var helt överväldigad. Dricks betyder mycket för dem och det är inte mycket extra för oss."
+  },
+  "streamingShare": {
+    "title": "📺 Dela streamingkontot",
+    "aName": "Maria",
+    "a": "Jag betalar för streamingabonnemanget och nu använder hälften av dina kompisar det också. Jag vill att de bidrar eller skaffar egna.",
+    "bName": "André",
+    "b": "Det kostar lika mycket om två eller fem använder det. Att be om en tia var vore bara pinsamt."
+  },
+  "taxiSplit": {
+    "title": "🚕 Dela på taxin hem",
+    "aName": "Lisa",
+    "a": "Din hållplats var först och min var femton minuter längre bort, men vi delade notan på hälften. Det tycker jag inte är riktigt rättvist.",
+    "bName": "Kristian",
+    "b": "Vi åkte i samma bil och åkte ihop. Att räkna ut per kilometer för två hundra kronor är lite väl mycket."
+  },
+  "groupGift": {
+    "title": "🎀 Present från hela gänget",
+    "aName": "Ivy",
+    "a": "Alla lägger tvåhundra på lärarens present, men jag är student och det är mycket pengar för mig. Kan jag ge hundra?",
+    "bName": "Walter",
+    "b": "Presenten är redan beställd till det priset, och en mindre del betyder att någon annan får täcka. Jag förstår, men det är pinsamt."
+  },
+  "groceryList": {
+    "title": "🛒 Dela på matkassen",
+    "aName": "Petra",
+    "a": "Du köper snacks och fin ost och lägger på den gemensamma summan. Jag äter bara basvaror, så jag ska inte betala hälften.",
+    "bName": "Ravi",
+    "b": "Du får äta av osten när du vill. Det var en gemensam kassa från början och jag tänker inte föra ett kalkylblad."
+  },
+  "bigPurchase": {
+    "title": "🛍️ Ett stort köp utan ett ord",
+    "aName": "Stella",
+    "a": "Du köpte en ny gamingskärm för 4000 kronor samma vecka som vi sparade till resan. Du kunde ha frågat mig.",
+    "bName": "Nils",
+    "b": "Det kom från mina egna fickpengar och jag har väntat på den i ett år. Jag trodde inte att jag behövde be om lov."
+  },
+  "subscriptions": {
+    "title": "💳 Säga upp bortglömda prenumerationer",
+    "aName": "Julia",
+    "a": "Vi betalar för fyra appar som ingen av oss öppnar. Låt oss säga upp dem och lägga pengarna på semestern.",
+    "bName": "Ola",
+    "b": "Jag är säker på att jag använder minst två av dem snart. Kan vi behålla dem till slutet av månaden innan vi bestämmer?"
+  },
+  "restaurantChoice": {
+    "title": "🍜 Var vi ska äta i kväll",
+    "aName": "Hiro",
+    "a": "Jag sa ramen tre gånger den här veckan och du sa ”visst” varje gång, och valde sedan något annat. Jag vill att vi går dit.",
+    "bName": "Beatrice",
+    "b": "Jag var inte sugen på nudlar när vi kom dit. Nästa gång, säg ett ställe så bestämmer jag mig innan vi går."
+  },
+  "cerealMilk": {
+    "title": "🥣 Mjölken före flingorna",
+    "aName": "Patrik",
+    "a": "Du häller i mjölken först och sedan flingorna. Det är fel, och de blir sega innan du hunnit äta upp.",
+    "bName": "Jessica",
+    "b": "Jag gillar det så och jag äter dem direkt. Du behöver inte titta, låt mig bara njuta av min frukost."
+  },
+  "ketchup": {
+    "title": "🍳 Ketchup på ägget",
+    "aName": "Louise",
+    "a": "Du lägger ketchup på en perfekt stekt omelett. Det är slöseri med bra ägg och jag står inte ut med att titta.",
+    "bName": "Dennis",
+    "b": "Jag har ätit det så sedan jag var liten och jag gillar smaken. Det är min tallrik, du äter din som du vill."
+  },
+  "pizzaCrust": {
+    "title": "🍕 Lämna pizzakanten",
+    "aName": "Tim",
+    "a": "Du äter mitten och lämnar kanten på tallriken varje gång. Det är det godaste och det går i soporna.",
+    "bName": "Gemma",
+    "b": "Kanten är hård och jag är mätt då. Vill du ha den så ta den, jag tänker inte tvinga i mig den."
+  },
+  "coffeeTea": {
+    "title": "☕ Kaffe eller te på morgonen",
+    "aName": "Arvid",
+    "a": "Du sa att te bara är varmt bladvatten och bad sedan om en klunk av mitt kaffe. Jag vill ha en ursäkt.",
+    "bName": "Heidi",
+    "b": "Jag gillar doften av kaffe mer än smaken. Och jag dricker te för att det är lugnt, jag behöver inte bli övertalad."
+  },
+  "spiceLevel": {
+    "title": "🌶️ Hur starkt är för starkt",
+    "aName": "Diego",
+    "a": "Du bad om ”mild” och hällde sedan halva chilioljan på din tallrik. Nu hostar hela bordet.",
+    "bName": "Anna",
+    "b": "Mild för mig är inte mild för dig, och jag visste inte att bordet delade. Jag beställer en egen skål nästa gång."
+  },
+  "leftovers": {
+    "title": "🥡 Slängde resterna",
+    "aName": "Mona",
+    "a": "Jag sparade den där currygrytan till lunch och du slängde den för att den hade stått i kylen i två dagar. Den var god.",
+    "bName": "Calle",
+    "b": "Jag tyckte den hade stått där alldeles för länge och ville inte att någon skulle bli sjuk. Jag köper ny, förlåt."
+  },
+  "cilantro": {
+    "title": "🌿 Koriander i allt",
+    "aName": "Vera",
+    "a": "Du har lagt koriander i rätten igen, fast du vet att det smakar tvål för mig. Jag kan inte plocka bort allt.",
+    "bName": "Marco",
+    "b": "Receptet kräver det och rätten behöver friskheten. Nästa gång lägger jag den i en skål vid sidan."
+  },
+  "tooSalty": {
+    "title": "🧂 För mycket salt i soppan",
+    "aName": "Frida",
+    "a": "Du saltade soppan innan du smakade och nu är den för salt att äta. Jag vill börja om med en ny gryta.",
+    "bName": "Jack",
+    "b": "Den smakar rätt för mig, och jag saltar alltid på slutet. Häll i lite vatten, det är lätt att fixa."
+  },
+  "doubleDip": {
+    "title": "🥨 Dubbeldoppa på festen",
+    "aName": "Cora",
+    "a": "Jag såg dig ta en tugga av en chips och doppa den igen i den gemensamma skålen. Nu vill jag inte ha något från den.",
+    "bName": "Bobby",
+    "b": "Det var en enda doppning och ingen annan såg. Du gör en stor sak av det, ta bara en ren sked."
+  },
+  "pastaShape": {
+    "title": "🍝 Pasta som inte är spaghetti",
+    "aName": "Giulia",
+    "a": "Den här såsen är gjord för långa nudlar och du lagade den med korta. Det är helt enkelt inte samma rätt.",
+    "bName": "Henrik",
+    "b": "Vi hade bara penne i skåpet, och det smakar bra. Spelar det så stor roll vilken form den har?"
+  },
+  "hotdog": {
+    "title": "🌭 Är en varmkorv en macka?",
+    "aName": "Robin",
+    "a": "En korv med bröd är en fyllning i skuret bröd, alltså är det en macka. Punkt slut.",
+    "bName": "Sam",
+    "b": "Det är sin egen grej. Ingen beställer en macka och väntar sig en korv med bröd, och ingen meny listar den bland mackorna."
+  },
+  "trashDay": {
+    "title": "🗑️ Bära ut soporna",
+    "aName": "Charlotte",
+    "a": "Soppåsen har svämmat över sedan onsdag och jag har burit ut den de fyra senaste gångerna. Det är din tur.",
+    "bName": "Amelia",
+    "b": "Jag tar hand om återvinningen och matavfallet, och det räknas också. Låt oss göra ett riktigt schema så vi slipper räkna."
+  },
+  "foldTowels": {
+    "title": "🧺 Rätt sätt att vika handdukar",
+    "aName": "Edvin",
+    "a": "Jag har just vikt om alla handdukar i tredjedelar för att du viker dem på mitten och de får inte plats på hyllan.",
+    "bName": "Carla",
+    "b": "Det är handdukar och de används om en minut. Jag tänker inte lära mig ett vikningssystem för dem."
+  },
+  "vacuumSchedule": {
+    "title": "🧹 Hur ofta man dammsuger",
+    "aName": "Fanny",
+    "a": "Jag dammsuger två gånger i veckan och har aldrig sett dig röra den. Lite hår på golvet stör mig verkligen.",
+    "bName": "Leo",
+    "b": "Det ser bra ut för mig en gång i veckan, och du gör det oftare än nödvändigt. Jag tar gärna söndagarna om du låter bli resten."
+  },
+  "whoCooks": {
+    "title": "🍲 Laga mat varje kväll",
+    "aName": "Maja",
+    "a": "Jag har lagat middag fem kvällar av sju den här månaden. Jag vill att vi delar på matlagningen mer jämnt.",
+    "bName": "Paolo",
+    "b": "Jag är inte lika bra på det och du tycker om det mer. Men du har rätt, låt oss välja två kvällar så blir jag bättre."
+  },
+  "makeBed": {
+    "title": "🛏️ Bädda sängen",
+    "aName": "Gunilla",
+    "a": "Du går upp, lämnar täcket i en hög och säger att det inte är lönt eftersom vi ändå rufsar till det ikväll. Det gör att rummet ser rörigt ut.",
+    "bName": "Nathan",
+    "b": "Det är jag som åker först till jobbet och det tar två minuter jag inte har. Om det är så viktigt för dig, bädda när du går upp."
+  },
+  "toiletSeat": {
+    "title": "🚽 Toalettlocket",
+    "aName": "Annika",
+    "a": "Jag har gått in på toa i mörkret tre gånger och sitsen har varit uppfälld. Det är inte svårt att fälla ner den.",
+    "bName": "Gustaf",
+    "b": "Det är mindre att ta i när den är uppe, och jag tänker inte på det vid midnatt. Om det stör dig ska jag försöka komma ihåg."
+  },
+  "toiletPaper": {
+    "title": "🧻 Över eller under",
+    "aName": "Dagmar",
+    "a": "Rullen ska hänga med papperet över toppen. Du hängde den bakvänt och jag måste sträcka mig runt varje gång.",
+    "bName": "Albert",
+    "b": "Det spelar ingen roll för hur den fungerar, så ta vilket du vill. Jag tänker inte hänga om den bara för att passa din vana."
+  },
+  "laundryColours": {
+    "title": "👕 Blanda färger i tvätten",
+    "aName": "Wilhelm",
+    "a": "Min vita skjorta kom ut rosa ur tvätten för att du slängde i den röda handduken. Den skjortan hade jag på mig till jobbet.",
+    "bName": "Lydia",
+    "b": "Jag hade bråttom och en liten tvätt tar för lång tid. Jag köper en ny till dig, men det var ett ärligt misstag."
+  },
+  "washCar": {
+    "title": "🚗 Städa den delade bilen",
+    "aName": "Ismail",
+    "a": "Baksätet är fullt av godispapper och en kaffekopp från förra veckan. Vi delar bil, så vi ska dela på städningen.",
+    "bName": "Dina",
+    "b": "Jag städar bilen så fort den börjar bli skräpig. Jag tänkte inte att ett par papper räknades, jag gör det i helgen."
+  },
+  "beachOrCity": {
+    "title": "🏖️ Strand eller storstad",
+    "aName": "Sven",
+    "a": "Jag vill ligga vid havet en vecka utan att något är planerat. Förra resan gick vi runt på museer.",
+    "bName": "Rakel",
+    "b": "Jag blir uttråkad efter två dagar på en solstol. Jag vill se något nytt, även om vi bara hinner med halva staden."
+  },
+  "airportEarly": {
+    "title": "✈️ Hur tidigt man ska vara på flygplatsen",
+    "aName": "Oksana",
+    "a": "Tre timmar före avgång är alldeles för tidigt. Vi kommer bara sitta vid gaten med en kaffe i evigheter.",
+    "bName": "Hamza",
+    "b": "Köerna kan vara långa och jag är flygrädd. Jag väntar hellre än stressar, och att missa flyget kostar mycket mer."
+  },
+  "campingHotel": {
+    "title": "⛺ Tält eller hotell",
+    "aName": "Britta",
+    "a": "Jag bokade en campingplats till helgen och nu säger du att du hellre bor på hotell. Vi bestämde det här i våras.",
+    "bName": "Conny",
+    "b": "Prognosen lovar regn hela helgen och ett blött tält är inte avkopplande. Jag åker gärna och campar när vädret är bättre."
+  },
+  "packingLight": {
+    "title": "🧳 En resväska var",
+    "aName": "Noor",
+    "a": "Vi bestämde att bara ha handbagage och ditt väger ett ton. Du har tre par skor där.",
+    "bName": "Stefan",
+    "b": "Jag gillar att ha alternativ och du packade en jacka du inte behöver. Om vi betalar för en incheckad väska tar jag kostnaden."
+  },
+  "mapOrGps": {
+    "title": "🗺️ Lita på GPS:en",
+    "aName": "Bertil",
+    "a": "Kartappen sa vänster och du svängde höger, för du tror att du kan en genväg. Nu har vi tappat tjugo minuter.",
+    "bName": "Rosie",
+    "b": "Jag har kört den här vägen hundra gånger och appen vet inget om vägarbetet. Jag hade rätt sist."
+  },
+  "leaveTime": {
+    "title": "🕗 När vi ska åka",
+    "aName": "Kajsa",
+    "a": "Jag sa att vi skulle åka klockan åtta för att slippa trafiken och du står fortfarande i duschen halv nio. Det blir alltid så här.",
+    "bName": "Måns",
+    "b": "Festen börjar tio, så att åka åtta är alldeles för tidigt. Du planerar för värsta möjliga trafik och sedan är det jag som får stressa."
+  },
+  "sleepIn": {
+    "title": "🌅 Uppstigning i helgen",
+    "aName": "Elin",
+    "a": "Det är lördag och du är uppe klockan sex och för oväsen i köket. Den enda morgonen jag kan sova länge, och den är förstörd.",
+    "bName": "Rasmus",
+    "b": "Min kropp vaknar tidigt och jag försökte vara tyst. Att ligga och stirra i taket hjälper inte heller."
+  },
+  "dinnerReservation": {
+    "title": "🕰️ Boka bord till middag",
+    "aName": "Isak",
+    "a": "Du bokade bordet till halv sex och det är en fredag. Ingen äter så tidigt, och jag hade andra planer.",
+    "bName": "Tilda",
+    "b": "Det var den enda tiden som fanns kvar och jag hade förlorat den. Jag frågade dig, men du hade fullt upp och svarade inte."
+  },
+  "boardGameRules": {
+    "title": "🎲 Regler som ingen minns",
+    "aName": "Björn",
+    "a": "Du har spelat det här spelet fel hela kvällen och nu leder du. Jag vill gå tillbaka och spela om dragen.",
+    "bName": "Sienna",
+    "b": "Vi läste instruktionen tillsammans i början och ingen protesterade. Man kan inte ändra reglerna när man ligger under."
+  },
+  "houseRules": {
+    "title": "💰 Egna regler i Monopol",
+    "aName": "Elias",
+    "a": "Jag la böterna i mitten, så nästa som landar på Fri parkering vinner dem. Det är den riktiga regeln.",
+    "bName": "Hedvig",
+    "b": "Det står inte i regelboken, och det gör att spelet håller på hela natten. Låt oss spela som det står."
+  },
+  "fantasyTrade": {
+    "title": "🏈 Ett orättvist byte i fantasyligan",
+    "aName": "Dag",
+    "a": "Du bytte till dig min bästa spelare mot en skadad, och jag sa ja utan att kolla. Det är ett orättvist byte, så vi river upp det.",
+    "bName": "Frida",
+    "b": "Du gick med på det skriftligt och affären var rättvis när vi gjorde den. Att kolla är ditt jobb, inte mitt."
+  },
+  "lineCall": {
+    "title": "🎾 Ut eller in",
+    "aName": "Martin",
+    "a": "Bollen var tydligt ut och du har sagt att den var in hela matchen. Jag vill att vi spelar om poängen.",
+    "bName": "Jolin",
+    "b": "Jag stod närmare linjen och såg att den tog kanten. Du kan inte avgöra det från andra änden av banan."
+  },
+  "controllerTurns": {
+    "title": "🎮 Vems tur med handkontrollen",
+    "aName": "Zacke",
+    "a": "Du har haft handkontrollen i en timme och varje gång jag frågar säger du ”en runda till”. Så funkar inte turer.",
+    "bName": "Pernilla",
+    "b": "Jag var mitt i en bana och kunde inte sluta. Du får den direkt efter den här, jag lovar."
+  },
+  "teamCaptain": {
+    "title": "⚽ Välja lag",
+    "aName": "Gunnar",
+    "a": "Du valde alla dina kompisar först och lämnade mig med de svagare spelarna igen. Jag vill att lagen ska vara jämna.",
+    "bName": "Anja",
+    "b": "Vi har spelat så i flera år och du har aldrig klagat. Vill du ha rättvisa lag kan vi lotta ut dem med namnlappar."
+  },
+  "cardCheating": {
+    "title": "🃏 Ett kort som göms",
+    "aName": "Reuben",
+    "a": "Jag såg dig ta ett kort från botten av leken under senaste given. Om det är så du vinner slutar jag spela.",
+    "bName": "Mei",
+    "b": "Jag tappade ett och tog upp det, mer var det inte. Du har varit sur över att förlora hela kvällen och nu anklagar du mig."
+  },
+  "trashTalk": {
+    "title": "🏀 Snack på planen",
+    "aName": "Dominik",
+    "a": "Lite retande under matchen hör till det roliga. Du blev tyst och sur efter en kommentar, och jag skämtade bara.",
+    "bName": "Karin",
+    "b": "Det är en sak när du skojar om spelet, en annan när det handlar om mig. Jag vill bara att vi ska vara snälla mot varandra."
+  },
+  "gameSave": {
+    "title": "💾 Skrev över sparfilen",
+    "aName": "Kalle",
+    "a": "Jag la trettio timmar på den där sparfilen och du startade ett nytt spel ovanpå den. Nu är den borta.",
+    "bName": "Lina",
+    "b": "Det fanns bara en plats och den såg oanvänd ut. Jag hade frågat, men du var inte hemma och jag ville bara prova."
+  },
+  "loserPays": {
+    "title": "🎳 Den som förlorar betalar pizzan",
+    "aName": "Boris",
+    "a": "Vi sa att förloraren betalar, och du förlorade med två käglor. En deal är en deal, så plocka fram plånboken.",
+    "bName": "Camilla",
+    "b": "Jag sa det på skämt och jag trodde du förstod det. Jag bjuder på nästa omgång om du hellre vill det."
+  },
+  "pickleball": {
+    "title": "🏓 Vem håller räkningen",
+    "aName": "Gloria",
+    "a": "Jag räknade åtta mot sex och du säger sju lika. Vi glömmer ställningen hela tiden och det förstör spelet.",
+    "bName": "Dennis",
+    "b": "Jag har räknat varje serve och jag är säker. Vi kör om poängen och fortsätter."
+  },
+  "dogCouch": {
+    "title": "🐕 Hunden i soffan",
+    "aName": "Maud",
+    "a": "Vi sa inga hundar i soffan och jag kommer hem och hittar honom utsträckt där. Kuddarna är täckta av hår.",
+    "bName": "Douglas",
+    "b": "Han ser så nöjd ut och ligger bara där när vi tittar på tv. Överkastet går att tvätta, och han blir en del av familjen."
+  },
+  "walkingDuty": {
+    "title": "🦮 Vem går ut med hunden",
+    "aName": "Hanna",
+    "a": "Jag har gått morgon- och kvällspromenaderna sedan i helgen och har en presentation i morgon. Det är din tur i kväll.",
+    "bName": "Viktor",
+    "b": "Det öser ner och jag har just satt mig. Jag tar den långa promenaden på lördag, kan vi inte hoppa över i kväll?"
+  },
+  "catNames": {
+    "title": "🐈 Namn på den nya kattungen",
+    "aName": "Pia",
+    "a": "Jag hittade henne och jag kallar henne Kanelbulle. Ditt namn på henne är Sir Fluffington, och det tänker jag inte säga till en veterinär.",
+    "bName": "Kurt",
+    "b": "Jag skrattar varje gång och hon lyssnar redan på det. Kanelbulle är fint men alla har en katt som heter något sånt."
+  },
+  "catKeyboard": {
+    "title": "🐱 Katten på arbetsbordet",
+    "aName": "Maxine",
+    "a": "Hon går över mitt tangentbord under möten och du uppmuntrar det med godis. Nu tror hon att mitt skrivbord är hennes säng.",
+    "bName": "Tore",
+    "b": "Alla i samtalet älskar henne, och hon söker bara sällskap. Du kan stänga dörren om det stör dig."
+  },
+  "feedingTime": {
+    "title": "🥫 Mata katten två gånger",
+    "aName": "Jun",
+    "a": "Jag gav katten hennes middag klockan sex och du matade henne igen klockan sju. Hon börjar bli lite knubbig.",
+    "bName": "Alicia",
+    "b": "Hon jamade åt mig och jag trodde att ingen hade matat henne. En lapp på kylen hade löst det här."
+  },
+  "vetCosts": {
+    "title": "🐾 Dela på veterinärräkningen",
+    "aName": "Rickard",
+    "a": "Veterinärräkningen blev 2800 kronor och jag betalade allt eftersom jag bokade. Du adopterade hunden tillsammans med mig, så vi delar.",
+    "bName": "Cecilia",
+    "b": "Jag hade betalat om du sagt det före besöket. Skicka kvittot så swishar jag hälften."
+  },
+  "offLeash": {
+    "title": "🌳 Lös hund i parken",
+    "aName": "Gudrun",
+    "a": "Din hund sprang fram till min valp utan förvarning och nu är han nervös. Det står på skylten att hundar ska vara kopplade här.",
+    "bName": "Mikael",
+    "b": "Han är snäll och ville bara säga hej. Jag har honom nära, och alla andra här har sina lösa."
+  },
+  "petInBed": {
+    "title": "🐶 Hunden i sängen",
+    "aName": "Selma",
+    "a": "Han tar halva madrassen och jag vaknar med en tass i ansiktet. Jag vill ha sängen för oss själva igen.",
+    "bName": "Carl",
+    "b": "Han är orolig när han är själv och sover bättre bredvid oss. Jag förlorar hellre lite plats än hör honom gnälla hela natten."
+  },
+  "puppyName": {
+    "title": "🐕‍🦺 Välja valpens namn",
+    "aName": "Roger",
+    "a": "Vi har sagt ”valpen” i en vecka för att vi inte kan bestämma oss. Jag röstar på Raket och det passar honom perfekt.",
+    "bName": "Margit",
+    "b": "Han är lugn och långsam, så Raket låter fånigt. Jag gillar Peppar, och det passar hans fläckar."
+  },
+  "fishSitter": {
+    "title": "🐠 Vem matar fiskarna",
+    "aName": "Teresia",
+    "a": "Jag bad dig för en månad sedan att mata fiskarna medan vi är borta. Du säger att du glömde ordna det, och resan är i morgon.",
+    "bName": "Alfred",
+    "b": "Jag trodde att din granne erbjöd sig och ville inte dubbla upp. Jag kan fråga min syster i kväll, hon bor nära."
+  },
+  "birdNoise": {
+    "title": "🦜 Papegojan som aldrig tystnar",
+    "aName": "Nils",
+    "a": "Din papegoja skriker klockan sex varje morgon och jag kan inte somna om. Jag bor precis bredvid dig.",
+    "bName": "Fatima",
+    "b": "Han är en fågel och han hälsar solen. Jag flyttar buren till ett tystare rum, förlåt för det."
+  },
+  "wifiPassword": {
+    "title": "🔐 Dela ut wifi-lösenordet",
+    "aName": "Robin",
+    "a": "Du gav wifi-lösenordet till alla som kom hem till oss och nu går det trögt när jag jobbar. Jag vill byta det.",
+    "bName": "Eva",
+    "b": "Det är oartigt att säga nej till gäster, och ingen använder så mycket. Om det stör dig, gör ett gästnätverk."
+  },
+  "tvVolume": {
+    "title": "🔊 Kriget om volymen",
+    "aName": "Sebastian",
+    "a": "Du tittar på allt på volym 40 och jag hör varje ord från köket. Använd textning.",
+    "bName": "Greta",
+    "b": "Jag hör dåligt och missar dialogen på lägre nivåer. Med textning läser jag i stället för att titta."
+  },
+  "phoneAtDinner": {
+    "title": "📵 Mobilen på restaurangbordet",
+    "aName": "Lydia",
+    "a": "Vi var ute för första gången på en månad och du kollade mobilen var femte minut. Jag kände mig som om jag satt ensam.",
+    "bName": "Peter",
+    "b": "Jag väntade på ett meddelande om att min brors flyg hade landat. Jag borde ha sagt det, men jag ville inte oroa dig."
+  },
+  "notificationSound": {
+    "title": "🔔 Notisljud på biblioteket",
+    "aName": "Evelina",
+    "a": "Din mobil plingar var trettionde sekund och några av oss pluggar. Sätt den på ljudlöst.",
+    "bName": "Mohammed",
+    "b": "Den är på vibration nu, och jag ber verkligen om ursäkt. Jag märkte inte att ljudet var på, så det händer inte igen."
+  },
+  "darkMode": {
+    "title": "🌗 Mörkt eller ljust läge",
+    "aName": "Jesper",
+    "a": "Du ställde in den delade surfplattan på ljust läge på natten och det bränner i ögonen. Vi kom överens om mörkt på kvällen.",
+    "bName": "Odette",
+    "b": "Jag kan inte läsa något i mörkt läge, texten blir suddig. Jag byter tillbaka före sängdags, men jag behöver det på dagen."
+  },
+  "smartSpeaker": {
+    "title": "🗣️ Smarta högtalaren som lyssnar",
+    "aName": "Gideon",
+    "a": "Du ställde en smart högtalare i vårt sovrum och jag känner obehag av att den lyssnar. Jag vill att den flyttas till köket.",
+    "bName": "Liv",
+    "b": "Jag använder den bara till alarm och väder. Köket är för långt bort, men jag kan stänga av mikrofonen på natten."
+  },
+  "tabsOpen": {
+    "title": "🗂️ Tvåhundra öppna flikar",
+    "aName": "Paula",
+    "a": "Varje gång jag lånar din laptop är det hundra flikar öppna och den kryper. Om du stängde några skulle den bli snabbare.",
+    "bName": "Arvid",
+    "b": "Varenda en av de där är något jag behöver, och jag vet exakt var var och en ligger. Det är organiserat kaos."
+  },
+  "photoStorage": {
+    "title": "🖼️ Dela molnlagringen",
+    "aName": "Lotta",
+    "a": "Dina filmer har fyllt vårt gemensamma lagringsutrymme och jag kan inte säkerhetskopiera mina bilder. Radera några, eller betala för eget.",
+    "bName": "Kofi",
+    "b": "Det är bara familjefilmer och jag vill inte förlora dem. Jag flyttar dem till en hårddisk, men ge mig några dagar."
+  },
+  "videoCallCamera": {
+    "title": "📹 Kameran på i videosamtal",
+    "aName": "Helga",
+    "a": "Vårt veckosamtal med familjen är den enda gången vi ser varandra och du har kameran avstängd. Det är som att prata med en vägg.",
+    "bName": "Dylan",
+    "b": "Jag lagar oftast mat eller sitter i pyjamas. Jag är ändå där och lyssnar, och jag tycker inte att kameran är poängen."
+  },
+  "doorbellCamera": {
+    "title": "🚪 Dörrklockskameran",
+    "aName": "Mara",
+    "a": "Du satte upp en kamera som filmar hela gångvägen framför huset, och grannarna kan se den också. Jag vill att den vinklas bort.",
+    "bName": "Ted",
+    "b": "Vi fick två paket stulna i vintras, och den filmar bara vår egen veranda. Jag vinklar gärna ner den lite."
+  },
+  "holdDoor": {
+    "title": "🚪 Hålla upp dörren",
+    "aName": "Valter",
+    "a": "Jag höll upp dörren för en hel grupp och ingen av dem sa tack. Det tar en sekund att vara artig.",
+    "bName": "Yasmin",
+    "b": "Folk har bråttom och märker det inte alltid. Du ska göra det för att det är snällt, inte för att du väntar dig ett tack."
+  },
+  "elevatorSpot": {
+    "title": "🛗 Stå först vid hissen",
+    "aName": "Gloria",
+    "a": "Jag stod och väntade på hissen och du trängde dig in precis när den öppnades. Jag var tydligt först.",
+    "bName": "Matilda",
+    "b": "Jag hade en barnvagn och hissen var enda vägen för mig. Jag såg dig inte, förlåt, men jag behövde verkligen den."
+  },
+  "cuttingQueue": {
+    "title": "🧍 Tränga sig före i kön",
+    "aName": "Ulla",
+    "a": "Du gick rakt fram till disken medan vi andra stod och väntade i tjugo minuter. Det står en kö bakom mig.",
+    "bName": "Idris",
+    "b": "Jag ska bara ställa en snabb fråga och jag beställde inte. Jag förstod inte att det här var kön för det."
+  },
+  "busPhone": {
+    "title": "🚌 Högljutt samtal på bussen",
+    "aName": "Dorotea",
+    "a": "Mannen bakom mig har pratat i högtalartelefon i tjugo minuter och vi har alla hört hela hans dag. Ett headset vore snällt.",
+    "bName": "Samir",
+    "b": "Det är ett viktigt samtal och linjen är dålig, så jag måste ha högtalaren. Jag fattar mig kort, det behövs inte vara otrevlig."
+  },
+  "shoesInside": {
+    "title": "👟 Skor inomhus",
+    "aName": "Hye-jin",
+    "a": "Ta av dig skorna vid dörren, vi har inte dem på oss inne. Jag har precis tvättat golvet.",
+    "bName": "Pavel",
+    "b": "Det är en torr dag och sulorna är rena. Jag är inte van, men jag tar av dem om det betyder så mycket."
+  },
+  "armrest": {
+    "title": "💪 Dela armstödet",
+    "aName": "Nils",
+    "a": "Du har haft båda armstöden hela filmen och min arm hänger i luften. Mittenplatsen får båda, det är regeln.",
+    "bName": "Jade",
+    "b": "Jag sitter vid fönstret och mina armbågar behöver plats. Jag visste inte att det fanns en regel, jag flyttar mig."
+  },
+  "lateRsvp": {
+    "title": "✉️ Svara på inbjudan i sista minuten",
+    "aName": "Greta",
+    "a": "Jag bad alla svara senast den första och du sa ja först dagen innan. Jag hade redan beställt mat till femton.",
+    "bName": "Tobias",
+    "b": "Jag visste inte om mitt skift förrän då. En person till vid bordet skadar inte, och jag tog med efterrätt."
+  },
+  "thankYouNote": {
+    "title": "💌 Tackkort",
+    "aName": "Edit",
+    "a": "Din kusins bröllop var för en månad sedan och vi har inte fått ett ord om vår present. Ett kort kostar ingenting.",
+    "bName": "Börje",
+    "b": "De hinner nog inte med att tacka för hundra presenter. Ett meddelande är inte hela världen, ge dem tid."
+  },
+  "regift": {
+    "title": "🎁 Ge vidare en present",
+    "aName": "Samira",
+    "a": "Jag fick reda på att halsduken jag fick av dig var en present någon annan hade gett dig först. Det kändes som en eftertanke.",
+    "bName": "Lennart",
+    "b": "Den var fin, men passade inte mig. Jag trodde den skulle passa dig bättre, och jag hade gett den till dig ändå."
+  },
+  "partyDrink": {
+    "title": "🍾 Ta med något till festen",
+    "aName": "Delia",
+    "a": "Du dök upp på middagen utan något alls och jag hade lagat mat i två dagar. En flaska eller några blommor hade varit fint.",
+    "bName": "Vide",
+    "b": "Du sa att jag bara skulle komma själv och jag tog dig på orden. Jag tar med något gott nästa gång."
+  },
+  "escalator": {
+    "title": "⬆️ Stå på rulltrappan",
+    "aName": "Brigitta",
+    "a": "Du stod på vänster sida och blockerade alla som ville gå upp. Regeln är att stå till höger och gå till vänster.",
+    "bName": "Anders",
+    "b": "Jag bär tunga väskor och vill bara ta mig fram säkert. Jag behöver inte skynda mig för någon annans tidtabell."
+  },
+  "cinemaTalk": {
+    "title": "🎞️ Viska under filmen",
+    "aName": "Claes",
+    "a": "Du förklarade varje scen för din kompis med viskande röst hela filmen. Jag betalade för att se den, inte för att höra en direktkommentar.",
+    "bName": "Leila",
+    "b": "Hon är ny i serien och jag hjälpte henne bara att hänga med i handlingen. Jag slutar om det verkligen störde dig."
+  },
+  "neighbourMusic": {
+    "title": "🔈 Grannen med sen fest",
+    "aName": "Ada",
+    "a": "Din fest var fortfarande högljudd klockan ett på natten och några av oss jobbar på morgonen. Lite förvarning hade varit artigt.",
+    "bName": "Stefan",
+    "b": "Jag sa till i huset, och det är en natt om året. Jag ber folk gå in, men alla har roligt."
+  },
+  "socks": {
+    "title": "🧦 Strumpor på golvet",
+    "aName": "Lisa",
+    "a": "Det ligger ett par av dina strumpor bredvid sängen, ett vid soffan och ett i hallen. Jag plockar upp dem varje dag.",
+    "bName": "Benjamin",
+    "b": "De är bara strumpor och jag ska ha dem igen. Jag lägger dem i tvättkorgen, men du behöver inte räkna dem."
+  },
+  "cafeSeat": {
+    "title": "☕ Hålla en plats med laptopen",
+    "aName": "Joanna",
+    "a": "Din laptop har hållit det där bordet i en timme och du har gått någon annanstans. Stället är fullt och folk får stå.",
+    "bName": "Karim",
+    "b": "Jag gick bara ut för att ta ett samtal och kom strax tillbaka. Att lämna kvar en väska är hur alla håller en plats."
+  },
+  "groupProject": {
+    "title": "🎓 Ett gruppprojekt ingen började på",
+    "aName": "Tessa",
+    "a": "Projektet ska in om en vecka och jag har skrivit hela dispositionen ensam. Jag behöver att var och en gör sin del till fredag.",
+    "bName": "Olle",
+    "b": "Jag har två tentor före och jag sa att mina delar skulle komma sent. Jag kan göra dem över helgen."
+  },
+  "puzzle": {
+    "title": "🧩 Göra klart mitt pussel",
+    "aName": "Gunilla",
+    "a": "Jag hade pysslat med det där pusslet i en vecka och du la de sista tjugo bitarna medan jag var ute. Jag ville göra klart det själv.",
+    "bName": "Harald",
+    "b": "Det låg på bordet och jag blev ivrig. Jag förstod inte att det betydde så mycket för dig, förlåt."
+  },
+  "hedge": {
+    "title": "🌿 Grannens häck",
+    "aName": "Barbro",
+    "a": "Din häck har vuxit över gångvägen och jag måste kliva ut i gatan för att komma förbi. Det har varit så sedan i våras.",
+    "bName": "Joel",
+    "b": "Jag har tänkt klippa den och vädret har varit hemskt. Jag gör det på söndag, du kunde ha knackat på."
+  }
+}
