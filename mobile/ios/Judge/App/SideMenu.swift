@@ -3,12 +3,19 @@ import SwiftUI
 import UIKit
 
 extension View {
-    /// A bar button on its own small round plate, as the website's header
-    /// buttons, as large as Apple's own round toolbar buttons.
-    fileprivate func roundPlate() -> some View {
-        frame(width: 44, height: 44)
-            .background(Circle().fill(Brand.ink.opacity(0.08)))
-            .contentShape(Rectangle())
+    /// A bar button on its own round plate, the size of Apple's round
+    /// toolbar buttons: glass on iOS 26, a soft tint before it.
+    @ViewBuilder
+    fileprivate func roundPlate(tint: Color? = nil) -> some View {
+        if #available(iOS 26.0, *) {
+            frame(width: 44, height: 44)
+                .glassEffect(.regular.tint(tint).interactive(), in: Circle())
+                .contentShape(Circle())
+        } else {
+            frame(width: 44, height: 44)
+                .background(Circle().fill(tint ?? Brand.ink.opacity(0.08)))
+                .contentShape(Circle())
+        }
     }
 }
 
@@ -37,7 +44,7 @@ struct MenuButton: View {
             app.openMenu()
         } label: {
             Image(systemName: "line.3.horizontal")
-                .font(.system(size: 22, weight: .semibold))
+                .font(.system(size: 17, weight: .medium))
                 .foregroundStyle(Brand.ink)
                 .roundPlate()
         }
@@ -63,7 +70,7 @@ struct ComposeButton: View {
             app.go(.new)
         } label: {
             Image(systemName: "square.and.pencil")
-                .font(.system(size: 22, weight: .semibold))
+                .font(.system(size: 17, weight: .medium))
                 .foregroundStyle(Brand.ink)
                 .roundPlate()
         }
@@ -82,19 +89,10 @@ private struct GamifyToggleStyle: ToggleStyle {
             configuration.isOn.toggle()
         } label: {
             Image(systemName: "gamecontroller")
-                .font(.system(size: 22, weight: .semibold))
+                .font(.system(size: 17, weight: .medium))
                 .foregroundStyle(on ? Brand.terraInk : Brand.muted)
-                .frame(width: 44, height: 44)
-                .background(
-                    ZStack {
-                        Circle()
-                            .fill(Brand.terra.opacity(on ? 0.4 : 0))
-                            .blur(radius: 6)
-                        Circle()
-                            .fill(on ? Brand.terra.opacity(0.16) : Brand.ink.opacity(0.08))
-                    }
-                )
-                .contentShape(Rectangle())
+                .roundPlate(tint: on ? Brand.terra.opacity(0.22) : nil)
+                .background(Circle().fill(Brand.terra.opacity(on ? 0.4 : 0)).blur(radius: 6))
                 .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: on)
         }
         .buttonStyle(.plain)

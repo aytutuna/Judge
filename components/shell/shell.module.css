@@ -66,8 +66,8 @@ html:not([data-game="off"]) .gamify {
   box-shadow: 0 0 12px color-mix(in srgb, var(--terra) 40%, transparent);
 }
 .gamify svg {
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   flex: none;
 }
 
@@ -94,8 +94,8 @@ html:not([data-game="off"]) .gamify {
   outline-offset: 2px;
 }
 .menuButton svg {
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
 }
 
 /* A full-screen modal dialog: the scrim fills it, the panel sits at the
