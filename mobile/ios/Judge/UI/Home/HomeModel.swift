@@ -98,8 +98,6 @@ final class HomeModel {
     /// What a request judges, fixed when it was submitted.
     @ObservationIgnored private var premiumInput: PremiumInput?
     @ObservationIgnored private let keys = IdempotencyKeys()
-    /// The example "Try an example" filled in last, so the next tap picks another.
-    @ObservationIgnored private var lastExample: String?
     /// What the example wrote, to tell it from the user's own text.
     @ObservationIgnored private var exampleForm: FormText?
     /// Told when the server refuses the session (401) and when an outcome
@@ -641,19 +639,22 @@ final class HomeModel {
         evidence.clear()
     }
 
-    /// "Try an example": both names and both sides from a random example,
-    /// over whatever was typed.
-    func fillExample(lang: AppLang) {
-        let example = ExampleCase.random(after: lastExample)
-        lastExample = example.id
-        fill(example, lang: lang)
+    /// "Try an example": both names and both sides from a random example this
+    /// phone has not shown in the current round, over whatever was typed.
+    func fillExample(lang: AppLang, defaults: UserDefaults = .standard) {
+        let examples = Examples.load(lang)
+        guard let pick = Examples.next(ids: examples.map(\.id), seen: Examples.loadSeen(defaults), random: .random(in: 0..<1)),
+              let example = examples.first(where: { $0.id == pick.id })
+        else { return }
+        Examples.saveSeen(pick.seen, defaults)
+        fill(example)
     }
 
-    private func fill(_ example: ExampleCase, lang: AppLang) {
-        caseName = example.myName(lang)
-        argument = example.mine(lang)
-        otherName = example.theirName(lang)
-        otherSide = example.theirs(lang)
+    private func fill(_ example: ExampleCase) {
+        caseName = example.aName
+        argument = example.a
+        otherName = example.bName
+        otherSide = example.b
         theirsOpen = true
         exampleForm = formText
     }
@@ -713,8 +714,8 @@ extension HomeModel {
     }
 
     /// Screenshot fixtures: one example, the same every run.
-    func showForScreenshot(example: ExampleCase, lang: AppLang) {
-        fill(example, lang: lang)
+    func showForScreenshot(example: ExampleCase) {
+        fill(example)
     }
 
     /// Screenshot fixtures: a fresh verdict.

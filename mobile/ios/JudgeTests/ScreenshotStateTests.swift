@@ -81,9 +81,10 @@ final class ScreenshotStateTests: XCTestCase {
         let container = HistoryContainer.inMemory()
         try withExtendedLifetime(container) {
             let example = try XCTUnwrap(ScreenshotState.parse("home-example:tr")).makeModel(container: container)
-            XCTAssertEqual(example.home.argument, ExampleCase.all[0].mine(.tr))
-            XCTAssertEqual(example.home.otherSide, ExampleCase.all[0].theirs(.tr))
-            XCTAssertEqual(example.home.otherName, ExampleCase.all[0].theirName(.tr))
+            let first = try XCTUnwrap(Examples.load(.tr).first)
+            XCTAssertEqual(example.home.argument, first.a)
+            XCTAssertEqual(example.home.otherSide, first.b)
+            XCTAssertEqual(example.home.otherName, first.bName)
 
             let thread = try XCTUnwrap(ScreenshotState.parse("verdict-thread:tr")).makeModel(container: container)
             XCTAssertEqual(thread.home.path, [.verdict(id: "abc123DEF0")])

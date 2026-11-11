@@ -180,7 +180,7 @@ struct ScreenshotState {
         case .settings:
             break
         case .homeExample:
-            app.home.showForScreenshot(example: ExampleCase.all[0], lang: lang)
+            if let example = Examples.load(lang).first { app.home.showForScreenshot(example: example) }
         case .homeError:
             app.home.argument = ExampleArgument.all[0].text(lang)
             app.home.showForScreenshot(error: .timeout)
