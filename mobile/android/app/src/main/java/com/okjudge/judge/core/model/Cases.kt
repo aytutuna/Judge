@@ -142,6 +142,8 @@ data class CaseView(
     val invites: List<CaseInvite>? = null,
     /** Only with three or four sides, for the owner: the answers in so far are enough to judge without the rest. */
     val canJudgeAnswered: Boolean = false,
+    /** Where the court is drawn, set when the case was made; null is the court. */
+    val venue: String? = null,
 ) {
     /** The sides of a case with more than two; a list with two known sides or fewer reads as a two-sided case. */
     val manySides: List<Side>? get() = parties?.mapNotNull { Side.of(it) }?.takeIf { it.size > 2 }
@@ -171,6 +173,7 @@ data class CaseSummary(
     val removed: Boolean = false,
     /** Only with three or four sides. */
     val parties: List<String>? = null,
+    val venue: String? = null,
 ) {
     val status: CaseStatus get() = CaseStatus.of(statusRaw)
     val sideCount: Int get() = parties?.mapNotNull { Side.of(it) }?.size?.takeIf { it > 2 } ?: 2
@@ -207,6 +210,8 @@ data class CreateCaseRequest(
     val displayName: String? = null,
     /** 3 or 4 for a case with that many sides; left out for two. */
     val sides: Int? = null,
+    /** The place the court is drawn in, picked on the phone. */
+    val venue: String? = null,
 )
 
 /** POST /api/v1/cases/{id}/side (WriteSideRequest). */

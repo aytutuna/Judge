@@ -49,12 +49,20 @@ class VerdictFlow(
     private val sleep: suspend (Long) -> Unit = { delay(it) },
     private val newKey: () -> String = { UUID.randomUUID().toString() },
     private val caseNames: CaseNamesStore = MemoryCaseNames(),
+    /** Picks where a new request's court is drawn; null leaves it to the server (the court). */
+    private val pickVenue: () -> String? = { null },
 ) {
     sealed interface State {
         data object Idle : State
         /** [argument] is what was sent; [sides] what was written, for the judging screen's tiles. */
-        data class Running(val startedAt: Long, val premium: Boolean = false, val argument: String = "", val sides: List<Side> = emptyList()) : State
-        data class Succeeded(val outcome: VerdictOutcome, val argument: String = "", val sides: List<Side> = emptyList()) : State
+        data class Running(
+            val startedAt: Long,
+            val premium: Boolean = false,
+            val argument: String = "",
+            val sides: List<Side> = emptyList(),
+            val venue: String? = null,
+        ) : State
+        data class Succeeded(val outcome: VerdictOutcome, val argument: String = "", val sides: List<Side> = emptyList(), val venue: String? = null) : State
         data class Failed(val error: UiError) : State
     }
 
@@ -130,10 +138,24 @@ class VerdictFlow(
         if (heldKey?.second == key) heldKey = null
     }
 
+    /**
+     * The place picked for a request, kept with its Idempotency-Key's body so a retry sends the
+     * same one. [bare] is the body without a venue.
+     */
+    @Volatile private var heldVenue: Pair<String, String?>? = null
+
+    private fun venueFor(bare: String): String? {
+        heldVenue?.let { (b, v) -> if (b == bare) return v }
+        val venue = pickVenue()
+        heldVenue = bare to venue
+        return venue
+    }
+
     private suspend fun succeed(outcome: VerdictOutcome) {
         history.save(outcome)
         val running = _state.value as? State.Running
-        _state.value = State.Succeeded(outcome, running?.argument.orEmpty(), running?.sides.orEmpty())
+        heldVenue = null
+        _state.value = State.Succeeded(outcome, running?.argument.orEmpty(), running?.sides.orEmpty(), outcome.venue ?: running?.venue)
     }
 
     private fun fail(error: UiError) {
@@ -229,7 +251,8 @@ class VerdictFlow(
             displayName = displayName?.trim()?.takeIf { it.isNotEmpty() },
             sides = sides.takeIf { it > 2 }?.coerceAtMost(4),
         )
-        val body = WireJson.json.encodeToString(CreateCaseRequest.serializer(), request)
+        val venue = venueFor(WireJson.json.encodeToString(CreateCaseRequest.serializer(), request))
+        val body = WireJson.json.encodeToString(CreateCaseRequest.serializer(), request.copy(venue = venue))
         val key = keyFor(body)
         job = scope.launch {
             when (val res = api.createCase(body, key)) {
@@ -239,6 +262,7 @@ class VerdictFlow(
                 }
                 is ApiResult.Ok -> {
                     clearKey(key)
+                    heldVenue = null
                     val created = res.value
                     caseNames.save(created.case.id, created.nameMap)
                     val other = otherName?.trim()?.takeIf { it.isNotEmpty() }
@@ -265,8 +289,6 @@ class VerdictFlow(
     /** Premium step 2 (judgePremium): the verdict itself. */
     private fun judgePremium(input: PremiumInput, clarifications: List<Clarification>?) {
         _lastError.value = null
-        _state.value = State.Running(clock(), premium = true, argument = input.text, sides = input.sides)
-        _navigation.trySend(Nav.Judging)
         val request = VerdictRequest(
             argument = input.text,
             lang = input.lang.tag,
@@ -276,7 +298,10 @@ class VerdictFlow(
             // Three or four sides go as typed; `argument` is all of them joined.
             sides = input.sides.takeIf { it.size > 2 }?.map { VerdictSide(it.text, it.name.ifEmpty { null }) },
         )
-        val body = WireJson.json.encodeToString(VerdictRequest.serializer(), request)
+        val venue = venueFor(WireJson.json.encodeToString(VerdictRequest.serializer(), request))
+        _state.value = State.Running(clock(), premium = true, argument = input.text, sides = input.sides, venue = venue)
+        _navigation.trySend(Nav.Judging)
+        val body = WireJson.json.encodeToString(VerdictRequest.serializer(), request.copy(venue = venue))
         val key = keyFor(body)
         job = scope.launch {
             val waitUntil = clock() + IN_PROGRESS_WAIT_MS

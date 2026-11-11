@@ -172,6 +172,15 @@ class CaseFlowTest {
     }
 
     @Test
+    fun create_sendsThePickedVenue() = runBlocking {
+        routes.on(CREATE, Routes.json(201, cases["createResponse"].toString()))
+        val flow = VerdictFlow(api(), FakeHistory(), scope, caseNames = names, pickVenue = { "museum" })
+        assertTrue(flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", AppLang.EN, emptyList(), "Alex"))
+        withTimeout(5_000) { flow.navigation.first() }
+        assertEquals("museum", bodyOf(CREATE)["venue"]!!.jsonPrimitive.content)
+    }
+
+    @Test
     fun create_postsTheOwnerSideWithAKey_keepsTheNames_andOpensTheCase() = runBlocking {
         routes.on(CREATE, Routes.json(201, cases["createResponse"].toString()))
         val flow = VerdictFlow(

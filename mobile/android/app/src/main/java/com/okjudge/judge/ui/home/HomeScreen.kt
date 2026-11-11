@@ -70,6 +70,7 @@ import androidx.compose.ui.unit.sp
 import com.okjudge.judge.core.cases.CaseLogic
 import com.okjudge.judge.core.display.ArgumentRules
 import com.okjudge.judge.core.display.CourtScene
+import com.okjudge.judge.core.display.Venues
 import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.display.PartyNames
 import com.okjudge.judge.core.display.UiError
@@ -144,6 +145,7 @@ fun HomeScreen(
     onSubmit: () -> Unit,
     onDismissError: () -> Unit,
     modifier: Modifier = Modifier,
+    venue: String = Venues.COURT,
     onOtherSideChange: (String) -> Unit = {},
     onOtherName: (String) -> Unit = {},
     onSendLink: () -> Unit = {},
@@ -368,7 +370,7 @@ fun HomeScreen(
                                     // 16/9 inside the free space; wide screens let it grow with the width, phones stay at 480.
                                     val cap = if (maxWidth >= WIDE_SCREEN) maxWidth * 0.92f else 480.dp
                                     val width = minOf(maxWidth - 32.dp, (maxHeight - 16.dp) * 16f / 9f, cap)
-                                    CourtView(CourtScene.Home(busy = state.holding), rememberReducedMotion(), Modifier.width(width).aspectRatio(16f / 9f).testTag(HomeTags.COURT))
+                                    CourtView(CourtScene.Home(busy = state.holding, venue = venue), rememberReducedMotion(), Modifier.width(width).aspectRatio(16f / 9f).testTag(HomeTags.COURT))
                                 }
                             },
                             form = form,

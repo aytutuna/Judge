@@ -25,6 +25,7 @@ import mockwebserver3.MockWebServer
 import okhttp3.OkHttpClient
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -58,7 +59,7 @@ class PremiumFlowTest {
 
     private val fastPolls = PollPolicy(firstMs = 5, maxMs = 10, errorMaxMs = 20, maxErrors = 3, deadlineMs = 10_000)
 
-    private fun flow() = VerdictFlow(
+    private fun flow(pickVenue: () -> String? = { null }) = VerdictFlow(
         JudgeApi(server.url("/").toString(), OkHttpClient(), "ua", pollPolicy = fastPolls),
         history, scope,
         clock = { now },
@@ -67,6 +68,7 @@ class PremiumFlowTest {
         // The 409 wait advances the fake clock instead of sleeping.
         sleep = { ms -> synchronized(sleeps) { sleeps += ms }; now += ms },
         newKey = { "key-${++keys}" },
+        pickVenue = pickVenue,
     )
 
     private val premium get() = Fixtures.verdicts["premiumVerdictResponse"]!!.jsonObject
@@ -238,6 +240,40 @@ class PremiumFlowTest {
         f.settled()
         waitFor { routes.requestsTo(VERDICT).size == 4 }
         assertEquals("key-2", routes.requestsTo(VERDICT)[3].headers["Idempotency-Key"])
+    }
+
+    @Test
+    fun verdict_sendsThePickedVenue_andARetryKeepsIt() = runBlocking {
+        val (status, json) = asyncError("in_progress")
+        val picks = mutableListOf("farm", "ice")
+        routes.on(CLARIFY, Routes.json(200, clarify("none")))
+        routes.on(VERDICT, Routes.json(status, json))
+        routes.on(VERDICT, Routes.json(200, premium["response"].toString()))
+        val f = flow { picks.removeFirst() }
+        f.startPremium(argument, AppLang.EN, emptyList())
+        val done = f.settled() as VerdictFlow.State.Succeeded
+        assertEquals(listOf("farm", "farm"), routes.requestsTo(VERDICT).indices.map { body(VERDICT, it)["venue"]!!.jsonPrimitive.content })
+        assertEquals("farm", done.venue)
+
+        routes.on(CLARIFY, Routes.json(200, clarify("none")))
+        routes.on(VERDICT, Routes.json(200, premium["response"].toString()))
+        f.acknowledge()
+        assertTrue(f.startPremium("Another disagreement entirely, about the best pizza topping.", AppLang.EN, emptyList()))
+        f.settled()
+        waitFor { routes.requestsTo(VERDICT).size == 3 }
+        assertEquals("ice", body(VERDICT, 2)["venue"]!!.jsonPrimitive.content)
+    }
+
+    @Test
+    fun verdict_leavesTheVenueOutWithoutAPick_andTakesTheOneTheServerStored() = runBlocking {
+        routes.on(CLARIFY, Routes.json(200, clarify("none")))
+        routes.on(VERDICT, Routes.json(200, Fixtures.sampleJson("win_b_named")))
+        val f = flow()
+        f.startPremium(argument, AppLang.EN, emptyList())
+        val done = f.settled() as VerdictFlow.State.Succeeded
+        assertFalse("venue" in body(VERDICT))
+        assertEquals("beach", done.outcome.venue)
+        assertEquals("beach", done.venue)
     }
 
     @Test

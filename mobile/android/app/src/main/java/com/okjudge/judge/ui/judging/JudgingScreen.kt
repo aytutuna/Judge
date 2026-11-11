@@ -54,6 +54,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.okjudge.judge.core.display.CourtScene
+import com.okjudge.judge.core.display.Venues
 import com.okjudge.judge.core.display.PartyNames
 import com.okjudge.judge.core.display.Story
 import com.okjudge.judge.core.model.VerdictResult
@@ -110,6 +111,8 @@ fun JudgingScreen(
     sides: List<VerdictFlow.Side> = emptyList(),
     /** How many sides stand at centre court before the verdict says; a case with more than two knows it. */
     sideCount: Int = 2,
+    /** Where the court is drawn; the court when unknown. */
+    venue: String = Venues.COURT,
 ) {
     val s = LocalStrings.current
     val finishedCallback by rememberUpdatedState(onFinished)
@@ -177,7 +180,7 @@ fun JudgingScreen(
                 val gamify = LocalGamify.current
                 if (gamify) {
                     CourtView(
-                        scene = CourtScene.Judging(beat, summary, maxOf(sideCount, sides.size)),
+                        scene = CourtScene.Judging(beat, summary, maxOf(sideCount, sides.size), venue),
                         reducedMotion = reducedMotion,
                         modifier = Modifier
                             .heightIn(max = courtHeight)

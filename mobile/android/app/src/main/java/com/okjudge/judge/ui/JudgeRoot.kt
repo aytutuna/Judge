@@ -109,6 +109,7 @@ import com.okjudge.judge.ui.verdict.VerdictRoute
 import com.okjudge.judge.ui.verdict.VerdictViewModel
 import com.okjudge.judge.core.analytics.Analytics
 import com.okjudge.judge.core.display.UiError
+import com.okjudge.judge.core.display.Venues
 import com.okjudge.judge.core.display.eventCode
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
@@ -397,8 +398,10 @@ fun JudgeRoot(
                                             if (counted(started) == Submitted.PRICING) openPricing()
                                         }
                                     }
+                                    val venue = remember { container.venues.pickNew() }
                                     HomeScreen(
                                         state = state,
+                                        venue = venue,
                                         onArgumentChange = { text ->
                                             if (state.argument.isEmpty() && text.isNotEmpty()) analytics.track("case_started")
                                             vm.onArgumentChange(text)
@@ -862,6 +865,13 @@ private fun JudgingEntry(flow: VerdictFlow, onDone: (String) -> Unit, onLeave: (
             else -> emptyList()
         }.ifEmpty { listOfNotNull(argument?.let { VerdictFlow.Side(mine = true, name = "", text = it) }) }
     }
+    val venue = remember {
+        when (val st = state) {
+            is VerdictFlow.State.Running -> st.venue
+            is VerdictFlow.State.Succeeded -> st.venue
+            else -> null
+        } ?: Venues.COURT
+    }
     val premium = remember {
         (state as? VerdictFlow.State.Running)?.premium ?: ((state as? VerdictFlow.State.Succeeded)?.outcome?.result?.result?.premium == true)
     }
@@ -884,6 +894,7 @@ private fun JudgingEntry(flow: VerdictFlow, onDone: (String) -> Unit, onLeave: (
         reducedMotion = reduced,
         premium = premium,
         sides = sides,
+        venue = venue,
         onFinished = {
             if (outcome != null) {
                 flow.acknowledge()

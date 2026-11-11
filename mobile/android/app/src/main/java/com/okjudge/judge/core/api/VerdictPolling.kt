@@ -97,6 +97,7 @@ internal suspend fun awaitVerdict(
                         replayed = accepted.replayed,
                         ownerToken = accepted.ownerToken,
                         entitlement = accepted.entitlement,
+                        venue = p.venue,
                     ),
                 )
             }

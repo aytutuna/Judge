@@ -39,7 +39,7 @@ object WireJson {
         val result = decodeResult(root["result"] ?: throw SerializationException("missing result"))
         val nameMap = decodeNameMapElement(root["name_map"])
         val replayed = (root["replayed"] as? JsonPrimitive)?.booleanOrNull ?: false
-        return VerdictOutcome(id, result, nameMap, replayed, root.string("owner_token"), decodeEntitlement(root["entitlement"]))
+        return VerdictOutcome(id, result, nameMap, replayed, root.string("owner_token"), decodeEntitlement(root["entitlement"]), root.string("venue"))
     }
 
     /** An `entitlement` field, or null when absent or unreadable (it is a hint, never required). */
@@ -79,6 +79,7 @@ object WireJson {
             else -> VerdictPoll.Ready(
                 id = root.string("id") ?: throw SerializationException("missing id"),
                 result = decodeResult(root["result"] ?: throw SerializationException("missing result")),
+                venue = root.string("venue"),
             )
         }
     }
@@ -111,6 +112,7 @@ object WireJson {
             id = root.string("id") ?: throw SerializationException("missing id"),
             result = decodeResult(root["result"] ?: throw SerializationException("missing result")),
             createdAt = root.string("createdAt") ?: "",
+            venue = root.string("venue"),
         )
     }
 

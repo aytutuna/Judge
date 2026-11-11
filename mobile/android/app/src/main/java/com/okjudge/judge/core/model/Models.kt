@@ -268,6 +268,8 @@ data class VerdictRequest(
     val evidence: List<String>? = null,
     /** Sides A to C or D as typed, when there are more than two; [argument] is then all of them joined. */
     val sides: List<VerdictSide>? = null,
+    /** The place the court is drawn in, picked on the phone (core/display/Venues.kt). */
+    val venue: String? = null,
 )
 
 /** One typed side of a request with three or four. */
@@ -322,6 +324,8 @@ data class VerdictOutcome(
     val ownerToken: String? = null,
     /** Premium: the account's entitlement after this verdict. */
     val entitlement: Entitlement? = null,
+    /** Where the court is drawn; null is the court (old servers and verdicts). */
+    val venue: String? = null,
 )
 
 /**
@@ -349,7 +353,7 @@ sealed interface VerdictSubmission {
 sealed interface VerdictPoll {
     data class Judging(val pollAfterMs: Long?) : VerdictPoll
     data class Failed(val code: String, val error: String?) : VerdictPoll
-    data class Ready(val id: String, val result: ParsedResult) : VerdictPoll
+    data class Ready(val id: String, val result: ParsedResult, val venue: String? = null) : VerdictPoll
 }
 
 data class TranslateOutcome(
@@ -360,4 +364,4 @@ data class TranslateOutcome(
     val result: ParsedResult,
 )
 
-data class StoredVerdict(val id: String, val result: ParsedResult, val createdAt: String)
+data class StoredVerdict(val id: String, val result: ParsedResult, val createdAt: String, val venue: String? = null)

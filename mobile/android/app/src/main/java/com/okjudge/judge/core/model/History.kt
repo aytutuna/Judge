@@ -33,6 +33,8 @@ data class HistoryItem(
     /** Cases with three or four sides only: the sides, and the latest ruling's winner (null: too close). */
     val parties: List<String>? = null,
     val winner: String? = null,
+    /** Where the court is drawn; null is the court. */
+    val venue: String? = null,
 ) {
     val manySides: List<Side>? get() = parties?.mapNotNull { Side.of(it) }?.takeIf { it.size > 2 }
     val isMany: Boolean get() = manySides != null

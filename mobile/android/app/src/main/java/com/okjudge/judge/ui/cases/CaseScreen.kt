@@ -73,6 +73,7 @@ import com.okjudge.judge.core.display.ContentLang
 import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.display.PartyNames
 import com.okjudge.judge.core.display.UiError
+import com.okjudge.judge.core.display.Venues
 import com.okjudge.judge.core.evidence.ImageSource
 import com.okjudge.judge.core.model.CaseAppealView
 import com.okjudge.judge.core.model.CaseEvidenceView
@@ -293,6 +294,7 @@ private fun CaseScreenBody(
                     premium = view.premium,
                     showCancel = false,
                     sideCount = view.sideCount,
+                    venue = view.venue ?: Venues.COURT,
                     modifier = Modifier.weight(1f),
                 )
             }
