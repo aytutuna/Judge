@@ -296,6 +296,7 @@ private struct CaseScreenContent: View {
 
     /// One invited side: its letter, the name it chose once it has answered,
     /// and where it stands.
+    @ViewBuilder
     private func liveRow(_ side: CaseLiveSide, lang: AppLang) -> some View {
         let trimmed = side.name?.trimmingCharacters(in: .whitespacesAndNewlines)
         let name = trimmed?.isEmpty == false ? trimmed : nil

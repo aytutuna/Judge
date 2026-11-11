@@ -121,6 +121,10 @@ final class AppModel {
         self.config = config
         self.persistsDraft = persistsDraft
         self.defaults = defaults
+        // Names an earlier build kept for the other sides are gone for good.
+        for key in defaults.dictionaryRepresentation().keys where key.hasPrefix("sidenames.") {
+            defaults.removeObject(forKey: key)
+        }
         self.sendsUsageEvents = sendsUsageEvents
         self.caseNames = caseNames ?? KeychainCaseNamesStore()
         langPreference = LangPreference(stored: defaults.string(forKey: Self.langKey))

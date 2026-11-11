@@ -43,11 +43,19 @@ struct InviteLinkView: View {
 struct ActivityView: UIViewControllerRepresentable {
     let items: [Any]
     /// Called when the sheet is dismissed, shared or not.
-    var onFinish: () -> Void = {}
+    var onFinish: @MainActor () -> Void = {}
+
+    /// The handler UIKit keeps is Sendable; this only ever runs on the main actor.
+    private struct Handoff: @unchecked Sendable {
+        let run: @MainActor () -> Void
+    }
 
     func makeUIViewController(context: Context) -> UIActivityViewController {
         let controller = UIActivityViewController(activityItems: items, applicationActivities: nil)
-        controller.completionWithItemsHandler = { _, _, _, _ in onFinish() }
+        let handoff = Handoff(run: onFinish)
+        controller.completionWithItemsHandler = { _, _, _, _ in
+            MainActor.assumeIsolated { handoff.run() }
+        }
         return controller
     }
 

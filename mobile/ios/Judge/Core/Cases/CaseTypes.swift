@@ -375,7 +375,6 @@ struct CaseSummary: Decodable, Sendable, Equatable, Identifiable {
         excerpt = try? c.decodeIfPresent(String.self, forKey: .excerpt)
         removed = (try? c.decodeIfPresent(Bool.self, forKey: .removed)) == true
         parties = manyParties(try? c.decodeIfPresent([Party].self, forKey: .parties))
-        canRotate = (try? c.decodeIfPresent(Bool.self, forKey: .canRotate)) != false
         venue = try? c.decodeIfPresent(String.self, forKey: .venue)
     }
 
@@ -467,6 +466,7 @@ private struct CaseViewWire: Decodable {
         invites = parties == nil ? nil : (try? c.decodeIfPresent([CaseInvite].self, forKey: .invites))
         live = try? c.decodeIfPresent([CaseLiveSide].self, forKey: .live)
         canJudgeAnswered = (try? c.decodeIfPresent(Bool.self, forKey: .canJudgeAnswered)) == true
+        canRotate = (try? c.decodeIfPresent(Bool.self, forKey: .canRotate)) != false
         venue = try? c.decodeIfPresent(String.self, forKey: .venue)
     }
 }
