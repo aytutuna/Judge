@@ -223,7 +223,7 @@ export async function refreshHistory(): Promise<void> {
     if (state?.user !== start.user) return;
     emit({ ...state, status: "ready", data: mergeFirstPage({ rows: page.items, next: page.next }, state.data) });
   } catch {
-    if (state?.user === start.user && !state.data) emit({ ...state, status: "error" });
+    if (state?.user === start.user) emit({ ...state, status: "error" });
   }
 }
 
@@ -412,7 +412,7 @@ function subscribe(onChange: () => void): () => void {
 /** The Verdicts list for this viewer: this browser's entries at once, and the
  * account's list once it loads. `poll`: while it is on screen, reload the
  * first page now and then while the judges work on a row. */
-export function useHistory(viewer: ViewerState, poll = false): HistoryView & { loadMore: () => void } {
+export function useHistory(viewer: ViewerState, poll = false): HistoryView & { loadMore: () => void; refresh: () => void } {
   const local = useLocalHistory();
   const answered = useLocalAnswered();
   const server = useSyncExternalStore(
@@ -460,5 +460,6 @@ export function useHistory(viewer: ViewerState, poll = false): HistoryView & { l
     more: Boolean(mine?.data?.next),
     loadingMore: mine?.loadingMore ?? false,
     loadMore: () => void loadMore(),
+    refresh: () => void refreshHistory(),
   };
 }

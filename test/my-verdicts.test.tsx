@@ -205,6 +205,13 @@ describe("the menu's lists", () => {
     expect(listed({ items: [], status: "error" })).toContain(esc(t("en", "shell.loadFailed")));
   });
 
+  it("keeps the rows and offers a retry when a refresh failed", () => {
+    const html = listed({ status: "error" });
+    expect(html).toContain("<section");
+    expect(html).toContain(esc(t("en", "shell.loadFailed")));
+    expect(html).toContain(t("en", "case.retry"));
+  });
+
   it("offers more at the end while a cursor is left, disabled while it loads", () => {
     const more = listed({ more: true });
     expect(more).toContain(t("en", "shell.loadMore"));

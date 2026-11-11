@@ -161,9 +161,19 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
               <p className={styles.note} role="status">
                 {t(lang, "shell.loading")}
               </p>
-            ) : (
-              <p className={styles.note}>{t(lang, history.status === "error" ? "shell.loadFailed" : "shell.empty")}</p>
+            ) : history.status === "error" ? null : (
+              <p className={styles.note}>{t(lang, "shell.empty")}</p>
             )
+          ) : null}
+          {history.status === "error" ? (
+            <>
+              <p className={styles.note} role="alert">
+                {t(lang, "shell.loadFailed")}
+              </p>
+              <button type="button" className={styles.more} onClick={history.refresh}>
+                {t(lang, "case.retry")}
+              </button>
+            </>
           ) : null}
           {history.more ? (
             <button type="button" className={styles.more} disabled={history.loadingMore} onClick={history.loadMore}>
