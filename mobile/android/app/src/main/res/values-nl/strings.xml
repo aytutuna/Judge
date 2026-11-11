@@ -288,8 +288,6 @@
     <string name="case_status_judged">Uitspraak</string>
     <string name="case_status_failed">De rechters konden het niet afronden</string>
     <string name="case_status_expired">De uitnodiging is verlopen</string>
-    <string name="case_invite_label">Stuur deze link naar de ander</string>
-    <string name="case_invite_copy">Link kopiëren</string>
     <string name="case_invite_copied">Gekopieerd</string>
     <string name="case_invite_share">Delen</string>
     <string name="case_invite_share_text">Ik heb Judge gevraagd onze discussie te beslechten. Vertel hier jouw kant. Ik zie die pas bij de uitspraak.</string>
@@ -297,10 +295,6 @@
     <string name="case_invite_reset_confirm">De link die je al stuurde, werkt dan niet meer. Een nieuwe maken?</string>
     <string name="case_invite_reset_yes">Ja, nieuwe link maken</string>
     <string name="case_invite_reset_done">Oude link uitgezet. Stuur de nieuwe.</string>
-    <string name="case_invite_expires">De link werkt tot %1$s.</string>
-    <string name="case_invite_expires_soon">De link werkt 7 dagen.</string>
-    <string name="case_held">Er staat 1 uitspraak voor deze zaak gereserveerd. Je krijgt hem terug als niemand vóór %1$s antwoordt.</string>
-    <string name="case_held_soon">Er staat 1 uitspraak voor deze zaak gereserveerd. Je krijgt hem terug als niemand binnen 7 dagen antwoordt.</string>
     <string name="case_judge_now">Alleen mijn kant laten beoordelen</string>
     <string name="case_judge_now_confirm">Nu een eenzijdige uitspraak? De uitnodiging sluit en de ander kan niet meer antwoorden.</string>
     <string name="case_judge_now_yes">Ja, nu beoordelen</string>
@@ -308,6 +302,8 @@
     <string name="case_judge_expired_yes">Ja, gebruik 1 uitspraak</string>
     <string name="case_side_waiting">Wacht</string>
     <string name="case_side_answered">Heeft geantwoord</string>
+    <string name="case_side_opened">Geopend</string>
+    <string name="case_side_typing">Typt…</string>
     <string name="case_judge_answered">Beoordelen met de kanten die geantwoord hebben</string>
     <string name="case_judge_answered_confirm">Een uitspraak van de kanten die geantwoord hebben? De andere uitnodigingen sluiten en die mensen kunnen niet meer antwoorden.</string>
     <string name="case_cancel">Annuleren</string>
@@ -327,7 +323,6 @@
     <string name="case_context_d">Aanvulling van Partij D</string>
     <string name="case_context_you">Jouw aanvulling (%1$s)</string>
     <string name="case_evidence_item">Afbeelding %1$s, zoals de rechters die lazen</string>
-    <string name="case_not_yet">De ander heeft nog niet geantwoord.</string>
     <string name="case_answered">De ander heeft geantwoord. De rechters zijn ermee bezig.</string>
     <string name="case_judging_alone">De rechters buigen zich over jouw kant.</string>
     <string name="case_expired_body">Niemand antwoordde binnen 7 dagen, dus je credit is terug. Je kunt nog steeds een uitspraak krijgen op alleen jouw kant.</string>
@@ -336,7 +331,6 @@
     <string name="case_start_over">Nieuwe zaak starten</string>
     <string name="case_list_untitled">Zaak van %1$s</string>
     <string name="case_list_untitled_soon">Zaak</string>
-    <string name="respond_kicker">Jouw kant</string>
     <string name="respond_title">Vertel jouw kant</string>
     <string name="respond_intro">Iemand heeft Judge gevraagd een discussie met jou te beslechten. Vertel jouw kant; de ander ziet die pas bij de uitspraak.</string>
     <string name="respond_privacy">Namen worden vervangen door Partij A en Partij B voordat de rechters iets lezen. Je hebt geen account nodig.</string>

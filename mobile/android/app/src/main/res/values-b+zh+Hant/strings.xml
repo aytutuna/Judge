@@ -281,8 +281,6 @@
     <string name="case_status_judged">判決出爐</string>
     <string name="case_status_failed">評審沒能完成</string>
     <string name="case_status_expired">邀請已過期</string>
-    <string name="case_invite_label">把這個連結傳給對方</string>
-    <string name="case_invite_copy">複製連結</string>
     <string name="case_invite_copied">已複製</string>
     <string name="case_invite_share">分享</string>
     <string name="case_invite_share_text">我請 Judge 幫我們評評理。在這裡寫下你的說法，判決出來之前我看不到。</string>
@@ -290,10 +288,6 @@
     <string name="case_invite_reset_confirm">你已經傳出的連結會失效。要產生新的嗎？</string>
     <string name="case_invite_reset_yes">是，產生新連結</string>
     <string name="case_invite_reset_done">舊連結已停用，請傳新的連結。</string>
-    <string name="case_invite_expires">連結有效期限至 %1$s。</string>
-    <string name="case_invite_expires_soon">連結 7 天內有效。</string>
-    <string name="case_held">這個案子已預留 1 次判決。如果到 %1$s 還沒人回覆，就會退還給你。</string>
-    <string name="case_held_soon">這個案子已預留 1 次判決。如果 7 天內沒人回覆，就會退還給你。</string>
     <string name="case_judge_now">只用我的說法判決</string>
     <string name="case_judge_now_confirm">現在就取得單方判決？邀請會關閉，對方就不能再回覆了。</string>
     <string name="case_judge_now_yes">是，現在判決</string>
@@ -301,6 +295,8 @@
     <string name="case_judge_expired_yes">是，用掉 1 次判決</string>
     <string name="case_side_waiting">等待中</string>
     <string name="case_side_answered">已回覆</string>
+    <string name="case_side_opened">已開啟</string>
+    <string name="case_side_typing">正在輸入…</string>
     <string name="case_judge_answered">依已回覆的各方判決</string>
     <string name="case_judge_answered_confirm">現在就依已回覆的各方判決？其餘邀請會關閉，那些人就不能再回覆了。</string>
     <string name="case_cancel">取消</string>
@@ -320,7 +316,6 @@
     <string name="case_context_d">當事人D的補充說明</string>
     <string name="case_context_you">你的補充說明（%1$s）</string>
     <string name="case_evidence_item">圖片 %1$s（評審讀到的版本）</string>
-    <string name="case_not_yet">對方還沒回覆。</string>
     <string name="case_answered">對方回覆了，評審正在處理。</string>
     <string name="case_judging_alone">評審正在處理你的說法。</string>
     <string name="case_expired_body">7 天內沒人回覆，額度已退還給你。你還是可以只用你的說法取得判決。</string>
@@ -329,7 +324,6 @@
     <string name="case_start_over">開新案子</string>
     <string name="case_list_untitled">%1$s 的案子</string>
     <string name="case_list_untitled_soon">案子</string>
-    <string name="respond_kicker">你的說法</string>
     <string name="respond_title">說說你的版本</string>
     <string name="respond_intro">有人請 Judge 幫你們之間的爭論評評理。寫下你的說法；判決出來前，對方看不到。</string>
     <string name="respond_privacy">評審讀取任何內容前，名字都會先換成當事人A和當事人B。你不需要帳號。</string>

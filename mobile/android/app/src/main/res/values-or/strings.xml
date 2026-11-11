@@ -288,8 +288,6 @@
     <string name="case_status_judged">ରାୟ</string>
     <string name="case_status_failed">ବିଚାରକମାନେ ଶେଷ କରିପାରିଲେ ନାହିଁ</string>
     <string name="case_status_expired">ନିମନ୍ତ୍ରଣର ମିଆଦ ସରିଗଲା</string>
-    <string name="case_invite_label">ଏହି ଲିଙ୍କ୍ ଅନ୍ୟ ଜଣଙ୍କୁ ପଠାନ୍ତୁ</string>
-    <string name="case_invite_copy">ଲିଙ୍କ୍ କପି କରନ୍ତୁ</string>
     <string name="case_invite_copied">କପି ହେଲା</string>
     <string name="case_invite_share">ସେୟାର୍</string>
     <string name="case_invite_share_text">ଆମ ଝଗଡ଼ା ମେଣ୍ଟାଇବାକୁ Judgeକୁ କହିଛି। ତୁମ କଥା ଏଠାରେ ଲେଖ। ରାୟ ଆସିବା ଯାଏଁ ମୁଁ ତାହା ଦେଖିପାରିବି ନାହିଁ।</string>
@@ -297,10 +295,6 @@
     <string name="case_invite_reset_confirm">ଆପଣ ଆଗରୁ ପଠାଇଥିବା ଲିଙ୍କ୍ କାମ କରିବା ବନ୍ଦ ହେବ। ନୂଆ ଗୋଟେ ତିଆରି କରିବେ?</string>
     <string name="case_invite_reset_yes">ହଁ, ନୂଆ ଲିଙ୍କ୍ ତିଆରି କରନ୍ତୁ</string>
     <string name="case_invite_reset_done">ପୁରୁଣା ଲିଙ୍କ୍ ବନ୍ଦ ହେଲା। ନୂଆଟି ପଠାନ୍ତୁ।</string>
-    <string name="case_invite_expires">ଲିଙ୍କ୍ %1$s ପର୍ଯ୍ୟନ୍ତ କାମ କରିବ।</string>
-    <string name="case_invite_expires_soon">ଲିଙ୍କ୍ 7 ଦିନ କାମ କରିବ।</string>
-    <string name="case_held">ଏହି ମାମଲା ପାଇଁ 1ଟି ରାୟ ସାଇତି ରଖାଯାଇଛି। %1$s ସୁଦ୍ଧା କେହି ଉତ୍ତର ନ ଦେଲେ ଏହା ଫେରି ପାଇବେ।</string>
-    <string name="case_held_soon">ଏହି ମାମଲା ପାଇଁ 1ଟି ରାୟ ସାଇତି ରଖାଯାଇଛି। 7 ଦିନ ଭିତରେ କେହି ଉତ୍ତର ନ ଦେଲେ ଏହା ଫେରି ପାଇବେ।</string>
     <string name="case_judge_now">କେବଳ ମୋ କଥା ଶୁଣି ରାୟ ଦିଅନ୍ତୁ</string>
     <string name="case_judge_now_confirm">ଏବେ ଏକପକ୍ଷୀୟ ରାୟ ନେବେ? ନିମନ୍ତ୍ରଣ ବନ୍ଦ ହେବ, ଆଉ ସେ ଉତ୍ତର ଦେଇପାରିବେ ନାହିଁ।</string>
     <string name="case_judge_now_yes">ହଁ, ଏବେ ରାୟ ଦିଅନ୍ତୁ</string>
@@ -308,6 +302,8 @@
     <string name="case_judge_expired_yes">ହଁ, 1ଟି ରାୟ ଖର୍ଚ୍ଚ କରନ୍ତୁ</string>
     <string name="case_side_waiting">ଅପେକ୍ଷାରେ</string>
     <string name="case_side_answered">ଉତ୍ତର ଦେଇଛନ୍ତି</string>
+    <string name="case_side_opened">ଖୋଲିଛନ୍ତି</string>
+    <string name="case_side_typing">ଲେଖୁଛନ୍ତି…</string>
     <string name="case_judge_answered">ଉତ୍ତର ଦେଇଥିବା ପକ୍ଷଙ୍କ କଥା ଶୁଣି ରାୟ ଦିଅନ୍ତୁ</string>
     <string name="case_judge_answered_confirm">ଉତ୍ତର ଦେଇଥିବା ପକ୍ଷଙ୍କ ଆଧାରରେ ରାୟ ନେବେ? ଅନ୍ୟ ନିମନ୍ତ୍ରଣ ବନ୍ଦ ହେବ, ସେମାନେ ଆଉ ଉତ୍ତର ଦେଇପାରିବେ ନାହିଁ।</string>
     <string name="case_cancel">ବାତିଲ୍</string>
@@ -327,7 +323,6 @@
     <string name="case_context_d">ପକ୍ଷ D ଯୋଡ଼ିଥିବା ବିବରଣୀ</string>
     <string name="case_context_you">ଆପଣ ଯୋଡ଼ିଥିବା ବିବରଣୀ (%1$s)</string>
     <string name="case_evidence_item">ଛବି %1$s, ବିଚାରକମାନେ ଯେମିତି ପଢ଼ିଲେ</string>
-    <string name="case_not_yet">ସେ ଏଯାଏଁ ଉତ୍ତର ଦେଇନାହାନ୍ତି।</string>
     <string name="case_answered">ସେ ଉତ୍ତର ଦେଲେଣି। ବିଚାରକମାନେ କାମରେ ଲାଗିଛନ୍ତି।</string>
     <string name="case_judging_alone">ବିଚାରକମାନେ ଆପଣଙ୍କ କଥା ଉପରେ କାମ କରୁଛନ୍ତି।</string>
     <string name="case_expired_body">7 ଦିନରେ କେହି ଉତ୍ତର ଦେଲେ ନାହିଁ, ତେଣୁ ଆପଣଙ୍କ କ୍ରେଡିଟ୍ ଫେରିଆସିଛି। ତଥାପି କେବଳ ଆପଣଙ୍କ କଥା ଆଧାରରେ ରାୟ ନେଇପାରିବେ।</string>
@@ -336,7 +331,6 @@
     <string name="case_start_over">ନୂଆ ମାମଲା ଆରମ୍ଭ କରନ୍ତୁ</string>
     <string name="case_list_untitled">ମାମଲା, %1$s</string>
     <string name="case_list_untitled_soon">ମାମଲା</string>
-    <string name="respond_kicker">ଆପଣଙ୍କ କଥା</string>
     <string name="respond_title">ନିଜ କଥା କୁହନ୍ତୁ</string>
     <string name="respond_intro">କେହି ଜଣେ ଆପଣଙ୍କ ସହ ହୋଇଥିବା ଏକ ବିବାଦ ମେଣ୍ଟାଇବାକୁ Judgeକୁ କହିଛନ୍ତି। ନିଜ କଥା କୁହନ୍ତୁ; ରାୟ ଆସିବା ଯାଏଁ ସେ ଏହା ଦେଖିପାରିବେ ନାହିଁ।</string>
     <string name="respond_privacy">ବିଚାରକମାନେ କିଛି ପଢ଼ିବା ଆଗରୁ ନାମ ବଦଳରେ ପକ୍ଷ A ଓ ପକ୍ଷ B ବସିଯାଏ। ଆକାଉଣ୍ଟ ଦରକାର ନାହିଁ।</string>

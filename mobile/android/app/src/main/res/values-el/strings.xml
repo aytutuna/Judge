@@ -288,8 +288,6 @@
     <string name="case_status_judged">Βγήκε απόφαση</string>
     <string name="case_status_failed">Οι κριτές δεν κατάφεραν να ολοκληρώσουν</string>
     <string name="case_status_expired">Η πρόσκληση έληξε</string>
-    <string name="case_invite_label">Στείλε αυτόν τον σύνδεσμο στο άλλο άτομο</string>
-    <string name="case_invite_copy">Αντιγραφή συνδέσμου</string>
     <string name="case_invite_copied">Αντιγράφηκε</string>
     <string name="case_invite_share">Κοινοποίηση</string>
     <string name="case_invite_share_text">Ζήτησα από το Judge να λύσει τη διαφωνία μας. Γράψε εδώ τη δική σου πλευρά. Δεν θα τη δω πριν βγει η απόφαση.</string>
@@ -297,10 +295,6 @@
     <string name="case_invite_reset_confirm">Ο σύνδεσμος που έστειλες θα σταματήσει να λειτουργεί. Να φτιάξουμε νέο;</string>
     <string name="case_invite_reset_yes">Ναι, φτιάξε νέο σύνδεσμο</string>
     <string name="case_invite_reset_done">Ο παλιός σύνδεσμος απενεργοποιήθηκε. Στείλε τον καινούργιο.</string>
-    <string name="case_invite_expires">Ο σύνδεσμος ισχύει έως τις %1$s.</string>
-    <string name="case_invite_expires_soon">Ο σύνδεσμος ισχύει για 7 μέρες.</string>
-    <string name="case_held">Δεσμεύσαμε 1 απόφαση για αυτή την υπόθεση. Σου επιστρέφεται αν δεν απαντήσει κανείς έως τις %1$s.</string>
-    <string name="case_held_soon">Δεσμεύσαμε 1 απόφαση για αυτή την υπόθεση. Σου επιστρέφεται αν δεν απαντήσει κανείς μέσα σε 7 μέρες.</string>
     <string name="case_judge_now">Κρίση μόνο με τη δική μου πλευρά</string>
     <string name="case_judge_now_confirm">Θέλεις μονόπλευρη απόφαση τώρα; Η πρόσκληση κλείνει και η άλλη πλευρά δεν θα μπορεί πια να απαντήσει.</string>
     <string name="case_judge_now_yes">Ναι, κρίνε τώρα</string>
@@ -308,6 +302,8 @@
     <string name="case_judge_expired_yes">Ναι, χρέωσε 1 απόφαση</string>
     <string name="case_side_waiting">Σε αναμονή</string>
     <string name="case_side_answered">Απάντησε</string>
+    <string name="case_side_opened">Άνοιξε</string>
+    <string name="case_side_typing">Πληκτρολογεί…</string>
     <string name="case_judge_answered">Κρίση με τις πλευρές που απάντησαν</string>
     <string name="case_judge_answered_confirm">Θέλεις απόφαση με τις πλευρές που απάντησαν; Οι υπόλοιπες προσκλήσεις κλείνουν και αυτά τα άτομα δεν θα μπορούν πια να απαντήσουν.</string>
     <string name="case_cancel">Άκυρο</string>
@@ -327,7 +323,6 @@
     <string name="case_context_d">Η Πλευρά D πρόσθεσε πληροφορίες</string>
     <string name="case_context_you">Πληροφορίες που πρόσθεσες (%1$s)</string>
     <string name="case_evidence_item">Εικόνα %1$s, όπως τη διάβασαν οι κριτές</string>
-    <string name="case_not_yet">Δεν έχει απαντήσει ακόμα.</string>
     <string name="case_answered">Απάντησε. Οι κριτές το δουλεύουν.</string>
     <string name="case_judging_alone">Οι κριτές δουλεύουν τη δική σου πλευρά.</string>
     <string name="case_expired_body">Κανείς δεν απάντησε σε 7 μέρες, οπότε η δεσμευμένη απόφαση σου επιστράφηκε. Μπορείς ακόμα να ζητήσεις απόφαση μόνο με τη δική σου πλευρά.</string>
@@ -336,7 +331,6 @@
     <string name="case_start_over">Νέα υπόθεση</string>
     <string name="case_list_untitled">Υπόθεση · %1$s</string>
     <string name="case_list_untitled_soon">Υπόθεση</string>
-    <string name="respond_kicker">Η πλευρά σου</string>
     <string name="respond_title">Πες τη δική σου πλευρά</string>
     <string name="respond_intro">Κάποιος ζήτησε από το Judge να λύσει μια διαφωνία που έχει μαζί σου. Πες τη δική σου πλευρά· δεν θα τη δει πριν βγει η απόφαση.</string>
     <string name="respond_privacy">Τα ονόματα γίνονται Πλευρά A και Πλευρά B πριν οι κριτές διαβάσουν οτιδήποτε. Δεν χρειάζεσαι λογαριασμό.</string>

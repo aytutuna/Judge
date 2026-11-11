@@ -281,8 +281,6 @@
     <string name="case_status_judged">Keputusan</string>
     <string name="case_status_failed">Hakim tidak dapat menyelesaikannya</string>
     <string name="case_status_expired">Jemputan sudah tamat tempoh</string>
-    <string name="case_invite_label">Hantar pautan ini kepada pihak satu lagi</string>
-    <string name="case_invite_copy">Salin pautan</string>
     <string name="case_invite_copied">Disalin</string>
     <string name="case_invite_share">Kongsi</string>
     <string name="case_invite_share_text">Saya minta Judge selesaikan pertikaian kita. Ceritakan versi awak di sini. Saya tak akan nampak sampai keputusan keluar.</string>
@@ -290,10 +288,6 @@
     <string name="case_invite_reset_confirm">Pautan yang anda sudah hantar akan berhenti berfungsi. Buat yang baharu?</string>
     <string name="case_invite_reset_yes">Ya, buat pautan baharu</string>
     <string name="case_invite_reset_done">Pautan lama sudah dimatikan. Hantar yang baharu.</string>
-    <string name="case_invite_expires">Pautan ini sah sehingga %1$s.</string>
-    <string name="case_invite_expires_soon">Pautan ini sah selama 7 hari.</string>
-    <string name="case_held">1 keputusan ditahan untuk kes ini. Ia dipulangkan kepada anda jika tiada jawapan menjelang %1$s.</string>
-    <string name="case_held_soon">1 keputusan ditahan untuk kes ini. Ia dipulangkan kepada anda jika tiada jawapan dalam masa 7 hari.</string>
     <string name="case_judge_now">Nilai versi saya sahaja</string>
     <string name="case_judge_now_confirm">Dapatkan keputusan berdasarkan versi anda sahaja sekarang? Jemputan akan ditutup dan dia tidak boleh menjawab lagi.</string>
     <string name="case_judge_now_yes">Ya, nilai sekarang</string>
@@ -301,6 +295,8 @@
     <string name="case_judge_expired_yes">Ya, guna 1 keputusan</string>
     <string name="case_side_waiting">Menunggu</string>
     <string name="case_side_answered">Sudah menjawab</string>
+    <string name="case_side_opened">Dibuka</string>
+    <string name="case_side_typing">Menaip…</string>
     <string name="case_judge_answered">Nilai dengan pihak yang sudah menjawab</string>
     <string name="case_judge_answered_confirm">Mahu keputusan daripada pihak yang sudah menjawab? Jemputan lain akan ditutup dan mereka tidak boleh menjawab lagi.</string>
     <string name="case_cancel">Batal</string>
@@ -320,7 +316,6 @@
     <string name="case_context_d">Pihak D menambah konteks</string>
     <string name="case_context_you">Konteks yang anda tambah (%1$s)</string>
     <string name="case_evidence_item">Imej %1$s, seperti yang dibaca hakim</string>
-    <string name="case_not_yet">Dia belum menjawab lagi.</string>
     <string name="case_answered">Dia sudah menjawab. Hakim sedang menilai.</string>
     <string name="case_judging_alone">Hakim sedang menilai versi anda.</string>
     <string name="case_expired_body">Tiada jawapan dalam 7 hari, jadi kredit anda sudah dikembalikan. Anda masih boleh dapatkan keputusan berdasarkan versi anda sahaja.</string>
@@ -329,7 +324,6 @@
     <string name="case_start_over">Mulakan kes baharu</string>
     <string name="case_list_untitled">Kes pada %1$s</string>
     <string name="case_list_untitled_soon">Kes</string>
-    <string name="respond_kicker">Versi anda</string>
     <string name="respond_title">Ceritakan versi anda</string>
     <string name="respond_intro">Seseorang minta Judge selesaikan pertikaiannya dengan anda. Ceritakan versi anda; dia tidak akan nampak sehingga keputusan keluar.</string>
     <string name="respond_privacy">Nama ditukar kepada Pihak A dan Pihak B sebelum hakim membaca apa-apa. Anda tidak perlukan akaun.</string>

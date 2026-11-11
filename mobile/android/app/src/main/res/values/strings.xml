@@ -288,19 +288,13 @@
     <string name="case_status_judged">Verdict</string>
     <string name="case_status_failed">The judges couldn\'t finish</string>
     <string name="case_status_expired">The invite expired</string>
-    <string name="case_invite_label">Send this link to the other person</string>
-    <string name="case_invite_copy">Copy link</string>
-    <string name="case_invite_copied">Copied</string>
-    <string name="case_invite_share">Share</string>
+    <string name="case_invite_copied">Link copied</string>
+    <string name="case_invite_share">Share link</string>
     <string name="case_invite_share_text">I asked Judge to settle our argument. Tell your side here. I won\'t see it until the verdict.</string>
     <string name="case_invite_reset">Make a new link</string>
     <string name="case_invite_reset_confirm">The link you already sent will stop working. Make a new one?</string>
     <string name="case_invite_reset_yes">Yes, make a new link</string>
     <string name="case_invite_reset_done">Old link turned off. Send the new one.</string>
-    <string name="case_invite_expires">The link works until %1$s.</string>
-    <string name="case_invite_expires_soon">The link works for 7 days.</string>
-    <string name="case_held">1 verdict is held for this case. You get it back if nobody answers by %1$s.</string>
-    <string name="case_held_soon">1 verdict is held for this case. You get it back if nobody answers within 7 days.</string>
     <string name="case_judge_now">Judge with only my side</string>
     <string name="case_judge_now_confirm">Get a one-sided verdict now? The invite closes and they can\'t answer anymore.</string>
     <string name="case_judge_now_yes">Yes, judge it now</string>
@@ -308,6 +302,8 @@
     <string name="case_judge_expired_yes">Yes, use 1 verdict</string>
     <string name="case_side_waiting">Waiting</string>
     <string name="case_side_answered">Answered</string>
+    <string name="case_side_opened">Opened</string>
+    <string name="case_side_typing">Typing…</string>
     <string name="case_judge_answered">Judge with the sides that answered</string>
     <string name="case_judge_answered_confirm">Get a verdict from the sides that have answered? The other invites close and those people can\'t answer anymore.</string>
     <string name="case_cancel">Cancel</string>
@@ -327,7 +323,6 @@
     <string name="case_context_d">Party D added context</string>
     <string name="case_context_you">Context you added (%1$s)</string>
     <string name="case_evidence_item">Image %1$s, as the judges read it</string>
-    <string name="case_not_yet">They haven\'t answered yet.</string>
     <string name="case_answered">They answered. The judges are working on it.</string>
     <string name="case_judging_alone">The judges are working on your side.</string>
     <string name="case_expired_body">Nobody answered in 7 days, so your credit is back. You can still get a verdict on your side alone.</string>
@@ -336,7 +331,6 @@
     <string name="case_start_over">Start a new case</string>
     <string name="case_list_untitled">Case from %1$s</string>
     <string name="case_list_untitled_soon">Case</string>
-    <string name="respond_kicker">Your side</string>
     <string name="respond_title">Tell your side</string>
     <string name="respond_intro">Someone asked Judge to settle an argument with you. Tell your side; they won\'t see it until the verdict.</string>
     <string name="respond_privacy">Names are swapped for Party A and Party B before the judges read anything. You don\'t need an account.</string>
@@ -403,7 +397,7 @@
     <string name="home_add_their_side">Add their side</string>
     <string name="home_add_side">Add another side</string>
     <string name="home_remove_their_side">Remove their side</string>
-    <string name="home_send_link">Send them a link</string>
+    <string name="home_send_link">Send link</string>
     <string name="home_clear">Clear</string>
     <string name="home_lead">Write both sides, or send the other person a link to write theirs.</string>
     <string name="home_lead_solo">Write your side, and theirs if you know it.</string>

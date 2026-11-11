@@ -288,8 +288,6 @@
     <string name="case_status_judged">தீர்ப்பு</string>
     <string name="case_status_failed">நடுவர்களால் முடிக்க முடியவில்லை</string>
     <string name="case_status_expired">அழைப்பு காலாவதியானது</string>
-    <string name="case_invite_label">இந்த லிங்கை மற்றவருக்கு அனுப்புங்கள்</string>
-    <string name="case_invite_copy">லிங்கை நகலெடு</string>
     <string name="case_invite_copied">நகலெடுக்கப்பட்டது</string>
     <string name="case_invite_share">பகிர்</string>
     <string name="case_invite_share_text">நம் வாக்குவாதத்தைத் தீர்க்க Judge-இடம் கேட்டிருக்கிறேன். உங்கள் தரப்பை இங்கே சொல்லுங்கள். தீர்ப்பு வரும் வரை நான் அதைப் பார்க்க மாட்டேன்.</string>
@@ -297,10 +295,6 @@
     <string name="case_invite_reset_confirm">ஏற்கெனவே அனுப்பிய லிங்க் இனி வேலை செய்யாது. புதியதை உருவாக்கவா?</string>
     <string name="case_invite_reset_yes">ஆம், புதிய லிங்க் உருவாக்கு</string>
     <string name="case_invite_reset_done">பழைய லிங்க் முடக்கப்பட்டது. புதியதை அனுப்புங்கள்.</string>
-    <string name="case_invite_expires">%1$s வரை லிங்க் வேலை செய்யும்.</string>
-    <string name="case_invite_expires_soon">லிங்க் 7 நாட்கள் வேலை செய்யும்.</string>
-    <string name="case_held">இந்த வழக்குக்காக 1 தீர்ப்பு ஒதுக்கி வைக்கப்பட்டுள்ளது. %1$s வரை யாரும் பதில் அளிக்காவிட்டால் அது திரும்பக் கிடைக்கும்.</string>
-    <string name="case_held_soon">இந்த வழக்குக்காக 1 தீர்ப்பு ஒதுக்கி வைக்கப்பட்டுள்ளது. 7 நாட்களுக்குள் யாரும் பதில் அளிக்காவிட்டால் அது திரும்பக் கிடைக்கும்.</string>
     <string name="case_judge_now">என் தரப்பு மட்டும் போதும்</string>
     <string name="case_judge_now_confirm">இப்போதே ஒரு தரப்புத் தீர்ப்பு வேண்டுமா? அழைப்பு மூடப்படும், மற்றவரால் இனி பதில் அளிக்க முடியாது.</string>
     <string name="case_judge_now_yes">ஆம், இப்போதே தீர்ப்பு</string>
@@ -308,6 +302,8 @@
     <string name="case_judge_expired_yes">ஆம், 1 தீர்ப்பைச் செலவிடு</string>
     <string name="case_side_waiting">காத்திருக்கிறது</string>
     <string name="case_side_answered">பதிலளித்துவிட்டார்</string>
+    <string name="case_side_opened">திறந்தார்</string>
+    <string name="case_side_typing">தட்டச்சு செய்கிறார்…</string>
     <string name="case_judge_answered">பதிலளித்த தரப்புகளை வைத்துத் தீர்ப்பு</string>
     <string name="case_judge_answered_confirm">பதிலளித்த தரப்புகளை வைத்துத் தீர்ப்பு வேண்டுமா? மற்ற அழைப்புகள் மூடப்படும், அவர்களால் இனி பதில் அளிக்க முடியாது.</string>
     <string name="case_cancel">ரத்துசெய்</string>
@@ -327,7 +323,6 @@
     <string name="case_context_d">தரப்பு D சேர்த்த தகவல்</string>
     <string name="case_context_you">நீங்கள் சேர்த்த தகவல் (%1$s)</string>
     <string name="case_evidence_item">படம் %1$s, நடுவர்கள் படித்தபடி</string>
-    <string name="case_not_yet">மற்றவர் இன்னும் பதில் அளிக்கவில்லை.</string>
     <string name="case_answered">மற்றவர் பதில் அளித்துவிட்டார். நடுவர்கள் வேலையில் இருக்கிறார்கள்.</string>
     <string name="case_judging_alone">நடுவர்கள் உங்கள் தரப்பைப் பார்த்துக்கொண்டிருக்கிறார்கள்.</string>
     <string name="case_expired_body">7 நாட்களில் யாரும் பதில் அளிக்கவில்லை, அதனால் உங்கள் கிரெடிட் திரும்ப வந்துவிட்டது. உங்கள் தரப்பை மட்டும் வைத்து இப்போதும் தீர்ப்பு பெறலாம்.</string>
@@ -336,7 +331,6 @@
     <string name="case_start_over">புதிய வழக்கைத் தொடங்கு</string>
     <string name="case_list_untitled">%1$s வழக்கு</string>
     <string name="case_list_untitled_soon">வழக்கு</string>
-    <string name="respond_kicker">உங்கள் தரப்பு</string>
     <string name="respond_title">உங்கள் தரப்பைச் சொல்லுங்கள்</string>
     <string name="respond_intro">உங்களுடன் நடந்த ஒரு வாக்குவாதத்தைத் தீர்த்து வைக்க ஒருவர் Judge-இடம் கேட்டிருக்கிறார். உங்கள் தரப்பைச் சொல்லுங்கள்; தீர்ப்பு வரும் வரை அவர் அதைப் பார்க்க மாட்டார்.</string>
     <string name="respond_privacy">நடுவர்கள் எதையும் படிக்கும் முன் பெயர்கள் தரப்பு A, தரப்பு B என மாற்றப்படும். கணக்கு தேவையில்லை.</string>

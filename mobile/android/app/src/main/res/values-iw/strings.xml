@@ -295,8 +295,6 @@
     <string name="case_status_judged">יש פסק דין</string>
     <string name="case_status_failed">השופטים לא הצליחו לסיים</string>
     <string name="case_status_expired">תוקף ההזמנה פג</string>
-    <string name="case_invite_label">את הקישור הזה שולחים לצד השני</string>
-    <string name="case_invite_copy">העתקת קישור</string>
     <string name="case_invite_copied">הועתק</string>
     <string name="case_invite_share">שיתוף</string>
     <string name="case_invite_share_text">ביקשתי מ-Judge להכריע בוויכוח שלנו. כאן אפשר לספר את הצד שלך. לא אראה אותו עד פסק הדין.</string>
@@ -304,10 +302,6 @@
     <string name="case_invite_reset_confirm">הקישור ששלחת יפסיק לעבוד. ליצור קישור חדש?</string>
     <string name="case_invite_reset_yes">כן, ליצור קישור חדש</string>
     <string name="case_invite_reset_done">הקישור הישן בוטל. אפשר לשלוח את החדש.</string>
-    <string name="case_invite_expires">הקישור תקף עד %1$s.</string>
-    <string name="case_invite_expires_soon">הקישור תקף ל-7 ימים.</string>
-    <string name="case_held">פסק דין אחד שמור בצד לתיק הזה. הוא יחזור לחשבון שלך אם אף אחד לא יענה עד %1$s.</string>
-    <string name="case_held_soon">פסק דין אחד שמור בצד לתיק הזה. הוא יחזור לחשבון שלך אם אף אחד לא יענה תוך 7 ימים.</string>
     <string name="case_judge_now">להכריע רק לפי הצד שלי</string>
     <string name="case_judge_now_confirm">לקבל עכשיו פסק דין חד-צדדי? ההזמנה תיסגר, והצד השני כבר לא יוכל לענות.</string>
     <string name="case_judge_now_yes">כן, להכריע עכשיו</string>
@@ -315,6 +309,8 @@
     <string name="case_judge_expired_yes">כן, להשתמש בפסק דין אחד</string>
     <string name="case_side_waiting">ממתין</string>
     <string name="case_side_answered">ענה</string>
+    <string name="case_side_opened">נפתח</string>
+    <string name="case_side_typing">מקליד…</string>
     <string name="case_judge_answered">להכריע לפי הצדדים שענו</string>
     <string name="case_judge_answered_confirm">לקבל פסק דין לפי הצדדים שענו? שאר ההזמנות ייסגרו, והם לא יוכלו עוד לענות.</string>
     <string name="case_cancel">ביטול</string>
@@ -334,7 +330,6 @@
     <string name="case_context_d">הקשר נוסף מצד D</string>
     <string name="case_context_you">ההקשר שהוספת (%1$s)</string>
     <string name="case_evidence_item">תמונה %1$s, כפי שהשופטים קראו אותה</string>
-    <string name="case_not_yet">עוד לא התקבלה תשובה.</string>
     <string name="case_answered">התשובה התקבלה. השופטים על זה.</string>
     <string name="case_judging_alone">השופטים עובדים על הצד שלך.</string>
     <string name="case_expired_body">אף אחד לא ענה תוך 7 ימים, אז הקרדיט חזר לחשבון. עדיין אפשר לקבל פסק דין רק לפי הצד שלך.</string>
@@ -343,7 +338,6 @@
     <string name="case_start_over">לפתוח תיק חדש</string>
     <string name="case_list_untitled">תיק מ-%1$s</string>
     <string name="case_list_untitled_soon">תיק</string>
-    <string name="respond_kicker">הצד שלך</string>
     <string name="respond_title">לספר את הצד שלך</string>
     <string name="respond_intro">מישהו ביקש מ-Judge להכריע בוויכוח איתך. כאן מספרים את הצד שלך, ומי שהזמין אותך לא יראה אותו עד פסק הדין.</string>
     <string name="respond_privacy">השמות מוחלפים בצד A ובצד B לפני שהשופטים קוראים משהו. לא צריך חשבון.</string>

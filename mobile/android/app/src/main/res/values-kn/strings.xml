@@ -288,8 +288,6 @@
     <string name="case_status_judged">ತೀರ್ಪು</string>
     <string name="case_status_failed">ತೀರ್ಪುಗಾರರಿಗೆ ಮುಗಿಸಲು ಆಗಲಿಲ್ಲ</string>
     <string name="case_status_expired">ಆಹ್ವಾನದ ಅವಧಿ ಮುಗಿದಿದೆ</string>
-    <string name="case_invite_label">ಈ ಲಿಂಕ್ ಅನ್ನು ಎದುರಿನವರಿಗೆ ಕಳುಹಿಸಿ</string>
-    <string name="case_invite_copy">ಲಿಂಕ್ ಕಾಪಿ ಮಾಡಿ</string>
     <string name="case_invite_copied">ಕಾಪಿ ಆಯಿತು</string>
     <string name="case_invite_share">ಹಂಚಿಕೊಳ್ಳಿ</string>
     <string name="case_invite_share_text">ನಮ್ಮ ವಾದವನ್ನು ಬಗೆಹರಿಸಲು Judge ಅನ್ನು ಕೇಳಿದ್ದೇನೆ. ನಿಮ್ಮ ಕಡೆಯ ಮಾತನ್ನು ಇಲ್ಲಿ ಹೇಳಿ. ತೀರ್ಪು ಬರುವವರೆಗೂ ನನಗೆ ಅದು ಕಾಣುವುದಿಲ್ಲ.</string>
@@ -297,10 +295,6 @@
     <string name="case_invite_reset_confirm">ನೀವು ಈಗಾಗಲೇ ಕಳುಹಿಸಿದ ಲಿಂಕ್ ಕೆಲಸ ಮಾಡುವುದನ್ನು ನಿಲ್ಲಿಸುತ್ತದೆ. ಹೊಸದು ಮಾಡಬೇಕೇ?</string>
     <string name="case_invite_reset_yes">ಹೌದು, ಹೊಸ ಲಿಂಕ್ ಮಾಡಿ</string>
     <string name="case_invite_reset_done">ಹಳೆಯ ಲಿಂಕ್ ಆಫ್ ಆಗಿದೆ. ಹೊಸದನ್ನು ಕಳುಹಿಸಿ.</string>
-    <string name="case_invite_expires">ಈ ಲಿಂಕ್ %1$sರವರೆಗೆ ಕೆಲಸ ಮಾಡುತ್ತದೆ.</string>
-    <string name="case_invite_expires_soon">ಈ ಲಿಂಕ್ 7 ದಿನ ಕೆಲಸ ಮಾಡುತ್ತದೆ.</string>
-    <string name="case_held">ಈ ಕೇಸ್‌ಗಾಗಿ 1 ತೀರ್ಪು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ. %1$sರೊಳಗೆ ಯಾರೂ ಉತ್ತರಿಸದಿದ್ದರೆ ಅದು ನಿಮಗೆ ವಾಪಸ್ ಸಿಗುತ್ತದೆ.</string>
-    <string name="case_held_soon">ಈ ಕೇಸ್‌ಗಾಗಿ 1 ತೀರ್ಪು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ. 7 ದಿನಗಳ ಒಳಗೆ ಯಾರೂ ಉತ್ತರಿಸದಿದ್ದರೆ ಅದು ನಿಮಗೆ ವಾಪಸ್ ಸಿಗುತ್ತದೆ.</string>
     <string name="case_judge_now">ನನ್ನ ಮಾತಿನ ಮೇಲೆಯೇ ತೀರ್ಪು ಕೊಡಿ</string>
     <string name="case_judge_now_confirm">ಈಗಲೇ ಒಂದು ಕಡೆಯ ತೀರ್ಪು ಪಡೆಯಬೇಕೇ? ಆಹ್ವಾನ ಮುಚ್ಚುತ್ತದೆ, ಅವರಿಗೆ ಇನ್ನು ಉತ್ತರಿಸಲು ಆಗುವುದಿಲ್ಲ.</string>
     <string name="case_judge_now_yes">ಹೌದು, ಈಗಲೇ ತೀರ್ಪು ಕೊಡಿ</string>
@@ -308,6 +302,8 @@
     <string name="case_judge_expired_yes">ಹೌದು, 1 ತೀರ್ಪು ಬಳಸಿ</string>
     <string name="case_side_waiting">ಕಾಯುತ್ತಿದೆ</string>
     <string name="case_side_answered">ಉತ್ತರಿಸಿದ್ದಾರೆ</string>
+    <string name="case_side_opened">ತೆರೆದಿದ್ದಾರೆ</string>
+    <string name="case_side_typing">ಬರೆಯುತ್ತಿದ್ದಾರೆ…</string>
     <string name="case_judge_answered">ಉತ್ತರಿಸಿದವರ ಮಾತಿನ ಮೇಲೆ ತೀರ್ಪು ಕೊಡಿ</string>
     <string name="case_judge_answered_confirm">ಉತ್ತರಿಸಿದವರ ಆಧಾರದ ಮೇಲೆ ತೀರ್ಪು ಬೇಕೇ? ಉಳಿದ ಆಹ್ವಾನಗಳು ಮುಚ್ಚುತ್ತವೆ, ಅವರಿಗೆ ಇನ್ನು ಉತ್ತರಿಸಲು ಆಗುವುದಿಲ್ಲ.</string>
     <string name="case_cancel">ರದ್ದುಮಾಡಿ</string>
@@ -327,7 +323,6 @@
     <string name="case_context_d">ಪಕ್ಷ D ಸೇರಿಸಿದ ವಿವರ</string>
     <string name="case_context_you">ನೀವು ಸೇರಿಸಿದ ವಿವರ (%1$s)</string>
     <string name="case_evidence_item">ಚಿತ್ರ %1$s, ತೀರ್ಪುಗಾರರು ಓದಿದಂತೆ</string>
-    <string name="case_not_yet">ಅವರು ಇನ್ನೂ ಉತ್ತರಿಸಿಲ್ಲ.</string>
     <string name="case_answered">ಅವರು ಉತ್ತರಿಸಿದ್ದಾರೆ. ತೀರ್ಪುಗಾರರು ಕೆಲಸದಲ್ಲಿದ್ದಾರೆ.</string>
     <string name="case_judging_alone">ತೀರ್ಪುಗಾರರು ನಿಮ್ಮ ಕಡೆಯ ಮಾತನ್ನು ಪರಿಶೀಲಿಸುತ್ತಿದ್ದಾರೆ.</string>
     <string name="case_expired_body">7 ದಿನಗಳಲ್ಲಿ ಯಾರೂ ಉತ್ತರಿಸಲಿಲ್ಲ, ಹಾಗಾಗಿ ನಿಮ್ಮ ಕ್ರೆಡಿಟ್ ವಾಪಸ್ ಬಂದಿದೆ. ನಿಮ್ಮ ಕಡೆಯ ಮಾತಿನ ಮೇಲೆಯೇ ಈಗಲೂ ತೀರ್ಪು ಪಡೆಯಬಹುದು.</string>
@@ -336,7 +331,6 @@
     <string name="case_start_over">ಹೊಸ ಕೇಸ್ ಶುರು ಮಾಡಿ</string>
     <string name="case_list_untitled">%1$sರ ಕೇಸ್</string>
     <string name="case_list_untitled_soon">ಕೇಸ್</string>
-    <string name="respond_kicker">ನಿಮ್ಮ ಕಡೆ</string>
     <string name="respond_title">ನಿಮ್ಮ ಕಡೆಯ ಮಾತು ಹೇಳಿ</string>
     <string name="respond_intro">ನಿಮ್ಮ ಜೊತೆಗಿನ ಒಂದು ವಾದವನ್ನು ಬಗೆಹರಿಸಲು ಯಾರೋ Judge ಅನ್ನು ಕೇಳಿದ್ದಾರೆ. ನಿಮ್ಮ ಕಡೆಯ ಮಾತು ಹೇಳಿ; ತೀರ್ಪು ಬರುವವರೆಗೂ ಅವರಿಗೆ ಅದು ಕಾಣುವುದಿಲ್ಲ.</string>
     <string name="respond_privacy">ತೀರ್ಪುಗಾರರು ಏನನ್ನಾದರೂ ಓದುವ ಮೊದಲೇ ಹೆಸರುಗಳನ್ನು ಪಕ್ಷ A ಮತ್ತು ಪಕ್ಷ B ಎಂದು ಬದಲಿಸಲಾಗುತ್ತದೆ. ನಿಮಗೆ ಖಾತೆ ಬೇಕಿಲ್ಲ.</string>

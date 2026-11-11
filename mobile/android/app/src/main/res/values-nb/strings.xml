@@ -288,8 +288,6 @@
     <string name="case_status_judged">Dom</string>
     <string name="case_status_failed">Dommerne ble ikke ferdige</string>
     <string name="case_status_expired">Invitasjonen har utløpt</string>
-    <string name="case_invite_label">Send denne lenken til den andre personen</string>
-    <string name="case_invite_copy">Kopier lenke</string>
     <string name="case_invite_copied">Kopiert</string>
     <string name="case_invite_share">Del</string>
     <string name="case_invite_share_text">Jeg har bedt Judge avgjøre diskusjonen vår. Fortell din side her. Jeg ser den ikke før dommen.</string>
@@ -297,10 +295,6 @@
     <string name="case_invite_reset_confirm">Lenken du allerede har sendt, slutter å virke. Vil du lage en ny?</string>
     <string name="case_invite_reset_yes">Ja, lag ny lenke</string>
     <string name="case_invite_reset_done">Den gamle lenken er slått av. Send den nye.</string>
-    <string name="case_invite_expires">Lenken virker til %1$s.</string>
-    <string name="case_invite_expires_soon">Lenken virker i 7 dager.</string>
-    <string name="case_held">1 dom er holdt av til denne saken. Du får den tilbake hvis ingen svarer innen %1$s.</string>
-    <string name="case_held_soon">1 dom er holdt av til denne saken. Du får den tilbake hvis ingen svarer innen 7 dager.</string>
     <string name="case_judge_now">Døm bare min side</string>
     <string name="case_judge_now_confirm">Vil du ha en ensidig dom nå? Invitasjonen lukkes, og den andre kan ikke svare lenger.</string>
     <string name="case_judge_now_yes">Ja, døm nå</string>
@@ -308,6 +302,8 @@
     <string name="case_judge_expired_yes">Ja, bruk 1 dom</string>
     <string name="case_side_waiting">Venter</string>
     <string name="case_side_answered">Har svart</string>
+    <string name="case_side_opened">Åpnet</string>
+    <string name="case_side_typing">Skriver…</string>
     <string name="case_judge_answered">Døm med sidene som har svart</string>
     <string name="case_judge_answered_confirm">Vil du ha en dom fra sidene som har svart? De andre invitasjonene lukkes, og de kan ikke svare lenger.</string>
     <string name="case_cancel">Avbryt</string>
@@ -327,7 +323,6 @@
     <string name="case_context_d">Part D la til kontekst</string>
     <string name="case_context_you">Kontekst du la til (%1$s)</string>
     <string name="case_evidence_item">Bilde %1$s, slik dommerne leser det</string>
-    <string name="case_not_yet">Den andre har ikke svart ennå.</string>
     <string name="case_answered">Den andre har svart. Dommerne jobber med saken.</string>
     <string name="case_judging_alone">Dommerne jobber med din side.</string>
     <string name="case_expired_body">Ingen svarte på 7 dager, så du har fått kreditten tilbake. Du kan fortsatt få en dom bare på din side.</string>
@@ -336,7 +331,6 @@
     <string name="case_start_over">Start en ny sak</string>
     <string name="case_list_untitled">Sak fra %1$s</string>
     <string name="case_list_untitled_soon">Sak</string>
-    <string name="respond_kicker">Din side</string>
     <string name="respond_title">Fortell din side</string>
     <string name="respond_intro">Noen har bedt Judge avgjøre en diskusjon med deg. Fortell din side; vedkommende ser den ikke før dommen.</string>
     <string name="respond_privacy">Navn byttes ut med Part A og Part B før dommerne leser noe. Du trenger ikke konto.</string>

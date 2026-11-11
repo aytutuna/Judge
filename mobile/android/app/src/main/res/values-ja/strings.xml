@@ -281,8 +281,6 @@
     <string name="case_status_judged">判定が出ました</string>
     <string name="case_status_failed">審査員が判定を終えられませんでした</string>
     <string name="case_status_expired">招待の期限切れ</string>
-    <string name="case_invite_label">このリンクを相手に送ってください</string>
-    <string name="case_invite_copy">リンクをコピー</string>
     <string name="case_invite_copied">コピーしました</string>
     <string name="case_invite_share">シェア</string>
     <string name="case_invite_share_text">私たちの言い合い、Judgeに白黒つけてもらうことにしたよ。ここにそっちの言い分を書いてね。判定が出るまで私には見えないから。</string>
@@ -290,10 +288,6 @@
     <string name="case_invite_reset_confirm">すでに送ったリンクは使えなくなります。新しいリンクを作りますか？</string>
     <string name="case_invite_reset_yes">新しいリンクを作る</string>
     <string name="case_invite_reset_done">古いリンクを無効にしました。新しいリンクを送ってください。</string>
-    <string name="case_invite_expires">リンクの有効期限は%1$sまでです。</string>
-    <string name="case_invite_expires_soon">リンクは7日間有効です。</string>
-    <string name="case_held">このケース用に判定1回分を確保しています。%1$sまでに返事がなければ戻ります。</string>
-    <string name="case_held_soon">このケース用に判定1回分を確保しています。7日以内に返事がなければ戻ります。</string>
     <string name="case_judge_now">自分の言い分だけで判定する</string>
     <string name="case_judge_now_confirm">いま片方の言い分だけで判定しますか？　招待は締め切られ、相手はもう回答できなくなります。</string>
     <string name="case_judge_now_yes">いま判定する</string>
@@ -301,6 +295,8 @@
     <string name="case_judge_expired_yes">判定1回分を使う</string>
     <string name="case_side_waiting">返事待ち</string>
     <string name="case_side_answered">回答済み</string>
+    <string name="case_side_opened">開封済み</string>
+    <string name="case_side_typing">入力中…</string>
     <string name="case_judge_answered">回答した人の言い分で判定する</string>
     <string name="case_judge_answered_confirm">回答した人の言い分で判定しますか？　ほかの招待は締め切られ、その人たちはもう回答できなくなります。</string>
     <string name="case_cancel">キャンセル</string>
@@ -320,7 +316,6 @@
     <string name="case_context_d">当事者Dの補足</string>
     <string name="case_context_you">あなたの補足（%1$s）</string>
     <string name="case_evidence_item">画像%1$s（審査員が読んだ形）</string>
-    <string name="case_not_yet">まだ返事がありません。</string>
     <string name="case_answered">返事がありました。審査員が判定中です。</string>
     <string name="case_judging_alone">審査員があなたの言い分を判定中です。</string>
     <string name="case_expired_body">7日間返事がなかったので、クレジットは戻りました。あなたの言い分だけで判定を受けることもできます。</string>
@@ -329,7 +324,6 @@
     <string name="case_start_over">新しいケースを始める</string>
     <string name="case_list_untitled">%1$sのケース</string>
     <string name="case_list_untitled_soon">ケース</string>
-    <string name="respond_kicker">あなたの言い分</string>
     <string name="respond_title">あなたの言い分を書く</string>
     <string name="respond_intro">あなたとの揉めごとについて、Judgeに判定が依頼されました。あなたの言い分を書いてください。判定が出るまで、相手には見えません。</string>
     <string name="respond_privacy">審査員が読む前に、名前は当事者Aと当事者Bに置き換えられます。アカウントは必要ありません。</string>

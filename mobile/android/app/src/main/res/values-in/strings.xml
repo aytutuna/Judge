@@ -281,8 +281,6 @@
     <string name="case_status_judged">Putusan</string>
     <string name="case_status_failed">Hakim tidak bisa menyelesaikannya</string>
     <string name="case_status_expired">Undangan kedaluwarsa</string>
-    <string name="case_invite_label">Kirim tautan ini ke lawan debatmu</string>
-    <string name="case_invite_copy">Salin tautan</string>
     <string name="case_invite_copied">Disalin</string>
     <string name="case_invite_share">Bagikan</string>
     <string name="case_invite_share_text">Aku minta Judge menuntaskan perdebatan kita. Tulis versimu di sini. Aku tidak bisa melihatnya sampai putusan keluar.</string>
@@ -290,10 +288,6 @@
     <string name="case_invite_reset_confirm">Tautan yang sudah kamu kirim akan berhenti berfungsi. Buat yang baru?</string>
     <string name="case_invite_reset_yes">Ya, buat tautan baru</string>
     <string name="case_invite_reset_done">Tautan lama sudah dimatikan. Kirim yang baru.</string>
-    <string name="case_invite_expires">Tautan ini berlaku sampai %1$s.</string>
-    <string name="case_invite_expires_soon">Tautan ini berlaku 7 hari.</string>
-    <string name="case_held">1 putusan ditahan untuk kasus ini. Putusan itu dikembalikan kepadamu kalau tidak ada yang menjawab sampai %1$s.</string>
-    <string name="case_held_soon">1 putusan ditahan untuk kasus ini. Putusan itu dikembalikan kepadamu kalau tidak ada yang menjawab dalam 7 hari.</string>
     <string name="case_judge_now">Putuskan dari versiku saja</string>
     <string name="case_judge_now_confirm">Minta putusan sepihak sekarang? Undangannya ditutup dan dia tidak bisa menjawab lagi.</string>
     <string name="case_judge_now_yes">Ya, putuskan sekarang</string>
@@ -301,6 +295,8 @@
     <string name="case_judge_expired_yes">Ya, pakai 1 putusan</string>
     <string name="case_side_waiting">Menunggu</string>
     <string name="case_side_answered">Sudah menjawab</string>
+    <string name="case_side_opened">Dibuka</string>
+    <string name="case_side_typing">Mengetik…</string>
     <string name="case_judge_answered">Putuskan dari pihak yang sudah menjawab</string>
     <string name="case_judge_answered_confirm">Minta putusan dari pihak yang sudah menjawab? Undangan lainnya ditutup dan mereka tidak bisa menjawab lagi.</string>
     <string name="case_cancel">Batal</string>
@@ -320,7 +316,6 @@
     <string name="case_context_d">Pihak D menambahkan konteks</string>
     <string name="case_context_you">Konteks yang kamu tambahkan (%1$s)</string>
     <string name="case_evidence_item">Gambar %1$s, seperti yang dibaca hakim</string>
-    <string name="case_not_yet">Dia belum menjawab.</string>
     <string name="case_answered">Dia sudah menjawab. Hakim sedang menilai.</string>
     <string name="case_judging_alone">Hakim sedang menilai versimu.</string>
     <string name="case_expired_body">Tidak ada yang menjawab dalam 7 hari, jadi kreditmu sudah kembali. Kamu tetap bisa minta putusan dari versimu saja.</string>
@@ -329,7 +324,6 @@
     <string name="case_start_over">Mulai kasus baru</string>
     <string name="case_list_untitled">Kasus %1$s</string>
     <string name="case_list_untitled_soon">Kasus</string>
-    <string name="respond_kicker">Versimu</string>
     <string name="respond_title">Ceritakan versimu</string>
     <string name="respond_intro">Seseorang minta Judge menuntaskan perdebatan denganmu. Ceritakan versimu; dia tidak bisa melihatnya sampai putusan keluar.</string>
     <string name="respond_privacy">Nama diganti dengan Pihak A dan Pihak B sebelum hakim membaca apa pun. Kamu tidak perlu akun.</string>

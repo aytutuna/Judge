@@ -302,8 +302,6 @@
     <string name="case_status_judged">Вердикт</string>
     <string name="case_status_failed">Судді не змогли завершити</string>
     <string name="case_status_expired">Термін запрошення минув</string>
-    <string name="case_invite_label">Надішли це посилання іншій людині</string>
-    <string name="case_invite_copy">Копіювати</string>
     <string name="case_invite_copied">Скопійовано</string>
     <string name="case_invite_share">Поділитися</string>
     <string name="case_invite_share_text">Хочу, щоб Judge розсудив нашу суперечку. Розкажи свою версію тут. Я не побачу її до вердикту.</string>
@@ -311,10 +309,6 @@
     <string name="case_invite_reset_confirm">Уже надіслане посилання перестане працювати. Створити нове?</string>
     <string name="case_invite_reset_yes">Так, створити нове</string>
     <string name="case_invite_reset_done">Старе посилання вимкнено. Надішли нове.</string>
-    <string name="case_invite_expires">Посилання діє до %1$s.</string>
-    <string name="case_invite_expires_soon">Посилання діє 7 днів.</string>
-    <string name="case_held">1 вердикт зарезервовано для цієї справи. Він повернеться, якщо до %1$s ніхто не відповість.</string>
-    <string name="case_held_soon">1 вердикт зарезервовано для цієї справи. Він повернеться, якщо протягом 7 днів ніхто не відповість.</string>
     <string name="case_judge_now">Судити лише мою версію</string>
     <string name="case_judge_now_confirm">Отримати однобічний вердикт зараз? Запрошення закриється, і інша сторона вже не зможе відповісти.</string>
     <string name="case_judge_now_yes">Так, судити зараз</string>
@@ -322,6 +316,8 @@
     <string name="case_judge_expired_yes">Так, списати 1 вердикт</string>
     <string name="case_side_waiting">Чекаємо</string>
     <string name="case_side_answered">Відповів(ла)</string>
+    <string name="case_side_opened">Відкрив</string>
+    <string name="case_side_typing">Друкує…</string>
     <string name="case_judge_answered">Судити за сторонами, які відповіли</string>
     <string name="case_judge_answered_confirm">Отримати вердикт за сторонами, які відповіли? Інші запрошення закриються, і ці люди вже не зможуть відповісти.</string>
     <string name="case_cancel">Скасувати</string>
@@ -341,7 +337,6 @@
     <string name="case_context_d">Контекст від Сторони D</string>
     <string name="case_context_you">Твій контекст (%1$s)</string>
     <string name="case_evidence_item">Зображення %1$s, як його прочитали судді</string>
-    <string name="case_not_yet">Відповіді ще немає.</string>
     <string name="case_answered">Відповідь надійшла. Судді вже працюють.</string>
     <string name="case_judging_alone">Судді працюють над твоєю версією.</string>
     <string name="case_expired_body">За 7 днів ніхто не відповів, тож вердикт повернуто на баланс. Ти все ще можеш отримати вердикт лише за своєю версією.</string>
@@ -350,7 +345,6 @@
     <string name="case_start_over">Нова справа</string>
     <string name="case_list_untitled">Справа від %1$s</string>
     <string name="case_list_untitled_soon">Справа</string>
-    <string name="respond_kicker">Твоя версія</string>
     <string name="respond_title">Розкажи свою версію</string>
     <string name="respond_intro">Хтось попросив Judge розсудити вашу суперечку. Розкажи свою версію; до вердикту ця людина її не побачить.</string>
     <string name="respond_privacy">Перш ніж судді щось прочитають, імена замінюються на Сторону A і Сторону B. Акаунт не потрібен.</string>

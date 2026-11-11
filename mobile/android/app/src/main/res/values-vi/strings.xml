@@ -281,8 +281,6 @@
     <string name="case_status_judged">Phán quyết</string>
     <string name="case_status_failed">Ban giám khảo chưa xử xong</string>
     <string name="case_status_expired">Lời mời đã hết hạn</string>
-    <string name="case_invite_label">Gửi liên kết này cho người kia</string>
-    <string name="case_invite_copy">Sao chép liên kết</string>
     <string name="case_invite_copied">Đã sao chép</string>
     <string name="case_invite_share">Chia sẻ</string>
     <string name="case_invite_share_text">Mình đã nhờ Judge phân xử vụ cãi nhau của tụi mình. Kể phần của bạn ở đây nhé. Mình sẽ không đọc được cho đến khi có phán quyết.</string>
@@ -290,10 +288,6 @@
     <string name="case_invite_reset_confirm">Liên kết bạn đã gửi sẽ ngừng hoạt động. Tạo liên kết mới?</string>
     <string name="case_invite_reset_yes">Có, tạo liên kết mới</string>
     <string name="case_invite_reset_done">Đã tắt liên kết cũ. Hãy gửi liên kết mới.</string>
-    <string name="case_invite_expires">Liên kết có hiệu lực đến %1$s.</string>
-    <string name="case_invite_expires_soon">Liên kết có hiệu lực trong 7 ngày.</string>
-    <string name="case_held">Đã giữ 1 lượt phán quyết cho vụ này. Bạn được hoàn lại nếu đến %1$s vẫn chưa ai trả lời.</string>
-    <string name="case_held_soon">Đã giữ 1 lượt phán quyết cho vụ này. Bạn được hoàn lại nếu trong 7 ngày chưa ai trả lời.</string>
     <string name="case_judge_now">Chỉ phân xử phần của tôi</string>
     <string name="case_judge_now_confirm">Nhận phán quyết một phía ngay bây giờ? Lời mời sẽ đóng và người kia không trả lời được nữa.</string>
     <string name="case_judge_now_yes">Có, phân xử ngay</string>
@@ -301,6 +295,8 @@
     <string name="case_judge_expired_yes">Có, dùng 1 lượt</string>
     <string name="case_side_waiting">Đang chờ</string>
     <string name="case_side_answered">Đã trả lời</string>
+    <string name="case_side_opened">Đã mở</string>
+    <string name="case_side_typing">Đang nhập…</string>
     <string name="case_judge_answered">Phân xử theo các phía đã trả lời</string>
     <string name="case_judge_answered_confirm">Nhận phán quyết theo các phía đã trả lời? Các lời mời còn lại sẽ đóng và những người đó không trả lời được nữa.</string>
     <string name="case_cancel">Hủy</string>
@@ -320,7 +316,6 @@
     <string name="case_context_d">Bên D đã bổ sung thông tin</string>
     <string name="case_context_you">Thông tin bạn bổ sung (%1$s)</string>
     <string name="case_evidence_item">Ảnh %1$s, như giám khảo đã đọc</string>
-    <string name="case_not_yet">Người kia chưa trả lời.</string>
     <string name="case_answered">Người kia đã trả lời. Ban giám khảo đang xử.</string>
     <string name="case_judging_alone">Ban giám khảo đang xem lời kể của bạn.</string>
     <string name="case_expired_body">Không ai trả lời trong 7 ngày nên lượt của bạn đã được hoàn lại. Bạn vẫn có thể nhận phán quyết chỉ dựa trên lời kể của bạn.</string>
@@ -329,7 +324,6 @@
     <string name="case_start_over">Bắt đầu vụ mới</string>
     <string name="case_list_untitled">Vụ ngày %1$s</string>
     <string name="case_list_untitled_soon">Vụ</string>
-    <string name="respond_kicker">Phía bạn</string>
     <string name="respond_title">Kể phần của bạn</string>
     <string name="respond_intro">Có người đã nhờ Judge phân xử một cuộc tranh cãi với bạn. Hãy kể phần của bạn; họ sẽ không thấy cho đến khi có phán quyết.</string>
     <string name="respond_privacy">Tên được thay bằng Bên A và Bên B trước khi giám khảo đọc bất cứ điều gì. Bạn không cần tài khoản.</string>

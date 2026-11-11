@@ -302,8 +302,6 @@
     <string name="case_status_judged">Werdykt</string>
     <string name="case_status_failed">Sędziowie nie dali rady skończyć</string>
     <string name="case_status_expired">Zaproszenie wygasło</string>
-    <string name="case_invite_label">Wyślij ten link drugiej osobie</string>
-    <string name="case_invite_copy">Kopiuj link</string>
     <string name="case_invite_copied">Skopiowano</string>
     <string name="case_invite_share">Udostępnij</string>
     <string name="case_invite_share_text">Judge ma rozstrzygnąć nasz spór. Opisz tu swoją wersję. Nie zobaczę jej przed werdyktem.</string>
@@ -311,10 +309,6 @@
     <string name="case_invite_reset_confirm">Wysłany już link przestanie działać. Utworzyć nowy?</string>
     <string name="case_invite_reset_yes">Tak, utwórz nowy link</string>
     <string name="case_invite_reset_done">Stary link wyłączony. Wyślij nowy.</string>
-    <string name="case_invite_expires">Link działa do %1$s.</string>
-    <string name="case_invite_expires_soon">Link działa przez 7 dni.</string>
-    <string name="case_held">Na tę sprawę jest zarezerwowany 1 werdykt. Odzyskasz go, jeśli nikt nie odpowie do %1$s.</string>
-    <string name="case_held_soon">Na tę sprawę jest zarezerwowany 1 werdykt. Odzyskasz go, jeśli nikt nie odpowie w ciągu 7 dni.</string>
     <string name="case_judge_now">Oceń tylko moją wersję</string>
     <string name="case_judge_now_confirm">Chcesz od razu jednostronny werdykt? Zaproszenie się zamknie i druga strona nie będzie już mogła odpowiedzieć.</string>
     <string name="case_judge_now_yes">Tak, oceń teraz</string>
@@ -322,6 +316,8 @@
     <string name="case_judge_expired_yes">Tak, użyj 1 werdyktu</string>
     <string name="case_side_waiting">Czeka</string>
     <string name="case_side_answered">Odpowiedział(a)</string>
+    <string name="case_side_opened">Otwarte</string>
+    <string name="case_side_typing">Pisze…</string>
     <string name="case_judge_answered">Oceń na podstawie stron, które odpowiedziały</string>
     <string name="case_judge_answered_confirm">Chcesz werdykt na podstawie stron, które odpowiedziały? Pozostałe zaproszenia się zamkną i te osoby nie będą mogły już odpowiedzieć.</string>
     <string name="case_cancel">Anuluj</string>
@@ -341,7 +337,6 @@
     <string name="case_context_d">Kontekst od Strony D</string>
     <string name="case_context_you">Twój dodatkowy kontekst (%1$s)</string>
     <string name="case_evidence_item">Obraz %1$s, tak jak czytają go sędziowie</string>
-    <string name="case_not_yet">Druga strona jeszcze nie odpowiedziała.</string>
     <string name="case_answered">Druga strona odpowiedziała. Sędziowie już nad tym pracują.</string>
     <string name="case_judging_alone">Sędziowie pracują nad twoją wersją.</string>
     <string name="case_expired_body">Nikt nie odpowiedział przez 7 dni, więc werdykt wrócił do twojej puli. Nadal możesz dostać werdykt tylko na podstawie swojej wersji.</string>
@@ -350,7 +345,6 @@
     <string name="case_start_over">Zacznij nową sprawę</string>
     <string name="case_list_untitled">Sprawa z %1$s</string>
     <string name="case_list_untitled_soon">Sprawa</string>
-    <string name="respond_kicker">Twoja wersja</string>
     <string name="respond_title">Opowiedz swoją wersję</string>
     <string name="respond_intro">Ktoś poprosił Judge o rozstrzygnięcie sporu z tobą. Opisz swoją wersję; ta osoba nie zobaczy jej przed werdyktem.</string>
     <string name="respond_privacy">Zanim sędziowie cokolwiek przeczytają, imiona zamieniamy na Stronę A i Stronę B. Nie potrzebujesz konta.</string>

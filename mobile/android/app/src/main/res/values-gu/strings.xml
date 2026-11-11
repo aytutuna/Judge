@@ -288,8 +288,6 @@
     <string name="case_status_judged">ચુકાદો</string>
     <string name="case_status_failed">જજ પૂરું ન કરી શક્યા</string>
     <string name="case_status_expired">આમંત્રણની મુદત પૂરી</string>
-    <string name="case_invite_label">આ લિંક સામેની વ્યક્તિને મોકલો</string>
-    <string name="case_invite_copy">લિંક કૉપી કરો</string>
     <string name="case_invite_copied">કૉપી થઈ</string>
     <string name="case_invite_share">શેર કરો</string>
     <string name="case_invite_share_text">મેં આપણા વિવાદનો ફેંસલો Judgeને સોંપ્યો છે. તમારી વાત અહીં લખો. ચુકાદા પહેલાં હું એ નહીં જોઉં.</string>
@@ -297,10 +295,6 @@
     <string name="case_invite_reset_confirm">તમે મોકલેલી લિંક કામ કરતી બંધ થઈ જશે. નવી બનાવીએ?</string>
     <string name="case_invite_reset_yes">હા, નવી લિંક બનાવો</string>
     <string name="case_invite_reset_done">જૂની લિંક બંધ. નવી મોકલો.</string>
-    <string name="case_invite_expires">લિંક %1$s સુધી ચાલશે.</string>
-    <string name="case_invite_expires_soon">લિંક 7 દિવસ ચાલશે.</string>
-    <string name="case_held">આ કેસ માટે 1 ચુકાદો અલગ રખાયો છે. %1$s સુધીમાં કોઈ જવાબ ન આપે તો એ પાછો મળશે.</string>
-    <string name="case_held_soon">આ કેસ માટે 1 ચુકાદો અલગ રખાયો છે. 7 દિવસમાં કોઈ જવાબ ન આપે તો એ પાછો મળશે.</string>
     <string name="case_judge_now">ફક્ત મારી બાજુ પરથી ચુકાદો</string>
     <string name="case_judge_now_confirm">હમણાં જ એક બાજુનો ચુકાદો લેવો છે? આમંત્રણ બંધ થશે અને તેઓ જવાબ નહીં આપી શકે.</string>
     <string name="case_judge_now_yes">હા, હમણાં ચુકાદો આપો</string>
@@ -308,6 +302,8 @@
     <string name="case_judge_expired_yes">હા, 1 ચુકાદો વાપરો</string>
     <string name="case_side_waiting">રાહ જોઈએ છીએ</string>
     <string name="case_side_answered">જવાબ આપ્યો</string>
+    <string name="case_side_opened">ખોલ્યું</string>
+    <string name="case_side_typing">લખી રહ્યા છે…</string>
     <string name="case_judge_answered">જવાબ આપનારની બાજુઓ પરથી ચુકાદો</string>
     <string name="case_judge_answered_confirm">જેમણે જવાબ આપ્યો તેમના પરથી ચુકાદો લેવો છે? બાકીનાં આમંત્રણ બંધ થશે અને તેઓ જવાબ નહીં આપી શકે.</string>
     <string name="case_cancel">રદ કરો</string>
@@ -327,7 +323,6 @@
     <string name="case_context_d">પક્ષ D તરફથી ઉમેરેલી વિગત</string>
     <string name="case_context_you">તમે ઉમેરેલી વિગત (%1$s)</string>
     <string name="case_evidence_item">ઇમેજ %1$s, જજોએ વાંચી એ રીતે</string>
-    <string name="case_not_yet">એમણે હજી જવાબ આપ્યો નથી.</string>
     <string name="case_answered">એમણે જવાબ આપ્યો. જજ કામે લાગ્યા છે.</string>
     <string name="case_judging_alone">જજ તમારી બાજુ પર કામ કરે છે.</string>
     <string name="case_expired_body">7 દિવસમાં કોઈએ જવાબ ન આપ્યો, એટલે તમારી ક્રેડિટ પાછી આવી ગઈ. છતાં તમે ફક્ત તમારી બાજુ પરથી ચુકાદો લઈ શકો છો.</string>
@@ -336,7 +331,6 @@
     <string name="case_start_over">નવો કેસ શરૂ કરો</string>
     <string name="case_list_untitled">%1$s નો કેસ</string>
     <string name="case_list_untitled_soon">કેસ</string>
-    <string name="respond_kicker">તમારી વાત</string>
     <string name="respond_title">તમારી વાત કહો</string>
     <string name="respond_intro">કોઈએ તમારી સાથેના વિવાદનો ફેંસલો Judgeને સોંપ્યો છે. તમારી વાત કહો; ચુકાદા પહેલાં તેઓ એ નહીં જુએ.</string>
     <string name="respond_privacy">જજ કંઈ પણ વાંચે એ પહેલાં નામની જગ્યાએ પક્ષ A અને પક્ષ B મુકાય છે. એકાઉન્ટની જરૂર નથી.</string>

@@ -288,8 +288,6 @@
     <string name="case_status_judged">Entschieden</string>
     <string name="case_status_failed">Die Richter sind nicht fertig geworden</string>
     <string name="case_status_expired">Die Einladung ist abgelaufen</string>
-    <string name="case_invite_label">Schick diesen Link an die andere Person</string>
-    <string name="case_invite_copy">Link kopieren</string>
     <string name="case_invite_copied">Kopiert</string>
     <string name="case_invite_share">Teilen</string>
     <string name="case_invite_share_text">Ich habe Judge gebeten, unseren Streit zu klären. Erzähl hier deine Version. Ich sehe sie erst mit dem Urteil.</string>
@@ -297,10 +295,6 @@
     <string name="case_invite_reset_confirm">Der Link, den du schon geschickt hast, funktioniert dann nicht mehr. Neuen erstellen?</string>
     <string name="case_invite_reset_yes">Ja, neuen Link erstellen</string>
     <string name="case_invite_reset_done">Alter Link deaktiviert. Schick den neuen.</string>
-    <string name="case_invite_expires">Der Link gilt bis zum %1$s.</string>
-    <string name="case_invite_expires_soon">Der Link gilt 7 Tage.</string>
-    <string name="case_held">1 Urteil ist für diesen Fall reserviert. Du bekommst es zurück, wenn bis zum %1$s niemand antwortet.</string>
-    <string name="case_held_soon">1 Urteil ist für diesen Fall reserviert. Du bekommst es zurück, wenn innerhalb von 7 Tagen niemand antwortet.</string>
     <string name="case_judge_now">Nur meine Seite beurteilen</string>
     <string name="case_judge_now_confirm">Jetzt ein einseitiges Urteil holen? Die Einladung wird geschlossen, und die andere Person kann nicht mehr antworten.</string>
     <string name="case_judge_now_yes">Ja, Urteil jetzt holen</string>
@@ -308,6 +302,8 @@
     <string name="case_judge_expired_yes">Ja, 1 Urteil nutzen</string>
     <string name="case_side_waiting">Wartet</string>
     <string name="case_side_answered">Hat geantwortet</string>
+    <string name="case_side_opened">Geöffnet</string>
+    <string name="case_side_typing">Schreibt…</string>
     <string name="case_judge_answered">Mit den Seiten beurteilen, die geantwortet haben</string>
     <string name="case_judge_answered_confirm">Ein Urteil aus den Seiten, die geantwortet haben? Die übrigen Einladungen werden geschlossen und diese Leute können nicht mehr antworten.</string>
     <string name="case_cancel">Abbrechen</string>
@@ -327,7 +323,6 @@
     <string name="case_context_d">Ergänzung von Partei D</string>
     <string name="case_context_you">Deine Ergänzung (%1$s)</string>
     <string name="case_evidence_item">Bild %1$s, wie die Richter es lesen</string>
-    <string name="case_not_yet">Noch keine Antwort.</string>
     <string name="case_answered">Die Antwort ist da. Die Richter sind dran.</string>
     <string name="case_judging_alone">Die Richter sehen sich deine Seite an.</string>
     <string name="case_expired_body">In 7 Tagen hat niemand geantwortet, also ist dein Credit wieder da. Du kannst trotzdem ein Urteil nur über deine Seite bekommen.</string>
@@ -336,7 +331,6 @@
     <string name="case_start_over">Neuen Fall starten</string>
     <string name="case_list_untitled">Fall vom %1$s</string>
     <string name="case_list_untitled_soon">Fall</string>
-    <string name="respond_kicker">Deine Seite</string>
     <string name="respond_title">Erzähl deine Version</string>
     <string name="respond_intro">Jemand hat Judge gebeten, einen Streit mit dir zu klären. Erzähl deine Version; die andere Person sieht sie erst mit dem Urteil.</string>
     <string name="respond_privacy">Bevor die Richter etwas lesen, werden Namen durch Partei A und Partei B ersetzt. Du brauchst kein Konto.</string>

@@ -295,8 +295,6 @@
     <string name="case_status_judged">Verdetto</string>
     <string name="case_status_failed">I giudici non sono riusciti a finire</string>
     <string name="case_status_expired">L\'invito è scaduto</string>
-    <string name="case_invite_label">Manda questo link all\'altra persona</string>
-    <string name="case_invite_copy">Copia link</string>
     <string name="case_invite_copied">Copiato</string>
     <string name="case_invite_share">Condividi</string>
     <string name="case_invite_share_text">Ho chiesto a Judge di risolvere la nostra discussione. Racconta qui la tua versione. Non la vedrò fino al verdetto.</string>
@@ -304,10 +302,6 @@
     <string name="case_invite_reset_confirm">Il link che hai già inviato smetterà di funzionare. Ne creiamo uno nuovo?</string>
     <string name="case_invite_reset_yes">Sì, crea un nuovo link</string>
     <string name="case_invite_reset_done">Il vecchio link è disattivato. Manda quello nuovo.</string>
-    <string name="case_invite_expires">Scadenza del link: %1$s.</string>
-    <string name="case_invite_expires_soon">Il link vale per 7 giorni.</string>
-    <string name="case_held">Per questo caso abbiamo messo da parte 1 verdetto. Se nessuno risponde entro la scadenza (%1$s), ti viene restituito.</string>
-    <string name="case_held_soon">Per questo caso abbiamo messo da parte 1 verdetto. Se nessuno risponde entro 7 giorni, ti viene restituito.</string>
     <string name="case_judge_now">Giudica solo la mia versione</string>
     <string name="case_judge_now_confirm">Vuoi subito un verdetto solo sulla tua versione? L\'invito si chiude e l\'altra persona non potrà più rispondere.</string>
     <string name="case_judge_now_yes">Sì, giudica ora</string>
@@ -315,6 +309,8 @@
     <string name="case_judge_expired_yes">Sì, usa 1 verdetto</string>
     <string name="case_side_waiting">In attesa</string>
     <string name="case_side_answered">Ha risposto</string>
+    <string name="case_side_opened">Aperto</string>
+    <string name="case_side_typing">Sta scrivendo…</string>
     <string name="case_judge_answered">Giudica con le parti che hanno risposto</string>
     <string name="case_judge_answered_confirm">Vuoi un verdetto con le parti che hanno risposto? Gli altri inviti si chiudono e quelle persone non potranno più rispondere.</string>
     <string name="case_cancel">Annulla</string>
@@ -334,7 +330,6 @@
     <string name="case_context_d">Contesto aggiunto da Parte D</string>
     <string name="case_context_you">Contesto aggiunto da te (%1$s)</string>
     <string name="case_evidence_item">Immagine %1$s, come l\'hanno letta i giudici</string>
-    <string name="case_not_yet">Non ha ancora risposto.</string>
     <string name="case_answered">Ha risposto. I giudici ci stanno lavorando.</string>
     <string name="case_judging_alone">I giudici stanno lavorando sulla tua versione.</string>
     <string name="case_expired_body">Nessuno ha risposto in 7 giorni, quindi il tuo credito è tornato. Puoi comunque avere un verdetto solo sulla tua versione.</string>
@@ -343,7 +338,6 @@
     <string name="case_start_over">Apri un nuovo caso</string>
     <string name="case_list_untitled">Caso · %1$s</string>
     <string name="case_list_untitled_soon">Caso</string>
-    <string name="respond_kicker">La tua versione</string>
     <string name="respond_title">Racconta la tua versione</string>
     <string name="respond_intro">Qualcuno ha chiesto a Judge di risolvere una discussione con te. Racconta la tua versione; non la vedrà fino al verdetto.</string>
     <string name="respond_privacy">Prima che i giudici leggano qualsiasi cosa, i nomi vengono sostituiti con Parte A e Parte B. Non ti serve un account.</string>

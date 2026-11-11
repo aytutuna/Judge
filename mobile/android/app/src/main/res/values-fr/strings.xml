@@ -295,8 +295,6 @@
     <string name="case_status_judged">Verdict</string>
     <string name="case_status_failed">Les juges n’ont pas pu terminer</string>
     <string name="case_status_expired">L’invitation a expiré</string>
-    <string name="case_invite_label">Envoie ce lien à l’autre personne</string>
-    <string name="case_invite_copy">Copier le lien</string>
     <string name="case_invite_copied">Copié</string>
     <string name="case_invite_share">Partager</string>
     <string name="case_invite_share_text">J’ai demandé à Judge de trancher notre débat. Donne ta version ici. Je ne la verrai pas avant le verdict.</string>
@@ -304,10 +302,6 @@
     <string name="case_invite_reset_confirm">Le lien que tu as déjà envoyé ne fonctionnera plus. Créer un nouveau lien ?</string>
     <string name="case_invite_reset_yes">Oui, créer un nouveau lien</string>
     <string name="case_invite_reset_done">Ancien lien désactivé. Envoie le nouveau.</string>
-    <string name="case_invite_expires">Le lien est valable jusqu’au %1$s.</string>
-    <string name="case_invite_expires_soon">Le lien est valable 7 jours.</string>
-    <string name="case_held">1 verdict est réservé pour ce dossier. Il te sera rendu si personne ne répond d’ici le %1$s.</string>
-    <string name="case_held_soon">1 verdict est réservé pour ce dossier. Il te sera rendu si personne ne répond sous 7 jours.</string>
     <string name="case_judge_now">Juger sur ma seule version</string>
     <string name="case_judge_now_confirm">Obtenir maintenant un verdict sur ta seule version ? L’invitation sera fermée et l’autre ne pourra plus répondre.</string>
     <string name="case_judge_now_yes">Oui, juger maintenant</string>
@@ -315,6 +309,8 @@
     <string name="case_judge_expired_yes">Oui, utiliser 1 verdict</string>
     <string name="case_side_waiting">En attente</string>
     <string name="case_side_answered">A répondu</string>
+    <string name="case_side_opened">Ouvert</string>
+    <string name="case_side_typing">Écrit…</string>
     <string name="case_judge_answered">Juger avec les camps qui ont répondu</string>
     <string name="case_judge_answered_confirm">Obtenir un verdict avec les camps qui ont répondu ? Les autres invitations se ferment et ces personnes ne pourront plus répondre.</string>
     <string name="case_cancel">Annuler</string>
@@ -334,7 +330,6 @@
     <string name="case_context_d">Partie D a ajouté du contexte</string>
     <string name="case_context_you">Contexte que tu as ajouté (%1$s)</string>
     <string name="case_evidence_item">Image %1$s, telle que les juges l’ont lue</string>
-    <string name="case_not_yet">Pas encore de réponse.</string>
     <string name="case_answered">L’autre a répondu. Les juges s’en occupent.</string>
     <string name="case_judging_alone">Les juges examinent ta version.</string>
     <string name="case_expired_body">Personne n’a répondu en 7 jours, ton crédit t’a donc été rendu. Tu peux quand même obtenir un verdict sur ta seule version.</string>
@@ -343,7 +338,6 @@
     <string name="case_start_over">Ouvrir un nouveau dossier</string>
     <string name="case_list_untitled">Dossier du %1$s</string>
     <string name="case_list_untitled_soon">Dossier</string>
-    <string name="respond_kicker">Ta version</string>
     <string name="respond_title">Donne ta version</string>
     <string name="respond_intro">Quelqu’un a demandé à Judge de trancher un débat entre vous deux. Donne ta version ; l’autre ne la verra pas avant le verdict.</string>
     <string name="respond_privacy">Les noms sont remplacés par Partie A et Partie B avant que les juges lisent quoi que ce soit. Pas besoin de compte.</string>

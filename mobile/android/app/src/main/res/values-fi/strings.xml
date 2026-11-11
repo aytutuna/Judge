@@ -288,8 +288,6 @@
     <string name="case_status_judged">Tuomio</string>
     <string name="case_status_failed">Tuomarit eivät saaneet valmiiksi</string>
     <string name="case_status_expired">Kutsu vanheni</string>
-    <string name="case_invite_label">Lähetä tämä linkki toiselle osapuolelle</string>
-    <string name="case_invite_copy">Kopioi linkki</string>
     <string name="case_invite_copied">Kopioitu</string>
     <string name="case_invite_share">Jaa</string>
     <string name="case_invite_share_text">Pyysin Judgea ratkaisemaan kiistamme. Kerro oma puolesi täällä. En näe sitä ennen tuomiota.</string>
@@ -297,10 +295,6 @@
     <string name="case_invite_reset_confirm">Jo lähettämäsi linkki lakkaa toimimasta. Luodaanko uusi?</string>
     <string name="case_invite_reset_yes">Kyllä, luo uusi linkki</string>
     <string name="case_invite_reset_done">Vanha linkki on poistettu käytöstä. Lähetä uusi.</string>
-    <string name="case_invite_expires">Linkki toimii %1$s asti.</string>
-    <string name="case_invite_expires_soon">Linkki toimii 7 päivää.</string>
-    <string name="case_held">1 tuomio on varattu tätä juttua varten. Saat sen takaisin, jos kukaan ei vastaa %1$s mennessä.</string>
-    <string name="case_held_soon">1 tuomio on varattu tätä juttua varten. Saat sen takaisin, jos kukaan ei vastaa 7 päivän kuluessa.</string>
     <string name="case_judge_now">Ratkaise ilman vastausta</string>
     <string name="case_judge_now_confirm">Haluatko yksipuolisen tuomion nyt? Kutsu sulkeutuu, eikä toinen voi enää vastata.</string>
     <string name="case_judge_now_yes">Kyllä, ratkaise nyt</string>
@@ -308,6 +302,8 @@
     <string name="case_judge_expired_yes">Kyllä, käytä 1 tuomio</string>
     <string name="case_side_waiting">Odottaa</string>
     <string name="case_side_answered">Vastannut</string>
+    <string name="case_side_opened">Avattu</string>
+    <string name="case_side_typing">Kirjoittaa…</string>
     <string name="case_judge_answered">Ratkaise vastanneiden puolilla</string>
     <string name="case_judge_answered_confirm">Haluatko tuomion vastanneiden puolilla? Muut kutsut sulkeutuvat, eivätkä he voi enää vastata.</string>
     <string name="case_cancel">Peruuta</string>
@@ -327,7 +323,6 @@
     <string name="case_context_d">Osapuoli D lisäsi tietoa</string>
     <string name="case_context_you">Lisäämäsi tieto (%1$s)</string>
     <string name="case_evidence_item">Kuva %1$s sellaisena kuin tuomarit sen lukivat</string>
-    <string name="case_not_yet">Ei vielä vastausta.</string>
     <string name="case_answered">Vastaus tuli. Tuomarit ovat asian kimpussa.</string>
     <string name="case_judging_alone">Tuomarit käyvät läpi kertomustasi.</string>
     <string name="case_expired_body">Kukaan ei vastannut 7 päivässä, joten tuomio palautettiin saldoosi. Voit silti saada tuomion pelkän oman puolesi perusteella.</string>
@@ -336,7 +331,6 @@
     <string name="case_start_over">Aloita uusi juttu</string>
     <string name="case_list_untitled">Juttu (%1$s)</string>
     <string name="case_list_untitled_soon">Juttu</string>
-    <string name="respond_kicker">Sinun puolesi</string>
     <string name="respond_title">Kerro oma puolesi</string>
     <string name="respond_intro">Joku pyysi Judgea ratkaisemaan välisenne kiistan. Kerro oma puolesi. Hän ei näe sitä ennen tuomiota.</string>
     <string name="respond_privacy">Nimet vaihdetaan muotoon Osapuoli A ja Osapuoli B ennen kuin tuomarit lukevat mitään. Et tarvitse tiliä.</string>

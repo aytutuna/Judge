@@ -288,8 +288,6 @@
     <string name="case_status_judged">Ítélet</string>
     <string name="case_status_failed">A bírák nem tudták befejezni</string>
     <string name="case_status_expired">A meghívó lejárt</string>
-    <string name="case_invite_label">Küldd el ezt a linket a másik félnek</string>
-    <string name="case_invite_copy">Link másolása</string>
     <string name="case_invite_copied">Másolva</string>
     <string name="case_invite_share">Megosztás</string>
     <string name="case_invite_share_text">Megkértem a Judge-ot, hogy döntse el a vitánkat. Itt elmondhatod a te verziódat. Az ítéletig nem fogom látni.</string>
@@ -297,10 +295,6 @@
     <string name="case_invite_reset_confirm">A már elküldött link megszűnik működni. Készítsünk újat?</string>
     <string name="case_invite_reset_yes">Igen, kérek új linket</string>
     <string name="case_invite_reset_done">A régi linket kikapcsoltuk. Küldd el az újat.</string>
-    <string name="case_invite_expires">A link eddig érvényes: %1$s.</string>
-    <string name="case_invite_expires_soon">A link 7 napig érvényes.</string>
-    <string name="case_held">Erre az ügyre félretettünk 1 ítéletet. Ha a határidőig (%1$s) senki sem válaszol, visszakapod.</string>
-    <string name="case_held_soon">Erre az ügyre félretettünk 1 ítéletet. Ha 7 napon belül senki sem válaszol, visszakapod.</string>
     <string name="case_judge_now">Ítélet csak az én verzióm alapján</string>
     <string name="case_judge_now_confirm">Kérsz most egy egyoldalú ítéletet? A meghívó lezárul, és a másik fél már nem válaszolhat.</string>
     <string name="case_judge_now_yes">Igen, döntsenek most</string>
@@ -308,6 +302,8 @@
     <string name="case_judge_expired_yes">Igen, mehet (1 ítélet)</string>
     <string name="case_side_waiting">Várakozik</string>
     <string name="case_side_answered">Válaszolt</string>
+    <string name="case_side_opened">Megnyitva</string>
+    <string name="case_side_typing">Gépel…</string>
     <string name="case_judge_answered">Ítélet a válaszoló felek alapján</string>
     <string name="case_judge_answered_confirm">Kérsz ítéletet a válaszoló felek alapján? A többi meghívó lezárul, és ők már nem válaszolhatnak.</string>
     <string name="case_cancel">Mégse</string>
@@ -327,7 +323,6 @@
     <string name="case_context_d">Fél D kiegészítése</string>
     <string name="case_context_you">A te kiegészítésed (%1$s)</string>
     <string name="case_evidence_item">%1$s. kép, ahogy a bírák olvassák</string>
-    <string name="case_not_yet">Még nem válaszolt.</string>
     <string name="case_answered">Válaszolt. A bírák dolgoznak rajta.</string>
     <string name="case_judging_alone">A bírák a te verziódon dolgoznak.</string>
     <string name="case_expired_body">7 napig senki sem válaszolt, ezért visszakaptad a kreditedet. Ítéletet a saját verziód alapján továbbra is kérhetsz.</string>
@@ -336,7 +331,6 @@
     <string name="case_start_over">Új ügy indítása</string>
     <string name="case_list_untitled">Ügy · %1$s</string>
     <string name="case_list_untitled_soon">Ügy</string>
-    <string name="respond_kicker">A te verziód</string>
     <string name="respond_title">Mondd el a te verziódat</string>
     <string name="respond_intro">Valaki megkérte a Judge-ot, hogy döntsön el egy vitát köztetek. Mondd el a te verziódat; az ítéletig ő nem fogja látni.</string>
     <string name="respond_privacy">Mielőtt a bírák bármit elolvasnak, a neveket Fél A-ra és Fél B-re cseréljük. Fiók sem kell hozzá.</string>

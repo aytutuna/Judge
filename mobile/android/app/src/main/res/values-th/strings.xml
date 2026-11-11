@@ -281,8 +281,6 @@
     <string name="case_status_judged">คำตัดสิน</string>
     <string name="case_status_failed">กรรมการตัดสินไม่เสร็จ</string>
     <string name="case_status_expired">คำเชิญหมดอายุแล้ว</string>
-    <string name="case_invite_label">ส่งลิงก์นี้ให้อีกฝ่าย</string>
-    <string name="case_invite_copy">คัดลอกลิงก์</string>
     <string name="case_invite_copied">คัดลอกแล้ว</string>
     <string name="case_invite_share">แชร์</string>
     <string name="case_invite_share_text">เราให้ Judge ช่วยตัดสินเรื่องที่เถียงกันอยู่ มาเล่าฝั่งของตัวเองตรงนี้ได้เลย เขียนอะไรไปเราก็ไม่เห็นจนกว่าจะมีคำตัดสิน</string>
@@ -290,10 +288,6 @@
     <string name="case_invite_reset_confirm">ลิงก์ที่ส่งไปแล้วจะใช้ไม่ได้ สร้างลิงก์ใหม่ไหม?</string>
     <string name="case_invite_reset_yes">ใช่ สร้างลิงก์ใหม่</string>
     <string name="case_invite_reset_done">ปิดลิงก์เก่าแล้ว ส่งลิงก์ใหม่ได้เลย</string>
-    <string name="case_invite_expires">ลิงก์ใช้ได้ถึงวันที่ %1$s</string>
-    <string name="case_invite_expires_soon">ลิงก์ใช้ได้ 7 วัน</string>
-    <string name="case_held">กันคำตัดสินไว้ 1 ครั้งสำหรับเคสนี้ ถ้าไม่มีใครตอบภายในวันที่ %1$s คุณจะได้คืน</string>
-    <string name="case_held_soon">กันคำตัดสินไว้ 1 ครั้งสำหรับเคสนี้ ถ้าไม่มีใครตอบภายใน 7 วัน คุณจะได้คืน</string>
     <string name="case_judge_now">ตัดสินจากฝั่งฉันอย่างเดียว</string>
     <string name="case_judge_now_confirm">ขอคำตัดสินจากฝั่งเดียวตอนนี้เลยไหม? คำเชิญจะปิด และอีกฝ่ายจะตอบไม่ได้แล้ว</string>
     <string name="case_judge_now_yes">ใช่ ตัดสินเลย</string>
@@ -301,6 +295,8 @@
     <string name="case_judge_expired_yes">ใช่ ใช้คำตัดสิน 1 ครั้ง</string>
     <string name="case_side_waiting">กำลังรอ</string>
     <string name="case_side_answered">ตอบแล้ว</string>
+    <string name="case_side_opened">เปิดแล้ว</string>
+    <string name="case_side_typing">กำลังพิมพ์…</string>
     <string name="case_judge_answered">ตัดสินจากฝั่งที่ตอบแล้ว</string>
     <string name="case_judge_answered_confirm">ขอคำตัดสินจากฝั่งที่ตอบแล้วไหม? คำเชิญอื่นจะปิด และคนเหล่านั้นจะตอบไม่ได้แล้ว</string>
     <string name="case_cancel">ยกเลิก</string>
@@ -320,7 +316,6 @@
     <string name="case_context_d">ฝ่าย D เพิ่มบริบท</string>
     <string name="case_context_you">บริบทที่คุณเพิ่ม (%1$s)</string>
     <string name="case_evidence_item">ภาพที่ %1$s แบบที่กรรมการอ่าน</string>
-    <string name="case_not_yet">อีกฝ่ายยังไม่ตอบ</string>
     <string name="case_answered">อีกฝ่ายตอบแล้ว กรรมการกำลังตัดสิน</string>
     <string name="case_judging_alone">กรรมการกำลังตัดสินจากฝั่งของคุณ</string>
     <string name="case_expired_body">ไม่มีใครตอบภายใน 7 วัน คุณจึงได้เครดิตคืน แต่ยังขอคำตัดสินจากฝั่งของคุณอย่างเดียวได้</string>
@@ -329,7 +324,6 @@
     <string name="case_start_over">เริ่มเคสใหม่</string>
     <string name="case_list_untitled">เคสวันที่ %1$s</string>
     <string name="case_list_untitled_soon">เคส</string>
-    <string name="respond_kicker">ฝั่งของคุณ</string>
     <string name="respond_title">เล่าฝั่งของคุณ</string>
     <string name="respond_intro">มีคนให้ Judge ช่วยตัดสินเรื่องที่เขาเถียงกับคุณ เล่าฝั่งของคุณมาได้เลย เขาจะไม่เห็นจนกว่าจะมีคำตัดสิน</string>
     <string name="respond_privacy">ชื่อจะถูกเปลี่ยนเป็นฝ่าย A และฝ่าย B ก่อนที่กรรมการจะอ่าน ไม่ต้องมีบัญชีก็ได้</string>

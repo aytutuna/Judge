@@ -288,8 +288,6 @@
     <string name="case_status_judged">फ़ैसला आ गया</string>
     <string name="case_status_failed">जज फ़ैसला पूरा नहीं कर पाए</string>
     <string name="case_status_expired">न्योते की मियाद ख़त्म</string>
-    <string name="case_invite_label">यह लिंक दूसरे व्यक्ति को भेजें</string>
-    <string name="case_invite_copy">लिंक कॉपी करें</string>
     <string name="case_invite_copied">कॉपी हो गया</string>
     <string name="case_invite_share">शेयर करें</string>
     <string name="case_invite_share_text">मैंने Judge से हमारी बहस सुलझाने को कहा है। अपनी बात यहाँ लिखो। फ़ैसला आने तक तुम्हारा लिखा मुझे नहीं दिखेगा।</string>
@@ -297,10 +295,6 @@
     <string name="case_invite_reset_confirm">पहले भेजा गया लिंक काम करना बंद कर देगा। नया बनाएँ?</string>
     <string name="case_invite_reset_yes">हाँ, नया लिंक बनाएँ</string>
     <string name="case_invite_reset_done">पुराना लिंक बंद हो गया। अब नया भेजें।</string>
-    <string name="case_invite_expires">लिंक %1$s तक काम करेगा।</string>
-    <string name="case_invite_expires_soon">लिंक 7 दिन तक काम करेगा।</string>
-    <string name="case_held">इस केस के लिए 1 फ़ैसला रोककर रखा गया है। अगर %1$s तक कोई जवाब न दे, तो यह आपको वापस मिल जाएगा।</string>
-    <string name="case_held_soon">इस केस के लिए 1 फ़ैसला रोककर रखा गया है। अगर 7 दिन में कोई जवाब न दे, तो यह आपको वापस मिल जाएगा।</string>
     <string name="case_judge_now">सिर्फ़ मेरी बात पर फ़ैसला करें</string>
     <string name="case_judge_now_confirm">अभी एकतरफ़ा फ़ैसला चाहिए? न्योता बंद हो जाएगा और दूसरा व्यक्ति फिर जवाब नहीं दे पाएगा।</string>
     <string name="case_judge_now_yes">हाँ, अभी फ़ैसला करें</string>
@@ -308,6 +302,8 @@
     <string name="case_judge_expired_yes">हाँ, 1 फ़ैसला लगाएँ</string>
     <string name="case_side_waiting">इंतज़ार में</string>
     <string name="case_side_answered">जवाब दे दिया</string>
+    <string name="case_side_opened">खोला</string>
+    <string name="case_side_typing">लिख रहे हैं…</string>
     <string name="case_judge_answered">जिन्होंने जवाब दिया उनकी बात पर फ़ैसला करें</string>
     <string name="case_judge_answered_confirm">जिन पक्षों ने जवाब दिया उन पर फ़ैसला चाहिए? बाकी न्योते बंद हो जाएँगे और वे लोग जवाब नहीं दे पाएँगे।</string>
     <string name="case_cancel">रद्द करें</string>
@@ -327,7 +323,6 @@
     <string name="case_context_d">पक्ष D की जोड़ी गई जानकारी</string>
     <string name="case_context_you">आपकी जोड़ी गई जानकारी (%1$s)</string>
     <string name="case_evidence_item">तस्वीर %1$s, जैसे जजों ने पढ़ी</string>
-    <string name="case_not_yet">अभी तक जवाब नहीं आया है।</string>
     <string name="case_answered">जवाब आ गया है। जज उस पर काम कर रहे हैं।</string>
     <string name="case_judging_alone">जज आपकी बात पर काम कर रहे हैं।</string>
     <string name="case_expired_body">7 दिन में किसी ने जवाब नहीं दिया, इसलिए आपका क्रेडिट वापस आ गया है। आप अब भी सिर्फ़ अपनी बात पर फ़ैसला करवा सकते हैं।</string>
@@ -336,7 +331,6 @@
     <string name="case_start_over">नया केस शुरू करें</string>
     <string name="case_list_untitled">%1$s का केस</string>
     <string name="case_list_untitled_soon">केस</string>
-    <string name="respond_kicker">आपकी बात</string>
     <string name="respond_title">अपनी बात बताएँ</string>
     <string name="respond_intro">किसी ने Judge से आपके साथ अपनी बहस सुलझाने को कहा है। अपनी बात बताएँ; फ़ैसला आने तक वे इसे नहीं देख पाएँगे।</string>
     <string name="respond_privacy">जजों के कुछ भी पढ़ने से पहले नामों की जगह पक्ष A और पक्ष B लिख दिया जाता है। आपको अकाउंट की ज़रूरत नहीं है।</string>

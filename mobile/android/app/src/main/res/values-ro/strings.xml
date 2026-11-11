@@ -295,8 +295,6 @@
     <string name="case_status_judged">Verdict</string>
     <string name="case_status_failed">Judecătorii n-au putut termina</string>
     <string name="case_status_expired">Invitația a expirat</string>
-    <string name="case_invite_label">Trimite linkul ăsta celeilalte persoane</string>
-    <string name="case_invite_copy">Copiază linkul</string>
     <string name="case_invite_copied">Copiat</string>
     <string name="case_invite_share">Distribuie</string>
     <string name="case_invite_share_text">Am cerut un verdict pe Judge pentru disputa noastră. Spune-ți varianta aici. N-o s-o văd până la verdict.</string>
@@ -304,10 +302,6 @@
     <string name="case_invite_reset_confirm">Linkul pe care l-ai trimis deja nu va mai funcționa. Faci unul nou?</string>
     <string name="case_invite_reset_yes">Da, fă un link nou</string>
     <string name="case_invite_reset_done">Linkul vechi a fost dezactivat. Trimite-l pe cel nou.</string>
-    <string name="case_invite_expires">Linkul funcționează până pe %1$s.</string>
-    <string name="case_invite_expires_soon">Linkul funcționează 7 zile.</string>
-    <string name="case_held">1 verdict e rezervat pentru acest caz. Îl primești înapoi dacă nu răspunde nimeni până pe %1$s.</string>
-    <string name="case_held_soon">1 verdict e rezervat pentru acest caz. Îl primești înapoi dacă nu răspunde nimeni în 7 zile.</string>
     <string name="case_judge_now">Judecă doar cu partea mea</string>
     <string name="case_judge_now_confirm">Vrei acum un verdict doar pe partea ta? Invitația se închide și cealaltă persoană nu mai poate răspunde.</string>
     <string name="case_judge_now_yes">Da, judecă acum</string>
@@ -315,6 +309,8 @@
     <string name="case_judge_expired_yes">Da, folosește 1 verdict</string>
     <string name="case_side_waiting">Așteaptă</string>
     <string name="case_side_answered">A răspuns</string>
+    <string name="case_side_opened">Deschis</string>
+    <string name="case_side_typing">Scrie…</string>
     <string name="case_judge_answered">Judecă cu părțile care au răspuns</string>
     <string name="case_judge_answered_confirm">Vrei o hotărâre cu părțile care au răspuns? Celelalte invitații se închid și acele persoane nu vor mai putea răspunde.</string>
     <string name="case_cancel">Anulează</string>
@@ -334,7 +330,6 @@
     <string name="case_context_d">Context adăugat de Partea D</string>
     <string name="case_context_you">Context adăugat de tine (%1$s)</string>
     <string name="case_evidence_item">Imaginea %1$s, așa cum au citit-o judecătorii</string>
-    <string name="case_not_yet">Încă n-a răspuns.</string>
     <string name="case_answered">A răspuns. Judecătorii lucrează la caz.</string>
     <string name="case_judging_alone">Judecătorii lucrează la partea ta.</string>
     <string name="case_expired_body">N-a răspuns nimeni în 7 zile, așa că ți-ai primit creditul înapoi. Poți primi totuși un verdict doar pe partea ta.</string>
@@ -343,7 +338,6 @@
     <string name="case_start_over">Începe un caz nou</string>
     <string name="case_list_untitled">Caz din %1$s</string>
     <string name="case_list_untitled_soon">Caz</string>
-    <string name="respond_kicker">Partea ta</string>
     <string name="respond_title">Spune-ți varianta</string>
     <string name="respond_intro">Cineva vrea ca Judge să lămurească o dispută pe care o are cu tine. Spune-ți varianta; persoana respectivă n-o va vedea până la verdict.</string>
     <string name="respond_privacy">Numele sunt înlocuite cu Partea A și Partea B înainte ca judecătorii să citească ceva. Nu ai nevoie de cont.</string>

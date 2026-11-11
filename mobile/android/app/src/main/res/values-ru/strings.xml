@@ -302,8 +302,6 @@
     <string name="case_status_judged">Вердикт вынесен</string>
     <string name="case_status_failed">Судьи не смогли закончить</string>
     <string name="case_status_expired">Срок приглашения истёк</string>
-    <string name="case_invite_label">Отправьте эту ссылку другому человеку</string>
-    <string name="case_invite_copy">Копировать ссылку</string>
     <string name="case_invite_copied">Скопировано</string>
     <string name="case_invite_share">Поделиться</string>
     <string name="case_invite_share_text">Пусть наш спор рассудит Judge. Свою версию можно рассказать по ссылке — до вердикта я её не увижу.</string>
@@ -311,10 +309,6 @@
     <string name="case_invite_reset_confirm">Ссылка, которую вы уже отправили, перестанет работать. Создать новую?</string>
     <string name="case_invite_reset_yes">Да, создать новую</string>
     <string name="case_invite_reset_done">Старая ссылка отключена. Отправьте новую.</string>
-    <string name="case_invite_expires">Ссылка действует до %1$s.</string>
-    <string name="case_invite_expires_soon">Ссылка действует 7 дней.</string>
-    <string name="case_held">Для этого дела зарезервирован 1 вердикт. Если до %1$s никто не ответит, он вернётся к вам.</string>
-    <string name="case_held_soon">Для этого дела зарезервирован 1 вердикт. Если в течение 7 дней никто не ответит, он вернётся к вам.</string>
     <string name="case_judge_now">Судить только по моей версии</string>
     <string name="case_judge_now_confirm">Получить вердикт только по вашей версии прямо сейчас? Приглашение закроется, и другая сторона уже не сможет ответить.</string>
     <string name="case_judge_now_yes">Да, судить сейчас</string>
@@ -322,6 +316,8 @@
     <string name="case_judge_expired_yes">Да, списать 1 вердикт</string>
     <string name="case_side_waiting">Ждём</string>
     <string name="case_side_answered">Ответил(а)</string>
+    <string name="case_side_opened">Открыл</string>
+    <string name="case_side_typing">Печатает…</string>
     <string name="case_judge_answered">Судить по сторонам, которые ответили</string>
     <string name="case_judge_answered_confirm">Получить вердикт по сторонам, которые ответили? Остальные приглашения закроются, и эти люди уже не смогут ответить.</string>
     <string name="case_cancel">Отмена</string>
@@ -341,7 +337,6 @@
     <string name="case_context_d">Подробности от Стороны D</string>
     <string name="case_context_you">Ваши подробности (%1$s)</string>
     <string name="case_evidence_item">Изображение %1$s — так, как его прочли судьи</string>
-    <string name="case_not_yet">Ответа пока нет.</string>
     <string name="case_answered">Ответ получен. Судьи уже работают.</string>
     <string name="case_judging_alone">Судьи разбирают вашу версию.</string>
     <string name="case_expired_body">За 7 дней никто не ответил, поэтому вердикт вернулся на баланс. Вы всё ещё можете получить вердикт только по своей версии.</string>
@@ -350,7 +345,6 @@
     <string name="case_start_over">Начать новое дело</string>
     <string name="case_list_untitled">Дело от %1$s</string>
     <string name="case_list_untitled_soon">Дело</string>
-    <string name="respond_kicker">Ваша версия</string>
     <string name="respond_title">Расскажите свою версию</string>
     <string name="respond_intro">Кто-то попросил Judge рассудить спор с вами. Расскажите свою версию — до вердикта этот человек её не увидит.</string>
     <string name="respond_privacy">Ещё до того, как судьи что-то прочтут, вместо имён появятся «Сторона A» и «Сторона B». Аккаунт не нужен.</string>

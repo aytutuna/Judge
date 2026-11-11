@@ -411,8 +411,6 @@ enum L10n {
     static func caseStatusJudged(_ lang: AppLang) -> String { string("case.status.judged", lang) }
     static func caseStatusFailed(_ lang: AppLang) -> String { string("case.status.failed", lang) }
     static func caseStatusExpired(_ lang: AppLang) -> String { string("case.status.expired", lang) }
-    static func caseInviteLabel(_ lang: AppLang) -> String { string("case.invite.label", lang) }
-    static func caseInviteCopy(_ lang: AppLang) -> String { string("case.invite.copy", lang) }
     static func caseInviteCopied(_ lang: AppLang) -> String { string("case.invite.copied", lang) }
     static func caseInviteShare(_ lang: AppLang) -> String { string("case.invite.share", lang) }
     static func caseInviteShareText(_ lang: AppLang) -> String { string("case.invite.shareText", lang) }
@@ -420,10 +418,6 @@ enum L10n {
     static func caseInviteResetConfirm(_ lang: AppLang) -> String { string("case.invite.resetConfirm", lang) }
     static func caseInviteResetYes(_ lang: AppLang) -> String { string("case.invite.resetYes", lang) }
     static func caseInviteResetDone(_ lang: AppLang) -> String { string("case.invite.resetDone", lang) }
-    static func caseInviteExpires(_ lang: AppLang, date: String) -> String { format("case.invite.expires", lang, date) }
-    static func caseInviteExpiresSoon(_ lang: AppLang) -> String { string("case.invite.expiresSoon", lang) }
-    static func caseHeld(_ lang: AppLang, date: String) -> String { format("case.held", lang, date) }
-    static func caseHeldSoon(_ lang: AppLang) -> String { string("case.heldSoon", lang) }
     static func caseJudgeNow(_ lang: AppLang) -> String { string("case.judgeNow", lang) }
     static func caseJudgeNowConfirm(_ lang: AppLang) -> String { string("case.judgeNow.confirm", lang) }
     static func caseJudgeNowYes(_ lang: AppLang) -> String { string("case.judgeNow.yes", lang) }
@@ -431,6 +425,8 @@ enum L10n {
     static func caseJudgeExpiredYes(_ lang: AppLang) -> String { string("case.judgeExpired.yes", lang) }
     static func caseSideWaiting(_ lang: AppLang) -> String { string("case.side.waiting", lang) }
     static func caseSideAnswered(_ lang: AppLang) -> String { string("case.side.answered", lang) }
+    static func caseSideOpened(_ lang: AppLang) -> String { string("case.side.opened", lang) }
+    static func caseSideTyping(_ lang: AppLang) -> String { string("case.side.typing", lang) }
     static func caseJudgeAnswered(_ lang: AppLang) -> String { string("case.judgeAnswered", lang) }
     static func caseJudgeAnsweredConfirm(_ lang: AppLang) -> String { string("case.judgeAnswered.confirm", lang) }
     static func caseCancel(_ lang: AppLang) -> String { string("case.cancel", lang) }
@@ -450,7 +446,6 @@ enum L10n {
     static func caseContextD(_ lang: AppLang) -> String { string("case.contextD", lang) }
     static func caseContextYou(_ lang: AppLang, label: String) -> String { format("case.contextYou", lang, label) }
     static func caseEvidenceItem(_ lang: AppLang, n: String) -> String { format("case.evidenceItem", lang, n) }
-    static func caseNotYet(_ lang: AppLang) -> String { string("case.notYet", lang) }
     static func caseAnswered(_ lang: AppLang) -> String { string("case.answered", lang) }
     static func caseJudgingAlone(_ lang: AppLang) -> String { string("case.judgingAlone", lang) }
     static func caseExpiredBody(_ lang: AppLang) -> String { string("case.expiredBody", lang) }
@@ -459,7 +454,6 @@ enum L10n {
     static func caseStartOver(_ lang: AppLang) -> String { string("case.startOver", lang) }
     static func caseListUntitled(_ lang: AppLang, date: String) -> String { format("case.list.untitled", lang, date) }
     static func caseListUntitledSoon(_ lang: AppLang) -> String { string("case.list.untitledSoon", lang) }
-    static func respondKicker(_ lang: AppLang) -> String { string("respond.kicker", lang) }
     static func respondTitle(_ lang: AppLang) -> String { string("respond.title", lang) }
     static func respondIntro(_ lang: AppLang) -> String { string("respond.intro", lang) }
     static func respondPrivacy(_ lang: AppLang) -> String { string("respond.privacy", lang) }
@@ -1025,8 +1019,6 @@ enum L10n {
         "case.status.judged",
         "case.status.failed",
         "case.status.expired",
-        "case.invite.label",
-        "case.invite.copy",
         "case.invite.copied",
         "case.invite.share",
         "case.invite.shareText",
@@ -1034,8 +1026,6 @@ enum L10n {
         "case.invite.resetConfirm",
         "case.invite.resetYes",
         "case.invite.resetDone",
-        "case.invite.expiresSoon",
-        "case.heldSoon",
         "case.judgeNow",
         "case.judgeNow.confirm",
         "case.judgeNow.yes",
@@ -1043,6 +1033,8 @@ enum L10n {
         "case.judgeExpired.yes",
         "case.side.waiting",
         "case.side.answered",
+        "case.side.opened",
+        "case.side.typing",
         "case.judgeAnswered",
         "case.judgeAnswered.confirm",
         "case.cancel",
@@ -1059,7 +1051,6 @@ enum L10n {
         "case.contextB",
         "case.contextC",
         "case.contextD",
-        "case.notYet",
         "case.answered",
         "case.judgingAlone",
         "case.expiredBody",
@@ -1067,7 +1058,6 @@ enum L10n {
         "case.oneSided",
         "case.startOver",
         "case.list.untitledSoon",
-        "respond.kicker",
         "respond.title",
         "respond.intro",
         "respond.privacy",

@@ -288,8 +288,6 @@
     <string name="case_status_judged">വിധി</string>
     <string name="case_status_failed">ജഡ്ജിമാർക്ക് പൂർത്തിയാക്കാനായില്ല</string>
     <string name="case_status_expired">ക്ഷണത്തിന്റെ കാലാവധി കഴിഞ്ഞു</string>
-    <string name="case_invite_label">ഈ ലിങ്ക് മറ്റേയാൾക്ക് അയയ്ക്കൂ</string>
-    <string name="case_invite_copy">ലിങ്ക് കോപ്പി ചെയ്യൂ</string>
     <string name="case_invite_copied">കോപ്പി ചെയ്തു</string>
     <string name="case_invite_share">പങ്കിടൂ</string>
     <string name="case_invite_share_text">നമ്മുടെ തർക്കം തീർക്കാൻ ഞാൻ Judge-നെ ഏൽപ്പിച്ചു. നിങ്ങളുടെ ഭാഗം ഇവിടെ പറയൂ. വിധി വരുന്നതുവരെ ഞാൻ അത് കാണില്ല.</string>
@@ -297,10 +295,6 @@
     <string name="case_invite_reset_confirm">നിങ്ങൾ നേരത്തേ അയച്ച ലിങ്ക് പ്രവർത്തിക്കാതാകും. പുതിയൊരെണ്ണം ഉണ്ടാക്കണോ?</string>
     <string name="case_invite_reset_yes">അതെ, പുതിയ ലിങ്ക് ഉണ്ടാക്കൂ</string>
     <string name="case_invite_reset_done">പഴയ ലിങ്ക് ഓഫാക്കി. പുതിയത് അയയ്ക്കൂ.</string>
-    <string name="case_invite_expires">%1$s വരെ ലിങ്ക് പ്രവർത്തിക്കും.</string>
-    <string name="case_invite_expires_soon">ലിങ്ക് 7 ദിവസം പ്രവർത്തിക്കും.</string>
-    <string name="case_held">ഈ കേസിനായി 1 വിധി മാറ്റിവെച്ചിട്ടുണ്ട്. %1$s ആകുമ്പോഴേക്കും ആരും മറുപടി നൽകിയില്ലെങ്കിൽ അത് തിരികെ കിട്ടും.</string>
-    <string name="case_held_soon">ഈ കേസിനായി 1 വിധി മാറ്റിവെച്ചിട്ടുണ്ട്. 7 ദിവസത്തിനകം ആരും മറുപടി നൽകിയില്ലെങ്കിൽ അത് തിരികെ കിട്ടും.</string>
     <string name="case_judge_now">എന്റെ ഭാഗം മാത്രം വെച്ച് വിധിക്കൂ</string>
     <string name="case_judge_now_confirm">ഒരു ഭാഗം മാത്രം കേട്ടുള്ള വിധി ഇപ്പോൾ വേണോ? ക്ഷണം അടയും, പിന്നെ അവർക്ക് മറുപടി നൽകാനാകില്ല.</string>
     <string name="case_judge_now_yes">അതെ, ഇപ്പോൾ വിധിക്കൂ</string>
@@ -308,6 +302,8 @@
     <string name="case_judge_expired_yes">അതെ, 1 വിധി ഉപയോഗിക്കൂ</string>
     <string name="case_side_waiting">കാത്തിരിക്കുന്നു</string>
     <string name="case_side_answered">മറുപടി നൽകി</string>
+    <string name="case_side_opened">തുറന്നു</string>
+    <string name="case_side_typing">ടൈപ്പ് ചെയ്യുന്നു…</string>
     <string name="case_judge_answered">മറുപടി നൽകിയവരെ വെച്ച് വിധിക്കൂ</string>
     <string name="case_judge_answered_confirm">മറുപടി നൽകിയവരെ വെച്ച് വിധി വേണോ? ബാക്കി ക്ഷണങ്ങൾ അടയും, അവർക്ക് പിന്നെ മറുപടി നൽകാനാകില്ല.</string>
     <string name="case_cancel">റദ്ദാക്കൂ</string>
@@ -327,7 +323,6 @@
     <string name="case_context_d">കക്ഷി D ചേർത്ത വിവരം</string>
     <string name="case_context_you">നിങ്ങൾ ചേർത്ത വിവരം (%1$s)</string>
     <string name="case_evidence_item">ചിത്രം %1$s, ജഡ്ജിമാർ വായിച്ച രൂപത്തിൽ</string>
-    <string name="case_not_yet">അവർ ഇതുവരെ മറുപടി നൽകിയിട്ടില്ല.</string>
     <string name="case_answered">അവർ മറുപടി നൽകി. ജഡ്ജിമാർ പരിഗണിക്കുന്നു.</string>
     <string name="case_judging_alone">ജഡ്ജിമാർ നിങ്ങളുടെ ഭാഗം പരിഗണിക്കുന്നു.</string>
     <string name="case_expired_body">7 ദിവസത്തിനുള്ളിൽ ആരും മറുപടി നൽകിയില്ല, അതുകൊണ്ട് നിങ്ങളുടെ ക്രെഡിറ്റ് തിരികെ കിട്ടി. നിങ്ങളുടെ ഭാഗം മാത്രം വെച്ച് ഇപ്പോഴും വിധി നേടാം.</string>
@@ -336,7 +331,6 @@
     <string name="case_start_over">പുതിയ കേസ് തുടങ്ങൂ</string>
     <string name="case_list_untitled">കേസ് · %1$s</string>
     <string name="case_list_untitled_soon">കേസ്</string>
-    <string name="respond_kicker">നിങ്ങളുടെ ഭാഗം</string>
     <string name="respond_title">നിങ്ങളുടെ ഭാഗം പറയൂ</string>
     <string name="respond_intro">നിങ്ങളുമായുള്ള ഒരു തർക്കം തീർക്കാൻ ഒരാൾ Judge-നോട് ആവശ്യപ്പെട്ടു. നിങ്ങളുടെ ഭാഗം പറയൂ; വിധി വരുന്നതുവരെ അവർ അത് കാണില്ല.</string>
     <string name="respond_privacy">ജഡ്ജിമാർ എന്തെങ്കിലും വായിക്കും മുമ്പ് പേരുകൾ കക്ഷി A, കക്ഷി B എന്നാക്കി മാറ്റും. നിങ്ങൾക്ക് അക്കൗണ്ട് വേണ്ട.</string>

@@ -281,8 +281,6 @@
     <string name="case_status_judged">已出裁决</string>
     <string name="case_status_failed">评委没能完成</string>
     <string name="case_status_expired">邀请已过期</string>
-    <string name="case_invite_label">把这个链接发给对方</string>
-    <string name="case_invite_copy">复制链接</string>
     <string name="case_invite_copied">已复制</string>
     <string name="case_invite_share">分享</string>
     <string name="case_invite_share_text">我请 Judge 来给咱俩评评理。你在这里说说你那边的情况，裁决出来之前我看不到。</string>
@@ -290,10 +288,6 @@
     <string name="case_invite_reset_confirm">你已经发出去的链接将会失效。要生成新链接吗？</string>
     <string name="case_invite_reset_yes">是的，生成新链接</string>
     <string name="case_invite_reset_done">旧链接已失效，请发送新链接。</string>
-    <string name="case_invite_expires">链接有效期至 %1$s。</string>
-    <string name="case_invite_expires_soon">链接 7 天内有效。</string>
-    <string name="case_held">已为这个案子预留 1 次裁决。如果到 %1$s 还没人回复，次数会退还给你。</string>
-    <string name="case_held_soon">已为这个案子预留 1 次裁决。如果 7 天内没人回复，次数会退还给你。</string>
     <string name="case_judge_now">只凭我这边的说法裁决</string>
     <string name="case_judge_now_confirm">现在就只凭你一方的说法裁决吗？邀请会关闭，对方将无法再回复。</string>
     <string name="case_judge_now_yes">是的，现在裁决</string>
@@ -301,6 +295,8 @@
     <string name="case_judge_expired_yes">是的，用 1 次</string>
     <string name="case_side_waiting">等待中</string>
     <string name="case_side_answered">已回复</string>
+    <string name="case_side_opened">已打开</string>
+    <string name="case_side_typing">正在输入…</string>
     <string name="case_judge_answered">按已回复的各方裁决</string>
     <string name="case_judge_answered_confirm">现在就按已回复的各方裁决吗？其余邀请会关闭，那些人将无法再回复。</string>
     <string name="case_cancel">取消</string>
@@ -320,7 +316,6 @@
     <string name="case_context_d">当事人D补充了说明</string>
     <string name="case_context_you">你补充的说明（%1$s）</string>
     <string name="case_evidence_item">图片 %1$s（评委读到的内容）</string>
-    <string name="case_not_yet">对方还没回复。</string>
     <string name="case_answered">对方已回复，评委正在处理。</string>
     <string name="case_judging_alone">评委正在处理你这边的说法。</string>
     <string name="case_expired_body">7 天内没人回复，次数已退还给你。你仍然可以只凭自己的说法获取裁决。</string>
@@ -329,7 +324,6 @@
     <string name="case_start_over">开个新案子</string>
     <string name="case_list_untitled">%1$s 的案子</string>
     <string name="case_list_untitled_soon">案子</string>
-    <string name="respond_kicker">你的说法</string>
     <string name="respond_title">说说你这边</string>
     <string name="respond_intro">有人请 Judge 给你们俩评评理。说说你这边的情况；裁决出来之前，对方看不到。</string>
     <string name="respond_privacy">评委读到任何内容之前，名字都会被换成当事人A和当事人B。你不需要账号。</string>

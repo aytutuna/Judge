@@ -302,8 +302,6 @@
     <string name="case_status_judged">Verdikt</string>
     <string name="case_status_failed">Sudcovia to nedokončili</string>
     <string name="case_status_expired">Pozvánka vypršala</string>
-    <string name="case_invite_label">Pošli tento odkaz druhej strane</string>
-    <string name="case_invite_copy">Kopírovať odkaz</string>
     <string name="case_invite_copied">Skopírované</string>
     <string name="case_invite_share">Zdieľať</string>
     <string name="case_invite_share_text">Náš spor rozsúdi Judge. Tu napíš svoju verziu. Uvidím ju až pri verdikte.</string>
@@ -311,10 +309,6 @@
     <string name="case_invite_reset_confirm">Už poslaný odkaz prestane fungovať. Vytvoriť nový?</string>
     <string name="case_invite_reset_yes">Áno, vytvoriť nový</string>
     <string name="case_invite_reset_done">Starý odkaz je vypnutý. Pošli nový.</string>
-    <string name="case_invite_expires">Odkaz platí do %1$s.</string>
-    <string name="case_invite_expires_soon">Odkaz platí 7 dní.</string>
-    <string name="case_held">Na tento prípad je rezervovaný 1 verdikt. Ak nikto neodpovie do %1$s, dostaneš ho späť.</string>
-    <string name="case_held_soon">Na tento prípad je rezervovaný 1 verdikt. Ak nikto neodpovie do 7 dní, dostaneš ho späť.</string>
     <string name="case_judge_now">Rozsúdiť len moju verziu</string>
     <string name="case_judge_now_confirm">Chceš jednostranný verdikt hneď? Pozvánka sa uzavrie a druhá strana už nebude môcť odpovedať.</string>
     <string name="case_judge_now_yes">Áno, rozsúdiť hneď</string>
@@ -322,6 +316,8 @@
     <string name="case_judge_expired_yes">Áno, použiť 1 verdikt</string>
     <string name="case_side_waiting">Čaká sa</string>
     <string name="case_side_answered">Odpovedal(a)</string>
+    <string name="case_side_opened">Otvorené</string>
+    <string name="case_side_typing">Píše…</string>
     <string name="case_judge_answered">Rozsúdiť podľa strán, ktoré odpovedali</string>
     <string name="case_judge_answered_confirm">Chceš verdikt podľa strán, ktoré odpovedali? Ostatné pozvánky sa uzavrú a títo ľudia už nebudú môcť odpovedať.</string>
     <string name="case_cancel">Zrušiť</string>
@@ -341,7 +337,6 @@
     <string name="case_context_d">Strana D doplnila kontext</string>
     <string name="case_context_you">Tvoj doplnený kontext (%1$s)</string>
     <string name="case_evidence_item">Obrázok %1$s tak, ako ho čítajú sudcovia</string>
-    <string name="case_not_yet">Druhá strana ešte neodpovedala.</string>
     <string name="case_answered">Druhá strana odpovedala. Sudcovia na tom pracujú.</string>
     <string name="case_judging_alone">Sudcovia posudzujú tvoju verziu.</string>
     <string name="case_expired_body">Nikto neodpovedal do 7 dní, takže kredit sa ti vrátil. Stále môžeš získať verdikt len podľa svojej verzie.</string>
@@ -350,7 +345,6 @@
     <string name="case_start_over">Začať nový prípad</string>
     <string name="case_list_untitled">Prípad z %1$s</string>
     <string name="case_list_untitled_soon">Prípad</string>
-    <string name="respond_kicker">Tvoja verzia</string>
     <string name="respond_title">Napíš svoju verziu</string>
     <string name="respond_intro">Niekto chce, aby Judge rozsúdil váš spor. Napíš svoju verziu; ten druhý ju uvidí až pri verdikte.</string>
     <string name="respond_privacy">Mená sa nahradia označeniami Strana A a Strana B skôr, než sudcovia čokoľvek prečítajú. Účet nepotrebuješ.</string>

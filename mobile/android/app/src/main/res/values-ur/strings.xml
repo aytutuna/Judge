@@ -288,8 +288,6 @@
     <string name="case_status_judged">فیصلہ</string>
     <string name="case_status_failed">جج فیصلہ مکمل نہیں کر سکے</string>
     <string name="case_status_expired">دعوتی لنک کی میعاد ختم</string>
-    <string name="case_invite_label">یہ لنک دوسرے شخص کو بھیجیں</string>
-    <string name="case_invite_copy">لنک کاپی کریں</string>
     <string name="case_invite_copied">کاپی ہو گیا</string>
     <string name="case_invite_share">شیئر کریں</string>
     <string name="case_invite_share_text">ہماری بحث کا فیصلہ میں نے Judge پر چھوڑ دیا ہے۔ اپنی بات یہاں بتائیں؛ فیصلے سے پہلے یہ مجھے نظر نہیں آئے گی۔</string>
@@ -297,10 +295,6 @@
     <string name="case_invite_reset_confirm">جو لنک آپ بھیج چکے ہیں وہ کام کرنا بند کر دے گا۔ نیا بنائیں؟</string>
     <string name="case_invite_reset_yes">ہاں، نیا لنک بنائیں</string>
     <string name="case_invite_reset_done">پرانا لنک بند کر دیا گیا۔ اب نیا والا بھیجیں۔</string>
-    <string name="case_invite_expires">یہ لنک %1$s تک کام کرے گا۔</string>
-    <string name="case_invite_expires_soon">یہ لنک 7 دن تک کام کرے گا۔</string>
-    <string name="case_held">اس کیس کے لیے 1 فیصلہ روک لیا گیا ہے۔ اگر %1$s تک کوئی جواب نہ آئے تو یہ آپ کو واپس مل جائے گا۔</string>
-    <string name="case_held_soon">اس کیس کے لیے 1 فیصلہ روک لیا گیا ہے۔ اگر 7 دن میں کوئی جواب نہ آئے تو یہ آپ کو واپس مل جائے گا۔</string>
     <string name="case_judge_now">صرف میری بات پر فیصلہ کریں</string>
     <string name="case_judge_now_confirm">ابھی ایک طرفہ فیصلہ لیں؟ دعوتی لنک بند ہو جائے گا اور وہ پھر جواب نہیں دے سکیں گے۔</string>
     <string name="case_judge_now_yes">ہاں، ابھی فیصلہ کریں</string>
@@ -308,6 +302,8 @@
     <string name="case_judge_expired_yes">ہاں، 1 فیصلہ استعمال کریں</string>
     <string name="case_side_waiting">انتظار میں</string>
     <string name="case_side_answered">جواب دے دیا</string>
+    <string name="case_side_opened">کھول لیا</string>
+    <string name="case_side_typing">لکھ رہے ہیں…</string>
     <string name="case_judge_answered">جواب دینے والوں کی بات پر فیصلہ کریں</string>
     <string name="case_judge_answered_confirm">جواب دینے والوں کی بنیاد پر فیصلہ لیں؟ باقی دعوتی لنک بند ہو جائیں گے اور وہ جواب نہیں دے سکیں گے۔</string>
     <string name="case_cancel">منسوخ کریں</string>
@@ -327,7 +323,6 @@
     <string name="case_context_d">فریق D نے مزید تفصیل دی</string>
     <string name="case_context_you">آپ کی دی ہوئی تفصیل (%1$s)</string>
     <string name="case_evidence_item">تصویر %1$s، جیسے ججوں نے پڑھی</string>
-    <string name="case_not_yet">انہوں نے ابھی جواب نہیں دیا۔</string>
     <string name="case_answered">انہوں نے جواب دے دیا۔ جج اس پر کام کر رہے ہیں۔</string>
     <string name="case_judging_alone">جج آپ کی بات پر کام کر رہے ہیں۔</string>
     <string name="case_expired_body">7 دن میں کسی نے جواب نہیں دیا، اس لیے آپ کا کریڈٹ واپس آ گیا ہے۔ آپ اب بھی صرف اپنی بات پر فیصلہ لے سکتے ہیں۔</string>
@@ -336,7 +331,6 @@
     <string name="case_start_over">نیا کیس شروع کریں</string>
     <string name="case_list_untitled">%1$s کا کیس</string>
     <string name="case_list_untitled_soon">کیس</string>
-    <string name="respond_kicker">آپ کی بات</string>
     <string name="respond_title">اپنی بات بتائیں</string>
     <string name="respond_intro">کسی نے آپ کے ساتھ اپنی بحث کا فیصلہ Judge پر چھوڑا ہے۔ اپنی بات بتائیں؛ فیصلے تک وہ اسے نہیں دیکھ سکیں گے۔</string>
     <string name="respond_privacy">ججوں کے کچھ بھی پڑھنے سے پہلے ناموں کی جگہ فریق A اور فریق B لکھ دیا جاتا ہے۔ آپ کو اکاؤنٹ کی ضرورت نہیں۔</string>

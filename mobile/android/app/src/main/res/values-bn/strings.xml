@@ -288,8 +288,6 @@
     <string name="case_status_judged">রায়</string>
     <string name="case_status_failed">বিচারকেরা শেষ করতে পারেননি</string>
     <string name="case_status_expired">আমন্ত্রণের মেয়াদ শেষ</string>
-    <string name="case_invite_label">এই লিংকটা অন্যজনকে পাঠান</string>
-    <string name="case_invite_copy">লিংক কপি</string>
     <string name="case_invite_copied">কপি হয়েছে</string>
     <string name="case_invite_share">শেয়ার</string>
     <string name="case_invite_share_text">আমাদের তর্কের ফয়সালা করতে Judge-কে বলেছি। নিজের কথাটা এখানে লেখা যাবে। রায়ের আগে আমি সেটা দেখতে পাব না।</string>
@@ -297,10 +295,6 @@
     <string name="case_invite_reset_confirm">আগে পাঠানো লিংকটা আর কাজ করবে না। নতুন লিংক বানাবেন?</string>
     <string name="case_invite_reset_yes">হ্যাঁ, নতুন লিংক বানান</string>
     <string name="case_invite_reset_done">পুরোনো লিংক বন্ধ হয়েছে। নতুনটা পাঠান।</string>
-    <string name="case_invite_expires">লিংকটা %1$s পর্যন্ত কাজ করবে।</string>
-    <string name="case_invite_expires_soon">লিংকটা 7 দিন কাজ করবে।</string>
-    <string name="case_held">এই মামলার জন্য 1টি রায় আটকে রাখা হয়েছে। %1$s তারিখের মধ্যে কেউ উত্তর না দিলে সেটা ফেরত পাবেন।</string>
-    <string name="case_held_soon">এই মামলার জন্য 1টি রায় আটকে রাখা হয়েছে। 7 দিনের মধ্যে কেউ উত্তর না দিলে সেটা ফেরত পাবেন।</string>
     <string name="case_judge_now">শুধু আমার বক্তব্যে রায় দিন</string>
     <string name="case_judge_now_confirm">এখনই একতরফা রায় চান? আমন্ত্রণ বন্ধ হয়ে যাবে, অন্যজন আর উত্তর দিতে পারবেন না।</string>
     <string name="case_judge_now_yes">হ্যাঁ, এখনই রায় দিন</string>
@@ -308,6 +302,8 @@
     <string name="case_judge_expired_yes">হ্যাঁ, 1টি রায় খরচ করুন</string>
     <string name="case_side_waiting">অপেক্ষায়</string>
     <string name="case_side_answered">উত্তর দিয়েছেন</string>
+    <string name="case_side_opened">খুলেছে</string>
+    <string name="case_side_typing">লিখছে…</string>
     <string name="case_judge_answered">যাঁরা উত্তর দিয়েছেন তাঁদের বক্তব্যে রায় দিন</string>
     <string name="case_judge_answered_confirm">যাঁরা উত্তর দিয়েছেন তাঁদের নিয়ে রায় চান? বাকি আমন্ত্রণ বন্ধ হয়ে যাবে, তাঁরা আর উত্তর দিতে পারবেন না।</string>
     <string name="case_cancel">বাতিল</string>
@@ -327,7 +323,6 @@
     <string name="case_context_d">পক্ষ D-এর যোগ করা নতুন তথ্য</string>
     <string name="case_context_you">আপনার যোগ করা নতুন তথ্য (%1$s)</string>
     <string name="case_evidence_item">ছবি %1$s, বিচারকেরা যেভাবে পড়েছেন</string>
-    <string name="case_not_yet">অন্যজন এখনও উত্তর দেননি।</string>
     <string name="case_answered">উত্তর এসেছে। বিচারকেরা কাজ করছেন।</string>
     <string name="case_judging_alone">বিচারকেরা আপনার বক্তব্য নিয়ে কাজ করছেন।</string>
     <string name="case_expired_body">7 দিনে কেউ উত্তর দেননি, তাই আপনার ক্রেডিট ফেরত এসেছে। তবু শুধু আপনার বক্তব্যের ভিত্তিতে রায় নিতে পারেন।</string>
@@ -336,7 +331,6 @@
     <string name="case_start_over">নতুন মামলা শুরু করুন</string>
     <string name="case_list_untitled">%1$s তারিখের মামলা</string>
     <string name="case_list_untitled_soon">মামলা</string>
-    <string name="respond_kicker">আপনার বক্তব্য</string>
     <string name="respond_title">আপনার কথা বলুন</string>
     <string name="respond_intro">কেউ একজন আপনার সঙ্গে একটা তর্কের ফয়সালা করতে Judge-কে বলেছেন। আপনার কথা বলুন; রায়ের আগে তিনি এটা দেখতে পাবেন না।</string>
     <string name="respond_privacy">বিচারকেরা কিছু পড়ার আগেই নামগুলো বদলে পক্ষ A আর পক্ষ B করা হয়। অ্যাকাউন্ট লাগবে না।</string>

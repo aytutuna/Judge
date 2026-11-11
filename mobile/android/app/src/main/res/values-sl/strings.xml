@@ -302,8 +302,6 @@
     <string name="case_status_judged">Razsojeno</string>
     <string name="case_status_failed">Sodniki niso mogli dokončati</string>
     <string name="case_status_expired">Povabilo je poteklo</string>
-    <string name="case_invite_label">To povezavo pošlji drugi osebi</string>
-    <string name="case_invite_copy">Kopiraj povezavo</string>
     <string name="case_invite_copied">Kopirano</string>
     <string name="case_invite_share">Deli</string>
     <string name="case_invite_share_text">Najin prepir naj razsodi Judge. Tukaj povej svojo plat – do razsodbe je ne morem videti.</string>
@@ -311,10 +309,6 @@
     <string name="case_invite_reset_confirm">Že poslana povezava bo prenehala delovati. Ustvarim novo?</string>
     <string name="case_invite_reset_yes">Da, ustvari novo</string>
     <string name="case_invite_reset_done">Stara povezava je izklopljena. Pošlji novo.</string>
-    <string name="case_invite_expires">Rok veljavnosti povezave: %1$s.</string>
-    <string name="case_invite_expires_soon">Povezava velja 7 dni.</string>
-    <string name="case_held">Za ta spor je rezervirana 1 razsodba. Vrnemo ti jo, če nihče ne odgovori do roka (%1$s).</string>
-    <string name="case_held_soon">Za ta spor je rezervirana 1 razsodba. Vrnemo ti jo, če v 7 dneh nihče ne odgovori.</string>
     <string name="case_judge_now">Razsodi samo mojo plat</string>
     <string name="case_judge_now_confirm">Želiš enostransko razsodbo zdaj? Povabilo se zapre in druga oseba ne more več odgovoriti.</string>
     <string name="case_judge_now_yes">Da, razsodi zdaj</string>
@@ -322,6 +316,8 @@
     <string name="case_judge_expired_yes">Da, porabi 1 razsodbo</string>
     <string name="case_side_waiting">Čaka</string>
     <string name="case_side_answered">Je odgovoril(a)</string>
+    <string name="case_side_opened">Odprto</string>
+    <string name="case_side_typing">Tipka…</string>
     <string name="case_judge_answered">Razsodi s platmi, ki so odgovorile</string>
     <string name="case_judge_answered_confirm">Želiš razsodbo s platmi, ki so odgovorile? Druga povabila se zaprejo in te osebe ne morejo več odgovoriti.</string>
     <string name="case_cancel">Prekliči</string>
@@ -341,7 +337,6 @@
     <string name="case_context_d">Stranka D je dodala kontekst</string>
     <string name="case_context_you">Tvoj dodani kontekst (%1$s)</string>
     <string name="case_evidence_item">Slika %1$s, kot so jo prebrali sodniki</string>
-    <string name="case_not_yet">Druga oseba še ni odgovorila.</string>
     <string name="case_answered">Druga oseba je odgovorila. Sodniki so že pri delu.</string>
     <string name="case_judging_alone">Sodniki obravnavajo tvojo plat.</string>
     <string name="case_expired_body">V 7 dneh ni nihče odgovoril, zato ti je kredit vrnjen. Še vedno lahko dobiš razsodbo samo na podlagi svoje plati.</string>
@@ -350,7 +345,6 @@
     <string name="case_start_over">Začni nov spor</string>
     <string name="case_list_untitled">Spor, %1$s</string>
     <string name="case_list_untitled_soon">Spor</string>
-    <string name="respond_kicker">Tvoja plat</string>
     <string name="respond_title">Povej svojo plat</string>
     <string name="respond_intro">Nekdo želi, da Judge razsodi vajin prepir. Povej svojo plat; druga oseba je do razsodbe ne bo videla.</string>
     <string name="respond_privacy">Preden sodniki karkoli preberejo, imena zamenjamo z oznakama Stranka A in Stranka B. Računa ne potrebuješ.</string>

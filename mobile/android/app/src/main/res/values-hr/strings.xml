@@ -295,8 +295,6 @@
     <string name="case_status_judged">Presuda</string>
     <string name="case_status_failed">Suci nisu uspjeli završiti</string>
     <string name="case_status_expired">Poziv je istekao</string>
-    <string name="case_invite_label">Pošalji ovu poveznicu drugoj osobi</string>
-    <string name="case_invite_copy">Kopiraj poveznicu</string>
     <string name="case_invite_copied">Kopirano</string>
     <string name="case_invite_share">Podijeli</string>
     <string name="case_invite_share_text">Neka Judge riješi našu raspravu. Ovdje ispričaj svoju stranu. Neću je vidjeti do presude.</string>
@@ -304,10 +302,6 @@
     <string name="case_invite_reset_confirm">Već poslana poveznica prestat će raditi. Napraviti novu?</string>
     <string name="case_invite_reset_yes">Da, napravi novu</string>
     <string name="case_invite_reset_done">Stara poveznica je ugašena. Pošalji novu.</string>
-    <string name="case_invite_expires">Poveznica vrijedi do %1$s.</string>
-    <string name="case_invite_expires_soon">Poveznica vrijedi 7 dana.</string>
-    <string name="case_held">Za ovaj slučaj rezervirana je 1 presuda. Vraća ti se ako nitko ne odgovori do %1$s.</string>
-    <string name="case_held_soon">Za ovaj slučaj rezervirana je 1 presuda. Vraća ti se ako nitko ne odgovori u roku od 7 dana.</string>
     <string name="case_judge_now">Presudi samo na temelju moje strane</string>
     <string name="case_judge_now_confirm">Želiš jednostranu presudu odmah? Poziv se zatvara i druga osoba više ne može odgovoriti.</string>
     <string name="case_judge_now_yes">Da, presudi sada</string>
@@ -315,6 +309,8 @@
     <string name="case_judge_expired_yes">Da, potroši 1 presudu</string>
     <string name="case_side_waiting">Čeka se</string>
     <string name="case_side_answered">Odgovorio/la</string>
+    <string name="case_side_opened">Otvoreno</string>
+    <string name="case_side_typing">Tipka…</string>
     <string name="case_judge_answered">Presudi na temelju strana koje su odgovorile</string>
     <string name="case_judge_answered_confirm">Želiš presudu na temelju strana koje su odgovorile? Ostali pozivi se zatvaraju i te osobe više ne mogu odgovoriti.</string>
     <string name="case_cancel">Odustani</string>
@@ -334,7 +330,6 @@
     <string name="case_context_d">Dodatni kontekst: Strana D</string>
     <string name="case_context_you">Tvoj dodatni kontekst (%1$s)</string>
     <string name="case_evidence_item">%1$s. slika, onako kako su je suci pročitali</string>
-    <string name="case_not_yet">Odgovor još nije stigao.</string>
     <string name="case_answered">Odgovor je stigao. Suci rade na tome.</string>
     <string name="case_judging_alone">Suci rade na tvojoj strani.</string>
     <string name="case_expired_body">Nitko nije odgovorio u roku od 7 dana, pa ti je kredit vraćen. I dalje možeš dobiti presudu samo na temelju svoje strane.</string>
@@ -343,7 +338,6 @@
     <string name="case_start_over">Pokreni novi slučaj</string>
     <string name="case_list_untitled">Slučaj od %1$s</string>
     <string name="case_list_untitled_soon">Slučaj</string>
-    <string name="respond_kicker">Tvoja strana</string>
     <string name="respond_title">Ispričaj svoju stranu</string>
     <string name="respond_intro">Netko želi da Judge presudi u raspravi s tobom. Ispričaj svoju stranu; ta osoba je neće vidjeti do presude.</string>
     <string name="respond_privacy">Prije nego što suci išta pročitaju, imena se zamjenjuju oznakama Strana A i Strana B. Račun ti ne treba.</string>

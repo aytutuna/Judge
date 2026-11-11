@@ -295,8 +295,6 @@
     <string name="case_status_judged">Veredicte</string>
     <string name="case_status_failed">Els jutges no han pogut acabar</string>
     <string name="case_status_expired">La invitació ha caducat</string>
-    <string name="case_invite_label">Envia aquest enllaç a l\'altra persona</string>
-    <string name="case_invite_copy">Copia l\'enllaç</string>
     <string name="case_invite_copied">Copiat</string>
     <string name="case_invite_share">Comparteix</string>
     <string name="case_invite_share_text">He demanat a Judge que resolgui la nostra discussió. Explica-hi la teva versió. No la veuré fins al veredicte.</string>
@@ -304,10 +302,6 @@
     <string name="case_invite_reset_confirm">L\'enllaç que ja has enviat deixarà de funcionar. En vols crear un de nou?</string>
     <string name="case_invite_reset_yes">Sí, crea un enllaç nou</string>
     <string name="case_invite_reset_done">L\'enllaç antic s\'ha desactivat. Envia el nou.</string>
-    <string name="case_invite_expires">L\'enllaç funciona fins al dia %1$s.</string>
-    <string name="case_invite_expires_soon">L\'enllaç funciona durant 7 dies.</string>
-    <string name="case_held">Hem reservat 1 veredicte per a aquest cas. El recuperes si ningú no respon abans del dia %1$s.</string>
-    <string name="case_held_soon">Hem reservat 1 veredicte per a aquest cas. El recuperes si ningú no respon en 7 dies.</string>
     <string name="case_judge_now">Jutja només la meva versió</string>
     <string name="case_judge_now_confirm">Vols un veredicte ara, només amb la teva versió? La invitació es tanca i l\'altra persona ja no podrà respondre.</string>
     <string name="case_judge_now_yes">Sí, jutja-ho ara</string>
@@ -315,6 +309,8 @@
     <string name="case_judge_expired_yes">Sí, gasta 1 veredicte</string>
     <string name="case_side_waiting">Esperant</string>
     <string name="case_side_answered">Ha respost</string>
+    <string name="case_side_opened">Ha obert</string>
+    <string name="case_side_typing">Escrivint…</string>
     <string name="case_judge_answered">Jutja amb les parts que han respost</string>
     <string name="case_judge_answered_confirm">Vols un veredicte amb les parts que han respost? Les altres invitacions es tanquen i aquestes persones ja no podran respondre.</string>
     <string name="case_cancel">Cancel·la</string>
@@ -334,7 +330,6 @@
     <string name="case_context_d">Context afegit per Part D</string>
     <string name="case_context_you">Context que has afegit (%1$s)</string>
     <string name="case_evidence_item">Imatge %1$s, tal com la llegeixen els jutges</string>
-    <string name="case_not_yet">Encara no ha respost.</string>
     <string name="case_answered">Ja ha respost. Els jutges hi estan treballant.</string>
     <string name="case_judging_alone">Els jutges estan treballant amb la teva versió.</string>
     <string name="case_expired_body">Ningú no ha respost en 7 dies, així que t\'hem tornat el crèdit. Encara pots obtenir un veredicte només amb la teva versió.</string>
@@ -343,7 +338,6 @@
     <string name="case_start_over">Comença un cas nou</string>
     <string name="case_list_untitled">Cas del dia %1$s</string>
     <string name="case_list_untitled_soon">Cas</string>
-    <string name="respond_kicker">La teva versió</string>
     <string name="respond_title">Explica la teva versió</string>
     <string name="respond_intro">Algú ha demanat a Judge que resolgui una discussió que té amb tu. Explica la teva versió; no la veurà fins al veredicte.</string>
     <string name="respond_privacy">Abans que els jutges llegeixin res, els noms es canvien per Part A i Part B. No et cal cap compte.</string>

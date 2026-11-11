@@ -288,8 +288,6 @@
     <string name="case_status_judged">Dom klar</string>
     <string name="case_status_failed">Domarna kunde inte bli klara</string>
     <string name="case_status_expired">Inbjudan har gått ut</string>
-    <string name="case_invite_label">Skicka länken till den andra personen</string>
-    <string name="case_invite_copy">Kopiera länk</string>
     <string name="case_invite_copied">Kopierad</string>
     <string name="case_invite_share">Dela</string>
     <string name="case_invite_share_text">Jag har bett Judge avgöra vårt bråk. Berätta din sida här. Jag ser den inte förrän domen är klar.</string>
@@ -297,10 +295,6 @@
     <string name="case_invite_reset_confirm">Länken du redan har skickat slutar fungera. Vill du skapa en ny?</string>
     <string name="case_invite_reset_yes">Ja, skapa en ny länk</string>
     <string name="case_invite_reset_done">Den gamla länken är avstängd. Skicka den nya.</string>
-    <string name="case_invite_expires">Länken gäller till %1$s.</string>
-    <string name="case_invite_expires_soon">Länken gäller i 7 dagar.</string>
-    <string name="case_held">1 dom är reserverad för det här fallet. Du får tillbaka den om ingen har svarat senast %1$s.</string>
-    <string name="case_held_soon">1 dom är reserverad för det här fallet. Du får tillbaka den om ingen svarar inom 7 dagar.</string>
     <string name="case_judge_now">Döm med bara min sida</string>
     <string name="case_judge_now_confirm">Vill du få en ensidig dom nu? Inbjudan stängs och den andra kan inte svara längre.</string>
     <string name="case_judge_now_yes">Ja, döm nu</string>
@@ -308,6 +302,8 @@
     <string name="case_judge_expired_yes">Ja, använd 1 dom</string>
     <string name="case_side_waiting">Väntar</string>
     <string name="case_side_answered">Har svarat</string>
+    <string name="case_side_opened">Öppnad</string>
+    <string name="case_side_typing">Skriver…</string>
     <string name="case_judge_answered">Döm med sidorna som har svarat</string>
     <string name="case_judge_answered_confirm">Vill du få en dom från sidorna som har svarat? De andra inbjudningarna stängs och de kan inte svara längre.</string>
     <string name="case_cancel">Avbryt</string>
@@ -327,7 +323,6 @@
     <string name="case_context_d">Part D kompletterade</string>
     <string name="case_context_you">Din komplettering (%1$s)</string>
     <string name="case_evidence_item">Bild %1$s, som domarna läste den</string>
-    <string name="case_not_yet">Den andra har inte svarat än.</string>
     <string name="case_answered">Den andra har svarat. Domarna jobbar på det.</string>
     <string name="case_judging_alone">Domarna jobbar med din sida.</string>
     <string name="case_expired_body">Ingen svarade inom 7 dagar, så du har fått tillbaka krediten. Du kan ändå få en dom på bara din sida.</string>
@@ -336,7 +331,6 @@
     <string name="case_start_over">Starta ett nytt fall</string>
     <string name="case_list_untitled">Fall från %1$s</string>
     <string name="case_list_untitled_soon">Fall</string>
-    <string name="respond_kicker">Din sida</string>
     <string name="respond_title">Berätta din sida</string>
     <string name="respond_intro">Någon har bett Judge avgöra ett bråk med dig. Berätta din sida; den andra ser den inte förrän domen är klar.</string>
     <string name="respond_privacy">Namnen byts ut mot Part A och Part B innan domarna läser något. Du behöver inget konto.</string>

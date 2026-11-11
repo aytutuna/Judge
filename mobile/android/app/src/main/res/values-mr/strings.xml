@@ -288,8 +288,6 @@
     <string name="case_status_judged">निकाल लागला</string>
     <string name="case_status_failed">परीक्षकांना पूर्ण करता आले नाही</string>
     <string name="case_status_expired">निमंत्रणाची मुदत संपली</string>
-    <string name="case_invite_label">ही लिंक समोरच्या व्यक्तीला पाठवा</string>
-    <string name="case_invite_copy">लिंक कॉपी करा</string>
     <string name="case_invite_copied">कॉपी झाली</string>
     <string name="case_invite_share">शेअर करा</string>
     <string name="case_invite_share_text">आपला वाद सोडवायला मी Judge ला सांगितले आहे. तुमची बाजू इथे सांगा. निकाल लागेपर्यंत मला ती दिसणार नाही.</string>
@@ -297,10 +295,6 @@
     <string name="case_invite_reset_confirm">तुम्ही आधी पाठवलेली लिंक चालणे बंद होईल. नवीन बनवायची?</string>
     <string name="case_invite_reset_yes">हो, नवीन लिंक बनवा</string>
     <string name="case_invite_reset_done">जुनी लिंक बंद केली. नवीन पाठवा.</string>
-    <string name="case_invite_expires">ही लिंक %1$s पर्यंत चालेल.</string>
-    <string name="case_invite_expires_soon">ही लिंक 7 दिवस चालेल.</string>
-    <string name="case_held">या प्रकरणासाठी 1 निकाल राखून ठेवला आहे. %1$s पर्यंत कोणी उत्तर दिले नाही तर तो तुम्हाला परत मिळेल.</string>
-    <string name="case_held_soon">या प्रकरणासाठी 1 निकाल राखून ठेवला आहे. 7 दिवसांत कोणी उत्तर दिले नाही तर तो तुम्हाला परत मिळेल.</string>
     <string name="case_judge_now">फक्त माझ्या बाजूवर निकाल द्या</string>
     <string name="case_judge_now_confirm">आत्ताच एकतर्फी निकाल हवा? निमंत्रण बंद होईल आणि त्यांना उत्तर देता येणार नाही.</string>
     <string name="case_judge_now_yes">हो, आत्ताच निकाल द्या</string>
@@ -308,6 +302,8 @@
     <string name="case_judge_expired_yes">हो, 1 निकाल वापरा</string>
     <string name="case_side_waiting">वाट पाहत आहोत</string>
     <string name="case_side_answered">उत्तर दिले</string>
+    <string name="case_side_opened">उघडले</string>
+    <string name="case_side_typing">लिहित आहे…</string>
     <string name="case_judge_answered">ज्यांनी उत्तर दिले त्यांच्या बाजूंवर निकाल द्या</string>
     <string name="case_judge_answered_confirm">ज्यांनी उत्तर दिले त्यांच्यावर निकाल हवा? बाकीची निमंत्रणे बंद होतील आणि त्यांना उत्तर देता येणार नाही.</string>
     <string name="case_cancel">रद्द करा</string>
@@ -327,7 +323,6 @@
     <string name="case_context_d">पक्ष Dने जोडलेली माहिती</string>
     <string name="case_context_you">तुम्ही जोडलेली माहिती (%1$s)</string>
     <string name="case_evidence_item">फोटो %1$s, परीक्षकांनी वाचला तसा</string>
-    <string name="case_not_yet">त्यांनी अजून उत्तर दिलेले नाही.</string>
     <string name="case_answered">त्यांनी उत्तर दिले. परीक्षक काम करत आहेत.</string>
     <string name="case_judging_alone">परीक्षक तुमच्या बाजूवर काम करत आहेत.</string>
     <string name="case_expired_body">7 दिवसांत कोणी उत्तर दिले नाही, म्हणून तुमचे क्रेडिट परत आले. तरीही फक्त तुमच्या बाजूवर निकाल घेऊ शकता.</string>
@@ -336,7 +331,6 @@
     <string name="case_start_over">नवीन प्रकरण सुरू करा</string>
     <string name="case_list_untitled">%1$s चे प्रकरण</string>
     <string name="case_list_untitled_soon">प्रकरण</string>
-    <string name="respond_kicker">तुमची बाजू</string>
     <string name="respond_title">तुमची बाजू सांगा</string>
     <string name="respond_intro">कोणीतरी तुमच्यासोबतचा वाद सोडवायला Judge ला सांगितले आहे. तुमची बाजू सांगा; निकाल लागेपर्यंत त्यांना ती दिसणार नाही.</string>
     <string name="respond_privacy">परीक्षक काहीही वाचण्याआधी नावांच्या जागी पक्ष A आणि पक्ष B येतात. तुम्हाला खाते लागत नाही.</string>

@@ -344,8 +344,6 @@ class Strings(private val res: Resources) {
     val caseStatusJudged: String get() = res.getString(R.string.case_status_judged)
     val caseStatusFailed: String get() = res.getString(R.string.case_status_failed)
     val caseStatusExpired: String get() = res.getString(R.string.case_status_expired)
-    val caseInviteLabel: String get() = res.getString(R.string.case_invite_label)
-    val caseInviteCopy: String get() = res.getString(R.string.case_invite_copy)
     val caseInviteCopied: String get() = res.getString(R.string.case_invite_copied)
     val caseInviteShare: String get() = res.getString(R.string.case_invite_share)
     val caseInviteShareText: String get() = res.getString(R.string.case_invite_share_text)
@@ -353,10 +351,6 @@ class Strings(private val res: Resources) {
     val caseInviteResetConfirm: String get() = res.getString(R.string.case_invite_reset_confirm)
     val caseInviteResetYes: String get() = res.getString(R.string.case_invite_reset_yes)
     val caseInviteResetDone: String get() = res.getString(R.string.case_invite_reset_done)
-    fun caseInviteExpires(date: String): String = res.getString(R.string.case_invite_expires, date)
-    val caseInviteExpiresSoon: String get() = res.getString(R.string.case_invite_expires_soon)
-    fun caseHeld(date: String): String = res.getString(R.string.case_held, date)
-    val caseHeldSoon: String get() = res.getString(R.string.case_held_soon)
     val caseJudgeNow: String get() = res.getString(R.string.case_judge_now)
     val caseJudgeNowConfirm: String get() = res.getString(R.string.case_judge_now_confirm)
     val caseJudgeNowYes: String get() = res.getString(R.string.case_judge_now_yes)
@@ -364,6 +358,8 @@ class Strings(private val res: Resources) {
     val caseJudgeExpiredYes: String get() = res.getString(R.string.case_judge_expired_yes)
     val caseSideWaiting: String get() = res.getString(R.string.case_side_waiting)
     val caseSideAnswered: String get() = res.getString(R.string.case_side_answered)
+    val caseSideOpened: String get() = res.getString(R.string.case_side_opened)
+    val caseSideTyping: String get() = res.getString(R.string.case_side_typing)
     val caseJudgeAnswered: String get() = res.getString(R.string.case_judge_answered)
     val caseJudgeAnsweredConfirm: String get() = res.getString(R.string.case_judge_answered_confirm)
     val caseCancel: String get() = res.getString(R.string.case_cancel)
@@ -383,7 +379,6 @@ class Strings(private val res: Resources) {
     val caseContextD: String get() = res.getString(R.string.case_context_d)
     fun caseContextYou(label: String): String = res.getString(R.string.case_context_you, label)
     fun caseEvidenceItem(n: String): String = res.getString(R.string.case_evidence_item, n)
-    val caseNotYet: String get() = res.getString(R.string.case_not_yet)
     val caseAnswered: String get() = res.getString(R.string.case_answered)
     val caseJudgingAlone: String get() = res.getString(R.string.case_judging_alone)
     val caseExpiredBody: String get() = res.getString(R.string.case_expired_body)
@@ -392,7 +387,6 @@ class Strings(private val res: Resources) {
     val caseStartOver: String get() = res.getString(R.string.case_start_over)
     fun caseListUntitled(date: String): String = res.getString(R.string.case_list_untitled, date)
     val caseListUntitledSoon: String get() = res.getString(R.string.case_list_untitled_soon)
-    val respondKicker: String get() = res.getString(R.string.respond_kicker)
     val respondTitle: String get() = res.getString(R.string.respond_title)
     val respondIntro: String get() = res.getString(R.string.respond_intro)
     val respondPrivacy: String get() = res.getString(R.string.respond_privacy)
@@ -957,8 +951,6 @@ class Strings(private val res: Resources) {
             "case.status.judged" -> R.string.case_status_judged
             "case.status.failed" -> R.string.case_status_failed
             "case.status.expired" -> R.string.case_status_expired
-            "case.invite.label" -> R.string.case_invite_label
-            "case.invite.copy" -> R.string.case_invite_copy
             "case.invite.copied" -> R.string.case_invite_copied
             "case.invite.share" -> R.string.case_invite_share
             "case.invite.shareText" -> R.string.case_invite_share_text
@@ -966,8 +958,6 @@ class Strings(private val res: Resources) {
             "case.invite.resetConfirm" -> R.string.case_invite_reset_confirm
             "case.invite.resetYes" -> R.string.case_invite_reset_yes
             "case.invite.resetDone" -> R.string.case_invite_reset_done
-            "case.invite.expiresSoon" -> R.string.case_invite_expires_soon
-            "case.heldSoon" -> R.string.case_held_soon
             "case.judgeNow" -> R.string.case_judge_now
             "case.judgeNow.confirm" -> R.string.case_judge_now_confirm
             "case.judgeNow.yes" -> R.string.case_judge_now_yes
@@ -975,6 +965,8 @@ class Strings(private val res: Resources) {
             "case.judgeExpired.yes" -> R.string.case_judge_expired_yes
             "case.side.waiting" -> R.string.case_side_waiting
             "case.side.answered" -> R.string.case_side_answered
+            "case.side.opened" -> R.string.case_side_opened
+            "case.side.typing" -> R.string.case_side_typing
             "case.judgeAnswered" -> R.string.case_judge_answered
             "case.judgeAnswered.confirm" -> R.string.case_judge_answered_confirm
             "case.cancel" -> R.string.case_cancel
@@ -991,7 +983,6 @@ class Strings(private val res: Resources) {
             "case.contextB" -> R.string.case_context_b
             "case.contextC" -> R.string.case_context_c
             "case.contextD" -> R.string.case_context_d
-            "case.notYet" -> R.string.case_not_yet
             "case.answered" -> R.string.case_answered
             "case.judgingAlone" -> R.string.case_judging_alone
             "case.expiredBody" -> R.string.case_expired_body
@@ -999,7 +990,6 @@ class Strings(private val res: Resources) {
             "case.oneSided" -> R.string.case_one_sided
             "case.startOver" -> R.string.case_start_over
             "case.list.untitledSoon" -> R.string.case_list_untitled_soon
-            "respond.kicker" -> R.string.respond_kicker
             "respond.title" -> R.string.respond_title
             "respond.intro" -> R.string.respond_intro
             "respond.privacy" -> R.string.respond_privacy

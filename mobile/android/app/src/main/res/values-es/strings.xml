@@ -295,8 +295,6 @@
     <string name="case_status_judged">Veredicto</string>
     <string name="case_status_failed">Los jueces no pudieron terminar</string>
     <string name="case_status_expired">La invitación expiró</string>
-    <string name="case_invite_label">Envía este enlace a la otra persona</string>
-    <string name="case_invite_copy">Copiar enlace</string>
     <string name="case_invite_copied">Copiado</string>
     <string name="case_invite_share">Compartir</string>
     <string name="case_invite_share_text">He pedido a Judge que resuelva nuestra discusión. Cuenta tu versión aquí. No la veré hasta el veredicto.</string>
@@ -304,10 +302,6 @@
     <string name="case_invite_reset_confirm">El enlace que ya enviaste dejará de funcionar. ¿Creamos uno nuevo?</string>
     <string name="case_invite_reset_yes">Sí, crear uno nuevo</string>
     <string name="case_invite_reset_done">Enlace anterior desactivado. Envía el nuevo.</string>
-    <string name="case_invite_expires">El enlace funciona hasta el %1$s.</string>
-    <string name="case_invite_expires_soon">El enlace funciona durante 7 días.</string>
-    <string name="case_held">Hay 1 veredicto reservado para este caso. Lo recuperas si nadie responde antes del %1$s.</string>
-    <string name="case_held_soon">Hay 1 veredicto reservado para este caso. Lo recuperas si nadie responde en 7 días.</string>
     <string name="case_judge_now">Juzgar solo con mi versión</string>
     <string name="case_judge_now_confirm">¿Quieres un veredicto ahora, con una sola versión? La invitación se cierra y la otra persona ya no podrá responder.</string>
     <string name="case_judge_now_yes">Sí, juzgar ahora</string>
@@ -315,6 +309,8 @@
     <string name="case_judge_expired_yes">Sí, usar 1 veredicto</string>
     <string name="case_side_waiting">Esperando</string>
     <string name="case_side_answered">Ha respondido</string>
+    <string name="case_side_opened">Abierto</string>
+    <string name="case_side_typing">Escribiendo…</string>
     <string name="case_judge_answered">Juzgar con las partes que han respondido</string>
     <string name="case_judge_answered_confirm">¿Quieres un veredicto con las partes que han respondido? Las demás invitaciones se cierran y esas personas ya no podrán responder.</string>
     <string name="case_cancel">Cancelar</string>
@@ -334,7 +330,6 @@
     <string name="case_context_d">Parte D añadió contexto</string>
     <string name="case_context_you">Contexto que añadiste (%1$s)</string>
     <string name="case_evidence_item">Imagen %1$s, tal como la leyeron los jueces</string>
-    <string name="case_not_yet">Todavía no ha respondido.</string>
     <string name="case_answered">Ya ha respondido. Los jueces están en ello.</string>
     <string name="case_judging_alone">Los jueces están trabajando en tu versión.</string>
     <string name="case_expired_body">Nadie respondió en 7 días, así que recuperaste tu crédito. Aún puedes obtener un veredicto solo con tu versión.</string>
@@ -343,7 +338,6 @@
     <string name="case_start_over">Empezar un caso nuevo</string>
     <string name="case_list_untitled">Caso del %1$s</string>
     <string name="case_list_untitled_soon">Caso</string>
-    <string name="respond_kicker">Tu versión</string>
     <string name="respond_title">Cuenta tu versión</string>
     <string name="respond_intro">Alguien ha pedido a Judge que resuelva una discusión contigo. Cuenta tu versión; esa persona no la verá hasta el veredicto.</string>
     <string name="respond_privacy">Los nombres se cambian por Parte A y Parte B antes de que los jueces lean nada. No necesitas una cuenta.</string>

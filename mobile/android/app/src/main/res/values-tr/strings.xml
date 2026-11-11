@@ -288,8 +288,6 @@
     <string name="case_status_judged">Karar</string>
     <string name="case_status_failed">Yargıçlar işi bitiremedi</string>
     <string name="case_status_expired">Davetin süresi doldu</string>
-    <string name="case_invite_label">Bu bağlantıyı diğer kişiye gönder</string>
-    <string name="case_invite_copy">Bağlantıyı kopyala</string>
     <string name="case_invite_copied">Kopyalandı</string>
     <string name="case_invite_share">Paylaş</string>
     <string name="case_invite_share_text">Tartışmamızı Judge\'a sordum. Kendi tarafını buraya yaz. Karar çıkana kadar ben göremeyeceğim.</string>
@@ -297,10 +295,6 @@
     <string name="case_invite_reset_confirm">Gönderdiğin bağlantı artık çalışmayacak. Yenisini oluşturalım mı?</string>
     <string name="case_invite_reset_yes">Evet, yeni bağlantı oluştur</string>
     <string name="case_invite_reset_done">Eski bağlantı kapandı. Yenisini gönder.</string>
-    <string name="case_invite_expires">Bağlantı %1$s tarihine kadar geçerli.</string>
-    <string name="case_invite_expires_soon">Bağlantı 7 gün geçerli.</string>
-    <string name="case_held">Bu dava için 1 karar hakkın ayrıldı. %1$s tarihine kadar kimse cevap vermezse hakkın geri gelir.</string>
-    <string name="case_held_soon">Bu dava için 1 karar hakkın ayrıldı. 7 gün içinde kimse cevap vermezse hakkın geri gelir.</string>
     <string name="case_judge_now">Sadece benim tarafımla karar ver</string>
     <string name="case_judge_now_confirm">Şimdi tek taraflı bir karar mı istiyorsun? Davet kapanır, o da artık cevap veremez.</string>
     <string name="case_judge_now_yes">Evet, şimdi karar ver</string>
@@ -308,6 +302,8 @@
     <string name="case_judge_expired_yes">Evet, 1 hak kullan</string>
     <string name="case_side_waiting">Bekliyor</string>
     <string name="case_side_answered">Cevapladı</string>
+    <string name="case_side_opened">Açtı</string>
+    <string name="case_side_typing">Yazıyor…</string>
     <string name="case_judge_answered">Cevaplayan taraflarla karar ver</string>
     <string name="case_judge_answered_confirm">Cevaplayan taraflarla bir karar mı istiyorsun? Diğer davetler kapanır, o kişiler artık cevap veremez.</string>
     <string name="case_cancel">Vazgeç</string>
@@ -327,7 +323,6 @@
     <string name="case_context_d">Taraf D\'nin eklediği bilgi</string>
     <string name="case_context_you">Senin eklediğin bilgi (%1$s)</string>
     <string name="case_evidence_item">%1$s. görsel, yargıçların okuduğu hâliyle</string>
-    <string name="case_not_yet">Henüz cevap vermedi.</string>
     <string name="case_answered">Cevap verdi. Yargıçlar üzerinde çalışıyor.</string>
     <string name="case_judging_alone">Yargıçlar senin tarafın üzerinde çalışıyor.</string>
     <string name="case_expired_body">7 gün içinde kimse cevap vermedi, kredin geri döndü. Yine de sadece kendi tarafına göre karar alabilirsin.</string>
@@ -336,7 +331,6 @@
     <string name="case_start_over">Yeni bir dava aç</string>
     <string name="case_list_untitled">%1$s tarihli dava</string>
     <string name="case_list_untitled_soon">Dava</string>
-    <string name="respond_kicker">Senin tarafın</string>
     <string name="respond_title">Kendi tarafını anlat</string>
     <string name="respond_intro">Biri, seninle arasındaki bir tartışmayı Judge\'a sordu. Kendi tarafını anlat; karar çıkana kadar o göremeyecek.</string>
     <string name="respond_privacy">Yargıçlar bir şey okumadan önce isimler Taraf A ve Taraf B olur. Hesap açman gerekmiyor.</string>

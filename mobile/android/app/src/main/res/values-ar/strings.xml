@@ -316,8 +316,6 @@
     <string name="case_status_judged">صدر الحكم</string>
     <string name="case_status_failed">لم يتمكن القضاة من إنهائها</string>
     <string name="case_status_expired">انتهت صلاحية الدعوة</string>
-    <string name="case_invite_label">أرسل هذا الرابط إلى الشخص الآخر</string>
-    <string name="case_invite_copy">نسخ الرابط</string>
     <string name="case_invite_copied">تم النسخ</string>
     <string name="case_invite_share">مشاركة</string>
     <string name="case_invite_share_text">طلبت من Judge أن يحسم خلافنا. اكتب روايتك هنا. لن أراها قبل صدور الحكم.</string>
@@ -325,10 +323,6 @@
     <string name="case_invite_reset_confirm">سيتوقف الرابط الذي أرسلته عن العمل. هل تريد إنشاء رابط جديد؟</string>
     <string name="case_invite_reset_yes">نعم، أنشئ رابطًا جديدًا</string>
     <string name="case_invite_reset_done">أُوقف الرابط القديم. أرسل الرابط الجديد.</string>
-    <string name="case_invite_expires">يعمل الرابط حتى %1$s.</string>
-    <string name="case_invite_expires_soon">يعمل الرابط لمدة 7 أيام.</string>
-    <string name="case_held">حُجز حكم واحد لهذه القضية. يعود إليك إذا لم يردّ أحد حتى %1$s.</string>
-    <string name="case_held_soon">حُجز حكم واحد لهذه القضية. يعود إليك إذا لم يردّ أحد خلال 7 أيام.</string>
     <string name="case_judge_now">الحكم بروايتي فقط</string>
     <string name="case_judge_now_confirm">هل تريد حكمًا على رواية طرف واحد الآن؟ ستُغلق الدعوة ولن يتمكن الطرف الآخر من الرد.</string>
     <string name="case_judge_now_yes">نعم، أريد الحكم الآن</string>
@@ -336,6 +330,8 @@
     <string name="case_judge_expired_yes">نعم، استخدم حكمًا واحدًا</string>
     <string name="case_side_waiting">بانتظار الرد</string>
     <string name="case_side_answered">ردّ</string>
+    <string name="case_side_opened">فتح الرابط</string>
+    <string name="case_side_typing">يكتب…</string>
     <string name="case_judge_answered">الحكم بروايات من ردّوا</string>
     <string name="case_judge_answered_confirm">هل تريد حكمًا من الأطراف التي ردّت؟ ستُغلق الدعوات الأخرى ولن يتمكن أصحابها من الرد.</string>
     <string name="case_cancel">إلغاء</string>
@@ -355,7 +351,6 @@
     <string name="case_context_d">توضيح أضافه الطرف D</string>
     <string name="case_context_you">التوضيح الذي أضفته (%1$s)</string>
     <string name="case_evidence_item">الصورة %1$s، كما قرأها القضاة</string>
-    <string name="case_not_yet">لم يصل الرد بعد.</string>
     <string name="case_answered">وصل الرد. القضاة يعملون عليه.</string>
     <string name="case_judging_alone">القضاة يعملون على روايتك.</string>
     <string name="case_expired_body">لم يردّ أحد خلال 7 أيام، فعاد الحكم المحجوز إلى رصيدك. وما زال بإمكانك الحصول على حكم على روايتك وحدها.</string>
@@ -364,7 +359,6 @@
     <string name="case_start_over">بدء قضية جديدة</string>
     <string name="case_list_untitled">قضية بتاريخ %1$s</string>
     <string name="case_list_untitled_soon">قضية</string>
-    <string name="respond_kicker">روايتك</string>
     <string name="respond_title">احكِ روايتك</string>
     <string name="respond_intro">طلب أحدهم من Judge أن يحسم خلافًا بينكما. احكِ روايتك؛ لن يراها قبل صدور الحكم.</string>
     <string name="respond_privacy">تُستبدل الأسماء بالطرف A والطرف B قبل أن يقرأ القضاة أي شيء. لا تحتاج إلى حساب.</string>
