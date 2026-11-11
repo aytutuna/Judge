@@ -96,6 +96,7 @@ object SignInTags {
     const val USE_PASSWORD = "signin.usePassword"
     const val NEW_PASSWORD = "signin.newPassword"
     const val SAVE_PASSWORD = "signin.savePassword"
+    const val SIGN_OUT = "signin.signOut"
 }
 
 /** Everything the sign-in screen can ask for; no-ops by default (previews, screenshots). */
@@ -107,6 +108,7 @@ data class SignInActions(
     val onSignInWithPassword: () -> Unit = {},
     val onMode: (SignInMode) -> Unit = {},
     val onSavePassword: () -> Unit = {},
+    val onSignOut: () -> Unit = {},
     val onCodeChange: (String) -> Unit = {},
     val onSubmitCode: () -> Unit = {},
     val onResend: () -> Unit = {},
@@ -358,11 +360,20 @@ private fun ChoosePasswordStep(state: SignInUiState, actions: SignInActions) {
         modifier = Modifier.testTag(SignInTags.NEW_PASSWORD),
     )
     PrimaryButton(
-        text = s.signinPasswordSave,
+        text = if (state.error == null) s.signinPasswordSave else s.appRetry,
         enabled = state.canSavePassword,
         onClick = actions.onSavePassword,
         modifier = Modifier.fillMaxWidth().padding(top = 16.dp).testTag(SignInTags.SAVE_PASSWORD),
     )
+    // No skip, but a save that keeps failing must not trap the person.
+    if (state.error != null) {
+        TextAction(
+            s.accountSignOut,
+            onClick = actions.onSignOut,
+            color = Palette.ink2,
+            modifier = Modifier.padding(top = 6.dp).testTag(SignInTags.SIGN_OUT),
+        )
+    }
 }
 
 /** A password box with a show switch; [autofill] tells password managers which kind it is. */

@@ -546,6 +546,13 @@ final class AccountModel {
         if await storePassword(password) { isSignInPresented = false }
     }
 
+    /// The password step has no skip, but a save that keeps failing must not
+    /// trap the person: this signs out and closes the sheet.
+    func signOutFromPasswordStep() async {
+        await signOut()
+        isSignInPresented = false
+    }
+
     private func storePassword(_ new: String) async -> Bool {
         guard isSignedIn, busy == nil else { return false }
         guard new.count >= Self.passwordMin else {

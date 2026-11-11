@@ -286,11 +286,18 @@ struct SignInView: View {
                 if account.busy == .password {
                     ProgressView().tint(Brand.ivory)
                 } else {
-                    Text(L10n.signinPasswordSave(lang))
+                    Text(account.failure == nil ? L10n.signinPasswordSave(lang) : L10n.appRetry(lang))
                 }
             }
             .buttonStyle(PrimaryButtonStyle())
             .disabled(account.busy != nil || account.password.isEmpty)
+            if account.failure != nil {
+                Button(L10n.accountSignOut(lang)) {
+                    Task { await app.account.signOutFromPasswordStep() }
+                }
+                .buttonStyle(LinkButtonStyle())
+                .disabled(account.busy != nil)
+            }
         }
     }
 

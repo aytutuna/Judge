@@ -769,6 +769,45 @@ class ScreensTest {
     }
 
     @Test
+    fun signIn_choosePassword_afterAFailedSave_offersTryAgainAndSignOut() {
+        var signedOut = 0
+        val providers = Account.Providers.Ready(ServerConfig(SignInProviders(emailCode = true, password = true)))
+        compose.setContent {
+            Themed(AppLang.EN) {
+                SignInScreen(
+                    SignInUiState(
+                        providers = providers,
+                        step = SignInStep.CHOOSE_PASSWORD,
+                        password = "made-up-pass",
+                        error = SignInError.PASSWORD_SAVE_FAILED,
+                    ),
+                    onBack = {},
+                    actions = SignInActions(onSignOut = { signedOut++ }),
+                )
+            }
+        }
+        val s = UiTestSupport.s(AppLang.EN)
+        compose.onNodeWithTag(SignInTags.SAVE_PASSWORD).assertIsEnabled().assertTextContains(s.appRetry)
+        compose.onNodeWithTag(SignInTags.SIGN_OUT).performClick()
+        assertEquals(1, signedOut)
+    }
+
+    @Test
+    fun signIn_choosePassword_hasNoSignOutBeforeAFailure() {
+        val providers = Account.Providers.Ready(ServerConfig(SignInProviders(emailCode = true, password = true)))
+        compose.setContent {
+            Themed(AppLang.EN) {
+                SignInScreen(
+                    SignInUiState(providers = providers, step = SignInStep.CHOOSE_PASSWORD, password = "made-up-pass"),
+                    onBack = {},
+                    actions = SignInActions(),
+                )
+            }
+        }
+        compose.onNodeWithTag(SignInTags.SIGN_OUT).assertDoesNotExist()
+    }
+
+    @Test
     fun signIn_passwordForm_hidesThePasswordWhenTyped_andSwitchesMode() {
         val modes = mutableListOf<SignInMode>()
         var signedIn = 0

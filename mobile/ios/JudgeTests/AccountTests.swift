@@ -593,6 +593,35 @@ final class AccountTests: XCTestCase {
     }
 
     @MainActor
+    func testASaveThatKeepsFailingCanBeLeftBySigningOut() async throws {
+        route([
+            "/api/auth/email-otp/send-verification-otp": try json(200, ["success": true]),
+            "/api/auth/sign-in/email-otp": try json(200, ["token": "sess-code", "user": Self.userJSON]),
+            "/api/v1/me/password": try json(429, ["code": "rate_limited"]),
+            "/api/auth/sign-out": try json(200, ["success": true]),
+            "/api/v1/me": try json(200, Self.meJSON),
+        ])
+        let store = MemoryTokenStore()
+        let account = passwordModel(store)
+        account.isSignInPresented = true
+        account.setMode(.create)
+        account.email = "ann@example.com"
+        account.password = "long enough"
+        await account.sendCode(lang: .en)
+        account.code = "123456"
+        await account.verifyCode()
+        XCTAssertEqual(account.step, .choosePassword)
+        XCTAssertNotNil(account.failure)
+
+        await account.signOutFromPasswordStep()
+        XCTAssertFalse(account.isSignedIn)
+        XCTAssertNil(store.token())
+        XCTAssertFalse(account.isSignInPresented)
+        XCTAssertEqual(account.step, .choose)
+        XCTAssertNotNil(request("/api/auth/sign-out"))
+    }
+
+    @MainActor
     func testAnOldCodeSignInGoesBackToTheCodeStepToChooseAPassword() async throws {
         route([
             "/api/auth/email-otp/send-verification-otp": try json(200, ["success": true]),

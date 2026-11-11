@@ -751,6 +751,11 @@ fun JudgeRoot(
                                             },
                                             onMode = vm::setMode,
                                             onSavePassword = vm::savePassword,
+                                            // App scope: leaving the screen must not stop the sign-out halfway.
+                                            onSignOut = {
+                                                container.appScope.launch { account.signOut() }
+                                                backStack.removeAll { it is SignInKey }
+                                            },
                                             onCodeChange = vm::onCodeChange,
                                             onSubmitCode = vm::submitCode,
                                             onResend = { vm.resend(lang) },
