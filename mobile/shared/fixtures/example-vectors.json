@@ -1,0 +1,200 @@
+{
+  "ids": [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e"
+  ],
+  "cases": [
+    {
+      "seen": [],
+      "random": 0,
+      "id": "a",
+      "seenAfter": [
+        "a"
+      ]
+    },
+    {
+      "seen": [],
+      "random": 0.5,
+      "id": "c",
+      "seenAfter": [
+        "c"
+      ]
+    },
+    {
+      "seen": [],
+      "random": 0.99,
+      "id": "e",
+      "seenAfter": [
+        "e"
+      ]
+    },
+    {
+      "seen": [
+        "c"
+      ],
+      "random": 0,
+      "id": "a",
+      "seenAfter": [
+        "c",
+        "a"
+      ]
+    },
+    {
+      "seen": [
+        "c"
+      ],
+      "random": 0.74,
+      "id": "d",
+      "seenAfter": [
+        "c",
+        "d"
+      ]
+    },
+    {
+      "seen": [
+        "e",
+        "a",
+        "c"
+      ],
+      "random": 0.3,
+      "id": "b",
+      "seenAfter": [
+        "e",
+        "a",
+        "c",
+        "b"
+      ]
+    },
+    {
+      "seen": [
+        "e",
+        "a",
+        "c"
+      ],
+      "random": 0.99,
+      "id": "d",
+      "seenAfter": [
+        "e",
+        "a",
+        "c",
+        "d"
+      ]
+    },
+    {
+      "seen": [
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "random": 0,
+      "id": "a",
+      "seenAfter": [
+        "b",
+        "c",
+        "d",
+        "e",
+        "a"
+      ]
+    },
+    {
+      "seen": [
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "random": 0.99,
+      "id": "a",
+      "seenAfter": [
+        "b",
+        "c",
+        "d",
+        "e",
+        "a"
+      ]
+    },
+    {
+      "seen": [
+        "c",
+        "b",
+        "d",
+        "e",
+        "a"
+      ],
+      "random": 0,
+      "id": "b",
+      "seenAfter": [
+        "b"
+      ]
+    },
+    {
+      "seen": [
+        "c",
+        "b",
+        "d",
+        "e",
+        "a"
+      ],
+      "random": 0.5,
+      "id": "d",
+      "seenAfter": [
+        "d"
+      ]
+    },
+    {
+      "seen": [
+        "c",
+        "b",
+        "d",
+        "e",
+        "a"
+      ],
+      "random": 0.99,
+      "id": "e",
+      "seenAfter": [
+        "e"
+      ]
+    },
+    {
+      "seen": [
+        "gone",
+        "b"
+      ],
+      "random": 0,
+      "id": "a",
+      "seenAfter": [
+        "b",
+        "a"
+      ]
+    },
+    {
+      "seen": [
+        "a",
+        "gone"
+      ],
+      "random": 0,
+      "id": "b",
+      "seenAfter": [
+        "a",
+        "b"
+      ]
+    }
+  ],
+  "single": {
+    "ids": [
+      "x"
+    ],
+    "seen": [
+      "x"
+    ],
+    "random": 0,
+    "id": "x",
+    "seenAfter": [
+      "x"
+    ]
+  }
+}

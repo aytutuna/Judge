@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { nextExample } from "@/lib/example-pick";
+import vectors from "@/mobile/shared/fixtures/example-vectors.json";
 
 const ids = ["a", "b", "c", "d"];
 const first = () => 0;
@@ -34,5 +35,13 @@ describe("nextExample", () => {
   it("ignores ids that are gone and a lone example repeats", () => {
     expect(nextExample(ids, ["gone", "a"], first)).toEqual({ id: "b", seen: ["a", "b"] });
     expect(nextExample(["x"], ["x"], first)).toEqual({ id: "x", seen: ["x"] });
+  });
+});
+
+describe("golden vectors", () => {
+  it("match the picker", () => {
+    for (const c of vectors.cases) {
+      expect(nextExample(vectors.ids, c.seen, () => c.random)).toEqual({ id: c.id, seen: c.seenAfter });
+    }
   });
 });

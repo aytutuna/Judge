@@ -228,6 +228,9 @@ jobs:
       - name: Fixtures are current
         run: npx tsx mobile/shared/fixtures/export-fixtures.ts --check
 
+      - name: Example data is current
+        run: npx tsx mobile/shared/examples/export-examples.ts --check
+
       - name: Scene bundle is current
         run: npx tsx mobile/shared/scene/build-scene.ts --check
 

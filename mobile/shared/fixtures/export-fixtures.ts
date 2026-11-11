@@ -52,6 +52,7 @@
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
+import { nextExample } from "../../../lib/example-pick";
 import { cruxStyle } from "../../../lib/crux-style";
 import { verdictLang } from "../../../lib/content-lang";
 import { apiErrorMessage, formatWait, loadLocales, t, type Lang } from "../../../lib/i18n";
@@ -1295,6 +1296,34 @@ function storyVectors() {
   return { waiting, summaries, endings: cases.map((c) => ({ ...c, ...ending(c.fromWaiting, c.summary, c.reduced) })) };
 }
 
+function exampleVectors() {
+  const ids = ["a", "b", "c", "d", "e"];
+  const cases: { seen: string[]; random: number }[] = [
+    { seen: [], random: 0 },
+    { seen: [], random: 0.5 },
+    { seen: [], random: 0.99 },
+    { seen: ["c"], random: 0 },
+    { seen: ["c"], random: 0.74 },
+    { seen: ["e", "a", "c"], random: 0.3 },
+    { seen: ["e", "a", "c"], random: 0.99 },
+    { seen: ["b", "c", "d", "e"], random: 0 },
+    { seen: ["b", "c", "d", "e"], random: 0.99 },
+    { seen: ["c", "b", "d", "e", "a"], random: 0 },
+    { seen: ["c", "b", "d", "e", "a"], random: 0.5 },
+    { seen: ["c", "b", "d", "e", "a"], random: 0.99 },
+    { seen: ["gone", "b"], random: 0 },
+    { seen: ["a", "gone"], random: 0 },
+  ];
+  return {
+    ids,
+    cases: cases.map((c) => {
+      const next = nextExample(ids, c.seen, () => c.random);
+      return { ...c, id: next.id, seenAfter: next.seen };
+    }),
+    single: { ids: ["x"], seen: ["x"], random: 0, id: "x", seenAfter: ["x"] },
+  };
+}
+
 async function main(): Promise<void> {
   // Every language but English loads on demand; without this the Turkish
   // vectors would quietly read English.
@@ -1331,6 +1360,8 @@ async function main(): Promise<void> {
   const files: [string, string][] = [
     [join(OUT_DIR, "verdicts.json"), `${JSON.stringify(verdicts, null, 2)}\n`],
     [join(OUT_DIR, "story-vectors.json"), `${JSON.stringify(storyVectors(), null, 2)}
+`],
+    [join(OUT_DIR, "example-vectors.json"), `${JSON.stringify(exampleVectors(), null, 2)}
 `],
     [join(OUT_DIR, "display-vectors.json"), `${JSON.stringify(displayVectors(), null, 2)}\n`],
   ];
