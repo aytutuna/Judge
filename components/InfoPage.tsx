@@ -90,21 +90,33 @@ function About({ lang, features, premiumOn }: { lang: Lang; features: InfoFeatur
   );
 }
 
-/** The street court art credit, pack and author as links. */
+/** The court art credit: the packs and the author as links. */
+const ART_PACKS: [string, string][] = [
+  ["Modern Exteriors", "https://limezu.itch.io/modernexteriors"],
+  ["Modern Interiors", "https://limezu.itch.io/moderninteriors"],
+  ["Modern Farm", "https://limezu.itch.io/modernfarm"],
+];
+
 function ArtCredit({ text }: { text: string }) {
-  const links: Record<string, [string, string]> = {
-    "{pack}": ["Modern Exteriors", "https://limezu.itch.io/modernexteriors"],
-    "{author}": ["LimeZu", "https://limezu.itch.io/"],
-  };
+  const link = (label: string, href: string) => (
+    <a href={href} className={styles.link} target="_blank" rel="noreferrer">
+      {label}
+    </a>
+  );
   return (
     <p>
       {text.split(/({pack}|{author})/).map((part, i) => {
-        const link = links[part];
-        if (!link) return part;
+        if (part === "{author}") return <span key={i}>{link("LimeZu", "https://limezu.itch.io/")}</span>;
+        if (part !== "{pack}") return part;
         return (
-          <a key={i} href={link[1]} className={styles.link} target="_blank" rel="noreferrer">
-            {link[0]}
-          </a>
+          <span key={i}>
+            {ART_PACKS.map(([label, href], k) => (
+              <span key={href}>
+                {k ? ", " : ""}
+                {link(label, href)}
+              </span>
+            ))}
+          </span>
         );
       })}
     </p>
