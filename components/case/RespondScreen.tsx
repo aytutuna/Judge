@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 import { apiFetch } from "@/lib/api-fetch";
-import type { AppealResponse, CaseRemovalResponse, CaseView, RespondResponse } from "@/lib/case-types";
+import type { AppealResponse, CaseRemovalResponse, CaseView, OpenResponse, RespondResponse } from "@/lib/case-types";
 import { MAX_EVIDENCE_PER_SIDE } from "@/lib/case-types";
 import { forgetCaseNames, saveCaseNames, useCaseNames } from "@/lib/case-names-store";
 import { firstNameOf } from "@/lib/originals-types";
@@ -95,13 +95,29 @@ export type RespondForm = {
   submit: () => Promise<void>;
 };
 
+/** Longest wait between heartbeats while someone types. */
+const TYPING_BEAT_MS = 3000;
+
 function useRespondForm(
   token: string,
   lang: Lang,
   onDone: (view: CaseView, names: NameMapping[], claim: string | null) => void,
   suggestedName: string | null,
+  claim: string | null,
 ): RespondForm {
   const [text, setText] = useState("");
+  const lastBeat = useRef(0);
+  // The owner sees "typing" for a few seconds after the last beat; it carries nothing else.
+  function typed(value: string) {
+    setText(value);
+    const now = Date.now();
+    if (!claim || now - lastBeat.current < TYPING_BEAT_MS) return;
+    lastBeat.current = now;
+    void apiFetch(`/api/v1/respond/${encodeURIComponent(token)}/typing`, {
+      method: "POST",
+      headers: { "Respondent-Claim": claim },
+    }).catch(() => undefined);
+  }
   const [typedName, setName] = useState<string | null>(null);
   const name = typedName ?? suggestedName ?? "";
   const [turnstile, setTurnstile] = useState<string | null>(null);
@@ -131,7 +147,11 @@ function useRespondForm(
     try {
       const res = await apiFetch(`/api/v1/respond/${encodeURIComponent(token)}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Idempotency-Key": keyFor(JSON.stringify(payload)) },
+        headers: {
+          "Content-Type": "application/json",
+          "Idempotency-Key": keyFor(JSON.stringify(payload)),
+          ...(claim ? { "Respondent-Claim": claim } : {}),
+        },
         body: JSON.stringify({ ...payload, ...(check ? { turnstileToken: check } : {}) }),
       });
       const json: unknown = await res.json().catch(() => null);
@@ -152,7 +172,7 @@ function useRespondForm(
     }
   }
 
-  return { text, setText, name, setName, evidence, setTurnstile, turnstileKey, sending, error, canSubmit, submit };
+  return { text, setText: typed, name, setName, evidence, setTurnstile, turnstileKey, sending, error, canSubmit, submit };
 }
 
 function LockGlyph() {
@@ -254,7 +274,7 @@ export function RespondPanel({
         >
           <div className={styles.field}>
             <label htmlFor={fieldId} className={styles.fieldLabel}>
-              <span>{t(lang, "respond.label")}</span>
+              <span className="sr-only">{t(lang, "respond.label")}</span>
               <span className={styles.count} aria-hidden>
                 {form.text.length.toLocaleString(langTag(lang))} / {MAX_SIDE.toLocaleString(langTag(lang))}
               </span>
@@ -504,7 +524,32 @@ export function RespondScreen({ token }: { token: string }) {
       setView(next);
     },
     firstNameOf(viewer.me?.user?.name),
+    claim,
   );
+
+  // The first visit takes the next open side, so the owner sees it opened and
+  // the side is kept for this browser (or this account) from then on.
+  const opened = useRef(false);
+  const [full, setFull] = useState(false);
+  useEffect(() => {
+    if (!view || claim || opened.current) return;
+    if (view.ownInvite || view.status !== "awaiting_respondent" || view.respondentAnswered) return;
+    opened.current = true;
+    void (async () => {
+      try {
+        const res = await apiFetch(`${base}/open`, { method: "POST" });
+        const json = (await res.json().catch(() => null)) as OpenResponse | null;
+        if (res.ok && json?.case) {
+          saveClaim(json.case.id, json.respondent_claim);
+          setView(json.case);
+        } else if (res.status === 409) {
+          setFull(true);
+        }
+      } catch {
+        opened.current = false;
+      }
+    })();
+  }, [view, claim, base, setView]);
 
   async function removeSide() {
     setRemoveError(null);
@@ -580,18 +625,22 @@ export function RespondScreen({ token }: { token: string }) {
   // them stays neutral.
   const shut = stage === "expired" || stage === "closed" || stage === "without_you";
   const title = t(lang, answering || !view ? "respond.title" : shut ? "respond.inviteTitle" : "case.title");
-  const kicker = t(lang, "respond.kicker");
 
-  if (!view) {
+  // Every side is taken: the link shows the case as full.
+  if (!view || full) {
+    const closed = full || load.code === "case_closed";
     const message =
       load.status === "loading"
         ? t(lang, "respond.loading")
-        : load.status === "missing"
-          ? t(lang, "respond.notFound")
-          : t(lang, "case.loadFailed");
+        : closed
+          ? t(lang, "respond.closed")
+          : load.status === "missing"
+            ? t(lang, "respond.notFound")
+            : t(lang, "case.loadFailed");
+    const calm = load.status === "loading" || closed;
     return (
-      <CaseShell lang={lang} kicker={kicker} title={title} bare>
-        <p className={load.status === "loading" ? styles.note : styles.error} role={load.status === "loading" ? "status" : "alert"}>
+      <CaseShell lang={lang} title={closed ? t(lang, "respond.inviteTitle") : title} bare>
+        <p className={calm ? styles.note : styles.error} role={load.status === "loading" ? "status" : "alert"}>
           {message}
         </p>
       </CaseShell>
@@ -601,7 +650,6 @@ export function RespondScreen({ token }: { token: string }) {
   return (
     <CaseShell
       lang={lang}
-      kicker={kicker}
       title={title}
       bare
       lead={answering ? t(lang, "respond.intro") : null}
@@ -682,7 +730,7 @@ export function PendingInviteScreen() {
     if (pending) router.replace(`/r/${pending}`);
   }, [pending, router]);
   return (
-    <CaseShell lang={lang} kicker={t(lang, "respond.kicker")} title={t(lang, "respond.inviteTitle")} bare>
+    <CaseShell lang={lang} title={t(lang, "respond.inviteTitle")} bare>
       <p className={styles.note} role={missing ? "alert" : "status"}>
         {t(lang, missing ? "respond.pendingMissing" : "respond.loading")}
       </p>

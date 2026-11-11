@@ -95,17 +95,18 @@ describe("case page as a thread", () => {
         resetDone={false}
         onJudgeNow={noop}
         onRetry={noop}
-        onReset={noop}
+        onShare={noop}
+      onReset={noop}
         onRemove={noop}
         appeal={draft}
         {...over}
       />,
     );
 
-  it("waiting: the owner's side, then the invite link, then New argument", () => {
+  it("waiting: the owner's side, then who is where, then New argument", () => {
     const html = panel();
     expect(order(html)).toEqual(["argument", "judges", "invite"]);
-    expect(html.indexOf("Deniz&#x27;s turn")).toBeLessThan(html.indexOf(OWNER.awaiting.inviteUrl as string));
+    expect(html.indexOf("Deniz&#x27;s turn")).toBeLessThan(html.indexOf(t("en", "case.invite.share")));
     expect(html).toContain(`href="/">`);
     expect(html).toContain(t("en", "shell.new"));
   });

@@ -4,10 +4,9 @@ import { AccountsRead } from "../components/case/AccountsRead";
 import { AppealSection, appealArea, type AppealDraft } from "../components/case/AppealForm";
 import { CasePanel, type CasePanelProps } from "../components/case/CaseScreen";
 import type { EvidenceController } from "../components/case/EvidencePicker";
-import { InviteLink } from "../components/case/InviteLink";
 import { RespondPanel, respondStage, type RespondForm, type RespondPanelProps } from "../components/case/RespondScreen";
 import { WriteSide, type SideDraft } from "../components/case/WriteSide";
-import type { CaseView } from "../lib/case-types";
+import type { CaseView, LiveState } from "../lib/case-types";
 import { t } from "../lib/i18n";
 import { OWNER, OWNER_NAMES, RESPONDENT, RESPONDENT_NAMES, caseView } from "./ui-case-fixtures";
 
@@ -66,6 +65,7 @@ function owner(view: CaseView, over: Partial<CasePanelProps> = {}): string {
       resetDone={false}
       onJudgeNow={noop}
       onRetry={noop}
+      onShare={noop}
       onReset={noop}
       onRemove={noop}
       appeal={draft}
@@ -93,12 +93,13 @@ function respondent(view: CaseView, over: Partial<RespondPanelProps> = {}): stri
 }
 
 describe("owner case page", () => {
-  it("awaiting: shows the invite link, the held credit, judge-now and only the owner's side", () => {
+  it("awaiting: a row per side, share link, judge-now and only the owner's side, with no explanation", () => {
     const html = owner(OWNER.awaiting);
-    expect(html).toContain(OWNER.awaiting.inviteUrl as string);
-    expect(html).toContain(t("en", "case.invite.copy"));
-    expect(html).toContain("The link works until October 27.");
-    expect(html).toContain("1 verdict is held for this case. You get it back if nobody answers by October 27.");
+    expect(html).toContain(t("en", "case.side.waiting"));
+    expect(html).toContain(t("en", "case.invite.share"));
+    expect(html).not.toContain(OWNER.awaiting.inviteUrl as string);
+    expect(html).not.toContain("verdict is held");
+    expect(html).not.toContain("The link works");
     expect(html).toContain(t("en", "case.judgeNow"));
     expect(html).toContain(esc(t("en", "case.judgeNow.confirm")));
     expect(html).toContain(esc(t("en", "case.yourSide")));
@@ -113,7 +114,7 @@ describe("owner case page", () => {
   it("no side A yet: the link and the write form, no judge-now, no not-stored message", () => {
     const waiting = caseView({ sides: [], ownerSideMissing: true, canJudgeNow: false });
     const html = owner(waiting, { write: sideDraft });
-    expect(html).toContain(waiting.inviteUrl as string);
+    expect(html).toContain(t("en", "case.invite.share"));
     expect(html).toContain(esc(t("en", "case.write.placeholder")));
     expect(html).toContain(esc(t("en", "case.write.lead")));
     expect(html).toContain(t("en", "case.write.submit"));
@@ -133,7 +134,7 @@ describe("owner case page", () => {
     const html = owner(waiting, { write: sideDraft });
     expect(html).toContain(esc(t("en", "case.write.leadAnswered")));
     expect(html).not.toContain(esc(t("en", "case.write.lead")));
-    expect(html).not.toContain(t("en", "case.invite.copy"));
+    expect(html).not.toContain(t("en", "case.invite.share"));
     expect(html).not.toContain(esc(t("en", "owner.notStored")));
   });
 
@@ -157,7 +158,24 @@ describe("owner case page", () => {
     expect(html).toMatch(new RegExp(`role="status" aria-live="polite">${t("en", "case.answered")}<`));
     expect(html).toContain(t("en", "thinking.eyebrow"));
     expect(html).not.toContain(t("en", "case.remove"));
-    expect(html).not.toContain(OWNER.awaiting.inviteUrl as string);
+    expect(html).not.toContain(t("en", "case.invite.share"));
+  });
+
+  it("awaiting: each side shows its live state", () => {
+    const live = (states: LiveState[]) =>
+      owner(
+        caseView({
+          live: states.map((state, i) => ({ party: (["b", "c", "d"] as const)[i], state })),
+        }),
+      );
+    const html = live(["answered", "typing", "opened"]);
+    expect(html).toContain(t("en", "case.side.answered"));
+    expect(html).toContain(esc(t("en", "case.side.typing")));
+    expect(html).toContain(t("en", "case.side.opened"));
+    expect(html).toContain('data-state="typing"');
+    // The letter is for the eye, the side's name for a screen reader.
+    expect(html).toContain('class="sr-only">Party C');
+    expect(html).not.toContain(esc(t("en", "case.accountB")));
   });
 
   it("judged: verdict with names on the owner's side, two-sided blocks, both accounts and the appeal form", () => {
@@ -207,7 +225,7 @@ describe("owner case page", () => {
   it("an old free case mentions no held or returned credit, but judging it alone or again costs one", () => {
     const free = (v: CaseView) => caseView({ ...v, tier: "free" });
     const awaiting = owner(free(OWNER.awaiting));
-    expect(awaiting).toContain(OWNER.awaiting.inviteUrl as string);
+    expect(awaiting).toContain(t("en", "case.invite.share"));
     expect(awaiting).not.toContain("verdict is held");
     const failed = owner(free(OWNER.failed));
     expect(failed).toContain(t("en", "case.failedBodyFree"));
@@ -237,8 +255,8 @@ describe("owner case page", () => {
 
   it("speaks Turkish", () => {
     const html = owner(OWNER.awaiting, { lang: "tr" });
-    expect(html).toContain(t("tr", "case.invite.copy"));
-    expect(html).toContain("27 Ekim");
+    expect(html).toContain(t("tr", "case.invite.share"));
+    expect(html).toContain(t("tr", "case.side.waiting"));
   });
 });
 
@@ -422,15 +440,6 @@ describe("appealArea", () => {
 });
 
 describe("small case components", () => {
-  it("InviteLink: labelled read-only field, copy, reset", () => {
-    const html = renderToStaticMarkup(
-      <InviteLink lang="en" url="https://x.test/r/abc" expiresAt="2026-10-27T09:00:00.000Z" onReset={noop} />,
-    );
-    expect(html).toMatch(/<label for="[^"]+"[^>]*>Send this link to the other person<\/label>/);
-    expect(html).toContain('readOnly=""');
-    expect(html).toContain(t("en", "case.invite.reset"));
-  });
-
   it("AccountsRead: renders nothing without sides, transcripts as details", () => {
     expect(renderToStaticMarkup(<AccountsRead lang="en" title="x" sides={[]} />)).toBe("");
     const html = renderToStaticMarkup(<AccountsRead lang="en" title="x" sides={OWNER.judged.sides} />);

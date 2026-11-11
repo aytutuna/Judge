@@ -442,8 +442,6 @@ const sl: Locale = {
     "case.status.judged": "Razsojeno",
     "case.status.failed": "Sodniki niso mogli dokončati",
     "case.status.expired": "Povabilo je poteklo",
-    "case.invite.label": "To povezavo pošlji drugi osebi",
-    "case.invite.copy": "Kopiraj povezavo",
     "case.invite.copied": "Kopirano",
     "case.invite.share": "Deli",
     "case.invite.shareText":
@@ -452,12 +450,6 @@ const sl: Locale = {
     "case.invite.resetConfirm": "Že poslana povezava bo prenehala delovati. Ustvarim novo?",
     "case.invite.resetYes": "Da, ustvari novo",
     "case.invite.resetDone": "Stara povezava je izklopljena. Pošlji novo.",
-    "case.invite.expires": "Rok veljavnosti povezave: {date}.",
-    "case.invite.expiresSoon": "Povezava velja 7 dni.",
-    "case.held":
-      "Za ta spor je rezervirana 1 razsodba. Vrnemo ti jo, če nihče ne odgovori do roka ({date}).",
-    "case.heldSoon":
-      "Za ta spor je rezervirana 1 razsodba. Vrnemo ti jo, če v 7 dneh nihče ne odgovori.",
     "case.judgeNow": "Razsodi samo mojo plat",
     "case.judgeNow.confirm": "Želiš enostransko razsodbo zdaj? Povabilo se zapre in druga oseba ne more več odgovoriti.",
     "case.judgeNow.yes": "Da, razsodi zdaj",
@@ -465,6 +457,8 @@ const sl: Locale = {
     "case.judgeExpired.yes": "Da, porabi 1 razsodbo",
     "case.side.waiting": "Čaka",
     "case.side.answered": "Je odgovoril(a)",
+    "case.side.opened": "Odprto",
+    "case.side.typing": "Tipka…",
     "case.judgeAnswered": "Razsodi s platmi, ki so odgovorile",
     "case.judgeAnswered.confirm": "Želiš razsodbo s platmi, ki so odgovorile? Druga povabila se zaprejo in te osebe ne morejo več odgovoriti.",
     "case.cancel": "Prekliči",
@@ -484,7 +478,6 @@ const sl: Locale = {
     "case.contextD": "Stranka D je dodala kontekst",
     "case.contextYou": "Tvoj dodani kontekst ({label})",
     "case.evidenceItem": "Slika {n}, kot so jo prebrali sodniki",
-    "case.notYet": "Druga oseba še ni odgovorila.",
     "case.answered": "Druga oseba je odgovorila. Sodniki so že pri delu.",
     "case.judgingAlone": "Sodniki obravnavajo tvojo plat.",
     "case.expiredBody":
@@ -494,7 +487,6 @@ const sl: Locale = {
     "case.startOver": "Začni nov spor",
     "case.list.untitled": "Spor, {date}",
     "case.list.untitledSoon": "Spor",
-    "respond.kicker": "Tvoja plat",
     "respond.title": "Povej svojo plat",
     "respond.intro":
       "Nekdo želi, da Judge razsodi vajin prepir. Povej svojo plat; druga oseba je do razsodbe ne bo videla.",

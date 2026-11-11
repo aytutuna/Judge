@@ -9,6 +9,7 @@ import type {
   CaseStatus,
   CaseView,
   InviteResponse,
+  LiveState,
   PartyLetter,
 } from "@/lib/case-types";
 import { apiFetch } from "@/lib/api-fetch";
@@ -19,10 +20,12 @@ import { langDir } from "@/lib/langs";
 import { useLang } from "@/lib/lang";
 import { localizeLabels, partyLabel, resolveParties, restoreNames, textLang } from "@/lib/names";
 import type { NameMapping } from "@/lib/types";
+import { shareLink } from "@/lib/share-link";
 import { useCase } from "@/lib/use-case";
 import { refreshViewer, useViewer } from "@/lib/use-viewer";
 import { JudgingOverlay } from "../JudgingOverlay";
 import { SiteFooter, SiteHeader, SkipLink } from "../SiteChrome";
+import { Toast, useToast } from "../Toast";
 import { AppShell, useBlurOnTapOutside } from "../shell/AppShell";
 import { updateHistoryCase } from "../shell/useHistory";
 import { NextSteps } from "../shell/NextSteps";
@@ -40,10 +43,16 @@ import {
   type AppealDraft,
 } from "./AppealForm";
 import { CaseNames, CaseOriginals, useCaseOriginals } from "./CaseOwnTools";
-import { InviteLink } from "./InviteLink";
 import { VerdictHistory } from "./VerdictHistory";
 import { WriteSide, useSideDraft, type SideDraft } from "./WriteSide";
 import styles from "./case.module.css";
+
+const LIVE_KEY = {
+  waiting: "case.side.waiting",
+  opened: "case.side.opened",
+  typing: "case.side.typing",
+  answered: "case.side.answered",
+} as const satisfies Record<LiveState, Key>;
 
 const STATUS_KEY = {
   awaiting_respondent: "case.status.awaiting",
@@ -82,7 +91,7 @@ export function CaseShell({
   headingRef,
 }: {
   lang: Lang;
-  kicker: string;
+  kicker?: string;
   title: string;
   lead?: string | null;
   status?: CaseStatus | null;
@@ -96,7 +105,7 @@ export function CaseShell({
     <main id="main" tabIndex={-1} className={styles.main} data-you={you}>
       <div className={`wrap ${styles.column}`}>
         <header className={styles.intro}>
-          <p className="kicker">{kicker}</p>
+          {kicker ? <p className="kicker">{kicker}</p> : null}
           <h1 ref={headingRef} tabIndex={-1} className={styles.h1}>
             {title}
           </h1>
@@ -189,12 +198,12 @@ export type CasePanelProps = {
   busy: boolean;
   actionError: string | null;
   resetDone: boolean;
-  /** The side whose link was just replaced (side B by default). */
-  resetParty?: PartyLetter;
   onJudgeNow: () => void;
   onRetry: () => void;
-  /** Replaces a side's link; the side is only given on a case with more than two. */
-  onReset: (party?: PartyLetter) => void;
+  /** Opens the share sheet with the one link. */
+  onShare: () => void;
+  /** Replaces the one link. */
+  onReset: () => void;
   /** Removes the owner's side (soft: blanked and links closed). */
   onRemove: () => void;
   appeal: AppealDraft | null;
@@ -237,9 +246,9 @@ export function CasePanel({
   busy,
   actionError,
   resetDone,
-  resetParty = "b",
   onJudgeNow,
   onRetry,
+  onShare,
   onReset,
   onRemove,
   appeal,
@@ -254,7 +263,6 @@ export function CasePanel({
   const judgeCancelRef = useRef<HTMLButtonElement>(null);
   const resetRef = useRef<HTMLDialogElement>(null);
   const resetCancelRef = useRef<HTMLButtonElement>(null);
-  const [resetting, setResetting] = useState<PartyLetter>("b");
   const deleteRef = useRef<HTMLDialogElement>(null);
   const deleteCancelRef = useRef<HTMLButtonElement>(null);
 
@@ -277,63 +285,49 @@ export function CasePanel({
   const argument = ownText ?? (own && !own.removed ? ownSideText(own.text, names) : null);
   const judged = !overlay && view.status === "judged" && current !== null;
 
-  // Three or four sides: a link for each person, with who has answered.
-  const invites = view.invites;
-  const judgeAnswered = invites !== undefined && view.canJudgeAnswered === true;
+  const judgeAnswered = view.canJudgeAnswered === true;
   const judgeKey = judgeAnswered ? "case.judgeAnswered" : "case.judgeNow";
-  const waiting = invites ? invites.some((i) => i.status === "waiting") : !view.respondentAnswered;
 
   let invite: ReactNode = null;
   let notice: ReactNode = null;
   if (!overlay && view.status === "awaiting_respondent") {
     invite = (
       <div className={styles.stack}>
-        {waiting ? <p className={styles.note}>{t(lang, "case.notYet")}</p> : null}
-        {invites ? (
+        {view.live ? (
           <section className={`${account.card} ${styles.inviteList}`}>
-            {invites.map((inv) => (
-              <div key={inv.party} className={styles.inviteRow} data-party={inv.party}>
+            {view.live.map((side) => (
+              <div key={side.party} className={styles.inviteRow} data-party={side.party}>
                 <div className={styles.inviteHead}>
                   <span className={styles.inviteAvatar} aria-hidden>
-                    {inv.party.toUpperCase()}
+                    {side.party.toUpperCase()}
                   </span>
-                  <span className={styles.inviteWho}>{partyLabel(lang, inv.party)}</span>
-                  <span className={styles.inviteState} data-state={inv.status}>
-                    {inv.status === "answered" ? t(lang, "case.side.answered") : t(lang, "case.side.waiting")}
+                  <span className="sr-only">{partyLabel(lang, side.party)}</span>
+                  <span className={styles.inviteState} data-state={side.state} role="status">
+                    {t(lang, LIVE_KEY[side.state])}
                   </span>
                 </div>
-                {inv.status === "waiting" && inv.inviteUrl ? (
-                  <InviteLink
-                    lang={lang}
-                    url={inv.inviteUrl}
-                    expiresAt={view.expiresAt}
-                    onReset={() => {
-                      setResetting(inv.party);
-                      openConfirm(resetRef.current, resetCancelRef.current);
-                    }}
-                    resetting={busy}
-                    resetDone={resetDone && resetParty === inv.party}
-                  />
-                ) : null}
               </div>
             ))}
-            {showHeld ? <p className={styles.note}>{tWithDate(lang, "case.held", view.expiresAt)}</p> : null}
-          </section>
-        ) : view.inviteUrl || showHeld ? (
-          <section className={account.card}>
-            {view.inviteUrl ? (
-              <InviteLink
-                lang={lang}
-                url={view.inviteUrl}
-                expiresAt={view.expiresAt}
-                onReset={() => openConfirm(resetRef.current, resetCancelRef.current)}
-                resetting={busy}
-                resetDone={resetDone}
-              />
-            ) : null}
-            {showHeld ? <p className={styles.note}>{tWithDate(lang, "case.held", view.expiresAt)}</p> : null}
           </section>
         ) : null}
+        {view.inviteUrl ? (
+          <div className={styles.row}>
+            <button type="button" className={`${account.btn} ${account.primary}`} onClick={onShare}>
+              {t(lang, "case.invite.share")}
+            </button>
+            <button
+              type="button"
+              className={styles.textBtn}
+              disabled={busy}
+              onClick={() => openConfirm(resetRef.current, resetCancelRef.current)}
+            >
+              {t(lang, "case.invite.reset")}
+            </button>
+          </div>
+        ) : null}
+        <p className={resetDone ? styles.calm : "sr-only"} role="status">
+          {resetDone ? t(lang, "case.invite.resetDone") : ""}
+        </p>
         {view.ownerSideMissing && write ? (
           <WriteSide lang={lang} draft={write} answered={view.respondentAnswered} evidenceOn={evidenceOn} />
         ) : null}
@@ -502,7 +496,7 @@ export function CasePanel({
           onYes={onJudgeNow}
         />
       ) : null}
-      {view.status === "awaiting_respondent" && (view.inviteUrl || invites) ? (
+      {view.status === "awaiting_respondent" && view.inviteUrl ? (
         <Confirm
           id="reset-invite-title"
           dialogRef={resetRef}
@@ -511,7 +505,7 @@ export function CasePanel({
           text={t(lang, "case.invite.resetConfirm")}
           yes={t(lang, "case.invite.resetYes")}
           lang={lang}
-          onYes={() => onReset(invites ? resetting : undefined)}
+          onYes={onReset}
         />
       ) : null}
       {canRemove ? (
@@ -583,8 +577,8 @@ export function CaseScreen({ id }: { id: string }) {
   const [busy, setBusy] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
   const [resetDone, setResetDone] = useState(false);
-  const [resetParty, setResetParty] = useState<PartyLetter>("b");
   const [removedNow, setRemovedNow] = useState(false);
+  const [toast, showToast] = useToast();
   const appeal = useAppealDraft<AppealResponse>({
     endpoint: `${base}/appeals`,
     lang,
@@ -639,26 +633,21 @@ export function CaseScreen({ id }: { id: string }) {
     if (json?.case) setView(json.case);
   }
 
-  async function reset(party?: PartyLetter) {
+  async function reset() {
     setResetDone(false);
-    const json = (await post(
-      "/invite",
-      party
-        ? { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ party }) }
-        : { method: "POST" },
-    )) as InviteResponse | null;
+    const json = (await post("/invite", { method: "POST" })) as InviteResponse | null;
     if (json?.inviteUrl && view) {
-      const at = json.party ?? "b";
       setView({
         ...view,
-        ...(at === "b" ? { inviteUrl: json.inviteUrl } : {}),
-        ...(view.invites
-          ? { invites: view.invites.map((i) => (i.party === at ? { ...i, inviteUrl: json.inviteUrl } : i)) }
-          : {}),
+        inviteUrl: json.inviteUrl,
+        ...(view.invites ? { invites: view.invites.map((i) => ({ ...i, inviteUrl: json.inviteUrl })) } : {}),
       });
-      setResetParty(at);
       setResetDone(true);
     }
+  }
+
+  async function share() {
+    if (view?.inviteUrl && (await shareLink(lang, view.inviteUrl)) === "copied") showToast(t(lang, "case.invite.copied"));
   }
 
   async function remove() {
@@ -719,10 +708,10 @@ export function CaseScreen({ id }: { id: string }) {
         busy={busy}
         actionError={actionError}
         resetDone={resetDone}
-        resetParty={resetParty}
         onJudgeNow={() => void judge(view.canJudgeAnswered ? "answered" : "only_mine")}
         onRetry={() => void judge("only_mine")}
-        onReset={(party) => void reset(party)}
+        onShare={() => void share()}
+        onReset={() => void reset()}
         onRemove={() => void remove()}
         appeal={appeal}
         write={write}
@@ -737,6 +726,7 @@ export function CaseScreen({ id }: { id: string }) {
           </>
         }
       />
+      <Toast message={toast} />
     </CaseShell>
   );
 }

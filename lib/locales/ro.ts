@@ -443,8 +443,6 @@ const ro: Locale = {
     "case.status.judged": "Verdict",
     "case.status.failed": "Judecătorii n-au putut termina",
     "case.status.expired": "Invitația a expirat",
-    "case.invite.label": "Trimite linkul ăsta celeilalte persoane",
-    "case.invite.copy": "Copiază linkul",
     "case.invite.copied": "Copiat",
     "case.invite.share": "Distribuie",
     "case.invite.shareText":
@@ -453,10 +451,6 @@ const ro: Locale = {
     "case.invite.resetConfirm": "Linkul pe care l-ai trimis deja nu va mai funcționa. Faci unul nou?",
     "case.invite.resetYes": "Da, fă un link nou",
     "case.invite.resetDone": "Linkul vechi a fost dezactivat. Trimite-l pe cel nou.",
-    "case.invite.expires": "Linkul funcționează până pe {date}.",
-    "case.invite.expiresSoon": "Linkul funcționează 7 zile.",
-    "case.held": "1 verdict e rezervat pentru acest caz. Îl primești înapoi dacă nu răspunde nimeni până pe {date}.",
-    "case.heldSoon": "1 verdict e rezervat pentru acest caz. Îl primești înapoi dacă nu răspunde nimeni în 7 zile.",
     "case.judgeNow": "Judecă doar cu partea mea",
     "case.judgeNow.confirm":
       "Vrei acum un verdict doar pe partea ta? Invitația se închide și cealaltă persoană nu mai poate răspunde.",
@@ -465,6 +459,8 @@ const ro: Locale = {
     "case.judgeExpired.yes": "Da, folosește 1 verdict",
     "case.side.waiting": "Așteaptă",
     "case.side.answered": "A răspuns",
+    "case.side.opened": "Deschis",
+    "case.side.typing": "Scrie…",
     "case.judgeAnswered": "Judecă cu părțile care au răspuns",
     "case.judgeAnswered.confirm": "Vrei o hotărâre cu părțile care au răspuns? Celelalte invitații se închid și acele persoane nu vor mai putea răspunde.",
     "case.cancel": "Anulează",
@@ -484,7 +480,6 @@ const ro: Locale = {
     "case.contextD": "Context adăugat de Partea D",
     "case.contextYou": "Context adăugat de tine ({label})",
     "case.evidenceItem": "Imaginea {n}, așa cum au citit-o judecătorii",
-    "case.notYet": "Încă n-a răspuns.",
     "case.answered": "A răspuns. Judecătorii lucrează la caz.",
     "case.judgingAlone": "Judecătorii lucrează la partea ta.",
     "case.expiredBody":
@@ -494,7 +489,6 @@ const ro: Locale = {
     "case.startOver": "Începe un caz nou",
     "case.list.untitled": "Caz din {date}",
     "case.list.untitledSoon": "Caz",
-    "respond.kicker": "Partea ta",
     "respond.title": "Spune-ți varianta",
     "respond.intro":
       "Cineva vrea ca Judge să lămurească o dispută pe care o are cu tine. Spune-ți varianta; persoana respectivă n-o va vedea până la verdict.",

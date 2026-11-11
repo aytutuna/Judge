@@ -444,8 +444,6 @@ const ms: Locale = {
     "case.status.judged": "Keputusan",
     "case.status.failed": "Hakim tidak dapat menyelesaikannya",
     "case.status.expired": "Jemputan sudah tamat tempoh",
-    "case.invite.label": "Hantar pautan ini kepada pihak satu lagi",
-    "case.invite.copy": "Salin pautan",
     "case.invite.copied": "Disalin",
     "case.invite.share": "Kongsi",
     "case.invite.shareText":
@@ -454,10 +452,6 @@ const ms: Locale = {
     "case.invite.resetConfirm": "Pautan yang anda sudah hantar akan berhenti berfungsi. Buat yang baharu?",
     "case.invite.resetYes": "Ya, buat pautan baharu",
     "case.invite.resetDone": "Pautan lama sudah dimatikan. Hantar yang baharu.",
-    "case.invite.expires": "Pautan ini sah sehingga {date}.",
-    "case.invite.expiresSoon": "Pautan ini sah selama 7 hari.",
-    "case.held": "1 keputusan ditahan untuk kes ini. Ia dipulangkan kepada anda jika tiada jawapan menjelang {date}.",
-    "case.heldSoon": "1 keputusan ditahan untuk kes ini. Ia dipulangkan kepada anda jika tiada jawapan dalam masa 7 hari.",
     "case.judgeNow": "Nilai versi saya sahaja",
     "case.judgeNow.confirm":
       "Dapatkan keputusan berdasarkan versi anda sahaja sekarang? Jemputan akan ditutup dan dia tidak boleh menjawab lagi.",
@@ -466,6 +460,8 @@ const ms: Locale = {
     "case.judgeExpired.yes": "Ya, guna 1 keputusan",
     "case.side.waiting": "Menunggu",
     "case.side.answered": "Sudah menjawab",
+    "case.side.opened": "Dibuka",
+    "case.side.typing": "Menaip…",
     "case.judgeAnswered": "Nilai dengan pihak yang sudah menjawab",
     "case.judgeAnswered.confirm": "Mahu keputusan daripada pihak yang sudah menjawab? Jemputan lain akan ditutup dan mereka tidak boleh menjawab lagi.",
     "case.cancel": "Batal",
@@ -485,7 +481,6 @@ const ms: Locale = {
     "case.contextD": "Pihak D menambah konteks",
     "case.contextYou": "Konteks yang anda tambah ({label})",
     "case.evidenceItem": "Imej {n}, seperti yang dibaca hakim",
-    "case.notYet": "Dia belum menjawab lagi.",
     "case.answered": "Dia sudah menjawab. Hakim sedang menilai.",
     "case.judgingAlone": "Hakim sedang menilai versi anda.",
     "case.expiredBody":
@@ -495,7 +490,6 @@ const ms: Locale = {
     "case.startOver": "Mulakan kes baharu",
     "case.list.untitled": "Kes pada {date}",
     "case.list.untitledSoon": "Kes",
-    "respond.kicker": "Versi anda",
     "respond.title": "Ceritakan versi anda",
     "respond.intro":
       "Seseorang minta Judge selesaikan pertikaiannya dengan anda. Ceritakan versi anda; dia tidak akan nampak sehingga keputusan keluar.",

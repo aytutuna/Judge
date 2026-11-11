@@ -443,8 +443,6 @@ const nl: Locale = {
     "case.status.judged": "Uitspraak",
     "case.status.failed": "De rechters konden het niet afronden",
     "case.status.expired": "De uitnodiging is verlopen",
-    "case.invite.label": "Stuur deze link naar de ander",
-    "case.invite.copy": "Link kopiëren",
     "case.invite.copied": "Gekopieerd",
     "case.invite.share": "Delen",
     "case.invite.shareText":
@@ -453,12 +451,6 @@ const nl: Locale = {
     "case.invite.resetConfirm": "De link die je al stuurde, werkt dan niet meer. Een nieuwe maken?",
     "case.invite.resetYes": "Ja, nieuwe link maken",
     "case.invite.resetDone": "Oude link uitgezet. Stuur de nieuwe.",
-    "case.invite.expires": "De link werkt tot {date}.",
-    "case.invite.expiresSoon": "De link werkt 7 dagen.",
-    "case.held":
-      "Er staat 1 uitspraak voor deze zaak gereserveerd. Je krijgt hem terug als niemand vóór {date} antwoordt.",
-    "case.heldSoon":
-      "Er staat 1 uitspraak voor deze zaak gereserveerd. Je krijgt hem terug als niemand binnen 7 dagen antwoordt.",
     "case.judgeNow": "Alleen mijn kant laten beoordelen",
     "case.judgeNow.confirm": "Nu een eenzijdige uitspraak? De uitnodiging sluit en de ander kan niet meer antwoorden.",
     "case.judgeNow.yes": "Ja, nu beoordelen",
@@ -466,6 +458,8 @@ const nl: Locale = {
     "case.judgeExpired.yes": "Ja, gebruik 1 uitspraak",
     "case.side.waiting": "Wacht",
     "case.side.answered": "Heeft geantwoord",
+    "case.side.opened": "Geopend",
+    "case.side.typing": "Typt…",
     "case.judgeAnswered": "Beoordelen met de kanten die geantwoord hebben",
     "case.judgeAnswered.confirm": "Een uitspraak van de kanten die geantwoord hebben? De andere uitnodigingen sluiten en die mensen kunnen niet meer antwoorden.",
     "case.cancel": "Annuleren",
@@ -485,7 +479,6 @@ const nl: Locale = {
     "case.contextD": "Aanvulling van Partij D",
     "case.contextYou": "Jouw aanvulling ({label})",
     "case.evidenceItem": "Afbeelding {n}, zoals de rechters die lazen",
-    "case.notYet": "De ander heeft nog niet geantwoord.",
     "case.answered": "De ander heeft geantwoord. De rechters zijn ermee bezig.",
     "case.judgingAlone": "De rechters buigen zich over jouw kant.",
     "case.expiredBody":
@@ -495,7 +488,6 @@ const nl: Locale = {
     "case.startOver": "Nieuwe zaak starten",
     "case.list.untitled": "Zaak van {date}",
     "case.list.untitledSoon": "Zaak",
-    "respond.kicker": "Jouw kant",
     "respond.title": "Vertel jouw kant",
     "respond.intro":
       "Iemand heeft Judge gevraagd een discussie met jou te beslechten. Vertel jouw kant; de ander ziet die pas bij de uitspraak.",

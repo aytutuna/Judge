@@ -442,8 +442,6 @@ const or: Locale = {
     "case.status.judged": "ରାୟ",
     "case.status.failed": "ବିଚାରକମାନେ ଶେଷ କରିପାରିଲେ ନାହିଁ",
     "case.status.expired": "ନିମନ୍ତ୍ରଣର ମିଆଦ ସରିଗଲା",
-    "case.invite.label": "ଏହି ଲିଙ୍କ୍ ଅନ୍ୟ ଜଣଙ୍କୁ ପଠାନ୍ତୁ",
-    "case.invite.copy": "ଲିଙ୍କ୍ କପି କରନ୍ତୁ",
     "case.invite.copied": "କପି ହେଲା",
     "case.invite.share": "ସେୟାର୍",
     "case.invite.shareText":
@@ -452,12 +450,6 @@ const or: Locale = {
     "case.invite.resetConfirm": "ଆପଣ ଆଗରୁ ପଠାଇଥିବା ଲିଙ୍କ୍ କାମ କରିବା ବନ୍ଦ ହେବ। ନୂଆ ଗୋଟେ ତିଆରି କରିବେ?",
     "case.invite.resetYes": "ହଁ, ନୂଆ ଲିଙ୍କ୍ ତିଆରି କରନ୍ତୁ",
     "case.invite.resetDone": "ପୁରୁଣା ଲିଙ୍କ୍ ବନ୍ଦ ହେଲା। ନୂଆଟି ପଠାନ୍ତୁ।",
-    "case.invite.expires": "ଲିଙ୍କ୍ {date} ପର୍ଯ୍ୟନ୍ତ କାମ କରିବ।",
-    "case.invite.expiresSoon": "ଲିଙ୍କ୍ 7 ଦିନ କାମ କରିବ।",
-    "case.held":
-      "ଏହି ମାମଲା ପାଇଁ 1ଟି ରାୟ ସାଇତି ରଖାଯାଇଛି। {date} ସୁଦ୍ଧା କେହି ଉତ୍ତର ନ ଦେଲେ ଏହା ଫେରି ପାଇବେ।",
-    "case.heldSoon":
-      "ଏହି ମାମଲା ପାଇଁ 1ଟି ରାୟ ସାଇତି ରଖାଯାଇଛି। 7 ଦିନ ଭିତରେ କେହି ଉତ୍ତର ନ ଦେଲେ ଏହା ଫେରି ପାଇବେ।",
     "case.judgeNow": "କେବଳ ମୋ କଥା ଶୁଣି ରାୟ ଦିଅନ୍ତୁ",
     "case.judgeNow.confirm": "ଏବେ ଏକପକ୍ଷୀୟ ରାୟ ନେବେ? ନିମନ୍ତ୍ରଣ ବନ୍ଦ ହେବ, ଆଉ ସେ ଉତ୍ତର ଦେଇପାରିବେ ନାହିଁ।",
     "case.judgeNow.yes": "ହଁ, ଏବେ ରାୟ ଦିଅନ୍ତୁ",
@@ -465,6 +457,8 @@ const or: Locale = {
     "case.judgeExpired.yes": "ହଁ, 1ଟି ରାୟ ଖର୍ଚ୍ଚ କରନ୍ତୁ",
     "case.side.waiting": "ଅପେକ୍ଷାରେ",
     "case.side.answered": "ଉତ୍ତର ଦେଇଛନ୍ତି",
+    "case.side.opened": "ଖୋଲିଛନ୍ତି",
+    "case.side.typing": "ଲେଖୁଛନ୍ତି…",
     "case.judgeAnswered": "ଉତ୍ତର ଦେଇଥିବା ପକ୍ଷଙ୍କ କଥା ଶୁଣି ରାୟ ଦିଅନ୍ତୁ",
     "case.judgeAnswered.confirm": "ଉତ୍ତର ଦେଇଥିବା ପକ୍ଷଙ୍କ ଆଧାରରେ ରାୟ ନେବେ? ଅନ୍ୟ ନିମନ୍ତ୍ରଣ ବନ୍ଦ ହେବ, ସେମାନେ ଆଉ ଉତ୍ତର ଦେଇପାରିବେ ନାହିଁ।",
     "case.cancel": "ବାତିଲ୍",
@@ -484,7 +478,6 @@ const or: Locale = {
     "case.contextD": "ପକ୍ଷ D ଯୋଡ଼ିଥିବା ବିବରଣୀ",
     "case.contextYou": "ଆପଣ ଯୋଡ଼ିଥିବା ବିବରଣୀ ({label})",
     "case.evidenceItem": "ଛବି {n}, ବିଚାରକମାନେ ଯେମିତି ପଢ଼ିଲେ",
-    "case.notYet": "ସେ ଏଯାଏଁ ଉତ୍ତର ଦେଇନାହାନ୍ତି।",
     "case.answered": "ସେ ଉତ୍ତର ଦେଲେଣି। ବିଚାରକମାନେ କାମରେ ଲାଗିଛନ୍ତି।",
     "case.judgingAlone": "ବିଚାରକମାନେ ଆପଣଙ୍କ କଥା ଉପରେ କାମ କରୁଛନ୍ତି।",
     "case.expiredBody":
@@ -494,7 +487,6 @@ const or: Locale = {
     "case.startOver": "ନୂଆ ମାମଲା ଆରମ୍ଭ କରନ୍ତୁ",
     "case.list.untitled": "ମାମଲା, {date}",
     "case.list.untitledSoon": "ମାମଲା",
-    "respond.kicker": "ଆପଣଙ୍କ କଥା",
     "respond.title": "ନିଜ କଥା କୁହନ୍ତୁ",
     "respond.intro":
       "କେହି ଜଣେ ଆପଣଙ୍କ ସହ ହୋଇଥିବା ଏକ ବିବାଦ ମେଣ୍ଟାଇବାକୁ Judgeକୁ କହିଛନ୍ତି। ନିଜ କଥା କୁହନ୍ତୁ; ରାୟ ଆସିବା ଯାଏଁ ସେ ଏହା ଦେଖିପାରିବେ ନାହିଁ।",

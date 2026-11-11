@@ -443,8 +443,6 @@ const mr: Locale = {
     "case.status.judged": "निकाल लागला",
     "case.status.failed": "परीक्षकांना पूर्ण करता आले नाही",
     "case.status.expired": "निमंत्रणाची मुदत संपली",
-    "case.invite.label": "ही लिंक समोरच्या व्यक्तीला पाठवा",
-    "case.invite.copy": "लिंक कॉपी करा",
     "case.invite.copied": "कॉपी झाली",
     "case.invite.share": "शेअर करा",
     "case.invite.shareText":
@@ -453,12 +451,6 @@ const mr: Locale = {
     "case.invite.resetConfirm": "तुम्ही आधी पाठवलेली लिंक चालणे बंद होईल. नवीन बनवायची?",
     "case.invite.resetYes": "हो, नवीन लिंक बनवा",
     "case.invite.resetDone": "जुनी लिंक बंद केली. नवीन पाठवा.",
-    "case.invite.expires": "ही लिंक {date} पर्यंत चालेल.",
-    "case.invite.expiresSoon": "ही लिंक 7 दिवस चालेल.",
-    "case.held":
-      "या प्रकरणासाठी 1 निकाल राखून ठेवला आहे. {date} पर्यंत कोणी उत्तर दिले नाही तर तो तुम्हाला परत मिळेल.",
-    "case.heldSoon":
-      "या प्रकरणासाठी 1 निकाल राखून ठेवला आहे. 7 दिवसांत कोणी उत्तर दिले नाही तर तो तुम्हाला परत मिळेल.",
     "case.judgeNow": "फक्त माझ्या बाजूवर निकाल द्या",
     "case.judgeNow.confirm": "आत्ताच एकतर्फी निकाल हवा? निमंत्रण बंद होईल आणि त्यांना उत्तर देता येणार नाही.",
     "case.judgeNow.yes": "हो, आत्ताच निकाल द्या",
@@ -466,6 +458,8 @@ const mr: Locale = {
     "case.judgeExpired.yes": "हो, 1 निकाल वापरा",
     "case.side.waiting": "वाट पाहत आहोत",
     "case.side.answered": "उत्तर दिले",
+    "case.side.opened": "उघडले",
+    "case.side.typing": "लिहित आहे…",
     "case.judgeAnswered": "ज्यांनी उत्तर दिले त्यांच्या बाजूंवर निकाल द्या",
     "case.judgeAnswered.confirm": "ज्यांनी उत्तर दिले त्यांच्यावर निकाल हवा? बाकीची निमंत्रणे बंद होतील आणि त्यांना उत्तर देता येणार नाही.",
     "case.cancel": "रद्द करा",
@@ -485,7 +479,6 @@ const mr: Locale = {
     "case.contextD": "पक्ष Dने जोडलेली माहिती",
     "case.contextYou": "तुम्ही जोडलेली माहिती ({label})",
     "case.evidenceItem": "फोटो {n}, परीक्षकांनी वाचला तसा",
-    "case.notYet": "त्यांनी अजून उत्तर दिलेले नाही.",
     "case.answered": "त्यांनी उत्तर दिले. परीक्षक काम करत आहेत.",
     "case.judgingAlone": "परीक्षक तुमच्या बाजूवर काम करत आहेत.",
     "case.expiredBody":
@@ -495,7 +488,6 @@ const mr: Locale = {
     "case.startOver": "नवीन प्रकरण सुरू करा",
     "case.list.untitled": "{date} चे प्रकरण",
     "case.list.untitledSoon": "प्रकरण",
-    "respond.kicker": "तुमची बाजू",
     "respond.title": "तुमची बाजू सांगा",
     "respond.intro":
       "कोणीतरी तुमच्यासोबतचा वाद सोडवायला Judge ला सांगितले आहे. तुमची बाजू सांगा; निकाल लागेपर्यंत त्यांना ती दिसणार नाही.",

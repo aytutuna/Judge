@@ -448,8 +448,6 @@ const tr: Locale = {
     "case.status.judged": "Karar",
     "case.status.failed": "Yargıçlar işi bitiremedi",
     "case.status.expired": "Davetin süresi doldu",
-    "case.invite.label": "Bu bağlantıyı diğer kişiye gönder",
-    "case.invite.copy": "Bağlantıyı kopyala",
     "case.invite.copied": "Kopyalandı",
     "case.invite.share": "Paylaş",
     "case.invite.shareText":
@@ -458,12 +456,6 @@ const tr: Locale = {
     "case.invite.resetConfirm": "Gönderdiğin bağlantı artık çalışmayacak. Yenisini oluşturalım mı?",
     "case.invite.resetYes": "Evet, yeni bağlantı oluştur",
     "case.invite.resetDone": "Eski bağlantı kapandı. Yenisini gönder.",
-    "case.invite.expires": "Bağlantı {date} tarihine kadar geçerli.",
-    "case.invite.expiresSoon": "Bağlantı 7 gün geçerli.",
-    "case.held":
-      "Bu dava için 1 karar hakkın ayrıldı. {date} tarihine kadar kimse cevap vermezse hakkın geri gelir.",
-    "case.heldSoon":
-      "Bu dava için 1 karar hakkın ayrıldı. 7 gün içinde kimse cevap vermezse hakkın geri gelir.",
     "case.judgeNow": "Sadece benim tarafımla karar ver",
     "case.judgeNow.confirm": "Şimdi tek taraflı bir karar mı istiyorsun? Davet kapanır, o da artık cevap veremez.",
     "case.judgeNow.yes": "Evet, şimdi karar ver",
@@ -471,6 +463,8 @@ const tr: Locale = {
     "case.judgeExpired.yes": "Evet, 1 hak kullan",
     "case.side.waiting": "Bekliyor",
     "case.side.answered": "Cevapladı",
+    "case.side.opened": "Açtı",
+    "case.side.typing": "Yazıyor…",
     "case.judgeAnswered": "Cevaplayan taraflarla karar ver",
     "case.judgeAnswered.confirm": "Cevaplayan taraflarla bir karar mı istiyorsun? Diğer davetler kapanır, o kişiler artık cevap veremez.",
     "case.cancel": "Vazgeç",
@@ -490,7 +484,6 @@ const tr: Locale = {
     "case.contextD": "Taraf D'nin eklediği bilgi",
     "case.contextYou": "Senin eklediğin bilgi ({label})",
     "case.evidenceItem": "{n}. görsel, yargıçların okuduğu hâliyle",
-    "case.notYet": "Henüz cevap vermedi.",
     "case.answered": "Cevap verdi. Yargıçlar üzerinde çalışıyor.",
     "case.judgingAlone": "Yargıçlar senin tarafın üzerinde çalışıyor.",
     "case.expiredBody":
@@ -500,7 +493,6 @@ const tr: Locale = {
     "case.startOver": "Yeni bir dava aç",
     "case.list.untitled": "{date} tarihli dava",
     "case.list.untitledSoon": "Dava",
-    "respond.kicker": "Senin tarafın",
     "respond.title": "Kendi tarafını anlat",
     "respond.intro":
       "Biri, seninle arasındaki bir tartışmayı Judge'a sordu. Kendi tarafını anlat; karar çıkana kadar o göremeyecek.",

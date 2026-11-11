@@ -442,8 +442,6 @@ const es: Locale = {
     "case.status.judged": "Veredicto",
     "case.status.failed": "Los jueces no pudieron terminar",
     "case.status.expired": "La invitación expiró",
-    "case.invite.label": "Envía este enlace a la otra persona",
-    "case.invite.copy": "Copiar enlace",
     "case.invite.copied": "Copiado",
     "case.invite.share": "Compartir",
     "case.invite.shareText":
@@ -452,10 +450,6 @@ const es: Locale = {
     "case.invite.resetConfirm": "El enlace que ya enviaste dejará de funcionar. ¿Creamos uno nuevo?",
     "case.invite.resetYes": "Sí, crear uno nuevo",
     "case.invite.resetDone": "Enlace anterior desactivado. Envía el nuevo.",
-    "case.invite.expires": "El enlace funciona hasta el {date}.",
-    "case.invite.expiresSoon": "El enlace funciona durante 7 días.",
-    "case.held": "Hay 1 veredicto reservado para este caso. Lo recuperas si nadie responde antes del {date}.",
-    "case.heldSoon": "Hay 1 veredicto reservado para este caso. Lo recuperas si nadie responde en 7 días.",
     "case.judgeNow": "Juzgar solo con mi versión",
     "case.judgeNow.confirm":
       "¿Quieres un veredicto ahora, con una sola versión? La invitación se cierra y la otra persona ya no podrá responder.",
@@ -464,6 +458,8 @@ const es: Locale = {
     "case.judgeExpired.yes": "Sí, usar 1 veredicto",
     "case.side.waiting": "Esperando",
     "case.side.answered": "Ha respondido",
+    "case.side.opened": "Abierto",
+    "case.side.typing": "Escribiendo…",
     "case.judgeAnswered": "Juzgar con las partes que han respondido",
     "case.judgeAnswered.confirm": "¿Quieres un veredicto con las partes que han respondido? Las demás invitaciones se cierran y esas personas ya no podrán responder.",
     "case.cancel": "Cancelar",
@@ -483,7 +479,6 @@ const es: Locale = {
     "case.contextD": "Parte D añadió contexto",
     "case.contextYou": "Contexto que añadiste ({label})",
     "case.evidenceItem": "Imagen {n}, tal como la leyeron los jueces",
-    "case.notYet": "Todavía no ha respondido.",
     "case.answered": "Ya ha respondido. Los jueces están en ello.",
     "case.judgingAlone": "Los jueces están trabajando en tu versión.",
     "case.expiredBody":
@@ -493,7 +488,6 @@ const es: Locale = {
     "case.startOver": "Empezar un caso nuevo",
     "case.list.untitled": "Caso del {date}",
     "case.list.untitledSoon": "Caso",
-    "respond.kicker": "Tu versión",
     "respond.title": "Cuenta tu versión",
     "respond.intro":
       "Alguien ha pedido a Judge que resuelva una discusión contigo. Cuenta tu versión; esa persona no la verá hasta el veredicto.",

@@ -446,8 +446,6 @@ const pl: Locale = {
     "case.status.judged": "Werdykt",
     "case.status.failed": "Sędziowie nie dali rady skończyć",
     "case.status.expired": "Zaproszenie wygasło",
-    "case.invite.label": "Wyślij ten link drugiej osobie",
-    "case.invite.copy": "Kopiuj link",
     "case.invite.copied": "Skopiowano",
     "case.invite.share": "Udostępnij",
     "case.invite.shareText":
@@ -456,11 +454,6 @@ const pl: Locale = {
     "case.invite.resetConfirm": "Wysłany już link przestanie działać. Utworzyć nowy?",
     "case.invite.resetYes": "Tak, utwórz nowy link",
     "case.invite.resetDone": "Stary link wyłączony. Wyślij nowy.",
-    "case.invite.expires": "Link działa do {date}.",
-    "case.invite.expiresSoon": "Link działa przez 7 dni.",
-    "case.held": "Na tę sprawę jest zarezerwowany 1 werdykt. Odzyskasz go, jeśli nikt nie odpowie do {date}.",
-    "case.heldSoon":
-      "Na tę sprawę jest zarezerwowany 1 werdykt. Odzyskasz go, jeśli nikt nie odpowie w ciągu 7 dni.",
     "case.judgeNow": "Oceń tylko moją wersję",
     "case.judgeNow.confirm":
       "Chcesz od razu jednostronny werdykt? Zaproszenie się zamknie i druga strona nie będzie już mogła odpowiedzieć.",
@@ -469,6 +462,8 @@ const pl: Locale = {
     "case.judgeExpired.yes": "Tak, użyj 1 werdyktu",
     "case.side.waiting": "Czeka",
     "case.side.answered": "Odpowiedział(a)",
+    "case.side.opened": "Otwarte",
+    "case.side.typing": "Pisze…",
     "case.judgeAnswered": "Oceń na podstawie stron, które odpowiedziały",
     "case.judgeAnswered.confirm": "Chcesz werdykt na podstawie stron, które odpowiedziały? Pozostałe zaproszenia się zamkną i te osoby nie będą mogły już odpowiedzieć.",
     "case.cancel": "Anuluj",
@@ -488,7 +483,6 @@ const pl: Locale = {
     "case.contextD": "Kontekst od Strony D",
     "case.contextYou": "Twój dodatkowy kontekst ({label})",
     "case.evidenceItem": "Obraz {n}, tak jak czytają go sędziowie",
-    "case.notYet": "Druga strona jeszcze nie odpowiedziała.",
     "case.answered": "Druga strona odpowiedziała. Sędziowie już nad tym pracują.",
     "case.judgingAlone": "Sędziowie pracują nad twoją wersją.",
     "case.expiredBody":
@@ -499,7 +493,6 @@ const pl: Locale = {
     "case.startOver": "Zacznij nową sprawę",
     "case.list.untitled": "Sprawa z {date}",
     "case.list.untitledSoon": "Sprawa",
-    "respond.kicker": "Twoja wersja",
     "respond.title": "Opowiedz swoją wersję",
     "respond.intro":
       "Ktoś poprosił Judge o rozstrzygnięcie sporu z tobą. Opisz swoją wersję; ta osoba nie zobaczy jej przed werdyktem.",

@@ -177,45 +177,6 @@
   color: var(--danger);
 }
 
-/* ---------- Invite link ---------- */
-.invite {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.inviteLabel {
-  margin: 0;
-  color: var(--ink);
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: -0.015em;
-}
-.inviteField {
-  width: 100%;
-  min-height: 50px;
-  padding: 12px 16px;
-  border: 1px dashed color-mix(in srgb, var(--terra-ink) 45%, transparent);
-  border-radius: 14px;
-  background: var(--well);
-  color: var(--ink);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 14px;
-  text-overflow: ellipsis;
-}
-.inviteField:focus-visible {
-  outline: 3px solid var(--terra-ink);
-  outline-offset: 0;
-}
-.inviteActions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.inviteActions > button {
-  flex: 1 1 140px;
-}
-
 /* ---------- Respondent form ---------- */
 .field {
   display: flex;
@@ -908,17 +869,14 @@
   }
 }
 
-/* ---------- One link per side (three or four sides) ---------- */
+/* ---------- One row per side: who is where ---------- */
 .inviteList {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
 }
 .inviteRow {
   --side-ink: var(--party-b-ink);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
   min-width: 0;
 }
 .inviteRow[data-party="c"] {
@@ -962,4 +920,18 @@
 }
 .inviteState[data-state="answered"] {
   color: var(--sage-ink);
+}
+.inviteState[data-state="typing"] {
+  color: var(--terra-ink);
+  animation: typingPulse 1.2s ease-in-out infinite;
+}
+@keyframes typingPulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .inviteState[data-state="typing"] {
+    animation: none;
+  }
 }

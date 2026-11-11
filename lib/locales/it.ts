@@ -443,8 +443,6 @@ const it: Locale = {
     "case.status.judged": "Verdetto",
     "case.status.failed": "I giudici non sono riusciti a finire",
     "case.status.expired": "L'invito è scaduto",
-    "case.invite.label": "Manda questo link all'altra persona",
-    "case.invite.copy": "Copia link",
     "case.invite.copied": "Copiato",
     "case.invite.share": "Condividi",
     "case.invite.shareText":
@@ -453,12 +451,6 @@ const it: Locale = {
     "case.invite.resetConfirm": "Il link che hai già inviato smetterà di funzionare. Ne creiamo uno nuovo?",
     "case.invite.resetYes": "Sì, crea un nuovo link",
     "case.invite.resetDone": "Il vecchio link è disattivato. Manda quello nuovo.",
-    "case.invite.expires": "Scadenza del link: {date}.",
-    "case.invite.expiresSoon": "Il link vale per 7 giorni.",
-    "case.held":
-      "Per questo caso abbiamo messo da parte 1 verdetto. Se nessuno risponde entro la scadenza ({date}), ti viene restituito.",
-    "case.heldSoon":
-      "Per questo caso abbiamo messo da parte 1 verdetto. Se nessuno risponde entro 7 giorni, ti viene restituito.",
     "case.judgeNow": "Giudica solo la mia versione",
     "case.judgeNow.confirm": "Vuoi subito un verdetto solo sulla tua versione? L'invito si chiude e l'altra persona non potrà più rispondere.",
     "case.judgeNow.yes": "Sì, giudica ora",
@@ -466,6 +458,8 @@ const it: Locale = {
     "case.judgeExpired.yes": "Sì, usa 1 verdetto",
     "case.side.waiting": "In attesa",
     "case.side.answered": "Ha risposto",
+    "case.side.opened": "Aperto",
+    "case.side.typing": "Sta scrivendo…",
     "case.judgeAnswered": "Giudica con le parti che hanno risposto",
     "case.judgeAnswered.confirm": "Vuoi un verdetto con le parti che hanno risposto? Gli altri inviti si chiudono e quelle persone non potranno più rispondere.",
     "case.cancel": "Annulla",
@@ -485,7 +479,6 @@ const it: Locale = {
     "case.contextD": "Contesto aggiunto da Parte D",
     "case.contextYou": "Contesto aggiunto da te ({label})",
     "case.evidenceItem": "Immagine {n}, come l'hanno letta i giudici",
-    "case.notYet": "Non ha ancora risposto.",
     "case.answered": "Ha risposto. I giudici ci stanno lavorando.",
     "case.judgingAlone": "I giudici stanno lavorando sulla tua versione.",
     "case.expiredBody":
@@ -495,7 +488,6 @@ const it: Locale = {
     "case.startOver": "Apri un nuovo caso",
     "case.list.untitled": "Caso · {date}",
     "case.list.untitledSoon": "Caso",
-    "respond.kicker": "La tua versione",
     "respond.title": "Racconta la tua versione",
     "respond.intro":
       "Qualcuno ha chiesto a Judge di risolvere una discussione con te. Racconta la tua versione; non la vedrà fino al verdetto.",

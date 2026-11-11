@@ -442,8 +442,6 @@ const uk: Locale = {
     "case.status.judged": "Вердикт",
     "case.status.failed": "Судді не змогли завершити",
     "case.status.expired": "Термін запрошення минув",
-    "case.invite.label": "Надішли це посилання іншій людині",
-    "case.invite.copy": "Копіювати",
     "case.invite.copied": "Скопійовано",
     "case.invite.share": "Поділитися",
     "case.invite.shareText":
@@ -452,11 +450,6 @@ const uk: Locale = {
     "case.invite.resetConfirm": "Уже надіслане посилання перестане працювати. Створити нове?",
     "case.invite.resetYes": "Так, створити нове",
     "case.invite.resetDone": "Старе посилання вимкнено. Надішли нове.",
-    "case.invite.expires": "Посилання діє до {date}.",
-    "case.invite.expiresSoon": "Посилання діє 7 днів.",
-    "case.held": "1 вердикт зарезервовано для цієї справи. Він повернеться, якщо до {date} ніхто не відповість.",
-    "case.heldSoon":
-      "1 вердикт зарезервовано для цієї справи. Він повернеться, якщо протягом 7 днів ніхто не відповість.",
     "case.judgeNow": "Судити лише мою версію",
     "case.judgeNow.confirm":
       "Отримати однобічний вердикт зараз? Запрошення закриється, і інша сторона вже не зможе відповісти.",
@@ -465,6 +458,8 @@ const uk: Locale = {
     "case.judgeExpired.yes": "Так, списати 1 вердикт",
     "case.side.waiting": "Чекаємо",
     "case.side.answered": "Відповів(ла)",
+    "case.side.opened": "Відкрив",
+    "case.side.typing": "Друкує…",
     "case.judgeAnswered": "Судити за сторонами, які відповіли",
     "case.judgeAnswered.confirm": "Отримати вердикт за сторонами, які відповіли? Інші запрошення закриються, і ці люди вже не зможуть відповісти.",
     "case.cancel": "Скасувати",
@@ -484,7 +479,6 @@ const uk: Locale = {
     "case.contextD": "Контекст від Сторони D",
     "case.contextYou": "Твій контекст ({label})",
     "case.evidenceItem": "Зображення {n}, як його прочитали судді",
-    "case.notYet": "Відповіді ще немає.",
     "case.answered": "Відповідь надійшла. Судді вже працюють.",
     "case.judgingAlone": "Судді працюють над твоєю версією.",
     "case.expiredBody":
@@ -494,7 +488,6 @@ const uk: Locale = {
     "case.startOver": "Нова справа",
     "case.list.untitled": "Справа від {date}",
     "case.list.untitledSoon": "Справа",
-    "respond.kicker": "Твоя версія",
     "respond.title": "Розкажи свою версію",
     "respond.intro":
       "Хтось попросив Judge розсудити вашу суперечку. Розкажи свою версію; до вердикту ця людина її не побачить.",

@@ -443,8 +443,6 @@ const ca: Locale = {
     "case.status.judged": "Veredicte",
     "case.status.failed": "Els jutges no han pogut acabar",
     "case.status.expired": "La invitació ha caducat",
-    "case.invite.label": "Envia aquest enllaç a l'altra persona",
-    "case.invite.copy": "Copia l'enllaç",
     "case.invite.copied": "Copiat",
     "case.invite.share": "Comparteix",
     "case.invite.shareText":
@@ -453,12 +451,6 @@ const ca: Locale = {
     "case.invite.resetConfirm": "L'enllaç que ja has enviat deixarà de funcionar. En vols crear un de nou?",
     "case.invite.resetYes": "Sí, crea un enllaç nou",
     "case.invite.resetDone": "L'enllaç antic s'ha desactivat. Envia el nou.",
-    "case.invite.expires": "L'enllaç funciona fins al dia {date}.",
-    "case.invite.expiresSoon": "L'enllaç funciona durant 7 dies.",
-    "case.held":
-      "Hem reservat 1 veredicte per a aquest cas. El recuperes si ningú no respon abans del dia {date}.",
-    "case.heldSoon":
-      "Hem reservat 1 veredicte per a aquest cas. El recuperes si ningú no respon en 7 dies.",
     "case.judgeNow": "Jutja només la meva versió",
     "case.judgeNow.confirm": "Vols un veredicte ara, només amb la teva versió? La invitació es tanca i l'altra persona ja no podrà respondre.",
     "case.judgeNow.yes": "Sí, jutja-ho ara",
@@ -466,6 +458,8 @@ const ca: Locale = {
     "case.judgeExpired.yes": "Sí, gasta 1 veredicte",
     "case.side.waiting": "Esperant",
     "case.side.answered": "Ha respost",
+    "case.side.opened": "Ha obert",
+    "case.side.typing": "Escrivint…",
     "case.judgeAnswered": "Jutja amb les parts que han respost",
     "case.judgeAnswered.confirm": "Vols un veredicte amb les parts que han respost? Les altres invitacions es tanquen i aquestes persones ja no podran respondre.",
     "case.cancel": "Cancel·la",
@@ -485,7 +479,6 @@ const ca: Locale = {
     "case.contextD": "Context afegit per Part D",
     "case.contextYou": "Context que has afegit ({label})",
     "case.evidenceItem": "Imatge {n}, tal com la llegeixen els jutges",
-    "case.notYet": "Encara no ha respost.",
     "case.answered": "Ja ha respost. Els jutges hi estan treballant.",
     "case.judgingAlone": "Els jutges estan treballant amb la teva versió.",
     "case.expiredBody":
@@ -495,7 +488,6 @@ const ca: Locale = {
     "case.startOver": "Comença un cas nou",
     "case.list.untitled": "Cas del dia {date}",
     "case.list.untitledSoon": "Cas",
-    "respond.kicker": "La teva versió",
     "respond.title": "Explica la teva versió",
     "respond.intro":
       "Algú ha demanat a Judge que resolgui una discussió que té amb tu. Explica la teva versió; no la veurà fins al veredicte.",

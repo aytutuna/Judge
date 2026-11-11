@@ -257,7 +257,7 @@ describe("draft with more sides", () => {
   });
 });
 
-describe("owner case page with a link per side", () => {
+describe("owner case page with three sides", () => {
   const view = (over: Partial<CaseView> = {}): CaseView =>
     caseView({
       parties: ["a", "b", "c"],
@@ -266,7 +266,11 @@ describe("owner case page with a link per side", () => {
         { party: "b", status: "answered", inviteUrl: null, answeredAt: "2026-10-21T09:00:00.000Z" },
         { party: "c", status: "waiting", inviteUrl: "https://okjudge.com/r/CCCCCCCCCCCCCCCCCCCCCC", answeredAt: null },
       ],
-      inviteUrl: null,
+      live: [
+        { party: "b", state: "answered" },
+        { party: "c", state: "typing" },
+      ],
+      inviteUrl: "https://okjudge.com/r/CCCCCCCCCCCCCCCCCCCCCC",
       canJudgeAnswered: true,
       ...over,
     });
@@ -284,20 +288,20 @@ describe("owner case page with a link per side", () => {
         resetDone={false}
         onJudgeNow={noop}
         onRetry={noop}
-        onReset={noop}
+        onShare={noop}
+      onReset={noop}
         onRemove={noop}
         appeal={null}
       />,
     );
 
-  it("lists each invited side with its status and only the waiting side's link", () => {
+  it("lists each invited side with its live state and one share button", () => {
     const out = owner(view());
     expect(out).toContain('data-party="b"');
     expect(out).toContain('data-party="c"');
     expect(out).toContain(t("en", "case.side.answered"));
-    expect(out).toContain(t("en", "case.side.waiting"));
-    expect(out).toContain("https://okjudge.com/r/CCCCCCCCCCCCCCCCCCCCCC");
-    expect(out).toContain(t("en", "case.invite.copy"));
+    expect(out).toContain(t("en", "case.side.typing").replace("\u2026", "…"));
+    expect(out.match(new RegExp(t("en", "case.invite.share"), "g"))).toHaveLength(1);
   });
 
   it("offers to judge with the sides that answered, and says what that does", () => {

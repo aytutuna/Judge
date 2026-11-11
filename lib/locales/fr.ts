@@ -442,8 +442,6 @@ const fr: Locale = {
     "case.status.judged": "Verdict",
     "case.status.failed": "Les juges n’ont pas pu terminer",
     "case.status.expired": "L’invitation a expiré",
-    "case.invite.label": "Envoie ce lien à l’autre personne",
-    "case.invite.copy": "Copier le lien",
     "case.invite.copied": "Copié",
     "case.invite.share": "Partager",
     "case.invite.shareText":
@@ -452,10 +450,6 @@ const fr: Locale = {
     "case.invite.resetConfirm": "Le lien que tu as déjà envoyé ne fonctionnera plus. Créer un nouveau lien ?",
     "case.invite.resetYes": "Oui, créer un nouveau lien",
     "case.invite.resetDone": "Ancien lien désactivé. Envoie le nouveau.",
-    "case.invite.expires": "Le lien est valable jusqu’au {date}.",
-    "case.invite.expiresSoon": "Le lien est valable 7 jours.",
-    "case.held": "1 verdict est réservé pour ce dossier. Il te sera rendu si personne ne répond d’ici le {date}.",
-    "case.heldSoon": "1 verdict est réservé pour ce dossier. Il te sera rendu si personne ne répond sous 7 jours.",
     "case.judgeNow": "Juger sur ma seule version",
     "case.judgeNow.confirm":
       "Obtenir maintenant un verdict sur ta seule version ? L’invitation sera fermée et l’autre ne pourra plus répondre.",
@@ -464,6 +458,8 @@ const fr: Locale = {
     "case.judgeExpired.yes": "Oui, utiliser 1 verdict",
     "case.side.waiting": "En attente",
     "case.side.answered": "A répondu",
+    "case.side.opened": "Ouvert",
+    "case.side.typing": "Écrit…",
     "case.judgeAnswered": "Juger avec les camps qui ont répondu",
     "case.judgeAnswered.confirm": "Obtenir un verdict avec les camps qui ont répondu ? Les autres invitations se ferment et ces personnes ne pourront plus répondre.",
     "case.cancel": "Annuler",
@@ -483,7 +479,6 @@ const fr: Locale = {
     "case.contextD": "Partie D a ajouté du contexte",
     "case.contextYou": "Contexte que tu as ajouté ({label})",
     "case.evidenceItem": "Image {n}, telle que les juges l’ont lue",
-    "case.notYet": "Pas encore de réponse.",
     "case.answered": "L’autre a répondu. Les juges s’en occupent.",
     "case.judgingAlone": "Les juges examinent ta version.",
     "case.expiredBody":
@@ -493,7 +488,6 @@ const fr: Locale = {
     "case.startOver": "Ouvrir un nouveau dossier",
     "case.list.untitled": "Dossier du {date}",
     "case.list.untitledSoon": "Dossier",
-    "respond.kicker": "Ta version",
     "respond.title": "Donne ta version",
     "respond.intro":
       "Quelqu’un a demandé à Judge de trancher un débat entre vous deux. Donne ta version ; l’autre ne la verra pas avant le verdict.",

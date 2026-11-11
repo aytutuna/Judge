@@ -93,10 +93,7 @@ export function WriteSide({
 }) {
   const fieldId = useId();
   return (
-    <section className={account.card} aria-labelledby="write-title">
-      <h2 id="write-title" className={styles.h2}>
-        {t(lang, "case.write.title")}
-      </h2>
+    <section className={account.card} aria-label={t(lang, "case.write.title")}>
       <p className={styles.note}>{t(lang, answered ? "case.write.leadAnswered" : "case.write.lead")}</p>
       <form
         className={styles.stack}
@@ -107,7 +104,7 @@ export function WriteSide({
       >
         <div className={styles.field}>
           <label htmlFor={fieldId} className={styles.fieldLabel}>
-            <span>{t(lang, "case.write.title")}</span>
+            <span className="sr-only">{t(lang, "case.write.title")}</span>
             <span className={styles.count} aria-hidden>
               {draft.text.length.toLocaleString(langTag(lang))} / {MAX_ARGUMENT.toLocaleString(langTag(lang))}
             </span>

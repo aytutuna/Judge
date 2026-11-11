@@ -444,8 +444,6 @@ const de: Locale = {
     "case.status.judged": "Entschieden",
     "case.status.failed": "Die Richter sind nicht fertig geworden",
     "case.status.expired": "Die Einladung ist abgelaufen",
-    "case.invite.label": "Schick diesen Link an die andere Person",
-    "case.invite.copy": "Link kopieren",
     "case.invite.copied": "Kopiert",
     "case.invite.share": "Teilen",
     "case.invite.shareText":
@@ -454,10 +452,6 @@ const de: Locale = {
     "case.invite.resetConfirm": "Der Link, den du schon geschickt hast, funktioniert dann nicht mehr. Neuen erstellen?",
     "case.invite.resetYes": "Ja, neuen Link erstellen",
     "case.invite.resetDone": "Alter Link deaktiviert. Schick den neuen.",
-    "case.invite.expires": "Der Link gilt bis zum {date}.",
-    "case.invite.expiresSoon": "Der Link gilt 7 Tage.",
-    "case.held": "1 Urteil ist für diesen Fall reserviert. Du bekommst es zurück, wenn bis zum {date} niemand antwortet.",
-    "case.heldSoon": "1 Urteil ist für diesen Fall reserviert. Du bekommst es zurück, wenn innerhalb von 7 Tagen niemand antwortet.",
     "case.judgeNow": "Nur meine Seite beurteilen",
     "case.judgeNow.confirm":
       "Jetzt ein einseitiges Urteil holen? Die Einladung wird geschlossen, und die andere Person kann nicht mehr antworten.",
@@ -466,6 +460,8 @@ const de: Locale = {
     "case.judgeExpired.yes": "Ja, 1 Urteil nutzen",
     "case.side.waiting": "Wartet",
     "case.side.answered": "Hat geantwortet",
+    "case.side.opened": "Geöffnet",
+    "case.side.typing": "Schreibt…",
     "case.judgeAnswered": "Mit den Seiten beurteilen, die geantwortet haben",
     "case.judgeAnswered.confirm": "Ein Urteil aus den Seiten, die geantwortet haben? Die übrigen Einladungen werden geschlossen und diese Leute können nicht mehr antworten.",
     "case.cancel": "Abbrechen",
@@ -485,7 +481,6 @@ const de: Locale = {
     "case.contextD": "Ergänzung von Partei D",
     "case.contextYou": "Deine Ergänzung ({label})",
     "case.evidenceItem": "Bild {n}, wie die Richter es lesen",
-    "case.notYet": "Noch keine Antwort.",
     "case.answered": "Die Antwort ist da. Die Richter sind dran.",
     "case.judgingAlone": "Die Richter sehen sich deine Seite an.",
     "case.expiredBody":
@@ -495,7 +490,6 @@ const de: Locale = {
     "case.startOver": "Neuen Fall starten",
     "case.list.untitled": "Fall vom {date}",
     "case.list.untitledSoon": "Fall",
-    "respond.kicker": "Deine Seite",
     "respond.title": "Erzähl deine Version",
     "respond.intro":
       "Jemand hat Judge gebeten, einen Streit mit dir zu klären. Erzähl deine Version; die andere Person sieht sie erst mit dem Urteil.",

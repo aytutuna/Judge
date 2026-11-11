@@ -136,7 +136,7 @@ export function caseView(over: Partial<CaseView> = {}): CaseView {
 }
 
 export const OWNER = {
-  awaiting: caseView(),
+  awaiting: caseView({ live: [{ party: "b", state: "waiting" }] }),
   judging: caseView({
     status: "judging",
     mode: "two_sided",

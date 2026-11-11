@@ -129,7 +129,8 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
         .filter((v) => v.result !== null)
         .map((v) => ({ seq: v.seq, id: v.verdictId, result: v.result!, appealId: v.appealId, createdAt: v.createdAt }));
 
-  const respondentAnswered = bundle.sides.some((s) => s.party === "b");
+  // A respondent is asked about their own side, not about B.
+  const respondentAnswered = bundle.sides.some((s) => s.party === (ctx.role === "respondent" ? yourParty : "b"));
   const appealJudging = bundle.appeals.some((a) => a.status === "judging");
   const judging = status === "judging" || appealJudging;
   const ownerSideMissing = !row.removedAt && !bundle.sides.some((s) => s.party === "a");

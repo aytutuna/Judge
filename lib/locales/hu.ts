@@ -443,8 +443,6 @@ const hu: Locale = {
     "case.status.judged": "Ítélet",
     "case.status.failed": "A bírák nem tudták befejezni",
     "case.status.expired": "A meghívó lejárt",
-    "case.invite.label": "Küldd el ezt a linket a másik félnek",
-    "case.invite.copy": "Link másolása",
     "case.invite.copied": "Másolva",
     "case.invite.share": "Megosztás",
     "case.invite.shareText":
@@ -453,12 +451,6 @@ const hu: Locale = {
     "case.invite.resetConfirm": "A már elküldött link megszűnik működni. Készítsünk újat?",
     "case.invite.resetYes": "Igen, kérek új linket",
     "case.invite.resetDone": "A régi linket kikapcsoltuk. Küldd el az újat.",
-    "case.invite.expires": "A link eddig érvényes: {date}.",
-    "case.invite.expiresSoon": "A link 7 napig érvényes.",
-    "case.held":
-      "Erre az ügyre félretettünk 1 ítéletet. Ha a határidőig ({date}) senki sem válaszol, visszakapod.",
-    "case.heldSoon":
-      "Erre az ügyre félretettünk 1 ítéletet. Ha 7 napon belül senki sem válaszol, visszakapod.",
     "case.judgeNow": "Ítélet csak az én verzióm alapján",
     "case.judgeNow.confirm": "Kérsz most egy egyoldalú ítéletet? A meghívó lezárul, és a másik fél már nem válaszolhat.",
     "case.judgeNow.yes": "Igen, döntsenek most",
@@ -466,6 +458,8 @@ const hu: Locale = {
     "case.judgeExpired.yes": "Igen, mehet (1 ítélet)",
     "case.side.waiting": "Várakozik",
     "case.side.answered": "Válaszolt",
+    "case.side.opened": "Megnyitva",
+    "case.side.typing": "Gépel…",
     "case.judgeAnswered": "Ítélet a válaszoló felek alapján",
     "case.judgeAnswered.confirm": "Kérsz ítéletet a válaszoló felek alapján? A többi meghívó lezárul, és ők már nem válaszolhatnak.",
     "case.cancel": "Mégse",
@@ -485,7 +479,6 @@ const hu: Locale = {
     "case.contextD": "Fél D kiegészítése",
     "case.contextYou": "A te kiegészítésed ({label})",
     "case.evidenceItem": "{n}. kép, ahogy a bírák olvassák",
-    "case.notYet": "Még nem válaszolt.",
     "case.answered": "Válaszolt. A bírák dolgoznak rajta.",
     "case.judgingAlone": "A bírák a te verziódon dolgoznak.",
     "case.expiredBody":
@@ -495,7 +488,6 @@ const hu: Locale = {
     "case.startOver": "Új ügy indítása",
     "case.list.untitled": "Ügy · {date}",
     "case.list.untitledSoon": "Ügy",
-    "respond.kicker": "A te verziód",
     "respond.title": "Mondd el a te verziódat",
     "respond.intro":
       "Valaki megkérte a Judge-ot, hogy döntsön el egy vitát köztetek. Mondd el a te verziódat; az ítéletig ő nem fogja látni.",
