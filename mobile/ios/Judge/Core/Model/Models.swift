@@ -293,12 +293,21 @@ struct VerdictRequest: Encodable, Sendable, Equatable {
         var answer: String
     }
 
+    /// One typed side of a request with three or four.
+    struct Side: Encodable, Sendable, Equatable {
+        var text: String
+        var name: String?
+    }
+
     var argument: String
     var lang: AppLang
     var tier: String = "free"
     var clarifications: [Clarification]?
     /// Premium only: signed tokens from POST /api/v1/evidence, in order.
     var evidence: [String]? = nil
+    /// Sides A to C or D as typed, when there are more than two; `argument`
+    /// is then all of them joined.
+    var sides: [Side]? = nil
 }
 
 // MARK: - Decoding

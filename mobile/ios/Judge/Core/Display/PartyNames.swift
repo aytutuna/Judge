@@ -1,5 +1,18 @@
 import Foundation
 
+extension Party {
+    /// "Party C" in the app's language; empty for a party this build does not know.
+    func label(_ lang: AppLang) -> String {
+        switch self {
+        case .a: return L10n.partyA(lang)
+        case .b: return L10n.partyB(lang)
+        case .c: return L10n.partyC(lang)
+        case .d: return L10n.partyD(lang)
+        case .unknown: return ""
+        }
+    }
+}
+
 /// Display names for the parties (the label half of lib/names.ts). C and D
 /// are only read on verdicts with more than two sides.
 struct PartyNames: Sendable, Equatable {

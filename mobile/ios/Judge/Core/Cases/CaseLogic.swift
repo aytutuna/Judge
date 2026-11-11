@@ -173,7 +173,7 @@ enum CaseLogic {
     /// first words of the owner's side, else "Case from {date}".
     static func listTitle(_ summary: CaseSummary, lang: AppLang) -> String {
         if let headline = summary.headline, !headline.isEmpty { return headline }
-        if let excerpt = summary.excerpt, !excerpt.isEmpty { return localizeLabels(excerpt, lang: ContentLang.of(excerpt)) }
+        if let excerpt = summary.excerpt, !excerpt.isEmpty { return localizeLabels(excerpt, lang: ContentLang.of(excerpt), sides: summary.sideCount) }
         if let date = ErrorText.formatDate(summary.createdAt, lang: lang) { return L10n.caseListUntitled(lang, date: date) }
         return L10n.caseListUntitledSoon(lang)
     }

@@ -13,13 +13,15 @@ struct CaseScreen: View {
 
 private enum CaseConfirm: Identifiable {
     case judgeNow(expired: Bool)
-    case resetInvite
+    case judgeAnswered
+    case resetInvite(Party)
     case remove
 
     var id: String {
         switch self {
         case .judgeNow(let expired): return "judge-\(expired)"
-        case .resetInvite: return "reset"
+        case .judgeAnswered: return "judge-answered"
+        case .resetInvite(let party): return "reset-\(party.rawValue)"
         case .remove: return "remove"
         }
     }
@@ -266,9 +268,13 @@ private struct CaseScreenContent: View {
 
     @ViewBuilder
     private func awaiting(_ view: CaseView, lang: AppLang) -> some View {
-        let other = otherName(view)
+        let other = view.isMany ? nil : otherName(view)
         let writing = writesSide(view)
-        if let url = view.inviteUrl {
+        if view.isMany, let invites = view.invites {
+            ForEach(invites, id: \.party) { invite in
+                inviteRow(invite, view: view, lang: lang)
+            }
+        } else if let url = view.inviteUrl {
             InviteLinkView(
                 url: url,
                 expiresAt: view.expiresAt,
@@ -277,7 +283,7 @@ private struct CaseScreenContent: View {
                 resetting: model.busy,
                 resetDone: model.resetDone
             ) {
-                ask(.resetInvite)
+                ask(.resetInvite(.b))
             }
         }
         if let held = CaseLogic.heldNote(view, lang: lang) {
@@ -288,11 +294,20 @@ private struct CaseScreenContent: View {
         }
         if writing {
             CaseSideForm(model: model, evidenceOn: CaseLogic.appealEvidenceOn(view, features: app.account.features), lang: lang)
-        } else {
+        } else if !view.isMany {
             WaitingSteps(other: other, judgeNow: view.canJudgeNow, lang: lang)
         }
         actionError(lang)
-        if view.canJudgeNow, !writing {
+        if view.isMany, view.canJudgeAnswered, !writing {
+            Button {
+                ask(.judgeAnswered)
+            } label: {
+                Text(L10n.caseJudgeAnswered(lang))
+                    .frame(maxWidth: .infinity, minHeight: 48)
+            }
+            .buttonStyle(GhostButtonStyle())
+            .disabled(model.busy)
+        } else if view.canJudgeNow, !writing {
             Button {
                 ask(.judgeNow(expired: false))
             } label: {
@@ -301,6 +316,39 @@ private struct CaseScreenContent: View {
             }
             .buttonStyle(GhostButtonStyle())
             .disabled(model.busy)
+        }
+    }
+
+    /// One invited side of a case with more than two: its name, whether it
+    /// has answered, and its own link while it waits.
+    private func inviteRow(_ invite: CaseInvite, view: CaseView, lang: AppLang) -> some View {
+        let typed = view.display.name(invite.party)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let name = typed.isEmpty ? invite.party.label(lang) : typed
+        return VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 8) {
+                PartyAvatar(party: invite.party)
+                Text(name)
+                    .brandText(.slotTitle)
+                    .foregroundStyle(Brand.ink)
+                    .lineLimit(1)
+                Spacer(minLength: 8)
+                Text(invite.status == .answered ? L10n.caseSideAnswered(lang) : L10n.caseSideWaiting(lang))
+                    .brandText(.footnote)
+                    .foregroundStyle(invite.status == .answered ? Brand.sageInk : Brand.muted)
+            }
+            .accessibilityElement(children: .combine)
+            if invite.status == .waiting, let url = invite.inviteUrl {
+                InviteLinkView(
+                    url: url,
+                    expiresAt: view.expiresAt,
+                    title: L10n.appCaseSendTo(lang, name: name),
+                    lang: lang,
+                    resetting: model.busy,
+                    resetDone: model.resetDone && model.resetParty == invite.party
+                ) {
+                    ask(.resetInvite(invite.party))
+                }
+            }
         }
     }
 
@@ -350,6 +398,7 @@ private struct CaseScreenContent: View {
     private func confirmTitle(_ lang: AppLang) -> String {
         switch confirm {
         case .judgeNow: return L10n.caseJudgeNow(lang)
+        case .judgeAnswered: return L10n.caseJudgeAnswered(lang)
         case .resetInvite: return L10n.caseInviteReset(lang)
         case .remove: return L10n.caseRemove(lang)
         case nil: return ""
@@ -359,6 +408,7 @@ private struct CaseScreenContent: View {
     private func confirmText(_ item: CaseConfirm, lang: AppLang) -> String {
         switch item {
         case .judgeNow(let expired): return CaseLogic.judgeNowConfirm(expired: expired, lang: lang).text
+        case .judgeAnswered: return L10n.caseJudgeAnsweredConfirm(lang)
         case .resetInvite: return L10n.caseInviteResetConfirm(lang)
         case .remove: return L10n.caseRemoveConfirm(lang)
         }
@@ -367,6 +417,7 @@ private struct CaseScreenContent: View {
     private func confirmYes(_ item: CaseConfirm, lang: AppLang) -> String {
         switch item {
         case .judgeNow(let expired): return CaseLogic.judgeNowConfirm(expired: expired, lang: lang).yes
+        case .judgeAnswered: return L10n.caseJudgeNowYes(lang)
         case .resetInvite: return L10n.caseInviteResetYes(lang)
         case .remove: return L10n.caseRemoveYes(lang)
         }
@@ -380,7 +431,8 @@ private struct CaseScreenContent: View {
     private func run(_ item: CaseConfirm) async {
         switch item {
         case .judgeNow: await model.judge(onlyMine: true)
-        case .resetInvite: await model.resetInvite()
+        case .judgeAnswered: await model.judgeAnswered()
+        case .resetInvite(let party): await model.resetInvite(party: party)
         case .remove: await model.remove()
         }
     }

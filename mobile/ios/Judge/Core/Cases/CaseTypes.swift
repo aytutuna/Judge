@@ -20,6 +20,11 @@ enum CaseRole: String, LenientEnum {
     case unknown = "_unknown"
 }
 
+enum InviteStatus: String, LenientEnum {
+    case waiting, answered, closed
+    case unknown = "_unknown"
+}
+
 enum CaseAppealStatus: String, LenientEnum {
     case judging, judged, failed
     case unknown = "_unknown"
@@ -160,25 +165,62 @@ struct VerdictAppealSubmission: Sendable, Equatable {
     var accepted: VerdictAccepted
 }
 
+/// One invited side of a case with more than two sides, as its owner sees it
+/// (CaseInviteView in lib/case-types.ts): B to D, each with its own link.
+struct CaseInvite: Decodable, Sendable, Equatable {
+    var party: Party
+    var status: InviteStatus
+    /// The owner's link while the side waits; nil once answered or closed.
+    var inviteUrl: String?
+    var answeredAt: String?
+
+    private enum CodingKeys: String, CodingKey { case party, status, inviteUrl, answeredAt }
+
+    init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        party = (try? c.decodeIfPresent(Party.self, forKey: .party)) ?? .unknown
+        status = (try? c.decodeIfPresent(InviteStatus.self, forKey: .status)) ?? .unknown
+        inviteUrl = try? c.decodeIfPresent(String.self, forKey: .inviteUrl)
+        answeredAt = try? c.decodeIfPresent(String.self, forKey: .answeredAt)
+    }
+}
+
 /// The names each party chose for the share pages, and the owner's switch.
+/// C and D only come with more than two sides.
 struct CaseDisplay: Decodable, Sendable, Equatable {
     var namesVisible: Bool
     var a: String?
     var b: String?
+    var c: String?
+    var d: String?
 
-    init(namesVisible: Bool = true, a: String? = nil, b: String? = nil) {
+    init(namesVisible: Bool = true, a: String? = nil, b: String? = nil, c: String? = nil, d: String? = nil) {
         self.namesVisible = namesVisible
         self.a = a
         self.b = b
+        self.c = c
+        self.d = d
     }
 
-    private enum CodingKeys: String, CodingKey { case namesVisible, a, b }
+    private enum CodingKeys: String, CodingKey { case namesVisible, a, b, c, d }
 
     init(from decoder: any Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        namesVisible = (try? c.decodeIfPresent(Bool.self, forKey: .namesVisible)) ?? true
-        a = try? c.decodeIfPresent(String.self, forKey: .a)
-        b = try? c.decodeIfPresent(String.self, forKey: .b)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        namesVisible = (try? container.decodeIfPresent(Bool.self, forKey: .namesVisible)) ?? true
+        a = try? container.decodeIfPresent(String.self, forKey: .a)
+        b = try? container.decodeIfPresent(String.self, forKey: .b)
+        c = try? container.decodeIfPresent(String.self, forKey: .c)
+        d = try? container.decodeIfPresent(String.self, forKey: .d)
+    }
+
+    func name(_ party: Party) -> String? {
+        switch party {
+        case .a: return a
+        case .b: return b
+        case .c: return c
+        case .d: return d
+        case .unknown: return nil
+        }
     }
 }
 
@@ -227,7 +269,17 @@ struct CaseView: Sendable, Equatable {
     /// Set once a party removed their side: every link of the case is closed.
     var removed: CaseRemoval?
     var yourOriginal: String
+    /// Only with three or four sides: A to C or A to D.
+    var parties: [Party]? = nil
+    /// Only with three or four sides, for the owner: sides B to D, each with
+    /// its own link. `inviteUrl` stays side B's.
+    var invites: [CaseInvite]? = nil
+    /// Only with three or four sides, for the owner: the answers in so far
+    /// are enough to judge without the rest.
+    var canJudgeAnswered = false
 
+    var isMany: Bool { parties != nil }
+    var sideCount: Int { parties?.count ?? 2 }
     var current: CaseVerdict? { verdicts.last }
     var appealJudging: Bool { appeals.contains { $0.status == .judging } }
 }
@@ -244,9 +296,11 @@ struct CaseSummary: Decodable, Sendable, Equatable, Identifiable {
     var headline: String?
     var excerpt: String?
     var removed: Bool
+    /// Only with three or four sides.
+    var parties: [Party]?
 
     private enum CodingKeys: String, CodingKey {
-        case id, status, mode, createdAt, expiresAt, respondentAnswered, verdict, headline, excerpt, removed
+        case id, status, mode, createdAt, expiresAt, respondentAnswered, verdict, headline, excerpt, removed, parties
     }
 
     init(from decoder: any Decoder) throws {
@@ -261,7 +315,17 @@ struct CaseSummary: Decodable, Sendable, Equatable, Identifiable {
         headline = try? c.decodeIfPresent(String.self, forKey: .headline)
         excerpt = try? c.decodeIfPresent(String.self, forKey: .excerpt)
         removed = (try? c.decodeIfPresent(Bool.self, forKey: .removed)) == true
+        parties = manyParties(try? c.decodeIfPresent([Party].self, forKey: .parties))
     }
+
+    var sideCount: Int { parties?.count ?? 2 }
+}
+
+/// The sides of a case with more than two; a list with two known sides or
+/// fewer is left out, so the case reads as a two-sided one.
+private func manyParties(_ listed: [Party]?) -> [Party]? {
+    let known = listed?.filter { $0 != .unknown }
+    return known.flatMap { $0.count > 2 ? $0 : nil }
 }
 
 /// POST /api/v1/cases, .../side and .../appeals: the case view,
@@ -298,10 +362,14 @@ private struct CaseViewWire: Decodable {
     var display: CaseDisplay
     var removed: CaseRemoval?
     var yourOriginal: String
+    var parties: [Party]?
+    var invites: [CaseInvite]?
+    var canJudgeAnswered: Bool
 
     private enum CodingKeys: String, CodingKey {
         case id, role, yourParty, status, mode, tier, lang, createdAt, expiresAt, judgedAt, respondentAnswered
         case ownerSideMissing, inviteUrl, sides, appeals, canJudgeNow, appeal, lastError, pollAfterMs, names, display, removed, yourOriginal
+        case parties, invites, canJudgeAnswered
     }
 
     init(from decoder: any Decoder) throws {
@@ -331,6 +399,9 @@ private struct CaseViewWire: Decodable {
         display = (try? c.decodeIfPresent(CaseDisplay.self, forKey: .display)) ?? CaseDisplay()
         removed = try? c.decodeIfPresent(CaseRemoval.self, forKey: .removed)
         yourOriginal = (try? c.decodeIfPresent(String.self, forKey: .yourOriginal)) ?? "not_stored"
+        parties = manyParties(try? c.decodeIfPresent([Party].self, forKey: .parties))
+        invites = parties == nil ? nil : (try? c.decodeIfPresent([CaseInvite].self, forKey: .invites))
+        canJudgeAnswered = (try? c.decodeIfPresent(Bool.self, forKey: .canJudgeAnswered)) == true
     }
 }
 
@@ -376,7 +447,10 @@ enum CaseDecoding {
             names: wire.names,
             display: wire.display,
             removed: wire.removed,
-            yourOriginal: wire.yourOriginal
+            yourOriginal: wire.yourOriginal,
+            parties: wire.parties,
+            invites: wire.invites,
+            canJudgeAnswered: wire.canJudgeAnswered
         )
     }
 

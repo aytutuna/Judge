@@ -18,6 +18,8 @@ struct HomeView: View {
 
     private enum Field: Hashable {
         case mine, theirs
+        /// Sides C and D, by position in `home.more`.
+        case extra(Int)
     }
 
     private static let errorID = "home.error"
@@ -126,8 +128,9 @@ struct HomeView: View {
                         HomeCourt(busy: home.isBusy, covered: pageCovered || home.isJudging || !home.path.isEmpty)
                     }
             }
-            if home.theirsOpen {
-                sideCard(lang, home: home, mine: true, inComposer: false)
+            // Every open card but the last, which is the composer at the bottom.
+            ForEach(home.theirsOpen ? Array(home.openSides.dropLast()) : [], id: \.self) { side in
+                sideCard(lang, home: home, side: side, inComposer: false)
             }
             if app.evidenceOn, !home.evidence.items.isEmpty || home.evidence.overLimit || home.evidence.failure != nil {
                 VStack(alignment: .leading, spacing: 10) {
@@ -144,6 +147,8 @@ struct HomeView: View {
             }
             if !home.theirsOpen {
                 otherSide(lang, home: home)
+            } else if home.canAddSide(app) || home.canSendLink(app) {
+                moreSides(lang, home: home)
             }
         }
     }
@@ -152,7 +157,7 @@ struct HomeView: View {
     private func composer(_ lang: AppLang, home: HomeModel) -> some View {
         // The gap is the glow's radius (12) plus 8, so it never touches the line.
         VStack(spacing: 20) {
-            sideCard(lang, home: home, mine: !home.theirsOpen, inComposer: true)
+            sideCard(lang, home: home, side: home.openSides.last ?? .a, inComposer: true)
             if home.isCheckingQuestions || home.isCreatingCase {
                 Text(home.isCreatingCase ? L10n.caseCreating(lang) : L10n.tierChecking(lang))
                     .brandText(.footnote)
@@ -171,37 +176,74 @@ struct HomeView: View {
         .background(Brand.ivory.ignoresSafeArea(edges: .bottom))
     }
 
-    private func sideCard(_ lang: AppLang, home: HomeModel, mine: Bool, inComposer: Bool) -> some View {
-        @Bindable var home = home
-        let field: Field = mine ? .mine : .theirs
-        let ink = mine ? sides.mine.ink : sides.theirs.ink
-        let strong = mine ? sides.mine.strong : sides.theirs.strong
+    private func field(for side: Party) -> Field {
+        switch side {
+        case .a, .unknown: return .mine
+        case .b: return .theirs
+        case .c: return .extra(0)
+        case .d: return .extra(1)
+        }
+    }
+
+    /// The text of a card: yours, theirs, or one of the extra sides (capped like the rest).
+    private func text(of side: Party, home: HomeModel) -> Binding<String> {
+        let index = side == .c ? 0 : 1
+        switch side {
+        case .a, .unknown: return Binding(get: { home.argument }, set: { home.argument = $0 })
+        case .b: return Binding(get: { home.otherSide }, set: { home.otherSide = $0 })
+        case .c, .d:
+            return Binding(
+                get: { home.more.indices.contains(index) ? home.more[index].text : "" },
+                set: { if home.more.indices.contains(index) { home.more[index].text = HomeModel.capped($0) } }
+            )
+        }
+    }
+
+    private func name(of side: Party, home: HomeModel) -> Binding<String?> {
+        let index = side == .c ? 0 : 1
+        switch side {
+        case .a, .unknown: return Binding(get: { home.caseName }, set: { home.caseName = $0 })
+        case .b: return Binding(get: { home.otherName }, set: { home.otherName = $0 })
+        case .c, .d:
+            return Binding(
+                get: { home.more.indices.contains(index) ? home.more[index].name : nil },
+                set: { if home.more.indices.contains(index) { home.more[index].name = $0 } }
+            )
+        }
+    }
+
+    private func sideCard(_ lang: AppLang, home: HomeModel, side: Party, inComposer: Bool) -> some View {
+        let focus = field(for: side)
+        let mine = side == .a
+        let colors = sides.of(side)
+        let title = mine ? L10n.appHomeYourSide(lang) : (side == .b ? L10n.appHomeTheirSide(lang) : side.label(lang))
+        let removable = side == home.openSides.last && side != .a
         return VStack(alignment: .leading, spacing: 8) {
             // Names only tell two sides apart.
             if home.theirsOpen {
                 HStack(spacing: 8) {
-                    PartyAvatar(party: mine ? .a : .b)
+                    PartyAvatar(party: side)
                     CaseNameField(
-                        name: mine ? $home.caseName : $home.otherName,
+                        name: name(of: side, home: home),
                         fallback: mine ? Names.firstName(app.account.user?.name) ?? "" : "",
                         placeholder: mine ? L10n.appHomeYourName(lang) : L10n.appHomeTheirName(lang),
                         disabled: home.isBusy
                     )
-                    Text(mine ? L10n.appHomeYourSide(lang) : L10n.appHomeTheirSide(lang))
+                    Text(title)
                         .brandText(TypeStyle(face: .inter, weight: 600, size: 11, lineHeight: 1.2, tracking: 0.08, textStyle: .caption2, maxScale: 1.6, uppercase: true))
-                        .foregroundStyle(ink)
+                        .foregroundStyle(colors.ink)
                         .lineLimit(1)
                         .accessibilityHidden(true)
-                    if !mine {
-                        removeTheirSide(lang, home: home)
+                    if removable {
+                        removeSide(lang, home: home, side: side)
                     }
                 }
             }
             editor(
-                mine ? $home.argument : $home.otherSide,
-                field: field,
+                text(of: side, home: home),
+                field: focus,
                 placeholder: mine ? L10n.appHomeYourPlaceholder(lang) : L10n.appHomeTheirPlaceholder(lang),
-                label: mine ? L10n.appHomeYourSideLabel(lang) : L10n.appHomeTheirSideLabel(lang),
+                label: mine ? L10n.appHomeYourSideLabel(lang) : (side == .b ? L10n.appHomeTheirSideLabel(lang) : title),
                 lines: inComposer ? 2...(typeSize.isAccessibilitySize ? 4 : 7) : 3...8
             )
             .disabled(home.isBusy)
@@ -210,7 +252,7 @@ struct HomeView: View {
         .padding(.horizontal, 16)
         .padding(.top, 14)
         .padding(.bottom, 10)
-        .neonEdge(strong, focused: focused == field, radius: Radius.block)
+        .neonEdge(colors.strong, focused: focused == focus, radius: Radius.block)
         .accessibilityElement(children: .contain)
     }
 
@@ -273,10 +315,14 @@ struct HomeView: View {
         .accessibilityLabel(L10n.getVerdict(lang))
     }
 
-    private func removeTheirSide(_ lang: AppLang, home: HomeModel) -> some View {
+    /// The card's close button: the second card goes back to one person writing,
+    /// a third or fourth just closes.
+    private func removeSide(_ lang: AppLang, home: HomeModel, side: Party) -> some View {
         Button {
             focused = nil
-            withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) { home.removeTheirSide() }
+            withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) {
+                if side == .b { home.removeTheirSide() } else { home.removeLastSide() }
+            }
         } label: {
             Image(systemName: "xmark")
                 .font(.system(size: 11, weight: .semibold))
@@ -340,6 +386,33 @@ struct HomeView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    /// Under the cards: another side to write, and the link when none of them has text.
+    private func moreSides(_ lang: AppLang, home: HomeModel) -> some View {
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: 8) {
+                addSide(lang, home: home)
+                if app.linkOn, home.canSendLink(app) { sendLink(lang, home: home) }
+            }
+            VStack(alignment: .leading, spacing: 8) {
+                addSide(lang, home: home)
+                if app.linkOn, home.canSendLink(app) { sendLink(lang, home: home) }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func addSide(_ lang: AppLang, home: HomeModel) -> some View {
+        Button {
+            withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) { home.addSide() }
+            Task { focused = .extra(home.more.count - 1) }
+        } label: {
+            Label(L10n.homeAddSide(lang), systemImage: "plus")
+                .frame(minHeight: 44)
+        }
+        .buttonStyle(GhostButtonStyle())
+        .disabled(home.isBusy || !home.canAddSide(app))
     }
 
     private func addTheirSide(_ lang: AppLang, home: HomeModel) -> some View {

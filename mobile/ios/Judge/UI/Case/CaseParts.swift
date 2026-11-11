@@ -503,7 +503,7 @@ struct AccountsReadView: View {
                     account(
                         title: side.party == view.yourParty
                             ? L10n.caseAccountYou(lang, label: label(side.party))
-                            : (side.party == .a ? L10n.caseAccountA(lang) : L10n.caseAccountB(lang)),
+                            : accountTitle(side.party),
                         party: side.party,
                         text: side.removed ? nil : side.text,
                         evidence: side.removed ? [] : side.evidence
@@ -513,7 +513,7 @@ struct AccountsReadView: View {
                     account(
                         title: appeal.party == view.yourParty
                             ? L10n.caseContextYou(lang, label: label(appeal.party))
-                            : (appeal.party == .a ? L10n.caseContextA(lang) : L10n.caseContextB(lang)),
+                            : contextTitle(appeal.party),
                         party: appeal.party,
                         text: appeal.text,
                         evidence: appeal.evidence
@@ -523,13 +523,29 @@ struct AccountsReadView: View {
         }
     }
 
-    private func label(_ party: Party) -> String {
-        party == .a ? L10n.partyA(lang) : L10n.partyB(lang)
+    private func label(_ party: Party) -> String { party.label(lang) }
+
+    private func accountTitle(_ party: Party) -> String {
+        switch party {
+        case .a: return L10n.caseAccountA(lang)
+        case .c: return L10n.caseAccountC(lang)
+        case .d: return L10n.caseAccountD(lang)
+        case .b, .unknown: return L10n.caseAccountB(lang)
+        }
+    }
+
+    private func contextTitle(_ party: Party) -> String {
+        switch party {
+        case .a: return L10n.caseContextA(lang)
+        case .c: return L10n.caseContextC(lang)
+        case .d: return L10n.caseContextD(lang)
+        case .b, .unknown: return L10n.caseContextB(lang)
+        }
     }
 
     /// "Party A" in Turkish text reads "Taraf A" (localizeLabels on the web).
     private func localized(_ text: String) -> String {
-        CaseLogic.localizeLabels(text, lang: view.lang ?? ContentLang.of(text))
+        CaseLogic.localizeLabels(text, lang: view.lang ?? ContentLang.of(text), sides: view.sideCount)
     }
 
     private func account(title: String, party: Party, text: String?, evidence: [CaseEvidence]) -> some View {
