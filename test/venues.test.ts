@@ -116,6 +116,19 @@ describe("court scenes", () => {
     court.dispose();
   });
 
+  it("throws the ball only on the court", async () => {
+    vi.spyOn(performance, "now").mockReturnValue(0);
+    for (const venue of VENUES) {
+      drawn.length = 0;
+      const court = await ready(venue);
+      let t = 0;
+      for (let i = 0; i < 60; i++) frames.splice(0).forEach((f) => f((t += 50)));
+      expect(drawn.some((d) => d.startsWith("props/ball@")), venue).toBe(venue === "court");
+      court.dispose();
+    }
+    vi.restoreAllMocks();
+  });
+
   it("plays every venue through its beats", async () => {
     for (const venue of VENUES) {
       const court = await ready(venue);

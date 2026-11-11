@@ -24,7 +24,7 @@ export type CourtScene =
       sides?: number;
     };
 
-/** A side of the case; A and C shoot at the left hoop, B and D at the right. */
+/** A side of the case; A and C go to the left target, B and D to the right. */
 export type Side = "a" | "b" | "c" | "d";
 
 export type CourtOptions = {
@@ -47,25 +47,46 @@ const W = 320;
 const H = 180;
 const PX = 2;
 const CENTER = { x: 160, y: 101 };
-// Where the ball goes in, per venue: the hoops' rims in the court picture, a bin
-// or basket baked into the others. Sides A and C shoot left, B and D right.
+// Where a vote lands, per venue: the hoops' rims in the court picture, or the
+// spot on the prop baked into the other backdrops (scripts/venue-art.py has
+// the same points). Sides A and C go left, B and D right.
 const TARGETS: Record<Venue, { a: Point; b: Point }> = {
   court: { a: { x: 81, y: 64 }, b: { x: 238, y: 64 } },
-  beach: { a: { x: 100, y: 82 }, b: { x: 212, y: 82 } },
+  beach: { a: { x: 114, y: 82 }, b: { x: 206, y: 82 } },
   camp: { a: { x: 100, y: 84 }, b: { x: 222, y: 84 } },
-  farm: { a: { x: 70, y: 88 }, b: { x: 250, y: 89 } },
-  ice: { a: { x: 75, y: 64 }, b: { x: 245, y: 64 } },
+  farm: { a: { x: 74, y: 106 }, b: { x: 250, y: 106 } },
+  ice: { a: { x: 76, y: 51 }, b: { x: 244, y: 51 } },
   library: { a: { x: 80, y: 84 }, b: { x: 240, y: 84 } },
-  museum: { a: { x: 78, y: 86 }, b: { x: 242, y: 86 } },
-  street: { a: { x: 72, y: 82 }, b: { x: 248, y: 82 } },
+  museum: { a: { x: 78, y: 96 }, b: { x: 242, y: 96 } },
+  street: { a: { x: 72, y: 89 }, b: { x: 248, y: 89 } },
   tv: { a: { x: 70, y: 88 }, b: { x: 250, y: 88 } },
 };
+// What a judge does to vote: the ball into a hoop, or something that fits the
+// place. A card is raised over the head instead of thrown.
+type Act = "ball" | "flag" | "log" | "shoe" | "coin" | "book" | "rosette" | "card";
+const ACT: Record<Venue, Act> = {
+  court: "ball",
+  beach: "flag",
+  camp: "log",
+  farm: "shoe",
+  ice: "coin",
+  library: "book",
+  museum: "rosette",
+  street: "coin",
+  tv: "card",
+};
+/** How many of a side's things stay on its target. */
+const PILE_MAX = 4;
 const SIDES: readonly Side[] = ["a", "b", "c", "d"];
 const SPEED = 34;
 const JOG = 70;
 // Keep in step with VOTE_MS in story.ts.
 const VOTE_S = 0.42;
 const TRIAL_SPEED = 110;
+/** How long a score card stays up. */
+const CARD_S = 1.8;
+/** How long a landing flash lasts away from the court. */
+const FLASH_S = 0.8;
 
 // Where the sides stand at centre court, left to right, and what the rest of
 // the cast does around them. Two sides are as they always were; with three or
@@ -232,6 +253,8 @@ type Actor = {
   phase: number;
   bubble: Bubble | null;
   flag: Side | null;
+  /** The score card held up over the head, in a studio. */
+  card: { side: Side; start: number } | null;
   /** Where a scout at centre court looks while standing. */
   look: "right" | "left" | "down";
   hop: { start: number; n: number } | null;
@@ -272,6 +295,8 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
   let score = { a: 0, b: 0, c: 0, d: 0 };
   let shots: { side: Side; x: number; y: number; t: number }[] = [];
   let swish = { a: -9, b: -9, c: -9, d: -9 };
+  // What has landed on each target, oldest first.
+  let pile: Record<"a" | "b", Side[]> = { a: [], b: [] };
   let talkNext = 0;
   let talkAt = 1;
 
@@ -297,6 +322,7 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
     phase: r() * 10,
     bubble: null,
     flag: null,
+    card: null,
     look: side === "a" ? "right" : side === "b" ? "left" : "down",
     hop: null,
     cheer: null,
@@ -450,7 +476,7 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
   };
   const hold = (c: Actor, kind: BubbleKind) => bubble(c, kind, Infinity);
 
-  /** A vote: the flag goes up, arms too, and the ball leaves for that side's hoop. */
+  /** A vote: the flag goes up, arms too, and the judge throws (or holds up a card) for that side. */
   function vote(c: Actor, v: Vote, snap: boolean) {
     if (v === "other") {
       if (!snap) bubble(c, "unsure", 1.4);
@@ -458,11 +484,22 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
     }
     c.flag = v;
     if (snap) {
-      score[v]++;
+      land(v, false);
       return;
     }
     c.cheer = clock;
-    shots.push({ side: v, x: c.x, y: c.y - 30, t: clock + 0.5 });
+    if (ACT[shown] === "card") {
+      c.card = { side: v, start: clock };
+      shots.push({ side: v, x: c.x, y: c.y - 30, t: clock - 0.4 });
+    } else shots.push({ side: v, x: c.x, y: c.y - 30, t: clock + 0.5 });
+  }
+
+  function land(side: Side, show: boolean) {
+    score[side]++;
+    if (show) swish[side] = clock;
+    const stack = pile[side === "a" || side === "c" ? "a" : "b"];
+    stack.push(side);
+    if (stack.length > PILE_MAX) stack.shift();
   }
 
   function clear() {
@@ -471,6 +508,7 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
     shots = [];
     score = { a: 0, b: 0, c: 0, d: 0 };
     swish = { a: -9, b: -9, c: -9, d: -9 };
+    pile = { a: [], b: [] };
     over = false;
     win = null;
     busy = false;
@@ -481,6 +519,7 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
       c.flag = null;
       c.hop = null;
       c.cheer = null;
+      c.card = null;
       c.shoot = false;
       c.path = [];
     }
@@ -624,7 +663,7 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
     else resnap(s, to);
   }
 
-  // Home: a few scouts shooting hoops, who huddle at centre court while the case is sent.
+  // Home: a few scouts shooting hoops (or strolling, away from the court), who huddle at centre court while the case is sent.
   const gather = (k: number): Point => ({ x: 160 + (k - (crew.length - 1) / 2) * 20, y: 106 + (k % 2) * 9 });
   function freeSpot(c: Actor): Point {
     const others = crew.filter((o) => o !== c).map((o) => boxAt(o.path.length ? o.path[o.path.length - 1] : o));
@@ -673,8 +712,7 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
     }
     shots = shots.filter((sh) => {
       if (clock < sh.t + 0.8) return true;
-      score[sh.side]++;
-      swish[sh.side] = clock;
+      land(sh.side, true);
       return false;
     });
     if (scene?.kind === "judging" && !over && pair.every((p) => !p.path.length) && clock > talkNext) {
@@ -716,6 +754,13 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
     if (c.path.length) return;
     if (c.shoot) {
       c.shoot = false;
+      if (ACT[shown] !== "ball") {
+        // Nothing to throw away from the court: stop, look around, wander on.
+        c.glance = clock + 1 + rand() * 1.5;
+        c.glanceTo = rand() < 0.5 ? "left" : "right";
+        c.wait = clock + 2 + rand() * 3;
+        return;
+      }
       c.cheer = clock;
       const near: Side = c.x < W / 2 ? "a" : "b";
       const side: Side = rand() < 0.75 ? near : near === "a" ? "b" : "a";
@@ -864,12 +909,152 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
     drawLetter(side, px + 3, py - 3, C.paper);
   }
 
+  const rect = (x: number, y: number, w: number, h: number, col: string) => {
+    ctx.fillStyle = col;
+    ctx.fillRect(x, y, w, h);
+  };
+  // A disc a few pixels across with a dark rim: `r` is 2 for five pixels, 3 for seven.
+  const disc = (x: number, y: number, r: number, rim: string, fill: string) => {
+    rect(x - r + 1, y - r, 2 * r - 1, 2 * r + 1, rim);
+    rect(x - r, y - r + 1, 2 * r + 1, 2 * r - 1, rim);
+    rect(x - r + 2, y - r + 1, 2 * r - 3, 2 * r - 1, fill);
+    rect(x - r + 1, y - r + 2, 2 * r - 1, 2 * r - 3, fill);
+  };
+  const horseshoe = (x: number, y: number, flip: boolean) => {
+    const steel = "#a9b1bd";
+    const top = flip ? y + 1 : y;
+    rect(x, y, 7, 5, "#1d2026");
+    rect(x + 1, top, 2, 4, steel);
+    rect(x + 4, top, 2, 4, steel);
+    rect(x + 1, flip ? y + 1 : y + 3, 5, 1, steel);
+  };
+  const flag = (x: number, y: number, side: Side) => {
+    rect(x, y - 14, 1, 14, "#3b2c1e");
+    rect(x + 1, y - 14, 8, 7, C.out);
+    rect(x + 1, y - 13, 7, 5, SIDE[side][0]);
+    rect(x + 1, y - 13, 7, 1, SIDE[side][1]);
+    rect(x + 6, y - 12, 1, 3, SIDE[side][2]);
+  };
+  const coin = (x: number, y: number, edge: boolean) => {
+    if (edge) {
+      rect(x - 1, y - 2, 3, 5, "#6e4a0c");
+      rect(x, y - 1, 1, 3, "#f2b632");
+    } else {
+      disc(x, y, 2, "#6e4a0c", "#f2b632");
+      rect(x - 1, y - 1, 1, 1, "#fff0a0");
+    }
+  };
+  const rosette = (x: number, y: number, side: Side, tails: boolean) => {
+    if (tails) {
+      rect(x - 3, y + 3, 3, 5, C.out);
+      rect(x, y + 3, 3, 5, C.out);
+      rect(x - 2, y + 3, 1, 4, SIDE[side][2]);
+      rect(x + 1, y + 3, 1, 4, SIDE[side][2]);
+    }
+    disc(x, y, 3, C.out, SIDE[side][0]);
+    rect(x - 1, y - 2, 3, 1, SIDE[side][1]);
+    rect(x - 1, y - 1, 3, 3, SIDE[side][1]);
+    rect(x, y, 1, 1, C.core);
+  };
+  const book = (x: number, y: number, side: Side) => {
+    rect(x - 5, y - 1, 10, 4, C.out);
+    rect(x - 4, y, 8, 2, SIDE[side][0]);
+    rect(x - 4, y, 8, 1, SIDE[side][1]);
+    rect(x + 3, y, 1, 2, C.paper);
+  };
+
+  // What has landed on a target stays there, a few at most.
+  function drawPile(t: Point, items: Side[]) {
+    const act = ACT[shown];
+    items.forEach((side, i) => {
+      if (act === "flag") {
+        flag(t.x + [-16, 13, -6, 4][i], t.y + [-5, -5, 0, 0][i], side);
+      } else if (act === "shoe") {
+        const [ox, oy] = [[-15, -2], [8, -2], [-12, 4], [5, 4]][i];
+        horseshoe(t.x + ox, t.y + oy, i % 2 === 1);
+      } else if (act === "book") {
+        book(t.x + [0, 1, -1, 0][i], t.y - 2 - i * 3, side);
+      } else if (act === "rosette") {
+        const [ox, oy] = [[-5, -3], [5, -3], [-5, 4], [5, 4]][i];
+        rosette(t.x + ox, t.y + oy, side, false);
+      } else if (act === "coin") {
+        // Coins in the jar or the guitar case, first the bottom row.
+        const [ox, oy] = shown === "ice" ? [[-3, 7], [-1, 7], [1, 7], [-2, 5]][i] : [[-8, 2], [-2, 3], [4, 2], [8, 3]][i];
+        disc(t.x + ox + 1, t.y + oy, 1, "#6e4a0c", "#f2b632");
+      }
+    });
+  }
+
+  function drawFlying(act: Act, side: Side, x: number, y: number, k: number) {
+    if (act === "flag") {
+      flag(x, y + 6, side);
+    } else if (act === "log") {
+      const up = Math.floor(k * 6) % 2 === 0;
+      const [w, h] = up ? [9, 5] : [5, 9];
+      rect(x - (w >> 1), y - (h >> 1), w, h, C.out);
+      rect(x - (w >> 1) + 1, y - (h >> 1) + 1, w - 2, h - 2, "#8a5a32");
+      rect(x - (w >> 1) + 1, y - (h >> 1) + 1, up ? 2 : w - 2, up ? h - 2 : 2, "#d9a066");
+    } else if (act === "shoe") {
+      horseshoe(x - 3, y - 2, Math.floor(k * 8) % 2 === 1);
+    } else if (act === "coin") {
+      coin(x, y, Math.floor(k * 10) % 2 === 1);
+    } else if (act === "book") {
+      book(x, y - 1, side);
+    } else if (act === "rosette") {
+      rosette(x, y - 3, side, true);
+    }
+  }
+
+  // A flash where something lands; `a` runs from 0 to 1 over its life.
+  function drawFlash(act: Act, side: Side, t: Point, a: number) {
+    if (act === "log") {
+      const h = Math.round(13 - a * 6);
+      rect(t.x - 5, t.y - h - 2, 10, h, C.flame);
+      rect(t.x - 4, t.y - h - 1, 8, h - 1, C.ember);
+      rect(t.x - 2, t.y - h + 1, 4, Math.max(3, h - 4), C.core);
+    } else if (act === "shoe") {
+      if (a > 0.75) return;
+      const on = Math.floor(a * 8) % 2 === 0;
+      const cx = t.x + 1;
+      const cy = t.y + 2;
+      rect(cx - 5, cy, 11, 1, on ? "#ffffff" : C.core);
+      rect(cx, cy - 5, 1, 11, on ? "#ffffff" : C.core);
+      for (const [dx, dy] of [[-3, -3], [3, -3], [-3, 3], [3, 3]]) rect(cx + dx, cy + dy, 1, 1, C.core);
+    } else if (act === "coin") {
+      const on = Math.floor(a * 8) % 2 === 0;
+      rect(t.x - 4, t.y, 9, 1, on ? "#ffffff" : C.core);
+      rect(t.x, t.y - 4, 1, 9, on ? "#ffffff" : C.core);
+      for (const [dx, dy] of [[-2, -2], [2, -2], [-2, 2], [2, 2]]) rect(t.x + dx, t.y + dy, 1, 1, "#ffffff");
+    } else if (act === "rosette" || act === "flag" || act === "book") {
+      if (a > 0.75) return;
+      ctx.fillStyle = a < 0.4 ? C.paper : SIDE[side][1];
+      for (const [dx, dy] of [[-14, -6], [14, -5], [-10, 8], [11, 9]]) {
+        ctx.fillRect(t.x + dx, t.y + dy - 1, 1, 3);
+        ctx.fillRect(t.x + dx - 1, t.y + dy, 3, 1);
+      }
+    }
+  }
+
+  // A score card held over the head, in the side's colour, until it drops to the vote flag.
+  function drawCard(x: number, top: number, side: Side, age: number) {
+    const lift = Math.round(Math.max(0, 1 - age / 0.15) * 10);
+    const y = top - 32 + lift;
+    rect(x, y + 14, 1, 14 - lift - 2, "#f3e8cc");
+    rect(x - 7, y, 14, 14, C.out);
+    rect(x - 6, y + 1, 12, 12, SIDE[side][0]);
+    rect(x - 6, y + 1, 12, 1, SIDE[side][1]);
+    rect(x - 6, y + 12, 12, 1, SIDE[side][2]);
+    ctx.fillStyle = C.paper;
+    for (let p = 0; p < 15; p++) if (LETTER[side][p] === "1") ctx.fillRect(x - 3 + (p % 3) * 2, y + 2 + Math.floor(p / 3) * 2, 2, 2);
+  }
+
   function draw() {
     if (!ready) return;
     dirty = false;
     ctx.setTransform(PX, 0, 0, PX, 0, 0);
     ctx.drawImage(bg, 0, 0);
     if (!scene) return;
+    if (scene.kind === "judging") for (const key of ["a", "b"] as const) drawPile(TARGETS[shown][key], pile[key]);
 
     const heads: { c: Actor; x: number; top: number }[] = [];
     const seen = everyone().filter((c) => c.x > -16 && c.x < W + 16 && c.y < H + 29).sort((p, q) => p.y - q.y);
@@ -911,24 +1096,37 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
       ctx.globalAlpha = 1;
       heads.push({ c, x, top: y - 26 - up });
     }
+    const act = ACT[shown];
     const ball = pics["props/ball"];
     for (const sh of shots) {
       const k = (clock - sh.t) / 0.8;
-      if (k < 0 || !ball) continue;
+      if (k < 0 || act === "card") continue;
       const h = hoopOf(sh.side);
-      const x = sh.x + (h.x - sh.x) * k;
-      const y = sh.y + (h.y - 6 - sh.y) * k - Math.sin(k * Math.PI) * 34;
-      ctx.drawImage(ball, Math.round(x - 4), Math.round(y - 4));
+      if (act === "ball") {
+        if (!ball) continue;
+        const x = sh.x + (h.x - sh.x) * k;
+        const y = sh.y + (h.y - 6 - sh.y) * k - Math.sin(k * Math.PI) * 34;
+        ctx.drawImage(ball, Math.round(x - 4), Math.round(y - 4));
+      } else {
+        const x = sh.x + (h.x - sh.x) * k;
+        const y = sh.y + (h.y - sh.y) * k - Math.sin(k * Math.PI) * 30;
+        drawFlying(act, sh.side, Math.round(x), Math.round(y), k);
+      }
     }
     for (const side of SIDES) {
-      if (clock - swish[side] > 0.5) continue;
+      const age = clock - swish[side];
+      if (age > (act === "ball" ? 0.5 : FLASH_S)) continue;
       const h = hoopOf(side);
-      ctx.fillStyle = SIDE[side][1];
-      for (let i = -3; i <= 3; i += 2) ctx.fillRect(h.x + i, h.y + 2 + ((i + Math.floor(clock * 20)) & 1), 1, 2);
+      if (act === "ball") {
+        ctx.fillStyle = SIDE[side][1];
+        for (let i = -3; i <= 3; i += 2) ctx.fillRect(h.x + i, h.y + 2 + ((i + Math.floor(clock * 20)) & 1), 1, 2);
+      } else drawFlash(act, side, h, age / FLASH_S);
     }
     drawBoard();
     for (const hd of heads) {
-      if (hd.c.flag) drawFlag(hd.x, hd.top, hd.c.flag);
+      const card = hd.c.card && clock - hd.c.card.start < CARD_S ? hd.c.card : null;
+      if (card) drawCard(hd.x, hd.top, card.side, clock - card.start);
+      else if (hd.c.flag) drawFlag(hd.x, hd.top, hd.c.flag);
       if (hd.c.side && scene?.kind === "judging" && !hd.c.path.length) drawTag(hd.x, hd.top, hd.c.side);
       if (hd.c.bubble) drawBubble(hd.x, hd.top - (hd.c.side ? 9 : 0), hd.c.bubble);
     }
