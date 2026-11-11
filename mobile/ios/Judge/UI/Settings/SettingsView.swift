@@ -1,36 +1,20 @@
 import SwiftUI
 
 enum SettingsRoute: Hashable {
-    case pricing, language
+    case pricing, language, account
 }
 
 struct SettingsView: View {
     @Environment(AppModel.self) private var app
     @State private var webLink: WebLink?
     @State private var confirmSignOut = false
-    @State private var confirmDelete = false
-    @State private var changePassword = false
 
     var body: some View {
         let lang = app.lang
         @Bindable var model = app
         NavigationStack(path: $model.settingsPath) {
             List {
-                AccountSection(confirmSignOut: $confirmSignOut, confirmDelete: $confirmDelete, changePassword: $changePassword)
-
-                Section {
-                    NavigationLink(value: SettingsRoute.pricing) {
-                        Label {
-                            Text(L10n.navPricing(lang))
-                                .brandText(.body)
-                                .foregroundStyle(Brand.ink)
-                        } icon: {
-                            Image(systemName: "sparkle")
-                                .foregroundStyle(Brand.terraInk)
-                        }
-                    }
-                }
-                .listRowBackground(Brand.paper)
+                AccountSection()
 
                 Section {
                     NavigationLink(value: SettingsRoute.language) {
@@ -47,12 +31,6 @@ struct SettingsView: View {
                     ForEach(Appearance.allCases, id: \.self) { option in
                         appearanceRow(option, lang: lang)
                     }
-                } header: {
-                    Kicker(text: L10n.appSettingsAppearance(lang))
-                }
-                .listRowBackground(Brand.paper)
-
-                Section {
                     Toggle(isOn: Binding(get: { app.gamify }, set: {
                         app.setGamify($0)
                         app.analytics.track("settings_changed", ["key": "gamify"])
@@ -62,6 +40,8 @@ struct SettingsView: View {
                             .foregroundStyle(Brand.ink)
                     }
                     .tint(Brand.terraInk)
+                } header: {
+                    Kicker(text: L10n.appSettingsAppearance(lang))
                 }
                 .listRowBackground(Brand.paper)
 
@@ -72,6 +52,12 @@ struct SettingsView: View {
                             .foregroundStyle(Brand.ink)
                     }
                     .tint(Brand.terraInk)
+                    linkRow(L10n.appSettingsAbout(lang), path: "about")
+                    linkRow(L10n.howTitle(lang), path: "#how")
+                    linkRow(L10n.footerPrivacy(lang), path: "privacy")
+                    linkRow(L10n.appLegalTerms(lang), path: "terms")
+                } header: {
+                    Kicker(text: L10n.footerPrivacy(lang))
                 } footer: {
                     Text(L10n.appSettingsUsageStatsHint(lang))
                         .brandText(.footnote)
@@ -79,13 +65,27 @@ struct SettingsView: View {
                 }
                 .listRowBackground(Brand.paper)
 
-                Section {
-                    linkRow(L10n.appSettingsAbout(lang), path: "about")
-                    linkRow(L10n.howTitle(lang), path: "#how")
-                    linkRow(L10n.footerPrivacy(lang), path: "privacy")
-                    linkRow(L10n.appLegalTerms(lang), path: "terms")
+                if app.account.isSignedIn {
+                    Section {
+                        Button {
+                            confirmSignOut = true
+                        } label: {
+                            HStack {
+                                Text(L10n.accountSignOut(lang))
+                                    .brandText(.body)
+                                    .foregroundStyle(Brand.ink)
+                                Spacer()
+                                if app.account.busy == .signOut {
+                                    ProgressView().tint(Brand.muted)
+                                }
+                            }
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        .disabled(app.account.busy != nil)
+                    }
+                    .listRowBackground(Brand.paper)
                 }
-                .listRowBackground(Brand.paper)
 
                 Section {
                     EmptyView()
@@ -110,27 +110,17 @@ struct SettingsView: View {
             .sheet(item: $webLink) { link in
                 SafariView(url: link.url).ignoresSafeArea()
             }
-            .sheet(isPresented: $changePassword) {
-                PasswordSheet().environment(app)
-            }
             .alert(L10n.appAccountSignOutConfirm(lang), isPresented: $confirmSignOut) {
                 Button(L10n.accountSignOut(lang), role: .destructive) {
                     Task { await app.account.signOut() }
                 }
                 Button(L10n.appCancel(lang), role: .cancel) {}
             }
-            .alert(L10n.appAccountDeleteTitle(lang), isPresented: $confirmDelete) {
-                Button(L10n.appAccountDeleteConfirm(lang), role: .destructive) {
-                    Task { await app.account.deleteAccount() }
-                }
-                Button(L10n.accountDeleteCancel(lang), role: .cancel) {}
-            } message: {
-                Text(L10n.appAccountDeleteBody(lang))
-            }
             .navigationDestination(for: SettingsRoute.self) { route in
                 switch route {
                 case .pricing: PricingView()
                 case .language: LanguageList()
+                case .account: AccountView()
                 }
             }
             .onTabAppear {
