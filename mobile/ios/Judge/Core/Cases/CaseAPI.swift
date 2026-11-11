@@ -35,7 +35,7 @@ extension JudgeAPI {
 
     /// The JSON body of POST /api/v1/cases, also the Idempotency-Key's input.
     /// A nil `text` leaves the key out: the case starts without the owner's side.
-    static func createCaseBody(text: String?, lang: AppLang, evidence: [String], displayName: String?, sides: Int = 2) -> [String: Any] {
+    static func createCaseBody(text: String?, lang: AppLang, evidence: [String], displayName: String?, sides: Int = 2, venue: String? = nil) -> [String: Any] {
         var body: [String: Any] = [
             "lang": lang.rawValue,
             "tier": Tier.premium.rawValue,
@@ -44,6 +44,7 @@ extension JudgeAPI {
         if !evidence.isEmpty { body["evidence"] = evidence }
         if let displayName, !displayName.isEmpty { body["displayName"] = displayName }
         if sides > 2 { body["sides"] = min(sides, 4) }
+        if let venue { body["venue"] = venue }
         return body
     }
 
@@ -54,8 +55,8 @@ extension JudgeAPI {
     }
 
     /// POST /api/v1/cases: the owner's side; the case holds one verdict's unit.
-    func createCase(text: String?, lang: AppLang, evidence: [String], displayName: String?, sides: Int = 2, idempotencyKey: String) async throws -> CaseSubmission {
-        let body = Self.createCaseBody(text: text, lang: lang, evidence: evidence, displayName: displayName, sides: sides)
+    func createCase(text: String?, lang: AppLang, evidence: [String], displayName: String?, sides: Int = 2, venue: String? = nil, idempotencyKey: String) async throws -> CaseSubmission {
+        let body = Self.createCaseBody(text: text, lang: lang, evidence: evidence, displayName: displayName, sides: sides, venue: venue)
         let request = try jsonRequest(endpoint("cases"), method: "POST", timeout: CaseTimeout.create, body: body, idempotencyKey: idempotencyKey)
         let data = try await send(request)
         do {

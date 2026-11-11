@@ -12,6 +12,7 @@ struct JudgingCover: View {
             lang: lang,
             gamify: gamify,
             sides: home.judgedSides,
+            venue: home.judgingVenue,
             result: home.arrived,
             acceptedAt: home.acceptedAt,
             onFinished: { home.judgingFinished() },
@@ -32,6 +33,8 @@ struct JudgingView: View {
     var gamify = true
     /// What was sent, a tile per written side.
     var sides: [HomeModel.JudgedSide] = []
+    /// Where the court is drawn.
+    var venue = Venues.fallback
     /// Non-nil once the verdict has arrived.
     let result: VerdictResult?
     /// When the server accepted the request, if it has.
@@ -115,7 +118,7 @@ struct JudgingView: View {
             Kicker(text: L10n.thinkingEyebrow(lang))
 
             if gamify {
-                CourtView(scene: .judging(beat, summary, sides: sides.count))
+                CourtView(scene: .judging(beat, summary, sides: sides.count, venue: venue))
                     .frame(maxWidth: courtWidth)
                     .frame(maxWidth: .infinity)
             }

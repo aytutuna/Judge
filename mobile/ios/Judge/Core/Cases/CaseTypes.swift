@@ -277,6 +277,8 @@ struct CaseView: Sendable, Equatable {
     /// Only with three or four sides, for the owner: the answers in so far
     /// are enough to judge without the rest.
     var canJudgeAnswered = false
+    /// The place the court is drawn in, set when the case was made; nil is the court.
+    var venue: String? = nil
 
     var isMany: Bool { parties != nil }
     var sideCount: Int { parties?.count ?? 2 }
@@ -298,9 +300,10 @@ struct CaseSummary: Decodable, Sendable, Equatable, Identifiable {
     var removed: Bool
     /// Only with three or four sides.
     var parties: [Party]?
+    var venue: String?
 
     private enum CodingKeys: String, CodingKey {
-        case id, status, mode, createdAt, expiresAt, respondentAnswered, verdict, headline, excerpt, removed, parties
+        case id, status, mode, createdAt, expiresAt, respondentAnswered, verdict, headline, excerpt, removed, parties, venue
     }
 
     init(from decoder: any Decoder) throws {
@@ -316,6 +319,7 @@ struct CaseSummary: Decodable, Sendable, Equatable, Identifiable {
         excerpt = try? c.decodeIfPresent(String.self, forKey: .excerpt)
         removed = (try? c.decodeIfPresent(Bool.self, forKey: .removed)) == true
         parties = manyParties(try? c.decodeIfPresent([Party].self, forKey: .parties))
+        venue = try? c.decodeIfPresent(String.self, forKey: .venue)
     }
 
     var sideCount: Int { parties?.count ?? 2 }
@@ -365,11 +369,12 @@ private struct CaseViewWire: Decodable {
     var parties: [Party]?
     var invites: [CaseInvite]?
     var canJudgeAnswered: Bool
+    var venue: String?
 
     private enum CodingKeys: String, CodingKey {
         case id, role, yourParty, status, mode, tier, lang, createdAt, expiresAt, judgedAt, respondentAnswered
         case ownerSideMissing, inviteUrl, sides, appeals, canJudgeNow, appeal, lastError, pollAfterMs, names, display, removed, yourOriginal
-        case parties, invites, canJudgeAnswered
+        case parties, invites, canJudgeAnswered, venue
     }
 
     init(from decoder: any Decoder) throws {
@@ -402,6 +407,7 @@ private struct CaseViewWire: Decodable {
         parties = manyParties(try? c.decodeIfPresent([Party].self, forKey: .parties))
         invites = parties == nil ? nil : (try? c.decodeIfPresent([CaseInvite].self, forKey: .invites))
         canJudgeAnswered = (try? c.decodeIfPresent(Bool.self, forKey: .canJudgeAnswered)) == true
+        venue = try? c.decodeIfPresent(String.self, forKey: .venue)
     }
 }
 
@@ -450,7 +456,8 @@ enum CaseDecoding {
             yourOriginal: wire.yourOriginal,
             parties: wire.parties,
             invites: wire.invites,
-            canJudgeAnswered: wire.canJudgeAnswered
+            canJudgeAnswered: wire.canJudgeAnswered,
+            venue: wire.venue
         )
     }
 

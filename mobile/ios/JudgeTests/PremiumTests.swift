@@ -592,6 +592,9 @@ final class PremiumFlowTests: XCTestCase {
         XCTAssertNil(body["clarifications"])
         XCTAssertNil(body["evidence"])
         XCTAssertNil(body["framework"])
+        let venue = try XCTUnwrap(body["venue"] as? String)
+        XCTAssertTrue(Venues.load().contains(venue), "a place from the shared list")
+        XCTAssertEqual(home.judgingVenue, venue, "the cover draws the place that was sent")
 
         // The 202's entitlement first, then /me after the outcome.
         try await PremiumFixtures.waitUntil("the account refresh") { router.count("GET", Self.mePath) >= 1 }

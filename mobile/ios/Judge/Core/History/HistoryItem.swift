@@ -36,6 +36,8 @@ struct HistoryItem: Codable, Sendable, Equatable {
     /// ruling's winner (nil: too close). `verdict` stays the two-sided projection.
     var parties: [String]?
     var winner: String?
+    /// The place the court is drawn in; nil is the court.
+    var venue: String?
 
     init(kind: String, id: String, at: String, state: String) {
         self.kind = kind
@@ -54,7 +56,7 @@ struct HistoryItem: Codable, Sendable, Equatable {
 
     private enum CodingKeys: String, CodingKey {
         case kind, id, role, party, at, createdAt, state, yourMove, verdict, contextAdded, contextBy
-        case headline, excerpt, nameMap, expiresAt, removed, removable, inviteToken, parties, winner
+        case headline, excerpt, nameMap, expiresAt, removed, removable, inviteToken, parties, winner, venue
     }
 
     init(from decoder: any Decoder) throws {
@@ -80,6 +82,7 @@ struct HistoryItem: Codable, Sendable, Equatable {
         inviteToken = try? c.decodeIfPresent(String.self, forKey: .inviteToken)
         parties = try? c.decodeIfPresent([String].self, forKey: .parties)
         winner = try? c.decodeIfPresent(String.self, forKey: .winner)
+        venue = try? c.decodeIfPresent(String.self, forKey: .venue)
     }
 }
 

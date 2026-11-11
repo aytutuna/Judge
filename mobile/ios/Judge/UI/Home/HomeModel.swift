@@ -61,6 +61,8 @@ final class HomeModel {
     private(set) var acceptedAt: Date?
     /// The sides the running request sent, for the judging cover.
     private(set) var judgedSides: [JudgedSide] = []
+    /// Where the judging court is drawn: picked when the request is submitted.
+    private(set) var judgingVenue = Venues.fallback
     private(set) var error: APIError?
     private(set) var blockedUntil: Date?
     /// Screenshots picked for the next request.
@@ -113,6 +115,12 @@ final class HomeModel {
     /// What a request judges, fixed when it was submitted.
     @ObservationIgnored private var premiumInput: PremiumInput?
     @ObservationIgnored private let keys = IdempotencyKeys()
+    /// The place picked for the verdict being asked for. A retry of the same
+    /// request keeps it, so its Idempotency-Key still matches; it goes when
+    /// the verdict arrives.
+    @ObservationIgnored private var heldVenue: (key: RequestKey, id: String)?
+    /// The same for a case being created.
+    @ObservationIgnored private var caseVenue: String?
     /// What the example wrote, to tell it from the user's own text.
     @ObservationIgnored private var exampleForm: FormText?
     /// Told when the server refuses the session (401) and when an outcome
@@ -145,6 +153,8 @@ final class HomeModel {
         let evidence: [String]
         /// Every side as typed, when there are more than two.
         var sides: [VerdictRequest.Side]? = nil
+        /// The place picked for this request.
+        var venue: String? = nil
 
         var requestKey: RequestKey {
             RequestKey(text: argument, lang: lang, extra: "premium:" + evidence.joined(separator: ","))
@@ -415,17 +425,20 @@ final class HomeModel {
         let displayName: String? = name.isEmpty ? nil : name
         let other = otherName?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let sides = theirsOpen ? 2 + more.count : 2
-        let body = JudgeAPI.createCaseBody(text: text, lang: lang, evidence: tokens, displayName: displayName, sides: sides)
+        let venue = caseVenue ?? Venues.pickNew()
+        caseVenue = venue
+        let body = JudgeAPI.createCaseBody(text: text, lang: lang, evidence: tokens, displayName: displayName, sides: sides, venue: venue)
         let token = keys.key(for: JudgeAPI.canonical(body))
         let api = app.api
         let names = app.caseNames
         request = Task { [weak self, weak app] in
             do {
                 let created = try await api.createCase(
-                    text: text, lang: lang, evidence: tokens, displayName: displayName, sides: sides, idempotencyKey: token
+                    text: text, lang: lang, evidence: tokens, displayName: displayName, sides: sides, venue: venue, idempotencyKey: token
                 )
                 guard let self, !Task.isCancelled else { return }
                 self.keys.clear(token)
+                self.caseVenue = nil
                 names.save(caseID: created.view.id, created.nameMap)
                 if let entitlement = created.entitlement { self.account?.applyEntitlement(entitlement) }
                 app?.seedCase(created.view, otherName: other.isEmpty ? nil : other)
@@ -470,17 +483,20 @@ final class HomeModel {
         arrivedID = nil
         acceptedAt = nil
         clarify = nil
-        let input = PremiumInput(
+        var input = PremiumInput(
             argument: outgoing(app),
             lang: app.lang,
             evidence: app.evidenceOn ? evidence.tokens : [],
             sides: typedSides(app)
         )
+        let key = input.requestKey
+        if heldVenue?.key != key { heldVenue = (key, Venues.pickNew()) }
+        input.venue = heldVenue?.id
         premiumInput = input
+        judgingVenue = input.venue ?? Venues.fallback
         judgedSides = Self.sides(mine: argument, theirs: otherSide, myName: shownCaseName(app), theirName: otherName ?? "", more: more)
         let api = app.api
         let history = app.history
-        let key = input.requestKey
         if let held = pending, held.key == key, Date.now.timeIntervalSince(held.since) < Self.resumeWindow {
             app.analytics.track("case_submitted")
             isJudging = true
@@ -567,7 +583,8 @@ final class HomeModel {
             tier: Tier.premium.rawValue,
             clarifications: clarifications,
             evidence: input.evidence.isEmpty ? nil : input.evidence,
-            sides: input.sides
+            sides: input.sides,
+            venue: input.venue
         )
         let token = keys.key(for: IdempotencyKeys.canonical(body))
         let key = input.requestKey
@@ -679,6 +696,7 @@ final class HomeModel {
     private func deliver(_ payload: VerdictPayload, history: HistoryStore) {
         let session = VerdictSession(id: payload.id, original: payload.result, nameMap: payload.nameMap, translations: [:])
         sessions[session.id] = session
+        heldVenue = nil
         try? history.save(session)
         arrivedID = session.id
         arrived = payload.result.result

@@ -547,6 +547,7 @@ final class CaseTests: XCTestCase {
         XCTAssertEqual(body["displayName"] as? String, "Alex")
         XCTAssertEqual(body["tier"] as? String, "premium")
         XCTAssertNil(body["evidence"])
+        XCTAssertTrue(Venues.load().contains(try XCTUnwrap(body["venue"] as? String)), "a place from the shared list")
 
         XCTAssertEqual(app.caseNames.names(caseID: Self.caseID).count, 2, "the name map is kept on the phone")
         XCTAssertEqual(app.account.entitlement?.subscription?.used, 13)

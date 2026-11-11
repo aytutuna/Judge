@@ -19,6 +19,8 @@ struct VerdictPayload: Sendable, Equatable {
     var entitlement: Entitlement? = nil
     /// Premium: an Idempotency-Key replay of a finished verdict (no name map).
     var replayed = false
+    /// The place the court is drawn in; nil is the court (old servers, old verdicts).
+    var venue: String? = nil
 }
 
 /// POST /api/v1/verdict answered 202: the verdict is judged in the background
@@ -60,6 +62,7 @@ struct StoredPayload: Sendable, Equatable {
     let id: String
     let result: RawResult
     let createdAt: String
+    var venue: String? = nil
 }
 
 enum WireDecodingError: Error, Equatable {
@@ -78,7 +81,8 @@ enum WireDecoding {
             nameMap: nameMap(in: object),
             ownerToken: ownerToken(in: object),
             entitlement: entitlement(in: object),
-            replayed: (object["replayed"] as? Bool) ?? false
+            replayed: (object["replayed"] as? Bool) ?? false,
+            venue: object["venue"] as? String
         )
     }
 
@@ -150,7 +154,8 @@ enum WireDecoding {
         return StoredPayload(
             id: try string("id", in: object),
             result: try rawResult(object["result"]),
-            createdAt: (object["createdAt"] as? String) ?? ""
+            createdAt: (object["createdAt"] as? String) ?? "",
+            venue: object["venue"] as? String
         )
     }
 

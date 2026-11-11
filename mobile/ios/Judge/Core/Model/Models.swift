@@ -308,6 +308,8 @@ struct VerdictRequest: Encodable, Sendable, Equatable {
     /// Sides A to C or D as typed, when there are more than two; `argument`
     /// is then all of them joined.
     var sides: [Side]? = nil
+    /// The place the court is drawn in, picked on the phone (see `Venues`).
+    var venue: String? = nil
 }
 
 // MARK: - Decoding
