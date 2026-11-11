@@ -279,18 +279,20 @@ fun JudgeRoot(
                 }
 
                 // While the judges work on a row, the list is read again now and then.
+                val lifecycle = LocalLifecycleOwner.current.lifecycle
                 LaunchedEffect(menuOpen, thinking, historyOn) {
                     if (!menuOpen || !thinking || !historyOn) return@LaunchedEffect
-                    while (true) {
-                        delay(HistoryViewModel.POLL_MS)
-                        historyVm.refresh(force = true)
+                    lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                        while (true) {
+                            delay(HistoryViewModel.POLL_MS)
+                            historyVm.refresh(force = true)
+                        }
                     }
                 }
 
                 // While a link row waits, its sides are read live; leaving the app stops it.
                 val waitingLinks = history.orEmpty().mapNotNull { it.waitingLinkId }.toSet()
                 val waitingLinksNow by rememberUpdatedState(waitingLinks)
-                val lifecycle = LocalLifecycleOwner.current.lifecycle
                 val live by historyVm.live.collectAsStateWithLifecycle()
                 LaunchedEffect(menuOpen, waitingLinks.isNotEmpty(), historyOn) {
                     if (!menuOpen || waitingLinks.isEmpty() || !historyOn) {
