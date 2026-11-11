@@ -457,6 +457,44 @@ final class HistoryListTests: XCTestCase {
     }
 
     @MainActor
+    func testAnInviteRowLeavesTheNewTabAlone() async throws {
+        let container = HistoryContainer.inMemory()
+        let (app, _) = try model(container, router: StubRouter())
+        var answered = item("c2", "2026-10-03T00:00:00.000Z", kind: "case")
+        answered.role = "respondent"
+        answered.party = "b"
+        answered.inviteToken = "tok2"
+        try app.history.apply(HistoryPage(items: [answered], next: nil), user: "u1", above: nil)
+        let entries = HistoryEntry.merge(cached: try app.history.cached(user: "u1"), saved: [], user: "u1")
+        let entry = try XCTUnwrap(entries.first { $0.id == "c:c2" })
+        app.home.path = [.saved(id: "old")]
+        app.tab = .settings
+
+        let url = await app.openRecent(entry)
+        XCTAssertEqual(url, app.config.siteURL("r").appending(component: "tok2"))
+        XCTAssertEqual(app.home.path, [.saved(id: "old")])
+        XCTAssertEqual(app.tab, .settings)
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
+    func testSigningOutClosesTheAccountsPages() async throws {
+        let container = HistoryContainer.inMemory()
+        let (app, _) = try model(container, router: StubRouter())
+        try app.history.apply(HistoryPage(items: [item("v1", "2026-10-05T00:00:00.000Z")], next: nil), user: "u1", above: nil)
+        try app.history.save(try session("lean_tie", id: "v1"))
+        try app.history.save(try session("split", id: "phone1"))
+        let entries = HistoryEntry.merge(cached: try app.history.cached(user: "u1"), saved: try app.history.all(), user: "u1")
+        _ = await app.openHistory(try XCTUnwrap(entries.first { $0.id == "v:v1" }))
+        _ = await app.openHistory(try XCTUnwrap(entries.first { $0.id == "v:phone1" }))
+        XCTAssertEqual(app.home.path, [.saved(id: "v1"), .saved(id: "phone1")])
+
+        app.dropAccountPages()
+        XCTAssertEqual(app.home.path, [.saved(id: "phone1")])
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
     func testAMenuRowStartsTheNewTabAgain() async throws {
         let container = HistoryContainer.inMemory()
         let (app, _) = try model(container, router: StubRouter())
