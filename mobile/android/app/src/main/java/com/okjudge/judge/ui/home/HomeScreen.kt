@@ -71,8 +71,10 @@ import com.okjudge.judge.core.cases.CaseLogic
 import com.okjudge.judge.core.display.ArgumentRules
 import com.okjudge.judge.core.display.CourtScene
 import com.okjudge.judge.core.display.Errors
+import com.okjudge.judge.core.display.PartyNames
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.evidence.ImageSource
+import com.okjudge.judge.core.model.Side
 import com.okjudge.judge.core.premium.Tiers
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LocalLang
@@ -118,7 +120,13 @@ object HomeTags {
     const val SEND_LINK = "home.sendLink"
     const val EXAMPLE = "home.example"
     const val ADD_THEIRS = "home.addTheirs"
+    const val ADD_SIDE = "home.addSide"
     const val REMOVE_THEIRS = "home.removeTheirs"
+    const val REMOVE_SIDE = "home.removeSide"
+
+    /** The writing box of side C or D. */
+    fun side(side: Side): String = "home.side.${side.raw}"
+    fun sideName(side: Side): String = "home.side.${side.raw}.name"
     const val CLEAR = "home.clear"
     const val BALANCE = "home.balance"
     const val COURT = "home.court"
@@ -142,6 +150,10 @@ fun HomeScreen(
     onExample: () -> Unit = {},
     onAddTheirSide: () -> Unit = {},
     onRemoveTheirSide: () -> Unit = {},
+    onAddSide: () -> Unit = {},
+    onRemoveLastSide: () -> Unit = {},
+    onExtraSide: (index: Int, text: String) -> Unit = { _, _ -> },
+    onExtraName: (index: Int, name: String) -> Unit = { _, _ -> },
     onClear: () -> Unit = {},
     onAddEvidence: (List<ImageSource>) -> Unit = {},
     onRemoveEvidence: (String) -> Unit = {},
@@ -171,7 +183,7 @@ fun HomeScreen(
 
     val theirFocus = remember { FocusRequester() }
     var focusTheirs by remember { mutableStateOf(false) }
-    LaunchedEffect(focusTheirs, state.theirsOpen) {
+    LaunchedEffect(focusTheirs, state.theirsOpen, state.more.size) {
         // The card has to be on screen before it can take the focus.
         if (focusTheirs && state.theirsOpen) {
             theirFocus.requestFocus()
@@ -188,28 +200,79 @@ fun HomeScreen(
             onClick = onSubmit,
         )
     }
+    // The cards on Home, A first. The last one is the composer at the bottom with the send button; the
+    // ones before it sit above in the page.
+    val openSides = state.openSides
+    val lastSide = openSides.last()
+    val card: @Composable (Side, Dp) -> Unit = { side, fieldMax ->
+        val last = side == lastSide
+        val others = Side.first(2).let { side !in it }
+        val extraIndex = side.ordinal - 2
+        val sides = LocalSides.current
+        SideCard(
+            colors = when (side) {
+                Side.A -> sides.mine
+                Side.B -> sides.theirs
+                else -> sides.of(side.raw)
+            },
+            letter = side.letter,
+            label = when (side) {
+                Side.A -> s.appHomeYourSide
+                Side.B -> s.appHomeTheirSide
+                else -> PartyNames.label(side, s)
+            },
+            showHeader = state.theirsOpen,
+            name = when (side) {
+                Side.A -> state.shownName
+                Side.B -> state.otherName
+                else -> state.more.getOrNull(extraIndex)?.name.orEmpty()
+            },
+            namePlaceholder = if (side == Side.A) s.appHomeYourName else s.appHomeTheirName,
+            onName = when (side) {
+                Side.A -> onDisplayName
+                Side.B -> onOtherName
+                else -> ({ name: String -> onExtraName(extraIndex, name) })
+            },
+            nameTag = when (side) {
+                Side.A -> HomeTags.NAME
+                Side.B -> HomeTags.OTHER_NAME
+                else -> HomeTags.sideName(side)
+            },
+            text = when (side) {
+                Side.A -> state.argument
+                Side.B -> state.otherSide
+                else -> state.more.getOrNull(extraIndex)?.text.orEmpty()
+            },
+            onText = when (side) {
+                Side.A -> onArgumentChange
+                Side.B -> onOtherSideChange
+                else -> ({ text: String -> onExtraSide(extraIndex, text) })
+            },
+            placeholder = if (side == Side.A) s.appHomeYourPlaceholder else s.appHomeTheirPlaceholder,
+            fieldLabel = when (side) {
+                Side.A -> s.appHomeYourSideLabel
+                Side.B -> s.appHomeTheirSideLabel
+                else -> PartyNames.label(side, s)
+            },
+            minLines = if (last) 2 else 3,
+            maxLines = if (last) 7 else 8,
+            tag = when (side) {
+                Side.A -> HomeTags.INPUT
+                Side.B -> HomeTags.OTHER
+                else -> HomeTags.side(side)
+            },
+            enabled = !state.holding,
+            fieldModifier = if (last && side != Side.A) Modifier.focusRequester(theirFocus) else Modifier,
+            onRemove = if (!last || side == Side.A) null else if (others) onRemoveLastSide else onRemoveTheirSide,
+            removeTag = if (others) HomeTags.REMOVE_SIDE else HomeTags.REMOVE_THEIRS,
+            onAddContext = addContext.takeIf { side == Side.A || last },
+            count = length.takeIf { last },
+            trailing = send.takeIf { last },
+            fieldMax = if (last) fieldMax else Dp.Unspecified,
+        )
+    }
     val middle: @Composable ColumnScope.() -> Unit = {
-        if (state.theirsOpen) {
-            SideCard(
-                colors = LocalSides.current.mine,
-                letter = "A",
-                label = s.appHomeYourSide,
-                showHeader = true,
-                name = state.shownName,
-                namePlaceholder = s.appHomeYourName,
-                onName = onDisplayName,
-                nameTag = HomeTags.NAME,
-                text = state.argument,
-                onText = onArgumentChange,
-                placeholder = s.appHomeYourPlaceholder,
-                fieldLabel = s.appHomeYourSideLabel,
-                minLines = 3,
-                maxLines = 8,
-                tag = HomeTags.INPUT,
-                enabled = !state.holding,
-                onAddContext = addContext,
-            )
-        }
+        if (state.theirsOpen) openSides.dropLast(1).forEach { card(it, Dp.Unspecified) }
         if (state.evidenceOn && state.evidence.hasRows) {
             EvidenceRows(state.evidence, disabled = state.holding, onRemove = onRemoveEvidence)
         }
@@ -234,22 +297,37 @@ fun HomeScreen(
                 }
             }
         }
-        if (!state.theirsOpen) {
+        val offerLink = state.casesOn && (!state.theirsOpen || state.more.isNotEmpty())
+        if (!state.theirsOpen || state.canAddSide || offerLink) {
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                GhostButton(
-                    s.appHomeAddTheirSide,
-                    rememberIcon(Palette.ink) { JudgeIcons.plus(it) },
-                    onClick = {
-                        focusTheirs = true
-                        onAddTheirSide()
-                    },
-                    modifier = Modifier.testTag(HomeTags.ADD_THEIRS),
-                    enabled = !state.holding,
-                )
-                if (state.casesOn) {
+                if (!state.theirsOpen) {
+                    GhostButton(
+                        s.appHomeAddTheirSide,
+                        rememberIcon(Palette.ink) { JudgeIcons.plus(it) },
+                        onClick = {
+                            focusTheirs = true
+                            onAddTheirSide()
+                        },
+                        modifier = Modifier.testTag(HomeTags.ADD_THEIRS),
+                        enabled = !state.holding,
+                    )
+                }
+                if (state.canAddSide) {
+                    GhostButton(
+                        s.homeAddSide,
+                        rememberIcon(Palette.ink) { JudgeIcons.plus(it) },
+                        onClick = {
+                            focusTheirs = true
+                            onAddSide()
+                        },
+                        modifier = Modifier.testTag(HomeTags.ADD_SIDE),
+                        enabled = !state.holding,
+                    )
+                }
+                if (offerLink) {
                     GhostButton(
                         s.appHomeSendLink,
                         rememberIcon(Palette.ink) { JudgeIcons.link(it) },
@@ -300,30 +378,7 @@ fun HomeScreen(
             }
             Column(column.padding(bottom = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 if (state.theirsOpen) {
-                    SideCard(
-                        colors = LocalSides.current.theirs,
-                        letter = "B",
-                        label = s.appHomeTheirSide,
-                        showHeader = true,
-                        name = state.otherName,
-                        namePlaceholder = s.appHomeTheirName,
-                        onName = onOtherName,
-                        nameTag = HomeTags.OTHER_NAME,
-                        text = state.otherSide,
-                        onText = onOtherSideChange,
-                        placeholder = s.appHomeTheirPlaceholder,
-                        fieldLabel = s.appHomeTheirSideLabel,
-                        minLines = 2,
-                        maxLines = 7,
-                        tag = HomeTags.OTHER,
-                        enabled = !state.holding,
-                        fieldModifier = Modifier.focusRequester(theirFocus),
-                        onRemove = onRemoveTheirSide,
-                        onAddContext = addContext,
-                        count = length,
-                        trailing = send,
-                        fieldMax = fieldMax,
-                    )
+                    card(lastSide, fieldMax)
                 } else {
                     SideCard(
                         colors = LocalSides.current.mine,
@@ -411,6 +466,7 @@ private fun SideCard(
     enabled: Boolean,
     fieldModifier: Modifier = Modifier,
     onRemove: (() -> Unit)? = null,
+    removeTag: String = HomeTags.REMOVE_THEIRS,
     onAddContext: (() -> Unit)? = null,
     count: Int? = null,
     trailing: (@Composable () -> Unit)? = null,
@@ -468,7 +524,7 @@ private fun SideCard(
                             contentDescription = s.appHomeRemoveTheirSide
                         }
                         .clickable(enabled = enabled, onClick = onRemove)
-                        .testTag(HomeTags.REMOVE_THEIRS),
+                        .testTag(removeTag),
                     contentAlignment = Alignment.Center,
                 ) {
                     Box(Modifier.size(26.dp).background(Palette.ivory2, CircleShape), contentAlignment = Alignment.Center) {

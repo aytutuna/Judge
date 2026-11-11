@@ -53,6 +53,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
@@ -80,6 +81,7 @@ import com.okjudge.judge.core.model.CaseStatus
 import com.okjudge.judge.core.model.CaseVerdictView
 import com.okjudge.judge.core.model.CaseView
 import com.okjudge.judge.core.model.NameMapping
+import com.okjudge.judge.core.model.Side
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.i18n.Strings
@@ -120,6 +122,10 @@ object CaseTags {
     const val SHARE = "case.share"
     const val RESET = "case.reset"
     const val JUDGE_NOW = "case.judgeNow"
+    const val JUDGE_ANSWERED = "case.judgeAnswered"
+
+    /** The card of one invited side of a case with three or four sides. */
+    fun invite(side: Side): String = "case.invite.${side.raw}"
     const val RETRY = "case.retry"
     const val START_OVER = "case.startOver"
     const val REMOVE = "case.remove"
@@ -151,7 +157,8 @@ data class CaseActions(
     val onStartOver: () -> Unit = {},
     val onJudgeNow: () -> Unit = {},
     val onRetry: () -> Unit = {},
-    val onResetInvite: () -> Unit = {},
+    val onJudgeAnswered: () -> Unit = {},
+    val onResetInvite: (Side) -> Unit = {},
     val onRemove: () -> Unit = {},
     val onCopyInvite: (String) -> Unit = {},
     val onShareInvite: (String) -> Unit = {},
@@ -171,7 +178,7 @@ data class CaseActions(
     val onCopyVerdict: ((id: String) -> Unit)? = null,
 )
 
-private enum class Confirm { JUDGE_NOW, RESET, REMOVE }
+private enum class Confirm { JUDGE_NOW, JUDGE_ANSWERED, RESET, REMOVE }
 
 /**
  * The owner's case screen (components/case/CaseScreen.tsx), stateless: the
@@ -208,6 +215,8 @@ private fun CaseScreenBody(
     val s = LocalStrings.current
     val view = state.view
     var confirm by rememberSaveable { mutableStateOf<Confirm?>(null) }
+    // Which side's link a reset confirmation is about.
+    var resetSide by rememberSaveable { mutableStateOf(Side.B.raw) }
     var details by rememberSaveable { mutableStateOf(false) }
     var appealOpen by rememberSaveable { mutableStateOf(false) }
     val kicker = if (view?.oneSided == true) s.caseKickerOneSided else s.caseKicker
@@ -283,13 +292,15 @@ private fun CaseScreenBody(
                     onCancel = { actions.onBack?.invoke() },
                     premium = view.premium,
                     showCancel = false,
+                    sideCount = view.sideCount,
                     modifier = Modifier.weight(1f),
                 )
             }
             return@Column
         }
 
-        val waitingFor = otherName?.trim()?.takeIf { it.isNotEmpty() } ?: view.display.b?.trim()?.takeIf { it.isNotEmpty() }
+        // With three or four sides the case waits for several people: the invites name them.
+        val waitingFor = if (view.isMany) null else otherName?.trim()?.takeIf { it.isNotEmpty() } ?: view.display.b?.trim()?.takeIf { it.isNotEmpty() }
         val scroll = rememberScrollState()
         Column(
             Modifier.fillMaxSize().clearFocusOnTap().dragDismissesKeyboard().verticalScroll(scroll, enabled = scroll.canScrollForward || scroll.canScrollBackward).imePadding().padding(horizontal = 16.dp),
@@ -309,7 +320,10 @@ private fun CaseScreenBody(
                 if (view.removed != null) {
                     Banner(if (state.removedNow) s.caseRemoved else s.caseRemovedBanner)
                 }
-                Body(state, view, waitingFor, evidenceOn, actions, addContext, onDetails = { details = true }, reducedMotion) { confirm = it }
+                Body(state, view, waitingFor, evidenceOn, actions, addContext, onDetails = { details = true }, reducedMotion) { what, side ->
+                    resetSide = side.raw
+                    confirm = what
+                }
                 if (view.verdicts.isNotEmpty() && view.removed == null) NamesTools(state, view, actions)
                 val bothRead = view.sides.size > 1
                 AccountsRead(
@@ -317,6 +331,7 @@ private fun CaseScreenBody(
                     sides = if (bothRead) view.sides else view.sides.filter { it.party == view.yourParty },
                     appeals = if (bothRead || view.oneSided) view.appeals else emptyList(),
                     yourParty = view.yourParty,
+                    sideCount = view.sideCount,
                 )
                 val canRemove = view.status != CaseStatus.JUDGING && !view.appealJudging && view.removed == null
                 if (canRemove) {
@@ -355,6 +370,7 @@ private fun CaseScreenBody(
                 if (expired) s.caseJudgeExpiredConfirm else s.caseJudgeNowConfirm,
                 if (expired) s.caseJudgeExpiredYes else s.caseJudgeNowYes,
             )
+            Confirm.JUDGE_ANSWERED -> Triple(s.caseJudgeAnswered, s.caseJudgeAnsweredConfirm, s.caseJudgeNowYes)
             Confirm.RESET -> Triple(s.caseInviteReset, s.caseInviteResetConfirm, s.caseInviteResetYes)
             Confirm.REMOVE -> Triple(s.caseRemove, s.caseRemoveConfirm, s.caseRemoveYes)
         }
@@ -368,7 +384,8 @@ private fun CaseScreenBody(
                         confirm = null
                         when (shown) {
                             Confirm.JUDGE_NOW -> actions.onJudgeNow()
-                            Confirm.RESET -> actions.onResetInvite()
+                            Confirm.JUDGE_ANSWERED -> actions.onJudgeAnswered()
+                            Confirm.RESET -> actions.onResetInvite(Side.of(resetSide) ?: Side.B)
                             Confirm.REMOVE -> actions.onRemove()
                         }
                     },
@@ -498,7 +515,7 @@ private fun Body(
     onAddContext: (() -> Unit)?,
     onDetails: () -> Unit,
     reducedMotion: Boolean,
-    ask: (Confirm) -> Unit,
+    ask: (Confirm, Side) -> Unit,
 ) {
     val s = LocalStrings.current
     val lang = LocalLang.current
@@ -506,9 +523,36 @@ private fun Body(
         CaseStatus.AWAITING -> {
             // "If nobody answers" no longer applies once they have.
             val held = view.premium && !(view.ownerSideMissing && view.respondentAnswered)
-            if (view.inviteUrl != null || held) {
+            val invites = view.invites.orEmpty().takeIf { view.isMany }
+            if (invites != null) {
+                // One link for each side, with whether that person has answered.
+                invites.forEach { invite ->
+                    val side = invite.side ?: return@forEach
+                    Card(Modifier.testTag(CaseTags.invite(side))) {
+                        val typed = view.display.name(side)?.trim().orEmpty()
+                        val name = typed.ifEmpty { PartyNames.label(side, s) }
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            SideAvatar(side)
+                            Text(name, style = JudgeType.slotTitle, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
+                            Text(
+                                if (invite.answered) s.caseSideAnswered else s.caseSideWaiting,
+                                style = JudgeType.footnote.copy(color = if (invite.answered) Palette.sageInk else Palette.muted),
+                            )
+                        }
+                        val url = invite.inviteUrl
+                        if (invite.waiting && url != null) {
+                            InviteLink(url, view.expiresAt, name, state, actions, resetDone = state.resetDone && state.resetSide == side) {
+                                ask(Confirm.RESET, side)
+                            }
+                        }
+                    }
+                }
+                if (held) Note(Errors.formatDate(lang, view.expiresAt)?.let { s.caseHeld(it) } ?: s.caseHeldSoon, color = Palette.muted)
+            } else if (view.inviteUrl != null || held) {
                 Card {
-                    view.inviteUrl?.let { url -> InviteLink(url, view.expiresAt, waitingFor, state, actions) { ask(Confirm.RESET) } }
+                    view.inviteUrl?.let { url ->
+                        InviteLink(url, view.expiresAt, waitingFor, state, actions, resetDone = state.resetDone) { ask(Confirm.RESET, Side.B) }
+                    }
                     if (held) Note(Errors.formatDate(lang, view.expiresAt)?.let { s.caseHeld(it) } ?: s.caseHeldSoon, color = Palette.muted)
                 }
             }
@@ -520,20 +564,21 @@ private fun Body(
             }
             if (!sideMissing) WaitingSteps(waitingFor, view.canJudgeNow)
             ErrorLine(state.actionError, actions.onPricing)
-            if (view.canJudgeNow && !sideMissing) {
+            val judgeAnswered = view.isMany && view.canJudgeAnswered && !sideMissing
+            if (judgeAnswered || (view.canJudgeNow && !sideMissing && !view.isMany)) {
                 Box(
                     Modifier
                         .fillMaxWidth()
                         .heightIn(min = 48.dp)
                         .clip(RoundedCornerShape(16.dp))
                         .border(1.dp, Palette.line2, RoundedCornerShape(16.dp))
-                        .clickable(role = Role.Button) { if (!state.busy) ask(Confirm.JUDGE_NOW) }
-                        .testTag(CaseTags.JUDGE_NOW)
+                        .clickable(role = Role.Button) { if (!state.busy) ask(if (judgeAnswered) Confirm.JUDGE_ANSWERED else Confirm.JUDGE_NOW, Side.B) }
+                        .testTag(if (judgeAnswered) CaseTags.JUDGE_ANSWERED else CaseTags.JUDGE_NOW)
                         .padding(horizontal = 16.dp, vertical = 12.dp),
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
-                        if (waitingFor != null) s.appCaseJudgeNowWithout(waitingFor) else s.caseJudgeNow,
+                        if (judgeAnswered) s.caseJudgeAnswered else if (waitingFor != null) s.appCaseJudgeNowWithout(waitingFor) else s.caseJudgeNow,
                         style = JudgeType.slotTitle.copy(color = Palette.ink),
                     )
                 }
@@ -574,7 +619,7 @@ private fun Body(
             ErrorLine(state.actionError, actions.onPricing)
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 if (view.canJudgeNow && !view.ownerSideMissing) {
-                    PrimaryButton(s.caseJudgeNow, !state.busy, { ask(Confirm.JUDGE_NOW) }, Modifier.testTag(CaseTags.JUDGE_NOW))
+                    PrimaryButton(s.caseJudgeNow, !state.busy, { ask(Confirm.JUDGE_NOW, Side.B) }, Modifier.testTag(CaseTags.JUDGE_NOW))
                 }
                 GhostButton(s.caseStartOver, null, actions.onStartOver, Modifier.testTag(CaseTags.START_OVER))
             }
@@ -584,7 +629,7 @@ private fun Body(
 
 /** "Send Sam this link", the link with Share and Copy, and until when it works (when the case says). */
 @Composable
-private fun InviteLink(url: String, expiresAt: String, name: String?, state: CaseUiState, actions: CaseActions, onReset: () -> Unit) {
+private fun InviteLink(url: String, expiresAt: String, name: String?, state: CaseUiState, actions: CaseActions, resetDone: Boolean, onReset: () -> Unit) {
     val s = LocalStrings.current
     val lang = LocalLang.current
     var copied by remember { mutableStateOf(false) }
@@ -648,7 +693,7 @@ private fun InviteLink(url: String, expiresAt: String, name: String?, state: Cas
     }
     Errors.formatDate(lang, expiresAt)?.let { Note(s.caseInviteExpires(it), color = Palette.muted) }
     TextAction(s.caseInviteReset, { if (!state.busy) onReset() }, Modifier.testTag(CaseTags.RESET), color = Palette.ink2)
-    if (state.resetDone) {
+    if (resetDone) {
         Note(s.caseInviteResetDone, Modifier.semantics { liveRegion = LiveRegionMode.Polite }, color = Palette.sageInk)
     }
 }
@@ -706,6 +751,17 @@ private fun WriteSide(draft: SideDraft, answered: Boolean, evidenceOn: Boolean, 
             actions.onSubmitSide,
             Modifier.fillMaxWidth().testTag(CaseTags.WRITE_SUBMIT),
         )
+    }
+}
+
+/** A side's letter on its colour. */
+@Composable
+private fun SideAvatar(side: Side) {
+    Box(
+        Modifier.size(28.dp).clip(CircleShape).background(LocalSides.current.of(side.raw).ink).clearAndSetSemantics { },
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(side.letter, style = JudgeType.micro.copy(fontSize = 12.sp, color = Palette.paper, letterSpacing = 0.sp))
     }
 }
 
@@ -770,14 +826,14 @@ private fun CaseVerdict(
             copied = false
         }
     }
-    val parties = PartyNames.partyNames(names, selfLang, s)
+    val parties = PartyNames.partyNames(names, selfLang, s, result.sideCount)
     val cardActions = CardActions(
         onShare = if (linked) actions.onShareVerdict?.let { share -> { share(verdict.id, result.headline) } } else null,
         onCopy = if (linked) actions.onCopyVerdict?.let { copy -> { copy(verdict.id); copied = true } } else null,
         copied = copied,
         onAddContext = onAddContext,
     )
-    val restored = PartyNames.restoredNames(names, selfLang)
+    val restored = PartyNames.restoredNames(names, selfLang, result.sideCount)
     if (details) {
         VerdictDetails(view, parties, restored, cardActions, modifier)
     } else {
@@ -1023,7 +1079,7 @@ private fun NamesTools(state: CaseUiState, view: CaseView, actions: CaseActions)
         }
         Text(s.caseDisplayName, style = JudgeType.slotTitle)
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            val mine = if (view.yourParty == "a") view.display.a else view.display.b
+            val mine = view.yourSide?.let { view.display.name(it) }
             Box(
                 Modifier
                     .weight(1f)
@@ -1069,36 +1125,54 @@ private fun NamesTools(state: CaseUiState, view: CaseView, actions: CaseActions)
  * viewer's own side marked as theirs. Names are deliberately not restored.
  */
 @Composable
-private fun AccountsRead(title: String, sides: List<CaseSideView>, appeals: List<CaseAppealView>, yourParty: String) {
+private fun AccountsRead(title: String, sides: List<CaseSideView>, appeals: List<CaseAppealView>, yourParty: String, sideCount: Int = 2) {
     if (sides.isEmpty()) return
     val s = LocalStrings.current
-    val label = { p: String -> if (p == "a") s.partyA else s.partyB }
+    val label = { p: String -> Side.of(p)?.let { PartyNames.label(it, s) } ?: s.partyB }
+    val accountTitle = { p: String ->
+        when (p) {
+            "a" -> s.caseAccountA
+            "c" -> s.caseAccountC
+            "d" -> s.caseAccountD
+            else -> s.caseAccountB
+        }
+    }
+    val contextTitle = { p: String ->
+        when (p) {
+            "a" -> s.caseContextA
+            "c" -> s.caseContextC
+            "d" -> s.caseContextD
+            else -> s.caseContextB
+        }
+    }
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Text(title, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
         sides.sortedBy { it.party }.forEach { side ->
             Account(
-                head = if (side.party == yourParty) s.caseAccountYou(label(side.party)) else if (side.party == "a") s.caseAccountA else s.caseAccountB,
-                isA = side.party == "a",
+                head = if (side.party == yourParty) s.caseAccountYou(label(side.party)) else accountTitle(side.party),
+                party = side.party,
                 text = if (side.removed) null else side.text,
                 evidence = if (side.removed) emptyList() else side.evidence,
                 s = s,
+                sides = sideCount,
             )
         }
         appeals.filter { it.status != "failed" && it.text.isNotBlank() }.forEach { a ->
             Account(
-                head = if (a.party == yourParty) s.caseContextYou(label(a.party)) else if (a.party == "a") s.caseContextA else s.caseContextB,
-                isA = a.party == "a",
+                head = if (a.party == yourParty) s.caseContextYou(label(a.party)) else contextTitle(a.party),
+                party = a.party,
                 text = a.text,
                 evidence = a.evidence,
                 s = s,
+                sides = sideCount,
             )
         }
     }
 }
 
 @Composable
-private fun Account(head: String, isA: Boolean, text: String?, evidence: List<CaseEvidenceView>, s: Strings) {
-    val side = LocalSides.current.of(if (isA) "a" else "b")
+private fun Account(head: String, party: String, text: String?, evidence: List<CaseEvidenceView>, s: Strings, sides: Int = 2) {
+    val side = LocalSides.current.of(party)
     Column(
         Modifier
             .fillMaxWidth()
@@ -1112,7 +1186,7 @@ private fun Account(head: String, isA: Boolean, text: String?, evidence: List<Ca
         if (text == null) {
             Note(s.caseSideRemoved, color = Palette.muted)
         } else {
-            Text(CaseLogic.localizeLabelsAuto(text), style = JudgeType.body.copy(fontSize = 15.sp, lineHeight = 22.sp))
+            Text(CaseLogic.localizeLabelsAuto(text, sides), style = JudgeType.body.copy(fontSize = 15.sp, lineHeight = 22.sp))
             evidence.forEachIndexed { i, ev ->
                 var open by rememberSaveable(ev.id) { mutableStateOf(false) }
                 Text(
@@ -1122,7 +1196,7 @@ private fun Account(head: String, isA: Boolean, text: String?, evidence: List<Ca
                 )
                 if (open) {
                     Text(
-                        CaseLogic.localizeLabelsAuto(ev.transcript),
+                        CaseLogic.localizeLabelsAuto(ev.transcript, sides),
                         style = JudgeType.slotText.copy(color = Palette.ink, fontFamily = FontFamily.Monospace, fontSize = 12.sp),
                         modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).background(Palette.paper).padding(10.dp),
                     )

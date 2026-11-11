@@ -430,6 +430,10 @@ fun JudgeRoot(
                                         onDismissError = vm::dismissError,
                                         onAddTheirSide = vm::addTheirSide,
                                         onRemoveTheirSide = vm::removeTheirSide,
+                                        onAddSide = vm::addSide,
+                                        onRemoveLastSide = vm::removeLastSide,
+                                        onExtraSide = vm::onExtraSideChange,
+                                        onExtraName = vm::onExtraName,
                                         onClear = vm::clear,
                                         onAddEvidence = {
                                             analytics.track("evidence_added")
@@ -623,6 +627,7 @@ fun JudgeRoot(
                                             },
                                             onJudgeNow = { vm.judge(onlyMine = true) },
                                             onRetry = { vm.judge(onlyMine = false) },
+                                            onJudgeAnswered = vm::judgeAnswered,
                                             onResetInvite = vm::resetInvite,
                                             onRemove = vm::remove,
                                             onCopyInvite = { copyLink(context, it) },

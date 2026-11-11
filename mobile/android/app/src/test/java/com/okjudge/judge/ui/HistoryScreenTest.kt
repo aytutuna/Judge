@@ -178,4 +178,19 @@ class HistoryScreenTest {
         assertEquals("a state this build doesn't know gets no label", null, HistoryLabels.status(waiting.copy(state = "archived"), en, now))
         assertEquals(en.historyStateReady, HistoryLabels.status(item("verdict0021").copy(verdict = null), en, now))
     }
+
+    @Test
+    fun labels_forThreeSides_readTheWinnerAgainstTheViewersParty() {
+        val base = item("case0000013").copy(parties = listOf("a", "b", "c"), verdict = "too_close", nameMap = emptyList())
+        val won = base.copy(party = "c", winner = "c")
+        assertEquals(HistoryLabels.Tone.YOURS, HistoryLabels.tone(won, now))
+        assertEquals(en.verdictWinSelf, HistoryLabels.status(won, en, now))
+        val lost = base.copy(party = "a", winner = "c")
+        assertEquals(HistoryLabels.Tone.THEIRS, HistoryLabels.tone(lost, now))
+        assertEquals(en.verdictWin(en.partyC), HistoryLabels.status(lost, en, now))
+        val tie = base.copy(party = "b", winner = null)
+        assertEquals(HistoryLabels.Tone.NEUTRAL, HistoryLabels.tone(tie, now))
+        assertEquals(en.verdictTooClose, HistoryLabels.status(tie, en, now))
+        assertEquals("nobody is the other side", null, HistoryLabels.otherName(won))
+    }
 }

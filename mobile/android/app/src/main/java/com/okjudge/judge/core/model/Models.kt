@@ -75,9 +75,45 @@ data class DisputedFact(
     val decisive: Boolean = false,
 )
 
-/** Images each party attached that the judges read. */
+/** Images each party attached that the judges read; [c] and [d] only count on cases with more than two sides. */
 @Serializable
-data class EvidenceUsed(val a: Int = 0, val b: Int = 0)
+data class EvidenceUsed(val a: Int = 0, val b: Int = 0, val c: Int = 0, val d: Int = 0)
+
+/** A party of a case: A and B, then C and D when there are more than two sides. */
+enum class Side(val raw: String) {
+    A("a"), B("b"), C("c"), D("d");
+
+    /** "A" to "D". */
+    val letter: String get() = raw.uppercase()
+
+    companion object {
+        /** Null for a party this build does not know: it is never shown as A. */
+        fun of(raw: String?): Side? = entries.firstOrNull { it.raw == raw }
+
+        /** The first [count] sides: A and B, then C and D. */
+        fun first(count: Int): List<Side> = entries.take(count.coerceIn(2, 4))
+    }
+}
+
+/** One side of a verdict with three or four sides: what it claimed and what it stands on. */
+@Serializable
+data class SideSummary(val party: String = "", val claims: List<Claim> = emptyList(), val bedrock: String = "")
+
+/** Where a side that did not win fell short. */
+@Serializable
+data class OtherLine(val party: String = "", val line: String = "")
+
+@Serializable
+data class DisputePosition(val party: String = "", val says: String = "")
+
+/** A fact separate accounts disagree about, on a verdict with more than two sides. `finding`: a side or "unsettled". */
+@Serializable
+data class Dispute(
+    val fact: String = "",
+    val positions: List<DisputePosition> = emptyList(),
+    val finding: String = "unsettled",
+    val decisive: Boolean = false,
+)
 
 /** On a verdict produced by an appeal: how it compares to the one before (AppealInfo). */
 @Serializable
@@ -139,9 +175,26 @@ data class VerdictResult(
     @SerialName("would_change") val wouldChange: List<String>? = null,
     @SerialName("evidence_used") val evidenceUsed: EvidenceUsed? = null,
     val appeal: AppealInfo? = null,
+    /** Three or four sides only: [verdict] and [runs] are then the older two-sided projection. */
+    val parties: List<String>? = null,
+    /** The winning side of a verdict with more than two; null is too close. */
+    val winner: String? = null,
+    /** One entry per judge run: a side's letter, or "other" for too close. */
+    val votes: List<String>? = null,
+    val sides: List<SideSummary>? = null,
+    val others: List<OtherLine>? = null,
+    val disputes: List<Dispute>? = null,
     @Transient val leanPresent: Boolean = false,
 ) {
     val isTwoSided: Boolean get() = twoSided == true
+
+    /** The sides of a verdict with three or four; a list with two known sides or fewer reads as a two-sided verdict. */
+    val manySides: List<Side>? get() = parties?.mapNotNull { Side.of(it) }?.takeIf { it.size > 2 }
+    val isMany: Boolean get() = manySides != null
+    val sideCount: Int get() = manySides?.size ?: 2
+
+    /** Who won a verdict with more than two sides; null when it was too close or this build does not know the side. */
+    val winnerSide: Side? get() = if (isMany) Side.of(winner) else null
 
     val finalVerdict: FinalVerdict get() = FinalVerdict.of(verdict)
     val dispute: DisputeType get() = DisputeType.of(disputeType)
@@ -213,7 +266,13 @@ data class VerdictRequest(
     val tier: String = "premium",
     val clarifications: List<Clarification>? = null,
     val evidence: List<String>? = null,
+    /** Sides A to C or D as typed, when there are more than two; [argument] is then all of them joined. */
+    val sides: List<VerdictSide>? = null,
 )
+
+/** One typed side of a request with three or four. */
+@Serializable
+data class VerdictSide(val text: String, val name: String? = null)
 
 /** POST /api/v1/clarify. */
 @Serializable

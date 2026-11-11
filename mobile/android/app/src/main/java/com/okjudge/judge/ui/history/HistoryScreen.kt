@@ -444,13 +444,15 @@ private fun PhoneRow(item: SavedVerdict, interaction: Modifier, selected: Boolea
     val s = LocalStrings.current
     val lang = LocalLang.current
     val result = item.original.result
-    val parties = PartyNames.partyNames(item.nameMap, item.lang, s)
+    val parties = PartyNames.partyNames(item.nameMap, item.lang, s, result.sideCount)
     val label = VerdictDisplay.verdictLabel(result, parties, s)
     val headline = remember(item, lang) { HistoryLabels.title(item, lang) }
     val date = remember(item.createdAt, lang) { formatDate(item.createdAt, lang) }
     val dot = when (VerdictDisplay.sealOf(result)) {
         SealSide.A -> LocalSides.current.a.ink
         SealSide.B -> LocalSides.current.b.ink
+        SealSide.C -> LocalSides.current.c.ink
+        SealSide.D -> LocalSides.current.d.ink
         SealSide.NONE -> Palette.ink
     }
     RowFrame("v:${item.id}", interaction, selected, dot) {

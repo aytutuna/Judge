@@ -54,8 +54,37 @@ data class CaseVerdictView(
 @Serializable
 data class AppealGate(val allowed: Boolean = false, val blockedBy: String? = null)
 
+/** C and D only come with more than two sides. */
 @Serializable
-data class CaseDisplay(val namesVisible: Boolean = false, val a: String? = null, val b: String? = null)
+data class CaseDisplay(
+    val namesVisible: Boolean = false,
+    val a: String? = null,
+    val b: String? = null,
+    val c: String? = null,
+    val d: String? = null,
+) {
+    fun name(side: Side): String? = when (side) {
+        Side.A -> a
+        Side.B -> b
+        Side.C -> c
+        Side.D -> d
+    }
+}
+
+/** One invited side of a case with more than two sides, for its owner: B to D, each with its own link. */
+@Serializable
+data class CaseInvite(
+    val party: String = "",
+    /** waiting | answered | closed */
+    val status: String = "",
+    /** The owner's link while the side waits; null once answered or closed. */
+    val inviteUrl: String? = null,
+    val answeredAt: String? = null,
+) {
+    val side: Side? get() = Side.of(party)
+    val waiting: Boolean get() = status == "waiting"
+    val answered: Boolean get() = status == "answered"
+}
 
 @Serializable
 data class CaseRemoved(val at: String = "", val parties: List<String> = emptyList())
@@ -107,7 +136,20 @@ data class CaseView(
     val yourOriginal: String? = null,
     /** The owner has not written their side yet: the link was made first. */
     val ownerSideMissing: Boolean = false,
+    /** Only with three or four sides: A to C or A to D. */
+    val parties: List<String>? = null,
+    /** Only with three or four sides, for the owner: sides B to D, each with its own link. [inviteUrl] stays side B's. */
+    val invites: List<CaseInvite>? = null,
+    /** Only with three or four sides, for the owner: the answers in so far are enough to judge without the rest. */
+    val canJudgeAnswered: Boolean = false,
 ) {
+    /** The sides of a case with more than two; a list with two known sides or fewer reads as a two-sided case. */
+    val manySides: List<Side>? get() = parties?.mapNotNull { Side.of(it) }?.takeIf { it.size > 2 }
+    val isMany: Boolean get() = manySides != null
+    val sideCount: Int get() = manySides?.size ?: 2
+
+    /** The viewer's own side; null for a party this build does not know. */
+    val yourSide: Side? get() = Side.of(yourParty)
     val status: CaseStatus get() = CaseStatus.of(statusRaw)
     val current: CaseVerdictView? get() = verdicts.lastOrNull()
     val oneSided: Boolean get() = mode == "one_sided"
@@ -127,8 +169,11 @@ data class CaseSummary(
     val headline: String? = null,
     val excerpt: String? = null,
     val removed: Boolean = false,
+    /** Only with three or four sides. */
+    val parties: List<String>? = null,
 ) {
     val status: CaseStatus get() = CaseStatus.of(statusRaw)
+    val sideCount: Int get() = parties?.mapNotNull { Side.of(it) }?.size?.takeIf { it > 2 } ?: 2
 }
 
 @Serializable
@@ -147,7 +192,7 @@ data class CaseWithNames(
 )
 
 @Serializable
-data class InviteResponse(val inviteUrl: String = "")
+data class InviteResponse(val inviteUrl: String = "", val party: String? = null)
 
 @Serializable
 data class CaseRemovalResponse(val removed: Boolean = false, val removedAt: String = "", @SerialName("case") val case: CaseView? = null)
@@ -160,6 +205,8 @@ data class CreateCaseRequest(
     val tier: String = "premium",
     val evidence: List<String>? = null,
     val displayName: String? = null,
+    /** 3 or 4 for a case with that many sides; left out for two. */
+    val sides: Int? = null,
 )
 
 /** POST /api/v1/cases/{id}/side (WriteSideRequest). */

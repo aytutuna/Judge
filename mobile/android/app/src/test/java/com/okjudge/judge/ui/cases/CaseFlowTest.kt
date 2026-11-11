@@ -21,10 +21,12 @@ import com.okjudge.judge.core.model.CaseView
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.Features
 import com.okjudge.judge.core.model.NameMapping
+import com.okjudge.judge.core.model.Side
 import com.okjudge.judge.core.model.WireJson
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.ui.DeepLinks
+import com.okjudge.judge.ui.home.ExtraSide
 import com.okjudge.judge.ui.home.HomeUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,6 +40,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import kotlinx.coroutines.withTimeout
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -510,6 +513,108 @@ class CaseFlowTest {
         assertNull(DeepLinks.parse("https://okjudge.com/c/a%20b"))
         assertNull(DeepLinks.parse("not a url"))
         assertNull("only the site's own links", DeepLinks.parse("https://evil.example/r/Xk3pQ9vLm2Rt7YbN4cWd0A"))
+    }
+
+    /** A three-sided case as its owner sees it: B has answered, C still waits. */
+    private fun manyCase(): String {
+        val base = viewJson("waiting_for_respondent").toMutableMap()
+        base["parties"] = JsonArray(listOf("a", "b", "c").map(::JsonPrimitive))
+        base["canJudgeAnswered"] = JsonPrimitive(true)
+        base["invites"] = Json.parseToJsonElement(
+            """[{"party":"b","status":"answered","inviteUrl":null,"answeredAt":"2026-11-02T10:00:00.000Z"},
+                {"party":"c","status":"waiting","inviteUrl":"https://okjudge.com/r/CtokenCtokenCtokenCtok","answeredAt":null}]""",
+        )
+        base["display"] = Json.parseToJsonElement("""{"namesVisible":true,"a":"Ayşe","b":"Sam","c":"Deniz"}""")
+        return JsonObject(mapOf("case" to JsonObject(base))).toString()
+    }
+
+    @Test
+    fun aCaseWithThreeSides_decodesItsPartiesAndInvites() {
+        val view = WireJson.json.decodeFromString(
+            com.okjudge.judge.core.model.CaseResponse.serializer(), manyCase(),
+        ).case
+        assertEquals(listOf(Side.A, Side.B, Side.C), view.manySides)
+        assertEquals(3, view.sideCount)
+        assertEquals(listOf(Side.B, Side.C), view.invites!!.map { it.side })
+        assertTrue(view.invites!!.first().answered)
+        assertTrue(view.invites!!.last().waiting)
+        assertEquals("Deniz", view.display.name(Side.C))
+        assertTrue(view.canJudgeAnswered)
+        assertEquals("two sides have no invites or parties", 2, view("waiting_for_respondent").sideCount)
+        assertNull(view("waiting_for_respondent").invites)
+    }
+
+    @Test
+    fun inviteReset_forASide_asksForThatSideOnly() = runBlocking {
+        routes.on(GET, Routes.json(200, manyCase()))
+        routes.on("POST /api/v1/cases/$ID/invite", Routes.json(200, """{"inviteUrl":"https://okjudge.com/r/NEWCtokenNEWCtokenNEWCt","party":"c"}"""))
+        val vm = vm()
+        vm.until { it.status == CaseLoadStatus.READY }
+        vm.resetInvite(Side.C)
+        val after = vm.until { it.resetDone }
+        assertEquals(Side.C, after.resetSide)
+        assertEquals("c", bodyOf("POST /api/v1/cases/$ID/invite")["party"]!!.jsonPrimitive.content)
+        assertEquals("https://okjudge.com/r/NEWCtokenNEWCtokenNEWCt", after.view!!.invites!!.single { it.side == Side.C }.inviteUrl)
+        assertEquals("side B's link is left alone", viewJson("waiting_for_respondent")["inviteUrl"]?.jsonPrimitive?.content, after.view!!.inviteUrl)
+    }
+
+    @Test
+    fun judgeAnswered_sendsTheAnsweredMode() = runBlocking {
+        routes.on(GET, Routes.json(200, manyCase()))
+        routes.on(JUDGE, Routes.json(200, caseBody("judging")))
+        val vm = vm()
+        vm.until { it.status == CaseLoadStatus.READY }
+        vm.judgeAnswered()
+        vm.until { it.view?.status == CaseStatus.JUDGING }
+        assertEquals("answered", bodyOf(JUDGE)["mode"]!!.jsonPrimitive.content)
+    }
+
+    @Test
+    fun create_withMoreThanTwoSides_sendsHowMany() = runBlocking {
+        routes.on(CREATE, Routes.json(201, cases["createResponse"].toString()))
+        val flow = VerdictFlow(api(), FakeHistory(), scope, newKey = { "ck-${++keys}" }, caseNames = names)
+        assertTrue(flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", AppLang.EN, emptyList(), null, sides = 4))
+        withTimeout(5_000) { flow.navigation.first() }
+        assertEquals(4, bodyOf(CREATE)["sides"]!!.jsonPrimitive.content.toInt())
+    }
+
+    @Test
+    fun create_withTwoSides_sendsNoSidesField() = runBlocking {
+        routes.on(CREATE, Routes.json(201, cases["createResponse"].toString()))
+        val flow = VerdictFlow(api(), FakeHistory(), scope, newKey = { "ck-${++keys}" }, caseNames = names)
+        assertTrue(flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", AppLang.EN, emptyList(), null))
+        withTimeout(5_000) { flow.navigation.first() }
+        assertNull(bodyOf(CREATE)["sides"])
+    }
+
+    private val sam = "Sam says a hot dog is a sandwich and I say it is not."
+
+    @Test
+    fun home_addSide_upToFour_andEachNeedsASide() {
+        val home = HomeUiState(argument = sam, otherSide = sam, theirsOpen = true, signedIn = true, features = Features(cases = true))
+        assertEquals(listOf(Side.A, Side.B), home.openSides)
+        assertTrue("an answered second card offers another side", home.canAddSide)
+        assertTrue("with links on, sides still to be invited can take another", home.copy(otherSide = "").canAddSide)
+        assertFalse("without them an empty card does not", home.copy(otherSide = "", features = Features()).canAddSide)
+        val three = home.copy(more = listOf(ExtraSide(text = sam)))
+        assertEquals(listOf(Side.A, Side.B, Side.C), three.openSides)
+        assertTrue(three.canAddSide)
+        assertTrue(three.canSubmit)
+        assertFalse("a side too short to judge", three.copy(more = listOf(ExtraSide(text = "Too short"))).canSubmit)
+        val four = three.copy(more = listOf(ExtraSide(text = sam), ExtraSide(text = sam)))
+        assertEquals(listOf(Side.A, Side.B, Side.C, Side.D), four.openSides)
+        assertFalse("four is the most", four.canAddSide)
+        assertFalse(HomeUiState(argument = sam, theirsOpen = false).canAddSide)
+    }
+
+    @Test
+    fun home_linkReturnsOnceAThirdSideIsAddedWithNoText() {
+        val home = HomeUiState(theirsOpen = true, signedIn = true, features = Features(cases = true))
+        assertFalse("two cards open: they write both", home.canSendLink)
+        val three = home.copy(more = listOf(ExtraSide()))
+        assertTrue(three.canSendLink)
+        assertTrue("sides still to be invited can take another", three.canAddSide)
+        assertFalse("text in another side is a verdict, not a link", three.copy(otherSide = sam).canSendLink)
     }
 
     private companion object {

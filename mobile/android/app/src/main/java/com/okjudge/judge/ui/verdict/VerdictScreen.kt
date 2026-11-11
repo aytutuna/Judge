@@ -119,7 +119,7 @@ fun VerdictRoute(
             return@Column
         }
         val selfLang = saved.lang
-        val parties = PartyNames.partyNames(saved.nameMap, selfLang, s)
+        val parties = PartyNames.partyNames(saved.nameMap, selfLang, s, view.result.sideCount)
         val shown = remember(view, saved.nameMap, selfLang) { view.personalized(saved.nameMap, selfLang) }
         val area = appealState?.area ?: AppealArea.None
         val actions = CardActions(
@@ -144,7 +144,7 @@ fun VerdictRoute(
                 .padding(horizontal = 16.dp, vertical = 4.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            val restored = remember(saved.nameMap, selfLang) { PartyNames.restoredNames(saved.nameMap, selfLang) }
+            val restored = remember(saved.nameMap, selfLang) { PartyNames.restoredNames(saved.nameMap, selfLang, view.result.sideCount) }
             if (details) {
                 VerdictDetails(shown, parties, restored, actions, width.padding(bottom = 32.dp))
             } else {

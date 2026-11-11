@@ -10,6 +10,7 @@ import com.okjudge.judge.core.display.ExampleBook
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.Features
 import com.okjudge.judge.core.model.MeResponse
+import com.okjudge.judge.core.model.Side
 import com.okjudge.judge.core.model.ServerConfig
 import com.okjudge.judge.core.model.Viewer
 import com.okjudge.judge.core.session.VerdictFlow
@@ -249,5 +250,18 @@ class HomeViewModelTest {
             assertEquals(Submitted.CHECKING, vm.submit(AppLang.EN, UiTestSupport.s(AppLang.EN)))
             flow.cancel()
         }
+    }
+
+    @Test
+    fun home_joinsAllSidesWithTheirNames_andListsTheWrittenOnes() {
+        val s = UiTestSupport.s(AppLang.EN)
+        val home = HomeUiState(
+            argument = "I did the dishes twice.", otherSide = "I did them three times.", otherName = "Sam",
+            theirsOpen = true, more = listOf(ExtraSide("Nobody asked me.", "Deniz"), ExtraSide("I was out of town.")),
+        )
+        val text = home.outgoing(s)
+        assertTrue(text, text.contains("Deniz") && text.contains("Nobody asked me."))
+        assertTrue("an unnamed side reads as its label", text.contains("Party D: I was out of town."))
+        assertEquals(listOf(Side.A, Side.B, Side.C, Side.D), home.sides.map { it.party })
     }
 }

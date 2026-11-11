@@ -38,6 +38,14 @@ object Fixtures {
 
     fun sample(name: String): VerdictOutcome = WireJson.decodeVerdictResponse(sampleJson(name))
 
+    /** A verdict with three or four sides (verdicts.json manySidedResponses). */
+    fun manySample(name: String): VerdictOutcome =
+        WireJson.decodeVerdictResponse(verdicts["manySidedResponses"]!!.jsonObject[name]!!.toString())
+
+    /** A sample of either kind. */
+    fun anySample(name: String): VerdictOutcome =
+        if (verdicts["manySidedResponses"]!!.jsonObject.containsKey(name)) manySample(name) else sample(name)
+
     /** The fixture translation body, through the app's wire decoder. */
     val translation: TranslateOutcome by lazy { WireJson.decodeTranslateResponse(verdicts["translateResponse"].toString()) }
 

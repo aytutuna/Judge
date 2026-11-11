@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -52,6 +53,7 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -76,6 +78,7 @@ import com.okjudge.judge.core.model.FactCheck
 import com.okjudge.judge.core.model.FinalVerdict
 import com.okjudge.judge.core.model.LeanState
 import com.okjudge.judge.core.model.NameMapping
+import com.okjudge.judge.core.model.Side
 import com.okjudge.judge.core.model.TrialOutcome
 import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.i18n.AppLang
@@ -95,6 +98,7 @@ import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.LocalSides
 import com.okjudge.judge.ui.theme.Palette
+import com.okjudge.judge.ui.theme.SideColors
 import com.okjudge.judge.ui.theme.cappedScale
 import com.okjudge.judge.ui.theme.forScript
 
@@ -123,6 +127,11 @@ object VerdictTags {
     const val CRUX_ROW = "verdict.row.crux"
     const val SIDES_ROW = "verdict.row.sides"
     const val BEST_ROW = "verdict.row.best"
+    const val SIDE_LIST = "verdict.sides"
+    const val OTHERS = "verdict.others"
+
+    /** A row of the side list of a verdict with three or four sides. */
+    fun side(side: Side): String = "verdict.side.${side.raw}"
 }
 
 /**
@@ -159,11 +168,16 @@ fun RulingSummary(
                 .animateContentSize(),
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
-            if (scene) SceneView(VerdictDisplay.sceneVerdict(result), reducedMotion, Modifier.fillMaxWidth().height(118.dp))
+            // Three or four sides have no balance and no lean bar.
+            if (scene && !result.isMany) SceneView(VerdictDisplay.sceneVerdict(result), reducedMotion, Modifier.fillMaxWidth().height(118.dp))
             TranslationLine(view)
             Column(Modifier.alpha(if (view.status == TranslationStatus.LOADING) 0.55f else 1f), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-                PartySides { Contenders(parties) }
-                VerdictDisplay.leanShare(result)?.let { share -> PartySides { LeanBar(share, parties) } }
+                if (result.isMany) {
+                    SideList(result, parties)
+                } else {
+                    PartySides { Contenders(parties) }
+                    VerdictDisplay.leanShare(result)?.let { share -> PartySides { LeanBar(share, parties) } }
+                }
                 LabelRow(result, parties, dots = true)
                 Text(
                     result.headline.ifEmpty { VerdictDisplay.verdictLabel(result, parties, s) },
@@ -172,16 +186,14 @@ fun RulingSummary(
                 )
                 Why(result)
                 Branches(result, parties, restoredNames)
+                if (result.isMany && !result.refused) OtherLines(result, parties)
                 if (result.refused) SlotText(s.refusedNote)
             }
         }
         if (!result.refused) {
             val rows = buildList {
                 if (result.crux.isNotEmpty()) add(s.cruxShort to VerdictTags.CRUX_ROW)
-                val map = result.argumentMap
-                if (map.bedrockA.isNotEmpty() || map.bedrockB.isNotEmpty() || map.sideA.isNotEmpty() || map.sideB.isNotEmpty()) {
-                    add(s.appVerdictSides to VerdictTags.SIDES_ROW)
-                }
+                if (VerdictDisplay.hasSides(result)) add(s.appVerdictSides to VerdictTags.SIDES_ROW)
                 if (result.losingSideBestPoint.isNotEmpty()) add(bestPointTitle(result, parties, s) to VerdictTags.BEST_ROW)
             }
             if (rows.isNotEmpty()) {
@@ -242,7 +254,7 @@ fun VerdictDetails(
                 DetailSection(bestPointTitle(result, parties, s)) { Text(result.losingSideBestPoint, style = SectionText) }
             }
             if (result.factsReliedOn.isNotEmpty()) FactsSection(result.factsReliedOn)
-            if (result.isTwoSided) TwoSidedFacts(result, parties)
+            if (result.isTwoSided || result.isMany) TwoSidedFacts(result, parties)
             result.factCheck?.let { FactCheckSection(it, result.dispute) }
             WouldChange(result.wouldChange.orEmpty())
         }
@@ -255,11 +267,12 @@ fun VerdictDetails(
 
 @Composable
 private fun OutcomeBanner(appeal: AppealInfo, parties: PartyLabels) {
-    val byA = appeal.by == "a"
+    // A party this build does not know is not shown as Party A.
+    val by = Side.of(appeal.by)
     AppealOutcomeBanner(
         appeal = appeal,
-        byName = if (byA) parties.nameA else parties.nameB,
-        bySelf = if (byA) parties.aIsSelf else parties.bIsSelf,
+        byName = by?.let { parties.name(it) } ?: parties.nameB,
+        bySelf = by?.let { parties.isSelf(it) } ?: false,
     )
 }
 
@@ -344,6 +357,75 @@ private fun Avatar(letter: String, color: Color) {
     }
 }
 
+/**
+ * Every side of a verdict with three or four sides: its name, a dot for each judge that voted for it and
+ * a check on the winner.
+ */
+@Composable
+private fun SideList(result: VerdictResult, parties: PartyLabels) {
+    val sides = LocalSides.current
+    val winner = result.winnerSide
+    val votes = VerdictDisplay.votes(result)
+    Column(Modifier.fillMaxWidth().testTag(VerdictTags.SIDE_LIST), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        result.manySides.orEmpty().forEach { side ->
+            val won = winner == side
+            val colors = sides.of(side.raw)
+            val name = parties.name(side)
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 44.dp)
+                    .clip(JudgeShapes.block)
+                    .background(if (won) colors.tint else Color.Transparent)
+                    .border(1.dp, if (won) colors.strong else Palette.line2, JudgeShapes.block)
+                    .semantics(mergeDescendants = true) { if (won) selected = true }
+                    .padding(horizontal = 12.dp, vertical = 8.dp)
+                    .testTag(VerdictTags.side(side)),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                Avatar(side.letter, colors.ink)
+                Row(Modifier.weight(1f), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(
+                        name,
+                        style = JudgeType.bodyStrong.copy(
+                            fontSize = 15.sp,
+                            fontWeight = if (won) FontWeight.Bold else FontWeight.SemiBold,
+                            color = if (won) Palette.ink else Palette.ink2,
+                        ),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f, fill = false),
+                    )
+                    if (won) TintedIcon(rememberIcon(colors.ink) { JudgeIcons.check(it, 2f) }, 14)
+                }
+                Row(Modifier.clearAndSetSemantics { }, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                    votes.filter { it.wire == side.raw }.forEach { VoteDot(it, 9) }
+                }
+            }
+        }
+    }
+}
+
+/** One short line for each side that did not win, on where it fell short. */
+@Composable
+private fun OtherLines(result: VerdictResult, parties: PartyLabels) {
+    val sides = LocalSides.current
+    val listed = result.manySides.orEmpty()
+    val lines = result.others.orEmpty().mapNotNull { o ->
+        val side = Side.of(o.party)?.takeIf { it in listed } ?: return@mapNotNull null
+        o.line.trim().takeIf { it.isNotEmpty() }?.let { side to it }
+    }
+    if (lines.isEmpty()) return
+    Column(Modifier.testTag(VerdictTags.OTHERS), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        lines.forEach { (side, line) ->
+            val colors = sides.of(side.raw)
+            // The line names its side already; the rule and tint carry the colour.
+            Branch(colors.tint, colors.strong) { Text(line, style = JudgeType.branch) }
+        }
+    }
+}
+
 /** Party A's share of the counted votes from the left, the rest in B's tint. */
 @Composable
 private fun LeanBar(share: Float, parties: PartyLabels) {
@@ -371,7 +453,14 @@ private fun LeanBar(share: Float, parties: PartyLabels) {
 @Composable
 private fun LabelRow(result: VerdictResult, parties: PartyLabels, dots: Boolean) {
     val s = LocalStrings.current
-    val color = when (result.finalVerdict) {
+    val color = if (result.isMany) {
+        // Green when the viewer's own side won, red when another did.
+        when (VerdictDisplay.outcome(result, Side.of(LocalSides.current.you))) {
+            VerdictDisplay.Outcome.WIN -> Palette.sageInk
+            VerdictDisplay.Outcome.LOSE -> Palette.terraInk
+            null -> Palette.ink2
+        }
+    } else when (result.finalVerdict) {
         FinalVerdict.SIDE_A -> LocalSides.current.a.ink
         FinalVerdict.SIDE_B -> LocalSides.current.b.ink
         else -> Palette.ink2
@@ -382,7 +471,8 @@ private fun LabelRow(result: VerdictResult, parties: PartyLabels, dots: Boolean)
             style = LabelText.copy(color = color).forScript(),
             modifier = Modifier.weight(1f),
         )
-        val votes = VerdictDisplay.votes(result)
+        // With three or four sides the sides show their own dots, so only the judges who found it too close are left.
+        val votes = VerdictDisplay.votes(result).filter { !result.isMany || it == Vote.OTHER }
         if (dots && votes.isNotEmpty()) {
             Row(Modifier.clearAndSetSemantics { }, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 votes.forEach { VoteDot(it, 9) }
@@ -432,6 +522,8 @@ fun VoteDot(vote: Vote?, sizeDp: Int) {
         when (vote) {
             Vote.A -> drawCircle(sides.a.strong)
             Vote.B -> drawCircle(sides.b.strong)
+            Vote.C -> drawCircle(sides.c.strong)
+            Vote.D -> drawCircle(sides.d.strong)
             Vote.OTHER -> drawCircle(ink, radius = size.minDimension / 2 - 0.75.dp.toPx(), style = Stroke(1.5.dp.toPx()))
             null -> drawCircle(ink.copy(alpha = 0.18f))
         }
@@ -723,6 +815,23 @@ private fun BranchText(lead: String, rest: String, arrow: String?) {
 private fun SidesSection(result: VerdictResult, parties: PartyLabels) {
     val s = LocalStrings.current
     val map = result.argumentMap
+    if (result.isMany) {
+        if (!VerdictDisplay.hasSides(result)) return
+        val summaries = result.sides.orEmpty().mapNotNull { sum -> Side.of(sum.party)?.let { it to sum } }
+        DetailSection(s.appVerdictSides) {
+            summaries.filter { it.second.bedrock.isNotEmpty() }.forEach { (side, sum) ->
+                BedrockTileBody(parties.name(side), sum.bedrock, LocalSides.current.of(side.raw), Modifier.fillMaxWidth())
+            }
+            val rows = summaries.flatMap { (side, sum) -> sum.claims.map { side to it } }
+            if (rows.isNotEmpty()) {
+                Column(Modifier.padding(top = 4.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    Text(s.appVerdictClaims, style = JudgeType.footnote.copy(fontWeight = FontWeight.SemiBold))
+                    rows.forEach { (side, claim) -> ClaimLine(side.letter, LocalSides.current.of(side.raw), claim, s) }
+                }
+            }
+        }
+        return
+    }
     val claims = map.sideA.map { "a" to it } + map.sideB.map { "b" to it }
     if (map.bedrockA.isEmpty() && map.bedrockB.isEmpty() && claims.isEmpty()) return
     DetailSection(s.appVerdictSides) {
@@ -737,7 +846,7 @@ private fun SidesSection(result: VerdictResult, parties: PartyLabels) {
         if (claims.isNotEmpty()) {
             Column(Modifier.padding(top = 4.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Text(s.appVerdictClaims, style = JudgeType.footnote.copy(fontWeight = FontWeight.SemiBold))
-                claims.forEach { (party, claim) -> ClaimLine(party == "a", claim, s) }
+                claims.forEach { (party, claim) -> ClaimLine(party.uppercase(), LocalSides.current.of(party), claim, s) }
             }
         }
     }
@@ -745,15 +854,15 @@ private fun SidesSection(result: VerdictResult, parties: PartyLabels) {
 
 @Composable
 private fun BedrockTile(name: String, text: String, isA: Boolean, direction: LayoutDirection, modifier: Modifier) {
-    CompositionLocalProvider(LocalLayoutDirection provides direction) { BedrockTileBody(name, text, isA, modifier) }
+    CompositionLocalProvider(LocalLayoutDirection provides direction) {
+        BedrockTileBody(name, text, LocalSides.current.of(if (isA) "a" else "b"), modifier.fillMaxHeight())
+    }
 }
 
 @Composable
-private fun BedrockTileBody(name: String, text: String, isA: Boolean, modifier: Modifier) {
-    val side = LocalSides.current.of(if (isA) "a" else "b")
+private fun BedrockTileBody(name: String, text: String, side: SideColors, modifier: Modifier) {
     Column(
         modifier
-            .fillMaxHeight()
             .clip(JudgeShapes.branch)
             .background(side.tint)
             .padding(12.dp),
@@ -771,10 +880,9 @@ private fun BedrockTileBody(name: String, text: String, isA: Boolean, modifier: 
 
 /** "A · fact" and the claim. */
 @Composable
-private fun ClaimLine(isA: Boolean, claim: Claim, s: Strings) {
+private fun ClaimLine(letter: String, side: SideColors, claim: Claim, s: Strings) {
     val kind = s.text("kind.${claim.claimKind.raw}")
-    val tag = if (kind != null) "${if (isA) "A" else "B"} · $kind" else if (isA) "A" else "B"
-    val side = LocalSides.current.of(if (isA) "a" else "b")
+    val tag = if (kind != null) "$letter · $kind" else letter
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.Top) {
         Text(
             tag,
@@ -792,6 +900,7 @@ private fun ClaimLine(isA: Boolean, claim: Claim, s: Strings) {
 
 /** "Deniz's best point" when one side won, the plain title otherwise. */
 private fun bestPointTitle(result: VerdictResult, parties: PartyLabels, s: Strings): String {
+    if (result.isMany) return s.bestPointTitle
     val loserA = when (result.finalVerdict) {
         FinalVerdict.SIDE_A -> false
         FinalVerdict.SIDE_B -> true
@@ -819,7 +928,11 @@ private fun Footnote(result: VerdictResult, parties: PartyLabels) {
     val s = LocalStrings.current
     val lines = buildList {
         if (result.escalated == true) add(s.escalated)
-        val votes = result.runs.joinToString(" · ") { voteName(it, parties, s) }
+        val votes = if (result.isMany) {
+            (result.votes ?: emptyList()).joinToString(" · ") { manyVoteName(it, parties, s) }
+        } else {
+            result.runs.joinToString(" · ") { voteName(it, parties, s) }
+        }
         add("${s.judgesVoted(result.runs.size)} $votes")
         if (result.premium) {
             val models = result.panel?.models.orEmpty()
@@ -834,6 +947,9 @@ private fun Footnote(result: VerdictResult, parties: PartyLabels) {
         modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
     )
 }
+
+private fun manyVoteName(vote: String, parties: PartyLabels, s: Strings): String =
+    Side.of(vote)?.let { parties.name(it) } ?: s.voteSplit
 
 private fun voteName(run: String, parties: PartyLabels, s: Strings): String = when (run) {
     "side_a" -> parties.nameA
@@ -961,69 +1077,88 @@ private fun TwoSidedFacts(result: VerdictResult, parties: PartyLabels) {
     val s = LocalStrings.current
     val sides = LocalSides.current
     val agreed = result.agreedFacts.orEmpty().filter { it.isNotBlank() }.take(MAX_AGREED)
-    val disputed = result.disputedFacts.orEmpty().take(MAX_DISPUTED)
+    val disputed = if (result.isMany) emptyList() else result.disputedFacts.orEmpty().take(MAX_DISPUTED)
+    val many = if (result.isMany) result.disputes.orEmpty().take(MAX_DISPUTED) else emptyList()
     // At most one decisive marker, as the server promises.
     val decisiveAt = disputed.indexOfFirst { it.decisive }
+    val manyDecisiveAt = many.indexOfFirst { it.decisive }
     if (agreed.isNotEmpty()) {
         DetailSection(s.twoSidedAgreed) {
             agreed.forEach { fact ->
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     Row(Modifier.padding(top = 6.dp).clearAndSetSemantics { }, horizontalArrangement = Arrangement.spacedBy((-3).dp)) {
-                        Dot(sides.a.strong, 10)
-                        Dot(sides.b.strong, 10)
+                        (result.manySides ?: Side.first(2)).forEach { Dot(sides.of(it.raw).strong, 10) }
                     }
                     Text(fact, style = JudgeType.body.copy(fontSize = 14.sp, lineHeight = (14 * 1.45).sp))
                 }
             }
         }
     }
-    if (disputed.isNotEmpty()) {
+    if (disputed.isNotEmpty() || many.isNotEmpty()) {
         DetailSection(s.twoSidedDisputed) {
             disputed.forEachIndexed { i, d ->
-                val decisive = i == decisiveAt
-                Column(
-                    Modifier
-                        .fillMaxWidth()
-                        .clip(JudgeShapes.branch)
-                        .background(Palette.well)
-                        .then(if (decisive) Modifier.dashedBorder(Palette.ink.copy(alpha = 0.4f)) else Modifier)
-                        .padding(horizontal = 12.dp, vertical = 10.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                        if (decisive) {
-                            Row(
-                                Modifier.clip(JudgeShapes.chip).background(Palette.ink).padding(horizontal = 9.dp, vertical = 4.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(4.dp),
-                            ) {
-                                TintedIcon(rememberIcon(Palette.ivory) { JudgeIcons.bolt(it) }, 11)
-                                Text(s.twoSidedDecisive.uppercaseForUi(), style = JudgeType.micro.copy(color = Palette.ivory))
-                            }
-                        }
-                        FindingChip(findingText(d.finding, parties, s), d.finding)
-                    }
-                    Text(d.fact, style = JudgeType.slotTitle)
+                DisputeCard(findingText(d.finding, parties, s), d.finding, d.fact, i == decisiveAt) {
                     PartyClaim(parties.nameA, d.partyA, sides.a.strong)
                     PartyClaim(parties.nameB, d.partyB, sides.b.strong)
+                }
+            }
+            many.forEachIndexed { i, d ->
+                DisputeCard(findingText(d.finding, parties, s), d.finding, d.fact, i == manyDecisiveAt) {
+                    // One claim per side that spoke to it; a party this build does not know is left out.
+                    d.positions.forEach { p ->
+                        Side.of(p.party)?.let { PartyClaim(parties.name(it), p.says, sides.of(it.raw).strong) }
+                    }
                 }
             }
         }
     }
 }
 
-private fun findingText(finding: String, p: PartyLabels, s: Strings): String = when (finding) {
-    "a" -> if (p.aIsSelf) s.twoSidedFindingSelf else s.twoSidedFindingA(p.nameA)
-    "b" -> if (p.bIsSelf) s.twoSidedFindingSelf else s.twoSidedFindingB(p.nameB)
-    else -> s.twoSidedFindingUnsettled
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun DisputeCard(finding: String, findingKey: String, fact: String, decisive: Boolean, claims: @Composable ColumnScope.() -> Unit) {
+    val s = LocalStrings.current
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(JudgeShapes.branch)
+            .background(Palette.well)
+            .then(if (decisive) Modifier.dashedBorder(Palette.ink.copy(alpha = 0.4f)) else Modifier)
+            .padding(horizontal = 12.dp, vertical = 10.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            if (decisive) {
+                Row(
+                    Modifier.clip(JudgeShapes.chip).background(Palette.ink).padding(horizontal = 9.dp, vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    TintedIcon(rememberIcon(Palette.ivory) { JudgeIcons.bolt(it) }, 11)
+                    Text(s.twoSidedDecisive.uppercaseForUi(), style = JudgeType.micro.copy(color = Palette.ivory))
+                }
+            }
+            FindingChip(finding, findingKey)
+        }
+        Text(fact, style = JudgeType.slotTitle)
+        claims()
+    }
+}
+
+private fun findingText(finding: String, p: PartyLabels, s: Strings): String {
+    val side = Side.of(finding) ?: return s.twoSidedFindingUnsettled
+    return when {
+        p.isSelf(side) -> s.twoSidedFindingSelf
+        side == Side.B -> s.twoSidedFindingB(p.name(side))
+        else -> s.twoSidedFindingA(p.name(side))
+    }
 }
 
 @Composable
 private fun FindingChip(text: String, finding: String) {
     val sides = LocalSides.current
     val (fg, bg) = when (finding) {
-        "a" -> sides.a.ink to sides.a.tint
-        "b" -> sides.b.ink to sides.b.tint
+        "a", "b", "c", "d" -> sides.of(finding).let { it.ink to it.tint }
         else -> Palette.ink2 to Palette.ivory2
     }
     Text(

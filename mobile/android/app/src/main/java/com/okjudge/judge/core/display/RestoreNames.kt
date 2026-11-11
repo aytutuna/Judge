@@ -390,7 +390,7 @@ object RestoreNames {
      * only where that stays grammatical; any label that cannot be rendered
      * with confidence is left as written.
      */
-    fun restoreNames(text: String, parties: Map<String, Party>, textLang: AppLang): String {
+    fun restoreNames(text: String, parties: Map<String, Party>, textLang: AppLang, sides: Int = 2): String {
         if (text.isEmpty() || parties.isEmpty()) return text
         val out = StringBuilder()
         var pos = 0
@@ -403,8 +403,7 @@ object RestoreNames {
             val letter = m.groupValues[2]
             val apos = m.groupValues[3]
             val suffix = m.groups[4]?.value
-            val isParty = word == "Party" || word == "Taraf"
-            if (isParty != (letter == "A" || letter == "B")) continue
+            if (!PartyNames.labelFits(word, letter, sides)) continue
             val party = parties[letter] ?: continue
             val start = m.range.first
             val before = text.substring(0, start)
@@ -428,10 +427,11 @@ object RestoreNames {
      * Returns the same object when there is nothing to restore.
      */
     fun personalizeResult(result: VerdictResult, nameMap: List<NameMapping>?, selfLang: AppLang): VerdictResult {
-        val parties = PartyNames.resolveParties(nameMap, selfLang)
+        val sides = result.sideCount
+        val parties = PartyNames.resolveParties(nameMap, selfLang, sides = sides)
         if (parties.isEmpty()) return result
         val lang = ContentLang.verdictLang(result)
-        val r = { s: String -> restoreNames(s, parties, lang) }
+        val r = { s: String -> restoreNames(s, parties, lang, sides) }
         val map = result.argumentMap
         return result.copy(
             headline = r(result.headline),
@@ -456,13 +456,18 @@ object RestoreNames {
             disputedFacts = result.disputedFacts?.map { it.copy(fact = r(it.fact), partyA = r(it.partyA), partyB = r(it.partyB)) },
             wouldChange = result.wouldChange?.map(r),
             appeal = result.appeal?.let { it.copy(summary = r(it.summary)) },
+            sides = result.sides?.map { side -> side.copy(claims = side.claims.map { it.copy(claim = r(it.claim)) }, bedrock = r(side.bedrock)) },
+            others = result.others?.map { it.copy(line = r(it.line)) },
+            disputes = result.disputes?.map { d ->
+                d.copy(fact = r(d.fact), positions = d.positions.map { it.copy(says = r(it.says)) })
+            },
         )
     }
 
     /** Just the headline of [personalizeResult], for list rows. */
     fun headline(result: VerdictResult, nameMap: List<NameMapping>?, selfLang: AppLang): String {
-        val parties = PartyNames.resolveParties(nameMap, selfLang)
+        val parties = PartyNames.resolveParties(nameMap, selfLang, sides = result.sideCount)
         if (parties.isEmpty()) return result.headline
-        return restoreNames(result.headline, parties, ContentLang.verdictLang(result))
+        return restoreNames(result.headline, parties, ContentLang.verdictLang(result), result.sideCount)
     }
 }

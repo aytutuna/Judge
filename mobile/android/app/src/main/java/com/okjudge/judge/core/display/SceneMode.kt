@@ -28,7 +28,7 @@ sealed interface SceneMode {
             put("kind", "verdict")
             putJsonObject("verdict") {
                 put("tugA", tugA)
-                putJsonArray("votes") { votes.forEach { add(JsonPrimitive(it.wire)) } }
+                putJsonArray("votes") { votes.forEach { add(JsonPrimitive(it.balance.wire)) } }
             }
         }
     }.toString()
