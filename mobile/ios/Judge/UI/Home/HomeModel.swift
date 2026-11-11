@@ -281,7 +281,8 @@ final class HomeModel {
         if app.evidenceOn, evidence.busy { return false }
         if let blockedUntil, blockedUntil > now { return false }
         if argument.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return evidence.items.isEmpty }
-        return canSubmit(app, now: now)
+        // Only your side is written, so the check that every card is long enough does not apply.
+        return writtenLength >= Self.minLength && length(app) <= Self.maxLength
     }
 
     /// The cards on Home, A first: only yours until the second is added.
