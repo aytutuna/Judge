@@ -23,6 +23,15 @@ export function blurOnTapOutside(
   active.blur();
 }
 
+/** Drops the side names an earlier build kept in this browser. */
+function dropOldSideNames() {
+  try {
+    for (const key of Object.keys(localStorage)) if (key.startsWith("settle.sidenames.")) localStorage.removeItem(key);
+  } catch {
+    // Storage unavailable: nothing was kept.
+  }
+}
+
 export function useBlurOnTapOutside(on = true) {
   useEffect(() => {
     if (!on) return;
@@ -58,6 +67,7 @@ export function AppShell({
 }) {
   const pathname = usePathname();
   useBlurOnTapOutside();
+  useEffect(dropOldSideNames, []);
   return (
     <div lang={lang} dir={langDir(lang)} className={styles.shell}>
       <SkipLink lang={lang} />

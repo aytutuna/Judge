@@ -56,6 +56,12 @@ class PrefsCaseNames(context: Context) : CaseNamesStore {
 
     private fun key(caseId: String) = "a:$caseId"
 
+    init {
+        // Names an earlier build kept for sides C and D are gone for good.
+        val stale = prefs.all.keys.filter { it.startsWith("c:") || it.startsWith("d:") }
+        if (stale.isNotEmpty()) prefs.edit().apply { stale.forEach { remove(it) } }.apply()
+    }
+
     @Synchronized override fun get(caseId: String): List<NameMapping> = WireJson.decodeNameMap(prefs.getString(key(caseId), null))
 
     @Synchronized override fun save(caseId: String, names: List<NameMapping>) {
