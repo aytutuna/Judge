@@ -7,6 +7,7 @@ import math, pathlib, random, sys
 from PIL import Image
 
 ART = pathlib.Path(sys.argv[1])
+PREMADE = ART / "moderninteriors-win/2_Characters/Character_Generator/0_Premade_Characters/16x16"
 ME = ART / "modernexteriors-win/Modern_Exteriors_16x16"
 SINGLES = ME / "Modern_Exteriors_Complete_Singles_16x16"
 MI = ART / "moderninteriors-win"
@@ -14,7 +15,6 @@ DESIGNS = MI / "6_Home_Designs"
 THEMES = MI / "1_Interiors/16x16/Theme_Sorter"
 BUILDER = MI / "1_Interiors/16x16/Room_Builder_subfiles"
 FARM = ART / "Modern_Farm_v1.3/16x16"
-PEOPLE = pathlib.Path(__file__).resolve().parent.parent / "public" / "court" / "people"
 OUT = pathlib.Path(__file__).resolve().parent.parent / "public" / "court" / "venues"
 OUT.mkdir(parents=True, exist_ok=True)
 W, H = 320, 180
@@ -102,28 +102,37 @@ def cart():
 
 
 def jar():
-    glass, rim = (190, 226, 238, 255), (112, 152, 172, 255)
-    return sprite(7, 10, [
-        (1, 0, 5, 2, (170, 176, 184, 255)), (1, 0, 5, 1, (214, 218, 224, 255)),
-        (0, 2, 7, 8, rim), (1, 2, 5, 7, glass), (1, 6, 5, 3, (240, 190, 80, 255)), (2, 7, 1, 1, (255, 230, 140, 255)), (4, 6, 1, 1, (255, 230, 140, 255)),
+    glass, rim = (206, 236, 246, 255), (84, 126, 150, 255)
+    return sprite(9, 11, [
+        (1, 0, 7, 2, (120, 128, 138, 255)), (1, 0, 7, 1, (214, 218, 224, 255)),
+        (0, 2, 9, 9, rim), (1, 2, 7, 8, glass), (1, 2, 1, 7, (255, 255, 255, 255)),
+        (2, 9, 2, 1, (242, 182, 50, 255)), (5, 9, 2, 1, (242, 182, 50, 255)), (3, 8, 2, 1, (255, 226, 130, 255)),
+    ])
+
+
+def stand():
+    pink, dark = (236, 146, 160, 255), (168, 84, 104, 255)
+    return sprite(13, 12, [
+        (0, 0, 13, 3, INK), (1, 1, 11, 1, (248, 236, 240, 255)), (1, 2, 11, 1, dark),
+        (2, 3, 9, 8, INK), (3, 3, 7, 7, pink), (3, 3, 1, 7, (250, 190, 200, 255)), (9, 3, 1, 7, dark),
+        (1, 10, 11, 2, INK),
     ])
 
 
 def pedestal():
     stone, light, dark = (205, 200, 190, 255), (232, 228, 218, 255), (150, 144, 134, 255)
-    return sprite(16, 24, [
-        (0, 0, 16, 4, INK), (1, 1, 14, 2, light), (1, 3, 14, 1, dark),
-        (2, 4, 12, 16, INK), (3, 4, 10, 15, stone), (3, 4, 1, 15, light), (12, 4, 1, 15, dark),
-        (0, 20, 16, 4, INK), (1, 20, 14, 3, dark), (1, 20, 14, 1, stone),
+    return sprite(22, 24, [
+        (0, 0, 22, 4, INK), (1, 1, 20, 2, light), (1, 3, 20, 1, dark),
+        (2, 4, 18, 16, INK), (3, 4, 16, 15, stone), (3, 4, 1, 15, light), (18, 4, 1, 15, dark),
+        (0, 20, 22, 4, INK), (1, 20, 20, 3, dark), (1, 20, 20, 1, stone),
     ])
 
 
 def guitar_case():
-    return sprite(18, 10, [
-        (1, 0, 16, 3, INK), (2, 1, 14, 2, (92, 62, 40, 255)),
-        (0, 3, 18, 7, INK), (1, 4, 16, 4, (142, 47, 47, 255)), (1, 4, 16, 1, (176, 74, 66, 255)),
-        (3, 6, 1, 1, (240, 190, 80, 255)), (9, 5, 1, 1, (240, 190, 80, 255)), (13, 6, 1, 1, (240, 190, 80, 255)),
-        (1, 8, 16, 1, (110, 80, 52, 255)),
+    return sprite(24, 13, [
+        (1, 0, 22, 5, INK), (2, 1, 20, 3, (96, 64, 42, 255)), (2, 1, 20, 1, (130, 92, 62, 255)),
+        (0, 4, 24, 9, INK), (1, 5, 22, 6, (150, 40, 44, 255)), (1, 5, 22, 1, (184, 72, 70, 255)),
+        (1, 11, 22, 1, (120, 86, 56, 255)), (5, 11, 2, 1, (242, 190, 80, 255)), (17, 11, 2, 1, (242, 190, 80, 255)),
     ])
 
 
@@ -143,12 +152,24 @@ def pit(w=34, h=11):
     return im
 
 
-def busker(who):
-    sheet = load(PEOPLE / f"{who}.png")
-    im = sheet.crop((18 * 16, 0, 18 * 16 + 16, 32))
-    for x, y, w, h, col in ((11, 14, 1, 1, INK), (12, 13, 1, 1, INK), (13, 12, 1, 1, INK), (14, 11, 1, 1, INK),
-                            (4, 17, 7, 6, INK), (5, 18, 5, 4, (190, 124, 66, 255)), (7, 19, 2, 2, INK)):
+def busker(n, left):
+    """A seated player on a crate, one of the premade characters; left-hand players face right."""
+    sheet = load(PREMADE / f"Premade_Character_{n:02d}.png")
+    x0 = 0 if left else 6 * 16
+    im = Image.new("RGBA", (30, 29))
+    wood, light = (170, 120, 70, 255), (206, 156, 100, 255)
+    for x, y, w, h, col in ((8, 19, 14, 10, INK), (9, 20, 12, 8, wood), (9, 20, 12, 1, light)):
         box(im, x, y, w, h, col)
+    im.alpha_composite(sheet.crop((x0, 138, x0 + 16, 160)), (7, 0))
+    # the guitar in the lap, neck up and out to the side the player faces
+    sign = 1 if left else -1
+    for i in range(10):
+        x = 15 + sign * (4 + i)
+        box(im, x, 14 - i // 2, 1, 2, INK if i % 2 else (120, 80, 48, 255))
+    box(im, 11, 12, 9, 8, INK)
+    box(im, 12, 13, 7, 6, (196, 122, 58, 255))
+    box(im, 12, 13, 7, 1, (226, 160, 86, 255))
+    box(im, 14, 15, 3, 2, INK)
     return im
 
 
@@ -173,8 +194,10 @@ def ice():
     s.at(o((146, 53, 173, 80)), 146 + shift, 53 - up)
     s.at(o((18, 92, 61, 128)), 8, 84)
     s.at(o((130, 92, 172, 128)), 270, 84)
-    target(s, jar(), 107, 39, 3, 1)
-    target(s, jar(), 213, 39, 3, 1)
+    target(s, stand(), 76, 62, 6, 0)
+    target(s, jar(), 76, 51, 4, 1)
+    target(s, stand(), 244, 62, 6, 0)
+    target(s, jar(), 244, 51, 4, 1)
     return s.finish()
 
 
@@ -219,8 +242,8 @@ def museum():
     s.put(o((64, 135, 80, 192)), 308, 66)
     s.at(o((34, 211, 62, 256)), 30, 58)
     s.at(o((242, 211, 270, 256)), 262, 58)
-    target(s, pedestal(), 78, 96, 8, 10)
-    target(s, pedestal(), 242, 96, 8, 10)
+    target(s, pedestal(), 78, 96, 11, 10)
+    target(s, pedestal(), 242, 96, 11, 10)
     return s.finish()
 
 
@@ -247,16 +270,16 @@ def beach():
         px[x, shore] = (225, 147, 75, 255)
         px[x, shore - 1] = (135, 236, 230, 255)
         px[x, shore - 2] = (135, 236, 230, 255) if (x // 3) % 2 else (91, 201, 210, 255)
-    s.put(beach_prop("Ship_Bar"), 52, 92)
+    s.put(beach_prop("Ship_Bar"), 40, 92)
     s.put(beach_prop("Palm_Tree"), 282, 72)
     s.put(beach_prop("Blue_Beach_Umbrella_Opened"), 236, 74)
     s.put(beach_prop("Blue_Beach_Towel_1"), 238, 86)
     s.put(beach_prop("Sand_Castle_2_Vers_2"), 292, 108)
     s.put(beach_prop("Medium_Sea_Rock_1_Vers_1"), 130, 36)
     s.put(beach_prop("Medium_Sea_Rock_1_Vers_2"), 186, 38)
-    castle = beach_prop("Sand_Castle_1_Vers_1")
-    target(s, castle, 100, 82, castle.width // 2, 10)
-    target(s, castle, 212, 82, castle.width // 2, 10)
+    castle = beach_prop("Sand_Castle_2_Vers_2")
+    target(s, castle, 114, 82, 23, 8)
+    target(s, castle, 206, 82, 23, 8)
     return s.finish()
 
 
@@ -354,9 +377,9 @@ def street():
     s.put(ext("City_Props_16x16_Tree_1"), 160, 70)
     s.put(ext("City_Props_16x16_Bench_2"), 40, 104)
     s.put(ext("City_Props_16x16_Bench_2"), 280, 104)
-    for x, who in ((72, "scout3-1"), (248, "scout5-2")):
-        s.put(busker(who), x, 84)
-        target(s, guitar_case(), x, 86, 9, 3)
+    for x, n, left in ((72, 11, True), (248, 17, False)):
+        s.put(busker(n, left), x, 86)
+        target(s, guitar_case(), x, 89, 12, 5)
     s.put(ext("Villas_16x16_Potted_Flowers_2"), 120, 72)
     s.put(ext("Villas_16x16_Potted_Flowers_3"), 200, 72)
     return s.finish()
