@@ -79,8 +79,13 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
   const many = row.sides > 2 && row.mode !== "one_sided";
   const allParties: PartyLetter[] = many ? partiesFor(row.sides) : ["a", "b"];
   const shared = twoSidedJudged(bundle);
-  // The respondent sees nothing of a case settled without their side.
-  const respondentShut = ctx.role === "respondent" && row.mode === "one_sided";
+  // The respondent sees nothing of a case settled without their side: one
+  // judged on side A alone, or judged without the side their link is for.
+  const respondentShut =
+    ctx.role === "respondent" &&
+    (row.mode === "one_sided" ||
+      !allParties.includes(yourParty) ||
+      (status !== "awaiting_respondent" && !bundle.sides.some((s) => s.party === yourParty)));
 
   const removedParties: PartyLetter[] = [
     ...(row.removedAAt ? (["a"] as const) : []),
@@ -90,7 +95,7 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
   ];
   const isRemoved = (p: PartyLetter) => removedParties.includes(p);
 
-  const visibleParties: PartyLetter[] = shared ? allParties : ctx.role === "owner" ? ["a"] : [];
+  const visibleParties: PartyLetter[] = respondentShut ? [] : shared ? allParties : ctx.role === "owner" ? ["a"] : [];
   const sides: CaseSideView[] = bundle.sides
     .filter((s) => visibleParties.includes(s.party))
     .map((s) =>
@@ -137,7 +142,7 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
   const present = new Set(bundle.sides.map((s) => s.party));
   const prefix = allParties.filter((p, i) => allParties.slice(0, i + 1).every((q) => present.has(q)));
   const canJudgeAnswered =
-    many && canJudgeNow && status === "awaiting_respondent" && prefix.length >= 2 && present.size === prefix.length;
+    many && canJudgeNow && (status === "awaiting_respondent" || status === "expired") && prefix.length >= 2 && present.size === prefix.length;
   const invites: CaseInviteView[] | undefined =
     many && ctx.role === "owner"
       ? allParties.slice(1).map((party) => {

@@ -66,12 +66,14 @@ const dir = mkdtempSync(path.join(tmpdir(), "verdict-cases-"));
 process.env.DATABASE_URL = `file:${path.join(dir, "test.db").replace(/\\/g, "/")}`;
 
 const http = await import("../lib/cases/http");
+const { historyHandler } = await import("../lib/history/http");
 const ent = await import("../lib/entitlements");
 const { getDb } = await import("../lib/db");
 const { getCase } = await import("../lib/cases/db");
 
 const { inviteHash } = await import("../lib/cases/invite");
 import type { CaseView } from "../lib/case-types";
+import type { HistoryResponse } from "../lib/history-types";
 import type { VerdictResult } from "../lib/types";
 
 afterAll(() => {
@@ -287,6 +289,132 @@ async function ownerView(ownerId: string, id: string) {
   const res = await http.getCaseHandler(req("GET", `/api/v1/cases/${id}`, { user: ownerId, headers: SIDES }), id);
   return (await body<{ case: CaseView }>(res)).case;
 }
+
+describe("a side the case went on without", () => {
+  const history = async (user: string, headers: Record<string, string>) => {
+    const res = await historyHandler(req("GET", "/api/v1/me/history", { user, headers }));
+    return (await body<HistoryResponse>(res)).items;
+  };
+
+  it("shuts the link of a side that never answered once the others were judged", async () => {
+    const o = await owner(3);
+    const { data, links } = await createMany(o, 4);
+    await respondAs(links.b, uid(), "Side B answered with enough words to count as an account.");
+    await respondAs(links.c, uid(), "Side C answered with enough words to count as an account.");
+    expect((await judgeSides(o, data.case.id, { mode: "answered" })).status).toBe(202);
+    m.judgeAnonymized.mockResolvedValue(okOutcome(manyResult(["a", "b", "c"])));
+    await drain();
+    expect((await getCase(data.case.id))?.sides).toBe(3);
+
+    const res = await http.respondGetHandler(req("GET", `/api/v1/respond/${links.d}`, { headers: SIDES }), links.d);
+    expect(res.status).toBe(409);
+    expect((await body(res)).code).toBe("case_closed");
+    expect((await http.respondGetHandler(req("GET", `/api/v1/respond/${links.d}`), links.d)).status).toBe(426);
+    expect((await view(links.c)).res.status).toBe(200);
+  });
+
+  it("shuts the link of a side that fell away when the case was judged on two", async () => {
+    const o = await owner(2);
+    const { data, links } = await createMany(o, 3);
+    await respondAs(links.b, uid(), "Side B answered with enough words to count as an account.");
+    expect((await judgeSides(o, data.case.id, { mode: "answered" })).status).toBe(202);
+    await drain();
+    for (const headers of [SIDES, OLD_APP]) {
+      const res = await http.respondGetHandler(req("GET", `/api/v1/respond/${links.c}`, { headers }), links.c);
+      expect(res.status).toBe(409);
+    }
+  });
+
+  it("leaves a case judged on side A alone out of the history of the sides that had answered", async () => {
+    const o = await owner(2);
+    const { data, links } = await createMany(o, 3);
+    const bob = uid("bob");
+    await respondAs(links.b, bob, "Side B answered with enough words to count as an account.");
+    expect((await judgeSides(o, data.case.id, { mode: "only_mine" })).status).toBe(202);
+    await drain();
+    const row = await getCase(data.case.id);
+    expect([row?.mode, row?.sides]).toEqual(["one_sided", 2]);
+    for (const headers of [SIDES, OLD_APP]) {
+      expect((await history(bob, headers)).filter((r) => r.id === data.case.id)).toEqual([]);
+    }
+    expect((await history(o, SIDES)).find((r) => r.id === data.case.id)?.state).toBe("ready");
+  });
+
+  it("sends side C and D only to an app that sends Judge-Sides", async () => {
+    const o = await owner(2);
+    const { data, links } = await createMany(o, 3);
+    const bob = uid("bob");
+    const carol = uid("carol");
+    await respondAs(links.b, bob, "Side B answered with enough words to count as an account.");
+    await respondAs(links.c, carol, "Side C answered with enough words to count as an account.");
+    m.judgeAnonymized.mockResolvedValue(okOutcome(manyResult(["a", "b", "c"])));
+    await drain();
+    const mine = (await history(carol, SIDES)).find((r) => r.id === data.case.id);
+    expect([mine?.party, mine?.winner, mine?.parties]).toEqual(["c", "a", ["a", "b", "c"]]);
+    for (const user of [bob, carol, o]) expect((await history(user, OLD_APP)).filter((r) => r.id === data.case.id)).toEqual([]);
+  });
+
+  it("judges the sides that answered after the invites expired, with a fresh unit", async () => {
+    const o = await owner(1);
+    const { data, links } = await createMany(o, 3);
+    const id = data.case.id;
+    expect(await credits(o)).toBe(0);
+    await respondAs(links.b, uid(), "Side B answered with enough words to count as an account.");
+    const db = await getDb();
+    await db.execute({ sql: "UPDATE cases SET expires_at = ? WHERE id = ?", args: [new Date(Date.now() - 60_000).toISOString(), id] });
+
+    const expired = await ownerView(o, id);
+    expect([expired.status, expired.canJudgeAnswered, expired.canJudgeNow]).toEqual(["expired", true, true]);
+    const go = await judgeSides(o, id, { mode: "answered" });
+    expect(go.status).toBe(202);
+    expect((await ownerView(o, id)).status).toBe("judging");
+    await drain();
+    const done = await ownerView(o, id);
+    expect([done.status, done.mode, done.parties]).toEqual(["judged", "two_sided", undefined]);
+    expect(await credits(o)).toBe(0);
+    expect((await judgeSides(o, id, { mode: "answered" })).status).toBe(200);
+  });
+
+  it("does not judge an expired case whose answers skip a side", async () => {
+    const o = await owner(2);
+    const { data, links } = await createMany(o, 3);
+    const id = data.case.id;
+    await respondAs(links.c, uid(), "Side C answered first, with enough words to count as an account.");
+    const db = await getDb();
+    await db.execute({ sql: "UPDATE cases SET expires_at = ? WHERE id = ?", args: [new Date(Date.now() - 60_000).toISOString(), id] });
+    expect((await ownerView(o, id)).canJudgeAnswered).toBe(false);
+    expect((await judgeSides(o, id, { mode: "answered" })).status).toBe(400);
+  });
+
+  it("tells the judges which invited sides did not answer", async () => {
+    const o = await owner(2);
+    const { data, links } = await createMany(o, 4);
+    await respondAs(links.b, uid(), "Side B answered with enough words to count as an account.");
+    await respondAs(links.c, uid(), "Side C answered with enough words to count as an account.");
+    await judgeSides(o, data.case.id, { mode: "answered" });
+    m.judgeAnonymized.mockResolvedValue(okOutcome(manyResult(["a", "b", "c"])));
+    await drain();
+    const input = m.judgeAnonymized.mock.calls[0][0] as { text: string };
+    expect(input.text).toContain("NOT HEARD: invited but did not answer: Party D.");
+  });
+
+  it("adds that note on the two-sided path too, and not when everyone answered", async () => {
+    const o = await owner(3);
+    const two = await createMany(o, 3);
+    await respondAs(two.links.b, uid(), "Side B answered with enough words to count as an account.");
+    await judgeSides(o, two.data.case.id, { mode: "answered" });
+    await drain();
+    expect((m.judgeAnonymized.mock.calls[0][0] as { text: string }).text).toContain("NOT HEARD: invited but did not answer: Party C.");
+
+    m.judgeAnonymized.mockClear();
+    const full = await createMany(o, 3);
+    await respondAs(full.links.b, uid(), "Side B answered with enough words to count as an account.");
+    await respondAs(full.links.c, uid(), "Side C answered with enough words to count as an account.");
+    m.judgeAnonymized.mockResolvedValue(okOutcome(manyResult(["a", "b", "c"])));
+    await drain();
+    expect((m.judgeAnonymized.mock.calls[0][0] as { text: string }).text).not.toContain("NOT HEARD");
+  });
+});
 
 describe("a case with three or four sides", () => {
   it("is created only by a client that sends the capability header", async () => {

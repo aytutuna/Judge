@@ -60,6 +60,7 @@ import { clientIp } from "@/lib/client-ip";
 import { entitlementWriteBatch, getEntitlement } from "@/lib/entitlements";
 import { handleEvidenceUpload, verifyEvidenceTokens, type EvidenceAudience, type VerifiedEvidence } from "@/lib/evidence";
 import { casesEnabled, evidenceEnabled } from "@/lib/features";
+import { partiesFor } from "@/lib/multi";
 import { originalsKeyState } from "@/lib/originals/crypto";
 import { caseDisplayNames, partyOriginals } from "@/lib/originals/cases";
 import { removeCaseSide } from "@/lib/originals/removal";
@@ -687,11 +688,19 @@ export function respondGetHandler(req: Request, token: string): Promise<NextResp
     const { viewer, deadBearer, refused } = await lookupViewer(req);
     if (deadBearer) return deadBearerResponse();
     if (refused) return refused;
+    if (await staleInvite(found.row, found.party)) return fail("case_closed");
     const body: CaseResponse = {
       case: await respondentView(found.row, found.party, viewer?.user.id ?? null, claimHeader(req)),
     };
     return json(body);
   });
+}
+
+/** The link is for a side the case no longer has (it was judged without that
+ * side) and nobody answered through it. */
+async function staleInvite(row: CaseRow, party: PartyLetter): Promise<boolean> {
+  if (partiesFor(row.sides).includes(party)) return false;
+  return respondentOf(row, await getInvites(row.id), party).claimNonce === null;
 }
 
 /** The evidence audience of a respondent link: bound to the side it is for. */

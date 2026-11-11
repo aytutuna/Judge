@@ -624,7 +624,7 @@ export async function judgeNow(input: {
     if (status === "judging" || status === "judged") return { ok: true, row, started: false };
 
     if (status === "awaiting_respondent") {
-      if (input.mode === "answered" && row.sides > 2) return judgeAnswered(row, input.origin, now);
+      if (input.mode === "answered" && row.sides > 2) return judgeAnswered(row, input.origin, now, "awaiting_respondent");
       if (input.mode !== "only_mine") return { ok: false, code: "invalid" };
       const token = nanoid(16);
       const guard: StatementGuard = {
@@ -648,6 +648,8 @@ export async function judgeNow(input: {
       row = (await getCase(row.id)) ?? row;
       continue;
     }
+
+    if (status === "expired" && input.mode === "answered" && row.sides > 2) return judgeAnswered(row, input.origin, now, "expired");
 
     // expired or failed: a fresh unit funds the run, on an old free case too.
     if (status === "expired") await materializeExpiry(row, now);
@@ -695,8 +697,14 @@ export async function judgeNow(input: {
  * each anonymized account), and at least two. The case then has that many
  * sides: with two it is an ordinary two-sided case, and the links of the
  * sides that did not answer stop working (the case is no longer awaiting).
+ * Once the invites expired the held unit is gone, so a fresh one funds the run.
  */
-async function judgeAnswered(row: CaseRow, origin: string, now: Date): Promise<JudgeNowResult> {
+async function judgeAnswered(
+  row: CaseRow,
+  origin: string,
+  now: Date,
+  from: "awaiting_respondent" | "expired",
+): Promise<JudgeNowResult> {
   const nowIso = now.toISOString();
   const bundle = await loadCaseBundle(row);
   const present = new Set(bundle.sides.map((s) => s.party));
@@ -705,21 +713,43 @@ async function judgeAnswered(row: CaseRow, origin: string, now: Date): Promise<J
   if (count < 2 || !present.has("a") || bundle.sides.length !== count || !prefix.every((p) => present.has(p))) {
     return { ok: false, code: "side_missing" };
   }
+  let reservationId: string | null = null;
+  if (from === "expired") {
+    await materializeExpiry(row, now);
+    const reserved = await reservePremiumVerdict(row.ownerId, { now });
+    if (!reserved.ok) {
+      if (reserved.code === "premium_required" || reserved.code === "no_credits" || reserved.code === "fair_use") {
+        return { ok: false, code: reserved.code, ...("resetsAt" in reserved && reserved.resetsAt ? { resetsAt: reserved.resetsAt } : {}) };
+      }
+      return { ok: false, code: "unavailable" };
+    }
+    reservationId = reserved.reservation.id;
+  }
   const token = nanoid(16);
   const guard: StatementGuard = {
     sql: "EXISTS (SELECT 1 FROM cases WHERE id = ? AND judging_token = ?)",
     args: [row.id, token],
   };
+  const countIs = `(SELECT COUNT(*) FROM case_sides WHERE case_id = cases.id) = ?`;
+  const write =
+    from === "expired"
+      ? {
+          sql: `UPDATE cases SET status = 'judging', mode = 'two_sided', sides = ?, reservation_id = ?, judging_token = ?,
+                  judging_started_at = ?, attempts = attempts + 1, last_error = NULL, updated_at = ?
+                WHERE id = ? AND status = 'expired' AND removed_at IS NULL AND ${countIs}`,
+          args: [count, reservationId, token, nowIso, nowIso, row.id, count],
+        }
+      : {
+          sql: `UPDATE cases SET status = 'judging', mode = 'two_sided', sides = ?, judging_token = ?, judging_started_at = ?,
+                  attempts = attempts + 1, last_error = NULL, updated_at = ?
+                WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL AND ${countIs}`,
+          args: [count, token, nowIso, nowIso, row.id, nowIso, count],
+        };
   const rs = await entitlementWriteBatch([
-    {
-      sql: `UPDATE cases SET status = 'judging', mode = 'two_sided', sides = ?, judging_token = ?, judging_started_at = ?,
-              attempts = attempts + 1, last_error = NULL, updated_at = ?
-            WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL
-              AND (SELECT COUNT(*) FROM case_sides WHERE case_id = cases.id) = ?`,
-      args: [count, token, nowIso, nowIso, row.id, nowIso, count],
-    },
-    ...(row.reservationId ? [holdStatement(row.reservationId, nowIso, guard)] : []),
+    write,
+    ...(from === "awaiting_respondent" && row.reservationId ? [holdStatement(row.reservationId, nowIso, guard)] : []),
   ]);
+  if (rs[0].rowsAffected !== 1 && reservationId) await refundQuietly(reservationId);
   const fresh = (await getCase(row.id)) ?? row;
   if (rs[0].rowsAffected === 1) {
     scheduleJudging(() => runCaseJudging(row.id, token, origin));

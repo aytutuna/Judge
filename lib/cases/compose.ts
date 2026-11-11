@@ -7,7 +7,7 @@
 import type { CaseMode, PartyLetter } from "@/lib/case-types";
 import type { EvidenceGroup, VerifiedEvidence } from "@/lib/evidence";
 import { composeSides, partiesFor } from "@/lib/multi";
-import type { AppealRow, EvidenceRow, SideRow } from "./db";
+import type { AppealRow, CaseBundle, EvidenceRow, SideRow } from "./db";
 
 const LABEL: Record<PartyLetter, string> = { a: "Party A", b: "Party B", c: "Party C", d: "Party D" };
 const LETTER: Record<PartyLetter, string> = { a: "A", b: "B", c: "C", d: "D" };
@@ -52,19 +52,32 @@ export function sideText(sides: readonly Account[], party: PartyLetter): string 
   return sides.find((s) => s.party === party)?.text ?? null;
 }
 
+/** Sides that were invited and never answered: the owner went ahead without
+ * them. Their labels can still appear in the accounts that were written. */
+export function missingSides(bundle: Pick<CaseBundle, "sides" | "invites">): PartyLetter[] {
+  return bundle.invites.map((i) => i.party).filter((p) => !bundle.sides.some((s) => s.party === p));
+}
+
 /** The case document for a judging run: both accounts (or side A alone),
- * then earlier judged appeals oldest first, then the appeal being judged. */
+ * then a note on any side that did not answer, then earlier judged appeals
+ * oldest first, then the appeal being judged. */
 export function composeForJudging(
   sides: readonly Account[],
   mode: CaseMode,
   appeals: { earlier: readonly Context[]; current: Context | null },
   count = 2,
+  missing: readonly PartyLetter[] = [],
 ): string {
   const many = mode === "two_sided" && count > 2;
   const base = many
     ? composeSides(partiesFor(count).flatMap((party) => sides.filter((s) => s.party === party)))
     : composeCaseDocument(sideText(sides, "a") ?? "", mode === "two_sided" ? sideText(sides, "b") ?? "" : null);
   const parts = [base];
+  if (mode === "two_sided" && missing.length > 0) {
+    parts.push(
+      `NOT HEARD: invited but did not answer: ${missing.map((p) => LABEL[p]).join(", ")}. They are not part of this dispute; treat what the accounts above say about them only as those accounts' claims.`,
+    );
+  }
   for (const a of appeals.earlier) parts.push(appealSection(a.party, a.text, mode, false, count));
   if (appeals.current) parts.push(appealSection(appeals.current.party, appeals.current.text, mode, true, count));
   return parts.join("\n\n");

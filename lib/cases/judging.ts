@@ -29,7 +29,7 @@ import { multiAppealNote } from "@/lib/judge-multi";
 import { partiesFor } from "@/lib/multi";
 import { judgeAnonymized, premiumLogLine, type JudgedOutcome, type PremiumStats } from "@/lib/premium/run";
 import type { AppealInfo, AppealOutcome, Dispute, DisputedFact, EvidenceUsed, VerdictResult } from "@/lib/types";
-import { composeForJudging, evidenceCounts, evidenceGroups } from "./compose";
+import { composeForJudging, evidenceCounts, evidenceGroups, missingSides } from "./compose";
 import { getCase, loadCaseBundle, type AppealRow, type CaseBundle } from "./db";
 import { notifyOwnerCaseReady } from "./notify";
 import { appealOutcome, confidenceChange } from "./outcome";
@@ -336,7 +336,7 @@ export async function runCaseJudging(
   const twoSided = mode === "two_sided";
   const count = twoSided ? row.sides : 2;
   const noAppeals = { earlier: [], current: null };
-  const document = composeForJudging(bundle.sides, mode, noAppeals, count);
+  const document = composeForJudging(bundle.sides, mode, noAppeals, count, missingSides(bundle));
   const evText = evidenceText(bundle, mode, noAppeals, count);
 
   const run = await judge(caseId, {
@@ -453,7 +453,7 @@ export async function runAppealJudging(
     .filter((a) => a.id !== appealId && a.status === "judged" && a.resultSeq !== null)
     .sort((x, y) => (x.resultSeq ?? 0) - (y.resultSeq ?? 0));
   const appeals = { earlier, current: appeal };
-  const document = composeForJudging(bundle.sides, mode, appeals, count);
+  const document = composeForJudging(bundle.sides, mode, appeals, count, missingSides(bundle));
   const evText = evidenceText(bundle, mode, appeals, count);
 
   const run = await judge(caseId, {
