@@ -94,6 +94,7 @@
     <string name="party_b">Taraf B</string>
     <string name="party_c">Taraf C</string>
     <string name="party_d">Taraf D</string>
+    <string name="party_you_label">%1$s (sen)</string>
     <string name="you">Sen</string>
     <string name="error_fallback">Bir şey ters gitti. Bir daha dener misin?</string>
     <string name="error_not_configured">Yargıç henüz kurulmamış. Biraz sonra yeniden dene.</string>

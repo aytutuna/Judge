@@ -96,6 +96,7 @@
     <string name="party_b">Сторона B</string>
     <string name="party_c">Сторона C</string>
     <string name="party_d">Сторона D</string>
+    <string name="party_you_label">%1$s (ти)</string>
     <string name="you">Ти</string>
     <string name="error_fallback">Щось пішло не так. Спробуєш ще раз?</string>
     <string name="error_not_configured">Суддю ще не налаштовано. Спробуй пізніше.</string>

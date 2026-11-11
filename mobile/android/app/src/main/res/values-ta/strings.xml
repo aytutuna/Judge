@@ -94,6 +94,7 @@
     <string name="party_b">தரப்பு B</string>
     <string name="party_c">தரப்பு C</string>
     <string name="party_d">தரப்பு D</string>
+    <string name="party_you_label">%1$s (நீங்கள்)</string>
     <string name="you">நீங்கள்</string>
     <string name="error_fallback">ஏதோ தவறாகிவிட்டது. மீண்டும் முயல்கிறீர்களா?</string>
     <string name="error_not_configured">நடுவர் இன்னும் தயாராகவில்லை. பிறகு முயலுங்கள்.</string>

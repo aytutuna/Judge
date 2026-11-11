@@ -94,6 +94,7 @@
     <string name="party_b">Part B</string>
     <string name="party_c">Part C</string>
     <string name="party_d">Part D</string>
+    <string name="party_you_label">%1$s (dig)</string>
     <string name="you">Du</string>
     <string name="error_fallback">Noget gik galt. Vil du prøve igen?</string>
     <string name="error_not_configured">Dommeren er ikke sat op endnu. Prøv igen senere.</string>

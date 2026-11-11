@@ -94,6 +94,7 @@
     <string name="party_b">فریق B</string>
     <string name="party_c">فریق C</string>
     <string name="party_d">فریق D</string>
+    <string name="party_you_label">%1$s (آپ)</string>
     <string name="you">آپ</string>
     <string name="error_fallback">کچھ گڑبڑ ہو گئی۔ ذرا دوبارہ کوشش کر کے دیکھیں۔</string>
     <string name="error_not_configured">Judge ابھی تیار نہیں۔ بعد میں دوبارہ کوشش کریں۔</string>

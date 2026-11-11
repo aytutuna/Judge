@@ -94,6 +94,7 @@
     <string name="party_b">पक्ष B</string>
     <string name="party_c">पक्ष C</string>
     <string name="party_d">पक्ष D</string>
+    <string name="party_you_label">%1$s (आप)</string>
     <string name="you">आप</string>
     <string name="error_fallback">कुछ गड़बड़ हो गई। एक बार फिर कोशिश करें?</string>
     <string name="error_not_configured">जज अभी सेट नहीं हुआ है। थोड़ी देर बाद कोशिश करें।</string>

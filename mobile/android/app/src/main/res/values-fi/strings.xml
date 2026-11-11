@@ -94,6 +94,7 @@
     <string name="party_b">Osapuoli B</string>
     <string name="party_c">Osapuoli C</string>
     <string name="party_d">Osapuoli D</string>
+    <string name="party_you_label">%1$s (sinä)</string>
     <string name="you">Sinä</string>
     <string name="error_fallback">Jokin meni pieleen. Yritä uudelleen.</string>
     <string name="error_not_configured">Tuomaria ei ole vielä otettu käyttöön. Yritä myöhemmin uudelleen.</string>

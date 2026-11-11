@@ -95,6 +95,7 @@
     <string name="party_b">Partea B</string>
     <string name="party_c">Partea C</string>
     <string name="party_d">Partea D</string>
+    <string name="party_you_label">%1$s (tu)</string>
     <string name="you">Tu</string>
     <string name="error_fallback">Ceva n-a mers. Mai încerci o dată?</string>
     <string name="error_not_configured">Judecătorul nu e configurat încă. Încearcă mai târziu.</string>

@@ -94,6 +94,7 @@
     <string name="party_b">પક્ષ B</string>
     <string name="party_c">પક્ષ C</string>
     <string name="party_d">પક્ષ D</string>
+    <string name="party_you_label">%1$s (તમે)</string>
     <string name="you">તમે</string>
     <string name="error_fallback">કંઈક ગરબડ થઈ. ફરી પ્રયાસ કરશો?</string>
     <string name="error_not_configured">જજ હજી સેટ નથી થયા. થોડી વાર પછી પ્રયાસ કરો.</string>

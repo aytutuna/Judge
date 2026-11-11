@@ -98,6 +98,7 @@
     <string name="party_b">الطرف B</string>
     <string name="party_c">الطرف C</string>
     <string name="party_d">الطرف D</string>
+    <string name="party_you_label">%1$s (أنت)</string>
     <string name="you">أنت</string>
     <string name="error_fallback">حدث خطأ ما. هلّا حاولت مرة أخرى؟</string>
     <string name="error_not_configured">القاضي غير مُعدّ بعد. حاول لاحقًا.</string>

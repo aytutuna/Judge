@@ -93,6 +93,7 @@
     <string name="party_b">当事者B</string>
     <string name="party_c">当事者C</string>
     <string name="party_d">当事者D</string>
+    <string name="party_you_label">%1$s（あなた）</string>
     <string name="you">あなた</string>
     <string name="error_fallback">うまくいきませんでした。もう一度お試しください。</string>
     <string name="error_not_configured">審査員の準備がまだできていません。しばらくしてからお試しください。</string>

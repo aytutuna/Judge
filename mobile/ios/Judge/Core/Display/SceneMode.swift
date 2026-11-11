@@ -16,7 +16,7 @@ enum SceneMode: Sendable, Equatable {
         case .judging(let beat):
             return #"{"kind":"judging","beat":"\#(beat.rawValue)"}"#
         case .verdict(let tugA, let votes):
-            let list = votes.map { "\"\($0.rawValue)\"" }.joined(separator: ",")
+            let list = votes.map { "\"\($0.balance.rawValue)\"" }.joined(separator: ",")
             return #"{"kind":"verdict","verdict":{"tugA":\#(tugA),"votes":[\#(list)]}}"#
         }
     }

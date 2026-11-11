@@ -96,6 +96,7 @@
     <string name="party_b">Сторона B</string>
     <string name="party_c">Сторона C</string>
     <string name="party_d">Сторона D</string>
+    <string name="party_you_label">%1$s (вы)</string>
     <string name="you">Вы</string>
     <string name="error_fallback">Что-то пошло не так. Попробуете ещё раз?</string>
     <string name="error_not_configured">Судьи пока не подключены. Попробуйте позже.</string>

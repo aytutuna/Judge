@@ -94,6 +94,7 @@
     <string name="party_b">Part B</string>
     <string name="party_c">Part C</string>
     <string name="party_d">Part D</string>
+    <string name="party_you_label">%1$s (du)</string>
     <string name="you">Du</string>
     <string name="error_fallback">Något gick fel. Vill du försöka igen?</string>
     <string name="error_not_configured">Domaren är inte igång än. Försök igen senare.</string>

@@ -168,6 +168,7 @@ class Strings(private val res: Resources) {
     val partyB: String get() = res.getString(R.string.party_b)
     val partyC: String get() = res.getString(R.string.party_c)
     val partyD: String get() = res.getString(R.string.party_d)
+    fun partyYouLabel(label: String): String = res.getString(R.string.party_you_label, label)
     val you: String get() = res.getString(R.string.you)
     val errorFallback: String get() = res.getString(R.string.error_fallback)
     val errorNotConfigured: String get() = res.getString(R.string.error_not_configured)

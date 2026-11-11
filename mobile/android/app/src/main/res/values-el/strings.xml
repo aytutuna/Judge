@@ -94,6 +94,7 @@
     <string name="party_b">Πλευρά B</string>
     <string name="party_c">Πλευρά C</string>
     <string name="party_d">Πλευρά D</string>
+    <string name="party_you_label">%1$s (εσύ)</string>
     <string name="you">Εσύ</string>
     <string name="error_fallback">Κάτι πήγε στραβά. Δοκιμάζεις ξανά;</string>
     <string name="error_not_configured">Οι κριτές δεν είναι ακόμα έτοιμοι. Δοκίμασε ξανά αργότερα.</string>

@@ -94,6 +94,7 @@
     <string name="party_b">Party B</string>
     <string name="party_c">Party C</string>
     <string name="party_d">Party D</string>
+    <string name="party_you_label">%1$s (you)</string>
     <string name="you">You</string>
     <string name="error_fallback">Something went wrong. Mind trying again?</string>
     <string name="error_not_configured">The judge isn\'t set up yet. Try again later.</string>

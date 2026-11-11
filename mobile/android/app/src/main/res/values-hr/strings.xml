@@ -95,6 +95,7 @@
     <string name="party_b">Strana B</string>
     <string name="party_c">Strana C</string>
     <string name="party_d">Strana D</string>
+    <string name="party_you_label">%1$s (ti)</string>
     <string name="you">Ti</string>
     <string name="error_fallback">Nešto je pošlo po zlu. Možeš pokušati ponovno?</string>
     <string name="error_not_configured">Sudac još nije postavljen. Pokušaj ponovno kasnije.</string>

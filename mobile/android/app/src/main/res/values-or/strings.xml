@@ -94,6 +94,7 @@
     <string name="party_b">ପକ୍ଷ B</string>
     <string name="party_c">ପକ୍ଷ C</string>
     <string name="party_d">ପକ୍ଷ D</string>
+    <string name="party_you_label">%1$s (ଆପଣ)</string>
     <string name="you">ଆପଣ</string>
     <string name="error_fallback">କିଛି ଗଡ଼ବଡ଼ ହେଲା। ପୁଣି ଥରେ ଚେଷ୍ଟା କରିବେ?</string>
     <string name="error_not_configured">ବିଚାରକ ଏବେ ସେଟ୍ ହୋଇନାହାନ୍ତି। ପରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>

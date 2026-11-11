@@ -94,6 +94,7 @@
     <string name="party_b">Partij B</string>
     <string name="party_c">Partij C</string>
     <string name="party_d">Partij D</string>
+    <string name="party_you_label">%1$s (jij)</string>
     <string name="you">Jij</string>
     <string name="error_fallback">Er ging iets mis. Wil je het nog eens proberen?</string>
     <string name="error_not_configured">De rechter is nog niet ingesteld. Probeer het later nog eens.</string>

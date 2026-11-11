@@ -94,6 +94,7 @@
     <string name="party_b">ਧਿਰ B</string>
     <string name="party_c">ਧਿਰ C</string>
     <string name="party_d">ਧਿਰ D</string>
+    <string name="party_you_label">%1$s (ਤੁਸੀਂ)</string>
     <string name="you">ਤੁਸੀਂ</string>
     <string name="error_fallback">ਕੁਝ ਗੜਬੜ ਹੋ ਗਈ। ਇੱਕ ਵਾਰ ਫਿਰ ਕੋਸ਼ਿਸ਼ ਕਰੋਗੇ?</string>
     <string name="error_not_configured">ਜੱਜ ਹਾਲੇ ਸੈੱਟ ਨਹੀਂ ਹੋਇਆ। ਥੋੜ੍ਹੀ ਦੇਰ ਬਾਅਦ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>

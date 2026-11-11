@@ -93,6 +93,7 @@
     <string name="party_b">Bên B</string>
     <string name="party_c">Bên C</string>
     <string name="party_d">Bên D</string>
+    <string name="party_you_label">%1$s (bạn)</string>
     <string name="you">Bạn</string>
     <string name="error_fallback">Có lỗi xảy ra. Bạn thử lại nhé?</string>
     <string name="error_not_configured">Giám khảo chưa được thiết lập. Thử lại sau nhé.</string>

@@ -96,6 +96,7 @@
     <string name="party_b">Strona B</string>
     <string name="party_c">Strona C</string>
     <string name="party_d">Strona D</string>
+    <string name="party_you_label">%1$s (ty)</string>
     <string name="you">Ty</string>
     <string name="error_fallback">Coś poszło nie tak. Spróbujesz jeszcze raz?</string>
     <string name="error_not_configured">Sędzia nie jest jeszcze gotowy. Spróbuj później.</string>

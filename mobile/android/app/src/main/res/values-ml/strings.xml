@@ -94,6 +94,7 @@
     <string name="party_b">കക്ഷി B</string>
     <string name="party_c">കക്ഷി C</string>
     <string name="party_d">കക്ഷി D</string>
+    <string name="party_you_label">%1$s (നിങ്ങൾ)</string>
     <string name="you">നിങ്ങൾ</string>
     <string name="error_fallback">എന്തോ പിശക് പറ്റി. ഒന്നുകൂടി ശ്രമിക്കാമോ?</string>
     <string name="error_not_configured">ജഡ്ജിയെ ഇതുവരെ സെറ്റ് ചെയ്തിട്ടില്ല. പിന്നീട് ശ്രമിക്കൂ.</string>

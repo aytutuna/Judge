@@ -94,6 +94,7 @@
     <string name="party_b">పక్షం B</string>
     <string name="party_c">పక్షం C</string>
     <string name="party_d">పక్షం D</string>
+    <string name="party_you_label">%1$s (మీరు)</string>
     <string name="you">మీరు</string>
     <string name="error_fallback">ఏదో పొరపాటు జరిగింది. ఇంకోసారి ప్రయత్నిస్తారా?</string>
     <string name="error_not_configured">జడ్జి ఇంకా సెటప్ కాలేదు. కాసేపాగి మళ్లీ ప్రయత్నించండి.</string>

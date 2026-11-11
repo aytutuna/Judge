@@ -93,6 +93,7 @@
     <string name="party_b">Pihak B</string>
     <string name="party_c">Pihak C</string>
     <string name="party_d">Pihak D</string>
+    <string name="party_you_label">%1$s (anda)</string>
     <string name="you">Anda</string>
     <string name="error_fallback">Ada yang tidak kena. Boleh cuba lagi?</string>
     <string name="error_not_configured">Hakim belum disediakan lagi. Cuba lagi nanti.</string>

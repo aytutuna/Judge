@@ -94,6 +94,7 @@
     <string name="party_b">পক্ষ B</string>
     <string name="party_c">পক্ষ C</string>
     <string name="party_d">পক্ষ D</string>
+    <string name="party_you_label">%1$s (আপনি)</string>
     <string name="you">আপনি</string>
     <string name="error_fallback">কিছু একটা গোলমাল হয়েছে। আরেকবার চেষ্টা করবেন?</string>
     <string name="error_not_configured">বিচারক এখনও সেট আপ হয়নি। পরে আবার চেষ্টা করুন।</string>

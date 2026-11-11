@@ -235,6 +235,7 @@ enum L10n {
     static func partyB(_ lang: AppLang) -> String { string("party.b", lang) }
     static func partyC(_ lang: AppLang) -> String { string("party.c", lang) }
     static func partyD(_ lang: AppLang) -> String { string("party.d", lang) }
+    static func partyYouLabel(_ lang: AppLang, label: String) -> String { format("party.youLabel", lang, label) }
     static func you(_ lang: AppLang) -> String { string("you", lang) }
     static func errorFallback(_ lang: AppLang) -> String { string("errorFallback", lang) }
     static func errorNotConfigured(_ lang: AppLang) -> String { string("error.not_configured", lang) }

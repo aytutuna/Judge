@@ -94,6 +94,7 @@
     <string name="party_b">ಪಕ್ಷ B</string>
     <string name="party_c">ಪಕ್ಷ C</string>
     <string name="party_d">ಪಕ್ಷ D</string>
+    <string name="party_you_label">%1$s (ನೀವು)</string>
     <string name="you">ನೀವು</string>
     <string name="error_fallback">ಏನೋ ತಪ್ಪಾಯಿತು. ಇನ್ನೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸುತ್ತೀರಾ?</string>
     <string name="error_not_configured">ತೀರ್ಪುಗಾರರು ಇನ್ನೂ ಸಿದ್ಧರಾಗಿಲ್ಲ. ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ.</string>

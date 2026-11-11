@@ -95,6 +95,7 @@
     <string name="party_b">Part B</string>
     <string name="party_c">Part C</string>
     <string name="party_d">Part D</string>
+    <string name="party_you_label">%1$s (tu)</string>
     <string name="you">Tu</string>
     <string name="error_fallback">Alguna cosa ha fallat. Ho tornes a provar?</string>
     <string name="error_not_configured">El jutge encara no està configurat. Torna-ho a provar més tard.</string>

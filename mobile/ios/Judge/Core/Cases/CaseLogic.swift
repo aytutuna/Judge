@@ -181,7 +181,7 @@ enum CaseLogic {
     /// "Party A" / "Person C" written in `lang` ("Taraf A" / "Kişi C" in
     /// Turkish), as localizeLabels does on the web. A word that is not a
     /// label ("Party C") stays as it is.
-    static func localizeLabels(_ text: String, lang: AppLang) -> String {
+    static func localizeLabels(_ text: String, lang: AppLang, sides: Int = 2) -> String {
         guard !text.isEmpty,
               let pattern = try? NSRegularExpression(pattern: "(?<!\\p{L})(Party|Taraf|Person|Kişi) ([A-Z])(?!\\p{L})")
         else { return text }
@@ -193,7 +193,7 @@ enum CaseLogic {
             let word = source.substring(with: match.range(at: 1))
             let letter = source.substring(with: match.range(at: 2))
             let party = word == "Party" || word == "Taraf"
-            guard party == (letter == "A" || letter == "B") else { continue }
+            guard Names.labelFits(word: word, letter: letter, sides: sides) else { continue }
             let label = lang == .tr ? (party ? "Taraf" : "Kişi") : (party ? "Party" : "Person")
             out.replaceCharacters(in: match.range, with: "\(label) \(letter)")
         }

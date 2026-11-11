@@ -93,6 +93,7 @@
     <string name="party_b">ฝ่าย B</string>
     <string name="party_c">ฝ่าย C</string>
     <string name="party_d">ฝ่าย D</string>
+    <string name="party_you_label">%1$s (คุณ)</string>
     <string name="you">คุณ</string>
     <string name="error_fallback">มีอะไรผิดพลาดนิดหน่อย ลองอีกครั้งนะ</string>
     <string name="error_not_configured">ระบบตัดสินยังไม่พร้อม ลองใหม่ภายหลังนะ</string>

@@ -94,6 +94,7 @@
     <string name="party_b">Fél B</string>
     <string name="party_c">Fél C</string>
     <string name="party_d">Fél D</string>
+    <string name="party_you_label">%1$s (te)</string>
     <string name="you">Te</string>
     <string name="error_fallback">Valami hiba történt. Megpróbálod újra?</string>
     <string name="error_not_configured">A bíró még nincs beállítva. Próbáld újra később.</string>

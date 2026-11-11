@@ -95,6 +95,7 @@
     <string name="party_b">Parte B</string>
     <string name="party_c">Parte C</string>
     <string name="party_d">Parte D</string>
+    <string name="party_you_label">%1$s (tu)</string>
     <string name="you">Tu</string>
     <string name="error_fallback">Algo correu mal. Tentas outra vez?</string>
     <string name="error_not_configured">O juiz ainda não está configurado. Tenta mais tarde.</string>

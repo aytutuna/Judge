@@ -28,6 +28,9 @@ struct JudgeAPI: Sendable {
         static let get: TimeInterval = 20
     }
 
+    /// The most sides of a case this build can show (SIDES_HEADER on the web).
+    static let sidesSupported = 4
+
     let baseURL: URL
     let session: URLSession
     let tokenStore: any TokenStore
@@ -147,6 +150,8 @@ struct JudgeAPI: Sendable {
         request.httpShouldHandleCookies = false
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
+        // Without this the server leaves out cases with more than two sides.
+        request.setValue(String(Self.sidesSupported), forHTTPHeaderField: "Judge-Sides")
         if let token = tokenStore.token(), !token.isEmpty {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }

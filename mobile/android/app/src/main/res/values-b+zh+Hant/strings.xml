@@ -93,6 +93,7 @@
     <string name="party_b">當事人B</string>
     <string name="party_c">當事人C</string>
     <string name="party_d">當事人D</string>
+    <string name="party_you_label">%1$s（你）</string>
     <string name="you">你</string>
     <string name="error_fallback">出了點問題，可以再試一次嗎？</string>
     <string name="error_not_configured">評審還沒準備好，請稍後再試。</string>

@@ -94,6 +94,7 @@
     <string name="party_b">Partei B</string>
     <string name="party_c">Partei C</string>
     <string name="party_d">Partei D</string>
+    <string name="party_you_label">%1$s (du)</string>
     <string name="you">Du</string>
     <string name="error_fallback">Da ist was schiefgelaufen. Versuchst du es noch mal?</string>
     <string name="error_not_configured">Der Richter ist noch nicht eingerichtet. Versuch es später noch mal.</string>

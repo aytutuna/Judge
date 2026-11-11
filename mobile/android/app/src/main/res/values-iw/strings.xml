@@ -95,6 +95,7 @@
     <string name="party_b">צד B</string>
     <string name="party_c">צד C</string>
     <string name="party_d">צד D</string>
+    <string name="party_you_label">%1$s (את/ה)</string>
     <string name="you">את/ה</string>
     <string name="error_fallback">משהו השתבש. אפשר לנסות שוב?</string>
     <string name="error_not_configured">השופט עוד לא מוגדר. אפשר לנסות שוב מאוחר יותר.</string>

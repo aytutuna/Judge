@@ -93,6 +93,7 @@
     <string name="party_b">당사자 B</string>
     <string name="party_c">당사자 C</string>
     <string name="party_d">당사자 D</string>
+    <string name="party_you_label">%1$s (나)</string>
     <string name="you">나</string>
     <string name="error_fallback">문제가 생겼어요. 다시 한번 해 볼까요?</string>
     <string name="error_not_configured">아직 판사가 준비되지 않았어요. 나중에 다시 시도해 주세요.</string>

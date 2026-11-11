@@ -96,6 +96,7 @@
     <string name="party_b">Strana B</string>
     <string name="party_c">Strana C</string>
     <string name="party_d">Strana D</string>
+    <string name="party_you_label">%1$s (ty)</string>
     <string name="you">Ty</string>
     <string name="error_fallback">Něco se pokazilo. Zkusíš to znovu?</string>
     <string name="error_not_configured">Soudci ještě nejsou připravení. Zkus to později.</string>
