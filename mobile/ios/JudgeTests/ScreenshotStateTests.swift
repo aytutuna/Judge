@@ -10,7 +10,7 @@ final class ScreenshotStateTests: XCTestCase {
         XCTAssertEqual(ScreenshotState.parse("home-error:tr")?.screen, .homeError)
         XCTAssertEqual(ScreenshotState.parse("judging:en")?.screen, .judging)
         XCTAssertEqual(ScreenshotState.parse("verdict/win_a_self:tr")?.screen, .verdict(sample: "win_a_self"))
-        XCTAssertEqual(ScreenshotState.parse("history:en")?.tab, .history)
+        XCTAssertNil(ScreenshotState.parse("history:en"))
         XCTAssertEqual(ScreenshotState.parse("settings:tr")?.tab, .settings)
         XCTAssertEqual(ScreenshotState.parse("verdict/split:en")?.tab, .new)
         XCTAssertEqual(ScreenshotState.parse("signin:en")?.screen, .signIn)
@@ -165,22 +165,6 @@ final class ScreenshotStateTests: XCTestCase {
         }
     }
 
-    @MainActor
-    func testHistoryStateFillsAnInMemoryStore() throws {
-        let state = try XCTUnwrap(ScreenshotState.parse("history:tr"))
-        // The store's context needs its container alive (as JudgeApp keeps it).
-        let container = HistoryContainer.inMemory()
-        try withExtendedLifetime(container) {
-            let app = state.makeModel(container: container)
-            let rows = try app.history.all()
-            XCTAssertEqual(rows.map(\.id).first, "abc123DEF0")
-            XCTAssertEqual(rows.count, 6)
-            XCTAssertEqual(app.lang, .tr)
-            let listed = try app.history.cached(user: try XCTUnwrap(app.historyUser))
-            XCTAssertEqual(listed.count, 6, "signed in: every row is the account's, none phone-only")
-        }
-    }
-
     func testParsesThePremiumScreens() {
         XCTAssertEqual(ScreenshotState.parse("balance/welcome:en")?.screen, .balanceWelcome)
         XCTAssertEqual(ScreenshotState.parse("balance/none:tr")?.screen, .balanceNone)
@@ -261,9 +245,6 @@ final class ScreenshotStateTests: XCTestCase {
         XCTAssertEqual(ScreenshotState.parse("case/appeal:tr")?.screen, .caseDetail(view: "appeal_overturned"))
         XCTAssertEqual(ScreenshotState.parse("case/judged:en")?.screen, .caseDetail(view: "judged"))
         XCTAssertEqual(ScreenshotState.parse("case/judged:en")?.tab, .new)
-        XCTAssertEqual(ScreenshotState.parse("history-cases:en")?.tab, .history)
-        XCTAssertEqual(ScreenshotState.parse("history-select:tr")?.screen, .historySelect)
-        XCTAssertEqual(ScreenshotState.parse("history-select:tr")?.tab, .history)
         XCTAssertEqual(ScreenshotState.parse("mode-both:en")?.screen, .modeBoth)
         XCTAssertEqual(ScreenshotState.parse("menu:en:dark")?.screen, .menu)
         XCTAssertEqual(ScreenshotState.parse("menu:en")?.tab, .new)
@@ -287,22 +268,14 @@ final class ScreenshotStateTests: XCTestCase {
             let tr = try XCTUnwrap(ScreenshotState.parse("case/judged:tr")).makeModel(container: container)
             XCTAssertEqual(tr.makeCaseModel(id: "case0000001").view?.lang, .tr, "Turkish takes the Turkish view")
 
-            let list = try XCTUnwrap(ScreenshotState.parse("history-cases:en")).makeModel(container: container)
-            let user = try XCTUnwrap(list.historyUser)
-            XCTAssertEqual(try list.history.cached(user: user).count, 7, "the fixture page is listed")
-            XCTAssertNotNil(list.historyList.next, "with Show more under it")
-            XCTAssertFalse(list.historyList.usesNetwork)
-            let phone = try XCTUnwrap(try list.history.find(id: "winB000001"), "and one verdict only on this phone")
-            XCTAssertNil(phone.ownerUserID)
-
             let menu = try XCTUnwrap(ScreenshotState.parse("menu:en")).makeModel(container: container)
             XCTAssertTrue(menu.menuOpen)
-            XCTAssertFalse(try menu.history.cached(user: try XCTUnwrap(menu.historyUser)).isEmpty, "the menu has verdicts to list")
-
-            let select = try XCTUnwrap(ScreenshotState.parse("history-select:en")).makeModel(container: container)
-            XCTAssertEqual(select.historySelectionSeed, ["c:case0000010", "v:verdict0021"])
-            let rows = try select.history.cached(user: try XCTUnwrap(select.historyUser))
-            XCTAssertTrue(rows.filter { ["c:case0000010", "v:verdict0021"].contains($0.key) }.allSatisfy(\.removable), "the picked rows can be removed")
+            let user = try XCTUnwrap(menu.historyUser)
+            XCTAssertEqual(try menu.history.cached(user: user).count, 7, "the fixture page is listed")
+            XCTAssertNotNil(menu.historyList.next, "with Show more under it")
+            XCTAssertFalse(menu.historyList.usesNetwork)
+            let phone = try XCTUnwrap(try menu.history.find(id: "winB000001"), "and one verdict only on this phone")
+            XCTAssertNil(phone.ownerUserID)
 
             let both = try XCTUnwrap(ScreenshotState.parse("mode-both:en")).makeModel(container: container)
             XCTAssertTrue(both.home.isTwoSided(both))

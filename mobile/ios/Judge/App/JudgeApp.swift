@@ -42,7 +42,7 @@ struct JudgeApp: App {
 }
 
 enum RootTab: Hashable {
-    case new, history, settings
+    case new, settings
 }
 
 struct RootView: View {
@@ -58,7 +58,6 @@ struct RootView: View {
         @Bindable var account = app.account
         ZStack {
             page(.new) { HomeTab() }
-            page(.history) { HistoryTab() }
             page(.settings) { SettingsView() }
         }
         .accessibilityHidden(app.menuOpen)
@@ -114,7 +113,7 @@ struct RootView: View {
         }
     }
 
-    /// All three tabs stay alive, so their pages and scroll positions survive
+    /// Both tabs stay alive, so their pages and scroll positions survive
     /// a switch; the others are only hidden.
     private func page<Content: View>(_ tab: RootTab, @ViewBuilder content: () -> Content) -> some View {
         let shown = app.tab == tab
@@ -235,23 +234,6 @@ private struct HomeTab: View {
                         PricingView()
                     case .caseDetail(let id):
                         CaseScreen(id: id)
-                    }
-                }
-        }
-    }
-}
-
-private struct HistoryTab: View {
-    @Environment(AppModel.self) private var app
-
-    var body: some View {
-        @Bindable var model = app
-        NavigationStack(path: $model.historyPath) {
-            HistoryView()
-                .navigationDestination(for: HistoryRoute.self) { route in
-                    switch route {
-                    case .detail(let id): HistoryDetailView(id: id)
-                    case .caseDetail(let id): CaseScreen(id: id)
                     }
                 }
         }

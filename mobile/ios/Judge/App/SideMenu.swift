@@ -181,8 +181,9 @@ struct RootBarTrailing: ToolbarContent {
     }
 }
 
-/// The panel the menu button slides in: New, a Verdicts heading over the
-/// newest few verdicts, and at the bottom the profile above Settings.
+/// The panel the menu button slides in: New, the Verdicts and the Links
+/// (cases sent and received) in one list that scrolls, and at the bottom
+/// the profile above Settings.
 struct SideMenu: View {
     @Environment(AppModel.self) private var app
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -194,11 +195,13 @@ struct SideMenu: View {
     @State private var webLink: WebLink?
     @State private var profileOpen = false
     @State private var confirmSignOut = false
+    @State private var confirming: [String]?
+    /// Rows near the end that are on screen.
+    @State private var tailShown: Set<String> = []
     @AccessibilityFocusState private var focusFirst: Bool
 
     private var settle: Duration { .milliseconds(reduceMotion ? 0 : 300) }
 
-    private static let recentCount = 5
     private static let rowType = TypeStyle(face: .inter, weight: 500, size: 16, lineHeight: 1.3)
     private static let recentType = TypeStyle(face: .inter, weight: 400, size: 14, lineHeight: 1.3, textStyle: .subheadline)
     private static let stateType = TypeStyle(face: .inter, weight: 600, size: 12.5, lineHeight: 1.3, textStyle: .footnote)
@@ -243,32 +246,138 @@ struct SideMenu: View {
             }
             Button(L10n.appCancel(app.lang), role: .cancel) {}
         }
+        .confirmationDialog(
+            HistoryLabels.removeConfirm(currentEntries.filter { Set(confirming ?? []).contains($0.id) }, lang: app.lang),
+            isPresented: Binding(get: { confirming != nil }, set: { if !$0 { confirming = nil } }),
+            titleVisibility: .visible
+        ) {
+            Button(L10n.appHistoryDelete(app.lang), role: .destructive) { remove(confirming ?? []) }
+            Button(L10n.appCancel(app.lang), role: .cancel) {}
+        }
+    }
+
+    private var currentEntries: [HistoryEntry] {
+        HistoryEntry.current(app: app, rows: cachedRows, saved: saved)
+    }
+
+    private func refresh(force: Bool = false) {
+        let list = app.historyList
+        let user = app.historyUser
+        let enabled = app.account.features.history
+        Task { await list.refresh(user: user, enabled: enabled, force: force) }
+    }
+
+    private func remove(_ keys: [String]) {
+        let wanted = Set(keys)
+        let picked = currentEntries.filter { wanted.contains($0.id) }
+        let list = app.historyList
+        let user = app.historyUser
+        let enabled = app.account.features.history
+        Task { _ = await list.remove(picked, user: user, enabled: enabled) }
     }
 
     private func panel(width: CGFloat) -> some View {
         let lang = app.lang
-        let recents = HistoryEntry.current(app: app, rows: cachedRows, saved: saved)
-            .filter(\.opens)
-            .prefix(Self.recentCount)
-        let now = app.historyList.now()
+        let list = app.historyList
+        let entries = currentEntries
+        let verdicts = entries.filter { !$0.isCase }
+        let links = entries.filter(\.isCase)
+        let now = list.now()
+        let thinking = entries.contains { entry in
+            if case .account(let item) = entry { return item.historyState?.thinking == true }
+            return false
+        }
         return VStack(spacing: 0) {
-            ScrollView {
-                VStack(spacing: 8) {
-                    row(.new, title: L10n.appTabNew(lang))
-                        .accessibilityFocused($focusFirst)
-                    heading(L10n.navVerdicts(lang))
-                    ForEach(Array(recents)) { entry in
-                        recent(entry, lang: lang, now: now)
+            List {
+                row(.new, title: L10n.appTabNew(lang))
+                    .accessibilityFocused($focusFirst)
+                    .menuListRow()
+                if let notice = list.notice {
+                    Text(noticeText(notice, lang: lang))
+                        .brandText(.footnote)
+                        .foregroundStyle(Brand.danger)
+                        .padding(.horizontal, 12)
+                        .menuListRow()
+                }
+                if !verdicts.isEmpty {
+                    heading(L10n.navVerdicts(lang)).menuListRow()
+                    ForEach(verdicts) { entry in
+                        entryRow(entry, entries: entries, lang: lang, now: now)
                     }
                 }
+                if !links.isEmpty {
+                    heading(L10n.navLinks(lang)).menuListRow()
+                    ForEach(links) { entry in
+                        entryRow(entry, entries: entries, lang: lang, now: now)
+                    }
+                }
+                if entries.isEmpty {
+                    if list.loading {
+                        ProgressView().tint(Brand.muted)
+                            .frame(maxWidth: .infinity)
+                            .padding(.top, 16)
+                            .menuListRow()
+                    } else if list.failed {
+                        loadFailed(lang).menuListRow()
+                    } else {
+                        Text(L10n.appHistoryEmpty(lang))
+                            .brandText(.footnote)
+                            .foregroundStyle(Brand.muted)
+                            .padding(.horizontal, 12)
+                            .padding(.top, 8)
+                            .menuListRow()
+                    }
+                } else if list.failed {
+                    loadFailed(lang).menuListRow()
+                }
+                if list.next != nil {
+                    Group {
+                        if list.loadingMore {
+                            ProgressView().tint(Brand.muted)
+                        } else {
+                            Button(L10n.shellLoadMore(lang)) {
+                                Task { await list.loadMore(user: app.historyUser) }
+                            }
+                            .buttonStyle(GhostButtonStyle())
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                    .menuListRow()
+                }
+                if entries.contains(where: \.isPhone) {
+                    Text(L10n.appHistoryPhoneOnlyNote(lang))
+                        .brandText(.footnote)
+                        .foregroundStyle(Brand.muted)
+                        .padding(.horizontal, 12)
+                        .padding(.top, 8)
+                        .menuListRow()
+                }
             }
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
             .scrollBounceBehavior(.basedOnSize)
+            // A page of rows the phone already had doesn't grow the list, so no
+            // new row appears: keep going while the end is on screen.
+            .onChange(of: list.next) { _, next in
+                guard next != nil, !tailShown.isDisjoint(with: entries.suffix(3).map(\.id)) else { return }
+                Task { await list.loadMore(user: app.historyUser) }
+            }
+            .refreshable { await list.refresh(user: app.historyUser, enabled: app.account.features.history, force: true) }
             VStack(spacing: 4) {
                 if profileOpen { profileItems(lang) }
                 profile(lang)
                 row(.settings, title: L10n.appTabSettings(lang), icon: "gearshape")
             }
             .padding(.top, 12)
+        }
+        // While the judges work on a row, the list is read again now and then.
+        .task(id: thinking) {
+            guard thinking else { return }
+            while !Task.isCancelled {
+                try? await Task.sleep(for: HistoryListModel.pollEvery)
+                if Task.isCancelled { return }
+                await list.refresh(user: app.historyUser, enabled: app.account.features.history, force: true)
+            }
         }
         .padding(.horizontal, 12)
         .padding(.top, 20)
@@ -295,11 +404,13 @@ struct SideMenu: View {
         .accessibilityAddTraits(.isModal)
         .accessibilityAction(.escape, close)
         .onAppear {
+            refresh()
             Task {
                 try? await Task.sleep(for: settle)
                 focusFirst = true
             }
         }
+        .onChange(of: app.historyUser) { _, _ in refresh(force: true) }
         .onDisappear { focusFirst = false }
     }
 
@@ -337,38 +448,24 @@ struct SideMenu: View {
         .accessibilityAddTraits(selected ? .isSelected : [])
     }
 
-    /// A section heading that still opens the list.
     private func heading(_ title: String) -> some View {
-        let selected = app.tab == .history
-        return Button {
-            app.menuOpen = false
-            app.go(.history)
-        } label: {
-            HStack {
-                Text(title)
-                    .brandText(Self.headingType)
-                    .foregroundStyle(selected ? Brand.ink : Brand.muted)
-                Spacer(minLength: 8)
-                Image(systemName: "chevron.forward")
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundStyle(Brand.muted)
-                    .accessibilityHidden(true)
-            }
+        Text(title)
+            .brandText(Self.headingType)
+            .foregroundStyle(Brand.muted)
             .padding(.horizontal, 12)
-            .frame(maxWidth: .infinity, minHeight: 44)
+            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
             .overlay(alignment: .bottom) { Rectangle().fill(Brand.line).frame(height: 1) }
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .padding(.top, 8)
-        .accessibilityAddTraits(selected ? [.isHeader, .isSelected] : .isHeader)
+            .padding(.top, 8)
+            .accessibilityAddTraits(.isHeader)
     }
 
-    /// One verdict as its own card: green when the ruling went the viewer's
+    /// One verdict or link as its own card: green when the ruling went the viewer's
     /// way, red when it went the other's. The result words stay under the
     /// title so colour is never the only signal.
     private func recent(_ entry: HistoryEntry, lang: AppLang, now: Date) -> some View {
         let tone = entry.tone(now: now)
+        var muted = false
+        if case .account(let item) = entry { muted = HistoryLabels.muted(item, now: now) }
         let status = entry.status(lang: lang, now: now)
         let (fill, edge, words): (Color, Color, Color) = switch tone {
         case .yours: (Brand.sageTint, Brand.sageStrong, Brand.sageInk)
@@ -398,9 +495,65 @@ struct SideMenu: View {
             .padding(.vertical, 8)
             .frame(maxWidth: .infinity, minHeight: 52, alignment: .leading)
             .paperSurface(radius: 12, fill: fill, border: edge)
+            .opacity(muted ? 0.6 : 1)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .disabled(!entry.opens)
+    }
+
+    /// A card with delete on a swipe and a long press, where the entry can
+    /// be removed. The swipe starts at the leading edge: a swipe toward the
+    /// trailing one is what closes the panel.
+    @ViewBuilder
+    private func entryRow(_ entry: HistoryEntry, entries: [HistoryEntry], lang: AppLang, now: Date) -> some View {
+        let card = recent(entry, lang: lang, now: now)
+            .menuListRow()
+            .onAppear {
+                guard let index = entries.firstIndex(where: { $0.id == entry.id }), index >= entries.count - 3 else { return }
+                tailShown.insert(entry.id)
+                if app.historyList.next != nil {
+                    Task { await app.historyList.loadMore(user: app.historyUser) }
+                }
+            }
+            .onDisappear { tailShown.remove(entry.id) }
+        if entry.removable {
+            card
+                .swipeActions(edge: .leading, allowsFullSwipe: false) {
+                    Button(role: .destructive) { confirming = [entry.id] } label: {
+                        Label(L10n.appHistoryDelete(lang), systemImage: "trash")
+                    }
+                }
+                .contextMenu {
+                    Button(role: .destructive) { confirming = [entry.id] } label: {
+                        Label(L10n.appHistoryDelete(lang), systemImage: "trash")
+                    }
+                }
+        } else {
+            card
+        }
+    }
+
+    private func loadFailed(_ lang: AppLang) -> some View {
+        VStack(spacing: 10) {
+            Text(L10n.shellLoadFailed(lang))
+                .brandText(.footnote)
+                .foregroundStyle(Brand.danger)
+                .multilineTextAlignment(.center)
+            Button(L10n.caseRetry(lang)) { refresh(force: true) }
+                .buttonStyle(GhostButtonStyle())
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 8)
+    }
+
+    private func noticeText(_ notice: HistoryListModel.Notice, lang: AppLang) -> String {
+        switch notice {
+        case .offline: return L10n.appHistoryOfflineRemove(lang)
+        case .removeFailed(let n): return L10n.appHistoryRemoveFailed(lang, n: n)
+        case .openFailed: return L10n.errorFallback(lang)
+        case .loadMoreFailed: return L10n.shellLoadFailed(lang)
+        }
     }
 
     /// The picture and name of the account; it opens Pricing, Sign in or Sign out.
@@ -497,14 +650,23 @@ extension AppModel {
         menuOpen = true
     }
 
-    /// A recent row: opens like in Verdicts, from a fresh list.
+    /// A menu row: opens on its page from a fresh New tab.
     func openRecent(_ entry: HistoryEntry) async -> URL? {
-        go(.history)
-        historyPath.removeAll()
+        go(.new)
         return await openHistory(entry)
     }
 
     private func dismissKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+
+extension View {
+    /// A row of the menu's list: no separator or background, and the card's
+    /// own spacing.
+    fileprivate func menuListRow() -> some View {
+        listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
     }
 }

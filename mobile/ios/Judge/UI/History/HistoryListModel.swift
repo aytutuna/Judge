@@ -21,13 +21,19 @@ enum HistoryEntry: Identifiable {
         }
     }
 
-    /// Select mode can pick it: phone rows, and account rows whose own page
+    /// The menu can delete it: phone rows, and account rows whose own page
     /// offers Remove (the website's case tools).
-    var selectable: Bool {
+    var removable: Bool {
         switch self {
         case .account(let item): return item.removable
         case .phone: return true
         }
+    }
+
+    /// A case, sent or received; the rest are verdicts.
+    var isCase: Bool {
+        if case .account(let item) = self { return item.isCase }
+        return false
     }
 
     var isPhone: Bool {
@@ -116,38 +122,6 @@ enum HistoryEntry: Identifiable {
             .map { ($0, $0.at) }
             .sorted { HistoryOrder.before(($0.1, $0.0.id), ($1.1, $1.0.id)) }
             .map(\.0)
-    }
-}
-
-/// Select mode of the Verdicts list, by entry id.
-struct HistorySelection: Equatable {
-    var isActive = false
-    var ids: Set<String> = []
-
-    static func selectable(_ entries: [HistoryEntry]) -> [String] {
-        entries.filter(\.selectable).map(\.id)
-    }
-
-    mutating func start() {
-        isActive = true
-        ids = []
-    }
-
-    mutating func end() {
-        isActive = false
-        ids = []
-    }
-
-    mutating func toggle(_ id: String) {
-        if ids.contains(id) { ids.remove(id) } else { ids.insert(id) }
-    }
-
-    func allOf(_ selectable: [String]) -> Bool {
-        !selectable.isEmpty && ids.isSuperset(of: selectable)
-    }
-
-    mutating func toggleAll(_ selectable: [String]) {
-        ids = allOf(selectable) ? [] : Set(selectable)
     }
 }
 

@@ -6,6 +6,7 @@ enum SettingsRoute: Hashable {
 
 struct SettingsView: View {
     @Environment(AppModel.self) private var app
+    @Environment(\.colorScheme) private var colorScheme
     @State private var webLink: WebLink?
     @State private var confirmSignOut = false
 
@@ -28,14 +29,11 @@ struct SettingsView: View {
                 .listRowBackground(Brand.paper)
 
                 Section {
-                    ForEach(Appearance.allCases, id: \.self) { option in
-                        appearanceRow(option, lang: lang)
-                    }
-                    Toggle(isOn: Binding(get: { app.gamify }, set: {
-                        app.setGamify($0)
-                        app.analytics.track("settings_changed", ["key": "gamify"])
+                    Toggle(isOn: Binding(get: { colorScheme == .dark }, set: {
+                        app.setAppearance($0 ? .dark : .light)
+                        app.analytics.track("settings_changed", ["key": "appearance"])
                     })) {
-                        Text(L10n.shellGamify(lang))
+                        Text(L10n.settingsDarkMode(lang))
                             .brandText(.body)
                             .foregroundStyle(Brand.ink)
                     }
@@ -138,37 +136,6 @@ struct SettingsView: View {
         switch app.langPreference {
         case .system: return L10n.appSettingsLanguageDevice(lang)
         case .fixed(let fixed): return fixed.nativeName
-        }
-    }
-
-    private func appearanceRow(_ option: Appearance, lang: AppLang) -> some View {
-        let selected = app.appearance == option
-        return Button {
-            app.setAppearance(option)
-            app.analytics.track("settings_changed", ["key": "appearance"])
-        } label: {
-            HStack {
-                Text(appearanceName(option, lang: lang))
-                    .brandText(.body)
-                    .foregroundStyle(Brand.ink)
-                Spacer()
-                if selected {
-                    Image(systemName: "checkmark")
-                        .foregroundStyle(Brand.terraInk)
-                        .accessibilityHidden(true)
-                }
-            }
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .accessibilityAddTraits(selected ? .isSelected : [])
-    }
-
-    private func appearanceName(_ option: Appearance, lang: AppLang) -> String {
-        switch option {
-        case .system: return L10n.appSettingsAppearanceSystem(lang)
-        case .light: return L10n.appSettingsAppearanceLight(lang)
-        case .dark: return L10n.appSettingsAppearanceDark(lang)
         }
     }
 

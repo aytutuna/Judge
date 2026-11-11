@@ -87,31 +87,6 @@ final class HistoryStoreTests: XCTestCase {
     }
 
     @MainActor
-    func testSelectionTogglesAndPicksAll() {
-        var selection = HistorySelection()
-        selection.start()
-        XCTAssertTrue(selection.isActive)
-        selection.toggle("v:a")
-        XCTAssertEqual(selection.ids, ["v:a"])
-        selection.toggle("v:a")
-        XCTAssertTrue(selection.ids.isEmpty)
-
-        let selectable = ["v:a", "c:b"]
-        selection.toggle("v:a")
-        XCTAssertFalse(selection.allOf(selectable))
-        selection.toggleAll(selectable)
-        XCTAssertEqual(selection.ids, Set(selectable))
-        XCTAssertTrue(selection.allOf(selectable))
-        selection.toggleAll(selectable)
-        XCTAssertTrue(selection.ids.isEmpty, "Deselect all once everything is picked")
-        XCTAssertFalse(HistorySelection().allOf([]), "nothing to pick is never all picked")
-        selection.toggle("v:a")
-        selection.end()
-        XCTAssertFalse(selection.isActive)
-        XCTAssertTrue(selection.ids.isEmpty)
-    }
-
-    @MainActor
     func testALaterRulingReplacesWhatTheEntryShows() throws {
         try withStore { store in
             let first = try session("win_b_named")

@@ -177,7 +177,7 @@ final class NewArgumentTests: XCTestCase {
         try withExtendedLifetime(container) {
             let app = try PremiumFixtures.app(container: container)
             app.home.path = [.verdict(id: "abc123DEF0"), .pricing]
-            app.tab = .history
+            app.tab = .settings
             app.newArgument()
             XCTAssertTrue(app.home.path.isEmpty, "back to the empty case card")
             XCTAssertTrue(app.home.isBlank)

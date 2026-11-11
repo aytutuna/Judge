@@ -293,12 +293,12 @@ final class HistoryListTests: XCTestCase {
     }
 
     @MainActor
-    func testSelectableRowsAndConfirmWording() throws {
+    func testRemovableRowsAndConfirmWording() throws {
         try withStore { store in
             try store.save(try session("win_b_named"))
             let page = try fixturePage()
             let entries = HistoryEntry.merge(cached: page.items, saved: try store.all(), user: "u1")
-            let selectable = Set(HistorySelection.selectable(entries))
+            let selectable = Set(entries.filter(\.removable).map(\.id))
             XCTAssertEqual(selectable, Set(page.items.filter(\.removable).map(\.key) + ["v:winB000001"]))
             XCTAssertFalse(selectable.contains("v:verdict0020"), "still being judged")
             XCTAssertFalse(selectable.contains("c:case0000014"), "removed by the other side")
@@ -427,7 +427,7 @@ final class HistoryListTests: XCTestCase {
     }
 
     @MainActor
-    func testOpeningARowPushesItOnTheVerdictsTab() async throws {
+    func testOpeningARowPushesItOnTheNewTab() async throws {
         let container = HistoryContainer.inMemory()
         let (app, _) = try model(container, router: StubRouter())
         var answered = item("c2", "2026-10-03T00:00:00.000Z", kind: "case")
@@ -447,30 +447,30 @@ final class HistoryListTests: XCTestCase {
         XCTAssertNil(url)
         url = await app.openHistory(try entry("c:c3"))
         XCTAssertNil(url)
-        XCTAssertEqual(app.historyPath, [.detail(id: "v1"), .detail(id: "phone1"), .caseDetail(id: "c3")])
+        XCTAssertEqual(app.home.path, [.saved(id: "v1"), .saved(id: "phone1"), .caseDetail(id: "c3")])
 
         url = await app.openHistory(try entry("c:c2"))
         XCTAssertEqual(url, app.config.siteURL("r").appending(component: "tok2"), "an invite is answered on the website")
-        XCTAssertEqual(app.historyPath.count, 3)
+        XCTAssertEqual(app.home.path.count, 3)
         XCTAssertEqual(try entry("v:v1").title(lang: .en), HistoryLabels.title(rows[0], lang: .en))
         withExtendedLifetime(container) {}
     }
 
     @MainActor
-    func testARecentRowFromAnotherTabStartsTheVerdictsStackAgain() async throws {
+    func testAMenuRowStartsTheNewTabAgain() async throws {
         let container = HistoryContainer.inMemory()
         let (app, _) = try model(container, router: StubRouter())
         try app.history.save(try session("split", id: "phone1"))
         let entries = HistoryEntry.merge(cached: try app.history.cached(user: "u1"), saved: try app.history.all(), user: "u1")
         let entry = try XCTUnwrap(entries.first { $0.id == "v:phone1" })
-        app.historyPath = [.detail(id: "old")]
-        app.tab = .new
+        app.home.path = [.saved(id: "old")]
+        app.tab = .settings
         app.menuOpen = true
 
         let url = await app.openRecent(entry)
         XCTAssertNil(url)
-        XCTAssertEqual(app.tab, .history)
-        XCTAssertEqual(app.historyPath, [.detail(id: "phone1")])
+        XCTAssertEqual(app.tab, .new)
+        XCTAssertEqual(app.home.path, [.saved(id: "phone1")])
         withExtendedLifetime(container) {}
     }
 

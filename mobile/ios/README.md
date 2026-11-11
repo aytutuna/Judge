@@ -81,7 +81,7 @@ state from `mobile/shared/fixtures/verdicts.json`, with an in-memory history,
 a separate defaults suite and no network (the API points at a closed local
 port). Screens: `home` (signed in, so the link and "Add context" show),
 `home-example` (both sides from "Try an example"), `home-error`, `judging`, `judging-plain` (the same
-with Gamify off), `history`, `settings`, `signin`, `signin-code`,
+with Gamify off), `settings`, `signin`, `signin-code`,
 `account` (Settings, signed in with a fixture account), `verdict/<sample>`
 for any key of `verdictResponses` (opened as a saved verdict),
 `verdict-thread` (a fresh verdict, as the judging cover hands over to it), `verdict-context`,
@@ -94,9 +94,8 @@ same, scrolled to the cards), `clarify` and
 `evidence` (picked screenshots in mixed states, under the box), and the case states
 `mode-both`, `case-write` and `case-write-answered` (the owner's page of a
 case the link started, with their side still to write, before and after the
-other side), `history-cases` (the account's list with every kind of row and
-a verdict kept only on the phone), `history-select` (select mode, two rows
-picked) and `case/<state>` (a key of `cases.views` or
+other side), `menu` (the side menu open, with the account's verdicts and links
+and a verdict kept only on the phone) and `case/<state>` (a key of `cases.views` or
 `awaiting`, `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`,
 `failed`, `expired`, `removed`; Turkish takes the `_tr` view if there is one).
 Languages: `en`, `tr`. Add `:dark` (`home:en:dark`) for the dark appearance;
@@ -212,7 +211,7 @@ flow, natively (app/page.tsx):
   `pollAfterMs` while something is judging (backing off to 30 s on errors)
   and offers the invite link (copy, share sheet, new link), judging on the
   owner's side alone, retry, removal, the names on the share pages and
-  adding context (appeals). The Verdicts tab lists the account's verdicts
+  adding context (appeals). The side menu lists the account's verdicts
   and cases, started or answered, from `GET /api/v1/me/history`, cached in
   SwiftData so it shows at once and offline. Invite links (`/r/…`) are never answered in the app: they are shared
   as URLs, and one the app is opened with goes to Safari; `/c/{id}` links

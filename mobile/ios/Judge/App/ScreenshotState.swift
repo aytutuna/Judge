@@ -10,7 +10,7 @@ import SwiftData
 /// `home` (signed in, so the link and "Add context" show),
 /// `home-example` (both sides filled by "Try an example"),
 /// `home-error`, `judging`, `judging-plain` (the same with Gamify off),
-/// `history`, `settings`, `signin`, `signin-code`,
+/// `settings`, `signin`, `signin-code`,
 /// `account` (Settings, signed in), `verdict/<sample>` (a key of `verdictResponses` or `manySidedResponses`,
 /// opened as a saved verdict), `verdict-thread` (a fresh verdict, as the
 /// judging cover hands over to it), `verdict-context`, `verdict-context-locked` and
@@ -22,10 +22,9 @@ import SwiftData
 /// questions), `evidence` (picked screenshots in mixed states under the box), `mode-both` (a case being sent),
 /// `case-write` and `case-write-answered` (the owner's page of a case the link
 /// started, with their side still to write, before and after the other side),
-/// `history-cases` (the account's Verdicts list: waiting, thinking, your turn,
-/// ready either way, an answered case, a phone-only verdict), `history-select`
-/// (the same list in select mode, two rows picked), `menu` (the side menu open over
-/// the New page, signed in, with the same list's newest rows) or `case/<state>`: the owner's
+/// `menu` (the side menu open over the New page, signed in, with the
+/// account's verdicts and links: waiting, thinking, your turn, ready either
+/// way, an answered case, and a phone-only verdict) or `case/<state>`: the owner's
 /// case page for a key of `cases.views` or one of the short names `awaiting`,
 /// `judging`, `judged`, `one-sided`, `appeal`, `appeal-judging`, `failed`,
 /// `expired`, `removed` (Turkish takes the `_tr` view when there is one);
@@ -48,7 +47,6 @@ struct ScreenshotState {
         case verdictThread
         /// The writer's gate: nil allows the form, else why not.
         case verdictContext(blockedBy: String?)
-        case history
         case settings
         case signIn
         case signInCode
@@ -62,8 +60,6 @@ struct ScreenshotState {
         case evidence
         case modeBoth
         case caseWrite(answered: Bool)
-        case historyCases
-        case historySelect
         case menu
         case caseDetail(view: String)
     }
@@ -79,7 +75,6 @@ struct ScreenshotState {
         case .home, .homeExample, .homeError, .judging, .judgingPlain, .verdict, .verdictThread, .verdictContext, .signIn, .signInCode,
              .balanceWelcome, .balanceNone, .pricing, .pricingStore, .pricingBuy, .clarify, .evidence, .modeBoth, .caseWrite, .caseDetail, .menu:
             return .new
-        case .history, .historyCases, .historySelect: return .history
         case .settings, .account: return .settings
         }
     }
@@ -105,7 +100,6 @@ struct ScreenshotState {
         case "verdict-context": screen = .verdictContext(blockedBy: nil)
         case "verdict-context-locked": screen = .verdictContext(blockedBy: "premium_required")
         case "verdict-context-limit": screen = .verdictContext(blockedBy: "appeal_limit")
-        case "history": screen = .history
         case "settings": screen = .settings
         case "signin": screen = .signIn
         case "signin-code": screen = .signInCode
@@ -120,8 +114,6 @@ struct ScreenshotState {
         case "mode-both": screen = .modeBoth
         case "case-write": screen = .caseWrite(answered: false)
         case "case-write-answered": screen = .caseWrite(answered: true)
-        case "history-cases": screen = .historyCases
-        case "history-select": screen = .historySelect
         case "menu": screen = .menu
         default:
             if name.hasPrefix("case/") {
@@ -267,13 +259,6 @@ struct ScreenshotState {
             guard let view = ScreenshotFixtures.caseView(answered ? "waiting_to_write_answered" : "waiting_to_write") else { return }
             app.seedCase(view)
             app.home.path = [.caseDetail(id: view.id)]
-        case .historyCases:
-            premium(app, me: "credits7")
-            accountList(app)
-        case .historySelect:
-            premium(app, me: "credits7")
-            accountList(app)
-            app.historySelectionSeed = ["c:case0000010", "v:verdict0021"]
         case .menu:
             premium(app, me: "credits7")
             accountList(app)
@@ -284,14 +269,6 @@ struct ScreenshotState {
             guard let view = localized ?? ScreenshotFixtures.caseView(name) else { return }
             app.seedCase(view)
             app.home.path = [.caseDetail(id: view.id)]
-        case .history:
-            // Signed in, so the six verdicts read as the account's.
-            premium(app, me: "credits7")
-            guard let user = app.account.user?.id else { return }
-            try? app.history.setAccount(user)
-            app.historyUser = user
-            saveSamples(app)
-            app.historyList.showForScreenshot(next: nil, last: nil, at: Self.newest)
         }
     }
 
@@ -311,16 +288,6 @@ struct ScreenshotState {
         guard let session = ScreenshotFixtures.session("win_b_named") else { return }
         try? app.history.setAccount(nil)
         try? app.history.save(session, now: ErrorText.parseISO("2026-10-17T08:00:00.000Z") ?? Self.newest)
-    }
-
-    /// Six saved verdicts, newest first, an hour apart.
-    @MainActor
-    private func saveSamples(_ app: AppModel) {
-        let samples = ["win_a_self", "overturned_tr", "win_b_named", "lean_b_majority_escalated", "split", "conditional"]
-        for (offset, name) in samples.enumerated() {
-            guard let session = ScreenshotFixtures.session(name) else { continue }
-            try? app.history.save(session, now: Self.newest.addingTimeInterval(Double(-offset) * 3600))
-        }
     }
 
     /// Signed in with a fixture account on a server with Premium, cases and

@@ -71,8 +71,6 @@ final class AppModel {
     /// A sheet the root does not own is up (the photo picker, a link opened
     /// from the side menu), so the Home page is covered.
     var sheetOpen = false
-    /// The Verdicts tab's pages.
-    var historyPath: [HistoryRoute] = []
     /// The Settings tab's pages.
     var settingsPath: [SettingsRoute] = []
     /// The account's Verdicts list (GET /api/v1/me/history and its cache).
@@ -88,9 +86,6 @@ final class AppModel {
     @ObservationIgnored var appealSeed: (gate: CaseAppealGate, text: String)?
     /// Screenshot states: the Pricing anchor the screen scrolls to; nil = the top.
     @ObservationIgnored var pricingScroll: String?
-    /// Screenshot states: verdicts the Verdicts list opens with picked, in
-    /// select mode.
-    @ObservationIgnored var historySelectionSeed: Set<String>?
     /// Case views created on this phone, so their page opens at once.
     @ObservationIgnored private var caseSeeds: [String: CaseView] = [:]
     /// The other side's name typed on Home, for the waiting page. Only for
@@ -173,7 +168,7 @@ final class AppModel {
         account.onSessionEnded = { [weak self, weak purchases, weak list] byUser in
             list?.reset()
             self?.historyUser = nil
-            self?.historyPath = []
+            self?.home.path.removeAll { if case .caseDetail = $0 { true } else { false } }
             self?.caseModels = [:]
             self?.home.evidence.clear()
             purchases?.userSignedOut()
@@ -282,32 +277,30 @@ final class AppModel {
     }
 
     /// A tab was tapped. "New" always lands on the form, also when a verdict
-    /// is still open in that tab; the others go back to their list when
-    /// tapped again.
+    /// is still open in that tab; Settings goes back to its list when tapped
+    /// again.
     func select(_ target: RootTab) {
         if target == .new { home.path.removeAll() }
-        if target == tab {
-            if target == .history { historyPath.removeAll() }
-            if target == .settings { settingsPath.removeAll() }
-        }
+        if target == tab, target == .settings { settingsPath.removeAll() }
         tab = target
     }
 
-    /// Opens a Verdicts row on its page in that tab. An invite answered on
-    /// the website comes back as its address instead.
+    /// Opens a menu row on its page in the New tab, on top of what is open
+    /// there. An invite answered on the website comes back as its address
+    /// instead.
     func openHistory(_ entry: HistoryEntry) async -> URL? {
         switch entry {
         case .phone(let row):
-            historyPath.append(.detail(id: row.id))
+            home.path.append(.saved(id: row.id))
         case .account(let item):
             guard HistoryLabels.openable(item) else { return nil }
             if !item.isCase {
-                if await historyList.openVerdict(item, user: historyUser) { historyPath.append(.detail(id: item.id)) }
+                if await historyList.openVerdict(item, user: historyUser) { home.path.append(.saved(id: item.id)) }
             } else if item.isRespondent, let token = item.inviteToken {
                 // Answering is done on the website: the case opens there too.
                 return config.siteURL("r").appending(component: token)
             } else {
-                historyPath.append(.caseDetail(id: item.id))
+                home.path.append(.caseDetail(id: item.id))
             }
         }
         return nil
