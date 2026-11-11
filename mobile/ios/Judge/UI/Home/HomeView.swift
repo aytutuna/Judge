@@ -46,7 +46,7 @@ struct HomeView: View {
                     }
                 }
                 .defaultScrollAnchor(home.clarify == nil ? UnitPoint.bottom : UnitPoint.top)
-                .scrollDismissesKeyboard(.immediately)
+                .scrollDismissesKeyboard(.interactively)
                 .onAppear {
                     if home.error != nil { proxy.scrollTo(Self.errorID, anchor: .center) }
                 }

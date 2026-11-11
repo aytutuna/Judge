@@ -4,11 +4,10 @@ import UIKit
 
 extension View {
     /// A bar button on its own small round plate, as the website's header
-    /// buttons. The hit area stays larger than the plate.
+    /// buttons, as large as Apple's own round toolbar buttons.
     fileprivate func roundPlate() -> some View {
-        frame(width: 36, height: 36)
+        frame(width: 44, height: 44)
             .background(Circle().fill(Brand.ink.opacity(0.08)))
-            .frame(minWidth: 40, minHeight: 44)
             .contentShape(Rectangle())
     }
 }
@@ -38,7 +37,7 @@ struct MenuButton: View {
             app.openMenu()
         } label: {
             Image(systemName: "line.3.horizontal")
-                .font(.system(size: 16, weight: .semibold))
+                .font(.system(size: 22, weight: .semibold))
                 .foregroundStyle(Brand.ink)
                 .roundPlate()
         }
@@ -64,7 +63,7 @@ struct ComposeButton: View {
             app.go(.new)
         } label: {
             Image(systemName: "square.and.pencil")
-                .font(.system(size: 16, weight: .semibold))
+                .font(.system(size: 22, weight: .semibold))
                 .foregroundStyle(Brand.ink)
                 .roundPlate()
         }
@@ -83,9 +82,9 @@ private struct GamifyToggleStyle: ToggleStyle {
             configuration.isOn.toggle()
         } label: {
             Image(systemName: "gamecontroller")
-                .font(.system(size: 16, weight: .semibold))
+                .font(.system(size: 22, weight: .semibold))
                 .foregroundStyle(on ? Brand.terraInk : Brand.muted)
-                .frame(width: 36, height: 36)
+                .frame(width: 44, height: 44)
                 .background(
                     ZStack {
                         Circle()
@@ -95,7 +94,6 @@ private struct GamifyToggleStyle: ToggleStyle {
                             .fill(on ? Brand.terra.opacity(0.16) : Brand.ink.opacity(0.08))
                     }
                 )
-                .frame(minWidth: 40, minHeight: 44)
                 .contentShape(Rectangle())
                 .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: on)
         }
@@ -416,7 +414,7 @@ struct SideMenu: View {
         } label: {
             HStack(spacing: 12) {
                 ProfileAvatar()
-                    .frame(width: 36, height: 36)
+                    .frame(width: 44, height: 44)
                     .clipShape(Circle())
                 Text(name)
                     .brandText(Self.rowType)
