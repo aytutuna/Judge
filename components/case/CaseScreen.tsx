@@ -22,7 +22,6 @@ import { useLang } from "@/lib/lang";
 import { localizeLabels, partyLabel, resolveParties, restoreNames, textLang } from "@/lib/names";
 import type { NameMapping } from "@/lib/types";
 import { shareLink } from "@/lib/share-link";
-import { forgetSideNames, loadSideNames, type SideNames } from "@/lib/side-names-store";
 import { useCase } from "@/lib/use-case";
 import { refreshViewer, useViewer } from "@/lib/use-viewer";
 import { JudgingOverlay } from "../JudgingOverlay";
@@ -225,8 +224,6 @@ export type CasePanelProps = {
   removedNow?: boolean;
   /** The owner's side as they wrote it, once this browser has read it. */
   ownText?: string | null;
-  /** What the owner called each other side when sending the link. */
-  sideNames?: SideNames;
 };
 
 /** The owner's side as the judges read it, with every name but the
@@ -241,7 +238,7 @@ export function ownSideText(text: string, names: NameMapping[]): string {
 
 /** One polite region for the whole list: it reads "<name or side>: <state>"
  * only for the sides whose state just changed. */
-function LiveAnnouncer({ lang, live, sideNames }: { lang: Lang; live: CaseLiveSide[]; sideNames: SideNames }) {
+function LiveAnnouncer({ lang, live }: { lang: Lang; live: CaseLiveSide[] }) {
   const [seen, setSeen] = useState(live);
   const [message, setMessage] = useState("");
   if (seen !== live) {
@@ -249,7 +246,7 @@ function LiveAnnouncer({ lang, live, sideNames }: { lang: Lang; live: CaseLiveSi
     const changed = live.filter((s) => seen.find((p) => p.party === s.party)?.state !== s.state);
     if (changed.length) {
       setMessage(
-        changed.map((s) => `${sideNames[s.party]?.trim() || partyLabel(lang, s.party)}: ${t(lang, LIVE_KEY[s.state])}`).join(". "),
+        changed.map((s) => `${s.name?.trim() || partyLabel(lang, s.party)}: ${t(lang, LIVE_KEY[s.state])}`).join(". "),
       );
     }
   }
@@ -287,7 +284,6 @@ export function CasePanel({
   ownTools = null,
   removedNow = false,
   ownText = null,
-  sideNames = {},
 }: CasePanelProps) {
   const judgeRef = useRef<HTMLDialogElement>(null);
   const judgeCancelRef = useRef<HTMLButtonElement>(null);
@@ -326,7 +322,7 @@ export function CasePanel({
         {view.live ? (
           <section className={`${account.card} ${styles.inviteList}`}>
             {view.live.map((side) => {
-              const name = sideNames[side.party]?.trim();
+              const name = side.name?.trim();
               return (
                 <div key={side.party} className={styles.inviteRow} data-party={side.party}>
                   <div className={styles.inviteHead}>
@@ -345,7 +341,7 @@ export function CasePanel({
                 </div>
               );
             })}
-            <LiveAnnouncer lang={lang} live={view.live} sideNames={sideNames} />
+            <LiveAnnouncer lang={lang} live={view.live} />
           </section>
         ) : null}
         {view.inviteUrl ? (
@@ -353,14 +349,16 @@ export function CasePanel({
             <button type="button" className={`${account.btn} ${account.primary}`} onClick={onShare}>
               {t(lang, "case.invite.share")}
             </button>
-            <button
-              type="button"
-              className={styles.textBtn}
-              disabled={busy}
-              onClick={() => openConfirm(resetRef.current, resetCancelRef.current)}
-            >
-              {t(lang, "case.invite.reset")}
-            </button>
+            {view.canRotate === false ? null : (
+              <button
+                type="button"
+                className={styles.textBtn}
+                disabled={busy}
+                onClick={() => openConfirm(resetRef.current, resetCancelRef.current)}
+              >
+                {t(lang, "case.invite.reset")}
+              </button>
+            )}
           </div>
         ) : null}
         <p className={resetDone ? styles.calm : "sr-only"} role="status">
@@ -616,8 +614,6 @@ export function CaseScreen({ id }: { id: string }) {
   const [busy, setBusy] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
   const [resetDone, setResetDone] = useState(false);
-  // Read once: the case loads after hydration, so nothing rendered here can mismatch.
-  const [sideNames] = useState<SideNames>(() => loadSideNames(id));
   const [removedNow, setRemovedNow] = useState(false);
   const [toast, showToast] = useToast();
   const appeal = useAppealDraft<AppealResponse>({
@@ -699,7 +695,6 @@ export function CaseScreen({ id }: { id: string }) {
     })) as CaseRemovalResponse | null;
     if (json?.case) {
       forgetCaseNames(id);
-      forgetSideNames(id);
       setView(json.case);
       setRemovedNow(true);
     }
@@ -759,7 +754,6 @@ export function CaseScreen({ id }: { id: string }) {
         focusAppeal={appealFinished}
         removedNow={removedNow}
         ownText={view.removed ? null : (originals?.side.original?.text ?? null)}
-        sideNames={sideNames}
         ownTools={
           <>
             <CaseOriginals lang={lang} data={view.removed ? null : originals} />
