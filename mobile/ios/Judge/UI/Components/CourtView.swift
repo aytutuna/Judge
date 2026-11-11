@@ -52,14 +52,18 @@ struct HomeCourt: View {
     static let minHeight: CGFloat = 110
     private static let maxWidth: CGFloat = 1100
 
+    /// A new place each time Home is shown.
+    @State private var venue = Venues.fallback
+
     var body: some View {
         GeometryReader { geo in
             if geo.size.height >= Self.minHeight {
-                CourtView(scene: .home(busy: busy), covered: covered)
+                CourtView(scene: .home(busy: busy, venue: venue), covered: covered)
                     .frame(maxWidth: min(geo.size.width, Self.maxWidth), maxHeight: .infinity)
                     .frame(width: geo.size.width, height: geo.size.height)
             }
         }
+        .onAppear { venue = Venues.pickNew() }
         .allowsHitTesting(false)
         .accessibilityHidden(true)
     }

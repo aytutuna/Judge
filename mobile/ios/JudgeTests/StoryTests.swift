@@ -116,14 +116,16 @@ final class StoryTests: XCTestCase {
     }
 
     func testCourtSceneJSON() throws {
-        XCTAssertEqual(CourtScene.home(busy: true).json, #"{"kind":"home","busy":true}"#)
+        XCTAssertEqual(CourtScene.home(busy: true).json, #"{"kind":"home","venue":"court","busy":true}"#)
         XCTAssertEqual(
             CourtScene.judging(.crux, nil).json,
-            #"{"kind":"judging","beat":"crux","votes":[],"extra":0,"winner":null,"trial":null}"#
+            #"{"kind":"judging","venue":"court","beat":"crux","votes":[],"extra":0,"winner":null,"trial":null}"#
         )
+        XCTAssertEqual(CourtScene.home(busy: false, venue: "ice").json, #"{"kind":"home","venue":"ice","busy":false}"#)
+        XCTAssertTrue(CourtScene.judging(.crux, nil, venue: "tv").json.hasPrefix(#"{"kind":"judging","venue":"tv","#))
         let summary = Story.Summary(votes: [.a, .other, .b], escalated: true, extra: 0, winner: .b, trial: .overturned)
         let json = CourtScene.judging(.finale, summary).json
-        XCTAssertEqual(json, #"{"kind":"judging","beat":"final","votes":["a","other","b"],"extra":0,"winner":"b","trial":"overturned"}"#)
+        XCTAssertEqual(json, #"{"kind":"judging","venue":"court","beat":"final","votes":["a","other","b"],"extra":0,"winner":"b","trial":"overturned"}"#)
         XCTAssertNotNil(try JSONSerialization.jsonObject(with: Data(json.utf8)) as? [String: Any])
     }
 

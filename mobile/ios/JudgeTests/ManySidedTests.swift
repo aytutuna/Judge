@@ -159,7 +159,7 @@ final class ManySidedTests: XCTestCase {
     func testTheCourtGetsTheSideCountOnlyBeyondTwo() throws {
         let three = try Fixtures.manySample("three_win_c").result.result
         let json = CourtScene.judging(.finale, Story.summarize(three)).json
-        XCTAssertEqual(json, #"{"kind":"judging","beat":"final","votes":["c","c","a"],"extra":0,"winner":"c","trial":null,"sides":3}"#)
+        XCTAssertEqual(json, #"{"kind":"judging","venue":"court","beat":"final","votes":["c","c","a"],"extra":0,"winner":"c","trial":null,"sides":3}"#)
         XCTAssertTrue(CourtScene.judging(.crux, nil, sides: 4).json.hasSuffix(#","sides":4}"#))
         XCTAssertFalse(CourtScene.judging(.crux, nil).json.contains("sides"))
     }
