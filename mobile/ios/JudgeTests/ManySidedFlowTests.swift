@@ -19,7 +19,7 @@ final class ManySidedFlowTests: XCTestCase {
         )
     }
 
-    private static let owner: [String: Any] = [
+    nonisolated(unsafe) private static let owner: [String: Any] = [
         "id": "caseMany01", "role": "owner", "yourParty": "a", "status": "awaiting_respondent",
         "createdAt": "2026-11-10T12:00:00.000Z", "expiresAt": "2026-11-17T12:00:00.000Z",
         "parties": ["a", "b", "c"],
