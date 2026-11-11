@@ -90,13 +90,13 @@ export function parseDraft(raw: string): Draft | null {
   const { argument, otherSide, mineName, otherName, theirsOpen, more } = v as Record<string, unknown>;
   if (typeof argument !== "string" || argument.length > MAX_DRAFT) return null;
   if (otherSide !== undefined && (typeof otherSide !== "string" || otherSide.length > MAX_DRAFT)) return null;
-  if (!argument.trim() && !(otherSide as string | undefined)?.trim()) return null;
+  const extra = parseMore(more);
+  if (!argument.trim() && !(otherSide as string | undefined)?.trim() && !extra.some((e) => e.text.trim())) return null;
   const draft: Draft = { argument };
   if (otherSide) draft.otherSide = otherSide as string;
   if (typeof mineName === "string" && mineName.length <= MAX_NAME) draft.mineName = mineName;
   if (typeof otherName === "string" && otherName.length <= MAX_NAME) draft.otherName = otherName;
   if (theirsOpen === true) draft.theirsOpen = true;
-  const extra = parseMore(more);
   if (extra.length) draft.more = extra;
   return draft;
 }

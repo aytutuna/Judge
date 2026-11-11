@@ -117,6 +117,12 @@ describe("parseDraft", () => {
     expect(parseDraft(JSON.stringify({ argument: "", otherSide: ARG }))).toEqual({ argument: "", otherSide: ARG });
   });
 
+  it("keeps a draft where only a later side has text", () => {
+    const raw = JSON.stringify({ argument: "", otherSide: "", more: [{ text: "Cy says so.", name: "Cy" }] });
+    expect(parseDraft(raw)).toEqual({ argument: "", more: [{ text: "Cy says so.", name: "Cy" }] });
+    expect(parseDraft(JSON.stringify({ argument: "", more: [{ text: " ", name: "Cy" }] }))).toBeNull();
+  });
+
   it("keeps the names and the open their-side card", () => {
     const full = { argument: ARG, otherSide: "Fruit.", mineName: "Ayse", otherName: "Sam", theirsOpen: true };
     expect(parseDraft(JSON.stringify(full))).toEqual(full);
