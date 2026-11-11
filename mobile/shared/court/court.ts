@@ -1,4 +1,5 @@
 import { createCourt, type CourtScene } from "@/components/court/engine";
+import { parseVenue } from "@/lib/venues";
 
 /**
  * Entry of the page the native apps show for the street court (bundled by
@@ -33,10 +34,11 @@ function post(type: string) {
 
 function parse(input: CourtScene | string): CourtScene {
   const s = typeof input === "string" ? JSON.parse(input) : input;
-  if (s?.kind === "home") return { kind: "home", busy: !!s.busy };
+  if (s?.kind === "home") return { kind: "home", busy: !!s.busy, venue: parseVenue(s.venue) ?? "court" };
   if (s?.kind === "judging" && BEATS.includes(s.beat) && Array.isArray(s.votes) && s.votes.every((v: string) => VOTES.includes(v))) {
     return {
       kind: "judging",
+      venue: parseVenue(s.venue) ?? "court",
       beat: s.beat,
       votes: [...s.votes],
       extra: Math.max(0, Number(s.extra) || 0),

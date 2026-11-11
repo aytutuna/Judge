@@ -5,12 +5,15 @@
 
 import type { Vote } from "@/lib/scene-bridge";
 import type { CruxTrialOutcome } from "@/lib/types";
+import { parseVenue, type Venue } from "@/lib/venues";
 import type { Beat } from "./story";
 
 export type CourtScene =
-  | { kind: "home"; busy: boolean }
+  | { kind: "home"; busy: boolean; venue?: string }
   | {
       kind: "judging";
+      /** The scene the court is set in (lib/venues); anything else is the street court. */
+      venue?: string;
       beat: Beat;
       votes: readonly Vote[];
       /** Judges called in after the first three. */
@@ -44,9 +47,19 @@ const W = 320;
 const H = 180;
 const PX = 2;
 const CENTER = { x: 160, y: 101 };
-// Rims of the hoops in the court picture; sides A and C shoot left, B and D right.
-const HOOP = { a: { x: 81, y: 64 }, b: { x: 238, y: 64 } };
-const hoopOf = (side: Side) => (side === "a" || side === "c" ? HOOP.a : HOOP.b);
+// Where the ball goes in, per venue: the hoops' rims in the court picture, a bin
+// or basket baked into the others. Sides A and C shoot left, B and D right.
+const TARGETS: Record<Venue, { a: Point; b: Point }> = {
+  court: { a: { x: 81, y: 64 }, b: { x: 238, y: 64 } },
+  beach: { a: { x: 100, y: 82 }, b: { x: 212, y: 82 } },
+  camp: { a: { x: 100, y: 84 }, b: { x: 222, y: 84 } },
+  farm: { a: { x: 122, y: 88 }, b: { x: 250, y: 89 } },
+  ice: { a: { x: 75, y: 64 }, b: { x: 245, y: 64 } },
+  library: { a: { x: 80, y: 84 }, b: { x: 240, y: 84 } },
+  museum: { a: { x: 78, y: 86 }, b: { x: 242, y: 86 } },
+  street: { a: { x: 72, y: 82 }, b: { x: 248, y: 82 } },
+  tv: { a: { x: 70, y: 88 }, b: { x: 250, y: 88 } },
+};
 const SIDES: readonly Side[] = ["a", "b", "c", "d"];
 const SPEED = 34;
 const JOG = 70;
@@ -323,20 +336,56 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
       img.onerror = () => ok(null);
       img.src = opts.src(name);
     });
+  // The backdrop is the street court's ground and props, or one picture with
+  // the venue's decoration baked in. `shown` is what the backdrop holds now.
+  let venue: Venue = "court";
+  let shown: Venue = "court";
+  const venueArt = (v: Venue) => `venues/${v}`;
+  const loadVenue = (v: Venue) =>
+    v === "court" || pics[venueArt(v)] ? Promise.resolve() : load(venueArt(v)).then((img) => void (img && (pics[venueArt(v)] = img)));
+  const hoopOf = (side: Side) => {
+    const target = TARGETS[shown];
+    return side === "a" || side === "c" ? target.a : target.b;
+  };
+  function paint() {
+    const g = bg.getContext("2d") as CanvasRenderingContext2D;
+    if (venue === "court") {
+      if (pics.ground) g.drawImage(pics.ground, 0, 0);
+      for (const [k, x, y] of LAYOUT) {
+        const img = pics[`props/${k}`];
+        if (img) g.drawImage(img, Math.round(x - img.width / 2), y - img.height);
+      }
+    } else {
+      const img = pics[venueArt(venue)];
+      if (!img) return;
+      g.drawImage(img, 0, 0);
+    }
+    shown = venue;
+  }
+  function switchVenue(id: string | undefined) {
+    venue = parseVenue(id) ?? "court";
+    if (!ready || venue === shown) return;
+    const v = venue;
+    loadVenue(v).then(() => {
+      if (disposed || venue !== v) return;
+      paint();
+      dirty = true;
+    });
+  }
   Promise.all([
     ...names.map((n) => load(n).then((img) => void (img && (pics[n] = img)))),
     ...everyone().map((c) => load(`people/${c.who}`).then((img) => void (c.img = img))),
   ]).then(() => {
     if (disposed) return;
-    const g = bg.getContext("2d") as CanvasRenderingContext2D;
-    if (pics.ground) g.drawImage(pics.ground, 0, 0);
-    for (const [k, x, y] of LAYOUT) {
-      const img = pics[`props/${k}`];
-      if (img) g.drawImage(img, Math.round(x - img.width / 2), y - img.height);
-    }
-    ready = true;
-    draw();
-    opts.onReady?.();
+    const first = () => {
+      if (disposed) return;
+      paint();
+      ready = true;
+      draw();
+      opts.onReady?.();
+    };
+    if (venue === "court") first();
+    else loadVenue(venue).then(first);
   });
 
   // Movement
@@ -928,6 +977,7 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
     set(next) {
       const prev = scene;
       scene = next;
+      switchVenue(next.venue);
       if (next.kind === "home") {
         if (prev?.kind !== "home") startHome(next.busy);
         else if (prev.busy !== next.busy) {
