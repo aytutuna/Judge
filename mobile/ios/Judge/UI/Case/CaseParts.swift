@@ -255,10 +255,6 @@ struct AppealSection<Draft: AppealDraft>: View {
 
     private func form(failed: String?) -> some View {
         stack {
-            Text(L10n.appAppealIntro(lang))
-                .brandText(TypeStyle(face: .inter, weight: 400, size: 14, lineHeight: 1.5, textStyle: .subheadline))
-                .foregroundStyle(Brand.ink2)
-                .fixedSize(horizontal: false, vertical: true)
             if let failed {
                 Text(failed == "refused" ? L10n.appealRefused(lang) : L10n.appealFailed(lang))
                     .brandText(.slotTitle)
@@ -267,28 +263,27 @@ struct AppealSection<Draft: AppealDraft>: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .paperSurface(radius: 14, fill: Brand.strata.opacity(0.6), border: Brand.stone)
             }
+            if !cost.isEmpty {
+                Text(cost)
+                    .brandText(TypeStyle(face: .inter, weight: 400, size: 13, lineHeight: 1.4, textStyle: .footnote))
+                    .foregroundStyle(Brand.ink2)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 12)
+                    .background(RoundedRectangle(cornerRadius: 16, style: .continuous).fill(Brand.ivory2))
+            }
             VStack(alignment: .leading, spacing: 6) {
-                HStack {
-                    Text(L10n.appAppealAsk(lang))
-                        .brandText(TypeStyle(face: .inter, weight: 600, size: 13, lineHeight: 1.3, textStyle: .footnote))
-                        .foregroundStyle(Brand.ink)
-                    Spacer()
-                    Text(verbatim: "\(model.appealText.utf16.count) / \(CaseLogic.maxAppeal)")
-                        .brandText(.footnote)
-                        .monospacedDigit()
-                        .foregroundStyle(Brand.muted)
-                        .accessibilityHidden(true)
-                }
                 ZStack(alignment: .topLeading) {
                     TextEditor(text: $model.appealText)
                         .brandText(TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5))
                         .foregroundStyle(Brand.ink)
                         .scrollContentBackground(.hidden)
-                        .frame(minHeight: 120)
+                        .frame(minHeight: 200)
                         .padding(.horizontal, 9)
                         .padding(.vertical, 6)
                         .disabled(model.appealSending)
-                        .accessibilityLabel(L10n.appAppealAsk(lang))
+                        .accessibilityLabel(L10n.appAppealPlaceholder(lang))
                     if model.appealText.isEmpty {
                         Text(L10n.appAppealPlaceholder(lang))
                             .brandText(TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5))
@@ -300,6 +295,12 @@ struct AppealSection<Draft: AppealDraft>: View {
                     }
                 }
                 .paperSurface(radius: Radius.field, fill: Brand.ivory, border: Brand.line2)
+                Text(verbatim: "\(model.appealText.utf16.count) / \(CaseLogic.maxAppeal)")
+                    .brandText(.footnote)
+                    .monospacedDigit()
+                    .foregroundStyle(Brand.muted)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .accessibilityHidden(true)
             }
             .onChange(of: model.appealText) { _, value in
                 let capped = HomeModel.capUTF16(value, max: CaseLogic.maxAppeal)
@@ -307,16 +308,6 @@ struct AppealSection<Draft: AppealDraft>: View {
             }
             if evidenceOn {
                 EvidencePickerView(evidence: model.appealEvidence, lang: lang, disabled: model.appealSending)
-            }
-            if !cost.isEmpty {
-                Text(cost)
-                    .brandText(TypeStyle(face: .inter, weight: 400, size: 13, lineHeight: 1.4, textStyle: .footnote))
-                    .foregroundStyle(Brand.ink2)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 12)
-                    .background(RoundedRectangle(cornerRadius: 16, style: .continuous).fill(Brand.ivory2))
             }
             if let error = model.appealError {
                 ErrorBanner(message: ErrorText.message(error, lang: lang))
@@ -389,10 +380,10 @@ struct AppealSheet<Draft: AppealDraft>: View {
                 }
             }
             .padding(.horizontal, 20)
-            .padding(.top, 18)
+            .padding(.top, 10)
             .padding(.bottom, 22)
         }
-        .scrollDismissesKeyboard(.immediately)
+        .scrollDismissesKeyboard(.interactively)
         .background(Brand.paper.ignoresSafeArea())
         .presentationDragIndicator(.visible)
         .presentationCornerRadius(Radius.card)
