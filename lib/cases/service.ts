@@ -745,13 +745,19 @@ async function judgeAnswered(
                 WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL AND ${countIs}`,
           args: [count, token, nowIso, nowIso, row.id, nowIso, count],
         };
-  const rs = await entitlementWriteBatch([
-    write,
-    ...(from === "awaiting_respondent" && row.reservationId ? [holdStatement(row.reservationId, nowIso, guard)] : []),
-  ]);
-  if (rs[0].rowsAffected !== 1 && reservationId) await refundQuietly(reservationId);
+  let won = false;
+  try {
+    const rs = await entitlementWriteBatch([
+      write,
+      ...(from === "awaiting_respondent" && row.reservationId ? [holdStatement(row.reservationId, nowIso, guard)] : []),
+    ]);
+    won = rs[0].rowsAffected === 1;
+  } catch (e) {
+    logError("starting a judging run failed", e);
+  }
+  if (!won && reservationId) await refundQuietly(reservationId);
   const fresh = (await getCase(row.id)) ?? row;
-  if (rs[0].rowsAffected === 1) {
+  if (won) {
     scheduleJudging(() => runCaseJudging(row.id, token, origin));
     return { ok: true, row: fresh, started: true };
   }
