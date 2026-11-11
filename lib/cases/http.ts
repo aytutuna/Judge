@@ -97,7 +97,7 @@ import {
 import { acceptsManySides } from "./capability";
 import { claimMatches, inviteHash, inviteUrl, isInviteToken, publicOrigin } from "./invite";
 import { provenParty } from "./party";
-import { claimSeat, heldSide, liveSides, nextOpenSide, recordTyping, releaseSeat, seatClaim } from "./seats";
+import { claimSeat, heldSide, liveSides, nextOpenSide, recordTyping, releaseSeat, seatClaim, touchSeat } from "./seats";
 import { respondToSide } from "./sides";
 import {
   boundElsewhere,
@@ -364,7 +364,7 @@ async function ownedCase(id: string, viewerId: string, req: Request): Promise<Ca
   return row;
 }
 
-type Found = { row: CaseRow; party: "b" | "c" | "d"; shared: boolean };
+type Found = { row: CaseRow; party: "b" | "c" | "d"; shared: boolean; retired: boolean };
 
 /** The case behind an invite link. A per-side link names its side; the
  * shared one leaves it to whoever holds a seat (see sideOnLink). */
@@ -707,7 +707,10 @@ export function respondGetHandler(req: Request, token: string): Promise<NextResp
       const now = new Date();
       const bundle = await loadCaseBundle(found.row);
       const held = heldSide(found.row, bundle.invites, bundle.seats, viewerId, claim);
-      if (held) party = held;
+      if (held) {
+        party = held;
+        await touchSeat(found.row.id, held, now);
+      } else if (found.retired) return fail("not_found", "No invite with that link.");
       else if (viewerId !== found.row.ownerId && effectiveStatus(found.row, now) === "awaiting_respondent") {
         const open = nextOpenSide(bundle, now);
         if (!open) return fail("case_closed");
@@ -755,10 +758,26 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
     if (refused) return refused;
     const held = await heldOnLink(found, viewer?.user.id ?? null, claimHeader(req));
     let party: "b" | "c" | "d" = held ?? found.party;
+    let retry = false;
     if (held === null && found.shared && key) {
       // A retry of an answer whose response never arrived: its key says which side it was.
       const invites = await getInvites(row.id);
-      party = (["b", "c", "d"] as const).find((p) => respondentOf(row, invites, p).idem === key) ?? party;
+      const stored = (["b", "c", "d"] as const).find((p) => respondentOf(row, invites, p).idem === key);
+      if (stored) {
+        party = stored;
+        retry = true;
+      }
+    }
+    if (found.retired && held === null && !retry) return fail("not_found", "No invite with that link.");
+    if (held && found.shared) await touchSeat(row.id, held, new Date());
+    // An older per-side link is no proof of a seat somebody else took, nor of an answer.
+    let viaSeat = found.shared;
+    if (!found.shared) {
+      const bundle = await loadCaseBundle(row);
+      const seat = bundle.seats.find((s) => s.party === party);
+      const proven = heldSide(row, bundle.invites, bundle.seats, viewer?.user.id ?? null, claimHeader(req)) === party;
+      if (seat && !proven) return fail("case_closed");
+      viaSeat = seat !== undefined;
     }
     const ip = clientIp(req.headers);
     if (viewer?.via !== "bearer") {
@@ -787,7 +806,7 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
     // if the answer fails: this person has no claim yet to come back with.
     let taken: SeatRow | null = null;
     const takeSeat = async (): Promise<boolean> => {
-      if (!found.shared || held !== null) return true;
+      if (!found.shared || held !== null || retry) return true;
       taken = await claimSeat(await loadCaseBundle(row), viewer?.user.id ?? null, now);
       if (taken) party = taken.party;
       return taken !== null;
@@ -818,6 +837,7 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
       const res = await respondToSide({
         row,
         party,
+        viaSeat,
         userId: viewer?.user.id ?? null,
         text: parsed.data.text,
         rawText: rawField(read.body, "text") ?? parsed.data.text,
@@ -918,11 +938,30 @@ export function respondOpenHandler(req: Request, token: string): Promise<NextRes
     const bundle = await loadCaseBundle(row);
     let party: "b" | "c" | "d";
     let claim: string | null;
-    const held = found.shared ? heldSide(row, bundle.invites, bundle.seats, viewerId, claimHeader(req)) : found.party;
-    if (held) {
+    // Opening never hands out a claim that already exists: that takes the
+    // claim itself or the account. A forwarded per-side link gets a claim
+    // only when its side is still unanswered and unseated.
+    const held = heldSide(row, bundle.invites, bundle.seats, viewerId, claimHeader(req));
+    if (held && (found.shared || held === found.party)) {
       party = held;
       const seat = bundle.seats.find((s) => s.party === party);
       claim = seat ? seatClaim(row, seat) : claimFor(row, bundle.invites, party);
+      if (seat) await touchSeat(row.id, party, now);
+    } else if (found.retired) {
+      return fail("not_found", "No invite with that link.");
+    } else if (!found.shared) {
+      party = found.party;
+      claim = null;
+      const taken =
+        bundle.sides.some((s) => s.party === party) ||
+        bundle.seats.some((s) => s.party === party) ||
+        respondentOf(row, bundle.invites, party).claimNonce !== null;
+      if (!taken) {
+        if (status !== "awaiting_respondent") return fail("case_closed");
+        const seat = await claimSeat(bundle, viewerId, now, party);
+        if (!seat) return fail("case_closed");
+        claim = seatClaim(row, seat);
+      }
     } else {
       if (status !== "awaiting_respondent") return fail("case_closed");
       const seat = await claimSeat(bundle, viewerId, now);
@@ -1039,7 +1078,9 @@ export function respondEvidenceHandler(req: Request, token: string): Promise<Nex
     let party: "b" | "c" | "d" = found.party;
     if (found.shared) {
       const bundle = await loadCaseBundle(row);
-      const side = heldSide(row, bundle.invites, bundle.seats, viewer?.user.id ?? null, claimHeader(req)) ?? nextOpenSide(bundle, new Date());
+      const held = heldSide(row, bundle.invites, bundle.seats, viewer?.user.id ?? null, claimHeader(req));
+      if (!held && found.retired) return fail("not_found", "No invite with that link.");
+      const side = held ?? nextOpenSide(bundle, new Date());
       if (!side) return fail("case_closed");
       party = side;
     }

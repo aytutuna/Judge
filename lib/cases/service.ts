@@ -297,8 +297,8 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
         ],
       },
       ...extra.map((e) => ({
-        sql: `INSERT INTO case_invites (case_id, party, invite_nonce, invite_hash, created_at, updated_at)
-              SELECT ?, ?, ?, ?, ?, ? WHERE ${guard.sql}`,
+        sql: `INSERT INTO case_invites (case_id, party, invite_nonce, invite_hash, created_at, updated_at, legacy)
+              SELECT ?, ?, ?, ?, ?, ?, 0 WHERE ${guard.sql}`,
         args: [caseId, e.party, e.nonce, e.hash, nowIso, nowIso, ...guard.args],
       })),
       ...(sub ? submissionStatements(caseId, "a", sub, guard, nowIso, null) : []),
@@ -780,14 +780,24 @@ export async function rotateInvite(row: CaseRow, now: Date = new Date()): Promis
   const token = inviteToken(row.id, nonce);
   if (!token) return { ok: false, code: "unavailable" };
   const nowIso = now.toISOString();
-  // The one link stays live while any side has not answered; sides that
-  // already took a seat keep it, since their claim does not depend on the link.
+  // The old token is kept as retired: it still serves a request that proves a
+  // seat or an answer, so a side mid-answer or already answered keeps working,
+  // but it takes no new seat. With every side seated there is nothing to rotate.
+  const hash = inviteHash(token);
+  const oldToken = inviteToken(row.id, row.inviteNonce);
   const rs = await entitlementWriteBatch([
     {
       sql: `UPDATE cases SET invite_nonce = ?, invite_hash = ?, updated_at = ?
             WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL
-              AND (SELECT COUNT(*) FROM case_sides WHERE case_id = cases.id AND party <> 'a') < sides - 1`,
-      args: [nonce, inviteHash(token), nowIso, row.id, nowIso],
+              AND (SELECT COUNT(*) FROM (
+                     SELECT party FROM case_seats WHERE case_id = cases.id
+                     UNION SELECT party FROM case_sides WHERE case_id = cases.id AND party <> 'a')) < sides - 1`,
+      args: [nonce, hash, nowIso, row.id, nowIso],
+    },
+    {
+      sql: `INSERT OR IGNORE INTO case_retired_links (invite_hash, case_id)
+            SELECT ?, ? WHERE EXISTS (SELECT 1 FROM cases WHERE id = ? AND invite_hash = ?)`,
+      args: [oldToken ? inviteHash(oldToken) : row.inviteHash, row.id, row.id, hash],
     },
   ]);
   if (rs[0].rowsAffected !== 1) return { ok: false, code: "case_closed" };

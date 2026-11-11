@@ -42,7 +42,9 @@ const LABEL: Record<PartyLetter, "Party A" | "Party B" | "Party C" | "Party D"> 
 };
 const MAX_TRIES = 3;
 
-export type RespondSideInput = Omit<RespondInput, "row"> & { row: CaseRow; party: "b" | "c" | "d" };
+/** `viaSeat`: the caller holds this side's seat, so its nonce is the claim.
+ * An answer through an older per-side link never inherits a seat. */
+export type RespondSideInput = Omit<RespondInput, "row"> & { row: CaseRow; party: "b" | "c" | "d"; viaSeat?: boolean };
 
 export type RespondSideResult =
   | { ok: true; row: CaseRow; nameMap: NameMapping[]; claim: string | null; replayed: boolean }
@@ -114,7 +116,7 @@ export async function respondToSide(input: RespondSideInput): Promise<RespondSid
       sql: "EXISTS (SELECT 1 FROM cases WHERE id = ? AND judging_token = ?)",
       args: [row.id, token],
     };
-    const claimNonce = bundle.seats.find((s) => s.party === party)?.nonce ?? newInviteNonce();
+    const claimNonce = (input.viaSeat ? bundle.seats.find((s) => s.party === party)?.nonce : undefined) ?? newInviteNonce();
     const display = sealCaseDisplay(row.id, party, input.displayName);
     const original = caseOriginalStatement(
       row.id,

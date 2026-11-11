@@ -71,6 +71,7 @@ const SCHEMA = [
     answered_at     TEXT,
     created_at      TEXT NOT NULL,
     updated_at      TEXT NOT NULL,
+    legacy          INTEGER NOT NULL DEFAULT 1,
     PRIMARY KEY (case_id, party)
   )`,
   "CREATE INDEX IF NOT EXISTS case_invites_user ON case_invites (user_id) WHERE user_id IS NOT NULL",
@@ -84,7 +85,14 @@ const SCHEMA = [
     user_id    TEXT,
     opened_at  TEXT NOT NULL,
     typing_at  TEXT,
+    seen_at    TEXT,
     PRIMARY KEY (case_id, party)
+  )`,
+  // Shared-link tokens that were rotated away. They keep working for a request
+  // that proves a seat or an answer, and can no longer take a new seat.
+  `CREATE TABLE IF NOT EXISTS case_retired_links (
+    invite_hash TEXT PRIMARY KEY,
+    case_id     TEXT NOT NULL
   )`,
   "CREATE INDEX IF NOT EXISTS case_seats_user ON case_seats (user_id) WHERE user_id IS NOT NULL",
   `CREATE TABLE IF NOT EXISTS case_sides (
@@ -155,6 +163,7 @@ export async function ensureCaseTables(): Promise<void> {
     .batch(SCHEMA, "write")
     .then(() => addClaimColumn(client))
     .then(() => addCaseColumns(client))
+    .then(() => addInviteLegacyColumn(client))
     .then(() => dropLangCheck(client))
     .then(() => widenPartyChecks(client))
     .then(
@@ -175,6 +184,19 @@ async function addClaimColumn(db: Client): Promise<void> {
   if (info.rows.some((r) => String(r.name) === "respondent_claim_nonce")) return;
   try {
     await db.execute("ALTER TABLE cases ADD COLUMN respondent_claim_nonce TEXT");
+  } catch (e) {
+    const message = e instanceof Error ? e.message : String(e);
+    if (!/duplicate column name/i.test(message)) throw e;
+  }
+}
+
+/** case_invites.legacy: 1 for per-side links that may have been sent before
+ * the one shared link existed, 0 for rows made with it (never handed out). */
+async function addInviteLegacyColumn(db: Client): Promise<void> {
+  const info = await db.execute("PRAGMA table_info(case_invites)");
+  if (info.rows.some((r) => String(r.name) === "legacy")) return;
+  try {
+    await db.execute("ALTER TABLE case_invites ADD COLUMN legacy INTEGER NOT NULL DEFAULT 1");
   } catch (e) {
     const message = e instanceof Error ? e.message : String(e);
     if (!/duplicate column name/i.test(message)) throw e;
@@ -311,6 +333,8 @@ export type InviteRow = {
   userId: string | null;
   claimNonce: string | null;
   answeredAt: string | null;
+  /** A per-side link that may already be out there. */
+  legacy: boolean;
 };
 
 /** A side taken by opening the shared link, answered or not. */
@@ -321,6 +345,8 @@ export type SeatRow = {
   userId: string | null;
   openedAt: string;
   typingAt: string | null;
+  /** Last request that carried this seat's claim; only idleness reads it. */
+  seenAt: string | null;
 };
 
 export type SideRow = { party: PartyLetter; text: string; submittedAt: string };
@@ -432,6 +458,7 @@ function mapInvite(r: Row): InviteRow {
     userId: strOrNull(r.user_id),
     claimNonce: strOrNull(r.claim_nonce),
     answeredAt: strOrNull(r.answered_at),
+    legacy: Number(r.legacy) !== 0,
   };
 }
 
@@ -443,6 +470,7 @@ function mapSeat(r: Row): SeatRow {
     userId: strOrNull(r.user_id),
     openedAt: str(r.opened_at),
     typingAt: strOrNull(r.typing_at),
+    seenAt: strOrNull(r.seen_at),
   };
 }
 
@@ -484,14 +512,19 @@ export async function getCaseByInviteHash(hash: string): Promise<CaseRow | null>
  * that keeps its side. */
 export async function getCaseByAnyInviteHash(
   hash: string,
-): Promise<{ row: CaseRow; party: "b" | "c" | "d"; shared: boolean } | null> {
+): Promise<{ row: CaseRow; party: "b" | "c" | "d"; shared: boolean; retired: boolean } | null> {
   const db = await caseDb();
   const own = await getCaseByInviteHash(hash);
-  if (own) return { row: own, party: "b", shared: true };
+  if (own) return { row: own, party: "b", shared: true, retired: false };
   const rs = await db.execute({ sql: "SELECT case_id, party FROM case_invites WHERE invite_hash = ?", args: [hash] });
-  if (!rs.rows[0]) return null;
-  const row = await getCase(str(rs.rows[0].case_id));
-  return row ? { row, party: str(rs.rows[0].party) as "c" | "d", shared: false } : null;
+  if (rs.rows[0]) {
+    const row = await getCase(str(rs.rows[0].case_id));
+    return row ? { row, party: str(rs.rows[0].party) as "c" | "d", shared: false, retired: false } : null;
+  }
+  const old = await db.execute({ sql: "SELECT case_id FROM case_retired_links WHERE invite_hash = ?", args: [hash] });
+  if (!old.rows[0]) return null;
+  const row = await getCase(str(old.rows[0].case_id));
+  return row ? { row, party: "b", shared: true, retired: true } : null;
 }
 
 export async function getInvites(caseId: string): Promise<InviteRow[]> {
