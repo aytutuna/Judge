@@ -74,6 +74,14 @@ describe("HomeForm", () => {
     );
   });
 
+  it("heads no side card with a side label, and keeps it for a screen reader", () => {
+    const html = form({ theirsOpen: true, mine: "x", theirs: "", more: [{ text: "", name: "" }] });
+    expect(html).not.toMatch(/>Their side</);
+    expect(html).not.toMatch(/>Your side</);
+    expect(html).toContain(`role="group" aria-label="${t("en", "home.theirSide")}"`);
+    expect(html).toContain(`role="group" aria-label="${t("en", "input.labelTwoSided")}"`);
+  });
+
   it("typed: the name goes, Clear shows and the send button is live", () => {
     const html = form({ mine: "A long enough argument about the dishes.", blank: false, canSubmit: true });
     expect(html).not.toContain(">Judge<");

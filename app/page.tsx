@@ -5,6 +5,7 @@ import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { useEvidence } from "@/components/case/EvidencePicker";
 import { ClarifyStep, buildClarifications, type ClarifyQuestion } from "@/components/ClarifyStep";
 import { Balance } from "@/components/home/Balance";
+import { Toast, useToast } from "@/components/Toast";
 import { HomeForm } from "@/components/home/HomeForm";
 import { JudgingScreen, type JudgedSide } from "@/components/JudgingScreen";
 import { ENDING_MAX_MS } from "@/components/court/story";
@@ -24,6 +25,7 @@ import { loadExamples } from "@/lib/examples";
 import { apiErrorMessage, t } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { resetScene } from "@/lib/scene-bridge";
+import { shareLink } from "@/lib/share-link";
 import { freshVenue, parseVenue, type Venue } from "@/lib/venues";
 import { MAX_ARGUMENT, inviteTextOk, joinSides, manySidesOk, type SideInput } from "@/lib/sides";
 import type { Clarification, ClarifyResponse, VerdictApiResponse, VerdictResponse } from "@/lib/types";
@@ -136,6 +138,7 @@ export default function Home() {
   // offers it (GET /api/v1/config `features`).
   const router = useRouter();
   const [creating, setCreating] = useState(false);
+  const [toast, showToast] = useToast();
   const evidence = useEvidence(EVIDENCE_ENDPOINT, MAX_EVIDENCE_PER_SIDE);
   // The current argument. "New argument" or leaving the page aborts it:
   // the clarify check is cancelled, while a verdict or case already sent
@@ -435,10 +438,11 @@ export default function Home() {
     }
   }
 
-  /** Send a link: create the case with the owner's side if they wrote one (it
-   * holds one premium verdict), keep the returned names in this browser and open
-   * the case page with the invite link. No clarifying step: the other side's
-   * account fills the gaps. */
+  /** Send link: create the case with the owner's side if they wrote one (it
+   * holds one premium verdict), keep the returned names in this browser, open
+   * the share sheet with the one link and leave the page ready for the next
+   * argument. The case is under Links in the menu. No clarifying step: the
+   * other side's account fills the gaps. */
   async function createCase() {
     track("case_submitted");
     const tokens = evidenceOn ? evidence.tokens : [];
@@ -478,9 +482,9 @@ export default function Home() {
       if (created.entitlement) applyEntitlement(created.entitlement);
       void refreshHistory();
       if (signal.aborted) return;
-      evidence.clear();
-      // `creating` stays on: the form holds until the case page takes over.
-      router.push(`/c/${encodeURIComponent(created.case.id)}`);
+      const link = created.case.inviteUrl;
+      reset();
+      if (link && (await shareLink(lang, link)) === "copied") showToast(t(lang, "case.invite.copied"));
     } catch {
       if (signal.aborted) return;
       fail(t(lang, "errorFallback"));
@@ -667,6 +671,7 @@ export default function Home() {
           )}
         </div>
       </main>
+      <Toast message={toast} />
     </AppShell>
   );
 }

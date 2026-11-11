@@ -200,19 +200,6 @@
   border-radius: 6px;
 }
 
-.label {
-  flex: 0 1 auto;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: var(--side-ink);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 .remove {
   display: grid;
   place-items: center;

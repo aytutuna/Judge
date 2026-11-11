@@ -48,7 +48,7 @@ function SideCard({ side, head, docked = false, children }: CardProps) {
   }, [side.value]);
 
   return (
-    <div className={styles.card} data-side={side.letter} data-docked={docked ? "" : undefined}>
+    <div className={styles.card} data-side={side.letter} data-docked={docked ? "" : undefined} role="group" aria-label={head ? side.label : undefined}>
       {head ? (
         <div className={styles.cardHead}>
           <span className={styles.avatar} aria-hidden>
@@ -63,7 +63,6 @@ function SideCard({ side, head, docked = false, children }: CardProps) {
             autoComplete={side.letter === "A" ? "given-name" : "off"}
             onChange={(e) => side.onName(e.target.value)}
           />
-          <span className={styles.label}>{side.label}</span>
           {side.onRemove ? (
             <button type="button" className={styles.remove} onClick={side.onRemove} aria-label={side.removeLabel}>
               <span>
