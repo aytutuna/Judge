@@ -1003,9 +1003,9 @@ export function respondTypingHandler(req: Request, token: string): Promise<NextR
     if (deadBearer) return deadBearerResponse();
     if (refused) return refused;
     const bundle = await loadCaseBundle(row);
-    const party = found.shared
-      ? heldSide(row, bundle.invites, bundle.seats, viewer?.user.id ?? null, claimHeader(req))
-      : null;
+    const held = heldSide(row, bundle.invites, bundle.seats, viewer?.user.id ?? null, claimHeader(req));
+    // An older per-side link only speaks for its own side.
+    const party = held && (found.shared || held === found.party) ? held : null;
     const seat = party ? bundle.seats.find((s) => s.party === party) : undefined;
     if (!party || !seat || row.removedAt) return fail("not_found", "No invite with that link.");
     const now = new Date();

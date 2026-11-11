@@ -978,6 +978,21 @@ describe("links that were sent before the one link", () => {
     expect((await respondAs(links.c, undefined, TEXT("Late"), undefined, first.claim!)).status).toBe(409);
   });
 
+  it("takes a heartbeat from the holder of its side, and from nobody else", async () => {
+    const o = await owner(2);
+    const { data, links, shared } = await createMany(o, 3);
+    const bob = await openLink(shared, uid("bob"));
+    const carol = await openLink(links.c, uid("carol"), undefined);
+    expect(carol.party).toBe("c");
+    expect((await beat(links.c, undefined, carol.claim!)).status).toBe(200);
+    expect((await ownerView(o, data.case.id)).live).toEqual([
+      { party: "b", state: "opened" },
+      { party: "c", state: "typing" },
+    ]);
+    expect((await beat(links.c, undefined, bob.claim!)).status).toBe(404);
+    expect((await beat(links.c)).status).toBe(404);
+  });
+
   it("does not keep the shared link off a side whose own link is out", async () => {
     const o = await owner(2);
     const { shared } = await createMany(o, 3);
