@@ -657,13 +657,12 @@ final class AccountTests: XCTestCase {
         account.isSignInPresented = true
         account.setMode(.create)
         account.email = "ann@example.com"
+        account.password = "brand new one"
         await account.sendCode(lang: .en)
         account.code = "123456"
         await account.verifyCode()
-        XCTAssertEqual(account.step, .choosePassword)
 
-        account.password = "brand new one"
-        await account.saveChosenPassword()
+        XCTAssertNotNil(request("/api/v1/me/password"))
         XCTAssertTrue(account.isSignedIn)
         XCTAssertNil(account.failure)
         XCTAssertFalse(account.isSignInPresented)
