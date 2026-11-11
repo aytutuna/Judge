@@ -328,7 +328,7 @@ fun JudgeRoot(
                                 setMenu(false)
                             },
                             onOpen = { e ->
-                                backStack.resetTo(listOf(HomeKey))
+                                if (!(e is HistoryEntry.Account && e.item.isCase && e.item.isRespondent)) backStack.resetTo(listOf(HomeKey))
                                 openEntry(e)
                                 setMenu(false)
                             },
