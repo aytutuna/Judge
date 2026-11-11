@@ -202,18 +202,20 @@ flow, natively (app/page.tsx):
   hold the submit.
 - **Both sides** (when `features.cases`): "Send them a link" on Home, signed
   in or not (signed out it goes through sign-in first), creates a case, which
-  costs a verdict (`POST /api/v1/cases` with an `Idempotency-Key`). Home may
+  costs a verdict (`POST /api/v1/cases` with an `Idempotency-Key`) and opens
+  the share sheet with the case's one link, leaving Home empty. Home may
   be blank then: the text key is left out and the owner writes their side on
   the case page (`POST /api/v1/cases/{id}/side`) while the link is out. The
   returned name map is
   kept in the Keychain per case (`KeychainCaseNamesStore`) as the fallback
   for `case.names`. The case page polls `GET /api/v1/cases/{id}` every
   `pollAfterMs` while something is judging (backing off to 30 s on errors)
-  and offers the invite link (copy, share sheet, new link), judging on the
+  and shows each side's live state (`live`), the share sheet, a new link, judging on the
   owner's side alone, retry, removal, the names on the share pages and
   adding context (appeals). The side menu lists the account's verdicts
   and cases, started or answered, from `GET /api/v1/me/history`, cached in
-  SwiftData so it shows at once and offline. Invite links (`/r/…`) are never answered in the app: they are shared
+  SwiftData so it shows at once and offline; while it is open, waiting links
+  are read from `GET /api/v1/cases/live` every 3 s. Invite links (`/r/…`) are never answered in the app: they are shared
   as URLs, and one the app is opened with goes to Safari; `/c/{id}` links
   open the case page.
 

@@ -111,6 +111,14 @@ struct HomeView: View {
             JudgingCover(home: home, lang: lang, gamify: app.gamify)
                 .environment(\.sceneLive, sceneLive)
         }
+        .sheet(item: $home.shareLink) { link in
+            ActivityView(items: [L10n.caseInviteShareText(lang), link.url])
+                .presentationDetents([.medium, .large])
+                .ignoresSafeArea()
+        }
+        .onChange(of: home.shareLink != nil) { _, open in
+            app.sheetOpen = open
+        }
     }
 
     /// Everything but the box in use, from the bottom up. Two sides go to
@@ -229,11 +237,6 @@ struct HomeView: View {
                         placeholder: mine ? L10n.appHomeYourName(lang) : L10n.appHomeTheirName(lang),
                         disabled: home.isBusy
                     )
-                    Text(title)
-                        .brandText(TypeStyle(face: .inter, weight: 600, size: 11, lineHeight: 1.2, tracking: 0.08, textStyle: .caption2, maxScale: 1.6, uppercase: true))
-                        .foregroundStyle(colors.ink)
-                        .lineLimit(1)
-                        .accessibilityHidden(true)
                     if removable {
                         removeSide(lang, home: home, side: side)
                     }
@@ -254,6 +257,7 @@ struct HomeView: View {
         .padding(.bottom, 10)
         .neonEdge(colors.strong, focused: focused == focus, radius: Radius.block)
         .accessibilityElement(children: .contain)
+        .accessibilityLabel(title)
     }
 
     /// Under the text: "Add context" on the left, and in the composer the

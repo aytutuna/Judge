@@ -14,14 +14,14 @@ struct CaseScreen: View {
 private enum CaseConfirm: Identifiable {
     case judgeNow(expired: Bool)
     case judgeAnswered(expired: Bool)
-    case resetInvite(Party)
+    case resetInvite
     case remove
 
     var id: String {
         switch self {
         case .judgeNow(let expired): return "judge-\(expired)"
         case .judgeAnswered(let expired): return "judge-answered-\(expired)"
-        case .resetInvite(let party): return "reset-\(party.rawValue)"
+        case .resetInvite: return "reset"
         case .remove: return "remove"
         }
     }
@@ -70,9 +70,9 @@ private struct CaseScreenContent: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Brand.ivory, for: .navigationBar)
         // Polling restarts whenever a new view arrives (generation), and
-        // waits while the page's tab is hidden.
-        .task(id: tabShown ? model.generation : -1) {
-            guard tabShown else { return }
+        // waits while the page's tab is hidden or the app is in the background.
+        .task(id: tabShown && scenePhase == .active ? model.generation : -1) {
+            guard tabShown, scenePhase == .active else { return }
             await model.run()
         }
         .onTabAppear {
@@ -135,7 +135,7 @@ private struct CaseScreenContent: View {
             if writesSide(view) {
                 writeHead(view, lang: lang)
             } else if view.status == .awaitingRespondent {
-                waitingHead(otherName(view), lang: lang)
+                waitingHead(lang: lang)
             } else {
                 // A case judged on the owner's side alone is not "both sides" anymore.
                 Kicker(text: view.mode == .oneSided ? L10n.caseKickerOneSided(lang) : L10n.caseKicker(lang))
@@ -146,14 +146,6 @@ private struct CaseScreenContent: View {
                 CaseStatusChip(status: view.status, lang: lang)
             }
         }
-    }
-
-    /// The other side's name as typed on Home on this run of the app, else
-    /// the one the case carries.
-    private func otherName(_ view: CaseView) -> String? {
-        [app.caseOtherName(view.id), view.display.b]
-            .compactMap { $0?.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .first { !$0.isEmpty }
     }
 
     /// The owner's side is still to be written, on a case the link started.
@@ -175,17 +167,13 @@ private struct CaseScreenContent: View {
     }
 
     @ViewBuilder
-    private func waitingHead(_ other: String?, lang: AppLang) -> some View {
+    private func waitingHead(lang: AppLang) -> some View {
         Kicker(text: L10n.appCaseWaitingKicker(lang), color: Brand.sageInk)
-        Text(other.map { L10n.appCaseWaitingFor(lang, name: $0) } ?? CaseLogic.statusText(.awaitingRespondent, lang: lang))
+        Text(CaseLogic.statusText(.awaitingRespondent, lang: lang))
             .brandText(TypeStyle(face: .serif, weight: 400, size: 34, lineHeight: 1.04, textStyle: .largeTitle, maxScale: 1.3))
             .foregroundStyle(Brand.ink)
             .fixedSize(horizontal: false, vertical: true)
             .accessibilityAddTraits(.isHeader)
-        Text(other.map { L10n.appCaseWaitingLead(lang, name: $0) } ?? L10n.appCaseWaitingLeadAnon(lang))
-            .brandText(TypeStyle(face: .inter, weight: 400, size: 14, lineHeight: 1.45, textStyle: .subheadline))
-            .foregroundStyle(Brand.ink2)
-            .fixedSize(horizontal: false, vertical: true)
     }
 
     @ViewBuilder
@@ -272,34 +260,20 @@ private struct CaseScreenContent: View {
 
     @ViewBuilder
     private func awaiting(_ view: CaseView, lang: AppLang) -> some View {
-        let other = view.isMany ? nil : otherName(view)
         let writing = writesSide(view)
-        if view.isMany, let invites = view.invites {
-            ForEach(invites, id: \.party) { invite in
-                inviteRow(invite, view: view, lang: lang)
-            }
-        } else if let url = view.inviteUrl {
-            InviteLinkView(
-                url: url,
-                expiresAt: view.expiresAt,
-                title: other.map { L10n.appCaseSendTo(lang, name: $0) } ?? L10n.caseInviteLabel(lang),
-                lang: lang,
-                resetting: model.busy,
-                resetDone: model.resetDone
-            ) {
-                ask(.resetInvite(.b))
-            }
-        }
-        if let held = CaseLogic.heldNote(view, lang: lang) {
-            Text(held)
-                .brandText(.slotText)
-                .foregroundStyle(Brand.muted)
-                .fixedSize(horizontal: false, vertical: true)
-        }
         if writing {
             CaseSideForm(model: model, evidenceOn: CaseLogic.appealEvidenceOn(view, features: app.account.features), lang: lang)
-        } else if !view.isMany {
-            WaitingSteps(other: other, judgeNow: view.canJudgeNow, lang: lang)
+        }
+        ForEach(view.live ?? [], id: \.party) { side in
+            liveRow(side, lang: lang)
+        }
+        InviteLinkView(
+            url: view.inviteUrl,
+            lang: lang,
+            resetting: model.busy,
+            resetDone: model.resetDone
+        ) {
+            ask(.resetInvite)
         }
         actionError(lang)
         if view.isMany, view.canJudgeAnswered, !writing {
@@ -315,7 +289,7 @@ private struct CaseScreenContent: View {
             Button {
                 ask(.judgeNow(expired: false))
             } label: {
-                Text(other.map { L10n.appCaseJudgeNowWithout(lang, name: $0) } ?? L10n.caseJudgeNow(lang))
+                Text(L10n.caseJudgeNow(lang))
                     .frame(maxWidth: .infinity, minHeight: 48)
             }
             .buttonStyle(GhostButtonStyle())
@@ -323,37 +297,19 @@ private struct CaseScreenContent: View {
         }
     }
 
-    /// One invited side of a case with more than two: its name, whether it
-    /// has answered, and its own link while it waits.
-    private func inviteRow(_ invite: CaseInvite, view: CaseView, lang: AppLang) -> some View {
-        let typed = view.display.name(invite.party)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        let name = typed.isEmpty ? invite.party.label(lang) : typed
-        return VStack(alignment: .leading, spacing: 8) {
-            HStack(spacing: 8) {
-                PartyAvatar(party: invite.party)
-                Text(name)
-                    .brandText(.slotTitle)
-                    .foregroundStyle(Brand.ink)
-                    .lineLimit(1)
-                Spacer(minLength: 8)
-                Text(invite.status == .answered ? L10n.caseSideAnswered(lang) : L10n.caseSideWaiting(lang))
-                    .brandText(.footnote)
-                    .foregroundStyle(invite.status == .answered ? Brand.sageInk : Brand.muted)
-            }
-            .accessibilityElement(children: .combine)
-            if invite.status == .waiting, let url = invite.inviteUrl {
-                InviteLinkView(
-                    url: url,
-                    expiresAt: view.expiresAt,
-                    title: L10n.appCaseSendTo(lang, name: name),
-                    lang: lang,
-                    resetting: model.busy,
-                    resetDone: model.resetDone && model.resetParty == invite.party
-                ) {
-                    ask(.resetInvite(invite.party))
-                }
-            }
+    /// One invited side: its letter and where it stands. The side's name is
+    /// only spoken.
+    private func liveRow(_ side: CaseLiveSide, lang: AppLang) -> some View {
+        HStack(spacing: 8) {
+            PartyAvatar(party: side.party)
+            Text(CaseLogic.liveText(side.state, lang: lang))
+                .brandText(.slotTitle)
+                .foregroundStyle(side.state == .answered ? Brand.sageInk : Brand.ink)
+            Spacer(minLength: 0)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(side.party.label(lang))
+        .accessibilityValue(CaseLogic.liveText(side.state, lang: lang))
     }
 
     @ViewBuilder
@@ -436,83 +392,8 @@ private struct CaseScreenContent: View {
         switch item {
         case .judgeNow: await model.judge(onlyMine: true)
         case .judgeAnswered: await model.judgeAnswered()
-        case .resetInvite(let party): await model.resetInvite(party: party)
+        case .resetInvite: await model.resetInvite()
         case .remove: await model.remove()
-        }
-    }
-}
-
-/// Where a waiting case stands: your side is in, theirs is next, then the
-/// judges (or now, on your side alone, when the case allows it).
-private struct WaitingSteps: View {
-    let other: String?
-    let judgeNow: Bool
-    let lang: AppLang
-
-    private enum Mark {
-        case done, current, next
-    }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            step(.done, title: L10n.appCaseStepYou(lang), note: L10n.appCaseStepYouNote(lang))
-            step(
-                .current,
-                title: other.map { L10n.appCaseStepThem(lang, name: $0) } ?? L10n.appCaseStepThemAnon(lang),
-                note: L10n.appCaseStepThemNote(lang)
-            )
-            step(.next, title: L10n.appCaseStepJudges(lang), note: judgeNow ? L10n.appCaseStepJudgesNote(lang) : nil)
-        }
-        .padding(.horizontal, 4)
-    }
-
-    private func step(_ mark: Mark, title: String, note: String?) -> some View {
-        HStack(alignment: .top, spacing: 12) {
-            VStack(spacing: 0) {
-                disc(mark)
-                if mark != .next {
-                    Rectangle()
-                        .fill(Brand.stone)
-                        .frame(width: 2)
-                        .frame(minHeight: 26, maxHeight: .infinity)
-                }
-            }
-            .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title)
-                    .brandText(.slotTitle)
-                    .foregroundStyle(mark == .next ? Brand.ink2 : Brand.ink)
-                if let note {
-                    Text(note)
-                        .brandText(.footnote)
-                        .foregroundStyle(Brand.muted)
-                }
-            }
-            .fixedSize(horizontal: false, vertical: true)
-            .padding(.top, 2)
-            .padding(.bottom, mark == .next ? 0 : 10)
-        }
-        .accessibilityElement(children: .combine)
-    }
-
-    @ViewBuilder
-    private func disc(_ mark: Mark) -> some View {
-        switch mark {
-        case .done:
-            Image(systemName: "checkmark")
-                .font(.system(size: 11, weight: .bold))
-                .foregroundStyle(Brand.paper)
-                .frame(width: 24, height: 24)
-                .background(Circle().fill(Brand.terra))
-        case .current:
-            Circle()
-                .fill(Brand.sageTint)
-                .overlay(Circle().strokeBorder(Brand.sageInk, lineWidth: 2))
-                .frame(width: 24, height: 24)
-        case .next:
-            Circle()
-                .strokeBorder(Brand.stone, lineWidth: 2)
-                .frame(width: 24, height: 24)
         }
     }
 }

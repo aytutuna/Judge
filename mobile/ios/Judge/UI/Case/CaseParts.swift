@@ -2,59 +2,26 @@ import Observation
 import SwiftUI
 import UIKit
 
-/// The owner's private invite link (components/case/InviteLink.tsx): the
-/// link, Share, Copy, the expiry date and "Make a new link". The link opens
-/// the website's answer page; the app never handles it itself.
+/// The owner's one link for the case (components/case/InviteLink.tsx): Share
+/// and "Make a new link". The link opens the website's answer page; the app
+/// never handles it itself.
 struct InviteLinkView: View {
     @Environment(AppModel.self) private var app
-    let url: String
-    let expiresAt: String
-    /// "Send Sam this link", or the plain label without a name.
-    let title: String
+    let url: String?
     let lang: AppLang
     let resetting: Bool
     let resetDone: Bool
     let onReset: () -> Void
-    @State private var copied = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(title)
-                .brandText(TypeStyle(face: .inter, weight: 600, size: 13, lineHeight: 1.3, textStyle: .footnote))
-                .foregroundStyle(Brand.ink)
-            Text(verbatim: url)
-                .brandText(TypeStyle(face: .inter, weight: 500, size: 14, lineHeight: 1.3, textStyle: .subheadline))
-                .foregroundStyle(Brand.ink2)
-                .lineLimit(1)
-                .truncationMode(.middle)
-                .textSelection(.enabled)
-                .frame(maxWidth: .infinity, minHeight: 46, alignment: .leading)
-                .padding(.horizontal, 14)
-                .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Brand.well))
-            HStack(spacing: 8) {
-                if let link = URL(string: url) {
-                    ShareLink(item: link, message: Text(L10n.caseInviteShareText(lang))) {
-                        Label(L10n.caseInviteShare(lang), systemImage: "square.and.arrow.up")
-                    }
-                    .buttonStyle(InviteButtonStyle(filled: true))
-                    .simultaneousGesture(TapGesture().onEnded { app.analytics.track("share_tapped") })
+        VStack(alignment: .leading, spacing: 8) {
+            if let url, let link = URL(string: url) {
+                ShareLink(item: link, message: Text(L10n.caseInviteShareText(lang))) {
+                    Label(L10n.caseInviteShare(lang), systemImage: "square.and.arrow.up")
                 }
-                Button {
-                    UIPasteboard.general.string = url
-                    copied = true
-                } label: {
-                    Label(copied ? L10n.caseInviteCopied(lang) : L10n.caseInviteCopy(lang), systemImage: copied ? "checkmark" : "doc.on.doc")
-                }
-                .buttonStyle(InviteButtonStyle(filled: false))
-                .task(id: copied) {
-                    guard copied else { return }
-                    try? await Task.sleep(for: .seconds(2))
-                    if !Task.isCancelled { copied = false }
-                }
+                .buttonStyle(InviteButtonStyle())
+                .simultaneousGesture(TapGesture().onEnded { app.analytics.track("share_tapped") })
             }
-            Text(ErrorText.formatDate(expiresAt, lang: lang).map { L10n.caseInviteExpires(lang, date: $0) } ?? L10n.caseInviteExpiresSoon(lang))
-                .brandText(.footnote)
-                .foregroundStyle(Brand.muted)
             Button(L10n.caseInviteReset(lang), action: onReset)
                 .buttonStyle(LinkButtonStyle())
                 .disabled(resetting)
@@ -65,27 +32,33 @@ struct InviteLinkView: View {
                     .accessibilityAddTraits(.updatesFrequently)
             }
         }
-        .padding(16)
-        .paperSurface(radius: Radius.block)
-        .softShadow()
     }
 }
 
-/// Share (ink) and Copy (outlined), side by side under the link.
-private struct InviteButtonStyle: ButtonStyle {
-    let filled: Bool
+/// The system share sheet, for a link that is shared right after it is made
+/// (ShareLink needs a tap).
+struct ActivityView: UIViewControllerRepresentable {
+    let items: [Any]
 
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: items, applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ controller: UIActivityViewController, context: Context) {}
+}
+
+/// Share, filled ink.
+private struct InviteButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .brandText(TypeStyle(face: .inter, weight: 600, size: 14, lineHeight: 1.2, textStyle: .subheadline, maxScale: 1.6))
-            .foregroundStyle(filled ? Brand.paper : Brand.ink)
+            .foregroundStyle(Brand.paper)
             .lineLimit(2)
             .multilineTextAlignment(.center)
             .padding(.horizontal, 10)
             .padding(.vertical, 6)
             .frame(maxWidth: .infinity, minHeight: 46)
-            .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(filled ? Brand.ink : Color.clear))
-            .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).strokeBorder(filled ? Color.clear : Brand.line2, lineWidth: 1))
+            .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Brand.ink))
             .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
             .opacity(configuration.isPressed ? 0.7 : 1)
     }

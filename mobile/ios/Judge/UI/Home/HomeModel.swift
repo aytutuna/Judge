@@ -74,6 +74,14 @@ final class HomeModel {
     var caseName: String?
     /// POST /api/v1/cases is running (the owner's side is being anonymized).
     private(set) var isCreatingCase = false
+    /// The new case's link, for the share sheet; the view clears it once shown.
+    var shareLink: SharedLink?
+
+    /// A link to hand to the share sheet.
+    struct SharedLink: Identifiable, Equatable {
+        let url: URL
+        var id: String { url.absoluteString }
+    }
 
     /// While the server answers 409 in_progress (the same premium request is
     /// still being judged, e.g. after a dropped connection), ask again this
@@ -411,8 +419,8 @@ final class HomeModel {
 
     /// The link: create the case with the owner's side if there is one (it
     /// holds one verdict's unit either way), keep the returned names on the
-    /// phone and open the case page with the invite link. No clarifying
-    /// step: the other side's account fills the gaps.
+    /// phone and hand the invite link to the share sheet, staying on an empty
+    /// form. No clarifying step: the other side's account fills the gaps.
     private func createCase(app: AppModel) {
         if openPricingIfOut(app) { return }
         app.analytics.track("case_submitted")
@@ -423,7 +431,6 @@ final class HomeModel {
         let tokens = app.evidenceOn ? evidence.tokens : []
         let name = shownCaseName(app).trimmingCharacters(in: .whitespacesAndNewlines)
         let displayName: String? = name.isEmpty ? nil : name
-        let other = otherName?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let sides = theirsOpen ? 2 + more.count : 2
         let venue = caseVenue ?? Venues.pickNew()
         caseVenue = venue
@@ -441,7 +448,6 @@ final class HomeModel {
                 self.caseVenue = nil
                 names.save(caseID: created.view.id, created.nameMap)
                 if let entitlement = created.entitlement { self.account?.applyEntitlement(entitlement) }
-                app?.seedCase(created.view, otherName: other.isEmpty ? nil : other)
                 self.evidence.clear()
                 self.argument = ""
                 self.caseName = nil
@@ -450,7 +456,10 @@ final class HomeModel {
                 self.theirsOpen = false
                 self.mode = .now
                 self.isCreatingCase = false
-                self.path.append(.caseDetail(id: created.view.id))
+                self.shareLink = created.view.inviteUrl.flatMap(URL.init(string:)).map(SharedLink.init)
+                if let app {
+                    await app.historyList.refresh(user: app.historyUser, enabled: app.account.features.history, force: true)
+                }
             } catch is CancellationError {
                 self?.isCreatingCase = false
             } catch let failure as APIError {

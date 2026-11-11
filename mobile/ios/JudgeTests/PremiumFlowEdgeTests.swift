@@ -118,7 +118,7 @@ final class PremiumFlowEdgeTests: XCTestCase {
         await signIn(app)
         try await PremiumFixtures.waitUntil("the account") { app.account.entitlement != nil }
         app.account.signInDismissed()
-        try await PremiumFixtures.waitUntil("the case page") { app.home.path.last == .caseDetail(id: "case0000001") }
+        try await PremiumFixtures.waitUntil("the link to share") { app.home.shareLink != nil }
         let body = try PremiumFixtures.body(router.sentBodies("POST", "/api/v1/cases").first)
         XCTAssertNil(body["text"])
         XCTAssertEqual(router.count("POST", Self.clarifyPath), 0)

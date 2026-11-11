@@ -36,8 +36,6 @@ final class CaseModel {
     private(set) var busy = false
     private(set) var actionError: APIError?
     private(set) var resetDone = false
-    /// Whose link was made anew (`resetDone` says it worked).
-    private(set) var resetParty = Party.b
     /// The owner removed the case on this screen just now.
     private(set) var removedNow = false
     /// Bumped when an action swaps in a new view: the screen restarts polling.
@@ -162,18 +160,15 @@ final class CaseModel {
         await act { api, id in try await api.judgeAnswered(id: id) }
     }
 
-    /// "Make a new link" for one side: the old one stops working.
-    func resetInvite(party: Party = .b) async {
+    /// "Make a new link" for the whole case: the old one stops working.
+    func resetInvite() async {
         guard !busy else { return }
         resetDone = false
-        resetParty = party
         busy = true
         actionError = nil
         defer { busy = false }
         do {
-            let url = try await api.rotateInvite(id: id, party: party)
-            if party == .b { view?.inviteUrl = url }
-            if let index = view?.invites?.firstIndex(where: { $0.party == party }) { view?.invites?[index].inviteUrl = url }
+            view?.inviteUrl = try await api.rotateInvite(id: id)
             resetDone = true
         } catch {
             fail(error)

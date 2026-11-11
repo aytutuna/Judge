@@ -116,8 +116,19 @@ extension JudgeAPI {
         try await caseAnswer(try jsonRequest(caseURL(id, "judge"), method: "POST", timeout: CaseTimeout.judge, body: ["mode": "answered"]))
     }
 
-    /// POST /api/v1/cases/{id}/invite: a new link for that side (B unless
-    /// told otherwise); the old one stops working.
+    /// GET /api/v1/cases/live: where each invited side of the owner's waiting
+    /// cases stands.
+    func liveCases() async throws -> [CaseLive] {
+        let data = try await send(makeRequest(url: endpoint("cases").appending(path: "live"), method: "GET", timeout: CaseTimeout.call))
+        do {
+            return try JSONDecoder().decode(CaseLiveList.self, from: data).cases
+        } catch {
+            throw APIError.malformed
+        }
+    }
+
+    /// POST /api/v1/cases/{id}/invite: a new link for the whole case; the
+    /// old one stops working. A body naming a party is still accepted.
     func rotateInvite(id: String, party: Party = .b) async throws -> String {
         let request = party == .b
             ? makeRequest(url: caseURL(id, "invite"), method: "POST", timeout: CaseTimeout.call)

@@ -198,6 +198,9 @@ struct SideMenu: View {
     @State private var confirming: [String]?
     /// Rows near the end that are on screen.
     @State private var tailShown: Set<String> = []
+    /// Where the sides of the owner's waiting links stand, by case id, while the menu is open.
+    @State private var live: [String: [CaseLiveSide]] = [:]
+    @Environment(\.scenePhase) private var scenePhase
     @AccessibilityFocusState private var focusFirst: Bool
 
     private var settle: Duration { .milliseconds(reduceMotion ? 0 : 300) }
@@ -227,7 +230,7 @@ struct SideMenu: View {
         .allowsHitTesting(app.menuOpen)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.24), value: app.menuOpen)
         .onChange(of: app.menuOpen) { _, open in
-            if open { pull = 0 } else { profileOpen = false }
+            if open { pull = 0 } else { profileOpen = false; live = [:] }
         }
         .onChange(of: app.home.path.count) { close() }
         .onChange(of: app.home.isJudging) { _, judging in
@@ -267,6 +270,25 @@ struct SideMenu: View {
         Task { await list.refresh(user: user, enabled: enabled, force: force) }
     }
 
+    /// The owner's links still waiting on someone.
+    private func isWaitingLink(_ entry: HistoryEntry, now: Date) -> Bool {
+        guard case .account(let item) = entry else { return false }
+        return item.isCase && !item.isRespondent && HistoryLabels.state(item, now: now) == .waiting
+    }
+
+    /// Reads where the waiting links stand; a link that dropped out of the
+    /// answer or gained an answered side changes the list, so it is read again.
+    private func pollLive() async {
+        guard let cases = try? await app.api.liveCases() else { return }
+        let fresh = Dictionary(cases.map { ($0.id, $0.sides) }, uniquingKeysWith: { first, _ in first })
+        let moved = live.contains { id, old in
+            guard let sides = fresh[id] else { return true }
+            return CaseLogic.answeredCount(sides) > CaseLogic.answeredCount(old)
+        }
+        live = fresh
+        if moved { refresh(force: true) }
+    }
+
     private func remove(_ keys: [String]) {
         let wanted = Set(keys)
         let picked = currentEntries.filter { wanted.contains($0.id) }
@@ -287,6 +309,7 @@ struct SideMenu: View {
             if case .account(let item) = entry { return item.historyState?.thinking == true }
             return false
         }
+        let watching = app.menuOpen && scenePhase == .active && links.contains { isWaitingLink($0, now: now) }
         return VStack(spacing: 0) {
             List {
                 row(.new, title: L10n.appTabNew(lang))
@@ -379,6 +402,13 @@ struct SideMenu: View {
                 await list.refresh(user: app.historyUser, enabled: app.account.features.history, force: true)
             }
         }
+        .task(id: watching) {
+            guard watching else { return }
+            while !Task.isCancelled {
+                await pollLive()
+                try? await Task.sleep(for: .seconds(3))
+            }
+        }
         .padding(.horizontal, 12)
         .padding(.top, 20)
         .padding(.bottom, 22)
@@ -466,7 +496,11 @@ struct SideMenu: View {
         let tone = entry.tone(now: now)
         var muted = false
         if case .account(let item) = entry { muted = HistoryLabels.muted(item, now: now) }
-        let status = entry.status(lang: lang, now: now)
+        var status = entry.status(lang: lang, now: now)
+        if case .account(let item) = entry, isWaitingLink(entry, now: now), let sides = live[item.id],
+           let label = CaseLogic.liveLabel(sides, lang: lang) {
+            status = label
+        }
         let (fill, edge, words): (Color, Color, Color) = switch tone {
         case .yours: (Brand.sageTint, Brand.sageStrong, Brand.sageInk)
         case .theirs: (Brand.terraTint, Brand.terra, Brand.terraInk)

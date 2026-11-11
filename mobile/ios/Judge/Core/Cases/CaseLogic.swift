@@ -104,12 +104,24 @@ enum CaseLogic {
         }
     }
 
-    /// The held-unit line under the invite. Only a premium case holds a
-    /// unit, so a free case never mentions credits.
-    static func heldNote(_ view: CaseView, lang: AppLang) -> String? {
-        // "If nobody answers" no longer applies once they have.
-        guard view.tier == .premium, !(view.ownerSideMissing && view.respondentAnswered) else { return nil }
-        return ErrorText.formatDate(view.expiresAt, lang: lang).map { L10n.caseHeld(lang, date: $0) } ?? L10n.caseHeldSoon(lang)
+    static func liveText(_ state: LiveState, lang: AppLang) -> String {
+        switch state {
+        case .opened: return L10n.caseSideOpened(lang)
+        case .typing: return L10n.caseSideTyping(lang)
+        case .answered: return L10n.caseSideAnswered(lang)
+        case .waiting, .unknown: return L10n.caseSideWaiting(lang)
+        }
+    }
+
+    /// The one word a menu row shows for a waiting case: nil leaves its usual label.
+    static func liveLabel(_ sides: [CaseLiveSide], lang: AppLang) -> String? {
+        if sides.contains(where: { $0.state == .typing }) { return L10n.caseSideTyping(lang) }
+        if sides.contains(where: { $0.state == .opened }) { return L10n.caseSideOpened(lang) }
+        return nil
+    }
+
+    static func answeredCount(_ sides: [CaseLiveSide]) -> Int {
+        sides.filter { $0.state == .answered }.count
     }
 
     static func failedBody(_ view: CaseView, lang: AppLang) -> String {

@@ -25,6 +25,11 @@ enum InviteStatus: String, LenientEnum {
     case unknown = "_unknown"
 }
 
+enum LiveState: String, LenientEnum {
+    case waiting, opened, typing, answered
+    case unknown = "_unknown"
+}
+
 enum CaseAppealStatus: String, LenientEnum {
     case judging, judged, failed
     case unknown = "_unknown"
@@ -185,6 +190,26 @@ struct CaseInvite: Decodable, Sendable, Equatable {
     }
 }
 
+/// One invited side's live state, for the owner of a waiting case
+/// (CaseLiveSide in lib/case-types.ts).
+struct CaseLiveSide: Decodable, Sendable, Equatable {
+    var party: Party
+    var state: LiveState
+
+    init(party: Party, state: LiveState) {
+        self.party = party
+        self.state = state
+    }
+
+    private enum CodingKeys: String, CodingKey { case party, state }
+
+    init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        party = (try? c.decodeIfPresent(Party.self, forKey: .party)) ?? .unknown
+        state = (try? c.decodeIfPresent(LiveState.self, forKey: .state)) ?? .unknown
+    }
+}
+
 /// The names each party chose for the share pages, and the owner's switch.
 /// C and D only come with more than two sides.
 struct CaseDisplay: Decodable, Sendable, Equatable {
@@ -274,6 +299,8 @@ struct CaseView: Sendable, Equatable {
     /// Only with three or four sides, for the owner: sides B to D, each with
     /// its own link. `inviteUrl` stays side B's.
     var invites: [CaseInvite]? = nil
+    /// Owner only, while the case waits: where each invited side stands.
+    var live: [CaseLiveSide]? = nil
     /// Only with three or four sides, for the owner: the answers in so far
     /// are enough to judge without the rest.
     var canJudgeAnswered = false
@@ -284,6 +311,29 @@ struct CaseView: Sendable, Equatable {
     var sideCount: Int { parties?.count ?? 2 }
     var current: CaseVerdict? { verdicts.last }
     var appealJudging: Bool { appeals.contains { $0.status == .judging } }
+}
+
+/// One waiting case of GET /api/v1/cases/live.
+struct CaseLive: Decodable, Sendable, Equatable {
+    var id: String
+    var sides: [CaseLiveSide]
+
+    init(id: String, sides: [CaseLiveSide]) {
+        self.id = id
+        self.sides = sides
+    }
+
+    private enum CodingKeys: String, CodingKey { case id, sides }
+
+    init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(String.self, forKey: .id)
+        sides = (try? c.decodeIfPresent([CaseLiveSide].self, forKey: .sides)) ?? []
+    }
+}
+
+struct CaseLiveList: Decodable, Sendable {
+    var cases: [CaseLive]
 }
 
 /// GET /api/v1/cases list entry (lib/case-types.ts CaseSummary).
@@ -368,13 +418,14 @@ private struct CaseViewWire: Decodable {
     var yourOriginal: String
     var parties: [Party]?
     var invites: [CaseInvite]?
+    var live: [CaseLiveSide]?
     var canJudgeAnswered: Bool
     var venue: String?
 
     private enum CodingKeys: String, CodingKey {
         case id, role, yourParty, status, mode, tier, lang, createdAt, expiresAt, judgedAt, respondentAnswered
         case ownerSideMissing, inviteUrl, sides, appeals, canJudgeNow, appeal, lastError, pollAfterMs, names, display, removed, yourOriginal
-        case parties, invites, canJudgeAnswered, venue
+        case parties, invites, live, canJudgeAnswered, venue
     }
 
     init(from decoder: any Decoder) throws {
@@ -406,6 +457,7 @@ private struct CaseViewWire: Decodable {
         yourOriginal = (try? c.decodeIfPresent(String.self, forKey: .yourOriginal)) ?? "not_stored"
         parties = manyParties(try? c.decodeIfPresent([Party].self, forKey: .parties))
         invites = parties == nil ? nil : (try? c.decodeIfPresent([CaseInvite].self, forKey: .invites))
+        live = try? c.decodeIfPresent([CaseLiveSide].self, forKey: .live)
         canJudgeAnswered = (try? c.decodeIfPresent(Bool.self, forKey: .canJudgeAnswered)) == true
         venue = try? c.decodeIfPresent(String.self, forKey: .venue)
     }
@@ -456,6 +508,7 @@ enum CaseDecoding {
             yourOriginal: wire.yourOriginal,
             parties: wire.parties,
             invites: wire.invites,
+            live: wire.live,
             canJudgeAnswered: wire.canJudgeAnswered,
             venue: wire.venue
         )

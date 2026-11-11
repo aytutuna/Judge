@@ -107,10 +107,6 @@ final class CaseTests: XCTestCase {
     }
 
     func testFreeCaseWordingNeverMentionsCredits() throws {
-        XCTAssertNotNil(CaseLogic.heldNote(try view("waiting_for_respondent"), lang: .en))
-        XCTAssertNil(CaseLogic.heldNote(try view("waiting_free"), lang: .en))
-        XCTAssertNil(CaseLogic.heldNote(try view("waiting_to_write_answered"), lang: .en), "they already answered")
-
         var failed = try view("failed")
         XCTAssertEqual(CaseLogic.failedBody(failed, lang: .en), L10n.errorQuota(.en))
         failed.lastError = nil
@@ -519,7 +515,7 @@ final class CaseTests: XCTestCase {
     // MARK: - Creating a case on Home
 
     @MainActor
-    func testCreatingACaseOpensItsPage() async throws {
+    func testCreatingACaseHandsOutItsLink() async throws {
         let container = HistoryContainer.inMemory()
         let router = StubRouter()
         let created = try PremiumFixtures.json(201, try PremiumFixtures.section("cases")["createResponse"] as Any)
@@ -533,7 +529,7 @@ final class CaseTests: XCTestCase {
 
         home.submit(app: app)
         XCTAssertTrue(home.isCreatingCase)
-        try await PremiumFixtures.waitUntil("the case page") { home.path.last == .caseDetail(id: Self.caseID) }
+        try await PremiumFixtures.waitUntil("the link to share") { home.shareLink != nil }
         XCTAssertFalse(home.isCreatingCase)
         XCTAssertEqual(router.count("POST", "/api/v1/clarify"), 0, "no clarifying step for a case")
         XCTAssertEqual(router.count("POST", "/api/v1/verdict"), 0)
@@ -651,7 +647,7 @@ final class CaseTests: XCTestCase {
         home.argument = ""
 
         home.sendLink(app: app)
-        try await PremiumFixtures.waitUntil("the case page") { home.path.last == .caseDetail(id: Self.caseID) }
+        try await PremiumFixtures.waitUntil("the link to share") { home.shareLink != nil }
         let body = try PremiumFixtures.body(router.sentBodies("POST", "/api/v1/cases").first)
         XCTAssertNil(body["text"], "no side yet: the key is left out")
         XCTAssertEqual(body["tier"] as? String, "premium")
