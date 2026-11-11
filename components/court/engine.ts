@@ -52,13 +52,13 @@ const CENTER = { x: 160, y: 101 };
 // the same points). Sides A and C go left, B and D right.
 const TARGETS: Record<Venue, { a: Point; b: Point }> = {
   court: { a: { x: 81, y: 64 }, b: { x: 238, y: 64 } },
-  beach: { a: { x: 100, y: 82 }, b: { x: 212, y: 82 } },
+  beach: { a: { x: 114, y: 82 }, b: { x: 206, y: 82 } },
   camp: { a: { x: 100, y: 84 }, b: { x: 222, y: 84 } },
   farm: { a: { x: 74, y: 106 }, b: { x: 250, y: 106 } },
-  ice: { a: { x: 107, y: 39 }, b: { x: 213, y: 39 } },
+  ice: { a: { x: 76, y: 51 }, b: { x: 244, y: 51 } },
   library: { a: { x: 80, y: 84 }, b: { x: 240, y: 84 } },
   museum: { a: { x: 78, y: 96 }, b: { x: 242, y: 96 } },
-  street: { a: { x: 72, y: 87 }, b: { x: 248, y: 87 } },
+  street: { a: { x: 72, y: 89 }, b: { x: 248, y: 89 } },
   tv: { a: { x: 70, y: 88 }, b: { x: 250, y: 88 } },
 };
 // What a judge does to vote: the ball into a hoop, or something that fits the
@@ -85,6 +85,8 @@ const VOTE_S = 0.42;
 const TRIAL_SPEED = 110;
 /** How long a score card stays up. */
 const CARD_S = 1.8;
+/** How long a landing flash lasts away from the court. */
+const FLASH_S = 0.8;
 
 // Where the sides stand at centre court, left to right, and what the rest of
 // the cast does around them. Two sides are as they always were; with three or
@@ -911,31 +913,54 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
     ctx.fillStyle = col;
     ctx.fillRect(x, y, w, h);
   };
+  // A disc a few pixels across with a dark rim: `r` is 2 for five pixels, 3 for seven.
+  const disc = (x: number, y: number, r: number, rim: string, fill: string) => {
+    rect(x - r + 1, y - r, 2 * r - 1, 2 * r + 1, rim);
+    rect(x - r, y - r + 1, 2 * r + 1, 2 * r - 1, rim);
+    rect(x - r + 2, y - r + 1, 2 * r - 3, 2 * r - 1, fill);
+    rect(x - r + 1, y - r + 2, 2 * r - 1, 2 * r - 3, fill);
+  };
   const horseshoe = (x: number, y: number, flip: boolean) => {
-    rect(x, y, 1, 3, "#3a3f47");
-    rect(x + 4, y, 1, 3, "#3a3f47");
-    rect(x + 1, flip ? y : y + 2, 3, 1, "#3a3f47");
-    rect(x, y, 1, 1, "#9aa2ad");
-    rect(x + 4, y, 1, 1, "#9aa2ad");
+    const steel = "#a9b1bd";
+    const top = flip ? y + 1 : y;
+    rect(x, y, 7, 5, "#1d2026");
+    rect(x + 1, top, 2, 4, steel);
+    rect(x + 4, top, 2, 4, steel);
+    rect(x + 1, flip ? y + 1 : y + 3, 5, 1, steel);
   };
   const flag = (x: number, y: number, side: Side) => {
-    rect(x, y - 11, 1, 11, "#5b4630");
-    rect(x + 1, y - 12, 7, 5, C.out);
-    rect(x + 1, y - 11, 6, 3, SIDE[side][0]);
-    rect(x + 1, y - 11, 6, 1, SIDE[side][1]);
+    rect(x, y - 14, 1, 14, "#3b2c1e");
+    rect(x + 1, y - 14, 8, 7, C.out);
+    rect(x + 1, y - 13, 7, 5, SIDE[side][0]);
+    rect(x + 1, y - 13, 7, 1, SIDE[side][1]);
+    rect(x + 6, y - 12, 1, 3, SIDE[side][2]);
+  };
+  const coin = (x: number, y: number, edge: boolean) => {
+    if (edge) {
+      rect(x - 1, y - 2, 3, 5, "#6e4a0c");
+      rect(x, y - 1, 1, 3, "#f2b632");
+    } else {
+      disc(x, y, 2, "#6e4a0c", "#f2b632");
+      rect(x - 1, y - 1, 1, 1, "#fff0a0");
+    }
   };
   const rosette = (x: number, y: number, side: Side, tails: boolean) => {
     if (tails) {
-      rect(x - 2, y + 2, 2, 4, SIDE[side][2]);
-      rect(x + 1, y + 2, 2, 4, SIDE[side][2]);
-      rect(x - 2, y + 5, 1, 1, C.out);
-      rect(x + 2, y + 5, 1, 1, C.out);
+      rect(x - 3, y + 3, 3, 5, C.out);
+      rect(x, y + 3, 3, 5, C.out);
+      rect(x - 2, y + 3, 1, 4, SIDE[side][2]);
+      rect(x + 1, y + 3, 1, 4, SIDE[side][2]);
     }
-    rect(x - 2, y - 1, 5, 3, C.out);
-    rect(x - 1, y - 2, 3, 5, C.out);
-    rect(x - 1, y - 1, 3, 3, SIDE[side][0]);
-    rect(x - 1, y - 1, 3, 1, SIDE[side][1]);
+    disc(x, y, 3, C.out, SIDE[side][0]);
+    rect(x - 1, y - 2, 3, 1, SIDE[side][1]);
+    rect(x - 1, y - 1, 3, 3, SIDE[side][1]);
     rect(x, y, 1, 1, C.core);
+  };
+  const book = (x: number, y: number, side: Side) => {
+    rect(x - 5, y - 1, 10, 4, C.out);
+    rect(x - 4, y, 8, 2, SIDE[side][0]);
+    rect(x - 4, y, 8, 1, SIDE[side][1]);
+    rect(x + 3, y, 1, 2, C.paper);
   };
 
   // What has landed on a target stays there, a few at most.
@@ -943,77 +968,84 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
     const act = ACT[shown];
     items.forEach((side, i) => {
       if (act === "flag") {
-        const bx = t.x + [-11, 11, -4, 4][i];
-        const by = t.y + [-5, -5, -8, -8][i];
-        flag(bx, by, side);
+        flag(t.x + [-16, 13, -6, 4][i], t.y + [-5, -5, 0, 0][i], side);
       } else if (act === "shoe") {
-        const [ox, oy] = [[-10, -1], [6, -1], [-7, 3], [3, 3]][i];
+        const [ox, oy] = [[-15, -2], [8, -2], [-12, 4], [5, 4]][i];
         horseshoe(t.x + ox, t.y + oy, i % 2 === 1);
       } else if (act === "book") {
-        const y = t.y + 2 - (i + 1) * 3;
-        const x = t.x - 4 + [0, 1, -1, 0][i];
-        rect(x - 1, y - 1, 10, 4, C.out);
-        rect(x, y, 8, 2, SIDE[side][0]);
-        rect(x, y, 8, 1, SIDE[side][1]);
-        rect(x + 7, y, 1, 2, C.paper);
+        book(t.x + [0, 1, -1, 0][i], t.y - 2 - i * 3, side);
       } else if (act === "rosette") {
-        const [ox, oy] = [[-4, -5], [4, -5], [-4, 2], [4, 2]][i];
+        const [ox, oy] = [[-5, -3], [5, -3], [-5, 4], [5, 4]][i];
         rosette(t.x + ox, t.y + oy, side, false);
+      } else if (act === "coin") {
+        // Coins in the jar or the guitar case, first the bottom row.
+        const [ox, oy] = shown === "ice" ? [[-3, 7], [-1, 7], [1, 7], [-2, 5]][i] : [[-8, 2], [-2, 3], [4, 2], [8, 3]][i];
+        disc(t.x + ox + 1, t.y + oy, 1, "#6e4a0c", "#f2b632");
       }
     });
   }
 
   function drawFlying(act: Act, side: Side, x: number, y: number, k: number) {
     if (act === "flag") {
-      flag(x, y + 4, side);
+      flag(x, y + 6, side);
     } else if (act === "log") {
       const up = Math.floor(k * 6) % 2 === 0;
-      rect(up ? x - 3 : x - 1, up ? y - 1 : y - 3, up ? 6 : 3, up ? 3 : 6, "#8a5a32");
-      rect(up ? x - 3 : x - 1, up ? y - 1 : y - 3, up ? 1 : 3, up ? 3 : 1, "#c58b52");
+      const [w, h] = up ? [9, 5] : [5, 9];
+      rect(x - (w >> 1), y - (h >> 1), w, h, C.out);
+      rect(x - (w >> 1) + 1, y - (h >> 1) + 1, w - 2, h - 2, "#8a5a32");
+      rect(x - (w >> 1) + 1, y - (h >> 1) + 1, up ? 2 : w - 2, up ? h - 2 : 2, "#d9a066");
     } else if (act === "shoe") {
-      horseshoe(x - 2, y - 1, Math.floor(k * 8) % 2 === 1);
+      horseshoe(x - 3, y - 2, Math.floor(k * 8) % 2 === 1);
     } else if (act === "coin") {
-      const edge = Math.floor(k * 10) % 2 === 1;
-      rect(edge ? x : x - 1, y - 1, edge ? 1 : 3, 3, "#e0a526");
-      rect(edge ? x : x - 1, y - 1, 1, 1, C.core);
+      coin(x, y, Math.floor(k * 10) % 2 === 1);
     } else if (act === "book") {
-      rect(x - 3, y - 2, 6, 4, C.out);
-      rect(x - 2, y - 1, 4, 2, SIDE[side][0]);
-      rect(x + 1, y - 1, 1, 2, C.paper);
+      book(x, y - 1, side);
     } else if (act === "rosette") {
-      rosette(x, y, side, true);
+      rosette(x, y - 3, side, true);
     }
   }
 
-  // A short flash where something lands; `a` runs from 0 to 1.
+  // A flash where something lands; `a` runs from 0 to 1 over its life.
   function drawFlash(act: Act, side: Side, t: Point, a: number) {
     if (act === "log") {
-      const h = Math.round(9 - a * 4);
-      rect(t.x - 3, t.y - h - 2, 6, h, a < 0.6 ? C.ember : C.flame);
-      rect(t.x - 1, t.y - h, 3, Math.max(2, h - 3), C.core);
+      const h = Math.round(13 - a * 6);
+      rect(t.x - 5, t.y - h - 2, 10, h, C.flame);
+      rect(t.x - 4, t.y - h - 1, 8, h - 1, C.ember);
+      rect(t.x - 2, t.y - h + 1, 4, Math.max(3, h - 4), C.core);
     } else if (act === "shoe") {
-      if (a > 0.5) return;
-      for (const [dx, dy] of [[0, 0], [-2, 0], [2, 0], [0, -2], [0, 2]]) rect(t.x + dx, t.y + dy + 2, 1, 1, dx || dy ? C.paper : C.core);
+      if (a > 0.75) return;
+      const on = Math.floor(a * 8) % 2 === 0;
+      const cx = t.x + 1;
+      const cy = t.y + 2;
+      rect(cx - 5, cy, 11, 1, on ? "#ffffff" : C.core);
+      rect(cx, cy - 5, 1, 11, on ? "#ffffff" : C.core);
+      for (const [dx, dy] of [[-3, -3], [3, -3], [-3, 3], [3, 3]]) rect(cx + dx, cy + dy, 1, 1, C.core);
     } else if (act === "coin") {
-      const on = Math.floor(a * 6) % 2 === 0;
-      rect(t.x, t.y - 2, 1, 5, on ? C.paper : C.core);
-      rect(t.x - 2, t.y, 5, 1, on ? C.paper : C.core);
+      const on = Math.floor(a * 8) % 2 === 0;
+      rect(t.x - 4, t.y, 9, 1, on ? "#ffffff" : C.core);
+      rect(t.x, t.y - 4, 1, 9, on ? "#ffffff" : C.core);
+      for (const [dx, dy] of [[-2, -2], [2, -2], [-2, 2], [2, 2]]) rect(t.x + dx, t.y + dy, 1, 1, "#ffffff");
     } else if (act === "rosette" || act === "flag" || act === "book") {
-      if (a > 0.6) return;
-      ctx.fillStyle = SIDE[side][1];
-      for (const [dx, dy] of [[-9, -4], [10, -3], [-7, 5], [8, 6]]) ctx.fillRect(t.x + dx, t.y + dy, 1, 1);
+      if (a > 0.75) return;
+      ctx.fillStyle = a < 0.4 ? C.paper : SIDE[side][1];
+      for (const [dx, dy] of [[-14, -6], [14, -5], [-10, 8], [11, 9]]) {
+        ctx.fillRect(t.x + dx, t.y + dy - 1, 1, 3);
+        ctx.fillRect(t.x + dx - 1, t.y + dy, 3, 1);
+      }
     }
   }
 
   // A score card held over the head, in the side's colour, until it drops to the vote flag.
   function drawCard(x: number, top: number, side: Side, age: number) {
-    const lift = Math.round(Math.max(0, 1 - age / 0.15) * 8);
-    const y = top - 19 + lift;
-    rect(x, y + 10, 1, 5 - lift, "#e8dcc0");
-    rect(x - 6, y, 12, 10, C.out);
-    rect(x - 5, y + 1, 10, 8, SIDE[side][0]);
-    rect(x - 5, y + 1, 10, 1, SIDE[side][1]);
-    drawLetter(side, x - 1, y + 3, C.paper);
+    const lift = Math.round(Math.max(0, 1 - age / 0.15) * 10);
+    const y = top - 32 + lift;
+    rect(x, y + 14, 1, 14 - lift - 2, "#f3e8cc");
+    rect(x - 7, y, 14, 14, C.out);
+    rect(x - 6, y + 1, 12, 12, SIDE[side][0]);
+    rect(x - 6, y + 1, 12, 1, SIDE[side][1]);
+    rect(x - 6, y + 12, 12, 1, SIDE[side][2]);
+    ctx.fillStyle = C.paper;
+    for (let p = 0; p < 15; p++) if (LETTER[side][p] === "1") ctx.fillRect(x - 3 + (p % 3) * 2, y + 2 + Math.floor(p / 3) * 2, 2, 2);
   }
 
   function draw() {
@@ -1083,12 +1115,12 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
     }
     for (const side of SIDES) {
       const age = clock - swish[side];
-      if (age > 0.5) continue;
+      if (age > (act === "ball" ? 0.5 : FLASH_S)) continue;
       const h = hoopOf(side);
       if (act === "ball") {
         ctx.fillStyle = SIDE[side][1];
         for (let i = -3; i <= 3; i += 2) ctx.fillRect(h.x + i, h.y + 2 + ((i + Math.floor(clock * 20)) & 1), 1, 2);
-      } else drawFlash(act, side, h, age / 0.5);
+      } else drawFlash(act, side, h, age / FLASH_S);
     }
     drawBoard();
     for (const hd of heads) {
