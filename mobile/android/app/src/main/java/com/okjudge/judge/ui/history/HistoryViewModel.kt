@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-/** A row of the Verdicts list: one from the account, or a verdict the account doesn't have that is kept on this phone. */
+/** A row of the menu's lists: one from the account, or a verdict the account doesn't have that is kept on this phone. */
 sealed interface HistoryEntry {
     val key: String
     val at: String
@@ -40,11 +40,14 @@ sealed interface HistoryEntry {
         override val at: String = isoMillis(verdict.createdAt)
     }
 
-    /** Select mode can pick it: phone rows, and account rows whose own page offers Remove. */
-    val selectable: Boolean get() = when (this) {
+    /** The menu can remove it: phone rows, and account rows whose own page offers Remove. */
+    val removable: Boolean get() = when (this) {
         is Account -> item.removable
         is Phone -> true
     }
+
+    /** A case, sent or received; the rest are verdicts. */
+    val isCase: Boolean get() = this is Account && item.isCase
 }
 
 /**

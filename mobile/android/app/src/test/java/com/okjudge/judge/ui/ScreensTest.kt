@@ -75,8 +75,7 @@ import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.str
 import com.okjudge.judge.ui.components.LocalGamify
 import com.okjudge.judge.ui.history.HistoryEntry
-import com.okjudge.judge.ui.history.HistoryScreen
-import com.okjudge.judge.ui.history.HistoryTags
+import com.okjudge.judge.core.data.Appearance
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeTags
 import com.okjudge.judge.ui.premium.EvidenceTags
@@ -642,16 +641,7 @@ class ScreensTest {
     }
 
     @Test
-    fun menu_verdictsIsAHeadingThatStillOpensTheList() {
-        val calls = mutableListOf<String>()
-        menu(null, calls)
-        compose.onNodeWithTag(PageBarTags.VERDICTS).assert(SemanticsMatcher.keyIsDefined(SemanticsProperties.Heading))
-        compose.onNodeWithTag(PageBarTags.VERDICTS).performClick()
-        assertEquals(listOf("select:HISTORY"), calls)
-    }
-
-    @Test
-    fun menu_recentVerdictsAreSeparateCardsWithTheirResultWords() {
+    fun menu_verdictsAreSeparateCardsWithTheirResultWords() {
         val rows = phoneRows("win_a_self", "win_b_named", "lean_tie")
         compose.setContent {
             Themed(AppLang.EN) { MenuPanel(Tab.NEW, rows, false, FocusRequester(), {}, {}, {}) }
@@ -691,16 +681,24 @@ class ScreensTest {
     }
 
     @Test
-    fun settings_gamifyRowToggles() {
-        var on by mutableStateOf(true)
+    fun settings_darkModeIsOneSwitchThatShowsTheSchemeInUse() {
+        val picked = mutableListOf<Appearance>()
+        var dark by mutableStateOf(false)
         compose.setContent {
-            Themed(AppLang.EN) {
-                SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com", gamify = on, onGamify = { on = it })
+            Themed(AppLang.EN, dark = dark) {
+                SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com", onAppearance = { picked += it; dark = it == Appearance.DARK })
             }
         }
-        compose.onNodeWithTag(SettingsTags.GAMIFY).assertIsOn().performClick()
-        assertFalse(on)
-        compose.onNodeWithTag(SettingsTags.GAMIFY).assertIsOff()
+        compose.onNodeWithTag(SettingsTags.DARK_MODE).assertIsOff().performClick()
+        compose.onNodeWithTag(SettingsTags.DARK_MODE).assertIsOn().performClick()
+        compose.onNodeWithTag(SettingsTags.DARK_MODE).assertIsOff()
+        assertEquals(listOf(Appearance.DARK, Appearance.LIGHT), picked)
+    }
+
+    @Test
+    fun settings_hasNoGamifyRow() {
+        compose.setContent { Themed(AppLang.EN) { SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com") } }
+        compose.onNodeWithText(UiTestSupport.s(AppLang.EN).shellGamify).assertDoesNotExist()
     }
 
     private fun signedInAs(email: String = "ada@example.com") =
@@ -717,7 +715,7 @@ class ScreensTest {
         compose.onNodeWithTag(SettingsTags.DELETE).assertDoesNotExist()
         val account = compose.onNodeWithTag(SettingsTags.ACCOUNT).fetchSemanticsNode().positionInRoot.y
         val language = compose.onNodeWithTag(SettingsTags.LANGUAGE).fetchSemanticsNode().positionInRoot.y
-        val appearance = compose.onNodeWithTag(SettingsTags.GAMIFY).fetchSemanticsNode().positionInRoot.y
+        val appearance = compose.onNodeWithTag(SettingsTags.DARK_MODE).fetchSemanticsNode().positionInRoot.y
         val privacy = compose.onNodeWithTag(SettingsTags.USAGE_STATS).fetchSemanticsNode().positionInRoot.y
         compose.onNodeWithTag(SettingsTags.SIGN_OUT).performScrollTo()
         val signOut = compose.onNodeWithTag(SettingsTags.SIGN_OUT).fetchSemanticsNode().positionInRoot.y
@@ -877,17 +875,17 @@ class ScreensTest {
     }
 
     @Test
-    fun history_listsAndEmptyState() {
+    fun menu_listsAndEmptyState() {
         var entries by mutableStateOf<List<HistoryEntry>?>(emptyList())
         compose.setContent {
             Themed(AppLang.EN) {
-                HistoryScreen(entries = entries, onOpen = {}, onRemove = { _, _ -> })
+                MenuPanel(Tab.NEW, entries.orEmpty(), false, FocusRequester(), {}, {}, {})
             }
         }
-        compose.onNodeWithTag(HistoryTags.EMPTY).assertExists()
+        compose.onNodeWithTag(PageBarTags.EMPTY).assertExists()
         entries = phoneRows("win_a_self", "lean_tie")
         compose.waitForIdle()
-        compose.onNodeWithTag(HistoryTags.row("v:abc123DEF0")).assertExists()
+        compose.onNodeWithTag(PageBarTags.recent("v:abc123DEF0")).assertExists()
         compose.onNodeWithText("You're right").assertExists()
         // Row headlines carry the real names (display only).
         compose.onNodeWithText(personalized("win_a_self").str("headline")!!).assertExists()

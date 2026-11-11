@@ -61,10 +61,7 @@ object SettingsTags {
     const val RESTORE_NOTE = "settings.restoreNote"
     const val LANGUAGE = "settings.language"
     const val USAGE_STATS = "settings.usageStats"
-    const val GAMIFY = "settings.gamify"
-
-    /** A row of the appearance group: "settings.appearance.dark". */
-    fun appearanceOption(a: Appearance): String = "settings.appearance.${a.stored}"
+    const val DARK_MODE = "settings.darkMode"
 
     /** A row of the language list: "settings.lang.system", "settings.lang.de". */
     fun langOption(pref: LangPref): String = "settings.lang.${pref.stored}"
@@ -73,7 +70,7 @@ object SettingsTags {
 /** "Restore purchases" in the account group; shown while the store is ready for this account. */
 data class RestoreUi(val working: Boolean = false, val notice: PurchaseController.RestoreNotice? = null)
 
-/** Account, language, appearance and privacy choices, links out to the website, then sign out. */
+/** Account, language, dark mode and privacy choices, links out to the website, then sign out. */
 @Composable
 fun SettingsScreen(
     langPref: LangPref,
@@ -90,12 +87,10 @@ fun SettingsScreen(
     onOpenPricing: (() -> Unit)? = null,
     restore: RestoreUi? = null,
     onRestore: () -> Unit = {},
-    appearance: Appearance = Appearance.SYSTEM,
+    /** Gets the stored choice: dark for the switch on, light for off. */
     onAppearance: (Appearance) -> Unit = {},
     usageStats: Boolean = true,
     onUsageStats: (Boolean) -> Unit = {},
-    gamify: Boolean = true,
-    onGamify: (Boolean) -> Unit = {},
 ) {
     val s = LocalStrings.current
     val base = siteBaseUrl.trimEnd('/')
@@ -134,11 +129,10 @@ fun SettingsScreen(
             }
 
             Group(s.appSettingsAppearance) {
-                Appearance.entries.forEach { option ->
-                    AppearanceRow(option, selected = option == appearance) { onAppearance(option) }
-                    HorizontalDivider(color = Palette.line)
+                // The switch shows the scheme in use, which is the phone's until the person picks one.
+                SwitchRow(s.settingsDarkMode, Palette.dark, SettingsTags.DARK_MODE) { on ->
+                    onAppearance(if (on) Appearance.DARK else Appearance.LIGHT)
                 }
-                SwitchRow(s.shellGamify, gamify, SettingsTags.GAMIFY, onGamify)
             }
 
             Column {
@@ -381,27 +375,6 @@ private fun LinkRow(label: String, onClick: () -> Unit) {
     ) {
         Text(label, style = JudgeType.body, modifier = Modifier.weight(1f))
         Text("↗", style = JudgeType.body.copy(color = Palette.muted))
-    }
-}
-
-@Composable
-private fun AppearanceRow(option: Appearance, selected: Boolean, onClick: () -> Unit) {
-    val s = LocalStrings.current
-    val label = when (option) {
-        Appearance.SYSTEM -> s.appSettingsAppearanceSystem
-        Appearance.LIGHT -> s.appSettingsAppearanceLight
-        Appearance.DARK -> s.appSettingsAppearanceDark
-    }
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .testTag(SettingsTags.appearanceOption(option))
-            .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 14.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(label, style = JudgeType.body, modifier = Modifier.weight(1f))
-        Radio(selected)
     }
 }
 

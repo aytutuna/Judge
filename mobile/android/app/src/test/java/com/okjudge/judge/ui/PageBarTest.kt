@@ -24,8 +24,8 @@ class PageBarTest {
     }
 
     @Test
-    fun shownOnTheThreeMainPages() {
-        for (key in listOf(HomeKey, HistoryKey, SettingsKey)) {
+    fun shownOnTheTwoMainPages() {
+        for (key in listOf(HomeKey, SettingsKey)) {
             assertTrue(key.toString(), showsPageBar(key))
         }
     }

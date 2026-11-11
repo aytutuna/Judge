@@ -3,7 +3,8 @@ package com.okjudge.judge.ui
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertIsNotDisplayed
-import androidx.compose.ui.test.assertIsSelected
+import androidx.compose.ui.test.assertIsOff
+import androidx.compose.ui.test.assertIsOn
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
@@ -22,7 +23,6 @@ import com.okjudge.judge.MainActivity
 import com.okjudge.judge.core.data.Appearance
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LangPref
-import com.okjudge.judge.ui.history.HistoryTags
 import com.okjudge.judge.ui.home.HomeTags
 import com.okjudge.judge.ui.settings.SettingsTags
 import kotlinx.coroutines.flow.first
@@ -54,6 +54,9 @@ class AppShellTest {
     @get:Rule(order = 1)
     val compose = createAndroidComposeRule<MainActivity>()
 
+    private fun awaitSettings() =
+        compose.waitUntil(5_000) { compose.onAllNodesWithTag(SettingsTags.LANGUAGE).fetchSemanticsNodes().isNotEmpty() }
+
     private fun awaitText(text: String) =
         compose.waitUntil(5_000) { compose.onAllNodesWithText(text).fetchSemanticsNodes().isNotEmpty() }
 
@@ -72,11 +75,14 @@ class AppShellTest {
         awaitText(en.appHomeExample)
         compose.onNodeWithTag(HomeTags.SUBMIT).assertExists()
 
-        goTo(en.navVerdicts, en.navTabs)
+        // With nothing judged yet the menu says so under New.
+        compose.onNodeWithContentDescription(en.navTabs).performClick()
         awaitText(en.appHistoryEmpty)
-        compose.onNodeWithTag(HistoryTags.EMPTY).assertExists()
-
-        goTo(en.appTabSettings, en.navTabs)
+        compose.onNodeWithTag(PageBarTags.EMPTY).assertExists()
+        compose.onNodeWithTag(PageBarTags.VERDICTS).assertDoesNotExist()
+        compose.onNodeWithTag(PageBarTags.LINKS).assertDoesNotExist()
+        compose.onNodeWithText(en.appTabSettings).performClick()
+        compose.waitForIdle()
         compose.onNodeWithTag(SettingsTags.LANGUAGE).assertTextContains(en.appSettingsLanguageDevice).performClick()
         compose.onNodeWithTag(SettingsTags.langOption(LangPref(AppLang.TR))).performClick()
         awaitText(tr.appTabSettings)
@@ -91,8 +97,8 @@ class AppShellTest {
         val en = UiTestSupport.s(AppLang.EN)
         awaitText(en.appHomeExample)
         compose.onNodeWithTag(HomeTags.INPUT).performTextInput("My roommate never does the dishes")
-        goTo(en.navVerdicts, en.navTabs)
-        awaitText(en.appHistoryEmpty)
+        goTo(en.appTabSettings, en.navTabs)
+        awaitSettings()
         compose.onNodeWithContentDescription(en.shellNew).performClick()
         compose.waitUntil(5_000) { compose.onAllNodesWithTag(HomeTags.INPUT).fetchSemanticsNodes().isNotEmpty() }
         assertEquals("My roommate never does the dishes", typed(HomeTags.INPUT))
@@ -124,11 +130,10 @@ class AppShellTest {
         val en = UiTestSupport.s(AppLang.EN)
         awaitText(en.appHomeExample)
         compose.onNodeWithTag(HomeTags.INPUT).performTextInput("My roommate never does the dishes")
-        goTo(en.navVerdicts, en.navTabs)
-        awaitText(en.appHistoryEmpty)
+        goTo(en.appTabSettings, en.navTabs)
+        awaitSettings()
         goTo(en.appTabNew, en.navTabs)
         compose.waitUntil(5_000) { compose.onAllNodesWithTag(HomeTags.INPUT).fetchSemanticsNodes().isNotEmpty() }
-        compose.onNodeWithTag(HistoryTags.EMPTY).assertDoesNotExist()
         assertEquals("My roommate never does the dishes", typed(HomeTags.INPUT))
     }
 
@@ -136,23 +141,23 @@ class AppShellTest {
     fun systemBack_closesTheMenuBeforeLeavingThePage() {
         val en = UiTestSupport.s(AppLang.EN)
         awaitText(en.appHomeExample)
-        goTo(en.navVerdicts, en.navTabs)
-        awaitText(en.appHistoryEmpty)
+        goTo(en.appTabSettings, en.navTabs)
+        awaitSettings()
         compose.onNodeWithContentDescription(en.navTabs).performClick()
         compose.waitForIdle()
-        compose.onNodeWithText(en.appTabSettings).assertIsDisplayed()
+        compose.onNodeWithTag(PageBarTags.SETTINGS).assertIsDisplayed()
         compose.runOnUiThread { compose.activity.onBackPressedDispatcher.onBackPressed() }
         compose.waitForIdle()
-        compose.onNodeWithTag(HistoryTags.EMPTY).assertExists()
-        compose.onNodeWithText(en.appTabSettings).assertIsNotDisplayed()
+        compose.onNodeWithTag(SettingsTags.LANGUAGE).assertExists()
+        compose.onNodeWithTag(PageBarTags.SETTINGS).assertIsNotDisplayed()
     }
 
     @Test
     fun focus_movesIntoTheMenuAndBackToTheButton() {
         val en = UiTestSupport.s(AppLang.EN)
         awaitText(en.appHomeExample)
-        goTo(en.navVerdicts, en.navTabs)
-        awaitText(en.appHistoryEmpty)
+        goTo(en.appTabSettings, en.navTabs)
+        awaitSettings()
         compose.onNodeWithContentDescription(en.navTabs).performClick()
         compose.waitForIdle()
         compose.onNodeWithText(en.appTabNew).assertIsFocused()
@@ -189,16 +194,21 @@ class AppShellTest {
         val en = UiTestSupport.s(AppLang.EN)
         awaitText(en.appHomeExample)
         goTo(en.appTabSettings, en.navTabs)
-        compose.onNodeWithTag(SettingsTags.appearanceOption(Appearance.SYSTEM)).assertIsSelected()
+        // Until it is flipped the switch shows the phone's scheme, which is light here.
+        compose.onNodeWithTag(SettingsTags.DARK_MODE).assertIsOff()
         val window = compose.activity.window
         val bars = WindowCompat.getInsetsController(window, window.decorView)
         assertTrue(bars.isAppearanceLightStatusBars)
         try {
-            compose.onNodeWithTag(SettingsTags.appearanceOption(Appearance.DARK)).performClick()
+            compose.onNodeWithTag(SettingsTags.DARK_MODE).performClick()
             compose.waitUntil(5_000) { runBlocking { settings.appearance.first() } == Appearance.DARK }
             compose.waitForIdle()
-            compose.onNodeWithTag(SettingsTags.appearanceOption(Appearance.DARK)).assertIsSelected()
+            compose.onNodeWithTag(SettingsTags.DARK_MODE).assertIsOn()
             assertFalse(bars.isAppearanceLightStatusBars)
+            compose.onNodeWithTag(SettingsTags.DARK_MODE).performClick()
+            compose.waitUntil(5_000) { runBlocking { settings.appearance.first() } == Appearance.LIGHT }
+            compose.onNodeWithTag(SettingsTags.DARK_MODE).assertIsOff()
+            assertTrue(bars.isAppearanceLightStatusBars)
         } finally {
             runBlocking { settings.setAppearance(Appearance.SYSTEM) }
         }

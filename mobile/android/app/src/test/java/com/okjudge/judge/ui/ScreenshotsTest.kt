@@ -37,9 +37,7 @@ import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.ui.components.LocalGamify
 import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.history.HistoryPaging
-import com.okjudge.judge.ui.history.HistoryScreen
 import com.okjudge.judge.ui.history.mergeHistory
-import com.okjudge.judge.ui.history.HistoryTags
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeUiState
 import com.okjudge.judge.ui.judging.JudgingScreen
@@ -318,12 +316,6 @@ class ScreenshotsTest {
     }
 
     @Test
-    fun history_en() = capture("history_en") {
-        val items = phoneRows("win_a_self", "win_b_named", "lean_tie", "overturned_tr", "conditional")
-        Themed(AppLang.EN) { HistoryScreen(items, {}, { _, _ -> }) }
-    }
-
-    @Test
     fun settings_tr() = capture("settings_tr") {
         Themed(AppLang.TR) { SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com") }
     }
@@ -331,7 +323,7 @@ class ScreenshotsTest {
     @Test
     fun settings_en_dark() = capture("settings_en_dark") {
         Themed(AppLang.EN, dark = true) {
-            SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com", appearance = Appearance.DARK)
+            SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com")
         }
     }
 
@@ -727,31 +719,14 @@ class ScreenshotsTest {
     private val listNow = Instant.parse("2026-10-21T08:00:00Z").toEpochMilli()
 
     /**
-     * The account's list from the viewer's side: waiting for them, judges
-     * thinking, your turn, ready either way, a case you answered, removed by
-     * the other side, and a verdict kept only on this phone.
+     * The menu's lists from the viewer's side: waiting for them, judges thinking, ready either way,
+     * a case you answered, removed by the other side, and a verdict kept only on this phone.
      */
     @Test
-    fun history_cases_en() = capture("history_cases_en") {
-        val page = historyPage()
-        val entries = mergeHistory(page.items, listOf(savedSample("win_b_named", 1_760_700_000_000L)), user = "u1")
-        Themed(AppLang.EN) { HistoryScreen(entries, {}, { _, _ -> }, paging = HistoryPaging(next = page.next, loadedAt = 1L), now = listNow) }
-    }
+    fun menu_open_cases_en() = capture("menu_open_cases_en") { OpenMenu(dark = false, cases = true) }
 
-    /** Select mode with two rows picked; rows that can't be removed stay dimmed. */
     @Test
-    fun history_select_en() {
-        val page = historyPage()
-        val entries = mergeHistory(page.items, listOf(savedSample("win_b_named", 1_760_700_000_000L)), user = "u1")
-        compose.setContent {
-            Themed(AppLang.EN) { HistoryScreen(entries, {}, { _, _ -> }, now = listNow) }
-        }
-        compose.onNodeWithTag(HistoryTags.SELECT).performClick()
-        compose.onNodeWithTag(HistoryTags.row("c:case0000010")).performClick()
-        compose.onNodeWithTag(HistoryTags.row("v:verdict0021")).performClick()
-        compose.mainClock.advanceTimeBy(5_000)
-        compose.onRoot().captureRoboImage(UiTestSupport.shot("history_select_en"))
-    }
+    fun menu_open_cases_en_dark() = capture("menu_open_cases_en_dark") { OpenMenu(dark = true, cases = true) }
 
     @Test
     fun case_judged_respondent_en() = capture("case_judged_respondent_en", tall = true) {
@@ -892,22 +867,29 @@ class ScreenshotsTest {
     fun menu_open_en_dark() = capture("menu_open_en_dark") { OpenMenu(dark = true) }
 
     @Composable
-    private fun OpenMenu(dark: Boolean, user: Viewer? = null) {
+    private fun OpenMenu(dark: Boolean, user: Viewer? = null, cases: Boolean = false) {
         val s = UiTestSupport.s(AppLang.EN)
+        val page = historyPage()
+        val entries = if (cases) {
+            mergeHistory(page.items, listOf(savedSample("win_b_named", 1_760_700_000_000L)), user = "u1")
+        } else {
+            phoneRows("win_a_self", "win_b_named", "lean_tie")
+        }
         Themed(AppLang.EN, dark = dark) {
             ModalNavigationDrawer(
                 drawerContent = {
                     MenuPanel(
-                        Tab.HISTORY, phoneRows("win_a_self", "win_b_named", "lean_tie"), false, FocusRequester(), {}, {}, {},
+                        Tab.NEW, entries, false, FocusRequester(), {}, {}, {},
                         account = AccountActions(user != null, user, {}, {}, {}),
+                        paging = HistoryPaging(next = page.next.takeIf { cases }, loadedAt = 1L),
+                        now = listNow,
                     )
                 },
                 drawerState = rememberDrawerState(DrawerValue.Open),
                 scrimColor = menuScrim,
             ) {
                 Column(Modifier.fillMaxSize()) {
-                    PageBar(s.navVerdicts, {}, {}, FocusRequester())
-                    HistoryScreen(phoneRows("win_a_self", "win_b_named", "lean_tie"), {}, { _, _ -> })
+                    PageBar(null, {}, {}, FocusRequester())
                 }
             }
         }

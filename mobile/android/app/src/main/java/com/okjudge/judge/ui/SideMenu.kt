@@ -6,8 +6,10 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +19,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.only
@@ -26,24 +29,34 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.focus.FocusRequester
@@ -59,30 +72,38 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.CustomAccessibilityAction
+import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.collapse
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.semantics.expand
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.hideFromAccessibility
+import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.platform.LocalLayoutDirection
 import com.okjudge.judge.core.model.Viewer
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
+import com.okjudge.judge.i18n.Strings
 import com.okjudge.judge.ui.components.BrandLogo
+import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.TintedIcon
+import com.okjudge.judge.ui.components.rememberIcon
 import com.okjudge.judge.ui.history.HistoryEntry
 import com.okjudge.judge.ui.history.HistoryLabels
+import com.okjudge.judge.ui.history.HistoryNotice
+import com.okjudge.judge.ui.history.HistoryPaging
 import com.okjudge.judge.ui.judging.rememberReducedMotion
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
@@ -98,6 +119,14 @@ object PageBarTags {
     const val SIGN_IN = "bar.menu.signIn"
     const val SIGN_OUT = "bar.menu.signOut"
     const val VERDICTS = "bar.menu.verdicts"
+    const val LINKS = "bar.menu.links"
+    const val LIST = "bar.menu.list"
+    const val EMPTY = "bar.menu.empty"
+    const val ERROR = "bar.menu.error"
+    const val NOTICE = "bar.menu.notice"
+    const val MORE = "bar.menu.more"
+    const val PHONE_NOTE = "bar.menu.phoneNote"
+    const val CONFIRM_DELETE = "bar.menu.confirmDelete"
     fun recent(key: String) = "bar.menu.recent.$key"
 }
 
@@ -205,25 +234,46 @@ private fun BarButton(label: String, icon: ImageVector, onClick: () -> Unit, mod
 }
 
 /**
- * The drawer's sheet: New, a Verdicts heading over the newest [recent] as separate cards, and at the
- * bottom the profile above Settings.
+ * The drawer's sheet: New, the Verdicts and the Links ([entries] split by kind) as separate cards in
+ * one list that scrolls, and at the bottom the profile above Settings. A card is removed by a swipe
+ * or a long press, after asking.
  */
 @Composable
 internal fun MenuPanel(
     selected: Tab,
-    recent: List<HistoryEntry>,
+    entries: List<HistoryEntry>,
     hidden: Boolean,
     firstRow: FocusRequester,
     onSelect: (Tab) -> Unit,
     onOpen: (HistoryEntry) -> Unit,
     onClose: () -> Unit,
     account: AccountActions = AccountActions(false, null, {}, {}, {}),
+    paging: HistoryPaging = HistoryPaging(),
+    notice: HistoryNotice? = null,
+    onRemove: (HistoryEntry) -> Unit = {},
+    onLoadMore: () -> Unit = {},
+    onRetry: () -> Unit = {},
+    /** For invites whose time ran out since the list was loaded. */
+    now: Long = System.currentTimeMillis(),
 ) {
     val s = LocalStrings.current
     val width = minOf(300.dp, (LocalConfiguration.current.screenWidthDp * 0.85f).dp)
     var profileOpen by remember { mutableStateOf(false) }
     LaunchedEffect(hidden) { if (hidden) profileOpen = false }
-    val now = remember(recent) { System.currentTimeMillis() }
+    val verdicts = remember(entries) { entries.filter { !it.isCase } }
+    val links = remember(entries) { entries.filter { it.isCase } }
+    var confirmKey by rememberSaveable { mutableStateOf<String?>(null) }
+    val listState = rememberLazyListState()
+    val nearEnd by remember {
+        derivedStateOf {
+            val info = listState.layoutInfo
+            val last = info.visibleItemsInfo.lastOrNull()?.index ?: return@derivedStateOf false
+            last >= info.totalItemsCount - 3
+        }
+    }
+    LaunchedEffect(nearEnd, paging.next) {
+        if (nearEnd && paging.next != null) onLoadMore()
+    }
     ModalDrawerSheet(
         modifier = Modifier
             .width(width)
@@ -247,10 +297,68 @@ internal fun MenuPanel(
                 BrandLogo(32.dp)
                 Text(s.appName, style = JudgeType.sectionTitle)
             }
-            Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                MenuRow(s.appTabNew, selected == Tab.NEW, { onSelect(Tab.NEW) }, Modifier.focusRequester(firstRow))
-                VerdictsHeading(s.navVerdicts, selected == Tab.HISTORY) { onSelect(Tab.HISTORY) }
-                recent.forEach { RecentCard(it, now) { onOpen(it) } }
+            LazyColumn(
+                Modifier.weight(1f).testTag(PageBarTags.LIST),
+                state = listState,
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                item(key = "new") {
+                    MenuRow(s.appTabNew, selected == Tab.NEW, { onSelect(Tab.NEW) }, Modifier.focusRequester(firstRow))
+                }
+                if (notice != null) {
+                    item(key = "notice") {
+                        Text(
+                            noticeText(notice, s),
+                            style = JudgeType.small.copy(color = Palette.danger),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 12.dp)
+                                .testTag(PageBarTags.NOTICE)
+                                .semantics { liveRegion = LiveRegionMode.Polite },
+                        )
+                    }
+                }
+                cards(s.navVerdicts, PageBarTags.VERDICTS, verdicts, now, onOpen) { confirmKey = it }
+                cards(s.navLinks, PageBarTags.LINKS, links, now, onOpen) { confirmKey = it }
+                if (entries.isEmpty()) {
+                    when {
+                        paging.loading -> item(key = "loading") {
+                            Box(Modifier.fillMaxWidth().padding(top = 16.dp), contentAlignment = Alignment.Center) {
+                                CircularProgressIndicator(Modifier.size(22.dp), color = Palette.muted, strokeWidth = 2.dp)
+                            }
+                        }
+                        paging.failed -> item(key = "error") { LoadFailed(onRetry) }
+                        else -> item(key = "empty") {
+                            Text(
+                                s.appHistoryEmpty,
+                                style = JudgeType.footnote,
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp).testTag(PageBarTags.EMPTY),
+                            )
+                        }
+                    }
+                } else if (paging.failed) {
+                    item(key = "error") { LoadFailed(onRetry) }
+                }
+                if (paging.next != null) {
+                    item(key = "more") {
+                        Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                            if (paging.loadingMore) {
+                                CircularProgressIndicator(Modifier.size(22.dp), color = Palette.muted, strokeWidth = 2.dp)
+                            } else {
+                                GhostButton(s.shellLoadMore, null, onLoadMore, Modifier.testTag(PageBarTags.MORE))
+                            }
+                        }
+                    }
+                }
+                if (entries.any { it is HistoryEntry.Phone }) {
+                    item(key = "phoneNote") {
+                        Text(
+                            s.appHistoryPhoneOnlyNote,
+                            style = JudgeType.footnote,
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp).testTag(PageBarTags.PHONE_NOTE),
+                        )
+                    }
+                }
             }
             Column(Modifier.padding(top = 12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 if (profileOpen) {
@@ -269,6 +377,61 @@ internal fun MenuPanel(
                 )
             }
         }
+    }
+    confirmKey?.let { key ->
+        val picked = entries.filter { it.key == key }
+        AlertDialog(
+            onDismissRequest = { confirmKey = null },
+            text = { Text(HistoryLabels.removeConfirm(picked, s), style = JudgeType.body) },
+            confirmButton = {
+                TextButton(
+                    onClick = { confirmKey = null; picked.forEach(onRemove) },
+                    modifier = Modifier.testTag(PageBarTags.CONFIRM_DELETE),
+                ) { Text(s.appHistoryDelete, color = Palette.danger) }
+            },
+            dismissButton = { TextButton(onClick = { confirmKey = null }) { Text(s.appCancel, color = Palette.ink) } },
+            containerColor = Palette.paper,
+        )
+    }
+}
+
+/** A heading and the cards under it; nothing at all when there are none. */
+private fun LazyListScope.cards(
+    heading: String,
+    tag: String,
+    list: List<HistoryEntry>,
+    now: Long,
+    onOpen: (HistoryEntry) -> Unit,
+    onAskRemove: (String) -> Unit,
+) {
+    if (list.isEmpty()) return
+    item(key = tag) { SectionHeading(heading, tag) }
+    items(list, key = { it.key }) { e -> MenuCard(e, now, { onOpen(e) }, { onAskRemove(e.key) }) }
+}
+
+private fun noticeText(notice: HistoryNotice, s: Strings) = when (notice) {
+    HistoryNotice.Offline -> s.appHistoryOfflineRemove
+    is HistoryNotice.RemoveFailed -> s.appHistoryRemoveFailed(notice.count)
+    HistoryNotice.OpenFailed -> s.errorFallback
+    HistoryNotice.LoadMoreFailed -> s.shellLoadFailed
+}
+
+internal fun opens(e: HistoryEntry) = when (e) {
+    is HistoryEntry.Account -> HistoryLabels.openable(e.item)
+    is HistoryEntry.Phone -> true
+}
+
+/** The list could not be loaded: said above whatever the phone has. */
+@Composable
+private fun LoadFailed(onRetry: () -> Unit) {
+    val s = LocalStrings.current
+    Column(
+        Modifier.fillMaxWidth().padding(vertical = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        Text(s.shellLoadFailed, style = JudgeType.small.copy(color = Palette.danger), modifier = Modifier.testTag(PageBarTags.ERROR))
+        GhostButton(s.appRetry, null, onRetry)
     }
 }
 
@@ -293,43 +456,31 @@ private fun MenuRow(label: String, on: Boolean, onClick: () -> Unit, modifier: M
     }
 }
 
-/** A section heading over the recent verdicts that still opens the list. */
 @Composable
-private fun VerdictsHeading(label: String, on: Boolean, onClick: () -> Unit) {
-    val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+private fun SectionHeading(label: String, tag: String) {
     val line = Palette.line
     Row(
         Modifier
             .padding(top = 8.dp)
             .fillMaxWidth()
             .heightIn(min = 48.dp)
-            .semantics {
-                selected = on
-                heading()
-            }
-            .focusProperties { canFocus = true }
-            .clickable(role = Role.Button, onClick = onClick)
+            .semantics { heading() }
             .drawBehind { drawLine(line, Offset(0f, size.height), Offset(size.width, size.height), 1.dp.toPx()) }
             .padding(horizontal = 12.dp)
-            .testTag(PageBarTags.VERDICTS),
+            .testTag(tag),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(
-            label,
-            style = JudgeType.small.copy(fontWeight = FontWeight.Bold, color = if (on) Palette.ink else Palette.muted),
-            modifier = Modifier.weight(1f),
-        )
-        TintedIcon(JudgeIcons.chevron(Palette.muted), 12, Modifier.scale(if (rtl) -1f else 1f, 1f))
+        Text(label, style = JudgeType.small.copy(fontWeight = FontWeight.Bold, color = Palette.muted))
     }
 }
 
 /**
- * One verdict as its own card: green when the ruling went the viewer's way, red when it went the
+ * One verdict or link as its own card: green when the ruling went the viewer's way, red when it went the
  * other's, plain otherwise. The result words stay under the title, so colour is never the only
  * signal, and a screen reader reads them with the title.
  */
 @Composable
-private fun RecentCard(entry: HistoryEntry, now: Long, onClick: () -> Unit) {
+private fun RecentCard(entry: HistoryEntry, now: Long, interaction: Modifier) {
     val s = LocalStrings.current
     val lang = LocalLang.current
     val title = remember(entry, lang) { HistoryLabels.title(entry, s, lang) }
@@ -339,16 +490,18 @@ private fun RecentCard(entry: HistoryEntry, now: Long, onClick: () -> Unit) {
         HistoryLabels.Tone.THEIRS -> Triple(Palette.terraTint, Palette.terra, Palette.terraInk)
         else -> Triple(Palette.paper, Palette.line2, Palette.muted)
     }
+    val muted = entry is HistoryEntry.Account && HistoryLabels.muted(entry.item, now)
     val shape = RoundedCornerShape(12.dp)
     Column(
         Modifier
             .fillMaxWidth()
             .heightIn(min = 52.dp)
+            .alpha(if (muted) 0.6f else 1f)
             .clip(shape)
             .background(fill)
             .border(1.dp, edge, shape)
             .semantics(mergeDescendants = true) {}
-            .clickable(role = Role.Button, onClick = onClick)
+            .then(interaction)
             .padding(horizontal = 12.dp, vertical = 8.dp)
             .testTag(PageBarTags.recent(entry.key)),
         verticalArrangement = Arrangement.spacedBy(2.dp, Alignment.CenterVertically),
@@ -361,6 +514,54 @@ private fun RecentCard(entry: HistoryEntry, now: Long, onClick: () -> Unit) {
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
+        }
+    }
+}
+
+/**
+ * A card that opens its page, and where it can be removed also swipes (from the start edge, since a
+ * swipe toward the end is what closes the drawer) and asks on a long press.
+ */
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun MenuCard(entry: HistoryEntry, now: Long, onOpen: () -> Unit, onAskRemove: () -> Unit) {
+    val s = LocalStrings.current
+    val open = Modifier.combinedClickable(
+        enabled = opens(entry),
+        role = Role.Button,
+        onClick = onOpen,
+        onLongClick = if (entry.removable) onAskRemove else null,
+    )
+    if (!entry.removable) {
+        RecentCard(entry, now, open)
+        return
+    }
+    val state = rememberSwipeToDismissBoxState()
+    // A swipe asks first: removing from the account can't be undone.
+    LaunchedEffect(state.currentValue) {
+        if (state.currentValue == SwipeToDismissBoxValue.StartToEnd) {
+            onAskRemove()
+            state.reset()
+        }
+    }
+    SwipeToDismissBox(
+        state = state,
+        enableDismissFromEndToStart = false,
+        backgroundContent = {
+            Row(
+                Modifier.fillMaxSize().clip(RoundedCornerShape(12.dp)).background(Palette.terraTint).padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                TintedIcon(rememberIcon(Palette.danger) { JudgeIcons.trash(it) }, 18)
+                Spacer(Modifier.size(8.dp))
+                Text(s.appHistoryDelete, style = JudgeType.small.copy(color = Palette.danger))
+            }
+        },
+    ) {
+        // Opaque, so the delete background does not show through a dimmed card.
+        Box(Modifier.background(Palette.paper, RoundedCornerShape(12.dp))) {
+            RecentCard(entry, now, open.semantics { customActions = listOf(CustomAccessibilityAction(s.appHistoryDelete) { onAskRemove(); true }) })
         }
     }
 }

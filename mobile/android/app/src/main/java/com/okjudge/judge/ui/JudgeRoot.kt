@@ -37,10 +37,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.lifecycle.createSavedStateHandle
@@ -68,8 +65,6 @@ import com.okjudge.judge.i18n.Strings
 import com.okjudge.judge.i18n.deviceLanguageTags
 import com.okjudge.judge.ui.components.LocalGamify
 import com.okjudge.judge.ui.history.HistoryEntry
-import com.okjudge.judge.ui.history.HistoryScreen
-import com.okjudge.judge.ui.history.opens
 import com.okjudge.judge.ui.history.HistoryViewModel
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeViewModel
@@ -117,7 +112,6 @@ import kotlinx.serialization.Serializable
 @Serializable data object HomeKey : NavKey
 @Serializable data object JudgingKey : NavKey
 @Serializable data class VerdictKey(val id: String) : NavKey
-@Serializable data object HistoryKey : NavKey
 @Serializable data object SettingsKey : NavKey
 @Serializable data object ClarifyKey : NavKey
 @Serializable data object PricingKey : NavKey
@@ -128,9 +122,7 @@ import kotlinx.serialization.Serializable
 /** Sign-in; [thenVerdict] or [thenLink] when it was opened by "Get the verdict" or "Send them a link", which go on after signing in. */
 @Serializable data class SignInKey(val thenVerdict: Boolean, val thenLink: Boolean = false) : NavKey
 
-internal enum class Tab { NEW, HISTORY, SETTINGS }
-
-private const val RECENT_MAX = 5
+internal enum class Tab { NEW, SETTINGS }
 
 /** App shell: language, theme, the back stack, the side menu and the sign-in gate. [onDark] hears the theme in use. */
 @Composable
@@ -235,7 +227,6 @@ fun JudgeRoot(
                     if (account.needsPlatformAge(onSignInScreen)) account.checkPlatformAge(context)
                 }
                 val tab = when {
-                    backStack.any { it is HistoryKey } -> Tab.HISTORY
                     backStack.any { it is SettingsKey } -> Tab.SETTINGS
                     else -> Tab.NEW
                 }
@@ -246,7 +237,11 @@ fun JudgeRoot(
                     )
                 }
                 val history by historyVm.entries.collectAsStateWithLifecycle()
-                val recent = remember(history) { history.orEmpty().filter(::opens).take(RECENT_MAX) }
+                val paging by historyVm.paging.collectAsStateWithLifecycle()
+                val historyNotice by historyVm.notice.collectAsStateWithLifecycle()
+                val historyProviders by account.providers.collectAsStateWithLifecycle()
+                val historyOn = (historyProviders as? Account.Providers.Ready)?.config?.features?.history == true
+                val thinking = history.orEmpty().any { (it as? HistoryEntry.Account)?.item?.historyState?.thinking == true }
                 val openEntry: (HistoryEntry) -> Unit = { e ->
                     when (e) {
                         is HistoryEntry.Phone -> backStack.add(VerdictKey(e.verdict.id))
@@ -262,7 +257,6 @@ fun JudgeRoot(
                     }
                 }
 
-                var selecting by remember { mutableStateOf(false) }
                 val drawer = rememberDrawerState(DrawerValue.Closed)
                 val reducedMotion = rememberReducedMotion()
                 val menuOpen = drawer.targetValue == DrawerValue.Open
@@ -270,20 +264,29 @@ fun JudgeRoot(
                     val to = if (open) DrawerValue.Open else DrawerValue.Closed
                     scope.launch { if (reducedMotion) drawer.snapTo(to) else if (open) drawer.open() else drawer.close() }
                 }
-                val barShown = showsPageBar(top) && !selecting
+                val barShown = showsPageBar(top)
                 val barShownNow by rememberUpdatedState(barShown)
                 val menuButton = remember { FocusRequester() }
                 val firstRow = remember { FocusRequester() }
                 var menuWasOpen by remember { mutableStateOf(false) }
                 LaunchedEffect(menuOpen) {
                     if (menuOpen) {
-                        // The recent rows come from the same list as Verdicts, which may not have been opened yet.
+                        historyVm.clearNotice()
                         historyVm.refresh()
                         firstRow.requestFocus()
                         menuWasOpen = true
                     } else if (menuWasOpen) {
                         menuWasOpen = false
                         if (barShownNow) menuButton.requestFocus()
+                    }
+                }
+
+                // While the judges work on a row, the list is read again now and then.
+                LaunchedEffect(menuOpen, thinking, historyOn) {
+                    if (!menuOpen || !thinking || !historyOn) return@LaunchedEffect
+                    while (true) {
+                        delay(HistoryViewModel.POLL_MS)
+                        historyVm.refresh(force = true)
                     }
                 }
 
@@ -295,25 +298,29 @@ fun JudgeRoot(
                     drawerContent = {
                         MenuPanel(
                             selected = tab,
-                            recent = recent,
+                            entries = history.orEmpty(),
                             hidden = drawer.currentValue == DrawerValue.Closed && !menuOpen,
                             firstRow = firstRow,
                             onSelect = { selected ->
                                 backStack.resetTo(
                                     when (selected) {
                                         Tab.NEW -> listOf(HomeKey)
-                                        Tab.HISTORY -> listOf(HomeKey, HistoryKey)
                                         Tab.SETTINGS -> listOf(HomeKey, SettingsKey)
                                     },
                                 )
                                 setMenu(false)
                             },
                             onOpen = { e ->
-                                backStack.resetTo(listOf(HomeKey, HistoryKey))
+                                backStack.resetTo(listOf(HomeKey))
                                 openEntry(e)
                                 setMenu(false)
                             },
                             onClose = { setMenu(false) },
+                            paging = paging,
+                            notice = historyNotice,
+                            onRemove = { e -> historyVm.remove(listOf(e)) {} },
+                            onLoadMore = historyVm::loadMore,
+                            onRetry = { historyVm.refresh(force = true) },
                             account = AccountActions(
                                 signedIn = accountNow is Account.State.SignedIn,
                                 user = (accountNow as? Account.State.SignedIn)?.me?.user,
@@ -337,7 +344,6 @@ fun JudgeRoot(
                         if (barShown) {
                             PageBar(
                                 title = when (top) {
-                                    is HistoryKey -> strings.navVerdicts
                                     is SettingsKey -> strings.appTabSettings
                                     else -> null
                                 },
@@ -549,48 +555,12 @@ fun JudgeRoot(
                                         shareBaseUrl = container.config.shareBaseUrl,
                                         onBack = { backStack.removeAll { it == key } },
                                         // A verdict just judged sits right above the form; one from the list, above the list.
-                                        backLabel = if (backStack.getOrNull(backStack.indexOf(key) - 1) is HomeKey) strings.appTabNew else strings.navVerdicts,
+                                        backLabel = strings.appTabNew,
                                         appeal = appeal,
                                         evidenceOn = (providers as? Account.Providers.Ready)?.config?.features?.evidence == true,
                                         onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
                                         onPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
                                         onShared = { container.analytics.track("share_tapped") },
-                                    )
-                                }
-                                entry<HistoryKey> {
-                                    val providers by account.providers.collectAsStateWithLifecycle()
-                                    val historyOn = (providers as? Account.Providers.Ready)?.config?.features?.history == true
-                                    ScreenView(container.analytics, "verdicts")
-                                    val vm = historyVm
-                                    val entries by vm.entries.collectAsStateWithLifecycle()
-                                    val paging by vm.paging.collectAsStateWithLifecycle()
-                                    val notice by vm.notice.collectAsStateWithLifecycle()
-                                    val thinking = entries.orEmpty().any { (it as? HistoryEntry.Account)?.item?.historyState?.thinking == true }
-                                    val lifecycle = LocalLifecycleOwner.current.lifecycle
-                                    // The list is read again on every visit, as when it had a view model of its own.
-                                    LaunchedEffect(historyOn) {
-                                        vm.clearNotice()
-                                        vm.refresh(force = true)
-                                    }
-                                    // While the judges work on a row, the list is read again now and then.
-                                    LaunchedEffect(thinking, historyOn) {
-                                        if (!thinking || !historyOn) return@LaunchedEffect
-                                        lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                                            while (true) {
-                                                delay(HistoryViewModel.POLL_MS)
-                                                vm.refresh(force = true)
-                                            }
-                                        }
-                                    }
-                                    HistoryScreen(
-                                        entries = entries,
-                                        onOpen = openEntry,
-                                        onRemove = vm::remove,
-                                        paging = paging,
-                                        notice = notice,
-                                        onLoadMore = vm::loadMore,
-                                        onRetry = { vm.refresh(force = true) },
-                                        onSelecting = { selecting = it },
                                     )
                                 }
                                 entry<CaseKey> { key ->
@@ -684,18 +654,12 @@ fun JudgeRoot(
                                             container.analytics.track("settings_changed", mapOf("key" to "language"))
                                             scope.launch { container.settings.setLangPref(pref) }
                                         },
-                                        appearance = appearance,
                                         onAppearance = { a ->
                                             container.analytics.track("settings_changed", mapOf("key" to "appearance"))
                                             scope.launch { container.settings.setAppearance(a) }
                                         },
                                         usageStats = usageStats,
                                         onUsageStats = { on -> scope.launch { container.settings.setUsageStats(on) } },
-                                        gamify = gamify != false,
-                                        onGamify = { on ->
-                                            container.analytics.track("settings_changed", mapOf("key" to "gamify"))
-                                            scope.launch { container.settings.setGamify(on) }
-                                        },
                                         onOpenLink = { openLink(context, it) },
                                         siteBaseUrl = container.config.shareBaseUrl,
                                         account = accountState,
@@ -929,8 +893,8 @@ private fun ErrorShown(analytics: Analytics, error: UiError?) {
     }
 }
 
-/** The menu bar is for the three main pages; the rest have their own back button or none. */
-internal fun showsPageBar(top: NavKey?): Boolean = top is HomeKey || top is HistoryKey || top is SettingsKey
+/** The menu bar is for the two main pages; the rest have their own back button or none. */
+internal fun showsPageBar(top: NavKey?): Boolean = top is HomeKey || top is SettingsKey
 
 private fun noticeText(s: Strings, notice: Account.Notice): String = when (notice) {
     Account.Notice.SIGNED_OUT -> s.appAccountSignedOut
