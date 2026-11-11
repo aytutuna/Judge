@@ -42,7 +42,7 @@ export function OtherLines({ result, names }: { result: VerdictResult; names: Si
     <ul className={styles.others}>
       {lines.map((o) => (
         <li key={o.party} className={styles.other} data-party={o.party}>
-          <span className={styles.otherName}>{names[o.party].name}</span> {o.line}
+          {o.line}
         </li>
       ))}
     </ul>

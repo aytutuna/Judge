@@ -159,7 +159,7 @@ OUTPUT RULES:
 - why: 2-3 plain sentences, at most 60 words, saying what actually decided it: the fact, agreement or reason that tips it, and why the other sides' cases don't outweigh it. For a values call, say which priority tips it; for "too_close", say what it turns on instead of writing as if one side won.
 - crux: one sentence, what this argument is REALLY about, said the way you'd say it out loud rather than as a "Whether X or Y" formula.
 - sides: one entry for each of ${ids}, in that order, with its claims and its bedrock premise.
-- others: for EACH side that did not win, one entry with that side's letter and ONE short sentence (at most 20 words) saying where it fell short. An empty array when the verdict is "too_close".
+- others: for EACH side that did not win, one entry with that side's letter and ONE short sentence (at most 20 words) saying where it fell short. The sentence must begin with that side's label ("Party C", written the way the language note names the sides), because it is shown without any other heading. An empty array when the verdict is "too_close".
 - All text concise and concrete, as it is displayed on small cards.
 - facts_relied_on: empty array if the verdict rests on no contested facts.${note}${languageBlock(lang)}
 

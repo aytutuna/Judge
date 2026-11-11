@@ -199,7 +199,8 @@ struct OtherLines: View {
             VStack(spacing: 8) {
                 ForEach(Array(lines.enumerated()), id: \.offset) { _, other in
                     Branch(tint: sides.of(other.party).tint, rule: sides.of(other.party).strong) {
-                        LeadText(lead: parties.name(other.party), leadColor: sides.of(other.party).ink, rest: " " + other.line)
+                        // The line names its side already; the rule and tint carry the colour.
+                        Text(other.line)
                     }
                 }
             }

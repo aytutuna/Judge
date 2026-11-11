@@ -130,6 +130,10 @@ describe("multiSystemPrompt", () => {
     expect(p).toContain('"too_close"');
   });
 
+  it("asks every others line to begin with its side's label", () => {
+    expect(multiSystemPrompt(P3, 0, "en")).toContain("must begin with that side's label (\"Party C\"");
+  });
+
   it("has no B-first note and no two-party wording", () => {
     const p = multiSystemPrompt(P3, 1, "en");
     expect(p).not.toContain("Party B's case fully before");

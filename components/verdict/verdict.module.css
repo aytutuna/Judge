@@ -818,7 +818,3 @@
   --side-ink: var(--party-d-ink);
   --side-tint: var(--party-d-tint);
 }
-.otherName {
-  color: var(--side-ink);
-  font-weight: 700;
-}
