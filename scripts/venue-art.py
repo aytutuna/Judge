@@ -234,10 +234,10 @@ def farm():
     s.put(f("Tractor_Right_Side"), 292, 100)
     s.put(f("Raw_Bale_Big"), 28, 112)
     s.put(f("Raw_Bale_Big"), 44, 112)
-    s.put(f("Milk_Can_1"), 72, 100)
+    s.put(f("Milk_Can_1"), 90, 112)
     s.put(f("Pimpkin_Big"), 226, 100)
     s.put(f("Crate_Brown_Empty"), 250, 108)
-    basin(s, f("Bucket_1_Single"), 122, 88)
+    basin(s, f("Bucket_1_Single"), 70, 88)
     return s.finish()
 
 

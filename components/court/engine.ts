@@ -53,7 +53,7 @@ const TARGETS: Record<Venue, { a: Point; b: Point }> = {
   court: { a: { x: 81, y: 64 }, b: { x: 238, y: 64 } },
   beach: { a: { x: 100, y: 82 }, b: { x: 212, y: 82 } },
   camp: { a: { x: 100, y: 84 }, b: { x: 222, y: 84 } },
-  farm: { a: { x: 122, y: 88 }, b: { x: 250, y: 89 } },
+  farm: { a: { x: 70, y: 88 }, b: { x: 250, y: 89 } },
   ice: { a: { x: 75, y: 64 }, b: { x: 245, y: 64 } },
   library: { a: { x: 80, y: 84 }, b: { x: 240, y: 84 } },
   museum: { a: { x: 78, y: 86 }, b: { x: 242, y: 86 } },
