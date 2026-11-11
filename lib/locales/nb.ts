@@ -119,6 +119,8 @@ const nb: Locale = {
     verdictAria: "Dom: {label}",
     "party.a": "Part A",
     "party.b": "Part B",
+    "party.c": "Part C",
+    "party.d": "Part D",
     "party.youLabel": "{label} (deg)",
     you: "Du",
     "shared.subtitle": "Noen delte denne dommen",
@@ -344,8 +346,7 @@ const nb: Locale = {
     "signin.createNote": "Vi sender deg en kode på e-post for å bekrefte adressen. Du trenger bare å gjøre det én gang.",
     "signin.passwordChoose": "Du er logget inn. Velg et passord til neste gang.",
     "signin.passwordSave": "Lagre passord",
-    "signin.passwordSaveFailed": "Du er logget inn, men vi kunne ikke lagre passordet. Prøv igjen, eller angi det senere i Innstillinger.",
-    "signin.passwordSkip": "Hopp over for nå",
+    "signin.passwordSaveFailed": "Vi klarte ikke å lagre passordet. Prøv igjen.",
     "signin.passwordSubmit": "Logg inn",
     "signin.rateLimited": "For mange forsøk. Vent et minutt og prøv igjen.",
     "signin.serviceDown": "Innlogging er ikke tilgjengelig akkurat nå. Prøv igjen senere.",
@@ -373,10 +374,6 @@ const nb: Locale = {
     "account.deleteConfirm":
       "Vil du slette kontoen din? Kredittene, abonnementet og innloggingsdetaljene dine slettes. Dommene dine og sidene dine i saker fjernes: det du skrev og navnene slettes, og delingslenkene slutter å virke.",
     "account.deleteYes": "Ja, slett den",
-    "account.passwordSet": "Angi et passord",
-    "account.passwordChange": "Endre passord",
-    "account.passwordCurrent": "Nåværende passord",
-    "account.passwordSaved": "Passordet er lagret.",
     "account.deleteCancel": "Behold kontoen",
     "account.deleted": "Kontoen din er slettet. Sender deg til forsiden…",
     "account.deleteFailed": "Vi fikk ikke slettet kontoen akkurat nå. Vil du prøve igjen?",
@@ -465,6 +462,10 @@ const nb: Locale = {
     "case.judgeNow.yes": "Ja, døm nå",
     "case.judgeExpired.confirm": "Vil du ha en dom bare på din side? Dette bruker 1 dom.",
     "case.judgeExpired.yes": "Ja, bruk 1 dom",
+    "case.side.waiting": "Venter",
+    "case.side.answered": "Har svart",
+    "case.judgeAnswered": "Døm med sidene som har svart",
+    "case.judgeAnswered.confirm": "Vil du ha en dom fra sidene som har svart? De andre invitasjonene lukkes, og de kan ikke svare lenger.",
     "case.cancel": "Avbryt",
     "case.retry": "Prøv igjen",
     "case.failedBody": "Du har fått kreditten tilbake. Du kan prøve igjen nå.",
@@ -473,9 +474,13 @@ const nb: Locale = {
     "case.accounts": "Det hver side fortalte dommerne",
     "case.accountA": "Forklaringen fra Part A",
     "case.accountB": "Forklaringen fra Part B",
+    "case.accountC": "Forklaringen fra Part C",
+    "case.accountD": "Forklaringen fra Part D",
     "case.accountYou": "Forklaringen din ({label})",
     "case.contextA": "Part A la til kontekst",
     "case.contextB": "Part B la til kontekst",
+    "case.contextC": "Part C la til kontekst",
+    "case.contextD": "Part D la til kontekst",
     "case.contextYou": "Kontekst du la til ({label})",
     "case.evidenceItem": "Bilde {n}, slik dommerne leser det",
     "case.notYet": "Den andre har ikke svart ennå.",
@@ -559,6 +564,7 @@ const nb: Locale = {
     "home.yourPlaceholder": "Hva er problemet?",
     "home.addContext": "Legg til kontekst",
     "home.addTheirSide": "Legg til den andres side",
+    "home.addSide": "Legg til en side til",
     "home.removeTheirSide": "Fjern den andres side",
     "home.sendLink": "Send en lenke",
     "home.clear": "Tøm",
@@ -572,58 +578,9 @@ const nb: Locale = {
     "home.says": "{name} sier:",
     "home.mySide": "Min side:",
     "home.otherSide": "Den andres side:",
-    "pairs.dishwasher.aName": "Ingrid",
-    "pairs.dishwasher.a":
-      "Du satte skålene i overkurven igjen. Der blir de aldri rene, det er det underkurven er til.",
-    "pairs.dishwasher.bName": "Henrik",
-    "pairs.dishwasher.b":
-      "De får fint plass der oppe, og da er underkurven ledig til kjelene. Jeg har fylt maskinen sånn i årevis, og ingenting har kommet ut skittent.",
-    "pairs.bill.aName": "Nora",
-    "pairs.bill.a":
-      "Jeg drakk ingenting, så jeg burde ikke betale for en fjerdedel av vinen. Å dele maten likt har jeg ikke noe imot.",
-    "pairs.bill.bName": "Magnus",
-    "pairs.bill.b":
-      "Vi deler jo alltid på fire. Å regne ut hvem som hadde hva hver gang, er et ork, og det er uansett ikke stor forskjell.",
-    "pairs.thermostat.aName": "Sofie",
-    "pairs.thermostat.a":
-      "Det er 19 grader her inne, og jeg fryser selv i hettegenser. Å skru opp til 22 er ikke galskap.",
-    "pairs.thermostat.bName": "Jonas",
-    "pairs.thermostat.b":
-      "22 grader er altfor varmt å sove i. Du kan ta på deg et lag til, jeg kan ikke ta av meg noe mer.",
-    "pairs.roadTrip.aName": "Emma",
-    "pairs.roadTrip.a":
-      "Jeg kjørte alle de seks timene dit. Det er bare rettferdig at du kjører oss hjem.",
-    "pairs.roadTrip.bName": "Lars",
-    "pairs.roadTrip.b":
-      "Jeg sa før vi dro, at jeg hater å kjøre i mørket, og vi drar klokka sju. På neste tur tar jeg morgenetappene.",
-    "pairs.seat.aName": "Ida",
-    "pairs.seat.a":
-      "Setet mitt kan lenes bakover, så det gjør jeg. Det er et nattfly, og alle prøver å sove.",
-    "pairs.seat.bName": "Martin",
-    "pairs.seat.b":
-      "Jeg er 191 cm, og knærne mine presser allerede mot setet ditt. Du kunne i det minste spurt før du la det helt bakover.",
-    "pairs.spoiler.aName": "Thea",
-    "pairs.spoiler.a":
-      "Du fortalte meg hvem morderen var før jeg i det hele tatt hadde begynt på siste episode. Jeg hadde gledet meg til den hele uka.",
-    "pairs.spoiler.bName": "Sander",
-    "pairs.spoiler.b":
-      "Den kom ut for tre uker siden, og du sa at du var ferdig med den. Jeg kan ikke holde styr på hvor langt alle har kommet.",
-    "pairs.jacket.aName": "Jakob",
-    "pairs.jacket.a":
-      "Du gikk på konsert i dongerijakka mi uten å spørre. Da jeg fikk den tilbake, luktet den røyk.",
-    "pairs.jacket.bName": "Sara",
-    "pairs.jacket.b":
-      "Den hang ved døra, og du bruker den aldri. Jeg ville spurt, men du sov, og jeg var allerede sent ute.",
-    "pairs.lastSlice.aName": "Emil",
-    "pairs.lastSlice.a":
-      "Jeg tinget det siste pizzastykket før filmen begynte. Alle hørte det.",
-    "pairs.lastSlice.bName": "Hanna",
-    "pairs.lastSlice.b":
-      "Du kan ikke tinge noe og så la det ligge urørt i to timer. Det lå bare der og ble kaldt, så jeg spiste det.",
     "appeal.lead":
-      "Mangler noe, eller er noe feil? Legg det til én gang, så ser dommerne på alt på nytt. Koster 1 dom.",
-    "appeal.label": "Konteksten din",
-    "appeal.placeholder": "Hva gikk dommerne glipp av?",
+      "Koster 1 dom.",
+    "appeal.placeholder": "Hva gikk dommerne glipp av? Et faktum, en melding eller hva dere faktisk ble enige om.",
     "appeal.submit": "Døm på nytt med min kontekst",
     "appeal.sending": "Anonymiserer konteksten din…",
     "appeal.judging": "Dommerne ser på alt på nytt…",
@@ -643,8 +600,6 @@ const nb: Locale = {
     "appeal.previous": "Tidligere dom",
     "appeal.failed": "Den nye dømmingen gikk ikke gjennom. Du har fått kreditten tilbake og kan prøve igjen.",
     "appeal.refused": "Dommerne ville ikke dømme på nytt med den konteksten. Du har fått kreditten tilbake.",
-    "appeal.leadVerdict":
-      "Mangler noe, eller er noe feil? Legg det til, så ser dommerne på alt på nytt. Hver gang koster 1 dom, opptil to ganger per dom.",
     "appeal.history": "Domshistorikk",
     "faq.both.q": "Kan den andre fortelle sin side?",
     "faq.both.a":
@@ -686,6 +641,7 @@ const nb: Locale = {
     "unavailable.cta": "Gå til Judge",
     "error.removed": "Dette er fjernet. Lenken virker ikke lenger.",
     "error.names_unavailable": "Navn kan ikke lagres akkurat nå. Prøv igjen senere.",
+    "error.update_required": "Denne saken har mer enn to sider. Oppdater appen for å åpne den.",
     "verdict.remove": "Fjern denne dommen",
     "verdict.remove.confirm":
       "Vil du fjerne det du skrev, navnene og visningsnavnene? Delingslenken slutter å virke, og forhåndsvisningsbildet vises ikke lenger for noen (forhåndsvisninger som allerede er lagt ut i chatter, kan fortsatt vises til appene oppdaterer dem). Dette kan ikke angres.",

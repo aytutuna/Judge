@@ -115,7 +115,7 @@ struct JudgingView: View {
             Kicker(text: L10n.thinkingEyebrow(lang))
 
             if gamify {
-                CourtView(scene: .judging(beat, summary))
+                CourtView(scene: .judging(beat, summary, sides: sides.count))
                     .frame(maxWidth: courtWidth)
                     .frame(maxWidth: .infinity)
             }
@@ -230,13 +230,32 @@ private struct SideTiles: View {
 
     @Environment(\.sides) private var colors
 
+    /// "Your side" and "Their side", then "Party C" and "Party D".
+    private static func title(_ side: HomeModel.JudgedSide, lang: AppLang) -> String {
+        switch side.party {
+        case .a: return L10n.appHomeYourSide(lang)
+        case .c, .d: return side.party.label(lang)
+        case .b, .unknown: return L10n.appHomeTheirSide(lang)
+        }
+    }
+
     var body: some View {
+        // Two to a row: four tiles side by side would be too narrow on a phone.
+        let rows = stride(from: 0, to: sides.count, by: 2).map { Array(sides[$0..<min($0 + 2, sides.count)]) }
+        VStack(alignment: .leading, spacing: 8) {
+            ForEach(rows.indices, id: \.self) { index in
+                row(rows[index])
+            }
+        }
+    }
+
+    private func row(_ sides: [HomeModel.JudgedSide]) -> some View {
         HStack(alignment: .top, spacing: 8) {
-            ForEach(sides, id: \.mine) { side in
+            ForEach(sides, id: \.party) { side in
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(side.name.isEmpty ? (side.mine ? L10n.appHomeYourSide(lang) : L10n.appHomeTheirSide(lang)) : side.name)
+                    Text(side.name.isEmpty ? Self.title(side, lang: lang) : side.name)
                         .brandText(TypeStyle(face: .inter, weight: 700, size: 11, lineHeight: 1.2, tracking: 0.08, textStyle: .caption2, maxScale: 1.6, uppercase: true))
-                        .foregroundStyle(side.mine ? colors.mine.ink : colors.theirs.ink)
+                        .foregroundStyle(colors.of(side.party).ink)
                         .lineLimit(1)
                     Text(side.text)
                         .brandText(TypeStyle(face: .inter, weight: 400, size: 13, lineHeight: 1.4, textStyle: .footnote))
@@ -248,7 +267,7 @@ private struct SideTiles: View {
                 .frame(maxWidth: .infinity, alignment: .topLeading)
                 .background(
                     RoundedRectangle(cornerRadius: Radius.field, style: .continuous)
-                        .fill(side.mine ? colors.mine.tint : colors.theirs.tint)
+                        .fill(colors.of(side.party).tint)
                 )
                 .accessibilityElement(children: .combine)
             }

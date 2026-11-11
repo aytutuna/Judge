@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useSyncExternalStore } from "react";
+import { apiFetch } from "@/lib/api-fetch";
 import type { CaseView } from "@/lib/case-types";
 import {
   addAnswered,
@@ -23,7 +24,7 @@ import { historyKey, type HistoryResponse, type HistoryRow, type HistoryState } 
 import { localizeLabelsAuto, resolveParties, restoreNames, textLang } from "@/lib/names";
 import { firstNameOf, type MineResponse } from "@/lib/originals-types";
 import { loadClaim } from "@/lib/respondent-store";
-import type { FinalVerdict, NameMapping } from "@/lib/types";
+import type { FinalVerdict, NameMapping, PartyId } from "@/lib/types";
 import type { VerdictPollResponse } from "@/lib/verdict-poll";
 import { loadOwnerToken, ownerHeaders, ownerTokenIds } from "@/lib/owner-store";
 import type { ViewerState } from "@/lib/use-viewer";
@@ -35,13 +36,17 @@ export type HistoryItem = {
   at: string;
   role: "owner" | "respondent";
   /** The viewer's party. */
-  party: "a" | "b";
+  party: "a" | "b" | "c" | "d";
   title: string | null;
   /** Null: nothing known beyond the title (an entry of this browser's). */
   state: HistoryState | null;
   verdict: FinalVerdict | null;
-  /** First names from the viewer's own map: the other party, and the viewer
-   * when they wrote about themselves by name. */
+  /** The winning side of a verdict with three or four, null when too close;
+   * absent otherwise. `verdict` is only the older projection there. */
+  winner?: PartyId | null;
+  /** First names from the viewer's own map: the winner (or the other party in
+   * a two-sided verdict), and the viewer when they wrote about themselves by
+   * name. */
   other: string | null;
   self: string | null;
   yourMove: boolean;
@@ -91,8 +96,8 @@ function hrefOf(row: HistoryRow): string | null {
 export function fromRow(row: HistoryRow): HistoryItem {
   const text = row.headline ?? row.excerpt;
   const lang = textLang(text ?? "");
-  const own = row.party === "a" ? "A" : "B";
-  const parties = resolveParties(row.nameMap, lang, own);
+  const own = row.party.toUpperCase() as "A" | "B" | "C" | "D";
+  const parties = resolveParties(row.nameMap, lang, own, row.parties ? { sides: row.parties.length } : {});
   const named = (letter: string) => {
     const p = parties.get(letter);
     return p && !p.self ? (firstNameOf(p.name) ?? p.name) : null;
@@ -106,7 +111,8 @@ export function fromRow(row: HistoryRow): HistoryItem {
     title: text ? localizeLabelsAuto(restoreNames(text, parties, lang)) : null,
     state: row.state,
     verdict: row.verdict,
-    other: named(own === "A" ? "B" : "A"),
+    ...(row.parties && row.winner !== undefined ? { winner: row.winner } : {}),
+    other: row.winner ? named(row.winner.toUpperCase()) : named(own === "A" ? "B" : "A"),
     // In a case the viewer is known to be their party: "You're right" even
     // when they named themselves.
     self: row.kind === "verdict" ? named(own) : null,
@@ -201,7 +207,7 @@ function emit(next: ServerState | null): void {
 
 async function fetchPage(cursor: string | null): Promise<HistoryResponse> {
   const q = `limit=${PAGE}${cursor ? `&cursor=${encodeURIComponent(cursor)}` : ""}`;
-  const res = await fetch(`/api/v1/me/history?${q}`, { cache: "no-store" });
+  const res = await apiFetch(`/api/v1/me/history?${q}`, { cache: "no-store" });
   if (!res.ok) throw new Error(String(res.status));
   return (await res.json()) as HistoryResponse;
 }
@@ -312,7 +318,7 @@ function forget(id: string): void {
  * should be tried again on a later page load (throttled, offline). */
 async function lookUp(id: string): Promise<boolean> {
   const path = `/api/v1/verdicts/${encodeURIComponent(id)}`;
-  const poll = await fetch(path, { cache: "no-store" });
+  const poll = await apiFetch(path, { cache: "no-store" });
   if (poll.status === 404) {
     forget(id);
     return true;
@@ -328,7 +334,7 @@ async function lookUp(id: string): Promise<boolean> {
     return false;
   }
   // Ready or removed: the writer's view has the names and the date.
-  const res = await fetch(`${path}/mine`, { cache: "no-store", headers: ownerHeaders(loadOwnerToken(id)) });
+  const res = await apiFetch(`${path}/mine`, { cache: "no-store", headers: ownerHeaders(loadOwnerToken(id)) });
   if (res.status === 404) {
     forget(id);
     return true;
@@ -349,7 +355,7 @@ async function lookUp(id: string): Promise<boolean> {
 async function lookUpAnswered(row: HistoryRow): Promise<boolean> {
   const claim = loadClaim(row.id);
   if (!row.inviteToken) return true;
-  const res = await fetch(`/api/v1/respond/${row.inviteToken}`, {
+  const res = await apiFetch(`/api/v1/respond/${row.inviteToken}`, {
     cache: "no-store",
     headers: claim ? { "Respondent-Claim": claim } : {},
   });

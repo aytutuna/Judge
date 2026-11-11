@@ -326,6 +326,7 @@ class AccountTest {
         assertEquals(SignInError.RATE_LIMITED, answer(429, "rate_limited"))
         assertEquals(SignInError.UNAVAILABLE, answer(503, "unavailable"))
         assertEquals(SignInError.PASSWORD_SAVE_FAILED, answer(400, "invalid"))
+        assertEquals(SignInError.PASSWORD_NOT_TAKEN, answer(403, "invalid"))
     }
 
     @Test

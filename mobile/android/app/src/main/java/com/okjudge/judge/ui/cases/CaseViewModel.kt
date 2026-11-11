@@ -18,6 +18,7 @@ import com.okjudge.judge.core.model.CaseStatus
 import com.okjudge.judge.core.model.CaseView
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.NameMapping
+import com.okjudge.judge.core.model.Side
 import com.okjudge.judge.core.model.WireJson
 import com.okjudge.judge.core.model.WriteSideRequest
 import com.okjudge.judge.ui.home.MAX_EVIDENCE_PER_SIDE
@@ -46,6 +47,8 @@ data class CaseUiState(
     val busy: Boolean = false,
     val actionError: UiError? = null,
     val resetDone: Boolean = false,
+    /** Whose link was made anew ([resetDone] says it worked). */
+    val resetSide: Side = Side.B,
     val removedNow: Boolean = false,
     val overlay: CaseOverlay? = null,
     /** The verdict just replaced the judging animation. */
@@ -218,14 +221,23 @@ class CaseViewModel(
         viewModelScope.launch { action { api.judgeCase(caseId, onlyMine) }?.let { show(it, fromAction = true) } }
     }
 
-    /** "Make a new link": the old one stops working. */
-    fun resetInvite() {
+    /** "Judge with the sides that answered", on a case with three or four sides. */
+    fun judgeAnswered() {
         if (_state.value.busy) return
-        _state.update { it.copy(resetDone = false) }
+        viewModelScope.launch { action { api.judgeCase(caseId, onlyMine = false, answered = true) }?.let { show(it, fromAction = true) } }
+    }
+
+    /** "Make a new link" for one side ([side], B unless told otherwise): the old one stops working. */
+    fun resetInvite(side: Side = Side.B) {
+        if (_state.value.busy) return
+        _state.update { it.copy(resetDone = false, resetSide = side) }
         viewModelScope.launch {
-            val res = action { api.resetInvite(caseId) } ?: return@launch
+            val res = action { api.resetInvite(caseId, side) } ?: return@launch
             val view = _state.value.view ?: return@launch
-            _state.update { it.copy(view = view.copy(inviteUrl = res.inviteUrl), resetDone = true) }
+            val invites = view.invites?.map { if (it.side == side) it.copy(inviteUrl = res.inviteUrl) else it }
+            _state.update {
+                it.copy(view = view.copy(inviteUrl = if (side == Side.B) res.inviteUrl else view.inviteUrl, invites = invites), resetDone = true)
+            }
         }
     }
 

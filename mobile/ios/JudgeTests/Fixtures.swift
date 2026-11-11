@@ -35,6 +35,19 @@ enum Fixtures {
         try WireDecoding.verdictPayload(from: sampleData(name))
     }
 
+    /// A verdict with three or four sides (verdicts.json → manySidedResponses[name]).
+    static func manySample(_ name: String) throws -> VerdictPayload {
+        let responses = try XCTUnwrap(verdicts()["manySidedResponses"] as? [String: Any])
+        let sample = try XCTUnwrap(responses[name], "missing many-sided sample \(name)")
+        return try WireDecoding.verdictPayload(from: JSONSerialization.data(withJSONObject: sample))
+    }
+
+    /// A sample of either kind.
+    static func anySample(_ name: String) throws -> VerdictPayload {
+        let many = try XCTUnwrap(verdicts()["manySidedResponses"] as? [String: Any])
+        return many[name] == nil ? try sample(name) : try manySample(name)
+    }
+
     static func sampleNames() throws -> [String] {
         let responses = try XCTUnwrap(verdicts()["verdictResponses"] as? [String: Any])
         return responses.keys.sorted()

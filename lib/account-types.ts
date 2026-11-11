@@ -51,6 +51,10 @@ export type MeResponse = {
   /** The account has a password (POST /api/v1/me/password). Absent when
    * signed out and on older servers. */
   hasPassword?: boolean;
+  /** Passwords are on and this account has none, so a sign-in by emailed code
+   * must go on to POST /api/v1/me/password before it is finished. False for
+   * the store review account. Absent when signed out and on older servers. */
+  needsPassword?: boolean;
 };
 
 /** Which sign-in methods are usable on this deployment right now. */

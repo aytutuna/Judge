@@ -1,12 +1,12 @@
 import { ImageResponse } from "next/og";
 import { OG_SIDES, OG_SIZE, OgCard, ogCanDraw, ogFonts } from "@/components/OgCard";
 import { verdictLang } from "@/lib/content-lang";
-import { confidenceLabel, tugFinal, verdictLabel } from "@/lib/verdict-display";
+import { confidenceLabel, manyLabel, tugFinal, verdictLabel } from "@/lib/verdict-display";
 import { loadLocales, t } from "@/lib/i18n";
-import { resolveParties, restoreNames } from "@/lib/names";
+import { partyLabel, resolveParties, restoreNames } from "@/lib/names";
 import { getPublicVerdict } from "@/lib/originals/display";
 import { publicNameMap } from "@/lib/originals-types";
-import type { VerdictResult } from "@/lib/types";
+import type { PartyId, VerdictResult } from "@/lib/types";
 
 export const alt = "A shared verdict";
 export const size = OG_SIZE;
@@ -79,14 +79,26 @@ export default async function Image({ params }: { params: Promise<{ id: string }
   const display = found?.display ?? null;
   const nameA = display?.a ?? t(lang, "party.a");
   const nameB = display?.b ?? t(lang, "party.b");
+  // Three or four sides: no tug bar, and the title names the winner. A
+  // preview cannot know who is looking, so it stays neutral.
+  const sides = r.parties
+    ? Object.fromEntries(r.parties.map((p) => [p, { name: display?.[p] ?? partyLabel(lang, p), self: false }]))
+    : null;
   const parties = resolveParties(publicNameMap(display), lang, "A", { noSelf: true });
-  const label = verdictLabel(r, nameA, nameB, false, false, lang);
+  const label = sides
+    ? manyLabel(r, sides as Record<PartyId, { name: string; self: boolean }>, lang)
+    : verdictLabel(r, nameA, nameB, false, false, lang);
   const lean = r.lean;
   const leanLine = lean
     ? t(lang, "lean.title", { name: lean.party === "a" ? nameA : nameB })
     : undefined;
-  const accent =
-    r.verdict === "side_a" ? OG_SIDES.a.ink : r.verdict === "side_b" ? OG_SIDES.b.ink : undefined;
+  const accent = sides
+    ? undefined
+    : r.verdict === "side_a"
+      ? OG_SIDES.a.ink
+      : r.verdict === "side_b"
+        ? OG_SIDES.b.ink
+        : undefined;
   const cta = t(lang, "shared.cta").replace(/\s*[→←]$/, "");
   const confidence = confidenceLabel(lang, r);
   const eyebrow = leanLine ?? t(lang, `badge.${r.dispute_type}`);
@@ -96,7 +108,14 @@ export default async function Image({ params }: { params: Promise<{ id: string }
 
   return new ImageResponse(
     (
-      <OgCard eyebrow={eyebrow} title={label} subtitle={subtitle} footer={footer} tugA={tugFinal(r)} accent={accent} />
+      <OgCard
+        eyebrow={eyebrow}
+        title={label}
+        subtitle={subtitle}
+        footer={footer}
+        tugA={sides ? undefined : tugFinal(r)}
+        accent={accent}
+      />
     ),
     { ...size, fonts },
   );

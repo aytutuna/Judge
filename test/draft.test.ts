@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { DRAFT_KEY, clearDraft, parseDraft, registerDraftSource, saveDraftForSignIn, takeDraft } from "../lib/draft";
+import { DRAFT_KEY, clearDraft, draftTheirsOpen, parseDraft, registerDraftSource, saveDraftForSignIn, takeDraft } from "../lib/draft";
 
 /** A minimal localStorage for the node test environment. */
 function fakeStorage() {
@@ -117,6 +117,12 @@ describe("parseDraft", () => {
     expect(parseDraft(JSON.stringify({ argument: "", otherSide: ARG }))).toEqual({ argument: "", otherSide: ARG });
   });
 
+  it("keeps a draft where only a later side has text", () => {
+    const raw = JSON.stringify({ argument: "", otherSide: "", more: [{ text: "Cy says so.", name: "Cy" }] });
+    expect(parseDraft(raw)).toEqual({ argument: "", more: [{ text: "Cy says so.", name: "Cy" }] });
+    expect(parseDraft(JSON.stringify({ argument: "", more: [{ text: " ", name: "Cy" }] }))).toBeNull();
+  });
+
   it("keeps the names and the open their-side card", () => {
     const full = { argument: ARG, otherSide: "Fruit.", mineName: "Ayse", otherName: "Sam", theirsOpen: true };
     expect(parseDraft(JSON.stringify(full))).toEqual(full);
@@ -137,5 +143,14 @@ describe("parseDraft", () => {
   it("still loads a draft saved with a judging style", () => {
     const raw = JSON.stringify({ argument: ARG, framework: { preset: "loyalty", sliders: { head_heart: 80 } } });
     expect(parseDraft(raw)).toEqual({ argument: ARG });
+  });
+});
+
+describe("draftTheirsOpen", () => {
+  it("opens the second side for text, a left-open card, or added sides C and D", () => {
+    expect(draftTheirsOpen({ argument: "x" })).toBe(false);
+    expect(draftTheirsOpen({ argument: "x", otherSide: "y" })).toBe(true);
+    expect(draftTheirsOpen({ argument: "x", theirsOpen: true })).toBe(true);
+    expect(draftTheirsOpen({ argument: "x", more: [{ text: "z", name: "" }] })).toBe(true);
   });
 });

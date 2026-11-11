@@ -11,7 +11,7 @@ import SwiftData
 /// `home-example` (both sides filled by "Try an example"),
 /// `home-error`, `judging`, `judging-plain` (the same with Gamify off),
 /// `history`, `settings`, `signin`, `signin-code`,
-/// `account` (Settings, signed in), `verdict/<sample>` (a key of `verdictResponses`,
+/// `account` (Settings, signed in), `verdict/<sample>` (a key of `verdictResponses` or `manySidedResponses`,
 /// opened as a saved verdict), `verdict-thread` (a fresh verdict, as the
 /// judging cover hands over to it), `verdict-context`, `verdict-context-locked` and
 /// `verdict-context-limit` (the writer's "Add context" form, its Premium
@@ -180,7 +180,7 @@ struct ScreenshotState {
         case .settings:
             break
         case .homeExample:
-            app.home.showForScreenshot(example: ExampleCase.all[0], lang: lang)
+            if let example = Examples.load(lang).first { app.home.showForScreenshot(example: example) }
         case .homeError:
             app.home.argument = ExampleArgument.all[0].text(lang)
             app.home.showForScreenshot(error: .timeout)
@@ -402,8 +402,8 @@ enum ScreenshotFixtures {
     /// language needs a fetch.
     static func session(_ name: String) -> VerdictSession? {
         let root = root()
-        guard let responses = root["verdictResponses"] as? [String: Any],
-              let sample = responses[name],
+        let sample = (root["verdictResponses"] as? [String: Any])?[name] ?? (root["manySidedResponses"] as? [String: Any])?[name]
+        guard let sample,
               let data = try? JSONSerialization.data(withJSONObject: sample),
               let payload = try? WireDecoding.verdictPayload(from: data)
         else { return nil }

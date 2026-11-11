@@ -166,6 +166,9 @@ class Strings(private val res: Resources) {
     fun verdictAria(label: String): String = res.getString(R.string.verdict_aria, label)
     val partyA: String get() = res.getString(R.string.party_a)
     val partyB: String get() = res.getString(R.string.party_b)
+    val partyC: String get() = res.getString(R.string.party_c)
+    val partyD: String get() = res.getString(R.string.party_d)
+    fun partyYouLabel(label: String): String = res.getString(R.string.party_you_label, label)
     val you: String get() = res.getString(R.string.you)
     val errorFallback: String get() = res.getString(R.string.error_fallback)
     val errorNotConfigured: String get() = res.getString(R.string.error_not_configured)
@@ -258,7 +261,6 @@ class Strings(private val res: Resources) {
     val signinPasswordChoose: String get() = res.getString(R.string.signin_password_choose)
     val signinPasswordSave: String get() = res.getString(R.string.signin_password_save)
     val signinPasswordSaveFailed: String get() = res.getString(R.string.signin_password_save_failed)
-    val signinPasswordSkip: String get() = res.getString(R.string.signin_password_skip)
     val signinPasswordSubmit: String get() = res.getString(R.string.signin_password_submit)
     val signinProviderUnavailable: String get() = res.getString(R.string.signin_provider_unavailable)
     val signinFailed: String get() = res.getString(R.string.signin_failed)
@@ -277,10 +279,6 @@ class Strings(private val res: Resources) {
     val accountDelete: String get() = res.getString(R.string.account_delete)
     val accountDeleteConfirm: String get() = res.getString(R.string.account_delete_confirm)
     val accountDeleteYes: String get() = res.getString(R.string.account_delete_yes)
-    val accountPasswordSet: String get() = res.getString(R.string.account_password_set)
-    val accountPasswordChange: String get() = res.getString(R.string.account_password_change)
-    val accountPasswordCurrent: String get() = res.getString(R.string.account_password_current)
-    val accountPasswordSaved: String get() = res.getString(R.string.account_password_saved)
     val accountDeleteCancel: String get() = res.getString(R.string.account_delete_cancel)
     val accountDeleteFailed: String get() = res.getString(R.string.account_delete_failed)
     val accountSignInPrompt: String get() = res.getString(R.string.account_sign_in_prompt)
@@ -362,6 +360,10 @@ class Strings(private val res: Resources) {
     val caseJudgeNowYes: String get() = res.getString(R.string.case_judge_now_yes)
     val caseJudgeExpiredConfirm: String get() = res.getString(R.string.case_judge_expired_confirm)
     val caseJudgeExpiredYes: String get() = res.getString(R.string.case_judge_expired_yes)
+    val caseSideWaiting: String get() = res.getString(R.string.case_side_waiting)
+    val caseSideAnswered: String get() = res.getString(R.string.case_side_answered)
+    val caseJudgeAnswered: String get() = res.getString(R.string.case_judge_answered)
+    val caseJudgeAnsweredConfirm: String get() = res.getString(R.string.case_judge_answered_confirm)
     val caseCancel: String get() = res.getString(R.string.case_cancel)
     val caseRetry: String get() = res.getString(R.string.case_retry)
     val caseFailedBody: String get() = res.getString(R.string.case_failed_body)
@@ -370,9 +372,13 @@ class Strings(private val res: Resources) {
     val caseAccounts: String get() = res.getString(R.string.case_accounts)
     val caseAccountA: String get() = res.getString(R.string.case_account_a)
     val caseAccountB: String get() = res.getString(R.string.case_account_b)
+    val caseAccountC: String get() = res.getString(R.string.case_account_c)
+    val caseAccountD: String get() = res.getString(R.string.case_account_d)
     fun caseAccountYou(label: String): String = res.getString(R.string.case_account_you, label)
     val caseContextA: String get() = res.getString(R.string.case_context_a)
     val caseContextB: String get() = res.getString(R.string.case_context_b)
+    val caseContextC: String get() = res.getString(R.string.case_context_c)
+    val caseContextD: String get() = res.getString(R.string.case_context_d)
     fun caseContextYou(label: String): String = res.getString(R.string.case_context_you, label)
     fun caseEvidenceItem(n: String): String = res.getString(R.string.case_evidence_item, n)
     val caseNotYet: String get() = res.getString(R.string.case_not_yet)
@@ -446,6 +452,7 @@ class Strings(private val res: Resources) {
     val homeYourPlaceholder: String get() = res.getString(R.string.home_your_placeholder)
     val homeAddContext: String get() = res.getString(R.string.home_add_context)
     val homeAddTheirSide: String get() = res.getString(R.string.home_add_their_side)
+    val homeAddSide: String get() = res.getString(R.string.home_add_side)
     val homeRemoveTheirSide: String get() = res.getString(R.string.home_remove_their_side)
     val homeSendLink: String get() = res.getString(R.string.home_send_link)
     val homeClear: String get() = res.getString(R.string.home_clear)
@@ -460,7 +467,6 @@ class Strings(private val res: Resources) {
     val homeMySide: String get() = res.getString(R.string.home_my_side)
     val homeOtherSide: String get() = res.getString(R.string.home_other_side)
     val appealLead: String get() = res.getString(R.string.appeal_lead)
-    val appealLabel: String get() = res.getString(R.string.appeal_label)
     val appealPlaceholder: String get() = res.getString(R.string.appeal_placeholder)
     val appealSubmit: String get() = res.getString(R.string.appeal_submit)
     val appealSending: String get() = res.getString(R.string.appeal_sending)
@@ -481,7 +487,6 @@ class Strings(private val res: Resources) {
     val appealPrevious: String get() = res.getString(R.string.appeal_previous)
     val appealFailed: String get() = res.getString(R.string.appeal_failed)
     val appealRefused: String get() = res.getString(R.string.appeal_refused)
-    val appealLeadVerdict: String get() = res.getString(R.string.appeal_lead_verdict)
     val appealHistory: String get() = res.getString(R.string.appeal_history)
     val pricingPremiumF5: String get() = res.getString(R.string.pricing_premium_f5)
     val pricingPremiumF6: String get() = res.getString(R.string.pricing_premium_f6)
@@ -493,6 +498,7 @@ class Strings(private val res: Resources) {
     val removedCta: String get() = res.getString(R.string.removed_cta)
     val errorRemoved: String get() = res.getString(R.string.error_removed)
     val errorNamesUnavailable: String get() = res.getString(R.string.error_names_unavailable)
+    val errorUpdateRequired: String get() = res.getString(R.string.error_update_required)
     val verdictRemove: String get() = res.getString(R.string.verdict_remove)
     val verdictRemoveConfirm: String get() = res.getString(R.string.verdict_remove_confirm)
     val verdictRemoveYes: String get() = res.getString(R.string.verdict_remove_yes)
@@ -594,7 +600,6 @@ class Strings(private val res: Resources) {
     fun appHistoryRemoveFailed(n: Int): String = res.getQuantityString(R.plurals.app_history_remove_failed, n, n.toString())
     val appHistoryOfflineRemove: String get() = res.getString(R.string.app_history_offline_remove)
     val appPricingFreeAccount: String get() = res.getString(R.string.app_pricing_free_account)
-    val appContextLabel: String get() = res.getString(R.string.app_context_label)
     val appPricingContext: String get() = res.getString(R.string.app_pricing_context)
     val appPricingHeadline: String get() = res.getString(R.string.app_pricing_headline)
     val appPricingSub: String get() = res.getString(R.string.app_pricing_sub)
@@ -661,38 +666,6 @@ class Strings(private val res: Resources) {
     val appHomeAddTheirSide: String get() = res.getString(R.string.app_home_add_their_side)
     val appHomeRemoveTheirSide: String get() = res.getString(R.string.app_home_remove_their_side)
     val appHomeClear: String get() = res.getString(R.string.app_home_clear)
-    val appExampleDishwasherAName: String get() = res.getString(R.string.app_example_dishwasher_a_name)
-    val appExampleDishwasherA: String get() = res.getString(R.string.app_example_dishwasher_a)
-    val appExampleDishwasherBName: String get() = res.getString(R.string.app_example_dishwasher_b_name)
-    val appExampleDishwasherB: String get() = res.getString(R.string.app_example_dishwasher_b)
-    val appExampleBillAName: String get() = res.getString(R.string.app_example_bill_a_name)
-    val appExampleBillA: String get() = res.getString(R.string.app_example_bill_a)
-    val appExampleBillBName: String get() = res.getString(R.string.app_example_bill_b_name)
-    val appExampleBillB: String get() = res.getString(R.string.app_example_bill_b)
-    val appExampleThermostatAName: String get() = res.getString(R.string.app_example_thermostat_a_name)
-    val appExampleThermostatA: String get() = res.getString(R.string.app_example_thermostat_a)
-    val appExampleThermostatBName: String get() = res.getString(R.string.app_example_thermostat_b_name)
-    val appExampleThermostatB: String get() = res.getString(R.string.app_example_thermostat_b)
-    val appExampleRoadTripAName: String get() = res.getString(R.string.app_example_road_trip_a_name)
-    val appExampleRoadTripA: String get() = res.getString(R.string.app_example_road_trip_a)
-    val appExampleRoadTripBName: String get() = res.getString(R.string.app_example_road_trip_b_name)
-    val appExampleRoadTripB: String get() = res.getString(R.string.app_example_road_trip_b)
-    val appExampleSeatAName: String get() = res.getString(R.string.app_example_seat_a_name)
-    val appExampleSeatA: String get() = res.getString(R.string.app_example_seat_a)
-    val appExampleSeatBName: String get() = res.getString(R.string.app_example_seat_b_name)
-    val appExampleSeatB: String get() = res.getString(R.string.app_example_seat_b)
-    val appExampleSpoilerAName: String get() = res.getString(R.string.app_example_spoiler_a_name)
-    val appExampleSpoilerA: String get() = res.getString(R.string.app_example_spoiler_a)
-    val appExampleSpoilerBName: String get() = res.getString(R.string.app_example_spoiler_b_name)
-    val appExampleSpoilerB: String get() = res.getString(R.string.app_example_spoiler_b)
-    val appExampleJacketAName: String get() = res.getString(R.string.app_example_jacket_a_name)
-    val appExampleJacketA: String get() = res.getString(R.string.app_example_jacket_a)
-    val appExampleJacketBName: String get() = res.getString(R.string.app_example_jacket_b_name)
-    val appExampleJacketB: String get() = res.getString(R.string.app_example_jacket_b)
-    val appExampleLastSliceAName: String get() = res.getString(R.string.app_example_last_slice_a_name)
-    val appExampleLastSliceA: String get() = res.getString(R.string.app_example_last_slice_a)
-    val appExampleLastSliceBName: String get() = res.getString(R.string.app_example_last_slice_b_name)
-    val appExampleLastSliceB: String get() = res.getString(R.string.app_example_last_slice_b)
     val appCaseWaitingKicker: String get() = res.getString(R.string.app_case_waiting_kicker)
     fun appCaseWaitingFor(name: String): String = res.getString(R.string.app_case_waiting_for, name)
     fun appCaseWaitingLead(name: String): String = res.getString(R.string.app_case_waiting_lead, name)
@@ -713,8 +686,6 @@ class Strings(private val res: Resources) {
     val appVerdictClaims: String get() = res.getString(R.string.app_verdict_claims)
     val appVerdictBack: String get() = res.getString(R.string.app_verdict_back)
     val appAppealTitle: String get() = res.getString(R.string.app_appeal_title)
-    val appAppealIntro: String get() = res.getString(R.string.app_appeal_intro)
-    val appAppealAsk: String get() = res.getString(R.string.app_appeal_ask)
     val appAppealPlaceholder: String get() = res.getString(R.string.app_appeal_placeholder)
     fun appAppealCost(left: String): String = res.getString(R.string.app_appeal_cost, left)
     val appAppealCostCase: String get() = res.getString(R.string.app_appeal_cost_case)
@@ -834,6 +805,8 @@ class Strings(private val res: Resources) {
             "trial.refereePrefix" -> R.string.trial_referee_prefix
             "party.a" -> R.string.party_a
             "party.b" -> R.string.party_b
+            "party.c" -> R.string.party_c
+            "party.d" -> R.string.party_d
             "you" -> R.string.you
             "errorFallback" -> R.string.error_fallback
             "error.not_configured" -> R.string.error_not_configured
@@ -917,7 +890,6 @@ class Strings(private val res: Resources) {
             "signin.passwordChoose" -> R.string.signin_password_choose
             "signin.passwordSave" -> R.string.signin_password_save
             "signin.passwordSaveFailed" -> R.string.signin_password_save_failed
-            "signin.passwordSkip" -> R.string.signin_password_skip
             "signin.passwordSubmit" -> R.string.signin_password_submit
             "signin.providerUnavailable" -> R.string.signin_provider_unavailable
             "signin.failed" -> R.string.signin_failed
@@ -932,10 +904,6 @@ class Strings(private val res: Resources) {
             "account.delete" -> R.string.account_delete
             "account.deleteConfirm" -> R.string.account_delete_confirm
             "account.deleteYes" -> R.string.account_delete_yes
-            "account.passwordSet" -> R.string.account_password_set
-            "account.passwordChange" -> R.string.account_password_change
-            "account.passwordCurrent" -> R.string.account_password_current
-            "account.passwordSaved" -> R.string.account_password_saved
             "account.deleteCancel" -> R.string.account_delete_cancel
             "account.deleteFailed" -> R.string.account_delete_failed
             "account.signInPrompt" -> R.string.account_sign_in_prompt
@@ -1011,6 +979,10 @@ class Strings(private val res: Resources) {
             "case.judgeNow.yes" -> R.string.case_judge_now_yes
             "case.judgeExpired.confirm" -> R.string.case_judge_expired_confirm
             "case.judgeExpired.yes" -> R.string.case_judge_expired_yes
+            "case.side.waiting" -> R.string.case_side_waiting
+            "case.side.answered" -> R.string.case_side_answered
+            "case.judgeAnswered" -> R.string.case_judge_answered
+            "case.judgeAnswered.confirm" -> R.string.case_judge_answered_confirm
             "case.cancel" -> R.string.case_cancel
             "case.retry" -> R.string.case_retry
             "case.failedBody" -> R.string.case_failed_body
@@ -1019,8 +991,12 @@ class Strings(private val res: Resources) {
             "case.accounts" -> R.string.case_accounts
             "case.accountA" -> R.string.case_account_a
             "case.accountB" -> R.string.case_account_b
+            "case.accountC" -> R.string.case_account_c
+            "case.accountD" -> R.string.case_account_d
             "case.contextA" -> R.string.case_context_a
             "case.contextB" -> R.string.case_context_b
+            "case.contextC" -> R.string.case_context_c
+            "case.contextD" -> R.string.case_context_d
             "case.notYet" -> R.string.case_not_yet
             "case.answered" -> R.string.case_answered
             "case.judgingAlone" -> R.string.case_judging_alone
@@ -1083,6 +1059,7 @@ class Strings(private val res: Resources) {
             "home.yourPlaceholder" -> R.string.home_your_placeholder
             "home.addContext" -> R.string.home_add_context
             "home.addTheirSide" -> R.string.home_add_their_side
+            "home.addSide" -> R.string.home_add_side
             "home.removeTheirSide" -> R.string.home_remove_their_side
             "home.sendLink" -> R.string.home_send_link
             "home.clear" -> R.string.home_clear
@@ -1096,7 +1073,6 @@ class Strings(private val res: Resources) {
             "home.mySide" -> R.string.home_my_side
             "home.otherSide" -> R.string.home_other_side
             "appeal.lead" -> R.string.appeal_lead
-            "appeal.label" -> R.string.appeal_label
             "appeal.placeholder" -> R.string.appeal_placeholder
             "appeal.submit" -> R.string.appeal_submit
             "appeal.sending" -> R.string.appeal_sending
@@ -1116,7 +1092,6 @@ class Strings(private val res: Resources) {
             "appeal.previous" -> R.string.appeal_previous
             "appeal.failed" -> R.string.appeal_failed
             "appeal.refused" -> R.string.appeal_refused
-            "appeal.leadVerdict" -> R.string.appeal_lead_verdict
             "appeal.history" -> R.string.appeal_history
             "pricing.premium.f5" -> R.string.pricing_premium_f5
             "pricing.premium.f6" -> R.string.pricing_premium_f6
@@ -1128,6 +1103,7 @@ class Strings(private val res: Resources) {
             "removed.cta" -> R.string.removed_cta
             "error.removed" -> R.string.error_removed
             "error.names_unavailable" -> R.string.error_names_unavailable
+            "error.update_required" -> R.string.error_update_required
             "verdict.remove" -> R.string.verdict_remove
             "verdict.remove.confirm" -> R.string.verdict_remove_confirm
             "verdict.remove.yes" -> R.string.verdict_remove_yes
@@ -1216,7 +1192,6 @@ class Strings(private val res: Resources) {
             "app.history.phoneOnlyNote" -> R.string.app_history_phone_only_note
             "app.history.offlineRemove" -> R.string.app_history_offline_remove
             "app.pricing.free.account" -> R.string.app_pricing_free_account
-            "app.context.label" -> R.string.app_context_label
             "app.pricing.context" -> R.string.app_pricing_context
             "app.pricing.headline" -> R.string.app_pricing_headline
             "app.pricing.sub" -> R.string.app_pricing_sub
@@ -1277,38 +1252,6 @@ class Strings(private val res: Resources) {
             "app.home.addTheirSide" -> R.string.app_home_add_their_side
             "app.home.removeTheirSide" -> R.string.app_home_remove_their_side
             "app.home.clear" -> R.string.app_home_clear
-            "app.example.dishwasher.aName" -> R.string.app_example_dishwasher_a_name
-            "app.example.dishwasher.a" -> R.string.app_example_dishwasher_a
-            "app.example.dishwasher.bName" -> R.string.app_example_dishwasher_b_name
-            "app.example.dishwasher.b" -> R.string.app_example_dishwasher_b
-            "app.example.bill.aName" -> R.string.app_example_bill_a_name
-            "app.example.bill.a" -> R.string.app_example_bill_a
-            "app.example.bill.bName" -> R.string.app_example_bill_b_name
-            "app.example.bill.b" -> R.string.app_example_bill_b
-            "app.example.thermostat.aName" -> R.string.app_example_thermostat_a_name
-            "app.example.thermostat.a" -> R.string.app_example_thermostat_a
-            "app.example.thermostat.bName" -> R.string.app_example_thermostat_b_name
-            "app.example.thermostat.b" -> R.string.app_example_thermostat_b
-            "app.example.roadTrip.aName" -> R.string.app_example_road_trip_a_name
-            "app.example.roadTrip.a" -> R.string.app_example_road_trip_a
-            "app.example.roadTrip.bName" -> R.string.app_example_road_trip_b_name
-            "app.example.roadTrip.b" -> R.string.app_example_road_trip_b
-            "app.example.seat.aName" -> R.string.app_example_seat_a_name
-            "app.example.seat.a" -> R.string.app_example_seat_a
-            "app.example.seat.bName" -> R.string.app_example_seat_b_name
-            "app.example.seat.b" -> R.string.app_example_seat_b
-            "app.example.spoiler.aName" -> R.string.app_example_spoiler_a_name
-            "app.example.spoiler.a" -> R.string.app_example_spoiler_a
-            "app.example.spoiler.bName" -> R.string.app_example_spoiler_b_name
-            "app.example.spoiler.b" -> R.string.app_example_spoiler_b
-            "app.example.jacket.aName" -> R.string.app_example_jacket_a_name
-            "app.example.jacket.a" -> R.string.app_example_jacket_a
-            "app.example.jacket.bName" -> R.string.app_example_jacket_b_name
-            "app.example.jacket.b" -> R.string.app_example_jacket_b
-            "app.example.lastSlice.aName" -> R.string.app_example_last_slice_a_name
-            "app.example.lastSlice.a" -> R.string.app_example_last_slice_a
-            "app.example.lastSlice.bName" -> R.string.app_example_last_slice_b_name
-            "app.example.lastSlice.b" -> R.string.app_example_last_slice_b
             "app.case.waitingKicker" -> R.string.app_case_waiting_kicker
             "app.case.waitingLeadAnon" -> R.string.app_case_waiting_lead_anon
             "app.case.stepYou" -> R.string.app_case_step_you
@@ -1323,8 +1266,6 @@ class Strings(private val res: Resources) {
             "app.verdict.claims" -> R.string.app_verdict_claims
             "app.verdict.back" -> R.string.app_verdict_back
             "app.appeal.title" -> R.string.app_appeal_title
-            "app.appeal.intro" -> R.string.app_appeal_intro
-            "app.appeal.ask" -> R.string.app_appeal_ask
             "app.appeal.placeholder" -> R.string.app_appeal_placeholder
             "app.appeal.costCase" -> R.string.app_appeal_cost_case
             "app.appeal.submit" -> R.string.app_appeal_submit

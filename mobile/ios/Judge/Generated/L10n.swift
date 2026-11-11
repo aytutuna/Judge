@@ -233,6 +233,9 @@ enum L10n {
     static func verdictAria(_ lang: AppLang, label: String) -> String { format("verdictAria", lang, label) }
     static func partyA(_ lang: AppLang) -> String { string("party.a", lang) }
     static func partyB(_ lang: AppLang) -> String { string("party.b", lang) }
+    static func partyC(_ lang: AppLang) -> String { string("party.c", lang) }
+    static func partyD(_ lang: AppLang) -> String { string("party.d", lang) }
+    static func partyYouLabel(_ lang: AppLang, label: String) -> String { format("party.youLabel", lang, label) }
     static func you(_ lang: AppLang) -> String { string("you", lang) }
     static func errorFallback(_ lang: AppLang) -> String { string("errorFallback", lang) }
     static func errorNotConfigured(_ lang: AppLang) -> String { string("error.not_configured", lang) }
@@ -325,7 +328,6 @@ enum L10n {
     static func signinPasswordChoose(_ lang: AppLang) -> String { string("signin.passwordChoose", lang) }
     static func signinPasswordSave(_ lang: AppLang) -> String { string("signin.passwordSave", lang) }
     static func signinPasswordSaveFailed(_ lang: AppLang) -> String { string("signin.passwordSaveFailed", lang) }
-    static func signinPasswordSkip(_ lang: AppLang) -> String { string("signin.passwordSkip", lang) }
     static func signinPasswordSubmit(_ lang: AppLang) -> String { string("signin.passwordSubmit", lang) }
     static func signinProviderUnavailable(_ lang: AppLang) -> String { string("signin.providerUnavailable", lang) }
     static func signinFailed(_ lang: AppLang) -> String { string("signin.failed", lang) }
@@ -344,10 +346,6 @@ enum L10n {
     static func accountDelete(_ lang: AppLang) -> String { string("account.delete", lang) }
     static func accountDeleteConfirm(_ lang: AppLang) -> String { string("account.deleteConfirm", lang) }
     static func accountDeleteYes(_ lang: AppLang) -> String { string("account.deleteYes", lang) }
-    static func accountPasswordSet(_ lang: AppLang) -> String { string("account.passwordSet", lang) }
-    static func accountPasswordChange(_ lang: AppLang) -> String { string("account.passwordChange", lang) }
-    static func accountPasswordCurrent(_ lang: AppLang) -> String { string("account.passwordCurrent", lang) }
-    static func accountPasswordSaved(_ lang: AppLang) -> String { string("account.passwordSaved", lang) }
     static func accountDeleteCancel(_ lang: AppLang) -> String { string("account.deleteCancel", lang) }
     static func accountDeleteFailed(_ lang: AppLang) -> String { string("account.deleteFailed", lang) }
     static func accountSignInPrompt(_ lang: AppLang) -> String { string("account.signInPrompt", lang) }
@@ -429,6 +427,10 @@ enum L10n {
     static func caseJudgeNowYes(_ lang: AppLang) -> String { string("case.judgeNow.yes", lang) }
     static func caseJudgeExpiredConfirm(_ lang: AppLang) -> String { string("case.judgeExpired.confirm", lang) }
     static func caseJudgeExpiredYes(_ lang: AppLang) -> String { string("case.judgeExpired.yes", lang) }
+    static func caseSideWaiting(_ lang: AppLang) -> String { string("case.side.waiting", lang) }
+    static func caseSideAnswered(_ lang: AppLang) -> String { string("case.side.answered", lang) }
+    static func caseJudgeAnswered(_ lang: AppLang) -> String { string("case.judgeAnswered", lang) }
+    static func caseJudgeAnsweredConfirm(_ lang: AppLang) -> String { string("case.judgeAnswered.confirm", lang) }
     static func caseCancel(_ lang: AppLang) -> String { string("case.cancel", lang) }
     static func caseRetry(_ lang: AppLang) -> String { string("case.retry", lang) }
     static func caseFailedBody(_ lang: AppLang) -> String { string("case.failedBody", lang) }
@@ -437,9 +439,13 @@ enum L10n {
     static func caseAccounts(_ lang: AppLang) -> String { string("case.accounts", lang) }
     static func caseAccountA(_ lang: AppLang) -> String { string("case.accountA", lang) }
     static func caseAccountB(_ lang: AppLang) -> String { string("case.accountB", lang) }
+    static func caseAccountC(_ lang: AppLang) -> String { string("case.accountC", lang) }
+    static func caseAccountD(_ lang: AppLang) -> String { string("case.accountD", lang) }
     static func caseAccountYou(_ lang: AppLang, label: String) -> String { format("case.accountYou", lang, label) }
     static func caseContextA(_ lang: AppLang) -> String { string("case.contextA", lang) }
     static func caseContextB(_ lang: AppLang) -> String { string("case.contextB", lang) }
+    static func caseContextC(_ lang: AppLang) -> String { string("case.contextC", lang) }
+    static func caseContextD(_ lang: AppLang) -> String { string("case.contextD", lang) }
     static func caseContextYou(_ lang: AppLang, label: String) -> String { format("case.contextYou", lang, label) }
     static func caseEvidenceItem(_ lang: AppLang, n: String) -> String { format("case.evidenceItem", lang, n) }
     static func caseNotYet(_ lang: AppLang) -> String { string("case.notYet", lang) }
@@ -513,6 +519,7 @@ enum L10n {
     static func homeYourPlaceholder(_ lang: AppLang) -> String { string("home.yourPlaceholder", lang) }
     static func homeAddContext(_ lang: AppLang) -> String { string("home.addContext", lang) }
     static func homeAddTheirSide(_ lang: AppLang) -> String { string("home.addTheirSide", lang) }
+    static func homeAddSide(_ lang: AppLang) -> String { string("home.addSide", lang) }
     static func homeRemoveTheirSide(_ lang: AppLang) -> String { string("home.removeTheirSide", lang) }
     static func homeSendLink(_ lang: AppLang) -> String { string("home.sendLink", lang) }
     static func homeClear(_ lang: AppLang) -> String { string("home.clear", lang) }
@@ -527,7 +534,6 @@ enum L10n {
     static func homeMySide(_ lang: AppLang) -> String { string("home.mySide", lang) }
     static func homeOtherSide(_ lang: AppLang) -> String { string("home.otherSide", lang) }
     static func appealLead(_ lang: AppLang) -> String { string("appeal.lead", lang) }
-    static func appealLabel(_ lang: AppLang) -> String { string("appeal.label", lang) }
     static func appealPlaceholder(_ lang: AppLang) -> String { string("appeal.placeholder", lang) }
     static func appealSubmit(_ lang: AppLang) -> String { string("appeal.submit", lang) }
     static func appealSending(_ lang: AppLang) -> String { string("appeal.sending", lang) }
@@ -548,7 +554,6 @@ enum L10n {
     static func appealPrevious(_ lang: AppLang) -> String { string("appeal.previous", lang) }
     static func appealFailed(_ lang: AppLang) -> String { string("appeal.failed", lang) }
     static func appealRefused(_ lang: AppLang) -> String { string("appeal.refused", lang) }
-    static func appealLeadVerdict(_ lang: AppLang) -> String { string("appeal.leadVerdict", lang) }
     static func appealHistory(_ lang: AppLang) -> String { string("appeal.history", lang) }
     static func pricingPremiumF5(_ lang: AppLang) -> String { string("pricing.premium.f5", lang) }
     static func pricingPremiumF6(_ lang: AppLang) -> String { string("pricing.premium.f6", lang) }
@@ -560,6 +565,7 @@ enum L10n {
     static func removedCta(_ lang: AppLang) -> String { string("removed.cta", lang) }
     static func errorRemoved(_ lang: AppLang) -> String { string("error.removed", lang) }
     static func errorNamesUnavailable(_ lang: AppLang) -> String { string("error.names_unavailable", lang) }
+    static func errorUpdateRequired(_ lang: AppLang) -> String { string("error.update_required", lang) }
     static func verdictRemove(_ lang: AppLang) -> String { string("verdict.remove", lang) }
     static func verdictRemoveConfirm(_ lang: AppLang) -> String { string("verdict.remove.confirm", lang) }
     static func verdictRemoveYes(_ lang: AppLang) -> String { string("verdict.remove.yes", lang) }
@@ -661,7 +667,6 @@ enum L10n {
     static func appHistoryRemoveFailed(_ lang: AppLang, n: Int) -> String { plural("app.history.removeFailed", lang, n) }
     static func appHistoryOfflineRemove(_ lang: AppLang) -> String { string("app.history.offlineRemove", lang) }
     static func appPricingFreeAccount(_ lang: AppLang) -> String { string("app.pricing.free.account", lang) }
-    static func appContextLabel(_ lang: AppLang) -> String { string("app.context.label", lang) }
     static func appPricingContext(_ lang: AppLang) -> String { string("app.pricing.context", lang) }
     static func appPricingHeadline(_ lang: AppLang) -> String { string("app.pricing.headline", lang) }
     static func appPricingSub(_ lang: AppLang) -> String { string("app.pricing.sub", lang) }
@@ -728,38 +733,6 @@ enum L10n {
     static func appHomeAddTheirSide(_ lang: AppLang) -> String { string("app.home.addTheirSide", lang) }
     static func appHomeRemoveTheirSide(_ lang: AppLang) -> String { string("app.home.removeTheirSide", lang) }
     static func appHomeClear(_ lang: AppLang) -> String { string("app.home.clear", lang) }
-    static func appExampleDishwasherAName(_ lang: AppLang) -> String { string("app.example.dishwasher.aName", lang) }
-    static func appExampleDishwasherA(_ lang: AppLang) -> String { string("app.example.dishwasher.a", lang) }
-    static func appExampleDishwasherBName(_ lang: AppLang) -> String { string("app.example.dishwasher.bName", lang) }
-    static func appExampleDishwasherB(_ lang: AppLang) -> String { string("app.example.dishwasher.b", lang) }
-    static func appExampleBillAName(_ lang: AppLang) -> String { string("app.example.bill.aName", lang) }
-    static func appExampleBillA(_ lang: AppLang) -> String { string("app.example.bill.a", lang) }
-    static func appExampleBillBName(_ lang: AppLang) -> String { string("app.example.bill.bName", lang) }
-    static func appExampleBillB(_ lang: AppLang) -> String { string("app.example.bill.b", lang) }
-    static func appExampleThermostatAName(_ lang: AppLang) -> String { string("app.example.thermostat.aName", lang) }
-    static func appExampleThermostatA(_ lang: AppLang) -> String { string("app.example.thermostat.a", lang) }
-    static func appExampleThermostatBName(_ lang: AppLang) -> String { string("app.example.thermostat.bName", lang) }
-    static func appExampleThermostatB(_ lang: AppLang) -> String { string("app.example.thermostat.b", lang) }
-    static func appExampleRoadTripAName(_ lang: AppLang) -> String { string("app.example.roadTrip.aName", lang) }
-    static func appExampleRoadTripA(_ lang: AppLang) -> String { string("app.example.roadTrip.a", lang) }
-    static func appExampleRoadTripBName(_ lang: AppLang) -> String { string("app.example.roadTrip.bName", lang) }
-    static func appExampleRoadTripB(_ lang: AppLang) -> String { string("app.example.roadTrip.b", lang) }
-    static func appExampleSeatAName(_ lang: AppLang) -> String { string("app.example.seat.aName", lang) }
-    static func appExampleSeatA(_ lang: AppLang) -> String { string("app.example.seat.a", lang) }
-    static func appExampleSeatBName(_ lang: AppLang) -> String { string("app.example.seat.bName", lang) }
-    static func appExampleSeatB(_ lang: AppLang) -> String { string("app.example.seat.b", lang) }
-    static func appExampleSpoilerAName(_ lang: AppLang) -> String { string("app.example.spoiler.aName", lang) }
-    static func appExampleSpoilerA(_ lang: AppLang) -> String { string("app.example.spoiler.a", lang) }
-    static func appExampleSpoilerBName(_ lang: AppLang) -> String { string("app.example.spoiler.bName", lang) }
-    static func appExampleSpoilerB(_ lang: AppLang) -> String { string("app.example.spoiler.b", lang) }
-    static func appExampleJacketAName(_ lang: AppLang) -> String { string("app.example.jacket.aName", lang) }
-    static func appExampleJacketA(_ lang: AppLang) -> String { string("app.example.jacket.a", lang) }
-    static func appExampleJacketBName(_ lang: AppLang) -> String { string("app.example.jacket.bName", lang) }
-    static func appExampleJacketB(_ lang: AppLang) -> String { string("app.example.jacket.b", lang) }
-    static func appExampleLastSliceAName(_ lang: AppLang) -> String { string("app.example.lastSlice.aName", lang) }
-    static func appExampleLastSliceA(_ lang: AppLang) -> String { string("app.example.lastSlice.a", lang) }
-    static func appExampleLastSliceBName(_ lang: AppLang) -> String { string("app.example.lastSlice.bName", lang) }
-    static func appExampleLastSliceB(_ lang: AppLang) -> String { string("app.example.lastSlice.b", lang) }
     static func appCaseWaitingKicker(_ lang: AppLang) -> String { string("app.case.waitingKicker", lang) }
     static func appCaseWaitingFor(_ lang: AppLang, name: String) -> String { format("app.case.waitingFor", lang, name) }
     static func appCaseWaitingLead(_ lang: AppLang, name: String) -> String { format("app.case.waitingLead", lang, name) }
@@ -780,8 +753,6 @@ enum L10n {
     static func appVerdictClaims(_ lang: AppLang) -> String { string("app.verdict.claims", lang) }
     static func appVerdictBack(_ lang: AppLang) -> String { string("app.verdict.back", lang) }
     static func appAppealTitle(_ lang: AppLang) -> String { string("app.appeal.title", lang) }
-    static func appAppealIntro(_ lang: AppLang) -> String { string("app.appeal.intro", lang) }
-    static func appAppealAsk(_ lang: AppLang) -> String { string("app.appeal.ask", lang) }
     static func appAppealPlaceholder(_ lang: AppLang) -> String { string("app.appeal.placeholder", lang) }
     static func appAppealCost(_ lang: AppLang, left: String) -> String { format("app.appeal.cost", lang, left) }
     static func appAppealCostCase(_ lang: AppLang) -> String { string("app.appeal.costCase", lang) }
@@ -902,6 +873,8 @@ enum L10n {
         "trial.refereePrefix",
         "party.a",
         "party.b",
+        "party.c",
+        "party.d",
         "you",
         "errorFallback",
         "error.not_configured",
@@ -985,7 +958,6 @@ enum L10n {
         "signin.passwordChoose",
         "signin.passwordSave",
         "signin.passwordSaveFailed",
-        "signin.passwordSkip",
         "signin.passwordSubmit",
         "signin.providerUnavailable",
         "signin.failed",
@@ -1000,10 +972,6 @@ enum L10n {
         "account.delete",
         "account.deleteConfirm",
         "account.deleteYes",
-        "account.passwordSet",
-        "account.passwordChange",
-        "account.passwordCurrent",
-        "account.passwordSaved",
         "account.deleteCancel",
         "account.deleteFailed",
         "account.signInPrompt",
@@ -1079,6 +1047,10 @@ enum L10n {
         "case.judgeNow.yes",
         "case.judgeExpired.confirm",
         "case.judgeExpired.yes",
+        "case.side.waiting",
+        "case.side.answered",
+        "case.judgeAnswered",
+        "case.judgeAnswered.confirm",
         "case.cancel",
         "case.retry",
         "case.failedBody",
@@ -1087,8 +1059,12 @@ enum L10n {
         "case.accounts",
         "case.accountA",
         "case.accountB",
+        "case.accountC",
+        "case.accountD",
         "case.contextA",
         "case.contextB",
+        "case.contextC",
+        "case.contextD",
         "case.notYet",
         "case.answered",
         "case.judgingAlone",
@@ -1151,6 +1127,7 @@ enum L10n {
         "home.yourPlaceholder",
         "home.addContext",
         "home.addTheirSide",
+        "home.addSide",
         "home.removeTheirSide",
         "home.sendLink",
         "home.clear",
@@ -1164,7 +1141,6 @@ enum L10n {
         "home.mySide",
         "home.otherSide",
         "appeal.lead",
-        "appeal.label",
         "appeal.placeholder",
         "appeal.submit",
         "appeal.sending",
@@ -1184,7 +1160,6 @@ enum L10n {
         "appeal.previous",
         "appeal.failed",
         "appeal.refused",
-        "appeal.leadVerdict",
         "appeal.history",
         "pricing.premium.f5",
         "pricing.premium.f6",
@@ -1196,6 +1171,7 @@ enum L10n {
         "removed.cta",
         "error.removed",
         "error.names_unavailable",
+        "error.update_required",
         "verdict.remove",
         "verdict.remove.confirm",
         "verdict.remove.yes",
@@ -1284,7 +1260,6 @@ enum L10n {
         "app.history.phoneOnlyNote",
         "app.history.offlineRemove",
         "app.pricing.free.account",
-        "app.context.label",
         "app.pricing.context",
         "app.pricing.headline",
         "app.pricing.sub",
@@ -1345,38 +1320,6 @@ enum L10n {
         "app.home.addTheirSide",
         "app.home.removeTheirSide",
         "app.home.clear",
-        "app.example.dishwasher.aName",
-        "app.example.dishwasher.a",
-        "app.example.dishwasher.bName",
-        "app.example.dishwasher.b",
-        "app.example.bill.aName",
-        "app.example.bill.a",
-        "app.example.bill.bName",
-        "app.example.bill.b",
-        "app.example.thermostat.aName",
-        "app.example.thermostat.a",
-        "app.example.thermostat.bName",
-        "app.example.thermostat.b",
-        "app.example.roadTrip.aName",
-        "app.example.roadTrip.a",
-        "app.example.roadTrip.bName",
-        "app.example.roadTrip.b",
-        "app.example.seat.aName",
-        "app.example.seat.a",
-        "app.example.seat.bName",
-        "app.example.seat.b",
-        "app.example.spoiler.aName",
-        "app.example.spoiler.a",
-        "app.example.spoiler.bName",
-        "app.example.spoiler.b",
-        "app.example.jacket.aName",
-        "app.example.jacket.a",
-        "app.example.jacket.bName",
-        "app.example.jacket.b",
-        "app.example.lastSlice.aName",
-        "app.example.lastSlice.a",
-        "app.example.lastSlice.bName",
-        "app.example.lastSlice.b",
         "app.case.waitingKicker",
         "app.case.waitingLeadAnon",
         "app.case.stepYou",
@@ -1391,8 +1334,6 @@ enum L10n {
         "app.verdict.claims",
         "app.verdict.back",
         "app.appeal.title",
-        "app.appeal.intro",
-        "app.appeal.ask",
         "app.appeal.placeholder",
         "app.appeal.costCase",
         "app.appeal.submit",

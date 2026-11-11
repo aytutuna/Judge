@@ -257,8 +257,12 @@
   outline: 3px solid var(--terra-ink);
   outline-offset: 0;
 }
-.short {
-  min-height: 110px;
+.tall {
+  min-height: 220px;
+}
+.countEnd {
+  align-self: flex-end;
+  font-size: 13px;
 }
 .facts {
   display: flex;
@@ -312,6 +316,12 @@
 }
 .accountB {
   border-inline-start: 4px solid var(--party-b-strong);
+}
+.accountC {
+  border-inline-start: 4px solid var(--party-c-strong);
+}
+.accountD {
+  border-inline-start: 4px solid var(--party-d-strong);
 }
 .accountHead {
   display: flex;
@@ -683,6 +693,18 @@
 .claimB dt {
   color: var(--party-b-ink);
 }
+.claimC {
+  background: var(--party-c-tint);
+}
+.claimC dt {
+  color: var(--party-c-ink);
+}
+.claimD {
+  background: var(--party-d-tint);
+}
+.claimD dt {
+  color: var(--party-d-ink);
+}
 @media (min-width: 560px) {
   .claims {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -705,6 +727,14 @@
 .finding[data-finding="b"] {
   background: var(--party-b-tint);
   color: var(--party-b-ink);
+}
+.finding[data-finding="c"] {
+  background: var(--party-c-tint);
+  color: var(--party-c-ink);
+}
+.finding[data-finding="d"] {
+  background: var(--party-d-tint);
+  color: var(--party-d-ink);
 }
 .finding[data-finding="unsettled"] {
   border: 1px solid var(--line-2);
@@ -876,4 +906,60 @@
   .previous {
     border-color: CanvasText;
   }
+}
+
+/* ---------- One link per side (three or four sides) ---------- */
+.inviteList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.inviteRow {
+  --side-ink: var(--party-b-ink);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+.inviteRow[data-party="c"] {
+  --side-ink: var(--party-c-ink);
+}
+.inviteRow[data-party="d"] {
+  --side-ink: var(--party-d-ink);
+}
+.inviteHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.inviteAvatar {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--side-ink);
+  color: var(--paper);
+  font-size: 12px;
+  font-weight: 700;
+}
+.inviteWho {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 700;
+}
+.inviteState {
+  margin-inline-start: auto;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+.inviteState[data-state="answered"] {
+  color: var(--sage-ink);
 }

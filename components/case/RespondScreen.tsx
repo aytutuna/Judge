@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
+import { apiFetch } from "@/lib/api-fetch";
 import type { AppealResponse, CaseRemovalResponse, CaseView, RespondResponse } from "@/lib/case-types";
 import { MAX_EVIDENCE_PER_SIDE } from "@/lib/case-types";
 import { forgetCaseNames, saveCaseNames, useCaseNames } from "@/lib/case-names-store";
@@ -11,6 +12,7 @@ import { trackApiError } from "@/lib/analytics/client";
 import { apiErrorMessage, languageName, t, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { langTag } from "@/lib/langs";
+import type { SelfParty } from "@/lib/names";
 import {
   clearPendingInvite,
   rememberPendingInvite,
@@ -127,7 +129,7 @@ function useRespondForm(
       ...(shownName ? { displayName: shownName } : {}),
     };
     try {
-      const res = await fetch(`/api/v1/respond/${encodeURIComponent(token)}`, {
+      const res = await apiFetch(`/api/v1/respond/${encodeURIComponent(token)}`, {
         method: "POST",
         headers: { "Content-Type": "application/json", "Idempotency-Key": keyFor(JSON.stringify(payload)) },
         body: JSON.stringify({ ...payload, ...(check ? { turnstileToken: check } : {}) }),
@@ -212,6 +214,7 @@ export function RespondPanel({
   const stage = respondStage(view);
   const current = view.verdicts.at(-1) ?? null;
   const ownSide = view.sides.filter((s) => s.party === view.yourParty);
+  const selfParty = view.yourParty.toUpperCase() as SelfParty;
 
   if (stage === "own_invite") {
     return <p className={styles.banner}>{t(lang, "respond.ownInvite")}</p>;
@@ -431,7 +434,7 @@ export function RespondPanel({
           shareId={view.removed ? undefined : current.id}
           lang={lang}
           fresh={fresh}
-          selfParty="B"
+          selfParty={selfParty}
           viewerIsSelfParty
           focusAppeal={focusAppeal}
         />
@@ -444,7 +447,7 @@ export function RespondPanel({
         draft={appeal}
         evidence={evidence}
       />
-      <VerdictHistory lang={lang} verdicts={view.verdicts} linked={!view.removed} names={names} selfParty="B" />
+      <VerdictHistory lang={lang} verdicts={view.verdicts} linked={!view.removed} names={names} selfParty={selfParty} />
       {ownTools}
       <AccountsRead
         lang={lang}
@@ -475,7 +478,7 @@ export function RespondScreen({ token }: { token: string }) {
   const view = load.view;
   const caseId = view?.id ?? null;
   if (caseId !== null && caseId !== knownId) setKnownId(caseId);
-  const localNames = useCaseNames(caseId, "b");
+  const localNames = useCaseNames(caseId, view?.yourParty ?? "b");
   // The server's encrypted copy when this browser proves it is Party B
   // (claim or bound account); this browser's names for older cases.
   const names = view?.names ?? localNames;
@@ -496,7 +499,7 @@ export function RespondScreen({ token }: { token: string }) {
     token,
     lang,
     (next, map, claimSecret) => {
-      saveCaseNames(next.id, "b", map);
+      saveCaseNames(next.id, next.yourParty, map);
       saveClaim(next.id, claimSecret);
       setView(next);
     },
@@ -506,7 +509,7 @@ export function RespondScreen({ token }: { token: string }) {
   async function removeSide() {
     setRemoveError(null);
     try {
-      const res = await fetch(`${base}/removal`, {
+      const res = await apiFetch(`${base}/removal`, {
         method: "POST",
         headers: { "Content-Type": "application/json", ...(claimHeaders ?? {}) },
         body: JSON.stringify({ confirm: "remove", ...(claim ? { claim } : {}) }),
@@ -528,7 +531,7 @@ export function RespondScreen({ token }: { token: string }) {
     if (!caseId || !claim || !view) return;
     setKeepError(null);
     try {
-      const res = await fetch(`/api/v1/cases/${encodeURIComponent(caseId)}/claim`, {
+      const res = await apiFetch(`/api/v1/cases/${encodeURIComponent(caseId)}/claim`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ claim }),
@@ -557,7 +560,7 @@ export function RespondScreen({ token }: { token: string }) {
     endpoint: `/api/v1/respond/${encodeURIComponent(token)}/appeals`,
     lang,
     onSent: (res) => {
-      saveCaseNames(caseId ?? "", "b", res.name_map ?? []);
+      saveCaseNames(caseId ?? "", view?.yourParty ?? "b", res.name_map ?? []);
       setView(res.case);
     },
     claim,

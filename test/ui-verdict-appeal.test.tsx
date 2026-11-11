@@ -91,11 +91,11 @@ describe("Add context on a one-sided verdict", () => {
     expect(other).not.toContain(t("en", "appeal.title"));
   });
 
-  it("uses the case appeal's states, with the verdict's own lead and limit", () => {
+  it("uses the case appeal's states", () => {
     const form = renderToStaticMarkup(
-      <AppealSection lang="en" view={subject({ allowed: true, blockedBy: null })} signInHref="/signin" draft={draft} lead="appeal.leadVerdict" />,
+      <AppealSection lang="en" view={subject({ allowed: true, blockedBy: null })} signInHref="/signin" draft={draft} />,
     );
-    expect(form).toContain(esc(t("en", "appeal.leadVerdict")));
+    expect(form).toContain(esc(t("en", "appeal.lead")));
     expect(form).toContain(t("en", "appeal.submit"));
 
     const limited = subject({ allowed: false, blockedBy: "appeal_limit" });

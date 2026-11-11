@@ -111,6 +111,8 @@ const en = {
   verdictAria: "Verdict: {label}",
   "party.a": "Party A",
   "party.b": "Party B",
+  "party.c": "Party C",
+  "party.d": "Party D",
   "party.youLabel": "{label} (you)",
   you: "You",
   "shared.subtitle": "Someone shared this ruling",
@@ -337,8 +339,7 @@ const en = {
   "signin.createNote": "We'll email you a code to confirm this address. You only need to do this once.",
   "signin.passwordChoose": "You're signed in. Choose a password for next time.",
   "signin.passwordSave": "Save password",
-  "signin.passwordSaveFailed": "You're signed in, but we couldn't save the password. Try again, or set it later in Settings.",
-  "signin.passwordSkip": "Skip for now",
+  "signin.passwordSaveFailed": "We couldn't save the password. Try again.",
   "signin.passwordSubmit": "Sign in",
   "signin.rateLimited": "Too many tries. Wait a minute and try again.",
   "signin.serviceDown": "Sign-in isn't available right now. Try again later.",
@@ -366,10 +367,6 @@ const en = {
   "account.deleteConfirm":
     "Delete your account? Your credits, plan and sign-in details are deleted. Your verdicts and your sides of cases are removed: what you wrote and the names are erased, and their share links stop working.",
   "account.deleteYes": "Yes, delete it",
-  "account.passwordSet": "Set a password",
-  "account.passwordChange": "Change password",
-  "account.passwordCurrent": "Current password",
-  "account.passwordSaved": "Password saved.",
   "account.deleteCancel": "Keep my account",
   "account.deleted": "Your account is deleted. Taking you to the home page…",
   "account.deleteFailed": "We couldn't delete the account just now. Mind trying again?",
@@ -458,6 +455,10 @@ const en = {
   "case.judgeNow.yes": "Yes, judge it now",
   "case.judgeExpired.confirm": "Get a verdict on your side alone? This uses 1 verdict.",
   "case.judgeExpired.yes": "Yes, use 1 verdict",
+  "case.side.waiting": "Waiting",
+  "case.side.answered": "Answered",
+  "case.judgeAnswered": "Judge with the sides that answered",
+  "case.judgeAnswered.confirm": "Get a verdict from the sides that have answered? The other invites close and those people can't answer anymore.",
   "case.cancel": "Cancel",
   "case.retry": "Try again",
   "case.failedBody": "Your credit is back. You can try again now.",
@@ -466,9 +467,13 @@ const en = {
   "case.accounts": "What each side told the judges",
   "case.accountA": "Party A's account",
   "case.accountB": "Party B's account",
+  "case.accountC": "Party C's account",
+  "case.accountD": "Party D's account",
   "case.accountYou": "Your account ({label})",
   "case.contextA": "Party A added context",
   "case.contextB": "Party B added context",
+  "case.contextC": "Party C added context",
+  "case.contextD": "Party D added context",
   "case.contextYou": "Context you added ({label})",
   "case.evidenceItem": "Image {n}, as the judges read it",
   "case.notYet": "They haven't answered yet.",
@@ -553,6 +558,7 @@ const en = {
   "home.yourPlaceholder": "What's the problem?",
   "home.addContext": "Add context",
   "home.addTheirSide": "Add their side",
+  "home.addSide": "Add another side",
   "home.removeTheirSide": "Remove their side",
   "home.sendLink": "Send them a link",
   "home.clear": "Clear",
@@ -566,58 +572,9 @@ const en = {
   "home.says": "{name} says:",
   "home.mySide": "My side:",
   "home.otherSide": "Their side:",
-  "pairs.dishwasher.aName": "Alex",
-  "pairs.dishwasher.a":
-    "You put the bowls on the top rack again. They never come out clean up there, that's what the bottom is for.",
-  "pairs.dishwasher.bName": "Sam",
-  "pairs.dishwasher.b":
-    "They fit fine up there and it leaves the bottom free for the pans. I've loaded it like this for years and nothing's come out dirty.",
-  "pairs.bill.aName": "Priya",
-  "pairs.bill.a":
-    "I didn't drink anything, so I shouldn't pay a quarter of the wine. Splitting the food evenly is fine with me.",
-  "pairs.bill.bName": "Jordan",
-  "pairs.bill.b":
-    "We always just split it four ways. Working out who had what every time is a pain, and it's not much of a difference anyway.",
-  "pairs.thermostat.aName": "Taylor",
-  "pairs.thermostat.a":
-    "It's 19 degrees in here and I'm cold even in a hoodie. Turning it up to 22 isn't crazy.",
-  "pairs.thermostat.bName": "Chris",
-  "pairs.thermostat.b":
-    "22 is way too warm to sleep in. You can put on another layer, I can't take anything else off.",
-  "pairs.roadTrip.aName": "Morgan",
-  "pairs.roadTrip.a":
-    "I drove the whole six hours there. It's only fair that you drive us back.",
-  "pairs.roadTrip.bName": "Riley",
-  "pairs.roadTrip.b":
-    "I said before we left that I hate driving at night, and we're leaving at 7. I'll take the morning drives next trip.",
-  "pairs.seat.aName": "Jamie",
-  "pairs.seat.a":
-    "My seat reclines, so I'm reclining it. It's a night flight and everyone's trying to sleep.",
-  "pairs.seat.bName": "Casey",
-  "pairs.seat.b":
-    "I'm 6'3\" and my knees are already pressed into your seat. You could at least ask before dropping it all the way back.",
-  "pairs.spoiler.aName": "Maya",
-  "pairs.spoiler.a":
-    "You told me who the killer was before I'd even started the last episode. I'd been waiting all week for it.",
-  "pairs.spoiler.bName": "Leo",
-  "pairs.spoiler.b":
-    "It came out three weeks ago and you said you'd finished it. I can't keep track of where everyone is.",
-  "pairs.jacket.aName": "Noah",
-  "pairs.jacket.a":
-    "You wore my denim jacket to the concert without asking. It came back smelling like smoke.",
-  "pairs.jacket.bName": "Ava",
-  "pairs.jacket.b":
-    "It was hanging by the door and you never wear it. I would've asked, but you were asleep and I was already late.",
-  "pairs.lastSlice.aName": "Ben",
-  "pairs.lastSlice.a":
-    "I called dibs on the last slice before the movie started. Everyone heard me.",
-  "pairs.lastSlice.bName": "Lily",
-  "pairs.lastSlice.b":
-    "You can't call dibs and then not touch it for two hours. It was just sitting there going cold, so I ate it.",
   "appeal.lead":
-    "Something missing or wrong? Add it once and the judges look at everything again. Costs 1 verdict.",
-  "appeal.label": "Your context",
-  "appeal.placeholder": "What did the judges miss?",
+    "Uses 1 verdict.",
+  "appeal.placeholder": "What did the judges miss? A fact, a message, or what was actually agreed.",
   "appeal.submit": "Re-judge with my context",
   "appeal.sending": "Anonymizing your context…",
   "appeal.judging": "The judges are looking at everything again…",
@@ -637,8 +594,6 @@ const en = {
   "appeal.previous": "Earlier verdict",
   "appeal.failed": "The re-judge didn't go through. Your credit is back; you can try again.",
   "appeal.refused": "The judges wouldn't re-judge with that context. Your credit is back.",
-  "appeal.leadVerdict":
-    "Something missing or wrong? Add it and the judges look at everything again. Each time costs 1 verdict, up to twice per verdict.",
   "appeal.history": "Verdict history",
   "faq.both.q": "Can the other person tell their side?",
   "faq.both.a":
@@ -683,6 +638,7 @@ const en = {
   "unavailable.cta": "Go to Judge",
   "error.removed": "This was removed. Its link no longer works.",
   "error.names_unavailable": "Names can't be saved right now. Try again later.",
+  "error.update_required": "This case has more than two sides. Update the app to open it.",
   "verdict.remove": "Remove this verdict",
   "verdict.remove.confirm":
     "Remove what you wrote, the names and the display names? The share link and its preview image stop loading for everyone (previews already posted in chats may still show until those apps refresh them). This can't be undone.",
@@ -1088,6 +1044,7 @@ export const ERROR_KEY_BY_CODE: Partial<Record<string, Key>> = {
   anonymize_failed: "error.anonymize_failed",
   removed: "error.removed",
   names_unavailable: "error.names_unavailable",
+  update_required: "error.update_required",
   age_blocked: "error.age_blocked",
   age_unconfirmed: "error.age_unconfirmed",
   password_wrong: "error.password_wrong",

@@ -271,27 +271,36 @@ final class TextHelperTests: XCTestCase {
     }
 
     @MainActor
-    func testTryAnExampleFillsBothSidesAndNeverRepeats() throws {
+    func testTryAnExampleFillsBothSidesAndShowsEveryOneOncePerRound() throws {
+        let english = Examples.load(.en)
+        XCTAssertFalse(english.isEmpty)
         for lang in AppLang.allCases {
-            for example in ExampleCase.all {
-                let parts = [example.myName(lang), example.mine(lang), example.theirName(lang), example.theirs(lang)]
+            let list = Examples.load(lang)
+            XCTAssertEqual(list.map(\.id), english.map(\.id), lang.rawValue)
+            for example in list {
+                let parts = [example.title, example.aName, example.a, example.bName, example.b]
                 XCTAssertFalse(parts.contains(""), "\(example.id) in \(lang.rawValue)")
             }
         }
+        let suite = "judge.tests.examples"
+        UserDefaults().removePersistentDomain(forName: suite)
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        let all = Examples.load(.tr)
         let home = HomeModel()
         home.argument = "Something already typed in the box."
         home.otherName = "Someone"
         var shown: [String] = []
-        for _ in 0..<40 {
-            home.fillExample(lang: .tr)
-            let example = try XCTUnwrap(ExampleCase.all.first { $0.mine(.tr) == home.argument })
-            XCTAssertEqual(home.caseName, example.myName(.tr))
-            XCTAssertEqual(home.otherName, example.theirName(.tr))
-            XCTAssertEqual(home.otherSide, example.theirs(.tr))
+        for _ in 0..<(all.count * 2) {
+            home.fillExample(lang: .tr, defaults: defaults)
+            let example = try XCTUnwrap(all.first { $0.a == home.argument })
+            XCTAssertEqual(home.caseName, example.aName)
+            XCTAssertEqual(home.otherName, example.bName)
+            XCTAssertEqual(home.otherSide, example.b)
             XCTAssertNotEqual(shown.last, example.id, "never the same example twice in a row")
             shown.append(example.id)
         }
-        XCTAssertGreaterThan(Set(shown).count, 1)
+        XCTAssertEqual(Set(shown.prefix(all.count)).count, all.count, "every example once before any repeats")
+        XCTAssertEqual(Set(shown.suffix(all.count)).count, all.count, "and again in the next round")
     }
 
     @MainActor

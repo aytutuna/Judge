@@ -92,6 +92,13 @@ extension SavedVerdict {
     var contentLang: AppLang { AppLang(rawValue: lang) ?? .en }
     var nameMap: [NameMapping] { WireDecoding.nameMap(fromJSON: nameMapJSON) }
 
+    /// The stored result of a verdict with three or four sides; `verdict` on
+    /// the row is only its two-sided projection. Nil for every other row.
+    var manyResult: VerdictResult? {
+        guard resultJSON.contains("\"parties\""), let result = try? WireDecoding.result(fromJSON: resultJSON), result.isMany else { return nil }
+        return result
+    }
+
     /// The verdict screen's input, or nil when the stored JSON no longer decodes.
     func session() -> VerdictSession? {
         guard let result = try? WireDecoding.result(fromJSON: resultJSON) else { return nil }

@@ -119,6 +119,8 @@ const sv: Locale = {
     verdictAria: "Dom: {label}",
     "party.a": "Part A",
     "party.b": "Part B",
+    "party.c": "Part C",
+    "party.d": "Part D",
     "party.youLabel": "{label} (du)",
     you: "Du",
     "shared.subtitle": "Någon delade den här domen",
@@ -345,8 +347,7 @@ const sv: Locale = {
     "signin.createNote": "Vi mejlar dig en kod för att bekräfta adressen. Det behöver du bara göra en gång.",
     "signin.passwordChoose": "Du är inloggad. Välj ett lösenord till nästa gång.",
     "signin.passwordSave": "Spara lösenord",
-    "signin.passwordSaveFailed": "Du är inloggad, men vi kunde inte spara lösenordet. Försök igen eller ange det senare i Inställningar.",
-    "signin.passwordSkip": "Hoppa över för nu",
+    "signin.passwordSaveFailed": "Vi kunde inte spara lösenordet. Försök igen.",
     "signin.passwordSubmit": "Logga in",
     "signin.rateLimited": "För många försök. Vänta en minut och försök igen.",
     "signin.serviceDown": "Det går inte att logga in just nu. Försök igen senare.",
@@ -375,10 +376,6 @@ const sv: Locale = {
     "account.deleteConfirm":
       "Radera ditt konto? Dina krediter, ditt abonnemang och dina inloggningsuppgifter raderas. Dina domar och dina sidor i tvåsidiga fall tas bort: det du skrev och namnen raderas, och deras delningslänkar slutar fungera.",
     "account.deleteYes": "Ja, radera det",
-    "account.passwordSet": "Ange ett lösenord",
-    "account.passwordChange": "Byt lösenord",
-    "account.passwordCurrent": "Nuvarande lösenord",
-    "account.passwordSaved": "Lösenordet har sparats.",
     "account.deleteCancel": "Behåll mitt konto",
     "account.deleted": "Ditt konto är raderat. Du skickas till startsidan…",
     "account.deleteFailed": "Vi kunde inte radera kontot just nu. Vill du försöka igen?",
@@ -466,6 +463,10 @@ const sv: Locale = {
     "case.judgeNow.yes": "Ja, döm nu",
     "case.judgeExpired.confirm": "Vill du få en dom på bara din sida? Det kostar 1 dom.",
     "case.judgeExpired.yes": "Ja, använd 1 dom",
+    "case.side.waiting": "Väntar",
+    "case.side.answered": "Har svarat",
+    "case.judgeAnswered": "Döm med sidorna som har svarat",
+    "case.judgeAnswered.confirm": "Vill du få en dom från sidorna som har svarat? De andra inbjudningarna stängs och de kan inte svara längre.",
     "case.cancel": "Avbryt",
     "case.retry": "Försök igen",
     "case.failedBody": "Du har fått tillbaka krediten. Du kan försöka igen nu.",
@@ -474,9 +475,13 @@ const sv: Locale = {
     "case.accounts": "Vad varje sida berättade för domarna",
     "case.accountA": "Part A:s berättelse",
     "case.accountB": "Part B:s berättelse",
+    "case.accountC": "Part C:s berättelse",
+    "case.accountD": "Part D:s berättelse",
     "case.accountYou": "Din berättelse ({label})",
     "case.contextA": "Part A kompletterade",
     "case.contextB": "Part B kompletterade",
+    "case.contextC": "Part C kompletterade",
+    "case.contextD": "Part D kompletterade",
     "case.contextYou": "Din komplettering ({label})",
     "case.evidenceItem": "Bild {n}, som domarna läste den",
     "case.notYet": "Den andra har inte svarat än.",
@@ -560,6 +565,7 @@ const sv: Locale = {
     "home.yourPlaceholder": "Vad är problemet?",
     "home.addContext": "Komplettera",
     "home.addTheirSide": "Lägg till den andras sida",
+    "home.addSide": "Lägg till ännu en sida",
     "home.removeTheirSide": "Ta bort den andras sida",
     "home.sendLink": "Skicka en länk",
     "home.clear": "Rensa",
@@ -573,57 +579,9 @@ const sv: Locale = {
     "home.says": "{name} säger:",
     "home.mySide": "Min sida:",
     "home.otherSide": "Den andras sida:",
-    "pairs.dishwasher.aName": "Emma",
-    "pairs.dishwasher.a":
-      "Du har ställt skålarna i överkorgen igen. Där uppe blir de aldrig rena – det är ju det underkorgen är till för.",
-    "pairs.dishwasher.bName": "Johan",
-    "pairs.dishwasher.b":
-      "De får plats fint där uppe, och då blir underkorgen ledig för kastrullerna. Jag har plockat in disken så här i flera år och allt har blivit rent.",
-    "pairs.bill.aName": "Sara",
-    "pairs.bill.a":
-      "Jag drack ingenting, så jag borde inte betala en fjärdedel av vinet. Att dela lika på maten går bra för mig.",
-    "pairs.bill.bName": "Erik",
-    "pairs.bill.b":
-      "Vi delar alltid bara på fyra. Att räkna ut vem som tog vad varje gång är jobbigt, och det är ändå ingen stor skillnad.",
-    "pairs.thermostat.aName": "Linnea",
-    "pairs.thermostat.a":
-      "Det är 19 grader här inne och jag fryser fast jag har luvtröja på mig. Att höja till 22 är väl inte orimligt.",
-    "pairs.thermostat.bName": "Anton",
-    "pairs.thermostat.b":
-      "22 grader är alldeles för varmt att sova i. Du kan ta på dig ett lager till, jag kan inte ta av mig mer.",
-    "pairs.roadTrip.aName": "Ida",
-    "pairs.roadTrip.a":
-      "Jag körde hela vägen dit, sex timmar. Det är bara rättvist att du kör hem.",
-    "pairs.roadTrip.bName": "Viktor",
-    "pairs.roadTrip.b":
-      "Jag sa innan vi åkte att jag hatar att köra i mörker, och vi åker sju i kväll. Nästa gång kör jag på morgnarna.",
-    "pairs.seat.aName": "Klara",
-    "pairs.seat.a":
-      "Mitt säte går att fälla bakåt, så jag fäller det. Det är ett nattflyg och alla försöker sova.",
-    "pairs.seat.bName": "Filip",
-    "pairs.seat.b":
-      "Jag är 191 cm lång och knäna trycker redan mot ditt säte. Du kunde åtminstone fråga innan du fäller det ända bak.",
-    "pairs.spoiler.aName": "Wilma",
-    "pairs.spoiler.a":
-      "Du berättade vem mördaren var innan jag ens hade börjat på sista avsnittet. Jag hade väntat på det hela veckan.",
-    "pairs.spoiler.bName": "Axel",
-    "pairs.spoiler.b":
-      "Det kom ut för tre veckor sedan och du sa att du hade sett klart. Jag kan inte hålla koll på hur långt alla har kommit.",
-    "pairs.jacket.aName": "Albin",
-    "pairs.jacket.a":
-      "Du hade på dig min jeansjacka på konserten utan att fråga. Den luktade rök när jag fick tillbaka den.",
-    "pairs.jacket.bName": "Ebba",
-    "pairs.jacket.b":
-      "Den hängde vid dörren och du använder den aldrig. Jag hade frågat, men du sov och jag var redan sen.",
-    "pairs.lastSlice.aName": "Lucas",
-    "pairs.lastSlice.a": "Jag paxade sista pizzabiten innan filmen började. Alla hörde mig.",
-    "pairs.lastSlice.bName": "Alva",
-    "pairs.lastSlice.b":
-      "Man kan inte paxa något och sedan inte röra det på två timmar. Den låg bara där och kallnade, så jag åt upp den.",
     "appeal.lead":
-      "Saknas något eller blev något fel? Lägg till det en gång så går domarna igenom allt igen. Kostar 1 dom.",
-    "appeal.label": "Din komplettering",
-    "appeal.placeholder": "Vad missade domarna?",
+      "Kostar 1 dom.",
+    "appeal.placeholder": "Vad missade domarna? Ett faktum, ett meddelande eller vad ni faktiskt kom överens om.",
     "appeal.submit": "Döm om med min komplettering",
     "appeal.sending": "Anonymiserar din komplettering…",
     "appeal.judging": "Domarna går igenom allt igen…",
@@ -643,8 +601,6 @@ const sv: Locale = {
     "appeal.previous": "Tidigare dom",
     "appeal.failed": "Omprövningen gick inte igenom. Du har fått tillbaka krediten och kan försöka igen.",
     "appeal.refused": "Domarna ville inte pröva om med den kompletteringen. Du har fått tillbaka krediten.",
-    "appeal.leadVerdict":
-      "Saknas något eller blev något fel? Lägg till det så går domarna igenom allt igen. Varje gång kostar 1 dom, högst två gånger per dom.",
     "appeal.history": "Domens historik",
     "faq.both.q": "Kan den andra personen berätta sin sida?",
     "faq.both.a":
@@ -686,6 +642,7 @@ const sv: Locale = {
     "unavailable.cta": "Gå till Judge",
     "error.removed": "Det här har tagits bort. Länken fungerar inte längre.",
     "error.names_unavailable": "Namn kan inte sparas just nu. Försök igen senare.",
+    "error.update_required": "Det här fallet har fler än två sidor. Uppdatera appen för att öppna det.",
     "verdict.remove": "Ta bort den här domen",
     "verdict.remove.confirm":
       "Ta bort det du skrev, namnen och visningsnamnen? Delningslänken och dess förhandsbild laddas inte längre för någon (förhandsvisningar som redan delats i chattar kan synas tills apparna uppdaterar dem). Det går inte att ångra.",

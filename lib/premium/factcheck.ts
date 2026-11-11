@@ -28,9 +28,29 @@ const TR_FACTCHECK_BLOCK = `
 
 LANGUAGE: Write each claim and summary in Turkish, in everyday words, addressing the reader with informal "sen", never "siz". Refer to the parties as "Taraf A" and "Taraf B". Keep every source title and URL exactly as it appeared in the search results, untranslated. Keep the status values exactly as specified in the schema (English identifiers).`;
 
-function factCheckLanguageBlock(lang: Lang): string {
+/** The prompt for a dispute with `sides` sides (three or four): the same
+ * rules, worded for all of them. Two sides get FACTCHECK_SYSTEM as it is. */
+export function factCheckSystem(sides = 2): string {
+  if (sides <= 2) return FACTCHECK_SYSTEM;
+  return FACTCHECK_SYSTEM.replace("a two-party dispute", `a dispute among ${sides} parties`).replace(
+    "Party A and Party B",
+    sideList("Party", sides),
+  );
+}
+
+/** "Party A, Party B and Party C" for the first `sides` letters. */
+function sideList(word: string, sides: number): string {
+  const labels = ["A", "B", "C", "D"].slice(0, sides).map((l) => `${word} ${l}`);
+  return labels.join(", ").replace(/, ([^,]*)$/, " and $1");
+}
+
+function factCheckLanguageBlock(lang: Lang, sides = 2): string {
   if (lang === "en") return "";
-  if (lang === "tr") return TR_FACTCHECK_BLOCK;
+  if (lang === "tr") {
+    return sides > 2
+      ? TR_FACTCHECK_BLOCK.replace('"Taraf A" and "Taraf B"', sideList("Taraf", sides).replace(/Taraf (\w)/g, '"Taraf $1"'))
+      : TR_FACTCHECK_BLOCK;
+  }
   const voice = voiceNote(lang);
   return `
 
@@ -185,11 +205,11 @@ function maxSearches(): number {
 const FACTCHECK_EFFORT: Effort = "low";
 
 /** Runs the fact-check on the anonymized text. Never throws. */
-export async function runFactCheck(anonymizedText: string, lang: Lang): Promise<FactCheck> {
+export async function runFactCheck(anonymizedText: string, lang: Lang, sides = 2): Promise<FactCheck> {
   try {
     await loadLocales();
     const res = await claudeSearchJson<unknown>({
-      system: `${FACTCHECK_SYSTEM}${factCheckLanguageBlock(lang)}`,
+      system: `${factCheckSystem(sides)}${factCheckLanguageBlock(lang, sides)}`,
       user: `THE DISPUTE:\n\n${anonymizedText}`,
       schema: FACTCHECK_SCHEMA as unknown as Record<string, unknown>,
       model: factCheckModel(),

@@ -10,7 +10,17 @@ enum HistoryLabels {
     private static func text(_ item: HistoryItem) -> String? { item.headline ?? item.excerpt }
 
     private static func parties(_ item: HistoryItem) -> [String: Names.Resolved] {
-        Names.resolveParties(item.nameMap, selfLang: ContentLang.of(text(item) ?? ""), selfParty: item.party == "b" ? "B" : "A")
+        Names.resolveParties(item.nameMap, selfLang: ContentLang.of(text(item) ?? ""), selfParty: item.party.uppercased(), sides: item.sideCount)
+    }
+
+    /// "Party C" in the app's language.
+    private static func label(_ letter: String, _ lang: AppLang) -> String {
+        switch letter {
+        case "b": return L10n.partyB(lang)
+        case "c": return L10n.partyC(lang)
+        case "d": return L10n.partyD(lang)
+        default: return L10n.partyA(lang)
+        }
     }
 
     private static func named(_ parties: [String: Names.Resolved], _ letter: String) -> String? {
@@ -20,7 +30,8 @@ enum HistoryLabels {
 
     /// The other party's first name, from the viewer's own names.
     static func otherName(_ item: HistoryItem) -> String? {
-        named(parties(item), item.party == "b" ? "A" : "B")
+        if item.isMany { return nil }
+        return named(parties(item), item.party == "b" ? "A" : "B")
     }
 
     /// The row's state, with an invite whose time ran out read as expired
@@ -35,8 +46,8 @@ enum HistoryLabels {
     static func title(_ item: HistoryItem, lang: AppLang) -> String {
         if let text = text(item), !text.isEmpty {
             let textLang = ContentLang.of(text)
-            let restored = Names.restoreNames(text, parties: parties(item), textLang: textLang)
-            return CaseLogic.localizeLabels(restored, lang: ContentLang.of(restored))
+            let restored = Names.restoreNames(text, parties: parties(item), textLang: textLang, sides: item.sideCount)
+            return CaseLogic.localizeLabels(restored, lang: ContentLang.of(restored), sides: item.sideCount)
         }
         if item.isCase {
             if let date = ErrorText.formatDate(item.at, lang: lang) { return L10n.caseListUntitled(lang, date: date) }
@@ -64,11 +75,18 @@ enum HistoryLabels {
     }
 
     private static func yours(_ item: HistoryItem) -> Bool {
-        item.verdict == (item.party == "b" ? "side_b" : "side_a")
+        if item.isMany { return item.winner == item.party }
+        return item.verdict == (item.party == "b" ? "side_b" : "side_a")
     }
 
     /// "You're right", "{name} is right", or the outcome itself.
     private static func ruling(_ item: HistoryItem, other: String?, lang: AppLang) -> String {
+        if item.isMany {
+            // `verdict` is only the older projection here: the winner decides.
+            guard let winner = item.winner else { return L10n.verdictTooClose(lang) }
+            if yours(item) { return L10n.verdictWinSelf(lang) }
+            return L10n.verdictWin(lang, name: named(parties(item), winner.uppercased()) ?? label(winner, lang))
+        }
         switch item.finalVerdict {
         case .sideA, .sideB:
             if yours(item) {
@@ -88,6 +106,7 @@ enum HistoryLabels {
     static func tone(_ item: HistoryItem, now: Date) -> Tone {
         switch state(item, now: now) {
         case .ready:
+            if item.isMany { return item.winner == nil ? .neutral : (yours(item) ? .yours : .theirs) }
             switch item.finalVerdict {
             case .sideA, .sideB: return yours(item) ? .yours : .theirs
             default: return .neutral

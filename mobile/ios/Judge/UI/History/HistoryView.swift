@@ -445,18 +445,20 @@ private struct PhoneRow: View {
     var body: some View {
         let nameMap = row.nameMap
         let selfLang = row.contentLang
-        let parties = Names.partyNames(nameMap, lang: lang, selfLang: selfLang)
+        let many = row.manyResult
+        let parties = Names.partyNames(nameMap, lang: lang, selfLang: selfLang, sides: many?.sideCount ?? 2)
         let headline = HistoryEntry.phone(row).title(lang: lang)
         let verdict = row.finalVerdict
+        let seal = many.map { VerdictDisplay.seal(winner: $0.winner) } ?? VerdictDisplay.seal(verdict)
         let date = row.createdAt.formatted(Date.FormatStyle(date: .abbreviated, time: .shortened).locale(lang.locale))
         HStack(alignment: .top, spacing: 12) {
             Circle()
-                .fill(sealColor(VerdictDisplay.seal(verdict)))
+                .fill(sealColor(seal))
                 .frame(width: 12, height: 12)
                 .padding(.top, 4)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 4) {
-                Text(VerdictDisplay.label(verdict, parties: parties, lang: lang))
+                Text(many.map { VerdictDisplay.label($0, parties: parties, lang: lang) } ?? VerdictDisplay.label(verdict, parties: parties, lang: lang))
                     .brandText(.slotTitle)
                     .foregroundStyle(Brand.ink)
                 Text(headline)
@@ -476,6 +478,8 @@ private struct PhoneRow: View {
         switch seal {
         case .a: return sides.a.ink
         case .b: return sides.b.ink
+        case .c: return sides.c.ink
+        case .d: return sides.d.ink
         case .none: return Brand.ink
         }
     }

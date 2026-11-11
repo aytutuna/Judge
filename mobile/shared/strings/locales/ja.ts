@@ -27,7 +27,6 @@ const ja: AppLocale = {
     "app.history.removeFailed": "{n}件を削除できませんでした。接続を確認して、もう一度お試しください。",
     "app.history.offlineRemove": "オフラインのため削除できません。接続してからもう一度お試しください。",
     "app.pricing.free.account": "Apple、Google、またはメールアドレスでログイン",
-    "app.context.label": "補足（任意）",
     "app.pricing.context": "補足の画像は読み取ったあと破棄されます。追加料金はかかりません",
     "app.pricing.headline": "最初の判定は無料です。",
     "app.pricing.sub":
@@ -98,48 +97,6 @@ const ja: AppLocale = {
     "app.home.addTheirSide": "相手の言い分を追加",
     "app.home.removeTheirSide": "相手の言い分を削除",
     "app.home.clear": "クリア",
-    "app.example.dishwasher.aName": "陽菜",
-    "app.example.dishwasher.a":
-      "またお椀を上の段に入れてる。上だと全然きれいにならないんだよ。そのための下の段でしょ。",
-    "app.example.dishwasher.bName": "健太",
-    "app.example.dishwasher.b":
-      "上でもちゃんと入るし、そのほうが下の段を鍋やフライパンに使えるじゃん。何年もこうやって入れてるけど、汚れが残ったことなんて一度もないよ。",
-    "app.example.bill.aName": "優子",
-    "app.example.bill.a":
-      "私はお酒を一滴も飲んでないんだから、ワイン代の4分の1を払うのはおかしいと思う。料理代を割り勘にするのは全然いいけど。",
-    "app.example.bill.bName": "拓也",
-    "app.example.bill.b":
-      "いつも4人で割り勘にしてるじゃん。毎回誰が何を頼んだか計算するのは面倒だし、どうせたいした差じゃないよ。",
-    "app.example.thermostat.aName": "結衣",
-    "app.example.thermostat.a": "この部屋、19℃しかないんだよ。パーカーを着てても寒いの。暖房を22℃にするくらい、別におかしくないでしょ。",
-    "app.example.thermostat.bName": "翔",
-    "app.example.thermostat.b":
-      "22℃じゃ暑すぎて寝られないよ。そっちはもう1枚着ればいいけど、こっちはこれ以上脱げないんだから。",
-    "app.example.roadTrip.aName": "真央",
-    "app.example.roadTrip.a": "行きの6時間、ずっと私が運転したんだよ。帰りはそっちが運転するのが筋でしょ。",
-    "app.example.roadTrip.bName": "大地",
-    "app.example.roadTrip.b":
-      "夜の運転は大嫌いだって、出発前に言ったよね。帰りは夜7時出発だよ。次の旅行では朝の運転は全部俺がやるから。",
-    "app.example.seat.aName": "彩",
-    "app.example.seat.a": "この席はリクライニングできるので、倒します。夜の便ですし、みんな寝ようとしているんです。",
-    "app.example.seat.bName": "直樹",
-    "app.example.seat.b":
-      "身長が190cmあって、膝がもう前の座席に当たっているんです。いちばん後ろまで倒す前に、ひと言くらい声をかけてくれてもいいでしょう。",
-    "app.example.spoiler.aName": "莉子",
-    "app.example.spoiler.a": "最終話を見始める前に、犯人をバラしたでしょ。1週間ずっと楽しみにしてたのに。",
-    "app.example.spoiler.bName": "蓮",
-    "app.example.spoiler.b":
-      "配信されたのは3週間前だし、もう見終わったって言ってたじゃん。誰がどこまで見てるかなんて、いちいち覚えてられないよ。",
-    "app.example.jacket.aName": "悠斗",
-    "app.example.jacket.a": "俺のデニムジャケット、勝手にライブに着ていったよね。タバコくさくなって返ってきたんだけど。",
-    "app.example.jacket.bName": "千尋",
-    "app.example.jacket.b":
-      "玄関に掛けっぱなしだったし、全然着てないじゃん。聞こうと思ったけど寝てたし、こっちはもう遅刻しそうだったの。",
-    "app.example.lastSlice.aName": "亮",
-    "app.example.lastSlice.a": "映画が始まる前に「ピザの最後の1切れは俺の」って言ったよね。みんな聞いてたし。",
-    "app.example.lastSlice.bName": "美羽",
-    "app.example.lastSlice.b":
-      "「俺の」って言っておいて、2時間も手をつけないのはなしでしょ。ずっと置きっぱなしで冷めてたから、食べちゃった。",
     "app.case.waitingKicker": "ケース · 返事待ち",
     "app.case.waitingFor": "{name}の返事待ち",
     "app.case.waitingLead": "{name}はアカウントなしで言い分を書けます。判定が出るまで、お互いの内容は見えません。",
@@ -160,9 +117,7 @@ const ja: AppLocale = {
     "app.verdict.claims": "それぞれの主張の筋道",
     "app.verdict.back": "判定",
     "app.appeal.title": "補足して再判定",
-    "app.appeal.intro": "審査員が見落としたことがありますか？　補足すると、もう一度判定します。最初の判定も記録に残ります。",
-    "app.appeal.ask": "審査員に伝えたいことは？",
-    "app.appeal.placeholder": "事実、やりとりしたメッセージ、実際に取り決めたことなど。",
+    "app.appeal.placeholder": "審査員が見落としたことは？事実、やりとりしたメッセージ、実際に取り決めたことなど。",
     "app.appeal.cost": "判定1回分を使います。1つの判定につき2回まで補足でき、残りは{left}回です。",
     "app.appeal.costCase": "判定1回分を使います。1つのケースにつき1回だけ補足できます。",
     "app.appeal.submit": "再判定する",

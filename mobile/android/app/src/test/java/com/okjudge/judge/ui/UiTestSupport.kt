@@ -71,9 +71,10 @@ fun SampleVerdict(
     val selfLang = ContentLang.verdictLang(outcome.result.result)
     val s = UiTestSupport.s(lang)
     val view = sampleView(outcome, lang, status).personalized(outcome.nameMap, selfLang)
-    val parties = PartyNames.partyNames(outcome.nameMap, selfLang, s)
+    val sides = outcome.result.result.sideCount
+    val parties = PartyNames.partyNames(outcome.nameMap, selfLang, s, sides)
     val actions = CardActions(onShare = {}, onCopy = {}, copied = false)
-    val restored = PartyNames.restoredNames(outcome.nameMap, selfLang)
+    val restored = PartyNames.restoredNames(outcome.nameMap, selfLang, sides)
     if (summary) {
         RulingSummary(view, parties, actions, onDetails = {}, reducedMotion = true, modifier = modifier, restoredNames = restored)
     } else {
@@ -81,7 +82,7 @@ fun SampleVerdict(
     }
 }
 
-fun sample(name: String): VerdictOutcome = Fixtures.sample(name)
+fun sample(name: String): VerdictOutcome = Fixtures.anySample(name)
 
 /** The `history` page of verdicts.json, as GET /api/v1/me/history answers. */
 fun historyPage(): HistoryPage = decodeHistoryPage(Fixtures.verdicts["history"].toString())

@@ -120,6 +120,66 @@
   --party-b-tint: var(--sage-tint);
 }
 
+/* Sides C and D (cases with three or four sides) are blue and violet, apart
+   from sage and terracotta. Whoever is looking is still sage: under
+   data-you="c" or "d" their letter takes sage and Party A takes their old
+   colour, as Party B does above. Dark values are written twice, like the
+   tokens at the top. */
+:root {
+  --blue: #3F7CC4;
+  --blue-ink: #2B5F9E;
+  --blue-tint: #DDE8F6;
+  --violet: #8B63C4;
+  --violet-ink: #6B459F;
+  --violet-tint: #E9DFF5;
+  --party-c: var(--blue);
+  --party-c-strong: var(--blue);
+  --party-c-ink: var(--blue-ink);
+  --party-c-tint: var(--blue-tint);
+  --party-d: var(--violet);
+  --party-d-strong: var(--violet);
+  --party-d-ink: var(--violet-ink);
+  --party-d-tint: var(--violet-tint);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --blue: #5C97DB;
+    --blue-ink: #9CC2F2;
+    --blue-tint: #1F3047;
+    --violet: #A07FD6;
+    --violet-ink: #C9ADF0;
+    --violet-tint: #31264A;
+  }
+}
+:root[data-theme="dark"] {
+  --blue: #5C97DB;
+  --blue-ink: #9CC2F2;
+  --blue-tint: #1F3047;
+  --violet: #A07FD6;
+  --violet-ink: #C9ADF0;
+  --violet-tint: #31264A;
+}
+[data-you="c"] {
+  --party-a: var(--blue);
+  --party-a-strong: var(--blue);
+  --party-a-ink: var(--blue-ink);
+  --party-a-tint: var(--blue-tint);
+  --party-c: var(--sage);
+  --party-c-strong: var(--sage-strong);
+  --party-c-ink: var(--sage-ink);
+  --party-c-tint: var(--sage-tint);
+}
+[data-you="d"] {
+  --party-a: var(--violet);
+  --party-a-strong: var(--violet);
+  --party-a-ink: var(--violet-ink);
+  --party-a-tint: var(--violet-tint);
+  --party-d: var(--sage);
+  --party-d-strong: var(--sage-strong);
+  --party-d-ink: var(--sage-ink);
+  --party-d-tint: var(--sage-tint);
+}
+
 :root {
   color-scheme: light dark;
 

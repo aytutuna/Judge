@@ -119,6 +119,8 @@ const he: Locale = {
     verdictAria: "פסק הדין: {label}",
     "party.a": "צד A",
     "party.b": "צד B",
+    "party.c": "צד C",
+    "party.d": "צד D",
     "party.youLabel": "{label} (את/ה)",
     you: "את/ה",
     "shared.subtitle": "מישהו שיתף את פסק הדין הזה",
@@ -338,8 +340,7 @@ const he: Locale = {
     "signin.createNote": "נשלח לך קוד במייל כדי לאמת את הכתובת הזו. צריך לעשות זאת פעם אחת בלבד.",
     "signin.passwordChoose": "התחברת. בחר סיסמה לפעם הבאה.",
     "signin.passwordSave": "שמירת הסיסמה",
-    "signin.passwordSaveFailed": "התחברת, אבל לא הצלחנו לשמור את הסיסמה. נסה שוב או הגדר אותה מאוחר יותר בהגדרות.",
-    "signin.passwordSkip": "דלג לעכשיו",
+    "signin.passwordSaveFailed": "לא הצלחנו לשמור את הסיסמה. נסה שוב.",
     "signin.passwordSubmit": "התחברות",
     "signin.rateLimited": "יותר מדי ניסיונות. אפשר לנסות שוב בעוד דקה.",
     "signin.serviceDown": "ההתחברות לא זמינה כרגע. אפשר לנסות שוב מאוחר יותר.",
@@ -367,10 +368,6 @@ const he: Locale = {
     "account.deleteConfirm":
       "למחוק את החשבון? הקרדיטים, התוכנית ופרטי ההתחברות יימחקו. פסקי הדין שלך והצדדים שלך בתיקים יוסרו: מה שכתבת והשמות יימחקו, וקישורי השיתוף שלהם יפסיקו לעבוד.",
     "account.deleteYes": "כן, למחוק",
-    "account.passwordSet": "הגדרת סיסמה",
-    "account.passwordChange": "שינוי סיסמה",
-    "account.passwordCurrent": "הסיסמה הנוכחית",
-    "account.passwordSaved": "הסיסמה נשמרה.",
     "account.deleteCancel": "להשאיר את החשבון",
     "account.deleted": "החשבון נמחק. חוזרים לדף הבית…",
     "account.deleteFailed": "לא הצלחנו למחוק את החשבון כרגע. אפשר לנסות שוב?",
@@ -458,6 +455,10 @@ const he: Locale = {
     "case.judgeNow.yes": "כן, להכריע עכשיו",
     "case.judgeExpired.confirm": "לקבל פסק דין רק לפי הצד שלך? זה עולה פסק דין אחד.",
     "case.judgeExpired.yes": "כן, להשתמש בפסק דין אחד",
+    "case.side.waiting": "ממתין",
+    "case.side.answered": "ענה",
+    "case.judgeAnswered": "להכריע לפי הצדדים שענו",
+    "case.judgeAnswered.confirm": "לקבל פסק דין לפי הצדדים שענו? שאר ההזמנות ייסגרו, והם לא יוכלו עוד לענות.",
     "case.cancel": "ביטול",
     "case.retry": "לנסות שוב",
     "case.failedBody": "הקרדיט חזר לחשבון. אפשר לנסות שוב עכשיו.",
@@ -466,9 +467,13 @@ const he: Locale = {
     "case.accounts": "מה כל צד סיפר לשופטים",
     "case.accountA": "הגרסה של צד A",
     "case.accountB": "הגרסה של צד B",
+    "case.accountC": "הגרסה של צד C",
+    "case.accountD": "הגרסה של צד D",
     "case.accountYou": "הגרסה שלך ({label})",
     "case.contextA": "הקשר נוסף מצד A",
     "case.contextB": "הקשר נוסף מצד B",
+    "case.contextC": "הקשר נוסף מצד C",
+    "case.contextD": "הקשר נוסף מצד D",
     "case.contextYou": "ההקשר שהוספת ({label})",
     "case.evidenceItem": "תמונה {n}, כפי שהשופטים קראו אותה",
     "case.notYet": "עוד לא התקבלה תשובה.",
@@ -550,6 +555,7 @@ const he: Locale = {
     "home.yourPlaceholder": "מה הבעיה?",
     "home.addContext": "להוסיף הקשר",
     "home.addTheirSide": "להוסיף את הצד השני",
+    "home.addSide": "להוסיף צד נוסף",
     "home.removeTheirSide": "להסיר את הצד השני",
     "home.sendLink": "לשלוח קישור",
     "home.clear": "ניקוי",
@@ -563,55 +569,9 @@ const he: Locale = {
     "home.says": "לדברי {name}:",
     "home.mySide": "הצד שלי:",
     "home.otherSide": "הצד השני:",
-    "pairs.dishwasher.aName": "נועה",
-    "pairs.dishwasher.a":
-      "שוב שמת את הקערות במדף העליון. שם הן אף פעם לא יוצאות נקיות, בשביל זה יש את המדף התחתון.",
-    "pairs.dishwasher.bName": "איתי",
-    "pairs.dishwasher.b":
-      "הן נכנסות שם בלי בעיה, וככה נשאר מקום למטה לסירים. אני מסדר ככה כבר שנים ושום דבר לא יצא מלוכלך.",
-    "pairs.bill.aName": "מיכל",
-    "pairs.bill.a":
-      "לא שתיתי כלום, אז אני לא צריכה לשלם רבע מהיין. לחלק את האוכל שווה בשווה זה בסדר מבחינתי.",
-    "pairs.bill.bName": "יונתן",
-    "pairs.bill.b":
-      "תמיד פשוט מחלקים לארבעה. לחשב כל פעם מי אכל מה זה כאב ראש, וההבדל ממילא לא גדול.",
-    "pairs.thermostat.aName": "שירה",
-    "pairs.thermostat.a":
-      "יש פה 19 מעלות וקר לי אפילו עם קפוצ'ון. להעלות את המזגן ל-22 זה לא מוגזם.",
-    "pairs.thermostat.bName": "אורי",
-    "pairs.thermostat.b":
-      "ב-22 מעלות אי אפשר לישון, חם מדי. את יכולה ללבוש עוד שכבה, לי כבר אין מה להוריד.",
-    "pairs.roadTrip.aName": "תמר",
-    "pairs.roadTrip.a": "נהגתי את כל שש השעות בדרך לשם. הכי הוגן שבחזרה אתה תנהג.",
-    "pairs.roadTrip.bName": "עידו",
-    "pairs.roadTrip.b":
-      "אמרתי עוד לפני שיצאנו שאני שונא לנהוג בלילה, ואנחנו יוצאים בשבע בערב. בטיול הבא אני אנהג בבקרים.",
-    "pairs.seat.aName": "ליאת",
-    "pairs.seat.a":
-      "המושב שלי יורד אחורה, אז אני מורידה אותו. זו טיסת לילה וכולם מנסים לישון.",
-    "pairs.seat.bName": "גיא",
-    "pairs.seat.b":
-      "אני מטר תשעים, והברכיים שלי כבר תקועות בגב המושב שלך. יכולת לפחות לשאול לפני שהורדת אותו עד הסוף.",
-    "pairs.spoiler.aName": "הילה",
-    "pairs.spoiler.a":
-      "סיפרת לי מי הרוצח עוד לפני שהתחלתי את הפרק האחרון. חיכיתי לו כל השבוע.",
-    "pairs.spoiler.bName": "אלון",
-    "pairs.spoiler.b":
-      "זה יצא לפני שלושה שבועות, ואמרת שסיימת. אני לא יכול לזכור מי הגיע לאיזה פרק.",
-    "pairs.jacket.aName": "יעל",
-    "pairs.jacket.a": "לבשת את ז'קט הג'ינס שלי להופעה בלי לשאול. הוא חזר עם ריח של עשן.",
-    "pairs.jacket.bName": "רועי",
-    "pairs.jacket.b":
-      "הוא היה תלוי ליד הדלת, ואת אף פעם לא לובשת אותו. הייתי שואל, אבל ישנת, וכבר איחרתי.",
-    "pairs.lastSlice.aName": "אביב",
-    "pairs.lastSlice.a": "שריינתי את המשולש האחרון עוד לפני שהסרט התחיל. כולם שמעו.",
-    "pairs.lastSlice.bName": "נטע",
-    "pairs.lastSlice.b":
-      "אי אפשר לשריין משולש ואז לא לגעת בו שעתיים. הוא סתם עמד שם והתקרר, אז אכלתי אותו.",
     "appeal.lead":
-      "משהו חסר או לא נכון? אפשר להוסיף אותו פעם אחת, והשופטים יבחנו הכול מחדש. זה עולה פסק דין אחד.",
-    "appeal.label": "ההקשר שלך",
-    "appeal.placeholder": "מה השופטים פספסו?",
+      "עולה פסק דין אחד.",
+    "appeal.placeholder": "מה השופטים פספסו? עובדה, הודעה או על מה בעצם סיכמתם.",
     "appeal.submit": "לשפוט מחדש עם ההקשר שלי",
     "appeal.sending": "מסירים את השמות מההקשר שלך…",
     "appeal.judging": "השופטים בוחנים הכול מחדש…",
@@ -631,8 +591,6 @@ const he: Locale = {
     "appeal.previous": "פסק הדין הקודם",
     "appeal.failed": "השיפוט מחדש לא הצליח. הקרדיט חזר לחשבון, אפשר לנסות שוב.",
     "appeal.refused": "השופטים סירבו לשפוט מחדש עם ההקשר הזה. הקרדיט חזר לחשבון.",
-    "appeal.leadVerdict":
-      "משהו חסר או לא נכון? אפשר להוסיף אותו, והשופטים יבחנו הכול מחדש. כל פעם עולה פסק דין אחד, עד פעמיים לכל פסק דין.",
     "appeal.history": "היסטוריית פסק הדין",
     "faq.both.q": "גם הצד השני יכול לספר את שלו?",
     "faq.both.a":
@@ -674,6 +632,7 @@ const he: Locale = {
     "unavailable.cta": "מעבר ל-Judge",
     "error.removed": "זה הוסר. הקישור כבר לא עובד.",
     "error.names_unavailable": "אי אפשר לשמור שמות כרגע. אפשר לנסות שוב מאוחר יותר.",
+    "error.update_required": "בתיק הזה יש יותר משני צדדים. עדכנו את האפליקציה כדי לפתוח אותו.",
     "verdict.remove": "הסרת פסק הדין",
     "verdict.remove.confirm":
       "להסיר את מה שכתבת, את השמות ואת שמות התצוגה? קישור השיתוף ותמונת התצוגה המקדימה שלו יפסיקו להיטען לכולם (תצוגות מקדימות שכבר פורסמו בצ'אטים עשויות להמשיך להופיע עד שהאפליקציות האלה ירעננו אותן). אי אפשר לבטל את זה.",

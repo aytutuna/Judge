@@ -119,6 +119,8 @@ const ca: Locale = {
     verdictAria: "Veredicte: {label}",
     "party.a": "Part A",
     "party.b": "Part B",
+    "party.c": "Part C",
+    "party.d": "Part D",
     "party.youLabel": "{label} (tu)",
     you: "Tu",
     "shared.subtitle": "Algú ha compartit aquest veredicte",
@@ -345,8 +347,7 @@ const ca: Locale = {
     "signin.createNote": "T'enviarem un codi per correu per confirmar aquesta adreça. Només ho has de fer una vegada.",
     "signin.passwordChoose": "Has iniciat la sessió. Tria una contrasenya per a la propera vegada.",
     "signin.passwordSave": "Desa la contrasenya",
-    "signin.passwordSaveFailed": "Has iniciat la sessió, però no hem pogut desar la contrasenya. Torna-ho a provar o defineix-la més tard a Configuració.",
-    "signin.passwordSkip": "Omet per ara",
+    "signin.passwordSaveFailed": "No hem pogut desar la contrasenya. Torna-ho a provar.",
     "signin.passwordSubmit": "Inicia sessió",
     "signin.rateLimited": "Massa intents. Espera un minut i torna-ho a provar.",
     "signin.serviceDown": "Ara mateix no es pot iniciar sessió. Torna-ho a provar més tard.",
@@ -374,10 +375,6 @@ const ca: Locale = {
     "account.deleteConfirm":
       "Vols eliminar el compte? S'esborraran els teus crèdits, el pla i les dades d'inici de sessió. Els teus veredictes i les teves versions dels casos s'eliminaran: s'esborrarà tot el que vas escriure, noms inclosos, i els seus enllaços per compartir deixaran de funcionar.",
     "account.deleteYes": "Sí, elimina'l",
-    "account.passwordSet": "Defineix una contrasenya",
-    "account.passwordChange": "Canvia la contrasenya",
-    "account.passwordCurrent": "Contrasenya actual",
-    "account.passwordSaved": "S'ha desat la contrasenya.",
     "account.deleteCancel": "Em quedo el compte",
     "account.deleted": "S'ha eliminat el compte. Et portem a la pàgina d'inici…",
     "account.deleteFailed": "Ara mateix no hem pogut eliminar el compte. Ho tornes a provar?",
@@ -468,6 +465,10 @@ const ca: Locale = {
     "case.judgeNow.yes": "Sí, jutja-ho ara",
     "case.judgeExpired.confirm": "Vols un veredicte només amb la teva versió? Gastarà 1 veredicte.",
     "case.judgeExpired.yes": "Sí, gasta 1 veredicte",
+    "case.side.waiting": "Esperant",
+    "case.side.answered": "Ha respost",
+    "case.judgeAnswered": "Jutja amb les parts que han respost",
+    "case.judgeAnswered.confirm": "Vols un veredicte amb les parts que han respost? Les altres invitacions es tanquen i aquestes persones ja no podran respondre.",
     "case.cancel": "Cancel·la",
     "case.retry": "Torna-ho a provar",
     "case.failedBody": "T'hem tornat el crèdit. Ja ho pots tornar a provar.",
@@ -476,9 +477,13 @@ const ca: Locale = {
     "case.accounts": "Què ha explicat cada part als jutges",
     "case.accountA": "Versió de Part A",
     "case.accountB": "Versió de Part B",
+    "case.accountC": "Versió de Part C",
+    "case.accountD": "Versió de Part D",
     "case.accountYou": "La teva versió ({label})",
     "case.contextA": "Context afegit per Part A",
     "case.contextB": "Context afegit per Part B",
+    "case.contextC": "Context afegit per Part C",
+    "case.contextD": "Context afegit per Part D",
     "case.contextYou": "Context que has afegit ({label})",
     "case.evidenceItem": "Imatge {n}, tal com la llegeixen els jutges",
     "case.notYet": "Encara no ha respost.",
@@ -564,6 +569,7 @@ const ca: Locale = {
     "home.yourPlaceholder": "Quin és el problema?",
     "home.addContext": "Afegeix context",
     "home.addTheirSide": "Afegeix la seva versió",
+    "home.addSide": "Afegeix una altra part",
     "home.removeTheirSide": "Treu la seva versió",
     "home.sendLink": "Envia-li un enllaç",
     "home.clear": "Esborra",
@@ -578,58 +584,9 @@ const ca: Locale = {
     "home.says": "{name} diu:",
     "home.mySide": "La meva versió:",
     "home.otherSide": "La versió de l'altra persona:",
-    "pairs.dishwasher.aName": "Jordi",
-    "pairs.dishwasher.a":
-      "Has tornat a posar els bols a la cistella de dalt del rentaplats. Allà dalt no surten mai nets; per això hi ha la de baix.",
-    "pairs.dishwasher.bName": "Núria",
-    "pairs.dishwasher.b":
-      "Hi caben perfectament, i així la de baix queda lliure per a les olles. Fa anys que el carrego així i mai no ha sortit res brut.",
-    "pairs.bill.aName": "Clara",
-    "pairs.bill.a":
-      "Jo no he begut res, així que no em toca pagar una quarta part del vi. Dividir el menjar a parts iguals ja em va bé.",
-    "pairs.bill.bName": "Marc",
-    "pairs.bill.b":
-      "Sempre ho dividim entre quatre i prou. Calcular cada vegada qui ha pres què és un maldecap, i tampoc no hi ha tanta diferència.",
-    "pairs.thermostat.aName": "Aina",
-    "pairs.thermostat.a":
-      "Aquí dins fa 19 graus i tinc fred fins i tot amb la dessuadora. Pujar la calefacció a 22 no és cap bogeria.",
-    "pairs.thermostat.bName": "Pol",
-    "pairs.thermostat.b":
-      "A 22 graus fa massa calor per dormir. Tu pots abrigar-te més; jo ja no em puc treure res més.",
-    "pairs.roadTrip.aName": "Arnau",
-    "pairs.roadTrip.a":
-      "Vaig conduir jo les sis hores de l'anada. El més just és que tu condueixis a la tornada.",
-    "pairs.roadTrip.bName": "Júlia",
-    "pairs.roadTrip.b":
-      "Abans de sortir ja et vaig dir que odio conduir de nit, i marxem a les 7 del vespre. Al pròxim viatge, els matins condueixo jo.",
-    "pairs.seat.aName": "Oriol",
-    "pairs.seat.a":
-      "El meu seient es reclina, així que el reclino. És un vol de nit i tothom intenta dormir.",
-    "pairs.seat.bName": "Marina",
-    "pairs.seat.b":
-      "Faig 1,90 i ja tinc els genolls clavats al teu seient. Com a mínim podries preguntar abans de tirar-lo del tot enrere.",
-    "pairs.spoiler.aName": "Mireia",
-    "pairs.spoiler.a":
-      "Em vas dir qui era l'assassí abans que comencés l'últim capítol. Feia tota la setmana que l'esperava.",
-    "pairs.spoiler.bName": "Pere",
-    "pairs.spoiler.b":
-      "Va sortir fa tres setmanes i em vas dir que ja l'havies acabat. No puc estar pendent de per on va cadascú.",
-    "pairs.jacket.aName": "Ona",
-    "pairs.jacket.a":
-      "Et vas posar la meva jaqueta texana per anar al concert sense preguntar-m'ho. Me la vas tornar fent pudor de fum.",
-    "pairs.jacket.bName": "Guillem",
-    "pairs.jacket.b":
-      "Estava penjada al costat de la porta i no te la poses mai. T'ho hauria preguntat, però dormies i jo ja feia tard.",
-    "pairs.lastSlice.aName": "Roger",
-    "pairs.lastSlice.a":
-      "Abans que comencés la pel·li vaig dir que l'últim tros de pizza era meu. Tothom em va sentir.",
-    "pairs.lastSlice.bName": "Carla",
-    "pairs.lastSlice.b":
-      "No pots dir que és teu i després passar-te dues hores sense tocar-lo. Era allà refredant-se, així que me'l vaig menjar.",
     "appeal.lead":
-      "Hi falta alguna cosa o hi ha algun error? Afegeix-ho un cop i els jutges ho tornaran a mirar tot. Costa 1 veredicte.",
-    "appeal.label": "El teu context",
-    "appeal.placeholder": "Què s'han deixat els jutges?",
+      "Gasta 1 veredicte.",
+    "appeal.placeholder": "Què s'han deixat els jutges? Un fet, un missatge o el que realment vau acordar.",
     "appeal.submit": "Torna a jutjar amb el meu context",
     "appeal.sending": "Anonimitzant el teu context…",
     "appeal.judging": "Els jutges ho tornen a mirar tot…",
@@ -649,8 +606,6 @@ const ca: Locale = {
     "appeal.previous": "Veredicte anterior",
     "appeal.failed": "No s'ha pogut tornar a jutjar. T'hem tornat el crèdit; ho pots tornar a provar.",
     "appeal.refused": "Els jutges no han volgut tornar a jutjar amb aquest context. T'hem tornat el crèdit.",
-    "appeal.leadVerdict":
-      "Hi falta alguna cosa o hi ha algun error? Afegeix-ho i els jutges ho tornaran a mirar tot. Cada vegada costa 1 veredicte, fins a dues vegades per veredicte.",
     "appeal.history": "Historial del veredicte",
     "faq.both.q": "L'altra persona pot explicar la seva versió?",
     "faq.both.a":
@@ -692,6 +647,7 @@ const ca: Locale = {
     "unavailable.cta": "Ves a Judge",
     "error.removed": "Això s'ha eliminat. El seu enllaç ja no funciona.",
     "error.names_unavailable": "Ara mateix no es poden desar els noms. Torna-ho a provar més tard.",
+    "error.update_required": "Aquest cas té més de dues parts. Actualitza l'aplicació per obrir-lo.",
     "verdict.remove": "Elimina aquest veredicte",
     "verdict.remove.confirm":
       "Vols eliminar el que vas escriure, els noms i els noms visibles? L'enllaç per compartir i la imatge de previsualització deixaran de carregar-se per a tothom (les previsualitzacions ja publicades en xats poden continuar apareixent fins que aquestes apps les actualitzin). No es pot desfer.",

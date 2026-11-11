@@ -119,6 +119,8 @@ const fr: Locale = {
     verdictAria: "Verdict : {label}",
     "party.a": "Partie A",
     "party.b": "Partie B",
+    "party.c": "Partie C",
+    "party.d": "Partie D",
     "party.youLabel": "{label} (toi)",
     you: "Toi",
     "shared.subtitle": "Quelqu’un a partagé ce verdict",
@@ -344,8 +346,7 @@ const fr: Locale = {
     "signin.createNote": "Nous t'enverrons un code par e-mail pour confirmer cette adresse. Tu n'as à le faire qu'une seule fois.",
     "signin.passwordChoose": "Tu es connecté. Choisis un mot de passe pour la prochaine fois.",
     "signin.passwordSave": "Enregistrer le mot de passe",
-    "signin.passwordSaveFailed": "Tu es connecté, mais nous n'avons pas pu enregistrer le mot de passe. Réessaie, ou définis-le plus tard dans les réglages.",
-    "signin.passwordSkip": "Passer pour l'instant",
+    "signin.passwordSaveFailed": "Nous n'avons pas pu enregistrer le mot de passe. Réessaie.",
     "signin.passwordSubmit": "Se connecter",
     "signin.rateLimited": "Trop de tentatives. Attends une minute et réessaie.",
     "signin.serviceDown": "La connexion n’est pas disponible pour l’instant. Réessaie plus tard.",
@@ -373,10 +374,6 @@ const fr: Locale = {
     "account.deleteConfirm":
       "Supprimer ton compte ? Tes crédits, ton offre et tes informations de connexion seront effacés. Tes verdicts et tes versions dans les dossiers seront supprimés : ce que tu as écrit et les noms seront effacés, et leurs liens de partage cesseront de fonctionner.",
     "account.deleteYes": "Oui, supprimer",
-    "account.passwordSet": "Définir un mot de passe",
-    "account.passwordChange": "Changer le mot de passe",
-    "account.passwordCurrent": "Mot de passe actuel",
-    "account.passwordSaved": "Mot de passe enregistré.",
     "account.deleteCancel": "Garder mon compte",
     "account.deleted": "Ton compte a été supprimé. Retour à l’accueil…",
     "account.deleteFailed": "Impossible de supprimer le compte pour l’instant. Tu veux bien réessayer ?",
@@ -466,6 +463,10 @@ const fr: Locale = {
     "case.judgeNow.yes": "Oui, juger maintenant",
     "case.judgeExpired.confirm": "Obtenir un verdict sur ta seule version ? Ça utilise 1 verdict.",
     "case.judgeExpired.yes": "Oui, utiliser 1 verdict",
+    "case.side.waiting": "En attente",
+    "case.side.answered": "A répondu",
+    "case.judgeAnswered": "Juger avec les camps qui ont répondu",
+    "case.judgeAnswered.confirm": "Obtenir un verdict avec les camps qui ont répondu ? Les autres invitations se ferment et ces personnes ne pourront plus répondre.",
     "case.cancel": "Annuler",
     "case.retry": "Réessayer",
     "case.failedBody": "Ton crédit t’a été rendu. Tu peux réessayer maintenant.",
@@ -474,9 +475,13 @@ const fr: Locale = {
     "case.accounts": "Ce que chaque camp a dit aux juges",
     "case.accountA": "La version de Partie A",
     "case.accountB": "La version de Partie B",
+    "case.accountC": "La version de Partie C",
+    "case.accountD": "La version de Partie D",
     "case.accountYou": "Ta version ({label})",
     "case.contextA": "Partie A a ajouté du contexte",
     "case.contextB": "Partie B a ajouté du contexte",
+    "case.contextC": "Partie C a ajouté du contexte",
+    "case.contextD": "Partie D a ajouté du contexte",
     "case.contextYou": "Contexte que tu as ajouté ({label})",
     "case.evidenceItem": "Image {n}, telle que les juges l’ont lue",
     "case.notYet": "Pas encore de réponse.",
@@ -561,6 +566,7 @@ const fr: Locale = {
     "home.yourPlaceholder": "C’est quoi, le problème ?",
     "home.addContext": "Ajouter du contexte",
     "home.addTheirSide": "Ajouter sa version",
+    "home.addSide": "Ajouter un autre camp",
     "home.removeTheirSide": "Retirer sa version",
     "home.sendLink": "Envoie-lui un lien",
     "home.clear": "Effacer",
@@ -575,58 +581,9 @@ const fr: Locale = {
     "home.says": "{name} dit :",
     "home.mySide": "Ma version :",
     "home.otherSide": "Sa version :",
-    "pairs.dishwasher.aName": "Julie",
-    "pairs.dishwasher.a":
-      "Tu as encore mis les bols dans le panier du haut. Ils n’en ressortent jamais propres, c’est à ça que sert le panier du bas.",
-    "pairs.dishwasher.bName": "Thomas",
-    "pairs.dishwasher.b":
-      "Ils y rentrent très bien, et ça laisse le bas libre pour les casseroles. Je remplis le lave-vaisselle comme ça depuis des années et rien n’est jamais ressorti sale.",
-    "pairs.bill.aName": "Sarah",
-    "pairs.bill.a":
-      "Je n’ai rien bu, alors je ne vois pas pourquoi je paierais un quart du vin. Partager le repas à parts égales, ça me va.",
-    "pairs.bill.bName": "Antoine",
-    "pairs.bill.b":
-      "On divise toujours en quatre, c’est tout. Calculer à chaque fois qui a pris quoi, c’est pénible, et de toute façon ça ne change pas grand-chose.",
-    "pairs.thermostat.aName": "Manon",
-    "pairs.thermostat.a":
-      "Il fait 19 °C ici et j’ai froid même avec un sweat. Monter le chauffage à 22, ce n’est pas exagéré.",
-    "pairs.thermostat.bName": "Hugo",
-    "pairs.thermostat.b":
-      "22 °C, c’est beaucoup trop chaud pour dormir. Toi, tu peux mettre une couche de plus ; moi, je ne peux rien enlever de plus.",
-    "pairs.roadTrip.aName": "Clara",
-    "pairs.roadTrip.a":
-      "J’ai conduit les six heures de l’aller. Ce serait normal que tu conduises au retour.",
-    "pairs.roadTrip.bName": "Maxime",
-    "pairs.roadTrip.b":
-      "J’ai dit avant de partir que je déteste conduire de nuit, et on part à 19 h. Je prendrai les trajets du matin la prochaine fois.",
-    "pairs.seat.aName": "Emma",
-    "pairs.seat.a":
-      "Mon siège s’incline, donc je l’incline. C’est un vol de nuit et tout le monde essaie de dormir.",
-    "pairs.seat.bName": "Louis",
-    "pairs.seat.b":
-      "Je mesure 1,90 m et mes genoux sont déjà collés à ton siège. Tu aurais au moins pu demander avant de le baisser à fond.",
-    "pairs.spoiler.aName": "Jade",
-    "pairs.spoiler.a":
-      "Tu m’as dit qui était le tueur avant même que je commence le dernier épisode. Ça faisait toute la semaine que je l’attendais.",
-    "pairs.spoiler.bName": "Nathan",
-    "pairs.spoiler.b":
-      "Il est sorti il y a trois semaines et tu m’avais dit que tu l’avais fini. Je ne peux pas savoir où en est tout le monde.",
-    "pairs.jacket.aName": "Lucas",
-    "pairs.jacket.a":
-      "Tu as mis ma veste en jean pour aller au concert sans me demander. Elle m’est revenue avec une odeur de tabac.",
-    "pairs.jacket.bName": "Chloé",
-    "pairs.jacket.b":
-      "Elle était accrochée près de la porte et tu ne la mets jamais. Je t’aurais demandé, mais tu dormais et j’étais déjà en retard.",
-    "pairs.lastSlice.aName": "Paul",
-    "pairs.lastSlice.a":
-      "J’ai dit « la dernière part est pour moi » avant le début du film. Tout le monde m’a entendu.",
-    "pairs.lastSlice.bName": "Zoé",
-    "pairs.lastSlice.b":
-      "Tu ne peux pas réserver une part et ne pas y toucher pendant deux heures. Elle était là à refroidir, alors je l’ai mangée.",
     "appeal.lead":
-      "Il manque quelque chose ou il y a une erreur ? Précise-le une fois et les juges réexaminent tout. Ça coûte 1 verdict.",
-    "appeal.label": "Ton contexte",
-    "appeal.placeholder": "Qu’est-ce que les juges ont raté ?",
+      "Coûte 1 verdict.",
+    "appeal.placeholder": "Qu’est-ce que les juges ont raté ? Un fait, un message ou ce qui avait vraiment été convenu.",
     "appeal.submit": "Rejuger avec mon contexte",
     "appeal.sending": "Anonymisation de ton contexte…",
     "appeal.judging": "Les juges réexaminent tout…",
@@ -646,8 +603,6 @@ const fr: Locale = {
     "appeal.previous": "Verdict précédent",
     "appeal.failed": "Le nouveau jugement n’a pas abouti. Ton crédit t’a été rendu ; tu peux réessayer.",
     "appeal.refused": "Les juges ont refusé de rejuger avec ce contexte. Ton crédit t’a été rendu.",
-    "appeal.leadVerdict":
-      "Il manque quelque chose ou il y a une erreur ? Précise-le et les juges réexaminent tout. Chaque ajout coûte 1 verdict, deux fois maximum par verdict.",
     "appeal.history": "Historique du verdict",
     "faq.both.q": "L’autre personne peut-elle donner sa version ?",
     "faq.both.a":
@@ -689,6 +644,7 @@ const fr: Locale = {
     "unavailable.cta": "Aller sur Judge",
     "error.removed": "Ce contenu a été supprimé. Son lien ne fonctionne plus.",
     "error.names_unavailable": "Impossible d’enregistrer les noms pour l’instant. Réessaie plus tard.",
+    "error.update_required": "Ce dossier a plus de deux parties. Mets l’appli à jour pour l’ouvrir.",
     "verdict.remove": "Supprimer ce verdict",
     "verdict.remove.confirm":
       "Supprimer ce que tu as écrit, les noms et les noms affichés ? Le lien de partage et son image d’aperçu ne s’afficheront plus pour personne (les aperçus déjà publiés dans des conversations peuvent rester visibles jusqu’à ce que ces applis les actualisent). Cette action est irréversible.",

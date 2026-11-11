@@ -1,5 +1,6 @@
 /** Shared shapes of the evidence package (re-exported by lib/evidence/index.ts). */
 
+import type { PartyLabel } from "@/lib/anonymize";
 import type { Lang } from "@/lib/i18n";
 import type { EvidenceKind, NameMapping } from "@/lib/types";
 
@@ -7,13 +8,16 @@ import type { EvidenceKind, NameMapping } from "@/lib/types";
 export type VerifiedEvidence = { kind: EvidenceKind; transcript: string };
 
 /** Who a token was issued to. */
-export type EvidenceAudience = { type: "user"; userId: string } | { type: "respondent"; caseId: string };
+export type EvidenceAudience =
+  | { type: "user"; userId: string }
+  /** `party` is left out for side B (every token already issued stays valid). */
+  | { type: "respondent"; caseId: string; party?: "c" | "d" };
 
 /** A persisted name fingerprint of a case. */
 export type KnownPerson = { label: string; key: string };
 
 export type SubmissionInput = {
-  narrator: "Party A" | "Party B";
+  narrator: PartyLabel;
   /** The raw account or appeal text (clarification answers already folded in). */
   text: string;
   evidence: VerifiedEvidence[];
@@ -25,6 +29,9 @@ export type SubmissionInput = {
   opponentRequired?: boolean;
   /** Earlier anonymized material of the case, for recognizing people by role. */
   roster?: { context: string; labelsInUse: string[] };
+  /** A dispute with 3 or 4 sides: how many, and what the writer calls each
+   * one in order A to D (null when unnamed). Absent for two sides. */
+  sides?: { count: number; names: (string | null)[] };
   /** Case name fingerprints (section 6.3). */
   names?: { keysFor: (name: string) => string[]; known: KnownPerson[] };
 };
@@ -39,4 +46,4 @@ export type AnonymizedSubmission = {
   people: KnownPerson[];
 };
 
-export type EvidenceGroup = { party: "a" | "b" | null; idPrefix: string; items: VerifiedEvidence[] };
+export type EvidenceGroup = { party: "a" | "b" | "c" | "d" | null; idPrefix: string; items: VerifiedEvidence[] };

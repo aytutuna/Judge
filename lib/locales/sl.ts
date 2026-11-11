@@ -119,6 +119,8 @@ const sl: Locale = {
     verdictAria: "Razsodba: {label}",
     "party.a": "Stranka A",
     "party.b": "Stranka B",
+    "party.c": "Stranka C",
+    "party.d": "Stranka D",
     "party.youLabel": "{label} (ti)",
     you: "Ti",
     "shared.subtitle": "Nekdo je delil to razsodbo",
@@ -344,8 +346,7 @@ const sl: Locale = {
     "signin.createNote": "Po e-pošti vam bomo poslali kodo za potrditev tega naslova. To morate storiti le enkrat.",
     "signin.passwordChoose": "Prijavljeni ste. Izberite geslo za naslednjič.",
     "signin.passwordSave": "Shrani geslo",
-    "signin.passwordSaveFailed": "Prijavljeni ste, vendar gesla nismo mogli shraniti. Poskusite znova ali ga nastavite pozneje v Nastavitvah.",
-    "signin.passwordSkip": "Zaenkrat preskoči",
+    "signin.passwordSaveFailed": "Gesla nismo mogli shraniti. Poskusite znova.",
     "signin.passwordSubmit": "Prijavi se",
     "signin.rateLimited": "Preveč poskusov. Počakaj minuto in poskusi znova.",
     "signin.serviceDown": "Prijava trenutno ni na voljo. Poskusi pozneje.",
@@ -373,10 +374,6 @@ const sl: Locale = {
     "account.deleteConfirm":
       "Želiš izbrisati račun? Krediti, naročnina in podatki za prijavo se izbrišejo. Tvoje razsodbe in tvoje plati v sporih se odstranijo: napisano besedilo in imena se izbrišejo, njihove povezave za deljenje pa prenehajo delovati.",
     "account.deleteYes": "Da, izbriši",
-    "account.passwordSet": "Nastavi geslo",
-    "account.passwordChange": "Spremeni geslo",
-    "account.passwordCurrent": "Trenutno geslo",
-    "account.passwordSaved": "Geslo je shranjeno.",
     "account.deleteCancel": "Obdrži račun",
     "account.deleted": "Račun je izbrisan. Preusmerjamo te na domačo stran…",
     "account.deleteFailed": "Računa trenutno nismo mogli izbrisati. Poskusiš znova?",
@@ -467,6 +464,10 @@ const sl: Locale = {
     "case.judgeNow.yes": "Da, razsodi zdaj",
     "case.judgeExpired.confirm": "Želiš razsodbo samo na podlagi svoje plati? To porabi 1 razsodbo.",
     "case.judgeExpired.yes": "Da, porabi 1 razsodbo",
+    "case.side.waiting": "Čaka",
+    "case.side.answered": "Je odgovoril(a)",
+    "case.judgeAnswered": "Razsodi s platmi, ki so odgovorile",
+    "case.judgeAnswered.confirm": "Želiš razsodbo s platmi, ki so odgovorile? Druga povabila se zaprejo in te osebe ne morejo več odgovoriti.",
     "case.cancel": "Prekliči",
     "case.retry": "Poskusi znova",
     "case.failedBody": "Kredit ti je vrnjen. Zdaj lahko poskusiš znova.",
@@ -475,9 +476,13 @@ const sl: Locale = {
     "case.accounts": "Kaj je vsaka plat povedala sodnikom",
     "case.accountA": "Kako to vidi Stranka A",
     "case.accountB": "Kako to vidi Stranka B",
+    "case.accountC": "Kako to vidi Stranka C",
+    "case.accountD": "Kako to vidi Stranka D",
     "case.accountYou": "Kako to vidiš ti ({label})",
     "case.contextA": "Stranka A je dodala kontekst",
     "case.contextB": "Stranka B je dodala kontekst",
+    "case.contextC": "Stranka C je dodala kontekst",
+    "case.contextD": "Stranka D je dodala kontekst",
     "case.contextYou": "Tvoj dodani kontekst ({label})",
     "case.evidenceItem": "Slika {n}, kot so jo prebrali sodniki",
     "case.notYet": "Druga oseba še ni odgovorila.",
@@ -563,6 +568,7 @@ const sl: Locale = {
     "home.yourPlaceholder": "Kaj je narobe?",
     "home.addContext": "Dodaj kontekst",
     "home.addTheirSide": "Dodaj drugo plat",
+    "home.addSide": "Dodaj še eno plat",
     "home.removeTheirSide": "Odstrani drugo plat",
     "home.sendLink": "Pošlji povezavo",
     "home.clear": "Počisti",
@@ -576,56 +582,9 @@ const sl: Locale = {
     "home.says": "{name} pravi:",
     "home.mySide": "Moja plat:",
     "home.otherSide": "Plat druge osebe:",
-    "pairs.dishwasher.aName": "Ana",
-    "pairs.dishwasher.a":
-      "Sklede si spet zložil v zgornjo košaro. Tam se nikoli ne pomijejo do konca, za to je spodnja.",
-    "pairs.dishwasher.bName": "Matic",
-    "pairs.dishwasher.b":
-      "Zgoraj čisto lepo gredo, spodaj pa ostane prostor za lonce. Pomivalni stroj tako polnim že leta in še nikoli ni nič ostalo umazano.",
-    "pairs.bill.aName": "Petra",
-    "pairs.bill.a":
-      "Nisem nič pila, zato ne bi smela plačati četrtine vina. Hrano pa lahko razdelimo na enake dele, s tem se strinjam.",
-    "pairs.bill.bName": "Jure",
-    "pairs.bill.b":
-      "Vedno vse razdelimo na štiri. Vsakič računati, kdo je kaj imel, je muka, razlika pa tako ali tako ni velika.",
-    "pairs.thermostat.aName": "Nina",
-    "pairs.thermostat.a":
-      "Tukaj je 19 stopinj in me zebe celo v puloverju s kapuco. Gretje naviti na 22 res ni nič pretiranega.",
-    "pairs.thermostat.bName": "Gašper",
-    "pairs.thermostat.b":
-      "Pri 22 stopinjah se ne da spati, prevroče je. Ti lahko oblečeš še eno plast, jaz pa ne morem sleči ničesar več.",
-    "pairs.roadTrip.aName": "Tina",
-    "pairs.roadTrip.a": "Celih šest ur tja sem vozila jaz. Pošteno je, da nazaj voziš ti.",
-    "pairs.roadTrip.bName": "Rok",
-    "pairs.roadTrip.b":
-      "Že pred odhodom sem rekel, da ponoči ne maram voziti, odhajamo pa ob sedmih zvečer. Na naslednjem izletu bom zjutraj vozil jaz.",
-    "pairs.seat.aName": "Sara",
-    "pairs.seat.a":
-      "Moj sedež se da nagniti, zato ga nagnem. Nočni let je, vsi poskušajo spati.",
-    "pairs.seat.bName": "Blaž",
-    "pairs.seat.b":
-      "Visok sem 1,91 m in s koleni že tako tiščim v tvoj sedež. Lahko bi vsaj vprašala, preden ga spustiš čisto nazaj.",
-    "pairs.spoiler.aName": "Maja",
-    "pairs.spoiler.a":
-      "Povedal si mi, kdo je morilec, še preden sem sploh začela zadnjo epizodo. Ves teden sem čakala nanjo.",
-    "pairs.spoiler.bName": "Jan",
-    "pairs.spoiler.b":
-      "Serija je izšla pred tremi tedni, ti pa si rekla, da si jo že pogledala do konca. Ne morem si zapomniti, do kod je kdo prišel.",
-    "pairs.jacket.aName": "Matej",
-    "pairs.jacket.a":
-      "Mojo jeans jakno si oblekla na koncert, ne da bi me vprašala. Vrnila si jo vso smrdečo po dimu.",
-    "pairs.jacket.bName": "Eva",
-    "pairs.jacket.b":
-      "Visela je pri vratih, ti pa je nikoli ne nosiš. Vprašala bi te, ampak si spal, jaz pa sem že tako zamujala.",
-    "pairs.lastSlice.aName": "Nejc",
-    "pairs.lastSlice.a": "Še pred filmom sem rekel: „Zadnji kos je moj.“ Vsi so slišali.",
-    "pairs.lastSlice.bName": "Lara",
-    "pairs.lastSlice.b":
-      "Ne moreš si rezervirati kosa in se ga potem dve uri ne dotakniti. Kar ležal je tam in se hladil, zato sem ga pojedla.",
     "appeal.lead":
-      "Kaj manjka ali je narobe? Dodaj enkrat in sodniki bodo znova pregledali vse. Stane 1 razsodbo.",
-    "appeal.label": "Tvoj kontekst",
-    "appeal.placeholder": "Kaj so sodniki spregledali?",
+      "Porabi 1 razsodbo.",
+    "appeal.placeholder": "Kaj so sodniki spregledali? Dejstvo, sporočilo ali to, kar je bilo v resnici dogovorjeno.",
     "appeal.submit": "Znova razsodi s tem",
     "appeal.sending": "Anonimiziramo tvoj kontekst…",
     "appeal.judging": "Sodniki znova pregledujejo vse…",
@@ -645,8 +604,6 @@ const sl: Locale = {
     "appeal.previous": "Prejšnja razsodba",
     "appeal.failed": "Ponovna presoja ni uspela. Kredit ti je vrnjen; lahko poskusiš znova.",
     "appeal.refused": "Sodniki s tem kontekstom niso hoteli znova razsojati. Kredit ti je vrnjen.",
-    "appeal.leadVerdict":
-      "Kaj manjka ali je narobe? Dodaj in sodniki bodo znova pregledali vse. Vsakič stane 1 razsodbo, največ dvakrat na razsodbo.",
     "appeal.history": "Zgodovina razsodbe",
     "faq.both.q": "Lahko tudi druga oseba pove svojo plat?",
     "faq.both.a":
@@ -688,6 +645,7 @@ const sl: Locale = {
     "unavailable.cta": "Pojdi na Judge",
     "error.removed": "To je odstranjeno. Povezava ne deluje več.",
     "error.names_unavailable": "Imen trenutno ni mogoče shraniti. Poskusi pozneje.",
+    "error.update_required": "Ta primer ima več kot dve strani. Posodobi aplikacijo, da ga odpreš.",
     "verdict.remove": "Odstrani to razsodbo",
     "verdict.remove.confirm":
       "Želiš odstraniti napisano besedilo, imena in prikazna imena? Povezava za deljenje in njena slika za predogled se nehata nalagati za vse (predogledi, ki so že objavljeni v klepetih, so lahko še vidni, dokler jih te aplikacije ne osvežijo). Tega ni mogoče razveljaviti.",

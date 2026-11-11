@@ -119,6 +119,8 @@ const ptPT: Locale = {
     verdictAria: "Veredicto: {label}",
     "party.a": "Parte A",
     "party.b": "Parte B",
+    "party.c": "Parte C",
+    "party.d": "Parte D",
     "party.youLabel": "{label} (tu)",
     you: "Tu",
     "shared.subtitle": "Alguém partilhou esta decisão",
@@ -344,8 +346,7 @@ const ptPT: Locale = {
     "signin.createNote": "Vamos enviar-te um código por e-mail para confirmar este endereço. Só precisas de o fazer uma vez.",
     "signin.passwordChoose": "Iniciaste sessão. Escolhe uma palavra-passe para a próxima vez.",
     "signin.passwordSave": "Guardar palavra-passe",
-    "signin.passwordSaveFailed": "Iniciaste sessão, mas não conseguimos guardar a palavra-passe. Tenta de novo ou define-a mais tarde nas Definições.",
-    "signin.passwordSkip": "Saltar por agora",
+    "signin.passwordSaveFailed": "Não conseguimos guardar a palavra-passe. Tenta de novo.",
     "signin.passwordSubmit": "Entrar",
     "signin.rateLimited": "Demasiadas tentativas. Espera um minuto e tenta outra vez.",
     "signin.serviceDown": "O início de sessão não está disponível neste momento. Tenta mais tarde.",
@@ -373,10 +374,6 @@ const ptPT: Locale = {
     "account.deleteConfirm":
       "Apagar a tua conta? Os teus créditos, o plano e os dados de acesso são apagados. Os teus veredictos e os teus lados dos casos são removidos: o que escreveste e os nomes são apagados, e os links de partilha deixam de funcionar.",
     "account.deleteYes": "Sim, apagar",
-    "account.passwordSet": "Definir uma palavra-passe",
-    "account.passwordChange": "Alterar palavra-passe",
-    "account.passwordCurrent": "Palavra-passe atual",
-    "account.passwordSaved": "Palavra-passe guardada.",
     "account.deleteCancel": "Manter a conta",
     "account.deleted": "A tua conta foi apagada. A levar-te para a página inicial…",
     "account.deleteFailed": "Não conseguimos apagar a conta agora. Tentas outra vez?",
@@ -464,6 +461,10 @@ const ptPT: Locale = {
     "case.judgeNow.yes": "Sim, julgar já",
     "case.judgeExpired.confirm": "Obter um veredicto só com o teu lado? Isto gasta 1 veredicto.",
     "case.judgeExpired.yes": "Sim, gastar 1 veredicto",
+    "case.side.waiting": "À espera",
+    "case.side.answered": "Respondeu",
+    "case.judgeAnswered": "Julgar com os lados que responderam",
+    "case.judgeAnswered.confirm": "Obter um veredicto com os lados que responderam? Os outros convites fecham e essas pessoas deixam de poder responder.",
     "case.cancel": "Cancelar",
     "case.retry": "Tentar outra vez",
     "case.failedBody": "O teu crédito foi devolvido. Já podes tentar outra vez.",
@@ -472,9 +473,13 @@ const ptPT: Locale = {
     "case.accounts": "O que cada lado contou aos juízes",
     "case.accountA": "Relato de Parte A",
     "case.accountB": "Relato de Parte B",
+    "case.accountC": "Relato de Parte C",
+    "case.accountD": "Relato de Parte D",
     "case.accountYou": "O teu relato ({label})",
     "case.contextA": "Parte A acrescentou contexto",
     "case.contextB": "Parte B acrescentou contexto",
+    "case.contextC": "Parte C acrescentou contexto",
+    "case.contextD": "Parte D acrescentou contexto",
     "case.contextYou": "Contexto que acrescentaste ({label})",
     "case.evidenceItem": "Imagem {n}, tal como os juízes a leram",
     "case.notYet": "Ainda não respondeu.",
@@ -560,6 +565,7 @@ const ptPT: Locale = {
     "home.yourPlaceholder": "Qual é o problema?",
     "home.addContext": "Acrescentar contexto",
     "home.addTheirSide": "Adicionar o outro lado",
+    "home.addSide": "Adicionar outro lado",
     "home.removeTheirSide": "Remover o outro lado",
     "home.sendLink": "Enviar um link",
     "home.clear": "Limpar",
@@ -573,58 +579,9 @@ const ptPT: Locale = {
     "home.says": "{name} diz:",
     "home.mySide": "O meu lado:",
     "home.otherSide": "O outro lado:",
-    "pairs.dishwasher.aName": "Rita",
-    "pairs.dishwasher.a":
-      "Voltaste a pôr as tigelas no cesto de cima. Lá em cima nunca ficam bem lavadas, o de baixo é que serve para isso.",
-    "pairs.dishwasher.bName": "Miguel",
-    "pairs.dishwasher.b":
-      "Cabem lá perfeitamente e deixam o de baixo livre para as panelas. Ponho a loiça assim há anos e nunca saiu nada sujo.",
-    "pairs.bill.aName": "Sofia",
-    "pairs.bill.a":
-      "Não bebi nada, por isso não devia pagar um quarto do vinho. Dividir a comida em partes iguais, por mim, tudo bem.",
-    "pairs.bill.bName": "Diogo",
-    "pairs.bill.b":
-      "Dividimos sempre por quatro. Andar sempre a fazer contas a quem comeu o quê é uma seca, e a diferença nem é assim tanta.",
-    "pairs.thermostat.aName": "Mariana",
-    "pairs.thermostat.a":
-      "Estão 19 graus cá dentro e tenho frio mesmo de camisola com capuz. Pôr o aquecimento nos 22 não é nenhum exagero.",
-    "pairs.thermostat.bName": "João",
-    "pairs.thermostat.b":
-      "Com 22 graus não se consegue dormir, é calor a mais. Tu podes vestir mais qualquer coisa, eu já não posso tirar mais nada.",
-    "pairs.roadTrip.aName": "Catarina",
-    "pairs.roadTrip.a":
-      "Fui eu a conduzir as seis horas da ida. O justo é seres tu a conduzir no regresso.",
-    "pairs.roadTrip.bName": "Pedro",
-    "pairs.roadTrip.b":
-      "Antes de sairmos disse que detesto conduzir à noite, e vamos sair às sete da tarde. Na próxima viagem, conduzo eu de manhã.",
-    "pairs.seat.aName": "Beatriz",
-    "pairs.seat.a":
-      "O meu assento reclina, por isso vou reclinar. É um voo noturno e está toda a gente a tentar dormir.",
-    "pairs.seat.bName": "Rui",
-    "pairs.seat.b":
-      "Tenho 1,90 m e já tenho os joelhos encostados ao teu assento. Podias ao menos perguntar antes de o reclinares todo para trás.",
-    "pairs.spoiler.aName": "Leonor",
-    "pairs.spoiler.a":
-      "Disseste-me quem era o assassino antes de eu sequer ter começado o último episódio. Estive a semana inteira à espera dele.",
-    "pairs.spoiler.bName": "Tomás",
-    "pairs.spoiler.b":
-      "Saiu há três semanas e tu disseste que já tinhas acabado. Não consigo saber em que episódio anda cada um.",
-    "pairs.jacket.aName": "Gonçalo",
-    "pairs.jacket.a":
-      "Levaste o meu casaco de ganga ao concerto sem perguntar. Veio a cheirar a fumo.",
-    "pairs.jacket.bName": "Ana",
-    "pairs.jacket.b":
-      "Estava pendurado ao pé da porta e tu nunca o usas. Ia perguntar-te, mas estavas a dormir e eu já ia atrasada.",
-    "pairs.lastSlice.aName": "Rodrigo",
-    "pairs.lastSlice.a":
-      "Disse «a última fatia é minha» antes de o filme começar. Toda a gente ouviu.",
-    "pairs.lastSlice.bName": "Carolina",
-    "pairs.lastSlice.b":
-      "Não podes dizer que é tua e depois não lhe tocar durante duas horas. Estava ali a arrefecer, por isso comi-a.",
     "appeal.lead":
-      "Falta alguma coisa ou há algo errado? Acrescenta-o uma vez e os juízes voltam a analisar tudo. Custa 1 veredicto.",
-    "appeal.label": "O teu contexto",
-    "appeal.placeholder": "O que é que escapou aos juízes?",
+      "Gasta 1 veredicto.",
+    "appeal.placeholder": "O que é que escapou aos juízes? Um facto, uma mensagem ou o que ficou mesmo combinado.",
     "appeal.submit": "Julgar de novo com isto",
     "appeal.sending": "A anonimizar o teu contexto…",
     "appeal.judging": "Os juízes estão a rever tudo…",
@@ -644,8 +601,6 @@ const ptPT: Locale = {
     "appeal.previous": "Veredicto anterior",
     "appeal.failed": "O novo julgamento não avançou. O teu crédito foi devolvido; podes tentar outra vez.",
     "appeal.refused": "Os juízes recusaram-se a julgar de novo com esse contexto. O teu crédito foi devolvido.",
-    "appeal.leadVerdict":
-      "Falta alguma coisa ou há algo errado? Acrescenta-o e os juízes voltam a analisar tudo. Cada vez custa 1 veredicto, até duas vezes por veredicto.",
     "appeal.history": "Histórico do veredicto",
     "faq.both.q": "A outra pessoa pode contar o lado dela?",
     "faq.both.a":
@@ -687,6 +642,7 @@ const ptPT: Locale = {
     "unavailable.cta": "Ir para o Judge",
     "error.removed": "Isto foi removido. O link já não funciona.",
     "error.names_unavailable": "Não é possível guardar os nomes agora. Tenta mais tarde.",
+    "error.update_required": "Este caso tem mais de dois lados. Atualiza a app para o abrir.",
     "verdict.remove": "Remover este veredicto",
     "verdict.remove.confirm":
       "Remover o que escreveste, os nomes e os nomes a mostrar? O link de partilha e a imagem de pré-visualização deixam de abrir para toda a gente (as pré-visualizações já publicadas em conversas podem continuar a aparecer até essas apps as atualizarem). Isto não pode ser desfeito.",

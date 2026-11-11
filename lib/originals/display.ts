@@ -6,6 +6,7 @@
  * "unavailable", never the verdict). Server only.
  */
 
+import type { PartyLetter as CaseParty } from "@/lib/case-types";
 import { cache } from "react";
 import { getCase, type CaseRow } from "@/lib/cases/db";
 import { getVerdict, type StoredVerdict } from "@/lib/db";
@@ -21,8 +22,11 @@ export function openVerdictDisplay(meta: VerdictMeta): DisplayNames {
 }
 
 /** One case party's display name, or null. */
-export function openCaseDisplayName(row: Pick<CaseRow, "id" | "displayASealed" | "displayBSealed">, party: "a" | "b"): string | null {
-  const sealed = party === "a" ? row.displayASealed : row.displayBSealed;
+export function openCaseDisplayName(
+  row: Pick<CaseRow, "id" | "displayASealed" | "displayBSealed" | "displayCSealed" | "displayDSealed">,
+  party: CaseParty,
+): string | null {
+  const sealed = { a: row.displayASealed, b: row.displayBSealed, c: row.displayCSealed, d: row.displayDSealed }[party];
   const raw = openOrNull<{ name?: unknown }>(sealed, aad.caseDisplay(row.id, party), `case:${row.id}:display:${party}`);
   return raw && typeof raw.name === "string" && raw.name.trim() ? raw.name : null;
 }
@@ -33,6 +37,7 @@ export function caseDisplayState(row: CaseRow): DisplayState {
     namesVisible: row.namesVisible,
     a: openCaseDisplayName(row, "a"),
     b: openCaseDisplayName(row, "b"),
+    ...(row.sides > 2 ? { c: openCaseDisplayName(row, "c"), ...(row.sides > 3 ? { d: openCaseDisplayName(row, "d") } : {}) } : {}),
     others: {},
   };
 }
@@ -46,7 +51,7 @@ export type PublicVerdict = {
 };
 
 function hasAny(d: DisplayNames): boolean {
-  return Boolean(d.a || d.b || Object.keys(d.others).length > 0);
+  return Boolean(d.a || d.b || d.c || d.d || Object.keys(d.others).length > 0);
 }
 
 async function loadPublicVerdict(id: string): Promise<PublicVerdict | null> {
@@ -76,7 +81,12 @@ async function loadPublicVerdict(id: string): Promise<PublicVerdict | null> {
     const row = await getCase(meta.caseId);
     const removed = Boolean(meta.removedAt || row?.removedAt);
     if (!row || removed || !row.namesVisible) return { stored, meta, display: null, removed };
-    const display = { a: openCaseDisplayName(row, "a"), b: openCaseDisplayName(row, "b"), others: {} };
+    const display: DisplayNames = {
+      a: openCaseDisplayName(row, "a"),
+      b: openCaseDisplayName(row, "b"),
+      ...(row.sides > 2 ? { c: openCaseDisplayName(row, "c"), ...(row.sides > 3 ? { d: openCaseDisplayName(row, "d") } : {}) } : {}),
+      others: {},
+    };
     return { stored, meta, display: hasAny(display) ? display : null, removed: false };
   }
   if (meta.removedAt) return { stored, meta, display: null, removed: true };

@@ -1,7 +1,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { AccountMenu, accountEntry, initialOf } from "../components/AccountMenu";
-import { AccountPanel, openConfirm, type AccountPanelProps } from "../components/account/AccountView";
+import { AccountDetailPanel, AccountPanel, openConfirm, type AccountDetailProps } from "../components/account/AccountView";
 import { SignInPanel, digitsOnly, safeNext, withLang, type SignInPanelProps } from "../components/account/SignInView";
 import { SiteFooter } from "../components/SiteChrome";
 import type { AppConfig, AuthProviders, Entitlement, MeResponse } from "../lib/account-types";
@@ -34,15 +34,20 @@ const sub = (willRenew: boolean, used = 12, cap = 200) => ({
 });
 const ready = (me: MeResponse): ViewerState => ({ status: "ready", me, config: null });
 
-function panel(over: Partial<AccountPanelProps>): string {
+function panel(over: { lang?: "en" | "tr"; viewer?: ViewerState }): string {
   return renderToStaticMarkup(
-    <AccountPanel
+    <AccountPanel lang={over.lang ?? "en"} viewer={over.viewer ?? ready({ user, entitlement: ent() })} />,
+  );
+}
+
+function detail(over: Partial<AccountDetailProps>): string {
+  return renderToStaticMarkup(
+    <AccountDetailPanel
       lang="en"
       viewer={ready({ user, entitlement: ent() })}
       deleting={false}
       deleted={false}
       deleteError={null}
-      onSignOut={noop}
       onDelete={noop}
       {...over}
     />,
@@ -62,8 +67,11 @@ describe("AccountPanel", () => {
   it("signed out: a sign-in prompt that comes back here", () => {
     const html = panel({ viewer: ready({ user: null, entitlement: null }) });
     expect(html).toContain(t("en", "account.signInPrompt"));
-    expect(html).toContain('href="/signin?next=%2Faccount"');
+    expect(html).toContain('href="/signin?next=%2Fsettings"');
     expect(html).not.toContain("<dialog");
+    expect(detail({ viewer: ready({ user: null, entitlement: null }) })).toContain(
+      'href="/signin?next=%2Fsettings%2Faccount"',
+    );
   });
 
   it("account with nothing left: email, zero credits, no monthly plan, a link to get more", () => {
@@ -74,7 +82,9 @@ describe("AccountPanel", () => {
     expect(html).toContain(t("en", "account.getPremium"));
     expect(html).toContain(t("en", "account.subscriptionNone"));
     expect(html).toContain('href="/pricing"');
-    expect(html).toContain(t("en", "account.signOut"));
+    expect(html).toContain('href="/settings/account"');
+    expect(html).not.toContain(t("en", "account.signOut"));
+    expect(html).not.toContain(t("en", "account.delete"));
   });
 
   it("premium account: credits and the monthly plan with its date and usage", () => {
@@ -92,24 +102,17 @@ describe("AccountPanel", () => {
     expect(until).toContain("Bu ay 200 karardan 12 tanesini kullandın");
   });
 
-  it("a Password row says set or change by what the account has, and hides on servers without passwords", () => {
-    const config = (password: boolean): AppConfig => ({
-      signIn: { apple: true, google: true, email: true, emailCode: true, password, dev: false },
-      premiumEnabled: true,
-      pricing: PRICING,
-    });
-    const viewer = (hasPassword: boolean | undefined, password = true): ViewerState => ({
+  it("has no Password row: a password is chosen while signing in", () => {
+    const viewer: ViewerState = {
       status: "ready",
-      me: { user, entitlement: ent(), hasPassword },
-      config: config(password),
-    });
-    expect(panel({ viewer: viewer(false) })).toContain(esc(t("en", "account.passwordSet")));
-    const change = panel({ viewer: viewer(true) });
-    expect(change).toContain(esc(t("en", "account.passwordChange")));
-    expect(change).not.toContain(esc(t("en", "account.passwordSet")));
-    expect(panel({ viewer: viewer(undefined) })).not.toContain(esc(t("en", "account.passwordSet")));
-    expect(panel({ viewer: viewer(false, false) })).not.toContain(esc(t("en", "account.passwordSet")));
-    expect(panel({})).not.toContain("Password");
+      me: { user, entitlement: ent(), hasPassword: false, needsPassword: true },
+      config: {
+        signIn: { apple: true, google: true, email: true, emailCode: true, password: true, dev: false },
+        premiumEnabled: true,
+        pricing: PRICING,
+      },
+    };
+    expect(panel({ viewer })).not.toContain("assword");
   });
 
   it("fair use: says when the allowance comes back", () => {
@@ -123,7 +126,7 @@ describe("AccountPanel", () => {
   });
 
   it("delete goes through a confirm dialog (focus: see openConfirm below)", () => {
-    const html = panel({});
+    const html = detail({});
     expect(html).toContain("<dialog");
     const dialog = html.slice(html.indexOf("<dialog"));
     expect(dialog).toContain(esc(t("en", "account.deleteConfirm")));
@@ -136,8 +139,8 @@ describe("AccountPanel", () => {
   });
 
   it("deleted and failed states", () => {
-    expect(panel({ deleted: true })).toContain(t("en", "account.deleted"));
-    expect(panel({ deleteError: "Nope" })).toMatch(/role="alert">Nope</);
+    expect(detail({ deleted: true })).toContain(t("en", "account.deleted"));
+    expect(detail({ deleteError: "Nope" })).toMatch(/role="alert">Nope</);
   });
 });
 
@@ -168,7 +171,6 @@ function signin(over: Partial<SignInPanelProps>): string {
       onShowPassword={noop}
       onSignInPassword={noop}
       onSavePassword={noop}
-      onSkipPassword={noop}
       onProvider={noop}
       onToggleEmail={noop}
       onEmail={noop}
@@ -380,13 +382,12 @@ describe("SignInPanel with passwords", () => {
     expect(html).not.toContain('type="password"');
   });
 
-  it("after the code it asks for the password to keep, with a way to skip", () => {
+  it("after the code it asks for the password to keep, with no way to skip", () => {
     const html = pw({ choosing: true, email: "a@b.co", password: "", error: "Could not save", errorInForm: true });
     expect(html).toContain(esc(t("en", "signin.passwordChoose")));
     expect(html).toContain('autoComplete="new-password"');
     expect(html).toContain('autoComplete="username"');
     expect(html).toContain(esc(t("en", "signin.passwordSave")));
-    expect(html).toContain(esc(t("en", "signin.passwordSkip")));
     expect(html).not.toContain("Continue with Apple");
     expect(html.match(/role="alert"/g)).toHaveLength(1);
   });

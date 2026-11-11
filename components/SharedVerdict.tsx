@@ -7,7 +7,8 @@ import { langDir } from "@/lib/langs";
 import { useLocaleLang } from "@/lib/lang";
 import type { DisplayState } from "@/lib/originals-types";
 import { useOwnerToken } from "@/lib/owner-store";
-import type { NameMapping, VerdictResult } from "@/lib/types";
+import type { SelfParty } from "@/lib/names";
+import type { NameMapping, PartyId, VerdictResult } from "@/lib/types";
 import { useViewer } from "@/lib/use-viewer";
 import { LangPicker } from "./LangPicker";
 import { OwnerPanel, useMine } from "./OwnerTools";
@@ -96,6 +97,7 @@ export function SharedVerdict({
             suggestedA: ownView.suggested.a,
             nameMap: ownView.nameMap,
             lang: verdictLang(result),
+            sides: result.parties?.length,
             namesConfirmed: ownView.namesConfirmed || display !== null,
             onSaved: setDisplay,
           })
@@ -115,9 +117,9 @@ export function SharedVerdict({
     );
   }
 
-  const selfParty = ownView?.case?.party === "b" ? "B" : "A";
+  const selfParty = (ownView?.case?.party.toUpperCase() ?? "A") as SelfParty;
   // The writer's own display name, as the share page shows it (names on).
-  const selfDisplayName = shownDisplay?.namesVisible ? (selfParty === "A" ? shownDisplay.a : shownDisplay.b) : null;
+  const selfDisplayName = shownDisplay?.namesVisible ? (shownDisplay[selfParty.toLowerCase() as PartyId] ?? null) : null;
   const langRow = (
     <div className={styles.langRow}>
       <span className={styles.langLabel} aria-hidden>

@@ -393,12 +393,21 @@ extension Names {
         return atSentenceStart(before) ? Rendered(text: capitalize(r.text, .tr), consumed: r.consumed) : r
     }
 
+    /// Whether a label's word and letter go together: A and B are parties,
+    /// C to Z other people. In a document with more than two sides the sides
+    /// take the first letters and other people start at E.
+    static func labelFits(word: String, letter: String, sides: Int = 2) -> Bool {
+        let isParty = word == "Party" || word == "Taraf"
+        if sides > 2 { return isParty ? letter <= lastSide(sides) : letter >= "E" }
+        return isParty == (letter == "A" || letter == "B")
+    }
+
     /// Put real names back into verdict text written with labels.
     /// `textLang` is the language the text is written in. Names get the
     /// suffix the sentence needs ("Taraf B'nin" -> "Deniz'in"; "Party B's"
     /// -> "Deniz's"). A narrator becomes "you"/"sen" only where that stays
     /// grammatical; any other label is left as written.
-    static func restoreNames(_ text: String, parties: [String: Resolved], textLang: AppLang) -> String {
+    static func restoreNames(_ text: String, parties: [String: Resolved], textLang: AppLang, sides: Int = 2) -> String {
         if text.isEmpty || parties.isEmpty { return text }
         let source = text as NSString
         var out = ""
@@ -411,8 +420,7 @@ extension Names {
             guard let word = m.group(1, in: source), let letter = m.group(2, in: source) else { continue }
             let apos = m.group(3, in: source) ?? ""
             let suffix = m.group(4, in: source)
-            let isParty = word == "Party" || word == "Taraf"
-            if isParty != (letter == "A" || letter == "B") { continue }
+            guard labelFits(word: word, letter: letter, sides: sides) else { continue }
             guard let party = parties[letter] else { continue }
             let before = source.substring(to: start)
             let after = source.substring(from: end)
@@ -433,10 +441,11 @@ extension Names {
     /// written in, which differs once the verdict has been translated.
     /// Returns the result unchanged when there is nothing to restore.
     static func personalizeResult(_ result: VerdictResult, nameMap: [NameMapping], selfLang: AppLang) -> VerdictResult {
-        let parties = resolveParties(nameMap, selfLang: selfLang)
+        let sides = result.sideCount
+        let parties = resolveParties(nameMap, selfLang: selfLang, sides: sides)
         if parties.isEmpty { return result }
         let lang = ContentLang.verdictLang(result)
-        func r(_ s: String) -> String { restoreNames(s, parties: parties, textLang: lang) }
+        func r(_ s: String) -> String { restoreNames(s, parties: parties, textLang: lang, sides: sides) }
         var out = result
         out.headline = r(result.headline)
         out.why = result.why.map(r)
@@ -497,13 +506,38 @@ extension Names {
             appeal.summary = r(appeal.summary)
             out.appeal = appeal
         }
+        out.sides = result.sides?.map { side in
+            var side = side
+            side.claims = side.claims.map { claim in
+                var claim = claim
+                claim.claim = r(claim.claim)
+                return claim
+            }
+            side.bedrock = r(side.bedrock)
+            return side
+        }
+        out.others = result.others?.map { other in
+            var other = other
+            other.line = r(other.line)
+            return other
+        }
+        out.disputes = result.disputes?.map { dispute in
+            var dispute = dispute
+            dispute.fact = r(dispute.fact)
+            dispute.positions = dispute.positions.map { position in
+                var position = position
+                position.says = r(position.says)
+                return position
+            }
+            return dispute
+        }
         return out
     }
 
     /// Real names that may open a conditional clause (never the narrator),
     /// for the clause's keep-capital list.
-    static func restoredNames(_ nameMap: [NameMapping], selfLang: AppLang) -> [String] {
-        resolveParties(nameMap, selfLang: selfLang)
+    static func restoredNames(_ nameMap: [NameMapping], selfLang: AppLang, sides: Int = 2) -> [String] {
+        resolveParties(nameMap, selfLang: selfLang, sides: sides)
             .sorted { $0.key < $1.key }
             .filter { !$0.value.isSelf }
             .map { $0.value.name }

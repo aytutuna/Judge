@@ -65,6 +65,7 @@ import com.okjudge.judge.ui.premium.StoreUi
 import com.okjudge.judge.core.purchases.PurchaseController
 import com.okjudge.judge.core.purchases.StoreOffer
 import com.okjudge.judge.core.session.VerdictFlow
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -225,6 +226,95 @@ class ScreenshotsTest {
         }
         compose.mainClock.advanceTimeBy(2_000)
         compose.onRoot().captureRoboImage(UiTestSupport.shot(file))
+    }
+
+    private fun manyShot(file: String, name: String, summary: Boolean, dark: Boolean = false) = capture(file, tall = !summary) {
+        Themed(AppLang.EN, dark = dark) {
+            Column(Modifier.fillMaxSize()) {
+                SampleVerdict(sample(name), AppLang.EN, Modifier.padding(horizontal = 16.dp, vertical = 4.dp), summary = summary)
+            }
+        }
+    }
+
+    @Test
+    fun verdict_threeSides_summary_en() = manyShot("verdict_three_win_c_en", "three_win_c", summary = true)
+
+    @Test
+    fun verdict_threeSides_summary_en_dark() = manyShot("verdict_three_win_c_en_dark", "three_win_c", summary = true, dark = true)
+
+    @Test
+    fun verdict_fourSides_summary_en() = manyShot("verdict_four_win_d_en", "four_win_d_separate_accounts", summary = true)
+
+    @Test
+    fun verdict_threeSides_tooClose_en() = manyShot("verdict_three_too_close_en", "three_too_close", summary = true)
+
+    @Test
+    fun verdict_fourSides_details_en() = manyShot("verdict_four_win_d_details_en", "four_win_d_separate_accounts", summary = false)
+
+    @Test
+    fun home_fourSides_en() = capture("home_four_sides_en", tall = true) {
+        val text = "A hot dog is its own thing. Nobody orders a sandwich and expects one."
+        Themed(AppLang.EN) {
+            HomeScreen(
+                premiumHome(AppLang.EN, "credits7").copy(
+                    argument = text,
+                    otherSide = "It's a filling inside sliced bread. That's a sandwich, end of story.",
+                    suggestedName = "Alex",
+                    otherName = "Sam",
+                    theirsOpen = true,
+                    more = listOf(
+                        com.okjudge.judge.ui.home.ExtraSide("Taco rules apply: a filling in a folded bread is a sandwich.", "Deniz"),
+                        com.okjudge.judge.ui.home.ExtraSide("", ""),
+                    ),
+                ),
+                {}, {}, {},
+            )
+        }
+    }
+
+    @Test
+    fun home_threeSides_withAddSide_en() = capture("home_three_sides_en", tall = true) {
+        Themed(AppLang.EN) {
+            HomeScreen(
+                premiumHome(AppLang.EN, "credits7").copy(
+                    argument = "A hot dog is its own thing. Nobody orders a sandwich and expects one.",
+                    otherSide = "It's a filling inside sliced bread. That's a sandwich, end of story.",
+                    theirsOpen = true,
+                ),
+                {}, {}, {},
+            )
+        }
+    }
+
+    @Test
+    fun case_threeSides_invites_en() = capture("case_three_sides_en", tall = true) {
+        val base = (Fixtures.verdicts["cases"]!!.jsonObject["views"]!!.jsonObject["waiting_for_respondent"]!!.jsonObject).toMutableMap()
+        base["parties"] = kotlinx.serialization.json.JsonArray(listOf("a", "b", "c", "d").map(::JsonPrimitive))
+        base["canJudgeAnswered"] = JsonPrimitive(true)
+        base["invites"] = kotlinx.serialization.json.Json.parseToJsonElement(
+            """[{"party":"b","status":"answered","inviteUrl":null,"answeredAt":"2026-11-02T10:00:00.000Z"},
+                {"party":"c","status":"waiting","inviteUrl":"https://okjudge.com/r/CtokenCtokenCtokenCtok","answeredAt":null},
+                {"party":"d","status":"waiting","inviteUrl":"https://okjudge.com/r/DtokenDtokenDtokenDtok","answeredAt":null}]""",
+        )
+        base["display"] = kotlinx.serialization.json.Json.parseToJsonElement("""{"namesVisible":true,"a":"Ayşe","b":"Sam","c":"Deniz"}""")
+        val v = WireJson.json.decodeFromString(
+            com.okjudge.judge.core.model.CaseView.serializer(),
+            kotlinx.serialization.json.JsonObject(base).toString(),
+        )
+        Themed(AppLang.EN) {
+            com.okjudge.judge.ui.cases.CaseScreen(
+                com.okjudge.judge.ui.cases.CaseViewModel.preview(v), evidenceOn = true,
+                actions = com.okjudge.judge.ui.cases.CaseActions(onBack = {}), reducedMotion = true,
+            )
+        }
+    }
+
+    @Test
+    fun account_page_en() = capture("account_page_en") {
+        val me = MeResponse(user = Viewer(id = "u1", email = "ada@example.com", name = "Ada"))
+        Themed(AppLang.EN) {
+            com.okjudge.judge.ui.settings.AccountScreen(Account.State.SignedIn(me), busy = false, onDelete = {}, onBack = {})
+        }
     }
 
     @Test

@@ -21,7 +21,7 @@ final class AccountModel {
         case choose
         /// The code was emailed to this address.
         case code(email: String)
-        /// Signed in by the code and choosing a password; closing the sheet skips it.
+        /// Signed in by the code and choosing a password; there is no way past it.
         case choosePassword
     }
 
@@ -72,8 +72,6 @@ final class AccountModel {
     var mode: Mode = .password
     /// Kept in memory only, until the account has it or the sheet is left.
     var password = ""
-    /// A password was just saved from Settings.
-    private(set) var passwordSaved = false
     var isSignInPresented = false
 
     /// The phone's answer, asked at most once per run; nil until it answered.
@@ -124,7 +122,6 @@ final class AccountModel {
     }
 
     var user: Viewer? { info?.user }
-    var hasPassword: Bool { info?.hasPassword == true }
     var entitlement: Entitlement? { info?.entitlement }
 
     var signInProviders: SignInProviders? {
@@ -502,16 +499,15 @@ final class AccountModel {
         }
         busy = .verifyCode
         failure = nil
-        let setsPassword = passwordSignIn && (mode == .create || mode == .forgot)
         do {
             let session = try await api.signInWithCode(email: address, code: entered)
-            await finishSignIn(session, choosePassword: setsPassword)
+            await finishSignIn(session, byCode: true)
         } catch {
             failure = Self.codeFailure(error)
         }
         busy = nil
         // Create asked for the password up front: save it now that the
-        // address is proven. A failure leaves the form up to retry or skip.
+        // address is proven. A failure leaves the form up to retry.
         if step == .choosePassword, mode == .create, password.count >= Self.passwordMin {
             await saveChosenPassword()
         }
@@ -547,31 +543,17 @@ final class AccountModel {
     /// The password form after a code sign-in: saves what was typed, then
     /// closes the sheet.
     func saveChosenPassword() async {
-        if await storePassword(password, current: nil) { isSignInPresented = false }
+        if await storePassword(password) { isSignInPresented = false }
     }
 
-    /// Settings: sets or replaces the password. `current` is needed to
-    /// replace one unless the session is a fresh code sign-in.
-    func changePassword(_ new: String, current: String?) async -> Bool {
-        passwordSaved = false
-        guard await storePassword(new, current: current) else { return false }
-        passwordSaved = true
-        return true
+    /// The password step has no skip, but a save that keeps failing must not
+    /// trap the person: this signs out and closes the sheet.
+    func signOutFromPasswordStep() async {
+        await signOut()
+        isSignInPresented = false
     }
 
-    /// The Password row was opened: forget the last attempt.
-    func beginPasswordChange() {
-        failure = nil
-        passwordSaved = false
-    }
-
-    /// Whether Settings offers the Password row: the server has passwords
-    /// and says whether this account has one.
-    var canManagePassword: Bool {
-        isSignedIn && serverConfig?.signIn.passwordSignIn == true && info?.hasPassword != nil
-    }
-
-    private func storePassword(_ new: String, current: String?) async -> Bool {
+    private func storePassword(_ new: String) async -> Bool {
         guard isSignedIn, busy == nil else { return false }
         guard new.count >= Self.passwordMin else {
             failure = .passwordShort
@@ -582,9 +564,10 @@ final class AccountModel {
         defer { busy = nil }
         let asked = api.tokenStore.token()
         do {
-            try await api.setPassword(new, current: current)
+            try await api.setPassword(new, current: nil)
             guard isSameSession(asked) else { return false }
             info?.hasPassword = true
+            info?.needsPassword = false
             password = ""
             return true
         } catch let error as APIError where error.code == "signin_required" {
@@ -598,6 +581,12 @@ final class AccountModel {
             code = ""
             failure = .codeExpired
             return false
+        } catch APIError.server(let status, let body) where status == 403 && body?.code == "invalid" && step == .choosePassword {
+            // The server takes no password for this account (the review account): the sign-in stands without one.
+            guard isSameSession(asked) else { return false }
+            info?.needsPassword = false
+            password = ""
+            return true
         } catch {
             failure = Self.passwordSaveFailure(error)
             return false
@@ -626,31 +615,39 @@ final class AccountModel {
 
     // MARK: - Session
 
-    /// `choosePassword` keeps the sheet open on the password form: the
-    /// account exists now, and closing the sheet skips the password.
-    private func finishSignIn(_ session: AuthSession, choosePassword: Bool = false) async {
+    /// A code sign-in keeps the sheet open on the password form when the
+    /// person is creating an account or resetting a password, or when /me says
+    /// the account has none. If /me can't be read the sign-in just finishes.
+    private func finishSignIn(_ session: AuthSession, byCode: Bool = false) async {
         api.tokenStore.setToken(session.token)
         isSignedIn = true
         info = session.user.map { AccountInfo(user: $0, entitlement: nil) }
         notice = nil
         failure = nil
-        step = choosePassword ? .choosePassword : .choose
         code = ""
-        if !choosePassword {
-            password = ""
-            mode = .password
+        var choosePassword = byCode && passwordSignIn && (mode == .create || mode == .forgot)
+        if choosePassword {
+            step = .choosePassword
+        } else if !byCode {
+            step = .choose
         }
         // The verdict waiting behind sign-in needs the age on record first:
         // read the account and report the box (or the phone's 18+) before
         // the sheet closes.
         var known = false
-        if usesNetwork, ageTicked || platformAge == .adult,
+        if usesNetwork, byCode || ageTicked || platformAge == .adult,
            let fresh = try? await api.me(), fresh.user != nil, isSignedIn {
             info = fresh
             known = true
             await settleAge()
+            if byCode, passwordSignIn, fresh.needsPassword { choosePassword = true }
         }
-        if !choosePassword { isSignInPresented = false }
+        if byCode { step = choosePassword ? .choosePassword : .choose }
+        if !choosePassword {
+            password = ""
+            mode = .password
+            isSignInPresented = false
+        }
         if let id = info?.user?.id ?? session.user?.id { onUserKnown?(id) }
         if usesNetwork, !known {
             Task { await refresh() }
@@ -743,7 +740,6 @@ final class AccountModel {
         code = ""
         password = ""
         mode = .password
-        passwordSaved = false
         onSessionEnded?(byUser)
     }
 

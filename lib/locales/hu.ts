@@ -119,6 +119,8 @@ const hu: Locale = {
     verdictAria: "Ítélet: {label}",
     "party.a": "Fél A",
     "party.b": "Fél B",
+    "party.c": "Fél C",
+    "party.d": "Fél D",
     "party.youLabel": "{label} (te)",
     you: "Te",
     "shared.subtitle": "Valaki megosztotta ezt az ítéletet",
@@ -345,8 +347,7 @@ const hu: Locale = {
     "signin.createNote": "E-mailben küldünk egy kódot, hogy megerősítsd ezt a címet. Ezt csak egyszer kell megtenned.",
     "signin.passwordChoose": "Be vagy jelentkezve. Válassz jelszót a következő alkalomra.",
     "signin.passwordSave": "Jelszó mentése",
-    "signin.passwordSaveFailed": "Be vagy jelentkezve, de a jelszót nem sikerült elmenteni. Próbáld újra, vagy állítsd be később a Beállításokban.",
-    "signin.passwordSkip": "Kihagyás egyelőre",
+    "signin.passwordSaveFailed": "A jelszót nem sikerült elmenteni. Próbáld újra.",
     "signin.passwordSubmit": "Belépés",
     "signin.rateLimited": "Túl sok próbálkozás. Várj egy percet, és próbáld újra.",
     "signin.serviceDown": "A belépés most nem érhető el. Próbáld újra később.",
@@ -374,10 +375,6 @@ const hu: Locale = {
     "account.deleteConfirm":
       "Törlöd a fiókodat? A kreditjeid, az előfizetésed és a belépési adataid törlődnek. Az ítéleteidet és az ügyekben beküldött verzióidat eltávolítjuk: amit írtál, azt a nevekkel együtt töröljük, a megosztási linkjeik pedig megszűnnek működni.",
     "account.deleteYes": "Igen, törlöm",
-    "account.passwordSet": "Jelszó beállítása",
-    "account.passwordChange": "Jelszó módosítása",
-    "account.passwordCurrent": "Jelenlegi jelszó",
-    "account.passwordSaved": "Jelszó elmentve.",
     "account.deleteCancel": "Megtartom a fiókot",
     "account.deleted": "A fiókodat töröltük. Visszaviszünk a kezdőlapra…",
     "account.deleteFailed": "Most nem sikerült törölni a fiókot. Megpróbálod újra?",
@@ -468,6 +465,10 @@ const hu: Locale = {
     "case.judgeNow.yes": "Igen, döntsenek most",
     "case.judgeExpired.confirm": "Kérsz ítéletet csak a te verziód alapján? Ez 1 ítéletbe kerül.",
     "case.judgeExpired.yes": "Igen, mehet (1 ítélet)",
+    "case.side.waiting": "Várakozik",
+    "case.side.answered": "Válaszolt",
+    "case.judgeAnswered": "Ítélet a válaszoló felek alapján",
+    "case.judgeAnswered.confirm": "Kérsz ítéletet a válaszoló felek alapján? A többi meghívó lezárul, és ők már nem válaszolhatnak.",
     "case.cancel": "Mégse",
     "case.retry": "Újrapróbálás",
     "case.failedBody": "Visszakaptad a kreditedet. Most újra megpróbálhatod.",
@@ -476,9 +477,13 @@ const hu: Locale = {
     "case.accounts": "Ki mit mondott a bíráknak",
     "case.accountA": "Fél A beszámolója",
     "case.accountB": "Fél B beszámolója",
+    "case.accountC": "Fél C beszámolója",
+    "case.accountD": "Fél D beszámolója",
     "case.accountYou": "A te beszámolód ({label})",
     "case.contextA": "Fél A kiegészítése",
     "case.contextB": "Fél B kiegészítése",
+    "case.contextC": "Fél C kiegészítése",
+    "case.contextD": "Fél D kiegészítése",
     "case.contextYou": "A te kiegészítésed ({label})",
     "case.evidenceItem": "{n}. kép, ahogy a bírák olvassák",
     "case.notYet": "Még nem válaszolt.",
@@ -564,6 +569,7 @@ const hu: Locale = {
     "home.yourPlaceholder": "Mi a gond?",
     "home.addContext": "Kiegészítés hozzáadása",
     "home.addTheirSide": "Add hozzá az ő verzióját",
+    "home.addSide": "Újabb fél hozzáadása",
     "home.removeTheirSide": "Vedd ki az ő verzióját",
     "home.sendLink": "Küldj linket",
     "home.clear": "Törlés",
@@ -578,58 +584,9 @@ const hu: Locale = {
     "home.says": "{name} szerint:",
     "home.mySide": "Az én verzióm:",
     "home.otherSide": "Az ő verziója:",
-    "pairs.dishwasher.aName": "Kata",
-    "pairs.dishwasher.a":
-      "Már megint a felső kosárba raktad a tálakat. Ott sosem lesznek tiszták, arra való az alsó.",
-    "pairs.dishwasher.bName": "Ádám",
-    "pairs.dishwasher.b":
-      "Simán elférnek fent, és így az alsó kosár szabad marad a lábasoknak. Évek óta így pakolom, és még soha semmi nem jött ki koszosan.",
-    "pairs.bill.aName": "Eszter",
-    "pairs.bill.a":
-      "Én nem ittam semmit, úgyhogy nem kéne kifizetnem a bor negyedét. Az ételt nyugodtan osszuk el egyenlően.",
-    "pairs.bill.bName": "Máté",
-    "pairs.bill.b":
-      "Mindig négyfelé osztjuk, és kész. Minden alkalommal kiszámolni, ki mit evett, macerás, és amúgy sem nagy a különbség.",
-    "pairs.thermostat.aName": "Zsófi",
-    "pairs.thermostat.a":
-      "19 fok van itt bent, és még kapucnis pulóverben is fázom. Nem őrültség feltekerni 22-re.",
-    "pairs.thermostat.bName": "Péter",
-    "pairs.thermostat.b":
-      "22 fokban nem lehet aludni, az már túl meleg. Te fel tudsz venni még egy réteget, én viszont már nem tudok mit levenni.",
-    "pairs.roadTrip.aName": "Dávid",
-    "pairs.roadTrip.a":
-      "Odafelé végig én vezettem, mind a hat órát. Az az igazságos, ha visszafelé te vezetsz.",
-    "pairs.roadTrip.bName": "Lilla",
-    "pairs.roadTrip.b":
-      "Már indulás előtt mondtam, hogy utálok éjszaka vezetni, és este hétkor indulunk. A következő úton majd én vezetek reggelente.",
-    "pairs.seat.aName": "Nóra",
-    "pairs.seat.a":
-      "Az ülésem hátradönthető, úgyhogy hátradöntöm. Éjszakai járaton vagyunk, mindenki aludni próbál.",
-    "pairs.seat.bName": "Bálint",
-    "pairs.seat.b":
-      "190 centi vagyok, és a térdem már így is az ülésednek nyomódik. Legalább megkérdezhetnéd, mielőtt teljesen hátradöntöd.",
-    "pairs.spoiler.aName": "Fanni",
-    "pairs.spoiler.a":
-      "Elárultad, ki a gyilkos, mielőtt egyáltalán elkezdtem volna az utolsó részt. Egész héten erre vártam.",
-    "pairs.spoiler.bName": "Levente",
-    "pairs.spoiler.b":
-      "Három hete jött ki, és azt mondtad, már a végére értél. Nem tudom fejben tartani, ki hol tart.",
-    "pairs.jacket.aName": "Dani",
-    "pairs.jacket.a":
-      "Meg sem kérdeztél, csak felvetted a farmerdzsekimet a koncertre. Füstszagúan kaptam vissza.",
-    "pairs.jacket.bName": "Lili",
-    "pairs.jacket.b":
-      "Az ajtó mellett lógott, és sosem hordod. Megkérdeztelek volna, de aludtál, én meg már késésben voltam.",
-    "pairs.lastSlice.aName": "Marci",
-    "pairs.lastSlice.a":
-      "Még a film előtt lestoppoltam az utolsó szeletet. Mindenki hallotta.",
-    "pairs.lastSlice.bName": "Panni",
-    "pairs.lastSlice.b":
-      "Nem lehet lestoppolni valamit, aztán két órán át hozzá se nyúlni. Csak ott hűlt, úgyhogy megettem.",
     "appeal.lead":
-      "Hiányzik vagy téves valami? Add hozzá egyszer, és a bírák mindent újra átnéznek. Ez 1 ítéletbe kerül.",
-    "appeal.label": "A kiegészítésed",
-    "appeal.placeholder": "Mi kerülte el a bírák figyelmét?",
+      "1 ítéletbe kerül.",
+    "appeal.placeholder": "Mi kerülte el a bírák figyelmét? Egy tény, egy üzenet vagy az, hogy miben állapodtatok meg valójában.",
     "appeal.submit": "Újraítélés kiegészítéssel",
     "appeal.sending": "Kivesszük a neveket a kiegészítésedből…",
     "appeal.judging": "A bírák mindent újra átnéznek…",
@@ -649,8 +606,6 @@ const hu: Locale = {
     "appeal.previous": "Korábbi ítélet",
     "appeal.failed": "Az újraítélés nem sikerült. Visszakaptad a kreditedet, megpróbálhatod újra.",
     "appeal.refused": "A bírák ezzel a kiegészítéssel nem voltak hajlandók újra dönteni. Visszakaptad a kreditedet.",
-    "appeal.leadVerdict":
-      "Hiányzik vagy téves valami? Add hozzá, és a bírák mindent újra átnéznek. Alkalmanként 1 ítéletbe kerül, ítéletenként legfeljebb kétszer.",
     "appeal.history": "Az ítélet előzményei",
     "faq.both.q": "A másik fél is elmondhatja a saját verzióját?",
     "faq.both.a":
@@ -692,6 +647,7 @@ const hu: Locale = {
     "unavailable.cta": "Irány a Judge",
     "error.removed": "Ezt eltávolították. A linkje már nem működik.",
     "error.names_unavailable": "A neveket most nem lehet menteni. Próbáld újra később.",
+    "error.update_required": "Ebben az ügyben kettőnél több fél van. Frissítsd az appot a megnyitáshoz.",
     "verdict.remove": "Ítélet eltávolítása",
     "verdict.remove.confirm":
       "Eltávolítod, amit írtál, a neveket és a megjelenített neveket? A megosztási link és az előnézeti képe senkinek sem töltődik be többé (a csetekben már kiküldött előnézetek még látszhatnak, amíg az adott app nem frissíti őket). Ez nem vonható vissza.",

@@ -13,17 +13,6 @@ struct EvidencePickerView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HStack(alignment: .firstTextBaseline) {
-                Text(L10n.appContextLabel(lang))
-                    .brandText(.slotTitle)
-                    .foregroundStyle(Brand.ink)
-                Spacer()
-                Text(verbatim: "\(evidence.items.count) / \(evidence.max)")
-                    .brandText(.footnote)
-                    .monospacedDigit()
-                    .foregroundStyle(Brand.muted)
-                    .accessibilityHidden(true)
-            }
             EvidenceRows(evidence: evidence, lang: lang, disabled: disabled)
             EvidenceAddButton(evidence: evidence, disabled: disabled) {
                 Label(L10n.appHomeAddContext(lang), systemImage: "plus")

@@ -19,9 +19,11 @@
  * feature) has no owner, is not removed and shows labels on its share page.
  */
 
+import type { PartyLetter as CaseParty } from "@/lib/case-types";
 import type { Client, Row } from "@libsql/client";
 import { ensureCaseTables } from "@/lib/cases/db";
 import { getDb } from "@/lib/db";
+import { PARTY_CHECK, PARTY_CHECK_WIDE, rebuildTable } from "@/lib/db-rebuild";
 import type { RemovalReason } from "@/lib/originals-types";
 import { VerdictResult } from "@/lib/types";
 
@@ -37,7 +39,7 @@ const SCHEMA = [
     display_key_id    TEXT,
     names_confirmed_at TEXT,
     removed_at        TEXT,
-    removal_reason    TEXT CHECK (removal_reason IN ('owner','party_a','party_b','account_deleted','operator')),
+    removal_reason    TEXT CHECK (removal_reason IN ('owner','party_a','party_b','party_c','party_d','account_deleted','operator')),
     created_at        TEXT NOT NULL,
     updated_at        TEXT NOT NULL
   )`,
@@ -51,7 +53,7 @@ const SCHEMA = [
     kind        TEXT NOT NULL CHECK (kind IN ('verdict','side','appeal')),
     verdict_id  TEXT,
     case_id     TEXT,
-    party       TEXT CHECK (party IN ('a','b')),
+    party       TEXT CHECK (party IN ('a','b','c','d')),
     sealed      TEXT,
     key_id      TEXT,
     removed_at  TEXT,
@@ -75,7 +77,8 @@ const SCHEMA = [
 
 /** Which party's removal a case verdict inherits (SQL over alias `c`). */
 export const CASE_REMOVAL_REASON_SQL = `CASE WHEN c.removed_at IS NULL THEN NULL
-  WHEN c.removed_a_at IS NOT NULL THEN 'party_a' WHEN c.removed_b_at IS NOT NULL THEN 'party_b' ELSE 'party_a' END`;
+  WHEN c.removed_a_at IS NOT NULL THEN 'party_a' WHEN c.removed_b_at IS NOT NULL THEN 'party_b'
+  WHEN c.removed_c_at IS NOT NULL THEN 'party_c' WHEN c.removed_d_at IS NOT NULL THEN 'party_d' ELSE 'party_a' END`;
 
 /** sqlite datetime('now') text -> ISO-8601 UTC (verdicts.created_at). */
 const ISO_FROM_SQLITE = (col: string) => `strftime('%Y-%m-%dT%H:%M:%fZ', ${col})`;
@@ -133,6 +136,13 @@ async function addMetaColumns(db: Client): Promise<void> {
   }
 }
 
+/** Tables created when a case had two sides: party was a or b, and a removal
+ * could only be the owner, party A or party B. */
+async function widenChecks(db: Client): Promise<void> {
+  await rebuildTable(db, "originals", PARTY_CHECK, PARTY_CHECK_WIDE);
+  await rebuildTable(db, "verdict_meta", /'party_b'\s*,\s*'account_deleted'/, "'party_b','party_c','party_d','account_deleted'");
+}
+
 /** Creates the case tables (with their added columns), the originals
  * tables, and runs the backfills, once per process. Idempotent. */
 export async function ensureOriginalsTables(): Promise<void> {
@@ -143,6 +153,7 @@ export async function ensureOriginalsTables(): Promise<void> {
   const ready = client
     .batch(SCHEMA, "write")
     .then(() => addMetaColumns(client))
+    .then(() => widenChecks(client))
     .then(() => client.batch(backfillStatements(new Date().toISOString()), "write"))
     .then(
       () => undefined,
@@ -210,8 +221,8 @@ export async function getOriginal(subject: string): Promise<{ sealed: string | n
 
 export const subjects = {
   verdict: (verdictId: string) => `verdict:${verdictId}`,
-  side: (caseId: string, party: "a" | "b") => `case:${caseId}:side:${party}`,
-  appeal: (caseId: string, party: "a" | "b") => `case:${caseId}:appeal:${party}`,
+  side: (caseId: string, party: CaseParty) => `case:${caseId}:side:${party}`,
+  appeal: (caseId: string, party: CaseParty) => `case:${caseId}:appeal:${party}`,
 };
 
 export type OwnerVerdictRow = {
@@ -226,7 +237,12 @@ export type OwnerVerdictRow = {
 /** One-sided verdicts owned by a user, newest first, each with its current
  * ruling (the latest appeal's verdict, if any). The verdicts appeals
  * produced are not listed on their own. */
-export async function listOwnerVerdicts(userId: string, limit: number, before: string | null): Promise<OwnerVerdictRow[]> {
+export async function listOwnerVerdicts(
+  userId: string,
+  limit: number,
+  before: string | null,
+  manySides = true,
+): Promise<OwnerVerdictRow[]> {
   const db = await originalsDb();
   const rs = await db.execute({
     sql: `SELECT m.verdict_id, m.kind, m.created_at, m.removed_at, o.sealed,
@@ -239,9 +255,10 @@ export async function listOwnerVerdicts(userId: string, limit: number, before: s
           LEFT JOIN originals o ON o.subject = 'verdict:' || m.verdict_id
           WHERE m.owner_user_id = ? AND m.kind IN ('free','premium') AND (? IS NULL OR m.created_at < ?)
             AND NOT EXISTS (SELECT 1 FROM verdict_appeals a WHERE a.id = m.verdict_id)
+            AND (? = 1 OR COALESCE(json_valid(v.result), 0) = 0 OR json_extract(v.result, '$.parties') IS NULL)
           ORDER BY m.created_at DESC, m.verdict_id DESC
           LIMIT ?`,
-    args: [userId, before, before, limit],
+    args: [userId, before, before, manySides ? 1 : 0, limit],
   });
   return rs.rows.map((r) => {
     let result: VerdictResult | null = null;

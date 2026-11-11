@@ -40,6 +40,7 @@ import {
   MAX_EVIDENCE_PER_APPEAL,
   MAX_EVIDENCE_PER_SIDE,
   RespondRequest,
+  RotateInviteRequest,
   SideRequest,
   type AppealBlock,
   type AppealResponse,
@@ -59,6 +60,7 @@ import { clientIp } from "@/lib/client-ip";
 import { entitlementWriteBatch, getEntitlement } from "@/lib/entitlements";
 import { handleEvidenceUpload, verifyEvidenceTokens, type EvidenceAudience, type VerifiedEvidence } from "@/lib/evidence";
 import { casesEnabled, evidenceEnabled } from "@/lib/features";
+import { partiesFor } from "@/lib/multi";
 import { originalsKeyState } from "@/lib/originals/crypto";
 import { caseDisplayNames, partyOriginals } from "@/lib/originals/cases";
 import { removeCaseSide } from "@/lib/originals/removal";
@@ -78,9 +80,22 @@ import {
   type UserBucket,
 } from "@/lib/ratelimit";
 import { verifyTurnstile } from "@/lib/turnstile";
-import { caseDb, getCase, getCaseByInviteHash, listOwnerCases, loadCaseBundle, type CaseRow } from "./db";
-import { claimMatches, inviteHash, inviteUrl, isInviteToken, publicOrigin } from "./invite";
 import {
+  caseDb,
+  getCase,
+  getCaseByAnyInviteHash,
+  getInvites,
+  listOwnerCases,
+  loadCaseBundle,
+  respondentOf,
+  type CaseRow,
+} from "./db";
+import { acceptsManySides } from "./capability";
+import { claimMatches, inviteHash, inviteUrl, isInviteToken, publicOrigin } from "./invite";
+import { provenParty } from "./party";
+import { respondToSide } from "./sides";
+import {
+  boundElsewhere,
   claimFor,
   createCase,
   currentInviteToken,
@@ -119,7 +134,18 @@ const MESSAGES: Partial<Record<ApiErrorCode, string>> = {
   anonymize_failed: "We couldn't take the names out of your text. Try again, or write initials instead of full names.",
   removed: "This case was removed. Its links no longer work.",
   names_unavailable: "Names can't be saved on this server right now.",
+  update_required: "This case has more than two sides. Update the app to open it.",
 };
+
+/** A case with three or four sides, asked by an app that does not send
+ * Judge-Sides: thrown by the lookups below and answered by `guarded`. */
+class UpdateRequired extends Error {}
+
+const isManySided = (row: CaseRow) => row.sides > 2 && row.mode !== "one_sided";
+
+function gateSides(req: Request, row: CaseRow): void {
+  if (isManySided(row) && !acceptsManySides(req, row.sides)) throw new UpdateRequired();
+}
 
 export function fail(
   code: ApiErrorCode,
@@ -281,43 +307,49 @@ async function viewOriginals(row: CaseRow, party: PartyLetter, proven: boolean) 
 
 async function ownerView(row: CaseRow, req: Request, viewerId: string, now = new Date()): Promise<CaseView> {
   const bundle = await loadCaseBundle(row);
-  const token =
-    effectiveStatus(row, now) === "awaiting_respondent" && !row.removedAt ? await currentInviteToken(row) : null;
+  const open = effectiveStatus(row, now) === "awaiting_respondent" && !row.removedAt;
+  const token = open ? await currentInviteToken(row) : null;
+  const origin = publicOrigin(req);
+  const inviteUrls: Partial<Record<PartyLetter, string>> = {};
+  if (open && isManySided(row)) {
+    if (token) inviteUrls.b = inviteUrl(origin, token);
+    for (const invite of bundle.invites) {
+      const t = await currentInviteToken(row, invite);
+      if (t) inviteUrls[invite.party] = inviteUrl(origin, t);
+    }
+  }
   return buildCaseView(bundle, {
     role: "owner",
     now,
-    inviteUrl: token ? inviteUrl(publicOrigin(req), token) : null,
+    inviteUrl: token ? inviteUrl(origin, token) : null,
+    ...(Object.keys(inviteUrls).length > 0 ? { inviteUrls } : {}),
     ownInvite: false,
     appealBlock: await appealBlockFor(row, bundle, "a", viewerId, now),
     originals: await viewOriginals(row, "a", true),
   });
 }
 
-/** Whether this request proves it comes from Party B: the account bound to
- * side B, or the claim secret from answering. Never the owner. */
-function provenRespondent(row: CaseRow, viewerId: string | null, claim: string | null): boolean {
-  if (row.mode !== "two_sided" || (viewerId !== null && viewerId === row.ownerId)) return false;
-  if (row.respondentUserId && viewerId === row.respondentUserId) return true;
-  return claimMatches(row, claim);
-}
-
+/** The case page for the side `party` (B unless the link is for C or D). */
 async function respondentView(
   row: CaseRow,
+  party: PartyLetter,
   viewerId: string | null,
   claim: string | null = null,
   now = new Date(),
 ): Promise<CaseView> {
   const bundle = await loadCaseBundle(row);
-  const claimOk = claimMatches(row, claim);
+  const who = respondentOf(row, bundle.invites, party);
+  const claimOk = claimMatches({ id: row.id, respondentClaimNonce: who.claimNonce }, claim);
   return buildCaseView(bundle, {
     role: "respondent",
+    party,
     now,
     inviteUrl: null,
     ownInvite: viewerId !== null && viewerId === row.ownerId,
-    appealBlock: await appealBlockFor(row, bundle, "b", viewerId, now, claimOk),
-    inAccount: viewerId !== null && row.mode === "two_sided" && row.respondentUserId === viewerId,
-    inOtherAccount: claimOk && row.respondentUserId !== null && row.respondentUserId !== viewerId,
-    originals: await viewOriginals(row, "b", provenRespondent(row, viewerId, claim)),
+    appealBlock: await appealBlockFor(row, bundle, party, viewerId, now, claimOk),
+    inAccount: viewerId !== null && row.mode === "two_sided" && who.userId === viewerId,
+    inOtherAccount: claimOk && who.userId !== null && who.userId !== viewerId,
+    originals: await viewOriginals(row, party, provenParty(row, bundle.invites, party, viewerId, claim)),
   });
 }
 
@@ -328,19 +360,25 @@ function claimHeader(req: Request): string | null {
 }
 
 /** The owner's case, or null for a bad id, a missing case or someone else's. */
-async function ownedCase(id: string, viewerId: string): Promise<CaseRow | null> {
+async function ownedCase(id: string, viewerId: string, req: Request): Promise<CaseRow | null> {
   if (!CASE_ID.test(id)) return null;
   const row = await getCase(id);
-  return row && row.ownerId === viewerId ? row : null;
+  if (!row || row.ownerId !== viewerId) return null;
+  gateSides(req, row);
+  return row;
 }
 
-async function caseByToken(token: string): Promise<CaseRow | null> {
+/** The case behind an invite link and the side the link is for. */
+async function caseByToken(token: string, req: Request): Promise<{ row: CaseRow; party: "b" | "c" | "d" } | null> {
   if (!isInviteToken(token)) return null;
-  return getCaseByInviteHash(inviteHash(token));
+  const found = await getCaseByAnyInviteHash(inviteHash(token));
+  if (found) gateSides(req, found.row);
+  return found;
 }
 
 export function guarded(name: string, fn: () => Promise<NextResponse>): Promise<NextResponse> {
   return fn().catch((e: unknown) => {
+    if (e instanceof UpdateRequired) return fail("update_required");
     console.error(`[cases] ${name} failed:`, e instanceof Error ? e.message : String(e));
     return fail("unavailable");
   });
@@ -358,6 +396,9 @@ export function createCaseHandler(req: Request): Promise<NextResponse> {
     if (!read.ok) return fail("invalid", "Invalid JSON body");
     const parsed = CreateCaseRequest.safeParse(read.body);
     if (!parsed.success) return invalidBody(parsed.error.issues[0]);
+    if (parsed.data.sides && parsed.data.sides > 2 && !acceptsManySides(req, parsed.data.sides)) {
+      return fail("update_required");
+    }
     const gate = await signedIn(req);
     if ("response" in gate) return gate.response;
     const userId = gate.viewer.user.id;
@@ -376,6 +417,7 @@ export function createCaseHandler(req: Request): Promise<NextResponse> {
       displayName: parsed.data.displayName || null,
       lang: parsed.data.lang,
       evidence: ev.items,
+      ...(parsed.data.sides && parsed.data.sides > 2 ? { sides: parsed.data.sides } : {}),
       ...(key ? { idempotencyKey: key } : {}),
     });
     if (!res.ok) {
@@ -410,7 +452,7 @@ export function writeSideHandler(req: Request, id: string): Promise<NextResponse
     const limited = await limitGate(userId, "premium_verdict", true);
     if (limited) return limited;
     await maybeSweepCases();
-    const row = await ownedCase(id, userId);
+    const row = await ownedCase(id, userId, req);
     if (!row) return fail("not_found");
 
     const ev = verifyEvidence(parsed.data.evidence, [{ type: "user", userId }], MAX_EVIDENCE_PER_SIDE);
@@ -455,7 +497,7 @@ export function listCasesHandler(req: Request): Promise<NextResponse> {
       before = d.toISOString();
     }
     await maybeSweepCases();
-    const rows = await listOwnerCases(viewer.user.id, limit + 1, before);
+    const rows = await listOwnerCases(viewer.user.id, limit + 1, before, acceptsManySides(req));
     const now = new Date();
     const page = rows.slice(0, limit);
     const body: CaseListResponse = {
@@ -474,7 +516,7 @@ export function getCaseHandler(req: Request, id: string): Promise<NextResponse> 
     if (refused) return refused;
     if (!viewer) return fail("signin_required");
     await maybeSweepCases();
-    const row = await ownedCase(id, viewer.user.id);
+    const row = await ownedCase(id, viewer.user.id, req);
     if (!row) return fail("not_found");
     const body: CaseResponse = { case: await ownerView(row, req, viewer.user.id) };
     return json(body);
@@ -488,7 +530,7 @@ export function deleteCaseHandler(req: Request, id: string): Promise<NextRespons
     if (!casesEnabled()) return fail("not_configured");
     const gate = await signedIn(req);
     if ("response" in gate) return gate.response;
-    const row = await ownedCase(id, gate.viewer.user.id);
+    const row = await ownedCase(id, gate.viewer.user.id, req);
     if (!row) return fail("not_found");
     const res = await removeCaseSide(row, "a", "party_a");
     if (!res.ok) return res.code === "not_found" ? fail("not_found") : fail("in_progress", "Wait for the judges to finish first.");
@@ -511,12 +553,24 @@ export function judgeCaseHandler(req: Request, id: string): Promise<NextResponse
     const limited = await limitGate(userId, "premium_verdict", true);
     if (limited) return limited;
     await maybeSweepCases();
-    const row = await ownedCase(id, userId);
+    const row = await ownedCase(id, userId, req);
     if (!row) return fail("not_found");
     const res = await judgeNow({ row, mode: parsed.data.mode, origin: publicOrigin(req) });
     if (!res.ok) {
-      if (res.code === "invalid") return fail("invalid", 'Send { "mode": "only_mine" } to judge without the other side.');
-      if (res.code === "side_missing") return fail("invalid", "Write your side first.");
+      if (res.code === "invalid") {
+        return fail(
+          "invalid",
+          isManySided(row)
+            ? 'Send { "mode": "answered" } to judge the sides that answered, or { "mode": "only_mine" } to judge yours alone.'
+            : 'Send { "mode": "only_mine" } to judge without the other side.',
+        );
+      }
+      if (res.code === "side_missing") {
+        return fail(
+          "invalid",
+          isManySided(row) ? "Write your side first, and wait until at least B has answered (the sides that answered must be A, B, C in order)." : "Write your side first.",
+        );
+      }
       if (res.code === "case_closed" || res.code === "unavailable" || res.code === "removed") return fail(res.code);
       return blocked(res.code, "resetsAt" in res ? res.resetsAt : undefined);
     }
@@ -533,11 +587,16 @@ export function rotateInviteHandler(req: Request, id: string): Promise<NextRespo
     if ("response" in gate) return gate.response;
     const limited = await limitGate(gate.viewer.user.id, "case_create", false);
     if (limited) return limited;
-    const row = await ownedCase(id, gate.viewer.user.id);
+    const read = await readJson(req, true);
+    if (!read.ok) return fail("invalid", "Invalid JSON body");
+    const parsed = RotateInviteRequest.safeParse(read.body ?? {});
+    if (!parsed.success) return invalidBody(parsed.error.issues[0]);
+    const row = await ownedCase(id, gate.viewer.user.id, req);
     if (!row) return fail("not_found");
-    const res = await rotateInvite(row);
+    const party = parsed.data.party ?? "b";
+    const res = await rotateInvite(row, new Date(), party);
     if (!res.ok) return fail(res.code);
-    const body: InviteResponse = { inviteUrl: inviteUrl(publicOrigin(req), res.token) };
+    const body: InviteResponse = { inviteUrl: inviteUrl(publicOrigin(req), res.token), party };
     return json(body);
   });
 }
@@ -575,7 +634,7 @@ async function appealCommon(
     text: parsed.data.text,
     rawText: rawField(read.body, "text") ?? parsed.data.text,
     evidence: ev.items,
-    ...(party === "b" && parsed.data.claim ? { claim: parsed.data.claim } : {}),
+    ...(party !== "a" && parsed.data.claim ? { claim: parsed.data.claim } : {}),
     ...(key ? { idempotencyKey: key } : {}),
   });
   if (!res.ok) {
@@ -606,7 +665,7 @@ export function ownerAppealHandler(req: Request, id: string): Promise<NextRespon
     appealCommon(
       req,
       async (userId) => {
-        const row = await ownedCase(id, userId);
+        const row = await ownedCase(id, userId, req);
         return row ? { row } : { response: fail("not_found") };
       },
       "a",
@@ -624,17 +683,35 @@ export function respondGetHandler(req: Request, token: string): Promise<NextResp
     if (!casesEnabled()) return fail("not_configured");
     if (!isInviteToken(token)) return fail("not_found", "No invite with that link.");
     await maybeSweepCases();
-    const row = await caseByToken(token);
-    if (!row) return fail("not_found", "No invite with that link.");
+    const found = await caseByToken(token, req);
+    if (!found) return fail("not_found", "No invite with that link.");
     const { viewer, deadBearer, refused } = await lookupViewer(req);
     if (deadBearer) return deadBearerResponse();
     if (refused) return refused;
-    const body: CaseResponse = { case: await respondentView(row, viewer?.user.id ?? null, claimHeader(req)) };
+    if (await staleInvite(found.row, found.party)) return fail("case_closed");
+    const body: CaseResponse = {
+      case: await respondentView(found.row, found.party, viewer?.user.id ?? null, claimHeader(req)),
+    };
     return json(body);
   });
 }
 
-/** POST /api/v1/respond/{token}: the other person's side. */
+/** The link is for a side the case no longer has (it was judged without that
+ * side) and nobody answered through it. */
+async function staleInvite(row: CaseRow, party: PartyLetter): Promise<boolean> {
+  if (partiesFor(row.sides).includes(party)) return false;
+  return respondentOf(row, await getInvites(row.id), party).claimNonce === null;
+}
+
+/** The evidence audience of a respondent link: bound to the side it is for. */
+const respondentAudience = (row: CaseRow, party: PartyLetter): EvidenceAudience => ({
+  type: "respondent",
+  caseId: row.id,
+  ...(party === "c" || party === "d" ? { party } : {}),
+});
+
+/** POST /api/v1/respond/{token}: the other person's side. The link says which
+ * side it writes (B, or C and D in a case with that many sides). */
 export function respondPostHandler(req: Request, token: string): Promise<NextResponse> {
   return guarded("respond", async () => {
     if (!casesEnabled()) return fail("not_configured");
@@ -645,8 +722,9 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
     const parsed = RespondRequest.safeParse(read.body);
     if (!parsed.success) return invalidBody(parsed.error.issues[0]);
     if (!isInviteToken(token)) return fail("not_found", "No invite with that link.");
-    const row = await caseByToken(token);
-    if (!row) return fail("not_found", "No invite with that link.");
+    const found = await caseByToken(token, req);
+    if (!found) return fail("not_found", "No invite with that link.");
+    const { row, party } = found;
     if (row.removedAt) return fail("removed");
 
     const { viewer, deadBearer, refused } = await lookupViewer(req);
@@ -673,12 +751,57 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
       await materializeExpiry(row, now).catch(() => undefined);
       return fail("case_expired");
     }
+
+    if (party !== "b" || row.sides > 2) {
+      // Each side has its own answer, link and claim: respondToSide checks
+      // that this one is still open.
+      if (status !== "awaiting_respondent") {
+        const invites = await getInvites(row.id);
+        if (key && respondentOf(row, invites, party).idem === key) {
+          const claim = claimFor(row, invites, party);
+          const body: RespondResponse = {
+            case: await respondentView(row, party, viewer?.user.id ?? null, claim),
+            name_map: [],
+            ...(claim ? { respondent_claim: claim } : {}),
+            replayed: true,
+          };
+          return json(body, 202);
+        }
+        return fail("case_closed");
+      }
+      const ev = verifyEvidence(parsed.data.evidence, [respondentAudience(row, party)], MAX_EVIDENCE_PER_SIDE);
+      if ("response" in ev) return ev.response;
+      const res = await respondToSide({
+        row,
+        party,
+        userId: viewer?.user.id ?? null,
+        text: parsed.data.text,
+        rawText: rawField(read.body, "text") ?? parsed.data.text,
+        displayName: parsed.data.displayName || null,
+        evidence: ev.items,
+        ...(key ? { idempotencyKey: key } : {}),
+        origin: publicOrigin(req),
+        now,
+      });
+      if (!res.ok) {
+        if (res.code === "other_side") return fail("not_party", "You already answered for another side of this case.");
+        return fail(res.code);
+      }
+      const body: RespondResponse = {
+        case: await respondentView(res.row, party, viewer?.user.id ?? null, res.claim),
+        name_map: res.nameMap,
+        ...(res.claim ? { respondent_claim: res.claim } : {}),
+        ...(res.replayed ? { replayed: true } : {}),
+      };
+      return json(body, 202);
+    }
+
     // A case waiting for the owner's side already holds an answer: closed too.
     if (status !== "awaiting_respondent" || row.respondentClaimNonce) {
       if (key && row.respondentIdem === key) {
         const claim = claimFor(row);
         const body: RespondResponse = {
-          case: await respondentView(row, viewer?.user.id ?? null, claim),
+          case: await respondentView(row, "b", viewer?.user.id ?? null, claim),
           name_map: [],
           ...(claim ? { respondent_claim: claim } : {}),
           replayed: true,
@@ -704,7 +827,7 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
     });
     if (!res.ok) return fail(res.code);
     const body: RespondResponse = {
-      case: await respondentView(res.row, viewer?.user.id ?? null, res.claim),
+      case: await respondentView(res.row, "b", viewer?.user.id ?? null, res.claim),
       name_map: res.nameMap,
       ...(res.claim ? { respondent_claim: res.claim } : {}),
       ...(res.replayed ? { replayed: true } : {}),
@@ -714,28 +837,31 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
 }
 
 /** POST /api/v1/respond/{token}/appeals: a signed-in Premium respondent
- * (Party B): the account bound to side B, or one presenting its claim. */
+ * (the side the link is for): the account bound to that side, or one
+ * presenting its claim. */
 export function respondAppealHandler(req: Request, token: string): Promise<NextResponse> {
-  return guarded("respond appeal", () =>
-    appealCommon(
+  return guarded("respond appeal", async () => {
+    if (!casesEnabled()) return fail("not_configured");
+    if (isInviteToken(token)) await maybeSweepCases();
+    const found = isInviteToken(token) ? await caseByToken(token, req) : null;
+    if (!found) return fail("not_found", "No invite with that link.");
+    const { party } = found;
+    return appealCommon(
       req,
       async (userId) => {
-        const row = await caseByToken(token);
-        if (!row) return { response: fail("not_found", "No invite with that link.") };
+        const row = (await getCase(found.row.id)) ?? found.row;
         if (userId === row.ownerId) return { response: fail("not_party") };
         if (row.mode === "one_sided") return { response: fail("not_party") };
-        if (row.respondentUserId && row.respondentUserId !== userId) return { response: fail("not_party") };
+        const bound = respondentOf(row, await getInvites(row.id), party).userId;
+        if (bound && bound !== userId) return { response: fail("not_party") };
         // Unbound: submitAppeal checks the claim secret.
         return { row };
       },
-      "b",
-      (userId, row) => [
-        { type: "user", userId },
-        { type: "respondent", caseId: row.id },
-      ],
-      (row, userId, claim) => respondentView(row, userId, claim),
-    ),
-  );
+      party,
+      (userId, row) => [{ type: "user", userId }, respondentAudience(row, party)],
+      (row, userId, claim) => respondentView(row, party, userId, claim),
+    );
+  });
 }
 
 /** POST /api/v1/respond/{token}/evidence: the respondent's screenshots. */
@@ -743,23 +869,25 @@ export function respondEvidenceHandler(req: Request, token: string): Promise<Nex
   return guarded("respond evidence", async () => {
     if (!casesEnabled() || !evidenceEnabled()) return fail("not_configured", "Screenshot evidence is not available right now.");
     if (!isInviteToken(token)) return fail("not_found", "No invite with that link.");
-    const row = await caseByToken(token);
-    if (!row) return fail("not_found", "No invite with that link.");
+    const found = await caseByToken(token, req);
+    if (!found) return fail("not_found", "No invite with that link.");
+    const { row, party } = found;
     const { refused } = await lookupViewer(req);
     if (refused) return refused;
     const status = effectiveStatus(row, new Date());
     if (status === "expired") return fail("case_expired");
-    if (status !== "awaiting_respondent" || row.respondentClaimNonce) return fail("case_closed");
+    const answered = respondentOf(row, await getInvites(row.id), party).claimNonce !== null;
+    if (status !== "awaiting_respondent" || answered) return fail("case_closed");
     const ip = clientIp(req.headers);
     try {
       const byIp = await checkIpLimits(ip, "respond_evidence");
       if (!byIp.ok) return limitRefusal(byIp);
-      const byCase = await checkUserLimits(`case:${row.id}:b`, "case_evidence");
+      const byCase = await checkUserLimits(`case:${row.id}:${party}`, "case_evidence");
       if (!byCase.ok) return limitRefusal(byCase);
     } catch {
       return fail("unavailable");
     }
-    const res = await handleEvidenceUpload(req, { type: "respondent", caseId: row.id });
+    const res = await handleEvidenceUpload(req, respondentAudience(row, party));
     res.headers.set("Cache-Control", "no-store");
     return res as NextResponse;
   });
@@ -779,7 +907,7 @@ async function ownerLimit(viewerId: string | null, req: Request): Promise<NextRe
   }
 }
 
-type Party = { row: CaseRow; viewer: ViewerSession | null } | { response: NextResponse };
+type Party = { row: CaseRow; viewer: ViewerSession | null; party: PartyLetter } | { response: NextResponse };
 
 /** The owner of case `id` (session). Writes need the same origin for cookies. */
 async function ownerParty(req: Request, id: string, write: boolean): Promise<Party> {
@@ -790,12 +918,12 @@ async function ownerParty(req: Request, id: string, write: boolean): Promise<Par
   if (write && viewer.via === "cookie" && !isSameOrigin(req)) return { response: fail("bad_origin") };
   const limited = await ownerLimit(viewer.user.id, req);
   if (limited) return { response: limited };
-  const row = await ownedCase(id, viewer.user.id);
-  return row ? { row, viewer } : { response: fail("not_found") };
+  const row = await ownedCase(id, viewer.user.id, req);
+  return row ? { row, viewer, party: "a" } : { response: fail("not_found") };
 }
 
-/** Party B of the case behind invite `token`: the bound account, or the
- * claim secret (header, or `claim` in a write body). */
+/** The side the link `token` is for: the bound account, or the claim secret
+ * (header, or `claim` in a write body). */
 async function respondentParty(req: Request, token: string, write: boolean, bodyClaim?: string): Promise<Party> {
   if (!casesEnabled()) return { response: fail("not_configured") };
   if (!isInviteToken(token)) return { response: fail("not_found", "No invite with that link.") };
@@ -805,12 +933,15 @@ async function respondentParty(req: Request, token: string, write: boolean, body
   if (write && viewer?.via === "cookie" && !isSameOrigin(req)) return { response: fail("bad_origin") };
   const limited = await ownerLimit(viewer?.user.id ?? null, req);
   if (limited) return { response: limited };
-  const row = await caseByToken(token);
-  if (!row) return { response: fail("not_found", "No invite with that link.") };
+  const found = await caseByToken(token, req);
+  if (!found) return { response: fail("not_found", "No invite with that link.") };
+  const { row, party } = found;
   if (row.mode !== "two_sided") return { response: fail("case_closed") };
   const claim = bodyClaim ?? claimHeader(req);
-  if (!provenRespondent(row, viewer?.user.id ?? null, claim)) return { response: fail("not_party") };
-  return { row, viewer };
+  if (!provenParty(row, await getInvites(row.id), party, viewer?.user.id ?? null, claim)) {
+    return { response: fail("not_party") };
+  }
+  return { row, viewer, party };
 }
 
 async function originalsBody(row: CaseRow, party: PartyLetter): Promise<CaseOriginalsResponse> {
@@ -827,12 +958,12 @@ export function caseOriginalsHandler(req: Request, id: string): Promise<NextResp
   });
 }
 
-/** GET /api/v1/respond/{token}/originals: Party B's side and appeal as written. */
+/** GET /api/v1/respond/{token}/originals: the link's side and appeal as written. */
 export function respondOriginalsHandler(req: Request, token: string): Promise<NextResponse> {
   return guarded("respond originals", async () => {
     const p = await respondentParty(req, token, false);
     if ("response" in p) return p.response;
-    return json(await originalsBody(p.row, "b"));
+    return json(await originalsBody(p.row, p.party));
   });
 }
 
@@ -897,11 +1028,11 @@ export function respondDisplayHandler(req: Request, token: string): Promise<Next
     if (parsed.data.namesVisible !== undefined) return fail("not_party", "Only the person who started the case can switch names off.");
     const p = await respondentParty(req, token, true, parsed.data.claim);
     if ("response" in p) return p.response;
-    const refused = await updateCaseDisplay(p.row, "b", { displayName: parsed.data.displayName });
+    const refused = await updateCaseDisplay(p.row, p.party, { displayName: parsed.data.displayName });
     if (refused) return refused;
     const fresh = (await getCase(p.row.id)) ?? p.row;
     const claim = parsed.data.claim ?? claimHeader(req);
-    const body: CaseResponse = { case: await respondentView(fresh, p.viewer?.user.id ?? null, claim) };
+    const body: CaseResponse = { case: await respondentView(fresh, p.party, p.viewer?.user.id ?? null, claim) };
     return json(body);
   });
 }
@@ -909,8 +1040,7 @@ export function respondDisplayHandler(req: Request, token: string): Promise<Next
 async function removal(
   req: Request,
   load: (body: { claim?: string }) => Promise<Party>,
-  party: PartyLetter,
-  view: (row: CaseRow, viewerId: string | null, claim: string | null) => Promise<CaseView>,
+  view: (row: CaseRow, party: PartyLetter, viewerId: string | null, claim: string | null) => Promise<CaseView>,
 ): Promise<NextResponse> {
   const read = await readJson(req);
   if (!read.ok) return fail("invalid", "Invalid JSON body");
@@ -918,12 +1048,13 @@ async function removal(
   if (!parsed.success) return fail("invalid", 'Send { "confirm": "remove" } to remove it.');
   const p = await load(parsed.data);
   if ("response" in p) return p.response;
-  const res = await removeCaseSide(p.row, party, party === "a" ? "party_a" : "party_b");
+  const party = p.party;
+  const res = await removeCaseSide(p.row, party, `party_${party}`);
   if (!res.ok) return res.code === "not_found" ? fail("not_found") : fail("in_progress", "Wait for the judges to finish first.");
   const body: CaseRemovalResponse = {
     removed: true,
     removedAt: res.removedAt,
-    case: await view(res.row, p.viewer?.user.id ?? null, parsed.data.claim ?? claimHeader(req)),
+    case: await view(res.row, party, p.viewer?.user.id ?? null, parsed.data.claim ?? claimHeader(req)),
   };
   return json(body);
 }
@@ -931,7 +1062,7 @@ async function removal(
 /** POST /api/v1/cases/{id}/removal { confirm: "remove" }: the owner's side. */
 export function caseRemovalHandler(req: Request, id: string): Promise<NextResponse> {
   return guarded("removal", () =>
-    removal(req, () => ownerParty(req, id, true), "a", (row, viewerId) => ownerView(row, req, viewerId ?? row.ownerId)),
+    removal(req, () => ownerParty(req, id, true), (row, _party, viewerId) => ownerView(row, req, viewerId ?? row.ownerId)),
   );
 }
 
@@ -955,37 +1086,58 @@ export function respondentClaimHandler(req: Request, id: string): Promise<NextRe
     if (limited) return limited;
     if (!CASE_ID.test(id)) return fail("not_found");
     const row = await getCase(id);
-    if (!row || row.mode !== "two_sided" || row.ownerId === userId || !claimMatches(row, parsed.data.claim)) {
-      return fail("not_found");
-    }
-    if (row.removedBAt) return fail("removed");
+    if (!row || row.mode !== "two_sided" || row.ownerId === userId) return fail("not_found");
+    gateSides(req, row);
+    // The claim secret says which side it is: B's, or C's or D's in a case with that many.
+    const invites = await getInvites(row.id);
+    const party = (["b", "c", "d"] as const).find((p) =>
+      claimMatches({ id: row.id, respondentClaimNonce: respondentOf(row, invites, p).claimNonce }, parsed.data.claim),
+    );
+    if (!party) return fail("not_found");
+    const removedAt = { b: row.removedBAt, c: row.removedCAt, d: row.removedDAt }[party];
+    if (removedAt) return fail("removed");
     const claimed: CaseClaimResponse = { claimed: true };
-    if (row.respondentUserId === userId) return json(claimed);
-    if (row.respondentUserId) return fail("not_found");
+    const bound = respondentOf(row, invites, party).userId;
+    if (bound === userId) return json(claimed);
+    if (bound) return fail("not_found");
+    // One person is one side of a case.
+    if (boundElsewhere(row, invites, party, userId)) return fail("not_found");
     await caseDb();
+    const nowIso = new Date().toISOString();
     const rs = await entitlementWriteBatch([
-      {
-        sql: `UPDATE cases SET respondent_user_id = ?, updated_at = ?
-              WHERE id = ? AND respondent_user_id IS NULL AND respondent_claim_nonce = ? AND owner_id <> ?
-                AND removed_b_at IS NULL`,
-        args: [userId, new Date().toISOString(), row.id, row.respondentClaimNonce, userId],
-      },
+      party === "b"
+        ? {
+            sql: `UPDATE cases SET respondent_user_id = ?, updated_at = ?
+                  WHERE id = ? AND respondent_user_id IS NULL AND respondent_claim_nonce = ? AND owner_id <> ?
+                    AND removed_b_at IS NULL
+                    AND NOT EXISTS (SELECT 1 FROM case_invites WHERE case_id = cases.id AND user_id = ?)`,
+            args: [userId, nowIso, row.id, row.respondentClaimNonce, userId, userId],
+          }
+        : {
+            sql: `UPDATE case_invites SET user_id = ?, updated_at = ?
+                  WHERE case_id = ? AND party = ? AND user_id IS NULL AND claim_nonce = ?
+                    AND EXISTS (SELECT 1 FROM cases c WHERE c.id = case_invites.case_id AND c.owner_id <> ?
+                                  AND c.removed_${party}_at IS NULL AND c.respondent_user_id IS NOT ?)
+                    AND NOT EXISTS (SELECT 1 FROM case_invites i WHERE i.case_id = case_invites.case_id AND i.user_id = ?)`,
+            args: [userId, nowIso, row.id, party, respondentOf(row, invites, party).claimNonce, userId, userId, userId],
+          },
     ]);
     if (rs[0].rowsAffected !== 1) {
       const fresh = await getCase(row.id);
-      if (fresh?.removedBAt) return fail("removed");
-      return fresh?.respondentUserId === userId ? json(claimed) : fail("not_found");
+      const freshBound = respondentOf(fresh ?? row, await getInvites(row.id), party).userId;
+      if (fresh && { b: fresh.removedBAt, c: fresh.removedCAt, d: fresh.removedDAt }[party]) return fail("removed");
+      return freshBound === userId ? json(claimed) : fail("not_found");
     }
     void track("case_claimed", { userId });
     return json(claimed);
   });
 }
 
-/** POST /api/v1/respond/{token}/removal { confirm: "remove", claim? }: Party B's side. */
+/** POST /api/v1/respond/{token}/removal { confirm: "remove", claim? }: the link's side. */
 export function respondRemovalHandler(req: Request, token: string): Promise<NextResponse> {
   return guarded("respond removal", () =>
-    removal(req, (body) => respondentParty(req, token, true, body.claim), "b", (row, viewerId, claim) =>
-      respondentView(row, viewerId, claim),
+    removal(req, (body) => respondentParty(req, token, true, body.claim), (row, party, viewerId, claim) =>
+      respondentView(row, party, viewerId, claim),
     ),
   );
 }

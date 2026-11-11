@@ -33,10 +33,13 @@ function serial<T>(userId: string, work: () => Promise<T>): Promise<T> {
   return run;
 }
 
-/** Sets the password, or replaces it when the account has one: that needs
- * `current`, or a session created within FRESH_SIGNIN_MS. An address that was
- * never verified gets none. Every other session of the account is signed out
- * first, so a failure part way leaves the old password and fewer sessions. */
+/** Sets the password, or replaces it when the account has one. Either needs a
+ * session created within FRESH_SIGNIN_MS; a replacement may give `current`
+ * instead. An address that was
+ * never verified gets none. When a password is replaced, every other session
+ * of the account is signed out first, so a failure part way leaves the old
+ * password and fewer sessions. The first password revokes nothing: the code
+ * sign-in that led to it may be one of several devices. */
 export function setPassword(
   userId: string,
   sessionId: string,
@@ -50,16 +53,14 @@ export function setPassword(
     if (!user?.emailVerified) return "unverified";
     const account = await ctx.internalAdapter.findCredentialAccount(userId);
     const sessions = await ctx.internalAdapter.listSessions(userId);
-    if (account?.password) {
-      if (current !== undefined) {
-        if (!(await ctx.password.verify({ hash: account.password, password: current }))) return "current_wrong";
-      } else {
-        const mine = sessions.find((s) => s.id === sessionId);
-        if (!mine || now - new Date(mine.createdAt).getTime() > FRESH_SIGNIN_MS) return "current_required";
-      }
+    if (account?.password && current !== undefined) {
+      if (!(await ctx.password.verify({ hash: account.password, password: current }))) return "current_wrong";
+    } else {
+      const mine = sessions.find((s) => s.id === sessionId);
+      if (!mine || now - new Date(mine.createdAt).getTime() > FRESH_SIGNIN_MS) return "current_required";
     }
     const hash = await ctx.password.hash(password);
-    const others = sessions.filter((s) => s.id !== sessionId).map((s) => s.token);
+    const others = account?.password ? sessions.filter((s) => s.id !== sessionId).map((s) => s.token) : [];
     if (others.length) await ctx.internalAdapter.deleteSessions(others);
     if (account) await ctx.internalAdapter.updateAccount(account.id, { password: hash });
     else await ctx.internalAdapter.linkAccount({ userId, providerId: "credential", accountId: userId, password: hash });

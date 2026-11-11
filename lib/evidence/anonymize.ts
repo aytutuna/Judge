@@ -21,6 +21,7 @@ import {
   onlyPlaceUses,
   qualityLines,
   qualityReason,
+  sideLabels,
   retryLines,
   substituteNames,
   trAccountRules,
@@ -67,15 +68,40 @@ type ModelOutput = {
 
 type Narrator = SubmissionInput["narrator"];
 
+/** The side count of a submission: 2 unless the dispute has more sides. */
+const sidesOf = (input: Pick<SubmissionInput, "sides">) => input.sides?.count ?? 2;
+
 const otherParty = (narrator: Narrator): Narrator => (narrator === "Party A" ? "Party B" : "Party A");
+
+/** The labels part of the prompt for a dispute with 3 or 4 sides. Sides that
+ * the writer named are listed, so the model gives that person the side's
+ * label whichever account mentions them. */
+function manySidesRules(n: Narrator, input: Pick<SubmissionInput, "sides">): { opponent: string; others: string; closing: string } {
+  const count = sidesOf(input);
+  const labels = sideLabels(count);
+  const rest = labels.filter((l) => l !== n);
+  const named = labels
+    .map((l, i) => ({ l, name: input.sides?.names[i]?.trim() }))
+    .filter((s): s is { l: (typeof labels)[number]; name: string } => Boolean(s.name) && s.l !== n);
+  const known = named.length ? ` Known: ${named.map((s) => `"${s.name}" is ${s.l}`).join("; ")}.` : "";
+  const list = (xs: string[]) => xs.map((x) => `"${x}"`).join(", ");
+  return {
+    opponent: `- The dispute has ${count} sides: ${list(labels)}. Each side wrote its own account separately. Anyone in the account who is one of the other sides (${list(rest)}) is ALWAYS that side's label, whether the narrator names them, calls them a friend, roommate or sibling or anything else.${known}`,
+    others: `- Other named people become "Person E", "Person F", and so on, never "Person C" or "Person D". The same person always gets the same label, in the account and in every transcript.`,
+    closing: `The labels are always exactly ${list(labels)}, "Person E"… regardless of language.`,
+  };
+}
 
 /** The system prompt for one submission. Exported for tests. */
 export function submissionSystem(
-  input: Pick<SubmissionInput, "narrator" | "twoSided" | "roster"> & Partial<Pick<SubmissionInput, "text" | "lang">>,
+  input: Pick<SubmissionInput, "narrator" | "twoSided" | "roster"> & Partial<Pick<SubmissionInput, "text" | "lang" | "sides">>,
 ): string {
   const n = input.narrator;
-  const o = otherParty(n);
-  const opponent = input.twoSided
+  const many = sidesOf(input) > 2 ? manySidesRules(n, input) : null;
+  const o = many ? sideLabels(sidesOf(input)).filter((l) => l !== n)[0] : otherParty(n);
+  const opponent = many
+    ? many.opponent
+    : input.twoSided
     ? `- The account is about a disagreement with one main person. That person is ALWAYS "${o}", whether the narrator names them, calls them a friend, roommate, sibling or anything else; "${o}" also wrote their own account separately. Use "Person C" and up only for people other than the two parties.`
     : `- The person the narrator argues with is "${o}".`;
   const turkish = input.lang === "tr" || (input.text !== undefined && isTurkishText(input.text));
@@ -87,7 +113,7 @@ export function submissionSystem(
 Labels:
 - The narrator is ALWAYS "${n}". First person marks the narrator in any language. English: "I", "me", "my", "myself". Turkish: "ben", "bence", "benim", "bana", "beni", "bende", "benden", "benimle", and also first-person endings with no pronoun at all ("düşünüyorum", "söyledim", "haklıyım", "arkadaşım").
 ${opponent}
-- Other named people become "Person C", "Person D", and so on. The same person always gets the same label, in the account and in every transcript.
+${many ? many.others : `- Other named people become "Person C", "Person D", and so on. The same person always gets the same label, in the account and in every transcript.`}
 ${roster ? `${roster}\n` : ""}
 In the ACCOUNT:
 - Rewrite the narrator's first-person sentences about themselves in the third person, adjusting only the pronoun and verb ending ("I think" -> "${n} thinks", "Ben ise düşünüyorum" -> "${n} ise düşünüyor").
@@ -107,9 +133,9 @@ Everywhere:
 - List every replacement you made, one entry per person, not one per inflected form. "original" is the bare name exactly as spelled, WITHOUT any case suffix, possessive ending or apostrophe ("Deniz", never "Deniz'in"; "Mark", never "Mark's"); "replacement" is the bare label ("${o}", never "${o}'nin").
 - ALWAYS include {"original": "I", "replacement": "${n}"}.
 
-The labels are always exactly "Party A", "Party B", "Person C"… regardless of language.${turkish ? `
+${many ? many.closing : `The labels are always exactly "Party A", "Party B", "Person C"… regardless of language.`}${turkish ? `
 
-${trAccountRules(n, o)}` : ""}`;
+${trAccountRules(n, o)}${many ? "\n- With several sides, a dropped subject is whichever other side the sentence is about, not always the one named in the examples." : ""}` : ""}`;
 }
 
 /** The user turn: earlier material (reference only), the account, the transcripts. */
@@ -124,8 +150,13 @@ export function submissionUser(input: Pick<SubmissionInput, "text" | "evidence" 
 }
 
 const LABEL_IN_TEXT = /(?<![\p{L}])(Party [AB]|Person [C-Z])(?![\p{L}\p{N}])/gu;
-const isParty = (label: string) => label === "Party A" || label === "Party B";
-const isCaseLabel = (label: string) => /^(Party [AB]|Person [C-Z])$/.test(label);
+/** The same for a dispute with 3 or 4 sides: people other than the sides
+ * start at Person E. */
+const LABEL_IN_TEXT_N = /(?<![\p{L}])(Party [A-D]|Person [E-Z])(?![\p{L}\p{N}])/gu;
+const labelInText = (sides: number) => (sides > 2 ? LABEL_IN_TEXT_N : LABEL_IN_TEXT);
+const isParty = (label: string, sides = 2) => (sideLabels(sides) as string[]).includes(label);
+const isCaseLabel = (label: string, sides = 2) =>
+  (sides > 2 ? /^(Party [A-D]|Person [E-Z])$/ : /^(Party [AB]|Person [C-Z])$/).test(label);
 const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 /** "21:02 ME: ..." -> "21:02 Party A: ..." for any line the model left alone. */
@@ -141,9 +172,9 @@ export function replaceSelfSpeaker(transcript: string, narrator: Narrator): stri
 }
 
 /** Applies a label -> label map in one pass (so swaps work). */
-export function relabelText(text: string, relabel: ReadonlyMap<string, string>): string {
+export function relabelText(text: string, relabel: ReadonlyMap<string, string>, sides = 2): string {
   if (relabel.size === 0) return text;
-  return text.replace(LABEL_IN_TEXT, (label: string) => relabel.get(label) ?? label);
+  return text.replace(labelInText(sides), (label: string) => relabel.get(label) ?? label);
 }
 
 /**
@@ -157,6 +188,7 @@ export function reconcileLabels(
   entries: readonly NameMapping[],
   known: readonly KnownPerson[],
   keysFor: (name: string) => string[],
+  sides = 2,
 ): Map<string, string> {
   const knownByKey = new Map(known.map((k) => [k.key, k.label]));
   const modelLabels = new Set(entries.map((e) => e.replacement));
@@ -164,14 +196,14 @@ export function reconcileLabels(
   const targets = new Set<string>();
   for (const e of entries) {
     const from = e.replacement;
-    if (isParty(from) || relabel.has(from) || !isCaseLabel(from)) continue;
+    if (isParty(from, sides) || relabel.has(from) || !isCaseLabel(from, sides)) continue;
     let to: string | undefined;
     for (const key of keysFor(e.original)) {
       to = knownByKey.get(key);
       if (to) break;
     }
-    if (!to || to === from || !isCaseLabel(to)) continue;
-    if (isParty(to)) {
+    if (!to || to === from || !isCaseLabel(to, sides)) continue;
+    if (isParty(to, sides)) {
       relabel.set(from, to);
       continue;
     }
@@ -211,10 +243,11 @@ export function findLeak(
   nameMap: readonly NameMapping[],
   outputs: readonly string[],
   names?: SubmissionInput["names"],
+  sides = 2,
 ): "listed" | "known" | null {
   for (const m of nameMap) {
     const original = m.original.trim();
-    if (original === "I" || canonicalLabel(original)) continue;
+    if (original === "I" || canonicalLabel(original, sides)) continue;
     if ((original.match(/\p{L}/gu) ?? []).length < 2) continue;
     if (outputs.some((o) => containsWord(o, original))) return "listed";
   }
@@ -244,12 +277,12 @@ export function findLeak(
  * "Elif") is dropped from the map but is still a name it saw. Narrator
  * pronouns and labels are skipped.
  */
-export function rawOriginals(replacements: readonly { original: string; replacement: string }[]): string[] {
+export function rawOriginals(replacements: readonly { original: string; replacement: string }[], sides = 2): string[] {
   const out: string[] = [];
   for (const r of replacements) {
     if (typeof r?.original !== "string") continue;
     const name = bareName(r.original);
-    if (!name || canonicalLabel(name) || EN_SELF.test(name) || TR_SELF.has(name.toLocaleLowerCase("tr"))) continue;
+    if (!name || canonicalLabel(name, sides) || EN_SELF.test(name) || TR_SELF.has(name.toLocaleLowerCase("tr"))) continue;
     if (!out.includes(name)) out.push(name);
   }
   return out;
@@ -265,10 +298,11 @@ export function unexplainedLabels(
   outputs: readonly string[],
   nameMap: readonly NameMapping[],
   labelsInUse: readonly string[] = [],
+  sides = 2,
 ): string[] {
-  const allowed = new Set<string>(["Party A", "Party B", ...labelsInUse, ...nameMap.map((m) => m.replacement)]);
+  const allowed = new Set<string>([...sideLabels(sides), ...labelsInUse, ...nameMap.map((m) => m.replacement)]);
   const found = new Set<string>();
-  for (const out of outputs) for (const m of out.matchAll(LABEL_IN_TEXT)) if (!allowed.has(m[1])) found.add(m[1]);
+  for (const out of outputs) for (const m of out.matchAll(labelInText(sides))) if (!allowed.has(m[1])) found.add(m[1]);
   return [...found];
 }
 
@@ -310,9 +344,9 @@ const lowerTr = (s: string) => s.toLocaleLowerCase("tr");
 
 /** Whether the model listed an original as itself ("Elif" -> "Elif") or
  * with an empty replacement. */
-function isSelfReplacement(r: { original: string; replacement: string }): boolean {
+function isSelfReplacement(r: { original: string; replacement: string }, sides = 2): boolean {
   const target = r.replacement.trim();
-  if (canonicalLabel(target)) return false;
+  if (canonicalLabel(target, sides)) return false;
   return !target || lowerTr(bareName(target)) === lowerTr(bareName(r.original));
 }
 
@@ -339,11 +373,13 @@ export function labelSelfReplaced(
   taken: ReadonlySet<string>,
   turkish: boolean,
   input?: string,
+  sides = 2,
 ): { original: string; replacement: string }[] {
   const used = new Set(taken);
   const given = new Map<string, string>();
   const next = (): string | null => {
-    for (let c = 67; c <= 90; c++) {
+    // With more than two sides, C and D belong to the sides.
+    for (let c = sides > 2 ? 69 : 67; c <= 90; c++) {
       const label = `Person ${String.fromCharCode(c)}`;
       if (!used.has(label)) {
         used.add(label);
@@ -353,9 +389,9 @@ export function labelSelfReplaced(
     return null;
   };
   return replacements.map((r) => {
-    if (!isSelfReplacement(r)) return r;
+    if (!isSelfReplacement(r, sides)) return r;
     const name = bareName(r.original);
-    if (rawOriginals([r]).length === 0 || !/^\p{Lu}/u.test(name)) return r;
+    if (rawOriginals([r], sides).length === 0 || !/^\p{Lu}/u.test(name)) return r;
     if (selfKeptWord(name, input)) return r;
     if (nameRules([{ original: name, replacement: "Person C" }], turkish).length === 0) return r;
     const key = lowerTr(name);
@@ -375,6 +411,7 @@ export function labelSelfReplaced(
 export function knownNameHits(
   outputs: readonly string[],
   names: NonNullable<SubmissionInput["names"]>,
+  sides = 2,
 ): { original: string; replacement: string }[] {
   const byKey = new Map(names.known.map((k) => [k.key, k.label]));
   const checked = new Set<string>();
@@ -387,7 +424,7 @@ export function knownNameHits(
       checked.add(word);
       for (const key of names.keysFor(word)) {
         const label = byKey.get(key);
-        if (label && isCaseLabel(label)) {
+        if (label && isCaseLabel(label, sides)) {
           hits.push({ original: word, replacement: label });
           break;
         }
@@ -425,9 +462,10 @@ async function attempt(
   prior: readonly NameRule[],
 ): Promise<Attempt> {
   const narrator = input.narrator;
-  const opponent = otherParty(narrator);
+  const sides = sidesOf(input);
+  const opponent = sides > 2 ? sideLabels(sides).filter((l) => l !== narrator)[0] : otherParty(narrator);
   const extra = retry
-    ? [...(retry.names ? retryLines(retry.names) : []), ...qualityLines(retry.issues, narrator, opponent)]
+    ? [...(retry.names ? retryLines(retry.names) : []), ...qualityLines(retry.issues, narrator, opponent, sides)]
     : [];
   const system = submissionSystem(input);
   const res = await claudeJson<ModelOutput>({
@@ -463,22 +501,25 @@ async function attempt(
     (r) => typeof r?.original === "string" && typeof r?.replacement === "string",
   );
 
-  const taken = new Set<string>(["Party A", "Party B", ...(input.roster?.labelsInUse ?? [])]);
+  const taken = new Set<string>([...sideLabels(sides), ...(input.roster?.labelsInUse ?? [])]);
   for (const k of input.names?.known ?? []) taken.add(k.label);
   for (const r of listed) {
-    const label = canonicalLabel(r.replacement);
+    const label = canonicalLabel(r.replacement, sides);
     if (label) taken.add(label);
   }
-  for (const out of [text, ...transcripts]) for (const m of out.matchAll(LABEL_IN_TEXT)) taken.add(m[1]);
-  const replacements = labelSelfReplaced(listed, taken, turkish, rawCombined);
+  for (const out of [text, ...transcripts]) for (const m of out.matchAll(labelInText(sides))) taken.add(m[1]);
+  const replacements = labelSelfReplaced(listed, taken, turkish, rawCombined, sides);
   // Self-listed words that are not people here: flagged words, not leaks.
   const keptWords = new Set(
     listed
-      .filter((r) => isSelfReplacement(r) && selfKeptWord(bareName(r.original), rawCombined))
+      .filter((r) => isSelfReplacement(r, sides) && selfKeptWord(bareName(r.original), rawCombined))
       .map((r) => lowerTr(bareName(r.original))),
   );
 
-  const normalized = normalizeNameMap(replacements, rawCombined, [text, ...transcripts].join("\n\n"), { narrator });
+  const normalized = normalizeNameMap(replacements, rawCombined, [text, ...transcripts].join("\n\n"), {
+    narrator,
+    ...(sides > 2 ? { sides } : {}),
+  });
   const rules = nameRules([...replacements, ...normalized], turkish, rawCombined);
   text = substituteNames(text, rules, turkish);
   transcripts = transcripts.map((t) => substituteNames(t, rules, turkish));
@@ -486,13 +527,13 @@ async function attempt(
   let entries = normalized.filter((m) => m.original !== "I");
 
   if (input.names) {
-    const relabel = reconcileLabels(entries, input.names.known, input.names.keysFor);
+    const relabel = reconcileLabels(entries, input.names.known, input.names.keysFor, sides);
     if (relabel.size > 0) {
-      text = relabelText(text, relabel);
-      transcripts = transcripts.map((t) => relabelText(t, relabel));
+      text = relabelText(text, relabel, sides);
+      transcripts = transcripts.map((t) => relabelText(t, relabel, sides));
       entries = entries.map((m) => ({ ...m, replacement: relabel.get(m.replacement) ?? m.replacement }));
     }
-    const hits = knownNameHits([text, ...transcripts], input.names);
+    const hits = knownNameHits([text, ...transcripts], input.names, sides);
     if (hits.length > 0) {
       const repair = nameRules(hits, turkish, rawCombined);
       text = substituteNames(text, repair, turkish);
@@ -513,7 +554,7 @@ async function attempt(
   const people = rules.filter((r) => r.person);
   const hint: RetryHint = {
     names: [...new Set([...prior, ...people].map((r) => r.name))],
-    candidates: unlistedCandidates(input.text, text, rules, listed),
+    candidates: unlistedCandidates(input.text, text, rules, listed, sides),
   };
   const base = { rules: people, hint };
   // Names a rule covers are checked by findNameLeak, which knows ordinary
@@ -528,12 +569,15 @@ async function attempt(
         nameMap.filter((m) => uncovered(m.original)),
         outputs,
         input.names,
+        sides,
       ) ??
       (findLeak(
-        rawOriginals(listed)
+        rawOriginals(listed, sides)
           .filter((name) => uncovered(name) && !keptWords.has(lowerTr(name)))
           .map((original) => ({ original, replacement: "" })),
         outputs,
+        undefined,
+        sides,
       )
         ? "listed"
         : null));
@@ -545,21 +589,22 @@ async function attempt(
     // narrator left in the first person. Never passed on.
     return { ok: false, retry: retry === null, error: "output identical to the input", leak: true, ...base };
   }
-  if (retry && heldCandidates(input.text, text, hint.candidates).length > 0) {
+  if (retry && heldCandidates(input.text, text, hint.candidates, sides).length > 0) {
     return { ok: false, retry: true, error: "a flagged name survived unlisted", leak: true, ...base };
   }
 
-  const odd = unexplainedLabels(outputs, nameMap, input.roster?.labelsInUse);
+  const odd = unexplainedLabels(outputs, nameMap, input.roster?.labelsInUse, sides);
   const issues = accountQualityIssues(input.text, text, {
     narrator,
     opponentRequired: input.opponentRequired === true,
+    ...(sides > 2 ? { sides } : {}),
   });
 
   const known: KnownPerson[] = [];
   if (input.names) {
     const knownKeys = new Set(input.names.known.map((k) => k.key));
     for (const m of entries) {
-      if (!isCaseLabel(m.replacement)) continue;
+      if (!isCaseLabel(m.replacement, sides)) continue;
       for (const key of input.names.keysFor(m.original)) {
         if (knownKeys.has(key)) continue;
         knownKeys.add(key);
@@ -629,7 +674,7 @@ export async function anonymizeSubmission(input: SubmissionInput): Promise<Anony
         ![first.value.text, ...first.value.evidence.map((e) => e.transcript)].some((o) =>
           findNameLeak(o, res.rules, turkish),
         ) &&
-        heldCandidates(input.text, first.value.text, first.hint.candidates).length === 0
+        heldCandidates(input.text, first.value.text, first.hint.candidates, sidesOf(input)).length === 0
       ) {
         return accept(first);
       }

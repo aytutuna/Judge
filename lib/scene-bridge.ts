@@ -14,7 +14,7 @@ import type { Party } from "./palette";
  *   React renders and zero allocation.
  */
 
-export type Vote = "a" | "b" | "other";
+export type Vote = "a" | "b" | "c" | "d" | "other";
 export type JudgingBeat = "lift" | "sort" | "dig" | "crux" | "orbs" | "deliberate";
 export type SceneVerdict = { tugA: number; votes: readonly Vote[] };
 export type SceneMode =

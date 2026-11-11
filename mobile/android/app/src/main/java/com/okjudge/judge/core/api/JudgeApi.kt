@@ -27,6 +27,7 @@ import com.okjudge.judge.core.model.VerdictAppealResponse
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.core.model.VerdictPoll
 import com.okjudge.judge.core.model.VerdictRequest
+import com.okjudge.judge.core.model.Side
 import com.okjudge.judge.core.model.VerdictRounds
 import com.okjudge.judge.core.model.VerdictSubmission
 import com.okjudge.judge.core.model.WireJson
@@ -244,16 +245,24 @@ class JudgeApi(
         return execute(getClient, req) { _, text -> WireJson.json.decodeFromString(CaseListResponse.serializer(), text) }
     }
 
-    /** POST /api/v1/cases/{id}/judge: `{"mode":"only_mine"}` judges without the other side, `{}` retries. */
-    suspend fun judgeCase(id: String, onlyMine: Boolean): ApiResult<CaseView> {
-        val body = if (onlyMine) buildJsonObject { put("mode", "only_mine") } else JsonObject(emptyMap())
+    /**
+     * POST /api/v1/cases/{id}/judge: `{"mode":"only_mine"}` judges without the other side, `{"mode":"answered"}`
+     * the sides that have written (three or four sides), `{}` retries.
+     */
+    suspend fun judgeCase(id: String, onlyMine: Boolean, answered: Boolean = false): ApiResult<CaseView> {
+        val body = when {
+            answered -> buildJsonObject { put("mode", "answered") }
+            onlyMine -> buildJsonObject { put("mode", "only_mine") }
+            else -> JsonObject(emptyMap())
+        }
         val req = request(caseUrl(id, "judge")).post(body.toString().toRequestBody(JSON)).build()
         return execute(caseWriteClient, req) { _, text -> WireJson.json.decodeFromString(CaseResponse.serializer(), text).case }
     }
 
-    /** POST /api/v1/cases/{id}/invite: a new invite link; the old one stops working. */
-    suspend fun resetInvite(id: String): ApiResult<InviteResponse> {
-        val req = request(caseUrl(id, "invite")).post(EMPTY).build()
+    /** POST /api/v1/cases/{id}/invite: a new invite link for [side] (B unless told otherwise); the old one stops working. */
+    suspend fun resetInvite(id: String, side: Side = Side.B): ApiResult<InviteResponse> {
+        val body = if (side == Side.B) EMPTY else buildJsonObject { put("party", side.raw) }.toString().toRequestBody(JSON)
+        val req = request(caseUrl(id, "invite")).post(body).build()
         return execute(accountClient, req) { _, text -> WireJson.json.decodeFromString(InviteResponse.serializer(), text) }
     }
 
@@ -511,6 +520,8 @@ class JudgeApi(
             .url(url)
             .header("Accept", "application/json")
             .header("User-Agent", userAgent)
+            // Without this the server leaves out cases with more than two sides.
+            .header("Judge-Sides", SIDES_SUPPORTED.toString())
         tokenStore.get()?.let { builder.header("Authorization", "Bearer $it") }
         return builder
     }
@@ -558,6 +569,9 @@ class JudgeApi(
     companion object {
         /** The `Prefer` token that asks for a 202 instead of waiting (RFC 7240). */
         const val RESPOND_ASYNC = "respond-async"
+
+        /** The most sides of a case this build can show (SIDES_HEADER on the web). */
+        const val SIDES_SUPPORTED = 4
 
         private val JSON = "application/json; charset=utf-8".toMediaType()
         private val EVENTS_JSON = "application/json".toMediaType()

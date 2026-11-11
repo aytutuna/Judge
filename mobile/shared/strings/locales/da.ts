@@ -27,7 +27,6 @@ const da: AppLocale = {
     "app.history.removeFailed": "Vi kunne ikke fjerne {n} af dem. Tjek din forbindelse, og prøv igen.",
     "app.history.offlineRemove": "Du er offline. Du skal have forbindelse for at fjerne domme.",
     "app.pricing.free.account": "Log ind med Apple, Google eller e-mail",
-    "app.context.label": "Kontekst (valgfrit)",
     "app.pricing.context":
       "Billeder som kontekst bliver læst og derefter smidt væk, uden ekstra pris",
     "app.pricing.headline": "Din første dom er på husets regning.",
@@ -100,51 +99,6 @@ const da: AppLocale = {
     "app.home.addTheirSide": "Tilføj den andens side",
     "app.home.removeTheirSide": "Fjern den andens side",
     "app.home.clear": "Ryd",
-    "app.example.dishwasher.aName": "Anne",
-    "app.example.dishwasher.a":
-      "Du har sat skålene i den øverste kurv igen. De bliver aldrig rene deroppe, det er det, den nederste er til.",
-    "app.example.dishwasher.bName": "Jens",
-    "app.example.dishwasher.b":
-      "De kan sagtens være deroppe, og så er der plads til gryderne i bunden. Jeg har fyldt den sådan i årevis, og der er aldrig kommet noget beskidt ud.",
-    "app.example.bill.aName": "Camilla",
-    "app.example.bill.a":
-      "Jeg drak ikke noget, så jeg skal ikke betale en fjerdedel af vinen. Maden deler vi gerne ligeligt.",
-    "app.example.bill.bName": "Rasmus",
-    "app.example.bill.b":
-      "Vi deler altid bare regningen i fire. Det er bøvlet at regne ud hver gang, hvem der fik hvad, og det gør alligevel ikke den store forskel.",
-    "app.example.thermostat.aName": "Laura",
-    "app.example.thermostat.a":
-      "Der er 19 grader herinde, og jeg fryser selv i hættetrøje. Det er da ikke vanvittigt at skrue op på 22.",
-    "app.example.thermostat.bName": "Mikkel",
-    "app.example.thermostat.b":
-      "22 grader er alt for varmt at sove i. Du kan tage en trøje mere på, jeg kan ikke tage mere af.",
-    "app.example.roadTrip.aName": "Sara",
-    "app.example.roadTrip.a": "Jeg kørte alle seks timer derhen. Det er kun fair, at du kører os hjem.",
-    "app.example.roadTrip.bName": "Anders",
-    "app.example.roadTrip.b":
-      "Jeg sagde, inden vi tog af sted, at jeg hader at køre i mørke, og vi kører hjem kl. 19. Næste gang kører jeg om morgenen.",
-    "app.example.seat.aName": "Julie",
-    "app.example.seat.a": "Mit sæde kan lænes tilbage, så det gør jeg. Det er en natflyvning, og alle prøver at sove.",
-    "app.example.seat.bName": "Kasper",
-    "app.example.seat.b":
-      "Jeg er 1,91, og mine knæ trykker allerede mod dit sæde. Du kunne i det mindste have spurgt, før du lænede det helt tilbage.",
-    "app.example.spoiler.aName": "Emma",
-    "app.example.spoiler.a":
-      "Du fortalte mig, hvem morderen var, før jeg overhovedet var begyndt på sidste afsnit. Jeg havde glædet mig hele ugen.",
-    "app.example.spoiler.bName": "Oliver",
-    "app.example.spoiler.b":
-      "Den kom for tre uger siden, og du sagde, at du havde set den færdig. Jeg kan ikke holde styr på, hvor langt alle er.",
-    "app.example.jacket.aName": "Mathilde",
-    "app.example.jacket.a":
-      "Du havde min cowboyjakke på til koncerten uden at spørge. Da jeg fik den tilbage, lugtede den af røg.",
-    "app.example.jacket.bName": "Frederik",
-    "app.example.jacket.b":
-      "Den hang ved døren, og du går aldrig med den. Jeg ville have spurgt, men du sov, og jeg var allerede sent på den.",
-    "app.example.lastSlice.aName": "Magnus",
-    "app.example.lastSlice.a": "Inden filmen startede, sagde jeg, at det sidste stykke pizza var mit. Alle hørte det.",
-    "app.example.lastSlice.bName": "Ida",
-    "app.example.lastSlice.b":
-      "Man kan ikke kalde det sit og så lade det ligge i to timer. Det lå bare og blev koldt, så jeg spiste det.",
     "app.case.waitingKicker": "Sag · venter",
     "app.case.waitingFor": "Venter på {name}",
     "app.case.waitingLead":
@@ -167,9 +121,7 @@ const da: AppLocale = {
     "app.verdict.claims": "Hvordan hver side kom frem til det",
     "app.verdict.back": "Dom",
     "app.appeal.title": "Tilføj kontekst og ank",
-    "app.appeal.intro": "Har dommerne overset noget? Tilføj det, så dømmer de igen. Den første dom bliver gemt.",
-    "app.appeal.ask": "Hvad skal de vide?",
-    "app.appeal.placeholder": "Et faktum, en besked eller det, I faktisk aftalte.",
+    "app.appeal.placeholder": "Hvad overså dommerne? Et faktum, en besked eller det, I faktisk aftalte.",
     "app.appeal.cost": "Koster 1 dom. Du kan gøre det to gange pr. dom; du har {left} tilbage.",
     "app.appeal.costCase": "Koster 1 dom. Du kan gøre det én gang pr. sag.",
     "app.appeal.submit": "Døm igen",

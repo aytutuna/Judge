@@ -48,9 +48,10 @@ export type HistoryVerdictRow = {
 };
 
 /** Stored one-sided verdicts the user owns, without the verdicts rounds of
- * added context produced. Sorted by when the verdict was asked for (its
+ * added context produced. One with three or four sides is listed only for a
+ * client that can read it. Sorted by when the verdict was asked for (its
  * job), so a verdict keeps its place when it finishes. */
-function verdictsQuery(userId: string, limit: number, cursor: Cursor): InStatement {
+function verdictsQuery(userId: string, limit: number, cursor: Cursor, manySides: boolean): InStatement {
   const c = after(cursor);
   // The newest round still open (no removal of its own) that has a verdict.
   const shown = `FROM verdict_appeals a JOIN verdicts av ON av.id = a.id
@@ -71,9 +72,9 @@ function verdictsQuery(userId: string, limit: number, cursor: Cursor): InStateme
             LEFT JOIN originals o ON o.subject = 'verdict:' || m.verdict_id
             WHERE m.owner_user_id = ? AND m.kind IN ('free','premium')
               AND NOT EXISTS (SELECT 1 FROM verdict_appeals a WHERE a.id = m.verdict_id)
-          ) h WHERE 1 = 1 ${c.sql}
+          ) h WHERE (? = 1 OR COALESCE(json_valid(h.result), 0) = 0 OR json_extract(h.result, '$.parties') IS NULL) ${c.sql}
           ORDER BY h.at DESC, h.k DESC LIMIT ?`,
-    args: [userId, ...c.args, limit],
+    args: [userId, manySides ? 1 : 0, ...c.args, limit],
   };
 }
 
@@ -121,6 +122,11 @@ function mapJob(r: Row): HistoryJobRow {
 
 export type HistoryCaseRow = CaseRow & {
   at: string;
+  /** Which side the viewer is: a for the owner, else the side bound to them. */
+  viewerParty: PartyLetter;
+  /** The viewer's own invite (sides C and D), for the page token. */
+  viewerInviteNonce: string | null;
+  viewerInviteHash: string | null;
   appeals: { id: string; party: PartyLetter; status: AppealStatus }[];
   /** The newest case verdict: its appeal and its result (null when it no longer parses). */
   latestAppealId: string | null;
@@ -135,7 +141,7 @@ function mapHistoryCase(r: Row): HistoryCaseRow {
     const raw = JSON.parse(String(r.appeals_json ?? "[]")) as { id: string; party: string; status: string }[];
     appeals = raw.map((a) => ({
       id: String(a.id),
-      party: a.party === "b" ? "b" : "a",
+      party: a.party === "b" || a.party === "c" || a.party === "d" ? a.party : "a",
       status: a.status === "judged" ? "judged" : a.status === "failed" ? "failed" : "judging",
     }));
   } catch {
@@ -144,6 +150,9 @@ function mapHistoryCase(r: Row): HistoryCaseRow {
   return {
     ...mapCase(r),
     at: String(r.at),
+    viewerParty: ["b", "c", "d"].includes(String(r.vp)) ? (String(r.vp) as PartyLetter) : "a",
+    viewerInviteNonce: strOrNull(r.vp_nonce),
+    viewerInviteHash: strOrNull(r.vp_hash),
     appeals,
     latestAppealId: strOrNull(r.latest_appeal),
     latestResult: parseResult(r.latest),
@@ -151,39 +160,54 @@ function mapHistoryCase(r: Row): HistoryCaseRow {
   };
 }
 
-function caseColumns(party: PartyLetter): string {
+/** `party` is an SQL expression: the viewer's side letter. */
+function caseColumns(party: string): string {
   return `(SELECT json_group_array(json_object('id', a.id, 'party', a.party, 'status', a.status))
              FROM case_appeals a WHERE a.case_id = c.id) AS appeals_json,
            (SELECT cv.appeal_id FROM case_verdicts cv WHERE cv.case_id = c.id ORDER BY cv.seq DESC LIMIT 1) AS latest_appeal,
            (SELECT v.result FROM case_verdicts cv JOIN verdicts v ON v.id = cv.verdict_id
              WHERE cv.case_id = c.id ORDER BY cv.seq DESC LIMIT 1) AS latest,
-           (SELECT substr(s.text, 1, 200) FROM case_sides s WHERE s.case_id = c.id AND s.party = '${party}') AS side_start`;
+           (SELECT substr(s.text, 1, 200) FROM case_sides s WHERE s.case_id = c.id AND s.party = ${party}) AS side_start,
+           ${party} AS vp`;
 }
 
 /** Cases the user started, by when they started them. */
-function ownerCasesQuery(userId: string, limit: number, cursor: Cursor): InStatement {
+function ownerCasesQuery(userId: string, limit: number, cursor: Cursor, manySides: boolean): InStatement {
   const c = after(cursor);
   return {
     sql: `SELECT h.* FROM (
-            SELECT c.*, c.created_at AS at, 'c:' || c.id AS k, ${caseColumns("a")}
-            FROM cases c WHERE c.owner_id = ?
+            SELECT c.*, c.created_at AS at, 'c:' || c.id AS k, ${caseColumns("'a'")},
+              NULL AS vp_nonce, NULL AS vp_hash
+            FROM cases c WHERE c.owner_id = ? AND (? = 1 OR c.sides <= 2)
           ) h WHERE 1 = 1 ${c.sql}
           ORDER BY h.at DESC, h.k DESC LIMIT ?`,
-    args: [userId, ...c.args, limit],
+    args: [userId, manySides ? 1 : 0, ...c.args, limit],
   };
 }
 
-/** Cases whose side B is bound to the user, by when they answered. */
-function answeredCasesQuery(userId: string, limit: number, cursor: Cursor): InStatement {
+/** Cases whose side B, C or D is bound to the user, by when they answered.
+ * Side B's account is in the case row, C's and D's in their invite. A case
+ * the owner settled on side A alone is left out: the sides that had answered
+ * are not shown that ruling. Sides C and D go only to a client that sends
+ * the capability header. */
+function answeredCasesQuery(userId: string, limit: number, cursor: Cursor, manySides: boolean): InStatement {
   const c = after(cursor);
   return {
     sql: `SELECT h.* FROM (
-            SELECT c.*, s.submitted_at AS at, 'c:' || c.id AS k, ${caseColumns("b")}
-            FROM cases c JOIN case_sides s ON s.case_id = c.id AND s.party = 'b'
-            WHERE c.respondent_user_id = ? AND c.owner_id <> ?
+            SELECT c.*, s.submitted_at AS at, 'c:' || c.id AS k, ${caseColumns("m.vp")},
+              (SELECT i.invite_nonce FROM case_invites i WHERE i.case_id = c.id AND i.party = m.vp) AS vp_nonce,
+              (SELECT i.invite_hash FROM case_invites i WHERE i.case_id = c.id AND i.party = m.vp) AS vp_hash
+            FROM (
+              SELECT id AS case_id, 'b' AS vp FROM cases WHERE respondent_user_id = ?
+              UNION ALL
+              SELECT case_id, party AS vp FROM case_invites WHERE user_id = ?
+            ) m
+            JOIN cases c ON c.id = m.case_id
+            JOIN case_sides s ON s.case_id = c.id AND s.party = m.vp
+            WHERE c.owner_id <> ? AND c.mode IS NOT 'one_sided' AND (? = 1 OR (c.sides <= 2 AND m.vp = 'b'))
           ) h WHERE 1 = 1 ${c.sql}
           ORDER BY h.at DESC, h.k DESC LIMIT ?`,
-    args: [userId, userId, ...c.args, limit],
+    args: [userId, userId, userId, manySides ? 1 : 0, ...c.args, limit],
   };
 }
 
@@ -199,13 +223,13 @@ export type HistorySources = {
  * at all. */
 export async function historySources(
   userId: string,
-  opts: { failedSince: string; limit: number; cursor: Cursor; cases: boolean },
+  opts: { failedSince: string; limit: number; cursor: Cursor; cases: boolean; manySides?: boolean },
 ): Promise<HistorySources> {
   await ensureVerdictJobTables();
   const db = await getDb();
-  const { failedSince, limit, cursor, cases } = opts;
-  const stmts = [verdictsQuery(userId, limit, cursor), jobsQuery(userId, failedSince, limit, cursor)];
-  if (cases) stmts.push(ownerCasesQuery(userId, limit, cursor), answeredCasesQuery(userId, limit, cursor));
+  const { failedSince, limit, cursor, cases, manySides = true } = opts;
+  const stmts = [verdictsQuery(userId, limit, cursor, manySides), jobsQuery(userId, failedSince, limit, cursor)];
+  if (cases) stmts.push(ownerCasesQuery(userId, limit, cursor, manySides), answeredCasesQuery(userId, limit, cursor, manySides));
   const [v, j, s, a] = await db.batch(stmts, "read");
   return {
     verdicts: v.rows.map(mapVerdict),

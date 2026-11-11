@@ -25,7 +25,7 @@ struct VerdictCard: View {
     /// close or split sits in the middle; nil (no bar) without votes or on
     /// a refusal.
     static func leanShare(_ result: VerdictResult) -> Double? {
-        guard !result.modelRefused, !result.runs.isEmpty else { return nil }
+        guard !result.isMany, !result.modelRefused, !result.runs.isEmpty else { return nil }
         if result.verdict == .tooClose || result.verdict == .split { return 0.5 }
         let votes = result.runs.map(VerdictDisplay.vote)
         let a = votes.filter { $0 == .a }.count
@@ -35,24 +35,34 @@ struct VerdictCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
-            SceneView(mode: VerdictDisplay.sceneVerdict(result))
-                .frame(maxWidth: .infinity)
-                .frame(height: 118)
-                .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            // Three or four sides have no balance and no lean bar.
+            if !result.isMany {
+                SceneView(mode: VerdictDisplay.sceneVerdict(result))
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 118)
+                    .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            }
             if let note = status.note(lang) {
                 TranslationNote(note: note, loading: status == .loading)
             }
-            // Party A on the left and Party B on the right in every
-            // language, as in the scene above.
-            names
-                .environment(\.layoutDirection, .leftToRight)
-            if let share = Self.leanShare(result) {
-                leanBar(share)
+            if result.isMany {
+                SideList(result: result, parties: parties)
+            } else {
+                // Party A on the left and Party B on the right in every
+                // language, as in the scene above.
+                names
                     .environment(\.layoutDirection, .leftToRight)
+                if let share = Self.leanShare(result) {
+                    leanBar(share)
+                        .environment(\.layoutDirection, .leftToRight)
+                }
             }
             RulingLine(result: result, parties: parties, lang: lang)
             headline
             WhyBlock(result: result, lang: lang)
+            if result.isMany, !result.modelRefused {
+                OtherLines(result: result, parties: parties)
+            }
             VerdictBranches(result: result, parties: parties, restoredNames: restoredNames, lang: lang)
             if result.modelRefused {
                 SlotText(L10n.refusedNote(lang))
@@ -113,7 +123,7 @@ struct VerdictCard: View {
     }
 
     private var headline: some View {
-        let label = VerdictDisplay.label(result.verdict, parties: parties, lang: lang)
+        let label = VerdictDisplay.label(result, parties: parties, lang: lang)
         var style = TypeStyle.ruling
         style.size = 30
         return Text(result.headline.isEmpty ? label : result.headline)
@@ -121,6 +131,80 @@ struct VerdictCard: View {
             .foregroundStyle(Brand.ink)
             .fixedSize(horizontal: false, vertical: true)
             .accessibilityAddTraits(.isHeader)
+    }
+}
+
+/// Every side of a verdict with three or four sides: its name, a dot for each
+/// judge that voted for it and a check on the winner.
+struct SideList: View {
+    let result: VerdictResult
+    let parties: PartyNames
+
+    @Environment(\.sides) private var sides
+
+    var body: some View {
+        VStack(spacing: 8) {
+            ForEach(result.parties ?? [], id: \.self) { party in
+                row(party)
+            }
+        }
+    }
+
+    private func row(_ party: Party) -> some View {
+        let won = result.winner == party
+        let colors = sides.of(party)
+        let votes = (result.votes ?? []).filter { $0.rawValue == party.rawValue }
+        return HStack(spacing: 10) {
+            PartyAvatar(party: party, size: 28)
+            Text(parties.name(party))
+                .brandText(TypeStyle(face: .inter, weight: won ? 700 : 600, size: 15, lineHeight: 1.2, textStyle: .subheadline, maxScale: 1.6))
+                .foregroundStyle(won ? Brand.ink : Brand.ink2)
+                .lineLimit(1)
+            if won {
+                Image(systemName: "checkmark")
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(colors.ink)
+                    .accessibilityHidden(true)
+            }
+            Spacer(minLength: 8)
+            HStack(spacing: 4) {
+                ForEach(Array(votes.enumerated()), id: \.offset) { _, vote in
+                    VoteDot(vote: vote)
+                }
+            }
+            .accessibilityHidden(true)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .frame(minHeight: 44)
+        .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(won ? colors.tint : Color.clear))
+        .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).strokeBorder(won ? colors.strong : Brand.line2, lineWidth: 1))
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(won ? .isSelected : [])
+    }
+}
+
+/// One short line for each side that did not win, on where it fell short.
+struct OtherLines: View {
+    let result: VerdictResult
+    let parties: PartyNames
+
+    @Environment(\.sides) private var sides
+
+    var body: some View {
+        let lines = (result.others ?? []).filter {
+            !$0.line.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && result.parties?.contains($0.party) == true
+        }
+        if !lines.isEmpty {
+            VStack(spacing: 8) {
+                ForEach(Array(lines.enumerated()), id: \.offset) { _, other in
+                    Branch(tint: sides.of(other.party).tint, rule: sides.of(other.party).strong) {
+                        // The line names its side already; the rule and tint carry the colour.
+                        Text(other.line)
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -187,7 +271,7 @@ struct RulingLine: View {
     @Environment(\.sides) private var sides
 
     var body: some View {
-        let label = VerdictDisplay.label(result.verdict, parties: parties, lang: lang)
+        let label = VerdictDisplay.label(result, parties: parties, lang: lang)
         HStack(spacing: 10) {
             Text(label)
                 .brandText(TypeStyle(face: .interTight, weight: 800, size: 13, lineHeight: 1.2, tracking: 0.1, textStyle: .footnote, maxScale: 1.6, uppercase: true))
@@ -196,8 +280,8 @@ struct RulingLine: View {
             Spacer(minLength: 0)
             if let confidence = VerdictDisplay.confidenceLabel(result, lang: lang) {
                 HStack(spacing: 4) {
-                    ForEach(Array(result.runs.enumerated()), id: \.offset) { _, run in
-                        VoteDot(vote: VerdictDisplay.vote(run))
+                    ForEach(Array(dots.enumerated()), id: \.offset) { _, vote in
+                        VoteDot(vote: vote)
                     }
                 }
                 .accessibilityHidden(true)
@@ -210,7 +294,21 @@ struct RulingLine: View {
         .accessibilityElement(children: .combine)
     }
 
+    /// One dot per judge; with three or four sides the sides show their own
+    /// dots, so only the judges who found it too close are left here.
+    private var dots: [VerdictDisplay.Vote] {
+        result.isMany ? (result.votes ?? []).filter { $0 == .other } : result.runs.map(VerdictDisplay.vote)
+    }
+
     private var color: Color {
+        if result.isMany {
+            // Green when the viewer's own side won, red when another did.
+            switch VerdictDisplay.outcome(result, viewer: sides.you) {
+            case .win: return Brand.sageInk
+            case .lose: return Brand.terraInk
+            case nil: return Brand.ink2
+            }
+        }
         switch result.verdict {
         case .sideA: return sides.a.ink
         case .sideB: return sides.b.ink
@@ -407,6 +505,8 @@ private struct VoteDot: View {
         switch vote {
         case .a: Circle().fill(sides.a.strong).frame(width: 10, height: 10)
         case .b: Circle().fill(sides.b.strong).frame(width: 10, height: 10)
+        case .c: Circle().fill(sides.c.strong).frame(width: 10, height: 10)
+        case .d: Circle().fill(sides.d.strong).frame(width: 10, height: 10)
         case .other: Circle().strokeBorder(Brand.ink, lineWidth: 1.5).frame(width: 10, height: 10)
         }
     }

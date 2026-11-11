@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { apiFetch } from "@/lib/api-fetch";
 import { apiErrorMessage, t, type Lang } from "@/lib/i18n";
-import { localizeLabels, resolveParties } from "@/lib/names";
+import { localizeLabels, partyLabel, resolveParties } from "@/lib/names";
 import { otherLabels, type DisplayResponse, type DisplayState } from "@/lib/originals-types";
 import type { NameMapping } from "@/lib/types";
 import { ownerHeaders } from "@/lib/owner-store";
@@ -20,6 +21,9 @@ export type OwnerShare = {
   aIsWriter: boolean;
   /** "Person C".."Person Z" labels this verdict uses. */
   otherLabels: string[];
+  /** Three or four on a verdict with that many sides; the names dialog then
+   * has a field for each. */
+  sides?: number;
   /** The writer saved these names before (on any device): no prompt before a share. */
   namesConfirmed: boolean;
   onSaved: (display: DisplayState) => void;
@@ -34,6 +38,7 @@ export function buildOwnerShare(args: {
   suggestedA: string | null;
   nameMap: NameMapping[];
   lang: Lang;
+  sides?: number;
   namesConfirmed?: boolean;
   onSaved: (display: DisplayState) => void;
 }): OwnerShare {
@@ -45,6 +50,7 @@ export function buildOwnerShare(args: {
     suggestedA: args.suggestedA,
     aIsWriter: Boolean(parties.get("A")?.self),
     otherLabels: otherLabels(args.nameMap, args.display),
+    ...(args.sides && args.sides > 2 ? { sides: args.sides } : {}),
     namesConfirmed: args.namesConfirmed ?? false,
     onSaved: args.onSaved,
   };
@@ -77,6 +83,8 @@ export function ShareDialog({
   const titleId = useId();
   const [a, setA] = useState("");
   const [b, setB] = useState("");
+  const [third, setThird] = useState("");
+  const [fourth, setFourth] = useState("");
   const [others, setOthers] = useState<Record<string, string>>({});
   const [visible, setVisible] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -90,6 +98,8 @@ export function ShareDialog({
       // The form is reset from the latest names each time it opens.
       setA(d.a ?? (owner.aIsWriter ? owner.suggestedA : null) ?? "");
       setB(d.b ?? "");
+      setThird(d.c ?? "");
+      setFourth(d.d ?? "");
       setOthers(Object.fromEntries(owner.otherLabels.map((l) => [l, d.others[l] ?? ""])));
       setVisible(d.namesVisible);
       setError(null);
@@ -108,10 +118,12 @@ export function ShareDialog({
       namesVisible: visible,
       a: clean(a),
       b: clean(b),
+      ...(owner.sides ? { c: clean(third) } : {}),
+      ...(owner.sides && owner.sides > 3 ? { d: clean(fourth) } : {}),
       others: Object.fromEntries(Object.entries(others).map(([k, v]) => [k, clean(v)])),
     };
     try {
-      const res = await fetch(`/api/v1/verdicts/${encodeURIComponent(owner.verdictId)}/display`, {
+      const res = await apiFetch(`/api/v1/verdicts/${encodeURIComponent(owner.verdictId)}/display`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json", ...ownerHeaders(owner.token) },
         body: JSON.stringify(body),
@@ -165,6 +177,8 @@ export function ShareDialog({
         </label>
         {field("a", t(lang, owner.aIsWriter ? "names.you" : "party.a"), a, setA, true)}
         {field("b", t(lang, "party.b"), b, setB)}
+        {owner.sides ? field("c", partyLabel(lang, "c"), third, setThird) : null}
+        {owner.sides && owner.sides > 3 ? field("d", partyLabel(lang, "d"), fourth, setFourth) : null}
         {owner.otherLabels.map((label) =>
           field(label, localizeLabels(label, lang), others[label] ?? "", (v) => setOthers((o) => ({ ...o, [label]: v }))),
         )}

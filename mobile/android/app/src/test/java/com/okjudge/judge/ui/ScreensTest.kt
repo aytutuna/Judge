@@ -17,7 +17,9 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertContentDescriptionEquals
 import androidx.compose.ui.test.assertHeightIsEqualTo
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertIsNotFocused
@@ -37,6 +39,7 @@ import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.assertWidthIsEqualTo
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onLast
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -46,6 +49,7 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import com.okjudge.judge.Fixtures
 import com.okjudge.judge.ui.signin.SignInUiState
+import com.okjudge.judge.ui.signin.SignInStep
 import com.okjudge.judge.ui.signin.SignInTags
 import com.okjudge.judge.ui.signin.SignInScreen
 import com.okjudge.judge.ui.signin.SignInMode
@@ -79,7 +83,7 @@ import com.okjudge.judge.ui.premium.EvidenceTags
 import com.okjudge.judge.ui.home.HomeUiState
 import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.judging.JudgingTags
-import com.okjudge.judge.ui.settings.PasswordPanel
+import com.okjudge.judge.ui.settings.AccountScreen
 import com.okjudge.judge.ui.settings.SettingsScreen
 import com.okjudge.judge.ui.settings.SettingsTags
 import com.okjudge.judge.ui.verdict.CardActions
@@ -699,77 +703,108 @@ class ScreensTest {
         compose.onNodeWithTag(SettingsTags.GAMIFY).assertIsOff()
     }
 
-    private fun signedInWith(hasPassword: Boolean?) =
-        Account.State.SignedIn(MeResponse(user = Viewer("u1", "ada@example.com"), hasPassword = hasPassword))
+    private fun signedInAs(email: String = "ada@example.com") =
+        Account.State.SignedIn(MeResponse(user = Viewer("u1", email)))
 
     @Test
-    fun passwordPanel_changesThePassword() {
-        val saved = mutableListOf<Pair<String, String?>>()
-        compose.setContent {
-            Themed(AppLang.EN) { PasswordPanel(hasPassword = true, onSave = { new, current -> saved += new to current; null }, onClose = {}) }
-        }
-        val s = UiTestSupport.s(AppLang.EN)
-        compose.onNodeWithTag(SettingsTags.PASSWORD_CURRENT).performTextInput("old-made-up")
-        compose.onNodeWithTag(SettingsTags.PASSWORD_NEW).performTextInput("short")
-        compose.onNodeWithTag(SettingsTags.PASSWORD_SAVE).performClick()
-        compose.onNodeWithTag(SettingsTags.PASSWORD_ERROR).assertTextEquals(s.signinPasswordShort)
-        assertTrue(saved.isEmpty())
-
-        compose.onNodeWithTag(SettingsTags.PASSWORD_NEW).performTextInput("-and-longer")
-        compose.onNodeWithTag(SettingsTags.PASSWORD_SAVE).performClick()
-        compose.onNodeWithTag(SettingsTags.PASSWORD_SAVED).assertTextEquals(s.accountPasswordSaved)
-        assertEquals(listOf("short-and-longer" to "old-made-up"), saved)
-    }
-
-    @Test
-    fun passwordPanel_changing_needsTheCurrentPasswordBeforeSaving() {
-        val saved = mutableListOf<Pair<String, String?>>()
-        compose.setContent {
-            Themed(AppLang.EN) { PasswordPanel(hasPassword = true, onSave = { new, current -> saved += new to current; null }, onClose = {}) }
-        }
-        compose.onNodeWithTag(SettingsTags.PASSWORD_NEW).performTextInput("made-up-pass")
-        compose.onNodeWithTag(SettingsTags.PASSWORD_SAVE).assertIsNotEnabled()
-        assertTrue(saved.isEmpty())
-    }
-
-    @Test
-    fun passwordPanel_firstPassword_doesNotAskForTheCurrentOne_andShowsTheServersAnswer() {
+    fun settings_signOutIsTheLastRow_andHasNoPasswordOrDeleteRow() {
+        val calls = mutableListOf<String>()
         compose.setContent {
             Themed(AppLang.EN) {
-                PasswordPanel(hasPassword = false, onSave = { _, _ -> SignInError.CURRENT_PASSWORD_REQUIRED }, onClose = {})
+                SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com", account = signedInAs(), onSignOut = { calls += "signOut" })
+            }
+        }
+        compose.onNodeWithTag(SettingsTags.DELETE).assertDoesNotExist()
+        val account = compose.onNodeWithTag(SettingsTags.ACCOUNT).fetchSemanticsNode().positionInRoot.y
+        val language = compose.onNodeWithTag(SettingsTags.LANGUAGE).fetchSemanticsNode().positionInRoot.y
+        val appearance = compose.onNodeWithTag(SettingsTags.GAMIFY).fetchSemanticsNode().positionInRoot.y
+        val privacy = compose.onNodeWithTag(SettingsTags.USAGE_STATS).fetchSemanticsNode().positionInRoot.y
+        compose.onNodeWithTag(SettingsTags.SIGN_OUT).performScrollTo()
+        val signOut = compose.onNodeWithTag(SettingsTags.SIGN_OUT).fetchSemanticsNode().positionInRoot.y
+        assertTrue(account < language && language < appearance && appearance < privacy && privacy < signOut)
+        compose.onNodeWithTag(SettingsTags.SIGN_OUT).performClick()
+        compose.onNodeWithText(UiTestSupport.s(AppLang.EN).appAccountSignOutConfirm).assertExists()
+    }
+
+    @Test
+    fun settings_accountRowOpensTheAccountPage() {
+        var opened = 0
+        compose.setContent {
+            Themed(AppLang.EN) {
+                SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com", account = signedInAs(), onOpenAccount = { opened++ })
+            }
+        }
+        compose.onNodeWithTag(SettingsTags.ACCOUNT).performClick()
+        assertEquals(1, opened)
+    }
+
+    @Test
+    fun accountPage_deleteAsksFirst() {
+        var deleted = 0
+        compose.setContent {
+            Themed(AppLang.EN) { AccountScreen(signedInAs(), busy = false, onDelete = { deleted++ }, onBack = {}) }
+        }
+        val s = UiTestSupport.s(AppLang.EN)
+        compose.onNodeWithText(s.accountSignedInAs("ada@example.com")).assertExists()
+        compose.onNodeWithTag(SettingsTags.DELETE).performClick()
+        assertEquals(0, deleted)
+        compose.onAllNodesWithText(s.appAccountDeleteConfirm).onLast().performClick()
+        assertEquals(1, deleted)
+    }
+
+    @Test
+    fun signIn_choosePassword_hasNoWayPast() {
+        val providers = Account.Providers.Ready(ServerConfig(SignInProviders(emailCode = true, password = true)))
+        compose.setContent {
+            Themed(AppLang.EN) {
+                SignInScreen(
+                    SignInUiState(providers = providers, step = SignInStep.CHOOSE_PASSWORD, password = "made-up-pass"),
+                    onBack = {},
+                    actions = SignInActions(),
+                )
+            }
+        }
+        compose.onNodeWithTag(SignInTags.SAVE_PASSWORD).assertIsEnabled()
+        compose.onNodeWithContentDescription(UiTestSupport.s(AppLang.EN).appCancel).assertDoesNotExist()
+    }
+
+    @Test
+    fun signIn_choosePassword_afterAFailedSave_offersTryAgainAndSignOut() {
+        var signedOut = 0
+        val providers = Account.Providers.Ready(ServerConfig(SignInProviders(emailCode = true, password = true)))
+        compose.setContent {
+            Themed(AppLang.EN) {
+                SignInScreen(
+                    SignInUiState(
+                        providers = providers,
+                        step = SignInStep.CHOOSE_PASSWORD,
+                        password = "made-up-pass",
+                        error = SignInError.PASSWORD_SAVE_FAILED,
+                    ),
+                    onBack = {},
+                    actions = SignInActions(onSignOut = { signedOut++ }),
+                )
             }
         }
         val s = UiTestSupport.s(AppLang.EN)
-        compose.onNodeWithTag(SettingsTags.PASSWORD_CURRENT).assertDoesNotExist()
-        compose.onNodeWithTag(SettingsTags.PASSWORD_NEW).performTextInput("made-up-pass")
-        compose.onNodeWithTag(SettingsTags.PASSWORD_SAVE).performClick()
-        compose.onNodeWithTag(SettingsTags.PASSWORD_ERROR).assertTextEquals(s.errorPasswordRequired)
+        compose.onNodeWithTag(SignInTags.SAVE_PASSWORD).assertIsEnabled().assertTextContains(s.appRetry)
+        compose.onNodeWithTag(SignInTags.SIGN_OUT).performClick()
+        assertEquals(1, signedOut)
     }
 
     @Test
-    fun settings_passwordRow_followsWhatTheAccountHas() {
-        var me by mutableStateOf(signedInWith(false))
+    fun signIn_choosePassword_hasNoSignOutBeforeAFailure() {
+        val providers = Account.Providers.Ready(ServerConfig(SignInProviders(emailCode = true, password = true)))
         compose.setContent {
             Themed(AppLang.EN) {
-                SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com", account = me, onSetPassword = { _, _ -> null })
+                SignInScreen(
+                    SignInUiState(providers = providers, step = SignInStep.CHOOSE_PASSWORD, password = "made-up-pass"),
+                    onBack = {},
+                    actions = SignInActions(),
+                )
             }
         }
-        val s = UiTestSupport.s(AppLang.EN)
-        compose.onNodeWithTag(SettingsTags.PASSWORD).assertTextContains(s.accountPasswordSet, substring = true)
-        me = signedInWith(true)
-        compose.onNodeWithTag(SettingsTags.PASSWORD).assertTextContains(s.accountPasswordChange, substring = true)
-    }
-
-    @Test
-    fun settings_passwordRow_waitsForTheServer() {
-        compose.setContent {
-            Themed(AppLang.EN) {
-                SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com", account = signedInWith(null), onSetPassword = { _, _ -> null })
-            }
-        }
-        val s = UiTestSupport.s(AppLang.EN)
-        compose.onNodeWithText(s.accountPasswordSet).assertDoesNotExist()
-        compose.onNodeWithText(s.accountPasswordChange).assertDoesNotExist()
+        compose.onNodeWithTag(SignInTags.SIGN_OUT).assertDoesNotExist()
     }
 
     @Test

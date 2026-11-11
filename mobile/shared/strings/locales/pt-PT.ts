@@ -28,7 +28,6 @@ const ptPT: AppLocale = {
     "app.history.removeFailed": "Não conseguimos remover {n} deles. Verifica a ligação e tenta outra vez.",
     "app.history.offlineRemove": "Estás sem internet. É preciso ligação para remover.",
     "app.pricing.free.account": "Entra com a Apple, o Google ou o e-mail",
-    "app.context.label": "Contexto (opcional)",
     "app.pricing.context": "As imagens de contexto são lidas e depois descartadas, sem custo extra",
     "app.pricing.headline": "O primeiro veredicto é por nossa conta.",
     "app.pricing.sub":
@@ -100,51 +99,6 @@ const ptPT: AppLocale = {
     "app.home.addTheirSide": "Adicionar o outro lado",
     "app.home.removeTheirSide": "Remover o outro lado",
     "app.home.clear": "Limpar",
-    "app.example.dishwasher.aName": "Rita",
-    "app.example.dishwasher.a":
-      "Voltaste a pôr as tigelas no cesto de cima. Lá em cima nunca ficam bem lavadas, o de baixo é que serve para isso.",
-    "app.example.dishwasher.bName": "Miguel",
-    "app.example.dishwasher.b":
-      "Cabem lá perfeitamente e deixam o de baixo livre para as panelas. Ponho a loiça assim há anos e nunca saiu nada sujo.",
-    "app.example.bill.aName": "Sofia",
-    "app.example.bill.a":
-      "Não bebi nada, por isso não devia pagar um quarto do vinho. Dividir a comida em partes iguais, por mim, tudo bem.",
-    "app.example.bill.bName": "Diogo",
-    "app.example.bill.b":
-      "Dividimos sempre por quatro. Andar sempre a fazer contas a quem comeu o quê é uma seca, e a diferença nem é assim tanta.",
-    "app.example.thermostat.aName": "Mariana",
-    "app.example.thermostat.a":
-      "Estão 19 graus cá dentro e tenho frio mesmo de camisola com capuz. Pôr o aquecimento nos 22 não é nenhum exagero.",
-    "app.example.thermostat.bName": "João",
-    "app.example.thermostat.b":
-      "Com 22 graus não se consegue dormir, é calor a mais. Tu podes vestir mais qualquer coisa, eu já não posso tirar mais nada.",
-    "app.example.roadTrip.aName": "Catarina",
-    "app.example.roadTrip.a": "Fui eu a conduzir as seis horas da ida. O justo é seres tu a conduzir no regresso.",
-    "app.example.roadTrip.bName": "Pedro",
-    "app.example.roadTrip.b":
-      "Antes de sairmos disse que detesto conduzir à noite, e vamos sair às sete da tarde. Na próxima viagem, conduzo eu de manhã.",
-    "app.example.seat.aName": "Beatriz",
-    "app.example.seat.a":
-      "O meu assento reclina, por isso vou reclinar. É um voo noturno e está toda a gente a tentar dormir.",
-    "app.example.seat.bName": "Rui",
-    "app.example.seat.b":
-      "Tenho 1,90 m e já tenho os joelhos encostados ao teu assento. Podias ao menos perguntar antes de o reclinares todo para trás.",
-    "app.example.spoiler.aName": "Leonor",
-    "app.example.spoiler.a":
-      "Disseste-me quem era o assassino antes de eu sequer ter começado o último episódio. Estive a semana inteira à espera dele.",
-    "app.example.spoiler.bName": "Tomás",
-    "app.example.spoiler.b":
-      "Saiu há três semanas e tu disseste que já tinhas acabado. Não consigo saber em que episódio anda cada um.",
-    "app.example.jacket.aName": "Gonçalo",
-    "app.example.jacket.a": "Levaste o meu casaco de ganga ao concerto sem perguntar. Veio a cheirar a fumo.",
-    "app.example.jacket.bName": "Ana",
-    "app.example.jacket.b":
-      "Estava pendurado ao pé da porta e tu nunca o usas. Ia perguntar-te, mas estavas a dormir e eu já ia atrasada.",
-    "app.example.lastSlice.aName": "Rodrigo",
-    "app.example.lastSlice.a": "Disse «a última fatia é minha» antes de o filme começar. Toda a gente ouviu.",
-    "app.example.lastSlice.bName": "Carolina",
-    "app.example.lastSlice.b":
-      "Não podes dizer que é tua e depois não lhe tocar durante duas horas. Estava ali a arrefecer, por isso comi-a.",
     "app.case.waitingKicker": "Caso · à espera",
     "app.case.waitingFor": "À espera de {name}",
     "app.case.waitingLead":
@@ -167,10 +121,7 @@ const ptPT: AppLocale = {
     "app.verdict.claims": "Como cada lado lá chegou",
     "app.verdict.back": "Decisão",
     "app.appeal.title": "Acrescentar contexto e recorrer",
-    "app.appeal.intro":
-      "Escapou alguma coisa aos juízes? Acrescenta-a e eles decidem de novo. A primeira decisão fica registada.",
-    "app.appeal.ask": "O que é que eles devem saber?",
-    "app.appeal.placeholder": "Um facto, uma mensagem ou o que ficou mesmo combinado.",
+    "app.appeal.placeholder": "O que é que escapou aos juízes? Um facto, uma mensagem ou o que ficou mesmo combinado.",
     "app.appeal.cost": "Gasta 1 veredicto. Podes fazê-lo duas vezes por decisão (ainda tens {left}).",
     "app.appeal.costCase": "Gasta 1 veredicto. Só podes fazê-lo uma vez por caso.",
     "app.appeal.submit": "Julgar de novo",

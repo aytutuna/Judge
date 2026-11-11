@@ -35,7 +35,7 @@ extension JudgeAPI {
 
     /// The JSON body of POST /api/v1/cases, also the Idempotency-Key's input.
     /// A nil `text` leaves the key out: the case starts without the owner's side.
-    static func createCaseBody(text: String?, lang: AppLang, evidence: [String], displayName: String?) -> [String: Any] {
+    static func createCaseBody(text: String?, lang: AppLang, evidence: [String], displayName: String?, sides: Int = 2) -> [String: Any] {
         var body: [String: Any] = [
             "lang": lang.rawValue,
             "tier": Tier.premium.rawValue,
@@ -43,6 +43,7 @@ extension JudgeAPI {
         if let text { body["text"] = text }
         if !evidence.isEmpty { body["evidence"] = evidence }
         if let displayName, !displayName.isEmpty { body["displayName"] = displayName }
+        if sides > 2 { body["sides"] = min(sides, 4) }
         return body
     }
 
@@ -53,8 +54,8 @@ extension JudgeAPI {
     }
 
     /// POST /api/v1/cases: the owner's side; the case holds one verdict's unit.
-    func createCase(text: String?, lang: AppLang, evidence: [String], displayName: String?, idempotencyKey: String) async throws -> CaseSubmission {
-        let body = Self.createCaseBody(text: text, lang: lang, evidence: evidence, displayName: displayName)
+    func createCase(text: String?, lang: AppLang, evidence: [String], displayName: String?, sides: Int = 2, idempotencyKey: String) async throws -> CaseSubmission {
+        let body = Self.createCaseBody(text: text, lang: lang, evidence: evidence, displayName: displayName, sides: sides)
         let request = try jsonRequest(endpoint("cases"), method: "POST", timeout: CaseTimeout.create, body: body, idempotencyKey: idempotencyKey)
         let data = try await send(request)
         do {
@@ -108,9 +109,19 @@ extension JudgeAPI {
         return try await caseAnswer(try jsonRequest(caseURL(id, "judge"), method: "POST", timeout: CaseTimeout.judge, body: body))
     }
 
-    /// POST /api/v1/cases/{id}/invite: a new link; the old one stops working.
-    func rotateInvite(id: String) async throws -> String {
-        let data = try await send(makeRequest(url: caseURL(id, "invite"), method: "POST", timeout: CaseTimeout.call))
+    /// POST /api/v1/cases/{id}/judge `{ "mode": "answered" }`: with three or
+    /// four sides, judges the ones that have written.
+    func judgeAnswered(id: String) async throws -> CaseView {
+        try await caseAnswer(try jsonRequest(caseURL(id, "judge"), method: "POST", timeout: CaseTimeout.judge, body: ["mode": "answered"]))
+    }
+
+    /// POST /api/v1/cases/{id}/invite: a new link for that side (B unless
+    /// told otherwise); the old one stops working.
+    func rotateInvite(id: String, party: Party = .b) async throws -> String {
+        let request = party == .b
+            ? makeRequest(url: caseURL(id, "invite"), method: "POST", timeout: CaseTimeout.call)
+            : try jsonRequest(caseURL(id, "invite"), method: "POST", timeout: CaseTimeout.call, body: ["party": party.rawValue])
+        let data = try await send(request)
         guard let object = try? WireDecoding.topLevelObject(data),
               let url = object["inviteUrl"] as? String, !url.isEmpty
         else { throw APIError.malformed }

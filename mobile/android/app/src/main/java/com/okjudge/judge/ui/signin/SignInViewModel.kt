@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-/** CHOOSE_PASSWORD: signed in by the code, choosing a password; leaving it skips the password. */
+/** CHOOSE_PASSWORD: signed in by the code, choosing a password; there is no way past it. */
 enum class SignInStep { EMAIL, CODE, CHOOSE_PASSWORD }
 
 /**
@@ -152,7 +152,7 @@ class SignInViewModel(private val account: Account) : ViewModel() {
         val setsPassword = s.flow == SignInMode.CREATE || s.flow == SignInMode.FORGOT
         viewModelScope.launch {
             val result = account.verifyCode(s.email, s.code)
-            if (!setsPassword || result != SignInResult.Success) return@launch finish(result)
+            if (result != SignInResult.Success || !(setsPassword || account.needsPassword)) return@launch finish(result)
             // The address is proven and the account exists: ask for the password, or save the one typed for create.
             _state.update { it.copy(busy = null, step = SignInStep.CHOOSE_PASSWORD, code = "", error = null) }
             if (s.flow == SignInMode.CREATE) savePassword()
@@ -172,7 +172,7 @@ class SignInViewModel(private val account: Account) : ViewModel() {
             val error = account.setPassword(s.password, null)
             _state.update {
                 when (error) {
-                    null -> it.copy(busy = null, password = "", done = true)
+                    null, SignInError.PASSWORD_NOT_TAKEN -> it.copy(busy = null, password = "", done = true)
                     // This sign-in is too old to replace a password: back to the code step for a fresh one.
                     SignInError.CURRENT_PASSWORD_REQUIRED ->
                         it.copy(busy = null, step = SignInStep.CODE, code = "", error = SignInError.CODE_EXPIRED)
@@ -180,11 +180,6 @@ class SignInViewModel(private val account: Account) : ViewModel() {
                 }
             }
         }
-    }
-
-    fun skipPassword() {
-        if (_state.value.busy != null) return
-        _state.update { it.copy(password = "", error = null, done = true) }
     }
 
     fun changeEmail() {

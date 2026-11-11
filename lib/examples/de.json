@@ -1,0 +1,1052 @@
+{
+  "dishwasher": {
+    "title": "🍽️ Schüsseln im Oberkorb",
+    "aName": "Julia",
+    "a": "Du hast die Schüsseln schon wieder oben eingeräumt. Da werden sie nie richtig sauber, dafür ist doch der untere Korb da.",
+    "bName": "Felix",
+    "b": "Die passen oben gut rein, und unten bleibt Platz für die Töpfe. Ich räume die Spülmaschine seit Jahren so ein, und noch nie ist was dreckig rausgekommen."
+  },
+  "bill": {
+    "title": "🍷 Die Rechnung im Restaurant teilen",
+    "aName": "Anna",
+    "a": "Ich hab nichts getrunken, also zahle ich auch kein Viertel vom Wein. Das Essen können wir gern gleichmäßig aufteilen.",
+    "bName": "Max",
+    "b": "Wir teilen doch immer einfach durch vier. Jedes Mal auszurechnen, wer was hatte, nervt, und so groß ist der Unterschied auch nicht."
+  },
+  "thermostat": {
+    "title": "🌡️ Streit ums Thermostat",
+    "aName": "Laura",
+    "a": "Hier drin sind 19 Grad, und mir ist sogar im Hoodie kalt. Die Heizung auf 22 zu drehen ist doch nicht übertrieben.",
+    "bName": "Jan",
+    "b": "Bei 22 Grad kann man nicht schlafen, viel zu warm. Du kannst dir noch was anziehen, ich kann nichts mehr ausziehen."
+  },
+  "roadTrip": {
+    "title": "🚗 Wer fährt nach Hause",
+    "aName": "Sarah",
+    "a": "Ich bin auf der Hinfahrt die ganzen sechs Stunden gefahren. Da ist es nur fair, wenn du uns zurückfährst.",
+    "bName": "David",
+    "b": "Ich hab schon vor der Abfahrt gesagt, dass ich nachts nicht gern fahre, und wir fahren um 19 Uhr los. Auf der nächsten Reise übernehme ich dafür die Fahrten am Morgen."
+  },
+  "seat": {
+    "title": "💺 Sitz zurückstellen im Nachtflug",
+    "aName": "Lisa",
+    "a": "Meine Lehne lässt sich zurückstellen, also stelle ich sie zurück. Es ist ein Nachtflug, und alle versuchen zu schlafen.",
+    "bName": "Tobias",
+    "b": "Ich bin 1,90 m groß, und meine Knie drücken jetzt schon gegen deinen Sitz. Du könntest wenigstens fragen, bevor du die Lehne ganz nach hinten kippst."
+  },
+  "spoiler": {
+    "title": "🎬 Ein Spoiler zum Finale",
+    "aName": "Mia",
+    "a": "Du hast mir verraten, wer der Mörder ist, bevor ich mit der letzten Folge überhaupt angefangen hatte. Ich hab mich die ganze Woche darauf gefreut.",
+    "bName": "Paul",
+    "b": "Die Folge kam vor drei Wochen raus, und du hast gesagt, du bist durch. Ich kann mir nicht merken, wer gerade bei welcher Folge ist."
+  },
+  "jacket": {
+    "title": "🧥 Die geliehene Jeansjacke",
+    "aName": "Leon",
+    "a": "Du hast meine Jeansjacke ungefragt zum Konzert angezogen. Sie kam total verraucht zurück.",
+    "bName": "Hannah",
+    "b": "Sie hing an der Garderobe, und du trägst sie nie. Ich hätte ja gefragt, aber du hast geschlafen, und ich war eh schon spät dran."
+  },
+  "lastSlice": {
+    "title": "🍕 Das letzte Stück Pizza",
+    "aName": "Niklas",
+    "a": "Ich hab schon vor dem Film gesagt: „Das letzte Stück Pizza ist meins!“ Alle haben es gehört.",
+    "bName": "Sophie",
+    "b": "Du kannst nicht „meins!“ rufen und es dann zwei Stunden nicht anrühren. Es lag nur rum und wurde kalt, also hab ich’s gegessen."
+  },
+  "sundayPlans": {
+    "title": "🛋️ Ein ganzer Sonntag auf dem Sofa",
+    "aName": "Hannah",
+    "a": "Das ist der einzige Tag, an dem wir beide frei haben, und ich würde gern wandern gehen. Den ganzen Tag auf dem Sofa zu verbringen, finde ich Verschwendung.",
+    "bName": "Dev",
+    "b": "Ich arbeite die ganze Woche hart, und am Sonntag lade ich meine Akkus auf. Wandern können wir nächstes Wochenende, heute will ich einfach nur mit dir nichts tun."
+  },
+  "anniversaryGift": {
+    "title": "🎁 Wie viel darf ein Geschenk kosten",
+    "aName": "Markus",
+    "a": "Wir hatten ausgemacht, dass Geschenke unter 50 Euro bleiben, und du hast mir eine Uhr gekauft. Jetzt sehe ich aus, als hätte ich mir keine Mühe gegeben.",
+    "bName": "Elena",
+    "b": "Ich hab sie gesehen und sofort an dich gedacht. Sie war im Angebot, und eine Zahl, die wir vor Jahren mal festgelegt haben, soll mich doch nicht daran hindern, großzügig zu sein."
+  },
+  "couplePhoto": {
+    "title": "📸 Unser Foto ohne Nachfrage posten",
+    "aName": "Sofia",
+    "a": "Du hast unser Strandfoto online gestellt, und ich hatte es noch nicht mal gesehen. Ich sehe darauf furchtbar aus und hätte Nein gesagt.",
+    "bName": "Jakob",
+    "b": "Ich finde, du siehst toll aus, und wollte einen schönen Tag teilen. Ich wusste nicht, dass dich das so aufregt."
+  },
+  "phoneInBed": {
+    "title": "📱 Handys im Bett",
+    "aName": "Nina",
+    "a": "Wir legen uns ins Bett, und du scrollst eine Stunde lang, während ich daneben liege. Ich würde gern reden oder wenigstens gemeinsam einschlafen.",
+    "bName": "Omar",
+    "b": "So komme ich nach einem langen Tag runter. Wir können gern reden, aber ich will keine Regeln für ein Handy, das ich einfach nur in der Hand halte."
+  },
+  "movieTurns": {
+    "title": "🍿 Wer sucht den Film aus",
+    "aName": "Katrin",
+    "a": "Ich hab letztes Mal ausgesucht und das Mal davor auch. Du bist dran, und du sagst seit vierzig Minuten nur, dass dir nichts gefällt.",
+    "bName": "Tom",
+    "b": "Ich würde ja was aussuchen, wenn mir was Interessantes einfiele. Du nimmst immer Sachen, die ich weniger mag, also sage ich lieber nichts."
+  },
+  "slowReply": {
+    "title": "💬 Stundenlang auf eine Antwort warten",
+    "aName": "Zoe",
+    "a": "Ich hab dir mittags eine einfache Frage geschickt und erst abends um acht eine Antwort bekommen. Eine kurze Antwort hätte dich doch nichts gekostet.",
+    "bName": "Lukas",
+    "b": "Ich war den ganzen Tag in Meetings, und mein Handy lag in der Tasche. Ich hab dich nicht ignoriert, es war einfach nicht dringend."
+  },
+  "bedSide": {
+    "title": "🛏️ Wer schläft auf welcher Seite",
+    "aName": "Rosa",
+    "a": "Ich schlafe seit sechs Jahren am Fenster. Jetzt, wo wir umgezogen sind, hast du dir meine Seite genommen, bevor ich überhaupt ausgepackt hatte.",
+    "bName": "Peter",
+    "b": "In diesem Zimmer steht das Bett an der anderen Wand, da haben sich die Seiten vertauscht. Ich tausche gern zurück, ich hab einfach nicht drüber nachgedacht."
+  },
+  "surpriseParty": {
+    "title": "🎈 Eine Überraschungsparty, die er nicht wollte",
+    "aName": "Lena",
+    "a": "Ich hab die ganze Feier zu deinem Geburtstag geplant und alle eingeladen. Du hast den ganzen Abend so ein Gesicht gezogen.",
+    "bName": "Gabriel",
+    "b": "Ich hab dir vor Monaten gesagt, dass ich Überraschungen und große Menschenmengen hasse. Ich weiß die Mühe zu schätzen, aber du hast mir nicht zugehört."
+  },
+  "toothpaste": {
+    "title": "🪥 Die Zahnpasta ausdrücken",
+    "aName": "Iris",
+    "a": "Du drückst die Tube in der Mitte aus und lässt sie flach und verdreht liegen. Ist eine Kleinigkeit, ich weiß, aber ich finde sie jeden Morgen so vor.",
+    "bName": "Kai",
+    "b": "Am Ende kommt doch eh alles gleich raus. Ich verstehe nicht, warum es eine richtige Stelle zum Drücken geben soll."
+  },
+  "blanket": {
+    "title": "🛌 Der Deckendieb",
+    "aName": "Dana",
+    "a": "Jede Nacht wickelst du dich in die ganze Decke, und ich wache frierend auf. Es ist, als würde ich neben einem Döner schlafen.",
+    "bName": "Michael",
+    "b": "Mir wird auch kalt, und ich mache das nicht mit Absicht. Wir könnten uns einfach eine zweite Decke holen, statt mir die Schuld zu geben."
+  },
+  "lateDinner": {
+    "title": "🍝 Abendessen um neun",
+    "aName": "Camilla",
+    "a": "Du hast gesagt, du bist um sechs zu Hause, und kommst um neun rein. Die Nudeln, die ich gekocht hab, sind kalt, und ich verhungere fast.",
+    "bName": "Robert",
+    "b": "Ein Telefonat hat länger gedauert, und ich konnte nicht einfach auflegen. Ich hätte dir Bescheid gesagt, aber mein Handy war leer."
+  },
+  "dateBill": {
+    "title": "💳 Wer zahlt beim Date",
+    "aName": "Yara",
+    "a": "Wir waren schon ein Dutzend Mal aus, und du greifst nie nach der Rechnung. Ich fände es schön, wenn wir uns abwechseln.",
+    "bName": "Wilhelm",
+    "b": "Ich verdiene im Moment mehr als du und zahle gern. Ich wusste nicht, dass dich das stört, ich will mich nur nicht über die Rechnung streiten."
+  },
+  "quietHours": {
+    "title": "🔇 Ruhezeit nach zehn",
+    "aName": "Olivia",
+    "a": "Ich hab morgen Frühschicht und höre um elf deinen Videoanruf durch die Wand. Du musst leiser sein.",
+    "bName": "Raj",
+    "b": "Mein Team sitzt in einer anderen Zeitzone, deshalb geht es nur spät. Ich nehme Kopfhörer, aber du könntest ja auch Ohrstöpsel benutzen."
+  },
+  "fridgeShelf": {
+    "title": "🧊 Wem gehört dieses Fach",
+    "aName": "Lukas",
+    "a": "Ich hab mein Kühlschrankfach beschriftet, und du stellst trotzdem deine Reste rein. In deinem ist doch genug Platz.",
+    "bName": "Mina",
+    "b": "Mein Fach war voll, und deine Box war halb leer. Es ist nur für eine Nacht, ich hab dir ja nichts weggenommen."
+  },
+  "overnightGuest": {
+    "title": "🚪 Ein Gast, der die ganze Woche bleibt",
+    "aName": "Ella",
+    "a": "Dein Freund schläft jetzt schon seit sechs Tagen im Wohnzimmer, und mich hat keiner gefragt. Ich möchte meine Wohnung zurück.",
+    "bName": "Theo",
+    "b": "Er ist zwischen zwei Wohnungen und hat sonst nirgends Platz. Ich hab dir gesagt, dass er ein paar Nächte bleibt, und er beteiligt sich an den Einkäufen."
+  },
+  "sharedShampoo": {
+    "title": "🧴 Mein Shampoo benutzen",
+    "aName": "Julia",
+    "a": "Mein Shampoo ist ein teures, und am Montag war es fast voll. Jetzt am Freitag ist es fast leer, und du bist die Einzige, die hier außer mir duscht.",
+    "bName": "Daniel",
+    "b": "Ich hab nur ein bisschen genommen, zweimal. Wenn es dir so wichtig ist, stell es in dein Zimmer, ich dachte, Badsachen gehören allen."
+  },
+  "dirtyPan": {
+    "title": "🍳 Die Pfanne zum Einweichen",
+    "aName": "Hugo",
+    "a": "Die Pfanne steht seit Dienstag im Waschbecken und fängt an zu stinken. Wer kocht, sollte auch abspülen.",
+    "bName": "Nora",
+    "b": "Ich wollte sie spülen, wenn sie noch ein bisschen länger eingeweicht ist. Du lässt hier seit zwei Tagen Teller stehen, und ich hab nichts gesagt."
+  },
+  "dryerLaundry": {
+    "title": "🧺 Wäsche im Trockner vergessen",
+    "aName": "Sabine",
+    "a": "Ich komm runter, und meine saubere Wäsche liegt in einem Haufen auf dem Tisch, weil du den Trockner gebraucht hast. Sie war noch feucht.",
+    "bName": "Ingo",
+    "b": "Das Programm war seit einer Stunde fertig, und ich hatte eine Ladung, die wartete. Nimm deine Sachen doch bitte raus, wenn es piept."
+  },
+  "loudMusic": {
+    "title": "🎧 Musik durch die Wand",
+    "aName": "Felix",
+    "a": "Es ist drei Uhr nachmittags an einem Samstag, und ich bin in meinem eigenen Zimmer. Ich sehe nicht ein, warum ich in meiner eigenen Wohnung Kopfhörer tragen soll.",
+    "bName": "Tessa",
+    "b": "Der Bass lässt meinen Schreibtisch vibrieren, wenn ich lernen will. Keiner verlangt, dass du aufhörst, nur ein bisschen leiser."
+  },
+  "longShower": {
+    "title": "🚿 Das warme Wasser ist alle",
+    "aName": "Amir",
+    "a": "Du duschst vierzig Minuten, und wenn ich dran bin, ist das warme Wasser immer weg. Zehn Minuten pro Person wären fair.",
+    "bName": "Bettina",
+    "b": "Ich stoppe die Zeit nicht, und es ist der einzige Ort, wo ich abschalten kann. Vielleicht könnten wir uns beim Ersten abwechseln."
+  },
+  "lightsOn": {
+    "title": "💡 Überall brennt Licht",
+    "aName": "Greta",
+    "a": "Ich gehe durch die Wohnung, und überall brennt Licht, sogar in Zimmern, in denen keiner ist. Die Kosten teilen wir, also ist es auch mein Geld.",
+    "bName": "Sebastian",
+    "b": "Ich mag es hell, und ich gehe den ganzen Abend rein und raus. Das Licht dauernd an- und auszuschalten nervt genauso."
+  },
+  "parcels": {
+    "title": "📦 Pakete stapeln sich im Flur",
+    "aName": "Nadja",
+    "a": "Im Flur stapeln sich sechs Kartons von dir, und ich stolpere jeden Tag darüber. Bring sie bitte in dein Zimmer.",
+    "bName": "Oskar",
+    "b": "Ich will sie zur Post zurückbringen und hatte viel zu tun. Sie stehen doch erst seit vier Tagen da."
+  },
+  "houseplant": {
+    "title": "🪴 Wer gießt die Pflanze",
+    "aName": "Wiebke",
+    "a": "Ich hab die Pflanze fürs Wohnzimmer gekauft und gieße sie jede Woche. Jetzt sieht sie aus wie ein Stock, weil du sie in die dunkle Ecke gestellt hast.",
+    "bName": "Pablo",
+    "b": "Sie stand vor dem Fernseher, und ich fand die Ecke okay. Ich wusste nicht, dass Pflanzen so empfindlich sind."
+  },
+  "lateArrival": {
+    "title": "⏰ Schon wieder vierzig Minuten zu spät",
+    "aName": "Daniel",
+    "a": "Wir hatten sieben gesagt, und ich hab bis zwanzig vor acht allein im Restaurant gesessen. Das ist jetzt das dritte Mal.",
+    "bName": "Miriam",
+    "b": "Der Bus hatte Verspätung, und ich hab dir geschrieben. Du hättest ja was zu trinken bestellen können, statt sauer zu sein."
+  },
+  "cancelledPlans": {
+    "title": "🙅 Eine Stunde vorher abgesagt",
+    "aName": "Ruth",
+    "a": "Ich hab meinen ganzen Tag umgeplant, um dich zu sehen, und du sagst eine Stunde vorher mit einer Nachricht ab. Das ist nicht das erste Mal.",
+    "bName": "Carlos",
+    "b": "Ich war total erledigt und wäre eine schlechte Gesellschaft gewesen. Ich fand es netter, das zu sagen, als mich irgendwie hinzuschleppen."
+  },
+  "borrowedBook": {
+    "title": "📚 Ein Buch, das nie zurückkam",
+    "aName": "Imke",
+    "a": "Ich hab dir das Buch letzten Frühling geliehen, und jetzt ist ein Jahr vergangen. Es war signiert, und ich hab dich schon zweimal gefragt.",
+    "bName": "Adam",
+    "b": "Ich hab es irgendwo, versprochen, wahrscheinlich in einem Umzugskarton. Ich finde es schon, du musst nicht ständig davon anfangen."
+  },
+  "mutedChat": {
+    "title": "🔕 Den Gruppenchat stummgeschaltet",
+    "aName": "Hanna",
+    "a": "Du hast unseren Gruppenchat stummgeschaltet und nicht mitbekommen, dass sich der Plan zweimal geändert hat. Wir mussten alle am falschen Ort auf dich warten.",
+    "bName": "Viktor",
+    "b": "Da kommen zweihundert Nachrichten am Tag, meistens Memes. Ich würde die wichtigen lesen, wenn das nicht eine Stunde dauern würde."
+  },
+  "birthdayDinner": {
+    "title": "🎂 Das Geburtstagsessen bezahlen",
+    "aName": "Kenji",
+    "a": "Es ist mein Geburtstagsessen, und wegen des teuren Weins kam jeder auf 90 Euro. Ich hätte gedacht, dass das Geburtstagskind nicht zahlen muss.",
+    "bName": "Sascha",
+    "b": "Wir teilen immer alles gleichmäßig durch die ganze Gruppe, das weiß jeder. Und du hast das Lokal ja auch ausgesucht."
+  },
+  "plusOne": {
+    "title": "💍 Eine Begleitung auf der Hochzeit",
+    "aName": "Bella",
+    "a": "Auf der Einladung steht nur mein Name, aber mein Partner, mit dem ich seit zwei Jahren zusammen bin, wäre allein zu Hause. Ich bringe ihn trotzdem mit.",
+    "bName": "Quirin",
+    "b": "Die Location hat eine feste Obergrenze, und jeder Platz kostet uns viel. Tut mir leid, aber ich kann für eine einzelne Person keine Ausnahme machen."
+  },
+  "chargerBorrow": {
+    "title": "🔌 Das geliehene Ladekabel",
+    "aName": "Frank",
+    "a": "Das ist jetzt schon das dritte Ladekabel von mir, das bei dir verschwunden ist. Ich will sie zurück, nicht noch ein „Tut mir leid“.",
+    "bName": "Lola",
+    "b": "Die sehen alle gleich aus, da vergesse ich echt, welches wem gehört. Ich bring dir am Freitag eine ganze Tüte voll mit."
+  },
+  "auxCord": {
+    "title": "🎵 Wer bestimmt die Musik im Auto",
+    "aName": "Tarik",
+    "a": "Ich fahre, also suche ich die Musik aus. Es ist eine lange Strecke, und ich bin derjenige, der wach bleiben muss.",
+    "bName": "Emma",
+    "b": "Du hast heute dreimal dasselbe Album gespielt. Beifahrer dürfen auch mitreden, so läuft das auf jeder Autofahrt."
+  },
+  "karaoke": {
+    "title": "🎤 Das Lied, das nicht aufhört",
+    "aName": "Gina",
+    "a": "Du hast neun Lieder gesungen, und wir anderen hatten je eins. Das Mikro soll doch im Raum rumgehen.",
+    "bName": "Max",
+    "b": "Sonst hat sich keiner in die Liste eingetragen, also hab ich die Lücken gefüllt. Ehrlich, ich dachte, es gefällt allen."
+  },
+  "uninvited": {
+    "title": "🙈 Nicht auf der Einladungsliste",
+    "aName": "Selma",
+    "a": "Ich hab die Fotos von deiner Party gesehen, und ich war nicht eingeladen, obwohl ich bisher auf jeder war. Das hat echt wehgetan.",
+    "bName": "Jonas",
+    "b": "Das war eine kleine Sache für meine Kollegen, nur zehn Leute. Das hatte nichts mit dir zu tun, ich dachte nicht mal, dass du kommen wolltest."
+  },
+  "holidayHost": {
+    "title": "🎄 Wer lädt zum Weihnachtsessen ein",
+    "aName": "Marta",
+    "a": "Wir haben das Familienessen jetzt vier Jahre in Folge ausgerichtet. Jemand anderes ist dran, und ich hätte gern mal ein Fest, an dem ich nicht koche.",
+    "bName": "Peter",
+    "b": "Mama schafft die Treppen nicht mehr, und bei uns steht der größte Tisch. Es hat sich keiner angeboten, also dachte ich, wir machen es wieder."
+  },
+  "dailyCalls": {
+    "title": "📞 Jeden Tag ein Anruf",
+    "aName": "Lea",
+    "a": "Mama ruft jeden Tag gegen sechs an und erwartet ein halbstündiges Gespräch. Ich hab sie lieb, aber manchmal hab ich einfach keine Lust.",
+    "bName": "Joshua",
+    "b": "Sie lebt allein, und der Anruf ist das Schönste an ihrem Tag. Du könntest ihr sagen, dass du an stressigen Tagen schreibst."
+  },
+  "bedtimeKids": {
+    "title": "🌙 Schlafenszeit unter der Woche",
+    "aName": "Ingrid",
+    "a": "Unser Sohn ist acht und sollte um acht schlafen. Du lässt ihn für das Fußballspiel aufbleiben, und jetzt ist er in der Schule total fertig.",
+    "bName": "Luis",
+    "b": "Es war ein einziges Spiel, und er war so aufgeregt. Ein später Abend ab und zu schadet ihm nicht, und für ihn ist das was Besonderes."
+  },
+  "borrowedSweater": {
+    "title": "👚 Eine Schwester, die an meinen Schrank geht",
+    "aName": "Alina",
+    "a": "Du hast meinen grünen Pulli ohne zu fragen genommen und zu einer Party getragen. Er kam mit Flecken zurück, und ich hatte ihn noch nie an.",
+    "bName": "Priya",
+    "b": "Ich hab mir mein ganzes Leben lang Sachen von dir geliehen, und es hat dich nie gestört. Ich lass ihn reinigen, aber du machst eine große Sache daraus."
+  },
+  "familyRecipe": {
+    "title": "🥘 Omas Rezept",
+    "aName": "Elif",
+    "a": "In Omas Suppe kam immer ein Löffel Tomatenmark, das steht sogar in ihrer Handschrift da. Du hast es weggelassen und trotzdem gesagt, es wäre dasselbe Rezept.",
+    "bName": "Mert",
+    "b": "Ich finde, ohne schmeckt sie leichter, und so kenne ich sie auch. Es ist immer noch ihr Rezept, nur ein kleines bisschen verbessert."
+  },
+  "dadRide": {
+    "title": "🚙 Papa zum Flughafen fahren",
+    "aName": "Simon",
+    "a": "Ich hab Papa letztes Mal gefahren und das Mal davor auch. Kannst du den Frühflug ausnahmsweise übernehmen, statt ein Taxi zu bestellen?",
+    "bName": "Hanna",
+    "b": "Das ist eine Fahrt von zwei Stunden hin und zurück, und ich muss um sechs auf der Arbeit sein. Ich zahle das Taxi, ich hab nur keine Zeit."
+  },
+  "familyChat": {
+    "title": "👨‍👩‍👧 Kettennachrichten im Familienchat",
+    "aName": "Rina",
+    "a": "Onkel Heinz schickt ständig diese Kettennachrichten und Videos in den ganzen Familienchat. Zwischen dem Zeug finde ich nichts Wichtiges mehr.",
+    "bName": "Theo",
+    "b": "Er will doch nur dazugehören und mit allen lachen. Ein kurzes Wort vielleicht, aber ihn stummzuschalten finde ich unfreundlich."
+  },
+  "tvRemote": {
+    "title": "📺 Die Fernbedienung verstecken",
+    "aName": "Nick",
+    "a": "Immer wenn ich mich für das Spiel hinsetze, ist die Fernbedienung weg, und es läuft ein Zeichentrickfilm. Das ist diese Woche schon das zweite Mal.",
+    "bName": "Maria",
+    "b": "Das ist meine liebste Stunde Fernsehen, und dein Spiel geht den ganzen Nachmittag. Wir können uns abwechseln, aber du kannst nicht den ganzen Nachmittag für dich haben."
+  },
+  "seatingChart": {
+    "title": "🍽️ Wer sitzt am Tischende",
+    "aName": "Gustav",
+    "a": "Ich sitze seit meiner Kindheit bei jedem Familienessen an diesem Ende. Jetzt hat dein Freund den Platz genommen, und keiner hat was gesagt.",
+    "bName": "Tara",
+    "b": "Er hat sich zuerst hingesetzt, und er ist Gast. Es ist ein Stuhl, und beim nächsten Mal können wir tauschen."
+  },
+  "teenPhone": {
+    "title": "🧒 Handy am Esstisch",
+    "aName": "Doris",
+    "a": "Das Abendessen ist der einzige Moment, in dem wir als Familie zusammensitzen. Fünfzehn Minuten ohne dein Handy sind doch nicht zu viel verlangt.",
+    "bName": "Elias",
+    "b": "Ich schaue nur, ob ein Freund geantwortet hat. Du hast am Tisch auch dein Handy in der Hand, wenn dir jemand von der Arbeit schreibt."
+  },
+  "meetingEmail": {
+    "title": "📧 Ein Meeting, das eine E-Mail hätte sein können",
+    "aName": "Paula",
+    "a": "Wir haben eine Stunde telefoniert, um etwas zu hören, das in drei Zeilen gepasst hätte. Das ist eine Stunde, in der ich den Bericht hätte fertig machen können.",
+    "bName": "Gregor",
+    "b": "Alle haben viel zu tun, aber im Gespräch kann man gleich nachfragen. Eine E-Mail hätte fünf verschiedene Verläufe losgetreten."
+  },
+  "microwaveFish": {
+    "title": "🐟 Fisch in der Büromikrowelle",
+    "aName": "Wanda",
+    "a": "Du hast Lachs in der gemeinsamen Mikrowelle aufgewärmt, und die ganze Etage riecht bis drei Uhr danach. Bring bitte was anderes mit.",
+    "bName": "Dmitri",
+    "b": "Das ist mein einziges richtiges Mittagessen, und ich hab nicht viel Geld für Essen zum Mitnehmen. Andere wärmen Curry auf, und da sagt keiner was."
+  },
+  "stolenLunch": {
+    "title": "🥪 Jemand hat mein Mittagessen gegessen",
+    "aName": "Bernd",
+    "a": "Mein Name stand auf der Tüte, und das Sandwich war bis zwölf weg. Ich schätze, du hast gesehen, wer es genommen hat.",
+    "bName": "Fiona",
+    "b": "Ich hab nichts gesehen und möchte niemanden beschuldigen. Vielleicht ist ein Zettel am Kühlschrank der freundlichere erste Schritt."
+  },
+  "replyAll": {
+    "title": "📨 „Allen antworten“ an die ganze Firma",
+    "aName": "Ewald",
+    "a": "Du hast allen geantwortet, also zweihundert Leuten, mit „Danke!“. Jetzt hab ich vierzig davon im Postfach.",
+    "bName": "Johanna",
+    "b": "Ich wollte höflich sein, und der Knopf war gleich da. Das ist ein winziger Fehler, und niemandem ist wirklich was passiert."
+  },
+  "officeCold": {
+    "title": "❄️ Das eiskalte Büro",
+    "aName": "Rebecca",
+    "a": "Die Klimaanlage ist so tief eingestellt, dass ich im Juli mit Jacke am Schreibtisch sitze. Ein paar Grad wärmer würden doch niemandem schaden.",
+    "bName": "Anil",
+    "b": "Mir ist schnell warm, und die Sonne scheint den ganzen Nachmittag auf meine Seite. Wenn dir kalt ist, ist eine Decke einfacher, als wenn wir anderen schwitzen."
+  },
+  "openOfficeHeadphones": {
+    "title": "🎧 Kopfhörer im Großraumbüro",
+    "aName": "Lars",
+    "a": "Ich trage Kopfhörer, um mich zu konzentrieren, und alle paar Minuten tippt mich jemand wegen einer kurzen Frage an. Das reißt mich jedes Mal raus.",
+    "bName": "Carmen",
+    "b": "Man merkt schwer, ob du wirklich beschäftigt bist. Erst eine Nachricht zu schreiben dauert zu lange, wenn die Antwort zehn Sekunden braucht."
+  },
+  "emptyCoffee": {
+    "title": "☕ Die letzte Tasse Kaffee",
+    "aName": "Torsten",
+    "a": "Du hast den letzten Rest aus der Kanne genommen und die leere stehen lassen. Neuen Kaffee zu kochen dauert zwei Minuten.",
+    "bName": "Lucy",
+    "b": "Ich war spät dran für ein Telefonat und hab echt nicht gemerkt, dass es die letzte Tasse war. Die nächste Kanne koche ich, versprochen."
+  },
+  "ideaCredit": {
+    "title": "💡 Wessen Idee war das",
+    "aName": "Sunil",
+    "a": "Ich hab im März den neuen Zeitplan vorgeschlagen, und du hast ihn dem Chef als deinen verkauft. Ein Dankeschön hätte gereicht.",
+    "bName": "Katja",
+    "b": "Wir haben das zusammen besprochen, und ich hab es dann mit dem Team ausgearbeitet. Ich dachte, wir waren uns einig, dass es gemeinsame Arbeit ist."
+  },
+  "fridayDeadline": {
+    "title": "📅 Abgabe bis Freitag",
+    "aName": "Monika",
+    "a": "Du wolltest mir deinen Teil bis Freitag schicken, und jetzt ist Montag. Alle anderen haben darauf gewartet, und ich musste zweimal nachfragen.",
+    "bName": "Ahmed",
+    "b": "Bei mir ist ein größeres Projekt reingekommen, und ich musste mich entscheiden. Ich hätte es dir früher sagen sollen, aber heute bekommst du es."
+  },
+  "deskLunch": {
+    "title": "🥗 Mittagessen am Schreibtisch",
+    "aName": "Henning",
+    "a": "In diesem Team macht keiner mehr eine richtige Mittagspause, und langsam wird es zur Erwartung. Ich fände es gut, wenn wir mittags mal alle vom Platz weggehen.",
+    "bName": "Yuki",
+    "b": "Ich esse beim Arbeiten und gehe dafür früher nach Hause. Pausen sind okay, aber ich entscheide lieber selbst."
+  },
+  "calendarInvite": {
+    "title": "🗓️ Meetings ohne Tagesordnung",
+    "aName": "Sylvia",
+    "a": "In deiner Einladung stand nur „kurz austauschen“, ohne Tagesordnung, und das hat mir eine dreiviertel Stunde vom Vormittag gekostet. Sag mir bitte vorher, worum es geht.",
+    "bName": "Bruno",
+    "b": "Es sollte ein lockeres Gespräch sein, und am Ende haben wir zwei Probleme gelöst. Eine förmliche Tagesordnung hätte das Gespräch totgemacht."
+  },
+  "rentSplit": {
+    "title": "🏠 Die Miete nach Zimmergröße teilen",
+    "aName": "Ana",
+    "a": "Mein Zimmer ist das kleinste und hat keinen Schrank, aber ich zahle genauso viel wie du. Ich finde, das größte Zimmer sollte mehr kosten.",
+    "bName": "Zacharias",
+    "b": "Wir haben beim Mietvertrag gleiche Drittel ausgemacht. Jedes Mal alles neu zu berechnen, wenn einem von uns was nicht passt, wird nur chaotisch."
+  },
+  "smallLoan": {
+    "title": "💶 Zehn Euro vom Mittagessen",
+    "aName": "Ralf",
+    "a": "Ich hab letzten Monat dein Mittagessen bezahlt und letzte Woche nochmal. Zusammen sind das dreißig Euro, und ich hab kein Wort dazu gehört.",
+    "bName": "Dora",
+    "b": "Ich dachte, wir wären nach der Kaffeerunde quitt. Ich zahle gern, sag mir einfach den Betrag, dann überweise ich ihn dir noch heute."
+  },
+  "tipping": {
+    "title": "🧾 Wie viel Trinkgeld",
+    "aName": "Helga",
+    "a": "Der Service war langsam, und das Essen war kalt. Ich gebe zehn Prozent, nicht zwanzig.",
+    "bName": "Oliver",
+    "b": "Das Lokal war voll, und der Kellner war offensichtlich überfordert. Trinkgeld bedeutet denen viel, und für uns ist es nicht viel mehr."
+  },
+  "streamingShare": {
+    "title": "📺 Ein Streaming-Konto teilen",
+    "aName": "Maria",
+    "a": "Ich zahle für das Streaming-Abo, und jetzt benutzt es die Hälfte deiner Freunde mit. Sie sollen sich beteiligen oder ein eigenes holen.",
+    "bName": "André",
+    "b": "Es kostet dasselbe, ob es zwei oder fünf nutzen. Jeden um ein paar Euro zu bitten, wäre nur peinlich."
+  },
+  "taxiSplit": {
+    "title": "🚕 Das Taxi nach Hause teilen",
+    "aName": "Lisa",
+    "a": "Du bist als Erster ausgestiegen, und ich bin noch fünfzehn Minuten weitergefahren, trotzdem teilen wir den Fahrpreis halbe-halbe. Ich finde das nicht ganz fair.",
+    "bName": "Kurt",
+    "b": "Wir saßen im selben Auto und sind zusammen losgefahren. Bei zwanzig Euro pro Kilometer auszurechnen, ist ein bisschen übertrieben."
+  },
+  "groupGift": {
+    "title": "🎀 Das Gruppengeschenk",
+    "aName": "Ivonne",
+    "a": "Alle legen zwanzig Euro für das Geschenk für unsere Lehrerin zusammen, aber ich bin Studentin, und das ist für mich viel. Kann ich zehn geben?",
+    "bName": "Walter",
+    "b": "Das Geschenk ist zu diesem Preis schon bestellt, und wenn du weniger gibst, muss jemand anderes drauflegen. Ich versteh dich, aber es ist unangenehm."
+  },
+  "groceryList": {
+    "title": "🛒 Die Einkäufe teilen",
+    "aName": "Petra",
+    "a": "Du kaufst Snacks und feinen Käse und rechnest alles auf die gemeinsame Summe. Ich esse nur das Normale, also soll ich nicht die Hälfte zahlen.",
+    "bName": "Ravi",
+    "b": "Du kannst den Käse jederzeit essen. Es war von Anfang an eine gemeinsame Rechnung, und ich führe keine Tabelle."
+  },
+  "bigPurchase": {
+    "title": "🛍️ Ein großer Kauf ohne ein Wort",
+    "aName": "Stella",
+    "a": "Du hast dir einen neuen Gaming-Monitor für 400 Euro gekauft, ausgerechnet in der Woche, in der wir für die Reise gespart haben. Du hättest mich fragen können.",
+    "bName": "Nils",
+    "b": "Das kam aus meinem eigenen Taschengeld, und ich hab ein Jahr darauf gewartet. Ich dachte nicht, dass ich dafür eine Erlaubnis brauche."
+  },
+  "subscriptions": {
+    "title": "💳 Vergessene Abos kündigen",
+    "aName": "Jule",
+    "a": "Wir zahlen für vier Apps, die keiner von uns öffnet. Lass uns die kündigen und das Geld für den Urlaub zurücklegen.",
+    "bName": "Ola",
+    "b": "Ich bin sicher, dass ich zwei davon bald benutze. Können wir sie bis Ende des Monats behalten und dann entscheiden?"
+  },
+  "restaurantChoice": {
+    "title": "🍜 Wo essen wir heute Abend",
+    "aName": "Hiro",
+    "a": "Ich hab diese Woche dreimal Ramen gesagt, und du hast jedes Mal „klar“ gesagt und dann was anderes ausgesucht. Ich möchte, dass wir da hingehen.",
+    "bName": "Beate",
+    "b": "Als wir da waren, hatte ich keine Lust auf Nudeln. Nenn nächstes Mal ein Lokal, dann leg ich mich vorher fest."
+  },
+  "cerealMilk": {
+    "title": "🥣 Erst die Milch, dann die Flocken",
+    "aName": "Patrick",
+    "a": "Du kippst erst die Milch rein und dann die Cornflakes. Das ist falsch, und sie sind matschig, bevor du fertig bist.",
+    "bName": "Jessica",
+    "b": "Ich mag es so und esse sie sofort. Du musst nicht zuschauen, lass mich einfach mein Frühstück genießen."
+  },
+  "ketchup": {
+    "title": "🍳 Ketchup auf den Eiern",
+    "aName": "Luise",
+    "a": "Du machst Ketchup auf ein perfekt gebratenes Omelett. Das ist Verschwendung guter Eier, und ich kann nicht hinsehen.",
+    "bName": "Dirk",
+    "b": "Ich esse sie schon seit meiner Kindheit so und mag den Geschmack. Es ist mein Teller, du isst deinen, wie du willst."
+  },
+  "pizzaCrust": {
+    "title": "🍕 Der Pizzarand bleibt liegen",
+    "aName": "Tim",
+    "a": "Du isst die Mitte und lässt jedes Mal den Rand auf dem Teller liegen. Das ist das Beste, und es landet im Müll.",
+    "bName": "Gerda",
+    "b": "Der Rand ist hart, und dann bin ich schon satt. Wenn du ihn willst, nimm ihn, ich zwinge mich nicht."
+  },
+  "coffeeTea": {
+    "title": "☕ Morgens Kaffee oder Tee",
+    "aName": "Arjun",
+    "a": "Du hast gesagt, Tee sei nur heißes Blätterwasser, und dann nach einem Schluck von meinem Kaffee gefragt. Ich hätte gern eine Entschuldigung.",
+    "bName": "Heidi",
+    "b": "Ich mag den Geruch von Kaffee lieber als den Geschmack. Und ich trinke Tee, weil er beruhigt, da muss mich keiner überzeugen."
+  },
+  "spiceLevel": {
+    "title": "🌶️ Wie scharf ist zu scharf",
+    "aName": "Diego",
+    "a": "Du hast „mild“ bestellt und dann die Hälfte des Chiliöls auf deinen Teller gekippt. Jetzt hustet der ganze Tisch.",
+    "bName": "Anna",
+    "b": "Mild für mich ist nicht mild für dich, und ich wusste nicht, dass wir alles teilen. Nächstes Mal bestelle ich eine eigene Schüssel."
+  },
+  "leftovers": {
+    "title": "🥡 Die Reste weggeworfen",
+    "aName": "Mona",
+    "a": "Ich hab das Curry fürs Mittagessen aufgehoben, und du hast es weggeworfen, weil es zwei Tage im Kühlschrank stand. Es war noch gut.",
+    "bName": "Calvin",
+    "b": "Ich dachte, es stand viel zu lange da, und wollte nicht, dass jemand krank wird. Ich ersetze es dir, tut mir leid."
+  },
+  "cilantro": {
+    "title": "🌿 Koriander in allem",
+    "aName": "Vera",
+    "a": "Du hast schon wieder Koriander ins Essen getan, obwohl du weißt, dass er für mich nach Seife schmeckt. Ich kann ihn nicht alles rauspicken.",
+    "bName": "Marco",
+    "b": "Das Rezept verlangt ihn, und das Gericht braucht die Frische. Nächstes Mal stelle ich ihn in einer Schale extra daneben."
+  },
+  "tooSalty": {
+    "title": "🧂 Zu viel Salz in der Suppe",
+    "aName": "Frieda",
+    "a": "Du hast die Suppe gesalzen, bevor du probiert hast, und jetzt ist sie zu salzig zum Essen. Ich möchte mit einem frischen Topf neu anfangen.",
+    "bName": "Jakob",
+    "b": "Mir schmeckt sie, und ich salze sowieso immer erst am Ende. Rühr ein bisschen Wasser rein, das ist leicht zu retten."
+  },
+  "doubleDip": {
+    "title": "🥨 Doppelt dippen auf der Party",
+    "aName": "Cora",
+    "a": "Ich hab gesehen, wie du in einen Chip gebissen und ihn nochmal in die gemeinsame Schüssel getunkt hast. Jetzt will ich nichts mehr daraus.",
+    "bName": "Bernhard",
+    "b": "Es war ein einziges Mal, und keiner hat es gesehen. Du machst eine Riesensache daraus, nimm dir einfach einen sauberen Löffel."
+  },
+  "pastaShape": {
+    "title": "🍝 Pasta, die keine Spaghetti ist",
+    "aName": "Giulia",
+    "a": "Diese Soße ist für lange Nudeln gedacht, und du hast sie mit kurzen gemacht. Das ist einfach nicht dasselbe Gericht.",
+    "bName": "Heinrich",
+    "b": "Wir hatten nur Penne im Schrank, und es schmeckt trotzdem gut. Spielt die Form wirklich so eine große Rolle?"
+  },
+  "hotdog": {
+    "title": "🌭 Ist ein Hotdog ein belegtes Brötchen?",
+    "aName": "Robert",
+    "a": "Ein Hotdog ist eine Füllung in einem aufgeschnittenen Brötchen, also ein belegtes Brötchen. Ende der Diskussion.",
+    "bName": "Sami",
+    "b": "Das ist was Eigenes. Keiner bestellt ein belegtes Brötchen und erwartet einen Hotdog, und auf keiner Karte steht er dort."
+  },
+  "trashDay": {
+    "title": "🗑️ Den Müll rausbringen",
+    "aName": "Karl",
+    "a": "Der Eimer läuft seit Mittwoch über, und ich hab ihn die letzten vier Male rausgebracht. Du bist dran.",
+    "bName": "Amelie",
+    "b": "Ich bringe den Altpapier- und den Biomüll raus, und das zählt auch. Lass uns einen richtigen Plan machen, dann müssen wir nicht mehr zählen."
+  },
+  "foldTowels": {
+    "title": "🧺 Die richtige Art, Handtücher zu falten",
+    "aName": "Ernst",
+    "a": "Ich hab gerade alle Handtücher nochmal in Dritteln gefaltet, weil du sie halbierst und sie dann nicht ins Regal passen.",
+    "bName": "Carla",
+    "b": "Das sind Handtücher, und die werden in einer Minute benutzt. Ich lerne dafür kein Falt-System."
+  },
+  "vacuumSchedule": {
+    "title": "🧹 Wie oft staubsaugen",
+    "aName": "Franziska",
+    "a": "Ich sauge zweimal die Woche, und ich hab dich noch nie am Staubsauger gesehen. Ein paar Haare auf dem Boden stören mich echt.",
+    "bName": "Leon",
+    "b": "Mir reicht einmal die Woche, du machst mehr als nötig. Ich saug gern sonntags, wenn du den Rest lässt."
+  },
+  "whoCooks": {
+    "title": "🍲 Jeden Abend kochen",
+    "aName": "Marie",
+    "a": "Ich hab diesen Monat an fünf von sieben Abenden gekocht. Ich möchte, dass wir das Kochen gerechter aufteilen.",
+    "bName": "Paolo",
+    "b": "Ich bin nicht so gut darin, und dir macht es mehr Spaß. Aber du hast recht, such zwei Abende aus, und ich werde besser."
+  },
+  "makeBed": {
+    "title": "🛏️ Das Bett machen",
+    "aName": "Gwen",
+    "a": "Du stehst auf, lässt die Decke als Haufen liegen und sagst, es bringt nichts, weil wir heute Abend alles wieder durcheinanderbringen. Dadurch sieht das Zimmer unordentlich aus.",
+    "bName": "Nils",
+    "b": "Ich bin der, der zuerst zur Arbeit geht, und das sind zwei Minuten, die ich nicht habe. Wenn es dir so wichtig ist, mach es, wenn du aufstehst."
+  },
+  "toiletSeat": {
+    "title": "🚽 Die Klobrille",
+    "aName": "Annika",
+    "a": "Ich bin jetzt dreimal im Dunkeln ins Bad gegangen, und die Brille war oben. Sie runterzuklappen ist nicht schwer.",
+    "bName": "Gregor",
+    "b": "Oben lassen heißt, weniger anzufassen, und um Mitternacht denke ich nicht dran. Wenn es dich stört, versuche ich, daran zu denken."
+  },
+  "toiletPaper": {
+    "title": "🧻 Über oder unter",
+    "aName": "Dagmar",
+    "a": "Die Rolle gehört so, dass das Papier oben drüberläuft. Du hast sie verkehrt herum aufgehängt, und ich muss jedes Mal drumherum greifen.",
+    "bName": "Albert",
+    "b": "Für die Funktion macht das keinen Unterschied, nimm also, was du willst. Ich hänge sie nicht um, nur damit sie zu deiner Gewohnheit passt."
+  },
+  "laundryColours": {
+    "title": "👕 Bunt und weiß zusammen waschen",
+    "aName": "Moritz",
+    "a": "Mein weißes Hemd ist rosa aus der Wäsche gekommen, weil du das rote Handtuch mit reingeworfen hast. Das Hemd hab ich zur Arbeit getragen.",
+    "bName": "Lydia",
+    "b": "Ich hatte es eilig, und eine kleine Ladung dauert zu lange. Ich kauf dir ein neues, aber es war ein Versehen."
+  },
+  "washCar": {
+    "title": "🚗 Das gemeinsame Auto putzen",
+    "aName": "Ismail",
+    "a": "Auf der Rückbank liegen lauter Verpackungen und ein Kaffeebecher von letzter Woche. Wir teilen uns das Auto, also teilen wir uns auch das Putzen.",
+    "bName": "Dina",
+    "b": "Ich putze das Auto immer, wenn es fast eine Sauerei ist. Ich dachte nicht, dass ein paar Verpackungen zählen, ich mach das am Wochenende."
+  },
+  "beachOrCity": {
+    "title": "🏖️ Strand oder Städtetrip",
+    "aName": "Sven",
+    "a": "Ich will eine Woche am Meer liegen, ohne irgendwas zu planen. Auf unserer letzten Reise sind wir nur durch Museen gelaufen.",
+    "bName": "Rebecca",
+    "b": "Mir wird auf der Liege nach zwei Tagen langweilig. Ich möchte was Neues sehen, auch wenn wir nur die halbe Stadt schaffen."
+  },
+  "airportEarly": {
+    "title": "✈️ Wie früh zum Flughafen",
+    "aName": "Oksana",
+    "a": "Drei Stunden vor dem Flug ist viel zu früh. Wir sitzen dann ewig am Gate mit einem Kaffee herum.",
+    "bName": "Hamza",
+    "b": "Die Schlangen können lang sein, und ich bin kein entspannter Flieger. Ich warte lieber, als zu hetzen, und den Flug zu verpassen wäre viel teurer."
+  },
+  "campingHotel": {
+    "title": "⛺ Zelt oder Hotel",
+    "aName": "Britta",
+    "a": "Ich hab uns für das Wochenende einen Campingplatz gebucht, und jetzt sagst du, du willst lieber ins Hotel. Das haben wir im Frühling so ausgemacht.",
+    "bName": "Conrad",
+    "b": "Der Wetterbericht sagt das ganze Wochenende Regen, und ein nasses Zelt ist nicht erholsam. Ich gehe gern zelten, wenn das Wetter besser ist."
+  },
+  "packingLight": {
+    "title": "🧳 Ein Koffer pro Person",
+    "aName": "Noor",
+    "a": "Wir hatten nur Handgepäck ausgemacht, und deins wiegt eine Tonne. Du hast drei Paar Schuhe dabei.",
+    "bName": "Stefan",
+    "b": "Ich hab gern Auswahl, und du hast einen Mantel eingepackt, den du nicht brauchst. Wenn wir für einen Koffer bezahlen, übernehme ich das."
+  },
+  "mapOrGps": {
+    "title": "🗺️ Dem Navi vertrauen",
+    "aName": "Bertram",
+    "a": "Das Navi hat gesagt, wir sollen links abbiegen, und du bist rechts abgebogen, weil du eine Abkürzung zu kennen glaubst. Jetzt haben wir zwanzig Minuten verloren.",
+    "bName": "Rosi",
+    "b": "Ich bin diese Strecke hundertmal gefahren, und das Navi kennt die Baustelle nicht. Beim letzten Mal hatte ich recht."
+  },
+  "leaveTime": {
+    "title": "🕗 Wann wir losfahren",
+    "aName": "Kathrin",
+    "a": "Ich hab gesagt, wir fahren um acht los, um dem Stau zu entgehen, und du stehst um halb neun immer noch unter der Dusche. Das passiert jedes Mal.",
+    "bName": "Mathis",
+    "b": "Die Party fängt um zehn an, da ist acht viel zu früh. Du planst für den schlimmsten Stau, und dann hetze ich am Ende."
+  },
+  "sleepIn": {
+    "title": "🌅 Aufstehzeit am Wochenende",
+    "aName": "Elli",
+    "a": "Es ist Samstag, und du bist um sechs wach und machst Lärm in der Küche. Der einzige Morgen, an dem ich ausschlafen kann, und er ist weg.",
+    "bName": "Ravi",
+    "b": "Mein Körper wacht früh auf, und ich hab versucht, leise zu sein. Im Bett zu liegen und die Decke anzustarren hilft mir auch nicht."
+  },
+  "dinnerReservation": {
+    "title": "🕰️ Den Tisch zum Abendessen reservieren",
+    "aName": "Isaak",
+    "a": "Du hast den Tisch für halb sechs gebucht, und es ist Freitag. So früh isst kein Mensch, und ich hatte schon was anderes vor.",
+    "bName": "Tilda",
+    "b": "Das war der einzige freie Termin, und ich hätte ihn verloren. Ich hab dich ja gefragt, aber du warst beschäftigt und hast nicht geantwortet."
+  },
+  "boardGameRules": {
+    "title": "🎲 Regeln, an die sich keiner erinnert",
+    "aName": "Brandon",
+    "a": "Du spielst das Spiel den ganzen Abend falsch und gewinnst jetzt auch noch. Ich möchte zurückgehen und die Züge nochmal spielen.",
+    "bName": "Sibylle",
+    "b": "Wir haben am Anfang zusammen die Anleitung gelesen, und keiner hat widersprochen. Du kannst die Regeln nicht ändern, wenn du verlierst."
+  },
+  "houseRules": {
+    "title": "💰 Hausregeln bei Monopoly",
+    "aName": "Elias",
+    "a": "Ich lege das Bußgeld in die Mitte, und wer als Nächstes auf Frei Parken landet, bekommt es. Das ist die richtige Regel.",
+    "bName": "Hazel",
+    "b": "Das steht nicht in der Spielanleitung, und dadurch dauert das Spiel die ganze Nacht. Lass uns so spielen, wie es gedruckt ist."
+  },
+  "fantasyTrade": {
+    "title": "⚽ Ein unfairer Tausch im Fantasy-Spiel",
+    "aName": "Dietmar",
+    "a": "Du hast mir einen verletzten Spieler gegen meinen besten Stürmer untergejubelt, und ich hab ohne nachzusehen zugestimmt. Der Tausch ist unfair, lass ihn uns rückgängig machen.",
+    "bName": "Franziska",
+    "b": "Du hast schriftlich zugestimmt, und der Deal war fair, als wir ihn gemacht haben. Nachsehen ist deine Aufgabe, nicht meine."
+  },
+  "lineCall": {
+    "title": "🎾 Aus oder drin",
+    "aName": "Martin",
+    "a": "Der Ball war eindeutig im Aus, und du sagst das ganze Spiel, er war drin. Ich möchte, dass wir den Punkt wiederholen.",
+    "bName": "Jolanda",
+    "b": "Ich war näher an der Linie und hab gesehen, dass er sie gestreift hat. Du kannst das nicht vom anderen Ende des Platzes beurteilen."
+  },
+  "controllerTurns": {
+    "title": "🎮 Wer ist am Controller dran",
+    "aName": "Jannik",
+    "a": "Du hast den Controller seit einer Stunde, und jedes Mal, wenn ich frage, sagst du „noch eine Runde“. So funktioniert Abwechseln nicht.",
+    "bName": "Priscilla",
+    "b": "Ich war mitten in einem Level und konnte nicht aufhören. Ich gebe ihn dir gleich nach diesem, versprochen."
+  },
+  "teamCaptain": {
+    "title": "⚽ Die Teams wählen",
+    "aName": "Gerrit",
+    "a": "Du hast zuerst alle deine Freunde gewählt und mir wieder die schwächeren Spieler übrig gelassen. Ich möchte, dass die Teams ausgeglichen sind.",
+    "bName": "Anja",
+    "b": "Wir spielen seit Jahren so, und du hast dich nie beschwert. Wenn du faire Teams willst, lass uns die Namen ziehen."
+  },
+  "cardCheating": {
+    "title": "🃏 Eine versteckte Karte",
+    "aName": "Ruben",
+    "a": "Ich hab gesehen, wie du in der letzten Runde eine Karte von unten aus dem Stapel genommen hast. Wenn du so gewinnst, spiele ich nicht mehr mit.",
+    "bName": "Mei",
+    "b": "Mir ist eine runtergefallen, und ich hab sie aufgehoben, mehr nicht. Du bist den ganzen Abend sauer, weil du verlierst, und jetzt beschuldigst du mich."
+  },
+  "trashTalk": {
+    "title": "🏀 Sprüche auf dem Platz",
+    "aName": "Dominik",
+    "a": "Ein bisschen Sticheln gehört beim Spielen dazu. Du bist nach einem Spruch still und beleidigt geworden, dabei war es nur ein Witz.",
+    "bName": "Karina",
+    "b": "Es ist was anderes, ob du Witze über das Spiel machst oder über mich. Ich will nur, dass wir es freundlich halten."
+  },
+  "gameSave": {
+    "title": "💾 Den Spielstand überschrieben",
+    "aName": "Cornelius",
+    "a": "Ich hab dreißig Stunden in diesen Spielstand gesteckt, und du hast ein neues Spiel darüber angefangen. Jetzt ist er weg.",
+    "bName": "Lina",
+    "b": "Es gab nur einen Platz, und er sah unbenutzt aus. Ich hätte gefragt, aber du warst nicht da, und ich wollte es nur kurz ausprobieren."
+  },
+  "loserPays": {
+    "title": "🎳 Der Verlierer zahlt die Pizza",
+    "aName": "Boris",
+    "a": "Wir haben ausgemacht, dass der Verlierer zahlt, und du hast mit zwei Kegeln Rückstand verloren. Abgemacht ist abgemacht, also zück bitte dein Portemonnaie.",
+    "bName": "Camilla",
+    "b": "Ich hab das als Scherz gesagt und dachte, das weißt du. Ich geb die nächste Runde aus, wenn dir das lieber ist."
+  },
+  "pickleball": {
+    "title": "🏓 Wer zählt die Punkte",
+    "aName": "Gloria",
+    "a": "Ich hab acht zu sechs gezählt, und du sagst, es steht sieben beide. Wir vergessen dauernd den Spielstand, und das nervt.",
+    "bName": "Dennis",
+    "b": "Ich zähle jeden Aufschlag mit und bin mir sicher. Lass uns den Punkt einfach wiederholen und weiterspielen."
+  },
+  "dogCouch": {
+    "title": "🐕 Der Hund auf dem Sofa",
+    "aName": "Maren",
+    "a": "Wir hatten ausgemacht, dass kein Hund aufs Sofa darf, und ich komme heim und er liegt ausgestreckt drauf. Die Kissen sind voller Haare.",
+    "bName": "Dieter",
+    "b": "Er sieht so glücklich aus und ist nur da, wenn wir fernsehen. Der Bezug ist waschbar, und so gehört er richtig zur Familie."
+  },
+  "walkingDuty": {
+    "title": "🦮 Wer geht mit dem Hund",
+    "aName": "Hanna",
+    "a": "Ich bin seit dem Wochenende morgens und abends mit ihm gegangen, und ich hab morgen eine Präsentation. Heute Abend bist du dran.",
+    "bName": "Viktor",
+    "b": "Es schüttet, und ich hab mich gerade erst hingesetzt. Ich gehe am Samstag die große Runde, können wir heute nicht aussetzen?"
+  },
+  "catNames": {
+    "title": "🐈 Das neue Kätzchen benennen",
+    "aName": "Pia",
+    "a": "Ich hab sie gefunden und nenne sie Keks. Du willst sie Sir Flauschi nennen, und das sage ich keinem Tierarzt.",
+    "bName": "Kurt",
+    "b": "Ich muss jedes Mal lachen, und sie hört schon darauf. Keks ist nett, aber so heißt jede zweite Katze."
+  },
+  "catKeyboard": {
+    "title": "🐱 Die Katze am Arbeitsplatz",
+    "aName": "Maxi",
+    "a": "Sie läuft in Meetings über meine Tastatur, und du machst es noch mit Leckerlis schlimmer. Jetzt denkt sie, mein Schreibtisch ist ihr Bett.",
+    "bName": "Tobias",
+    "b": "Alle im Call lieben sie, und sie sucht nur Gesellschaft. Du kannst die Tür zumachen, wenn es dich stört."
+  },
+  "feedingTime": {
+    "title": "🥫 Die Katze zweimal füttern",
+    "aName": "Jun",
+    "a": "Ich hab der Katze um sechs ihr Abendessen gegeben, und du hast sie um sieben nochmal gefüttert. Sie wird langsam ein bisschen pummelig.",
+    "bName": "Alicia",
+    "b": "Sie hat mich angemaunzt, und ich dachte, keiner hätte sie gefüttert. Ein Zettel am Kühlschrank würde das verhindern."
+  },
+  "vetCosts": {
+    "title": "🐾 Die Tierarztrechnung teilen",
+    "aName": "Reinhard",
+    "a": "Die Tierarztrechnung war 280 Euro, und ich hab alles bezahlt, weil ich den Termin gemacht hab. Du hast den Hund mit mir zusammen geholt, also sollten wir teilen.",
+    "bName": "Cheryl",
+    "b": "Ich hätte bezahlt, wenn du es mir vor dem Termin gesagt hättest. Schick mir den Beleg, dann überweise ich dir die Hälfte."
+  },
+  "offLeash": {
+    "title": "🌳 Ohne Leine im Park",
+    "aName": "Gabi",
+    "a": "Dein Hund ist ohne Vorwarnung auf meinen Welpen zugerannt, und der ist jetzt verängstigt. Auf dem Schild steht, dass hier Leinenpflicht gilt.",
+    "bName": "Mitch",
+    "b": "Er ist freundlich und wollte nur Hallo sagen. Ich behalte ihn in der Nähe, und alle anderen hier lassen ihre auch frei laufen."
+  },
+  "petInBed": {
+    "title": "🐶 Der Hund im Bett",
+    "aName": "Selina",
+    "a": "Er nimmt die halbe Matratze ein, und ich wache mit einer Pfote im Gesicht auf. Ich hätte gern das Bett wieder für uns allein.",
+    "bName": "Carsten",
+    "b": "Allein ist er ängstlich und schläft neben uns besser. Ich verliere lieber ein bisschen Platz, als ihn die ganze Nacht weinen zu hören."
+  },
+  "puppyName": {
+    "title": "🐕‍🦺 Den Namen für den Welpen aussuchen",
+    "aName": "Roland",
+    "a": "Wir nennen ihn seit einer Woche „der Kleine“, weil wir uns nicht einigen können. Ich stimme für Rakete, und der Name passt perfekt zu ihm.",
+    "bName": "Margot",
+    "b": "Er ist ruhig und gemütlich, also klingt Rakete albern. Ich mag Pepper, das passt zu seinen Sprenkeln."
+  },
+  "fishSitter": {
+    "title": "🐠 Wer füttert die Fische",
+    "aName": "Theresa",
+    "a": "Ich hab dich vor einem Monat gebeten, die Fische zu füttern, solange wir weg sind. Du sagst, du hast vergessen, das zu klären, und die Reise ist morgen.",
+    "bName": "Alfred",
+    "b": "Ich dachte, deine Nachbarin hätte das angeboten, und wollte es nicht doppelt machen. Ich kann heute Abend meine Schwester fragen, die wohnt in der Nähe."
+  },
+  "birdNoise": {
+    "title": "🦜 Der Papagei, der nie aufhört",
+    "aName": "Norbert",
+    "a": "Dein Papagei kreischt jeden Morgen um sechs, und ich kann danach nicht mehr einschlafen. Ich wohne direkt neben dir.",
+    "bName": "Fatima",
+    "b": "Er ist ein Vogel und begrüßt die Sonne. Ich stelle den Käfig in ein ruhigeres Zimmer, tut mir leid."
+  },
+  "wifiPassword": {
+    "title": "🔐 Das WLAN-Passwort herausgeben",
+    "aName": "Robin",
+    "a": "Du hast jedem, der vorbeikam, das WLAN-Passwort gegeben, und jetzt ist es langsam, wenn ich arbeite. Ich würde es gern ändern.",
+    "bName": "Eva",
+    "b": "Gästen was zu verweigern ist unhöflich, und keiner nutzt es wirklich viel. Wenn es dich stört, mach ein Gastnetz."
+  },
+  "tvVolume": {
+    "title": "🔊 Der Streit um die Lautstärke",
+    "aName": "Sebastian",
+    "a": "Du schaust alles auf Lautstärke 40, und ich höre jedes Wort davon in der Küche. Mach bitte die Untertitel an.",
+    "bName": "Gisela",
+    "b": "Ich höre nicht gut und verstehe bei niedrigeren Stufen die Dialoge nicht. Mit Untertiteln muss ich lesen, statt zu schauen."
+  },
+  "phoneAtDinner": {
+    "title": "📵 Handys auf dem Restauranttisch",
+    "aName": "Lydia",
+    "a": "Wir waren seit einem Monat zum ersten Mal abends aus, und du hast alle fünf Minuten aufs Handy geschaut. Ich hab mich gefühlt, als säße ich allein da.",
+    "bName": "Peter",
+    "b": "Ich hab auf eine Nachricht gewartet, ob der Flug von meinem Bruder gelandet ist. Ich hätte es sagen sollen, aber ich wollte dich nicht beunruhigen."
+  },
+  "notificationSound": {
+    "title": "🔔 Benachrichtigungstöne in der Bibliothek",
+    "aName": "Eva-Maria",
+    "a": "Dein Handy piept alle dreißig Sekunden, und einige von uns lernen gerade. Stell es bitte auf lautlos.",
+    "bName": "Mohamed",
+    "b": "Es ist jetzt auf Vibration, tut mir wirklich leid. Ich hab nicht gemerkt, dass der Ton an war, es kommt nicht wieder vor."
+  },
+  "darkMode": {
+    "title": "🌗 Dunkler oder heller Modus",
+    "aName": "Jasper",
+    "a": "Du hast das gemeinsame Tablet nachts auf den hellen Modus gestellt, und das brennt mir in den Augen. Wir hatten für abends den dunklen ausgemacht.",
+    "bName": "Odette",
+    "b": "Im dunklen Modus kann ich nichts lesen, der Text wird verschwommen. Ich stelle es vorm Schlafen zurück, aber tagsüber brauche ich es so."
+  },
+  "smartSpeaker": {
+    "title": "🗣️ Der Smart Speaker, der mithört",
+    "aName": "Gideon",
+    "a": "Du hast einen Smart Speaker in unser Schlafzimmer gestellt, und mir ist es unangenehm, dass er mithört. Ich möchte, dass er in die Küche kommt.",
+    "bName": "Lisa",
+    "b": "Ich nutze ihn nur für den Wecker und das Wetter. Die Küche ist zu weit weg, aber ich kann nachts das Mikrofon stummschalten."
+  },
+  "tabsOpen": {
+    "title": "🗂️ Zweihundert offene Tabs",
+    "aName": "Paula",
+    "a": "Immer wenn ich mir deinen Laptop leihe, sind hundert Tabs offen, und er kriecht nur noch. Ein paar zu schließen würde ihn schneller machen.",
+    "bName": "Arthur",
+    "b": "Jeder davon ist was, das ich brauche, und ich weiß genau, wo jeder ist. Das ist organisiertes Chaos."
+  },
+  "photoStorage": {
+    "title": "🖼️ Den Cloud-Speicher teilen",
+    "aName": "Lorna",
+    "a": "Deine Videos haben unseren gemeinsamen Speicher gefüllt, und ich kann meine Fotos nicht sichern. Lösch bitte ein paar oder zahl für deinen eigenen.",
+    "bName": "Kofi",
+    "b": "Das sind alles Familienvideos, und ich will sie nicht verlieren. Ich ziehe sie auf eine Festplatte, aber gib mir ein paar Tage."
+  },
+  "videoCallCamera": {
+    "title": "📹 Kamera an im Videoanruf",
+    "aName": "Helga",
+    "a": "Unser wöchentlicher Familienanruf ist die einzige Gelegenheit, uns zu sehen, und du lässt deine Kamera aus. Es ist, als würde ich mit einer Wand reden.",
+    "bName": "Dylan",
+    "b": "Ich koche meistens gerade oder bin im Schlafanzug. Ich bin trotzdem da und höre zu, und ich glaube, die Kamera ist nicht der Punkt."
+  },
+  "doorbellCamera": {
+    "title": "🚪 Die Türklingelkamera",
+    "aName": "Mara",
+    "a": "Du hast eine Kamera installiert, die den ganzen Weg zur Haustür filmt, und die Nachbarn können das auch sehen. Ich möchte, dass sie anders ausgerichtet wird.",
+    "bName": "Theo",
+    "b": "Uns wurden letzten Winter zwei Pakete geklaut, und sie filmt nur unseren eigenen Eingang. Ich neige sie gern ein Stück nach unten."
+  },
+  "holdDoor": {
+    "title": "🚪 Die Tür aufhalten",
+    "aName": "Winfried",
+    "a": "Ich hab einer ganzen Gruppe die Tür aufgehalten, und keiner hat danke gesagt. Es dauert eine Sekunde, höflich zu sein.",
+    "bName": "Yasmin",
+    "b": "Die Leute haben es eilig und merken es nicht immer. Du solltest es tun, weil es nett ist, nicht weil du ein Danke erwartest."
+  },
+  "elevatorSpot": {
+    "title": "🛗 Vor dem Aufzug stehen",
+    "aName": "Gloria",
+    "a": "Ich hab auf den Aufzug gewartet, und du hast dich genau dann reingedrängt, als er aufging. Ich war eindeutig zuerst da.",
+    "bName": "Matthias",
+    "b": "Ich hatte einen Kinderwagen, und der Aufzug war für mich der einzige Weg. Ich hab dich nicht gesehen, tut mir leid, aber ich hab ihn wirklich gebraucht."
+  },
+  "cuttingQueue": {
+    "title": "🧍 Sich vordrängeln",
+    "aName": "Ursula",
+    "a": "Du bist direkt zum Schalter gegangen, während wir anderen zwanzig Minuten gewartet haben. Hinter mir steht eine Schlange.",
+    "bName": "Idris",
+    "b": "Ich muss nur kurz was fragen und wollte nichts bestellen. Ich wusste nicht, dass das hier die Schlange dafür ist."
+  },
+  "busPhone": {
+    "title": "🚌 Ein lauter Anruf im Bus",
+    "aName": "Dorothea",
+    "a": "Der Mann hinter mir telefoniert seit zwanzig Minuten auf Lautsprecher, und wir haben alle seinen ganzen Tag mitbekommen. Ein Headset wäre rücksichtsvoll.",
+    "bName": "Samir",
+    "b": "Es ist ein dringender Anruf und die Verbindung ist schlecht, also brauche ich den Lautsprecher. Ich fasse mich kurz, du musst nicht unhöflich sein."
+  },
+  "shoesInside": {
+    "title": "👟 Schuhe im Haus",
+    "aName": "Hye-jin",
+    "a": "Zieh bitte an der Tür die Schuhe aus, wir tragen sie drinnen nicht. Ich hab gerade den Boden gewischt.",
+    "bName": "Pavel",
+    "b": "Es ist ein trockener Tag, und die Sohlen sind sauber. Ich bin das nicht gewohnt, aber ich ziehe sie aus, wenn es dir so wichtig ist."
+  },
+  "armrest": {
+    "title": "💪 Die Armlehne teilen",
+    "aName": "Nils",
+    "a": "Du hast den ganzen Film beide Armlehnen gehabt, und mein Arm hängt in der Luft. Der Mittelplatz bekommt beide, das ist die Regel.",
+    "bName": "Jana",
+    "b": "Ich sitze am Fenster, und meine Ellbogen brauchen Platz. Ich wusste nicht, dass es da eine Regel gibt, ich rücke rüber."
+  },
+  "lateRsvp": {
+    "title": "✉️ Erst in letzter Minute zugesagt",
+    "aName": "Greta",
+    "a": "Ich hab alle gebeten, bis zum Ersten Bescheid zu sagen, und du hast erst am Tag davor zugesagt. Ich hatte schon das Essen für fünfzehn bestellt.",
+    "bName": "Tobias",
+    "b": "Ich war mir bis dahin wegen meiner Schicht nicht sicher. Eine Person mehr am Tisch schadet doch nicht, und ich hab einen Nachtisch mitgebracht."
+  },
+  "thankYouNote": {
+    "title": "💌 Dankeskarten",
+    "aName": "Edith",
+    "a": "Die Hochzeit deiner Cousine war vor einem Monat, und wir haben kein einziges Wort zu unserem Geschenk gehört. Eine Karte kostet nichts.",
+    "bName": "Bernd",
+    "b": "Die kommen wahrscheinlich gerade mit hundert Geschenken nicht hinterher. Eine Nachricht ist kein Weltuntergang, gib ihnen Zeit."
+  },
+  "regift": {
+    "title": "🎁 Ein Geschenk weiterverschenken",
+    "aName": "Sabrina",
+    "a": "Ich hab rausgefunden, dass der Schal von dir ein Geschenk war, das dir zuerst jemand anders gemacht hat. Ich hab mich gefühlt, als wäre er mir nur nebenbei eingefallen.",
+    "bName": "Leo",
+    "b": "Er war schön, und er stand mir nicht. Ich dachte, er steht dir besser, und ich hätte ihn dir sowieso geschenkt."
+  },
+  "partyDrink": {
+    "title": "🍾 Etwas zur Feier mitbringen",
+    "aName": "Delia",
+    "a": "Du bist ohne alles zum Essen gekommen, und ich hab zwei Tage lang gekocht. Eine Flasche oder ein paar Blumen wären schön gewesen.",
+    "bName": "Wolfgang",
+    "b": "Du hast gesagt, bring einfach dich mit, und ich hab dich beim Wort genommen. Nächstes Mal bringe ich was Gutes mit."
+  },
+  "escalator": {
+    "title": "⬆️ Auf der Rolltreppe stehen",
+    "aName": "Brigitte",
+    "a": "Du hast links gestanden und alle blockiert, die hochlaufen wollten. Die Regel ist: rechts stehen, links gehen.",
+    "bName": "Andreas",
+    "b": "Ich trage schwere Taschen und will nur sicher ankommen. Ich muss mich nicht nach dem Zeitplan von anderen hetzen."
+  },
+  "cinemaTalk": {
+    "title": "🎞️ Flüstern im Kino",
+    "aName": "Clemens",
+    "a": "Du hast deiner Freundin den ganzen Film über jede Szene geflüstert erklärt. Ich hab fürs Zuschauen bezahlt, nicht für einen Live-Kommentar.",
+    "bName": "Leila",
+    "b": "Sie kennt die Serie nicht, und ich wollte ihr nur helfen, der Handlung zu folgen. Ich hör auf, wenn es dich wirklich gestört hat."
+  },
+  "neighbourMusic": {
+    "title": "🔈 Ein Nachbar mit später Party",
+    "aName": "Ada",
+    "a": "Deine Party war um ein Uhr nachts immer noch laut, und manche von uns müssen morgens arbeiten. Eine kleine Vorwarnung wäre höflich gewesen.",
+    "bName": "Stefan",
+    "b": "Ich hab es im Haus ausgehängt, und es ist einmal im Jahr. Ich sage den Leuten, sie sollen reingehen, aber alle haben Spaß."
+  },
+  "socks": {
+    "title": "🧦 Socken auf dem Boden",
+    "aName": "Lucy",
+    "a": "Ein Paar von deinen Socken liegt neben dem Bett, eins am Sofa und eine im Flur. Ich sammle sie jeden Tag ein.",
+    "bName": "Ben",
+    "b": "Das sind nur Socken, und ich ziehe sie nochmal an. Ich lege sie in den Korb, aber du musst sie nicht zählen."
+  },
+  "cafeSeat": {
+    "title": "☕ Einen Platz mit dem Laptop reservieren",
+    "aName": "Johanna",
+    "a": "Dein Laptop hält den Tisch seit einer Stunde besetzt, und du bist irgendwo anders. Das Café ist voll, und Leute stehen.",
+    "bName": "Kareem",
+    "b": "Ich bin nur kurz raus, um zu telefonieren, und komme gleich zurück. Eine Tasche liegen zu lassen ist, wie alle einen Platz freihalten."
+  },
+  "groupProject": {
+    "title": "🎓 Ein Gruppenprojekt, das keiner angefangen hat",
+    "aName": "Tessa",
+    "a": "Das Projekt ist in einer Woche fällig, und ich hab die ganze Gliederung allein geschrieben. Ihr müsst eure Teile bis Freitag machen.",
+    "bName": "Ole",
+    "b": "Ich hab davor zwei Klausuren und dir gesagt, dass meine Teile später kommen. Ich kann sie übers Wochenende machen."
+  },
+  "puzzle": {
+    "title": "🧩 Mein Puzzle fertigmachen",
+    "aName": "Grete",
+    "a": "Ich hab eine Woche an dem Puzzle gesessen, und du hast die letzten zwanzig Teile eingesetzt, während ich weg war. Ich wollte es selbst fertigmachen.",
+    "bName": "Harald",
+    "b": "Es lag auf dem Tisch, und ich hab mich mitreißen lassen. Ich wusste nicht, dass dir das so viel bedeutet, tut mir leid."
+  },
+  "hedge": {
+    "title": "🌿 Die Hecke vom Nachbarn",
+    "aName": "Barbara",
+    "a": "Deine Hecke ist über den Weg gewachsen, und ich muss auf die Straße ausweichen, um vorbeizukommen. Das ist schon seit dem Frühling so.",
+    "bName": "Jörg",
+    "b": "Ich wollte sie schon schneiden, und das Wetter war furchtbar. Ich mach es Sonntag, du hättest einfach mal klingeln können."
+  }
+}

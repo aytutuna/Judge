@@ -119,6 +119,8 @@ const da: Locale = {
     verdictAria: "Dom: {label}",
     "party.a": "Part A",
     "party.b": "Part B",
+    "party.c": "Part C",
+    "party.d": "Part D",
     "party.youLabel": "{label} (dig)",
     you: "Du",
     "shared.subtitle": "Nogen har delt denne dom",
@@ -345,8 +347,7 @@ const da: Locale = {
     "signin.createNote": "Vi sender dig en kode på mail for at bekræfte adressen. Du skal kun gøre det én gang.",
     "signin.passwordChoose": "Du er logget ind. Vælg en adgangskode til næste gang.",
     "signin.passwordSave": "Gem adgangskode",
-    "signin.passwordSaveFailed": "Du er logget ind, men vi kunne ikke gemme adgangskoden. Prøv igen, eller indstil den senere i Indstillinger.",
-    "signin.passwordSkip": "Spring over for nu",
+    "signin.passwordSaveFailed": "Vi kunne ikke gemme adgangskoden. Prøv igen.",
     "signin.passwordSubmit": "Log ind",
     "signin.rateLimited": "For mange forsøg. Vent et minut, og prøv igen.",
     "signin.serviceDown": "Login er ikke tilgængeligt lige nu. Prøv igen senere.",
@@ -374,10 +375,6 @@ const da: Locale = {
     "account.deleteConfirm":
       "Vil du slette din konto? Dine kreditter, din plan og dine loginoplysninger bliver slettet. Dine domme og dine sider i sager bliver fjernet: det, du skrev, og navnene bliver slettet, og deres delingslinks holder op med at virke.",
     "account.deleteYes": "Ja, slet den",
-    "account.passwordSet": "Indstil en adgangskode",
-    "account.passwordChange": "Skift adgangskode",
-    "account.passwordCurrent": "Nuværende adgangskode",
-    "account.passwordSaved": "Adgangskoden er gemt.",
     "account.deleteCancel": "Behold min konto",
     "account.deleted": "Din konto er slettet. Du bliver sendt til forsiden…",
     "account.deleteFailed": "Vi kunne ikke slette kontoen lige nu. Vil du prøve igen?",
@@ -465,6 +462,10 @@ const da: Locale = {
     "case.judgeNow.yes": "Ja, døm nu",
     "case.judgeExpired.confirm": "Vil du have en dom på din side alene? Det bruger 1 dom.",
     "case.judgeExpired.yes": "Ja, brug 1 dom",
+    "case.side.waiting": "Venter",
+    "case.side.answered": "Har svaret",
+    "case.judgeAnswered": "Døm med de sider, der har svaret",
+    "case.judgeAnswered.confirm": "Vil du have en dom fra de sider, der har svaret? De andre invitationer lukker, og de kan ikke svare længere.",
     "case.cancel": "Annullér",
     "case.retry": "Prøv igen",
     "case.failedBody": "Du har fået din kredit tilbage. Du kan prøve igen nu.",
@@ -473,9 +474,13 @@ const da: Locale = {
     "case.accounts": "Det, hver side fortalte dommerne",
     "case.accountA": "Part A's version",
     "case.accountB": "Part B's version",
+    "case.accountC": "Part C's version",
+    "case.accountD": "Part D's version",
     "case.accountYou": "Din version ({label})",
     "case.contextA": "Part A tilføjede kontekst",
     "case.contextB": "Part B tilføjede kontekst",
+    "case.contextC": "Part C tilføjede kontekst",
+    "case.contextD": "Part D tilføjede kontekst",
     "case.contextYou": "Kontekst, du tilføjede ({label})",
     "case.evidenceItem": "Billede {n}, som dommerne læste det",
     "case.notYet": "Den anden har ikke svaret endnu.",
@@ -560,6 +565,7 @@ const da: Locale = {
     "home.yourPlaceholder": "Hvad er problemet?",
     "home.addContext": "Tilføj kontekst",
     "home.addTheirSide": "Tilføj den andens side",
+    "home.addSide": "Tilføj en side mere",
     "home.removeTheirSide": "Fjern den andens side",
     "home.sendLink": "Send et link",
     "home.clear": "Ryd",
@@ -574,58 +580,9 @@ const da: Locale = {
     "home.says": "{name} siger:",
     "home.mySide": "Min side:",
     "home.otherSide": "Den andens side:",
-    "pairs.dishwasher.aName": "Anne",
-    "pairs.dishwasher.a":
-      "Du har sat skålene i den øverste kurv igen. De bliver aldrig rene deroppe, det er det, den nederste er til.",
-    "pairs.dishwasher.bName": "Jens",
-    "pairs.dishwasher.b":
-      "De kan sagtens være deroppe, og så er der plads til gryderne i bunden. Jeg har fyldt den sådan i årevis, og der er aldrig kommet noget beskidt ud.",
-    "pairs.bill.aName": "Camilla",
-    "pairs.bill.a":
-      "Jeg drak ikke noget, så jeg skal ikke betale en fjerdedel af vinen. Maden deler vi gerne ligeligt.",
-    "pairs.bill.bName": "Rasmus",
-    "pairs.bill.b":
-      "Vi deler altid bare regningen i fire. Det er bøvlet at regne ud hver gang, hvem der fik hvad, og det gør alligevel ikke den store forskel.",
-    "pairs.thermostat.aName": "Laura",
-    "pairs.thermostat.a":
-      "Der er 19 grader herinde, og jeg fryser selv i hættetrøje. Det er da ikke vanvittigt at skrue op på 22.",
-    "pairs.thermostat.bName": "Mikkel",
-    "pairs.thermostat.b":
-      "22 grader er alt for varmt at sove i. Du kan tage en trøje mere på, jeg kan ikke tage mere af.",
-    "pairs.roadTrip.aName": "Sara",
-    "pairs.roadTrip.a":
-      "Jeg kørte alle seks timer derhen. Det er kun fair, at du kører os hjem.",
-    "pairs.roadTrip.bName": "Anders",
-    "pairs.roadTrip.b":
-      "Jeg sagde, inden vi tog af sted, at jeg hader at køre i mørke, og vi kører hjem kl. 19. Næste gang kører jeg om morgenen.",
-    "pairs.seat.aName": "Julie",
-    "pairs.seat.a":
-      "Mit sæde kan lænes tilbage, så det gør jeg. Det er en natflyvning, og alle prøver at sove.",
-    "pairs.seat.bName": "Kasper",
-    "pairs.seat.b":
-      "Jeg er 1,91, og mine knæ trykker allerede mod dit sæde. Du kunne i det mindste have spurgt, før du lænede det helt tilbage.",
-    "pairs.spoiler.aName": "Emma",
-    "pairs.spoiler.a":
-      "Du fortalte mig, hvem morderen var, før jeg overhovedet var begyndt på sidste afsnit. Jeg havde glædet mig hele ugen.",
-    "pairs.spoiler.bName": "Oliver",
-    "pairs.spoiler.b":
-      "Den kom for tre uger siden, og du sagde, at du havde set den færdig. Jeg kan ikke holde styr på, hvor langt alle er.",
-    "pairs.jacket.aName": "Mathilde",
-    "pairs.jacket.a":
-      "Du havde min cowboyjakke på til koncerten uden at spørge. Da jeg fik den tilbage, lugtede den af røg.",
-    "pairs.jacket.bName": "Frederik",
-    "pairs.jacket.b":
-      "Den hang ved døren, og du går aldrig med den. Jeg ville have spurgt, men du sov, og jeg var allerede sent på den.",
-    "pairs.lastSlice.aName": "Magnus",
-    "pairs.lastSlice.a":
-      "Inden filmen startede, sagde jeg, at det sidste stykke pizza var mit. Alle hørte det.",
-    "pairs.lastSlice.bName": "Ida",
-    "pairs.lastSlice.b":
-      "Man kan ikke kalde det sit og så lade det ligge i to timer. Det lå bare og blev koldt, så jeg spiste det.",
     "appeal.lead":
-      "Mangler der noget, eller er noget forkert? Tilføj det én gang, så kigger dommerne på det hele igen. Det koster 1 dom.",
-    "appeal.label": "Din kontekst",
-    "appeal.placeholder": "Hvad overså dommerne?",
+      "Koster 1 dom.",
+    "appeal.placeholder": "Hvad overså dommerne? Et faktum, en besked eller det, I faktisk aftalte.",
     "appeal.submit": "Døm igen med min kontekst",
     "appeal.sending": "Anonymiserer din kontekst…",
     "appeal.judging": "Dommerne kigger på det hele igen…",
@@ -645,8 +602,6 @@ const da: Locale = {
     "appeal.previous": "Tidligere dom",
     "appeal.failed": "Den nye bedømmelse gik ikke igennem. Du har fået din kredit tilbage; du kan prøve igen.",
     "appeal.refused": "Dommerne ville ikke dømme igen med den kontekst. Du har fået din kredit tilbage.",
-    "appeal.leadVerdict":
-      "Mangler der noget, eller er noget forkert? Tilføj det, så kigger dommerne på det hele igen. Det koster 1 dom hver gang, højst to gange pr. dom.",
     "appeal.history": "Domshistorik",
     "faq.both.q": "Kan den anden fortælle sin side?",
     "faq.both.a":
@@ -688,6 +643,7 @@ const da: Locale = {
     "unavailable.cta": "Gå til Judge",
     "error.removed": "Den er fjernet. Linket virker ikke længere.",
     "error.names_unavailable": "Navne kan ikke gemmes lige nu. Prøv igen senere.",
+    "error.update_required": "Denne sag har mere end to sider. Opdater appen for at åbne den.",
     "verdict.remove": "Fjern denne dom",
     "verdict.remove.confirm":
       "Vil du fjerne det, du skrev, navnene og de viste navne? Delingslinket og dets forhåndsvisning holder op med at virke for alle (forhåndsvisninger, der allerede er sendt i chats, kan stadig blive vist, indtil de apps opdaterer dem). Det kan ikke fortrydes.",

@@ -5,10 +5,17 @@
  *
  *   mobile/shared/fixtures/verdicts.json         sample API bodies (validated with lib/types.ts)
  *   mobile/shared/fixtures/story-vectors.json    the judging card's timeline: waitingAt samples and
- *                                                the ending plan for a spread of verdicts
+ *                                                the ending plan for a spread of verdicts (three-
+ *                                                and four-sided ones included), and summarize()
+ *                                                of every sample
  *   mobile/shared/fixtures/display-vectors.json  expected labels, tug, tilt, waits (pluralWaits
  *                                                in languages with more plural forms), errors,
- *                                                restored names
+ *                                                restored names, and `manySided`: the labels,
+ *                                                names, outcome per viewer and restored text of
+ *                                                verdicts with three or four sides
+ *
+ * verdicts.json also carries `manySidedResponses`: verdict bodies with three or four sides,
+ * kept apart from `verdictResponses` so a client that does not know them reads the rest as before.
  *
  * verdicts.json also carries the Premium and account bodies the apps build and
  * test against offline (each validated with the web's zod schemas where one
@@ -45,15 +52,16 @@
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
+import { nextExample } from "../../../lib/example-pick";
 import { cruxStyle } from "../../../lib/crux-style";
 import { verdictLang } from "../../../lib/content-lang";
 import { apiErrorMessage, formatWait, loadLocales, t, type Lang } from "../../../lib/i18n";
-import { partyNames, personalizeResult, resolveParties, restoreNames } from "../../../lib/names";
+import { partyNames, partyNamesFor, personalizeResult, resolveParties, restoreNames } from "../../../lib/names";
 import { svgRotateDeg } from "../../../lib/balance";
 import { PALETTE, PALETTE_ALPHA, PALETTE_ALPHA_DARK, PALETTE_DARK } from "../../../lib/palette";
 import { FINISH_CAPTION, FINISH_STEPS, MAX_FINISH_MS, READY, STILL_JUDGING, THINKING_STEPS } from "../../../lib/thinking";
 import { KEY_BY_CAPTION } from "../../../lib/thinking-keys";
-import { confidenceLabel, leanTally, tugFinal, verdictLabel } from "../../../lib/verdict-display";
+import { confidenceLabel, leanTally, manyLabel, outcomeFor, tugFinal, verdictLabel } from "../../../lib/verdict-display";
 import { applyText, checkSegments, extractText, planSegments, reassemble, unflattenText } from "../../../lib/translate";
 import { z } from "zod";
 import type { AppConfig as WebAppConfig, AuthProviders, Entitlement, MeResponse, SubscriptionView, Viewer } from "../../../lib/account-types";
@@ -71,7 +79,7 @@ import {
 } from "../../../lib/case-types";
 import type { DisplayState } from "../../../lib/originals-types";
 import { compareHistory, historyKey, type HistoryResponse, type HistoryRow } from "../../../lib/history-types";
-import { ending, waitingAt, type Summary } from "../../../components/court/story";
+import { ending, summarize, waitingAt, type Summary } from "../../../components/court/story";
 import { PRICING } from "../../../lib/pricing";
 import { POLL_AFTER_MS, type VerdictAcceptedResponse, type VerdictPollResponse } from "../../../lib/verdict-poll";
 import {
@@ -82,6 +90,7 @@ import {
   VerdictResult as VerdictResultSchema,
   type AppealOutcome,
   type NameMapping,
+  type PartyId,
   type VerdictResult,
 } from "../../../lib/types";
 
@@ -117,6 +126,135 @@ const base = (over: Partial<VerdictResult>): VerdictResult => ({
   lang: "en",
   ...over,
 });
+
+/** A verdict with three or four sides. `verdict` and `runs` are the older projection
+ * (side_a or side_b only for a real A or B winner, otherwise too_close and split);
+ * the true result is `parties`, `winner`, `votes`, `sides` and `others`. */
+const many = (parties: PartyId[], winner: PartyId | null, votes: (PartyId | "other")[], over: Partial<VerdictResult> = {}): VerdictResult =>
+  base({
+    verdict: winner === "a" ? "side_a" : winner === "b" ? "side_b" : "too_close",
+    runs: votes.map((v) => (v === "a" ? "side_a" : v === "b" ? "side_b" : "split")),
+    confidence: 3,
+    argument_map: {
+      side_a: [{ claim: "Skipped", kind: "logic" }],
+      side_b: [{ claim: "Skipped", kind: "logic" }],
+      bedrock_a: "Skipped",
+      bedrock_b: "Skipped",
+    },
+    losing_side_best_point: "",
+    split_points: null,
+    conditional: null,
+    parties,
+    winner,
+    votes,
+    ...over,
+  });
+
+const MANY_SIDES = [
+  { party: "a", claims: [{ claim: "Party A says the dishes are done on weekdays", kind: "fact" as const }], bedrock: "A rota only works if it is kept" },
+  { party: "b", claims: [{ claim: "Party B says the weekend is for resting", kind: "value" as const }], bedrock: "Rest comes before chores" },
+  { party: "c", claims: [{ claim: "Party C says Person E agreed to a rota", kind: "fact" as const }], bedrock: "Agreements bind" },
+  { party: "d", claims: [{ claim: "Party D says the list was never fair", kind: "logic" as const }], bedrock: "Fairness is the point" },
+] as const;
+const manySides = (parties: PartyId[]) => MANY_SIDES.filter((s) => parties.includes(s.party)).map((s) => ({ ...s, claims: [...s.claims] }));
+
+const NAMES_MANY: NameMapping[] = [
+  { original: "I", replacement: "Party A" },
+  { original: "Deniz", replacement: "Party B" },
+  { original: "Cem", replacement: "Party C" },
+  { original: "Mina", replacement: "Party D" },
+  { original: "Sarah", replacement: "Person E" },
+];
+
+/** Verdicts with three or four sides, one per branch the cards draw. */
+const MANY_SAMPLES: Record<string, { response: VerdictResponse }> = {
+  three_win_c: {
+    response: {
+      id: "many3win01",
+      result: many(["a", "b", "c"], "c", ["c", "c", "a"], {
+        headline: "Party C's rota is the only one all three can keep",
+        why: "Party C's rota is the only plan that covers weekends too. Party A and Party B each solve half the week.",
+        crux: "Whether the dishes follow a rota or a mood.",
+        facts_relied_on: ["Person E wrote the rota down"],
+        sides: manySides(["a", "b", "c"]),
+        others: [
+          { party: "a", line: "Party A only covers weekdays." },
+          { party: "b", line: "Party B leaves the weekend to luck." },
+        ],
+      }),
+      name_map: NAMES_MANY.slice(0, 3),
+    },
+  },
+  four_win_d_separate_accounts: {
+    response: {
+      id: "many4win01",
+      result: many(["a", "b", "c", "d"], "d", ["d", "d", "d", "a", "d"], {
+        headline: "Party D shows the old list was never fair",
+        why: "Four accounts disagree about who agreed to what. Party D's count of the turns is the one the others never dispute.",
+        crux: "Who has done how many turns since March.",
+        confidence: 4,
+        escalated: true,
+        two_sided: true,
+        agreed_facts: ["There was a list on the fridge in March.", "Person E did the dishes twice."],
+        disputes: [
+          {
+            fact: "Who agreed to the rota",
+            positions: [
+              { party: "a", says: "Party A says everyone agreed" },
+              { party: "c", says: "Party C says only Party A did" },
+              { party: "d", says: "Party D says nobody asked" },
+            ],
+            finding: "d",
+            decisive: true,
+          },
+          {
+            fact: "Whether the list was updated in April",
+            positions: [{ party: "b", says: "Party B says Party B updated it" }, { party: "a", says: "Party A says nobody did" }],
+            finding: "unsettled",
+            decisive: false,
+          },
+        ],
+        would_change: ["A dated copy of the list"],
+        evidence_used: { a: 1, b: 0, c: 1, d: 0 },
+        sides: manySides(["a", "b", "c", "d"]),
+        others: [
+          { party: "a", line: "Party A's list was never agreed." },
+          { party: "b", line: "Party B did not take part." },
+          { party: "c", line: "Party C relies on Party A's word." },
+        ],
+      }),
+      name_map: NAMES_MANY,
+    },
+  },
+  three_too_close: {
+    response: {
+      id: "many3tie01",
+      result: many(["a", "b", "c"], null, ["a", "other", "c"], {
+        verdict: "too_close",
+        confidence: 1,
+        headline: "Three fair rotas, and nothing to choose between them",
+        sides: manySides(["a", "b", "c"]),
+        others: [],
+      }),
+      name_map: NAMES_MANY.slice(0, 3),
+    },
+  },
+  four_win_a: {
+    response: {
+      id: "many4win02",
+      result: many(["a", "b", "c", "d"], "a", ["a", "a", "b"], {
+        headline: "Party A kept the rota, so the dishes are Party B's to do",
+        sides: manySides(["a", "b", "c", "d"]),
+        others: [
+          { party: "b", line: "Party B skipped three weekends." },
+          { party: "c", line: "Party C joined late." },
+          { party: "d", line: "Party D never took a turn." },
+        ],
+      }),
+      name_map: NAMES_MANY,
+    },
+  },
+};
 
 const NARRATOR_EN: NameMapping[] = [
   { original: "I", replacement: "Party A" },
@@ -997,6 +1135,49 @@ function premiumFixtures() {
   };
 }
 
+/** The free text of a verdict with three or four sides, restored with names. */
+function personalizedManyFields(r: VerdictResult, nameMap: NameMapping[], selfLang: Lang) {
+  const p = personalizeResult(r, nameMap, selfLang);
+  return {
+    headline: p.headline,
+    why: p.why ?? null,
+    crux: p.crux,
+    facts_relied_on: p.facts_relied_on,
+    sides: (p.sides ?? []).map((s) => ({ party: s.party, claims: s.claims.map((c) => c.claim), bedrock: s.bedrock })),
+    others: (p.others ?? []).map((o) => ({ party: o.party, line: o.line })),
+    disputes: (p.disputes ?? []).map((d) => ({ fact: d.fact, positions: d.positions.map((x) => ({ party: x.party, says: x.says })) })),
+    agreed_facts: p.agreed_facts ?? null,
+    would_change: p.would_change ?? null,
+  };
+}
+
+function manySidedVectors() {
+  return Object.entries(MANY_SAMPLES).flatMap(([name, { response }]) =>
+    LANGS.map((lang) => {
+      const r = response.result;
+      const parties = r.parties as PartyId[];
+      const selfLang = verdictLang(r);
+      const names = partyNamesFor(parties, response.name_map, lang, selfLang);
+      return {
+        sample: name,
+        lang,
+        selfLang,
+        parties,
+        winner: r.winner ?? null,
+        names,
+        // The viewer's own side reads "(you)" when the name map says nothing about it.
+        namesAsViewer: Object.fromEntries(parties.map((v) => [v, partyNamesFor(parties, [], lang, selfLang, v.toUpperCase() as "A", true)])),
+        label: manyLabel(r, names, lang),
+        confidence: confidenceLabel(lang, r),
+        tugA: tugFinal(r),
+        outcomes: Object.fromEntries(parties.map((v) => [v, outcomeFor(r, v)])),
+        outcomeWithoutViewer: outcomeFor(r, null),
+        personalized: personalizedManyFields(r, response.name_map, selfLang),
+      };
+    }),
+  );
+}
+
 function displayVectors() {
   const verdicts = Object.entries(SAMPLES).flatMap(([name, { response }]) =>
     LANGS.map((lang) => {
@@ -1054,6 +1235,7 @@ function displayVectors() {
   ];
   return {
     verdicts,
+    manySided: manySidedVectors(),
     names,
     restore,
     personalizedTranslations,
@@ -1096,11 +1278,50 @@ function storyVectors() {
   for (const trial of ["survived", "uncertain", "overturned"] as const) add(`trial_${trial}`, { trial });
   add("trial_without_votes", { votes: [], winner: null, trial: "survived" });
   add("everything", { votes: ["b", "a", "b", "b", "a"], winner: "b", escalated: true, extra: 2, trial: "overturned" }, 0);
+  add("three_sides_c_wins", { votes: ["c", "c", "a"], winner: "c" });
+  add("four_sides_d_wins_escalated", { votes: ["d", "a", "d", "c", "d"], winner: "d", escalated: true, extra: 2 });
+  add("four_sides_no_majority", { votes: ["a", "other", "c"], winner: null });
+  add("four_sides_trial", { votes: ["c", "d", "c"], winner: "c", trial: "survived" });
   cases.push({ name: "reduced", fromWaiting: 2, summary: base, reduced: true });
   cases.push({ name: "no_result", fromWaiting: 2, summary: null, reduced: false });
   for (let i = 0; i < 5; i++) add(`done_during_${i}`, {}, i);
 
-  return { waiting, endings: cases.map((c) => ({ ...c, ...ending(c.fromWaiting, c.summary, c.reduced) })) };
+  // summarize() of each sample verdict: what the court is handed once a verdict lands.
+  const summaries = [...Object.entries(SAMPLES), ...Object.entries(MANY_SAMPLES)].map(([sample, { response }]) => ({
+    sample,
+    sides: response.result.parties?.length ?? 2,
+    summary: summarize(response.result),
+  }));
+
+  return { waiting, summaries, endings: cases.map((c) => ({ ...c, ...ending(c.fromWaiting, c.summary, c.reduced) })) };
+}
+
+function exampleVectors() {
+  const ids = ["a", "b", "c", "d", "e"];
+  const cases: { seen: string[]; random: number }[] = [
+    { seen: [], random: 0 },
+    { seen: [], random: 0.5 },
+    { seen: [], random: 0.99 },
+    { seen: ["c"], random: 0 },
+    { seen: ["c"], random: 0.74 },
+    { seen: ["e", "a", "c"], random: 0.3 },
+    { seen: ["e", "a", "c"], random: 0.99 },
+    { seen: ["b", "c", "d", "e"], random: 0 },
+    { seen: ["b", "c", "d", "e"], random: 0.99 },
+    { seen: ["c", "b", "d", "e", "a"], random: 0 },
+    { seen: ["c", "b", "d", "e", "a"], random: 0.5 },
+    { seen: ["c", "b", "d", "e", "a"], random: 0.99 },
+    { seen: ["gone", "b"], random: 0 },
+    { seen: ["a", "gone"], random: 0 },
+  ];
+  return {
+    ids,
+    cases: cases.map((c) => {
+      const next = nextExample(ids, c.seen, () => c.random);
+      return { ...c, id: next.id, seenAfter: next.seen };
+    }),
+    single: { ids: ["x"], seen: ["x"], random: 0, id: "x", seenAfter: ["x"] },
+  };
 }
 
 async function main(): Promise<void> {
@@ -1124,8 +1345,13 @@ async function main(): Promise<void> {
     result: SAMPLES.win_b_named.response.result,
     createdAt: "2026-10-20T12:00:00.000Z",
   });
+  for (const [name, { response }] of Object.entries(MANY_SAMPLES)) {
+    const parsed = VerdictResponse.safeParse(response);
+    if (!parsed.success) throw new Error(`sample ${name} is not a valid VerdictResponse: ${parsed.error.message}`);
+  }
   const verdicts = {
     verdictResponses: Object.fromEntries(Object.entries(SAMPLES).map(([k, v]) => [k, v.response])),
+    manySidedResponses: Object.fromEntries(Object.entries(MANY_SAMPLES).map(([k, v]) => [k, v.response])),
     translateResponse: translate,
     storedVerdictResponse: stored,
     errorBodies: ERROR_BODIES,
@@ -1134,6 +1360,8 @@ async function main(): Promise<void> {
   const files: [string, string][] = [
     [join(OUT_DIR, "verdicts.json"), `${JSON.stringify(verdicts, null, 2)}\n`],
     [join(OUT_DIR, "story-vectors.json"), `${JSON.stringify(storyVectors(), null, 2)}
+`],
+    [join(OUT_DIR, "example-vectors.json"), `${JSON.stringify(exampleVectors(), null, 2)}
 `],
     [join(OUT_DIR, "display-vectors.json"), `${JSON.stringify(displayVectors(), null, 2)}\n`],
   ];

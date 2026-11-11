@@ -119,6 +119,8 @@ const nl: Locale = {
     verdictAria: "Uitspraak: {label}",
     "party.a": "Partij A",
     "party.b": "Partij B",
+    "party.c": "Partij C",
+    "party.d": "Partij D",
     "party.youLabel": "{label} (jij)",
     you: "Jij",
     "shared.subtitle": "Iemand heeft deze uitspraak gedeeld",
@@ -344,8 +346,7 @@ const nl: Locale = {
     "signin.createNote": "We mailen je een code om dit adres te bevestigen. Dat hoef je maar één keer te doen.",
     "signin.passwordChoose": "Je bent ingelogd. Kies een wachtwoord voor de volgende keer.",
     "signin.passwordSave": "Wachtwoord opslaan",
-    "signin.passwordSaveFailed": "Je bent ingelogd, maar we konden het wachtwoord niet opslaan. Probeer het opnieuw of stel het later in bij Instellingen.",
-    "signin.passwordSkip": "Nu overslaan",
+    "signin.passwordSaveFailed": "We konden het wachtwoord niet opslaan. Probeer het opnieuw.",
     "signin.passwordSubmit": "Inloggen",
     "signin.rateLimited": "Te veel pogingen. Wacht een minuutje en probeer het opnieuw.",
     "signin.serviceDown": "Inloggen lukt nu even niet. Probeer het later opnieuw.",
@@ -374,10 +375,6 @@ const nl: Locale = {
     "account.deleteConfirm":
       "Je account verwijderen? Je credits, abonnement en inloggegevens worden gewist. Je uitspraken en jouw kant in zaken worden verwijderd: wat je schreef en de namen worden gewist, en de deellinks werken niet meer.",
     "account.deleteYes": "Ja, verwijderen",
-    "account.passwordSet": "Wachtwoord instellen",
-    "account.passwordChange": "Wachtwoord wijzigen",
-    "account.passwordCurrent": "Huidig wachtwoord",
-    "account.passwordSaved": "Wachtwoord opgeslagen.",
     "account.deleteCancel": "Account houden",
     "account.deleted": "Je account is verwijderd. We brengen je naar de startpagina…",
     "account.deleteFailed": "We konden het account nu niet verwijderen. Wil je het nog eens proberen?",
@@ -468,6 +465,10 @@ const nl: Locale = {
     "case.judgeNow.yes": "Ja, nu beoordelen",
     "case.judgeExpired.confirm": "Een uitspraak op alleen jouw kant? Dit kost 1 uitspraak.",
     "case.judgeExpired.yes": "Ja, gebruik 1 uitspraak",
+    "case.side.waiting": "Wacht",
+    "case.side.answered": "Heeft geantwoord",
+    "case.judgeAnswered": "Beoordelen met de kanten die geantwoord hebben",
+    "case.judgeAnswered.confirm": "Een uitspraak van de kanten die geantwoord hebben? De andere uitnodigingen sluiten en die mensen kunnen niet meer antwoorden.",
     "case.cancel": "Annuleren",
     "case.retry": "Opnieuw proberen",
     "case.failedBody": "Je credit is terug. Je kunt het nu opnieuw proberen.",
@@ -476,9 +477,13 @@ const nl: Locale = {
     "case.accounts": "Wat elke kant de rechters vertelde",
     "case.accountA": "Het verhaal van Partij A",
     "case.accountB": "Het verhaal van Partij B",
+    "case.accountC": "Het verhaal van Partij C",
+    "case.accountD": "Het verhaal van Partij D",
     "case.accountYou": "Jouw verhaal ({label})",
     "case.contextA": "Aanvulling van Partij A",
     "case.contextB": "Aanvulling van Partij B",
+    "case.contextC": "Aanvulling van Partij C",
+    "case.contextD": "Aanvulling van Partij D",
     "case.contextYou": "Jouw aanvulling ({label})",
     "case.evidenceItem": "Afbeelding {n}, zoals de rechters die lazen",
     "case.notYet": "De ander heeft nog niet geantwoord.",
@@ -564,6 +569,7 @@ const nl: Locale = {
     "home.yourPlaceholder": "Wat is het probleem?",
     "home.addContext": "Iets aanvullen",
     "home.addTheirSide": "Kant van de ander toevoegen",
+    "home.addSide": "Nog een kant toevoegen",
     "home.removeTheirSide": "Kant van de ander verwijderen",
     "home.sendLink": "Stuur een link",
     "home.clear": "Wissen",
@@ -577,58 +583,9 @@ const nl: Locale = {
     "home.says": "{name} zegt:",
     "home.mySide": "Mijn kant:",
     "home.otherSide": "De andere kant:",
-    "pairs.dishwasher.aName": "Lotte",
-    "pairs.dishwasher.a":
-      "Je hebt de kommen weer in het bovenste rek gezet. Daar worden ze nooit schoon, daar is het onderste rek voor.",
-    "pairs.dishwasher.bName": "Jeroen",
-    "pairs.dishwasher.b":
-      "Ze passen daar prima, en dan blijft het onderste rek vrij voor de pannen. Ik ruim de vaatwasser al jaren zo in en er is nog nooit iets vies uitgekomen.",
-    "pairs.bill.aName": "Fleur",
-    "pairs.bill.a":
-      "Ik heb niks gedronken, dus ik hoef geen kwart van de wijn te betalen. Het eten gelijk verdelen vind ik prima.",
-    "pairs.bill.bName": "Ruben",
-    "pairs.bill.b":
-      "We delen het altijd gewoon door vieren. Elke keer uitzoeken wie wat had is gedoe, en zoveel scheelt het toch niet.",
-    "pairs.thermostat.aName": "Iris",
-    "pairs.thermostat.a":
-      "Het is hier 19 graden en ik heb het zelfs in een hoodie koud. De thermostaat op 22 zetten is echt niet overdreven.",
-    "pairs.thermostat.bName": "Sem",
-    "pairs.thermostat.b":
-      "Bij 22 graden kun je echt niet slapen, veel te warm. Jij kunt nog een trui aantrekken, ik kan niks meer uittrekken.",
-    "pairs.roadTrip.aName": "Anouk",
-    "pairs.roadTrip.a":
-      "Ik heb de hele heenweg gereden, zes uur lang. Het is niet meer dan eerlijk dat jij terugrijdt.",
-    "pairs.roadTrip.bName": "Joris",
-    "pairs.roadTrip.b":
-      "Ik zei voor we vertrokken al dat ik een hekel heb aan rijden in het donker, en we gaan om zeven uur 's avonds weg. Volgende keer rijd ik 's ochtends.",
-    "pairs.seat.aName": "Eva",
-    "pairs.seat.a":
-      "Mijn stoel kan naar achteren, dus dat doe ik ook. Het is een nachtvlucht en iedereen probeert te slapen.",
-    "pairs.seat.bName": "Bas",
-    "pairs.seat.b":
-      "Ik ben 1,91 m en mijn knieën zitten nu al tegen je stoel. Je kunt op z'n minst even vragen voordat je hem helemaal naar achteren zet.",
-    "pairs.spoiler.aName": "Noor",
-    "pairs.spoiler.a":
-      "Je verklapte wie de moordenaar was voordat ik ook maar aan de laatste aflevering was begonnen. Ik had er de hele week naar uitgekeken.",
-    "pairs.spoiler.bName": "Lucas",
-    "pairs.spoiler.b":
-      "Die aflevering kwam drie weken geleden uit en je zei dat je de serie uit had. Ik kan niet bijhouden hoe ver iedereen is.",
-    "pairs.jacket.aName": "Femke",
-    "pairs.jacket.a":
-      "Je bent zonder te vragen in mijn spijkerjack naar het concert gegaan. Toen ik het terugkreeg, stonk het naar rook.",
-    "pairs.jacket.bName": "Tim",
-    "pairs.jacket.b":
-      "Het hing bij de deur en je draagt het nooit. Ik had het heus gevraagd, maar je sliep en ik was al te laat.",
-    "pairs.lastSlice.aName": "Milan",
-    "pairs.lastSlice.a":
-      "Ik riep al “laatste stuk is voor mij” voordat de film begon. Iedereen heeft het gehoord.",
-    "pairs.lastSlice.bName": "Julia",
-    "pairs.lastSlice.b":
-      "Je kunt niet roepen dat het van jou is en het dan twee uur laten liggen. Het lag daar maar koud te worden, dus ik heb het opgegeten.",
     "appeal.lead":
-      "Mist er iets of klopt er iets niet? Vul het één keer aan en de rechters kijken opnieuw naar alles. Kost 1 uitspraak.",
-    "appeal.label": "Jouw aanvulling",
-    "appeal.placeholder": "Wat hebben de rechters gemist?",
+      "Kost 1 uitspraak.",
+    "appeal.placeholder": "Wat hebben de rechters gemist? Een feit, een bericht of wat er echt is afgesproken.",
     "appeal.submit": "Opnieuw laten beoordelen",
     "appeal.sending": "Je aanvulling anonimiseren…",
     "appeal.judging": "De rechters kijken opnieuw naar alles…",
@@ -648,8 +605,6 @@ const nl: Locale = {
     "appeal.previous": "Eerdere uitspraak",
     "appeal.failed": "Het opnieuw beoordelen is niet gelukt. Je credit is terug; je kunt het nog eens proberen.",
     "appeal.refused": "De rechters wilden met die aanvulling niet opnieuw oordelen. Je credit is terug.",
-    "appeal.leadVerdict":
-      "Mist er iets of klopt er iets niet? Vul het aan en de rechters kijken opnieuw naar alles. Elke keer kost 1 uitspraak, maximaal twee keer per uitspraak.",
     "appeal.history": "Eerdere uitspraken",
     "faq.both.q": "Kan de ander ook zijn of haar kant vertellen?",
     "faq.both.a":
@@ -691,6 +646,7 @@ const nl: Locale = {
     "unavailable.cta": "Naar Judge",
     "error.removed": "Dit is verwijderd. De link werkt niet meer.",
     "error.names_unavailable": "Namen kunnen nu niet worden opgeslagen. Probeer het later opnieuw.",
+    "error.update_required": "Deze zaak heeft meer dan twee kanten. Werk de app bij om hem te openen.",
     "verdict.remove": "Deze uitspraak verwijderen",
     "verdict.remove.confirm":
       "Wat je schreef, de namen en de weergavenamen verwijderen? De deellink en de previewafbeelding laden voor niemand meer (previews die al in chats zijn gedeeld, kunnen zichtbaar blijven tot die apps ze vernieuwen). Dit kan niet ongedaan worden gemaakt.",

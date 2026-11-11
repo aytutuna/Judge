@@ -39,7 +39,6 @@ export const APP_EN = {
   "app.history.removeFailed": "Couldn't remove {n} of them. Check your connection and try again.",
   "app.history.offlineRemove": "You're offline. Removing needs a connection.",
   "app.pricing.free.account": "Sign in with Apple, Google or email",
-  "app.context.label": "Context (optional)",
   "app.pricing.context": "Context images, read and then thrown away, at no extra cost",
   "app.pricing.headline": "Your first verdict is on us.",
   "app.pricing.sub":
@@ -121,50 +120,6 @@ export const APP_EN = {
   "app.home.addTheirSide": "Add their side",
   "app.home.removeTheirSide": "Remove their side",
   "app.home.clear": "Clear",
-  // Cases the example button fills in, a on "your side" and b on "theirs".
-  "app.example.dishwasher.aName": "Alex",
-  "app.example.dishwasher.a":
-    "You put the bowls on the top rack again. They never come out clean up there, that's what the bottom is for.",
-  "app.example.dishwasher.bName": "Sam",
-  "app.example.dishwasher.b":
-    "They fit fine up there and it leaves the bottom free for the pans. I've loaded it like this for years and nothing's come out dirty.",
-  "app.example.bill.aName": "Priya",
-  "app.example.bill.a":
-    "I didn't drink anything, so I shouldn't pay a quarter of the wine. Splitting the food evenly is fine with me.",
-  "app.example.bill.bName": "Jordan",
-  "app.example.bill.b":
-    "We always just split it four ways. Working out who had what every time is a pain, and it's not much of a difference anyway.",
-  "app.example.thermostat.aName": "Taylor",
-  "app.example.thermostat.a": "It's 19 degrees in here and I'm cold even in a hoodie. Turning it up to 22 isn't crazy.",
-  "app.example.thermostat.bName": "Chris",
-  "app.example.thermostat.b":
-    "22 is way too warm to sleep in. You can put on another layer, I can't take anything else off.",
-  "app.example.roadTrip.aName": "Morgan",
-  "app.example.roadTrip.a": "I drove the whole six hours there. It's only fair that you drive us back.",
-  "app.example.roadTrip.bName": "Riley",
-  "app.example.roadTrip.b":
-    "I said before we left that I hate driving at night, and we're leaving at 7. I'll take the morning drives next trip.",
-  "app.example.seat.aName": "Jamie",
-  "app.example.seat.a": "My seat reclines, so I'm reclining it. It's a night flight and everyone's trying to sleep.",
-  "app.example.seat.bName": "Casey",
-  "app.example.seat.b":
-    "I'm 6'3\" and my knees are already pressed into your seat. You could at least ask before dropping it all the way back.",
-  "app.example.spoiler.aName": "Maya",
-  "app.example.spoiler.a":
-    "You told me who the killer was before I'd even started the last episode. I'd been waiting all week for it.",
-  "app.example.spoiler.bName": "Leo",
-  "app.example.spoiler.b":
-    "It came out three weeks ago and you said you'd finished it. I can't keep track of where everyone is.",
-  "app.example.jacket.aName": "Noah",
-  "app.example.jacket.a": "You wore my denim jacket to the concert without asking. It came back smelling like smoke.",
-  "app.example.jacket.bName": "Ava",
-  "app.example.jacket.b":
-    "It was hanging by the door and you never wear it. I would've asked, but you were asleep and I was already late.",
-  "app.example.lastSlice.aName": "Ben",
-  "app.example.lastSlice.a": "I called dibs on the last slice before the movie started. Everyone heard me.",
-  "app.example.lastSlice.bName": "Lily",
-  "app.example.lastSlice.b":
-    "You can't call dibs and then not touch it for two hours. It was just sitting there going cold, so I ate it.",
   // The case page while the other side has not written yet.
   "app.case.waitingKicker": "Case · waiting",
   "app.case.waitingFor": "Waiting for {name}",
@@ -190,9 +145,7 @@ export const APP_EN = {
   "app.verdict.back": "Ruling",
   // Adding context to a ruling (one-sided verdicts and cases).
   "app.appeal.title": "Add context & appeal",
-  "app.appeal.intro": "Something the judges missed? Add it and they rule again. The first ruling stays on record.",
-  "app.appeal.ask": "What should they know?",
-  "app.appeal.placeholder": "A fact, a message, or what was actually agreed.",
+  "app.appeal.placeholder": "What did the judges miss? A fact, a message, or what was actually agreed.",
   "app.appeal.cost": "Uses 1 verdict. You can do this twice per ruling; {left} left.",
   "app.appeal.costCase": "Uses 1 verdict. You can do this once per case.",
   "app.appeal.submit": "Rule again",

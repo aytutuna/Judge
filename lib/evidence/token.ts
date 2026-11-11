@@ -29,7 +29,7 @@ type Payload = {
 };
 
 export function audienceString(audience: EvidenceAudience): string {
-  return audience.type === "user" ? `u:${audience.userId}` : `r:${audience.caseId}`;
+  return audience.type === "user" ? `u:${audience.userId}` : `r:${audience.caseId}${audience.party ? `:${audience.party}` : ""}`;
 }
 
 function mac(key: Buffer, signed: string): Buffer {

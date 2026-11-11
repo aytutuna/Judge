@@ -60,6 +60,10 @@ enum HistoryEntry: Identifiable {
         case .account(let item):
             return HistoryLabels.status(item, lang: lang, now: now)
         case .phone(let row):
+            if let many = row.manyResult {
+                let parties = Names.partyNames(row.nameMap, lang: lang, selfLang: row.contentLang, sides: many.sideCount)
+                return VerdictDisplay.label(many, parties: parties, lang: lang)
+            }
             let parties = Names.partyNames(row.nameMap, lang: lang, selfLang: row.contentLang)
             return VerdictDisplay.label(row.finalVerdict, parties: parties, lang: lang)
         }
@@ -71,10 +75,17 @@ enum HistoryEntry: Identifiable {
         case .account(let item):
             return HistoryLabels.tone(item, now: now)
         case .phone(let row):
+            if let many = row.manyResult {
+                switch VerdictDisplay.outcome(many, viewer: .a) {
+                case .win: return .yours
+                case .lose: return .theirs
+                case nil: return .neutral
+                }
+            }
             switch VerdictDisplay.seal(row.finalVerdict) {
             case .a: return .yours
             case .b: return .theirs
-            case .none: return .neutral
+            default: return .neutral
             }
         }
     }

@@ -119,6 +119,8 @@ const sk: Locale = {
     verdictAria: "Verdikt: {label}",
     "party.a": "Strana A",
     "party.b": "Strana B",
+    "party.c": "Strana C",
+    "party.d": "Strana D",
     "party.youLabel": "{label} (ty)",
     you: "Ty",
     "shared.subtitle": "Niekto zdieľal tento verdikt",
@@ -344,8 +346,7 @@ const sk: Locale = {
     "signin.createNote": "Pošleme vám e-mailom kód na potvrdenie tejto adresy. Stačí to urobiť raz.",
     "signin.passwordChoose": "Ste prihlásený. Vyberte si heslo na nabudúce.",
     "signin.passwordSave": "Uložiť heslo",
-    "signin.passwordSaveFailed": "Ste prihlásený, ale heslo sa nepodarilo uložiť. Skúste to znova alebo si ho nastavte neskôr v Nastaveniach.",
-    "signin.passwordSkip": "Zatiaľ preskočiť",
+    "signin.passwordSaveFailed": "Heslo sa nepodarilo uložiť. Skúste to znova.",
     "signin.passwordSubmit": "Prihlásiť sa",
     "signin.rateLimited": "Priveľa pokusov. Počkaj minútu a skús to znova.",
     "signin.serviceDown": "Prihlásenie teraz nie je dostupné. Skús to neskôr.",
@@ -373,10 +374,6 @@ const sk: Locale = {
     "account.deleteConfirm":
       "Zrušiť účet? Tvoje kredity, plán a prihlasovacie údaje sa vymažú. Tvoje verdikty a tvoje verzie v prípadoch sa odstránia: tvoje texty a mená sa vymažú a ich odkazy na zdieľanie prestanú fungovať.",
     "account.deleteYes": "Áno, zrušiť",
-    "account.passwordSet": "Nastaviť heslo",
-    "account.passwordChange": "Zmeniť heslo",
-    "account.passwordCurrent": "Súčasné heslo",
-    "account.passwordSaved": "Heslo je uložené.",
     "account.deleteCancel": "Ponechať účet",
     "account.deleted": "Tvoj účet je zrušený. Presmerúvame ťa na domovskú stránku…",
     "account.deleteFailed": "Účet sa teraz nepodarilo zrušiť. Skúsiš to znova?",
@@ -464,6 +461,10 @@ const sk: Locale = {
     "case.judgeNow.yes": "Áno, rozsúdiť hneď",
     "case.judgeExpired.confirm": "Chceš verdikt len podľa svojej verzie? Použije sa 1 verdikt.",
     "case.judgeExpired.yes": "Áno, použiť 1 verdikt",
+    "case.side.waiting": "Čaká sa",
+    "case.side.answered": "Odpovedal(a)",
+    "case.judgeAnswered": "Rozsúdiť podľa strán, ktoré odpovedali",
+    "case.judgeAnswered.confirm": "Chceš verdikt podľa strán, ktoré odpovedali? Ostatné pozvánky sa uzavrú a títo ľudia už nebudú môcť odpovedať.",
     "case.cancel": "Zrušiť",
     "case.retry": "Skúsiť znova",
     "case.failedBody": "Kredit sa ti vrátil. Môžeš to skúsiť znova.",
@@ -472,9 +473,13 @@ const sk: Locale = {
     "case.accounts": "Čo každá strana povedala sudcom",
     "case.accountA": "Ako to vidí Strana A",
     "case.accountB": "Ako to vidí Strana B",
+    "case.accountC": "Ako to vidí Strana C",
+    "case.accountD": "Ako to vidí Strana D",
     "case.accountYou": "Tvoja verzia ({label})",
     "case.contextA": "Strana A doplnila kontext",
     "case.contextB": "Strana B doplnila kontext",
+    "case.contextC": "Strana C doplnila kontext",
+    "case.contextD": "Strana D doplnila kontext",
     "case.contextYou": "Tvoj doplnený kontext ({label})",
     "case.evidenceItem": "Obrázok {n} tak, ako ho čítajú sudcovia",
     "case.notYet": "Druhá strana ešte neodpovedala.",
@@ -560,6 +565,7 @@ const sk: Locale = {
     "home.yourPlaceholder": "V čom je problém?",
     "home.addContext": "Pridať kontext",
     "home.addTheirSide": "Pridať verziu druhej strany",
+    "home.addSide": "Pridať ďalšiu stranu",
     "home.removeTheirSide": "Odstrániť verziu druhej strany",
     "home.sendLink": "Poslať odkaz",
     "home.clear": "Vymazať",
@@ -573,58 +579,9 @@ const sk: Locale = {
     "home.says": "{name} hovorí:",
     "home.mySide": "Moja verzia:",
     "home.otherSide": "Verzia druhej strany:",
-    "pairs.dishwasher.aName": "Lucia",
-    "pairs.dishwasher.a":
-      "Zase si dal misky do horného koša. Tam sa nikdy poriadne neumyjú, na to je predsa dolný kôš.",
-    "pairs.dishwasher.bName": "Peter",
-    "pairs.dishwasher.b":
-      "Hore sa zmestia v pohode a dole ostane miesto na hrnce. Takto umývačku plním už roky a ešte nikdy z nej nič nevyšlo špinavé.",
-    "pairs.bill.aName": "Zuzana",
-    "pairs.bill.a":
-      "Nič som nepila, tak by som nemala platiť štvrtinu vína. Jedlo si pokojne rozdeľme rovným dielom.",
-    "pairs.bill.bName": "Marek",
-    "pairs.bill.b":
-      "Vždy to proste delíme na štyroch. Zakaždým rátať, kto mal čo, je otrava, a ten rozdiel aj tak nie je veľký.",
-    "pairs.thermostat.aName": "Jana",
-    "pairs.thermostat.a":
-      "Je tu 19 stupňov a je mi zima aj v mikine. Dať kúrenie na 22 predsa nie je žiadne šialenstvo.",
-    "pairs.thermostat.bName": "Michal",
-    "pairs.thermostat.b":
-      "Pri 22 stupňoch je na spanie priveľmi teplo. Ty si môžeš obliecť ďalšiu vrstvu, ja už zo seba nemám čo dať dole.",
-    "pairs.roadTrip.aName": "Juraj",
-    "pairs.roadTrip.a":
-      "Cestou tam som šoféroval celých šesť hodín. Je len fér, aby si nás späť odviezla ty.",
-    "pairs.roadTrip.bName": "Simona",
-    "pairs.roadTrip.b":
-      "Ešte pred odchodom som hovorila, že neznášam šoférovanie v noci, a my vyrážame o siedmej večer. Nabudúce si zoberiem všetky ranné jazdy ja.",
-    "pairs.seat.aName": "Veronika",
-    "pairs.seat.a":
-      "Moje sedadlo sa dá sklopiť, tak ho sklápam. Je to nočný let a všetci sa snažia spať.",
-    "pairs.seat.bName": "Lukáš",
-    "pairs.seat.b":
-      "Mám 190 centimetrov a kolená mám už teraz zapreté o tvoje sedadlo. Mohla si sa aspoň opýtať, skôr než si ho sklopila úplne dozadu.",
-    "pairs.spoiler.aName": "Kristína",
-    "pairs.spoiler.a":
-      "Prezradil si mi, kto je vrah, ešte predtým, ako som si pustila poslednú časť. Celý týždeň som sa na ňu tešila.",
-    "pairs.spoiler.bName": "Patrik",
-    "pairs.spoiler.b":
-      "Vyšlo to pred tromi týždňami a hovorila si, že to máš dopozerané. Nemôžem predsa sledovať, kto má čo dopozerané.",
-    "pairs.jacket.aName": "Tomáš",
-    "pairs.jacket.a":
-      "Zobrala si si moju džínsovú bundu na koncert a ani si sa neopýtala. Vrátila sa mi celá presiaknutá dymom.",
-    "pairs.jacket.bName": "Ema",
-    "pairs.jacket.b":
-      "Visela pri dverách a ty ju nikdy nenosíš. Opýtala by som sa, ale spal si a ja som už meškala.",
-    "pairs.lastSlice.aName": "Matej",
-    "pairs.lastSlice.a":
-      "Ešte pred začiatkom filmu som povedal, že posledný kúsok je môj. Všetci to počuli.",
-    "pairs.lastSlice.bName": "Natália",
-    "pairs.lastSlice.b":
-      "Nemôžeš si niečo zabrať a potom sa toho dve hodiny ani nedotknúť. Ležalo to tam a chladlo, tak som to zjedla.",
     "appeal.lead":
-      "Niečo chýba alebo nesedí? Doplň to raz a sudcovia všetko posúdia znova. Stojí to 1 verdikt.",
-    "appeal.label": "Tvoj kontext",
-    "appeal.placeholder": "Čo sudcom ušlo?",
+      "Stojí 1 verdikt.",
+    "appeal.placeholder": "Čo sudcom ušlo? Fakt, správa alebo to, na čom ste sa naozaj dohodli.",
     "appeal.submit": "Posúdiť znova s mojím kontextom",
     "appeal.sending": "Anonymizujem tvoj kontext…",
     "appeal.judging": "Sudcovia znova prechádzajú všetko…",
@@ -644,8 +601,6 @@ const sk: Locale = {
     "appeal.previous": "Predchádzajúci verdikt",
     "appeal.failed": "Nové posúdenie sa nepodarilo. Kredit sa ti vrátil; môžeš to skúsiť znova.",
     "appeal.refused": "Sudcovia s týmto kontextom odmietli posúdiť spor znova. Kredit sa ti vrátil.",
-    "appeal.leadVerdict":
-      "Niečo chýba alebo nesedí? Doplň to a sudcovia všetko posúdia znova. Zakaždým to stojí 1 verdikt, najviac dvakrát na verdikt.",
     "appeal.history": "História verdiktu",
     "faq.both.q": "Môže druhá strana napísať svoju verziu?",
     "faq.both.a":
@@ -687,6 +642,7 @@ const sk: Locale = {
     "unavailable.cta": "Prejsť na Judge",
     "error.removed": "Toto bolo odstránené. Odkaz už nefunguje.",
     "error.names_unavailable": "Mená sa teraz nedajú uložiť. Skús to neskôr.",
+    "error.update_required": "Tento prípad má viac ako dve strany. Aktualizuj aplikáciu, aby si ho otvoril.",
     "verdict.remove": "Odstrániť tento verdikt",
     "verdict.remove.confirm":
       "Odstrániť svoj text, mená a zobrazované mená? Odkaz na zdieľanie a jeho náhľadový obrázok sa prestanú načítavať pre všetkých (náhľady, ktoré už boli poslané v chatoch, sa môžu zobrazovať, kým ich tieto aplikácie neobnovia). Nedá sa to vrátiť späť.",

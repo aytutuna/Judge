@@ -9,6 +9,7 @@
  * any text, names or tokens. Server only.
  */
 
+import type { PartyLetter as CaseParty } from "@/lib/case-types";
 import { appendFile, readFile } from "node:fs/promises";
 import path from "node:path";
 import type { RemovalReason } from "@/lib/originals-types";
@@ -16,7 +17,7 @@ import type { SignInRevocation } from "@/lib/signin-tokens";
 
 export type RemovalLogEntry =
   | { v: 1; at: string; kind: "verdict"; id: string; reason: RemovalReason }
-  | { v: 1; at: string; kind: "case_side"; id: string; party: "a" | "b"; reason: RemovalReason }
+  | { v: 1; at: string; kind: "case_side"; id: string; party: CaseParty; reason: RemovalReason }
   | {
       v: 1;
       at: string;
@@ -56,7 +57,7 @@ export async function appendRemovalLog(entry: RemovalLogEntry): Promise<void> {
 }
 
 const ID = /^[A-Za-z0-9_-]{1,128}$/;
-const REASONS: readonly RemovalReason[] = ["owner", "party_a", "party_b", "account_deleted", "operator"];
+const REASONS: readonly RemovalReason[] = ["owner", "party_a", "party_b", "party_c", "party_d", "account_deleted", "operator"];
 
 /** One log line, validated; null for anything malformed. */
 export function parseRemovalLogLine(line: string): RemovalLogEntry | null {
@@ -75,7 +76,7 @@ export function parseRemovalLogLine(line: string): RemovalLogEntry | null {
     case "verdict":
       return reason ? { v: 1, at: r.at, kind: "verdict", id: r.id, reason } : null;
     case "case_side":
-      return reason && (r.party === "a" || r.party === "b")
+      return reason && (r.party === "a" || r.party === "b" || r.party === "c" || r.party === "d")
         ? { v: 1, at: r.at, kind: "case_side", id: r.id, party: r.party, reason }
         : null;
     case "account":

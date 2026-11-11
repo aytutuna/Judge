@@ -148,5 +148,41 @@
     "id": "mixed-dog",
     "argument": "Party A wants to adopt a husky because they're beautiful and the family will exercise more. Party B says they live in a small hot-climate apartment, both work full time, and a husky would be miserable. Party A says love is what matters most for a pet.",
     "expected": { "dispute_type": ["mixed", "factual"], "verdict_one_of": ["side_b"] }
+  },
+  {
+    "id": "sides3-fact-moon",
+    "parties": 3,
+    "argument": "PARTY A'S SIDE:\nParty A says the moon landings were staged in a studio and the flag only waves because of a fan.\n\nPARTY B'S SIDE:\nParty B says the landings happened: the mirrors the crews left on the surface are still used to bounce lasers off the moon, and thousands of people worked on the missions.\n\nPARTY C'S SIDE:\nParty C says the landings happened but the official story hides how many missions nearly failed, so nobody should trust the agency about anything.",
+    "expected": { "dispute_type": ["factual"], "verdict_one_of": ["b"] }
+  },
+  {
+    "id": "sides3-values-trip-bill",
+    "parties": 3,
+    "argument": "PARTY A'S SIDE:\nParty A stayed all five nights of the group trip and says the villa bill should be split by nights stayed.\n\nPARTY B'S SIDE:\nParty B booked the villa for everyone and says it should be split evenly three ways, because nobody asked to pay by the night when they agreed to come.\n\nPARTY C'S SIDE:\nParty C only came for two nights because of work and says splitting evenly makes them pay for three nights they were not there, though they will pay their share of the shared food.",
+    "expected": { "dispute_type": ["values", "mixed"], "verdict_one_of": ["a", "c"] }
+  },
+  {
+    "id": "sides3-too-close-dishes",
+    "parties": 3,
+    "argument": "PARTY A'S SIDE:\nParty A cooked dinner for all three roommates and says whoever did not cook should do the dishes.\n\nPARTY B'S SIDE:\nParty B did the dishes the last two times and says it is now Party A's turn, whoever cooked.\n\nPARTY C'S SIDE:\nParty C bought the groceries for the dinner and says buying counts as much as cooking, so the dishes should go to Party A or Party B.",
+    "expected": { "dispute_type": ["values", "mixed"], "verdict_one_of": ["too_close", "a", "b"] }
+  },
+  {
+    "id": "sides4-fact-meeting-day",
+    "parties": 4,
+    "argument": "PARTY A'S SIDE:\nParty A says the team meeting is on Tuesday because that is when it was last month.\n\nPARTY B'S SIDE:\nParty B says it is on Wednesday because a colleague told them in the hallway.\n\nPARTY C'S SIDE:\nParty C says the calendar invite sent by the manager reads Thursday at 10:00, and the manager has not changed it.\n\nPARTY D'S SIDE:\nParty D says they do not remember the day but the room was booked for the whole week, so it does not matter.",
+    "expected": { "dispute_type": ["factual"], "verdict_one_of": ["c"] }
+  },
+  {
+    "id": "sides4-definition-hot-dog",
+    "parties": 4,
+    "argument": "PARTY A'S SIDE:\nParty A says a hot dog is a sandwich, because it is meat inside bread.\n\nPARTY B'S SIDE:\nParty B says a hot dog is not a sandwich, because nobody orders a sandwich and gets a hot dog, and restaurants list them separately.\n\nPARTY C'S SIDE:\nParty C says a hot dog is a taco, because it is a single folded bread holding the filling.\n\nPARTY D'S SIDE:\nParty D says it is a category of its own and the question is pointless.",
+    "expected": { "dispute_type": ["definitional"], "verdict_one_of": ["b", "too_close"] }
+  },
+  {
+    "id": "sides3-logic-star-player",
+    "parties": 3,
+    "argument": "PARTY A'S SIDE:\nParty A says the team only wins because of its star player, since they won every game he played this season.\n\nPARTY B'S SIDE:\nParty B says winning every game he played proves nothing, because he plays the easy home games.\n\nPARTY C'S SIDE:\nParty C says the season record shows the team also won all three games he missed, two of them away, so his presence is not what decides results.",
+    "expected": { "dispute_type": ["logical", "factual"], "verdict_one_of": ["c"] }
   }
 ]

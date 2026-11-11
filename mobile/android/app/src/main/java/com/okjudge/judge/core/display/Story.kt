@@ -42,6 +42,8 @@ object Story {
         val extra: Int,
         val winner: Vote?,
         val trial: TrialOutcome?,
+        /** How many sides stand at centre court. */
+        val sides: Int = 2,
     )
 
     /** Index in [WAITING] of the line being worked on [elapsed] ms in, given when the names went out (null: not yet). */
@@ -76,19 +78,21 @@ object Story {
     fun summarize(result: VerdictResult): Summary {
         val votes = VerdictDisplay.votes(result)
         val escalated = result.escalated == true
-        val winner = when (result.finalVerdict) {
+        val winner = if (result.isMany) {
+            result.winnerSide?.let { VerdictDisplay.manyVoteOf(it.raw) }
+        } else when (result.finalVerdict) {
             FinalVerdict.SIDE_A -> Vote.A
             FinalVerdict.SIDE_B -> Vote.B
             else -> null
         }
         val trial = result.cruxTrial?.trialOutcome?.takeIf { it != TrialOutcome.UNKNOWN }
-        return Summary(votes, escalated, if (escalated) maxOf(0, votes.size - 3) else 0, winner, trial)
+        return Summary(votes, escalated, if (escalated) maxOf(0, votes.size - 3) else 0, winner, trial, result.sideCount)
     }
 
     /** Everything that happens once the verdict lands, given the waiting line the story was on. */
     fun ending(fromWaiting: Int, summary: Summary?, reduced: Boolean): Ending {
         if (reduced || summary == null) return Ending(emptyList(), if (reduced) 600 else 0)
-        val (votes, escalated, extra, _, trial) = summary
+        val (votes, escalated, extra, _, trial, _) = summary
         val steps = mutableListOf<Step>()
         var at = 0L
         fun later(ms: Long, beat: Beat, line: Line?) {

@@ -233,21 +233,23 @@ struct AgeStatus: Decodable, Sendable, Equatable {
 
 /// GET /api/v1/me. Signed out (or an unknown token): both nil. `age` is nil
 /// from a server without the age check, `hasPassword` from one without
-/// passwords.
+/// passwords. `needsPassword` is false when missing.
 struct AccountInfo: Decodable, Sendable, Equatable {
     var user: Viewer?
     var entitlement: Entitlement?
     var age: AgeStatus?
     var hasPassword: Bool?
+    var needsPassword = false
 
-    init(user: Viewer?, entitlement: Entitlement?, age: AgeStatus? = nil, hasPassword: Bool? = nil) {
+    init(user: Viewer?, entitlement: Entitlement?, age: AgeStatus? = nil, hasPassword: Bool? = nil, needsPassword: Bool = false) {
         self.user = user
         self.entitlement = entitlement
         self.age = age
         self.hasPassword = hasPassword
+        self.needsPassword = needsPassword
     }
 
-    private enum CodingKeys: String, CodingKey { case user, entitlement, age, hasPassword }
+    private enum CodingKeys: String, CodingKey { case user, entitlement, age, hasPassword, needsPassword }
 
     init(from decoder: any Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
@@ -255,6 +257,7 @@ struct AccountInfo: Decodable, Sendable, Equatable {
         entitlement = try? c.decodeIfPresent(Entitlement.self, forKey: .entitlement)
         age = try? c.decodeIfPresent(AgeStatus.self, forKey: .age)
         hasPassword = try? c.decodeIfPresent(Bool.self, forKey: .hasPassword)
+        needsPassword = (try? c.decodeIfPresent(Bool.self, forKey: .needsPassword)) == true
     }
 }
 

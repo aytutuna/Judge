@@ -1,7 +1,7 @@
 import { t, type Lang } from "./i18n";
 import { verdictLang } from "./content-lang";
 import { PARTY_LABELS } from "./langs";
-import type { NameMapping, VerdictResult } from "./types";
+import type { NameMapping, PartyId, VerdictResult } from "./types";
 
 /**
  * Turkish first-person forms. Matched with toLocaleLowerCase("tr") — never a
@@ -34,17 +34,25 @@ export const EN_SELF = /^(i|me|my|mine|myself)$/i;
  * leftover suffix ("Taraf B'ye", "Party A's"). */
 const LABEL = /^(?:(?:party|taraf)\s+([ab])|(?:person|kişi)\s+([c-z]))(?:['’]\p{L}*)?$/iu;
 
+/** The same for a document with 3 or 4 sides: the sides take Party A to
+ * Party C (or D), so other people start at Person E and never share a
+ * letter with a side. */
+const LABEL_N = /^(?:(?:party|taraf)\s+([a-d])|(?:person|kişi)\s+([e-z]))(?:['’]\p{L}*)?$/iu;
+
 /** Canonical label for an anonymizer replacement ("taraf b'ye" -> "Party B",
- * "Kişi C" -> "Person C"), or null when it is not a person label. */
-export function canonicalLabel(replacement: string): string | null {
-  const m = LABEL.exec(replacement.trim());
+ * "Kişi C" -> "Person C"), or null when it is not a person label. `sides`
+ * is how many sides the document has; only a document with more than two
+ * reads "Party C" and "Party D" as sides. */
+export function canonicalLabel(replacement: string, sides = 2): string | null {
+  const m = (sides > 2 ? LABEL_N : LABEL).exec(replacement.trim());
   if (!m) return null;
+  if (m[1] && sides > 2 && m[1].toUpperCase() > String.fromCharCode(64 + sides)) return null;
   return m[1] ? `Party ${m[1].toUpperCase()}` : `Person ${m[2].toUpperCase()}`;
 }
 
 /** The letter of a label ("Party B" -> "B"), or null. */
-function labelLetter(replacement: string): string | null {
-  const label = canonicalLabel(replacement);
+function labelLetter(replacement: string, sides = 2): string | null {
+  const label = canonicalLabel(replacement, sides);
   return label ? label.slice(-1) : null;
 }
 
@@ -75,12 +83,13 @@ export type Parties = ReadonlyMap<string, Party>;
 /** Which party label is the viewer's own narrator. "A" everywhere except a
  * two-sided case seen by the person who answered the invite: their own
  * account was anonymized with them as Party B. */
-export type SelfParty = "A" | "B";
+export type SelfParty = "A" | "B" | "C" | "D";
 
 /** `noSelf`: no entry is the narrator. Share pages restore the writer's
  * chosen display names this way, so nobody is called "You" there and a
- * display name such as "Ben" stays a name. */
-export type NameOptions = { noSelf?: boolean };
+ * display name such as "Ben" stays a name. `sides`: how many sides the
+ * document has (default 2; see canonicalLabel). */
+export type NameOptions = { noSelf?: boolean; sides?: number };
 
 /**
  * Who each label stands for. The pronoun -> narrator mapping applies ONLY to
@@ -106,8 +115,10 @@ export function resolveParties(
   opts: NameOptions = {},
 ): Map<string, Party> {
   const parties = new Map<string, Party>();
+  const sides = opts.sides ?? 2;
+  const isSide = (letter: string) => letter <= String.fromCharCode(64 + sides);
   for (const m of nameMap ?? []) {
-    const letter = labelLetter(m.replacement);
+    const letter = labelLetter(m.replacement, sides);
     if (!letter) continue;
     const name = bareName(m.original);
     if (!name) continue;
@@ -115,7 +126,7 @@ export function resolveParties(
     const selfWord = !opts.noSelf && isSelfOriginal(name, selfLang);
     if (selfWord && letter === selfParty) {
       parties.set(letter, { name, self: true });
-    } else if (selfWord && letter !== "A" && letter !== "B") {
+    } else if (selfWord && !isSide(letter)) {
       continue;
     } else if (!current || (!current.self && !startsUpper(current.name) && startsUpper(name))) {
       // A capitalized name beats a lowercase description ("my roommate").
@@ -170,6 +181,42 @@ export function partyNames(
     aIsSelf: Boolean(a?.self) || markA,
     bIsSelf: Boolean(b?.self) || markB,
   };
+}
+
+/** "Party C" in `lang`: what an unnamed side is called. */
+export function partyLabel(lang: Lang, party: PartyId): string {
+  return t(lang, `party.${party}`);
+}
+
+/**
+ * Display names for a verdict with 3 or 4 sides, keyed by party letter
+ * ("a" to "d"). The narrator's entry makes the viewer's own party "you".
+ * Without a name a party shows its label in `lang`; `viewerKnown` marks the
+ * viewer's own party when the map says nothing about it, as partyNames does.
+ */
+export function partyNamesFor(
+  parties: readonly PartyId[],
+  nameMap: NameMapping[] | undefined,
+  lang: Lang = "en",
+  selfLang: Lang = lang,
+  selfParty: SelfParty = "A",
+  viewerKnown = false,
+  opts: NameOptions = {},
+): Record<PartyId, { name: string; self: boolean }> {
+  const resolved = resolveParties(nameMap, selfLang, selfParty, { ...opts, sides: parties.length });
+  const out = {} as Record<PartyId, { name: string; self: boolean }>;
+  for (const id of parties) {
+    const letter = id.toUpperCase();
+    const found = resolved.get(letter);
+    const label = partyLabel(lang, id);
+    const mark = viewerKnown && selfParty === letter && !found;
+    out[id] = found
+      ? { name: found.self ? t(lang, "you") : found.name, self: found.self }
+      : mark
+        ? { name: t(lang, "party.youLabel", { label }), self: true }
+        : { name: label, self: false };
+  }
+  return out;
 }
 
 // --- Turkish suffixes on a name -------------------------------------------------
@@ -292,8 +339,12 @@ const EN_LOOKALIKES = ["Part "];
 /** Whether a label's word and letter go together in text of `lang`: A and B
  * are parties, C to Z other people. A word that reads as plain English is a
  * label only in text of a language that uses it. */
-function labelFits(word: string, letter: string, lang: Lang): boolean {
+function labelFits(word: string, letter: string, lang: Lang, sides = 2): boolean {
   if (EN_LOOKALIKES.includes(word) && PARTY_LABELS[lang]?.[0].slice(0, -1) !== word) return false;
+  if (sides > 2) {
+    // Sides take the first letters; other people start at E.
+    return PARTY_WORDS.includes(word) ? letter <= String.fromCharCode(64 + sides) : letter >= "E";
+  }
   return (letter === "A" || letter === "B") === PARTY_WORDS.includes(word);
 }
 
@@ -606,7 +657,7 @@ function renderTr(party: Party, suffix: string | undefined, apos: string, before
  * label that cannot be rendered with confidence is left as written, which
  * reads better than broken grammar.
  */
-export function restoreNames(text: string, parties: Parties, textLang: Lang): string {
+export function restoreNames(text: string, parties: Parties, textLang: Lang, sides = 2): string {
   if (!text || parties.size === 0) return text;
   const re = new RegExp(LABEL_IN_TEXT.source, LABEL_IN_TEXT.flags);
   let out = "";
@@ -614,7 +665,7 @@ export function restoreNames(text: string, parties: Parties, textLang: Lang): st
   let m: RegExpExecArray | null;
   while ((m = re.exec(text))) {
     const [whole, word, letter, apos = "", suffix] = m;
-    if (!labelFits(word, letter, textLang)) continue;
+    if (!labelFits(word, letter, textLang, sides)) continue;
     const party = parties.get(letter);
     if (!party) continue;
     const before = text.slice(0, m.index);
@@ -649,10 +700,11 @@ export function personalizeResult(
   selfParty: SelfParty = "A",
   opts: NameOptions = {},
 ): VerdictResult {
-  const parties = resolveParties(nameMap, selfLang, selfParty, opts);
+  const sides = result.parties?.length ?? 2;
+  const parties = resolveParties(nameMap, selfLang, selfParty, sides > 2 ? { ...opts, sides } : opts);
   if (parties.size === 0) return result;
   const lang = verdictLang(result);
-  const r = (s: string) => restoreNames(s, parties, lang);
+  const r = (s: string) => restoreNames(s, parties, lang, sides);
   const map = result.argument_map;
   return {
     ...result,
@@ -701,6 +753,19 @@ export function personalizeResult(
       : {}),
     ...(result.would_change ? { would_change: result.would_change.map(r) } : {}),
     ...(result.appeal ? { appeal: { ...result.appeal, summary: r(result.appeal.summary) } } : {}),
+    ...(result.sides
+      ? { sides: result.sides.map((s) => ({ ...s, claims: s.claims.map((c) => ({ ...c, claim: r(c.claim) })), bedrock: r(s.bedrock) })) }
+      : {}),
+    ...(result.others ? { others: result.others.map((o) => ({ ...o, line: r(o.line) })) } : {}),
+    ...(result.disputes
+      ? {
+          disputes: result.disputes.map((d) => ({
+            ...d,
+            fact: r(d.fact),
+            positions: d.positions.map((p) => ({ ...p, says: r(p.says) })),
+          })),
+        }
+      : {}),
   };
 }
 
@@ -749,18 +814,18 @@ export function textLang(text: string): Lang {
  * the English labels; this is for display only, with `lang` the language of
  * the text itself (textLang), not of the interface. Pure.
  */
-export function localizeLabels(text: string, lang: Lang): string {
+export function localizeLabels(text: string, lang: Lang, sides = 2): string {
   if (!text) return text;
   return text.replace(ANY_LABEL, (whole: string, word: string, letter: string) => {
-    if (!labelFits(word, letter, lang)) return whole;
-    if (letter !== "A" && letter !== "B") return `${lang === "tr" ? "Kişi" : "Person"} ${letter}`;
+    if (!labelFits(word, letter, lang, sides)) return whole;
+    if (!PARTY_WORDS.includes(word)) return `${lang === "tr" ? "Kişi" : "Person"} ${letter}`;
     return (PARTY_LABELS[lang] ?? PARTY_LABELS.en)[0].slice(0, -1) + letter;
   });
 }
 
 /** localizeLabels by the text's own language. */
-export function localizeLabelsAuto(text: string): string {
-  return localizeLabels(text, textLang(text));
+export function localizeLabelsAuto(text: string, sides = 2): string {
+  return localizeLabels(text, textLang(text), sides);
 }
 
 // --- One way of naming the viewer per verdict -----------------------------------------
@@ -787,6 +852,9 @@ function resultTexts(result: VerdictResult): string[] {
     ...(result.disputed_facts ?? []).flatMap((d) => [d.fact, d.party_a, d.party_b]),
     ...(result.would_change ?? []),
     ...(result.appeal ? [result.appeal.summary] : []),
+    ...(result.sides ?? []).flatMap((s) => [...s.claims.map((c) => c.claim), s.bedrock]),
+    ...(result.others ?? []).map((o) => o.line),
+    ...(result.disputes ?? []).flatMap((d) => [d.fact, ...d.positions.map((p) => p.says)]),
   ].filter((s): s is string => typeof s === "string" && s.length > 0);
 }
 
@@ -808,16 +876,17 @@ export function consistentSelfMap(
   opts: NameOptions = {},
 ): { nameMap: NameMapping[] | undefined; selfDropped: boolean } {
   if (!nameMap?.length || opts.noSelf) return { nameMap, selfDropped: false };
-  const parties = resolveParties(nameMap, selfLang, selfParty);
+  const sides = result.parties?.length ?? 2;
+  const parties = resolveParties(nameMap, selfLang, selfParty, sides > 2 ? { sides } : {});
   const self = parties.get(selfParty);
   if (!self?.self) return { nameMap, selfDropped: false };
   const only = new Map([[selfParty, self]]);
   const lang = verdictLang(result);
   const label = new RegExp(String.raw`(?:${wordsRe(PARTY_WORDS)})${selfParty}(?:['’]\p{Ll}+)?${LABEL_END}`, "u");
-  const keepsLabel = resultTexts(result).some((s) => label.test(restoreNames(s, only, lang)));
+  const keepsLabel = resultTexts(result).some((s) => label.test(restoreNames(s, only, lang, sides)));
   if (!keepsLabel) return { nameMap, selfDropped: false };
   return {
-    nameMap: nameMap.filter((m) => labelLetter(m.replacement) !== selfParty),
+    nameMap: nameMap.filter((m) => labelLetter(m.replacement, sides) !== selfParty),
     selfDropped: true,
   };
 }

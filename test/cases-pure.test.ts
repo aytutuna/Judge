@@ -62,6 +62,11 @@ function row(over: Partial<CaseRow> = {}): CaseRow {
     removedAt: null,
     removedAAt: null,
     removedBAt: null,
+    sides: 2,
+    displayCSealed: null,
+    displayDSealed: null,
+    removedCAt: null,
+    removedDAt: null,
     ...over,
   };
 }
@@ -97,7 +102,7 @@ function appeal(over: Partial<AppealRow> = {}): AppealRow {
 }
 
 function bundle(over: Partial<CaseBundle> = {}): CaseBundle {
-  return { row: row(), sides: [SIDES[0]], evidence: [], appeals: [], verdicts: [], people: [], ...over };
+  return { row: row(), sides: [SIDES[0]], evidence: [], appeals: [], verdicts: [], people: [], invites: [], ...over };
 }
 
 const judged = (mode: "two_sided" | "one_sided", over: Partial<CaseBundle> = {}) =>

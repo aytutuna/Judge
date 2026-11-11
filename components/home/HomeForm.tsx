@@ -4,7 +4,7 @@ import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
 import { EvidenceAdd, EvidenceNotes, EvidenceRows, type EvidenceController } from "@/components/case/EvidencePicker";
 import { t, type Lang } from "@/lib/i18n";
 import { langTag } from "@/lib/langs";
-import { MAX_ARGUMENT } from "@/lib/sides";
+import { MAX_ARGUMENT, type SideInput } from "@/lib/sides";
 import { HomeCourt } from "@/components/court/HomeCourt";
 import styles from "./HomeForm.module.css";
 
@@ -12,7 +12,7 @@ const WARN_AT = 5700;
 
 type Side = {
   id: string;
-  letter: "A" | "B";
+  letter: "A" | "B" | "C" | "D";
   value: string;
   onChange: (value: string) => void;
   name: string;
@@ -114,6 +114,12 @@ export type HomeFormProps = {
   theirsOpen: boolean;
   onAddTheirs: () => void;
   onRemoveTheirs: () => void;
+  /** Sides C and D, added under their side; the last one takes the composer. */
+  more?: readonly SideInput[];
+  onMoreText?: (index: number, value: string) => void;
+  onMoreName?: (index: number, value: string) => void;
+  onAddMore?: () => void;
+  onRemoveMore?: () => void;
   /** Length of what would be sent (both sides joined). */
   length: number;
   /** Nothing typed, no context and no second side. */
@@ -122,7 +128,8 @@ export type HomeFormProps = {
   onExample: () => void;
   canSubmit: boolean;
   onSubmit: () => void;
-  /** "Send them a link", offered while their side is closed. */
+  /** "Send them a link", offered while their side is closed or no side but
+   * yours has text (every other side then gets its own link). */
   onInvite?: () => void;
   canInvite: boolean;
   holding: boolean;
@@ -135,8 +142,11 @@ export type HomeFormProps = {
   onAddContextSignIn?: () => void;
 };
 
+const NO_MORE: readonly SideInput[] = [];
+
 export function HomeForm(p: HomeFormProps) {
   const { lang, evidence } = p;
+  const more = p.more ?? NO_MORE;
   const tag = langTag(lang);
   const submit = () => {
     if (p.canSubmit) p.onSubmit();
@@ -149,13 +159,13 @@ export function HomeForm(p: HomeFormProps) {
     if (!focusNext.current) return;
     document.getElementById(focusNext.current)?.focus();
     focusNext.current = null;
-  }, [p.theirsOpen]);
+  }, [p.theirsOpen, more.length]);
 
   // Short of room the middle rests at its top; keep the part by the composer in view.
   useLayoutEffect(() => {
     const el = mid.current;
     if (el) el.scrollTop = el.scrollHeight;
-  }, [p.error, p.theirsOpen, evidence?.items.length, evidence?.failure, evidence?.overLimit]);
+  }, [p.error, p.theirsOpen, more.length, evidence?.items.length, evidence?.failure, evidence?.overLimit]);
 
   const addContext = evidence ? (
     <EvidenceAdd disabled={evidence.full} className={styles.context} onAdd={evidence.add} onSignIn={p.onAddContextSignIn}>
@@ -199,13 +209,60 @@ export function HomeForm(p: HomeFormProps) {
     fieldLabel: t(lang, "home.theirSideLabel"),
     placeholder: t(lang, "home.theirPlaceholder"),
     onSend: submit,
-    onRemove: () => {
-      focusNext.current = "argument";
-      p.onRemoveTheirs();
-    },
+    // Only the last side can be removed.
+    onRemove: more.length
+      ? undefined
+      : () => {
+          focusNext.current = "argument";
+          p.onRemoveTheirs();
+        },
     removeLabel: t(lang, "home.removeTheirSide"),
   };
-  const composer = p.theirsOpen ? theirs : mine;
+  const extra = (i: number): Side => {
+    const letter = i ? "D" : "C";
+    return {
+      id: `side-${letter.toLowerCase()}`,
+      letter,
+      value: more[i].text,
+      onChange: (value) => p.onMoreText?.(i, value),
+      name: more[i].name,
+      onName: (value) => p.onMoreName?.(i, value),
+      namePlaceholder: t(lang, "home.theirName"),
+      label: t(lang, "home.theirSide"),
+      fieldLabel: `${t(lang, "home.theirSideLabel")} (${letter})`,
+      placeholder: t(lang, "home.theirPlaceholder"),
+      onSend: submit,
+      removeLabel: t(lang, "home.removeTheirSide"),
+    };
+  };
+  const sideC: Side | null =
+    more.length > 0
+      ? {
+          ...extra(0),
+          onRemove:
+            more.length === 1
+              ? () => {
+                  focusNext.current = "other-side";
+                  p.onRemoveMore?.();
+                }
+              : undefined,
+        }
+      : null;
+  const sideD: Side | null =
+    more.length > 1
+      ? {
+          ...extra(1),
+          onRemove: () => {
+            focusNext.current = "side-c";
+            p.onRemoveMore?.();
+          },
+        }
+      : null;
+  const composer = !p.theirsOpen ? mine : (sideD ?? sideC ?? theirs);
+  const lastText = (more.length ? more[more.length - 1].text : p.theirs).trim();
+  const othersEmpty = !p.theirs.trim() && more.every((s) => !s.text.trim());
+  // Another side once the last one has text, or links for everyone else while none has.
+  const room = p.theirsOpen && more.length < 2 && (lastText !== "" || (p.onInvite !== undefined && othersEmpty));
 
   return (
     <form
@@ -226,6 +283,8 @@ export function HomeForm(p: HomeFormProps) {
               {addContext ? <div className={styles.row}>{addContext}</div> : null}
             </SideCard>
           ) : null}
+          {p.theirsOpen && sideC ? <SideCard side={theirs} head /> : null}
+          {p.theirsOpen && sideD ? <SideCard side={sideC as Side} head /> : null}
 
           {evidence && !p.onAddContextSignIn ? (
             <>
@@ -262,22 +321,27 @@ export function HomeForm(p: HomeFormProps) {
             )}
           </div>
 
-          {p.theirsOpen ? null : (
+          {p.theirsOpen && !room ? null : (
             <div className={styles.chips}>
               <button
                 type="button"
                 className={styles.chip}
                 onClick={() => {
-                  focusNext.current = "other-side";
-                  p.onAddTheirs();
+                  if (p.theirsOpen) {
+                    focusNext.current = more.length ? "side-d" : "side-c";
+                    p.onAddMore?.();
+                  } else {
+                    focusNext.current = "other-side";
+                    p.onAddTheirs();
+                  }
                 }}
               >
                 <svg viewBox="0 0 16 16" aria-hidden>
                   <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
                 </svg>
-                {t(lang, "home.addTheirSide")}
+                {t(lang, p.theirsOpen ? "home.addSide" : "home.addTheirSide")}
               </button>
-              {p.onInvite ? (
+              {p.onInvite && othersEmpty ? (
                 <button type="button" className={styles.chip} disabled={!p.canInvite} onClick={p.onInvite}>
                   <svg viewBox="0 0 20 20" aria-hidden>
                     <path

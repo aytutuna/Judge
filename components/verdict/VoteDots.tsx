@@ -1,13 +1,15 @@
-import { voteOf, type Vote } from "@/lib/balance";
+import { voteOf, votesOf, type Vote } from "@/lib/balance";
 import styles from "./verdict.module.css";
 
 /** One judge's vote as the card draws it (the same mapping as the 3D vote
  * orbs): for Party A, for Party B, or any non-side ruling. */
-export { voteOf, type Vote };
+export { voteOf, votesOf, type Vote };
 
 const DOT_CLASS: Record<Vote, string> = {
   a: styles.dotA,
   b: styles.dotB,
+  c: styles.dotC,
+  d: styles.dotD,
   other: styles.dotOther,
 };
 

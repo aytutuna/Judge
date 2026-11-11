@@ -96,7 +96,7 @@ object SignInTags {
     const val USE_PASSWORD = "signin.usePassword"
     const val NEW_PASSWORD = "signin.newPassword"
     const val SAVE_PASSWORD = "signin.savePassword"
-    const val SKIP_PASSWORD = "signin.skipPassword"
+    const val SIGN_OUT = "signin.signOut"
 }
 
 /** Everything the sign-in screen can ask for; no-ops by default (previews, screenshots). */
@@ -108,7 +108,7 @@ data class SignInActions(
     val onSignInWithPassword: () -> Unit = {},
     val onMode: (SignInMode) -> Unit = {},
     val onSavePassword: () -> Unit = {},
-    val onSkipPassword: () -> Unit = {},
+    val onSignOut: () -> Unit = {},
     val onCodeChange: (String) -> Unit = {},
     val onSubmitCode: () -> Unit = {},
     val onResend: () -> Unit = {},
@@ -132,11 +132,11 @@ fun SignInScreen(
     modifier: Modifier = Modifier,
 ) {
     val s = LocalStrings.current
-    // Signed in by the code already: leaving this step skips the password and goes on.
+    // Signed in by the code already: the password is the only way on.
     val choosing = state.step == SignInStep.CHOOSE_PASSWORD
-    BackHandler(enabled = choosing, onBack = actions.onSkipPassword)
+    BackHandler(enabled = choosing) {}
     Column(modifier.fillMaxSize()) {
-        TopBar(onBack = if (choosing) actions.onSkipPassword else onBack)
+        TopBar(onBack = if (choosing) null else onBack)
         Column(
             Modifier
                 .fillMaxSize()
@@ -197,7 +197,7 @@ fun errorText(s: Strings, error: SignInError): String = when (error) {
     SignInError.CODE_TOO_MANY -> s.appSigninCodeTooMany
     SignInError.PASSWORD_WRONG -> s.signinPasswordWrong
     SignInError.PASSWORD_SHORT -> s.signinPasswordShort
-    SignInError.PASSWORD_SAVE_FAILED -> s.signinPasswordSaveFailed
+    SignInError.PASSWORD_SAVE_FAILED, SignInError.PASSWORD_NOT_TAKEN -> s.signinPasswordSaveFailed
     SignInError.CURRENT_PASSWORD_WRONG -> s.errorPasswordWrong
     SignInError.CURRENT_PASSWORD_REQUIRED -> s.errorPasswordRequired
     SignInError.RATE_LIMITED -> s.appSigninRateLimited
@@ -360,17 +360,20 @@ private fun ChoosePasswordStep(state: SignInUiState, actions: SignInActions) {
         modifier = Modifier.testTag(SignInTags.NEW_PASSWORD),
     )
     PrimaryButton(
-        text = s.signinPasswordSave,
+        text = if (state.error == null) s.signinPasswordSave else s.appRetry,
         enabled = state.canSavePassword,
         onClick = actions.onSavePassword,
         modifier = Modifier.fillMaxWidth().padding(top = 16.dp).testTag(SignInTags.SAVE_PASSWORD),
     )
-    TextAction(
-        s.signinPasswordSkip,
-        onClick = actions.onSkipPassword,
-        color = Palette.ink2,
-        modifier = Modifier.padding(top = 6.dp).testTag(SignInTags.SKIP_PASSWORD),
-    )
+    // No skip, but a save that keeps failing must not trap the person.
+    if (state.error != null) {
+        TextAction(
+            s.accountSignOut,
+            onClick = actions.onSignOut,
+            color = Palette.ink2,
+            modifier = Modifier.padding(top = 6.dp).testTag(SignInTags.SIGN_OUT),
+        )
+    }
 }
 
 /** A password box with a show switch; [autofill] tells password managers which kind it is. */

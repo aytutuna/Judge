@@ -57,6 +57,7 @@ describe("GET /api/v1/me", () => {
       entitlement: { canUsePremium: true, blockedReason: null, credits: 6, subscription: null, resetsAt: null },
       age: { confirmed: false, blocked: false },
       hasPassword: false,
+      needsPassword: false,
     });
   });
 

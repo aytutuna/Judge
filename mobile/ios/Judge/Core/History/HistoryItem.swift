@@ -32,6 +32,10 @@ struct HistoryItem: Codable, Sendable, Equatable {
     var removed = false
     var removable = false
     var inviteToken: String?
+    /// Cases with three or four sides only: the sides, and the latest
+    /// ruling's winner (nil: too close). `verdict` stays the two-sided projection.
+    var parties: [String]?
+    var winner: String?
 
     init(kind: String, id: String, at: String, state: String) {
         self.kind = kind
@@ -42,13 +46,15 @@ struct HistoryItem: Codable, Sendable, Equatable {
 
     var isCase: Bool { kind == "case" }
     var isRespondent: Bool { role == "respondent" }
+    var isMany: Bool { parties != nil }
+    var sideCount: Int { parties?.count ?? 2 }
     var key: String { HistoryOrder.key(kind: kind, id: id) }
     var historyState: HistoryState? { HistoryState(rawValue: state) }
     var finalVerdict: FinalVerdict? { verdict.flatMap(FinalVerdict.init(rawValue:)) }
 
     private enum CodingKeys: String, CodingKey {
         case kind, id, role, party, at, createdAt, state, yourMove, verdict, contextAdded, contextBy
-        case headline, excerpt, nameMap, expiresAt, removed, removable, inviteToken
+        case headline, excerpt, nameMap, expiresAt, removed, removable, inviteToken, parties, winner
     }
 
     init(from decoder: any Decoder) throws {
@@ -72,6 +78,8 @@ struct HistoryItem: Codable, Sendable, Equatable {
         removed = (try? c.decodeIfPresent(Bool.self, forKey: .removed)) == true
         removable = (try? c.decodeIfPresent(Bool.self, forKey: .removable)) == true
         inviteToken = try? c.decodeIfPresent(String.self, forKey: .inviteToken)
+        parties = try? c.decodeIfPresent([String].self, forKey: .parties)
+        winner = try? c.decodeIfPresent(String.self, forKey: .winner)
     }
 }
 

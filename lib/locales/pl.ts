@@ -119,6 +119,8 @@ const pl: Locale = {
     verdictAria: "Werdykt: {label}",
     "party.a": "Strona A",
     "party.b": "Strona B",
+    "party.c": "Strona C",
+    "party.d": "Strona D",
     "party.youLabel": "{label} (ty)",
     you: "Ty",
     "shared.subtitle": "Ktoś udostępnił ten werdykt",
@@ -347,8 +349,7 @@ const pl: Locale = {
     "signin.createNote": "Wyślemy ci e-mailem kod, aby potwierdzić ten adres. Wystarczy to zrobić raz.",
     "signin.passwordChoose": "Jesteś zalogowany. Wybierz hasło na następny raz.",
     "signin.passwordSave": "Zapisz hasło",
-    "signin.passwordSaveFailed": "Jesteś zalogowany, ale nie udało się zapisać hasła. Spróbuj ponownie albo ustaw je później w Ustawieniach.",
-    "signin.passwordSkip": "Pomiń na razie",
+    "signin.passwordSaveFailed": "Nie udało się zapisać hasła. Spróbuj ponownie.",
     "signin.passwordSubmit": "Zaloguj się",
     "signin.rateLimited": "Za dużo prób. Odczekaj minutę i spróbuj ponownie.",
     "signin.serviceDown": "Logowanie jest teraz niedostępne. Spróbuj później.",
@@ -376,10 +377,6 @@ const pl: Locale = {
     "account.deleteConfirm":
       "Usunąć konto? Usuniemy twoją pulę werdyktów, plan i dane logowania. Twoje werdykty i twoje wersje w sprawach też znikną: wymażemy twoje teksty i imiona, a linki do udostępniania przestaną działać.",
     "account.deleteYes": "Tak, usuń",
-    "account.passwordSet": "Ustaw hasło",
-    "account.passwordChange": "Zmień hasło",
-    "account.passwordCurrent": "Obecne hasło",
-    "account.passwordSaved": "Hasło zapisane.",
     "account.deleteCancel": "Zostaw moje konto",
     "account.deleted": "Konto usunięte. Przenosimy cię na stronę główną…",
     "account.deleteFailed": "Nie udało się teraz usunąć konta. Spróbujesz jeszcze raz?",
@@ -471,6 +468,10 @@ const pl: Locale = {
     "case.judgeNow.yes": "Tak, oceń teraz",
     "case.judgeExpired.confirm": "Chcesz werdykt tylko na podstawie swojej wersji? To zużyje 1 werdykt.",
     "case.judgeExpired.yes": "Tak, użyj 1 werdyktu",
+    "case.side.waiting": "Czeka",
+    "case.side.answered": "Odpowiedział(a)",
+    "case.judgeAnswered": "Oceń na podstawie stron, które odpowiedziały",
+    "case.judgeAnswered.confirm": "Chcesz werdykt na podstawie stron, które odpowiedziały? Pozostałe zaproszenia się zamkną i te osoby nie będą mogły już odpowiedzieć.",
     "case.cancel": "Anuluj",
     "case.retry": "Spróbuj ponownie",
     "case.failedBody": "Werdykt wrócił do twojej puli. Możesz spróbować ponownie.",
@@ -479,9 +480,13 @@ const pl: Locale = {
     "case.accounts": "Co każda strona powiedziała sędziom",
     "case.accountA": "Relacja Strony A",
     "case.accountB": "Relacja Strony B",
+    "case.accountC": "Relacja Strony C",
+    "case.accountD": "Relacja Strony D",
     "case.accountYou": "Twoja relacja ({label})",
     "case.contextA": "Kontekst od Strony A",
     "case.contextB": "Kontekst od Strony B",
+    "case.contextC": "Kontekst od Strony C",
+    "case.contextD": "Kontekst od Strony D",
     "case.contextYou": "Twój dodatkowy kontekst ({label})",
     "case.evidenceItem": "Obraz {n}, tak jak czytają go sędziowie",
     "case.notYet": "Druga strona jeszcze nie odpowiedziała.",
@@ -568,6 +573,7 @@ const pl: Locale = {
     "home.yourPlaceholder": "O co chodzi?",
     "home.addContext": "Dodaj kontekst",
     "home.addTheirSide": "Dodaj drugą stronę",
+    "home.addSide": "Dodaj kolejną stronę",
     "home.removeTheirSide": "Usuń drugą stronę",
     "home.sendLink": "Wyślij link",
     "home.clear": "Wyczyść",
@@ -581,58 +587,9 @@ const pl: Locale = {
     "home.says": "{name} mówi:",
     "home.mySide": "Moja wersja:",
     "home.otherSide": "Wersja drugiej strony:",
-    "pairs.dishwasher.aName": "Ania",
-    "pairs.dishwasher.a":
-      "Znowu wstawiłeś miski do górnego kosza. Tam nigdy się nie domywają, od tego jest dolny.",
-    "pairs.dishwasher.bName": "Michał",
-    "pairs.dishwasher.b":
-      "Mieszczą się tam bez problemu, a dół zostaje wolny na garnki. Od lat tak ładuję zmywarkę i nigdy nic nie wyszło niedomyte.",
-    "pairs.bill.aName": "Magda",
-    "pairs.bill.a":
-      "Nic nie piłam, więc nie powinnam płacić jednej czwartej rachunku za wino. Jedzenie możemy podzielić po równo, to mi pasuje.",
-    "pairs.bill.bName": "Paweł",
-    "pairs.bill.b":
-      "Zawsze po prostu dzielimy rachunek na cztery. Liczenie za każdym razem, kto co zamówił, to męczarnia, a różnica i tak jest niewielka.",
-    "pairs.thermostat.aName": "Julia",
-    "pairs.thermostat.a":
-      "Jest tu 19 stopni i marznę nawet w bluzie. Podkręcenie ogrzewania do 22 to żadna przesada.",
-    "pairs.thermostat.bName": "Tomek",
-    "pairs.thermostat.b":
-      "Przy 22 stopniach nie da się spać, jest za gorąco. Ty możesz coś jeszcze na siebie narzucić, a ja już nic więcej nie zdejmę.",
-    "pairs.roadTrip.aName": "Marta",
-    "pairs.roadTrip.a":
-      "Całe sześć godzin w tamtą stronę prowadziłam ja. Uczciwie będzie, jeśli w drodze powrotnej poprowadzisz ty.",
-    "pairs.roadTrip.bName": "Piotr",
-    "pairs.roadTrip.b":
-      "Przed wyjazdem mówiłem, że nie znoszę jeździć po nocy, a wyjeżdżamy o 19. Następnym razem to ja prowadzę rano.",
-    "pairs.seat.aName": "Karolina",
-    "pairs.seat.a":
-      "Mój fotel się odchyla, więc go odchylam. To nocny lot, wszyscy próbują spać.",
-    "pairs.seat.bName": "Wojtek",
-    "pairs.seat.b":
-      "Mam 190 cm wzrostu, a kolana i tak już wbijają mi się w twój fotel. Mogłaś chociaż zapytać, zanim odchyliłaś go do oporu.",
-    "pairs.spoiler.aName": "Zosia",
-    "pairs.spoiler.a":
-      "Powiedziałeś mi, kto zabił, zanim w ogóle włączyłam ostatni odcinek. Czekałam na niego cały tydzień.",
-    "pairs.spoiler.bName": "Kamil",
-    "pairs.spoiler.b":
-      "Wyszedł trzy tygodnie temu, a ty mówiłaś, że już skończyłaś. Nie jestem w stanie śledzić, kto jest na którym odcinku.",
-    "pairs.jacket.aName": "Adam",
-    "pairs.jacket.a":
-      "Poszłaś w mojej dżinsowej kurtce na koncert i nawet nie zapytałaś. Wróciła cała przesiąknięta dymem.",
-    "pairs.jacket.bName": "Ewa",
-    "pairs.jacket.b":
-      "Wisiała przy drzwiach, a ty jej nigdy nie nosisz. Zapytałabym, ale spałeś, a ja już byłam spóźniona.",
-    "pairs.lastSlice.aName": "Szymon",
-    "pairs.lastSlice.a":
-      "Zaklepałem ostatni kawałek pizzy, zanim zaczął się film. Wszyscy słyszeli.",
-    "pairs.lastSlice.bName": "Natalia",
-    "pairs.lastSlice.b":
-      "Nie możesz czegoś zaklepać, a potem nie tknąć tego przez dwie godziny. Leżał tam i stygł, więc go zjadłam.",
     "appeal.lead":
-      "Czegoś brakuje albo coś się nie zgadza? Możesz to raz dopisać, a sędziowie przyjrzą się wszystkiemu od nowa. Kosztuje to 1 werdykt.",
-    "appeal.label": "Twój kontekst",
-    "appeal.placeholder": "Co umknęło sędziom?",
+      "Zużywa 1 werdykt.",
+    "appeal.placeholder": "Co umknęło sędziom? Fakt, wiadomość albo to, na co naprawdę się umówiliście.",
     "appeal.submit": "Oceń ponownie z kontekstem",
     "appeal.sending": "Anonimizujemy twój kontekst…",
     "appeal.judging": "Sędziowie przyglądają się wszystkiemu od nowa…",
@@ -652,8 +609,6 @@ const pl: Locale = {
     "appeal.previous": "Wcześniejszy werdykt",
     "appeal.failed": "Ponowna ocena się nie udała. Werdykt wrócił do twojej puli, możesz spróbować jeszcze raz.",
     "appeal.refused": "Sędziowie odmówili ponownej oceny z tym kontekstem. Werdykt wrócił do twojej puli.",
-    "appeal.leadVerdict":
-      "Czegoś brakuje albo coś się nie zgadza? Dodaj to, a sędziowie przyjrzą się wszystkiemu od nowa. Każde dodanie kontekstu kosztuje 1 werdykt i można je zrobić najwyżej dwa razy na werdykt.",
     "appeal.history": "Historia werdyktu",
     "faq.both.q": "Czy druga osoba może opowiedzieć swoją wersję?",
     "faq.both.a":
@@ -696,6 +651,7 @@ const pl: Locale = {
     "unavailable.cta": "Przejdź do Judge",
     "error.removed": "To zostało usunięte. Link już nie działa.",
     "error.names_unavailable": "Nie można teraz zapisać imion. Spróbuj później.",
+    "error.update_required": "Ta sprawa ma więcej niż dwie strony. Zaktualizuj aplikację, żeby ją otworzyć.",
     "verdict.remove": "Usuń ten werdykt",
     "verdict.remove.confirm":
       "Usunąć twój tekst, imiona i nazwy wyświetlane? Link do udostępniania i jego obrazek podglądu przestaną się wczytywać dla wszystkich (podglądy wysłane już na czatach mogą być widoczne, dopóki te aplikacje ich nie odświeżą). Tego nie da się cofnąć.",

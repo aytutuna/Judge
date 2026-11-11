@@ -1,6 +1,6 @@
 import type { CaseAppealView, CaseEvidenceView, CaseSideView, PartyLetter } from "@/lib/case-types";
-import { t, type Lang } from "@/lib/i18n";
-import { localizeLabelsAuto } from "@/lib/names";
+import { t, type Key, type Lang } from "@/lib/i18n";
+import { localizeLabelsAuto, partyLabel } from "@/lib/names";
 import styles from "./case.module.css";
 
 function Evidence({ items, lang }: { items: readonly CaseEvidenceView[]; lang: Lang }) {
@@ -15,6 +15,27 @@ function Evidence({ items, lang }: { items: readonly CaseEvidenceView[]; lang: L
     </>
   );
 }
+
+const ACCOUNT_CLASS: Record<PartyLetter, string> = {
+  a: styles.accountA,
+  b: styles.accountB,
+  c: styles.accountC,
+  d: styles.accountD,
+};
+
+const ACCOUNT_KEY: Record<PartyLetter, Key> = {
+  a: "case.accountA",
+  b: "case.accountB",
+  c: "case.accountC",
+  d: "case.accountD",
+};
+
+const CONTEXT_KEY: Record<PartyLetter, Key> = {
+  a: "case.contextA",
+  b: "case.contextB",
+  c: "case.contextC",
+  d: "case.contextD",
+};
 
 /**
  * The accounts exactly as the judges read them: anonymized text plus the
@@ -41,7 +62,7 @@ export function AccountsRead({
   /** The viewer's party (from the case view). */
   yourParty?: PartyLetter;
 }) {
-  const label = (p: PartyLetter) => t(lang, p === "a" ? "party.a" : "party.b");
+  const label = (p: PartyLetter) => partyLabel(lang, p);
   if (sides.length === 0) return null;
   const ordered = [...sides].sort((x, y) => x.party.localeCompare(y.party));
   const added = appeals.filter((a) => a.status !== "failed" && a.text.trim());
@@ -54,12 +75,12 @@ export function AccountsRead({
         {ordered.map((side) => (
           <article
             key={side.party}
-            className={`${styles.account} ${side.party === "a" ? styles.accountA : styles.accountB}`}
+            className={`${styles.account} ${ACCOUNT_CLASS[side.party]}`}
           >
             <h3 className={styles.accountHead}>
               {side.party === yourParty
                 ? t(lang, "case.accountYou", { label: label(side.party) })
-                : t(lang, side.party === "a" ? "case.accountA" : "case.accountB")}
+                : t(lang, ACCOUNT_KEY[side.party])}
             </h3>
             {side.removed ? (
               <p className={styles.note}>{t(lang, "case.sideRemoved")}</p>
@@ -73,11 +94,11 @@ export function AccountsRead({
         ))}
       </div>
       {added.map((a) => (
-        <article key={a.id} className={`${styles.account} ${a.party === "a" ? styles.accountA : styles.accountB}`}>
+        <article key={a.id} className={`${styles.account} ${ACCOUNT_CLASS[a.party]}`}>
           <h3 className={styles.accountHead}>
             {a.party === yourParty
               ? t(lang, "case.contextYou", { label: label(a.party) })
-              : t(lang, a.party === "a" ? "case.contextA" : "case.contextB")}
+              : t(lang, CONTEXT_KEY[a.party])}
           </h3>
           <p className={styles.accountText}>{localizeLabelsAuto(a.text)}</p>
           <Evidence items={a.evidence} lang={lang} />

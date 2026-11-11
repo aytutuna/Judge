@@ -119,6 +119,8 @@ const cs: Locale = {
     verdictAria: "Verdikt: {label}",
     "party.a": "Strana A",
     "party.b": "Strana B",
+    "party.c": "Strana C",
+    "party.d": "Strana D",
     "party.youLabel": "{label} (ty)",
     you: "Ty",
     "shared.subtitle": "Někdo s tebou sdílí tento verdikt",
@@ -341,8 +343,7 @@ const cs: Locale = {
     "signin.createNote": "Pošleme ti e-mailem kód, abychom potvrdili tuto adresu. Stačí to udělat jednou.",
     "signin.passwordChoose": "Jsi přihlášen(a). Vyber si heslo na příště.",
     "signin.passwordSave": "Uložit heslo",
-    "signin.passwordSaveFailed": "Jsi přihlášen(a), ale heslo se nepodařilo uložit. Zkus to znovu, nebo si ho nastav později v Nastavení.",
-    "signin.passwordSkip": "Zatím přeskočit",
+    "signin.passwordSaveFailed": "Heslo se nepodařilo uložit. Zkus to znovu.",
     "signin.passwordSubmit": "Přihlásit se",
     "signin.rateLimited": "Příliš mnoho pokusů. Počkej minutu a zkus to znovu.",
     "signin.serviceDown": "Přihlášení teď není dostupné. Zkus to později.",
@@ -370,10 +371,6 @@ const cs: Locale = {
     "account.deleteConfirm":
       "Smazat účet? Tvoje kredity, plán a přihlašovací údaje se smažou. Tvoje verdikty a tvoje pohledy v případech se odstraní: tvoje texty i jména se vymažou a sdílené odkazy přestanou fungovat.",
     "account.deleteYes": "Ano, smazat",
-    "account.passwordSet": "Nastavit heslo",
-    "account.passwordChange": "Změnit heslo",
-    "account.passwordCurrent": "Současné heslo",
-    "account.passwordSaved": "Heslo je uloženo.",
     "account.deleteCancel": "Ponechat účet",
     "account.deleted": "Účet je smazaný. Přesměrujeme tě na úvodní stránku…",
     "account.deleteFailed": "Účet se teď nepodařilo smazat. Zkusíš to znovu?",
@@ -462,6 +459,10 @@ const cs: Locale = {
     "case.judgeNow.yes": "Ano, soudit hned",
     "case.judgeExpired.confirm": "Chceš verdikt jen podle svého pohledu? Spotřebuje to 1 verdikt.",
     "case.judgeExpired.yes": "Ano, použít 1 verdikt",
+    "case.side.waiting": "Čeká se",
+    "case.side.answered": "Odpověděl(a)",
+    "case.judgeAnswered": "Soudit podle stran, které odpověděly",
+    "case.judgeAnswered.confirm": "Chceš verdikt od stran, které odpověděly? Ostatní pozvánky se zavřou a ti lidé už nebudou moct odpovědět.",
     "case.cancel": "Zrušit",
     "case.retry": "Zkusit znovu",
     "case.failedBody": "Kredit se ti vrátil. Můžeš to zkusit znovu.",
@@ -470,9 +471,13 @@ const cs: Locale = {
     "case.accounts": "Co každá strana řekla soudcům",
     "case.accountA": "Jak to vidí Strana A",
     "case.accountB": "Jak to vidí Strana B",
+    "case.accountC": "Jak to vidí Strana C",
+    "case.accountD": "Jak to vidí Strana D",
     "case.accountYou": "Jak to vidíš ty ({label})",
     "case.contextA": "Strana A doplnila kontext",
     "case.contextB": "Strana B doplnila kontext",
+    "case.contextC": "Strana C doplnila kontext",
+    "case.contextD": "Strana D doplnila kontext",
     "case.contextYou": "Tvůj doplněný kontext ({label})",
     "case.evidenceItem": "Obrázek {n}, jak ho čtou soudci",
     "case.notYet": "Druhá strana ještě neodpověděla.",
@@ -557,6 +562,7 @@ const cs: Locale = {
     "home.yourPlaceholder": "Co je za problém?",
     "home.addContext": "Přidat kontext",
     "home.addTheirSide": "Přidat pohled druhé strany",
+    "home.addSide": "Přidat další stranu",
     "home.removeTheirSide": "Odebrat pohled druhé strany",
     "home.sendLink": "Pošli odkaz",
     "home.clear": "Vymazat",
@@ -570,58 +576,9 @@ const cs: Locale = {
     "home.says": "{name} říká:",
     "home.mySide": "Můj pohled:",
     "home.otherSide": "Pohled druhé strany:",
-    "pairs.dishwasher.aName": "Lucie",
-    "pairs.dishwasher.a":
-      "Zase jsi dal misky do horního koše. Tam se nikdy pořádně neumyjí, od toho je přece dolní koš.",
-    "pairs.dishwasher.bName": "Tomáš",
-    "pairs.dishwasher.b":
-      "Nahoru se vejdou v pohodě a dole zůstane místo na hrnce. Takhle myčku plním už roky a ještě nikdy nic nezůstalo špinavé.",
-    "pairs.bill.aName": "Petra",
-    "pairs.bill.a":
-      "Nic jsem nepila, tak bych neměla platit čtvrtinu vína. Jídlo klidně rozdělme rovným dílem.",
-    "pairs.bill.bName": "Jakub",
-    "pairs.bill.b":
-      "Vždycky to prostě dělíme na čtyři. Pokaždé počítat, kdo měl co, je otrava, a ten rozdíl stejně není nijak velký.",
-    "pairs.thermostat.aName": "Klára",
-    "pairs.thermostat.a":
-      "Je tu 19 stupňů a je mi zima i v mikině. Pustit topení na 22 není žádné šílenství.",
-    "pairs.thermostat.bName": "Martin",
-    "pairs.thermostat.b":
-      "Při 22 stupních je na spaní moc teplo. Ty si můžeš vzít další vrstvu, já už ze sebe nic sundat nemůžu.",
-    "pairs.roadTrip.aName": "Vojta",
-    "pairs.roadTrip.a":
-      "Cestou tam jsem řídil celých šest hodin. Je jen fér, abys nás zpátky odvezla ty.",
-    "pairs.roadTrip.bName": "Eliška",
-    "pairs.roadTrip.b":
-      "Ještě před odjezdem jsem říkala, že nesnáším řízení v noci, a my vyrážíme v sedm večer. Příště beru všechny ranní jízdy já.",
-    "pairs.seat.aName": "Adéla",
-    "pairs.seat.a":
-      "Moje sedadlo se dá sklopit, tak ho sklápím. Je to noční let a všichni se snaží spát.",
-    "pairs.seat.bName": "Filip",
-    "pairs.seat.b":
-      "Měřím metr devadesát a kolena už teď opírám o tvoje sedadlo. Mohla ses aspoň zeptat, než jsi ho sklopila úplně dozadu.",
-    "pairs.spoiler.aName": "Karolína",
-    "pairs.spoiler.a":
-      "Prozradil jsi mi vraha, ještě než jsem pustila poslední díl. Celý týden jsem se na něj těšila.",
-    "pairs.spoiler.bName": "Lukáš",
-    "pairs.spoiler.b":
-      "Vyšlo to před třemi týdny a říkala jsi, že to máš dokoukané. Nemůžu hlídat, kdo je u kterého dílu.",
-    "pairs.jacket.aName": "David",
-    "pairs.jacket.a":
-      "Vzala sis moji džínovou bundu na koncert a ani ses nezeptala. Vrátila se celá načichlá kouřem.",
-    "pairs.jacket.bName": "Anna",
-    "pairs.jacket.b":
-      "Visela u dveří a ty ji nikdy nenosíš. Zeptala bych se, ale spal jsi a já už jsem nestíhala.",
-    "pairs.lastSlice.aName": "Matěj",
-    "pairs.lastSlice.a":
-      "Ještě než začal film, řekl jsem, že poslední kousek je můj. Všichni to slyšeli.",
-    "pairs.lastSlice.bName": "Kristýna",
-    "pairs.lastSlice.b":
-      "Nemůžeš si něco zabrat a pak na to dvě hodiny nesáhnout. Jen to tam leželo a chladlo, tak jsem to snědla.",
     "appeal.lead":
-      "Něco chybí nebo nesedí? Doplň to jednou a soudci se na všechno podívají znovu. Stojí to 1 verdikt.",
-    "appeal.label": "Tvůj kontext",
-    "appeal.placeholder": "Co soudcům uniklo?",
+      "Stojí 1 verdikt.",
+    "appeal.placeholder": "Co soudcům uniklo? Fakt, zpráva nebo to, na čem byla doopravdy dohoda.",
     "appeal.submit": "Znovu soudit s kontextem",
     "appeal.sending": "Anonymizujeme tvůj kontext…",
     "appeal.judging": "Soudci se na všechno dívají znovu…",
@@ -641,8 +598,6 @@ const cs: Locale = {
     "appeal.previous": "Dřívější verdikt",
     "appeal.failed": "Nové posouzení neproběhlo. Kredit se ti vrátil; můžeš to zkusit znovu.",
     "appeal.refused": "S tímhle kontextem soudci znovu soudit odmítli. Kredit se ti vrátil.",
-    "appeal.leadVerdict":
-      "Něco chybí nebo nesedí? Doplň to a soudci se na všechno podívají znovu. Pokaždé to stojí 1 verdikt, nejvýš dvakrát u jednoho verdiktu.",
     "appeal.history": "Historie verdiktu",
     "faq.both.q": "Může druhá strana napsat, jak to vidí ona?",
     "faq.both.a":
@@ -684,6 +639,7 @@ const cs: Locale = {
     "unavailable.cta": "Přejít na Judge",
     "error.removed": "Tohle bylo odstraněno. Odkaz už nefunguje.",
     "error.names_unavailable": "Jména teď nejde uložit. Zkus to později.",
+    "error.update_required": "Tento případ má více než dvě strany. Aktualizuj aplikaci, abys ho otevřel.",
     "verdict.remove": "Odstranit tento verdikt",
     "verdict.remove.confirm":
       "Odstranit tvůj text, jména i zobrazovaná jména? Sdílený odkaz a jeho náhledový obrázek se přestanou načítat pro všechny (náhledy, které už byly vložené do chatů, se můžou zobrazovat dál, dokud je tyto aplikace neobnoví). Tohle nejde vrátit.",

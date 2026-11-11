@@ -3,6 +3,7 @@ package com.okjudge.judge.core.api
 import com.okjudge.judge.Fixtures
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.model.VerdictRequest
+import com.okjudge.judge.core.model.VerdictSide
 import com.okjudge.judge.i18n.AppLang
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.async
@@ -66,6 +67,26 @@ class JudgeApiTest {
         assertEquals("premium", body["tier"]!!.jsonPrimitive.content)
         assertTrue("no null fields on the wire", "clarifications" !in body && "evidence" !in body)
         assertTrue("framework" !in body)
+    }
+
+    @Test
+    fun everyRequest_asksForUpToFourSides() = runBlocking {
+        server.enqueue(json(200, Fixtures.sampleJson("win_b_named")))
+        api().submitVerdict(request)
+        assertEquals("4", server.takeRequest().headers["Judge-Sides"])
+    }
+
+    @Test
+    fun aVerdictRequestWithSides_carriesThemAsTyped() {
+        val body = com.okjudge.judge.core.model.WireJson.json.encodeToString(
+            VerdictRequest.serializer(),
+            request.copy(sides = listOf(VerdictSide("a", "Ayşe"), VerdictSide("b"), VerdictSide("c", "Deniz"))),
+        )
+        val sides = Json.parseToJsonElement(body).jsonObject["sides"]!!.let { it as kotlinx.serialization.json.JsonArray }
+        assertEquals(3, sides.size)
+        assertEquals("Deniz", sides[2].jsonObject["name"]!!.jsonPrimitive.content)
+        assertNull("an unnamed side leaves the name out", sides[1].jsonObject["name"])
+        assertNull(Json.parseToJsonElement(com.okjudge.judge.core.model.WireJson.json.encodeToString(VerdictRequest.serializer(), request)).jsonObject["sides"])
     }
 
     @Test

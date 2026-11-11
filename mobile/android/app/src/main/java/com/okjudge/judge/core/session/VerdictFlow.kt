@@ -15,6 +15,7 @@ import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.WireJson
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.core.model.VerdictRequest
+import com.okjudge.judge.core.model.VerdictSide
 import com.okjudge.judge.core.model.VerdictSubmission
 import com.okjudge.judge.i18n.AppLang
 import kotlinx.coroutines.CoroutineScope
@@ -57,8 +58,13 @@ class VerdictFlow(
         data class Failed(val error: UiError) : State
     }
 
-    /** One written side as the judging screen shows it; an empty [name] reads "Your side" / "Their side". */
-    data class Side(val mine: Boolean, val name: String, val text: String)
+    /**
+     * One written side as the judging screen shows it; an empty [name] reads "Your side" / "Their side".
+     * [extra] is C or D on a verdict with more than two sides.
+     */
+    data class Side(val mine: Boolean, val name: String, val text: String, val extra: com.okjudge.judge.core.model.Side? = null) {
+        val party: com.okjudge.judge.core.model.Side get() = if (mine) com.okjudge.judge.core.model.Side.A else extra ?: com.okjudge.judge.core.model.Side.B
+    }
 
     private val _state = MutableStateFlow<State>(State.Idle)
     val state: StateFlow<State> = _state.asStateFlow()
@@ -211,6 +217,7 @@ class VerdictFlow(
         evidence: List<String>,
         displayName: String?,
         otherName: String? = null,
+        sides: Int = 2,
     ): Boolean {
         if (!canStart()) return false
         _lastError.value = null
@@ -220,6 +227,7 @@ class VerdictFlow(
             lang = lang.tag,
             evidence = evidence.takeIf { it.isNotEmpty() },
             displayName = displayName?.trim()?.takeIf { it.isNotEmpty() },
+            sides = sides.takeIf { it > 2 }?.coerceAtMost(4),
         )
         val body = WireJson.json.encodeToString(CreateCaseRequest.serializer(), request)
         val key = keyFor(body)
@@ -265,6 +273,8 @@ class VerdictFlow(
             tier = "premium",
             clarifications = clarifications,
             evidence = input.evidence.takeIf { it.isNotEmpty() },
+            // Three or four sides go as typed; `argument` is all of them joined.
+            sides = input.sides.takeIf { it.size > 2 }?.map { VerdictSide(it.text, it.name.ifEmpty { null }) },
         )
         val body = WireJson.json.encodeToString(VerdictRequest.serializer(), request)
         val key = keyFor(body)

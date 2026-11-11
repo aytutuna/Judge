@@ -15,7 +15,7 @@
 
 import { nanoid } from "nanoid";
 import { track } from "@/lib/analytics/track";
-import type { CaseMode } from "@/lib/case-types";
+import type { CaseMode, PartyLetter } from "@/lib/case-types";
 import { claudeJson, LITE_MODEL, withUsageMeter, type UsageTotals } from "@/lib/claude";
 import type { InStatement } from "@libsql/client";
 import { STORED_FRAMEWORK } from "@/lib/db";
@@ -25,9 +25,11 @@ import { evidenceBlock } from "@/lib/evidence";
 import { loadLocales, voiceNote, type Lang } from "@/lib/i18n";
 import { LANGS } from "@/lib/langs";
 import { APPEAL_JUDGE_NOTE, APPEAL_ONE_SIDED_JUDGE_NOTE } from "@/lib/judge";
+import { multiAppealNote } from "@/lib/judge-multi";
+import { partiesFor } from "@/lib/multi";
 import { judgeAnonymized, premiumLogLine, type JudgedOutcome, type PremiumStats } from "@/lib/premium/run";
-import type { AppealInfo, AppealOutcome, DisputedFact, EvidenceUsed, VerdictResult } from "@/lib/types";
-import { composeForJudging, evidenceCounts, evidenceGroups } from "./compose";
+import type { AppealInfo, AppealOutcome, Dispute, DisputedFact, EvidenceUsed, VerdictResult } from "@/lib/types";
+import { composeForJudging, evidenceCounts, evidenceGroups, missingSides } from "./compose";
 import { getCase, loadCaseBundle, type AppealRow, type CaseBundle } from "./db";
 import { notifyOwnerCaseReady } from "./notify";
 import { appealOutcome, confidenceChange } from "./outcome";
@@ -57,6 +59,7 @@ export function normalizeCaseResult(
   result: VerdictResult,
   opts: { twoSided: boolean; evidenceUsed: EvidenceUsed },
 ): VerdictResult {
+  if (result.parties) return normalizeManyResult(result, opts.evidenceUsed);
   const {
     two_sided: _t,
     agreed_facts: agreed,
@@ -84,6 +87,34 @@ export function normalizeCaseResult(
     disputed_facts: disputedFacts,
     would_change: (would ?? []).map(clip).filter(Boolean).slice(0, MAX_WOULD_CHANGE),
     evidence_used: opts.evidenceUsed,
+  };
+}
+
+/** The stored shape of a case verdict with three or four sides: the same
+ * limits as the two-sided one, over `disputes` instead of `disputed_facts`. */
+function normalizeManyResult(result: VerdictResult, evidenceUsed: EvidenceUsed): VerdictResult {
+  const { two_sided: _t, agreed_facts: agreed, disputes, would_change: would, evidence_used: _e, ...rest } = result;
+  void _t;
+  void _e;
+  let decisiveSeen = false;
+  const overturned = rest.crux_trial?.outcome === "overturned";
+  const kept: Dispute[] = (disputes ?? []).slice(0, MAX_DISPUTED).map((d) => {
+    const decisive = d.decisive && !decisiveSeen;
+    if (decisive) decisiveSeen = true;
+    return {
+      fact: clip(d.fact),
+      positions: d.positions.map((p) => ({ party: p.party, says: clip(p.says) })),
+      finding: decisive && overturned ? "unsettled" : d.finding,
+      decisive,
+    };
+  });
+  return {
+    ...rest,
+    two_sided: true,
+    agreed_facts: (agreed ?? []).map(clip).filter(Boolean).slice(0, MAX_AGREED),
+    disputes: kept,
+    would_change: (would ?? []).map(clip).filter(Boolean).slice(0, MAX_WOULD_CHANGE),
+    evidence_used: evidenceUsed,
   };
 }
 
@@ -115,11 +146,19 @@ function summarySystem(lang: Lang): string {
   return `You write one sentence for an argument-settling app. A case was judged, then one party added new context and the whole case was judged again. The app already shows the outcome label, so never quote numbers and never contradict the label. Say what the new context changed in the judges' reasoning, or why it did not change the outcome. One short sentence of 12 to 25 words: name the one point that mattered, nothing more. No names, no quotes, no preamble. ${language}`;
 }
 
+/** The verdict as the summary prompt names it. A result with three or four
+ * sides keeps side_a, side_b or too_close in `verdict`, so it is read by
+ * its winner. */
+function verdictWord(r: VerdictResult): string {
+  if (!r.parties) return r.verdict;
+  return r.winner ? `side_${r.winner}` : "too_close";
+}
+
 /** One sentence on what the new context changed. Fails open to "". */
 export async function appealSummary(
   prev: VerdictResult,
   next: VerdictResult,
-  appeal: { party: "a" | "b"; text: string },
+  appeal: { party: PartyLetter; text: string },
   lang: Lang,
   outcome: AppealOutcome,
 ): Promise<string> {
@@ -127,12 +166,12 @@ export async function appealSummary(
     const user = [
       `OUTCOME LABEL: ${OUTCOME_MEANING[outcome]}`,
       "",
-      `EARLIER VERDICT: ${prev.verdict}`,
+      `EARLIER VERDICT: ${verdictWord(prev)}`,
       `Headline: ${prev.headline}`,
       ...(prev.why ? [`Why: ${prev.why}`] : []),
       `Crux: ${prev.crux}`,
       "",
-      `NEW VERDICT: ${next.verdict}`,
+      `NEW VERDICT: ${verdictWord(next)}`,
       `Headline: ${next.headline}`,
       ...(next.why ? [`Why: ${next.why}`] : []),
       `Crux: ${next.crux}`,
@@ -255,8 +294,13 @@ function verdictRowStatements(
 
 const VERDICT_EXISTS = "EXISTS (SELECT 1 FROM verdicts WHERE id = ?)";
 
-function evidenceText(bundle: CaseBundle, mode: CaseMode, appeals: { earlier: AppealRow[]; current: AppealRow | null }) {
-  const groups = evidenceGroups(bundle.evidence, mode, appeals);
+function evidenceText(
+  bundle: CaseBundle,
+  mode: CaseMode,
+  appeals: { earlier: AppealRow[]; current: AppealRow | null },
+  count = 2,
+) {
+  const groups = evidenceGroups(bundle.evidence, mode, appeals, count);
   return groups.length > 0 ? evidenceBlock(groups) : null;
 }
 
@@ -290,9 +334,10 @@ export async function runCaseJudging(
   }
   const mode: CaseMode = row.mode ?? "two_sided";
   const twoSided = mode === "two_sided";
+  const count = twoSided ? row.sides : 2;
   const noAppeals = { earlier: [], current: null };
-  const document = composeForJudging(bundle.sides, mode, noAppeals);
-  const evText = evidenceText(bundle, mode, noAppeals);
+  const document = composeForJudging(bundle.sides, mode, noAppeals, count, missingSides(bundle));
+  const evText = evidenceText(bundle, mode, noAppeals, count);
 
   const run = await judge(caseId, {
     text: document,
@@ -300,19 +345,20 @@ export async function runCaseJudging(
     lang: row.lang,
     ...(twoSided ? { twoSided: true } : {}),
     ...(evText ? { evidence: true } : {}),
+    ...(count > 2 ? { parties: partiesFor(count) } : {}),
   }, startedAt);
   const outcome = run.outcome;
   if (!outcome || outcome.status === "failed") {
     const code = outcome?.status === "failed" ? outcome.code : "unavailable";
     console.error("[cases] judging failed:", outcome?.status === "failed" ? outcome.error : run.error);
     run.log(null, code);
-    void track("verdict_failed", { userId: row.ownerId, props: { kind: "case", mode, code } });
+    void track("verdict_failed", { userId: row.ownerId, props: { kind: "case", mode: count > 2 ? "many_sided" : mode, code } });
     return fail(code);
   }
 
   const result = normalizeCaseResult(outcome.result, {
     twoSided,
-    evidenceUsed: evidenceCounts(bundle.evidence, new Set()),
+    evidenceUsed: evidenceCounts(bundle.evidence, new Set(), count),
   });
   const verdictId = nanoid(10);
   const at = nowIso();
@@ -364,7 +410,7 @@ export async function runCaseJudging(
     return;
   }
   run.log(verdictId, outcome.refused ? "refused" : outcome.degraded ? "degraded" : "ok");
-  void track("verdict_ready", { userId: row.ownerId, props: { kind: "case", mode } });
+  void track("verdict_ready", { userId: row.ownerId, props: { kind: "case", mode: count > 2 ? "many_sided" : mode } });
   if (twoSided) await notifyOwnerCaseReady(row, origin);
 }
 
@@ -400,14 +446,15 @@ export async function runAppealJudging(
 
   const mode: CaseMode = row.mode ?? "two_sided";
   const twoSided = mode === "two_sided";
+  const count = twoSided ? row.sides : 2;
   const previous = bundle.verdicts.find((v) => v.seq === appeal.baseSeq) ?? bundle.verdicts.at(-1);
   if (!previous?.result) return fail("unavailable");
   const earlier = bundle.appeals
     .filter((a) => a.id !== appealId && a.status === "judged" && a.resultSeq !== null)
     .sort((x, y) => (x.resultSeq ?? 0) - (y.resultSeq ?? 0));
   const appeals = { earlier, current: appeal };
-  const document = composeForJudging(bundle.sides, mode, appeals);
-  const evText = evidenceText(bundle, mode, appeals);
+  const document = composeForJudging(bundle.sides, mode, appeals, count, missingSides(bundle));
+  const evText = evidenceText(bundle, mode, appeals, count);
 
   const run = await judge(caseId, {
     text: document,
@@ -415,8 +462,9 @@ export async function runAppealJudging(
     lang: row.lang,
     ...(twoSided ? { twoSided: true } : {}),
     ...(evText ? { evidence: true } : {}),
+    ...(count > 2 ? { parties: partiesFor(count) } : {}),
     // A one-sided case has no second account: its appeal note says so.
-    appeal: twoSided ? APPEAL_JUDGE_NOTE : APPEAL_ONE_SIDED_JUDGE_NOTE,
+    appeal: count > 2 ? multiAppealNote(appeal.party) : twoSided ? APPEAL_JUDGE_NOTE : APPEAL_ONE_SIDED_JUDGE_NOTE,
   }, startedAt);
   const outcome = run.outcome;
   if (!outcome || outcome.status === "failed") {
@@ -432,7 +480,7 @@ export async function runAppealJudging(
   }
 
   const counted = new Set([...earlier.map((a) => a.id), appeal.id]);
-  const next = normalizeCaseResult(outcome.result, { twoSided, evidenceUsed: evidenceCounts(bundle.evidence, counted) });
+  const next = normalizeCaseResult(outcome.result, { twoSided, evidenceUsed: evidenceCounts(bundle.evidence, counted, count) });
   const prev = previous.result;
   const label = appealOutcome(prev, next);
   // appealSummary never throws (it fails open to ""), so this always logs.

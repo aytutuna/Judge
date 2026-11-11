@@ -96,6 +96,7 @@ data class AgeStatus(val confirmed: Boolean = false, val blocked: Boolean = fals
 /**
  * GET /api/v1/me. Both null when the request carried no valid session; [age]
  * null from a server without the age check, [hasPassword] from one without passwords.
+ * [needsPassword] is false when missing.
  */
 @Serializable
 data class MeResponse(
@@ -103,6 +104,7 @@ data class MeResponse(
     val entitlement: Entitlement? = null,
     val age: AgeStatus? = null,
     val hasPassword: Boolean? = null,
+    val needsPassword: Boolean = false,
 )
 
 /** The `{token, user}` body of a successful Better Auth sign-in. */

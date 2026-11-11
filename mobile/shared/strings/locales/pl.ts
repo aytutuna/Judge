@@ -30,7 +30,6 @@ const pl: AppLocale = {
     "app.history.removeFailed": "Nie udało się usunąć {n} z nich. Sprawdź połączenie i spróbuj ponownie.",
     "app.history.offlineRemove": "Jesteś offline. Usuwanie wymaga połączenia z internetem.",
     "app.pricing.free.account": "Zaloguj się przez Apple, Google albo e-mail",
-    "app.context.label": "Kontekst (opcjonalnie)",
     "app.pricing.context":
       "Obrazy z kontekstem są czytane, a potem wyrzucane, bez dodatkowych kosztów",
     "app.pricing.headline": "Pierwszy werdykt na nasz koszt.",
@@ -103,52 +102,6 @@ const pl: AppLocale = {
     "app.home.addTheirSide": "Dodaj drugą stronę",
     "app.home.removeTheirSide": "Usuń drugą stronę",
     "app.home.clear": "Wyczyść",
-    "app.example.dishwasher.aName": "Ania",
-    "app.example.dishwasher.a":
-      "Znowu wstawiłeś miski do górnego kosza. Tam nigdy się nie domywają, od tego jest dolny.",
-    "app.example.dishwasher.bName": "Michał",
-    "app.example.dishwasher.b":
-      "Mieszczą się tam bez problemu, a dół zostaje wolny na garnki. Od lat tak ładuję zmywarkę i nigdy nic nie wyszło niedomyte.",
-    "app.example.bill.aName": "Magda",
-    "app.example.bill.a":
-      "Nic nie piłam, więc nie powinnam płacić jednej czwartej rachunku za wino. Jedzenie możemy podzielić po równo, to mi pasuje.",
-    "app.example.bill.bName": "Paweł",
-    "app.example.bill.b":
-      "Zawsze po prostu dzielimy rachunek na cztery. Liczenie za każdym razem, kto co zamówił, to męczarnia, a różnica i tak jest niewielka.",
-    "app.example.thermostat.aName": "Julia",
-    "app.example.thermostat.a":
-      "Jest tu 19 stopni i marznę nawet w bluzie. Podkręcenie ogrzewania do 22 to żadna przesada.",
-    "app.example.thermostat.bName": "Tomek",
-    "app.example.thermostat.b":
-      "Przy 22 stopniach nie da się spać, jest za gorąco. Ty możesz coś jeszcze na siebie narzucić, a ja już nic więcej nie zdejmę.",
-    "app.example.roadTrip.aName": "Marta",
-    "app.example.roadTrip.a":
-      "Całe sześć godzin w tamtą stronę prowadziłam ja. Uczciwie będzie, jeśli w drodze powrotnej poprowadzisz ty.",
-    "app.example.roadTrip.bName": "Piotr",
-    "app.example.roadTrip.b":
-      "Przed wyjazdem mówiłem, że nie znoszę jeździć po nocy, a wyjeżdżamy o 19. Następnym razem to ja prowadzę rano.",
-    "app.example.seat.aName": "Karolina",
-    "app.example.seat.a": "Mój fotel się odchyla, więc go odchylam. To nocny lot, wszyscy próbują spać.",
-    "app.example.seat.bName": "Wojtek",
-    "app.example.seat.b":
-      "Mam 190 cm wzrostu, a kolana i tak już wbijają mi się w twój fotel. Mogłaś chociaż zapytać, zanim odchyliłaś go do oporu.",
-    "app.example.spoiler.aName": "Zosia",
-    "app.example.spoiler.a":
-      "Powiedziałeś mi, kto zabił, zanim w ogóle włączyłam ostatni odcinek. Czekałam na niego cały tydzień.",
-    "app.example.spoiler.bName": "Kamil",
-    "app.example.spoiler.b":
-      "Wyszedł trzy tygodnie temu, a ty mówiłaś, że już skończyłaś. Nie jestem w stanie śledzić, kto jest na którym odcinku.",
-    "app.example.jacket.aName": "Adam",
-    "app.example.jacket.a":
-      "Poszłaś w mojej dżinsowej kurtce na koncert i nawet nie zapytałaś. Wróciła cała przesiąknięta dymem.",
-    "app.example.jacket.bName": "Ewa",
-    "app.example.jacket.b":
-      "Wisiała przy drzwiach, a ty jej nigdy nie nosisz. Zapytałabym, ale spałeś, a ja już byłam spóźniona.",
-    "app.example.lastSlice.aName": "Szymon",
-    "app.example.lastSlice.a": "Zaklepałem ostatni kawałek pizzy, zanim zaczął się film. Wszyscy słyszeli.",
-    "app.example.lastSlice.bName": "Natalia",
-    "app.example.lastSlice.b":
-      "Nie możesz czegoś zaklepać, a potem nie tknąć tego przez dwie godziny. Leżał tam i stygł, więc go zjadłam.",
     "app.case.waitingKicker": "Sprawa · w oczekiwaniu",
     "app.case.waitingFor": "Czekamy na: {name}",
     "app.case.waitingLead":
@@ -171,10 +124,7 @@ const pl: AppLocale = {
     "app.verdict.claims": "Jak każda strona do tego doszła",
     "app.verdict.back": "Werdykt",
     "app.appeal.title": "Dodaj kontekst i odwołaj się",
-    "app.appeal.intro":
-      "Sędziowie coś przeoczyli? Dodaj to, a ocenią sprawę jeszcze raz. Pierwszy werdykt zostaje w historii.",
-    "app.appeal.ask": "Co powinni wiedzieć?",
-    "app.appeal.placeholder": "Fakt, wiadomość albo to, na co naprawdę się umówiliście.",
+    "app.appeal.placeholder": "Co umknęło sędziom? Fakt, wiadomość albo to, na co naprawdę się umówiliście.",
     "app.appeal.cost": "Zużywa 1 werdykt. Przy każdym werdykcie możesz to zrobić dwa razy (zostało: {left}).",
     "app.appeal.costCase": "Zużywa 1 werdykt. W każdej sprawie możesz to zrobić tylko raz.",
     "app.appeal.submit": "Oceń ponownie",

@@ -32,8 +32,13 @@ export type HistoryRow = {
   id: string;
   /** Verdicts: always "owner". */
   role: "owner" | "respondent";
-  /** The viewer's party: "a" for the owner, "b" for the respondent. */
-  party: "a" | "b";
+  /** The viewer's party: "a" for the owner, "b" for the respondent (or "c" or
+   * "d" in a case with that many sides). */
+  party: "a" | "b" | "c" | "d";
+  /** Cases with three or four sides only: the sides, and the latest ruling's
+   * winner (null: too close). `verdict` stays the older projection. */
+  parties?: ("a" | "b" | "c" | "d")[];
+  winner?: "a" | "b" | "c" | "d" | null;
   /** Sort time (ISO): when the verdict was asked for, the case started, or
    * for a case the viewer answered, when they answered. */
   at: string;

@@ -1,0 +1,1052 @@
+{
+  "dishwasher": {
+    "title": "🍽️ Kaseler üst rafta",
+    "aName": "Elif",
+    "a": "Kâseleri yine üst rafa koymuşsun. Orada hiç temiz çıkmıyorlar, alt raf bunun için var.",
+    "bName": "Can",
+    "b": "Üstte gayet sığıyorlar, alt raf da tencerelere kalıyor. Yıllardır böyle diziyorum, bir kere bile kirli çıkmadı."
+  },
+  "bill": {
+    "title": "🍷 Restoran hesabını bölmek",
+    "aName": "Zeynep",
+    "a": "Hiç içmedim, şarabın dörtte birini ben ödememeliyim. Yemeği eşit bölelim, ona itirazım yok.",
+    "bName": "Mert",
+    "b": "Hep dörde bölüyoruz zaten. Her seferinde kim ne yedi diye hesap yapmak çok uğraştırıyor, fark da o kadar değil."
+  },
+  "thermostat": {
+    "title": "🌡️ Termostat savaşı",
+    "aName": "Selin",
+    "a": "İçerisi 19 derece, kapüşonluyla bile üşüyorum. Kombiyi 22'ye almak abartı değil.",
+    "bName": "Emre",
+    "b": "22 derecede uyunmaz, çok sıcak. Sen bir kat daha giyebilirsin ama ben daha fazla bir şey çıkaramam."
+  },
+  "roadTrip": {
+    "title": "🚗 Eve kim sürecek",
+    "aName": "Deniz",
+    "a": "Gidişte altı saat boyunca hep ben sürdüm. Dönüşte senin sürmen adil olur.",
+    "bName": "Burak",
+    "b": "Yola çıkmadan gece araba kullanmaktan nefret ettiğimi söyledim, akşam yedide çıkıyoruz. Bir dahaki yolculukta sabahları ben sürerim."
+  },
+  "seat": {
+    "title": "💺 Gece uçuşunda koltuğu yatırmak",
+    "aName": "Ece",
+    "a": "Koltuğum yatıyor, ben de yatırıyorum. Gece uçuşu, herkes uyumaya çalışıyor.",
+    "bName": "Kaan",
+    "b": "Boyum 1,90, dizlerim zaten koltuğuna değiyor. Sonuna kadar yatırmadan önce en azından sorabilirdin."
+  },
+  "spoiler": {
+    "title": "🎬 Final bölümünün spoiler'ı",
+    "aName": "Defne",
+    "a": "Son bölümü açmadan katilin kim olduğunu söyledin. Bütün hafta onu bekliyordum.",
+    "bName": "Ozan",
+    "b": "Üç hafta önce çıktı, sen de bitirdim demiştin. Herkesin hangi bölümde olduğunu takip edemem."
+  },
+  "jacket": {
+    "title": "🧥 Ödünç alınan kot ceket",
+    "aName": "Ayşe",
+    "a": "Kot ceketimi bana sormadan konsere giymişsin. Sigara kokarak geri geldi.",
+    "bName": "Berk",
+    "b": "Kapının yanında asılıydı, sen de hiç giymiyorsun. Sorardım ama uyuyordun, ben de zaten geç kalmıştım."
+  },
+  "lastSlice": {
+    "title": "🍕 Son dilimin sahibi",
+    "aName": "Cem",
+    "a": "Film başlamadan \"son dilim benim\" dedim. Herkes duydu.",
+    "bName": "Naz",
+    "b": "\"Benim\" deyip iki saat dokunmamak olmaz. Orada soğuyup duruyordu, ben de yedim."
+  },
+  "sundayPlans": {
+    "title": "🛋️ Koca bir pazar kanepede",
+    "aName": "Gül",
+    "a": "İkimizin de izinli olduğu tek gün bu, ben yürüyüşe çıkmak istiyorum. Hepsini kanepede geçirmek heba etmek gibi geliyor.",
+    "bName": "Tolga",
+    "b": "Bütün hafta çalışıyorum, pazar da dinlenme günüm. Yürüyüşe haftaya gideriz, bugün seninle hiçbir şey yapmadan oturmak istiyorum."
+  },
+  "anniversaryGift": {
+    "title": "🎁 Hediyeye ne kadar harcanır",
+    "aName": "Murat",
+    "a": "Hediyeleri 2000 liranın altında tutalım demiştik, sen bana saat almışsın. Şimdi ben hiç uğraşmamış gibi duruyorum.",
+    "bName": "Aylin",
+    "b": "Gördüm ve aklıma sen geldin. İndirimdi, yıllar önce koyduğumuz bir rakam cömert olmamı engellememeli."
+  },
+  "couplePhoto": {
+    "title": "📸 Sormadan fotoğrafımızı paylaşmak",
+    "aName": "Sevgi",
+    "a": "Deniz kenarındaki fotoğrafımızı ben daha görmeden paylaşmışsın. Çok kötü çıkmışım, olsa hayır derdim.",
+    "bName": "Barış",
+    "b": "Bence çok güzel çıkmışsın, güzel bir günü paylaşmak istedim. Seni bu kadar üzeceğini bilmiyordum."
+  },
+  "phoneInBed": {
+    "title": "📱 Yatakta telefon",
+    "aName": "Nehir",
+    "a": "Yatağa giriyoruz, sen bir saat telefona bakıyorsun, ben de öylece yatıyorum. Konuşalım ya da en azından birlikte uyuyalım istiyorum.",
+    "bName": "Onur",
+    "b": "Uzun bir günün ardından böyle rahatlıyorum. Konuşabiliriz ama elimde tuttuğum telefona kural konsun istemiyorum."
+  },
+  "movieTurns": {
+    "title": "🍿 Film seçme sırası kimde",
+    "aName": "Pınar",
+    "a": "Geçen sefer de ondan önceki sefer de ben seçtim. Sıra sende, sen de kırk dakikadır hiçbir şey hoşuma gitmiyor diyorsun.",
+    "bName": "Tuna",
+    "b": "İzlemek istediğim bir şey olsa seçerdim. Sen hep benim daha az sevdiğim şeyleri seçiyorsun, ben de susuyorum."
+  },
+  "slowReply": {
+    "title": "💬 Mesaja saatlerce cevap beklemek",
+    "aName": "Gizem",
+    "a": "Öğlen sana basit bir soru yazdım, akşam sekizde cevap geldi. Hızlı bir cevap vermek sana bir şey kaybettirmezdi.",
+    "bName": "Koray",
+    "b": "Bütün gün toplantıdaydım, telefon da çantamdaydı. Seni yok saymadım, sadece acil değildi."
+  },
+  "bedSide": {
+    "title": "🛏️ Yatağın hangi tarafı kimin",
+    "aName": "Büşra",
+    "a": "Tam altı yıldır pencere tarafında yatıyorum. Taşındık, ben daha kolileri açmadan sen benim tarafımı kaptın.",
+    "bName": "Serkan",
+    "b": "Bu odada yatak öbür duvarda, taraflar ters döndü. Geri değişmemde sorun yok, sadece aklıma gelmedi."
+  },
+  "surpriseParty": {
+    "title": "🎈 İstemediği sürpriz parti",
+    "aName": "Derya",
+    "a": "Doğum günün için her şeyi ben ayarladım, herkesi çağırdım. Bütün akşam suratın asıktı.",
+    "bName": "Kerem",
+    "b": "Aylar önce sürprizden ve kalabalıktan nefret ettiğimi söylemiştim. Emeğine saygım var ama beni dinlemedin."
+  },
+  "toothpaste": {
+    "title": "🪥 Diş macununu sıkmak",
+    "aName": "Melis",
+    "a": "Tüpü ortasından sıkıp düz ve burulmuş bırakıyorsun. Küçük bir şey, biliyorum ama her sabah karşıma çıkıyor.",
+    "bName": "Yiğit",
+    "b": "Sonunda hepsi aynı şekilde çıkıyor. Sıkmanın doğru bir yeri neden olsun anlamıyorum."
+  },
+  "blanket": {
+    "title": "🛌 Battaniye hırsızı",
+    "aName": "Hande",
+    "a": "Her gece bütün battaniyeye sarılıyorsun, ben de donarak uyanıyorum. Dürümün yanında yatıyor gibiyim.",
+    "bName": "Oğuz",
+    "b": "Ben de üşüyorum, bilerek yapmıyorum. Beni suçlamak yerine ikinci bir battaniye alsak olmaz mı?"
+  },
+  "lateDinner": {
+    "title": "🍝 Akşam yemeği dokuzda",
+    "aName": "Ceren",
+    "a": "Altıda evde olurum demiştin, dokuzda girdin kapıdan. Yaptığım makarna soğudu, ben de açlıktan öldüm.",
+    "bName": "Volkan",
+    "b": "Bir telefon görüşmesi uzadı, öylece kapatamadım. Haber verirdim ama telefonum kapandı."
+  },
+  "dateBill": {
+    "title": "💳 Buluşmalarda hesabı kim öder",
+    "aName": "Yasemin",
+    "a": "On iki kez dışarı çıktık ve sen hiç hesaba uzanmadın. Sırayla ödesek diyorum.",
+    "bName": "Efe",
+    "b": "Şu an senden fazla kazanıyorum ve ödemekten memnunum. Seni rahatsız ettiğini fark etmemiştim, sadece hesap yüzünden tartışmak istemiyorum."
+  },
+  "quietHours": {
+    "title": "🔇 Saat ondan sonra sessizlik",
+    "aName": "Buse",
+    "a": "Sabah erken işe gidiyorum ve on birde görüntülü görüşmen duvardan geliyor. Sesini kısmanı istiyorum.",
+    "bName": "Alper",
+    "b": "Ekibim başka bir saat diliminde, bu yüzden ancak geç saatte olabiliyor. Kulaklık takarım ama sen de kulak tıkacı kullanabilirsin."
+  },
+  "fridgeShelf": {
+    "title": "🧊 Bu raf kimin",
+    "aName": "Kemal",
+    "a": "Buzdolabındaki rafımı etiketledim, yine de yemeklerini oraya koymuşsun. Seninkinde bol bol yer var.",
+    "bName": "Dilara",
+    "b": "Rafım doluydu, senin kabın da yarı boştu. Bir geceliğine, bir şey almadım ki."
+  },
+  "overnightGuest": {
+    "title": "🚪 Bütün hafta kalan misafir",
+    "aName": "Esra",
+    "a": "Arkadaşın altı gündür salonda kalıyor ve bana kimse sormadı. Evimi geri istiyorum.",
+    "bName": "Taner",
+    "b": "Ev arıyor, gidecek başka yeri yok. Birkaç gece kalacak demiştim, market masrafına da katılıyor."
+  },
+  "sharedShampoo": {
+    "title": "🧴 Şampuanımı kullanmak",
+    "aName": "Sibel",
+    "a": "Şampuanım pahalı bir şampuan ve pazartesi neredeyse doluydu. Cuma olunca bitmek üzere, burada duş alan bir tek sen varsın.",
+    "bName": "Hakan",
+    "b": "Sadece iki kez azıcık kullandım. O kadar önemliyse odana koy, banyodaki şeylerin ortak olduğunu sanıyordum."
+  },
+  "dirtyPan": {
+    "title": "🍳 Suda bekletilen tava",
+    "aName": "Sinan",
+    "a": "O tava salıdan beri lavaboda ve kokmaya başladı. Kim pişirdiyse o yıkamalı.",
+    "bName": "Gamze",
+    "b": "Biraz daha ıslanınca yıkayacaktım. Sen de iki gündür tabakları bırakıyorsun, ben bir şey demedim."
+  },
+  "dryerLaundry": {
+    "title": "🧺 Kurutma makinesinde unutulan çamaşırlar",
+    "aName": "Aslı",
+    "a": "Aşağı indim, temiz çamaşırlarım masada yığın halindeydi çünkü makineye ihtiyacın varmış. Hâlâ nemliydiler.",
+    "bName": "Uğur",
+    "b": "Program bir saat önce bitmişti ve sırada çamaşırım vardı. Ses çalınca lütfen eşyalarını çıkar."
+  },
+  "loudMusic": {
+    "title": "🎧 Duvardan gelen müzik",
+    "aName": "Arda",
+    "a": "Cumartesi öğleden sonra üç ve ben kendi odamdayım. Kendi evimde kulaklık takmam gerektiğini düşünmüyorum.",
+    "bName": "Tuğba",
+    "b": "Ders çalışmaya çalışırken bas sesi masamı sarsıyor. Kimse bırak demiyor, sadece biraz kıs."
+  },
+  "longShower": {
+    "title": "🚿 Sıcak su bitiyor",
+    "aName": "Kaya",
+    "a": "Duşların kırk dakika sürüyor ve sıra bana gelince sıcak su hep bitmiş oluyor. Onar dakika adil olur.",
+    "bName": "Neslihan",
+    "b": "Süre tutmuyorum, burası rahatlayabildiğim tek yer. Sırayla önce girsek olmaz mı?"
+  },
+  "lightsOn": {
+    "title": "💡 Her ışık açık",
+    "aName": "Sema",
+    "a": "Eve girince evdeki bütün ışıklar yanıyor, kimsenin olmadığı odalarda bile. Faturalar bölünüyor, yani benim de param.",
+    "bName": "Ali",
+    "b": "Aydınlık seviyorum, akşam boyunca odalara girip çıkıyorum. Bütün gece aç kapa yapmak da en az bu kadar sinir bozucu."
+  },
+  "parcels": {
+    "title": "📦 Koridorda biriken kargolar",
+    "aName": "Leyla",
+    "a": "Koridorda senin altı kolin üst üste duruyor ve her gün takılıyorum. Lütfen odana al.",
+    "bName": "Mehmet",
+    "b": "Kargoya geri götürmek için bekliyorum, işlerim de yoğundu. Daha dört gündür orada duruyorlar."
+  },
+  "houseplant": {
+    "title": "🪴 Çiçeği kim sulayacak",
+    "aName": "Nilüfer",
+    "a": "Çiçeği salon için ben aldım ve her hafta suladım. Şimdi karanlık köşeye koyduğun için bir çöp gibi duruyor.",
+    "bName": "Selim",
+    "b": "Televizyonun önünü kapatıyordu, köşe de bana uygun göründü. Çiçeklerin bu kadar nazlı olduğunu bilmiyordum."
+  },
+  "lateArrival": {
+    "title": "⏰ Yine kırk dakika geç",
+    "aName": "Doruk",
+    "a": "Yedide buluşalım dedik, ben restoranda sekize yirmi kalaya kadar tek başıma oturdum. Bu üçüncü kez yapıyorsun.",
+    "bName": "Melike",
+    "b": "Otobüs geç geldi, sana da yazdım. Kızmak yerine bir içecek söyleyebilirdin."
+  },
+  "cancelledPlans": {
+    "title": "🙅 Bir saat kala iptal etmek",
+    "aName": "Hülya",
+    "a": "Seni görmek için bütün gününü ayarladım, sen bir saat kala tek mesajla iptal ettin. İlk defa olmuyor.",
+    "bName": "Orhan",
+    "b": "Çok yorgundum, berbat bir arkadaş olurdum. Kendimi sürükleyip gelmektense bunu söylemenin daha nazik olduğunu düşündüm."
+  },
+  "borrowedBook": {
+    "title": "📚 Geri gelmeyen kitap",
+    "aName": "Irmak",
+    "a": "O kitabı sana geçen bahar verdim, bir yıl oldu. İmzalıydı, iki kere de sordum.",
+    "bName": "Batuhan",
+    "b": "Bende bir yerde, söz, muhtemelen taşınmadan kalan bir kolide. Bulurum, sürekli yüzüme vurman gerekmiyor."
+  },
+  "mutedChat": {
+    "title": "🔕 Grubu sessize almak",
+    "aName": "Beyza",
+    "a": "Grubu sessize almışsın, plan iki kere değişti haberin olmadı. Hepimiz seni yanlış yerde bekledik.",
+    "bName": "Cenk",
+    "b": "Günde iki yüz mesaj atılıyor, çoğu da caps. Önemlilerini okurdum ama bir saat sürmese."
+  },
+  "birthdayDinner": {
+    "title": "🎂 Doğum günü yemeğini ödemek",
+    "aName": "Taylan",
+    "a": "Benim doğum günü yemeğim ve pahalı şarap yüzünden hesap kişi başı 1500 lira geldi. Davetlinin ödemeyeceğini düşünürdüm.",
+    "bName": "Aslı",
+    "b": "Biz hep her şeyi grupta eşit bölüyoruz, bunu herkes biliyor. Mekânı da sen seçtin."
+  },
+  "plusOne": {
+    "title": "💍 Düğünde yanında biri",
+    "aName": "Duygu",
+    "a": "Davetiyede sadece benim adım yazıyor ama iki yıllık sevgilim evde tek başına kalacak. Yine de getiriyorum.",
+    "bName": "Gökhan",
+    "b": "Salonun kesin bir sınırı var ve her koltuk bize çok pahalıya geliyor. Üzgünüm ama tek kişi için istisna yapamam."
+  },
+  "chargerBorrow": {
+    "title": "🔌 Ödünç aldığın şarj aleti",
+    "aName": "Fatih",
+    "a": "Sende kaybolan üçüncü şarj aletim bu. Bir özür daha değil, geri istiyorum.",
+    "bName": "Ebru",
+    "b": "Hepsi birbirine benziyor, hangisi kimin diye gerçekten unutuyorum. Cuma günü bir poşet dolusu getiririm."
+  },
+  "auxCord": {
+    "title": "🎵 Arabada müziği kim seçer",
+    "aName": "Cihan",
+    "a": "Ben sürüyorum, müziği ben seçerim. Yol uzun, uyanık kalması gereken benim.",
+    "bName": "Ceyda",
+    "b": "Bugün aynı albümü üç kere çaldın. Yanındakinin de söz hakkı var, bütün yolculuklar böyle işler."
+  },
+  "karaoke": {
+    "title": "🎤 Bitmeyen şarkı",
+    "aName": "Tülin",
+    "a": "Dokuz şarkı söyledin, geri kalanımız bir tane söyledik. Mikrofon odada dolaşmalı.",
+    "bName": "Bora",
+    "b": "Listeye başka kimse isim yazmadı, ben de boşlukları doldurdum. Açıkçası herkesin keyif aldığını sanıyordum."
+  },
+  "uninvited": {
+    "title": "🙈 Davet listesinde yokum",
+    "aName": "Sevim",
+    "a": "Partinin fotoğraflarını gördüm, davetli değildim, oysa öncekilerin hepsine geldim. Çok kırıldım.",
+    "bName": "Levent",
+    "b": "İş arkadaşlarım için küçük bir şeydi, on kişi kadar. Seninle ilgisi yoktu, gelmek isteyeceğini bile düşünmedim."
+  },
+  "holidayHost": {
+    "title": "🥘 Bayram yemeğine kim ev sahipliği yapacak",
+    "aName": "Nalan",
+    "a": "Dört yıldır aile yemeğini biz veriyoruz. Sıra başkasında, ben de yemek yapmadığım bir bayram yaşamak istiyorum.",
+    "bName": "Ferhat",
+    "b": "Annem merdivenleri çıkamıyor, bizim sofra da en büyüğü. Kimse teklif etmedi, ben de yine biz yaparız sandım."
+  },
+  "dailyCalls": {
+    "title": "📞 Her gün bir telefon",
+    "aName": "Sena",
+    "a": "Annem her gün altı gibi arıyor ve yarım saat sohbet bekliyor. Onu seviyorum ama bazen hiç canım istemiyor.",
+    "bName": "Kadir",
+    "b": "Yalnız yaşıyor ve o telefon günün en güzel anı. Yoğun günlerde mesaj atacağını söyleyebilirsin."
+  },
+  "bedtimeKids": {
+    "title": "🌙 Okul günlerinde yatma saati",
+    "aName": "Müge",
+    "a": "Oğlumuz sekiz yaşında ve sekizde uyumuş olmalı. Maç için kalkmasına izin verdin, şimdi okulda perişan.",
+    "bName": "Ersin",
+    "b": "Tek bir maçtı, çok heyecanlıydı. Ara sıra geç yatmak ona zarar vermez, onun için özel."
+  },
+  "borrowedSweater": {
+    "title": "👚 Dolabımı karıştıran kardeş",
+    "aName": "Ayten",
+    "a": "Yeşil kazağımı sormadan alıp partiye giymişsin. Lekeli geldi, ben daha hiç giymemiştim.",
+    "bName": "Pelin",
+    "b": "Bütün hayatım boyunca senden bir şeyler aldım, sorun etmezdin. Kuru temizlemeye veririm ama olayı büyütüyorsun."
+  },
+  "familyRecipe": {
+    "title": "🥘 Babaannemin tarifi",
+    "aName": "Özge",
+    "a": "Babaannemin çorbasına hep bir kaşık salça girerdi, kendi el yazısıyla yazılı. Sen koymamışsın, hâlâ aynı tarif diyorsun.",
+    "bName": "Taha",
+    "b": "Bence onsuz daha hafif oluyor, ben de öyle hatırlıyorum. Yine onun tarifi, sadece biraz geliştirilmiş."
+  },
+  "dadRide": {
+    "title": "🚙 Babamı havalimanına götürmek",
+    "aName": "Emir",
+    "a": "Babamı geçen sefer götürdüm, ondan önce de. Bu sefer taksi çağırmak yerine sen erken uçuşa götürebilir misin?",
+    "bName": "Sibel",
+    "b": "Gidiş dönüş iki saat sürüyor, altıda da işte olmam lazım. Taksi parasını veririm, sadece zamanım yok."
+  },
+  "familyChat": {
+    "title": "👨‍👩‍👧 Aile grubundaki zincir mesajlar",
+    "aName": "Aylin",
+    "a": "Amcam bütün aile grubuna sürekli o zincir mesajları ve videoları yolluyor. Aralarında gerçek bir şey bulamıyorum.",
+    "bName": "Yusuf",
+    "b": "Gruba katılmaya ve güldürmeye çalışıyor sadece. Belki ona hafifçe söylersin ama sessize almak ayıp olur."
+  },
+  "tvRemote": {
+    "title": "📺 Kumandayı saklamak",
+    "aName": "Ramazan",
+    "a": "Maç için oturduğum anda kumanda kayboluyor ve çizgi film açık oluyor. Bu hafta ikinci kez oldu.",
+    "bName": "Sevil",
+    "b": "Benim en sevdiğim saat o, senin maçın ise bütün öğleden sonra sürüyor. Sırayla izleriz ama bütün öğleden sonrayı alamazsın."
+  },
+  "seatingChart": {
+    "title": "🍽️ Sofranın başına kim oturur",
+    "aName": "Rıza",
+    "a": "Çocukluğumdan beri bütün aile yemeklerinde o başta oturuyorum. Şimdi senin sevgilin oraya oturdu ve kimse bir şey demedi.",
+    "bName": "Gamze",
+    "b": "O önce oturdu, üstelik misafir. Bir sandalye bu, bir dahaki sefere yer değiştiririz."
+  },
+  "teenPhone": {
+    "title": "🧒 Yemek masasında telefon",
+    "aName": "Nesrin",
+    "a": "Akşam yemeği ailece oturduğumuz tek zaman. On beş dakika telefonsuz durmak çok şey istemek değil.",
+    "bName": "Deniz",
+    "b": "Sadece bir arkadaşım cevap yazdı mı diye bakıyorum. İşten mesaj gelince sen de masada telefondasın."
+  },
+  "meetingEmail": {
+    "title": "📧 Mail olabilecek bir toplantı",
+    "aName": "Sevda",
+    "a": "Üç satıra sığacak şeyi duymak için bir saat toplantıda oturduk. O saatte raporu bitirirdim.",
+    "bName": "Ümit",
+    "b": "Herkes yoğun ama toplantıda insanlar anında soru sorabiliyor. Mail olsaydı beş ayrı yazışma başlardı."
+  },
+  "microwaveFish": {
+    "title": "🐟 Ofis mikrodalgasında balık",
+    "aName": "Hatice",
+    "a": "Ortak mikrodalgada somon ısıttın ve bütün kat üçe kadar kokuyor. Lütfen başka bir şey getir.",
+    "bName": "Barkın",
+    "b": "Düzgün öğle yemeğim bu, dışarıdan söyleyecek param da pek yok. Başkaları da köri ısıtıyor, kimse bir şey demiyor."
+  },
+  "stolenLunch": {
+    "title": "🥪 Öğle yemeğimi biri yemiş",
+    "aName": "Hasan",
+    "a": "Poşetin üstünde adım yazıyordu ve sandviç öğlene kadar yok oldu. Kimin aldığını görmüşsündür herhalde.",
+    "bName": "Sinem",
+    "b": "Hiçbir şey görmedim, kimseyi de suçlamak istemem. Belki buzdolabına bir not yapıştırmak daha nazik bir ilk adım olur."
+  },
+  "replyAll": {
+    "title": "📨 Bütün şirkete cevapla",
+    "aName": "Cüneyt",
+    "a": "Herkese, yani iki yüz kişiye, 'teşekkürler!' diye cevap vermişsin. Şimdi gelen kutumda bunlardan kırk tane daha var.",
+    "bName": "Burcu",
+    "b": "Kibar olmak istedim, düğme de tam oradaydı. Küçük bir hata, kimse zarar görmedi."
+  },
+  "officeCold": {
+    "title": "❄️ Buz gibi ofis",
+    "aName": "Gönül",
+    "a": "Klima o kadar düşük ki temmuzda masamda mont giyiyorum. Birkaç derece daha sıcak olması kimseyi öldürmez.",
+    "bName": "Anıl",
+    "b": "Ben çabuk terliyorum, güneş de bütün öğleden sonra benim tarafıma vuruyor. Üşüyorsan bir battaniye, geri kalanımızın terlemesinden daha kolay."
+  },
+  "openOfficeHeadphones": {
+    "title": "🎧 Açık ofiste kulaklık",
+    "aName": "Kenan",
+    "a": "Odaklanmak için kulaklık takıyorum, insanlar birkaç dakikada bir hızlı bir soruyla omzuma dokunuyor. Düşünce akışım bozuluyor.",
+    "bName": "Zerrin",
+    "b": "Gerçekten meşgul olup olmadığını anlamak zor. Cevabı on saniye süren şey için önce mesaj atmak çok yavaş olur."
+  },
+  "emptyCoffee": {
+    "title": "☕ Son fincan kahve",
+    "aName": "Oya",
+    "a": "Demliğin sonunu doldurup boş demliği ocakta bırakmışsın. Yeni demlik iki dakika sürüyor.",
+    "bName": "Erkan",
+    "b": "Bir görüşmeye geç kalmıştım, son fincan olduğunu gerçekten fark etmedim. Sonrakini ben yaparım, söz."
+  },
+  "ideaCredit": {
+    "title": "💡 Bu kimin fikriydi",
+    "aName": "Metin",
+    "a": "Yeni çalışma planını mart ayında ben önerdim, sen de patrona kendi fikrinmiş gibi sundun. Bir teşekkür yeterdi.",
+    "bName": "Ayça",
+    "b": "Birlikte konuşmuştuk ve ekiple ben geliştirdim. Hepimiz bunun ortak bir iş olduğunu kabul ettik sanıyordum."
+  },
+  "fridayDeadline": {
+    "title": "📅 Cuma günü son tarih",
+    "aName": "Özlem",
+    "a": "Bana kısmını cumaya kadar atacağını söyledin, bugün pazartesi. Herkes bunu bekliyordu, ben de iki kere sormak zorunda kaldım.",
+    "bName": "Ahmet",
+    "b": "Üstüme daha büyük bir proje düştü ve seçim yapmak zorunda kaldım. Daha önce söylemeliydim, ama bugün sende olacak."
+  },
+  "deskLunch": {
+    "title": "🥗 Masada öğle yemeği",
+    "aName": "Tarık",
+    "a": "Bu ekipte artık kimse düzgün bir öğle molası vermiyor ve bu beklenen bir şey olmaya başladı. Öğlen hep birlikte kalkalım istiyorum.",
+    "bName": "Yelda",
+    "b": "Çalışırken yiyorum ve bu yüzden eve daha erken gidiyorum. Mola iyi ama kendi kararımı kendim vermek isterim."
+  },
+  "calendarInvite": {
+    "title": "🗓️ Gündemsiz toplantılar",
+    "aName": "Sevinç",
+    "a": "Davetinde sadece 'bir konuşalım' yazıyordu, gündem yoktu ve sabahımın kırk beş dakikasını aldı. Önce ne hakkında olduğunu söyle lütfen.",
+    "bName": "Bülent",
+    "b": "Sohbet olacaktı, sonunda iki sorunu çözdük. Resmi bir gündem sohbeti öldürürdü."
+  },
+  "rentSplit": {
+    "title": "🏠 Kirayı oda büyüklüğüne göre bölmek",
+    "aName": "Ceyda",
+    "a": "Benim oda en küçüğü ve dolabı yok, ama senle aynı parayı ödüyorum. Bence en büyük oda daha pahalı olmalı.",
+    "bName": "Sarp",
+    "b": "Sözleşmeyi imzalarken eşit üçe bölmeye karar vermiştik. Birimizin canı sıkılınca rakamları baştan yapmak karışık olur."
+  },
+  "smallLoan": {
+    "title": "💵 Öğle yemeğinden kalan yüz lira",
+    "aName": "Ufuk",
+    "a": "Geçen ay yemeğini ben ödedim, geçen hafta yine. Toplam üç yüz lira ediyor ve ağzından tek kelime çıkmadı.",
+    "bName": "Dilek",
+    "b": "Kahve ısmarlamamdan sonra denkleştik sanıyordum. Ödemekte sorun yok, sadece rakamı söyle, bugün göndereyim."
+  },
+  "tipping": {
+    "title": "🧾 Ne kadar bahşiş bırakılır",
+    "aName": "Hatice",
+    "a": "Servis yavaştı, yemek de soğuktu. Yüzde yirmi değil, yüzde on bırakıyorum.",
+    "bName": "Kerim",
+    "b": "Mekân tıklım tıklımdı ve garson bariz şekilde bunalmıştı. Bahşiş onlar için çok önemli, bizim için de fazla bir şey değil."
+  },
+  "streamingShare": {
+    "title": "📺 Dizi aboneliğini paylaşmak",
+    "aName": "Merve",
+    "a": "Dizi platformunun parasını ben ödüyorum ve şimdi arkadaşlarının yarısı da kullanıyor. Ya para versinler ya kendi hesaplarını açsınlar.",
+    "bName": "Anıl",
+    "b": "İki kişi de kullansa beş kişi de aynı ücret. Kişi başı birkaç lira istemek sadece garip olur."
+  },
+  "taxiSplit": {
+    "title": "🚕 Eve taksiyi bölüşmek",
+    "aName": "Lale",
+    "a": "Senin durağın ilkiydi, benimki on beş dakika daha uzaktaydı, yine de ücreti ikiye böldük. Bence pek adil değil.",
+    "bName": "Cengiz",
+    "b": "Aynı arabaya bindik ve birlikte çıktık. Dokuz yüz lira için kilometre hesabı yapmak biraz fazla."
+  },
+  "groupGift": {
+    "title": "🎀 Ortak hediye",
+    "aName": "İpek",
+    "a": "Öğretmenimizin hediyesi için herkes iki yüz lira veriyor ama ben öğrenciyim ve bu bana çok. Yüz verebilir miyim?",
+    "bName": "Veli",
+    "b": "Hediye zaten o fiyata sipariş edildi, daha az verirsen farkı başkası kapatacak. Anlıyorum ama hoş olmuyor."
+  },
+  "groceryList": {
+    "title": "🛒 Market alışverişini bölüşmek",
+    "aName": "Pelin",
+    "a": "Atıştırmalık ve havalı peynir alıp ortak hesaba yazıyorsun. Ben sadece temel şeyleri yiyorum, yarısını ödememeliyim.",
+    "bName": "Rıdvan",
+    "b": "Peyniri istediğin zaman yiyebilirsin. Baştan beri ortak hesaptı ve ben tablo tutmayacağım."
+  },
+  "bigPurchase": {
+    "title": "🛍️ Habersiz büyük alışveriş",
+    "aName": "Sultan",
+    "a": "Tatil için para biriktirdiğimiz hafta tam on bin liraya yeni bir oyuncu monitörü almışsın. Bana sorabilirdin.",
+    "bName": "Nihat",
+    "b": "Kendi harçlığımdan çıktı, bir yıldır da bekliyordum. İzin almam gerektiğini düşünmedim."
+  },
+  "subscriptions": {
+    "title": "💳 Unutulan abonelikleri iptal etmek",
+    "aName": "Ozan",
+    "a": "İkimizin de açmadığı dört uygulamaya para ödüyoruz. İptal edelim, parayı tatile ayıralım.",
+    "bName": "Ayla",
+    "b": "Bence en az ikisini yakında kullanırım. Karar vermeden önce ay sonuna kadar tutabilir miyiz?"
+  },
+  "restaurantChoice": {
+    "title": "🍜 Bu akşam nerede yeneceği",
+    "aName": "Kutay",
+    "a": "Bu hafta üç kere erişte dedim, sen her seferinde tamam dedin, sonra başka bir yer seçtin. Gidelim istiyorum.",
+    "bName": "Beril",
+    "b": "Oraya gelince erişte canım istemiyordu. Bir dahaki sefere yeri söyle, çıkmadan önce karar vereyim."
+  },
+  "cerealMilk": {
+    "title": "🥣 Mısır gevreğinden önce süt",
+    "aName": "Orkun",
+    "a": "Önce sütü döküp sonra gevreği ekliyorsun. Yanlış, sen bitirmeden ıslanıp lapa oluyor.",
+    "bName": "Işıl",
+    "b": "Ben böyle seviyorum ve hemen yiyorum. Bakmak zorunda değilsin, bırak kahvaltımın tadını çıkarayım."
+  },
+  "ketchup": {
+    "title": "🍳 Yumurtaya ketçap",
+    "aName": "Nur",
+    "a": "Mükemmel pişmiş omlete ketçap sıkıyorsun. Güzel yumurtaya yazık, ben bakamıyorum.",
+    "bName": "Selçuk",
+    "b": "Çocukluğumdan beri böyle yiyorum ve tadını seviyorum. Benim tabağım, sen kendininkini nasıl istersen öyle ye."
+  },
+  "pizzaCrust": {
+    "title": "🍕 Pizza kenarını bırakmak",
+    "aName": "Barış",
+    "a": "Ortasını yiyip kenarını her seferinde tabakta bırakıyorsun. En güzel yeri o ve çöpe gidiyor.",
+    "bName": "Ece",
+    "b": "Kenarı sert, ona gelince de doyuyorum. İstiyorsan al, kendimi zorlamayacağım."
+  },
+  "coffeeTea": {
+    "title": "☕ Sabah kahve mi çay mı",
+    "aName": "Alper",
+    "a": "Çay sıcak yaprak suyu dedin, sonra benim kahvemden yudum istedin. Özür bekliyorum.",
+    "bName": "Hilal",
+    "b": "Ben kahvenin tadından çok kokusunu seviyorum. Çayı da sakinleştirdiği için içiyorum, ikna olmama gerek yok."
+  },
+  "spiceLevel": {
+    "title": "🌶️ Ne kadar acı çok acı",
+    "aName": "Tolga",
+    "a": "'Az acılı' istedin, sonra acı yağın yarısını tabağına boşalttın. Şimdi bütün masa öksürüyor.",
+    "bName": "Aysel",
+    "b": "Benim az acım senin az acın değil, masanın ortak yediğini de bilmiyordum. Bir dahaki sefere ayrı kâse isterim."
+  },
+  "leftovers": {
+    "title": "🥡 Artan yemeği atmak",
+    "aName": "Mine",
+    "a": "O köriyi öğle yemeği için saklıyordum, sen iki gündür buzdolabında diye attın. Gayet iyiydi.",
+    "bName": "Cem",
+    "b": "Bence çok uzun süredir duruyordu, kimsenin hasta olmasını da istemedim. Yenisini yaparım, özür dilerim."
+  },
+  "cilantro": {
+    "title": "🌿 Her şeyde kişniş",
+    "aName": "Vildan",
+    "a": "Yemeğe yine kişniş koymuşsun, benim için sabun gibi tat verdiğini bildiğin halde. Hepsini ayıklayamam.",
+    "bName": "Fikret",
+    "b": "Tarifte var ve yemek o tazeliğe ihtiyaç duyuyor. Bir dahaki sefere yanda bir kasede bırakırım."
+  },
+  "tooSalty": {
+    "title": "🧂 Çorbada fazla tuz",
+    "aName": "Funda",
+    "a": "Çorbayı tatmadan tuzladın, şimdi yenmeyecek kadar tuzlu. Yeni bir tencere ile baştan başlayalım.",
+    "bName": "Yavuz",
+    "b": "Bana tuzu tam gelmiş, ben hep sona doğru tuz atıyorum. Biraz su ekle, düzelir."
+  },
+  "doubleDip": {
+    "title": "🥨 Partide ikinci kez batırmak",
+    "aName": "Gülşen",
+    "a": "Cipsten ısırıp aynı cipsi ortadaki sosa tekrar batırdığını gördüm. Artık ondan hiçbir şey yemek istemiyorum.",
+    "bName": "Murat",
+    "b": "Bir kereydi, kimse görmedi. Olayı büyütüyorsun, temiz bir kaşık al."
+  },
+  "pastaShape": {
+    "title": "🍝 Spagetti olmayan makarna",
+    "aName": "Gaye",
+    "a": "Bu sos uzun makarna için yapılır, sen kısa olanla yapmışsın. Bu aynı yemek değil.",
+    "bName": "Hakan",
+    "b": "Dolapta sadece fiyonk vardı ve tadı gayet iyi. Şekli bu kadar mı önemli?"
+  },
+  "hotdog": {
+    "title": "🌭 Sosisli sandviç mi, sandviç mi?",
+    "aName": "Rıfat",
+    "a": "Sosisli, dilimlenmiş ekmeğin içindeki bir iç, yani sandviç. Konu kapandı.",
+    "bName": "Semih",
+    "b": "Kendi başına bir şey. Kimse sandviç isteyip sosisli beklemez, hiçbir menüde de sandviçlerin altında yazmaz."
+  },
+  "trashDay": {
+    "title": "🗑️ Çöpü çıkarmak",
+    "aName": "Caner",
+    "a": "Çöp kovası çarşambadan beri taşıyor ve son dört seferdir ben çıkarıyorum. Sıra sende.",
+    "bName": "Ahsen",
+    "b": "Ben geri dönüşümü ve organik atıkları çıkarıyorum, onlar da sayılır. Düzgün bir çizelge yapalım da sayıp durmayalım."
+  },
+  "foldTowels": {
+    "title": "🧺 Havlular nasıl katlanır",
+    "aName": "Necati",
+    "a": "Bütün havluları az önce üçe katladım çünkü sen ikiye katlıyorsun ve rafa sığmıyorlar.",
+    "bName": "Cansu",
+    "b": "Havlu bunlar, bir dakikaya kullanılıyor. Onlar için katlama sistemi öğrenmeyeceğim."
+  },
+  "vacuumSchedule": {
+    "title": "🧹 Ne sıklıkla süpürge",
+    "aName": "Figen",
+    "a": "Haftada iki kere süpürüyorum ve sana hiç dokunurken görmedim. Yerdeki biraz tüy beni gerçekten rahatsız ediyor.",
+    "bName": "Levent",
+    "b": "Bana haftada bir yeterli görünüyor, sen gereğinden fazla yapıyorsun. Gerisini bana bırakırsan pazarları ben yaparım."
+  },
+  "whoCooks": {
+    "title": "🍲 Her akşam yemek",
+    "aName": "Mehtap",
+    "a": "Bu ay yedi akşamın beşinde yemeği ben yaptım. Yemek yapmayı daha eşit paylaşmak istiyorum.",
+    "bName": "Sezer",
+    "b": "Ben pek iyi değilim, sen de daha çok seviyorsun. Ama haklısın, iki akşam seçelim, ben de gelişirim."
+  },
+  "makeBed": {
+    "title": "🛏️ Yatağı toplamak",
+    "aName": "Gülay",
+    "a": "Kalkıyorsun, yorganı yığın halinde bırakıyorsun ve bu gece yine bozacağız, boşuna diyorsun. Oda dağınık görünüyor.",
+    "bName": "Koray",
+    "b": "İşe ilk çıkan benim ve iki dakikam yok. Senin için bu kadar önemliyse kalkınca sen topla."
+  },
+  "toiletSeat": {
+    "title": "🚽 Klozet kapağı",
+    "aName": "Betül",
+    "a": "Karanlıkta üç kere banyoya girdim ve kapak açıktı. Kapatmak zor değil.",
+    "bName": "Erdem",
+    "b": "Açık bırakınca dokunacak şey azalıyor, gece yarısı da bunu düşünmüyorum. Seni bu kadar rahatsız ediyorsa hatırlamaya çalışırım."
+  },
+  "toiletPaper": {
+    "title": "🧻 Üstten mi alttan mı",
+    "aName": "Derya",
+    "a": "Rulo kâğıt üstten gelecek şekilde takılır. Sen tersine asmışsın ve her seferinde arkasına uzanmam gerekiyor.",
+    "bName": "Ali",
+    "b": "Çalışmasına bir etkisi yok, hangisi hoşuna giderse onu seç. Senin alışkanlığına uysun diye tekrar asmayacağım."
+  },
+  "laundryColours": {
+    "title": "👕 Çamaşırda renkleri karıştırmak",
+    "aName": "Kaan",
+    "a": "Beyaz gömleğim pembe çıktı çünkü kırmızı havluyu da atmışsın. İşe giydiğim bir gömlekti o.",
+    "bName": "Leyla",
+    "b": "Acelem vardı ve küçük yük çok uzun sürüyor. Sana yenisini alırım ama bilerek yapmadım."
+  },
+  "washCar": {
+    "title": "🚗 Ortak arabayı temizlemek",
+    "aName": "İsmail",
+    "a": "Arka koltuk ambalaj ve geçen haftadan kalma kahve bardağıyla dolu. Arabayı birlikte kullanıyoruz, temizliği de birlikte yapalım.",
+    "bName": "Dilan",
+    "b": "Ben araba dağınıklığa yaklaştığında temizliyorum. Birkaç ambalajı sayılır sanmadım, bu hafta sonu yaparım."
+  },
+  "beachOrCity": {
+    "title": "🏖️ Deniz tatili mi şehir turu mu",
+    "aName": "Savaş",
+    "a": "Bir hafta denizin kenarında yatmak istiyorum, hiçbir plan yok. Geçen gezide müze müze dolaştık.",
+    "bName": "Rabia",
+    "b": "Şezlongda iki gün sonra sıkılıyorum. Yeni bir şey görmek isterim, şehrin yarısını gezsek bile."
+  },
+  "airportEarly": {
+    "title": "✈️ Havalimanına ne kadar erken gidilir",
+    "aName": "Oksana",
+    "a": "Uçuştan üç saat önce çok erken. Kapıda bir kahveyle saatlerce oturacağız.",
+    "bName": "Hamza",
+    "b": "Kuyruklar uzun olabiliyor ve ben uçmaktan biraz korkarım. Acele etmektense beklerim, uçağı kaçırmak çok daha pahalıya gelir."
+  },
+  "campingHotel": {
+    "title": "⛺ Çadır mı otel mi",
+    "aName": "Burcu",
+    "a": "Hafta sonu için kamp yeri ayırttım ve şimdi otelde kalmak istediğini söylüyorsun. Bunu baharda kararlaştırmıştık.",
+    "bName": "Cengiz",
+    "b": "Hava durumu bütün hafta sonu yağmur diyor, ıslak çadır da rahatlatıcı değil. Hava düzelince seve seve kampa giderim."
+  },
+  "packingLight": {
+    "title": "🧳 Kişi başı bir valiz",
+    "aName": "Nur",
+    "a": "Sadece kabin çantası alalım demiştik, seninki tonlarca ağırlıkta. İçinde üç çift ayakkabı var.",
+    "bName": "Serdar",
+    "b": "Seçeneklerim olsun isterim, sen de ihtiyacın olmayacak bir mont koymuşsun. Bir valiz için ücret ödersek ben karşılarım."
+  },
+  "mapOrGps": {
+    "title": "🗺️ Navigasyona güvenmek",
+    "aName": "Bekir",
+    "a": "Harita sola dön dedi, sen kestirme biliyorum diye sağa döndün. Yirmi dakika kaybettik.",
+    "bName": "Gülizar",
+    "b": "Bu yolu yüz kere geçtim, uygulama yol çalışmasını bilmiyor. Geçen sefer ben haklı çıkmıştım."
+  },
+  "leaveTime": {
+    "title": "🕗 Kaçta çıkılacak",
+    "aName": "Kübra",
+    "a": "Trafiğe takılmayalım diye sekizde çıkalım dedim, sen sekiz buçukta hâlâ duştasın. Hep böyle oluyor.",
+    "bName": "Emre",
+    "b": "Parti ondan sonra başlıyor, sekizde çıkmak çok erken. Sen en kötü trafiğe göre planlıyorsun, sonra acele eden ben oluyorum."
+  },
+  "sleepIn": {
+    "title": "🌅 Hafta sonu kalkma saati",
+    "aName": "Elif",
+    "a": "Cumartesi ve sen altıda kalkmış mutfakta ses çıkarıyorsun. Uyuyabildiğim tek sabah ve gitti.",
+    "bName": "Ravi",
+    "b": "Vücudum erken uyanıyor ve sessiz olmaya çalışıyordum. Yatıp tavana bakmak da bir işe yaramıyor."
+  },
+  "dinnerReservation": {
+    "title": "🕰️ Akşam yemeği için masa ayırtmak",
+    "aName": "İlker",
+    "a": "Masayı beş buçuğa ayırtmışsın, üstelik cuma. Kimse o kadar erken yemek yemez, ben de başka plan yapmıştım.",
+    "bName": "Tuğçe",
+    "b": "Kalan tek saatti, kaçırırdım. Sana sormuştum ama meşguldün ve cevap vermedin."
+  },
+  "boardGameRules": {
+    "title": "🎲 Kimsenin hatırlamadığı kurallar",
+    "aName": "Berkay",
+    "a": "Bütün akşam bu oyunu yanlış oynuyormuşsun ve şimdi kazanıyorsun. Geri dönüp turları yeniden oynayalım.",
+    "bName": "Sibel",
+    "b": "Başta kitapçığı birlikte okuduk ve kimse itiraz etmedi. Kaybederken kuralları değiştiremezsin."
+  },
+  "houseRules": {
+    "title": "💰 Monopolide ev kuralları",
+    "aName": "Ersin",
+    "a": "Cezaları ortaya koydum, Bedava Park'a gelen sonraki kişi alır. Gerçek kural bu.",
+    "bName": "Hazal",
+    "b": "Kitapçıkta öyle yazmıyor, üstelik oyunu bütün geceye yayıyor. Yazıldığı gibi oynayalım."
+  },
+  "fantasyTrade": {
+    "title": "🏈 Haksız bir fantezi lig takası",
+    "aName": "Okan",
+    "a": "Bana sakat bir oyuncuyu en iyi forvetime karşılık sattın, ben de bakmadan evet dedim. Haksız bir takas, geri alalım.",
+    "bName": "Fatoş",
+    "b": "Yazılı olarak kabul ettin ve takas yapıldığında adildi. Bakmak senin işin, benim değil."
+  },
+  "lineCall": {
+    "title": "🎾 Aut mu içeride mi",
+    "aName": "Mehmet",
+    "a": "O top açıkça auttu ama bütün maç boyunca içeride diyorsun. Sayının tekrar oynanmasını istiyorum.",
+    "bName": "Jale",
+    "b": "Ben çizgiye daha yakındım ve kenarına değdiğini gördüm. Sahanın öbür ucundan karar veremezsin."
+  },
+  "controllerTurns": {
+    "title": "🎮 Kumandada sıra kimde",
+    "aName": "Alp",
+    "a": "Bir saattir kumanda sende ve her sorduğumda bir tur daha diyorsun. Sıra böyle işlemez.",
+    "bName": "Pınar",
+    "b": "Bir bölümün ortasındaydım, bırakamadım. Bunu bitirince hemen veriyorum, söz."
+  },
+  "teamCaptain": {
+    "title": "⚽ Takımları seçmek",
+    "aName": "Gürkan",
+    "a": "Önce hep arkadaşlarını seçtin, beni yine zayıf oyunculara bıraktın. Takımlar dengeli olsun istiyorum.",
+    "bName": "Aylin",
+    "b": "Yıllardır böyle oynuyoruz ve sen hiç şikâyet etmedin. Adil takım istiyorsan isimleri çekerek karalım."
+  },
+  "cardCheating": {
+    "title": "🃏 Saklanan bir kart",
+    "aName": "Ruhi",
+    "a": "Son elde destenin altından kart çektiğini gördüm. Böyle kazanıyorsan ben oynamam.",
+    "bName": "Meltem",
+    "b": "Bir tanesini düşürdüm, yerden aldım, o kadar. Bütün gece kaybettiğin için huysuzsun, şimdi de beni suçluyorsun."
+  },
+  "trashTalk": {
+    "title": "🏀 Sahada atışmak",
+    "aName": "Doğan",
+    "a": "Oyun sırasında biraz takılmak işin eğlencesi. Tek bir yorumdan sonra sustun ve surat astın, ben sadece şaka yaptım.",
+    "bName": "Zehra",
+    "b": "Oyunla ilgili şaka başka, benimle ilgili olanı başka. Sadece kırıcı olmayalım istiyorum."
+  },
+  "gameSave": {
+    "title": "💾 Kayıt dosyasının üzerine yazmak",
+    "aName": "Cüneyt",
+    "a": "O kayıt dosyasına otuz saat harcadım ve sen üstüne yeni oyun başlattın. Şimdi yok.",
+    "bName": "Lale",
+    "b": "Tek yuva vardı ve boş görünüyordu. Sorardım ama evde değildin, sadece denemek istemiştim."
+  },
+  "loserPays": {
+    "title": "🎳 Kaybeden pizzayı öder",
+    "aName": "Bora",
+    "a": "Kaybeden öder demiştik, sen iki lobutla kaybettin. Söz sözdür, cüzdanını çıkar lütfen.",
+    "bName": "Ceren",
+    "b": "Şaka olarak söylemiştim, bildiğini sandım. Bir sonrakini ben ısmarlarım, ister misin?"
+  },
+  "pickleball": {
+    "title": "🏓 Skoru kim tutuyor",
+    "aName": "Gülsüm",
+    "a": "Ben sekize altı saydım, sen yediye yedi diyorsun. Skoru sürekli unutuyoruz ve oyunu bozuyor.",
+    "bName": "Deniz",
+    "b": "Her servisi saydım ve eminim. Tekrar sayısı diyelim, devam edelim."
+  },
+  "dogCouch": {
+    "title": "🐕 Kanepede köpek",
+    "aName": "Müjgan",
+    "a": "Kanepeye köpek çıkmasın demiştik, eve geliyorum bir de bakıyorum üstüne yayılmış. Minderler tüy içinde.",
+    "bName": "Doğukan",
+    "b": "Çok mutlu görünüyor ve sadece televizyon izlerken orada. Kılıf yıkanıyor, üstelik ailenin bir parçası oluyor."
+  },
+  "walkingDuty": {
+    "title": "🦮 Köpeği kim gezdirecek",
+    "aName": "Hande",
+    "a": "Hafta sonundan beri sabah ve akşam gezintilerini ben yapıyorum ve yarın sunumum var. Bu akşam sıra sende.",
+    "bName": "Tamer",
+    "b": "Yağmur boşanıyor ve yeni oturdum. Uzun yürüyüşü cumartesi yaparım, bu akşamı geçsek olmaz mı?"
+  },
+  "catNames": {
+    "title": "🐈 Yeni yavru kediye isim vermek",
+    "aName": "Pınar",
+    "a": "Onu ben buldum ve adı Pamuk olacak. Senin taktığın isim Sir Tüylü Bey ve ben bunu veterinere söylemem.",
+    "bName": "Kürşat",
+    "b": "Beni her seferinde güldürüyor ve şimdiden o isme cevap veriyor. Pamuk güzel ama herkesin kedisinin adı o."
+  },
+  "catKeyboard": {
+    "title": "🐱 Çalışma masasında kedi",
+    "aName": "Nazlı",
+    "a": "Toplantılarda klavyemin üstünden yürüyor ve sen ödül vererek bunu teşvik ediyorsun. Artık masamı yatağı sanıyor.",
+    "bName": "Taylan",
+    "b": "Görüşmedeki herkes onu seviyor ve o sadece arkadaşlık arıyor. Seni rahatsız ediyorsa kapıyı kapatabilirsin."
+  },
+  "feedingTime": {
+    "title": "🥫 Kediyi iki kere beslemek",
+    "aName": "Burak",
+    "a": "Kedinin akşam yemeğini altıda ben verdim, sen yedide yine verdin. Biraz kilo alıyor.",
+    "bName": "Eda",
+    "b": "Bana miyavlıyordu, kimse beslemedi sandım. Buzdolabına bir not asarsak bu biter."
+  },
+  "vetCosts": {
+    "title": "🐾 Veteriner faturasını bölüşmek",
+    "aName": "Rıza",
+    "a": "Veteriner faturası 3500 lira geldi, randevuyu ben aldığım için hepsini ben ödedim. Köpeği benimle sahiplendin, bölüşelim.",
+    "bName": "Sevgi",
+    "b": "Randevudan önce söyleseydin ben öderdim. Fişi bana gönder, yarısını havale ederim."
+  },
+  "offLeash": {
+    "title": "🌳 Parkta tasmasız köpek",
+    "aName": "Gülten",
+    "a": "Köpeğin uyarısız yavruma koştu ve şimdi çekingen. Tabelada bu alanda tasma zorunlu yazıyor.",
+    "bName": "Metin",
+    "b": "Çok dost canlısı, sadece merhaba demek istedi. Yakınımda tutuyorum, buradaki herkes köpeğini bırakıyor."
+  },
+  "petInBed": {
+    "title": "🐶 Yatakta köpek",
+    "aName": "Selen",
+    "a": "Yatağın yarısını kaplıyor ve yüzümde bir patiyle uyanıyorum. Yatağın yine bize ait olmasını istiyorum.",
+    "bName": "Cüneyt",
+    "b": "Yalnızken huzursuz oluyor ve yanımızda daha iyi uyuyor. Bütün gece ağlamasını dinlemektense biraz yer kaybederim."
+  },
+  "puppyName": {
+    "title": "🐕‍🦺 Yavru köpeğin adı",
+    "aName": "Tolga",
+    "a": "Bir haftadır anlaşamadığımız için ona yavru diyoruz. Ben Roket diyorum, ona çok yakışıyor.",
+    "bName": "Esin",
+    "b": "Sakin ve yavaş, Roket kulağa saçma geliyor. Ben Benek'i seviyorum, lekelerine yakışıyor."
+  },
+  "fishSitter": {
+    "title": "🐠 Balıkları kim besleyecek",
+    "aName": "Tülay",
+    "a": "Bir ay önce biz yokken balıkları beslemeni istemiştim. Halletmeyi unuttuğunu söylüyorsun, yolculuk da yarın.",
+    "bName": "Alper",
+    "b": "Komşunun teklif ettiğini sandım, çifte olmasın istedim. Bu akşam ablama sorabilirim, yakında oturuyor."
+  },
+  "birdNoise": {
+    "title": "🦜 Susmayan papağan",
+    "aName": "Necdet",
+    "a": "Papağanın her sabah altıda bağırıyor ve bir daha uyuyamıyorum. Tam yan komşunum.",
+    "bName": "Fatma",
+    "b": "O bir kuş, güneşi selamlıyor. Kafesi daha sessiz bir odaya taşırım, kusura bakma."
+  },
+  "wifiPassword": {
+    "title": "🔐 Wifi şifresini vermek",
+    "aName": "Cenk",
+    "a": "Gelen herkese wifi şifresini vermişsin ve şimdi ben çalışırken yavaşlıyor. Değiştirmek istiyorum.",
+    "bName": "Eylül",
+    "b": "Misafire hayır demek ayıp ve kimse o kadar kullanmıyor. Seni rahatsız ediyorsa misafir ağı aç."
+  },
+  "tvVolume": {
+    "title": "🔊 Ses seviyesi savaşı",
+    "aName": "Sinan",
+    "a": "Her şeyi kırk sesle izliyorsun ve mutfaktan her kelimesini duyuyorum. Lütfen altyazı kullan.",
+    "bName": "Perihan",
+    "b": "İyi duymuyorum ve düşük seviyelerde konuşmaları kaçırıyorum. Altyazı beni izletmiyor, okutuyor."
+  },
+  "phoneAtDinner": {
+    "title": "📵 Restoran masasında telefon",
+    "aName": "Leyla",
+    "a": "Bir aydır ilk kez dışarı çıkmıştık ve sen beş dakikada bir telefona baktın. Tek başıma oturuyormuşum gibi hissettim.",
+    "bName": "Kemal",
+    "b": "Kardeşimin uçağının inip inmediğine dair mesaj bekliyordum. Söylemeliydim ama seni endişelendirmek istemedim."
+  },
+  "notificationSound": {
+    "title": "🔔 Kütüphanede bildirim sesi",
+    "aName": "Evrim",
+    "a": "Telefonun otuz saniyede bir ötüyor ve bazılarımız ders çalışıyor. Lütfen sessize al.",
+    "bName": "Mehmet",
+    "b": "Şimdi titreşimde, çok özür dilerim. Sesin açık olduğunu fark etmedim, bir daha olmaz."
+  },
+  "darkMode": {
+    "title": "🌗 Karanlık mod mu aydınlık mod mu",
+    "aName": "Cem",
+    "a": "Ortak tableti gece aydınlık moda çevirmişsin, gözlerimi yakıyor. Akşamları karanlık olsun diye anlaşmıştık.",
+    "bName": "Özlem",
+    "b": "Karanlık modda hiçbir şey okuyamıyorum, yazılar bulanıklaşıyor. Yatmadan önce geri çeviririm ama gündüz bana lazım."
+  },
+  "smartSpeaker": {
+    "title": "🗣️ Dinleyen akıllı hoparlör",
+    "aName": "Mazlum",
+    "a": "Yatak odamıza akıllı hoparlör koymuşsun ve dinlemesi beni rahatsız ediyor. Mutfağa taşınmasını istiyorum.",
+    "bName": "Aslıhan",
+    "b": "Sadece alarm ve hava durumu için kullanıyorum. Mutfak çok uzak ama geceleri mikrofonu kapatabilirim."
+  },
+  "tabsOpen": {
+    "title": "🗂️ İki yüz açık sekme",
+    "aName": "Sema",
+    "a": "Dizüstünü ne zaman ödünç alsam yüz sekme açık oluyor ve sürünüyor. Birkaçını kapatsan hızlanır.",
+    "bName": "Ali Rıza",
+    "b": "Hepsi bana lazım ve hangisinin nerede olduğunu tam biliyorum. Düzenli bir kaos bu."
+  },
+  "photoStorage": {
+    "title": "🖼️ Bulut depolamayı paylaşmak",
+    "aName": "Nesrin",
+    "a": "Videolarının yüzünden ortak depolama doldu ve fotoğraflarımı yedekleyemiyorum. Birazını sil ya da kendi alanını al.",
+    "bName": "Kerem",
+    "b": "Hepsi aile videoları, kaybetmek istemiyorum. Bir diske atarım ama birkaç gün ver."
+  },
+  "videoCallCamera": {
+    "title": "📹 Görüntülü görüşmede kamera",
+    "aName": "Gülşah",
+    "a": "Haftalık aile görüşmesi birbirimizi gördüğümüz tek zaman ve sen kameranı kapalı tutuyorsun. Duvarla konuşuyor gibiyim.",
+    "bName": "Barış",
+    "b": "Genelde yemek yapıyorum ya da pijamalarım üstümde. Yine de oradayım ve dinliyorum, kameranın önemli olduğunu sanmıyorum."
+  },
+  "doorbellCamera": {
+    "title": "🚪 Kapı zili kamerası",
+    "aName": "Meral",
+    "a": "Bütün giriş yolunu izleyen bir kamera taktırmışsın, komşular da görebiliyor. Başka yöne çevrilmesini istiyorum.",
+    "bName": "Tuncay",
+    "b": "Geçen kış iki paketimiz çalındı ve sadece kendi kapımızı kaydediyor. Biraz aşağı eğmekten memnuniyet duyarım."
+  },
+  "holdDoor": {
+    "title": "🚪 Kapıyı tutmak",
+    "aName": "Vedat",
+    "a": "Koca bir grup için kapıyı tuttum, hiçbiri teşekkür etmedi. Nazik olmak bir saniye sürer.",
+    "bName": "Yasemin",
+    "b": "İnsanlar acele ediyor ve her zaman fark etmiyor. Teşekkür bekleyerek değil, iyi olduğu için yapmalısın."
+  },
+  "elevatorSpot": {
+    "title": "🛗 Asansörün önünde durmak",
+    "aName": "Gülnur",
+    "a": "Asansörü bekliyordum ve açıldığı anda sen önüme geçtin. Açıkça önce ben oradaydım.",
+    "bName": "Mustafa",
+    "b": "Bebek arabam vardı ve asansör tek yolumdu. Seni görmedim, kusura bakma ama gerçekten ihtiyacım vardı."
+  },
+  "cuttingQueue": {
+    "title": "🧍 Sıraya girmemek",
+    "aName": "Ülkü",
+    "a": "Biz yirmi dakikadır beklerken sen doğrudan tezgâha yürüdün. Arkamda bir sıra var.",
+    "bName": "İdris",
+    "b": "Sadece kısa bir şey soracaktım, sipariş vermiyordum. Burası onun sırası olduğunu anlamadım."
+  },
+  "busPhone": {
+    "title": "🚌 Otobüste yüksek sesli telefon",
+    "aName": "Dilber",
+    "a": "Arkamdaki bey yirmi dakikadır hoparlörde konuşuyor ve hepimiz bütün gününü duyduk. Kulaklık takması nazik olurdu.",
+    "bName": "Samet",
+    "b": "Acil bir görüşme ve hat kötü, hoparlör lazım. Kısa keserim, kaba olmaya gerek yok."
+  },
+  "shoesInside": {
+    "title": "👟 Evde ayakkabı",
+    "aName": "Hacer",
+    "a": "Lütfen ayakkabıları kapıda çıkar, biz içeride giymiyoruz. Yeni yeri sildim.",
+    "bName": "Pavel",
+    "b": "Hava kuru ve tabanlar temiz. Alışık değilim ama bu kadar önemliyse çıkarırım."
+  },
+  "armrest": {
+    "title": "💪 Kol dayama yerini paylaşmak",
+    "aName": "Nedim",
+    "a": "Bütün film boyunca iki kolçak da sendeydi ve kolum havada kaldı. Ortadaki koltuğa ikisi de düşer, kural bu.",
+    "bName": "Ceyda",
+    "b": "Cam kenarındayım ve dirseklerime yer lazım. Kural olduğunu bilmiyordum, kayarım."
+  },
+  "lateRsvp": {
+    "title": "✉️ Davete son anda cevap vermek",
+    "aName": "Gaye",
+    "a": "Herkesten birine kadar cevap vermesini istedim, sen bir gün önce evet dedin. On beş kişilik yemeği çoktan sipariş etmiştim.",
+    "bName": "Tayfun",
+    "b": "Vardiyamdan o zamana kadar emin değildim. Sofraya bir kişi daha eklenmesi zarar vermez, ben de tatlı getirdim."
+  },
+  "thankYouNote": {
+    "title": "💌 Teşekkür notları",
+    "aName": "Edibe",
+    "a": "Kuzeninin düğünü bir ay önceydi ve hediyemiz hakkında tek kelime duymadık. Bir not hiçbir şeye mal olmaz.",
+    "bName": "Burhan",
+    "b": "Muhtemelen yüz hediyenin arkasından yetişmeye çalışıyorlar. Bir mesaj dünyanın sonu değil, zaman ver."
+  },
+  "regift": {
+    "title": "🎁 Hediyeyi başkasına vermek",
+    "aName": "Sevcan",
+    "a": "Senden aldığım şalın önce başkasının sana verdiği hediye olduğunu öğrendim. Sanki sonradan akla gelmiş gibi hissettim.",
+    "bName": "Levent",
+    "b": "Çok güzeldi ama bana yakışmıyordu. Sana daha çok yakışacağını düşündüm, zaten sana verirdim."
+  },
+  "partyDrink": {
+    "title": "🍾 Davete bir şey getirmek",
+    "aName": "Dilek",
+    "a": "Yemeğe elin boş geldin, ben iki gün yemek yaptım. Bir şişe ya da biraz çiçek güzel olurdu.",
+    "bName": "Vahit",
+    "b": "Sen sadece kendini getir dedin, ben de sözüne inandım. Bir dahaki sefere güzel bir şey getiririm."
+  },
+  "escalator": {
+    "title": "⬆️ Yürüyen merdivende durmak",
+    "aName": "Birgül",
+    "a": "Sol tarafta durdun ve yürümek isteyen herkesi engelledin. Kural şu, sağda dur, solda yürü.",
+    "bName": "Ender",
+    "b": "Ağır çantalarım var ve sadece güvenle varmak istiyorum. Kimsenin programı için acele etmek zorunda değilim."
+  },
+  "cinemaTalk": {
+    "title": "🎞️ Film sırasında fısıldamak",
+    "aName": "Cihan",
+    "a": "Bütün film boyunca arkadaşına her sahneyi fısıltıyla anlattın. Ben izlemek için para verdim, canlı anlatım dinlemek için değil.",
+    "bName": "Leyla",
+    "b": "O diziye yeni başladı, sadece olay örgüsünü takip etmesine yardım ediyordum. Gerçekten rahatsız ettiysem keserim."
+  },
+  "neighbourMusic": {
+    "title": "🔈 Geç saate kadar partisi olan komşu",
+    "aName": "Ada",
+    "a": "Partin gece birde hâlâ gürültülüydü ve bazılarımız sabah işe gidiyor. Biraz haber vermek kibar olurdu.",
+    "bName": "Selahattin",
+    "b": "Apartman yönetimine haber verdim, yılda bir gece. İnsanlardan içeri girmelerini isterim ama herkes eğleniyor."
+  },
+  "socks": {
+    "title": "🧦 Yerde çoraplar",
+    "aName": "Gülay",
+    "a": "Yatağın yanında bir çift çorabın, kanepenin yanında bir tane daha, koridorda da bir tane var. Her gün topluyorum.",
+    "bName": "Berk",
+    "b": "Sadece çorap ve tekrar giyeceğim. Sepete atarım ama saymana gerek yok."
+  },
+  "cafeSeat": {
+    "title": "☕ Dizüstüyle yer tutmak",
+    "aName": "Jale",
+    "a": "Dizüstün o masayı bir saattir tutuyor ve sen başka yere gittin. Mekân dolu ve insanlar ayakta.",
+    "bName": "Kerem",
+    "b": "Sadece telefon görüşmesi için dışarı çıktım ve hemen dönüyordum. Çanta bırakmak herkesin yer tutma yöntemi."
+  },
+  "groupProject": {
+    "title": "🎓 Kimsenin başlamadığı grup projesi",
+    "aName": "Tuğba",
+    "a": "Proje bir hafta sonra teslim ve bütün taslağı tek başıma yazdım. Her birinizin kendi bölümünü cumaya kadar yapmasını istiyorum.",
+    "bName": "Oğuz",
+    "b": "Ondan önce iki sınavım var ve bölümlerimin geç geleceğini söylemiştim. Hafta sonu yapabilirim."
+  },
+  "puzzle": {
+    "title": "🧩 Yapbozumu bitirmek",
+    "aName": "Gülsüm",
+    "a": "O yapboz üzerinde bir haftadır çalışıyordum ve ben yokken son yirmi parçayı sen yerleştirdin. Kendim bitirmek istiyordum.",
+    "bName": "Hüseyin",
+    "b": "Masanın üstünde duruyordu ve kendimi kaptırdım. Senin için bu kadar önemli olduğunu bilmiyordum, özür dilerim."
+  },
+  "hedge": {
+    "title": "🌿 Komşunun çit ağacı",
+    "aName": "Berna",
+    "a": "Çitin yolun üstüne taştı ve geçmek için yola inmem gerekiyor. Bahardan beri böyle.",
+    "bName": "Zafer",
+    "b": "Kesmeyi düşünüyordum ve hava berbattı. Pazar günü yaparım, kapıyı çalabilirdin."
+  }
+}

@@ -54,6 +54,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.okjudge.judge.core.display.CourtScene
+import com.okjudge.judge.core.display.PartyNames
 import com.okjudge.judge.core.display.Story
 import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.core.session.VerdictFlow
@@ -107,6 +108,8 @@ fun JudgingScreen(
     premium: Boolean = false,
     showCancel: Boolean = true,
     sides: List<VerdictFlow.Side> = emptyList(),
+    /** How many sides stand at centre court before the verdict says; a case with more than two knows it. */
+    sideCount: Int = 2,
 ) {
     val s = LocalStrings.current
     val finishedCallback by rememberUpdatedState(onFinished)
@@ -174,7 +177,7 @@ fun JudgingScreen(
                 val gamify = LocalGamify.current
                 if (gamify) {
                     CourtView(
-                        scene = CourtScene.Judging(beat, summary),
+                        scene = CourtScene.Judging(beat, summary, maxOf(sideCount, sides.size)),
                         reducedMotion = reducedMotion,
                         modifier = Modifier
                             .heightIn(max = courtHeight)
@@ -251,14 +254,21 @@ private fun TypeLine(text: String, reducedMotion: Boolean, style: TextStyle) {
     )
 }
 
-/** What each side wrote, three lines at most, yours first. */
+/** What each side wrote, three lines at most, yours first; two to a row, as four tiles side by side would be too narrow. */
 @Composable
 private fun SideTiles(sides: List<VerdictFlow.Side>) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        sides.chunked(2).forEach { row -> SideTileRow(row) }
+    }
+}
+
+@Composable
+private fun SideTileRow(sides: List<VerdictFlow.Side>) {
     val s = LocalStrings.current
     val colors = LocalSides.current
     Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         sides.forEach { side ->
-            val (ink, tint) = (if (side.mine) colors.mine else colors.theirs).let { it.ink to it.tint }
+            val (ink, tint) = (if (side.mine) colors.mine else if (side.extra == null) colors.theirs else colors.of(side.party.raw)).let { it.ink to it.tint }
             Column(
                 Modifier
                     .weight(1f)
@@ -270,7 +280,13 @@ private fun SideTiles(sides: List<VerdictFlow.Side>) {
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 Text(
-                    side.name.ifEmpty { if (side.mine) s.appHomeYourSide else s.appHomeTheirSide }.uppercaseForUi(),
+                    side.name.ifEmpty {
+                        when {
+                            side.mine -> s.appHomeYourSide
+                            side.extra != null -> PartyNames.label(side.party, s)
+                            else -> s.appHomeTheirSide
+                        }
+                    }.uppercaseForUi(),
                     style = JudgeType.micro.copy(color = ink, letterSpacing = 0.08.em).forScript(),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,

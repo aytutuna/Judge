@@ -23,6 +23,25 @@ enum VerdictDisplay {
         }
     }
 
+    /// The ruling of a result: with three or four sides who is right, or too
+    /// close to call (`verdict` there is only the older two-sided projection).
+    static func label(_ result: VerdictResult, parties: PartyNames, lang: AppLang) -> String {
+        guard result.isMany else { return label(result.verdict, parties: parties, lang: lang) }
+        guard let winner = result.winner else { return L10n.verdictTooClose(lang) }
+        return parties.isSelf(winner) ? L10n.verdictWinSelf(lang) : L10n.verdictWin(lang, name: parties.name(winner))
+    }
+
+    /// How the ruling reads from the viewer's side: their own side won, or
+    /// another did; nil when it was too close or nobody is looking (a share page).
+    enum Outcome: Sendable, Equatable {
+        case win, lose
+    }
+
+    static func outcome(_ result: VerdictResult, viewer: Party?) -> Outcome? {
+        guard let winner = result.winner, let viewer, viewer != .unknown else { return nil }
+        return winner == viewer ? .win : .lose
+    }
+
     /// The stamp on the card: the winner as `label` says it, otherwise one short word.
     static func stampLabel(_ verdict: FinalVerdict, parties: PartyNames, lang: AppLang) -> String {
         switch verdict {
@@ -55,6 +74,10 @@ enum VerdictDisplay {
     /// How many judge runs reached the final verdict; nil when there is no
     /// majority ruling to agree with (too close) or no runs at all.
     static func agreement(_ result: VerdictResult) -> Agreement? {
+        if result.isMany {
+            guard !result.runs.isEmpty, let winner = result.winner else { return nil }
+            return Agreement(n: (result.votes ?? []).filter { $0.rawValue == winner.rawValue }.count, total: result.runs.count)
+        }
         guard !result.runs.isEmpty, result.verdict != .tooClose, result.verdict != .unknown else { return nil }
         let n = result.runs.filter { $0.rawValue == result.verdict.rawValue }.count
         return Agreement(n: n, total: result.runs.count)
@@ -90,6 +113,7 @@ enum VerdictDisplay {
     /// Party A's share of the tug-of-war bar, in percent: 80/20 for a win,
     /// a fixed 62/38 for a forced-ruling lean, 50 otherwise.
     static func tugFinal(_ result: VerdictResult) -> Int {
+        if result.isMany { return 50 }
         switch result.verdict {
         case .sideA: return 80
         case .sideB: return 20
@@ -108,7 +132,8 @@ enum VerdictDisplay {
     /// level with no votes.
     static func sceneVerdict(_ result: VerdictResult) -> SceneMode {
         if result.modelRefused { return .verdict(tugA: 50, votes: []) }
-        return .verdict(tugA: tugFinal(result), votes: result.runs.map(vote))
+        let votes = result.isMany ? (result.votes ?? []) : result.runs.map(vote)
+        return .verdict(tugA: tugFinal(result), votes: votes)
     }
 
     /// Largest verdict tilt in radians (about 17 degrees at 100/0).
@@ -148,7 +173,10 @@ enum VerdictDisplay {
 
     /// Raw values are the scene bridge's (lib/scene-bridge.ts Vote).
     enum Vote: String, Sendable, Equatable {
-        case a, b, other
+        case a, b, c, d, other
+
+        /// The 3D balance knows two sides; the rest read as other.
+        var balance: Vote { self == .c || self == .d ? .other : self }
     }
 
     static func vote(_ run: JudgeVerdict) -> Vote {
@@ -160,7 +188,18 @@ enum VerdictDisplay {
     }
 
     enum Seal: Sendable, Equatable {
-        case a, b, none
+        case a, b, c, d, none
+    }
+
+    /// The seal of a ruling with three or four sides: its winner's.
+    static func seal(winner: Party?) -> Seal {
+        switch winner {
+        case .a: return .a
+        case .b: return .b
+        case .c: return .c
+        case .d: return .d
+        default: return .none
+        }
     }
 
     static func seal(_ verdict: FinalVerdict) -> Seal {
@@ -169,6 +208,28 @@ enum VerdictDisplay {
         case .sideB: return .b
         default: return .none
         }
+    }
+
+    /// Whether there is anything to say about what the sides stand on.
+    static func hasSides(_ result: VerdictResult) -> Bool {
+        if result.isMany { return (result.sides ?? []).contains { !$0.bedrock.isEmpty || !$0.claims.isEmpty } }
+        let map = result.argumentMap
+        return !(map.bedrockA.isEmpty && map.bedrockB.isEmpty && map.sideA.isEmpty && map.sideB.isEmpty)
+    }
+
+    /// The footnote's votes in words for a result with three or four sides.
+    static func votesText(_ result: VerdictResult, parties: PartyNames, lang: AppLang) -> String {
+        guard result.isMany else { return votesText(result.runs, parties: parties, lang: lang) }
+        return (result.votes ?? []).map { vote -> String in
+            switch vote {
+            case .a: return parties.nameA
+            case .b: return parties.nameB
+            case .c: return parties.nameC
+            case .d: return parties.nameD
+            case .other: return L10n.voteSplit(lang)
+            }
+        }
+        .joined(separator: " · ")
     }
 
     /// The footnote's votes in words, joined with " · ".
@@ -303,22 +364,4 @@ struct ExampleArgument: Sendable, Identifiable {
     func text(_ lang: AppLang) -> String { L10n.text("example.\(id).text", lang) ?? "" }
 
     static let all: [ExampleArgument] = ["hotdog", "tomato", "whiteLie", "knuckles", "pineapple"].map { ExampleArgument(id: $0) }
-}
-
-/// "Try an example" on Home: both names and both sides of a made-up argument.
-struct ExampleCase: Sendable, Equatable {
-    let id: String
-
-    func myName(_ lang: AppLang) -> String { L10n.text("app.example.\(id).aName", lang) ?? "" }
-    func mine(_ lang: AppLang) -> String { L10n.text("app.example.\(id).a", lang) ?? "" }
-    func theirName(_ lang: AppLang) -> String { L10n.text("app.example.\(id).bName", lang) ?? "" }
-    func theirs(_ lang: AppLang) -> String { L10n.text("app.example.\(id).b", lang) ?? "" }
-
-    static let all: [ExampleCase] = ["dishwasher", "bill", "thermostat", "roadTrip", "seat", "spoiler", "jacket", "lastSlice"]
-        .map { ExampleCase(id: $0) }
-
-    /// Any example but `last`, so every tap changes what is on screen.
-    static func random(after last: String?) -> ExampleCase {
-        all.filter { $0.id != last }.randomElement() ?? all[0]
-    }
 }

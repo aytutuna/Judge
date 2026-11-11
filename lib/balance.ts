@@ -32,8 +32,14 @@ export function voteOf(run: JudgeVerdict): Vote {
   return run === "side_a" ? "a" : run === "side_b" ? "b" : "other";
 }
 
+/** Every run's vote: with three or four sides the true votes, else each
+ * run's own ruling. */
+export function votesOf(r: VerdictResult): Vote[] {
+  return r.votes ?? r.runs.map(voteOf);
+}
+
 /** What the scene shows for a finished verdict. A refusal is level with no
  * votes: the model never judged, so no orb may pretend it did. */
 export function sceneVerdictFrom(r: VerdictResult): SceneVerdict {
-  return r.model_refused ? { tugA: 50, votes: [] } : { tugA: tugFinal(r), votes: r.runs.map(voteOf) };
+  return r.model_refused ? { tugA: 50, votes: [] } : { tugA: tugFinal(r), votes: votesOf(r) };
 }

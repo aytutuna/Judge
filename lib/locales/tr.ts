@@ -123,6 +123,8 @@ const tr: Locale = {
     verdictAria: "Karar: {label}",
     "party.a": "Taraf A",
     "party.b": "Taraf B",
+    "party.c": "Taraf C",
+    "party.d": "Taraf D",
     "party.youLabel": "{label} (sen)",
     you: "Sen",
     "shared.subtitle": "Biri bu kararı paylaştı",
@@ -349,8 +351,7 @@ const tr: Locale = {
     "signin.createNote": "Bu adresi doğrulamak için sana bir kod e-postalayacağız. Bunu yalnızca bir kez yapman yeterli.",
     "signin.passwordChoose": "Giriş yaptın. Bir dahaki sefer için bir parola seç.",
     "signin.passwordSave": "Parolayı kaydet",
-    "signin.passwordSaveFailed": "Giriş yaptın ama parolayı kaydedemedik. Tekrar dene ya da sonra Ayarlar'dan belirle.",
-    "signin.passwordSkip": "Şimdilik geç",
+    "signin.passwordSaveFailed": "Parolayı kaydedemedik. Tekrar dene.",
     "signin.passwordSubmit": "Giriş yap",
     "signin.rateLimited": "Çok fazla deneme oldu. Bir dakika bekleyip tekrar dene.",
     "signin.serviceDown": "Giriş şu an kullanılamıyor. Daha sonra tekrar dene.",
@@ -379,10 +380,6 @@ const tr: Locale = {
     "account.deleteConfirm":
       "Hesabın silinsin mi? Kredilerin, planın ve giriş bilgilerin silinir. Kararların ve davalardaki tarafların kaldırılır: yazdıkların ve isimler silinir, paylaşım bağlantıları da çalışmaz olur.",
     "account.deleteYes": "Evet, sil",
-    "account.passwordSet": "Parola belirle",
-    "account.passwordChange": "Parolayı değiştir",
-    "account.passwordCurrent": "Şu anki parola",
-    "account.passwordSaved": "Parola kaydedildi.",
     "account.deleteCancel": "Hesabım kalsın",
     "account.deleted": "Hesabın silindi. Ana sayfaya dönüyoruz…",
     "account.deleteFailed": "Hesabı şu an silemedik. Bir daha dener misin?",
@@ -473,6 +470,10 @@ const tr: Locale = {
     "case.judgeNow.yes": "Evet, şimdi karar ver",
     "case.judgeExpired.confirm": "Sadece kendi tarafına göre karar mı istiyorsun? Bu, 1 karar hakkı kullanır.",
     "case.judgeExpired.yes": "Evet, 1 hak kullan",
+    "case.side.waiting": "Bekliyor",
+    "case.side.answered": "Cevapladı",
+    "case.judgeAnswered": "Cevaplayan taraflarla karar ver",
+    "case.judgeAnswered.confirm": "Cevaplayan taraflarla bir karar mı istiyorsun? Diğer davetler kapanır, o kişiler artık cevap veremez.",
     "case.cancel": "Vazgeç",
     "case.retry": "Tekrar dene",
     "case.failedBody": "Kredin geri döndü. Şimdi tekrar deneyebilirsin.",
@@ -481,9 +482,13 @@ const tr: Locale = {
     "case.accounts": "Her taraf yargıçlara ne anlattı",
     "case.accountA": "Taraf A'nın anlatımı",
     "case.accountB": "Taraf B'nin anlatımı",
+    "case.accountC": "Taraf C'nin anlatımı",
+    "case.accountD": "Taraf D'nin anlatımı",
     "case.accountYou": "Senin anlatımın ({label})",
     "case.contextA": "Taraf A'nın eklediği bilgi",
     "case.contextB": "Taraf B'nin eklediği bilgi",
+    "case.contextC": "Taraf C'nin eklediği bilgi",
+    "case.contextD": "Taraf D'nin eklediği bilgi",
     "case.contextYou": "Senin eklediğin bilgi ({label})",
     "case.evidenceItem": "{n}. görsel, yargıçların okuduğu hâliyle",
     "case.notYet": "Henüz cevap vermedi.",
@@ -566,6 +571,7 @@ const tr: Locale = {
     "home.yourPlaceholder": "Sorun ne?",
     "home.addContext": "Ayrıntı ekle",
     "home.addTheirSide": "Karşı tarafı ekle",
+    "home.addSide": "Bir taraf daha ekle",
     "home.removeTheirSide": "Karşı tarafı kaldır",
     "home.sendLink": "Bağlantı gönder",
     "home.clear": "Temizle",
@@ -580,57 +586,9 @@ const tr: Locale = {
     "home.says": "{name} diyor ki:",
     "home.mySide": "Benim tarafım:",
     "home.otherSide": "Onun tarafı:",
-    "pairs.dishwasher.aName": "Elif",
-    "pairs.dishwasher.a":
-      "Kâseleri yine üst rafa koymuşsun. Orada hiç temiz çıkmıyorlar, alt raf bunun için var.",
-    "pairs.dishwasher.bName": "Can",
-    "pairs.dishwasher.b":
-      "Üstte gayet sığıyorlar, alt raf da tencerelere kalıyor. Yıllardır böyle diziyorum, bir kere bile kirli çıkmadı.",
-    "pairs.bill.aName": "Zeynep",
-    "pairs.bill.a":
-      "Hiç içmedim, şarabın dörtte birini ben ödememeliyim. Yemeği eşit bölelim, ona itirazım yok.",
-    "pairs.bill.bName": "Mert",
-    "pairs.bill.b":
-      "Hep dörde bölüyoruz zaten. Her seferinde kim ne yedi diye hesap yapmak çok uğraştırıyor, fark da o kadar değil.",
-    "pairs.thermostat.aName": "Selin",
-    "pairs.thermostat.a":
-      "İçerisi 19 derece, kapüşonluyla bile üşüyorum. Kombiyi 22'ye almak abartı değil.",
-    "pairs.thermostat.bName": "Emre",
-    "pairs.thermostat.b":
-      "22 derecede uyunmaz, çok sıcak. Sen bir kat daha giyebilirsin ama ben daha fazla bir şey çıkaramam.",
-    "pairs.roadTrip.aName": "Deniz",
-    "pairs.roadTrip.a":
-      "Gidişte altı saat boyunca hep ben sürdüm. Dönüşte senin sürmen adil olur.",
-    "pairs.roadTrip.bName": "Burak",
-    "pairs.roadTrip.b":
-      "Yola çıkmadan gece araba kullanmaktan nefret ettiğimi söyledim, akşam yedide çıkıyoruz. Bir dahaki yolculukta sabahları ben sürerim.",
-    "pairs.seat.aName": "Ece",
-    "pairs.seat.a":
-      "Koltuğum yatıyor, ben de yatırıyorum. Gece uçuşu, herkes uyumaya çalışıyor.",
-    "pairs.seat.bName": "Kaan",
-    "pairs.seat.b":
-      "Boyum 1,90, dizlerim zaten koltuğuna değiyor. Sonuna kadar yatırmadan önce en azından sorabilirdin.",
-    "pairs.spoiler.aName": "Defne",
-    "pairs.spoiler.a":
-      "Son bölümü açmadan katilin kim olduğunu söyledin. Bütün hafta onu bekliyordum.",
-    "pairs.spoiler.bName": "Ozan",
-    "pairs.spoiler.b":
-      "Üç hafta önce çıktı, sen de bitirdim demiştin. Herkesin hangi bölümde olduğunu takip edemem.",
-    "pairs.jacket.aName": "Ayşe",
-    "pairs.jacket.a":
-      "Kot ceketimi bana sormadan konsere giymişsin. Sigara kokarak geri geldi.",
-    "pairs.jacket.bName": "Berk",
-    "pairs.jacket.b":
-      "Kapının yanında asılıydı, sen de hiç giymiyorsun. Sorardım ama uyuyordun, ben de zaten geç kalmıştım.",
-    "pairs.lastSlice.aName": "Cem",
-    "pairs.lastSlice.a": "Film başlamadan \"son dilim benim\" dedim. Herkes duydu.",
-    "pairs.lastSlice.bName": "Naz",
-    "pairs.lastSlice.b":
-      "\"Benim\" deyip iki saat dokunmamak olmaz. Orada soğuyup duruyordu, ben de yedim.",
     "appeal.lead":
-      "Eksik ya da yanlış bir şey mi var? Bir kez ekle, yargıçlar her şeye yeniden baksın. 1 karar hakkı kullanır.",
-    "appeal.label": "Eklemek istediğin bilgi",
-    "appeal.placeholder": "Yargıçlar neyi kaçırdı?",
+      "1 karar hakkı kullanır.",
+    "appeal.placeholder": "Yargıçlar neyi kaçırdı? Bir detay, bir mesaj ya da gerçekte ne kararlaştırıldığı.",
     "appeal.submit": "Bilgimle yeniden yargıla",
     "appeal.sending": "Bilgini anonimleştiriyoruz…",
     "appeal.judging": "Yargıçlar her şeye yeniden bakıyor…",
@@ -650,8 +608,6 @@ const tr: Locale = {
     "appeal.previous": "Önceki karar",
     "appeal.failed": "Yeniden yargılama gerçekleşmedi. Kredin geri döndü, tekrar deneyebilirsin.",
     "appeal.refused": "Yargıçlar bu bilgiyle yeniden yargılamayı reddetti. Kredin geri döndü.",
-    "appeal.leadVerdict":
-      "Eksik ya da yanlış bir şey mi var? Ekle, yargıçlar her şeye yeniden baksın. Her seferinde 1 karar hakkı kullanır, bir karar için en fazla iki kez.",
     "appeal.history": "Karar geçmişi",
     "faq.both.q": "Diğer kişi de kendi tarafını anlatabilir mi?",
     "faq.both.a":
@@ -693,6 +649,7 @@ const tr: Locale = {
     "unavailable.cta": "Judge'a git",
     "error.removed": "Bu kaldırıldı. Bağlantısı artık çalışmıyor.",
     "error.names_unavailable": "İsimler şu an kaydedilemiyor. Daha sonra tekrar dene.",
+    "error.update_required": "Bu davada ikiden fazla taraf var. Açmak için uygulamayı güncelle.",
     "verdict.remove": "Bu kararı kaldır",
     "verdict.remove.confirm":
       "Yazdıkların, isimler ve görünen adlar kaldırılsın mı? Paylaşım bağlantısı ve önizleme görseli herkes için açılmaz olur (sohbetlerde önceden paylaşılmış önizlemeler, o uygulamalar yenileyene kadar görünmeye devam edebilir). Bu geri alınamaz.",

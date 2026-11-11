@@ -119,6 +119,8 @@ const de: Locale = {
     verdictAria: "Urteil: {label}",
     "party.a": "Partei A",
     "party.b": "Partei B",
+    "party.c": "Partei C",
+    "party.d": "Partei D",
     "party.youLabel": "{label} (du)",
     you: "Du",
     "shared.subtitle": "Jemand hat dieses Urteil geteilt",
@@ -344,8 +346,7 @@ const de: Locale = {
     "signin.createNote": "Wir schicken dir einen Code, um diese Adresse zu bestätigen. Das musst du nur einmal tun.",
     "signin.passwordChoose": "Du bist angemeldet. Wähle ein Passwort für das nächste Mal.",
     "signin.passwordSave": "Passwort speichern",
-    "signin.passwordSaveFailed": "Du bist angemeldet, aber das Passwort konnte nicht gespeichert werden. Versuche es erneut oder lege es später in den Einstellungen fest.",
-    "signin.passwordSkip": "Vorerst überspringen",
+    "signin.passwordSaveFailed": "Das Passwort konnte nicht gespeichert werden. Versuche es erneut.",
     "signin.passwordSubmit": "Anmelden",
     "signin.rateLimited": "Zu viele Versuche. Warte eine Minute und versuch es dann noch mal.",
     "signin.serviceDown": "Die Anmeldung ist gerade nicht verfügbar. Versuch es später noch mal.",
@@ -374,10 +375,6 @@ const de: Locale = {
     "account.deleteConfirm":
       "Konto löschen? Deine Credits, dein Tarif und deine Anmeldedaten werden gelöscht. Deine Urteile und deine Beiträge zu Fällen werden entfernt: Was du geschrieben hast und die Namen werden gelöscht, und die geteilten Links funktionieren nicht mehr.",
     "account.deleteYes": "Ja, löschen",
-    "account.passwordSet": "Passwort festlegen",
-    "account.passwordChange": "Passwort ändern",
-    "account.passwordCurrent": "Aktuelles Passwort",
-    "account.passwordSaved": "Passwort gespeichert.",
     "account.deleteCancel": "Konto behalten",
     "account.deleted": "Dein Konto ist gelöscht. Wir bringen dich zur Startseite…",
     "account.deleteFailed": "Wir konnten das Konto gerade nicht löschen. Versuchst du es noch mal?",
@@ -468,6 +465,10 @@ const de: Locale = {
     "case.judgeNow.yes": "Ja, Urteil jetzt holen",
     "case.judgeExpired.confirm": "Ein Urteil nur über deine Seite holen? Das kostet 1 Urteil.",
     "case.judgeExpired.yes": "Ja, 1 Urteil nutzen",
+    "case.side.waiting": "Wartet",
+    "case.side.answered": "Hat geantwortet",
+    "case.judgeAnswered": "Mit den Seiten beurteilen, die geantwortet haben",
+    "case.judgeAnswered.confirm": "Ein Urteil aus den Seiten, die geantwortet haben? Die übrigen Einladungen werden geschlossen und diese Leute können nicht mehr antworten.",
     "case.cancel": "Abbrechen",
     "case.retry": "Noch mal versuchen",
     "case.failedBody": "Dein Credit ist wieder da. Du kannst es jetzt noch mal versuchen.",
@@ -476,9 +477,13 @@ const de: Locale = {
     "case.accounts": "Was jede Seite den Richtern erzählt hat",
     "case.accountA": "Darstellung von Partei A",
     "case.accountB": "Darstellung von Partei B",
+    "case.accountC": "Darstellung von Partei C",
+    "case.accountD": "Darstellung von Partei D",
     "case.accountYou": "Deine Darstellung ({label})",
     "case.contextA": "Ergänzung von Partei A",
     "case.contextB": "Ergänzung von Partei B",
+    "case.contextC": "Ergänzung von Partei C",
+    "case.contextD": "Ergänzung von Partei D",
     "case.contextYou": "Deine Ergänzung ({label})",
     "case.evidenceItem": "Bild {n}, wie die Richter es lesen",
     "case.notYet": "Noch keine Antwort.",
@@ -564,6 +569,7 @@ const de: Locale = {
     "home.yourPlaceholder": "Was ist das Problem?",
     "home.addContext": "Kontext hinzufügen",
     "home.addTheirSide": "Gegenseite hinzufügen",
+    "home.addSide": "Weitere Seite hinzufügen",
     "home.removeTheirSide": "Gegenseite entfernen",
     "home.sendLink": "Per Link einladen",
     "home.clear": "Leeren",
@@ -579,58 +585,9 @@ const de: Locale = {
     "home.says": "{name} sagt:",
     "home.mySide": "Meine Seite:",
     "home.otherSide": "Die andere Seite:",
-    "pairs.dishwasher.aName": "Julia",
-    "pairs.dishwasher.a":
-      "Du hast die Schüsseln schon wieder oben eingeräumt. Da werden sie nie richtig sauber, dafür ist doch der untere Korb da.",
-    "pairs.dishwasher.bName": "Felix",
-    "pairs.dishwasher.b":
-      "Die passen oben gut rein, und unten bleibt Platz für die Töpfe. Ich räume die Spülmaschine seit Jahren so ein, und noch nie ist was dreckig rausgekommen.",
-    "pairs.bill.aName": "Anna",
-    "pairs.bill.a":
-      "Ich hab nichts getrunken, also zahle ich auch kein Viertel vom Wein. Das Essen können wir gern gleichmäßig aufteilen.",
-    "pairs.bill.bName": "Max",
-    "pairs.bill.b":
-      "Wir teilen doch immer einfach durch vier. Jedes Mal auszurechnen, wer was hatte, nervt, und so groß ist der Unterschied auch nicht.",
-    "pairs.thermostat.aName": "Laura",
-    "pairs.thermostat.a":
-      "Hier drin sind 19 Grad, und mir ist sogar im Hoodie kalt. Die Heizung auf 22 zu drehen ist doch nicht übertrieben.",
-    "pairs.thermostat.bName": "Jan",
-    "pairs.thermostat.b":
-      "Bei 22 Grad kann man nicht schlafen, viel zu warm. Du kannst dir noch was anziehen, ich kann nichts mehr ausziehen.",
-    "pairs.roadTrip.aName": "Sarah",
-    "pairs.roadTrip.a":
-      "Ich bin auf der Hinfahrt die ganzen sechs Stunden gefahren. Da ist es nur fair, wenn du uns zurückfährst.",
-    "pairs.roadTrip.bName": "David",
-    "pairs.roadTrip.b":
-      "Ich hab schon vor der Abfahrt gesagt, dass ich nachts nicht gern fahre, und wir fahren um 19 Uhr los. Auf der nächsten Reise übernehme ich dafür die Fahrten am Morgen.",
-    "pairs.seat.aName": "Lisa",
-    "pairs.seat.a":
-      "Meine Lehne lässt sich zurückstellen, also stelle ich sie zurück. Es ist ein Nachtflug, und alle versuchen zu schlafen.",
-    "pairs.seat.bName": "Tobias",
-    "pairs.seat.b":
-      "Ich bin 1,90 m groß, und meine Knie drücken jetzt schon gegen deinen Sitz. Du könntest wenigstens fragen, bevor du die Lehne ganz nach hinten kippst.",
-    "pairs.spoiler.aName": "Mia",
-    "pairs.spoiler.a":
-      "Du hast mir verraten, wer der Mörder ist, bevor ich mit der letzten Folge überhaupt angefangen hatte. Ich hab mich die ganze Woche darauf gefreut.",
-    "pairs.spoiler.bName": "Paul",
-    "pairs.spoiler.b":
-      "Die Folge kam vor drei Wochen raus, und du hast gesagt, du bist durch. Ich kann mir nicht merken, wer gerade bei welcher Folge ist.",
-    "pairs.jacket.aName": "Leon",
-    "pairs.jacket.a":
-      "Du hast meine Jeansjacke ungefragt zum Konzert angezogen. Sie kam total verraucht zurück.",
-    "pairs.jacket.bName": "Hannah",
-    "pairs.jacket.b":
-      "Sie hing an der Garderobe, und du trägst sie nie. Ich hätte ja gefragt, aber du hast geschlafen, und ich war eh schon spät dran.",
-    "pairs.lastSlice.aName": "Niklas",
-    "pairs.lastSlice.a":
-      "Ich hab schon vor dem Film gesagt: „Das letzte Stück Pizza ist meins!“ Alle haben es gehört.",
-    "pairs.lastSlice.bName": "Sophie",
-    "pairs.lastSlice.b":
-      "Du kannst nicht „meins!“ rufen und es dann zwei Stunden nicht anrühren. Es lag nur rum und wurde kalt, also hab ich’s gegessen.",
     "appeal.lead":
-      "Fehlt etwas oder stimmt etwas nicht? Ergänze es einmal, und die Richter sehen sich alles noch mal an. Kostet 1 Urteil.",
-    "appeal.label": "Dein Kontext",
-    "appeal.placeholder": "Was haben die Richter übersehen?",
+      "Kostet 1 Urteil.",
+    "appeal.placeholder": "Was haben die Richter übersehen? Ein Fakt, eine Nachricht oder was wirklich abgemacht war.",
     "appeal.submit": "Neu beurteilen lassen",
     "appeal.sending": "Dein Kontext wird anonymisiert…",
     "appeal.judging": "Die Richter sehen sich alles noch mal an…",
@@ -650,8 +607,6 @@ const de: Locale = {
     "appeal.previous": "Früheres Urteil",
     "appeal.failed": "Das neue Urteil hat nicht geklappt. Dein Credit ist wieder da; du kannst es noch mal versuchen.",
     "appeal.refused": "Die Richter wollten mit diesem Kontext nicht neu urteilen. Dein Credit ist wieder da.",
-    "appeal.leadVerdict":
-      "Fehlt etwas oder stimmt etwas nicht? Ergänze es, und die Richter sehen sich alles noch mal an. Das kostet jedes Mal 1 Urteil, höchstens zweimal pro Urteil.",
     "appeal.history": "Verlauf des Urteils",
     "faq.both.q": "Kann die andere Person ihre Version erzählen?",
     "faq.both.a":
@@ -693,6 +648,7 @@ const de: Locale = {
     "unavailable.cta": "Zu Judge",
     "error.removed": "Das wurde entfernt. Der Link funktioniert nicht mehr.",
     "error.names_unavailable": "Namen können gerade nicht gespeichert werden. Versuch es später noch mal.",
+    "error.update_required": "Dieser Fall hat mehr als zwei Seiten. Aktualisiere die App, um ihn zu öffnen.",
     "verdict.remove": "Dieses Urteil entfernen",
     "verdict.remove.confirm":
       "Was du geschrieben hast, die Namen und die Anzeigenamen entfernen? Der geteilte Link und sein Vorschaubild laden dann für niemanden mehr (Vorschauen, die schon in Chats gepostet wurden, können sichtbar bleiben, bis diese Apps sie aktualisieren). Das lässt sich nicht rückgängig machen.",

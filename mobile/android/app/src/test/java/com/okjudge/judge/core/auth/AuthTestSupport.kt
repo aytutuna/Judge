@@ -67,11 +67,12 @@ class Routes : Dispatcher() {
             """{"redirect":false,"token":"$token","user":{"id":"u1","email":"$email","name":"Ada","emailVerified":true}}""",
         )
 
-        fun me(email: String = "ada@example.com", credits: Int = 0) = json(
+        fun me(email: String = "ada@example.com", credits: Int = 0, needsPassword: Boolean = false) = json(
             200,
             """{"user":{"id":"u1","email":"$email","name":"Ada","image":null},
                "entitlement":{"canUsePremium":${credits > 0},"blockedReason":${if (credits > 0) "null" else "\"premium_required\""},
-               "credits":$credits,"subscription":null,"resetsAt":null}}""",
+               "credits":$credits,"subscription":null,"resetsAt":null},
+               "hasPassword":${!needsPassword},"needsPassword":$needsPassword}""",
         )
 
         val signedOutMe = json(200, """{"user":null,"entitlement":null}""")

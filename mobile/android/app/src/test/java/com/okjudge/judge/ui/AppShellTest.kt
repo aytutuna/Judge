@@ -20,7 +20,6 @@ import androidx.test.core.app.ApplicationProvider
 import com.okjudge.judge.JudgeApp
 import com.okjudge.judge.MainActivity
 import com.okjudge.judge.core.data.Appearance
-import com.okjudge.judge.core.display.Examples
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.ui.history.HistoryTags
@@ -170,11 +169,11 @@ class AppShellTest {
         compose.onNodeWithTag(HomeTags.EXAMPLE).performClick()
         compose.waitForIdle()
         // The language another test picked may still be set.
-        val all = AppLang.entries.flatMap { lang -> Examples.ids.map { Examples.of(it, UiTestSupport.s(lang)) } }
-        val example = all.single { it.mine == typed(HomeTags.INPUT) }
-        assertEquals(example.theirs, typed(HomeTags.OTHER))
-        assertEquals(example.theirName, typed(HomeTags.OTHER_NAME))
-        assertEquals(example.myName, typed(HomeTags.NAME))
+        val book = (compose.activity.application as JudgeApp).container.examples
+        val example = AppLang.entries.flatMap { book.load(it) }.first { it.a == typed(HomeTags.INPUT) }
+        assertEquals(example.b, typed(HomeTags.OTHER))
+        assertEquals(example.bName, typed(HomeTags.OTHER_NAME))
+        assertEquals(example.aName, typed(HomeTags.NAME))
 
         compose.onNodeWithTag(HomeTags.CLEAR).performClick()
         compose.waitForIdle()

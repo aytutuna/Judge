@@ -18,7 +18,8 @@ declare global {
 }
 
 const BEATS = ["names", "facts", "judges", "bothSides", "crux", "ruling", "vote1", "more", "vote2", "trial", "final"];
-const VOTES = ["a", "b", "other"];
+const SIDES = ["a", "b", "c", "d"];
+const VOTES = [...SIDES, "other"];
 const TRIALS = ["survived", "uncertain", "overturned"];
 
 function post(type: string) {
@@ -39,8 +40,9 @@ function parse(input: CourtScene | string): CourtScene {
       beat: s.beat,
       votes: [...s.votes],
       extra: Math.max(0, Number(s.extra) || 0),
-      winner: s.winner === "a" || s.winner === "b" ? s.winner : null,
+      winner: SIDES.includes(s.winner) ? s.winner : null,
       trial: TRIALS.includes(s.trial) ? s.trial : null,
+      sides: Math.max(2, Math.min(4, Number(s.sides) || 2)),
     };
   }
   throw new Error(`bad court scene: ${JSON.stringify(s)}`);

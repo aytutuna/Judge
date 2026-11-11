@@ -28,7 +28,6 @@ const fi: AppLocale = {
     "app.history.removeFailed": "{n} tuomion poistaminen ei onnistunut. Tarkista yhteys ja yritä uudelleen.",
     "app.history.offlineRemove": "Verkkoyhteys puuttuu. Poistaminen vaatii yhteyden.",
     "app.pricing.free.account": "Kirjaudu Applella, Googlella tai sähköpostilla",
-    "app.context.label": "Lisätiedot (valinnainen)",
     "app.pricing.context": "Lisätietokuvat luetaan ja heitetään sitten pois, ilman lisämaksua",
     "app.pricing.headline": "Ensimmäinen tuomio on meiltä.",
     "app.pricing.sub":
@@ -100,50 +99,6 @@ const fi: AppLocale = {
     "app.home.addTheirSide": "Lisää toisen puoli",
     "app.home.removeTheirSide": "Poista toisen puoli",
     "app.home.clear": "Tyhjennä",
-    "app.example.dishwasher.aName": "Laura",
-    "app.example.dishwasher.a":
-      "Laitoit kulhot taas yläkoriin. Ne eivät ikinä puhdistu siellä, alakori on niitä varten.",
-    "app.example.dishwasher.bName": "Mikko",
-    "app.example.dishwasher.b":
-      "Ne mahtuvat sinne ihan hyvin, ja alas jää tilaa kattiloille. Olen täyttänyt koneen näin jo vuosia, eikä mikään ole jäänyt likaiseksi.",
-    "app.example.bill.aName": "Anna",
-    "app.example.bill.a":
-      "En juonut mitään, joten minun ei pitäisi maksaa neljäsosaa viinistä. Ruoan voi minun puolestani jakaa tasan.",
-    "app.example.bill.bName": "Jussi",
-    "app.example.bill.b":
-      "Jaamme laskun aina neljään osaan. On rasittavaa selvittää joka kerta, kuka söi ja joi mitäkin, eikä ero ole edes iso.",
-    "app.example.thermostat.aName": "Sanna",
-    "app.example.thermostat.a":
-      "Täällä on 19 astetta, ja minulla on kylmä hupparissakin. Ei ole mitenkään hullua nostaa lämpöä 22 asteeseen.",
-    "app.example.thermostat.bName": "Antti",
-    "app.example.thermostat.b":
-      "22 astetta on aivan liian lämmin nukkumiseen. Sinä voit pukea lisää päälle, minä en voi riisua enempää.",
-    "app.example.roadTrip.aName": "Elina",
-    "app.example.roadTrip.a": "Ajoin koko kuuden tunnin matkan sinne. On vain reilua, että sinä ajat takaisin.",
-    "app.example.roadTrip.bName": "Tuomas",
-    "app.example.roadTrip.b":
-      "Sanoin jo ennen lähtöä, että inhoan ajamista pimeällä, ja lähdemme vasta seitsemältä illalla. Seuraavalla reissulla ajan minä aamuisin.",
-    "app.example.seat.aName": "Johanna",
-    "app.example.seat.a": "Selkänojani kallistuu, joten kallistan sitä. On yölento, ja kaikki yrittävät nukkua.",
-    "app.example.seat.bName": "Petri",
-    "app.example.seat.b":
-      "Olen 190-senttinen, ja polveni painavat jo valmiiksi penkkiäsi. Olisit voinut edes kysyä, ennen kuin laskit selkänojan ihan pohjaan.",
-    "app.example.spoiler.aName": "Emilia",
-    "app.example.spoiler.a":
-      "Kerroit, kuka murhaaja oli, ennen kuin olin edes aloittanut viimeistä jaksoa. Olin odottanut sitä koko viikon.",
-    "app.example.spoiler.bName": "Lauri",
-    "app.example.spoiler.b":
-      "Se ilmestyi kolme viikkoa sitten, ja sanoit katsoneesi sen loppuun. En pysty pitämään kirjaa siitä, missä kohtaa kukin menee.",
-    "app.example.jacket.aName": "Veera",
-    "app.example.jacket.a": "Pidit farkkutakkiani keikalla kysymättä. Kun sain sen takaisin, se haisi tupakalta.",
-    "app.example.jacket.bName": "Joonas",
-    "app.example.jacket.b":
-      "Se roikkui oven vieressä, etkä ikinä käytä sitä. Olisin kysynyt, mutta nukuit, ja olin jo valmiiksi myöhässä.",
-    "app.example.lastSlice.aName": "Eetu",
-    "app.example.lastSlice.a": "Varasin viimeisen palan jo ennen kuin leffa alkoi. Kaikki kuulivat sen.",
-    "app.example.lastSlice.bName": "Iida",
-    "app.example.lastSlice.b":
-      "Ei voi varata palaa ja sitten jättää sitä koskematta kahdeksi tunniksi. Se vain jäähtyi siinä, joten söin sen.",
     "app.case.waitingKicker": "Juttu · odottaa",
     "app.case.waitingFor": "Odotetaan, että {name} vastaa",
     "app.case.waitingLead":
@@ -166,10 +121,7 @@ const fi: AppLocale = {
     "app.verdict.claims": "Miten kumpikin puoli päätyi kantaansa",
     "app.verdict.back": "Tuomio",
     "app.appeal.title": "Lisää tietoa ja pyydä uusi tuomio",
-    "app.appeal.intro":
-      "Jäikö tuomareilta jotain huomaamatta? Lisää se, niin he ratkaisevat uudelleen. Ensimmäinen tuomio jää näkyviin.",
-    "app.appeal.ask": "Mitä tuomareiden pitäisi tietää?",
-    "app.appeal.placeholder": "Fakta, viesti tai se, mistä oikeasti sovittiin.",
+    "app.appeal.placeholder": "Mitä tuomarit eivät huomanneet? Fakta, viesti tai se, mistä oikeasti sovittiin.",
     "app.appeal.cost": "Käyttää 1 tuomion. Voit tehdä tämän kahdesti tuomiota kohden; jäljellä {left}.",
     "app.appeal.costCase": "Käyttää 1 tuomion. Voit tehdä tämän kerran juttua kohden.",
     "app.appeal.submit": "Ratkaise uudelleen",

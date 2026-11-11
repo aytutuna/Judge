@@ -27,13 +27,21 @@ export type OriginalPayload = {
   nameMap: NameMapping[];
 };
 
-/** Public names per label. Null = the label is shown. `others` keys are "Person C".."Person Z". */
-export type DisplayNames = { a: string | null; b: string | null; others: Record<string, string> };
+/** Public names per label. Null = the label is shown. `others` keys are "Person C".."Person Z"
+ * ("Person E".."Person Z" on a verdict with more than two sides, whose third
+ * and fourth sides are `c` and `d`; the keys are absent on two-sided ones). */
+export type DisplayNames = {
+  a: string | null;
+  b: string | null;
+  c?: string | null;
+  d?: string | null;
+  others: Record<string, string>;
+};
 
 /** Display names plus the owner's switch, as the owner sees them. */
 export type DisplayState = DisplayNames & { namesVisible: boolean };
 
-export type RemovalReason = "owner" | "party_a" | "party_b" | "account_deleted" | "operator";
+export type RemovalReason = "owner" | "party_a" | "party_b" | "party_c" | "party_d" | "account_deleted" | "operator";
 
 /** "stored": readable; "not_stored": legacy or no key at the time; "removed":
  * blanked on request; "unreadable": decryption failed (logged). */
@@ -88,6 +96,8 @@ export const VerdictDisplayPatch = z
     namesVisible: z.boolean().optional(),
     a: DisplayNameInput.nullable().optional(),
     b: DisplayNameInput.nullable().optional(),
+    c: DisplayNameInput.nullable().optional(),
+    d: DisplayNameInput.nullable().optional(),
     others: z
       .record(z.string().regex(OTHER_LABEL), DisplayNameInput.nullable())
       .refine((r) => Object.keys(r).length <= 24, "too many")
@@ -126,19 +136,21 @@ export function firstNameOf(name: string | null | undefined): string | null {
  * narrator's pronoun on a "Person X" label (a bystander telling about two
  * other people), Party A is not the writer and gets their first name too,
  * and that pronoun ("Ben", "I") is never a name (resolveParties skips it). */
-export function defaultDisplay(nameMap: readonly NameMapping[], lang: Lang): DisplayNames {
-  const parties = resolveParties([...nameMap], lang, "A");
+export function defaultDisplay(nameMap: readonly NameMapping[], lang: Lang, sides = 2): DisplayNames {
+  const parties = resolveParties([...nameMap], lang, "A", sides > 2 ? { sides } : {});
   const narratorElsewhere = nameMap.some((m) => {
     const label = canonicalLabel(m.replacement);
     return label !== null && label.startsWith("Person ") && isSelfOriginal(bareName(m.original), lang);
   });
-  const out: DisplayNames = { a: null, b: null, others: {} };
+  const out: DisplayNames = sides > 2 ? { a: null, b: null, c: null, d: null, others: {} } : { a: null, b: null, others: {} };
   for (const [letter, party] of parties) {
     if (party.self || (letter === "A" && !narratorElsewhere)) continue;
     const first = firstNameOf(party.name);
     if (!first) continue;
     if (letter === "A") out.a = first;
     else if (letter === "B") out.b = first;
+    else if (sides > 2 && letter === "C") out.c = first;
+    else if (sides > 3 && letter === "D") out.d = first;
     else out.others[`Person ${letter}`] = first;
   }
   return out;
@@ -156,7 +168,9 @@ export function normalizeDisplay(raw: unknown): DisplayNames {
       if (OTHER_LABEL.test(k) && n) others[k] = n;
     }
   }
-  return { a: name(r.a), b: name(r.b), others };
+  const c = name(r.c);
+  const d = name(r.d);
+  return { a: name(r.a), b: name(r.b), ...(c ? { c } : {}), ...(d ? { d } : {}), others };
 }
 
 /** The public "name map" a share page restores with: display name ->
@@ -166,6 +180,8 @@ export function publicNameMap(display: DisplayNames | null | undefined): NameMap
   const out: NameMapping[] = [];
   if (display.a) out.push({ original: display.a, replacement: "Party A" });
   if (display.b) out.push({ original: display.b, replacement: "Party B" });
+  if (display.c) out.push({ original: display.c, replacement: "Party C" });
+  if (display.d) out.push({ original: display.d, replacement: "Party D" });
   for (const [label, name] of Object.entries(display.others)) {
     if (OTHER_LABEL.test(label) && name) out.push({ original: name, replacement: label });
   }
@@ -223,7 +239,7 @@ export type MineResponse = {
   display: DisplayState;
   suggested: { a: string | null };
   removed: { at: string; reason: RemovalReason | null } | null;
-  case: { id: string; party: "a" | "b" } | null;
+  case: { id: string; party: "a" | "b" | "c" | "d" } | null;
   via: "session" | "token";
   /** The writer has saved the share-page names (or switched them off)
    * before: clients do not prompt for them again before a share. */
@@ -250,4 +266,4 @@ export type OwnerVerdictListResponse = { verdicts: OwnerVerdictSummary[]; next: 
 
 /** GET /api/v1/cases/{id}/originals and /respond/{token}/originals */
 export type CaseOriginalEntry = { status: OriginalStatus; original: OriginalPayload | null };
-export type CaseOriginalsResponse = { party: "a" | "b"; side: CaseOriginalEntry; appeal: CaseOriginalEntry | null };
+export type CaseOriginalsResponse = { party: "a" | "b" | "c" | "d"; side: CaseOriginalEntry; appeal: CaseOriginalEntry | null };

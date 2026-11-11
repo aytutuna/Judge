@@ -37,7 +37,7 @@ struct SceneView<Fallback: View>: View {
         ZStack {
             Brand.paper
             if live && !failed {
-                SceneWebView(mode: mode, you: sides.you, dark: colorScheme == .dark, active: visible && scenePhase == .active && tabShown) {
+                SceneWebView(mode: mode, you: sides.you == .b ? .b : .a, dark: colorScheme == .dark, active: visible && scenePhase == .active && tabShown) {
                     failed = true
                 }
             } else {

@@ -1,6 +1,7 @@
 "use client";
 
 import { formatDate, t, type Lang } from "@/lib/i18n";
+import type { SelfParty } from "@/lib/names";
 import type { NameMapping, VerdictResult } from "@/lib/types";
 import { VerdictView } from "../VerdictView";
 import styles from "./case.module.css";
@@ -20,7 +21,7 @@ export function VerdictHistory({
   verdicts: readonly { id: string; result: VerdictResult; createdAt: string }[];
   linked: boolean;
   names: NameMapping[];
-  selfParty: "A" | "B";
+  selfParty: SelfParty;
   viewerIsSelfParty?: boolean;
 }) {
   const earlier = verdicts.slice(0, -1).reverse();

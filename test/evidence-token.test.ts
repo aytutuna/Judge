@@ -56,6 +56,15 @@ describe("evidence tokens", () => {
     expect(verifyEvidenceToken(resp, { type: "respondent", caseId: "c2" }, NOW)).toBeNull();
   });
 
+  it("binds a respondent token to its side", () => {
+    const sideB = sign({ audience: { type: "respondent", caseId: "c1" } }).token;
+    const sideC = sign({ audience: { type: "respondent", caseId: "c1", party: "c" } }).token;
+    expect(verifyEvidenceToken(sideC, { type: "respondent", caseId: "c1", party: "c" }, NOW)).not.toBeNull();
+    expect(verifyEvidenceToken(sideC, { type: "respondent", caseId: "c1", party: "d" }, NOW)).toBeNull();
+    expect(verifyEvidenceToken(sideC, { type: "respondent", caseId: "c1" }, NOW)).toBeNull();
+    expect(verifyEvidenceToken(sideB, { type: "respondent", caseId: "c1", party: "c" }, NOW)).toBeNull();
+  });
+
   it("rejects an over-long token without verifying it", () => {
     expect(verifyEvidenceToken("v1." + "a".repeat(MAX_TOKEN_LENGTH), USER, NOW)).toBeNull();
   });

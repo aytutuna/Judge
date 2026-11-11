@@ -11,17 +11,20 @@ import { ENDING_MAX_MS } from "@/components/court/story";
 import { AppShell } from "@/components/shell/AppShell";
 import { refreshHistory, useHistory } from "@/components/shell/useHistory";
 import styles from "@/components/home/page.module.css";
+import { apiFetch } from "@/lib/api-fetch";
 import { MAX_EVIDENCE_PER_SIDE, type CreateCaseResponse } from "@/lib/case-types";
 import { saveCaseNames } from "@/lib/case-names-store";
 import { firstNameOf } from "@/lib/originals-types";
 import { ownerTokenIds } from "@/lib/owner-store";
 import { track, trackApiError } from "@/lib/analytics/client";
-import { clearDraft, registerDraftSource, saveDraftForSignIn, takeDraft } from "@/lib/draft";
+import { clearDraft, draftTheirsOpen, registerDraftSource, saveDraftForSignIn, takeDraft } from "@/lib/draft";
 import { startHistory } from "@/lib/history-store";
+import { nextExample, loadSeen, saveSeen } from "@/lib/example-pick";
+import { loadExamples } from "@/lib/examples";
 import { apiErrorMessage, t } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { resetScene } from "@/lib/scene-bridge";
-import { EXAMPLES, MAX_ARGUMENT, inviteTextOk, joinSides } from "@/lib/sides";
+import { MAX_ARGUMENT, inviteTextOk, joinSides, manySidesOk, type SideInput } from "@/lib/sides";
 import type { Clarification, ClarifyResponse, VerdictApiResponse, VerdictResponse } from "@/lib/types";
 import { applyEntitlement, refreshViewer, useViewer } from "@/lib/use-viewer";
 import { pollVerdict, RESPOND_ASYNC, type VerdictAcceptedResponse } from "@/lib/verdict-poll";
@@ -76,7 +79,17 @@ type PremiumInput = {
   evidence: string[];
   mine: JudgedSide | null;
   theirs: JudgedSide | null;
+  /** Sides C and D. */
+  more: JudgedSide[];
 };
+
+/** The typed sides A to D as the verdict request takes them. */
+function typedSides(input: PremiumInput) {
+  return [input.mine, input.theirs, ...input.more].map((s) => ({
+    text: s?.text ?? "",
+    ...(s?.name.trim() ? { name: s.name.trim() } : {}),
+  }));
+}
 
 /** Signed-in screenshot uploads (the respondent's page uses its own). */
 const EVIDENCE_ENDPOINT = "/api/v1/evidence";
@@ -95,6 +108,8 @@ export default function Home() {
   // Null: the account's first name until they type.
   const [mineName, setMineName] = useState<string | null>(null);
   const [otherName, setOtherName] = useState("");
+  // Sides C and D, added under theirs; they exist only while theirs is open.
+  const [more, setMore] = useState<SideInput[]>([]);
   const [phase, setPhase] = useState<Phase>("form");
   const [error, setError] = useState<string | null>(null);
   const [response, setResponse] = useState<VerdictResponse | null>(null);
@@ -112,9 +127,7 @@ export default function Home() {
   // of the same request reuses it, so the server replays or waits instead
   // of charging again. A success or a different request gets a new key.
   const premiumKey = useRef<{ request: string; key: string } | null>(null);
-  // The example that filled the form last, so the next one differs, and the
-  // name it wrote, which "New argument" drops but keeps a typed one.
-  const lastExample = useRef<string | null>(null);
+  // The name the last example wrote, which "New argument" drops but keeps a typed one.
   const exampleName = useRef<string | null>(null);
   // Screenshot evidence and two-sided cases, each only when this deployment
   // offers it (GET /api/v1/config `features`).
@@ -169,9 +182,10 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time read of browser storage
     setArgument(draft.argument);
     setOtherSide(draft.otherSide ?? "");
-    setTheirsOpen(Boolean(draft.otherSide) || draft.theirsOpen === true);
+    setTheirsOpen(draftTheirsOpen(draft));
     if (draft.mineName !== undefined) setMineName(draft.mineName);
     setOtherName(draft.otherName ?? "");
+    setMore(draft.more ?? []);
   }, []);
 
   // The index has to exist before the first addHistory, or the verdicts
@@ -190,19 +204,22 @@ export default function Home() {
               ...(mineName !== null ? { mineName } : {}),
               ...(otherName ? { otherName } : {}),
               ...(theirsOpen ? { theirsOpen } : {}),
+              ...(more.length ? { more } : {}),
             },
       ),
-    [argument, otherSide, mineName, otherName, theirsOpen, phase],
+    [argument, otherSide, mineName, otherName, theirsOpen, more, phase],
   );
 
   const shownMineName = mineName ?? firstNameOf(viewer.me?.user?.name) ?? "";
-  const joined = joinSides(lang, { text: argument, name: shownMineName }, { text: otherSide, name: otherName });
+  const joined = joinSides(lang, { text: argument, name: shownMineName }, { text: otherSide, name: otherName }, more);
 
   // Until /me answers, a click could send a signed-in writer to sign in.
   // If it failed, the server decides (401 when signed out).
   const viewerKnown = viewer.status === "ready" || viewer.status === "error";
   const canSubmit =
-    argument.trim().length + otherSide.trim().length >= 20 &&
+    (more.length
+      ? manySidesOk([{ text: argument, name: "" }, { text: otherSide, name: "" }, ...more])
+      : argument.trim().length + otherSide.trim().length >= 20) &&
     joined.length <= MAX_ARGUMENT &&
     viewerKnown &&
     !holding &&
@@ -211,7 +228,7 @@ export default function Home() {
   // A link needs a side worth judging, or none at all (the other person can
   // write theirs first); text with a few words or only images does not count.
   const canInvite =
-    !theirsOpen &&
+    (!theirsOpen || (!otherSide.trim() && more.every((s) => !s.text.trim()))) &&
     viewerKnown &&
     !holding &&
     !(evidenceOn && evidence.busy) &&
@@ -257,7 +274,7 @@ export default function Home() {
    */
   async function awaitVerdict(accepted: VerdictAcceptedResponse, signal: AbortSignal): Promise<VerdictResponse | null> {
     const outcome = await pollVerdict(accepted.id, {
-      fetch: (url, init) => fetch(url, init),
+      fetch: (url, init) => apiFetch(url, init),
       sleep: wakefulSleep,
       ownerToken: accepted.owner_token ?? null,
       firstDelayMs: accepted.pollAfterMs,
@@ -296,6 +313,7 @@ export default function Home() {
       evidence: evidenceOn ? evidence.tokens : [],
       mine: argument.trim() ? { name: shownMineName, text: argument.trim() } : null,
       theirs: otherSide.trim() ? { name: otherName, text: otherSide.trim() } : null,
+      more: more.map((s) => ({ name: s.name, text: s.text.trim() })),
     };
     const signal = threadSignal();
     premiumInput.current = input;
@@ -305,7 +323,7 @@ export default function Home() {
     setChecking(true);
     let found: ClarifyQuestion[] = [];
     try {
-      const res = await fetch("/api/v1/clarify", {
+      const res = await apiFetch("/api/v1/clarify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ argument: input.argument, lang }),
@@ -357,12 +375,13 @@ export default function Home() {
       lang,
       ...(clarifications ? { clarifications } : {}),
       ...(input.evidence.length ? { evidence: input.evidence } : {}),
+      ...(input.more.length ? { sides: typedSides(input) } : {}),
     });
     const key = keyFor(body);
     const waitUntil = Date.now() + IN_PROGRESS_WAIT_MS;
     try {
       for (;;) {
-        const res = await fetch("/api/v1/verdict", {
+        const res = await apiFetch("/api/v1/verdict", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -428,10 +447,11 @@ export default function Home() {
       lang,
       ...(tokens.length ? { evidence: tokens } : {}),
       ...(name ? { displayName: name } : {}),
+      ...(theirsOpen ? { sides: 2 + more.length } : {}),
     });
     const key = keyFor(body);
     try {
-      const res = await fetch("/api/v1/cases", {
+      const res = await apiFetch("/api/v1/cases", {
         method: "POST",
         headers: { "Content-Type": "application/json", "Idempotency-Key": key },
         body,
@@ -479,6 +499,7 @@ export default function Home() {
     setArgument("");
     setOtherSide("");
     setOtherName("");
+    setMore([]);
     setTheirsOpen(false);
     if (mineName !== null && mineName === exampleName.current) setMineName(null);
     exampleName.current = null;
@@ -511,21 +532,23 @@ export default function Home() {
   function removeTheirs() {
     setOtherSide("");
     setOtherName("");
+    setMore([]);
     setTheirsOpen(false);
     if (mineName !== null && mineName === exampleName.current) setMineName(null);
     exampleName.current = null;
   }
 
-  function fillExample() {
-    const pool = EXAMPLES.filter((id) => id !== lastExample.current);
-    const id = pool[Math.floor(Math.random() * pool.length)];
-    lastExample.current = id;
-    const name = t(lang, `pairs.${id}.aName`);
-    exampleName.current = name;
-    setMineName(name);
-    setArgument(t(lang, `pairs.${id}.a`));
-    setOtherName(t(lang, `pairs.${id}.bName`));
-    setOtherSide(t(lang, `pairs.${id}.b`));
+  async function fillExample() {
+    const all = await loadExamples(lang);
+    const picked = nextExample(Object.keys(all), loadSeen(), Math.random);
+    saveSeen(picked.seen);
+    const example = all[picked.id];
+    exampleName.current = example.aName;
+    setMineName(example.aName);
+    setArgument(example.a);
+    setOtherName(example.bName);
+    setOtherSide(example.b);
+    setMore([]);
     setTheirsOpen(true);
     setError(null);
   }
@@ -593,6 +616,7 @@ export default function Home() {
               lang={lang}
               mine={judged.mine}
               theirs={judged.theirs}
+              more={judged.more}
               accepted={accepted}
               done={response !== null}
               result={response?.result ?? null}
@@ -613,10 +637,15 @@ export default function Home() {
               theirsOpen={theirsOpen}
               onAddTheirs={() => setTheirsOpen(true)}
               onRemoveTheirs={removeTheirs}
+              more={more}
+              onMoreText={(i, text) => setMore((m) => m.map((s, j) => (j === i ? { ...s, text } : s)))}
+              onMoreName={(i, name) => setMore((m) => m.map((s, j) => (j === i ? { ...s, name } : s)))}
+              onAddMore={() => setMore((m) => [...m, { text: "", name: "" }])}
+              onRemoveMore={() => setMore((m) => m.slice(0, -1))}
               length={joined.length}
               blank={!argument && !theirsOpen && evidence.items.length === 0}
               onClear={reset}
-              onExample={fillExample}
+              onExample={() => void fillExample()}
               canSubmit={canSubmit}
               onSubmit={onSubmit}
               onInvite={casesOn ? onInvite : undefined}

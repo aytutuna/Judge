@@ -1,0 +1,1052 @@
+{
+  "dishwasher": {
+    "title": "🍽️ Kommen in het bovenste rek",
+    "aName": "Lotte",
+    "a": "Je hebt de kommen weer in het bovenste rek gezet. Daar worden ze nooit schoon, daar is het onderste rek voor.",
+    "bName": "Jeroen",
+    "b": "Ze passen daar prima, en dan blijft het onderste rek vrij voor de pannen. Ik ruim de vaatwasser al jaren zo in en er is nog nooit iets vies uitgekomen."
+  },
+  "bill": {
+    "title": "🍷 De rekening delen in het restaurant",
+    "aName": "Fleur",
+    "a": "Ik heb niks gedronken, dus ik hoef geen kwart van de wijn te betalen. Het eten gelijk verdelen vind ik prima.",
+    "bName": "Ruben",
+    "b": "We delen het altijd gewoon door vieren. Elke keer uitzoeken wie wat had is gedoe, en zoveel scheelt het toch niet."
+  },
+  "thermostat": {
+    "title": "🌡️ De strijd om de thermostaat",
+    "aName": "Iris",
+    "a": "Het is hier 19 graden en ik heb het zelfs in een hoodie koud. De thermostaat op 22 zetten is echt niet overdreven.",
+    "bName": "Sem",
+    "b": "Bij 22 graden kun je echt niet slapen, veel te warm. Jij kunt nog een trui aantrekken, ik kan niks meer uittrekken."
+  },
+  "roadTrip": {
+    "title": "🚗 Wie rijdt er terug",
+    "aName": "Anouk",
+    "a": "Ik heb de hele heenweg gereden, zes uur lang. Het is niet meer dan eerlijk dat jij terugrijdt.",
+    "bName": "Joris",
+    "b": "Ik zei voor we vertrokken al dat ik een hekel heb aan rijden in het donker, en we gaan om zeven uur 's avonds weg. Volgende keer rijd ik 's ochtends."
+  },
+  "seat": {
+    "title": "💺 Je stoel achterover in een nachtvlucht",
+    "aName": "Eva",
+    "a": "Mijn stoel kan naar achteren, dus dat doe ik ook. Het is een nachtvlucht en iedereen probeert te slapen.",
+    "bName": "Bas",
+    "b": "Ik ben 1,91 m en mijn knieën zitten nu al tegen je stoel. Je kunt op z'n minst even vragen voordat je hem helemaal naar achteren zet."
+  },
+  "spoiler": {
+    "title": "🎬 Een spoiler over de finale",
+    "aName": "Noor",
+    "a": "Je verklapte wie de moordenaar was voordat ik ook maar aan de laatste aflevering was begonnen. Ik had er de hele week naar uitgekeken.",
+    "bName": "Lucas",
+    "b": "Die aflevering kwam drie weken geleden uit en je zei dat je de serie uit had. Ik kan niet bijhouden hoe ver iedereen is."
+  },
+  "jacket": {
+    "title": "🧥 Het geleende spijkerjack",
+    "aName": "Femke",
+    "a": "Je bent zonder te vragen in mijn spijkerjack naar het concert gegaan. Toen ik het terugkreeg, stonk het naar rook.",
+    "bName": "Tim",
+    "b": "Het hing bij de deur en je draagt het nooit. Ik had het heus gevraagd, maar je sliep en ik was al te laat."
+  },
+  "lastSlice": {
+    "title": "🍕 Het laatste stuk pizza",
+    "aName": "Milan",
+    "a": "Ik riep al “laatste stuk is voor mij” voordat de film begon. Iedereen heeft het gehoord.",
+    "bName": "Julia",
+    "b": "Je kunt niet roepen dat het van jou is en het dan twee uur laten liggen. Het lag daar maar koud te worden, dus ik heb het opgegeten."
+  },
+  "sundayPlans": {
+    "title": "🛋️ Een hele zondag op de bank",
+    "aName": "Hanneke",
+    "a": "Het is de enige dag dat we allebei vrij zijn en ik wil graag gaan wandelen. De hele dag op de bank hangen voelt als zonde.",
+    "bName": "Davey",
+    "b": "Ik werk de hele week hard en zondag is mijn oplaaddag. Volgend weekend kunnen we wandelen, vandaag wil ik gewoon samen niks doen."
+  },
+  "anniversaryGift": {
+    "title": "🎁 Hoeveel mag een cadeau kosten",
+    "aName": "Marco",
+    "a": "We hadden afgesproken om onder de 50 euro te blijven en jij koopt een horloge voor me. Nu lijkt het alsof ik me niet heb ingespannen.",
+    "bName": "Elena",
+    "b": "Ik zag hem en dacht meteen aan jou. Hij was in de aanbieding, en een bedrag dat we jaren geleden hebben bedacht mag me niet tegenhouden om gul te zijn."
+  },
+  "couplePhoto": {
+    "title": "📸 Onze foto posten zonder te vragen",
+    "aName": "Sofie",
+    "a": "Je hebt onze strandfoto online gezet en ik had hem nog niet eens gezien. Ik sta er slecht op en ik had nee gezegd.",
+    "bName": "Jasper",
+    "b": "Ik vind dat je er prachtig op staat en ik wilde een mooie dag delen. Ik wist niet dat je er zo van zou balen."
+  },
+  "phoneInBed": {
+    "title": "📱 Telefoons in bed",
+    "aName": "Nina",
+    "a": "We gaan naar bed en jij scrolt een uur lang terwijl ik daar lig. Ik wil graag even praten, of in elk geval samen gaan slapen.",
+    "bName": "Omar",
+    "b": "Zo ontspan ik na een lange dag. Je mag best met me praten, maar ik wil geen regels over een telefoon die ik gewoon vasthoud."
+  },
+  "movieTurns": {
+    "title": "🍿 Wie kiest de film",
+    "aName": "Claire",
+    "a": "Ik koos de vorige keer en de keer daarvoor ook. Nu ben jij aan de beurt en je hebt net veertig minuten lang gezegd dat niks je leuk lijkt.",
+    "bName": "Tom",
+    "b": "Ik zou best kiezen als er iets was wat ik wilde zien. Jij kiest altijd dingen die ik minder leuk vind, dus zeg ik maar niks."
+  },
+  "slowReply": {
+    "title": "💬 Uren wachten op een appje",
+    "aName": "Zoë",
+    "a": "Ik stuurde je om twaalf uur een simpele vraag en ik hoorde pas om acht uur wat terug. Even snel antwoorden had je niks gekost.",
+    "bName": "Ethan",
+    "b": "Ik zat de hele dag in vergaderingen en mijn telefoon zat in mijn tas. Ik negeerde je niet, het was gewoon niet dringend."
+  },
+  "bedSide": {
+    "title": "🛏️ Wiens kant van het bed",
+    "aName": "Roos",
+    "a": "Ik heb al zes jaar aan het raam geslapen. Nu we verhuisd zijn, nam jij mijn kant in voordat ik mijn spullen had uitgepakt.",
+    "bName": "Pieter",
+    "b": "Het bed staat in deze kamer tegen de andere muur, dus de kanten zijn omgedraaid. Ik wil best terugwisselen, ik had er gewoon niet bij nagedacht."
+  },
+  "surpriseParty": {
+    "title": "🎈 Een verrassingsfeestje dat hij niet wilde",
+    "aName": "Lena",
+    "a": "Ik heb het hele feest voor je verjaardag geregeld en iedereen uitgenodigd. Je keek de hele avond ongelukkig.",
+    "bName": "Gijs",
+    "b": "Ik heb je maanden geleden al gezegd dat ik niet van verrassingen en drukte houd. Ik waardeer de moeite, maar je hebt niet naar me geluisterd."
+  },
+  "toothpaste": {
+    "title": "🪥 Tandpasta uitknijpen",
+    "aName": "Iris",
+    "a": "Je knijpt de tube in het midden uit en laat hem plat en gedraaid liggen. Het is iets kleins, dat weet ik, maar ik zie het elke ochtend weer.",
+    "bName": "Kai",
+    "b": "Uiteindelijk komt het er toch op dezelfde manier uit. Ik snap niet waarom er een juiste plek zou zijn om te knijpen."
+  },
+  "blanket": {
+    "title": "🛌 De dekendief",
+    "aName": "Daniëlle",
+    "a": "Elke nacht rol jij je in het hele dekbed en word ik ijskoud wakker. Het is alsof ik naast een loempia slaap.",
+    "bName": "Mike",
+    "b": "Ik heb het ook koud en ik doe het niet expres. Misschien kunnen we gewoon een tweede dekbed nemen in plaats van mij de schuld te geven."
+  },
+  "lateDinner": {
+    "title": "🍝 Eten om negen uur",
+    "aName": "Camille",
+    "a": "Je zei dat je om zes uur thuis zou zijn en je komt om negen uur binnen. De pasta die ik heb gemaakt is koud en ik rammel van de honger.",
+    "bName": "Rob",
+    "b": "Een telefoontje liep uit en ik kon niet zomaar ophangen. Ik had het je laten weten, maar mijn telefoon was leeg."
+  },
+  "dateBill": {
+    "title": "💳 Wie betaalt er bij een date",
+    "aName": "Yara",
+    "a": "We zijn al een keer of twaalf uit geweest en jij pakt nooit je portemonnee voor de rekening. Ik wil graag dat we om de beurt betalen.",
+    "bName": "Wouter",
+    "b": "Ik verdien op dit moment meer dan jij en ik betaal het graag. Ik wist niet dat het je dwarszat, ik wil alleen geen ruzie over een rekening."
+  },
+  "quietHours": {
+    "title": "🔇 Stilte na tien uur",
+    "aName": "Olivia",
+    "a": "Ik moet vroeg beginnen met werken en ik hoor je videobellen door de muur om elf uur. Je moet het zachter doen.",
+    "bName": "Raj",
+    "b": "Mijn team zit in een andere tijdzone, dus laat is het enige moment dat het kan. Ik gebruik wel een koptelefoon, maar jij kunt ook oordoppen indoen."
+  },
+  "fridgeShelf": {
+    "title": "🧊 Van wie is dit plankje",
+    "aName": "Lucas",
+    "a": "Ik heb mijn plank in de koelkast een naam gegeven en toch zet je er je restjes op. Er is genoeg ruimte op die van jou.",
+    "bName": "Mina",
+    "b": "Mijn plank zat vol en jouw bakje was half leeg. Het is maar voor één nacht, ik pakte niks af."
+  },
+  "overnightGuest": {
+    "title": "🚪 Een gast die de hele week blijft",
+    "aName": "Ella",
+    "a": "Je vriend slaapt nu al zes dagen in de woonkamer en niemand heeft het aan mij gevraagd. Ik wil mijn huis terug.",
+    "bName": "Thijs",
+    "b": "Hij zit tussen twee woningen in en kan nergens anders heen. Ik zei dat hij een paar nachten zou blijven, en hij betaalt mee aan de boodschappen."
+  },
+  "sharedShampoo": {
+    "title": "🧴 Mijn shampoo gebruiken",
+    "aName": "Julia",
+    "a": "Mijn shampoo is een dure en hij was maandag bijna vol. Nu, op vrijdag, is hij bijna op en jij bent de enige andere die hier doucht.",
+    "bName": "Daan",
+    "b": "Ik heb maar een beetje gebruikt, twee keer. Als het zo belangrijk is, zet hem dan op je kamer, ik dacht dat badkamerspullen gedeeld waren."
+  },
+  "dirtyPan": {
+    "title": "🍳 De pan die blijft weken",
+    "aName": "Hugo",
+    "a": "Die pan staat sinds dinsdag in de gootsteen en begint te stinken. Wie kookt, moet afwassen.",
+    "bName": "Nora",
+    "b": "Ik wilde hem afwassen als hij nog wat langer had geweekt. Jij laat hier al twee dagen borden staan en daar heb ik niks over gezegd."
+  },
+  "dryerLaundry": {
+    "title": "🧺 Kleren in de droger laten liggen",
+    "aName": "Sara",
+    "a": "Ik kwam naar beneden en mijn schone kleren lagen op een hoop op tafel omdat jij de droger nodig had. Ze waren nog vochtig.",
+    "bName": "Ian",
+    "b": "Het programma was al een uur klaar en ik had een wasje liggen. Haal je spullen er gewoon uit als de piep gaat, alsjeblieft."
+  },
+  "loudMusic": {
+    "title": "🎧 Muziek door de muur",
+    "aName": "Felix",
+    "a": "Het is zaterdagmiddag drie uur en ik zit in mijn eigen kamer. Ik vind niet dat ik een koptelefoon nodig zou moeten hebben in mijn eigen huis.",
+    "bName": "Tess",
+    "b": "De bas laat mijn bureau trillen terwijl ik probeer te leren. Niemand vraagt je om te stoppen, alleen om het een tikje zachter te zetten."
+  },
+  "longShower": {
+    "title": "🚿 Het warme water is op",
+    "aName": "Amir",
+    "a": "Jouw douchebeurten duren veertig minuten en het warme water is altijd op als ik aan de beurt ben. Tien minuten per persoon zou eerlijk zijn.",
+    "bName": "Bo",
+    "b": "Ik hou mezelf niet in de gaten en het is de enige plek waar ik kan ontspannen. Misschien kunnen we om de beurt als eerste gaan."
+  },
+  "lightsOn": {
+    "title": "💡 Alle lampen blijven aan",
+    "aName": "Greet",
+    "a": "Ik loop door het huis en overal brandt het licht, zelfs in kamers waar niemand is. De rekeningen worden gedeeld, dus het is ook mijn geld.",
+    "bName": "Stan",
+    "b": "Ik hou van veel licht en ik loop de hele avond in en uit kamers. De hele avond lampen aan- en uitdoen is net zo irritant."
+  },
+  "parcels": {
+    "title": "📦 Pakketjes die zich opstapelen in de gang",
+    "aName": "Nadia",
+    "a": "Er staan zes dozen van jou in de gang en ik struikel er elke dag over. Neem ze alsjeblieft mee naar je kamer.",
+    "bName": "Oscar",
+    "b": "Ik wacht tot ik ze kan terugbrengen naar het postkantoor en ik ben druk geweest. Ze staan er pas vier dagen."
+  },
+  "houseplant": {
+    "title": "🪴 Wie geeft de plant water",
+    "aName": "Wendy",
+    "a": "Ik heb de plant voor in de woonkamer gekocht en gaf hem elke week water. Nu lijkt hij op een stok omdat jij hem in de donkere hoek hebt gezet.",
+    "bName": "Pablo",
+    "b": "Hij stond voor de tv en ik vond die hoek prima. Ik wist niet dat planten zo gevoelig waren."
+  },
+  "lateArrival": {
+    "title": "⏰ Alweer veertig minuten te laat",
+    "aName": "Daan",
+    "a": "We hadden zeven uur afgesproken en ik zat tot twintig voor acht alleen in het restaurant. Dit is de derde keer dat je dit doet.",
+    "bName": "Mia",
+    "b": "De bus had vertraging en ik heb je geappt. Je had ook een drankje kunnen bestellen in plaats van boos te zijn."
+  },
+  "cancelledPlans": {
+    "title": "🙅 Een uur van tevoren afzeggen",
+    "aName": "Ruth",
+    "a": "Ik heb mijn hele dag omgegooid om jou te zien en jij zegt een uur van tevoren af met één berichtje. Het is niet de eerste keer.",
+    "bName": "Carlos",
+    "b": "Ik was doodmoe en ik was echt geen leuk gezelschap geweest. Ik vond het aardiger om dat te zeggen dan me erheen te slepen."
+  },
+  "borrowedBook": {
+    "title": "📚 Een boek dat nooit terugkwam",
+    "aName": "Anne",
+    "a": "Ik heb je dat boek vorig voorjaar geleend en het is nu een jaar geleden. Het was gesigneerd en ik heb het je al twee keer gevraagd.",
+    "bName": "Adam",
+    "b": "Ik heb het ergens, echt waar, waarschijnlijk in een doos van de verhuizing. Ik ga het vinden, je hoeft er niet steeds over te beginnen."
+  },
+  "mutedChat": {
+    "title": "🔕 De groepsapp op stil",
+    "aName": "Hanna",
+    "a": "Je hebt onze groepsapp gedempt en bent twee keer gemist dat de afspraak veranderde. We stonden allemaal op de verkeerde plek op je te wachten.",
+    "bName": "Vincent",
+    "b": "Er komen elke dag tweehonderd berichten in, vooral memes. Ik zou de belangrijke wel lezen als het geen uur kostte."
+  },
+  "birthdayDinner": {
+    "title": "🎂 Betalen voor het verjaardagsdiner",
+    "aName": "Kenji",
+    "a": "Het is mijn verjaardagsdiner en de rekening kwam op 90 euro per persoon door de dure wijn. Ik had gedacht dat de jarige niet hoefde te betalen.",
+    "bName": "Sacha",
+    "b": "We delen altijd alles gelijk met de hele groep en dat weet iedereen. Jij hebt de plek ook zelf uitgekozen."
+  },
+  "plusOne": {
+    "title": "💍 Een plus-één op de bruiloft",
+    "aName": "Bella",
+    "a": "Op de uitnodiging staat alleen mijn naam, maar mijn partner van twee jaar zou alleen thuis zitten. Ik neem hem toch mee.",
+    "bName": "Quinten",
+    "b": "De locatie heeft een harde limiet en elke stoel kost ons veel geld. Het spijt me, maar ik kan geen uitzondering maken voor één persoon."
+  },
+  "chargerBorrow": {
+    "title": "🔌 De oplader die je hebt geleend",
+    "aName": "Frank",
+    "a": "Dit is al de derde oplader van mij die bij jou kwijtraakt. Ik wil ze terug, geen nieuwe sorry.",
+    "bName": "Lola",
+    "b": "Ze zien er allemaal hetzelfde uit, dus ik weet eerlijk gezegd niet meer welke van wie is. Ik neem vrijdag een zak vol mee."
+  },
+  "auxCord": {
+    "title": "🎵 Wie bepaalt de muziek in de auto",
+    "aName": "Tarik",
+    "a": "Ik rijd, dus ik kies de muziek. Het is een lange rit en ik moet wakker blijven.",
+    "bName": "Emma",
+    "b": "Je hebt vandaag drie keer hetzelfde album gedraaid. De bijrijder mag ook meebeslissen, zo werkt het op elke roadtrip."
+  },
+  "karaoke": {
+    "title": "🎤 Het nummer dat niet ophield",
+    "aName": "Gina",
+    "a": "Jij hebt negen nummers gezongen en wij anderen elk één. De microfoon hoort rond te gaan.",
+    "bName": "Max",
+    "b": "Niemand anders heeft zich op de lijst gezet, dus ik vulde de gaten op. Ik dacht echt dat iedereen het leuk vond."
+  },
+  "uninvited": {
+    "title": "🙈 Niet op de gastenlijst",
+    "aName": "Selma",
+    "a": "Ik zag de foto's van je feest en ik was niet uitgenodigd, terwijl ik bij alle eerdere wel was. Dat deed echt pijn.",
+    "bName": "Jonas",
+    "b": "Het was een klein feestje voor mijn collega's, maar tien mensen. Het had niks met jou te maken, ik dacht niet dat je zou willen komen."
+  },
+  "holidayHost": {
+    "title": "🎄 Wie houdt het kerstdiner",
+    "aName": "Marta",
+    "a": "We hebben het familiediner nu vier jaar achter elkaar gehouden. Een ander is aan de beurt en ik wil graag een kerst zonder te koken.",
+    "bName": "Peter",
+    "b": "Mama kan de trap niet aan en wij hebben de grootste tafel. Niemand anders heeft zich aangeboden, dus ik nam aan dat wij het weer zouden doen."
+  },
+  "dailyCalls": {
+    "title": "📞 Elke dag een telefoontje",
+    "aName": "Lies",
+    "a": "Mama belt elke dag rond zes uur en verwacht een gesprek van een half uur. Ik hou van haar, maar soms heb ik er gewoon geen zin in.",
+    "bName": "Joost",
+    "b": "Ze woont alleen en dat telefoontje is het mooiste moment van haar dag. Je kunt zeggen dat je op drukke dagen een berichtje stuurt."
+  },
+  "bedtimeKids": {
+    "title": "🌙 Bedtijd op schooldagen",
+    "aName": "Ingrid",
+    "a": "Onze zoon is acht en moet om acht uur slapen. Jij liet hem opblijven voor het voetbal en nu is hij op school een wrak.",
+    "bName": "Luuk",
+    "b": "Het was maar één wedstrijd en hij was zo enthousiast. Af en toe een late avond kan geen kwaad, en voor hem is het iets bijzonders."
+  },
+  "borrowedSweater": {
+    "title": "👚 Een zus die in mijn kast zit",
+    "aName": "Alice",
+    "a": "Je hebt mijn groene trui zonder te vragen meegenomen en naar een feestje aangehad. Hij kwam terug met vlekken en ik had hem zelf nog nooit gedragen.",
+    "bName": "Priya",
+    "b": "Ik heb mijn hele leven dingen van je geleend en dat vond je nooit erg. Ik laat hem reinigen, maar je maakt er een heel drama van."
+  },
+  "familyRecipe": {
+    "title": "🥘 Oma's recept",
+    "aName": "Elif",
+    "a": "In oma's soep zat altijd een lepel tomatenpuree, en het staat in haar handschrift. Jij liet het weg en noemde het hetzelfde recept.",
+    "bName": "Mert",
+    "b": "Ik vind dat het lichter smaakt zonder, en zo herinner ik het me. Het is nog steeds haar recept, alleen een beetje verbeterd."
+  },
+  "dadRide": {
+    "title": "🚙 Papa naar het vliegveld brengen",
+    "aName": "Sam",
+    "a": "Ik heb papa de vorige keer gebracht, en de keer daarvoor ook. Kun je de vroege vlucht nu eens doen in plaats van een taxi te bestellen?",
+    "bName": "Hailey",
+    "b": "Het is twee uur heen en terug en ik moet om zes uur op mijn werk zijn. Ik betaal de taxi wel, ik heb gewoon de tijd niet."
+  },
+  "familyChat": {
+    "title": "👨‍👩‍👧 Kettingberichten in de familie-app",
+    "aName": "Rina",
+    "a": "Oom blijft die kettingberichten en filmpjes doorsturen naar de hele familie-app. Ik kan er niks echts meer tussen vinden.",
+    "bName": "Theo",
+    "b": "Hij wil gewoon erbij horen en samen lachen. Misschien even met hem praten, maar hem dempen lijkt me onaardig."
+  },
+  "tvRemote": {
+    "title": "📺 De afstandsbediening verstoppen",
+    "aName": "Nick",
+    "a": "Elke keer als ik voor de wedstrijd ga zitten, is de afstandsbediening weg en staat er een tekenfilm aan. Dit is de tweede keer deze week.",
+    "bName": "Maddie",
+    "b": "Het is mijn favoriete uurtje tv en jouw wedstrijd duurt de hele middag. We kunnen om de beurt, maar je kunt niet de hele middag pakken."
+  },
+  "seatingChart": {
+    "title": "🍽️ Wie zit er aan het hoofd van de tafel",
+    "aName": "Gijs",
+    "a": "Ik zit aan dat uiteinde bij elk familiediner sinds ik klein was. Nu heeft jouw vriend die plek genomen en niemand zei iets.",
+    "bName": "Tara",
+    "b": "Hij ging als eerste zitten en hij is gast. Het is maar een stoel, en de volgende keer kunnen we wisselen."
+  },
+  "teenPhone": {
+    "title": "🧒 Telefoon aan tafel",
+    "aName": "Dorien",
+    "a": "Het avondeten is het enige moment dat we samen als gezin zitten. Vijftien minuten zonder je telefoon is toch niet veel gevraagd.",
+    "bName": "Eli",
+    "b": "Ik kijk alleen of een vriend heeft geantwoord. Jij zit ook aan tafel op de jouwe als je werk je appt."
+  },
+  "meetingEmail": {
+    "title": "📧 Een vergadering die een mailtje had kunnen zijn",
+    "aName": "Paula",
+    "a": "We hebben een uur gebeld om te horen wat in drie regels paste. Dat is een uur dat ik had kunnen gebruiken om het rapport af te maken.",
+    "bName": "Gerrit",
+    "b": "Iedereen heeft het druk, maar bij een gesprek kunnen mensen meteen vragen stellen. Een mail had vijf aparte discussies opgeleverd."
+  },
+  "microwaveFish": {
+    "title": "🐟 Vis in de magnetron op kantoor",
+    "aName": "Wanda",
+    "a": "Je hebt zalm opgewarmd in de gedeelde magnetron en de hele verdieping ruikt er tot drie uur naar. Neem alsjeblieft iets anders mee.",
+    "bName": "Dimitri",
+    "b": "Het is mijn enige echte lunch en ik heb niet veel geld om af te halen. Anderen warmen kerrie op en niemand zegt er iets van."
+  },
+  "stolenLunch": {
+    "title": "🥪 Iemand heeft mijn lunch opgegeten",
+    "aName": "Bert",
+    "a": "Mijn naam stond op het zakje en de boterham was om twaalf uur weg. Ik denk dat jij wel gezien hebt wie hem heeft gepakt.",
+    "bName": "Fiona",
+    "b": "Ik heb niks gezien en ik wil niemand beschuldigen. Misschien is een briefje op de koelkast een vriendelijker eerste stap."
+  },
+  "replyAll": {
+    "title": "📨 Allen beantwoorden naar het hele bedrijf",
+    "aName": "Evert",
+    "a": "Je hebt op iedereen gereageerd, alle tweehonderd mensen, met 'bedankt!'. Nu heb ik veertig van die mailtjes extra in mijn inbox.",
+    "bName": "Joy",
+    "b": "Ik wilde beleefd zijn en de knop zat er gewoon. Het is een klein foutje en er is niemand echt mee geschaad."
+  },
+  "officeCold": {
+    "title": "❄️ Het ijskoude kantoor",
+    "aName": "Rebecca",
+    "a": "De airco staat zo laag dat ik in juli een jas aan heb op mijn plek. Een paar graden warmer kan niemand kwaad doen.",
+    "bName": "Anil",
+    "b": "Ik heb het snel warm en de zon schijnt de hele middag op mijn kant. Als je het koud hebt, is een dekentje makkelijker dan dat de rest van ons zweet."
+  },
+  "openOfficeHeadphones": {
+    "title": "🎧 Koptelefoon op de kantoortuin",
+    "aName": "Lars",
+    "a": "Ik draag een koptelefoon om me te concentreren en toch tikken mensen me om de paar minuten aan voor een snelle vraag. Dat haalt me uit mijn gedachten.",
+    "bName": "Carmen",
+    "b": "Het is moeilijk te zien of je echt druk bent. Eerst een berichtje sturen duurt te lang als het antwoord tien seconden kost."
+  },
+  "emptyCoffee": {
+    "title": "☕ De laatste kop koffie",
+    "aName": "Teun",
+    "a": "Je hebt de laatste koffie uit de kan geschonken en de lege kan op het plaatje laten staan. Een nieuwe kan zetten kost twee minuten.",
+    "bName": "Lucy",
+    "b": "Ik was te laat voor een belafspraak en zag eerlijk gezegd niet dat het de laatste kop was. De volgende zet ik, echt waar."
+  },
+  "ideaCredit": {
+    "title": "💡 Van wie was het idee",
+    "aName": "Sunil",
+    "a": "Ik heb in maart het nieuwe rooster voorgesteld en jij presenteerde het aan de baas als van jou. Een bedankje was genoeg geweest.",
+    "bName": "Kim",
+    "b": "We hebben het samen besproken en ik heb het met het team uitgewerkt. Ik dacht dat we het er allemaal over eens waren dat het gezamenlijk werk was."
+  },
+  "fridayDeadline": {
+    "title": "📅 Een deadline op vrijdag",
+    "aName": "Monique",
+    "a": "Je zei dat je me je deel voor vrijdag zou sturen en het is maandag. Iedereen wachtte hierop en ik moest het twee keer vragen.",
+    "bName": "Ahmed",
+    "b": "Er kwam een groter project op mijn bord en ik moest kiezen. Ik had het je eerder moeten zeggen, maar je krijgt het vandaag."
+  },
+  "deskLunch": {
+    "title": "🥗 Lunchen achter je bureau",
+    "aName": "Henk",
+    "a": "Niemand in dit team neemt nog een echte lunchpauze en het begint bijna verwacht te worden. Ik zou graag hebben dat we om twaalf uur even weggaan.",
+    "bName": "Yvonne",
+    "b": "Ik eet terwijl ik werk en ga daardoor eerder naar huis. Pauzes zijn prima, maar ik beslis liever zelf."
+  },
+  "calendarInvite": {
+    "title": "🗓️ Vergaderingen zonder agenda",
+    "aName": "Sylvia",
+    "a": "In je uitnodiging stond 'even bijpraten' zonder agenda en het kostte me vijfenveertig minuten van mijn ochtend. Zeg me alsjeblieft eerst waar het over gaat.",
+    "bName": "Bruno",
+    "b": "Het was bedoeld als een praatje en uiteindelijk losten we twee problemen op. Een formele agenda had het gesprek gedood."
+  },
+  "rentSplit": {
+    "title": "🏠 De huur verdelen naar kamergrootte",
+    "aName": "Ana",
+    "a": "Mijn kamer is de kleinste en heeft geen kast, maar ik betaal evenveel als jij. Ik vind dat de grootste kamer meer moet kosten.",
+    "bName": "Sven",
+    "b": "We hadden afgesproken om het in drie gelijke delen te doen toen we het contract tekenden. Telkens de bedragen opnieuw uitrekenen als een van ons een gevoel heeft, wordt een rommeltje."
+  },
+  "smallLoan": {
+    "title": "💵 Tien euro van de lunch",
+    "aName": "Ruben",
+    "a": "Ik heb vorige maand je lunch betaald en vorige week weer. Dat is samen dertig euro en ik heb er nog niks over gehoord.",
+    "bName": "Dora",
+    "b": "Ik dacht dat we quitte stonden na het koffiehalen. Ik betaal graag, zeg maar het bedrag en ik maak het vandaag nog over."
+  },
+  "tipping": {
+    "title": "🧾 Hoeveel fooi geef je",
+    "aName": "Helen",
+    "a": "De bediening was traag en het eten was koud. Ik geef tien procent, geen twintig.",
+    "bName": "Olivier",
+    "b": "Het zat vol en de ober had het duidelijk druk. Fooi is voor hen echt belangrijk en voor ons is het niet veel extra."
+  },
+  "streamingShare": {
+    "title": "📺 Een streamingaccount delen",
+    "aName": "Maria",
+    "a": "Ik betaal voor het streamingabonnement en nu gebruikt de helft van je vrienden het ook. Ik wil graag dat ze meebetalen of een eigen account nemen.",
+    "bName": "Andre",
+    "b": "Het kost evenveel of er twee of vijf mensen kijken. Om een paar euro per persoon vragen is gewoon ongemakkelijk."
+  },
+  "taxiSplit": {
+    "title": "🚕 De taxi naar huis delen",
+    "aName": "Lisa",
+    "a": "Jouw halte was de eerste en de mijne was een kwartier verder, en toch delen we de rit doormidden. Dat vind ik niet helemaal eerlijk.",
+    "bName": "Kees",
+    "b": "We zaten in dezelfde auto en zijn samen vertrokken. Het per kilometer uitrekenen voor twintig euro is een beetje veel gedoe."
+  },
+  "groupGift": {
+    "title": "🎀 Het groepscadeau",
+    "aName": "Ivy",
+    "a": "Iedereen legt twintig euro in voor het cadeau van onze docent, maar ik ben student en dat is veel voor mij. Mag ik tien geven?",
+    "bName": "Wim",
+    "b": "Het cadeau is al besteld voor dat bedrag en als jij minder betaalt, moet iemand anders het aanvullen. Ik snap het, maar het is lastig."
+  },
+  "groceryList": {
+    "title": "🛒 De boodschappen verdelen",
+    "aName": "Puck",
+    "a": "Jij koopt snacks en dure kaas en zet het op het gedeelde bedrag. Ik eet alleen de basisdingen, dus ik hoef niet de helft te betalen.",
+    "bName": "Ravi",
+    "b": "Je mag de kaas altijd opeten. Het was vanaf het begin een gedeelde rekening en ik ga geen spreadsheet bijhouden."
+  },
+  "bigPurchase": {
+    "title": "🛍️ Een grote aankoop zonder iets te zeggen",
+    "aName": "Stella",
+    "a": "Je hebt een nieuwe gamemonitor van 400 euro gekocht in dezelfde week dat we spaarden voor de reis. Je had het me kunnen vragen.",
+    "bName": "Niels",
+    "b": "Het kwam uit mijn eigen zakgeld en ik wacht er al een jaar op. Ik dacht niet dat ik toestemming nodig had."
+  },
+  "subscriptions": {
+    "title": "💳 Vergeten abonnementen opzeggen",
+    "aName": "Jules",
+    "a": "We betalen voor vier apps die geen van ons opent. Laten we ze opzeggen en het geld voor de vakantie sparen.",
+    "bName": "Ola",
+    "b": "Ik weet zeker dat ik er binnenkort minstens twee ga gebruiken. Kunnen we ze tot het eind van de maand houden voor we beslissen?"
+  },
+  "restaurantChoice": {
+    "title": "🍜 Waar eten we vanavond",
+    "aName": "Hiro",
+    "a": "Ik zei deze week al drie keer ramen en jij zei elke keer oké, en koos dan iets anders. Ik wil dat we er gewoon gaan.",
+    "bName": "Beatrijs",
+    "b": "Ik had geen zin in noedels toen we er waren. Zeg de volgende keer een plek en ik leg me erop vast voor we vertrekken."
+  },
+  "cerealMilk": {
+    "title": "🥣 Eerst de melk, dan de cornflakes",
+    "aName": "Peter",
+    "a": "Jij schenkt eerst de melk in en doet er dan de cornflakes bij. Dat is fout, want ze zijn zompig voor je klaar bent.",
+    "bName": "Jessie",
+    "b": "Ik hou het zo graag en ik eet het meteen op. Je hoeft niet te kijken, laat me gewoon van mijn ontbijt genieten."
+  },
+  "ketchup": {
+    "title": "🍳 Ketchup op het ei",
+    "aName": "Louise",
+    "a": "Je doet ketchup op een perfect gebakken omelet. Dat is zonde van de goede eieren en ik kan er niet naar kijken.",
+    "bName": "Dennis",
+    "b": "Ik eet ze al zo sinds ik klein was en ik vind het lekker. Het is mijn bord, eet jij de jouwe maar zoals je wilt."
+  },
+  "pizzaCrust": {
+    "title": "🍕 De pizzarand laten liggen",
+    "aName": "Tim",
+    "a": "Jij eet het midden en laat de rand elke keer op je bord liggen. Dat is het lekkerste stuk en het gaat de prullenbak in.",
+    "bName": "Gemma",
+    "b": "De rand is hard en ik zit dan al vol. Als je hem wilt, pak hem maar, ik ga me niet dwingen."
+  },
+  "coffeeTea": {
+    "title": "☕ Koffie of thee in de ochtend",
+    "aName": "Arjan",
+    "a": "Je zei dat thee gewoon heet bladerwater is en vroeg toen om een slokje van mijn koffie. Ik wil graag een excuus.",
+    "bName": "Heidi",
+    "b": "Ik hou meer van de geur van koffie dan van de smaak. En ik drink thee omdat het rustig is, ik hoef niet overtuigd te worden."
+  },
+  "spiceLevel": {
+    "title": "🌶️ Hoe pittig is te pittig",
+    "aName": "Diego",
+    "a": "Je vroeg om 'mild' en kieperde toen de helft van de chiliolie over je bord. Nu zit de hele tafel te hoesten.",
+    "bName": "Anna",
+    "b": "Mild voor mij is niet mild voor jou en ik wist niet dat de tafel het deelde. De volgende keer bestel ik een aparte kom."
+  },
+  "leftovers": {
+    "title": "🥡 De restjes weggooien",
+    "aName": "Mona",
+    "a": "Ik bewaarde die curry voor mijn lunch en jij hebt hem weggegooid omdat hij twee dagen in de koelkast stond. Hij was nog prima.",
+    "bName": "Calvin",
+    "b": "Ik vond dat hij er veel te lang had gestaan en ik wilde niet dat iemand ziek werd. Ik koop een nieuwe, sorry."
+  },
+  "cilantro": {
+    "title": "🌿 Koriander in alles",
+    "aName": "Vera",
+    "a": "Je hebt weer koriander door het gerecht gedaan, terwijl je weet dat het voor mij naar zeep smaakt. Ik kan het er niet allemaal uit halen.",
+    "bName": "Marco",
+    "b": "Het staat in het recept en het gerecht heeft die frisheid nodig. De volgende keer doe ik het apart in een bakje."
+  },
+  "tooSalty": {
+    "title": "🧂 Te veel zout in de soep",
+    "aName": "Frida",
+    "a": "Je hebt de soep gezouten voor je geproefd had en nu is hij te zout om te eten. Ik wil opnieuw beginnen met een verse pan.",
+    "bName": "Jack",
+    "b": "Voor mij smaakt hij goed, en ik doe het zout altijd aan het eind. Roer er wat water door, dat is zo opgelost."
+  },
+  "doubleDip": {
+    "title": "🥨 Dubbel dippen op het feestje",
+    "aName": "Cora",
+    "a": "Ik zag dat je een hap van je chip nam en hem toen nog een keer in de gedeelde dip doopte. Nu wil ik er niks meer van.",
+    "bName": "Bobby",
+    "b": "Het was maar één keer en niemand anders zag het. Je maakt er iets enorms van, pak gewoon een schone lepel."
+  },
+  "pastaShape": {
+    "title": "🍝 Pasta die geen spaghetti is",
+    "aName": "Giulia",
+    "a": "Deze saus is bedoeld voor lange pasta en jij hebt hem met korte gemaakt. Het is gewoon niet hetzelfde gerecht.",
+    "bName": "Hendrik",
+    "b": "We hadden alleen penne in de kast en het smaakt prima. Maakt het echt zoveel uit welke vorm het is?"
+  },
+  "hotdog": {
+    "title": "🌭 Is een hotdog een broodje",
+    "aName": "Rob",
+    "a": "Een hotdog is vulling in een gesneden broodje, dus het is een broodje. Klaar.",
+    "bName": "Sam",
+    "b": "Het is iets eigens. Niemand bestelt een broodje en verwacht een hotdog, en op geen enkele kaart staat hij bij de broodjes."
+  },
+  "trashDay": {
+    "title": "🗑️ De vuilnis buiten zetten",
+    "aName": "Charlie",
+    "a": "De prullenbak loopt al sinds woensdag over en ik heb hem de laatste vier keer buiten gezet. Nu ben jij aan de beurt.",
+    "bName": "Amelia",
+    "b": "Ik breng het glas en het gft-afval weg en dat telt ook. Laten we een echt rooster maken, dan hoeven we niet meer te tellen."
+  },
+  "foldTowels": {
+    "title": "🧺 De juiste manier om handdoeken te vouwen",
+    "aName": "Ned",
+    "a": "Ik heb net alle handdoeken opnieuw in drieën gevouwen omdat jij ze dubbel vouwt en ze dan niet op de plank passen.",
+    "bName": "Carla",
+    "b": "Het zijn handdoeken en ze worden zo weer gebruikt. Ik ga geen vouwsysteem leren voor handdoeken."
+  },
+  "vacuumSchedule": {
+    "title": "🧹 Hoe vaak stofzuigen",
+    "aName": "Fleur",
+    "a": "Ik stofzuig twee keer per week en ik heb je het nog nooit zien aanraken. Een beetje haar op de vloer stoort me echt.",
+    "bName": "Leon",
+    "b": "Voor mij ziet het er prima uit met één keer per week en jij doet het vaker dan nodig is. Ik doe graag de zondagen als jij de rest laat."
+  },
+  "whoCooks": {
+    "title": "🍲 Elke avond koken",
+    "aName": "Maeve",
+    "a": "Ik heb deze maand vijf van de zeven avonden gekookt. Ik wil graag dat we het koken eerlijker verdelen.",
+    "bName": "Paolo",
+    "b": "Ik ben er minder goed in en jij vindt het leuker. Maar je hebt gelijk, laten we twee avonden kiezen en dan word ik beter."
+  },
+  "makeBed": {
+    "title": "🛏️ Het bed opmaken",
+    "aName": "Gwen",
+    "a": "Je staat op, laat het dekbed in een hoop liggen en zegt dat het geen zin heeft omdat we het vanavond toch weer door elkaar halen. De kamer ziet er rommelig door uit.",
+    "bName": "Nathan",
+    "b": "Ik ga als eerste naar mijn werk en het kost twee minuten die ik niet heb. Als het jou zoveel uitmaakt, doe het dan als je opstaat."
+  },
+  "toiletSeat": {
+    "title": "🚽 De wc-bril",
+    "aName": "Annika",
+    "a": "Ik ben drie keer in het donker naar de wc gegaan en de bril stond omhoog. Hem omlaag doen is niet moeilijk.",
+    "bName": "Gerrit",
+    "b": "Als hij omhoog blijft, hoef ik minder aan te raken en ik denk er om middernacht niet aan. Als het je dwarszit, probeer ik eraan te denken."
+  },
+  "toiletPaper": {
+    "title": "🧻 Over of onder",
+    "aName": "Daisy",
+    "a": "De rol hoort zo te hangen dat het papier over de bovenkant komt. Jij hebt hem achterstevoren gehangen en ik moet er elke keer omheen grijpen.",
+    "bName": "Albert",
+    "b": "Het maakt niks uit voor hoe het werkt, dus kies maar wat je wilt. Ik hang hem niet opnieuw op om bij jouw gewoonte te passen."
+  },
+  "laundryColours": {
+    "title": "👕 Kleuren door elkaar in de was",
+    "aName": "Wouter",
+    "a": "Mijn witte overhemd kwam roze uit de wasmachine omdat jij de rode handdoek erbij gooide. Dat overhemd droeg ik naar mijn werk.",
+    "bName": "Lydia",
+    "b": "Ik had haast en een kleine was duurt te lang. Ik koop een nieuw voor je, maar het was echt een foutje."
+  },
+  "washCar": {
+    "title": "🚗 De gedeelde auto schoonmaken",
+    "aName": "Ismail",
+    "a": "De achterbank ligt vol met verpakkingen en een koffiebeker van vorige week. We delen de auto, dus we moeten ook samen schoonmaken.",
+    "bName": "Dina",
+    "b": "Ik maak de auto schoon zodra hij bijna een rommeltje is. Ik vond een paar verpakkingen niet meetellen, ik doe het dit weekend."
+  },
+  "beachOrCity": {
+    "title": "🏖️ Een strandvakantie of een stedentrip",
+    "aName": "Sven",
+    "a": "Ik wil een week aan zee liggen, niks plannen. Onze vorige trip liepen we alleen maar langs musea.",
+    "bName": "Rachel",
+    "b": "Na twee dagen op een ligbed verveel ik me. Ik wil iets nieuws zien, ook al doen we maar de helft van de stad."
+  },
+  "airportEarly": {
+    "title": "✈️ Hoe vroeg ben je op het vliegveld",
+    "aName": "Oksana",
+    "a": "Drie uur voor de vlucht is veel te vroeg. We zitten straks eindeloos bij de gate met een kop koffie.",
+    "bName": "Hamza",
+    "b": "De rijen kunnen lang zijn en ik ben een angstige vlieger. Ik wacht liever dan dat ik haast heb, en de vlucht missen kost veel meer."
+  },
+  "campingHotel": {
+    "title": "⛺ Een tent of een hotel",
+    "aName": "Britt",
+    "a": "Ik heb een camping voor het weekend voor ons geboekt en nu zeg je dat je liever in een hotel slaapt. We hadden dit in het voorjaar afgesproken.",
+    "bName": "Coen",
+    "b": "Het weerbericht geeft het hele weekend regen en een natte tent is niet ontspannend. Ik ga graag kamperen als het mooier weer is."
+  },
+  "packingLight": {
+    "title": "🧳 Eén koffer per persoon",
+    "aName": "Noor",
+    "a": "We hadden afgesproken om alleen handbagage mee te nemen en die van jou weegt een ton. Je hebt drie paar schoenen meegenomen.",
+    "bName": "Stefan",
+    "b": "Ik heb graag keuze en jij hebt een jas ingepakt die je niet nodig hebt. Als we voor één ruimbagage betalen, neem ik dat voor mijn rekening."
+  },
+  "mapOrGps": {
+    "title": "🗺️ De navigatie vertrouwen",
+    "aName": "Bert",
+    "a": "De app zei dat we links moesten en jij ging rechts omdat je denkt dat je een sluiproute kent. We zijn twintig minuten kwijt.",
+    "bName": "Rosa",
+    "b": "Ik heb deze weg honderd keer gereden en de app weet niks van de wegwerkzaamheden. De vorige keer had ik gelijk."
+  },
+  "leaveTime": {
+    "title": "🕗 Hoe laat vertrekken we",
+    "aName": "Kim",
+    "a": "Ik zei dat we om acht uur moesten vertrekken om de file te ontlopen en jij staat om half negen nog onder de douche. Dit gaat altijd zo.",
+    "bName": "Mees",
+    "b": "Het feest begint om tien uur, dus om acht uur vertrekken is veel te vroeg. Jij plant voor de ergste file en dan ben ik degene die moet haasten."
+  },
+  "sleepIn": {
+    "title": "🌅 Opstaan in het weekend",
+    "aName": "Ellie",
+    "a": "Het is zaterdag en jij bent om zes uur op en maakt lawaai in de keuken. Het enige ochtendje dat ik kan uitslapen en het is weg.",
+    "bName": "Ravi",
+    "b": "Mijn lichaam wordt vroeg wakker en ik probeerde stil te zijn. Daar liggen en naar het plafond staren helpt ook niet."
+  },
+  "dinnerReservation": {
+    "title": "🕰️ De tafel voor het diner reserveren",
+    "aName": "Isaac",
+    "a": "Je hebt de tafel voor half zes geboekt en het is vrijdag. Niemand eet zo vroeg en ik had andere plannen gemaakt.",
+    "bName": "Tilda",
+    "b": "Het was het enige tijdstip dat nog vrij was en ik was het kwijtgeraakt. Ik heb het je wel gevraagd, maar je had het druk en antwoordde niet."
+  },
+  "boardGameRules": {
+    "title": "🎲 Regels die niemand meer weet",
+    "aName": "Brandon",
+    "a": "Je speelt dit spel de hele avond al verkeerd en nu sta je te winnen. Ik wil terug en de beurten opnieuw spelen.",
+    "bName": "Sienna",
+    "b": "We hebben aan het begin samen de handleiding gelezen en niemand maakte bezwaar. Je kunt de regels niet veranderen als je aan het verliezen bent."
+  },
+  "houseRules": {
+    "title": "💰 Eigen regels bij Monopoly",
+    "aName": "Elliot",
+    "a": "Ik leg het boetegeld in het midden, zodat wie als volgende op Vrij Parkeren komt het wint. Dat is de echte regel.",
+    "bName": "Hazel",
+    "b": "Dat staat niet in het regelboekje en het spel duurt er de hele nacht door. Laten we het spelen zoals het er staat."
+  },
+  "fantasyTrade": {
+    "title": "🏆 Een oneerlijke ruil in de voetbalpool",
+    "aName": "Dirk",
+    "a": "Je hebt me een geblesseerde speler gegeven voor mijn beste spits en ik zei ja zonder te checken. Het is een oneerlijke ruil, dus laten we hem terugdraaien.",
+    "bName": "Frans",
+    "b": "Je ging er schriftelijk mee akkoord en de ruil was eerlijk toen we hem deden. Checken is jouw werk, niet het mijne."
+  },
+  "lineCall": {
+    "title": "🎾 Uit of erin",
+    "aName": "Martin",
+    "a": "Die bal was duidelijk uit en je zegt de hele wedstrijd al dat hij erin was. Ik wil dat het punt opnieuw wordt gespeeld.",
+    "bName": "Jolien",
+    "b": "Ik stond dichter bij de lijn en ik zag dat hij de rand raakte. Je kunt het niet beoordelen vanaf de andere kant van de baan."
+  },
+  "controllerTurns": {
+    "title": "🎮 Wie is er aan de beurt met de controller",
+    "aName": "Zeno",
+    "a": "Je hebt de controller al een uur en elke keer als ik het vraag zeg je 'nog één ronde'. Zo werkt een beurt niet.",
+    "bName": "Priscilla",
+    "b": "Ik zat midden in een level en kon niet stoppen. Ik geef hem na deze meteen aan jou, echt waar."
+  },
+  "teamCaptain": {
+    "title": "⚽ De teams kiezen",
+    "aName": "Gerard",
+    "a": "Je hebt weer al je vrienden als eerste gekozen en mij met de zwakkere spelers laten zitten. Ik wil dat de teams eerlijk verdeeld zijn.",
+    "bName": "Anja",
+    "b": "We doen het al jaren zo en je hebt nooit geklaagd. Als je eerlijke teams wilt, loten we de namen."
+  },
+  "cardCheating": {
+    "title": "🃏 Een verstopte kaart",
+    "aName": "Ruben",
+    "a": "Ik zag dat je tijdens de laatste ronde een kaart van onder uit de stapel pakte. Als je zo wint, speel ik niet meer mee.",
+    "bName": "Mei",
+    "b": "Ik liet er een vallen en raapte hem op, dat is alles. Je bent de hele avond al chagrijnig omdat je verliest en nu beschuldig je mij."
+  },
+  "trashTalk": {
+    "title": "🏀 Praatjes op het veld",
+    "aName": "Dominic",
+    "a": "Een beetje plagen tijdens het spel hoort erbij. Jij werd stil en pruilerig na één opmerking en ik maakte maar een grapje.",
+    "bName": "Karin",
+    "b": "Het is iets anders als je grappen maakt over het spel dan als het over mij gaat. Ik wil gewoon dat we het aardig houden."
+  },
+  "gameSave": {
+    "title": "💾 Het savebestand overschrijven",
+    "aName": "Cas",
+    "a": "Ik heb dertig uur in dat savebestand gestoken en jij begon er een nieuw spel overheen. Nu is het weg.",
+    "bName": "Lina",
+    "b": "Er was maar één slot en het zag er ongebruikt uit. Ik had het gevraagd, maar je was niet thuis en ik wilde het alleen uitproberen."
+  },
+  "loserPays": {
+    "title": "🎳 De verliezer betaalt de pizza",
+    "aName": "Boris",
+    "a": "We hadden gezegd dat de verliezer betaalt en jij verloor met twee kegels. Afspraak is afspraak, dus pak je portemonnee maar.",
+    "bName": "Camille",
+    "b": "Ik zei het als grap en ik dacht dat je dat wist. Ik trakteer de volgende ronde als je dat liever hebt."
+  },
+  "pickleball": {
+    "title": "🏓 Wie houdt de score bij",
+    "aName": "Gloria",
+    "a": "Ik telde acht-zes en jij zegt dat het zeven gelijk is. We vergeten steeds de stand en dat verpest het spel.",
+    "bName": "Dennis",
+    "b": "Ik heb elke service geteld en ik weet het zeker. Laten we gewoon het punt overspelen en doorgaan."
+  },
+  "dogCouch": {
+    "title": "🐕 De hond op de bank",
+    "aName": "Maureen",
+    "a": "We hadden afgesproken dat de hond niet op de bank mocht en ik kom thuis en vind hem languit erop. De kussens zitten vol haren.",
+    "bName": "Dirk",
+    "b": "Hij kijkt zo blij en hij ligt er alleen als we tv kijken. De hoes is wasbaar en zo hoort hij echt bij het gezin."
+  },
+  "walkingDuty": {
+    "title": "🦮 Wie gaat er met de hond uit",
+    "aName": "Hanna",
+    "a": "Ik doe sinds het weekend de ochtend- en avondwandelingen en ik moet morgen een presentatie geven. Vanavond ben jij aan de beurt.",
+    "bName": "Viktor",
+    "b": "Het regent pijpenstelen en ik ben net gaan zitten. Ik doe zaterdag de lange wandeling, kunnen we vanavond overslaan?"
+  },
+  "catNames": {
+    "title": "🐈 Het nieuwe katje een naam geven",
+    "aName": "Pia",
+    "a": "Ik heb haar gevonden en ik noem haar Koekje. Jouw naam voor haar is Meneer Pluisbol en dat ga ik niet tegen een dierenarts zeggen.",
+    "bName": "Kurt",
+    "b": "Ik moet er elke keer om lachen en ze luistert er al naar. Koekje is lief, maar iedereens kat heet zo."
+  },
+  "catKeyboard": {
+    "title": "🐱 De kat op het bureau",
+    "aName": "Maxine",
+    "a": "Ze loopt tijdens vergaderingen over mijn toetsenbord en jij moedigt het aan met snoepjes. Nu denkt ze dat mijn bureau haar bed is.",
+    "bName": "Tom",
+    "b": "Iedereen in de call is gek op haar en ze zoekt alleen gezelschap. Je kunt de deur dichtdoen als het je stoort."
+  },
+  "feedingTime": {
+    "title": "🥫 De kat twee keer eten geven",
+    "aName": "Jun",
+    "a": "Ik gaf de kat om zes uur haar eten en jij gaf haar om zeven uur nog een keer. Ze wordt een beetje dik.",
+    "bName": "Alicia",
+    "b": "Ze zat tegen me aan te miauwen en ik dacht dat niemand haar had gevoerd. Een briefje op de koelkast zou dit voorkomen."
+  },
+  "vetCosts": {
+    "title": "🐾 De dierenartsrekening delen",
+    "aName": "Reinier",
+    "a": "De rekening van de dierenarts was 280 euro en ik heb alles betaald omdat ik de afspraak had gemaakt. Je hebt de hond samen met mij genomen, dus we moeten het delen.",
+    "bName": "Cheryl",
+    "b": "Ik had het betaald als je het me voor de afspraak had gezegd. Stuur me de bon en ik maak de helft over."
+  },
+  "offLeash": {
+    "title": "🌳 Los in het park",
+    "aName": "Gail",
+    "a": "Je hond rende zonder waarschuwing naar mijn pup toe en die is nu bang. Op het bord staat dat honden hier aan de lijn moeten.",
+    "bName": "Mitch",
+    "b": "Hij is vriendelijk en wilde alleen even hallo zeggen. Ik hou hem dichtbij en iedereen hier laat de zijne los."
+  },
+  "petInBed": {
+    "title": "🐶 De hond in bed",
+    "aName": "Selena",
+    "a": "Hij neemt de helft van het matras in en ik word wakker met een poot in mijn gezicht. Ik wil het bed graag weer voor ons tweeën.",
+    "bName": "Carter",
+    "b": "Hij is angstig als hij alleen is en slaapt beter naast ons. Ik heb liever wat minder ruimte dan dat ik hem de hele nacht hoor huilen."
+  },
+  "puppyName": {
+    "title": "🐕‍🦺 De naam van de pup kiezen",
+    "aName": "Roel",
+    "a": "We noemen hem al een week 'de pup' omdat we het niet eens kunnen worden. Ik stem voor Rocket en het past perfect bij hem.",
+    "bName": "Margot",
+    "b": "Hij is rustig en traag, dus Rocket klinkt gek. Ik hou van Pepper en het past bij zijn sproetjes."
+  },
+  "fishSitter": {
+    "title": "🐠 Wie geeft de vissen eten",
+    "aName": "Tessa",
+    "a": "Ik heb je een maand geleden gevraagd om de vissen te voeren als we weg zijn. Je zegt dat je het vergeten bent te regelen en we vertrekken morgen.",
+    "bName": "Alfred",
+    "b": "Ik dacht dat jouw buurvrouw het had aangeboden en ik wilde niet dubbelop gaan. Ik kan vanavond mijn zus vragen, ze woont dichtbij."
+  },
+  "birdNoise": {
+    "title": "🦜 De papegaai die nooit ophoudt",
+    "aName": "Bram",
+    "a": "Je papegaai krijst elke ochtend om zes uur en ik kan niet meer slapen. Ik woon naast je.",
+    "bName": "Fatima",
+    "b": "Hij is een vogel en hij begroet de zon. Ik zet de kooi in een rustigere kamer, sorry."
+  },
+  "wifiPassword": {
+    "title": "🔐 Het wifiwachtwoord uitdelen",
+    "aName": "Robin",
+    "a": "Je hebt het wifiwachtwoord aan iedereen gegeven die langskwam en nu is het internet traag als ik werk. Ik wil het veranderen.",
+    "bName": "Eva",
+    "b": "Het is onbeleefd om gasten te weigeren en niemand gebruikt echt veel. Als het je stoort, maak dan een gastennetwerk."
+  },
+  "tvVolume": {
+    "title": "🔊 De strijd om het volume",
+    "aName": "Sjoerd",
+    "a": "Je kijkt alles op volume 40 en ik hoor elk woord vanuit de keuken. Zet alsjeblieft de ondertiteling aan.",
+    "bName": "Peggy",
+    "b": "Ik hoor niet goed en bij een lager volume mis ik de dialogen. Door ondertiteling ga ik lezen in plaats van kijken."
+  },
+  "phoneAtDinner": {
+    "title": "📵 Telefoons op tafel in het restaurant",
+    "aName": "Lydia",
+    "a": "We gingen voor het eerst in een maand samen uit eten en jij keek elke vijf minuten op je telefoon. Ik voelde me alsof ik alleen zat.",
+    "bName": "Pieter",
+    "b": "Ik wachtte op een bericht dat de vlucht van mijn broer was geland. Ik had het moeten zeggen, maar ik wilde je niet ongerust maken."
+  },
+  "notificationSound": {
+    "title": "🔔 Meldingsgeluiden in de bibliotheek",
+    "aName": "Eveline",
+    "a": "Je telefoon piept elke dertig seconden en sommigen van ons zijn aan het studeren. Zet hem alsjeblieft op stil.",
+    "bName": "Mohamed",
+    "b": "Hij staat nu op trillen en het spijt me heel erg. Ik had niet door dat het geluid aanstond, het gebeurt niet meer."
+  },
+  "darkMode": {
+    "title": "🌗 Donkere of lichte modus",
+    "aName": "Jasper",
+    "a": "Je hebt de gedeelde tablet 's avonds op de lichte modus gezet en mijn ogen branden. We hadden afgesproken dat het 's avonds donker zou zijn.",
+    "bName": "Odette",
+    "b": "In de donkere modus kan ik niks lezen, de tekst wordt wazig. Ik zet hem voor het slapengaan terug, maar overdag heb ik hem licht nodig."
+  },
+  "smartSpeaker": {
+    "title": "🗣️ De slimme speaker die meeluistert",
+    "aName": "Gideon",
+    "a": "Je hebt een slimme speaker in onze slaapkamer gezet en ik vind het niet prettig dat hij meeluistert. Ik wil hem graag in de keuken.",
+    "bName": "Liv",
+    "b": "Ik gebruik hem alleen voor de wekker en het weer. De keuken is te ver weg, maar ik kan 's nachts de microfoon uitzetten."
+  },
+  "tabsOpen": {
+    "title": "🗂️ Tweehonderd open tabbladen",
+    "aName": "Paula",
+    "a": "Als ik je laptop leen, staan er honderd tabbladen open en gaat hij superlangzaam. Een paar sluiten zou hem sneller maken.",
+    "bName": "Arthur",
+    "b": "Elk daarvan heb ik nodig en ik weet precies waar alles staat. Het is georganiseerde chaos."
+  },
+  "photoStorage": {
+    "title": "🖼️ De cloudopslag delen",
+    "aName": "Lotte",
+    "a": "Jouw video's hebben onze gedeelde opslag vol gezet en ik kan mijn foto's niet meer back-uppen. Verwijder er wat, of betaal voor je eigen opslag.",
+    "bName": "Kofi",
+    "b": "Het zijn allemaal familievideo's en ik wil ze niet kwijtraken. Ik zet ze op een schijf, maar geef me een paar dagen."
+  },
+  "videoCallCamera": {
+    "title": "📹 Camera aan bij videobellen",
+    "aName": "Helga",
+    "a": "Ons wekelijkse familiegesprek is het enige moment dat we elkaar zien en jij houdt je camera uit. Het is alsof ik tegen een muur praat.",
+    "bName": "Dylan",
+    "b": "Ik ben meestal aan het koken of in mijn pyjama. Ik ben er nog steeds en luister mee, en ik denk niet dat de camera het punt is."
+  },
+  "doorbellCamera": {
+    "title": "🚪 De deurbelcamera",
+    "aName": "Mara",
+    "a": "Je hebt een camera opgehangen die het hele pad voor het huis filmt en de buren kunnen hem ook zien. Ik wil hem graag een andere kant op richten.",
+    "bName": "Ted",
+    "b": "We hebben vorige winter twee pakketten laten stelen en hij filmt alleen onze eigen stoep. Ik kantel hem graag een stukje naar beneden."
+  },
+  "holdDoor": {
+    "title": "🚪 De deur openhouden",
+    "aName": "Willem",
+    "a": "Ik hield de deur open voor een hele groep en niet één van hen zei bedankt. Het kost één seconde om beleefd te zijn.",
+    "bName": "Yasmin",
+    "b": "Mensen hebben haast en merken het niet altijd. Je moet het doen omdat het aardig is, niet omdat je een bedankje verwacht."
+  },
+  "elevatorSpot": {
+    "title": "🛗 Voor de lift staan",
+    "aName": "Gloria",
+    "a": "Ik stond te wachten op de lift en jij drong voor op het moment dat hij openging. Ik stond er duidelijk eerder.",
+    "bName": "Matthijs",
+    "b": "Ik had een kinderwagen en de lift was de enige manier voor mij. Ik zag je niet, sorry, maar ik had hem echt nodig."
+  },
+  "cuttingQueue": {
+    "title": "🧍 Voordringen in de rij",
+    "aName": "Ursula",
+    "a": "Je liep recht naar de balie terwijl de rest van ons twintig minuten wachtte. Er staat een rij achter mij.",
+    "bName": "Idris",
+    "b": "Ik wil alleen een snelle vraag stellen en ik bestelde niks. Ik wist niet dat dit de rij daarvoor was."
+  },
+  "busPhone": {
+    "title": "🚌 Hard bellen in de bus",
+    "aName": "Dora",
+    "a": "De man achter mij belt al twintig minuten op de speaker en we hebben allemaal zijn hele dag gehoord. Een headset zou aardig zijn.",
+    "bName": "Samir",
+    "b": "Het is een dringend gesprek en de verbinding is slecht, dus ik heb de speaker nodig. Ik hou het kort, je hoeft niet onbeleefd te doen."
+  },
+  "shoesInside": {
+    "title": "👟 Schoenen in huis",
+    "aName": "Hye-jin",
+    "a": "Doe alsjeblieft je schoenen uit bij de deur, we dragen ze niet binnen. Ik heb net de vloer gedaan.",
+    "bName": "Pavel",
+    "b": "Het is een droge dag en de zolen zijn schoon. Ik ben het niet gewend, maar ik doe ze uit als het zo belangrijk is."
+  },
+  "armrest": {
+    "title": "💪 De armleuning delen",
+    "aName": "Noël",
+    "a": "Je hebt de hele film beide armleuningen gehad en mijn arm hangt in de lucht. De middelste stoel krijgt er twee, dat is de regel.",
+    "bName": "Jade",
+    "b": "Ik zit aan de kant van het raam en mijn ellebogen hebben ruimte nodig. Ik wist niet dat er een regel was, ik schuif wel op."
+  },
+  "lateRsvp": {
+    "title": "✉️ Op het laatste moment reageren op de uitnodiging",
+    "aName": "Greta",
+    "a": "Ik vroeg iedereen om voor de eerste te reageren en jij zei pas de dag ervoor ja. Ik had het eten al voor vijftien mensen besteld.",
+    "bName": "Tobias",
+    "b": "Ik wist tot dan niet zeker wanneer ik moest werken. Eén persoon meer aan tafel kan geen kwaad, en ik heb een toetje meegebracht."
+  },
+  "thankYouNote": {
+    "title": "💌 Bedankkaartjes",
+    "aName": "Edith",
+    "a": "De bruiloft van je nicht was een maand geleden en we hebben nog geen woord over ons cadeau gehoord. Een kaartje kost niks.",
+    "bName": "Bram",
+    "b": "Ze zijn waarschijnlijk nog bezig met honderd cadeaus. Een berichtje is niet het einde van de wereld, geef ze tijd."
+  },
+  "regift": {
+    "title": "🎁 Een cadeau doorgeven",
+    "aName": "Samantha",
+    "a": "Ik kwam erachter dat de sjaal die ik van je kreeg eerst een cadeau was dat iemand jou had gegeven. Ik voelde me een bijzaak.",
+    "bName": "Lenny",
+    "b": "Hij was mooi, maar hij stond mij niet. Ik dacht dat hij jou beter zou staan, en ik had hem je ook zo gegeven."
+  },
+  "partyDrink": {
+    "title": "🍾 Iets meenemen naar het diner",
+    "aName": "Dilara",
+    "a": "Je kwam helemaal met niks aan bij het diner en ik had twee dagen gekookt. Een fles wijn of wat bloemen was leuk geweest.",
+    "bName": "Wessel",
+    "b": "Jij zei dat ik alleen mezelf mee hoefde te nemen en ik nam je op je woord. De volgende keer neem ik iets lekkers mee."
+  },
+  "escalator": {
+    "title": "⬆️ Op de roltrap staan",
+    "aName": "Brigitte",
+    "a": "Je stond aan de linkerkant en blokkeerde iedereen die wilde doorlopen. De regel is rechts staan en links lopen.",
+    "bName": "Anders",
+    "b": "Ik draag zware tassen en wil gewoon veilig boven komen. Ik hoef me niet te haasten voor andermans planning."
+  },
+  "cinemaTalk": {
+    "title": "🎞️ Fluisteren tijdens de film",
+    "aName": "Cas",
+    "a": "Je hebt de hele film lang elke scène aan je vriendin uitgelegd, fluisterend. Ik heb betaald om te kijken, niet om een lopend commentaar te horen.",
+    "bName": "Leila",
+    "b": "Ze kent de serie niet en ik hielp haar alleen de plot te volgen. Ik stop als het je echt stoorde."
+  },
+  "neighbourMusic": {
+    "title": "🔈 Een buurman met een laat feest",
+    "aName": "Ada",
+    "a": "Jouw feest was om één uur 's nachts nog steeds luid en sommigen van ons moeten 's ochtends werken. Een beetje waarschuwing was beleefd geweest.",
+    "bName": "Stan",
+    "b": "Ik heb het aan het gebouw laten weten en het is één nacht per jaar. Ik vraag iedereen om naar binnen te gaan, maar iedereen heeft plezier."
+  },
+  "socks": {
+    "title": "🧦 Sokken op de vloer",
+    "aName": "Lucy",
+    "a": "Er ligt een paar sokken van jou naast het bed, nog een bij de bank en één in de gang. Ik raap ze elke dag op.",
+    "bName": "Ben",
+    "b": "Het zijn maar sokken en ik trek ze straks weer aan. Ik doe ze in de wasmand, maar je hoeft ze niet te tellen."
+  },
+  "cafeSeat": {
+    "title": "☕ Een plek reserveren met een laptop",
+    "aName": "Joanna",
+    "a": "Je laptop houdt die tafel al een uur bezet en jij bent ergens anders. Het is hier vol en mensen staan.",
+    "bName": "Kareem",
+    "b": "Ik ging alleen even naar buiten om te bellen en kwam meteen terug. Een tas laten liggen is hoe iedereen een plek vasthoudt."
+  },
+  "groupProject": {
+    "title": "🎓 Een groepsopdracht waar niemand aan begon",
+    "aName": "Tessa",
+    "a": "De opdracht moet over een week af en ik heb het hele overzicht alleen geschreven. Ik wil dat jullie allemaal je deel voor vrijdag doen.",
+    "bName": "Olivier",
+    "b": "Ik heb twee tentamens ervoor en ik zei al dat mijn delen later zouden komen. Ik kan ze in het weekend doen."
+  },
+  "puzzle": {
+    "title": "🧩 Mijn puzzel afmaken",
+    "aName": "Grace",
+    "a": "Ik werkte al een week aan die puzzel en jij legde de laatste twintig stukjes terwijl ik weg was. Ik wilde hem zelf afmaken.",
+    "bName": "Harm",
+    "b": "Hij lag op tafel en ik ging erin op. Ik wist niet dat het je zoveel deed, sorry."
+  },
+  "hedge": {
+    "title": "🌿 De haag van de buurman",
+    "aName": "Barbara",
+    "a": "Je haag is over het pad gegroeid en ik moet de straat op stappen om erlangs te komen. Het is al zo sinds het voorjaar.",
+    "bName": "Joël",
+    "b": "Ik wilde hem al snoeien en het weer was verschrikkelijk. Ik doe het zondag, je had gewoon kunnen aankloppen."
+  }
+}

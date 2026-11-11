@@ -170,7 +170,7 @@ object CaseLogic {
     // --- Labels in anonymized text (localizeLabels / textLang in lib/names.ts) ---------
 
     private val ANY_LABEL = Regex("(?<![\\p{L}\\p{N}])(Party|Taraf|Person|Kişi) ([A-Z])(?![\\p{L}\\p{N}])")
-    private val TR_LABEL = Regex("(?<![\\p{L}])(?:Taraf [AB]|Kişi [C-Z])(?![\\p{L}])")
+    private val TR_LABEL = Regex("(?<![\\p{L}])(?:Taraf [A-D]|Kişi [C-Z])(?![\\p{L}])")
     private val TR_WORDS = Regex(
         "(?<![\\p{L}])(?:ve|bir|bu|ama|için|çok|değil|gibi|ile|diye|sonra|çünkü|hiç|daha|kadar|ediyor|dedi|oldu)(?![\\p{L}])",
         setOf(RegexOption.IGNORE_CASE),
@@ -191,17 +191,17 @@ object CaseLogic {
     }
 
     /** "Party A" <-> "Taraf A", "Person C" <-> "Kişi C" in the words of [lang] (localizeLabels). */
-    fun localizeLabels(text: String, lang: AppLang): String {
+    fun localizeLabels(text: String, lang: AppLang, sides: Int = 2): String {
         if (text.isEmpty()) return text
         return ANY_LABEL.replace(text) { m ->
             val word = m.groupValues[1]
             val letter = m.groupValues[2]
             val party = word == "Party" || word == "Taraf"
-            if (party != (letter == "A" || letter == "B")) return@replace m.value
+            if (!PartyNames.labelFits(word, letter, sides)) return@replace m.value
             if (lang == AppLang.TR) "${if (party) "Taraf" else "Kişi"} $letter" else "${if (party) "Party" else "Person"} $letter"
         }
     }
 
     /** localizeLabels by the text's own language. */
-    fun localizeLabelsAuto(text: String): String = localizeLabels(text, textLang(text))
+    fun localizeLabelsAuto(text: String, sides: Int = 2): String = localizeLabels(text, textLang(text), sides)
 }

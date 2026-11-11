@@ -70,16 +70,22 @@ enum Story {
         var extra: Int
         var winner: Party?
         var trial: CruxTrialOutcome?
+        /// How many sides stand at centre court.
+        var sides = 2
     }
 
     static func summarize(_ result: VerdictResult) -> Summary {
-        let votes = result.modelRefused ? [] : result.runs.map { VerdictDisplay.vote($0) }
+        let votes = result.modelRefused ? [] : (result.isMany ? (result.votes ?? []) : result.runs.map { VerdictDisplay.vote($0) })
         let escalated = result.escalated
         let winner: Party?
-        switch result.verdict {
-        case .sideA: winner = .a
-        case .sideB: winner = .b
-        default: winner = nil
+        if result.isMany {
+            winner = result.winner
+        } else {
+            switch result.verdict {
+            case .sideA: winner = .a
+            case .sideB: winner = .b
+            default: winner = nil
+            }
         }
         let trial = result.cruxTrial?.outcome
         return Summary(
@@ -87,7 +93,8 @@ enum Story {
             escalated: escalated,
             extra: escalated ? max(0, votes.count - 3) : 0,
             winner: winner,
-            trial: trial == .unknown ? nil : trial
+            trial: trial == .unknown ? nil : trial,
+            sides: result.sideCount
         )
     }
 

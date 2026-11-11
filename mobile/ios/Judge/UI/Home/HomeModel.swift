@@ -42,6 +42,8 @@ final class HomeModel {
     var theirsOpen = false
     /// The other side's name over their card; nil until typed.
     var otherName: String?
+    /// Sides C and D, once added under the second card.
+    var more: [ExtraSide] = []
     var path: [HomeRoute] = []
 
     /// Step 1: asking whether key facts are missing.
@@ -83,7 +85,20 @@ final class HomeModel {
         let mine: Bool
         let name: String
         let text: String
+        /// C or D on a verdict with more than two sides.
+        var extra: Party? = nil
+
+        var party: Party { mine ? .a : (extra ?? .b) }
     }
+
+    /// A third or fourth side written on this phone.
+    struct ExtraSide: Equatable {
+        var text = ""
+        var name: String?
+    }
+
+    /// Most sides one verdict or case takes (MAX_CASE_SIDES).
+    static let maxSides = 4
 
     struct ClarifyState: Equatable {
         var questions: [ClarifyQuestion]
@@ -98,8 +113,6 @@ final class HomeModel {
     /// What a request judges, fixed when it was submitted.
     @ObservationIgnored private var premiumInput: PremiumInput?
     @ObservationIgnored private let keys = IdempotencyKeys()
-    /// The example "Try an example" filled in last, so the next tap picks another.
-    @ObservationIgnored private var lastExample: String?
     /// What the example wrote, to tell it from the user's own text.
     @ObservationIgnored private var exampleForm: FormText?
     /// Told when the server refuses the session (401) and when an outcome
@@ -111,10 +124,11 @@ final class HomeModel {
         let theirs: String
         let myName: String?
         let theirName: String?
+        var more: [ExtraSide] = []
     }
 
     private var formText: FormText {
-        FormText(mine: argument, theirs: otherSide, myName: caseName, theirName: otherName)
+        FormText(mine: argument, theirs: otherSide, myName: caseName, theirName: otherName, more: more)
     }
 
     /// What was asked: "Try again" with the same request resumes its verdict.
@@ -129,6 +143,8 @@ final class HomeModel {
         let argument: String
         let lang: AppLang
         let evidence: [String]
+        /// Every side as typed, when there are more than two.
+        var sides: [VerdictRequest.Side]? = nil
 
         var requestKey: RequestKey {
             RequestKey(text: argument, lang: lang, extra: "premium:" + evidence.joined(separator: ","))
@@ -158,10 +174,17 @@ final class HomeModel {
     /// What the judges read: your side as written, or with the other side
     /// filled in, both joined into one text with a name in front of each.
     func outgoing(_ app: AppModel) -> String {
-        Self.joined(mine: argument, theirs: otherSide, myName: shownCaseName(app), theirName: otherName ?? "", lang: app.lang)
+        Self.joined(
+            mine: argument, theirs: otherSide, myName: shownCaseName(app), theirName: otherName ?? "", lang: app.lang,
+            more: more.map { (text: $0.text, name: $0.name ?? "") }
+        )
     }
 
-    static func joined(mine: String, theirs: String, myName: String, theirName: String, lang: AppLang) -> String {
+    /// `more` holds sides C and D; an unnamed one reads "Party C:".
+    static func joined(
+        mine: String, theirs: String, myName: String, theirName: String, lang: AppLang,
+        more: [(text: String, name: String)] = []
+    ) -> String {
         let theirs = theirs.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !theirs.isEmpty else { return mine }
         let mine = mine.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -172,19 +195,36 @@ final class HomeModel {
         var parts: [String] = []
         if !mine.isEmpty { parts.append(part(mine, name: myName, unnamed: L10n.appHomeMySide(lang))) }
         parts.append(part(theirs, name: theirName, unnamed: L10n.appHomeOtherSide(lang)))
+        for (index, side) in more.enumerated() {
+            let text = side.text.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !text.isEmpty { parts.append(part(text, name: side.name, unnamed: (index == 0 ? L10n.partyC(lang) : L10n.partyD(lang)) + ":")) }
+        }
         return parts.joined(separator: "\n\n")
     }
 
     /// The written sides, yours first.
-    static func sides(mine: String, theirs: String, myName: String, theirName: String) -> [JudgedSide] {
-        func side(_ isMine: Bool, _ text: String, _ name: String) -> JudgedSide {
+    static func sides(mine: String, theirs: String, myName: String, theirName: String, more: [ExtraSide] = []) -> [JudgedSide] {
+        func side(_ isMine: Bool, _ text: String, _ name: String, extra: Party? = nil) -> JudgedSide {
             JudgedSide(
                 mine: isMine,
                 name: name.trimmingCharacters(in: .whitespacesAndNewlines),
-                text: text.trimmingCharacters(in: .whitespacesAndNewlines)
+                text: text.trimmingCharacters(in: .whitespacesAndNewlines),
+                extra: extra
             )
         }
-        return [side(true, mine, myName), side(false, theirs, theirName)].filter { !$0.text.isEmpty }
+        let extras = more.enumerated().map { side(false, $0.element.text, $0.element.name ?? "", extra: $0.offset == 0 ? .c : .d) }
+        return ([side(true, mine, myName), side(false, theirs, theirName)] + extras).filter { !$0.text.isEmpty }
+    }
+
+    /// The typed sides A to D as a verdict request takes them, when there
+    /// are more than two.
+    func typedSides(_ app: AppModel) -> [VerdictRequest.Side]? {
+        guard !more.isEmpty else { return nil }
+        let all = [(argument, shownCaseName(app)), (otherSide, otherName ?? "")] + more.map { ($0.text, $0.name ?? "") }
+        return all.map { text, name in
+            let name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+            return VerdictRequest.Side(text: text.trimmingCharacters(in: .whitespacesAndNewlines), name: name.isEmpty ? nil : name)
+        }
     }
 
     /// UTF-16 length of what would be sent, as the website's `maxLength`
@@ -199,14 +239,14 @@ final class HomeModel {
 
     /// What the user wrote, without the names and labels the join adds.
     var writtenLength: Int {
-        [argument, otherSide].map { $0.trimmingCharacters(in: .whitespacesAndNewlines).utf16.count }.reduce(0, +)
+        ([argument, otherSide] + more.map(\.text)).map { $0.trimmingCharacters(in: .whitespacesAndNewlines).utf16.count }.reduce(0, +)
     }
 
     /// Something the form started is still running: the switches hold still.
     var isBusy: Bool { isCheckingQuestions || isJudging || isCreatingCase }
 
     /// Nothing typed, attached or opened: Home has nothing to clear.
-    var isBlank: Bool { argument.isEmpty && otherSide.isEmpty && evidence.items.isEmpty && !theirsOpen }
+    var isBlank: Bool { argument.isEmpty && otherSide.isEmpty && evidence.items.isEmpty && !theirsOpen && more.isEmpty }
 
     /// An example writes over the form, so it never replaces the user's text.
     var offersExample: Bool { isBlank || formText == exampleForm }
@@ -223,6 +263,10 @@ final class HomeModel {
 
     func canSubmit(_ app: AppModel, now: Date = .now) -> Bool {
         guard writtenLength >= Self.minLength, length(app) <= Self.maxLength, !isBusy else { return false }
+        // The judges read three or four accounts one by one: each needs a side worth judging.
+        if !more.isEmpty, ([argument, otherSide] + more.map(\.text)).contains(where: { $0.trimmingCharacters(in: .whitespacesAndNewlines).utf16.count < Self.minLength }) {
+            return false
+        }
         if app.evidenceOn, evidence.busy { return false }
         if let blockedUntil, blockedUntil > now { return false }
         return true
@@ -231,11 +275,33 @@ final class HomeModel {
     /// The link can go out with nothing written, or with a side that would
     /// also do for a verdict. Images only go with a written side.
     func canSendLink(_ app: AppModel, now: Date = .now) -> Bool {
-        guard !theirsOpen, !isBusy else { return false }
+        // With the second card open they write both; the link comes back once a
+        // third side is added and none of them has text.
+        guard !isBusy, !hasWrittenOtherSide, !theirsOpen || !more.isEmpty else { return false }
         if app.evidenceOn, evidence.busy { return false }
         if let blockedUntil, blockedUntil > now { return false }
         if argument.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return evidence.items.isEmpty }
-        return canSubmit(app, now: now)
+        // Only your side is written, so the check that every card is long enough does not apply.
+        return writtenLength >= Self.minLength && length(app) <= Self.maxLength
+    }
+
+    /// The cards on Home, A first: only yours until the second is added.
+    var openSides: [Party] { theirsOpen ? Party.sides(2 + more.count) : [.a] }
+
+    /// A side other than yours has text: that is a verdict to get now, not a link to send.
+    private var hasWrittenOtherSide: Bool {
+        !([otherSide] + more.map(\.text)).allSatisfy { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+    }
+
+    /// The text of the last card open.
+    private var lastSideText: String { more.last?.text ?? otherSide }
+
+    /// "Add another side": under the last card once it has text, or while the
+    /// sides are all still to be invited, up to four.
+    func canAddSide(_ app: AppModel) -> Bool {
+        guard theirsOpen, more.count < Self.maxSides - 2, !isBusy else { return false }
+        if !lastSideText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return true }
+        return app.linkOn && !hasWrittenOtherSide
     }
 
     /// Hard cap at 6000 UTF-16 units, cutting whole characters.
@@ -304,8 +370,23 @@ final class HomeModel {
         theirsOpen = false
         otherSide = ""
         otherName = nil
+        more = []
         if caseName == exampleForm?.myName { caseName = nil }
         exampleForm = nil
+    }
+
+    /// "Add another side": a third card, then a fourth.
+    func addSide() {
+        guard theirsOpen, more.count < Self.maxSides - 2 else { return }
+        more.append(ExtraSide())
+        mode = .now
+    }
+
+    /// The last extra card's close button: the second card stays.
+    func removeLastSide() {
+        guard !more.isEmpty else { return }
+        more.removeLast()
+        if more.isEmpty, caseName == exampleForm?.myName { caseName = nil }
     }
 
     /// Nothing left to spend: pricing instead of a request the server
@@ -333,14 +414,15 @@ final class HomeModel {
         let name = shownCaseName(app).trimmingCharacters(in: .whitespacesAndNewlines)
         let displayName: String? = name.isEmpty ? nil : name
         let other = otherName?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        let body = JudgeAPI.createCaseBody(text: text, lang: lang, evidence: tokens, displayName: displayName)
+        let sides = theirsOpen ? 2 + more.count : 2
+        let body = JudgeAPI.createCaseBody(text: text, lang: lang, evidence: tokens, displayName: displayName, sides: sides)
         let token = keys.key(for: JudgeAPI.canonical(body))
         let api = app.api
         let names = app.caseNames
         request = Task { [weak self, weak app] in
             do {
                 let created = try await api.createCase(
-                    text: text, lang: lang, evidence: tokens, displayName: displayName, idempotencyKey: token
+                    text: text, lang: lang, evidence: tokens, displayName: displayName, sides: sides, idempotencyKey: token
                 )
                 guard let self, !Task.isCancelled else { return }
                 self.keys.clear(token)
@@ -351,6 +433,8 @@ final class HomeModel {
                 self.argument = ""
                 self.caseName = nil
                 self.otherName = nil
+                self.more = []
+                self.theirsOpen = false
                 self.mode = .now
                 self.isCreatingCase = false
                 self.path.append(.caseDetail(id: created.view.id))
@@ -389,10 +473,11 @@ final class HomeModel {
         let input = PremiumInput(
             argument: outgoing(app),
             lang: app.lang,
-            evidence: app.evidenceOn ? evidence.tokens : []
+            evidence: app.evidenceOn ? evidence.tokens : [],
+            sides: typedSides(app)
         )
         premiumInput = input
-        judgedSides = Self.sides(mine: argument, theirs: otherSide, myName: shownCaseName(app), theirName: otherName ?? "")
+        judgedSides = Self.sides(mine: argument, theirs: otherSide, myName: shownCaseName(app), theirName: otherName ?? "", more: more)
         let api = app.api
         let history = app.history
         let key = input.requestKey
@@ -481,7 +566,8 @@ final class HomeModel {
             lang: input.lang,
             tier: Tier.premium.rawValue,
             clarifications: clarifications,
-            evidence: input.evidence.isEmpty ? nil : input.evidence
+            evidence: input.evidence.isEmpty ? nil : input.evidence,
+            sides: input.sides
         )
         let token = keys.key(for: IdempotencyKeys.canonical(body))
         let key = input.requestKey
@@ -641,19 +727,23 @@ final class HomeModel {
         evidence.clear()
     }
 
-    /// "Try an example": both names and both sides from a random example,
-    /// over whatever was typed.
-    func fillExample(lang: AppLang) {
-        let example = ExampleCase.random(after: lastExample)
-        lastExample = example.id
-        fill(example, lang: lang)
+    /// "Try an example": both names and both sides from a random example this
+    /// phone has not shown in the current round, over whatever was typed.
+    func fillExample(lang: AppLang, defaults: UserDefaults = .standard) {
+        let examples = Examples.load(lang)
+        guard let pick = Examples.next(ids: examples.map(\.id), seen: Examples.loadSeen(defaults), random: .random(in: 0..<1)),
+              let example = examples.first(where: { $0.id == pick.id })
+        else { return }
+        Examples.saveSeen(pick.seen, defaults)
+        fill(example)
     }
 
-    private func fill(_ example: ExampleCase, lang: AppLang) {
-        caseName = example.myName(lang)
-        argument = example.mine(lang)
-        otherName = example.theirName(lang)
-        otherSide = example.theirs(lang)
+    private func fill(_ example: ExampleCase) {
+        caseName = example.aName
+        argument = example.a
+        otherName = example.bName
+        otherSide = example.b
+        more = []
         theirsOpen = true
         exampleForm = formText
     }
@@ -713,8 +803,8 @@ extension HomeModel {
     }
 
     /// Screenshot fixtures: one example, the same every run.
-    func showForScreenshot(example: ExampleCase, lang: AppLang) {
-        fill(example, lang: lang)
+    func showForScreenshot(example: ExampleCase) {
+        fill(example)
     }
 
     /// Screenshot fixtures: a fresh verdict.

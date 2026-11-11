@@ -15,12 +15,14 @@
  * `Cache-Control: no-store`. Server only.
  */
 
+import type { PartyLetter as CaseParty } from "@/lib/case-types";
 import { NextResponse } from "next/server";
 import { API_ERROR_STATUS, apiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
 import { isSameOrigin, type ViewerSession } from "@/lib/auth";
 import { deadBearerResponse, lookupViewer } from "@/lib/bearer-guard";
-import { getCase, type CaseRow } from "@/lib/cases/db";
-import { claimMatches } from "@/lib/cases/invite";
+import { getCase, getInvites, type CaseRow } from "@/lib/cases/db";
+import { acceptsManySides, hidesFrom, VERDICT_UPDATE } from "@/lib/cases/capability";
+import { partyOfViewer } from "@/lib/cases/party";
 import { clientIp } from "@/lib/client-ip";
 import { getVerdict } from "@/lib/db";
 import { entitlementWriteBatch } from "@/lib/entitlements";
@@ -101,7 +103,7 @@ function claimHeader(req: Request): string | null {
 }
 
 type Owner =
-  | { meta: VerdictMeta; via: "session" | "token"; viewer: ViewerSession | null; caseParty: { row: CaseRow; party: "a" | "b" } | null }
+  | { meta: VerdictMeta; via: "session" | "token"; viewer: ViewerSession | null; caseParty: { row: CaseRow; party: CaseParty } | null }
   | { response: NextResponse };
 
 /** Who is asking, checked against the verdict's owner. 404 for everyone else. */
@@ -130,10 +132,7 @@ async function ownerOf(req: Request, id: string, write: boolean): Promise<Owner>
     const row = meta.caseId ? await getCase(meta.caseId) : null;
     if (!row) return { response: fail("not_found") };
     const viewerId = viewer?.user.id ?? null;
-    let party: "a" | "b" | null = null;
-    if (viewerId && viewerId === row.ownerId) party = "a";
-    else if (row.mode === "two_sided" && viewerId && viewerId === row.respondentUserId) party = "b";
-    else if (row.mode === "two_sided" && viewerId !== row.ownerId && claimMatches(row, claimHeader(req))) party = "b";
+    const party: CaseParty | null = partyOfViewer(row, await getInvites(row.id), viewerId, claimHeader(req));
     if (!party) return { response: fail("not_found") };
     if (!sessionWriteOk()) return { response: fail("bad_origin") };
     return { meta, via: "session", viewer, caseParty: { row, party } };
@@ -193,6 +192,7 @@ export function mineHandler(req: Request, id: string): Promise<NextResponse> {
     }
     const stored = await getVerdict(meta.verdictId);
     if (!stored) return fail("not_found");
+    if (hidesFrom(req, stored.result)) return fail("update_required", VERDICT_UPDATE);
     if (caseParty) {
       const own = await partyOriginals(caseParty.row, caseParty.party);
       const body: MineResponse = {
@@ -335,7 +335,7 @@ export function myVerdictsHandler(req: Request): Promise<NextResponse> {
     const limited = await checkUserLimits(viewer.user.id, "verdict_owner").catch(() => null);
     if (!limited) return fail("unavailable");
     if (!limited.ok) return limitRefusal(limited);
-    const rows = await listOwnerVerdicts(viewer.user.id, limit + 1, before);
+    const rows = await listOwnerVerdicts(viewer.user.id, limit + 1, before, acceptsManySides(req));
     const page = rows.slice(0, limit);
     const body: OwnerVerdictListResponse = {
       verdicts: page.map((r) => {

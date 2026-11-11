@@ -119,6 +119,8 @@ const id: Locale = {
     verdictAria: "Putusan: {label}",
     "party.a": "Pihak A",
     "party.b": "Pihak B",
+    "party.c": "Pihak C",
+    "party.d": "Pihak D",
     "party.youLabel": "{label} (kamu)",
     you: "Kamu",
     "shared.subtitle": "Seseorang membagikan putusan ini",
@@ -344,8 +346,7 @@ const id: Locale = {
     "signin.createNote": "Kami akan mengirim kode lewat email untuk mengonfirmasi alamat ini. Kamu hanya perlu melakukannya sekali.",
     "signin.passwordChoose": "Kamu sudah masuk. Pilih kata sandi untuk lain kali.",
     "signin.passwordSave": "Simpan kata sandi",
-    "signin.passwordSaveFailed": "Kamu sudah masuk, tetapi kami tidak bisa menyimpan kata sandinya. Coba lagi, atau atur nanti di Pengaturan.",
-    "signin.passwordSkip": "Lewati dulu",
+    "signin.passwordSaveFailed": "Kami tidak bisa menyimpan kata sandinya. Coba lagi.",
     "signin.passwordSubmit": "Masuk",
     "signin.rateLimited": "Terlalu banyak percobaan. Tunggu satu menit, lalu coba lagi.",
     "signin.serviceDown": "Fitur masuk sedang tidak tersedia. Coba lagi nanti.",
@@ -373,10 +374,6 @@ const id: Locale = {
     "account.deleteConfirm":
       "Hapus akunmu? Kredit, langganan, dan data masukmu akan dihapus. Putusan dan versimu dalam kasus juga ikut hilang: tulisanmu beserta nama-namanya dihapus, dan tautan berbaginya tidak berfungsi lagi.",
     "account.deleteYes": "Ya, hapus",
-    "account.passwordSet": "Atur kata sandi",
-    "account.passwordChange": "Ubah kata sandi",
-    "account.passwordCurrent": "Kata sandi saat ini",
-    "account.passwordSaved": "Kata sandi tersimpan.",
     "account.deleteCancel": "Tetap simpan akunku",
     "account.deleted": "Akunmu sudah dihapus. Kamu akan dibawa ke beranda…",
     "account.deleteFailed": "Akun belum bisa dihapus sekarang. Coba lagi, ya?",
@@ -465,6 +462,10 @@ const id: Locale = {
     "case.judgeNow.yes": "Ya, putuskan sekarang",
     "case.judgeExpired.confirm": "Minta putusan dari versimu saja? Ini memakai 1 putusan.",
     "case.judgeExpired.yes": "Ya, pakai 1 putusan",
+    "case.side.waiting": "Menunggu",
+    "case.side.answered": "Sudah menjawab",
+    "case.judgeAnswered": "Putuskan dari pihak yang sudah menjawab",
+    "case.judgeAnswered.confirm": "Minta putusan dari pihak yang sudah menjawab? Undangan lainnya ditutup dan mereka tidak bisa menjawab lagi.",
     "case.cancel": "Batal",
     "case.retry": "Coba lagi",
     "case.failedBody": "Kreditmu sudah kembali. Kamu bisa coba lagi sekarang.",
@@ -473,9 +474,13 @@ const id: Locale = {
     "case.accounts": "Yang diceritakan tiap pihak kepada hakim",
     "case.accountA": "Cerita Pihak A",
     "case.accountB": "Cerita Pihak B",
+    "case.accountC": "Cerita Pihak C",
+    "case.accountD": "Cerita Pihak D",
     "case.accountYou": "Ceritamu ({label})",
     "case.contextA": "Pihak A menambahkan konteks",
     "case.contextB": "Pihak B menambahkan konteks",
+    "case.contextC": "Pihak C menambahkan konteks",
+    "case.contextD": "Pihak D menambahkan konteks",
     "case.contextYou": "Konteks yang kamu tambahkan ({label})",
     "case.evidenceItem": "Gambar {n}, seperti yang dibaca hakim",
     "case.notYet": "Dia belum menjawab.",
@@ -559,6 +564,7 @@ const id: Locale = {
     "home.yourPlaceholder": "Apa masalahnya?",
     "home.addContext": "Tambah konteks",
     "home.addTheirSide": "Tambah versi dia",
+    "home.addSide": "Tambah pihak lain",
     "home.removeTheirSide": "Hapus versi dia",
     "home.sendLink": "Kirim tautan",
     "home.clear": "Bersihkan",
@@ -573,58 +579,9 @@ const id: Locale = {
     "home.says": "Kata {name}:",
     "home.mySide": "Versiku:",
     "home.otherSide": "Versi dia:",
-    "pairs.dishwasher.aName": "Rina",
-    "pairs.dishwasher.a":
-      "Kamu menumpuk mangkuk basah di rak piring lagi. Kalau ditumpuk begitu, mangkuknya nggak pernah kering. Taruh telungkup satu-satu, dong.",
-    "pairs.dishwasher.bName": "Budi",
-    "pairs.dishwasher.b":
-      "Ditumpuk begitu lebih hemat tempat, jadi sisa raknya bisa buat wajan. Aku sudah bertahun-tahun begini dan nggak pernah ada yang bau.",
-    "pairs.bill.aName": "Dewi",
-    "pairs.bill.a":
-      "Aku cuma minum air putih, jadi kenapa harus ikut bayar seperempat harga kopi kalian? Kalau makanannya dibagi rata, aku nggak keberatan.",
-    "pairs.bill.bName": "Andi",
-    "pairs.bill.b":
-      "Dari dulu kita selalu bagi empat. Menghitung siapa pesan apa tiap kali itu ribet, lagian bedanya juga nggak seberapa.",
-    "pairs.thermostat.aName": "Ayu",
-    "pairs.thermostat.a":
-      "AC-nya disetel 18 derajat dan aku kedinginan padahal sudah pakai hoodie. Menaikkannya ke 24 itu nggak berlebihan.",
-    "pairs.thermostat.bName": "Fajar",
-    "pairs.thermostat.b":
-      "24 derajat terlalu gerah buat tidur. Kamu bisa pakai selimut, tapi aku nggak bisa lepas apa-apa lagi.",
-    "pairs.roadTrip.aName": "Rizky",
-    "pairs.roadTrip.a":
-      "Waktu berangkat, aku yang menyetir enam jam penuh. Adil dong kalau pulangnya kamu yang menyetir.",
-    "pairs.roadTrip.bName": "Intan",
-    "pairs.roadTrip.b":
-      "Sebelum berangkat aku sudah bilang aku benci menyetir malam, dan kita pulang jam 7 malam. Lain kali, biar aku yang menyetir pas pagi.",
-    "pairs.seat.aName": "Nadia",
-    "pairs.seat.a":
-      "Kursiku bisa direbahkan, jadi ya aku rebahkan. Ini penerbangan malam, semua orang juga mau tidur.",
-    "pairs.seat.bName": "Yoga",
-    "pairs.seat.b":
-      "Tinggiku 190 cm dan lututku sudah menempel ke kursimu. Paling nggak tanya dulu sebelum merebahkannya sampai mentok.",
-    "pairs.spoiler.aName": "Wulan",
-    "pairs.spoiler.a":
-      "Kamu kasih tahu siapa pembunuhnya padahal aku belum mulai nonton episode terakhir. Aku sudah menunggunya seminggu penuh.",
-    "pairs.spoiler.bName": "Bima",
-    "pairs.spoiler.b":
-      "Episodenya sudah keluar tiga minggu lalu dan kamu bilang sudah selesai nonton. Aku nggak bisa ingat semua orang sudah nonton sampai mana.",
-    "pairs.jacket.aName": "Tika",
-    "pairs.jacket.a":
-      "Kamu pakai jaket jinku ke konser tanpa izin. Pas dikembalikan, jaketnya bau asap rokok.",
-    "pairs.jacket.bName": "Reza",
-    "pairs.jacket.b":
-      "Jaketnya tergantung dekat pintu dan kamu nggak pernah pakai. Tadinya aku mau minta izin, tapi kamu lagi tidur dan aku sudah telat.",
-    "pairs.lastSlice.aName": "Eko",
-    "pairs.lastSlice.a":
-      "Sebelum filmnya mulai, aku sudah bilang “potongan terakhir punyaku”. Semua orang dengar.",
-    "pairs.lastSlice.bName": "Lia",
-    "pairs.lastSlice.b":
-      "Nggak bisa dong bilang “punyaku” terus dianggurin dua jam. Pizzanya dibiarkan sampai dingin, jadi aku makan saja.",
     "appeal.lead":
-      "Ada yang kurang atau salah? Tambahkan sekali, dan hakim akan menilai ulang semuanya. Memakai 1 putusan.",
-    "appeal.label": "Konteksmu",
-    "appeal.placeholder": "Apa yang terlewat oleh hakim?",
+      "Memakai 1 putusan.",
+    "appeal.placeholder": "Apa yang terlewat oleh hakim? Fakta, pesan, atau apa yang sebenarnya disepakati.",
     "appeal.submit": "Nilai ulang dengan konteksku",
     "appeal.sending": "Menganonimkan konteksmu…",
     "appeal.judging": "Hakim sedang menilai ulang semuanya…",
@@ -644,8 +601,6 @@ const id: Locale = {
     "appeal.previous": "Putusan sebelumnya",
     "appeal.failed": "Penilaian ulang gagal. Kreditmu sudah kembali; kamu bisa coba lagi.",
     "appeal.refused": "Hakim menolak menilai ulang dengan konteks itu. Kreditmu sudah kembali.",
-    "appeal.leadVerdict":
-      "Ada yang kurang atau salah? Tambahkan, dan hakim akan menilai ulang semuanya. Tiap kali memakai 1 putusan, maksimal dua kali per putusan.",
     "appeal.history": "Riwayat putusan",
     "faq.both.q": "Bisakah lawan debatku menceritakan versinya?",
     "faq.both.a":
@@ -687,6 +642,7 @@ const id: Locale = {
     "unavailable.cta": "Ke Judge",
     "error.removed": "Ini sudah dihapus. Tautannya sudah tidak berfungsi.",
     "error.names_unavailable": "Nama belum bisa disimpan sekarang. Coba lagi nanti.",
+    "error.update_required": "Kasus ini punya lebih dari dua pihak. Perbarui aplikasi untuk membukanya.",
     "verdict.remove": "Hapus putusan ini",
     "verdict.remove.confirm":
       "Hapus tulisanmu, nama-nama, dan nama tampilannya? Tautan berbagi dan gambar pratinjaunya tidak akan bisa dimuat lagi oleh siapa pun (pratinjau yang sudah terkirim di chat mungkin masih terlihat sampai aplikasinya memperbaruinya). Ini tidak bisa dibatalkan.",

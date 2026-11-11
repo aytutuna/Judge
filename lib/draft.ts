@@ -16,6 +16,8 @@ export type Draft = {
   mineName?: string;
   otherName?: string;
   theirsOpen?: boolean;
+  /** Sides C and D, when added. */
+  more?: { text: string; name: string }[];
 };
 
 export const DRAFT_KEY = "verdict-draft";
@@ -24,6 +26,12 @@ const MAX_DRAFT = 6000;
 /** Same cap as the name inputs. */
 const MAX_NAME = 40;
 const DRAFT_TTL_MS = 30 * 60_000;
+
+/** Whether the second side shows when the draft comes back: it has text, was
+ * left open, or sides C and D were added (they hang under it). */
+export function draftTheirsOpen(d: Draft): boolean {
+  return Boolean(d.otherSide) || d.theirsOpen === true || (d.more?.length ?? 0) > 0;
+}
 
 let source: (() => Draft | null) | null = null;
 
@@ -79,14 +87,28 @@ export function parseDraft(raw: string): Draft | null {
     return null;
   }
   if (typeof v !== "object" || v === null) return null;
-  const { argument, otherSide, mineName, otherName, theirsOpen } = v as Record<string, unknown>;
+  const { argument, otherSide, mineName, otherName, theirsOpen, more } = v as Record<string, unknown>;
   if (typeof argument !== "string" || argument.length > MAX_DRAFT) return null;
   if (otherSide !== undefined && (typeof otherSide !== "string" || otherSide.length > MAX_DRAFT)) return null;
-  if (!argument.trim() && !(otherSide as string | undefined)?.trim()) return null;
+  const extra = parseMore(more);
+  if (!argument.trim() && !(otherSide as string | undefined)?.trim() && !extra.some((e) => e.text.trim())) return null;
   const draft: Draft = { argument };
   if (otherSide) draft.otherSide = otherSide as string;
   if (typeof mineName === "string" && mineName.length <= MAX_NAME) draft.mineName = mineName;
   if (typeof otherName === "string" && otherName.length <= MAX_NAME) draft.otherName = otherName;
   if (theirsOpen === true) draft.theirsOpen = true;
+  if (extra.length) draft.more = extra;
   return draft;
+}
+
+/** Sides C and D as stored; a malformed entry ends the list. */
+function parseMore(v: unknown): { text: string; name: string }[] {
+  if (!Array.isArray(v)) return [];
+  const out: { text: string; name: string }[] = [];
+  for (const e of v.slice(0, 2)) {
+    const { text, name } = (e ?? {}) as Record<string, unknown>;
+    if (typeof text !== "string" || text.length > MAX_DRAFT) break;
+    out.push({ text, name: typeof name === "string" && name.length <= MAX_NAME ? name : "" });
+  }
+  return out;
 }

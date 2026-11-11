@@ -119,6 +119,8 @@ const vi: Locale = {
     verdictAria: "Phán quyết: {label}",
     "party.a": "Bên A",
     "party.b": "Bên B",
+    "party.c": "Bên C",
+    "party.d": "Bên D",
     "party.youLabel": "{label} (bạn)",
     you: "Bạn",
     "shared.subtitle": "Ai đó đã chia sẻ phán quyết này",
@@ -345,8 +347,7 @@ const vi: Locale = {
     "signin.createNote": "Chúng tôi sẽ gửi cho bạn một mã qua email để xác nhận địa chỉ này. Bạn chỉ cần làm một lần.",
     "signin.passwordChoose": "Bạn đã đăng nhập. Hãy chọn một mật khẩu cho lần sau.",
     "signin.passwordSave": "Lưu mật khẩu",
-    "signin.passwordSaveFailed": "Bạn đã đăng nhập, nhưng chúng tôi không lưu được mật khẩu. Hãy thử lại, hoặc đặt sau trong Cài đặt.",
-    "signin.passwordSkip": "Bỏ qua lúc này",
+    "signin.passwordSaveFailed": "Chúng tôi không lưu được mật khẩu. Hãy thử lại.",
     "signin.passwordSubmit": "Đăng nhập",
     "signin.rateLimited": "Bạn thử quá nhiều lần rồi. Đợi một phút rồi thử lại nhé.",
     "signin.serviceDown": "Tạm thời chưa thể đăng nhập. Thử lại sau nhé.",
@@ -375,10 +376,6 @@ const vi: Locale = {
     "account.deleteConfirm":
       "Xóa tài khoản của bạn? Lượt, gói và thông tin đăng nhập sẽ bị xóa. Các phán quyết và phần của bạn trong các vụ sẽ bị gỡ: nội dung bạn viết và các tên bị xóa, liên kết chia sẻ cũng ngừng hoạt động.",
     "account.deleteYes": "Có, xóa đi",
-    "account.passwordSet": "Đặt mật khẩu",
-    "account.passwordChange": "Đổi mật khẩu",
-    "account.passwordCurrent": "Mật khẩu hiện tại",
-    "account.passwordSaved": "Đã lưu mật khẩu.",
     "account.deleteCancel": "Giữ tài khoản",
     "account.deleted": "Đã xóa tài khoản. Đang đưa bạn về trang chủ…",
     "account.deleteFailed": "Chưa xóa được tài khoản lúc này. Bạn thử lại nhé?",
@@ -467,6 +464,10 @@ const vi: Locale = {
     "case.judgeNow.yes": "Có, phân xử ngay",
     "case.judgeExpired.confirm": "Nhận phán quyết chỉ dựa trên lời kể của bạn? Việc này dùng 1 lượt.",
     "case.judgeExpired.yes": "Có, dùng 1 lượt",
+    "case.side.waiting": "Đang chờ",
+    "case.side.answered": "Đã trả lời",
+    "case.judgeAnswered": "Phân xử theo các phía đã trả lời",
+    "case.judgeAnswered.confirm": "Nhận phán quyết theo các phía đã trả lời? Các lời mời còn lại sẽ đóng và những người đó không trả lời được nữa.",
     "case.cancel": "Hủy",
     "case.retry": "Thử lại",
     "case.failedBody": "Lượt của bạn đã được hoàn lại. Bạn có thể thử lại ngay.",
@@ -475,9 +476,13 @@ const vi: Locale = {
     "case.accounts": "Mỗi bên đã kể gì với giám khảo",
     "case.accountA": "Lời kể của Bên A",
     "case.accountB": "Lời kể của Bên B",
+    "case.accountC": "Lời kể của Bên C",
+    "case.accountD": "Lời kể của Bên D",
     "case.accountYou": "Lời kể của bạn ({label})",
     "case.contextA": "Bên A đã bổ sung thông tin",
     "case.contextB": "Bên B đã bổ sung thông tin",
+    "case.contextC": "Bên C đã bổ sung thông tin",
+    "case.contextD": "Bên D đã bổ sung thông tin",
     "case.contextYou": "Thông tin bạn bổ sung ({label})",
     "case.evidenceItem": "Ảnh {n}, như giám khảo đã đọc",
     "case.notYet": "Người kia chưa trả lời.",
@@ -562,6 +567,7 @@ const vi: Locale = {
     "home.yourPlaceholder": "Có chuyện gì vậy?",
     "home.addContext": "Bổ sung thông tin",
     "home.addTheirSide": "Thêm phía bên kia",
+    "home.addSide": "Thêm một phía nữa",
     "home.removeTheirSide": "Bỏ phía bên kia",
     "home.sendLink": "Gửi liên kết",
     "home.clear": "Xóa",
@@ -575,55 +581,9 @@ const vi: Locale = {
     "home.says": "{name} nói:",
     "home.mySide": "Phía tôi:",
     "home.otherSide": "Phía bên kia:",
-    "pairs.dishwasher.aName": "Linh",
-    "pairs.dishwasher.a":
-      "Bạn lại xếp bát lên ngăn trên rồi. Để trên đó rửa chẳng bao giờ sạch, ngăn dưới là để xếp bát mà.",
-    "pairs.dishwasher.bName": "Tuấn",
-    "pairs.dishwasher.b":
-      "Để trên vừa khít mà, lại chừa ngăn dưới cho xoong nồi. Mình xếp kiểu này mấy năm rồi, có cái nào ra mà còn bẩn đâu.",
-    "pairs.bill.aName": "Mai",
-    "pairs.bill.a":
-      "Mình có uống giọt nào đâu, sao lại phải trả một phần tư tiền bia. Đồ ăn chia đều thì mình không ý kiến.",
-    "pairs.bill.bName": "Khoa",
-    "pairs.bill.b":
-      "Tụi mình lúc nào cũng chia bốn mà. Lần nào cũng ngồi tính ai ăn gì uống gì thì mệt lắm, mà chênh nhau có bao nhiêu đâu.",
-    "pairs.thermostat.aName": "Hà",
-    "pairs.thermostat.a":
-      "Phòng đang 29°C, mình nóng toát mồ hôi. Hạ điều hòa xuống 25°C có gì quá đâu.",
-    "pairs.thermostat.bName": "Nam",
-    "pairs.thermostat.b":
-      "25°C thì lạnh quá, ngủ không nổi. Bạn nóng thì bật thêm quạt, còn mình đắp chăn rồi mà vẫn lạnh.",
-    "pairs.roadTrip.aName": "Phong",
-    "pairs.roadTrip.a": "Lúc đi mình lái suốt sáu tiếng. Lúc về bạn lái mới công bằng.",
-    "pairs.roadTrip.bName": "Vy",
-    "pairs.roadTrip.b":
-      "Trước khi đi mình đã nói là rất ghét lái xe ban đêm, mà 7 giờ tối mới lên đường về. Chuyến sau mình sẽ lái mấy chặng buổi sáng.",
-    "pairs.seat.aName": "Thảo",
-    "pairs.seat.a": "Ghế mình ngả được thì mình ngả. Chuyến bay đêm, ai cũng đang cố ngủ.",
-    "pairs.seat.bName": "Dũng",
-    "pairs.seat.b":
-      "Mình cao 1m90, đầu gối đã tì sát vào lưng ghế bạn rồi. Ít ra bạn cũng nên hỏi trước khi ngả hết cỡ chứ.",
-    "pairs.spoiler.aName": "Ngọc",
-    "pairs.spoiler.a":
-      "Mình còn chưa mở tập cuối thì bạn đã nói ai là hung thủ. Mình chờ tập đó cả tuần đấy.",
-    "pairs.spoiler.bName": "Huy",
-    "pairs.spoiler.b":
-      "Phim ra ba tuần rồi, bạn còn bảo là xem xong rồi mà. Mình đâu nhớ nổi ai đang xem tới đâu.",
-    "pairs.jacket.aName": "Quân",
-    "pairs.jacket.a":
-      "Bạn mặc áo khoác jean của mình đi xem ca nhạc mà không hỏi. Lúc trả lại thì ám mùi khói thuốc.",
-    "pairs.jacket.bName": "Hương",
-    "pairs.jacket.b":
-      "Nó treo ngay cạnh cửa, mà bạn có bao giờ mặc đâu. Mình cũng định hỏi, nhưng bạn đang ngủ còn mình thì đang trễ giờ.",
-    "pairs.lastSlice.aName": "Bảo",
-    "pairs.lastSlice.a": "Mình xí miếng pizza cuối từ trước khi phim chiếu. Cả đám đều nghe.",
-    "pairs.lastSlice.bName": "My",
-    "pairs.lastSlice.b":
-      "Xí rồi để đó hai tiếng không đụng tới thì không tính. Nó nằm đó nguội ngắt, nên mình ăn luôn.",
     "appeal.lead":
-      "Thiếu hoặc sai gì à? Bổ sung một lần và ban giám khảo sẽ xem lại toàn bộ. Tốn 1 lượt.",
-    "appeal.label": "Thông tin bổ sung",
-    "appeal.placeholder": "Ban giám khảo đã bỏ sót điều gì?",
+      "Dùng 1 lượt.",
+    "appeal.placeholder": "Ban giám khảo đã bỏ sót điều gì? Một sự thật, một tin nhắn hoặc điều hai bên đã thật sự thỏa thuận.",
     "appeal.submit": "Xét lại với thông tin của tôi",
     "appeal.sending": "Đang ẩn tên trong thông tin bổ sung…",
     "appeal.judging": "Ban giám khảo đang xem lại toàn bộ…",
@@ -643,8 +603,6 @@ const vi: Locale = {
     "appeal.previous": "Phán quyết trước",
     "appeal.failed": "Chưa xét lại được. Lượt của bạn đã được hoàn lại; bạn có thể thử lại.",
     "appeal.refused": "Ban giám khảo không chịu xét lại với thông tin đó. Lượt của bạn đã được hoàn lại.",
-    "appeal.leadVerdict":
-      "Thiếu hoặc sai gì à? Bổ sung vào và ban giám khảo sẽ xem lại toàn bộ. Mỗi lần tốn 1 lượt, tối đa hai lần cho một phán quyết.",
     "appeal.history": "Lịch sử phán quyết",
     "faq.both.q": "Người kia có được kể phần của họ không?",
     "faq.both.a":
@@ -686,6 +644,7 @@ const vi: Locale = {
     "unavailable.cta": "Đến Judge",
     "error.removed": "Nội dung này đã bị gỡ. Liên kết không còn hoạt động.",
     "error.names_unavailable": "Hiện chưa lưu được tên. Thử lại sau nhé.",
+    "error.update_required": "Vụ này có hơn hai bên. Hãy cập nhật ứng dụng để mở.",
     "verdict.remove": "Gỡ phán quyết này",
     "verdict.remove.confirm":
       "Gỡ nội dung bạn viết, các tên và tên hiển thị? Liên kết chia sẻ và ảnh xem trước sẽ không tải được nữa với mọi người (các bản xem trước đã đăng trong đoạn chat có thể vẫn hiện cho đến khi ứng dụng làm mới). Không thể hoàn tác.",

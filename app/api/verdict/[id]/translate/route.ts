@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
+import { hidesFrom, VERDICT_UPDATE } from "@/lib/cases/capability";
 import { clientIp } from "@/lib/client-ip";
+import { getVerdict } from "@/lib/db";
 import { ENABLED, isEnabled } from "@/lib/langs";
 import { verdictRemoved } from "@/lib/originals/removed";
 import { checkTranslateLimits, type LimitDecision } from "@/lib/ratelimit";
@@ -45,6 +47,9 @@ export async function POST(req: Request, ctx: RouteContext<"/api/verdict/[id]/tr
   if (!ID_PATTERN.test(id)) return notFound();
   // A removed verdict is not translated (or served translated) any more.
   try {
+    if (hidesFrom(req, (await getVerdict(id))?.result)) {
+      return NextResponse.json({ error: VERDICT_UPDATE, code: "update_required" }, { status: 426 });
+    }
     if (await verdictRemoved(id)) {
       return NextResponse.json(
         { error: "This verdict was removed. Its link no longer works.", code: "removed" },

@@ -119,6 +119,8 @@ const ro: Locale = {
     verdictAria: "Verdict: {label}",
     "party.a": "Partea A",
     "party.b": "Partea B",
+    "party.c": "Partea C",
+    "party.d": "Partea D",
     "party.youLabel": "{label} (tu)",
     you: "Tu",
     "shared.subtitle": "Cineva a distribuit acest verdict",
@@ -344,8 +346,7 @@ const ro: Locale = {
     "signin.createNote": "Îți vom trimite un cod pe e-mail pentru a confirma această adresă. Trebuie să faci asta o singură dată.",
     "signin.passwordChoose": "Ești conectat. Alege o parolă pentru data viitoare.",
     "signin.passwordSave": "Salvează parola",
-    "signin.passwordSaveFailed": "Ești conectat, dar nu am putut salva parola. Încearcă din nou sau setează-o mai târziu în Setări.",
-    "signin.passwordSkip": "Omite deocamdată",
+    "signin.passwordSaveFailed": "Nu am putut salva parola. Încearcă din nou.",
     "signin.passwordSubmit": "Conectează-te",
     "signin.rateLimited": "Prea multe încercări. Așteaptă un minut și încearcă din nou.",
     "signin.serviceDown": "Conectarea nu e disponibilă acum. Încearcă mai târziu.",
@@ -374,10 +375,6 @@ const ro: Locale = {
     "account.deleteConfirm":
       "Îți ștergi contul? Creditele, planul și datele de conectare vor fi șterse. Verdictele tale și părțile tale din cazuri vor fi eliminate: ce ai scris și numele se șterg, iar linkurile lor de distribuire nu vor mai funcționa.",
     "account.deleteYes": "Da, șterge-l",
-    "account.passwordSet": "Setează o parolă",
-    "account.passwordChange": "Schimbă parola",
-    "account.passwordCurrent": "Parola actuală",
-    "account.passwordSaved": "Parola a fost salvată.",
     "account.deleteCancel": "Păstrez contul",
     "account.deleted": "Contul tău a fost șters. Te ducem la pagina principală…",
     "account.deleteFailed": "N-am putut șterge contul acum. Mai încerci o dată?",
@@ -467,6 +464,10 @@ const ro: Locale = {
     "case.judgeNow.yes": "Da, judecă acum",
     "case.judgeExpired.confirm": "Vrei un verdict doar pe partea ta? Asta folosește 1 verdict.",
     "case.judgeExpired.yes": "Da, folosește 1 verdict",
+    "case.side.waiting": "Așteaptă",
+    "case.side.answered": "A răspuns",
+    "case.judgeAnswered": "Judecă cu părțile care au răspuns",
+    "case.judgeAnswered.confirm": "Vrei o hotărâre cu părțile care au răspuns? Celelalte invitații se închid și acele persoane nu vor mai putea răspunde.",
     "case.cancel": "Anulează",
     "case.retry": "Încearcă din nou",
     "case.failedBody": "Ți-ai primit creditul înapoi. Poți încerca din nou acum.",
@@ -475,9 +476,13 @@ const ro: Locale = {
     "case.accounts": "Ce le-a spus fiecare parte judecătorilor",
     "case.accountA": "Varianta Părții A",
     "case.accountB": "Varianta Părții B",
+    "case.accountC": "Varianta Părții C",
+    "case.accountD": "Varianta Părții D",
     "case.accountYou": "Varianta ta ({label})",
     "case.contextA": "Context adăugat de Partea A",
     "case.contextB": "Context adăugat de Partea B",
+    "case.contextC": "Context adăugat de Partea C",
+    "case.contextD": "Context adăugat de Partea D",
     "case.contextYou": "Context adăugat de tine ({label})",
     "case.evidenceItem": "Imaginea {n}, așa cum au citit-o judecătorii",
     "case.notYet": "Încă n-a răspuns.",
@@ -563,6 +568,7 @@ const ro: Locale = {
     "home.yourPlaceholder": "Care e problema?",
     "home.addContext": "Adaugă context",
     "home.addTheirSide": "Adaugă cealaltă parte",
+    "home.addSide": "Adaugă încă o parte",
     "home.removeTheirSide": "Elimină cealaltă parte",
     "home.sendLink": "Trimite un link",
     "home.clear": "Șterge",
@@ -577,58 +583,9 @@ const ro: Locale = {
     "home.says": "{name} spune:",
     "home.mySide": "Partea mea:",
     "home.otherSide": "Cealaltă parte:",
-    "pairs.dishwasher.aName": "Ioana",
-    "pairs.dishwasher.a":
-      "Iar ai pus bolurile în coșul de sus. Acolo nu ies niciodată curate, coșul de jos e pentru asta.",
-    "pairs.dishwasher.bName": "Mihai",
-    "pairs.dishwasher.b":
-      "Încap foarte bine sus și rămâne loc jos pentru oale. Le pun așa de ani de zile și n-a ieșit nimic murdar.",
-    "pairs.bill.aName": "Elena",
-    "pairs.bill.a":
-      "N-am băut nimic, deci n-ar trebui să plătesc un sfert din vin. Mâncarea s-o împărțim egal, cu asta n-am nicio problemă.",
-    "pairs.bill.bName": "Vlad",
-    "pairs.bill.b":
-      "Mereu împărțim nota la patru și gata. E o bătaie de cap să socotim de fiecare dată cine ce a luat, iar diferența oricum nu e mare.",
-    "pairs.thermostat.aName": "Irina",
-    "pairs.thermostat.a":
-      "Sunt 19 grade aici și mi-e frig și cu hanoracul pe mine. Nu e o nebunie să dăm căldura la 22.",
-    "pairs.thermostat.bName": "Radu",
-    "pairs.thermostat.b":
-      "La 22 de grade e mult prea cald ca să dormi. Tu poți să mai pui ceva pe tine, eu n-am ce să mai dau jos.",
-    "pairs.roadTrip.aName": "Cristina",
-    "pairs.roadTrip.a":
-      "Eu am condus toate cele șase ore la dus. E corect să conduci tu la întoarcere.",
-    "pairs.roadTrip.bName": "Bogdan",
-    "pairs.roadTrip.b":
-      "Ți-am zis înainte de plecare că urăsc să conduc noaptea, iar noi plecăm la 7 seara. Data viitoare conduc eu dimineața.",
-    "pairs.seat.aName": "Diana",
-    "pairs.seat.a":
-      "Scaunul meu se lasă pe spate, așa că îl las. E zbor de noapte și toată lumea încearcă să doarmă.",
-    "pairs.seat.bName": "Sorin",
-    "pairs.seat.b":
-      "Am 1,90 m și am deja genunchii lipiți de scaunul tău. Puteai măcar să întrebi înainte să-l lași complet pe spate.",
-    "pairs.spoiler.aName": "Maria",
-    "pairs.spoiler.a":
-      "Mi-ai zis cine e criminalul înainte să încep măcar ultimul episod. L-am așteptat toată săptămâna.",
-    "pairs.spoiler.bName": "Tudor",
-    "pairs.spoiler.b":
-      "A ieșit acum trei săptămâni și mi-ai zis că l-ai terminat. Nu pot să țin minte unde a ajuns fiecare.",
-    "pairs.jacket.aName": "Ștefan",
-    "pairs.jacket.a":
-      "Mi-ai luat geaca de blugi la concert fără să mă întrebi. Mi-ai adus-o înapoi mirosind a fum.",
-    "pairs.jacket.bName": "Alina",
-    "pairs.jacket.b":
-      "Era agățată lângă ușă și tu n-o porți niciodată. Te-aș fi întrebat, dar dormeai, iar eu deja întârziam.",
-    "pairs.lastSlice.aName": "Matei",
-    "pairs.lastSlice.a":
-      "Am zis „ultima felie e a mea” înainte să înceapă filmul. Toată lumea m-a auzit.",
-    "pairs.lastSlice.bName": "Carmen",
-    "pairs.lastSlice.b":
-      "Nu poți s-o declari a ta și apoi să n-o atingi două ore. Stătea acolo și se răcea, așa că am mâncat-o eu.",
     "appeal.lead":
-      "Lipsește ceva sau e greșit? Poți adăuga context o singură dată, iar judecătorii se uită din nou la tot. Costă 1 verdict.",
-    "appeal.label": "Contextul tău",
-    "appeal.placeholder": "Ce le-a scăpat judecătorilor?",
+      "Folosește 1 verdict.",
+    "appeal.placeholder": "Ce le-a scăpat judecătorilor? Un fapt, un mesaj sau ce ați stabilit cu adevărat.",
     "appeal.submit": "Judecă din nou cu contextul meu",
     "appeal.sending": "Îți anonimizăm contextul…",
     "appeal.judging": "Judecătorii se uită din nou la tot…",
@@ -648,8 +605,6 @@ const ro: Locale = {
     "appeal.previous": "Verdictul anterior",
     "appeal.failed": "Rejudecarea n-a mers. Ți-ai primit creditul înapoi; poți încerca din nou.",
     "appeal.refused": "Judecătorii n-au vrut să judece din nou cu acest context. Ți-ai primit creditul înapoi.",
-    "appeal.leadVerdict":
-      "Lipsește ceva sau e greșit? Adaugă context și judecătorii se uită din nou la tot. De fiecare dată costă 1 verdict, de cel mult două ori pentru același verdict.",
     "appeal.history": "Istoricul verdictului",
     "faq.both.q": "Poate și cealaltă persoană să-și spună varianta?",
     "faq.both.a":
@@ -691,6 +646,7 @@ const ro: Locale = {
     "unavailable.cta": "Mergi la Judge",
     "error.removed": "Asta a fost eliminat. Linkul nu mai funcționează.",
     "error.names_unavailable": "Numele nu pot fi salvate acum. Încearcă mai târziu.",
+    "error.update_required": "Acest caz are mai mult de două părți. Actualizează aplicația ca să-l deschizi.",
     "verdict.remove": "Elimină acest verdict",
     "verdict.remove.confirm":
       "Elimini ce ai scris, numele și numele afișate? Linkul de distribuire și imaginea de previzualizare nu se mai încarcă pentru nimeni (previzualizările deja postate în conversații pot apărea în continuare până când acele aplicații le reîmprospătează). Acțiunea nu poate fi anulată.",

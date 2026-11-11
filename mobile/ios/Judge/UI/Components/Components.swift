@@ -122,7 +122,7 @@ struct PartyAvatar: View {
     @Environment(\.sides) private var sides
 
     var body: some View {
-        Text(verbatim: party == .b ? "B" : "A")
+        Text(verbatim: party.letter)
             .brandText(TypeStyle(face: .inter, weight: 700, size: (size * 0.45).rounded(), lineHeight: 1, textStyle: .caption2, maxScale: 1.2))
             .foregroundStyle(Brand.paper)
             .frame(width: size, height: size)

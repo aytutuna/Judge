@@ -1,0 +1,1052 @@
+{
+  "dishwasher": {
+    "title": "🍽️ Bolurile în coșul de sus",
+    "aName": "Ioana",
+    "a": "Iar ai pus bolurile în coșul de sus. Acolo nu ies niciodată curate, coșul de jos e pentru asta.",
+    "bName": "Mihai",
+    "b": "Încap foarte bine sus și rămâne loc jos pentru oale. Le pun așa de ani de zile și n-a ieșit nimic murdar."
+  },
+  "bill": {
+    "title": "🍷 Împărțirea notei la restaurant",
+    "aName": "Elena",
+    "a": "N-am băut nimic, deci n-ar trebui să plătesc un sfert din vin. Mâncarea s-o împărțim egal, cu asta n-am nicio problemă.",
+    "bName": "Vlad",
+    "b": "Mereu împărțim nota la patru și gata. E o bătaie de cap să socotim de fiecare dată cine ce a luat, iar diferența oricum nu e mare."
+  },
+  "thermostat": {
+    "title": "🌡️ Războiul termostatului",
+    "aName": "Irina",
+    "a": "Sunt 19 grade aici și mi-e frig și cu hanoracul pe mine. Nu e o nebunie să dăm căldura la 22.",
+    "bName": "Radu",
+    "b": "La 22 de grade e mult prea cald ca să dormi. Tu poți să mai pui ceva pe tine, eu n-am ce să mai dau jos."
+  },
+  "roadTrip": {
+    "title": "🚗 Cine conduce spre casă",
+    "aName": "Cristina",
+    "a": "Eu am condus toate cele șase ore la dus. E corect să conduci tu la întoarcere.",
+    "bName": "Bogdan",
+    "b": "Ți-am zis înainte de plecare că urăsc să conduc noaptea, iar noi plecăm la 7 seara. Data viitoare conduc eu dimineața."
+  },
+  "seat": {
+    "title": "💺 Scaunul lăsat pe spate în zborul de noapte",
+    "aName": "Diana",
+    "a": "Scaunul meu se lasă pe spate, așa că îl las. E zbor de noapte și toată lumea încearcă să doarmă.",
+    "bName": "Sorin",
+    "b": "Am 1,90 m și am deja genunchii lipiți de scaunul tău. Puteai măcar să întrebi înainte să-l lași complet pe spate."
+  },
+  "spoiler": {
+    "title": "🎬 Spoiler pentru finalul serialului",
+    "aName": "Maria",
+    "a": "Mi-ai zis cine e criminalul înainte să încep măcar ultimul episod. L-am așteptat toată săptămâna.",
+    "bName": "Tudor",
+    "b": "A ieșit acum trei săptămâni și mi-ai zis că l-ai terminat. Nu pot să țin minte unde a ajuns fiecare."
+  },
+  "jacket": {
+    "title": "🧥 Geaca de blugi împrumutată",
+    "aName": "Ștefan",
+    "a": "Mi-ai luat geaca de blugi la concert fără să mă întrebi. Mi-ai adus-o înapoi mirosind a fum.",
+    "bName": "Alina",
+    "b": "Era agățată lângă ușă și tu n-o porți niciodată. Te-aș fi întrebat, dar dormeai, iar eu deja întârziam."
+  },
+  "lastSlice": {
+    "title": "🍕 Ultima felie de pizza",
+    "aName": "Matei",
+    "a": "Am zis „ultima felie e a mea” înainte să înceapă filmul. Toată lumea m-a auzit.",
+    "bName": "Carmen",
+    "b": "Nu poți s-o declari a ta și apoi să n-o atingi două ore. Stătea acolo și se răcea, așa că am mâncat-o eu."
+  },
+  "sundayPlans": {
+    "title": "🛋️ O duminică întreagă pe canapea",
+    "aName": "Larisa",
+    "a": "E singura zi liberă pe care o avem amândoi și mi-ar plăcea să mergem la munte. Să o petrecem toată pe canapea mi se pare o risipă.",
+    "bName": "Cătălin",
+    "b": "Muncesc din greu toată săptămâna, iar duminica e ziua în care mă încarc. Mergem la munte weekendul viitor, azi vreau doar să nu fac nimic cu tine."
+  },
+  "anniversaryGift": {
+    "title": "🎁 Cât cheltuim pe un cadou",
+    "aName": "Marius",
+    "a": "Am stabilit că nu depășim 250 de lei pe cadouri, iar tu mi-ai luat un ceas. Acum par că nici nu m-am străduit.",
+    "bName": "Elena",
+    "b": "L-am văzut și m-am gândit la tine. Era la reducere, iar o sumă pe care am ales-o acum ani nu trebuie să mă oprească să fiu generoasă."
+  },
+  "couplePhoto": {
+    "title": "📸 Poza noastră postată fără să mă întrebi",
+    "aName": "Sonia",
+    "a": "Ai pus poza noastră de la mare pe net și eu nici n-o văzusem. Arăt groaznic în ea și ți-aș fi zis să nu o postezi.",
+    "bName": "Dragoș",
+    "b": "Mie mi se pare că arăți super și voiam să împărtășesc o zi frumoasă. Nu m-am gândit că o să te supere atât de tare."
+  },
+  "phoneInBed": {
+    "title": "📱 Telefonul în pat",
+    "aName": "Nicoleta",
+    "a": "Ne băgăm în pat și tu dai scroll o oră, iar eu stau acolo degeaba. Mi-aș dori să vorbim sau măcar să adormim împreună.",
+    "bName": "Alex",
+    "b": "Așa mă liniștesc după o zi lungă. Putem vorbi oricând, dar nu vreau reguli despre un telefon pe care doar îl țin în mână."
+  },
+  "movieTurns": {
+    "title": "🍿 Cine alege filmul",
+    "aName": "Claudia",
+    "a": "Eu am ales data trecută și cea dinainte. E rândul tău, iar tu ai stat patruzeci de minute să-mi spui că nimic nu sună bine.",
+    "bName": "Tudor",
+    "b": "Aș alege dacă mi-ar plăcea ceva anume. Tu alegi mereu lucruri care îmi plac mai puțin, așa că tac."
+  },
+  "slowReply": {
+    "title": "💬 Ore întregi până la un răspuns",
+    "aName": "Zoe",
+    "a": "Ți-am scris o întrebare simplă la prânz și mi-ai răspuns la opt seara. Un răspuns scurt nu te-ar fi costat nimic.",
+    "bName": "Răzvan",
+    "b": "Am avut ședințe toată ziua și telefonul era în geantă. Nu te-am ignorat, pur și simplu nu era urgent."
+  },
+  "bedSide": {
+    "title": "🛏️ Cine doarme pe ce parte a patului",
+    "aName": "Roxana",
+    "a": "Am dormit lângă geam toți cei șase ani. Acum, după mutare, mi-ai luat partea înainte să apuc să despachetez.",
+    "bName": "Petre",
+    "b": "Patul e pe celălalt perete în camera asta, deci părțile s-au inversat. Nu mă deranjează să ne schimbăm la loc, pur și simplu nu m-am gândit."
+  },
+  "surpriseParty": {
+    "title": "🎈 O petrecere surpriză nedorită",
+    "aName": "Lenuța",
+    "a": "Am organizat totul pentru ziua ta și i-am invitat pe toți. Ai arătat mohorât toată seara.",
+    "bName": "Gabriel",
+    "b": "Ți-am spus de luni de zile că urăsc surprizele și mulțimile mari. Apreciez efortul, dar nu m-ai ascultat."
+  },
+  "toothpaste": {
+    "title": "🪥 Cum strângi pasta de dinți",
+    "aName": "Irina",
+    "a": "Strângi tubul din mijloc și îl lași turtit și răsucit. E o prostie, știu, dar îl găsesc așa în fiecare dimineață.",
+    "bName": "Costin",
+    "b": "Până la urmă iese la fel. Nu văd de ce ar exista un loc corect de unde să strângi."
+  },
+  "blanket": {
+    "title": "🛌 Hoțul de pătură",
+    "aName": "Daniela",
+    "a": "În fiecare noapte te învelești cu toată pătura și eu mă trezesc înghețată. E ca și cum aș dormi lângă o ruladă.",
+    "bName": "Mihnea",
+    "b": "Mi-e frig și mie și nu o fac intenționat. Poate luăm o a doua pătură în loc să dai vina pe mine."
+  },
+  "lateDinner": {
+    "title": "🍝 Cina la nouă",
+    "aName": "Camelia",
+    "a": "Ai zis că ajungi acasă la șase și ai intrat pe ușă la nouă. Pastele mele s-au răcit și mor de foame.",
+    "bName": "Robert",
+    "b": "O convorbire s-a prelungit și nu puteam să închid pur și simplu. Te-aș fi anunțat, dar mi s-a descărcat telefonul."
+  },
+  "dateBill": {
+    "title": "💳 Cine plătește la întâlniri",
+    "aName": "Iasmina",
+    "a": "Am ieșit de vreo douăsprezece ori și tu nu întinzi niciodată mâna după nota de plată. Aș vrea să plătim pe rând.",
+    "bName": "Vali",
+    "b": "Câștig mai mult decât tine acum și plătesc cu plăcere. Nu mi-am dat seama că te deranjează, doar că nu vreau să ne certăm pentru o notă."
+  },
+  "quietHours": {
+    "title": "🔇 Liniște după ora zece",
+    "aName": "Olga",
+    "a": "Mâine am tură dimineața devreme și te aud prin perete la apelul video la unsprezece. Te rog să vorbești mai încet.",
+    "bName": "Rareș",
+    "b": "Echipa mea e în alt fus orar, așa că târziu e singura oră care merge. Pun căștile, dar și tu poți să folosești dopuri de urechi."
+  },
+  "fridgeShelf": {
+    "title": "🧊 Al cui e raftul",
+    "aName": "Luca",
+    "a": "Mi-am etichetat raftul din frigider și tu tot ți-ai pus mâncarea pe el. Pe al tău e destul loc.",
+    "bName": "Mina",
+    "b": "Raftul meu era plin, iar caserola ta era pe jumătate goală. E doar pentru o noapte, n-am luat nimic."
+  },
+  "overnightGuest": {
+    "title": "🚪 Un oaspete care stă toată săptămâna",
+    "aName": "Ela",
+    "a": "Prietenul tău doarme în sufragerie de șase zile și nimeni nu m-a întrebat. Vreau să-mi iau apartamentul înapoi.",
+    "bName": "Teodor",
+    "b": "Se află între două locuințe și nu are unde să meargă. Ți-am zis că rămâne câteva nopți și contribuie la cumpărăturile pentru casă."
+  },
+  "sharedShampoo": {
+    "title": "🧴 Folosești șamponul meu",
+    "aName": "Julia",
+    "a": "Șamponul meu e scump și luni era aproape plin. Până vineri aproape s-a terminat, iar tu ești singura altă persoană care face duș aici.",
+    "bName": "Dan",
+    "b": "Am folosit puțin, de două ori. Dacă e atât de important, ia-l în camera ta, credeam că lucrurile din baie sunt comune."
+  },
+  "dirtyPan": {
+    "title": "🍳 Tigaia lăsată la înmuiat",
+    "aName": "Hugo",
+    "a": "Tigaia aia stă în chiuvetă din marți și începe să miroasă. Cine gătește, ar trebui să o spele.",
+    "bName": "Nora",
+    "b": "Voiam să o spăl după ce se înmoaie mai mult. Tu ai lăsat farfurii aici două zile și eu n-am zis nimic."
+  },
+  "dryerLaundry": {
+    "title": "🧺 Hainele lăsate în uscător",
+    "aName": "Sara",
+    "a": "Am coborât și mi-am găsit hainele curate grămadă pe masă pentru că aveai nevoie de uscător. Erau încă umede.",
+    "bName": "Ianis",
+    "b": "Ciclul se terminase de o oră și aveam o încărcătură care aștepta. Te rog doar să-ți scoți lucrurile când sună."
+  },
+  "loudMusic": {
+    "title": "🎧 Muzica prin perete",
+    "aName": "Felix",
+    "a": "E trei după-amiaza într-o sâmbătă și sunt în camera mea. Nu cred că ar trebui să port căști în propria casă.",
+    "bName": "Teodora",
+    "b": "Basul zguduie biroul când încerc să învăț. Nu îți cere nimeni să te oprești, doar dă-l puțin mai încet."
+  },
+  "longShower": {
+    "title": "🚿 Apa caldă care se termină",
+    "aName": "Amir",
+    "a": "Dușurile tale țin patruzeci de minute și apa caldă se termină mereu când îmi vine rândul. Zece minute fiecare ar fi corect.",
+    "bName": "Bianca",
+    "b": "Nu mă cronometrez și e singurul loc unde mă pot relaxa. Poate ne schimbăm la rând cine intră primul."
+  },
+  "lightsOn": {
+    "title": "💡 Toate luminile lăsate aprinse",
+    "aName": "Georgiana",
+    "a": "Trec prin casă și toate luminile sunt aprinse, chiar și în camerele în care nu e nimeni. Facturile se împart, deci și banii mei se duc.",
+    "bName": "Sorin",
+    "b": "Îmi place lumina și umblu prin camere toată seara. Să le aprind și să le sting toată noaptea e la fel de enervant."
+  },
+  "parcels": {
+    "title": "📦 Coletele din hol",
+    "aName": "Nadia",
+    "a": "Sunt șase cutii de-ale tale puse în hol și mă împiedic de ele în fiecare zi. Te rog să le duci în camera ta.",
+    "bName": "Oscar",
+    "b": "Aștept să le duc la poștă și am fost ocupat. Sunt acolo doar de patru zile."
+  },
+  "houseplant": {
+    "title": "🪴 Cine udă planta",
+    "aName": "Mădălina",
+    "a": "Am cumpărat planta pentru sufragerie și am udat-o în fiecare săptămână. Acum arată ca un băț pentru că ai mutat-o în colțul întunecat.",
+    "bName": "Paul",
+    "b": "Bloca televizorul și mi s-a părut că în colț e bine. Nu știam că plantele sunt atât de sensibile."
+  },
+  "lateArrival": {
+    "title": "⏰ Din nou cu patruzeci de minute întârziere",
+    "aName": "Daniel",
+    "a": "Am zis la șapte și am stat singur în restaurant până la opt fără douăzeci. E a treia oară când faci asta.",
+    "bName": "Maria",
+    "b": "Autobuzul a întârziat și ți-am scris. Puteai să comanzi o băutură în loc să te superi."
+  },
+  "cancelledPlans": {
+    "title": "🙅 Anulat cu o oră înainte",
+    "aName": "Rodica",
+    "a": "Mi-am reorganizat toată ziua ca să ne vedem, iar tu ai anulat cu un singur mesaj cu o oră înainte. Nu e prima dată.",
+    "bName": "Călin",
+    "b": "Eram epuizat și aș fi fost o companie groaznică. Mi s-a părut mai frumos să-ți spun decât să mă târăsc până acolo."
+  },
+  "borrowedBook": {
+    "title": "📚 Cartea care nu s-a mai întors",
+    "aName": "Ilinca",
+    "a": "Ți-am dat cartea aia în primăvara trecută și a trecut un an. Avea autograf și te-am întrebat de două ori.",
+    "bName": "Adrian",
+    "b": "O am pe undeva, promit, probabil într-o cutie de la mutare. O găsesc, nu trebuie să-mi tot amintești."
+  },
+  "mutedChat": {
+    "title": "🔕 Grupul de chat dat pe mut",
+    "aName": "Oana",
+    "a": "Ai dat pe mut grupul nostru și ai ratat de două ori schimbarea planului. Te-am așteptat toți în locul greșit.",
+    "bName": "Victor",
+    "b": "Vin două sute de mesaje pe zi, mai ales meme-uri. Le-aș citi pe cele importante dacă nu mi-ar lua o oră."
+  },
+  "birthdayDinner": {
+    "title": "🎂 Cine plătește cina de ziua de naștere",
+    "aName": "Kenji",
+    "a": "E cina mea de ziua mea și nota a ieșit 200 de lei de persoană din cauza vinului scump. Credeam că sărbătoritul nu plătește.",
+    "bName": "Sasha",
+    "b": "Noi împărțim mereu totul egal în tot grupul și știe toată lumea. Tu ai ales și localul."
+  },
+  "plusOne": {
+    "title": "💍 Încă o persoană la nuntă",
+    "aName": "Bianca",
+    "a": "Pe invitație e doar numele meu, dar partenerul meu de doi ani ar rămâne singur acasă. Îl aduc oricum.",
+    "bName": "Radu",
+    "b": "Sala are un număr strict de locuri și fiecare loc ne costă mult. Îmi pare rău, dar nu pot face o excepție pentru o singură persoană."
+  },
+  "chargerBorrow": {
+    "title": "🔌 Încărcătorul pe care l-ai luat",
+    "aName": "Florin",
+    "a": "E al treilea încărcător de-al meu care dispare la tine. Vreau să mi le dai înapoi, nu încă o scuză.",
+    "bName": "Lola",
+    "b": "Seamănă toate, așa că sincer nu mai știu care e al cui. Vineri aduc o pungă plină."
+  },
+  "auxCord": {
+    "title": "🎵 Cine pune muzica în mașină",
+    "aName": "Tariq",
+    "a": "Eu conduc, deci eu aleg muzica. E drum lung și eu sunt cel care trebuie să rămână treaz.",
+    "bName": "Emma",
+    "b": "Ai pus același album de trei ori azi. Și pasagerul are voie să zică ceva, așa e la orice drum lung."
+  },
+  "karaoke": {
+    "title": "🎤 Cântecul care nu se mai termina",
+    "aName": "Gina",
+    "a": "Ai cântat nouă piese și noi ceilalți câte una. Microfonul trebuie să circule prin cameră.",
+    "bName": "Mihai",
+    "b": "Nimeni altcineva nu s-a trecut pe listă, așa că am umplut eu golurile. Sincer, credeam că vă place tuturor."
+  },
+  "uninvited": {
+    "title": "🙈 Lăsat în afara listei de invitați",
+    "aName": "Selma",
+    "a": "Am văzut pozele de la petrecerea ta și n-am fost invitată, deși am venit la toate de până acum. M-a durut cu adevărat.",
+    "bName": "Ion",
+    "b": "A fost ceva mic pentru colegii mei, doar zece oameni. N-a avut nicio legătură cu tine, nu credeam că ai vrea să vii."
+  },
+  "holidayHost": {
+    "title": "🎄 Cine găzduiește masa de sărbători",
+    "aName": "Marta",
+    "a": "Am găzduit cina în familie patru ani la rând. E rândul altcuiva, iar eu aș vrea o sărbătoare în care să nu gătesc.",
+    "bName": "Petru",
+    "b": "Mama nu mai poate urca scările și la noi e cea mai mare masă. Nu s-a oferit nimeni altcineva, așa că am presupus că facem la fel."
+  },
+  "dailyCalls": {
+    "title": "📞 Un telefon în fiecare zi",
+    "aName": "Leana",
+    "a": "Mama sună în fiecare zi pe la șase și se așteaptă la o jumătate de oră de vorbă. O iubesc, dar uneori pur și simplu nu am chef.",
+    "bName": "Iosif",
+    "b": "Locuiește singură și apelul ăla e cea mai frumoasă parte a zilei ei. Poți să-i spui că îi scrii în zilele aglomerate."
+  },
+  "bedtimeKids": {
+    "title": "🌙 Ora de culcare în zilele de școală",
+    "aName": "Ingrid",
+    "a": "Fiul nostru are opt ani și ar trebui să doarmă la opt. L-ai lăsat să vadă fotbalul și acum e varză la școală.",
+    "bName": "Lucian",
+    "b": "A fost un singur meci și era foarte entuziasmat. O seară târzie din când în când nu-i face rău și e ceva special pentru el."
+  },
+  "borrowedSweater": {
+    "title": "👚 O soră care îmi scotocește prin dulap",
+    "aName": "Alina",
+    "a": "Mi-ai luat puloverul verde fără să mă întrebi și l-ai purtat la o petrecere. S-a întors pătat și nici nu apucasem să-l port.",
+    "bName": "Priyanka",
+    "b": "Toată viața am luat lucruri de la tine și nu te-a deranjat. O să-l dau la curățat, dar faci dintr-un fleac o tragedie."
+  },
+  "familyRecipe": {
+    "title": "🥘 Rețeta bunicii",
+    "aName": "Elif",
+    "a": "Ciorba bunicii avea mereu o lingură de pastă de roșii, și e scris cu mâna ei. Tu ai lăsat-o deoparte și ai zis că e aceeași rețetă.",
+    "bName": "Mert",
+    "b": "Mie mi se pare mai ușoară fără ea și așa îmi amintesc eu gustul. E tot rețeta ei, doar puțin îmbunătățită."
+  },
+  "dadRide": {
+    "title": "🚙 Cine îl duce pe tati la aeroport",
+    "aName": "Sebastian",
+    "a": "Pe tata l-am dus eu data trecută și cu o dată înainte. Poți să-l duci tu la cursa de dimineață măcar de data asta, în loc să chemi un taxi?",
+    "bName": "Alexia",
+    "b": "Sunt două ore dus-întors și trebuie să fiu la serviciu la șase. Plătesc eu taxiul, dar timp pur și simplu nu am."
+  },
+  "familyChat": {
+    "title": "👨‍👩‍👧 Mesajele în lanț pe grupul familiei",
+    "aName": "Rina",
+    "a": "Unchiul tot trimite mesaje în lanț și filmulețe pe grupul întregii familii. Nu mai găsesc nimic real printre ele.",
+    "bName": "Teodor",
+    "b": "Încearcă doar să facă parte din grup și să ne facă să râdem. Poate o vorbă mai blândă, dar să-l dai pe mut mi se pare urât."
+  },
+  "tvRemote": {
+    "title": "📺 Telecomanda ascunsă",
+    "aName": "Nicu",
+    "a": "De fiecare dată când mă așez la meci, telecomanda a dispărut și rulează un desen animat. E a doua oară săptămâna asta.",
+    "bName": "Maria",
+    "b": "E ora mea preferată de televizor, iar meciul tău ține toată după-amiaza. Putem alterna, dar nu poți să iei toată după-amiaza."
+  },
+  "seatingChart": {
+    "title": "🍽️ Cine stă în capul mesei",
+    "aName": "Gabi",
+    "a": "Stau în capătul ăla la fiecare cină de familie de când eram mic. Acum prietenul tău l-a luat și n-a zis nimeni nimic.",
+    "bName": "Tamara",
+    "b": "S-a așezat primul și e oaspete. E doar un scaun, putem să ne schimbăm data viitoare."
+  },
+  "teenPhone": {
+    "title": "🧒 Telefonul la masă",
+    "aName": "Doina",
+    "a": "Cina e singurul moment în care stăm împreună ca familie. Cincisprezece minute fără telefon nu e mult de cerut.",
+    "bName": "Eduard",
+    "b": "Doar verific dacă mi-a răspuns un prieten. Și tu ești pe al tău la masă când îți scrie cei de la serviciu."
+  },
+  "meetingEmail": {
+    "title": "📧 O ședință care putea fi un email",
+    "aName": "Paula",
+    "a": "Am stat o oră la un apel ca să aflăm ce încăpea în trei rânduri. Era o oră pe care o puteam folosi să termin raportul.",
+    "bName": "Grigore",
+    "b": "Toți suntem ocupați, dar la un apel lumea poate pune întrebări pe loc. Un email ar fi început cinci conversații separate."
+  },
+  "microwaveFish": {
+    "title": "🐟 Pește în cuptorul cu microunde de la birou",
+    "aName": "Valentina",
+    "a": "Ai încălzit somon în microundele comune și tot etajul miroase a pește până la trei. Te rog să aduci altceva.",
+    "bName": "Dmitri",
+    "b": "E singurul meu prânz decent și n-am mulți bani de comandat de la restaurant. Alții încălzesc curry și nu zice nimeni nimic."
+  },
+  "stolenLunch": {
+    "title": "🥪 Cineva mi-a mâncat prânzul",
+    "aName": "Bogdan",
+    "a": "Pe pungă era numele meu și sandvișul a dispărut până la prânz. Bănuiesc că ai văzut cine l-a luat.",
+    "bName": "Fiona",
+    "b": "N-am văzut nimic și nu vreau să acuz pe nimeni. Poate un bilet pe frigider e un prim pas mai blând."
+  },
+  "replyAll": {
+    "title": "📨 Răspuns către toată firma",
+    "aName": "Eugen",
+    "a": "Ai răspuns tuturor, la vreo două sute de oameni, cu „mulțumesc!”. Acum am în inbox încă patruzeci ca ăsta.",
+    "bName": "Joița",
+    "b": "Am vrut să fiu politicoasă și butonul era chiar acolo. E o greșeală mică și nu a păgubit pe nimeni."
+  },
+  "officeCold": {
+    "title": "❄️ Biroul înghețat",
+    "aName": "Rebeca",
+    "a": "Aerul condiționat e dat atât de jos că port geacă la birou în iulie. Câteva grade mai sus n-ar strica nimănui.",
+    "bName": "Anil",
+    "b": "Mie îmi e cald și soarele bate pe partea mea toată după-amiaza. Dacă ți-e frig, o pătură e mai simplu decât să ne chinuim noi ceilalți de căldură."
+  },
+  "openOfficeHeadphones": {
+    "title": "🎧 Căștile în open space",
+    "aName": "Lars",
+    "a": "Port căști ca să mă concentrez, iar oamenii mă bat pe umăr la câteva minute cu o întrebare rapidă. Îmi pierd firul.",
+    "bName": "Carmen",
+    "b": "E greu de știut dacă ești chiar ocupat. Un mesaj în prealabil ar fi prea lent când răspunsul durează zece secunde."
+  },
+  "emptyCoffee": {
+    "title": "☕ Ultima ceașcă de cafea",
+    "aName": "Tudor",
+    "a": "Ai turnat ultima cană din ibric și ai lăsat ibricul gol pe aragaz. Una nouă se face în două minute.",
+    "bName": "Lucia",
+    "b": "Întârziam la un apel și sincer n-am observat că era ultima. Fac eu următoarea, promit."
+  },
+  "ideaCredit": {
+    "title": "💡 A cui a fost ideea",
+    "aName": "Sunil",
+    "a": "Eu am propus noul program în martie, iar tu l-ai prezentat șefului ca fiind al tău. Un mulțumesc ar fi fost de ajuns.",
+    "bName": "Cati",
+    "b": "Am vorbit despre el împreună și l-am dezvoltat cu echipa. Credeam că suntem toți de acord că e muncă în comun."
+  },
+  "fridayDeadline": {
+    "title": "📅 Termen stabilit pentru vineri",
+    "aName": "Monica",
+    "a": "Ai zis că îmi trimiți partea ta până vineri și suntem luni. Toți ceilalți așteptau asta și a trebuit să te rog de două ori.",
+    "bName": "Ahmed",
+    "b": "Mi-a căzut pe cap un proiect mai mare și a trebuit să aleg. Trebuia să-ți spun mai devreme, dar ajunge la tine azi."
+  },
+  "deskLunch": {
+    "title": "🥗 Prânzul la birou",
+    "aName": "Horia",
+    "a": "Nimeni din echipă nu mai ia o pauză de masă adevărată și începe să pară ceva așteptat. Mi-ar plăcea să ne ridicăm de la birou la prânz.",
+    "bName": "Yuki",
+    "b": "Eu mănânc în timp ce lucrez și plec mai devreme acasă datorită asta. Pauzele sunt ok, dar prefer să hotărăsc eu."
+  },
+  "calendarInvite": {
+    "title": "🗓️ Ședințe fără agendă",
+    "aName": "Silvia",
+    "a": "Invitația ta spunea doar „ne vedem puțin” și fără agendă, și mi-a luat patruzeci și cinci de minute din dimineață. Te rog să-mi spui mai întâi despre ce e vorba.",
+    "bName": "Bruno",
+    "b": "Trebuia să fie o discuție, și am ajuns să rezolvăm două probleme. O agendă formală ar fi omorât conversația."
+  },
+  "rentSplit": {
+    "title": "🏠 Chiria împărțită după mărimea camerei",
+    "aName": "Ana",
+    "a": "Camera mea e cea mai mică și n-are dulap, dar plătesc la fel ca tine. Cred că camera cea mai mare ar trebui să coste mai mult.",
+    "bName": "Zoli",
+    "b": "Am stabilit în trei părți egale când am semnat contractul. Dacă refacem calculele de fiecare dată când unul dintre noi simte altceva, se complică."
+  },
+  "smallLoan": {
+    "title": "💵 Cincizeci de lei de la prânz",
+    "aName": "Răzvan",
+    "a": "Am plătit prânzul tău luna trecută și iar săptămâna trecută. Face 150 de lei și n-am auzit niciun cuvânt despre asta.",
+    "bName": "Dora",
+    "b": "Credeam că suntem chit după cafelele alea. Nu mă deranjează să plătesc, spune-mi suma și ți-o trimit azi."
+  },
+  "tipping": {
+    "title": "🧾 Cât lăsăm bacșiș",
+    "aName": "Elena",
+    "a": "Servirea a fost lentă și mâncarea rece. Las zece la sută, nu douăzeci.",
+    "bName": "Liviu",
+    "b": "Localul era plin și chelnerul era clar copleșit. Bacșișul contează mult pentru ei și pentru noi nu e mult în plus."
+  },
+  "streamingShare": {
+    "title": "📺 Contul de streaming împărțit",
+    "aName": "Mara",
+    "a": "Eu plătesc abonamentul de streaming și acum îl folosește și jumătate din prietenii tăi. Aș vrea să contribuie sau să-și ia unul al lor.",
+    "bName": "Andrei",
+    "b": "Costă la fel, indiferent dacă îl folosesc doi sau cinci oameni. Să cerem câțiva lei de la fiecare ar fi jenant."
+  },
+  "taxiSplit": {
+    "title": "🚕 Taxiul spre casă împărțit",
+    "aName": "Lia",
+    "a": "Stația ta era prima, iar a mea cu un sfert de oră mai departe, și am împărțit totuși cursa în două. Nu cred că e tocmai corect.",
+    "bName": "Cristi",
+    "b": "Am stat în aceeași mașină și am plecat împreună. Să calculăm pe kilometri pentru 100 de lei e cam mult."
+  },
+  "groupGift": {
+    "title": "🎀 Cadoul de grup",
+    "aName": "Ioana",
+    "a": "Toți dau câte 50 de lei pentru cadoul profesoarei, dar eu sunt studentă și pentru mine e mult. Pot să dau 20?",
+    "bName": "Valentin",
+    "b": "Cadoul e deja comandat la prețul ăsta, iar o parte mai mică înseamnă că altcineva acoperă diferența. Te înțeleg, dar e incomod."
+  },
+  "groceryList": {
+    "title": "🛒 Cumpărăturile împărțite",
+    "aName": "Paula",
+    "a": "Tu iei gustări și brânzeturi fine și le pui la totalul comun. Eu mănânc doar de bază, deci nu ar trebui să plătesc jumătate.",
+    "bName": "Ravi",
+    "b": "Poți să mănânci brânza oricând. A fost o notă comună de la început și nu țin un tabel."
+  },
+  "bigPurchase": {
+    "title": "🛍️ O achiziție mare fără o vorbă",
+    "aName": "Ștefania",
+    "a": "Ți-ai luat un monitor nou de gaming de 2000 de lei chiar în săptămâna în care strângeam bani pentru excursie. Puteai să mă întrebi.",
+    "bName": "Neculai",
+    "b": "A ieșit din banii mei de buzunar și îl aștept de un an. Nu m-am gândit că am nevoie de permisiune."
+  },
+  "subscriptions": {
+    "title": "💳 Anulăm abonamentele uitate",
+    "aName": "Iulia",
+    "a": "Plătim patru aplicații pe care nu le deschidem niciunul. Hai să le anulăm și să punem banii pentru vacanță.",
+    "bName": "Ovidiu",
+    "b": "Sunt sigur că o să folosesc măcar două dintre ele curând. Putem să le păstrăm până la sfârșitul lunii și apoi decidem?"
+  },
+  "restaurantChoice": {
+    "title": "🍜 Unde mâncăm diseară",
+    "aName": "Hiro",
+    "a": "Am zis ramen de trei ori săptămâna asta și de fiecare dată ai zis „sigur”, apoi ai ales altceva. Aș vrea să mergem.",
+    "bName": "Beatrice",
+    "b": "Nu aveam chef de tăiței când am ajuns. Data viitoare spune un loc și mă hotărăsc înainte să plecăm."
+  },
+  "cerealMilk": {
+    "title": "🥣 Laptele înaintea cerealelor",
+    "aName": "Patricia",
+    "a": "Torni laptele întâi și pui cerealele după. E greșit și se muiază înainte să termini.",
+    "bName": "Jenică",
+    "b": "Așa îmi place și le mănânc imediat. Nu trebuie să te uiți, lasă-mă să-mi savurez micul dejun."
+  },
+  "ketchup": {
+    "title": "🍳 Ketchup pe ouă",
+    "aName": "Luiza",
+    "a": "Pui ketchup pe o omletă perfect gătită. E o risipă de ouă bune și nu pot să mă uit.",
+    "bName": "Dumitru",
+    "b": "Le mănânc așa de când eram mic și îmi place gustul. E farfuria mea, mănâncă-o pe a ta cum vrei."
+  },
+  "pizzaCrust": {
+    "title": "🍕 Marginile de pizza lăsate",
+    "aName": "Tiberiu",
+    "a": "Mănânci mijlocul și lași marginea în farfurie de fiecare dată. E cea mai bună parte și ajunge la gunoi.",
+    "bName": "Gabriela",
+    "b": "Marginea e tare iar până ajung la ea sunt sătulă. Dacă o vrei, ia-o, nu mă forțez."
+  },
+  "coffeeTea": {
+    "title": "☕ Cafea sau ceai dimineața",
+    "aName": "Arjun",
+    "a": "Ai zis că ceaiul e doar apă fierbinte cu frunze, apoi mi-ai cerut o gură din cafeaua mea. Aș vrea o scuză.",
+    "bName": "Heidi",
+    "b": "Îmi place mirosul de cafea mai mult decât gustul. Iar beau ceai pentru că mă liniștește, nu trebuie să mă convingi."
+  },
+  "spiceLevel": {
+    "title": "🌶️ Cât de picant e prea picant",
+    "aName": "Diego",
+    "a": "Ai cerut „ușor” și apoi ai turnat jumătate din uleiul cu ardei pe farfurie. Acum toată masa tușește.",
+    "bName": "Anca",
+    "b": "Ușor pentru mine nu e ușor pentru tine și nu știam că masa împarte. Data viitoare comand un bol separat."
+  },
+  "leftovers": {
+    "title": "🥡 Resturile aruncate",
+    "aName": "Mona",
+    "a": "Păstram curry-ul ăla pentru prânz și tu l-ai aruncat pentru că stătea de două zile în frigider. Era bun.",
+    "bName": "Calin",
+    "b": "Credeam că stă acolo de prea mult și nu voiam să se îmbolnăvească cineva. Îl înlocuiesc, scuze."
+  },
+  "cilantro": {
+    "title": "🌿 Coriandru în orice",
+    "aName": "Vera",
+    "a": "Ai pus iar coriandru în mâncare, deși știi că are gust de săpun pentru mine. Nu pot să-l scot pe tot.",
+    "bName": "Marcu",
+    "b": "Rețeta îl cere și preparatul are nevoie de prospețime. Data viitoare îl las într-un bol alături."
+  },
+  "tooSalty": {
+    "title": "🧂 Prea multă sare în supă",
+    "aName": "Frida",
+    "a": "Ai sărat supa înainte să o guști și acum e prea sărată ca să o mănânc. Aș vrea să o luăm de la capăt cu o oală nouă.",
+    "bName": "Iacob",
+    "b": "Mie mi se pare bună și eu pun mereu sare la sfârșit. Mai adaugă apă, se repară ușor."
+  },
+  "doubleDip": {
+    "title": "🥨 Înmuiat de două ori la petrecere",
+    "aName": "Cora",
+    "a": "Te-am văzut mușcând un cip și înmuindu-l iar în sosul comun. Acum nu mai vreau nimic din el.",
+    "bName": "Bobi",
+    "b": "A fost o singură înmuiere și nu a văzut nimeni. Faci din asta ceva uriaș, ia o lingură curată."
+  },
+  "pastaShape": {
+    "title": "🍝 Paste care nu sunt spaghete",
+    "aName": "Giulia",
+    "a": "Sosul ăsta e făcut pentru paste lungi, iar tu l-ai făcut cu scurte. Pur și simplu nu mai e același fel de mâncare.",
+    "bName": "Henri",
+    "b": "Aveam doar penne în dulap și e bun și așa. Contează chiar atât de mult forma?"
+  },
+  "hotdog": {
+    "title": "🌭 Hot dog-ul e sandviș?",
+    "aName": "Robert",
+    "a": "Un hot dog e o umplutură într-o pâine tăiată, deci e sandviș. Gata, atât.",
+    "bName": "Sami",
+    "b": "E un lucru aparte. Nimeni nu comandă un sandviș și se așteaptă la un hot dog, și niciun meniu nu-l pune la sandvișuri."
+  },
+  "trashDay": {
+    "title": "🗑️ Scosul gunoiului",
+    "aName": "Carol",
+    "a": "Coșul de gunoi e plin până la refuz din miercuri și l-am scos eu ultimele patru dăți. E rândul tău.",
+    "bName": "Amalia",
+    "b": "Eu scot reciclabilele și resturile organice și astea contează. Hai să facem un program adevărat ca să nu mai numărăm."
+  },
+  "foldTowels": {
+    "title": "🧺 Cum se împăturesc prosoapele",
+    "aName": "Ned",
+    "a": "Tocmai am împăturit toate prosoapele în trei, pentru că tu le faci în două și nu încap pe raft.",
+    "bName": "Carla",
+    "b": "Sunt prosoape și le folosim într-un minut. Nu o să învăț un sistem de împăturit pentru ele."
+  },
+  "vacuumSchedule": {
+    "title": "🧹 Cât de des dăm cu aspiratorul",
+    "aName": "Felicia",
+    "a": "Dau cu aspiratorul de două ori pe săptămână și nu te-am văzut niciodată să-l atingi. Puțin păr pe podea chiar mă deranjează.",
+    "bName": "Leon",
+    "b": "Mie mi se pare curat și o dată pe săptămână, iar tu faci mai mult decât trebuie. Fac eu duminicile dacă mă lași în pace în rest."
+  },
+  "whoCooks": {
+    "title": "🍲 Gătitul în fiecare seară",
+    "aName": "Maria-Elena",
+    "a": "Luna asta am gătit cina cinci seri din șapte. Aș vrea să împărțim gătitul mai egal.",
+    "bName": "Paul",
+    "b": "Mă pricep mai puțin și tu te bucuri mai mult. Dar ai dreptate, hai să alegem două seri și mă îmbunătățesc."
+  },
+  "makeBed": {
+    "title": "🛏️ Făcutul patului",
+    "aName": "Simona",
+    "a": "Te ridici, lași păturile grămadă și zici că nu are rost, că le facem praf iar diseară. Camera arată dezordonat.",
+    "bName": "Nelu",
+    "b": "Eu plec primul la serviciu și durează două minute pe care nu le am. Dacă contează atât de mult pentru tine, fă-l tu când te ridici."
+  },
+  "toiletSeat": {
+    "title": "🚽 Capacul de la toaletă",
+    "aName": "Anca",
+    "a": "Am intrat în baie pe întuneric de trei ori și capacul era ridicat. Să-l pui jos nu e greu.",
+    "bName": "Gheorghe",
+    "b": "Ridicat e mai puțin de atins și nu mă gândesc la asta la miezul nopții. Dacă te deranjează, încerc să-mi amintesc."
+  },
+  "toiletPaper": {
+    "title": "🧻 Hârtia pe deasupra sau pe dedesubt",
+    "aName": "Daria",
+    "a": "Rola se pune cu hârtia care vine pe deasupra. Tu ai pus-o invers și trebuie să întind mâna pe după ea de fiecare dată.",
+    "bName": "Albert",
+    "b": "Nu schimbă nimic la funcționare, deci alege cum vrei. Nu o mai mut doar ca să se potrivească cu obiceiul tău."
+  },
+  "laundryColours": {
+    "title": "👕 Culori amestecate la spălat",
+    "aName": "Cosmin",
+    "a": "Cămașa mea albă a ieșit roz din mașină pentru că ai băgat prosopul roșu. E o cămașă pe care o purtam la serviciu.",
+    "bName": "Lidia",
+    "b": "Mă grăbeam și o spălare mică durează prea mult. Îți cumpăr una nouă, dar a fost o greșeală sinceră."
+  },
+  "washCar": {
+    "title": "🚗 Curățenia în mașina comună",
+    "aName": "Ismail",
+    "a": "Bancheta din spate e plină de ambalaje și de o cană de cafea de săptămâna trecută. Folosim mașina împreună, deci ar trebui să facem curat împreună.",
+    "bName": "Dina",
+    "b": "Eu curăț mașina de fiecare dată când e aproape de dezastru. Nu m-am gândit că niște ambalaje contează, o fac weekendul ăsta."
+  },
+  "beachOrCity": {
+    "title": "🏖️ Mare sau city break",
+    "aName": "Sven",
+    "a": "Eu vreau o săptămână la mare, fără niciun plan. Data trecută ne-am plimbat numai pe la muzee.",
+    "bName": "Raluca",
+    "b": "Mă plictisesc după două zile pe șezlong. Aș vrea să vedem ceva nou, chiar dacă nu facem decât jumătate din oraș."
+  },
+  "airportEarly": {
+    "title": "✈️ Cât de devreme ajungem la aeroport",
+    "aName": "Oksana",
+    "a": "Trei ore înainte de zbor e mult prea devreme. O să stăm la poartă cu o cafea o veșnicie.",
+    "bName": "Hamza",
+    "b": "Cozile pot fi lungi și mi-e frică de zbor. Prefer să aștept decât să alerg, iar un zbor pierdut costă mult mai mult."
+  },
+  "campingHotel": {
+    "title": "⛺ Cort sau hotel",
+    "aName": "Brândușa",
+    "a": "Am rezervat un loc de camping pentru weekend și acum zici că preferi un hotel. Am stabilit asta în primăvară.",
+    "bName": "Colin",
+    "b": "Prognoza dă ploaie tot weekendul și un cort ud nu e deloc relaxant. Merg cu drag la camping când e vreme mai bună."
+  },
+  "packingLight": {
+    "title": "🧳 O valiză pentru fiecare",
+    "aName": "Noor",
+    "a": "Am zis că luăm doar bagaj de mână și al tău cântărește o tonă. Ai trei perechi de pantofi acolo.",
+    "bName": "Ștefan",
+    "b": "Îmi place să am variante, iar tu ai împachetat un palton de care n-o să ai nevoie. Dacă plătim pentru un bagaj de cală, plătesc eu."
+  },
+  "mapOrGps": {
+    "title": "🗺️ Încrederea în GPS",
+    "aName": "Bertrand",
+    "a": "Aplicația a zis să o iei la stânga, iar tu ai virat la dreapta pentru că ți se pare că știi un drum mai scurt. Am pierdut douăzeci de minute.",
+    "bName": "Rozalia",
+    "b": "Am condus pe drumul ăsta de o sută de ori, iar aplicația nu știe de lucrări. Data trecută am avut dreptate."
+  },
+  "leaveTime": {
+    "title": "🕗 La ce oră plecăm",
+    "aName": "Carina",
+    "a": "Am zis să plecăm la opt ca să evităm aglomerația și tu ești încă la duș la opt și jumătate. Se întâmplă mereu.",
+    "bName": "Matei",
+    "b": "Petrecerea începe la zece, deci să plecăm la opt e mult prea devreme. Tu planifici pentru cel mai rău trafic și apoi eu sunt cel care se grăbește."
+  },
+  "sleepIn": {
+    "title": "🌅 Ora de trezire în weekend",
+    "aName": "Ecaterina",
+    "a": "E sâmbătă și tu te-ai trezit la șase și faci zgomot în bucătărie. Singura dimineață în care pot dormi mai mult, și a dispărut.",
+    "bName": "Dorin",
+    "b": "Corpul meu se trezește devreme și încercam să fiu discret. Nici să stau întins și să mă uit în tavan nu ajută."
+  },
+  "dinnerReservation": {
+    "title": "🕰️ Rezervarea la restaurant",
+    "aName": "Isac",
+    "a": "Ai rezervat masa la cinci jumate și e vineri. Nimeni nu mănâncă atât de devreme și eu aveam alte planuri.",
+    "bName": "Tilda",
+    "b": "Era singurul interval rămas și l-aș fi pierdut. Te-am întrebat, dar erai ocupat și nu ai răspuns."
+  },
+  "boardGameRules": {
+    "title": "🎲 Reguli pe care nu le mai ține minte nimeni",
+    "aName": "Bogdan",
+    "a": "Ai jucat greșit toată seara și acum câștigi. Aș vrea să ne întoarcem și să rejucăm rundele.",
+    "bName": "Simina",
+    "b": "Am citit regulile împreună la început și nu s-a opus nimeni. Nu poți schimba regulile când pierzi."
+  },
+  "houseRules": {
+    "title": "💰 Reguli de casă la Monopoly",
+    "aName": "Eliot",
+    "a": "Eu pun banii din amenzi la mijloc, iar următorul care nimerește pe Parcare gratuită îi ia. Asta e regula adevărată.",
+    "bName": "Hazel",
+    "b": "Nu scrie așa în regulament și face jocul să țină toată noaptea. Hai să jucăm cum e tipărit."
+  },
+  "fantasyTrade": {
+    "title": "🏈 Un schimb nedrept la fantasy",
+    "aName": "Dorian",
+    "a": "Mi-ai dat un jucător accidentat pentru cel mai bun atacant al meu și am zis da fără să verific. E un schimb nedrept, deci hai să-l anulăm.",
+    "bName": "Fran",
+    "b": "Ai fost de acord în scris și înțelegerea era corectă când am făcut-o. Să verifici e treaba ta, nu a mea."
+  },
+  "lineCall": {
+    "title": "🎾 Afară sau înăuntru",
+    "aName": "Martin",
+    "a": "Mingea aia a fost clar afară și tu ai tot zis că a fost înăuntru tot meciul. Vreau să se rejoace punctul.",
+    "bName": "Jeni",
+    "b": "Eram mai aproape de linie și am văzut cum a atins marginea. Nu poți decide de la celălalt capăt al terenului."
+  },
+  "controllerTurns": {
+    "title": "🎮 Al cui e rândul la controller",
+    "aName": "Zan",
+    "a": "Ai controllerul de o oră și de fiecare dată când te rog zici „încă o rundă”. Nu așa funcționează rândurile.",
+    "bName": "Priscila",
+    "b": "Eram în mijlocul unui nivel și nu m-am putut opri. Ți-l dau imediat după asta, promit."
+  },
+  "teamCaptain": {
+    "title": "⚽ Alegerea echipelor",
+    "aName": "Gelu",
+    "a": "Ți-ai ales toți prietenii primii și m-ai lăsat din nou cu cei mai slabi. Aș vrea echipe echilibrate.",
+    "bName": "Anya",
+    "b": "Am jucat așa ani de zile și nu te-ai plâns niciodată. Dacă vrei echipe corecte, amestecăm prin tragere la sorți."
+  },
+  "cardCheating": {
+    "title": "🃏 O carte ascunsă",
+    "aName": "Reuben",
+    "a": "Te-am văzut luând o carte de la baza pachetului în ultima mână. Dacă așa câștigi, nu mai joc.",
+    "bName": "Mei",
+    "b": "Mi-a căzut una și am ridicat-o, atâta tot. Ești supărat toată seara că pierzi și acum mă acuzi pe mine."
+  },
+  "trashTalk": {
+    "title": "🏀 Tachinări pe teren",
+    "aName": "Dominic",
+    "a": "O mică tachinare în timpul jocului face parte din distracție. Tu ai devenit tăcută și bosumflată după o remarcă, și eu doar glumeam.",
+    "bName": "Karina",
+    "b": "Una e când glumești despre joc și alta când e despre mine. Vreau doar să rămânem amabili."
+  },
+  "gameSave": {
+    "title": "💾 Salvarea suprascrisă",
+    "aName": "Silviu",
+    "a": "Am petrecut treizeci de ore pe salvarea aia și tu ai început un joc nou peste ea. Acum a dispărut.",
+    "bName": "Lina",
+    "b": "Era un singur slot și părea nefolosit. Te-aș fi întrebat, dar nu erai acasă și voiam doar să încerc."
+  },
+  "loserPays": {
+    "title": "🎳 Cine pierde plătește pizza",
+    "aName": "Boris",
+    "a": "Am zis că pierzătorul plătește și ai pierdut la două popice. Cuvântul dat e cuvânt, deci scoate portofelul.",
+    "bName": "Camelia",
+    "b": "Am zis-o în glumă și credeam că știi. Plătesc runda următoare, dacă preferi așa."
+  },
+  "pickleball": {
+    "title": "🏓 Cine ține scorul",
+    "aName": "Gloria",
+    "a": "Eu am numărat opt la șase, iar tu zici că e șapte egal. Tot uităm scorul și ne strică jocul.",
+    "bName": "Denis",
+    "b": "Am numărat fiecare serviciu și sunt sigur. Hai să dăm punctul la rejucare și să mergem mai departe."
+  },
+  "dogCouch": {
+    "title": "🐕 Câinele pe canapea",
+    "aName": "Maria",
+    "a": "Am zis că niciun câine pe canapea și vin acasă și îl găsesc întins pe ea. Pernele sunt pline de păr.",
+    "bName": "Dorel",
+    "b": "Arată atât de fericit și stă acolo doar cât ne uităm la televizor. Husa se spală și îl face parte din familie."
+  },
+  "walkingDuty": {
+    "title": "🦮 Cine scoate câinele la plimbare",
+    "aName": "Hanna",
+    "a": "Am făcut plimbările de dimineață și de seară din weekend și mâine am o prezentare. Diseară e rândul tău.",
+    "bName": "Viktor",
+    "b": "Plouă cu găleata și tocmai m-am așezat. Fac plimbarea lungă sâmbătă, nu putem sări peste diseară?"
+  },
+  "catNames": {
+    "title": "🐈 Numele noii pisicuțe",
+    "aName": "Pia",
+    "a": "Eu am găsit-o și o cheamă Biscuit. Numele tău pentru ea e Domnul Pufoșenie și nu-l spun la veterinar.",
+    "bName": "Kurt",
+    "b": "Mă face să râd de fiecare dată și deja răspunde la el. Biscuit e drăguț, dar așa cheamă pisica oricui."
+  },
+  "catKeyboard": {
+    "title": "🐱 Pisica pe biroul de lucru",
+    "aName": "Maxina",
+    "a": "Îmi trece peste tastatură în timpul ședințelor, iar tu o încurajezi cu recompense. Acum crede că biroul meu e patul ei.",
+    "bName": "Toma",
+    "b": "Toți cei de la apel o ador și ea caută doar companie. Poți să închizi ușa dacă te deranjează."
+  },
+  "feedingTime": {
+    "title": "🥫 Pisica hrănită de două ori",
+    "aName": "Jun",
+    "a": "I-am dat pisicii cina la șase și tu ai hrănit-o din nou la șapte. Începe să se îngrașe.",
+    "bName": "Alicia",
+    "b": "Mieuna la mine și am crezut că n-a mâncat nimeni. Un bilet pe frigider ar rezolva asta."
+  },
+  "vetCosts": {
+    "title": "🐾 Nota de la veterinar",
+    "aName": "Remus",
+    "a": "Nota de la veterinar a fost 1200 de lei și am plătit-o eu toată pentru că eu am făcut programarea. Ai adoptat câinele împreună cu mine, deci ar trebui să împărțim.",
+    "bName": "Cheryl",
+    "b": "Aș fi plătit dacă îmi spuneai înainte de programare. Trimite-mi bonul și îți transfer jumătate."
+  },
+  "offLeash": {
+    "title": "🌳 Câinele liber în parc",
+    "aName": "Gabriela",
+    "a": "Câinele tău a dat fuga la cățelul meu fără avertisment și acum e speriat. Pe panou scrie că e obligatoriu lesa în zona asta.",
+    "bName": "Mitică",
+    "b": "E prietenos și a vrut doar să salute. Îl țin aproape, și toți ceilalți de aici își lasă câinii liberi."
+  },
+  "petInBed": {
+    "title": "🐶 Câinele în pat",
+    "aName": "Selena",
+    "a": "Ocupă jumătate din saltea și mă trezesc cu o labă în față. Aș vrea să avem patul din nou doar pentru noi.",
+    "bName": "Cătălin",
+    "b": "Îi e frică singur și doarme mai bine lângă noi. Prefer să pierd puțin loc decât să-l aud plângând toată noaptea."
+  },
+  "puppyName": {
+    "title": "🐕‍🦺 Alegerea numelui pentru cățel",
+    "aName": "Ross",
+    "a": "Îi zicem „cățelul” de o săptămână pentru că nu ne înțelegem. Eu votez pentru Rocket și i se potrivește perfect.",
+    "bName": "Margareta",
+    "b": "E calm și lent, deci Rocket sună caraghios. Mie îmi place Piper și se potrivește cu pistruii lui."
+  },
+  "fishSitter": {
+    "title": "🐠 Cine hrănește peștii",
+    "aName": "Teodora",
+    "a": "Te-am rugat acum o lună să hrănești peștii cât lipsim. Zici că ai uitat să rezolvi, iar plecarea e mâine.",
+    "bName": "Alexandru",
+    "b": "Credeam că s-a oferit vecina ta și nu voiam să dublez. Pot să o rog diseară pe sora mea, locuiește aproape."
+  },
+  "birdNoise": {
+    "title": "🦜 Papagalul care nu tace",
+    "aName": "Nelu",
+    "a": "Papagalul tău țipă la șase în fiecare dimineață și nu mai pot adormi la loc. Locuiesc chiar lângă tine.",
+    "bName": "Fatima",
+    "b": "E o pasăre și salută soarele. Mut cușca într-o cameră mai liniștită, îmi pare rău."
+  },
+  "wifiPassword": {
+    "title": "🔐 Parola de wifi dată tuturor",
+    "aName": "Robert",
+    "a": "Ai dat parola de wifi tuturor celor care au trecut pe la noi și acum merge încet când lucrez. Aș vrea să o schimb.",
+    "bName": "Eva",
+    "b": "E urât să refuzi oaspeții și nimeni nu folosește chiar atât de mult. Dacă te deranjează, fă o rețea pentru invitați."
+  },
+  "tvVolume": {
+    "title": "🔊 Războiul volumului",
+    "aName": "Sandu",
+    "a": "Te uiți la tot la volumul 40 și aud fiecare cuvânt din bucătărie. Te rog să pui subtitrare.",
+    "bName": "Peggy",
+    "b": "Nu aud bine și pierd dialogul la volum mai mic. Cu subtitrare citesc în loc să mă uit."
+  },
+  "phoneAtDinner": {
+    "title": "📵 Telefoanele pe masa de la restaurant",
+    "aName": "Lidia",
+    "a": "Eram prima seară în oraș după o lună și ți-ai verificat telefonul din cinci în cinci minute. M-am simțit de parcă stăteam singură.",
+    "bName": "Petrică",
+    "b": "Așteptam un mesaj că aterizează zborul fratelui meu. Trebuia să-ți spun, dar nu voiam să te îngrijorez."
+  },
+  "notificationSound": {
+    "title": "🔔 Sunete de notificare la bibliotecă",
+    "aName": "Evelina",
+    "a": "Telefonul tău sună la fiecare treizeci de secunde și unii dintre noi învățăm. Te rog să-l pui pe silențios.",
+    "bName": "Mohamed",
+    "b": "Acum e pe vibrații și îmi cer scuze. Nu mi-am dat seama că avea sunetul pornit, nu se mai repetă."
+  },
+  "darkMode": {
+    "title": "🌗 Modul întunecat sau cel luminos",
+    "aName": "Iaroslav",
+    "a": "Ai pus tableta noastră pe modul luminos noaptea și mă dor ochii. Am stabilit modul întunecat seara.",
+    "bName": "Odeta",
+    "b": "Nu pot citi nimic în modul întunecat, textul se încețoșează. Îl pun la loc înainte de culcare, dar ziua am nevoie de el."
+  },
+  "smartSpeaker": {
+    "title": "🗣️ Boxa inteligentă care ascultă",
+    "aName": "Ghedeon",
+    "a": "Ai pus o boxă inteligentă în dormitorul nostru și mă simt prost că ascultă. Aș vrea să o mutăm în bucătărie.",
+    "bName": "Livia",
+    "b": "O folosesc doar pentru alarme și vreme. Bucătăria e prea departe, dar pot opri microfonul noaptea."
+  },
+  "tabsOpen": {
+    "title": "🗂️ Două sute de taburi deschise",
+    "aName": "Paula",
+    "a": "De fiecare dată când iau laptopul tău sunt o sută de taburi deschise și abia se mișcă. Dacă ai închide câteva, ar merge mai repede.",
+    "bName": "Arthur",
+    "b": "Fiecare dintre ele îmi trebuie și știu exact unde e fiecare. E haos organizat."
+  },
+  "photoStorage": {
+    "title": "🖼️ Spațiul de stocare în cloud împărțit",
+    "aName": "Lorena",
+    "a": "Filmările tale au umplut spațiul nostru comun și nu-mi pot salva pozele. Te rog să ștergi câteva sau să-ți plătești unul separat.",
+    "bName": "Kofi",
+    "b": "Sunt toate filmări cu familia și nu vreau să le pierd. Le mut pe un hard disk, dar dă-mi câteva zile."
+  },
+  "videoCallCamera": {
+    "title": "📹 Camera pornită la apelurile video",
+    "aName": "Helga",
+    "a": "Apelul nostru săptămânal în familie e singurul moment când ne vedem, iar tu ții camera oprită. E ca și cum aș vorbi cu un perete.",
+    "bName": "Dylan",
+    "b": "De obicei gătesc sau sunt în pijama. Sunt acolo și ascult, și nu cred că camera e ce contează."
+  },
+  "doorbellCamera": {
+    "title": "🚪 Camera de la sonerie",
+    "aName": "Mara",
+    "a": "Ai instalat o cameră care vede toată aleea din față și o văd și vecinii. Aș vrea să o orientezi în altă parte.",
+    "bName": "Tedi",
+    "b": "Ne-au furat două colete iarna trecută și filmează doar veranda noastră. O înclin puțin mai jos, nicio problemă."
+  },
+  "holdDoor": {
+    "title": "🚪 Ținutul ușii",
+    "aName": "Vasile",
+    "a": "Am ținut ușa pentru un grup întreg și nici unul nu a zis mulțumesc. Durează o secundă să fii politicos.",
+    "bName": "Iasmina",
+    "b": "Lumea se grăbește și nu observă mereu. Ar trebui să o faci pentru că e frumos, nu pentru că aștepți un mulțumesc."
+  },
+  "elevatorSpot": {
+    "title": "🛗 Cine stă în fața liftului",
+    "aName": "Gloria",
+    "a": "Așteptam liftul și te-ai băgat fix când s-au deschis ușile. Eram clar prima aici.",
+    "bName": "Matei",
+    "b": "Aveam un cărucior și liftul era singura variantă pentru mine. Nu te-am văzut, îmi pare rău, dar chiar aveam nevoie."
+  },
+  "cuttingQueue": {
+    "title": "🧍 Tăiatul cozii",
+    "aName": "Ursula",
+    "a": "Ai mers direct la ghișeu în timp ce noi ceilalți am așteptat douăzeci de minute. E coadă în spatele meu.",
+    "bName": "Idris",
+    "b": "Am nevoie doar de o întrebare rapidă și nu comandam. Nu mi-am dat seama că asta e coada pentru asta."
+  },
+  "busPhone": {
+    "title": "🚌 O convorbire tare în autobuz",
+    "aName": "Dorina",
+    "a": "Domnul din spatele meu vorbește pe difuzor de douăzeci de minute și i-am auzit toată ziua. O cască ar fi un gest frumos.",
+    "bName": "Samir",
+    "b": "E un apel urgent și linia e proastă, deci am nevoie de difuzor. Scurtez, nu e nevoie să fii nepoliticoasă."
+  },
+  "shoesInside": {
+    "title": "👟 Pantofii în casă",
+    "aName": "Hye-jin",
+    "a": "Te rog să te descalți la ușă, noi nu purtăm încălțămintea în casă. Tocmai am spălat podeaua.",
+    "bName": "Pavel",
+    "b": "E o zi uscată și tălpile sunt curate. Nu sunt obișnuit, dar mă descalț dacă e atât de important."
+  },
+  "armrest": {
+    "title": "💪 Cotiera împărțită",
+    "aName": "Nolan",
+    "a": "Ai avut ambele cotiere tot filmul și brațul meu atârnă în aer. Cine stă la mijloc le primește pe amândouă, e regula.",
+    "bName": "Jade",
+    "b": "Sunt lângă geam și coatele mele au nevoie de loc. Nu știam că e o regulă, mă dau mai încolo."
+  },
+  "lateRsvp": {
+    "title": "✉️ Răspuns la invitație în ultima clipă",
+    "aName": "Greta",
+    "a": "Am rugat pe toți să răspundă până pe întâi, iar tu ai zis da abia cu o zi înainte. Comandasem deja mâncare pentru cincisprezece.",
+    "bName": "Toma",
+    "b": "Nu știam programul de la serviciu până atunci. O persoană în plus la masă nu strică și am adus un desert."
+  },
+  "thankYouNote": {
+    "title": "💌 Mesaje de mulțumire",
+    "aName": "Edith",
+    "a": "Nunta verișorului tău a fost acum o lună și n-am primit niciun cuvânt despre cadoul nostru. Un bilețel nu costă nimic.",
+    "bName": "Bruno",
+    "b": "Probabil încă se descurcă cu o sută de cadouri. Un mesaj nu e sfârșitul lumii, dă-le timp."
+  },
+  "regift": {
+    "title": "🎁 Un cadou dat mai departe",
+    "aName": "Simona",
+    "a": "Am aflat că fularul primit de la tine fusese cadoul cuiva pentru tine. Mi-a părut că a fost o idee de ultim moment.",
+    "bName": "Lenuș",
+    "b": "Era foarte frumos și nu mi se potrivea mie. Credeam că ți se potrivește ție mai bine și ți l-aș fi dat oricum."
+  },
+  "partyDrink": {
+    "title": "🍾 Ce aduci la petrecere",
+    "aName": "Delia",
+    "a": "Ai venit la cină cu mâinile goale, iar eu am gătit două zile. O sticlă de vin sau niște flori ar fi fost frumoase.",
+    "bName": "Vlăduț",
+    "b": "Ai zis să vin doar eu și te-am luat de la cuvânt. Data viitoare aduc ceva bun."
+  },
+  "escalator": {
+    "title": "⬆️ Statul pe scara rulantă",
+    "aName": "Brigitte",
+    "a": "Ai stat în stânga și i-ai blocat pe toți cei care voiau să urce pe jos. Regula e să stai în dreapta și să mergi în stânga.",
+    "bName": "Andrei",
+    "b": "Port bagaje grele și vreau doar să ajung în siguranță. Nu trebuie să mă grăbesc după programul altcuiva."
+  },
+  "cinemaTalk": {
+    "title": "🎞️ Șoptitul în timpul filmului",
+    "aName": "Clement",
+    "a": "I-ai explicat fiecare scenă prietenei tale în șoaptă tot filmul. Am plătit să mă uit la el, nu să ascult un comentariu continuu.",
+    "bName": "Leila",
+    "b": "Ea e nouă în serial și doar o ajutam să urmărească firul. Mă opresc dacă te-a deranjat cu adevărat."
+  },
+  "neighbourMusic": {
+    "title": "🔈 Un vecin cu petrecere până târziu",
+    "aName": "Adina",
+    "a": "Petrecerea ta era încă zgomotoasă la unu noaptea și unii dintre noi lucrăm dimineața. Un avertisment ar fi fost politicos.",
+    "bName": "Stelian",
+    "b": "Am anunțat blocul și e o noapte pe an. Rog oamenii să intre înăuntru, dar toți se distrează."
+  },
+  "socks": {
+    "title": "🧦 Șosete pe jos",
+    "aName": "Lucia",
+    "a": "E o pereche de șosete de-ale tale lângă pat, alta lângă canapea și una în hol. Le adun în fiecare zi.",
+    "bName": "Bebe",
+    "b": "Sunt doar șosete și le mai port. O să le pun în coș, dar nu trebuie să le numeri."
+  },
+  "cafeSeat": {
+    "title": "☕ Un loc rezervat cu laptopul",
+    "aName": "Ioana",
+    "a": "Laptopul tău ține masa aia de o oră și tu ai plecat în altă parte. Localul e plin și oamenii stau în picioare.",
+    "bName": "Karim",
+    "b": "Am ieșit doar să răspund la un apel și mă întorceam imediat. Lăsatul unei genți e modul în care toți își țin un loc."
+  },
+  "groupProject": {
+    "title": "🎓 Un proiect de grup pe care nu l-a început nimeni",
+    "aName": "Teodora",
+    "a": "Proiectul e pentru peste o săptămână și am scris tot schița singură. Am nevoie ca fiecare dintre voi să-și facă partea până vineri.",
+    "bName": "Ovi",
+    "b": "Am două examene înainte și ți-am zis că părțile mele vor veni mai târziu. Le pot face în weekend."
+  },
+  "puzzle": {
+    "title": "🧩 Puzzle-ul meu terminat de altcineva",
+    "aName": "Grația",
+    "a": "Lucram de o săptămână la puzzle-ul ăla și tu ai pus ultimele douăzeci de piese cât am fost plecată. Voiam să-l termin eu.",
+    "bName": "Horațiu",
+    "b": "Era pe masă și m-am lăsat dus de val. Nu mi-am dat seama că înseamnă atât de mult pentru tine, îmi pare rău."
+  },
+  "hedge": {
+    "title": "🌿 Gardul viu al vecinului",
+    "aName": "Barbara",
+    "a": "Gardul tău viu a crescut peste trotuar și trebuie să calc pe stradă ca să trec. E așa din primăvară.",
+    "bName": "Ionuț",
+    "b": "Tot vreau să-l tund și vremea a fost groaznică. Îl fac duminică, puteai să bați la ușă."
+  }
+}

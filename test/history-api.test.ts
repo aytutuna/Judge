@@ -285,6 +285,35 @@ describe("GET /api/v1/me/history: gates", () => {
   });
 });
 
+describe("GET /api/v1/me/history: a verdict typed with three sides", () => {
+  it("is listed with its sides and winner for an app that sends Judge-Sides, and not otherwise", async () => {
+    const u = await owner();
+    const plain = await saveVerdict(u);
+    const id = uid("v");
+    await saveVerdictWithOriginals({
+      id,
+      input: "Party A, Party B and Party C argue",
+      result: {
+        ...RESULT,
+        verdict: "too_close",
+        runs: ["split", "split", "split"],
+        headline: "Party C is right",
+        parties: ["a", "b", "c"],
+        winner: "c",
+        votes: ["c", "c", "c"],
+      },
+      kind: "premium",
+      ownerUserId: u,
+      original: { v: 1, text: "As written", nameMap: [] },
+    });
+    const items = async (headers: Record<string, string>) =>
+      (await body<HistoryResponse>(await historyHandler(req("GET", "/api/v1/me/history", { user: u, headers })))).items;
+    expect((await items({})).map((r) => r.id)).toEqual([plain]);
+    const row = (await items({ "judge-sides": "4" })).find((r) => r.id === id);
+    expect([row?.parties, row?.winner]).toEqual([["a", "b", "c"], "c"]);
+  });
+});
+
 describe("GET /api/v1/me/history: one list", () => {
   it("merges verdicts, jobs, cases started and cases answered, newest first, each with its state", async () => {
     const u = await owner(5);

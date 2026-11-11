@@ -1,15 +1,10 @@
 import SwiftUI
 
-/// Settings → Account: who is signed in, plan and credits, restore
-/// purchases (when the store is set up), sign out and delete; signed out, a
-/// way into sign-in. Either action takes the account's verdicts off the
-/// phone; ones no account has stay. The confirmations are alerts owned by
-/// the list (alerts on list sections are unreliable).
+/// Settings → Account: who is signed in (a row into the account page),
+/// plan and credits, restore purchases (when the store is set up) and
+/// Pricing; signed out, a way into sign-in.
 struct AccountSection: View {
     @Environment(AppModel.self) private var app
-    @Binding var confirmSignOut: Bool
-    @Binding var confirmDelete: Bool
-    @Binding var changePassword: Bool
 
     var body: some View {
         let account = app.account
@@ -19,6 +14,16 @@ struct AccountSection: View {
                 signedIn(lang, account: account)
             } else {
                 signedOut(lang)
+            }
+            NavigationLink(value: SettingsRoute.pricing) {
+                Label {
+                    Text(L10n.navPricing(lang))
+                        .brandText(.body)
+                        .foregroundStyle(Brand.ink)
+                } icon: {
+                    Image(systemName: "sparkle")
+                        .foregroundStyle(Brand.terraInk)
+                }
             }
         } header: {
             Kicker(text: L10n.accountTitle(lang))
@@ -31,9 +36,11 @@ struct AccountSection: View {
     @ViewBuilder
     private func signedIn(_ lang: AppLang, account: AccountModel) -> some View {
         if let email = account.user?.email, !email.isEmpty {
-            Text(L10n.accountSignedInAs(lang, email: email))
-                .brandText(.body)
-                .foregroundStyle(Brand.ink)
+            NavigationLink(value: SettingsRoute.account) {
+                Text(L10n.accountSignedInAs(lang, email: email))
+                    .brandText(.body)
+                    .foregroundStyle(Brand.ink)
+            }
         } else if account.failure != .loadFailed {
             HStack(spacing: 10) {
                 ProgressView().tint(Brand.muted)
@@ -55,21 +62,6 @@ struct AccountSection: View {
             }
             .disabled(purchases.isRestoring || account.busy != nil)
         }
-        if account.canManagePassword {
-            actionRow(account.hasPassword ? L10n.accountPasswordChange(lang) : L10n.accountPasswordSet(lang), busy: false, color: Brand.ink) {
-                account.beginPasswordChange()
-                changePassword = true
-            }
-            .disabled(account.busy != nil)
-        }
-        actionRow(L10n.accountSignOut(lang), busy: account.busy == .signOut, color: Brand.ink) {
-            confirmSignOut = true
-        }
-        .disabled(account.busy != nil)
-        actionRow(L10n.accountDelete(lang), busy: account.busy == .delete, color: Brand.danger) {
-            confirmDelete = true
-        }
-        .disabled(account.busy != nil)
     }
 
     private func signedOut(_ lang: AppLang) -> some View {
@@ -85,14 +77,10 @@ struct AccountSection: View {
 
     @ViewBuilder
     private func footer(_ lang: AppLang, account: AccountModel) -> some View {
-        if let failure = account.failure, failure == .deleteFailed || failure == .loadFailed {
+        if let failure = account.failure, failure == .loadFailed {
             Text(failure.message(lang))
                 .brandText(.footnote)
                 .foregroundStyle(Brand.danger)
-        } else if account.isSignedIn, account.passwordSaved {
-            Text(L10n.accountPasswordSaved(lang))
-                .brandText(.footnote)
-                .foregroundStyle(Brand.muted)
         } else if account.isSignedIn, let restored = app.purchases.restoreResult {
             Text(restored.text(lang))
                 .brandText(.footnote)
@@ -144,100 +132,64 @@ struct AccountSection: View {
     }
 }
 
-/// Settings → Password: set one, or replace the current one (which the
-/// server asks for unless the session is a fresh code sign-in).
-struct PasswordSheet: View {
+/// Settings → Account page: the email and Delete account, with its
+/// confirmation. Deleting takes the account's verdicts off the phone; ones
+/// no account has stay.
+struct AccountView: View {
     @Environment(AppModel.self) private var app
     @Environment(\.dismiss) private var dismiss
-    @State private var current = ""
-    @State private var next = ""
-    @State private var showPassword = false
-    @FocusState private var focus: Field?
-
-    private enum Field: Hashable {
-        case current, next
-    }
+    @State private var confirmDelete = false
 
     var body: some View {
         let account = app.account
         let lang = app.lang
-        let replacing = account.hasPassword
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                Text(replacing ? L10n.accountPasswordChange(lang) : L10n.accountPasswordSet(lang))
-                    .brandText(.display1)
-                    .foregroundStyle(Brand.ink)
-                    .accessibilityAddTraits(.isHeader)
-                if replacing {
-                    field(L10n.accountPasswordCurrent(lang), text: $current, type: .password, focus: .current)
-                }
-                field(L10n.signinPasswordNew(lang), text: $next, type: .newPassword, focus: .next)
-                Button(L10n.signinPasswordShow(lang)) { showPassword.toggle() }
-                    .buttonStyle(LinkButtonStyle())
-                    .accessibilityAddTraits(showPassword ? .isSelected : [])
-                if let failure = account.failure, failure != .loadFailed {
-                    ErrorBanner(message: failure.message(lang))
+        List {
+            Section {
+                if let email = account.user?.email, !email.isEmpty {
+                    Text(L10n.accountSignedInAs(lang, email: email))
+                        .brandText(.body)
+                        .foregroundStyle(Brand.ink)
                 }
                 Button {
-                    save(replacing: replacing)
+                    confirmDelete = true
                 } label: {
-                    if account.busy == .password {
-                        ProgressView().tint(Brand.ivory)
-                    } else {
-                        Text(L10n.signinPasswordSave(lang))
+                    HStack {
+                        Text(L10n.accountDelete(lang))
+                            .brandText(.body)
+                            .foregroundStyle(Brand.danger)
+                        Spacer()
+                        if account.busy == .delete {
+                            ProgressView().tint(Brand.muted)
+                        }
                     }
+                    .contentShape(Rectangle())
                 }
-                .buttonStyle(PrimaryButtonStyle())
-                .disabled(account.busy != nil || next.isEmpty || (replacing && current.isEmpty))
-                Button(L10n.appCancel(lang)) { dismiss() }
-                    .buttonStyle(LinkButtonStyle())
-                    .disabled(account.busy != nil)
+                .buttonStyle(.plain)
+                .disabled(account.busy != nil)
+            } footer: {
+                if account.failure == .deleteFailed {
+                    Text(AccountModel.Failure.deleteFailed.message(lang))
+                        .brandText(.footnote)
+                        .foregroundStyle(Brand.danger)
+                }
             }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 24)
+            .listRowBackground(Brand.paper)
         }
-        .scrollDismissesKeyboard(.interactively)
+        .scrollContentBackground(.hidden)
         .background(Brand.ivory.ignoresSafeArea())
-        .interactiveDismissDisabled(account.busy != nil)
-        .environment(\.locale, lang.locale)
+        .navigationTitle(L10n.accountTitle(lang))
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(Brand.ivory, for: .navigationBar)
+        .alert(L10n.appAccountDeleteTitle(lang), isPresented: $confirmDelete) {
+            Button(L10n.appAccountDeleteConfirm(lang), role: .destructive) {
+                Task { await app.account.deleteAccount() }
+            }
+            Button(L10n.accountDeleteCancel(lang), role: .cancel) {}
+        } message: {
+            Text(L10n.appAccountDeleteBody(lang))
+        }
         .onChange(of: account.isSignedIn) { _, signedIn in
             if !signedIn { dismiss() }
-        }
-    }
-
-    private func field(_ label: String, text: Binding<String>, type: UITextContentType, focus which: Field) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text(label)
-                .brandText(.slotTitle)
-                .foregroundStyle(Brand.ink)
-            Group {
-                if showPassword {
-                    TextField("", text: text)
-                } else {
-                    SecureField("", text: text)
-                }
-            }
-            .focused($focus, equals: which)
-            .textContentType(type)
-            .textInputAutocapitalization(.never)
-            .autocorrectionDisabled()
-            .submitLabel(which == .current ? .next : .go)
-            .onSubmit {
-                if which == .current { focus = .next } else { save(replacing: app.account.hasPassword) }
-            }
-            .brandText(.body)
-            .foregroundStyle(Brand.ink)
-            .padding(.horizontal, 16)
-            .frame(minHeight: 52)
-            .paperSurface(radius: Radius.field, fill: Brand.paper, border: focus == which ? Brand.terraInk : Brand.line2)
-            .accessibilityLabel(label)
-        }
-    }
-
-    private func save(replacing: Bool) {
-        guard !next.isEmpty, !replacing || !current.isEmpty else { return }
-        Task {
-            if await app.account.changePassword(next, current: replacing ? current : nil) { dismiss() }
         }
     }
 }

@@ -60,7 +60,7 @@ function sendConfirm(): Promise<boolean> {
 
 /** Pages a gated account can still open: its account (to delete it) and
  * the two legal pages. */
-const OPEN_PAGES = new Set(["/account", "/settings", "/privacy", "/terms"]);
+const OPEN_PAGES = new Set(["/account", "/settings", "/settings/account", "/privacy", "/terms"]);
 
 /** The 18+ box, shared by the sign-in page and the dialog below. */
 export function AdultCheck({ lang, checked, onChange }: { lang: Lang; checked: boolean; onChange: (v: boolean) => void }) {
@@ -111,7 +111,7 @@ export function AgeDialogBody({ lang, age, ticked, saving, failed, contactEmail,
         ) : null}
         <div className={styles.row}>
           {signOut}
-          <Link href="/settings" className={styles.link}>
+          <Link href="/settings/account" className={styles.link}>
             {t(lang, "account.delete")}
           </Link>
         </div>

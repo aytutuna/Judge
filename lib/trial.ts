@@ -16,6 +16,7 @@ import { z } from "zod";
 import { claudeJson } from "./claude";
 import { loadLocales, voiceNote, type Lang } from "./i18n";
 import { LANGS } from "./langs";
+import { partyLabel, winnerOf } from "./multi";
 import { humanStyle } from "./style";
 import { CruxTrial, type VerdictResult } from "./types";
 
@@ -66,6 +67,21 @@ const TR_TRIAL_BLOCK = `
 
 LANGUAGE: Write the attack and reasoning text in Turkish, following the VOICE rules below, addressing the reader with informal "sen", never "siz". Refer to the parties as "Taraf A" and "Taraf B". Keep all JSON enum values exactly as specified in the schema (English identifiers).`;
 
+/** "Party A, Party B and Party C" for a dispute with `sides` sides. */
+function sideList(word: string, sides: number): string {
+  const labels = ["A", "B", "C", "D"].slice(0, sides).map((l) => `${word} ${l}`);
+  return labels.join(", ").replace(/, ([^,]*)$/, " and $1");
+}
+
+/** The two trial prompts worded for a dispute with `sides` sides (three or
+ * four); two sides get the prompts as they are. */
+export function attackerSystem(sides = 2): string {
+  return sides > 2 ? ATTACKER_SYSTEM.replace("between Party A and Party B", `among ${sideList("Party", sides)}`) : ATTACKER_SYSTEM;
+}
+export function adjudicatorSystem(sides = 2): string {
+  return sides > 2 ? ADJUDICATOR_SYSTEM.replace("between Party A and Party B", `among ${sideList("Party", sides)}`) : ADJUDICATOR_SYSTEM;
+}
+
 /** Output schemas (compact form, converted by toClaudeSchema), mirroring
  * lib/judge.ts style. */
 const ATTACKER_SCHEMA = {
@@ -102,7 +118,7 @@ export function shouldTryCrux(result: VerdictResult): boolean {
   return (
     // A winner was declared — split/conditional/dissolved/too_close have no
     // single ruling to attack.
-    (result.verdict === "side_a" || result.verdict === "side_b") &&
+    (result.parties ? winnerOf(result) !== null : result.verdict === "side_a" || result.verdict === "side_b") &&
     // Only fact/logic ground is testable. A framework-decided values win has
     // no factual basis to attack; "mixed" is included because a winner ruling
     // on a mixed dispute rests on its fact/logic component (the attacker
@@ -140,6 +156,7 @@ export function applyCruxTrial(result: VerdictResult, trial: CruxTrial): Verdict
 
 /** Compact ruling summary both trial calls receive. */
 function rulingSummary(result: VerdictResult): string {
+  if (result.parties) return multiRulingSummary(result);
   const facts = result.facts_relied_on.length
     ? result.facts_relied_on.map((f) => `- ${f}`).join("\n")
     : "(none listed — the ruling rests on logic, not contested facts)";
@@ -153,9 +170,28 @@ function rulingSummary(result: VerdictResult): string {
   ].join("\n");
 }
 
-function trialLanguageBlock(lang: Lang): string {
+/** rulingSummary for three or four sides: the winner and every side's bedrock. */
+function multiRulingSummary(result: VerdictResult): string {
+  const facts = result.facts_relied_on.length
+    ? result.facts_relied_on.map((f) => `- ${f}`).join("\n")
+    : "(none listed — the ruling rests on logic, not contested facts)";
+  const winner = winnerOf(result);
+  return [
+    `WINNING SIDE: ${winner ? partyLabel(winner) : "none"}`,
+    `DISPUTE TYPE: ${result.dispute_type}`,
+    `CRUX: ${result.crux}`,
+    `FACTS RELIED ON:\n${facts}`,
+    ...(result.sides ?? []).map((s) => `${partyLabel(s.party).toUpperCase()}'S BEDROCK PREMISE: ${s.bedrock}`),
+  ].join("\n");
+}
+
+function trialLanguageBlock(lang: Lang, sides = 2): string {
   if (lang === "en") return "";
-  if (lang === "tr") return TR_TRIAL_BLOCK;
+  if (lang === "tr") {
+    return sides > 2
+      ? TR_TRIAL_BLOCK.replace('"Taraf A" and "Taraf B"', sideList("Taraf", sides).replace(/Taraf (\w)/g, '"Taraf $1"'))
+      : TR_TRIAL_BLOCK;
+  }
   const voice = voiceNote(lang);
   return `
 
@@ -172,10 +208,11 @@ async function trialCalls(
   const context = `THE ARGUMENT:\n\n${anonymizedArgument}\n\nTHE RULING:\n\n${summary}`;
   // Both texts are shown on the verdict card, so both calls get the voice.
   await loadLocales();
-  const langBlock = `${trialLanguageBlock(lang)}\n\n${humanStyle(lang)}`;
+  const sides = result.parties?.length ?? 2;
+  const langBlock = `${trialLanguageBlock(lang, sides)}\n\n${humanStyle(lang)}`;
 
   const attackRes = await claudeJson<unknown>({
-    system: `${ATTACKER_SYSTEM}${langBlock}`,
+    system: `${attackerSystem(sides)}${langBlock}`,
     user: context,
     schema: ATTACKER_SCHEMA as unknown as Record<string, unknown>,
   });
@@ -210,7 +247,7 @@ async function trialCalls(
   if (isExpired()) return null;
 
   const adjRes = await claudeJson<unknown>({
-    system: `${ADJUDICATOR_SYSTEM}${langBlock}`,
+    system: `${adjudicatorSystem(sides)}${langBlock}`,
     user: `${context}\n\nTHE ATTACK:\n\n${attacker.data.attack}`,
     schema: ADJUDICATOR_SCHEMA as unknown as Record<string, unknown>,
   });

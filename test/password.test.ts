@@ -309,6 +309,16 @@ describe("POST /api/v1/me/password", () => {
     expect((await signInPassword("change@example.com", "third password")).status).toBe(200);
   });
 
+  it("a first password needs a recent sign-in too", async () => {
+    const sent = emailOn();
+    const token = await codeSignIn(sent, "stale@example.com");
+    await age(token, 30);
+    const res = await setPassword(token, { password: "first password" });
+    expect(res.status).toBe(403);
+    expect((await res.json()).code).toBe("password_required");
+    expect((await signInPassword("stale@example.com", "first password")).status).toBe(401);
+  });
+
   it("a wrong current password is refused even on a recent session", async () => {
     const sent = emailOn();
     const token = await codeSignIn(sent, "fresh@example.com");
@@ -327,6 +337,31 @@ describe("POST /api/v1/me/password", () => {
     expect((await setPassword(first, { password: "second password" })).status).toBe(200);
     expect((await me(first)).status).toBe(200);
     expect((await me(other)).status).toBe(401);
+  });
+
+  it("the first password signs no other session out", async () => {
+    const sent = emailOn();
+    const phone = await codeSignIn(sent, "first@example.com");
+    const browser = await codeSignIn(sent, "first@example.com");
+    expect((await setPassword(browser, { password: "first password" })).status).toBe(200);
+    expect((await me(phone)).status).toBe(200);
+    expect((await me(browser)).status).toBe(200);
+    // Changing it does.
+    expect((await setPassword(browser, { password: "second password" })).status).toBe(200);
+    expect((await me(phone)).status).toBe(401);
+  });
+
+  it("refuses to set a password on the review account", async () => {
+    emailOn();
+    vi.stubEnv("REVIEW_ACCOUNT_EMAIL", "review3@example.com");
+    vi.stubEnv("REVIEW_ACCOUNT_CODE", "482915");
+    expect((await sendCode("review3@example.com")).status).toBe(200);
+    const signed = await post("/sign-in/email-otp", { email: "review3@example.com", otp: "482915" });
+    const token = ((await signed.json()) as { token: string }).token;
+    const res = await setPassword(token, { password: "correct horse" });
+    expect(res.status).toBe(403);
+    expect((await res.json()).code).toBe("invalid");
+    expect((await signInPassword("review3@example.com", "correct horse")).status).toBe(401);
   });
 
   it("forgot password: a new code sign-in lets a new password replace the old one", async () => {
@@ -375,7 +410,13 @@ describe("POST /api/v1/me/password", () => {
       args: ["credential", "race@example.com"],
     });
     expect(Number(rs.rows[0].n)).toBe(1);
-    expect((await signInPassword("race@example.com", "second password")).status).toBe(200);
+    // Which request reaches the writer first depends on timing; the later
+    // one wins, and only its password works.
+    const signIns = [
+      (await signInPassword("race@example.com", "first password")).status,
+      (await signInPassword("race@example.com", "second password")).status,
+    ];
+    expect(signIns.filter((s) => s === 200)).toHaveLength(1);
   });
 
   it("limits attempts per account", async () => {
@@ -388,6 +429,35 @@ describe("POST /api/v1/me/password", () => {
       statuses.push((await setPassword(token, { password: "other password", current: "a guess" })).status);
     }
     expect(statuses).toEqual([403, 403, 403, 403, 429, 429]);
+  });
+});
+
+describe("needsPassword in /me", () => {
+  const needs = async (token: string) => ((await (await me(token)).json()) as { needsPassword: boolean }).needsPassword;
+
+  it("is true after a code sign-in until a password is set", async () => {
+    const sent = emailOn();
+    const token = await codeSignIn(sent, "needs@example.com");
+    expect(await needs(token)).toBe(true);
+    await setPassword(token, { password: "first password" });
+    expect(await needs(token)).toBe(false);
+  });
+
+  it("is false for the review account, which signs in with its fixed code", async () => {
+    emailOn();
+    vi.stubEnv("REVIEW_ACCOUNT_EMAIL", "review2@example.com");
+    vi.stubEnv("REVIEW_ACCOUNT_CODE", "482915");
+    expect((await sendCode("review2@example.com")).status).toBe(200);
+    const res = await post("/sign-in/email-otp", { email: "review2@example.com", otp: "482915" });
+    expect(res.status).toBe(200);
+    expect(await needs(((await res.json()) as { token: string }).token)).toBe(false);
+  });
+
+  it("is false when the deployment has no passwords", async () => {
+    const sent = emailOn();
+    const token = await codeSignIn(sent, "off@example.com");
+    vi.stubEnv("RESEND_API_KEY", "");
+    expect(await needs(token)).toBe(false);
   });
 });
 

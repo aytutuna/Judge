@@ -30,7 +30,6 @@ const sv: AppLocale = {
     "app.history.removeFailed": "Det gick inte att ta bort {n} av dem. Kolla din uppkoppling och försök igen.",
     "app.history.offlineRemove": "Du är offline. Du måste vara uppkopplad för att ta bort.",
     "app.pricing.free.account": "Logga in med Apple, Google eller e-post",
-    "app.context.label": "Komplettering (valfritt)",
     "app.pricing.context": "Bilder till kompletteringen läses och kastas sedan, utan extra kostnad",
     "app.pricing.headline": "Din första dom bjuder vi på.",
     "app.pricing.sub":
@@ -102,50 +101,6 @@ const sv: AppLocale = {
     "app.home.addTheirSide": "Lägg till den andras sida",
     "app.home.removeTheirSide": "Ta bort den andras sida",
     "app.home.clear": "Rensa",
-    "app.example.dishwasher.aName": "Emma",
-    "app.example.dishwasher.a":
-      "Du har ställt skålarna i överkorgen igen. Där uppe blir de aldrig rena – det är ju det underkorgen är till för.",
-    "app.example.dishwasher.bName": "Johan",
-    "app.example.dishwasher.b":
-      "De får plats fint där uppe, och då blir underkorgen ledig för kastrullerna. Jag har plockat in disken så här i flera år och allt har blivit rent.",
-    "app.example.bill.aName": "Sara",
-    "app.example.bill.a":
-      "Jag drack ingenting, så jag borde inte betala en fjärdedel av vinet. Att dela lika på maten går bra för mig.",
-    "app.example.bill.bName": "Erik",
-    "app.example.bill.b":
-      "Vi delar alltid bara på fyra. Att räkna ut vem som tog vad varje gång är jobbigt, och det är ändå ingen stor skillnad.",
-    "app.example.thermostat.aName": "Linnea",
-    "app.example.thermostat.a":
-      "Det är 19 grader här inne och jag fryser fast jag har luvtröja på mig. Att höja till 22 är väl inte orimligt.",
-    "app.example.thermostat.bName": "Anton",
-    "app.example.thermostat.b":
-      "22 grader är alldeles för varmt att sova i. Du kan ta på dig ett lager till, jag kan inte ta av mig mer.",
-    "app.example.roadTrip.aName": "Ida",
-    "app.example.roadTrip.a": "Jag körde hela vägen dit, sex timmar. Det är bara rättvist att du kör hem.",
-    "app.example.roadTrip.bName": "Viktor",
-    "app.example.roadTrip.b":
-      "Jag sa innan vi åkte att jag hatar att köra i mörker, och vi åker sju i kväll. Nästa gång kör jag på morgnarna.",
-    "app.example.seat.aName": "Klara",
-    "app.example.seat.a": "Mitt säte går att fälla bakåt, så jag fäller det. Det är ett nattflyg och alla försöker sova.",
-    "app.example.seat.bName": "Filip",
-    "app.example.seat.b":
-      "Jag är 191 cm lång och knäna trycker redan mot ditt säte. Du kunde åtminstone fråga innan du fäller det ända bak.",
-    "app.example.spoiler.aName": "Wilma",
-    "app.example.spoiler.a":
-      "Du berättade vem mördaren var innan jag ens hade börjat på sista avsnittet. Jag hade väntat på det hela veckan.",
-    "app.example.spoiler.bName": "Axel",
-    "app.example.spoiler.b":
-      "Det kom ut för tre veckor sedan och du sa att du hade sett klart. Jag kan inte hålla koll på hur långt alla har kommit.",
-    "app.example.jacket.aName": "Albin",
-    "app.example.jacket.a": "Du hade på dig min jeansjacka på konserten utan att fråga. Den luktade rök när jag fick tillbaka den.",
-    "app.example.jacket.bName": "Ebba",
-    "app.example.jacket.b":
-      "Den hängde vid dörren och du använder den aldrig. Jag hade frågat, men du sov och jag var redan sen.",
-    "app.example.lastSlice.aName": "Lucas",
-    "app.example.lastSlice.a": "Jag paxade sista pizzabiten innan filmen började. Alla hörde mig.",
-    "app.example.lastSlice.bName": "Alva",
-    "app.example.lastSlice.b":
-      "Man kan inte paxa något och sedan inte röra det på två timmar. Den låg bara där och kallnade, så jag åt upp den.",
     "app.case.waitingKicker": "Fall · väntar",
     "app.case.waitingFor": "Väntar på {name}",
     "app.case.waitingLead":
@@ -168,9 +123,7 @@ const sv: AppLocale = {
     "app.verdict.claims": "Hur varje sida resonerade",
     "app.verdict.back": "Domen",
     "app.appeal.title": "Komplettera och döm om",
-    "app.appeal.intro": "Missade domarna något? Lägg till det så dömer de igen. Den första domen finns kvar.",
-    "app.appeal.ask": "Vad behöver de veta?",
-    "app.appeal.placeholder": "Ett faktum, ett meddelande eller vad ni faktiskt kom överens om.",
+    "app.appeal.placeholder": "Vad missade domarna? Ett faktum, ett meddelande eller vad ni faktiskt kom överens om.",
     "app.appeal.cost": "Kostar 1 dom. Du kan komplettera två gånger per dom ({left} kvar).",
     "app.appeal.costCase": "Kostar 1 dom. Du kan komplettera en gång per fall.",
     "app.appeal.submit": "Döm om",

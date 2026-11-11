@@ -1,15 +1,62 @@
 import Foundation
 
-/// Display names for the two parties (the label half of lib/names.ts).
+extension Party {
+    /// "Party C" in the app's language; empty for a party this build does not know.
+    func label(_ lang: AppLang) -> String {
+        switch self {
+        case .a: return L10n.partyA(lang)
+        case .b: return L10n.partyB(lang)
+        case .c: return L10n.partyC(lang)
+        case .d: return L10n.partyD(lang)
+        case .unknown: return ""
+        }
+    }
+}
+
+/// Display names for the parties (the label half of lib/names.ts). C and D
+/// are only read on verdicts with more than two sides.
 struct PartyNames: Sendable, Equatable {
     let nameA: String
     let nameB: String
+    let nameC: String
+    let nameD: String
     /// Structural second-person flags: never detect "you" by comparing names.
     let aIsSelf: Bool
     let bIsSelf: Bool
+    let cIsSelf: Bool
+    let dIsSelf: Bool
 
-    func name(_ party: Party) -> String { party == .a ? nameA : nameB }
-    func isSelf(_ party: Party) -> Bool { party == .a ? aIsSelf : bIsSelf }
+    init(
+        nameA: String, nameB: String, nameC: String = "", nameD: String = "",
+        aIsSelf: Bool, bIsSelf: Bool, cIsSelf: Bool = false, dIsSelf: Bool = false
+    ) {
+        self.nameA = nameA
+        self.nameB = nameB
+        self.nameC = nameC
+        self.nameD = nameD
+        self.aIsSelf = aIsSelf
+        self.bIsSelf = bIsSelf
+        self.cIsSelf = cIsSelf
+        self.dIsSelf = dIsSelf
+    }
+
+    func name(_ party: Party) -> String {
+        switch party {
+        case .a: return nameA
+        case .c: return nameC
+        case .d: return nameD
+        case .b, .unknown: return nameB
+        }
+    }
+
+    func isSelf(_ party: Party) -> Bool {
+        switch party {
+        case .a: return aIsSelf
+        case .c: return cIsSelf
+        case .d: return dIsSelf
+        case .b, .unknown: return bIsSelf
+        }
+    }
 }
 
 /// Port of the label half of lib/names.ts: canonicalLabel, bareName,
@@ -33,18 +80,39 @@ enum Names {
     }
 
     /// "taraf b'ye" -> "Party B", "Kişi C" -> "Person C"; nil for anything
-    /// that is not a person label.
-    static func canonicalLabel(_ replacement: String) -> String? {
+    /// that is not a person label. `sides` is how many sides the document
+    /// has: only one with more than two reads "Party C" and "Party D" as
+    /// sides, and other people then start at Person E.
+    static func canonicalLabel(_ replacement: String, sides: Int = 2) -> String? {
         let text = replacement.trimmingCharacters(in: .whitespacesAndNewlines)
-        let pattern = #/^(?:(?:party|taraf)\s+([ab])|(?:person|kişi)\s+([c-z]))(?:['’]\p{L}*)?$/#.ignoresCase()
-        guard let match = text.wholeMatch(of: pattern) else { return nil }
-        if let party = match.output.1 { return "Party \(party.uppercased())" }
-        if let person = match.output.2 { return "Person \(person.uppercased())" }
+        let party: Substring?
+        let person: Substring?
+        if sides > 2 {
+            let pattern = #/^(?:(?:party|taraf)\s+([a-d])|(?:person|kişi)\s+([e-z]))(?:['’]\p{L}*)?$/#.ignoresCase()
+            guard let found = text.wholeMatch(of: pattern) else { return nil }
+            party = found.output.1
+            person = found.output.2
+        } else {
+            let pattern = #/^(?:(?:party|taraf)\s+([ab])|(?:person|kişi)\s+([c-z]))(?:['’]\p{L}*)?$/#.ignoresCase()
+            guard let found = text.wholeMatch(of: pattern) else { return nil }
+            party = found.output.1
+            person = found.output.2
+        }
+        if let party {
+            if sides > 2, party.uppercased() > lastSide(sides) { return nil }
+            return "Party \(party.uppercased())"
+        }
+        if let person { return "Person \(person.uppercased())" }
         return nil
     }
 
-    private static func labelLetter(_ replacement: String) -> String? {
-        canonicalLabel(replacement).flatMap { $0.last.map(String.init) }
+    /// The letter of the last side of a document ("B", "C" or "D").
+    static func lastSide(_ sides: Int) -> String {
+        String(UnicodeScalar(UInt8(64 + min(max(sides, 2), 4))))
+    }
+
+    private static func labelLetter(_ replacement: String, sides: Int = 2) -> String? {
+        canonicalLabel(replacement, sides: sides).flatMap { $0.last.map(String.init) }
     }
 
     /// A name minus a Turkish case suffix or English possessive after an
@@ -75,15 +143,19 @@ enum Names {
     /// first-person writer in A; the side that answered a case is B), and the
     /// Turkish forms only when the argument was judged in Turkish. For names,
     /// a capitalized entry beats a lowercase description.
-    static func resolveParties(_ nameMap: [NameMapping], selfLang: AppLang, selfParty: String = "A") -> [String: Resolved] {
+    static func resolveParties(_ nameMap: [NameMapping], selfLang: AppLang, selfParty: String = "A", sides: Int = 2) -> [String: Resolved] {
         var parties: [String: Resolved] = [:]
+        let last = lastSide(sides)
         for mapping in nameMap {
-            guard let letter = labelLetter(mapping.replacement) else { continue }
+            guard let letter = labelLetter(mapping.replacement, sides: sides) else { continue }
             let name = bareName(mapping.original)
             guard !name.isEmpty else { continue }
             let current = parties[letter]
             if letter == selfParty, isSelfOriginal(name, selfLang: selfLang) {
                 parties[letter] = Resolved(name: name, isSelf: true)
+            } else if letter > last, isSelfOriginal(name, selfLang: selfLang) {
+                // A first-person word never names someone who is not a side.
+                continue
             } else if let current {
                 if !current.isSelf, !startsUpper(current.name), startsUpper(name) {
                     parties[letter] = Resolved(name: name, isSelf: false)
@@ -97,7 +169,10 @@ enum Names {
 
     /// Labels follow `lang` (the UI language); narrator detection follows
     /// `selfLang` (the language the argument was judged in).
-    static func partyNames(_ nameMap: [NameMapping], lang: AppLang, selfLang: AppLang) -> PartyNames {
+    static func partyNames(_ nameMap: [NameMapping], lang: AppLang, selfLang: AppLang, sides: Int = 2) -> PartyNames {
+        if sides > 2 {
+            return partyNamesFor(Party.sides(sides), nameMap, lang: lang, selfLang: selfLang)
+        }
         let parties = resolveParties(nameMap, selfLang: selfLang)
         let a = parties["A"]
         let b = parties["B"]
@@ -112,6 +187,31 @@ enum Names {
             nameB: b?.name ?? L10n.partyB(lang),
             aIsSelf: a?.isSelf ?? false,
             bIsSelf: false
+        )
+    }
+
+    /// Display names for a verdict with three or four sides (partyNamesFor in
+    /// lib/names.ts). The narrator's entry makes `selfParty` "you"; a side the
+    /// map says nothing about shows its label, and with `viewerKnown` the
+    /// viewer's own reads "Party C (you)".
+    static func partyNamesFor(
+        _ sides: [Party], _ nameMap: [NameMapping], lang: AppLang, selfLang: AppLang,
+        selfParty: String = "A", viewerKnown: Bool = false
+    ) -> PartyNames {
+        let resolved = resolveParties(nameMap, selfLang: selfLang, selfParty: selfParty, sides: sides.count)
+        let word = String(L10n.partyA(lang).dropLast())
+        func entry(_ party: Party) -> (name: String, isSelf: Bool) {
+            guard sides.contains(party) else { return ("", false) }
+            let letter = party.letter
+            let label = word + letter
+            if let found = resolved[letter] { return (found.isSelf ? L10n.you(lang) : found.name, found.isSelf) }
+            if viewerKnown, selfParty == letter { return (L10n.partyYouLabel(lang, label: label), true) }
+            return (label, false)
+        }
+        let a = entry(.a), b = entry(.b), c = entry(.c), d = entry(.d)
+        return PartyNames(
+            nameA: a.name, nameB: b.name, nameC: c.name, nameD: d.name,
+            aIsSelf: a.isSelf, bIsSelf: b.isSelf, cIsSelf: c.isSelf, dIsSelf: d.isSelf
         )
     }
 

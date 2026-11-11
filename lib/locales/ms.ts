@@ -119,6 +119,8 @@ const ms: Locale = {
     verdictAria: "Keputusan: {label}",
     "party.a": "Pihak A",
     "party.b": "Pihak B",
+    "party.c": "Pihak C",
+    "party.d": "Pihak D",
     "party.youLabel": "{label} (anda)",
     you: "Anda",
     "shared.subtitle": "Seseorang berkongsi keputusan ini",
@@ -345,8 +347,7 @@ const ms: Locale = {
     "signin.createNote": "Kami akan e-melkan kod kepada anda untuk mengesahkan alamat ini. Anda hanya perlu berbuat demikian sekali.",
     "signin.passwordChoose": "Anda telah log masuk. Pilih kata laluan untuk kali seterusnya.",
     "signin.passwordSave": "Simpan kata laluan",
-    "signin.passwordSaveFailed": "Anda telah log masuk, tetapi kami tidak dapat menyimpan kata laluan. Cuba lagi, atau tetapkan kemudian dalam Tetapan.",
-    "signin.passwordSkip": "Langkau buat masa ini",
+    "signin.passwordSaveFailed": "Kami tidak dapat menyimpan kata laluan. Cuba lagi.",
     "signin.passwordSubmit": "Log masuk",
     "signin.rateLimited": "Terlalu banyak cubaan. Tunggu seminit dan cuba lagi.",
     "signin.serviceDown": "Log masuk tidak tersedia buat masa ini. Cuba lagi nanti.",
@@ -374,10 +375,6 @@ const ms: Locale = {
     "account.deleteConfirm":
       "Padam akaun anda? Kredit, pelan dan butiran log masuk anda akan dipadam. Keputusan anda dan versi anda dalam kes akan dibuang: apa yang anda tulis dan nama-nama akan dihapuskan, dan pautan kongsinya tidak lagi berfungsi.",
     "account.deleteYes": "Ya, padam",
-    "account.passwordSet": "Tetapkan kata laluan",
-    "account.passwordChange": "Tukar kata laluan",
-    "account.passwordCurrent": "Kata laluan semasa",
-    "account.passwordSaved": "Kata laluan disimpan.",
     "account.deleteCancel": "Kekalkan akaun saya",
     "account.deleted": "Akaun anda sudah dipadam. Membawa anda ke laman utama…",
     "account.deleteFailed": "Kami tidak dapat memadam akaun sekarang. Boleh cuba lagi?",
@@ -468,6 +465,10 @@ const ms: Locale = {
     "case.judgeNow.yes": "Ya, nilai sekarang",
     "case.judgeExpired.confirm": "Dapatkan keputusan berdasarkan versi anda sahaja? Ini menggunakan 1 keputusan.",
     "case.judgeExpired.yes": "Ya, guna 1 keputusan",
+    "case.side.waiting": "Menunggu",
+    "case.side.answered": "Sudah menjawab",
+    "case.judgeAnswered": "Nilai dengan pihak yang sudah menjawab",
+    "case.judgeAnswered.confirm": "Mahu keputusan daripada pihak yang sudah menjawab? Jemputan lain akan ditutup dan mereka tidak boleh menjawab lagi.",
     "case.cancel": "Batal",
     "case.retry": "Cuba lagi",
     "case.failedBody": "Kredit anda sudah dikembalikan. Anda boleh cuba lagi sekarang.",
@@ -476,9 +477,13 @@ const ms: Locale = {
     "case.accounts": "Apa yang setiap pihak beritahu hakim",
     "case.accountA": "Cerita Pihak A",
     "case.accountB": "Cerita Pihak B",
+    "case.accountC": "Cerita Pihak C",
+    "case.accountD": "Cerita Pihak D",
     "case.accountYou": "Cerita anda ({label})",
     "case.contextA": "Pihak A menambah konteks",
     "case.contextB": "Pihak B menambah konteks",
+    "case.contextC": "Pihak C menambah konteks",
+    "case.contextD": "Pihak D menambah konteks",
     "case.contextYou": "Konteks yang anda tambah ({label})",
     "case.evidenceItem": "Imej {n}, seperti yang dibaca hakim",
     "case.notYet": "Dia belum menjawab lagi.",
@@ -564,6 +569,7 @@ const ms: Locale = {
     "home.yourPlaceholder": "Apa masalahnya?",
     "home.addContext": "Tambah konteks",
     "home.addTheirSide": "Tambah versi dia",
+    "home.addSide": "Tambah satu lagi pihak",
     "home.removeTheirSide": "Buang versi dia",
     "home.sendLink": "Hantar pautan",
     "home.clear": "Kosongkan",
@@ -578,58 +584,9 @@ const ms: Locale = {
     "home.says": "{name} berkata:",
     "home.mySide": "Versi saya:",
     "home.otherSide": "Versi dia:",
-    "pairs.dishwasher.aName": "Aisyah",
-    "pairs.dishwasher.a":
-      "Awak letak mangkuk kat rak atas lagi. Kat atas tu mangkuk tak pernah keluar bersih, sebab tu ada rak bawah.",
-    "pairs.dishwasher.bName": "Haziq",
-    "pairs.dishwasher.b":
-      "Muat saja kat atas, jadi rak bawah kosong untuk periuk. Dah bertahun saya susun macam ni, tak ada pun yang keluar kotor.",
-    "pairs.bill.aName": "Priya",
-    "pairs.bill.a":
-      "Saya minum air kosong saja, jadi saya tak patut bayar suku daripada bil minuman. Kalau makanan dibahagi sama rata, saya okey.",
-    "pairs.bill.bName": "Amir",
-    "pairs.bill.b":
-      "Kita selalu bahagi empat saja. Kira siapa makan apa setiap kali tu leceh, lagipun bezanya bukan banyak mana.",
-    "pairs.thermostat.aName": "Nurul",
-    "pairs.thermostat.a":
-      "Aircond ni 19°C, saya pakai hoodie pun masih sejuk. Naikkan ke 24 bukannya melampau pun.",
-    "pairs.thermostat.bName": "Faizal",
-    "pairs.thermostat.b":
-      "24 tu panas sangat untuk tidur. Awak boleh pakai satu lapis lagi, saya dah tak ada apa nak tanggal.",
-    "pairs.roadTrip.aName": "Syafiq",
-    "pairs.roadTrip.a":
-      "Masa pergi, saya memandu enam jam penuh. Adillah kalau awak pula yang bawa balik.",
-    "pairs.roadTrip.bName": "Hana",
-    "pairs.roadTrip.b":
-      "Sebelum bertolak saya dah cakap saya benci memandu waktu malam, dan kita gerak pukul 7 malam. Lain kali, saya yang pandu waktu pagi.",
-    "pairs.seat.aName": "Arif",
-    "pairs.seat.a":
-      "Kerusi saya boleh direbahkan, jadi saya rebahkanlah. Ini penerbangan malam, semua orang nak tidur.",
-    "pairs.seat.bName": "Siti",
-    "pairs.seat.b":
-      "Saya tinggi 190 cm dan lutut saya dah tertekan pada kerusi awak. Sekurang-kurangnya tanyalah dulu sebelum rebahkan sampai habis.",
-    "pairs.spoiler.aName": "Alia",
-    "pairs.spoiler.a":
-      "Awak beritahu saya siapa pembunuhnya sebelum saya sempat mula tengok episod terakhir. Saya dah tunggu seminggu.",
-    "pairs.spoiler.bName": "Irfan",
-    "pairs.spoiler.b":
-      "Episod tu dah keluar tiga minggu lepas, dan awak kata awak dah habis tengok. Saya tak boleh nak ingat semua orang dah tengok sampai mana.",
-    "pairs.jacket.aName": "Sofea",
-    "pairs.jacket.a":
-      "Awak pakai jaket denim saya pergi konsert tanpa tanya dulu. Bila dapat balik, jaket tu bau asap rokok.",
-    "pairs.jacket.bName": "Adam",
-    "pairs.jacket.b":
-      "Jaket tu tergantung tepi pintu dan awak tak pernah pakai pun. Saya memang nak tanya, tapi awak tengah tidur dan saya dah lambat.",
-    "pairs.lastSlice.aName": "Zul",
-    "pairs.lastSlice.a":
-      "Saya dah cop potongan pizza terakhir sebelum filem mula. Semua orang dengar.",
-    "pairs.lastSlice.bName": "Mira",
-    "pairs.lastSlice.b":
-      "Takkanlah cop lepas tu dua jam tak sentuh. Dah sejuk terbiar kat situ, jadi saya makanlah.",
     "appeal.lead":
-      "Ada yang tertinggal atau salah? Anda boleh menambahnya sekali, dan hakim akan meneliti semuanya semula. Kosnya 1 keputusan.",
-    "appeal.label": "Konteks anda",
-    "appeal.placeholder": "Apa yang hakim terlepas pandang?",
+      "Menggunakan 1 keputusan.",
+    "appeal.placeholder": "Apa yang hakim terlepas pandang? Satu fakta, satu mesej, atau apa yang sebenarnya dipersetujui.",
     "appeal.submit": "Nilai semula dengan konteks",
     "appeal.sending": "Mengeluarkan nama daripada konteks anda…",
     "appeal.judging": "Hakim sedang meneliti semuanya semula…",
@@ -649,8 +606,6 @@ const ms: Locale = {
     "appeal.previous": "Keputusan terdahulu",
     "appeal.failed": "Penilaian semula tidak berjaya. Kredit anda sudah dikembalikan; anda boleh cuba lagi.",
     "appeal.refused": "Hakim tidak mahu menilai semula dengan konteks itu. Kredit anda sudah dikembalikan.",
-    "appeal.leadVerdict":
-      "Ada yang tertinggal atau salah? Tambahkan dan hakim akan meneliti semuanya semula. Setiap kali kosnya 1 keputusan, maksimum dua kali bagi setiap keputusan.",
     "appeal.history": "Sejarah keputusan",
     "faq.both.q": "Bolehkah pihak satu lagi ceritakan versinya?",
     "faq.both.a":
@@ -693,6 +648,7 @@ const ms: Locale = {
     "unavailable.cta": "Pergi ke Judge",
     "error.removed": "Ini sudah dibuang. Pautannya tidak lagi berfungsi.",
     "error.names_unavailable": "Nama tidak dapat disimpan sekarang. Cuba lagi nanti.",
+    "error.update_required": "Kes ini mempunyai lebih daripada dua pihak. Kemas kini apl untuk membukanya.",
     "verdict.remove": "Buang keputusan ini",
     "verdict.remove.confirm":
       "Buang apa yang anda tulis, nama-nama dan nama paparan? Pautan kongsi dan imej pratontonnya akan berhenti dimuatkan untuk semua orang (pratonton yang sudah disiarkan dalam sembang mungkin masih kelihatan sehingga aplikasi itu menyegarkannya). Tindakan ini tidak boleh dibatalkan.",

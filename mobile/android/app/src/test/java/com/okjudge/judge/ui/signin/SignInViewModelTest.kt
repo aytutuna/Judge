@@ -284,21 +284,50 @@ class SignInViewModelTest {
     }
 
     @Test
-    fun skippingTheNewPassword_finishesSignedIn() = runBlocking {
+    fun codeMode_withAPassword_justSignsIn() = runBlocking {
         withPasswords()
         routes.always(SEND_CODE, json(200, """{"success":true}"""))
-        routes.on(VERIFY_CODE, Routes.grant("reset-session"))
+        routes.on(VERIFY_CODE, Routes.grant("code-session"))
         val vm = vm()
-        vm.throughTheCode(SignInMode.FORGOT)
-        vm.await { it.step == SignInStep.CHOOSE_PASSWORD && it.busy == null }
-        vm.skipPassword()
+        vm.throughTheCode(SignInMode.CODE)
         vm.await { it.done }
-        assertEquals("reset-session", tokens.get())
+        assertTrue(routes.requestsTo(SET_PASSWORD).isEmpty())
     }
 
     @Test
-    fun codeMode_neverAsksForAPassword() = runBlocking {
+    fun codeMode_withoutAPassword_mustChooseOne() = runBlocking {
         withPasswords()
+        routes.always(Routes.ME, Routes.me(needsPassword = true))
+        routes.always(SEND_CODE, json(200, """{"success":true}"""))
+        routes.on(VERIFY_CODE, Routes.grant("code-session"))
+        routes.on(SET_PASSWORD, json(200, """{"ok":true}"""))
+        val vm = vm()
+        vm.throughTheCode(SignInMode.CODE)
+        val choosing = vm.await { it.step == SignInStep.CHOOSE_PASSWORD && it.busy == null }
+        assertFalse(choosing.done)
+        vm.onPasswordChange("made-up-pass")
+        vm.savePassword()
+        vm.await { it.done }
+        assertEquals(1, routes.requestsTo(SET_PASSWORD).size)
+    }
+
+    @Test
+    fun createAccount_whenTheServerTakesNoPassword_stillSignsIn() = runBlocking {
+        withPasswords()
+        routes.always(SEND_CODE, json(200, """{"success":true}"""))
+        routes.on(VERIFY_CODE, Routes.grant("code-session"))
+        routes.on(SET_PASSWORD, json(403, """{"code":"invalid"}"""))
+        val vm = vm()
+        vm.throughTheCode(SignInMode.CREATE, "made-up-pass")
+        val done =vm.await { it.done }
+        assertNull(done.error)
+        assertEquals(1, routes.requestsTo(SET_PASSWORD).size)
+    }
+
+    @Test
+    fun codeMode_whenMeCannotBeRead_justSignsIn() = runBlocking {
+        withPasswords()
+        routes.always(Routes.ME, json(503, """{"code":"unavailable"}"""))
         routes.always(SEND_CODE, json(200, """{"success":true}"""))
         routes.on(VERIFY_CODE, Routes.grant("code-session"))
         val vm = vm()

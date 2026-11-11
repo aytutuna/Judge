@@ -39,8 +39,14 @@ enum ClaimKind: String, LenientEnum {
 }
 
 enum Party: String, LenientEnum {
-    case a, b
+    case a, b, c, d
     case unknown = "_unknown"
+
+    /// "A" to "D"; empty for a party this build does not know.
+    var letter: String { self == .unknown ? "" : rawValue.uppercased() }
+
+    /// The first `count` sides of a case: A and B, then C and D.
+    static func sides(_ count: Int) -> [Party] { Array([Party.a, .b, .c, .d].prefix(max(2, min(4, count)))) }
 }
 
 enum CruxTrialOutcome: String, LenientEnum {
@@ -135,7 +141,7 @@ struct Panel: Sendable, Equatable {
 }
 
 enum DisputeFinding: String, LenientEnum {
-    case a, b, unsettled
+    case a, b, c, d, unsettled
     case unknown = "_unknown"
 }
 
@@ -153,10 +159,41 @@ struct DisputedFact: Sendable, Equatable {
     var decisive: Bool
 }
 
-/// Images each party attached that the judges read.
+/// Images each party attached that the judges read. `c` and `d` only count
+/// on cases with more than two sides.
 struct EvidenceUsed: Sendable, Equatable {
     var a: Int
     var b: Int
+    var c = 0
+    var d = 0
+}
+
+/// One side of a verdict with three or four sides: what it claimed and what
+/// it stands on (`sides` in lib/types.ts).
+struct SideSummary: Sendable, Equatable {
+    var party: Party
+    var claims: [Claim]
+    var bedrock: String
+}
+
+/// The line on where a side that did not win fell short.
+struct OtherLine: Sendable, Equatable {
+    var party: Party
+    var line: String
+}
+
+struct DisputePosition: Sendable, Equatable {
+    var party: Party
+    var says: String
+}
+
+/// A fact separate accounts disagree about, on a verdict with more than two
+/// sides (`disputes`).
+struct Dispute: Sendable, Equatable {
+    var fact: String
+    var positions: [DisputePosition]
+    var finding: DisputeFinding
+    var decisive: Bool
 }
 
 /// On a verdict produced by an appeal: how it compares to the one before.
@@ -203,8 +240,20 @@ struct VerdictResult: Sendable, Equatable {
     var evidenceUsed: EvidenceUsed? = nil
     /// Set on verdicts produced by an appeal.
     var appeal: AppealInfo? = nil
+    /// Verdicts with three or four sides only: `verdict` and `runs` are then
+    /// the older two-sided projection and these hold the true result.
+    var parties: [Party]? = nil
+    /// The winning side; nil is too close.
+    var winner: Party? = nil
+    /// One vote per judge run: a side, or `.other` for too close.
+    var votes: [VerdictDisplay.Vote]? = nil
+    var sides: [SideSummary]? = nil
+    var others: [OtherLine]? = nil
+    var disputes: [Dispute]? = nil
 
     var isPremium: Bool { tier == "premium" }
+    var isMany: Bool { parties != nil }
+    var sideCount: Int { parties?.count ?? 2 }
 }
 
 struct NameMapping: Codable, Sendable, Equatable, Hashable {
@@ -244,12 +293,21 @@ struct VerdictRequest: Encodable, Sendable, Equatable {
         var answer: String
     }
 
+    /// One typed side of a request with three or four.
+    struct Side: Encodable, Sendable, Equatable {
+        var text: String
+        var name: String?
+    }
+
     var argument: String
     var lang: AppLang
     var tier: String = "free"
     var clarifications: [Clarification]?
     /// Premium only: signed tokens from POST /api/v1/evidence, in order.
     var evidence: [String]? = nil
+    /// Sides A to C or D as typed, when there are more than two; `argument`
+    /// is then all of them joined.
+    var sides: [Side]? = nil
 }
 
 // MARK: - Decoding
@@ -379,11 +437,52 @@ extension DisputedFact: Decodable {
 }
 
 extension EvidenceUsed: Decodable {
-    private enum CodingKeys: String, CodingKey { case a, b }
+    private enum CodingKeys: String, CodingKey { case a, b, c, d }
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        a = max(0, (try? container.decodeIfPresent(Int.self, forKey: .a)) ?? 0)
+        b = max(0, (try? container.decodeIfPresent(Int.self, forKey: .b)) ?? 0)
+        c = max(0, (try? container.decodeIfPresent(Int.self, forKey: .c)) ?? 0)
+        d = max(0, (try? container.decodeIfPresent(Int.self, forKey: .d)) ?? 0)
+    }
+}
+
+extension SideSummary: Decodable {
+    private enum CodingKeys: String, CodingKey { case party, claims, bedrock }
     init(from decoder: any Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
-        a = max(0, (try? c.decodeIfPresent(Int.self, forKey: .a)) ?? 0)
-        b = max(0, (try? c.decodeIfPresent(Int.self, forKey: .b)) ?? 0)
+        party = (try? c.decodeIfPresent(Party.self, forKey: .party)) ?? .unknown
+        claims = (try? c.decodeIfPresent([Claim].self, forKey: .claims)) ?? []
+        bedrock = (try? c.decodeIfPresent(String.self, forKey: .bedrock)) ?? ""
+    }
+}
+
+extension OtherLine: Decodable {
+    private enum CodingKeys: String, CodingKey { case party, line }
+    init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        party = (try? c.decodeIfPresent(Party.self, forKey: .party)) ?? .unknown
+        line = (try? c.decodeIfPresent(String.self, forKey: .line)) ?? ""
+    }
+}
+
+extension DisputePosition: Decodable {
+    private enum CodingKeys: String, CodingKey { case party, says }
+    init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        party = (try? c.decodeIfPresent(Party.self, forKey: .party)) ?? .unknown
+        says = (try? c.decodeIfPresent(String.self, forKey: .says)) ?? ""
+    }
+}
+
+extension Dispute: Decodable {
+    private enum CodingKeys: String, CodingKey { case fact, positions, finding, decisive }
+    init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        fact = (try? c.decodeIfPresent(String.self, forKey: .fact)) ?? ""
+        positions = (try? c.decodeIfPresent([DisputePosition].self, forKey: .positions)) ?? []
+        finding = (try? c.decodeIfPresent(DisputeFinding.self, forKey: .finding)) ?? .unknown
+        decisive = (try? c.decodeIfPresent(Bool.self, forKey: .decisive)) ?? false
     }
 }
 
@@ -410,6 +509,7 @@ extension AppealInfo: Decodable {
 extension VerdictResult: Decodable {
     private enum CodingKeys: String, CodingKey {
         case verdict, headline, why, crux, conditional, confidence, runs, demo, lean, escalated, lang, tier, panel, appeal
+        case parties, winner, votes, sides, others, disputes
         case twoSided = "two_sided"
         case agreedFacts = "agreed_facts"
         case disputedFacts = "disputed_facts"
@@ -469,5 +569,17 @@ extension VerdictResult: Decodable {
         wouldChange = try? c.decodeIfPresent([String].self, forKey: .wouldChange)
         evidenceUsed = try? c.decodeIfPresent(EvidenceUsed.self, forKey: .evidenceUsed)
         appeal = try? c.decodeIfPresent(AppealInfo.self, forKey: .appeal)
+        // More than two sides only; a list this build can't read leaves the
+        // older projection to show.
+        let listed = (try? c.decodeIfPresent([Party].self, forKey: .parties))?.filter { $0 != .unknown }
+        if let listed, listed.count > 2 {
+            parties = listed
+            winner = (try? c.decodeIfPresent(Party.self, forKey: .winner)).flatMap { $0 == .unknown ? nil : $0 }
+            let rawVotes = try? c.decodeIfPresent([String].self, forKey: .votes)
+            votes = rawVotes?.map { VerdictDisplay.Vote(rawValue: $0) ?? .other }
+            sides = try? c.decodeIfPresent([SideSummary].self, forKey: .sides)
+            others = try? c.decodeIfPresent([OtherLine].self, forKey: .others)
+            disputes = try? c.decodeIfPresent([Dispute].self, forKey: .disputes)
+        }
     }
 }

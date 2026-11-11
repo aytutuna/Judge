@@ -13,6 +13,8 @@
     "eval": "tsx --env-file=.env scripts/eval.ts",
     "check:locales": "tsx scripts/check-locales.ts",
     "check:app-locales": "tsx mobile/shared/strings/check-app-locales.ts",
+    "examples:export": "tsx mobile/shared/examples/export-examples.ts",
+    "check:examples": "tsx mobile/shared/examples/export-examples.ts --check",
     "scene:build": "tsx mobile/shared/scene/build-scene.ts"
   },
   "dependencies": {

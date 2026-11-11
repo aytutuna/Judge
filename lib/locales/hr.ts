@@ -119,6 +119,8 @@ const hr: Locale = {
     verdictAria: "Presuda: {label}",
     "party.a": "Strana A",
     "party.b": "Strana B",
+    "party.c": "Strana C",
+    "party.d": "Strana D",
     "party.youLabel": "{label} (ti)",
     you: "Ti",
     "shared.subtitle": "Netko je podijelio ovu presudu",
@@ -344,8 +346,7 @@ const hr: Locale = {
     "signin.createNote": "Poslat ćemo ti kod e-poštom kako bismo potvrdili ovu adresu. To trebaš napraviti samo jednom.",
     "signin.passwordChoose": "Prijavljen si. Odaberi lozinku za sljedeći put.",
     "signin.passwordSave": "Spremi lozinku",
-    "signin.passwordSaveFailed": "Prijavljen si, ali lozinku nismo mogli spremiti. Pokušaj ponovno ili je postavi kasnije u Postavkama.",
-    "signin.passwordSkip": "Preskoči za sada",
+    "signin.passwordSaveFailed": "Lozinku nismo mogli spremiti. Pokušaj ponovno.",
     "signin.passwordSubmit": "Prijavi se",
     "signin.rateLimited": "Previše pokušaja. Pričekaj minutu pa pokušaj ponovno.",
     "signin.serviceDown": "Prijava trenutačno nije dostupna. Pokušaj ponovno kasnije.",
@@ -373,10 +374,6 @@ const hr: Locale = {
     "account.deleteConfirm":
       "Želiš izbrisati račun? Brišu se tvoji krediti, plan i podaci za prijavu. Tvoje presude i tvoje strane u slučajevima uklanjaju se: tvoji tekstovi i imena brišu se, a njihove poveznice za dijeljenje prestaju raditi.",
     "account.deleteYes": "Da, izbriši",
-    "account.passwordSet": "Postavi lozinku",
-    "account.passwordChange": "Promijeni lozinku",
-    "account.passwordCurrent": "Trenutna lozinka",
-    "account.passwordSaved": "Lozinka je spremljena.",
     "account.deleteCancel": "Zadrži račun",
     "account.deleted": "Račun je izbrisan. Vodimo te na početnu stranicu…",
     "account.deleteFailed": "Trenutačno ne možemo izbrisati račun. Možeš pokušati ponovno?",
@@ -465,6 +462,10 @@ const hr: Locale = {
     "case.judgeNow.yes": "Da, presudi sada",
     "case.judgeExpired.confirm": "Želiš presudu samo na temelju svoje strane? To troši 1 presudu.",
     "case.judgeExpired.yes": "Da, potroši 1 presudu",
+    "case.side.waiting": "Čeka se",
+    "case.side.answered": "Odgovorio/la",
+    "case.judgeAnswered": "Presudi na temelju strana koje su odgovorile",
+    "case.judgeAnswered.confirm": "Želiš presudu na temelju strana koje su odgovorile? Ostali pozivi se zatvaraju i te osobe više ne mogu odgovoriti.",
     "case.cancel": "Odustani",
     "case.retry": "Pokušaj ponovno",
     "case.failedBody": "Kredit ti je vraćen. Možeš pokušati ponovno.",
@@ -473,9 +474,13 @@ const hr: Locale = {
     "case.accounts": "Što je svaka strana rekla sucima",
     "case.accountA": "Kako to vidi Strana A",
     "case.accountB": "Kako to vidi Strana B",
+    "case.accountC": "Kako to vidi Strana C",
+    "case.accountD": "Kako to vidi Strana D",
     "case.accountYou": "Kako to vidiš ti ({label})",
     "case.contextA": "Dodatni kontekst: Strana A",
     "case.contextB": "Dodatni kontekst: Strana B",
+    "case.contextC": "Dodatni kontekst: Strana C",
+    "case.contextD": "Dodatni kontekst: Strana D",
     "case.contextYou": "Tvoj dodatni kontekst ({label})",
     "case.evidenceItem": "{n}. slika, onako kako su je suci pročitali",
     "case.notYet": "Odgovor još nije stigao.",
@@ -559,6 +564,7 @@ const hr: Locale = {
     "home.yourPlaceholder": "Što je problem?",
     "home.addContext": "Dodaj kontekst",
     "home.addTheirSide": "Dodaj drugu stranu",
+    "home.addSide": "Dodaj još jednu stranu",
     "home.removeTheirSide": "Ukloni drugu stranu",
     "home.sendLink": "Pošalji poveznicu",
     "home.clear": "Očisti",
@@ -572,57 +578,9 @@ const hr: Locale = {
     "home.says": "{name} kaže:",
     "home.mySide": "Moja strana:",
     "home.otherSide": "Druga strana:",
-    "pairs.dishwasher.aName": "Ana",
-    "pairs.dishwasher.a":
-      "Opet si stavio zdjelice u gornju košaru. Gore se nikad ne operu kako treba, za to služi donja.",
-    "pairs.dishwasher.bName": "Marko",
-    "pairs.dishwasher.b":
-      "Gore sasvim lijepo stanu, a dolje ostaje mjesta za lonce. Godinama ovako punim perilicu i još ništa nije izašlo prljavo.",
-    "pairs.bill.aName": "Petra",
-    "pairs.bill.a":
-      "Nisam ništa pila, pa ne bih trebala platiti četvrtinu vina. Hranu možemo podijeliti na jednake dijelove, to mi je u redu.",
-    "pairs.bill.bName": "Ivan",
-    "pairs.bill.b":
-      "Uvijek samo podijelimo račun na četvero. Svaki put računati tko je što imao prava je gnjavaža, a razlika ionako nije velika.",
-    "pairs.thermostat.aName": "Lucija",
-    "pairs.thermostat.a":
-      "Ovdje je 19 stupnjeva i hladno mi je čak i u dukserici. Pojačati grijanje na 22 nije nikakva ludost.",
-    "pairs.thermostat.bName": "Filip",
-    "pairs.thermostat.b":
-      "Na 22 je prevruće za spavanje. Ti možeš obući još nešto, a ja više nemam što skinuti.",
-    "pairs.roadTrip.aName": "Ema",
-    "pairs.roadTrip.a":
-      "Do tamo sam vozila cijelih šest sati. Pošteno je da ti voziš natrag.",
-    "pairs.roadTrip.bName": "Josip",
-    "pairs.roadTrip.b":
-      "Prije puta sam rekao da mrzim voziti noću, a krećemo u sedam navečer. Idući put ja vozim ujutro.",
-    "pairs.seat.aName": "Mia",
-    "pairs.seat.a":
-      "Naslon se može spustiti, pa ga spuštam. Noćni je let i svi pokušavaju spavati.",
-    "pairs.seat.bName": "Karlo",
-    "pairs.seat.b":
-      "Visok sam 190 cm i koljena mi se već zabijaju u tvoje sjedalo. Mogla si me barem pitati prije nego što ga spustiš do kraja.",
-    "pairs.spoiler.aName": "Nika",
-    "pairs.spoiler.a":
-      "Rekao si mi tko je ubojica prije nego što sam uopće počela gledati zadnju epizodu. Cijeli tjedan sam je čekala.",
-    "pairs.spoiler.bName": "Matej",
-    "pairs.spoiler.b":
-      "Izašla je prije tri tjedna, a rekla si da si je već odgledala. Ne mogu pratiti dokle je tko stigao.",
-    "pairs.jacket.aName": "Luka",
-    "pairs.jacket.a":
-      "Obukla si moju traper jaknu na koncert, a nisi me ni pitala. Vratila si je i sad sva smrdi po dimu.",
-    "pairs.jacket.bName": "Sara",
-    "pairs.jacket.b":
-      "Visjela je kraj vrata, a ti je nikad ne nosiš. Pitala bih te, ali spavao si, a ja sam već kasnila.",
-    "pairs.lastSlice.aName": "David",
-    "pairs.lastSlice.a": "Prije filma sam rekao „zadnji komad je moj“. Svi su me čuli.",
-    "pairs.lastSlice.bName": "Lana",
-    "pairs.lastSlice.b":
-      "Ne možeš reći „moj je“ i onda ga ne taknuti dva sata. Samo je stajao i hladio se, pa sam ga pojela.",
     "appeal.lead":
-      "Nešto nedostaje ili nije točno? Dodaj to jednom i suci će ponovno pogledati sve. Troši 1 presudu.",
-    "appeal.label": "Tvoj kontekst",
-    "appeal.placeholder": "Što su suci propustili?",
+      "Troši 1 presudu.",
+    "appeal.placeholder": "Što su suci propustili? Neka činjenica, poruka ili ono što je zapravo dogovoreno.",
     "appeal.submit": "Presudi ponovno",
     "appeal.sending": "Anonimiziramo tvoj kontekst…",
     "appeal.judging": "Suci ponovno gledaju sve…",
@@ -642,8 +600,6 @@ const hr: Locale = {
     "appeal.previous": "Ranija presuda",
     "appeal.failed": "Ponovno presuđivanje nije uspjelo. Kredit ti je vraćen; možeš pokušati ponovno.",
     "appeal.refused": "Suci nisu htjeli ponovno presuditi s tim kontekstom. Kredit ti je vraćen.",
-    "appeal.leadVerdict":
-      "Nešto nedostaje ili nije točno? Dodaj to i suci će ponovno pogledati sve. Svaki put troši 1 presudu, najviše dvaput po presudi.",
     "appeal.history": "Povijest presude",
     "faq.both.q": "Može li i druga osoba ispričati svoju stranu?",
     "faq.both.a":
@@ -685,6 +641,7 @@ const hr: Locale = {
     "unavailable.cta": "Idi na Judge",
     "error.removed": "Ovo je uklonjeno. Poveznica više ne radi.",
     "error.names_unavailable": "Imena se trenutačno ne mogu spremiti. Pokušaj ponovno kasnije.",
+    "error.update_required": "Ovaj slučaj ima više od dvije strane. Ažuriraj aplikaciju da ga otvoriš.",
     "verdict.remove": "Ukloni ovu presudu",
     "verdict.remove.confirm":
       "Želiš ukloniti svoj tekst, imena i prikazana imena? Poveznica za dijeljenje i njezina slika pregleda prestaju se učitavati za sve (pregledi već objavljeni u razgovorima mogu se i dalje prikazivati dok ih te aplikacije ne osvježe). Ovo se ne može poništiti.",

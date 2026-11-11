@@ -38,6 +38,8 @@ enum class SignInError {
     PASSWORD_WRONG,
     PASSWORD_SHORT,
     PASSWORD_SAVE_FAILED,
+    /** The server takes no password for this account (the review account): the sign-in stands without one. */
+    PASSWORD_NOT_TAKEN,
     CURRENT_PASSWORD_WRONG,
     CURRENT_PASSWORD_REQUIRED,
     RATE_LIMITED,
@@ -308,9 +310,12 @@ class Account(
 
     suspend fun verifyCode(email: String, code: String): SignInResult =
         when (val res = api.signInWithCode(email.trim(), code.trim())) {
-            is ApiResult.Ok -> complete(res.value)
+            is ApiResult.Ok -> complete(res.value, byCode = true)
             is ApiResult.Err -> SignInResult.Error(codeVerifyError(res.error))
         }
+
+    /** The account that just signed in by code has no password and the server wants one. */
+    val needsPassword: Boolean get() = (_state.value as? State.SignedIn)?.me?.needsPassword == true
 
     suspend fun signInWithPassword(email: String, password: String): SignInResult =
         when (val res = api.signInWithPassword(email.trim(), password)) {
@@ -320,7 +325,7 @@ class Account(
 
     /**
      * Sets or replaces the password of the signed-in account; null when saved.
-     * [current] is needed to replace one, unless the session is a fresh code sign-in.
+     * [current] replaces a password on a session that is not a fresh code sign-in.
      */
     suspend fun setPassword(password: String, current: String?): SignInError? {
         val asked = tokens.get()
@@ -329,7 +334,7 @@ class Account(
                 if (tokens.get() == asked) {
                     val signedIn = _state.value as? State.SignedIn
                     val me = signedIn?.me
-                    if (signedIn != null && me != null) _state.value = signedIn.copy(me = me.copy(hasPassword = true))
+                    if (signedIn != null && me != null) _state.value = signedIn.copy(me = me.copy(hasPassword = true, needsPassword = false))
                 }
                 null
             }
@@ -337,10 +342,11 @@ class Account(
         }
     }
 
-    private suspend fun complete(grant: SessionGrant): SignInResult {
+    private suspend fun complete(grant: SessionGrant, byCode: Boolean = false): SignInResult {
         // The verdict waiting behind sign-in needs the age on record first, so
         // the box ticked (or the phone's 18+) is reported before "signed in".
-        val reportsAge = _ageTicked.value || _platformAge.value == PlatformAge.ADULT
+        // A code sign-in reads /me too, for needsPassword.
+        val reportsAge = byCode || _ageTicked.value || _platformAge.value == PlatformAge.ADULT
         // Stored token and state change together, even if the screen goes away now.
         withContext(NonCancellable) {
             withContext(io) { tokens.set(grant.token) }
@@ -457,6 +463,7 @@ class Account(
 
         fun passwordSaveError(e: UiError): SignInError = common(e) ?: (e as UiError.Api).let {
             when (it.code) {
+                "invalid" -> if (it.status == 403) SignInError.PASSWORD_NOT_TAKEN else SignInError.PASSWORD_SAVE_FAILED
                 "too_short", "too_long" -> SignInError.PASSWORD_SHORT
                 "password_wrong" -> SignInError.CURRENT_PASSWORD_WRONG
                 "password_required" -> SignInError.CURRENT_PASSWORD_REQUIRED

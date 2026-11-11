@@ -34,7 +34,7 @@ import { ensureOriginalsTables } from "@/lib/originals/db";
 import { caseOriginalStatement, sealCaseDisplay } from "@/lib/originals/save";
 import type { OriginalPayload } from "@/lib/originals-types";
 import { track } from "@/lib/analytics/track";
-import { AnonymizeError } from "@/lib/anonymize";
+import { AnonymizeError, sideLabels } from "@/lib/anonymize";
 import {
   anonymizeSubmission,
   caseNameKeys,
@@ -43,6 +43,7 @@ import {
   type VerifiedEvidence,
 } from "@/lib/evidence";
 import type { Lang } from "@/lib/i18n";
+import { partiesFor } from "@/lib/multi";
 import type { NameMapping } from "@/lib/types";
 import { composeForJudging } from "./compose";
 import {
@@ -51,8 +52,10 @@ import {
   getCaseByOwnerKey,
   hasSide,
   loadCaseBundle,
+  respondentOf,
   type CaseBundle,
   type CaseRow,
+  type InviteRow,
 } from "./db";
 import { claimMatches, inviteHash, inviteToken, newInviteNonce, respondentClaim } from "./invite";
 import { meteredStep, runAppealJudging, runCaseJudging } from "./judging";
@@ -65,7 +68,18 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 export type Blocked = { ok: false; code: PremiumBlock; resetsAt?: string };
 export type Failure<C extends string> = { ok: false; code: C };
 
-const LABEL: Record<PartyLetter, "Party A" | "Party B"> = { a: "Party A", b: "Party B" };
+const LABEL: Record<PartyLetter, "Party A" | "Party B" | "Party C" | "Party D"> = {
+  a: "Party A",
+  b: "Party B",
+  c: "Party C",
+  d: "Party D",
+};
+
+/** What the anonymizer is told when a case has three or four sides. The
+ * owner names nobody, so no side has a name. */
+export function sidesOption(count: number): { sides: { count: number; names: null[] } } | Record<string, never> {
+  return count > 2 ? { sides: { count, names: Array<null>(count).fill(null) } } : {};
+}
 
 function logError(what: string, e: unknown): void {
   console.error(`[cases] ${what}:`, e instanceof Error ? e.message : String(e));
@@ -82,7 +96,7 @@ export async function refundQuietly(reservationId: string | null): Promise<void>
 
 /** Rows that persist one anonymized submission (side or appeal), each
  * guarded so nothing is written unless the state change it belongs to was. */
-function submissionStatements(
+export function submissionStatements(
   caseId: string,
   party: PartyLetter,
   sub: AnonymizedSubmission,
@@ -129,9 +143,10 @@ function submissionStatements(
 
 /** Labels already used in a case: the parties, known fingerprints, and any
  * "Person X" in the anonymized material. */
-export function labelsInUse(context: string, people: readonly KnownPerson[]): string[] {
-  const found = new Set<string>(["Party A", "Party B", ...people.map((p) => p.label)]);
-  for (const m of context.matchAll(/(?<![\p{L}])(Person [C-Z])(?![\p{L}\p{N}])/gu)) found.add(m[1]);
+export function labelsInUse(context: string, people: readonly KnownPerson[], sides = 2): string[] {
+  const found = new Set<string>([...sideLabels(sides), ...people.map((p) => p.label)]);
+  const person = sides > 2 ? /(?<![\p{L}])(Person [E-Z])(?![\p{L}\p{N}])/gu : /(?<![\p{L}])(Person [C-Z])(?![\p{L}\p{N}])/gu;
+  for (const m of context.matchAll(person)) found.add(m[1]);
   return [...found];
 }
 
@@ -150,10 +165,10 @@ export function originalPayload(text: string, evidence: readonly VerifiedEvidenc
 const sideExists = (party: PartyLetter, yes: boolean) =>
   `${yes ? "" : "NOT "}EXISTS (SELECT 1 FROM case_sides WHERE case_id = cases.id AND party = '${party}')`;
 
-function rosterContext(bundle: CaseBundle): string {
+export function rosterContext(bundle: CaseBundle): string {
   const mode = bundle.row.mode ?? (bundle.sides.some((s) => s.party === "b") ? "two_sided" : "one_sided");
   const earlier = bundle.appeals.filter((a) => a.status === "judged");
-  const doc = composeForJudging(bundle.sides, mode, { earlier, current: null });
+  const doc = composeForJudging(bundle.sides, mode, { earlier, current: null }, bundle.row.sides);
   const transcripts = bundle.evidence.map((e) => e.transcript).join("\n\n");
   return transcripts ? `${doc}\n\n${transcripts}` : doc;
 }
@@ -171,6 +186,8 @@ export type CreateCaseInput = {
   rawText?: string;
   /** How the owner wants to appear on the share pages (null = Party A). */
   displayName?: string | null;
+  /** 3 or 4 for a case with that many sides; B, C and D each get a link. */
+  sides?: number;
   now?: Date;
 };
 
@@ -203,11 +220,18 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
     return { ok: false, code: "unavailable" };
   }
   const reservationId = reserved.reservation.id;
+  const count = Math.max(2, Math.min(4, input.sides ?? 2));
 
   const caseId = nanoid(12);
   const nonce = newInviteNonce();
   const token = inviteToken(caseId, nonce);
-  if (!token) {
+  // Side C and D's links: a nonce each, kept in case_invites.
+  const extra = partiesFor(count).slice(2).map((party) => {
+    const n = newInviteNonce();
+    const t = inviteToken(caseId, n);
+    return { party, nonce: n, hash: t ? inviteHash(t) : null };
+  });
+  if (!token || extra.some((e) => e.hash === null)) {
     await refundQuietly(reservationId);
     return { ok: false, code: "unavailable" };
   }
@@ -224,6 +248,7 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
           lang: input.lang,
           twoSided: true,
           opponentRequired: true,
+          ...sidesOption(count),
           names: { keysFor: caseNameKeys(caseId), known: [] },
         }),
       );
@@ -248,8 +273,8 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
       {
         sql: `INSERT INTO cases
                 (id, owner_id, status, mode, tier, framework, lang, invite_nonce, invite_hash, idempotency_key,
-                 reservation_id, expires_at, created_at, updated_at, display_a_sealed, display_key_id)
-              VALUES (?, ?, 'awaiting_respondent', NULL, 'premium', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                 reservation_id, expires_at, created_at, updated_at, display_a_sealed, display_key_id, sides)
+              VALUES (?, ?, 'awaiting_respondent', NULL, 'premium', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
               ON CONFLICT DO NOTHING`,
         args: [
           caseId,
@@ -265,8 +290,14 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
           nowIso,
           display?.sealed ?? null,
           display?.kid ?? null,
+          count,
         ],
       },
+      ...extra.map((e) => ({
+        sql: `INSERT INTO case_invites (case_id, party, invite_nonce, invite_hash, created_at, updated_at)
+              SELECT ?, ?, ?, ?, ?, ? WHERE ${guard.sql}`,
+        args: [caseId, e.party, e.nonce, e.hash, nowIso, nowIso, ...guard.args],
+      })),
       ...(sub ? submissionStatements(caseId, "a", sub, guard, nowIso, null) : []),
       ...(original ? [original] : []),
       // The unit stays held until the invite expires (then the usual
@@ -288,7 +319,7 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
   }
   const row = await getCase(caseId);
   if (!row) return { ok: false, code: "unavailable" };
-  void track("case_created", { userId: input.ownerId, props: { mode: row.mode ?? "two_sided" } });
+  void track("case_created", { userId: input.ownerId, props: { mode: count > 2 ? "many_sided" : (row.mode ?? "two_sided") } });
   return { ok: true, row, nameMap: sub?.nameMap ?? [], replayed: false };
 }
 
@@ -315,9 +346,10 @@ export type RespondResult =
 
 /** The claim secret for whoever answered signed out (null once an account
  * is bound to side B, or when side B predates claims). */
-export function claimFor(row: CaseRow): string | null {
-  if (row.respondentUserId || !row.respondentClaimNonce) return null;
-  return respondentClaim(row.id, row.respondentClaimNonce);
+export function claimFor(row: CaseRow, invites: readonly InviteRow[] = [], party: PartyLetter = "b"): string | null {
+  const who = respondentOf(row, invites, party);
+  if (who.userId || !who.claimNonce) return null;
+  return respondentClaim(row.id, who.claimNonce);
 }
 
 function closedOrReplay(row: CaseRow, key: string | null, now: Date): RespondResult {
@@ -470,7 +502,10 @@ export async function writeOwnerSide(input: WriteSideInput): Promise<WriteSideRe
       return { ok: false, code: "case_expired" };
     }
     if (status !== "awaiting_respondent") return { ok: false, code: "case_closed" };
-    const answered = bundle.sides.some((s) => s.party === "b");
+    const many = row.sides > 2;
+    // With more sides, judging starts when every other side is in.
+    const answered = many ? bundle.sides.length === row.sides - 1 : bundle.sides.some((s) => s.party === "b");
+    const anyAnswer = bundle.sides.length > 0;
     const context = rosterContext(bundle);
 
     let sub: AnonymizedSubmission;
@@ -483,7 +518,10 @@ export async function writeOwnerSide(input: WriteSideInput): Promise<WriteSideRe
           lang: row.lang,
           twoSided: true,
           opponentRequired: true,
-          ...(answered ? { roster: { context, labelsInUse: labelsInUse(context, bundle.people) } } : {}),
+          ...sidesOption(row.sides),
+          ...((many ? anyAnswer : answered)
+            ? { roster: { context, labelsInUse: labelsInUse(context, bundle.people, row.sides) } }
+            : {}),
           names: { keysFor: caseNameKeys(row.id), known: bundle.people },
         }),
       );
@@ -509,7 +547,10 @@ export async function writeOwnerSide(input: WriteSideInput): Promise<WriteSideRe
     );
     // Side B's presence is part of the condition either way: the batch only
     // applies to the state it was prepared for.
-    const open = `WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL
+    const open = many
+      ? `WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL
+           AND ${sideExists("a", false)} AND (SELECT COUNT(*) FROM case_sides WHERE case_id = cases.id) = ${bundle.sides.length}`
+      : `WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL
                     AND ${sideExists("a", false)} AND ${sideExists("b", answered)}`;
     const store: InStatement = answered
       ? {
@@ -569,7 +610,7 @@ export type JudgeNowResult =
  */
 export async function judgeNow(input: {
   row: CaseRow;
-  mode?: "only_mine";
+  mode?: "only_mine" | "answered";
   origin: string;
   now?: Date;
 }): Promise<JudgeNowResult> {
@@ -583,6 +624,7 @@ export async function judgeNow(input: {
     if (status === "judging" || status === "judged") return { ok: true, row, started: false };
 
     if (status === "awaiting_respondent") {
+      if (input.mode === "answered" && row.sides > 2) return judgeAnswered(row, input.origin, now, "awaiting_respondent");
       if (input.mode !== "only_mine") return { ok: false, code: "invalid" };
       const token = nanoid(16);
       const guard: StatementGuard = {
@@ -591,7 +633,7 @@ export async function judgeNow(input: {
       };
       const rs = await entitlementWriteBatch([
         {
-          sql: `UPDATE cases SET status = 'judging', mode = 'one_sided', judging_token = ?, judging_started_at = ?,
+          sql: `UPDATE cases SET status = 'judging', mode = 'one_sided', sides = 2, judging_token = ?, judging_started_at = ?,
                   attempts = attempts + 1, last_error = NULL, updated_at = ?
                 WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL`,
           args: [token, nowIso, nowIso, row.id, nowIso],
@@ -606,6 +648,8 @@ export async function judgeNow(input: {
       row = (await getCase(row.id)) ?? row;
       continue;
     }
+
+    if (status === "expired" && input.mode === "answered" && row.sides > 2) return judgeAnswered(row, input.origin, now, "expired");
 
     // expired or failed: a fresh unit funds the run, on an old free case too.
     if (status === "expired") await materializeExpiry(row, now);
@@ -623,7 +667,7 @@ export async function judgeNow(input: {
     try {
       const rs = await entitlementWriteBatch([
         {
-          sql: `UPDATE cases SET status = 'judging', mode = ${from === "expired" ? "'one_sided'" : "COALESCE(mode, 'one_sided')"},
+          sql: `UPDATE cases SET status = 'judging', mode = ${from === "expired" ? "'one_sided', sides = 2" : "COALESCE(mode, 'one_sided')"},
                   reservation_id = ?, judging_token = ?, judging_started_at = ?, attempts = attempts + 1,
                   last_error = NULL, updated_at = ?
                 WHERE id = ? AND status = ? AND removed_at IS NULL`,
@@ -647,17 +691,106 @@ export async function judgeNow(input: {
   return { ok: false, code: "case_closed" };
 }
 
+/**
+ * A case with three or four sides, owner going ahead: judge the sides that
+ * answered. They must be A, B, C... without a gap (letters are baked into
+ * each anonymized account), and at least two. The case then has that many
+ * sides: with two it is an ordinary two-sided case, and the links of the
+ * sides that did not answer stop working (the case is no longer awaiting).
+ * Once the invites expired the held unit is gone, so a fresh one funds the run.
+ */
+async function judgeAnswered(
+  row: CaseRow,
+  origin: string,
+  now: Date,
+  from: "awaiting_respondent" | "expired",
+): Promise<JudgeNowResult> {
+  const nowIso = now.toISOString();
+  const bundle = await loadCaseBundle(row);
+  const present = new Set(bundle.sides.map((s) => s.party));
+  const count = partiesFor(row.sides).filter((p) => present.has(p)).length;
+  const prefix = partiesFor(count);
+  if (count < 2 || !present.has("a") || bundle.sides.length !== count || !prefix.every((p) => present.has(p))) {
+    return { ok: false, code: "side_missing" };
+  }
+  let reservationId: string | null = null;
+  if (from === "expired") {
+    await materializeExpiry(row, now);
+    const reserved = await reservePremiumVerdict(row.ownerId, { now });
+    if (!reserved.ok) {
+      if (reserved.code === "premium_required" || reserved.code === "no_credits" || reserved.code === "fair_use") {
+        return { ok: false, code: reserved.code, ...("resetsAt" in reserved && reserved.resetsAt ? { resetsAt: reserved.resetsAt } : {}) };
+      }
+      return { ok: false, code: "unavailable" };
+    }
+    reservationId = reserved.reservation.id;
+  }
+  const token = nanoid(16);
+  const guard: StatementGuard = {
+    sql: "EXISTS (SELECT 1 FROM cases WHERE id = ? AND judging_token = ?)",
+    args: [row.id, token],
+  };
+  const countIs = `(SELECT COUNT(*) FROM case_sides WHERE case_id = cases.id) = ?`;
+  const write =
+    from === "expired"
+      ? {
+          sql: `UPDATE cases SET status = 'judging', mode = 'two_sided', sides = ?, reservation_id = ?, judging_token = ?,
+                  judging_started_at = ?, attempts = attempts + 1, last_error = NULL, updated_at = ?
+                WHERE id = ? AND status = 'expired' AND removed_at IS NULL AND ${countIs}`,
+          args: [count, reservationId, token, nowIso, nowIso, row.id, count],
+        }
+      : {
+          sql: `UPDATE cases SET status = 'judging', mode = 'two_sided', sides = ?, judging_token = ?, judging_started_at = ?,
+                  attempts = attempts + 1, last_error = NULL, updated_at = ?
+                WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL AND ${countIs}`,
+          args: [count, token, nowIso, nowIso, row.id, nowIso, count],
+        };
+  let won = false;
+  try {
+    const rs = await entitlementWriteBatch([
+      write,
+      ...(from === "awaiting_respondent" && row.reservationId ? [holdStatement(row.reservationId, nowIso, guard)] : []),
+    ]);
+    won = rs[0].rowsAffected === 1;
+  } catch (e) {
+    logError("starting a judging run failed", e);
+  }
+  if (!won && reservationId) await refundQuietly(reservationId);
+  const fresh = (await getCase(row.id)) ?? row;
+  if (won) {
+    scheduleJudging(() => runCaseJudging(row.id, token, origin));
+    return { ok: true, row: fresh, started: true };
+  }
+  // Another answer arrived, or the case moved on: the owner looks again.
+  const status = effectiveStatus(fresh, now);
+  return status === "judging" || status === "judged" ? { ok: true, row: fresh, started: false } : { ok: false, code: "case_closed" };
+}
+
 // --- Invite --------------------------------------------------------------------------
 
 export type RotateResult = { ok: true; row: CaseRow; token: string } | Failure<"case_closed" | "unavailable" | "removed">;
 
-export async function rotateInvite(row: CaseRow, now: Date = new Date()): Promise<RotateResult> {
+export async function rotateInvite(row: CaseRow, now: Date = new Date(), party: PartyLetter = "b"): Promise<RotateResult> {
   if (row.removedAt) return { ok: false, code: "removed" };
   if (effectiveStatus(row, now) !== "awaiting_respondent") return { ok: false, code: "case_closed" };
+  if (party === "a" || partiesFor(row.sides).indexOf(party) < 0) return { ok: false, code: "case_closed" };
   const nonce = newInviteNonce();
   const token = inviteToken(row.id, nonce);
   if (!token) return { ok: false, code: "unavailable" };
   const nowIso = now.toISOString();
+  if (party !== "b") {
+    const rs = await entitlementWriteBatch([
+      {
+        sql: `UPDATE case_invites SET invite_nonce = ?, invite_hash = ?, updated_at = ?
+              WHERE case_id = ? AND party = ? AND answered_at IS NULL
+                AND EXISTS (SELECT 1 FROM cases WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL)
+                AND ${sideExists(party, false).replace("cases.id", "case_invites.case_id")}`,
+        args: [nonce, inviteHash(token), nowIso, row.id, party, row.id, nowIso],
+      },
+    ]);
+    if (rs[0].rowsAffected !== 1) return { ok: false, code: "case_closed" };
+    return { ok: true, row: (await getCase(row.id)) ?? row, token };
+  }
   const rs = await entitlementWriteBatch([
     {
       sql: `UPDATE cases SET invite_nonce = ?, invite_hash = ?, updated_at = ?
@@ -672,10 +805,25 @@ export async function rotateInvite(row: CaseRow, now: Date = new Date()): Promis
 
 /** The owner's current invite token, healing invite_hash when the derived
  * token changed (the secret was rotated; the old link was dead anyway). */
-export async function currentInviteToken(row: CaseRow): Promise<string | null> {
-  const token = inviteToken(row.id, row.inviteNonce);
+export async function currentInviteToken(row: CaseRow, invite?: InviteRow): Promise<string | null> {
+  const token = inviteToken(row.id, invite ? invite.inviteNonce : row.inviteNonce);
   if (!token) return null;
   const hash = inviteHash(token);
+  if (invite) {
+    if (hash !== invite.inviteHash && row.status === "awaiting_respondent") {
+      try {
+        await entitlementWriteBatch([
+          {
+            sql: "UPDATE case_invites SET invite_hash = ? WHERE case_id = ? AND party = ? AND invite_nonce = ?",
+            args: [hash, row.id, invite.party, invite.inviteNonce],
+          },
+        ]);
+      } catch (e) {
+        logError("updating the invite hash failed", e);
+      }
+    }
+    return token;
+  }
   if (hash !== row.inviteHash && row.status === "awaiting_respondent") {
     try {
       await entitlementWriteBatch([
@@ -718,6 +866,29 @@ export function mayActAsRespondent(row: CaseRow, userId: string, claim: string |
   return claimMatches(row, claim);
 }
 
+/** Whether `userId` already answers for a side of the case other than `party`
+ * (a person is one side of a case, and never also its owner). */
+export function boundElsewhere(row: CaseRow, invites: readonly InviteRow[], party: PartyLetter, userId: string): boolean {
+  if (userId === row.ownerId) return true;
+  if (party !== "b" && row.respondentUserId === userId) return true;
+  return invites.some((i) => i.party !== party && i.userId === userId);
+}
+
+/** The same for any side but A: B's binding is in the case row, C's and D's
+ * in their invite. */
+export function mayActAsParty(
+  row: CaseRow,
+  invites: readonly InviteRow[],
+  party: PartyLetter,
+  userId: string,
+  claim: string | null | undefined,
+): boolean {
+  if (row.mode !== "two_sided" || userId === row.ownerId || party === "a") return false;
+  const who = respondentOf(row, invites, party);
+  if (who.userId) return who.userId === userId;
+  return claimMatches({ id: row.id, respondentClaimNonce: who.claimNonce }, claim);
+}
+
 /** The premium unit an appeal spends (case or one-sided verdict).
  * `replayed`: the Idempotency-Key already holds or spent one. */
 export async function reserveAppealUnit(
@@ -750,9 +921,10 @@ export async function submitAppeal(input: AppealInput): Promise<AppealResult> {
 
   const bundle = await loadCaseBundle(row);
   if (bundle.verdicts.length === 0) return { ok: false, code: "case_closed" };
-  if (party === "b" ? !mayActAsRespondent(row, userId, input.claim) : userId !== row.ownerId) {
+  if (party === "a" ? userId !== row.ownerId : !mayActAsParty(row, bundle.invites, party, userId, input.claim)) {
     return { ok: false, code: "not_party" };
   }
+  if (party !== "a" && boundElsewhere(row, bundle.invites, party, userId)) return { ok: false, code: "not_party" };
   if (bundle.appeals.some((a) => a.party === party && a.status === "judged")) return { ok: false, code: "appeal_used" };
   if (bundle.appeals.some((a) => a.status === "judging")) return { ok: false, code: "in_progress" };
 
@@ -771,7 +943,8 @@ export async function submitAppeal(input: AppealInput): Promise<AppealResult> {
         evidence: input.evidence,
         lang: row.lang,
         twoSided: row.mode === "two_sided",
-        roster: { context, labelsInUse: labelsInUse(context, bundle.people) },
+        ...(row.mode === "two_sided" ? sidesOption(row.sides) : {}),
+        roster: { context, labelsInUse: labelsInUse(context, bundle.people, row.mode === "two_sided" ? row.sides : 2) },
         names: { keysFor: caseNameKeys(row.id), known: bundle.people },
       }),
     );
@@ -793,7 +966,14 @@ export async function submitAppeal(input: AppealInput): Promise<AppealResult> {
   };
   const appealIdSql = "(SELECT id FROM case_appeals WHERE case_id = ? AND party = ? AND attempt_token = ?)";
   const bindingOk =
-    party === "b" ? "AND ((SELECT respondent_user_id FROM cases WHERE id = ?) IS NULL OR (SELECT respondent_user_id FROM cases WHERE id = ?) = ?)" : "";
+    party === "b"
+      ? `AND ((SELECT respondent_user_id FROM cases WHERE id = ?) IS NULL OR (SELECT respondent_user_id FROM cases WHERE id = ?) = ?)
+         AND NOT EXISTS (SELECT 1 FROM case_invites WHERE case_id = ? AND user_id = ?)`
+      : party === "a"
+        ? ""
+        : `AND ((SELECT user_id FROM case_invites WHERE case_id = ? AND party = ?) IS NULL OR (SELECT user_id FROM case_invites WHERE case_id = ? AND party = ?) = ?)
+           AND NOT EXISTS (SELECT 1 FROM cases WHERE id = ? AND respondent_user_id = ?)
+           AND NOT EXISTS (SELECT 1 FROM case_invites WHERE case_id = ? AND party <> ? AND user_id = ?)`;
   const original = caseOriginalStatement(
     row.id,
     party,
@@ -834,7 +1014,11 @@ export async function submitAppeal(input: AppealInput): Promise<AppealResult> {
           nowIso,
           row.id,
           row.id,
-          ...(party === "b" ? [row.id, row.id, userId] : []),
+          ...(party === "b"
+            ? [row.id, row.id, userId, row.id, userId]
+            : party === "a"
+              ? []
+              : [row.id, party, row.id, party, userId, row.id, userId, row.id, party, userId]),
         ],
       },
       {
@@ -853,7 +1037,14 @@ export async function submitAppeal(input: AppealInput): Promise<AppealResult> {
               args: [userId, row.id, ...guard.args],
             },
           ]
-        : []),
+        : party === "a"
+          ? []
+          : [
+              {
+                sql: `UPDATE case_invites SET user_id = ? WHERE case_id = ? AND party = ? AND user_id IS NULL AND ${guard.sql}`,
+                args: [userId, row.id, party, ...guard.args],
+              },
+            ]),
     ]);
     won = rs[0].rowsAffected === 1;
   } catch (e) {
@@ -868,7 +1059,8 @@ export async function submitAppeal(input: AppealInput): Promise<AppealResult> {
     if (fresh.row.removedAt) return { ok: false, code: "removed" };
     if (fresh.appeals.some((a) => a.party === party && a.status === "judged")) return { ok: false, code: "appeal_used" };
     if (fresh.appeals.some((a) => a.status === "judging")) return { ok: false, code: "in_progress" };
-    if (party === "b" && fresh.row.respondentUserId && fresh.row.respondentUserId !== userId) {
+    const bound = respondentOf(fresh.row, fresh.invites, party).userId;
+    if (party !== "a" && bound && bound !== userId) {
       return { ok: false, code: "not_party" };
     }
     return { ok: false, code: "case_closed" };
