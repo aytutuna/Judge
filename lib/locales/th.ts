@@ -430,8 +430,6 @@ const th: Locale = {
     "mode.signIn": "เข้าสู่ระบบเพื่อส่งลิงก์",
     "case.create": "สร้างคำเชิญ",
     "case.creating": "กำลังซ่อนชื่อในฝั่งของคุณ…",
-    "case.kicker": "สองฝั่ง",
-    "case.kickerOneSided": "ฝั่งคุณเท่านั้น",
     "case.title": "เคสของคุณ",
     "case.loading": "กำลังโหลดเคส…",
     "case.loadFailed": "โหลดเคสนี้ไม่ได้ ลองใหม่อีกสักครู่",
@@ -488,8 +486,6 @@ const th: Locale = {
     "case.list.untitled": "เคสวันที่ {date}",
     "case.list.untitledSoon": "เคส",
     "respond.title": "เล่าฝั่งของคุณ",
-    "respond.intro":
-      "มีคนให้ Judge ช่วยตัดสินเรื่องที่เขาเถียงกับคุณ เล่าฝั่งของคุณมาได้เลย เขาจะไม่เห็นจนกว่าจะมีคำตัดสิน",
     "respond.privacy":
       "ชื่อจะถูกเปลี่ยนเป็นฝ่าย A และฝ่าย B ก่อนที่กรรมการจะอ่าน ไม่ต้องมีบัญชีก็ได้",
     "respond.lang": "คำตัดสินจะเขียนเป็นภาษา{lang}",

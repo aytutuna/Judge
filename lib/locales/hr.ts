@@ -430,8 +430,6 @@ const hr: Locale = {
     "mode.signIn": "Prijavi se da pošalješ poveznicu",
     "case.create": "Napravi poziv",
     "case.creating": "Anonimiziramo tvoju stranu…",
-    "case.kicker": "Obje strane",
-    "case.kickerOneSided": "Samo tvoja strana",
     "case.title": "Tvoj slučaj",
     "case.loading": "Učitavamo slučaj…",
     "case.loadFailed": "Nismo uspjeli učitati ovaj slučaj. Pokušaj ponovno za trenutak.",
@@ -488,8 +486,6 @@ const hr: Locale = {
     "case.list.untitled": "Slučaj od {date}",
     "case.list.untitledSoon": "Slučaj",
     "respond.title": "Ispričaj svoju stranu",
-    "respond.intro":
-      "Netko želi da Judge presudi u raspravi s tobom. Ispričaj svoju stranu; ta osoba je neće vidjeti do presude.",
     "respond.privacy":
       "Prije nego što suci išta pročitaju, imena se zamjenjuju oznakama Strana A i Strana B. Račun ti ne treba.",
     "respond.lang": "Jezik presude: {lang}.",

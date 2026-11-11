@@ -432,8 +432,6 @@ const ms: Locale = {
     "mode.signIn": "Log masuk untuk menghantar pautan",
     "case.create": "Buat jemputan",
     "case.creating": "Mengeluarkan nama daripada versi anda…",
-    "case.kicker": "Dua pihak",
-    "case.kickerOneSided": "Versi anda sahaja",
     "case.title": "Kes anda",
     "case.loading": "Memuatkan kes…",
     "case.loadFailed": "Kami tidak dapat memuatkan kes ini. Cuba lagi sebentar nanti.",
@@ -491,8 +489,6 @@ const ms: Locale = {
     "case.list.untitled": "Kes pada {date}",
     "case.list.untitledSoon": "Kes",
     "respond.title": "Ceritakan versi anda",
-    "respond.intro":
-      "Seseorang minta Judge selesaikan pertikaiannya dengan anda. Ceritakan versi anda; dia tidak akan nampak sehingga keputusan keluar.",
     "respond.privacy":
       "Nama ditukar kepada Pihak A dan Pihak B sebelum hakim membaca apa-apa. Anda tidak perlukan akaun.",
     "respond.lang": "Keputusan akan ditulis dalam bahasa {lang}.",

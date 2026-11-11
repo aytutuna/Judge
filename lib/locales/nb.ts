@@ -430,8 +430,6 @@ const nb: Locale = {
     "mode.signIn": "Logg inn for å sende en lenke",
     "case.create": "Lag invitasjonen",
     "case.creating": "Anonymiserer siden din…",
-    "case.kicker": "Begge sider",
-    "case.kickerOneSided": "Bare din side",
     "case.title": "Saken din",
     "case.loading": "Laster saken…",
     "case.loadFailed": "Vi fikk ikke lastet denne saken. Prøv igjen om litt.",
@@ -488,8 +486,6 @@ const nb: Locale = {
     "case.list.untitled": "Sak fra {date}",
     "case.list.untitledSoon": "Sak",
     "respond.title": "Fortell din side",
-    "respond.intro":
-      "Noen har bedt Judge avgjøre en diskusjon med deg. Fortell din side; vedkommende ser den ikke før dommen.",
     "respond.privacy": "Navn byttes ut med Part A og Part B før dommerne leser noe. Du trenger ikke konto.",
     "respond.lang": "Dommen blir skrevet på {lang}.",
     "respond.lang.en": "engelsk",

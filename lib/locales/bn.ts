@@ -431,8 +431,6 @@ const bn: Locale = {
     "mode.signIn": "লিংক পাঠাতে সাইন ইন করুন",
     "case.create": "আমন্ত্রণ তৈরি করুন",
     "case.creating": "আপনার বক্তব্য থেকে নাম সরাচ্ছি…",
-    "case.kicker": "দুই পক্ষ",
-    "case.kickerOneSided": "শুধু আপনার বক্তব্য",
     "case.title": "আপনার মামলা",
     "case.loading": "মামলা লোড হচ্ছে…",
     "case.loadFailed": "মামলাটা লোড করা গেল না। একটু পরে আবার চেষ্টা করুন।",
@@ -489,8 +487,6 @@ const bn: Locale = {
     "case.list.untitled": "{date} তারিখের মামলা",
     "case.list.untitledSoon": "মামলা",
     "respond.title": "আপনার কথা বলুন",
-    "respond.intro":
-      "কেউ একজন আপনার সঙ্গে একটা তর্কের ফয়সালা করতে Judge-কে বলেছেন। আপনার কথা বলুন; রায়ের আগে তিনি এটা দেখতে পাবেন না।",
     "respond.privacy":
       "বিচারকেরা কিছু পড়ার আগেই নামগুলো বদলে পক্ষ A আর পক্ষ B করা হয়। অ্যাকাউন্ট লাগবে না।",
     "respond.lang": "রায়ের ভাষা: {lang}।",

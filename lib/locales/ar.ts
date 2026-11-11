@@ -430,8 +430,6 @@ const ar: Locale = {
     "mode.signIn": "سجّل الدخول لإرسال رابط",
     "case.create": "إنشاء الدعوة",
     "case.creating": "نحذف الأسماء من روايتك…",
-    "case.kicker": "الطرفان",
-    "case.kickerOneSided": "روايتك فقط",
     "case.title": "قضيتك",
     "case.loading": "جارٍ تحميل القضية…",
     "case.loadFailed": "تعذّر تحميل هذه القضية. حاول مجددًا بعد قليل.",
@@ -487,8 +485,6 @@ const ar: Locale = {
     "case.list.untitled": "قضية بتاريخ {date}",
     "case.list.untitledSoon": "قضية",
     "respond.title": "احكِ روايتك",
-    "respond.intro":
-      "طلب أحدهم من Judge أن يحسم خلافًا بينكما. احكِ روايتك؛ لن يراها قبل صدور الحكم.",
     "respond.privacy":
       "تُستبدل الأسماء بالطرف A والطرف B قبل أن يقرأ القضاة أي شيء. لا تحتاج إلى حساب.",
     "respond.lang": "سيُكتب الحكم باللغة {lang}.",

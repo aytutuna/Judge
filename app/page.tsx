@@ -15,6 +15,7 @@ import styles from "@/components/home/page.module.css";
 import { apiFetch } from "@/lib/api-fetch";
 import { MAX_EVIDENCE_PER_SIDE, type CreateCaseResponse } from "@/lib/case-types";
 import { saveCaseNames } from "@/lib/case-names-store";
+import { saveSideNames } from "@/lib/side-names-store";
 import { firstNameOf } from "@/lib/originals-types";
 import { ownerTokenIds } from "@/lib/owner-store";
 import { track, trackApiError } from "@/lib/analytics/client";
@@ -479,6 +480,7 @@ export default function Home() {
       }
       if (premiumKey.current?.key === key) premiumKey.current = null;
       saveCaseNames(created.case.id, "a", created.name_map ?? []);
+      if (theirsOpen) saveSideNames(created.case.id, { b: otherName, c: more[0]?.name, d: more[1]?.name });
       if (created.entitlement) applyEntitlement(created.entitlement);
       void refreshHistory();
       if (signal.aborted) return;

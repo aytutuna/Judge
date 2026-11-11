@@ -432,8 +432,6 @@ const pa: Locale = {
     "mode.signIn": "ਲਿੰਕ ਭੇਜਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ",
     "case.create": "ਸੱਦਾ ਬਣਾਓ",
     "case.creating": "ਤੁਹਾਡੇ ਪੱਖ ਵਿੱਚੋਂ ਨਾਂ ਕੱਢ ਰਹੇ ਹਾਂ…",
-    "case.kicker": "ਦੋਵੇਂ ਪੱਖ",
-    "case.kickerOneSided": "ਸਿਰਫ਼ ਤੁਹਾਡਾ ਪੱਖ",
     "case.title": "ਤੁਹਾਡਾ ਕੇਸ",
     "case.loading": "ਕੇਸ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ…",
     "case.loadFailed": "ਇਹ ਕੇਸ ਲੋਡ ਨਹੀਂ ਹੋ ਸਕਿਆ। ਥੋੜ੍ਹੀ ਦੇਰ ਬਾਅਦ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
@@ -489,8 +487,6 @@ const pa: Locale = {
     "case.list.untitled": "{date} ਦਾ ਕੇਸ",
     "case.list.untitledSoon": "ਕੇਸ",
     "respond.title": "ਆਪਣਾ ਪੱਖ ਦੱਸੋ",
-    "respond.intro":
-      "ਕਿਸੇ ਨੇ Judge ਨੂੰ ਤੁਹਾਡੇ ਨਾਲ ਹੋਈ ਬਹਿਸ ਦਾ ਨਿਬੇੜਾ ਕਰਨ ਲਈ ਕਿਹਾ ਹੈ। ਆਪਣਾ ਪੱਖ ਦੱਸੋ; ਫ਼ੈਸਲੇ ਤੱਕ ਉਹ ਇਸ ਨੂੰ ਨਹੀਂ ਦੇਖਣਗੇ।",
     "respond.privacy":
       "ਜੱਜਾਂ ਦੇ ਕੁਝ ਵੀ ਪੜ੍ਹਨ ਤੋਂ ਪਹਿਲਾਂ ਨਾਂਵਾਂ ਦੀ ਥਾਂ ਧਿਰ A ਅਤੇ ਧਿਰ B ਲਿਖ ਦਿੱਤਾ ਜਾਂਦਾ ਹੈ। ਤੁਹਾਨੂੰ ਖਾਤੇ ਦੀ ਲੋੜ ਨਹੀਂ।",
     "respond.lang": "ਫ਼ੈਸਲਾ {lang} ਵਿੱਚ ਲਿਖਿਆ ਜਾਵੇਗਾ।",

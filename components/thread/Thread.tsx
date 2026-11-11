@@ -27,6 +27,8 @@ export type ThreadProps = {
   followUp?: ReactNode;
   /** Replaces "The judges" (e.g. how far they agreed). */
   judgesLabel?: string;
+  /** Drops the "The judges" chip: the part says it all (the owner's side rows). */
+  plain?: boolean;
 };
 
 const PARTS = ["clarify", "status", "judging", "invite", "notice", "verdict"] as const;
@@ -43,7 +45,7 @@ function prefersReducedMotion(): boolean {
  * finished thread stays where it starts.
  */
 export function Thread(props: ThreadProps) {
-  const { lang, argument, missing = "owner.notStored", unwritten = false, status, followUp, judgesLabel } = props;
+  const { lang, argument, missing = "owner.notStored", unwritten = false, status, followUp, judgesLabel, plain = false } = props;
   const listRef = useRef<HTMLOListElement>(null);
   const parts = PARTS.filter((p) => Boolean(props[p]));
   const shown = parts.join(" ");
@@ -79,10 +81,12 @@ export function Thread(props: ThreadProps) {
       )}
       {parts.length > 0 ? (
         <li className={styles.judges} data-turn="judges">
-          <p className={styles.who}>
-            <BrandMark size={18} />
-            {judgesLabel ?? t(lang, "thread.judges")}
-          </p>
+          {plain ? null : (
+            <p className={styles.who}>
+              <BrandMark size={18} />
+              {judgesLabel ?? t(lang, "thread.judges")}
+            </p>
+          )}
           {parts.map((p) =>
             p === "status" ? (
               <p key={p} data-part={p} className={styles.status}>

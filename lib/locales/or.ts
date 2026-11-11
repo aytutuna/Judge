@@ -430,8 +430,6 @@ const or: Locale = {
     "mode.signIn": "ଲିଙ୍କ୍ ପଠାଇବାକୁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ",
     "case.create": "ନିମନ୍ତ୍ରଣ ତିଆରି କରନ୍ତୁ",
     "case.creating": "ଆପଣଙ୍କ କଥାକୁ ନାମହୀନ କରୁଛୁ…",
-    "case.kicker": "ଦୁଇ ପକ୍ଷ",
-    "case.kickerOneSided": "କେବଳ ଆପଣଙ୍କ କଥା",
     "case.title": "ଆପଣଙ୍କ ମାମଲା",
     "case.loading": "ମାମଲା ଲୋଡ୍ ହେଉଛି…",
     "case.loadFailed": "ଏହି ମାମଲା ଲୋଡ୍ କରିପାରିଲୁ ନାହିଁ। ଟିକେ ପରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।",
@@ -488,8 +486,6 @@ const or: Locale = {
     "case.list.untitled": "ମାମଲା, {date}",
     "case.list.untitledSoon": "ମାମଲା",
     "respond.title": "ନିଜ କଥା କୁହନ୍ତୁ",
-    "respond.intro":
-      "କେହି ଜଣେ ଆପଣଙ୍କ ସହ ହୋଇଥିବା ଏକ ବିବାଦ ମେଣ୍ଟାଇବାକୁ Judgeକୁ କହିଛନ୍ତି। ନିଜ କଥା କୁହନ୍ତୁ; ରାୟ ଆସିବା ଯାଏଁ ସେ ଏହା ଦେଖିପାରିବେ ନାହିଁ।",
     "respond.privacy": "ବିଚାରକମାନେ କିଛି ପଢ଼ିବା ଆଗରୁ ନାମ ବଦଳରେ ପକ୍ଷ A ଓ ପକ୍ଷ B ବସିଯାଏ। ଆକାଉଣ୍ଟ ଦରକାର ନାହିଁ।",
     "respond.lang": "ରାୟର ଭାଷା: {lang}।",
     "respond.lang.en": "ଇଂରାଜୀ",

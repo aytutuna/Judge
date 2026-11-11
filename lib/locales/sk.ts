@@ -430,8 +430,6 @@ const sk: Locale = {
     "mode.signIn": "Prihlás sa a pošli odkaz",
     "case.create": "Vytvoriť pozvánku",
     "case.creating": "Anonymizujem tvoju verziu…",
-    "case.kicker": "Obe strany",
-    "case.kickerOneSided": "Len tvoja verzia",
     "case.title": "Tvoj prípad",
     "case.loading": "Načítavam prípad…",
     "case.loadFailed": "Prípad sa nepodarilo načítať. Skús to o chvíľu.",
@@ -487,8 +485,6 @@ const sk: Locale = {
     "case.list.untitled": "Prípad z {date}",
     "case.list.untitledSoon": "Prípad",
     "respond.title": "Napíš svoju verziu",
-    "respond.intro":
-      "Niekto chce, aby Judge rozsúdil váš spor. Napíš svoju verziu; ten druhý ju uvidí až pri verdikte.",
     "respond.privacy":
       "Mená sa nahradia označeniami Strana A a Strana B skôr, než sudcovia čokoľvek prečítajú. Účet nepotrebuješ.",
     "respond.lang": "Jazyk verdiktu: {lang}.",

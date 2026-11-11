@@ -431,8 +431,6 @@ const nl: Locale = {
     "mode.signIn": "Log in om een link te sturen",
     "case.create": "Uitnodiging maken",
     "case.creating": "Je kant anonimiseren…",
-    "case.kicker": "Beide kanten",
-    "case.kickerOneSided": "Alleen jouw kant",
     "case.title": "Je zaak",
     "case.loading": "Zaak laden…",
     "case.loadFailed": "We konden deze zaak niet laden. Probeer het zo nog eens.",
@@ -489,8 +487,6 @@ const nl: Locale = {
     "case.list.untitled": "Zaak van {date}",
     "case.list.untitledSoon": "Zaak",
     "respond.title": "Vertel jouw kant",
-    "respond.intro":
-      "Iemand heeft Judge gevraagd een discussie met jou te beslechten. Vertel jouw kant; de ander ziet die pas bij de uitspraak.",
     "respond.privacy":
       "Namen worden vervangen door Partij A en Partij B voordat de rechters iets lezen. Je hebt geen account nodig.",
     "respond.lang": "De uitspraak wordt geschreven in het {lang}.",

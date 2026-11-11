@@ -431,8 +431,6 @@ const ro: Locale = {
     "mode.signIn": "Conectează-te ca să trimiți un link",
     "case.create": "Creează invitația",
     "case.creating": "Îți anonimizăm partea…",
-    "case.kicker": "Ambele părți",
-    "case.kickerOneSided": "Doar partea ta",
     "case.title": "Cazul tău",
     "case.loading": "Se încarcă cazul…",
     "case.loadFailed": "N-am putut încărca acest caz. Încearcă din nou peste puțin timp.",
@@ -490,8 +488,6 @@ const ro: Locale = {
     "case.list.untitled": "Caz din {date}",
     "case.list.untitledSoon": "Caz",
     "respond.title": "Spune-ți varianta",
-    "respond.intro":
-      "Cineva vrea ca Judge să lămurească o dispută pe care o are cu tine. Spune-ți varianta; persoana respectivă n-o va vedea până la verdict.",
     "respond.privacy":
       "Numele sunt înlocuite cu Partea A și Partea B înainte ca judecătorii să citească ceva. Nu ai nevoie de cont.",
     "respond.lang": "Verdictul va fi scris în {lang}.",

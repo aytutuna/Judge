@@ -430,8 +430,6 @@ const ja: Locale = {
     "mode.signIn": "ログインしてリンクを送る",
     "case.create": "招待を作成",
     "case.creating": "あなたの言い分を匿名化しています…",
-    "case.kicker": "両方の言い分",
-    "case.kickerOneSided": "あなたの言い分のみ",
     "case.title": "あなたのケース",
     "case.loading": "ケースを読み込み中…",
     "case.loadFailed": "このケースを読み込めませんでした。少ししてからもう一度お試しください。",
@@ -488,8 +486,6 @@ const ja: Locale = {
     "case.list.untitled": "{date}のケース",
     "case.list.untitledSoon": "ケース",
     "respond.title": "あなたの言い分を書く",
-    "respond.intro":
-      "あなたとの揉めごとについて、Judgeに判定が依頼されました。あなたの言い分を書いてください。判定が出るまで、相手には見えません。",
     "respond.privacy":
       "審査員が読む前に、名前は当事者Aと当事者Bに置き換えられます。アカウントは必要ありません。",
     "respond.lang": "判定は{lang}で書かれます。",

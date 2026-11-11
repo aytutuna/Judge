@@ -432,8 +432,6 @@ const sv: Locale = {
     "mode.signIn": "Logga in för att skicka en länk",
     "case.create": "Skapa inbjudan",
     "case.creating": "Anonymiserar din sida…",
-    "case.kicker": "Båda sidor",
-    "case.kickerOneSided": "Bara din sida",
     "case.title": "Ditt fall",
     "case.loading": "Laddar fallet…",
     "case.loadFailed": "Vi kunde inte ladda fallet. Försök igen om en stund.",
@@ -489,8 +487,6 @@ const sv: Locale = {
     "case.list.untitled": "Fall från {date}",
     "case.list.untitledSoon": "Fall",
     "respond.title": "Berätta din sida",
-    "respond.intro":
-      "Någon har bett Judge avgöra ett bråk med dig. Berätta din sida; den andra ser den inte förrän domen är klar.",
     "respond.privacy":
       "Namnen byts ut mot Part A och Part B innan domarna läser något. Du behöver inget konto.",
     "respond.lang": "Domen skrivs på {lang}.",

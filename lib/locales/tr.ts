@@ -436,8 +436,6 @@ const tr: Locale = {
     "mode.signIn": "Bağlantı göndermek için giriş yap",
     "case.create": "Daveti oluştur",
     "case.creating": "Tarafını anonimleştiriyoruz…",
-    "case.kicker": "İki taraf",
-    "case.kickerOneSided": "Sadece senin tarafın",
     "case.title": "Davan",
     "case.loading": "Dava yükleniyor…",
     "case.loadFailed": "Bu davayı yükleyemedik. Birazdan tekrar dene.",
@@ -494,8 +492,6 @@ const tr: Locale = {
     "case.list.untitled": "{date} tarihli dava",
     "case.list.untitledSoon": "Dava",
     "respond.title": "Kendi tarafını anlat",
-    "respond.intro":
-      "Biri, seninle arasındaki bir tartışmayı Judge'a sordu. Kendi tarafını anlat; karar çıkana kadar o göremeyecek.",
     "respond.privacy": "Yargıçlar bir şey okumadan önce isimler Taraf A ve Taraf B olur. Hesap açman gerekmiyor.",
     "respond.lang": "Karar {lang} yazılacak.",
     "respond.lang.en": "İngilizce",

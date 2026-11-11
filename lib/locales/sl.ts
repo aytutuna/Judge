@@ -430,8 +430,6 @@ const sl: Locale = {
     "mode.signIn": "Prijavi se in pošlji povezavo",
     "case.create": "Ustvari povabilo",
     "case.creating": "Anonimiziramo tvojo plat…",
-    "case.kicker": "Obe plati",
-    "case.kickerOneSided": "Samo tvoja plat",
     "case.title": "Tvoj spor",
     "case.loading": "Nalagamo spor…",
     "case.loadFailed": "Tega spora nismo mogli naložiti. Poskusi znova čez trenutek.",
@@ -488,8 +486,6 @@ const sl: Locale = {
     "case.list.untitled": "Spor, {date}",
     "case.list.untitledSoon": "Spor",
     "respond.title": "Povej svojo plat",
-    "respond.intro":
-      "Nekdo želi, da Judge razsodi vajin prepir. Povej svojo plat; druga oseba je do razsodbe ne bo videla.",
     "respond.privacy":
       "Preden sodniki karkoli preberejo, imena zamenjamo z oznakama Stranka A in Stranka B. Računa ne potrebuješ.",
     "respond.lang": "Jezik razsodbe: {lang}.",

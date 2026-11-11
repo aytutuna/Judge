@@ -434,8 +434,6 @@ const pl: Locale = {
     "mode.signIn": "Zaloguj się, żeby wysłać link",
     "case.create": "Utwórz zaproszenie",
     "case.creating": "Anonimizujemy twoją wersję…",
-    "case.kicker": "Obie strony",
-    "case.kickerOneSided": "Tylko twoja wersja",
     "case.title": "Twoja sprawa",
     "case.loading": "Wczytywanie sprawy…",
     "case.loadFailed": "Nie udało się wczytać tej sprawy. Spróbuj za chwilę.",
@@ -494,8 +492,6 @@ const pl: Locale = {
     "case.list.untitled": "Sprawa z {date}",
     "case.list.untitledSoon": "Sprawa",
     "respond.title": "Opowiedz swoją wersję",
-    "respond.intro":
-      "Ktoś poprosił Judge o rozstrzygnięcie sporu z tobą. Opisz swoją wersję; ta osoba nie zobaczy jej przed werdyktem.",
     "respond.privacy":
       "Zanim sędziowie cokolwiek przeczytają, imiona zamieniamy na Stronę A i Stronę B. Nie potrzebujesz konta.",
     "respond.lang": "Język werdyktu: {lang}.",

@@ -430,8 +430,6 @@ const hi: Locale = {
     "mode.signIn": "लिंक भेजने के लिए साइन इन करें",
     "case.create": "न्योता बनाएँ",
     "case.creating": "आपकी बात से नाम हटा रहे हैं…",
-    "case.kicker": "दोनों पक्ष",
-    "case.kickerOneSided": "सिर्फ़ आपकी बात",
     "case.title": "आपका केस",
     "case.loading": "केस लोड हो रहा है…",
     "case.loadFailed": "यह केस लोड नहीं हो पाया। थोड़ी देर में फिर कोशिश करें।",
@@ -488,8 +486,6 @@ const hi: Locale = {
     "case.list.untitled": "{date} का केस",
     "case.list.untitledSoon": "केस",
     "respond.title": "अपनी बात बताएँ",
-    "respond.intro":
-      "किसी ने Judge से आपके साथ अपनी बहस सुलझाने को कहा है। अपनी बात बताएँ; फ़ैसला आने तक वे इसे नहीं देख पाएँगे।",
     "respond.privacy":
       "जजों के कुछ भी पढ़ने से पहले नामों की जगह पक्ष A और पक्ष B लिख दिया जाता है। आपको अकाउंट की ज़रूरत नहीं है।",
     "respond.lang": "फ़ैसला {lang} में लिखा जाएगा।",

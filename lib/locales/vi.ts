@@ -432,8 +432,6 @@ const vi: Locale = {
     "mode.signIn": "Đăng nhập để gửi liên kết",
     "case.create": "Tạo lời mời",
     "case.creating": "Đang ẩn tên trong lời kể của bạn…",
-    "case.kicker": "Cả hai bên",
-    "case.kickerOneSided": "Chỉ một phía",
     "case.title": "Vụ của bạn",
     "case.loading": "Đang tải vụ…",
     "case.loadFailed": "Không tải được vụ này. Thử lại sau giây lát nhé.",
@@ -490,8 +488,6 @@ const vi: Locale = {
     "case.list.untitled": "Vụ ngày {date}",
     "case.list.untitledSoon": "Vụ",
     "respond.title": "Kể phần của bạn",
-    "respond.intro":
-      "Có người đã nhờ Judge phân xử một cuộc tranh cãi với bạn. Hãy kể phần của bạn; họ sẽ không thấy cho đến khi có phán quyết.",
     "respond.privacy":
       "Tên được thay bằng Bên A và Bên B trước khi giám khảo đọc bất cứ điều gì. Bạn không cần tài khoản.",
     "respond.lang": "Ngôn ngữ của phán quyết: {lang}.",

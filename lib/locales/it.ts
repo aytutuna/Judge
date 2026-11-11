@@ -431,8 +431,6 @@ const it: Locale = {
     "mode.signIn": "Accedi per inviare un link",
     "case.create": "Crea l'invito",
     "case.creating": "Anonimizziamo la tua versione…",
-    "case.kicker": "Entrambe le parti",
-    "case.kickerOneSided": "Solo la tua versione",
     "case.title": "Il tuo caso",
     "case.loading": "Caricamento del caso…",
     "case.loadFailed": "Non siamo riusciti a caricare questo caso. Riprova tra un attimo.",
@@ -489,8 +487,6 @@ const it: Locale = {
     "case.list.untitled": "Caso · {date}",
     "case.list.untitledSoon": "Caso",
     "respond.title": "Racconta la tua versione",
-    "respond.intro":
-      "Qualcuno ha chiesto a Judge di risolvere una discussione con te. Racconta la tua versione; non la vedrà fino al verdetto.",
     "respond.privacy":
       "Prima che i giudici leggano qualsiasi cosa, i nomi vengono sostituiti con Parte A e Parte B. Non ti serve un account.",
     "respond.lang": "Il verdetto sarà scritto in {lang}.",

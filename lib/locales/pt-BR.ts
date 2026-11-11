@@ -430,8 +430,6 @@ const ptBR: Locale = {
     "mode.signIn": "Entre para enviar um link",
     "case.create": "Criar o convite",
     "case.creating": "Anonimizando o seu lado…",
-    "case.kicker": "Os dois lados",
-    "case.kickerOneSided": "Só o seu lado",
     "case.title": "Seu caso",
     "case.loading": "Carregando o caso…",
     "case.loadFailed": "Não conseguimos carregar este caso. Tente de novo daqui a pouco.",
@@ -487,8 +485,6 @@ const ptBR: Locale = {
     "case.list.untitled": "Caso de {date}",
     "case.list.untitledSoon": "Caso",
     "respond.title": "Conte o seu lado",
-    "respond.intro":
-      "Alguém pediu para o Judge resolver uma discussão com você. Conte o seu lado; a outra pessoa só vai ver depois do veredito.",
     "respond.privacy":
       "Os nomes são trocados por Parte A e Parte B antes de os juízes lerem qualquer coisa. Você não precisa de conta.",
     "respond.lang": "O veredito será escrito em {lang}.",

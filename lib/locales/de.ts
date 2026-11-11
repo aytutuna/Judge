@@ -432,8 +432,6 @@ const de: Locale = {
     "mode.signIn": "Melde dich an, um einen Link zu schicken",
     "case.create": "Einladung erstellen",
     "case.creating": "Deine Seite wird anonymisiert…",
-    "case.kicker": "Beide Seiten",
-    "case.kickerOneSided": "Nur deine Seite",
     "case.title": "Dein Fall",
     "case.loading": "Fall wird geladen…",
     "case.loadFailed": "Wir konnten diesen Fall nicht laden. Versuch es gleich noch mal.",
@@ -491,8 +489,6 @@ const de: Locale = {
     "case.list.untitled": "Fall vom {date}",
     "case.list.untitledSoon": "Fall",
     "respond.title": "Erzähl deine Version",
-    "respond.intro":
-      "Jemand hat Judge gebeten, einen Streit mit dir zu klären. Erzähl deine Version; die andere Person sieht sie erst mit dem Urteil.",
     "respond.privacy":
       "Bevor die Richter etwas lesen, werden Namen durch Partei A und Partei B ersetzt. Du brauchst kein Konto.",
     "respond.lang": "Das Urteil wird auf {lang} geschrieben.",

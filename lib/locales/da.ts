@@ -431,8 +431,6 @@ const da: Locale = {
     "mode.signIn": "Log ind for at sende et link",
     "case.create": "Opret invitationen",
     "case.creating": "Anonymiserer din side…",
-    "case.kicker": "Begge sider",
-    "case.kickerOneSided": "Kun din side",
     "case.title": "Din sag",
     "case.loading": "Henter sagen…",
     "case.loadFailed": "Vi kunne ikke hente sagen. Prøv igen om lidt.",
@@ -488,8 +486,6 @@ const da: Locale = {
     "case.list.untitled": "Sag fra {date}",
     "case.list.untitledSoon": "Sag",
     "respond.title": "Fortæl din side",
-    "respond.intro":
-      "Nogen har bedt Judge om at afgøre en diskussion med dig. Fortæl din side; den anden ser den ikke, før dommen falder.",
     "respond.privacy":
       "Navne bliver byttet ud med Part A og Part B, før dommerne læser noget. Du behøver ikke en konto.",
     "respond.lang": "Dommen bliver skrevet på {lang}.",

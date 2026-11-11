@@ -431,8 +431,6 @@ const hu: Locale = {
     "mode.signIn": "Lépj be a link küldéséhez",
     "case.create": "Meghívó létrehozása",
     "case.creating": "Kivesszük a neveket a verziódból…",
-    "case.kicker": "Mindkét fél",
-    "case.kickerOneSided": "Csak a te verziód",
     "case.title": "Az ügyed",
     "case.loading": "Ügy betöltése…",
     "case.loadFailed": "Nem sikerült betölteni ezt az ügyet. Próbáld újra egy kicsit később.",
@@ -489,8 +487,6 @@ const hu: Locale = {
     "case.list.untitled": "Ügy · {date}",
     "case.list.untitledSoon": "Ügy",
     "respond.title": "Mondd el a te verziódat",
-    "respond.intro":
-      "Valaki megkérte a Judge-ot, hogy döntsön el egy vitát köztetek. Mondd el a te verziódat; az ítéletig ő nem fogja látni.",
     "respond.privacy":
       "Mielőtt a bírák bármit elolvasnak, a neveket Fél A-ra és Fél B-re cseréljük. Fiók sem kell hozzá.",
     "respond.lang": "Az ítélet nyelve: {lang}.",

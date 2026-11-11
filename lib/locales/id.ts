@@ -430,8 +430,6 @@ const id: Locale = {
     "mode.signIn": "Masuk untuk mengirim tautan",
     "case.create": "Buat undangan",
     "case.creating": "Menganonimkan versimu…",
-    "case.kicker": "Dua pihak",
-    "case.kickerOneSided": "Versimu saja",
     "case.title": "Kasusmu",
     "case.loading": "Memuat kasus…",
     "case.loadFailed": "Kasus ini gagal dimuat. Coba lagi sebentar lagi.",
@@ -488,8 +486,6 @@ const id: Locale = {
     "case.list.untitled": "Kasus {date}",
     "case.list.untitledSoon": "Kasus",
     "respond.title": "Ceritakan versimu",
-    "respond.intro":
-      "Seseorang minta Judge menuntaskan perdebatan denganmu. Ceritakan versimu; dia tidak bisa melihatnya sampai putusan keluar.",
     "respond.privacy": "Nama diganti dengan Pihak A dan Pihak B sebelum hakim membaca apa pun. Kamu tidak perlu akun.",
     "respond.lang": "Putusan akan ditulis dalam bahasa {lang}.",
     "respond.lang.en": "Inggris",

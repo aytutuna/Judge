@@ -424,8 +424,6 @@ const he: Locale = {
     "mode.signIn": "צריך להתחבר כדי לשלוח קישור",
     "case.create": "יצירת ההזמנה",
     "case.creating": "מסירים את השמות מהצד שלך…",
-    "case.kicker": "שני הצדדים",
-    "case.kickerOneSided": "רק הצד שלך",
     "case.title": "התיק שלך",
     "case.loading": "טוענים את התיק…",
     "case.loadFailed": "לא הצלחנו לטעון את התיק. אפשר לנסות שוב עוד רגע.",
@@ -481,8 +479,6 @@ const he: Locale = {
     "case.list.untitled": "תיק מ-{date}",
     "case.list.untitledSoon": "תיק",
     "respond.title": "לספר את הצד שלך",
-    "respond.intro":
-      "מישהו ביקש מ-Judge להכריע בוויכוח איתך. כאן מספרים את הצד שלך, ומי שהזמין אותך לא יראה אותו עד פסק הדין.",
     "respond.privacy": "השמות מוחלפים בצד A ובצד B לפני שהשופטים קוראים משהו. לא צריך חשבון.",
     "respond.lang": "שפת פסק הדין: {lang}.",
     "respond.lang.en": "אנגלית",

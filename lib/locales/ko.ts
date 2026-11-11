@@ -429,8 +429,6 @@ const ko: Locale = {
     "mode.signIn": "로그인하고 링크 보내기",
     "case.create": "초대 링크 만들기",
     "case.creating": "내 입장을 익명 처리하는 중…",
-    "case.kicker": "양측",
-    "case.kickerOneSided": "내 입장만",
     "case.title": "내 사건",
     "case.loading": "사건을 불러오는 중…",
     "case.loadFailed": "사건을 불러오지 못했어요. 잠시 후 다시 시도해 주세요.",
@@ -486,8 +484,6 @@ const ko: Locale = {
     "case.list.untitled": "{date} 사건",
     "case.list.untitledSoon": "사건",
     "respond.title": "내 입장 들려주기",
-    "respond.intro":
-      "누군가 Judge에 논쟁 판결을 맡기면서 입장을 들려 달라고 했어요. 판결이 나오기 전까지 상대방은 이 글을 볼 수 없어요.",
     "respond.privacy":
       "판사들이 읽기 전에 이름은 당사자 A와 당사자 B로 바뀌어요. 계정이 없어도 괜찮아요.",
     "respond.lang": "판결은 {lang}로 작성돼요.",

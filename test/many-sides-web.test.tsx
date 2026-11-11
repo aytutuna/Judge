@@ -304,6 +304,33 @@ describe("owner case page with three sides", () => {
     expect(out.match(new RegExp(t("en", "case.invite.share"), "g"))).toHaveLength(1);
   });
 
+  it("shows the names the owner gave, one polite region and no judges chip", () => {
+    const out = html(
+      <CasePanel
+        lang="en"
+        view={view()}
+        names={OWNER_NAMES}
+        overlay={null}
+        onOverlayFinished={noop}
+        fresh={false}
+        busy={false}
+        actionError={null}
+        resetDone={false}
+        onJudgeNow={noop}
+        onRetry={noop}
+        onShare={noop}
+        onReset={noop}
+        onRemove={noop}
+        appeal={null}
+        sideNames={{ b: "Deniz" }}
+      />,
+    );
+    expect(out).toContain("Deniz");
+    expect(out).not.toMatch(/data-state="[a-z]+"[^>]*role="status"/);
+    expect(out.match(/aria-live="polite"/g)?.length ?? 0).toBeGreaterThanOrEqual(1);
+    expect(out).not.toContain(t("en", "thread.judges"));
+  });
+
   it("offers to judge with the sides that answered, and says what that does", () => {
     const out = owner(view());
     expect(out).toContain(t("en", "case.judgeAnswered"));

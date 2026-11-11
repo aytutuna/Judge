@@ -430,8 +430,6 @@ const gu: Locale = {
     "mode.signIn": "લિંક મોકલવા સાઇન ઇન કરો",
     "case.create": "આમંત્રણ બનાવો",
     "case.creating": "તમારી વાત અનામી કરીએ છીએ…",
-    "case.kicker": "બંને બાજુ",
-    "case.kickerOneSided": "ફક્ત તમારી બાજુ",
     "case.title": "તમારો કેસ",
     "case.loading": "કેસ લોડ થાય છે…",
     "case.loadFailed": "આ કેસ લોડ ન થઈ શક્યો. થોડી વારમાં ફરી પ્રયાસ કરો.",
@@ -488,8 +486,6 @@ const gu: Locale = {
     "case.list.untitled": "{date} નો કેસ",
     "case.list.untitledSoon": "કેસ",
     "respond.title": "તમારી વાત કહો",
-    "respond.intro":
-      "કોઈએ તમારી સાથેના વિવાદનો ફેંસલો Judgeને સોંપ્યો છે. તમારી વાત કહો; ચુકાદા પહેલાં તેઓ એ નહીં જુએ.",
     "respond.privacy":
       "જજ કંઈ પણ વાંચે એ પહેલાં નામની જગ્યાએ પક્ષ A અને પક્ષ B મુકાય છે. એકાઉન્ટની જરૂર નથી.",
     "respond.lang": "ચુકાદો આ ભાષામાં લખાશે: {lang}.",

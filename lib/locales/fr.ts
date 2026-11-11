@@ -430,8 +430,6 @@ const fr: Locale = {
     "mode.signIn": "Connecte-toi pour envoyer un lien",
     "case.create": "Créer l’invitation",
     "case.creating": "Anonymisation de ta version…",
-    "case.kicker": "Les deux camps",
-    "case.kickerOneSided": "Ta version seulement",
     "case.title": "Ton dossier",
     "case.loading": "Chargement du dossier…",
     "case.loadFailed": "Impossible de charger ce dossier. Réessaie dans un instant.",
@@ -489,8 +487,6 @@ const fr: Locale = {
     "case.list.untitled": "Dossier du {date}",
     "case.list.untitledSoon": "Dossier",
     "respond.title": "Donne ta version",
-    "respond.intro":
-      "Quelqu’un a demandé à Judge de trancher un débat entre vous deux. Donne ta version ; l’autre ne la verra pas avant le verdict.",
     "respond.privacy":
       "Les noms sont remplacés par Partie A et Partie B avant que les juges lisent quoi que ce soit. Pas besoin de compte.",
     "respond.lang": "Le verdict sera rédigé en {lang}.",

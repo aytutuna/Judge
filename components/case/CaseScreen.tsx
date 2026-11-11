@@ -6,6 +6,7 @@ import type {
   AppealResponse,
   CaseRemovalResponse,
   CaseResponse,
+  CaseLiveSide,
   CaseStatus,
   CaseView,
   InviteResponse,
@@ -21,6 +22,7 @@ import { useLang } from "@/lib/lang";
 import { localizeLabels, partyLabel, resolveParties, restoreNames, textLang } from "@/lib/names";
 import type { NameMapping } from "@/lib/types";
 import { shareLink } from "@/lib/share-link";
+import { forgetSideNames, loadSideNames, type SideNames } from "@/lib/side-names-store";
 import { useCase } from "@/lib/use-case";
 import { refreshViewer, useViewer } from "@/lib/use-viewer";
 import { JudgingOverlay } from "../JudgingOverlay";
@@ -66,11 +68,13 @@ const STATUS_KEY = {
 const ownerOwes = (view: CaseView) =>
   view.status === "awaiting_respondent" && view.ownerSideMissing && view.respondentAnswered;
 
-export function StatusChip({ lang, status }: { lang: Lang; status: CaseStatus }) {
+/** `many`: three or four sides, so "the other side" would be wrong. */
+export function StatusChip({ lang, status, many = false }: { lang: Lang; status: CaseStatus; many?: boolean }) {
+  const key = many && status === "awaiting_respondent" ? "shell.case.waiting" : STATUS_KEY[status];
   return (
     <span className={styles.status} data-status={status}>
       <span className={styles.statusDot} aria-hidden />
-      {t(lang, STATUS_KEY[status])}
+      {t(lang, key)}
     </span>
   );
 }
@@ -85,6 +89,7 @@ export function CaseShell({
   title,
   lead,
   status,
+  many = false,
   you,
   bare = false,
   children,
@@ -95,6 +100,7 @@ export function CaseShell({
   title: string;
   lead?: string | null;
   status?: CaseStatus | null;
+  many?: boolean;
   you?: PartyLetter;
   bare?: boolean;
   children: ReactNode;
@@ -109,7 +115,7 @@ export function CaseShell({
           <h1 ref={headingRef} tabIndex={-1} className={styles.h1}>
             {title}
           </h1>
-          {status ? <StatusChip lang={lang} status={status} /> : null}
+          {status ? <StatusChip lang={lang} status={status} many={many} /> : null}
           {lead ? <p className={styles.lead}>{lead}</p> : null}
         </header>
         {children}
@@ -219,6 +225,8 @@ export type CasePanelProps = {
   removedNow?: boolean;
   /** The owner's side as they wrote it, once this browser has read it. */
   ownText?: string | null;
+  /** What the owner called each other side when sending the link. */
+  sideNames?: SideNames;
 };
 
 /** The owner's side as the judges read it, with every name but the
@@ -229,6 +237,27 @@ export function ownSideText(text: string, names: NameMapping[]): string {
   const parties = resolveParties(names, lang, "A");
   for (const [letter, party] of parties) if (party.self) parties.delete(letter);
   return restoreNames(localizeLabels(text, lang), parties, lang);
+}
+
+/** One polite region for the whole list: it reads "<name or side>: <state>"
+ * only for the sides whose state just changed. */
+function LiveAnnouncer({ lang, live, sideNames }: { lang: Lang; live: CaseLiveSide[]; sideNames: SideNames }) {
+  const [seen, setSeen] = useState(live);
+  const [message, setMessage] = useState("");
+  if (seen !== live) {
+    setSeen(live);
+    const changed = live.filter((s) => seen.find((p) => p.party === s.party)?.state !== s.state);
+    if (changed.length) {
+      setMessage(
+        changed.map((s) => `${sideNames[s.party]?.trim() || partyLabel(lang, s.party)}: ${t(lang, LIVE_KEY[s.state])}`).join(". "),
+      );
+    }
+  }
+  return (
+    <p className="sr-only" role="status" aria-live="polite">
+      {message}
+    </p>
+  );
 }
 
 /** Everything on the owner's case page below the title, from one case view:
@@ -258,6 +287,7 @@ export function CasePanel({
   ownTools = null,
   removedNow = false,
   ownText = null,
+  sideNames = {},
 }: CasePanelProps) {
   const judgeRef = useRef<HTMLDialogElement>(null);
   const judgeCancelRef = useRef<HTMLButtonElement>(null);
@@ -295,19 +325,27 @@ export function CasePanel({
       <div className={styles.stack}>
         {view.live ? (
           <section className={`${account.card} ${styles.inviteList}`}>
-            {view.live.map((side) => (
-              <div key={side.party} className={styles.inviteRow} data-party={side.party}>
-                <div className={styles.inviteHead}>
-                  <span className={styles.inviteAvatar} aria-hidden>
-                    {side.party.toUpperCase()}
-                  </span>
-                  <span className="sr-only">{partyLabel(lang, side.party)}</span>
-                  <span className={styles.inviteState} data-state={side.state} role="status">
-                    {t(lang, LIVE_KEY[side.state])}
-                  </span>
+            {view.live.map((side) => {
+              const name = sideNames[side.party]?.trim();
+              return (
+                <div key={side.party} className={styles.inviteRow} data-party={side.party}>
+                  <div className={styles.inviteHead}>
+                    <span className={styles.inviteAvatar} aria-hidden>
+                      {side.party.toUpperCase()}
+                    </span>
+                    {name ? (
+                      <span className={styles.inviteWho}>{name}</span>
+                    ) : (
+                      <span className="sr-only">{partyLabel(lang, side.party)}</span>
+                    )}
+                    <span className={styles.inviteState} data-state={side.state}>
+                      {t(lang, LIVE_KEY[side.state])}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
+            <LiveAnnouncer lang={lang} live={view.live} sideNames={sideNames} />
           </section>
         ) : null}
         {view.inviteUrl ? (
@@ -411,6 +449,7 @@ export function CasePanel({
           ) : null
         }
         invite={invite}
+        plain={invite !== null && !judgingNote && !notice}
         notice={
           removedBanner || notice ? (
             <div className={styles.stack}>
@@ -577,6 +616,8 @@ export function CaseScreen({ id }: { id: string }) {
   const [busy, setBusy] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
   const [resetDone, setResetDone] = useState(false);
+  // Read once: the case loads after hydration, so nothing rendered here can mismatch.
+  const [sideNames] = useState<SideNames>(() => loadSideNames(id));
   const [removedNow, setRemovedNow] = useState(false);
   const [toast, showToast] = useToast();
   const appeal = useAppealDraft<AppealResponse>({
@@ -658,14 +699,13 @@ export function CaseScreen({ id }: { id: string }) {
     })) as CaseRemovalResponse | null;
     if (json?.case) {
       forgetCaseNames(id);
+      forgetSideNames(id);
       setView(json.case);
       setRemovedNow(true);
     }
   }
 
   const title = t(lang, "case.title");
-  // A case judged on the owner's side alone is not "both sides" anymore.
-  const kicker = t(lang, view?.mode === "one_sided" ? "case.kickerOneSided" : "case.kicker");
 
   if (!view) {
     const message =
@@ -677,7 +717,7 @@ export function CaseScreen({ id }: { id: string }) {
             ? t(lang, "case.signIn")
             : t(lang, "case.loadFailed");
     return (
-      <CaseShell lang={lang} kicker={kicker} title={title}>
+      <CaseShell lang={lang} title={title}>
         <p className={load.status === "error" ? styles.error : styles.note} role={load.status === "loading" ? "status" : "alert"}>
           {message}
         </p>
@@ -693,9 +733,9 @@ export function CaseScreen({ id }: { id: string }) {
   return (
     <CaseShell
       lang={lang}
-      kicker={kicker}
       title={title}
       status={ownerOwes(view) ? null : view.status}
+      many={(view.parties?.length ?? 2) > 2}
       you={view.yourParty}
     >
       <CasePanel
@@ -719,6 +759,7 @@ export function CaseScreen({ id }: { id: string }) {
         focusAppeal={appealFinished}
         removedNow={removedNow}
         ownText={view.removed ? null : (originals?.side.original?.text ?? null)}
+        sideNames={sideNames}
         ownTools={
           <>
             <CaseOriginals lang={lang} data={view.removed ? null : originals} />

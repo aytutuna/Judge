@@ -430,8 +430,6 @@ const fi: Locale = {
     "mode.signIn": "Kirjaudu, niin voit lähettää linkin",
     "case.create": "Luo kutsu",
     "case.creating": "Anonymisoidaan kertomustasi…",
-    "case.kicker": "Molemmat puolet",
-    "case.kickerOneSided": "Vain sinun puolesi",
     "case.title": "Juttusi",
     "case.loading": "Ladataan juttua…",
     "case.loadFailed": "Juttua ei saatu ladattua. Yritä hetken päästä uudelleen.",
@@ -488,8 +486,6 @@ const fi: Locale = {
     "case.list.untitled": "Juttu ({date})",
     "case.list.untitledSoon": "Juttu",
     "respond.title": "Kerro oma puolesi",
-    "respond.intro":
-      "Joku pyysi Judgea ratkaisemaan välisenne kiistan. Kerro oma puolesi. Hän ei näe sitä ennen tuomiota.",
     "respond.privacy": "Nimet vaihdetaan muotoon Osapuoli A ja Osapuoli B ennen kuin tuomarit lukevat mitään. Et tarvitse tiliä.",
     "respond.lang": "Tuomion kieli: {lang}.",
     "respond.lang.en": "englanti",

@@ -431,8 +431,6 @@ const ca: Locale = {
     "mode.signIn": "Inicia sessió per enviar un enllaç",
     "case.create": "Crea la invitació",
     "case.creating": "Anonimitzant la teva versió…",
-    "case.kicker": "Totes dues parts",
-    "case.kickerOneSided": "Només la teva versió",
     "case.title": "El teu cas",
     "case.loading": "Carregant el cas…",
     "case.loadFailed": "No hem pogut carregar aquest cas. Torna-ho a provar d'aquí a una estona.",
@@ -489,8 +487,6 @@ const ca: Locale = {
     "case.list.untitled": "Cas del dia {date}",
     "case.list.untitledSoon": "Cas",
     "respond.title": "Explica la teva versió",
-    "respond.intro":
-      "Algú ha demanat a Judge que resolgui una discussió que té amb tu. Explica la teva versió; no la veurà fins al veredicte.",
     "respond.privacy":
       "Abans que els jutges llegeixin res, els noms es canvien per Part A i Part B. No et cal cap compte.",
     "respond.lang": "El veredicte s'escriurà en {lang}.",

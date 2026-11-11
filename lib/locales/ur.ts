@@ -429,8 +429,6 @@ const ur: Locale = {
     "mode.signIn": "لنک بھیجنے کے لیے سائن ان کریں",
     "case.create": "دعوتی لنک بنائیں",
     "case.creating": "آپ کی بات سے نام ہٹا رہے ہیں…",
-    "case.kicker": "دونوں طرف",
-    "case.kickerOneSided": "صرف آپ کی بات",
     "case.title": "آپ کا کیس",
     "case.loading": "کیس لوڈ ہو رہا ہے…",
     "case.loadFailed": "یہ کیس لوڈ نہیں ہو سکا۔ تھوڑی دیر میں دوبارہ کوشش کریں۔",
@@ -487,8 +485,6 @@ const ur: Locale = {
     "case.list.untitled": "{date} کا کیس",
     "case.list.untitledSoon": "کیس",
     "respond.title": "اپنی بات بتائیں",
-    "respond.intro":
-      "کسی نے آپ کے ساتھ اپنی بحث کا فیصلہ Judge پر چھوڑا ہے۔ اپنی بات بتائیں؛ فیصلے تک وہ اسے نہیں دیکھ سکیں گے۔",
     "respond.privacy":
       "ججوں کے کچھ بھی پڑھنے سے پہلے ناموں کی جگہ فریق A اور فریق B لکھ دیا جاتا ہے۔ آپ کو اکاؤنٹ کی ضرورت نہیں۔",
     "respond.lang": "فیصلہ {lang} میں لکھا جائے گا۔",

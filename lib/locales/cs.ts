@@ -427,8 +427,6 @@ const cs: Locale = {
     "mode.signIn": "Pro odeslání odkazu se přihlas",
     "case.create": "Vytvořit pozvánku",
     "case.creating": "Anonymizujeme tvůj pohled…",
-    "case.kicker": "Obě strany",
-    "case.kickerOneSided": "Jen tvůj pohled",
     "case.title": "Tvůj případ",
     "case.loading": "Načítáme případ…",
     "case.loadFailed": "Případ se nepodařilo načíst. Zkus to za chvilku.",
@@ -485,8 +483,6 @@ const cs: Locale = {
     "case.list.untitled": "Případ z {date}",
     "case.list.untitledSoon": "Případ",
     "respond.title": "Napiš, jak to vidíš ty",
-    "respond.intro":
-      "Někdo nechává v Judge rozsoudit spor, který s tebou má. Napiš, jak to vidíš ty; uvidí to až s verdiktem.",
     "respond.privacy":
       "Než soudci cokoli přečtou, jména se nahradí označeními Strana A a Strana B. Účet nepotřebuješ.",
     "respond.lang": "Jazyk verdiktu: {lang}.",

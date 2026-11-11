@@ -424,8 +424,6 @@ const en = {
   "mode.signIn": "Sign in to send a link",
   "case.create": "Create the invite",
   "case.creating": "Anonymizing your side…",
-  "case.kicker": "Both sides",
-  "case.kickerOneSided": "Your side only",
   "case.title": "Your case",
   "case.loading": "Loading the case…",
   "case.loadFailed": "We couldn't load this case. Try again in a moment.",
@@ -481,8 +479,6 @@ const en = {
   "case.list.untitled": "Case from {date}",
   "case.list.untitledSoon": "Case",
   "respond.title": "Tell your side",
-  "respond.intro":
-    "Someone asked Judge to settle an argument with you. Tell your side; they won't see it until the verdict.",
   "respond.privacy":
     "Names are swapped for Party A and Party B before the judges read anything. You don't need an account.",
   "respond.lang": "The verdict will be written in {lang}.",
