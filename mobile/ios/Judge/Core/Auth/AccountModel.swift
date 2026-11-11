@@ -581,6 +581,12 @@ final class AccountModel {
             code = ""
             failure = .codeExpired
             return false
+        } catch APIError.server(let status, let body) where status == 403 && body?.code == "invalid" && step == .choosePassword {
+            // The server takes no password for this account (the review account): the sign-in stands without one.
+            guard isSameSession(asked) else { return false }
+            info?.needsPassword = false
+            password = ""
+            return true
         } catch {
             failure = Self.passwordSaveFailure(error)
             return false

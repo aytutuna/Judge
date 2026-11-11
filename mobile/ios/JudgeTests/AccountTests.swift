@@ -646,6 +646,31 @@ final class AccountTests: XCTestCase {
     }
 
     @MainActor
+    func testCreateAccountFinishesWhenTheServerTakesNoPassword() async throws {
+        route([
+            "/api/auth/email-otp/send-verification-otp": try json(200, ["success": true]),
+            "/api/auth/sign-in/email-otp": try json(200, ["token": "sess-code", "user": Self.userJSON]),
+            "/api/v1/me/password": try json(403, ["code": "invalid"]),
+            "/api/v1/me": try json(200, Self.meJSON),
+        ])
+        let account = passwordModel()
+        account.isSignInPresented = true
+        account.setMode(.create)
+        account.email = "ann@example.com"
+        await account.sendCode(lang: .en)
+        account.code = "123456"
+        await account.verifyCode()
+        XCTAssertEqual(account.step, .choosePassword)
+
+        account.password = "brand new one"
+        await account.saveChosenPassword()
+        XCTAssertTrue(account.isSignedIn)
+        XCTAssertNil(account.failure)
+        XCTAssertFalse(account.isSignInPresented)
+        XCTAssertEqual(account.password, "")
+    }
+
+    @MainActor
     func testATypedPasswordIsForgottenWhenTheSheetClosesSignedOut() {
         let account = passwordModel()
         account.isSignInPresented = true
