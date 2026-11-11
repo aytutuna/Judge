@@ -93,6 +93,8 @@ final class AppModel {
     @ObservationIgnored private var caseOthers: [String: String] = [:]
     /// One model per case page, so a re-rendered screen keeps its state.
     @ObservationIgnored private var caseModels: [String: CaseModel] = [:]
+    /// Verdicts opened from the account's menu rows; they leave with the account.
+    @ObservationIgnored private var accountVerdicts: Set<String> = []
 
     private let defaults: UserDefaults
     /// Off in hosted unit tests: the setting then never turns events on.
@@ -168,7 +170,7 @@ final class AppModel {
         account.onSessionEnded = { [weak self, weak purchases, weak list] byUser in
             list?.reset()
             self?.historyUser = nil
-            self?.home.path.removeAll { if case .caseDetail = $0 { true } else { false } }
+            self?.dropAccountPages()
             self?.caseModels = [:]
             self?.home.evidence.clear()
             purchases?.userSignedOut()
@@ -285,6 +287,24 @@ final class AppModel {
         tab = target
     }
 
+    func dropAccountPages() {
+        let ids = accountVerdicts
+        accountVerdicts = []
+        home.path.removeAll {
+            switch $0 {
+            case .caseDetail: return true
+            case .saved(let id): return ids.contains(id)
+            default: return false
+            }
+        }
+    }
+
+    /// The website address of a received invite, which is answered there.
+    func inviteURL(_ entry: HistoryEntry) -> URL? {
+        guard case .account(let item) = entry, item.isCase, item.isRespondent, let token = item.inviteToken else { return nil }
+        return config.siteURL("r").appending(component: token)
+    }
+
     /// Opens a menu row on its page in the New tab, on top of what is open
     /// there. An invite answered on the website comes back as its address
     /// instead.
@@ -295,10 +315,12 @@ final class AppModel {
         case .account(let item):
             guard HistoryLabels.openable(item) else { return nil }
             if !item.isCase {
-                if await historyList.openVerdict(item, user: historyUser) { home.path.append(.saved(id: item.id)) }
-            } else if item.isRespondent, let token = item.inviteToken {
-                // Answering is done on the website: the case opens there too.
-                return config.siteURL("r").appending(component: token)
+                if await historyList.openVerdict(item, user: historyUser) {
+                    accountVerdicts.insert(item.id)
+                    home.path.append(.saved(id: item.id))
+                }
+            } else if let url = inviteURL(entry) {
+                return url
             } else {
                 home.path.append(.caseDetail(id: item.id))
             }

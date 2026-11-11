@@ -686,6 +686,8 @@ extension AppModel {
 
     /// A menu row: opens on its page from a fresh New tab.
     func openRecent(_ entry: HistoryEntry) async -> URL? {
+        // An invite is answered in the browser, so the tab stays as it is.
+        if let url = inviteURL(entry) { return url }
         go(.new)
         return await openHistory(entry)
     }
