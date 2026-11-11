@@ -6,8 +6,9 @@ import { accountEntry, AccountPicture, returnPath, signOutNow } from "@/componen
 import { saveDraftForSignIn } from "@/lib/draft";
 import { t, type Key, type Lang } from "@/lib/i18n";
 import { useViewer } from "@/lib/use-viewer";
-import { stateLabel, titleOf, tone } from "./history-labels";
+import { liveLabel, stateLabel, titleOf, tone } from "./history-labels";
 import { useHistory, type HistoryItem } from "./useHistory";
+import { useLive } from "./useLive";
 import styles from "./shell.module.css";
 
 type Props = {
@@ -63,6 +64,8 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
   const close = () => dialogRef.current?.close();
   const verdicts = history.items.filter((i) => i.kind === "verdict");
   const links = history.items.filter((i) => i.kind === "case");
+  const waiting = links.some((i) => i.role === "owner" && i.state === "waiting");
+  const live = useLive(waiting);
   const user = viewer.me?.user ?? null;
   const showSignIn = accountEntry(viewer.config, viewer.me) === "signin" && !pathname?.startsWith("/signin");
   const [profileOpen, setProfileOpen] = useState(false);
@@ -91,11 +94,16 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
         <h2 className={styles.menuHeading}>{t(lang, heading)}</h2>
         <ul>
           {items.map((item) => {
-            const state = item.kind === "verdict" && item.state === "removed" ? null : stateLabel(lang, item);
+            const typing = item.kind === "case" && item.state === "waiting" ? liveLabel(lang, live.get(item.id)) : null;
+            const state = typing ?? (item.kind === "verdict" && item.state === "removed" ? null : stateLabel(lang, item));
             const inner = (
               <>
                 <span className={styles.recentTitle}>{titleOf(lang, item)}</span>
-                {state ? <span className={styles.recentState}>{state}</span> : null}
+                {state ? (
+                  <span className={styles.recentState} data-live={typing ? "" : undefined}>
+                    {state}
+                  </span>
+                ) : null}
               </>
             );
             return (

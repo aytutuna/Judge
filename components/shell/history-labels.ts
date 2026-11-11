@@ -1,3 +1,4 @@
+import type { CaseLiveSide } from "@/lib/case-types";
 import { t, tWithDate, type Lang } from "@/lib/i18n";
 import { partyLabel } from "@/lib/names";
 import type { HistoryItem } from "./useHistory";
@@ -54,6 +55,14 @@ export function stateLabel(lang: Lang, item: HistoryItem): string | null {
     default:
       return null;
   }
+}
+
+/** The most advanced thing happening on a waiting link: someone typing, else
+ * someone who opened it; null when nobody has, so the plain state shows. */
+export function liveLabel(lang: Lang, sides: readonly CaseLiveSide[] | undefined): string | null {
+  if (sides?.some((s) => s.state === "typing")) return t(lang, "case.side.typing");
+  if (sides?.some((s) => s.state === "opened")) return t(lang, "case.side.opened");
+  return null;
 }
 
 /** Green when the ruling went the viewer's way, red when it went the other's. */
