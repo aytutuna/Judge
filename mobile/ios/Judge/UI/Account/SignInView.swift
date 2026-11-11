@@ -42,7 +42,7 @@ struct SignInView: View {
         }
         .scrollDismissesKeyboard(.interactively)
         .background(Brand.ivory.ignoresSafeArea())
-        .interactiveDismissDisabled(account.busy != nil)
+        .interactiveDismissDisabled(account.busy != nil || account.step == .choosePassword)
         .sheet(item: $webLink) { link in
             SafariView(url: link.url).ignoresSafeArea()
         }
@@ -68,7 +68,9 @@ struct SignInView: View {
                     .overlay(Circle().strokeBorder(Brand.line2, lineWidth: 1))
             }
             .buttonStyle(.plain)
-            .disabled(app.account.busy != nil)
+            .disabled(app.account.busy != nil || app.account.step == .choosePassword)
+            .opacity(app.account.step == .choosePassword ? 0 : 1)
+            .accessibilityHidden(app.account.step == .choosePassword)
             .accessibilityLabel(L10n.appCancel(lang))
         }
     }
@@ -264,7 +266,7 @@ struct SignInView: View {
         }
     }
 
-    /// Signed in by the code: choose a password, or skip by closing the sheet.
+    /// Signed in by the code: choose a password; the sheet stays until one is saved.
     private func passwordChoice(_ lang: AppLang, account: AccountModel) -> some View {
         @Bindable var account = account
         return VStack(alignment: .leading, spacing: 12) {
@@ -289,11 +291,6 @@ struct SignInView: View {
             }
             .buttonStyle(PrimaryButtonStyle())
             .disabled(account.busy != nil || account.password.isEmpty)
-            Button(L10n.signinPasswordSkip(lang)) {
-                app.account.isSignInPresented = false
-            }
-            .buttonStyle(LinkButtonStyle())
-            .disabled(account.busy != nil)
         }
     }
 
