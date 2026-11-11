@@ -304,6 +304,7 @@ struct SideMenu: View {
         let entries = currentEntries
         let verdicts = entries.filter { !$0.isCase }
         let links = entries.filter(\.isCase)
+        let shown = verdicts + links
         let now = list.now()
         let thinking = entries.contains { entry in
             if case .account(let item) = entry { return item.historyState?.thinking == true }
@@ -325,13 +326,13 @@ struct SideMenu: View {
                 if !verdicts.isEmpty {
                     heading(L10n.navVerdicts(lang)).menuListRow()
                     ForEach(verdicts) { entry in
-                        entryRow(entry, entries: entries, lang: lang, now: now)
+                        entryRow(entry, entries: shown, lang: lang, now: now)
                     }
                 }
                 if !links.isEmpty {
                     heading(L10n.navLinks(lang)).menuListRow()
                     ForEach(links) { entry in
-                        entryRow(entry, entries: entries, lang: lang, now: now)
+                        entryRow(entry, entries: shown, lang: lang, now: now)
                     }
                 }
                 if entries.isEmpty {
@@ -382,7 +383,7 @@ struct SideMenu: View {
             // A page of rows the phone already had doesn't grow the list, so no
             // new row appears: keep going while the end is on screen.
             .onChange(of: list.next) { _, next in
-                guard next != nil, !tailShown.isDisjoint(with: entries.suffix(3).map(\.id)) else { return }
+                guard next != nil, !tailShown.isDisjoint(with: shown.suffix(3).map(\.id)) else { return }
                 Task { await list.loadMore(user: app.historyUser) }
             }
             .refreshable { await list.refresh(user: app.historyUser, enabled: app.account.features.history, force: true) }
