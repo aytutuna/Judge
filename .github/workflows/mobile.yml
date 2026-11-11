@@ -231,6 +231,9 @@ jobs:
       - name: Example data is current
         run: npx tsx mobile/shared/examples/export-examples.ts --check
 
+      - name: Venue list is current
+        run: npx tsx mobile/shared/venues/export-venues.ts --check
+
       - name: Scene bundle is current
         run: npx tsx mobile/shared/scene/build-scene.ts --check
 
