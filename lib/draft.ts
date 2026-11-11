@@ -27,6 +27,12 @@ const MAX_DRAFT = 6000;
 const MAX_NAME = 40;
 const DRAFT_TTL_MS = 30 * 60_000;
 
+/** Whether the second side shows when the draft comes back: it has text, was
+ * left open, or sides C and D were added (they hang under it). */
+export function draftTheirsOpen(d: Draft): boolean {
+  return Boolean(d.otherSide) || d.theirsOpen === true || (d.more?.length ?? 0) > 0;
+}
+
 let source: (() => Draft | null) | null = null;
 
 /** Registers the current form state; returns the unregister function. */

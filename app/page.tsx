@@ -17,7 +17,7 @@ import { saveCaseNames } from "@/lib/case-names-store";
 import { firstNameOf } from "@/lib/originals-types";
 import { ownerTokenIds } from "@/lib/owner-store";
 import { track, trackApiError } from "@/lib/analytics/client";
-import { clearDraft, registerDraftSource, saveDraftForSignIn, takeDraft } from "@/lib/draft";
+import { clearDraft, draftTheirsOpen, registerDraftSource, saveDraftForSignIn, takeDraft } from "@/lib/draft";
 import { startHistory } from "@/lib/history-store";
 import { nextExample, loadSeen, saveSeen } from "@/lib/example-pick";
 import { loadExamples } from "@/lib/examples";
@@ -182,10 +182,10 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time read of browser storage
     setArgument(draft.argument);
     setOtherSide(draft.otherSide ?? "");
-    setTheirsOpen(Boolean(draft.otherSide) || draft.theirsOpen === true);
+    setTheirsOpen(draftTheirsOpen(draft));
     if (draft.mineName !== undefined) setMineName(draft.mineName);
     setOtherName(draft.otherName ?? "");
-    setMore(draft.otherSide && draft.more ? draft.more : []);
+    setMore(draft.more ?? []);
   }, []);
 
   // The index has to exist before the first addHistory, or the verdicts
