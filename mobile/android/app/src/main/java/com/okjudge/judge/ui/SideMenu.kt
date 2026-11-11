@@ -91,6 +91,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.okjudge.judge.core.model.LiveState
 import com.okjudge.judge.core.model.Viewer
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
@@ -253,6 +254,8 @@ internal fun MenuPanel(
     onRemove: (HistoryEntry) -> Unit = {},
     onLoadMore: () -> Unit = {},
     onRetry: () -> Unit = {},
+    /** Link rows that are being read live, by case id. */
+    live: Map<String, LiveState> = emptyMap(),
     /** For invites whose time ran out since the list was loaded. */
     now: Long = System.currentTimeMillis(),
 ) {
@@ -318,8 +321,8 @@ internal fun MenuPanel(
                         )
                     }
                 }
-                cards(s.navVerdicts, PageBarTags.VERDICTS, verdicts, now, onOpen) { confirmKey = it }
-                cards(s.navLinks, PageBarTags.LINKS, links, now, onOpen) { confirmKey = it }
+                cards(s.navVerdicts, PageBarTags.VERDICTS, verdicts, now, live, onOpen) { confirmKey = it }
+                cards(s.navLinks, PageBarTags.LINKS, links, now, live, onOpen) { confirmKey = it }
                 if (entries.isEmpty()) {
                     when {
                         paging.loading -> item(key = "loading") {
@@ -401,12 +404,20 @@ private fun LazyListScope.cards(
     tag: String,
     list: List<HistoryEntry>,
     now: Long,
+    live: Map<String, LiveState>,
     onOpen: (HistoryEntry) -> Unit,
     onAskRemove: (String) -> Unit,
 ) {
     if (list.isEmpty()) return
     item(key = tag) { SectionHeading(heading, tag) }
-    items(list, key = { it.key }) { e -> MenuCard(e, now, { onOpen(e) }, { onAskRemove(e.key) }) }
+    items(list, key = { it.key }) { e -> MenuCard(e, now, e.waitingLinkId?.let { live[it] }, { onOpen(e) }, { onAskRemove(e.key) }) }
+}
+
+/** A waiting link row says what its sides are doing: typing, or opened; plain waiting keeps the row's own words. */
+internal fun liveLabel(live: LiveState?, s: Strings): String? = when (live) {
+    LiveState.TYPING -> s.caseSideTyping
+    LiveState.OPENED -> s.caseSideOpened
+    else -> null
 }
 
 private fun noticeText(notice: HistoryNotice, s: Strings) = when (notice) {
@@ -480,11 +491,11 @@ private fun SectionHeading(label: String, tag: String) {
  * signal, and a screen reader reads them with the title.
  */
 @Composable
-private fun RecentCard(entry: HistoryEntry, now: Long, interaction: Modifier) {
+private fun RecentCard(entry: HistoryEntry, now: Long, live: LiveState?, interaction: Modifier) {
     val s = LocalStrings.current
     val lang = LocalLang.current
     val title = remember(entry, lang) { HistoryLabels.title(entry, s, lang) }
-    val status = HistoryLabels.status(entry, s, now)
+    val status = liveLabel(live, s) ?: HistoryLabels.status(entry, s, now)
     val (fill, edge, words) = when (HistoryLabels.tone(entry, now)) {
         HistoryLabels.Tone.YOURS -> Triple(Palette.sageTint, Palette.sageStrong, Palette.sageInk)
         HistoryLabels.Tone.THEIRS -> Triple(Palette.terraTint, Palette.terra, Palette.terraInk)
@@ -524,7 +535,7 @@ private fun RecentCard(entry: HistoryEntry, now: Long, interaction: Modifier) {
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun MenuCard(entry: HistoryEntry, now: Long, onOpen: () -> Unit, onAskRemove: () -> Unit) {
+private fun MenuCard(entry: HistoryEntry, now: Long, live: LiveState?, onOpen: () -> Unit, onAskRemove: () -> Unit) {
     val s = LocalStrings.current
     val open = Modifier.combinedClickable(
         enabled = opens(entry),
@@ -533,7 +544,7 @@ private fun MenuCard(entry: HistoryEntry, now: Long, onOpen: () -> Unit, onAskRe
         onLongClick = if (entry.removable) onAskRemove else null,
     )
     if (!entry.removable) {
-        RecentCard(entry, now, open)
+        RecentCard(entry, now, live, open)
         return
     }
     val state = rememberSwipeToDismissBoxState()
@@ -561,7 +572,7 @@ private fun MenuCard(entry: HistoryEntry, now: Long, onOpen: () -> Unit, onAskRe
     ) {
         // Opaque, so the delete background does not show through a dimmed card.
         Box(Modifier.background(Palette.paper, RoundedCornerShape(12.dp))) {
-            RecentCard(entry, now, open.semantics { customActions = listOf(CustomAccessibilityAction(s.appHistoryDelete) { onAskRemove(); true }) })
+            RecentCard(entry, now, live, open.semantics { customActions = listOf(CustomAccessibilityAction(s.appHistoryDelete) { onAskRemove(); true }) })
         }
     }
 }

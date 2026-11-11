@@ -37,7 +37,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleStartEffect
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.lifecycle.createSavedStateHandle
@@ -166,13 +170,6 @@ fun JudgeRoot(
                                 backStack.removeAll { it is ClarifyKey }
                                 if (backStack.none { it is JudgingKey }) backStack.add(JudgingKey)
                             }
-                            is VerdictFlow.Nav.Case -> {
-                                // The form's work is now the case: it starts empty next time.
-                                clearDraft = true
-                                backStack.removeAll { it is ClarifyKey }
-                                backStack.add(CaseKey(nav.id, nav.otherName))
-                                container.verdictFlow.caseOpened()
-                            }
                             // The verdict was refused for the account: no judging screen behind the answer.
                             VerdictFlow.Nav.Pricing -> {
                                 backStack.removeAll { it is ClarifyKey || it is JudgingKey }
@@ -290,6 +287,24 @@ fun JudgeRoot(
                     }
                 }
 
+                // While a link row waits, its sides are read live; leaving the app stops it.
+                val waitingLinks = history.orEmpty().mapNotNull { it.waitingLinkId }.toSet()
+                val waitingLinksNow by rememberUpdatedState(waitingLinks)
+                val lifecycle = LocalLifecycleOwner.current.lifecycle
+                val live by historyVm.live.collectAsStateWithLifecycle()
+                LaunchedEffect(menuOpen, waitingLinks.isNotEmpty(), historyOn) {
+                    if (!menuOpen || waitingLinks.isEmpty() || !historyOn) {
+                        historyVm.clearLive()
+                        return@LaunchedEffect
+                    }
+                    lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        while (true) {
+                            historyVm.pollLive(waitingLinksNow)
+                            delay(HistoryViewModel.LIVE_POLL_MS)
+                        }
+                    }
+                }
+
                 // A link, an expired session or a verdict on its way can push a page that has no menu.
                 LaunchedEffect(barShown) { if (!barShown) drawer.snapTo(DrawerValue.Closed) }
 
@@ -318,6 +333,7 @@ fun JudgeRoot(
                             onClose = { setMenu(false) },
                             paging = paging,
                             notice = historyNotice,
+                            live = live,
                             onRemove = { e -> historyVm.remove(listOf(e)) {} },
                             onLoadMore = historyVm::loadMore,
                             onRetry = { historyVm.refresh(force = true) },
@@ -380,6 +396,12 @@ fun JudgeRoot(
                                     val analytics = container.analytics
                                     ScreenView(analytics, "home")
                                     ErrorShown(analytics, state.error)
+                                    LaunchedEffect(vm) {
+                                        vm.shareLink.collect {
+                                            analytics.track("share_tapped")
+                                            shareInvite(context, currentStrings.appShareTitle, currentStrings.caseInviteShareText, it)
+                                        }
+                                    }
                                     val counted: (Submitted) -> Submitted = {
                                         if (it == Submitted.CHECKING || it == Submitted.CREATING) analytics.track("case_submitted")
                                         it
@@ -573,6 +595,10 @@ fun JudgeRoot(
                                         )
                                     }
                                     val state by vm.state.collectAsStateWithLifecycle()
+                                    LifecycleStartEffect(vm) {
+                                        vm.setForeground(true)
+                                        onStopOrDispose { vm.setForeground(false) }
+                                    }
                                     val accountState by account.state.collectAsStateWithLifecycle()
                                     val providers by account.providers.collectAsStateWithLifecycle()
                                     val signedIn = accountState is Account.State.SignedIn
@@ -603,7 +629,6 @@ fun JudgeRoot(
                                             onJudgeAnswered = vm::judgeAnswered,
                                             onResetInvite = vm::resetInvite,
                                             onRemove = vm::remove,
-                                            onCopyInvite = { copyLink(context, it) },
                                             onShareInvite = {
                                                 analytics.track("share_tapped")
                                                 shareInvite(context, currentStrings.appShareTitle, currentStrings.caseInviteShareText, it)

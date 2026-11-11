@@ -71,7 +71,7 @@ data class CaseDisplay(
     }
 }
 
-/** One invited side of a case with more than two sides, for its owner: B to D, each with its own link. */
+/** One invited side of a case with more than two sides, for its owner: B to D. */
 @Serializable
 data class CaseInvite(
     val party: String = "",
@@ -84,6 +84,32 @@ data class CaseInvite(
     val side: Side? get() = Side.of(party)
     val waiting: Boolean get() = status == "waiting"
     val answered: Boolean get() = status == "answered"
+}
+
+/** Where one invited side stands, as the owner sees it live. [state] stays raw so a state a newer server adds never fails the case. */
+@Serializable
+data class CaseLiveSide(val party: String = "", val state: String = "") {
+    val side: Side? get() = Side.of(party)
+    val liveState: LiveState get() = LiveState.of(state)
+}
+
+enum class LiveState(val raw: String) {
+    WAITING("waiting"),
+    OPENED("opened"),
+    TYPING("typing"),
+    ANSWERED("answered");
+
+    companion object {
+        /** An unknown state reads as waiting: the side has not answered. */
+        fun of(raw: String?): LiveState = entries.firstOrNull { it.raw == raw } ?: WAITING
+
+        /** What a case row says in the menu: typing beats opened, which beats the plain waiting text. */
+        fun forRow(sides: List<CaseLiveSide>): LiveState = when {
+            sides.any { it.liveState == TYPING } -> TYPING
+            sides.any { it.liveState == OPENED } -> OPENED
+            else -> WAITING
+        }
+    }
 }
 
 @Serializable
@@ -138,8 +164,10 @@ data class CaseView(
     val ownerSideMissing: Boolean = false,
     /** Only with three or four sides: A to C or A to D. */
     val parties: List<String>? = null,
-    /** Only with three or four sides, for the owner: sides B to D, each with its own link. [inviteUrl] stays side B's. */
+    /** Only with three or four sides, for the owner: sides B to D; every entry carries the case's one link. */
     val invites: List<CaseInvite>? = null,
+    /** Owner only: each invited side's live state. */
+    val live: List<CaseLiveSide>? = null,
     /** Only with three or four sides, for the owner: the answers in so far are enough to judge without the rest. */
     val canJudgeAnswered: Boolean = false,
     /** Where the court is drawn, set when the case was made; null is the court. */
@@ -181,6 +209,13 @@ data class CaseSummary(
 
 @Serializable
 data class CaseListResponse(val cases: List<CaseSummary> = emptyList(), val next: String? = null)
+
+/** GET /api/v1/cases/live: the owner's cases that wait on someone. */
+@Serializable
+data class LiveCase(val id: String = "", val sides: List<CaseLiveSide> = emptyList())
+
+@Serializable
+data class LiveCasesResponse(val cases: List<LiveCase> = emptyList())
 
 @Serializable
 data class CaseResponse(@SerialName("case") val case: CaseView)

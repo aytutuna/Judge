@@ -2,8 +2,11 @@ package com.okjudge.judge.ui.home
 
 import androidx.lifecycle.SavedStateHandle
 import com.okjudge.judge.FakeHistory
+import com.okjudge.judge.Fixtures
 import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.auth.Account
+import com.okjudge.judge.core.auth.Routes
+import com.okjudge.judge.core.cases.MemoryCaseNames
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.okjudge.judge.core.display.ExampleBook
@@ -21,14 +24,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.withTimeoutOrNull
+import kotlinx.serialization.json.jsonObject
+import mockwebserver3.MockWebServer
 import okhttp3.OkHttpClient
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -263,5 +273,26 @@ class HomeViewModelTest {
         assertTrue(text, text.contains("Deniz") && text.contains("Nobody asked me."))
         assertTrue("an unnamed side reads as its label", text.contains("Party D: I was out of town."))
         assertEquals(listOf(Side.A, Side.B, Side.C, Side.D), home.sides.map { it.party })
+    }
+
+    @Test
+    fun createdCase_handsOutItsLinkOnce_andHomeStaysEmpty() = runBlocking {
+        val routes = Routes()
+        val server = MockWebServer().also { it.dispatcher = routes; it.start() }
+        try {
+            routes.on("POST /api/v1/cases", Routes.json(201, Fixtures.verdicts["cases"]!!.jsonObject["createResponse"].toString()))
+            val created = VerdictFlow(JudgeApi(server.url("/").toString(), OkHttpClient(), "ua"), FakeHistory(), scope, caseNames = MemoryCaseNames())
+            val ready = Account.Providers.Ready(ServerConfig(features = Features(cases = true)))
+            val vm = HomeViewModel(SavedStateHandle(), created, flowOf(signedIn(null)), flowOf(ready))
+            vm.onArgumentChange(argument)
+            vm.onDisplayName("Ada")
+            assertEquals(Submitted.CREATING, vm.sendLink(AppLang.EN))
+            assertEquals("https://okjudge.com/r/Xk3pQ9vLm2Rt7YbN4cWd0A", withTimeout(5_000) { vm.shareLink.first() })
+            val after = withTimeout(5_000) { vm.state.first { it.blank && !it.creating } }
+            assertEquals("", after.argument)
+            assertNull("the link is handed out once", withTimeoutOrNull(300) { vm.shareLink.first() })
+        } finally {
+            server.close()
+        }
     }
 }

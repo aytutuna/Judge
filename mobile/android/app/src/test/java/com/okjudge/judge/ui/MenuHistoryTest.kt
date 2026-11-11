@@ -14,6 +14,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeRight
+import com.okjudge.judge.core.model.LiveState
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.ui.history.HistoryEntry
 import com.okjudge.judge.ui.history.HistoryLabels
@@ -51,13 +52,30 @@ class MenuHistoryTest {
         notice: HistoryNotice? = null,
         onLoadMore: () -> Unit = {},
         onRetry: () -> Unit = {},
+        live: Map<String, LiveState> = emptyMap(),
     ) = compose.setContent {
         Themed(AppLang.EN) {
             MenuPanel(
                 Tab.NEW, list, false, FocusRequester(), {}, onOpen, {},
-                paging = paging, notice = notice, onRemove = onRemove, onLoadMore = onLoadMore, onRetry = onRetry, now = now,
+                paging = paging, notice = notice, onRemove = onRemove, onLoadMore = onLoadMore, onRetry = onRetry, live = live, now = now,
             )
         }
+    }
+
+    @Test
+    fun aWaitingLinkRow_saysTypingOrOpened_insteadOfWaiting() {
+        val waiting = entries.first { it.waitingLinkId != null }
+        val id = waiting.waitingLinkId!!
+        menu(live = mapOf(id to LiveState.TYPING))
+        compose.onNodeWithText(en.caseSideTyping).assertExists()
+        compose.onNodeWithText("Waiting for Sam to answer").assertDoesNotExist()
+    }
+
+    @Test
+    fun aWaitingLinkRow_withNoLiveState_keepsItsOwnWords() {
+        val id = entries.first { it.waitingLinkId != null }.waitingLinkId!!
+        menu(live = mapOf(id to LiveState.WAITING))
+        compose.onNodeWithText("Waiting for Sam to answer").assertExists()
     }
 
     @Test

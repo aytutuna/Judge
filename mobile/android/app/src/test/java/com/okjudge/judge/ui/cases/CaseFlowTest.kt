@@ -19,6 +19,7 @@ import com.okjudge.judge.core.evidence.PreparedImage
 import com.okjudge.judge.core.model.CaseStatus
 import com.okjudge.judge.core.model.CaseView
 import com.okjudge.judge.core.model.Entitlement
+import com.okjudge.judge.core.model.LiveState
 import com.okjudge.judge.core.model.Features
 import com.okjudge.judge.core.model.NameMapping
 import com.okjudge.judge.core.model.Side
@@ -176,12 +177,12 @@ class CaseFlowTest {
         routes.on(CREATE, Routes.json(201, cases["createResponse"].toString()))
         val flow = VerdictFlow(api(), FakeHistory(), scope, caseNames = names, pickVenue = { "museum" })
         assertTrue(flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", AppLang.EN, emptyList(), "Alex"))
-        withTimeout(5_000) { flow.navigation.first() }
+        withTimeout(5_000) { flow.shareLink.first() }
         assertEquals("museum", bodyOf(CREATE)["venue"]!!.jsonPrimitive.content)
     }
 
     @Test
-    fun create_postsTheOwnerSideWithAKey_keepsTheNames_andOpensTheCase() = runBlocking {
+    fun create_postsTheOwnerSideWithAKey_keepsTheNames_andHandsOverTheLink() = runBlocking {
         routes.on(CREATE, Routes.json(201, cases["createResponse"].toString()))
         val flow = VerdictFlow(
             api(), FakeHistory(), scope,
@@ -191,11 +192,8 @@ class CaseFlowTest {
             caseNames = names,
         )
         assertTrue(flow.createCase("  Sam says a hot dog is a sandwich and I say it is not.  ", AppLang.TR, listOf("e1"), " Ayşe "))
-        assertEquals(VerdictFlow.Nav.Case(ID), withTimeout(5_000) { flow.navigation.first() })
-        assertTrue("the form holds until the case screen takes over", flow.creating.value)
-        assertFalse(flow.canStart())
-        flow.caseOpened()
-        assertFalse(flow.creating.value)
+        assertEquals(LINK, withTimeout(5_000) { flow.shareLink.first() })
+        assertFalse("the form can be used again at once", flow.creating.value)
         val req = routes.requestsTo(CREATE).single()
         assertEquals("ck-1", req.headers["Idempotency-Key"])
         val body = bodyOf(CREATE)
@@ -214,7 +212,7 @@ class CaseFlowTest {
         routes.on(CREATE, Routes.json(201, cases["createResponse"].toString()))
         val flow = VerdictFlow(api(), FakeHistory(), scope, caseNames = names)
         assertTrue(flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", AppLang.EN, emptyList(), "Alex", " Sam "))
-        assertEquals("the case screen is told who it waits for", VerdictFlow.Nav.Case(ID, "Sam"), withTimeout(5_000) { flow.navigation.first() })
+        withTimeout(5_000) { flow.shareLink.first() }
         assertEquals("and keeps it for later visits", "Sam", names.otherName(ID))
         val body = bodyOf(CREATE)
         assertEquals("premium", body["tier"]!!.jsonPrimitive.content)
@@ -255,7 +253,7 @@ class CaseFlowTest {
         withTimeout(5_000) { flow.lastError.first { it != null } }
         assertFalse(flow.creating.value)
         assertTrue("the form can try again", flow.createCase("", AppLang.EN, emptyList(), "Alex"))
-        assertEquals(VerdictFlow.Nav.Case(ID), withTimeout(5_000) { flow.navigation.first() })
+        withTimeout(5_000) { flow.shareLink.first() }
         assertEquals(listOf("ck-1", "ck-1"), routes.requestsTo(CREATE).map { it.headers["Idempotency-Key"] })
         val body = bodyOf(CREATE)
         assertTrue("text" !in body)
@@ -554,17 +552,36 @@ class CaseFlowTest {
     }
 
     @Test
-    fun inviteReset_forASide_asksForThatSideOnly() = runBlocking {
+    fun inviteReset_onAManySidedCase_swapsTheOneLinkForEverySide() = runBlocking {
         routes.on(GET, Routes.json(200, manyCase()))
-        routes.on("POST /api/v1/cases/$ID/invite", Routes.json(200, """{"inviteUrl":"https://okjudge.com/r/NEWCtokenNEWCtokenNEWCt","party":"c"}"""))
+        routes.on("POST /api/v1/cases/$ID/invite", Routes.json(200, """{"inviteUrl":"https://okjudge.com/r/NEWtokenNEWtokenNEWtok"}"""))
         val vm = vm()
         vm.until { it.status == CaseLoadStatus.READY }
-        vm.resetInvite(Side.C)
+        vm.resetInvite()
         val after = vm.until { it.resetDone }
-        assertEquals(Side.C, after.resetSide)
-        assertEquals("c", bodyOf("POST /api/v1/cases/$ID/invite")["party"]!!.jsonPrimitive.content)
-        assertEquals("https://okjudge.com/r/NEWCtokenNEWCtokenNEWCt", after.view!!.invites!!.single { it.side == Side.C }.inviteUrl)
-        assertEquals("side B's link is left alone", viewJson("waiting_for_respondent")["inviteUrl"]?.jsonPrimitive?.content, after.view!!.inviteUrl)
+        assertEquals("no side is asked for", "", routes.requestsTo("POST /api/v1/cases/$ID/invite").single().body?.utf8().orEmpty())
+        assertEquals("https://okjudge.com/r/NEWtokenNEWtokenNEWtok", after.view!!.inviteUrl)
+        assertEquals(setOf("https://okjudge.com/r/NEWtokenNEWtokenNEWtok"), after.view!!.invites!!.map { it.inviteUrl }.toSet())
+    }
+
+    @Test
+    fun liveStates_decode_andAnUnknownStateReadsAsWaiting() {
+        val json = viewJson("waiting_for_respondent").toMutableMap()
+        json["live"] = Json.parseToJsonElement("""[{"party":"b","state":"typing"},{"party":"c","state":"opened"},{"party":"d","state":"dozing"}]""")
+        val view = WireJson.json.decodeFromString(CaseView.serializer(), JsonObject(json).toString())
+        assertEquals(listOf(Side.B, Side.C, Side.D), view.live!!.map { it.side })
+        assertEquals(listOf(LiveState.TYPING, LiveState.OPENED, LiveState.WAITING), view.live!!.map { it.liveState })
+        assertNull("absent for anyone but the owner", view("waiting_for_respondent").live)
+    }
+
+    @Test
+    fun liveCases_decodesTheListAndTheRowLabelPicksTypingThenOpened() = runBlocking {
+        routes.on("GET /api/v1/cases/live", Routes.json(200, """{"cases":[{"id":"c1","sides":[{"party":"b","state":"opened"},{"party":"c","state":"typing"}]},{"id":"c2","sides":[{"party":"b","state":"waiting"},{"party":"c","state":"opened"}]},{"id":"c3","sides":[{"party":"b","state":"waiting"},{"party":"c","state":"answered"}]}]}"""))
+        val res = api().liveCases() as com.okjudge.judge.core.api.ApiResult.Ok
+        assertEquals(
+            listOf(LiveState.TYPING, LiveState.OPENED, LiveState.WAITING),
+            res.value.cases.map { LiveState.forRow(it.sides) },
+        )
     }
 
     @Test
@@ -596,7 +613,7 @@ class CaseFlowTest {
         routes.on(CREATE, Routes.json(201, cases["createResponse"].toString()))
         val flow = VerdictFlow(api(), FakeHistory(), scope, newKey = { "ck-${++keys}" }, caseNames = names)
         assertTrue(flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", AppLang.EN, emptyList(), null, sides = 4))
-        withTimeout(5_000) { flow.navigation.first() }
+        withTimeout(5_000) { flow.shareLink.first() }
         assertEquals(4, bodyOf(CREATE)["sides"]!!.jsonPrimitive.content.toInt())
     }
 
@@ -605,7 +622,7 @@ class CaseFlowTest {
         routes.on(CREATE, Routes.json(201, cases["createResponse"].toString()))
         val flow = VerdictFlow(api(), FakeHistory(), scope, newKey = { "ck-${++keys}" }, caseNames = names)
         assertTrue(flow.createCase("Sam says a hot dog is a sandwich and I say it is not.", AppLang.EN, emptyList(), null))
-        withTimeout(5_000) { flow.navigation.first() }
+        withTimeout(5_000) { flow.shareLink.first() }
         assertNull(bodyOf(CREATE)["sides"])
     }
 
@@ -641,6 +658,7 @@ class CaseFlowTest {
 
     private companion object {
         const val ID = "case0000001"
+        const val LINK = "https://okjudge.com/r/Xk3pQ9vLm2Rt7YbN4cWd0A"
         const val CREATE = "POST /api/v1/cases"
         const val GET = "GET /api/v1/cases/$ID"
         const val JUDGE = "POST /api/v1/cases/$ID/judge"

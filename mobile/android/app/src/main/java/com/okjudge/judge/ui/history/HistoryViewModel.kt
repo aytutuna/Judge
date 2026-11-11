@@ -12,6 +12,7 @@ import com.okjudge.judge.core.model.HistoryItem
 import com.okjudge.judge.core.model.HistoryOrder
 import com.okjudge.judge.core.model.HistoryPage
 import com.okjudge.judge.core.model.HistoryState
+import com.okjudge.judge.core.model.LiveState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -48,6 +49,9 @@ sealed interface HistoryEntry {
 
     /** A case, sent or received; the rest are verdicts. */
     val isCase: Boolean get() = this is Account && item.isCase
+
+    /** The id of one of the viewer's own links that still waits on someone; those rows are read live. */
+    val waitingLinkId: String? get() = (this as? Account)?.item?.takeIf { it.isCase && !it.isRespondent && it.historyState == HistoryState.WAITING }?.id
 }
 
 /**
@@ -107,6 +111,13 @@ class HistoryViewModel(
 
     private val _notice = MutableStateFlow<HistoryNotice?>(null)
     val notice: StateFlow<HistoryNotice?> = _notice.asStateFlow()
+
+    private val _live = MutableStateFlow<Map<String, LiveState>>(emptyMap())
+
+    /** The menu's waiting link rows by case id: typing or opened, else waiting. */
+    val live: StateFlow<Map<String, LiveState>> = _live.asStateFlow()
+
+    private var seenAnswered: Map<String, Int> = emptyMap()
 
     /** Null until the first read from the database. */
     val entries: StateFlow<List<HistoryEntry>?> = user.flatMapLatest { id ->
@@ -262,6 +273,25 @@ class HistoryViewModel(
         }
     }
 
+    /**
+     * GET /api/v1/cases/live once for the open menu's [waiting] link rows. A row that left the list or gained
+     * an answered side has changed state for real: the history is read again.
+     */
+    suspend fun pollLive(waiting: Set<String>) {
+        val res = api.liveCases() as? ApiResult.Ok ?: return
+        val byId = res.value.cases.associateBy { it.id }
+        val answered = byId.mapValues { (_, c) -> c.sides.count { it.liveState == LiveState.ANSWERED } }
+        val changed = waiting.any { it !in byId || answered.getValue(it) > (seenAnswered[it] ?: 0) }
+        seenAnswered = answered
+        _live.value = byId.mapValues { (_, c) -> LiveState.forRow(c.sides) }
+        if (changed) refresh(force = true)
+    }
+
+    fun clearLive() {
+        _live.value = emptyMap()
+        seenAnswered = emptyMap()
+    }
+
     fun clearNotice() {
         _notice.value = null
     }
@@ -270,6 +300,7 @@ class HistoryViewModel(
         const val LIMIT = 20
         const val REFRESH_MS = 60_000L
         const val POLL_MS = 20_000L
+        const val LIVE_POLL_MS = 3_000L
         private val GONE = setOf("not_found", "removed")
     }
 }

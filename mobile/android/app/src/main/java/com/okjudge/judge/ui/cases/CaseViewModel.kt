@@ -18,7 +18,6 @@ import com.okjudge.judge.core.model.CaseStatus
 import com.okjudge.judge.core.model.CaseView
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.NameMapping
-import com.okjudge.judge.core.model.Side
 import com.okjudge.judge.core.model.WireJson
 import com.okjudge.judge.core.model.WriteSideRequest
 import com.okjudge.judge.ui.home.MAX_EVIDENCE_PER_SIDE
@@ -47,8 +46,6 @@ data class CaseUiState(
     val busy: Boolean = false,
     val actionError: UiError? = null,
     val resetDone: Boolean = false,
-    /** Whose link was made anew ([resetDone] says it worked). */
-    val resetSide: Side = Side.B,
     val removedNow: Boolean = false,
     val overlay: CaseOverlay? = null,
     /** The verdict just replaced the judging animation. */
@@ -136,6 +133,7 @@ class CaseViewModel(
     }.stateIn(viewModelScope, SharingStarted.Eagerly, _state.value)
 
     private var failures = 0
+    private var foreground = true
     private var pollJob: Job? = null
     private var appealKey: Pair<String, String>? = null
     private var sideKey: Pair<String, String>? = null
@@ -187,8 +185,20 @@ class CaseViewModel(
         schedule()
     }
 
+    /** The screen is in the foreground: polling runs only then, and catches up when it comes back. */
+    fun setForeground(on: Boolean) {
+        if (foreground == on) return
+        foreground = on
+        if (on) {
+            if (_state.value.view?.pollAfterMs != null) reload()
+        } else {
+            pollJob?.cancel()
+        }
+    }
+
     private fun schedule() {
         pollJob?.cancel()
+        if (!foreground) return
         val wait = CaseLogic.nextPollDelay(_state.value.view, failures) ?: return
         pollJob = viewModelScope.launch {
             sleep(wait)
@@ -227,17 +237,15 @@ class CaseViewModel(
         viewModelScope.launch { action { api.judgeCase(caseId, onlyMine = false, answered = true) }?.let { show(it, fromAction = true) } }
     }
 
-    /** "Make a new link" for one side ([side], B unless told otherwise): the old one stops working. */
-    fun resetInvite(side: Side = Side.B) {
+    /** "Make a new link" for the whole case: the old one stops working. */
+    fun resetInvite() {
         if (_state.value.busy) return
-        _state.update { it.copy(resetDone = false, resetSide = side) }
+        _state.update { it.copy(resetDone = false) }
         viewModelScope.launch {
-            val res = action { api.resetInvite(caseId, side) } ?: return@launch
+            val res = action { api.resetInvite(caseId) } ?: return@launch
             val view = _state.value.view ?: return@launch
-            val invites = view.invites?.map { if (it.side == side) it.copy(inviteUrl = res.inviteUrl) else it }
-            _state.update {
-                it.copy(view = view.copy(inviteUrl = if (side == Side.B) res.inviteUrl else view.inviteUrl, invites = invites), resetDone = true)
-            }
+            val invites = view.invites?.map { it.copy(inviteUrl = res.inviteUrl) }
+            _state.update { it.copy(view = view.copy(inviteUrl = res.inviteUrl, invites = invites), resetDone = true) }
         }
     }
 

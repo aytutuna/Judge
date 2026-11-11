@@ -12,6 +12,7 @@ import com.okjudge.judge.core.model.CaseView
 import com.okjudge.judge.core.model.CaseWithNames
 import com.okjudge.judge.core.model.ClarifyRequest
 import com.okjudge.judge.core.model.InviteResponse
+import com.okjudge.judge.core.model.LiveCasesResponse
 import com.okjudge.judge.core.model.ClarifyResponse
 import com.okjudge.judge.core.model.EvidenceUploadResponse
 import com.okjudge.judge.core.model.HistoryPage
@@ -27,7 +28,6 @@ import com.okjudge.judge.core.model.VerdictAppealResponse
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.core.model.VerdictPoll
 import com.okjudge.judge.core.model.VerdictRequest
-import com.okjudge.judge.core.model.Side
 import com.okjudge.judge.core.model.VerdictRounds
 import com.okjudge.judge.core.model.VerdictSubmission
 import com.okjudge.judge.core.model.WireJson
@@ -238,6 +238,12 @@ class JudgeApi(
         return execute(getClient, req) { _, text -> WireJson.json.decodeFromString(CaseResponse.serializer(), text).case }
     }
 
+    /** GET /api/v1/cases/live: the owner's cases that still wait, with where each side stands. */
+    suspend fun liveCases(): ApiResult<LiveCasesResponse> {
+        val req = request(url("api", "v1", "cases", "live")).cacheControl(CacheControl.FORCE_NETWORK).get().build()
+        return execute(getClient, req) { _, text -> WireJson.json.decodeFromString(LiveCasesResponse.serializer(), text) }
+    }
+
     /** GET /api/v1/cases?limit=: the signed-in account's cases, newest first. */
     suspend fun listCases(limit: Int = 20): ApiResult<CaseListResponse> {
         val url = url("api", "v1", "cases").newBuilder().addQueryParameter("limit", limit.toString()).build()
@@ -259,10 +265,9 @@ class JudgeApi(
         return execute(caseWriteClient, req) { _, text -> WireJson.json.decodeFromString(CaseResponse.serializer(), text).case }
     }
 
-    /** POST /api/v1/cases/{id}/invite: a new invite link for [side] (B unless told otherwise); the old one stops working. */
-    suspend fun resetInvite(id: String, side: Side = Side.B): ApiResult<InviteResponse> {
-        val body = if (side == Side.B) EMPTY else buildJsonObject { put("party", side.raw) }.toString().toRequestBody(JSON)
-        val req = request(caseUrl(id, "invite")).post(body).build()
+    /** POST /api/v1/cases/{id}/invite: a new link for the whole case; the old one stops working. */
+    suspend fun resetInvite(id: String): ApiResult<InviteResponse> {
+        val req = request(caseUrl(id, "invite")).post(EMPTY).build()
         return execute(accountClient, req) { _, text -> WireJson.json.decodeFromString(InviteResponse.serializer(), text) }
     }
 

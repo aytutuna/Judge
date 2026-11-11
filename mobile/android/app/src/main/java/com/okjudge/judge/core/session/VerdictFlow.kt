@@ -98,8 +98,6 @@ class VerdictFlow(
     sealed interface Nav {
         data object Clarify : Nav
         data object Judging : Nav
-        /** A two-sided case was created: open its screen. [otherName] is who it waits for, as typed. */
-        data class Case(val id: String, val otherName: String? = null) : Nav
         /** Nothing left to spend: the pricing screen. */
         data object Pricing : Nav
         data object SignIn : Nav
@@ -114,6 +112,11 @@ class VerdictFlow(
 
     private val _navigation = Channel<Nav>(Channel.BUFFERED)
     val navigation: Flow<Nav> = _navigation.receiveAsFlow()
+
+    private val _shareLink = Channel<String>(Channel.BUFFERED)
+
+    /** The one link of a case just created, once, for the share sheet. */
+    val shareLink: Flow<String> = _shareLink.receiveAsFlow()
 
     /** What a premium request judges, fixed when it is submitted. */
     private data class PremiumInput(val text: String, val lang: AppLang, val evidence: List<String>, val sides: List<Side>)
@@ -268,17 +271,12 @@ class VerdictFlow(
                     val other = otherName?.trim()?.takeIf { it.isNotEmpty() }
                     other?.let { caseNames.saveOtherName(created.case.id, it) }
                     created.entitlement?.let(onEntitlement)
-                    // The form stays held until the case screen has taken over (caseOpened).
-                    _navigation.trySend(Nav.Case(created.case.id, other))
+                    _creating.value = false
+                    created.case.inviteUrl?.let { _shareLink.trySend(it) }
                 }
             }
         }
         return true
-    }
-
-    /** The shell opened the created case: the form may be used again. */
-    fun caseOpened() {
-        _creating.value = false
     }
 
     /** "Back" from the questions: the form again, nothing sent. */

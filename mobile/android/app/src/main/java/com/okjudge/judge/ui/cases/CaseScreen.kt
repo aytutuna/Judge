@@ -77,10 +77,12 @@ import com.okjudge.judge.core.display.Venues
 import com.okjudge.judge.core.evidence.ImageSource
 import com.okjudge.judge.core.model.CaseAppealView
 import com.okjudge.judge.core.model.CaseEvidenceView
+import com.okjudge.judge.core.model.CaseLiveSide
 import com.okjudge.judge.core.model.CaseSideView
 import com.okjudge.judge.core.model.CaseStatus
 import com.okjudge.judge.core.model.CaseVerdictView
 import com.okjudge.judge.core.model.CaseView
+import com.okjudge.judge.core.model.LiveState
 import com.okjudge.judge.core.model.NameMapping
 import com.okjudge.judge.core.model.Side
 import com.okjudge.judge.i18n.LocalLang
@@ -118,15 +120,14 @@ import kotlinx.coroutines.delay
 object CaseTags {
     const val STATUS = "case.status"
     const val MESSAGE = "case.message"
-    const val INVITE_URL = "case.inviteUrl"
-    const val COPY = "case.copy"
     const val SHARE = "case.share"
     const val RESET = "case.reset"
     const val JUDGE_NOW = "case.judgeNow"
     const val JUDGE_ANSWERED = "case.judgeAnswered"
 
-    /** The card of one invited side of a case with three or four sides. */
-    fun invite(side: Side): String = "case.invite.${side.raw}"
+
+    /** The status row of one invited side. */
+    fun live(side: Side): String = "case.live.${side.raw}"
     const val RETRY = "case.retry"
     const val START_OVER = "case.startOver"
     const val REMOVE = "case.remove"
@@ -159,9 +160,8 @@ data class CaseActions(
     val onJudgeNow: () -> Unit = {},
     val onRetry: () -> Unit = {},
     val onJudgeAnswered: () -> Unit = {},
-    val onResetInvite: (Side) -> Unit = {},
+    val onResetInvite: () -> Unit = {},
     val onRemove: () -> Unit = {},
-    val onCopyInvite: (String) -> Unit = {},
     val onShareInvite: (String) -> Unit = {},
     val onOverlayFinished: () -> Unit = {},
     val onAppealText: (String) -> Unit = {},
@@ -216,8 +216,6 @@ private fun CaseScreenBody(
     val s = LocalStrings.current
     val view = state.view
     var confirm by rememberSaveable { mutableStateOf<Confirm?>(null) }
-    // Which side's link a reset confirmation is about.
-    var resetSide by rememberSaveable { mutableStateOf(Side.B.raw) }
     var details by rememberSaveable { mutableStateOf(false) }
     var appealOpen by rememberSaveable { mutableStateOf(false) }
     val kicker = if (view?.oneSided == true) s.caseKickerOneSided else s.caseKicker
@@ -322,10 +320,7 @@ private fun CaseScreenBody(
                 if (view.removed != null) {
                     Banner(if (state.removedNow) s.caseRemoved else s.caseRemovedBanner)
                 }
-                Body(state, view, waitingFor, evidenceOn, actions, addContext, onDetails = { details = true }, reducedMotion) { what, side ->
-                    resetSide = side.raw
-                    confirm = what
-                }
+                Body(state, view, waitingFor, evidenceOn, actions, addContext, onDetails = { details = true }, reducedMotion) { confirm = it }
                 if (view.verdicts.isNotEmpty() && view.removed == null) NamesTools(state, view, actions)
                 val bothRead = view.sides.size > 1
                 AccountsRead(
@@ -387,7 +382,7 @@ private fun CaseScreenBody(
                         when (shown) {
                             Confirm.JUDGE_NOW -> actions.onJudgeNow()
                             Confirm.JUDGE_ANSWERED -> actions.onJudgeAnswered()
-                            Confirm.RESET -> actions.onResetInvite(Side.of(resetSide) ?: Side.B)
+                            Confirm.RESET -> actions.onResetInvite()
                             Confirm.REMOVE -> actions.onRemove()
                         }
                     },
@@ -400,7 +395,7 @@ private fun CaseScreenBody(
     }
 }
 
-/** "Case · waiting", who for, and that neither side sees the other's words until the ruling. */
+/** "Case · waiting" and who for. */
 @Composable
 private fun WaitingHeader(name: String?) {
     val s = LocalStrings.current
@@ -410,10 +405,6 @@ private fun WaitingHeader(name: String?) {
             if (name != null) s.appCaseWaitingFor(name) else s.caseStatusAwaiting,
             style = JudgeType.caseTitle.copy(fontSize = 34.sp, lineHeight = (34 * 1.04).sp),
             modifier = Modifier.semantics { heading() },
-        )
-        Text(
-            if (name != null) s.appCaseWaitingLead(name) else s.appCaseWaitingLeadAnon,
-            style = JudgeType.body.copy(fontSize = 14.sp, lineHeight = (14 * 1.45).sp, color = Palette.ink2),
         )
     }
 }
@@ -517,45 +508,18 @@ private fun Body(
     onAddContext: (() -> Unit)?,
     onDetails: () -> Unit,
     reducedMotion: Boolean,
-    ask: (Confirm, Side) -> Unit,
+    ask: (Confirm) -> Unit,
 ) {
     val s = LocalStrings.current
     val lang = LocalLang.current
     when (view.status) {
         CaseStatus.AWAITING -> {
-            // "If nobody answers" no longer applies once they have.
-            val held = view.premium && !(view.ownerSideMissing && view.respondentAnswered)
-            val invites = view.invites.orEmpty().takeIf { view.isMany }
-            if (invites != null) {
-                // One link for each side, with whether that person has answered.
-                invites.forEach { invite ->
-                    val side = invite.side ?: return@forEach
-                    Card(Modifier.testTag(CaseTags.invite(side))) {
-                        val typed = view.display.name(side)?.trim().orEmpty()
-                        val name = typed.ifEmpty { PartyNames.label(side, s) }
-                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            SideAvatar(side)
-                            Text(name, style = JudgeType.slotTitle, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
-                            Text(
-                                if (invite.answered) s.caseSideAnswered else s.caseSideWaiting,
-                                style = JudgeType.footnote.copy(color = if (invite.answered) Palette.sageInk else Palette.muted),
-                            )
-                        }
-                        val url = invite.inviteUrl
-                        if (invite.waiting && url != null) {
-                            InviteLink(url, view.expiresAt, name, state, actions, resetDone = state.resetDone && state.resetSide == side) {
-                                ask(Confirm.RESET, side)
-                            }
-                        }
-                    }
-                }
-                if (held) Note(Errors.formatDate(lang, view.expiresAt)?.let { s.caseHeld(it) } ?: s.caseHeldSoon, color = Palette.muted)
-            } else if (view.inviteUrl != null || held) {
-                Card {
-                    view.inviteUrl?.let { url ->
-                        InviteLink(url, view.expiresAt, waitingFor, state, actions, resetDone = state.resetDone) { ask(Confirm.RESET, Side.B) }
-                    }
-                    if (held) Note(Errors.formatDate(lang, view.expiresAt)?.let { s.caseHeld(it) } ?: s.caseHeldSoon, color = Palette.muted)
+            view.live.orEmpty().forEach { LiveRow(it) }
+            view.inviteUrl?.let { url ->
+                PrimaryButton(s.caseInviteShare, true, { actions.onShareInvite(url) }, Modifier.fillMaxWidth().testTag(CaseTags.SHARE))
+                TextAction(s.caseInviteReset, { if (!state.busy) ask(Confirm.RESET) }, Modifier.testTag(CaseTags.RESET), color = Palette.ink2)
+                if (state.resetDone) {
+                    Note(s.caseInviteResetDone, Modifier.semantics { liveRegion = LiveRegionMode.Polite }, color = Palette.sageInk)
                 }
             }
             val sideMissing = view.ownerSideMissing
@@ -564,7 +528,6 @@ private fun Body(
             } else if (sideMissing && view.respondentAnswered) {
                 Note(s.respondSentWaiting, Modifier.semantics { liveRegion = LiveRegionMode.Polite })
             }
-            if (!sideMissing) WaitingSteps(waitingFor, view.canJudgeNow)
             ErrorLine(state.actionError, actions.onPricing)
             val judgeAnswered = view.isMany && view.canJudgeAnswered && !sideMissing
             if (judgeAnswered || (view.canJudgeNow && !sideMissing && !view.isMany)) {
@@ -574,7 +537,7 @@ private fun Body(
                         .heightIn(min = 48.dp)
                         .clip(RoundedCornerShape(16.dp))
                         .border(1.dp, Palette.line2, RoundedCornerShape(16.dp))
-                        .clickable(role = Role.Button) { if (!state.busy) ask(if (judgeAnswered) Confirm.JUDGE_ANSWERED else Confirm.JUDGE_NOW, Side.B) }
+                        .clickable(role = Role.Button) { if (!state.busy) ask(if (judgeAnswered) Confirm.JUDGE_ANSWERED else Confirm.JUDGE_NOW) }
                         .testTag(if (judgeAnswered) CaseTags.JUDGE_ANSWERED else CaseTags.JUDGE_NOW)
                         .padding(horizontal = 16.dp, vertical = 12.dp),
                     contentAlignment = Alignment.Center,
@@ -621,9 +584,9 @@ private fun Body(
             ErrorLine(state.actionError, actions.onPricing)
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 if (view.isMany && view.canJudgeAnswered && !view.ownerSideMissing) {
-                    PrimaryButton(s.caseJudgeAnswered, !state.busy, { ask(Confirm.JUDGE_ANSWERED, Side.B) }, Modifier.testTag(CaseTags.JUDGE_ANSWERED))
+                    PrimaryButton(s.caseJudgeAnswered, !state.busy, { ask(Confirm.JUDGE_ANSWERED) }, Modifier.testTag(CaseTags.JUDGE_ANSWERED))
                 } else if (view.canJudgeNow && !view.ownerSideMissing) {
-                    PrimaryButton(s.caseJudgeNow, !state.busy, { ask(Confirm.JUDGE_NOW, Side.B) }, Modifier.testTag(CaseTags.JUDGE_NOW))
+                    PrimaryButton(s.caseJudgeNow, !state.busy, { ask(Confirm.JUDGE_NOW) }, Modifier.testTag(CaseTags.JUDGE_NOW))
                 }
                 GhostButton(s.caseStartOver, null, actions.onStartOver, Modifier.testTag(CaseTags.START_OVER))
             }
@@ -631,74 +594,25 @@ private fun Body(
     }
 }
 
-/** "Send Sam this link", the link with Share and Copy, and until when it works (when the case says). */
+/** One invited side: its letter on its colour and where it stands; the side's name is for screen readers only. */
 @Composable
-private fun InviteLink(url: String, expiresAt: String, name: String?, state: CaseUiState, actions: CaseActions, resetDone: Boolean, onReset: () -> Unit) {
+private fun LiveRow(live: CaseLiveSide) {
     val s = LocalStrings.current
-    val lang = LocalLang.current
-    var copied by remember { mutableStateOf(false) }
-    LaunchedEffect(copied) {
-        if (copied) {
-            delay(2000)
-            copied = false
-        }
+    val side = live.side ?: return
+    val name = PartyNames.label(side, s)
+    val (label, color) = when (live.liveState) {
+        LiveState.WAITING -> s.caseSideWaiting to Palette.muted
+        LiveState.OPENED -> s.caseSideOpened to Palette.ink2
+        LiveState.TYPING -> s.caseSideTyping to Palette.ink2
+        LiveState.ANSWERED -> s.caseSideAnswered to Palette.sageInk
     }
-    Text(if (name != null) s.appCaseSendTo(name) else s.caseInviteLabel, style = JudgeType.slotTitle.copy(fontSize = 13.sp))
-    SelectionContainer {
-        Text(
-            url.removePrefix("https://"),
-            style = JudgeType.body.copy(fontSize = 14.sp, fontWeight = FontWeight.Medium, color = Palette.ink2),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(14.dp))
-                .background(Palette.well)
-                .semantics { contentDescription = url }
-                .testTag(CaseTags.INVITE_URL)
-                .padding(horizontal = 14.dp, vertical = 12.dp),
-        )
-    }
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        Row(
-            Modifier
-                .weight(1f)
-                .heightIn(min = 46.dp)
-                .clip(RoundedCornerShape(14.dp))
-                .background(Palette.ink)
-                .clickable(role = Role.Button) { actions.onShareInvite(url) }
-                .padding(horizontal = 10.dp, vertical = 6.dp)
-                .testTag(CaseTags.SHARE),
-            horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            TintedIcon(rememberIcon(Palette.paper) { JudgeIcons.share(it) }, 15)
-            Text(s.caseInviteShare, style = JudgeType.slotTitle.copy(color = Palette.paper), textAlign = TextAlign.Center)
-        }
-        Row(
-            Modifier
-                .weight(1f)
-                .heightIn(min = 46.dp)
-                .clip(RoundedCornerShape(14.dp))
-                .border(1.dp, Palette.line2, RoundedCornerShape(14.dp))
-                .clickable(role = Role.Button) {
-                    actions.onCopyInvite(url)
-                    copied = true
-                }
-                .semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }
-                .padding(horizontal = 10.dp, vertical = 6.dp)
-                .testTag(CaseTags.COPY),
-            horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            if (copied) TintedIcon(rememberIcon(Palette.sageInk) { JudgeIcons.check(it, 2f) }, 15)
-            Text(if (copied) s.caseInviteCopied else s.caseInviteCopy, style = JudgeType.slotTitle, textAlign = TextAlign.Center)
-        }
-    }
-    Errors.formatDate(lang, expiresAt)?.let { Note(s.caseInviteExpires(it), color = Palette.muted) }
-    TextAction(s.caseInviteReset, { if (!state.busy) onReset() }, Modifier.testTag(CaseTags.RESET), color = Palette.ink2)
-    if (resetDone) {
-        Note(s.caseInviteResetDone, Modifier.semantics { liveRegion = LiveRegionMode.Polite }, color = Palette.sageInk)
+    Row(
+        Modifier.fillMaxWidth().semantics(mergeDescendants = true) { contentDescription = name }.testTag(CaseTags.live(side)),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        SideAvatar(side)
+        Text(label, style = JudgeType.body.copy(fontSize = 15.sp, color = color))
     }
 }
 
@@ -766,40 +680,6 @@ private fun SideAvatar(side: Side) {
         contentAlignment = Alignment.Center,
     ) {
         Text(side.letter, style = JudgeType.micro.copy(fontSize = 12.sp, color = Palette.paper, letterSpacing = 0.sp))
-    }
-}
-
-/** Your side is in, theirs is next, then the judges. */
-@Composable
-private fun WaitingSteps(name: String?, canJudgeNow: Boolean) {
-    val s = LocalStrings.current
-    Column(Modifier.fillMaxWidth().semantics(mergeDescendants = true) {}) {
-        Step(StepState.DONE, s.appCaseStepYou, s.appCaseStepYouNote, last = false)
-        Step(StepState.NOW, if (name != null) s.appCaseStepThem(name) else s.appCaseStepThemAnon, s.appCaseStepThemNote, last = false)
-        Step(StepState.LATER, s.appCaseStepJudges, if (canJudgeNow) s.appCaseStepJudgesNote else null, last = true)
-    }
-}
-
-private enum class StepState { DONE, NOW, LATER }
-
-@Composable
-private fun Step(state: StepState, title: String, note: String?, last: Boolean) {
-    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            val dot = Modifier.size(24.dp).clip(CircleShape)
-            when (state) {
-                StepState.DONE -> Box(dot.background(Palette.terra), contentAlignment = Alignment.Center) {
-                    TintedIcon(rememberIcon(Palette.paper) { JudgeIcons.check(it, 2.4f) }, 12)
-                }
-                StepState.NOW -> Box(dot.background(Palette.sageTint).border(2.dp, Palette.sageInk, CircleShape))
-                StepState.LATER -> Box(dot.border(2.dp, Palette.stone, CircleShape))
-            }
-            if (!last) Box(Modifier.width(2.dp).height(26.dp).background(Palette.stone))
-        }
-        Column(Modifier.padding(top = 2.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            Text(title, style = JudgeType.slotTitle.copy(color = if (state == StepState.LATER) Palette.ink2 else Palette.ink))
-            if (note != null) Text(note, style = JudgeType.footnote.copy(fontSize = 12.sp))
-        }
     }
 }
 

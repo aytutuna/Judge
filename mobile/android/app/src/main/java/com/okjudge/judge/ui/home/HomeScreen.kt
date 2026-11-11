@@ -59,13 +59,11 @@ import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.okjudge.judge.core.cases.CaseLogic
 import com.okjudge.judge.core.display.ArgumentRules
@@ -89,7 +87,6 @@ import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.rememberIcon
 import com.okjudge.judge.ui.components.clearFocusOnTap
 import com.okjudge.judge.ui.components.neonEdge
-import com.okjudge.judge.ui.components.uppercaseForUi
 import com.okjudge.judge.ui.judging.rememberReducedMotion
 import com.okjudge.judge.ui.premium.AddContextButton
 import com.okjudge.judge.ui.premium.EvidenceRows
@@ -99,7 +96,6 @@ import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.LocalSides
 import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.theme.SideColors
-import com.okjudge.judge.ui.theme.forScript
 import java.text.NumberFormat
 import kotlinx.coroutines.delay
 
@@ -447,7 +443,7 @@ private fun CourtAbove(region: Dp, court: @Composable () -> Unit, form: @Composa
     }
 }
 
-/** One side: over what it says, the letter, a name field and the label (only once there are two sides). */
+/** One side: over what it says, the letter and a name field (only once there are two sides); the label is for screen readers. */
 @Composable
 private fun SideCard(
     colors: SideColors,
@@ -486,7 +482,7 @@ private fun SideCard(
     ) {
         if (showHeader) Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Box(
-                Modifier.size(24.dp).clip(CircleShape).background(colors.ink).clearAndSetSemantics { },
+                Modifier.size(24.dp).clip(CircleShape).background(colors.ink).clearAndSetSemantics { contentDescription = label },
                 contentAlignment = Alignment.Center,
             ) {
                 Text(letter, style = JudgeType.micro.copy(color = Palette.paper, letterSpacing = 0.sp))
@@ -510,11 +506,6 @@ private fun SideCard(
                         inner()
                     }
                 },
-            )
-            Text(
-                label.uppercaseForUi(),
-                style = JudgeType.micro.copy(fontWeight = FontWeight.SemiBold, letterSpacing = 0.08.em, color = colors.ink).forScript(),
-                maxLines = 1,
             )
             if (onRemove != null) {
                 Box(

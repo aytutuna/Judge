@@ -161,10 +161,10 @@ class ScreensTest {
     }
 
     @Test
-    fun home_tr_sideLabelsUppercaseWithTurkishRules() {
+    fun home_sideLabels_areOnlyForScreenReaders() {
         home(AppLang.TR, HomeUiState(theirsOpen = true))
-        // "Senin tarafın" must become "SENİN TARAFIN", not "SENIN TARAFIN".
-        compose.onNodeWithText("SENİN TARAFIN").assertExists()
+        compose.onNodeWithText("SENİN TARAFIN").assertDoesNotExist()
+        compose.onNodeWithContentDescription(UiTestSupport.s(AppLang.TR).appHomeYourSide).assertExists()
     }
 
     @Test

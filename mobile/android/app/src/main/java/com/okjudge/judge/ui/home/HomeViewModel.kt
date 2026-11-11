@@ -22,12 +22,14 @@ import com.okjudge.judge.core.premium.Tiers
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.Strings
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlin.random.Random
 
@@ -183,7 +185,18 @@ class HomeViewModel(
 
     val evidence = EvidenceController(viewModelScope, MAX_EVIDENCE_PER_SIDE, uploadEvidence)
 
+    private val _shareLink = Channel<String>(Channel.BUFFERED)
+
+    /** The link of a case just created, once: the screen opens the share sheet and Home stays, empty. */
+    val shareLink: Flow<String> = _shareLink.receiveAsFlow()
+
     init {
+        viewModelScope.launch {
+            flow.shareLink.collect {
+                clear()
+                _shareLink.send(it)
+            }
+        }
         // Refused tokens would fail the same way on every retry.
         viewModelScope.launch {
             flow.lastError.collect { if ((it as? UiError.Api)?.code == "evidence_invalid") evidence.invalidateTokens() }
