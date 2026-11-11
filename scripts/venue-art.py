@@ -14,6 +14,7 @@ DESIGNS = MI / "6_Home_Designs"
 THEMES = MI / "1_Interiors/16x16/Theme_Sorter"
 BUILDER = MI / "1_Interiors/16x16/Room_Builder_subfiles"
 FARM = ART / "Modern_Farm_v1.3/16x16"
+PEOPLE = pathlib.Path(__file__).resolve().parent.parent / "public" / "court" / "people"
 OUT = pathlib.Path(__file__).resolve().parent.parent / "public" / "court" / "venues"
 OUT.mkdir(parents=True, exist_ok=True)
 W, H = 320, 180
@@ -68,14 +69,87 @@ def design(folder, stem):
     return load(DESIGNS / folder / "16x16" / stem)
 
 
-def bin_(n=13):
-    return ext(f"City_Props_16x16_Trashbin_{n}")
+def box(im, x, y, w, h, col):
+    im.paste(col, (x, y, x + w, y + h))
 
 
-def basin(s, im, x, y):
-    """A bin, bucket or basket the ball drops into: x is its middle, y the height of its opening.
+def sprite(w, h, parts):
+    """Tiny hand-drawn props: parts are (x, y, w, h, colour) boxes, later ones on top."""
+    im = Image.new("RGBA", (w, h))
+    for x, y, bw, bh, col in parts:
+        box(im, x, y, bw, bh, col)
+    return im
+
+
+def target(s, im, x, y, ox=None, oy=0):
+    """Puts a prop where the engine's thrown thing lands: (x, y) is that spot, (ox, oy) the same spot inside the prop.
     The engine's TARGETS (components/court/engine.ts) hold the same points."""
-    s.put(im, x, y + im.height - 3)
+    ox = im.width // 2 if ox is None else ox
+    s.queue.append((H + im.height, im, x - ox, y - oy))
+
+
+INK = (36, 28, 24, 255)
+
+
+def cart():
+    wood, light = (154, 107, 63, 255), (201, 150, 96, 255)
+    return sprite(24, 20, [
+        (0, 0, 2, 9, INK), (0, 0, 3, 2, INK),
+        (2, 5, 22, 3, INK), (3, 6, 20, 1, light),
+        (3, 8, 20, 8, INK), (4, 8, 18, 7, wood), (4, 8, 18, 1, light), (4, 11, 18, 1, INK),
+        (5, 13, 16, 1, INK), (5, 16, 4, 4, INK), (17, 16, 4, 4, INK), (6, 17, 2, 2, (170, 170, 176, 255)), (18, 17, 2, 2, (170, 170, 176, 255)),
+    ])
+
+
+def jar():
+    glass, rim = (190, 226, 238, 255), (112, 152, 172, 255)
+    return sprite(7, 10, [
+        (1, 0, 5, 2, (170, 176, 184, 255)), (1, 0, 5, 1, (214, 218, 224, 255)),
+        (0, 2, 7, 8, rim), (1, 2, 5, 7, glass), (1, 6, 5, 3, (240, 190, 80, 255)), (2, 7, 1, 1, (255, 230, 140, 255)), (4, 6, 1, 1, (255, 230, 140, 255)),
+    ])
+
+
+def pedestal():
+    stone, light, dark = (205, 200, 190, 255), (232, 228, 218, 255), (150, 144, 134, 255)
+    return sprite(16, 24, [
+        (0, 0, 16, 4, INK), (1, 1, 14, 2, light), (1, 3, 14, 1, dark),
+        (2, 4, 12, 16, INK), (3, 4, 10, 15, stone), (3, 4, 1, 15, light), (12, 4, 1, 15, dark),
+        (0, 20, 16, 4, INK), (1, 20, 14, 3, dark), (1, 20, 14, 1, stone),
+    ])
+
+
+def guitar_case():
+    return sprite(18, 10, [
+        (1, 0, 16, 3, INK), (2, 1, 14, 2, (92, 62, 40, 255)),
+        (0, 3, 18, 7, INK), (1, 4, 16, 4, (142, 47, 47, 255)), (1, 4, 16, 1, (176, 74, 66, 255)),
+        (3, 6, 1, 1, (240, 190, 80, 255)), (9, 5, 1, 1, (240, 190, 80, 255)), (13, 6, 1, 1, (240, 190, 80, 255)),
+        (1, 8, 16, 1, (110, 80, 52, 255)),
+    ])
+
+
+def peg():
+    return sprite(3, 9, [(0, 0, 3, 3, INK), (1, 0, 1, 2, (150, 156, 164, 255)), (1, 3, 1, 6, (110, 116, 124, 255)), (0, 8, 3, 1, INK)])
+
+
+def pit(w=34, h=11):
+    im = Image.new("RGBA", (w, h))
+    px = im.load()
+    for y in range(h):
+        for x in range(w):
+            dx, dy = (x + 0.5 - w / 2) / (w / 2), (y + 0.5 - h / 2) / (h / 2)
+            d = dx * dx + dy * dy
+            if d <= 1:
+                px[x, y] = (146, 104, 66, 255) if d > 0.8 else (176, 130, 84, 255) if (x * 5 + y * 3) % 7 else (160, 116, 74, 255)
+    return im
+
+
+def busker(who):
+    sheet = load(PEOPLE / f"{who}.png")
+    im = sheet.crop((18 * 16, 0, 18 * 16 + 16, 32))
+    for x, y, w, h, col in ((11, 14, 1, 1, INK), (12, 13, 1, 1, INK), (13, 12, 1, 1, INK), (14, 11, 1, 1, INK),
+                            (4, 17, 7, 6, INK), (5, 18, 5, 4, (190, 124, 66, 255)), (7, 19, 2, 2, INK)):
+        box(im, x, y, w, h, col)
+    return im
 
 
 def ice():
@@ -99,8 +173,8 @@ def ice():
     s.at(o((146, 53, 173, 80)), 146 + shift, 53 - up)
     s.at(o((18, 92, 61, 128)), 8, 84)
     s.at(o((130, 92, 172, 128)), 270, 84)
-    basin(s, bin_(), 75, 64)
-    basin(s, bin_(), 245, 64)
+    target(s, jar(), 107, 39, 3, 1)
+    target(s, jar(), 213, 39, 3, 1)
     return s.finish()
 
 
@@ -124,8 +198,6 @@ def tv():
     s.at(o((146, 119, 159, 143)), 296, 106)
     s.at(o((49, 97, 63, 128)), 16, 130)
     s.at(o((81, 97, 95, 128)), 36, 130)
-    basin(s, bin_(7), 70, 88)
-    basin(s, bin_(7), 250, 88)
     return s.finish()
 
 
@@ -147,8 +219,8 @@ def museum():
     s.put(o((64, 135, 80, 192)), 308, 66)
     s.at(o((34, 211, 62, 256)), 30, 58)
     s.at(o((242, 211, 270, 256)), 262, 58)
-    basin(s, bin_(5), 78, 86)
-    basin(s, bin_(5), 242, 86)
+    target(s, pedestal(), 78, 96, 8, 10)
+    target(s, pedestal(), 242, 96, 8, 10)
     return s.finish()
 
 
@@ -182,8 +254,9 @@ def beach():
     s.put(beach_prop("Sand_Castle_2_Vers_2"), 292, 108)
     s.put(beach_prop("Medium_Sea_Rock_1_Vers_1"), 130, 36)
     s.put(beach_prop("Medium_Sea_Rock_1_Vers_2"), 186, 38)
-    basin(s, beach_prop("Small_Red_Bucket_1"), 100, 82)
-    basin(s, beach_prop("Small_Blue_Bucket_1"), 212, 82)
+    castle = beach_prop("Sand_Castle_1_Vers_1")
+    target(s, castle, 100, 82, castle.width // 2, 10)
+    target(s, castle, 212, 82, castle.width // 2, 10)
     return s.finish()
 
 
@@ -216,8 +289,8 @@ def camp():
     s.put(c("Backpack_2"), 52, 78)
     s.put(c("Lantern_2"), 266, 74)
     s.put(c("Barbecue_2"), 282, 80)
-    basin(s, c("Bucket_2"), 100, 84)
-    basin(s, c("Basket_1"), 222, 84)
+    target(s, c("Campfire_3"), 100, 84, 8, 14)
+    target(s, c("Campfire_3"), 222, 84, 8, 14)
     return s.finish()
 
 
@@ -232,12 +305,13 @@ def farm():
     s.put(f("Well_Usable"), 94, 84)
     s.put(f("Scarecrow"), 232, 80)
     s.put(f("Tractor_Right_Side"), 292, 100)
-    s.put(f("Raw_Bale_Big"), 28, 112)
-    s.put(f("Raw_Bale_Big"), 44, 112)
-    s.put(f("Milk_Can_1"), 90, 112)
+    s.put(f("Raw_Bale_Big"), 28, 130)
+    s.put(f("Raw_Bale_Big"), 44, 130)
+    s.put(f("Milk_Can_1"), 104, 126)
     s.put(f("Pimpkin_Big"), 226, 100)
-    s.put(f("Crate_Brown_Empty"), 250, 108)
-    basin(s, f("Bucket_1_Single"), 70, 88)
+    for x in (74, 250):
+        s.paste(pit(), x - 17, 100)
+        target(s, peg(), x, 106, 1, 6)
     return s.finish()
 
 
@@ -262,8 +336,8 @@ def library():
     s.put(cut(208, 16, 16, 32), 112, 64)
     s.put(cut(80, 16, 34, 34), 30, 112)
     s.put(cut(80, 16, 34, 34), 290, 112)
-    basin(s, ext("Camping_16x16_Basket_1"), 80, 84)
-    basin(s, ext("Camping_16x16_Basket_1"), 240, 84)
+    target(s, cart(), 80, 84, 13, 5)
+    target(s, cart(), 240, 84, 13, 5)
     return s.finish()
 
 
@@ -280,8 +354,9 @@ def street():
     s.put(ext("City_Props_16x16_Tree_1"), 160, 70)
     s.put(ext("City_Props_16x16_Bench_2"), 40, 104)
     s.put(ext("City_Props_16x16_Bench_2"), 280, 104)
-    basin(s, bin_(), 72, 82)
-    basin(s, bin_(), 248, 82)
+    for x, who in ((72, "scout3-1"), (248, "scout5-2")):
+        s.put(busker(who), x, 84)
+        target(s, guitar_case(), x, 86, 9, 3)
     s.put(ext("Villas_16x16_Potted_Flowers_2"), 120, 72)
     s.put(ext("Villas_16x16_Potted_Flowers_3"), 200, 72)
     return s.finish()
