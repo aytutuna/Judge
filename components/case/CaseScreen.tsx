@@ -377,7 +377,7 @@ export function CasePanel({
               disabled={busy}
               onClick={() => openConfirm(judgeRef.current, judgeCancelRef.current)}
             >
-              {t(lang, "case.judgeNow")}
+              {t(lang, judgeKey)}
             </button>
           ) : null}
           <Link href="/" className={`${account.btn} ${account.secondary}`}>
@@ -491,10 +491,10 @@ export function CasePanel({
           title={t(lang, "case.judgeNow")}
           text={t(
             lang,
-            view.status === "expired"
-              ? "case.judgeExpired.confirm"
-              : judgeAnswered
-                ? "case.judgeAnswered.confirm"
+            judgeAnswered
+              ? "case.judgeAnswered.confirm"
+              : view.status === "expired"
+                ? "case.judgeExpired.confirm"
                 : "case.judgeNow.confirm",
           )}
           yes={t(lang, view.status === "expired" ? "case.judgeExpired.yes" : "case.judgeNow.yes")}

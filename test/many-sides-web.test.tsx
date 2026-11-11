@@ -306,6 +306,12 @@ describe("owner case page with a link per side", () => {
     expect(out).toContain(t("en", "case.judgeAnswered.confirm").replace(/'/g, "&#x27;"));
     expect(owner(view({ canJudgeAnswered: false }))).toContain(t("en", "case.judgeNow"));
   });
+
+  it("offers the same once the invites expired, and says it uses a unit", () => {
+    const out = owner(view({ status: "expired" }));
+    expect(out).toContain(t("en", "case.judgeAnswered"));
+    expect(out).toContain(t("en", "case.judgeExpired.yes"));
+  });
 });
 
 describe("party labels", () => {

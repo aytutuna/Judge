@@ -370,7 +370,7 @@ private fun CaseScreenBody(
                 if (expired) s.caseJudgeExpiredConfirm else s.caseJudgeNowConfirm,
                 if (expired) s.caseJudgeExpiredYes else s.caseJudgeNowYes,
             )
-            Confirm.JUDGE_ANSWERED -> Triple(s.caseJudgeAnswered, s.caseJudgeAnsweredConfirm, s.caseJudgeNowYes)
+            Confirm.JUDGE_ANSWERED -> Triple(s.caseJudgeAnswered, s.caseJudgeAnsweredConfirm, if (expired) s.caseJudgeExpiredYes else s.caseJudgeNowYes)
             Confirm.RESET -> Triple(s.caseInviteReset, s.caseInviteResetConfirm, s.caseInviteResetYes)
             Confirm.REMOVE -> Triple(s.caseRemove, s.caseRemoveConfirm, s.caseRemoveYes)
         }
@@ -618,7 +618,9 @@ private fun Body(
             Banner(if (view.premium) s.caseExpiredBody else s.caseExpiredBodyFree)
             ErrorLine(state.actionError, actions.onPricing)
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                if (view.canJudgeNow && !view.ownerSideMissing) {
+                if (view.isMany && view.canJudgeAnswered && !view.ownerSideMissing) {
+                    PrimaryButton(s.caseJudgeAnswered, !state.busy, { ask(Confirm.JUDGE_ANSWERED, Side.B) }, Modifier.testTag(CaseTags.JUDGE_ANSWERED))
+                } else if (view.canJudgeNow && !view.ownerSideMissing) {
                     PrimaryButton(s.caseJudgeNow, !state.busy, { ask(Confirm.JUDGE_NOW, Side.B) }, Modifier.testTag(CaseTags.JUDGE_NOW))
                 }
                 GhostButton(s.caseStartOver, null, actions.onStartOver, Modifier.testTag(CaseTags.START_OVER))

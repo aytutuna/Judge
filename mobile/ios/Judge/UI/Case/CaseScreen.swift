@@ -13,14 +13,14 @@ struct CaseScreen: View {
 
 private enum CaseConfirm: Identifiable {
     case judgeNow(expired: Bool)
-    case judgeAnswered
+    case judgeAnswered(expired: Bool)
     case resetInvite(Party)
     case remove
 
     var id: String {
         switch self {
         case .judgeNow(let expired): return "judge-\(expired)"
-        case .judgeAnswered: return "judge-answered"
+        case .judgeAnswered(let expired): return "judge-answered-\(expired)"
         case .resetInvite(let party): return "reset-\(party.rawValue)"
         case .remove: return "remove"
         }
@@ -239,7 +239,11 @@ private struct CaseScreenContent: View {
             banner(CaseLogic.expiredBody(view, lang: lang))
             actionError(lang)
             VStack(spacing: 10) {
-                if view.canJudgeNow {
+                if view.isMany, view.canJudgeAnswered {
+                    Button(L10n.caseJudgeAnswered(lang)) { ask(.judgeAnswered(expired: true)) }
+                        .buttonStyle(PrimaryButtonStyle())
+                        .disabled(model.busy)
+                } else if view.canJudgeNow {
                     Button(L10n.caseJudgeNow(lang)) { ask(.judgeNow(expired: true)) }
                         .buttonStyle(PrimaryButtonStyle())
                         .disabled(model.busy)
@@ -300,7 +304,7 @@ private struct CaseScreenContent: View {
         actionError(lang)
         if view.isMany, view.canJudgeAnswered, !writing {
             Button {
-                ask(.judgeAnswered)
+                ask(.judgeAnswered(expired: false))
             } label: {
                 Text(L10n.caseJudgeAnswered(lang))
                     .frame(maxWidth: .infinity, minHeight: 48)
@@ -417,7 +421,7 @@ private struct CaseScreenContent: View {
     private func confirmYes(_ item: CaseConfirm, lang: AppLang) -> String {
         switch item {
         case .judgeNow(let expired): return CaseLogic.judgeNowConfirm(expired: expired, lang: lang).yes
-        case .judgeAnswered: return L10n.caseJudgeNowYes(lang)
+        case .judgeAnswered(let expired): return expired ? L10n.caseJudgeExpiredYes(lang) : L10n.caseJudgeNowYes(lang)
         case .resetInvite: return L10n.caseInviteResetYes(lang)
         case .remove: return L10n.caseRemoveYes(lang)
         }

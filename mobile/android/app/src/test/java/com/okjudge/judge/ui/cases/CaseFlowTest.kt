@@ -516,8 +516,8 @@ class CaseFlowTest {
     }
 
     /** A three-sided case as its owner sees it: B has answered, C still waits. */
-    private fun manyCase(): String {
-        val base = viewJson("waiting_for_respondent").toMutableMap()
+    private fun manyCase(name: String = "waiting_for_respondent"): String {
+        val base = viewJson(name).toMutableMap()
         base["parties"] = JsonArray(listOf("a", "b", "c").map(::JsonPrimitive))
         base["canJudgeAnswered"] = JsonPrimitive(true)
         base["invites"] = Json.parseToJsonElement(
@@ -556,6 +556,19 @@ class CaseFlowTest {
         assertEquals("c", bodyOf("POST /api/v1/cases/$ID/invite")["party"]!!.jsonPrimitive.content)
         assertEquals("https://okjudge.com/r/NEWCtokenNEWCtokenNEWCt", after.view!!.invites!!.single { it.side == Side.C }.inviteUrl)
         assertEquals("side B's link is left alone", viewJson("waiting_for_respondent")["inviteUrl"]?.jsonPrimitive?.content, after.view!!.inviteUrl)
+    }
+
+    @Test
+    fun judgeAnswered_isOfferedOnAnExpiredCaseToo() = runBlocking {
+        routes.on(GET, Routes.json(200, manyCase("expired")))
+        routes.on(JUDGE, Routes.json(200, caseBody("judging")))
+        val vm = vm()
+        val loaded = vm.until { it.status == CaseLoadStatus.READY }
+        assertEquals(CaseStatus.EXPIRED, loaded.view!!.status)
+        assertTrue(loaded.view!!.canJudgeAnswered)
+        vm.judgeAnswered()
+        vm.until { it.view?.status == CaseStatus.JUDGING }
+        assertEquals("answered", bodyOf(JUDGE)["mode"]!!.jsonPrimitive.content)
     }
 
     @Test

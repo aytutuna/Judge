@@ -46,6 +46,15 @@ final class ManySidedFlowTests: XCTestCase {
         XCTAssertNil(view.display.name(.d))
     }
 
+    func testAnExpiredCaseCanStillBeJudgedOnTheSidesThatAnswered() throws {
+        var object = Self.owner
+        object["status"] = "expired"
+        object["inviteUrl"] = NSNull()
+        let view = try CaseDecoding.view(object)
+        XCTAssertEqual(view.status, .expired)
+        XCTAssertTrue(view.canJudgeAnswered)
+    }
+
     func testATwoSidedCaseCarriesNoneOfIt() throws {
         var object = Self.owner
         for key in ["parties", "invites", "canJudgeAnswered"] { object[key] = nil }
