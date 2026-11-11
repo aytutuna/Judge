@@ -129,13 +129,18 @@ function retryAfter(res: Response): number | null {
   return Number.isFinite(sec) && sec > 0 ? Math.min(sec, MAX_RETRY_AFTER_SEC) : null;
 }
 
+/** The Judge-Sides header is written out here: importing apiFetch would pull
+ * the case schemas into the share page. */
+const sidesFetch: typeof fetch = (input, init) =>
+  fetch(input, { ...init, headers: { ...(init?.headers as Record<string, string> | undefined), "Judge-Sides": "4" } });
+
 /** Fetches the verdict text in `lang`. A failure (network, HTTP error, or a
  * body that does not parse) comes back as a TranslationFailure; the caller
  * keeps the original. */
 export async function fetchTranslation(
   id: string,
   lang: Lang,
-  fetchImpl: typeof fetch = fetch,
+  fetchImpl: typeof fetch = sidesFetch,
 ): Promise<VerdictResult | TranslationFailure> {
   try {
     const res = await fetchImpl(

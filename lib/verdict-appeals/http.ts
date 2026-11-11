@@ -22,6 +22,8 @@ import {
   signedIn,
   verifyEvidence,
 } from "@/lib/cases/http";
+import { hidesFrom, VERDICT_UPDATE } from "@/lib/cases/capability";
+import { getVerdict } from "@/lib/db";
 import { getVerdictMeta, type VerdictMeta } from "@/lib/originals/db";
 import { idempotencyKey } from "@/lib/premium/context";
 import type { VerdictAppealView } from "@/lib/types";
@@ -59,6 +61,7 @@ export function verdictAppealHandler(req: Request, id: string): Promise<NextResp
     const owned = await ownedVerdict(id, userId);
     if (owned === "not_found") return fail("not_found", NOT_FOUND);
     if (owned === "removed") return fail("removed", "This verdict was removed. Its link no longer works.");
+    if (hidesFrom(req, (await getVerdict(id))?.result)) return fail("update_required", VERDICT_UPDATE);
 
     const ev = verifyEvidence(parsed.data.evidence, [{ type: "user", userId }], MAX_EVIDENCE_PER_APPEAL);
     if ("response" in ev) return ev.response;

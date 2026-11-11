@@ -21,6 +21,7 @@ import { API_ERROR_STATUS, apiErrorBody, type ApiErrorCode } from "@/lib/api-err
 import { isSameOrigin, type ViewerSession } from "@/lib/auth";
 import { deadBearerResponse, lookupViewer } from "@/lib/bearer-guard";
 import { getCase, getInvites, type CaseRow } from "@/lib/cases/db";
+import { acceptsManySides, hidesFrom, VERDICT_UPDATE } from "@/lib/cases/capability";
 import { partyOfViewer } from "@/lib/cases/party";
 import { clientIp } from "@/lib/client-ip";
 import { getVerdict } from "@/lib/db";
@@ -191,6 +192,7 @@ export function mineHandler(req: Request, id: string): Promise<NextResponse> {
     }
     const stored = await getVerdict(meta.verdictId);
     if (!stored) return fail("not_found");
+    if (hidesFrom(req, stored.result)) return fail("update_required", VERDICT_UPDATE);
     if (caseParty) {
       const own = await partyOriginals(caseParty.row, caseParty.party);
       const body: MineResponse = {
@@ -333,7 +335,7 @@ export function myVerdictsHandler(req: Request): Promise<NextResponse> {
     const limited = await checkUserLimits(viewer.user.id, "verdict_owner").catch(() => null);
     if (!limited) return fail("unavailable");
     if (!limited.ok) return limitRefusal(limited);
-    const rows = await listOwnerVerdicts(viewer.user.id, limit + 1, before);
+    const rows = await listOwnerVerdicts(viewer.user.id, limit + 1, before, acceptsManySides(req));
     const page = rows.slice(0, limit);
     const body: OwnerVerdictListResponse = {
       verdicts: page.map((r) => {

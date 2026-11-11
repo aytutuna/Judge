@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { apiErrorBody } from "@/lib/api-errors";
 import { deadBearerResponse, lookupViewer } from "@/lib/bearer-guard";
+import { hidesFrom, VERDICT_UPDATE } from "@/lib/cases/capability";
 import { clientIp } from "@/lib/client-ip";
 import { getPublicVerdict } from "@/lib/originals/display";
 import type { VerdictMeta } from "@/lib/originals/db";
@@ -145,6 +146,9 @@ export async function GET(req: Request, ctx: RouteContext<"/api/v1/verdicts/[id]
     });
   }
   const { stored, display } = found;
+  if (hidesFrom(req, stored.result)) {
+    return NextResponse.json(apiErrorBody("update_required", VERDICT_UPDATE), { status: 426, headers: NO_STORE });
+  }
   const owner = await ownerState(req, found.meta);
   const { verdictAppealState } = await import("@/lib/verdict-appeals/http");
   const { appeals, appeal } = found.meta ? await verdictAppealState(found.meta, owner ?? null) : {};

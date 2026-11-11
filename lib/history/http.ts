@@ -91,6 +91,7 @@ function verdictRow(r: HistoryVerdictRow): HistoryRow {
     expiresAt: null,
     removed,
     inviteToken: null,
+    ...(!removed && r.result?.parties ? { parties: r.result.parties, winner: r.result.winner ?? null } : {}),
   };
 }
 

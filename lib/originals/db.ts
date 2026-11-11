@@ -237,7 +237,12 @@ export type OwnerVerdictRow = {
 /** One-sided verdicts owned by a user, newest first, each with its current
  * ruling (the latest appeal's verdict, if any). The verdicts appeals
  * produced are not listed on their own. */
-export async function listOwnerVerdicts(userId: string, limit: number, before: string | null): Promise<OwnerVerdictRow[]> {
+export async function listOwnerVerdicts(
+  userId: string,
+  limit: number,
+  before: string | null,
+  manySides = true,
+): Promise<OwnerVerdictRow[]> {
   const db = await originalsDb();
   const rs = await db.execute({
     sql: `SELECT m.verdict_id, m.kind, m.created_at, m.removed_at, o.sealed,
@@ -250,9 +255,10 @@ export async function listOwnerVerdicts(userId: string, limit: number, before: s
           LEFT JOIN originals o ON o.subject = 'verdict:' || m.verdict_id
           WHERE m.owner_user_id = ? AND m.kind IN ('free','premium') AND (? IS NULL OR m.created_at < ?)
             AND NOT EXISTS (SELECT 1 FROM verdict_appeals a WHERE a.id = m.verdict_id)
+            AND (? = 1 OR COALESCE(json_valid(v.result), 0) = 0 OR json_extract(v.result, '$.parties') IS NULL)
           ORDER BY m.created_at DESC, m.verdict_id DESC
           LIMIT ?`,
-    args: [userId, before, before, limit],
+    args: [userId, before, before, manySides ? 1 : 0, limit],
   });
   return rs.rows.map((r) => {
     let result: VerdictResult | null = null;

@@ -48,9 +48,10 @@ export type HistoryVerdictRow = {
 };
 
 /** Stored one-sided verdicts the user owns, without the verdicts rounds of
- * added context produced. Sorted by when the verdict was asked for (its
+ * added context produced. One with three or four sides is listed only for a
+ * client that can read it. Sorted by when the verdict was asked for (its
  * job), so a verdict keeps its place when it finishes. */
-function verdictsQuery(userId: string, limit: number, cursor: Cursor): InStatement {
+function verdictsQuery(userId: string, limit: number, cursor: Cursor, manySides: boolean): InStatement {
   const c = after(cursor);
   // The newest round still open (no removal of its own) that has a verdict.
   const shown = `FROM verdict_appeals a JOIN verdicts av ON av.id = a.id
@@ -71,9 +72,9 @@ function verdictsQuery(userId: string, limit: number, cursor: Cursor): InStateme
             LEFT JOIN originals o ON o.subject = 'verdict:' || m.verdict_id
             WHERE m.owner_user_id = ? AND m.kind IN ('free','premium')
               AND NOT EXISTS (SELECT 1 FROM verdict_appeals a WHERE a.id = m.verdict_id)
-          ) h WHERE 1 = 1 ${c.sql}
+          ) h WHERE (? = 1 OR COALESCE(json_valid(h.result), 0) = 0 OR json_extract(h.result, '$.parties') IS NULL) ${c.sql}
           ORDER BY h.at DESC, h.k DESC LIMIT ?`,
-    args: [userId, ...c.args, limit],
+    args: [userId, manySides ? 1 : 0, ...c.args, limit],
   };
 }
 
@@ -185,7 +186,10 @@ function ownerCasesQuery(userId: string, limit: number, cursor: Cursor, manySide
 }
 
 /** Cases whose side B, C or D is bound to the user, by when they answered.
- * Side B's account is in the case row, C's and D's in their invite. */
+ * Side B's account is in the case row, C's and D's in their invite. A case
+ * the owner settled on side A alone is left out: the sides that had answered
+ * are not shown that ruling. Sides C and D go only to a client that sends
+ * the capability header. */
 function answeredCasesQuery(userId: string, limit: number, cursor: Cursor, manySides: boolean): InStatement {
   const c = after(cursor);
   return {
@@ -200,7 +204,7 @@ function answeredCasesQuery(userId: string, limit: number, cursor: Cursor, manyS
             ) m
             JOIN cases c ON c.id = m.case_id
             JOIN case_sides s ON s.case_id = c.id AND s.party = m.vp
-            WHERE c.owner_id <> ? AND (? = 1 OR c.sides <= 2)
+            WHERE c.owner_id <> ? AND c.mode IS NOT 'one_sided' AND (? = 1 OR (c.sides <= 2 AND m.vp = 'b'))
           ) h WHERE 1 = 1 ${c.sql}
           ORDER BY h.at DESC, h.k DESC LIMIT ?`,
     args: [userId, userId, userId, manySides ? 1 : 0, ...c.args, limit],
@@ -224,7 +228,7 @@ export async function historySources(
   await ensureVerdictJobTables();
   const db = await getDb();
   const { failedSince, limit, cursor, cases, manySides = true } = opts;
-  const stmts = [verdictsQuery(userId, limit, cursor), jobsQuery(userId, failedSince, limit, cursor)];
+  const stmts = [verdictsQuery(userId, limit, cursor, manySides), jobsQuery(userId, failedSince, limit, cursor)];
   if (cases) stmts.push(ownerCasesQuery(userId, limit, cursor, manySides), answeredCasesQuery(userId, limit, cursor, manySides));
   const [v, j, s, a] = await db.batch(stmts, "read");
   return {

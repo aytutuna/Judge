@@ -444,3 +444,73 @@ describe("removal log and replay after a restore", () => {
     });
   });
 });
+
+describe("a verdict typed with three or four sides", () => {
+  const MANY: VerdictResult = {
+    ...RESULT,
+    verdict: "too_close",
+    headline: "Party C is right",
+    runs: ["split", "split", "split"],
+    parties: ["a", "b", "c"],
+    winner: "c",
+    votes: ["c", "c", "c"],
+    sides: ["a", "b", "c"].map((party) => ({ party: party as "a", claims: [{ claim: party, kind: "fact" as const }], bedrock: party })),
+    others: [
+      { party: "a", line: "Party A fell short." },
+      { party: "b", line: "Party B fell short." },
+    ],
+  };
+  const SIDES = { "judge-sides": "4" };
+
+  async function saveMany(userId: string) {
+    const id = vid();
+    await saveVerdictWithOriginals({
+      id,
+      input: "Party A, Party B and Party C argue",
+      result: MANY,
+      kind: "premium",
+      ownerUserId: userId,
+      original: { v: 1, text: RAW, nameMap: MAP },
+    });
+    return id;
+  }
+  const withHeaders = (r: Request, headers: Record<string, string>) => new Request(r, { headers: { ...Object.fromEntries(r.headers), ...headers } });
+
+  it("answers an app without Judge-Sides with update_required, and lets one that sends it read it", async () => {
+    const user = "u-many";
+    const id = await saveMany(user);
+    const get = (headers: Record<string, string>) =>
+      publicRoute.GET(withHeaders(new Request(`${ORIGIN}/api/v1/verdicts/${id}`), headers), { params: Promise.resolve({ id }) } as never);
+    const old = await get({});
+    expect(old.status).toBe(426);
+    expect((await json(old)).code).toBe("update_required");
+    expect((await get({ "judge-sides": "2" })).status).toBe(426);
+    const ok = await get(SIDES);
+    expect(ok.status).toBe(200);
+    expect((await json<{ result: VerdictResult }>(ok)).result.winner).toBe("c");
+
+    const oldMine = await mine(id, { user });
+    expect(oldMine.status).toBe(426);
+    const newMine = await ohttp.mineHandler(withHeaders(req("GET", `/api/v1/verdicts/${id}/mine`, { user }), SIDES), id);
+    expect(newMine.status).toBe(200);
+
+    const tr = (headers: Record<string, string>) =>
+      translateRoute.POST(
+        withHeaders(new Request(`${ORIGIN}/api/verdict/${id}/translate?lang=tr`, { method: "POST" }), headers),
+        { params: Promise.resolve({ id }) } as never,
+      );
+    expect((await tr({})).status).toBe(426);
+  });
+
+  it("leaves it out of the account list for an app without Judge-Sides", async () => {
+    const user = "u-many-list";
+    const id = await saveMany(user);
+    const plain = await save(user);
+    const list = async (headers: Record<string, string>) =>
+      (await json<OwnerVerdictListResponse>(
+        await ohttp.myVerdictsHandler(withHeaders(req("GET", "/api/v1/me/verdicts", { user }), headers)),
+      )).verdicts.map((v) => v.id);
+    expect(await list({})).toEqual([plain.id]);
+    expect((await list(SIDES)).sort()).toEqual([id, plain.id].sort());
+  });
+});
