@@ -25,16 +25,11 @@ interface CaseNamesStore {
     /** Who the case waits for, as typed on Home; the server never gets it. */
     fun otherName(caseId: String): String?
     fun saveOtherName(caseId: String, name: String)
-
-    /** What the owner called sides C and D when sending the link, by party letter. */
-    fun sideNames(caseId: String): Map<String, String>
-    fun saveSideNames(caseId: String, names: Map<String, String>)
 }
 
 class MemoryCaseNames : CaseNamesStore {
     private val map = HashMap<String, List<NameMapping>>()
     private val others = HashMap<String, String>()
-    private val sides = HashMap<String, Map<String, String>>()
 
     @Synchronized override fun get(caseId: String): List<NameMapping> = map[caseId].orEmpty()
 
@@ -46,19 +41,12 @@ class MemoryCaseNames : CaseNamesStore {
     @Synchronized override fun forget(caseId: String) {
         map.remove(caseId)
         others.remove(caseId)
-        sides.remove(caseId)
     }
 
     @Synchronized override fun otherName(caseId: String): String? = others[caseId]
 
     @Synchronized override fun saveOtherName(caseId: String, name: String) {
         others[caseId] = name
-    }
-
-    @Synchronized override fun sideNames(caseId: String): Map<String, String> = sides[caseId].orEmpty()
-
-    @Synchronized override fun saveSideNames(caseId: String, names: Map<String, String>) {
-        sides[caseId] = names
     }
 }
 
@@ -77,22 +65,13 @@ class PrefsCaseNames(context: Context) : CaseNamesStore {
     }
 
     @Synchronized override fun forget(caseId: String) {
-        prefs.edit().remove(key(caseId)).remove("other:$caseId").remove("c:$caseId").remove("d:$caseId").apply()
+        prefs.edit().remove(key(caseId)).remove("other:$caseId").apply()
     }
 
     @Synchronized override fun otherName(caseId: String): String? = prefs.getString("other:$caseId", null)
 
     @Synchronized override fun saveOtherName(caseId: String, name: String) {
         prefs.edit().putString("other:$caseId", name).apply()
-    }
-
-    @Synchronized override fun sideNames(caseId: String): Map<String, String> =
-        listOf("c", "d").mapNotNull { p -> prefs.getString("$p:$caseId", null)?.let { p to it } }.toMap()
-
-    @Synchronized override fun saveSideNames(caseId: String, names: Map<String, String>) {
-        val edit = prefs.edit()
-        names.forEach { (party, name) -> edit.putString("$party:$caseId", name) }
-        edit.apply()
     }
 }
 

@@ -195,18 +195,22 @@ struct CaseInvite: Decodable, Sendable, Equatable {
 struct CaseLiveSide: Decodable, Sendable, Equatable {
     var party: Party
     var state: LiveState
+    /// The name that side chose for itself, once it has answered.
+    var name: String?
 
-    init(party: Party, state: LiveState) {
+    init(party: Party, state: LiveState, name: String? = nil) {
         self.party = party
         self.state = state
+        self.name = name
     }
 
-    private enum CodingKeys: String, CodingKey { case party, state }
+    private enum CodingKeys: String, CodingKey { case party, state, name }
 
     init(from decoder: any Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         party = (try? c.decodeIfPresent(Party.self, forKey: .party)) ?? .unknown
         state = (try? c.decodeIfPresent(LiveState.self, forKey: .state)) ?? .unknown
+        name = try? c.decodeIfPresent(String.self, forKey: .name)
     }
 }
 
@@ -304,6 +308,8 @@ struct CaseView: Sendable, Equatable {
     /// Only with three or four sides, for the owner: the answers in so far
     /// are enough to judge without the rest.
     var canJudgeAnswered = false
+    /// Owner only: a new link can still be made (some side has no seat yet).
+    var canRotate = true
     /// The place the court is drawn in, set when the case was made; nil is the court.
     var venue: String? = nil
 
@@ -369,6 +375,7 @@ struct CaseSummary: Decodable, Sendable, Equatable, Identifiable {
         excerpt = try? c.decodeIfPresent(String.self, forKey: .excerpt)
         removed = (try? c.decodeIfPresent(Bool.self, forKey: .removed)) == true
         parties = manyParties(try? c.decodeIfPresent([Party].self, forKey: .parties))
+        canRotate = (try? c.decodeIfPresent(Bool.self, forKey: .canRotate)) != false
         venue = try? c.decodeIfPresent(String.self, forKey: .venue)
     }
 
@@ -420,12 +427,13 @@ private struct CaseViewWire: Decodable {
     var invites: [CaseInvite]?
     var live: [CaseLiveSide]?
     var canJudgeAnswered: Bool
+    var canRotate: Bool
     var venue: String?
 
     private enum CodingKeys: String, CodingKey {
         case id, role, yourParty, status, mode, tier, lang, createdAt, expiresAt, judgedAt, respondentAnswered
         case ownerSideMissing, inviteUrl, sides, appeals, canJudgeNow, appeal, lastError, pollAfterMs, names, display, removed, yourOriginal
-        case parties, invites, live, canJudgeAnswered, venue
+        case parties, invites, live, canJudgeAnswered, canRotate, venue
     }
 
     init(from decoder: any Decoder) throws {
@@ -510,6 +518,7 @@ enum CaseDecoding {
             invites: wire.invites,
             live: wire.live,
             canJudgeAnswered: wire.canJudgeAnswered,
+            canRotate: wire.canRotate,
             venue: wire.venue
         )
     }

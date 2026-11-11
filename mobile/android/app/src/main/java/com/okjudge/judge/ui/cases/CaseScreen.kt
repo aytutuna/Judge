@@ -198,10 +198,9 @@ fun CaseScreen(
     reducedMotion: Boolean,
     modifier: Modifier = Modifier,
     otherName: String? = null,
-    sideNames: Map<String, String> = emptyMap(),
 ) {
     CompositionLocalProvider(LocalSides provides Sides.forViewer(state.view?.yourParty, Palette)) {
-        CaseScreenBody(state, evidenceOn, actions, reducedMotion, modifier, otherName, sideNames)
+        CaseScreenBody(state, evidenceOn, actions, reducedMotion, modifier, otherName)
     }
 }
 
@@ -213,7 +212,6 @@ private fun CaseScreenBody(
     reducedMotion: Boolean,
     modifier: Modifier,
     otherName: String?,
-    sideNames: Map<String, String>,
 ) {
     val s = LocalStrings.current
     val view = state.view
@@ -321,7 +319,7 @@ private fun CaseScreenBody(
                 if (view.removed != null) {
                     Banner(if (state.removedNow) s.caseRemoved else s.caseRemovedBanner)
                 }
-                Body(state, view, waitingFor, sideNames, evidenceOn, actions, addContext, onDetails = { details = true }, reducedMotion) { confirm = it }
+                Body(state, view, waitingFor, evidenceOn, actions, addContext, onDetails = { details = true }, reducedMotion) { confirm = it }
                 if (view.verdicts.isNotEmpty() && view.removed == null) NamesTools(state, view, actions)
                 val bothRead = view.sides.size > 1
                 AccountsRead(
@@ -503,7 +501,6 @@ private fun Body(
     state: CaseUiState,
     view: CaseView,
     waitingFor: String?,
-    sideNames: Map<String, String>,
     evidenceOn: Boolean,
     actions: CaseActions,
     onAddContext: (() -> Unit)?,
@@ -515,10 +512,12 @@ private fun Body(
     val lang = LocalLang.current
     when (view.status) {
         CaseStatus.AWAITING -> {
-            view.live.orEmpty().forEach { LiveRow(it, sideNames[it.side?.raw]) }
+            view.live.orEmpty().forEach { LiveRow(it) }
             view.inviteUrl?.let { url ->
                 PrimaryButton(s.caseInviteShare, true, { actions.onShareInvite(url) }, Modifier.fillMaxWidth().testTag(CaseTags.SHARE))
-                TextAction(s.caseInviteReset, { if (!state.busy) ask(Confirm.RESET) }, Modifier.testTag(CaseTags.RESET), color = Palette.ink2)
+                if (view.canRotate) {
+                    TextAction(s.caseInviteReset, { if (!state.busy) ask(Confirm.RESET) }, Modifier.testTag(CaseTags.RESET), color = Palette.ink2)
+                }
                 if (state.resetDone) {
                     Note(s.caseInviteResetDone, Modifier.semantics { liveRegion = LiveRegionMode.Polite }, color = Palette.sageInk)
                 }
@@ -595,12 +594,12 @@ private fun Body(
     }
 }
 
-/** One invited side: its letter on its colour, the name the owner gave it if any, and where it stands. */
+/** One invited side: its letter on its colour, the name it chose once it has answered, and where it stands. */
 @Composable
-private fun LiveRow(live: CaseLiveSide, typedName: String?) {
+private fun LiveRow(live: CaseLiveSide) {
     val s = LocalStrings.current
     val side = live.side ?: return
-    val shown = typedName?.trim()?.takeIf { it.isNotEmpty() }
+    val shown = live.name?.trim()?.takeIf { it.isNotEmpty() }
     val name = shown ?: PartyNames.label(side, s)
     val (label, color) = when (live.liveState) {
         LiveState.WAITING -> s.caseSideWaiting to Palette.muted

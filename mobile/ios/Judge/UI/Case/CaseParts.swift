@@ -9,6 +9,7 @@ struct InviteLinkView: View {
     @Environment(AppModel.self) private var app
     let url: String?
     let lang: AppLang
+    let canReset: Bool
     let resetting: Bool
     let resetDone: Bool
     let onReset: () -> Void
@@ -22,7 +23,7 @@ struct InviteLinkView: View {
                 .buttonStyle(InviteButtonStyle())
                 .simultaneousGesture(TapGesture().onEnded { app.analytics.track("share_tapped") })
             }
-            if url != nil {
+            if url != nil, canReset {
                 Button(L10n.caseInviteReset(lang), action: onReset)
                     .buttonStyle(LinkButtonStyle())
                     .disabled(resetting)

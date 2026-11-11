@@ -243,7 +243,6 @@ class VerdictFlow(
         displayName: String?,
         otherName: String? = null,
         sides: Int = 2,
-        moreNames: List<String> = emptyList(),
     ): Boolean {
         if (!canStart()) return false
         _lastError.value = null
@@ -271,10 +270,6 @@ class VerdictFlow(
                     caseNames.save(created.case.id, created.nameMap)
                     val other = otherName?.trim()?.takeIf { it.isNotEmpty() }
                     other?.let { caseNames.saveOtherName(created.case.id, it) }
-                    val extra = moreNames.take(2).mapIndexedNotNull { i, n ->
-                        n.trim().takeIf { it.isNotEmpty() }?.let { ("cd"[i].toString()) to it }
-                    }.toMap()
-                    if (extra.isNotEmpty()) caseNames.saveSideNames(created.case.id, extra)
                     created.entitlement?.let(onEntitlement)
                     _creating.value = false
                     created.case.inviteUrl?.let { _shareLink.trySend(it) }

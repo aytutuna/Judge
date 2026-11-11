@@ -616,7 +616,6 @@ fun JudgeRoot(
                                         evidenceOn = (providers as? Account.Providers.Ready)?.config?.features?.evidence == true,
                                         reducedMotion = rememberReducedMotion(),
                                         otherName = key.otherName ?: vm.otherName,
-                                        sideNames = vm.sideNames,
                                         actions = CaseActions(
                                             onBack = if (backStack.size > 1) ({ backStack.removeAt(backStack.lastIndex) }) else null,
                                             onReload = vm::reload,

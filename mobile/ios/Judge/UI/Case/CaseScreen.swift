@@ -260,13 +260,13 @@ private struct CaseScreenContent: View {
         if writing {
             CaseSideForm(model: model, evidenceOn: CaseLogic.appealEvidenceOn(view, features: app.account.features), lang: lang)
         }
-        let typed = SideNames.load(caseID: model.id)
         ForEach(view.live ?? [], id: \.party) { side in
-            liveRow(side, name: typed[side.party], lang: lang)
+            liveRow(side, lang: lang)
         }
         InviteLinkView(
             url: view.inviteUrl,
             lang: lang,
+            canReset: view.canRotate,
             resetting: model.busy,
             resetDone: model.resetDone
         ) {
@@ -294,9 +294,11 @@ private struct CaseScreenContent: View {
         }
     }
 
-    /// One invited side: its letter, the name the owner gave it if any, and
-    /// where it stands.
-    private func liveRow(_ side: CaseLiveSide, name: String?, lang: AppLang) -> some View {
+    /// One invited side: its letter, the name it chose once it has answered,
+    /// and where it stands.
+    private func liveRow(_ side: CaseLiveSide, lang: AppLang) -> some View {
+        let trimmed = side.name?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let name = trimmed?.isEmpty == false ? trimmed : nil
         HStack(spacing: 8) {
             PartyAvatar(party: side.party)
             if let name {

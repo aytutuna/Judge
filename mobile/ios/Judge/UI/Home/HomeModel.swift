@@ -438,11 +438,6 @@ final class HomeModel {
         let token = keys.key(for: JudgeAPI.canonical(body))
         let api = app.api
         let names = app.caseNames
-        let typed: [Party: String] = [
-            .b: theirsOpen ? (otherName ?? "") : "",
-            .c: theirsOpen ? (more.first?.name ?? "") : "",
-            .d: theirsOpen && more.count > 1 ? (more[1].name ?? "") : "",
-        ]
         request = Task { [weak self, weak app] in
             do {
                 let created = try await api.createCase(
@@ -452,7 +447,6 @@ final class HomeModel {
                 self.keys.clear(token)
                 self.caseVenue = nil
                 names.save(caseID: created.view.id, created.nameMap)
-                SideNames.save(caseID: created.view.id, typed)
                 if let entitlement = created.entitlement { self.account?.applyEntitlement(entitlement) }
                 self.evidence.clear()
                 self.argument = ""

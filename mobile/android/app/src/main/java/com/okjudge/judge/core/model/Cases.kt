@@ -88,7 +88,7 @@ data class CaseInvite(
 
 /** Where one invited side stands, as the owner sees it live. [state] stays raw so a state a newer server adds never fails the case. */
 @Serializable
-data class CaseLiveSide(val party: String = "", val state: String = "") {
+data class CaseLiveSide(val party: String = "", val state: String = "", val name: String? = null) {
     val side: Side? get() = Side.of(party)
     val liveState: LiveState get() = LiveState.of(state)
 }
@@ -168,6 +168,8 @@ data class CaseView(
     val invites: List<CaseInvite>? = null,
     /** Owner only: each invited side's live state. */
     val live: List<CaseLiveSide>? = null,
+    /** Owner only: a new link can still be made (some side has no seat yet). */
+    val canRotate: Boolean = true,
     /** Only with three or four sides, for the owner: the answers in so far are enough to judge without the rest. */
     val canJudgeAnswered: Boolean = false,
     /** Where the court is drawn, set when the case was made; null is the court. */
