@@ -274,8 +274,8 @@ internal fun MenuPanel(
             last >= info.totalItemsCount - 3
         }
     }
-    LaunchedEffect(nearEnd, paging.next) {
-        if (nearEnd && paging.next != null) onLoadMore()
+    LaunchedEffect(hidden, nearEnd, paging.next) {
+        if (!hidden && nearEnd && paging.next != null) onLoadMore()
     }
     ModalDrawerSheet(
         modifier = Modifier
