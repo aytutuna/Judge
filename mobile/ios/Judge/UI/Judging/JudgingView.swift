@@ -115,7 +115,7 @@ struct JudgingView: View {
             Kicker(text: L10n.thinkingEyebrow(lang))
 
             if gamify {
-                CourtView(scene: .judging(beat, summary))
+                CourtView(scene: .judging(beat, summary, sides: sides.count))
                     .frame(maxWidth: courtWidth)
                     .frame(maxWidth: .infinity)
             }

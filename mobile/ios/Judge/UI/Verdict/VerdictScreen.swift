@@ -156,7 +156,7 @@ struct VerdictSections<Appeal: View>: View {
         let session = model.session
         let view = model.view(for: lang)
         let selfLang = session.sourceLang
-        let parties = Names.partyNames(session.nameMap, lang: lang, selfLang: selfLang)
+        let parties = Names.partyNames(session.nameMap, lang: lang, selfLang: selfLang, sides: view.result.sideCount)
         let result = Names.personalizeResult(view.result, nameMap: session.nameMap, selfLang: selfLang)
         let offered = appealArea.inSheet
         VStack(spacing: 12) {
@@ -180,7 +180,7 @@ struct VerdictSections<Appeal: View>: View {
             VerdictCard(
                 result: result,
                 parties: parties,
-                restoredNames: Names.restoredNames(session.nameMap, selfLang: selfLang),
+                restoredNames: Names.restoredNames(session.nameMap, selfLang: selfLang, sides: result.sideCount),
                 lang: lang,
                 status: view.status
             )

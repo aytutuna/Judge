@@ -13,7 +13,7 @@ struct VerdictReasons: View {
         let map = result.argumentMap
         let rows = [
             result.crux.isEmpty ? nil : L10n.cruxShort(lang),
-            map.bedrockA.isEmpty && map.bedrockB.isEmpty && map.sideA.isEmpty && map.sideB.isEmpty ? nil : L10n.appVerdictSides(lang),
+            VerdictDisplay.hasSides(result) ? L10n.appVerdictSides(lang) : nil,
             result.losingSideBestPoint.isEmpty ? nil : VerdictDisplay.bestPointTitle(result.verdict, parties: parties, lang: lang),
         ].compactMap { $0 }
         if !rows.isEmpty {
@@ -70,7 +70,7 @@ struct VerdictDetails<Appeal: View>: View {
         let session = model.session
         let view = model.view(for: lang)
         let selfLang = session.sourceLang
-        let parties = Names.partyNames(session.nameMap, lang: lang, selfLang: selfLang)
+        let parties = Names.partyNames(session.nameMap, lang: lang, selfLang: selfLang, sides: view.result.sideCount)
         let result = Names.personalizeResult(view.result, nameMap: session.nameMap, selfLang: selfLang)
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
@@ -90,7 +90,7 @@ struct VerdictDetails<Appeal: View>: View {
                         bySelf: outcome.by != .unknown && parties.isSelf(outcome.by)
                     )
                 }
-                summary(result, parties: parties, restoredNames: Names.restoredNames(session.nameMap, selfLang: selfLang))
+                summary(result, parties: parties, restoredNames: Names.restoredNames(session.nameMap, selfLang: selfLang, sides: result.sideCount))
                 if !result.modelRefused {
                     sections(result, parties: parties)
                 }
@@ -133,7 +133,7 @@ struct VerdictDetails<Appeal: View>: View {
     }
 
     private func summary(_ result: VerdictResult, parties: PartyNames, restoredNames: [String]) -> some View {
-        let label = VerdictDisplay.label(result.verdict, parties: parties, lang: lang)
+        let label = VerdictDisplay.label(result, parties: parties, lang: lang)
         var style = TypeStyle.ruling
         style.size = 24
         return card {
@@ -188,7 +188,22 @@ struct VerdictDetails<Appeal: View>: View {
             }
         }
         let map = result.argumentMap
-        if !map.bedrockA.isEmpty || !map.bedrockB.isEmpty || !map.sideA.isEmpty || !map.sideB.isEmpty {
+        if result.isMany, VerdictDisplay.hasSides(result) {
+            card {
+                SectionTitle(text: L10n.appVerdictSides(lang))
+                ForEach(result.sides ?? [], id: \.party) { side in
+                    if !side.bedrock.isEmpty {
+                        BedrockTile(name: parties.name(side.party), text: side.bedrock, color: sides.of(side.party).ink, tint: sides.of(side.party).tint)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+                let rows = (result.sides ?? []).flatMap { side in side.claims.map { (party: side.party, claim: $0) } }
+                if !rows.isEmpty {
+                    claims(rows)
+                        .padding(.top, 4)
+                }
+            }
+        } else if !map.bedrockA.isEmpty || !map.bedrockB.isEmpty || !map.sideA.isEmpty || !map.sideB.isEmpty {
             card {
                 SectionTitle(text: L10n.appVerdictSides(lang))
                 if !map.bedrockA.isEmpty || !map.bedrockB.isEmpty {
@@ -204,7 +219,7 @@ struct VerdictDetails<Appeal: View>: View {
                     .fixedSize(horizontal: false, vertical: true)
                 }
                 if !map.sideA.isEmpty || !map.sideB.isEmpty {
-                    claims(map)
+                    claims(map.sideA.map { (party: Party.a, claim: $0) } + map.sideB.map { (party: Party.b, claim: $0) })
                         .padding(.top, 4)
                 }
             }
@@ -223,7 +238,8 @@ struct VerdictDetails<Appeal: View>: View {
                 FactsView(facts: result.factsReliedOn, lang: lang)
             }
         }
-        if result.twoSided, !TwoSidedDisplay.agreed(result).isEmpty || !TwoSidedDisplay.disputed(result).isEmpty {
+        if result.twoSided || result.isMany,
+           !TwoSidedDisplay.agreed(result).isEmpty || !TwoSidedDisplay.disputed(result).isEmpty || !TwoSidedDisplay.manyDisputes(result).isEmpty {
             card {
                 TwoSidedFactsView(result: result, parties: parties, lang: lang)
             }
@@ -242,14 +258,13 @@ struct VerdictDetails<Appeal: View>: View {
     }
 
     /// "A · fact" and the claim, your side's first.
-    private func claims(_ map: ArgumentMap) -> some View {
-        let rows = map.sideA.map { (party: Party.a, claim: $0) } + map.sideB.map { (party: Party.b, claim: $0) }
-        return VStack(alignment: .leading, spacing: 6) {
+    private func claims(_ rows: [(party: Party, claim: Claim)]) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
             Text(L10n.appVerdictClaims(lang))
                 .brandText(TypeStyle(face: .inter, weight: 600, size: 12, lineHeight: 1.3, textStyle: .footnote))
                 .foregroundStyle(Brand.muted)
             ForEach(Array(rows.enumerated()), id: \.offset) { _, row in
-                let letter = row.party == .a ? "A" : "B"
+                let letter = row.party.letter
                 let side = sides.of(row.party)
                 HStack(alignment: .firstTextBaseline, spacing: 8) {
                     Text(VerdictDisplay.kind(row.claim.kind, lang: lang).map { letter + " · " + $0 } ?? letter)
@@ -278,7 +293,7 @@ struct VerdictDetails<Appeal: View>: View {
                 if result.escalated {
                     Text(L10n.escalated(lang))
                 }
-                Text(L10n.judgesVoted(lang, n: result.runs.count) + " " + VerdictDisplay.votesText(result.runs, parties: parties, lang: lang))
+                Text(L10n.judgesVoted(lang, n: result.runs.count) + " " + VerdictDisplay.votesText(result, parties: parties, lang: lang))
                 if result.isPremium {
                     let models = result.panel?.models ?? []
                     Text(models.isEmpty ? L10n.panelPremium(lang) : L10n.panelPremium(lang) + " " + VerdictDisplay.panelSummary(models: models, lang: lang))

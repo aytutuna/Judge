@@ -10,7 +10,12 @@ enum TwoSidedDisplay {
     /// The evidence footnote: per party on two-sided verdicts, a plain count
     /// otherwise. Nil when no image was read.
     static func evidenceNote(_ result: VerdictResult, lang: AppLang) -> String? {
-        guard let used = result.evidenceUsed, used.a + used.b > 0 else { return nil }
+        guard let used = result.evidenceUsed else { return nil }
+        if result.isMany {
+            let n = used.a + used.b + used.c + used.d
+            return n > 0 ? L10n.evidenceUsedOne(lang, n: String(n)) : nil
+        }
+        guard used.a + used.b > 0 else { return nil }
         return result.twoSided
             ? L10n.evidenceUsed(lang, a: String(used.a), b: String(used.b))
             : L10n.evidenceUsedOne(lang, n: String(used.a + used.b))
@@ -23,9 +28,26 @@ enum TwoSidedDisplay {
             return parties.aIsSelf ? L10n.twoSidedFindingSelf(lang) : L10n.twoSidedFindingA(lang, name: parties.nameA)
         case .b:
             return parties.bIsSelf ? L10n.twoSidedFindingSelf(lang) : L10n.twoSidedFindingB(lang, name: parties.nameB)
-        case .unsettled, .unknown:
+        case .c, .d, .unsettled, .unknown:
             return L10n.twoSidedFindingUnsettled(lang)
         }
+    }
+
+    /// The same for a dispute among three or four accounts.
+    static func findingText(_ dispute: Dispute, parties: PartyNames, lang: AppLang) -> String {
+        let side: Party
+        switch dispute.finding {
+        case .a: side = .a
+        case .b: side = .b
+        case .c: side = .c
+        case .d: side = .d
+        case .unsettled, .unknown: return L10n.twoSidedFindingUnsettled(lang)
+        }
+        return parties.isSelf(side) ? L10n.twoSidedFindingSelf(lang) : L10n.twoSidedFindingA(lang, name: parties.name(side))
+    }
+
+    static func manyDisputes(_ result: VerdictResult) -> [Dispute] {
+        result.isMany ? Array((result.disputes ?? []).prefix(maxDisputed)) : []
     }
 
     static func agreed(_ result: VerdictResult) -> [String] {
@@ -95,9 +117,11 @@ struct TwoSidedFactsView: View {
     var body: some View {
         let agreed = TwoSidedDisplay.agreed(result)
         let disputed = TwoSidedDisplay.disputed(result)
+        let many = TwoSidedDisplay.manyDisputes(result)
         // At most one decisive marker, as the server promises.
         let decisiveAt = disputed.firstIndex { $0.decisive }
-        if !agreed.isEmpty || !disputed.isEmpty {
+        let manyDecisiveAt = many.firstIndex { $0.decisive }
+        if !agreed.isEmpty || !disputed.isEmpty || !many.isEmpty {
             VStack(alignment: .leading, spacing: 22) {
                 if !agreed.isEmpty {
                     VStack(alignment: .leading, spacing: 8) {
@@ -105,8 +129,9 @@ struct TwoSidedFactsView: View {
                         ForEach(Array(agreed.enumerated()), id: \.offset) { _, fact in
                             HStack(alignment: .firstTextBaseline, spacing: 10) {
                                 HStack(spacing: -3) {
-                                    Circle().fill(sides.a.strong).frame(width: 9, height: 9)
-                                    Circle().fill(sides.b.strong).frame(width: 9, height: 9)
+                                    ForEach(result.parties ?? [.a, .b], id: \.self) { party in
+                                        Circle().fill(sides.of(party).strong).frame(width: 9, height: 9)
+                                    }
                                 }
                                 .accessibilityHidden(true)
                                 Text(fact)
@@ -118,6 +143,14 @@ struct TwoSidedFactsView: View {
                             .padding(.vertical, 11)
                             .padding(.horizontal, 14)
                             .paperSurface(radius: 14, fill: Brand.well)
+                        }
+                    }
+                }
+                if !many.isEmpty {
+                    VStack(alignment: .leading, spacing: 10) {
+                        SectionTitle(text: L10n.twoSidedDisputed(lang))
+                        ForEach(Array(many.enumerated()), id: \.offset) { index, item in
+                            manyDispute(item, decisive: index == manyDecisiveAt)
                         }
                     }
                 }
@@ -135,6 +168,34 @@ struct TwoSidedFactsView: View {
     }
 
     private func dispute(_ fact: DisputedFact, decisive: Bool) -> some View {
+        disputeCard(
+            finding: TwoSidedDisplay.findingText(fact, parties: parties, lang: lang),
+            color: findingColor(fact.finding),
+            fact: fact.fact,
+            decisive: decisive
+        ) {
+            claim(parties.nameA, text: fact.partyA, rule: sides.a.strong)
+            claim(parties.nameB, text: fact.partyB, rule: sides.b.strong)
+        }
+    }
+
+    /// A dispute among three or four accounts: one claim per side that spoke to it.
+    private func manyDispute(_ item: Dispute, decisive: Bool) -> some View {
+        disputeCard(
+            finding: TwoSidedDisplay.findingText(item, parties: parties, lang: lang),
+            color: findingColor(item.finding),
+            fact: item.fact,
+            decisive: decisive
+        ) {
+            ForEach(Array(item.positions.enumerated()), id: \.offset) { _, position in
+                claim(parties.name(position.party), text: position.says, rule: sides.of(position.party).strong)
+            }
+        }
+    }
+
+    private func disputeCard<Claims: View>(
+        finding: String, color: Color, fact: String, decisive: Bool, @ViewBuilder claims: () -> Claims
+    ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             FlowLayout(spacing: 6, rowSpacing: 6) {
                 if decisive {
@@ -145,19 +206,18 @@ struct TwoSidedFactsView: View {
                         .padding(.vertical, 4)
                         .background(Capsule().fill(Brand.strata))
                 }
-                Text(TwoSidedDisplay.findingText(fact, parties: parties, lang: lang))
+                Text(finding)
                     .brandText(.micro)
-                    .foregroundStyle(findingColor(fact.finding))
+                    .foregroundStyle(color)
                     .padding(.horizontal, 9)
                     .padding(.vertical, 4)
-                    .background(Capsule().fill(findingColor(fact.finding).opacity(0.12)))
+                    .background(Capsule().fill(color.opacity(0.12)))
             }
-            Text(fact.fact)
+            Text(fact)
                 .brandText(.claim)
                 .foregroundStyle(Brand.ink)
                 .fixedSize(horizontal: false, vertical: true)
-            claim(parties.nameA, text: fact.partyA, rule: sides.a.strong)
-            claim(parties.nameB, text: fact.partyB, rule: sides.b.strong)
+            claims()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(14)
@@ -192,6 +252,8 @@ struct TwoSidedFactsView: View {
         switch finding {
         case .a: return sides.a.ink
         case .b: return sides.b.ink
+        case .c: return sides.c.ink
+        case .d: return sides.d.ink
         case .unsettled, .unknown: return Brand.ink2
         }
     }
