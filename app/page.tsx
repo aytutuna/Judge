@@ -19,10 +19,12 @@ import { ownerTokenIds } from "@/lib/owner-store";
 import { track, trackApiError } from "@/lib/analytics/client";
 import { clearDraft, registerDraftSource, saveDraftForSignIn, takeDraft } from "@/lib/draft";
 import { startHistory } from "@/lib/history-store";
+import { nextExample, loadSeen, saveSeen } from "@/lib/example-pick";
+import { loadExamples } from "@/lib/examples";
 import { apiErrorMessage, t } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { resetScene } from "@/lib/scene-bridge";
-import { EXAMPLES, MAX_ARGUMENT, inviteTextOk, joinSides, manySidesOk, type SideInput } from "@/lib/sides";
+import { MAX_ARGUMENT, inviteTextOk, joinSides, manySidesOk, type SideInput } from "@/lib/sides";
 import type { Clarification, ClarifyResponse, VerdictApiResponse, VerdictResponse } from "@/lib/types";
 import { applyEntitlement, refreshViewer, useViewer } from "@/lib/use-viewer";
 import { pollVerdict, RESPOND_ASYNC, type VerdictAcceptedResponse } from "@/lib/verdict-poll";
@@ -125,9 +127,7 @@ export default function Home() {
   // of the same request reuses it, so the server replays or waits instead
   // of charging again. A success or a different request gets a new key.
   const premiumKey = useRef<{ request: string; key: string } | null>(null);
-  // The example that filled the form last, so the next one differs, and the
-  // name it wrote, which "New argument" drops but keeps a typed one.
-  const lastExample = useRef<string | null>(null);
+  // The name the last example wrote, which "New argument" drops but keeps a typed one.
   const exampleName = useRef<string | null>(null);
   // Screenshot evidence and two-sided cases, each only when this deployment
   // offers it (GET /api/v1/config `features`).
@@ -538,16 +538,16 @@ export default function Home() {
     exampleName.current = null;
   }
 
-  function fillExample() {
-    const pool = EXAMPLES.filter((id) => id !== lastExample.current);
-    const id = pool[Math.floor(Math.random() * pool.length)];
-    lastExample.current = id;
-    const name = t(lang, `pairs.${id}.aName`);
-    exampleName.current = name;
-    setMineName(name);
-    setArgument(t(lang, `pairs.${id}.a`));
-    setOtherName(t(lang, `pairs.${id}.bName`));
-    setOtherSide(t(lang, `pairs.${id}.b`));
+  async function fillExample() {
+    const all = await loadExamples(lang);
+    const picked = nextExample(Object.keys(all), loadSeen(), Math.random);
+    saveSeen(picked.seen);
+    const example = all[picked.id];
+    exampleName.current = example.aName;
+    setMineName(example.aName);
+    setArgument(example.a);
+    setOtherName(example.bName);
+    setOtherSide(example.b);
     setMore([]);
     setTheirsOpen(true);
     setError(null);
@@ -645,7 +645,7 @@ export default function Home() {
               length={joined.length}
               blank={!argument && !theirsOpen && evidence.items.length === 0}
               onClear={reset}
-              onExample={fillExample}
+              onExample={() => void fillExample()}
               canSubmit={canSubmit}
               onSubmit={onSubmit}
               onInvite={casesOn ? onInvite : undefined}

@@ -582,52 +582,6 @@ const sl: Locale = {
     "home.says": "{name} pravi:",
     "home.mySide": "Moja plat:",
     "home.otherSide": "Plat druge osebe:",
-    "pairs.dishwasher.aName": "Ana",
-    "pairs.dishwasher.a":
-      "Sklede si spet zložil v zgornjo košaro. Tam se nikoli ne pomijejo do konca, za to je spodnja.",
-    "pairs.dishwasher.bName": "Matic",
-    "pairs.dishwasher.b":
-      "Zgoraj čisto lepo gredo, spodaj pa ostane prostor za lonce. Pomivalni stroj tako polnim že leta in še nikoli ni nič ostalo umazano.",
-    "pairs.bill.aName": "Petra",
-    "pairs.bill.a":
-      "Nisem nič pila, zato ne bi smela plačati četrtine vina. Hrano pa lahko razdelimo na enake dele, s tem se strinjam.",
-    "pairs.bill.bName": "Jure",
-    "pairs.bill.b":
-      "Vedno vse razdelimo na štiri. Vsakič računati, kdo je kaj imel, je muka, razlika pa tako ali tako ni velika.",
-    "pairs.thermostat.aName": "Nina",
-    "pairs.thermostat.a":
-      "Tukaj je 19 stopinj in me zebe celo v puloverju s kapuco. Gretje naviti na 22 res ni nič pretiranega.",
-    "pairs.thermostat.bName": "Gašper",
-    "pairs.thermostat.b":
-      "Pri 22 stopinjah se ne da spati, prevroče je. Ti lahko oblečeš še eno plast, jaz pa ne morem sleči ničesar več.",
-    "pairs.roadTrip.aName": "Tina",
-    "pairs.roadTrip.a": "Celih šest ur tja sem vozila jaz. Pošteno je, da nazaj voziš ti.",
-    "pairs.roadTrip.bName": "Rok",
-    "pairs.roadTrip.b":
-      "Že pred odhodom sem rekel, da ponoči ne maram voziti, odhajamo pa ob sedmih zvečer. Na naslednjem izletu bom zjutraj vozil jaz.",
-    "pairs.seat.aName": "Sara",
-    "pairs.seat.a":
-      "Moj sedež se da nagniti, zato ga nagnem. Nočni let je, vsi poskušajo spati.",
-    "pairs.seat.bName": "Blaž",
-    "pairs.seat.b":
-      "Visok sem 1,91 m in s koleni že tako tiščim v tvoj sedež. Lahko bi vsaj vprašala, preden ga spustiš čisto nazaj.",
-    "pairs.spoiler.aName": "Maja",
-    "pairs.spoiler.a":
-      "Povedal si mi, kdo je morilec, še preden sem sploh začela zadnjo epizodo. Ves teden sem čakala nanjo.",
-    "pairs.spoiler.bName": "Jan",
-    "pairs.spoiler.b":
-      "Serija je izšla pred tremi tedni, ti pa si rekla, da si jo že pogledala do konca. Ne morem si zapomniti, do kod je kdo prišel.",
-    "pairs.jacket.aName": "Matej",
-    "pairs.jacket.a":
-      "Mojo jeans jakno si oblekla na koncert, ne da bi me vprašala. Vrnila si jo vso smrdečo po dimu.",
-    "pairs.jacket.bName": "Eva",
-    "pairs.jacket.b":
-      "Visela je pri vratih, ti pa je nikoli ne nosiš. Vprašala bi te, ampak si spal, jaz pa sem že tako zamujala.",
-    "pairs.lastSlice.aName": "Nejc",
-    "pairs.lastSlice.a": "Še pred filmom sem rekel: „Zadnji kos je moj.“ Vsi so slišali.",
-    "pairs.lastSlice.bName": "Lara",
-    "pairs.lastSlice.b":
-      "Ne moreš si rezervirati kosa in se ga potem dve uri ne dotakniti. Kar ležal je tam in se hladil, zato sem ga pojedla.",
     "appeal.lead":
       "Porabi 1 razsodbo.",
     "appeal.placeholder": "Kaj so sodniki spregledali? Dejstvo, sporočilo ali to, kar je bilo v resnici dogovorjeno.",

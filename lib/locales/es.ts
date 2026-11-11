@@ -581,54 +581,6 @@ const es: Locale = {
     "home.says": "{name} dice:",
     "home.mySide": "Mi versión:",
     "home.otherSide": "Versión de la otra persona:",
-    "pairs.dishwasher.aName": "Carmen",
-    "pairs.dishwasher.a":
-      "Otra vez pusiste los platos hondos en la parte de arriba. Ahí nunca salen limpios; para eso está la de abajo.",
-    "pairs.dishwasher.bName": "Javier",
-    "pairs.dishwasher.b":
-      "Caben perfectamente arriba y así queda libre la parte de abajo para las ollas. Llevo años cargándolo así y nunca ha salido nada sucio.",
-    "pairs.bill.aName": "Laura",
-    "pairs.bill.a":
-      "Yo no bebí nada, así que no debería pagar una cuarta parte del vino. Dividir la comida a partes iguales me parece bien.",
-    "pairs.bill.bName": "Pablo",
-    "pairs.bill.b":
-      "Siempre lo dividimos entre cuatro y ya. Calcular cada vez quién pidió qué es un lío, y además la diferencia es mínima.",
-    "pairs.thermostat.aName": "Sofía",
-    "pairs.thermostat.a":
-      "Aquí dentro hace 19 grados y tengo frío incluso con sudadera. Poner la calefacción a 22 no es ninguna locura.",
-    "pairs.thermostat.bName": "Andrés",
-    "pairs.thermostat.b":
-      "Con 22 grados hace demasiado calor para dormir. Tú puedes abrigarte más; yo ya no me puedo quitar nada.",
-    "pairs.roadTrip.aName": "Elena",
-    "pairs.roadTrip.a":
-      "A la ida conduje yo las seis horas. Lo justo es que tú conduzcas a la vuelta.",
-    "pairs.roadTrip.bName": "Miguel",
-    "pairs.roadTrip.b":
-      "Antes de salir dije que odio conducir de noche, y salimos a las siete de la tarde. En el próximo viaje conduzco yo por las mañanas.",
-    "pairs.seat.aName": "Paula",
-    "pairs.seat.a":
-      "Mi asiento se reclina, así que lo reclino. Es un vuelo nocturno y todo el mundo está intentando dormir.",
-    "pairs.seat.bName": "Daniel",
-    "pairs.seat.b":
-      "Mido un metro noventa y ya tengo las rodillas pegadas a tu asiento. Por lo menos podrías preguntar antes de echarlo del todo hacia atrás.",
-    "pairs.spoiler.aName": "Valeria",
-    "pairs.spoiler.a":
-      "Me dijiste quién era el asesino antes de que empezara a ver el último capítulo. Llevaba toda la semana esperándolo.",
-    "pairs.spoiler.bName": "Mateo",
-    "pairs.spoiler.b":
-      "Salió hace tres semanas y dijiste que ya habías terminado la serie. No puedo estar pendiente de por dónde va cada uno.",
-    "pairs.jacket.aName": "Marta",
-    "pairs.jacket.a":
-      "Te llevaste mi chaqueta vaquera al concierto sin preguntarme. Volvió oliendo a humo.",
-    "pairs.jacket.bName": "Sergio",
-    "pairs.jacket.b":
-      "Estaba colgada junto a la puerta y nunca te la pones. Te habría preguntado, pero estabas dormida y yo ya llegaba tarde.",
-    "pairs.lastSlice.aName": "Tomás",
-    "pairs.lastSlice.a":
-      "Dije que la última porción era para mí antes de que empezara la película. Todo el mundo me oyó.",
-    "pairs.lastSlice.bName": "Camila",
-    "pairs.lastSlice.b":
-      "No puedes decir que es tuya y luego no tocarla en dos horas. Estaba ahí enfriándose, así que me la comí.",
     "appeal.lead":
       "Usa 1 veredicto.",
     "appeal.placeholder": "¿Qué se les pasó a los jueces? Un dato, un mensaje o lo que de verdad se acordó.",

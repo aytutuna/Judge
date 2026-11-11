@@ -580,54 +580,6 @@ const da: Locale = {
     "home.says": "{name} siger:",
     "home.mySide": "Min side:",
     "home.otherSide": "Den andens side:",
-    "pairs.dishwasher.aName": "Anne",
-    "pairs.dishwasher.a":
-      "Du har sat skålene i den øverste kurv igen. De bliver aldrig rene deroppe, det er det, den nederste er til.",
-    "pairs.dishwasher.bName": "Jens",
-    "pairs.dishwasher.b":
-      "De kan sagtens være deroppe, og så er der plads til gryderne i bunden. Jeg har fyldt den sådan i årevis, og der er aldrig kommet noget beskidt ud.",
-    "pairs.bill.aName": "Camilla",
-    "pairs.bill.a":
-      "Jeg drak ikke noget, så jeg skal ikke betale en fjerdedel af vinen. Maden deler vi gerne ligeligt.",
-    "pairs.bill.bName": "Rasmus",
-    "pairs.bill.b":
-      "Vi deler altid bare regningen i fire. Det er bøvlet at regne ud hver gang, hvem der fik hvad, og det gør alligevel ikke den store forskel.",
-    "pairs.thermostat.aName": "Laura",
-    "pairs.thermostat.a":
-      "Der er 19 grader herinde, og jeg fryser selv i hættetrøje. Det er da ikke vanvittigt at skrue op på 22.",
-    "pairs.thermostat.bName": "Mikkel",
-    "pairs.thermostat.b":
-      "22 grader er alt for varmt at sove i. Du kan tage en trøje mere på, jeg kan ikke tage mere af.",
-    "pairs.roadTrip.aName": "Sara",
-    "pairs.roadTrip.a":
-      "Jeg kørte alle seks timer derhen. Det er kun fair, at du kører os hjem.",
-    "pairs.roadTrip.bName": "Anders",
-    "pairs.roadTrip.b":
-      "Jeg sagde, inden vi tog af sted, at jeg hader at køre i mørke, og vi kører hjem kl. 19. Næste gang kører jeg om morgenen.",
-    "pairs.seat.aName": "Julie",
-    "pairs.seat.a":
-      "Mit sæde kan lænes tilbage, så det gør jeg. Det er en natflyvning, og alle prøver at sove.",
-    "pairs.seat.bName": "Kasper",
-    "pairs.seat.b":
-      "Jeg er 1,91, og mine knæ trykker allerede mod dit sæde. Du kunne i det mindste have spurgt, før du lænede det helt tilbage.",
-    "pairs.spoiler.aName": "Emma",
-    "pairs.spoiler.a":
-      "Du fortalte mig, hvem morderen var, før jeg overhovedet var begyndt på sidste afsnit. Jeg havde glædet mig hele ugen.",
-    "pairs.spoiler.bName": "Oliver",
-    "pairs.spoiler.b":
-      "Den kom for tre uger siden, og du sagde, at du havde set den færdig. Jeg kan ikke holde styr på, hvor langt alle er.",
-    "pairs.jacket.aName": "Mathilde",
-    "pairs.jacket.a":
-      "Du havde min cowboyjakke på til koncerten uden at spørge. Da jeg fik den tilbage, lugtede den af røg.",
-    "pairs.jacket.bName": "Frederik",
-    "pairs.jacket.b":
-      "Den hang ved døren, og du går aldrig med den. Jeg ville have spurgt, men du sov, og jeg var allerede sent på den.",
-    "pairs.lastSlice.aName": "Magnus",
-    "pairs.lastSlice.a":
-      "Inden filmen startede, sagde jeg, at det sidste stykke pizza var mit. Alle hørte det.",
-    "pairs.lastSlice.bName": "Ida",
-    "pairs.lastSlice.b":
-      "Man kan ikke kalde det sit og så lade det ligge i to timer. Det lå bare og blev koldt, så jeg spiste det.",
     "appeal.lead":
       "Koster 1 dom.",
     "appeal.placeholder": "Hvad overså dommerne? Et faktum, en besked eller det, I faktisk aftalte.",

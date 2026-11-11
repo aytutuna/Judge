@@ -579,53 +579,6 @@ const sv: Locale = {
     "home.says": "{name} säger:",
     "home.mySide": "Min sida:",
     "home.otherSide": "Den andras sida:",
-    "pairs.dishwasher.aName": "Emma",
-    "pairs.dishwasher.a":
-      "Du har ställt skålarna i överkorgen igen. Där uppe blir de aldrig rena – det är ju det underkorgen är till för.",
-    "pairs.dishwasher.bName": "Johan",
-    "pairs.dishwasher.b":
-      "De får plats fint där uppe, och då blir underkorgen ledig för kastrullerna. Jag har plockat in disken så här i flera år och allt har blivit rent.",
-    "pairs.bill.aName": "Sara",
-    "pairs.bill.a":
-      "Jag drack ingenting, så jag borde inte betala en fjärdedel av vinet. Att dela lika på maten går bra för mig.",
-    "pairs.bill.bName": "Erik",
-    "pairs.bill.b":
-      "Vi delar alltid bara på fyra. Att räkna ut vem som tog vad varje gång är jobbigt, och det är ändå ingen stor skillnad.",
-    "pairs.thermostat.aName": "Linnea",
-    "pairs.thermostat.a":
-      "Det är 19 grader här inne och jag fryser fast jag har luvtröja på mig. Att höja till 22 är väl inte orimligt.",
-    "pairs.thermostat.bName": "Anton",
-    "pairs.thermostat.b":
-      "22 grader är alldeles för varmt att sova i. Du kan ta på dig ett lager till, jag kan inte ta av mig mer.",
-    "pairs.roadTrip.aName": "Ida",
-    "pairs.roadTrip.a":
-      "Jag körde hela vägen dit, sex timmar. Det är bara rättvist att du kör hem.",
-    "pairs.roadTrip.bName": "Viktor",
-    "pairs.roadTrip.b":
-      "Jag sa innan vi åkte att jag hatar att köra i mörker, och vi åker sju i kväll. Nästa gång kör jag på morgnarna.",
-    "pairs.seat.aName": "Klara",
-    "pairs.seat.a":
-      "Mitt säte går att fälla bakåt, så jag fäller det. Det är ett nattflyg och alla försöker sova.",
-    "pairs.seat.bName": "Filip",
-    "pairs.seat.b":
-      "Jag är 191 cm lång och knäna trycker redan mot ditt säte. Du kunde åtminstone fråga innan du fäller det ända bak.",
-    "pairs.spoiler.aName": "Wilma",
-    "pairs.spoiler.a":
-      "Du berättade vem mördaren var innan jag ens hade börjat på sista avsnittet. Jag hade väntat på det hela veckan.",
-    "pairs.spoiler.bName": "Axel",
-    "pairs.spoiler.b":
-      "Det kom ut för tre veckor sedan och du sa att du hade sett klart. Jag kan inte hålla koll på hur långt alla har kommit.",
-    "pairs.jacket.aName": "Albin",
-    "pairs.jacket.a":
-      "Du hade på dig min jeansjacka på konserten utan att fråga. Den luktade rök när jag fick tillbaka den.",
-    "pairs.jacket.bName": "Ebba",
-    "pairs.jacket.b":
-      "Den hängde vid dörren och du använder den aldrig. Jag hade frågat, men du sov och jag var redan sen.",
-    "pairs.lastSlice.aName": "Lucas",
-    "pairs.lastSlice.a": "Jag paxade sista pizzabiten innan filmen började. Alla hörde mig.",
-    "pairs.lastSlice.bName": "Alva",
-    "pairs.lastSlice.b":
-      "Man kan inte paxa något och sedan inte röra det på två timmar. Den låg bara där och kallnade, så jag åt upp den.",
     "appeal.lead":
       "Kostar 1 dom.",
     "appeal.placeholder": "Vad missade domarna? Ett faktum, ett meddelande eller vad ni faktiskt kom överens om.",

@@ -585,54 +585,6 @@ const de: Locale = {
     "home.says": "{name} sagt:",
     "home.mySide": "Meine Seite:",
     "home.otherSide": "Die andere Seite:",
-    "pairs.dishwasher.aName": "Julia",
-    "pairs.dishwasher.a":
-      "Du hast die Schüsseln schon wieder oben eingeräumt. Da werden sie nie richtig sauber, dafür ist doch der untere Korb da.",
-    "pairs.dishwasher.bName": "Felix",
-    "pairs.dishwasher.b":
-      "Die passen oben gut rein, und unten bleibt Platz für die Töpfe. Ich räume die Spülmaschine seit Jahren so ein, und noch nie ist was dreckig rausgekommen.",
-    "pairs.bill.aName": "Anna",
-    "pairs.bill.a":
-      "Ich hab nichts getrunken, also zahle ich auch kein Viertel vom Wein. Das Essen können wir gern gleichmäßig aufteilen.",
-    "pairs.bill.bName": "Max",
-    "pairs.bill.b":
-      "Wir teilen doch immer einfach durch vier. Jedes Mal auszurechnen, wer was hatte, nervt, und so groß ist der Unterschied auch nicht.",
-    "pairs.thermostat.aName": "Laura",
-    "pairs.thermostat.a":
-      "Hier drin sind 19 Grad, und mir ist sogar im Hoodie kalt. Die Heizung auf 22 zu drehen ist doch nicht übertrieben.",
-    "pairs.thermostat.bName": "Jan",
-    "pairs.thermostat.b":
-      "Bei 22 Grad kann man nicht schlafen, viel zu warm. Du kannst dir noch was anziehen, ich kann nichts mehr ausziehen.",
-    "pairs.roadTrip.aName": "Sarah",
-    "pairs.roadTrip.a":
-      "Ich bin auf der Hinfahrt die ganzen sechs Stunden gefahren. Da ist es nur fair, wenn du uns zurückfährst.",
-    "pairs.roadTrip.bName": "David",
-    "pairs.roadTrip.b":
-      "Ich hab schon vor der Abfahrt gesagt, dass ich nachts nicht gern fahre, und wir fahren um 19 Uhr los. Auf der nächsten Reise übernehme ich dafür die Fahrten am Morgen.",
-    "pairs.seat.aName": "Lisa",
-    "pairs.seat.a":
-      "Meine Lehne lässt sich zurückstellen, also stelle ich sie zurück. Es ist ein Nachtflug, und alle versuchen zu schlafen.",
-    "pairs.seat.bName": "Tobias",
-    "pairs.seat.b":
-      "Ich bin 1,90 m groß, und meine Knie drücken jetzt schon gegen deinen Sitz. Du könntest wenigstens fragen, bevor du die Lehne ganz nach hinten kippst.",
-    "pairs.spoiler.aName": "Mia",
-    "pairs.spoiler.a":
-      "Du hast mir verraten, wer der Mörder ist, bevor ich mit der letzten Folge überhaupt angefangen hatte. Ich hab mich die ganze Woche darauf gefreut.",
-    "pairs.spoiler.bName": "Paul",
-    "pairs.spoiler.b":
-      "Die Folge kam vor drei Wochen raus, und du hast gesagt, du bist durch. Ich kann mir nicht merken, wer gerade bei welcher Folge ist.",
-    "pairs.jacket.aName": "Leon",
-    "pairs.jacket.a":
-      "Du hast meine Jeansjacke ungefragt zum Konzert angezogen. Sie kam total verraucht zurück.",
-    "pairs.jacket.bName": "Hannah",
-    "pairs.jacket.b":
-      "Sie hing an der Garderobe, und du trägst sie nie. Ich hätte ja gefragt, aber du hast geschlafen, und ich war eh schon spät dran.",
-    "pairs.lastSlice.aName": "Niklas",
-    "pairs.lastSlice.a":
-      "Ich hab schon vor dem Film gesagt: „Das letzte Stück Pizza ist meins!“ Alle haben es gehört.",
-    "pairs.lastSlice.bName": "Sophie",
-    "pairs.lastSlice.b":
-      "Du kannst nicht „meins!“ rufen und es dann zwei Stunden nicht anrühren. Es lag nur rum und wurde kalt, also hab ich’s gegessen.",
     "appeal.lead":
       "Kostet 1 Urteil.",
     "appeal.placeholder": "Was haben die Richter übersehen? Ein Fakt, eine Nachricht oder was wirklich abgemacht war.",

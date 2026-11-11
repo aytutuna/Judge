@@ -578,54 +578,6 @@ const nb: Locale = {
     "home.says": "{name} sier:",
     "home.mySide": "Min side:",
     "home.otherSide": "Den andres side:",
-    "pairs.dishwasher.aName": "Ingrid",
-    "pairs.dishwasher.a":
-      "Du satte skålene i overkurven igjen. Der blir de aldri rene, det er det underkurven er til.",
-    "pairs.dishwasher.bName": "Henrik",
-    "pairs.dishwasher.b":
-      "De får fint plass der oppe, og da er underkurven ledig til kjelene. Jeg har fylt maskinen sånn i årevis, og ingenting har kommet ut skittent.",
-    "pairs.bill.aName": "Nora",
-    "pairs.bill.a":
-      "Jeg drakk ingenting, så jeg burde ikke betale for en fjerdedel av vinen. Å dele maten likt har jeg ikke noe imot.",
-    "pairs.bill.bName": "Magnus",
-    "pairs.bill.b":
-      "Vi deler jo alltid på fire. Å regne ut hvem som hadde hva hver gang, er et ork, og det er uansett ikke stor forskjell.",
-    "pairs.thermostat.aName": "Sofie",
-    "pairs.thermostat.a":
-      "Det er 19 grader her inne, og jeg fryser selv i hettegenser. Å skru opp til 22 er ikke galskap.",
-    "pairs.thermostat.bName": "Jonas",
-    "pairs.thermostat.b":
-      "22 grader er altfor varmt å sove i. Du kan ta på deg et lag til, jeg kan ikke ta av meg noe mer.",
-    "pairs.roadTrip.aName": "Emma",
-    "pairs.roadTrip.a":
-      "Jeg kjørte alle de seks timene dit. Det er bare rettferdig at du kjører oss hjem.",
-    "pairs.roadTrip.bName": "Lars",
-    "pairs.roadTrip.b":
-      "Jeg sa før vi dro, at jeg hater å kjøre i mørket, og vi drar klokka sju. På neste tur tar jeg morgenetappene.",
-    "pairs.seat.aName": "Ida",
-    "pairs.seat.a":
-      "Setet mitt kan lenes bakover, så det gjør jeg. Det er et nattfly, og alle prøver å sove.",
-    "pairs.seat.bName": "Martin",
-    "pairs.seat.b":
-      "Jeg er 191 cm, og knærne mine presser allerede mot setet ditt. Du kunne i det minste spurt før du la det helt bakover.",
-    "pairs.spoiler.aName": "Thea",
-    "pairs.spoiler.a":
-      "Du fortalte meg hvem morderen var før jeg i det hele tatt hadde begynt på siste episode. Jeg hadde gledet meg til den hele uka.",
-    "pairs.spoiler.bName": "Sander",
-    "pairs.spoiler.b":
-      "Den kom ut for tre uker siden, og du sa at du var ferdig med den. Jeg kan ikke holde styr på hvor langt alle har kommet.",
-    "pairs.jacket.aName": "Jakob",
-    "pairs.jacket.a":
-      "Du gikk på konsert i dongerijakka mi uten å spørre. Da jeg fikk den tilbake, luktet den røyk.",
-    "pairs.jacket.bName": "Sara",
-    "pairs.jacket.b":
-      "Den hang ved døra, og du bruker den aldri. Jeg ville spurt, men du sov, og jeg var allerede sent ute.",
-    "pairs.lastSlice.aName": "Emil",
-    "pairs.lastSlice.a":
-      "Jeg tinget det siste pizzastykket før filmen begynte. Alle hørte det.",
-    "pairs.lastSlice.bName": "Hanna",
-    "pairs.lastSlice.b":
-      "Du kan ikke tinge noe og så la det ligge urørt i to timer. Det lå bare der og ble kaldt, så jeg spiste det.",
     "appeal.lead":
       "Koster 1 dom.",
     "appeal.placeholder": "Hva gikk dommerne glipp av? Et faktum, en melding eller hva dere faktisk ble enige om.",

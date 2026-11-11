@@ -572,54 +572,6 @@ const en = {
   "home.says": "{name} says:",
   "home.mySide": "My side:",
   "home.otherSide": "Their side:",
-  "pairs.dishwasher.aName": "Alex",
-  "pairs.dishwasher.a":
-    "You put the bowls on the top rack again. They never come out clean up there, that's what the bottom is for.",
-  "pairs.dishwasher.bName": "Sam",
-  "pairs.dishwasher.b":
-    "They fit fine up there and it leaves the bottom free for the pans. I've loaded it like this for years and nothing's come out dirty.",
-  "pairs.bill.aName": "Priya",
-  "pairs.bill.a":
-    "I didn't drink anything, so I shouldn't pay a quarter of the wine. Splitting the food evenly is fine with me.",
-  "pairs.bill.bName": "Jordan",
-  "pairs.bill.b":
-    "We always just split it four ways. Working out who had what every time is a pain, and it's not much of a difference anyway.",
-  "pairs.thermostat.aName": "Taylor",
-  "pairs.thermostat.a":
-    "It's 19 degrees in here and I'm cold even in a hoodie. Turning it up to 22 isn't crazy.",
-  "pairs.thermostat.bName": "Chris",
-  "pairs.thermostat.b":
-    "22 is way too warm to sleep in. You can put on another layer, I can't take anything else off.",
-  "pairs.roadTrip.aName": "Morgan",
-  "pairs.roadTrip.a":
-    "I drove the whole six hours there. It's only fair that you drive us back.",
-  "pairs.roadTrip.bName": "Riley",
-  "pairs.roadTrip.b":
-    "I said before we left that I hate driving at night, and we're leaving at 7. I'll take the morning drives next trip.",
-  "pairs.seat.aName": "Jamie",
-  "pairs.seat.a":
-    "My seat reclines, so I'm reclining it. It's a night flight and everyone's trying to sleep.",
-  "pairs.seat.bName": "Casey",
-  "pairs.seat.b":
-    "I'm 6'3\" and my knees are already pressed into your seat. You could at least ask before dropping it all the way back.",
-  "pairs.spoiler.aName": "Maya",
-  "pairs.spoiler.a":
-    "You told me who the killer was before I'd even started the last episode. I'd been waiting all week for it.",
-  "pairs.spoiler.bName": "Leo",
-  "pairs.spoiler.b":
-    "It came out three weeks ago and you said you'd finished it. I can't keep track of where everyone is.",
-  "pairs.jacket.aName": "Noah",
-  "pairs.jacket.a":
-    "You wore my denim jacket to the concert without asking. It came back smelling like smoke.",
-  "pairs.jacket.bName": "Ava",
-  "pairs.jacket.b":
-    "It was hanging by the door and you never wear it. I would've asked, but you were asleep and I was already late.",
-  "pairs.lastSlice.aName": "Ben",
-  "pairs.lastSlice.a":
-    "I called dibs on the last slice before the movie started. Everyone heard me.",
-  "pairs.lastSlice.bName": "Lily",
-  "pairs.lastSlice.b":
-    "You can't call dibs and then not touch it for two hours. It was just sitting there going cold, so I ate it.",
   "appeal.lead":
     "Uses 1 verdict.",
   "appeal.placeholder": "What did the judges miss? A fact, a message, or what was actually agreed.",

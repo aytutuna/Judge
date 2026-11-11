@@ -578,53 +578,6 @@ const hr: Locale = {
     "home.says": "{name} kaže:",
     "home.mySide": "Moja strana:",
     "home.otherSide": "Druga strana:",
-    "pairs.dishwasher.aName": "Ana",
-    "pairs.dishwasher.a":
-      "Opet si stavio zdjelice u gornju košaru. Gore se nikad ne operu kako treba, za to služi donja.",
-    "pairs.dishwasher.bName": "Marko",
-    "pairs.dishwasher.b":
-      "Gore sasvim lijepo stanu, a dolje ostaje mjesta za lonce. Godinama ovako punim perilicu i još ništa nije izašlo prljavo.",
-    "pairs.bill.aName": "Petra",
-    "pairs.bill.a":
-      "Nisam ništa pila, pa ne bih trebala platiti četvrtinu vina. Hranu možemo podijeliti na jednake dijelove, to mi je u redu.",
-    "pairs.bill.bName": "Ivan",
-    "pairs.bill.b":
-      "Uvijek samo podijelimo račun na četvero. Svaki put računati tko je što imao prava je gnjavaža, a razlika ionako nije velika.",
-    "pairs.thermostat.aName": "Lucija",
-    "pairs.thermostat.a":
-      "Ovdje je 19 stupnjeva i hladno mi je čak i u dukserici. Pojačati grijanje na 22 nije nikakva ludost.",
-    "pairs.thermostat.bName": "Filip",
-    "pairs.thermostat.b":
-      "Na 22 je prevruće za spavanje. Ti možeš obući još nešto, a ja više nemam što skinuti.",
-    "pairs.roadTrip.aName": "Ema",
-    "pairs.roadTrip.a":
-      "Do tamo sam vozila cijelih šest sati. Pošteno je da ti voziš natrag.",
-    "pairs.roadTrip.bName": "Josip",
-    "pairs.roadTrip.b":
-      "Prije puta sam rekao da mrzim voziti noću, a krećemo u sedam navečer. Idući put ja vozim ujutro.",
-    "pairs.seat.aName": "Mia",
-    "pairs.seat.a":
-      "Naslon se može spustiti, pa ga spuštam. Noćni je let i svi pokušavaju spavati.",
-    "pairs.seat.bName": "Karlo",
-    "pairs.seat.b":
-      "Visok sam 190 cm i koljena mi se već zabijaju u tvoje sjedalo. Mogla si me barem pitati prije nego što ga spustiš do kraja.",
-    "pairs.spoiler.aName": "Nika",
-    "pairs.spoiler.a":
-      "Rekao si mi tko je ubojica prije nego što sam uopće počela gledati zadnju epizodu. Cijeli tjedan sam je čekala.",
-    "pairs.spoiler.bName": "Matej",
-    "pairs.spoiler.b":
-      "Izašla je prije tri tjedna, a rekla si da si je već odgledala. Ne mogu pratiti dokle je tko stigao.",
-    "pairs.jacket.aName": "Luka",
-    "pairs.jacket.a":
-      "Obukla si moju traper jaknu na koncert, a nisi me ni pitala. Vratila si je i sad sva smrdi po dimu.",
-    "pairs.jacket.bName": "Sara",
-    "pairs.jacket.b":
-      "Visjela je kraj vrata, a ti je nikad ne nosiš. Pitala bih te, ali spavao si, a ja sam već kasnila.",
-    "pairs.lastSlice.aName": "David",
-    "pairs.lastSlice.a": "Prije filma sam rekao „zadnji komad je moj“. Svi su me čuli.",
-    "pairs.lastSlice.bName": "Lana",
-    "pairs.lastSlice.b":
-      "Ne možeš reći „moj je“ i onda ga ne taknuti dva sata. Samo je stajao i hladio se, pa sam ga pojela.",
     "appeal.lead":
       "Troši 1 presudu.",
     "appeal.placeholder": "Što su suci propustili? Neka činjenica, poruka ili ono što je zapravo dogovoreno.",

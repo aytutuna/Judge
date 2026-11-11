@@ -583,54 +583,6 @@ const nl: Locale = {
     "home.says": "{name} zegt:",
     "home.mySide": "Mijn kant:",
     "home.otherSide": "De andere kant:",
-    "pairs.dishwasher.aName": "Lotte",
-    "pairs.dishwasher.a":
-      "Je hebt de kommen weer in het bovenste rek gezet. Daar worden ze nooit schoon, daar is het onderste rek voor.",
-    "pairs.dishwasher.bName": "Jeroen",
-    "pairs.dishwasher.b":
-      "Ze passen daar prima, en dan blijft het onderste rek vrij voor de pannen. Ik ruim de vaatwasser al jaren zo in en er is nog nooit iets vies uitgekomen.",
-    "pairs.bill.aName": "Fleur",
-    "pairs.bill.a":
-      "Ik heb niks gedronken, dus ik hoef geen kwart van de wijn te betalen. Het eten gelijk verdelen vind ik prima.",
-    "pairs.bill.bName": "Ruben",
-    "pairs.bill.b":
-      "We delen het altijd gewoon door vieren. Elke keer uitzoeken wie wat had is gedoe, en zoveel scheelt het toch niet.",
-    "pairs.thermostat.aName": "Iris",
-    "pairs.thermostat.a":
-      "Het is hier 19 graden en ik heb het zelfs in een hoodie koud. De thermostaat op 22 zetten is echt niet overdreven.",
-    "pairs.thermostat.bName": "Sem",
-    "pairs.thermostat.b":
-      "Bij 22 graden kun je echt niet slapen, veel te warm. Jij kunt nog een trui aantrekken, ik kan niks meer uittrekken.",
-    "pairs.roadTrip.aName": "Anouk",
-    "pairs.roadTrip.a":
-      "Ik heb de hele heenweg gereden, zes uur lang. Het is niet meer dan eerlijk dat jij terugrijdt.",
-    "pairs.roadTrip.bName": "Joris",
-    "pairs.roadTrip.b":
-      "Ik zei voor we vertrokken al dat ik een hekel heb aan rijden in het donker, en we gaan om zeven uur 's avonds weg. Volgende keer rijd ik 's ochtends.",
-    "pairs.seat.aName": "Eva",
-    "pairs.seat.a":
-      "Mijn stoel kan naar achteren, dus dat doe ik ook. Het is een nachtvlucht en iedereen probeert te slapen.",
-    "pairs.seat.bName": "Bas",
-    "pairs.seat.b":
-      "Ik ben 1,91 m en mijn knieën zitten nu al tegen je stoel. Je kunt op z'n minst even vragen voordat je hem helemaal naar achteren zet.",
-    "pairs.spoiler.aName": "Noor",
-    "pairs.spoiler.a":
-      "Je verklapte wie de moordenaar was voordat ik ook maar aan de laatste aflevering was begonnen. Ik had er de hele week naar uitgekeken.",
-    "pairs.spoiler.bName": "Lucas",
-    "pairs.spoiler.b":
-      "Die aflevering kwam drie weken geleden uit en je zei dat je de serie uit had. Ik kan niet bijhouden hoe ver iedereen is.",
-    "pairs.jacket.aName": "Femke",
-    "pairs.jacket.a":
-      "Je bent zonder te vragen in mijn spijkerjack naar het concert gegaan. Toen ik het terugkreeg, stonk het naar rook.",
-    "pairs.jacket.bName": "Tim",
-    "pairs.jacket.b":
-      "Het hing bij de deur en je draagt het nooit. Ik had het heus gevraagd, maar je sliep en ik was al te laat.",
-    "pairs.lastSlice.aName": "Milan",
-    "pairs.lastSlice.a":
-      "Ik riep al “laatste stuk is voor mij” voordat de film begon. Iedereen heeft het gehoord.",
-    "pairs.lastSlice.bName": "Julia",
-    "pairs.lastSlice.b":
-      "Je kunt niet roepen dat het van jou is en het dan twee uur laten liggen. Het lag daar maar koud te worden, dus ik heb het opgegeten.",
     "appeal.lead":
       "Kost 1 uitspraak.",
     "appeal.placeholder": "Wat hebben de rechters gemist? Een feit, een bericht of wat er echt is afgesproken.",

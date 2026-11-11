@@ -581,51 +581,6 @@ const vi: Locale = {
     "home.says": "{name} nói:",
     "home.mySide": "Phía tôi:",
     "home.otherSide": "Phía bên kia:",
-    "pairs.dishwasher.aName": "Linh",
-    "pairs.dishwasher.a":
-      "Bạn lại xếp bát lên ngăn trên rồi. Để trên đó rửa chẳng bao giờ sạch, ngăn dưới là để xếp bát mà.",
-    "pairs.dishwasher.bName": "Tuấn",
-    "pairs.dishwasher.b":
-      "Để trên vừa khít mà, lại chừa ngăn dưới cho xoong nồi. Mình xếp kiểu này mấy năm rồi, có cái nào ra mà còn bẩn đâu.",
-    "pairs.bill.aName": "Mai",
-    "pairs.bill.a":
-      "Mình có uống giọt nào đâu, sao lại phải trả một phần tư tiền bia. Đồ ăn chia đều thì mình không ý kiến.",
-    "pairs.bill.bName": "Khoa",
-    "pairs.bill.b":
-      "Tụi mình lúc nào cũng chia bốn mà. Lần nào cũng ngồi tính ai ăn gì uống gì thì mệt lắm, mà chênh nhau có bao nhiêu đâu.",
-    "pairs.thermostat.aName": "Hà",
-    "pairs.thermostat.a":
-      "Phòng đang 29°C, mình nóng toát mồ hôi. Hạ điều hòa xuống 25°C có gì quá đâu.",
-    "pairs.thermostat.bName": "Nam",
-    "pairs.thermostat.b":
-      "25°C thì lạnh quá, ngủ không nổi. Bạn nóng thì bật thêm quạt, còn mình đắp chăn rồi mà vẫn lạnh.",
-    "pairs.roadTrip.aName": "Phong",
-    "pairs.roadTrip.a": "Lúc đi mình lái suốt sáu tiếng. Lúc về bạn lái mới công bằng.",
-    "pairs.roadTrip.bName": "Vy",
-    "pairs.roadTrip.b":
-      "Trước khi đi mình đã nói là rất ghét lái xe ban đêm, mà 7 giờ tối mới lên đường về. Chuyến sau mình sẽ lái mấy chặng buổi sáng.",
-    "pairs.seat.aName": "Thảo",
-    "pairs.seat.a": "Ghế mình ngả được thì mình ngả. Chuyến bay đêm, ai cũng đang cố ngủ.",
-    "pairs.seat.bName": "Dũng",
-    "pairs.seat.b":
-      "Mình cao 1m90, đầu gối đã tì sát vào lưng ghế bạn rồi. Ít ra bạn cũng nên hỏi trước khi ngả hết cỡ chứ.",
-    "pairs.spoiler.aName": "Ngọc",
-    "pairs.spoiler.a":
-      "Mình còn chưa mở tập cuối thì bạn đã nói ai là hung thủ. Mình chờ tập đó cả tuần đấy.",
-    "pairs.spoiler.bName": "Huy",
-    "pairs.spoiler.b":
-      "Phim ra ba tuần rồi, bạn còn bảo là xem xong rồi mà. Mình đâu nhớ nổi ai đang xem tới đâu.",
-    "pairs.jacket.aName": "Quân",
-    "pairs.jacket.a":
-      "Bạn mặc áo khoác jean của mình đi xem ca nhạc mà không hỏi. Lúc trả lại thì ám mùi khói thuốc.",
-    "pairs.jacket.bName": "Hương",
-    "pairs.jacket.b":
-      "Nó treo ngay cạnh cửa, mà bạn có bao giờ mặc đâu. Mình cũng định hỏi, nhưng bạn đang ngủ còn mình thì đang trễ giờ.",
-    "pairs.lastSlice.aName": "Bảo",
-    "pairs.lastSlice.a": "Mình xí miếng pizza cuối từ trước khi phim chiếu. Cả đám đều nghe.",
-    "pairs.lastSlice.bName": "My",
-    "pairs.lastSlice.b":
-      "Xí rồi để đó hai tiếng không đụng tới thì không tính. Nó nằm đó nguội ngắt, nên mình ăn luôn.",
     "appeal.lead":
       "Dùng 1 lượt.",
     "appeal.placeholder": "Ban giám khảo đã bỏ sót điều gì? Một sự thật, một tin nhắn hoặc điều hai bên đã thật sự thỏa thuận.",

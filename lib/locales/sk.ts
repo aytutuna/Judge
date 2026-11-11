@@ -579,54 +579,6 @@ const sk: Locale = {
     "home.says": "{name} hovorí:",
     "home.mySide": "Moja verzia:",
     "home.otherSide": "Verzia druhej strany:",
-    "pairs.dishwasher.aName": "Lucia",
-    "pairs.dishwasher.a":
-      "Zase si dal misky do horného koša. Tam sa nikdy poriadne neumyjú, na to je predsa dolný kôš.",
-    "pairs.dishwasher.bName": "Peter",
-    "pairs.dishwasher.b":
-      "Hore sa zmestia v pohode a dole ostane miesto na hrnce. Takto umývačku plním už roky a ešte nikdy z nej nič nevyšlo špinavé.",
-    "pairs.bill.aName": "Zuzana",
-    "pairs.bill.a":
-      "Nič som nepila, tak by som nemala platiť štvrtinu vína. Jedlo si pokojne rozdeľme rovným dielom.",
-    "pairs.bill.bName": "Marek",
-    "pairs.bill.b":
-      "Vždy to proste delíme na štyroch. Zakaždým rátať, kto mal čo, je otrava, a ten rozdiel aj tak nie je veľký.",
-    "pairs.thermostat.aName": "Jana",
-    "pairs.thermostat.a":
-      "Je tu 19 stupňov a je mi zima aj v mikine. Dať kúrenie na 22 predsa nie je žiadne šialenstvo.",
-    "pairs.thermostat.bName": "Michal",
-    "pairs.thermostat.b":
-      "Pri 22 stupňoch je na spanie priveľmi teplo. Ty si môžeš obliecť ďalšiu vrstvu, ja už zo seba nemám čo dať dole.",
-    "pairs.roadTrip.aName": "Juraj",
-    "pairs.roadTrip.a":
-      "Cestou tam som šoféroval celých šesť hodín. Je len fér, aby si nás späť odviezla ty.",
-    "pairs.roadTrip.bName": "Simona",
-    "pairs.roadTrip.b":
-      "Ešte pred odchodom som hovorila, že neznášam šoférovanie v noci, a my vyrážame o siedmej večer. Nabudúce si zoberiem všetky ranné jazdy ja.",
-    "pairs.seat.aName": "Veronika",
-    "pairs.seat.a":
-      "Moje sedadlo sa dá sklopiť, tak ho sklápam. Je to nočný let a všetci sa snažia spať.",
-    "pairs.seat.bName": "Lukáš",
-    "pairs.seat.b":
-      "Mám 190 centimetrov a kolená mám už teraz zapreté o tvoje sedadlo. Mohla si sa aspoň opýtať, skôr než si ho sklopila úplne dozadu.",
-    "pairs.spoiler.aName": "Kristína",
-    "pairs.spoiler.a":
-      "Prezradil si mi, kto je vrah, ešte predtým, ako som si pustila poslednú časť. Celý týždeň som sa na ňu tešila.",
-    "pairs.spoiler.bName": "Patrik",
-    "pairs.spoiler.b":
-      "Vyšlo to pred tromi týždňami a hovorila si, že to máš dopozerané. Nemôžem predsa sledovať, kto má čo dopozerané.",
-    "pairs.jacket.aName": "Tomáš",
-    "pairs.jacket.a":
-      "Zobrala si si moju džínsovú bundu na koncert a ani si sa neopýtala. Vrátila sa mi celá presiaknutá dymom.",
-    "pairs.jacket.bName": "Ema",
-    "pairs.jacket.b":
-      "Visela pri dverách a ty ju nikdy nenosíš. Opýtala by som sa, ale spal si a ja som už meškala.",
-    "pairs.lastSlice.aName": "Matej",
-    "pairs.lastSlice.a":
-      "Ešte pred začiatkom filmu som povedal, že posledný kúsok je môj. Všetci to počuli.",
-    "pairs.lastSlice.bName": "Natália",
-    "pairs.lastSlice.b":
-      "Nemôžeš si niečo zabrať a potom sa toho dve hodiny ani nedotknúť. Ležalo to tam a chladlo, tak som to zjedla.",
     "appeal.lead":
       "Stojí 1 verdikt.",
     "appeal.placeholder": "Čo sudcom ušlo? Fakt, správa alebo to, na čom ste sa naozaj dohodli.",

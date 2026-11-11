@@ -579,54 +579,6 @@ const fi: Locale = {
     "home.says": "{name} sanoo:",
     "home.mySide": "Minun puoleni:",
     "home.otherSide": "Toisen puoli:",
-    "pairs.dishwasher.aName": "Laura",
-    "pairs.dishwasher.a":
-      "Laitoit kulhot taas yläkoriin. Ne eivät ikinä puhdistu siellä, alakori on niitä varten.",
-    "pairs.dishwasher.bName": "Mikko",
-    "pairs.dishwasher.b":
-      "Ne mahtuvat sinne ihan hyvin, ja alas jää tilaa kattiloille. Olen täyttänyt koneen näin jo vuosia, eikä mikään ole jäänyt likaiseksi.",
-    "pairs.bill.aName": "Anna",
-    "pairs.bill.a":
-      "En juonut mitään, joten minun ei pitäisi maksaa neljäsosaa viinistä. Ruoan voi minun puolestani jakaa tasan.",
-    "pairs.bill.bName": "Jussi",
-    "pairs.bill.b":
-      "Jaamme laskun aina neljään osaan. On rasittavaa selvittää joka kerta, kuka söi ja joi mitäkin, eikä ero ole edes iso.",
-    "pairs.thermostat.aName": "Sanna",
-    "pairs.thermostat.a":
-      "Täällä on 19 astetta, ja minulla on kylmä hupparissakin. Ei ole mitenkään hullua nostaa lämpöä 22 asteeseen.",
-    "pairs.thermostat.bName": "Antti",
-    "pairs.thermostat.b":
-      "22 astetta on aivan liian lämmin nukkumiseen. Sinä voit pukea lisää päälle, minä en voi riisua enempää.",
-    "pairs.roadTrip.aName": "Elina",
-    "pairs.roadTrip.a":
-      "Ajoin koko kuuden tunnin matkan sinne. On vain reilua, että sinä ajat takaisin.",
-    "pairs.roadTrip.bName": "Tuomas",
-    "pairs.roadTrip.b":
-      "Sanoin jo ennen lähtöä, että inhoan ajamista pimeällä, ja lähdemme vasta seitsemältä illalla. Seuraavalla reissulla ajan minä aamuisin.",
-    "pairs.seat.aName": "Johanna",
-    "pairs.seat.a":
-      "Selkänojani kallistuu, joten kallistan sitä. On yölento, ja kaikki yrittävät nukkua.",
-    "pairs.seat.bName": "Petri",
-    "pairs.seat.b":
-      "Olen 190-senttinen, ja polveni painavat jo valmiiksi penkkiäsi. Olisit voinut edes kysyä, ennen kuin laskit selkänojan ihan pohjaan.",
-    "pairs.spoiler.aName": "Emilia",
-    "pairs.spoiler.a":
-      "Kerroit, kuka murhaaja oli, ennen kuin olin edes aloittanut viimeistä jaksoa. Olin odottanut sitä koko viikon.",
-    "pairs.spoiler.bName": "Lauri",
-    "pairs.spoiler.b":
-      "Se ilmestyi kolme viikkoa sitten, ja sanoit katsoneesi sen loppuun. En pysty pitämään kirjaa siitä, missä kohtaa kukin menee.",
-    "pairs.jacket.aName": "Veera",
-    "pairs.jacket.a":
-      "Pidit farkkutakkiani keikalla kysymättä. Kun sain sen takaisin, se haisi tupakalta.",
-    "pairs.jacket.bName": "Joonas",
-    "pairs.jacket.b":
-      "Se roikkui oven vieressä, etkä ikinä käytä sitä. Olisin kysynyt, mutta nukuit, ja olin jo valmiiksi myöhässä.",
-    "pairs.lastSlice.aName": "Eetu",
-    "pairs.lastSlice.a":
-      "Varasin viimeisen palan jo ennen kuin leffa alkoi. Kaikki kuulivat sen.",
-    "pairs.lastSlice.bName": "Iida",
-    "pairs.lastSlice.b":
-      "Ei voi varata palaa ja sitten jättää sitä koskematta kahdeksi tunniksi. Se vain jäähtyi siinä, joten söin sen.",
     "appeal.lead":
       "Käyttää 1 tuomion.",
     "appeal.placeholder": "Mitä tuomarit eivät huomanneet? Fakta, viesti tai se, mistä oikeasti sovittiin.",

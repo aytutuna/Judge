@@ -584,54 +584,6 @@ const hu: Locale = {
     "home.says": "{name} szerint:",
     "home.mySide": "Az én verzióm:",
     "home.otherSide": "Az ő verziója:",
-    "pairs.dishwasher.aName": "Kata",
-    "pairs.dishwasher.a":
-      "Már megint a felső kosárba raktad a tálakat. Ott sosem lesznek tiszták, arra való az alsó.",
-    "pairs.dishwasher.bName": "Ádám",
-    "pairs.dishwasher.b":
-      "Simán elférnek fent, és így az alsó kosár szabad marad a lábasoknak. Évek óta így pakolom, és még soha semmi nem jött ki koszosan.",
-    "pairs.bill.aName": "Eszter",
-    "pairs.bill.a":
-      "Én nem ittam semmit, úgyhogy nem kéne kifizetnem a bor negyedét. Az ételt nyugodtan osszuk el egyenlően.",
-    "pairs.bill.bName": "Máté",
-    "pairs.bill.b":
-      "Mindig négyfelé osztjuk, és kész. Minden alkalommal kiszámolni, ki mit evett, macerás, és amúgy sem nagy a különbség.",
-    "pairs.thermostat.aName": "Zsófi",
-    "pairs.thermostat.a":
-      "19 fok van itt bent, és még kapucnis pulóverben is fázom. Nem őrültség feltekerni 22-re.",
-    "pairs.thermostat.bName": "Péter",
-    "pairs.thermostat.b":
-      "22 fokban nem lehet aludni, az már túl meleg. Te fel tudsz venni még egy réteget, én viszont már nem tudok mit levenni.",
-    "pairs.roadTrip.aName": "Dávid",
-    "pairs.roadTrip.a":
-      "Odafelé végig én vezettem, mind a hat órát. Az az igazságos, ha visszafelé te vezetsz.",
-    "pairs.roadTrip.bName": "Lilla",
-    "pairs.roadTrip.b":
-      "Már indulás előtt mondtam, hogy utálok éjszaka vezetni, és este hétkor indulunk. A következő úton majd én vezetek reggelente.",
-    "pairs.seat.aName": "Nóra",
-    "pairs.seat.a":
-      "Az ülésem hátradönthető, úgyhogy hátradöntöm. Éjszakai járaton vagyunk, mindenki aludni próbál.",
-    "pairs.seat.bName": "Bálint",
-    "pairs.seat.b":
-      "190 centi vagyok, és a térdem már így is az ülésednek nyomódik. Legalább megkérdezhetnéd, mielőtt teljesen hátradöntöd.",
-    "pairs.spoiler.aName": "Fanni",
-    "pairs.spoiler.a":
-      "Elárultad, ki a gyilkos, mielőtt egyáltalán elkezdtem volna az utolsó részt. Egész héten erre vártam.",
-    "pairs.spoiler.bName": "Levente",
-    "pairs.spoiler.b":
-      "Három hete jött ki, és azt mondtad, már a végére értél. Nem tudom fejben tartani, ki hol tart.",
-    "pairs.jacket.aName": "Dani",
-    "pairs.jacket.a":
-      "Meg sem kérdeztél, csak felvetted a farmerdzsekimet a koncertre. Füstszagúan kaptam vissza.",
-    "pairs.jacket.bName": "Lili",
-    "pairs.jacket.b":
-      "Az ajtó mellett lógott, és sosem hordod. Megkérdeztelek volna, de aludtál, én meg már késésben voltam.",
-    "pairs.lastSlice.aName": "Marci",
-    "pairs.lastSlice.a":
-      "Még a film előtt lestoppoltam az utolsó szeletet. Mindenki hallotta.",
-    "pairs.lastSlice.bName": "Panni",
-    "pairs.lastSlice.b":
-      "Nem lehet lestoppolni valamit, aztán két órán át hozzá se nyúlni. Csak ott hűlt, úgyhogy megettem.",
     "appeal.lead":
       "1 ítéletbe kerül.",
     "appeal.placeholder": "Mi kerülte el a bírák figyelmét? Egy tény, egy üzenet vagy az, hogy miben állapodtatok meg valójában.",

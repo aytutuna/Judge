@@ -581,54 +581,6 @@ const fr: Locale = {
     "home.says": "{name} dit :",
     "home.mySide": "Ma version :",
     "home.otherSide": "Sa version :",
-    "pairs.dishwasher.aName": "Julie",
-    "pairs.dishwasher.a":
-      "Tu as encore mis les bols dans le panier du haut. Ils n’en ressortent jamais propres, c’est à ça que sert le panier du bas.",
-    "pairs.dishwasher.bName": "Thomas",
-    "pairs.dishwasher.b":
-      "Ils y rentrent très bien, et ça laisse le bas libre pour les casseroles. Je remplis le lave-vaisselle comme ça depuis des années et rien n’est jamais ressorti sale.",
-    "pairs.bill.aName": "Sarah",
-    "pairs.bill.a":
-      "Je n’ai rien bu, alors je ne vois pas pourquoi je paierais un quart du vin. Partager le repas à parts égales, ça me va.",
-    "pairs.bill.bName": "Antoine",
-    "pairs.bill.b":
-      "On divise toujours en quatre, c’est tout. Calculer à chaque fois qui a pris quoi, c’est pénible, et de toute façon ça ne change pas grand-chose.",
-    "pairs.thermostat.aName": "Manon",
-    "pairs.thermostat.a":
-      "Il fait 19 °C ici et j’ai froid même avec un sweat. Monter le chauffage à 22, ce n’est pas exagéré.",
-    "pairs.thermostat.bName": "Hugo",
-    "pairs.thermostat.b":
-      "22 °C, c’est beaucoup trop chaud pour dormir. Toi, tu peux mettre une couche de plus ; moi, je ne peux rien enlever de plus.",
-    "pairs.roadTrip.aName": "Clara",
-    "pairs.roadTrip.a":
-      "J’ai conduit les six heures de l’aller. Ce serait normal que tu conduises au retour.",
-    "pairs.roadTrip.bName": "Maxime",
-    "pairs.roadTrip.b":
-      "J’ai dit avant de partir que je déteste conduire de nuit, et on part à 19 h. Je prendrai les trajets du matin la prochaine fois.",
-    "pairs.seat.aName": "Emma",
-    "pairs.seat.a":
-      "Mon siège s’incline, donc je l’incline. C’est un vol de nuit et tout le monde essaie de dormir.",
-    "pairs.seat.bName": "Louis",
-    "pairs.seat.b":
-      "Je mesure 1,90 m et mes genoux sont déjà collés à ton siège. Tu aurais au moins pu demander avant de le baisser à fond.",
-    "pairs.spoiler.aName": "Jade",
-    "pairs.spoiler.a":
-      "Tu m’as dit qui était le tueur avant même que je commence le dernier épisode. Ça faisait toute la semaine que je l’attendais.",
-    "pairs.spoiler.bName": "Nathan",
-    "pairs.spoiler.b":
-      "Il est sorti il y a trois semaines et tu m’avais dit que tu l’avais fini. Je ne peux pas savoir où en est tout le monde.",
-    "pairs.jacket.aName": "Lucas",
-    "pairs.jacket.a":
-      "Tu as mis ma veste en jean pour aller au concert sans me demander. Elle m’est revenue avec une odeur de tabac.",
-    "pairs.jacket.bName": "Chloé",
-    "pairs.jacket.b":
-      "Elle était accrochée près de la porte et tu ne la mets jamais. Je t’aurais demandé, mais tu dormais et j’étais déjà en retard.",
-    "pairs.lastSlice.aName": "Paul",
-    "pairs.lastSlice.a":
-      "J’ai dit « la dernière part est pour moi » avant le début du film. Tout le monde m’a entendu.",
-    "pairs.lastSlice.bName": "Zoé",
-    "pairs.lastSlice.b":
-      "Tu ne peux pas réserver une part et ne pas y toucher pendant deux heures. Elle était là à refroidir, alors je l’ai mangée.",
     "appeal.lead":
       "Coûte 1 verdict.",
     "appeal.placeholder": "Qu’est-ce que les juges ont raté ? Un fait, un message ou ce qui avait vraiment été convenu.",

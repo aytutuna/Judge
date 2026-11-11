@@ -584,54 +584,6 @@ const ms: Locale = {
     "home.says": "{name} berkata:",
     "home.mySide": "Versi saya:",
     "home.otherSide": "Versi dia:",
-    "pairs.dishwasher.aName": "Aisyah",
-    "pairs.dishwasher.a":
-      "Awak letak mangkuk kat rak atas lagi. Kat atas tu mangkuk tak pernah keluar bersih, sebab tu ada rak bawah.",
-    "pairs.dishwasher.bName": "Haziq",
-    "pairs.dishwasher.b":
-      "Muat saja kat atas, jadi rak bawah kosong untuk periuk. Dah bertahun saya susun macam ni, tak ada pun yang keluar kotor.",
-    "pairs.bill.aName": "Priya",
-    "pairs.bill.a":
-      "Saya minum air kosong saja, jadi saya tak patut bayar suku daripada bil minuman. Kalau makanan dibahagi sama rata, saya okey.",
-    "pairs.bill.bName": "Amir",
-    "pairs.bill.b":
-      "Kita selalu bahagi empat saja. Kira siapa makan apa setiap kali tu leceh, lagipun bezanya bukan banyak mana.",
-    "pairs.thermostat.aName": "Nurul",
-    "pairs.thermostat.a":
-      "Aircond ni 19°C, saya pakai hoodie pun masih sejuk. Naikkan ke 24 bukannya melampau pun.",
-    "pairs.thermostat.bName": "Faizal",
-    "pairs.thermostat.b":
-      "24 tu panas sangat untuk tidur. Awak boleh pakai satu lapis lagi, saya dah tak ada apa nak tanggal.",
-    "pairs.roadTrip.aName": "Syafiq",
-    "pairs.roadTrip.a":
-      "Masa pergi, saya memandu enam jam penuh. Adillah kalau awak pula yang bawa balik.",
-    "pairs.roadTrip.bName": "Hana",
-    "pairs.roadTrip.b":
-      "Sebelum bertolak saya dah cakap saya benci memandu waktu malam, dan kita gerak pukul 7 malam. Lain kali, saya yang pandu waktu pagi.",
-    "pairs.seat.aName": "Arif",
-    "pairs.seat.a":
-      "Kerusi saya boleh direbahkan, jadi saya rebahkanlah. Ini penerbangan malam, semua orang nak tidur.",
-    "pairs.seat.bName": "Siti",
-    "pairs.seat.b":
-      "Saya tinggi 190 cm dan lutut saya dah tertekan pada kerusi awak. Sekurang-kurangnya tanyalah dulu sebelum rebahkan sampai habis.",
-    "pairs.spoiler.aName": "Alia",
-    "pairs.spoiler.a":
-      "Awak beritahu saya siapa pembunuhnya sebelum saya sempat mula tengok episod terakhir. Saya dah tunggu seminggu.",
-    "pairs.spoiler.bName": "Irfan",
-    "pairs.spoiler.b":
-      "Episod tu dah keluar tiga minggu lepas, dan awak kata awak dah habis tengok. Saya tak boleh nak ingat semua orang dah tengok sampai mana.",
-    "pairs.jacket.aName": "Sofea",
-    "pairs.jacket.a":
-      "Awak pakai jaket denim saya pergi konsert tanpa tanya dulu. Bila dapat balik, jaket tu bau asap rokok.",
-    "pairs.jacket.bName": "Adam",
-    "pairs.jacket.b":
-      "Jaket tu tergantung tepi pintu dan awak tak pernah pakai pun. Saya memang nak tanya, tapi awak tengah tidur dan saya dah lambat.",
-    "pairs.lastSlice.aName": "Zul",
-    "pairs.lastSlice.a":
-      "Saya dah cop potongan pizza terakhir sebelum filem mula. Semua orang dengar.",
-    "pairs.lastSlice.bName": "Mira",
-    "pairs.lastSlice.b":
-      "Takkanlah cop lepas tu dua jam tak sentuh. Dah sejuk terbiar kat situ, jadi saya makanlah.",
     "appeal.lead":
       "Menggunakan 1 keputusan.",
     "appeal.placeholder": "Apa yang hakim terlepas pandang? Satu fakta, satu mesej, atau apa yang sebenarnya dipersetujui.",

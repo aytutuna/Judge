@@ -4,9 +4,6 @@ import { partyLabel } from "./names";
 /** Longest argument the form accepts (the API enforces the same cap). */
 export const MAX_ARGUMENT = 6000;
 
-/** The "Try an example" cases; each has a name and a text for both sides. */
-export const EXAMPLES = ["dishwasher", "bill", "thermostat", "roadTrip", "seat", "spoiler", "jacket", "lastSlice"] as const;
-
 /** A link needs a side worth judging, or none at all; a few words or only images do not count. */
 export function inviteTextOk(text: string, images: number): boolean {
   const len = text.trim().length;

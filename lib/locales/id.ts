@@ -579,54 +579,6 @@ const id: Locale = {
     "home.says": "Kata {name}:",
     "home.mySide": "Versiku:",
     "home.otherSide": "Versi dia:",
-    "pairs.dishwasher.aName": "Rina",
-    "pairs.dishwasher.a":
-      "Kamu menumpuk mangkuk basah di rak piring lagi. Kalau ditumpuk begitu, mangkuknya nggak pernah kering. Taruh telungkup satu-satu, dong.",
-    "pairs.dishwasher.bName": "Budi",
-    "pairs.dishwasher.b":
-      "Ditumpuk begitu lebih hemat tempat, jadi sisa raknya bisa buat wajan. Aku sudah bertahun-tahun begini dan nggak pernah ada yang bau.",
-    "pairs.bill.aName": "Dewi",
-    "pairs.bill.a":
-      "Aku cuma minum air putih, jadi kenapa harus ikut bayar seperempat harga kopi kalian? Kalau makanannya dibagi rata, aku nggak keberatan.",
-    "pairs.bill.bName": "Andi",
-    "pairs.bill.b":
-      "Dari dulu kita selalu bagi empat. Menghitung siapa pesan apa tiap kali itu ribet, lagian bedanya juga nggak seberapa.",
-    "pairs.thermostat.aName": "Ayu",
-    "pairs.thermostat.a":
-      "AC-nya disetel 18 derajat dan aku kedinginan padahal sudah pakai hoodie. Menaikkannya ke 24 itu nggak berlebihan.",
-    "pairs.thermostat.bName": "Fajar",
-    "pairs.thermostat.b":
-      "24 derajat terlalu gerah buat tidur. Kamu bisa pakai selimut, tapi aku nggak bisa lepas apa-apa lagi.",
-    "pairs.roadTrip.aName": "Rizky",
-    "pairs.roadTrip.a":
-      "Waktu berangkat, aku yang menyetir enam jam penuh. Adil dong kalau pulangnya kamu yang menyetir.",
-    "pairs.roadTrip.bName": "Intan",
-    "pairs.roadTrip.b":
-      "Sebelum berangkat aku sudah bilang aku benci menyetir malam, dan kita pulang jam 7 malam. Lain kali, biar aku yang menyetir pas pagi.",
-    "pairs.seat.aName": "Nadia",
-    "pairs.seat.a":
-      "Kursiku bisa direbahkan, jadi ya aku rebahkan. Ini penerbangan malam, semua orang juga mau tidur.",
-    "pairs.seat.bName": "Yoga",
-    "pairs.seat.b":
-      "Tinggiku 190 cm dan lututku sudah menempel ke kursimu. Paling nggak tanya dulu sebelum merebahkannya sampai mentok.",
-    "pairs.spoiler.aName": "Wulan",
-    "pairs.spoiler.a":
-      "Kamu kasih tahu siapa pembunuhnya padahal aku belum mulai nonton episode terakhir. Aku sudah menunggunya seminggu penuh.",
-    "pairs.spoiler.bName": "Bima",
-    "pairs.spoiler.b":
-      "Episodenya sudah keluar tiga minggu lalu dan kamu bilang sudah selesai nonton. Aku nggak bisa ingat semua orang sudah nonton sampai mana.",
-    "pairs.jacket.aName": "Tika",
-    "pairs.jacket.a":
-      "Kamu pakai jaket jinku ke konser tanpa izin. Pas dikembalikan, jaketnya bau asap rokok.",
-    "pairs.jacket.bName": "Reza",
-    "pairs.jacket.b":
-      "Jaketnya tergantung dekat pintu dan kamu nggak pernah pakai. Tadinya aku mau minta izin, tapi kamu lagi tidur dan aku sudah telat.",
-    "pairs.lastSlice.aName": "Eko",
-    "pairs.lastSlice.a":
-      "Sebelum filmnya mulai, aku sudah bilang “potongan terakhir punyaku”. Semua orang dengar.",
-    "pairs.lastSlice.bName": "Lia",
-    "pairs.lastSlice.b":
-      "Nggak bisa dong bilang “punyaku” terus dianggurin dua jam. Pizzanya dibiarkan sampai dingin, jadi aku makan saja.",
     "appeal.lead":
       "Memakai 1 putusan.",
     "appeal.placeholder": "Apa yang terlewat oleh hakim? Fakta, pesan, atau apa yang sebenarnya disepakati.",

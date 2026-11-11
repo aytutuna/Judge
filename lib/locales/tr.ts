@@ -586,53 +586,6 @@ const tr: Locale = {
     "home.says": "{name} diyor ki:",
     "home.mySide": "Benim tarafım:",
     "home.otherSide": "Onun tarafı:",
-    "pairs.dishwasher.aName": "Elif",
-    "pairs.dishwasher.a":
-      "Kâseleri yine üst rafa koymuşsun. Orada hiç temiz çıkmıyorlar, alt raf bunun için var.",
-    "pairs.dishwasher.bName": "Can",
-    "pairs.dishwasher.b":
-      "Üstte gayet sığıyorlar, alt raf da tencerelere kalıyor. Yıllardır böyle diziyorum, bir kere bile kirli çıkmadı.",
-    "pairs.bill.aName": "Zeynep",
-    "pairs.bill.a":
-      "Hiç içmedim, şarabın dörtte birini ben ödememeliyim. Yemeği eşit bölelim, ona itirazım yok.",
-    "pairs.bill.bName": "Mert",
-    "pairs.bill.b":
-      "Hep dörde bölüyoruz zaten. Her seferinde kim ne yedi diye hesap yapmak çok uğraştırıyor, fark da o kadar değil.",
-    "pairs.thermostat.aName": "Selin",
-    "pairs.thermostat.a":
-      "İçerisi 19 derece, kapüşonluyla bile üşüyorum. Kombiyi 22'ye almak abartı değil.",
-    "pairs.thermostat.bName": "Emre",
-    "pairs.thermostat.b":
-      "22 derecede uyunmaz, çok sıcak. Sen bir kat daha giyebilirsin ama ben daha fazla bir şey çıkaramam.",
-    "pairs.roadTrip.aName": "Deniz",
-    "pairs.roadTrip.a":
-      "Gidişte altı saat boyunca hep ben sürdüm. Dönüşte senin sürmen adil olur.",
-    "pairs.roadTrip.bName": "Burak",
-    "pairs.roadTrip.b":
-      "Yola çıkmadan gece araba kullanmaktan nefret ettiğimi söyledim, akşam yedide çıkıyoruz. Bir dahaki yolculukta sabahları ben sürerim.",
-    "pairs.seat.aName": "Ece",
-    "pairs.seat.a":
-      "Koltuğum yatıyor, ben de yatırıyorum. Gece uçuşu, herkes uyumaya çalışıyor.",
-    "pairs.seat.bName": "Kaan",
-    "pairs.seat.b":
-      "Boyum 1,90, dizlerim zaten koltuğuna değiyor. Sonuna kadar yatırmadan önce en azından sorabilirdin.",
-    "pairs.spoiler.aName": "Defne",
-    "pairs.spoiler.a":
-      "Son bölümü açmadan katilin kim olduğunu söyledin. Bütün hafta onu bekliyordum.",
-    "pairs.spoiler.bName": "Ozan",
-    "pairs.spoiler.b":
-      "Üç hafta önce çıktı, sen de bitirdim demiştin. Herkesin hangi bölümde olduğunu takip edemem.",
-    "pairs.jacket.aName": "Ayşe",
-    "pairs.jacket.a":
-      "Kot ceketimi bana sormadan konsere giymişsin. Sigara kokarak geri geldi.",
-    "pairs.jacket.bName": "Berk",
-    "pairs.jacket.b":
-      "Kapının yanında asılıydı, sen de hiç giymiyorsun. Sorardım ama uyuyordun, ben de zaten geç kalmıştım.",
-    "pairs.lastSlice.aName": "Cem",
-    "pairs.lastSlice.a": "Film başlamadan \"son dilim benim\" dedim. Herkes duydu.",
-    "pairs.lastSlice.bName": "Naz",
-    "pairs.lastSlice.b":
-      "\"Benim\" deyip iki saat dokunmamak olmaz. Orada soğuyup duruyordu, ben de yedim.",
     "appeal.lead":
       "1 karar hakkı kullanır.",
     "appeal.placeholder": "Yargıçlar neyi kaçırdı? Bir detay, bir mesaj ya da gerçekte ne kararlaştırıldığı.",

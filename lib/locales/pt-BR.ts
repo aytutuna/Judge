@@ -579,54 +579,6 @@ const ptBR: Locale = {
     "home.says": "{name} diz:",
     "home.mySide": "Meu lado:",
     "home.otherSide": "O lado da outra pessoa:",
-    "pairs.dishwasher.aName": "Ana",
-    "pairs.dishwasher.a":
-      "Você colocou as tigelas na parte de cima de novo. Lá em cima elas nunca saem limpas. É para isso que serve a parte de baixo.",
-    "pairs.dishwasher.bName": "Pedro",
-    "pairs.dishwasher.b":
-      "Elas cabem direitinho lá em cima, e assim a parte de baixo fica livre para as panelas. Coloco desse jeito há anos e nunca saiu nada sujo.",
-    "pairs.bill.aName": "Camila",
-    "pairs.bill.a":
-      "Eu não bebi nada, então não devia pagar um quarto do vinho. Dividir a comida por igual, tudo bem.",
-    "pairs.bill.bName": "Lucas",
-    "pairs.bill.b":
-      "A gente sempre divide por quatro e pronto. Ficar calculando quem pediu o quê toda vez é um saco, e a diferença nem é tão grande.",
-    "pairs.thermostat.aName": "Juliana",
-    "pairs.thermostat.a":
-      "O ar está em 19 graus e eu estou com frio até de moletom. Subir para 22 não é nenhum absurdo.",
-    "pairs.thermostat.bName": "Rafael",
-    "pairs.thermostat.b":
-      "Com 22 graus não dá para dormir, fica quente demais. Você pode vestir mais alguma coisa, eu não tenho mais o que tirar.",
-    "pairs.roadTrip.aName": "Fernanda",
-    "pairs.roadTrip.a":
-      "Eu dirigi as seis horas da ida inteirinhas. Nada mais justo do que você dirigir na volta.",
-    "pairs.roadTrip.bName": "Bruno",
-    "pairs.roadTrip.b":
-      "Antes da viagem eu avisei que odeio dirigir à noite, e a gente vai sair às sete. Na próxima viagem eu pego os trechos de manhã.",
-    "pairs.seat.aName": "Larissa",
-    "pairs.seat.a":
-      "Minha poltrona reclina, então eu vou reclinar. É um voo noturno e todo mundo está tentando dormir.",
-    "pairs.seat.bName": "Thiago",
-    "pairs.seat.b":
-      "Eu tenho 1,90 m e meus joelhos já estão encostados na sua poltrona. Você podia pelo menos perguntar antes de reclinar tudo.",
-    "pairs.spoiler.aName": "Beatriz",
-    "pairs.spoiler.a":
-      "Você me contou quem era o assassino antes mesmo de eu começar o último episódio. Passei a semana inteira esperando esse episódio.",
-    "pairs.spoiler.bName": "Gabriel",
-    "pairs.spoiler.b":
-      "Saiu faz três semanas e você disse que já tinha terminado. Não dá para eu ficar controlando em que episódio cada um está.",
-    "pairs.jacket.aName": "Mateus",
-    "pairs.jacket.a":
-      "Você foi ao show com a minha jaqueta jeans sem pedir. Ela voltou com cheiro de cigarro.",
-    "pairs.jacket.bName": "Letícia",
-    "pairs.jacket.b":
-      "Estava pendurada perto da porta e você nunca usa. Eu teria pedido, mas você estava dormindo e eu já estava atrasada.",
-    "pairs.lastSlice.aName": "Gustavo",
-    "pairs.lastSlice.a":
-      "Eu falei “o último pedaço é meu” antes de o filme começar. Todo mundo ouviu.",
-    "pairs.lastSlice.bName": "Mariana",
-    "pairs.lastSlice.b":
-      "Não vale falar que é seu e passar duas horas sem encostar. Estava lá esfriando, aí eu comi.",
     "appeal.lead":
       "Usa 1 veredito.",
     "appeal.placeholder": "O que os juízes deixaram passar? Um fato, uma mensagem ou o que foi combinado de verdade.",
