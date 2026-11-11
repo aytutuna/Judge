@@ -16,6 +16,7 @@ import com.okjudge.judge.core.data.HistoryDb
 import com.okjudge.judge.core.data.HistoryRepository
 import com.okjudge.judge.core.data.RoomHistoryRepository
 import com.okjudge.judge.core.data.SettingsStore
+import com.okjudge.judge.core.display.ExampleBook
 import com.okjudge.judge.core.purchases.PurchaseController
 import com.okjudge.judge.core.purchases.PurchaseGateway
 import com.okjudge.judge.core.purchases.RevenueCatGateway
@@ -117,6 +118,10 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
     val historyUser: StateFlow<String?> = _historyUser.asStateFlow()
 
     val settings: SettingsStore by lazy { DataStoreSettings(appContext) }
+
+    val examples: ExampleBook by lazy {
+        ExampleBook(appContext.assets, appContext.getSharedPreferences(ExampleBook.FILE, Context.MODE_PRIVATE))
+    }
 
     /** The owner's real names per two-sided case, on this phone only. */
     val caseNames: CaseNamesStore by lazy { PrefsCaseNames(appContext) }

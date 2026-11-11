@@ -140,6 +140,8 @@ class HomeViewModel(
     providers: Flow<Account.Providers> = flowOf(Account.Providers.Loading),
     uploadEvidence: suspend (List<PreparedImage>) -> ApiResult<EvidenceUploadResponse> = { ApiResult.Err(UiError.Unknown) },
     private val random: Random = Random.Default,
+    /** The next unseen example for a language, or null when there are none. */
+    private val example: (AppLang, Double) -> Examples.Example? = { _, _ -> null },
 ) : ViewModel() {
 
     val evidence = EvidenceController(viewModelScope, MAX_EVIDENCE_PER_SIDE, uploadEvidence)
@@ -247,19 +249,17 @@ class HomeViewModel(
         saved[KEY_EXAMPLE_NAME] = false
     }
 
-    /** "Try an example": both names and both sides, in the words of [strings], over whatever was typed. */
-    fun fillExample(strings: Strings) {
+    /** "Try an example": both names and both sides of one this phone has not shown lately, over whatever was typed. */
+    fun fillExample(lang: AppLang) {
         if (state.value.holding) return
-        val id = Examples.pick(saved[KEY_EXAMPLE], random)
-        val example = Examples.of(id, strings)
-        saved[KEY_EXAMPLE] = id
-        saved[KEY_NAME] = example.myName
+        val picked = example(lang, random.nextDouble()) ?: return
+        saved[KEY_NAME] = picked.aName
         saved[KEY_EXAMPLE_NAME] = true
-        saved[KEY_ARGUMENT] = example.mine
-        saved[KEY_EXAMPLE_TEXT] = HomeUiState.exampleMark(example.mine, example.myName, example.theirs, example.theirName)
+        saved[KEY_ARGUMENT] = picked.a
+        saved[KEY_EXAMPLE_TEXT] = HomeUiState.exampleMark(picked.a, picked.aName, picked.b, picked.bName)
         saved[KEY_THEIRS_OPEN] = true
-        saved[KEY_OTHER_NAME] = example.theirName
-        saved[KEY_OTHER] = example.theirs
+        saved[KEY_OTHER_NAME] = picked.bName
+        saved[KEY_OTHER] = picked.b
     }
 
     /** "Add their side": the second card, for writing both sides on one phone. */
@@ -332,7 +332,6 @@ class HomeViewModel(
         const val KEY_THEIRS_OPEN = "theirs_open"
         const val KEY_EXAMPLE_TEXT = "example_text"
         const val KEY_NAME = "case_name"
-        const val KEY_EXAMPLE = "example"
         const val KEY_EXAMPLE_NAME = "example_name"
     }
 }

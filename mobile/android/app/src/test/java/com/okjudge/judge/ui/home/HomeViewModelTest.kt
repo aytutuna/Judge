@@ -4,7 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import com.okjudge.judge.FakeHistory
 import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.auth.Account
-import com.okjudge.judge.core.display.Examples
+import android.content.Context
+import androidx.test.core.app.ApplicationProvider
+import com.okjudge.judge.core.display.ExampleBook
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.Features
 import com.okjudge.judge.core.model.MeResponse
@@ -53,9 +55,14 @@ class HomeViewModelTest {
 
     private val flow = VerdictFlow(JudgeApi("http://localhost:1/", OkHttpClient(), "ua"), FakeHistory(), scope)
 
+    private val book: ExampleBook by lazy {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        ExampleBook(context.assets, context.getSharedPreferences("home-examples-test", Context.MODE_PRIVATE).also { it.edit().clear().commit() })
+    }
+
     private fun vm(random: Random = Random(7), account: Account.State = Account.State.SignedOut): HomeViewModel {
         val ready = Account.Providers.Ready(ServerConfig(features = Features(cases = true)))
-        return HomeViewModel(SavedStateHandle(), flow, flowOf(account), flowOf(ready), random = random)
+        return HomeViewModel(SavedStateHandle(), flow, flowOf(account), flowOf(ready), random = random, example = book::next)
     }
 
     private fun signedIn(e: Entitlement?) = Account.State.SignedIn(MeResponse(Viewer("u1", "ada@example.com"), e))
@@ -63,55 +70,44 @@ class HomeViewModelTest {
     private val argument = "My roommate never does the dishes and says it is my turn."
 
     @Test
-    fun everyExample_hasBothNamesAndBothSides_inBothLanguages() {
-        for (lang in AppLang.entries) {
-            val s = UiTestSupport.s(lang)
-            for (id in Examples.ids) {
-                val e = Examples.of(id, s)
-                assertTrue("$lang $id", listOf(e.myName, e.mine, e.theirName, e.theirs).all { it.isNotBlank() })
-            }
-        }
-    }
-
-    @Test
-    fun example_replacesWhatWasTyped_andNeverRepeatsTwiceInARow() {
-        val en = UiTestSupport.s(AppLang.EN)
+    fun example_replacesWhatWasTyped_andShowsEveryOneOncePerRound() {
         val vm = vm()
         vm.onArgumentChange("something I typed myself")
         vm.onOtherName("Jo")
-        var last = vm.state.value
-        repeat(30) {
-            vm.fillExample(en)
+        val examples = book.load(AppLang.EN)
+        val shown = mutableListOf<String>()
+        repeat(examples.size) {
+            vm.fillExample(AppLang.EN)
             val now = vm.state.value
-            val example = Examples.ids.map { Examples.of(it, en) }.single { it.mine == now.argument }
-            assertEquals(example.myName, now.shownName)
-            assertEquals(example.theirName, now.otherName)
-            assertEquals(example.theirs, now.otherSide)
-            assertNotEquals("not the same one again", last.argument, now.argument)
-            last = now
+            val example = examples.single { it.a == now.argument }
+            assertEquals(example.aName, now.shownName)
+            assertEquals(example.bName, now.otherName)
+            assertEquals(example.b, now.otherSide)
+            shown += example.id
         }
+        assertEquals("no repeats within a round", examples.size, shown.toSet().size)
+        vm.fillExample(AppLang.EN)
+        assertNotEquals("a new round does not open with the last one", shown.last(), examples.single { it.a == vm.state.value.argument }.id)
     }
 
     @Test
     fun example_isInTheAppLanguage() {
-        val tr = UiTestSupport.s(AppLang.TR)
         val vm = vm()
-        vm.fillExample(tr)
-        assertTrue(Examples.ids.any { Examples.of(it, tr).mine == vm.state.value.argument })
+        vm.fillExample(AppLang.TR)
+        assertTrue(book.load(AppLang.TR).any { it.a == vm.state.value.argument })
     }
 
     @Test
     fun clear_dropsTheExampleName_butKeepsOneTheUserTyped() {
-        val en = UiTestSupport.s(AppLang.EN)
         val vm = vm()
-        vm.fillExample(en)
+        vm.fillExample(AppLang.EN)
         vm.clear()
         assertTrue(vm.state.value.blank)
         assertEquals("", vm.state.value.shownName)
         assertEquals("", vm.state.value.otherName)
 
         vm.onDisplayName("Ada")
-        vm.fillExample(en)
+        vm.fillExample(AppLang.EN)
         vm.onDisplayName("Ada")
         vm.clear()
         assertEquals("Ada", vm.state.value.shownName)
@@ -151,10 +147,9 @@ class HomeViewModelTest {
 
     @Test
     fun anExampleNeverReplacesTheUsersText() {
-        val en = UiTestSupport.s(AppLang.EN)
         val vm = vm()
         assertTrue(vm.state.value.offersExample)
-        vm.fillExample(en)
+        vm.fillExample(AppLang.EN)
         assertTrue(vm.state.value.theirsOpen)
         assertTrue("another example can replace an example", vm.state.value.offersExample)
         vm.onArgumentChange(vm.state.value.argument + " And one more thing.")
@@ -165,20 +160,19 @@ class HomeViewModelTest {
 
     @Test
     fun anExampleIsKeptOnlyWhileNothingInItWasEdited() {
-        val en = UiTestSupport.s(AppLang.EN)
         val vm = vm()
-        vm.fillExample(en)
+        vm.fillExample(AppLang.EN)
         vm.onOtherSideChange(vm.state.value.otherSide + " Also this.")
         assertFalse(vm.state.value.offersExample)
 
         vm.clear()
-        vm.fillExample(en)
+        vm.fillExample(AppLang.EN)
         assertTrue(vm.state.value.offersExample)
         vm.onOtherName("Someone else")
         assertFalse(vm.state.value.offersExample)
 
         vm.clear()
-        vm.fillExample(en)
+        vm.fillExample(AppLang.EN)
         vm.onDisplayName("Me")
         assertFalse(vm.state.value.offersExample)
     }
@@ -186,7 +180,7 @@ class HomeViewModelTest {
     @Test
     fun removingTheirSideDropsTheExampleNameAndMarker() {
         val vm = vm()
-        vm.fillExample(UiTestSupport.s(AppLang.EN))
+        vm.fillExample(AppLang.EN)
         vm.removeTheirSide()
         assertEquals("", vm.state.value.shownName)
         assertEquals(null, vm.state.value.exampleText)

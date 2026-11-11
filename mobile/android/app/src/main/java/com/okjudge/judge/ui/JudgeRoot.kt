@@ -366,6 +366,7 @@ fun JudgeRoot(
                                             accountState = account.state,
                                             providers = account.providers,
                                             uploadEvidence = container.api::uploadEvidence,
+                                            example = container.examples::next,
                                         )
                                     }
                                     val state by vm.state.collectAsStateWithLifecycle()
@@ -424,7 +425,7 @@ fun JudgeRoot(
                                         },
                                         onExample = {
                                             if (state.argument.isEmpty()) analytics.track("case_started")
-                                            vm.fillExample(strings)
+                                            vm.fillExample(lang)
                                         },
                                         onDismissError = vm::dismissError,
                                         onAddTheirSide = vm::addTheirSide,
