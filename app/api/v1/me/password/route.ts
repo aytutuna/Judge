@@ -22,9 +22,9 @@ const fail = (code: ApiErrorCode, status: number, message: string, headers: Reco
   NextResponse.json(apiErrorBody(code, message), { status, headers: { ...NO_STORE, ...headers } });
 
 /** POST /api/v1/me/password {password, current?}: sets the account's password,
- * or replaces it. Replacing needs `current` (password_wrong when it does not
- * match) or a sign-in from the last few minutes; otherwise 403
- * password_required, and the app asks for the current password. The new
+ * or replaces it. Both need a sign-in from the last few minutes; replacing may
+ * give `current` instead (password_wrong when it does not match). Otherwise
+ * 403 password_required, and the app asks for the current password. The new
  * password is 8 to 128 characters (400 too_short, too_long). Other sessions
  * of the account are signed out; setting the first password signs out none.
  * The review account gets 403 invalid. Answers {ok: true}. */

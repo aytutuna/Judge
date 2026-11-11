@@ -309,6 +309,16 @@ describe("POST /api/v1/me/password", () => {
     expect((await signInPassword("change@example.com", "third password")).status).toBe(200);
   });
 
+  it("a first password needs a recent sign-in too", async () => {
+    const sent = emailOn();
+    const token = await codeSignIn(sent, "stale@example.com");
+    await age(token, 30);
+    const res = await setPassword(token, { password: "first password" });
+    expect(res.status).toBe(403);
+    expect((await res.json()).code).toBe("password_required");
+    expect((await signInPassword("stale@example.com", "first password")).status).toBe(401);
+  });
+
   it("a wrong current password is refused even on a recent session", async () => {
     const sent = emailOn();
     const token = await codeSignIn(sent, "fresh@example.com");
