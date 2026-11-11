@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { apiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
-import { isSameOrigin } from "@/lib/auth";
+import { isSameOrigin, reviewAccount } from "@/lib/auth";
 import { deadBearerResponse, lookupViewer } from "@/lib/bearer-guard";
 import { setPassword } from "@/lib/password";
 import { checkUserLimits } from "@/lib/ratelimit";
@@ -26,13 +26,15 @@ const fail = (code: ApiErrorCode, status: number, message: string, headers: Reco
  * match) or a sign-in from the last few minutes; otherwise 403
  * password_required, and the app asks for the current password. The new
  * password is 8 to 128 characters (400 too_short, too_long). Other sessions
- * of the account are signed out. Answers {ok: true}. */
+ * of the account are signed out; setting the first password signs out none.
+ * The review account gets 403 invalid. Answers {ok: true}. */
 export async function POST(req: Request): Promise<NextResponse> {
   const { viewer, deadBearer, refused } = await lookupViewer(req);
   if (deadBearer) return deadBearerResponse();
   if (refused) return refused;
   if (!viewer) return fail("signin_required", 401, "Sign in first.");
   if (viewer.via === "cookie" && !isSameOrigin(req)) return fail("bad_origin", 403, "Cross-site request refused.");
+  if (reviewAccount()?.email === viewer.user.email.toLowerCase()) return fail("invalid", 403, "A password can't be set on this account.");
   let body: unknown = null;
   try {
     body = await req.json();

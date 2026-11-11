@@ -35,8 +35,10 @@ function serial<T>(userId: string, work: () => Promise<T>): Promise<T> {
 
 /** Sets the password, or replaces it when the account has one: that needs
  * `current`, or a session created within FRESH_SIGNIN_MS. An address that was
- * never verified gets none. Every other session of the account is signed out
- * first, so a failure part way leaves the old password and fewer sessions. */
+ * never verified gets none. When a password is replaced, every other session
+ * of the account is signed out first, so a failure part way leaves the old
+ * password and fewer sessions. The first password revokes nothing: the code
+ * sign-in that led to it may be one of several devices. */
 export function setPassword(
   userId: string,
   sessionId: string,
@@ -59,7 +61,7 @@ export function setPassword(
       }
     }
     const hash = await ctx.password.hash(password);
-    const others = sessions.filter((s) => s.id !== sessionId).map((s) => s.token);
+    const others = account?.password ? sessions.filter((s) => s.id !== sessionId).map((s) => s.token) : [];
     if (others.length) await ctx.internalAdapter.deleteSessions(others);
     if (account) await ctx.internalAdapter.updateAccount(account.id, { password: hash });
     else await ctx.internalAdapter.linkAccount({ userId, providerId: "credential", accountId: userId, password: hash });

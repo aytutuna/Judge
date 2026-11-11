@@ -329,6 +329,31 @@ describe("POST /api/v1/me/password", () => {
     expect((await me(other)).status).toBe(401);
   });
 
+  it("the first password signs no other session out", async () => {
+    const sent = emailOn();
+    const phone = await codeSignIn(sent, "first@example.com");
+    const browser = await codeSignIn(sent, "first@example.com");
+    expect((await setPassword(browser, { password: "first password" })).status).toBe(200);
+    expect((await me(phone)).status).toBe(200);
+    expect((await me(browser)).status).toBe(200);
+    // Changing it does.
+    expect((await setPassword(browser, { password: "second password" })).status).toBe(200);
+    expect((await me(phone)).status).toBe(401);
+  });
+
+  it("refuses to set a password on the review account", async () => {
+    emailOn();
+    vi.stubEnv("REVIEW_ACCOUNT_EMAIL", "review3@example.com");
+    vi.stubEnv("REVIEW_ACCOUNT_CODE", "482915");
+    expect((await sendCode("review3@example.com")).status).toBe(200);
+    const signed = await post("/sign-in/email-otp", { email: "review3@example.com", otp: "482915" });
+    const token = ((await signed.json()) as { token: string }).token;
+    const res = await setPassword(token, { password: "correct horse" });
+    expect(res.status).toBe(403);
+    expect((await res.json()).code).toBe("invalid");
+    expect((await signInPassword("review3@example.com", "correct horse")).status).toBe(401);
+  });
+
   it("forgot password: a new code sign-in lets a new password replace the old one", async () => {
     const sent = emailOn();
     const first = await codeSignIn(sent, "forgot@example.com");
