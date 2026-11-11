@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useId, useRef, useState, type ReactNode } from "react";
+import { apiFetch } from "@/lib/api-fetch";
 import { track } from "@/lib/analytics/client";
 import type { EvidenceStatus, EvidenceUploadResponse } from "@/lib/case-types";
 import { ACCEPTED_IMAGE_TYPES } from "@/lib/case-types";
@@ -154,7 +155,7 @@ export function useEvidence(endpoint: string, max: number): EvidenceController {
         const sentIds = send.map((s) => s.id);
         let response: EvidenceUploadResponse | null = null;
         try {
-          const res = await fetch(endpoint, { method: "POST", body: form });
+          const res = await apiFetch(endpoint, { method: "POST", body: form });
           const json: unknown = await res.json().catch(() => null);
           if (res.ok && json && Array.isArray((json as EvidenceUploadResponse).items)) {
             response = json as EvidenceUploadResponse;
