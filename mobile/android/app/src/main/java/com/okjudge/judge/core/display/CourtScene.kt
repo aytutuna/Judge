@@ -8,19 +8,21 @@ import kotlinx.serialization.json.putJsonArray
 
 /** What the bundled court page shows (components/court/engine.ts Scene). */
 sealed interface CourtScene {
-    data class Home(val busy: Boolean) : CourtScene
+    data class Home(val busy: Boolean, val venue: String = Venues.COURT) : CourtScene
 
     /** [sides] is how many stand at centre court before the verdict says. */
-    data class Judging(val beat: Story.Beat, val summary: Story.Summary?, val sides: Int = 2) : CourtScene
+    data class Judging(val beat: Story.Beat, val summary: Story.Summary?, val sides: Int = 2, val venue: String = Venues.COURT) : CourtScene
 
     /** The argument of `window.judgeCourt.set`. */
     fun json(): String = when (this) {
         is Home -> buildJsonObject {
             put("kind", "home")
+            put("venue", venue)
             put("busy", busy)
         }
         is Judging -> buildJsonObject {
             put("kind", "judging")
+            put("venue", venue)
             put("beat", beat.wire)
             putJsonArray("votes") { summary?.votes?.forEach { add(JsonPrimitive(it.wire)) } }
             put("extra", summary?.extra ?: 0)

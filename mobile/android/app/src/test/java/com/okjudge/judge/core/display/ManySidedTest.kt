@@ -202,7 +202,7 @@ class ManySidedTest {
     fun theCourtGetsTheSideCountOnlyBeyondTwo() {
         val three = Fixtures.manySample("three_win_c").result.result
         assertEquals(
-            """{"kind":"judging","beat":"final","votes":["c","c","a"],"extra":0,"winner":"c","trial":null,"sides":3}""",
+            """{"kind":"judging","venue":"court","beat":"final","votes":["c","c","a"],"extra":0,"winner":"c","trial":null,"sides":3}""",
             CourtScene.Judging(Story.Beat.FINAL, Story.summarize(three)).json(),
         )
         assertTrue(CourtScene.Judging(Story.Beat.CRUX, null, sides = 4).json().endsWith(""","sides":4}"""))
