@@ -54,3 +54,22 @@ export function getTheme(): Theme {
 export function useTheme(): Theme {
   return useSyncExternalStore(subscribe, getTheme, () => "system");
 }
+
+const DARK_QUERY = "(prefers-color-scheme: dark)";
+
+function subscribeScheme(onChange: () => void): () => void {
+  const mq = window.matchMedia(DARK_QUERY);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
+
+/** The scheme in effect: the stored choice, or the device's while there is none. */
+export function useDark(): boolean {
+  const theme = useTheme();
+  const device = useSyncExternalStore(
+    subscribeScheme,
+    () => window.matchMedia(DARK_QUERY).matches,
+    () => false,
+  );
+  return theme === "system" ? device : theme === "dark";
+}

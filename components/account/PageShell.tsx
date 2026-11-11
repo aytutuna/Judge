@@ -18,7 +18,7 @@ export function PageIntro({ kicker, title, lead }: { kicker?: string; title: str
   );
 }
 
-/** Chrome and intro shared by /signin, /settings and /verdicts:
+/** Chrome and intro shared by /signin and /settings:
  * the same type scale as the prose pages, one lang scope. All but sign-in
  * sit in the app shell; sign-in (`bare`) keeps the plain header and footer,
  * as a step on the way somewhere else. */

@@ -4,19 +4,12 @@ import Link from "next/link";
 import { track } from "@/lib/analytics/client";
 import { t, type Key } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
-import { setGame, useGame } from "@/lib/game";
-import { setTheme, useTheme, type Theme } from "@/lib/theme";
+import { setTheme, useDark } from "@/lib/theme";
 import { signInOffered, useViewer } from "@/lib/use-viewer";
 import { LangPicker } from "../LangPicker";
 import { AccountSection, SignOutRow } from "./AccountView";
 import styles from "./AccountPages.module.css";
 import { PageShell } from "./PageShell";
-
-const THEMES: { value: Theme; label: Key }[] = [
-  { value: "system", label: "settings.appearanceSystem" },
-  { value: "light", label: "settings.appearanceLight" },
-  { value: "dark", label: "settings.appearanceDark" },
-];
 
 const LINKS: { href: string; label: Key }[] = [
   { href: "/about", label: "footer.about" },
@@ -31,8 +24,7 @@ const OUT = "M7 17 17 7M8 7h9v9";
  * out, in the order of the apps' Settings tab. */
 export function SettingsView() {
   const lang = useLang();
-  const theme = useTheme();
-  const game = useGame();
+  const dark = useDark();
 
   const viewer = useViewer();
   const nothingToShow = viewer.status === "ready" && !viewer.me?.user && !signInOffered(viewer.config);
@@ -56,60 +48,19 @@ export function SettingsView() {
       <div className={styles.group}>
         <p className={styles.groupTitle}>{t(lang, "settings.appearance")}</p>
         <section className={styles.card}>
-          <div
-            role="radiogroup"
-            aria-label={t(lang, "settings.appearance")}
-            className={styles.options}
-          >
-            {THEMES.map((o) => (
-              <label key={o.value} className={styles.option}>
-                <input
-                  type="radio"
-                  name="theme"
-                  value={o.value}
-                  checked={theme === o.value}
-                  onChange={() => {
-                    setTheme(o.value);
-                    track("settings_changed", { key: "appearance" });
-                  }}
-                />
-                <span>{t(lang, o.label)}</span>
-                <svg viewBox="0 0 24 24" aria-hidden className={styles.optionTick}>
-                  <path
-                    d="m5 12.5 4.5 4.5L19 7.5"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </label>
-            ))}
-          </div>
-          <div className={styles.options}>
-            <label className={styles.option}>
-              <input
-                type="checkbox"
-                checked={game}
-                onChange={(e) => {
-                  setGame(e.target.checked);
-                  track("settings_changed", { key: "gamify" });
-                }}
-              />
-              <span>{t(lang, "shell.gamify")}</span>
-              <svg viewBox="0 0 24 24" aria-hidden className={styles.optionTick}>
-                <path
-                  d="m5 12.5 4.5 4.5L19 7.5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </label>
-          </div>
+          <label className={`${styles.option} ${styles.switchRow}`}>
+            <span>{t(lang, "settings.darkMode")}</span>
+            <input
+              type="checkbox"
+              role="switch"
+              className={styles.switch}
+              checked={dark}
+              onChange={(e) => {
+                setTheme(e.target.checked ? "dark" : "light");
+                track("settings_changed", { key: "appearance" });
+              }}
+            />
+          </label>
         </section>
       </div>
 
