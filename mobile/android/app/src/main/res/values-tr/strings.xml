@@ -276,8 +276,6 @@
     <string name="mode_sign_in">Bağlantı göndermek için giriş yap</string>
     <string name="case_create">Daveti oluştur</string>
     <string name="case_creating">Tarafını anonimleştiriyoruz…</string>
-    <string name="case_kicker">İki taraf</string>
-    <string name="case_kicker_one_sided">Sadece senin tarafın</string>
     <string name="case_title">Davan</string>
     <string name="case_loading">Dava yükleniyor…</string>
     <string name="case_load_failed">Bu davayı yükleyemedik. Birazdan tekrar dene.</string>
@@ -332,7 +330,6 @@
     <string name="case_list_untitled">%1$s tarihli dava</string>
     <string name="case_list_untitled_soon">Dava</string>
     <string name="respond_title">Kendi tarafını anlat</string>
-    <string name="respond_intro">Biri, seninle arasındaki bir tartışmayı Judge\'a sordu. Kendi tarafını anlat; karar çıkana kadar o göremeyecek.</string>
     <string name="respond_privacy">Yargıçlar bir şey okumadan önce isimler Taraf A ve Taraf B olur. Hesap açman gerekmiyor.</string>
     <string name="respond_lang">Karar %1$s yazılacak.</string>
     <string name="respond_lang_en">İngilizce</string>
@@ -477,6 +474,7 @@
     <string name="shell_load_failed">Geçmişini yükleyemedik.</string>
     <string name="shell_load_more">Daha fazla göster</string>
     <string name="shell_untitled">Başlıksız karar</string>
+    <string name="shell_case_waiting">Yanıt bekliyor</string>
     <string name="history_state_judging">Yargıçlar düşünüyor</string>
     <string name="history_state_rejudging">Yargıçlar yeniden düşünüyor</string>
     <string name="history_state_failed">Tamamlanamadı</string>

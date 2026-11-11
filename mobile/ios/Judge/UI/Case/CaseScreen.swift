@@ -107,7 +107,6 @@ private struct CaseScreenContent: View {
 
     @ViewBuilder
     private func loadState(_ lang: AppLang) -> some View {
-        Kicker(text: L10n.caseKicker(lang))
         Text(L10n.caseTitle(lang))
             .brandText(Self.title)
             .foregroundStyle(Brand.ink)
@@ -135,10 +134,8 @@ private struct CaseScreenContent: View {
             if writesSide(view) {
                 writeHead(view, lang: lang)
             } else if view.status == .awaitingRespondent {
-                waitingHead(lang: lang)
+                waitingHead(view, lang: lang)
             } else {
-                // A case judged on the owner's side alone is not "both sides" anymore.
-                Kicker(text: view.mode == .oneSided ? L10n.caseKickerOneSided(lang) : L10n.caseKicker(lang))
                 Text(L10n.caseTitle(lang))
                     .brandText(Self.title)
                     .foregroundStyle(Brand.ink)
@@ -155,7 +152,6 @@ private struct CaseScreenContent: View {
 
     @ViewBuilder
     private func writeHead(_ view: CaseView, lang: AppLang) -> some View {
-        Kicker(text: L10n.caseKicker(lang))
         Text(L10n.caseWriteTitle(lang))
             .brandText(Self.title)
             .foregroundStyle(Brand.ink)
@@ -167,9 +163,9 @@ private struct CaseScreenContent: View {
     }
 
     @ViewBuilder
-    private func waitingHead(lang: AppLang) -> some View {
+    private func waitingHead(_ view: CaseView, lang: AppLang) -> some View {
         Kicker(text: L10n.appCaseWaitingKicker(lang), color: Brand.sageInk)
-        Text(CaseLogic.statusText(.awaitingRespondent, lang: lang))
+        Text(view.isMany ? L10n.shellCaseWaiting(lang) : CaseLogic.statusText(.awaitingRespondent, lang: lang))
             .brandText(TypeStyle(face: .serif, weight: 400, size: 34, lineHeight: 1.04, textStyle: .largeTitle, maxScale: 1.3))
             .foregroundStyle(Brand.ink)
             .fixedSize(horizontal: false, vertical: true)
@@ -264,8 +260,9 @@ private struct CaseScreenContent: View {
         if writing {
             CaseSideForm(model: model, evidenceOn: CaseLogic.appealEvidenceOn(view, features: app.account.features), lang: lang)
         }
+        let typed = SideNames.load(caseID: model.id)
         ForEach(view.live ?? [], id: \.party) { side in
-            liveRow(side, lang: lang)
+            liveRow(side, name: typed[side.party], lang: lang)
         }
         InviteLinkView(
             url: view.inviteUrl,
@@ -297,18 +294,25 @@ private struct CaseScreenContent: View {
         }
     }
 
-    /// One invited side: its letter and where it stands. The side's name is
-    /// only spoken.
-    private func liveRow(_ side: CaseLiveSide, lang: AppLang) -> some View {
+    /// One invited side: its letter, the name the owner gave it if any, and
+    /// where it stands.
+    private func liveRow(_ side: CaseLiveSide, name: String?, lang: AppLang) -> some View {
         HStack(spacing: 8) {
             PartyAvatar(party: side.party)
+            if let name {
+                Text(name)
+                    .brandText(.slotTitle)
+                    .foregroundStyle(Brand.ink)
+                    .lineLimit(1)
+                Spacer(minLength: 8)
+            }
             Text(CaseLogic.liveText(side.state, lang: lang))
                 .brandText(.slotTitle)
                 .foregroundStyle(side.state == .answered ? Brand.sageInk : Brand.ink)
             Spacer(minLength: 0)
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(side.party.label(lang))
+        .accessibilityLabel(name ?? side.party.label(lang))
         .accessibilityValue(CaseLogic.liveText(side.state, lang: lang))
     }
 

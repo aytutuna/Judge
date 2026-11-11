@@ -269,8 +269,6 @@
     <string name="mode_sign_in">Log masuk untuk menghantar pautan</string>
     <string name="case_create">Buat jemputan</string>
     <string name="case_creating">Mengeluarkan nama daripada versi anda…</string>
-    <string name="case_kicker">Dua pihak</string>
-    <string name="case_kicker_one_sided">Versi anda sahaja</string>
     <string name="case_title">Kes anda</string>
     <string name="case_loading">Memuatkan kes…</string>
     <string name="case_load_failed">Kami tidak dapat memuatkan kes ini. Cuba lagi sebentar nanti.</string>
@@ -325,7 +323,6 @@
     <string name="case_list_untitled">Kes pada %1$s</string>
     <string name="case_list_untitled_soon">Kes</string>
     <string name="respond_title">Ceritakan versi anda</string>
-    <string name="respond_intro">Seseorang minta Judge selesaikan pertikaiannya dengan anda. Ceritakan versi anda; dia tidak akan nampak sehingga keputusan keluar.</string>
     <string name="respond_privacy">Nama ditukar kepada Pihak A dan Pihak B sebelum hakim membaca apa-apa. Anda tidak perlukan akaun.</string>
     <string name="respond_lang">Keputusan akan ditulis dalam bahasa %1$s.</string>
     <string name="respond_lang_en">Inggeris</string>
@@ -469,6 +466,7 @@
     <string name="shell_load_failed">Kami tidak dapat memuatkan sejarah anda.</string>
     <string name="shell_load_more">Tunjuk lagi</string>
     <string name="shell_untitled">Keputusan tanpa tajuk</string>
+    <string name="shell_case_waiting">Menunggu jawapan</string>
     <string name="history_state_judging">Hakim sedang berfikir</string>
     <string name="history_state_rejudging">Hakim sedang berfikir semula</string>
     <string name="history_state_failed">Tidak selesai</string>

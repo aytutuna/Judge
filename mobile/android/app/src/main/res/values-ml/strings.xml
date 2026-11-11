@@ -276,8 +276,6 @@
     <string name="mode_sign_in">ലിങ്ക് അയയ്ക്കാൻ സൈൻ ഇൻ ചെയ്യൂ</string>
     <string name="case_create">ക്ഷണം തയ്യാറാക്കൂ</string>
     <string name="case_creating">നിങ്ങളുടെ ഭാഗത്തുനിന്ന് പേരുകൾ നീക്കുന്നു…</string>
-    <string name="case_kicker">രണ്ടു ഭാഗവും</string>
-    <string name="case_kicker_one_sided">നിങ്ങളുടെ ഭാഗം മാത്രം</string>
     <string name="case_title">നിങ്ങളുടെ കേസ്</string>
     <string name="case_loading">കേസ് ലോഡ് ചെയ്യുന്നു…</string>
     <string name="case_load_failed">ഈ കേസ് ലോഡ് ചെയ്യാനായില്ല. അൽപസമയം കഴിഞ്ഞ് ശ്രമിക്കൂ.</string>
@@ -332,7 +330,6 @@
     <string name="case_list_untitled">കേസ് · %1$s</string>
     <string name="case_list_untitled_soon">കേസ്</string>
     <string name="respond_title">നിങ്ങളുടെ ഭാഗം പറയൂ</string>
-    <string name="respond_intro">നിങ്ങളുമായുള്ള ഒരു തർക്കം തീർക്കാൻ ഒരാൾ Judge-നോട് ആവശ്യപ്പെട്ടു. നിങ്ങളുടെ ഭാഗം പറയൂ; വിധി വരുന്നതുവരെ അവർ അത് കാണില്ല.</string>
     <string name="respond_privacy">ജഡ്ജിമാർ എന്തെങ്കിലും വായിക്കും മുമ്പ് പേരുകൾ കക്ഷി A, കക്ഷി B എന്നാക്കി മാറ്റും. നിങ്ങൾക്ക് അക്കൗണ്ട് വേണ്ട.</string>
     <string name="respond_lang">വിധി എഴുതുന്ന ഭാഷ: %1$s.</string>
     <string name="respond_lang_en">ഇംഗ്ലീഷ്</string>
@@ -477,6 +474,7 @@
     <string name="shell_load_failed">ചരിത്രം ലോഡ് ചെയ്യാനായില്ല.</string>
     <string name="shell_load_more">കൂടുതൽ കാണിക്കൂ</string>
     <string name="shell_untitled">പേരില്ലാത്ത വിധി</string>
+    <string name="shell_case_waiting">മറുപടിക്കായി കാത്തിരിക്കുന്നു</string>
     <string name="history_state_judging">ജഡ്ജിമാർ പരിഗണിക്കുന്നു</string>
     <string name="history_state_rejudging">ജഡ്ജിമാർ വീണ്ടും പരിഗണിക്കുന്നു</string>
     <string name="history_state_failed">പൂർത്തിയായില്ല</string>

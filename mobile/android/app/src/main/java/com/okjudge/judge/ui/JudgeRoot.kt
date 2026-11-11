@@ -292,7 +292,6 @@ fun JudgeRoot(
 
                 // While a link row waits, its sides are read live; leaving the app stops it.
                 val waitingLinks = history.orEmpty().mapNotNull { it.waitingLinkId }.toSet()
-                val waitingLinksNow by rememberUpdatedState(waitingLinks)
                 val live by historyVm.live.collectAsStateWithLifecycle()
                 LaunchedEffect(menuOpen, waitingLinks.isNotEmpty(), historyOn) {
                     if (!menuOpen || waitingLinks.isEmpty() || !historyOn) {
@@ -301,7 +300,7 @@ fun JudgeRoot(
                     }
                     lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                         while (true) {
-                            historyVm.pollLive(waitingLinksNow)
+                            historyVm.pollLive()
                             delay(HistoryViewModel.LIVE_POLL_MS)
                         }
                     }
@@ -617,6 +616,7 @@ fun JudgeRoot(
                                         evidenceOn = (providers as? Account.Providers.Ready)?.config?.features?.evidence == true,
                                         reducedMotion = rememberReducedMotion(),
                                         otherName = key.otherName ?: vm.otherName,
+                                        sideNames = vm.sideNames,
                                         actions = CaseActions(
                                             onBack = if (backStack.size > 1) ({ backStack.removeAt(backStack.lastIndex) }) else null,
                                             onReload = vm::reload,

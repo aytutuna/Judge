@@ -276,8 +276,6 @@
     <string name="mode_sign_in">Sign in to send a link</string>
     <string name="case_create">Create the invite</string>
     <string name="case_creating">Anonymizing your side…</string>
-    <string name="case_kicker">Both sides</string>
-    <string name="case_kicker_one_sided">Your side only</string>
     <string name="case_title">Your case</string>
     <string name="case_loading">Loading the case…</string>
     <string name="case_load_failed">We couldn\'t load this case. Try again in a moment.</string>
@@ -332,7 +330,6 @@
     <string name="case_list_untitled">Case from %1$s</string>
     <string name="case_list_untitled_soon">Case</string>
     <string name="respond_title">Tell your side</string>
-    <string name="respond_intro">Someone asked Judge to settle an argument with you. Tell your side; they won\'t see it until the verdict.</string>
     <string name="respond_privacy">Names are swapped for Party A and Party B before the judges read anything. You don\'t need an account.</string>
     <string name="respond_lang">The verdict will be written in %1$s.</string>
     <string name="respond_lang_en">English</string>
@@ -477,6 +474,7 @@
     <string name="shell_load_failed">We couldn\'t load your history.</string>
     <string name="shell_load_more">Show more</string>
     <string name="shell_untitled">Untitled verdict</string>
+    <string name="shell_case_waiting">Waiting for reply</string>
     <string name="history_state_judging">Judges thinking</string>
     <string name="history_state_rejudging">Judges thinking again</string>
     <string name="history_state_failed">Didn\'t finish</string>

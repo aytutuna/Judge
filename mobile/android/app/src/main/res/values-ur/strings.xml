@@ -276,8 +276,6 @@
     <string name="mode_sign_in">لنک بھیجنے کے لیے سائن ان کریں</string>
     <string name="case_create">دعوتی لنک بنائیں</string>
     <string name="case_creating">آپ کی بات سے نام ہٹا رہے ہیں…</string>
-    <string name="case_kicker">دونوں طرف</string>
-    <string name="case_kicker_one_sided">صرف آپ کی بات</string>
     <string name="case_title">آپ کا کیس</string>
     <string name="case_loading">کیس لوڈ ہو رہا ہے…</string>
     <string name="case_load_failed">یہ کیس لوڈ نہیں ہو سکا۔ تھوڑی دیر میں دوبارہ کوشش کریں۔</string>
@@ -332,7 +330,6 @@
     <string name="case_list_untitled">%1$s کا کیس</string>
     <string name="case_list_untitled_soon">کیس</string>
     <string name="respond_title">اپنی بات بتائیں</string>
-    <string name="respond_intro">کسی نے آپ کے ساتھ اپنی بحث کا فیصلہ Judge پر چھوڑا ہے۔ اپنی بات بتائیں؛ فیصلے تک وہ اسے نہیں دیکھ سکیں گے۔</string>
     <string name="respond_privacy">ججوں کے کچھ بھی پڑھنے سے پہلے ناموں کی جگہ فریق A اور فریق B لکھ دیا جاتا ہے۔ آپ کو اکاؤنٹ کی ضرورت نہیں۔</string>
     <string name="respond_lang">فیصلہ %1$s میں لکھا جائے گا۔</string>
     <string name="respond_lang_en">انگریزی</string>
@@ -477,6 +474,7 @@
     <string name="shell_load_failed">آپ کی ہسٹری لوڈ نہیں ہو سکی۔</string>
     <string name="shell_load_more">مزید دکھائیں</string>
     <string name="shell_untitled">بے عنوان فیصلہ</string>
+    <string name="shell_case_waiting">جواب کا انتظار</string>
     <string name="history_state_judging">جج سوچ رہے ہیں</string>
     <string name="history_state_rejudging">جج دوبارہ سوچ رہے ہیں</string>
     <string name="history_state_failed">مکمل نہیں ہوا</string>

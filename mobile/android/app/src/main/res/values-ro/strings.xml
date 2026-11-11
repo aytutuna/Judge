@@ -283,8 +283,6 @@
     <string name="mode_sign_in">Conectează-te ca să trimiți un link</string>
     <string name="case_create">Creează invitația</string>
     <string name="case_creating">Îți anonimizăm partea…</string>
-    <string name="case_kicker">Ambele părți</string>
-    <string name="case_kicker_one_sided">Doar partea ta</string>
     <string name="case_title">Cazul tău</string>
     <string name="case_loading">Se încarcă cazul…</string>
     <string name="case_load_failed">N-am putut încărca acest caz. Încearcă din nou peste puțin timp.</string>
@@ -339,7 +337,6 @@
     <string name="case_list_untitled">Caz din %1$s</string>
     <string name="case_list_untitled_soon">Caz</string>
     <string name="respond_title">Spune-ți varianta</string>
-    <string name="respond_intro">Cineva vrea ca Judge să lămurească o dispută pe care o are cu tine. Spune-ți varianta; persoana respectivă n-o va vedea până la verdict.</string>
     <string name="respond_privacy">Numele sunt înlocuite cu Partea A și Partea B înainte ca judecătorii să citească ceva. Nu ai nevoie de cont.</string>
     <string name="respond_lang">Verdictul va fi scris în %1$s.</string>
     <string name="respond_lang_en">engleză</string>
@@ -485,6 +482,7 @@
     <string name="shell_load_failed">N-am putut încărca istoricul.</string>
     <string name="shell_load_more">Arată mai multe</string>
     <string name="shell_untitled">Verdict fără titlu</string>
+    <string name="shell_case_waiting">Așteaptă răspuns</string>
     <string name="history_state_judging">Judecătorii se gândesc</string>
     <string name="history_state_rejudging">Judecătorii se gândesc din nou</string>
     <string name="history_state_failed">Neterminat</string>

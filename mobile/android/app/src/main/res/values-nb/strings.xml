@@ -276,8 +276,6 @@
     <string name="mode_sign_in">Logg inn for å sende en lenke</string>
     <string name="case_create">Lag invitasjonen</string>
     <string name="case_creating">Anonymiserer siden din…</string>
-    <string name="case_kicker">Begge sider</string>
-    <string name="case_kicker_one_sided">Bare din side</string>
     <string name="case_title">Saken din</string>
     <string name="case_loading">Laster saken…</string>
     <string name="case_load_failed">Vi fikk ikke lastet denne saken. Prøv igjen om litt.</string>
@@ -332,7 +330,6 @@
     <string name="case_list_untitled">Sak fra %1$s</string>
     <string name="case_list_untitled_soon">Sak</string>
     <string name="respond_title">Fortell din side</string>
-    <string name="respond_intro">Noen har bedt Judge avgjøre en diskusjon med deg. Fortell din side; vedkommende ser den ikke før dommen.</string>
     <string name="respond_privacy">Navn byttes ut med Part A og Part B før dommerne leser noe. Du trenger ikke konto.</string>
     <string name="respond_lang">Dommen blir skrevet på %1$s.</string>
     <string name="respond_lang_en">engelsk</string>
@@ -477,6 +474,7 @@
     <string name="shell_load_failed">Vi fikk ikke lastet historikken din.</string>
     <string name="shell_load_more">Vis flere</string>
     <string name="shell_untitled">Dom uten tittel</string>
+    <string name="shell_case_waiting">Venter på svar</string>
     <string name="history_state_judging">Dommerne tenker</string>
     <string name="history_state_rejudging">Dommerne tenker på nytt</string>
     <string name="history_state_failed">Ble ikke ferdig</string>

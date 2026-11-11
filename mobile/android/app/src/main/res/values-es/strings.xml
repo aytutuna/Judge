@@ -283,8 +283,6 @@
     <string name="mode_sign_in">Inicia sesión para enviar un enlace</string>
     <string name="case_create">Crear la invitación</string>
     <string name="case_creating">Anonimizando tu versión…</string>
-    <string name="case_kicker">Las dos partes</string>
-    <string name="case_kicker_one_sided">Solo tu versión</string>
     <string name="case_title">Tu caso</string>
     <string name="case_loading">Cargando el caso…</string>
     <string name="case_load_failed">No pudimos cargar este caso. Inténtalo de nuevo en un momento.</string>
@@ -339,7 +337,6 @@
     <string name="case_list_untitled">Caso del %1$s</string>
     <string name="case_list_untitled_soon">Caso</string>
     <string name="respond_title">Cuenta tu versión</string>
-    <string name="respond_intro">Alguien ha pedido a Judge que resuelva una discusión contigo. Cuenta tu versión; esa persona no la verá hasta el veredicto.</string>
     <string name="respond_privacy">Los nombres se cambian por Parte A y Parte B antes de que los jueces lean nada. No necesitas una cuenta.</string>
     <string name="respond_lang">El veredicto se escribirá en %1$s.</string>
     <string name="respond_lang_en">inglés</string>
@@ -485,6 +482,7 @@
     <string name="shell_load_failed">No pudimos cargar tu historial.</string>
     <string name="shell_load_more">Mostrar más</string>
     <string name="shell_untitled">Veredicto sin título</string>
+    <string name="shell_case_waiting">Esperando respuesta</string>
     <string name="history_state_judging">Los jueces deliberan</string>
     <string name="history_state_rejudging">Los jueces vuelven a deliberar</string>
     <string name="history_state_failed">No se completó</string>

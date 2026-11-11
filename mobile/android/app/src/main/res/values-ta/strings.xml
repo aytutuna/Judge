@@ -276,8 +276,6 @@
     <string name="mode_sign_in">லிங்க் அனுப்ப உள்நுழையுங்கள்</string>
     <string name="case_create">அழைப்பை உருவாக்கு</string>
     <string name="case_creating">உங்கள் தரப்பில் பெயர்களை மறைக்கிறோம்…</string>
-    <string name="case_kicker">இரு தரப்பும்</string>
-    <string name="case_kicker_one_sided">உங்கள் தரப்பு மட்டும்</string>
     <string name="case_title">உங்கள் வழக்கு</string>
     <string name="case_loading">வழக்கை ஏற்றுகிறோம்…</string>
     <string name="case_load_failed">இந்த வழக்கை ஏற்ற முடியவில்லை. சிறிது நேரத்தில் மீண்டும் முயலுங்கள்.</string>
@@ -332,7 +330,6 @@
     <string name="case_list_untitled">%1$s வழக்கு</string>
     <string name="case_list_untitled_soon">வழக்கு</string>
     <string name="respond_title">உங்கள் தரப்பைச் சொல்லுங்கள்</string>
-    <string name="respond_intro">உங்களுடன் நடந்த ஒரு வாக்குவாதத்தைத் தீர்த்து வைக்க ஒருவர் Judge-இடம் கேட்டிருக்கிறார். உங்கள் தரப்பைச் சொல்லுங்கள்; தீர்ப்பு வரும் வரை அவர் அதைப் பார்க்க மாட்டார்.</string>
     <string name="respond_privacy">நடுவர்கள் எதையும் படிக்கும் முன் பெயர்கள் தரப்பு A, தரப்பு B என மாற்றப்படும். கணக்கு தேவையில்லை.</string>
     <string name="respond_lang">தீர்ப்பின் மொழி: %1$s.</string>
     <string name="respond_lang_en">ஆங்கிலம்</string>
@@ -477,6 +474,7 @@
     <string name="shell_load_failed">உங்கள் வரலாற்றை ஏற்ற முடியவில்லை.</string>
     <string name="shell_load_more">மேலும் காட்டு</string>
     <string name="shell_untitled">தலைப்பில்லாத தீர்ப்பு</string>
+    <string name="shell_case_waiting">பதிலுக்குக் காத்திருக்கிறது</string>
     <string name="history_state_judging">நடுவர்கள் யோசிக்கிறார்கள்</string>
     <string name="history_state_rejudging">நடுவர்கள் மீண்டும் யோசிக்கிறார்கள்</string>
     <string name="history_state_failed">முடிவடையவில்லை</string>

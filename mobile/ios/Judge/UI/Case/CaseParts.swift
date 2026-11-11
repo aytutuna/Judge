@@ -22,9 +22,11 @@ struct InviteLinkView: View {
                 .buttonStyle(InviteButtonStyle())
                 .simultaneousGesture(TapGesture().onEnded { app.analytics.track("share_tapped") })
             }
-            Button(L10n.caseInviteReset(lang), action: onReset)
-                .buttonStyle(LinkButtonStyle())
-                .disabled(resetting)
+            if url != nil {
+                Button(L10n.caseInviteReset(lang), action: onReset)
+                    .buttonStyle(LinkButtonStyle())
+                    .disabled(resetting)
+            }
             if resetDone {
                 Text(L10n.caseInviteResetDone(lang))
                     .brandText(.slotText)
@@ -39,9 +41,13 @@ struct InviteLinkView: View {
 /// (ShareLink needs a tap).
 struct ActivityView: UIViewControllerRepresentable {
     let items: [Any]
+    /// Called when the sheet is dismissed, shared or not.
+    var onFinish: () -> Void = {}
 
     func makeUIViewController(context: Context) -> UIActivityViewController {
-        UIActivityViewController(activityItems: items, applicationActivities: nil)
+        let controller = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        controller.completionWithItemsHandler = { _, _, _, _ in onFinish() }
+        return controller
     }
 
     func updateUIViewController(_ controller: UIActivityViewController, context: Context) {}

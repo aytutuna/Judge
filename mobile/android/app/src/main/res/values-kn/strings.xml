@@ -276,8 +276,6 @@
     <string name="mode_sign_in">ಲಿಂಕ್ ಕಳುಹಿಸಲು ಸೈನ್ ಇನ್ ಮಾಡಿ</string>
     <string name="case_create">ಆಹ್ವಾನ ಲಿಂಕ್ ಮಾಡಿ</string>
     <string name="case_creating">ನಿಮ್ಮ ಮಾತಿನಿಂದ ಹೆಸರುಗಳನ್ನು ತೆಗೆಯುತ್ತಿದ್ದೇವೆ…</string>
-    <string name="case_kicker">ಎರಡೂ ಕಡೆ</string>
-    <string name="case_kicker_one_sided">ನಿಮ್ಮ ಕಡೆ ಮಾತ್ರ</string>
     <string name="case_title">ನಿಮ್ಮ ಕೇಸ್</string>
     <string name="case_loading">ಕೇಸ್ ಲೋಡ್ ಆಗುತ್ತಿದೆ…</string>
     <string name="case_load_failed">ಈ ಕೇಸ್ ಲೋಡ್ ಆಗಲಿಲ್ಲ. ಸ್ವಲ್ಪ ಹೊತ್ತಿನ ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
@@ -332,7 +330,6 @@
     <string name="case_list_untitled">%1$sರ ಕೇಸ್</string>
     <string name="case_list_untitled_soon">ಕೇಸ್</string>
     <string name="respond_title">ನಿಮ್ಮ ಕಡೆಯ ಮಾತು ಹೇಳಿ</string>
-    <string name="respond_intro">ನಿಮ್ಮ ಜೊತೆಗಿನ ಒಂದು ವಾದವನ್ನು ಬಗೆಹರಿಸಲು ಯಾರೋ Judge ಅನ್ನು ಕೇಳಿದ್ದಾರೆ. ನಿಮ್ಮ ಕಡೆಯ ಮಾತು ಹೇಳಿ; ತೀರ್ಪು ಬರುವವರೆಗೂ ಅವರಿಗೆ ಅದು ಕಾಣುವುದಿಲ್ಲ.</string>
     <string name="respond_privacy">ತೀರ್ಪುಗಾರರು ಏನನ್ನಾದರೂ ಓದುವ ಮೊದಲೇ ಹೆಸರುಗಳನ್ನು ಪಕ್ಷ A ಮತ್ತು ಪಕ್ಷ B ಎಂದು ಬದಲಿಸಲಾಗುತ್ತದೆ. ನಿಮಗೆ ಖಾತೆ ಬೇಕಿಲ್ಲ.</string>
     <string name="respond_lang">ತೀರ್ಪಿನ ಭಾಷೆ: %1$s.</string>
     <string name="respond_lang_en">ಇಂಗ್ಲಿಷ್</string>
@@ -477,6 +474,7 @@
     <string name="shell_load_failed">ನಿಮ್ಮ ಇತಿಹಾಸ ಲೋಡ್ ಆಗಲಿಲ್ಲ.</string>
     <string name="shell_load_more">ಇನ್ನಷ್ಟು ತೋರಿಸಿ</string>
     <string name="shell_untitled">ಹೆಸರಿಲ್ಲದ ತೀರ್ಪು</string>
+    <string name="shell_case_waiting">ಉತ್ತರಕ್ಕಾಗಿ ಕಾಯುತ್ತಿದೆ</string>
     <string name="history_state_judging">ತೀರ್ಪುಗಾರರು ಯೋಚಿಸುತ್ತಿದ್ದಾರೆ</string>
     <string name="history_state_rejudging">ತೀರ್ಪುಗಾರರು ಮತ್ತೆ ಯೋಚಿಸುತ್ತಿದ್ದಾರೆ</string>
     <string name="history_state_failed">ಮುಗಿಯಲಿಲ್ಲ</string>

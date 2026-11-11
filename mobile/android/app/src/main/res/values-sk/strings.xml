@@ -290,8 +290,6 @@
     <string name="mode_sign_in">Prihlás sa a pošli odkaz</string>
     <string name="case_create">Vytvoriť pozvánku</string>
     <string name="case_creating">Anonymizujem tvoju verziu…</string>
-    <string name="case_kicker">Obe strany</string>
-    <string name="case_kicker_one_sided">Len tvoja verzia</string>
     <string name="case_title">Tvoj prípad</string>
     <string name="case_loading">Načítavam prípad…</string>
     <string name="case_load_failed">Prípad sa nepodarilo načítať. Skús to o chvíľu.</string>
@@ -346,7 +344,6 @@
     <string name="case_list_untitled">Prípad z %1$s</string>
     <string name="case_list_untitled_soon">Prípad</string>
     <string name="respond_title">Napíš svoju verziu</string>
-    <string name="respond_intro">Niekto chce, aby Judge rozsúdil váš spor. Napíš svoju verziu; ten druhý ju uvidí až pri verdikte.</string>
     <string name="respond_privacy">Mená sa nahradia označeniami Strana A a Strana B skôr, než sudcovia čokoľvek prečítajú. Účet nepotrebuješ.</string>
     <string name="respond_lang">Jazyk verdiktu: %1$s.</string>
     <string name="respond_lang_en">angličtina</string>
@@ -493,6 +490,7 @@
     <string name="shell_load_failed">Históriu sa nepodarilo načítať.</string>
     <string name="shell_load_more">Zobraziť viac</string>
     <string name="shell_untitled">Verdikt bez názvu</string>
+    <string name="shell_case_waiting">Čaká na odpoveď</string>
     <string name="history_state_judging">Sudcovia rozhodujú</string>
     <string name="history_state_rejudging">Sudcovia rozhodujú znova</string>
     <string name="history_state_failed">Nedokončené</string>

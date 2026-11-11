@@ -276,8 +276,6 @@
     <string name="mode_sign_in">लिंक भेजने के लिए साइन इन करें</string>
     <string name="case_create">न्योता बनाएँ</string>
     <string name="case_creating">आपकी बात से नाम हटा रहे हैं…</string>
-    <string name="case_kicker">दोनों पक्ष</string>
-    <string name="case_kicker_one_sided">सिर्फ़ आपकी बात</string>
     <string name="case_title">आपका केस</string>
     <string name="case_loading">केस लोड हो रहा है…</string>
     <string name="case_load_failed">यह केस लोड नहीं हो पाया। थोड़ी देर में फिर कोशिश करें।</string>
@@ -332,7 +330,6 @@
     <string name="case_list_untitled">%1$s का केस</string>
     <string name="case_list_untitled_soon">केस</string>
     <string name="respond_title">अपनी बात बताएँ</string>
-    <string name="respond_intro">किसी ने Judge से आपके साथ अपनी बहस सुलझाने को कहा है। अपनी बात बताएँ; फ़ैसला आने तक वे इसे नहीं देख पाएँगे।</string>
     <string name="respond_privacy">जजों के कुछ भी पढ़ने से पहले नामों की जगह पक्ष A और पक्ष B लिख दिया जाता है। आपको अकाउंट की ज़रूरत नहीं है।</string>
     <string name="respond_lang">फ़ैसला %1$s में लिखा जाएगा।</string>
     <string name="respond_lang_en">अंग्रेज़ी</string>
@@ -477,6 +474,7 @@
     <string name="shell_load_failed">आपका इतिहास लोड नहीं हो पाया।</string>
     <string name="shell_load_more">और दिखाएँ</string>
     <string name="shell_untitled">बिना शीर्षक का फ़ैसला</string>
+    <string name="shell_case_waiting">जवाब का इंतज़ार</string>
     <string name="history_state_judging">जज सोच रहे हैं</string>
     <string name="history_state_rejudging">जज फिर से सोच रहे हैं</string>
     <string name="history_state_failed">पूरा नहीं हुआ</string>

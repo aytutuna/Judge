@@ -269,8 +269,6 @@
     <string name="mode_sign_in">Masuk untuk mengirim tautan</string>
     <string name="case_create">Buat undangan</string>
     <string name="case_creating">Menganonimkan versimu…</string>
-    <string name="case_kicker">Dua pihak</string>
-    <string name="case_kicker_one_sided">Versimu saja</string>
     <string name="case_title">Kasusmu</string>
     <string name="case_loading">Memuat kasus…</string>
     <string name="case_load_failed">Kasus ini gagal dimuat. Coba lagi sebentar lagi.</string>
@@ -325,7 +323,6 @@
     <string name="case_list_untitled">Kasus %1$s</string>
     <string name="case_list_untitled_soon">Kasus</string>
     <string name="respond_title">Ceritakan versimu</string>
-    <string name="respond_intro">Seseorang minta Judge menuntaskan perdebatan denganmu. Ceritakan versimu; dia tidak bisa melihatnya sampai putusan keluar.</string>
     <string name="respond_privacy">Nama diganti dengan Pihak A dan Pihak B sebelum hakim membaca apa pun. Kamu tidak perlu akun.</string>
     <string name="respond_lang">Putusan akan ditulis dalam bahasa %1$s.</string>
     <string name="respond_lang_en">Inggris</string>
@@ -469,6 +466,7 @@
     <string name="shell_load_failed">Riwayatmu gagal dimuat.</string>
     <string name="shell_load_more">Tampilkan lagi</string>
     <string name="shell_untitled">Putusan tanpa judul</string>
+    <string name="shell_case_waiting">Menunggu jawaban</string>
     <string name="history_state_judging">Hakim sedang menimbang</string>
     <string name="history_state_rejudging">Hakim menimbang ulang</string>
     <string name="history_state_failed">Tidak selesai</string>

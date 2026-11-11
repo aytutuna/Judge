@@ -198,9 +198,10 @@ fun CaseScreen(
     reducedMotion: Boolean,
     modifier: Modifier = Modifier,
     otherName: String? = null,
+    sideNames: Map<String, String> = emptyMap(),
 ) {
     CompositionLocalProvider(LocalSides provides Sides.forViewer(state.view?.yourParty, Palette)) {
-        CaseScreenBody(state, evidenceOn, actions, reducedMotion, modifier, otherName)
+        CaseScreenBody(state, evidenceOn, actions, reducedMotion, modifier, otherName, sideNames)
     }
 }
 
@@ -212,13 +213,13 @@ private fun CaseScreenBody(
     reducedMotion: Boolean,
     modifier: Modifier,
     otherName: String?,
+    sideNames: Map<String, String>,
 ) {
     val s = LocalStrings.current
     val view = state.view
     var confirm by rememberSaveable { mutableStateOf<Confirm?>(null) }
     var details by rememberSaveable { mutableStateOf(false) }
     var appealOpen by rememberSaveable { mutableStateOf(false) }
-    val kicker = if (view?.oneSided == true) s.caseKickerOneSided else s.caseKicker
     val current = view?.current?.takeIf { view.status == CaseStatus.JUDGED }
     val area = view?.let(CaseLogic::appealArea) ?: AppealArea.None
     var wasJudging by remember { mutableStateOf(false) }
@@ -252,7 +253,7 @@ private fun CaseScreenBody(
         TopBar(onBack = actions.onBack, backLabel = s.navVerdicts)
         if (view == null) {
             Column(Modifier.fillMaxSize().padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-                Header(kicker, null)
+                Header(null)
                 val message = when (state.status) {
                     CaseLoadStatus.LOADING -> s.caseLoading
                     CaseLoadStatus.MISSING -> s.caseNotFound
@@ -276,7 +277,7 @@ private fun CaseScreenBody(
         val overlay = state.overlay
         if (overlay != null) {
             Column(Modifier.fillMaxSize().padding(horizontal = 20.dp)) {
-                Header(kicker, view.status)
+                Header(view.status)
                 Text(
                     if (view.respondentAnswered) s.caseAnswered else s.caseJudgingAlone,
                     style = JudgeType.body.copy(color = Palette.sageInk),
@@ -312,15 +313,15 @@ private fun CaseScreenBody(
             ) {
                 val theyWrote = view.status == CaseStatus.AWAITING && view.ownerSideMissing && view.respondentAnswered
                 if (view.status == CaseStatus.AWAITING && !theyWrote) {
-                    WaitingHeader(waitingFor)
+                    WaitingHeader(waitingFor, view.isMany)
                 } else {
                     // The owner is who everyone waits for now, not the other side.
-                    Header(kicker, view.status.takeUnless { theyWrote && view.role == "owner" })
+                    Header(view.status.takeUnless { theyWrote && view.role == "owner" })
                 }
                 if (view.removed != null) {
                     Banner(if (state.removedNow) s.caseRemoved else s.caseRemovedBanner)
                 }
-                Body(state, view, waitingFor, evidenceOn, actions, addContext, onDetails = { details = true }, reducedMotion) { confirm = it }
+                Body(state, view, waitingFor, sideNames, evidenceOn, actions, addContext, onDetails = { details = true }, reducedMotion) { confirm = it }
                 if (view.verdicts.isNotEmpty() && view.removed == null) NamesTools(state, view, actions)
                 val bothRead = view.sides.size > 1
                 AccountsRead(
@@ -397,12 +398,12 @@ private fun CaseScreenBody(
 
 /** "Case · waiting" and who for. */
 @Composable
-private fun WaitingHeader(name: String?) {
+private fun WaitingHeader(name: String?, many: Boolean) {
     val s = LocalStrings.current
     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
         Kicker(s.appCaseWaitingKicker, color = Palette.sageInk)
         Text(
-            if (name != null) s.appCaseWaitingFor(name) else s.caseStatusAwaiting,
+            if (many) s.shellCaseWaiting else if (name != null) s.appCaseWaitingFor(name) else s.caseStatusAwaiting,
             style = JudgeType.caseTitle.copy(fontSize = 34.sp, lineHeight = (34 * 1.04).sp),
             modifier = Modifier.semantics { heading() },
         )
@@ -410,10 +411,9 @@ private fun WaitingHeader(name: String?) {
 }
 
 @Composable
-private fun Header(kicker: String, status: CaseStatus?) {
+private fun Header(status: CaseStatus?) {
     val s = LocalStrings.current
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Kicker(kicker)
         Text(
             s.caseTitle,
             style = JudgeType.sectionTitle.copy(fontSize = JudgeType.sectionTitle.fontSize * 1.3f),
@@ -503,6 +503,7 @@ private fun Body(
     state: CaseUiState,
     view: CaseView,
     waitingFor: String?,
+    sideNames: Map<String, String>,
     evidenceOn: Boolean,
     actions: CaseActions,
     onAddContext: (() -> Unit)?,
@@ -514,7 +515,7 @@ private fun Body(
     val lang = LocalLang.current
     when (view.status) {
         CaseStatus.AWAITING -> {
-            view.live.orEmpty().forEach { LiveRow(it) }
+            view.live.orEmpty().forEach { LiveRow(it, sideNames[it.side?.raw]) }
             view.inviteUrl?.let { url ->
                 PrimaryButton(s.caseInviteShare, true, { actions.onShareInvite(url) }, Modifier.fillMaxWidth().testTag(CaseTags.SHARE))
                 TextAction(s.caseInviteReset, { if (!state.busy) ask(Confirm.RESET) }, Modifier.testTag(CaseTags.RESET), color = Palette.ink2)
@@ -594,12 +595,13 @@ private fun Body(
     }
 }
 
-/** One invited side: its letter on its colour and where it stands; the side's name is for screen readers only. */
+/** One invited side: its letter on its colour, the name the owner gave it if any, and where it stands. */
 @Composable
-private fun LiveRow(live: CaseLiveSide) {
+private fun LiveRow(live: CaseLiveSide, typedName: String?) {
     val s = LocalStrings.current
     val side = live.side ?: return
-    val name = PartyNames.label(side, s)
+    val shown = typedName?.trim()?.takeIf { it.isNotEmpty() }
+    val name = shown ?: PartyNames.label(side, s)
     val (label, color) = when (live.liveState) {
         LiveState.WAITING -> s.caseSideWaiting to Palette.muted
         LiveState.OPENED -> s.caseSideOpened to Palette.ink2
@@ -607,11 +609,12 @@ private fun LiveRow(live: CaseLiveSide) {
         LiveState.ANSWERED -> s.caseSideAnswered to Palette.sageInk
     }
     Row(
-        Modifier.fillMaxWidth().semantics(mergeDescendants = true) { contentDescription = name }.testTag(CaseTags.live(side)),
+        Modifier.fillMaxWidth().semantics(mergeDescendants = true) { contentDescription = "$name, $label" }.testTag(CaseTags.live(side)),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         SideAvatar(side)
+        if (shown != null) Text(shown, style = JudgeType.body.copy(fontSize = 15.sp, color = Palette.ink), modifier = Modifier.weight(1f), maxLines = 1)
         Text(label, style = JudgeType.body.copy(fontSize = 15.sp, color = color))
     }
 }

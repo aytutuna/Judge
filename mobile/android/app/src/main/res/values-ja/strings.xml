@@ -269,8 +269,6 @@
     <string name="mode_sign_in">ログインしてリンクを送る</string>
     <string name="case_create">招待を作成</string>
     <string name="case_creating">あなたの言い分を匿名化しています…</string>
-    <string name="case_kicker">両方の言い分</string>
-    <string name="case_kicker_one_sided">あなたの言い分のみ</string>
     <string name="case_title">あなたのケース</string>
     <string name="case_loading">ケースを読み込み中…</string>
     <string name="case_load_failed">このケースを読み込めませんでした。少ししてからもう一度お試しください。</string>
@@ -325,7 +323,6 @@
     <string name="case_list_untitled">%1$sのケース</string>
     <string name="case_list_untitled_soon">ケース</string>
     <string name="respond_title">あなたの言い分を書く</string>
-    <string name="respond_intro">あなたとの揉めごとについて、Judgeに判定が依頼されました。あなたの言い分を書いてください。判定が出るまで、相手には見えません。</string>
     <string name="respond_privacy">審査員が読む前に、名前は当事者Aと当事者Bに置き換えられます。アカウントは必要ありません。</string>
     <string name="respond_lang">判定は%1$sで書かれます。</string>
     <string name="respond_lang_en">英語</string>
@@ -469,6 +466,7 @@
     <string name="shell_load_failed">履歴を読み込めませんでした。</string>
     <string name="shell_load_more">もっと見る</string>
     <string name="shell_untitled">無題の判定</string>
+    <string name="shell_case_waiting">返事待ち</string>
     <string name="history_state_judging">審査員が判定中</string>
     <string name="history_state_rejudging">審査員が再判定中</string>
     <string name="history_state_failed">判定できませんでした</string>

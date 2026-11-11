@@ -276,8 +276,6 @@
     <string name="mode_sign_in">Lépj be a link küldéséhez</string>
     <string name="case_create">Meghívó létrehozása</string>
     <string name="case_creating">Kivesszük a neveket a verziódból…</string>
-    <string name="case_kicker">Mindkét fél</string>
-    <string name="case_kicker_one_sided">Csak a te verziód</string>
     <string name="case_title">Az ügyed</string>
     <string name="case_loading">Ügy betöltése…</string>
     <string name="case_load_failed">Nem sikerült betölteni ezt az ügyet. Próbáld újra egy kicsit később.</string>
@@ -332,7 +330,6 @@
     <string name="case_list_untitled">Ügy · %1$s</string>
     <string name="case_list_untitled_soon">Ügy</string>
     <string name="respond_title">Mondd el a te verziódat</string>
-    <string name="respond_intro">Valaki megkérte a Judge-ot, hogy döntsön el egy vitát köztetek. Mondd el a te verziódat; az ítéletig ő nem fogja látni.</string>
     <string name="respond_privacy">Mielőtt a bírák bármit elolvasnak, a neveket Fél A-ra és Fél B-re cseréljük. Fiók sem kell hozzá.</string>
     <string name="respond_lang">Az ítélet nyelve: %1$s.</string>
     <string name="respond_lang_en">angol</string>
@@ -477,6 +474,7 @@
     <string name="shell_load_failed">Nem sikerült betölteni az előzményeidet.</string>
     <string name="shell_load_more">Továbbiak</string>
     <string name="shell_untitled">Cím nélküli ítélet</string>
+    <string name="shell_case_waiting">Válaszra vár</string>
     <string name="history_state_judging">A bírák mérlegelnek</string>
     <string name="history_state_rejudging">A bírák újra mérlegelnek</string>
     <string name="history_state_failed">Nem fejeződött be</string>

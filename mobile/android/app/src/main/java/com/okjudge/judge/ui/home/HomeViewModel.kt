@@ -409,7 +409,7 @@ class HomeViewModel(
         if (!s.signedIn) return Submitted.SIGN_IN
         if (s.outOfUnits) return Submitted.PRICING
         val tokens = if (s.evidenceOn) s.evidence.tokens else emptyList()
-        val started = flow.createCase(s.argument, lang, tokens, s.shownName, s.otherName, sides = if (s.theirsOpen) 2 + s.more.size else 2)
+        val started = flow.createCase(s.argument, lang, tokens, s.shownName, s.otherName, sides = if (s.theirsOpen) 2 + s.more.size else 2, moreNames = s.more.map { it.name })
         return if (started) Submitted.CREATING else Submitted.NOTHING
     }
 

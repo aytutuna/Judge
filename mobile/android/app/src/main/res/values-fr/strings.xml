@@ -283,8 +283,6 @@
     <string name="mode_sign_in">Connecte-toi pour envoyer un lien</string>
     <string name="case_create">Créer l’invitation</string>
     <string name="case_creating">Anonymisation de ta version…</string>
-    <string name="case_kicker">Les deux camps</string>
-    <string name="case_kicker_one_sided">Ta version seulement</string>
     <string name="case_title">Ton dossier</string>
     <string name="case_loading">Chargement du dossier…</string>
     <string name="case_load_failed">Impossible de charger ce dossier. Réessaie dans un instant.</string>
@@ -339,7 +337,6 @@
     <string name="case_list_untitled">Dossier du %1$s</string>
     <string name="case_list_untitled_soon">Dossier</string>
     <string name="respond_title">Donne ta version</string>
-    <string name="respond_intro">Quelqu’un a demandé à Judge de trancher un débat entre vous deux. Donne ta version ; l’autre ne la verra pas avant le verdict.</string>
     <string name="respond_privacy">Les noms sont remplacés par Partie A et Partie B avant que les juges lisent quoi que ce soit. Pas besoin de compte.</string>
     <string name="respond_lang">Le verdict sera rédigé en %1$s.</string>
     <string name="respond_lang_en">anglais</string>
@@ -485,6 +482,7 @@
     <string name="shell_load_failed">Impossible de charger ton historique.</string>
     <string name="shell_load_more">Afficher plus</string>
     <string name="shell_untitled">Verdict sans titre</string>
+    <string name="shell_case_waiting">En attente de réponse</string>
     <string name="history_state_judging">Les juges réfléchissent</string>
     <string name="history_state_rejudging">Les juges réfléchissent à nouveau</string>
     <string name="history_state_failed">Inachevé</string>

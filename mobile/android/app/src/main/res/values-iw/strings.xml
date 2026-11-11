@@ -283,8 +283,6 @@
     <string name="mode_sign_in">צריך להתחבר כדי לשלוח קישור</string>
     <string name="case_create">יצירת ההזמנה</string>
     <string name="case_creating">מסירים את השמות מהצד שלך…</string>
-    <string name="case_kicker">שני הצדדים</string>
-    <string name="case_kicker_one_sided">רק הצד שלך</string>
     <string name="case_title">התיק שלך</string>
     <string name="case_loading">טוענים את התיק…</string>
     <string name="case_load_failed">לא הצלחנו לטעון את התיק. אפשר לנסות שוב עוד רגע.</string>
@@ -339,7 +337,6 @@
     <string name="case_list_untitled">תיק מ-%1$s</string>
     <string name="case_list_untitled_soon">תיק</string>
     <string name="respond_title">לספר את הצד שלך</string>
-    <string name="respond_intro">מישהו ביקש מ-Judge להכריע בוויכוח איתך. כאן מספרים את הצד שלך, ומי שהזמין אותך לא יראה אותו עד פסק הדין.</string>
     <string name="respond_privacy">השמות מוחלפים בצד A ובצד B לפני שהשופטים קוראים משהו. לא צריך חשבון.</string>
     <string name="respond_lang">שפת פסק הדין: %1$s.</string>
     <string name="respond_lang_en">אנגלית</string>
@@ -485,6 +482,7 @@
     <string name="shell_load_failed">לא הצלחנו לטעון את ההיסטוריה.</string>
     <string name="shell_load_more">להציג עוד</string>
     <string name="shell_untitled">פסק דין בלי כותרת</string>
+    <string name="shell_case_waiting">מחכה לתשובה</string>
     <string name="history_state_judging">השופטים חושבים</string>
     <string name="history_state_rejudging">השופטים חושבים שוב</string>
     <string name="history_state_failed">לא הסתיים</string>

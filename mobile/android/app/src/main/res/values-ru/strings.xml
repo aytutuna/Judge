@@ -290,8 +290,6 @@
     <string name="mode_sign_in">Войдите, чтобы отправить ссылку</string>
     <string name="case_create">Создать приглашение</string>
     <string name="case_creating">Убираем имена из вашей версии…</string>
-    <string name="case_kicker">Обе стороны</string>
-    <string name="case_kicker_one_sided">Только ваша версия</string>
     <string name="case_title">Ваше дело</string>
     <string name="case_loading">Загружаем дело…</string>
     <string name="case_load_failed">Не удалось загрузить дело. Попробуйте чуть позже.</string>
@@ -346,7 +344,6 @@
     <string name="case_list_untitled">Дело от %1$s</string>
     <string name="case_list_untitled_soon">Дело</string>
     <string name="respond_title">Расскажите свою версию</string>
-    <string name="respond_intro">Кто-то попросил Judge рассудить спор с вами. Расскажите свою версию — до вердикта этот человек её не увидит.</string>
     <string name="respond_privacy">Ещё до того, как судьи что-то прочтут, вместо имён появятся «Сторона A» и «Сторона B». Аккаунт не нужен.</string>
     <string name="respond_lang">Язык вердикта: %1$s.</string>
     <string name="respond_lang_en">английский</string>
@@ -493,6 +490,7 @@
     <string name="shell_load_failed">Не удалось загрузить историю.</string>
     <string name="shell_load_more">Показать ещё</string>
     <string name="shell_untitled">Вердикт без названия</string>
+    <string name="shell_case_waiting">Ждём ответа</string>
     <string name="history_state_judging">Судьи думают</string>
     <string name="history_state_rejudging">Судьи снова думают</string>
     <string name="history_state_failed">Не завершено</string>

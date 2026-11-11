@@ -269,8 +269,6 @@
     <string name="mode_sign_in">Đăng nhập để gửi liên kết</string>
     <string name="case_create">Tạo lời mời</string>
     <string name="case_creating">Đang ẩn tên trong lời kể của bạn…</string>
-    <string name="case_kicker">Cả hai bên</string>
-    <string name="case_kicker_one_sided">Chỉ một phía</string>
     <string name="case_title">Vụ của bạn</string>
     <string name="case_loading">Đang tải vụ…</string>
     <string name="case_load_failed">Không tải được vụ này. Thử lại sau giây lát nhé.</string>
@@ -325,7 +323,6 @@
     <string name="case_list_untitled">Vụ ngày %1$s</string>
     <string name="case_list_untitled_soon">Vụ</string>
     <string name="respond_title">Kể phần của bạn</string>
-    <string name="respond_intro">Có người đã nhờ Judge phân xử một cuộc tranh cãi với bạn. Hãy kể phần của bạn; họ sẽ không thấy cho đến khi có phán quyết.</string>
     <string name="respond_privacy">Tên được thay bằng Bên A và Bên B trước khi giám khảo đọc bất cứ điều gì. Bạn không cần tài khoản.</string>
     <string name="respond_lang">Ngôn ngữ của phán quyết: %1$s.</string>
     <string name="respond_lang_en">Tiếng Anh</string>
@@ -469,6 +466,7 @@
     <string name="shell_load_failed">Không tải được lịch sử.</string>
     <string name="shell_load_more">Xem thêm</string>
     <string name="shell_untitled">Phán quyết chưa có tiêu đề</string>
+    <string name="shell_case_waiting">Đang chờ trả lời</string>
     <string name="history_state_judging">Ban giám khảo đang cân nhắc</string>
     <string name="history_state_rejudging">Ban giám khảo đang xét lại</string>
     <string name="history_state_failed">Không phân xử xong</string>

@@ -21,6 +21,7 @@ export const WEB_KEYS: readonly string[] = [
   "shell.loadFailed",
   "shell.loadMore",
   "shell.untitled",
+  "shell.case.waiting",
   // Verdicts list
   "history.*",
   // Judging state

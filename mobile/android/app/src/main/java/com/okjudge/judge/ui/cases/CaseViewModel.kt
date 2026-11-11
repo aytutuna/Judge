@@ -124,6 +124,12 @@ class CaseViewModel(
     /** Opened from History or a link, the case still knows who it waits for. */
     val otherName: String? = names.otherName(caseId)
 
+    /** What the owner called each other side, by party letter. */
+    val sideNames: Map<String, String> = buildMap {
+        otherName?.trim()?.takeIf { it.isNotEmpty() }?.let { put("b", it) }
+        putAll(names.sideNames(caseId))
+    }
+
     val evidence = EvidenceController(viewModelScope, CaseLogic.MAX_EVIDENCE_PER_APPEAL) { api.uploadEvidence(it) }
 
     val sideEvidence = EvidenceController(viewModelScope, MAX_EVIDENCE_PER_SIDE) { api.uploadEvidence(it) }

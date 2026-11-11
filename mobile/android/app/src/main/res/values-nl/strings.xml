@@ -276,8 +276,6 @@
     <string name="mode_sign_in">Log in om een link te sturen</string>
     <string name="case_create">Uitnodiging maken</string>
     <string name="case_creating">Je kant anonimiseren…</string>
-    <string name="case_kicker">Beide kanten</string>
-    <string name="case_kicker_one_sided">Alleen jouw kant</string>
     <string name="case_title">Je zaak</string>
     <string name="case_loading">Zaak laden…</string>
     <string name="case_load_failed">We konden deze zaak niet laden. Probeer het zo nog eens.</string>
@@ -332,7 +330,6 @@
     <string name="case_list_untitled">Zaak van %1$s</string>
     <string name="case_list_untitled_soon">Zaak</string>
     <string name="respond_title">Vertel jouw kant</string>
-    <string name="respond_intro">Iemand heeft Judge gevraagd een discussie met jou te beslechten. Vertel jouw kant; de ander ziet die pas bij de uitspraak.</string>
     <string name="respond_privacy">Namen worden vervangen door Partij A en Partij B voordat de rechters iets lezen. Je hebt geen account nodig.</string>
     <string name="respond_lang">De uitspraak wordt geschreven in het %1$s.</string>
     <string name="respond_lang_en">Engels</string>
@@ -477,6 +474,7 @@
     <string name="shell_load_failed">We konden je geschiedenis niet laden.</string>
     <string name="shell_load_more">Meer tonen</string>
     <string name="shell_untitled">Uitspraak zonder titel</string>
+    <string name="shell_case_waiting">Wacht op antwoord</string>
     <string name="history_state_judging">De rechters denken na</string>
     <string name="history_state_rejudging">De rechters denken opnieuw na</string>
     <string name="history_state_failed">Niet afgerond</string>

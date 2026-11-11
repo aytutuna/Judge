@@ -290,8 +290,6 @@
     <string name="mode_sign_in">Zaloguj się, żeby wysłać link</string>
     <string name="case_create">Utwórz zaproszenie</string>
     <string name="case_creating">Anonimizujemy twoją wersję…</string>
-    <string name="case_kicker">Obie strony</string>
-    <string name="case_kicker_one_sided">Tylko twoja wersja</string>
     <string name="case_title">Twoja sprawa</string>
     <string name="case_loading">Wczytywanie sprawy…</string>
     <string name="case_load_failed">Nie udało się wczytać tej sprawy. Spróbuj za chwilę.</string>
@@ -346,7 +344,6 @@
     <string name="case_list_untitled">Sprawa z %1$s</string>
     <string name="case_list_untitled_soon">Sprawa</string>
     <string name="respond_title">Opowiedz swoją wersję</string>
-    <string name="respond_intro">Ktoś poprosił Judge o rozstrzygnięcie sporu z tobą. Opisz swoją wersję; ta osoba nie zobaczy jej przed werdyktem.</string>
     <string name="respond_privacy">Zanim sędziowie cokolwiek przeczytają, imiona zamieniamy na Stronę A i Stronę B. Nie potrzebujesz konta.</string>
     <string name="respond_lang">Język werdyktu: %1$s.</string>
     <string name="respond_lang_en">angielski</string>
@@ -493,6 +490,7 @@
     <string name="shell_load_failed">Nie udało się wczytać historii.</string>
     <string name="shell_load_more">Pokaż więcej</string>
     <string name="shell_untitled">Werdykt bez tytułu</string>
+    <string name="shell_case_waiting">Czeka na odpowiedź</string>
     <string name="history_state_judging">Sędziowie się naradzają</string>
     <string name="history_state_rejudging">Sędziowie znów się naradzają</string>
     <string name="history_state_failed">Nie dokończono</string>

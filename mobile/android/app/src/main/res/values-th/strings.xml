@@ -269,8 +269,6 @@
     <string name="mode_sign_in">เข้าสู่ระบบเพื่อส่งลิงก์</string>
     <string name="case_create">สร้างคำเชิญ</string>
     <string name="case_creating">กำลังซ่อนชื่อในฝั่งของคุณ…</string>
-    <string name="case_kicker">สองฝั่ง</string>
-    <string name="case_kicker_one_sided">ฝั่งคุณเท่านั้น</string>
     <string name="case_title">เคสของคุณ</string>
     <string name="case_loading">กำลังโหลดเคส…</string>
     <string name="case_load_failed">โหลดเคสนี้ไม่ได้ ลองใหม่อีกสักครู่</string>
@@ -325,7 +323,6 @@
     <string name="case_list_untitled">เคสวันที่ %1$s</string>
     <string name="case_list_untitled_soon">เคส</string>
     <string name="respond_title">เล่าฝั่งของคุณ</string>
-    <string name="respond_intro">มีคนให้ Judge ช่วยตัดสินเรื่องที่เขาเถียงกับคุณ เล่าฝั่งของคุณมาได้เลย เขาจะไม่เห็นจนกว่าจะมีคำตัดสิน</string>
     <string name="respond_privacy">ชื่อจะถูกเปลี่ยนเป็นฝ่าย A และฝ่าย B ก่อนที่กรรมการจะอ่าน ไม่ต้องมีบัญชีก็ได้</string>
     <string name="respond_lang">คำตัดสินจะเขียนเป็นภาษา%1$s</string>
     <string name="respond_lang_en">อังกฤษ</string>
@@ -469,6 +466,7 @@
     <string name="shell_load_failed">โหลดประวัติไม่ได้</string>
     <string name="shell_load_more">ดูเพิ่ม</string>
     <string name="shell_untitled">คำตัดสินไม่มีชื่อ</string>
+    <string name="shell_case_waiting">รอคำตอบ</string>
     <string name="history_state_judging">กรรมการกำลังคิด</string>
     <string name="history_state_rejudging">กรรมการกำลังคิดอีกรอบ</string>
     <string name="history_state_failed">ตัดสินไม่เสร็จ</string>

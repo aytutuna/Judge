@@ -283,8 +283,6 @@
     <string name="mode_sign_in">Prijavi se da pošalješ poveznicu</string>
     <string name="case_create">Napravi poziv</string>
     <string name="case_creating">Anonimiziramo tvoju stranu…</string>
-    <string name="case_kicker">Obje strane</string>
-    <string name="case_kicker_one_sided">Samo tvoja strana</string>
     <string name="case_title">Tvoj slučaj</string>
     <string name="case_loading">Učitavamo slučaj…</string>
     <string name="case_load_failed">Nismo uspjeli učitati ovaj slučaj. Pokušaj ponovno za trenutak.</string>
@@ -339,7 +337,6 @@
     <string name="case_list_untitled">Slučaj od %1$s</string>
     <string name="case_list_untitled_soon">Slučaj</string>
     <string name="respond_title">Ispričaj svoju stranu</string>
-    <string name="respond_intro">Netko želi da Judge presudi u raspravi s tobom. Ispričaj svoju stranu; ta osoba je neće vidjeti do presude.</string>
     <string name="respond_privacy">Prije nego što suci išta pročitaju, imena se zamjenjuju oznakama Strana A i Strana B. Račun ti ne treba.</string>
     <string name="respond_lang">Jezik presude: %1$s.</string>
     <string name="respond_lang_en">engleski</string>
@@ -485,6 +482,7 @@
     <string name="shell_load_failed">Nismo uspjeli učitati tvoju povijest.</string>
     <string name="shell_load_more">Prikaži više</string>
     <string name="shell_untitled">Presuda bez naslova</string>
+    <string name="shell_case_waiting">Čeka odgovor</string>
     <string name="history_state_judging">Suci razmišljaju</string>
     <string name="history_state_rejudging">Suci ponovno razmišljaju</string>
     <string name="history_state_failed">Nije dovršeno</string>

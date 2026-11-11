@@ -276,8 +276,6 @@
     <string name="mode_sign_in">Συνδέσου για να στείλεις σύνδεσμο</string>
     <string name="case_create">Δημιουργία πρόσκλησης</string>
     <string name="case_creating">Ανωνυμοποιούμε την πλευρά σου…</string>
-    <string name="case_kicker">Και οι δύο πλευρές</string>
-    <string name="case_kicker_one_sided">Μόνο η δική σου πλευρά</string>
     <string name="case_title">Η υπόθεσή σου</string>
     <string name="case_loading">Φόρτωση υπόθεσης…</string>
     <string name="case_load_failed">Δεν μπορέσαμε να φορτώσουμε την υπόθεση. Δοκίμασε ξανά σε λίγο.</string>
@@ -332,7 +330,6 @@
     <string name="case_list_untitled">Υπόθεση · %1$s</string>
     <string name="case_list_untitled_soon">Υπόθεση</string>
     <string name="respond_title">Πες τη δική σου πλευρά</string>
-    <string name="respond_intro">Κάποιος ζήτησε από το Judge να λύσει μια διαφωνία που έχει μαζί σου. Πες τη δική σου πλευρά· δεν θα τη δει πριν βγει η απόφαση.</string>
     <string name="respond_privacy">Τα ονόματα γίνονται Πλευρά A και Πλευρά B πριν οι κριτές διαβάσουν οτιδήποτε. Δεν χρειάζεσαι λογαριασμό.</string>
     <string name="respond_lang">Γλώσσα απόφασης: %1$s.</string>
     <string name="respond_lang_en">Αγγλικά</string>
@@ -477,6 +474,7 @@
     <string name="shell_load_failed">Δεν μπορέσαμε να φορτώσουμε το ιστορικό σου.</string>
     <string name="shell_load_more">Περισσότερα</string>
     <string name="shell_untitled">Απόφαση χωρίς τίτλο</string>
+    <string name="shell_case_waiting">Αναμονή απάντησης</string>
     <string name="history_state_judging">Οι κριτές σκέφτονται</string>
     <string name="history_state_rejudging">Οι κριτές σκέφτονται ξανά</string>
     <string name="history_state_failed">Δεν ολοκληρώθηκε</string>

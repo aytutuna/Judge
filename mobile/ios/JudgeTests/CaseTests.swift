@@ -547,7 +547,10 @@ final class CaseTests: XCTestCase {
 
         XCTAssertEqual(app.caseNames.names(caseID: Self.caseID).count, 2, "the name map is kept on the phone")
         XCTAssertEqual(app.account.entitlement?.subscription?.used, 13)
-        XCTAssertEqual(app.makeCaseModel(id: Self.caseID).view?.status, .awaitingRespondent, "the page opens on the created view")
+        XCTAssertEqual(home.shareLink?.url.absoluteString, "https://okjudge.com/r/Xk3pQ9vLm2Rt7YbN4cWd0A", "the one link goes to the share sheet")
+        XCTAssertTrue(home.path.isEmpty, "no case page in between")
+        XCTAssertEqual(app.tab, .new, "the person stays on New")
+        XCTAssertEqual(home.mode, .now, "the form is ready for the next argument")
         XCTAssertTrue(home.argument.isEmpty)
         withExtendedLifetime(container) {}
     }

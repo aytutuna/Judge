@@ -276,8 +276,6 @@
     <string name="mode_sign_in">লিংক পাঠাতে সাইন ইন করুন</string>
     <string name="case_create">আমন্ত্রণ তৈরি করুন</string>
     <string name="case_creating">আপনার বক্তব্য থেকে নাম সরাচ্ছি…</string>
-    <string name="case_kicker">দুই পক্ষ</string>
-    <string name="case_kicker_one_sided">শুধু আপনার বক্তব্য</string>
     <string name="case_title">আপনার মামলা</string>
     <string name="case_loading">মামলা লোড হচ্ছে…</string>
     <string name="case_load_failed">মামলাটা লোড করা গেল না। একটু পরে আবার চেষ্টা করুন।</string>
@@ -332,7 +330,6 @@
     <string name="case_list_untitled">%1$s তারিখের মামলা</string>
     <string name="case_list_untitled_soon">মামলা</string>
     <string name="respond_title">আপনার কথা বলুন</string>
-    <string name="respond_intro">কেউ একজন আপনার সঙ্গে একটা তর্কের ফয়সালা করতে Judge-কে বলেছেন। আপনার কথা বলুন; রায়ের আগে তিনি এটা দেখতে পাবেন না।</string>
     <string name="respond_privacy">বিচারকেরা কিছু পড়ার আগেই নামগুলো বদলে পক্ষ A আর পক্ষ B করা হয়। অ্যাকাউন্ট লাগবে না।</string>
     <string name="respond_lang">রায়ের ভাষা: %1$s।</string>
     <string name="respond_lang_en">ইংরেজি</string>
@@ -477,6 +474,7 @@
     <string name="shell_load_failed">আপনার ইতিহাস লোড করা গেল না।</string>
     <string name="shell_load_more">আরও দেখুন</string>
     <string name="shell_untitled">শিরোনামহীন রায়</string>
+    <string name="shell_case_waiting">উত্তরের অপেক্ষায়</string>
     <string name="history_state_judging">বিচারকেরা ভাবছেন</string>
     <string name="history_state_rejudging">বিচারকেরা আবার ভাবছেন</string>
     <string name="history_state_failed">শেষ হয়নি</string>

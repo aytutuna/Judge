@@ -332,8 +332,6 @@ class Strings(private val res: Resources) {
     val modeSignIn: String get() = res.getString(R.string.mode_sign_in)
     val caseCreate: String get() = res.getString(R.string.case_create)
     val caseCreating: String get() = res.getString(R.string.case_creating)
-    val caseKicker: String get() = res.getString(R.string.case_kicker)
-    val caseKickerOneSided: String get() = res.getString(R.string.case_kicker_one_sided)
     val caseTitle: String get() = res.getString(R.string.case_title)
     val caseLoading: String get() = res.getString(R.string.case_loading)
     val caseLoadFailed: String get() = res.getString(R.string.case_load_failed)
@@ -388,7 +386,6 @@ class Strings(private val res: Resources) {
     fun caseListUntitled(date: String): String = res.getString(R.string.case_list_untitled, date)
     val caseListUntitledSoon: String get() = res.getString(R.string.case_list_untitled_soon)
     val respondTitle: String get() = res.getString(R.string.respond_title)
-    val respondIntro: String get() = res.getString(R.string.respond_intro)
     val respondPrivacy: String get() = res.getString(R.string.respond_privacy)
     fun respondLang(language: String): String = res.getString(R.string.respond_lang, language)
     val respondLangEn: String get() = res.getString(R.string.respond_lang_en)
@@ -530,6 +527,7 @@ class Strings(private val res: Resources) {
     val shellLoadFailed: String get() = res.getString(R.string.shell_load_failed)
     val shellLoadMore: String get() = res.getString(R.string.shell_load_more)
     val shellUntitled: String get() = res.getString(R.string.shell_untitled)
+    val shellCaseWaiting: String get() = res.getString(R.string.shell_case_waiting)
     val historyStateJudging: String get() = res.getString(R.string.history_state_judging)
     val historyStateRejudging: String get() = res.getString(R.string.history_state_rejudging)
     val historyStateFailed: String get() = res.getString(R.string.history_state_failed)
@@ -939,8 +937,6 @@ class Strings(private val res: Resources) {
             "mode.signIn" -> R.string.mode_sign_in
             "case.create" -> R.string.case_create
             "case.creating" -> R.string.case_creating
-            "case.kicker" -> R.string.case_kicker
-            "case.kickerOneSided" -> R.string.case_kicker_one_sided
             "case.title" -> R.string.case_title
             "case.loading" -> R.string.case_loading
             "case.loadFailed" -> R.string.case_load_failed
@@ -991,7 +987,6 @@ class Strings(private val res: Resources) {
             "case.startOver" -> R.string.case_start_over
             "case.list.untitledSoon" -> R.string.case_list_untitled_soon
             "respond.title" -> R.string.respond_title
-            "respond.intro" -> R.string.respond_intro
             "respond.privacy" -> R.string.respond_privacy
             "respond.lang.en" -> R.string.respond_lang_en
             "respond.lang.tr" -> R.string.respond_lang_tr
@@ -1123,6 +1118,7 @@ class Strings(private val res: Resources) {
             "shell.loadFailed" -> R.string.shell_load_failed
             "shell.loadMore" -> R.string.shell_load_more
             "shell.untitled" -> R.string.shell_untitled
+            "shell.case.waiting" -> R.string.shell_case_waiting
             "history.state.judging" -> R.string.history_state_judging
             "history.state.rejudging" -> R.string.history_state_rejudging
             "history.state.failed" -> R.string.history_state_failed

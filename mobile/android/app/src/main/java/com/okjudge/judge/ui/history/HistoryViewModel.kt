@@ -274,14 +274,15 @@ class HistoryViewModel(
     }
 
     /**
-     * GET /api/v1/cases/live once for the open menu's [waiting] link rows. A row that left the list or gained
-     * an answered side has changed state for real: the history is read again.
+     * GET /api/v1/cases/live once for the open menu's link rows. A case that was in the previous response and
+     * left it, or gained an answered side, has changed state for real: the history is read again. A waiting case
+     * that never made the capped list is not a change.
      */
-    suspend fun pollLive(waiting: Set<String>) {
+    suspend fun pollLive() {
         val res = api.liveCases() as? ApiResult.Ok ?: return
         val byId = res.value.cases.associateBy { it.id }
         val answered = byId.mapValues { (_, c) -> c.sides.count { it.liveState == LiveState.ANSWERED } }
-        val changed = waiting.any { it !in byId || answered.getValue(it) > (seenAnswered[it] ?: 0) }
+        val changed = seenAnswered.any { (id, n) -> id !in byId || answered.getValue(id) > n }
         seenAnswered = answered
         _live.value = byId.mapValues { (_, c) -> LiveState.forRow(c.sides) }
         if (changed) refresh(force = true)

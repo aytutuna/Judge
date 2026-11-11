@@ -290,8 +290,6 @@
     <string name="mode_sign_in">Prijavi se in pošlji povezavo</string>
     <string name="case_create">Ustvari povabilo</string>
     <string name="case_creating">Anonimiziramo tvojo plat…</string>
-    <string name="case_kicker">Obe plati</string>
-    <string name="case_kicker_one_sided">Samo tvoja plat</string>
     <string name="case_title">Tvoj spor</string>
     <string name="case_loading">Nalagamo spor…</string>
     <string name="case_load_failed">Tega spora nismo mogli naložiti. Poskusi znova čez trenutek.</string>
@@ -346,7 +344,6 @@
     <string name="case_list_untitled">Spor, %1$s</string>
     <string name="case_list_untitled_soon">Spor</string>
     <string name="respond_title">Povej svojo plat</string>
-    <string name="respond_intro">Nekdo želi, da Judge razsodi vajin prepir. Povej svojo plat; druga oseba je do razsodbe ne bo videla.</string>
     <string name="respond_privacy">Preden sodniki karkoli preberejo, imena zamenjamo z oznakama Stranka A in Stranka B. Računa ne potrebuješ.</string>
     <string name="respond_lang">Jezik razsodbe: %1$s.</string>
     <string name="respond_lang_en">angleščina</string>
@@ -493,6 +490,7 @@
     <string name="shell_load_failed">Zgodovine nismo mogli naložiti.</string>
     <string name="shell_load_more">Pokaži več</string>
     <string name="shell_untitled">Razsodba brez naslova</string>
+    <string name="shell_case_waiting">Čaka na odgovor</string>
     <string name="history_state_judging">Sodniki razmišljajo</string>
     <string name="history_state_rejudging">Sodniki znova razmišljajo</string>
     <string name="history_state_failed">Ni dokončano</string>

@@ -276,8 +276,6 @@
     <string name="mode_sign_in">Logga in för att skicka en länk</string>
     <string name="case_create">Skapa inbjudan</string>
     <string name="case_creating">Anonymiserar din sida…</string>
-    <string name="case_kicker">Båda sidor</string>
-    <string name="case_kicker_one_sided">Bara din sida</string>
     <string name="case_title">Ditt fall</string>
     <string name="case_loading">Laddar fallet…</string>
     <string name="case_load_failed">Vi kunde inte ladda fallet. Försök igen om en stund.</string>
@@ -332,7 +330,6 @@
     <string name="case_list_untitled">Fall från %1$s</string>
     <string name="case_list_untitled_soon">Fall</string>
     <string name="respond_title">Berätta din sida</string>
-    <string name="respond_intro">Någon har bett Judge avgöra ett bråk med dig. Berätta din sida; den andra ser den inte förrän domen är klar.</string>
     <string name="respond_privacy">Namnen byts ut mot Part A och Part B innan domarna läser något. Du behöver inget konto.</string>
     <string name="respond_lang">Domen skrivs på %1$s.</string>
     <string name="respond_lang_en">engelska</string>
@@ -477,6 +474,7 @@
     <string name="shell_load_failed">Vi kunde inte ladda din historik.</string>
     <string name="shell_load_more">Visa fler</string>
     <string name="shell_untitled">Dom utan titel</string>
+    <string name="shell_case_waiting">Väntar på svar</string>
     <string name="history_state_judging">Domarna tänker</string>
     <string name="history_state_rejudging">Domarna omprövar</string>
     <string name="history_state_failed">Blev inte klart</string>

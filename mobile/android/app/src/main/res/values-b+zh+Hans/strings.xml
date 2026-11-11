@@ -269,8 +269,6 @@
     <string name="mode_sign_in">登录后发送链接</string>
     <string name="case_create">生成邀请</string>
     <string name="case_creating">正在匿名处理你的说法……</string>
-    <string name="case_kicker">双方说法</string>
-    <string name="case_kicker_one_sided">仅你一方</string>
     <string name="case_title">你的案子</string>
     <string name="case_loading">正在加载案子……</string>
     <string name="case_load_failed">没能加载这个案子，请稍后再试。</string>
@@ -325,7 +323,6 @@
     <string name="case_list_untitled">%1$s 的案子</string>
     <string name="case_list_untitled_soon">案子</string>
     <string name="respond_title">说说你这边</string>
-    <string name="respond_intro">有人请 Judge 给你们俩评评理。说说你这边的情况；裁决出来之前，对方看不到。</string>
     <string name="respond_privacy">评委读到任何内容之前，名字都会被换成当事人A和当事人B。你不需要账号。</string>
     <string name="respond_lang">裁决将用%1$s撰写。</string>
     <string name="respond_lang_en">英语</string>
@@ -469,6 +466,7 @@
     <string name="shell_load_failed">没能加载历史记录。</string>
     <string name="shell_load_more">显示更多</string>
     <string name="shell_untitled">未命名裁决</string>
+    <string name="shell_case_waiting">等待回复</string>
     <string name="history_state_judging">评委思考中</string>
     <string name="history_state_rejudging">评委重新思考中</string>
     <string name="history_state_failed">未完成</string>

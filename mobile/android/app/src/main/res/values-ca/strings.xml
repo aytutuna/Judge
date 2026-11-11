@@ -283,8 +283,6 @@
     <string name="mode_sign_in">Inicia sessió per enviar un enllaç</string>
     <string name="case_create">Crea la invitació</string>
     <string name="case_creating">Anonimitzant la teva versió…</string>
-    <string name="case_kicker">Totes dues parts</string>
-    <string name="case_kicker_one_sided">Només la teva versió</string>
     <string name="case_title">El teu cas</string>
     <string name="case_loading">Carregant el cas…</string>
     <string name="case_load_failed">No hem pogut carregar aquest cas. Torna-ho a provar d\'aquí a una estona.</string>
@@ -339,7 +337,6 @@
     <string name="case_list_untitled">Cas del dia %1$s</string>
     <string name="case_list_untitled_soon">Cas</string>
     <string name="respond_title">Explica la teva versió</string>
-    <string name="respond_intro">Algú ha demanat a Judge que resolgui una discussió que té amb tu. Explica la teva versió; no la veurà fins al veredicte.</string>
     <string name="respond_privacy">Abans que els jutges llegeixin res, els noms es canvien per Part A i Part B. No et cal cap compte.</string>
     <string name="respond_lang">El veredicte s\'escriurà en %1$s.</string>
     <string name="respond_lang_en">anglès</string>
@@ -485,6 +482,7 @@
     <string name="shell_load_failed">No hem pogut carregar l\'historial.</string>
     <string name="shell_load_more">Mostra\'n més</string>
     <string name="shell_untitled">Veredicte sense títol</string>
+    <string name="shell_case_waiting">Esperant resposta</string>
     <string name="history_state_judging">Els jutges deliberen</string>
     <string name="history_state_rejudging">Els jutges tornen a deliberar</string>
     <string name="history_state_failed">No s\'ha acabat</string>

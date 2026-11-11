@@ -276,8 +276,6 @@
     <string name="mode_sign_in">लिंक पाठवण्यासाठी साइन इन करा</string>
     <string name="case_create">निमंत्रण तयार करा</string>
     <string name="case_creating">तुमची बाजू निनावी करत आहोत…</string>
-    <string name="case_kicker">दोन्ही बाजू</string>
-    <string name="case_kicker_one_sided">फक्त तुमची बाजू</string>
     <string name="case_title">तुमचे प्रकरण</string>
     <string name="case_loading">प्रकरण लोड होत आहे…</string>
     <string name="case_load_failed">हे प्रकरण लोड करता आले नाही. थोड्या वेळाने पुन्हा प्रयत्न करा.</string>
@@ -332,7 +330,6 @@
     <string name="case_list_untitled">%1$s चे प्रकरण</string>
     <string name="case_list_untitled_soon">प्रकरण</string>
     <string name="respond_title">तुमची बाजू सांगा</string>
-    <string name="respond_intro">कोणीतरी तुमच्यासोबतचा वाद सोडवायला Judge ला सांगितले आहे. तुमची बाजू सांगा; निकाल लागेपर्यंत त्यांना ती दिसणार नाही.</string>
     <string name="respond_privacy">परीक्षक काहीही वाचण्याआधी नावांच्या जागी पक्ष A आणि पक्ष B येतात. तुम्हाला खाते लागत नाही.</string>
     <string name="respond_lang">निकाल %1$s भाषेत लिहिला जाईल.</string>
     <string name="respond_lang_en">इंग्रजी</string>
@@ -477,6 +474,7 @@
     <string name="shell_load_failed">तुमचा इतिहास लोड करता आला नाही.</string>
     <string name="shell_load_more">आणखी दाखवा</string>
     <string name="shell_untitled">शीर्षक नसलेला निकाल</string>
+    <string name="shell_case_waiting">उत्तराची वाट</string>
     <string name="history_state_judging">परीक्षक विचार करत आहेत</string>
     <string name="history_state_rejudging">परीक्षक पुन्हा विचार करत आहेत</string>
     <string name="history_state_failed">पूर्ण झाले नाही</string>

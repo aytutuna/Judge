@@ -276,8 +276,6 @@
     <string name="mode_sign_in">Kirjaudu, niin voit lähettää linkin</string>
     <string name="case_create">Luo kutsu</string>
     <string name="case_creating">Anonymisoidaan kertomustasi…</string>
-    <string name="case_kicker">Molemmat puolet</string>
-    <string name="case_kicker_one_sided">Vain sinun puolesi</string>
     <string name="case_title">Juttusi</string>
     <string name="case_loading">Ladataan juttua…</string>
     <string name="case_load_failed">Juttua ei saatu ladattua. Yritä hetken päästä uudelleen.</string>
@@ -332,7 +330,6 @@
     <string name="case_list_untitled">Juttu (%1$s)</string>
     <string name="case_list_untitled_soon">Juttu</string>
     <string name="respond_title">Kerro oma puolesi</string>
-    <string name="respond_intro">Joku pyysi Judgea ratkaisemaan välisenne kiistan. Kerro oma puolesi. Hän ei näe sitä ennen tuomiota.</string>
     <string name="respond_privacy">Nimet vaihdetaan muotoon Osapuoli A ja Osapuoli B ennen kuin tuomarit lukevat mitään. Et tarvitse tiliä.</string>
     <string name="respond_lang">Tuomion kieli: %1$s.</string>
     <string name="respond_lang_en">englanti</string>
@@ -477,6 +474,7 @@
     <string name="shell_load_failed">Historiaa ei saatu ladattua.</string>
     <string name="shell_load_more">Näytä lisää</string>
     <string name="shell_untitled">Nimetön tuomio</string>
+    <string name="shell_case_waiting">Odottaa vastausta</string>
     <string name="history_state_judging">Tuomarit miettivät</string>
     <string name="history_state_rejudging">Tuomarit miettivät uudelleen</string>
     <string name="history_state_failed">Jäi kesken</string>

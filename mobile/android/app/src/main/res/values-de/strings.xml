@@ -276,8 +276,6 @@
     <string name="mode_sign_in">Melde dich an, um einen Link zu schicken</string>
     <string name="case_create">Einladung erstellen</string>
     <string name="case_creating">Deine Seite wird anonymisiert…</string>
-    <string name="case_kicker">Beide Seiten</string>
-    <string name="case_kicker_one_sided">Nur deine Seite</string>
     <string name="case_title">Dein Fall</string>
     <string name="case_loading">Fall wird geladen…</string>
     <string name="case_load_failed">Wir konnten diesen Fall nicht laden. Versuch es gleich noch mal.</string>
@@ -332,7 +330,6 @@
     <string name="case_list_untitled">Fall vom %1$s</string>
     <string name="case_list_untitled_soon">Fall</string>
     <string name="respond_title">Erzähl deine Version</string>
-    <string name="respond_intro">Jemand hat Judge gebeten, einen Streit mit dir zu klären. Erzähl deine Version; die andere Person sieht sie erst mit dem Urteil.</string>
     <string name="respond_privacy">Bevor die Richter etwas lesen, werden Namen durch Partei A und Partei B ersetzt. Du brauchst kein Konto.</string>
     <string name="respond_lang">Das Urteil wird auf %1$s geschrieben.</string>
     <string name="respond_lang_en">Englisch</string>
@@ -477,6 +474,7 @@
     <string name="shell_load_failed">Wir konnten deinen Verlauf nicht laden.</string>
     <string name="shell_load_more">Mehr anzeigen</string>
     <string name="shell_untitled">Urteil ohne Titel</string>
+    <string name="shell_case_waiting">Wartet auf Antwort</string>
     <string name="history_state_judging">Die Richter überlegen</string>
     <string name="history_state_rejudging">Die Richter überlegen noch mal</string>
     <string name="history_state_failed">Nicht fertig geworden</string>

@@ -129,7 +129,7 @@ class CaseScreensTest {
         compose.onNodeWithText(en.caseSideOpened).assertExists()
         compose.onNodeWithText(en.caseSideAnswered).assertExists()
         compose.onNodeWithText(en.caseSideWaiting).assertDoesNotExist()
-        compose.onNodeWithTag(CaseTags.live(Side.B)).assertContentDescriptionEquals(PartyNames.label(Side.B, en))
+        compose.onNodeWithTag(CaseTags.live(Side.B)).assertContentDescriptionEquals("${PartyNames.label(Side.B, en)}, ${en.caseSideTyping}")
         compose.onNodeWithTag(CaseTags.live(Side.C)).assertExists()
         compose.onNodeWithTag(CaseTags.live(Side.D)).assertExists()
         compose.onNodeWithText(en.caseInviteShare).assertExists()

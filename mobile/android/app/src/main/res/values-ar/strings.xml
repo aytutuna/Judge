@@ -304,8 +304,6 @@
     <string name="mode_sign_in">سجّل الدخول لإرسال رابط</string>
     <string name="case_create">إنشاء الدعوة</string>
     <string name="case_creating">نحذف الأسماء من روايتك…</string>
-    <string name="case_kicker">الطرفان</string>
-    <string name="case_kicker_one_sided">روايتك فقط</string>
     <string name="case_title">قضيتك</string>
     <string name="case_loading">جارٍ تحميل القضية…</string>
     <string name="case_load_failed">تعذّر تحميل هذه القضية. حاول مجددًا بعد قليل.</string>
@@ -360,7 +358,6 @@
     <string name="case_list_untitled">قضية بتاريخ %1$s</string>
     <string name="case_list_untitled_soon">قضية</string>
     <string name="respond_title">احكِ روايتك</string>
-    <string name="respond_intro">طلب أحدهم من Judge أن يحسم خلافًا بينكما. احكِ روايتك؛ لن يراها قبل صدور الحكم.</string>
     <string name="respond_privacy">تُستبدل الأسماء بالطرف A والطرف B قبل أن يقرأ القضاة أي شيء. لا تحتاج إلى حساب.</string>
     <string name="respond_lang">سيُكتب الحكم باللغة %1$s.</string>
     <string name="respond_lang_en">الإنجليزية</string>
@@ -509,6 +506,7 @@
     <string name="shell_load_failed">تعذّر تحميل سجلك.</string>
     <string name="shell_load_more">عرض المزيد</string>
     <string name="shell_untitled">حكم بلا عنوان</string>
+    <string name="shell_case_waiting">بانتظار الرد</string>
     <string name="history_state_judging">القضاة يفكرون</string>
     <string name="history_state_rejudging">القضاة يعيدون النظر</string>
     <string name="history_state_failed">لم يكتمل</string>

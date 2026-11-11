@@ -269,8 +269,6 @@
     <string name="mode_sign_in">登入後即可傳送連結</string>
     <string name="case_create">建立邀請</string>
     <string name="case_creating">正在匿名化你的說法…</string>
-    <string name="case_kicker">雙方說法</string>
-    <string name="case_kicker_one_sided">只有你的說法</string>
     <string name="case_title">你的案子</string>
     <string name="case_loading">正在載入案子…</string>
     <string name="case_load_failed">無法載入這個案子，請稍後再試。</string>
@@ -325,7 +323,6 @@
     <string name="case_list_untitled">%1$s 的案子</string>
     <string name="case_list_untitled_soon">案子</string>
     <string name="respond_title">說說你的版本</string>
-    <string name="respond_intro">有人請 Judge 幫你們之間的爭論評評理。寫下你的說法；判決出來前，對方看不到。</string>
     <string name="respond_privacy">評審讀取任何內容前，名字都會先換成當事人A和當事人B。你不需要帳號。</string>
     <string name="respond_lang">判決會以%1$s撰寫。</string>
     <string name="respond_lang_en">英文</string>
@@ -469,6 +466,7 @@
     <string name="shell_load_failed">無法載入你的紀錄。</string>
     <string name="shell_load_more">顯示更多</string>
     <string name="shell_untitled">未命名的判決</string>
+    <string name="shell_case_waiting">等待回覆</string>
     <string name="history_state_judging">評審思考中</string>
     <string name="history_state_rejudging">評審重新思考中</string>
     <string name="history_state_failed">未完成</string>

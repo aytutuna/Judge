@@ -399,8 +399,6 @@ enum L10n {
     static func modeSignIn(_ lang: AppLang) -> String { string("mode.signIn", lang) }
     static func caseCreate(_ lang: AppLang) -> String { string("case.create", lang) }
     static func caseCreating(_ lang: AppLang) -> String { string("case.creating", lang) }
-    static func caseKicker(_ lang: AppLang) -> String { string("case.kicker", lang) }
-    static func caseKickerOneSided(_ lang: AppLang) -> String { string("case.kickerOneSided", lang) }
     static func caseTitle(_ lang: AppLang) -> String { string("case.title", lang) }
     static func caseLoading(_ lang: AppLang) -> String { string("case.loading", lang) }
     static func caseLoadFailed(_ lang: AppLang) -> String { string("case.loadFailed", lang) }
@@ -455,7 +453,6 @@ enum L10n {
     static func caseListUntitled(_ lang: AppLang, date: String) -> String { format("case.list.untitled", lang, date) }
     static func caseListUntitledSoon(_ lang: AppLang) -> String { string("case.list.untitledSoon", lang) }
     static func respondTitle(_ lang: AppLang) -> String { string("respond.title", lang) }
-    static func respondIntro(_ lang: AppLang) -> String { string("respond.intro", lang) }
     static func respondPrivacy(_ lang: AppLang) -> String { string("respond.privacy", lang) }
     static func respondLang(_ lang: AppLang, language: String) -> String { format("respond.lang", lang, language) }
     static func respondLangEn(_ lang: AppLang) -> String { string("respond.lang.en", lang) }
@@ -597,6 +594,7 @@ enum L10n {
     static func shellLoadFailed(_ lang: AppLang) -> String { string("shell.loadFailed", lang) }
     static func shellLoadMore(_ lang: AppLang) -> String { string("shell.loadMore", lang) }
     static func shellUntitled(_ lang: AppLang) -> String { string("shell.untitled", lang) }
+    static func shellCaseWaiting(_ lang: AppLang) -> String { string("shell.case.waiting", lang) }
     static func historyStateJudging(_ lang: AppLang) -> String { string("history.state.judging", lang) }
     static func historyStateRejudging(_ lang: AppLang) -> String { string("history.state.rejudging", lang) }
     static func historyStateFailed(_ lang: AppLang) -> String { string("history.state.failed", lang) }
@@ -1007,8 +1005,6 @@ enum L10n {
         "mode.signIn",
         "case.create",
         "case.creating",
-        "case.kicker",
-        "case.kickerOneSided",
         "case.title",
         "case.loading",
         "case.loadFailed",
@@ -1059,7 +1055,6 @@ enum L10n {
         "case.startOver",
         "case.list.untitledSoon",
         "respond.title",
-        "respond.intro",
         "respond.privacy",
         "respond.lang.en",
         "respond.lang.tr",
@@ -1191,6 +1186,7 @@ enum L10n {
         "shell.loadFailed",
         "shell.loadMore",
         "shell.untitled",
+        "shell.case.waiting",
         "history.state.judging",
         "history.state.rejudging",
         "history.state.failed",

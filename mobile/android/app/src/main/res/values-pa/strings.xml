@@ -276,8 +276,6 @@
     <string name="mode_sign_in">ਲਿੰਕ ਭੇਜਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ</string>
     <string name="case_create">ਸੱਦਾ ਬਣਾਓ</string>
     <string name="case_creating">ਤੁਹਾਡੇ ਪੱਖ ਵਿੱਚੋਂ ਨਾਂ ਕੱਢ ਰਹੇ ਹਾਂ…</string>
-    <string name="case_kicker">ਦੋਵੇਂ ਪੱਖ</string>
-    <string name="case_kicker_one_sided">ਸਿਰਫ਼ ਤੁਹਾਡਾ ਪੱਖ</string>
     <string name="case_title">ਤੁਹਾਡਾ ਕੇਸ</string>
     <string name="case_loading">ਕੇਸ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ…</string>
     <string name="case_load_failed">ਇਹ ਕੇਸ ਲੋਡ ਨਹੀਂ ਹੋ ਸਕਿਆ। ਥੋੜ੍ਹੀ ਦੇਰ ਬਾਅਦ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
@@ -332,7 +330,6 @@
     <string name="case_list_untitled">%1$s ਦਾ ਕੇਸ</string>
     <string name="case_list_untitled_soon">ਕੇਸ</string>
     <string name="respond_title">ਆਪਣਾ ਪੱਖ ਦੱਸੋ</string>
-    <string name="respond_intro">ਕਿਸੇ ਨੇ Judge ਨੂੰ ਤੁਹਾਡੇ ਨਾਲ ਹੋਈ ਬਹਿਸ ਦਾ ਨਿਬੇੜਾ ਕਰਨ ਲਈ ਕਿਹਾ ਹੈ। ਆਪਣਾ ਪੱਖ ਦੱਸੋ; ਫ਼ੈਸਲੇ ਤੱਕ ਉਹ ਇਸ ਨੂੰ ਨਹੀਂ ਦੇਖਣਗੇ।</string>
     <string name="respond_privacy">ਜੱਜਾਂ ਦੇ ਕੁਝ ਵੀ ਪੜ੍ਹਨ ਤੋਂ ਪਹਿਲਾਂ ਨਾਂਵਾਂ ਦੀ ਥਾਂ ਧਿਰ A ਅਤੇ ਧਿਰ B ਲਿਖ ਦਿੱਤਾ ਜਾਂਦਾ ਹੈ। ਤੁਹਾਨੂੰ ਖਾਤੇ ਦੀ ਲੋੜ ਨਹੀਂ।</string>
     <string name="respond_lang">ਫ਼ੈਸਲਾ %1$s ਵਿੱਚ ਲਿਖਿਆ ਜਾਵੇਗਾ।</string>
     <string name="respond_lang_en">ਅੰਗਰੇਜ਼ੀ</string>
@@ -477,6 +474,7 @@
     <string name="shell_load_failed">ਤੁਹਾਡਾ ਇਤਿਹਾਸ ਲੋਡ ਨਹੀਂ ਹੋ ਸਕਿਆ।</string>
     <string name="shell_load_more">ਹੋਰ ਦਿਖਾਓ</string>
     <string name="shell_untitled">ਬਿਨਾਂ ਸਿਰਲੇਖ ਦਾ ਫ਼ੈਸਲਾ</string>
+    <string name="shell_case_waiting">ਜਵਾਬ ਦੀ ਉਡੀਕ</string>
     <string name="history_state_judging">ਜੱਜ ਸੋਚ ਰਹੇ ਹਨ</string>
     <string name="history_state_rejudging">ਜੱਜ ਮੁੜ ਸੋਚ ਰਹੇ ਹਨ</string>
     <string name="history_state_failed">ਪੂਰਾ ਨਹੀਂ ਹੋਇਆ</string>

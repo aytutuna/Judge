@@ -112,7 +112,10 @@ struct HomeView: View {
                 .environment(\.sceneLive, sceneLive)
         }
         .sheet(item: $home.shareLink) { link in
-            ActivityView(items: [L10n.caseInviteShareText(lang), link.url])
+            ActivityView(items: [L10n.caseInviteShareText(lang), link.url]) {
+                home.shareLink = nil
+                app.sheetOpen = false
+            }
                 .presentationDetents([.medium, .large])
                 .ignoresSafeArea()
         }

@@ -276,8 +276,6 @@
     <string name="mode_sign_in">ଲିଙ୍କ୍ ପଠାଇବାକୁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ</string>
     <string name="case_create">ନିମନ୍ତ୍ରଣ ତିଆରି କରନ୍ତୁ</string>
     <string name="case_creating">ଆପଣଙ୍କ କଥାକୁ ନାମହୀନ କରୁଛୁ…</string>
-    <string name="case_kicker">ଦୁଇ ପକ୍ଷ</string>
-    <string name="case_kicker_one_sided">କେବଳ ଆପଣଙ୍କ କଥା</string>
     <string name="case_title">ଆପଣଙ୍କ ମାମଲା</string>
     <string name="case_loading">ମାମଲା ଲୋଡ୍ ହେଉଛି…</string>
     <string name="case_load_failed">ଏହି ମାମଲା ଲୋଡ୍ କରିପାରିଲୁ ନାହିଁ। ଟିକେ ପରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>
@@ -332,7 +330,6 @@
     <string name="case_list_untitled">ମାମଲା, %1$s</string>
     <string name="case_list_untitled_soon">ମାମଲା</string>
     <string name="respond_title">ନିଜ କଥା କୁହନ୍ତୁ</string>
-    <string name="respond_intro">କେହି ଜଣେ ଆପଣଙ୍କ ସହ ହୋଇଥିବା ଏକ ବିବାଦ ମେଣ୍ଟାଇବାକୁ Judgeକୁ କହିଛନ୍ତି। ନିଜ କଥା କୁହନ୍ତୁ; ରାୟ ଆସିବା ଯାଏଁ ସେ ଏହା ଦେଖିପାରିବେ ନାହିଁ।</string>
     <string name="respond_privacy">ବିଚାରକମାନେ କିଛି ପଢ଼ିବା ଆଗରୁ ନାମ ବଦଳରେ ପକ୍ଷ A ଓ ପକ୍ଷ B ବସିଯାଏ। ଆକାଉଣ୍ଟ ଦରକାର ନାହିଁ।</string>
     <string name="respond_lang">ରାୟର ଭାଷା: %1$s।</string>
     <string name="respond_lang_en">ଇଂରାଜୀ</string>
@@ -477,6 +474,7 @@
     <string name="shell_load_failed">ଆପଣଙ୍କ ଇତିହାସ ଲୋଡ୍ କରିପାରିଲୁ ନାହିଁ।</string>
     <string name="shell_load_more">ଆହୁରି ଦେଖାନ୍ତୁ</string>
     <string name="shell_untitled">ଶିରୋନାମା ବିନା ରାୟ</string>
+    <string name="shell_case_waiting">ଉତ୍ତର ଅପେକ୍ଷାରେ</string>
     <string name="history_state_judging">ବିଚାରକମାନେ ଭାବୁଛନ୍ତି</string>
     <string name="history_state_rejudging">ବିଚାରକମାନେ ପୁଣି ଭାବୁଛନ୍ତି</string>
     <string name="history_state_failed">ଶେଷ ହେଲା ନାହିଁ</string>

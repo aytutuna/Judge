@@ -290,8 +290,6 @@
     <string name="mode_sign_in">Pro odeslání odkazu se přihlas</string>
     <string name="case_create">Vytvořit pozvánku</string>
     <string name="case_creating">Anonymizujeme tvůj pohled…</string>
-    <string name="case_kicker">Obě strany</string>
-    <string name="case_kicker_one_sided">Jen tvůj pohled</string>
     <string name="case_title">Tvůj případ</string>
     <string name="case_loading">Načítáme případ…</string>
     <string name="case_load_failed">Případ se nepodařilo načíst. Zkus to za chvilku.</string>
@@ -346,7 +344,6 @@
     <string name="case_list_untitled">Případ z %1$s</string>
     <string name="case_list_untitled_soon">Případ</string>
     <string name="respond_title">Napiš, jak to vidíš ty</string>
-    <string name="respond_intro">Někdo nechává v Judge rozsoudit spor, který s tebou má. Napiš, jak to vidíš ty; uvidí to až s verdiktem.</string>
     <string name="respond_privacy">Než soudci cokoli přečtou, jména se nahradí označeními Strana A a Strana B. Účet nepotřebuješ.</string>
     <string name="respond_lang">Jazyk verdiktu: %1$s.</string>
     <string name="respond_lang_en">angličtina</string>
@@ -493,6 +490,7 @@
     <string name="shell_load_failed">Historii se nepodařilo načíst.</string>
     <string name="shell_load_more">Zobrazit další</string>
     <string name="shell_untitled">Verdikt bez názvu</string>
+    <string name="shell_case_waiting">Čeká na odpověď</string>
     <string name="history_state_judging">Soudci přemýšlejí</string>
     <string name="history_state_rejudging">Soudci přemýšlejí znovu</string>
     <string name="history_state_failed">Nedokončeno</string>
