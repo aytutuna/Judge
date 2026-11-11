@@ -57,6 +57,7 @@
     },
     "win_b_named": {
       "id": "winB000001",
+      "venue": "beach",
       "result": {
         "verdict": "side_b",
         "dispute_type": "definitional",
@@ -1065,7 +1066,8 @@
       "demo": false,
       "lang": "en"
     },
-    "createdAt": "2026-10-20T12:00:00.000Z"
+    "createdAt": "2026-10-20T12:00:00.000Z",
+    "venue": "beach"
   },
   "errorBodies": [
     {
@@ -1995,7 +1997,8 @@
           "b": "Sam"
         },
         "removed": null,
-        "yourOriginal": "stored"
+        "yourOriginal": "stored",
+        "venue": "library"
       },
       "judged_one_sided": {
         "id": "case0000001",
@@ -3483,6 +3486,7 @@
           "id": "case0000002",
           "status": "judged",
           "mode": "two_sided",
+          "venue": "library",
           "createdAt": "2026-10-18T17:30:00.000Z",
           "expiresAt": "2026-10-25T17:30:00.000Z",
           "respondentAnswered": true,
@@ -3857,7 +3861,8 @@
         "kind": "verdict",
         "id": "verdict0021",
         "at": "2026-10-17T19:40:00.000Z",
-        "state": "ready"
+        "state": "ready",
+        "venue": "museum"
       },
       {
         "role": "owner",
@@ -3886,7 +3891,8 @@
         "kind": "case",
         "id": "case0000012",
         "at": "2026-10-16T12:30:00.000Z",
-        "state": "ready"
+        "state": "ready",
+        "venue": "camp"
       },
       {
         "role": "respondent",

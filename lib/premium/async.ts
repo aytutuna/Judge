@@ -11,6 +11,7 @@ import { track } from "@/lib/analytics/track";
 import type { UsageTotals } from "@/lib/claude";
 import type { OriginalPayload } from "@/lib/originals-types";
 import type { Lang } from "@/lib/i18n";
+import type { Venue } from "@/lib/venues";
 import { completeVerdictJob, failVerdictJob, maybeSweepVerdictJobs } from "@/lib/verdict-jobs";
 import { premiumLogLine, runPreparedPipeline, type PreparedPremium, type PremiumRun } from "./run";
 
@@ -20,6 +21,7 @@ export type PremiumJobInput = {
   reservationId: string;
   prepared: PreparedPremium;
   lang: Lang;
+  venue?: Venue | null;
   original: OriginalPayload;
   startedAt: number;
   anonymizeUsage?: UsageTotals;
@@ -57,6 +59,7 @@ export async function runPremiumJob(job: PremiumJobInput): Promise<void> {
         result: outcome.result,
         kind: "premium",
         ownerUserId: job.userId,
+        venue: job.venue,
         original: job.original,
       },
       { ownerToken: null, reservationId: job.reservationId, settle: free ? "refund" : "consume" },

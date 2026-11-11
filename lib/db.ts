@@ -1,6 +1,7 @@
 import { createClient, type Client } from "@libsql/client";
 import type { Lang } from "./i18n";
 import { VerdictResult } from "./types";
+import { parseVenue, type Venue } from "./venues";
 
 /** DATABASE_URL: `file:./dev.db` locally (relative to the working directory),
  * `libsql://<db>.turso.io` + DATABASE_AUTH_TOKEN in production. A bare path
@@ -43,6 +44,15 @@ async function migrate(client: Client): Promise<void> {
     created_at TEXT NOT NULL DEFAULT (datetime('now')),
     PRIMARY KEY (id, lang)
   )`);
+  const info = await client.execute("PRAGMA table_info(verdicts)");
+  if (!info.rows.some((r) => String(r.name) === "venue")) {
+    try {
+      await client.execute("ALTER TABLE verdicts ADD COLUMN venue TEXT");
+    } catch (e) {
+      const message = e instanceof Error ? e.message : String(e);
+      if (!/duplicate column name/i.test(message)) throw e;
+    }
+  }
 }
 
 async function db(): Promise<Client> {
@@ -72,21 +82,25 @@ export type StoredVerdict = {
   input: string;
   result: VerdictResult;
   createdAt: string;
+  /** The scene the court is set in; null for verdicts from before venues. */
+  venue: Venue | null;
 };
 
 export async function saveVerdict(entry: {
   id: string;
   input: string;
   result: VerdictResult;
+  venue?: Venue | null;
 }): Promise<void> {
   const client = await db();
   await client.execute({
-    sql: "INSERT INTO verdicts (id, input, framework, result) VALUES (?, ?, ?, ?)",
+    sql: "INSERT INTO verdicts (id, input, framework, result, venue) VALUES (?, ?, ?, ?, ?)",
     args: [
       entry.id,
       entry.input,
       STORED_FRAMEWORK,
       JSON.stringify(entry.result),
+      entry.venue ?? null,
     ],
   });
 }
@@ -94,7 +108,7 @@ export async function saveVerdict(entry: {
 export async function getVerdict(id: string): Promise<StoredVerdict | null> {
   const client = await db();
   const rs = await client.execute({
-    sql: "SELECT id, input, result, created_at FROM verdicts WHERE id = ?",
+    sql: "SELECT id, input, result, created_at, venue FROM verdicts WHERE id = ?",
     args: [id],
   });
   const row = rs.rows[0];
@@ -106,6 +120,7 @@ export async function getVerdict(id: string): Promise<StoredVerdict | null> {
     input: String(row.input),
     result: parsed.data,
     createdAt: String(row.created_at),
+    venue: parseVenue(row.venue),
   };
 }
 

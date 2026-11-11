@@ -68,6 +68,9 @@ export type HistoryRow = {
   /** Respondent rows: the token of their page, /r/<token>; null when that
    * link no longer opens. */
   inviteToken: string | null;
+  /** The scene the court is set in; null shows the street court. Jobs not yet
+   * stored have none; the app that sent it keeps what it picked. */
+  venue?: string | null;
 };
 
 export type HistoryResponse = { items: HistoryRow[]; next: string | null };

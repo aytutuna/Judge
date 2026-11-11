@@ -10,6 +10,7 @@ import { mapCase, type CaseRow } from "@/lib/cases/db";
 import type { AppealStatus, PartyLetter } from "@/lib/case-types";
 import { getDb } from "@/lib/db";
 import { VerdictResult } from "@/lib/types";
+import { parseVenue, type Venue } from "@/lib/venues";
 import { ensureVerdictJobTables } from "@/lib/verdict-jobs";
 
 /** Rows strictly after the cursor in (at DESC, key DESC) order. */
@@ -45,6 +46,7 @@ export type HistoryVerdictRow = {
   fromRound: boolean;
   round: AppealStatus | null;
   sealed: string | null;
+  venue: Venue | null;
 };
 
 /** Stored one-sided verdicts the user owns, without the verdicts rounds of
@@ -60,7 +62,7 @@ function verdictsQuery(userId: string, limit: number, cursor: Cursor, manySides:
                  ORDER BY a.created_at DESC, a.id DESC LIMIT 1`;
   return {
     sql: `SELECT h.* FROM (
-            SELECT m.verdict_id AS id, m.created_at, m.removed_at, o.sealed,
+            SELECT m.verdict_id AS id, m.created_at, m.removed_at, o.sealed, v.venue,
               COALESCE(j.created_at, m.created_at) AS at, 'v:' || m.verdict_id AS k,
               (SELECT a.id ${shown}) AS shown_round,
               COALESCE((SELECT av.result ${shown}), v.result) AS result,
@@ -88,6 +90,7 @@ function mapVerdict(r: Row): HistoryVerdictRow {
     fromRound: r.shown_round != null,
     round: jobStatus(r.round_status),
     sealed: strOrNull(r.sealed),
+    venue: parseVenue(r.venue),
   };
 }
 

@@ -348,6 +348,8 @@ export const VerdictRequest = z.object({
       }
     })
     .optional(),
+  /** The scene the court is set in (lib/venues); anything not on the list is ignored. */
+  venue: z.unknown().optional(),
 });
 export type VerdictRequest = z.infer<typeof VerdictRequest>;
 
@@ -395,6 +397,8 @@ export const VerdictResponse = z.object({
   display: DisplayStateSchema.optional(),
   /** A first-name suggestion for the writer's own display name (signed in). */
   suggested_display_a: z.string().nullable().optional(),
+  /** The scene the court is set in; absent means the street court. */
+  venue: z.string().nullable().optional(),
 });
 export type VerdictResponse = z.infer<typeof VerdictResponse>;
 
@@ -409,6 +413,8 @@ export type StoredVerdictResponse = {
   id: string;
   result: VerdictResult;
   createdAt: string;
+  /** The scene the court is set in; null or absent means the street court. */
+  venue?: string | null;
   display?: { a: string | null; b: string | null; c?: string | null; d?: string | null; others: Record<string, string> } | null;
   /** A one-sided verdict's added context, oldest first. The verdict of the
    * last judged one is the current ruling. */

@@ -1,0 +1,88 @@
+{
+  "ids": [
+    "court",
+    "beach",
+    "camp",
+    "farm",
+    "ice",
+    "library",
+    "museum",
+    "street",
+    "tv"
+  ],
+  "cases": [
+    {
+      "last": null,
+      "random": 0,
+      "id": "court"
+    },
+    {
+      "last": null,
+      "random": 0.5,
+      "id": "ice"
+    },
+    {
+      "last": null,
+      "random": 0.99999,
+      "id": "tv"
+    },
+    {
+      "last": "court",
+      "random": 0,
+      "id": "beach"
+    },
+    {
+      "last": "court",
+      "random": 0.99999,
+      "id": "tv"
+    },
+    {
+      "last": "beach",
+      "random": 0,
+      "id": "court"
+    },
+    {
+      "last": "beach",
+      "random": 0.12,
+      "id": "court"
+    },
+    {
+      "last": "beach",
+      "random": 0.13,
+      "id": "camp"
+    },
+    {
+      "last": "tv",
+      "random": 0.99999,
+      "id": "street"
+    },
+    {
+      "last": "tv",
+      "random": 0.5,
+      "id": "ice"
+    },
+    {
+      "last": "street",
+      "random": 0.875,
+      "id": "tv"
+    },
+    {
+      "last": "gone",
+      "random": 0,
+      "id": "court"
+    },
+    {
+      "last": "gone",
+      "random": 0.99999,
+      "id": "tv"
+    }
+  ],
+  "single": {
+    "ids": [
+      "court"
+    ],
+    "last": "court",
+    "random": 0,
+    "id": "court"
+  }
+}

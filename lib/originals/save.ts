@@ -21,6 +21,7 @@ import {
   type OriginalPayload,
 } from "@/lib/originals-types";
 import type { VerdictResult } from "@/lib/types";
+import type { Venue } from "@/lib/venues";
 import { aad, newOwnerToken, ownerTokenHash, sealJson } from "./crypto";
 import { ensureOriginalsTables, subjects } from "./db";
 
@@ -75,6 +76,8 @@ export type SaveVerdictInput = {
   ownerUserId: string | null;
   /** Always built; sealed only when a key exists. */
   original: OriginalPayload;
+  /** The scene the court is set in. */
+  venue?: Venue | null;
 };
 
 export type SaveVerdictOutcome = {
@@ -97,12 +100,12 @@ function insert(head: string, values: InValue[], guard?: StatementGuard): InStat
 
 /** The verdict row alone (the fallback when the full batch fails). */
 export function plainVerdictStatement(
-  v: Pick<SaveVerdictInput, "id" | "input" | "result">,
+  v: Pick<SaveVerdictInput, "id" | "input" | "result" | "venue">,
   guard?: StatementGuard,
 ): InStatement {
   return insert(
-    "INSERT INTO verdicts (id, input, framework, result)",
-    [v.id, v.input, STORED_FRAMEWORK, JSON.stringify(v.result)],
+    "INSERT INTO verdicts (id, input, framework, result, venue)",
+    [v.id, v.input, STORED_FRAMEWORK, JSON.stringify(v.result), v.venue ?? null],
     guard,
   );
 }
@@ -193,6 +196,6 @@ export async function saveVerdictWithOriginals(v: SaveVerdictInput): Promise<Sav
   } catch (e) {
     console.error("[originals] meta write failed:", e instanceof Error ? e.message : String(e));
   }
-  await saveVerdict({ id: v.id, input: v.input, result: v.result });
+  await saveVerdict({ id: v.id, input: v.input, result: v.result, venue: v.venue });
   return { ...PLAIN_SAVE_OUTCOME };
 }

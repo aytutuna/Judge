@@ -280,8 +280,9 @@ function verdictRowStatements(
 ): InStatement[] {
   return [
     {
-      sql: `INSERT INTO verdicts (id, input, framework, result) SELECT ?, ?, ?, ? WHERE ${runGuard.sql}`,
-      args: [verdictId, input, STORED_FRAMEWORK, JSON.stringify(result), ...runGuard.args],
+      sql: `INSERT INTO verdicts (id, input, framework, result, venue)
+            SELECT ?, ?, ?, ?, (SELECT venue FROM cases WHERE id = ?) WHERE ${runGuard.sql}`,
+      args: [verdictId, input, STORED_FRAMEWORK, JSON.stringify(result), caseId, ...runGuard.args],
     },
     {
       sql: `INSERT INTO verdict_meta (verdict_id, kind, case_id, names_visible, removed_at, removal_reason, created_at, updated_at)

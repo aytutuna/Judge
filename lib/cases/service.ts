@@ -59,6 +59,7 @@ import {
 } from "./db";
 import { claimMatches, inviteHash, inviteToken, newInviteNonce, respondentClaim } from "./invite";
 import { meteredStep, runAppealJudging, runCaseJudging } from "./judging";
+import type { Venue } from "@/lib/venues";
 import { notifyOwnerSideWaiting } from "./notify";
 import { scheduleJudging } from "./schedule";
 import { effectiveStatus, expireStatements, materializeExpiry } from "./sweep";
@@ -188,6 +189,7 @@ export type CreateCaseInput = {
   displayName?: string | null;
   /** 3 or 4 for a case with that many sides; B, C and D each get a link. */
   sides?: number;
+  venue?: Venue | null;
   now?: Date;
 };
 
@@ -273,8 +275,8 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
       {
         sql: `INSERT INTO cases
                 (id, owner_id, status, mode, tier, framework, lang, invite_nonce, invite_hash, idempotency_key,
-                 reservation_id, expires_at, created_at, updated_at, display_a_sealed, display_key_id, sides)
-              VALUES (?, ?, 'awaiting_respondent', NULL, 'premium', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                 reservation_id, expires_at, created_at, updated_at, display_a_sealed, display_key_id, sides, venue)
+              VALUES (?, ?, 'awaiting_respondent', NULL, 'premium', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
               ON CONFLICT DO NOTHING`,
         args: [
           caseId,
@@ -291,6 +293,7 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
           display?.sealed ?? null,
           display?.kid ?? null,
           count,
+          input.venue ?? null,
         ],
       },
       ...extra.map((e) => ({

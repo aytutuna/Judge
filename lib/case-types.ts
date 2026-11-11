@@ -49,6 +49,8 @@ export const CreateCaseRequest = z
     /** 3 or 4 for a case with that many sides: B, C and D each get their own
      * invite link. Left out (or 2) is the usual case. */
     sides: z.number().int().min(2).max(MAX_CASE_SIDES).optional(),
+    /** The scene the court is set in (lib/venues); anything not on the list is ignored. */
+    venue: z.unknown().optional(),
   })
   .refine((v) => v.text !== undefined || !v.evidence?.length, {
     path: ["evidence"],
@@ -201,6 +203,9 @@ export type CaseView = {
    * hold no unit. */
   tier: Tier;
   lang: Lang;
+  /** The scene the court is set in, chosen when the case was created; null for
+   * cases from before venues, which show the street court. */
+  venue?: string | null;
   createdAt: string;
   expiresAt: string;
   judgedAt: string | null;
@@ -254,6 +259,7 @@ export type CaseSummary = {
   id: string;
   status: CaseStatus;
   mode: CaseMode | null;
+  venue?: string | null;
   createdAt: string;
   expiresAt: string;
   respondentAnswered: boolean;

@@ -105,6 +105,7 @@ import {
   submitAppeal,
   writeOwnerSide,
 } from "./service";
+import { parseVenue } from "@/lib/venues";
 import { effectiveStatus, materializeExpiry, maybeSweepCases } from "./sweep";
 import { buildCaseView, caseSummary, structuralAppealBlock } from "./view";
 
@@ -418,6 +419,7 @@ export function createCaseHandler(req: Request): Promise<NextResponse> {
       lang: parsed.data.lang,
       evidence: ev.items,
       ...(parsed.data.sides && parsed.data.sides > 2 ? { sides: parsed.data.sides } : {}),
+      venue: parseVenue(parsed.data.venue),
       ...(key ? { idempotencyKey: key } : {}),
     });
     if (!res.ok) {

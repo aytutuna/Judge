@@ -67,6 +67,7 @@ function row(over: Partial<CaseRow> = {}): CaseRow {
     displayDSealed: null,
     removedCAt: null,
     removedDAt: null,
+    venue: null,
     ...over,
   };
 }

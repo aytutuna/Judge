@@ -39,6 +39,7 @@ import { firstNameOf } from "@/lib/originals-types";
 import { saveVerdictWithOriginals } from "@/lib/originals/save";
 import { checkPremiumSiteCap, checkUserLimits, type UserBucket } from "@/lib/ratelimit";
 import { ClarifyRequest, type VerdictApiResponse, type VerdictRequest } from "@/lib/types";
+import { parseVenue } from "@/lib/venues";
 import { acceptedHeaders, POLL_AFTER_MS, pollPath, wantsAsync, type VerdictAcceptedResponse } from "@/lib/verdict-poll";
 import { clarifyQuestions } from "./clarify";
 import { idempotencyKey } from "./context";
@@ -169,6 +170,7 @@ async function replay(userId: string, verdictId: string): Promise<NextResponse> 
   const body: VerdictApiResponse = {
     id: stored.id,
     result: stored.result,
+    venue: stored.venue,
     name_map: [],
     replayed: true,
     ...(await storedOwnership(verdictId)),
@@ -330,6 +332,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
         result: outcome.result,
         kind: "premium",
         ownerUserId: userId,
+        venue: parseVenue(data.venue),
         original: {
           v: 1,
           text: rawArgumentOf(rawBody, data.argument),
@@ -366,6 +369,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
     const body: VerdictApiResponse = {
       id,
       result: outcome.result,
+      venue: parseVenue(data.venue),
       name_map: outcome.nameMap,
       originals_stored: saved.originalsStored,
       ...(saved.metaWritten ? { display: saved.display } : {}),
@@ -466,6 +470,7 @@ async function startPremiumJob(p: {
       reservationId: p.reservationId,
       prepared: prepared.prepared,
       lang: data.lang,
+      venue: parseVenue(data.venue),
       original: {
         v: 1,
         text: rawArgumentOf(p.rawBody, data.argument),

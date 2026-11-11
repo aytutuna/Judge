@@ -22,6 +22,7 @@ import { ensureEntitlementTables } from "@/lib/entitlements";
 import type { KnownPerson } from "@/lib/evidence";
 import type { Lang } from "@/lib/i18n";
 import { isLang } from "@/lib/langs";
+import { parseVenue, type Venue } from "@/lib/venues";
 import { VerdictResult, type AppealOutcome, type EvidenceKind, type Tier } from "@/lib/types";
 
 const SCHEMA = [
@@ -184,6 +185,7 @@ const ADDED_COLUMNS: [string, string][] = [
   ["display_d_sealed", "TEXT"],
   ["removed_c_at", "TEXT"],
   ["removed_d_at", "TEXT"],
+  ["venue", "TEXT"],
 ];
 
 async function addCaseColumns(db: Client): Promise<void> {
@@ -282,6 +284,8 @@ export type CaseRow = {
   displayDSealed: string | null;
   removedCAt: string | null;
   removedDAt: string | null;
+  /** The scene the court is set in; null for cases from before venues. */
+  venue: Venue | null;
 };
 
 /** The link and respondent of side C or D. Side B's are in the cases row. */
@@ -390,6 +394,7 @@ export function mapCase(r: Row): CaseRow {
     displayDSealed: strOrNull(r.display_d_sealed),
     removedCAt: strOrNull(r.removed_c_at),
     removedDAt: strOrNull(r.removed_d_at),
+    venue: parseVenue(r.venue),
   };
 }
 

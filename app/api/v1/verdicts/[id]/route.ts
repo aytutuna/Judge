@@ -156,6 +156,7 @@ export async function GET(req: Request, ctx: RouteContext<"/api/v1/verdicts/[id]
     id: stored.id,
     result: stored.result,
     createdAt: stored.createdAt,
+    venue: stored.venue,
     display,
     status: "ready",
     ...(appeals ? { appeals } : {}),

@@ -23,7 +23,7 @@ const m = vi.hoisted(() => ({
   verifyEvidenceTokens: vi.fn(),
   anonymizeSubmission: vi.fn(),
   evidenceBlock: vi.fn(),
-  saved: [] as { ownerUserId: string | null; original: unknown }[],
+  saved: [] as { ownerUserId: string | null; original: unknown; venue?: string | null }[],
 }));
 
 /** Wraps a mock so the call order across modules is recorded. */
@@ -79,6 +79,7 @@ vi.mock("@/lib/originals/save", () => ({
     result: unknown;
     ownerUserId: string | null;
     original: unknown;
+    venue?: string | null;
   }) => {
     await track("save", m.saveVerdict)({ id: v.id, input: v.input, result: v.result });
     m.saved.push(v);
@@ -248,6 +249,19 @@ describe("every verdict is premium", () => {
       expect(json.entitlement).toEqual(ENTITLEMENT);
     }
     expect(m.judgeSelfConsistent).not.toHaveBeenCalled();
+  });
+
+  it("stores and returns the venue it was sent, and ignores one that is not on the list", async () => {
+    const sent = await POST_V1(request(premium({ venue: "beach" }), {}, "http://localhost/api/v1/verdict"));
+    expect((await sent.json()).venue).toBe("beach");
+    expect(m.saved[0]).toMatchObject({ venue: "beach" });
+    for (const venue of ["moon", 7, { a: 1 }, undefined]) {
+      m.saved.length = 0;
+      const res = await POST_V1(request(premium({ venue }), {}, "http://localhost/api/v1/verdict"));
+      expect(res.status).toBe(200);
+      expect((await res.json()).venue).toBeNull();
+      expect(m.saved[0].venue).toBeNull();
+    }
   });
 
   it("tier free signed out is 401 signin_required, never an anonymous verdict", async () => {

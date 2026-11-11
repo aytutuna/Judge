@@ -8,6 +8,8 @@
  *                                                the ending plan for a spread of verdicts (three-
  *                                                and four-sided ones included), and summarize()
  *                                                of every sample
+ *   mobile/shared/fixtures/venue-vectors.json    lib/venues.ts pickVenue: the ids, and the pick for each
+ *                                                (last shown, random) pair
  *   mobile/shared/fixtures/display-vectors.json  expected labels, tug, tilt, waits (pluralWaits
  *                                                in languages with more plural forms), errors,
  *                                                restored names, and `manySided`: the labels,
@@ -53,6 +55,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 import { nextExample } from "../../../lib/example-pick";
+import { VENUES, pickVenue } from "../../../lib/venues";
 import { cruxStyle } from "../../../lib/crux-style";
 import { verdictLang } from "../../../lib/content-lang";
 import { apiErrorMessage, formatWait, loadLocales, t, type Lang } from "../../../lib/i18n";
@@ -99,6 +102,7 @@ const StoredVerdictResponseSchema = z.object({
   id: z.string(),
   result: VerdictResultSchema,
   createdAt: z.string(),
+  venue: z.string().nullable().optional(),
 });
 
 const OUT_DIR = __dirname;
@@ -269,6 +273,7 @@ const SAMPLES: Record<string, { response: VerdictResponse }> = {
   win_b_named: {
     response: {
       id: "winB000001",
+      venue: "beach",
       result: base({ verdict: "side_b", runs: ["side_b", "side_b", "side_b"], confidence: 5 }),
       name_map: [
         { original: "Alex", replacement: "Party A" },
@@ -845,7 +850,7 @@ const CASE_VIEWS: Record<string, CaseView> = {
     names: RESPONDENT_NAMES,
   }),
   judging: caseView({ status: "judging", mode: "two_sided", respondentAnswered: true, pollAfterMs: CASE_POLL_MS }),
-  judged: judgedCase(),
+  judged: judgedCase({ venue: "library" }),
   judged_one_sided: caseView({
     status: "judged",
     mode: "one_sided",
@@ -943,6 +948,7 @@ const CASE_LIST: CaseListResponse = {
       id: "case0000002",
       status: "judged",
       mode: "two_sided",
+      venue: "library",
       createdAt: "2026-10-18T17:30:00.000Z",
       expiresAt: "2026-10-25T17:30:00.000Z",
       respondentAnswered: true,
@@ -1018,6 +1024,7 @@ const HISTORY_ROWS: HistoryRow[] = [
     at: "2026-10-17T19:40:00.000Z",
     state: "ready",
     verdict: "side_a",
+    venue: "museum",
     headline: "Party A is right about the thermostat",
     nameMap: [{ original: "I", replacement: "Party A" }, { original: "Deniz", replacement: "Party B" }],
     removable: true,
@@ -1028,6 +1035,7 @@ const HISTORY_ROWS: HistoryRow[] = [
     at: "2026-10-16T12:30:00.000Z",
     state: "ready",
     verdict: "side_b",
+    venue: "camp",
     contextAdded: true,
     headline: "Party B's dictionary test wins",
     nameMap: OWNER_NAMES,
@@ -1324,6 +1332,29 @@ function exampleVectors() {
   };
 }
 
+function venueVectors() {
+  const cases: { last: string | null; random: number }[] = [
+    { last: null, random: 0 },
+    { last: null, random: 0.5 },
+    { last: null, random: 0.99999 },
+    { last: "court", random: 0 },
+    { last: "court", random: 0.99999 },
+    { last: "beach", random: 0 },
+    { last: "beach", random: 0.12 },
+    { last: "beach", random: 0.13 },
+    { last: "tv", random: 0.99999 },
+    { last: "tv", random: 0.5 },
+    { last: "street", random: 0.875 },
+    { last: "gone", random: 0 },
+    { last: "gone", random: 0.99999 },
+  ];
+  return {
+    ids: [...VENUES],
+    cases: cases.map((c) => ({ ...c, id: pickVenue(VENUES, c.last, () => c.random) })),
+    single: { ids: ["court"], last: "court", random: 0, id: "court" },
+  };
+}
+
 async function main(): Promise<void> {
   // Every language but English loads on demand; without this the Turkish
   // vectors would quietly read English.
@@ -1344,6 +1375,7 @@ async function main(): Promise<void> {
     id: SAMPLES.win_b_named.response.id,
     result: SAMPLES.win_b_named.response.result,
     createdAt: "2026-10-20T12:00:00.000Z",
+    venue: "beach",
   });
   for (const [name, { response }] of Object.entries(MANY_SAMPLES)) {
     const parsed = VerdictResponse.safeParse(response);
@@ -1360,6 +1392,8 @@ async function main(): Promise<void> {
   const files: [string, string][] = [
     [join(OUT_DIR, "verdicts.json"), `${JSON.stringify(verdicts, null, 2)}\n`],
     [join(OUT_DIR, "story-vectors.json"), `${JSON.stringify(storyVectors(), null, 2)}
+`],
+    [join(OUT_DIR, "venue-vectors.json"), `${JSON.stringify(venueVectors(), null, 2)}
 `],
     [join(OUT_DIR, "example-vectors.json"), `${JSON.stringify(exampleVectors(), null, 2)}
 `],

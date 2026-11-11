@@ -91,6 +91,7 @@ function verdictRow(r: HistoryVerdictRow): HistoryRow {
     expiresAt: null,
     removed,
     inviteToken: null,
+    venue: r.venue,
     ...(!removed && r.result?.parties ? { parties: r.result.parties, winner: r.result.winner ?? null } : {}),
   };
 }
@@ -110,6 +111,7 @@ function jobRow(r: HistoryJobRow): HistoryRow {
     expiresAt: null,
     removed: false,
     inviteToken: null,
+    venue: null,
   };
 }
 
@@ -167,6 +169,7 @@ async function caseRow(r: HistoryCaseRow, now: Date): Promise<HistoryRow> {
     expiresAt: derived.state === "waiting" ? r.expiresAt : null,
     removed: r.removedAt !== null,
     inviteToken: token,
+    venue: r.venue,
     ...(many ? { parties: partiesFor(r.sides) } : {}),
     ...(many && r.latestResult?.parties && !ownRemoved ? { winner: r.latestResult.winner ?? null } : {}),
   };
