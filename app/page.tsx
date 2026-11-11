@@ -24,6 +24,7 @@ import { loadExamples } from "@/lib/examples";
 import { apiErrorMessage, t } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { resetScene } from "@/lib/scene-bridge";
+import { freshVenue, parseVenue, type Venue } from "@/lib/venues";
 import { MAX_ARGUMENT, inviteTextOk, joinSides, manySidesOk, type SideInput } from "@/lib/sides";
 import type { Clarification, ClarifyResponse, VerdictApiResponse, VerdictResponse } from "@/lib/types";
 import { applyEntitlement, refreshViewer, useViewer } from "@/lib/use-viewer";
@@ -126,7 +127,9 @@ export default function Home() {
   // One key per exact premium request (input, language, answers): a retry
   // of the same request reuses it, so the server replays or waits instead
   // of charging again. A success or a different request gets a new key.
-  const premiumKey = useRef<{ request: string; key: string } | null>(null);
+  // The scene picked for the request is held with it, so a retry keeps it.
+  const premiumKey = useRef<{ request: string; key: string; venue: Venue } | null>(null);
+  const [venue, setVenue] = useState<Venue>("court");
   // The name the last example wrote, which "New argument" drops but keeps a typed one.
   const exampleName = useRef<string | null>(null);
   // Screenshot evidence and two-sided cases, each only when this deployment
@@ -358,7 +361,7 @@ export default function Home() {
     const held = premiumKey.current;
     if (held?.request === request) return held.key;
     const key = idempotencyKey();
-    premiumKey.current = { request, key };
+    premiumKey.current = { request, key, venue: freshVenue() };
     return key;
   }
 
@@ -370,14 +373,17 @@ export default function Home() {
     setAccepted(false);
     opened.current = false;
     setPhase("judging");
-    const body = JSON.stringify({
+    const request = JSON.stringify({
       argument: input.argument,
       lang,
       ...(clarifications ? { clarifications } : {}),
       ...(input.evidence.length ? { evidence: input.evidence } : {}),
       ...(input.more.length ? { sides: typedSides(input) } : {}),
     });
-    const key = keyFor(body);
+    const key = keyFor(request);
+    const picked = premiumKey.current?.venue ?? "court";
+    setVenue(picked);
+    const body = JSON.stringify({ ...JSON.parse(request), venue: picked });
     const waitUntil = Date.now() + IN_PROGRESS_WAIT_MS;
     try {
       for (;;) {
@@ -442,14 +448,15 @@ export default function Home() {
     setError(null);
     setCreating(true);
     const name = shownMineName.trim();
-    const body = JSON.stringify({
+    const request = JSON.stringify({
       text,
       lang,
       ...(tokens.length ? { evidence: tokens } : {}),
       ...(name ? { displayName: name } : {}),
       ...(theirsOpen ? { sides: 2 + more.length } : {}),
     });
-    const key = keyFor(body);
+    const key = keyFor(request);
+    const body = JSON.stringify({ ...JSON.parse(request), venue: premiumKey.current?.venue });
     try {
       const res = await apiFetch("/api/v1/cases", {
         method: "POST",
@@ -617,6 +624,7 @@ export default function Home() {
               mine={judged.mine}
               theirs={judged.theirs}
               more={judged.more}
+              venue={parseVenue(response?.venue) ?? venue}
               accepted={accepted}
               done={response !== null}
               result={response?.result ?? null}

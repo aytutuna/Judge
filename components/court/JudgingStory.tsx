@@ -36,6 +36,7 @@ export function JudgingStory({
   done,
   result,
   sides = 2,
+  venue,
   onFinished,
 }: {
   lang: Lang;
@@ -45,6 +46,8 @@ export function JudgingStory({
   result: VerdictResult | null;
   /** How many sides the case has (the result's own count once it is in). */
   sides?: number;
+  /** The scene the court is set in (lib/venues). */
+  venue?: string;
   onFinished: () => void;
 }) {
   const reduced = useReducedMotion();
@@ -109,6 +112,7 @@ export function JudgingStory({
           className={styles.stage}
           scene={{
             kind: "judging",
+            venue,
             beat,
             votes: summary?.votes ?? [],
             extra: summary?.extra ?? 0,

@@ -16,6 +16,7 @@ export function JudgingScreen({
   mine,
   theirs,
   more = [],
+  venue,
   accepted = false,
   done,
   result,
@@ -26,6 +27,7 @@ export function JudgingScreen({
   mine: JudgedSide | null;
   theirs: JudgedSide | null;
   more?: readonly JudgedSide[];
+  venue?: string;
   accepted?: boolean;
   done: boolean;
   result: VerdictResult | null;
@@ -64,6 +66,7 @@ export function JudgingScreen({
           done={done}
           result={result}
           sides={2 + more.length}
+          venue={venue}
           onFinished={onFinished}
         />
       </div>

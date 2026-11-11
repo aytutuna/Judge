@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useGame } from "@/lib/game";
+import { freshVenue } from "@/lib/venues";
 import { Court } from "./Court";
 import styles from "./Court.module.css";
 
@@ -11,6 +12,7 @@ export function HomeCourt({ busy, className }: { busy: boolean; className?: stri
   const game = useGame();
   const ref = useRef<HTMLDivElement>(null);
   const [roomy, setRoomy] = useState(false);
+  const [venue] = useState(freshVenue);
 
   useEffect(() => {
     const el = ref.current;
@@ -26,7 +28,7 @@ export function HomeCourt({ busy, className }: { busy: boolean; className?: stri
   if (!game) return null;
   return (
     <div ref={ref} className={className ? `${styles.home} ${className}` : styles.home} aria-hidden>
-      {roomy ? <Court scene={{ kind: "home", busy }} className={styles.fit} /> : null}
+      {roomy ? <Court scene={{ kind: "home", busy, venue }} className={styles.fit} /> : null}
     </div>
   );
 }
