@@ -139,7 +139,9 @@
     <string name="nav_account_menu">Menu akaun</string>
     <string name="nav_sign_out">Log keluar</string>
     <string name="nav_verdicts">Keputusan</string>
+    <string name="nav_links">Pautan</string>
     <string name="nav_tabs">Bahagian</string>
+    <string name="settings_dark_mode">Mod gelap</string>
     <string name="tier_locked_sign_in">(dikunci: log masuk untuk menggunakannya)</string>
     <string name="tier_get_premium">Dapatkan lebih banyak keputusan</string>
     <string name="tier_checking">Menyemak kalau ada yang tertinggal…</string>
@@ -530,18 +532,9 @@
     <string name="app_history_empty">Belum ada keputusan. Selesaikan pertikaian pertama anda dan ia akan muncul di sini.</string>
     <string name="app_history_device_only">Disimpan dalam telefon ini sahaja. Memadam satu keputusan di sini tidak mematikan pautan kongsinya.</string>
     <string name="app_history_delete">Padam</string>
-    <string name="app_history_select">Pilih</string>
-    <string name="app_history_select_all">Pilih semua</string>
-    <string name="app_history_deselect_all">Nyahpilih semua</string>
-    <plurals name="app_history_selected">
-        <item quantity="other">%1$s dipilih</item>
-    </plurals>
-    <string name="app_history_delete_count">Padam (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="other">Padam %1$s keputusan daripada telefon ini? Pautan kongsinya akan terus berfungsi.</item>
     </plurals>
-    <string name="app_history_row_selected">Dipilih</string>
-    <string name="app_history_row_not_selected">Tidak dipilih</string>
     <string name="app_history_phone_only">Dalam telefon ini sahaja</string>
     <string name="app_history_phone_only_note">Tiada dalam akaun anda: keputusan ini disimpan dalam telefon ini sahaja. Memadam satu keputusan di sini tidak mematikan pautan kongsinya.</string>
     <plurals name="app_history_remove_confirm">
@@ -578,9 +571,6 @@
     <string name="app_settings_language">Bahasa</string>
     <string name="app_settings_language_device">Sama seperti telefon</string>
     <string name="app_settings_appearance">Penampilan</string>
-    <string name="app_settings_appearance_system">Sama seperti telefon</string>
-    <string name="app_settings_appearance_light">Cerah</string>
-    <string name="app_settings_appearance_dark">Gelap</string>
     <string name="app_settings_usage_stats">Statistik penggunaan</string>
     <string name="app_settings_usage_stats_hint">Kiraan skrin dan ciri yang digunakan, dipautkan kepada akaun anda semasa log masuk. Teks kes tidak pernah dihantar.</string>
     <string name="app_settings_about">Tentang Judge</string>

@@ -142,7 +142,9 @@
     <string name="nav_account_menu">অ্যাকাউন্ট মেনু</string>
     <string name="nav_sign_out">সাইন আউট</string>
     <string name="nav_verdicts">রায়</string>
+    <string name="nav_links">লিংক</string>
     <string name="nav_tabs">বিভাগ</string>
+    <string name="settings_dark_mode">ডার্ক মোড</string>
     <string name="tier_locked_sign_in">(লক করা: ব্যবহার করতে সাইন ইন করুন)</string>
     <string name="tier_get_premium">আরও রায় নিন</string>
     <string name="tier_checking">কিছু বাদ পড়েছে কি না দেখছি…</string>
@@ -541,20 +543,10 @@
     <string name="app_history_empty">এখনও কোনো রায় নেই। প্রথম তর্কের ফয়সালা করলে সেটা এখানে দেখা যাবে।</string>
     <string name="app_history_device_only">শুধু এই ফোনে সেভ করা আছে। এখান থেকে কোনো রায় মুছলেও তার শেয়ার লিংক বন্ধ হয় না।</string>
     <string name="app_history_delete">মুছুন</string>
-    <string name="app_history_select">বেছে নিন</string>
-    <string name="app_history_select_all">সব বেছে নিন</string>
-    <string name="app_history_deselect_all">বাছাই বাতিল করুন</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$sটি নির্বাচিত</item>
-        <item quantity="other">%1$sটি নির্বাচিত</item>
-    </plurals>
-    <string name="app_history_delete_count">মুছুন (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">এই ফোন থেকে %1$sটি রায় মুছবেন? সেটির শেয়ার লিংক চালু থাকবে।</item>
         <item quantity="other">এই ফোন থেকে %1$sটি রায় মুছবেন? সেগুলোর শেয়ার লিংক চালু থাকবে।</item>
     </plurals>
-    <string name="app_history_row_selected">নির্বাচিত</string>
-    <string name="app_history_row_not_selected">নির্বাচিত নয়</string>
     <string name="app_history_phone_only">শুধু এই ফোনে</string>
     <string name="app_history_phone_only_note">আপনার অ্যাকাউন্টে নেই: এগুলো শুধু এই ফোনে সেভ করা আছে। এখান থেকে কোনো রায় মুছলেও তার শেয়ার লিংক বন্ধ হয় না।</string>
     <plurals name="app_history_remove_confirm">
@@ -595,9 +587,6 @@
     <string name="app_settings_language">ভাষা</string>
     <string name="app_settings_language_device">ফোনের ভাষা</string>
     <string name="app_settings_appearance">থিম</string>
-    <string name="app_settings_appearance_system">ফোনের মতো</string>
-    <string name="app_settings_appearance_light">হালকা</string>
-    <string name="app_settings_appearance_dark">গাঢ়</string>
     <string name="app_settings_usage_stats">ব্যবহারের পরিসংখ্যান</string>
     <string name="app_settings_usage_stats_hint">কোন স্ক্রিন আর ফিচার ব্যবহার হয় তার গণনা, সাইন ইন থাকলে আপনার অ্যাকাউন্টের সঙ্গে যুক্ত। মামলার কোনো লেখা কখনও পাঠানো হয় না।</string>
     <string name="app_settings_about">Judge সম্পর্কে</string>

@@ -148,7 +148,9 @@
     <string name="nav_account_menu">Меню аккаунта</string>
     <string name="nav_sign_out">Выйти</string>
     <string name="nav_verdicts">Вердикты</string>
+    <string name="nav_links">Ссылки</string>
     <string name="nav_tabs">Разделы</string>
+    <string name="settings_dark_mode">Тёмная тема</string>
     <string name="tier_locked_sign_in">(недоступно: войдите, чтобы пользоваться)</string>
     <string name="tier_get_premium">Больше вердиктов</string>
     <string name="tier_checking">Проверяем, всего ли хватает…</string>
@@ -563,24 +565,12 @@
     <string name="app_history_empty">Вердиктов пока нет. Рассудите первый спор — вердикт появится здесь.</string>
     <string name="app_history_device_only">Вердикты хранятся только на этом телефоне. Если удалить вердикт здесь, ссылка на него продолжит работать.</string>
     <string name="app_history_delete">Удалить</string>
-    <string name="app_history_select">Выбрать</string>
-    <string name="app_history_select_all">Выбрать все</string>
-    <string name="app_history_deselect_all">Отменить выбор</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">Выбрано: %1$s</item>
-        <item quantity="few">Выбрано: %1$s</item>
-        <item quantity="many">Выбрано: %1$s</item>
-        <item quantity="other">Выбрано: %1$s</item>
-    </plurals>
-    <string name="app_history_delete_count">Удалить (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Удалить %1$s вердикт с этого телефона? Ссылка на него продолжит работать.</item>
         <item quantity="few">Удалить %1$s вердикта с этого телефона? Ссылки на них продолжат работать.</item>
         <item quantity="many">Удалить %1$s вердиктов с этого телефона? Ссылки на них продолжат работать.</item>
         <item quantity="other">Удалить %1$s вердиктов с этого телефона? Ссылки на них продолжат работать.</item>
     </plurals>
-    <string name="app_history_row_selected">Выбрано</string>
-    <string name="app_history_row_not_selected">Не выбрано</string>
     <string name="app_history_phone_only">Только на этом телефоне</string>
     <string name="app_history_phone_only_note">Их нет в вашем аккаунте: эти вердикты хранятся только на этом телефоне. Если удалить вердикт здесь, ссылка на него продолжит работать.</string>
     <plurals name="app_history_remove_confirm">
@@ -629,9 +619,6 @@
     <string name="app_settings_language">Язык</string>
     <string name="app_settings_language_device">Как на телефоне</string>
     <string name="app_settings_appearance">Оформление</string>
-    <string name="app_settings_appearance_system">Как на телефоне</string>
-    <string name="app_settings_appearance_light">Светлое</string>
-    <string name="app_settings_appearance_dark">Тёмное</string>
     <string name="app_settings_usage_stats">Статистика использования</string>
     <string name="app_settings_usage_stats_hint">Подсчёт того, какие экраны и функции используются, — после входа он привязан к вашему аккаунту. Текст дел никогда не отправляется.</string>
     <string name="app_settings_about">О Judge</string>

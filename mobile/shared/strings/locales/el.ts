@@ -12,15 +12,8 @@ const el: AppLocale = {
     "app.history.deviceOnly":
       "Αποθηκεύονται μόνο σε αυτό το τηλέφωνο. Αν διαγράψεις μια απόφαση από εδώ, ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.",
     "app.history.delete": "Διαγραφή",
-    "app.history.select": "Επιλογή",
-    "app.history.selectAll": "Επιλογή όλων",
-    "app.history.deselectAll": "Αποεπιλογή όλων",
-    "app.history.selected": "Επιλέχθηκαν {n}",
-    "app.history.deleteCount": "Διαγραφή ({count})",
     "app.history.deleteConfirm":
       "Να διαγραφούν {n} αποφάσεις από αυτό το τηλέφωνο; Οι σύνδεσμοι κοινοποίησής τους θα συνεχίσουν να λειτουργούν.",
-    "app.history.rowSelected": "Επιλεγμένη",
-    "app.history.rowNotSelected": "Μη επιλεγμένη",
     "app.history.phoneOnly": "Μόνο σε αυτό το τηλέφωνο",
     "app.history.phoneOnlyNote":
       "Αυτές οι αποφάσεις δεν υπάρχουν στον λογαριασμό σου· είναι αποθηκευμένες μόνο σε αυτό το τηλέφωνο. Αν διαγράψεις μία από εδώ, ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.",
@@ -56,9 +49,6 @@ const el: AppLocale = {
     "app.settings.language": "Γλώσσα",
     "app.settings.languageDevice": "Ίδια με του τηλεφώνου",
     "app.settings.appearance": "Εμφάνιση",
-    "app.settings.appearanceSystem": "Ίδια με του τηλεφώνου",
-    "app.settings.appearanceLight": "Ανοιχτή",
-    "app.settings.appearanceDark": "Σκούρα",
     "app.settings.usageStats": "Στατιστικά χρήσης",
     "app.settings.usageStatsHint":
       "Μετρήσεις για το ποιες οθόνες και λειτουργίες χρησιμοποιούνται, συνδεδεμένες με τον λογαριασμό σου όταν έχεις συνδεθεί. Κείμενο από υποθέσεις δεν στέλνεται ποτέ.",
@@ -163,7 +153,6 @@ const el: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Σου έμεινε {n} απόφαση" },
-    "app.history.selected": { one: "Επιλέχθηκε {n}" },
     "app.history.deleteConfirm": {
       one: "Να διαγραφεί η απόφαση από αυτό το τηλέφωνο; Ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.",
     },

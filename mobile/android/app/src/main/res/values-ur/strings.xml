@@ -142,7 +142,9 @@
     <string name="nav_account_menu">اکاؤنٹ مینو</string>
     <string name="nav_sign_out">سائن آؤٹ</string>
     <string name="nav_verdicts">فیصلے</string>
+    <string name="nav_links">لنکس</string>
     <string name="nav_tabs">حصے</string>
+    <string name="settings_dark_mode">ڈارک موڈ</string>
     <string name="tier_locked_sign_in">(بند ہے: استعمال کے لیے سائن ان کریں)</string>
     <string name="tier_get_premium">مزید فیصلے لیں</string>
     <string name="tier_checking">دیکھ رہے ہیں کہ کچھ رہ تو نہیں گیا…</string>
@@ -541,20 +543,10 @@
     <string name="app_history_empty">ابھی کوئی فیصلہ نہیں۔ اپنی پہلی بحث کا فیصلہ کروائیں تو وہ یہاں نظر آئے گا۔</string>
     <string name="app_history_device_only">یہ فیصلے صرف اسی فون پر محفوظ ہیں۔ یہاں سے کوئی فیصلہ حذف کرنے سے اس کا شیئر لنک بند نہیں ہوتا۔</string>
     <string name="app_history_delete">حذف کریں</string>
-    <string name="app_history_select">منتخب کریں</string>
-    <string name="app_history_select_all">سب منتخب کریں</string>
-    <string name="app_history_deselect_all">سب غیر منتخب کریں</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s فیصلہ منتخب</item>
-        <item quantity="other">%1$s فیصلے منتخب</item>
-    </plurals>
-    <string name="app_history_delete_count">حذف کریں (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">یہ فیصلہ اس فون سے حذف کریں؟ اس کا شیئر لنک کام کرتا رہے گا۔</item>
         <item quantity="other">اس فون سے %1$s فیصلے حذف کریں؟ ان کے شیئر لنکس کام کرتے رہیں گے۔</item>
     </plurals>
-    <string name="app_history_row_selected">منتخب</string>
-    <string name="app_history_row_not_selected">غیر منتخب</string>
     <string name="app_history_phone_only">صرف اسی فون پر</string>
     <string name="app_history_phone_only_note">یہ فیصلے آپ کے اکاؤنٹ میں نہیں، صرف اسی فون پر محفوظ ہیں۔ یہاں سے کوئی فیصلہ حذف کرنے سے اس کا شیئر لنک بند نہیں ہوتا۔</string>
     <plurals name="app_history_remove_confirm">
@@ -595,9 +587,6 @@
     <string name="app_settings_language">زبان</string>
     <string name="app_settings_language_device">فون کے مطابق</string>
     <string name="app_settings_appearance">ظاہری شکل</string>
-    <string name="app_settings_appearance_system">فون کے مطابق</string>
-    <string name="app_settings_appearance_light">ہلکا</string>
-    <string name="app_settings_appearance_dark">گہرا</string>
     <string name="app_settings_usage_stats">استعمال کے اعداد و شمار</string>
     <string name="app_settings_usage_stats_hint">کون سی اسکرینیں اور فیچرز استعمال ہوتے ہیں، اس کی گنتی، سائن ان ہونے پر آپ کے اکاؤنٹ سے منسلک۔ کیس کا کوئی متن کبھی نہیں بھیجا جاتا۔</string>
     <string name="app_settings_about">Judge کا تعارف</string>

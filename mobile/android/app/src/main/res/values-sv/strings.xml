@@ -142,7 +142,9 @@
     <string name="nav_account_menu">Kontomeny</string>
     <string name="nav_sign_out">Logga ut</string>
     <string name="nav_verdicts">Domar</string>
+    <string name="nav_links">Länkar</string>
     <string name="nav_tabs">Avsnitt</string>
+    <string name="settings_dark_mode">Mörkt läge</string>
     <string name="tier_locked_sign_in">(låst: logga in för att använda)</string>
     <string name="tier_get_premium">Skaffa fler domar</string>
     <string name="tier_checking">Kollar om något saknas…</string>
@@ -541,20 +543,10 @@
     <string name="app_history_empty">Inga domar än. Avgör ditt första bråk så dyker domen upp här.</string>
     <string name="app_history_device_only">Sparas bara på den här telefonen. Tar du bort en dom här fortsätter delningslänken att fungera.</string>
     <string name="app_history_delete">Ta bort</string>
-    <string name="app_history_select">Välj</string>
-    <string name="app_history_select_all">Markera alla</string>
-    <string name="app_history_deselect_all">Avmarkera alla</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s markerad</item>
-        <item quantity="other">%1$s markerade</item>
-    </plurals>
-    <string name="app_history_delete_count">Ta bort (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Ta bort domen från den här telefonen? Delningslänken fortsätter att fungera.</item>
         <item quantity="other">Ta bort %1$s domar från den här telefonen? Delningslänkarna fortsätter att fungera.</item>
     </plurals>
-    <string name="app_history_row_selected">Markerad</string>
-    <string name="app_history_row_not_selected">Inte markerad</string>
     <string name="app_history_phone_only">Bara på den här telefonen</string>
     <string name="app_history_phone_only_note">Inte i ditt konto: de här sparas bara på den här telefonen. Tar du bort en dom här fortsätter delningslänken att fungera.</string>
     <plurals name="app_history_remove_confirm">
@@ -595,9 +587,6 @@
     <string name="app_settings_language">Språk</string>
     <string name="app_settings_language_device">Samma som telefonen</string>
     <string name="app_settings_appearance">Utseende</string>
-    <string name="app_settings_appearance_system">Samma som telefonen</string>
-    <string name="app_settings_appearance_light">Ljust</string>
-    <string name="app_settings_appearance_dark">Mörkt</string>
     <string name="app_settings_usage_stats">Användningsstatistik</string>
     <string name="app_settings_usage_stats_hint">Räkningar av vilka skärmar och funktioner som används, kopplade till ditt konto när du är inloggad. Text från fall skickas aldrig.</string>
     <string name="app_settings_about">Om Judge</string>

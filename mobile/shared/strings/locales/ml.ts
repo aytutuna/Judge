@@ -11,15 +11,8 @@ const ml: AppLocale = {
     "app.history.deviceOnly":
       "ഈ ഫോണിൽ മാത്രമാണ് സേവ് ചെയ്തിരിക്കുന്നത്. ഇവിടെനിന്ന് ഒരു വിധി ഡിലീറ്റ് ചെയ്താലും അതിന്റെ ഷെയർ ലിങ്ക് തുടർന്നും പ്രവർത്തിക്കും.",
     "app.history.delete": "ഡിലീറ്റ്",
-    "app.history.select": "തിരഞ്ഞെടുക്കൂ",
-    "app.history.selectAll": "എല്ലാം തിരഞ്ഞെടുക്കൂ",
-    "app.history.deselectAll": "എല്ലാം തിരഞ്ഞെടുത്തത് മാറ്റൂ",
-    "app.history.selected": "{n} എണ്ണം തിരഞ്ഞെടുത്തു",
-    "app.history.deleteCount": "ഡിലീറ്റ് ({count})",
     "app.history.deleteConfirm":
       "ഈ ഫോണിൽനിന്ന് {n} വിധികൾ ഡിലീറ്റ് ചെയ്യണോ? അവയുടെ ഷെയർ ലിങ്കുകൾ തുടർന്നും പ്രവർത്തിക്കും.",
-    "app.history.rowSelected": "തിരഞ്ഞെടുത്തു",
-    "app.history.rowNotSelected": "തിരഞ്ഞെടുത്തിട്ടില്ല",
     "app.history.phoneOnly": "ഈ ഫോണിൽ മാത്രം",
     "app.history.phoneOnlyNote":
       "നിങ്ങളുടെ അക്കൗണ്ടിലില്ല: ഇവ ഈ ഫോണിൽ മാത്രമാണ് സേവ് ചെയ്തിരിക്കുന്നത്. ഇവിടെനിന്ന് ഒരു വിധി ഡിലീറ്റ് ചെയ്താലും അതിന്റെ ഷെയർ ലിങ്ക് തുടർന്നും പ്രവർത്തിക്കും.",
@@ -54,9 +47,6 @@ const ml: AppLocale = {
     "app.settings.language": "ഭാഷ",
     "app.settings.languageDevice": "ഫോണിലെ ഭാഷ തന്നെ",
     "app.settings.appearance": "തീം",
-    "app.settings.appearanceSystem": "ഫോണിലേതു പോലെ",
-    "app.settings.appearanceLight": "ലൈറ്റ്",
-    "app.settings.appearanceDark": "ഡാർക്ക്",
     "app.settings.usageStats": "ഉപയോഗ സ്ഥിതിവിവരക്കണക്കുകൾ",
     "app.settings.usageStatsHint":
       "ഏതൊക്കെ സ്ക്രീനുകളും ഫീച്ചറുകളും ഉപയോഗിക്കുന്നു എന്നതിന്റെ എണ്ണം, സൈൻ ഇൻ ചെയ്തിരിക്കുമ്പോൾ നിങ്ങളുടെ അക്കൗണ്ടുമായി ബന്ധിപ്പിക്കും. കേസിലെ ഒരു വാചകവും ഒരിക്കലും അയയ്ക്കില്ല.",
@@ -161,7 +151,6 @@ const ml: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} വിധി ബാക്കി" },
-    "app.history.selected": { one: "{n} എണ്ണം തിരഞ്ഞെടുത്തു" },
     "app.history.deleteConfirm": {
       one: "ഈ വിധി ഈ ഫോണിൽനിന്ന് ഡിലീറ്റ് ചെയ്യണോ? അതിന്റെ ഷെയർ ലിങ്ക് തുടർന്നും പ്രവർത്തിക്കും.",
     },

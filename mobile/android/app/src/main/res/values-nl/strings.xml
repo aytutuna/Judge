@@ -142,7 +142,9 @@
     <string name="nav_account_menu">Accountmenu</string>
     <string name="nav_sign_out">Uitloggen</string>
     <string name="nav_verdicts">Uitspraken</string>
+    <string name="nav_links">Links</string>
     <string name="nav_tabs">Onderdelen</string>
+    <string name="settings_dark_mode">Donkere modus</string>
     <string name="tier_locked_sign_in">(op slot: log in om het te gebruiken)</string>
     <string name="tier_get_premium">Meer uitspraken</string>
     <string name="tier_checking">Even kijken of er iets ontbreekt…</string>
@@ -541,20 +543,10 @@
     <string name="app_history_empty">Nog geen uitspraken. Leg je eerste discussie voor, dan verschijnt de uitspraak hier.</string>
     <string name="app_history_device_only">Alleen op deze telefoon bewaard. Verwijder je hier een uitspraak, dan blijft de deellink gewoon werken.</string>
     <string name="app_history_delete">Verwijderen</string>
-    <string name="app_history_select">Selecteren</string>
-    <string name="app_history_select_all">Alles selecteren</string>
-    <string name="app_history_deselect_all">Alles deselecteren</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s geselecteerd</item>
-        <item quantity="other">%1$s geselecteerd</item>
-    </plurals>
-    <string name="app_history_delete_count">Verwijderen (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Deze uitspraak van deze telefoon verwijderen? De deellink blijft gewoon werken.</item>
         <item quantity="other">%1$s uitspraken van deze telefoon verwijderen? De deellinks blijven gewoon werken.</item>
     </plurals>
-    <string name="app_history_row_selected">Geselecteerd</string>
-    <string name="app_history_row_not_selected">Niet geselecteerd</string>
     <string name="app_history_phone_only">Alleen op deze telefoon</string>
     <string name="app_history_phone_only_note">Niet in je account: deze staan alleen op deze telefoon. Verwijder je hier een uitspraak, dan blijft de deellink gewoon werken.</string>
     <plurals name="app_history_remove_confirm">
@@ -595,9 +587,6 @@
     <string name="app_settings_language">Taal</string>
     <string name="app_settings_language_device">Taal van je telefoon</string>
     <string name="app_settings_appearance">Weergave</string>
-    <string name="app_settings_appearance_system">Zoals je telefoon</string>
-    <string name="app_settings_appearance_light">Licht</string>
-    <string name="app_settings_appearance_dark">Donker</string>
     <string name="app_settings_usage_stats">Gebruiksstatistieken</string>
     <string name="app_settings_usage_stats_hint">Tellingen van welke schermen en functies worden gebruikt, gekoppeld aan je account als je bent ingelogd. Tekst uit zaken wordt nooit verstuurd.</string>
     <string name="app_settings_about">Over Judge</string>

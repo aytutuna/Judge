@@ -12,14 +12,7 @@ const ur: AppLocale = {
     "app.history.deviceOnly":
       "یہ فیصلے صرف اسی فون پر محفوظ ہیں۔ یہاں سے کوئی فیصلہ حذف کرنے سے اس کا شیئر لنک بند نہیں ہوتا۔",
     "app.history.delete": "حذف کریں",
-    "app.history.select": "منتخب کریں",
-    "app.history.selectAll": "سب منتخب کریں",
-    "app.history.deselectAll": "سب غیر منتخب کریں",
-    "app.history.selected": "{n} فیصلے منتخب",
-    "app.history.deleteCount": "حذف کریں ({count})",
     "app.history.deleteConfirm": "اس فون سے {n} فیصلے حذف کریں؟ ان کے شیئر لنکس کام کرتے رہیں گے۔",
-    "app.history.rowSelected": "منتخب",
-    "app.history.rowNotSelected": "غیر منتخب",
     "app.history.phoneOnly": "صرف اسی فون پر",
     "app.history.phoneOnlyNote":
       "یہ فیصلے آپ کے اکاؤنٹ میں نہیں، صرف اسی فون پر محفوظ ہیں۔ یہاں سے کوئی فیصلہ حذف کرنے سے اس کا شیئر لنک بند نہیں ہوتا۔",
@@ -52,9 +45,6 @@ const ur: AppLocale = {
     "app.settings.language": "زبان",
     "app.settings.languageDevice": "فون کے مطابق",
     "app.settings.appearance": "ظاہری شکل",
-    "app.settings.appearanceSystem": "فون کے مطابق",
-    "app.settings.appearanceLight": "ہلکا",
-    "app.settings.appearanceDark": "گہرا",
     "app.settings.usageStats": "استعمال کے اعداد و شمار",
     "app.settings.usageStatsHint":
       "کون سی اسکرینیں اور فیچرز استعمال ہوتے ہیں، اس کی گنتی، سائن ان ہونے پر آپ کے اکاؤنٹ سے منسلک۔ کیس کا کوئی متن کبھی نہیں بھیجا جاتا۔",
@@ -159,7 +149,6 @@ const ur: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} فیصلہ باقی" },
-    "app.history.selected": { one: "{n} فیصلہ منتخب" },
     "app.history.deleteConfirm": { one: "یہ فیصلہ اس فون سے حذف کریں؟ اس کا شیئر لنک کام کرتا رہے گا۔" },
     "app.history.removeConfirm": {
       one: "یہ فیصلہ اپنے اکاؤنٹ سے ہٹائیں؟ ہر ڈیوائس پر آپ کا لکھا ہوا اور نام مٹا دیے جائیں گے اور اس کا شیئر لنک کام کرنا بند کر دے گا۔ یہ واپس نہیں ہو سکتا۔",

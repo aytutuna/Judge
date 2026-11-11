@@ -11,15 +11,8 @@ const ro: AppLocale = {
     "app.history.deviceOnly":
       "Salvate doar pe acest telefon. Dacă ștergi unul de aici, linkul lui de distribuire rămâne activ.",
     "app.history.delete": "Șterge",
-    "app.history.select": "Selectează",
-    "app.history.selectAll": "Selectează tot",
-    "app.history.deselectAll": "Deselectează tot",
-    "app.history.selected": "{n} selectate",
-    "app.history.deleteCount": "Șterge ({count})",
     "app.history.deleteConfirm":
       "Ștergi {n} de verdicte de pe acest telefon? Linkurile lor de distribuire rămân active.",
-    "app.history.rowSelected": "Selectat",
-    "app.history.rowNotSelected": "Neselectat",
     "app.history.phoneOnly": "Doar pe acest telefon",
     "app.history.phoneOnlyNote":
       "Acestea nu sunt în contul tău, ci salvate doar pe acest telefon. Dacă ștergi unul de aici, linkul lui de distribuire rămâne activ.",
@@ -55,9 +48,6 @@ const ro: AppLocale = {
     "app.settings.language": "Limbă",
     "app.settings.languageDevice": "Limba telefonului",
     "app.settings.appearance": "Aspect",
-    "app.settings.appearanceSystem": "Ca pe telefon",
-    "app.settings.appearanceLight": "Luminos",
-    "app.settings.appearanceDark": "Întunecat",
     "app.settings.usageStats": "Statistici de utilizare",
     "app.settings.usageStatsHint":
       "Numărători ale ecranelor și funcțiilor folosite, legate de contul tău când ești conectat. Textul cazurilor nu este trimis niciodată.",
@@ -162,7 +152,6 @@ const ro: AppLocale = {
   // As on the web, the base string carries "de" (20 and up) and "few" drops it.
   plurals: {
     "app.balance.left": { one: "Mai ai 1 verdict", few: "Mai ai {n} verdicte" },
-    "app.history.selected": { one: "1 selectat", few: "{n} selectate" },
     "app.history.deleteConfirm": {
       one: "Ștergi verdictul de pe acest telefon? Linkul lui de distribuire rămâne activ.",
       few: "Ștergi {n} verdicte de pe acest telefon? Linkurile lor de distribuire rămân active.",

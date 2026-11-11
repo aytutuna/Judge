@@ -11,14 +11,7 @@ const de: AppLocale = {
     "app.history.deviceOnly":
       "Nur auf diesem Handy gespeichert. Wenn du hier ein Urteil löschst, funktioniert der geteilte Link weiter.",
     "app.history.delete": "Löschen",
-    "app.history.select": "Auswählen",
-    "app.history.selectAll": "Alle auswählen",
-    "app.history.deselectAll": "Auswahl aufheben",
-    "app.history.selected": "{n} ausgewählt",
-    "app.history.deleteCount": "Löschen ({count})",
     "app.history.deleteConfirm": "{n} Urteile von diesem Handy löschen? Die geteilten Links funktionieren weiter.",
-    "app.history.rowSelected": "Ausgewählt",
-    "app.history.rowNotSelected": "Nicht ausgewählt",
     "app.history.phoneOnly": "Nur auf diesem Handy",
     "app.history.phoneOnlyNote":
       "Nicht in deinem Konto: Diese Urteile sind nur auf diesem Handy gespeichert. Wenn du hier eins löschst, funktioniert sein geteilter Link weiter.",
@@ -52,9 +45,6 @@ const de: AppLocale = {
     "app.settings.language": "Sprache",
     "app.settings.languageDevice": "Wie auf dem Handy",
     "app.settings.appearance": "Erscheinungsbild",
-    "app.settings.appearanceSystem": "Wie auf dem Handy",
-    "app.settings.appearanceLight": "Hell",
-    "app.settings.appearanceDark": "Dunkel",
     "app.settings.usageStats": "Nutzungsstatistik",
     "app.settings.usageStatsHint":
       "Zählungen, welche Bildschirme und Funktionen genutzt werden, mit deinem Konto verknüpft, wenn du angemeldet bist. Text aus Fällen wird nie gesendet.",
@@ -158,7 +148,6 @@ const de: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "1 Urteil übrig" },
-    "app.history.selected": { one: "{n} ausgewählt" },
     "app.history.deleteConfirm": { one: "Dieses Urteil von diesem Handy löschen? Der geteilte Link funktioniert weiter." },
     "app.history.removeConfirm": {
       one: "Dieses Urteil aus deinem Konto entfernen? Es verschwindet von allen Geräten: Was du geschrieben hast und die Namen werden gelöscht, und der geteilte Link funktioniert nicht mehr. Das lässt sich nicht rückgängig machen.",

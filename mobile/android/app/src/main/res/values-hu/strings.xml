@@ -142,7 +142,9 @@
     <string name="nav_account_menu">Fiókmenü</string>
     <string name="nav_sign_out">Kilépés</string>
     <string name="nav_verdicts">Ítéletek</string>
+    <string name="nav_links">Linkek</string>
     <string name="nav_tabs">Szakaszok</string>
+    <string name="settings_dark_mode">Sötét mód</string>
     <string name="tier_locked_sign_in">(zárolva: a használatához lépj be)</string>
     <string name="tier_get_premium">További ítéletek</string>
     <string name="tier_checking">Megnézzük, hiányzik-e valami…</string>
@@ -541,20 +543,10 @@
     <string name="app_history_empty">Még nincs ítéleted. Amint eldől az első vitád, itt megjelenik.</string>
     <string name="app_history_device_only">Csak ezen a telefonon vannak elmentve. Ha innen törölsz egyet, a megosztási linkje attól még működik.</string>
     <string name="app_history_delete">Törlés</string>
-    <string name="app_history_select">Kijelölés</string>
-    <string name="app_history_select_all">Összes kijelölése</string>
-    <string name="app_history_deselect_all">Kijelölés megszüntetése</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s kijelölve</item>
-        <item quantity="other">%1$s kijelölve</item>
-    </plurals>
-    <string name="app_history_delete_count">Törlés (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Törlöd ezt az ítéletet erről a telefonról? A megosztási linkje továbbra is működik.</item>
         <item quantity="other">Törlöd a kijelölt %1$s ítéletet erről a telefonról? A megosztási linkjeik továbbra is működnek.</item>
     </plurals>
-    <string name="app_history_row_selected">Kijelölve</string>
-    <string name="app_history_row_not_selected">Nincs kijelölve</string>
     <string name="app_history_phone_only">Csak ezen a telefonon</string>
     <string name="app_history_phone_only_note">Nincsenek a fiókodban: ezek csak ezen a telefonon vannak elmentve. Ha innen törölsz egyet, a megosztási linkje attól még működik.</string>
     <plurals name="app_history_remove_confirm">
@@ -595,9 +587,6 @@
     <string name="app_settings_language">Nyelv</string>
     <string name="app_settings_language_device">A telefon nyelve</string>
     <string name="app_settings_appearance">Megjelenés</string>
-    <string name="app_settings_appearance_system">A telefon szerint</string>
-    <string name="app_settings_appearance_light">Világos</string>
-    <string name="app_settings_appearance_dark">Sötét</string>
     <string name="app_settings_usage_stats">Használati statisztika</string>
     <string name="app_settings_usage_stats_hint">Számlálás arról, mely képernyőket és funkciókat használják, bejelentkezve a fiókodhoz kötve. Az ügyek szövege soha nem kerül elküldésre.</string>
     <string name="app_settings_about">A Judge-ról</string>

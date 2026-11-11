@@ -148,7 +148,9 @@
     <string name="nav_account_menu">Meni računa</string>
     <string name="nav_sign_out">Odjava</string>
     <string name="nav_verdicts">Razsodbe</string>
+    <string name="nav_links">Povezave</string>
     <string name="nav_tabs">Razdelki</string>
+    <string name="settings_dark_mode">Temni način</string>
     <string name="tier_locked_sign_in">(zaklenjeno: za uporabo se prijavi)</string>
     <string name="tier_get_premium">Več razsodb</string>
     <string name="tier_checking">Preverjamo, ali kaj manjka…</string>
@@ -563,24 +565,12 @@
     <string name="app_history_empty">Razsodb še ni. Ko razčistiš prvi prepir, se razsodba prikaže tukaj.</string>
     <string name="app_history_device_only">Shranjeno samo na tem telefonu. Če razsodbo izbrišeš tukaj, njena povezava za deljenje še vedno deluje.</string>
     <string name="app_history_delete">Izbriši</string>
-    <string name="app_history_select">Izberi</string>
-    <string name="app_history_select_all">Izberi vse</string>
-    <string name="app_history_deselect_all">Odznači vse</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s izbrana</item>
-        <item quantity="two">%1$s izbrani</item>
-        <item quantity="few">%1$s izbrane</item>
-        <item quantity="other">%1$s izbranih</item>
-    </plurals>
-    <string name="app_history_delete_count">Izbriši (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Želiš s tega telefona izbrisati %1$s razsodbo? Njena povezava za deljenje še vedno deluje.</item>
         <item quantity="two">Želiš s tega telefona izbrisati %1$s razsodbi? Njuni povezavi za deljenje še vedno delujeta.</item>
         <item quantity="few">Želiš s tega telefona izbrisati %1$s razsodbe? Njihove povezave za deljenje še vedno delujejo.</item>
         <item quantity="other">Želiš s tega telefona izbrisati %1$s razsodb? Njihove povezave za deljenje še vedno delujejo.</item>
     </plurals>
-    <string name="app_history_row_selected">Izbrano</string>
-    <string name="app_history_row_not_selected">Ni izbrano</string>
     <string name="app_history_phone_only">Samo na tem telefonu</string>
     <string name="app_history_phone_only_note">Ni v tvojem računu: te razsodbe so shranjene samo na tem telefonu. Če razsodbo izbrišeš tukaj, njena povezava za deljenje še vedno deluje.</string>
     <plurals name="app_history_remove_confirm">
@@ -629,9 +619,6 @@
     <string name="app_settings_language">Jezik</string>
     <string name="app_settings_language_device">Jezik telefona</string>
     <string name="app_settings_appearance">Videz</string>
-    <string name="app_settings_appearance_system">Kot v telefonu</string>
-    <string name="app_settings_appearance_light">Svetlo</string>
-    <string name="app_settings_appearance_dark">Temno</string>
     <string name="app_settings_usage_stats">Statistika uporabe</string>
     <string name="app_settings_usage_stats_hint">Štetje, kateri zasloni in funkcije se uporabljajo, povezano s tvojim računom, ko si prijavljen. Besedilo sporov se nikoli ne pošlje.</string>
     <string name="app_settings_about">O aplikaciji Judge</string>

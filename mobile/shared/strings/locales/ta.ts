@@ -11,15 +11,8 @@ const ta: AppLocale = {
     "app.history.deviceOnly":
       "இவை இந்தப் போனில் மட்டுமே சேமிக்கப்பட்டுள்ளன. இங்கே ஒன்றை நீக்கினாலும், அதன் பகிர்வு லிங்க் தொடர்ந்து வேலை செய்யும்.",
     "app.history.delete": "நீக்கு",
-    "app.history.select": "தேர்ந்தெடு",
-    "app.history.selectAll": "அனைத்தையும் தேர்ந்தெடு",
-    "app.history.deselectAll": "அனைத்தையும் தேர்வுநீக்கு",
-    "app.history.selected": "{n} தேர்ந்தெடுக்கப்பட்டன",
-    "app.history.deleteCount": "நீக்கு ({count})",
     "app.history.deleteConfirm":
       "இந்தப் போனிலிருந்து {n} தீர்ப்புகளை நீக்கவா? அவற்றின் பகிர்வு லிங்க்குகள் தொடர்ந்து வேலை செய்யும்.",
-    "app.history.rowSelected": "தேர்ந்தெடுக்கப்பட்டது",
-    "app.history.rowNotSelected": "தேர்ந்தெடுக்கப்படவில்லை",
     "app.history.phoneOnly": "இந்தப் போனில் மட்டும்",
     "app.history.phoneOnlyNote":
       "உங்கள் கணக்கில் இல்லை: இவை இந்தப் போனில் மட்டுமே சேமிக்கப்பட்டுள்ளன. இங்கே ஒன்றை நீக்கினாலும், அதன் பகிர்வு லிங்க் தொடர்ந்து வேலை செய்யும்.",
@@ -56,9 +49,6 @@ const ta: AppLocale = {
     "app.settings.language": "மொழி",
     "app.settings.languageDevice": "போனில் உள்ளபடியே",
     "app.settings.appearance": "தோற்றம்",
-    "app.settings.appearanceSystem": "போனில் உள்ளபடியே",
-    "app.settings.appearanceLight": "வெளிர்",
-    "app.settings.appearanceDark": "இருண்ட",
     "app.settings.usageStats": "பயன்பாட்டுப் புள்ளிவிவரம்",
     "app.settings.usageStatsHint":
       "எந்தத் திரைகளும் அம்சங்களும் பயன்படுத்தப்படுகின்றன என்பதன் எண்ணிக்கை, உள்நுழைந்திருக்கும்போது உங்கள் கணக்குடன் இணைக்கப்படும். வழக்கின் எந்த உரையும் ஒருபோதும் அனுப்பப்படாது.",
@@ -163,7 +153,6 @@ const ta: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} தீர்ப்பு மீதம்" },
-    "app.history.selected": { one: "{n} தேர்ந்தெடுக்கப்பட்டது" },
     "app.history.deleteConfirm": {
       one: "இந்தத் தீர்ப்பை இந்தப் போனிலிருந்து நீக்கவா? அதன் பகிர்வு லிங்க் தொடர்ந்து வேலை செய்யும்.",
     },

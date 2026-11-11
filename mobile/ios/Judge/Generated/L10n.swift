@@ -277,7 +277,9 @@ enum L10n {
     static func navAccountMenu(_ lang: AppLang) -> String { string("nav.accountMenu", lang) }
     static func navSignOut(_ lang: AppLang) -> String { string("nav.signOut", lang) }
     static func navVerdicts(_ lang: AppLang) -> String { string("nav.verdicts", lang) }
+    static func navLinks(_ lang: AppLang) -> String { string("nav.links", lang) }
     static func navTabs(_ lang: AppLang) -> String { string("nav.tabs", lang) }
+    static func settingsDarkMode(_ lang: AppLang) -> String { string("settings.darkMode", lang) }
     static func tierLockedSignIn(_ lang: AppLang) -> String { string("tier.lockedSignIn", lang) }
     static func tierGetPremium(_ lang: AppLang) -> String { string("tier.getPremium", lang) }
     static func tierChecking(_ lang: AppLang) -> String { string("tier.checking", lang) }
@@ -652,14 +654,7 @@ enum L10n {
     static func appHistoryEmpty(_ lang: AppLang) -> String { string("app.history.empty", lang) }
     static func appHistoryDeviceOnly(_ lang: AppLang) -> String { string("app.history.deviceOnly", lang) }
     static func appHistoryDelete(_ lang: AppLang) -> String { string("app.history.delete", lang) }
-    static func appHistorySelect(_ lang: AppLang) -> String { string("app.history.select", lang) }
-    static func appHistorySelectAll(_ lang: AppLang) -> String { string("app.history.selectAll", lang) }
-    static func appHistoryDeselectAll(_ lang: AppLang) -> String { string("app.history.deselectAll", lang) }
-    static func appHistorySelected(_ lang: AppLang, n: Int) -> String { plural("app.history.selected", lang, n) }
-    static func appHistoryDeleteCount(_ lang: AppLang, count: String) -> String { format("app.history.deleteCount", lang, count) }
     static func appHistoryDeleteConfirm(_ lang: AppLang, n: Int) -> String { plural("app.history.deleteConfirm", lang, n) }
-    static func appHistoryRowSelected(_ lang: AppLang) -> String { string("app.history.rowSelected", lang) }
-    static func appHistoryRowNotSelected(_ lang: AppLang) -> String { string("app.history.rowNotSelected", lang) }
     static func appHistoryPhoneOnly(_ lang: AppLang) -> String { string("app.history.phoneOnly", lang) }
     static func appHistoryPhoneOnlyNote(_ lang: AppLang) -> String { string("app.history.phoneOnlyNote", lang) }
     static func appHistoryRemoveConfirm(_ lang: AppLang, n: Int) -> String { plural("app.history.removeConfirm", lang, n) }
@@ -688,9 +683,6 @@ enum L10n {
     static func appSettingsLanguage(_ lang: AppLang) -> String { string("app.settings.language", lang) }
     static func appSettingsLanguageDevice(_ lang: AppLang) -> String { string("app.settings.languageDevice", lang) }
     static func appSettingsAppearance(_ lang: AppLang) -> String { string("app.settings.appearance", lang) }
-    static func appSettingsAppearanceSystem(_ lang: AppLang) -> String { string("app.settings.appearanceSystem", lang) }
-    static func appSettingsAppearanceLight(_ lang: AppLang) -> String { string("app.settings.appearanceLight", lang) }
-    static func appSettingsAppearanceDark(_ lang: AppLang) -> String { string("app.settings.appearanceDark", lang) }
     static func appSettingsUsageStats(_ lang: AppLang) -> String { string("app.settings.usageStats", lang) }
     static func appSettingsUsageStatsHint(_ lang: AppLang) -> String { string("app.settings.usageStatsHint", lang) }
     static func appSettingsAbout(_ lang: AppLang) -> String { string("app.settings.about", lang) }
@@ -912,7 +904,9 @@ enum L10n {
         "nav.accountMenu",
         "nav.signOut",
         "nav.verdicts",
+        "nav.links",
         "nav.tabs",
+        "settings.darkMode",
         "tier.lockedSignIn",
         "tier.getPremium",
         "tier.checking",
@@ -1251,11 +1245,6 @@ enum L10n {
         "app.history.empty",
         "app.history.deviceOnly",
         "app.history.delete",
-        "app.history.select",
-        "app.history.selectAll",
-        "app.history.deselectAll",
-        "app.history.rowSelected",
-        "app.history.rowNotSelected",
         "app.history.phoneOnly",
         "app.history.phoneOnlyNote",
         "app.history.offlineRemove",
@@ -1278,9 +1267,6 @@ enum L10n {
         "app.settings.language",
         "app.settings.languageDevice",
         "app.settings.appearance",
-        "app.settings.appearanceSystem",
-        "app.settings.appearanceLight",
-        "app.settings.appearanceDark",
         "app.settings.usageStats",
         "app.settings.usageStatsHint",
         "app.settings.about",

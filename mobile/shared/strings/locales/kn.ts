@@ -12,15 +12,8 @@ const kn: AppLocale = {
     "app.history.deviceOnly":
       "ಈ ಫೋನ್‌ನಲ್ಲಿ ಮಾತ್ರ ಉಳಿಸಲಾಗಿದೆ. ಒಂದು ತೀರ್ಪನ್ನು ಇಲ್ಲಿಂದ ಅಳಿಸಿದರೂ ಅದರ ಹಂಚಿಕೆ ಲಿಂಕ್ ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತದೆ.",
     "app.history.delete": "ಅಳಿಸಿ",
-    "app.history.select": "ಆಯ್ಕೆಮಾಡಿ",
-    "app.history.selectAll": "ಎಲ್ಲವನ್ನೂ ಆಯ್ಕೆಮಾಡಿ",
-    "app.history.deselectAll": "ಎಲ್ಲವನ್ನೂ ಆಯ್ಕೆ ರದ್ದುಮಾಡಿ",
-    "app.history.selected": "{n} ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ",
-    "app.history.deleteCount": "ಅಳಿಸಿ ({count})",
     "app.history.deleteConfirm":
       "ಈ ಫೋನ್‌ನಿಂದ {n} ತೀರ್ಪುಗಳನ್ನು ಅಳಿಸಬೇಕೇ? ಅವುಗಳ ಹಂಚಿಕೆ ಲಿಂಕ್‌ಗಳು ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತವೆ.",
-    "app.history.rowSelected": "ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ",
-    "app.history.rowNotSelected": "ಆಯ್ಕೆಮಾಡಲಾಗಿಲ್ಲ",
     "app.history.phoneOnly": "ಈ ಫೋನ್‌ನಲ್ಲಿ ಮಾತ್ರ",
     "app.history.phoneOnlyNote":
       "ನಿಮ್ಮ ಖಾತೆಯಲ್ಲಿ ಇಲ್ಲ: ಇವನ್ನು ಈ ಫೋನ್‌ನಲ್ಲಿ ಮಾತ್ರ ಉಳಿಸಲಾಗಿದೆ. ಒಂದು ತೀರ್ಪನ್ನು ಇಲ್ಲಿಂದ ಅಳಿಸಿದರೂ ಅದರ ಹಂಚಿಕೆ ಲಿಂಕ್ ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತದೆ.",
@@ -55,9 +48,6 @@ const kn: AppLocale = {
     "app.settings.language": "ಭಾಷೆ",
     "app.settings.languageDevice": "ಫೋನ್‌ನಲ್ಲಿರುವಂತೆಯೇ",
     "app.settings.appearance": "ಥೀಮ್",
-    "app.settings.appearanceSystem": "ಫೋನ್‌ನಲ್ಲಿರುವಂತೆಯೇ",
-    "app.settings.appearanceLight": "ತಿಳಿ",
-    "app.settings.appearanceDark": "ಗಾಢ",
     "app.settings.usageStats": "ಬಳಕೆಯ ಅಂಕಿಅಂಶಗಳು",
     "app.settings.usageStatsHint":
       "ಯಾವ ಪರದೆಗಳು ಮತ್ತು ವೈಶಿಷ್ಟ್ಯಗಳು ಬಳಕೆಯಾಗುತ್ತವೆ ಎಂಬುದರ ಎಣಿಕೆ, ಸೈನ್ ಇನ್ ಆಗಿದ್ದಾಗ ನಿಮ್ಮ ಖಾತೆಗೆ ಜೋಡಿಸಲಾಗುತ್ತದೆ. ಕೇಸ್‌ನ ಯಾವ ಪಠ್ಯವನ್ನೂ ಎಂದಿಗೂ ಕಳುಹಿಸುವುದಿಲ್ಲ.",
@@ -161,7 +151,6 @@ const kn: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} ತೀರ್ಪು ಉಳಿದಿದೆ" },
-    "app.history.selected": { one: "{n} ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ" },
     "app.history.deleteConfirm": {
       one: "ಈ ಫೋನ್‌ನಿಂದ {n} ತೀರ್ಪನ್ನು ಅಳಿಸಬೇಕೇ? ಅದರ ಹಂಚಿಕೆ ಲಿಂಕ್ ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತದೆ.",
     },

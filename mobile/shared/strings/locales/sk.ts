@@ -11,14 +11,7 @@ const sk: AppLocale = {
     "app.history.deviceOnly":
       "Uložené len v tomto telefóne. Keď tu verdikt vymažeš, jeho odkaz na zdieľanie bude fungovať ďalej.",
     "app.history.delete": "Vymazať",
-    "app.history.select": "Vybrať",
-    "app.history.selectAll": "Vybrať všetko",
-    "app.history.deselectAll": "Zrušiť výber",
-    "app.history.selected": "{n} vybraných",
-    "app.history.deleteCount": "Vymazať ({count})",
     "app.history.deleteConfirm": "Vymazať {n} verdiktov z tohto telefónu? Ich odkazy na zdieľanie budú fungovať ďalej.",
-    "app.history.rowSelected": "Vybrané",
-    "app.history.rowNotSelected": "Nevybrané",
     "app.history.phoneOnly": "Len v tomto telefóne",
     "app.history.phoneOnlyNote":
       "Tieto verdikty nie sú v tvojom účte, sú uložené len v tomto telefóne. Keď tu niektorý vymažeš, jeho odkaz na zdieľanie bude fungovať ďalej.",
@@ -53,9 +46,6 @@ const sk: AppLocale = {
     "app.settings.language": "Jazyk",
     "app.settings.languageDevice": "Podľa telefónu",
     "app.settings.appearance": "Vzhľad",
-    "app.settings.appearanceSystem": "Podľa telefónu",
-    "app.settings.appearanceLight": "Svetlý",
-    "app.settings.appearanceDark": "Tmavý",
     "app.settings.usageStats": "Štatistiky používania",
     "app.settings.usageStatsHint":
       "Počty toho, ktoré obrazovky a funkcie sa používajú, po prihlásení spojené s tvojím účtom. Text prípadov sa nikdy neodosiela.",
@@ -159,7 +149,6 @@ const sk: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Zostáva 1 verdikt", few: "Zostávajú {n} verdikty" },
-    "app.history.selected": { one: "{n} vybraný", few: "{n} vybrané" },
     "app.history.deleteConfirm": {
       one: "Vymazať tento verdikt z tohto telefónu? Jeho odkaz na zdieľanie bude fungovať ďalej.",
       few: "Vymazať {n} verdikty z tohto telefónu? Ich odkazy na zdieľanie budú fungovať ďalej.",

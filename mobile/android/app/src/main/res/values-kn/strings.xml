@@ -142,7 +142,9 @@
     <string name="nav_account_menu">ಖಾತೆ ಮೆನು</string>
     <string name="nav_sign_out">ಸೈನ್ ಔಟ್</string>
     <string name="nav_verdicts">ತೀರ್ಪುಗಳು</string>
+    <string name="nav_links">ಲಿಂಕ್‌ಗಳು</string>
     <string name="nav_tabs">ವಿಭಾಗಗಳು</string>
+    <string name="settings_dark_mode">ಡಾರ್ಕ್ ಮೋಡ್</string>
     <string name="tier_locked_sign_in">(ಲಾಕ್ ಆಗಿದೆ: ಬಳಸಲು ಸೈನ್ ಇನ್ ಮಾಡಿ)</string>
     <string name="tier_get_premium">ಇನ್ನಷ್ಟು ತೀರ್ಪುಗಳನ್ನು ಪಡೆಯಿರಿ</string>
     <string name="tier_checking">ಏನಾದರೂ ಬಿಟ್ಟುಹೋಗಿದೆಯೇ ಎಂದು ನೋಡುತ್ತಿದ್ದೇವೆ…</string>
@@ -541,20 +543,10 @@
     <string name="app_history_empty">ಇನ್ನೂ ಯಾವ ತೀರ್ಪೂ ಇಲ್ಲ. ನಿಮ್ಮ ಮೊದಲ ವಾದವನ್ನು ಬಗೆಹರಿಸಿ, ಅದು ಇಲ್ಲಿ ಕಾಣುತ್ತದೆ.</string>
     <string name="app_history_device_only">ಈ ಫೋನ್‌ನಲ್ಲಿ ಮಾತ್ರ ಉಳಿಸಲಾಗಿದೆ. ಒಂದು ತೀರ್ಪನ್ನು ಇಲ್ಲಿಂದ ಅಳಿಸಿದರೂ ಅದರ ಹಂಚಿಕೆ ಲಿಂಕ್ ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತದೆ.</string>
     <string name="app_history_delete">ಅಳಿಸಿ</string>
-    <string name="app_history_select">ಆಯ್ಕೆಮಾಡಿ</string>
-    <string name="app_history_select_all">ಎಲ್ಲವನ್ನೂ ಆಯ್ಕೆಮಾಡಿ</string>
-    <string name="app_history_deselect_all">ಎಲ್ಲವನ್ನೂ ಆಯ್ಕೆ ರದ್ದುಮಾಡಿ</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ</item>
-        <item quantity="other">%1$s ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ</item>
-    </plurals>
-    <string name="app_history_delete_count">ಅಳಿಸಿ (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">ಈ ಫೋನ್‌ನಿಂದ %1$s ತೀರ್ಪನ್ನು ಅಳಿಸಬೇಕೇ? ಅದರ ಹಂಚಿಕೆ ಲಿಂಕ್ ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತದೆ.</item>
         <item quantity="other">ಈ ಫೋನ್‌ನಿಂದ %1$s ತೀರ್ಪುಗಳನ್ನು ಅಳಿಸಬೇಕೇ? ಅವುಗಳ ಹಂಚಿಕೆ ಲಿಂಕ್‌ಗಳು ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತವೆ.</item>
     </plurals>
-    <string name="app_history_row_selected">ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ</string>
-    <string name="app_history_row_not_selected">ಆಯ್ಕೆಮಾಡಲಾಗಿಲ್ಲ</string>
     <string name="app_history_phone_only">ಈ ಫೋನ್‌ನಲ್ಲಿ ಮಾತ್ರ</string>
     <string name="app_history_phone_only_note">ನಿಮ್ಮ ಖಾತೆಯಲ್ಲಿ ಇಲ್ಲ: ಇವನ್ನು ಈ ಫೋನ್‌ನಲ್ಲಿ ಮಾತ್ರ ಉಳಿಸಲಾಗಿದೆ. ಒಂದು ತೀರ್ಪನ್ನು ಇಲ್ಲಿಂದ ಅಳಿಸಿದರೂ ಅದರ ಹಂಚಿಕೆ ಲಿಂಕ್ ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತದೆ.</string>
     <plurals name="app_history_remove_confirm">
@@ -595,9 +587,6 @@
     <string name="app_settings_language">ಭಾಷೆ</string>
     <string name="app_settings_language_device">ಫೋನ್‌ನಲ್ಲಿರುವಂತೆಯೇ</string>
     <string name="app_settings_appearance">ಥೀಮ್</string>
-    <string name="app_settings_appearance_system">ಫೋನ್‌ನಲ್ಲಿರುವಂತೆಯೇ</string>
-    <string name="app_settings_appearance_light">ತಿಳಿ</string>
-    <string name="app_settings_appearance_dark">ಗಾಢ</string>
     <string name="app_settings_usage_stats">ಬಳಕೆಯ ಅಂಕಿಅಂಶಗಳು</string>
     <string name="app_settings_usage_stats_hint">ಯಾವ ಪರದೆಗಳು ಮತ್ತು ವೈಶಿಷ್ಟ್ಯಗಳು ಬಳಕೆಯಾಗುತ್ತವೆ ಎಂಬುದರ ಎಣಿಕೆ, ಸೈನ್ ಇನ್ ಆಗಿದ್ದಾಗ ನಿಮ್ಮ ಖಾತೆಗೆ ಜೋಡಿಸಲಾಗುತ್ತದೆ. ಕೇಸ್‌ನ ಯಾವ ಪಠ್ಯವನ್ನೂ ಎಂದಿಗೂ ಕಳುಹಿಸುವುದಿಲ್ಲ.</string>
     <string name="app_settings_about">Judge ಬಗ್ಗೆ</string>

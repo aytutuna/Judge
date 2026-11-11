@@ -139,7 +139,9 @@
     <string name="nav_account_menu">เมนูบัญชี</string>
     <string name="nav_sign_out">ออกจากระบบ</string>
     <string name="nav_verdicts">คำตัดสิน</string>
+    <string name="nav_links">ลิงก์</string>
     <string name="nav_tabs">ส่วนต่าง ๆ</string>
+    <string name="settings_dark_mode">โหมดมืด</string>
     <string name="tier_locked_sign_in">(ล็อกอยู่: เข้าสู่ระบบเพื่อใช้)</string>
     <string name="tier_get_premium">เติมคำตัดสิน</string>
     <string name="tier_checking">กำลังเช็กว่าขาดข้อมูลอะไรไหม…</string>
@@ -530,18 +532,9 @@
     <string name="app_history_empty">ยังไม่มีคำตัดสิน ลองเคลียร์เรื่องที่เถียงกันเรื่องแรกดู แล้วคำตัดสินจะขึ้นที่นี่</string>
     <string name="app_history_device_only">บันทึกไว้ในโทรศัพท์เครื่องนี้เท่านั้น ถึงจะลบออกจากที่นี่ ลิงก์แชร์ก็ยังใช้ได้อยู่</string>
     <string name="app_history_delete">ลบ</string>
-    <string name="app_history_select">เลือก</string>
-    <string name="app_history_select_all">เลือกทั้งหมด</string>
-    <string name="app_history_deselect_all">ยกเลิกการเลือกทั้งหมด</string>
-    <plurals name="app_history_selected">
-        <item quantity="other">เลือกแล้ว %1$s รายการ</item>
-    </plurals>
-    <string name="app_history_delete_count">ลบ (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="other">ลบคำตัดสิน %1$s รายการออกจากโทรศัพท์เครื่องนี้ไหม? ลิงก์แชร์จะยังใช้ได้อยู่</item>
     </plurals>
-    <string name="app_history_row_selected">เลือกแล้ว</string>
-    <string name="app_history_row_not_selected">ไม่ได้เลือก</string>
     <string name="app_history_phone_only">เฉพาะในโทรศัพท์เครื่องนี้</string>
     <string name="app_history_phone_only_note">ไม่ได้อยู่ในบัญชีของคุณ รายการเหล่านี้บันทึกไว้ในโทรศัพท์เครื่องนี้เท่านั้น ถึงจะลบออกจากที่นี่ ลิงก์แชร์ก็ยังใช้ได้อยู่</string>
     <plurals name="app_history_remove_confirm">
@@ -578,9 +571,6 @@
     <string name="app_settings_language">ภาษา</string>
     <string name="app_settings_language_device">ตามภาษาของโทรศัพท์</string>
     <string name="app_settings_appearance">ธีม</string>
-    <string name="app_settings_appearance_system">ตามโทรศัพท์</string>
-    <string name="app_settings_appearance_light">สว่าง</string>
-    <string name="app_settings_appearance_dark">มืด</string>
     <string name="app_settings_usage_stats">สถิติการใช้งาน</string>
     <string name="app_settings_usage_stats_hint">นับว่าใช้หน้าจอและฟีเจอร์ใดบ้าง โดยผูกกับบัญชีของคุณเมื่อลงชื่อเข้าใช้ จะไม่มีการส่งข้อความในเคสใดๆ ออกไปเลย</string>
     <string name="app_settings_about">เกี่ยวกับ Judge</string>

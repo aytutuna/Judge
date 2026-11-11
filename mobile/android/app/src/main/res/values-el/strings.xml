@@ -142,7 +142,9 @@
     <string name="nav_account_menu">Μενού λογαριασμού</string>
     <string name="nav_sign_out">Αποσύνδεση</string>
     <string name="nav_verdicts">Αποφάσεις</string>
+    <string name="nav_links">Σύνδεσμοι</string>
     <string name="nav_tabs">Ενότητες</string>
+    <string name="settings_dark_mode">Σκοτεινή λειτουργία</string>
     <string name="tier_locked_sign_in">(κλειδωμένο: συνδέσου για να το χρησιμοποιήσεις)</string>
     <string name="tier_get_premium">Περισσότερες αποφάσεις</string>
     <string name="tier_checking">Ελέγχουμε αν λείπει κάτι…</string>
@@ -541,20 +543,10 @@
     <string name="app_history_empty">Δεν έχεις αποφάσεις ακόμα. Λύσε την πρώτη σου διαφωνία και η απόφαση θα εμφανιστεί εδώ.</string>
     <string name="app_history_device_only">Αποθηκεύονται μόνο σε αυτό το τηλέφωνο. Αν διαγράψεις μια απόφαση από εδώ, ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.</string>
     <string name="app_history_delete">Διαγραφή</string>
-    <string name="app_history_select">Επιλογή</string>
-    <string name="app_history_select_all">Επιλογή όλων</string>
-    <string name="app_history_deselect_all">Αποεπιλογή όλων</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">Επιλέχθηκε %1$s</item>
-        <item quantity="other">Επιλέχθηκαν %1$s</item>
-    </plurals>
-    <string name="app_history_delete_count">Διαγραφή (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Να διαγραφεί η απόφαση από αυτό το τηλέφωνο; Ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.</item>
         <item quantity="other">Να διαγραφούν %1$s αποφάσεις από αυτό το τηλέφωνο; Οι σύνδεσμοι κοινοποίησής τους θα συνεχίσουν να λειτουργούν.</item>
     </plurals>
-    <string name="app_history_row_selected">Επιλεγμένη</string>
-    <string name="app_history_row_not_selected">Μη επιλεγμένη</string>
     <string name="app_history_phone_only">Μόνο σε αυτό το τηλέφωνο</string>
     <string name="app_history_phone_only_note">Αυτές οι αποφάσεις δεν υπάρχουν στον λογαριασμό σου· είναι αποθηκευμένες μόνο σε αυτό το τηλέφωνο. Αν διαγράψεις μία από εδώ, ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.</string>
     <plurals name="app_history_remove_confirm">
@@ -595,9 +587,6 @@
     <string name="app_settings_language">Γλώσσα</string>
     <string name="app_settings_language_device">Ίδια με του τηλεφώνου</string>
     <string name="app_settings_appearance">Εμφάνιση</string>
-    <string name="app_settings_appearance_system">Ίδια με του τηλεφώνου</string>
-    <string name="app_settings_appearance_light">Ανοιχτή</string>
-    <string name="app_settings_appearance_dark">Σκούρα</string>
     <string name="app_settings_usage_stats">Στατιστικά χρήσης</string>
     <string name="app_settings_usage_stats_hint">Μετρήσεις για το ποιες οθόνες και λειτουργίες χρησιμοποιούνται, συνδεδεμένες με τον λογαριασμό σου όταν έχεις συνδεθεί. Κείμενο από υποθέσεις δεν στέλνεται ποτέ.</string>
     <string name="app_settings_about">Σχετικά με το Judge</string>

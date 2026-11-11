@@ -12,14 +12,7 @@ const uk: AppLocale = {
     "app.history.deviceOnly":
       "Вердикти зберігаються лише на цьому телефоні. Якщо видалити вердикт тут, посилання на нього й далі працюватиме.",
     "app.history.delete": "Видалити",
-    "app.history.select": "Вибрати",
-    "app.history.selectAll": "Вибрати все",
-    "app.history.deselectAll": "Зняти вибір",
-    "app.history.selected": "Вибрано: {n}",
-    "app.history.deleteCount": "Видалити ({count})",
     "app.history.deleteConfirm": "Видалити {n} вердиктів із цього телефону? Посилання на них і далі працюватимуть.",
-    "app.history.rowSelected": "Вибрано",
-    "app.history.rowNotSelected": "Не вибрано",
     "app.history.phoneOnly": "Лише на цьому телефоні",
     "app.history.phoneOnlyNote":
       "Цих вердиктів немає в акаунті: вони зберігаються лише на цьому телефоні. Якщо видалити вердикт тут, посилання на нього й далі працюватиме.",
@@ -54,9 +47,6 @@ const uk: AppLocale = {
     "app.settings.language": "Мова",
     "app.settings.languageDevice": "Як на телефоні",
     "app.settings.appearance": "Оформлення",
-    "app.settings.appearanceSystem": "Як на телефоні",
-    "app.settings.appearanceLight": "Світле",
-    "app.settings.appearanceDark": "Темне",
     "app.settings.usageStats": "Статистика використання",
     "app.settings.usageStatsHint":
       "Підрахунок того, які екрани й функції використовуються, — після входу він пов’язаний з твоїм акаунтом. Текст справ ніколи не надсилається.",
@@ -164,11 +154,6 @@ const uk: AppLocale = {
       one: "Залишився {n} вердикт",
       few: "Залишилося {n} вердикти",
       many: "Залишилося {n} вердиктів",
-    },
-    "app.history.selected": {
-      one: "Вибрано: {n}",
-      few: "Вибрано: {n}",
-      many: "Вибрано: {n}",
     },
     // "one" also covers 21, 31, so it can't say "this verdict".
     "app.history.deleteConfirm": {

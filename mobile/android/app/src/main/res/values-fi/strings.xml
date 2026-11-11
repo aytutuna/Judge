@@ -142,7 +142,9 @@
     <string name="nav_account_menu">Tilivalikko</string>
     <string name="nav_sign_out">Kirjaudu ulos</string>
     <string name="nav_verdicts">Tuomiot</string>
+    <string name="nav_links">Linkit</string>
     <string name="nav_tabs">Osiot</string>
+    <string name="settings_dark_mode">Tumma tila</string>
     <string name="tier_locked_sign_in">(lukittu: vaatii kirjautumisen)</string>
     <string name="tier_get_premium">Hanki lisää tuomioita</string>
     <string name="tier_checking">Tarkistetaan, puuttuuko jotain…</string>
@@ -541,20 +543,10 @@
     <string name="app_history_empty">Ei vielä tuomioita. Ratkaise ensimmäinen kiistasi, niin tuomio näkyy täällä.</string>
     <string name="app_history_device_only">Tallennettu vain tähän puhelimeen. Jos poistat tuomion täältä, sen jakolinkki toimii edelleen.</string>
     <string name="app_history_delete">Poista</string>
-    <string name="app_history_select">Valitse</string>
-    <string name="app_history_select_all">Valitse kaikki</string>
-    <string name="app_history_deselect_all">Poista valinnat</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s valittu</item>
-        <item quantity="other">%1$s valittua</item>
-    </plurals>
-    <string name="app_history_delete_count">Poista (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Poistetaanko tämä tuomio tästä puhelimesta? Sen jakolinkki toimii edelleen.</item>
         <item quantity="other">Poistetaanko %1$s tuomiota tästä puhelimesta? Niiden jakolinkit toimivat edelleen.</item>
     </plurals>
-    <string name="app_history_row_selected">Valittu</string>
-    <string name="app_history_row_not_selected">Ei valittu</string>
     <string name="app_history_phone_only">Vain tässä puhelimessa</string>
     <string name="app_history_phone_only_note">Nämä eivät ole tililläsi, vaan ne on tallennettu vain tähän puhelimeen. Jos poistat tuomion täältä, sen jakolinkki toimii edelleen.</string>
     <plurals name="app_history_remove_confirm">
@@ -595,9 +587,6 @@
     <string name="app_settings_language">Kieli</string>
     <string name="app_settings_language_device">Sama kuin puhelimessa</string>
     <string name="app_settings_appearance">Ulkoasu</string>
-    <string name="app_settings_appearance_system">Sama kuin puhelimessa</string>
-    <string name="app_settings_appearance_light">Vaalea</string>
-    <string name="app_settings_appearance_dark">Tumma</string>
     <string name="app_settings_usage_stats">Käyttötilastot</string>
     <string name="app_settings_usage_stats_hint">Määriä siitä, mitä näkymiä ja toimintoja käytetään, kirjautuneena tiliisi liitettyinä. Juttujen tekstiä ei lähetetä koskaan.</string>
     <string name="app_settings_about">Tietoa Judgesta</string>

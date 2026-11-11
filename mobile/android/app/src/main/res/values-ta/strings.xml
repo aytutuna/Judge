@@ -142,7 +142,9 @@
     <string name="nav_account_menu">கணக்கு மெனு</string>
     <string name="nav_sign_out">வெளியேறு</string>
     <string name="nav_verdicts">தீர்ப்புகள்</string>
+    <string name="nav_links">இணைப்புகள்</string>
     <string name="nav_tabs">பிரிவுகள்</string>
+    <string name="settings_dark_mode">டார்க் மோடு</string>
     <string name="tier_locked_sign_in">(பூட்டப்பட்டது: பயன்படுத்த உள்நுழையுங்கள்)</string>
     <string name="tier_get_premium">இன்னும் தீர்ப்புகள் பெறுக</string>
     <string name="tier_checking">ஏதாவது விடுபட்டிருக்கிறதா என்று பார்க்கிறோம்…</string>
@@ -541,20 +543,10 @@
     <string name="app_history_empty">இன்னும் தீர்ப்புகள் இல்லை. உங்கள் முதல் வாக்குவாதத்தைத் தீர்த்ததும் அது இங்கே தெரியும்.</string>
     <string name="app_history_device_only">இவை இந்தப் போனில் மட்டுமே சேமிக்கப்பட்டுள்ளன. இங்கே ஒன்றை நீக்கினாலும், அதன் பகிர்வு லிங்க் தொடர்ந்து வேலை செய்யும்.</string>
     <string name="app_history_delete">நீக்கு</string>
-    <string name="app_history_select">தேர்ந்தெடு</string>
-    <string name="app_history_select_all">அனைத்தையும் தேர்ந்தெடு</string>
-    <string name="app_history_deselect_all">அனைத்தையும் தேர்வுநீக்கு</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s தேர்ந்தெடுக்கப்பட்டது</item>
-        <item quantity="other">%1$s தேர்ந்தெடுக்கப்பட்டன</item>
-    </plurals>
-    <string name="app_history_delete_count">நீக்கு (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">இந்தத் தீர்ப்பை இந்தப் போனிலிருந்து நீக்கவா? அதன் பகிர்வு லிங்க் தொடர்ந்து வேலை செய்யும்.</item>
         <item quantity="other">இந்தப் போனிலிருந்து %1$s தீர்ப்புகளை நீக்கவா? அவற்றின் பகிர்வு லிங்க்குகள் தொடர்ந்து வேலை செய்யும்.</item>
     </plurals>
-    <string name="app_history_row_selected">தேர்ந்தெடுக்கப்பட்டது</string>
-    <string name="app_history_row_not_selected">தேர்ந்தெடுக்கப்படவில்லை</string>
     <string name="app_history_phone_only">இந்தப் போனில் மட்டும்</string>
     <string name="app_history_phone_only_note">உங்கள் கணக்கில் இல்லை: இவை இந்தப் போனில் மட்டுமே சேமிக்கப்பட்டுள்ளன. இங்கே ஒன்றை நீக்கினாலும், அதன் பகிர்வு லிங்க் தொடர்ந்து வேலை செய்யும்.</string>
     <plurals name="app_history_remove_confirm">
@@ -595,9 +587,6 @@
     <string name="app_settings_language">மொழி</string>
     <string name="app_settings_language_device">போனில் உள்ளபடியே</string>
     <string name="app_settings_appearance">தோற்றம்</string>
-    <string name="app_settings_appearance_system">போனில் உள்ளபடியே</string>
-    <string name="app_settings_appearance_light">வெளிர்</string>
-    <string name="app_settings_appearance_dark">இருண்ட</string>
     <string name="app_settings_usage_stats">பயன்பாட்டுப் புள்ளிவிவரம்</string>
     <string name="app_settings_usage_stats_hint">எந்தத் திரைகளும் அம்சங்களும் பயன்படுத்தப்படுகின்றன என்பதன் எண்ணிக்கை, உள்நுழைந்திருக்கும்போது உங்கள் கணக்குடன் இணைக்கப்படும். வழக்கின் எந்த உரையும் ஒருபோதும் அனுப்பப்படாது.</string>
     <string name="app_settings_about">Judge பற்றி</string>

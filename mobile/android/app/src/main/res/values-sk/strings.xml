@@ -148,7 +148,9 @@
     <string name="nav_account_menu">Ponuka účtu</string>
     <string name="nav_sign_out">Odhlásiť sa</string>
     <string name="nav_verdicts">Verdikty</string>
+    <string name="nav_links">Odkazy</string>
     <string name="nav_tabs">Sekcie</string>
+    <string name="settings_dark_mode">Tmavý režim</string>
     <string name="tier_locked_sign_in">(zamknuté: najprv sa prihlás)</string>
     <string name="tier_get_premium">Získať viac verdiktov</string>
     <string name="tier_checking">Kontrolujem, či niečo nechýba…</string>
@@ -563,24 +565,12 @@
     <string name="app_history_empty">Zatiaľ tu nie sú žiadne verdikty. Nechaj rozsúdiť svoj prvý spor a verdikt nájdeš tu.</string>
     <string name="app_history_device_only">Uložené len v tomto telefóne. Keď tu verdikt vymažeš, jeho odkaz na zdieľanie bude fungovať ďalej.</string>
     <string name="app_history_delete">Vymazať</string>
-    <string name="app_history_select">Vybrať</string>
-    <string name="app_history_select_all">Vybrať všetko</string>
-    <string name="app_history_deselect_all">Zrušiť výber</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s vybraný</item>
-        <item quantity="few">%1$s vybrané</item>
-        <item quantity="many">%1$s vybraných</item>
-        <item quantity="other">%1$s vybraných</item>
-    </plurals>
-    <string name="app_history_delete_count">Vymazať (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Vymazať tento verdikt z tohto telefónu? Jeho odkaz na zdieľanie bude fungovať ďalej.</item>
         <item quantity="few">Vymazať %1$s verdikty z tohto telefónu? Ich odkazy na zdieľanie budú fungovať ďalej.</item>
         <item quantity="many">Vymazať %1$s verdiktov z tohto telefónu? Ich odkazy na zdieľanie budú fungovať ďalej.</item>
         <item quantity="other">Vymazať %1$s verdiktov z tohto telefónu? Ich odkazy na zdieľanie budú fungovať ďalej.</item>
     </plurals>
-    <string name="app_history_row_selected">Vybrané</string>
-    <string name="app_history_row_not_selected">Nevybrané</string>
     <string name="app_history_phone_only">Len v tomto telefóne</string>
     <string name="app_history_phone_only_note">Tieto verdikty nie sú v tvojom účte, sú uložené len v tomto telefóne. Keď tu niektorý vymažeš, jeho odkaz na zdieľanie bude fungovať ďalej.</string>
     <plurals name="app_history_remove_confirm">
@@ -629,9 +619,6 @@
     <string name="app_settings_language">Jazyk</string>
     <string name="app_settings_language_device">Podľa telefónu</string>
     <string name="app_settings_appearance">Vzhľad</string>
-    <string name="app_settings_appearance_system">Podľa telefónu</string>
-    <string name="app_settings_appearance_light">Svetlý</string>
-    <string name="app_settings_appearance_dark">Tmavý</string>
     <string name="app_settings_usage_stats">Štatistiky používania</string>
     <string name="app_settings_usage_stats_hint">Počty toho, ktoré obrazovky a funkcie sa používajú, po prihlásení spojené s tvojím účtom. Text prípadov sa nikdy neodosiela.</string>
     <string name="app_settings_about">O aplikácii Judge</string>

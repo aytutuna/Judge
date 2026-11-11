@@ -145,7 +145,9 @@
     <string name="nav_account_menu">Menú del compte</string>
     <string name="nav_sign_out">Tanca la sessió</string>
     <string name="nav_verdicts">Veredictes</string>
+    <string name="nav_links">Enllaços</string>
     <string name="nav_tabs">Seccions</string>
+    <string name="settings_dark_mode">Mode fosc</string>
     <string name="tier_locked_sign_in">(bloquejat: inicia sessió per fer-lo servir)</string>
     <string name="tier_get_premium">Aconsegueix més veredictes</string>
     <string name="tier_checking">Comprovant si hi falta alguna cosa…</string>
@@ -552,22 +554,11 @@
     <string name="app_history_empty">Encara no tens cap veredicte. Resol la teva primera discussió i apareixerà aquí.</string>
     <string name="app_history_device_only">Només es desen en aquest telèfon. Si n\'elimines un aquí, el seu enllaç per compartir continuarà funcionant.</string>
     <string name="app_history_delete">Elimina</string>
-    <string name="app_history_select">Selecciona</string>
-    <string name="app_history_select_all">Selecciona-ho tot</string>
-    <string name="app_history_deselect_all">Desselecciona-ho tot</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s seleccionat</item>
-        <item quantity="many">%1$s seleccionats</item>
-        <item quantity="other">%1$s seleccionats</item>
-    </plurals>
-    <string name="app_history_delete_count">Elimina (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Vols eliminar aquest veredicte del telèfon? El seu enllaç per compartir continuarà funcionant.</item>
         <item quantity="many">Vols eliminar %1$s veredictes del telèfon? Els seus enllaços per compartir continuaran funcionant.</item>
         <item quantity="other">Vols eliminar %1$s veredictes del telèfon? Els seus enllaços per compartir continuaran funcionant.</item>
     </plurals>
-    <string name="app_history_row_selected">Seleccionat</string>
-    <string name="app_history_row_not_selected">No seleccionat</string>
     <string name="app_history_phone_only">Només en aquest telèfon</string>
     <string name="app_history_phone_only_note">No són al teu compte: només es desen en aquest telèfon. Si n\'elimines un aquí, el seu enllaç per compartir continuarà funcionant.</string>
     <plurals name="app_history_remove_confirm">
@@ -612,9 +603,6 @@
     <string name="app_settings_language">Idioma</string>
     <string name="app_settings_language_device">El mateix que el telèfon</string>
     <string name="app_settings_appearance">Aparença</string>
-    <string name="app_settings_appearance_system">El mateix que el telèfon</string>
-    <string name="app_settings_appearance_light">Clar</string>
-    <string name="app_settings_appearance_dark">Fosc</string>
     <string name="app_settings_usage_stats">Estadístiques d’ús</string>
     <string name="app_settings_usage_stats_hint">Recomptes de les pantalles i funcions que es fan servir, vinculats al teu compte si has iniciat la sessió. No s’envia mai cap text dels casos.</string>
     <string name="app_settings_about">Quant a Judge</string>

@@ -11,14 +11,7 @@ const nl: AppLocale = {
     "app.history.deviceOnly":
       "Alleen op deze telefoon bewaard. Verwijder je hier een uitspraak, dan blijft de deellink gewoon werken.",
     "app.history.delete": "Verwijderen",
-    "app.history.select": "Selecteren",
-    "app.history.selectAll": "Alles selecteren",
-    "app.history.deselectAll": "Alles deselecteren",
-    "app.history.selected": "{n} geselecteerd",
-    "app.history.deleteCount": "Verwijderen ({count})",
     "app.history.deleteConfirm": "{n} uitspraken van deze telefoon verwijderen? De deellinks blijven gewoon werken.",
-    "app.history.rowSelected": "Geselecteerd",
-    "app.history.rowNotSelected": "Niet geselecteerd",
     "app.history.phoneOnly": "Alleen op deze telefoon",
     "app.history.phoneOnlyNote":
       "Niet in je account: deze staan alleen op deze telefoon. Verwijder je hier een uitspraak, dan blijft de deellink gewoon werken.",
@@ -53,9 +46,6 @@ const nl: AppLocale = {
     "app.settings.language": "Taal",
     "app.settings.languageDevice": "Taal van je telefoon",
     "app.settings.appearance": "Weergave",
-    "app.settings.appearanceSystem": "Zoals je telefoon",
-    "app.settings.appearanceLight": "Licht",
-    "app.settings.appearanceDark": "Donker",
     "app.settings.usageStats": "Gebruiksstatistieken",
     "app.settings.usageStatsHint":
       "Tellingen van welke schermen en functies worden gebruikt, gekoppeld aan je account als je bent ingelogd. Tekst uit zaken wordt nooit verstuurd.",
@@ -159,7 +149,6 @@ const nl: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Nog {n} uitspraak over" },
-    "app.history.selected": { one: "{n} geselecteerd" },
     "app.history.deleteConfirm": { one: "Deze uitspraak van deze telefoon verwijderen? De deellink blijft gewoon werken." },
     "app.history.removeConfirm": {
       one: "Deze uitspraak uit je account verwijderen? Hij verdwijnt van al je apparaten: wat je schreef en de namen worden gewist en de deellink werkt niet meer. Dit kan niet ongedaan worden gemaakt.",

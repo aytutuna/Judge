@@ -10,14 +10,7 @@ const da: AppLocale = {
     "app.history.empty": "Ingen domme endnu. Få afgjort din første diskussion, så dukker den op her.",
     "app.history.deviceOnly": "Kun gemt på denne telefon. Sletter du en her, virker dens delingslink stadig.",
     "app.history.delete": "Slet",
-    "app.history.select": "Vælg",
-    "app.history.selectAll": "Vælg alle",
-    "app.history.deselectAll": "Fravælg alle",
-    "app.history.selected": "{n} valgt",
-    "app.history.deleteCount": "Slet ({count})",
     "app.history.deleteConfirm": "Vil du slette {n} domme fra denne telefon? Delingslinkene virker stadig.",
-    "app.history.rowSelected": "Valgt",
-    "app.history.rowNotSelected": "Ikke valgt",
     "app.history.phoneOnly": "Kun på denne telefon",
     "app.history.phoneOnlyNote":
       "Ikke på din konto, kun gemt på denne telefon. Sletter du en her, virker dens delingslink stadig.",
@@ -52,9 +45,6 @@ const da: AppLocale = {
     "app.settings.language": "Sprog",
     "app.settings.languageDevice": "Samme som telefonen",
     "app.settings.appearance": "Udseende",
-    "app.settings.appearanceSystem": "Samme som telefonen",
-    "app.settings.appearanceLight": "Lys",
-    "app.settings.appearanceDark": "Mørk",
     "app.settings.usageStats": "Brugsstatistik",
     "app.settings.usageStatsHint":
       "Optællinger af, hvilke skærme og funktioner der bruges, knyttet til din konto, når du er logget ind. Tekst fra sager sendes aldrig.",
@@ -158,7 +148,6 @@ const da: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} dom tilbage" },
-    "app.history.selected": { one: "{n} valgt" },
     "app.history.deleteConfirm": { one: "Vil du slette dommen fra denne telefon? Delingslinket virker stadig." },
     "app.history.removeConfirm": {
       one: "Vil du fjerne dommen fra din konto? Det, du skrev, og navnene bliver slettet, og dens delingslink holder op med at virke på alle enheder. Det kan ikke fortrydes.",

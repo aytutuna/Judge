@@ -139,7 +139,9 @@
     <string name="nav_account_menu">Menu akun</string>
     <string name="nav_sign_out">Keluar</string>
     <string name="nav_verdicts">Putusan</string>
+    <string name="nav_links">Tautan</string>
     <string name="nav_tabs">Bagian</string>
+    <string name="settings_dark_mode">Mode gelap</string>
     <string name="tier_locked_sign_in">(terkunci: masuk dulu untuk memakainya)</string>
     <string name="tier_get_premium">Tambah putusan</string>
     <string name="tier_checking">Mengecek apakah ada yang kurang…</string>
@@ -530,18 +532,9 @@
     <string name="app_history_empty">Belum ada putusan. Tuntaskan perdebatan pertamamu, nanti putusannya muncul di sini.</string>
     <string name="app_history_device_only">Hanya tersimpan di ponsel ini. Menghapus putusan di sini tidak mematikan tautan berbaginya.</string>
     <string name="app_history_delete">Hapus</string>
-    <string name="app_history_select">Pilih</string>
-    <string name="app_history_select_all">Pilih semua</string>
-    <string name="app_history_deselect_all">Batal pilih semua</string>
-    <plurals name="app_history_selected">
-        <item quantity="other">%1$s dipilih</item>
-    </plurals>
-    <string name="app_history_delete_count">Hapus (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="other">Hapus %1$s putusan dari ponsel ini? Tautan berbaginya tetap berfungsi.</item>
     </plurals>
-    <string name="app_history_row_selected">Dipilih</string>
-    <string name="app_history_row_not_selected">Tidak dipilih</string>
     <string name="app_history_phone_only">Hanya di ponsel ini</string>
     <string name="app_history_phone_only_note">Tidak ada di akunmu: putusan ini hanya tersimpan di ponsel ini. Menghapus putusan di sini tidak mematikan tautan berbaginya.</string>
     <plurals name="app_history_remove_confirm">
@@ -578,9 +571,6 @@
     <string name="app_settings_language">Bahasa</string>
     <string name="app_settings_language_device">Ikuti ponsel</string>
     <string name="app_settings_appearance">Tampilan</string>
-    <string name="app_settings_appearance_system">Ikuti ponsel</string>
-    <string name="app_settings_appearance_light">Terang</string>
-    <string name="app_settings_appearance_dark">Gelap</string>
     <string name="app_settings_usage_stats">Statistik penggunaan</string>
     <string name="app_settings_usage_stats_hint">Hitungan layar dan fitur yang dipakai, terhubung ke akunmu saat kamu masuk. Teks kasus tidak pernah dikirim.</string>
     <string name="app_settings_about">Tentang Judge</string>

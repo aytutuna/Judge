@@ -145,7 +145,9 @@
     <string name="nav_account_menu">Menu account</string>
     <string name="nav_sign_out">Esci</string>
     <string name="nav_verdicts">Verdetti</string>
+    <string name="nav_links">Link</string>
     <string name="nav_tabs">Sezioni</string>
+    <string name="settings_dark_mode">Modalità scura</string>
     <string name="tier_locked_sign_in">(disponibile solo dopo l\'accesso)</string>
     <string name="tier_get_premium">Ottieni altri verdetti</string>
     <string name="tier_checking">Controlliamo se manca qualcosa…</string>
@@ -552,22 +554,11 @@
     <string name="app_history_empty">Ancora nessun verdetto. Risolvi la tua prima discussione e lo troverai qui.</string>
     <string name="app_history_device_only">Salvati solo su questo telefono. Se ne elimini uno qui, il suo link di condivisione continua a funzionare.</string>
     <string name="app_history_delete">Elimina</string>
-    <string name="app_history_select">Seleziona</string>
-    <string name="app_history_select_all">Seleziona tutto</string>
-    <string name="app_history_deselect_all">Deseleziona tutto</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s selezionato</item>
-        <item quantity="many">%1$s selezionati</item>
-        <item quantity="other">%1$s selezionati</item>
-    </plurals>
-    <string name="app_history_delete_count">Elimina (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Eliminare questo verdetto da questo telefono? Il suo link di condivisione continua a funzionare.</item>
         <item quantity="many">Eliminare %1$s verdetti da questo telefono? I loro link di condivisione continuano a funzionare.</item>
         <item quantity="other">Eliminare %1$s verdetti da questo telefono? I loro link di condivisione continuano a funzionare.</item>
     </plurals>
-    <string name="app_history_row_selected">Selezionato</string>
-    <string name="app_history_row_not_selected">Non selezionato</string>
     <string name="app_history_phone_only">Solo su questo telefono</string>
     <string name="app_history_phone_only_note">Non sono nel tuo account: sono salvati solo su questo telefono. Se ne elimini uno qui, il suo link di condivisione continua a funzionare.</string>
     <plurals name="app_history_remove_confirm">
@@ -612,9 +603,6 @@
     <string name="app_settings_language">Lingua</string>
     <string name="app_settings_language_device">Lingua del telefono</string>
     <string name="app_settings_appearance">Aspetto</string>
-    <string name="app_settings_appearance_system">Come il telefono</string>
-    <string name="app_settings_appearance_light">Chiaro</string>
-    <string name="app_settings_appearance_dark">Scuro</string>
     <string name="app_settings_usage_stats">Statistiche di utilizzo</string>
     <string name="app_settings_usage_stats_hint">Conteggi delle schermate e delle funzioni usate, collegati al tuo account quando hai effettuato l’accesso. Il testo dei casi non viene mai inviato.</string>
     <string name="app_settings_about">Info su Judge</string>

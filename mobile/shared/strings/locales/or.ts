@@ -11,14 +11,7 @@ const or: AppLocale = {
     "app.history.empty": "ଏଯାଏଁ କୌଣସି ରାୟ ନାହିଁ। ଆପଣଙ୍କ ପ୍ରଥମ ଝଗଡ଼ା ମେଣ୍ଟାନ୍ତୁ, ତା'ର ରାୟ ଏଠାରେ ଦେଖାଯିବ।",
     "app.history.deviceOnly": "କେବଳ ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଛି। ଏଠାରୁ କୌଣସି ରାୟ ଡିଲିଟ୍ କଲେ ବି ତା'ର ସେୟାର୍ ଲିଙ୍କ୍ ବନ୍ଦ ହୁଏ ନାହିଁ।",
     "app.history.delete": "ଡିଲିଟ୍",
-    "app.history.select": "ଚୟନ କରନ୍ତୁ",
-    "app.history.selectAll": "ସବୁ ଚୟନ କରନ୍ତୁ",
-    "app.history.deselectAll": "ସବୁ ଚୟନ ହଟାନ୍ତୁ",
-    "app.history.selected": "{n}ଟି ଚୟନ କରାଯାଇଛି",
-    "app.history.deleteCount": "ଡିଲିଟ୍ ({count})",
     "app.history.deleteConfirm": "ଏହି ଫୋନ୍‌ରୁ {n}ଟି ରାୟ ଡିଲିଟ୍ କରିବେ? ସେଗୁଡ଼ିକର ସେୟାର୍ ଲିଙ୍କ୍ ଚାଲୁ ରହିବ।",
-    "app.history.rowSelected": "ଚୟନ କରାଯାଇଛି",
-    "app.history.rowNotSelected": "ଚୟନ କରାଯାଇନାହିଁ",
     "app.history.phoneOnly": "କେବଳ ଏହି ଫୋନ୍‌ରେ",
     "app.history.phoneOnlyNote":
       "ଆପଣଙ୍କ ଆକାଉଣ୍ଟରେ ନାହିଁ: ଏଗୁଡ଼ିକ କେବଳ ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଛି। ଏଠାରୁ କୌଣସି ରାୟ ଡିଲିଟ୍ କଲେ ବି ତା'ର ସେୟାର୍ ଲିଙ୍କ୍ ବନ୍ଦ ହୁଏ ନାହିଁ।",
@@ -52,9 +45,6 @@ const or: AppLocale = {
     "app.settings.language": "ଭାଷା",
     "app.settings.languageDevice": "ଫୋନ୍‌ର ଭାଷା",
     "app.settings.appearance": "ଥିମ୍",
-    "app.settings.appearanceSystem": "ଫୋନ୍ ଅନୁସାରେ",
-    "app.settings.appearanceLight": "ହାଲୁକା",
-    "app.settings.appearanceDark": "ଗାଢ଼",
     "app.settings.usageStats": "ବ୍ୟବହାର ପରିସଂଖ୍ୟାନ",
     "app.settings.usageStatsHint":
       "କେଉଁ ସ୍କ୍ରିନ ଓ ସୁବିଧା ବ୍ୟବହାର ହୁଏ, ତା'ର ଗଣନା, ସାଇନ୍ ଇନ୍ ଥିଲେ ଆପଣଙ୍କ ଆକାଉଣ୍ଟ ସହ ଯୋଡ଼ା। ମାମଲାର କୌଣସି ଲେଖା କେବେ ପଠାଯାଏ ନାହିଁ।",
@@ -159,7 +149,6 @@ const or: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n}ଟି ରାୟ ବାକି" },
-    "app.history.selected": { one: "{n}ଟି ଚୟନ କରାଯାଇଛି" },
     "app.history.deleteConfirm": { one: "ଏହି ଫୋନ୍‌ରୁ ରାୟଟି ଡିଲିଟ୍ କରିବେ? ଏହାର ସେୟାର୍ ଲିଙ୍କ୍ ଚାଲୁ ରହିବ।" },
     "app.history.removeConfirm": {
       one: "ଆପଣଙ୍କ ଆକାଉଣ୍ଟରୁ ଏହି ରାୟ ହଟାଇବେ? ସବୁ ଡିଭାଇସ୍‌ରେ ଆପଣ ଲେଖିଥିବା କଥା ଓ ନାମଗୁଡ଼ିକ ଲିଭିଯିବ, ଆଉ ଏହାର ସେୟାର୍ ଲିଙ୍କ୍ କାମ କରିବା ବନ୍ଦ କରିବ। ଏହାକୁ ଆଉ ଫେରାଇହେବ ନାହିଁ।",

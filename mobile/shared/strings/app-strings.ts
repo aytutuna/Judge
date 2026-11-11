@@ -19,16 +19,7 @@ export const APP_EN = {
   // No longer shown; drop it from every locale in one go.
   "app.history.deviceOnly": "Saved on this phone only. Deleting one here doesn't take down its share link.",
   "app.history.delete": "Delete",
-  // Select mode, which removes picked verdicts from the account, or deletes
-  // phone-only ones.
-  "app.history.select": "Select",
-  "app.history.selectAll": "Select all",
-  "app.history.deselectAll": "Deselect all",
-  "app.history.selected": "{n} selected",
-  "app.history.deleteCount": "Delete ({count})",
   "app.history.deleteConfirm": "Delete {n} verdicts from this phone? Their share links keep working.",
-  "app.history.rowSelected": "Selected",
-  "app.history.rowNotSelected": "Not selected",
   // Verdicts kept on the phone by older versions that the account doesn't have.
   "app.history.phoneOnly": "Only on this phone",
   "app.history.phoneOnlyNote":
@@ -66,9 +57,6 @@ export const APP_EN = {
   "app.settings.language": "Language",
   "app.settings.languageDevice": "Same as the phone",
   "app.settings.appearance": "Appearance",
-  "app.settings.appearanceSystem": "Same as the phone",
-  "app.settings.appearanceLight": "Light",
-  "app.settings.appearanceDark": "Dark",
   "app.settings.usageStats": "Usage statistics",
   "app.settings.usageStatsHint":
     "Counts of which screens and features are used, tied to your account when signed in. No case text is ever sent.",
@@ -200,7 +188,6 @@ export type AppKey = keyof typeof APP_EN;
  */
 export const APP_COUNT_KEYS = [
   "app.balance.left",
-  "app.history.selected",
   "app.history.deleteConfirm",
   "app.history.removeConfirm",
   "app.history.phoneOnlyAlso",

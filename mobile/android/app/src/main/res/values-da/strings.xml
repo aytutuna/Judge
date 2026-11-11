@@ -142,7 +142,9 @@
     <string name="nav_account_menu">Kontomenu</string>
     <string name="nav_sign_out">Log ud</string>
     <string name="nav_verdicts">Domme</string>
+    <string name="nav_links">Links</string>
     <string name="nav_tabs">Sektioner</string>
+    <string name="settings_dark_mode">Mørk tilstand</string>
     <string name="tier_locked_sign_in">(låst: log ind for at bruge det)</string>
     <string name="tier_get_premium">Få flere domme</string>
     <string name="tier_checking">Tjekker, om der mangler noget…</string>
@@ -541,20 +543,10 @@
     <string name="app_history_empty">Ingen domme endnu. Få afgjort din første diskussion, så dukker den op her.</string>
     <string name="app_history_device_only">Kun gemt på denne telefon. Sletter du en her, virker dens delingslink stadig.</string>
     <string name="app_history_delete">Slet</string>
-    <string name="app_history_select">Vælg</string>
-    <string name="app_history_select_all">Vælg alle</string>
-    <string name="app_history_deselect_all">Fravælg alle</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s valgt</item>
-        <item quantity="other">%1$s valgt</item>
-    </plurals>
-    <string name="app_history_delete_count">Slet (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Vil du slette dommen fra denne telefon? Delingslinket virker stadig.</item>
         <item quantity="other">Vil du slette %1$s domme fra denne telefon? Delingslinkene virker stadig.</item>
     </plurals>
-    <string name="app_history_row_selected">Valgt</string>
-    <string name="app_history_row_not_selected">Ikke valgt</string>
     <string name="app_history_phone_only">Kun på denne telefon</string>
     <string name="app_history_phone_only_note">Ikke på din konto, kun gemt på denne telefon. Sletter du en her, virker dens delingslink stadig.</string>
     <plurals name="app_history_remove_confirm">
@@ -595,9 +587,6 @@
     <string name="app_settings_language">Sprog</string>
     <string name="app_settings_language_device">Samme som telefonen</string>
     <string name="app_settings_appearance">Udseende</string>
-    <string name="app_settings_appearance_system">Samme som telefonen</string>
-    <string name="app_settings_appearance_light">Lys</string>
-    <string name="app_settings_appearance_dark">Mørk</string>
     <string name="app_settings_usage_stats">Brugsstatistik</string>
     <string name="app_settings_usage_stats_hint">Optællinger af, hvilke skærme og funktioner der bruges, knyttet til din konto, når du er logget ind. Tekst fra sager sendes aldrig.</string>
     <string name="app_settings_about">Om Judge</string>

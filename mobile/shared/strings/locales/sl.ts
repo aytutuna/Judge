@@ -12,15 +12,8 @@ const sl: AppLocale = {
     "app.history.deviceOnly":
       "Shranjeno samo na tem telefonu. Če razsodbo izbrišeš tukaj, njena povezava za deljenje še vedno deluje.",
     "app.history.delete": "Izbriši",
-    "app.history.select": "Izberi",
-    "app.history.selectAll": "Izberi vse",
-    "app.history.deselectAll": "Odznači vse",
-    "app.history.selected": "{n} izbranih",
-    "app.history.deleteCount": "Izbriši ({count})",
     "app.history.deleteConfirm":
       "Želiš s tega telefona izbrisati {n} razsodb? Njihove povezave za deljenje še vedno delujejo.",
-    "app.history.rowSelected": "Izbrano",
-    "app.history.rowNotSelected": "Ni izbrano",
     "app.history.phoneOnly": "Samo na tem telefonu",
     "app.history.phoneOnlyNote":
       "Ni v tvojem računu: te razsodbe so shranjene samo na tem telefonu. Če razsodbo izbrišeš tukaj, njena povezava za deljenje še vedno deluje.",
@@ -60,9 +53,6 @@ const sl: AppLocale = {
     "app.settings.language": "Jezik",
     "app.settings.languageDevice": "Jezik telefona",
     "app.settings.appearance": "Videz",
-    "app.settings.appearanceSystem": "Kot v telefonu",
-    "app.settings.appearanceLight": "Svetlo",
-    "app.settings.appearanceDark": "Temno",
     "app.settings.usageStats": "Statistika uporabe",
     "app.settings.usageStatsHint":
       "Štetje, kateri zasloni in funkcije se uporabljajo, povezano s tvojim računom, ko si prijavljen. Besedilo sporov se nikoli ne pošlje.",
@@ -180,11 +170,6 @@ const sl: AppLocale = {
       one: "Na voljo še {n} razsodba",
       two: "Na voljo še {n} razsodbi",
       few: "Na voljo še {n} razsodbe",
-    },
-    "app.history.selected": {
-      one: "{n} izbrana",
-      two: "{n} izbrani",
-      few: "{n} izbrane",
     },
     "app.history.deleteConfirm": {
       one: "Želiš s tega telefona izbrisati {n} razsodbo? Njena povezava za deljenje še vedno deluje.",

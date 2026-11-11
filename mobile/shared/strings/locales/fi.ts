@@ -11,14 +11,7 @@ const fi: AppLocale = {
     "app.history.empty": "Ei vielä tuomioita. Ratkaise ensimmäinen kiistasi, niin tuomio näkyy täällä.",
     "app.history.deviceOnly": "Tallennettu vain tähän puhelimeen. Jos poistat tuomion täältä, sen jakolinkki toimii edelleen.",
     "app.history.delete": "Poista",
-    "app.history.select": "Valitse",
-    "app.history.selectAll": "Valitse kaikki",
-    "app.history.deselectAll": "Poista valinnat",
-    "app.history.selected": "{n} valittua",
-    "app.history.deleteCount": "Poista ({count})",
     "app.history.deleteConfirm": "Poistetaanko {n} tuomiota tästä puhelimesta? Niiden jakolinkit toimivat edelleen.",
-    "app.history.rowSelected": "Valittu",
-    "app.history.rowNotSelected": "Ei valittu",
     "app.history.phoneOnly": "Vain tässä puhelimessa",
     "app.history.phoneOnlyNote":
       "Nämä eivät ole tililläsi, vaan ne on tallennettu vain tähän puhelimeen. Jos poistat tuomion täältä, sen jakolinkki toimii edelleen.",
@@ -52,9 +45,6 @@ const fi: AppLocale = {
     "app.settings.language": "Kieli",
     "app.settings.languageDevice": "Sama kuin puhelimessa",
     "app.settings.appearance": "Ulkoasu",
-    "app.settings.appearanceSystem": "Sama kuin puhelimessa",
-    "app.settings.appearanceLight": "Vaalea",
-    "app.settings.appearanceDark": "Tumma",
     "app.settings.usageStats": "Käyttötilastot",
     "app.settings.usageStatsHint":
       "Määriä siitä, mitä näkymiä ja toimintoja käytetään, kirjautuneena tiliisi liitettyinä. Juttujen tekstiä ei lähetetä koskaan.",
@@ -158,7 +148,6 @@ const fi: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} tuomio jäljellä" },
-    "app.history.selected": { one: "{n} valittu" },
     "app.history.deleteConfirm": { one: "Poistetaanko tämä tuomio tästä puhelimesta? Sen jakolinkki toimii edelleen." },
     "app.history.removeConfirm": {
       one: "Poistetaanko tämä tuomio tililtäsi? Poisto koskee kaikkia laitteitasi: kirjoittamasi teksti ja nimet pyyhitään, ja sen jakolinkki lakkaa toimimasta. Tätä ei voi perua.",

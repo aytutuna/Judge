@@ -142,7 +142,9 @@
     <string name="nav_account_menu">ଆକାଉଣ୍ଟ ମେନୁ</string>
     <string name="nav_sign_out">ସାଇନ୍ ଆଉଟ୍</string>
     <string name="nav_verdicts">ରାୟ</string>
+    <string name="nav_links">ଲିଙ୍କ</string>
     <string name="nav_tabs">ବିଭାଗ</string>
+    <string name="settings_dark_mode">ଡାର୍କ ମୋଡ୍</string>
     <string name="tier_locked_sign_in">(ଲକ୍: ବ୍ୟବହାର ପାଇଁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ)</string>
     <string name="tier_get_premium">ଅଧିକ ରାୟ ନିଅନ୍ତୁ</string>
     <string name="tier_checking">କିଛି ବାକି ରହିଲା କି ଦେଖୁଛୁ…</string>
@@ -541,20 +543,10 @@
     <string name="app_history_empty">ଏଯାଏଁ କୌଣସି ରାୟ ନାହିଁ। ଆପଣଙ୍କ ପ୍ରଥମ ଝଗଡ଼ା ମେଣ୍ଟାନ୍ତୁ, ତା\'ର ରାୟ ଏଠାରେ ଦେଖାଯିବ।</string>
     <string name="app_history_device_only">କେବଳ ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଛି। ଏଠାରୁ କୌଣସି ରାୟ ଡିଲିଟ୍ କଲେ ବି ତା\'ର ସେୟାର୍ ଲିଙ୍କ୍ ବନ୍ଦ ହୁଏ ନାହିଁ।</string>
     <string name="app_history_delete">ଡିଲିଟ୍</string>
-    <string name="app_history_select">ଚୟନ କରନ୍ତୁ</string>
-    <string name="app_history_select_all">ସବୁ ଚୟନ କରନ୍ତୁ</string>
-    <string name="app_history_deselect_all">ସବୁ ଚୟନ ହଟାନ୍ତୁ</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$sଟି ଚୟନ କରାଯାଇଛି</item>
-        <item quantity="other">%1$sଟି ଚୟନ କରାଯାଇଛି</item>
-    </plurals>
-    <string name="app_history_delete_count">ଡିଲିଟ୍ (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">ଏହି ଫୋନ୍‌ରୁ ରାୟଟି ଡିଲିଟ୍ କରିବେ? ଏହାର ସେୟାର୍ ଲିଙ୍କ୍ ଚାଲୁ ରହିବ।</item>
         <item quantity="other">ଏହି ଫୋନ୍‌ରୁ %1$sଟି ରାୟ ଡିଲିଟ୍ କରିବେ? ସେଗୁଡ଼ିକର ସେୟାର୍ ଲିଙ୍କ୍ ଚାଲୁ ରହିବ।</item>
     </plurals>
-    <string name="app_history_row_selected">ଚୟନ କରାଯାଇଛି</string>
-    <string name="app_history_row_not_selected">ଚୟନ କରାଯାଇନାହିଁ</string>
     <string name="app_history_phone_only">କେବଳ ଏହି ଫୋନ୍‌ରେ</string>
     <string name="app_history_phone_only_note">ଆପଣଙ୍କ ଆକାଉଣ୍ଟରେ ନାହିଁ: ଏଗୁଡ଼ିକ କେବଳ ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଛି। ଏଠାରୁ କୌଣସି ରାୟ ଡିଲିଟ୍ କଲେ ବି ତା\'ର ସେୟାର୍ ଲିଙ୍କ୍ ବନ୍ଦ ହୁଏ ନାହିଁ।</string>
     <plurals name="app_history_remove_confirm">
@@ -595,9 +587,6 @@
     <string name="app_settings_language">ଭାଷା</string>
     <string name="app_settings_language_device">ଫୋନ୍‌ର ଭାଷା</string>
     <string name="app_settings_appearance">ଥିମ୍</string>
-    <string name="app_settings_appearance_system">ଫୋନ୍ ଅନୁସାରେ</string>
-    <string name="app_settings_appearance_light">ହାଲୁକା</string>
-    <string name="app_settings_appearance_dark">ଗାଢ଼</string>
     <string name="app_settings_usage_stats">ବ୍ୟବହାର ପରିସଂଖ୍ୟାନ</string>
     <string name="app_settings_usage_stats_hint">କେଉଁ ସ୍କ୍ରିନ ଓ ସୁବିଧା ବ୍ୟବହାର ହୁଏ, ତା\'ର ଗଣନା, ସାଇନ୍ ଇନ୍ ଥିଲେ ଆପଣଙ୍କ ଆକାଉଣ୍ଟ ସହ ଯୋଡ଼ା। ମାମଲାର କୌଣସି ଲେଖା କେବେ ପଠାଯାଏ ନାହିଁ।</string>
     <string name="app_settings_about">Judge ବିଷୟରେ</string>

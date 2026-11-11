@@ -154,7 +154,9 @@
     <string name="nav_account_menu">قائمة الحساب</string>
     <string name="nav_sign_out">تسجيل الخروج</string>
     <string name="nav_verdicts">الأحكام</string>
+    <string name="nav_links">الروابط</string>
     <string name="nav_tabs">الأقسام</string>
+    <string name="settings_dark_mode">الوضع الداكن</string>
     <string name="tier_locked_sign_in">(مقفل: سجّل الدخول لاستخدامه)</string>
     <string name="tier_get_premium">المزيد من الأحكام</string>
     <string name="tier_checking">نتحقق إن كان ينقص شيء…</string>
@@ -585,18 +587,6 @@
     <string name="app_history_empty">لا أحكام بعد. احسم أول خلاف لك وسيظهر حكمه هنا.</string>
     <string name="app_history_device_only">الأحكام محفوظة على هذا الهاتف فقط. حذف حكم من هنا لا يوقف رابط مشاركته.</string>
     <string name="app_history_delete">حذف</string>
-    <string name="app_history_select">تحديد</string>
-    <string name="app_history_select_all">تحديد الكل</string>
-    <string name="app_history_deselect_all">إلغاء تحديد الكل</string>
-    <plurals name="app_history_selected">
-        <item quantity="zero">لم يُحدَّد أي حكم</item>
-        <item quantity="one">تم تحديد حكم واحد</item>
-        <item quantity="two">تم تحديد حكمين</item>
-        <item quantity="few">تم تحديد %1$s أحكام</item>
-        <item quantity="many">تم تحديد %1$s حكمًا</item>
-        <item quantity="other">تم تحديد %1$s حكم</item>
-    </plurals>
-    <string name="app_history_delete_count">حذف (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="zero">لا أحكام محددة للحذف.</item>
         <item quantity="one">هل تريد حذف هذا الحكم من هذا الهاتف؟ سيبقى رابط مشاركته يعمل.</item>
@@ -605,8 +595,6 @@
         <item quantity="many">هل تريد حذف %1$s حكمًا من هذا الهاتف؟ ستبقى روابط مشاركتها تعمل.</item>
         <item quantity="other">هل تريد حذف %1$s حكم من هذا الهاتف؟ ستبقى روابط مشاركتها تعمل.</item>
     </plurals>
-    <string name="app_history_row_selected">محدد</string>
-    <string name="app_history_row_not_selected">غير محدد</string>
     <string name="app_history_phone_only">على هذا الهاتف فقط</string>
     <string name="app_history_phone_only_note">ليست في حسابك: هذه الأحكام محفوظة على هذا الهاتف فقط. حذف حكم منها هنا لا يوقف رابط مشاركته.</string>
     <plurals name="app_history_remove_confirm">
@@ -663,9 +651,6 @@
     <string name="app_settings_language">اللغة</string>
     <string name="app_settings_language_device">لغة الهاتف</string>
     <string name="app_settings_appearance">المظهر</string>
-    <string name="app_settings_appearance_system">مثل الهاتف</string>
-    <string name="app_settings_appearance_light">فاتح</string>
-    <string name="app_settings_appearance_dark">داكن</string>
     <string name="app_settings_usage_stats">إحصاءات الاستخدام</string>
     <string name="app_settings_usage_stats_hint">أعداد للشاشات والميزات المستخدمة، مرتبطة بحسابك عند تسجيل الدخول. لا يُرسَل أي نص من القضايا أبدًا.</string>
     <string name="app_settings_about">عن Judge</string>

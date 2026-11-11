@@ -12,15 +12,8 @@ const ar: AppLocale = {
     "app.history.deviceOnly":
       "الأحكام محفوظة على هذا الهاتف فقط. حذف حكم من هنا لا يوقف رابط مشاركته.",
     "app.history.delete": "حذف",
-    "app.history.select": "تحديد",
-    "app.history.selectAll": "تحديد الكل",
-    "app.history.deselectAll": "إلغاء تحديد الكل",
-    "app.history.selected": "تم تحديد {n} حكم",
-    "app.history.deleteCount": "حذف ({count})",
     "app.history.deleteConfirm":
       "هل تريد حذف {n} حكم من هذا الهاتف؟ ستبقى روابط مشاركتها تعمل.",
-    "app.history.rowSelected": "محدد",
-    "app.history.rowNotSelected": "غير محدد",
     "app.history.phoneOnly": "على هذا الهاتف فقط",
     "app.history.phoneOnlyNote":
       "ليست في حسابك: هذه الأحكام محفوظة على هذا الهاتف فقط. حذف حكم منها هنا لا يوقف رابط مشاركته.",
@@ -60,9 +53,6 @@ const ar: AppLocale = {
     "app.settings.language": "اللغة",
     "app.settings.languageDevice": "لغة الهاتف",
     "app.settings.appearance": "المظهر",
-    "app.settings.appearanceSystem": "مثل الهاتف",
-    "app.settings.appearanceLight": "فاتح",
-    "app.settings.appearanceDark": "داكن",
     "app.settings.usageStats": "إحصاءات الاستخدام",
     "app.settings.usageStatsHint":
       "أعداد للشاشات والميزات المستخدمة، مرتبطة بحسابك عند تسجيل الدخول. لا يُرسَل أي نص من القضايا أبدًا.",
@@ -180,13 +170,6 @@ const ar: AppLocale = {
       two: "بقي لك حكمان",
       few: "بقي لك {n} أحكام",
       many: "بقي لك {n} حكمًا",
-    },
-    "app.history.selected": {
-      zero: "لم يُحدَّد أي حكم",
-      one: "تم تحديد حكم واحد",
-      two: "تم تحديد حكمين",
-      few: "تم تحديد {n} أحكام",
-      many: "تم تحديد {n} حكمًا",
     },
     "app.history.deleteConfirm": {
       zero: "لا أحكام محددة للحذف.",

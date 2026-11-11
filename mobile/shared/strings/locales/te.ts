@@ -11,14 +11,7 @@ const te: AppLocale = {
     "app.history.empty": "ఇంకా తీర్పులేవీ లేవు. మీ మొదటి గొడవ తేల్చుకోండి, దాని తీర్పు ఇక్కడ కనిపిస్తుంది.",
     "app.history.deviceOnly": "ఇవి ఈ ఫోన్‌లో మాత్రమే సేవ్ అయ్యాయి. ఇక్కడ ఒకదాన్ని డిలీట్ చేసినా దాని షేర్ లింక్ ఆగిపోదు.",
     "app.history.delete": "డిలీట్",
-    "app.history.select": "ఎంచుకోండి",
-    "app.history.selectAll": "అన్నీ ఎంచుకోండి",
-    "app.history.deselectAll": "ఎంపికలన్నీ తీసివేయండి",
-    "app.history.selected": "{n} ఎంచుకోబడ్డాయి",
-    "app.history.deleteCount": "డిలీట్ ({count})",
     "app.history.deleteConfirm": "ఈ ఫోన్ నుంచి {n} తీర్పులను డిలీట్ చేయాలా? వాటి షేర్ లింక్‌లు పని చేస్తూనే ఉంటాయి.",
-    "app.history.rowSelected": "ఎంచుకోబడింది",
-    "app.history.rowNotSelected": "ఎంచుకోబడలేదు",
     "app.history.phoneOnly": "ఈ ఫోన్‌లో మాత్రమే",
     "app.history.phoneOnlyNote":
       "మీ అకౌంట్‌లో లేవు: ఇవి ఈ ఫోన్‌లో మాత్రమే సేవ్ అయ్యాయి. ఇక్కడ ఒకదాన్ని డిలీట్ చేసినా దాని షేర్ లింక్ ఆగిపోదు.",
@@ -52,9 +45,6 @@ const te: AppLocale = {
     "app.settings.language": "భాష",
     "app.settings.languageDevice": "ఫోన్ భాషే",
     "app.settings.appearance": "థీమ్",
-    "app.settings.appearanceSystem": "ఫోన్ ప్రకారం",
-    "app.settings.appearanceLight": "లైట్",
-    "app.settings.appearanceDark": "డార్క్",
     "app.settings.usageStats": "వినియోగ గణాంకాలు",
     "app.settings.usageStatsHint":
       "ఏ స్క్రీన్‌లు, ఫీచర్‌లు వాడుతున్నారో లెక్కలు, సైన్ ఇన్ అయి ఉన్నప్పుడు మీ ఖాతాకు జోడించబడతాయి. కేసులోని ఏ పాఠ్యమూ ఎప్పుడూ పంపబడదు.",
@@ -158,7 +148,6 @@ const te: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "1 తీర్పు మిగిలింది" },
-    "app.history.selected": { one: "{n} ఎంచుకోబడింది" },
     "app.history.deleteConfirm": { one: "ఈ తీర్పును ఈ ఫోన్ నుంచి డిలీట్ చేయాలా? దాని షేర్ లింక్ పని చేస్తూనే ఉంటుంది." },
     "app.history.removeConfirm": {
       one: "ఈ తీర్పును మీ అకౌంట్ నుంచి తీసేయాలా? ప్రతి డివైస్‌లోనూ మీరు రాసింది, పేర్లు చెరిగిపోతాయి, దాని షేర్ లింక్ పనిచేయడం ఆగిపోతుంది. దీన్ని వెనక్కి తీసుకోలేరు.",

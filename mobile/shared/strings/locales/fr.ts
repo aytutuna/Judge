@@ -11,15 +11,8 @@ const fr: AppLocale = {
     "app.history.deviceOnly":
       "Enregistrés uniquement sur ce téléphone. En supprimer un ici ne désactive pas son lien de partage.",
     "app.history.delete": "Supprimer",
-    "app.history.select": "Sélectionner",
-    "app.history.selectAll": "Tout sélectionner",
-    "app.history.deselectAll": "Tout désélectionner",
-    "app.history.selected": "{n} sélectionnés",
-    "app.history.deleteCount": "Supprimer ({count})",
     "app.history.deleteConfirm":
       "Supprimer {n} verdicts de ce téléphone ? Leurs liens de partage continueront de fonctionner.",
-    "app.history.rowSelected": "Sélectionné",
-    "app.history.rowNotSelected": "Non sélectionné",
     "app.history.phoneOnly": "Uniquement sur ce téléphone",
     "app.history.phoneOnlyNote":
       "Pas dans ton compte : ces verdicts sont enregistrés uniquement sur ce téléphone. En supprimer un ici ne désactive pas son lien de partage.",
@@ -54,9 +47,6 @@ const fr: AppLocale = {
     "app.settings.language": "Langue",
     "app.settings.languageDevice": "Langue du téléphone",
     "app.settings.appearance": "Apparence",
-    "app.settings.appearanceSystem": "Comme le téléphone",
-    "app.settings.appearanceLight": "Clair",
-    "app.settings.appearanceDark": "Sombre",
     "app.settings.usageStats": "Statistiques d’utilisation",
     "app.settings.usageStatsHint":
       "Des comptages des écrans et fonctions utilisés, liés à ton compte si tu es connecté. Le texte des dossiers n’est jamais envoyé.",
@@ -160,7 +150,6 @@ const fr: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Il te reste {n} verdict" },
-    "app.history.selected": { one: "{n} sélectionné" },
     "app.history.deleteConfirm": {
       one: "Supprimer {n} verdict de ce téléphone ? Son lien de partage continuera de fonctionner.",
     },

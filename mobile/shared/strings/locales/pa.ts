@@ -10,14 +10,7 @@ const pa: AppLocale = {
     "app.history.empty": "ਹਾਲੇ ਕੋਈ ਫ਼ੈਸਲਾ ਨਹੀਂ। ਆਪਣੀ ਪਹਿਲੀ ਬਹਿਸ ਦਾ ਨਿਬੇੜਾ ਕਰਾਓ, ਫ਼ੈਸਲਾ ਇੱਥੇ ਦਿਖੇਗਾ।",
     "app.history.deviceOnly": "ਇਹ ਸਿਰਫ਼ ਇਸ ਫ਼ੋਨ ’ਤੇ ਸੇਵ ਹਨ। ਇੱਥੋਂ ਕੋਈ ਫ਼ੈਸਲਾ ਮਿਟਾਉਣ ਨਾਲ ਉਸ ਦਾ ਸਾਂਝਾ ਲਿੰਕ ਬੰਦ ਨਹੀਂ ਹੁੰਦਾ।",
     "app.history.delete": "ਮਿਟਾਓ",
-    "app.history.select": "ਚੁਣੋ",
-    "app.history.selectAll": "ਸਭ ਚੁਣੋ",
-    "app.history.deselectAll": "ਚੋਣ ਹਟਾਓ",
-    "app.history.selected": "{n} ਚੁਣੇ ਗਏ",
-    "app.history.deleteCount": "ਮਿਟਾਓ ({count})",
     "app.history.deleteConfirm": "ਇਸ ਫ਼ੋਨ ਤੋਂ {n} ਫ਼ੈਸਲੇ ਮਿਟਾਉਣੇ ਹਨ? ਉਨ੍ਹਾਂ ਦੇ ਸਾਂਝੇ ਲਿੰਕ ਕੰਮ ਕਰਦੇ ਰਹਿਣਗੇ।",
-    "app.history.rowSelected": "ਚੁਣਿਆ ਗਿਆ",
-    "app.history.rowNotSelected": "ਚੁਣਿਆ ਨਹੀਂ ਗਿਆ",
     "app.history.phoneOnly": "ਸਿਰਫ਼ ਇਸ ਫ਼ੋਨ ’ਤੇ",
     "app.history.phoneOnlyNote":
       "ਤੁਹਾਡੇ ਖਾਤੇ ਵਿੱਚ ਨਹੀਂ: ਇਹ ਸਿਰਫ਼ ਇਸ ਫ਼ੋਨ ’ਤੇ ਸੇਵ ਹਨ। ਇੱਥੋਂ ਕੋਈ ਫ਼ੈਸਲਾ ਮਿਟਾਉਣ ਨਾਲ ਉਸ ਦਾ ਸਾਂਝਾ ਲਿੰਕ ਬੰਦ ਨਹੀਂ ਹੁੰਦਾ।",
@@ -52,9 +45,6 @@ const pa: AppLocale = {
     "app.settings.language": "ਭਾਸ਼ਾ",
     "app.settings.languageDevice": "ਫ਼ੋਨ ਵਾਲੀ ਭਾਸ਼ਾ",
     "app.settings.appearance": "ਦਿੱਖ",
-    "app.settings.appearanceSystem": "ਫ਼ੋਨ ਵਾਂਗ",
-    "app.settings.appearanceLight": "ਹਲਕੀ",
-    "app.settings.appearanceDark": "ਗੂੜ੍ਹੀ",
     "app.settings.usageStats": "ਵਰਤੋਂ ਦੇ ਅੰਕੜੇ",
     "app.settings.usageStatsHint":
       "ਕਿਹੜੀਆਂ ਸਕ੍ਰੀਨਾਂ ਅਤੇ ਸਹੂਲਤਾਂ ਵਰਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ, ਇਸਦੀ ਗਿਣਤੀ, ਸਾਈਨ ਇਨ ਹੋਣ 'ਤੇ ਤੁਹਾਡੇ ਖਾਤੇ ਨਾਲ ਜੁੜੀ। ਕੇਸ ਦੀ ਕੋਈ ਵੀ ਲਿਖਤ ਕਦੇ ਨਹੀਂ ਭੇਜੀ ਜਾਂਦੀ।",
@@ -158,7 +148,6 @@ const pa: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} ਫ਼ੈਸਲਾ ਬਾਕੀ" },
-    "app.history.selected": { one: "{n} ਚੁਣਿਆ ਗਿਆ" },
     "app.history.deleteConfirm": { one: "ਇਸ ਫ਼ੋਨ ਤੋਂ {n} ਫ਼ੈਸਲਾ ਮਿਟਾਉਣਾ ਹੈ? ਉਸ ਦਾ ਸਾਂਝਾ ਲਿੰਕ ਕੰਮ ਕਰਦਾ ਰਹੇਗਾ।" },
     "app.history.removeConfirm": {
       one: "ਆਪਣੇ ਖਾਤੇ ਵਿੱਚੋਂ {n} ਫ਼ੈਸਲਾ ਹਟਾਉਣਾ ਹੈ? ਇਹ ਹਰ ਡਿਵਾਈਸ ਤੋਂ ਹਟ ਜਾਵੇਗਾ: ਤੁਹਾਡੀ ਲਿਖਤ ਅਤੇ ਨਾਂ ਮਿਟ ਜਾਣਗੇ ਅਤੇ ਇਸ ਦਾ ਸਾਂਝਾ ਲਿੰਕ ਕੰਮ ਕਰਨਾ ਬੰਦ ਕਰ ਦੇਵੇਗਾ। ਇਹ ਵਾਪਸ ਨਹੀਂ ਹੋ ਸਕਦਾ।",

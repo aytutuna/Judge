@@ -139,7 +139,9 @@
     <string name="nav_account_menu">Menu tài khoản</string>
     <string name="nav_sign_out">Đăng xuất</string>
     <string name="nav_verdicts">Phán quyết</string>
+    <string name="nav_links">Liên kết</string>
     <string name="nav_tabs">Mục</string>
+    <string name="settings_dark_mode">Chế độ tối</string>
     <string name="tier_locked_sign_in">(đã khóa: đăng nhập để dùng)</string>
     <string name="tier_get_premium">Thêm lượt phán quyết</string>
     <string name="tier_checking">Đang xem có thiếu gì không…</string>
@@ -530,18 +532,9 @@
     <string name="app_history_empty">Chưa có phán quyết nào. Phân xử cuộc tranh cãi đầu tiên của bạn, kết quả sẽ hiện ở đây.</string>
     <string name="app_history_device_only">Chỉ lưu trên điện thoại này. Xóa một phán quyết ở đây thì liên kết chia sẻ của nó vẫn hoạt động.</string>
     <string name="app_history_delete">Xóa</string>
-    <string name="app_history_select">Chọn</string>
-    <string name="app_history_select_all">Chọn tất cả</string>
-    <string name="app_history_deselect_all">Bỏ chọn tất cả</string>
-    <plurals name="app_history_selected">
-        <item quantity="other">Đã chọn %1$s</item>
-    </plurals>
-    <string name="app_history_delete_count">Xóa (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="other">Xóa %1$s phán quyết khỏi điện thoại này? Liên kết chia sẻ vẫn hoạt động.</item>
     </plurals>
-    <string name="app_history_row_selected">Đã chọn</string>
-    <string name="app_history_row_not_selected">Chưa chọn</string>
     <string name="app_history_phone_only">Chỉ có trên điện thoại này</string>
     <string name="app_history_phone_only_note">Không có trong tài khoản của bạn: các phán quyết này chỉ lưu trên điện thoại này. Xóa một phán quyết ở đây thì liên kết chia sẻ của nó vẫn hoạt động.</string>
     <plurals name="app_history_remove_confirm">
@@ -578,9 +571,6 @@
     <string name="app_settings_language">Ngôn ngữ</string>
     <string name="app_settings_language_device">Theo điện thoại</string>
     <string name="app_settings_appearance">Giao diện</string>
-    <string name="app_settings_appearance_system">Theo điện thoại</string>
-    <string name="app_settings_appearance_light">Sáng</string>
-    <string name="app_settings_appearance_dark">Tối</string>
     <string name="app_settings_usage_stats">Thống kê sử dụng</string>
     <string name="app_settings_usage_stats_hint">Đếm những màn hình và tính năng được dùng, gắn với tài khoản của bạn khi đã đăng nhập. Nội dung các vụ không bao giờ được gửi đi.</string>
     <string name="app_settings_about">Về Judge</string>

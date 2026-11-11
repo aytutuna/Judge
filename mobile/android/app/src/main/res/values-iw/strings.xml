@@ -145,7 +145,9 @@
     <string name="nav_account_menu">תפריט החשבון</string>
     <string name="nav_sign_out">התנתקות</string>
     <string name="nav_verdicts">פסקי דין</string>
+    <string name="nav_links">קישורים</string>
     <string name="nav_tabs">אזורים</string>
+    <string name="settings_dark_mode">מצב כהה</string>
     <string name="tier_locked_sign_in">(נעול: צריך להתחבר כדי להשתמש)</string>
     <string name="tier_get_premium">עוד פסקי דין</string>
     <string name="tier_checking">בודקים אם חסר משהו…</string>
@@ -552,22 +554,11 @@
     <string name="app_history_empty">עוד אין פסקי דין. כשהוויכוח הראשון שלך יוכרע, פסק הדין יופיע כאן.</string>
     <string name="app_history_device_only">פסקי הדין שמורים רק בטלפון הזה. מחיקה של פסק דין כאן לא מבטלת את קישור השיתוף שלו.</string>
     <string name="app_history_delete">מחיקה</string>
-    <string name="app_history_select">בחירה</string>
-    <string name="app_history_select_all">בחירת הכול</string>
-    <string name="app_history_deselect_all">ביטול הבחירה</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s נבחר</item>
-        <item quantity="two">%1$s נבחרו</item>
-        <item quantity="other">%1$s נבחרו</item>
-    </plurals>
-    <string name="app_history_delete_count">מחיקה (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">למחוק את פסק הדין מהטלפון הזה? קישור השיתוף שלו ימשיך לעבוד.</item>
         <item quantity="two">למחוק את שני פסקי הדין מהטלפון הזה? קישורי השיתוף שלהם ימשיכו לעבוד.</item>
         <item quantity="other">למחוק %1$s פסקי דין מהטלפון הזה? קישורי השיתוף שלהם ימשיכו לעבוד.</item>
     </plurals>
-    <string name="app_history_row_selected">נבחר</string>
-    <string name="app_history_row_not_selected">לא נבחר</string>
     <string name="app_history_phone_only">רק בטלפון הזה</string>
     <string name="app_history_phone_only_note">לא בחשבון שלך: אלה שמורים רק בטלפון הזה. מחיקה של פסק דין כאן לא מבטלת את קישור השיתוף שלו.</string>
     <plurals name="app_history_remove_confirm">
@@ -612,9 +603,6 @@
     <string name="app_settings_language">שפה</string>
     <string name="app_settings_language_device">כמו בטלפון</string>
     <string name="app_settings_appearance">מראה</string>
-    <string name="app_settings_appearance_system">כמו בטלפון</string>
-    <string name="app_settings_appearance_light">בהיר</string>
-    <string name="app_settings_appearance_dark">כהה</string>
     <string name="app_settings_usage_stats">סטטיסטיקות שימוש</string>
     <string name="app_settings_usage_stats_hint">ספירות של המסכים והתכונות שבשימוש, מקושרות לחשבון שלך כשנכנסת אליו. טקסט מתיקים לא נשלח אף פעם.</string>
     <string name="app_settings_about">על Judge</string>

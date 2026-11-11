@@ -148,7 +148,9 @@
     <string name="nav_account_menu">Menu konta</string>
     <string name="nav_sign_out">Wyloguj się</string>
     <string name="nav_verdicts">Werdykty</string>
+    <string name="nav_links">Linki</string>
     <string name="nav_tabs">Sekcje</string>
+    <string name="settings_dark_mode">Tryb ciemny</string>
     <string name="tier_locked_sign_in">(zablokowane: zaloguj się, żeby użyć)</string>
     <string name="tier_get_premium">Kup więcej werdyktów</string>
     <string name="tier_checking">Sprawdzamy, czy czegoś nie brakuje…</string>
@@ -563,24 +565,12 @@
     <string name="app_history_empty">Nie masz jeszcze werdyktów. Rozstrzygnij pierwszy spór, a werdykt pojawi się tutaj.</string>
     <string name="app_history_device_only">Zapisane tylko na tym telefonie. Usunięcie werdyktu tutaj nie wyłącza linku do udostępniania.</string>
     <string name="app_history_delete">Usuń</string>
-    <string name="app_history_select">Wybierz</string>
-    <string name="app_history_select_all">Zaznacz wszystko</string>
-    <string name="app_history_deselect_all">Odznacz wszystko</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">Wybrano: %1$s</item>
-        <item quantity="few">Wybrano: %1$s</item>
-        <item quantity="many">Wybrano: %1$s</item>
-        <item quantity="other">Wybrano: %1$s</item>
-    </plurals>
-    <string name="app_history_delete_count">Usuń (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Usunąć ten werdykt z tego telefonu? Jego link do udostępniania nadal będzie działać.</item>
         <item quantity="few">Usunąć %1$s werdykty z tego telefonu? Ich linki do udostępniania nadal będą działać.</item>
         <item quantity="many">Usunąć %1$s werdyktów z tego telefonu? Ich linki do udostępniania nadal będą działać.</item>
         <item quantity="other">Usunąć %1$s werdyktów z tego telefonu? Ich linki do udostępniania nadal będą działać.</item>
     </plurals>
-    <string name="app_history_row_selected">Zaznaczone</string>
-    <string name="app_history_row_not_selected">Niezaznaczone</string>
     <string name="app_history_phone_only">Tylko na tym telefonie</string>
     <string name="app_history_phone_only_note">Nie ma ich na twoim koncie: są zapisane tylko na tym telefonie. Usunięcie werdyktu tutaj nie wyłącza linku do udostępniania.</string>
     <plurals name="app_history_remove_confirm">
@@ -629,9 +619,6 @@
     <string name="app_settings_language">Język</string>
     <string name="app_settings_language_device">Jak w telefonie</string>
     <string name="app_settings_appearance">Wygląd</string>
-    <string name="app_settings_appearance_system">Jak w telefonie</string>
-    <string name="app_settings_appearance_light">Jasny</string>
-    <string name="app_settings_appearance_dark">Ciemny</string>
     <string name="app_settings_usage_stats">Statystyki użycia</string>
     <string name="app_settings_usage_stats_hint">Liczniki tego, które ekrany i funkcje są używane, po zalogowaniu powiązane z twoim kontem. Tekst spraw nigdy nie jest wysyłany.</string>
     <string name="app_settings_about">O Judge</string>

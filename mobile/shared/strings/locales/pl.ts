@@ -12,14 +12,7 @@ const pl: AppLocale = {
     "app.history.deviceOnly":
       "Zapisane tylko na tym telefonie. Usunięcie werdyktu tutaj nie wyłącza linku do udostępniania.",
     "app.history.delete": "Usuń",
-    "app.history.select": "Wybierz",
-    "app.history.selectAll": "Zaznacz wszystko",
-    "app.history.deselectAll": "Odznacz wszystko",
-    "app.history.selected": "Wybrano: {n}",
-    "app.history.deleteCount": "Usuń ({count})",
     "app.history.deleteConfirm": "Usunąć {n} werdyktów z tego telefonu? Ich linki do udostępniania nadal będą działać.",
-    "app.history.rowSelected": "Zaznaczone",
-    "app.history.rowNotSelected": "Niezaznaczone",
     "app.history.phoneOnly": "Tylko na tym telefonie",
     "app.history.phoneOnlyNote":
       "Nie ma ich na twoim koncie: są zapisane tylko na tym telefonie. Usunięcie werdyktu tutaj nie wyłącza linku do udostępniania.",
@@ -55,9 +48,6 @@ const pl: AppLocale = {
     "app.settings.language": "Język",
     "app.settings.languageDevice": "Jak w telefonie",
     "app.settings.appearance": "Wygląd",
-    "app.settings.appearanceSystem": "Jak w telefonie",
-    "app.settings.appearanceLight": "Jasny",
-    "app.settings.appearanceDark": "Ciemny",
     "app.settings.usageStats": "Statystyki użycia",
     "app.settings.usageStatsHint":
       "Liczniki tego, które ekrany i funkcje są używane, po zalogowaniu powiązane z twoim kontem. Tekst spraw nigdy nie jest wysyłany.",
@@ -165,7 +155,6 @@ const pl: AppLocale = {
       few: "Zostały ci {n} werdykty",
       many: "Zostało ci {n} werdyktów",
     },
-    "app.history.selected": { one: "Wybrano: {n}", few: "Wybrano: {n}", many: "Wybrano: {n}" },
     "app.history.deleteConfirm": {
       one: "Usunąć ten werdykt z tego telefonu? Jego link do udostępniania nadal będzie działać.",
       few: "Usunąć {n} werdykty z tego telefonu? Ich linki do udostępniania nadal będą działać.",

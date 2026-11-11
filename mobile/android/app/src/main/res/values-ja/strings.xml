@@ -139,7 +139,9 @@
     <string name="nav_account_menu">アカウントメニュー</string>
     <string name="nav_sign_out">ログアウト</string>
     <string name="nav_verdicts">判定一覧</string>
+    <string name="nav_links">リンク</string>
     <string name="nav_tabs">セクション</string>
+    <string name="settings_dark_mode">ダークモード</string>
     <string name="tier_locked_sign_in">（ロック中：ログインすると使えます）</string>
     <string name="tier_get_premium">判定回数を追加</string>
     <string name="tier_checking">足りない情報がないか確認しています…</string>
@@ -530,18 +532,9 @@
     <string name="app_history_empty">まだ判定はありません。最初の揉めごとに白黒つけると、ここに表示されます。</string>
     <string name="app_history_device_only">この端末にだけ保存されています。ここで削除しても、シェア用リンクはそのまま使えます。</string>
     <string name="app_history_delete">削除</string>
-    <string name="app_history_select">選択</string>
-    <string name="app_history_select_all">すべて選択</string>
-    <string name="app_history_deselect_all">すべての選択を解除</string>
-    <plurals name="app_history_selected">
-        <item quantity="other">%1$s件を選択中</item>
-    </plurals>
-    <string name="app_history_delete_count">削除（%1$s）</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="other">この端末から%1$s件の判定を削除しますか？　シェア用リンクはそのまま使えます。</item>
     </plurals>
-    <string name="app_history_row_selected">選択済み</string>
-    <string name="app_history_row_not_selected">未選択</string>
     <string name="app_history_phone_only">この端末にのみ保存</string>
     <string name="app_history_phone_only_note">アカウントには保存されておらず、この端末にだけ保存されています。ここで削除しても、シェア用リンクはそのまま使えます。</string>
     <plurals name="app_history_remove_confirm">
@@ -578,9 +571,6 @@
     <string name="app_settings_language">言語</string>
     <string name="app_settings_language_device">端末の設定に合わせる</string>
     <string name="app_settings_appearance">外観モード</string>
-    <string name="app_settings_appearance_system">端末の設定に合わせる</string>
-    <string name="app_settings_appearance_light">ライト</string>
-    <string name="app_settings_appearance_dark">ダーク</string>
     <string name="app_settings_usage_stats">利用状況の統計</string>
     <string name="app_settings_usage_stats_hint">どの画面や機能が使われたかを集計します。ログイン中はアカウントにひも付きます。ケースの文章が送信されることはありません。</string>
     <string name="app_settings_about">Judgeについて</string>

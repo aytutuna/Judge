@@ -142,7 +142,9 @@
     <string name="nav_account_menu">अकाउंट मेन्यू</string>
     <string name="nav_sign_out">साइन आउट</string>
     <string name="nav_verdicts">फ़ैसले</string>
+    <string name="nav_links">लिंक</string>
     <string name="nav_tabs">सेक्शन</string>
+    <string name="settings_dark_mode">डार्क मोड</string>
     <string name="tier_locked_sign_in">(लॉक है: इस्तेमाल के लिए साइन इन करें)</string>
     <string name="tier_get_premium">और फ़ैसले पाएँ</string>
     <string name="tier_checking">देख रहे हैं कि कुछ छूटा तो नहीं…</string>
@@ -541,20 +543,10 @@
     <string name="app_history_empty">अभी तक कोई फ़ैसला नहीं। अपनी पहली बहस सुलझाएँ, उसका फ़ैसला यहीं दिखेगा।</string>
     <string name="app_history_device_only">ये सिर्फ़ इसी फ़ोन में सेव हैं। यहाँ से कोई फ़ैसला हटाने पर भी उसका शेयर लिंक बंद नहीं होता।</string>
     <string name="app_history_delete">हटाएँ</string>
-    <string name="app_history_select">चुनें</string>
-    <string name="app_history_select_all">सभी चुनें</string>
-    <string name="app_history_deselect_all">चयन हटाएँ</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s चुना गया</item>
-        <item quantity="other">%1$s चुने गए</item>
-    </plurals>
-    <string name="app_history_delete_count">हटाएँ (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">इस फ़ोन से %1$s फ़ैसला हटाएँ? उसका शेयर लिंक काम करता रहेगा।</item>
         <item quantity="other">इस फ़ोन से %1$s फ़ैसले हटाएँ? उनके शेयर लिंक काम करते रहेंगे।</item>
     </plurals>
-    <string name="app_history_row_selected">चुना गया</string>
-    <string name="app_history_row_not_selected">नहीं चुना गया</string>
     <string name="app_history_phone_only">सिर्फ़ इसी फ़ोन में</string>
     <string name="app_history_phone_only_note">आपके अकाउंट में नहीं: ये सिर्फ़ इसी फ़ोन में सेव हैं। यहाँ से कोई फ़ैसला हटाने पर भी उसका शेयर लिंक बंद नहीं होता।</string>
     <plurals name="app_history_remove_confirm">
@@ -595,9 +587,6 @@
     <string name="app_settings_language">भाषा</string>
     <string name="app_settings_language_device">फ़ोन की भाषा</string>
     <string name="app_settings_appearance">थीम</string>
-    <string name="app_settings_appearance_system">फ़ोन के अनुसार</string>
-    <string name="app_settings_appearance_light">लाइट</string>
-    <string name="app_settings_appearance_dark">डार्क</string>
     <string name="app_settings_usage_stats">इस्तेमाल के आँकड़े</string>
     <string name="app_settings_usage_stats_hint">कौन-सी स्क्रीन और सुविधाएँ इस्तेमाल होती हैं, इसकी गिनती, साइन इन होने पर आपके खाते से जुड़ी। केस का कोई भी टेक्स्ट कभी नहीं भेजा जाता।</string>
     <string name="app_settings_about">Judge के बारे में</string>

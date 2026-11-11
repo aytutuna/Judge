@@ -12,14 +12,7 @@ const ru: AppLocale = {
     "app.history.deviceOnly":
       "Вердикты хранятся только на этом телефоне. Если удалить вердикт здесь, ссылка на него продолжит работать.",
     "app.history.delete": "Удалить",
-    "app.history.select": "Выбрать",
-    "app.history.selectAll": "Выбрать все",
-    "app.history.deselectAll": "Отменить выбор",
-    "app.history.selected": "Выбрано: {n}",
-    "app.history.deleteCount": "Удалить ({count})",
     "app.history.deleteConfirm": "Удалить {n} вердиктов с этого телефона? Ссылки на них продолжат работать.",
-    "app.history.rowSelected": "Выбрано",
-    "app.history.rowNotSelected": "Не выбрано",
     "app.history.phoneOnly": "Только на этом телефоне",
     "app.history.phoneOnlyNote":
       "Их нет в вашем аккаунте: эти вердикты хранятся только на этом телефоне. Если удалить вердикт здесь, ссылка на него продолжит работать.",
@@ -54,9 +47,6 @@ const ru: AppLocale = {
     "app.settings.language": "Язык",
     "app.settings.languageDevice": "Как на телефоне",
     "app.settings.appearance": "Оформление",
-    "app.settings.appearanceSystem": "Как на телефоне",
-    "app.settings.appearanceLight": "Светлое",
-    "app.settings.appearanceDark": "Тёмное",
     "app.settings.usageStats": "Статистика использования",
     "app.settings.usageStatsHint":
       "Подсчёт того, какие экраны и функции используются, — после входа он привязан к вашему аккаунту. Текст дел никогда не отправляется.",
@@ -164,11 +154,6 @@ const ru: AppLocale = {
       one: "Остался {n} вердикт",
       few: "Осталось {n} вердикта",
       many: "Осталось {n} вердиктов",
-    },
-    "app.history.selected": {
-      one: "Выбрано: {n}",
-      few: "Выбрано: {n}",
-      many: "Выбрано: {n}",
     },
     "app.history.deleteConfirm": {
       one: "Удалить {n} вердикт с этого телефона? Ссылка на него продолжит работать.",

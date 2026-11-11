@@ -12,14 +12,7 @@ const ms: AppLocale = {
     "app.history.deviceOnly":
       "Disimpan dalam telefon ini sahaja. Memadam satu keputusan di sini tidak mematikan pautan kongsinya.",
     "app.history.delete": "Padam",
-    "app.history.select": "Pilih",
-    "app.history.selectAll": "Pilih semua",
-    "app.history.deselectAll": "Nyahpilih semua",
-    "app.history.selected": "{n} dipilih",
-    "app.history.deleteCount": "Padam ({count})",
     "app.history.deleteConfirm": "Padam {n} keputusan daripada telefon ini? Pautan kongsinya akan terus berfungsi.",
-    "app.history.rowSelected": "Dipilih",
-    "app.history.rowNotSelected": "Tidak dipilih",
     "app.history.phoneOnly": "Dalam telefon ini sahaja",
     "app.history.phoneOnlyNote":
       "Tiada dalam akaun anda: keputusan ini disimpan dalam telefon ini sahaja. Memadam satu keputusan di sini tidak mematikan pautan kongsinya.",
@@ -54,9 +47,6 @@ const ms: AppLocale = {
     "app.settings.language": "Bahasa",
     "app.settings.languageDevice": "Sama seperti telefon",
     "app.settings.appearance": "Penampilan",
-    "app.settings.appearanceSystem": "Sama seperti telefon",
-    "app.settings.appearanceLight": "Cerah",
-    "app.settings.appearanceDark": "Gelap",
     "app.settings.usageStats": "Statistik penggunaan",
     "app.settings.usageStatsHint":
       "Kiraan skrin dan ciri yang digunakan, dipautkan kepada akaun anda semasa log masuk. Teks kes tidak pernah dihantar.",

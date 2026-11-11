@@ -11,14 +11,7 @@ const he: AppLocale = {
     "app.history.empty": "עוד אין פסקי דין. כשהוויכוח הראשון שלך יוכרע, פסק הדין יופיע כאן.",
     "app.history.deviceOnly": "פסקי הדין שמורים רק בטלפון הזה. מחיקה של פסק דין כאן לא מבטלת את קישור השיתוף שלו.",
     "app.history.delete": "מחיקה",
-    "app.history.select": "בחירה",
-    "app.history.selectAll": "בחירת הכול",
-    "app.history.deselectAll": "ביטול הבחירה",
-    "app.history.selected": "{n} נבחרו",
-    "app.history.deleteCount": "מחיקה ({count})",
     "app.history.deleteConfirm": "למחוק {n} פסקי דין מהטלפון הזה? קישורי השיתוף שלהם ימשיכו לעבוד.",
-    "app.history.rowSelected": "נבחר",
-    "app.history.rowNotSelected": "לא נבחר",
     "app.history.phoneOnly": "רק בטלפון הזה",
     "app.history.phoneOnlyNote":
       "לא בחשבון שלך: אלה שמורים רק בטלפון הזה. מחיקה של פסק דין כאן לא מבטלת את קישור השיתוף שלו.",
@@ -52,9 +45,6 @@ const he: AppLocale = {
     "app.settings.language": "שפה",
     "app.settings.languageDevice": "כמו בטלפון",
     "app.settings.appearance": "מראה",
-    "app.settings.appearanceSystem": "כמו בטלפון",
-    "app.settings.appearanceLight": "בהיר",
-    "app.settings.appearanceDark": "כהה",
     "app.settings.usageStats": "סטטיסטיקות שימוש",
     "app.settings.usageStatsHint":
       "ספירות של המסכים והתכונות שבשימוש, מקושרות לחשבון שלך כשנכנסת אליו. טקסט מתיקים לא נשלח אף פעם.",
@@ -157,7 +147,6 @@ const he: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "נשאר פסק דין אחד", two: "נשארו שני פסקי דין" },
-    "app.history.selected": { one: "{n} נבחר", two: "{n} נבחרו" },
     "app.history.deleteConfirm": {
       one: "למחוק את פסק הדין מהטלפון הזה? קישור השיתוף שלו ימשיך לעבוד.",
       two: "למחוק את שני פסקי הדין מהטלפון הזה? קישורי השיתוף שלהם ימשיכו לעבוד.",

@@ -11,14 +11,7 @@ const id: AppLocale = {
     "app.history.deviceOnly":
       "Hanya tersimpan di ponsel ini. Menghapus putusan di sini tidak mematikan tautan berbaginya.",
     "app.history.delete": "Hapus",
-    "app.history.select": "Pilih",
-    "app.history.selectAll": "Pilih semua",
-    "app.history.deselectAll": "Batal pilih semua",
-    "app.history.selected": "{n} dipilih",
-    "app.history.deleteCount": "Hapus ({count})",
     "app.history.deleteConfirm": "Hapus {n} putusan dari ponsel ini? Tautan berbaginya tetap berfungsi.",
-    "app.history.rowSelected": "Dipilih",
-    "app.history.rowNotSelected": "Tidak dipilih",
     "app.history.phoneOnly": "Hanya di ponsel ini",
     "app.history.phoneOnlyNote":
       "Tidak ada di akunmu: putusan ini hanya tersimpan di ponsel ini. Menghapus putusan di sini tidak mematikan tautan berbaginya.",
@@ -53,9 +46,6 @@ const id: AppLocale = {
     "app.settings.language": "Bahasa",
     "app.settings.languageDevice": "Ikuti ponsel",
     "app.settings.appearance": "Tampilan",
-    "app.settings.appearanceSystem": "Ikuti ponsel",
-    "app.settings.appearanceLight": "Terang",
-    "app.settings.appearanceDark": "Gelap",
     "app.settings.usageStats": "Statistik penggunaan",
     "app.settings.usageStatsHint":
       "Hitungan layar dan fitur yang dipakai, terhubung ke akunmu saat kamu masuk. Teks kasus tidak pernah dikirim.",

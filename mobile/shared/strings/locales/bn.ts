@@ -11,14 +11,7 @@ const bn: AppLocale = {
     "app.history.empty": "এখনও কোনো রায় নেই। প্রথম তর্কের ফয়সালা করলে সেটা এখানে দেখা যাবে।",
     "app.history.deviceOnly": "শুধু এই ফোনে সেভ করা আছে। এখান থেকে কোনো রায় মুছলেও তার শেয়ার লিংক বন্ধ হয় না।",
     "app.history.delete": "মুছুন",
-    "app.history.select": "বেছে নিন",
-    "app.history.selectAll": "সব বেছে নিন",
-    "app.history.deselectAll": "বাছাই বাতিল করুন",
-    "app.history.selected": "{n}টি নির্বাচিত",
-    "app.history.deleteCount": "মুছুন ({count})",
     "app.history.deleteConfirm": "এই ফোন থেকে {n}টি রায় মুছবেন? সেগুলোর শেয়ার লিংক চালু থাকবে।",
-    "app.history.rowSelected": "নির্বাচিত",
-    "app.history.rowNotSelected": "নির্বাচিত নয়",
     "app.history.phoneOnly": "শুধু এই ফোনে",
     "app.history.phoneOnlyNote":
       "আপনার অ্যাকাউন্টে নেই: এগুলো শুধু এই ফোনে সেভ করা আছে। এখান থেকে কোনো রায় মুছলেও তার শেয়ার লিংক বন্ধ হয় না।",
@@ -52,9 +45,6 @@ const bn: AppLocale = {
     "app.settings.language": "ভাষা",
     "app.settings.languageDevice": "ফোনের ভাষা",
     "app.settings.appearance": "থিম",
-    "app.settings.appearanceSystem": "ফোনের মতো",
-    "app.settings.appearanceLight": "হালকা",
-    "app.settings.appearanceDark": "গাঢ়",
     "app.settings.usageStats": "ব্যবহারের পরিসংখ্যান",
     "app.settings.usageStatsHint":
       "কোন স্ক্রিন আর ফিচার ব্যবহার হয় তার গণনা, সাইন ইন থাকলে আপনার অ্যাকাউন্টের সঙ্গে যুক্ত। মামলার কোনো লেখা কখনও পাঠানো হয় না।",
@@ -158,7 +148,6 @@ const bn: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "আর {n}টি রায় বাকি" },
-    "app.history.selected": { one: "{n}টি নির্বাচিত" },
     "app.history.deleteConfirm": { one: "এই ফোন থেকে {n}টি রায় মুছবেন? সেটির শেয়ার লিংক চালু থাকবে।" },
     "app.history.removeConfirm": {
       one: "আপনার অ্যাকাউন্ট থেকে {n}টি রায় সরিয়ে ফেলবেন? সব ডিভাইসেই আপনার লেখা আর নামগুলো মুছে যাবে, আর সেটির শেয়ার লিংক কাজ করা বন্ধ করবে। এটা আর ফেরানো যাবে না।",

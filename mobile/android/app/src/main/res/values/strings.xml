@@ -142,7 +142,9 @@
     <string name="nav_account_menu">Account menu</string>
     <string name="nav_sign_out">Sign out</string>
     <string name="nav_verdicts">Verdicts</string>
+    <string name="nav_links">Links</string>
     <string name="nav_tabs">Sections</string>
+    <string name="settings_dark_mode">Dark mode</string>
     <string name="tier_locked_sign_in">(locked: sign in to use it)</string>
     <string name="tier_get_premium">Get more verdicts</string>
     <string name="tier_checking">Checking if anything\'s missing…</string>
@@ -541,20 +543,10 @@
     <string name="app_history_empty">No verdicts yet. Settle your first argument and it shows up here.</string>
     <string name="app_history_device_only">Saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
     <string name="app_history_delete">Delete</string>
-    <string name="app_history_select">Select</string>
-    <string name="app_history_select_all">Select all</string>
-    <string name="app_history_deselect_all">Deselect all</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s selected</item>
-        <item quantity="other">%1$s selected</item>
-    </plurals>
-    <string name="app_history_delete_count">Delete (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
         <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
     </plurals>
-    <string name="app_history_row_selected">Selected</string>
-    <string name="app_history_row_not_selected">Not selected</string>
     <string name="app_history_phone_only">Only on this phone</string>
     <string name="app_history_phone_only_note">Not in your account: these are saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
     <plurals name="app_history_remove_confirm">
@@ -595,9 +587,6 @@
     <string name="app_settings_language">Language</string>
     <string name="app_settings_language_device">Same as the phone</string>
     <string name="app_settings_appearance">Appearance</string>
-    <string name="app_settings_appearance_system">Same as the phone</string>
-    <string name="app_settings_appearance_light">Light</string>
-    <string name="app_settings_appearance_dark">Dark</string>
     <string name="app_settings_usage_stats">Usage statistics</string>
     <string name="app_settings_usage_stats_hint">Counts of which screens and features are used, tied to your account when signed in. No case text is ever sent.</string>
     <string name="app_settings_about">About Judge</string>

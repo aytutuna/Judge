@@ -142,7 +142,9 @@
     <string name="nav_account_menu">Hesap menüsü</string>
     <string name="nav_sign_out">Çıkış yap</string>
     <string name="nav_verdicts">Kararlar</string>
+    <string name="nav_links">Bağlantılar</string>
     <string name="nav_tabs">Bölümler</string>
+    <string name="settings_dark_mode">Koyu mod</string>
     <string name="tier_locked_sign_in">(kilitli: kullanmak için giriş yap)</string>
     <string name="tier_get_premium">Daha fazla karar al</string>
     <string name="tier_checking">Eksik bir şey var mı diye bakıyoruz…</string>
@@ -541,20 +543,10 @@
     <string name="app_history_empty">Henüz kararın yok. İlk tartışmanı çözdüğünde burada görünür.</string>
     <string name="app_history_device_only">Sadece bu telefonda saklanır. Buradan silmek paylaşım linkini kaldırmaz.</string>
     <string name="app_history_delete">Sil</string>
-    <string name="app_history_select">Seç</string>
-    <string name="app_history_select_all">Tümünü seç</string>
-    <string name="app_history_deselect_all">Seçimi kaldır</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s seçildi</item>
-        <item quantity="other">%1$s seçildi</item>
-    </plurals>
-    <string name="app_history_delete_count">Sil (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Bu karar bu telefondan silinsin mi? Paylaşım linki çalışmaya devam eder.</item>
         <item quantity="other">Bu telefondan %1$s karar silinsin mi? Paylaşım linkleri çalışmaya devam eder.</item>
     </plurals>
-    <string name="app_history_row_selected">Seçili</string>
-    <string name="app_history_row_not_selected">Seçili değil</string>
     <string name="app_history_phone_only">Sadece bu telefonda</string>
     <string name="app_history_phone_only_note">Hesabında değil: bunlar sadece bu telefonda saklanıyor. Buradan silmek paylaşım linkini kaldırmaz.</string>
     <plurals name="app_history_remove_confirm">
@@ -595,9 +587,6 @@
     <string name="app_settings_language">Dil</string>
     <string name="app_settings_language_device">Telefonla aynı</string>
     <string name="app_settings_appearance">Görünüm</string>
-    <string name="app_settings_appearance_system">Telefonla aynı</string>
-    <string name="app_settings_appearance_light">Açık</string>
-    <string name="app_settings_appearance_dark">Koyu</string>
     <string name="app_settings_usage_stats">Kullanım istatistikleri</string>
     <string name="app_settings_usage_stats_hint">Hangi ekranların ve özelliklerin kullanıldığına dair sayımlar; giriş yaptıysan hesabına bağlı. Davaların metni asla gönderilmez.</string>
     <string name="app_settings_about">Judge hakkında</string>

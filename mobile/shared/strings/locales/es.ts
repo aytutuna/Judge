@@ -11,15 +11,8 @@ const es: AppLocale = {
     "app.history.deviceOnly":
       "Solo se guardan en este teléfono. Eliminar uno aquí no desactiva su enlace para compartir.",
     "app.history.delete": "Eliminar",
-    "app.history.select": "Seleccionar",
-    "app.history.selectAll": "Seleccionar todo",
-    "app.history.deselectAll": "Deseleccionar todo",
-    "app.history.selected": "{n} seleccionados",
-    "app.history.deleteCount": "Eliminar ({count})",
     "app.history.deleteConfirm":
       "¿Eliminar {n} veredictos de este teléfono? Sus enlaces para compartir seguirán funcionando.",
-    "app.history.rowSelected": "Seleccionado",
-    "app.history.rowNotSelected": "No seleccionado",
     "app.history.phoneOnly": "Solo en este teléfono",
     "app.history.phoneOnlyNote":
       "No están en tu cuenta: solo se guardan en este teléfono. Eliminar uno aquí no desactiva su enlace para compartir.",
@@ -55,9 +48,6 @@ const es: AppLocale = {
     "app.settings.language": "Idioma",
     "app.settings.languageDevice": "Igual que el teléfono",
     "app.settings.appearance": "Apariencia",
-    "app.settings.appearanceSystem": "Igual que el teléfono",
-    "app.settings.appearanceLight": "Claro",
-    "app.settings.appearanceDark": "Oscuro",
     "app.settings.usageStats": "Estadísticas de uso",
     "app.settings.usageStatsHint":
       "Recuentos de las pantallas y funciones que se usan, vinculados a tu cuenta si has iniciado sesión. Nunca se envía el texto de ningún caso.",
@@ -161,7 +151,6 @@ const es: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Te queda {n} veredicto" },
-    "app.history.selected": { one: "{n} seleccionado" },
     "app.history.deleteConfirm": {
       one: "¿Eliminar este veredicto de este teléfono? Su enlace para compartir seguirá funcionando.",
     },

@@ -145,7 +145,9 @@
     <string name="nav_account_menu">Meniul contului</string>
     <string name="nav_sign_out">Deconectează-te</string>
     <string name="nav_verdicts">Verdicte</string>
+    <string name="nav_links">Linkuri</string>
     <string name="nav_tabs">Secțiuni</string>
+    <string name="settings_dark_mode">Mod întunecat</string>
     <string name="tier_locked_sign_in">(blocat: conectează-te ca să-l folosești)</string>
     <string name="tier_get_premium">Ia mai multe verdicte</string>
     <string name="tier_checking">Verificăm dacă lipsește ceva…</string>
@@ -552,22 +554,11 @@
     <string name="app_history_empty">Încă nu ai verdicte. Lămurește-ți prima dispută și verdictul apare aici.</string>
     <string name="app_history_device_only">Salvate doar pe acest telefon. Dacă ștergi unul de aici, linkul lui de distribuire rămâne activ.</string>
     <string name="app_history_delete">Șterge</string>
-    <string name="app_history_select">Selectează</string>
-    <string name="app_history_select_all">Selectează tot</string>
-    <string name="app_history_deselect_all">Deselectează tot</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">1 selectat</item>
-        <item quantity="few">%1$s selectate</item>
-        <item quantity="other">%1$s selectate</item>
-    </plurals>
-    <string name="app_history_delete_count">Șterge (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Ștergi verdictul de pe acest telefon? Linkul lui de distribuire rămâne activ.</item>
         <item quantity="few">Ștergi %1$s verdicte de pe acest telefon? Linkurile lor de distribuire rămân active.</item>
         <item quantity="other">Ștergi %1$s de verdicte de pe acest telefon? Linkurile lor de distribuire rămân active.</item>
     </plurals>
-    <string name="app_history_row_selected">Selectat</string>
-    <string name="app_history_row_not_selected">Neselectat</string>
     <string name="app_history_phone_only">Doar pe acest telefon</string>
     <string name="app_history_phone_only_note">Acestea nu sunt în contul tău, ci salvate doar pe acest telefon. Dacă ștergi unul de aici, linkul lui de distribuire rămâne activ.</string>
     <plurals name="app_history_remove_confirm">
@@ -612,9 +603,6 @@
     <string name="app_settings_language">Limbă</string>
     <string name="app_settings_language_device">Limba telefonului</string>
     <string name="app_settings_appearance">Aspect</string>
-    <string name="app_settings_appearance_system">Ca pe telefon</string>
-    <string name="app_settings_appearance_light">Luminos</string>
-    <string name="app_settings_appearance_dark">Întunecat</string>
     <string name="app_settings_usage_stats">Statistici de utilizare</string>
     <string name="app_settings_usage_stats_hint">Numărători ale ecranelor și funcțiilor folosite, legate de contul tău când ești conectat. Textul cazurilor nu este trimis niciodată.</string>
     <string name="app_settings_about">Despre Judge</string>

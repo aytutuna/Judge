@@ -11,14 +11,7 @@ const mr: AppLocale = {
     "app.history.empty": "अजून एकही निकाल नाही. तुमचा पहिला वाद सोडवा, त्याचा निकाल इथे दिसेल.",
     "app.history.deviceOnly": "हे निकाल फक्त या फोनवर सेव्ह होतात. इथून एखादा निकाल डिलीट केला तरी त्याची शेअर लिंक चालू राहते.",
     "app.history.delete": "डिलीट करा",
-    "app.history.select": "निवडा",
-    "app.history.selectAll": "सर्व निवडा",
-    "app.history.deselectAll": "सर्व निवड रद्द करा",
-    "app.history.selected": "{n} निवडले",
-    "app.history.deleteCount": "डिलीट करा ({count})",
     "app.history.deleteConfirm": "या फोनवरून {n} निकाल डिलीट करायचे? त्यांच्या शेअर लिंक चालू राहतील.",
-    "app.history.rowSelected": "निवडलेले",
-    "app.history.rowNotSelected": "निवडलेले नाही",
     "app.history.phoneOnly": "फक्त या फोनवर",
     "app.history.phoneOnlyNote":
       "तुमच्या खात्यात नाहीत: हे निकाल फक्त या फोनवर सेव्ह आहेत. इथून एखादा डिलीट केला तरी त्याची शेअर लिंक चालू राहते.",
@@ -52,9 +45,6 @@ const mr: AppLocale = {
     "app.settings.language": "भाषा",
     "app.settings.languageDevice": "फोनची भाषा",
     "app.settings.appearance": "थीम",
-    "app.settings.appearanceSystem": "फोनप्रमाणे",
-    "app.settings.appearanceLight": "लाइट",
-    "app.settings.appearanceDark": "गडद",
     "app.settings.usageStats": "वापराची आकडेवारी",
     "app.settings.usageStatsHint":
       "कोणत्या स्क्रीन आणि सुविधा वापरल्या जातात याची मोजणी, साइन इन असताना तुमच्या खात्याशी जोडलेली. प्रकरणातील कोणताही मजकूर कधीही पाठवला जात नाही.",
@@ -158,7 +148,6 @@ const mr: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} निकाल शिल्लक" },
-    "app.history.selected": { one: "{n} निवडला" },
     "app.history.deleteConfirm": { one: "हा निकाल या फोनवरून डिलीट करायचा? त्याची शेअर लिंक चालू राहील." },
     "app.history.removeConfirm": {
       one: "हा निकाल तुमच्या खात्यातून काढून टाकायचा? तुम्ही लिहिलेला मजकूर आणि नावे पुसली जातील, आणि त्याची शेअर लिंक चालणे बंद होईल. हे सगळ्या डिव्हाइसवर लागू होते आणि परत आणता येणार नाही.",

@@ -10,14 +10,7 @@ const ptPT: AppLocale = {
     "app.history.empty": "Ainda não há veredictos. Tira a tua primeira teima e o veredicto aparece aqui.",
     "app.history.deviceOnly": "Ficam guardados só neste telemóvel. Se apagares um aqui, o link de partilha continua ativo.",
     "app.history.delete": "Apagar",
-    "app.history.select": "Selecionar",
-    "app.history.selectAll": "Selecionar tudo",
-    "app.history.deselectAll": "Desmarcar tudo",
-    "app.history.selected": "{n} selecionados",
-    "app.history.deleteCount": "Apagar ({count})",
     "app.history.deleteConfirm": "Apagar {n} veredictos deste telemóvel? Os links de partilha continuam ativos.",
-    "app.history.rowSelected": "Selecionado",
-    "app.history.rowNotSelected": "Não selecionado",
     "app.history.phoneOnly": "Só neste telemóvel",
     "app.history.phoneOnlyNote":
       "Não estão na tua conta: ficam guardados só neste telemóvel. Se apagares um aqui, o link de partilha continua ativo.",
@@ -52,9 +45,6 @@ const ptPT: AppLocale = {
     "app.settings.language": "Idioma",
     "app.settings.languageDevice": "Idioma do telemóvel",
     "app.settings.appearance": "Aspeto",
-    "app.settings.appearanceSystem": "Igual ao telemóvel",
-    "app.settings.appearanceLight": "Claro",
-    "app.settings.appearanceDark": "Escuro",
     "app.settings.usageStats": "Estatísticas de utilização",
     "app.settings.usageStatsHint":
       "Contagens dos ecrãs e funcionalidades utilizados, associadas à tua conta quando tens sessão iniciada. O texto dos casos nunca é enviado.",
@@ -158,7 +148,6 @@ const ptPT: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Resta {n} veredicto" },
-    "app.history.selected": { one: "{n} selecionado" },
     "app.history.deleteConfirm": { one: "Apagar este veredicto do telemóvel? O link de partilha continua ativo." },
     "app.history.removeConfirm": {
       one: "Remover este veredicto da tua conta? O que escreveste e os nomes são apagados e o link de partilha deixa de funcionar, em todos os dispositivos. Isto não pode ser desfeito.",

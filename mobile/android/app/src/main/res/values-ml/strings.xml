@@ -142,7 +142,9 @@
     <string name="nav_account_menu">അക്കൗണ്ട് മെനു</string>
     <string name="nav_sign_out">സൈൻ ഔട്ട്</string>
     <string name="nav_verdicts">വിധികൾ</string>
+    <string name="nav_links">ലിങ്കുകൾ</string>
     <string name="nav_tabs">വിഭാഗങ്ങൾ</string>
+    <string name="settings_dark_mode">ഡാർക്ക് മോഡ്</string>
     <string name="tier_locked_sign_in">(ലോക്ക് ചെയ്തിരിക്കുന്നു: ഉപയോഗിക്കാൻ സൈൻ ഇൻ ചെയ്യൂ)</string>
     <string name="tier_get_premium">കൂടുതൽ വിധികൾ നേടൂ</string>
     <string name="tier_checking">എന്തെങ്കിലും വിട്ടുപോയോ എന്ന് നോക്കുന്നു…</string>
@@ -541,20 +543,10 @@
     <string name="app_history_empty">ഇതുവരെ വിധികളൊന്നുമില്ല. ആദ്യത്തെ തർക്കം തീർക്കൂ, അത് ഇവിടെ കാണാം.</string>
     <string name="app_history_device_only">ഈ ഫോണിൽ മാത്രമാണ് സേവ് ചെയ്തിരിക്കുന്നത്. ഇവിടെനിന്ന് ഒരു വിധി ഡിലീറ്റ് ചെയ്താലും അതിന്റെ ഷെയർ ലിങ്ക് തുടർന്നും പ്രവർത്തിക്കും.</string>
     <string name="app_history_delete">ഡിലീറ്റ്</string>
-    <string name="app_history_select">തിരഞ്ഞെടുക്കൂ</string>
-    <string name="app_history_select_all">എല്ലാം തിരഞ്ഞെടുക്കൂ</string>
-    <string name="app_history_deselect_all">എല്ലാം തിരഞ്ഞെടുത്തത് മാറ്റൂ</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s എണ്ണം തിരഞ്ഞെടുത്തു</item>
-        <item quantity="other">%1$s എണ്ണം തിരഞ്ഞെടുത്തു</item>
-    </plurals>
-    <string name="app_history_delete_count">ഡിലീറ്റ് (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">ഈ വിധി ഈ ഫോണിൽനിന്ന് ഡിലീറ്റ് ചെയ്യണോ? അതിന്റെ ഷെയർ ലിങ്ക് തുടർന്നും പ്രവർത്തിക്കും.</item>
         <item quantity="other">ഈ ഫോണിൽനിന്ന് %1$s വിധികൾ ഡിലീറ്റ് ചെയ്യണോ? അവയുടെ ഷെയർ ലിങ്കുകൾ തുടർന്നും പ്രവർത്തിക്കും.</item>
     </plurals>
-    <string name="app_history_row_selected">തിരഞ്ഞെടുത്തു</string>
-    <string name="app_history_row_not_selected">തിരഞ്ഞെടുത്തിട്ടില്ല</string>
     <string name="app_history_phone_only">ഈ ഫോണിൽ മാത്രം</string>
     <string name="app_history_phone_only_note">നിങ്ങളുടെ അക്കൗണ്ടിലില്ല: ഇവ ഈ ഫോണിൽ മാത്രമാണ് സേവ് ചെയ്തിരിക്കുന്നത്. ഇവിടെനിന്ന് ഒരു വിധി ഡിലീറ്റ് ചെയ്താലും അതിന്റെ ഷെയർ ലിങ്ക് തുടർന്നും പ്രവർത്തിക്കും.</string>
     <plurals name="app_history_remove_confirm">
@@ -595,9 +587,6 @@
     <string name="app_settings_language">ഭാഷ</string>
     <string name="app_settings_language_device">ഫോണിലെ ഭാഷ തന്നെ</string>
     <string name="app_settings_appearance">തീം</string>
-    <string name="app_settings_appearance_system">ഫോണിലേതു പോലെ</string>
-    <string name="app_settings_appearance_light">ലൈറ്റ്</string>
-    <string name="app_settings_appearance_dark">ഡാർക്ക്</string>
     <string name="app_settings_usage_stats">ഉപയോഗ സ്ഥിതിവിവരക്കണക്കുകൾ</string>
     <string name="app_settings_usage_stats_hint">ഏതൊക്കെ സ്ക്രീനുകളും ഫീച്ചറുകളും ഉപയോഗിക്കുന്നു എന്നതിന്റെ എണ്ണം, സൈൻ ഇൻ ചെയ്തിരിക്കുമ്പോൾ നിങ്ങളുടെ അക്കൗണ്ടുമായി ബന്ധിപ്പിക്കും. കേസിലെ ഒരു വാചകവും ഒരിക്കലും അയയ്ക്കില്ല.</string>
     <string name="app_settings_about">Judge-നെക്കുറിച്ച്</string>

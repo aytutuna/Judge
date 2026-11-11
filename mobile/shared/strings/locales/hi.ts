@@ -11,14 +11,7 @@ const hi: AppLocale = {
     "app.history.empty": "अभी तक कोई फ़ैसला नहीं। अपनी पहली बहस सुलझाएँ, उसका फ़ैसला यहीं दिखेगा।",
     "app.history.deviceOnly": "ये सिर्फ़ इसी फ़ोन में सेव हैं। यहाँ से कोई फ़ैसला हटाने पर भी उसका शेयर लिंक बंद नहीं होता।",
     "app.history.delete": "हटाएँ",
-    "app.history.select": "चुनें",
-    "app.history.selectAll": "सभी चुनें",
-    "app.history.deselectAll": "चयन हटाएँ",
-    "app.history.selected": "{n} चुने गए",
-    "app.history.deleteCount": "हटाएँ ({count})",
     "app.history.deleteConfirm": "इस फ़ोन से {n} फ़ैसले हटाएँ? उनके शेयर लिंक काम करते रहेंगे।",
-    "app.history.rowSelected": "चुना गया",
-    "app.history.rowNotSelected": "नहीं चुना गया",
     "app.history.phoneOnly": "सिर्फ़ इसी फ़ोन में",
     "app.history.phoneOnlyNote":
       "आपके अकाउंट में नहीं: ये सिर्फ़ इसी फ़ोन में सेव हैं। यहाँ से कोई फ़ैसला हटाने पर भी उसका शेयर लिंक बंद नहीं होता।",
@@ -51,9 +44,6 @@ const hi: AppLocale = {
     "app.settings.language": "भाषा",
     "app.settings.languageDevice": "फ़ोन की भाषा",
     "app.settings.appearance": "थीम",
-    "app.settings.appearanceSystem": "फ़ोन के अनुसार",
-    "app.settings.appearanceLight": "लाइट",
-    "app.settings.appearanceDark": "डार्क",
     "app.settings.usageStats": "इस्तेमाल के आँकड़े",
     "app.settings.usageStatsHint":
       "कौन-सी स्क्रीन और सुविधाएँ इस्तेमाल होती हैं, इसकी गिनती, साइन इन होने पर आपके खाते से जुड़ी। केस का कोई भी टेक्स्ट कभी नहीं भेजा जाता।",
@@ -158,7 +148,6 @@ const hi: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} फ़ैसला बाकी" },
-    "app.history.selected": { one: "{n} चुना गया" },
     "app.history.deleteConfirm": { one: "इस फ़ोन से {n} फ़ैसला हटाएँ? उसका शेयर लिंक काम करता रहेगा।" },
     "app.history.removeConfirm": {
       one: "अपने अकाउंट से {n} फ़ैसला हटाएँ? आपका लिखा टेक्स्ट और नाम हर डिवाइस से मिट जाएँगे, और उसका शेयर लिंक काम करना बंद कर देगा। इसे पहले जैसा नहीं किया जा सकता।",

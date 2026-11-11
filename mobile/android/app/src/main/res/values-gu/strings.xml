@@ -142,7 +142,9 @@
     <string name="nav_account_menu">એકાઉન્ટ મેનૂ</string>
     <string name="nav_sign_out">સાઇન આઉટ</string>
     <string name="nav_verdicts">ચુકાદા</string>
+    <string name="nav_links">લિંક્સ</string>
     <string name="nav_tabs">વિભાગો</string>
+    <string name="settings_dark_mode">ડાર્ક મોડ</string>
     <string name="tier_locked_sign_in">(લૉક છે: વાપરવા માટે સાઇન ઇન કરો)</string>
     <string name="tier_get_premium">વધુ ચુકાદા લો</string>
     <string name="tier_checking">કંઈ ખૂટે છે કે નહીં, એ જોઈએ છીએ…</string>
@@ -541,20 +543,10 @@
     <string name="app_history_empty">હજી કોઈ ચુકાદો નથી. તમારા પહેલા વિવાદનો ફેંસલો કરાવો, એ અહીં દેખાશે.</string>
     <string name="app_history_device_only">ફક્ત આ ફોનમાં સેવ થયેલા છે. અહીંથી કોઈ ચુકાદો ડિલીટ કરવાથી એની શેર લિંક બંધ થતી નથી.</string>
     <string name="app_history_delete">ડિલીટ કરો</string>
-    <string name="app_history_select">પસંદ કરો</string>
-    <string name="app_history_select_all">બધા પસંદ કરો</string>
-    <string name="app_history_deselect_all">પસંદગી હટાવો</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s પસંદ કરેલ</item>
-        <item quantity="other">%1$s પસંદ કરેલ</item>
-    </plurals>
-    <string name="app_history_delete_count">ડિલીટ કરો (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">આ ફોનમાંથી %1$s ચુકાદો ડિલીટ કરવો છે? એની શેર લિંક કામ કરતી રહેશે.</item>
         <item quantity="other">આ ફોનમાંથી %1$s ચુકાદા ડિલીટ કરવા છે? એમની શેર લિંક કામ કરતી રહેશે.</item>
     </plurals>
-    <string name="app_history_row_selected">પસંદ કરેલ</string>
-    <string name="app_history_row_not_selected">પસંદ કરેલ નથી</string>
     <string name="app_history_phone_only">ફક્ત આ ફોનમાં</string>
     <string name="app_history_phone_only_note">તમારા એકાઉન્ટમાં નથી: આ ફક્ત આ ફોનમાં સેવ થયેલા છે. અહીંથી કોઈ ચુકાદો ડિલીટ કરવાથી એની શેર લિંક બંધ થતી નથી.</string>
     <plurals name="app_history_remove_confirm">
@@ -595,9 +587,6 @@
     <string name="app_settings_language">ભાષા</string>
     <string name="app_settings_language_device">ફોનની ભાષા</string>
     <string name="app_settings_appearance">દેખાવ</string>
-    <string name="app_settings_appearance_system">ફોન પ્રમાણે</string>
-    <string name="app_settings_appearance_light">લાઇટ</string>
-    <string name="app_settings_appearance_dark">ડાર્ક</string>
     <string name="app_settings_usage_stats">વપરાશના આંકડા</string>
     <string name="app_settings_usage_stats_hint">કઈ સ્ક્રીન અને સુવિધાઓ વપરાય છે તેની ગણતરી, સાઇન ઇન હો ત્યારે તમારા એકાઉન્ટ સાથે જોડાયેલી. કેસનું કોઈ લખાણ ક્યારેય મોકલાતું નથી.</string>
     <string name="app_settings_about">Judge વિશે</string>

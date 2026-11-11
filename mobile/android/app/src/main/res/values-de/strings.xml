@@ -142,7 +142,9 @@
     <string name="nav_account_menu">Kontomenü</string>
     <string name="nav_sign_out">Abmelden</string>
     <string name="nav_verdicts">Urteile</string>
+    <string name="nav_links">Links</string>
     <string name="nav_tabs">Bereiche</string>
+    <string name="settings_dark_mode">Dunkelmodus</string>
     <string name="tier_locked_sign_in">(gesperrt: zum Nutzen anmelden)</string>
     <string name="tier_get_premium">Mehr Urteile holen</string>
     <string name="tier_checking">Wir prüfen, ob etwas fehlt…</string>
@@ -541,20 +543,10 @@
     <string name="app_history_empty">Noch keine Urteile. Kläre deinen ersten Streit, dann erscheint das Urteil hier.</string>
     <string name="app_history_device_only">Nur auf diesem Handy gespeichert. Wenn du hier ein Urteil löschst, funktioniert der geteilte Link weiter.</string>
     <string name="app_history_delete">Löschen</string>
-    <string name="app_history_select">Auswählen</string>
-    <string name="app_history_select_all">Alle auswählen</string>
-    <string name="app_history_deselect_all">Auswahl aufheben</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s ausgewählt</item>
-        <item quantity="other">%1$s ausgewählt</item>
-    </plurals>
-    <string name="app_history_delete_count">Löschen (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Dieses Urteil von diesem Handy löschen? Der geteilte Link funktioniert weiter.</item>
         <item quantity="other">%1$s Urteile von diesem Handy löschen? Die geteilten Links funktionieren weiter.</item>
     </plurals>
-    <string name="app_history_row_selected">Ausgewählt</string>
-    <string name="app_history_row_not_selected">Nicht ausgewählt</string>
     <string name="app_history_phone_only">Nur auf diesem Handy</string>
     <string name="app_history_phone_only_note">Nicht in deinem Konto: Diese Urteile sind nur auf diesem Handy gespeichert. Wenn du hier eins löschst, funktioniert sein geteilter Link weiter.</string>
     <plurals name="app_history_remove_confirm">
@@ -595,9 +587,6 @@
     <string name="app_settings_language">Sprache</string>
     <string name="app_settings_language_device">Wie auf dem Handy</string>
     <string name="app_settings_appearance">Erscheinungsbild</string>
-    <string name="app_settings_appearance_system">Wie auf dem Handy</string>
-    <string name="app_settings_appearance_light">Hell</string>
-    <string name="app_settings_appearance_dark">Dunkel</string>
     <string name="app_settings_usage_stats">Nutzungsstatistik</string>
     <string name="app_settings_usage_stats_hint">Zählungen, welche Bildschirme und Funktionen genutzt werden, mit deinem Konto verknüpft, wenn du angemeldet bist. Text aus Fällen wird nie gesendet.</string>
     <string name="app_settings_about">Über Judge</string>

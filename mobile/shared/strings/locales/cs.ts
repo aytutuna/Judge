@@ -11,15 +11,8 @@ const cs: AppLocale = {
     "app.history.deviceOnly":
       "Uloženo jen v tomhle telefonu. Když tu verdikt smažeš, jeho sdílený odkaz bude fungovat dál.",
     "app.history.delete": "Smazat",
-    "app.history.select": "Vybrat",
-    "app.history.selectAll": "Vybrat vše",
-    "app.history.deselectAll": "Zrušit výběr",
-    "app.history.selected": "Vybráno: {n}",
-    "app.history.deleteCount": "Smazat ({count})",
     "app.history.deleteConfirm":
       "Smazat {n} verdiktů z tohohle telefonu? Jejich sdílené odkazy budou fungovat dál.",
-    "app.history.rowSelected": "Vybráno",
-    "app.history.rowNotSelected": "Nevybráno",
     "app.history.phoneOnly": "Jen v tomhle telefonu",
     "app.history.phoneOnlyNote":
       "Tyhle verdikty nejsou ve tvém účtu, jsou uložené jen v tomhle telefonu. Když tu některý smažeš, jeho sdílený odkaz bude fungovat dál.",
@@ -54,9 +47,6 @@ const cs: AppLocale = {
     "app.settings.language": "Jazyk",
     "app.settings.languageDevice": "Podle telefonu",
     "app.settings.appearance": "Vzhled",
-    "app.settings.appearanceSystem": "Podle telefonu",
-    "app.settings.appearanceLight": "Světlý",
-    "app.settings.appearanceDark": "Tmavý",
     "app.settings.usageStats": "Statistiky používání",
     "app.settings.usageStatsHint":
       "Počty toho, které obrazovky a funkce se používají, po přihlášení spojené s tvým účtem. Text případů se nikdy neodesílá.",
@@ -160,7 +150,6 @@ const cs: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Zbývá ti {n} verdikt", few: "Zbývají ti {n} verdikty" },
-    "app.history.selected": { one: "Vybráno: {n}", few: "Vybráno: {n}" },
     "app.history.deleteConfirm": {
       one: "Smazat tenhle verdikt z tohohle telefonu? Jeho sdílený odkaz bude fungovat dál.",
       few: "Smazat {n} verdikty z tohohle telefonu? Jejich sdílené odkazy budou fungovat dál.",

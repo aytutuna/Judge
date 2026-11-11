@@ -139,7 +139,9 @@
     <string name="nav_account_menu">账号菜单</string>
     <string name="nav_sign_out">退出登录</string>
     <string name="nav_verdicts">裁决</string>
+    <string name="nav_links">链接</string>
     <string name="nav_tabs">版块</string>
+    <string name="settings_dark_mode">深色模式</string>
     <string name="tier_locked_sign_in">（已锁定：登录后可用）</string>
     <string name="tier_get_premium">获取更多裁决</string>
     <string name="tier_checking">正在检查有没有遗漏……</string>
@@ -530,18 +532,9 @@
     <string name="app_history_empty">还没有裁决。第一场争论评出结果后，裁决会出现在这里。</string>
     <string name="app_history_device_only">只保存在这台手机上。在这里删掉一条裁决，它的分享链接仍然有效。</string>
     <string name="app_history_delete">删除</string>
-    <string name="app_history_select">选择</string>
-    <string name="app_history_select_all">全选</string>
-    <string name="app_history_deselect_all">取消全选</string>
-    <plurals name="app_history_selected">
-        <item quantity="other">已选择 %1$s 项</item>
-    </plurals>
-    <string name="app_history_delete_count">删除（%1$s）</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="other">要从这台手机上删除 %1$s 条裁决吗？分享链接仍然有效。</item>
     </plurals>
-    <string name="app_history_row_selected">已选中</string>
-    <string name="app_history_row_not_selected">未选中</string>
     <string name="app_history_phone_only">只在这台手机上</string>
     <string name="app_history_phone_only_note">不在你的账号里：这些只保存在这台手机上。在这里删掉一条，它的分享链接仍然有效。</string>
     <plurals name="app_history_remove_confirm">
@@ -578,9 +571,6 @@
     <string name="app_settings_language">语言</string>
     <string name="app_settings_language_device">跟随系统</string>
     <string name="app_settings_appearance">外观</string>
-    <string name="app_settings_appearance_system">跟随系统</string>
-    <string name="app_settings_appearance_light">浅色</string>
-    <string name="app_settings_appearance_dark">深色</string>
     <string name="app_settings_usage_stats">使用情况统计</string>
     <string name="app_settings_usage_stats_hint">统计哪些页面和功能被使用，登录后与你的账号关联。案子的文字内容绝不会发送。</string>
     <string name="app_settings_about">关于 Judge</string>

@@ -11,15 +11,8 @@ const sv: AppLocale = {
     "app.history.deviceOnly":
       "Sparas bara på den här telefonen. Tar du bort en dom här fortsätter delningslänken att fungera.",
     "app.history.delete": "Ta bort",
-    "app.history.select": "Välj",
-    "app.history.selectAll": "Markera alla",
-    "app.history.deselectAll": "Avmarkera alla",
-    "app.history.selected": "{n} markerade",
-    "app.history.deleteCount": "Ta bort ({count})",
     "app.history.deleteConfirm":
       "Ta bort {n} domar från den här telefonen? Delningslänkarna fortsätter att fungera.",
-    "app.history.rowSelected": "Markerad",
-    "app.history.rowNotSelected": "Inte markerad",
     "app.history.phoneOnly": "Bara på den här telefonen",
     "app.history.phoneOnlyNote":
       "Inte i ditt konto: de här sparas bara på den här telefonen. Tar du bort en dom här fortsätter delningslänken att fungera.",
@@ -54,9 +47,6 @@ const sv: AppLocale = {
     "app.settings.language": "Språk",
     "app.settings.languageDevice": "Samma som telefonen",
     "app.settings.appearance": "Utseende",
-    "app.settings.appearanceSystem": "Samma som telefonen",
-    "app.settings.appearanceLight": "Ljust",
-    "app.settings.appearanceDark": "Mörkt",
     "app.settings.usageStats": "Användningsstatistik",
     "app.settings.usageStatsHint":
       "Räkningar av vilka skärmar och funktioner som används, kopplade till ditt konto när du är inloggad. Text från fall skickas aldrig.",
@@ -160,7 +150,6 @@ const sv: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} dom kvar" },
-    "app.history.selected": { one: "{n} markerad" },
     "app.history.deleteConfirm": {
       one: "Ta bort domen från den här telefonen? Delningslänken fortsätter att fungera.",
     },

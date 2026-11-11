@@ -11,15 +11,8 @@ const ca: AppLocale = {
     "app.history.deviceOnly":
       "Només es desen en aquest telèfon. Si n'elimines un aquí, el seu enllaç per compartir continuarà funcionant.",
     "app.history.delete": "Elimina",
-    "app.history.select": "Selecciona",
-    "app.history.selectAll": "Selecciona-ho tot",
-    "app.history.deselectAll": "Desselecciona-ho tot",
-    "app.history.selected": "{n} seleccionats",
-    "app.history.deleteCount": "Elimina ({count})",
     "app.history.deleteConfirm":
       "Vols eliminar {n} veredictes del telèfon? Els seus enllaços per compartir continuaran funcionant.",
-    "app.history.rowSelected": "Seleccionat",
-    "app.history.rowNotSelected": "No seleccionat",
     "app.history.phoneOnly": "Només en aquest telèfon",
     "app.history.phoneOnlyNote":
       "No són al teu compte: només es desen en aquest telèfon. Si n'elimines un aquí, el seu enllaç per compartir continuarà funcionant.",
@@ -55,9 +48,6 @@ const ca: AppLocale = {
     "app.settings.language": "Idioma",
     "app.settings.languageDevice": "El mateix que el telèfon",
     "app.settings.appearance": "Aparença",
-    "app.settings.appearanceSystem": "El mateix que el telèfon",
-    "app.settings.appearanceLight": "Clar",
-    "app.settings.appearanceDark": "Fosc",
     "app.settings.usageStats": "Estadístiques d’ús",
     "app.settings.usageStatsHint":
       "Recomptes de les pantalles i funcions que es fan servir, vinculats al teu compte si has iniciat la sessió. No s’envia mai cap text dels casos.",
@@ -161,7 +151,6 @@ const ca: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Et queda {n} veredicte" },
-    "app.history.selected": { one: "{n} seleccionat" },
     "app.history.deleteConfirm": {
       one: "Vols eliminar aquest veredicte del telèfon? El seu enllaç per compartir continuarà funcionant.",
     },

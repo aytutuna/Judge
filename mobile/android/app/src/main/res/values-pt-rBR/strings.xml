@@ -145,7 +145,9 @@
     <string name="nav_account_menu">Menu da conta</string>
     <string name="nav_sign_out">Sair</string>
     <string name="nav_verdicts">Vereditos</string>
+    <string name="nav_links">Links</string>
     <string name="nav_tabs">Seções</string>
+    <string name="settings_dark_mode">Modo escuro</string>
     <string name="tier_locked_sign_in">(bloqueado: entre para usar)</string>
     <string name="tier_get_premium">Mais vereditos</string>
     <string name="tier_checking">Vendo se falta alguma coisa…</string>
@@ -552,22 +554,11 @@
     <string name="app_history_empty">Nenhum veredito ainda. Resolva sua primeira discussão e o veredito aparece aqui.</string>
     <string name="app_history_device_only">Ficam salvos só neste celular. Excluir um aqui não tira do ar o link de compartilhamento dele.</string>
     <string name="app_history_delete">Excluir</string>
-    <string name="app_history_select">Selecionar</string>
-    <string name="app_history_select_all">Selecionar tudo</string>
-    <string name="app_history_deselect_all">Desmarcar tudo</string>
-    <plurals name="app_history_selected">
-        <item quantity="one">%1$s selecionado</item>
-        <item quantity="many">%1$s selecionados</item>
-        <item quantity="other">%1$s selecionados</item>
-    </plurals>
-    <string name="app_history_delete_count">Excluir (%1$s)</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Excluir %1$s veredito deste celular? O link de compartilhamento dele continua funcionando.</item>
         <item quantity="many">Excluir %1$s vereditos deste celular? Os links de compartilhamento deles continuam funcionando.</item>
         <item quantity="other">Excluir %1$s vereditos deste celular? Os links de compartilhamento deles continuam funcionando.</item>
     </plurals>
-    <string name="app_history_row_selected">Selecionado</string>
-    <string name="app_history_row_not_selected">Não selecionado</string>
     <string name="app_history_phone_only">Só neste celular</string>
     <string name="app_history_phone_only_note">Não estão na sua conta: ficam salvos só neste celular. Excluir um aqui não tira do ar o link de compartilhamento dele.</string>
     <plurals name="app_history_remove_confirm">
@@ -612,9 +603,6 @@
     <string name="app_settings_language">Idioma</string>
     <string name="app_settings_language_device">Igual ao do celular</string>
     <string name="app_settings_appearance">Aparência</string>
-    <string name="app_settings_appearance_system">Igual ao do celular</string>
-    <string name="app_settings_appearance_light">Claro</string>
-    <string name="app_settings_appearance_dark">Escuro</string>
     <string name="app_settings_usage_stats">Estatísticas de uso</string>
     <string name="app_settings_usage_stats_hint">Contagens de quais telas e recursos são usados, ligadas à sua conta quando você está conectado. O texto dos casos nunca é enviado.</string>
     <string name="app_settings_about">Sobre o Judge</string>

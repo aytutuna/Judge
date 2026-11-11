@@ -10,14 +10,7 @@ const hu: AppLocale = {
     "app.history.empty": "Még nincs ítéleted. Amint eldől az első vitád, itt megjelenik.",
     "app.history.deviceOnly": "Csak ezen a telefonon vannak elmentve. Ha innen törölsz egyet, a megosztási linkje attól még működik.",
     "app.history.delete": "Törlés",
-    "app.history.select": "Kijelölés",
-    "app.history.selectAll": "Összes kijelölése",
-    "app.history.deselectAll": "Kijelölés megszüntetése",
-    "app.history.selected": "{n} kijelölve",
-    "app.history.deleteCount": "Törlés ({count})",
     "app.history.deleteConfirm": "Törlöd a kijelölt {n} ítéletet erről a telefonról? A megosztási linkjeik továbbra is működnek.",
-    "app.history.rowSelected": "Kijelölve",
-    "app.history.rowNotSelected": "Nincs kijelölve",
     "app.history.phoneOnly": "Csak ezen a telefonon",
     "app.history.phoneOnlyNote":
       "Nincsenek a fiókodban: ezek csak ezen a telefonon vannak elmentve. Ha innen törölsz egyet, a megosztási linkje attól még működik.",
@@ -51,9 +44,6 @@ const hu: AppLocale = {
     "app.settings.language": "Nyelv",
     "app.settings.languageDevice": "A telefon nyelve",
     "app.settings.appearance": "Megjelenés",
-    "app.settings.appearanceSystem": "A telefon szerint",
-    "app.settings.appearanceLight": "Világos",
-    "app.settings.appearanceDark": "Sötét",
     "app.settings.usageStats": "Használati statisztika",
     "app.settings.usageStatsHint":
       "Számlálás arról, mely képernyőket és funkciókat használják, bejelentkezve a fiókodhoz kötve. Az ügyek szövege soha nem kerül elküldésre.",
@@ -157,7 +147,6 @@ const hu: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Még {n} ítéleted maradt" },
-    "app.history.selected": { one: "{n} kijelölve" },
     "app.history.deleteConfirm": { one: "Törlöd ezt az ítéletet erről a telefonról? A megosztási linkje továbbra is működik." },
     "app.history.removeConfirm": {
       one: "Eltávolítod ezt az ítéletet a fiókodból? Az eredeti szöveged és a nevek törlődnek, a megosztási linkje pedig minden eszközön megszűnik működni. Ez nem vonható vissza.",

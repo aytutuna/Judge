@@ -13,15 +13,8 @@ const gu: AppLocale = {
     "app.history.deviceOnly":
       "ફક્ત આ ફોનમાં સેવ થયેલા છે. અહીંથી કોઈ ચુકાદો ડિલીટ કરવાથી એની શેર લિંક બંધ થતી નથી.",
     "app.history.delete": "ડિલીટ કરો",
-    "app.history.select": "પસંદ કરો",
-    "app.history.selectAll": "બધા પસંદ કરો",
-    "app.history.deselectAll": "પસંદગી હટાવો",
-    "app.history.selected": "{n} પસંદ કરેલ",
-    "app.history.deleteCount": "ડિલીટ કરો ({count})",
     "app.history.deleteConfirm":
       "આ ફોનમાંથી {n} ચુકાદા ડિલીટ કરવા છે? એમની શેર લિંક કામ કરતી રહેશે.",
-    "app.history.rowSelected": "પસંદ કરેલ",
-    "app.history.rowNotSelected": "પસંદ કરેલ નથી",
     "app.history.phoneOnly": "ફક્ત આ ફોનમાં",
     "app.history.phoneOnlyNote":
       "તમારા એકાઉન્ટમાં નથી: આ ફક્ત આ ફોનમાં સેવ થયેલા છે. અહીંથી કોઈ ચુકાદો ડિલીટ કરવાથી એની શેર લિંક બંધ થતી નથી.",
@@ -61,9 +54,6 @@ const gu: AppLocale = {
     "app.settings.language": "ભાષા",
     "app.settings.languageDevice": "ફોનની ભાષા",
     "app.settings.appearance": "દેખાવ",
-    "app.settings.appearanceSystem": "ફોન પ્રમાણે",
-    "app.settings.appearanceLight": "લાઇટ",
-    "app.settings.appearanceDark": "ડાર્ક",
     "app.settings.usageStats": "વપરાશના આંકડા",
     "app.settings.usageStatsHint":
       "કઈ સ્ક્રીન અને સુવિધાઓ વપરાય છે તેની ગણતરી, સાઇન ઇન હો ત્યારે તમારા એકાઉન્ટ સાથે જોડાયેલી. કેસનું કોઈ લખાણ ક્યારેય મોકલાતું નથી.",
@@ -178,7 +168,6 @@ const gu: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} ચુકાદો બાકી" },
-    "app.history.selected": { one: "{n} પસંદ કરેલ" },
     "app.history.deleteConfirm": {
       one: "આ ફોનમાંથી {n} ચુકાદો ડિલીટ કરવો છે? એની શેર લિંક કામ કરતી રહેશે.",
     },

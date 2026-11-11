@@ -11,15 +11,8 @@ const ptBR: AppLocale = {
     "app.history.deviceOnly":
       "Ficam salvos só neste celular. Excluir um aqui não tira do ar o link de compartilhamento dele.",
     "app.history.delete": "Excluir",
-    "app.history.select": "Selecionar",
-    "app.history.selectAll": "Selecionar tudo",
-    "app.history.deselectAll": "Desmarcar tudo",
-    "app.history.selected": "{n} selecionados",
-    "app.history.deleteCount": "Excluir ({count})",
     "app.history.deleteConfirm":
       "Excluir {n} vereditos deste celular? Os links de compartilhamento deles continuam funcionando.",
-    "app.history.rowSelected": "Selecionado",
-    "app.history.rowNotSelected": "Não selecionado",
     "app.history.phoneOnly": "Só neste celular",
     "app.history.phoneOnlyNote":
       "Não estão na sua conta: ficam salvos só neste celular. Excluir um aqui não tira do ar o link de compartilhamento dele.",
@@ -54,9 +47,6 @@ const ptBR: AppLocale = {
     "app.settings.language": "Idioma",
     "app.settings.languageDevice": "Igual ao do celular",
     "app.settings.appearance": "Aparência",
-    "app.settings.appearanceSystem": "Igual ao do celular",
-    "app.settings.appearanceLight": "Claro",
-    "app.settings.appearanceDark": "Escuro",
     "app.settings.usageStats": "Estatísticas de uso",
     "app.settings.usageStatsHint":
       "Contagens de quais telas e recursos são usados, ligadas à sua conta quando você está conectado. O texto dos casos nunca é enviado.",
@@ -161,7 +151,6 @@ const ptBR: AppLocale = {
   plurals: {
     "app.balance.left": { one: "Resta {n} veredito" },
     // The count is 0 when selecting starts, and "0 selecionado" reads wrong.
-    "app.history.selected": { one: "{n} selecionado" },
     "app.history.deleteConfirm": {
       one: "Excluir {n} veredito deste celular? O link de compartilhamento dele continua funcionando.",
     },

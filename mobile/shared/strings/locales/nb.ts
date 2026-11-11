@@ -12,15 +12,8 @@ const nb: AppLocale = {
     "app.history.deviceOnly":
       "Lagres bare på denne telefonen. Sletter du en dom her, fjernes ikke delingslenken.",
     "app.history.delete": "Slett",
-    "app.history.select": "Velg",
-    "app.history.selectAll": "Velg alle",
-    "app.history.deselectAll": "Fjern alle valg",
-    "app.history.selected": "{n} valgt",
-    "app.history.deleteCount": "Slett ({count})",
     "app.history.deleteConfirm":
       "Vil du slette {n} dommer fra denne telefonen? Delingslenkene virker fortsatt.",
-    "app.history.rowSelected": "Valgt",
-    "app.history.rowNotSelected": "Ikke valgt",
     "app.history.phoneOnly": "Bare på denne telefonen",
     "app.history.phoneOnlyNote":
       "Ikke i kontoen din: disse er bare lagret på denne telefonen. Sletter du en dom her, fjernes ikke delingslenken.",
@@ -60,9 +53,6 @@ const nb: AppLocale = {
     "app.settings.language": "Språk",
     "app.settings.languageDevice": "Samme som telefonen",
     "app.settings.appearance": "Utseende",
-    "app.settings.appearanceSystem": "Samme som telefonen",
-    "app.settings.appearanceLight": "Lyst",
-    "app.settings.appearanceDark": "Mørkt",
     "app.settings.usageStats": "Bruksstatistikk",
     "app.settings.usageStatsHint":
       "Tellinger av hvilke skjermer og funksjoner som brukes, knyttet til kontoen din når du er logget inn. Tekst fra saker sendes aldri.",
@@ -178,7 +168,6 @@ const nb: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "{n} dom igjen" },
-    "app.history.selected": { one: "{n} valgt" },
     "app.history.deleteConfirm": {
       one: "Vil du slette denne dommen fra telefonen? Delingslenken virker fortsatt.",
     },
