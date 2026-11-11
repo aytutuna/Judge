@@ -96,7 +96,6 @@ object SignInTags {
     const val USE_PASSWORD = "signin.usePassword"
     const val NEW_PASSWORD = "signin.newPassword"
     const val SAVE_PASSWORD = "signin.savePassword"
-    const val SKIP_PASSWORD = "signin.skipPassword"
 }
 
 /** Everything the sign-in screen can ask for; no-ops by default (previews, screenshots). */
@@ -108,7 +107,6 @@ data class SignInActions(
     val onSignInWithPassword: () -> Unit = {},
     val onMode: (SignInMode) -> Unit = {},
     val onSavePassword: () -> Unit = {},
-    val onSkipPassword: () -> Unit = {},
     val onCodeChange: (String) -> Unit = {},
     val onSubmitCode: () -> Unit = {},
     val onResend: () -> Unit = {},
@@ -132,11 +130,11 @@ fun SignInScreen(
     modifier: Modifier = Modifier,
 ) {
     val s = LocalStrings.current
-    // Signed in by the code already: leaving this step skips the password and goes on.
+    // Signed in by the code already: the password is the only way on.
     val choosing = state.step == SignInStep.CHOOSE_PASSWORD
-    BackHandler(enabled = choosing, onBack = actions.onSkipPassword)
+    BackHandler(enabled = choosing) {}
     Column(modifier.fillMaxSize()) {
-        TopBar(onBack = if (choosing) actions.onSkipPassword else onBack)
+        TopBar(onBack = if (choosing) null else onBack)
         Column(
             Modifier
                 .fillMaxSize()
@@ -364,12 +362,6 @@ private fun ChoosePasswordStep(state: SignInUiState, actions: SignInActions) {
         enabled = state.canSavePassword,
         onClick = actions.onSavePassword,
         modifier = Modifier.fillMaxWidth().padding(top = 16.dp).testTag(SignInTags.SAVE_PASSWORD),
-    )
-    TextAction(
-        s.signinPasswordSkip,
-        onClick = actions.onSkipPassword,
-        color = Palette.ink2,
-        modifier = Modifier.padding(top = 6.dp).testTag(SignInTags.SKIP_PASSWORD),
     )
 }
 

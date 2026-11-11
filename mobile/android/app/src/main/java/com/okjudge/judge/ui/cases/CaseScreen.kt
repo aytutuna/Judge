@@ -83,7 +83,7 @@ import com.okjudge.judge.core.model.NameMapping
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.i18n.Strings
-import com.okjudge.judge.ui.components.ClearFocusOnDrag
+import com.okjudge.judge.ui.components.dragDismissesKeyboard
 import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.Kicker
@@ -291,9 +291,8 @@ private fun CaseScreenBody(
 
         val waitingFor = otherName?.trim()?.takeIf { it.isNotEmpty() } ?: view.display.b?.trim()?.takeIf { it.isNotEmpty() }
         val scroll = rememberScrollState()
-        ClearFocusOnDrag(scroll)
         Column(
-            Modifier.fillMaxSize().clearFocusOnTap().verticalScroll(scroll, enabled = scroll.canScrollForward || scroll.canScrollBackward).imePadding().padding(horizontal = 16.dp),
+            Modifier.fillMaxSize().clearFocusOnTap().dragDismissesKeyboard().verticalScroll(scroll, enabled = scroll.canScrollForward || scroll.canScrollBackward).imePadding().padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Column(
@@ -876,8 +875,7 @@ fun AppealSheet(
         dragHandle = { Box(Modifier.padding(top = 10.dp).size(width = 40.dp, height = 5.dp).clip(JudgeShapes.chip).background(Palette.stone)) },
     ) {
         val scroll = rememberScrollState()
-        ClearFocusOnDrag(scroll)
-        AppealPanel(area, draft, evidenceOn, cost, actions, onClose, Modifier.clearFocusOnTap().verticalScroll(scroll).imePadding())
+        AppealPanel(area, draft, evidenceOn, cost, actions, onClose, Modifier.clearFocusOnTap().dragDismissesKeyboard().verticalScroll(scroll).imePadding())
     }
 }
 
@@ -937,16 +935,23 @@ fun AppealPanel(
                 }
             }
             is AppealArea.Form -> {
-                Note(s.appAppealIntro)
                 area.failed?.let { Banner(if (it == "refused") s.appealRefused else s.appealFailed) }
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(s.appAppealAsk, style = JudgeType.slotTitle.copy(fontSize = 13.sp), modifier = Modifier.weight(1f))
-                    Text("${draft.text.length} / ${CaseLogic.MAX_APPEAL_CHARS}", style = JudgeType.footnote)
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Palette.ivory2)
+                        .padding(horizontal = 14.dp, vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    TintedIcon(rememberIcon(Palette.terra) { JudgeIcons.spark(it) }, 14)
+                    Text(cost, style = AppealText.copy(fontSize = 13.sp, lineHeight = (13 * 1.4).sp, color = Palette.ink2))
                 }
                 Box(
                     Modifier
                         .fillMaxWidth()
-                        .heightIn(min = 130.dp)
+                        .heightIn(min = 200.dp)
                         .clip(JudgeShapes.field)
                         .background(Palette.ivory)
                         .border(1.dp, Palette.line2, JudgeShapes.field)
@@ -961,8 +966,8 @@ fun AppealPanel(
                         keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .heightIn(min = 100.dp)
-                            .semantics { contentDescription = s.appAppealAsk }
+                            .heightIn(min = 170.dp)
+                            .semantics { contentDescription = s.appAppealPlaceholder }
                             .testTag(CaseTags.APPEAL_TEXT),
                         decorationBox = { inner ->
                             if (draft.text.isEmpty()) Text(s.appAppealPlaceholder, style = AppealText.copy(color = Palette.placeholder))
@@ -970,21 +975,15 @@ fun AppealPanel(
                         },
                     )
                 }
+                Text(
+                    "${draft.text.length} / ${CaseLogic.MAX_APPEAL_CHARS}",
+                    style = JudgeType.footnote,
+                    textAlign = TextAlign.End,
+                    modifier = Modifier.fillMaxWidth(),
+                )
                 if (evidenceOn) {
                     val pick = rememberEvidencePicker(draft.evidence.room, actions.onAddEvidence)
                     EvidencePicker(draft.evidence, disabled = draft.sending, onAdd = pick, onRemove = actions.onRemoveEvidence)
-                }
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(16.dp))
-                        .background(Palette.ivory2)
-                        .padding(horizontal = 14.dp, vertical = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                ) {
-                    TintedIcon(rememberIcon(Palette.terra) { JudgeIcons.spark(it) }, 14)
-                    Text(cost, style = AppealText.copy(fontSize = 13.sp, lineHeight = (13 * 1.4).sp, color = Palette.ink2))
                 }
                 ErrorLine(draft.error, actions.onPricing)
                 PrimaryButton(

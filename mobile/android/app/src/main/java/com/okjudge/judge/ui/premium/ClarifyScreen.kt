@@ -31,7 +31,7 @@ import com.okjudge.judge.core.model.ClarifyQuestion
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
-import com.okjudge.judge.ui.components.ClearFocusOnDrag
+import com.okjudge.judge.ui.components.dragDismissesKeyboard
 import com.okjudge.judge.ui.components.PrimaryButton
 import com.okjudge.judge.ui.components.TextAction
 import com.okjudge.judge.ui.components.TopBar
@@ -68,9 +68,8 @@ fun ClarifyScreen(
     Column(modifier.fillMaxSize()) {
         TopBar(onBack = onBack, backLabel = s.clarifyBack)
         val scroll = rememberScrollState()
-        ClearFocusOnDrag(scroll)
         Column(
-            Modifier.fillMaxSize().clearFocusOnTap().verticalScroll(scroll).imePadding().padding(horizontal = 20.dp),
+            Modifier.fillMaxSize().clearFocusOnTap().dragDismissesKeyboard().verticalScroll(scroll).imePadding().padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Column(Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(top = 12.dp, bottom = 40.dp)) {

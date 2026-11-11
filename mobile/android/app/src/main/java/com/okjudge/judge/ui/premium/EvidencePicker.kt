@@ -102,10 +102,6 @@ fun EvidencePicker(
 ) {
     val s = LocalStrings.current
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Text(s.appContextLabel, style = JudgeType.slotTitle, modifier = Modifier.weight(1f))
-            Text("${state.items.size} / ${state.max}", style = JudgeType.footnote)
-        }
         EvidenceRows(state, disabled, onRemove)
         val canAdd = !disabled && !state.full
         Row(

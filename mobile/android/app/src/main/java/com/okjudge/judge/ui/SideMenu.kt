@@ -153,9 +153,9 @@ internal fun PageBar(
     }
 }
 
-/** The 44dp hit area of a bar button around its 36dp plate. */
-private val BarTarget = 44.dp
-private val BarPlate = 36.dp
+/** Bar buttons are round plates 48dp across with 22dp icons. */
+private val BarTarget = 48.dp
+private val BarPlate = 48.dp
 
 @Composable
 private fun GamifyButton(on: Boolean, onChange: (Boolean) -> Unit) {
@@ -179,7 +179,7 @@ private fun GamifyButton(on: Boolean, onChange: (Boolean) -> Unit) {
                 .background(tint),
             contentAlignment = Alignment.Center,
         ) {
-            TintedIcon(JudgeIcons.gamepad(if (on) Palette.terraInk else Palette.muted), 20)
+            TintedIcon(JudgeIcons.gamepad(if (on) Palette.terraInk else Palette.muted), 22)
         }
     }
 }
@@ -199,7 +199,7 @@ private fun BarButton(label: String, icon: ImageVector, onClick: () -> Unit, mod
         contentAlignment = Alignment.Center,
     ) {
         Box(Modifier.size(BarPlate).background(Palette.ink.copy(alpha = 0.08f), CircleShape), contentAlignment = Alignment.Center) {
-            TintedIcon(icon, 20)
+            TintedIcon(icon, 22)
         }
     }
 }
@@ -390,9 +390,9 @@ private fun ProfileRow(account: AccountActions, open: Boolean, onClick: () -> Un
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Box(Modifier.size(36.dp).background(if (user == null) Palette.line else Palette.sageTint, CircleShape), contentAlignment = Alignment.Center) {
+        Box(Modifier.size(48.dp).background(if (user == null) Palette.line else Palette.sageTint, CircleShape), contentAlignment = Alignment.Center) {
             if (user == null) {
-                TintedIcon(JudgeIcons.person(Palette.ink2), 20)
+                TintedIcon(JudgeIcons.person(Palette.ink2), 22)
             } else {
                 Text(initialOf(user), style = JudgeType.slotTitle.copy(color = Palette.sageInk, fontSize = 15.sp))
                 AvatarImage(user.image)

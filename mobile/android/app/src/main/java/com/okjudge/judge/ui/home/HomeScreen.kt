@@ -77,7 +77,7 @@ import com.okjudge.judge.core.premium.Tiers
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
-import com.okjudge.judge.ui.components.ClearFocusOnDrag
+import com.okjudge.judge.ui.components.dragDismissesKeyboard
 import com.okjudge.judge.ui.components.CourtView
 import com.okjudge.judge.ui.components.LocalGamify
 import com.okjudge.judge.ui.components.GhostButton
@@ -263,7 +263,6 @@ fun HomeScreen(
     }
 
     val scroll = rememberScrollState()
-    ClearFocusOnDrag(scroll)
     BoxWithConstraints(modifier.fillMaxSize().background(Palette.ivory).imePadding().clearFocusOnTap()) {
         // A short screen with the keyboard up still has to leave room for the send row.
         val fieldMax = maxHeight * 0.25f
@@ -280,7 +279,7 @@ fun HomeScreen(
                     Column(column.padding(top = 16.dp, bottom = 20.dp), verticalArrangement = Arrangement.spacedBy(12.dp), content = middle)
                 }
                 // Reversed, so the content stays against the composer as it grows.
-                Column((if (centred) Modifier.fillMaxWidth() else Modifier.fillMaxSize()).verticalScroll(scroll, reverseScrolling = true)) {
+                Column((if (centred) Modifier.fillMaxWidth() else Modifier.fillMaxSize()).dragDismissesKeyboard().verticalScroll(scroll, reverseScrolling = true)) {
                     if (centred) {
                         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) { form() }
                     } else {

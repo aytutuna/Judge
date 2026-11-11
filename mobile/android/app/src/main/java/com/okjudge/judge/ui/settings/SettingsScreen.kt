@@ -38,7 +38,6 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.okjudge.judge.core.auth.Account
-import com.okjudge.judge.core.auth.SignInError
 import com.okjudge.judge.core.data.Appearance
 import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.purchases.PurchaseController
@@ -47,6 +46,7 @@ import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.ui.components.Kicker
+import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
@@ -55,12 +55,7 @@ object SettingsTags {
     const val SIGN_IN = "settings.signIn"
     const val SIGN_OUT = "settings.signOut"
     const val DELETE = "settings.delete"
-    const val PASSWORD = "settings.password"
-    const val PASSWORD_CURRENT = "settings.password.current"
-    const val PASSWORD_NEW = "settings.password.new"
-    const val PASSWORD_SAVE = "settings.password.save"
-    const val PASSWORD_SAVED = "settings.password.saved"
-    const val PASSWORD_ERROR = "settings.password.error"
+    const val ACCOUNT = "settings.account"
     const val PRICING = "settings.pricing"
     const val RESTORE = "settings.restore"
     const val RESTORE_NOTE = "settings.restoreNote"
@@ -78,7 +73,7 @@ object SettingsTags {
 /** "Restore purchases" in the account group; shown while the store is ready for this account. */
 data class RestoreUi(val working: Boolean = false, val notice: PurchaseController.RestoreNotice? = null)
 
-/** The account, language, appearance and gamify choices, links out to the website, and the footer note. */
+/** Account, language, appearance and privacy choices, links out to the website, then sign out. */
 @Composable
 fun SettingsScreen(
     langPref: LangPref,
@@ -91,9 +86,7 @@ fun SettingsScreen(
     accountBusy: Boolean = false,
     onSignIn: () -> Unit = {},
     onSignOut: () -> Unit = {},
-    onDeleteAccount: () -> Unit = {},
-    /** Set when the server has passwords; the row also waits for /me to say whether this account has one. */
-    onSetPassword: (suspend (new: String, current: String?) -> SignInError?)? = null,
+    onOpenAccount: () -> Unit = {},
     onOpenPricing: (() -> Unit)? = null,
     restore: RestoreUi? = null,
     onRestore: () -> Unit = {},
@@ -107,21 +100,30 @@ fun SettingsScreen(
     val s = LocalStrings.current
     val base = siteBaseUrl.trimEnd('/')
     var pickingLang by rememberSaveable { mutableStateOf(false) }
+    var confirmSignOut by rememberSaveable { mutableStateOf(false) }
+    val signedIn = account is Account.State.SignedIn
+    // A session that ends while the dialog is open must not bring it back after the next sign-in.
+    LaunchedEffect(signedIn) { if (!signedIn) confirmSignOut = false }
     if (pickingLang) {
         LanguageDialog(langPref, onPick = { pickingLang = false; onLangPref(it) }, onDismiss = { pickingLang = false })
+    }
+    if (confirmSignOut && signedIn) {
+        AlertDialog(
+            onDismissRequest = { confirmSignOut = false },
+            text = { Text(s.appAccountSignOutConfirm, style = JudgeType.body) },
+            confirmButton = {
+                TextButton(onClick = { confirmSignOut = false; onSignOut() }) { Text(s.accountSignOut, color = Palette.ink) }
+            },
+            dismissButton = { TextButton(onClick = { confirmSignOut = false }) { Text(s.appCancel, color = Palette.ink) } },
+            containerColor = Palette.paper,
+        )
     }
     Column(modifier.fillMaxSize()) {
         Column(
             Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
-            AccountGroup(account, accountBusy, onSignIn, onSignOut, onDeleteAccount, onSetPassword, restore, onRestore)
-
-            if (onOpenPricing != null) {
-                Group(null) {
-                    ActionRow(s.navPricing, Modifier.testTag(SettingsTags.PRICING), trailing = "›", onClick = onOpenPricing)
-                }
-            }
+            AccountGroup(account, accountBusy, onSignIn, onOpenAccount, onOpenPricing, restore, onRestore)
 
             Group(s.appSettingsLanguage) {
                 ActionRow(
@@ -132,59 +134,32 @@ fun SettingsScreen(
             }
 
             Group(s.appSettingsAppearance) {
-                Appearance.entries.forEachIndexed { i, option ->
-                    if (i > 0) HorizontalDivider(color = Palette.line)
+                Appearance.entries.forEach { option ->
                     AppearanceRow(option, selected = option == appearance) { onAppearance(option) }
+                    HorizontalDivider(color = Palette.line)
                 }
-            }
-
-            Group(null) {
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .testTag(SettingsTags.GAMIFY)
-                        .toggleable(value = gamify, role = Role.Switch, onValueChange = onGamify)
-                        .padding(horizontal = 16.dp, vertical = 10.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(s.shellGamify, style = JudgeType.body, modifier = Modifier.weight(1f))
-                    Switch(
-                        checked = gamify,
-                        onCheckedChange = null,
-                        colors = SwitchDefaults.colors(checkedTrackColor = Palette.terraInk, checkedThumbColor = Palette.paper),
-                    )
-                }
+                SwitchRow(s.shellGamify, gamify, SettingsTags.GAMIFY, onGamify)
             }
 
             Column {
-                Group(null) {
-                    Row(
-                        Modifier
-                            .fillMaxWidth()
-                            .testTag(SettingsTags.USAGE_STATS)
-                            .toggleable(value = usageStats, role = Role.Switch, onValueChange = onUsageStats)
-                            .padding(horizontal = 16.dp, vertical = 10.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Text(s.appSettingsUsageStats, style = JudgeType.body, modifier = Modifier.weight(1f))
-                        Switch(
-                            checked = usageStats,
-                            onCheckedChange = null,
-                            colors = SwitchDefaults.colors(checkedTrackColor = Palette.terraInk, checkedThumbColor = Palette.paper),
-                        )
-                    }
+                Group(s.footerPrivacy) {
+                    SwitchRow(s.appSettingsUsageStats, usageStats, SettingsTags.USAGE_STATS, onUsageStats)
+                    HorizontalDivider(color = Palette.line)
+                    LinkRow(s.appSettingsAbout) { onOpenLink("$base/about") }
+                    HorizontalDivider(color = Palette.line)
+                    LinkRow(s.howTitle) { onOpenLink("$base/about#how") }
+                    HorizontalDivider(color = Palette.line)
+                    LinkRow(s.footerPrivacy) { onOpenLink("$base/privacy") }
+                    HorizontalDivider(color = Palette.line)
+                    LinkRow(s.appLegalTerms) { onOpenLink("$base/terms") }
                 }
                 Text(s.appSettingsUsageStatsHint, style = JudgeType.footnote, modifier = Modifier.padding(start = 4.dp, top = 8.dp, end = 4.dp))
             }
 
-            Group(null) {
-                LinkRow(s.appSettingsAbout) { onOpenLink("$base/about") }
-                HorizontalDivider(color = Palette.line)
-                LinkRow(s.howTitle) { onOpenLink("$base/about#how") }
-                HorizontalDivider(color = Palette.line)
-                LinkRow(s.footerPrivacy) { onOpenLink("$base/privacy") }
-                HorizontalDivider(color = Palette.line)
-                LinkRow(s.appLegalTerms) { onOpenLink("$base/terms") }
+            if (signedIn) {
+                Group(null) {
+                    ActionRow(s.accountSignOut, Modifier.testTag(SettingsTags.SIGN_OUT), enabled = !accountBusy) { confirmSignOut = true }
+                }
             }
 
             Column(horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)) {
@@ -196,31 +171,36 @@ fun SettingsScreen(
 }
 
 @Composable
+private fun SwitchRow(label: String, checked: Boolean, tag: String, onChange: (Boolean) -> Unit) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .testTag(tag)
+            .toggleable(value = checked, role = Role.Switch, onValueChange = onChange)
+            .padding(horizontal = 16.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(label, style = JudgeType.body, modifier = Modifier.weight(1f))
+        Switch(
+            checked = checked,
+            onCheckedChange = null,
+            colors = SwitchDefaults.colors(checkedTrackColor = Palette.terraInk, checkedThumbColor = Palette.paper),
+        )
+    }
+}
+
+@Composable
 private fun AccountGroup(
     account: Account.State,
     busy: Boolean,
     onSignIn: () -> Unit,
-    onSignOut: () -> Unit,
-    onDelete: () -> Unit,
-    onSetPassword: (suspend (new: String, current: String?) -> SignInError?)?,
+    onOpenAccount: () -> Unit,
+    onOpenPricing: (() -> Unit)?,
     restore: RestoreUi?,
     onRestore: () -> Unit,
 ) {
     val s = LocalStrings.current
     val lang = LocalLang.current
-    var confirmSignOut by rememberSaveable { mutableStateOf(false) }
-    var confirmDelete by rememberSaveable { mutableStateOf(false) }
-    var editingPassword by rememberSaveable { mutableStateOf(false) }
-    val signedIn = account is Account.State.SignedIn
-    // A session that ends while a dialog is open must not bring it back after the next sign-in.
-    LaunchedEffect(signedIn) {
-        if (!signedIn) {
-            confirmSignOut = false
-            confirmDelete = false
-            editingPassword = false
-        }
-    }
-
     Group(s.accountTitle) {
         when (account) {
             Account.State.SignedOut -> {
@@ -235,17 +215,8 @@ private fun AccountGroup(
             is Account.State.SignedIn -> {
                 val user = account.me?.user
                 val e = account.me?.entitlement
-                val status = when {
-                    user != null -> s.accountSignedInAs(user.email)
-                    account.loadFailed -> s.accountLoadFailed
-                    else -> s.accountLoading
-                }
-                Text(
-                    status,
-                    style = JudgeType.body.copy(color = Palette.ink2),
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
-                )
                 if (user != null) {
+                    ActionRow(s.accountSignedInAs(user.email), Modifier.testTag(SettingsTags.ACCOUNT), trailing = "›", onClick = onOpenAccount)
                     HorizontalDivider(color = Palette.line)
                     FactRow(s.accountCredits, (e?.credits ?: 0).toString())
                     e?.subscription?.let { sub ->
@@ -261,46 +232,58 @@ private fun AccountGroup(
                         HorizontalDivider(color = Palette.line)
                         RestoreRow(restore, enabled = !busy, onRestore)
                     }
+                } else {
+                    Text(
+                        if (account.loadFailed) s.accountLoadFailed else s.accountLoading,
+                        style = JudgeType.body.copy(color = Palette.ink2),
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
+                    )
                 }
-                val hasPassword = account.me?.hasPassword
-                if (user != null && onSetPassword != null && hasPassword != null) {
+            }
+        }
+        if (onOpenPricing != null) {
+            HorizontalDivider(color = Palette.line)
+            ActionRow(s.navPricing, Modifier.testTag(SettingsTags.PRICING), trailing = "›", onClick = onOpenPricing)
+        }
+    }
+}
+
+/** Settings > Account: the email and Delete account, behind its confirmation. */
+@Composable
+fun AccountScreen(
+    account: Account.State,
+    busy: Boolean,
+    onDelete: () -> Unit,
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val s = LocalStrings.current
+    var confirmDelete by rememberSaveable { mutableStateOf(false) }
+    val signedIn = account is Account.State.SignedIn
+    LaunchedEffect(signedIn) { if (!signedIn) confirmDelete = false }
+    Column(modifier.fillMaxSize()) {
+        TopBar(onBack = onBack)
+        Column(
+            Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp),
+        ) {
+            Text(s.accountTitle, style = JudgeType.sectionTitle)
+            Group(null) {
+                (account as? Account.State.SignedIn)?.me?.user?.let {
+                    Text(
+                        s.accountSignedInAs(it.email),
+                        style = JudgeType.body.copy(color = Palette.ink2),
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
+                    )
                     HorizontalDivider(color = Palette.line)
-                    ActionRow(
-                        if (hasPassword) s.accountPasswordChange else s.accountPasswordSet,
-                        Modifier.testTag(SettingsTags.PASSWORD),
-                        trailing = "›",
-                        enabled = !busy,
-                    ) { editingPassword = true }
                 }
-                HorizontalDivider(color = Palette.line)
-                ActionRow(s.accountSignOut, Modifier.testTag(SettingsTags.SIGN_OUT), enabled = !busy) { confirmSignOut = true }
-                HorizontalDivider(color = Palette.line)
                 ActionRow(s.accountDelete, Modifier.testTag(SettingsTags.DELETE), color = Palette.danger, enabled = !busy) {
                     confirmDelete = true
                 }
             }
         }
     }
-
-    if (editingPassword && account is Account.State.SignedIn && onSetPassword != null) {
-        PasswordDialog(
-            hasPassword = account.me?.hasPassword == true,
-            onSave = onSetPassword,
-            onDismiss = { editingPassword = false },
-        )
-    }
-    if (confirmSignOut && account is Account.State.SignedIn) {
-        AlertDialog(
-            onDismissRequest = { confirmSignOut = false },
-            text = { Text(s.appAccountSignOutConfirm, style = JudgeType.body) },
-            confirmButton = {
-                TextButton(onClick = { confirmSignOut = false; onSignOut() }) { Text(s.accountSignOut, color = Palette.ink) }
-            },
-            dismissButton = { TextButton(onClick = { confirmSignOut = false }) { Text(s.appCancel, color = Palette.ink) } },
-            containerColor = Palette.paper,
-        )
-    }
-    if (confirmDelete && account is Account.State.SignedIn) {
+    if (confirmDelete && signedIn) {
         AlertDialog(
             onDismissRequest = { confirmDelete = false },
             title = { Text(s.appAccountDeleteTitle, style = JudgeType.sectionTitle) },

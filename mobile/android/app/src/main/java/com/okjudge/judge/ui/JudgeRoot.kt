@@ -94,6 +94,7 @@ import com.okjudge.judge.core.model.PricingInfo
 import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.judging.rememberReducedMotion
 import com.okjudge.judge.ui.settings.RestoreUi
+import com.okjudge.judge.ui.settings.AccountScreen
 import com.okjudge.judge.ui.settings.SettingsScreen
 import com.okjudge.judge.ui.signin.SignInActions
 import com.okjudge.judge.ui.signin.SignInScreen
@@ -119,6 +120,7 @@ import kotlinx.serialization.Serializable
 @Serializable data object SettingsKey : NavKey
 @Serializable data object ClarifyKey : NavKey
 @Serializable data object PricingKey : NavKey
+@Serializable data object AccountKey : NavKey
 /** [otherName]: who a case just created here waits for, as typed on Home. */
 @Serializable data class CaseKey(val id: String, val otherName: String? = null) : NavKey
 
@@ -693,14 +695,23 @@ fun JudgeRoot(
                                         onOpenPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
                                         // App scope: leaving the screen must not stop a sign-out or deletion halfway.
                                         onSignOut = { container.appScope.launch { account.signOut() } },
-                                        onDeleteAccount = { container.appScope.launch { account.deleteAccount() } },
-                                        onSetPassword = if ((providers as? Account.Providers.Ready)?.config?.passwordSignIn == true) {
-                                            { new, current -> account.setPassword(new, current) }
-                                        } else {
-                                            null
-                                        },
+                                        onOpenAccount = { if (backStack.lastOrNull() !is AccountKey) backStack.add(AccountKey) },
                                         restore = if (purchasesOn && purchases.isReady(store)) RestoreUi(store.restoring, store.restoreNotice) else null,
                                         onRestore = { purchases.restore() },
+                                    )
+                                }
+                                entry<AccountKey> {
+                                    val accountState by account.state.collectAsStateWithLifecycle()
+                                    val accountBusy by account.working.collectAsStateWithLifecycle()
+                                    LaunchedEffect(accountState is Account.State.SignedOut) {
+                                        if (accountState is Account.State.SignedOut) backStack.removeAll { it is AccountKey }
+                                    }
+                                    AccountScreen(
+                                        account = accountState,
+                                        busy = accountBusy,
+                                        // App scope: leaving the screen must not stop a deletion halfway.
+                                        onDelete = { container.appScope.launch { account.deleteAccount() } },
+                                        onBack = { backStack.removeAll { it is AccountKey } },
                                     )
                                 }
                                 entry<SignInKey> { key ->
@@ -734,7 +745,6 @@ fun JudgeRoot(
                                             },
                                             onMode = vm::setMode,
                                             onSavePassword = vm::savePassword,
-                                            onSkipPassword = vm::skipPassword,
                                             onCodeChange = vm::onCodeChange,
                                             onSubmitCode = vm::submitCode,
                                             onResend = { vm.resend(lang) },
