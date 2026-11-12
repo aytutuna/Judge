@@ -259,7 +259,7 @@ fun AccountScreen(
     val signedIn = account is Account.State.SignedIn
     LaunchedEffect(signedIn) { if (!signedIn) confirmDelete = false }
     Column(modifier.fillMaxSize()) {
-        TopBar(onBack = onBack)
+        TopBar(onBack = onBack, backLabel = s.appTabSettings)
         Column(
             Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(start = 20.dp, top = 24.dp, end = 20.dp, bottom = 8.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp),

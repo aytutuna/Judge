@@ -141,7 +141,7 @@ fun SignInScreen(
     val choosing = state.step == SignInStep.CHOOSE_PASSWORD
     BackHandler(enabled = choosing) {}
     Column(modifier.fillMaxSize()) {
-        TopBar(onBack = if (choosing) null else onBack)
+        TopBar(onBack = if (choosing) null else onBack, backLabel = s.appClose)
         Column(
             Modifier
                 .fillMaxSize()

@@ -108,7 +108,7 @@ fun PricingScreen(
     fun canBuy(offer: StoreOffer?) = store.buying == null && (offer != null || (storeOn && !signedIn))
     fun buy(id: String) = if (signedIn) onBuy(id) else onSignIn()
     Column(modifier.fillMaxSize()) {
-        TopBar(onBack = onBack)
+        TopBar(onBack = onBack, backLabel = s.appClose)
         Column(
             Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
