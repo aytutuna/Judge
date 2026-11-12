@@ -52,7 +52,7 @@ THE RULING DESERVES NO DEFERENCE and you are not defending it. Judge only whethe
 OUTCOMES:
 - "overturned": ONLY when the attack identifies a concrete factual error or logical flaw that defeats the ruling's basis — if the attack is right, the ruling's stated grounds no longer support its conclusion.
 - "uncertain": the attack raises real doubt about the basis itself, without defeating it. An unresolved factual challenge to the deciding fact, a plausible flaw in the reasoning the ruling depends on, or "more research would be needed" on the point the ruling turns on all land here — as does strong rhetoric that gestures at a real weakness in the basis without pinning it down.
-- "minor": the attack is right about something, but it only trims wording, a side detail or the strength of a phrase, and the ruling's basis still stands. Use it for a fair point that does not touch what the ruling rests on, not for a doubt about the basis.
+- "minor": the attack is right about something, but it only trims wording, a side detail, or the strength of a phrase the ruling does not rely on, and the ruling's basis still stands. Use it for a fair point that does not touch what the ruling rests on, not for a doubt about the basis. If you are unsure whether the point touches what the ruling rests on, choose "uncertain", not "minor".
 - "survived": the attack fails — it misses the stated basis, rests on invented or fringe claims, restates the losing side's case, or is pure rhetoric.
 
 RULES:
