@@ -5,7 +5,7 @@ import type { CruxTrial, VerdictResult } from "@/lib/types";
 import { KIND_KEY, t, type Key, type Lang } from "@/lib/i18n";
 import { cruxStyle } from "@/lib/crux-style";
 import { stripLeadingEmoji } from "@/lib/text";
-import { leanTally, panelSummary } from "@/lib/verdict-display";
+import { leanTally } from "@/lib/verdict-display";
 import { FactCheckList } from "../FactCheckList";
 import { isMany } from "./ManySides";
 import { TwoSidedFacts, WouldChangeBlock, evidenceNote, type PartyLabels } from "../case/TwoSidedBlocks";
@@ -77,13 +77,13 @@ function Chevron() {
   );
 }
 
-/** Outcome of the adversarial cross-examination of a fact/logic winner
- * ruling. Survived is styled neutral, not green: green here means
- * user-checkable verified facts, and a green shield would read as an
- * endorsement badge — exactly the confidence-laundering this app forbids.
- * "Capped" (never "reduced") because the cap may equal the pre-trial number.
+/** Outcome of the stress test of a fact/logic winner ruling. Survived is
+ * styled neutral, not green: green here means user-checkable verified facts,
+ * and a green shield would read as an endorsement badge — exactly the
+ * confidence-laundering this app forbids. Doubt always comes with its reason
+ * (the referee's, else the objection itself).
  * The dictionary's leading emoji is swapped for a drawn icon. */
-function CruxTrialNote({ trial, lang }: { trial: CruxTrial; lang: Lang }) {
+function CruxTrialNote({ trial, mixed, lang }: { trial: CruxTrial; mixed: boolean; lang: Lang }) {
   if (trial.outcome === "survived") {
     return (
       <div className={styles.noteBlock}>
@@ -107,6 +107,7 @@ function CruxTrialNote({ trial, lang }: { trial: CruxTrial; lang: Lang }) {
     );
   }
   const overturned = trial.outcome === "overturned";
+  const why = trial.reasoning.trim() || trial.attack.trim();
   return (
     <div className={styles.noteBlock}>
       <p
@@ -115,13 +116,19 @@ function CruxTrialNote({ trial, lang }: { trial: CruxTrial; lang: Lang }) {
       >
         <AlertIcon /> {stripLeadingEmoji(t(lang, overturned ? "trial.overturned" : "trial.uncertain"))}
       </p>
-      <p className={styles.noteText}>
-        {t(lang, "trial.attackPrefix")} {trial.attack}
-      </p>
-      {trial.reasoning ? (
+      {why ? (
         <p className={styles.noteText}>
-          {t(lang, "trial.refereePrefix")} {trial.reasoning}
+          {t(lang, "trial.refereePrefix")} {why}
         </p>
+      ) : null}
+      {mixed ? <p className={styles.noteText}>{t(lang, "trial.mixedNote")}</p> : null}
+      {trial.reasoning.trim() && trial.attack.trim() ? (
+        <details className={styles.disclosure}>
+          <summary>{t(lang, "trial.whatWasTested")}</summary>
+          <p>
+            {t(lang, "trial.attackPrefix")} {trial.attack}
+          </p>
+        </details>
       ) : null}
     </div>
   );
@@ -238,7 +245,7 @@ export function VerdictDetails({
           ) : lean === null ? (
             <p className={styles.noteText}>{t(lang, "lean.tie")}</p>
           ) : null}
-          {result.crux_trial ? <CruxTrialNote trial={result.crux_trial} lang={lang} /> : null}
+          {result.crux_trial ? <CruxTrialNote trial={result.crux_trial} mixed={result.dispute_type === "mixed"} lang={lang} /> : null}
           {result.demo ? <p className={styles.noteText}>{stripLeadingEmoji(t(lang, "demoNote"))}</p> : null}
         </Detail>
 
@@ -362,7 +369,6 @@ export function VerdictDetails({
               <>
                 <br />
                 {t(lang, "panel.premium")}
-                {result.panel?.models.length ? ` ${panelSummary(result.panel.models, lang)}` : null}
               </>
             ) : null}
             {evidenceLine ? (

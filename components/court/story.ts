@@ -27,7 +27,7 @@ export const NAMES_MIN_MS = 2500;
 // Once the verdict is in, the lines still to come go by at this pace.
 export const CATCH_UP_MS = 450;
 export const VOTE_MS = 420;
-/** The cross-examination: objection, then the adjudicator's answer. */
+/** The stress test: objection, then the adjudicator's answer. */
 export const TRIAL_MS = 4200;
 
 /** The longest the card plays on after the verdict lands (from the first line, a close call with five votes and a trial). */

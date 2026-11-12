@@ -99,9 +99,16 @@ export function JudgingStory({
   const beat: Beat = steps.length ? steps[steps.length - 1].beat : WAITING[waiting];
   const over = beat === "final";
   const last = lines.length - 1;
+  const trial = result?.crux_trial;
+  // A doubtful stress test says why right in the log, and owns up to a mixed dispute.
   const text = (l: Line) => {
     const s = t(lang, l.key, l.vars);
-    return l.key.startsWith("trial.") ? stripLeadingEmoji(s) : s;
+    if (!l.key.startsWith("trial.")) return s;
+    const line = stripLeadingEmoji(s);
+    if (!trial || trial.outcome === "survived") return line;
+    const why = trial.reasoning.trim() || trial.attack.trim();
+    const mixed = result?.dispute_type === "mixed" ? ` ${t(lang, "trial.mixedNote")}` : "";
+    return `${line}${why ? `: ${why}` : ""}${mixed}`;
   };
 
   return (
