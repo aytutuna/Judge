@@ -161,7 +161,7 @@ fun RulingSummary(
     val s = LocalStrings.current
     val result = view.result
     Column(modifier, verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        if (showShare) ShareActions(actions)
+        if (showShare) ShareActions(actions, Modifier.fillMaxWidth())
         result.appeal?.let { OutcomeBanner(it, parties) }
         Column(
             Modifier
@@ -237,7 +237,7 @@ fun VerdictDetails(
         modifier.alpha(if (view.status == TranslationStatus.LOADING) 0.55f else 1f),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        if (showShare) ShareActions(actions)
+        if (showShare) ShareActions(actions, Modifier.fillMaxWidth())
         result.appeal?.let { OutcomeBanner(it, parties) }
         DetailCard {
             TranslationLine(view)
@@ -549,7 +549,7 @@ fun ShareActions(actions: CardActions, modifier: Modifier = Modifier) {
     val s = LocalStrings.current
     val share = actions.onShare ?: return
     FlowRow(
-        modifier.fillMaxWidth(),
+        modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
