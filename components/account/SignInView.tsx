@@ -555,9 +555,35 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
   const needsCaptcha = TURNSTILE_SITE_KEY !== "" && !byCode;
   const canSendEmail = EMAIL_RE.test(email.trim()) && (!needsCaptcha || captchaToken !== null);
 
+  // Back from Apple or Google through the browser's page cache: the page
+  // comes back exactly as it was left, spinner included.
+  useEffect(() => {
+    function restored(e: PageTransitionEvent) {
+      if (!e.persisted) return;
+      forgetAdultTick();
+      setPending(false);
+      setError(null);
+    }
+    window.addEventListener("pageshow", restored);
+    return () => window.removeEventListener("pageshow", restored);
+  }, []);
+
   function fail(message: string, inForm = true) {
     setError(message);
     setErrorInForm(inForm);
+  }
+
+  // A chunk that fails to load (offline, a deploy in between) must not leave
+  // the form spinning.
+  async function loadClient() {
+    try {
+      return await import("@/lib/auth-client");
+    } catch {
+      forgetAdultTick();
+      fail(t(lang, "signin.failed"));
+      setPending(false);
+      return null;
+    }
   }
 
   async function provider(p: "apple" | "google") {
@@ -565,8 +591,9 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     setError(null);
     rememberAdultTick();
     signInStarted(p);
-    const { signInWithProvider } = await import("@/lib/auth-client");
-    const res = await signInWithProvider(p, next);
+    const client = await loadClient();
+    if (!client) return;
+    const res = await client.signInWithProvider(p, next);
     // Success leaves the page for Apple or Google; only failure lands here.
     if (!res.ok) {
       forgetAdultTick();
@@ -586,12 +613,13 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     setError(null);
     rememberAdultTick();
     signInStarted("password");
-    const { signInWithPassword, passwordSignInErrorKey } = await import("@/lib/auth-client");
-    const res = await signInWithPassword(to, password);
+    const client = await loadClient();
+    if (!client) return;
+    const res = await client.signInWithPassword(to, password);
     if (!res.ok) {
       forgetAdultTick();
       trackError(res.code);
-      fail(t(lang, passwordSignInErrorKey(res)));
+      fail(t(lang, client.passwordSignInErrorKey(res)));
       setPending(false);
       return;
     }
@@ -612,9 +640,10 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     setError(null);
     rememberAdultTick();
     signInStarted("email");
+    const client = await loadClient();
+    if (!client) return;
     if (byCode) {
-      const { sendSignInCode, codeErrorKey } = await import("@/lib/auth-client");
-      const res = await sendSignInCode(to, lang);
+      const res = await client.sendSignInCode(to, lang);
       setPending(false);
       if (res.ok) {
         setCode("");
@@ -623,14 +652,13 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
       } else {
         forgetAdultTick();
         trackError(res.code);
-        fail(t(lang, codeErrorKey(res, "send")));
+        fail(t(lang, client.codeErrorKey(res, "send")));
       }
       return;
     }
     const token = captchaToken ?? undefined;
     setCaptchaToken(null);
-    const { sendMagicLink } = await import("@/lib/auth-client");
-    const res = await sendMagicLink(to, withLang(next, lang), token);
+    const res = await client.sendMagicLink(to, withLang(next, lang), token);
     setPending(false);
     if (res.ok) setSentTo(to);
     else {
@@ -659,8 +687,9 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     }
     setPending(true);
     setError(null);
-    const { savePassword, passwordSaveErrorKey } = await import("@/lib/auth-client");
-    const res = await savePassword(password);
+    const client = await loadClient();
+    if (!client) return;
+    const res = await client.savePassword(password);
     if (!res.ok && res.code === "password_required") {
       // The code sign-in is too old to replace a password: back to the code
       // step for a fresh one.
@@ -675,7 +704,7 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     if (!res.ok) {
       trackError(res.code);
       setChoosing(true);
-      fail(t(lang, passwordSaveErrorKey(res.code)));
+      fail(t(lang, client.passwordSaveErrorKey(res.code)));
       setPending(false);
       return;
     }
@@ -687,12 +716,13 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     setPending(true);
     setError(null);
     rememberAdultTick();
-    const { signInWithCode, codeErrorKey } = await import("@/lib/auth-client");
-    const res = await signInWithCode(sentTo, code);
+    const client = await loadClient();
+    if (!client) return;
+    const res = await client.signInWithCode(sentTo, code);
     if (!res.ok) {
       forgetAdultTick();
       trackError(res.code);
-      fail(t(lang, codeErrorKey(res, "verify")));
+      fail(t(lang, client.codeErrorKey(res, "verify")));
       setPending(false);
       return;
     }
@@ -712,8 +742,8 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
   }
 
   async function needsPassword(): Promise<boolean> {
-    const { fetchMe } = await import("@/lib/auth-client");
     try {
+      const { fetchMe } = await import("@/lib/auth-client");
       return (await fetchMe()).needsPassword === true;
     } catch {
       return false;
@@ -724,13 +754,14 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     if (!sentTo) return;
     setPending(true);
     setError(null);
-    const { sendSignInCode, codeErrorKey } = await import("@/lib/auth-client");
-    const res = await sendSignInCode(sentTo, lang);
+    const client = await loadClient();
+    if (!client) return;
+    const res = await client.sendSignInCode(sentTo, lang);
     setPending(false);
     if (res.ok) setCode("");
     else {
       trackError(res.code);
-      fail(t(lang, codeErrorKey(res, "send")));
+      fail(t(lang, client.codeErrorKey(res, "send")));
     }
   }
 
@@ -753,8 +784,9 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     setError(null);
     rememberAdultTick();
     signInStarted("dev");
-    const { devLogin } = await import("@/lib/auth-client");
-    const res = await devLogin();
+    const client = await loadClient();
+    if (!client) return;
+    const res = await client.devLogin();
     if (!res.ok) {
       forgetAdultTick();
       trackError("dev_login_failed");
