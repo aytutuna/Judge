@@ -411,7 +411,7 @@ struct SideMenu: View {
                     }
                 }
                 if !links.isEmpty {
-                    heading(L10n.navLinks(lang), removeAll: links.contains(where: \.removable) ? removeAllLinks : nil)
+                    heading(L10n.navLinks(lang), removeAll: links.contains(where: \.removable) ? { removeAllLinks() } : nil)
                         .simultaneousGesture(closeDrag(width))
                         .menuListRow()
                     ForEach(links) { entry in
@@ -531,7 +531,7 @@ struct SideMenu: View {
         }
         .accessibilityElement(children: .contain)
         .accessibilityAddTraits(.isModal)
-        .accessibilityAction(.escape, close)
+        .accessibilityAction(.escape) { close() }
         .onAppear {
             refresh()
             Task {
