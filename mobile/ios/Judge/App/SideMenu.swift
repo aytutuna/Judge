@@ -635,9 +635,10 @@ struct SideMenu: View {
                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                     // No destructive role: that would take the row away before the question is answered.
                     Button { confirming = [entry.id] } label: {
-                        Label(L10n.appHistoryDelete(lang), systemImage: "trash")
+                        Image(systemName: "trash")
                     }
                     .tint(Brand.danger)
+                    .accessibilityLabel(L10n.appHistoryDelete(lang))
                 }
                 .contextMenu {
                     Button(role: .destructive) { confirming = [entry.id] } label: {
