@@ -61,6 +61,7 @@ private struct VerdictScreenContent: View {
                         model: model,
                         lang: lang,
                         shareURL: app.config.shareURL(id: model.session.id),
+                        shareInBar: true,
                         appealArea: area,
                         appealStartsOpen: appeal.open,
                         onAppealOpen: { appeal.openForm() }
@@ -124,6 +125,14 @@ private struct VerdictScreenContent: View {
         .background(Brand.ivory.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Brand.ivory, for: .navigationBar)
+        .toolbar {
+            VerdictBarTrailing(
+                shareURL: app.config.shareURL(id: model.session.id),
+                shareSubject: model.session.original.result.headline,
+                lang: lang,
+                writer: area.inSheet
+            )
+        }
     }
 }
 
@@ -137,6 +146,8 @@ struct VerdictSections<Appeal: View>: View {
     let lang: AppLang
     /// Nil hides the share buttons.
     let shareURL: URL?
+    /// The screen's bar carries the share buttons, so the card's row is left out.
+    var shareInBar = false
     /// Where the writer's "Add context & appeal" stands: the button shows
     /// while the sheet has something to offer.
     var appealArea: CaseLogic.AppealArea = .none
@@ -163,7 +174,7 @@ struct VerdictSections<Appeal: View>: View {
         let result = Names.personalizeResult(view.result, nameMap: session.nameMap, selfLang: selfLang)
         let offered = appealArea.inSheet
         VStack(spacing: 12) {
-            if shareURL != nil {
+            if shareURL != nil, !shareInBar {
                 VerdictShare(
                     shareURL: shareURL,
                     shareSubject: session.original.result.headline,

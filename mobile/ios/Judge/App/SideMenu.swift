@@ -78,6 +78,63 @@ struct ComposeButton: View {
     }
 }
 
+/// The verdict screen's trailing bar end, level with the back button: Copy
+/// link (not for the writer, who copies from the share sheet) and Share, each
+/// on a round plate.
+struct VerdictBarTrailing: ToolbarContent {
+    let shareURL: URL
+    /// The anonymized original headline.
+    let shareSubject: String
+    let lang: AppLang
+    let writer: Bool
+
+    var body: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            VerdictBarButtons(shareURL: shareURL, shareSubject: shareSubject, lang: lang, writer: writer)
+        }
+        .ownBackground()
+    }
+}
+
+private struct VerdictBarButtons: View {
+    @Environment(AppModel.self) private var app
+    let shareURL: URL
+    let shareSubject: String
+    let lang: AppLang
+    let writer: Bool
+    @State private var copied = false
+
+    var body: some View {
+        HStack(spacing: 0) {
+            if !writer {
+                Button {
+                    UIPasteboard.general.url = shareURL
+                    copied = true
+                } label: {
+                    Image(systemName: copied ? "checkmark" : "link")
+                        .font(.system(size: 17, weight: .medium))
+                        .foregroundStyle(Brand.ink)
+                        .roundPlate()
+                }
+                .accessibilityLabel(copied ? L10n.copied(lang) : L10n.copyLink(lang))
+                .task(id: copied) {
+                    guard copied else { return }
+                    try? await Task.sleep(for: .seconds(2))
+                    if !Task.isCancelled { copied = false }
+                }
+            }
+            ShareLink(item: shareURL, subject: Text(shareSubject), message: Text(L10n.shareText(lang))) {
+                Image(systemName: "square.and.arrow.up")
+                    .font(.system(size: 17, weight: .medium))
+                    .foregroundStyle(Brand.ink)
+                    .roundPlate()
+            }
+            .accessibilityLabel(L10n.share(lang))
+            .simultaneousGesture(TapGesture().onEnded { app.analytics.track("share_tapped") })
+        }
+    }
+}
+
 /// The look of the Gamify control: the gamepad on a round plate that lights
 /// up when it is on. The label is for VoiceOver only.
 private struct GamifyToggleStyle: ToggleStyle {
