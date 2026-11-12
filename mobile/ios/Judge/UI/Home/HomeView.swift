@@ -292,7 +292,7 @@ struct HomeView: View {
                         closeButton(lang)
                     }
                 }
-                .gesture(pullDown, including: lifted ? .all : .none)
+                .gesture(pullDown, including: lifted ? .all : .subviews)
             }
             if writes {
                 editor(
