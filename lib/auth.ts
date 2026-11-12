@@ -31,7 +31,7 @@ import {
 } from "./email";
 import { ensureEntitlementTables, grantMissedWelcomeCredit, grantWelcomeCredit } from "./entitlements";
 import { clientIp } from "./client-ip";
-import { checkUserLimits, visitorKey } from "./ratelimit";
+import { checkUserLimits, visitorKey, type UserBucket } from "./ratelimit";
 import { captureAppleRefreshToken, deleteSignInTokens, keepCapturedAppleRefreshToken } from "./signin-tokens";
 import { signal } from "./signals";
 
@@ -48,6 +48,7 @@ const EMAIL_CODE_ATTEMPTS = 3;
 /** Sign-in requests per IP and endpoint per minute (production only). */
 const EMAIL_SIGNIN_RATE = { window: 60, max: 3 };
 const SEND_CODE_PATH = "/email-otp/send-verification-otp";
+const CODE_SIGNIN_PATH = "/sign-in/email-otp";
 const PASSWORD_SIGNIN_PATH = "/sign-in/email";
 /** Sign-in with a password per IP and minute (production only). */
 const PASSWORD_SIGNIN_RATE = { window: 60, max: 5 };
@@ -247,6 +248,24 @@ async function keepPreviousCode(context: AuthContext, email: string): Promise<vo
   await context.internalAdapter.createVerificationValue({ identifier, ...previous });
 }
 
+async function limitOrThrow(subject: string, bucket: UserBucket): Promise<void> {
+  const limit = await checkUserLimits(subject, bucket);
+  if (limit.ok) return;
+  if (limit.code === "unavailable") {
+    throw new APIError("SERVICE_UNAVAILABLE", { message: "Sign-in is unavailable right now.", code: "unavailable" });
+  }
+  throw new APIError("TOO_MANY_REQUESTS", { message: "Too many attempts", code: "RATE_LIMITED" });
+}
+
+/** Per-address code limits, so aliases and many IPs share one budget. The
+ * review address has its own cap (reviewSendAllowed). */
+async function limitCodeAddress(email: unknown, bucket: "code_send" | "code_attempt", env: Env): Promise<void> {
+  if (typeof email !== "string") return;
+  if (reviewAccount(env)?.email === email.trim().toLowerCase()) return;
+  const claim = welcomeClaim(email);
+  if (claim) await limitOrThrow(claim, bucket);
+}
+
 function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeof getDb>>) {
   const origin = configuredOrigin(env);
   const production = isProduction(env);
@@ -415,7 +434,7 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
       customRules: {
         "/sign-in/magic-link": EMAIL_SIGNIN_RATE,
         [SEND_CODE_PATH]: EMAIL_SIGNIN_RATE,
-        "/sign-in/email-otp": EMAIL_SIGNIN_RATE,
+        [CODE_SIGNIN_PATH]: EMAIL_SIGNIN_RATE,
         [PASSWORD_SIGNIN_PATH]: PASSWORD_SIGNIN_RATE,
         "/sign-in/social": { window: 60, max: 10 },
       },
@@ -427,12 +446,16 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         if (ctx.path === SEND_CODE_PATH) {
           const body = ctx.body as { type?: unknown; email?: unknown } | undefined;
           if (body?.type !== "sign-in") throw new APIError("BAD_REQUEST", { message: "Only sign-in codes are supported" });
+          await limitCodeAddress(body.email, "code_send", env);
           if (typeof body.email === "string") {
             const row = await ctx.context.internalAdapter.findVerificationValue(codeIdentifier(body.email));
             if (row && row.expiresAt > new Date()) {
               (ctx.context as unknown as Record<string, unknown>)[PREVIOUS_CODE] = { value: row.value, expiresAt: row.expiresAt };
             }
           }
+        }
+        if (ctx.path === CODE_SIGNIN_PATH) {
+          await limitCodeAddress((ctx.body as { email?: unknown } | undefined)?.email, "code_attempt", env);
         }
         if (ctx.path === PASSWORD_SIGNIN_PATH) {
           // Every address counts the same, known or not, so the refusal
@@ -443,13 +466,7 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
           const claim = typeof email === "string" ? welcomeClaim(email) : null;
           if (claim) {
             const ip = clientIp(ctx.headers ?? ctx.request?.headers ?? new Headers());
-            const limit = await checkUserLimits(`${claim}:${visitorKey(ip)}`, "password_signin");
-            if (!limit.ok) {
-              if (limit.code === "unavailable") {
-                throw new APIError("SERVICE_UNAVAILABLE", { message: "Sign-in is unavailable right now.", code: "unavailable" });
-              }
-              throw new APIError("TOO_MANY_REQUESTS", { message: "Too many attempts", code: "RATE_LIMITED" });
-            }
+            await limitOrThrow(`${claim}:${visitorKey(ip)}`, "password_signin");
           }
         }
       }),
