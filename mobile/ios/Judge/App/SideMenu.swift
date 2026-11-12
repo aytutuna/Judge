@@ -377,6 +377,7 @@ struct SideMenu: View {
             List {
                 row(.new, title: L10n.appTabNew(lang))
                     .accessibilityFocused($focusFirst)
+                    .simultaneousGesture(closeDrag(width))
                     .menuListRow()
                 if let notice = list.notice {
                     Text(noticeText(notice, lang: lang))
@@ -386,13 +387,13 @@ struct SideMenu: View {
                         .menuListRow()
                 }
                 if !verdicts.isEmpty {
-                    heading(L10n.navVerdicts(lang)).menuListRow()
+                    heading(L10n.navVerdicts(lang)).simultaneousGesture(closeDrag(width)).menuListRow()
                     ForEach(verdicts) { entry in
                         entryRow(entry, entries: shown, lang: lang, now: now)
                     }
                 }
                 if !links.isEmpty {
-                    heading(L10n.navLinks(lang)).menuListRow()
+                    heading(L10n.navLinks(lang)).simultaneousGesture(closeDrag(width)).menuListRow()
                     ForEach(links) { entry in
                         entryRow(entry, entries: shown, lang: lang, now: now)
                     }
@@ -464,6 +465,8 @@ struct SideMenu: View {
                 row(.settings, title: L10n.appTabSettings(lang), icon: "gearshape")
             }
             .padding(.top, 12)
+            .contentShape(Rectangle())
+            .simultaneousGesture(closeDrag(width))
         }
         // While the judges work on a row, the list is read again now and then.
         .task(id: thinking) {
@@ -486,16 +489,8 @@ struct SideMenu: View {
         .padding(.bottom, 22)
         .frame(width: width)
         .frame(maxHeight: .infinity)
-        .background(Brand.ivory2.ignoresSafeArea())
+        .background(Brand.ivory2.ignoresSafeArea().gesture(closeDrag(width)))
         .offset(x: layoutDirection == .rightToLeft ? pull : -pull)
-        .gesture(
-            DragGesture(coordinateSpace: .global)
-                .updating($dragging) { _, state, _ in state = true }
-                .onChanged { pull = max(0, closing($0.translation.width)) }
-                .onEnded { value in
-                    if closing(value.predictedEndTranslation.width) > width / 2 { close() }
-                }
-        )
         .onChange(of: dragging) { _, active in
             // A cancelled drag never reaches onEnded.
             if !active, app.menuOpen {
@@ -727,6 +722,17 @@ struct SideMenu: View {
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+    }
+
+    /// Dragging the panel toward its edge closes it. It is left off the rows
+    /// that swipe to remove, whose own leftward swipe it would fight.
+    private func closeDrag(_ width: CGFloat) -> some Gesture {
+        DragGesture(coordinateSpace: .global)
+            .updating($dragging) { _, state, _ in state = true }
+            .onChanged { pull = max(0, closing($0.translation.width)) }
+            .onEnded { value in
+                if closing(value.predictedEndTranslation.width) > width / 2 { close() }
+            }
     }
 
     /// How far a drag has moved toward the panel's own edge.
