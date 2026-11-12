@@ -184,7 +184,6 @@ struct HomeView: View {
         }
         .padding(.horizontal, 16)
         .padding(.bottom, 16)
-        .background(Brand.ivory.ignoresSafeArea(edges: .bottom))
     }
 
     private func field(for side: Party) -> Field {
