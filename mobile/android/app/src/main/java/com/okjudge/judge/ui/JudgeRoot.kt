@@ -695,7 +695,7 @@ fun JudgeRoot(
                                         // App scope: leaving the screen must not stop a sign-out or deletion halfway.
                                         onSignOut = { container.appScope.launch { account.signOut() } },
                                         onOpenAccount = { if (backStack.lastOrNull() !is AccountKey) backStack.add(AccountKey) },
-                                        restore = if (purchasesOn && purchases.isReady(store)) RestoreUi(store.restoring, store.restoreNotice) else null,
+                                        restore = if (purchasesOn && store.available && (accountState !is Account.State.SignedIn || purchases.isReady(store))) RestoreUi(store.restoring, store.restoreNotice) else null,
                                         onRestore = { purchases.restore() },
                                     )
                                 }

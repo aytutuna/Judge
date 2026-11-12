@@ -81,6 +81,7 @@ data class StoreUi(
  * signed-in account has left, and the buy buttons. With purchases on and the
  * store ready ([store]) a button shows the store's own price and buys that
  * product; otherwise it stays disabled ("Coming soon" while purchases are off).
+ * Signed out, the buttons are on and ask for sign-in.
  * [features] is null while /config is loading.
  */
 @Composable
@@ -103,6 +104,9 @@ fun PricingScreen(
     val storeOn = pricing.purchasesEnabled && store.available
     // The store's offer for a product, when this account can buy it now.
     fun offerFor(id: String): StoreOffer? = if (storeOn && signedIn) store.offers[id] else null
+    // Signed out the buttons stay on and a tap asks for sign-in; the store has no offers for nobody.
+    fun canBuy(offer: StoreOffer?) = store.buying == null && (offer != null || (storeOn && !signedIn))
+    fun buy(id: String) = if (signedIn) onBuy(id) else onSignIn()
     Column(modifier.fillMaxSize()) {
         TopBar(onBack = onBack)
         Column(
@@ -127,10 +131,10 @@ fun PricingScreen(
                             meta = each?.let { s.pricingPerVerdict(it) },
                             price = price,
                             buyLabel = if (storeOn) price else s.pricingComingSoon,
-                            enabled = offer != null && store.buying == null,
+                            enabled = canBuy(offer),
                             buying = store.buying == pack.id,
                             buyingLabel = s.appPurchaseBuying,
-                            onBuy = { onBuy(pack.id) },
+                            onBuy = { buy(pack.id) },
                         )
                     }
 
@@ -142,10 +146,10 @@ fun PricingScreen(
                         meta = s.pricingMonthlyRenews,
                         price = monthly,
                         buyLabel = if (storeOn) monthly else s.pricingComingSoon,
-                        enabled = monthlyOffer != null && store.buying == null,
+                        enabled = canBuy(monthlyOffer),
                         buying = store.buying == monthlyId,
                         buyingLabel = s.appPurchaseBuying,
-                        onBuy = { onBuy(monthlyId) },
+                        onBuy = { buy(monthlyId) },
                     )
 
                     val notice = when (store.notice) {

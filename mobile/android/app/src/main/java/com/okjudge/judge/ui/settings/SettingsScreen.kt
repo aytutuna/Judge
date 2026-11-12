@@ -222,10 +222,6 @@ private fun AccountGroup(
                             note = s.accountFairUse(sub.used.toString(), sub.cap.toString()),
                         )
                     }
-                    if (restore != null) {
-                        HorizontalDivider(color = Palette.line)
-                        RestoreRow(restore, enabled = !busy, onRestore)
-                    }
                 } else {
                     Text(
                         if (account.loadFailed) s.accountLoadFailed else s.accountLoading,
@@ -234,6 +230,10 @@ private fun AccountGroup(
                     )
                 }
             }
+        }
+        if (restore != null) {
+            HorizontalDivider(color = Palette.line)
+            RestoreRow(restore, enabled = !busy, if (account is Account.State.SignedIn) onRestore else onSignIn)
         }
         if (onOpenPricing != null) {
             HorizontalDivider(color = Palette.line)

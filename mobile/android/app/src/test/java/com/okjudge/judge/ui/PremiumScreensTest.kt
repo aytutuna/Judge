@@ -289,17 +289,22 @@ class PremiumScreensTest {
     }
 
     @Test
-    fun pricing_storeReady_butSignedOut_doesNotSell() {
+    fun pricing_storeReady_butSignedOut_asksForSignInInsteadOfBuying() {
+        val bought = mutableListOf<String>()
+        var signIns = 0
         compose.setContent {
             Themed(AppLang.EN) {
                 PricingScreen(
-                    PricingInfo(purchasesEnabled = true), Features(true, true), false, true, null, null, {},
+                    PricingInfo(purchasesEnabled = true), Features(true, true), false, true, null, null, { signIns++ },
                     store = StoreUi(available = true, offers = storeOffers),
+                    onBuy = { bought += it },
                 )
             }
         }
         compose.onAllNodesWithText("TRY 44.99").assertCountEquals(0)
-        compose.onAllNodesWithTag(PricingTags.BUY)[0].assertIsNotEnabled()
+        compose.onAllNodesWithTag(PricingTags.BUY)[0].assertIsEnabled().performClick()
+        assertEquals(1, signIns)
+        assertEquals(emptyList<String>(), bought)
     }
 
     @Test
@@ -339,6 +344,25 @@ class PremiumScreensTest {
         compose.onNodeWithText(en.appPurchasePending).assertExists()
         store = store.copy(subscriptionPending = false)
         compose.onAllNodesWithTag(PricingTags.NOTICE).assertCountEquals(0)
+    }
+
+    @Test
+    fun settings_restoreRow_signedOut_asksForSignIn() {
+        var signIns = 0
+        var restores = 0
+        compose.setContent {
+            Themed(AppLang.EN) {
+                SettingsScreen(
+                    LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com",
+                    restore = RestoreUi(),
+                    onSignIn = { signIns++ },
+                    onRestore = { restores++ },
+                )
+            }
+        }
+        compose.onNodeWithTag(SettingsTags.RESTORE).performClick()
+        assertEquals(1, signIns)
+        assertEquals(0, restores)
     }
 
     @Test
