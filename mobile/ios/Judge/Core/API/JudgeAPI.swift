@@ -152,6 +152,8 @@ struct JudgeAPI: Sendable {
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         // Without this the server leaves out cases with more than two sides.
         request.setValue(String(Self.sidesSupported), forHTTPHeaderField: "Judge-Sides")
+        // Without this the server sends "survived" for an objection that only trimmed a phrase.
+        request.setValue("minor", forHTTPHeaderField: "Judge-Trial")
         if let token = tokenStore.token(), !token.isEmpty {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }

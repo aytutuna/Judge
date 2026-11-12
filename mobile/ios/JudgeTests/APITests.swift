@@ -102,6 +102,7 @@ final class JudgeAPITests: XCTestCase {
         XCTAssertEqual(sent.value(forHTTPHeaderField: "Content-Type"), "application/json")
         XCTAssertEqual(sent.value(forHTTPHeaderField: "User-Agent"), "Judge-iOS/1.0.0 (1)")
         XCTAssertEqual(sent.value(forHTTPHeaderField: "Judge-Sides"), "4", "cases with up to four sides are shown")
+        XCTAssertEqual(sent.value(forHTTPHeaderField: "Judge-Trial"), "minor", "a minor objection outcome is understood")
         XCTAssertNil(sent.value(forHTTPHeaderField: "Authorization"))
         XCTAssertEqual(sent.timeoutInterval, 310)
         let body = try XCTUnwrap(JSONSerialization.jsonObject(with: XCTUnwrap(sent.httpBody)) as? [String: Any])
