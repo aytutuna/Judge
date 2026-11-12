@@ -15,6 +15,7 @@ extension View {
         } else {
             frame(width: 44, height: 44)
                 .background(Circle().fill(tint ?? Brand.ink.opacity(0.08)))
+                .background(Circle().fill(.regularMaterial))
                 .contentShape(Circle())
         }
     }
@@ -361,6 +362,21 @@ struct SideMenu: View {
         Task { _ = await list.remove(picked, user: user, enabled: enabled) }
     }
 
+    /// Asks about every link, not just those on the pages loaded so far.
+    private func removeAllLinks() {
+        let list = app.historyList
+        let user = app.historyUser
+        Task {
+            var cursor = list.next
+            while let at = cursor {
+                await list.loadMore(user: user)
+                if list.next == at { break }
+                cursor = list.next
+            }
+            confirming = currentEntries.filter { $0.isCase && $0.removable }.map(\.id)
+        }
+    }
+
     private func panel(width: CGFloat) -> some View {
         let lang = app.lang
         let list = app.historyList
@@ -395,8 +411,7 @@ struct SideMenu: View {
                     }
                 }
                 if !links.isEmpty {
-                    let removable = links.filter(\.removable).map(\.id)
-                    heading(L10n.navLinks(lang), removeAll: removable.isEmpty ? nil : { confirming = removable })
+                    heading(L10n.navLinks(lang), removeAll: links.contains(where: \.removable) ? removeAllLinks : nil)
                         .simultaneousGesture(closeDrag(width))
                         .menuListRow()
                     ForEach(links) { entry in
@@ -570,12 +585,15 @@ struct SideMenu: View {
                 .accessibilityAddTraits(.isHeader)
             Spacer(minLength: 0)
             if let removeAll {
-                Button(L10n.appHistoryRemoveAll(app.lang), action: removeAll)
-                    .brandText(Self.stateType)
-                    .foregroundStyle(Brand.danger)
-                    .buttonStyle(.plain)
-                    .frame(minHeight: 44)
-                    .contentShape(Rectangle())
+                Button(action: removeAll) {
+                    Text(L10n.appHistoryRemoveAll(app.lang))
+                        .brandText(Self.stateType)
+                        .foregroundStyle(Brand.danger)
+                        .padding(.leading, 12)
+                        .frame(minHeight: 44)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
             }
         }
         .padding(.horizontal, 12)
