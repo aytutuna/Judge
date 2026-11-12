@@ -186,27 +186,6 @@ private struct EvidenceRow: View {
                 .disabled(disabled)
                 .accessibilityLabel(L10n.evidenceRemove(lang, n: String(item.n)))
             }
-            if item.status == .ok, let preview = item.preview, !preview.isEmpty {
-                DisclosureGroup {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text(L10n.evidencePreviewNote(lang))
-                            .brandText(.footnote)
-                            .foregroundStyle(Brand.muted)
-                        Text(preview)
-                            .font(.system(.footnote, design: .monospaced))
-                            .foregroundStyle(Brand.ink2)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .textSelection(.enabled)
-                    }
-                    .padding(.top, 6)
-                } label: {
-                    Text(L10n.evidencePreview(lang))
-                        .brandText(.slotTitle)
-                        .foregroundStyle(Brand.ink2)
-                }
-                .tint(Brand.ink2)
-            }
         }
         .padding(10)
         .paperSurface(radius: 14)
