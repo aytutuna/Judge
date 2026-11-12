@@ -66,6 +66,9 @@ const hu: AppLocale = {
     "app.account.deleteBody":
       "A belépési adataid, a kreditjeid, az előfizetésed és a személyes adataid törlődnek, a megosztási linkjeid pedig megszűnnek működni. Az ítéletek szövegét a neved nélkül megőrizzük, ahogy az Adatvédelmi tájékoztató leírja.",
     "app.account.deleteConfirm": "Fiók törlése",
+    "app.account.deleteSubscription":
+      "A fiókod törlése nem mondja le a havi csomagodat az áruházban. Addig számláznak, amíg ott le nem mondod.",
+    "app.account.manageSubscription": "Előfizetés kezelése",
     "app.account.deleted": "A fiókodat töröltük.",
     "app.account.signOutConfirm": "Kilépsz a Judge-ból ezen a telefonon?",
     "app.account.signedOut": "Kiléptél.",

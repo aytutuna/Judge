@@ -599,6 +599,8 @@
     <string name="app_account_delete_title">Dein Konto löschen?</string>
     <string name="app_account_delete_body">Deine Anmeldedaten, deine Credits, dein Tarif und deine persönlichen Daten werden gelöscht, und deine geteilten Links funktionieren nicht mehr. Der Text deiner Urteile bleibt ohne deinen Namen gespeichert, wie in der Datenschutzerklärung beschrieben.</string>
     <string name="app_account_delete_confirm">Konto löschen</string>
+    <string name="app_account_delete_subscription">Wenn du dein Konto löschst, wird dein Monatsabo im Store nicht gekündigt. Es wird weiter abgebucht, bis du es dort kündigst.</string>
+    <string name="app_account_manage_subscription">Abo verwalten</string>
     <string name="app_account_deleted">Dein Konto ist gelöscht.</string>
     <string name="app_account_sign_out_confirm">Auf diesem Handy von Judge abmelden?</string>
     <string name="app_account_signed_out">Du bist abgemeldet.</string>

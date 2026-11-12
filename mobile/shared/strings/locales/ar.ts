@@ -78,6 +78,9 @@ const ar: AppLocale = {
     "app.account.deleteBody":
       "ستُحذف بيانات تسجيل دخولك ورصيدك وخطتك وبياناتك الشخصية، وستتوقف روابط مشاركتك عن العمل. أما نصوص الأحكام فتبقى محفوظة دون اسمك، كما هو موضح في سياسة الخصوصية.",
     "app.account.deleteConfirm": "حذف الحساب",
+    "app.account.deleteSubscription":
+      "حذف حسابك لا يلغي خطتك الشهرية في المتجر. ستستمر في دفع الرسوم حتى تلغيها هناك.",
+    "app.account.manageSubscription": "إدارة الاشتراك",
     "app.account.deleted": "تم حذف حسابك.",
     "app.account.signOutConfirm":
       "هل تريد تسجيل الخروج من Judge على هذا الهاتف؟",

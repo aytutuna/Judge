@@ -615,6 +615,8 @@
     <string name="app_account_delete_title">Apagar a tua conta?</string>
     <string name="app_account_delete_body">Apagamos os teus dados de acesso, créditos, plano e dados pessoais, e os teus links de partilha deixam de funcionar. O texto dos veredictos fica guardado sem o teu nome, como explica a Política de Privacidade.</string>
     <string name="app_account_delete_confirm">Apagar conta</string>
+    <string name="app_account_delete_subscription">Eliminar a tua conta não cancela o teu plano mensal na loja. A cobrança continua até o cancelares lá.</string>
+    <string name="app_account_manage_subscription">Gerir subscrição</string>
     <string name="app_account_deleted">A tua conta foi apagada.</string>
     <string name="app_account_sign_out_confirm">Sair do Judge neste telemóvel?</string>
     <string name="app_account_signed_out">Terminaste a sessão.</string>

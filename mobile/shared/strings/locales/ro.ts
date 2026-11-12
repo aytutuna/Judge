@@ -70,6 +70,9 @@ const ro: AppLocale = {
     "app.account.deleteBody":
       "Se șterg datele de conectare, creditele, planul și informațiile tale personale, iar linkurile tale de distribuire nu vor mai funcționa. Textul verdictelor rămâne stocat fără numele tău, așa cum se explică în Politica de confidențialitate.",
     "app.account.deleteConfirm": "Șterge contul",
+    "app.account.deleteSubscription":
+      "Ștergerea contului nu anulează planul tău lunar din magazin. Vei fi taxat în continuare până când îl anulezi acolo.",
+    "app.account.manageSubscription": "Gestionează abonamentul",
     "app.account.deleted": "Contul tău a fost șters.",
     "app.account.signOutConfirm": "Te deconectezi de la Judge pe acest telefon?",
     "app.account.signedOut": "Te-ai deconectat.",

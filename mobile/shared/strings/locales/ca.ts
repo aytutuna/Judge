@@ -70,6 +70,9 @@ const ca: AppLocale = {
     "app.account.deleteBody":
       "S'esborraran les teves dades d'inici de sessió, els crèdits, el pla i les dades personals, i els teus enllaços per compartir deixaran de funcionar. El text dels veredictes es conservarà sense el teu nom, tal com s'explica a la Política de privadesa.",
     "app.account.deleteConfirm": "Elimina el compte",
+    "app.account.deleteSubscription":
+      "Eliminar el teu compte no cancel·la el teu pla mensual a la botiga. Se't continuarà cobrant fins que el cancel·lis allà.",
+    "app.account.manageSubscription": "Gestiona la subscripció",
     "app.account.deleted": "S'ha eliminat el compte.",
     "app.account.signOutConfirm": "Vols tancar la sessió de Judge en aquest telèfon?",
     "app.account.signedOut": "Has tancat la sessió.",

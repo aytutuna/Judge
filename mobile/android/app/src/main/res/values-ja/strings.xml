@@ -583,6 +583,8 @@
     <string name="app_account_delete_title">アカウントを削除しますか？</string>
     <string name="app_account_delete_body">ログイン情報、クレジット、プラン、個人データが削除され、シェア用リンクも使えなくなります。判定の本文は、プライバシーポリシーに記載のとおり、あなたの名前を除いた形で残ります。</string>
     <string name="app_account_delete_confirm">アカウントを削除</string>
+    <string name="app_account_delete_subscription">アカウントを削除しても、ストアの月額プランは解約されません。ストアで解約するまで、請求は続きます。</string>
+    <string name="app_account_manage_subscription">サブスクリプションを管理</string>
     <string name="app_account_deleted">アカウントを削除しました。</string>
     <string name="app_account_sign_out_confirm">この端末でJudgeからログアウトしますか？</string>
     <string name="app_account_signed_out">ログアウトしました。</string>

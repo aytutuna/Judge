@@ -615,6 +615,8 @@
     <string name="app_account_delete_title">¿Eliminar tu cuenta?</string>
     <string name="app_account_delete_body">Se eliminarán tus datos de inicio de sesión, tus créditos, tu plan y tu información personal, y tus enlaces para compartir dejarán de funcionar. El texto de los veredictos se seguirá guardando sin tu nombre, como se explica en la Política de privacidad.</string>
     <string name="app_account_delete_confirm">Eliminar cuenta</string>
+    <string name="app_account_delete_subscription">Eliminar tu cuenta no cancela tu plan mensual en la tienda. Se te seguirá cobrando hasta que lo canceles allí.</string>
+    <string name="app_account_manage_subscription">Gestionar suscripción</string>
     <string name="app_account_deleted">Tu cuenta se ha eliminado.</string>
     <string name="app_account_sign_out_confirm">¿Cerrar la sesión de Judge en este teléfono?</string>
     <string name="app_account_signed_out">Has cerrado sesión.</string>

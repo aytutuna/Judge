@@ -69,6 +69,9 @@ const ms: AppLocale = {
     "app.account.deleteBody":
       "Butiran log masuk, kredit, pelan dan data peribadi anda akan dipadam, dan pautan kongsi anda akan berhenti berfungsi. Teks keputusan kekal disimpan tanpa nama anda, seperti yang diterangkan dalam Dasar Privasi.",
     "app.account.deleteConfirm": "Padam akaun",
+    "app.account.deleteSubscription":
+      "Memadam akaun anda tidak membatalkan pelan bulanan anda di kedai. Anda akan terus dikenakan bayaran sehingga anda membatalkannya di sana.",
+    "app.account.manageSubscription": "Urus langganan",
     "app.account.deleted": "Akaun anda sudah dipadam.",
     "app.account.signOutConfirm": "Log keluar daripada Judge di telefon ini?",
     "app.account.signedOut": "Anda sudah log keluar.",

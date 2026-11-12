@@ -599,6 +599,8 @@
     <string name="app_account_delete_title">Poistetaanko tilisi?</string>
     <string name="app_account_delete_body">Kirjautumistietosi, tuomiosaldosi, tilauksesi ja henkilötietosi poistetaan, ja jakolinkkisi lakkaavat toimimasta. Tuomioiden teksti säilyy tallessa ilman nimeäsi, kuten tietosuojakäytännössä kerrotaan.</string>
     <string name="app_account_delete_confirm">Poista tili</string>
+    <string name="app_account_delete_subscription">Tilin poistaminen ei peruuta kuukausisuunnitelmaasi kaupassa. Sinulta veloitetaan edelleen, kunnes peruutat sen siellä.</string>
+    <string name="app_account_manage_subscription">Hallitse tilausta</string>
     <string name="app_account_deleted">Tilisi on poistettu.</string>
     <string name="app_account_sign_out_confirm">Kirjaudutaanko ulos Judgesta tässä puhelimessa?</string>
     <string name="app_account_signed_out">Olet kirjautunut ulos.</string>

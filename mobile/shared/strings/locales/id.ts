@@ -68,6 +68,9 @@ const id: AppLocale = {
     "app.account.deleteBody":
       "Data masuk, kredit, langganan, dan informasi pribadimu akan dihapus, dan tautan berbagimu tidak berfungsi lagi. Teks putusan tetap disimpan tanpa namamu, seperti dijelaskan di Kebijakan Privasi.",
     "app.account.deleteConfirm": "Hapus akun",
+    "app.account.deleteSubscription":
+      "Menghapus akunmu tidak membatalkan paket bulananmu di toko. Kamu akan tetap ditagih sampai kamu membatalkannya di sana.",
+    "app.account.manageSubscription": "Kelola langganan",
     "app.account.deleted": "Akunmu sudah dihapus.",
     "app.account.signOutConfirm": "Keluar dari Judge di ponsel ini?",
     "app.account.signedOut": "Kamu sudah keluar.",

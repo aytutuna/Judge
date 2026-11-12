@@ -615,6 +615,8 @@
     <string name="app_account_delete_title">Vuoi eliminare l\'account?</string>
     <string name="app_account_delete_body">I tuoi dati di accesso, i crediti, il piano e i dati personali verranno cancellati e i tuoi link di condivisione smetteranno di funzionare. Il testo dei verdetti resterà conservato senza il tuo nome, come spiegato nell\'Informativa sulla privacy.</string>
     <string name="app_account_delete_confirm">Elimina account</string>
+    <string name="app_account_delete_subscription">Eliminare il tuo account non annulla il tuo piano mensile nello store. Continuerai a ricevere addebiti finché non lo annulli lì.</string>
+    <string name="app_account_manage_subscription">Gestisci abbonamento</string>
     <string name="app_account_deleted">Il tuo account è stato eliminato.</string>
     <string name="app_account_sign_out_confirm">Vuoi uscire da Judge su questo telefono?</string>
     <string name="app_account_signed_out">Disconnessione effettuata.</string>

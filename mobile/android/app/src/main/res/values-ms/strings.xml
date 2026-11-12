@@ -583,6 +583,8 @@
     <string name="app_account_delete_title">Padam akaun anda?</string>
     <string name="app_account_delete_body">Butiran log masuk, kredit, pelan dan data peribadi anda akan dipadam, dan pautan kongsi anda akan berhenti berfungsi. Teks keputusan kekal disimpan tanpa nama anda, seperti yang diterangkan dalam Dasar Privasi.</string>
     <string name="app_account_delete_confirm">Padam akaun</string>
+    <string name="app_account_delete_subscription">Memadam akaun anda tidak membatalkan pelan bulanan anda di kedai. Anda akan terus dikenakan bayaran sehingga anda membatalkannya di sana.</string>
+    <string name="app_account_manage_subscription">Urus langganan</string>
     <string name="app_account_deleted">Akaun anda sudah dipadam.</string>
     <string name="app_account_sign_out_confirm">Log keluar daripada Judge di telefon ini?</string>
     <string name="app_account_signed_out">Anda sudah log keluar.</string>

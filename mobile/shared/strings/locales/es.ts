@@ -70,6 +70,9 @@ const es: AppLocale = {
     "app.account.deleteBody":
       "Se eliminarán tus datos de inicio de sesión, tus créditos, tu plan y tu información personal, y tus enlaces para compartir dejarán de funcionar. El texto de los veredictos se seguirá guardando sin tu nombre, como se explica en la Política de privacidad.",
     "app.account.deleteConfirm": "Eliminar cuenta",
+    "app.account.deleteSubscription":
+      "Eliminar tu cuenta no cancela tu plan mensual en la tienda. Se te seguirá cobrando hasta que lo canceles allí.",
+    "app.account.manageSubscription": "Gestionar suscripción",
     "app.account.deleted": "Tu cuenta se ha eliminado.",
     "app.account.signOutConfirm": "¿Cerrar la sesión de Judge en este teléfono?",
     "app.account.signedOut": "Has cerrado sesión.",

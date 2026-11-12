@@ -599,6 +599,8 @@
     <string name="app_account_delete_title">Törlöd a fiókodat?</string>
     <string name="app_account_delete_body">A belépési adataid, a kreditjeid, az előfizetésed és a személyes adataid törlődnek, a megosztási linkjeid pedig megszűnnek működni. Az ítéletek szövegét a neved nélkül megőrizzük, ahogy az Adatvédelmi tájékoztató leírja.</string>
     <string name="app_account_delete_confirm">Fiók törlése</string>
+    <string name="app_account_delete_subscription">A fiókod törlése nem mondja le a havi csomagodat az áruházban. Addig számláznak, amíg ott le nem mondod.</string>
+    <string name="app_account_manage_subscription">Előfizetés kezelése</string>
     <string name="app_account_deleted">A fiókodat töröltük.</string>
     <string name="app_account_sign_out_confirm">Kilépsz a Judge-ból ezen a telefonon?</string>
     <string name="app_account_signed_out">Kiléptél.</string>

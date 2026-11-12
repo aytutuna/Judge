@@ -67,6 +67,9 @@ const he: AppLocale = {
     "app.account.deleteBody":
       "פרטי ההתחברות, הקרדיטים, התוכנית והמידע האישי שלך יימחקו, וקישורי השיתוף שלך יפסיקו לעבוד. הטקסט של פסקי הדין יישמר בלי השם שלך, כפי שמוסבר במדיניות הפרטיות.",
     "app.account.deleteConfirm": "מחיקת החשבון",
+    "app.account.deleteSubscription":
+      "מחיקת החשבון לא מבטלת את התוכנית החודשית שלך בחנות. החיוב ימשיך עד שתבטל אותה שם.",
+    "app.account.manageSubscription": "ניהול המנוי",
     "app.account.deleted": "החשבון נמחק.",
     "app.account.signOutConfirm": "להתנתק מ-Judge בטלפון הזה?",
     "app.account.signedOut": "התנתקת.",

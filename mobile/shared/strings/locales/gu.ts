@@ -79,6 +79,9 @@ const gu: AppLocale = {
     "app.account.deleteBody":
       "તમારી સાઇન ઇનની વિગતો, ક્રેડિટ, પ્લાન અને અંગત ડેટા ડિલીટ થશે, અને તમારી શેર લિંક કામ કરતી બંધ થઈ જશે. ગોપનીયતા નીતિમાં સમજાવ્યા મુજબ, ચુકાદાનું લખાણ તમારા નામ વગર સચવાયેલું રહેશે.",
     "app.account.deleteConfirm": "એકાઉન્ટ ડિલીટ કરો",
+    "app.account.deleteSubscription":
+      "એકાઉન્ટ કાઢી નાખવાથી સ્ટોરમાં તમારો માસિક પ્લાન રદ થતો નથી. તમે ત્યાં રદ ન કરો ત્યાં સુધી બિલિંગ ચાલુ રહેશે.",
+    "app.account.manageSubscription": "સબ્સ્ક્રિપ્શન મેનેજ કરો",
     "app.account.deleted": "તમારું એકાઉન્ટ ડિલીટ થઈ ગયું.",
     "app.account.signOutConfirm": "આ ફોન પર Judgeમાંથી સાઇન આઉટ કરવું છે?",
     "app.account.signedOut": "તમે સાઇન આઉટ થઈ ગયા.",

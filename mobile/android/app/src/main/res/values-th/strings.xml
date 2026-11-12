@@ -583,6 +583,8 @@
     <string name="app_account_delete_title">ลบบัญชีของคุณไหม?</string>
     <string name="app_account_delete_body">ข้อมูลการเข้าสู่ระบบ เครดิต แพ็กเกจ และข้อมูลส่วนตัวของคุณจะถูกลบ ลิงก์แชร์ของคุณจะใช้ไม่ได้อีกต่อไป ส่วนข้อความคำตัดสินจะยังเก็บไว้โดยไม่มีชื่อของคุณ ตามที่อธิบายไว้ในนโยบายความเป็นส่วนตัว</string>
     <string name="app_account_delete_confirm">ลบบัญชี</string>
+    <string name="app_account_delete_subscription">การลบบัญชีไม่ได้ยกเลิกแพ็กเกจรายเดือนของคุณในสโตร์ คุณจะยังถูกเรียกเก็บเงินต่อไปจนกว่าจะยกเลิกที่นั่น</string>
+    <string name="app_account_manage_subscription">จัดการการสมัครสมาชิก</string>
     <string name="app_account_deleted">ลบบัญชีแล้ว</string>
     <string name="app_account_sign_out_confirm">ออกจากระบบ Judge บนโทรศัพท์เครื่องนี้ไหม?</string>
     <string name="app_account_signed_out">ออกจากระบบแล้ว</string>

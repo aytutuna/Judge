@@ -599,6 +599,8 @@
     <string name="app_account_delete_title">Να διαγραφεί ο λογαριασμός σου;</string>
     <string name="app_account_delete_body">Θα διαγραφούν τα στοιχεία σύνδεσης, το υπόλοιπο αποφάσεων, το πρόγραμμα και τα προσωπικά σου δεδομένα, και οι σύνδεσμοι κοινοποίησης θα σταματήσουν να λειτουργούν. Το κείμενο των αποφάσεων θα μείνει αποθηκευμένο χωρίς το όνομά σου, όπως εξηγεί η Πολιτική Απορρήτου.</string>
     <string name="app_account_delete_confirm">Διαγραφή λογαριασμού</string>
+    <string name="app_account_delete_subscription">Η διαγραφή του λογαριασμού σου δεν ακυρώνει το μηνιαίο πλάνο σου στο κατάστημα. Θα συνεχίσεις να χρεώνεσαι μέχρι να το ακυρώσεις εκεί.</string>
+    <string name="app_account_manage_subscription">Διαχείριση συνδρομής</string>
     <string name="app_account_deleted">Ο λογαριασμός σου διαγράφηκε.</string>
     <string name="app_account_sign_out_confirm">Αποσύνδεση από το Judge σε αυτό το τηλέφωνο;</string>
     <string name="app_account_signed_out">Αποσυνδέθηκες.</string>

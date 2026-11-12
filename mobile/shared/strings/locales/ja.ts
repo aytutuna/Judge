@@ -65,6 +65,9 @@ const ja: AppLocale = {
     "app.account.deleteBody":
       "ログイン情報、クレジット、プラン、個人データが削除され、シェア用リンクも使えなくなります。判定の本文は、プライバシーポリシーに記載のとおり、あなたの名前を除いた形で残ります。",
     "app.account.deleteConfirm": "アカウントを削除",
+    "app.account.deleteSubscription":
+      "アカウントを削除しても、ストアの月額プランは解約されません。ストアで解約するまで、請求は続きます。",
+    "app.account.manageSubscription": "サブスクリプションを管理",
     "app.account.deleted": "アカウントを削除しました。",
     "app.account.signOutConfirm": "この端末でJudgeからログアウトしますか？",
     "app.account.signedOut": "ログアウトしました。",

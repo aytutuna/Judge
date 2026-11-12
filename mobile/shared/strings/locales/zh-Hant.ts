@@ -60,6 +60,9 @@ const zhHant: AppLocale = {
     "app.account.deleteBody":
       "你的登入資料、額度、方案和個人資料都會刪除，分享連結也會失效。判決內容會拿掉你的名字後繼續保存，詳見隱私權政策。",
     "app.account.deleteConfirm": "刪除帳號",
+    "app.account.deleteSubscription":
+      "刪除帳號不會取消你在應用程式商店的月方案，在你到商店取消之前會繼續扣款。",
+    "app.account.manageSubscription": "管理訂閱",
     "app.account.deleted": "你的帳號已刪除。",
     "app.account.signOutConfirm": "要在這支手機上登出 Judge 嗎？",
     "app.account.signedOut": "你已登出。",

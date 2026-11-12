@@ -599,6 +599,8 @@
     <string name="app_account_delete_title">Je account verwijderen?</string>
     <string name="app_account_delete_body">Je inloggegevens, credits, abonnement en persoonsgegevens worden gewist, en je deellinks werken niet meer. De tekst van uitspraken blijft zonder je naam bewaard, zoals beschreven in het privacybeleid.</string>
     <string name="app_account_delete_confirm">Account verwijderen</string>
+    <string name="app_account_delete_subscription">Als je je account verwijdert, wordt je maandabonnement in de winkel niet opgezegd. Je blijft betalen tot je het daar opzegt.</string>
+    <string name="app_account_manage_subscription">Abonnement beheren</string>
     <string name="app_account_deleted">Je account is verwijderd.</string>
     <string name="app_account_sign_out_confirm">Uitloggen bij Judge op deze telefoon?</string>
     <string name="app_account_signed_out">Je bent uitgelogd.</string>

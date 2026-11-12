@@ -631,6 +631,8 @@
     <string name="app_account_delete_title">Smazat účet?</string>
     <string name="app_account_delete_body">Tvoje přihlašovací údaje, kredity, plán a osobní data se smažou a tvoje sdílené odkazy přestanou fungovat. Texty verdiktů zůstanou uložené bez tvého jména, jak vysvětlují zásady ochrany soukromí.</string>
     <string name="app_account_delete_confirm">Smazat účet</string>
+    <string name="app_account_delete_subscription">Smazáním účtu se měsíční plán v obchodě neruší. Platby ti budou dál strhávány, dokud ho tam nezrušíš.</string>
+    <string name="app_account_manage_subscription">Spravovat předplatné</string>
     <string name="app_account_deleted">Účet je smazaný.</string>
     <string name="app_account_sign_out_confirm">Odhlásit se z Judge v tomhle telefonu?</string>
     <string name="app_account_signed_out">Odhlášeno.</string>

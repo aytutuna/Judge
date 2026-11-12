@@ -628,6 +628,8 @@ class Strings(private val res: Resources) {
     val appAccountDeleteTitle: String get() = res.getString(R.string.app_account_delete_title)
     val appAccountDeleteBody: String get() = res.getString(R.string.app_account_delete_body)
     val appAccountDeleteConfirm: String get() = res.getString(R.string.app_account_delete_confirm)
+    val appAccountDeleteSubscription: String get() = res.getString(R.string.app_account_delete_subscription)
+    val appAccountManageSubscription: String get() = res.getString(R.string.app_account_manage_subscription)
     val appAccountDeleted: String get() = res.getString(R.string.app_account_deleted)
     val appAccountSignOutConfirm: String get() = res.getString(R.string.app_account_sign_out_confirm)
     val appAccountSignedOut: String get() = res.getString(R.string.app_account_signed_out)
@@ -1203,6 +1205,8 @@ class Strings(private val res: Resources) {
             "app.account.deleteTitle" -> R.string.app_account_delete_title
             "app.account.deleteBody" -> R.string.app_account_delete_body
             "app.account.deleteConfirm" -> R.string.app_account_delete_confirm
+            "app.account.deleteSubscription" -> R.string.app_account_delete_subscription
+            "app.account.manageSubscription" -> R.string.app_account_manage_subscription
             "app.account.deleted" -> R.string.app_account_deleted
             "app.account.signOutConfirm" -> R.string.app_account_sign_out_confirm
             "app.account.signedOut" -> R.string.app_account_signed_out

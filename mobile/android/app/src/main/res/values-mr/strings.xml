@@ -599,6 +599,8 @@
     <string name="app_account_delete_title">तुमचे खाते डिलीट करायचे?</string>
     <string name="app_account_delete_body">तुमची साइन-इनची माहिती, क्रेडिट, प्लॅन आणि वैयक्तिक डेटा डिलीट होतील, आणि तुमच्या शेअर लिंक चालणे बंद होईल. गोपनीयता धोरणात सांगितल्याप्रमाणे निकालांचा मजकूर तुमच्या नावाशिवाय साठवलेला राहतो.</string>
     <string name="app_account_delete_confirm">खाते डिलीट करा</string>
+    <string name="app_account_delete_subscription">खाते हटवल्याने स्टोअरमधील तुमचा मासिक प्लॅन रद्द होत नाही. तुम्ही तो तिथे रद्द करेपर्यंत तुमच्याकडून शुल्क आकारले जात राहील.</string>
+    <string name="app_account_manage_subscription">सबस्क्रिप्शन व्यवस्थापित करा</string>
     <string name="app_account_deleted">तुमचे खाते डिलीट झाले.</string>
     <string name="app_account_sign_out_confirm">या फोनवर Judge मधून साइन आउट करायचे?</string>
     <string name="app_account_signed_out">तुम्ही साइन आउट झाला आहात.</string>

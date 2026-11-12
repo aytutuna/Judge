@@ -663,6 +663,8 @@
     <string name="app_account_delete_title">هل تريد حذف حسابك؟</string>
     <string name="app_account_delete_body">ستُحذف بيانات تسجيل دخولك ورصيدك وخطتك وبياناتك الشخصية، وستتوقف روابط مشاركتك عن العمل. أما نصوص الأحكام فتبقى محفوظة دون اسمك، كما هو موضح في سياسة الخصوصية.</string>
     <string name="app_account_delete_confirm">حذف الحساب</string>
+    <string name="app_account_delete_subscription">حذف حسابك لا يلغي خطتك الشهرية في المتجر. ستستمر في دفع الرسوم حتى تلغيها هناك.</string>
+    <string name="app_account_manage_subscription">إدارة الاشتراك</string>
     <string name="app_account_deleted">تم حذف حسابك.</string>
     <string name="app_account_sign_out_confirm">هل تريد تسجيل الخروج من Judge على هذا الهاتف؟</string>
     <string name="app_account_signed_out">تم تسجيل خروجك.</string>

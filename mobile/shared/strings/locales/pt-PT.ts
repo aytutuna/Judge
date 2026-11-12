@@ -67,6 +67,9 @@ const ptPT: AppLocale = {
     "app.account.deleteBody":
       "Apagamos os teus dados de acesso, créditos, plano e dados pessoais, e os teus links de partilha deixam de funcionar. O texto dos veredictos fica guardado sem o teu nome, como explica a Política de Privacidade.",
     "app.account.deleteConfirm": "Apagar conta",
+    "app.account.deleteSubscription":
+      "Eliminar a tua conta não cancela o teu plano mensal na loja. A cobrança continua até o cancelares lá.",
+    "app.account.manageSubscription": "Gerir subscrição",
     "app.account.deleted": "A tua conta foi apagada.",
     "app.account.signOutConfirm": "Sair do Judge neste telemóvel?",
     "app.account.signedOut": "Terminaste a sessão.",

@@ -78,6 +78,9 @@ const sl: AppLocale = {
     "app.account.deleteBody":
       "Izbrišejo se tvoji podatki za prijavo, krediti, naročnina in osebni podatki, povezave za deljenje pa prenehajo delovati. Besedilo razsodb ostane shranjeno brez tvojega imena, kot je pojasnjeno v politiki zasebnosti.",
     "app.account.deleteConfirm": "Izbriši račun",
+    "app.account.deleteSubscription":
+      "Z izbrisom računa se mesečni paket v trgovini ne prekliče. Obračunavanje se bo nadaljevalo, dokler ga tam ne prekličeš.",
+    "app.account.manageSubscription": "Upravljaj naročnino",
     "app.account.deleted": "Tvoj račun je izbrisan.",
     "app.account.signOutConfirm": "Se želiš na tem telefonu odjaviti iz aplikacije Judge?",
     "app.account.signedOut": "Odjava je uspela.",

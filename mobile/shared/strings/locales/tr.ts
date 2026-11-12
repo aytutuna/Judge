@@ -66,6 +66,9 @@ const tr: AppLocale = {
     "app.account.deleteBody":
       "Giriş bilgilerin, kredilerin, planın ve kişisel verilerin silinir; paylaşım bağlantıların da çalışmaz olur. Karar metinleri, Gizlilik Politikası'nda anlatıldığı gibi adın olmadan saklanır.",
     "app.account.deleteConfirm": "Hesabı sil",
+    "app.account.deleteSubscription":
+      "Hesabını silmek, mağazadaki aylık planını iptal etmez. Orada iptal edene kadar ücret kesilmeye devam eder.",
+    "app.account.manageSubscription": "Aboneliği yönet",
     "app.account.deleted": "Hesabın silindi.",
     "app.account.signOutConfirm": "Bu telefonda Judge'dan çıkış yapılsın mı?",
     "app.account.signedOut": "Çıkış yaptın.",

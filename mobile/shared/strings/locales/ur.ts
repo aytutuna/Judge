@@ -67,6 +67,9 @@ const ur: AppLocale = {
     "app.account.deleteBody":
       "آپ کی سائن ان کی تفصیلات، کریڈٹس، پلان اور ذاتی ڈیٹا حذف ہو جائیں گے، اور آپ کے شیئر لنکس کام کرنا بند کر دیں گے۔ فیصلوں کا متن آپ کے نام کے بغیر محفوظ رہتا ہے، جیسا کہ رازداری کی پالیسی میں بتایا گیا ہے۔",
     "app.account.deleteConfirm": "اکاؤنٹ حذف کریں",
+    "app.account.deleteSubscription":
+      "اکاؤنٹ حذف کرنے سے اسٹور میں آپ کا ماہانہ پلان منسوخ نہیں ہوتا۔ جب تک آپ اسے وہاں منسوخ نہیں کرتے، آپ سے رقم کٹتی رہے گی۔",
+    "app.account.manageSubscription": "سبسکرپشن منظم کریں",
     "app.account.deleted": "آپ کا اکاؤنٹ حذف ہو گیا۔",
     "app.account.signOutConfirm": "اس فون پر Judge سے سائن آؤٹ کریں؟",
     "app.account.signedOut": "سائن آؤٹ ہو گیا۔",

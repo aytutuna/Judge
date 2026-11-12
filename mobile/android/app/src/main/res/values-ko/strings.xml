@@ -583,6 +583,8 @@
     <string name="app_account_delete_title">계정을 삭제할까요?</string>
     <string name="app_account_delete_body">로그인 정보, 크레딧, 요금제, 개인정보가 삭제되고 공유 링크도 더 이상 열리지 않아요. 판결 내용은 개인정보 처리방침에 설명된 대로 이름을 뺀 채 보관돼요.</string>
     <string name="app_account_delete_confirm">계정 삭제</string>
+    <string name="app_account_delete_subscription">계정을 삭제해도 스토어의 월간 플랜은 해지되지 않습니다. 스토어에서 해지하기 전까지 계속 결제됩니다.</string>
+    <string name="app_account_manage_subscription">구독 관리</string>
     <string name="app_account_deleted">계정이 삭제됐어요.</string>
     <string name="app_account_sign_out_confirm">이 휴대폰의 Judge에서 로그아웃할까요?</string>
     <string name="app_account_signed_out">로그아웃했어요.</string>

@@ -599,6 +599,8 @@
     <string name="app_account_delete_title">اپنا اکاؤنٹ حذف کریں؟</string>
     <string name="app_account_delete_body">آپ کی سائن ان کی تفصیلات، کریڈٹس، پلان اور ذاتی ڈیٹا حذف ہو جائیں گے، اور آپ کے شیئر لنکس کام کرنا بند کر دیں گے۔ فیصلوں کا متن آپ کے نام کے بغیر محفوظ رہتا ہے، جیسا کہ رازداری کی پالیسی میں بتایا گیا ہے۔</string>
     <string name="app_account_delete_confirm">اکاؤنٹ حذف کریں</string>
+    <string name="app_account_delete_subscription">اکاؤنٹ حذف کرنے سے اسٹور میں آپ کا ماہانہ پلان منسوخ نہیں ہوتا۔ جب تک آپ اسے وہاں منسوخ نہیں کرتے، آپ سے رقم کٹتی رہے گی۔</string>
+    <string name="app_account_manage_subscription">سبسکرپشن منظم کریں</string>
     <string name="app_account_deleted">آپ کا اکاؤنٹ حذف ہو گیا۔</string>
     <string name="app_account_sign_out_confirm">اس فون پر Judge سے سائن آؤٹ کریں؟</string>
     <string name="app_account_signed_out">سائن آؤٹ ہو گیا۔</string>

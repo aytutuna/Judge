@@ -83,6 +83,9 @@ export const APP_EN = {
   "app.account.deleteBody":
     "Your sign-in details, credits, plan and personal data are deleted, and your share links stop working. Verdict text stays stored without your name, as explained in the Privacy Policy.",
   "app.account.deleteConfirm": "Delete account",
+  "app.account.deleteSubscription":
+    "Deleting your account does not cancel your monthly plan in the store. You'll keep being billed until you cancel it there.",
+  "app.account.manageSubscription": "Manage subscription",
   // App version of account.deleted, which promises a trip to the home page.
   "app.account.deleted": "Your account was deleted.",
   "app.account.signOutConfirm": "Sign out of Judge on this phone?",

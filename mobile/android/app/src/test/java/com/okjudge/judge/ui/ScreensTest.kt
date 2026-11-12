@@ -56,7 +56,9 @@ import com.okjudge.judge.ui.signin.SignInMode
 import com.okjudge.judge.ui.signin.SignInActions
 import com.okjudge.judge.core.model.SignInProviders
 import com.okjudge.judge.core.model.ServerConfig
+import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.MeResponse
+import com.okjudge.judge.core.model.SubscriptionView
 import com.okjudge.judge.core.auth.SignInError
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.i18n.LangPref
@@ -740,7 +742,7 @@ class ScreensTest {
     fun accountPage_deleteAsksFirst() {
         var deleted = 0
         compose.setContent {
-            Themed(AppLang.EN) { AccountScreen(signedInAs(), busy = false, onDelete = { deleted++ }, onBack = {}) }
+            Themed(AppLang.EN) { AccountScreen(signedInAs(), busy = false, onDelete = { deleted++ }, onBack = {}, onManageSubscription = {}) }
         }
         val s = UiTestSupport.s(AppLang.EN)
         compose.onNodeWithText(s.accountSignedInAs("ada@example.com")).assertExists()
@@ -748,6 +750,23 @@ class ScreensTest {
         assertEquals(0, deleted)
         compose.onAllNodesWithText(s.appAccountDeleteConfirm).onLast().performClick()
         assertEquals(1, deleted)
+    }
+
+    @Test
+    fun accountPage_deleteWarnsAboutARenewingSubscription() {
+        var managed = 0
+        val sub = SubscriptionView(willRenew = true)
+        val me = MeResponse(user = Viewer("u1", "ada@example.com"), entitlement = Entitlement(subscription = sub))
+        compose.setContent {
+            Themed(AppLang.EN) {
+                AccountScreen(Account.State.SignedIn(me), busy = false, onDelete = {}, onBack = {}, onManageSubscription = { managed++ })
+            }
+        }
+        val s = UiTestSupport.s(AppLang.EN)
+        compose.onNodeWithTag(SettingsTags.DELETE).performClick()
+        compose.onNodeWithText(s.appAccountDeleteBody + "\n\n" + s.appAccountDeleteSubscription).assertExists()
+        compose.onNodeWithText(s.appAccountManageSubscription).performClick()
+        assertEquals(1, managed)
     }
 
     @Test

@@ -599,6 +599,8 @@
     <string name="app_account_delete_title">మీ అకౌంట్ డిలీట్ చేయాలా?</string>
     <string name="app_account_delete_body">మీ సైన్ ఇన్ వివరాలు, క్రెడిట్లు, ప్లాన్, వ్యక్తిగత డేటా డిలీట్ అవుతాయి, మీ షేర్ లింక్‌లు పనిచేయడం ఆగిపోతాయి. తీర్పుల టెక్స్ట్‌ను మాత్రం, గోప్యతా విధానంలో చెప్పినట్టు, మీ పేరు లేకుండా ఉంచుతాం.</string>
     <string name="app_account_delete_confirm">అకౌంట్ డిలీట్ చేయండి</string>
+    <string name="app_account_delete_subscription">ఖాతాను తొలగించినా స్టోర్‌లో మీ నెలవారీ ప్లాన్ రద్దు కాదు. మీరు అక్కడ రద్దు చేసే వరకు మీకు ఛార్జ్ చేయడం కొనసాగుతుంది.</string>
+    <string name="app_account_manage_subscription">సభ్యత్వాన్ని నిర్వహించండి</string>
     <string name="app_account_deleted">మీ అకౌంట్ డిలీట్ అయింది.</string>
     <string name="app_account_sign_out_confirm">ఈ ఫోన్‌లో Judge నుంచి సైన్ అవుట్ చేయాలా?</string>
     <string name="app_account_signed_out">మీరు సైన్ అవుట్ అయ్యారు.</string>

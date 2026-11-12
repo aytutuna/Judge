@@ -249,9 +249,12 @@ fun AccountScreen(
     busy: Boolean,
     onDelete: () -> Unit,
     onBack: () -> Unit,
+    onManageSubscription: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val s = LocalStrings.current
+    // A subscription that still renews keeps billing after the account is gone.
+    val billing = (account as? Account.State.SignedIn)?.me?.entitlement?.subscription?.willRenew == true
     var confirmDelete by rememberSaveable { mutableStateOf(false) }
     val signedIn = account is Account.State.SignedIn
     LaunchedEffect(signedIn) { if (!signedIn) confirmDelete = false }
@@ -281,11 +284,21 @@ fun AccountScreen(
         AlertDialog(
             onDismissRequest = { confirmDelete = false },
             title = { Text(s.appAccountDeleteTitle, style = JudgeType.sectionTitle) },
-            text = { Text(s.appAccountDeleteBody, style = JudgeType.body) },
+            text = {
+                Text(
+                    if (billing) s.appAccountDeleteBody + "\n\n" + s.appAccountDeleteSubscription else s.appAccountDeleteBody,
+                    style = JudgeType.body,
+                )
+            },
             confirmButton = {
                 TextButton(onClick = { confirmDelete = false; onDelete() }) { Text(s.appAccountDeleteConfirm, color = Palette.danger) }
             },
-            dismissButton = { TextButton(onClick = { confirmDelete = false }) { Text(s.appCancel, color = Palette.ink) } },
+            dismissButton = {
+                Row {
+                    if (billing) TextButton(onClick = onManageSubscription) { Text(s.appAccountManageSubscription, color = Palette.ink) }
+                    TextButton(onClick = { confirmDelete = false }) { Text(s.appCancel, color = Palette.ink) }
+                }
+            },
             containerColor = Palette.paper,
         )
     }

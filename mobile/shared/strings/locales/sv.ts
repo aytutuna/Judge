@@ -69,6 +69,9 @@ const sv: AppLocale = {
     "app.account.deleteBody":
       "Dina inloggningsuppgifter, dina krediter, ditt abonnemang och dina personuppgifter raderas, och dina delningslänkar slutar fungera. Texten i dina domar sparas kvar utan ditt namn, som beskrivs i integritetspolicyn.",
     "app.account.deleteConfirm": "Radera konto",
+    "app.account.deleteSubscription":
+      "Om du raderar kontot avslutas inte din månadsplan i butiken. Du debiteras tills du avslutar den där.",
+    "app.account.manageSubscription": "Hantera prenumeration",
     "app.account.deleted": "Ditt konto är raderat.",
     "app.account.signOutConfirm": "Logga ut från Judge på den här telefonen?",
     "app.account.signedOut": "Du är utloggad.",

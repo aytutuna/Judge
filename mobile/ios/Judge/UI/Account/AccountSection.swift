@@ -138,11 +138,14 @@ struct AccountSection: View {
 struct AccountView: View {
     @Environment(AppModel.self) private var app
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
     @State private var confirmDelete = false
 
     var body: some View {
         let account = app.account
         let lang = app.lang
+        // A subscription that still renews keeps billing after the account is gone.
+        let billing = account.entitlement?.subscription?.willRenew == true
         List {
             Section {
                 if let email = account.user?.email, !email.isEmpty {
@@ -184,9 +187,18 @@ struct AccountView: View {
             Button(L10n.appAccountDeleteConfirm(lang), role: .destructive) {
                 Task { await app.account.deleteAccount() }
             }
+            if billing {
+                Button(L10n.appAccountManageSubscription(lang)) {
+                    if let url = URL(string: "https://apps.apple.com/account/subscriptions") { openURL(url) }
+                }
+            }
             Button(L10n.accountDeleteCancel(lang), role: .cancel) {}
         } message: {
-            Text(L10n.appAccountDeleteBody(lang))
+            if billing {
+                Text(L10n.appAccountDeleteBody(lang) + "\n\n" + L10n.appAccountDeleteSubscription(lang))
+            } else {
+                Text(L10n.appAccountDeleteBody(lang))
+            }
         }
         .onChange(of: account.isSignedIn) { _, signedIn in
             if !signedIn { dismiss() }

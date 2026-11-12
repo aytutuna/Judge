@@ -599,6 +599,8 @@
     <string name="app_account_delete_title">Radera ditt konto?</string>
     <string name="app_account_delete_body">Dina inloggningsuppgifter, dina krediter, ditt abonnemang och dina personuppgifter raderas, och dina delningslänkar slutar fungera. Texten i dina domar sparas kvar utan ditt namn, som beskrivs i integritetspolicyn.</string>
     <string name="app_account_delete_confirm">Radera konto</string>
+    <string name="app_account_delete_subscription">Om du raderar kontot avslutas inte din månadsplan i butiken. Du debiteras tills du avslutar den där.</string>
+    <string name="app_account_manage_subscription">Hantera prenumeration</string>
     <string name="app_account_deleted">Ditt konto är raderat.</string>
     <string name="app_account_sign_out_confirm">Logga ut från Judge på den här telefonen?</string>
     <string name="app_account_signed_out">Du är utloggad.</string>

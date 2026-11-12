@@ -615,6 +615,8 @@
     <string name="app_account_delete_title">למחוק את החשבון?</string>
     <string name="app_account_delete_body">פרטי ההתחברות, הקרדיטים, התוכנית והמידע האישי שלך יימחקו, וקישורי השיתוף שלך יפסיקו לעבוד. הטקסט של פסקי הדין יישמר בלי השם שלך, כפי שמוסבר במדיניות הפרטיות.</string>
     <string name="app_account_delete_confirm">מחיקת החשבון</string>
+    <string name="app_account_delete_subscription">מחיקת החשבון לא מבטלת את התוכנית החודשית שלך בחנות. החיוב ימשיך עד שתבטל אותה שם.</string>
+    <string name="app_account_manage_subscription">ניהול המנוי</string>
     <string name="app_account_deleted">החשבון נמחק.</string>
     <string name="app_account_sign_out_confirm">להתנתק מ-Judge בטלפון הזה?</string>
     <string name="app_account_signed_out">התנתקת.</string>

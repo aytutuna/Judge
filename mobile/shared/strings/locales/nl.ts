@@ -68,6 +68,9 @@ const nl: AppLocale = {
     "app.account.deleteBody":
       "Je inloggegevens, credits, abonnement en persoonsgegevens worden gewist, en je deellinks werken niet meer. De tekst van uitspraken blijft zonder je naam bewaard, zoals beschreven in het privacybeleid.",
     "app.account.deleteConfirm": "Account verwijderen",
+    "app.account.deleteSubscription":
+      "Als je je account verwijdert, wordt je maandabonnement in de winkel niet opgezegd. Je blijft betalen tot je het daar opzegt.",
+    "app.account.manageSubscription": "Abonnement beheren",
     "app.account.deleted": "Je account is verwijderd.",
     "app.account.signOutConfirm": "Uitloggen bij Judge op deze telefoon?",
     "app.account.signedOut": "Je bent uitgelogd.",

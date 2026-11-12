@@ -583,6 +583,8 @@
     <string name="app_account_delete_title">Xóa tài khoản của bạn?</string>
     <string name="app_account_delete_body">Thông tin đăng nhập, lượt phán quyết, gói và dữ liệu cá nhân của bạn sẽ bị xóa, các liên kết chia sẻ của bạn cũng ngừng hoạt động. Nội dung phán quyết vẫn được lưu nhưng không kèm tên bạn, như đã nêu trong Chính sách quyền riêng tư.</string>
     <string name="app_account_delete_confirm">Xóa tài khoản</string>
+    <string name="app_account_delete_subscription">Xóa tài khoản không hủy gói hằng tháng của bạn trên cửa hàng. Bạn vẫn bị tính phí cho đến khi hủy ở đó.</string>
+    <string name="app_account_manage_subscription">Quản lý gói đăng ký</string>
     <string name="app_account_deleted">Đã xóa tài khoản của bạn.</string>
     <string name="app_account_sign_out_confirm">Đăng xuất khỏi Judge trên điện thoại này?</string>
     <string name="app_account_signed_out">Bạn đã đăng xuất.</string>

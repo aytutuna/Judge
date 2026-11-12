@@ -69,6 +69,9 @@ const ptBR: AppLocale = {
     "app.account.deleteBody":
       "Suas informações de login, seus créditos, seu plano e seus dados pessoais são apagados, e seus links de compartilhamento param de funcionar. O texto dos vereditos continua guardado sem o seu nome, como explica a Política de Privacidade.",
     "app.account.deleteConfirm": "Excluir conta",
+    "app.account.deleteSubscription":
+      "Excluir sua conta não cancela seu plano mensal na loja. A cobrança continua até você cancelar lá.",
+    "app.account.manageSubscription": "Gerenciar assinatura",
     "app.account.deleted": "Sua conta foi excluída.",
     "app.account.signOutConfirm": "Sair do Judge neste celular?",
     "app.account.signedOut": "Você saiu da conta.",

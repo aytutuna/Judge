@@ -583,6 +583,8 @@
     <string name="app_account_delete_title">Hapus akunmu?</string>
     <string name="app_account_delete_body">Data masuk, kredit, langganan, dan informasi pribadimu akan dihapus, dan tautan berbagimu tidak berfungsi lagi. Teks putusan tetap disimpan tanpa namamu, seperti dijelaskan di Kebijakan Privasi.</string>
     <string name="app_account_delete_confirm">Hapus akun</string>
+    <string name="app_account_delete_subscription">Menghapus akunmu tidak membatalkan paket bulananmu di toko. Kamu akan tetap ditagih sampai kamu membatalkannya di sana.</string>
+    <string name="app_account_manage_subscription">Kelola langganan</string>
     <string name="app_account_deleted">Akunmu sudah dihapus.</string>
     <string name="app_account_sign_out_confirm">Keluar dari Judge di ponsel ini?</string>
     <string name="app_account_signed_out">Kamu sudah keluar.</string>

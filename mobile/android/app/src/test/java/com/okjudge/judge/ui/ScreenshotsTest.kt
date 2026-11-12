@@ -311,7 +311,7 @@ class ScreenshotsTest {
     fun account_page_en() = capture("account_page_en") {
         val me = MeResponse(user = Viewer(id = "u1", email = "ada@example.com", name = "Ada"))
         Themed(AppLang.EN) {
-            com.okjudge.judge.ui.settings.AccountScreen(Account.State.SignedIn(me), busy = false, onDelete = {}, onBack = {})
+            com.okjudge.judge.ui.settings.AccountScreen(Account.State.SignedIn(me), busy = false, onDelete = {}, onBack = {}, onManageSubscription = {})
         }
     }
 

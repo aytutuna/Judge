@@ -615,6 +615,8 @@
     <string name="app_account_delete_title">Îți ștergi contul?</string>
     <string name="app_account_delete_body">Se șterg datele de conectare, creditele, planul și informațiile tale personale, iar linkurile tale de distribuire nu vor mai funcționa. Textul verdictelor rămâne stocat fără numele tău, așa cum se explică în Politica de confidențialitate.</string>
     <string name="app_account_delete_confirm">Șterge contul</string>
+    <string name="app_account_delete_subscription">Ștergerea contului nu anulează planul tău lunar din magazin. Vei fi taxat în continuare până când îl anulezi acolo.</string>
+    <string name="app_account_manage_subscription">Gestionează abonamentul</string>
     <string name="app_account_deleted">Contul tău a fost șters.</string>
     <string name="app_account_sign_out_confirm">Te deconectezi de la Judge pe acest telefon?</string>
     <string name="app_account_signed_out">Te-ai deconectat.</string>

@@ -599,6 +599,8 @@
     <string name="app_account_delete_title">ਆਪਣਾ ਖਾਤਾ ਮਿਟਾਉਣਾ ਹੈ?</string>
     <string name="app_account_delete_body">ਤੁਹਾਡੇ ਸਾਈਨ ਇਨ ਦੇ ਵੇਰਵੇ, ਕ੍ਰੈਡਿਟ, ਪਲਾਨ ਅਤੇ ਨਿੱਜੀ ਡਾਟਾ ਮਿਟ ਜਾਣਗੇ, ਅਤੇ ਤੁਹਾਡੇ ਸਾਂਝੇ ਲਿੰਕ ਕੰਮ ਕਰਨਾ ਬੰਦ ਕਰ ਦੇਣਗੇ। ਫ਼ੈਸਲਿਆਂ ਦੀ ਲਿਖਤ ਤੁਹਾਡੇ ਨਾਂ ਤੋਂ ਬਿਨਾਂ ਸਾਡੇ ਕੋਲ ਸੇਵ ਰਹੇਗੀ, ਜਿਵੇਂ ਪਰਦੇਦਾਰੀ ਨੀਤੀ ਵਿੱਚ ਦੱਸਿਆ ਗਿਆ ਹੈ।</string>
     <string name="app_account_delete_confirm">ਖਾਤਾ ਮਿਟਾਓ</string>
+    <string name="app_account_delete_subscription">ਖਾਤਾ ਮਿਟਾਉਣ ਨਾਲ ਸਟੋਰ ਵਿੱਚ ਤੁਹਾਡਾ ਮਾਸਿਕ ਪਲਾਨ ਰੱਦ ਨਹੀਂ ਹੁੰਦਾ। ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਉੱਥੇ ਰੱਦ ਨਹੀਂ ਕਰਦੇ, ਤੁਹਾਡੇ ਤੋਂ ਚਾਰਜ ਲਿਆ ਜਾਂਦਾ ਰਹੇਗਾ।</string>
+    <string name="app_account_manage_subscription">ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਪ੍ਰਬੰਧਿਤ ਕਰੋ</string>
     <string name="app_account_deleted">ਤੁਹਾਡਾ ਖਾਤਾ ਮਿਟ ਗਿਆ ਹੈ।</string>
     <string name="app_account_sign_out_confirm">ਇਸ ਫ਼ੋਨ ’ਤੇ Judge ਤੋਂ ਸਾਈਨ ਆਊਟ ਕਰਨਾ ਹੈ?</string>
     <string name="app_account_signed_out">ਤੁਸੀਂ ਸਾਈਨ ਆਊਟ ਹੋ ਗਏ ਹੋ।</string>

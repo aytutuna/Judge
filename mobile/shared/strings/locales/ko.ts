@@ -63,6 +63,9 @@ const ko: AppLocale = {
     "app.account.deleteBody":
       "로그인 정보, 크레딧, 요금제, 개인정보가 삭제되고 공유 링크도 더 이상 열리지 않아요. 판결 내용은 개인정보 처리방침에 설명된 대로 이름을 뺀 채 보관돼요.",
     "app.account.deleteConfirm": "계정 삭제",
+    "app.account.deleteSubscription":
+      "계정을 삭제해도 스토어의 월간 플랜은 해지되지 않습니다. 스토어에서 해지하기 전까지 계속 결제됩니다.",
+    "app.account.manageSubscription": "구독 관리",
     "app.account.deleted": "계정이 삭제됐어요.",
     "app.account.signOutConfirm": "이 휴대폰의 Judge에서 로그아웃할까요?",
     "app.account.signedOut": "로그아웃했어요.",

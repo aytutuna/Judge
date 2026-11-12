@@ -615,6 +615,8 @@
     <string name="app_account_delete_title">Izbrisati račun?</string>
     <string name="app_account_delete_body">Brišu se tvoji podaci za prijavu, krediti, plan i ostali osobni podaci, a tvoje poveznice za dijeljenje prestaju raditi. Tekst presuda ostaje spremljen bez tvog imena, kako je objašnjeno u Pravilima privatnosti.</string>
     <string name="app_account_delete_confirm">Izbriši račun</string>
+    <string name="app_account_delete_subscription">Brisanjem računa ne otkazuje se tvoj mjesečni plan u trgovini. Naplata će se nastaviti dok ga ondje ne otkažeš.</string>
+    <string name="app_account_manage_subscription">Upravljaj pretplatom</string>
     <string name="app_account_deleted">Račun je izbrisan.</string>
     <string name="app_account_sign_out_confirm">Odjaviti se iz aplikacije Judge na ovom telefonu?</string>
     <string name="app_account_signed_out">Odjava je uspjela.</string>

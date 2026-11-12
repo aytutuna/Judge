@@ -615,6 +615,8 @@
     <string name="app_account_delete_title">Supprimer ton compte ?</string>
     <string name="app_account_delete_body">Tes informations de connexion, tes crédits, ton offre et tes données personnelles seront effacés, et tes liens de partage cesseront de fonctionner. Le texte des verdicts sera conservé sans ton nom, comme l’explique la Politique de confidentialité.</string>
     <string name="app_account_delete_confirm">Supprimer le compte</string>
+    <string name="app_account_delete_subscription">Supprimer ton compte n\'annule pas ton forfait mensuel dans la boutique. Tu continueras à être facturé jusqu\'à ce que tu l\'annules là-bas.</string>
+    <string name="app_account_manage_subscription">Gérer l\'abonnement</string>
     <string name="app_account_deleted">Ton compte a été supprimé.</string>
     <string name="app_account_sign_out_confirm">Se déconnecter de Judge sur ce téléphone ?</string>
     <string name="app_account_signed_out">Déconnexion effectuée.</string>

@@ -711,6 +711,9 @@ fun JudgeRoot(
                                         // App scope: leaving the screen must not stop a deletion halfway.
                                         onDelete = { container.appScope.launch { account.deleteAccount() } },
                                         onBack = { backStack.removeAll { it is AccountKey } },
+                                        onManageSubscription = {
+                                            openLink(context, "https://play.google.com/store/account/subscriptions?package=${context.packageName}")
+                                        },
                                     )
                                 }
                                 entry<SignInKey> { key ->

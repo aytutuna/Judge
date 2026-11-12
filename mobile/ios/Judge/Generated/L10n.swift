@@ -695,6 +695,8 @@ enum L10n {
     static func appAccountDeleteTitle(_ lang: AppLang) -> String { string("app.account.deleteTitle", lang) }
     static func appAccountDeleteBody(_ lang: AppLang) -> String { string("app.account.deleteBody", lang) }
     static func appAccountDeleteConfirm(_ lang: AppLang) -> String { string("app.account.deleteConfirm", lang) }
+    static func appAccountDeleteSubscription(_ lang: AppLang) -> String { string("app.account.deleteSubscription", lang) }
+    static func appAccountManageSubscription(_ lang: AppLang) -> String { string("app.account.manageSubscription", lang) }
     static func appAccountDeleted(_ lang: AppLang) -> String { string("app.account.deleted", lang) }
     static func appAccountSignOutConfirm(_ lang: AppLang) -> String { string("app.account.signOutConfirm", lang) }
     static func appAccountSignedOut(_ lang: AppLang) -> String { string("app.account.signedOut", lang) }
@@ -1271,6 +1273,8 @@ enum L10n {
         "app.account.deleteTitle",
         "app.account.deleteBody",
         "app.account.deleteConfirm",
+        "app.account.deleteSubscription",
+        "app.account.manageSubscription",
         "app.account.deleted",
         "app.account.signOutConfirm",
         "app.account.signedOut",

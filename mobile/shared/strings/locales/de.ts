@@ -67,6 +67,9 @@ const de: AppLocale = {
     "app.account.deleteBody":
       "Deine Anmeldedaten, deine Credits, dein Tarif und deine persönlichen Daten werden gelöscht, und deine geteilten Links funktionieren nicht mehr. Der Text deiner Urteile bleibt ohne deinen Namen gespeichert, wie in der Datenschutzerklärung beschrieben.",
     "app.account.deleteConfirm": "Konto löschen",
+    "app.account.deleteSubscription":
+      "Wenn du dein Konto löschst, wird dein Monatsabo im Store nicht gekündigt. Es wird weiter abgebucht, bis du es dort kündigst.",
+    "app.account.manageSubscription": "Abo verwalten",
     "app.account.deleted": "Dein Konto ist gelöscht.",
     "app.account.signOutConfirm": "Auf diesem Handy von Judge abmelden?",
     "app.account.signedOut": "Du bist abgemeldet.",

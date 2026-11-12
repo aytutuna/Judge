@@ -615,6 +615,8 @@
     <string name="app_account_delete_title">Vols eliminar el compte?</string>
     <string name="app_account_delete_body">S\'esborraran les teves dades d\'inici de sessió, els crèdits, el pla i les dades personals, i els teus enllaços per compartir deixaran de funcionar. El text dels veredictes es conservarà sense el teu nom, tal com s\'explica a la Política de privadesa.</string>
     <string name="app_account_delete_confirm">Elimina el compte</string>
+    <string name="app_account_delete_subscription">Eliminar el teu compte no cancel·la el teu pla mensual a la botiga. Se\'t continuarà cobrant fins que el cancel·lis allà.</string>
+    <string name="app_account_manage_subscription">Gestiona la subscripció</string>
     <string name="app_account_deleted">S\'ha eliminat el compte.</string>
     <string name="app_account_sign_out_confirm">Vols tancar la sessió de Judge en aquest telèfon?</string>
     <string name="app_account_signed_out">Has tancat la sessió.</string>

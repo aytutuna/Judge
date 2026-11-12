@@ -67,6 +67,9 @@ const da: AppLocale = {
     "app.account.deleteBody":
       "Dine loginoplysninger, dine kreditter, din plan og dine personoplysninger bliver slettet, og dine delingslinks holder op med at virke. Teksten i dommene bliver stadig gemt, men uden dit navn, som beskrevet i privatlivspolitikken.",
     "app.account.deleteConfirm": "Slet konto",
+    "app.account.deleteSubscription":
+      "Når du sletter din konto, bliver dit månedlige abonnement i butikken ikke opsagt. Du bliver ved med at blive opkrævet, indtil du opsiger det der.",
+    "app.account.manageSubscription": "Administrer abonnement",
     "app.account.deleted": "Din konto er slettet.",
     "app.account.signOutConfirm": "Vil du logge ud af Judge på denne telefon?",
     "app.account.signedOut": "Du er logget ud.",

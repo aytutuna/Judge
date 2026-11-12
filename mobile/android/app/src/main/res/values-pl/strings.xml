@@ -631,6 +631,8 @@
     <string name="app_account_delete_title">Usunąć konto?</string>
     <string name="app_account_delete_body">Usuniemy twoje dane logowania, pulę werdyktów, plan i dane osobowe, a twoje linki do udostępniania przestaną działać. Treść werdyktów zachowujemy bez twojego imienia, jak opisano w Polityce prywatności.</string>
     <string name="app_account_delete_confirm">Usuń konto</string>
+    <string name="app_account_delete_subscription">Usunięcie konta nie anuluje Twojego planu miesięcznego w sklepie. Opłaty będą pobierane, dopóki go tam nie anulujesz.</string>
+    <string name="app_account_manage_subscription">Zarządzaj subskrypcją</string>
     <string name="app_account_deleted">Konto zostało usunięte.</string>
     <string name="app_account_sign_out_confirm">Wylogować się z Judge na tym telefonie?</string>
     <string name="app_account_signed_out">Wylogowano.</string>

@@ -599,6 +599,8 @@
     <string name="app_account_delete_title">ଆପଣଙ୍କ ଆକାଉଣ୍ଟ ଡିଲିଟ୍ କରିବେ?</string>
     <string name="app_account_delete_body">ଆପଣଙ୍କ ସାଇନ୍ ଇନ୍ ବିବରଣୀ, କ୍ରେଡିଟ୍, ପ୍ଲାନ୍ ଓ ବ୍ୟକ୍ତିଗତ ଡାଟା ଡିଲିଟ୍ ହେବ, ଏବଂ ଆପଣଙ୍କ ସେୟାର୍ ଲିଙ୍କ୍ ଆଉ କାମ କରିବ ନାହିଁ। ଗୋପନୀୟତା ନୀତିରେ ଯେମିତି କୁହାଯାଇଛି, ରାୟର ଲେଖା ଆପଣଙ୍କ ନାମ ବିନା ରଖାଯିବ।</string>
     <string name="app_account_delete_confirm">ଆକାଉଣ୍ଟ ଡିଲିଟ୍ କରନ୍ତୁ</string>
+    <string name="app_account_delete_subscription">ଆକାଉଣ୍ଟ ଡିଲିଟ୍ କଲେ ଷ୍ଟୋରରେ ଆପଣଙ୍କ ମାସିକ ପ୍ଲାନ୍ ବାତିଲ୍ ହୁଏ ନାହିଁ। ଆପଣ ସେଠାରେ ବାତିଲ୍ ନକରିବା ପର୍ଯ୍ୟନ୍ତ ଆପଣଙ୍କଠାରୁ ଶୁଳ୍କ ନିଆଯିବ।</string>
+    <string name="app_account_manage_subscription">ସବ୍‌ସ୍କ୍ରିପସନ୍ ପରିଚାଳନା</string>
     <string name="app_account_deleted">ଆପଣଙ୍କ ଆକାଉଣ୍ଟ ଡିଲିଟ୍ ହେଲା।</string>
     <string name="app_account_sign_out_confirm">ଏହି ଫୋନ୍‌ରେ Judgeରୁ ସାଇନ୍ ଆଉଟ୍ କରିବେ?</string>
     <string name="app_account_signed_out">ଆପଣ ସାଇନ୍ ଆଉଟ୍ ହୋଇଗଲେ।</string>

@@ -70,6 +70,9 @@ const pl: AppLocale = {
     "app.account.deleteBody":
       "Usuniemy twoje dane logowania, pulę werdyktów, plan i dane osobowe, a twoje linki do udostępniania przestaną działać. Treść werdyktów zachowujemy bez twojego imienia, jak opisano w Polityce prywatności.",
     "app.account.deleteConfirm": "Usuń konto",
+    "app.account.deleteSubscription":
+      "Usunięcie konta nie anuluje Twojego planu miesięcznego w sklepie. Opłaty będą pobierane, dopóki go tam nie anulujesz.",
+    "app.account.manageSubscription": "Zarządzaj subskrypcją",
     "app.account.deleted": "Konto zostało usunięte.",
     "app.account.signOutConfirm": "Wylogować się z Judge na tym telefonie?",
     "app.account.signedOut": "Wylogowano.",

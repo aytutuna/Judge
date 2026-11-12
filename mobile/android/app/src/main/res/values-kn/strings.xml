@@ -599,6 +599,8 @@
     <string name="app_account_delete_title">ನಿಮ್ಮ ಖಾತೆ ಅಳಿಸಬೇಕೇ?</string>
     <string name="app_account_delete_body">ನಿಮ್ಮ ಸೈನ್ ಇನ್ ವಿವರಗಳು, ಕ್ರೆಡಿಟ್‌ಗಳು, ಪ್ಲಾನ್ ಮತ್ತು ವೈಯಕ್ತಿಕ ಡೇಟಾ ಅಳಿಸಿಹೋಗುತ್ತವೆ ಮತ್ತು ನಿಮ್ಮ ಹಂಚಿಕೆ ಲಿಂಕ್‌ಗಳು ಕೆಲಸ ಮಾಡುವುದನ್ನು ನಿಲ್ಲಿಸುತ್ತವೆ. ಗೌಪ್ಯತಾ ನೀತಿಯಲ್ಲಿ ಹೇಳಿರುವಂತೆ, ತೀರ್ಪುಗಳ ಪಠ್ಯ ನಿಮ್ಮ ಹೆಸರಿಲ್ಲದೆ ಸಂಗ್ರಹವಾಗಿ ಉಳಿಯುತ್ತದೆ.</string>
     <string name="app_account_delete_confirm">ಖಾತೆ ಅಳಿಸಿ</string>
+    <string name="app_account_delete_subscription">ಖಾತೆಯನ್ನು ಅಳಿಸಿದರೆ ಸ್ಟೋರ್‌ನಲ್ಲಿರುವ ನಿಮ್ಮ ಮಾಸಿಕ ಪ್ಲಾನ್ ರದ್ದಾಗುವುದಿಲ್ಲ. ನೀವು ಅಲ್ಲಿ ರದ್ದು ಮಾಡುವವರೆಗೆ ಶುಲ್ಕ ವಿಧಿಸಲಾಗುತ್ತದೆ.</string>
+    <string name="app_account_manage_subscription">ಚಂದಾದಾರಿಕೆ ನಿರ್ವಹಿಸಿ</string>
     <string name="app_account_deleted">ನಿಮ್ಮ ಖಾತೆ ಅಳಿಸಲಾಗಿದೆ.</string>
     <string name="app_account_sign_out_confirm">ಈ ಫೋನ್‌ನಲ್ಲಿ Judge ಖಾತೆಯಿಂದ ಸೈನ್ ಔಟ್ ಮಾಡಬೇಕೇ?</string>
     <string name="app_account_signed_out">ನೀವು ಸೈನ್ ಔಟ್ ಆಗಿದ್ದೀರಿ.</string>

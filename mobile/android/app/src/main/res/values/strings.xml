@@ -599,6 +599,8 @@
     <string name="app_account_delete_title">Delete your account?</string>
     <string name="app_account_delete_body">Your sign-in details, credits, plan and personal data are deleted, and your share links stop working. Verdict text stays stored without your name, as explained in the Privacy Policy.</string>
     <string name="app_account_delete_confirm">Delete account</string>
+    <string name="app_account_delete_subscription">Deleting your account does not cancel your monthly plan in the store. You\'ll keep being billed until you cancel it there.</string>
+    <string name="app_account_manage_subscription">Manage subscription</string>
     <string name="app_account_deleted">Your account was deleted.</string>
     <string name="app_account_sign_out_confirm">Sign out of Judge on this phone?</string>
     <string name="app_account_signed_out">You\'re signed out.</string>

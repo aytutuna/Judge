@@ -599,6 +599,8 @@
     <string name="app_account_delete_title">Vil du slette din konto?</string>
     <string name="app_account_delete_body">Dine loginoplysninger, dine kreditter, din plan og dine personoplysninger bliver slettet, og dine delingslinks holder op med at virke. Teksten i dommene bliver stadig gemt, men uden dit navn, som beskrevet i privatlivspolitikken.</string>
     <string name="app_account_delete_confirm">Slet konto</string>
+    <string name="app_account_delete_subscription">Når du sletter din konto, bliver dit månedlige abonnement i butikken ikke opsagt. Du bliver ved med at blive opkrævet, indtil du opsiger det der.</string>
+    <string name="app_account_manage_subscription">Administrer abonnement</string>
     <string name="app_account_deleted">Din konto er slettet.</string>
     <string name="app_account_sign_out_confirm">Vil du logge ud af Judge på denne telefon?</string>
     <string name="app_account_signed_out">Du er logget ud.</string>

@@ -615,6 +615,8 @@
     <string name="app_account_delete_title">Excluir sua conta?</string>
     <string name="app_account_delete_body">Suas informações de login, seus créditos, seu plano e seus dados pessoais são apagados, e seus links de compartilhamento param de funcionar. O texto dos vereditos continua guardado sem o seu nome, como explica a Política de Privacidade.</string>
     <string name="app_account_delete_confirm">Excluir conta</string>
+    <string name="app_account_delete_subscription">Excluir sua conta não cancela seu plano mensal na loja. A cobrança continua até você cancelar lá.</string>
+    <string name="app_account_manage_subscription">Gerenciar assinatura</string>
     <string name="app_account_deleted">Sua conta foi excluída.</string>
     <string name="app_account_sign_out_confirm">Sair do Judge neste celular?</string>
     <string name="app_account_signed_out">Você saiu da conta.</string>

@@ -599,6 +599,8 @@
     <string name="app_account_delete_title">Hesabın silinsin mi?</string>
     <string name="app_account_delete_body">Giriş bilgilerin, kredilerin, planın ve kişisel verilerin silinir; paylaşım bağlantıların da çalışmaz olur. Karar metinleri, Gizlilik Politikası\'nda anlatıldığı gibi adın olmadan saklanır.</string>
     <string name="app_account_delete_confirm">Hesabı sil</string>
+    <string name="app_account_delete_subscription">Hesabını silmek, mağazadaki aylık planını iptal etmez. Orada iptal edene kadar ücret kesilmeye devam eder.</string>
+    <string name="app_account_manage_subscription">Aboneliği yönet</string>
     <string name="app_account_deleted">Hesabın silindi.</string>
     <string name="app_account_sign_out_confirm">Bu telefonda Judge\'dan çıkış yapılsın mı?</string>
     <string name="app_account_signed_out">Çıkış yaptın.</string>

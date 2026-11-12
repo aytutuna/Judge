@@ -61,6 +61,9 @@ const zhHans: AppLocale = {
     "app.account.deleteBody":
       "你的登录信息、剩余次数、套餐和个人数据都会被删除，分享链接也会失效。裁决内容会去掉你的名字后继续保存，详见《隐私政策》。",
     "app.account.deleteConfirm": "删除账号",
+    "app.account.deleteSubscription":
+      "删除账号不会取消你在应用商店的月度套餐，在你去商店取消之前会继续扣费。",
+    "app.account.manageSubscription": "管理订阅",
     "app.account.deleted": "你的账号已删除。",
     "app.account.signOutConfirm": "要在这台手机上退出 Judge 吗？",
     "app.account.signedOut": "你已退出登录。",

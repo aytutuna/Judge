@@ -631,6 +631,8 @@
     <string name="app_account_delete_title">Видалити акаунт?</string>
     <string name="app_account_delete_body">Ми видалимо твої дані для входу, баланс вердиктів, тариф і особисту інформацію, а твої посилання для поширення перестануть працювати. Текст вердиктів залишиться збереженим без твого імені, як пояснено в Політиці конфіденційності.</string>
     <string name="app_account_delete_confirm">Видалити акаунт</string>
+    <string name="app_account_delete_subscription">Видалення акаунта не скасовує твій місячний план у магазині. Гроші списуватимуться, доки ти не скасуєш його там.</string>
+    <string name="app_account_manage_subscription">Керувати підпискою</string>
     <string name="app_account_deleted">Акаунт видалено.</string>
     <string name="app_account_sign_out_confirm">Вийти з Judge на цьому телефоні?</string>
     <string name="app_account_signed_out">Вихід виконано.</string>

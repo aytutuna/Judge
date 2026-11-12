@@ -67,6 +67,9 @@ const fi: AppLocale = {
     "app.account.deleteBody":
       "Kirjautumistietosi, tuomiosaldosi, tilauksesi ja henkilötietosi poistetaan, ja jakolinkkisi lakkaavat toimimasta. Tuomioiden teksti säilyy tallessa ilman nimeäsi, kuten tietosuojakäytännössä kerrotaan.",
     "app.account.deleteConfirm": "Poista tili",
+    "app.account.deleteSubscription":
+      "Tilin poistaminen ei peruuta kuukausisuunnitelmaasi kaupassa. Sinulta veloitetaan edelleen, kunnes peruutat sen siellä.",
+    "app.account.manageSubscription": "Hallitse tilausta",
     "app.account.deleted": "Tilisi on poistettu.",
     "app.account.signOutConfirm": "Kirjaudutaanko ulos Judgesta tässä puhelimessa?",
     "app.account.signedOut": "Olet kirjautunut ulos.",

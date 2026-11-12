@@ -583,6 +583,8 @@
     <string name="app_account_delete_title">要删除你的账号吗？</string>
     <string name="app_account_delete_body">你的登录信息、剩余次数、套餐和个人数据都会被删除，分享链接也会失效。裁决内容会去掉你的名字后继续保存，详见《隐私政策》。</string>
     <string name="app_account_delete_confirm">删除账号</string>
+    <string name="app_account_delete_subscription">删除账号不会取消你在应用商店的月度套餐，在你去商店取消之前会继续扣费。</string>
+    <string name="app_account_manage_subscription">管理订阅</string>
     <string name="app_account_deleted">你的账号已删除。</string>
     <string name="app_account_sign_out_confirm">要在这台手机上退出 Judge 吗？</string>
     <string name="app_account_signed_out">你已退出登录。</string>

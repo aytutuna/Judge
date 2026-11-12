@@ -69,6 +69,9 @@ const fr: AppLocale = {
     "app.account.deleteBody":
       "Tes informations de connexion, tes crédits, ton offre et tes données personnelles seront effacés, et tes liens de partage cesseront de fonctionner. Le texte des verdicts sera conservé sans ton nom, comme l’explique la Politique de confidentialité.",
     "app.account.deleteConfirm": "Supprimer le compte",
+    "app.account.deleteSubscription":
+      "Supprimer ton compte n'annule pas ton forfait mensuel dans la boutique. Tu continueras à être facturé jusqu'à ce que tu l'annules là-bas.",
+    "app.account.manageSubscription": "Gérer l'abonnement",
     "app.account.deleted": "Ton compte a été supprimé.",
     "app.account.signOutConfirm": "Se déconnecter de Judge sur ce téléphone ?",
     "app.account.signedOut": "Déconnexion effectuée.",

@@ -68,6 +68,9 @@ const sk: AppLocale = {
     "app.account.deleteBody":
       "Tvoje prihlasovacie a osobné údaje, kredity aj plán sa vymažú a tvoje odkazy na zdieľanie prestanú fungovať. Text verdiktov zostane uložený bez tvojho mena, ako to opisujú Zásady ochrany súkromia.",
     "app.account.deleteConfirm": "Zrušiť účet",
+    "app.account.deleteSubscription":
+      "Zmazaním účtu sa mesačný plán v obchode nezruší. Platby ti budú ďalej strhávané, kým ho tam nezrušíš.",
+    "app.account.manageSubscription": "Spravovať predplatné",
     "app.account.deleted": "Tvoj účet je zrušený.",
     "app.account.signOutConfirm": "Odhlásiť sa z Judge v tomto telefóne?",
     "app.account.signedOut": "Odhlásenie prebehlo.",

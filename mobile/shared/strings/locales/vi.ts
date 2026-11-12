@@ -66,6 +66,9 @@ const vi: AppLocale = {
     "app.account.deleteBody":
       "Thông tin đăng nhập, lượt phán quyết, gói và dữ liệu cá nhân của bạn sẽ bị xóa, các liên kết chia sẻ của bạn cũng ngừng hoạt động. Nội dung phán quyết vẫn được lưu nhưng không kèm tên bạn, như đã nêu trong Chính sách quyền riêng tư.",
     "app.account.deleteConfirm": "Xóa tài khoản",
+    "app.account.deleteSubscription":
+      "Xóa tài khoản không hủy gói hằng tháng của bạn trên cửa hàng. Bạn vẫn bị tính phí cho đến khi hủy ở đó.",
+    "app.account.manageSubscription": "Quản lý gói đăng ký",
     "app.account.deleted": "Đã xóa tài khoản của bạn.",
     "app.account.signOutConfirm": "Đăng xuất khỏi Judge trên điện thoại này?",
     "app.account.signedOut": "Bạn đã đăng xuất.",

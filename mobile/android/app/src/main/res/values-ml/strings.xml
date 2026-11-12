@@ -599,6 +599,8 @@
     <string name="app_account_delete_title">അക്കൗണ്ട് ഡിലീറ്റ് ചെയ്യണോ?</string>
     <string name="app_account_delete_body">നിങ്ങളുടെ സൈൻ-ഇൻ വിവരങ്ങളും ക്രെഡിറ്റുകളും പ്ലാനും വ്യക്തിഗത ഡാറ്റയും ഡിലീറ്റ് ചെയ്യും, നിങ്ങളുടെ ഷെയർ ലിങ്കുകൾ പ്രവർത്തിക്കാതാകും. സ്വകാര്യതാ നയത്തിൽ പറഞ്ഞിട്ടുള്ളതുപോലെ, വിധികളുടെ ടെക്സ്റ്റ് നിങ്ങളുടെ പേരില്ലാതെ സൂക്ഷിക്കും.</string>
     <string name="app_account_delete_confirm">അക്കൗണ്ട് ഡിലീറ്റ് ചെയ്യൂ</string>
+    <string name="app_account_delete_subscription">അക്കൗണ്ട് ഇല്ലാതാക്കിയാലും സ്റ്റോറിലെ നിങ്ങളുടെ പ്രതിമാസ പ്ലാൻ റദ്ദാകില്ല. അവിടെ റദ്ദാക്കുന്നതുവരെ നിങ്ങളിൽ നിന്ന് പണം ഈടാക്കിക്കൊണ്ടിരിക്കും.</string>
+    <string name="app_account_manage_subscription">സബ്സ്ക്രിപ്ഷൻ നിയന്ത്രിക്കുക</string>
     <string name="app_account_deleted">നിങ്ങളുടെ അക്കൗണ്ട് ഡിലീറ്റ് ചെയ്തു.</string>
     <string name="app_account_sign_out_confirm">ഈ ഫോണിൽ Judge-ൽ നിന്ന് സൈൻ ഔട്ട് ചെയ്യണോ?</string>
     <string name="app_account_signed_out">നിങ്ങൾ സൈൻ ഔട്ട് ചെയ്തു.</string>

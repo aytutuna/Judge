@@ -71,6 +71,9 @@ const it: AppLocale = {
     "app.account.deleteBody":
       "I tuoi dati di accesso, i crediti, il piano e i dati personali verranno cancellati e i tuoi link di condivisione smetteranno di funzionare. Il testo dei verdetti resterà conservato senza il tuo nome, come spiegato nell'Informativa sulla privacy.",
     "app.account.deleteConfirm": "Elimina account",
+    "app.account.deleteSubscription":
+      "Eliminare il tuo account non annulla il tuo piano mensile nello store. Continuerai a ricevere addebiti finché non lo annulli lì.",
+    "app.account.manageSubscription": "Gestisci abbonamento",
     "app.account.deleted": "Il tuo account è stato eliminato.",
     "app.account.signOutConfirm": "Vuoi uscire da Judge su questo telefono?",
     "app.account.signedOut": "Disconnessione effettuata.",
