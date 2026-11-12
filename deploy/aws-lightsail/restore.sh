@@ -19,7 +19,7 @@ DATA_DIR=/var/lib/verdict
 DB=$DATA_DIR/verdict.db
 BACKUP_DIR=$DATA_DIR/backups
 ENV_FILE=/etc/verdict/verdict.env
-HEALTH_URL=http://127.0.0.1:3000/api/health
+HEALTH_URL=http://127.0.0.1:3000/api/health?ready=1
 
 die() {
   printf '\nERROR: %s\n' "$*" >&2

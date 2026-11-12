@@ -56,7 +56,7 @@ CF_SNIPPET=/etc/caddy/cloudflare-ips.caddy
 ALLOY_CONFIG=/etc/alloy/verdict.alloy
 ALLOY_DROPIN=/etc/systemd/system/alloy.service.d/verdict.conf
 ALLOY_ENV=/etc/alloy/grafana.env
-HEALTH_URL=http://127.0.0.1:3000/api/health
+HEALTH_URL=http://127.0.0.1:3000/api/health?ready=1
 HEALTH_TIMEOUT_SEC=120
 KEEP_RELEASES=3
 # V8 heap for npm ci and next build. The instance has 512 MB of RAM, so this

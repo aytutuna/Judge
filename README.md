@@ -867,7 +867,7 @@ All commands run in the browser SSH window (**Connect using SSH**).
 - **Deploy a change:** push it to `main` on GitHub (e.g. `git push` from your
   computer), then on the server run `sudo verdict-update`. It builds the new
   code next to the running site, switches over only if the build succeeds,
-  and checks `/api/health`; if the new version does not answer, it switches
+  and checks `/api/health?ready=1` (which also runs a database query); if the new version does not answer, it switches
   back to the previous one, with its service and web server settings,
   automatically. A restart first lets verdicts still being judged finish
   (up to about 5 minutes); new requests are refused until the new version
