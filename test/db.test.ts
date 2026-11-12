@@ -1,7 +1,7 @@
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { createClient } from "@libsql/client";
 import type { VerdictResult } from "../lib/types";
 
@@ -93,5 +93,20 @@ describe("db (libSQL)", () => {
 
   it("returns null for an unknown id", async () => {
     expect(await getVerdict("nope")).toBeNull();
+  });
+
+  it("logs the field paths, not the text, when a stored result no longer parses", async () => {
+    const db = await getDb();
+    await db.execute({
+      sql: "INSERT INTO verdicts (id, input, result, framework) VALUES (?, ?, ?, ?)",
+      args: ["drift00001", "private words", JSON.stringify({ ...RESULT, verdict: "private words" }), "{}"],
+    });
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    expect(await getVerdict("drift00001")).toBeNull();
+    expect(warn).toHaveBeenCalledTimes(1);
+    const line = String(warn.mock.calls[0][0]);
+    expect(line).toContain("[signal:schema_drift] verdict=drift00001 paths=verdict");
+    expect(line).not.toContain("private");
+    warn.mockRestore();
   });
 });

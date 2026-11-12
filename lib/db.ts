@@ -1,5 +1,6 @@
 import { createClient, type Client } from "@libsql/client";
 import type { Lang } from "./i18n";
+import { signal } from "./signals";
 import { VerdictResult } from "./types";
 import { parseVenue, type Venue } from "./venues";
 
@@ -105,6 +106,11 @@ export async function saveVerdict(entry: {
   });
 }
 
+/** Field paths of a zod failure, never the values. */
+function issuePaths(error: { issues: { path: PropertyKey[] }[] }): string {
+  return [...new Set(error.issues.map((i) => i.path.map(String).join(".")))].slice(0, 8).join(",");
+}
+
 export async function getVerdict(id: string): Promise<StoredVerdict | null> {
   const client = await db();
   const rs = await client.execute({
@@ -114,7 +120,10 @@ export async function getVerdict(id: string): Promise<StoredVerdict | null> {
   const row = rs.rows[0];
   if (!row) return null;
   const parsed = VerdictResult.safeParse(JSON.parse(String(row.result)));
-  if (!parsed.success) return null;
+  if (!parsed.success) {
+    signal("schema_drift", `verdict=${id} paths=${issuePaths(parsed.error)}`);
+    return null;
+  }
   return {
     id: String(row.id),
     input: String(row.input),
@@ -134,7 +143,11 @@ export async function getTranslation(id: string, lang: Lang): Promise<VerdictRes
   const row = rs.rows[0];
   if (!row) return null;
   const parsed = VerdictResult.safeParse(JSON.parse(String(row.result_json)));
-  return parsed.success ? parsed.data : null;
+  if (!parsed.success) {
+    signal("schema_drift", `translation=${id}/${lang} paths=${issuePaths(parsed.error)}`);
+    return null;
+  }
+  return parsed.data;
 }
 
 /** Stores a translation unless one already exists for the pair: the first
