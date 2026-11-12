@@ -85,6 +85,11 @@ struct PricingView: View {
                         Image(systemName: "xmark")
                             .font(.system(size: 15, weight: .semibold))
                             .foregroundStyle(Brand.ink2)
+                            .frame(width: 36, height: 36)
+                            .background {
+                                // iOS 26 gives bar items glass; before it the bar has no ground.
+                                if #available(iOS 26.0, *) { Color.clear } else { Circle().fill(.regularMaterial) }
+                            }
                     }
                     .accessibilityLabel(L10n.appCancel(lang))
                 }

@@ -4,9 +4,10 @@ import UIKit
 
 extension View {
     /// A bar button on its own round plate, the size of Apple's round
-    /// toolbar buttons: glass on iOS 26, a soft tint before it.
+    /// toolbar buttons: glass on iOS 26, a blurred tint before it, since the
+    /// bar has no background and the page scrolls under it.
     @ViewBuilder
-    fileprivate func roundPlate(tint: Color? = nil) -> some View {
+    func roundPlate(tint: Color? = nil) -> some View {
         if #available(iOS 26.0, *) {
             frame(width: 44, height: 44)
                 .glassEffect(.regular.tint(tint).interactive(), in: Circle())

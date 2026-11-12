@@ -123,6 +123,14 @@ struct VerdictDetails<Appeal: View>: View {
                     }
                     .foregroundStyle(Brand.ink)
                     .frame(minHeight: 44)
+                    .background {
+                        // iOS 26 gives bar items glass; before it the bar has no ground.
+                        if #available(iOS 26.0, *) {
+                            Color.clear
+                        } else {
+                            Capsule().fill(.regularMaterial).padding(.horizontal, -12).padding(.vertical, 4)
+                        }
+                    }
                 }
             }
         }
