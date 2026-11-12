@@ -197,7 +197,7 @@ private fun AccountGroup(
     val lang = LocalLang.current
     Group(s.accountTitle) {
         when (account) {
-            Account.State.SignedOut -> {
+            Account.State.Loading, Account.State.SignedOut -> {
                 Text(
                     s.accountSignInPrompt,
                     style = JudgeType.body.copy(color = Palette.ink2),

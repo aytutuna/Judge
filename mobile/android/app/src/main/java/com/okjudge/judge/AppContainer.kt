@@ -154,6 +154,7 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
             var launching = true
             account.state.collect { state ->
                 when (state) {
+                    Account.State.Loading -> return@collect
                     Account.State.SignedOut -> {
                         history.setAccount(null)
                         _historyUser.value = null

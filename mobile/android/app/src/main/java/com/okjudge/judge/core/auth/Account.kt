@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -80,6 +81,9 @@ class Account(
     private val platformTimeoutMs: Long = 10_000,
 ) {
     sealed interface State {
+        /** The stored token is still being read off the main thread. */
+        data object Loading : State
+
         data object SignedOut : State
 
         /** [me] is null until /api/v1/me answers; [loadFailed] when the last lookup failed. */
@@ -95,7 +99,7 @@ class Account(
     /** One-off messages for the app shell (snackbar, routing to sign-in). */
     enum class Notice { SIGNED_OUT, SESSION_EXPIRED, DELETED, DELETE_FAILED }
 
-    private val _state = MutableStateFlow<State>(if (tokens.get() != null) State.SignedIn() else State.SignedOut)
+    private val _state = MutableStateFlow<State>(State.Loading)
     val state: StateFlow<State> = _state.asStateFlow()
 
     private val _providers = MutableStateFlow<Providers>(Providers.Loading)
@@ -105,6 +109,14 @@ class Account(
     val notices: Flow<Notice> = _notices.receiveAsFlow()
 
     val isSignedIn: Boolean get() = _state.value is State.SignedIn
+
+    init {
+        // The Keystore read is slow enough to be felt on the main thread.
+        scope.launch {
+            val signedIn = withContext(io) { tokens.get() } != null
+            _state.compareAndSet(State.Loading, if (signedIn) State.SignedIn() else State.SignedOut)
+        }
+    }
 
     /** Runs when the user signed out or deleted the account (not when the session expired). */
     var onEndedByUser: suspend () -> Unit = {}
@@ -158,6 +170,7 @@ class Account(
 
     /** Re-reads the account. A token the server no longer knows ends the session. */
     suspend fun refresh() {
+        _state.first { it !is State.Loading }
         if (_state.value !is State.SignedIn) return
         val asked = tokens.get() ?: return
         val res = api.me()
@@ -205,6 +218,7 @@ class Account(
     fun needsPlatformAge(onSignIn: Boolean): Boolean {
         if (_platformAge.value != null || askingPlatform) return false
         return when (val state = _state.value) {
+            State.Loading -> false
             State.SignedOut -> onSignIn
             is State.SignedIn -> state.me?.age?.let { !it.confirmed && !it.blocked } == true
         }

@@ -78,6 +78,7 @@ class AccountTest {
         lateinit var account: Account
         val api = JudgeApi(base, OkHttpClient(), "Judge-Android/test (1)", tokens, onSignedOut = { account.onSessionExpired() }, timeouts = timeouts)
         account = Account(api, tokens, google, scope, io = Dispatchers.IO)
+        runBlocking { account.state.first { it !is Account.State.Loading } }
         return account
     }
 

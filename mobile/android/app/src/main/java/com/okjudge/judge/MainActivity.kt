@@ -11,12 +11,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
+import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.ui.JudgeRoot
 import com.okjudge.judge.ui.theme.DarkPalette
 import com.okjudge.judge.ui.theme.LightPalette
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class MainActivity : ComponentActivity() {
     /** An okjudge.com link the app was opened with, until the app shell has handled it. */
@@ -32,14 +34,19 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val container = (application as JudgeApp).container
 
-        // Hold the splash until the language and appearance settings are
-        // read, so the first frame is already in the right language and theme.
+        // Hold the splash until the language and appearance settings and the
+        // stored session are read, so the first frame is already in the right
+        // language and theme. Unreadable settings fall back to the defaults.
         var ready = false
         splash.setKeepOnScreenCondition { !ready }
         lifecycleScope.launch {
-            container.settings.langPref.first()
-            container.settings.appearance.first()
-            container.settings.gamify.first()
+            try {
+                container.settings.langPref.first()
+                container.settings.appearance.first()
+                container.settings.gamify.first()
+            } catch (_: IOException) {
+            }
+            container.account.state.first { it !is Account.State.Loading }
             ready = true
         }
 

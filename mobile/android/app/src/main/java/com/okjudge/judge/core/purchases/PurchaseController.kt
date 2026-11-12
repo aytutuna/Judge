@@ -85,6 +85,7 @@ class PurchaseController(
     }
 
     private fun who(state: Account.State): Who = when (state) {
+        Account.State.Loading -> Who.Unknown
         Account.State.SignedOut -> Who.SignedOut
         is Account.State.SignedIn -> state.me?.user?.id?.let { Who.User(it) } ?: Who.Unknown
     }
