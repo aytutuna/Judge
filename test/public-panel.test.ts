@@ -9,7 +9,6 @@ process.env.BETTER_AUTH_SECRET = "test-secret-".padEnd(48, "x");
 
 const { saveVerdict, getVerdict } = await import("../lib/db");
 const route = await import("../app/api/v1/verdicts/[id]/route");
-const { panelSummary } = await import("../lib/verdict-display");
 import type { VerdictResult } from "../lib/types";
 
 afterAll(() => {
@@ -71,9 +70,5 @@ describe("panel models in public output", () => {
     const parsed = await getVerdict("panel00001");
     await saveTranslation("panel00001", "de", { ...parsed!.result, lang: "de" });
     expect((await getTranslation("panel00001", "de"))?.panel?.models).toEqual(["strong", "strong", "quick"]);
-  });
-
-  it("the summary counts quick seats", () => {
-    expect(panelSummary(["strong", "strong", "quick"], "en")).toBe("Judges: 2 strong + 1 quick");
   });
 });

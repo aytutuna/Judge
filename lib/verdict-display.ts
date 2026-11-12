@@ -115,16 +115,3 @@ export function leanShare(r: VerdictResult): number | null {
 export function leanTally(lean: Lean, runCount: number): { for: number; against: number } {
   return lean.tally ?? { for: runCount - 1, against: 1 };
 }
-
-/** Who sat on a premium panel, e.g. "Judges: 2 strong + 1 quick". `models`
- * is VerdictResult.panel.models (one entry per counted run, escalation
- * included). Users see seat tiers, never model names: the lite model is
- * "quick", every other model is "strong". */
-export function panelSummary(models: readonly string[], lang: Lang): string {
-  const quick = models.filter((m) => /haiku|^quick$/i.test(m)).length;
-  const strong = models.length - quick;
-  const parts: string[] = [];
-  if (strong) parts.push(t(lang, "panel.strong", { n: strong }));
-  if (quick) parts.push(t(lang, "panel.quick", { n: quick }));
-  return t(lang, "panel.models", { list: parts.join(" + ") });
-}

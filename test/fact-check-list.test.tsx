@@ -5,7 +5,6 @@ import { JudgingOverlay } from "../components/JudgingOverlay";
 import { VerdictView } from "../components/VerdictView";
 import { t } from "../lib/i18n";
 import type { FactCheck, VerdictResult } from "../lib/types";
-import { panelSummary } from "../lib/verdict-display";
 
 const html = (el: React.ReactElement) => renderToStaticMarkup(el);
 const count = (s: string, needle: string) => s.split(needle).length - 1;
@@ -112,7 +111,8 @@ describe("VerdictView premium", () => {
   it("adds the panel line and the fact-check, after the facts", () => {
     const out = html(<VerdictView result={premium} lang="en" />);
     expect(out).not.toContain(">Premium<");
-    expect(out).toContain("Judged with a web fact-check. Judges: 2 strong + 1 quick");
+    expect(out).toContain("Judged with a web fact-check.");
+    expect(out).not.toContain("Judges:");
     expect(out.indexOf("The Wall is a few metres wide.")).toBeLessThan(out.indexOf(t("en", "factcheck.title")));
   });
 
@@ -121,19 +121,6 @@ describe("VerdictView premium", () => {
     expect(out).not.toContain(">Premium<");
     expect(out).not.toContain(t("en", "factcheck.title"));
     expect(out).not.toContain("Judges:");
-  });
-});
-
-describe("panelSummary", () => {
-  it("counts seat tiers in a fixed order, escalation included, without model names", () => {
-    expect(panelSummary(["claude-haiku-5-5", "claude-sonnet-5-5", "claude-sonnet-5-5"], "en")).toBe(
-      "Judges: 2 strong + 1 quick",
-    );
-    expect(
-      panelSummary(["claude-sonnet-5-5", "claude-sonnet-5-5", "claude-haiku-5-5", "claude-haiku-5-5", "claude-haiku-5-5"], "tr"),
-    ).toBe("Yargıçlar: 2 güçlü + 3 hızlı");
-    expect(panelSummary(["mystery-model"], "en")).toBe("Judges: 1 strong");
-    expect(panelSummary(["claude-haiku-5-5"], "en")).toBe("Judges: 1 quick");
   });
 });
 
