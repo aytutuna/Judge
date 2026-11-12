@@ -712,7 +712,8 @@ export async function grantSubscription(g: {
               period_start = excluded.period_start,
               period_end = excluded.period_end,
               updated_at = excluded.updated_at
-            WHERE subscriptions.status NOT IN ('refunded', 'revoked')
+            WHERE subscriptions.status <> 'refunded'
+              AND (subscriptions.status <> 'revoked' OR subscriptions.source = 'admin')
               AND (subscriptions.status <> 'active' OR excluded.period_end >= subscriptions.period_end)`,
       args: [
         subId,
