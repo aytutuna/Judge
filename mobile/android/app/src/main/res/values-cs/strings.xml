@@ -86,7 +86,7 @@
     <string name="demo_note">Ukázkový režim: chybí klíč k AI, takže tohle je jen vzorový verdikt</string>
     <string name="trial_survived">Námitka zamítnuta: advokát druhé strany vznesl svou nejsilnější námitku a verdikt obstál. Jistota zůstává.</string>
     <string name="trial_uncertain">Advokát druhé strany vznesl námitku a ta nechala o tomto verdiktu skutečné pochybnosti</string>
-    <string name="trial_overturned">Námitka přijata: nejsilnější námitka druhé strany převážila nad tímto verdiktem</string>
+    <string name="trial_overturned">Námitka přijata: verdikt platí, ale nejsilnější námitka druhé strany ho vážně oslabila</string>
     <string name="trial_what_was_tested">Námitka</string>
     <string name="trial_attack_prefix">Námitka:</string>
     <string name="trial_referee_prefix">Proč:</string>

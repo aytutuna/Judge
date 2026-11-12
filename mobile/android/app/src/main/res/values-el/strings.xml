@@ -84,7 +84,7 @@
     <string name="demo_note">Λειτουργία demo: δεν υπάρχει κλειδί AI, οπότε αυτή είναι ενδεικτική απόφαση</string>
     <string name="trial_survived">Η ένσταση απορρίφθηκε: ο δικηγόρος της άλλης πλευράς έκανε την πιο ισχυρή του ένσταση, κι η απόφαση άντεξε. Η βεβαιότητα μένει ίδια.</string>
     <string name="trial_uncertain">Ο δικηγόρος της άλλης πλευράς έκανε ένσταση και η ένσταση άφησε σοβαρές αμφιβολίες για αυτή την απόφαση</string>
-    <string name="trial_overturned">Η ένσταση έγινε δεκτή: η πιο ισχυρή ένσταση της άλλης πλευράς ζύγισε περισσότερο από αυτή την απόφαση</string>
+    <string name="trial_overturned">Η ένσταση έγινε δεκτή: η απόφαση ισχύει, αλλά η πιο ισχυρή ένσταση της άλλης πλευράς την αποδυναμώνει σοβαρά</string>
     <string name="trial_what_was_tested">Η ένσταση</string>
     <string name="trial_attack_prefix">Ένσταση:</string>
     <string name="trial_referee_prefix">Γιατί:</string>

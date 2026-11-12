@@ -84,7 +84,7 @@
     <string name="demo_note">Demomodus: ingen KI-nøkkel er satt opp, så dette er en eksempeldom</string>
     <string name="trial_survived">Innsigelsen er avvist: den andre sidens advokat kom med sin sterkeste innsigelse, og dommen holdt. Sikkerheten er uendret.</string>
     <string name="trial_uncertain">Den andre sidens advokat gjorde innsigelse, og innsigelsen skapte reell tvil om dommen</string>
-    <string name="trial_overturned">Innsigelsen er tatt til følge: den andre sidens sterkeste innsigelse veide tyngre enn dommen</string>
+    <string name="trial_overturned">Innsigelsen er tatt til følge: dommen står, men den andre sidens sterkeste innsigelse svekker den alvorlig</string>
     <string name="trial_what_was_tested">Innsigelsen</string>
     <string name="trial_attack_prefix">Innsigelse:</string>
     <string name="trial_referee_prefix">Hvorfor:</string>

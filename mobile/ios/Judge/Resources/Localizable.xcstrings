@@ -169724,271 +169724,271 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "قُبل الاعتراض: أقوى اعتراض للطرف الآخر رجح على هذا الحكم"
+            "value" : "قُبل الاعتراض: الحكم قائم، لكن أقوى اعتراض للطرف الآخر أضعفه ضعفًا كبيرًا"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "আপত্তি গৃহীত: অন্য পক্ষের সবচেয়ে কড়া আপত্তি এই রায়ের চেয়ে ভারী হয়েছে"
+            "value" : "আপত্তি গৃহীত: রায় বহাল, তবে অন্য পক্ষের সবচেয়ে কড়া আপত্তি তাকে গুরুতরভাবে দুর্বল করেছে"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Objecció acceptada: l'objecció més forta de l'altra part ha pesat més que aquest veredicte"
+            "value" : "Objecció acceptada: el veredicte es manté, però l'objecció més forta de l'altra part el debilita seriosament"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Námitka přijata: nejsilnější námitka druhé strany převážila nad tímto verdiktem"
+            "value" : "Námitka přijata: verdikt platí, ale nejsilnější námitka druhé strany ho vážně oslabila"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Indsigelsen taget til følge: den anden sides stærkeste indsigelse vejede tungere end dommen"
+            "value" : "Indsigelsen taget til følge: dommen står ved magt, men den anden sides stærkeste indsigelse svækker den alvorligt"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Einspruch stattgegeben: Der stärkste Einspruch der Gegenseite wog schwerer als dieses Urteil"
+            "value" : "Einspruch stattgegeben: Das Urteil bleibt bestehen, wird aber durch den stärksten Einspruch der Gegenseite ernsthaft geschwächt"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Η ένσταση έγινε δεκτή: η πιο ισχυρή ένσταση της άλλης πλευράς ζύγισε περισσότερο από αυτή την απόφαση"
+            "value" : "Η ένσταση έγινε δεκτή: η απόφαση ισχύει, αλλά η πιο ισχυρή ένσταση της άλλης πλευράς την αποδυναμώνει σοβαρά"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Objection sustained: the other side's strongest objection outweighed this ruling"
+            "value" : "Objection sustained: the ruling stands, but the other side's strongest objection seriously weakens it"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Objeción aceptada: la objeción más fuerte de la otra parte pesó más que esta decisión"
+            "value" : "Objeción aceptada: la decisión se mantiene, pero la objeción más fuerte de la otra parte la debilita seriamente"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vastaväite hyväksyttiin: vastapuolen vahvin vastaväite painoi enemmän kuin tämä tuomio"
+            "value" : "Vastaväite hyväksyttiin: tuomio pysyy voimassa, mutta vastapuolen vahvin vastaväite heikentää sitä vakavasti"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Objection retenue : la plus forte objection de l’autre camp a pesé plus lourd que ce verdict"
+            "value" : "Objection retenue : le verdict tient, mais la plus forte objection de l’autre camp l’affaiblit sérieusement"
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "વાંધો મંજૂર: સામેની બાજુનો સૌથી મજબૂત વાંધો આ ચુકાદા પર ભારે પડ્યો"
+            "value" : "વાંધો મંજૂર: ચુકાદો કાયમ છે, પણ સામેની બાજુના સૌથી મજબૂત વાંધાએ તેને ગંભીર રીતે નબળો પાડ્યો"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ההתנגדות התקבלה: ההתנגדות החזקה ביותר של הצד השני גברה על פסק הדין"
+            "value" : "ההתנגדות התקבלה: פסק הדין עומד, אבל ההתנגדות החזקה ביותר של הצד השני החלישה אותו קשות"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "आपत्ति स्वीकार: दूसरे पक्ष की सबसे मज़बूत आपत्ति इस फ़ैसले पर भारी पड़ी"
+            "value" : "आपत्ति स्वीकार: फ़ैसला कायम है, पर दूसरे पक्ष की सबसे मज़बूत आपत्ति ने उसे गंभीर रूप से कमज़ोर कर दिया"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prigovor prihvaćen: najjači prigovor druge strane odvagnuo je više od ove presude"
+            "value" : "Prigovor prihvaćen: presuda ostaje na snazi, ali ju je najjači prigovor druge strane ozbiljno oslabio"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A tiltakozásnak helyt adtak: a másik oldal legerősebb tiltakozása nagyobb súlyú volt ennél az ítéletnél"
+            "value" : "A tiltakozásnak helyt adtak: az ítélet érvényben marad, de a másik oldal legerősebb tiltakozása komolyan gyengítette"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Keberatan diterima: keberatan terkuat pihak lain lebih berat daripada putusan ini"
+            "value" : "Keberatan diterima: putusan tetap berlaku, tetapi keberatan terkuat pihak lain melemahkannya secara serius"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Obiezione accolta: l'obiezione più forte dell'altra parte ha pesato più di questo verdetto"
+            "value" : "Obiezione accolta: il verdetto resta valido, ma l'obiezione più forte dell'altra parte lo indebolisce seriamente"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "異議を認めます：相手側のいちばん強い異議が、この判定を上回りました"
+            "value" : "異議が認められました：判定は有効ですが、相手側のいちばん強い異議により大きく弱まりました"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಆಕ್ಷೇಪಣೆ ಅಂಗೀಕೃತ: ಎದುರು ಕಡೆಯ ಅತ್ಯಂತ ಗಟ್ಟಿಯಾದ ಆಕ್ಷೇಪಣೆ ಈ ತೀರ್ಪಿಗಿಂತ ಭಾರವಾಯಿತು"
+            "value" : "ಆಕ್ಷೇಪಣೆ ಅಂಗೀಕೃತ: ತೀರ್ಪು ಉಳಿದಿದೆ, ಆದರೆ ಎದುರು ಕಡೆಯ ಅತ್ಯಂತ ಗಟ್ಟಿಯಾದ ಆಕ್ಷೇಪಣೆ ಅದನ್ನು ಗಂಭೀರವಾಗಿ ದುರ್ಬಲಗೊಳಿಸಿದೆ"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이의 인용: 상대편의 가장 강한 이의가 이 판결보다 더 무거웠어요"
+            "value" : "이의 인용: 판결은 유지되지만, 상대편의 가장 강한 이의가 판결을 크게 약화시켰어요"
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ആക്ഷേപം അംഗീകരിച്ചു: മറുഭാഗത്തിന്റെ ഏറ്റവും ശക്തമായ ആക്ഷേപം ഈ വിധിയെക്കാൾ ഭാരമുള്ളതായി"
+            "value" : "ആക്ഷേപം അംഗീകരിച്ചു: വിധി നിലനിൽക്കുന്നു, പക്ഷേ മറുഭാഗത്തിന്റെ ഏറ്റവും ശക്തമായ ആക്ഷേപം അതിനെ ഗുരുതരമായി ദുർബലപ്പെടുത്തി"
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "आक्षेप मान्य: समोरच्या बाजूचा सर्वात कडक आक्षेप या निकालापेक्षा जड ठरला"
+            "value" : "आक्षेप मान्य: निकाल कायम आहे, पण समोरच्या बाजूच्या सर्वात कडक आक्षेपाने तो गंभीरपणे कमकुवत केला"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bantahan diterima: bantahan paling kuat pihak satu lagi lebih berat daripada keputusan ini"
+            "value" : "Bantahan diterima: keputusan kekal, tetapi bantahan paling kuat pihak satu lagi melemahkannya dengan serius"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Innsigelsen er tatt til følge: den andre sidens sterkeste innsigelse veide tyngre enn dommen"
+            "value" : "Innsigelsen er tatt til følge: dommen står, men den andre sidens sterkeste innsigelse svekker den alvorlig"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bezwaar toegewezen: het sterkste bezwaar van de andere kant woog zwaarder dan deze uitspraak"
+            "value" : "Bezwaar toegewezen: de uitspraak blijft staan, maar het sterkste bezwaar van de andere kant verzwakt haar ernstig"
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଆପତ୍ତି ଗ୍ରହଣ: ଅନ୍ୟ ପକ୍ଷର ସବୁଠୁ କଡ଼ା ଆପତ୍ତି ଏହି ରାୟଠାରୁ ଭାରୀ ପଡ଼ିଲା"
+            "value" : "ଆପତ୍ତି ଗ୍ରହଣ: ରାୟ ବଳବତ୍ତର ଅଛି, କିନ୍ତୁ ଅନ୍ୟ ପକ୍ଷର ସବୁଠୁ କଡ଼ା ଆପତ୍ତି ତାକୁ ଗୁରୁତର ଭାବେ ଦୁର୍ବଳ କରିଦେଲା"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਇਤਰਾਜ਼ ਮਨਜ਼ੂਰ: ਦੂਜੇ ਪੱਖ ਦਾ ਸਭ ਤੋਂ ਸਖ਼ਤ ਇਤਰਾਜ਼ ਇਸ ਫ਼ੈਸਲੇ ਨਾਲੋਂ ਭਾਰੀ ਪਿਆ"
+            "value" : "ਇਤਰਾਜ਼ ਮਨਜ਼ੂਰ: ਫ਼ੈਸਲਾ ਕਾਇਮ ਹੈ, ਪਰ ਦੂਜੇ ਪੱਖ ਦੇ ਸਭ ਤੋਂ ਸਖ਼ਤ ਇਤਰਾਜ਼ ਨੇ ਇਸ ਨੂੰ ਗੰਭੀਰ ਤੌਰ ’ਤੇ ਕਮਜ਼ੋਰ ਕਰ ਦਿੱਤਾ"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sprzeciw uwzględniony: najmocniejszy sprzeciw drugiej strony przeważył nad tym werdyktem"
+            "value" : "Sprzeciw uwzględniony: werdykt pozostaje w mocy, ale najmocniejszy sprzeciw drugiej strony poważnie go osłabił"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Objeção deferida: a objeção mais forte do outro lado pesou mais que este veredito"
+            "value" : "Objeção deferida: o veredito se mantém, mas a objeção mais forte do outro lado o enfraquece seriamente"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Objeção deferida: a objeção mais forte do outro lado pesou mais do que esta decisão"
+            "value" : "Objeção deferida: a decisão mantém-se, mas a objeção mais forte do outro lado enfraquece-a seriamente"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Obiecție admisă: cea mai puternică obiecție a celeilalte părți a cântărit mai mult decât acest verdict"
+            "value" : "Obiecție admisă: verdictul rămâne în picioare, dar cea mai puternică obiecție a celeilalte părți îl slăbește serios"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Возражение принято: самое сильное возражение другой стороны перевесило этот вердикт"
+            "value" : "Возражение принято: вердикт остаётся в силе, но самое сильное возражение другой стороны серьёзно его ослабило"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Námietka prijatá: najsilnejšia námietka druhej strany prevážila nad týmto rozhodnutím"
+            "value" : "Námietka prijatá: rozhodnutie platí, ale najsilnejšia námietka druhej strany ho vážne oslabila"
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ugovor sprejet: najmočnejši ugovor druge plati je pretehtal to razsodbo"
+            "value" : "Ugovor sprejet: razsodba ostaja v veljavi, vendar jo je najmočnejši ugovor druge plati resno oslabil"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invändningen bifölls: andra sidans starkaste invändning vägde tyngre än domen"
+            "value" : "Invändningen bifölls: domen står kvar, men andra sidans starkaste invändning försvagar den allvarligt"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ஆட்சேபனை ஏற்பு: மறுதரப்பின் மிகக் கடுமையான ஆட்சேபனை இந்தத் தீர்ப்பை விட வலுவாக இருந்தது"
+            "value" : "ஆட்சேபனை ஏற்பு: தீர்ப்பு நிலைத்திருக்கிறது, ஆனால் மறுதரப்பின் மிகக் கடுமையான ஆட்சேபனை அதைக் கடுமையாக பலவீனப்படுத்தியது"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "అభ్యంతరం ఆమోదం: అవతలి వైపు అత్యంత గట్టి అభ్యంతరం ఈ తీర్పు కన్నా బరువైంది"
+            "value" : "అభ్యంతరం ఆమోదం: తీర్పు నిలుస్తుంది, కానీ అవతలి వైపు అత్యంత గట్టి అభ్యంతరం దాన్ని తీవ్రంగా బలహీనపరిచింది"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "รับข้อคัดค้าน: ข้อคัดค้านที่หนักที่สุดของอีกฝ่ายหนักกว่าคำตัดสินนี้"
+            "value" : "รับข้อคัดค้าน: คำตัดสินยังมีผล แต่ข้อคัดค้านที่หนักที่สุดของอีกฝ่ายทำให้คำตัดสินอ่อนลงอย่างมาก"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "İtiraz kabul edildi: karşı tarafın en güçlü itirazı bu karardan ağır bastı"
+            "value" : "İtiraz kabul edildi: karar geçerli, ama karşı tarafın en güçlü itirazı onu ciddi biçimde zayıflattı"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Заперечення прийнято: найсильніше заперечення іншої сторони переважило цей вердикт"
+            "value" : "Заперечення прийнято: вердикт залишається чинним, але найсильніше заперечення іншої сторони серйозно його послабило"
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "اعتراض منظور: دوسری طرف کا سب سے سخت اعتراض اس فیصلے پر بھاری پڑا"
+            "value" : "اعتراض منظور: فیصلہ برقرار ہے، مگر دوسری طرف کے سب سے سخت اعتراض نے اسے سنگین حد تک کمزور کر دیا"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Chấp nhận phản đối: phản đối mạnh nhất của phía bên kia nặng ký hơn phán quyết này"
+            "value" : "Chấp nhận phản đối: phán quyết vẫn giữ nguyên, nhưng phản đối mạnh nhất của phía bên kia đã làm nó yếu đi nghiêm trọng"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "异议成立：对方最有力的异议比这份裁决更有分量"
+            "value" : "异议成立：裁决依然有效，但对方最有力的异议已将其严重削弱"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "異議成立：對方最有力的異議比這個判決更有分量"
+            "value" : "異議成立：判決依然有效，但對方最有力的異議已將其嚴重削弱"
           }
         }
       }
@@ -170384,7 +170384,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "異議を却下：相手側の弁護人がいちばん強い異議を唱えましたが、判定は持ちこたえました。信頼度はそのままです。"
+            "value" : "異議が却下されました：相手側の弁護人がいちばん強い異議を唱えましたが、判定は持ちこたえました。信頼度はそのままです。"
           }
         },
         "kn" : {

@@ -83,7 +83,7 @@
     <string name="demo_note">演示模式：还没配置 AI 密钥，这是一份示例裁决</string>
     <string name="trial_survived">异议被驳回：对方律师提出了最有力的异议，裁决依然成立。可信度不变。</string>
     <string name="trial_uncertain">对方律师提出异议，这一异议让这份裁决留下了实质的疑问</string>
-    <string name="trial_overturned">异议成立：对方最有力的异议比这份裁决更有分量</string>
+    <string name="trial_overturned">异议成立：裁决依然有效，但对方最有力的异议已将其严重削弱</string>
     <string name="trial_what_was_tested">异议</string>
     <string name="trial_attack_prefix">异议：</string>
     <string name="trial_referee_prefix">原因：</string>

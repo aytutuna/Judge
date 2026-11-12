@@ -84,7 +84,7 @@
     <string name="demo_note">Demomodus: er is geen AI-sleutel ingesteld, dus dit is een voorbeelduitspraak</string>
     <string name="trial_survived">Bezwaar afgewezen: de advocaat van de andere kant bracht zijn sterkste bezwaar in, en de uitspraak hield stand. De zekerheid blijft gelijk.</string>
     <string name="trial_uncertain">De advocaat van de andere kant maakte bezwaar, en dat bezwaar liet echte twijfel over deze uitspraak achter</string>
-    <string name="trial_overturned">Bezwaar toegewezen: het sterkste bezwaar van de andere kant woog zwaarder dan deze uitspraak</string>
+    <string name="trial_overturned">Bezwaar toegewezen: de uitspraak blijft staan, maar het sterkste bezwaar van de andere kant verzwakt haar ernstig</string>
     <string name="trial_what_was_tested">Het bezwaar</string>
     <string name="trial_attack_prefix">Bezwaar:</string>
     <string name="trial_referee_prefix">Waarom:</string>

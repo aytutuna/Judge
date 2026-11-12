@@ -85,7 +85,7 @@
     <string name="demo_note">Modo demo: não há chave de IA configurada, por isso este é um veredicto de exemplo</string>
     <string name="trial_survived">Objeção indeferida: o advogado do outro lado levantou a sua objeção mais forte, e a decisão aguentou. A confiança mantém-se.</string>
     <string name="trial_uncertain">O advogado do outro lado levantou uma objeção, e ela deixou dúvidas sérias sobre esta decisão</string>
-    <string name="trial_overturned">Objeção deferida: a objeção mais forte do outro lado pesou mais do que esta decisão</string>
+    <string name="trial_overturned">Objeção deferida: a decisão mantém-se, mas a objeção mais forte do outro lado enfraquece-a seriamente</string>
     <string name="trial_what_was_tested">A objeção</string>
     <string name="trial_attack_prefix">Objeção:</string>
     <string name="trial_referee_prefix">Porquê:</string>

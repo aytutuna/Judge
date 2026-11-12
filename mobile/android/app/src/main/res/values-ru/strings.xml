@@ -86,7 +86,7 @@
     <string name="demo_note">Демо-режим: ключ ИИ не настроен, это пример вердикта</string>
     <string name="trial_survived">Возражение отклонено: адвокат другой стороны выдвинул своё самое сильное возражение, но вердикт устоял. Уверенность не изменилась.</string>
     <string name="trial_uncertain">Адвокат другой стороны выдвинул возражение, и оно оставило серьёзные сомнения в этом вердикте</string>
-    <string name="trial_overturned">Возражение принято: самое сильное возражение другой стороны перевесило этот вердикт</string>
+    <string name="trial_overturned">Возражение принято: вердикт остаётся в силе, но самое сильное возражение другой стороны серьёзно его ослабило</string>
     <string name="trial_what_was_tested">Возражение</string>
     <string name="trial_attack_prefix">Возражение:</string>
     <string name="trial_referee_prefix">Почему:</string>

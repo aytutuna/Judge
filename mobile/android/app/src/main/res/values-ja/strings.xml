@@ -81,9 +81,9 @@
     <string name="vote_dissolved">言葉のズレ</string>
     <string name="refused_note">今回はAIが判定を見送りました。それらしい判定をでっち上げるより、何も出さないほうがいいと考えています。</string>
     <string name="demo_note">デモモード：AIキーが未設定のため、これはサンプルの判定です</string>
-    <string name="trial_survived">異議を却下：相手側の弁護人がいちばん強い異議を唱えましたが、判定は持ちこたえました。信頼度はそのままです。</string>
+    <string name="trial_survived">異議が却下されました：相手側の弁護人がいちばん強い異議を唱えましたが、判定は持ちこたえました。信頼度はそのままです。</string>
     <string name="trial_uncertain">相手側の弁護人が異議を唱え、この判定に無視できない疑問が残りました</string>
-    <string name="trial_overturned">異議を認めます：相手側のいちばん強い異議が、この判定を上回りました</string>
+    <string name="trial_overturned">異議が認められました：判定は有効ですが、相手側のいちばん強い異議により大きく弱まりました</string>
     <string name="trial_what_was_tested">異議</string>
     <string name="trial_attack_prefix">異議：</string>
     <string name="trial_referee_prefix">理由：</string>

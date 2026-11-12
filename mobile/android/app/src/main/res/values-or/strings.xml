@@ -84,7 +84,7 @@
     <string name="demo_note">ଡେମୋ ମୋଡ୍: AI ସଂଯୋଗ ସେଟ୍ ହୋଇନାହିଁ, ତେଣୁ ଏହା ଏକ ନମୁନା ରାୟ</string>
     <string name="trial_survived">ଆପତ୍ତି ଖାରଜ: ଅନ୍ୟ ପକ୍ଷର ଓକିଲ ନିଜର ସବୁଠୁ କଡ଼ା ଆପତ୍ତି ଉଠାଇଲେ, ଆଉ ରାୟ ଟିକି ରହିଲା। ଭରସା ସ୍କୋର୍ ବଦଳିଲା ନାହିଁ।</string>
     <string name="trial_uncertain">ଅନ୍ୟ ପକ୍ଷର ଓକିଲ ଆପତ୍ତି ଉଠାଇଲେ, ଆଉ ସେହି ଆପତ୍ତି ଏହି ରାୟ ଉପରେ ପ୍ରକୃତ ସନ୍ଦେହ ଛାଡ଼ିଗଲା</string>
-    <string name="trial_overturned">ଆପତ୍ତି ଗ୍ରହଣ: ଅନ୍ୟ ପକ୍ଷର ସବୁଠୁ କଡ଼ା ଆପତ୍ତି ଏହି ରାୟଠାରୁ ଭାରୀ ପଡ଼ିଲା</string>
+    <string name="trial_overturned">ଆପତ୍ତି ଗ୍ରହଣ: ରାୟ ବଳବତ୍ତର ଅଛି, କିନ୍ତୁ ଅନ୍ୟ ପକ୍ଷର ସବୁଠୁ କଡ଼ା ଆପତ୍ତି ତାକୁ ଗୁରୁତର ଭାବେ ଦୁର୍ବଳ କରିଦେଲା</string>
     <string name="trial_what_was_tested">ଆପତ୍ତି</string>
     <string name="trial_attack_prefix">ଆପତ୍ତି:</string>
     <string name="trial_referee_prefix">କାରଣ:</string>

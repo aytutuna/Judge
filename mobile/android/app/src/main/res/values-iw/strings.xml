@@ -85,7 +85,7 @@
     <string name="demo_note">מצב הדגמה: לא הוגדר מפתח AI, אז זה פסק דין לדוגמה</string>
     <string name="trial_survived">ההתנגדות נדחתה: עורך הדין של הצד השני העלה את ההתנגדות החזקה ביותר שלו, ופסק הדין החזיק. רמת הביטחון לא השתנתה.</string>
     <string name="trial_uncertain">עורך הדין של הצד השני התנגד, וההתנגדות השאירה ספק אמיתי לגבי פסק הדין</string>
-    <string name="trial_overturned">ההתנגדות התקבלה: ההתנגדות החזקה ביותר של הצד השני גברה על פסק הדין</string>
+    <string name="trial_overturned">ההתנגדות התקבלה: פסק הדין עומד, אבל ההתנגדות החזקה ביותר של הצד השני החלישה אותו קשות</string>
     <string name="trial_what_was_tested">ההתנגדות</string>
     <string name="trial_attack_prefix">התנגדות:</string>
     <string name="trial_referee_prefix">למה:</string>

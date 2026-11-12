@@ -84,7 +84,7 @@
     <string name="demo_note">डेमो मोड: AI साठी API की सेट केलेली नाही, म्हणून हा नमुना निकाल आहे</string>
     <string name="trial_survived">आक्षेप फेटाळला: समोरच्या बाजूच्या वकिलाने आपला सर्वात कडक आक्षेप घेतला, आणि निकाल टिकला. खात्री गुण तसेच राहिले.</string>
     <string name="trial_uncertain">समोरच्या बाजूच्या वकिलाने आक्षेप घेतला, आणि त्या आक्षेपाने या निकालाबद्दल खरी शंका ठेवली</string>
-    <string name="trial_overturned">आक्षेप मान्य: समोरच्या बाजूचा सर्वात कडक आक्षेप या निकालापेक्षा जड ठरला</string>
+    <string name="trial_overturned">आक्षेप मान्य: निकाल कायम आहे, पण समोरच्या बाजूच्या सर्वात कडक आक्षेपाने तो गंभीरपणे कमकुवत केला</string>
     <string name="trial_what_was_tested">आक्षेप</string>
     <string name="trial_attack_prefix">आक्षेप:</string>
     <string name="trial_referee_prefix">कारण:</string>

@@ -84,7 +84,7 @@
     <string name="demo_note">डेमो मोड: कोई AI कुंजी सेट नहीं है, इसलिए यह एक नमूना फ़ैसला है</string>
     <string name="trial_survived">आपत्ति खारिज: दूसरे पक्ष के वकील ने अपनी सबसे मज़बूत आपत्ति रखी, और फ़ैसला टिका रहा। भरोसा स्कोर जस का तस है।</string>
     <string name="trial_uncertain">दूसरे पक्ष के वकील ने आपत्ति जताई, और उस आपत्ति ने इस फ़ैसले पर सच्चा शक छोड़ा</string>
-    <string name="trial_overturned">आपत्ति स्वीकार: दूसरे पक्ष की सबसे मज़बूत आपत्ति इस फ़ैसले पर भारी पड़ी</string>
+    <string name="trial_overturned">आपत्ति स्वीकार: फ़ैसला कायम है, पर दूसरे पक्ष की सबसे मज़बूत आपत्ति ने उसे गंभीर रूप से कमज़ोर कर दिया</string>
     <string name="trial_what_was_tested">आपत्ति</string>
     <string name="trial_attack_prefix">आपत्ति:</string>
     <string name="trial_referee_prefix">वजह:</string>

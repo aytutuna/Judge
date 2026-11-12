@@ -84,7 +84,7 @@
     <string name="demo_note">டெமோ பயன்முறை: AI கீ அமைக்கப்படவில்லை, இது ஒரு மாதிரித் தீர்ப்பு</string>
     <string name="trial_survived">ஆட்சேபனை தள்ளுபடி: மறுதரப்பின் வழக்கறிஞர் தன் மிகக் கடுமையான ஆட்சேபனையை எழுப்பினார், தீர்ப்பு தாக்குப்பிடித்தது. நம்பகம் மாறவில்லை.</string>
     <string name="trial_uncertain">மறுதரப்பின் வழக்கறிஞர் ஆட்சேபனை எழுப்பினார், அந்த ஆட்சேபனை இந்தத் தீர்ப்பின் மேல் உண்மையான சந்தேகத்தை விட்டுச் சென்றது</string>
-    <string name="trial_overturned">ஆட்சேபனை ஏற்பு: மறுதரப்பின் மிகக் கடுமையான ஆட்சேபனை இந்தத் தீர்ப்பை விட வலுவாக இருந்தது</string>
+    <string name="trial_overturned">ஆட்சேபனை ஏற்பு: தீர்ப்பு நிலைத்திருக்கிறது, ஆனால் மறுதரப்பின் மிகக் கடுமையான ஆட்சேபனை அதைக் கடுமையாக பலவீனப்படுத்தியது</string>
     <string name="trial_what_was_tested">ஆட்சேபனை</string>
     <string name="trial_attack_prefix">ஆட்சேபனை:</string>
     <string name="trial_referee_prefix">ஏன்:</string>

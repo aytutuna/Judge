@@ -85,7 +85,7 @@
     <string name="demo_note">Modalità demo: nessuna chiave IA configurata, quindi questo è un verdetto di esempio</string>
     <string name="trial_survived">Obiezione respinta: l\'avvocato dell\'altra parte ha sollevato la sua obiezione più forte, e il verdetto ha retto. La certezza non cambia.</string>
     <string name="trial_uncertain">L\'avvocato dell\'altra parte ha sollevato un\'obiezione, e l\'obiezione ha lasciato dubbi seri su questo verdetto</string>
-    <string name="trial_overturned">Obiezione accolta: l\'obiezione più forte dell\'altra parte ha pesato più di questo verdetto</string>
+    <string name="trial_overturned">Obiezione accolta: il verdetto resta valido, ma l\'obiezione più forte dell\'altra parte lo indebolisce seriamente</string>
     <string name="trial_what_was_tested">L\'obiezione</string>
     <string name="trial_attack_prefix">Obiezione:</string>
     <string name="trial_referee_prefix">Perché:</string>

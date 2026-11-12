@@ -84,7 +84,7 @@
     <string name="demo_note">Demoläge: ingen AI-nyckel är inställd, så det här är en exempeldom</string>
     <string name="trial_survived">Invändningen avslogs: andra sidans advokat framförde sin starkaste invändning, och domen höll. Säkerheten är oförändrad.</string>
     <string name="trial_uncertain">Andra sidans advokat gjorde en invändning, och den lämnade verkligt tvivel om domen</string>
-    <string name="trial_overturned">Invändningen bifölls: andra sidans starkaste invändning vägde tyngre än domen</string>
+    <string name="trial_overturned">Invändningen bifölls: domen står kvar, men andra sidans starkaste invändning försvagar den allvarligt</string>
     <string name="trial_what_was_tested">Invändningen</string>
     <string name="trial_attack_prefix">Invändning:</string>
     <string name="trial_referee_prefix">Varför:</string>

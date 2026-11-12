@@ -84,7 +84,7 @@
     <string name="demo_note">Demo modu: API anahtarı yok, bu örnek bir karar</string>
     <string name="trial_survived">İtiraz reddedildi: karşı tarafın avukatı en güçlü itirazını yaptı, karar ayakta kaldı. Güven puanı değişmedi.</string>
     <string name="trial_uncertain">Karşı tarafın avukatı itiraz etti ve itiraz bu karar hakkında ciddi şüphe bıraktı</string>
-    <string name="trial_overturned">İtiraz kabul edildi: karşı tarafın en güçlü itirazı bu karardan ağır bastı</string>
+    <string name="trial_overturned">İtiraz kabul edildi: karar geçerli, ama karşı tarafın en güçlü itirazı onu ciddi biçimde zayıflattı</string>
     <string name="trial_what_was_tested">İtiraz</string>
     <string name="trial_attack_prefix">İtiraz:</string>
     <string name="trial_referee_prefix">Neden:</string>

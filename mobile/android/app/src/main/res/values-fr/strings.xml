@@ -85,7 +85,7 @@
     <string name="demo_note">Mode démo : aucune clé d’IA configurée, voici donc un exemple de verdict</string>
     <string name="trial_survived">Objection rejetée : l’avocat de l’autre camp a soulevé sa plus forte objection, et le verdict a tenu. L’indice de confiance ne bouge pas.</string>
     <string name="trial_uncertain">L’avocat de l’autre camp a fait objection, et cette objection a laissé un vrai doute sur ce verdict</string>
-    <string name="trial_overturned">Objection retenue : la plus forte objection de l’autre camp a pesé plus lourd que ce verdict</string>
+    <string name="trial_overturned">Objection retenue : le verdict tient, mais la plus forte objection de l’autre camp l’affaiblit sérieusement</string>
     <string name="trial_what_was_tested">L’objection</string>
     <string name="trial_attack_prefix">Objection :</string>
     <string name="trial_referee_prefix">Pourquoi :</string>

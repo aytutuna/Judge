@@ -85,7 +85,7 @@
     <string name="demo_note">Modo demo: no hay ninguna clave de IA configurada, así que este es un veredicto de ejemplo</string>
     <string name="trial_survived">Objeción rechazada: el abogado de la otra parte planteó su objeción más fuerte y la decisión aguantó. La confianza no cambia.</string>
     <string name="trial_uncertain">El abogado de la otra parte objetó, y la objeción dejó dudas serias sobre esta decisión</string>
-    <string name="trial_overturned">Objeción aceptada: la objeción más fuerte de la otra parte pesó más que esta decisión</string>
+    <string name="trial_overturned">Objeción aceptada: la decisión se mantiene, pero la objeción más fuerte de la otra parte la debilita seriamente</string>
     <string name="trial_what_was_tested">La objeción</string>
     <string name="trial_attack_prefix">Objeción:</string>
     <string name="trial_referee_prefix">Por qué:</string>

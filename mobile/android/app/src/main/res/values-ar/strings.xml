@@ -88,7 +88,7 @@
     <string name="demo_note">وضع تجريبي: لا يوجد مفتاح ذكاء اصطناعي، لذا هذا حكم للعرض فقط</string>
     <string name="trial_survived">رُفض الاعتراض: رفع محامي الطرف الآخر أقوى اعتراض لديه فصمد الحكم. درجة الثقة كما هي.</string>
     <string name="trial_uncertain">اعترض محامي الطرف الآخر، وترك اعتراضه شكًّا حقيقيًا حول هذا الحكم</string>
-    <string name="trial_overturned">قُبل الاعتراض: أقوى اعتراض للطرف الآخر رجح على هذا الحكم</string>
+    <string name="trial_overturned">قُبل الاعتراض: الحكم قائم، لكن أقوى اعتراض للطرف الآخر أضعفه ضعفًا كبيرًا</string>
     <string name="trial_what_was_tested">الاعتراض</string>
     <string name="trial_attack_prefix">الاعتراض:</string>
     <string name="trial_referee_prefix">السبب:</string>

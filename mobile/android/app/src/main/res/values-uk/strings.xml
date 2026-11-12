@@ -86,7 +86,7 @@
     <string name="demo_note">Демо-режим: ключ ШІ не налаштовано, тож це зразок вердикту</string>
     <string name="trial_survived">Заперечення відхилено: адвокат іншої сторони висунув своє найсильніше заперечення, але вердикт устояв. Упевненість не змінилася.</string>
     <string name="trial_uncertain">Адвокат іншої сторони висунув заперечення, і воно залишило серйозні сумніви щодо цього вердикту</string>
-    <string name="trial_overturned">Заперечення прийнято: найсильніше заперечення іншої сторони переважило цей вердикт</string>
+    <string name="trial_overturned">Заперечення прийнято: вердикт залишається чинним, але найсильніше заперечення іншої сторони серйозно його послабило</string>
     <string name="trial_what_was_tested">Заперечення</string>
     <string name="trial_attack_prefix">Заперечення:</string>
     <string name="trial_referee_prefix">Чому:</string>
