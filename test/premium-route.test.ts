@@ -328,11 +328,12 @@ describe("premium verdict: success", () => {
     const result: VerdictResult = body.result;
     expect(result.tier).toBe("premium");
     expect(result.fact_check).toEqual(FACTS);
-    expect(result.panel).toEqual({ models: PANEL_MODELS });
+    expect(result.panel).toEqual({ models: ["strong", "strong", "quick"] });
+    expect(saved.result.panel).toEqual({ models: PANEL_MODELS });
     expect(result.panel!.models).toHaveLength(result.runs.length);
     expect(result.lang).toBe("en");
     expect(saved.input).toBe(ANON);
-    expect(saved.result).toEqual(result);
+    expect(saved.result).toEqual({ ...result, panel: { models: PANEL_MODELS } });
   });
 
   it("passes the fact-check block to the panel and the anonymized text to the fact-check", async () => {
@@ -580,7 +581,7 @@ describe("premium verdict: refunds", () => {
     expect(res.status).toBe(200);
     const result: VerdictResult = (await res.json()).result;
     expect(result.tier).toBe("premium");
-    expect(result.panel!.models).toEqual(["claude-haiku-5-5"]);
+    expect(result.panel!.models).toEqual(["quick"]);
     expect(m.saveVerdict).toHaveBeenCalledTimes(1);
     expect(m.refundPremiumVerdict).toHaveBeenCalledWith("r1");
     expect(m.consumePremiumVerdict).not.toHaveBeenCalled();
@@ -652,7 +653,7 @@ describe("premium verdict: escalation, trial and deadlines", () => {
     expect(extra.context).toMatch(/^FACT-CHECK/);
     expect(result.escalated).toBe(true);
     expect(result.runs).toHaveLength(4);
-    expect(result.panel!.models).toEqual([...PANEL_MODELS, "claude-haiku-5-5"]);
+    expect(result.panel!.models).toEqual(["strong", "strong", "quick", "quick"]);
   });
 
   it("runs the crux trial with the fact-check evidence appended", async () => {
@@ -705,7 +706,7 @@ describe("premium verdict: escalation, trial and deadlines", () => {
     });
     const result: VerdictResult = (await (await POST(request(premium()))).json()).result;
     expect(result.runs).toHaveLength(2);
-    expect(result.panel!.models).toEqual(["claude-sonnet-5-5", "claude-haiku-5-5"]);
+    expect(result.panel!.models).toEqual(["strong", "quick"]);
   });
 });
 

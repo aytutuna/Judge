@@ -144,7 +144,7 @@ export type FactCheck = z.infer<typeof FactCheck>;
  * model ids; every parse of a stored result turns them into the seat tier
  * clients are shown, so no output path can leak an id. */
 export const Panel = z.object({
-  models: z.array(z.string()).transform((models) => models.map((m) => (/haiku/i.test(m) ? "quick" : "strong"))),
+  models: z.array(z.string()).transform((models): string[] => models.map((m) => (/haiku/i.test(m) ? "quick" : "strong"))),
 });
 export type Panel = z.infer<typeof Panel>;
 
