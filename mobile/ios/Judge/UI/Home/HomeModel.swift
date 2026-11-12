@@ -63,6 +63,9 @@ final class HomeModel {
     private(set) var judgedSides: [JudgedSide] = []
     /// Where the judging court is drawn: picked when the request is submitted.
     private(set) var judgingVenue = Venues.fallback
+    /// The New page's court: a new place only once something has been sent,
+    /// not every time the page comes back.
+    private(set) var homeVenue = Venues.pickNew()
     private(set) var error: APIError?
     private(set) var blockedUntil: Date?
     /// Screenshots picked for the next request.
@@ -497,6 +500,7 @@ final class HomeModel {
                 guard let self, !Task.isCancelled else { return }
                 self.keys.clear(token)
                 self.caseVenue = nil
+                self.homeVenue = Venues.pickNew()
                 names.save(caseID: created.view.id, created.nameMap)
                 if let entitlement = created.entitlement { self.account?.applyEntitlement(entitlement) }
                 self.evidence.clear()
@@ -561,6 +565,7 @@ final class HomeModel {
         input.venue = heldVenue?.id
         premiumInput = input
         judgingVenue = input.venue ?? Venues.fallback
+        homeVenue = Venues.pickNew()
         judgedSides = Self.sides(mine: argument, theirs: otherSide, myName: shownCaseName(app), theirName: otherName ?? "", more: more)
         let api = app.api
         let history = app.history

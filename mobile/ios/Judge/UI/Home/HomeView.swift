@@ -185,7 +185,7 @@ struct HomeView: View {
                 Color.clear
                     .frame(maxWidth: .infinity, minHeight: HomeCourt.minHeight)
                     .overlay {
-                        HomeCourt(busy: home.isBusy, covered: pageCovered || home.isJudging || !home.path.isEmpty)
+                        HomeCourt(busy: home.isBusy, covered: pageCovered || home.isJudging || !home.path.isEmpty, venue: home.homeVenue)
                     }
             }
             // Every open card but the last, which is the composer at the bottom.
