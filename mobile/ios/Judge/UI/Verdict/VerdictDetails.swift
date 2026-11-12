@@ -294,7 +294,7 @@ struct VerdictDetails<Appeal: View>: View {
                     Text(L10n.escalated(lang))
                 }
                 Text(L10n.judgesVoted(lang, n: result.runs.count) + " " + VerdictDisplay.votesText(result, parties: parties, lang: lang))
-                if result.isPremium {
+                if result.isPremium && result.factCheck?.status == .checked {
                     Text(L10n.panelPremium(lang))
                 }
                 if let evidence = TwoSidedDisplay.evidenceNote(result, lang: lang) {

@@ -957,7 +957,7 @@ private fun Footnote(result: VerdictResult, parties: PartyLabels) {
             result.runs.joinToString(" · ") { voteName(it, parties, s) }
         }
         add("${s.judgesVoted(result.runs.size)} $votes")
-        if (result.premium) {
+        if (result.premium && result.factCheck?.status == "checked") {
             add(s.panelPremium)
         }
         VerdictDisplay.evidenceNote(result, s)?.let { add(it) }

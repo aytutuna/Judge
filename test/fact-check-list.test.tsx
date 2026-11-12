@@ -116,6 +116,13 @@ describe("VerdictView premium", () => {
     expect(out.indexOf("The Wall is a few metres wide.")).toBeLessThan(out.indexOf(t("en", "factcheck.title")));
   });
 
+  it("leaves the web fact-check line out when nothing was checked", () => {
+    for (const status of ["none", "unavailable"] as const) {
+      const out = html(<VerdictView result={{ ...premium, fact_check: { status, claims: [] } }} lang="en" />);
+      expect(out).not.toContain("Judged with a web fact-check.");
+    }
+  });
+
   it("leaves free results exactly as they were", () => {
     const out = html(<VerdictView result={base} lang="en" />);
     expect(out).not.toContain(">Premium<");

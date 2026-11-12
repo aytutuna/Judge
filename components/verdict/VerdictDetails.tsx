@@ -365,7 +365,7 @@ export function VerdictDetails({
                 return r === "side_a" ? nameA : r === "side_b" ? nameB : t(lang, VOTE_KEY[r]);
               })
               .join(" · ")}
-            {result.tier === "premium" ? (
+            {result.tier === "premium" && result.fact_check?.status === "checked" ? (
               <>
                 <br />
                 {t(lang, "panel.premium")}
