@@ -44,8 +44,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.Layout
@@ -179,16 +177,6 @@ fun HomeScreen(
     val pickContext = if (state.evidenceOn) picker else if (state.evidenceOffered) onAddContextSignIn else null
     val addContext = pickContext.takeIf { !state.evidence.full }
 
-    val theirFocus = remember { FocusRequester() }
-    var focusTheirs by remember { mutableStateOf(false) }
-    LaunchedEffect(focusTheirs, state.theirsOpen, state.more.size) {
-        // The card has to be on screen before it can take the focus.
-        if (focusTheirs && state.theirsOpen) {
-            theirFocus.requestFocus()
-            focusTheirs = false
-        }
-    }
-
     val column = Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(horizontal = 16.dp)
     val send: @Composable () -> Unit = {
         SendButton(
@@ -260,7 +248,6 @@ fun HomeScreen(
                 else -> HomeTags.side(side)
             },
             enabled = !state.holding,
-            fieldModifier = if (last && side != Side.A) Modifier.focusRequester(theirFocus) else Modifier,
             onRemove = if (!last || side == Side.A) null else if (others) onRemoveLastSide else onRemoveTheirSide,
             removeTag = if (others) HomeTags.REMOVE_SIDE else HomeTags.REMOVE_THEIRS,
             onAddContext = addContext.takeIf { side == Side.A || last },
@@ -305,10 +292,7 @@ fun HomeScreen(
                     GhostButton(
                         s.appHomeAddTheirSide,
                         rememberIcon(Palette.ink) { JudgeIcons.plus(it) },
-                        onClick = {
-                            focusTheirs = true
-                            onAddTheirSide()
-                        },
+                        onClick = onAddTheirSide,
                         modifier = Modifier.testTag(HomeTags.ADD_THEIRS),
                         enabled = !state.holding,
                     )
@@ -317,10 +301,7 @@ fun HomeScreen(
                     GhostButton(
                         s.homeAddSide,
                         rememberIcon(Palette.ink) { JudgeIcons.plus(it) },
-                        onClick = {
-                            focusTheirs = true
-                            onAddSide()
-                        },
+                        onClick = onAddSide,
                         modifier = Modifier.testTag(HomeTags.ADD_SIDE),
                         enabled = !state.holding,
                     )
@@ -462,7 +443,6 @@ private fun SideCard(
     maxLines: Int,
     tag: String,
     enabled: Boolean,
-    fieldModifier: Modifier = Modifier,
     onRemove: (() -> Unit)? = null,
     removeTag: String = HomeTags.REMOVE_THEIRS,
     onAddContext: (() -> Unit)? = null,
@@ -535,7 +515,7 @@ private fun SideCard(
             keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
             minLines = minLines,
             maxLines = maxLines,
-            modifier = fieldModifier.fillMaxWidth().heightIn(max = fieldMax).semantics { contentDescription = fieldLabel }.testTag(tag),
+            modifier = Modifier.fillMaxWidth().heightIn(max = fieldMax).semantics { contentDescription = fieldLabel }.testTag(tag),
             decorationBox = { inner ->
                 Box {
                     if (text.isEmpty()) Text(placeholder, style = SideText.copy(color = Palette.placeholder))
