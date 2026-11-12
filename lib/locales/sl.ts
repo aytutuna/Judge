@@ -111,7 +111,7 @@ const sl: Locale = {
     demoNote: "🎭 Demo način: ključ UI ni nastavljen, zato je to vzorčna razsodba",
     "trial.survived": "🛡️ Ugovor zavrnjen: odvetnik druge plati je podal svoj najmočnejši ugovor, razsodba pa je zdržala. Zanesljivost ostaja enaka.",
     "trial.uncertain": "⚠️ Odvetnik druge plati je podal ugovor in ta je pustil resen dvom o tej razsodbi",
-    "trial.overturned": "⚠️ Ugovor sprejet: najmočnejši ugovor druge plati je pretehtal to razsodbo",
+    "trial.overturned": "⚠️ Ugovor sprejet: razsodba ostaja v veljavi, vendar jo je najmočnejši ugovor druge plati resno oslabil",
     "trial.whatWasTested": "Ugovor",
     "trial.attackPrefix": "Ugovor:",
     "trial.refereePrefix": "Zakaj:",
@@ -183,7 +183,7 @@ const sl: Locale = {
       "Trije sodniki razsojajo ločeno, ob tesnem izidu pa se pridruži še kdo. Zanesljivost izhaja iz tega, koliko se strinjajo, ne iz tega, kako prepričano zvenijo.",
     "how.step5.title": "Razsodba, nato ugovor",
     "how.step5.body":
-      "Dobiš razsodbo in oceno zanesljivosti, zraven pa še najboljši argument druge plati. Nato ločen sodnik odigra odvetnika druge plati in v zmagovito razsodbo vrže njegov najmočnejši ugovor. Če zadene, dobiš opozorilo z razlogom.",
+      "Dobiš razsodbo in oceno zanesljivosti, zraven pa še najboljši argument druge plati. Nato ločen sodnik odigra odvetnika druge plati in v zmagovito razsodbo o dejstvih ali logiki vrže njegov najmočnejši ugovor. Če zadene, dobiš opozorilo z razlogom.",
     "sample.title": "Kako je videti razsodba",
     "sample.kicker": "Rezultat",
     "sample.lead":

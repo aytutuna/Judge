@@ -111,7 +111,7 @@ const ca: Locale = {
     demoNote: "🎭 Mode demo: no hi ha cap clau d'IA configurada, així que això és un veredicte d'exemple",
     "trial.survived": "🛡️ Objecció rebutjada: l'advocat de l'altra part ha plantejat la seva objecció més forta, i el veredicte ha aguantat. La confiança es manté.",
     "trial.uncertain": "⚠️ L'advocat de l'altra part ha objectat, i l'objecció ha deixat dubtes reals sobre aquest veredicte",
-    "trial.overturned": "⚠️ Objecció acceptada: l'objecció més forta de l'altra part ha pesat més que aquest veredicte",
+    "trial.overturned": "⚠️ Objecció acceptada: el veredicte es manté, però l'objecció més forta de l'altra part el debilita seriosament",
     "trial.whatWasTested": "L'objecció",
     "trial.attackPrefix": "Objecció:",
     "trial.refereePrefix": "Per què:",
@@ -184,7 +184,7 @@ const ca: Locale = {
       "Tres jutges decideixen per separat i, si la cosa està igualada, se n'hi afegeixen més. La confiança depèn de fins a quin punt coincideixen, no de la seguretat amb què parlen.",
     "how.step5.title": "Veredicte i objecció",
     "how.step5.body":
-      "Reps el veredicte i una puntuació de confiança, a més del millor argument de l'altra part. Després un jutge a part fa d'advocat de l'altra part i planteja la seva objecció més forta contra un veredicte guanyador; si prospera, te n'avisem amb el motiu.",
+      "Reps el veredicte i una puntuació de confiança, a més del millor argument de l'altra part. Després un jutge a part fa d'advocat de l'altra part i planteja la seva objecció més forta contra un veredicte guanyador sobre fets o lògica; si prospera, te n'avisem amb el motiu.",
     "sample.title": "Com és un veredicte",
     "sample.kicker": "El resultat",
     "sample.lead":

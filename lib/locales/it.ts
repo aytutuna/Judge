@@ -111,7 +111,7 @@ const it: Locale = {
     demoNote: "🎭 Modalità demo: nessuna chiave IA configurata, quindi questo è un verdetto di esempio",
     "trial.survived": "🛡️ Obiezione respinta: l'avvocato dell'altra parte ha sollevato la sua obiezione più forte, e il verdetto ha retto. La certezza non cambia.",
     "trial.uncertain": "⚠️ L'avvocato dell'altra parte ha sollevato un'obiezione, e l'obiezione ha lasciato dubbi seri su questo verdetto",
-    "trial.overturned": "⚠️ Obiezione accolta: l'obiezione più forte dell'altra parte ha pesato più di questo verdetto",
+    "trial.overturned": "⚠️ Obiezione accolta: il verdetto resta valido, ma l'obiezione più forte dell'altra parte lo indebolisce seriamente",
     "trial.whatWasTested": "L'obiezione",
     "trial.attackPrefix": "Obiezione:",
     "trial.refereePrefix": "Perché:",
@@ -183,7 +183,7 @@ const it: Locale = {
       "Tre giudici decidono separatamente e, se è in bilico, ne arrivano altri. La certezza dipende da quanto sono d'accordo, non da quanto sembrano sicuri.",
     "how.step5.title": "Verdetto, poi obiezione",
     "how.step5.body":
-      "Ricevi il verdetto e un punteggio di certezza, più l'argomento migliore dell'altra parte. Poi un giudice a parte veste i panni dell'avvocato dell'altra parte e solleva la sua obiezione più forte contro un verdetto vincente e, se va a segno, ricevi un avviso con il motivo.",
+      "Ricevi il verdetto e un punteggio di certezza, più l'argomento migliore dell'altra parte. Poi un giudice a parte veste i panni dell'avvocato dell'altra parte e solleva la sua obiezione più forte contro un verdetto vincente su fatti o logica e, se va a segno, ricevi un avviso con il motivo.",
     "sample.title": "Com'è fatto un verdetto",
     "sample.kicker": "Il risultato",
     "sample.lead":

@@ -115,7 +115,7 @@ const tr: Locale = {
     demoNote: "🎭 Demo modu: API anahtarı yok, bu örnek bir karar",
     "trial.survived": "🛡️ İtiraz reddedildi: karşı tarafın avukatı en güçlü itirazını yaptı, karar ayakta kaldı. Güven puanı değişmedi.",
     "trial.uncertain": "⚠️ Karşı tarafın avukatı itiraz etti ve itiraz bu karar hakkında ciddi şüphe bıraktı",
-    "trial.overturned": "⚠️ İtiraz kabul edildi: karşı tarafın en güçlü itirazı bu karardan ağır bastı",
+    "trial.overturned": "⚠️ İtiraz kabul edildi: karar geçerli, ama karşı tarafın en güçlü itirazı onu ciddi biçimde zayıflattı",
     "trial.whatWasTested": "İtiraz",
     "trial.attackPrefix": "İtiraz:",
     "trial.refereePrefix": "Neden:",
@@ -188,7 +188,7 @@ const tr: Locale = {
       "Üç yargıç ayrı ayrı karar verir, oylar başa başsa ek yargıç çağrılır. Güven puanı ne kadar emin konuştuklarına değil, ne kadar anlaştıklarına bakar.",
     "how.step5.title": "Önce karar, sonra itiraz",
     "how.step5.body":
-      "Kararı ve güven puanını alırsın, yanında karşı tarafın en sağlam kozu da gelir. Sonra ayrı bir yargıç karşı tarafın avukatını oynayıp kazanan karara en güçlü itirazını yöneltir; itiraz tutarsa nedeniyle birlikte bir uyarı görürsün.",
+      "Kararı ve güven puanını alırsın, yanında karşı tarafın en sağlam kozu da gelir. Sonra ayrı bir yargıç karşı tarafın avukatını oynayıp olgu ya da mantık üzerinden kazanan karara en güçlü itirazını yöneltir; itiraz tutarsa nedeniyle birlikte bir uyarı görürsün.",
     "sample.title": "Bir karar neye benzer",
     "sample.kicker": "Sonuç",
     "sample.lead":

@@ -111,7 +111,7 @@ const ro: Locale = {
     demoNote: "🎭 Mod demo: nu e configurată nicio cheie AI, deci ăsta e un verdict de exemplu",
     "trial.survived": "🛡️ Obiecție respinsă: avocatul celeilalte părți și-a ridicat cea mai puternică obiecție, iar verdictul a rezistat. Încrederea rămâne aceeași.",
     "trial.uncertain": "⚠️ Avocatul celeilalte părți a ridicat o obiecție, iar obiecția a lăsat îndoieli reale despre acest verdict",
-    "trial.overturned": "⚠️ Obiecție admisă: cea mai puternică obiecție a celeilalte părți a cântărit mai mult decât acest verdict",
+    "trial.overturned": "⚠️ Obiecție admisă: verdictul rămâne în picioare, dar cea mai puternică obiecție a celeilalte părți îl slăbește serios",
     "trial.whatWasTested": "Obiecția",
     "trial.attackPrefix": "Obiecție:",
     "trial.refereePrefix": "De ce:",
@@ -183,7 +183,7 @@ const ro: Locale = {
       "Trei judecători decid separat, iar când e la limită mai vin și alții. Încrederea vine din cât de mult sunt de acord, nu din cât de siguri par.",
     "how.step5.title": "Verdictul, apoi o obiecție",
     "how.step5.body":
-      "Primești verdictul și un scor de încredere, plus cel mai bun argument al celeilalte părți. Apoi un judecător separat joacă rolul avocatului celeilalte părți și ridică cea mai puternică obiecție a acestuia împotriva unui verdict câștigător, iar dacă prinde, primești un avertisment cu motivul.",
+      "Primești verdictul și un scor de încredere, plus cel mai bun argument al celeilalte părți. Apoi un judecător separat joacă rolul avocatului celeilalte părți și ridică cea mai puternică obiecție a acestuia împotriva unui verdict câștigător pe fapte sau logică, iar dacă prinde, primești un avertisment cu motivul.",
     "sample.title": "Cum arată un verdict",
     "sample.kicker": "Rezultatul",
     "sample.lead":

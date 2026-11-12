@@ -111,7 +111,7 @@ const hu: Locale = {
     demoNote: "🎭 Demó mód: nincs beállítva API-kulcs, ez csak egy mintaítélet",
     "trial.survived": "🛡️ A tiltakozást elutasították: a másik oldal ügyvédje előadta a legerősebb tiltakozását, az ítélet pedig megállt. A bizonyosság nem változik.",
     "trial.uncertain": "⚠️ A másik oldal ügyvédje tiltakozott, és a tiltakozás valódi kétséget hagyott ezzel az ítélettel kapcsolatban",
-    "trial.overturned": "⚠️ A tiltakozásnak helyt adtak: a másik oldal legerősebb tiltakozása nagyobb súlyú volt ennél az ítéletnél",
+    "trial.overturned": "⚠️ A tiltakozásnak helyt adtak: az ítélet érvényben marad, de a másik oldal legerősebb tiltakozása komolyan gyengítette",
     "trial.whatWasTested": "A tiltakozás",
     "trial.attackPrefix": "Tiltakozás:",
     "trial.refereePrefix": "Miért:",
@@ -184,7 +184,7 @@ const hu: Locale = {
       "Három bíró dönt egymástól függetlenül, szoros állásnál pedig további bírák is beszállnak. A bizonyosság abból jön, mennyire értenek egyet, nem abból, milyen magabiztosan beszélnek.",
     "how.step5.title": "Ítélet, aztán tiltakozás",
     "how.step5.body":
-      "Megkapod az ítéletet és a bizonyossági pontszámot, mellé pedig a másik oldal legjobb érvét. Ezután egy különálló bíró a másik oldal ügyvédjét játssza, és előadja a legerősebb tiltakozását a győztes ítélet ellen. Ha célba talál, figyelmeztetést kapsz, az indokkal együtt.",
+      "Megkapod az ítéletet és a bizonyossági pontszámot, mellé pedig a másik oldal legjobb érvét. Ezután egy különálló bíró a másik oldal ügyvédjét játssza, és előadja a legerősebb tiltakozását a tényeken vagy logikán nyert ítélet ellen. Ha célba talál, figyelmeztetést kapsz, az indokkal együtt.",
     "sample.title": "Így néz ki egy ítélet",
     "sample.kicker": "Az eredmény",
     "sample.lead":

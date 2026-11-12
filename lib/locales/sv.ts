@@ -111,7 +111,7 @@ const sv: Locale = {
     demoNote: "🎭 Demoläge: ingen AI-nyckel är inställd, så det här är en exempeldom",
     "trial.survived": "🛡️ Invändningen avslogs: andra sidans advokat framförde sin starkaste invändning, och domen höll. Säkerheten är oförändrad.",
     "trial.uncertain": "⚠️ Andra sidans advokat gjorde en invändning, och den lämnade verkligt tvivel om domen",
-    "trial.overturned": "⚠️ Invändningen bifölls: andra sidans starkaste invändning vägde tyngre än domen",
+    "trial.overturned": "⚠️ Invändningen bifölls: domen står kvar, men andra sidans starkaste invändning försvagar den allvarligt",
     "trial.whatWasTested": "Invändningen",
     "trial.attackPrefix": "Invändning:",
     "trial.refereePrefix": "Varför:",
@@ -184,7 +184,7 @@ const sv: Locale = {
       "Tre domare dömer var för sig, och är det jämnt kallas fler in. Säkerheten kommer från hur överens de är, inte hur säkra de låter.",
     "how.step5.title": "Dom, sedan invändning",
     "how.step5.body":
-      "Du får domen och en säkerhetspoäng, plus andra sidans bästa argument. Sedan spelar en separat domare andra sidans advokat och framför dennes starkaste invändning mot en vinnande dom, och om den träffar får du en varning med skälet.",
+      "Du får domen och en säkerhetspoäng, plus andra sidans bästa argument. Sedan spelar en separat domare andra sidans advokat och framför dennes starkaste invändning mot en vinnande dom om fakta eller logik, och om den träffar får du en varning med skälet.",
     "sample.title": "Så ser en dom ut",
     "sample.kicker": "Resultatet",
     "sample.lead":

@@ -103,7 +103,7 @@ const en = {
   demoNote: "🎭 Demo mode: no AI key set up, so this is a sample verdict",
   "trial.survived": "🛡️ Objection overruled: the other side's lawyer raised their strongest objection, and the ruling held. Confidence stays put.",
   "trial.uncertain": "⚠️ The other side's lawyer objected, and the objection left real doubt about this ruling",
-  "trial.overturned": "⚠️ Objection sustained: the other side's strongest objection outweighed this ruling",
+  "trial.overturned": "⚠️ Objection sustained: the ruling stands, but the other side's strongest objection seriously weakens it",
   "trial.whatWasTested": "The objection",
   "trial.attackPrefix": "Objection:",
   "trial.refereePrefix": "Why:",
@@ -176,7 +176,7 @@ const en = {
     "Three judges rule separately, and a close call brings in more. Confidence comes from how much they agree, not how sure they sound.",
   "how.step5.title": "Verdict, then an objection",
   "how.step5.body":
-    "You get the ruling and a confidence score, plus the other side's best point. Then a separate judge plays the other side's lawyer and raises their strongest objection to a winning ruling. If it lands, you get a warning with the reason.",
+    "You get the ruling and a confidence score, plus the other side's best point. Then a separate judge plays the other side's lawyer and raises their strongest objection to a winning ruling on facts or logic. If it lands, you get a warning with the reason.",
   "sample.title": "What a verdict looks like",
   "sample.kicker": "The result",
   "sample.lead":
@@ -202,7 +202,7 @@ const en = {
     "You need an account to get a verdict. Your text goes to an outside AI service so the names can be swapped for Party A and Party B, and only that version is judged. We keep what you wrote, names included, encrypted, so you can see it again; you can have it removed any time. Share links show the names you choose, or none.",
   "faq.powers.q": "What powers it?",
   "faq.powers.a":
-    "An AI model from an outside provider. Three judges run side by side on a structured judging prompt, with more joining on a close call. Winning factual rulings then face an objection from a separate judge playing the other side's lawyer. The confidence math is plain code that counts how often the judges agree.",
+    "An AI model from an outside provider. Three judges run side by side on a structured judging prompt, with more joining on a close call. Winning rulings on facts or logic then face an objection from a separate judge playing the other side's lawyer. The confidence math is plain code that counts how often the judges agree.",
   "faq.taste.q": "What if it's just a matter of taste?",
   "faq.taste.a":
     "Then it'll tell you: “It depends on your values” or “Same word, different meanings”. You still see which way the judges lean, clearly marked as a forced ruling.",
@@ -235,7 +235,7 @@ const en = {
   "about.limit4": "It's for fun and clarity, not legal, medical or financial advice.",
   "about.builtTitle": "Under the hood",
   "about.built":
-    "Judge runs on an AI model from an outside provider. Three judges work in parallel and more join on a close call. How much they agree sets the confidence score, and a winning factual ruling faces an objection from a separate judge before it stands.",
+    "Judge runs on an AI model from an outside provider. Three judges work in parallel and more join on a close call. How much they agree sets the confidence score, and a winning ruling on facts or logic faces an objection from a separate judge before it stands.",
   "about.art": "Pixel art: {pack} by {author}",
   "privacy.title": "Privacy",
   "privacy.kicker": "Your data",

@@ -111,7 +111,7 @@ const nb: Locale = {
     demoNote: "🎭 Demomodus: ingen KI-nøkkel er satt opp, så dette er en eksempeldom",
     "trial.survived": "🛡️ Innsigelsen er avvist: den andre sidens advokat kom med sin sterkeste innsigelse, og dommen holdt. Sikkerheten er uendret.",
     "trial.uncertain": "⚠️ Den andre sidens advokat gjorde innsigelse, og innsigelsen skapte reell tvil om dommen",
-    "trial.overturned": "⚠️ Innsigelsen er tatt til følge: den andre sidens sterkeste innsigelse veide tyngre enn dommen",
+    "trial.overturned": "⚠️ Innsigelsen er tatt til følge: dommen står, men den andre sidens sterkeste innsigelse svekker den alvorlig",
     "trial.whatWasTested": "Innsigelsen",
     "trial.attackPrefix": "Innsigelse:",
     "trial.refereePrefix": "Hvorfor:",
@@ -183,7 +183,7 @@ const nb: Locale = {
       "Tre dommere avgjør hver for seg, og er det jevnt, kommer flere til. Sikkerheten kommer av hvor enige de er, ikke av hvor sikre de høres ut.",
     "how.step5.title": "Dom, så innsigelse",
     "how.step5.body":
-      "Du får dommen og en sikkerhetsscore, pluss det beste poenget til den andre siden. Deretter spiller en egen dommer den andre sidens advokat og kommer med sin sterkeste innsigelse mot en vinnende dom. Treffer den, får du en advarsel med begrunnelsen.",
+      "Du får dommen og en sikkerhetsscore, pluss det beste poenget til den andre siden. Deretter spiller en egen dommer den andre sidens advokat og kommer med sin sterkeste innsigelse mot en vinnende dom om fakta eller logikk. Treffer den, får du en advarsel med begrunnelsen.",
     "sample.title": "Slik ser en dom ut",
     "sample.kicker": "Resultatet",
     "sample.lead":

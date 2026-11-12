@@ -111,7 +111,7 @@ const ms: Locale = {
     demoNote: "🎭 Mod demo: tiada kunci AI ditetapkan, jadi ini contoh keputusan",
     "trial.survived": "🛡️ Bantahan ditolak: peguam pihak satu lagi mengemukakan bantahan paling kuatnya, dan keputusan ini tetap bertahan. Skor keyakinan tidak berubah.",
     "trial.uncertain": "⚠️ Peguam pihak satu lagi membantah, dan bantahan itu meninggalkan keraguan sebenar tentang keputusan ini",
-    "trial.overturned": "⚠️ Bantahan diterima: bantahan paling kuat pihak satu lagi lebih berat daripada keputusan ini",
+    "trial.overturned": "⚠️ Bantahan diterima: keputusan kekal, tetapi bantahan paling kuat pihak satu lagi melemahkannya dengan serius",
     "trial.whatWasTested": "Bantahan",
     "trial.attackPrefix": "Bantahan:",
     "trial.refereePrefix": "Sebabnya:",
@@ -185,7 +185,7 @@ const ms: Locale = {
       "Tiga hakim memutuskan secara berasingan, dan kalau keputusannya rapat, lebih ramai dipanggil. Keyakinan datang daripada sejauh mana mereka sependapat, bukan sejauh mana mereka kedengaran yakin.",
     "how.step5.title": "Keputusan, kemudian bantahan",
     "how.step5.body":
-      "Anda dapat keputusan dan skor keyakinan, bersama hujah terbaik pihak satu lagi. Kemudian seorang hakim berasingan memainkan peranan peguam pihak satu lagi dan mengemukakan bantahan paling kuatnya terhadap keputusan yang menang, dan kalau bantahan itu mengena, anda akan diberi amaran beserta sebabnya.",
+      "Anda dapat keputusan dan skor keyakinan, bersama hujah terbaik pihak satu lagi. Kemudian seorang hakim berasingan memainkan peranan peguam pihak satu lagi dan mengemukakan bantahan paling kuatnya terhadap keputusan yang menang berkenaan fakta atau logik, dan kalau bantahan itu mengena, anda akan diberi amaran beserta sebabnya.",
     "sample.title": "Rupa sebuah keputusan",
     "sample.kicker": "Hasilnya",
     "sample.lead":

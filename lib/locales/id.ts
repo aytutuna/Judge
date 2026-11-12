@@ -111,7 +111,7 @@ const id: Locale = {
     demoNote: "🎭 Mode demo: kunci AI belum dipasang, jadi ini contoh putusan",
     "trial.survived": "🛡️ Keberatan ditolak: pengacara pihak lain mengajukan keberatan terkuatnya, dan putusan tetap bertahan. Skor keyakinan tetap.",
     "trial.uncertain": "⚠️ Pengacara pihak lain mengajukan keberatan, dan keberatan itu meninggalkan keraguan nyata soal putusan ini",
-    "trial.overturned": "⚠️ Keberatan diterima: keberatan terkuat pihak lain lebih berat daripada putusan ini",
+    "trial.overturned": "⚠️ Keberatan diterima: putusan tetap berlaku, tetapi keberatan terkuat pihak lain melemahkannya secara serius",
     "trial.whatWasTested": "Keberatan",
     "trial.attackPrefix": "Keberatan:",
     "trial.refereePrefix": "Alasannya:",
@@ -183,7 +183,7 @@ const id: Locale = {
       "Tiga hakim memutuskan terpisah, dan kalau hasilnya tipis, hakim tambahan dipanggil. Skor keyakinan datang dari seberapa sepakat mereka, bukan dari seberapa yakin kedengarannya.",
     "how.step5.title": "Putusan, lalu keberatan",
     "how.step5.body":
-      "Kamu dapat putusan dan skor keyakinan, plus poin terkuat pihak lain. Lalu hakim terpisah berperan sebagai pengacara pihak lain dan mengajukan keberatan terkuatnya terhadap putusan yang menang. Kalau keberatan itu kena, kamu dapat peringatan beserta alasannya.",
+      "Kamu dapat putusan dan skor keyakinan, plus poin terkuat pihak lain. Lalu hakim terpisah berperan sebagai pengacara pihak lain dan mengajukan keberatan terkuatnya terhadap putusan yang menang soal fakta atau logika. Kalau keberatan itu kena, kamu dapat peringatan beserta alasannya.",
     "sample.title": "Seperti apa putusannya",
     "sample.kicker": "Hasilnya",
     "sample.lead":

@@ -111,7 +111,7 @@ const ptBR: Locale = {
     demoNote: "🎭 Modo demo: sem chave de IA configurada, então este é um veredito de exemplo",
     "trial.survived": "🛡️ Objeção indeferida: o advogado do outro lado levantou a objeção mais forte dele, e o veredito se manteve. A confiança não muda.",
     "trial.uncertain": "⚠️ O advogado do outro lado levantou uma objeção, e ela deixou dúvidas sérias sobre este veredito",
-    "trial.overturned": "⚠️ Objeção deferida: a objeção mais forte do outro lado pesou mais que este veredito",
+    "trial.overturned": "⚠️ Objeção deferida: o veredito se mantém, mas a objeção mais forte do outro lado o enfraquece seriamente",
     "trial.whatWasTested": "A objeção",
     "trial.attackPrefix": "Objeção:",
     "trial.refereePrefix": "Por quê:",
@@ -183,7 +183,7 @@ const ptBR: Locale = {
       "Três juízes decidem separadamente, e um caso apertado chama mais juízes. A confiança vem do quanto eles concordam, não de quão seguros parecem.",
     "how.step5.title": "Veredito, depois uma objeção",
     "how.step5.body":
-      "Você recebe o veredito e uma nota de confiança, além do melhor argumento do outro lado. Depois um juiz separado faz o papel do advogado do outro lado e levanta a objeção mais forte dele contra um veredito vencedor. Se ela pegar, você recebe um aviso com o motivo.",
+      "Você recebe o veredito e uma nota de confiança, além do melhor argumento do outro lado. Depois um juiz separado faz o papel do advogado do outro lado e levanta a objeção mais forte dele contra um veredito vencedor sobre fatos ou lógica. Se ela pegar, você recebe um aviso com o motivo.",
     "sample.title": "Como é um veredito",
     "sample.kicker": "O resultado",
     "sample.lead":

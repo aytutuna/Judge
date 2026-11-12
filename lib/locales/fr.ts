@@ -111,7 +111,7 @@ const fr: Locale = {
     demoNote: "🎭 Mode démo : aucune clé d’IA configurée, voici donc un exemple de verdict",
     "trial.survived": "🛡️ Objection rejetée : l’avocat de l’autre camp a soulevé sa plus forte objection, et le verdict a tenu. L’indice de confiance ne bouge pas.",
     "trial.uncertain": "⚠️ L’avocat de l’autre camp a fait objection, et cette objection a laissé un vrai doute sur ce verdict",
-    "trial.overturned": "⚠️ Objection retenue : la plus forte objection de l’autre camp a pesé plus lourd que ce verdict",
+    "trial.overturned": "⚠️ Objection retenue : le verdict tient, mais la plus forte objection de l’autre camp l’affaiblit sérieusement",
     "trial.whatWasTested": "L’objection",
     "trial.attackPrefix": "Objection :",
     "trial.refereePrefix": "Pourquoi :",
@@ -183,7 +183,7 @@ const fr: Locale = {
       "Trois juges tranchent séparément, et si c’est serré, d’autres viennent en renfort. La confiance dépend de leur accord, pas de leur aplomb.",
     "how.step5.title": "Le verdict, puis une objection",
     "how.step5.body":
-      "Tu obtiens le verdict et un indice de confiance, plus le meilleur argument d’en face. Ensuite, un juge à part joue l’avocat de l’autre camp et soulève sa plus forte objection contre un verdict gagnant ; si elle porte, tu reçois un avertissement avec la raison.",
+      "Tu obtiens le verdict et un indice de confiance, plus le meilleur argument d’en face. Ensuite, un juge à part joue l’avocat de l’autre camp et soulève sa plus forte objection contre un verdict gagnant portant sur les faits ou la logique ; si elle porte, tu reçois un avertissement avec la raison.",
     "sample.title": "À quoi ressemble un verdict",
     "sample.kicker": "Le résultat",
     "sample.lead":

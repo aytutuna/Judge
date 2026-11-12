@@ -111,7 +111,7 @@ const hr: Locale = {
     demoNote: "🎭 Demo način: AI ključ nije postavljen, pa je ovo primjer presude",
     "trial.survived": "🛡️ Prigovor odbijen: odvjetnik druge strane iznio je svoj najjači prigovor, a presuda je izdržala. Pouzdanost ostaje ista.",
     "trial.uncertain": "⚠️ Odvjetnik druge strane uložio je prigovor i on je ostavio ozbiljnu sumnju u ovu presudu",
-    "trial.overturned": "⚠️ Prigovor prihvaćen: najjači prigovor druge strane odvagnuo je više od ove presude",
+    "trial.overturned": "⚠️ Prigovor prihvaćen: presuda ostaje na snazi, ali ju je najjači prigovor druge strane ozbiljno oslabio",
     "trial.whatWasTested": "Prigovor",
     "trial.attackPrefix": "Prigovor:",
     "trial.refereePrefix": "Zašto:",
@@ -183,7 +183,7 @@ const hr: Locale = {
       "Tri suca presuđuju odvojeno, a kad je tijesno, uključuju se dodatni suci. Pouzdanost proizlazi iz toga koliko se slažu, a ne koliko sigurno zvuče.",
     "how.step5.title": "Presuda, pa prigovor",
     "how.step5.body":
-      "Dobivaš presudu i ocjenu pouzdanosti, a uz to i najjači argument druge strane. Zatim zaseban sudac glumi odvjetnika druge strane i iznosi njegov najjači prigovor na pobjedničku presudu. Ako pogodi, dobivaš upozorenje s razlogom.",
+      "Dobivaš presudu i ocjenu pouzdanosti, a uz to i najjači argument druge strane. Zatim zaseban sudac glumi odvjetnika druge strane i iznosi njegov najjači prigovor na pobjedničku presudu o činjenicama ili logici. Ako pogodi, dobivaš upozorenje s razlogom.",
     "sample.title": "Kako izgleda presuda",
     "sample.kicker": "Rezultat",
     "sample.lead":

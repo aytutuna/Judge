@@ -111,7 +111,7 @@ const fi: Locale = {
     demoNote: "🎭 Demotila: tekoälyavainta ei ole määritetty, joten tämä on esimerkkituomio",
     "trial.survived": "🛡️ Vastaväite hylättiin: vastapuolen asianajaja esitti vahvimman vastaväitteensä, ja tuomio kesti. Varmuus pysyy ennallaan.",
     "trial.uncertain": "⚠️ Vastapuolen asianajaja esitti vastaväitteen, ja se jätti aiheellisen epäilyksen tästä tuomiosta",
-    "trial.overturned": "⚠️ Vastaväite hyväksyttiin: vastapuolen vahvin vastaväite painoi enemmän kuin tämä tuomio",
+    "trial.overturned": "⚠️ Vastaväite hyväksyttiin: tuomio pysyy voimassa, mutta vastapuolen vahvin vastaväite heikentää sitä vakavasti",
     "trial.whatWasTested": "Vastaväite",
     "trial.attackPrefix": "Vastaväite:",
     "trial.refereePrefix": "Miksi:",
@@ -183,7 +183,7 @@ const fi: Locale = {
       "Kolme tuomaria ratkaisee erikseen, ja tiukassa tilanteessa mukaan tulee lisää. Varmuus kertoo, kuinka yksimielisiä he ovat, ei sitä, kuinka varmalta he kuulostavat.",
     "how.step5.title": "Ensin tuomio, sitten vastaväite",
     "how.step5.body":
-      "Saat tuomion ja varmuusluvun sekä vastapuolen parhaan pointin. Sitten erillinen tuomari näyttelee vastapuolen asianajajaa ja heittää vastapuolen vahvimman vastaväitteen voittanutta tuomiota vastaan. Jos se osuu, saat varoituksen perusteluineen.",
+      "Saat tuomion ja varmuusluvun sekä vastapuolen parhaan pointin. Sitten erillinen tuomari näyttelee vastapuolen asianajajaa ja heittää vastapuolen vahvimman vastaväitteen faktoihin tai logiikkaan perustuvaa voittanutta tuomiota vastaan. Jos se osuu, saat varoituksen perusteluineen.",
     "sample.title": "Tältä tuomio näyttää",
     "sample.kicker": "Lopputulos",
     "sample.lead":

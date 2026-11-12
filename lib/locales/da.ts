@@ -111,7 +111,7 @@ const da: Locale = {
     demoNote: "🎭 Demotilstand: der er ingen AI-nøgle sat op, så det her er en eksempeldom",
     "trial.survived": "🛡️ Indsigelsen afvist: den anden sides advokat kom med sin stærkeste indsigelse, og dommen holdt. Sikkerheden er uændret.",
     "trial.uncertain": "⚠️ Den anden sides advokat gjorde indsigelse, og den efterlod reel tvivl om dommen",
-    "trial.overturned": "⚠️ Indsigelsen taget til følge: den anden sides stærkeste indsigelse vejede tungere end dommen",
+    "trial.overturned": "⚠️ Indsigelsen taget til følge: dommen står ved magt, men den anden sides stærkeste indsigelse svækker den alvorligt",
     "trial.whatWasTested": "Indsigelsen",
     "trial.attackPrefix": "Indsigelse:",
     "trial.refereePrefix": "Hvorfor:",
@@ -184,7 +184,7 @@ const da: Locale = {
       "Tre dommere dømmer hver for sig, og er det tæt, kommer der flere til. Sikkerheden kommer af, hvor enige de er, ikke af, hvor sikre de lyder.",
     "how.step5.title": "Først dom, så indsigelse",
     "how.step5.body":
-      "Du får dommen og en sikkerhedsscore plus den anden sides bedste pointe. Derefter spiller en separat dommer den anden sides advokat og fremfører sin stærkeste indsigelse mod en vindende dom. Rammer den, får du en advarsel med begrundelsen.",
+      "Du får dommen og en sikkerhedsscore plus den anden sides bedste pointe. Derefter spiller en separat dommer den anden sides advokat og fremfører sin stærkeste indsigelse mod en vindende dom om fakta eller logik. Rammer den, får du en advarsel med begrundelsen.",
     "sample.title": "Sådan ser en dom ud",
     "sample.kicker": "Resultatet",
     "sample.lead":

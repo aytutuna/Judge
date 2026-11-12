@@ -111,7 +111,7 @@ const sk: Locale = {
     demoNote: "🎭 Demo režim: nie je nastavený AI kľúč, takže toto je ukážkový verdikt",
     "trial.survived": "🛡️ Námietka zamietnutá: advokát druhej strany vzniesol svoju najsilnejšiu námietku a rozhodnutie obstálo. Istota sa nemení.",
     "trial.uncertain": "⚠️ Advokát druhej strany vzniesol námietku a tá zanechala o tomto rozhodnutí skutočné pochybnosti",
-    "trial.overturned": "⚠️ Námietka prijatá: najsilnejšia námietka druhej strany prevážila nad týmto rozhodnutím",
+    "trial.overturned": "⚠️ Námietka prijatá: rozhodnutie platí, ale najsilnejšia námietka druhej strany ho vážne oslabila",
     "trial.whatWasTested": "Námietka",
     "trial.attackPrefix": "Námietka:",
     "trial.refereePrefix": "Prečo:",
@@ -183,7 +183,7 @@ const sk: Locale = {
       "Traja sudcovia rozhodujú oddelene a pri tesnom výsledku prizveme ďalších. Istota vychádza z toho, nakoľko sa zhodujú, nie z toho, ako sebaisto znejú.",
     "how.step5.title": "Verdikt a potom námietka",
     "how.step5.body":
-      "Dostaneš rozhodnutie a skóre istoty, k tomu najsilnejší argument druhej strany. Potom samostatný sudca zahrá advokáta druhej strany a vznesie jeho najsilnejšiu námietku proti víťaznému rozhodnutiu. Ak zaberie, dostaneš varovanie aj s dôvodom.",
+      "Dostaneš rozhodnutie a skóre istoty, k tomu najsilnejší argument druhej strany. Potom samostatný sudca zahrá advokáta druhej strany a vznesie jeho najsilnejšiu námietku proti víťaznému rozhodnutiu o faktoch alebo logike. Ak zaberie, dostaneš varovanie aj s dôvodom.",
     "sample.title": "Ako vyzerá verdikt",
     "sample.kicker": "Výsledok",
     "sample.lead":

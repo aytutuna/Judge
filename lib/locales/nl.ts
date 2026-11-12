@@ -111,7 +111,7 @@ const nl: Locale = {
     demoNote: "🎭 Demomodus: er is geen AI-sleutel ingesteld, dus dit is een voorbeelduitspraak",
     "trial.survived": "🛡️ Bezwaar afgewezen: de advocaat van de andere kant bracht zijn sterkste bezwaar in, en de uitspraak hield stand. De zekerheid blijft gelijk.",
     "trial.uncertain": "⚠️ De advocaat van de andere kant maakte bezwaar, en dat bezwaar liet echte twijfel over deze uitspraak achter",
-    "trial.overturned": "⚠️ Bezwaar toegewezen: het sterkste bezwaar van de andere kant woog zwaarder dan deze uitspraak",
+    "trial.overturned": "⚠️ Bezwaar toegewezen: de uitspraak blijft staan, maar het sterkste bezwaar van de andere kant verzwakt haar ernstig",
     "trial.whatWasTested": "Het bezwaar",
     "trial.attackPrefix": "Bezwaar:",
     "trial.refereePrefix": "Waarom:",
@@ -183,7 +183,7 @@ const nl: Locale = {
       "Drie rechters oordelen los van elkaar, en bij een nipte uitslag komen er meer bij. De zekerheid hangt af van hoe eensgezind ze zijn, niet van hoe zeker ze klinken.",
     "how.step5.title": "Uitspraak, dan bezwaar",
     "how.step5.body":
-      "Je krijgt de uitspraak en een zekerheidsscore, plus het sterkste punt van de andere kant. Daarna speelt een aparte rechter de advocaat van de andere kant en brengt diens sterkste bezwaar in tegen een winnende uitspraak. Slaat dat aan, dan krijg je een waarschuwing met de reden.",
+      "Je krijgt de uitspraak en een zekerheidsscore, plus het sterkste punt van de andere kant. Daarna speelt een aparte rechter de advocaat van de andere kant en brengt diens sterkste bezwaar in tegen een winnende uitspraak over feiten of logica. Slaat dat aan, dan krijg je een waarschuwing met de reden.",
     "sample.title": "Zo ziet een uitspraak eruit",
     "sample.kicker": "Het resultaat",
     "sample.lead":

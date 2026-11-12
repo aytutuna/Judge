@@ -111,7 +111,7 @@ const pl: Locale = {
     demoNote: "🎭 Tryb demo: brak klucza AI, więc to przykładowy werdykt",
     "trial.survived": "🛡️ Sprzeciw oddalony: adwokat drugiej strony zgłosił swój najmocniejszy sprzeciw, a werdykt się obronił. Pewność bez zmian.",
     "trial.uncertain": "⚠️ Adwokat drugiej strony zgłosił sprzeciw i ten sprzeciw zostawił realne wątpliwości co do tego werdyktu",
-    "trial.overturned": "⚠️ Sprzeciw uwzględniony: najmocniejszy sprzeciw drugiej strony przeważył nad tym werdyktem",
+    "trial.overturned": "⚠️ Sprzeciw uwzględniony: werdykt pozostaje w mocy, ale najmocniejszy sprzeciw drugiej strony poważnie go osłabił",
     "trial.whatWasTested": "Sprzeciw",
     "trial.attackPrefix": "Sprzeciw:",
     "trial.refereePrefix": "Dlaczego:",
@@ -186,7 +186,7 @@ const pl: Locale = {
       "Trzech sędziów decyduje osobno, a przy wyrównanym wyniku dochodzą kolejni. Pewność wynika z tego, na ile się zgadzają, a nie z tego, jak pewnie brzmią.",
     "how.step5.title": "Werdykt i sprzeciw",
     "how.step5.body":
-      "Dostajesz werdykt i poziom pewności, a do tego najmocniejszy argument drugiej strony. Potem osobny sędzia wciela się w adwokata drugiej strony i zgłasza jego najmocniejszy sprzeciw wobec zwycięskiego werdyktu, a jeśli trafi, dostajesz ostrzeżenie z uzasadnieniem.",
+      "Dostajesz werdykt i poziom pewności, a do tego najmocniejszy argument drugiej strony. Potem osobny sędzia wciela się w adwokata drugiej strony i zgłasza jego najmocniejszy sprzeciw wobec zwycięskiego werdyktu w sprawie faktów lub logiki, a jeśli trafi, dostajesz ostrzeżenie z uzasadnieniem.",
     "sample.title": "Jak wygląda werdykt",
     "sample.kicker": "Wynik",
     "sample.lead":

@@ -111,7 +111,7 @@ const de: Locale = {
     demoNote: "🎭 Demo-Modus: kein KI-Schlüssel eingerichtet, daher ein Beispielurteil",
     "trial.survived": "🛡️ Einspruch abgewiesen: Der Anwalt der Gegenseite hat seinen stärksten Einspruch erhoben, und das Urteil hat gehalten. Die Sicherheit bleibt unverändert.",
     "trial.uncertain": "⚠️ Der Anwalt der Gegenseite hat Einspruch erhoben, und der Einspruch hat echte Zweifel an diesem Urteil hinterlassen",
-    "trial.overturned": "⚠️ Einspruch stattgegeben: Der stärkste Einspruch der Gegenseite wog schwerer als dieses Urteil",
+    "trial.overturned": "⚠️ Einspruch stattgegeben: Das Urteil bleibt bestehen, wird aber durch den stärksten Einspruch der Gegenseite ernsthaft geschwächt",
     "trial.whatWasTested": "Der Einspruch",
     "trial.attackPrefix": "Einspruch:",
     "trial.refereePrefix": "Warum:",
@@ -183,7 +183,7 @@ const de: Locale = {
       "Drei Richter urteilen getrennt, bei knappen Fällen kommen weitere dazu. Die Sicherheit hängt davon ab, wie einig sie sich sind, nicht davon, wie überzeugt sie klingen.",
     "how.step5.title": "Erst das Urteil, dann ein Einspruch",
     "how.step5.body":
-      "Du bekommst das Urteil und einen Sicherheitswert, dazu das stärkste Argument der Gegenseite. Dann schlüpft ein separater Richter in die Rolle des Anwalts der Gegenseite und erhebt gegen ein siegreiches Urteil den stärksten Einspruch. Sitzt er, bekommst du eine Warnung samt Begründung.",
+      "Du bekommst das Urteil und einen Sicherheitswert, dazu das stärkste Argument der Gegenseite. Dann schlüpft ein separater Richter in die Rolle des Anwalts der Gegenseite und erhebt gegen ein siegreiches Urteil über Tatsachen oder Logik den stärksten Einspruch. Sitzt er, bekommst du eine Warnung samt Begründung.",
     "sample.title": "So sieht ein Urteil aus",
     "sample.kicker": "Das Ergebnis",
     "sample.lead":

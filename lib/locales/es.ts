@@ -111,7 +111,7 @@ const es: Locale = {
     demoNote: "🎭 Modo demo: no hay ninguna clave de IA configurada, así que este es un veredicto de ejemplo",
     "trial.survived": "🛡️ Objeción rechazada: el abogado de la otra parte planteó su objeción más fuerte y la decisión aguantó. La confianza no cambia.",
     "trial.uncertain": "⚠️ El abogado de la otra parte objetó, y la objeción dejó dudas serias sobre esta decisión",
-    "trial.overturned": "⚠️ Objeción aceptada: la objeción más fuerte de la otra parte pesó más que esta decisión",
+    "trial.overturned": "⚠️ Objeción aceptada: la decisión se mantiene, pero la objeción más fuerte de la otra parte la debilita seriamente",
     "trial.whatWasTested": "La objeción",
     "trial.attackPrefix": "Objeción:",
     "trial.refereePrefix": "Por qué:",
@@ -183,7 +183,7 @@ const es: Locale = {
       "Tres jueces deciden por separado y, si está reñido, entran más. La confianza sale de cuánto coinciden, no de lo seguros que suenan.",
     "how.step5.title": "Veredicto y luego objeción",
     "how.step5.body":
-      "Recibes la decisión y una puntuación de confianza, además del mejor argumento de la otra parte. Después un juez aparte hace de abogado de la otra parte y plantea su objeción más fuerte contra una decisión ganadora; si prospera, te avisamos con el motivo.",
+      "Recibes la decisión y una puntuación de confianza, además del mejor argumento de la otra parte. Después un juez aparte hace de abogado de la otra parte y plantea su objeción más fuerte contra una decisión ganadora sobre hechos o lógica; si prospera, te avisamos con el motivo.",
     "sample.title": "Así es un veredicto",
     "sample.kicker": "El resultado",
     "sample.lead":

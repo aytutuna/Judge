@@ -111,7 +111,7 @@ const vi: Locale = {
     demoNote: "🎭 Chế độ demo: chưa thiết lập khóa AI nên đây là phán quyết mẫu",
     "trial.survived": "🛡️ Bác bỏ phản đối: luật sư phía bên kia đã nêu phản đối mạnh nhất của mình, và phán quyết vẫn đứng vững. Độ tin cậy giữ nguyên.",
     "trial.uncertain": "⚠️ Luật sư phía bên kia đã phản đối, và sự phản đối đó để lại nghi ngờ thật sự về phán quyết này",
-    "trial.overturned": "⚠️ Chấp nhận phản đối: phản đối mạnh nhất của phía bên kia nặng ký hơn phán quyết này",
+    "trial.overturned": "⚠️ Chấp nhận phản đối: phán quyết vẫn giữ nguyên, nhưng phản đối mạnh nhất của phía bên kia đã làm nó yếu đi nghiêm trọng",
     "trial.whatWasTested": "Phản đối",
     "trial.attackPrefix": "Phản đối:",
     "trial.refereePrefix": "Lý do:",
@@ -184,7 +184,7 @@ const vi: Locale = {
       "Ba giám khảo phân xử riêng rẽ, nếu sát nút sẽ gọi thêm giám khảo. Độ tin cậy đến từ mức độ họ đồng thuận, không phải từ việc họ nói chắc nịch đến đâu.",
     "how.step5.title": "Phán quyết, rồi phản đối",
     "how.step5.body":
-      "Bạn nhận phán quyết và độ tin cậy, kèm điểm mạnh nhất của phía bên kia. Sau đó một giám khảo riêng đóng vai luật sư phía bên kia và nêu phản đối mạnh nhất của họ trước phán quyết thắng, và nếu phản đối đó trúng đích, bạn sẽ nhận được cảnh báo kèm lý do.",
+      "Bạn nhận phán quyết và độ tin cậy, kèm điểm mạnh nhất của phía bên kia. Sau đó một giám khảo riêng đóng vai luật sư phía bên kia và nêu phản đối mạnh nhất của họ trước phán quyết thắng về sự kiện hoặc logic, và nếu phản đối đó trúng đích, bạn sẽ nhận được cảnh báo kèm lý do.",
     "sample.title": "Một phán quyết trông thế nào",
     "sample.kicker": "Kết quả",
     "sample.lead":
