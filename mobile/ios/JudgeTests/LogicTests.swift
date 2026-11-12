@@ -74,15 +74,6 @@ final class TugAndTiltTests: XCTestCase {
         let implied = Lean(party: .a, unanimous: false, reason: "", tally: nil)
         XCTAssertEqual(VerdictDisplay.leanTally(implied, runCount: 3), LeanTally(forValue: 2, against: 1))
     }
-
-    func testPanelSummary() {
-        let text = VerdictDisplay.panelSummary(models: ["claude-haiku-4", "claude-sonnet-4", "claude-sonnet-4", "mystery"], lang: .en)
-        XCTAssertEqual(text, "Judges: 3 strong + 1 quick")
-        XCTAssertEqual(VerdictDisplay.panelSummary(models: ["claude-haiku-4"], lang: .en), "Judges: 1 quick")
-        let tr = VerdictDisplay.panelSummary(models: ["a-sonnet", "b-sonnet", "x-haiku", "y-haiku", "z-haiku"], lang: .tr)
-        XCTAssertEqual(tr, "Yargıçlar: 2 güçlü + 3 hızlı")
-        XCTAssertEqual(VerdictDisplay.panelSummary(models: ["strong", "strong", "quick"], lang: .en), "Judges: 2 strong + 1 quick")
-    }
 }
 
 final class NamesTests: XCTestCase {

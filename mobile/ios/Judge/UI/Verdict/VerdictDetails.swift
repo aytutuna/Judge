@@ -295,8 +295,7 @@ struct VerdictDetails<Appeal: View>: View {
                 }
                 Text(L10n.judgesVoted(lang, n: result.runs.count) + " " + VerdictDisplay.votesText(result, parties: parties, lang: lang))
                 if result.isPremium {
-                    let models = result.panel?.models ?? []
-                    Text(models.isEmpty ? L10n.panelPremium(lang) : L10n.panelPremium(lang) + " " + VerdictDisplay.panelSummary(models: models, lang: lang))
+                    Text(L10n.panelPremium(lang))
                 }
                 if let evidence = TwoSidedDisplay.evidenceNote(result, lang: lang) {
                     Text(evidence)

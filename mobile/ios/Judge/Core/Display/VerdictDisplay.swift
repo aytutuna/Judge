@@ -159,19 +159,6 @@ enum VerdictDisplay {
         lean.tally ?? LeanTally(forValue: runCount - 1, against: 1)
     }
 
-    /// "Judges: 2 strong + 1 quick" for a premium panel. Users see seat
-    /// tiers, never model names: the lite model is "quick", every other is
-    /// "strong". The server sends "quick" or "strong"; "haiku" is the model
-    /// id older stored verdicts carry.
-    static func panelSummary(models: [String], lang: AppLang) -> String {
-        let quick = models.filter { $0 == "quick" || $0.lowercased().contains("haiku") }.count
-        let strong = models.count - quick
-        var parts: [String] = []
-        if strong > 0 { parts.append(L10n.panelStrong(lang, n: strong)) }
-        if quick > 0 { parts.append(L10n.panelQuick(lang, n: quick)) }
-        return L10n.panelModels(lang, list: parts.joined(separator: " + "))
-    }
-
     /// Why a stress test left doubt: the referee's reason, else the objection.
     static func trialWhy(_ trial: CruxTrial) -> String {
         let reason = trial.reasoning.trimmingCharacters(in: .whitespacesAndNewlines)
