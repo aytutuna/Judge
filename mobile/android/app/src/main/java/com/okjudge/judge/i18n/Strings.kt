@@ -612,6 +612,7 @@ class Strings(private val res: Resources) {
     val appSettingsAbout: String get() = res.getString(R.string.app_settings_about)
     fun appSettingsVersion(version: String): String = res.getString(R.string.app_settings_version, version)
     val appSigninRequired: String get() = res.getString(R.string.app_signin_required)
+    val appSigninLink: String get() = res.getString(R.string.app_signin_link)
     val appSigninOr: String get() = res.getString(R.string.app_signin_or)
     val appSigninCodeRequest: String get() = res.getString(R.string.app_signin_code_request)
     fun appSigninCodeSent(email: String): String = res.getString(R.string.app_signin_code_sent, email)
@@ -1192,6 +1193,7 @@ class Strings(private val res: Resources) {
             "app.settings.usageStatsHint" -> R.string.app_settings_usage_stats_hint
             "app.settings.about" -> R.string.app_settings_about
             "app.signin.required" -> R.string.app_signin_required
+            "app.signin.link" -> R.string.app_signin_link
             "app.signin.or" -> R.string.app_signin_or
             "app.signin.codeRequest" -> R.string.app_signin_code_request
             "app.signin.codeLabel" -> R.string.app_signin_code_label

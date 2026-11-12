@@ -64,6 +64,7 @@ export const APP_EN = {
   "app.settings.version": "Version {version}",
   // Sign-in. Email in the apps is a 6-digit code, not a link.
   "app.signin.required": "Sign in to get a verdict.",
+  "app.signin.link": "Sign in to send them a link.",
   "app.signin.or": "or",
   "app.signin.codeRequest": "Email me a code",
   "app.signin.codeSent": "We emailed a code to {email}. It works for 10 minutes.",

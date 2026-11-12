@@ -577,6 +577,7 @@
     <string name="app_settings_about">Judge గురించి</string>
     <string name="app_settings_version">వెర్షన్ %1$s</string>
     <string name="app_signin_required">తీర్పు కోసం సైన్ ఇన్ చేయండి.</string>
+    <string name="app_signin_link">లింక్ పంపడానికి సైన్ ఇన్ చేయండి.</string>
     <string name="app_signin_or">లేదా</string>
     <string name="app_signin_code_request">ఈమెయిల్‌కు కోడ్ పంపండి</string>
     <string name="app_signin_code_sent">%1$sకు ఒక కోడ్ పంపాం. అది 10 నిమిషాలు పనిచేస్తుంది.</string>

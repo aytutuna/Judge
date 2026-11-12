@@ -44,6 +44,7 @@ const zhHant: AppLocale = {
     "app.settings.about": "關於 Judge",
     "app.settings.version": "版本 {version}",
     "app.signin.required": "登入即可取得判決。",
+    "app.signin.link": "登入即可傳送連結。",
     "app.signin.or": "或",
     "app.signin.codeRequest": "寄登入碼給我",
     "app.signin.codeSent": "登入碼已寄到 {email}，10 分鐘內有效。",

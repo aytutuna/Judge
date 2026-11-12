@@ -577,6 +577,7 @@
     <string name="app_settings_about">Σχετικά με το Judge</string>
     <string name="app_settings_version">Έκδοση %1$s</string>
     <string name="app_signin_required">Συνδέσου για να ζητήσεις απόφαση.</string>
+    <string name="app_signin_link">Συνδέσου για να στείλεις σύνδεσμο.</string>
     <string name="app_signin_or">ή</string>
     <string name="app_signin_code_request">Στείλε μου κωδικό στο email</string>
     <string name="app_signin_code_sent">Στείλαμε κωδικό στο %1$s. Ισχύει για 10 λεπτά.</string>

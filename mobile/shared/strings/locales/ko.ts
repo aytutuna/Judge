@@ -47,6 +47,7 @@ const ko: AppLocale = {
     "app.settings.about": "Judge 소개",
     "app.settings.version": "버전 {version}",
     "app.signin.required": "판결을 받으려면 로그인해 주세요.",
+    "app.signin.link": "링크를 보내려면 로그인해 주세요.",
     "app.signin.or": "또는",
     "app.signin.codeRequest": "이메일로 코드 받기",
     "app.signin.codeSent": "{email} 주소로 코드를 보냈어요. 10분 동안 쓸 수 있어요.",

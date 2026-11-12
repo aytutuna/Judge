@@ -54,6 +54,7 @@ const kn: AppLocale = {
     "app.settings.about": "Judge ಬಗ್ಗೆ",
     "app.settings.version": "ಆವೃತ್ತಿ {version}",
     "app.signin.required": "ತೀರ್ಪು ಪಡೆಯಲು ಸೈನ್ ಇನ್ ಮಾಡಿ.",
+    "app.signin.link": "ಲಿಂಕ್ ಕಳುಹಿಸಲು ಸೈನ್ ಇನ್ ಮಾಡಿ.",
     "app.signin.or": "ಅಥವಾ",
     "app.signin.codeRequest": "ನನಗೆ ಕೋಡ್ ಇಮೇಲ್ ಮಾಡಿ",
     "app.signin.codeSent": "{email} ವಿಳಾಸಕ್ಕೆ ಒಂದು ಕೋಡ್ ಇಮೇಲ್ ಮಾಡಿದ್ದೇವೆ. ಅದು 10 ನಿಮಿಷ ಕೆಲಸ ಮಾಡುತ್ತದೆ.",

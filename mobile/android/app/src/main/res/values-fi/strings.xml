@@ -577,6 +577,7 @@
     <string name="app_settings_about">Tietoa Judgesta</string>
     <string name="app_settings_version">Versio %1$s</string>
     <string name="app_signin_required">Kirjaudu, niin saat tuomion.</string>
+    <string name="app_signin_link">Kirjaudu, niin voit lähettää linkin.</string>
     <string name="app_signin_or">tai</string>
     <string name="app_signin_code_request">Lähetä koodi sähköpostiin</string>
     <string name="app_signin_code_sent">Lähetimme koodin osoitteeseen %1$s. Se toimii 10 minuuttia.</string>

@@ -591,6 +591,7 @@
     <string name="app_settings_about">Info su Judge</string>
     <string name="app_settings_version">Versione %1$s</string>
     <string name="app_signin_required">Accedi per avere un verdetto.</string>
+    <string name="app_signin_link">Accedi per mandare un link.</string>
     <string name="app_signin_or">oppure</string>
     <string name="app_signin_code_request">Inviami un codice via email</string>
     <string name="app_signin_code_sent">Abbiamo inviato un codice a %1$s. Vale per 10 minuti.</string>

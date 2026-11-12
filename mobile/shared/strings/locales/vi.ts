@@ -50,6 +50,7 @@ const vi: AppLocale = {
     "app.settings.about": "Về Judge",
     "app.settings.version": "Phiên bản {version}",
     "app.signin.required": "Đăng nhập để nhận phán quyết.",
+    "app.signin.link": "Đăng nhập để gửi liên kết.",
     "app.signin.or": "hoặc",
     "app.signin.codeRequest": "Gửi mã qua email",
     "app.signin.codeSent": "Chúng tôi đã gửi mã tới {email}. Mã có hiệu lực trong 10 phút.",

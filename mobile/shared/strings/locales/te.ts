@@ -51,6 +51,7 @@ const te: AppLocale = {
     "app.settings.about": "Judge గురించి",
     "app.settings.version": "వెర్షన్ {version}",
     "app.signin.required": "తీర్పు కోసం సైన్ ఇన్ చేయండి.",
+    "app.signin.link": "లింక్ పంపడానికి సైన్ ఇన్ చేయండి.",
     "app.signin.or": "లేదా",
     "app.signin.codeRequest": "ఈమెయిల్‌కు కోడ్ పంపండి",
     "app.signin.codeSent": "{email}కు ఒక కోడ్ పంపాం. అది 10 నిమిషాలు పనిచేస్తుంది.",

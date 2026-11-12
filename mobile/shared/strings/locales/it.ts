@@ -55,6 +55,7 @@ const it: AppLocale = {
     "app.settings.about": "Info su Judge",
     "app.settings.version": "Versione {version}",
     "app.signin.required": "Accedi per avere un verdetto.",
+    "app.signin.link": "Accedi per mandare un link.",
     "app.signin.or": "oppure",
     "app.signin.codeRequest": "Inviami un codice via email",
     "app.signin.codeSent": "Abbiamo inviato un codice a {email}. Vale per 10 minuti.",

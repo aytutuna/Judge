@@ -51,6 +51,7 @@ const he: AppLocale = {
     "app.settings.about": "על Judge",
     "app.settings.version": "גרסה {version}",
     "app.signin.required": "צריך להתחבר כדי לקבל פסק דין.",
+    "app.signin.link": "צריך להתחבר כדי לשלוח קישור.",
     "app.signin.or": "או",
     "app.signin.codeRequest": "לשלוח לי קוד באימייל",
     "app.signin.codeSent": "שלחנו קוד אל {email}. הוא תקף ל-10 דקות.",

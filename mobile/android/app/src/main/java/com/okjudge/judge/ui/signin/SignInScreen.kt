@@ -130,6 +130,7 @@ fun SignInScreen(
     onBack: (() -> Unit)?,
     actions: SignInActions,
     modifier: Modifier = Modifier,
+    forLink: Boolean = false,
 ) {
     val s = LocalStrings.current
     // Signed in by the code already: the password is the only way on.
@@ -147,7 +148,7 @@ fun SignInScreen(
         ) {
             Column(Modifier.widthIn(max = 480.dp).fillMaxWidth().padding(top = 12.dp, bottom = 32.dp)) {
                 Text(s.signinTitle, style = JudgeType.display1.cappedScale())
-                Text(s.appSigninRequired, style = JudgeType.lead, modifier = Modifier.padding(top = 10.dp, bottom = 28.dp))
+                Text(if (forLink) s.appSigninLink else s.appSigninRequired, style = JudgeType.lead, modifier = Modifier.padding(top = 10.dp, bottom = 28.dp))
 
                 Column(
                     Modifier

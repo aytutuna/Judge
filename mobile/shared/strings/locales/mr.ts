@@ -51,6 +51,7 @@ const mr: AppLocale = {
     "app.settings.about": "Judge बद्दल",
     "app.settings.version": "आवृत्ती {version}",
     "app.signin.required": "निकाल मिळवण्यासाठी साइन इन करा.",
+    "app.signin.link": "लिंक पाठवण्यासाठी साइन इन करा.",
     "app.signin.or": "किंवा",
     "app.signin.codeRequest": "मला कोड ईमेल करा",
     "app.signin.codeSent": "{email} वर कोड ईमेल केला आहे. तो 10 मिनिटे चालेल.",

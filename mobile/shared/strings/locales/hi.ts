@@ -50,6 +50,7 @@ const hi: AppLocale = {
     "app.settings.about": "Judge के बारे में",
     "app.settings.version": "वर्शन {version}",
     "app.signin.required": "फ़ैसला पाने के लिए साइन इन करें।",
+    "app.signin.link": "लिंक भेजने के लिए साइन इन करें।",
     "app.signin.or": "या",
     "app.signin.codeRequest": "मुझे ईमेल पर कोड भेजें",
     "app.signin.codeSent": "हमने {email} पर एक कोड भेजा है। यह 10 मिनट तक काम करेगा।",

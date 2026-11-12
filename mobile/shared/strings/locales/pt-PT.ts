@@ -51,6 +51,7 @@ const ptPT: AppLocale = {
     "app.settings.about": "Sobre o Judge",
     "app.settings.version": "Versão {version}",
     "app.signin.required": "Entra para obter um veredicto.",
+    "app.signin.link": "Entra para enviar um link.",
     "app.signin.or": "ou",
     "app.signin.codeRequest": "Enviar-me um código",
     "app.signin.codeSent": "Enviámos um código para {email}. Funciona durante 10 minutos.",

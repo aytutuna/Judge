@@ -563,6 +563,7 @@
     <string name="app_settings_about">Judge 소개</string>
     <string name="app_settings_version">버전 %1$s</string>
     <string name="app_signin_required">판결을 받으려면 로그인해 주세요.</string>
+    <string name="app_signin_link">링크를 보내려면 로그인해 주세요.</string>
     <string name="app_signin_or">또는</string>
     <string name="app_signin_code_request">이메일로 코드 받기</string>
     <string name="app_signin_code_sent">%1$s 주소로 코드를 보냈어요. 10분 동안 쓸 수 있어요.</string>

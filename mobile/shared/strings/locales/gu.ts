@@ -60,6 +60,7 @@ const gu: AppLocale = {
     "app.settings.about": "Judge વિશે",
     "app.settings.version": "વર્ઝન {version}",
     "app.signin.required": "ચુકાદો મેળવવા સાઇન ઇન કરો.",
+    "app.signin.link": "લિંક મોકલવા સાઇન ઇન કરો.",
     "app.signin.or": "અથવા",
     "app.signin.codeRequest": "મને કોડ ઈમેલ કરો",
     "app.signin.codeSent":

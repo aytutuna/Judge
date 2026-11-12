@@ -605,6 +605,7 @@
     <string name="app_settings_about">O aplikácii Judge</string>
     <string name="app_settings_version">Verzia %1$s</string>
     <string name="app_signin_required">Prihlás sa a získaj verdikt.</string>
+    <string name="app_signin_link">Prihlás sa a pošli odkaz.</string>
     <string name="app_signin_or">alebo</string>
     <string name="app_signin_code_request">Pošli mi kód e-mailom</string>
     <string name="app_signin_code_sent">Na %1$s sme poslali kód. Platí 10 minút.</string>

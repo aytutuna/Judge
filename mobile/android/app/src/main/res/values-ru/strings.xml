@@ -605,6 +605,7 @@
     <string name="app_settings_about">О Judge</string>
     <string name="app_settings_version">Версия %1$s</string>
     <string name="app_signin_required">Войдите, чтобы получить вердикт.</string>
+    <string name="app_signin_link">Войдите, чтобы отправить ссылку.</string>
     <string name="app_signin_or">или</string>
     <string name="app_signin_code_request">Прислать код на почту</string>
     <string name="app_signin_code_sent">Мы отправили код на %1$s. Он действует 10 минут.</string>

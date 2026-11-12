@@ -59,6 +59,7 @@ const nb: AppLocale = {
     "app.settings.about": "Om Judge",
     "app.settings.version": "Versjon {version}",
     "app.signin.required": "Logg inn for å få en dom.",
+    "app.signin.link": "Logg inn for å sende en lenke.",
     "app.signin.or": "eller",
     "app.signin.codeRequest": "Send meg en kode på e-post",
     "app.signin.codeSent":

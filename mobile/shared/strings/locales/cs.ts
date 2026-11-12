@@ -53,6 +53,7 @@ const cs: AppLocale = {
     "app.settings.about": "O aplikaci Judge",
     "app.settings.version": "Verze {version}",
     "app.signin.required": "Pro verdikt se přihlas.",
+    "app.signin.link": "Pro odeslání odkazu se přihlas.",
     "app.signin.or": "nebo",
     "app.signin.codeRequest": "Poslat kód e-mailem",
     "app.signin.codeSent": "Na {email} jsme poslali kód. Platí 10 minut.",

@@ -53,6 +53,7 @@ const ml: AppLocale = {
     "app.settings.about": "Judge-നെക്കുറിച്ച്",
     "app.settings.version": "പതിപ്പ് {version}",
     "app.signin.required": "വിധി കിട്ടാൻ സൈൻ ഇൻ ചെയ്യൂ.",
+    "app.signin.link": "ലിങ്ക് അയയ്ക്കാൻ സൈൻ ഇൻ ചെയ്യൂ.",
     "app.signin.or": "അല്ലെങ്കിൽ",
     "app.signin.codeRequest": "ഇമെയിലിൽ കോഡ് അയച്ചുതരൂ",
     "app.signin.codeSent": "{email} എന്ന വിലാസത്തിലേക്ക് ഒരു കോഡ് അയച്ചിട്ടുണ്ട്. 10 മിനിറ്റ് നേരത്തേക്ക് അത് പ്രവർത്തിക്കും.",

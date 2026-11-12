@@ -55,6 +55,7 @@ const el: AppLocale = {
     "app.settings.about": "Σχετικά με το Judge",
     "app.settings.version": "Έκδοση {version}",
     "app.signin.required": "Συνδέσου για να ζητήσεις απόφαση.",
+    "app.signin.link": "Συνδέσου για να στείλεις σύνδεσμο.",
     "app.signin.or": "ή",
     "app.signin.codeRequest": "Στείλε μου κωδικό στο email",
     "app.signin.codeSent": "Στείλαμε κωδικό στο {email}. Ισχύει για 10 λεπτά.",

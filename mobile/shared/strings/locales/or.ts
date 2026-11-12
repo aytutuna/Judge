@@ -51,6 +51,7 @@ const or: AppLocale = {
     "app.settings.about": "Judge ବିଷୟରେ",
     "app.settings.version": "ସଂସ୍କରଣ {version}",
     "app.signin.required": "ରାୟ ପାଇବାକୁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ।",
+    "app.signin.link": "ଲିଙ୍କ୍ ପଠାଇବାକୁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ।",
     "app.signin.or": "କିମ୍ବା",
     "app.signin.codeRequest": "ମୋ ଇମେଲ୍‌କୁ କୋଡ୍ ପଠାନ୍ତୁ",
     "app.signin.codeSent": "{email} ଠିକଣାକୁ ଏକ କୋଡ୍ ପଠାଇଛୁ। ଏହା 10 ମିନିଟ୍ କାମ କରିବ।",

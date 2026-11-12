@@ -577,6 +577,7 @@
     <string name="app_settings_about">Judge-നെക്കുറിച്ച്</string>
     <string name="app_settings_version">പതിപ്പ് %1$s</string>
     <string name="app_signin_required">വിധി കിട്ടാൻ സൈൻ ഇൻ ചെയ്യൂ.</string>
+    <string name="app_signin_link">ലിങ്ക് അയയ്ക്കാൻ സൈൻ ഇൻ ചെയ്യൂ.</string>
     <string name="app_signin_or">അല്ലെങ്കിൽ</string>
     <string name="app_signin_code_request">ഇമെയിലിൽ കോഡ് അയച്ചുതരൂ</string>
     <string name="app_signin_code_sent">%1$s എന്ന വിലാസത്തിലേക്ക് ഒരു കോഡ് അയച്ചിട്ടുണ്ട്. 10 മിനിറ്റ് നേരത്തേക്ക് അത് പ്രവർത്തിക്കും.</string>

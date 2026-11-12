@@ -51,6 +51,7 @@ const bn: AppLocale = {
     "app.settings.about": "Judge সম্পর্কে",
     "app.settings.version": "সংস্করণ {version}",
     "app.signin.required": "রায় পেতে সাইন ইন করুন।",
+    "app.signin.link": "লিংক পাঠাতে সাইন ইন করুন।",
     "app.signin.or": "অথবা",
     "app.signin.codeRequest": "ইমেইলে কোড পাঠান",
     "app.signin.codeSent": "{email} ঠিকানায় একটা কোড পাঠিয়েছি। এটা 10 মিনিট কাজ করবে।",

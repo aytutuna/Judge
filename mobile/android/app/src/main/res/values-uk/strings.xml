@@ -605,6 +605,7 @@
     <string name="app_settings_about">Про Judge</string>
     <string name="app_settings_version">Версія %1$s</string>
     <string name="app_signin_required">Увійди, щоб отримати вердикт.</string>
+    <string name="app_signin_link">Увійди, щоб надіслати посилання.</string>
     <string name="app_signin_or">або</string>
     <string name="app_signin_code_request">Надіслати код на пошту</string>
     <string name="app_signin_code_sent">Ми надіслали код на %1$s. Він діє 10 хвилин.</string>

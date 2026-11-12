@@ -51,6 +51,7 @@ const pa: AppLocale = {
     "app.settings.about": "Judge ਬਾਰੇ",
     "app.settings.version": "ਵਰਜ਼ਨ {version}",
     "app.signin.required": "ਫ਼ੈਸਲਾ ਲੈਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ।",
+    "app.signin.link": "ਲਿੰਕ ਭੇਜਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ।",
     "app.signin.or": "ਜਾਂ",
     "app.signin.codeRequest": "ਮੈਨੂੰ ਕੋਡ ਈਮੇਲ ਕਰੋ",
     "app.signin.codeSent": "ਅਸੀਂ {email} ’ਤੇ ਇੱਕ ਕੋਡ ਭੇਜਿਆ ਹੈ। ਇਹ 10 ਮਿੰਟ ਚੱਲੇਗਾ।",

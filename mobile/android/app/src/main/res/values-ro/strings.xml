@@ -591,6 +591,7 @@
     <string name="app_settings_about">Despre Judge</string>
     <string name="app_settings_version">Versiunea %1$s</string>
     <string name="app_signin_required">Conectează-te ca să primești un verdict.</string>
+    <string name="app_signin_link">Conectează-te ca să trimiți un link.</string>
     <string name="app_signin_or">sau</string>
     <string name="app_signin_code_request">Trimite-mi un cod pe e-mail</string>
     <string name="app_signin_code_sent">Am trimis un cod la %1$s. E valabil 10 minute.</string>

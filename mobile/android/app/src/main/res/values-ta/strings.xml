@@ -577,6 +577,7 @@
     <string name="app_settings_about">Judge பற்றி</string>
     <string name="app_settings_version">பதிப்பு %1$s</string>
     <string name="app_signin_required">தீர்ப்பு பெற உள்நுழையுங்கள்.</string>
+    <string name="app_signin_link">லிங்க் அனுப்ப உள்நுழையுங்கள்.</string>
     <string name="app_signin_or">அல்லது</string>
     <string name="app_signin_code_request">குறியீட்டை ஈமெயிலில் அனுப்புக</string>
     <string name="app_signin_code_sent">%1$s முகவரிக்கு ஒரு குறியீட்டை அனுப்பியுள்ளோம். அது 10 நிமிடங்கள் வேலை செய்யும்.</string>

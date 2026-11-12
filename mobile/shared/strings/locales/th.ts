@@ -51,6 +51,7 @@ const th: AppLocale = {
     "app.settings.about": "เกี่ยวกับ Judge",
     "app.settings.version": "เวอร์ชัน {version}",
     "app.signin.required": "เข้าสู่ระบบเพื่อขอคำตัดสิน",
+    "app.signin.link": "เข้าสู่ระบบเพื่อส่งลิงก์",
     "app.signin.or": "หรือ",
     "app.signin.codeRequest": "ส่งรหัสมาทางอีเมล",
     "app.signin.codeSent": "เราส่งรหัสไปที่ {email} แล้ว ใช้ได้ 10 นาที",

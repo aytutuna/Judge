@@ -563,6 +563,7 @@
     <string name="app_settings_about">關於 Judge</string>
     <string name="app_settings_version">版本 %1$s</string>
     <string name="app_signin_required">登入即可取得判決。</string>
+    <string name="app_signin_link">登入即可傳送連結。</string>
     <string name="app_signin_or">或</string>
     <string name="app_signin_code_request">寄登入碼給我</string>
     <string name="app_signin_code_sent">登入碼已寄到 %1$s，10 分鐘內有效。</string>

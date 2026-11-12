@@ -53,6 +53,7 @@ const sv: AppLocale = {
     "app.settings.about": "Om Judge",
     "app.settings.version": "Version {version}",
     "app.signin.required": "Logga in för att få en dom.",
+    "app.signin.link": "Logga in för att skicka en länk.",
     "app.signin.or": "eller",
     "app.signin.codeRequest": "Mejla mig en kod",
     "app.signin.codeSent": "Vi har mejlat en kod till {email}. Den gäller i 10 minuter.",

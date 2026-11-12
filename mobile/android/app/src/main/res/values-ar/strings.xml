@@ -633,6 +633,7 @@
     <string name="app_settings_about">عن Judge</string>
     <string name="app_settings_version">الإصدار %1$s</string>
     <string name="app_signin_required">سجّل الدخول لتحصل على حكم.</string>
+    <string name="app_signin_link">سجّل الدخول لترسل له رابطًا.</string>
     <string name="app_signin_or">أو</string>
     <string name="app_signin_code_request">أرسل لي رمز الدخول</string>
     <string name="app_signin_code_sent">أرسلنا رمزًا إلى %1$s. يعمل الرمز لمدة 10 دقائق.</string>

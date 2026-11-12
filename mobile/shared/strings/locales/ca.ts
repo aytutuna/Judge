@@ -54,6 +54,7 @@ const ca: AppLocale = {
     "app.settings.about": "Quant a Judge",
     "app.settings.version": "Versió {version}",
     "app.signin.required": "Inicia sessió per obtenir un veredicte.",
+    "app.signin.link": "Inicia sessió per enviar-li un enllaç.",
     "app.signin.or": "o",
     "app.signin.codeRequest": "Envia'm un codi per correu",
     "app.signin.codeSent": "Hem enviat un codi a {email}. Funciona durant 10 minuts.",

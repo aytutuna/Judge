@@ -52,6 +52,7 @@ const sk: AppLocale = {
     "app.settings.about": "O aplikácii Judge",
     "app.settings.version": "Verzia {version}",
     "app.signin.required": "Prihlás sa a získaj verdikt.",
+    "app.signin.link": "Prihlás sa a pošli odkaz.",
     "app.signin.or": "alebo",
     "app.signin.codeRequest": "Pošli mi kód e-mailom",
     "app.signin.codeSent": "Na {email} sme poslali kód. Platí 10 minút.",

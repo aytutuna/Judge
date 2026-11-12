@@ -49,6 +49,7 @@ const ja: AppLocale = {
     "app.settings.about": "Judgeについて",
     "app.settings.version": "バージョン{version}",
     "app.signin.required": "判定を受けるにはログインしてください。",
+    "app.signin.link": "リンクを送るにはログインしてください。",
     "app.signin.or": "または",
     "app.signin.codeRequest": "メールでコードを受け取る",
     "app.signin.codeSent": "{email}にコードを送りました。有効期限は10分です。",

@@ -52,6 +52,7 @@ const id: AppLocale = {
     "app.settings.about": "Tentang Judge",
     "app.settings.version": "Versi {version}",
     "app.signin.required": "Masuk untuk mendapat putusan.",
+    "app.signin.link": "Masuk untuk mengirim tautan.",
     "app.signin.or": "atau",
     "app.signin.codeRequest": "Kirim kode ke emailku",
     "app.signin.codeSent": "Kami sudah mengirim kode ke {email}. Kodenya berlaku 10 menit.",

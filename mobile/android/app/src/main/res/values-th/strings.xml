@@ -563,6 +563,7 @@
     <string name="app_settings_about">เกี่ยวกับ Judge</string>
     <string name="app_settings_version">เวอร์ชัน %1$s</string>
     <string name="app_signin_required">เข้าสู่ระบบเพื่อขอคำตัดสิน</string>
+    <string name="app_signin_link">เข้าสู่ระบบเพื่อส่งลิงก์</string>
     <string name="app_signin_or">หรือ</string>
     <string name="app_signin_code_request">ส่งรหัสมาทางอีเมล</string>
     <string name="app_signin_code_sent">เราส่งรหัสไปที่ %1$s แล้ว ใช้ได้ 10 นาที</string>

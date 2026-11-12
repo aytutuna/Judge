@@ -55,6 +55,7 @@ const hr: AppLocale = {
     "app.settings.about": "O aplikaciji Judge",
     "app.settings.version": "Verzija {version}",
     "app.signin.required": "Prijavi se da dobiješ presudu.",
+    "app.signin.link": "Prijavi se da pošalješ poveznicu.",
     "app.signin.or": "ili",
     "app.signin.codeRequest": "Pošalji mi kod e-poštom",
     "app.signin.codeSent": "Poslali smo kod na {email}. Vrijedi 10 minuta.",

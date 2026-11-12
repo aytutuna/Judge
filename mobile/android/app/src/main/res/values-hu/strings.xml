@@ -577,6 +577,7 @@
     <string name="app_settings_about">A Judge-ról</string>
     <string name="app_settings_version">Verzió: %1$s</string>
     <string name="app_signin_required">Lépj be, hogy ítéletet kérhess.</string>
+    <string name="app_signin_link">Lépj be, hogy linket küldhess.</string>
     <string name="app_signin_or">vagy</string>
     <string name="app_signin_code_request">Kód küldése e-mailben</string>
     <string name="app_signin_code_sent">Küldtünk egy kódot ide: %1$s. 10 percig érvényes.</string>

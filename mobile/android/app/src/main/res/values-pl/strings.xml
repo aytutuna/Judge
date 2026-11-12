@@ -605,6 +605,7 @@
     <string name="app_settings_about">O Judge</string>
     <string name="app_settings_version">Wersja %1$s</string>
     <string name="app_signin_required">Zaloguj się, żeby dostać werdykt.</string>
+    <string name="app_signin_link">Zaloguj się, żeby wysłać link.</string>
     <string name="app_signin_or">albo</string>
     <string name="app_signin_code_request">Wyślij mi kod e-mailem</string>
     <string name="app_signin_code_sent">Wysłaliśmy kod na %1$s. Działa przez 10 minut.</string>

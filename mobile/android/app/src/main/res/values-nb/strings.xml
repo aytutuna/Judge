@@ -577,6 +577,7 @@
     <string name="app_settings_about">Om Judge</string>
     <string name="app_settings_version">Versjon %1$s</string>
     <string name="app_signin_required">Logg inn for å få en dom.</string>
+    <string name="app_signin_link">Logg inn for å sende en lenke.</string>
     <string name="app_signin_or">eller</string>
     <string name="app_signin_code_request">Send meg en kode på e-post</string>
     <string name="app_signin_code_sent">Vi har sendt en kode til %1$s. Den virker i 10 minutter.</string>

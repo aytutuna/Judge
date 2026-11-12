@@ -605,6 +605,7 @@
     <string name="app_settings_about">O aplikaciji Judge</string>
     <string name="app_settings_version">Različica %1$s</string>
     <string name="app_signin_required">Prijavi se in dobi razsodbo.</string>
+    <string name="app_signin_link">Prijavi se in pošlji povezavo.</string>
     <string name="app_signin_or">ali</string>
     <string name="app_signin_code_request">Pošlji mi kodo po e-pošti</string>
     <string name="app_signin_code_sent">Na %1$s smo poslali kodo. Velja 10 minut.</string>

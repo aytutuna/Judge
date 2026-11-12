@@ -54,6 +54,7 @@ const ro: AppLocale = {
     "app.settings.about": "Despre Judge",
     "app.settings.version": "Versiunea {version}",
     "app.signin.required": "Conectează-te ca să primești un verdict.",
+    "app.signin.link": "Conectează-te ca să trimiți un link.",
     "app.signin.or": "sau",
     "app.signin.codeRequest": "Trimite-mi un cod pe e-mail",
     "app.signin.codeSent": "Am trimis un cod la {email}. E valabil 10 minute.",

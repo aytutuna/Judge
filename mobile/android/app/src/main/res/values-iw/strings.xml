@@ -591,6 +591,7 @@
     <string name="app_settings_about">על Judge</string>
     <string name="app_settings_version">גרסה %1$s</string>
     <string name="app_signin_required">צריך להתחבר כדי לקבל פסק דין.</string>
+    <string name="app_signin_link">צריך להתחבר כדי לשלוח קישור.</string>
     <string name="app_signin_or">או</string>
     <string name="app_signin_code_request">לשלוח לי קוד באימייל</string>
     <string name="app_signin_code_sent">שלחנו קוד אל %1$s. הוא תקף ל-10 דקות.</string>

@@ -50,6 +50,7 @@ const hu: AppLocale = {
     "app.settings.about": "A Judge-ról",
     "app.settings.version": "Verzió: {version}",
     "app.signin.required": "Lépj be, hogy ítéletet kérhess.",
+    "app.signin.link": "Lépj be, hogy linket küldhess.",
     "app.signin.or": "vagy",
     "app.signin.codeRequest": "Kód küldése e-mailben",
     "app.signin.codeSent": "Küldtünk egy kódot ide: {email}. 10 percig érvényes.",

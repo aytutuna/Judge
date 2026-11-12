@@ -771,6 +771,15 @@ class ScreensTest {
     }
 
     @Test
+    fun signIn_forALink_givesTheLinkReason() {
+        compose.setContent {
+            Themed(AppLang.EN) { SignInScreen(SignInUiState(), onBack = {}, actions = SignInActions(), forLink = true) }
+        }
+        compose.onNodeWithText(UiTestSupport.s(AppLang.EN).appSigninLink).assertExists()
+        compose.onNodeWithText(UiTestSupport.s(AppLang.EN).appSigninRequired).assertDoesNotExist()
+    }
+
+    @Test
     fun signIn_choosePassword_hasNoWayPast() {
         val providers = Account.Providers.Ready(ServerConfig(SignInProviders(emailCode = true, password = true)))
         compose.setContent {

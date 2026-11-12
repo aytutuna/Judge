@@ -50,6 +50,7 @@ const tr: AppLocale = {
     "app.settings.about": "Judge hakkında",
     "app.settings.version": "Sürüm {version}",
     "app.signin.required": "Karar almak için giriş yap.",
+    "app.signin.link": "Bağlantı göndermek için giriş yap.",
     "app.signin.or": "ya da",
     "app.signin.codeRequest": "Bana kod gönder",
     "app.signin.codeSent": "{email} adresine bir kod gönderdik. 10 dakika geçerli.",

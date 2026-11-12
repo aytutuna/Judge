@@ -52,6 +52,7 @@ const nl: AppLocale = {
     "app.settings.about": "Over Judge",
     "app.settings.version": "Versie {version}",
     "app.signin.required": "Log in voor een uitspraak.",
+    "app.signin.link": "Log in om een link te sturen.",
     "app.signin.or": "of",
     "app.signin.codeRequest": "Mail me een code",
     "app.signin.codeSent": "We hebben een code gemaild naar {email}. Die werkt 10 minuten.",

@@ -563,6 +563,7 @@
     <string name="app_settings_about">Tentang Judge</string>
     <string name="app_settings_version">Versi %1$s</string>
     <string name="app_signin_required">Log masuk untuk mendapatkan keputusan.</string>
+    <string name="app_signin_link">Log masuk untuk menghantar pautan.</string>
     <string name="app_signin_or">atau</string>
     <string name="app_signin_code_request">Hantar kod ke e-mel saya</string>
     <string name="app_signin_code_sent">Kami telah menghantar kod ke %1$s. Ia sah selama 10 minit.</string>

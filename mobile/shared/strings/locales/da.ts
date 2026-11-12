@@ -51,6 +51,7 @@ const da: AppLocale = {
     "app.settings.about": "Om Judge",
     "app.settings.version": "Version {version}",
     "app.signin.required": "Log ind for at få en dom.",
+    "app.signin.link": "Log ind for at sende et link.",
     "app.signin.or": "eller",
     "app.signin.codeRequest": "Send mig en kode",
     "app.signin.codeSent": "Vi har sendt en kode til {email}. Den gælder i 10 minutter.",

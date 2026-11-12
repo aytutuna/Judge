@@ -53,6 +53,7 @@ const uk: AppLocale = {
     "app.settings.about": "Про Judge",
     "app.settings.version": "Версія {version}",
     "app.signin.required": "Увійди, щоб отримати вердикт.",
+    "app.signin.link": "Увійди, щоб надіслати посилання.",
     "app.signin.or": "або",
     "app.signin.codeRequest": "Надіслати код на пошту",
     "app.signin.codeSent": "Ми надіслали код на {email}. Він діє 10 хвилин.",

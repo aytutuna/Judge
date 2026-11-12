@@ -59,6 +59,7 @@ const ar: AppLocale = {
     "app.settings.about": "عن Judge",
     "app.settings.version": "الإصدار {version}",
     "app.signin.required": "سجّل الدخول لتحصل على حكم.",
+    "app.signin.link": "سجّل الدخول لترسل له رابطًا.",
     "app.signin.or": "أو",
     "app.signin.codeRequest": "أرسل لي رمز الدخول",
     "app.signin.codeSent":

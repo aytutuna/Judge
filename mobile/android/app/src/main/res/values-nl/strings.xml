@@ -577,6 +577,7 @@
     <string name="app_settings_about">Over Judge</string>
     <string name="app_settings_version">Versie %1$s</string>
     <string name="app_signin_required">Log in voor een uitspraak.</string>
+    <string name="app_signin_link">Log in om een link te sturen.</string>
     <string name="app_signin_or">of</string>
     <string name="app_signin_code_request">Mail me een code</string>
     <string name="app_signin_code_sent">We hebben een code gemaild naar %1$s. Die werkt 10 minuten.</string>

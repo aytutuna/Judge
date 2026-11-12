@@ -51,6 +51,7 @@ const ur: AppLocale = {
     "app.settings.about": "Judge کا تعارف",
     "app.settings.version": "ورژن {version}",
     "app.signin.required": "فیصلہ لینے کے لیے سائن ان کریں۔",
+    "app.signin.link": "لنک بھیجنے کے لیے سائن ان کریں۔",
     "app.signin.or": "یا",
     "app.signin.codeRequest": "مجھے کوڈ ای میل کریں",
     "app.signin.codeSent": "ہم نے {email} پر ایک کوڈ بھیجا ہے۔ یہ 10 منٹ تک کام کرے گا۔",

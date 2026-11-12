@@ -45,6 +45,7 @@ const zhHans: AppLocale = {
     "app.settings.about": "关于 Judge",
     "app.settings.version": "版本 {version}",
     "app.signin.required": "登录后即可获取裁决。",
+    "app.signin.link": "登录后即可发送链接。",
     "app.signin.or": "或",
     "app.signin.codeRequest": "把验证码发到我邮箱",
     "app.signin.codeSent": "我们已向 {email} 发送验证码，10 分钟内有效。",

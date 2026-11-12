@@ -55,6 +55,7 @@ const ta: AppLocale = {
     "app.settings.about": "Judge பற்றி",
     "app.settings.version": "பதிப்பு {version}",
     "app.signin.required": "தீர்ப்பு பெற உள்நுழையுங்கள்.",
+    "app.signin.link": "லிங்க் அனுப்ப உள்நுழையுங்கள்.",
     "app.signin.or": "அல்லது",
     "app.signin.codeRequest": "குறியீட்டை ஈமெயிலில் அனுப்புக",
     "app.signin.codeSent": "{email} முகவரிக்கு ஒரு குறியீட்டை அனுப்பியுள்ளோம். அது 10 நிமிடங்கள் வேலை செய்யும்.",

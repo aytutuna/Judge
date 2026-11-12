@@ -53,6 +53,7 @@ const ru: AppLocale = {
     "app.settings.about": "О Judge",
     "app.settings.version": "Версия {version}",
     "app.signin.required": "Войдите, чтобы получить вердикт.",
+    "app.signin.link": "Войдите, чтобы отправить ссылку.",
     "app.signin.or": "или",
     "app.signin.codeRequest": "Прислать код на почту",
     "app.signin.codeSent": "Мы отправили код на {email}. Он действует 10 минут.",

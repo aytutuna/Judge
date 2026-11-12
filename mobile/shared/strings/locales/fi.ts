@@ -51,6 +51,7 @@ const fi: AppLocale = {
     "app.settings.about": "Tietoa Judgesta",
     "app.settings.version": "Versio {version}",
     "app.signin.required": "Kirjaudu, niin saat tuomion.",
+    "app.signin.link": "Kirjaudu, niin voit lähettää linkin.",
     "app.signin.or": "tai",
     "app.signin.codeRequest": "Lähetä koodi sähköpostiin",
     "app.signin.codeSent": "Lähetimme koodin osoitteeseen {email}. Se toimii 10 minuuttia.",

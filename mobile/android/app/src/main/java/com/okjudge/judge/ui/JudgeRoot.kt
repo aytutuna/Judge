@@ -731,6 +731,7 @@ fun JudgeRoot(
                                     }
                                     SignInScreen(
                                         state = state,
+                                        forLink = key.thenLink,
                                         onBack = { backStack.removeAll { it is SignInKey } },
                                         actions = SignInActions(
                                             onGoogle = {

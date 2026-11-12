@@ -577,6 +577,7 @@
     <string name="app_settings_about">Judge ବିଷୟରେ</string>
     <string name="app_settings_version">ସଂସ୍କରଣ %1$s</string>
     <string name="app_signin_required">ରାୟ ପାଇବାକୁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ।</string>
+    <string name="app_signin_link">ଲିଙ୍କ୍ ପଠାଇବାକୁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ।</string>
     <string name="app_signin_or">କିମ୍ବା</string>
     <string name="app_signin_code_request">ମୋ ଇମେଲ୍‌କୁ କୋଡ୍ ପଠାନ୍ତୁ</string>
     <string name="app_signin_code_sent">%1$s ଠିକଣାକୁ ଏକ କୋଡ୍ ପଠାଇଛୁ। ଏହା 10 ମିନିଟ୍ କାମ କରିବ।</string>

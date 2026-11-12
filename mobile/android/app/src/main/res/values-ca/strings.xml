@@ -591,6 +591,7 @@
     <string name="app_settings_about">Quant a Judge</string>
     <string name="app_settings_version">Versió %1$s</string>
     <string name="app_signin_required">Inicia sessió per obtenir un veredicte.</string>
+    <string name="app_signin_link">Inicia sessió per enviar-li un enllaç.</string>
     <string name="app_signin_or">o</string>
     <string name="app_signin_code_request">Envia\'m un codi per correu</string>
     <string name="app_signin_code_sent">Hem enviat un codi a %1$s. Funciona durant 10 minuts.</string>
