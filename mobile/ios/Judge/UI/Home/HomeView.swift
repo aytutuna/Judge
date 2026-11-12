@@ -583,8 +583,6 @@ struct HomeView: View {
     private func addTheirSide(_ lang: AppLang, home: HomeModel) -> some View {
         Button {
             withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) { home.addTheirSide() }
-            // The card has to be on screen before it can be lifted.
-            Task { activate(.b, home: home) }
         } label: {
             Label(L10n.appHomeAddTheirSide(lang), systemImage: "plus")
                 .frame(minHeight: 44)
