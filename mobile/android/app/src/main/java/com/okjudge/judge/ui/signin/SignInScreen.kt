@@ -67,6 +67,7 @@ import androidx.compose.ui.unit.sp
 import com.okjudge.judge.R
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.auth.SignInError
+import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.i18n.Strings
 import com.okjudge.judge.ui.age.AgeCheckbox
@@ -82,6 +83,7 @@ import com.okjudge.judge.ui.theme.cappedScale
 
 object SignInTags {
     const val GOOGLE = "signin.google"
+    const val DEV = "signin.dev"
     const val EMAIL = "signin.email"
     const val REQUEST_CODE = "signin.requestCode"
     const val CODE = "signin.code"
@@ -117,6 +119,8 @@ data class SignInActions(
     val onAgeTicked: (Boolean) -> Unit = {},
     val onOpenTerms: () -> Unit = {},
     val onOpenPrivacy: () -> Unit = {},
+    /** Set in debug builds only; the button is drawn when it is. */
+    val onDevSignIn: (() -> Unit)? = null,
 )
 
 /**
@@ -183,6 +187,10 @@ fun SignInScreen(
                     }
 
                     state.error?.let { ErrorNote(errorText(s, it)) }
+                }
+
+                actions.onDevSignIn?.let {
+                    GhostButton("Developer sign-in", null, it, Modifier.padding(top = 16.dp).testTag(SignInTags.DEV), enabled = state.busy == null)
                 }
 
                 LegalLine(s, actions.onOpenTerms, actions.onOpenPrivacy, Modifier.padding(top = 32.dp))

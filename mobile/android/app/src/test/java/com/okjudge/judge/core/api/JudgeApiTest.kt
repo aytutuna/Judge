@@ -70,6 +70,16 @@ class JudgeApiTest {
     }
 
     @Test
+    fun devLogin_postsToTheDevRouteAndReadsTheToken() = runBlocking {
+        server.enqueue(json(200, """{"token":"t-1","user":{"id":"u1","email":"dev@verdict.local"}}"""))
+        val res = api().devLogin()
+        assertEquals("t-1", (res as ApiResult.Ok).value.token)
+        val recorded = server.takeRequest()
+        assertEquals("POST", recorded.method)
+        assertEquals("/api/v1/auth/dev-login", recorded.url.encodedPath)
+    }
+
+    @Test
     fun everyRequest_asksForUpToFourSides() = runBlocking {
         server.enqueue(json(200, Fixtures.sampleJson("win_b_named")))
         api().submitVerdict(request)

@@ -52,6 +52,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.okjudge.judge.AppContainer
+import com.okjudge.judge.BuildConfig
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.auth.AgeCheck
@@ -761,6 +762,7 @@ fun JudgeRoot(
                                             onChangeEmail = vm::changeEmail,
                                             onRetryProviders = vm::retryProviders,
                                             onAgeTicked = vm::onAgeTicked,
+                                            onDevSignIn = if (BuildConfig.DEBUG) vm::signInDev else null,
                                             onOpenTerms = { openLink(context, "$site/terms") },
                                             onOpenPrivacy = { openLink(context, "$site/privacy") },
                                         ),

@@ -328,6 +328,13 @@ class Account(
             is ApiResult.Err -> SignInResult.Error(codeVerifyError(res.error))
         }
 
+    /** Debug builds only: the local server's test sign-in. */
+    suspend fun signInDev(): SignInResult =
+        when (val res = api.devLogin()) {
+            is ApiResult.Ok -> complete(res.value)
+            is ApiResult.Err -> SignInResult.Error(passwordSignInError(res.error))
+        }
+
     /** The account that just signed in by code has no password and the server wants one. */
     val needsPassword: Boolean get() = (_state.value as? State.SignedIn)?.me?.needsPassword == true
 

@@ -458,6 +458,13 @@ class JudgeApi(
         signIn = true,
     ) { _, text -> decodeGrant(text) }
 
+    /** POST /api/v1/auth/dev-login: a session on a local server that allows it (debug builds only). */
+    suspend fun devLogin(): ApiResult<SessionGrant> = postAuth(
+        url("api", "v1", "auth", "dev-login"),
+        buildJsonObject {},
+        signIn = true,
+    ) { _, text -> decodeGrant(text) }
+
     /** POST /api/v1/me/password: sets the password, or replaces it ([current] unless the sign-in is fresh). */
     suspend fun setPassword(password: String, current: String?): ApiResult<Unit> {
         val body = buildJsonObject {

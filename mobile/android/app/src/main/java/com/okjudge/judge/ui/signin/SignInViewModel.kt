@@ -194,6 +194,12 @@ class SignInViewModel(private val account: Account) : ViewModel() {
         viewModelScope.launch { finish(account.signInWithGoogle(host)) }
     }
 
+    fun signInDev() {
+        if (_state.value.busy != null) return
+        _state.update { it.copy(busy = SignInBusy.PASSWORD, error = null) }
+        viewModelScope.launch { finish(account.signInDev()) }
+    }
+
     private fun finish(result: SignInResult) {
         _state.update {
             when (result) {
