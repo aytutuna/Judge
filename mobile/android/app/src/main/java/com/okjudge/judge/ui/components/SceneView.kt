@@ -3,6 +3,7 @@ package com.okjudge.judge.ui.components
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.View
+import android.view.ViewGroup
 import android.webkit.JavascriptInterface
 import android.webkit.RenderProcessGoneDetail
 import android.webkit.WebResourceRequest
@@ -91,6 +92,8 @@ private fun SceneWebView(mode: SceneMode, reducedMotion: Boolean, onGone: () -> 
     // No WebView provider, or one being updated, throws here.
     val web = remember {
         runCatching { WebView(context) }.getOrNull()?.apply {
+            // Without this the view is wrap-content to the web view, and the page's 100% heights come out as 0.
+            layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             setBackgroundColor(Color.TRANSPARENT)
             isVerticalScrollBarEnabled = false
             isHorizontalScrollBarEnabled = false
@@ -159,6 +162,7 @@ private fun SceneWebView(mode: SceneMode, reducedMotion: Boolean, onGone: () -> 
         lifecycle.addObserver(observer)
         onDispose {
             lifecycle.removeObserver(observer)
+            report(false)
             web.stopLoading()
             web.destroy()
         }
