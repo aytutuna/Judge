@@ -112,6 +112,7 @@ export async function ensureEntitlementTables(): Promise<void> {
   const ready = withBusyRetry(() => client.batch(SCHEMA, "write")).then(
     async () => {
       await addColumn(client, "premium_usage", "hold_until");
+      await addColumn(client, "premium_usage", "body_hash");
       await addColumn(client, "welcome_claims", "age_blocked_at");
     },
     (e: unknown) => {
@@ -353,14 +354,18 @@ async function existingByKey(
   db: Client,
   userId: string,
   key: string,
-): Promise<{ status: string; verdictId: string | null } | null> {
+): Promise<{ status: string; verdictId: string | null; bodyHash: string | null } | null> {
   const rs = await db.execute({
-    sql: "SELECT status, verdict_id FROM premium_usage WHERE user_id = ? AND idempotency_key = ?",
+    sql: "SELECT status, verdict_id, body_hash FROM premium_usage WHERE user_id = ? AND idempotency_key = ?",
     args: [userId, key],
   });
   const row = rs.rows[0];
   if (!row) return null;
-  return { status: String(row.status), verdictId: row.verdict_id == null ? null : String(row.verdict_id) };
+  return {
+    status: String(row.status),
+    verdictId: row.verdict_id == null ? null : String(row.verdict_id),
+    bodyHash: row.body_hash == null ? null : String(row.body_hash),
+  };
 }
 
 /** The reservation a user made with this Idempotency-Key, if any (status:
@@ -368,11 +373,11 @@ async function existingByKey(
 export async function reservationByKey(
   userId: string,
   key: string,
-): Promise<{ status: string; verdictId: string | null } | null> {
+): Promise<{ status: string; verdictId: string | null; bodyHash: string | null } | null> {
   return existingByKey(await client(), userId, key);
 }
 
-function keyOutcome(existing:{ status: string; verdictId: string | null }): ReserveResult | null {
+function keyOutcome(existing: { status: string; verdictId: string | null }): ReserveResult | null {
   if (existing.status === "reserved") return { ok: false, code: "in_progress" };
   if (existing.status === "consumed" && existing.verdictId) {
     return { ok: false, code: "replay", verdictId: existing.verdictId };
@@ -388,7 +393,7 @@ function keyOutcome(existing:{ status: string; verdictId: string | null }): Rese
  */
 export async function reservePremiumVerdict(
   userId: string,
-  opts: { idempotencyKey?: string; now?: Date } = {},
+  opts: { idempotencyKey?: string; bodyHash?: string; now?: Date } = {},
 ): Promise<ReserveResult> {
   const now = opts.now ?? new Date();
   const nowIso = iso(now);
@@ -424,10 +429,10 @@ export async function reservePremiumVerdict(
   const subInsertIndex = stmts.length;
   stmts.push({
     sql: `INSERT INTO premium_usage
-            (id, user_id, idempotency_key, funded_by, subscription_id, sub_period_end, status, created_at, updated_at)
-          SELECT ?, ?, ?, 'subscription', id, period_end, 'reserved', ?, ?
+            (id, user_id, idempotency_key, funded_by, subscription_id, sub_period_end, status, created_at, updated_at, body_hash)
+          SELECT ?, ?, ?, 'subscription', id, period_end, 'reserved', ?, ?, ?
           FROM subscriptions WHERE id = ? AND changes() = 1`,
-    args: [id, userId, key, nowIso, nowIso, candidate?.id ?? ""],
+    args: [id, userId, key, nowIso, nowIso, opts.bodyHash ?? null, candidate?.id ?? ""],
   });
   // 2. Otherwise one credit.
   stmts.push({
@@ -438,9 +443,9 @@ export async function reservePremiumVerdict(
   const creditInsertIndex = stmts.length;
   stmts.push({
     sql: `INSERT INTO premium_usage
-            (id, user_id, idempotency_key, funded_by, subscription_id, sub_period_end, status, created_at, updated_at)
-          SELECT ?, ?, ?, 'credits', NULL, NULL, 'reserved', ?, ? WHERE changes() = 1`,
-    args: [id, userId, key, nowIso, nowIso],
+            (id, user_id, idempotency_key, funded_by, subscription_id, sub_period_end, status, created_at, updated_at, body_hash)
+          SELECT ?, ?, ?, 'credits', NULL, NULL, 'reserved', ?, ?, ? WHERE changes() = 1`,
+    args: [id, userId, key, nowIso, nowIso, opts.bodyHash ?? null],
   });
 
   let results: ResultSet[];

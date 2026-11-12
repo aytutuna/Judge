@@ -245,6 +245,13 @@ describe("entitlements: reservations", () => {
     expect((await ent.getEntitlement(u)).credits).toBe(1);
   });
 
+  it("stores the body hash with the key's reservation", async () => {
+    const u = newUser();
+    await credits(u, 1);
+    await ent.reservePremiumVerdict(u, { idempotencyKey: "kh-1", bodyHash: "h1" });
+    expect(await ent.reservationByKey(u, "kh-1")).toMatchObject({ status: "reserved", bodyHash: "h1" });
+  });
+
   it("counts today's premium runs, refunded ones included (they still cost model calls)", async () => {
     const before = await ent.countPremiumToday();
     const u = newUser();

@@ -6,6 +6,7 @@ const m = vi.hoisted(() => ({
   isSameOrigin: vi.fn(),
   authConfigured: vi.fn(),
   reservePremiumVerdict: vi.fn(),
+  reservationByKey: vi.fn(),
   consumePremiumVerdict: vi.fn(),
   refundPremiumVerdict: vi.fn(),
   getEntitlement: vi.fn(),
@@ -46,6 +47,7 @@ vi.mock("@/lib/auth", () => ({
 }));
 vi.mock("@/lib/entitlements", () => ({
   reservePremiumVerdict: track("reserve", m.reservePremiumVerdict),
+  reservationByKey: m.reservationByKey,
   consumePremiumVerdict: track("consume", m.consumePremiumVerdict),
   refundPremiumVerdict: track("refund", m.refundPremiumVerdict),
   getEntitlement: track("entitlement", m.getEntitlement),
@@ -202,6 +204,7 @@ beforeEach(() => {
   m.checkUserLimits.mockResolvedValue({ ok: true });
   m.checkPremiumSiteCap.mockResolvedValue({ ok: true });
   m.reservePremiumVerdict.mockResolvedValue({ ok: true, reservation: { id: "r1", fundedBy: "credits" } });
+  m.reservationByKey.mockResolvedValue(null);
   m.consumePremiumVerdict.mockResolvedValue(undefined);
   m.refundPremiumVerdict.mockResolvedValue(undefined);
   m.getEntitlement.mockResolvedValue(ENTITLEMENT);
@@ -315,7 +318,10 @@ describe("premium verdict: success", () => {
       "consume",
     ]);
     expect(m.checkUserLimits).toHaveBeenCalledWith("u1", "premium_verdict");
-    expect(m.reservePremiumVerdict).toHaveBeenCalledWith("u1", { idempotencyKey: "abc-123" });
+    expect(m.reservePremiumVerdict).toHaveBeenCalledWith("u1", {
+      idempotencyKey: "abc-123",
+      bodyHash: expect.stringMatching(/^[A-Za-z0-9_-]{43}$/),
+    });
     expect(m.consumePremiumVerdict).toHaveBeenCalledTimes(1);
     expect(m.refundPremiumVerdict).not.toHaveBeenCalled();
 
@@ -494,6 +500,38 @@ describe("premium verdict: gates and error codes", () => {
     expect(body).not.toHaveProperty("input");
     expect(m.anonymize).not.toHaveBeenCalled();
     expect(m.consumePremiumVerdict).not.toHaveBeenCalled();
+  });
+
+  it("replays a finished key before the limits, so a retry is not rate limited", async () => {
+    const stored: VerdictResult = { ...RUN, verdict: "side_b", confidence: 5, runs: ["side_b"], demo: false, tier: "premium" };
+    m.reservationByKey.mockResolvedValue({ status: "consumed", verdictId: "v123", bodyHash: null });
+    m.checkUserLimits.mockResolvedValue({ ok: false, code: "rate_limited", retryAfterSec: 90 });
+    m.getVerdict.mockResolvedValue({ id: "v123", input: ANON, result: stored, createdAt: "x" });
+    const res = await POST(request(premium(), { "idempotency-key": "k1" }));
+    expect(res.status).toBe(200);
+    expect(await res.json()).toMatchObject({ id: "v123", replayed: true });
+    expect(m.checkUserLimits).not.toHaveBeenCalled();
+    expect(m.reservePremiumVerdict).not.toHaveBeenCalled();
+  });
+
+  it("a key still being judged skips the limits and answers in_progress", async () => {
+    m.reservationByKey.mockResolvedValue({ status: "reserved", verdictId: null, bodyHash: null });
+    m.reservePremiumVerdict.mockResolvedValue({ ok: false, code: "in_progress" });
+    m.checkUserLimits.mockResolvedValue({ ok: false, code: "rate_limited", retryAfterSec: 90 });
+    await expectError(await POST(request(premium(), { "idempotency-key": "k1" })), 409, "in_progress");
+    expect(m.checkUserLimits).not.toHaveBeenCalled();
+  });
+
+  it("422 key_reused when the same key comes with a different body", async () => {
+    await POST(request(premium(), { "idempotency-key": "k1" }));
+    const stored = (m.reservePremiumVerdict.mock.calls[0][1] as { bodyHash: string }).bodyHash;
+    m.reservationByKey.mockResolvedValue({ status: "consumed", verdictId: "v123", bodyHash: stored });
+    m.getVerdict.mockResolvedValue({ id: "v123", input: ANON, result: RUN, createdAt: "x" });
+    const same = await POST(request(premium(), { "idempotency-key": "k1" }));
+    expect(same.status).toBe(200);
+    const other = await POST(request(premium({ argument: `${ARGUMENT} And more.` }), { "idempotency-key": "k1" }));
+    expect(other.status).toBe(422);
+    expect((await other.json()).code).toBe("key_reused");
   });
 
   it("503 unavailable when the reservation itself fails", async () => {

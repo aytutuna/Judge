@@ -22,6 +22,7 @@ vi.mock("@/lib/auth", () => ({
 }));
 vi.mock("@/lib/entitlements", () => ({
   reservePremiumVerdict: m.reserve,
+  reservationByKey: async () => null,
   consumePremiumVerdict: m.consume,
   refundPremiumVerdict: m.refund,
   getEntitlement: async () => ({ canUsePremium: true, blockedReason: null, credits: 4, subscription: null, resetsAt: null }),

@@ -29,6 +29,7 @@ import {
   getEntitlement,
   hasWelcomeCreditOnly,
   refundPremiumVerdict,
+  reservationByKey,
   reservePremiumVerdict,
   type ReserveResult,
 } from "@/lib/entitlements";
@@ -236,8 +237,30 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
   if ("response" in gate) return gate.response;
   const { userId } = gate;
 
-  const limited = await limitGate(userId, "premium_verdict");
-  if (limited) return limited;
+  // A retry of a key already reserved or finished gets its answer without
+  // the limits, which would otherwise burn a slot or turn the replay away.
+  const bodyHash = sentKey ? createHash("sha256").update(JSON.stringify(data)).digest("base64url") : undefined;
+  let prior: Awaited<ReturnType<typeof reservationByKey>>;
+  try {
+    prior = await reservationByKey(userId, key);
+  } catch (e) {
+    console.error("[premium] key lookup failed:", e instanceof Error ? e.message : String(e));
+    return unavailable();
+  }
+  if (prior?.status === "refunded") prior = null;
+  if (prior) {
+    if (bodyHash && prior.bodyHash && prior.bodyHash !== bodyHash) {
+      // Not in lib/api-errors: the clients have no text for it and show the generic failure.
+      return NextResponse.json(
+        { error: "This Idempotency-Key was already used with a different request.", code: "key_reused" },
+        { status: 422 },
+      );
+    }
+    if (prior.status === "consumed" && prior.verdictId) return replay(userId, prior.verdictId);
+  } else {
+    const limited = await limitGate(userId, "premium_verdict");
+    if (limited) return limited;
+  }
 
   // Evidence tokens are checked before any unit is reserved. Loaded only
   // when sent, so a request without evidence runs exactly as before.
@@ -263,7 +286,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
 
   let reserved: ReserveResult;
   try {
-    reserved = await reservePremiumVerdict(userId, { idempotencyKey: key });
+    reserved = await reservePremiumVerdict(userId, { idempotencyKey: key, ...(bodyHash ? { bodyHash } : {}) });
   } catch (e) {
     console.error("[premium] reserve failed:", e instanceof Error ? e.message : String(e));
     return unavailable();
