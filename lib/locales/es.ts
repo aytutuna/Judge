@@ -112,6 +112,7 @@ const es: Locale = {
     "trial.survived": "🛡️ Objeción rechazada: el abogado de la otra parte planteó su objeción más fuerte y la decisión aguantó. La confianza no cambia.",
     "trial.uncertain": "⚠️ El abogado de la otra parte objetó, y la objeción dejó dudas serias sobre esta decisión",
     "trial.overturned": "⚠️ Objeción aceptada: la decisión se mantiene, pero la objeción más fuerte de la otra parte la debilita seriamente",
+    "trial.minor": "🛡️ El abogado de la otra parte señaló un punto justo, pero la decisión se mantiene",
     "trial.whatWasTested": "La objeción",
     "trial.attackPrefix": "Objeción:",
     "trial.refereePrefix": "Por qué:",

@@ -112,6 +112,7 @@ const sv: Locale = {
     "trial.survived": "🛡️ Invändningen avslogs: andra sidans advokat framförde sin starkaste invändning, och domen höll. Säkerheten är oförändrad.",
     "trial.uncertain": "⚠️ Andra sidans advokat gjorde en invändning, och den lämnade verkligt tvivel om domen",
     "trial.overturned": "⚠️ Invändningen bifölls: domen står kvar, men andra sidans starkaste invändning försvagar den allvarligt",
+    "trial.minor": "🛡️ Andra sidans advokat hade en rimlig poäng, men domen står kvar",
     "trial.whatWasTested": "Invändningen",
     "trial.attackPrefix": "Invändning:",
     "trial.refereePrefix": "Varför:",

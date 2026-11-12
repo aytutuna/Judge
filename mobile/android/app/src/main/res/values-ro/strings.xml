@@ -86,6 +86,7 @@
     <string name="trial_survived">Obiecție respinsă: avocatul celeilalte părți și-a ridicat cea mai puternică obiecție, iar verdictul a rezistat. Încrederea rămâne aceeași.</string>
     <string name="trial_uncertain">Avocatul celeilalte părți a ridicat o obiecție, iar obiecția a lăsat îndoieli reale despre acest verdict</string>
     <string name="trial_overturned">Obiecție admisă: verdictul rămâne în picioare, dar cea mai puternică obiecție a celeilalte părți îl slăbește serios</string>
+    <string name="trial_minor">Avocatul celeilalte părți a adus un argument întemeiat, dar verdictul rămâne în picioare</string>
     <string name="trial_what_was_tested">Obiecția</string>
     <string name="trial_attack_prefix">Obiecție:</string>
     <string name="trial_referee_prefix">De ce:</string>

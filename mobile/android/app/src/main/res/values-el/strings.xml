@@ -85,6 +85,7 @@
     <string name="trial_survived">Η ένσταση απορρίφθηκε: ο δικηγόρος της άλλης πλευράς έκανε την πιο ισχυρή του ένσταση, κι η απόφαση άντεξε. Η βεβαιότητα μένει ίδια.</string>
     <string name="trial_uncertain">Ο δικηγόρος της άλλης πλευράς έκανε ένσταση και η ένσταση άφησε σοβαρές αμφιβολίες για αυτή την απόφαση</string>
     <string name="trial_overturned">Η ένσταση έγινε δεκτή: η απόφαση ισχύει, αλλά η πιο ισχυρή ένσταση της άλλης πλευράς την αποδυναμώνει σοβαρά</string>
+    <string name="trial_minor">Ο δικηγόρος της άλλης πλευράς έθεσε ένα δίκαιο σημείο, αλλά η απόφαση ισχύει</string>
     <string name="trial_what_was_tested">Η ένσταση</string>
     <string name="trial_attack_prefix">Ένσταση:</string>
     <string name="trial_referee_prefix">Γιατί:</string>

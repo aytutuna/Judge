@@ -112,6 +112,7 @@ const fi: Locale = {
     "trial.survived": "🛡️ Vastaväite hylättiin: vastapuolen asianajaja esitti vahvimman vastaväitteensä, ja tuomio kesti. Varmuus pysyy ennallaan.",
     "trial.uncertain": "⚠️ Vastapuolen asianajaja esitti vastaväitteen, ja se jätti aiheellisen epäilyksen tästä tuomiosta",
     "trial.overturned": "⚠️ Vastaväite hyväksyttiin: tuomio pysyy voimassa, mutta vastapuolen vahvin vastaväite heikentää sitä vakavasti",
+    "trial.minor": "🛡️ Vastapuolen asianajaja huomautti aiheellisesta asiasta, mutta tuomio pysyy voimassa",
     "trial.whatWasTested": "Vastaväite",
     "trial.attackPrefix": "Vastaväite:",
     "trial.refereePrefix": "Miksi:",

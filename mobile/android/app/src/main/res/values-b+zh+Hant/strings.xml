@@ -84,6 +84,7 @@
     <string name="trial_survived">異議駁回：對方律師提出了最有力的異議，判決依然成立。信心分數不變。</string>
     <string name="trial_uncertain">對方律師提出異議，這項異議讓這個判決留下了實質的疑問</string>
     <string name="trial_overturned">異議成立：判決依然有效，但對方最有力的異議已將其嚴重削弱</string>
+    <string name="trial_minor">對方律師提出了一個合理的觀點，但判決依然成立</string>
     <string name="trial_what_was_tested">異議</string>
     <string name="trial_attack_prefix">異議：</string>
     <string name="trial_referee_prefix">原因：</string>

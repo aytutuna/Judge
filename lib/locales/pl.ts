@@ -112,6 +112,7 @@ const pl: Locale = {
     "trial.survived": "🛡️ Sprzeciw oddalony: adwokat drugiej strony zgłosił swój najmocniejszy sprzeciw, a werdykt się obronił. Pewność bez zmian.",
     "trial.uncertain": "⚠️ Adwokat drugiej strony zgłosił sprzeciw i ten sprzeciw zostawił realne wątpliwości co do tego werdyktu",
     "trial.overturned": "⚠️ Sprzeciw uwzględniony: werdykt pozostaje w mocy, ale najmocniejszy sprzeciw drugiej strony poważnie go osłabił",
+    "trial.minor": "🛡️ Adwokat drugiej strony zwrócił uwagę na słuszny szczegół, ale werdykt pozostaje w mocy",
     "trial.whatWasTested": "Sprzeciw",
     "trial.attackPrefix": "Sprzeciw:",
     "trial.refereePrefix": "Dlaczego:",

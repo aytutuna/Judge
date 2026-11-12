@@ -85,6 +85,7 @@
     <string name="trial_survived">Einspruch abgewiesen: Der Anwalt der Gegenseite hat seinen stärksten Einspruch erhoben, und das Urteil hat gehalten. Die Sicherheit bleibt unverändert.</string>
     <string name="trial_uncertain">Der Anwalt der Gegenseite hat Einspruch erhoben, und der Einspruch hat echte Zweifel an diesem Urteil hinterlassen</string>
     <string name="trial_overturned">Einspruch stattgegeben: Das Urteil bleibt bestehen, wird aber durch den stärksten Einspruch der Gegenseite ernsthaft geschwächt</string>
+    <string name="trial_minor">Der Anwalt der Gegenseite hat einen berechtigten Punkt angesprochen, aber das Urteil gilt weiterhin</string>
     <string name="trial_what_was_tested">Der Einspruch</string>
     <string name="trial_attack_prefix">Einspruch:</string>
     <string name="trial_referee_prefix">Warum:</string>

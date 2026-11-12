@@ -85,6 +85,7 @@
     <string name="trial_survived">Invändningen avslogs: andra sidans advokat framförde sin starkaste invändning, och domen höll. Säkerheten är oförändrad.</string>
     <string name="trial_uncertain">Andra sidans advokat gjorde en invändning, och den lämnade verkligt tvivel om domen</string>
     <string name="trial_overturned">Invändningen bifölls: domen står kvar, men andra sidans starkaste invändning försvagar den allvarligt</string>
+    <string name="trial_minor">Andra sidans advokat hade en rimlig poäng, men domen står kvar</string>
     <string name="trial_what_was_tested">Invändningen</string>
     <string name="trial_attack_prefix">Invändning:</string>
     <string name="trial_referee_prefix">Varför:</string>

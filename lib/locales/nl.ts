@@ -112,6 +112,7 @@ const nl: Locale = {
     "trial.survived": "🛡️ Bezwaar afgewezen: de advocaat van de andere kant bracht zijn sterkste bezwaar in, en de uitspraak hield stand. De zekerheid blijft gelijk.",
     "trial.uncertain": "⚠️ De advocaat van de andere kant maakte bezwaar, en dat bezwaar liet echte twijfel over deze uitspraak achter",
     "trial.overturned": "⚠️ Bezwaar toegewezen: de uitspraak blijft staan, maar het sterkste bezwaar van de andere kant verzwakt haar ernstig",
+    "trial.minor": "🛡️ De advocaat van de andere kant had een terecht punt, maar de uitspraak blijft staan",
     "trial.whatWasTested": "Het bezwaar",
     "trial.attackPrefix": "Bezwaar:",
     "trial.refereePrefix": "Waarom:",

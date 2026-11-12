@@ -111,6 +111,7 @@ const zhHans: Locale = {
     "trial.survived": "🛡️ 异议被驳回：对方律师提出了最有力的异议，裁决依然成立。可信度不变。",
     "trial.uncertain": "⚠️ 对方律师提出异议，这一异议让这份裁决留下了实质的疑问",
     "trial.overturned": "⚠️ 异议成立：裁决依然有效，但对方最有力的异议已将其严重削弱",
+    "trial.minor": "🛡️ 对方律师提出了一个合理的观点，但裁决依然成立",
     "trial.whatWasTested": "异议",
     "trial.attackPrefix": "异议：",
     "trial.refereePrefix": "原因：",

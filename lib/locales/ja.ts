@@ -112,6 +112,7 @@ const ja: Locale = {
     "trial.survived": "🛡️ 異議が却下されました：相手側の弁護人がいちばん強い異議を唱えましたが、判定は持ちこたえました。信頼度はそのままです。",
     "trial.uncertain": "⚠️ 相手側の弁護人が異議を唱え、この判定に無視できない疑問が残りました",
     "trial.overturned": "⚠️ 異議が認められました：判定は有効ですが、相手側のいちばん強い異議により大きく弱まりました",
+    "trial.minor": "🛡️ 相手側の弁護人が的を射た指摘をしましたが、判定は変わりません",
     "trial.whatWasTested": "異議",
     "trial.attackPrefix": "異議：",
     "trial.refereePrefix": "理由：",

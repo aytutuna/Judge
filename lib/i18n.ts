@@ -104,6 +104,7 @@ const en = {
   "trial.survived": "🛡️ Objection overruled: the other side's lawyer raised their strongest objection, and the ruling held. Confidence stays put.",
   "trial.uncertain": "⚠️ The other side's lawyer objected, and the objection left real doubt about this ruling",
   "trial.overturned": "⚠️ Objection sustained: the ruling stands, but the other side's strongest objection seriously weakens it",
+  "trial.minor": "🛡️ The other side's lawyer made a fair point, but the ruling holds",
   "trial.whatWasTested": "The objection",
   "trial.attackPrefix": "Objection:",
   "trial.refereePrefix": "Why:",

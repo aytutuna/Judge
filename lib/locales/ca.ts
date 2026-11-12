@@ -112,6 +112,7 @@ const ca: Locale = {
     "trial.survived": "🛡️ Objecció rebutjada: l'advocat de l'altra part ha plantejat la seva objecció més forta, i el veredicte ha aguantat. La confiança es manté.",
     "trial.uncertain": "⚠️ L'advocat de l'altra part ha objectat, i l'objecció ha deixat dubtes reals sobre aquest veredicte",
     "trial.overturned": "⚠️ Objecció acceptada: el veredicte es manté, però l'objecció més forta de l'altra part el debilita seriosament",
+    "trial.minor": "🛡️ L'advocat de l'altra part ha fet una observació justa, però el veredicte es manté",
     "trial.whatWasTested": "L'objecció",
     "trial.attackPrefix": "Objecció:",
     "trial.refereePrefix": "Per què:",

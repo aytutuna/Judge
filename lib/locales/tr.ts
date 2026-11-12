@@ -116,6 +116,7 @@ const tr: Locale = {
     "trial.survived": "🛡️ İtiraz reddedildi: karşı tarafın avukatı en güçlü itirazını yaptı, karar ayakta kaldı. Güven puanı değişmedi.",
     "trial.uncertain": "⚠️ Karşı tarafın avukatı itiraz etti ve itiraz bu karar hakkında ciddi şüphe bıraktı",
     "trial.overturned": "⚠️ İtiraz kabul edildi: karar geçerli, ama karşı tarafın en güçlü itirazı onu ciddi biçimde zayıflattı",
+    "trial.minor": "🛡️ Karşı tarafın avukatı haklı bir noktaya değindi, ama karar geçerli",
     "trial.whatWasTested": "İtiraz",
     "trial.attackPrefix": "İtiraz:",
     "trial.refereePrefix": "Neden:",

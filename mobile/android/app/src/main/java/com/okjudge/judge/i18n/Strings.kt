@@ -159,6 +159,7 @@ class Strings(private val res: Resources) {
     val trialSurvived: String get() = res.getString(R.string.trial_survived)
     val trialUncertain: String get() = res.getString(R.string.trial_uncertain)
     val trialOverturned: String get() = res.getString(R.string.trial_overturned)
+    val trialMinor: String get() = res.getString(R.string.trial_minor)
     val trialWhatWasTested: String get() = res.getString(R.string.trial_what_was_tested)
     val trialAttackPrefix: String get() = res.getString(R.string.trial_attack_prefix)
     val trialRefereePrefix: String get() = res.getString(R.string.trial_referee_prefix)
@@ -786,6 +787,7 @@ class Strings(private val res: Resources) {
             "trial.survived" -> R.string.trial_survived
             "trial.uncertain" -> R.string.trial_uncertain
             "trial.overturned" -> R.string.trial_overturned
+            "trial.minor" -> R.string.trial_minor
             "trial.whatWasTested" -> R.string.trial_what_was_tested
             "trial.attackPrefix" -> R.string.trial_attack_prefix
             "trial.refereePrefix" -> R.string.trial_referee_prefix

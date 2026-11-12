@@ -85,6 +85,7 @@
     <string name="trial_survived">Vastaväite hylättiin: vastapuolen asianajaja esitti vahvimman vastaväitteensä, ja tuomio kesti. Varmuus pysyy ennallaan.</string>
     <string name="trial_uncertain">Vastapuolen asianajaja esitti vastaväitteen, ja se jätti aiheellisen epäilyksen tästä tuomiosta</string>
     <string name="trial_overturned">Vastaväite hyväksyttiin: tuomio pysyy voimassa, mutta vastapuolen vahvin vastaväite heikentää sitä vakavasti</string>
+    <string name="trial_minor">Vastapuolen asianajaja huomautti aiheellisesta asiasta, mutta tuomio pysyy voimassa</string>
     <string name="trial_what_was_tested">Vastaväite</string>
     <string name="trial_attack_prefix">Vastaväite:</string>
     <string name="trial_referee_prefix">Miksi:</string>

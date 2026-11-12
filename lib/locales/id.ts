@@ -112,6 +112,7 @@ const id: Locale = {
     "trial.survived": "🛡️ Keberatan ditolak: pengacara pihak lain mengajukan keberatan terkuatnya, dan putusan tetap bertahan. Skor keyakinan tetap.",
     "trial.uncertain": "⚠️ Pengacara pihak lain mengajukan keberatan, dan keberatan itu meninggalkan keraguan nyata soal putusan ini",
     "trial.overturned": "⚠️ Keberatan diterima: putusan tetap berlaku, tetapi keberatan terkuat pihak lain melemahkannya secara serius",
+    "trial.minor": "🛡️ Pengacara pihak lain mengajukan poin yang wajar, tetapi putusan tetap berlaku",
     "trial.whatWasTested": "Keberatan",
     "trial.attackPrefix": "Keberatan:",
     "trial.refereePrefix": "Alasannya:",

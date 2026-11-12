@@ -112,6 +112,7 @@ const ro: Locale = {
     "trial.survived": "🛡️ Obiecție respinsă: avocatul celeilalte părți și-a ridicat cea mai puternică obiecție, iar verdictul a rezistat. Încrederea rămâne aceeași.",
     "trial.uncertain": "⚠️ Avocatul celeilalte părți a ridicat o obiecție, iar obiecția a lăsat îndoieli reale despre acest verdict",
     "trial.overturned": "⚠️ Obiecție admisă: verdictul rămâne în picioare, dar cea mai puternică obiecție a celeilalte părți îl slăbește serios",
+    "trial.minor": "🛡️ Avocatul celeilalte părți a adus un argument întemeiat, dar verdictul rămâne în picioare",
     "trial.whatWasTested": "Obiecția",
     "trial.attackPrefix": "Obiecție:",
     "trial.refereePrefix": "De ce:",

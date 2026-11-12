@@ -112,6 +112,7 @@ const ms: Locale = {
     "trial.survived": "🛡️ Bantahan ditolak: peguam pihak satu lagi mengemukakan bantahan paling kuatnya, dan keputusan ini tetap bertahan. Skor keyakinan tidak berubah.",
     "trial.uncertain": "⚠️ Peguam pihak satu lagi membantah, dan bantahan itu meninggalkan keraguan sebenar tentang keputusan ini",
     "trial.overturned": "⚠️ Bantahan diterima: keputusan kekal, tetapi bantahan paling kuat pihak satu lagi melemahkannya dengan serius",
+    "trial.minor": "🛡️ Peguam pihak satu lagi membangkitkan perkara yang wajar, tetapi keputusan kekal",
     "trial.whatWasTested": "Bantahan",
     "trial.attackPrefix": "Bantahan:",
     "trial.refereePrefix": "Sebabnya:",

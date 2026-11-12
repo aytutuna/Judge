@@ -112,6 +112,7 @@ const hr: Locale = {
     "trial.survived": "🛡️ Prigovor odbijen: odvjetnik druge strane iznio je svoj najjači prigovor, a presuda je izdržala. Pouzdanost ostaje ista.",
     "trial.uncertain": "⚠️ Odvjetnik druge strane uložio je prigovor i on je ostavio ozbiljnu sumnju u ovu presudu",
     "trial.overturned": "⚠️ Prigovor prihvaćen: presuda ostaje na snazi, ali ju je najjači prigovor druge strane ozbiljno oslabio",
+    "trial.minor": "🛡️ Odvjetnik druge strane iznio je opravdanu točku, ali presuda ostaje na snazi",
     "trial.whatWasTested": "Prigovor",
     "trial.attackPrefix": "Prigovor:",
     "trial.refereePrefix": "Zašto:",

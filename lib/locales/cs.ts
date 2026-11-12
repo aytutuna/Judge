@@ -112,6 +112,7 @@ const cs: Locale = {
     "trial.survived": "🛡️ Námitka zamítnuta: advokát druhé strany vznesl svou nejsilnější námitku a verdikt obstál. Jistota zůstává.",
     "trial.uncertain": "⚠️ Advokát druhé strany vznesl námitku a ta nechala o tomto verdiktu skutečné pochybnosti",
     "trial.overturned": "⚠️ Námitka přijata: verdikt platí, ale nejsilnější námitka druhé strany ho vážně oslabila",
+    "trial.minor": "🛡️ Advokát druhé strany upozornil na oprávněný bod, ale verdikt platí",
     "trial.whatWasTested": "Námitka",
     "trial.attackPrefix": "Námitka:",
     "trial.refereePrefix": "Proč:",

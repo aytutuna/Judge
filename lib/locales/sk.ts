@@ -112,6 +112,7 @@ const sk: Locale = {
     "trial.survived": "🛡️ Námietka zamietnutá: advokát druhej strany vzniesol svoju najsilnejšiu námietku a rozhodnutie obstálo. Istota sa nemení.",
     "trial.uncertain": "⚠️ Advokát druhej strany vzniesol námietku a tá zanechala o tomto rozhodnutí skutočné pochybnosti",
     "trial.overturned": "⚠️ Námietka prijatá: rozhodnutie platí, ale najsilnejšia námietka druhej strany ho vážne oslabila",
+    "trial.minor": "🛡️ Advokát druhej strany upozornil na oprávnený bod, ale rozhodnutie platí",
     "trial.whatWasTested": "Námietka",
     "trial.attackPrefix": "Námietka:",
     "trial.refereePrefix": "Prečo:",

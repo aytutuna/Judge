@@ -112,6 +112,7 @@ const sl: Locale = {
     "trial.survived": "🛡️ Ugovor zavrnjen: odvetnik druge plati je podal svoj najmočnejši ugovor, razsodba pa je zdržala. Zanesljivost ostaja enaka.",
     "trial.uncertain": "⚠️ Odvetnik druge plati je podal ugovor in ta je pustil resen dvom o tej razsodbi",
     "trial.overturned": "⚠️ Ugovor sprejet: razsodba ostaja v veljavi, vendar jo je najmočnejši ugovor druge plati resno oslabil",
+    "trial.minor": "🛡️ Odvetnik druge plati je navedel upravičeno točko, vendar razsodba ostaja v veljavi",
     "trial.whatWasTested": "Ugovor",
     "trial.attackPrefix": "Ugovor:",
     "trial.refereePrefix": "Zakaj:",

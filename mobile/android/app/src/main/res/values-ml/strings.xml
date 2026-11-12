@@ -85,6 +85,7 @@
     <string name="trial_survived">ആക്ഷേപം തള്ളി: മറുഭാഗത്തിന്റെ അഭിഭാഷകൻ തന്റെ ഏറ്റവും ശക്തമായ ആക്ഷേപം ഉന്നയിച്ചു, വിധി പിടിച്ചുനിന്നു. ഉറപ്പ് സ്കോർ മാറിയില്ല.</string>
     <string name="trial_uncertain">മറുഭാഗത്തിന്റെ അഭിഭാഷകൻ ആക്ഷേപം ഉന്നയിച്ചു, ആ ആക്ഷേപം ഈ വിധിയിൽ യഥാർത്ഥ സംശയം ബാക്കിവെച്ചു</string>
     <string name="trial_overturned">ആക്ഷേപം അംഗീകരിച്ചു: വിധി നിലനിൽക്കുന്നു, പക്ഷേ മറുഭാഗത്തിന്റെ ഏറ്റവും ശക്തമായ ആക്ഷേപം അതിനെ ഗുരുതരമായി ദുർബലപ്പെടുത്തി</string>
+    <string name="trial_minor">മറുഭാഗത്തിന്റെ അഭിഭാഷകൻ ന്യായമായ ഒരു കാര്യം ചൂണ്ടിക്കാട്ടി, പക്ഷേ വിധി നിലനിൽക്കുന്നു</string>
     <string name="trial_what_was_tested">ആക്ഷേപം</string>
     <string name="trial_attack_prefix">ആക്ഷേപം:</string>
     <string name="trial_referee_prefix">കാരണം:</string>

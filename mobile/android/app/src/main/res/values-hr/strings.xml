@@ -86,6 +86,7 @@
     <string name="trial_survived">Prigovor odbijen: odvjetnik druge strane iznio je svoj najjači prigovor, a presuda je izdržala. Pouzdanost ostaje ista.</string>
     <string name="trial_uncertain">Odvjetnik druge strane uložio je prigovor i on je ostavio ozbiljnu sumnju u ovu presudu</string>
     <string name="trial_overturned">Prigovor prihvaćen: presuda ostaje na snazi, ali ju je najjači prigovor druge strane ozbiljno oslabio</string>
+    <string name="trial_minor">Odvjetnik druge strane iznio je opravdanu točku, ali presuda ostaje na snazi</string>
     <string name="trial_what_was_tested">Prigovor</string>
     <string name="trial_attack_prefix">Prigovor:</string>
     <string name="trial_referee_prefix">Zašto:</string>

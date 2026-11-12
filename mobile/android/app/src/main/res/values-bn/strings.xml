@@ -85,6 +85,7 @@
     <string name="trial_survived">আপত্তি খারিজ: অন্য পক্ষের আইনজীবী তাঁর সবচেয়ে কড়া আপত্তি তুলেছিলেন, রায় টিকে গেছে। নিশ্চয়তা যেমন ছিল তেমনই আছে।</string>
     <string name="trial_uncertain">অন্য পক্ষের আইনজীবী আপত্তি তুললেন, আর সেই আপত্তি এই রায় নিয়ে সত্যিকারের সন্দেহ রেখে গেছে</string>
     <string name="trial_overturned">আপত্তি গৃহীত: রায় বহাল, তবে অন্য পক্ষের সবচেয়ে কড়া আপত্তি তাকে গুরুতরভাবে দুর্বল করেছে</string>
+    <string name="trial_minor">অন্য পক্ষের আইনজীবী একটি ন্যায্য কথা তুলেছেন, কিন্তু রায় বহাল</string>
     <string name="trial_what_was_tested">আপত্তি</string>
     <string name="trial_attack_prefix">আপত্তি:</string>
     <string name="trial_referee_prefix">কারণ:</string>

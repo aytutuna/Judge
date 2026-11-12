@@ -111,6 +111,7 @@ const zhHant: Locale = {
     "trial.survived": "🛡️ 異議駁回：對方律師提出了最有力的異議，判決依然成立。信心分數不變。",
     "trial.uncertain": "⚠️ 對方律師提出異議，這項異議讓這個判決留下了實質的疑問",
     "trial.overturned": "⚠️ 異議成立：判決依然有效，但對方最有力的異議已將其嚴重削弱",
+    "trial.minor": "🛡️ 對方律師提出了一個合理的觀點，但判決依然成立",
     "trial.whatWasTested": "異議",
     "trial.attackPrefix": "異議：",
     "trial.refereePrefix": "原因：",

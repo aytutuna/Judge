@@ -85,6 +85,7 @@
     <string name="trial_survived">Indsigelsen afvist: den anden sides advokat kom med sin stærkeste indsigelse, og dommen holdt. Sikkerheden er uændret.</string>
     <string name="trial_uncertain">Den anden sides advokat gjorde indsigelse, og den efterlod reel tvivl om dommen</string>
     <string name="trial_overturned">Indsigelsen taget til følge: dommen står ved magt, men den anden sides stærkeste indsigelse svækker den alvorligt</string>
+    <string name="trial_minor">Den anden sides advokat havde en fair pointe, men dommen står ved magt</string>
     <string name="trial_what_was_tested">Indsigelsen</string>
     <string name="trial_attack_prefix">Indsigelse:</string>
     <string name="trial_referee_prefix">Hvorfor:</string>

@@ -112,6 +112,7 @@ const it: Locale = {
     "trial.survived": "🛡️ Obiezione respinta: l'avvocato dell'altra parte ha sollevato la sua obiezione più forte, e il verdetto ha retto. La certezza non cambia.",
     "trial.uncertain": "⚠️ L'avvocato dell'altra parte ha sollevato un'obiezione, e l'obiezione ha lasciato dubbi seri su questo verdetto",
     "trial.overturned": "⚠️ Obiezione accolta: il verdetto resta valido, ma l'obiezione più forte dell'altra parte lo indebolisce seriamente",
+    "trial.minor": "🛡️ L'avvocato dell'altra parte ha sollevato un punto giusto, ma il verdetto resta valido",
     "trial.whatWasTested": "L'obiezione",
     "trial.attackPrefix": "Obiezione:",
     "trial.refereePrefix": "Perché:",

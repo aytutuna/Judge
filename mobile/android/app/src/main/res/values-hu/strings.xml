@@ -85,6 +85,7 @@
     <string name="trial_survived">A tiltakozást elutasították: a másik oldal ügyvédje előadta a legerősebb tiltakozását, az ítélet pedig megállt. A bizonyosság nem változik.</string>
     <string name="trial_uncertain">A másik oldal ügyvédje tiltakozott, és a tiltakozás valódi kétséget hagyott ezzel az ítélettel kapcsolatban</string>
     <string name="trial_overturned">A tiltakozásnak helyt adtak: az ítélet érvényben marad, de a másik oldal legerősebb tiltakozása komolyan gyengítette</string>
+    <string name="trial_minor">A másik oldal ügyvédje jogos pontot említett, de az ítélet érvényben marad</string>
     <string name="trial_what_was_tested">A tiltakozás</string>
     <string name="trial_attack_prefix">Tiltakozás:</string>
     <string name="trial_referee_prefix">Miért:</string>

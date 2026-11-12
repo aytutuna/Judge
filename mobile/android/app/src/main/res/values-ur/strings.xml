@@ -85,6 +85,7 @@
     <string name="trial_survived">اعتراض مسترد: دوسری طرف کے وکیل نے اپنا سب سے سخت اعتراض اٹھایا، اور فیصلہ قائم رہا۔ اعتماد اپنی جگہ برقرار ہے۔</string>
     <string name="trial_uncertain">دوسری طرف کے وکیل نے اعتراض کیا، اور اس اعتراض نے اس فیصلے پر حقیقی شک چھوڑا</string>
     <string name="trial_overturned">اعتراض منظور: فیصلہ برقرار ہے، مگر دوسری طرف کے سب سے سخت اعتراض نے اسے سنگین حد تک کمزور کر دیا</string>
+    <string name="trial_minor">دوسری طرف کے وکیل نے ایک مناسب نکتہ اٹھایا، مگر فیصلہ برقرار ہے</string>
     <string name="trial_what_was_tested">اعتراض</string>
     <string name="trial_attack_prefix">اعتراض:</string>
     <string name="trial_referee_prefix">وجہ:</string>

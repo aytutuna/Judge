@@ -84,6 +84,7 @@
     <string name="trial_survived">Keberatan ditolak: pengacara pihak lain mengajukan keberatan terkuatnya, dan putusan tetap bertahan. Skor keyakinan tetap.</string>
     <string name="trial_uncertain">Pengacara pihak lain mengajukan keberatan, dan keberatan itu meninggalkan keraguan nyata soal putusan ini</string>
     <string name="trial_overturned">Keberatan diterima: putusan tetap berlaku, tetapi keberatan terkuat pihak lain melemahkannya secara serius</string>
+    <string name="trial_minor">Pengacara pihak lain mengajukan poin yang wajar, tetapi putusan tetap berlaku</string>
     <string name="trial_what_was_tested">Keberatan</string>
     <string name="trial_attack_prefix">Keberatan:</string>
     <string name="trial_referee_prefix">Alasannya:</string>

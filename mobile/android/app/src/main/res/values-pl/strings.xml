@@ -87,6 +87,7 @@
     <string name="trial_survived">Sprzeciw oddalony: adwokat drugiej strony zgłosił swój najmocniejszy sprzeciw, a werdykt się obronił. Pewność bez zmian.</string>
     <string name="trial_uncertain">Adwokat drugiej strony zgłosił sprzeciw i ten sprzeciw zostawił realne wątpliwości co do tego werdyktu</string>
     <string name="trial_overturned">Sprzeciw uwzględniony: werdykt pozostaje w mocy, ale najmocniejszy sprzeciw drugiej strony poważnie go osłabił</string>
+    <string name="trial_minor">Adwokat drugiej strony zwrócił uwagę na słuszny szczegół, ale werdykt pozostaje w mocy</string>
     <string name="trial_what_was_tested">Sprzeciw</string>
     <string name="trial_attack_prefix">Sprzeciw:</string>
     <string name="trial_referee_prefix">Dlaczego:</string>

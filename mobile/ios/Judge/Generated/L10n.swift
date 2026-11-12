@@ -226,6 +226,7 @@ enum L10n {
     static func trialSurvived(_ lang: AppLang) -> String { string("trial.survived", lang) }
     static func trialUncertain(_ lang: AppLang) -> String { string("trial.uncertain", lang) }
     static func trialOverturned(_ lang: AppLang) -> String { string("trial.overturned", lang) }
+    static func trialMinor(_ lang: AppLang) -> String { string("trial.minor", lang) }
     static func trialWhatWasTested(_ lang: AppLang) -> String { string("trial.whatWasTested", lang) }
     static func trialAttackPrefix(_ lang: AppLang) -> String { string("trial.attackPrefix", lang) }
     static func trialRefereePrefix(_ lang: AppLang) -> String { string("trial.refereePrefix", lang) }
@@ -854,6 +855,7 @@ enum L10n {
         "trial.survived",
         "trial.uncertain",
         "trial.overturned",
+        "trial.minor",
         "trial.whatWasTested",
         "trial.attackPrefix",
         "trial.refereePrefix",

@@ -112,6 +112,7 @@ const vi: Locale = {
     "trial.survived": "🛡️ Bác bỏ phản đối: luật sư phía bên kia đã nêu phản đối mạnh nhất của mình, và phán quyết vẫn đứng vững. Độ tin cậy giữ nguyên.",
     "trial.uncertain": "⚠️ Luật sư phía bên kia đã phản đối, và sự phản đối đó để lại nghi ngờ thật sự về phán quyết này",
     "trial.overturned": "⚠️ Chấp nhận phản đối: phán quyết vẫn giữ nguyên, nhưng phản đối mạnh nhất của phía bên kia đã làm nó yếu đi nghiêm trọng",
+    "trial.minor": "🛡️ Luật sư phía bên kia nêu một điểm hợp lý, nhưng phán quyết vẫn giữ nguyên",
     "trial.whatWasTested": "Phản đối",
     "trial.attackPrefix": "Phản đối:",
     "trial.refereePrefix": "Lý do:",

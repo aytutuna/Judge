@@ -112,6 +112,7 @@ const fr: Locale = {
     "trial.survived": "🛡️ Objection rejetée : l’avocat de l’autre camp a soulevé sa plus forte objection, et le verdict a tenu. L’indice de confiance ne bouge pas.",
     "trial.uncertain": "⚠️ L’avocat de l’autre camp a fait objection, et cette objection a laissé un vrai doute sur ce verdict",
     "trial.overturned": "⚠️ Objection retenue : le verdict tient, mais la plus forte objection de l’autre camp l’affaiblit sérieusement",
+    "trial.minor": "🛡️ L’avocat de l’autre camp a soulevé un point juste, mais le verdict tient",
     "trial.whatWasTested": "L’objection",
     "trial.attackPrefix": "Objection :",
     "trial.refereePrefix": "Pourquoi :",

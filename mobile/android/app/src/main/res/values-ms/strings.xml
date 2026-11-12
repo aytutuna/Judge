@@ -84,6 +84,7 @@
     <string name="trial_survived">Bantahan ditolak: peguam pihak satu lagi mengemukakan bantahan paling kuatnya, dan keputusan ini tetap bertahan. Skor keyakinan tidak berubah.</string>
     <string name="trial_uncertain">Peguam pihak satu lagi membantah, dan bantahan itu meninggalkan keraguan sebenar tentang keputusan ini</string>
     <string name="trial_overturned">Bantahan diterima: keputusan kekal, tetapi bantahan paling kuat pihak satu lagi melemahkannya dengan serius</string>
+    <string name="trial_minor">Peguam pihak satu lagi membangkitkan perkara yang wajar, tetapi keputusan kekal</string>
     <string name="trial_what_was_tested">Bantahan</string>
     <string name="trial_attack_prefix">Bantahan:</string>
     <string name="trial_referee_prefix">Sebabnya:</string>

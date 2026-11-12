@@ -112,6 +112,7 @@ const nb: Locale = {
     "trial.survived": "🛡️ Innsigelsen er avvist: den andre sidens advokat kom med sin sterkeste innsigelse, og dommen holdt. Sikkerheten er uendret.",
     "trial.uncertain": "⚠️ Den andre sidens advokat gjorde innsigelse, og innsigelsen skapte reell tvil om dommen",
     "trial.overturned": "⚠️ Innsigelsen er tatt til følge: dommen står, men den andre sidens sterkeste innsigelse svekker den alvorlig",
+    "trial.minor": "🛡️ Den andre sidens advokat tok opp et rimelig poeng, men dommen står",
     "trial.whatWasTested": "Innsigelsen",
     "trial.attackPrefix": "Innsigelse:",
     "trial.refereePrefix": "Hvorfor:",

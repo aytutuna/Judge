@@ -112,6 +112,7 @@ const de: Locale = {
     "trial.survived": "🛡️ Einspruch abgewiesen: Der Anwalt der Gegenseite hat seinen stärksten Einspruch erhoben, und das Urteil hat gehalten. Die Sicherheit bleibt unverändert.",
     "trial.uncertain": "⚠️ Der Anwalt der Gegenseite hat Einspruch erhoben, und der Einspruch hat echte Zweifel an diesem Urteil hinterlassen",
     "trial.overturned": "⚠️ Einspruch stattgegeben: Das Urteil bleibt bestehen, wird aber durch den stärksten Einspruch der Gegenseite ernsthaft geschwächt",
+    "trial.minor": "🛡️ Der Anwalt der Gegenseite hat einen berechtigten Punkt angesprochen, aber das Urteil gilt weiterhin",
     "trial.whatWasTested": "Der Einspruch",
     "trial.attackPrefix": "Einspruch:",
     "trial.refereePrefix": "Warum:",

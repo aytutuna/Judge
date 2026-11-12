@@ -112,6 +112,7 @@ const ko: Locale = {
     "trial.survived": "🛡️ 이의 기각: 상대편 변호인이 가장 강한 이의를 제기했지만 판결은 버텼어요. 신뢰도는 그대로예요.",
     "trial.uncertain": "⚠️ 상대편 변호인이 이의를 제기했고, 그 이의가 이 판결에 진지한 의문을 남겼어요",
     "trial.overturned": "⚠️ 이의 인용: 판결은 유지되지만, 상대편의 가장 강한 이의가 판결을 크게 약화시켰어요",
+    "trial.minor": "🛡️ 상대편 변호인이 타당한 점을 짚었지만, 판결은 그대로예요",
     "trial.whatWasTested": "이의",
     "trial.attackPrefix": "이의:",
     "trial.refereePrefix": "이유:",

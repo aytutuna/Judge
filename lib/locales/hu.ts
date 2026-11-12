@@ -112,6 +112,7 @@ const hu: Locale = {
     "trial.survived": "🛡️ A tiltakozást elutasították: a másik oldal ügyvédje előadta a legerősebb tiltakozását, az ítélet pedig megállt. A bizonyosság nem változik.",
     "trial.uncertain": "⚠️ A másik oldal ügyvédje tiltakozott, és a tiltakozás valódi kétséget hagyott ezzel az ítélettel kapcsolatban",
     "trial.overturned": "⚠️ A tiltakozásnak helyt adtak: az ítélet érvényben marad, de a másik oldal legerősebb tiltakozása komolyan gyengítette",
+    "trial.minor": "🛡️ A másik oldal ügyvédje jogos pontot említett, de az ítélet érvényben marad",
     "trial.whatWasTested": "A tiltakozás",
     "trial.attackPrefix": "Tiltakozás:",
     "trial.refereePrefix": "Miért:",

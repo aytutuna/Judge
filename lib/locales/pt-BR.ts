@@ -112,6 +112,7 @@ const ptBR: Locale = {
     "trial.survived": "🛡️ Objeção indeferida: o advogado do outro lado levantou a objeção mais forte dele, e o veredito se manteve. A confiança não muda.",
     "trial.uncertain": "⚠️ O advogado do outro lado levantou uma objeção, e ela deixou dúvidas sérias sobre este veredito",
     "trial.overturned": "⚠️ Objeção deferida: o veredito se mantém, mas a objeção mais forte do outro lado o enfraquece seriamente",
+    "trial.minor": "🛡️ O advogado do outro lado fez um ponto justo, mas o veredito se mantém",
     "trial.whatWasTested": "A objeção",
     "trial.attackPrefix": "Objeção:",
     "trial.refereePrefix": "Por quê:",

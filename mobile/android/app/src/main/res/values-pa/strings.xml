@@ -85,6 +85,7 @@
     <string name="trial_survived">ਇਤਰਾਜ਼ ਰੱਦ: ਦੂਜੇ ਪੱਖ ਦੇ ਵਕੀਲ ਨੇ ਆਪਣਾ ਸਭ ਤੋਂ ਸਖ਼ਤ ਇਤਰਾਜ਼ ਉਠਾਇਆ, ਅਤੇ ਫ਼ੈਸਲਾ ਟਿਕਿਆ ਰਿਹਾ। ਭਰੋਸੇ ਦਾ ਸਕੋਰ ਉਹੀ ਰਹਿੰਦਾ ਹੈ।</string>
     <string name="trial_uncertain">ਦੂਜੇ ਪੱਖ ਦੇ ਵਕੀਲ ਨੇ ਇਤਰਾਜ਼ ਉਠਾਇਆ, ਅਤੇ ਉਸ ਇਤਰਾਜ਼ ਨੇ ਇਸ ਫ਼ੈਸਲੇ ’ਤੇ ਸੱਚਾ ਸ਼ੱਕ ਛੱਡਿਆ</string>
     <string name="trial_overturned">ਇਤਰਾਜ਼ ਮਨਜ਼ੂਰ: ਫ਼ੈਸਲਾ ਕਾਇਮ ਹੈ, ਪਰ ਦੂਜੇ ਪੱਖ ਦੇ ਸਭ ਤੋਂ ਸਖ਼ਤ ਇਤਰਾਜ਼ ਨੇ ਇਸ ਨੂੰ ਗੰਭੀਰ ਤੌਰ ’ਤੇ ਕਮਜ਼ੋਰ ਕਰ ਦਿੱਤਾ</string>
+    <string name="trial_minor">ਦੂਜੇ ਪੱਖ ਦੇ ਵਕੀਲ ਨੇ ਇੱਕ ਜਾਇਜ਼ ਨੁਕਤਾ ਉਠਾਇਆ, ਪਰ ਫ਼ੈਸਲਾ ਕਾਇਮ ਹੈ</string>
     <string name="trial_what_was_tested">ਇਤਰਾਜ਼</string>
     <string name="trial_attack_prefix">ਇਤਰਾਜ਼:</string>
     <string name="trial_referee_prefix">ਕਾਰਨ:</string>

@@ -85,6 +85,7 @@
     <string name="trial_survived">વાંધો નામંજૂર: સામેની બાજુના વકીલે પોતાનો સૌથી મજબૂત વાંધો ઉઠાવ્યો, અને ચુકાદો ટકી રહ્યો. વિશ્વાસ સ્કોર એનો એ જ.</string>
     <string name="trial_uncertain">સામેની બાજુના વકીલે વાંધો ઉઠાવ્યો, અને એ વાંધાએ આ ચુકાદા પર સાચી શંકા છોડી</string>
     <string name="trial_overturned">વાંધો મંજૂર: ચુકાદો કાયમ છે, પણ સામેની બાજુના સૌથી મજબૂત વાંધાએ તેને ગંભીર રીતે નબળો પાડ્યો</string>
+    <string name="trial_minor">સામેની બાજુના વકીલે એક વાજબી મુદ્દો ઉઠાવ્યો, પણ ચુકાદો કાયમ છે</string>
     <string name="trial_what_was_tested">વાંધો</string>
     <string name="trial_attack_prefix">વાંધો:</string>
     <string name="trial_referee_prefix">કારણ:</string>
