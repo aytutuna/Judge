@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.flowOf
@@ -187,6 +188,8 @@ class HomeViewModel(
     private val example: (AppLang, Double) -> Examples.Example? = { _, _ -> null },
     /** Where the draft lives past the form: a Back-exit ends the SavedStateHandle with the screen. */
     private val drafts: DraftStore? = null,
+    /** Fires when the user signs out or deletes the account: nothing typed stays for the next person. */
+    accountEnded: Flow<Unit> = emptyFlow(),
 ) : ViewModel() {
 
     val evidence = EvidenceController(viewModelScope, MAX_EVIDENCE_PER_SIDE, uploadEvidence)
@@ -202,6 +205,12 @@ class HomeViewModel(
             flow.shareLink.collect {
                 clear()
                 _shareLink.send(it)
+            }
+        }
+        viewModelScope.launch {
+            accountEnded.collect {
+                clear()
+                saved[KEY_NAME] = null
             }
         }
         // Refused tokens would fail the same way on every retry.

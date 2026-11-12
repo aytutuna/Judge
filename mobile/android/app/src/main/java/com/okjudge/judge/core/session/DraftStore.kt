@@ -28,9 +28,17 @@ class MemoryDraft(private var draft: Draft? = null) : DraftStore {
     }
 }
 
-class PrefsDraft(private val prefs: SharedPreferences) : DraftStore {
+class PrefsDraft(
+    private val prefs: SharedPreferences,
+    private val clock: () -> Long = System::currentTimeMillis,
+) : DraftStore {
     override fun load(): Draft? {
         if (!prefs.contains(ARGUMENT)) return null
+        // A draft with no time (from before drafts expired) counts as old.
+        if (clock() - prefs.getLong(SAVED_AT, 0L) > MAX_AGE_MS) {
+            save(null)
+            return null
+        }
         return Draft(
             argument = prefs.getString(ARGUMENT, "").orEmpty(),
             other = prefs.getString(OTHER, "").orEmpty(),
@@ -50,17 +58,22 @@ class PrefsDraft(private val prefs: SharedPreferences) : DraftStore {
                 putString(OTHER_NAME, draft.otherName)
                 putString(NAME, draft.name)
                 putBoolean(THEIRS_OPEN, draft.theirsOpen)
-                putString(MORE_TEXT, draft.moreText.joinToString(SEP))
-                putString(MORE_NAME, draft.moreName.joinToString(SEP))
+                putString(MORE_TEXT, join(draft.moreText))
+                putString(MORE_NAME, join(draft.moreName))
+                putLong(SAVED_AT, clock())
             }
         }.apply()
     }
 
-    // The side's own text can hold any character but NUL.
-    private fun split(joined: String?): List<String> = if (joined.isNullOrEmpty()) emptyList() else joined.split(SEP)
+    // The side's own text can hold any character but NUL. No key at all is no extra sides; an empty value is one empty side.
+    private fun join(list: List<String>): String? = if (list.isEmpty()) null else list.joinToString(SEP)
+
+    private fun split(joined: String?): List<String> = joined?.split(SEP).orEmpty()
 
     private companion object {
         const val SEP = "\u0000"
+        const val MAX_AGE_MS = 24L * 60 * 60 * 1000
+        const val SAVED_AT = "saved_at"
         const val ARGUMENT = "argument"
         const val OTHER = "other"
         const val OTHER_NAME = "other_name"

@@ -28,6 +28,7 @@ import com.okjudge.judge.i18n.LocalizedStrings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -121,6 +122,9 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
      */
     val historyUser: StateFlow<String?> = _historyUser.asStateFlow()
 
+    /** Emits when the user signs out or deletes the account, for screens holding typed text. */
+    val accountEnded = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+
     val drafts: PrefsDraft by lazy { PrefsDraft(appContext.getSharedPreferences("home_draft", Context.MODE_PRIVATE)) }
 
     val settings: SettingsStore by lazy { DataStoreSettings(appContext) }
@@ -149,7 +153,11 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
 
     /** Keeps the Verdicts cache with the session: signing out (or deleting the account) takes the account's rows off the phone. */
     fun start() {
-        account.onEndedByUser = { history.forgetAccounts() }
+        account.onEndedByUser = {
+            history.forgetAccounts()
+            drafts.save(null)
+            accountEnded.tryEmit(Unit)
+        }
         account.onSignedIn = { analytics.track("sign_in_completed") }
         appScope.launch { settings.usageStats.collect { analytics.allowed = it } }
         appScope.launch {

@@ -25,6 +25,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
@@ -175,6 +176,22 @@ class HomeViewModelTest {
         second.clear()
         assertNull(store.load())
         assertEquals("", open().state.value.argument)
+    }
+
+    @Test
+    fun signingOutEmptiesTheFormAndTheDraft() {
+        val store = MemoryDraft()
+        val ended = MutableSharedFlow<Unit>()
+        val vm = HomeViewModel(SavedStateHandle(), flow, flowOf(Account.State.SignedOut), flowOf(Account.Providers.Loading), drafts = store, accountEnded = ended)
+        vm.onArgumentChange(argument)
+        vm.addTheirSide()
+        vm.onOtherSideChange("Their account of it.")
+        assertTrue(store.load() != null)
+        runBlocking { ended.emit(Unit) }
+        assertEquals("", vm.state.value.argument)
+        assertEquals("", vm.state.value.otherSide)
+        assertFalse(vm.state.value.theirsOpen)
+        assertNull(store.load())
     }
 
     @Test
