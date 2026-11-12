@@ -557,7 +557,7 @@ private struct CruxTrialNote: View {
                     DisclosureGroup(isExpanded: $expanded) {
                         VStack(alignment: .leading, spacing: 6) {
                             SlotText(L10n.trialAttackPrefix(lang) + " " + trial.attack)
-                            if !trial.reasoning.isEmpty {
+                            if !trial.reasoning.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                                 SlotText(L10n.trialRefereePrefix(lang) + " " + trial.reasoning)
                             }
                         }
@@ -589,7 +589,7 @@ private struct CruxTrialNote: View {
                 }
                 .multilineTextAlignment(.leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                if !trial.reasoning.isEmpty, !trial.attack.isEmpty {
+                if !trial.reasoning.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, !trial.attack.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     DisclosureGroup(isExpanded: $expanded) {
                         SlotText(L10n.trialAttackPrefix(lang) + " " + trial.attack)
                             .multilineTextAlignment(.leading)
