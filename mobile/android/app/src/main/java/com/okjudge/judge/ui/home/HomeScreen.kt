@@ -19,7 +19,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.isImeVisible
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -52,6 +54,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
@@ -329,12 +332,6 @@ fun HomeScreen(
     val scroll = rememberScrollState()
     // The window's height, not the free space: the keyboard must not swap the layout under the cursor.
     val shortWindow = LocalConfiguration.current.screenHeightDp < SHORT_WINDOW.value
-    val scrollsAll = !LocalGamify.current || shortWindow
-    val imeUp = WindowInsets.isImeVisible && scrollsAll
-    // With the keyboard up the send row stays at the bottom edge of the scrolled form, clear of the keys.
-    LaunchedEffect(imeUp) {
-        if (imeUp) snapshotFlow { scroll.maxValue }.collect { scroll.animateScrollTo(it) }
-    }
     BoxWithConstraints(modifier.fillMaxSize().background(Palette.ivory).imePadding().clearFocusOnTap()) {
         // No court, or no room for one: the form and the composer scroll together from the top.
         val flat = !LocalGamify.current || shortWindow
@@ -470,6 +467,15 @@ private fun SideCard(
 ) {
     val s = LocalStrings.current
     var focused by remember { mutableStateOf(false) }
+    val sendRow = remember { BringIntoViewRequester() }
+    val ime = WindowInsets.ime
+    val density = LocalDensity.current
+    // The composer keeps its send row above the keyboard while it opens; the other sides only follow the caret.
+    if (trailing != null) {
+        LaunchedEffect(focused) {
+            if (focused) snapshotFlow { ime.getBottom(density) }.collect { if (it > 0) sendRow.bringIntoView() }
+        }
+    }
     Column(
         Modifier
             .fillMaxWidth()
@@ -542,7 +548,7 @@ private fun SideCard(
             },
         )
         if (onAddContext != null || count != null || trailing != null) {
-            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Row(Modifier.fillMaxWidth().bringIntoViewRequester(sendRow), verticalAlignment = Alignment.CenterVertically) {
                 // The label gives way, the counter and the send button keep their size.
                 Box(Modifier.weight(1f), contentAlignment = Alignment.CenterStart) {
                     if (onAddContext != null) AddContextButton(enabled, onAddContext)
