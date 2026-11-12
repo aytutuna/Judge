@@ -199,7 +199,7 @@ final class HomeModel {
         let digest = held.key.digest
         let earlier = loadSaved().flatMap { $0.request == digest ? $0 : nil }
         var saved = SavedRequest(
-            request: digest, venue: held.id, body: keys.current?.hash, key: keys.current?.key, since: earlier?.since ?? .now
+            request: digest, venue: held.id, body: keys.current?.hash ?? earlier?.body, key: keys.current?.key ?? earlier?.key, since: earlier?.since ?? .now
         )
         if let pending, pending.key == held.key { saved.accepted = pending.accepted.id }
         defaults.set(try? JSONEncoder().encode(saved), forKey: Self.savedKey)
