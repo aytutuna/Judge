@@ -23,6 +23,7 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertIsNotFocused
+import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.assertHeightIsAtLeast
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performTouchInput
@@ -223,10 +224,10 @@ class ScreensTest {
     }
 
     @Test
-    fun home_addTheirSide_movesTheFocusToTheirBox() {
+    fun home_addTheirSide_leavesTheFocusAlone() {
         home(AppLang.EN)
         compose.onNodeWithTag(HomeTags.ADD_THEIRS).performClick()
-        compose.onNodeWithTag(HomeTags.OTHER).assertIsFocused()
+        compose.onNodeWithTag(HomeTags.OTHER).assertIsNotFocused()
     }
 
     @Test
