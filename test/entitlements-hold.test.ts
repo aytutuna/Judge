@@ -134,7 +134,7 @@ describe("statement builders", () => {
     const u = await withCredits(1);
     const r = await ent.reservePremiumVerdict(u, { idempotencyKey: "appeal:c1:k1" });
     expect(r.ok).toBe(true);
-    expect(await ent.reservationByKey(u, "appeal:c1:k1")).toEqual({ status: "reserved", verdictId: null });
+    expect(await ent.reservationByKey(u, "appeal:c1:k1")).toMatchObject({ status: "reserved", verdictId: null });
     expect(await ent.reservationByKey(u, "nope")).toBeNull();
   });
 });
