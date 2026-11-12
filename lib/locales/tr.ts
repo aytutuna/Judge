@@ -113,11 +113,11 @@ const tr: Locale = {
     "vote.dissolved": "anlam farkı",
     refusedNote: "Yapay zekâ bu kez pas geçti. Sahte bir karar göstermektense hiç göstermeyiz.",
     demoNote: "🎭 Demo modu: API anahtarı yok, bu örnek bir karar",
-    "trial.survived": "🛡️ Dayanıklılık testi geçildi: ayrı bir yargıç karşı tarafın en güçlü karşı argümanıyla bu kararı yıkmaya çalıştı, karar ayakta kaldı. Güven puanı aynı kaldı.",
-    "trial.uncertain": "⚠️ Dayanıklılık testi: karşı tarafın en güçlü karşı argümanı bu karar hakkında ciddi şüphe bıraktı",
-    "trial.overturned": "⚠️ Dayanıklılık testi geçilemedi: karşı tarafın en güçlü karşı argümanı bu karardan daha ağır bastı",
-    "trial.whatWasTested": "Dayanıklılık testi neyi denedi",
-    "trial.attackPrefix": "En güçlü karşı argüman:",
+    "trial.survived": "🛡️ İtiraz reddedildi: karşı tarafın avukatı en güçlü itirazını yaptı, karar ayakta kaldı. Güven puanı değişmedi.",
+    "trial.uncertain": "⚠️ Karşı tarafın avukatı itiraz etti ve itiraz bu karar hakkında ciddi şüphe bıraktı",
+    "trial.overturned": "⚠️ İtiraz kabul edildi: karşı tarafın en güçlü itirazı bu karardan ağır bastı",
+    "trial.whatWasTested": "İtiraz",
+    "trial.attackPrefix": "İtiraz:",
     "trial.refereePrefix": "Neden:",
     "trial.mixedNote": "Bu karma bir tartışma: biraz olgu, biraz değer ya da sözcük anlamı içeriyor; bu yüzden net bir galibiyeti savunmak daha zor.",
     confidence: "Güven: {total} üzerinden {n}",
@@ -186,9 +186,9 @@ const tr: Locale = {
     "how.step4.title": "Üç bağımsız yargıç",
     "how.step4.body":
       "Üç yargıç ayrı ayrı karar verir, oylar başa başsa ek yargıç çağrılır. Güven puanı ne kadar emin konuştuklarına değil, ne kadar anlaştıklarına bakar.",
-    "how.step5.title": "Önce karar, sonra dayanıklılık testi",
+    "how.step5.title": "Önce karar, sonra itiraz",
     "how.step5.body":
-      "Kararı ve güven puanını alırsın, yanında karşı tarafın en sağlam kozu da gelir. Sonra ayrı bir yargıç, karşı tarafın en güçlü karşı argümanını kazanan karara yöneltir; karar sallanırsa nedeniyle birlikte bir uyarı görürsün.",
+      "Kararı ve güven puanını alırsın, yanında karşı tarafın en sağlam kozu da gelir. Sonra ayrı bir yargıç karşı tarafın avukatını oynayıp kazanan karara en güçlü itirazını yöneltir; itiraz tutarsa nedeniyle birlikte bir uyarı görürsün.",
     "sample.title": "Bir karar neye benzer",
     "sample.kicker": "Sonuç",
     "sample.lead":
@@ -214,7 +214,7 @@ const tr: Locale = {
       "Karar almak için hesap gerekir. Metnin, isimler Taraf A ve Taraf B'ye çevrilsin diye harici bir yapay zekâ hizmetine gider ve yalnızca bu hâli yargılanır. Yazdığını, isimler dahil, şifreli olarak saklarız; böylece tekrar görebilirsin. İstediğin an kaldırılmasını isteyebilirsin. Paylaşım bağlantıları senin seçtiğin isimleri gösterir ya da hiç isim göstermez.",
     "faq.powers.q": "Arkasında ne var?",
     "faq.powers.a":
-      "Harici bir sağlayıcının yapay zekâ modeli. Üç yargıç aynı ayrıntılı talimatla yan yana çalışır, oylar başa başsa ek yargıçlar da katılır. Olgulara dayanan kazanan kararlar sonra ayrı bir yargıcın dayanıklılık testinden geçer. Güven puanını basit bir kod hesaplar, yargıçların ne sıklıkla anlaştığına bakar.",
+      "Harici bir sağlayıcının yapay zekâ modeli. Üç yargıç aynı ayrıntılı talimatla yan yana çalışır, oylar başa başsa ek yargıçlar da katılır. Olgulara dayanan kazanan kararlar sonra karşı tarafın avukatını oynayan ayrı bir yargıcın itirazıyla karşılaşır. Güven puanını basit bir kod hesaplar, yargıçların ne sıklıkla anlaştığına bakar.",
     "faq.taste.q": "Ya iş sadece zevk meselesiyse?",
     "faq.taste.a":
       "O zaman bunu söyler: “Değerlerine bağlı” ya da “Aynı kelime, farklı anlamlar”. Yargıçların hangi tarafa yattığını da gösterir, üstünde açıkça zorunlu hüküm olduğu yazar.",
@@ -247,7 +247,7 @@ const tr: Locale = {
     "about.limit4": "Eğlence ve netlik için. Hukuki, tıbbi ya da mali tavsiye değil.",
     "about.builtTitle": "Perde arkası",
     "about.built":
-      "Judge, harici bir sağlayıcının yapay zekâ modeliyle çalışır. Üç yargıç aynı anda karar verir, oylar başa başsa ek yargıçlar da katılır. Ne kadar anlaştıkları güven puanını belirler. Kazanan olgusal bir hüküm de kesinleşmeden önce ayrı bir yargıcın dayanıklılık testinden geçer.",
+      "Judge, harici bir sağlayıcının yapay zekâ modeliyle çalışır. Üç yargıç aynı anda karar verir, oylar başa başsa ek yargıçlar da katılır. Ne kadar anlaştıkları güven puanını belirler. Kazanan olgusal bir hüküm de kesinleşmeden önce ayrı bir yargıcın itirazıyla karşılaşır.",
     "about.art": "Piksel sanat: {author} tarafından {pack}",
     "privacy.title": "Gizlilik",
     "privacy.kicker": "Verilerin",

@@ -109,11 +109,11 @@ const da: Locale = {
     "vote.dissolved": "ordstrid",
     refusedNote: "AI'en stod over på den her. Vi viser hellere ingenting end en opdigtet dom.",
     demoNote: "🎭 Demotilstand: der er ingen AI-nøgle sat op, så det her er en eksempeldom",
-    "trial.survived": "🛡️ Belastningstesten er bestået: en separat dommer prøvede at knække dommen med den anden sides stærkeste indvending, og den holdt. Sikkerheden er uændret.",
-    "trial.uncertain": "⚠️ Belastningstest: den anden sides stærkeste indvending efterlod reel tvivl om dommen",
-    "trial.overturned": "⚠️ Belastningstesten slog fejl: den anden sides stærkeste indvending vejede tungere end dommen",
-    "trial.whatWasTested": "Det prøvede belastningstesten",
-    "trial.attackPrefix": "Hårdeste indvending:",
+    "trial.survived": "🛡️ Indsigelsen afvist: den anden sides advokat kom med sin stærkeste indsigelse, og dommen holdt. Sikkerheden er uændret.",
+    "trial.uncertain": "⚠️ Den anden sides advokat gjorde indsigelse, og den efterlod reel tvivl om dommen",
+    "trial.overturned": "⚠️ Indsigelsen taget til følge: den anden sides stærkeste indsigelse vejede tungere end dommen",
+    "trial.whatWasTested": "Indsigelsen",
+    "trial.attackPrefix": "Indsigelse:",
     "trial.refereePrefix": "Hvorfor:",
     "trial.mixedNote": "Det her er en blandet uenighed: dels fakta, dels værdier eller ords betydning, så en ren sejr er sværere at forsvare.",
     confidence: "Sikkerhed: {n} ud af {total}",
@@ -182,9 +182,9 @@ const da: Locale = {
     "how.step4.title": "Tre uafhængige dommere",
     "how.step4.body":
       "Tre dommere dømmer hver for sig, og er det tæt, kommer der flere til. Sikkerheden kommer af, hvor enige de er, ikke af, hvor sikre de lyder.",
-    "how.step5.title": "Først dom, så belastningstest",
+    "how.step5.title": "Først dom, så indsigelse",
     "how.step5.body":
-      "Du får dommen og en sikkerhedsscore plus den anden sides bedste pointe. Derefter kaster en separat dommer den anden sides stærkeste indvending mod en vindende dom, og vakler den, får du en advarsel med begrundelsen.",
+      "Du får dommen og en sikkerhedsscore plus den anden sides bedste pointe. Derefter spiller en separat dommer den anden sides advokat og fremfører sin stærkeste indsigelse mod en vindende dom. Rammer den, får du en advarsel med begrundelsen.",
     "sample.title": "Sådan ser en dom ud",
     "sample.kicker": "Resultatet",
     "sample.lead":
@@ -210,7 +210,7 @@ const da: Locale = {
       "Du skal have en konto for at få en dom. Din tekst sendes til en ekstern AI-tjeneste, så navnene kan blive byttet ud med Part A og Part B, og kun den version bliver bedømt. Vi gemmer det, du skrev, krypteret og med navne, så du kan se det igen; du kan til enhver tid få det fjernet. Delingslinks viser de navne, du vælger, eller ingen.",
     "faq.powers.q": "Hvad kører det på?",
     "faq.powers.a":
-      "En AI-model fra en ekstern udbyder. Tre dommere kører side om side på en struktureret dommerprompt, og flere kommer til, når det er tæt. Vindende afgørelser om fakta får bagefter en belastningstest af en separat dommer. Sikkerhedsberegningen er helt almindelig kode, der tæller, hvor ofte dommerne er enige.",
+      "En AI-model fra en ekstern udbyder. Tre dommere kører side om side på en struktureret dommerprompt, og flere kommer til, når det er tæt. Vindende afgørelser om fakta møder bagefter en indsigelse fra en separat dommer, der spiller den anden sides advokat. Sikkerhedsberegningen er helt almindelig kode, der tæller, hvor ofte dommerne er enige.",
     "faq.taste.q": "Hvad hvis det bare er en smagssag?",
     "faq.taste.a":
       "Så siger den det: »Det afhænger af dine værdier« eller »Samme ord, forskellige betydninger«. Du kan stadig se, hvilken vej dommerne hælder, tydeligt markeret som en tvunget dom.",
@@ -243,7 +243,7 @@ const da: Locale = {
     "about.limit4": "Det er for sjov og klarhed, ikke juridisk, medicinsk eller økonomisk rådgivning.",
     "about.builtTitle": "Under motorhjelmen",
     "about.built":
-      "Judge kører på en AI-model fra en ekstern udbyder. Tre dommere arbejder parallelt, og flere kommer til, når det er tæt. Hvor enige de er, bestemmer sikkerhedsscoren, og en vindende afgørelse om fakta skal igennem en belastningstest hos en separat dommer, før den står ved magt.",
+      "Judge kører på en AI-model fra en ekstern udbyder. Tre dommere arbejder parallelt, og flere kommer til, når det er tæt. Hvor enige de er, bestemmer sikkerhedsscoren, og en vindende afgørelse om fakta skal først modstå en indsigelse fra en separat dommer, før den står ved magt.",
     "about.art": "Pixelkunst: {pack} af {author}",
     "privacy.title": "Privatliv",
     "privacy.kicker": "Dine data",

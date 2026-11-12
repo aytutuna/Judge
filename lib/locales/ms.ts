@@ -109,11 +109,11 @@ const ms: Locale = {
     "vote.dissolved": "salah faham",
     refusedNote: "AI tidak mahu masuk campur kali ini. Kami lebih rela tidak tunjuk apa-apa daripada mereka-reka keputusan.",
     demoNote: "🎭 Mod demo: tiada kunci AI ditetapkan, jadi ini contoh keputusan",
-    "trial.survived": "🛡️ Ujian ketahanan lulus: seorang hakim berasingan cuba menjatuhkan keputusan ini dengan bantahan paling kuat pihak satu lagi, dan keputusan ini tetap bertahan. Skor keyakinan tidak berubah.",
-    "trial.uncertain": "⚠️ Ujian ketahanan: bantahan paling kuat pihak satu lagi meninggalkan keraguan sebenar tentang keputusan ini",
-    "trial.overturned": "⚠️ Ujian ketahanan gagal: bantahan paling kuat pihak satu lagi lebih berat daripada keputusan ini",
-    "trial.whatWasTested": "Apa yang dicuba oleh ujian ketahanan",
-    "trial.attackPrefix": "Bantahan paling kuat:",
+    "trial.survived": "🛡️ Bantahan ditolak: peguam pihak satu lagi mengemukakan bantahan paling kuatnya, dan keputusan ini tetap bertahan. Skor keyakinan tidak berubah.",
+    "trial.uncertain": "⚠️ Peguam pihak satu lagi membantah, dan bantahan itu meninggalkan keraguan sebenar tentang keputusan ini",
+    "trial.overturned": "⚠️ Bantahan diterima: bantahan paling kuat pihak satu lagi lebih berat daripada keputusan ini",
+    "trial.whatWasTested": "Bantahan",
+    "trial.attackPrefix": "Bantahan:",
     "trial.refereePrefix": "Sebabnya:",
     "trial.mixedNote": "Ini pertikaian bercampur: sebahagian fakta, sebahagian nilai atau makna perkataan, jadi kemenangan yang jelas lebih sukar dipertahankan.",
     confidence: "Keyakinan {n} daripada {total}",
@@ -183,9 +183,9 @@ const ms: Locale = {
     "how.step4.title": "Tiga hakim bebas",
     "how.step4.body":
       "Tiga hakim memutuskan secara berasingan, dan kalau keputusannya rapat, lebih ramai dipanggil. Keyakinan datang daripada sejauh mana mereka sependapat, bukan sejauh mana mereka kedengaran yakin.",
-    "how.step5.title": "Keputusan, kemudian ujian ketahanan",
+    "how.step5.title": "Keputusan, kemudian bantahan",
     "how.step5.body":
-      "Anda dapat keputusan dan skor keyakinan, bersama hujah terbaik pihak satu lagi. Kemudian seorang hakim berasingan melontarkan bantahan paling kuat pihak satu lagi kepada keputusan yang menang, dan kalau ia goyah, anda akan diberi amaran beserta sebabnya.",
+      "Anda dapat keputusan dan skor keyakinan, bersama hujah terbaik pihak satu lagi. Kemudian seorang hakim berasingan memainkan peranan peguam pihak satu lagi dan mengemukakan bantahan paling kuatnya terhadap keputusan yang menang, dan kalau bantahan itu mengena, anda akan diberi amaran beserta sebabnya.",
     "sample.title": "Rupa sebuah keputusan",
     "sample.kicker": "Hasilnya",
     "sample.lead":
@@ -211,7 +211,7 @@ const ms: Locale = {
       "Anda perlukan akaun untuk mendapatkan keputusan. Teks anda dihantar kepada perkhidmatan AI luar supaya nama boleh ditukar kepada Pihak A dan Pihak B, dan hanya versi itu yang dinilai. Kami simpan apa yang anda tulis, termasuk nama, secara disulitkan, supaya anda boleh melihatnya semula; anda boleh minta ia dibuang bila-bila masa. Pautan kongsi menunjukkan nama yang anda pilih, atau tiada nama langsung.",
     "faq.powers.q": "Apa yang menggerakkannya?",
     "faq.powers.a":
-      "Model AI daripada penyedia luar. Tiga hakim berjalan serentak dengan arahan penilaian yang berstruktur, dan lebih ramai menyertai kalau keputusannya rapat. Keputusan fakta yang menang kemudian menghadapi ujian ketahanan oleh hakim berasingan. Pengiraan keyakinan hanyalah kod biasa yang mengira berapa kerap hakim sependapat.",
+      "Model AI daripada penyedia luar. Tiga hakim berjalan serentak dengan arahan penilaian yang berstruktur, dan lebih ramai menyertai kalau keputusannya rapat. Keputusan fakta yang menang kemudian menghadapi bantahan daripada hakim berasingan yang memainkan peranan peguam pihak satu lagi. Pengiraan keyakinan hanyalah kod biasa yang mengira berapa kerap hakim sependapat.",
     "faq.taste.q": "Bagaimana kalau ia cuma soal citarasa?",
     "faq.taste.a":
       "Kalau begitu, ia akan beritahu anda: “Bergantung pada nilai anda” atau “Perkataan sama, maksud berbeza”. Anda tetap nampak ke arah mana hakim condong, ditanda dengan jelas sebagai keputusan paksa.",
@@ -244,7 +244,7 @@ const ms: Locale = {
     "about.limit4": "Ia untuk suka-suka dan kejelasan, bukan nasihat undang-undang, perubatan atau kewangan.",
     "about.builtTitle": "Di sebalik tabir",
     "about.built":
-      "Judge menggunakan model AI daripada penyedia luar. Tiga hakim bekerja serentak dan lebih ramai menyertai kalau keputusannya rapat. Sejauh mana mereka sependapat menentukan skor keyakinan, dan keputusan fakta yang menang perlu melalui ujian ketahanan oleh hakim berasingan sebelum diterima.",
+      "Judge menggunakan model AI daripada penyedia luar. Tiga hakim bekerja serentak dan lebih ramai menyertai kalau keputusannya rapat. Sejauh mana mereka sependapat menentukan skor keyakinan, dan keputusan fakta yang menang perlu menghadapi bantahan daripada hakim berasingan sebelum diterima.",
     "about.art": "Seni piksel: {pack} oleh {author}",
     "privacy.title": "Privasi",
     "privacy.kicker": "Data anda",

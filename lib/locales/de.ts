@@ -109,11 +109,11 @@ const de: Locale = {
     "vote.dissolved": "Missverständnis",
     refusedNote: "Die KI hat bei diesem Fall gepasst. Lieber zeigen wir gar nichts als ein erfundenes Urteil.",
     demoNote: "🎭 Demo-Modus: kein KI-Schlüssel eingerichtet, daher ein Beispielurteil",
-    "trial.survived": "🛡️ Belastungstest bestanden: Ein separater Richter hat versucht, dieses Urteil mit dem stärksten Einwand der Gegenseite zu kippen, und es hat gehalten. Die Sicherheit bleibt unverändert.",
-    "trial.uncertain": "⚠️ Belastungstest: Der stärkste Einwand der Gegenseite hat echte Zweifel an diesem Urteil hinterlassen",
-    "trial.overturned": "⚠️ Belastungstest nicht bestanden: Der stärkste Einwand der Gegenseite wog schwerer als dieses Urteil",
-    "trial.whatWasTested": "Was der Belastungstest versucht hat",
-    "trial.attackPrefix": "Stärkstes Gegenargument:",
+    "trial.survived": "🛡️ Einspruch abgewiesen: Der Anwalt der Gegenseite hat seinen stärksten Einspruch erhoben, und das Urteil hat gehalten. Die Sicherheit bleibt unverändert.",
+    "trial.uncertain": "⚠️ Der Anwalt der Gegenseite hat Einspruch erhoben, und der Einspruch hat echte Zweifel an diesem Urteil hinterlassen",
+    "trial.overturned": "⚠️ Einspruch stattgegeben: Der stärkste Einspruch der Gegenseite wog schwerer als dieses Urteil",
+    "trial.whatWasTested": "Der Einspruch",
+    "trial.attackPrefix": "Einspruch:",
     "trial.refereePrefix": "Warum:",
     "trial.mixedNote": "Das ist ein gemischter Streit: teils Fakten, teils Werte oder Wortbedeutungen, deshalb ist ein klarer Sieg schwerer zu verteidigen.",
     confidence: "Sicherheit {n} von {total}",
@@ -181,9 +181,9 @@ const de: Locale = {
     "how.step4.title": "Drei unabhängige Richter",
     "how.step4.body":
       "Drei Richter urteilen getrennt, bei knappen Fällen kommen weitere dazu. Die Sicherheit hängt davon ab, wie einig sie sich sind, nicht davon, wie überzeugt sie klingen.",
-    "how.step5.title": "Erst das Urteil, dann ein Belastungstest",
+    "how.step5.title": "Erst das Urteil, dann ein Einspruch",
     "how.step5.body":
-      "Du bekommst das Urteil und einen Sicherheitswert, dazu das stärkste Argument der Gegenseite. Dann wirft ein separater Richter den stärksten Einwand der Gegenseite auf ein siegreiches Urteil, und wenn es wackelt, bekommst du eine Warnung samt Begründung.",
+      "Du bekommst das Urteil und einen Sicherheitswert, dazu das stärkste Argument der Gegenseite. Dann schlüpft ein separater Richter in die Rolle des Anwalts der Gegenseite und erhebt gegen ein siegreiches Urteil den stärksten Einspruch. Sitzt er, bekommst du eine Warnung samt Begründung.",
     "sample.title": "So sieht ein Urteil aus",
     "sample.kicker": "Das Ergebnis",
     "sample.lead":
@@ -209,7 +209,7 @@ const de: Locale = {
       "Für ein Urteil brauchst du ein Konto. Dein Text geht an einen externen KI-Dienst, damit die Namen durch Partei A und Partei B ersetzt werden, und nur diese Fassung wird beurteilt. Was du geschrieben hast, speichern wir samt Namen verschlüsselt, damit du es wieder ansehen kannst; du kannst es jederzeit entfernen lassen. Geteilte Links zeigen die Namen, die du auswählst, oder gar keine.",
     "faq.powers.q": "Was steckt dahinter?",
     "faq.powers.a":
-      "Ein KI-Modell eines externen Anbieters. Drei Richter arbeiten parallel mit einem strukturierten Bewertungs-Prompt, bei knappen Fällen kommen weitere dazu. Wer auf Basis von Fakten gewinnt, muss danach zusätzlich durch einen Belastungstest bei einem separaten Richter. Die Sicherheit berechnet schlichter Code, der zählt, wie oft die Richter übereinstimmen.",
+      "Ein KI-Modell eines externen Anbieters. Drei Richter arbeiten parallel mit einem strukturierten Bewertungs-Prompt, bei knappen Fällen kommen weitere dazu. Wer auf Basis von Fakten gewinnt, muss danach zusätzlich einen Einspruch bestehen, den ein separater Richter als Anwalt der Gegenseite erhebt. Die Sicherheit berechnet schlichter Code, der zählt, wie oft die Richter übereinstimmen.",
     "faq.taste.q": "Und wenn es einfach Geschmackssache ist?",
     "faq.taste.a":
       "Dann sagt Judge dir das: „Kommt auf deine Werte an“ oder „Ein Wort, zwei Bedeutungen“. Du siehst trotzdem, wohin die Richter tendieren, klar als erzwungenes Urteil gekennzeichnet.",
@@ -242,7 +242,7 @@ const de: Locale = {
     "about.limit4": "Zum Spaß und für mehr Klarheit, keine rechtliche, medizinische oder finanzielle Beratung.",
     "about.builtTitle": "Unter der Haube",
     "about.built":
-      "Judge läuft mit einem KI-Modell eines externen Anbieters. Drei Richter arbeiten parallel, bei knappen Fällen kommen weitere dazu. Wie einig sie sich sind, bestimmt die Sicherheit, und ein Sieg auf Faktenbasis muss erst einen Belastungstest bei einem separaten Richter bestehen, bevor er gilt.",
+      "Judge läuft mit einem KI-Modell eines externen Anbieters. Drei Richter arbeiten parallel, bei knappen Fällen kommen weitere dazu. Wie einig sie sich sind, bestimmt die Sicherheit, und ein Sieg auf Faktenbasis muss erst einen Einspruch bestehen, den ein separater Richter erhebt, bevor er gilt.",
     "about.art": "Pixel-Art: {pack} von {author}",
     "privacy.title": "Datenschutz",
     "privacy.kicker": "Deine Daten",

@@ -109,11 +109,11 @@ const sv: Locale = {
     "vote.dissolved": "ordstrid",
     refusedNote: "AI:n stod över den här gången. Vi visar hellre ingenting än en låtsasdom.",
     demoNote: "🎭 Demoläge: ingen AI-nyckel är inställd, så det här är en exempeldom",
-    "trial.survived": "🛡️ Hållbarhetstestet klarades: en separat domare försökte fälla domen med andra sidans starkaste invändning, och den höll. Säkerheten är oförändrad.",
-    "trial.uncertain": "⚠️ Hållbarhetstest: andra sidans starkaste invändning lämnade verkligt tvivel om domen",
-    "trial.overturned": "⚠️ Hållbarhetstestet misslyckades: andra sidans starkaste invändning vägde tyngre än domen",
-    "trial.whatWasTested": "Det här försökte hållbarhetstestet",
-    "trial.attackPrefix": "Tyngsta invändningen:",
+    "trial.survived": "🛡️ Invändningen avslogs: andra sidans advokat framförde sin starkaste invändning, och domen höll. Säkerheten är oförändrad.",
+    "trial.uncertain": "⚠️ Andra sidans advokat gjorde en invändning, och den lämnade verkligt tvivel om domen",
+    "trial.overturned": "⚠️ Invändningen bifölls: andra sidans starkaste invändning vägde tyngre än domen",
+    "trial.whatWasTested": "Invändningen",
+    "trial.attackPrefix": "Invändning:",
     "trial.refereePrefix": "Varför:",
     "trial.mixedNote": "Det här är en blandad tvist: delvis fakta, delvis värderingar eller ords betydelse, så en ren seger är svårare att försvara.",
     confidence: "Säkerhet {n} av {total}",
@@ -182,9 +182,9 @@ const sv: Locale = {
     "how.step4.title": "Tre oberoende domare",
     "how.step4.body":
       "Tre domare dömer var för sig, och är det jämnt kallas fler in. Säkerheten kommer från hur överens de är, inte hur säkra de låter.",
-    "how.step5.title": "Dom, sedan hållbarhetstest",
+    "how.step5.title": "Dom, sedan invändning",
     "how.step5.body":
-      "Du får domen och en säkerhetspoäng, plus andra sidans bästa argument. Sedan kastar en separat domare andra sidans starkaste invändning mot en vinnande dom, och om den vacklar får du en varning med skälet.",
+      "Du får domen och en säkerhetspoäng, plus andra sidans bästa argument. Sedan spelar en separat domare andra sidans advokat och framför dennes starkaste invändning mot en vinnande dom, och om den träffar får du en varning med skälet.",
     "sample.title": "Så ser en dom ut",
     "sample.kicker": "Resultatet",
     "sample.lead":
@@ -210,7 +210,7 @@ const sv: Locale = {
       "Du behöver ett konto för att få en dom. Din text skickas till en extern AI-tjänst så att namnen kan bytas ut mot Part A och Part B, och bara den versionen döms. Vi sparar det du skrev, namn inräknade, krypterat, så att du kan se det igen; du kan få det borttaget när som helst. Delningslänkar visar de namn du väljer, eller inga.",
     "faq.powers.q": "Vad driver det?",
     "faq.powers.a":
-      "En AI-modell från en extern leverantör. Tre domare körs sida vid sida med en strukturerad domarprompt, och fler ansluter när det är jämnt. Vinnande faktadomar får därefter ett hållbarhetstest av en separat domare. Säkerhetsberäkningen är vanlig kod som räknar hur ofta domarna är överens.",
+      "En AI-modell från en extern leverantör. Tre domare körs sida vid sida med en strukturerad domarprompt, och fler ansluter när det är jämnt. Vinnande faktadomar får därefter en invändning från en separat domare som spelar andra sidans advokat. Säkerhetsberäkningen är vanlig kod som räknar hur ofta domarna är överens.",
     "faq.taste.q": "Tänk om det bara är en smaksak?",
     "faq.taste.a":
       "Då säger den det: ”Det beror på vad du värderar” eller ”Samma ord, olika betydelser”. Du ser ändå åt vilket håll domarna lutar, tydligt märkt som ett framtvingat avgörande.",
@@ -243,7 +243,7 @@ const sv: Locale = {
     "about.limit4": "Det är till för skoj och tydlighet, inte juridisk, medicinsk eller ekonomisk rådgivning.",
     "about.builtTitle": "Under huven",
     "about.built":
-      "Judge körs på en AI-modell från en extern leverantör. Tre domare arbetar parallellt och fler ansluter när det är jämnt. Hur överens de är avgör säkerhetspoängen, och en vinnande faktadom får klara ett hållbarhetstest hos en separat domare innan den får stå kvar.",
+      "Judge körs på en AI-modell från en extern leverantör. Tre domare arbetar parallellt och fler ansluter när det är jämnt. Hur överens de är avgör säkerhetspoängen, och en vinnande faktadom får först klara en invändning från en separat domare innan den får stå kvar.",
     "about.art": "Pixelkonst: {pack} av {author}",
     "privacy.title": "Integritet",
     "privacy.kicker": "Dina uppgifter",

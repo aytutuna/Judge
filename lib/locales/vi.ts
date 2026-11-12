@@ -109,11 +109,11 @@ const vi: Locale = {
     "vote.dissolved": "lệch nghĩa",
     refusedNote: "AI đã từ chối vụ này. Chúng tôi thà không hiện gì còn hơn bịa ra một phán quyết.",
     demoNote: "🎭 Chế độ demo: chưa thiết lập khóa AI nên đây là phán quyết mẫu",
-    "trial.survived": "🛡️ Đã vượt qua bài kiểm tra độ bền: một giám khảo riêng đã thử hạ phán quyết này bằng phản bác mạnh nhất của phía bên kia, và nó vẫn đứng vững. Độ tin cậy giữ nguyên.",
-    "trial.uncertain": "⚠️ Bài kiểm tra độ bền: phản bác mạnh nhất của phía bên kia để lại nghi ngờ thật sự về phán quyết này",
-    "trial.overturned": "⚠️ Không vượt qua bài kiểm tra độ bền: phản bác mạnh nhất của phía bên kia nặng ký hơn phán quyết này",
-    "trial.whatWasTested": "Bài kiểm tra độ bền đã thử gì",
-    "trial.attackPrefix": "Phản bác gắt nhất:",
+    "trial.survived": "🛡️ Bác bỏ phản đối: luật sư phía bên kia đã nêu phản đối mạnh nhất của mình, và phán quyết vẫn đứng vững. Độ tin cậy giữ nguyên.",
+    "trial.uncertain": "⚠️ Luật sư phía bên kia đã phản đối, và sự phản đối đó để lại nghi ngờ thật sự về phán quyết này",
+    "trial.overturned": "⚠️ Chấp nhận phản đối: phản đối mạnh nhất của phía bên kia nặng ký hơn phán quyết này",
+    "trial.whatWasTested": "Phản đối",
+    "trial.attackPrefix": "Phản đối:",
     "trial.refereePrefix": "Lý do:",
     "trial.mixedNote": "Đây là tranh chấp pha trộn: một phần là sự thật, một phần là giá trị hoặc nghĩa của từ, nên khó bảo vệ một chiến thắng rõ ràng hơn.",
     confidence: "Độ tin cậy {n}/{total}",
@@ -182,9 +182,9 @@ const vi: Locale = {
     "how.step4.title": "Ba giám khảo độc lập",
     "how.step4.body":
       "Ba giám khảo phân xử riêng rẽ, nếu sát nút sẽ gọi thêm giám khảo. Độ tin cậy đến từ mức độ họ đồng thuận, không phải từ việc họ nói chắc nịch đến đâu.",
-    "how.step5.title": "Phán quyết, rồi bài kiểm tra độ bền",
+    "how.step5.title": "Phán quyết, rồi phản đối",
     "how.step5.body":
-      "Bạn nhận phán quyết và độ tin cậy, kèm điểm mạnh nhất của phía bên kia. Sau đó một giám khảo riêng ném phản bác mạnh nhất của phía bên kia vào phán quyết thắng, và nếu nó lung lay, bạn sẽ nhận được cảnh báo kèm lý do.",
+      "Bạn nhận phán quyết và độ tin cậy, kèm điểm mạnh nhất của phía bên kia. Sau đó một giám khảo riêng đóng vai luật sư phía bên kia và nêu phản đối mạnh nhất của họ trước phán quyết thắng, và nếu phản đối đó trúng đích, bạn sẽ nhận được cảnh báo kèm lý do.",
     "sample.title": "Một phán quyết trông thế nào",
     "sample.kicker": "Kết quả",
     "sample.lead":
@@ -210,7 +210,7 @@ const vi: Locale = {
       "Bạn cần có tài khoản để nhận phán quyết. Nội dung của bạn được gửi tới một dịch vụ AI bên ngoài để thay các tên bằng Bên A và Bên B, và chỉ bản đó được đem ra phân xử. Chúng tôi lưu những gì bạn viết, kể cả tên, ở dạng mã hóa để bạn xem lại; bạn có thể yêu cầu gỡ bỏ bất cứ lúc nào. Liên kết chia sẻ hiển thị tên bạn chọn, hoặc không hiển thị tên nào.",
     "faq.powers.q": "Judge chạy bằng gì?",
     "faq.powers.a":
-      "Một mô hình AI của một nhà cung cấp bên ngoài. Ba giám khảo chạy song song theo một hướng dẫn phân xử có cấu trúc, có thêm giám khảo khi sát nút. Phán quyết thắng về mặt sự thật còn qua một bài kiểm tra độ bền do một giám khảo riêng thực hiện. Độ tin cậy được tính bằng một đoạn mã đơn giản, đếm xem các giám khảo đồng ý với nhau thường xuyên đến đâu.",
+      "Một mô hình AI của một nhà cung cấp bên ngoài. Ba giám khảo chạy song song theo một hướng dẫn phân xử có cấu trúc, có thêm giám khảo khi sát nút. Phán quyết thắng về mặt sự thật còn phải đối mặt với phản đối của một giám khảo riêng đóng vai luật sư phía bên kia. Độ tin cậy được tính bằng một đoạn mã đơn giản, đếm xem các giám khảo đồng ý với nhau thường xuyên đến đâu.",
     "faq.taste.q": "Nếu chỉ là chuyện sở thích thì sao?",
     "faq.taste.a":
       "Khi đó Judge sẽ nói thẳng: “Tùy bạn coi trọng điều gì” hoặc “Cùng một từ, khác nghĩa”. Bạn vẫn thấy ban giám khảo nghiêng về phía nào, được ghi rõ là buộc phải chọn.",
@@ -243,7 +243,7 @@ const vi: Locale = {
     "about.limit4": "Để giải trí và cho rõ ràng, không phải tư vấn pháp lý, y tế hay tài chính.",
     "about.builtTitle": "Bên trong",
     "about.built":
-      "Judge chạy trên một mô hình AI của một nhà cung cấp bên ngoài. Ba giám khảo làm việc song song và có thêm giám khảo khi sát nút. Mức độ đồng thuận của họ quyết định độ tin cậy, và một phán quyết thắng về mặt sự thật phải qua một bài kiểm tra độ bền do một giám khảo riêng thực hiện trước khi được giữ nguyên.",
+      "Judge chạy trên một mô hình AI của một nhà cung cấp bên ngoài. Ba giám khảo làm việc song song và có thêm giám khảo khi sát nút. Mức độ đồng thuận của họ quyết định độ tin cậy, và một phán quyết thắng về mặt sự thật phải đối mặt với phản đối của một giám khảo riêng trước khi được giữ nguyên.",
     "about.art": "Đồ họa pixel: {pack} của {author}",
     "privacy.title": "Quyền riêng tư",
     "privacy.kicker": "Dữ liệu của bạn",

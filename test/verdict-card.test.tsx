@@ -124,13 +124,13 @@ describe("VerdictView", () => {
     expect(html(<VerdictView result={{ ...base, why, lang: "tr" }} lang="tr" />)).toContain(">Neden</h3>");
   });
 
-  it("says why a stress test left doubt, and owns up to a mixed dispute", () => {
+  it("says why an objection left doubt, and owns up to a mixed dispute", () => {
     const trial = { attack: "Menus vary by country.", outcome: "uncertain" as const, reasoning: "Only some menus list it." };
     const out = html(<VerdictView result={{ ...base, dispute_type: "mixed", crux_trial: trial }} lang="en" />);
     expect(out).toContain("Why:");
     expect(out).toContain("Only some menus list it.");
     expect(out).toContain(esc(t("en", "trial.mixedNote")));
-    expect(out).toContain("Strongest objection:");
+    expect(out).toContain("Objection:");
     expect(out).toContain("Menus vary by country.");
     const bare = html(<VerdictView result={{ ...base, dispute_type: "mixed", crux_trial: { ...trial, reasoning: "" } }} lang="en" />);
     expect(count(bare, "Menus vary by country.")).toBe(1);

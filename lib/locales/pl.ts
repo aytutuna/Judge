@@ -109,11 +109,11 @@ const pl: Locale = {
     "vote.dissolved": "spór o słowa",
     refusedNote: "Tym razem AI wstrzymuje się od głosu. Wolimy nic nie pokazać, niż udawać werdykt.",
     demoNote: "🎭 Tryb demo: brak klucza AI, więc to przykładowy werdykt",
-    "trial.survived": "🛡️ Test wytrzymałości zaliczony: osobny sędzia próbował obalić ten werdykt najmocniejszym zarzutem drugiej strony, a werdykt się obronił. Pewność bez zmian.",
-    "trial.uncertain": "⚠️ Test wytrzymałości: najmocniejszy zarzut drugiej strony zostawił realne wątpliwości co do tego werdyktu",
-    "trial.overturned": "⚠️ Test wytrzymałości oblany: najmocniejszy zarzut drugiej strony przeważył nad tym werdyktem",
-    "trial.whatWasTested": "Co próbował test wytrzymałości",
-    "trial.attackPrefix": "Najmocniejszy zarzut:",
+    "trial.survived": "🛡️ Sprzeciw oddalony: adwokat drugiej strony zgłosił swój najmocniejszy sprzeciw, a werdykt się obronił. Pewność bez zmian.",
+    "trial.uncertain": "⚠️ Adwokat drugiej strony zgłosił sprzeciw i ten sprzeciw zostawił realne wątpliwości co do tego werdyktu",
+    "trial.overturned": "⚠️ Sprzeciw uwzględniony: najmocniejszy sprzeciw drugiej strony przeważył nad tym werdyktem",
+    "trial.whatWasTested": "Sprzeciw",
+    "trial.attackPrefix": "Sprzeciw:",
     "trial.refereePrefix": "Dlaczego:",
     "trial.mixedNote": "To spór mieszany: po części fakty, po części wartości lub znaczenia słów, więc czystą wygraną trudniej obronić.",
     confidence: "Pewność: {n} z {total}",
@@ -184,9 +184,9 @@ const pl: Locale = {
     "how.step4.title": "Trzech niezależnych sędziów",
     "how.step4.body":
       "Trzech sędziów decyduje osobno, a przy wyrównanym wyniku dochodzą kolejni. Pewność wynika z tego, na ile się zgadzają, a nie z tego, jak pewnie brzmią.",
-    "how.step5.title": "Werdykt i test wytrzymałości",
+    "how.step5.title": "Werdykt i sprzeciw",
     "how.step5.body":
-      "Dostajesz werdykt i poziom pewności, a do tego najmocniejszy argument drugiej strony. Potem osobny sędzia rzuca najmocniejszy zarzut drugiej strony w zwycięski werdykt, a jeśli się chwieje, dostajesz ostrzeżenie z uzasadnieniem.",
+      "Dostajesz werdykt i poziom pewności, a do tego najmocniejszy argument drugiej strony. Potem osobny sędzia wciela się w adwokata drugiej strony i zgłasza jego najmocniejszy sprzeciw wobec zwycięskiego werdyktu, a jeśli trafi, dostajesz ostrzeżenie z uzasadnieniem.",
     "sample.title": "Jak wygląda werdykt",
     "sample.kicker": "Wynik",
     "sample.lead":
@@ -212,7 +212,7 @@ const pl: Locale = {
       "Do werdyktu potrzebne jest konto. Twój tekst trafia do zewnętrznej usługi AI, która zamienia imiona na Stronę A i Stronę B, i oceniana jest tylko ta wersja. To, co piszesz, łącznie z imionami, przechowujemy w formie zaszyfrowanej, więc zawsze możesz do tego wrócić; w każdej chwili możesz też poprosić o usunięcie. Linki do udostępniania pokazują wybrane przez ciebie imiona albo żadne.",
     "faq.powers.q": "Na czym to działa?",
     "faq.powers.a":
-      "Na modelu AI od zewnętrznego dostawcy. Trzech sędziów pracuje równolegle według tych samych, szczegółowych zasad oceniania, a przy wyrównanym wyniku dołączają kolejni. Zwycięskie werdykty oparte na faktach przechodzą potem test wytrzymałości u osobnego sędziego. Poziom pewności liczy zwykły kod, który sprawdza, jak często sędziowie się zgadzają.",
+      "Na modelu AI od zewnętrznego dostawcy. Trzech sędziów pracuje równolegle według tych samych, szczegółowych zasad oceniania, a przy wyrównanym wyniku dołączają kolejni. Zwycięskie werdykty oparte na faktach muszą potem zmierzyć się ze sprzeciwem osobnego sędziego, który wciela się w adwokata drugiej strony. Poziom pewności liczy zwykły kod, który sprawdza, jak często sędziowie się zgadzają.",
     "faq.taste.q": "A jeśli to kwestia gustu?",
     "faq.taste.a":
       "Wtedy usłyszysz: „Zależy, co cenicie” albo „To samo słowo, inne znaczenia”. Nadal zobaczysz, w którą stronę skłaniają się sędziowie – jako werdykt na siłę, wyraźnie tak oznaczony.",
@@ -245,7 +245,7 @@ const pl: Locale = {
     "about.limit4": "To zabawa i sposób na jaśniejsze spojrzenie, a nie porada prawna, medyczna ani finansowa.",
     "about.builtTitle": "Pod maską",
     "about.built":
-      "Judge działa na modelu AI od zewnętrznego dostawcy. Trzech sędziów pracuje równolegle, a przy wyrównanym wyniku dochodzą kolejni. To, na ile się zgadzają, wyznacza poziom pewności, a zwycięski werdykt oparty na faktach musi jeszcze przetrwać test wytrzymałości u osobnego sędziego.",
+      "Judge działa na modelu AI od zewnętrznego dostawcy. Trzech sędziów pracuje równolegle, a przy wyrównanym wyniku dochodzą kolejni. To, na ile się zgadzają, wyznacza poziom pewności, a zwycięski werdykt oparty na faktach musi jeszcze przetrwać sprzeciw osobnego sędziego.",
     "about.art": "Pixel art: {pack} autorstwa {author}",
     "privacy.title": "Prywatność",
     "privacy.kicker": "Twoje dane",

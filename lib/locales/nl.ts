@@ -109,11 +109,11 @@ const nl: Locale = {
     "vote.dissolved": "misverstand",
     refusedNote: "De AI heeft deze overgeslagen. We laten liever niets zien dan een nepuitspraak.",
     demoNote: "🎭 Demomodus: er is geen AI-sleutel ingesteld, dus dit is een voorbeelduitspraak",
-    "trial.survived": "🛡️ Stresstest doorstaan: een aparte rechter probeerde deze uitspraak onderuit te halen met het sterkste bezwaar van de andere kant, en ze hield stand. De zekerheid blijft gelijk.",
-    "trial.uncertain": "⚠️ Stresstest: het sterkste bezwaar van de andere kant liet echte twijfel over deze uitspraak achter",
-    "trial.overturned": "⚠️ Stresstest gefaald: het sterkste bezwaar van de andere kant woog zwaarder dan deze uitspraak",
-    "trial.whatWasTested": "Wat de stresstest probeerde",
-    "trial.attackPrefix": "Zwaarste tegenwerping:",
+    "trial.survived": "🛡️ Bezwaar afgewezen: de advocaat van de andere kant bracht zijn sterkste bezwaar in, en de uitspraak hield stand. De zekerheid blijft gelijk.",
+    "trial.uncertain": "⚠️ De advocaat van de andere kant maakte bezwaar, en dat bezwaar liet echte twijfel over deze uitspraak achter",
+    "trial.overturned": "⚠️ Bezwaar toegewezen: het sterkste bezwaar van de andere kant woog zwaarder dan deze uitspraak",
+    "trial.whatWasTested": "Het bezwaar",
+    "trial.attackPrefix": "Bezwaar:",
     "trial.refereePrefix": "Waarom:",
     "trial.mixedNote": "Dit is een gemengde kwestie: deels feiten, deels waarden of woordbetekenissen, dus een zuivere winst is lastiger te verdedigen.",
     confidence: "Zekerheid {n} van {total}",
@@ -181,9 +181,9 @@ const nl: Locale = {
     "how.step4.title": "Drie onafhankelijke rechters",
     "how.step4.body":
       "Drie rechters oordelen los van elkaar, en bij een nipte uitslag komen er meer bij. De zekerheid hangt af van hoe eensgezind ze zijn, niet van hoe zeker ze klinken.",
-    "how.step5.title": "Uitspraak, dan stresstest",
+    "how.step5.title": "Uitspraak, dan bezwaar",
     "how.step5.body":
-      "Je krijgt de uitspraak en een zekerheidsscore, plus het sterkste punt van de andere kant. Daarna gooit een aparte rechter het sterkste bezwaar van de andere kant op een winnende uitspraak. Gaat die wankelen, dan krijg je een waarschuwing met de reden.",
+      "Je krijgt de uitspraak en een zekerheidsscore, plus het sterkste punt van de andere kant. Daarna speelt een aparte rechter de advocaat van de andere kant en brengt diens sterkste bezwaar in tegen een winnende uitspraak. Slaat dat aan, dan krijg je een waarschuwing met de reden.",
     "sample.title": "Zo ziet een uitspraak eruit",
     "sample.kicker": "Het resultaat",
     "sample.lead":
@@ -209,7 +209,7 @@ const nl: Locale = {
       "Voor een uitspraak heb je een account nodig. Je tekst gaat naar een externe AI-dienst zodat de namen vervangen kunnen worden door Partij A en Partij B, en alleen die versie wordt beoordeeld. Wat je schreef, inclusief namen, bewaren we versleuteld, zodat je het later terug kunt zien. Je kunt het op elk moment laten verwijderen. Deellinks tonen de namen die jij kiest, of helemaal geen.",
     "faq.powers.q": "Wat zit erachter?",
     "faq.powers.a":
-      "Een AI-model van een externe aanbieder. Drie rechters draaien naast elkaar op een uitgewerkte beoordelingsinstructie, en bij een nipte uitslag komen er meer bij. Winnende uitspraken over feiten krijgen daarna nog een stresstest van een aparte rechter. De zekerheidsscore is gewone code die telt hoe vaak de rechters het eens zijn.",
+      "Een AI-model van een externe aanbieder. Drie rechters draaien naast elkaar op een uitgewerkte beoordelingsinstructie, en bij een nipte uitslag komen er meer bij. Winnende uitspraken over feiten krijgen daarna nog een bezwaar van een aparte rechter, die de advocaat van de andere kant speelt. De zekerheidsscore is gewone code die telt hoe vaak de rechters het eens zijn.",
     "faq.taste.q": "En als het gewoon een kwestie van smaak is?",
     "faq.taste.a":
       "Dan zegt het dat ook: “Het hangt af van je waarden” of “Zelfde woord, andere betekenis”. Je ziet nog steeds welke kant de rechters op neigen, duidelijk gemarkeerd als gedwongen keuze.",
@@ -242,7 +242,7 @@ const nl: Locale = {
     "about.limit4": "Het is voor de lol en voor duidelijkheid, geen juridisch, medisch of financieel advies.",
     "about.builtTitle": "Onder de motorkap",
     "about.built":
-      "Judge draait op een AI-model van een externe aanbieder. Drie rechters werken tegelijk en bij een nipte uitslag komen er meer bij. Hoe eensgezind ze zijn, bepaalt de zekerheidsscore, en een winnende uitspraak over feiten moet eerst nog door een stresstest van een aparte rechter voordat hij staat.",
+      "Judge draait op een AI-model van een externe aanbieder. Drie rechters werken tegelijk en bij een nipte uitslag komen er meer bij. Hoe eensgezind ze zijn, bepaalt de zekerheidsscore, en een winnende uitspraak over feiten moet eerst nog een bezwaar van een aparte rechter doorstaan voordat hij staat.",
     "about.art": "Pixelart: {pack} van {author}",
     "privacy.title": "Privacy",
     "privacy.kicker": "Jouw gegevens",

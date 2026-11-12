@@ -109,11 +109,11 @@ const ptPT: Locale = {
     "vote.dissolved": "equívoco",
     refusedNote: "A IA ficou de fora desta. Preferimos não mostrar nada a inventar uma decisão.",
     demoNote: "🎭 Modo demo: não há chave de IA configurada, por isso este é um veredicto de exemplo",
-    "trial.survived": "🛡️ Teste de resistência superado: um juiz separado tentou derrubar esta decisão com a objeção mais forte do outro lado, e ela aguentou. A confiança mantém-se.",
-    "trial.uncertain": "⚠️ Teste de resistência: a objeção mais forte do outro lado deixou dúvidas sérias sobre esta decisão",
-    "trial.overturned": "⚠️ Teste de resistência falhado: a objeção mais forte do outro lado pesou mais do que esta decisão",
-    "trial.whatWasTested": "O que o teste de resistência tentou",
-    "trial.attackPrefix": "Objeção mais forte:",
+    "trial.survived": "🛡️ Objeção indeferida: o advogado do outro lado levantou a sua objeção mais forte, e a decisão aguentou. A confiança mantém-se.",
+    "trial.uncertain": "⚠️ O advogado do outro lado levantou uma objeção, e ela deixou dúvidas sérias sobre esta decisão",
+    "trial.overturned": "⚠️ Objeção deferida: a objeção mais forte do outro lado pesou mais do que esta decisão",
+    "trial.whatWasTested": "A objeção",
+    "trial.attackPrefix": "Objeção:",
     "trial.refereePrefix": "Porquê:",
     "trial.mixedNote": "Esta é uma disputa mista: em parte factos, em parte valores ou significados de palavras, por isso uma vitória limpa é mais difícil de defender.",
     confidence: "Confiança: {n} de {total}",
@@ -181,9 +181,9 @@ const ptPT: Locale = {
     "how.step4.title": "Três juízes independentes",
     "how.step4.body":
       "Três juízes decidem em separado e, se estiver renhido, entram mais. A confiança vem de quanto concordam, não de quão seguros parecem.",
-    "how.step5.title": "Veredicto e depois teste de resistência",
+    "how.step5.title": "Veredicto e depois objeção",
     "how.step5.body":
-      "Recebes a decisão e uma pontuação de confiança, mais o melhor argumento do outro lado. Depois um juiz separado lança a objeção mais forte do outro lado contra uma decisão vencedora e, se vacilar, recebes um aviso com o motivo.",
+      "Recebes a decisão e uma pontuação de confiança, mais o melhor argumento do outro lado. Depois um juiz separado faz de advogado do outro lado e levanta a sua objeção mais forte contra uma decisão vencedora e, se pegar, recebes um aviso com o motivo.",
     "sample.title": "Assim é um veredicto",
     "sample.kicker": "O resultado",
     "sample.lead":
@@ -209,7 +209,7 @@ const ptPT: Locale = {
       "Precisas de uma conta para obter um veredicto. O teu texto vai para um serviço de IA externo para trocar os nomes por Parte A e Parte B, e só essa versão é julgada. Guardamos o que escreveste, nomes incluídos, encriptado, para o poderes voltar a ver; podes pedir que seja apagado quando quiseres. Os links de partilha mostram os nomes que escolheres, ou nenhum.",
     "faq.powers.q": "O que está por trás?",
     "faq.powers.a":
-      "Um modelo de IA de um fornecedor externo. Três juízes trabalham lado a lado com instruções de avaliação estruturadas, e entram mais quando está renhido. As decisões vencedoras baseadas em factos passam depois por um teste de resistência feito por um juiz separado. O cálculo da confiança é código simples que conta quantas vezes os juízes concordam.",
+      "Um modelo de IA de um fornecedor externo. Três juízes trabalham lado a lado com instruções de avaliação estruturadas, e entram mais quando está renhido. As decisões vencedoras baseadas em factos enfrentam depois a objeção de um juiz separado que faz de advogado do outro lado. O cálculo da confiança é código simples que conta quantas vezes os juízes concordam.",
     "faq.taste.q": "E se for só uma questão de gosto?",
     "faq.taste.a":
       "Então diz-te isso mesmo: «Depende dos teus valores» ou «Mesma palavra, sentidos diferentes». Vês na mesma para que lado os juízes se inclinam, bem marcado como decisão forçada.",
@@ -242,7 +242,7 @@ const ptPT: Locale = {
     "about.limit4": "É para diversão e clareza, não é aconselhamento jurídico, médico nem financeiro.",
     "about.builtTitle": "Por dentro",
     "about.built":
-      "O Judge funciona com um modelo de IA de um fornecedor externo. Três juízes trabalham em paralelo e entram mais quando está renhido. O grau de acordo entre eles define a pontuação de confiança, e uma decisão vencedora baseada em factos enfrenta um teste de resistência feito por um juiz separado antes de ser dada como certa.",
+      "O Judge funciona com um modelo de IA de um fornecedor externo. Três juízes trabalham em paralelo e entram mais quando está renhido. O grau de acordo entre eles define a pontuação de confiança, e uma decisão vencedora baseada em factos enfrenta a objeção de um juiz separado antes de ser dada como certa.",
     "about.art": "Pixel art: {pack} de {author}",
     "privacy.title": "Privacidade",
     "privacy.kicker": "Os teus dados",

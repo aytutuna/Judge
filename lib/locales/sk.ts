@@ -109,11 +109,11 @@ const sk: Locale = {
     "vote.dissolved": "nedorozumenie",
     refusedNote: "AI sa do tohto nepustila. Radšej neukážeme nič, ako by sme mali predstierať verdikt.",
     demoNote: "🎭 Demo režim: nie je nastavený AI kľúč, takže toto je ukážkový verdikt",
-    "trial.survived": "🛡️ Záťažový test splnený: samostatný sudca sa toto rozhodnutie pokúsil rozbiť najsilnejšou námietkou druhej strany a rozhodnutie obstálo. Istota sa nemení.",
-    "trial.uncertain": "⚠️ Záťažový test: najsilnejšia námietka druhej strany zanechala o tomto rozhodnutí skutočné pochybnosti",
-    "trial.overturned": "⚠️ Záťažový test neprešiel: najsilnejšia námietka druhej strany prevážila nad týmto rozhodnutím",
-    "trial.whatWasTested": "Čo záťažový test skúšal",
-    "trial.attackPrefix": "Najtvrdšia námietka:",
+    "trial.survived": "🛡️ Námietka zamietnutá: advokát druhej strany vzniesol svoju najsilnejšiu námietku a rozhodnutie obstálo. Istota sa nemení.",
+    "trial.uncertain": "⚠️ Advokát druhej strany vzniesol námietku a tá zanechala o tomto rozhodnutí skutočné pochybnosti",
+    "trial.overturned": "⚠️ Námietka prijatá: najsilnejšia námietka druhej strany prevážila nad týmto rozhodnutím",
+    "trial.whatWasTested": "Námietka",
+    "trial.attackPrefix": "Námietka:",
     "trial.refereePrefix": "Prečo:",
     "trial.mixedNote": "Je to zmiešaný spor: sčasti fakty, sčasti hodnoty alebo významy slov, takže čistú výhru je ťažšie obhájiť.",
     confidence: "Istota {n} z {total}",
@@ -181,9 +181,9 @@ const sk: Locale = {
     "how.step4.title": "Traja nezávislí sudcovia",
     "how.step4.body":
       "Traja sudcovia rozhodujú oddelene a pri tesnom výsledku prizveme ďalších. Istota vychádza z toho, nakoľko sa zhodujú, nie z toho, ako sebaisto znejú.",
-    "how.step5.title": "Verdikt a potom záťažový test",
+    "how.step5.title": "Verdikt a potom námietka",
     "how.step5.body":
-      "Dostaneš rozhodnutie a skóre istoty, k tomu najsilnejší argument druhej strany. Potom samostatný sudca vrhne najsilnejšiu námietku druhej strany na víťazné rozhodnutie, a ak zakolíše, dostaneš varovanie aj s dôvodom.",
+      "Dostaneš rozhodnutie a skóre istoty, k tomu najsilnejší argument druhej strany. Potom samostatný sudca zahrá advokáta druhej strany a vznesie jeho najsilnejšiu námietku proti víťaznému rozhodnutiu. Ak zaberie, dostaneš varovanie aj s dôvodom.",
     "sample.title": "Ako vyzerá verdikt",
     "sample.kicker": "Výsledok",
     "sample.lead":
@@ -209,7 +209,7 @@ const sk: Locale = {
       "Na verdikt potrebuješ účet. Tvoj text ide do externej AI služby, aby sa mená nahradili označeniami Strana A a Strana B, a posudzuje sa len táto verzia. To, čo napíšeš, aj s menami, uchovávame zašifrované, takže sa k tomu môžeš vrátiť; kedykoľvek môžeš požiadať o odstránenie. Odkazy na zdieľanie ukazujú mená, ktoré si vyberieš, alebo žiadne.",
     "faq.powers.q": "Na čom to beží?",
     "faq.powers.a":
-      "Na AI modeli od externého poskytovateľa. Traja sudcovia bežia vedľa seba so štruktúrovaným zadaním na posudzovanie a pri tesnom výsledku sa pridajú ďalší. Víťazné rozhodnutia o faktoch potom prejdú záťažovým testom u samostatného sudcu. Výpočet istoty je obyčajný kód, ktorý počíta, ako často sa sudcovia zhodnú.",
+      "Na AI modeli od externého poskytovateľa. Traja sudcovia bežia vedľa seba so štruktúrovaným zadaním na posudzovanie a pri tesnom výsledku sa pridajú ďalší. Víťazné rozhodnutia o faktoch potom čelia námietke samostatného sudcu v úlohe advokáta druhej strany. Výpočet istoty je obyčajný kód, ktorý počíta, ako často sa sudcovia zhodnú.",
     "faq.taste.q": "Čo ak je to len vec vkusu?",
     "faq.taste.a":
       "Potom ti to povie: „Záleží na tvojich hodnotách“ alebo „Rovnaké slovo, iný význam“. Aj tak uvidíš, kam sa sudcovia prikláňajú, jasne označené ako vynútené rozhodnutie.",
@@ -242,7 +242,7 @@ const sk: Locale = {
     "about.limit4": "Je to na zábavu a pre jasnosť, nie ako právna, zdravotná či finančná rada.",
     "about.builtTitle": "Pod kapotou",
     "about.built":
-      "Judge beží na AI modeli od externého poskytovateľa. Traja sudcovia pracujú súčasne a pri tesnom výsledku sa pridajú ďalší. Miera ich zhody určuje skóre istoty a víťazné rozhodnutie o faktoch musí ešte obstáť v záťažovom teste u samostatného sudcu.",
+      "Judge beží na AI modeli od externého poskytovateľa. Traja sudcovia pracujú súčasne a pri tesnom výsledku sa pridajú ďalší. Miera ich zhody určuje skóre istoty a víťazné rozhodnutie o faktoch musí ešte obstáť pred námietkou samostatného sudcu.",
     "about.art": "Pixel art: {pack} od {author}",
     "privacy.title": "Súkromie",
     "privacy.kicker": "Tvoje údaje",

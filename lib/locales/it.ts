@@ -109,11 +109,11 @@ const it: Locale = {
     "vote.dissolved": "equivoco",
     refusedNote: "L'IA ha preferito non esprimersi. Meglio non mostrare niente che inventarsi un verdetto.",
     demoNote: "🎭 Modalità demo: nessuna chiave IA configurata, quindi questo è un verdetto di esempio",
-    "trial.survived": "🛡️ Prova di tenuta superata: un giudice a parte ha provato a far crollare questo verdetto con l'obiezione più forte dell'altra parte, e ha retto. La certezza non cambia.",
-    "trial.uncertain": "⚠️ Prova di tenuta: l'obiezione più forte dell'altra parte ha lasciato dubbi seri su questo verdetto",
-    "trial.overturned": "⚠️ Prova di tenuta fallita: l'obiezione più forte dell'altra parte ha pesato più di questo verdetto",
-    "trial.whatWasTested": "Cosa ha provato la prova di tenuta",
-    "trial.attackPrefix": "L'obiezione più dura:",
+    "trial.survived": "🛡️ Obiezione respinta: l'avvocato dell'altra parte ha sollevato la sua obiezione più forte, e il verdetto ha retto. La certezza non cambia.",
+    "trial.uncertain": "⚠️ L'avvocato dell'altra parte ha sollevato un'obiezione, e l'obiezione ha lasciato dubbi seri su questo verdetto",
+    "trial.overturned": "⚠️ Obiezione accolta: l'obiezione più forte dell'altra parte ha pesato più di questo verdetto",
+    "trial.whatWasTested": "L'obiezione",
+    "trial.attackPrefix": "Obiezione:",
     "trial.refereePrefix": "Perché:",
     "trial.mixedNote": "È una disputa mista: in parte fatti, in parte valori o significati delle parole, quindi una vittoria netta è più difficile da difendere.",
     confidence: "Certezza {n} su {total}",
@@ -181,9 +181,9 @@ const it: Locale = {
     "how.step4.title": "Tre giudici indipendenti",
     "how.step4.body":
       "Tre giudici decidono separatamente e, se è in bilico, ne arrivano altri. La certezza dipende da quanto sono d'accordo, non da quanto sembrano sicuri.",
-    "how.step5.title": "Verdetto, poi prova di tenuta",
+    "how.step5.title": "Verdetto, poi obiezione",
     "how.step5.body":
-      "Ricevi il verdetto e un punteggio di certezza, più l'argomento migliore dell'altra parte. Poi un giudice a parte lancia l'obiezione più forte dell'altra parte contro un verdetto vincente e, se vacilla, ricevi un avviso con il motivo.",
+      "Ricevi il verdetto e un punteggio di certezza, più l'argomento migliore dell'altra parte. Poi un giudice a parte veste i panni dell'avvocato dell'altra parte e solleva la sua obiezione più forte contro un verdetto vincente e, se va a segno, ricevi un avviso con il motivo.",
     "sample.title": "Com'è fatto un verdetto",
     "sample.kicker": "Il risultato",
     "sample.lead":
@@ -209,7 +209,7 @@ const it: Locale = {
       "Per avere un verdetto ti serve un account. Il tuo testo va a un servizio di IA esterno per sostituire i nomi con Parte A e Parte B, e viene giudicata solo quella versione. Conserviamo quello che hai scritto, nomi compresi, in forma crittografata, così puoi rileggerlo; puoi farlo rimuovere quando vuoi. I link di condivisione mostrano i nomi che scegli tu, oppure nessuno.",
     "faq.powers.q": "Che tecnologia usa?",
     "faq.powers.a":
-      "Un modello di IA di un fornitore esterno. Tre giudici lavorano in parallelo con istruzioni di giudizio strutturate, e altri si aggiungono quando è in bilico. Le vittorie sui fatti passano poi una prova di tenuta con un giudice a parte. Il calcolo della certezza è semplice codice che conta quanto spesso i giudici sono d'accordo.",
+      "Un modello di IA di un fornitore esterno. Tre giudici lavorano in parallelo con istruzioni di giudizio strutturate, e altri si aggiungono quando è in bilico. Le vittorie sui fatti devono poi affrontare l'obiezione di un giudice a parte che veste i panni dell'avvocato dell'altra parte. Il calcolo della certezza è semplice codice che conta quanto spesso i giudici sono d'accordo.",
     "faq.taste.q": "E se è solo una questione di gusti?",
     "faq.taste.a":
       "Allora te lo dice: “Dipende dai tuoi valori” o “Stessa parola, significati diversi”. Vedi comunque da che parte pendono i giudici, segnalato chiaramente come scelta forzata.",
@@ -242,7 +242,7 @@ const it: Locale = {
     "about.limit4": "È per divertimento e chiarezza, non è una consulenza legale, medica o finanziaria.",
     "about.builtTitle": "Dietro le quinte",
     "about.built":
-      "Judge funziona con un modello di IA di un fornitore esterno. Tre giudici lavorano in parallelo e altri si aggiungono quando è in bilico. Quanto sono d'accordo determina il punteggio di certezza, e una vittoria sui fatti affronta una prova di tenuta con un giudice a parte prima di essere confermata.",
+      "Judge funziona con un modello di IA di un fornitore esterno. Tre giudici lavorano in parallelo e altri si aggiungono quando è in bilico. Quanto sono d'accordo determina il punteggio di certezza, e una vittoria sui fatti affronta l'obiezione di un giudice a parte prima di essere confermata.",
     "about.art": "Pixel art: {pack} di {author}",
     "privacy.title": "Privacy",
     "privacy.kicker": "I tuoi dati",

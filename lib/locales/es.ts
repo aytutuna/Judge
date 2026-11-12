@@ -109,11 +109,11 @@ const es: Locale = {
     "vote.dissolved": "malentendido",
     refusedNote: "La IA se abstuvo esta vez. Preferimos no mostrar nada antes que inventarnos una decisión.",
     demoNote: "🎭 Modo demo: no hay ninguna clave de IA configurada, así que este es un veredicto de ejemplo",
-    "trial.survived": "🛡️ Prueba de resistencia superada: un juez aparte intentó tumbar esta decisión con la objeción más fuerte de la otra parte, y aguantó. La confianza no cambia.",
-    "trial.uncertain": "⚠️ Prueba de resistencia: la objeción más fuerte de la otra parte dejó dudas serias sobre esta decisión",
-    "trial.overturned": "⚠️ Prueba de resistencia fallida: la objeción más fuerte de la otra parte pesó más que esta decisión",
-    "trial.whatWasTested": "Qué probó la prueba de resistencia",
-    "trial.attackPrefix": "La objeción más dura:",
+    "trial.survived": "🛡️ Objeción rechazada: el abogado de la otra parte planteó su objeción más fuerte y la decisión aguantó. La confianza no cambia.",
+    "trial.uncertain": "⚠️ El abogado de la otra parte objetó, y la objeción dejó dudas serias sobre esta decisión",
+    "trial.overturned": "⚠️ Objeción aceptada: la objeción más fuerte de la otra parte pesó más que esta decisión",
+    "trial.whatWasTested": "La objeción",
+    "trial.attackPrefix": "Objeción:",
     "trial.refereePrefix": "Por qué:",
     "trial.mixedNote": "Es una disputa mixta: en parte hechos, en parte valores o significados de palabras, así que una victoria limpia es más difícil de defender.",
     confidence: "Confianza: {n} de {total}",
@@ -181,9 +181,9 @@ const es: Locale = {
     "how.step4.title": "Tres jueces independientes",
     "how.step4.body":
       "Tres jueces deciden por separado y, si está reñido, entran más. La confianza sale de cuánto coinciden, no de lo seguros que suenan.",
-    "how.step5.title": "Veredicto y luego prueba de resistencia",
+    "how.step5.title": "Veredicto y luego objeción",
     "how.step5.body":
-      "Recibes la decisión y una puntuación de confianza, además del mejor argumento de la otra parte. Después un juez aparte lanza la objeción más fuerte de la otra parte contra una decisión ganadora y, si se tambalea, te avisamos con el motivo.",
+      "Recibes la decisión y una puntuación de confianza, además del mejor argumento de la otra parte. Después un juez aparte hace de abogado de la otra parte y plantea su objeción más fuerte contra una decisión ganadora; si prospera, te avisamos con el motivo.",
     "sample.title": "Así es un veredicto",
     "sample.kicker": "El resultado",
     "sample.lead":
@@ -209,7 +209,7 @@ const es: Locale = {
       "Necesitas una cuenta para obtener un veredicto. Tu texto va a un servicio de IA externo para cambiar los nombres por Parte A y Parte B, y solo se juzga esa versión. Guardamos lo que escribiste, nombres incluidos, cifrado, para que puedas volver a verlo; puedes pedir que se elimine cuando quieras. Los enlaces para compartir muestran los nombres que elijas, o ninguno.",
     "faq.powers.q": "¿Qué hay detrás?",
     "faq.powers.a":
-      "Un modelo de IA de un proveedor externo. Tres jueces trabajan en paralelo con unas instrucciones de evaluación estructuradas, y se suman más si está reñido. Las decisiones ganadoras basadas en hechos pasan después por una prueba de resistencia a cargo de un juez aparte. El cálculo de la confianza es código sencillo que cuenta cuántas veces coinciden los jueces.",
+      "Un modelo de IA de un proveedor externo. Tres jueces trabajan en paralelo con unas instrucciones de evaluación estructuradas, y se suman más si está reñido. Las decisiones ganadoras basadas en hechos se enfrentan después a una objeción de un juez aparte que hace de abogado de la otra parte. El cálculo de la confianza es código sencillo que cuenta cuántas veces coinciden los jueces.",
     "faq.taste.q": "¿Y si es solo cuestión de gustos?",
     "faq.taste.a":
       "Entonces te lo dirá: “Depende de tus valores” o “Misma palabra, distintos significados”. Aun así verás hacia dónde se inclinan los jueces, marcado claramente como decisión forzada.",
@@ -242,7 +242,7 @@ const es: Locale = {
     "about.limit4": "Es para divertirse y ganar claridad, no es asesoramiento legal, médico ni financiero.",
     "about.builtTitle": "Por dentro",
     "about.built":
-      "Judge funciona con un modelo de IA de un proveedor externo. Tres jueces trabajan en paralelo y se suman más si está reñido. Cuánto coinciden determina la puntuación de confianza, y una decisión ganadora basada en hechos pasa por una prueba de resistencia a cargo de un juez aparte antes de darse por buena.",
+      "Judge funciona con un modelo de IA de un proveedor externo. Tres jueces trabajan en paralelo y se suman más si está reñido. Cuánto coinciden determina la puntuación de confianza, y una decisión ganadora basada en hechos se enfrenta a una objeción de un juez aparte antes de darse por buena.",
     "about.art": "Pixel art: {pack} de {author}",
     "privacy.title": "Privacidad",
     "privacy.kicker": "Tus datos",

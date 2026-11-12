@@ -109,11 +109,11 @@ const fr: Locale = {
     "vote.dissolved": "quiproquo",
     refusedNote: "L’IA a préféré passer son tour. Mieux vaut ne rien afficher qu’un faux verdict.",
     demoNote: "🎭 Mode démo : aucune clé d’IA configurée, voici donc un exemple de verdict",
-    "trial.survived": "🛡️ Test de résistance réussi : un juge à part a tenté de faire tomber ce verdict avec la plus forte objection de l’autre camp, et il a tenu. L’indice de confiance ne bouge pas.",
-    "trial.uncertain": "⚠️ Test de résistance : la plus forte objection de l’autre camp a laissé un vrai doute sur ce verdict",
-    "trial.overturned": "⚠️ Test de résistance échoué : la plus forte objection de l’autre camp a pesé plus lourd que ce verdict",
-    "trial.whatWasTested": "Ce que le test de résistance a tenté",
-    "trial.attackPrefix": "L’objection la plus coriace :",
+    "trial.survived": "🛡️ Objection rejetée : l’avocat de l’autre camp a soulevé sa plus forte objection, et le verdict a tenu. L’indice de confiance ne bouge pas.",
+    "trial.uncertain": "⚠️ L’avocat de l’autre camp a fait objection, et cette objection a laissé un vrai doute sur ce verdict",
+    "trial.overturned": "⚠️ Objection retenue : la plus forte objection de l’autre camp a pesé plus lourd que ce verdict",
+    "trial.whatWasTested": "L’objection",
+    "trial.attackPrefix": "Objection :",
     "trial.refereePrefix": "Pourquoi :",
     "trial.mixedNote": "C’est un différend mixte : en partie des faits, en partie des valeurs ou le sens des mots, donc une victoire nette est plus difficile à défendre.",
     confidence: "Confiance : {n} sur {total}",
@@ -181,9 +181,9 @@ const fr: Locale = {
     "how.step4.title": "Trois juges indépendants",
     "how.step4.body":
       "Trois juges tranchent séparément, et si c’est serré, d’autres viennent en renfort. La confiance dépend de leur accord, pas de leur aplomb.",
-    "how.step5.title": "Le verdict, puis un test de résistance",
+    "how.step5.title": "Le verdict, puis une objection",
     "how.step5.body":
-      "Tu obtiens le verdict et un indice de confiance, plus le meilleur argument d’en face. Ensuite, un juge à part lance la plus forte objection de l’autre camp contre un verdict gagnant, et si celui-ci vacille, tu reçois un avertissement avec la raison.",
+      "Tu obtiens le verdict et un indice de confiance, plus le meilleur argument d’en face. Ensuite, un juge à part joue l’avocat de l’autre camp et soulève sa plus forte objection contre un verdict gagnant ; si elle porte, tu reçois un avertissement avec la raison.",
     "sample.title": "À quoi ressemble un verdict",
     "sample.kicker": "Le résultat",
     "sample.lead":
@@ -209,7 +209,7 @@ const fr: Locale = {
       "Il faut un compte pour obtenir un verdict. Ton texte est envoyé à un service d’IA externe pour que les noms soient remplacés par Partie A et Partie B, et seule cette version est jugée. On conserve ce que tu as écrit, noms compris, de façon chiffrée, pour que tu puisses le relire ; tu peux le faire supprimer à tout moment. Les liens de partage affichent les noms que tu choisis, ou aucun.",
     "faq.powers.q": "Qu’est-ce qui le fait tourner ?",
     "faq.powers.a":
-      "Un modèle d’IA d’un fournisseur externe. Trois juges travaillent en parallèle avec des consignes de jugement détaillées, et d’autres les rejoignent si c’est serré. Les verdicts gagnants fondés sur des faits passent ensuite un test de résistance mené par un juge à part. L’indice de confiance est calculé par du code tout simple qui compte combien de fois les juges sont d’accord.",
+      "Un modèle d’IA d’un fournisseur externe. Trois juges travaillent en parallèle avec des consignes de jugement détaillées, et d’autres les rejoignent si c’est serré. Les verdicts gagnants fondés sur des faits essuient ensuite l’objection d’un juge à part qui joue l’avocat de l’autre camp. L’indice de confiance est calculé par du code tout simple qui compte combien de fois les juges sont d’accord.",
     "faq.taste.q": "Et si c’est juste une question de goût ?",
     "faq.taste.a":
       "Alors il te le dira : « Ça dépend de tes valeurs » ou « Même mot, sens différents ». Tu vois quand même de quel côté penchent les juges, avec la mention claire « verdict forcé ».",
@@ -242,7 +242,7 @@ const fr: Locale = {
     "about.limit4": "C’est pour s’amuser et y voir clair, pas un conseil juridique, médical ou financier.",
     "about.builtTitle": "Sous le capot",
     "about.built":
-      "Judge s’appuie sur un modèle d’IA d’un fournisseur externe. Trois juges travaillent en parallèle, et d’autres les rejoignent si c’est serré. Leur degré d’accord fixe l’indice de confiance, et un verdict gagnant fondé sur des faits passe un test de résistance mené par un juge à part avant d’être validé.",
+      "Judge s’appuie sur un modèle d’IA d’un fournisseur externe. Trois juges travaillent en parallèle, et d’autres les rejoignent si c’est serré. Leur degré d’accord fixe l’indice de confiance, et un verdict gagnant fondé sur des faits essuie l’objection d’un juge à part avant d’être validé.",
     "about.art": "Pixel art : {pack} de {author}",
     "privacy.title": "Confidentialité",
     "privacy.kicker": "Tes données",

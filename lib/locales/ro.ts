@@ -109,11 +109,11 @@ const ro: Locale = {
     "vote.dissolved": "sensuri diferite",
     refusedNote: "AI-ul a stat deoparte de data asta. Decât un verdict inventat, mai bine nimic.",
     demoNote: "🎭 Mod demo: nu e configurată nicio cheie AI, deci ăsta e un verdict de exemplu",
-    "trial.survived": "🛡️ Test de rezistență trecut: un judecător separat a încercat să dărâme acest verdict cu cea mai puternică obiecție a celeilalte părți, iar verdictul a rezistat. Încrederea rămâne aceeași.",
-    "trial.uncertain": "⚠️ Test de rezistență: cea mai puternică obiecție a celeilalte părți a lăsat îndoieli reale despre acest verdict",
-    "trial.overturned": "⚠️ Test de rezistență picat: cea mai puternică obiecție a celeilalte părți a cântărit mai mult decât acest verdict",
-    "trial.whatWasTested": "Ce a încercat testul de rezistență",
-    "trial.attackPrefix": "Cea mai dură obiecție:",
+    "trial.survived": "🛡️ Obiecție respinsă: avocatul celeilalte părți și-a ridicat cea mai puternică obiecție, iar verdictul a rezistat. Încrederea rămâne aceeași.",
+    "trial.uncertain": "⚠️ Avocatul celeilalte părți a ridicat o obiecție, iar obiecția a lăsat îndoieli reale despre acest verdict",
+    "trial.overturned": "⚠️ Obiecție admisă: cea mai puternică obiecție a celeilalte părți a cântărit mai mult decât acest verdict",
+    "trial.whatWasTested": "Obiecția",
+    "trial.attackPrefix": "Obiecție:",
     "trial.refereePrefix": "De ce:",
     "trial.mixedNote": "Este o dispută mixtă: în parte fapte, în parte valori sau sensuri ale cuvintelor, așa că o victorie netă e mai greu de apărat.",
     confidence: "Încredere: {n} din {total}",
@@ -181,9 +181,9 @@ const ro: Locale = {
     "how.step4.title": "Trei judecători independenți",
     "how.step4.body":
       "Trei judecători decid separat, iar când e la limită mai vin și alții. Încrederea vine din cât de mult sunt de acord, nu din cât de siguri par.",
-    "how.step5.title": "Verdictul, apoi un test de rezistență",
+    "how.step5.title": "Verdictul, apoi o obiecție",
     "how.step5.body":
-      "Primești verdictul și un scor de încredere, plus cel mai bun argument al celeilalte părți. Apoi un judecător separat aruncă cea mai puternică obiecție a celeilalte părți asupra unui verdict câștigător, iar dacă se clatină, primești un avertisment cu motivul.",
+      "Primești verdictul și un scor de încredere, plus cel mai bun argument al celeilalte părți. Apoi un judecător separat joacă rolul avocatului celeilalte părți și ridică cea mai puternică obiecție a acestuia împotriva unui verdict câștigător, iar dacă prinde, primești un avertisment cu motivul.",
     "sample.title": "Cum arată un verdict",
     "sample.kicker": "Rezultatul",
     "sample.lead":
@@ -209,7 +209,7 @@ const ro: Locale = {
       "Ai nevoie de un cont ca să primești un verdict. Textul tău ajunge la un serviciu AI extern, ca numele să fie înlocuite cu Partea A și Partea B, și doar acea variantă e judecată. Păstrăm ce ai scris, inclusiv numele, criptat, ca să-l poți revedea; poți cere oricând să fie eliminat. Linkurile de distribuire arată numele pe care le alegi tu sau niciun nume.",
     "faq.powers.q": "Ce e în spate?",
     "faq.powers.a":
-      "Un model AI de la un furnizor extern. Trei judecători lucrează în paralel, după instrucțiuni detaliate de judecare, iar când e la limită se alătură și alții. Verdictele câștigătoare bazate pe fapte trec apoi printr-un test de rezistență făcut de un judecător separat. Scorul de încredere îl calculează un cod simplu care numără cât de des sunt de acord judecătorii.",
+      "Un model AI de la un furnizor extern. Trei judecători lucrează în paralel, după instrucțiuni detaliate de judecare, iar când e la limită se alătură și alții. Verdictele câștigătoare bazate pe fapte se lovesc apoi de obiecția unui judecător separat care joacă rolul avocatului celeilalte părți. Scorul de încredere îl calculează un cod simplu care numără cât de des sunt de acord judecătorii.",
     "faq.taste.q": "Și dacă e doar o chestiune de gust?",
     "faq.taste.a":
       "Atunci îți spune asta: „Depinde de valorile tale” sau „Același cuvânt, sensuri diferite”. Vezi totuși încotro înclină judecătorii, marcat clar ca verdict forțat.",
@@ -242,7 +242,7 @@ const ro: Locale = {
     "about.limit4": "E pentru distracție și claritate, nu consultanță juridică, medicală sau financiară.",
     "about.builtTitle": "Sub capotă",
     "about.built":
-      "Judge funcționează cu un model AI de la un furnizor extern. Trei judecători lucrează în paralel, iar când e la limită se alătură și alții. Cât de mult sunt de acord dă scorul de încredere, iar un verdict câștigător bazat pe fapte trece printr-un test de rezistență făcut de un judecător separat înainte să rămână în picioare.",
+      "Judge funcționează cu un model AI de la un furnizor extern. Trei judecători lucrează în paralel, iar când e la limită se alătură și alții. Cât de mult sunt de acord dă scorul de încredere, iar un verdict câștigător bazat pe fapte se lovește de obiecția unui judecător separat înainte să rămână în picioare.",
     "about.art": "Pixel art: {pack} de {author}",
     "privacy.title": "Confidențialitate",
     "privacy.kicker": "Datele tale",
