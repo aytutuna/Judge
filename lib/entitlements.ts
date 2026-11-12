@@ -110,17 +110,16 @@ export async function ensureEntitlementTables(): Promise<void> {
   const client = await getDb();
   const cached = globalForEntitlements.__verdictEntitlementsReady;
   if (cached?.client === client) return cached.ready;
-  const ready = withBusyRetry(() => client.batch(SCHEMA, "write")).then(
-    async () => {
+  const ready = withBusyRetry(() => client.batch(SCHEMA, "write"))
+    .then(async () => {
       await addColumn(client, "premium_usage", "hold_until");
       await addColumn(client, "premium_usage", "body_hash");
       await addColumn(client, "welcome_claims", "age_blocked_at");
-    },
-    (e: unknown) => {
+    })
+    .catch((e: unknown) => {
       globalForEntitlements.__verdictEntitlementsReady = undefined;
       throw e;
-    },
-  );
+    });
   globalForEntitlements.__verdictEntitlementsReady = { client, ready };
   return ready;
 }
