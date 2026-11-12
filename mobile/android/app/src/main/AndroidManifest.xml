@@ -34,9 +34,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <!-- Case links open the case screen; invite links (/r/) are passed
-                 on to the website in a Custom Tab. Not auto-verified: the
-                 site publishes no assetlinks.json for the app yet. -->
-            <intent-filter>
+                 on to the website in a Custom Tab. Auto-verified against the
+                 assetlinks.json the site publishes for the app. -->
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
