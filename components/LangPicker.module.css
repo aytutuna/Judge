@@ -37,6 +37,13 @@
   }
 }
 
+/* iOS Safari zooms the page when a control under 16px takes focus. */
+@media (pointer: coarse) {
+  .select {
+    font-size: 16px;
+  }
+}
+
 .select:hover {
   background: color-mix(in srgb, var(--ink) 11%, transparent);
 }

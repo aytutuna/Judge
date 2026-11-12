@@ -185,7 +185,7 @@
   background: none;
   color: var(--ink);
   font: inherit;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
 }
 .name::placeholder {
@@ -235,7 +235,7 @@
   background: none;
   color: var(--ink);
   font: inherit;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.5;
   resize: none;
   overflow-y: auto;
