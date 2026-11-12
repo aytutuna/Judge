@@ -121,7 +121,7 @@ export function leanTally(lean: Lean, runCount: number): { for: number; against:
  * included). Users see seat tiers, never model names: the lite model is
  * "quick", every other model is "strong". */
 export function panelSummary(models: readonly string[], lang: Lang): string {
-  const quick = models.filter((m) => /haiku/i.test(m)).length;
+  const quick = models.filter((m) => /haiku|^quick$/i.test(m)).length;
   const strong = models.length - quick;
   const parts: string[] = [];
   if (strong) parts.push(t(lang, "panel.strong", { n: strong }));

@@ -140,9 +140,18 @@ export const FactCheck = z.object({
 });
 export type FactCheck = z.infer<typeof FactCheck>;
 
-/** models[i] is the model that produced runs[i]. */
-export const Panel = z.object({ models: z.array(z.string()) });
+/** models[i] is the model that produced runs[i]. Stored rows hold literal
+ * model ids; every parse of a stored result turns them into the seat tier
+ * clients are shown, so no output path can leak an id. */
+export const Panel = z.object({
+  models: z.array(z.string()).transform((models) => models.map((m) => (/haiku/i.test(m) ? "quick" : "strong"))),
+});
 export type Panel = z.infer<typeof Panel>;
+
+/** A freshly judged result, which still carries literal model ids, as clients may see it. */
+export function withPublicPanel<T extends { panel?: { models: string[] } }>(result: T): T {
+  return result.panel ? { ...result, panel: Panel.parse(result.panel) } : result;
+}
 
 // --- Two-sided cases, evidence, appeals ------------------------------------------
 export const EvidenceKind = z.enum(["chat", "document", "photo", "other"]);

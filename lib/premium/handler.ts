@@ -38,7 +38,7 @@ import { evidenceEnabled } from "@/lib/features";
 import { firstNameOf } from "@/lib/originals-types";
 import { saveVerdictWithOriginals } from "@/lib/originals/save";
 import { checkPremiumSiteCap, checkUserLimits, type UserBucket } from "@/lib/ratelimit";
-import { ClarifyRequest, type VerdictApiResponse, type VerdictRequest } from "@/lib/types";
+import { ClarifyRequest, withPublicPanel, type VerdictApiResponse, type VerdictRequest } from "@/lib/types";
 import { parseVenue } from "@/lib/venues";
 import { acceptedHeaders, POLL_AFTER_MS, pollPath, wantsAsync, type VerdictAcceptedResponse } from "@/lib/verdict-poll";
 import { clarifyQuestions } from "./clarify";
@@ -368,7 +368,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
     void track("verdict_ready", { userId, props: { kind: "verdict", ...(data.sides ? { mode: MANY_SIDED } : {}) } });
     const body: VerdictApiResponse = {
       id,
-      result: outcome.result,
+      result: withPublicPanel(outcome.result),
       venue: parseVenue(data.venue),
       name_map: outcome.nameMap,
       originals_stored: saved.originalsStored,
