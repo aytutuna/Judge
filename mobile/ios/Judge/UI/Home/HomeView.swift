@@ -20,6 +20,8 @@ struct HomeView: View {
     @ScaledMetric(relativeTo: .body) private var lineHeight: CGFloat = 22.5
     /// The side whose box is lifted above the keyboard.
     @State private var active: Party?
+    /// True from the lift until the keyboard is gone, so the page doesn't jump while it leaves.
+    @State private var pinned = false
     @State private var dragY: CGFloat = 0
     /// Where each box sits on screen, read when one is lifted; not state, so scrolling doesn't redraw.
     @State private var frames = FrameBox()
@@ -97,7 +99,7 @@ struct HomeView: View {
             }
         }
         // The page stays where it is while a box is lifted above the keyboard.
-        .ignoresSafeArea(.keyboard, edges: active == nil ? Edge.Set() : .bottom)
+        .ignoresSafeArea(.keyboard, edges: pinned ? .bottom : Edge.Set())
         lifted(lang, home: home)
         }
         .background(Brand.ivory.ignoresSafeArea())
@@ -114,6 +116,17 @@ struct HomeView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
             if active != nil { dismiss() }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
+            if active == nil { pinned = false }
+        }
+        .onChange(of: active) { _, side in
+            guard side == nil else { return }
+            // No keyboard to wait for (a hardware keyboard, say).
+            Task {
+                try? await Task.sleep(for: .seconds(1))
+                if active == nil { pinned = false }
+            }
         }
         .onTabAppear { app.analytics.track("screen_view", ["screen": "home"]) }
         .onAppear {
@@ -368,6 +381,7 @@ struct HomeView: View {
     private func activate(_ side: Party, home: HomeModel) {
         guard active == nil, !home.isBusy else { return }
         dragY = 0
+        pinned = true
         withAnimation(openAnimation) { active = side }
         // The box has to be on screen before it can take the focus.
         Task { focused = field(for: side) }
