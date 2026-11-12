@@ -692,9 +692,9 @@ export async function grantSubscription(g: {
     {
       sql: `INSERT INTO entitlement_grants (id, user_id, source, external_id, kind, product_id, created_at)
             SELECT ?, ?, ?, ?, 'subscription_active', ?, ?
-            WHERE NOT EXISTS (SELECT 1 FROM refund_tombstones WHERE source = ? AND transaction_id = ?)
+            WHERE NOT EXISTS (SELECT 1 FROM refund_tombstones WHERE source = ? AND transaction_id = ? AND created_at > ?)
             ON CONFLICT (source, external_id) DO NOTHING`,
-      args: [id, g.userId, g.source, g.externalId, g.productId, nowIso, g.source, g.originalTransactionId],
+      args: [id, g.userId, g.source, g.externalId, g.productId, nowIso, g.source, g.originalTransactionId, periodStart],
     },
     {
       sql: `INSERT INTO subscriptions
@@ -712,7 +712,11 @@ export async function grantSubscription(g: {
               period_start = excluded.period_start,
               period_end = excluded.period_end,
               updated_at = excluded.updated_at
-            WHERE subscriptions.status <> 'refunded'
+            WHERE (subscriptions.status <> 'refunded'
+                   OR excluded.period_start >= COALESCE(
+                        (SELECT max(r.created_at) FROM entitlement_grants r
+                         WHERE r.subscription_id = subscriptions.id AND r.kind = 'refund'),
+                        subscriptions.updated_at))
               AND (subscriptions.status <> 'revoked' OR subscriptions.source = 'admin')
               AND (subscriptions.status <> 'active' OR excluded.period_end >= subscriptions.period_end)`,
       args: [

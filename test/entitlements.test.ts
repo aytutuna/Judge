@@ -416,6 +416,29 @@ describe("entitlements: grants and store events", () => {
     expect((await ent.getEntitlement(v)).canUsePremium).toBe(true);
   });
 
+  it("a resubscription after a refund starts a later period and is active", async () => {
+    const u = newUser();
+    const otid = `resub-${u}`;
+    await subscribe(u, { otid, start: new Date(Date.now() - 5 * DAY) });
+    await ent.refundPurchase({ source: "app_store", externalId: `rf-${u}`, transactionId: otid });
+    // A late renewal of the refunded period stays refunded.
+    await subscribe(u, { otid, start: new Date(Date.now() - 1000), days: 30 });
+    expect((await ent.getEntitlement(u)).canUsePremium).toBe(false);
+    await new Promise((r) => setTimeout(r, 10));
+    expect(await subscribe(u, { otid, start: new Date() })).toEqual({ applied: true });
+    expect((await ent.getEntitlement(u)).canUsePremium).toBe(true);
+  });
+
+  it("a tombstone only blocks the period it was made for", async () => {
+    const u = newUser();
+    const otid = `tomb-${u}`;
+    await ent.refundPurchase({ source: "app_store", externalId: `rf-${u}`, transactionId: otid });
+    expect(await subscribe(u, { otid, start: new Date(Date.now() - 1000) })).toEqual({ applied: false });
+    await new Promise((r) => setTimeout(r, 10));
+    expect(await subscribe(u, { otid, start: new Date() })).toEqual({ applied: true });
+    expect((await ent.getEntitlement(u)).canUsePremium).toBe(true);
+  });
+
   it("revokeAll zeroes credits and revokes subscriptions; a later grant works again", async () => {
     const u = newUser();
     await credits(u, 4);
