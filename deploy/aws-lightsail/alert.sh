@@ -36,7 +36,7 @@ send_email() {
     "$(json_string "$EMAIL_FROM")" "$(json_string "$ALERT_EMAIL")" \
     "$(json_string "$subject")" "$(json_string "$text")")
   # The key goes in through a file descriptor, so it never shows in ps.
-  if ! curl -fsS --max-time 20 --retry 2 -o /dev/null \
+  if ! curl -fsS --max-time 20 --retry 2 --retry-max-time 40 -o /dev/null \
     -H @<(printf 'Authorization: Bearer %s\n' "$RESEND_API_KEY") \
     -H 'Content-Type: application/json' \
     --data-binary @- https://api.resend.com/emails <<<"$body"; then
@@ -50,7 +50,9 @@ send_push() {
   [[ -n ${NTFY_TOPIC-} ]] || return 1
   # The topic works like a password, so the URL goes in through a config
   # file descriptor too.
-  if ! curl -fsS --max-time 20 --retry 2 -o /dev/null \
+  # A throttled ntfy answers 429 with a long Retry-After, which --retry obeys;
+  # --retry-max-time keeps that from outlasting the watcher's run.
+  if ! curl -fsS --max-time 20 --retry 2 --retry-max-time 40 -o /dev/null \
     -K <(
       printf 'url = "%s/%s"\n' "${base%/}" "$NTFY_TOPIC"
       if [[ -n ${NTFY_TOKEN-} ]]; then printf 'header = "Authorization: Bearer %s"\n' "$NTFY_TOKEN"; fi
