@@ -1,9 +1,12 @@
 import SwiftUI
+import UIKit
 
 /// Home, laid out like a chat: what has been added so far fills the page
 /// above, the box to write in is pinned to the bottom with its send button,
 /// and the other side comes as a card above it or as a link. The box holds
 /// the text, "Add context" and the counter; picked images show just above it.
+/// With more than one side the boxes only show their text: a tap lifts that
+/// side's box above the keyboard to write in, and a drag down puts it back.
 struct HomeView: View {
     @Environment(AppModel.self) private var app
     @SceneStorage("home.draft") private var draft = ""
@@ -15,11 +18,29 @@ struct HomeView: View {
     @Environment(\.sides) private var sides
     @Environment(\.dynamicTypeSize) private var typeSize
     @ScaledMetric(relativeTo: .body) private var lineHeight: CGFloat = 22.5
+    /// The side whose box is lifted above the keyboard.
+    @State private var active: Party?
+    @State private var dragY: CGFloat = 0
+    /// Where each box sits on screen, read when one is lifted; not state, so scrolling doesn't redraw.
+    @State private var frames = FrameBox()
 
     private enum Field: Hashable {
         case mine, theirs
         /// Sides C and D, by position in `home.more`.
         case extra(Int)
+    }
+
+    private enum CardKind { case list, composer, lifted }
+
+    private final class FrameBox {
+        var values: [Party: CGRect] = [:]
+    }
+
+    private struct CardFrames: PreferenceKey {
+        static let defaultValue: [Party: CGRect] = [:]
+        static func reduce(value: inout [Party: CGRect], nextValue: () -> [Party: CGRect]) {
+            value.merge(nextValue()) { $1 }
+        }
     }
 
     private static let errorID = "home.error"
@@ -29,6 +50,7 @@ struct HomeView: View {
     var body: some View {
         @Bindable var home = app.home
         let lang = app.lang
+        ZStack(alignment: .bottom) {
         GeometryReader { geo in
             ScrollViewReader { proxy in
                 ScrollView {
@@ -62,6 +84,7 @@ struct HomeView: View {
                 .onChange(of: home.clarify != nil) { _, shown in
                     guard shown else { return }
                     focused = nil
+                    active = nil
                     withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
                         proxy.scrollTo(Self.clarifyID, anchor: .top)
                     }
@@ -73,6 +96,10 @@ struct HomeView: View {
                 composer(lang, home: home)
             }
         }
+        // The page stays where it is while a box is lifted above the keyboard.
+        .ignoresSafeArea(.keyboard, edges: active == nil ? Edge.Set() : .bottom)
+        lifted(lang, home: home)
+        }
         .background(Brand.ivory.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Brand.ivory, for: .navigationBar)
@@ -81,6 +108,10 @@ struct HomeView: View {
                 RootBarLeading()
                 RootBarTrailing()
             }
+        }
+        .onPreferenceChange(CardFrames.self) { frames.values = $0 }
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
+            if active != nil { dismiss() }
         }
         .onTabAppear { app.analytics.track("screen_view", ["screen": "home"]) }
         .onAppear {
@@ -141,7 +172,7 @@ struct HomeView: View {
             }
             // Every open card but the last, which is the composer at the bottom.
             ForEach(home.theirsOpen ? Array(home.openSides.dropLast()) : [], id: \.self) { side in
-                sideCard(lang, home: home, side: side, inComposer: false)
+                sideCard(lang, home: home, side: side, kind: .list)
             }
             if app.evidenceOn, !home.evidence.items.isEmpty || home.evidence.overLimit || home.evidence.failure != nil {
                 VStack(alignment: .leading, spacing: 10) {
@@ -168,7 +199,7 @@ struct HomeView: View {
     private func composer(_ lang: AppLang, home: HomeModel) -> some View {
         // The gap is the glow's radius (12) plus 8, so it never touches the line.
         VStack(spacing: 20) {
-            sideCard(lang, home: home, side: home.openSides.last ?? .a, inComposer: true)
+            sideCard(lang, home: home, side: home.openSides.last ?? .a, kind: .composer)
             if home.isCheckingQuestions || home.isCreatingCase {
                 Text(home.isCreatingCase ? L10n.caseCreating(lang) : L10n.tierChecking(lang))
                     .brandText(.footnote)
@@ -222,13 +253,28 @@ struct HomeView: View {
         }
     }
 
-    private func sideCard(_ lang: AppLang, home: HomeModel, side: Party, inComposer: Bool) -> some View {
+    private func sideCard(_ lang: AppLang, home: HomeModel, side: Party, kind: CardKind, room: CGFloat = 0) -> some View {
         let focus = field(for: side)
+        let lifted = kind == .lifted
+        // With one side the box is written in where it stands.
+        let writes = lifted || !home.theirsOpen
         let mine = side == .a
         let colors = sides.of(side)
         let title = mine ? L10n.appHomeYourSide(lang) : (side == .b ? L10n.appHomeTheirSide(lang) : side.label(lang))
-        let removable = side == home.openSides.last && side != .a
+        let removable = side == home.openSides.last && side != .a && !lifted
+        let placeholder = mine ? L10n.appHomeYourPlaceholder(lang) : L10n.appHomeTheirPlaceholder(lang)
+        let label = mine ? L10n.appHomeYourSideLabel(lang) : (side == .b ? L10n.appHomeTheirSideLabel(lang) : title)
+        let range = kind == .list ? 3...8 : 2...(typeSize.isAccessibilitySize ? 4 : 7)
         return VStack(alignment: .leading, spacing: 8) {
+            if lifted {
+                Capsule()
+                    .fill(Brand.line)
+                    .frame(width: 36, height: 5)
+                    .frame(maxWidth: .infinity, minHeight: 16)
+                    .contentShape(Rectangle())
+                    .gesture(pullDown)
+                    .accessibilityHidden(true)
+            }
             // Names only tell two sides apart.
             if home.theirsOpen {
                 HStack(spacing: 8) {
@@ -242,24 +288,136 @@ struct HomeView: View {
                     if removable {
                         removeSide(lang, home: home, side: side)
                     }
+                    if lifted {
+                        closeButton(lang)
+                    }
+                }
+                .gesture(pullDown, including: lifted ? .all : .none)
+            }
+            if writes {
+                editor(
+                    text(of: side, home: home),
+                    field: focus,
+                    placeholder: placeholder,
+                    label: label,
+                    lines: range,
+                    room: lifted ? room : nil
+                )
+                .disabled(home.isBusy)
+            } else {
+                preview(text(of: side, home: home).wrappedValue, placeholder: placeholder, label: label, lines: range) {
+                    activate(side, home: home)
                 }
             }
-            editor(
-                text(of: side, home: home),
-                field: focus,
-                placeholder: mine ? L10n.appHomeYourPlaceholder(lang) : L10n.appHomeTheirPlaceholder(lang),
-                label: mine ? L10n.appHomeYourSideLabel(lang) : (side == .b ? L10n.appHomeTheirSideLabel(lang) : title),
-                lines: inComposer ? 2...(typeSize.isAccessibilitySize ? 4 : 7) : 3...8
-            )
-            .disabled(home.isBusy)
-            bottomRow(lang, home: home, inComposer: inComposer)
+            bottomRow(lang, home: home, inComposer: kind != .list)
         }
         .padding(.horizontal, 16)
-        .padding(.top, 14)
+        .padding(.top, lifted ? 4 : 14)
         .padding(.bottom, 10)
-        .neonEdge(colors.strong, focused: focused == focus, radius: Radius.block)
+        .neonEdge(colors.strong, focused: lifted || (writes && focused == focus), radius: Radius.block)
         .accessibilityElement(children: .contain)
         .accessibilityLabel(title)
+        .background {
+            if !lifted {
+                GeometryReader { geo in
+                    Color.clear.preference(key: CardFrames.self, value: [side: geo.frame(in: .global)])
+                }
+            }
+        }
+        .opacity(!lifted && active == side ? 0 : 1)
+        .accessibilityHidden(!lifted && active == side)
+    }
+
+    /// A box that is not being written in: the text, and a tap lifts it.
+    private func preview(_ text: String, placeholder: String, label: String, lines: ClosedRange<Int>, open: @escaping () -> Void) -> some View {
+        let style = TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5)
+        let line = min(lineHeight, 22.5 * style.maxScale)
+        return Text(text.isEmpty ? placeholder : text)
+            .brandText(style)
+            .foregroundStyle(text.isEmpty ? Brand.placeholder : Brand.ink)
+            .lineLimit(lines.upperBound)
+            .frame(maxWidth: .infinity, minHeight: line * CGFloat(lines.lowerBound), alignment: .topLeading)
+            .contentShape(Rectangle())
+            .onTapGesture(perform: open)
+            .accessibilityLabel(label)
+            .accessibilityValue(text)
+            .accessibilityAddTraits(.isButton)
+            .accessibilityAction(.default, open)
+    }
+
+    private func closeButton(_ lang: AppLang) -> some View {
+        Button(action: dismiss) {
+            Image(systemName: "chevron.down")
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundStyle(Brand.ink2)
+                .frame(width: 26, height: 26)
+                .background(Circle().fill(Brand.ivory2))
+                .frame(width: 44, height: 44)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(L10n.appClose(lang))
+    }
+
+    private var openAnimation: Animation {
+        reduceMotion ? .easeInOut(duration: 0.2) : .spring(response: 0.4, dampingFraction: 0.86)
+    }
+
+    private func activate(_ side: Party, home: HomeModel) {
+        guard active == nil, !home.isBusy else { return }
+        dragY = 0
+        withAnimation(openAnimation) { active = side }
+        // The box has to be on screen before it can take the focus.
+        Task { focused = field(for: side) }
+    }
+
+    /// The box goes back to its place in the list and the keyboard goes
+    /// with it; the text stays where it was typed.
+    private func dismiss() {
+        guard active != nil else { return }
+        focused = nil
+        withAnimation(openAnimation) { active = nil }
+    }
+
+    /// The lifted box sits just above the keyboard: this layer is only as
+    /// tall as the space the keyboard leaves.
+    @ViewBuilder
+    private func lifted(_ lang: AppLang, home: HomeModel) -> some View {
+        if home.theirsOpen, home.clarify == nil {
+            GeometryReader { geo in
+                ZStack(alignment: .bottom) {
+                    if let side = active, home.openSides.contains(side) {
+                        let from = frames.values[side].map { $0.maxY - geo.frame(in: .global).maxY } ?? 0
+                        Color.black.opacity(0.2)
+                            .ignoresSafeArea()
+                            .onTapGesture { dismiss() }
+                            .accessibilityHidden(true)
+                            .transition(.opacity)
+                        sideCard(lang, home: home, side: side, kind: .lifted, room: geo.size.height)
+                            .padding(.horizontal, 16)
+                            .padding(.bottom, 8)
+                            .offset(y: dragY)
+                            .transition(reduceMotion ? .opacity : .offset(y: from).combined(with: .opacity))
+                            .accessibilityAddTraits(.isModal)
+                            .accessibilityAction(.escape) { dismiss() }
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+            }
+        }
+    }
+
+    /// Dragging the top of the lifted box down and letting go with speed throws it back.
+    private var pullDown: some Gesture {
+        DragGesture()
+            .onChanged { dragY = max(0, $0.translation.height) }
+            .onEnded { value in
+                if value.translation.height > 80 || value.predictedEndTranslation.height > 240 {
+                    dismiss()
+                } else {
+                    withAnimation(openAnimation) { dragY = 0 }
+                }
+            }
     }
 
     /// Under the text: "Add context" on the left, and in the composer the
@@ -343,17 +501,19 @@ struct HomeView: View {
         .accessibilityLabel(L10n.appHomeRemoveTheirSide(lang))
     }
 
-    private func editor(_ text: Binding<String>, field: Field, placeholder: String, label: String, lines: ClosedRange<Int>) -> some View {
+    /// `room` is the height the box may use in all, while lifted; the text grows up to it, then scrolls.
+    private func editor(_ text: Binding<String>, field: Field, placeholder: String, label: String, lines: ClosedRange<Int>, room: CGFloat? = nil) -> some View {
         let style = TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5)
         // The editor font stops scaling at 2.2x, so the line height must too.
         let line = min(lineHeight, 22.5 * style.maxScale)
+        let tallest = room.map { max(line * CGFloat(lines.lowerBound), $0 - 190) } ?? line * CGFloat(lines.upperBound)
         // TextEditor has no height of its own, so an invisible copy of the
         // text sets it (the placeholder while empty, which can wrap). The
         // zero-width space keeps the empty line after a trailing newline.
         return Text(text.wrappedValue.isEmpty ? placeholder : text.wrappedValue + "\u{200B}")
             .brandText(style)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .frame(minHeight: line * CGFloat(lines.lowerBound), maxHeight: line * CGFloat(lines.upperBound), alignment: .top)
+            .frame(minHeight: line * CGFloat(lines.lowerBound), maxHeight: tallest, alignment: .top)
             .fixedSize(horizontal: false, vertical: true)
             .hidden()
             .overlay(alignment: .topLeading) {
@@ -412,7 +572,6 @@ struct HomeView: View {
     private func addSide(_ lang: AppLang, home: HomeModel) -> some View {
         Button {
             withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) { home.addSide() }
-            Task { focused = .extra(home.more.count - 1) }
         } label: {
             Label(L10n.homeAddSide(lang), systemImage: "plus")
                 .frame(minHeight: 44)
@@ -424,8 +583,8 @@ struct HomeView: View {
     private func addTheirSide(_ lang: AppLang, home: HomeModel) -> some View {
         Button {
             withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) { home.addTheirSide() }
-            // The card has to be on screen before it can take the focus.
-            Task { focused = .theirs }
+            // The card has to be on screen before it can be lifted.
+            Task { activate(.b, home: home) }
         } label: {
             Label(L10n.appHomeAddTheirSide(lang), systemImage: "plus")
                 .frame(minHeight: 44)
@@ -512,6 +671,7 @@ struct HomeView: View {
     /// Also "Try again", which repeats whatever was sent last (a verdict or a case).
     private func submit() {
         focused = nil
+        active = nil
         app.home.submit(app: app)
     }
 }
