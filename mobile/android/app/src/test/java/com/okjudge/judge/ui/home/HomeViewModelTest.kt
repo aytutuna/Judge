@@ -16,6 +16,7 @@ import com.okjudge.judge.core.model.MeResponse
 import com.okjudge.judge.core.model.Side
 import com.okjudge.judge.core.model.ServerConfig
 import com.okjudge.judge.core.model.Viewer
+import com.okjudge.judge.core.session.MemoryDraft
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.ui.UiTestSupport
@@ -154,6 +155,26 @@ class HomeViewModelTest {
         val saved = SavedStateHandle(mapOf("argument" to argument, "other_side" to "Their account of it."))
         val vm = HomeViewModel(saved, flow, flowOf(Account.State.SignedOut), flowOf(Account.Providers.Loading))
         assertTrue(vm.state.value.theirsOpen)
+    }
+
+    @Test
+    fun theDraftSurvivesAnotherFormAndClearDropsIt() {
+        val store = MemoryDraft()
+        fun open() = HomeViewModel(SavedStateHandle(), flow, flowOf(Account.State.SignedOut), flowOf(Account.Providers.Loading), drafts = store)
+        val first = open()
+        first.onArgumentChange(argument)
+        first.addTheirSide()
+        first.onOtherSideChange("Their account of it.")
+        first.addSide()
+        first.onExtraSideChange(0, "A third view of it.")
+        val second = open()
+        assertEquals(argument, second.state.value.argument)
+        assertEquals("Their account of it.", second.state.value.otherSide)
+        assertTrue(second.state.value.theirsOpen)
+        assertEquals(listOf("A third view of it."), second.state.value.more.map { it.text })
+        second.clear()
+        assertNull(store.load())
+        assertEquals("", open().state.value.argument)
     }
 
     @Test

@@ -21,6 +21,7 @@ import com.okjudge.judge.core.display.VenueBook
 import com.okjudge.judge.core.purchases.PurchaseController
 import com.okjudge.judge.core.purchases.PurchaseGateway
 import com.okjudge.judge.core.purchases.RevenueCatGateway
+import com.okjudge.judge.core.session.PrefsDraft
 import com.okjudge.judge.core.session.PrefsPending
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.LocalizedStrings
@@ -119,6 +120,8 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
      * same session token, so it shows offline. Null signed out.
      */
     val historyUser: StateFlow<String?> = _historyUser.asStateFlow()
+
+    val drafts: PrefsDraft by lazy { PrefsDraft(appContext.getSharedPreferences("home_draft", Context.MODE_PRIVATE)) }
 
     val settings: SettingsStore by lazy { DataStoreSettings(appContext) }
 

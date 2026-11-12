@@ -19,6 +19,8 @@ import com.okjudge.judge.core.model.EvidenceUploadResponse
 import com.okjudge.judge.core.model.Features
 import com.okjudge.judge.core.model.Side
 import com.okjudge.judge.core.premium.Tiers
+import com.okjudge.judge.core.session.Draft
+import com.okjudge.judge.core.session.DraftStore
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.Strings
@@ -28,6 +30,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
@@ -181,6 +185,8 @@ class HomeViewModel(
     private val random: Random = Random.Default,
     /** The next unseen example for a language, or null when there are none. */
     private val example: (AppLang, Double) -> Examples.Example? = { _, _ -> null },
+    /** Where the draft lives past the form: a Back-exit ends the SavedStateHandle with the screen. */
+    private val drafts: DraftStore? = null,
 ) : ViewModel() {
 
     val evidence = EvidenceController(viewModelScope, MAX_EVIDENCE_PER_SIDE, uploadEvidence)
@@ -191,6 +197,7 @@ class HomeViewModel(
     val shareLink: Flow<String> = _shareLink.receiveAsFlow()
 
     init {
+        if (!saved.contains(KEY_ARGUMENT)) drafts?.load()?.let(::restore)
         viewModelScope.launch {
             flow.shareLink.collect {
                 clear()
@@ -284,6 +291,27 @@ class HomeViewModel(
             more = extraSides(),
         ),
     )
+
+    init {
+        if (drafts != null) {
+            viewModelScope.launch {
+                state.map {
+                    Draft(it.argument, it.otherSide, it.otherName, it.typedName, it.theirsOpen, it.more.map { m -> m.text }, it.more.map { m -> m.name })
+                        .takeIf { d -> d != Draft() }
+                }.distinctUntilChanged().collect { drafts.save(it) }
+            }
+        }
+    }
+
+    private fun restore(d: Draft) {
+        saved[KEY_ARGUMENT] = d.argument
+        saved[KEY_OTHER] = d.other
+        saved[KEY_OTHER_NAME] = d.otherName
+        saved[KEY_NAME] = d.name
+        saved[KEY_THEIRS_OPEN] = d.theirsOpen
+        saved[KEY_MORE_TEXT] = ArrayList(d.moreText)
+        saved[KEY_MORE_NAME] = ArrayList(d.moreName)
+    }
 
     private fun extraSides(): List<ExtraSide> {
         val texts = saved.get<ArrayList<String>>(KEY_MORE_TEXT).orEmpty()

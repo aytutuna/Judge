@@ -391,6 +391,7 @@ fun JudgeRoot(
                                             providers = account.providers,
                                             uploadEvidence = container.api::uploadEvidence,
                                             example = container.examples::next,
+                                            drafts = container.drafts,
                                         )
                                     }
                                     val state by vm.state.collectAsStateWithLifecycle()
