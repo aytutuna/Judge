@@ -565,13 +565,13 @@ final class HomeModel {
         input.venue = heldVenue?.id
         premiumInput = input
         judgingVenue = input.venue ?? Venues.fallback
-        homeVenue = Venues.pickNew()
         judgedSides = Self.sides(mine: argument, theirs: otherSide, myName: shownCaseName(app), theirName: otherName ?? "", more: more)
         let api = app.api
         let history = app.history
         if let held = pending, held.key == key, Date.now.timeIntervalSince(held.since) < Self.resumeWindow {
             app.analytics.track("case_submitted")
             isJudging = true
+            homeVenue = Venues.pickNew()
             request = Task { [weak self] in
                 await self?.judge(.resume(held.accepted, idempotencyKey: held.idempotencyKey), requestKey: key, api: api, history: history)
             }
@@ -649,6 +649,7 @@ final class HomeModel {
         acceptedAt = nil
         pending = nil
         isJudging = true
+        homeVenue = Venues.pickNew()
         let body = VerdictRequest(
             argument: input.argument,
             lang: input.lang,
