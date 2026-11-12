@@ -63,6 +63,10 @@ export function ShareButtons({
 
   async function copyLink() {
     track("share_tapped");
+    await copy();
+  }
+
+  async function copy() {
     const link = url();
     try {
       await navigator.clipboard.writeText(link);
@@ -77,8 +81,10 @@ export function ShareButtons({
     track("share_tapped");
     try {
       await navigator.share({ title, text: t(lang, "shareText"), url: url() });
-    } catch {
+    } catch (e) {
       // Dismissing the share sheet rejects with AbortError; nothing to do.
+      // NotAllowedError: the names dialog used up the tap, so copy instead.
+      if (e instanceof DOMException && e.name === "NotAllowedError") await copy();
     }
   }
 
