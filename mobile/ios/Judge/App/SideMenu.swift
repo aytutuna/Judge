@@ -604,8 +604,7 @@ struct SideMenu: View {
     }
 
     /// A card with delete on a swipe and a long press, where the entry can
-    /// be removed. The swipe starts at the leading edge: a swipe toward the
-    /// trailing one is what closes the panel.
+    /// be removed. A full swipe asks the same question the long press does.
     @ViewBuilder
     private func entryRow(_ entry: HistoryEntry, entries: [HistoryEntry], lang: AppLang, now: Date) -> some View {
         let card = recent(entry, lang: lang, now: now)
@@ -620,7 +619,7 @@ struct SideMenu: View {
             .onDisappear { tailShown.remove(entry.id) }
         if entry.removable {
             card
-                .swipeActions(edge: .leading, allowsFullSwipe: false) {
+                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                     Button(role: .destructive) { confirming = [entry.id] } label: {
                         Label(L10n.appHistoryDelete(lang), systemImage: "trash")
                     }
