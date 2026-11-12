@@ -884,6 +884,7 @@ private fun JudgingEntry(flow: VerdictFlow, onDone: (String) -> Unit, onLeave: (
     JudgingScreen(
         done = outcome != null,
         result = outcome?.result?.result,
+        names = outcome?.nameMap.orEmpty(),
         startedAt = startedAt,
         reducedMotion = reduced,
         premium = premium,

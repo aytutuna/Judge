@@ -53,12 +53,15 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import com.okjudge.judge.core.display.ContentLang
 import com.okjudge.judge.core.display.CourtScene
 import com.okjudge.judge.core.display.Venues
 import com.okjudge.judge.core.display.PartyNames
+import com.okjudge.judge.core.display.RestoreNames
 import com.okjudge.judge.core.display.Story
 import com.okjudge.judge.core.display.VerdictDisplay
 import com.okjudge.judge.core.model.DisputeType
+import com.okjudge.judge.core.model.NameMapping
 import com.okjudge.judge.core.model.TrialOutcome
 import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.core.session.VerdictFlow
@@ -116,6 +119,8 @@ fun JudgingScreen(
     sideCount: Int = 2,
     /** Where the court is drawn; the court when unknown. */
     venue: String = Venues.COURT,
+    /** The writer's names, restored in the objection the log quotes. */
+    names: List<NameMapping> = emptyList(),
 ) {
     val s = LocalStrings.current
     val finishedCallback by rememberUpdatedState(onFinished)
@@ -150,7 +155,8 @@ fun JudgingScreen(
     val lines = Story.WAITING.take(waiting + 1).map { Story.Line("story.${it.wire}") } + steps.mapNotNull { it.line }
     val beat = steps.lastOrNull()?.beat ?: Story.WAITING[waiting]
     val last = lines.lastIndex
-    val texts = lines.map { lineText(s, it, result) }
+    val named = remember(result, names) { result?.let { withNames(it, names) } }
+    val texts = lines.map { lineText(s, it, named) }
 
     val screen = LocalConfiguration.current
     // Large screens let the card and the court grow; the court stops short of half the height so the log stays in view.
@@ -240,8 +246,11 @@ private fun lineText(s: Strings, line: Story.Line, result: VerdictResult?): Stri
     else -> s.text(line.key) ?: ""
 }
 
+internal fun withNames(result: VerdictResult, names: List<NameMapping>): VerdictResult =
+    RestoreNames.personalizeResult(result, names, ContentLang.verdictLang(result))
+
 // A doubtful stress test says why right in the log, and owns up to a mixed dispute.
-private fun trialLine(s: Strings, key: String, result: VerdictResult?): String {
+internal fun trialLine(s: Strings, key: String, result: VerdictResult?): String {
     val line = (s.text(key) ?: "").replace(LEADING_SYMBOLS, "")
     val trial = result?.cruxTrial ?: return line
     if (trial.trialOutcome == TrialOutcome.SURVIVED) return line

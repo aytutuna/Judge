@@ -284,6 +284,7 @@ private fun CaseScreenBody(
                 JudgingScreen(
                     done = overlay.done,
                     result = if (overlay.done) view.current?.result else null,
+                    names = state.names,
                     startedAt = remember { System.currentTimeMillis() },
                     reducedMotion = reducedMotion,
                     onFinished = actions.onOverlayFinished,
