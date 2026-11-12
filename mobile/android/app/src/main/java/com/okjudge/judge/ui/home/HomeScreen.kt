@@ -321,25 +321,74 @@ fun HomeScreen(
 
     val scroll = rememberScrollState()
     BoxWithConstraints(modifier.fillMaxSize().background(Palette.ivory).imePadding().clearFocusOnTap()) {
+        // No court: the form and the composer scroll together from the top.
+        val flat = !LocalGamify.current
         // A short screen with the keyboard up still has to leave room for the send row.
-        val fieldMax = maxHeight * 0.25f
-        // No court: the form rests in the middle of the screen, typed or not.
-        val centred = !LocalGamify.current
-        Column(
-            Modifier.fillMaxSize(),
-            verticalArrangement = if (centred) Arrangement.Center else Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            BoxWithConstraints(Modifier.weight(1f, fill = !centred).fillMaxWidth()) {
-                val region = if (centred) 0.dp else maxHeight
-                val form: @Composable () -> Unit = {
-                    Column(column.padding(top = 16.dp, bottom = 20.dp), verticalArrangement = Arrangement.spacedBy(12.dp), content = middle)
+        val fieldMax = if (flat) 120.dp else maxHeight * 0.25f
+        val form: @Composable () -> Unit = {
+            Column(column.padding(top = 16.dp, bottom = 20.dp), verticalArrangement = Arrangement.spacedBy(12.dp), content = middle)
+        }
+        val composer: @Composable ColumnScope.() -> Unit = {
+            if (state.theirsOpen) {
+                card(lastSide, fieldMax)
+            } else {
+                SideCard(
+                    colors = LocalSides.current.mine,
+                    letter = "A",
+                    label = s.appHomeYourSide,
+                    showHeader = false,
+                    name = state.shownName,
+                    namePlaceholder = s.appHomeYourName,
+                    onName = onDisplayName,
+                    nameTag = HomeTags.NAME,
+                    text = state.argument,
+                    onText = onArgumentChange,
+                    placeholder = s.appHomeYourPlaceholder,
+                    fieldLabel = s.appHomeYourSideLabel,
+                    minLines = 2,
+                    maxLines = 7,
+                    tag = HomeTags.INPUT,
+                    enabled = !state.holding,
+                    onAddContext = addContext,
+                    count = length,
+                    trailing = send,
+                    fieldMax = fieldMax,
+                )
+            }
+            if (state.holding) {
+                Row(
+                    Modifier.fillMaxWidth().padding(top = 28.dp).semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }.testTag(HomeTags.STATUS),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    CircularProgressIndicator(Modifier.padding(end = 8.dp).size(14.dp), color = Palette.ink2, strokeWidth = 1.5.dp)
+                    Text(if (state.creating) s.caseCreating else s.tierChecking, style = JudgeType.slotText)
                 }
-                // Reversed, so the content stays against the composer as it grows.
-                Column((if (centred) Modifier.fillMaxWidth() else Modifier.fillMaxSize()).dragDismissesKeyboard().verticalScroll(scroll, reverseScrolling = true)) {
-                    if (centred) {
-                        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) { form() }
-                    } else {
+            } else if (state.signedIn) {
+                Tiers.balance(s, state.entitlement)?.let {
+                    Text(
+                        it,
+                        style = JudgeType.slotText,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth().padding(top = 28.dp).testTag(HomeTags.BALANCE),
+                    )
+                }
+            }
+        }
+        if (flat) {
+            Column(
+                Modifier.fillMaxSize().dragDismissesKeyboard().verticalScroll(scroll),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                form()
+                Column(column.padding(bottom = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp), content = composer)
+            }
+        } else {
+            Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+                BoxWithConstraints(Modifier.weight(1f).fillMaxWidth()) {
+                    val region = maxHeight
+                    // Reversed, so the content stays against the composer as it grows.
+                    Column(Modifier.fillMaxSize().dragDismissesKeyboard().verticalScroll(scroll, reverseScrolling = true)) {
                         CourtAbove(
                             region,
                             court = {
@@ -354,53 +403,7 @@ fun HomeScreen(
                         )
                     }
                 }
-            }
-            Column(column.padding(bottom = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                if (state.theirsOpen) {
-                    card(lastSide, fieldMax)
-                } else {
-                    SideCard(
-                        colors = LocalSides.current.mine,
-                        letter = "A",
-                        label = s.appHomeYourSide,
-                        showHeader = false,
-                        name = state.shownName,
-                        namePlaceholder = s.appHomeYourName,
-                        onName = onDisplayName,
-                        nameTag = HomeTags.NAME,
-                        text = state.argument,
-                        onText = onArgumentChange,
-                        placeholder = s.appHomeYourPlaceholder,
-                        fieldLabel = s.appHomeYourSideLabel,
-                        minLines = 2,
-                        maxLines = 7,
-                        tag = HomeTags.INPUT,
-                        enabled = !state.holding,
-                        onAddContext = addContext,
-                        count = length,
-                        trailing = send,
-                        fieldMax = fieldMax,
-                    )
-                }
-                if (state.holding) {
-                    Row(
-                        Modifier.fillMaxWidth().padding(top = 28.dp).semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }.testTag(HomeTags.STATUS),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        CircularProgressIndicator(Modifier.padding(end = 8.dp).size(14.dp), color = Palette.ink2, strokeWidth = 1.5.dp)
-                        Text(if (state.creating) s.caseCreating else s.tierChecking, style = JudgeType.slotText)
-                    }
-                } else if (state.signedIn) {
-                    Tiers.balance(s, state.entitlement)?.let {
-                        Text(
-                            it,
-                            style = JudgeType.slotText,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.fillMaxWidth().padding(top = 28.dp).testTag(HomeTags.BALANCE),
-                        )
-                    }
-                }
+                Column(column.padding(bottom = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp), content = composer)
             }
         }
     }
