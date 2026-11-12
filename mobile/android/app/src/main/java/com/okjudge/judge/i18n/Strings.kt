@@ -162,6 +162,7 @@ class Strings(private val res: Resources) {
     val trialWhatWasTested: String get() = res.getString(R.string.trial_what_was_tested)
     val trialAttackPrefix: String get() = res.getString(R.string.trial_attack_prefix)
     val trialRefereePrefix: String get() = res.getString(R.string.trial_referee_prefix)
+    val trialMixedNote: String get() = res.getString(R.string.trial_mixed_note)
     fun confidence(n: String, total: String): String = res.getString(R.string.confidence, n, total)
     fun verdictAria(label: String): String = res.getString(R.string.verdict_aria, label)
     val partyA: String get() = res.getString(R.string.party_a)
@@ -790,6 +791,7 @@ class Strings(private val res: Resources) {
             "trial.whatWasTested" -> R.string.trial_what_was_tested
             "trial.attackPrefix" -> R.string.trial_attack_prefix
             "trial.refereePrefix" -> R.string.trial_referee_prefix
+            "trial.mixedNote" -> R.string.trial_mixed_note
             "party.a" -> R.string.party_a
             "party.b" -> R.string.party_b
             "party.c" -> R.string.party_c

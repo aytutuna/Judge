@@ -229,6 +229,7 @@ enum L10n {
     static func trialWhatWasTested(_ lang: AppLang) -> String { string("trial.whatWasTested", lang) }
     static func trialAttackPrefix(_ lang: AppLang) -> String { string("trial.attackPrefix", lang) }
     static func trialRefereePrefix(_ lang: AppLang) -> String { string("trial.refereePrefix", lang) }
+    static func trialMixedNote(_ lang: AppLang) -> String { string("trial.mixedNote", lang) }
     static func confidence(_ lang: AppLang, n: String, total: String) -> String { format("confidence", lang, n, total) }
     static func verdictAria(_ lang: AppLang, label: String) -> String { format("verdictAria", lang, label) }
     static func partyA(_ lang: AppLang) -> String { string("party.a", lang) }
@@ -858,6 +859,7 @@ enum L10n {
         "trial.whatWasTested",
         "trial.attackPrefix",
         "trial.refereePrefix",
+        "trial.mixedNote",
         "party.a",
         "party.b",
         "party.c",
