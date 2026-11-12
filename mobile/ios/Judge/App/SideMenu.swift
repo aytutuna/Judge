@@ -384,18 +384,19 @@ struct SideMenu: View {
                         .brandText(.footnote)
                         .foregroundStyle(Brand.danger)
                         .padding(.horizontal, 12)
+                        .simultaneousGesture(closeDrag(width))
                         .menuListRow()
                 }
                 if !verdicts.isEmpty {
                     heading(L10n.navVerdicts(lang)).simultaneousGesture(closeDrag(width)).menuListRow()
                     ForEach(verdicts) { entry in
-                        entryRow(entry, entries: shown, lang: lang, now: now)
+                        entryRow(entry, entries: shown, width: width, lang: lang, now: now)
                     }
                 }
                 if !links.isEmpty {
                     heading(L10n.navLinks(lang)).simultaneousGesture(closeDrag(width)).menuListRow()
                     ForEach(links) { entry in
-                        entryRow(entry, entries: shown, lang: lang, now: now)
+                        entryRow(entry, entries: shown, width: width, lang: lang, now: now)
                     }
                 }
                 if entries.isEmpty {
@@ -403,15 +404,17 @@ struct SideMenu: View {
                         ProgressView().tint(Brand.muted)
                             .frame(maxWidth: .infinity)
                             .padding(.top, 16)
+                            .simultaneousGesture(closeDrag(width))
                             .menuListRow()
                     } else if list.failed {
-                        loadFailed(lang).menuListRow()
+                        loadFailed(lang).simultaneousGesture(closeDrag(width)).menuListRow()
                     } else {
                         Text(L10n.appHistoryEmpty(lang))
                             .brandText(.footnote)
                             .foregroundStyle(Brand.muted)
                             .padding(.horizontal, 12)
                             .padding(.top, 8)
+                            .simultaneousGesture(closeDrag(width))
                             .menuListRow()
                         if !app.account.isSignedIn {
                             Button(L10n.shellLocalSignIn(lang)) {
@@ -420,11 +423,12 @@ struct SideMenu: View {
                             }
                             .buttonStyle(GhostButtonStyle())
                             .frame(maxWidth: .infinity)
+                            .simultaneousGesture(closeDrag(width))
                             .menuListRow()
                         }
                     }
                 } else if list.failed {
-                    loadFailed(lang).menuListRow()
+                    loadFailed(lang).simultaneousGesture(closeDrag(width)).menuListRow()
                 }
                 if list.next != nil {
                     Group {
@@ -438,6 +442,7 @@ struct SideMenu: View {
                         }
                     }
                     .frame(maxWidth: .infinity)
+                    .simultaneousGesture(closeDrag(width))
                     .menuListRow()
                 }
                 if entries.contains(where: \.isPhone) {
@@ -446,8 +451,16 @@ struct SideMenu: View {
                         .foregroundStyle(Brand.muted)
                         .padding(.horizontal, 12)
                         .padding(.top, 8)
+                        .simultaneousGesture(closeDrag(width))
                         .menuListRow()
                 }
+                // The list's own empty area takes the touch itself, so a plain row stands in for it.
+                Color.clear
+                    .frame(height: 200)
+                    .contentShape(Rectangle())
+                    .simultaneousGesture(closeDrag(width))
+                    .menuListRow()
+                    .accessibilityHidden(true)
             }
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
@@ -606,7 +619,7 @@ struct SideMenu: View {
     /// A card with delete on a swipe and a long press, where the entry can
     /// be removed. A full swipe asks the same question the long press does.
     @ViewBuilder
-    private func entryRow(_ entry: HistoryEntry, entries: [HistoryEntry], lang: AppLang, now: Date) -> some View {
+    private func entryRow(_ entry: HistoryEntry, entries: [HistoryEntry], width: CGFloat, lang: AppLang, now: Date) -> some View {
         let card = recent(entry, lang: lang, now: now)
             .menuListRow()
             .onAppear {
@@ -632,7 +645,7 @@ struct SideMenu: View {
                     }
                 }
         } else {
-            card
+            card.simultaneousGesture(closeDrag(width))
         }
     }
 
