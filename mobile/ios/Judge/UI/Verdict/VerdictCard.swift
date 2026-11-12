@@ -538,8 +538,8 @@ private struct SlotText: View {
     }
 }
 
-/// Outcome of the stress test: survived is neutral (never green);
-/// uncertain and overturned say why, with the objection tucked below.
+/// Outcome of the stress test: survived and minor are neutral (never green);
+/// minor, uncertain and overturned say why, with the objection tucked below.
 private struct CruxTrialNote: View {
     let trial: CruxTrial
     let mixed: Bool
@@ -572,10 +572,14 @@ private struct CruxTrialNote: View {
                     .tint(Brand.ink2)
                 }
             }
-        case .overturned, .uncertain, .unknown:
+        case .overturned, .uncertain, .minor, .unknown:
             let overturned = trial.outcome == .overturned
+            let minor = trial.outcome == .minor
             Slot {
-                Label(overturned ? L10n.trialOverturned(lang) : L10n.trialUncertain(lang), systemImage: "exclamationmark.triangle")
+                Label(
+                    minor ? L10n.trialMinor(lang) : overturned ? L10n.trialOverturned(lang) : L10n.trialUncertain(lang),
+                    systemImage: minor ? "shield" : "exclamationmark.triangle"
+                )
                     .brandText(.slotText)
                     .foregroundStyle(overturned ? Brand.danger : Brand.ink2)
                 let why = VerdictDisplay.trialWhy(trial)
@@ -583,7 +587,7 @@ private struct CruxTrialNote: View {
                     if !why.isEmpty {
                         SlotText(L10n.trialRefereePrefix(lang) + " " + why)
                     }
-                    if mixed {
+                    if mixed && !minor {
                         SlotText(L10n.trialMixedNote(lang))
                     }
                 }

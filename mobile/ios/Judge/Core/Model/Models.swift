@@ -50,7 +50,7 @@ enum Party: String, LenientEnum {
 }
 
 enum CruxTrialOutcome: String, LenientEnum {
-    case survived, overturned, uncertain
+    case survived, overturned, uncertain, minor
     case unknown = "_unknown"
 }
 

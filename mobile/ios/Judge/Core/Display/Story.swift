@@ -181,6 +181,7 @@ enum Story {
         case "story.agree": return L10n.storyAgree(lang, n: String(line.vars?.n ?? 0), total: String(line.vars?.total ?? 0))
         case "story.split": return L10n.storySplit(lang)
         case "trial.survived": return stripLeadingEmoji(L10n.trialSurvived(lang))
+        case "trial.minor": return doubt(stripLeadingEmoji(L10n.trialMinor(lang)), result, lang, mixedNote: false)
         case "trial.uncertain": return doubt(stripLeadingEmoji(L10n.trialUncertain(lang)), result, lang)
         case "trial.overturned": return doubt(stripLeadingEmoji(L10n.trialOverturned(lang)), result, lang)
         case "thinking.ready": return L10n.thinkingReady(lang)
@@ -188,10 +189,10 @@ enum Story {
         }
     }
 
-    private static func doubt(_ line: String, _ result: VerdictResult?, _ lang: AppLang) -> String {
+    private static func doubt(_ line: String, _ result: VerdictResult?, _ lang: AppLang, mixedNote: Bool = true) -> String {
         guard let trial = result?.cruxTrial else { return line }
         let why = VerdictDisplay.trialWhy(trial)
-        let mixed = result?.disputeType == .mixed ? " " + L10n.trialMixedNote(lang) : ""
+        let mixed = mixedNote && result?.disputeType == .mixed ? " " + L10n.trialMixedNote(lang) : ""
         return line + (why.isEmpty ? "" : ": " + why) + mixed
     }
 

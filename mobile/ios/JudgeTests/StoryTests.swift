@@ -91,7 +91,7 @@ final class StoryTests: XCTestCase {
     func testEveryLineHasText() {
         let keys = [
             "story.names", "story.facts", "story.judges", "story.bothSides", "story.crux", "story.ruling",
-            "story.count", "story.closeCall", "story.split", "trial.survived", "trial.uncertain", "trial.overturned",
+            "story.count", "story.closeCall", "story.split", "trial.survived", "trial.minor", "trial.uncertain", "trial.overturned",
             "thinking.ready",
         ]
         for lang in [AppLang.en, .tr] {
@@ -108,7 +108,7 @@ final class StoryTests: XCTestCase {
         XCTAssertEqual(Story.stripLeadingEmoji("⚠️ Doubts"), "Doubts")
         XCTAssertEqual(Story.stripLeadingEmoji("2 of 3 agree"), "2 of 3 agree")
         XCTAssertEqual(Story.stripLeadingEmoji("Plain"), "Plain")
-        for outcome in ["survived", "uncertain", "overturned"] {
+        for outcome in ["survived", "minor", "uncertain", "overturned"] {
             let text = Story.text(Story.Line(key: "trial.\(outcome)"), lang: .en)
             XCTAssertEqual(text, Story.stripLeadingEmoji(text), outcome)
             XCTAssertFalse(text.unicodeScalars.first.map { $0.value > 0x7F && $0.properties.isEmoji } ?? true, outcome)
@@ -142,6 +142,13 @@ final class StoryTests: XCTestCase {
         XCTAssertEqual(Story.text(line, lang: .en, result: result(.factual, bare)), plain + ": Menus vary.")
         let mixed = Story.text(line, lang: .en, result: result(.mixed, reasoned))
         XCTAssertTrue(mixed.hasSuffix(" " + L10n.trialMixedNote(.en)))
+    }
+
+    func testMinorTrialLineSaysWhyWithoutMixedNote() {
+        let line = Story.Line(key: "trial.minor")
+        let plain = Story.text(line, lang: .en)
+        let minor = CruxTrial(attack: "Menus vary.", outcome: .minor, reasoning: "Only trims a phrase.")
+        XCTAssertEqual(Story.text(line, lang: .en, result: result(.mixed, minor)), plain + ": Only trims a phrase.")
     }
 
     func testCourtSceneJSON() throws {
