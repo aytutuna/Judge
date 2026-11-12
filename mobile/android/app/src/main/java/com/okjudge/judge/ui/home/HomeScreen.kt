@@ -17,7 +17,9 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -35,6 +37,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -326,6 +329,12 @@ fun HomeScreen(
     val scroll = rememberScrollState()
     // The window's height, not the free space: the keyboard must not swap the layout under the cursor.
     val shortWindow = LocalConfiguration.current.screenHeightDp < SHORT_WINDOW.value
+    val scrollsAll = !LocalGamify.current || shortWindow
+    val imeUp = WindowInsets.isImeVisible && scrollsAll
+    // With the keyboard up the send row stays at the bottom edge of the scrolled form, clear of the keys.
+    LaunchedEffect(imeUp) {
+        if (imeUp) snapshotFlow { scroll.maxValue }.collect { scroll.animateScrollTo(it) }
+    }
     BoxWithConstraints(modifier.fillMaxSize().background(Palette.ivory).imePadding().clearFocusOnTap()) {
         // No court, or no room for one: the form and the composer scroll together from the top.
         val flat = !LocalGamify.current || shortWindow
