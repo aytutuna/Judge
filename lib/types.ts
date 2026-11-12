@@ -142,9 +142,12 @@ export type FactCheck = z.infer<typeof FactCheck>;
 
 /** models[i] is the model that produced runs[i]. Stored rows hold literal
  * model ids; every parse of a stored result turns them into the seat tier
- * clients are shown, so no output path can leak an id. */
+ * clients are shown, so no output path can leak an id. Translations are
+ * saved from an already parsed result, so a tier has to parse to itself. */
 export const Panel = z.object({
-  models: z.array(z.string()).transform((models): string[] => models.map((m) => (/haiku/i.test(m) ? "quick" : "strong"))),
+  models: z
+    .array(z.string())
+    .transform((models): string[] => models.map((m) => (/haiku|^quick$/i.test(m) ? "quick" : "strong"))),
 });
 export type Panel = z.infer<typeof Panel>;
 

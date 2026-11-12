@@ -66,6 +66,13 @@ describe("panel models in public output", () => {
     expect((await getVerdict("panel00001"))?.result.panel?.models).toEqual(["strong", "strong", "quick"]);
   });
 
+  it("a translation saved from a parsed result keeps its quick seat", async () => {
+    const { saveTranslation, getTranslation } = await import("../lib/db");
+    const parsed = await getVerdict("panel00001");
+    await saveTranslation("panel00001", "de", { ...parsed!.result, lang: "de" });
+    expect((await getTranslation("panel00001", "de"))?.panel?.models).toEqual(["strong", "strong", "quick"]);
+  });
+
   it("the summary counts quick seats", () => {
     expect(panelSummary(["strong", "strong", "quick"], "en")).toBe("Judges: 2 strong + 1 quick");
   });
