@@ -123,6 +123,7 @@ object PageBarTags {
     const val LINKS = "bar.menu.links"
     const val LIST = "bar.menu.list"
     const val EMPTY = "bar.menu.empty"
+    const val EMPTY_SIGN_IN = "bar.menu.empty.signIn"
     const val ERROR = "bar.menu.error"
     const val NOTICE = "bar.menu.notice"
     const val MORE = "bar.menu.more"
@@ -332,11 +333,21 @@ internal fun MenuPanel(
                         }
                         paging.failed -> item(key = "error") { LoadFailed(onRetry) }
                         else -> item(key = "empty") {
-                            Text(
-                                s.appHistoryEmpty,
-                                style = JudgeType.footnote,
-                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp).testTag(PageBarTags.EMPTY),
-                            )
+                            Column {
+                                Text(
+                                    s.appHistoryEmpty,
+                                    style = JudgeType.footnote,
+                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp).testTag(PageBarTags.EMPTY),
+                                )
+                                if (!account.signedIn) {
+                                    Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                                        GhostButton(
+                                            s.shellLocalSignIn, null, { onClose(); account.onSignIn() },
+                                            Modifier.testTag(PageBarTags.EMPTY_SIGN_IN),
+                                        )
+                                    }
+                                }
+                            }
                         }
                     }
                 } else if (paging.failed) {

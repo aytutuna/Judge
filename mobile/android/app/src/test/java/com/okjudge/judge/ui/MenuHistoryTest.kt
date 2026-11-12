@@ -5,6 +5,7 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.longClick
 import androidx.compose.ui.test.onAllNodesWithText
@@ -53,11 +54,12 @@ class MenuHistoryTest {
         onLoadMore: () -> Unit = {},
         onRetry: () -> Unit = {},
         live: Map<String, LiveState> = emptyMap(),
+        account: AccountActions = AccountActions(false, null, {}, {}, {}),
     ) = compose.setContent {
         Themed(AppLang.EN) {
             MenuPanel(
                 Tab.NEW, list, false, FocusRequester(), {}, onOpen, {},
-                paging = paging, notice = notice, onRemove = onRemove, onLoadMore = onLoadMore, onRetry = onRetry, live = live, now = now,
+                account = account, paging = paging, notice = notice, onRemove = onRemove, onLoadMore = onLoadMore, onRetry = onRetry, live = live, now = now,
             )
         }
     }
@@ -189,6 +191,21 @@ class MenuHistoryTest {
         compose.onNodeWithText(en.appHistoryOfflineRemove).assertExists()
         compose.onNodeWithText(en.appRetry).performClick()
         assertEquals(1, retried)
+    }
+
+    @Test
+    fun anEmptyList_signedOut_asksForSignIn_andSignedInDoesNot() {
+        var signIn = 0
+        menu(emptyList(), account = AccountActions(false, null, {}, { signIn++ }, {}))
+        compose.onNodeWithTag(PageBarTags.EMPTY_SIGN_IN).assertTextEquals(en.shellLocalSignIn).performClick()
+        assertEquals(1, signIn)
+    }
+
+    @Test
+    fun anEmptyList_signedIn_hasNoSignInButton() {
+        menu(emptyList(), account = AccountActions(true, null, {}, {}, {}))
+        compose.onNodeWithTag(PageBarTags.EMPTY).assertExists()
+        compose.onNodeWithTag(PageBarTags.EMPTY_SIGN_IN).assertDoesNotExist()
     }
 
     @Test
