@@ -534,6 +534,8 @@ class JudgeApi(
             .header("User-Agent", userAgent)
             // Without this the server leaves out cases with more than two sides.
             .header("Judge-Sides", SIDES_SUPPORTED.toString())
+            // Without this the server sends "survived" for an objection that only trimmed a phrase.
+            .header("Judge-Trial", "minor")
         tokenStore.get()?.let { builder.header("Authorization", "Bearer $it") }
         return builder
     }

@@ -87,6 +87,13 @@ class JudgeApiTest {
     }
 
     @Test
+    fun everyRequest_saysItKnowsMinorObjections() = runBlocking {
+        server.enqueue(json(200, Fixtures.sampleJson("win_b_named")))
+        api().submitVerdict(request)
+        assertEquals("minor", server.takeRequest().headers["Judge-Trial"])
+    }
+
+    @Test
     fun aVerdictRequestWithSides_carriesThemAsTyped() {
         val body = com.okjudge.judge.core.model.WireJson.json.encodeToString(
             VerdictRequest.serializer(),
