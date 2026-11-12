@@ -50,6 +50,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -401,7 +402,7 @@ internal fun MenuPanel(
                 TextButton(
                     onClick = { confirmKey = null; picked.forEach(onRemove) },
                     modifier = Modifier.testTag(PageBarTags.CONFIRM_DELETE),
-                ) { Text(s.appHistoryDelete, color = Palette.danger) }
+                ) { Text(if (picked.any { it is HistoryEntry.Account }) s.verdictRemoveYes else s.appHistoryDelete, color = Palette.danger) }
             },
             dismissButton = { TextButton(onClick = { confirmKey = null }) { Text(s.appCancel, color = Palette.ink) } },
             containerColor = Palette.paper,
@@ -558,14 +559,13 @@ private fun MenuCard(entry: HistoryEntry, now: Long, live: LiveState?, onOpen: (
         RecentCard(entry, now, live, open)
         return
     }
-    val state = rememberSwipeToDismissBoxState()
-    // A swipe asks first: removing from the account can't be undone.
-    LaunchedEffect(state.currentValue) {
-        if (state.currentValue == SwipeToDismissBoxValue.StartToEnd) {
-            onAskRemove()
-            state.reset()
-        }
-    }
+    // A swipe asks first: removing from the account can't be undone. The row never settles open, so it
+    // snaps back whether the dialog is confirmed or not.
+    val ask by rememberUpdatedState(onAskRemove)
+    val state = rememberSwipeToDismissBoxState(confirmValueChange = { value ->
+        if (value == SwipeToDismissBoxValue.StartToEnd) ask()
+        false
+    })
     SwipeToDismissBox(
         state = state,
         enableDismissFromEndToStart = false,
