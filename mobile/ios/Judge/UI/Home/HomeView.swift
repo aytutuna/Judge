@@ -240,6 +240,10 @@ struct HomeView: View {
         }
         .padding(.horizontal, 16)
         .padding(.bottom, 16)
+        // Stacked boxes scroll under the send row, so it needs its own ground.
+        .background {
+            if home.theirsOpen { Brand.ivory.ignoresSafeArea(edges: .bottom) }
+        }
     }
 
     private func field(for side: Party) -> Field {
@@ -470,12 +474,15 @@ struct HomeView: View {
             drag = .zero
             return
         }
-        thrown = true
+        let side = active
         withAnimation(.easeIn(duration: 0.22)) {
+            thrown = true
             drag = CGSize(width: direction.width / length * 900, height: direction.height / length * 900)
         }
         Task {
             try? await Task.sleep(for: .milliseconds(240))
+            // A box lifted again in the meantime stays up.
+            guard thrown, active == side else { return }
             // Out of sight by now, so it goes back to its spot unseen.
             dismiss()
             drag = .zero
