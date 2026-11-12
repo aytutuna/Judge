@@ -14,6 +14,7 @@ import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import com.okjudge.judge.FakeHistory
 import com.okjudge.judge.Fixtures
 import com.okjudge.judge.core.display.PartyNames
 import com.okjudge.judge.core.display.UiError
@@ -30,7 +31,12 @@ import com.okjudge.judge.ui.cases.CaseTags
 import com.okjudge.judge.ui.cases.CaseUiState
 import com.okjudge.judge.ui.cases.CaseViewModel
 import com.okjudge.judge.ui.premium.EvidenceTags
+import com.okjudge.judge.ui.verdict.VerdictRoute
 import com.okjudge.judge.ui.verdict.VerdictTags
+import com.okjudge.judge.ui.verdict.VerdictViewModel
+import okhttp3.OkHttpClient
+import com.okjudge.judge.core.api.JudgeApi
+import kotlinx.coroutines.runBlocking
 import java.util.Locale
 import kotlinx.serialization.json.jsonObject
 import org.junit.Assert.assertEquals
@@ -238,6 +244,23 @@ class CaseScreensTest {
         compose.onNodeWithTag(CaseTags.APPEAL_NOTE).assertTextContains(en.errorPremiumRequired)
         compose.onNodeWithTag(CaseTags.APPEAL_PRICING).performClick()
         assertEquals(1, pricing)
+    }
+
+    @Test
+    fun signedOut_theVerdictStillOffersAppeal_andTheTapAsksForSignIn() {
+        val outcome = Fixtures.sample("win_a_self")
+        val history = FakeHistory().also { runBlocking { it.save(outcome) } }
+        val vm = VerdictViewModel(outcome.id, history, JudgeApi("http://localhost/", OkHttpClient(), "ua"))
+        var signIn = 0
+        compose.setContent {
+            Themed(AppLang.EN) {
+                VerdictRoute(outcome.id, vm, "https://example.test", {}, "Back", signedOut = true, onSignIn = { signIn++ })
+            }
+        }
+        compose.onNodeWithTag(VerdictTags.ADD_CONTEXT).performClick()
+        compose.onNodeWithTag(CaseTags.APPEAL_NOTE).assertTextContains(en.appAppealUpsell)
+        compose.onNodeWithTag(CaseTags.APPEAL_SIGN_IN).performClick()
+        assertEquals(1, signIn)
     }
 
     @Test

@@ -580,6 +580,7 @@ fun JudgeRoot(
                                         // A verdict just judged sits right above the form; one from the list, above the list.
                                         backLabel = strings.appTabNew,
                                         appeal = appeal,
+                                        signedOut = accountState is Account.State.SignedOut,
                                         evidenceOn = (providers as? Account.Providers.Ready)?.config?.features?.evidence == true,
                                         onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
                                         onPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },

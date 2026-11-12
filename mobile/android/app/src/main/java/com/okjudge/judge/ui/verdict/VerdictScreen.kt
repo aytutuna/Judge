@@ -34,6 +34,7 @@ import com.okjudge.judge.core.cases.AppealArea
 import com.okjudge.judge.core.display.PartyNames
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
+import com.okjudge.judge.ui.cases.AppealDraft
 import com.okjudge.judge.ui.cases.AppealFormActions
 import com.okjudge.judge.ui.cases.AppealNote
 import com.okjudge.judge.ui.cases.AppealSheet
@@ -63,6 +64,7 @@ fun VerdictRoute(
     onBack: () -> Unit,
     backLabel: String,
     appeal: VerdictAppealViewModel? = null,
+    signedOut: Boolean = false,
     evidenceOn: Boolean = false,
     onSignIn: () -> Unit = {},
     onPricing: () -> Unit = {},
@@ -82,6 +84,8 @@ fun VerdictRoute(
         details = on
         scope.launch { scroll.scrollTo(0) }
     }
+    // Signed out there is no appeal model; the sheet only asks for sign-in.
+    var signInSheet by rememberSaveable(id) { mutableStateOf(false) }
     var copied by remember { mutableStateOf(false) }
     LaunchedEffect(copied) {
         if (copied) {
@@ -132,7 +136,11 @@ fun VerdictRoute(
                 copied = true
             },
             copied = copied,
-            onAddContext = if (appeal != null && appealState?.offered == true) appeal::open else null,
+            onAddContext = when {
+                appeal != null && appealState?.offered == true -> appeal::open
+                signedOut -> ({ signInSheet = true })
+                else -> null
+            },
         )
         val width = Modifier.widthIn(max = 640.dp).fillMaxWidth()
         Column(
@@ -172,6 +180,16 @@ fun VerdictRoute(
                     onPricing = onPricing,
                 ),
                 onClose = appeal::close,
+            )
+        }
+        if (signedOut && signInSheet) {
+            AppealSheet(
+                area = AppealArea.Upsell(signIn = true),
+                draft = AppealDraft(),
+                evidenceOn = false,
+                cost = "",
+                actions = AppealFormActions(onSignIn = { signInSheet = false; onSignIn() }),
+                onClose = { signInSheet = false },
             )
         }
     }
