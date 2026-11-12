@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.okjudge.judge",
+      "sha256_cert_fingerprints": [
+        "85:E4:09:C1:3A:A4:FF:07:C8:AD:47:26:EF:29:23:6C:E5:55:9E:FB:8A:5B:D8:DE:66:A0:20:D1:A9:D5:24:F4"
+      ]
+    }
+  }
+]
