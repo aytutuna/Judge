@@ -5,8 +5,10 @@ import UIKit
 /// above, the box to write in is pinned to the bottom with its send button,
 /// and the other side comes as a card above it or as a link. The box holds
 /// the text, "Add context" and the counter; picked images show just above it.
-/// With more than one side the boxes only show their text: a tap lifts that
-/// side's box above the keyboard to write in, and a drag down puts it back.
+/// With more than one side nothing is pinned but the send row: the boxes
+/// stack in the page, in order, and only show their text. A tap lifts that
+/// side's box above the keyboard to write in; drag it any way and let go
+/// with some speed to throw it back, or tap the dim page.
 struct HomeView: View {
     @Environment(AppModel.self) private var app
     @SceneStorage("home.draft") private var draft = ""
@@ -22,7 +24,9 @@ struct HomeView: View {
     @State private var active: Party?
     /// True from the lift until the keyboard is gone, so the page doesn't jump while it leaves.
     @State private var pinned = false
-    @State private var dragY: CGFloat = 0
+    @State private var drag: CGSize = .zero
+    /// True from the throw until the next lift: the box is flying off, or gone.
+    @State private var thrown = false
     /// Where each box sits on screen, read when one is lifted; not state, so scrolling doesn't redraw.
     @State private var frames = FrameBox()
 
@@ -115,7 +119,7 @@ struct HomeView: View {
             MainActor.assumeIsolated { frames.values = value }
         }
         .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
-            if active != nil, !app.sheetOpen { dismiss() }
+            if active != nil, !thrown, !app.sheetOpen { dismiss() }
         }
         .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
             if active == nil { pinned = false }
@@ -188,8 +192,7 @@ struct HomeView: View {
                         HomeCourt(busy: home.isBusy, covered: pageCovered || home.isJudging || !home.path.isEmpty, venue: home.homeVenue)
                     }
             }
-            // Every open card but the last, which is the composer at the bottom.
-            ForEach(home.theirsOpen ? Array(home.openSides.dropLast()) : [], id: \.self) { side in
+            ForEach(home.theirsOpen ? home.openSides : [], id: \.self) { side in
                 sideCard(lang, home: home, side: side, kind: .list)
             }
             if app.evidenceOn, !home.evidence.items.isEmpty || home.evidence.overLimit || home.evidence.failure != nil {
@@ -213,11 +216,15 @@ struct HomeView: View {
         }
     }
 
-    /// The box that was opened last, and under it what is left to spend.
+    /// The only box, or with several sides just the send row, and under it what is left to spend.
     private func composer(_ lang: AppLang, home: HomeModel) -> some View {
         // The gap is the glow's radius (12) plus 8, so it never touches the line.
-        VStack(spacing: 20) {
-            sideCard(lang, home: home, side: home.openSides.last ?? .a, kind: .composer)
+        VStack(spacing: home.theirsOpen ? 4 : 20) {
+            if home.theirsOpen {
+                bottomRow(lang, home: home, inComposer: true)
+            } else {
+                sideCard(lang, home: home, side: .a, kind: .composer)
+            }
             if home.isCheckingQuestions || home.isCreatingCase {
                 Text(home.isCreatingCase ? L10n.caseCreating(lang) : L10n.tierChecking(lang))
                     .brandText(.footnote)
@@ -290,7 +297,7 @@ struct HomeView: View {
                     .frame(width: 36, height: 5)
                     .frame(maxWidth: .infinity, minHeight: 16)
                     .contentShape(Rectangle())
-                    .gesture(pullDown)
+                    .gesture(throwDrag)
                     .accessibilityHidden(true)
             }
             // Names only tell two sides apart.
@@ -310,7 +317,7 @@ struct HomeView: View {
                         closeButton(lang)
                     }
                 }
-                .gesture(pullDown, including: lifted ? .all : .subviews)
+                .gesture(throwDrag, including: lifted ? .all : .subviews)
             }
             if writes {
                 editor(
@@ -327,11 +334,22 @@ struct HomeView: View {
                     activate(side, home: home)
                 }
             }
-            bottomRow(lang, home: home, inComposer: kind != .list)
+            // With several sides the send row is at the bottom of the page.
+            if lifted || !home.theirsOpen {
+                bottomRow(lang, home: home, inComposer: kind != .list)
+            }
         }
         .padding(.horizontal, 16)
         .padding(.top, lifted ? 4 : 14)
         .padding(.bottom, 10)
+        .background {
+            // Behind the editor, so only the gaps and edges throw the box.
+            if lifted {
+                Color.clear
+                    .contentShape(Rectangle())
+                    .gesture(throwDrag)
+            }
+        }
         .neonEdge(colors.strong, focused: lifted || (writes && focused == focus), radius: Radius.block)
         .accessibilityElement(children: .contain)
         .accessibilityLabel(title)
@@ -383,7 +401,8 @@ struct HomeView: View {
 
     private func activate(_ side: Party, home: HomeModel) {
         guard active == nil, !home.isBusy else { return }
-        dragY = 0
+        drag = .zero
+        thrown = false
         pinned = true
         withAnimation(openAnimation) { active = side }
         // The box has to be on screen before it can take the focus.
@@ -415,7 +434,8 @@ struct HomeView: View {
                         sideCard(lang, home: home, side: side, kind: .lifted, room: geo.size.height)
                             .padding(.horizontal, 16)
                             .padding(.bottom, 8)
-                            .offset(y: dragY)
+                            .offset(drag)
+                            .opacity(thrown ? 0 : 1)
                             .transition(reduceMotion ? .opacity : .offset(y: from).combined(with: .opacity))
                             .accessibilityAddTraits(.isModal)
                             .accessibilityAction(.escape) { dismiss() }
@@ -426,17 +446,40 @@ struct HomeView: View {
         }
     }
 
-    /// Dragging the top of the lifted box down and letting go with speed throws it back.
-    private var pullDown: some Gesture {
+    /// The lifted box follows the finger. Far enough, or fast enough, and it
+    /// flies off that way; otherwise it springs back.
+    private var throwDrag: some Gesture {
         DragGesture(coordinateSpace: .global)
-            .onChanged { dragY = max(0, $0.translation.height) }
+            .onChanged { drag = $0.translation }
             .onEnded { value in
-                if value.translation.height > 80 || value.predictedEndTranslation.height > 240 {
-                    dismiss()
+                let pulled = hypot(value.translation.width, value.translation.height)
+                let ahead = value.predictedEndTranslation
+                let speed = hypot(ahead.width, ahead.height)
+                if pulled > 90 || speed > 360 {
+                    if speed > 0 { throwAway(toward: ahead, length: speed) } else { throwAway(toward: value.translation, length: pulled) }
                 } else {
-                    withAnimation(openAnimation) { dragY = 0 }
+                    withAnimation(openAnimation) { drag = .zero }
                 }
             }
+    }
+
+    private func throwAway(toward direction: CGSize, length: CGFloat) {
+        focused = nil
+        guard !reduceMotion else {
+            dismiss()
+            drag = .zero
+            return
+        }
+        thrown = true
+        withAnimation(.easeIn(duration: 0.22)) {
+            drag = CGSize(width: direction.width / length * 900, height: direction.height / length * 900)
+        }
+        Task {
+            try? await Task.sleep(for: .milliseconds(240))
+            // Out of sight by now, so it goes back to its spot unseen.
+            dismiss()
+            drag = .zero
+        }
     }
 
     /// Under the text: "Add context" on the left, and in the composer the
