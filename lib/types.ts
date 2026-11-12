@@ -101,7 +101,7 @@ export const Lean = z.object({
 });
 export type Lean = z.infer<typeof Lean>;
 
-export const CruxTrialOutcome = z.enum(["survived", "overturned", "uncertain"]);
+export const CruxTrialOutcome = z.enum(["survived", "overturned", "uncertain", "minor"]);
 export type CruxTrialOutcome = z.infer<typeof CruxTrialOutcome>;
 
 /** Result of the adversarial cross-examination of a fact/logic winner ruling. */

@@ -57,6 +57,11 @@ describe("applyCruxTrial", () => {
     expect(applyCruxTrial(fixture({ confidence: 2 }), trial("uncertain")).confidence).toBe(2);
   });
 
+  it("minor has no cap", () => {
+    expect(applyCruxTrial(fixture({ confidence: 5 }), trial("minor")).confidence).toBe(5);
+    expect(applyCruxTrial(fixture({ confidence: 3 }), trial("minor")).confidence).toBe(3);
+  });
+
   it("overturned caps at 2", () => {
     expect(applyCruxTrial(fixture({ confidence: 5 }), trial("overturned")).confidence).toBe(2);
     expect(applyCruxTrial(fixture({ confidence: 4 }), trial("overturned")).confidence).toBe(2);
@@ -64,7 +69,7 @@ describe("applyCruxTrial", () => {
   });
 
   it("never raises confidence (1 stays 1 for every outcome)", () => {
-    for (const outcome of ["survived", "uncertain", "overturned"] as const) {
+    for (const outcome of ["survived", "minor", "uncertain", "overturned"] as const) {
       expect(applyCruxTrial(fixture({ confidence: 1 }), trial(outcome)).confidence).toBe(1);
     }
   });
@@ -199,6 +204,22 @@ describe("runCruxTrial (mocked claude)", () => {
       reasoning: "The flaw defeats the basis.",
     });
     expect(mockClaude).toHaveBeenCalledTimes(2);
+  });
+
+  it("a minor outcome from the adjudicator parses and the schema offers it", async () => {
+    mockClaude
+      .mockResolvedValueOnce({
+        ok: true,
+        data: { attack: "The figure is a little high.", has_substantive_attack: true },
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        data: { outcome: "minor", reasoning: "Fair, but the basis stands." },
+      });
+    const t = await runCruxTrial("arg", fixture());
+    expect(t?.outcome).toBe("minor");
+    const schema = mockClaude.mock.calls[1][0].schema as { properties: { outcome: { enum: string[] } } };
+    expect(schema.properties.outcome.enum).toContain("minor");
   });
 
   it("returns null when the attacker is safety-blocked", async () => {
