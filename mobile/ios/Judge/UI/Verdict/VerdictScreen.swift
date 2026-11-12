@@ -52,7 +52,7 @@ private struct VerdictScreenContent: View {
     var body: some View {
         let lang = app.lang
         let signedIn = app.account.isSignedIn
-        // Signed out, the button stays and the sheet asks for sign-in.
+        // Signed out, the button stays and asks for sign-in.
         let area: CaseLogic.AppealArea = signedIn ? appeal.area : .upsell(signIn: true)
         ScrollViewReader { proxy in
             ScrollView {
@@ -151,6 +151,7 @@ struct VerdictSections<Appeal: View>: View {
     /// details screen's while that one is pushed.
     @State private var appealShown = false
     @State private var detailsAppealShown = false
+    @Environment(AppModel.self) private var app
     @Environment(\.sides) private var sides
     @State private var openedAtStart = false
 
@@ -232,6 +233,11 @@ struct VerdictSections<Appeal: View>: View {
     }
 
     private func openAppeal() {
+        // The sign-in sheet hangs off the app root, which a sheet from here would cover.
+        if appealArea == .upsell(signIn: true) {
+            app.account.presentSignIn()
+            return
+        }
         onAppealOpen()
         if showDetails {
             detailsAppealShown = true
