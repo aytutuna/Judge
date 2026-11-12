@@ -107,15 +107,15 @@ struct HomeView: View {
         .toolbarBackground(Brand.ivory, for: .navigationBar)
         .toolbar {
             if home.clarify == nil {
-                RootBarLeading()
-                RootBarTrailing()
+                RootBarLeading(locked: active != nil)
+                RootBarTrailing(locked: active != nil)
             }
         }
         .onPreferenceChange(CardFrames.self) { [frames] value in
             MainActor.assumeIsolated { frames.values = value }
         }
         .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
-            if active != nil { dismiss() }
+            if active != nil, !app.sheetOpen { dismiss() }
         }
         .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
             if active == nil { pinned = false }
@@ -127,6 +127,9 @@ struct HomeView: View {
                 try? await Task.sleep(for: .seconds(1))
                 if active == nil { pinned = false }
             }
+        }
+        .onChange(of: app.sheetOpen) { _, open in
+            if !open, let side = active { focused = field(for: side) }
         }
         .onTabAppear { app.analytics.track("screen_view", ["screen": "home"]) }
         .onAppear {

@@ -217,8 +217,10 @@ struct ProfileAvatar: View {
 
 /// The leading end of a root page's bar: the menu button.
 struct RootBarLeading: ToolbarContent {
+    var locked = false
+
     var body: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) { MenuButton() }
+        ToolbarItem(placement: .topBarLeading) { MenuButton().disabled(locked) }
             .ownBackground()
     }
 }
@@ -226,6 +228,8 @@ struct RootBarLeading: ToolbarContent {
 /// The trailing end of a root page's bar: the Gamify button and New, each on
 /// its own round plate. The profile is in the side menu.
 struct RootBarTrailing: ToolbarContent {
+    var locked = false
+
     var body: some ToolbarContent {
         // One item, because the bar spaces separate items too far apart.
         ToolbarItem(placement: .topBarTrailing) {
@@ -233,6 +237,7 @@ struct RootBarTrailing: ToolbarContent {
                 GamifyButton()
                 ComposeButton()
             }
+            .disabled(locked)
         }
         .ownBackground()
     }
