@@ -8,6 +8,8 @@ import android.webkit.RenderProcessGoneDetail
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +25,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
@@ -56,12 +59,16 @@ private const val SCENE_URL = "file:///android_asset/scene/index.html"
 fun SceneView(mode: SceneMode, reducedMotion: Boolean, modifier: Modifier = Modifier) {
     val live = LocalSceneLive.current && !LocalInspectionMode.current
     var gone by remember { mutableStateOf(false) }
+    var ready by remember { mutableStateOf(false) }
+    // The still holds the place until the page says it has drawn, so the card is never an empty band.
+    val shown by animateFloatAsState(if (ready && live && !gone) 1f else 0f, tween(250), label = "scene")
     Box(modifier.clip(SceneShape).background(Palette.paper).clearAndSetSemantics { }) {
-        if (live && !gone) {
-            SceneWebView(mode, reducedMotion, onGone = { gone = true }, Modifier.fillMaxSize())
-        } else {
+        if (shown < 1f) {
             val angle = if (mode is SceneMode.Verdict) VerdictDisplay.svgRotateDeg(mode.tugA).toFloat() else 0f
-            Balance(angle, Modifier.fillMaxSize().padding(horizontal = 32.dp, vertical = 24.dp))
+            Balance(angle, Modifier.fillMaxSize().padding(horizontal = 32.dp, vertical = 24.dp).alpha(1f - shown))
+        }
+        if (live && !gone) {
+            SceneWebView(mode, reducedMotion, onGone = { gone = true }, onReady = { ready = it }, Modifier.fillMaxSize().alpha(shown))
         }
         Box(Modifier.matchParentSize().pointerInput(Unit) {})
     }
@@ -74,9 +81,10 @@ private class SceneEvents(private val handle: (String) -> Unit) {
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-private fun SceneWebView(mode: SceneMode, reducedMotion: Boolean, onGone: () -> Unit, modifier: Modifier) {
+private fun SceneWebView(mode: SceneMode, reducedMotion: Boolean, onGone: () -> Unit, onReady: (Boolean) -> Unit, modifier: Modifier) {
     val context = LocalContext.current
     val gone by rememberUpdatedState(onGone)
+    val report by rememberUpdatedState(onReady)
     var loaded by remember { mutableStateOf(false) }
     // WebGL can drop its context in the background; the page then shows its flat fallback until reloaded.
     var lost by remember { mutableStateOf(false) }
@@ -95,7 +103,12 @@ private fun SceneWebView(mode: SceneMode, reducedMotion: Boolean, onGone: () -> 
             settings.displayZoomControls = false
             settings.allowFileAccess = false
             settings.allowContentAccess = false
-            addJavascriptInterface(SceneEvents { type -> post { if (type == "lost") lost = true } }, "JudgeScene")
+            addJavascriptInterface(SceneEvents { type ->
+                post {
+                    if (type == "lost") lost = true
+                    report(type == "ready")
+                }
+            }, "JudgeScene")
             webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView, url: String) {
                     loaded = true
@@ -136,6 +149,7 @@ private fun SceneWebView(mode: SceneMode, reducedMotion: Boolean, onGone: () -> 
                     if (lost) {
                         lost = false
                         loaded = false
+                        report(false)
                         web.reload()
                     }
                 }
