@@ -84,11 +84,11 @@
     <string name="vote_dissolved">плутанина слів</string>
     <string name="refused_note">ШІ цього разу відмовився судити. Краще нічого не показати, ніж вигадати вердикт.</string>
     <string name="demo_note">Демо-режим: ключ ШІ не налаштовано, тож це зразок вердикту</string>
-    <string name="trial_survived">Перевірку на міцність пройдено: окремий суддя спробував зламати цей вердикт найсильнішим запереченням іншої сторони, але вердикт устояв. Упевненість не змінилася.</string>
-    <string name="trial_uncertain">Перевірка на міцність: найсильніше заперечення іншої сторони залишило серйозні сумніви щодо цього вердикту</string>
-    <string name="trial_overturned">Перевірку на міцність не пройдено: найсильніше заперечення іншої сторони переважило цей вердикт</string>
-    <string name="trial_what_was_tested">Що пробувала перевірка на міцність</string>
-    <string name="trial_attack_prefix">Найсильніше заперечення:</string>
+    <string name="trial_survived">Заперечення відхилено: адвокат іншої сторони висунув своє найсильніше заперечення, але вердикт устояв. Упевненість не змінилася.</string>
+    <string name="trial_uncertain">Адвокат іншої сторони висунув заперечення, і воно залишило серйозні сумніви щодо цього вердикту</string>
+    <string name="trial_overturned">Заперечення прийнято: найсильніше заперечення іншої сторони переважило цей вердикт</string>
+    <string name="trial_what_was_tested">Заперечення</string>
+    <string name="trial_attack_prefix">Заперечення:</string>
     <string name="trial_referee_prefix">Чому:</string>
     <string name="trial_mixed_note">Це змішана суперечка: почасти факти, почасти цінності чи значення слів, тому чисту перемогу тут важче відстояти.</string>
     <string name="confidence">Упевненість: %1$s з %2$s</string>

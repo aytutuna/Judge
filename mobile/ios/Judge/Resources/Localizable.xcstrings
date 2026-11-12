@@ -171284,271 +171284,271 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "أقوى حجة مضادة:"
+            "value" : "الاعتراض:"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "সবচেয়ে কড়া আপত্তি:"
+            "value" : "আপত্তি:"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L'objecció més dura:"
+            "value" : "Objecció:"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nejtvrdší námitka:"
+            "value" : "Námitka:"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hårdeste indvending:"
+            "value" : "Indsigelse:"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stärkstes Gegenargument:"
+            "value" : "Einspruch:"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Η δυνατότερη αντίρρηση:"
+            "value" : "Ένσταση:"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Strongest objection:"
+            "value" : "Objection:"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La objeción más dura:"
+            "value" : "Objeción:"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kovin vastaväite:"
+            "value" : "Vastaväite:"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L’objection la plus coriace :"
+            "value" : "Objection :"
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "સૌથી સખત વાંધો:"
+            "value" : "વાંધો:"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ההתנגדות הכי קשה:"
+            "value" : "התנגדות:"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "सबसे कड़ी आपत्ति:"
+            "value" : "आपत्ति:"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Najoštriji prigovor:"
+            "value" : "Prigovor:"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A legerősebb ellenvetés:"
+            "value" : "Tiltakozás:"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sanggahan terberat:"
+            "value" : "Keberatan:"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L'obiezione più dura:"
+            "value" : "Obiezione:"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "いちばん厳しい反論："
+            "value" : "異議："
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಅತ್ಯಂತ ಗಟ್ಟಿಯಾದ ಆಕ್ಷೇಪ:"
+            "value" : "ಆಕ್ಷೇಪಣೆ:"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "가장 날카로운 반론:"
+            "value" : "이의:"
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ഏറ്റവും കടുത്ത എതിർപ്പ്:"
+            "value" : "ആക്ഷേപം:"
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "सर्वात कडक आक्षेप:"
+            "value" : "आक्षेप:"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bantahan paling kuat:"
+            "value" : "Bantahan:"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sterkeste innvending:"
+            "value" : "Innsigelse:"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zwaarste tegenwerping:"
+            "value" : "Bezwaar:"
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ସବୁଠୁ କଡ଼ା ଆପତ୍ତି:"
+            "value" : "ଆପତ୍ତି:"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਸਭ ਤੋਂ ਸਖ਼ਤ ਇਤਰਾਜ਼:"
+            "value" : "ਇਤਰਾਜ਼:"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Najmocniejszy zarzut:"
+            "value" : "Sprzeciw:"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Objeção mais dura:"
+            "value" : "Objeção:"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Objeção mais forte:"
+            "value" : "Objeção:"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cea mai dură obiecție:"
+            "value" : "Obiecție:"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Самое сильное возражение:"
+            "value" : "Возражение:"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Najtvrdšia námietka:"
+            "value" : "Námietka:"
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Najostrejši ugovor:"
+            "value" : "Ugovor:"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tyngsta invändningen:"
+            "value" : "Invändning:"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "மிகக் கடுமையான ஆட்சேபனை:"
+            "value" : "ஆட்சேபனை:"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "అన్నిటికంటే గట్టి అభ్యంతరం:"
+            "value" : "అభ్యంతరం:"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ข้อแย้งที่หนักที่สุด:"
+            "value" : "ข้อคัดค้าน:"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "En güçlü karşı argüman:"
+            "value" : "İtiraz:"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Найсильніше заперечення:"
+            "value" : "Заперечення:"
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "سب سے سخت اعتراض:"
+            "value" : "اعتراض:"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Phản bác gắt nhất:"
+            "value" : "Phản đối:"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最尖锐的反驳："
+            "value" : "异议："
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最強烈的反駁："
+            "value" : "異議："
           }
         }
       }
@@ -171836,271 +171836,271 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "فشل الحكم في اختبار التحمّل: أقوى حجة للطرف الآخر رجحت على هذا الحكم"
+            "value" : "قُبل الاعتراض: أقوى اعتراض للطرف الآخر رجح على هذا الحكم"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "চাপ পরীক্ষায় রায় টেকেনি: অন্য পক্ষের সবচেয়ে কড়া আপত্তি এই রায়ের চেয়ে ভারী হয়েছে"
+            "value" : "আপত্তি গৃহীত: অন্য পক্ষের সবচেয়ে কড়া আপত্তি এই রায়ের চেয়ে ভারী হয়েছে"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prova de resistència fallida: l'objecció més forta de l'altra part ha pesat més que aquest veredicte"
+            "value" : "Objecció acceptada: l'objecció més forta de l'altra part ha pesat més que aquest veredicte"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zátěžový test neprošel: nejsilnější námitka druhé strany převážila nad tímto verdiktem"
+            "value" : "Námitka přijata: nejsilnější námitka druhé strany převážila nad tímto verdiktem"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Belastningstesten slog fejl: den anden sides stærkeste indvending vejede tungere end dommen"
+            "value" : "Indsigelsen taget til følge: den anden sides stærkeste indsigelse vejede tungere end dommen"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Belastungstest nicht bestanden: Der stärkste Einwand der Gegenseite wog schwerer als dieses Urteil"
+            "value" : "Einspruch stattgegeben: Der stärkste Einspruch der Gegenseite wog schwerer als dieses Urteil"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Το τεστ αντοχής απέτυχε: η δυνατότερη ένσταση της άλλης πλευράς ζύγισε περισσότερο από αυτή την απόφαση"
+            "value" : "Η ένσταση έγινε δεκτή: η πιο ισχυρή ένσταση της άλλης πλευράς ζύγισε περισσότερο από αυτή την απόφαση"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stress test failed: the other side's strongest objection outweighed this ruling"
+            "value" : "Objection sustained: the other side's strongest objection outweighed this ruling"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prueba de resistencia fallida: la objeción más fuerte de la otra parte pesó más que esta decisión"
+            "value" : "Objeción aceptada: la objeción más fuerte de la otra parte pesó más que esta decisión"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kestävyystesti epäonnistui: vastapuolen vahvin vastaväite painoi enemmän kuin tämä tuomio"
+            "value" : "Vastaväite hyväksyttiin: vastapuolen vahvin vastaväite painoi enemmän kuin tämä tuomio"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Test de résistance échoué : la plus forte objection de l’autre camp a pesé plus lourd que ce verdict"
+            "value" : "Objection retenue : la plus forte objection de l’autre camp a pesé plus lourd que ce verdict"
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "મજબૂતી કસોટીમાં ચુકાદો નિષ્ફળ: સામેની બાજુનો સૌથી મજબૂત વાંધો આ ચુકાદા પર ભારે પડ્યો"
+            "value" : "વાંધો મંજૂર: સામેની બાજુનો સૌથી મજબૂત વાંધો આ ચુકાદા પર ભારે પડ્યો"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "פסק הדין נכשל במבחן העמידות: ההתנגדות החזקה ביותר של הצד השני גברה עליו"
+            "value" : "ההתנגדות התקבלה: ההתנגדות החזקה ביותר של הצד השני גברה על פסק הדין"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "टिकाऊपन की जाँच में फ़ैसला नाकाम: दूसरे पक्ष की सबसे मज़बूत आपत्ति इस फ़ैसले पर भारी पड़ी"
+            "value" : "आपत्ति स्वीकार: दूसरे पक्ष की सबसे मज़बूत आपत्ति इस फ़ैसले पर भारी पड़ी"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Test otpornosti nije prošao: najjača primjedba druge strane odvagnula je više od ove presude"
+            "value" : "Prigovor prihvaćen: najjači prigovor druge strane odvagnuo je više od ove presude"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Az ítélet megbukott a terhelési teszten: a másik oldal legerősebb ellenvetése nagyobb súlyú volt nála"
+            "value" : "A tiltakozásnak helyt adtak: a másik oldal legerősebb tiltakozása nagyobb súlyú volt ennél az ítéletnél"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uji ketahanan gagal: keberatan terkuat pihak lain lebih berat daripada putusan ini"
+            "value" : "Keberatan diterima: keberatan terkuat pihak lain lebih berat daripada putusan ini"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prova di tenuta fallita: l'obiezione più forte dell'altra parte ha pesato più di questo verdetto"
+            "value" : "Obiezione accolta: l'obiezione più forte dell'altra parte ha pesato più di questo verdetto"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "耐久テストに不合格：相手側のいちばん強い反論が、この判定を上回りました"
+            "value" : "異議を認めます：相手側のいちばん強い異議が、この判定を上回りました"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಬಲ ಪರೀಕ್ಷೆಯಲ್ಲಿ ತೀರ್ಪು ಸೋತಿತು: ಎದುರು ಕಡೆಯ ಅತ್ಯಂತ ಗಟ್ಟಿಯಾದ ಆಕ್ಷೇಪ ಈ ತೀರ್ಪಿಗಿಂತ ಭಾರವಾಯಿತು"
+            "value" : "ಆಕ್ಷೇಪಣೆ ಅಂಗೀಕೃತ: ಎದುರು ಕಡೆಯ ಅತ್ಯಂತ ಗಟ್ಟಿಯಾದ ಆಕ್ಷೇಪಣೆ ಈ ತೀರ್ಪಿಗಿಂತ ಭಾರವಾಯಿತು"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "스트레스 테스트 실패: 상대편의 가장 강한 반론이 이 판결보다 더 무거웠어요"
+            "value" : "이의 인용: 상대편의 가장 강한 이의가 이 판결보다 더 무거웠어요"
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ഈട് പരിശോധനയിൽ വിധി പരാജയപ്പെട്ടു: മറുഭാഗത്തിന്റെ ഏറ്റവും ശക്തമായ എതിർവാദം ഈ വിധിയെക്കാൾ ഭാരമുള്ളതായി"
+            "value" : "ആക്ഷേപം അംഗീകരിച്ചു: മറുഭാഗത്തിന്റെ ഏറ്റവും ശക്തമായ ആക്ഷേപം ഈ വിധിയെക്കാൾ ഭാരമുള്ളതായി"
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "टिकाऊपणा चाचणीत निकाल अपयशी: समोरच्या बाजूचा सर्वात कडक आक्षेप या निकालापेक्षा जड ठरला"
+            "value" : "आक्षेप मान्य: समोरच्या बाजूचा सर्वात कडक आक्षेप या निकालापेक्षा जड ठरला"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ujian ketahanan gagal: bantahan paling kuat pihak satu lagi lebih berat daripada keputusan ini"
+            "value" : "Bantahan diterima: bantahan paling kuat pihak satu lagi lebih berat daripada keputusan ini"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Belastningstesten feilet: den andre sidens sterkeste innvending veide tyngre enn dommen"
+            "value" : "Innsigelsen er tatt til følge: den andre sidens sterkeste innsigelse veide tyngre enn dommen"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stresstest gefaald: het sterkste bezwaar van de andere kant woog zwaarder dan deze uitspraak"
+            "value" : "Bezwaar toegewezen: het sterkste bezwaar van de andere kant woog zwaarder dan deze uitspraak"
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଦୃଢ଼ତା ପରୀକ୍ଷାରେ ରାୟ ଫେଲ୍: ଅନ୍ୟ ପକ୍ଷର ସବୁଠୁ କଡ଼ା ଆପତ୍ତି ଏହି ରାୟଠାରୁ ଭାରୀ ପଡ଼ିଲା"
+            "value" : "ଆପତ୍ତି ଗ୍ରହଣ: ଅନ୍ୟ ପକ୍ଷର ସବୁଠୁ କଡ଼ା ଆପତ୍ତି ଏହି ରାୟଠାରୁ ଭାରୀ ପଡ଼ିଲା"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਮਜ਼ਬੂਤੀ ਦੀ ਪਰਖ ਵਿੱਚ ਫ਼ੈਸਲਾ ਫ਼ੇਲ੍ਹ: ਦੂਜੇ ਪੱਖ ਦਾ ਸਭ ਤੋਂ ਸਖ਼ਤ ਇਤਰਾਜ਼ ਇਸ ਫ਼ੈਸਲੇ ਨਾਲੋਂ ਭਾਰੀ ਪਿਆ"
+            "value" : "ਇਤਰਾਜ਼ ਮਨਜ਼ੂਰ: ਦੂਜੇ ਪੱਖ ਦਾ ਸਭ ਤੋਂ ਸਖ਼ਤ ਇਤਰਾਜ਼ ਇਸ ਫ਼ੈਸਲੇ ਨਾਲੋਂ ਭਾਰੀ ਪਿਆ"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Test wytrzymałości oblany: najmocniejszy zarzut drugiej strony przeważył nad tym werdyktem"
+            "value" : "Sprzeciw uwzględniony: najmocniejszy sprzeciw drugiej strony przeważył nad tym werdyktem"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Teste de resistência reprovado: a objeção mais forte do outro lado pesou mais que este veredito"
+            "value" : "Objeção deferida: a objeção mais forte do outro lado pesou mais que este veredito"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Teste de resistência falhado: a objeção mais forte do outro lado pesou mais do que esta decisão"
+            "value" : "Objeção deferida: a objeção mais forte do outro lado pesou mais do que esta decisão"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Test de rezistență picat: cea mai puternică obiecție a celeilalte părți a cântărit mai mult decât acest verdict"
+            "value" : "Obiecție admisă: cea mai puternică obiecție a celeilalte părți a cântărit mai mult decât acest verdict"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Проверка на прочность не пройдена: самое сильное возражение другой стороны перевесило этот вердикт"
+            "value" : "Возражение принято: самое сильное возражение другой стороны перевесило этот вердикт"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Záťažový test neprešiel: najsilnejšia námietka druhej strany prevážila nad týmto rozhodnutím"
+            "value" : "Námietka prijatá: najsilnejšia námietka druhej strany prevážila nad týmto rozhodnutím"
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Test vzdržljivosti ni uspel: najmočnejši ugovor druge plati je pretehtal to razsodbo"
+            "value" : "Ugovor sprejet: najmočnejši ugovor druge plati je pretehtal to razsodbo"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hållbarhetstestet misslyckades: andra sidans starkaste invändning vägde tyngre än domen"
+            "value" : "Invändningen bifölls: andra sidans starkaste invändning vägde tyngre än domen"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "உறுதித் தேர்வில் தீர்ப்பு தோல்வி: மறுதரப்பின் மிகக் கடுமையான ஆட்சேபனை இந்தத் தீர்ப்பை விட வலுவாக இருந்தது"
+            "value" : "ஆட்சேபனை ஏற்பு: மறுதரப்பின் மிகக் கடுமையான ஆட்சேபனை இந்தத் தீர்ப்பை விட வலுவாக இருந்தது"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "దృఢత్వ పరీక్షలో తీర్పు విఫలమైంది: అవతలి వైపు అత్యంత గట్టి అభ్యంతరం ఈ తీర్పు కన్నా బరువైంది"
+            "value" : "అభ్యంతరం ఆమోదం: అవతలి వైపు అత్యంత గట్టి అభ్యంతరం ఈ తీర్పు కన్నా బరువైంది"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ไม่ผ่านการทดสอบความทนทาน: ข้อแย้งที่หนักที่สุดของอีกฝ่ายหนักกว่าคำตัดสินนี้"
+            "value" : "รับข้อคัดค้าน: ข้อคัดค้านที่หนักที่สุดของอีกฝ่ายหนักกว่าคำตัดสินนี้"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dayanıklılık testi geçilemedi: karşı tarafın en güçlü karşı argümanı bu karardan daha ağır bastı"
+            "value" : "İtiraz kabul edildi: karşı tarafın en güçlü itirazı bu karardan ağır bastı"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Перевірку на міцність не пройдено: найсильніше заперечення іншої сторони переважило цей вердикт"
+            "value" : "Заперечення прийнято: найсильніше заперечення іншої сторони переважило цей вердикт"
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "پختگی کی جانچ میں فیصلہ ناکام: دوسری طرف کا سب سے سخت اعتراض اس فیصلے پر بھاری پڑا"
+            "value" : "اعتراض منظور: دوسری طرف کا سب سے سخت اعتراض اس فیصلے پر بھاری پڑا"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Không vượt qua bài kiểm tra độ bền: phản bác mạnh nhất của phía bên kia nặng ký hơn phán quyết này"
+            "value" : "Chấp nhận phản đối: phản đối mạnh nhất của phía bên kia nặng ký hơn phán quyết này"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "抗压测试未通过：对方最有力的反驳比这份裁决更有分量"
+            "value" : "异议成立：对方最有力的异议比这份裁决更有分量"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "壓力測試未通過：對方最有力的反駁比這個判決更有分量"
+            "value" : "異議成立：對方最有力的異議比這個判決更有分量"
           }
         }
       }
@@ -172388,271 +172388,271 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "اجتاز الحكم اختبار التحمّل: حاول قاضٍ مستقل نقضه بأقوى حجة للطرف الآخر فصمد. درجة الثقة كما هي."
+            "value" : "رُفض الاعتراض: رفع محامي الطرف الآخر أقوى اعتراض لديه فصمد الحكم. درجة الثقة كما هي."
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "চাপ পরীক্ষায় উতরে গেছে: আলাদা একজন বিচারক অন্য পক্ষের সবচেয়ে কড়া আপত্তি দিয়ে এই রায় ভাঙার চেষ্টা করেছেন, রায় টিকে গেছে। নিশ্চয়তা যেমন ছিল তেমনই আছে।"
+            "value" : "আপত্তি খারিজ: অন্য পক্ষের আইনজীবী তাঁর সবচেয়ে কড়া আপত্তি তুলেছিলেন, রায় টিকে গেছে। নিশ্চয়তা যেমন ছিল তেমনই আছে।"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prova de resistència superada: un jutge a part ha intentat tombar aquest veredicte amb l'objecció més forta de l'altra part, i ha aguantat. La confiança es manté."
+            "value" : "Objecció rebutjada: l'advocat de l'altra part ha plantejat la seva objecció més forta, i el veredicte ha aguantat. La confiança es manté."
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zátěžový test splněn: samostatný soudce se tento verdikt pokusil rozbít nejsilnější námitkou druhé strany a verdikt obstál. Jistota zůstává."
+            "value" : "Námitka zamítnuta: advokát druhé strany vznesl svou nejsilnější námitku a verdikt obstál. Jistota zůstává."
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Belastningstesten er bestået: en separat dommer prøvede at knække dommen med den anden sides stærkeste indvending, og den holdt. Sikkerheden er uændret."
+            "value" : "Indsigelsen afvist: den anden sides advokat kom med sin stærkeste indsigelse, og dommen holdt. Sikkerheden er uændret."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Belastungstest bestanden: Ein separater Richter hat versucht, dieses Urteil mit dem stärksten Einwand der Gegenseite zu kippen, und es hat gehalten. Die Sicherheit bleibt unverändert."
+            "value" : "Einspruch abgewiesen: Der Anwalt der Gegenseite hat seinen stärksten Einspruch erhoben, und das Urteil hat gehalten. Die Sicherheit bleibt unverändert."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Το τεστ αντοχής πέρασε: ένας ξεχωριστός κριτής προσπάθησε να ανατρέψει την απόφαση με τη δυνατότερη ένσταση της άλλης πλευράς, κι εκείνη άντεξε. Η βεβαιότητα μένει ίδια."
+            "value" : "Η ένσταση απορρίφθηκε: ο δικηγόρος της άλλης πλευράς έκανε την πιο ισχυρή του ένσταση, κι η απόφαση άντεξε. Η βεβαιότητα μένει ίδια."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stress test passed: a separate judge tried to break this ruling with the other side's strongest objection, and it held. Confidence stays put."
+            "value" : "Objection overruled: the other side's lawyer raised their strongest objection, and the ruling held. Confidence stays put."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prueba de resistencia superada: un juez aparte intentó tumbar esta decisión con la objeción más fuerte de la otra parte, y aguantó. La confianza no cambia."
+            "value" : "Objeción rechazada: el abogado de la otra parte planteó su objeción más fuerte y la decisión aguantó. La confianza no cambia."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kestävyystesti läpäisty: erillinen tuomari yritti kaataa tuomion vastapuolen vahvimmalla vastaväitteellä, ja tuomio kesti. Varmuus pysyy ennallaan."
+            "value" : "Vastaväite hylättiin: vastapuolen asianajaja esitti vahvimman vastaväitteensä, ja tuomio kesti. Varmuus pysyy ennallaan."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Test de résistance réussi : un juge à part a tenté de faire tomber ce verdict avec la plus forte objection de l’autre camp, et il a tenu. L’indice de confiance ne bouge pas."
+            "value" : "Objection rejetée : l’avocat de l’autre camp a soulevé sa plus forte objection, et le verdict a tenu. L’indice de confiance ne bouge pas."
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "મજબૂતી કસોટી પાસ: એક અલગ જજે સામેની બાજુના સૌથી મજબૂત વાંધાથી આ ચુકાદો તોડવાનો પ્રયાસ કર્યો, અને ચુકાદો ટકી રહ્યો. વિશ્વાસ સ્કોર એનો એ જ."
+            "value" : "વાંધો નામંજૂર: સામેની બાજુના વકીલે પોતાનો સૌથી મજબૂત વાંધો ઉઠાવ્યો, અને ચુકાદો ટકી રહ્યો. વિશ્વાસ સ્કોર એનો એ જ."
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "מבחן העמידות עבר: שופט נפרד ניסה לשבור את פסק הדין עם ההתנגדות החזקה ביותר של הצד השני, והוא החזיק. רמת הביטחון לא השתנתה."
+            "value" : "ההתנגדות נדחתה: עורך הדין של הצד השני העלה את ההתנגדות החזקה ביותר שלו, ופסק הדין החזיק. רמת הביטחון לא השתנתה."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "टिकाऊपन की जाँच पास: एक अलग जज ने दूसरे पक्ष की सबसे मज़बूत आपत्ति से इस फ़ैसले को तोड़ने की कोशिश की, और यह टिका रहा। भरोसा स्कोर जस का तस है।"
+            "value" : "आपत्ति खारिज: दूसरे पक्ष के वकील ने अपनी सबसे मज़बूत आपत्ति रखी, और फ़ैसला टिका रहा। भरोसा स्कोर जस का तस है।"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Test otpornosti položen: zaseban sudac pokušao je srušiti ovu presudu najjačom primjedbom druge strane, a ona je izdržala. Pouzdanost ostaje ista."
+            "value" : "Prigovor odbijen: odvjetnik druge strane iznio je svoj najjači prigovor, a presuda je izdržala. Pouzdanost ostaje ista."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A terhelési teszt sikeres: egy különálló bíró a másik oldal legerősebb ellenvetésével próbálta megdönteni az ítéletet, de az megállt. A bizonyosság nem változik."
+            "value" : "A tiltakozást elutasították: a másik oldal ügyvédje előadta a legerősebb tiltakozását, az ítélet pedig megállt. A bizonyosság nem változik."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uji ketahanan lolos: hakim terpisah mencoba menjatuhkan putusan ini dengan keberatan terkuat pihak lain, dan putusan tetap bertahan. Skor keyakinan tetap."
+            "value" : "Keberatan ditolak: pengacara pihak lain mengajukan keberatan terkuatnya, dan putusan tetap bertahan. Skor keyakinan tetap."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prova di tenuta superata: un giudice a parte ha provato a far crollare questo verdetto con l'obiezione più forte dell'altra parte, e ha retto. La certezza non cambia."
+            "value" : "Obiezione respinta: l'avvocato dell'altra parte ha sollevato la sua obiezione più forte, e il verdetto ha retto. La certezza non cambia."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "耐久テストに合格：別の審査員が相手側のいちばん強い反論でこの判定を崩そうとしましたが、判定は持ちこたえました。信頼度はそのままです。"
+            "value" : "異議を却下：相手側の弁護人がいちばん強い異議を唱えましたが、判定は持ちこたえました。信頼度はそのままです。"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಬಲ ಪರೀಕ್ಷೆಯಲ್ಲಿ ಪಾಸ್: ಪ್ರತ್ಯೇಕ ತೀರ್ಪುಗಾರರೊಬ್ಬರು ಎದುರು ಕಡೆಯ ಅತ್ಯಂತ ಗಟ್ಟಿಯಾದ ಆಕ್ಷೇಪದಿಂದ ಈ ತೀರ್ಪನ್ನು ಮುರಿಯಲು ಪ್ರಯತ್ನಿಸಿದರು, ತೀರ್ಪು ನಿಂತಿತು. ವಿಶ್ವಾಸ ಅಂಕ ಬದಲಾಗಿಲ್ಲ."
+            "value" : "ಆಕ್ಷೇಪಣೆ ತಿರಸ್ಕೃತ: ಎದುರು ಕಡೆಯ ವಕೀಲರು ತಮ್ಮ ಅತ್ಯಂತ ಗಟ್ಟಿಯಾದ ಆಕ್ಷೇಪಣೆ ಎತ್ತಿದರು, ತೀರ್ಪು ನಿಂತಿತು. ವಿಶ್ವಾಸ ಅಂಕ ಬದಲಾಗಿಲ್ಲ."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "스트레스 테스트 통과: 별도의 판사가 상대편의 가장 강한 반론으로 이 판결을 무너뜨리려 했지만 판결은 버텼어요. 신뢰도는 그대로예요."
+            "value" : "이의 기각: 상대편 변호인이 가장 강한 이의를 제기했지만 판결은 버텼어요. 신뢰도는 그대로예요."
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ഈട് പരിശോധന വിജയിച്ചു: വേറൊരു ജഡ്ജി മറുഭാഗത്തിന്റെ ഏറ്റവും ശക്തമായ എതിർവാദം കൊണ്ട് ഈ വിധി തകർക്കാൻ നോക്കി, വിധി പിടിച്ചുനിന്നു. ഉറപ്പ് സ്കോർ മാറിയില്ല."
+            "value" : "ആക്ഷേപം തള്ളി: മറുഭാഗത്തിന്റെ അഭിഭാഷകൻ തന്റെ ഏറ്റവും ശക്തമായ ആക്ഷേപം ഉന്നയിച്ചു, വിധി പിടിച്ചുനിന്നു. ഉറപ്പ് സ്കോർ മാറിയില്ല."
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "टिकाऊपणा चाचणी पास: एका वेगळ्या परीक्षकाने समोरच्या बाजूच्या सर्वात कडक आक्षेपाने हा निकाल मोडण्याचा प्रयत्न केला, आणि निकाल टिकला. खात्री गुण तसेच राहिले."
+            "value" : "आक्षेप फेटाळला: समोरच्या बाजूच्या वकिलाने आपला सर्वात कडक आक्षेप घेतला, आणि निकाल टिकला. खात्री गुण तसेच राहिले."
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ujian ketahanan lulus: seorang hakim berasingan cuba menjatuhkan keputusan ini dengan bantahan paling kuat pihak satu lagi, dan keputusan ini tetap bertahan. Skor keyakinan tidak berubah."
+            "value" : "Bantahan ditolak: peguam pihak satu lagi mengemukakan bantahan paling kuatnya, dan keputusan ini tetap bertahan. Skor keyakinan tidak berubah."
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Belastningstesten er bestått: en egen dommer prøvde å knekke dommen med den andre sidens sterkeste innvending, og den holdt. Sikkerheten er uendret."
+            "value" : "Innsigelsen er avvist: den andre sidens advokat kom med sin sterkeste innsigelse, og dommen holdt. Sikkerheten er uendret."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stresstest doorstaan: een aparte rechter probeerde deze uitspraak onderuit te halen met het sterkste bezwaar van de andere kant, en ze hield stand. De zekerheid blijft gelijk."
+            "value" : "Bezwaar afgewezen: de advocaat van de andere kant bracht zijn sterkste bezwaar in, en de uitspraak hield stand. De zekerheid blijft gelijk."
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଦୃଢ଼ତା ପରୀକ୍ଷାରେ ପାସ୍: ଅଲଗା ଜଣେ ବିଚାରକ ଅନ୍ୟ ପକ୍ଷର ସବୁଠୁ କଡ଼ା ଆପତ୍ତିରେ ଏହି ରାୟକୁ ଭାଙ୍ଗିବାକୁ ଚେଷ୍ଟା କଲେ, ଆଉ ରାୟ ଟିକି ରହିଲା। ଭରସା ସ୍କୋର୍ ବଦଳିଲା ନାହିଁ।"
+            "value" : "ଆପତ୍ତି ଖାରଜ: ଅନ୍ୟ ପକ୍ଷର ଓକିଲ ନିଜର ସବୁଠୁ କଡ଼ା ଆପତ୍ତି ଉଠାଇଲେ, ଆଉ ରାୟ ଟିକି ରହିଲା। ଭରସା ସ୍କୋର୍ ବଦଳିଲା ନାହିଁ।"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਮਜ਼ਬੂਤੀ ਦੀ ਪਰਖ ਪਾਸ: ਇੱਕ ਵੱਖਰੇ ਜੱਜ ਨੇ ਦੂਜੇ ਪੱਖ ਦੇ ਸਭ ਤੋਂ ਸਖ਼ਤ ਇਤਰਾਜ਼ ਨਾਲ ਇਹ ਫ਼ੈਸਲਾ ਤੋੜਨ ਦੀ ਕੋਸ਼ਿਸ਼ ਕੀਤੀ, ਅਤੇ ਫ਼ੈਸਲਾ ਟਿਕਿਆ ਰਿਹਾ। ਭਰੋਸੇ ਦਾ ਸਕੋਰ ਉਹੀ ਰਹਿੰਦਾ ਹੈ।"
+            "value" : "ਇਤਰਾਜ਼ ਰੱਦ: ਦੂਜੇ ਪੱਖ ਦੇ ਵਕੀਲ ਨੇ ਆਪਣਾ ਸਭ ਤੋਂ ਸਖ਼ਤ ਇਤਰਾਜ਼ ਉਠਾਇਆ, ਅਤੇ ਫ਼ੈਸਲਾ ਟਿਕਿਆ ਰਿਹਾ। ਭਰੋਸੇ ਦਾ ਸਕੋਰ ਉਹੀ ਰਹਿੰਦਾ ਹੈ।"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Test wytrzymałości zaliczony: osobny sędzia próbował obalić ten werdykt najmocniejszym zarzutem drugiej strony, a werdykt się obronił. Pewność bez zmian."
+            "value" : "Sprzeciw oddalony: adwokat drugiej strony zgłosił swój najmocniejszy sprzeciw, a werdykt się obronił. Pewność bez zmian."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Teste de resistência superado: um juiz separado tentou derrubar este veredito com a objeção mais forte do outro lado, e ele se manteve. A confiança não muda."
+            "value" : "Objeção indeferida: o advogado do outro lado levantou a objeção mais forte dele, e o veredito se manteve. A confiança não muda."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Teste de resistência superado: um juiz separado tentou derrubar esta decisão com a objeção mais forte do outro lado, e ela aguentou. A confiança mantém-se."
+            "value" : "Objeção indeferida: o advogado do outro lado levantou a sua objeção mais forte, e a decisão aguentou. A confiança mantém-se."
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Test de rezistență trecut: un judecător separat a încercat să dărâme acest verdict cu cea mai puternică obiecție a celeilalte părți, iar verdictul a rezistat. Încrederea rămâne aceeași."
+            "value" : "Obiecție respinsă: avocatul celeilalte părți și-a ridicat cea mai puternică obiecție, iar verdictul a rezistat. Încrederea rămâne aceeași."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Проверка на прочность пройдена: отдельный судья попытался сломать этот вердикт самым сильным возражением другой стороны, но вердикт устоял. Уверенность не изменилась."
+            "value" : "Возражение отклонено: адвокат другой стороны выдвинул своё самое сильное возражение, но вердикт устоял. Уверенность не изменилась."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Záťažový test splnený: samostatný sudca sa toto rozhodnutie pokúsil rozbiť najsilnejšou námietkou druhej strany a rozhodnutie obstálo. Istota sa nemení."
+            "value" : "Námietka zamietnutá: advokát druhej strany vzniesol svoju najsilnejšiu námietku a rozhodnutie obstálo. Istota sa nemení."
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Test vzdržljivosti opravljen: ločen sodnik je poskusil porušiti to razsodbo z najmočnejšim ugovorom druge plati, pa je zdržala. Zanesljivost ostaja enaka."
+            "value" : "Ugovor zavrnjen: odvetnik druge plati je podal svoj najmočnejši ugovor, razsodba pa je zdržala. Zanesljivost ostaja enaka."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hållbarhetstestet klarades: en separat domare försökte fälla domen med andra sidans starkaste invändning, och den höll. Säkerheten är oförändrad."
+            "value" : "Invändningen avslogs: andra sidans advokat framförde sin starkaste invändning, och domen höll. Säkerheten är oförändrad."
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "உறுதித் தேர்வில் தேர்ச்சி: தனி நடுவர் ஒருவர் மறுதரப்பின் மிகக் கடுமையான ஆட்சேபனையால் இந்தத் தீர்ப்பை உடைக்க முயன்றார், தீர்ப்பு தாக்குப்பிடித்தது. நம்பகம் மாறவில்லை."
+            "value" : "ஆட்சேபனை தள்ளுபடி: மறுதரப்பின் வழக்கறிஞர் தன் மிகக் கடுமையான ஆட்சேபனையை எழுப்பினார், தீர்ப்பு தாக்குப்பிடித்தது. நம்பகம் மாறவில்லை."
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "దృఢత్వ పరీక్షలో నెగ్గింది: వేరే జడ్జి అవతలి వైపు అత్యంత గట్టి అభ్యంతరంతో ఈ తీర్పును కూల్చడానికి ప్రయత్నించారు, తీర్పు నిలబడింది. నమ్మకం స్కోరు మారలేదు."
+            "value" : "అభ్యంతరం తిరస్కరణ: అవతలి వైపు న్యాయవాది తన అత్యంత గట్టి అభ్యంతరం లేవనెత్తారు, తీర్పు నిలబడింది. నమ్మకం స్కోరు మారలేదు."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ผ่านการทดสอบความทนทาน: กรรมการอีกคนพยายามล้มคำตัดสินนี้ด้วยข้อแย้งที่หนักที่สุดของอีกฝ่าย แต่คำตัดสินยังอยู่ ความมั่นใจยังเท่าเดิม"
+            "value" : "ยกข้อคัดค้าน: ทนายของอีกฝ่ายยกข้อคัดค้านที่หนักที่สุดขึ้นมา แต่คำตัดสินยังอยู่ ความมั่นใจยังเท่าเดิม"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dayanıklılık testi geçildi: ayrı bir yargıç karşı tarafın en güçlü karşı argümanıyla bu kararı yıkmaya çalıştı, karar ayakta kaldı. Güven puanı aynı kaldı."
+            "value" : "İtiraz reddedildi: karşı tarafın avukatı en güçlü itirazını yaptı, karar ayakta kaldı. Güven puanı değişmedi."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Перевірку на міцність пройдено: окремий суддя спробував зламати цей вердикт найсильнішим запереченням іншої сторони, але вердикт устояв. Упевненість не змінилася."
+            "value" : "Заперечення відхилено: адвокат іншої сторони висунув своє найсильніше заперечення, але вердикт устояв. Упевненість не змінилася."
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "پختگی کی جانچ میں کامیاب: ایک الگ جج نے دوسری طرف کے سب سے سخت اعتراض سے اس فیصلے کو توڑنے کی کوشش کی، اور فیصلہ قائم رہا۔ اعتماد اپنی جگہ برقرار ہے۔"
+            "value" : "اعتراض مسترد: دوسری طرف کے وکیل نے اپنا سب سے سخت اعتراض اٹھایا، اور فیصلہ قائم رہا۔ اعتماد اپنی جگہ برقرار ہے۔"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Đã vượt qua bài kiểm tra độ bền: một giám khảo riêng đã thử hạ phán quyết này bằng phản bác mạnh nhất của phía bên kia, và nó vẫn đứng vững. Độ tin cậy giữ nguyên."
+            "value" : "Bác bỏ phản đối: luật sư phía bên kia đã nêu phản đối mạnh nhất của mình, và phán quyết vẫn đứng vững. Độ tin cậy giữ nguyên."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "抗压测试通过：另一位评委用对方最有力的反驳试图推翻这份裁决，它扛住了。可信度不变。"
+            "value" : "异议被驳回：对方律师提出了最有力的异议，裁决依然成立。可信度不变。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "壓力測試通過：另一位評審用對方最有力的反駁試圖推翻這個判決，它撐住了。信心分數不變。"
+            "value" : "異議駁回：對方律師提出了最有力的異議，判決依然成立。信心分數不變。"
           }
         }
       }
@@ -172664,271 +172664,271 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "اختبار التحمّل: أقوى حجة للطرف الآخر تركت شكًّا حقيقيًا حول هذا الحكم"
+            "value" : "اعترض محامي الطرف الآخر، وترك اعتراضه شكًّا حقيقيًا حول هذا الحكم"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "চাপ পরীক্ষা: অন্য পক্ষের সবচেয়ে কড়া আপত্তি এই রায় নিয়ে সত্যিকারের সন্দেহ রেখে গেছে"
+            "value" : "অন্য পক্ষের আইনজীবী আপত্তি তুললেন, আর সেই আপত্তি এই রায় নিয়ে সত্যিকারের সন্দেহ রেখে গেছে"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prova de resistència: l'objecció més forta de l'altra part ha deixat dubtes reals sobre aquest veredicte"
+            "value" : "L'advocat de l'altra part ha objectat, i l'objecció ha deixat dubtes reals sobre aquest veredicte"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zátěžový test: nejsilnější námitka druhé strany nechala o tomto verdiktu skutečné pochybnosti"
+            "value" : "Advokát druhé strany vznesl námitku a ta nechala o tomto verdiktu skutečné pochybnosti"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Belastningstest: den anden sides stærkeste indvending efterlod reel tvivl om dommen"
+            "value" : "Den anden sides advokat gjorde indsigelse, og den efterlod reel tvivl om dommen"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Belastungstest: Der stärkste Einwand der Gegenseite hat echte Zweifel an diesem Urteil hinterlassen"
+            "value" : "Der Anwalt der Gegenseite hat Einspruch erhoben, und der Einspruch hat echte Zweifel an diesem Urteil hinterlassen"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Τεστ αντοχής: η δυνατότερη ένσταση της άλλης πλευράς άφησε σοβαρές αμφιβολίες για αυτή την απόφαση"
+            "value" : "Ο δικηγόρος της άλλης πλευράς έκανε ένσταση και η ένσταση άφησε σοβαρές αμφιβολίες για αυτή την απόφαση"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stress test: the other side's strongest objection left real doubt about this ruling"
+            "value" : "The other side's lawyer objected, and the objection left real doubt about this ruling"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prueba de resistencia: la objeción más fuerte de la otra parte dejó dudas serias sobre esta decisión"
+            "value" : "El abogado de la otra parte objetó, y la objeción dejó dudas serias sobre esta decisión"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kestävyystesti: vastapuolen vahvin vastaväite jätti aiheellisen epäilyksen tästä tuomiosta"
+            "value" : "Vastapuolen asianajaja esitti vastaväitteen, ja se jätti aiheellisen epäilyksen tästä tuomiosta"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Test de résistance : la plus forte objection de l’autre camp a laissé un vrai doute sur ce verdict"
+            "value" : "L’avocat de l’autre camp a fait objection, et cette objection a laissé un vrai doute sur ce verdict"
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "મજબૂતી કસોટી: સામેની બાજુના સૌથી મજબૂત વાંધાએ આ ચુકાદા પર સાચી શંકા છોડી"
+            "value" : "સામેની બાજુના વકીલે વાંધો ઉઠાવ્યો, અને એ વાંધાએ આ ચુકાદા પર સાચી શંકા છોડી"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "מבחן עמידות: ההתנגדות החזקה ביותר של הצד השני השאירה ספק אמיתי לגבי פסק הדין"
+            "value" : "עורך הדין של הצד השני התנגד, וההתנגדות השאירה ספק אמיתי לגבי פסק הדין"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "टिकाऊपन की जाँच: दूसरे पक्ष की सबसे मज़बूत आपत्ति ने इस फ़ैसले पर सच्चा शक छोड़ा"
+            "value" : "दूसरे पक्ष के वकील ने आपत्ति जताई, और उस आपत्ति ने इस फ़ैसले पर सच्चा शक छोड़ा"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Test otpornosti: najjača primjedba druge strane ostavila je ozbiljnu sumnju u ovu presudu"
+            "value" : "Odvjetnik druge strane uložio je prigovor i on je ostavio ozbiljnu sumnju u ovu presudu"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Terhelési teszt: a másik oldal legerősebb ellenvetése valódi kétséget hagyott ezzel az ítélettel kapcsolatban"
+            "value" : "A másik oldal ügyvédje tiltakozott, és a tiltakozás valódi kétséget hagyott ezzel az ítélettel kapcsolatban"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uji ketahanan: keberatan terkuat pihak lain meninggalkan keraguan nyata soal putusan ini"
+            "value" : "Pengacara pihak lain mengajukan keberatan, dan keberatan itu meninggalkan keraguan nyata soal putusan ini"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prova di tenuta: l'obiezione più forte dell'altra parte ha lasciato dubbi seri su questo verdetto"
+            "value" : "L'avvocato dell'altra parte ha sollevato un'obiezione, e l'obiezione ha lasciato dubbi seri su questo verdetto"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "耐久テスト：相手側のいちばん強い反論で、この判定に無視できない疑問が残りました"
+            "value" : "相手側の弁護人が異議を唱え、この判定に無視できない疑問が残りました"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಬಲ ಪರೀಕ್ಷೆ: ಎದುರು ಕಡೆಯ ಅತ್ಯಂತ ಗಟ್ಟಿಯಾದ ಆಕ್ಷೇಪ ಈ ತೀರ್ಪಿನ ಬಗ್ಗೆ ನಿಜವಾದ ಅನುಮಾನ ಉಳಿಸಿತು"
+            "value" : "ಎದುರು ಕಡೆಯ ವಕೀಲರು ಆಕ್ಷೇಪಣೆ ಎತ್ತಿದರು, ಮತ್ತು ಆ ಆಕ್ಷೇಪಣೆ ಈ ತೀರ್ಪಿನ ಬಗ್ಗೆ ನಿಜವಾದ ಅನುಮಾನ ಉಳಿಸಿತು"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "스트레스 테스트: 상대편의 가장 강한 반론이 이 판결에 진지한 의문을 남겼어요"
+            "value" : "상대편 변호인이 이의를 제기했고, 그 이의가 이 판결에 진지한 의문을 남겼어요"
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ഈട് പരിശോധന: മറുഭാഗത്തിന്റെ ഏറ്റവും ശക്തമായ എതിർവാദം ഈ വിധിയിൽ യഥാർത്ഥ സംശയം ബാക്കിവെച്ചു"
+            "value" : "മറുഭാഗത്തിന്റെ അഭിഭാഷകൻ ആക്ഷേപം ഉന്നയിച്ചു, ആ ആക്ഷേപം ഈ വിധിയിൽ യഥാർത്ഥ സംശയം ബാക്കിവെച്ചു"
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "टिकाऊपणा चाचणी: समोरच्या बाजूच्या सर्वात कडक आक्षेपाने या निकालाबद्दल खरी शंका ठेवली"
+            "value" : "समोरच्या बाजूच्या वकिलाने आक्षेप घेतला, आणि त्या आक्षेपाने या निकालाबद्दल खरी शंका ठेवली"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ujian ketahanan: bantahan paling kuat pihak satu lagi meninggalkan keraguan sebenar tentang keputusan ini"
+            "value" : "Peguam pihak satu lagi membantah, dan bantahan itu meninggalkan keraguan sebenar tentang keputusan ini"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Belastningstest: den andre sidens sterkeste innvending skapte reell tvil om dommen"
+            "value" : "Den andre sidens advokat gjorde innsigelse, og innsigelsen skapte reell tvil om dommen"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stresstest: het sterkste bezwaar van de andere kant liet echte twijfel over deze uitspraak achter"
+            "value" : "De advocaat van de andere kant maakte bezwaar, en dat bezwaar liet echte twijfel over deze uitspraak achter"
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଦୃଢ଼ତା ପରୀକ୍ଷା: ଅନ୍ୟ ପକ୍ଷର ସବୁଠୁ କଡ଼ା ଆପତ୍ତି ଏହି ରାୟ ଉପରେ ପ୍ରକୃତ ସନ୍ଦେହ ଛାଡ଼ିଗଲା"
+            "value" : "ଅନ୍ୟ ପକ୍ଷର ଓକିଲ ଆପତ୍ତି ଉଠାଇଲେ, ଆଉ ସେହି ଆପତ୍ତି ଏହି ରାୟ ଉପରେ ପ୍ରକୃତ ସନ୍ଦେହ ଛାଡ଼ିଗଲା"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਮਜ਼ਬੂਤੀ ਦੀ ਪਰਖ: ਦੂਜੇ ਪੱਖ ਦੇ ਸਭ ਤੋਂ ਸਖ਼ਤ ਇਤਰਾਜ਼ ਨੇ ਇਸ ਫ਼ੈਸਲੇ ’ਤੇ ਸੱਚਾ ਸ਼ੱਕ ਛੱਡਿਆ"
+            "value" : "ਦੂਜੇ ਪੱਖ ਦੇ ਵਕੀਲ ਨੇ ਇਤਰਾਜ਼ ਉਠਾਇਆ, ਅਤੇ ਉਸ ਇਤਰਾਜ਼ ਨੇ ਇਸ ਫ਼ੈਸਲੇ ’ਤੇ ਸੱਚਾ ਸ਼ੱਕ ਛੱਡਿਆ"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Test wytrzymałości: najmocniejszy zarzut drugiej strony zostawił realne wątpliwości co do tego werdyktu"
+            "value" : "Adwokat drugiej strony zgłosił sprzeciw i ten sprzeciw zostawił realne wątpliwości co do tego werdyktu"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Teste de resistência: a objeção mais forte do outro lado deixou dúvidas sérias sobre este veredito"
+            "value" : "O advogado do outro lado levantou uma objeção, e ela deixou dúvidas sérias sobre este veredito"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Teste de resistência: a objeção mais forte do outro lado deixou dúvidas sérias sobre esta decisão"
+            "value" : "O advogado do outro lado levantou uma objeção, e ela deixou dúvidas sérias sobre esta decisão"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Test de rezistență: cea mai puternică obiecție a celeilalte părți a lăsat îndoieli reale despre acest verdict"
+            "value" : "Avocatul celeilalte părți a ridicat o obiecție, iar obiecția a lăsat îndoieli reale despre acest verdict"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Проверка на прочность: самое сильное возражение другой стороны оставило серьёзные сомнения в этом вердикте"
+            "value" : "Адвокат другой стороны выдвинул возражение, и оно оставило серьёзные сомнения в этом вердикте"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Záťažový test: najsilnejšia námietka druhej strany zanechala o tomto rozhodnutí skutočné pochybnosti"
+            "value" : "Advokát druhej strany vzniesol námietku a tá zanechala o tomto rozhodnutí skutočné pochybnosti"
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Test vzdržljivosti: najmočnejši ugovor druge plati je pustil resen dvom o tej razsodbi"
+            "value" : "Odvetnik druge plati je podal ugovor in ta je pustil resen dvom o tej razsodbi"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hållbarhetstest: andra sidans starkaste invändning lämnade verkligt tvivel om domen"
+            "value" : "Andra sidans advokat gjorde en invändning, och den lämnade verkligt tvivel om domen"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "உறுதித் தேர்வு: மறுதரப்பின் மிகக் கடுமையான ஆட்சேபனை இந்தத் தீர்ப்பின் மேல் உண்மையான சந்தேகத்தை விட்டுச் சென்றது"
+            "value" : "மறுதரப்பின் வழக்கறிஞர் ஆட்சேபனை எழுப்பினார், அந்த ஆட்சேபனை இந்தத் தீர்ப்பின் மேல் உண்மையான சந்தேகத்தை விட்டுச் சென்றது"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "దృఢత్వ పరీక్ష: అవతలి వైపు అత్యంత గట్టి అభ్యంతరం ఈ తీర్పు మీద నిజమైన సందేహం మిగిల్చింది"
+            "value" : "అవతలి వైపు న్యాయవాది అభ్యంతరం చెప్పారు, ఆ అభ్యంతరం ఈ తీర్పు మీద నిజమైన సందేహం మిగిల్చింది"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ทดสอบความทนทาน: ข้อแย้งที่หนักที่สุดของอีกฝ่ายทิ้งข้อสงสัยจริงจังไว้กับคำตัดสินนี้"
+            "value" : "ทนายของอีกฝ่ายคัดค้าน และข้อคัดค้านนั้นทิ้งข้อสงสัยจริงจังไว้กับคำตัดสินนี้"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dayanıklılık testi: karşı tarafın en güçlü karşı argümanı bu karar hakkında ciddi şüphe bıraktı"
+            "value" : "Karşı tarafın avukatı itiraz etti ve itiraz bu karar hakkında ciddi şüphe bıraktı"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Перевірка на міцність: найсильніше заперечення іншої сторони залишило серйозні сумніви щодо цього вердикту"
+            "value" : "Адвокат іншої сторони висунув заперечення, і воно залишило серйозні сумніви щодо цього вердикту"
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "پختگی کی جانچ: دوسری طرف کے سب سے سخت اعتراض نے اس فیصلے پر حقیقی شک چھوڑا"
+            "value" : "دوسری طرف کے وکیل نے اعتراض کیا، اور اس اعتراض نے اس فیصلے پر حقیقی شک چھوڑا"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bài kiểm tra độ bền: phản bác mạnh nhất của phía bên kia để lại nghi ngờ thật sự về phán quyết này"
+            "value" : "Luật sư phía bên kia đã phản đối, và sự phản đối đó để lại nghi ngờ thật sự về phán quyết này"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "抗压测试：对方最有力的反驳让这份裁决留下了实质的疑问"
+            "value" : "对方律师提出异议，这一异议让这份裁决留下了实质的疑问"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "壓力測試：對方最有力的反駁讓這個判決留下了實質的疑問"
+            "value" : "對方律師提出異議，這項異議讓這個判決留下了實質的疑問"
           }
         }
       }
@@ -172940,271 +172940,271 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ما الذي جرّبه اختبار التحمّل"
+            "value" : "الاعتراض"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "চাপ পরীক্ষায় কী চেষ্টা হলো"
+            "value" : "আপত্তি"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Què ha provat la prova de resistència"
+            "value" : "L'objecció"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Co zátěžový test zkoušel"
+            "value" : "Námitka"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Det prøvede belastningstesten"
+            "value" : "Indsigelsen"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Was der Belastungstest versucht hat"
+            "value" : "Der Einspruch"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Τι δοκίμασε το τεστ αντοχής"
+            "value" : "Η ένσταση"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "What the stress test tried"
+            "value" : "The objection"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Qué probó la prueba de resistencia"
+            "value" : "La objeción"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mitä kestävyystesti yritti"
+            "value" : "Vastaväite"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ce que le test de résistance a tenté"
+            "value" : "L’objection"
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "મજબૂતી કસોટીએ શું અજમાવ્યું"
+            "value" : "વાંધો"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "מה ניסה מבחן העמידות"
+            "value" : "ההתנגדות"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "टिकाऊपन की जाँच ने क्या आज़माया"
+            "value" : "आपत्ति"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Što je test otpornosti pokušao"
+            "value" : "Prigovor"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mit próbált a terhelési teszt"
+            "value" : "A tiltakozás"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yang dicoba uji ketahanan"
+            "value" : "Keberatan"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cosa ha provato la prova di tenuta"
+            "value" : "L'obiezione"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "耐久テストで試した内容"
+            "value" : "異議"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಬಲ ಪರೀಕ್ಷೆ ಏನನ್ನು ಪ್ರಯತ್ನಿಸಿತು"
+            "value" : "ಆಕ್ಷೇಪಣೆ"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "스트레스 테스트가 시도한 것"
+            "value" : "이의"
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ഈട് പരിശോധന എന്താണ് പരീക്ഷിച്ചത്"
+            "value" : "ആക്ഷേപം"
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "टिकाऊपणा चाचणीने काय आजमावले"
+            "value" : "आक्षेप"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apa yang dicuba oleh ujian ketahanan"
+            "value" : "Bantahan"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dette prøvde belastningstesten"
+            "value" : "Innsigelsen"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wat de stresstest probeerde"
+            "value" : "Het bezwaar"
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଦୃଢ଼ତା ପରୀକ୍ଷା କ'ଣ ଚେଷ୍ଟା କଲା"
+            "value" : "ଆପତ୍ତି"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਮਜ਼ਬੂਤੀ ਦੀ ਪਰਖ ਨੇ ਕੀ ਅਜ਼ਮਾਇਆ"
+            "value" : "ਇਤਰਾਜ਼"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Co próbował test wytrzymałości"
+            "value" : "Sprzeciw"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O que o teste de resistência tentou"
+            "value" : "A objeção"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O que o teste de resistência tentou"
+            "value" : "A objeção"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ce a încercat testul de rezistență"
+            "value" : "Obiecția"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Что пробовала проверка на прочность"
+            "value" : "Возражение"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Čo záťažový test skúšal"
+            "value" : "Námietka"
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kaj je poskusil test vzdržljivosti"
+            "value" : "Ugovor"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Det här försökte hållbarhetstestet"
+            "value" : "Invändningen"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "உறுதித் தேர்வு எதை முயன்றது"
+            "value" : "ஆட்சேபனை"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "దృఢత్వ పరీక్ష దేన్ని ప్రయత్నించింది"
+            "value" : "అభ్యంతరం"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "สิ่งที่การทดสอบความทนทานลอง"
+            "value" : "ข้อคัดค้าน"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dayanıklılık testi neyi denedi"
+            "value" : "İtiraz"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Що пробувала перевірка на міцність"
+            "value" : "Заперечення"
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "پختگی کی جانچ نے کیا آزمایا"
+            "value" : "اعتراض"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bài kiểm tra độ bền đã thử gì"
+            "value" : "Phản đối"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "抗压测试试了什么"
+            "value" : "异议"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "壓力測試試了什麼"
+            "value" : "異議"
           }
         }
       }

@@ -84,11 +84,11 @@
     <string name="vote_dissolved">spór o słowa</string>
     <string name="refused_note">Tym razem AI wstrzymuje się od głosu. Wolimy nic nie pokazać, niż udawać werdykt.</string>
     <string name="demo_note">Tryb demo: brak klucza AI, więc to przykładowy werdykt</string>
-    <string name="trial_survived">Test wytrzymałości zaliczony: osobny sędzia próbował obalić ten werdykt najmocniejszym zarzutem drugiej strony, a werdykt się obronił. Pewność bez zmian.</string>
-    <string name="trial_uncertain">Test wytrzymałości: najmocniejszy zarzut drugiej strony zostawił realne wątpliwości co do tego werdyktu</string>
-    <string name="trial_overturned">Test wytrzymałości oblany: najmocniejszy zarzut drugiej strony przeważył nad tym werdyktem</string>
-    <string name="trial_what_was_tested">Co próbował test wytrzymałości</string>
-    <string name="trial_attack_prefix">Najmocniejszy zarzut:</string>
+    <string name="trial_survived">Sprzeciw oddalony: adwokat drugiej strony zgłosił swój najmocniejszy sprzeciw, a werdykt się obronił. Pewność bez zmian.</string>
+    <string name="trial_uncertain">Adwokat drugiej strony zgłosił sprzeciw i ten sprzeciw zostawił realne wątpliwości co do tego werdyktu</string>
+    <string name="trial_overturned">Sprzeciw uwzględniony: najmocniejszy sprzeciw drugiej strony przeważył nad tym werdyktem</string>
+    <string name="trial_what_was_tested">Sprzeciw</string>
+    <string name="trial_attack_prefix">Sprzeciw:</string>
     <string name="trial_referee_prefix">Dlaczego:</string>
     <string name="trial_mixed_note">To spór mieszany: po części fakty, po części wartości lub znaczenia słów, więc czystą wygraną trudniej obronić.</string>
     <string name="confidence">Pewność: %1$s z %2$s</string>

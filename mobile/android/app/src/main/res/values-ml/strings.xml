@@ -82,11 +82,11 @@
     <string name="vote_dissolved">അർത്ഥഭേദം</string>
     <string name="refused_note">ഇത്തവണ എഐ മാറിനിന്നു. വ്യാജ വിധി കാണിക്കുന്നതിലും ഭേദം ഒന്നും കാണിക്കാതിരിക്കുന്നതാണ്.</string>
     <string name="demo_note">ഡെമോ മോഡ്: എഐ കീ സെറ്റ് ചെയ്തിട്ടില്ല, ഇത് ഒരു സാമ്പിൾ വിധിയാണ്</string>
-    <string name="trial_survived">ഈട് പരിശോധന വിജയിച്ചു: വേറൊരു ജഡ്ജി മറുഭാഗത്തിന്റെ ഏറ്റവും ശക്തമായ എതിർവാദം കൊണ്ട് ഈ വിധി തകർക്കാൻ നോക്കി, വിധി പിടിച്ചുനിന്നു. ഉറപ്പ് സ്കോർ മാറിയില്ല.</string>
-    <string name="trial_uncertain">ഈട് പരിശോധന: മറുഭാഗത്തിന്റെ ഏറ്റവും ശക്തമായ എതിർവാദം ഈ വിധിയിൽ യഥാർത്ഥ സംശയം ബാക്കിവെച്ചു</string>
-    <string name="trial_overturned">ഈട് പരിശോധനയിൽ വിധി പരാജയപ്പെട്ടു: മറുഭാഗത്തിന്റെ ഏറ്റവും ശക്തമായ എതിർവാദം ഈ വിധിയെക്കാൾ ഭാരമുള്ളതായി</string>
-    <string name="trial_what_was_tested">ഈട് പരിശോധന എന്താണ് പരീക്ഷിച്ചത്</string>
-    <string name="trial_attack_prefix">ഏറ്റവും കടുത്ത എതിർപ്പ്:</string>
+    <string name="trial_survived">ആക്ഷേപം തള്ളി: മറുഭാഗത്തിന്റെ അഭിഭാഷകൻ തന്റെ ഏറ്റവും ശക്തമായ ആക്ഷേപം ഉന്നയിച്ചു, വിധി പിടിച്ചുനിന്നു. ഉറപ്പ് സ്കോർ മാറിയില്ല.</string>
+    <string name="trial_uncertain">മറുഭാഗത്തിന്റെ അഭിഭാഷകൻ ആക്ഷേപം ഉന്നയിച്ചു, ആ ആക്ഷേപം ഈ വിധിയിൽ യഥാർത്ഥ സംശയം ബാക്കിവെച്ചു</string>
+    <string name="trial_overturned">ആക്ഷേപം അംഗീകരിച്ചു: മറുഭാഗത്തിന്റെ ഏറ്റവും ശക്തമായ ആക്ഷേപം ഈ വിധിയെക്കാൾ ഭാരമുള്ളതായി</string>
+    <string name="trial_what_was_tested">ആക്ഷേപം</string>
+    <string name="trial_attack_prefix">ആക്ഷേപം:</string>
     <string name="trial_referee_prefix">കാരണം:</string>
     <string name="trial_mixed_note">ഇത് സമ്മിശ്ര തർക്കമാണ്: കുറച്ച് വസ്തുതകളും കുറച്ച് മൂല്യങ്ങളോ വാക്കുകളുടെ അർത്ഥമോ ആണ്, അതുകൊണ്ട് വ്യക്തമായ ജയം ന്യായീകരിക്കാൻ ബുദ്ധിമുട്ടാണ്.</string>
     <string name="confidence">ഉറപ്പ്: %2$s-ൽ %1$s</string>

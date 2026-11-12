@@ -81,11 +81,11 @@
     <string name="vote_dissolved">lệch nghĩa</string>
     <string name="refused_note">AI đã từ chối vụ này. Chúng tôi thà không hiện gì còn hơn bịa ra một phán quyết.</string>
     <string name="demo_note">Chế độ demo: chưa thiết lập khóa AI nên đây là phán quyết mẫu</string>
-    <string name="trial_survived">Đã vượt qua bài kiểm tra độ bền: một giám khảo riêng đã thử hạ phán quyết này bằng phản bác mạnh nhất của phía bên kia, và nó vẫn đứng vững. Độ tin cậy giữ nguyên.</string>
-    <string name="trial_uncertain">Bài kiểm tra độ bền: phản bác mạnh nhất của phía bên kia để lại nghi ngờ thật sự về phán quyết này</string>
-    <string name="trial_overturned">Không vượt qua bài kiểm tra độ bền: phản bác mạnh nhất của phía bên kia nặng ký hơn phán quyết này</string>
-    <string name="trial_what_was_tested">Bài kiểm tra độ bền đã thử gì</string>
-    <string name="trial_attack_prefix">Phản bác gắt nhất:</string>
+    <string name="trial_survived">Bác bỏ phản đối: luật sư phía bên kia đã nêu phản đối mạnh nhất của mình, và phán quyết vẫn đứng vững. Độ tin cậy giữ nguyên.</string>
+    <string name="trial_uncertain">Luật sư phía bên kia đã phản đối, và sự phản đối đó để lại nghi ngờ thật sự về phán quyết này</string>
+    <string name="trial_overturned">Chấp nhận phản đối: phản đối mạnh nhất của phía bên kia nặng ký hơn phán quyết này</string>
+    <string name="trial_what_was_tested">Phản đối</string>
+    <string name="trial_attack_prefix">Phản đối:</string>
     <string name="trial_referee_prefix">Lý do:</string>
     <string name="trial_mixed_note">Đây là tranh chấp pha trộn: một phần là sự thật, một phần là giá trị hoặc nghĩa của từ, nên khó bảo vệ một chiến thắng rõ ràng hơn.</string>
     <string name="confidence">Độ tin cậy %1$s/%2$s</string>

@@ -81,11 +81,11 @@
     <string name="vote_dissolved">เข้าใจคำต่างกัน</string>
     <string name="refused_note">รอบนี้ AI ขอไม่ตัดสิน เราขอไม่แสดงอะไรเลย ดีกว่าแต่งคำตัดสินขึ้นมาเอง</string>
     <string name="demo_note">โหมดเดโม: ยังไม่ได้ตั้งค่าคีย์ AI นี่จึงเป็นคำตัดสินตัวอย่าง</string>
-    <string name="trial_survived">ผ่านการทดสอบความทนทาน: กรรมการอีกคนพยายามล้มคำตัดสินนี้ด้วยข้อแย้งที่หนักที่สุดของอีกฝ่าย แต่คำตัดสินยังอยู่ ความมั่นใจยังเท่าเดิม</string>
-    <string name="trial_uncertain">ทดสอบความทนทาน: ข้อแย้งที่หนักที่สุดของอีกฝ่ายทิ้งข้อสงสัยจริงจังไว้กับคำตัดสินนี้</string>
-    <string name="trial_overturned">ไม่ผ่านการทดสอบความทนทาน: ข้อแย้งที่หนักที่สุดของอีกฝ่ายหนักกว่าคำตัดสินนี้</string>
-    <string name="trial_what_was_tested">สิ่งที่การทดสอบความทนทานลอง</string>
-    <string name="trial_attack_prefix">ข้อแย้งที่หนักที่สุด:</string>
+    <string name="trial_survived">ยกข้อคัดค้าน: ทนายของอีกฝ่ายยกข้อคัดค้านที่หนักที่สุดขึ้นมา แต่คำตัดสินยังอยู่ ความมั่นใจยังเท่าเดิม</string>
+    <string name="trial_uncertain">ทนายของอีกฝ่ายคัดค้าน และข้อคัดค้านนั้นทิ้งข้อสงสัยจริงจังไว้กับคำตัดสินนี้</string>
+    <string name="trial_overturned">รับข้อคัดค้าน: ข้อคัดค้านที่หนักที่สุดของอีกฝ่ายหนักกว่าคำตัดสินนี้</string>
+    <string name="trial_what_was_tested">ข้อคัดค้าน</string>
+    <string name="trial_attack_prefix">ข้อคัดค้าน:</string>
     <string name="trial_referee_prefix">เหตุผล:</string>
     <string name="trial_mixed_note">นี่เป็นข้อพิพาทแบบผสม: ส่วนหนึ่งเป็นข้อเท็จจริง อีกส่วนเป็นคุณค่าหรือความหมายของคำ จึงปกป้องชัยชนะแบบเด็ดขาดได้ยากกว่า</string>
     <string name="confidence">ความมั่นใจ %1$s จาก %2$s</string>

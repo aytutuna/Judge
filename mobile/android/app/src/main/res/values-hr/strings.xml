@@ -83,11 +83,11 @@
     <string name="vote_dissolved">zbrka pojmova</string>
     <string name="refused_note">AI je ovaj put odustao. Radije nećemo pokazati ništa nego izmisliti presudu.</string>
     <string name="demo_note">Demo način: AI ključ nije postavljen, pa je ovo primjer presude</string>
-    <string name="trial_survived">Test otpornosti položen: zaseban sudac pokušao je srušiti ovu presudu najjačom primjedbom druge strane, a ona je izdržala. Pouzdanost ostaje ista.</string>
-    <string name="trial_uncertain">Test otpornosti: najjača primjedba druge strane ostavila je ozbiljnu sumnju u ovu presudu</string>
-    <string name="trial_overturned">Test otpornosti nije prošao: najjača primjedba druge strane odvagnula je više od ove presude</string>
-    <string name="trial_what_was_tested">Što je test otpornosti pokušao</string>
-    <string name="trial_attack_prefix">Najoštriji prigovor:</string>
+    <string name="trial_survived">Prigovor odbijen: odvjetnik druge strane iznio je svoj najjači prigovor, a presuda je izdržala. Pouzdanost ostaje ista.</string>
+    <string name="trial_uncertain">Odvjetnik druge strane uložio je prigovor i on je ostavio ozbiljnu sumnju u ovu presudu</string>
+    <string name="trial_overturned">Prigovor prihvaćen: najjači prigovor druge strane odvagnuo je više od ove presude</string>
+    <string name="trial_what_was_tested">Prigovor</string>
+    <string name="trial_attack_prefix">Prigovor:</string>
     <string name="trial_referee_prefix">Zašto:</string>
     <string name="trial_mixed_note">Ovo je miješan spor: dijelom činjenice, dijelom vrijednosti ili značenja riječi, pa je čistu pobjedu teže obraniti.</string>
     <string name="confidence">Pouzdanost %1$s od %2$s</string>

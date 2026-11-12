@@ -82,11 +82,11 @@
     <string name="vote_dissolved">ಪದದ ಗೊಂದಲ</string>
     <string name="refused_note">ಈ ಬಾರಿ AI ದೂರ ಉಳಿಯಿತು. ನಕಲಿ ತೀರ್ಪು ತೋರಿಸುವುದಕ್ಕಿಂತ ಏನೂ ತೋರಿಸದಿರುವುದೇ ಮೇಲು.</string>
     <string name="demo_note">ಡೆಮೊ ಮೋಡ್: AI ಕೀ ಹೊಂದಿಸಿಲ್ಲ, ಇದು ಒಂದು ಉದಾಹರಣೆ ತೀರ್ಪು</string>
-    <string name="trial_survived">ಬಲ ಪರೀಕ್ಷೆಯಲ್ಲಿ ಪಾಸ್: ಪ್ರತ್ಯೇಕ ತೀರ್ಪುಗಾರರೊಬ್ಬರು ಎದುರು ಕಡೆಯ ಅತ್ಯಂತ ಗಟ್ಟಿಯಾದ ಆಕ್ಷೇಪದಿಂದ ಈ ತೀರ್ಪನ್ನು ಮುರಿಯಲು ಪ್ರಯತ್ನಿಸಿದರು, ತೀರ್ಪು ನಿಂತಿತು. ವಿಶ್ವಾಸ ಅಂಕ ಬದಲಾಗಿಲ್ಲ.</string>
-    <string name="trial_uncertain">ಬಲ ಪರೀಕ್ಷೆ: ಎದುರು ಕಡೆಯ ಅತ್ಯಂತ ಗಟ್ಟಿಯಾದ ಆಕ್ಷೇಪ ಈ ತೀರ್ಪಿನ ಬಗ್ಗೆ ನಿಜವಾದ ಅನುಮಾನ ಉಳಿಸಿತು</string>
-    <string name="trial_overturned">ಬಲ ಪರೀಕ್ಷೆಯಲ್ಲಿ ತೀರ್ಪು ಸೋತಿತು: ಎದುರು ಕಡೆಯ ಅತ್ಯಂತ ಗಟ್ಟಿಯಾದ ಆಕ್ಷೇಪ ಈ ತೀರ್ಪಿಗಿಂತ ಭಾರವಾಯಿತು</string>
-    <string name="trial_what_was_tested">ಬಲ ಪರೀಕ್ಷೆ ಏನನ್ನು ಪ್ರಯತ್ನಿಸಿತು</string>
-    <string name="trial_attack_prefix">ಅತ್ಯಂತ ಗಟ್ಟಿಯಾದ ಆಕ್ಷೇಪ:</string>
+    <string name="trial_survived">ಆಕ್ಷೇಪಣೆ ತಿರಸ್ಕೃತ: ಎದುರು ಕಡೆಯ ವಕೀಲರು ತಮ್ಮ ಅತ್ಯಂತ ಗಟ್ಟಿಯಾದ ಆಕ್ಷೇಪಣೆ ಎತ್ತಿದರು, ತೀರ್ಪು ನಿಂತಿತು. ವಿಶ್ವಾಸ ಅಂಕ ಬದಲಾಗಿಲ್ಲ.</string>
+    <string name="trial_uncertain">ಎದುರು ಕಡೆಯ ವಕೀಲರು ಆಕ್ಷೇಪಣೆ ಎತ್ತಿದರು, ಮತ್ತು ಆ ಆಕ್ಷೇಪಣೆ ಈ ತೀರ್ಪಿನ ಬಗ್ಗೆ ನಿಜವಾದ ಅನುಮಾನ ಉಳಿಸಿತು</string>
+    <string name="trial_overturned">ಆಕ್ಷೇಪಣೆ ಅಂಗೀಕೃತ: ಎದುರು ಕಡೆಯ ಅತ್ಯಂತ ಗಟ್ಟಿಯಾದ ಆಕ್ಷೇಪಣೆ ಈ ತೀರ್ಪಿಗಿಂತ ಭಾರವಾಯಿತು</string>
+    <string name="trial_what_was_tested">ಆಕ್ಷೇಪಣೆ</string>
+    <string name="trial_attack_prefix">ಆಕ್ಷೇಪಣೆ:</string>
     <string name="trial_referee_prefix">ಕಾರಣ:</string>
     <string name="trial_mixed_note">ಇದು ಮಿಶ್ರ ವಿವಾದ: ಸ್ವಲ್ಪ ಸಂಗತಿಗಳು, ಸ್ವಲ್ಪ ಮೌಲ್ಯಗಳು ಅಥವಾ ಪದಗಳ ಅರ್ಥಗಳು, ಹೀಗಾಗಿ ಸ್ಪಷ್ಟ ಗೆಲುವನ್ನು ಸಮರ್ಥಿಸುವುದು ಕಷ್ಟ.</string>
     <string name="confidence">ವಿಶ್ವಾಸ: %2$sರಲ್ಲಿ %1$s</string>

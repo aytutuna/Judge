@@ -81,11 +81,11 @@
     <string name="vote_dissolved">beda makna</string>
     <string name="refused_note">AI-nya memilih absen kali ini. Kami lebih baik tidak menampilkan apa-apa daripada mengarang putusan.</string>
     <string name="demo_note">Mode demo: kunci AI belum dipasang, jadi ini contoh putusan</string>
-    <string name="trial_survived">Uji ketahanan lolos: hakim terpisah mencoba menjatuhkan putusan ini dengan keberatan terkuat pihak lain, dan putusan tetap bertahan. Skor keyakinan tetap.</string>
-    <string name="trial_uncertain">Uji ketahanan: keberatan terkuat pihak lain meninggalkan keraguan nyata soal putusan ini</string>
-    <string name="trial_overturned">Uji ketahanan gagal: keberatan terkuat pihak lain lebih berat daripada putusan ini</string>
-    <string name="trial_what_was_tested">Yang dicoba uji ketahanan</string>
-    <string name="trial_attack_prefix">Sanggahan terberat:</string>
+    <string name="trial_survived">Keberatan ditolak: pengacara pihak lain mengajukan keberatan terkuatnya, dan putusan tetap bertahan. Skor keyakinan tetap.</string>
+    <string name="trial_uncertain">Pengacara pihak lain mengajukan keberatan, dan keberatan itu meninggalkan keraguan nyata soal putusan ini</string>
+    <string name="trial_overturned">Keberatan diterima: keberatan terkuat pihak lain lebih berat daripada putusan ini</string>
+    <string name="trial_what_was_tested">Keberatan</string>
+    <string name="trial_attack_prefix">Keberatan:</string>
     <string name="trial_referee_prefix">Alasannya:</string>
     <string name="trial_mixed_note">Ini perselisihan campuran: sebagian fakta, sebagian nilai atau makna kata, jadi kemenangan yang bersih lebih sulit dipertahankan.</string>
     <string name="confidence">Keyakinan %1$s dari %2$s</string>

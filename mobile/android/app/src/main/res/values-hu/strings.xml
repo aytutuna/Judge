@@ -82,11 +82,11 @@
     <string name="vote_dissolved">félreértés</string>
     <string name="refused_note">Az MI ezt most kihagyta. Inkább semmit sem mutatunk, mint egy kamu ítéletet.</string>
     <string name="demo_note">Demó mód: nincs beállítva API-kulcs, ez csak egy mintaítélet</string>
-    <string name="trial_survived">A terhelési teszt sikeres: egy különálló bíró a másik oldal legerősebb ellenvetésével próbálta megdönteni az ítéletet, de az megállt. A bizonyosság nem változik.</string>
-    <string name="trial_uncertain">Terhelési teszt: a másik oldal legerősebb ellenvetése valódi kétséget hagyott ezzel az ítélettel kapcsolatban</string>
-    <string name="trial_overturned">Az ítélet megbukott a terhelési teszten: a másik oldal legerősebb ellenvetése nagyobb súlyú volt nála</string>
-    <string name="trial_what_was_tested">Mit próbált a terhelési teszt</string>
-    <string name="trial_attack_prefix">A legerősebb ellenvetés:</string>
+    <string name="trial_survived">A tiltakozást elutasították: a másik oldal ügyvédje előadta a legerősebb tiltakozását, az ítélet pedig megállt. A bizonyosság nem változik.</string>
+    <string name="trial_uncertain">A másik oldal ügyvédje tiltakozott, és a tiltakozás valódi kétséget hagyott ezzel az ítélettel kapcsolatban</string>
+    <string name="trial_overturned">A tiltakozásnak helyt adtak: a másik oldal legerősebb tiltakozása nagyobb súlyú volt ennél az ítéletnél</string>
+    <string name="trial_what_was_tested">A tiltakozás</string>
+    <string name="trial_attack_prefix">Tiltakozás:</string>
     <string name="trial_referee_prefix">Miért:</string>
     <string name="trial_mixed_note">Ez vegyes vita: részben tények, részben értékek vagy szavak jelentése, ezért a tiszta győzelmet nehezebb megvédeni.</string>
     <string name="confidence">Bizonyosság: %1$s/%2$s</string>

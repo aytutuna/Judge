@@ -84,11 +84,11 @@
     <string name="vote_dissolved">jiný význam</string>
     <string name="refused_note">AI se k tomu tentokrát nevyjádřila. Radši neukážeme nic, než abychom si verdikt vymýšleli.</string>
     <string name="demo_note">Ukázkový režim: chybí klíč k AI, takže tohle je jen vzorový verdikt</string>
-    <string name="trial_survived">Zátěžový test splněn: samostatný soudce se tento verdikt pokusil rozbít nejsilnější námitkou druhé strany a verdikt obstál. Jistota zůstává.</string>
-    <string name="trial_uncertain">Zátěžový test: nejsilnější námitka druhé strany nechala o tomto verdiktu skutečné pochybnosti</string>
-    <string name="trial_overturned">Zátěžový test neprošel: nejsilnější námitka druhé strany převážila nad tímto verdiktem</string>
-    <string name="trial_what_was_tested">Co zátěžový test zkoušel</string>
-    <string name="trial_attack_prefix">Nejtvrdší námitka:</string>
+    <string name="trial_survived">Námitka zamítnuta: advokát druhé strany vznesl svou nejsilnější námitku a verdikt obstál. Jistota zůstává.</string>
+    <string name="trial_uncertain">Advokát druhé strany vznesl námitku a ta nechala o tomto verdiktu skutečné pochybnosti</string>
+    <string name="trial_overturned">Námitka přijata: nejsilnější námitka druhé strany převážila nad tímto verdiktem</string>
+    <string name="trial_what_was_tested">Námitka</string>
+    <string name="trial_attack_prefix">Námitka:</string>
     <string name="trial_referee_prefix">Proč:</string>
     <string name="trial_mixed_note">Je to smíšený spor: část fakta, část hodnoty nebo významy slov, takže čistou výhru je těžší obhájit.</string>
     <string name="confidence">Jistota %1$s z %2$s</string>

@@ -82,11 +82,11 @@
     <string name="vote_dissolved">અર્થનો ફરક</string>
     <string name="refused_note">AI આ વખતે આમાં ન પડ્યું. બનાવટી ચુકાદો બતાવવા કરતાં કંઈ ન બતાવવું સારું.</string>
     <string name="demo_note">ડેમો મોડ: AI કી સેટ નથી, એટલે આ નમૂનાનો ચુકાદો છે</string>
-    <string name="trial_survived">મજબૂતી કસોટી પાસ: એક અલગ જજે સામેની બાજુના સૌથી મજબૂત વાંધાથી આ ચુકાદો તોડવાનો પ્રયાસ કર્યો, અને ચુકાદો ટકી રહ્યો. વિશ્વાસ સ્કોર એનો એ જ.</string>
-    <string name="trial_uncertain">મજબૂતી કસોટી: સામેની બાજુના સૌથી મજબૂત વાંધાએ આ ચુકાદા પર સાચી શંકા છોડી</string>
-    <string name="trial_overturned">મજબૂતી કસોટીમાં ચુકાદો નિષ્ફળ: સામેની બાજુનો સૌથી મજબૂત વાંધો આ ચુકાદા પર ભારે પડ્યો</string>
-    <string name="trial_what_was_tested">મજબૂતી કસોટીએ શું અજમાવ્યું</string>
-    <string name="trial_attack_prefix">સૌથી સખત વાંધો:</string>
+    <string name="trial_survived">વાંધો નામંજૂર: સામેની બાજુના વકીલે પોતાનો સૌથી મજબૂત વાંધો ઉઠાવ્યો, અને ચુકાદો ટકી રહ્યો. વિશ્વાસ સ્કોર એનો એ જ.</string>
+    <string name="trial_uncertain">સામેની બાજુના વકીલે વાંધો ઉઠાવ્યો, અને એ વાંધાએ આ ચુકાદા પર સાચી શંકા છોડી</string>
+    <string name="trial_overturned">વાંધો મંજૂર: સામેની બાજુનો સૌથી મજબૂત વાંધો આ ચુકાદા પર ભારે પડ્યો</string>
+    <string name="trial_what_was_tested">વાંધો</string>
+    <string name="trial_attack_prefix">વાંધો:</string>
     <string name="trial_referee_prefix">કારણ:</string>
     <string name="trial_mixed_note">આ મિશ્ર વિવાદ છે: થોડો હકીકતનો, થોડો મૂલ્યો કે શબ્દોના અર્થનો, એટલે સ્પષ્ટ જીતનો બચાવ કરવો વધુ અઘરો છે.</string>
     <string name="confidence">વિશ્વાસ: %2$sમાંથી %1$s</string>

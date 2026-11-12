@@ -83,11 +83,11 @@
     <string name="vote_dissolved">sensuri diferite</string>
     <string name="refused_note">AI-ul a stat deoparte de data asta. Decât un verdict inventat, mai bine nimic.</string>
     <string name="demo_note">Mod demo: nu e configurată nicio cheie AI, deci ăsta e un verdict de exemplu</string>
-    <string name="trial_survived">Test de rezistență trecut: un judecător separat a încercat să dărâme acest verdict cu cea mai puternică obiecție a celeilalte părți, iar verdictul a rezistat. Încrederea rămâne aceeași.</string>
-    <string name="trial_uncertain">Test de rezistență: cea mai puternică obiecție a celeilalte părți a lăsat îndoieli reale despre acest verdict</string>
-    <string name="trial_overturned">Test de rezistență picat: cea mai puternică obiecție a celeilalte părți a cântărit mai mult decât acest verdict</string>
-    <string name="trial_what_was_tested">Ce a încercat testul de rezistență</string>
-    <string name="trial_attack_prefix">Cea mai dură obiecție:</string>
+    <string name="trial_survived">Obiecție respinsă: avocatul celeilalte părți și-a ridicat cea mai puternică obiecție, iar verdictul a rezistat. Încrederea rămâne aceeași.</string>
+    <string name="trial_uncertain">Avocatul celeilalte părți a ridicat o obiecție, iar obiecția a lăsat îndoieli reale despre acest verdict</string>
+    <string name="trial_overturned">Obiecție admisă: cea mai puternică obiecție a celeilalte părți a cântărit mai mult decât acest verdict</string>
+    <string name="trial_what_was_tested">Obiecția</string>
+    <string name="trial_attack_prefix">Obiecție:</string>
     <string name="trial_referee_prefix">De ce:</string>
     <string name="trial_mixed_note">Este o dispută mixtă: în parte fapte, în parte valori sau sensuri ale cuvintelor, așa că o victorie netă e mai greu de apărat.</string>
     <string name="confidence">Încredere: %1$s din %2$s</string>

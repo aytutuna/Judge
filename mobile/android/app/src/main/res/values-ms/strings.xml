@@ -81,11 +81,11 @@
     <string name="vote_dissolved">salah faham</string>
     <string name="refused_note">AI tidak mahu masuk campur kali ini. Kami lebih rela tidak tunjuk apa-apa daripada mereka-reka keputusan.</string>
     <string name="demo_note">Mod demo: tiada kunci AI ditetapkan, jadi ini contoh keputusan</string>
-    <string name="trial_survived">Ujian ketahanan lulus: seorang hakim berasingan cuba menjatuhkan keputusan ini dengan bantahan paling kuat pihak satu lagi, dan keputusan ini tetap bertahan. Skor keyakinan tidak berubah.</string>
-    <string name="trial_uncertain">Ujian ketahanan: bantahan paling kuat pihak satu lagi meninggalkan keraguan sebenar tentang keputusan ini</string>
-    <string name="trial_overturned">Ujian ketahanan gagal: bantahan paling kuat pihak satu lagi lebih berat daripada keputusan ini</string>
-    <string name="trial_what_was_tested">Apa yang dicuba oleh ujian ketahanan</string>
-    <string name="trial_attack_prefix">Bantahan paling kuat:</string>
+    <string name="trial_survived">Bantahan ditolak: peguam pihak satu lagi mengemukakan bantahan paling kuatnya, dan keputusan ini tetap bertahan. Skor keyakinan tidak berubah.</string>
+    <string name="trial_uncertain">Peguam pihak satu lagi membantah, dan bantahan itu meninggalkan keraguan sebenar tentang keputusan ini</string>
+    <string name="trial_overturned">Bantahan diterima: bantahan paling kuat pihak satu lagi lebih berat daripada keputusan ini</string>
+    <string name="trial_what_was_tested">Bantahan</string>
+    <string name="trial_attack_prefix">Bantahan:</string>
     <string name="trial_referee_prefix">Sebabnya:</string>
     <string name="trial_mixed_note">Ini pertikaian bercampur: sebahagian fakta, sebahagian nilai atau makna perkataan, jadi kemenangan yang jelas lebih sukar dipertahankan.</string>
     <string name="confidence">Keyakinan %1$s daripada %2$s</string>

@@ -82,11 +82,11 @@
     <string name="vote_dissolved">misverstand</string>
     <string name="refused_note">De AI heeft deze overgeslagen. We laten liever niets zien dan een nepuitspraak.</string>
     <string name="demo_note">Demomodus: er is geen AI-sleutel ingesteld, dus dit is een voorbeelduitspraak</string>
-    <string name="trial_survived">Stresstest doorstaan: een aparte rechter probeerde deze uitspraak onderuit te halen met het sterkste bezwaar van de andere kant, en ze hield stand. De zekerheid blijft gelijk.</string>
-    <string name="trial_uncertain">Stresstest: het sterkste bezwaar van de andere kant liet echte twijfel over deze uitspraak achter</string>
-    <string name="trial_overturned">Stresstest gefaald: het sterkste bezwaar van de andere kant woog zwaarder dan deze uitspraak</string>
-    <string name="trial_what_was_tested">Wat de stresstest probeerde</string>
-    <string name="trial_attack_prefix">Zwaarste tegenwerping:</string>
+    <string name="trial_survived">Bezwaar afgewezen: de advocaat van de andere kant bracht zijn sterkste bezwaar in, en de uitspraak hield stand. De zekerheid blijft gelijk.</string>
+    <string name="trial_uncertain">De advocaat van de andere kant maakte bezwaar, en dat bezwaar liet echte twijfel over deze uitspraak achter</string>
+    <string name="trial_overturned">Bezwaar toegewezen: het sterkste bezwaar van de andere kant woog zwaarder dan deze uitspraak</string>
+    <string name="trial_what_was_tested">Het bezwaar</string>
+    <string name="trial_attack_prefix">Bezwaar:</string>
     <string name="trial_referee_prefix">Waarom:</string>
     <string name="trial_mixed_note">Dit is een gemengde kwestie: deels feiten, deels waarden of woordbetekenissen, dus een zuivere winst is lastiger te verdedigen.</string>
     <string name="confidence">Zekerheid %1$s van %2$s</string>

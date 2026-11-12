@@ -82,11 +82,11 @@
     <string name="vote_dissolved">θέμα λέξεων</string>
     <string name="refused_note">Το AI δεν πήρε θέση σε αυτό. Προτιμάμε να μη δείξουμε τίποτα παρά μια ψεύτικη απόφαση.</string>
     <string name="demo_note">Λειτουργία demo: δεν υπάρχει κλειδί AI, οπότε αυτή είναι ενδεικτική απόφαση</string>
-    <string name="trial_survived">Το τεστ αντοχής πέρασε: ένας ξεχωριστός κριτής προσπάθησε να ανατρέψει την απόφαση με τη δυνατότερη ένσταση της άλλης πλευράς, κι εκείνη άντεξε. Η βεβαιότητα μένει ίδια.</string>
-    <string name="trial_uncertain">Τεστ αντοχής: η δυνατότερη ένσταση της άλλης πλευράς άφησε σοβαρές αμφιβολίες για αυτή την απόφαση</string>
-    <string name="trial_overturned">Το τεστ αντοχής απέτυχε: η δυνατότερη ένσταση της άλλης πλευράς ζύγισε περισσότερο από αυτή την απόφαση</string>
-    <string name="trial_what_was_tested">Τι δοκίμασε το τεστ αντοχής</string>
-    <string name="trial_attack_prefix">Η δυνατότερη αντίρρηση:</string>
+    <string name="trial_survived">Η ένσταση απορρίφθηκε: ο δικηγόρος της άλλης πλευράς έκανε την πιο ισχυρή του ένσταση, κι η απόφαση άντεξε. Η βεβαιότητα μένει ίδια.</string>
+    <string name="trial_uncertain">Ο δικηγόρος της άλλης πλευράς έκανε ένσταση και η ένσταση άφησε σοβαρές αμφιβολίες για αυτή την απόφαση</string>
+    <string name="trial_overturned">Η ένσταση έγινε δεκτή: η πιο ισχυρή ένσταση της άλλης πλευράς ζύγισε περισσότερο από αυτή την απόφαση</string>
+    <string name="trial_what_was_tested">Η ένσταση</string>
+    <string name="trial_attack_prefix">Ένσταση:</string>
     <string name="trial_referee_prefix">Γιατί:</string>
     <string name="trial_mixed_note">Αυτή είναι μικτή διαφορά: εν μέρει γεγονότα, εν μέρει αξίες ή έννοιες λέξεων, οπότε μια καθαρή νίκη υπερασπίζεται πιο δύσκολα.</string>
     <string name="confidence">Βεβαιότητα %1$s στα %2$s</string>

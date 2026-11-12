@@ -83,11 +83,11 @@
     <string name="vote_dissolved">equívoco</string>
     <string name="refused_note">A IA ficou de fora desta. Preferimos não mostrar nada a inventar uma decisão.</string>
     <string name="demo_note">Modo demo: não há chave de IA configurada, por isso este é um veredicto de exemplo</string>
-    <string name="trial_survived">Teste de resistência superado: um juiz separado tentou derrubar esta decisão com a objeção mais forte do outro lado, e ela aguentou. A confiança mantém-se.</string>
-    <string name="trial_uncertain">Teste de resistência: a objeção mais forte do outro lado deixou dúvidas sérias sobre esta decisão</string>
-    <string name="trial_overturned">Teste de resistência falhado: a objeção mais forte do outro lado pesou mais do que esta decisão</string>
-    <string name="trial_what_was_tested">O que o teste de resistência tentou</string>
-    <string name="trial_attack_prefix">Objeção mais forte:</string>
+    <string name="trial_survived">Objeção indeferida: o advogado do outro lado levantou a sua objeção mais forte, e a decisão aguentou. A confiança mantém-se.</string>
+    <string name="trial_uncertain">O advogado do outro lado levantou uma objeção, e ela deixou dúvidas sérias sobre esta decisão</string>
+    <string name="trial_overturned">Objeção deferida: a objeção mais forte do outro lado pesou mais do que esta decisão</string>
+    <string name="trial_what_was_tested">A objeção</string>
+    <string name="trial_attack_prefix">Objeção:</string>
     <string name="trial_referee_prefix">Porquê:</string>
     <string name="trial_mixed_note">Esta é uma disputa mista: em parte factos, em parte valores ou significados de palavras, por isso uma vitória limpa é mais difícil de defender.</string>
     <string name="confidence">Confiança: %1$s de %2$s</string>

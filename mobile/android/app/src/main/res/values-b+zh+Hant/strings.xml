@@ -81,11 +81,11 @@
     <string name="vote_dissolved">用詞誤會</string>
     <string name="refused_note">AI 這次選擇不表態。與其給你假判決，我們寧可什麼都不顯示。</string>
     <string name="demo_note">展示模式：還沒設定 AI 金鑰，這是範例判決</string>
-    <string name="trial_survived">壓力測試通過：另一位評審用對方最有力的反駁試圖推翻這個判決，它撐住了。信心分數不變。</string>
-    <string name="trial_uncertain">壓力測試：對方最有力的反駁讓這個判決留下了實質的疑問</string>
-    <string name="trial_overturned">壓力測試未通過：對方最有力的反駁比這個判決更有分量</string>
-    <string name="trial_what_was_tested">壓力測試試了什麼</string>
-    <string name="trial_attack_prefix">最強烈的反駁：</string>
+    <string name="trial_survived">異議駁回：對方律師提出了最有力的異議，判決依然成立。信心分數不變。</string>
+    <string name="trial_uncertain">對方律師提出異議，這項異議讓這個判決留下了實質的疑問</string>
+    <string name="trial_overturned">異議成立：對方最有力的異議比這個判決更有分量</string>
+    <string name="trial_what_was_tested">異議</string>
+    <string name="trial_attack_prefix">異議：</string>
     <string name="trial_referee_prefix">原因：</string>
     <string name="trial_mixed_note">這是一場混合型爭論：一部分是事實，一部分是價值觀或詞義，所以很難為一面倒的勝負辯護。</string>
     <string name="confidence">信心分數 %1$s/%2$s</string>

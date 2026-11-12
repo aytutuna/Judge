@@ -82,11 +82,11 @@
     <string name="vote_dissolved">anlam farkı</string>
     <string name="refused_note">Yapay zekâ bu kez pas geçti. Sahte bir karar göstermektense hiç göstermeyiz.</string>
     <string name="demo_note">Demo modu: API anahtarı yok, bu örnek bir karar</string>
-    <string name="trial_survived">Dayanıklılık testi geçildi: ayrı bir yargıç karşı tarafın en güçlü karşı argümanıyla bu kararı yıkmaya çalıştı, karar ayakta kaldı. Güven puanı aynı kaldı.</string>
-    <string name="trial_uncertain">Dayanıklılık testi: karşı tarafın en güçlü karşı argümanı bu karar hakkında ciddi şüphe bıraktı</string>
-    <string name="trial_overturned">Dayanıklılık testi geçilemedi: karşı tarafın en güçlü karşı argümanı bu karardan daha ağır bastı</string>
-    <string name="trial_what_was_tested">Dayanıklılık testi neyi denedi</string>
-    <string name="trial_attack_prefix">En güçlü karşı argüman:</string>
+    <string name="trial_survived">İtiraz reddedildi: karşı tarafın avukatı en güçlü itirazını yaptı, karar ayakta kaldı. Güven puanı değişmedi.</string>
+    <string name="trial_uncertain">Karşı tarafın avukatı itiraz etti ve itiraz bu karar hakkında ciddi şüphe bıraktı</string>
+    <string name="trial_overturned">İtiraz kabul edildi: karşı tarafın en güçlü itirazı bu karardan ağır bastı</string>
+    <string name="trial_what_was_tested">İtiraz</string>
+    <string name="trial_attack_prefix">İtiraz:</string>
     <string name="trial_referee_prefix">Neden:</string>
     <string name="trial_mixed_note">Bu karma bir tartışma: biraz olgu, biraz değer ya da sözcük anlamı içeriyor; bu yüzden net bir galibiyeti savunmak daha zor.</string>
     <string name="confidence">Güven: %2$s üzerinden %1$s</string>

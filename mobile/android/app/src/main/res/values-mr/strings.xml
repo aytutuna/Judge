@@ -82,11 +82,11 @@
     <string name="vote_dissolved">अर्थभेद</string>
     <string name="refused_note">या वेळी AI ने माघार घेतली. खोटा निकाल दाखवण्यापेक्षा काहीच न दाखवलेले बरे.</string>
     <string name="demo_note">डेमो मोड: AI साठी API की सेट केलेली नाही, म्हणून हा नमुना निकाल आहे</string>
-    <string name="trial_survived">टिकाऊपणा चाचणी पास: एका वेगळ्या परीक्षकाने समोरच्या बाजूच्या सर्वात कडक आक्षेपाने हा निकाल मोडण्याचा प्रयत्न केला, आणि निकाल टिकला. खात्री गुण तसेच राहिले.</string>
-    <string name="trial_uncertain">टिकाऊपणा चाचणी: समोरच्या बाजूच्या सर्वात कडक आक्षेपाने या निकालाबद्दल खरी शंका ठेवली</string>
-    <string name="trial_overturned">टिकाऊपणा चाचणीत निकाल अपयशी: समोरच्या बाजूचा सर्वात कडक आक्षेप या निकालापेक्षा जड ठरला</string>
-    <string name="trial_what_was_tested">टिकाऊपणा चाचणीने काय आजमावले</string>
-    <string name="trial_attack_prefix">सर्वात कडक आक्षेप:</string>
+    <string name="trial_survived">आक्षेप फेटाळला: समोरच्या बाजूच्या वकिलाने आपला सर्वात कडक आक्षेप घेतला, आणि निकाल टिकला. खात्री गुण तसेच राहिले.</string>
+    <string name="trial_uncertain">समोरच्या बाजूच्या वकिलाने आक्षेप घेतला, आणि त्या आक्षेपाने या निकालाबद्दल खरी शंका ठेवली</string>
+    <string name="trial_overturned">आक्षेप मान्य: समोरच्या बाजूचा सर्वात कडक आक्षेप या निकालापेक्षा जड ठरला</string>
+    <string name="trial_what_was_tested">आक्षेप</string>
+    <string name="trial_attack_prefix">आक्षेप:</string>
     <string name="trial_referee_prefix">कारण:</string>
     <string name="trial_mixed_note">हा मिश्र वाद आहे: काही तथ्ये, काही मूल्ये किंवा शब्दांचे अर्थ, त्यामुळे स्पष्ट विजयाचे समर्थन करणे अवघड आहे.</string>
     <string name="confidence">खात्री: %2$s पैकी %1$s</string>

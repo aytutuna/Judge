@@ -81,11 +81,11 @@
     <string name="vote_dissolved">词义不同</string>
     <string name="refused_note">AI 这次选择不评。与其假装给个裁决，我们宁可什么都不显示。</string>
     <string name="demo_note">演示模式：还没配置 AI 密钥，这是一份示例裁决</string>
-    <string name="trial_survived">抗压测试通过：另一位评委用对方最有力的反驳试图推翻这份裁决，它扛住了。可信度不变。</string>
-    <string name="trial_uncertain">抗压测试：对方最有力的反驳让这份裁决留下了实质的疑问</string>
-    <string name="trial_overturned">抗压测试未通过：对方最有力的反驳比这份裁决更有分量</string>
-    <string name="trial_what_was_tested">抗压测试试了什么</string>
-    <string name="trial_attack_prefix">最尖锐的反驳：</string>
+    <string name="trial_survived">异议被驳回：对方律师提出了最有力的异议，裁决依然成立。可信度不变。</string>
+    <string name="trial_uncertain">对方律师提出异议，这一异议让这份裁决留下了实质的疑问</string>
+    <string name="trial_overturned">异议成立：对方最有力的异议比这份裁决更有分量</string>
+    <string name="trial_what_was_tested">异议</string>
+    <string name="trial_attack_prefix">异议：</string>
     <string name="trial_referee_prefix">原因：</string>
     <string name="trial_mixed_note">这是一场混合型争论：一部分是事实，一部分是价值观或词义，所以很难为一边倒的胜负辩护。</string>
     <string name="confidence">可信度 %1$s/%2$s</string>
