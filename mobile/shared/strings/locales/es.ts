@@ -11,6 +11,7 @@ const es: AppLocale = {
     "app.history.deviceOnly":
       "Solo se guardan en este teléfono. Eliminar uno aquí no desactiva su enlace para compartir.",
     "app.history.delete": "Eliminar",
+    "app.history.removeAll": "Quitar todo",
     "app.history.deleteConfirm":
       "¿Eliminar {n} veredictos de este teléfono? Sus enlaces para compartir seguirán funcionando.",
     "app.history.phoneOnly": "Solo en este teléfono",

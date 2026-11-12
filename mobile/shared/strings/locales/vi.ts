@@ -10,6 +10,7 @@ const vi: AppLocale = {
     "app.history.empty": "Chưa có phán quyết nào. Phân xử cuộc tranh cãi đầu tiên của bạn, kết quả sẽ hiện ở đây.",
     "app.history.deviceOnly": "Chỉ lưu trên điện thoại này. Xóa một phán quyết ở đây thì liên kết chia sẻ của nó vẫn hoạt động.",
     "app.history.delete": "Xóa",
+    "app.history.removeAll": "Xóa tất cả",
     "app.history.deleteConfirm": "Xóa {n} phán quyết khỏi điện thoại này? Liên kết chia sẻ vẫn hoạt động.",
     "app.history.phoneOnly": "Chỉ có trên điện thoại này",
     "app.history.phoneOnlyNote":

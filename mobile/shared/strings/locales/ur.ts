@@ -12,6 +12,7 @@ const ur: AppLocale = {
     "app.history.deviceOnly":
       "یہ فیصلے صرف اسی فون پر محفوظ ہیں۔ یہاں سے کوئی فیصلہ حذف کرنے سے اس کا شیئر لنک بند نہیں ہوتا۔",
     "app.history.delete": "حذف کریں",
+    "app.history.removeAll": "سب ہٹائیں",
     "app.history.deleteConfirm": "اس فون سے {n} فیصلے حذف کریں؟ ان کے شیئر لنکس کام کرتے رہیں گے۔",
     "app.history.phoneOnly": "صرف اسی فون پر",
     "app.history.phoneOnlyNote":

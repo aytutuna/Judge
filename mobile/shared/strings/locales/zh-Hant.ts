@@ -10,6 +10,7 @@ const zhHant: AppLocale = {
     "app.history.empty": "還沒有判決。第一場爭論有了判決，就會出現在這裡。",
     "app.history.deviceOnly": "只保存在這支手機上。在這裡刪除，分享連結不會跟著失效。",
     "app.history.delete": "刪除",
+    "app.history.removeAll": "全部移除",
     "app.history.deleteConfirm": "要從這支手機刪除 {n} 個判決嗎？分享連結不會跟著失效。",
     "app.history.phoneOnly": "只在這支手機上",
     "app.history.phoneOnlyNote": "這些判決不在你的帳號中，只保存在這支手機上。在這裡刪除，分享連結不會跟著失效。",

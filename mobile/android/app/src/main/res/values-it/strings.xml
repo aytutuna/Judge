@@ -538,6 +538,7 @@
     <string name="app_history_empty">Ancora nessun verdetto. Risolvi la tua prima discussione e lo troverai qui.</string>
     <string name="app_history_device_only">Salvati solo su questo telefono. Se ne elimini uno qui, il suo link di condivisione continua a funzionare.</string>
     <string name="app_history_delete">Elimina</string>
+    <string name="app_history_remove_all">Rimuovi tutto</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Eliminare questo verdetto da questo telefono? Il suo link di condivisione continua a funzionare.</item>
         <item quantity="many">Eliminare %1$s verdetti da questo telefono? I loro link di condivisione continuano a funzionare.</item>

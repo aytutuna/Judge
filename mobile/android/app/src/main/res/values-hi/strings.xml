@@ -529,6 +529,7 @@
     <string name="app_history_empty">अभी तक कोई फ़ैसला नहीं। अपनी पहली बहस सुलझाएँ, उसका फ़ैसला यहीं दिखेगा।</string>
     <string name="app_history_device_only">ये सिर्फ़ इसी फ़ोन में सेव हैं। यहाँ से कोई फ़ैसला हटाने पर भी उसका शेयर लिंक बंद नहीं होता।</string>
     <string name="app_history_delete">हटाएँ</string>
+    <string name="app_history_remove_all">सभी हटाएँ</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">इस फ़ोन से %1$s फ़ैसला हटाएँ? उसका शेयर लिंक काम करता रहेगा।</item>
         <item quantity="other">इस फ़ोन से %1$s फ़ैसले हटाएँ? उनके शेयर लिंक काम करते रहेंगे।</item>

@@ -12,6 +12,7 @@ const ru: AppLocale = {
     "app.history.deviceOnly":
       "Вердикты хранятся только на этом телефоне. Если удалить вердикт здесь, ссылка на него продолжит работать.",
     "app.history.delete": "Удалить",
+    "app.history.removeAll": "Удалить все",
     "app.history.deleteConfirm": "Удалить {n} вердиктов с этого телефона? Ссылки на них продолжат работать.",
     "app.history.phoneOnly": "Только на этом телефоне",
     "app.history.phoneOnlyNote":

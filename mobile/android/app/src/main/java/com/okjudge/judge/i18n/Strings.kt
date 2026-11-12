@@ -579,6 +579,7 @@ class Strings(private val res: Resources) {
     val appHistoryEmpty: String get() = res.getString(R.string.app_history_empty)
     val appHistoryDeviceOnly: String get() = res.getString(R.string.app_history_device_only)
     val appHistoryDelete: String get() = res.getString(R.string.app_history_delete)
+    val appHistoryRemoveAll: String get() = res.getString(R.string.app_history_remove_all)
     fun appHistoryDeleteConfirm(n: Int): String = res.getQuantityString(R.plurals.app_history_delete_confirm, n, n.toString())
     val appHistoryPhoneOnly: String get() = res.getString(R.string.app_history_phone_only)
     val appHistoryPhoneOnlyNote: String get() = res.getString(R.string.app_history_phone_only_note)
@@ -1169,6 +1170,7 @@ class Strings(private val res: Resources) {
             "app.history.empty" -> R.string.app_history_empty
             "app.history.deviceOnly" -> R.string.app_history_device_only
             "app.history.delete" -> R.string.app_history_delete
+            "app.history.removeAll" -> R.string.app_history_remove_all
             "app.history.phoneOnly" -> R.string.app_history_phone_only
             "app.history.phoneOnlyNote" -> R.string.app_history_phone_only_note
             "app.history.offlineRemove" -> R.string.app_history_offline_remove

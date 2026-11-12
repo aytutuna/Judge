@@ -11,6 +11,7 @@ const de: AppLocale = {
     "app.history.deviceOnly":
       "Nur auf diesem Handy gespeichert. Wenn du hier ein Urteil löschst, funktioniert der geteilte Link weiter.",
     "app.history.delete": "Löschen",
+    "app.history.removeAll": "Alle entfernen",
     "app.history.deleteConfirm": "{n} Urteile von diesem Handy löschen? Die geteilten Links funktionieren weiter.",
     "app.history.phoneOnly": "Nur auf diesem Handy",
     "app.history.phoneOnlyNote":

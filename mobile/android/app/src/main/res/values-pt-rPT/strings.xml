@@ -538,6 +538,7 @@
     <string name="app_history_empty">Ainda não há veredictos. Tira a tua primeira teima e o veredicto aparece aqui.</string>
     <string name="app_history_device_only">Ficam guardados só neste telemóvel. Se apagares um aqui, o link de partilha continua ativo.</string>
     <string name="app_history_delete">Apagar</string>
+    <string name="app_history_remove_all">Remover tudo</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Apagar %1$s veredicto do telemóvel? O link de partilha continua ativo.</item>
         <item quantity="many">Apagar %1$s veredictos deste telemóvel? Os links de partilha continuam ativos.</item>

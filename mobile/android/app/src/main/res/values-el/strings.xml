@@ -529,6 +529,7 @@
     <string name="app_history_empty">Δεν έχεις αποφάσεις ακόμα. Λύσε την πρώτη σου διαφωνία και η απόφαση θα εμφανιστεί εδώ.</string>
     <string name="app_history_device_only">Αποθηκεύονται μόνο σε αυτό το τηλέφωνο. Αν διαγράψεις μια απόφαση από εδώ, ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.</string>
     <string name="app_history_delete">Διαγραφή</string>
+    <string name="app_history_remove_all">Αφαίρεση όλων</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Να διαγραφεί η απόφαση από αυτό το τηλέφωνο; Ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.</item>
         <item quantity="other">Να διαγραφούν %1$s αποφάσεις από αυτό το τηλέφωνο; Οι σύνδεσμοι κοινοποίησής τους θα συνεχίσουν να λειτουργούν.</item>

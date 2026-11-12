@@ -12,6 +12,7 @@ const hr: AppLocale = {
     "app.history.deviceOnly":
       "Spremljeno samo na ovom telefonu. Ako presudu izbrišeš ovdje, njezina poveznica za dijeljenje i dalje radi.",
     "app.history.delete": "Izbriši",
+    "app.history.removeAll": "Ukloni sve",
     "app.history.deleteConfirm":
       "Izbrisati {n} presuda s ovog telefona? Poveznice za dijeljenje i dalje rade.",
     "app.history.phoneOnly": "Samo na ovom telefonu",

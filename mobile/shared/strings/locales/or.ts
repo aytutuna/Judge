@@ -11,6 +11,7 @@ const or: AppLocale = {
     "app.history.empty": "ଏଯାଏଁ କୌଣସି ରାୟ ନାହିଁ। ଆପଣଙ୍କ ପ୍ରଥମ ଝଗଡ଼ା ମେଣ୍ଟାନ୍ତୁ, ତା'ର ରାୟ ଏଠାରେ ଦେଖାଯିବ।",
     "app.history.deviceOnly": "କେବଳ ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଛି। ଏଠାରୁ କୌଣସି ରାୟ ଡିଲିଟ୍ କଲେ ବି ତା'ର ସେୟାର୍ ଲିଙ୍କ୍ ବନ୍ଦ ହୁଏ ନାହିଁ।",
     "app.history.delete": "ଡିଲିଟ୍",
+    "app.history.removeAll": "ସବୁ ହଟାନ୍ତୁ",
     "app.history.deleteConfirm": "ଏହି ଫୋନ୍‌ରୁ {n}ଟି ରାୟ ଡିଲିଟ୍ କରିବେ? ସେଗୁଡ଼ିକର ସେୟାର୍ ଲିଙ୍କ୍ ଚାଲୁ ରହିବ।",
     "app.history.phoneOnly": "କେବଳ ଏହି ଫୋନ୍‌ରେ",
     "app.history.phoneOnlyNote":

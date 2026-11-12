@@ -529,6 +529,7 @@
     <string name="app_history_empty">ابھی کوئی فیصلہ نہیں۔ اپنی پہلی بحث کا فیصلہ کروائیں تو وہ یہاں نظر آئے گا۔</string>
     <string name="app_history_device_only">یہ فیصلے صرف اسی فون پر محفوظ ہیں۔ یہاں سے کوئی فیصلہ حذف کرنے سے اس کا شیئر لنک بند نہیں ہوتا۔</string>
     <string name="app_history_delete">حذف کریں</string>
+    <string name="app_history_remove_all">سب ہٹائیں</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">یہ فیصلہ اس فون سے حذف کریں؟ اس کا شیئر لنک کام کرتا رہے گا۔</item>
         <item quantity="other">اس فون سے %1$s فیصلے حذف کریں؟ ان کے شیئر لنکس کام کرتے رہیں گے۔</item>

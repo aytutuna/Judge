@@ -10,6 +10,7 @@ const zhHans: AppLocale = {
     "app.history.empty": "还没有裁决。第一场争论评出结果后，裁决会出现在这里。",
     "app.history.deviceOnly": "只保存在这台手机上。在这里删掉一条裁决，它的分享链接仍然有效。",
     "app.history.delete": "删除",
+    "app.history.removeAll": "全部移除",
     "app.history.deleteConfirm": "要从这台手机上删除 {n} 条裁决吗？分享链接仍然有效。",
     "app.history.phoneOnly": "只在这台手机上",
     "app.history.phoneOnlyNote": "不在你的账号里：这些只保存在这台手机上。在这里删掉一条，它的分享链接仍然有效。",

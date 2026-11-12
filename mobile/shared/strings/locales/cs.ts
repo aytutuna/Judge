@@ -11,6 +11,7 @@ const cs: AppLocale = {
     "app.history.deviceOnly":
       "Uloženo jen v tomhle telefonu. Když tu verdikt smažeš, jeho sdílený odkaz bude fungovat dál.",
     "app.history.delete": "Smazat",
+    "app.history.removeAll": "Odebrat vše",
     "app.history.deleteConfirm":
       "Smazat {n} verdiktů z tohohle telefonu? Jejich sdílené odkazy budou fungovat dál.",
     "app.history.phoneOnly": "Jen v tomhle telefonu",

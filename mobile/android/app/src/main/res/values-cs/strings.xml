@@ -547,6 +547,7 @@
     <string name="app_history_empty">Zatím žádné verdikty. Nech rozsoudit svůj první spor a verdikt najdeš tady.</string>
     <string name="app_history_device_only">Uloženo jen v tomhle telefonu. Když tu verdikt smažeš, jeho sdílený odkaz bude fungovat dál.</string>
     <string name="app_history_delete">Smazat</string>
+    <string name="app_history_remove_all">Odebrat vše</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Smazat tenhle verdikt z tohohle telefonu? Jeho sdílený odkaz bude fungovat dál.</item>
         <item quantity="few">Smazat %1$s verdikty z tohohle telefonu? Jejich sdílené odkazy budou fungovat dál.</item>

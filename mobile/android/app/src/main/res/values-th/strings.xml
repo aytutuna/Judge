@@ -520,6 +520,7 @@
     <string name="app_history_empty">ยังไม่มีคำตัดสิน ลองเคลียร์เรื่องที่เถียงกันเรื่องแรกดู แล้วคำตัดสินจะขึ้นที่นี่</string>
     <string name="app_history_device_only">บันทึกไว้ในโทรศัพท์เครื่องนี้เท่านั้น ถึงจะลบออกจากที่นี่ ลิงก์แชร์ก็ยังใช้ได้อยู่</string>
     <string name="app_history_delete">ลบ</string>
+    <string name="app_history_remove_all">ลบทั้งหมด</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="other">ลบคำตัดสิน %1$s รายการออกจากโทรศัพท์เครื่องนี้ไหม? ลิงก์แชร์จะยังใช้ได้อยู่</item>
     </plurals>

@@ -10,6 +10,7 @@ const ja: AppLocale = {
     "app.history.empty": "まだ判定はありません。最初の揉めごとに白黒つけると、ここに表示されます。",
     "app.history.deviceOnly": "この端末にだけ保存されています。ここで削除しても、シェア用リンクはそのまま使えます。",
     "app.history.delete": "削除",
+    "app.history.removeAll": "すべて削除",
     "app.history.deleteConfirm": "この端末から{n}件の判定を削除しますか？　シェア用リンクはそのまま使えます。",
     "app.history.phoneOnly": "この端末にのみ保存",
     "app.history.phoneOnlyNote":

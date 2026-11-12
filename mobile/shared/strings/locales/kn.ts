@@ -12,6 +12,7 @@ const kn: AppLocale = {
     "app.history.deviceOnly":
       "ಈ ಫೋನ್‌ನಲ್ಲಿ ಮಾತ್ರ ಉಳಿಸಲಾಗಿದೆ. ಒಂದು ತೀರ್ಪನ್ನು ಇಲ್ಲಿಂದ ಅಳಿಸಿದರೂ ಅದರ ಹಂಚಿಕೆ ಲಿಂಕ್ ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತದೆ.",
     "app.history.delete": "ಅಳಿಸಿ",
+    "app.history.removeAll": "ಎಲ್ಲವನ್ನೂ ತೆಗೆದುಹಾಕಿ",
     "app.history.deleteConfirm":
       "ಈ ಫೋನ್‌ನಿಂದ {n} ತೀರ್ಪುಗಳನ್ನು ಅಳಿಸಬೇಕೇ? ಅವುಗಳ ಹಂಚಿಕೆ ಲಿಂಕ್‌ಗಳು ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತವೆ.",
     "app.history.phoneOnly": "ಈ ಫೋನ್‌ನಲ್ಲಿ ಮಾತ್ರ",

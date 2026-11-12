@@ -529,6 +529,7 @@
     <string name="app_history_empty">এখনও কোনো রায় নেই। প্রথম তর্কের ফয়সালা করলে সেটা এখানে দেখা যাবে।</string>
     <string name="app_history_device_only">শুধু এই ফোনে সেভ করা আছে। এখান থেকে কোনো রায় মুছলেও তার শেয়ার লিংক বন্ধ হয় না।</string>
     <string name="app_history_delete">মুছুন</string>
+    <string name="app_history_remove_all">সব সরান</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">এই ফোন থেকে %1$sটি রায় মুছবেন? সেটির শেয়ার লিংক চালু থাকবে।</item>
         <item quantity="other">এই ফোন থেকে %1$sটি রায় মুছবেন? সেগুলোর শেয়ার লিংক চালু থাকবে।</item>

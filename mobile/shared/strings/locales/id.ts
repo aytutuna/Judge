@@ -11,6 +11,7 @@ const id: AppLocale = {
     "app.history.deviceOnly":
       "Hanya tersimpan di ponsel ini. Menghapus putusan di sini tidak mematikan tautan berbaginya.",
     "app.history.delete": "Hapus",
+    "app.history.removeAll": "Hapus semua",
     "app.history.deleteConfirm": "Hapus {n} putusan dari ponsel ini? Tautan berbaginya tetap berfungsi.",
     "app.history.phoneOnly": "Hanya di ponsel ini",
     "app.history.phoneOnlyNote":

@@ -12,6 +12,7 @@ const sl: AppLocale = {
     "app.history.deviceOnly":
       "Shranjeno samo na tem telefonu. Če razsodbo izbrišeš tukaj, njena povezava za deljenje še vedno deluje.",
     "app.history.delete": "Izbriši",
+    "app.history.removeAll": "Odstrani vse",
     "app.history.deleteConfirm":
       "Želiš s tega telefona izbrisati {n} razsodb? Njihove povezave za deljenje še vedno delujejo.",
     "app.history.phoneOnly": "Samo na tem telefonu",

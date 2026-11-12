@@ -547,6 +547,7 @@
     <string name="app_history_empty">Razsodb še ni. Ko razčistiš prvi prepir, se razsodba prikaže tukaj.</string>
     <string name="app_history_device_only">Shranjeno samo na tem telefonu. Če razsodbo izbrišeš tukaj, njena povezava za deljenje še vedno deluje.</string>
     <string name="app_history_delete">Izbriši</string>
+    <string name="app_history_remove_all">Odstrani vse</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Želiš s tega telefona izbrisati %1$s razsodbo? Njena povezava za deljenje še vedno deluje.</item>
         <item quantity="two">Želiš s tega telefona izbrisati %1$s razsodbi? Njuni povezavi za deljenje še vedno delujeta.</item>

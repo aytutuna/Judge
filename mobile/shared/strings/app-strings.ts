@@ -19,6 +19,7 @@ export const APP_EN = {
   // No longer shown; drop it from every locale in one go.
   "app.history.deviceOnly": "Saved on this phone only. Deleting one here doesn't take down its share link.",
   "app.history.delete": "Delete",
+  "app.history.removeAll": "Remove all",
   "app.history.deleteConfirm": "Delete {n} verdicts from this phone? Their share links keep working.",
   // Verdicts kept on the phone by older versions that the account doesn't have.
   "app.history.phoneOnly": "Only on this phone",

@@ -12,6 +12,7 @@ const ar: AppLocale = {
     "app.history.deviceOnly":
       "الأحكام محفوظة على هذا الهاتف فقط. حذف حكم من هنا لا يوقف رابط مشاركته.",
     "app.history.delete": "حذف",
+    "app.history.removeAll": "إزالة الكل",
     "app.history.deleteConfirm":
       "هل تريد حذف {n} حكم من هذا الهاتف؟ ستبقى روابط مشاركتها تعمل.",
     "app.history.phoneOnly": "على هذا الهاتف فقط",

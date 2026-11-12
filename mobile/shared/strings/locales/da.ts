@@ -10,6 +10,7 @@ const da: AppLocale = {
     "app.history.empty": "Ingen domme endnu. Få afgjort din første diskussion, så dukker den op her.",
     "app.history.deviceOnly": "Kun gemt på denne telefon. Sletter du en her, virker dens delingslink stadig.",
     "app.history.delete": "Slet",
+    "app.history.removeAll": "Fjern alle",
     "app.history.deleteConfirm": "Vil du slette {n} domme fra denne telefon? Delingslinkene virker stadig.",
     "app.history.phoneOnly": "Kun på denne telefon",
     "app.history.phoneOnlyNote":

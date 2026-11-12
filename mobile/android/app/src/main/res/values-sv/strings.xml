@@ -529,6 +529,7 @@
     <string name="app_history_empty">Inga domar än. Avgör ditt första bråk så dyker domen upp här.</string>
     <string name="app_history_device_only">Sparas bara på den här telefonen. Tar du bort en dom här fortsätter delningslänken att fungera.</string>
     <string name="app_history_delete">Ta bort</string>
+    <string name="app_history_remove_all">Ta bort alla</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Ta bort domen från den här telefonen? Delningslänken fortsätter att fungera.</item>
         <item quantity="other">Ta bort %1$s domar från den här telefonen? Delningslänkarna fortsätter att fungera.</item>

@@ -538,6 +538,7 @@
     <string name="app_history_empty">Nenhum veredito ainda. Resolva sua primeira discussão e o veredito aparece aqui.</string>
     <string name="app_history_device_only">Ficam salvos só neste celular. Excluir um aqui não tira do ar o link de compartilhamento dele.</string>
     <string name="app_history_delete">Excluir</string>
+    <string name="app_history_remove_all">Remover tudo</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Excluir %1$s veredito deste celular? O link de compartilhamento dele continua funcionando.</item>
         <item quantity="many">Excluir %1$s vereditos deste celular? Os links de compartilhamento deles continuam funcionando.</item>

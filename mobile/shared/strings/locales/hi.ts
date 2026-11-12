@@ -11,6 +11,7 @@ const hi: AppLocale = {
     "app.history.empty": "अभी तक कोई फ़ैसला नहीं। अपनी पहली बहस सुलझाएँ, उसका फ़ैसला यहीं दिखेगा।",
     "app.history.deviceOnly": "ये सिर्फ़ इसी फ़ोन में सेव हैं। यहाँ से कोई फ़ैसला हटाने पर भी उसका शेयर लिंक बंद नहीं होता।",
     "app.history.delete": "हटाएँ",
+    "app.history.removeAll": "सभी हटाएँ",
     "app.history.deleteConfirm": "इस फ़ोन से {n} फ़ैसले हटाएँ? उनके शेयर लिंक काम करते रहेंगे।",
     "app.history.phoneOnly": "सिर्फ़ इसी फ़ोन में",
     "app.history.phoneOnlyNote":

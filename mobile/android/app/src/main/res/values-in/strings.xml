@@ -520,6 +520,7 @@
     <string name="app_history_empty">Belum ada putusan. Tuntaskan perdebatan pertamamu, nanti putusannya muncul di sini.</string>
     <string name="app_history_device_only">Hanya tersimpan di ponsel ini. Menghapus putusan di sini tidak mematikan tautan berbaginya.</string>
     <string name="app_history_delete">Hapus</string>
+    <string name="app_history_remove_all">Hapus semua</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="other">Hapus %1$s putusan dari ponsel ini? Tautan berbaginya tetap berfungsi.</item>
     </plurals>

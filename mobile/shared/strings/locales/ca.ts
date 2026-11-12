@@ -11,6 +11,7 @@ const ca: AppLocale = {
     "app.history.deviceOnly":
       "Només es desen en aquest telèfon. Si n'elimines un aquí, el seu enllaç per compartir continuarà funcionant.",
     "app.history.delete": "Elimina",
+    "app.history.removeAll": "Elimina-ho tot",
     "app.history.deleteConfirm":
       "Vols eliminar {n} veredictes del telèfon? Els seus enllaços per compartir continuaran funcionant.",
     "app.history.phoneOnly": "Només en aquest telèfon",

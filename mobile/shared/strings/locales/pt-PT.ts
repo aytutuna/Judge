@@ -10,6 +10,7 @@ const ptPT: AppLocale = {
     "app.history.empty": "Ainda não há veredictos. Tira a tua primeira teima e o veredicto aparece aqui.",
     "app.history.deviceOnly": "Ficam guardados só neste telemóvel. Se apagares um aqui, o link de partilha continua ativo.",
     "app.history.delete": "Apagar",
+    "app.history.removeAll": "Remover tudo",
     "app.history.deleteConfirm": "Apagar {n} veredictos deste telemóvel? Os links de partilha continuam ativos.",
     "app.history.phoneOnly": "Só neste telemóvel",
     "app.history.phoneOnlyNote":

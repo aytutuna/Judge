@@ -12,6 +12,7 @@ const pl: AppLocale = {
     "app.history.deviceOnly":
       "Zapisane tylko na tym telefonie. Usunięcie werdyktu tutaj nie wyłącza linku do udostępniania.",
     "app.history.delete": "Usuń",
+    "app.history.removeAll": "Usuń wszystko",
     "app.history.deleteConfirm": "Usunąć {n} werdyktów z tego telefonu? Ich linki do udostępniania nadal będą działać.",
     "app.history.phoneOnly": "Tylko na tym telefonie",
     "app.history.phoneOnlyNote":

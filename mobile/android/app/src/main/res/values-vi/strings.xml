@@ -520,6 +520,7 @@
     <string name="app_history_empty">Chưa có phán quyết nào. Phân xử cuộc tranh cãi đầu tiên của bạn, kết quả sẽ hiện ở đây.</string>
     <string name="app_history_device_only">Chỉ lưu trên điện thoại này. Xóa một phán quyết ở đây thì liên kết chia sẻ của nó vẫn hoạt động.</string>
     <string name="app_history_delete">Xóa</string>
+    <string name="app_history_remove_all">Xóa tất cả</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="other">Xóa %1$s phán quyết khỏi điện thoại này? Liên kết chia sẻ vẫn hoạt động.</item>
     </plurals>

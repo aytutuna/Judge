@@ -529,6 +529,7 @@
     <string name="app_history_empty">Ingen domme endnu. Få afgjort din første diskussion, så dukker den op her.</string>
     <string name="app_history_device_only">Kun gemt på denne telefon. Sletter du en her, virker dens delingslink stadig.</string>
     <string name="app_history_delete">Slet</string>
+    <string name="app_history_remove_all">Fjern alle</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Vil du slette dommen fra denne telefon? Delingslinket virker stadig.</item>
         <item quantity="other">Vil du slette %1$s domme fra denne telefon? Delingslinkene virker stadig.</item>

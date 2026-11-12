@@ -529,6 +529,7 @@
     <string name="app_history_empty">ଏଯାଏଁ କୌଣସି ରାୟ ନାହିଁ। ଆପଣଙ୍କ ପ୍ରଥମ ଝଗଡ଼ା ମେଣ୍ଟାନ୍ତୁ, ତା\'ର ରାୟ ଏଠାରେ ଦେଖାଯିବ।</string>
     <string name="app_history_device_only">କେବଳ ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଛି। ଏଠାରୁ କୌଣସି ରାୟ ଡିଲିଟ୍ କଲେ ବି ତା\'ର ସେୟାର୍ ଲିଙ୍କ୍ ବନ୍ଦ ହୁଏ ନାହିଁ।</string>
     <string name="app_history_delete">ଡିଲିଟ୍</string>
+    <string name="app_history_remove_all">ସବୁ ହଟାନ୍ତୁ</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">ଏହି ଫୋନ୍‌ରୁ ରାୟଟି ଡିଲିଟ୍ କରିବେ? ଏହାର ସେୟାର୍ ଲିଙ୍କ୍ ଚାଲୁ ରହିବ।</item>
         <item quantity="other">ଏହି ଫୋନ୍‌ରୁ %1$sଟି ରାୟ ଡିଲିଟ୍ କରିବେ? ସେଗୁଡ଼ିକର ସେୟାର୍ ଲିଙ୍କ୍ ଚାଲୁ ରହିବ।</item>

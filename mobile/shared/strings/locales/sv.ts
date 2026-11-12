@@ -11,6 +11,7 @@ const sv: AppLocale = {
     "app.history.deviceOnly":
       "Sparas bara på den här telefonen. Tar du bort en dom här fortsätter delningslänken att fungera.",
     "app.history.delete": "Ta bort",
+    "app.history.removeAll": "Ta bort alla",
     "app.history.deleteConfirm":
       "Ta bort {n} domar från den här telefonen? Delningslänkarna fortsätter att fungera.",
     "app.history.phoneOnly": "Bara på den här telefonen",

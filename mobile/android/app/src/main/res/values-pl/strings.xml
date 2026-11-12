@@ -547,6 +547,7 @@
     <string name="app_history_empty">Nie masz jeszcze werdyktów. Rozstrzygnij pierwszy spór, a werdykt pojawi się tutaj.</string>
     <string name="app_history_device_only">Zapisane tylko na tym telefonie. Usunięcie werdyktu tutaj nie wyłącza linku do udostępniania.</string>
     <string name="app_history_delete">Usuń</string>
+    <string name="app_history_remove_all">Usuń wszystko</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Usunąć ten werdykt z tego telefonu? Jego link do udostępniania nadal będzie działać.</item>
         <item quantity="few">Usunąć %1$s werdykty z tego telefonu? Ich linki do udostępniania nadal będą działać.</item>

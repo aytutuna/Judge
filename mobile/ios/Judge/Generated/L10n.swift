@@ -646,6 +646,7 @@ enum L10n {
     static func appHistoryEmpty(_ lang: AppLang) -> String { string("app.history.empty", lang) }
     static func appHistoryDeviceOnly(_ lang: AppLang) -> String { string("app.history.deviceOnly", lang) }
     static func appHistoryDelete(_ lang: AppLang) -> String { string("app.history.delete", lang) }
+    static func appHistoryRemoveAll(_ lang: AppLang) -> String { string("app.history.removeAll", lang) }
     static func appHistoryDeleteConfirm(_ lang: AppLang, n: Int) -> String { plural("app.history.deleteConfirm", lang, n) }
     static func appHistoryPhoneOnly(_ lang: AppLang) -> String { string("app.history.phoneOnly", lang) }
     static func appHistoryPhoneOnlyNote(_ lang: AppLang) -> String { string("app.history.phoneOnlyNote", lang) }
@@ -1237,6 +1238,7 @@ enum L10n {
         "app.history.empty",
         "app.history.deviceOnly",
         "app.history.delete",
+        "app.history.removeAll",
         "app.history.phoneOnly",
         "app.history.phoneOnlyNote",
         "app.history.offlineRemove",

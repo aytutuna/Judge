@@ -11,6 +11,7 @@ const fi: AppLocale = {
     "app.history.empty": "Ei vielä tuomioita. Ratkaise ensimmäinen kiistasi, niin tuomio näkyy täällä.",
     "app.history.deviceOnly": "Tallennettu vain tähän puhelimeen. Jos poistat tuomion täältä, sen jakolinkki toimii edelleen.",
     "app.history.delete": "Poista",
+    "app.history.removeAll": "Poista kaikki",
     "app.history.deleteConfirm": "Poistetaanko {n} tuomiota tästä puhelimesta? Niiden jakolinkit toimivat edelleen.",
     "app.history.phoneOnly": "Vain tässä puhelimessa",
     "app.history.phoneOnlyNote":

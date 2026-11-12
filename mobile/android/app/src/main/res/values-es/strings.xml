@@ -538,6 +538,7 @@
     <string name="app_history_empty">Aún no tienes veredictos. Resuelve tu primera discusión y aparecerá aquí.</string>
     <string name="app_history_device_only">Solo se guardan en este teléfono. Eliminar uno aquí no desactiva su enlace para compartir.</string>
     <string name="app_history_delete">Eliminar</string>
+    <string name="app_history_remove_all">Quitar todo</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">¿Eliminar este veredicto de este teléfono? Su enlace para compartir seguirá funcionando.</item>
         <item quantity="many">¿Eliminar %1$s veredictos de este teléfono? Sus enlaces para compartir seguirán funcionando.</item>

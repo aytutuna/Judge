@@ -538,6 +538,7 @@
     <string name="app_history_empty">עוד אין פסקי דין. כשהוויכוח הראשון שלך יוכרע, פסק הדין יופיע כאן.</string>
     <string name="app_history_device_only">פסקי הדין שמורים רק בטלפון הזה. מחיקה של פסק דין כאן לא מבטלת את קישור השיתוף שלו.</string>
     <string name="app_history_delete">מחיקה</string>
+    <string name="app_history_remove_all">הסרת הכול</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">למחוק את פסק הדין מהטלפון הזה? קישור השיתוף שלו ימשיך לעבוד.</item>
         <item quantity="two">למחוק את שני פסקי הדין מהטלפון הזה? קישורי השיתוף שלהם ימשיכו לעבוד.</item>

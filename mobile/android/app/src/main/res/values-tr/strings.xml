@@ -529,6 +529,7 @@
     <string name="app_history_empty">Henüz kararın yok. İlk tartışmanı çözdüğünde burada görünür.</string>
     <string name="app_history_device_only">Sadece bu telefonda saklanır. Buradan silmek paylaşım linkini kaldırmaz.</string>
     <string name="app_history_delete">Sil</string>
+    <string name="app_history_remove_all">Tümünü kaldır</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Bu karar bu telefondan silinsin mi? Paylaşım linki çalışmaya devam eder.</item>
         <item quantity="other">Bu telefondan %1$s karar silinsin mi? Paylaşım linkleri çalışmaya devam eder.</item>

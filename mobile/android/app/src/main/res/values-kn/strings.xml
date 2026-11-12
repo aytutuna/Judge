@@ -529,6 +529,7 @@
     <string name="app_history_empty">ಇನ್ನೂ ಯಾವ ತೀರ್ಪೂ ಇಲ್ಲ. ನಿಮ್ಮ ಮೊದಲ ವಾದವನ್ನು ಬಗೆಹರಿಸಿ, ಅದು ಇಲ್ಲಿ ಕಾಣುತ್ತದೆ.</string>
     <string name="app_history_device_only">ಈ ಫೋನ್‌ನಲ್ಲಿ ಮಾತ್ರ ಉಳಿಸಲಾಗಿದೆ. ಒಂದು ತೀರ್ಪನ್ನು ಇಲ್ಲಿಂದ ಅಳಿಸಿದರೂ ಅದರ ಹಂಚಿಕೆ ಲಿಂಕ್ ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತದೆ.</string>
     <string name="app_history_delete">ಅಳಿಸಿ</string>
+    <string name="app_history_remove_all">ಎಲ್ಲವನ್ನೂ ತೆಗೆದುಹಾಕಿ</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">ಈ ಫೋನ್‌ನಿಂದ %1$s ತೀರ್ಪನ್ನು ಅಳಿಸಬೇಕೇ? ಅದರ ಹಂಚಿಕೆ ಲಿಂಕ್ ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತದೆ.</item>
         <item quantity="other">ಈ ಫೋನ್‌ನಿಂದ %1$s ತೀರ್ಪುಗಳನ್ನು ಅಳಿಸಬೇಕೇ? ಅವುಗಳ ಹಂಚಿಕೆ ಲಿಂಕ್‌ಗಳು ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತವೆ.</item>

@@ -11,6 +11,7 @@ const ptBR: AppLocale = {
     "app.history.deviceOnly":
       "Ficam salvos só neste celular. Excluir um aqui não tira do ar o link de compartilhamento dele.",
     "app.history.delete": "Excluir",
+    "app.history.removeAll": "Remover tudo",
     "app.history.deleteConfirm":
       "Excluir {n} vereditos deste celular? Os links de compartilhamento deles continuam funcionando.",
     "app.history.phoneOnly": "Só neste celular",

@@ -394,7 +394,10 @@ struct SideMenu: View {
                     }
                 }
                 if !links.isEmpty {
-                    heading(L10n.navLinks(lang)).simultaneousGesture(closeDrag(width)).menuListRow()
+                    let removable = links.filter(\.removable).map(\.id)
+                    heading(L10n.navLinks(lang), removeAll: removable.isEmpty ? nil : { confirming = removable })
+                        .simultaneousGesture(closeDrag(width))
+                        .menuListRow()
                     ForEach(links) { entry in
                         entryRow(entry, entries: shown, width: width, lang: lang, now: now)
                     }
@@ -558,15 +561,26 @@ struct SideMenu: View {
         .accessibilityAddTraits(selected ? .isSelected : [])
     }
 
-    private func heading(_ title: String) -> some View {
-        Text(title)
-            .brandText(Self.headingType)
-            .foregroundStyle(Brand.muted)
-            .padding(.horizontal, 12)
-            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
-            .overlay(alignment: .bottom) { Rectangle().fill(Brand.line).frame(height: 1) }
-            .padding(.top, 8)
-            .accessibilityAddTraits(.isHeader)
+    private func heading(_ title: String, removeAll: (() -> Void)? = nil) -> some View {
+        HStack(spacing: 8) {
+            Text(title)
+                .brandText(Self.headingType)
+                .foregroundStyle(Brand.muted)
+                .accessibilityAddTraits(.isHeader)
+            Spacer(minLength: 0)
+            if let removeAll {
+                Button(L10n.appHistoryRemoveAll(app.lang), action: removeAll)
+                    .brandText(Self.stateType)
+                    .foregroundStyle(Brand.danger)
+                    .buttonStyle(.plain)
+                    .frame(minHeight: 44)
+                    .contentShape(Rectangle())
+            }
+        }
+        .padding(.horizontal, 12)
+        .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+        .overlay(alignment: .bottom) { Rectangle().fill(Brand.line).frame(height: 1) }
+        .padding(.top, 8)
     }
 
     /// One verdict or link as its own card: green when the ruling went the viewer's

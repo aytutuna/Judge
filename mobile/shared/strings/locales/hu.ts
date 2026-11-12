@@ -10,6 +10,7 @@ const hu: AppLocale = {
     "app.history.empty": "Még nincs ítéleted. Amint eldől az első vitád, itt megjelenik.",
     "app.history.deviceOnly": "Csak ezen a telefonon vannak elmentve. Ha innen törölsz egyet, a megosztási linkje attól még működik.",
     "app.history.delete": "Törlés",
+    "app.history.removeAll": "Összes eltávolítása",
     "app.history.deleteConfirm": "Törlöd a kijelölt {n} ítéletet erről a telefonról? A megosztási linkjeik továbbra is működnek.",
     "app.history.phoneOnly": "Csak ezen a telefonon",
     "app.history.phoneOnlyNote":

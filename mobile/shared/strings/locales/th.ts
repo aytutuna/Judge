@@ -11,6 +11,7 @@ const th: AppLocale = {
     "app.history.empty": "ยังไม่มีคำตัดสิน ลองเคลียร์เรื่องที่เถียงกันเรื่องแรกดู แล้วคำตัดสินจะขึ้นที่นี่",
     "app.history.deviceOnly": "บันทึกไว้ในโทรศัพท์เครื่องนี้เท่านั้น ถึงจะลบออกจากที่นี่ ลิงก์แชร์ก็ยังใช้ได้อยู่",
     "app.history.delete": "ลบ",
+    "app.history.removeAll": "ลบทั้งหมด",
     "app.history.deleteConfirm": "ลบคำตัดสิน {n} รายการออกจากโทรศัพท์เครื่องนี้ไหม? ลิงก์แชร์จะยังใช้ได้อยู่",
     "app.history.phoneOnly": "เฉพาะในโทรศัพท์เครื่องนี้",
     "app.history.phoneOnlyNote":

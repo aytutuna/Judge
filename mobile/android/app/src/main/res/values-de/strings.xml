@@ -529,6 +529,7 @@
     <string name="app_history_empty">Noch keine Urteile. Kläre deinen ersten Streit, dann erscheint das Urteil hier.</string>
     <string name="app_history_device_only">Nur auf diesem Handy gespeichert. Wenn du hier ein Urteil löschst, funktioniert der geteilte Link weiter.</string>
     <string name="app_history_delete">Löschen</string>
+    <string name="app_history_remove_all">Alle entfernen</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Dieses Urteil von diesem Handy löschen? Der geteilte Link funktioniert weiter.</item>
         <item quantity="other">%1$s Urteile von diesem Handy löschen? Die geteilten Links funktionieren weiter.</item>

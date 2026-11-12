@@ -12,6 +12,7 @@ const ms: AppLocale = {
     "app.history.deviceOnly":
       "Disimpan dalam telefon ini sahaja. Memadam satu keputusan di sini tidak mematikan pautan kongsinya.",
     "app.history.delete": "Padam",
+    "app.history.removeAll": "Alih keluar semua",
     "app.history.deleteConfirm": "Padam {n} keputusan daripada telefon ini? Pautan kongsinya akan terus berfungsi.",
     "app.history.phoneOnly": "Dalam telefon ini sahaja",
     "app.history.phoneOnlyNote":

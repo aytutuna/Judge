@@ -11,6 +11,7 @@ const ro: AppLocale = {
     "app.history.deviceOnly":
       "Salvate doar pe acest telefon. Dacă ștergi unul de aici, linkul lui de distribuire rămâne activ.",
     "app.history.delete": "Șterge",
+    "app.history.removeAll": "Elimină tot",
     "app.history.deleteConfirm":
       "Ștergi {n} de verdicte de pe acest telefon? Linkurile lor de distribuire rămân active.",
     "app.history.phoneOnly": "Doar pe acest telefon",

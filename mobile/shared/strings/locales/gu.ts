@@ -13,6 +13,7 @@ const gu: AppLocale = {
     "app.history.deviceOnly":
       "ફક્ત આ ફોનમાં સેવ થયેલા છે. અહીંથી કોઈ ચુકાદો ડિલીટ કરવાથી એની શેર લિંક બંધ થતી નથી.",
     "app.history.delete": "ડિલીટ કરો",
+    "app.history.removeAll": "બધું દૂર કરો",
     "app.history.deleteConfirm":
       "આ ફોનમાંથી {n} ચુકાદા ડિલીટ કરવા છે? એમની શેર લિંક કામ કરતી રહેશે.",
     "app.history.phoneOnly": "ફક્ત આ ફોનમાં",

@@ -538,6 +538,7 @@
     <string name="app_history_empty">Încă nu ai verdicte. Lămurește-ți prima dispută și verdictul apare aici.</string>
     <string name="app_history_device_only">Salvate doar pe acest telefon. Dacă ștergi unul de aici, linkul lui de distribuire rămâne activ.</string>
     <string name="app_history_delete">Șterge</string>
+    <string name="app_history_remove_all">Elimină tot</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Ștergi verdictul de pe acest telefon? Linkul lui de distribuire rămâne activ.</item>
         <item quantity="few">Ștergi %1$s verdicte de pe acest telefon? Linkurile lor de distribuire rămân active.</item>

@@ -520,6 +520,7 @@
     <string name="app_history_empty">还没有裁决。第一场争论评出结果后，裁决会出现在这里。</string>
     <string name="app_history_device_only">只保存在这台手机上。在这里删掉一条裁决，它的分享链接仍然有效。</string>
     <string name="app_history_delete">删除</string>
+    <string name="app_history_remove_all">全部移除</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="other">要从这台手机上删除 %1$s 条裁决吗？分享链接仍然有效。</item>
     </plurals>

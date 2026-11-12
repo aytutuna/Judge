@@ -529,6 +529,7 @@
     <string name="app_history_empty">Ei vielä tuomioita. Ratkaise ensimmäinen kiistasi, niin tuomio näkyy täällä.</string>
     <string name="app_history_device_only">Tallennettu vain tähän puhelimeen. Jos poistat tuomion täältä, sen jakolinkki toimii edelleen.</string>
     <string name="app_history_delete">Poista</string>
+    <string name="app_history_remove_all">Poista kaikki</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Poistetaanko tämä tuomio tästä puhelimesta? Sen jakolinkki toimii edelleen.</item>
         <item quantity="other">Poistetaanko %1$s tuomiota tästä puhelimesta? Niiden jakolinkit toimivat edelleen.</item>

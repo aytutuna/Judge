@@ -10,6 +10,7 @@ const ko: AppLocale = {
     "app.history.empty": "아직 판결이 없어요. 첫 논쟁을 판결 받으면 여기에 나와요.",
     "app.history.deviceOnly": "이 휴대폰에만 저장돼요. 여기서 지워도 공유 링크는 계속 열려요.",
     "app.history.delete": "삭제",
+    "app.history.removeAll": "모두 삭제",
     "app.history.deleteConfirm": "이 휴대폰에서 판결 {n}건을 삭제할까요? 공유 링크는 계속 열려요.",
     "app.history.phoneOnly": "이 휴대폰에만 저장됨",
     "app.history.phoneOnlyNote": "계정에 없고 이 휴대폰에만 저장된 판결이에요. 여기서 삭제해도 공유 링크는 계속 열려요.",

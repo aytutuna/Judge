@@ -520,6 +520,7 @@
     <string name="app_history_empty">Belum ada keputusan. Selesaikan pertikaian pertama anda dan ia akan muncul di sini.</string>
     <string name="app_history_device_only">Disimpan dalam telefon ini sahaja. Memadam satu keputusan di sini tidak mematikan pautan kongsinya.</string>
     <string name="app_history_delete">Padam</string>
+    <string name="app_history_remove_all">Alih keluar semua</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="other">Padam %1$s keputusan daripada telefon ini? Pautan kongsinya akan terus berfungsi.</item>
     </plurals>

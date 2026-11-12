@@ -529,6 +529,7 @@
     <string name="app_history_empty">Nog geen uitspraken. Leg je eerste discussie voor, dan verschijnt de uitspraak hier.</string>
     <string name="app_history_device_only">Alleen op deze telefoon bewaard. Verwijder je hier een uitspraak, dan blijft de deellink gewoon werken.</string>
     <string name="app_history_delete">Verwijderen</string>
+    <string name="app_history_remove_all">Alles verwijderen</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Deze uitspraak van deze telefoon verwijderen? De deellink blijft gewoon werken.</item>
         <item quantity="other">%1$s uitspraken van deze telefoon verwijderen? De deellinks blijven gewoon werken.</item>

@@ -547,6 +547,7 @@
     <string name="app_history_empty">Вердиктов пока нет. Рассудите первый спор — вердикт появится здесь.</string>
     <string name="app_history_device_only">Вердикты хранятся только на этом телефоне. Если удалить вердикт здесь, ссылка на него продолжит работать.</string>
     <string name="app_history_delete">Удалить</string>
+    <string name="app_history_remove_all">Удалить все</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Удалить %1$s вердикт с этого телефона? Ссылка на него продолжит работать.</item>
         <item quantity="few">Удалить %1$s вердикта с этого телефона? Ссылки на них продолжат работать.</item>

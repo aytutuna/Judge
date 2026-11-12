@@ -10,6 +10,7 @@ const tr: AppLocale = {
     "app.history.empty": "Henüz kararın yok. İlk tartışmanı çözdüğünde burada görünür.",
     "app.history.deviceOnly": "Sadece bu telefonda saklanır. Buradan silmek paylaşım linkini kaldırmaz.",
     "app.history.delete": "Sil",
+    "app.history.removeAll": "Tümünü kaldır",
     "app.history.deleteConfirm": "Bu telefondan {n} karar silinsin mi? Paylaşım linkleri çalışmaya devam eder.",
     "app.history.phoneOnly": "Sadece bu telefonda",
     "app.history.phoneOnlyNote":

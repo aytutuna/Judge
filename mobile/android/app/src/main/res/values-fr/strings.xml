@@ -538,6 +538,7 @@
     <string name="app_history_empty">Aucun verdict pour l’instant. Fais trancher ton premier débat et il apparaîtra ici.</string>
     <string name="app_history_device_only">Enregistrés uniquement sur ce téléphone. En supprimer un ici ne désactive pas son lien de partage.</string>
     <string name="app_history_delete">Supprimer</string>
+    <string name="app_history_remove_all">Tout retirer</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Supprimer %1$s verdict de ce téléphone ? Son lien de partage continuera de fonctionner.</item>
         <item quantity="many">Supprimer %1$s verdicts de ce téléphone ? Leurs liens de partage continueront de fonctionner.</item>

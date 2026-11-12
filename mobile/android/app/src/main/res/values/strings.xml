@@ -529,6 +529,7 @@
     <string name="app_history_empty">No verdicts yet. Settle your first argument and it shows up here.</string>
     <string name="app_history_device_only">Saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
     <string name="app_history_delete">Delete</string>
+    <string name="app_history_remove_all">Remove all</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="one">Delete this verdict from this phone? Its share link keeps working.</item>
         <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>

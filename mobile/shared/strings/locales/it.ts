@@ -11,6 +11,7 @@ const it: AppLocale = {
     "app.history.deviceOnly":
       "Salvati solo su questo telefono. Se ne elimini uno qui, il suo link di condivisione continua a funzionare.",
     "app.history.delete": "Elimina",
+    "app.history.removeAll": "Rimuovi tutto",
     "app.history.deleteConfirm":
       "Eliminare {n} verdetti da questo telefono? I loro link di condivisione continuano a funzionare.",
     "app.history.phoneOnly": "Solo su questo telefono",

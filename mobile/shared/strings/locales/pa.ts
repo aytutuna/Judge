@@ -10,6 +10,7 @@ const pa: AppLocale = {
     "app.history.empty": "ਹਾਲੇ ਕੋਈ ਫ਼ੈਸਲਾ ਨਹੀਂ। ਆਪਣੀ ਪਹਿਲੀ ਬਹਿਸ ਦਾ ਨਿਬੇੜਾ ਕਰਾਓ, ਫ਼ੈਸਲਾ ਇੱਥੇ ਦਿਖੇਗਾ।",
     "app.history.deviceOnly": "ਇਹ ਸਿਰਫ਼ ਇਸ ਫ਼ੋਨ ’ਤੇ ਸੇਵ ਹਨ। ਇੱਥੋਂ ਕੋਈ ਫ਼ੈਸਲਾ ਮਿਟਾਉਣ ਨਾਲ ਉਸ ਦਾ ਸਾਂਝਾ ਲਿੰਕ ਬੰਦ ਨਹੀਂ ਹੁੰਦਾ।",
     "app.history.delete": "ਮਿਟਾਓ",
+    "app.history.removeAll": "ਸਭ ਹਟਾਓ",
     "app.history.deleteConfirm": "ਇਸ ਫ਼ੋਨ ਤੋਂ {n} ਫ਼ੈਸਲੇ ਮਿਟਾਉਣੇ ਹਨ? ਉਨ੍ਹਾਂ ਦੇ ਸਾਂਝੇ ਲਿੰਕ ਕੰਮ ਕਰਦੇ ਰਹਿਣਗੇ।",
     "app.history.phoneOnly": "ਸਿਰਫ਼ ਇਸ ਫ਼ੋਨ ’ਤੇ",
     "app.history.phoneOnlyNote":

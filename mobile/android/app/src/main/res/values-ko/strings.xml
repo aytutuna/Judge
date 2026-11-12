@@ -520,6 +520,7 @@
     <string name="app_history_empty">아직 판결이 없어요. 첫 논쟁을 판결 받으면 여기에 나와요.</string>
     <string name="app_history_device_only">이 휴대폰에만 저장돼요. 여기서 지워도 공유 링크는 계속 열려요.</string>
     <string name="app_history_delete">삭제</string>
+    <string name="app_history_remove_all">모두 삭제</string>
     <plurals name="app_history_delete_confirm">
         <item quantity="other">이 휴대폰에서 판결 %1$s건을 삭제할까요? 공유 링크는 계속 열려요.</item>
     </plurals>

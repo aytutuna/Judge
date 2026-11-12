@@ -12,6 +12,7 @@ const nb: AppLocale = {
     "app.history.deviceOnly":
       "Lagres bare på denne telefonen. Sletter du en dom her, fjernes ikke delingslenken.",
     "app.history.delete": "Slett",
+    "app.history.removeAll": "Fjern alle",
     "app.history.deleteConfirm":
       "Vil du slette {n} dommer fra denne telefonen? Delingslenkene virker fortsatt.",
     "app.history.phoneOnly": "Bare på denne telefonen",

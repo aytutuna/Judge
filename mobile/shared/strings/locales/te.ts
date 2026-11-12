@@ -11,6 +11,7 @@ const te: AppLocale = {
     "app.history.empty": "ఇంకా తీర్పులేవీ లేవు. మీ మొదటి గొడవ తేల్చుకోండి, దాని తీర్పు ఇక్కడ కనిపిస్తుంది.",
     "app.history.deviceOnly": "ఇవి ఈ ఫోన్‌లో మాత్రమే సేవ్ అయ్యాయి. ఇక్కడ ఒకదాన్ని డిలీట్ చేసినా దాని షేర్ లింక్ ఆగిపోదు.",
     "app.history.delete": "డిలీట్",
+    "app.history.removeAll": "అన్నీ తొలగించు",
     "app.history.deleteConfirm": "ఈ ఫోన్ నుంచి {n} తీర్పులను డిలీట్ చేయాలా? వాటి షేర్ లింక్‌లు పని చేస్తూనే ఉంటాయి.",
     "app.history.phoneOnly": "ఈ ఫోన్‌లో మాత్రమే",
     "app.history.phoneOnlyNote":
