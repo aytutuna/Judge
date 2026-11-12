@@ -47,7 +47,8 @@ fun TopBar(
         if (backText != null) {
             Row(
                 Modifier
-                    .height(44.dp)
+                    .weight(1f, fill = false)
+                    .heightIn(min = 44.dp)
                     .clip(CircleShape)
                     .semantics(mergeDescendants = true) { role = Role.Button }
                     .clickable(onClick = onBack)
@@ -56,7 +57,11 @@ fun TopBar(
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 TintedIcon(rememberIcon(Palette.ink) { JudgeIcons.back(it) }, 18)
-                Text(backText, style = JudgeType.slotTitle.copy(fontSize = 15.sp))
+                Text(
+                    backText,
+                    style = JudgeType.slotTitle.copy(fontSize = 15.sp),
+                    modifier = Modifier.weight(1f, fill = false),
+                )
             }
         } else {
             Box(

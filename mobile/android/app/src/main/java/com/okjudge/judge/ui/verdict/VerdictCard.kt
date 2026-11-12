@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
@@ -50,7 +51,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.collapse
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.expand
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.selected
@@ -729,7 +732,15 @@ private fun CruxTrialNote(trial: CruxTrial, mixed: Boolean) {
                 Text(
                     s.trialWhatWasTested,
                     style = JudgeType.slotText.copy(color = Palette.ink2, fontWeight = FontWeight.SemiBold),
-                    modifier = Modifier.clip(RoundedCornerShape(8.dp)).clickable { open = !open }.padding(4.dp),
+                    modifier = Modifier
+                    .heightIn(min = 48.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .semantics(mergeDescendants = true) {
+                        if (open) collapse { open = false; true } else expand { open = true; true }
+                    }
+                    .clickable(role = Role.Button) { open = !open }
+                    .padding(4.dp)
+                    .wrapContentHeight(Alignment.CenterVertically),
                 )
                 if (open) {
                     SlotText("${s.trialAttackPrefix} ${trial.attack}")
