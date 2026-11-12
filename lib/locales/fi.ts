@@ -300,9 +300,6 @@ const fi: Locale = {
     "thinking.premiumHelper":
       "Faktojen tarkistaminen verkosta vie vähän pidempään. Anna sille minuutti tai kaksi.",
     "panel.premium": "Faktat tarkistettu verkosta ennen ratkaisua.",
-    "panel.models": "Tuomarit: {list}",
-    "panel.strong": "{n} vahvaa",
-    "panel.quick": "{n} nopeaa",
     "factcheck.title": "Tarkistettu verkosta",
     "factcheck.lead": "Tuomarit näkivät nämä hakutulokset ennen ratkaisua. Ne ovat todisteita, eivät itse tuomio.",
     "factcheck.status.supported": "Pitää paikkansa",
@@ -795,8 +792,6 @@ const fi: Locale = {
     "terms.contact": "Kysyttävää näistä ehdoista? Kirjoita osoitteeseen {email}.",
   },
   plurals: {
-    "panel.strong": { one: "{n} vahva" },
-    "panel.quick": { one: "{n} nopea" },
     "home.monthLeft": { one: "Tässä kuussa jäljellä {n}/{cap}" },
     "thread.judgesAgree": { one: "Tuomarit · {n}/{total} samaa mieltä" },
   },

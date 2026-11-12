@@ -301,9 +301,6 @@ const ml: Locale = {
     "thinking.premiumHelper":
       "വസ്തുതകൾ വെബിൽ പരിശോധിക്കാൻ അൽപം കൂടുതൽ സമയമെടുക്കും. ഒന്നോ രണ്ടോ മിനിറ്റ് തരൂ.",
     "panel.premium": "വെബിലെ വസ്തുതാ പരിശോധനയോടെയുള്ള വിധി.",
-    "panel.models": "ജഡ്ജിമാർ: {list}",
-    "panel.strong": "ശക്തമായ {n}",
-    "panel.quick": "വേഗമേറിയ {n}",
     "factcheck.title": "വെബിൽ പരിശോധിച്ചത്",
     "factcheck.lead": "വിധി പറയും മുമ്പ് ജഡ്ജിമാർ ഈ സെർച്ച് ഫലങ്ങൾ കണ്ടിരുന്നു. ഇവ തെളിവുകളാണ്, വിധിയല്ല.",
     "factcheck.status.supported": "ശരിയാണ്",
@@ -797,8 +794,6 @@ const ml: Locale = {
     "terms.contact": "ഈ നിബന്ധനകളെക്കുറിച്ച് ചോദ്യങ്ങളുണ്ടോ? {email} എന്ന വിലാസത്തിൽ ഇമെയിൽ ചെയ്യൂ.",
   },
   plurals: {
-    "panel.strong": { one: "ശക്തമായ {n}" },
-    "panel.quick": { one: "വേഗമേറിയ {n}" },
     "home.monthLeft": { one: "ഈ മാസം {cap}-ൽ ഒന്ന് ബാക്കി" },
     "thread.judgesAgree": { one: "ജഡ്ജിമാർ · {total}-ൽ ഒരാൾ യോജിക്കുന്നു" },
   },

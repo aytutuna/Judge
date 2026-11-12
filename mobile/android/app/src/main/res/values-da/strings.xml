@@ -160,15 +160,6 @@
     <string name="thinking_factcheck_done">Faktatjekket på nettet er færdigt.</string>
     <string name="thinking_premium_helper">Det tager lidt længere at tjekke fakta på nettet. Giv det et minut eller to.</string>
     <string name="panel_premium">Dømt med faktatjek på nettet.</string>
-    <string name="panel_models">Dommere: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="one">%1$s stærk</item>
-        <item quantity="other">%1$s stærke</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="one">%1$s hurtig</item>
-        <item quantity="other">%1$s hurtige</item>
-    </plurals>
     <string name="factcheck_title">Tjekket på nettet</string>
     <string name="factcheck_lead">Dommerne så disse søgeresultater, før de dømte. De er bevismateriale, ikke selve dommen.</string>
     <string name="factcheck_status_supported">Holder</string>

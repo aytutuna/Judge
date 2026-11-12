@@ -163,17 +163,6 @@
     <string name="thinking_factcheck_done">Verificarea pe web s-a încheiat.</string>
     <string name="thinking_premium_helper">Verificarea faptelor pe web durează un pic mai mult. Dă-i un minut sau două.</string>
     <string name="panel_premium">Judecat cu verificarea faptelor pe web.</string>
-    <string name="panel_models">Judecători: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="one">%1$s puternic</item>
-        <item quantity="few">%1$s puternici</item>
-        <item quantity="other">%1$s de puternici</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="one">%1$s rapid</item>
-        <item quantity="few">%1$s rapizi</item>
-        <item quantity="other">%1$s de rapizi</item>
-    </plurals>
     <string name="factcheck_title">Verificat pe web</string>
     <string name="factcheck_lead">Judecătorii au văzut aceste rezultate ale căutării înainte să decidă. Sunt dovezi, nu verdictul în sine.</string>
     <string name="factcheck_status_supported">Se confirmă</string>

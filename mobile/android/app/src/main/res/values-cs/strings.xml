@@ -166,19 +166,6 @@
     <string name="thinking_factcheck_done">Ověření na webu je hotové.</string>
     <string name="thinking_premium_helper">Ověřování faktů na webu chvilku trvá. Dej tomu minutu nebo dvě.</string>
     <string name="panel_premium">Souzeno s ověřením faktů na webu.</string>
-    <string name="panel_models">Soudci: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="one">%1$s silný</item>
-        <item quantity="few">%1$s silní</item>
-        <item quantity="many">%1$s silných</item>
-        <item quantity="other">%1$s silných</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="one">%1$s rychlý</item>
-        <item quantity="few">%1$s rychlí</item>
-        <item quantity="many">%1$s rychlých</item>
-        <item quantity="other">%1$s rychlých</item>
-    </plurals>
     <string name="factcheck_title">Ověřeno na webu</string>
     <string name="factcheck_lead">Soudci tyto výsledky hledání viděli, než rozhodli. Jsou to podklady, ne samotný verdikt.</string>
     <string name="factcheck_status_supported">Sedí</string>

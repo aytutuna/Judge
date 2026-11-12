@@ -300,9 +300,6 @@ const th: Locale = {
     "thinking.premiumHelper":
       "การเช็กข้อเท็จจริงบนเว็บใช้เวลานานขึ้นอีกหน่อย รอสักนาทีสองนาทีนะ",
     "panel.premium": "ตัดสินพร้อมเช็กข้อเท็จจริงบนเว็บ",
-    "panel.models": "กรรมการ: {list}",
-    "panel.strong": "แบบละเอียด {n} คน",
-    "panel.quick": "แบบเร็ว {n} คน",
     "factcheck.title": "เช็กบนเว็บแล้ว",
     "factcheck.lead": "กรรมการเห็นผลการค้นหาเหล่านี้ก่อนตัดสิน ผลเหล่านี้เป็นหลักฐาน ไม่ใช่ตัวคำตัดสิน",
     "factcheck.status.supported": "จริง",

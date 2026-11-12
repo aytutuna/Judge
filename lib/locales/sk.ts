@@ -300,9 +300,6 @@ const sk: Locale = {
     "thinking.premiumHelper":
       "Overovanie faktov na webe trvá o niečo dlhšie. Daj tomu minútu či dve.",
     "panel.premium": "Posúdené s overením faktov na webe.",
-    "panel.models": "Sudcovia: {list}",
-    "panel.strong": "{n} silných",
-    "panel.quick": "{n} rýchlych",
     "factcheck.title": "Overené na webe",
     "factcheck.lead": "Sudcovia videli tieto výsledky vyhľadávania pred rozhodnutím. Sú to dôkazy, nie samotné rozhodnutie.",
     "factcheck.status.supported": "Sedí",
@@ -798,8 +795,6 @@ const sk: Locale = {
     "judgesVoted.other": { few: "Hlasovali {n} nezávislí AI sudcovia:" },
     "wait.minutes": { few: "{n} minúty" },
     "wait.hours": { few: "{n} hodiny" },
-    "panel.strong": { one: "{n} silný", few: "{n} silní" },
-    "panel.quick": { one: "{n} rýchly", few: "{n} rýchli" },
     "pricing.pack": { few: "{n} verdikty" },
     "pricing.monthly.cap": { few: "{n} verdikty mesačne" },
     "evidence.hint": { few: "Najviac {n} obrázky. Prečítame text, skryjeme mená a obrázky nikdy neukladáme." },

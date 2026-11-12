@@ -300,9 +300,6 @@ const de: Locale = {
     "thinking.premiumHelper":
       "Die Faktenprüfung im Netz dauert etwas länger. Gib uns ein, zwei Minuten.",
     "panel.premium": "Mit Faktencheck im Netz beurteilt.",
-    "panel.models": "Richter: {list}",
-    "panel.strong": "{n} starke",
-    "panel.quick": "{n} schnelle",
     "factcheck.title": "Im Netz geprüft",
     "factcheck.lead": "Diese Suchergebnisse lagen den Richtern vor dem Urteil vor. Sie sind Belege, nicht das Urteil selbst.",
     "factcheck.status.supported": "Stimmt",
@@ -801,8 +798,6 @@ const de: Locale = {
     "terms.contact": "Fragen zu diesen Bedingungen? Schreib an {email}.",
   },
   plurals: {
-    "panel.strong": { one: "{n} starker" },
-    "panel.quick": { one: "{n} schneller" },
     "home.monthLeft": { one: "Noch {n} von {cap} diesen Monat" },
     "thread.judgesAgree": { one: "Richter · {n} von {total} einig" },
   },

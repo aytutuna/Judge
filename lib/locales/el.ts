@@ -300,9 +300,6 @@ const el: Locale = {
     "thinking.premiumHelper":
       "Ο έλεγχος των γεγονότων στο ίντερνετ θέλει λίγο παραπάνω. Δώσε μας ένα-δυο λεπτά.",
     "panel.premium": "Κρίθηκε με έλεγχο γεγονότων στο ίντερνετ.",
-    "panel.models": "Κριτές: {list}",
-    "panel.strong": "{n} ισχυροί",
-    "panel.quick": "{n} γρήγοροι",
     "factcheck.title": "Ελέγχθηκε στο ίντερνετ",
     "factcheck.lead": "Οι κριτές είδαν αυτά τα αποτελέσματα αναζήτησης πριν αποφασίσουν. Είναι στοιχεία, όχι η ίδια η απόφαση.",
     "factcheck.status.supported": "Ισχύει",
@@ -799,8 +796,6 @@ const el: Locale = {
     "terms.contact": "Ερωτήσεις για αυτούς τους όρους; Στείλε email στο {email}.",
   },
   plurals: {
-    "panel.strong": { one: "{n} ισχυρός" },
-    "panel.quick": { one: "{n} γρήγορος" },
     "home.monthLeft": { one: "Απομένει {n} από {cap} αυτόν τον μήνα" },
     "thread.judgesAgree": { one: "Κριτές · {n} στους {total} συμφωνεί" },
   },

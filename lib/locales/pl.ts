@@ -303,9 +303,6 @@ const pl: Locale = {
     "thinking.premiumHelper":
       "Sprawdzanie faktów w sieci trwa trochę dłużej. Daj nam minutę lub dwie.",
     "panel.premium": "Ocenione z weryfikacją faktów w sieci.",
-    "panel.models": "Sędziowie: {list}",
-    "panel.strong": "{n} mocnych",
-    "panel.quick": "{n} szybkich",
     "factcheck.title": "Sprawdzone w sieci",
     "factcheck.lead": "Sędziowie widzieli te wyniki wyszukiwania przed werdyktem. To dowody, a nie sam werdykt.",
     "factcheck.status.supported": "Potwierdzone",
@@ -809,8 +806,6 @@ const pl: Locale = {
     },
     "wait.minutes": { few: "{n} minuty", many: "{n} minut" },
     "wait.hours": { few: "{n} godziny", many: "{n} godzin" },
-    "panel.strong": { one: "{n} mocny", few: "{n} mocnych", many: "{n} mocnych" },
-    "panel.quick": { one: "{n} szybki", few: "{n} szybkich", many: "{n} szybkich" },
     "pricing.pack": { few: "{n} werdykty", many: "{n} werdyktów" },
     "pricing.monthly.cap": { few: "{n} werdykty miesięcznie", many: "{n} werdyktów miesięcznie" },
     "evidence.hint": {

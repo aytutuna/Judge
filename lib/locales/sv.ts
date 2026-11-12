@@ -301,9 +301,6 @@ const sv: Locale = {
     "thinking.premiumHelper":
       "Att kolla fakta på webben tar lite längre tid. Ge det en minut eller två.",
     "panel.premium": "Dömd med faktakoll på webben.",
-    "panel.models": "Domare: {list}",
-    "panel.strong": "{n} starka",
-    "panel.quick": "{n} snabba",
     "factcheck.title": "Kollat på webben",
     "factcheck.lead": "Domarna såg de här sökresultaten innan de dömde. De är bevis, inte själva domen.",
     "factcheck.status.supported": "Stämmer",
@@ -796,8 +793,6 @@ const sv: Locale = {
     "terms.contact": "Frågor om villkoren? Mejla {email}.",
   },
   plurals: {
-    "panel.strong": { one: "{n} stark" },
-    "panel.quick": { one: "{n} snabb" },
     "home.monthLeft": { one: "{n} av {cap} kvar den här månaden" },
     "thread.judgesAgree": { one: "Domare · {n} av {total} är överens" },
   },

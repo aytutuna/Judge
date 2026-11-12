@@ -300,9 +300,6 @@ const ro: Locale = {
     "thinking.premiumHelper":
       "Verificarea faptelor pe web durează un pic mai mult. Dă-i un minut sau două.",
     "panel.premium": "Judecat cu verificarea faptelor pe web.",
-    "panel.models": "Judecători: {list}",
-    "panel.strong": "{n} de puternici",
-    "panel.quick": "{n} de rapizi",
     "factcheck.title": "Verificat pe web",
     "factcheck.lead": "Judecătorii au văzut aceste rezultate ale căutării înainte să decidă. Sunt dovezi, nu verdictul în sine.",
     "factcheck.status.supported": "Se confirmă",
@@ -804,8 +801,6 @@ const ro: Locale = {
     "judgesVoted.other": { few: "{n} judecători AI independenți au votat:" },
     "wait.minutes": { few: "{n} minute" },
     "wait.hours": { few: "{n} ore" },
-    "panel.strong": { one: "{n} puternic", few: "{n} puternici" },
-    "panel.quick": { one: "{n} rapid", few: "{n} rapizi" },
     "pricing.pack": { few: "{n} verdicte" },
     "pricing.monthly.cap": { few: "{n} verdicte pe lună" },
     "evidence.hint": { few: "Cel mult {n} imagini. Citim textul, ascundem numele și nu păstrăm niciodată imaginile." },

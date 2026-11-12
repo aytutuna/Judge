@@ -166,19 +166,6 @@
     <string name="thinking_factcheck_done">Sprawdzanie w sieci zakończone.</string>
     <string name="thinking_premium_helper">Sprawdzanie faktów w sieci trwa trochę dłużej. Daj nam minutę lub dwie.</string>
     <string name="panel_premium">Ocenione z weryfikacją faktów w sieci.</string>
-    <string name="panel_models">Sędziowie: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="one">%1$s mocny</item>
-        <item quantity="few">%1$s mocnych</item>
-        <item quantity="many">%1$s mocnych</item>
-        <item quantity="other">%1$s mocnych</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="one">%1$s szybki</item>
-        <item quantity="few">%1$s szybkich</item>
-        <item quantity="many">%1$s szybkich</item>
-        <item quantity="other">%1$s szybkich</item>
-    </plurals>
     <string name="factcheck_title">Sprawdzone w sieci</string>
     <string name="factcheck_lead">Sędziowie widzieli te wyniki wyszukiwania przed werdyktem. To dowody, a nie sam werdykt.</string>
     <string name="factcheck_status_supported">Potwierdzone</string>

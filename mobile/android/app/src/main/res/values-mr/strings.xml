@@ -160,15 +160,6 @@
     <string name="thinking_factcheck_done">वेब तपासणी पूर्ण झाली.</string>
     <string name="thinking_premium_helper">तथ्ये वेबवर तपासायला जरा जास्त वेळ लागतो. एक-दोन मिनिटे थांबा.</string>
     <string name="panel_premium">वेबवरील तथ्य-तपासणीसह निकाल दिला.</string>
-    <string name="panel_models">परीक्षक: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="one">%1$s सखोल</item>
-        <item quantity="other">%1$s सखोल</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="one">%1$s जलद</item>
-        <item quantity="other">%1$s जलद</item>
-    </plurals>
     <string name="factcheck_title">वेबवर तपासले</string>
     <string name="factcheck_lead">निकाल देण्याआधी परीक्षकांनी हे सर्च परिणाम पाहिले. हे पुरावे आहेत, निकाल नव्हे.</string>
     <string name="factcheck_status_supported">खरे ठरले</string>

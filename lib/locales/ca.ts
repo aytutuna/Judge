@@ -301,9 +301,6 @@ const ca: Locale = {
     "thinking.premiumHelper":
       "Comprovar els fets a internet triga una mica més. Pot ser qüestió d'un minut o dos.",
     "panel.premium": "Jutjat amb comprovació de fets a internet.",
-    "panel.models": "Jutges: {list}",
-    "panel.strong": "{n} potents",
-    "panel.quick": "{n} ràpids",
     "factcheck.title": "Comprovat a internet",
     "factcheck.lead": "Els jutges han vist aquests resultats de cerca abans de decidir. Són proves, no el veredicte en si.",
     "factcheck.status.supported": "Se sosté",
@@ -798,8 +795,6 @@ const ca: Locale = {
     "terms.contact": "Tens preguntes sobre aquestes condicions? Escriu a {email}.",
   },
   plurals: {
-    "panel.strong": { one: "{n} potent" },
-    "panel.quick": { one: "{n} ràpid" },
     "home.monthLeft": { one: "Te'n queda {n} de {cap} aquest mes" },
     "thread.judgesAgree": { one: "Jutges · {n} de {total} hi està d'acord" },
   },

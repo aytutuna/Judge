@@ -172,23 +172,6 @@
     <string name="thinking_factcheck_done">انتهى التحقق على الويب.</string>
     <string name="thinking_premium_helper">التحقق من الحقائق على الويب يستغرق وقتًا أطول قليلًا. امنحنا دقيقة أو دقيقتين.</string>
     <string name="panel_premium">صدر الحكم بعد تحقق من الحقائق على الويب.</string>
-    <string name="panel_models">هيئة القضاة: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="zero">%1$s قاضٍ متمرّس</item>
-        <item quantity="one">قاضٍ متمرّس</item>
-        <item quantity="two">قاضيان متمرّسان</item>
-        <item quantity="few">%1$s قضاة متمرّسين</item>
-        <item quantity="many">%1$s قاضيًا متمرّسًا</item>
-        <item quantity="other">%1$s قاضٍ متمرّس</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="zero">%1$s قاضٍ سريع</item>
-        <item quantity="one">قاضٍ سريع</item>
-        <item quantity="two">قاضيان سريعان</item>
-        <item quantity="few">%1$s قضاة سريعين</item>
-        <item quantity="many">%1$s قاضيًا سريعًا</item>
-        <item quantity="other">%1$s قاضٍ سريع</item>
-    </plurals>
     <string name="factcheck_title">تم التحقق على الويب</string>
     <string name="factcheck_lead">اطّلع القضاة على نتائج البحث هذه قبل الحكم. هي أدلة، وليست الحكم نفسه.</string>
     <string name="factcheck_status_supported">صحيح</string>

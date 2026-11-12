@@ -300,9 +300,6 @@ const sl: Locale = {
     "thinking.premiumHelper":
       "Preverjanje dejstev na spletu traja malo dlje. Daj nam minuto ali dve.",
     "panel.premium": "Razsojeno s spletnim preverjanjem dejstev.",
-    "panel.models": "Sodniki: {list}",
-    "panel.strong": "{n} močnih",
-    "panel.quick": "{n} hitrih",
     "factcheck.title": "Preverjeno na spletu",
     "factcheck.lead": "Sodniki so te zadetke iskanja videli pred razsodbo. So dokazi, ne razsodba sama.",
     "factcheck.status.supported": "Drži",
@@ -803,8 +800,6 @@ const sl: Locale = {
     },
     "wait.minutes": { one: "{n} minuto", two: "{n} minuti", few: "{n} minute" },
     "wait.hours": { one: "{n} uro", two: "{n} uri", few: "{n} ure" },
-    "panel.strong": { one: "{n} močan", two: "{n} močna", few: "{n} močni" },
-    "panel.quick": { one: "{n} hiter", two: "{n} hitra", few: "{n} hitri" },
     "pricing.pack": { one: "{n} razsodba", two: "{n} razsodbi", few: "{n} razsodbe" },
     "pricing.monthly.cap": {
       one: "{n} razsodba na mesec",

@@ -160,15 +160,6 @@
     <string name="thinking_factcheck_done">വെബ് പരിശോധന കഴിഞ്ഞു.</string>
     <string name="thinking_premium_helper">വസ്തുതകൾ വെബിൽ പരിശോധിക്കാൻ അൽപം കൂടുതൽ സമയമെടുക്കും. ഒന്നോ രണ്ടോ മിനിറ്റ് തരൂ.</string>
     <string name="panel_premium">വെബിലെ വസ്തുതാ പരിശോധനയോടെയുള്ള വിധി.</string>
-    <string name="panel_models">ജഡ്ജിമാർ: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="one">ശക്തമായ %1$s</item>
-        <item quantity="other">ശക്തമായ %1$s</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="one">വേഗമേറിയ %1$s</item>
-        <item quantity="other">വേഗമേറിയ %1$s</item>
-    </plurals>
     <string name="factcheck_title">വെബിൽ പരിശോധിച്ചത്</string>
     <string name="factcheck_lead">വിധി പറയും മുമ്പ് ജഡ്ജിമാർ ഈ സെർച്ച് ഫലങ്ങൾ കണ്ടിരുന്നു. ഇവ തെളിവുകളാണ്, വിധിയല്ല.</string>
     <string name="factcheck_status_supported">ശരിയാണ്</string>

@@ -157,13 +157,6 @@
     <string name="thinking_factcheck_done">เช็กบนเว็บเสร็จแล้ว</string>
     <string name="thinking_premium_helper">การเช็กข้อเท็จจริงบนเว็บใช้เวลานานขึ้นอีกหน่อย รอสักนาทีสองนาทีนะ</string>
     <string name="panel_premium">ตัดสินพร้อมเช็กข้อเท็จจริงบนเว็บ</string>
-    <string name="panel_models">กรรมการ: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="other">แบบละเอียด %1$s คน</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="other">แบบเร็ว %1$s คน</item>
-    </plurals>
     <string name="factcheck_title">เช็กบนเว็บแล้ว</string>
     <string name="factcheck_lead">กรรมการเห็นผลการค้นหาเหล่านี้ก่อนตัดสิน ผลเหล่านี้เป็นหลักฐาน ไม่ใช่ตัวคำตัดสิน</string>
     <string name="factcheck_status_supported">จริง</string>

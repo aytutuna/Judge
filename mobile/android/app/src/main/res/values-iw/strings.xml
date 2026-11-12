@@ -163,17 +163,6 @@
     <string name="thinking_factcheck_done">הבדיקה ברשת הסתיימה.</string>
     <string name="thinking_premium_helper">בדיקת העובדות ברשת לוקחת קצת יותר זמן. עוד דקה או שתיים.</string>
     <string name="panel_premium">נשפט עם בדיקת עובדות ברשת.</string>
-    <string name="panel_models">שופטים: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="one">%1$s חזק</item>
-        <item quantity="two">%1$s חזקים</item>
-        <item quantity="other">%1$s חזקים</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="one">%1$s מהיר</item>
-        <item quantity="two">%1$s מהירים</item>
-        <item quantity="other">%1$s מהירים</item>
-    </plurals>
     <string name="factcheck_title">נבדק ברשת</string>
     <string name="factcheck_lead">השופטים ראו את תוצאות החיפוש האלה לפני ההכרעה. הן ראיות, לא ההכרעה עצמה.</string>
     <string name="factcheck_status_supported">מחזיק מים</string>

@@ -305,9 +305,6 @@ const tr: Locale = {
     "thinking.premiumHelper":
       "Olguları internette kontrol etmek biraz daha uzun sürer. Bir iki dakika verebilirsin.",
     "panel.premium": "İnternette olgu kontrolüyle yargılandı.",
-    "panel.models": "Yargıçlar: {list}",
-    "panel.strong": "{n} güçlü",
-    "panel.quick": "{n} hızlı",
     "factcheck.title": "İnternette kontrol edildi",
     "factcheck.lead": "Yargıçlar karar vermeden önce bu arama sonuçlarını gördü. Bunlar kanıt, kararın kendisi değil.",
     "factcheck.status.supported": "Doğru çıktı",
@@ -802,8 +799,6 @@ const tr: Locale = {
   // Turkish says 1 like any other number; these keys can be handed 1, so the
   // check wants the form spelled out.
   plurals: {
-    "panel.strong": { one: "{n} güçlü" },
-    "panel.quick": { one: "{n} hızlı" },
     "home.monthLeft": { one: "Bu ay {cap} kararın {n} tanesi kaldı" },
     "thread.judgesAgree": { one: "Yargıçlar · {n}/{total} aynı fikirde" },
   },

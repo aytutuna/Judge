@@ -300,9 +300,6 @@ const or: Locale = {
     "thinking.premiumHelper":
       "ୱେବ୍‌ରେ ତଥ୍ୟ ଯାଞ୍ଚ କରିବାକୁ ଟିକେ ଅଧିକ ସମୟ ଲାଗେ। ଗୋଟେ ଦୁଇଟା ମିନିଟ୍ ଦିଅନ୍ତୁ।",
     "panel.premium": "ୱେବ୍ ତଥ୍ୟ-ଯାଞ୍ଚ ସହ ବିଚାର ହେଲା।",
-    "panel.models": "ବିଚାରକ: {list}",
-    "panel.strong": "{n} ଶକ୍ତିଶାଳୀ",
-    "panel.quick": "{n} ଦ୍ରୁତ",
     "factcheck.title": "ୱେବ୍‌ରେ ଯାଞ୍ଚ ହେଲା",
     "factcheck.lead": "ରାୟ ଦେବା ଆଗରୁ ବିଚାରକମାନେ ଏହି ସର୍ଚ୍ଚ ଫଳାଫଳ ଦେଖିଥିଲେ। ଏଗୁଡ଼ିକ ପ୍ରମାଣ, ରାୟ ନିଜେ ନୁହେଁ।",
     "factcheck.status.supported": "ଠିକ୍ ବାହାରିଲା",
@@ -792,8 +789,6 @@ const or: Locale = {
     "terms.contact": "ଏହି ସର୍ତ୍ତ ବିଷୟରେ ପ୍ରଶ୍ନ ଅଛି? {email} କୁ ଇମେଲ୍ କରନ୍ତୁ।",
   },
   plurals: {
-    "panel.strong": { one: "{n} ଶକ୍ତିଶାଳୀ" },
-    "panel.quick": { one: "{n} ଦ୍ରୁତ" },
     "home.monthLeft": { one: "ଏହି ମାସ {cap}ଟିରୁ {n}ଟି ବାକି" },
     "thread.judgesAgree": { one: "ବିଚାରକ · {n}/{total} ସହମତ" },
   },

@@ -163,17 +163,6 @@
     <string name="thinking_factcheck_done">Vérification sur le web terminée.</string>
     <string name="thinking_premium_helper">Vérifier les faits sur le web prend un peu plus de temps. Compte une minute ou deux.</string>
     <string name="panel_premium">Jugé avec une vérification des faits sur le web.</string>
-    <string name="panel_models">Juges : %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="one">%1$s puissant</item>
-        <item quantity="many">%1$s puissants</item>
-        <item quantity="other">%1$s puissants</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="one">%1$s rapide</item>
-        <item quantity="many">%1$s rapides</item>
-        <item quantity="other">%1$s rapides</item>
-    </plurals>
     <string name="factcheck_title">Vérifié sur le web</string>
     <string name="factcheck_lead">Les juges ont vu ces résultats de recherche avant de trancher. Ce sont des éléments de preuve, pas le verdict lui-même.</string>
     <string name="factcheck_status_supported">Confirmé</string>

@@ -160,15 +160,6 @@
     <string name="thinking_factcheck_done">Webbkollen är klar.</string>
     <string name="thinking_premium_helper">Att kolla fakta på webben tar lite längre tid. Ge det en minut eller två.</string>
     <string name="panel_premium">Dömd med faktakoll på webben.</string>
-    <string name="panel_models">Domare: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="one">%1$s stark</item>
-        <item quantity="other">%1$s starka</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="one">%1$s snabb</item>
-        <item quantity="other">%1$s snabba</item>
-    </plurals>
     <string name="factcheck_title">Kollat på webben</string>
     <string name="factcheck_lead">Domarna såg de här sökresultaten innan de dömde. De är bevis, inte själva domen.</string>
     <string name="factcheck_status_supported">Stämmer</string>

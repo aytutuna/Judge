@@ -299,9 +299,6 @@ const kn: Locale = {
     "thinking.factcheckDone": "ವೆಬ್ ಪರಿಶೀಲನೆ ಮುಗಿಯಿತು.",
     "thinking.premiumHelper": "ವೆಬ್‌ನಲ್ಲಿ ಸಂಗತಿಗಳನ್ನು ಪರಿಶೀಲಿಸಲು ಸ್ವಲ್ಪ ಹೆಚ್ಚು ಸಮಯ ಬೇಕು. ಒಂದೆರಡು ನಿಮಿಷ ಕಾಯಿರಿ.",
     "panel.premium": "ವೆಬ್‌ನಲ್ಲಿ ಸಂಗತಿಗಳನ್ನು ಪರಿಶೀಲಿಸಿ ಕೊಟ್ಟ ತೀರ್ಪು.",
-    "panel.models": "ತೀರ್ಪುಗಾರರು: {list}",
-    "panel.strong": "{n} ಪ್ರಬಲ",
-    "panel.quick": "{n} ಚುರುಕು",
     "factcheck.title": "ವೆಬ್‌ನಲ್ಲಿ ಪರಿಶೀಲಿಸಲಾಗಿದೆ",
     "factcheck.lead": "ತೀರ್ಪು ಕೊಡುವ ಮೊದಲು ತೀರ್ಪುಗಾರರು ಈ ಹುಡುಕಾಟ ಫಲಿತಾಂಶಗಳನ್ನು ನೋಡಿದ್ದರು. ಇವು ಪುರಾವೆಗಳು, ತೀರ್ಪು ಅಲ್ಲ.",
     "factcheck.status.supported": "ಸರಿಯಾಗಿದೆ",
@@ -796,8 +793,6 @@ const kn: Locale = {
     "terms.contact": "ಈ ನಿಯಮಗಳ ಬಗ್ಗೆ ಪ್ರಶ್ನೆಗಳಿವೆಯೇ? {email} ಗೆ ಇಮೇಲ್ ಮಾಡಿ.",
   },
   plurals: {
-    "panel.strong": { one: "{n} ಪ್ರಬಲ" },
-    "panel.quick": { one: "{n} ಚುರುಕು" },
     "home.monthLeft": { one: "ಈ ತಿಂಗಳು {cap}ರಲ್ಲಿ {n} ಉಳಿದಿದೆ" },
     "thread.judgesAgree": { one: "ತೀರ್ಪುಗಾರರು · {total}ರಲ್ಲಿ {n} ಸಹಮತ" },
   },

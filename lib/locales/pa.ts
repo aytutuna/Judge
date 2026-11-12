@@ -301,9 +301,6 @@ const pa: Locale = {
     "thinking.premiumHelper":
       "ਵੈੱਬ ’ਤੇ ਤੱਥ ਜਾਂਚਣ ਨੂੰ ਥੋੜ੍ਹਾ ਹੋਰ ਸਮਾਂ ਲੱਗਦਾ ਹੈ। ਇੱਕ-ਦੋ ਮਿੰਟ ਦਿਓ।",
     "panel.premium": "ਵੈੱਬ ’ਤੇ ਤੱਥ ਜਾਂਚ ਕੇ ਫ਼ੈਸਲਾ ਕੀਤਾ।",
-    "panel.models": "ਜੱਜ: {list}",
-    "panel.strong": "{n} ਤਕੜੇ",
-    "panel.quick": "{n} ਤੇਜ਼",
     "factcheck.title": "ਵੈੱਬ ’ਤੇ ਜਾਂਚਿਆ",
     "factcheck.lead": "ਫ਼ੈਸਲੇ ਤੋਂ ਪਹਿਲਾਂ ਜੱਜਾਂ ਨੇ ਇਹ ਸਰਚ ਨਤੀਜੇ ਦੇਖੇ। ਇਹ ਸਬੂਤ ਹਨ, ਫ਼ੈਸਲਾ ਨਹੀਂ।",
     "factcheck.status.supported": "ਸਹੀ ਨਿਕਲਿਆ",
@@ -794,8 +791,6 @@ const pa: Locale = {
     "terms.contact": "ਇਨ੍ਹਾਂ ਸ਼ਰਤਾਂ ਬਾਰੇ ਸਵਾਲ ਹਨ? {email} ’ਤੇ ਈਮੇਲ ਕਰੋ।",
   },
   plurals: {
-    "panel.strong": { one: "{n} ਤਕੜਾ" },
-    "panel.quick": { one: "{n} ਤੇਜ਼" },
     "home.monthLeft": { one: "ਇਸ ਮਹੀਨੇ {cap} ਵਿੱਚੋਂ {n} ਬਾਕੀ" },
     "thread.judgesAgree": { one: "ਜੱਜ · {total} ਵਿੱਚੋਂ {n} ਸਹਿਮਤ" },
   },

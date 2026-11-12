@@ -22,8 +22,8 @@ describe("locale check", () => {
 
   it("asks for the form of 1 where the caller can pass 1", () => {
     expect(requiredPluralForms("de", "wait.minutes")).toEqual([]);
-    expect(requiredPluralForms("de", "panel.quick")).toEqual(["one"]);
-    expect(requiredPluralForms("ja", "panel.quick")).toEqual([]);
+    expect(requiredPluralForms("de", "home.monthLeft")).toEqual(["one"]);
+    expect(requiredPluralForms("ja", "home.monthLeft")).toEqual([]);
     expect(requiredPluralForms("pl", "home.monthLeft").sort()).toEqual(["few", "many", "one"]);
     const locale = {
       voice: 'Refer to the parties as "Parte A" and "Parte B".',

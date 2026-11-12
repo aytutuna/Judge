@@ -301,9 +301,6 @@ const bn: Locale = {
     "thinking.premiumHelper":
       "ওয়েবে তথ্য যাচাই করতে একটু বেশি সময় লাগে। এক-দুই মিনিট সময় দিন।",
     "panel.premium": "ওয়েবে তথ্য যাচাই করে বিচার করা হয়েছে।",
-    "panel.models": "বিচারক: {list}",
-    "panel.strong": "{n} জন শক্তিশালী",
-    "panel.quick": "{n} জন দ্রুত",
     "factcheck.title": "ওয়েবে যাচাই করা",
     "factcheck.lead": "রায় দেওয়ার আগে বিচারকেরা এই সার্চ ফলাফলগুলো দেখেছেন। এগুলো প্রমাণ, রায় নিজে নয়।",
     "factcheck.status.supported": "ধোপে টেকে",
@@ -795,8 +792,6 @@ const bn: Locale = {
     "terms.contact": "এই শর্তাবলি নিয়ে প্রশ্ন আছে? {email} ঠিকানায় ইমেইল করুন।",
   },
   plurals: {
-    "panel.strong": { one: "{n} জন শক্তিশালী" },
-    "panel.quick": { one: "{n} জন দ্রুত" },
     "home.monthLeft": { one: "এ মাসে {cap}টির মধ্যে {n}টি বাকি" },
     "thread.judgesAgree": { one: "বিচারক · {total} জনের {n} জন একমত" },
   },

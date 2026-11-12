@@ -70,9 +70,6 @@ export const WEB_KEYS: readonly string[] = [
   "notFound.body",
   // Premium results can already be rendered (fact check, panel line).
   "panel.premium",
-  "panel.models",
-  "panel.strong",
-  "panel.quick",
   "factcheck.*",
   // Errors and waits
   "errorFallback",

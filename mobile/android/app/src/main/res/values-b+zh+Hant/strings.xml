@@ -157,13 +157,6 @@
     <string name="thinking_factcheck_done">網路查證完成。</string>
     <string name="thinking_premium_helper">上網查證事實會多花一點時間，請稍等一兩分鐘。</string>
     <string name="panel_premium">已經過網路查證。</string>
-    <string name="panel_models">評審：%1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="other">%1$s 位強力型</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="other">%1$s 位快速型</item>
-    </plurals>
     <string name="factcheck_title">網路查證</string>
     <string name="factcheck_lead">評審在判決前看過這些搜尋結果。這些是證據，不是判決本身。</string>
     <string name="factcheck_status_supported">站得住</string>

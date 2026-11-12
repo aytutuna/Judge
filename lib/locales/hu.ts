@@ -301,9 +301,6 @@ const hu: Locale = {
     "thinking.premiumHelper":
       "A netes tényellenőrzés kicsit tovább tart, akár egy-két percig is.",
     "panel.premium": "Netes tényellenőrzéssel ítélve.",
-    "panel.models": "Bírák: {list}",
-    "panel.strong": "{n} erős",
-    "panel.quick": "{n} gyors",
     "factcheck.title": "Ellenőrizve a neten",
     "factcheck.lead": "A bírák ezeket a keresési találatokat látták, mielőtt döntöttek. Ezek bizonyítékok, nem maga az ítélet.",
     "factcheck.status.supported": "Stimmel",
@@ -798,8 +795,6 @@ const hu: Locale = {
     "terms.contact": "Kérdésed van a feltételekről? Írj e-mailt ide: {email}.",
   },
   plurals: {
-    "panel.strong": { one: "{n} erős" },
-    "panel.quick": { one: "{n} gyors" },
     "home.monthLeft": { one: "Ebben a hónapban még {n}/{cap} maradt" },
     "thread.judgesAgree": { one: "Bírák · {n}/{total} egyetért" },
   },

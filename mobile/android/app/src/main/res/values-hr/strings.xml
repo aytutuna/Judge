@@ -163,17 +163,6 @@
     <string name="thinking_factcheck_done">Provjera na internetu je gotova.</string>
     <string name="thinking_premium_helper">Provjera činjenica na internetu traje malo dulje. Daj nam minutu-dvije.</string>
     <string name="panel_premium">Presuđeno uz provjeru činjenica na internetu.</string>
-    <string name="panel_models">Suci: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="one">%1$s jaki</item>
-        <item quantity="few">%1$s jaka</item>
-        <item quantity="other">%1$s jakih</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="one">%1$s brzi</item>
-        <item quantity="few">%1$s brza</item>
-        <item quantity="other">%1$s brzih</item>
-    </plurals>
     <string name="factcheck_title">Provjereno na internetu</string>
     <string name="factcheck_lead">Suci su vidjeli ove rezultate pretraživanja prije presude. To su dokazi, a ne sama presuda.</string>
     <string name="factcheck_status_supported">Stoji</string>

@@ -300,9 +300,6 @@ const hr: Locale = {
     "thinking.premiumHelper":
       "Provjera činjenica na internetu traje malo dulje. Daj nam minutu-dvije.",
     "panel.premium": "Presuđeno uz provjeru činjenica na internetu.",
-    "panel.models": "Suci: {list}",
-    "panel.strong": "{n} jakih",
-    "panel.quick": "{n} brzih",
     "factcheck.title": "Provjereno na internetu",
     "factcheck.lead": "Suci su vidjeli ove rezultate pretraživanja prije presude. To su dokazi, a ne sama presuda.",
     "factcheck.status.supported": "Stoji",
@@ -800,8 +797,6 @@ const hr: Locale = {
     },
     "wait.minutes": { one: "{n} minutu", few: "{n} minute" },
     "wait.hours": { one: "{n} sat", few: "{n} sata" },
-    "panel.strong": { one: "{n} jaki", few: "{n} jaka" },
-    "panel.quick": { one: "{n} brzi", few: "{n} brza" },
     "pricing.pack": { one: "{n} presuda", few: "{n} presude" },
     "pricing.monthly.cap": { one: "{n} presuda mjesečno", few: "{n} presude mjesečno" },
     "evidence.hint": {

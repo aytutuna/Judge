@@ -300,9 +300,6 @@ const uk: Locale = {
     "thinking.premiumHelper":
       "Перевірка фактів в інтернеті триває трохи довше. Дай їй хвилину-дві.",
     "panel.premium": "Вердикт із перевіркою фактів в інтернеті.",
-    "panel.models": "Судді: {list}",
-    "panel.strong": "{n} сильних",
-    "panel.quick": "{n} швидких",
     "factcheck.title": "Перевірено в інтернеті",
     "factcheck.lead": "Судді бачили ці результати пошуку перед вердиктом. Це докази, а не сам вердикт.",
     "factcheck.status.supported": "Підтверджується",
@@ -804,8 +801,6 @@ const uk: Locale = {
     },
     "wait.minutes": { one: "{n} хвилину", few: "{n} хвилини", many: "{n} хвилин" },
     "wait.hours": { one: "{n} годину", few: "{n} години", many: "{n} годин" },
-    "panel.strong": { one: "{n} сильний", few: "{n} сильні", many: "{n} сильних" },
-    "panel.quick": { one: "{n} швидкий", few: "{n} швидкі", many: "{n} швидких" },
     "pricing.pack": { one: "{n} вердикт", few: "{n} вердикти", many: "{n} вердиктів" },
     "pricing.monthly.cap": {
       one: "{n} вердикт на місяць",

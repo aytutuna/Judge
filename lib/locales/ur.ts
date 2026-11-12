@@ -298,9 +298,6 @@ const ur: Locale = {
     "thinking.factcheckDone": "ویب پر جانچ مکمل۔",
     "thinking.premiumHelper": "ویب پر حقائق جانچنے میں تھوڑا زیادہ وقت لگتا ہے۔ ایک دو منٹ دیں۔",
     "panel.premium": "ویب پر حقائق کی جانچ کے ساتھ فیصلہ ہوا۔",
-    "panel.models": "جج: {list}",
-    "panel.strong": "{n} طاقتور",
-    "panel.quick": "{n} تیز",
     "factcheck.title": "ویب پر جانچا گیا",
     "factcheck.lead": "ججوں نے فیصلے سے پہلے یہ سرچ نتائج دیکھے۔ یہ ثبوت ہیں، خود فیصلہ نہیں۔",
     "factcheck.status.supported": "درست نکلا",
@@ -793,8 +790,6 @@ const ur: Locale = {
     "terms.contact": "ان شرائط کے بارے میں سوالات ہیں؟ {email} پر ای میل کریں۔",
   },
   plurals: {
-    "panel.strong": { one: "{n} طاقتور" },
-    "panel.quick": { one: "{n} تیز" },
     "home.monthLeft": { one: "اس مہینے {cap} میں سے {n} باقی" },
     "thread.judgesAgree": { one: "جج · {total} میں سے {n} متفق" },
   },

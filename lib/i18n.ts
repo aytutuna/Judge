@@ -293,9 +293,6 @@ const en = {
   "thinking.premiumHelper":
     "Checking the facts on the web takes a little longer. Give it a minute or two.",
   "panel.premium": "Judged with a web fact-check.",
-  "panel.models": "Judges: {list}",
-  "panel.strong": "{n} strong",
-  "panel.quick": "{n} quick",
   "factcheck.title": "Checked on the web",
   "factcheck.lead": "The judges saw these search results before ruling. They're evidence, not the ruling itself.",
   "factcheck.status.supported": "Holds up",
@@ -829,15 +826,13 @@ export type Strings = Record<Exclude<Key, LegalKey>, string> & Partial<Record<Le
  * them extra forms by Intl.PluralRules category; the base string is the
  * "other" form and stands in for any form left out. Most callers pick a
  * separate singular key for 1; the ones in COUNTS_FROM_ONE are handed 1
- * itself ("2 strong + 1 quick"), so those need a "one" form wherever the
+ * itself ("1 of 5 left"), so those need a "one" form wherever the
  * language has one.
  */
 export const COUNT_KEYS = [
   "judgesVoted.other",
   "wait.minutes",
   "wait.hours",
-  "panel.strong",
-  "panel.quick",
   "pricing.pack",
   "pricing.monthly.cap",
   "evidence.hint",
@@ -849,8 +844,6 @@ export const COUNT_KEYS = [
 export type CountKey = (typeof COUNT_KEYS)[number];
 
 export const COUNTS_FROM_ONE = [
-  "panel.strong",
-  "panel.quick",
   "home.monthLeft",
   "thread.judgesAgree",
 ] as const satisfies readonly CountKey[];

@@ -166,19 +166,6 @@
     <string name="thinking_factcheck_done">Проверка в интернете закончена.</string>
     <string name="thinking_premium_helper">Проверка фактов в интернете занимает чуть больше времени. Подождите минуту-другую.</string>
     <string name="panel_premium">Вердикт вынесен с проверкой фактов в интернете.</string>
-    <string name="panel_models">Судьи: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="one">%1$s сильный</item>
-        <item quantity="few">%1$s сильных</item>
-        <item quantity="many">%1$s сильных</item>
-        <item quantity="other">%1$s сильных</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="one">%1$s быстрый</item>
-        <item quantity="few">%1$s быстрых</item>
-        <item quantity="many">%1$s быстрых</item>
-        <item quantity="other">%1$s быстрых</item>
-    </plurals>
     <string name="factcheck_title">Проверено в интернете</string>
     <string name="factcheck_lead">Судьи видели эти результаты поиска до вынесения вердикта. Это доказательства, а не сам вердикт.</string>
     <string name="factcheck_status_supported">Подтверждается</string>

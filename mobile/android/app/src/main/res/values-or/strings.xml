@@ -160,15 +160,6 @@
     <string name="thinking_factcheck_done">ୱେବ୍ ଯାଞ୍ଚ ସରିଲା।</string>
     <string name="thinking_premium_helper">ୱେବ୍‌ରେ ତଥ୍ୟ ଯାଞ୍ଚ କରିବାକୁ ଟିକେ ଅଧିକ ସମୟ ଲାଗେ। ଗୋଟେ ଦୁଇଟା ମିନିଟ୍ ଦିଅନ୍ତୁ।</string>
     <string name="panel_premium">ୱେବ୍ ତଥ୍ୟ-ଯାଞ୍ଚ ସହ ବିଚାର ହେଲା।</string>
-    <string name="panel_models">ବିଚାରକ: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="one">%1$s ଶକ୍ତିଶାଳୀ</item>
-        <item quantity="other">%1$s ଶକ୍ତିଶାଳୀ</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="one">%1$s ଦ୍ରୁତ</item>
-        <item quantity="other">%1$s ଦ୍ରୁତ</item>
-    </plurals>
     <string name="factcheck_title">ୱେବ୍‌ରେ ଯାଞ୍ଚ ହେଲା</string>
     <string name="factcheck_lead">ରାୟ ଦେବା ଆଗରୁ ବିଚାରକମାନେ ଏହି ସର୍ଚ୍ଚ ଫଳାଫଳ ଦେଖିଥିଲେ। ଏଗୁଡ଼ିକ ପ୍ରମାଣ, ରାୟ ନିଜେ ନୁହେଁ।</string>
     <string name="factcheck_status_supported">ଠିକ୍ ବାହାରିଲା</string>

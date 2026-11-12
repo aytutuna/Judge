@@ -301,9 +301,6 @@ const te: Locale = {
     "thinking.premiumHelper":
       "వెబ్‌లో వాస్తవాలు చెక్ చేయడానికి కాస్త ఎక్కువ టైమ్ పడుతుంది. ఒకటి రెండు నిమిషాలు ఆగండి.",
     "panel.premium": "వెబ్‌లో వాస్తవాలు చెక్ చేసి జడ్జ్ చేశాం.",
-    "panel.models": "బృందం: {list}",
-    "panel.strong": "{n} బలమైన జడ్జీలు",
-    "panel.quick": "{n} చురుకైన జడ్జీలు",
     "factcheck.title": "వెబ్‌లో చెక్ చేసినవి",
     "factcheck.lead": "తీర్పు చెప్పే ముందు జడ్జీలు ఈ సెర్చ్ ఫలితాలు చూశారు. ఇవి ఆధారాలు మాత్రమే, తీర్పు కాదు.",
     "factcheck.status.supported": "నిజమే",
@@ -795,8 +792,6 @@ const te: Locale = {
     "terms.contact": "ఈ నిబంధనల గురించి ప్రశ్నలా? {email}కు ఈమెయిల్ చేయండి.",
   },
   plurals: {
-    "panel.strong": { one: "{n} బలమైన జడ్జి" },
-    "panel.quick": { one: "{n} చురుకైన జడ్జి" },
     "home.monthLeft": { one: "ఈ నెల {cap}లో {n} మిగిలింది" },
     "thread.judgesAgree": { one: "జడ్జీలు · {n}/{total} ఏకీభవించారు" },
   },

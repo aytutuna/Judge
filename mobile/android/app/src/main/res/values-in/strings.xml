@@ -157,13 +157,6 @@
     <string name="thinking_factcheck_done">Pengecekan web selesai.</string>
     <string name="thinking_premium_helper">Mengecek fakta di web butuh waktu sedikit lebih lama. Tunggu satu-dua menit, ya.</string>
     <string name="panel_premium">Dinilai dengan cek fakta di web.</string>
-    <string name="panel_models">Hakim: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="other">%1$s kuat</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="other">%1$s cepat</item>
-    </plurals>
     <string name="factcheck_title">Dicek di web</string>
     <string name="factcheck_lead">Para hakim melihat hasil pencarian ini sebelum memutuskan. Ini bukti, bukan putusannya.</string>
     <string name="factcheck_status_supported">Terbukti</string>

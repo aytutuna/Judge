@@ -301,9 +301,6 @@ const da: Locale = {
     "thinking.premiumHelper":
       "Det tager lidt længere at tjekke fakta på nettet. Giv det et minut eller to.",
     "panel.premium": "Dømt med faktatjek på nettet.",
-    "panel.models": "Dommere: {list}",
-    "panel.strong": "{n} stærke",
-    "panel.quick": "{n} hurtige",
     "factcheck.title": "Tjekket på nettet",
     "factcheck.lead": "Dommerne så disse søgeresultater, før de dømte. De er bevismateriale, ikke selve dommen.",
     "factcheck.status.supported": "Holder",
@@ -796,8 +793,6 @@ const da: Locale = {
     "terms.contact": "Spørgsmål til disse vilkår? Skriv til {email}.",
   },
   plurals: {
-    "panel.strong": { one: "{n} stærk" },
-    "panel.quick": { one: "{n} hurtig" },
     "home.monthLeft": { one: "{n} af {cap} tilbage denne måned" },
     "thread.judgesAgree": { one: "Dommere · {n} af {total} er enig" },
   },

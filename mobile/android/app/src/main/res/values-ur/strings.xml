@@ -160,15 +160,6 @@
     <string name="thinking_factcheck_done">ویب پر جانچ مکمل۔</string>
     <string name="thinking_premium_helper">ویب پر حقائق جانچنے میں تھوڑا زیادہ وقت لگتا ہے۔ ایک دو منٹ دیں۔</string>
     <string name="panel_premium">ویب پر حقائق کی جانچ کے ساتھ فیصلہ ہوا۔</string>
-    <string name="panel_models">جج: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="one">%1$s طاقتور</item>
-        <item quantity="other">%1$s طاقتور</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="one">%1$s تیز</item>
-        <item quantity="other">%1$s تیز</item>
-    </plurals>
     <string name="factcheck_title">ویب پر جانچا گیا</string>
     <string name="factcheck_lead">ججوں نے فیصلے سے پہلے یہ سرچ نتائج دیکھے۔ یہ ثبوت ہیں، خود فیصلہ نہیں۔</string>
     <string name="factcheck_status_supported">درست نکلا</string>

@@ -157,13 +157,6 @@
     <string name="thinking_factcheck_done">Đã kiểm chứng xong trên mạng.</string>
     <string name="thinking_premium_helper">Kiểm chứng sự thật trên mạng mất thêm chút thời gian. Chờ một hai phút nhé.</string>
     <string name="panel_premium">Đã phân xử kèm kiểm chứng trên mạng.</string>
-    <string name="panel_models">Giám khảo: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="other">%1$s mạnh</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="other">%1$s nhanh</item>
-    </plurals>
     <string name="factcheck_title">Đã kiểm chứng trên mạng</string>
     <string name="factcheck_lead">Giám khảo đã xem các kết quả tìm kiếm này trước khi phân xử. Đây là bằng chứng, không phải bản thân phán quyết.</string>
     <string name="factcheck_status_supported">Đúng</string>

@@ -301,9 +301,6 @@ const vi: Locale = {
     "thinking.premiumHelper":
       "Kiểm chứng sự thật trên mạng mất thêm chút thời gian. Chờ một hai phút nhé.",
     "panel.premium": "Đã phân xử kèm kiểm chứng trên mạng.",
-    "panel.models": "Giám khảo: {list}",
-    "panel.strong": "{n} mạnh",
-    "panel.quick": "{n} nhanh",
     "factcheck.title": "Đã kiểm chứng trên mạng",
     "factcheck.lead": "Giám khảo đã xem các kết quả tìm kiếm này trước khi phân xử. Đây là bằng chứng, không phải bản thân phán quyết.",
     "factcheck.status.supported": "Đúng",

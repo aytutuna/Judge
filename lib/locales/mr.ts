@@ -301,9 +301,6 @@ const mr: Locale = {
     "thinking.premiumHelper":
       "तथ्ये वेबवर तपासायला जरा जास्त वेळ लागतो. एक-दोन मिनिटे थांबा.",
     "panel.premium": "वेबवरील तथ्य-तपासणीसह निकाल दिला.",
-    "panel.models": "परीक्षक: {list}",
-    "panel.strong": "{n} सखोल",
-    "panel.quick": "{n} जलद",
     "factcheck.title": "वेबवर तपासले",
     "factcheck.lead": "निकाल देण्याआधी परीक्षकांनी हे सर्च परिणाम पाहिले. हे पुरावे आहेत, निकाल नव्हे.",
     "factcheck.status.supported": "खरे ठरले",
@@ -795,8 +792,6 @@ const mr: Locale = {
     "terms.contact": "या अटींबद्दल प्रश्न आहेत? {email} वर ईमेल करा.",
   },
   plurals: {
-    "panel.strong": { one: "{n} सखोल" },
-    "panel.quick": { one: "{n} जलद" },
     "home.monthLeft": { one: "या महिन्यात {cap} पैकी {n} शिल्लक" },
     "thread.judgesAgree": { one: "परीक्षक · {total} पैकी {n} सहमत" },
   },

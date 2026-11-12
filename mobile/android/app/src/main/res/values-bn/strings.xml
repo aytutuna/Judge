@@ -160,15 +160,6 @@
     <string name="thinking_factcheck_done">ওয়েবে যাচাই শেষ।</string>
     <string name="thinking_premium_helper">ওয়েবে তথ্য যাচাই করতে একটু বেশি সময় লাগে। এক-দুই মিনিট সময় দিন।</string>
     <string name="panel_premium">ওয়েবে তথ্য যাচাই করে বিচার করা হয়েছে।</string>
-    <string name="panel_models">বিচারক: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="one">%1$s জন শক্তিশালী</item>
-        <item quantity="other">%1$s জন শক্তিশালী</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="one">%1$s জন দ্রুত</item>
-        <item quantity="other">%1$s জন দ্রুত</item>
-    </plurals>
     <string name="factcheck_title">ওয়েবে যাচাই করা</string>
     <string name="factcheck_lead">রায় দেওয়ার আগে বিচারকেরা এই সার্চ ফলাফলগুলো দেখেছেন। এগুলো প্রমাণ, রায় নিজে নয়।</string>
     <string name="factcheck_status_supported">ধোপে টেকে</string>

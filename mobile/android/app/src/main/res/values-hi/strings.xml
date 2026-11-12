@@ -160,15 +160,6 @@
     <string name="thinking_factcheck_done">वेब पर जाँच पूरी हुई।</string>
     <string name="thinking_premium_helper">वेब पर तथ्य जाँचने में थोड़ा ज़्यादा समय लगता है। एक-दो मिनट दें।</string>
     <string name="panel_premium">वेब पर तथ्यों की जाँच के साथ फ़ैसला हुआ।</string>
-    <string name="panel_models">जज: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="one">%1$s मज़बूत</item>
-        <item quantity="other">%1$s मज़बूत</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="one">%1$s तेज़</item>
-        <item quantity="other">%1$s तेज़</item>
-    </plurals>
     <string name="factcheck_title">वेब पर जाँचा गया</string>
     <string name="factcheck_lead">फ़ैसले से पहले जजों ने ये सर्च नतीजे देखे। ये सबूत हैं, ख़ुद फ़ैसला नहीं।</string>
     <string name="factcheck_status_supported">सही निकला</string>

@@ -301,9 +301,6 @@ const ru: Locale = {
     "thinking.premiumHelper":
       "Проверка фактов в интернете занимает чуть больше времени. Подождите минуту-другую.",
     "panel.premium": "Вердикт вынесен с проверкой фактов в интернете.",
-    "panel.models": "Судьи: {list}",
-    "panel.strong": "{n} сильных",
-    "panel.quick": "{n} быстрых",
     "factcheck.title": "Проверено в интернете",
     "factcheck.lead": "Судьи видели эти результаты поиска до вынесения вердикта. Это доказательства, а не сам вердикт.",
     "factcheck.status.supported": "Подтверждается",
@@ -805,8 +802,6 @@ const ru: Locale = {
     },
     "wait.minutes": { one: "{n} минуту", few: "{n} минуты", many: "{n} минут" },
     "wait.hours": { one: "{n} час", few: "{n} часа", many: "{n} часов" },
-    "panel.strong": { one: "{n} сильный", few: "{n} сильных", many: "{n} сильных" },
-    "panel.quick": { one: "{n} быстрый", few: "{n} быстрых", many: "{n} быстрых" },
     "pricing.pack": { one: "{n} вердикт", few: "{n} вердикта", many: "{n} вердиктов" },
     "pricing.monthly.cap": {
       one: "{n} вердикт в месяц",

@@ -300,9 +300,6 @@ const nl: Locale = {
     "thinking.premiumHelper":
       "Feiten checken op het web duurt wat langer. Geef het een minuutje of twee.",
     "panel.premium": "Beoordeeld met een factcheck op het web.",
-    "panel.models": "Rechters: {list}",
-    "panel.strong": "{n} sterke",
-    "panel.quick": "{n} snelle",
     "factcheck.title": "Gecheckt op het web",
     "factcheck.lead": "De rechters zagen deze zoekresultaten voordat ze oordeelden. Het is bewijs, niet de uitspraak zelf.",
     "factcheck.status.supported": "Klopt",
@@ -797,8 +794,6 @@ const nl: Locale = {
     "terms.contact": "Vragen over deze voorwaarden? Mail naar {email}.",
   },
   plurals: {
-    "panel.strong": { one: "{n} sterke" },
-    "panel.quick": { one: "{n} snelle" },
     "home.monthLeft": { one: "Nog {n} van {cap} deze maand" },
     "thread.judgesAgree": { one: "Rechters · {n} van {total} eens" },
   },

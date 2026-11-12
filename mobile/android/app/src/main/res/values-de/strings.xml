@@ -160,15 +160,6 @@
     <string name="thinking_factcheck_done">Faktencheck im Netz abgeschlossen.</string>
     <string name="thinking_premium_helper">Die Faktenprüfung im Netz dauert etwas länger. Gib uns ein, zwei Minuten.</string>
     <string name="panel_premium">Mit Faktencheck im Netz beurteilt.</string>
-    <string name="panel_models">Richter: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="one">%1$s starker</item>
-        <item quantity="other">%1$s starke</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="one">%1$s schneller</item>
-        <item quantity="other">%1$s schnelle</item>
-    </plurals>
     <string name="factcheck_title">Im Netz geprüft</string>
     <string name="factcheck_lead">Diese Suchergebnisse lagen den Richtern vor dem Urteil vor. Sie sind Belege, nicht das Urteil selbst.</string>
     <string name="factcheck_status_supported">Stimmt</string>

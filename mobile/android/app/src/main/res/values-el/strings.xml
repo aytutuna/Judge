@@ -160,15 +160,6 @@
     <string name="thinking_factcheck_done">Ο έλεγχος στο ίντερνετ ολοκληρώθηκε.</string>
     <string name="thinking_premium_helper">Ο έλεγχος των γεγονότων στο ίντερνετ θέλει λίγο παραπάνω. Δώσε μας ένα-δυο λεπτά.</string>
     <string name="panel_premium">Κρίθηκε με έλεγχο γεγονότων στο ίντερνετ.</string>
-    <string name="panel_models">Κριτές: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="one">%1$s ισχυρός</item>
-        <item quantity="other">%1$s ισχυροί</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="one">%1$s γρήγορος</item>
-        <item quantity="other">%1$s γρήγοροι</item>
-    </plurals>
     <string name="factcheck_title">Ελέγχθηκε στο ίντερνετ</string>
     <string name="factcheck_lead">Οι κριτές είδαν αυτά τα αποτελέσματα αναζήτησης πριν αποφασίσουν. Είναι στοιχεία, όχι η ίδια η απόφαση.</string>
     <string name="factcheck_status_supported">Ισχύει</string>

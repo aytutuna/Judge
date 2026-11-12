@@ -300,9 +300,6 @@ const ar: Locale = {
     "thinking.premiumHelper":
       "التحقق من الحقائق على الويب يستغرق وقتًا أطول قليلًا. امنحنا دقيقة أو دقيقتين.",
     "panel.premium": "صدر الحكم بعد تحقق من الحقائق على الويب.",
-    "panel.models": "هيئة القضاة: {list}",
-    "panel.strong": "{n} قاضٍ متمرّس",
-    "panel.quick": "{n} قاضٍ سريع",
     "factcheck.title": "تم التحقق على الويب",
     "factcheck.lead": "اطّلع القضاة على نتائج البحث هذه قبل الحكم. هي أدلة، وليست الحكم نفسه.",
     "factcheck.status.supported": "صحيح",
@@ -799,8 +796,6 @@ const ar: Locale = {
     },
     "wait.minutes": { two: "دقيقتين", few: "{n} دقائق", many: "{n} دقيقة" },
     "wait.hours": { two: "ساعتين", few: "{n} ساعات", many: "{n} ساعة" },
-    "panel.strong": { one: "قاضٍ متمرّس", two: "قاضيان متمرّسان", few: "{n} قضاة متمرّسين", many: "{n} قاضيًا متمرّسًا" },
-    "panel.quick": { one: "قاضٍ سريع", two: "قاضيان سريعان", few: "{n} قضاة سريعين", many: "{n} قاضيًا سريعًا" },
     "pricing.pack": { two: "حكمان", few: "{n} أحكام", many: "{n} حكمًا" },
     "pricing.monthly.cap": { two: "حكمان شهريًا", few: "{n} أحكام شهريًا", many: "{n} حكمًا شهريًا" },
     "evidence.hint": {

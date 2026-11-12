@@ -299,9 +299,6 @@ const gu: Locale = {
     "thinking.factcheckDone": "વેબ ચકાસણી પૂરી.",
     "thinking.premiumHelper": "વેબ પર હકીકતો ચકાસવામાં થોડો વધુ સમય લાગે છે. એક-બે મિનિટ આપો.",
     "panel.premium": "વેબ પર હકીકતો ચકાસીને ચુકાદો અપાયો.",
-    "panel.models": "જજ: {list}",
-    "panel.strong": "{n} મજબૂત",
-    "panel.quick": "{n} ઝડપી",
     "factcheck.title": "વેબ પર ચકાસ્યું",
     "factcheck.lead": "ચુકાદો આપતાં પહેલાં જજોએ આ સર્ચ પરિણામ જોયાં. એ પુરાવા છે, ચુકાદો નહીં.",
     "factcheck.status.supported": "સાચું નીકળ્યું",
@@ -794,8 +791,6 @@ const gu: Locale = {
     "terms.contact": "આ શરતો વિશે પ્રશ્નો છે? {email} પર ઈમેલ કરો.",
   },
   plurals: {
-    "panel.strong": { one: "{n} મજબૂત" },
-    "panel.quick": { one: "{n} ઝડપી" },
     "home.monthLeft": { one: "આ મહિને {cap}માંથી {n} બાકી" },
     "thread.judgesAgree": { one: "જજ · {total}માંથી {n} સહમત" },
   },

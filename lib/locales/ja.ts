@@ -300,9 +300,6 @@ const ja: Locale = {
     "thinking.premiumHelper":
       "ネットで事実を確認するので、少し時間がかかります。1〜2分お待ちください。",
     "panel.premium": "ネットでのファクトチェック付きで判定しました。",
-    "panel.models": "審査員：{list}",
-    "panel.strong": "高性能{n}人",
-    "panel.quick": "高速{n}人",
     "factcheck.title": "ネットで確認済み",
     "factcheck.lead": "審査員は判定の前にこれらの検索結果を見ています。これは判定の材料で、判定そのものではありません。",
     "factcheck.status.supported": "裏付けあり",

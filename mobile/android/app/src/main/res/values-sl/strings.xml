@@ -166,19 +166,6 @@
     <string name="thinking_factcheck_done">Spletno preverjanje je končano.</string>
     <string name="thinking_premium_helper">Preverjanje dejstev na spletu traja malo dlje. Daj nam minuto ali dve.</string>
     <string name="panel_premium">Razsojeno s spletnim preverjanjem dejstev.</string>
-    <string name="panel_models">Sodniki: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="one">%1$s močan</item>
-        <item quantity="two">%1$s močna</item>
-        <item quantity="few">%1$s močni</item>
-        <item quantity="other">%1$s močnih</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="one">%1$s hiter</item>
-        <item quantity="two">%1$s hitra</item>
-        <item quantity="few">%1$s hitri</item>
-        <item quantity="other">%1$s hitrih</item>
-    </plurals>
     <string name="factcheck_title">Preverjeno na spletu</string>
     <string name="factcheck_lead">Sodniki so te zadetke iskanja videli pred razsodbo. So dokazi, ne razsodba sama.</string>
     <string name="factcheck_status_supported">Drži</string>

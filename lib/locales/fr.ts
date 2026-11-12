@@ -300,9 +300,6 @@ const fr: Locale = {
     "thinking.premiumHelper":
       "Vérifier les faits sur le web prend un peu plus de temps. Compte une minute ou deux.",
     "panel.premium": "Jugé avec une vérification des faits sur le web.",
-    "panel.models": "Juges : {list}",
-    "panel.strong": "{n} puissants",
-    "panel.quick": "{n} rapides",
     "factcheck.title": "Vérifié sur le web",
     "factcheck.lead": "Les juges ont vu ces résultats de recherche avant de trancher. Ce sont des éléments de preuve, pas le verdict lui-même.",
     "factcheck.status.supported": "Confirmé",
@@ -797,8 +794,6 @@ const fr: Locale = {
     "terms.contact": "Des questions sur ces conditions ? Écris à {email}.",
   },
   plurals: {
-    "panel.strong": { one: "{n} puissant" },
-    "panel.quick": { one: "{n} rapide" },
     "home.monthLeft": { one: "Il t’en reste {n} sur {cap} ce mois-ci" },
     "thread.judgesAgree": { one: "Juges · {n} sur {total} d’accord" },
   },

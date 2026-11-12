@@ -300,9 +300,6 @@ const id: Locale = {
     "thinking.premiumHelper":
       "Mengecek fakta di web butuh waktu sedikit lebih lama. Tunggu satu-dua menit, ya.",
     "panel.premium": "Dinilai dengan cek fakta di web.",
-    "panel.models": "Hakim: {list}",
-    "panel.strong": "{n} kuat",
-    "panel.quick": "{n} cepat",
     "factcheck.title": "Dicek di web",
     "factcheck.lead": "Para hakim melihat hasil pencarian ini sebelum memutuskan. Ini bukti, bukan putusannya.",
     "factcheck.status.supported": "Terbukti",

@@ -160,15 +160,6 @@
     <string name="thinking_factcheck_done">இணையச் சரிபார்ப்பு முடிந்தது.</string>
     <string name="thinking_premium_helper">இணையத்தில் உண்மைகளைச் சரிபார்க்க இன்னும் கொஞ்சம் நேரம் ஆகும். ஒன்றிரண்டு நிமிடங்கள் கொடுங்கள்.</string>
     <string name="panel_premium">இணையச் சரிபார்ப்புடன் தீர்ப்பளிக்கப்பட்டது.</string>
-    <string name="panel_models">நடுவர்கள்: %1$s</string>
-    <plurals name="panel_strong">
-        <item quantity="one">%1$s வலுவானவர்</item>
-        <item quantity="other">%1$s வலுவானவர்கள்</item>
-    </plurals>
-    <plurals name="panel_quick">
-        <item quantity="one">%1$s வேகமானவர்</item>
-        <item quantity="other">%1$s வேகமானவர்கள்</item>
-    </plurals>
     <string name="factcheck_title">இணையத்தில் சரிபார்க்கப்பட்டது</string>
     <string name="factcheck_lead">தீர்ப்பு சொல்வதற்கு முன் நடுவர்கள் இந்தத் தேடல் முடிவுகளைப் பார்த்தார்கள். இவை ஆதாரங்கள், தீர்ப்பு அல்ல.</string>
     <string name="factcheck_status_supported">உண்மைதான்</string>

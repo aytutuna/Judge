@@ -300,9 +300,6 @@ const ptBR: Locale = {
     "thinking.premiumHelper":
       "Checar os fatos na web demora um pouco mais. Pode levar um ou dois minutos.",
     "panel.premium": "Julgado com checagem de fatos na web.",
-    "panel.models": "Juízes: {list}",
-    "panel.strong": "{n} fortes",
-    "panel.quick": "{n} rápidos",
     "factcheck.title": "Checado na web",
     "factcheck.lead": "Os juízes viram estes resultados de busca antes de decidir. São provas, não o veredito em si.",
     "factcheck.status.supported": "Se sustenta",
@@ -795,8 +792,6 @@ const ptBR: Locale = {
     "terms.contact": "Dúvidas sobre estes termos? Escreva para {email}.",
   },
   plurals: {
-    "panel.strong": { one: "{n} forte" },
-    "panel.quick": { one: "{n} rápido" },
     "home.monthLeft": { one: "Resta {n} de {cap} neste mês" },
     "thread.judgesAgree": { one: "Juízes · {n} de {total} concorda" },
   },
