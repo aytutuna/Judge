@@ -177,11 +177,11 @@ describe("GET /api/v1/verdicts/{id} for async verdicts", () => {
 });
 
 describe("v1 routes", () => {
-  it("re-export the unversioned handlers with the same segment config", () => {
-    expect(v1Verdict.POST).toBe(verdict.POST);
+  it("wrap the unversioned handlers with the same segment config", () => {
+    expect(v1Verdict.POST).toBeTypeOf("function");
     expect(v1Verdict.runtime).toBe(verdict.runtime);
     expect(v1Verdict.maxDuration).toBe(verdict.maxDuration);
-    expect(v1Translate.POST).toBe(translate.POST);
+    expect(v1Translate.POST).toBeTypeOf("function");
     expect(v1Translate.runtime).toBe(translate.runtime);
     expect(v1Translate.maxDuration).toBe(translate.maxDuration);
   });

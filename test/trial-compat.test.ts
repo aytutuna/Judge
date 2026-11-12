@@ -115,7 +115,14 @@ describe("GET /api/v1/verdicts/{id} with a stored minor outcome", () => {
 
   it("answers survived to an older app and minor to one that sends the header", async () => {
     const id = "tc1abcdef";
-    await saveVerdictWithOriginals({ id, input: "Party B says...", result: RESULT, kind: "free", ownerUserId: null });
+    await saveVerdictWithOriginals({
+      id,
+      input: "Party B says...",
+      result: RESULT,
+      kind: "free",
+      ownerUserId: null,
+      original: { v: 1, text: "Party B says...", nameMap: [] },
+    });
     const ctx = { params: Promise.resolve({ id }) } as never;
     const get = async (req: Request) =>
       ((await (await publicRoute.GET(req, ctx)).json()) as { result: { crux_trial: { outcome: string } } }).result.crux_trial.outcome;
