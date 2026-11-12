@@ -474,6 +474,7 @@
     <string name="shell_load_failed">آپ کی ہسٹری لوڈ نہیں ہو سکی۔</string>
     <string name="shell_load_more">مزید دکھائیں</string>
     <string name="shell_untitled">بے عنوان فیصلہ</string>
+    <string name="shell_local_sign_in">کسی بھی ڈیوائس پر اپنے فیصلے دیکھنے کے لیے سائن ان کریں</string>
     <string name="shell_case_waiting">جواب کا انتظار</string>
     <string name="history_state_judging">جج سوچ رہے ہیں</string>
     <string name="history_state_rejudging">جج دوبارہ سوچ رہے ہیں</string>

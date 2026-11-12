@@ -474,6 +474,7 @@
     <string name="shell_load_failed">We konden je geschiedenis niet laden.</string>
     <string name="shell_load_more">Meer tonen</string>
     <string name="shell_untitled">Uitspraak zonder titel</string>
+    <string name="shell_local_sign_in">Log in om je uitspraken op elk apparaat te zien</string>
     <string name="shell_case_waiting">Wacht op antwoord</string>
     <string name="history_state_judging">De rechters denken na</string>
     <string name="history_state_rejudging">De rechters denken opnieuw na</string>

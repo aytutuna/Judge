@@ -474,6 +474,7 @@
     <string name="shell_load_failed">Historiaa ei saatu ladattua.</string>
     <string name="shell_load_more">Näytä lisää</string>
     <string name="shell_untitled">Nimetön tuomio</string>
+    <string name="shell_local_sign_in">Kirjaudu, niin näet tuomiosi kaikilla laitteilla</string>
     <string name="shell_case_waiting">Odottaa vastausta</string>
     <string name="history_state_judging">Tuomarit miettivät</string>
     <string name="history_state_rejudging">Tuomarit miettivät uudelleen</string>

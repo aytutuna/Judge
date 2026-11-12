@@ -474,6 +474,7 @@
     <string name="shell_load_failed">Nem sikerült betölteni az előzményeidet.</string>
     <string name="shell_load_more">Továbbiak</string>
     <string name="shell_untitled">Cím nélküli ítélet</string>
+    <string name="shell_local_sign_in">Lépj be, hogy bármelyik eszközön lásd az ítéleteidet</string>
     <string name="shell_case_waiting">Válaszra vár</string>
     <string name="history_state_judging">A bírák mérlegelnek</string>
     <string name="history_state_rejudging">A bírák újra mérlegelnek</string>

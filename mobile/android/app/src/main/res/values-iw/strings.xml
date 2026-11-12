@@ -482,6 +482,7 @@
     <string name="shell_load_failed">לא הצלחנו לטעון את ההיסטוריה.</string>
     <string name="shell_load_more">להציג עוד</string>
     <string name="shell_untitled">פסק דין בלי כותרת</string>
+    <string name="shell_local_sign_in">אפשר להתחבר כדי לראות את פסקי הדין בכל מכשיר</string>
     <string name="shell_case_waiting">מחכה לתשובה</string>
     <string name="history_state_judging">השופטים חושבים</string>
     <string name="history_state_rejudging">השופטים חושבים שוב</string>

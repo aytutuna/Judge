@@ -466,6 +466,7 @@
     <string name="shell_load_failed">Kami tidak dapat memuatkan sejarah anda.</string>
     <string name="shell_load_more">Tunjuk lagi</string>
     <string name="shell_untitled">Keputusan tanpa tajuk</string>
+    <string name="shell_local_sign_in">Log masuk untuk melihat keputusan anda pada mana-mana peranti</string>
     <string name="shell_case_waiting">Menunggu jawapan</string>
     <string name="history_state_judging">Hakim sedang berfikir</string>
     <string name="history_state_rejudging">Hakim sedang berfikir semula</string>

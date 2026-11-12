@@ -466,6 +466,7 @@
     <string name="shell_load_failed">没能加载历史记录。</string>
     <string name="shell_load_more">显示更多</string>
     <string name="shell_untitled">未命名裁决</string>
+    <string name="shell_local_sign_in">登录后在任何设备上查看你的裁决</string>
     <string name="shell_case_waiting">等待回复</string>
     <string name="history_state_judging">评委思考中</string>
     <string name="history_state_rejudging">评委重新思考中</string>

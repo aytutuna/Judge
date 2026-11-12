@@ -474,6 +474,7 @@
     <string name="shell_load_failed">Geçmişini yükleyemedik.</string>
     <string name="shell_load_more">Daha fazla göster</string>
     <string name="shell_untitled">Başlıksız karar</string>
+    <string name="shell_local_sign_in">Kararlarını her cihazda görmek için giriş yap</string>
     <string name="shell_case_waiting">Yanıt bekliyor</string>
     <string name="history_state_judging">Yargıçlar düşünüyor</string>
     <string name="history_state_rejudging">Yargıçlar yeniden düşünüyor</string>

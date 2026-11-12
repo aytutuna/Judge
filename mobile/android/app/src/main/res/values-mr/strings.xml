@@ -474,6 +474,7 @@
     <string name="shell_load_failed">तुमचा इतिहास लोड करता आला नाही.</string>
     <string name="shell_load_more">आणखी दाखवा</string>
     <string name="shell_untitled">शीर्षक नसलेला निकाल</string>
+    <string name="shell_local_sign_in">कोणत्याही डिव्हाइसवर तुमचे निकाल पाहण्यासाठी साइन इन करा</string>
     <string name="shell_case_waiting">उत्तराची वाट</string>
     <string name="history_state_judging">परीक्षक विचार करत आहेत</string>
     <string name="history_state_rejudging">परीक्षक पुन्हा विचार करत आहेत</string>

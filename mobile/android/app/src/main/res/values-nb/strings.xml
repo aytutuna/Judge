@@ -474,6 +474,7 @@
     <string name="shell_load_failed">Vi fikk ikke lastet historikken din.</string>
     <string name="shell_load_more">Vis flere</string>
     <string name="shell_untitled">Dom uten tittel</string>
+    <string name="shell_local_sign_in">Logg inn for å se dommene dine på alle enheter</string>
     <string name="shell_case_waiting">Venter på svar</string>
     <string name="history_state_judging">Dommerne tenker</string>
     <string name="history_state_rejudging">Dommerne tenker på nytt</string>

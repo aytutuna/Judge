@@ -466,6 +466,7 @@
     <string name="shell_load_failed">履歴を読み込めませんでした。</string>
     <string name="shell_load_more">もっと見る</string>
     <string name="shell_untitled">無題の判定</string>
+    <string name="shell_local_sign_in">ログインすると、どの端末でも判定を見られます</string>
     <string name="shell_case_waiting">返事待ち</string>
     <string name="history_state_judging">審査員が判定中</string>
     <string name="history_state_rejudging">審査員が再判定中</string>

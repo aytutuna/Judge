@@ -482,6 +482,7 @@
     <string name="shell_load_failed">No hem pogut carregar l\'historial.</string>
     <string name="shell_load_more">Mostra\'n més</string>
     <string name="shell_untitled">Veredicte sense títol</string>
+    <string name="shell_local_sign_in">Inicia sessió per veure els teus veredictes des de qualsevol dispositiu</string>
     <string name="shell_case_waiting">Esperant resposta</string>
     <string name="history_state_judging">Els jutges deliberen</string>
     <string name="history_state_rejudging">Els jutges tornen a deliberar</string>

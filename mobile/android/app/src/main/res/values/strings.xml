@@ -474,6 +474,7 @@
     <string name="shell_load_failed">We couldn\'t load your history.</string>
     <string name="shell_load_more">Show more</string>
     <string name="shell_untitled">Untitled verdict</string>
+    <string name="shell_local_sign_in">Sign in to see your verdicts on any device</string>
     <string name="shell_case_waiting">Waiting for reply</string>
     <string name="history_state_judging">Judges thinking</string>
     <string name="history_state_rejudging">Judges thinking again</string>

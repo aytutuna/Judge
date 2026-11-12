@@ -350,6 +350,15 @@ struct SideMenu: View {
                             .padding(.horizontal, 12)
                             .padding(.top, 8)
                             .menuListRow()
+                        if !app.account.isSignedIn {
+                            Button(L10n.shellLocalSignIn(lang)) {
+                                app.menuOpen = false
+                                app.account.presentSignIn()
+                            }
+                            .buttonStyle(GhostButtonStyle())
+                            .frame(maxWidth: .infinity)
+                            .menuListRow()
+                        }
                     }
                 } else if list.failed {
                     loadFailed(lang).menuListRow()

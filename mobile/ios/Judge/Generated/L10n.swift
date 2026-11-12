@@ -594,6 +594,7 @@ enum L10n {
     static func shellLoadFailed(_ lang: AppLang) -> String { string("shell.loadFailed", lang) }
     static func shellLoadMore(_ lang: AppLang) -> String { string("shell.loadMore", lang) }
     static func shellUntitled(_ lang: AppLang) -> String { string("shell.untitled", lang) }
+    static func shellLocalSignIn(_ lang: AppLang) -> String { string("shell.localSignIn", lang) }
     static func shellCaseWaiting(_ lang: AppLang) -> String { string("shell.case.waiting", lang) }
     static func historyStateJudging(_ lang: AppLang) -> String { string("history.state.judging", lang) }
     static func historyStateRejudging(_ lang: AppLang) -> String { string("history.state.rejudging", lang) }
@@ -1188,6 +1189,7 @@ enum L10n {
         "shell.loadFailed",
         "shell.loadMore",
         "shell.untitled",
+        "shell.localSignIn",
         "shell.case.waiting",
         "history.state.judging",
         "history.state.rejudging",

@@ -474,6 +474,7 @@
     <string name="shell_load_failed">உங்கள் வரலாற்றை ஏற்ற முடியவில்லை.</string>
     <string name="shell_load_more">மேலும் காட்டு</string>
     <string name="shell_untitled">தலைப்பில்லாத தீர்ப்பு</string>
+    <string name="shell_local_sign_in">எந்தச் சாதனத்திலும் உங்கள் தீர்ப்புகளைப் பார்க்க உள்நுழையுங்கள்</string>
     <string name="shell_case_waiting">பதிலுக்குக் காத்திருக்கிறது</string>
     <string name="history_state_judging">நடுவர்கள் யோசிக்கிறார்கள்</string>
     <string name="history_state_rejudging">நடுவர்கள் மீண்டும் யோசிக்கிறார்கள்</string>

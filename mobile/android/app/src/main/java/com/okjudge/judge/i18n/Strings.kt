@@ -527,6 +527,7 @@ class Strings(private val res: Resources) {
     val shellLoadFailed: String get() = res.getString(R.string.shell_load_failed)
     val shellLoadMore: String get() = res.getString(R.string.shell_load_more)
     val shellUntitled: String get() = res.getString(R.string.shell_untitled)
+    val shellLocalSignIn: String get() = res.getString(R.string.shell_local_sign_in)
     val shellCaseWaiting: String get() = res.getString(R.string.shell_case_waiting)
     val historyStateJudging: String get() = res.getString(R.string.history_state_judging)
     val historyStateRejudging: String get() = res.getString(R.string.history_state_rejudging)
@@ -1120,6 +1121,7 @@ class Strings(private val res: Resources) {
             "shell.loadFailed" -> R.string.shell_load_failed
             "shell.loadMore" -> R.string.shell_load_more
             "shell.untitled" -> R.string.shell_untitled
+            "shell.localSignIn" -> R.string.shell_local_sign_in
             "shell.case.waiting" -> R.string.shell_case_waiting
             "history.state.judging" -> R.string.history_state_judging
             "history.state.rejudging" -> R.string.history_state_rejudging

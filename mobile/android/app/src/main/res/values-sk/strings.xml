@@ -490,6 +490,7 @@
     <string name="shell_load_failed">Históriu sa nepodarilo načítať.</string>
     <string name="shell_load_more">Zobraziť viac</string>
     <string name="shell_untitled">Verdikt bez názvu</string>
+    <string name="shell_local_sign_in">Prihlás sa a uvidíš svoje verdikty na každom zariadení</string>
     <string name="shell_case_waiting">Čaká na odpoveď</string>
     <string name="history_state_judging">Sudcovia rozhodujú</string>
     <string name="history_state_rejudging">Sudcovia rozhodujú znova</string>

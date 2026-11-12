@@ -474,6 +474,7 @@
     <string name="shell_load_failed">మీ చరిత్ర లోడ్ కాలేదు.</string>
     <string name="shell_load_more">ఇంకా చూపించండి</string>
     <string name="shell_untitled">పేరు లేని తీర్పు</string>
+    <string name="shell_local_sign_in">ఏ డివైస్‌లోనైనా మీ తీర్పులు చూడటానికి సైన్ ఇన్ చేయండి</string>
     <string name="shell_case_waiting">జవాబు కోసం ఎదురుచూపు</string>
     <string name="history_state_judging">జడ్జీలు ఆలోచిస్తున్నారు</string>
     <string name="history_state_rejudging">జడ్జీలు మళ్లీ ఆలోచిస్తున్నారు</string>

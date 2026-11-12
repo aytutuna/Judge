@@ -474,6 +474,7 @@
     <string name="shell_load_failed">ചരിത്രം ലോഡ് ചെയ്യാനായില്ല.</string>
     <string name="shell_load_more">കൂടുതൽ കാണിക്കൂ</string>
     <string name="shell_untitled">പേരില്ലാത്ത വിധി</string>
+    <string name="shell_local_sign_in">ഏത് ഉപകരണത്തിലും വിധികൾ കാണാൻ സൈൻ ഇൻ ചെയ്യൂ</string>
     <string name="shell_case_waiting">മറുപടിക്കായി കാത്തിരിക്കുന്നു</string>
     <string name="history_state_judging">ജഡ്ജിമാർ പരിഗണിക്കുന്നു</string>
     <string name="history_state_rejudging">ജഡ്ജിമാർ വീണ്ടും പരിഗണിക്കുന്നു</string>

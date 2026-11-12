@@ -474,6 +474,7 @@
     <string name="shell_load_failed">Vi kunde inte ladda din historik.</string>
     <string name="shell_load_more">Visa fler</string>
     <string name="shell_untitled">Dom utan titel</string>
+    <string name="shell_local_sign_in">Logga in för att se dina domar på alla enheter</string>
     <string name="shell_case_waiting">Väntar på svar</string>
     <string name="history_state_judging">Domarna tänker</string>
     <string name="history_state_rejudging">Domarna omprövar</string>

@@ -474,6 +474,7 @@
     <string name="shell_load_failed">ଆପଣଙ୍କ ଇତିହାସ ଲୋଡ୍ କରିପାରିଲୁ ନାହିଁ।</string>
     <string name="shell_load_more">ଆହୁରି ଦେଖାନ୍ତୁ</string>
     <string name="shell_untitled">ଶିରୋନାମା ବିନା ରାୟ</string>
+    <string name="shell_local_sign_in">ଯେକୌଣସି ଡିଭାଇସ୍‌ରେ ଆପଣଙ୍କ ରାୟ ଦେଖିବାକୁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ</string>
     <string name="shell_case_waiting">ଉତ୍ତର ଅପେକ୍ଷାରେ</string>
     <string name="history_state_judging">ବିଚାରକମାନେ ଭାବୁଛନ୍ତି</string>
     <string name="history_state_rejudging">ବିଚାରକମାନେ ପୁଣି ଭାବୁଛନ୍ତି</string>

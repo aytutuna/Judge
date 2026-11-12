@@ -466,6 +466,7 @@
     <string name="shell_load_failed">無法載入你的紀錄。</string>
     <string name="shell_load_more">顯示更多</string>
     <string name="shell_untitled">未命名的判決</string>
+    <string name="shell_local_sign_in">登入後就能在任何裝置上查看你的判決</string>
     <string name="shell_case_waiting">等待回覆</string>
     <string name="history_state_judging">評審思考中</string>
     <string name="history_state_rejudging">評審重新思考中</string>

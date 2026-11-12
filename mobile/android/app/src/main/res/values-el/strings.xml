@@ -474,6 +474,7 @@
     <string name="shell_load_failed">Δεν μπορέσαμε να φορτώσουμε το ιστορικό σου.</string>
     <string name="shell_load_more">Περισσότερα</string>
     <string name="shell_untitled">Απόφαση χωρίς τίτλο</string>
+    <string name="shell_local_sign_in">Συνδέσου για να βλέπεις τις αποφάσεις σου σε κάθε συσκευή</string>
     <string name="shell_case_waiting">Αναμονή απάντησης</string>
     <string name="history_state_judging">Οι κριτές σκέφτονται</string>
     <string name="history_state_rejudging">Οι κριτές σκέφτονται ξανά</string>

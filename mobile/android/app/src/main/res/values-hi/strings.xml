@@ -474,6 +474,7 @@
     <string name="shell_load_failed">आपका इतिहास लोड नहीं हो पाया।</string>
     <string name="shell_load_more">और दिखाएँ</string>
     <string name="shell_untitled">बिना शीर्षक का फ़ैसला</string>
+    <string name="shell_local_sign_in">अपने फ़ैसले किसी भी डिवाइस पर देखने के लिए साइन इन करें</string>
     <string name="shell_case_waiting">जवाब का इंतज़ार</string>
     <string name="history_state_judging">जज सोच रहे हैं</string>
     <string name="history_state_rejudging">जज फिर से सोच रहे हैं</string>

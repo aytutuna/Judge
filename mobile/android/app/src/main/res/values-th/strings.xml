@@ -466,6 +466,7 @@
     <string name="shell_load_failed">โหลดประวัติไม่ได้</string>
     <string name="shell_load_more">ดูเพิ่ม</string>
     <string name="shell_untitled">คำตัดสินไม่มีชื่อ</string>
+    <string name="shell_local_sign_in">เข้าสู่ระบบเพื่อดูคำตัดสินจากทุกอุปกรณ์</string>
     <string name="shell_case_waiting">รอคำตอบ</string>
     <string name="history_state_judging">กรรมการกำลังคิด</string>
     <string name="history_state_rejudging">กรรมการกำลังคิดอีกรอบ</string>

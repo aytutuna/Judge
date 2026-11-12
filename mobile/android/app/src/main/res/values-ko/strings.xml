@@ -466,6 +466,7 @@
     <string name="shell_load_failed">기록을 불러오지 못했어요.</string>
     <string name="shell_load_more">더 보기</string>
     <string name="shell_untitled">제목 없는 판결</string>
+    <string name="shell_local_sign_in">로그인하면 어느 기기에서든 판결을 볼 수 있어요</string>
     <string name="shell_case_waiting">답변 대기 중</string>
     <string name="history_state_judging">판사들이 검토 중</string>
     <string name="history_state_rejudging">판사들이 다시 검토 중</string>

@@ -52,6 +52,8 @@ private struct VerdictScreenContent: View {
     var body: some View {
         let lang = app.lang
         let signedIn = app.account.isSignedIn
+        // Signed out, the button stays and the sheet asks for sign-in.
+        let area: CaseLogic.AppealArea = signedIn ? appeal.area : .upsell(signIn: true)
         ScrollViewReader { proxy in
             ScrollView {
                 VStack(spacing: 16) {
@@ -59,13 +61,13 @@ private struct VerdictScreenContent: View {
                         model: model,
                         lang: lang,
                         shareURL: app.config.shareURL(id: model.session.id),
-                        appealArea: signedIn ? appeal.area : CaseLogic.AppealArea.none,
+                        appealArea: area,
                         appealStartsOpen: appeal.open,
                         onAppealOpen: { appeal.openForm() }
                     ) {
                         AppealSheet(
                             model: appeal,
-                            area: appeal.area,
+                            area: area,
                             cost: L10n.appAppealCost(lang, left: String(appeal.rounds.map(CaseLogic.appealsLeft) ?? CaseLogic.maxVerdictAppeals)),
                             evidenceOn: app.account.features.evidence,
                             lang: lang

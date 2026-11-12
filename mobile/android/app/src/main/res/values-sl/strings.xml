@@ -490,6 +490,7 @@
     <string name="shell_load_failed">Zgodovine nismo mogli naložiti.</string>
     <string name="shell_load_more">Pokaži več</string>
     <string name="shell_untitled">Razsodba brez naslova</string>
+    <string name="shell_local_sign_in">Prijavi se in imej razsodbe na vseh napravah</string>
     <string name="shell_case_waiting">Čaka na odgovor</string>
     <string name="history_state_judging">Sodniki razmišljajo</string>
     <string name="history_state_rejudging">Sodniki znova razmišljajo</string>

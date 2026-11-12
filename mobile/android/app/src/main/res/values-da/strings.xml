@@ -474,6 +474,7 @@
     <string name="shell_load_failed">Vi kunne ikke hente din historik.</string>
     <string name="shell_load_more">Vis flere</string>
     <string name="shell_untitled">Dom uden titel</string>
+    <string name="shell_local_sign_in">Log ind for at se dine domme på alle enheder</string>
     <string name="shell_case_waiting">Venter på svar</string>
     <string name="history_state_judging">Dommerne tænker</string>
     <string name="history_state_rejudging">Dommerne tænker igen</string>

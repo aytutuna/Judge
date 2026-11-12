@@ -482,6 +482,7 @@
     <string name="shell_load_failed">N-am putut încărca istoricul.</string>
     <string name="shell_load_more">Arată mai multe</string>
     <string name="shell_untitled">Verdict fără titlu</string>
+    <string name="shell_local_sign_in">Conectează-te ca să-ți vezi verdictele pe orice dispozitiv</string>
     <string name="shell_case_waiting">Așteaptă răspuns</string>
     <string name="history_state_judging">Judecătorii se gândesc</string>
     <string name="history_state_rejudging">Judecătorii se gândesc din nou</string>

@@ -482,6 +482,7 @@
     <string name="shell_load_failed">Non siamo riusciti a caricare la cronologia.</string>
     <string name="shell_load_more">Mostra altri</string>
     <string name="shell_untitled">Verdetto senza titolo</string>
+    <string name="shell_local_sign_in">Accedi per vedere i tuoi verdetti su qualsiasi dispositivo</string>
     <string name="shell_case_waiting">In attesa di risposta</string>
     <string name="history_state_judging">I giudici stanno riflettendo</string>
     <string name="history_state_rejudging">I giudici stanno rivalutando</string>

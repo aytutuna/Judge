@@ -490,6 +490,7 @@
     <string name="shell_load_failed">Nie udało się wczytać historii.</string>
     <string name="shell_load_more">Pokaż więcej</string>
     <string name="shell_untitled">Werdykt bez tytułu</string>
+    <string name="shell_local_sign_in">Zaloguj się, żeby widzieć werdykty na każdym urządzeniu</string>
     <string name="shell_case_waiting">Czeka na odpowiedź</string>
     <string name="history_state_judging">Sędziowie się naradzają</string>
     <string name="history_state_rejudging">Sędziowie znów się naradzają</string>

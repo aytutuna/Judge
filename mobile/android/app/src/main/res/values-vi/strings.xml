@@ -466,6 +466,7 @@
     <string name="shell_load_failed">Không tải được lịch sử.</string>
     <string name="shell_load_more">Xem thêm</string>
     <string name="shell_untitled">Phán quyết chưa có tiêu đề</string>
+    <string name="shell_local_sign_in">Đăng nhập để xem phán quyết trên mọi thiết bị</string>
     <string name="shell_case_waiting">Đang chờ trả lời</string>
     <string name="history_state_judging">Ban giám khảo đang cân nhắc</string>
     <string name="history_state_rejudging">Ban giám khảo đang xét lại</string>

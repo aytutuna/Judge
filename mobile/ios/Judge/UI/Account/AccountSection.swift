@@ -15,6 +15,13 @@ struct AccountSection: View {
             } else {
                 signedOut(lang)
             }
+            if app.purchases.canRestore(account.pricing) {
+                let purchases = app.purchases
+                actionRow(L10n.appPurchaseRestore(lang), busy: purchases.isRestoring, color: Brand.ink) {
+                    account.requireSignIn { Task { await purchases.restore() } }
+                }
+                .disabled(purchases.isRestoring || account.busy != nil)
+            }
             NavigationLink(value: SettingsRoute.pricing) {
                 Label {
                     Text(L10n.navPricing(lang))
@@ -54,13 +61,6 @@ struct AccountSection: View {
             if let subscription = entitlement.subscription {
                 fact(L10n.accountSubscription(lang), value: subscriptionText(subscription, lang: lang))
             }
-        }
-        if app.purchases.canRestore(account.pricing) {
-            let purchases = app.purchases
-            actionRow(L10n.appPurchaseRestore(lang), busy: purchases.isRestoring, color: Brand.ink) {
-                Task { await purchases.restore() }
-            }
-            .disabled(purchases.isRestoring || account.busy != nil)
         }
     }
 

@@ -474,6 +474,7 @@
     <string name="shell_load_failed">ਤੁਹਾਡਾ ਇਤਿਹਾਸ ਲੋਡ ਨਹੀਂ ਹੋ ਸਕਿਆ।</string>
     <string name="shell_load_more">ਹੋਰ ਦਿਖਾਓ</string>
     <string name="shell_untitled">ਬਿਨਾਂ ਸਿਰਲੇਖ ਦਾ ਫ਼ੈਸਲਾ</string>
+    <string name="shell_local_sign_in">ਕਿਸੇ ਵੀ ਡਿਵਾਈਸ ’ਤੇ ਆਪਣੇ ਫ਼ੈਸਲੇ ਦੇਖਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ</string>
     <string name="shell_case_waiting">ਜਵਾਬ ਦੀ ਉਡੀਕ</string>
     <string name="history_state_judging">ਜੱਜ ਸੋਚ ਰਹੇ ਹਨ</string>
     <string name="history_state_rejudging">ਜੱਜ ਮੁੜ ਸੋਚ ਰਹੇ ਹਨ</string>

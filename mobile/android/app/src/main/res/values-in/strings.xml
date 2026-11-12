@@ -466,6 +466,7 @@
     <string name="shell_load_failed">Riwayatmu gagal dimuat.</string>
     <string name="shell_load_more">Tampilkan lagi</string>
     <string name="shell_untitled">Putusan tanpa judul</string>
+    <string name="shell_local_sign_in">Masuk untuk melihat putusanmu di perangkat mana pun</string>
     <string name="shell_case_waiting">Menunggu jawaban</string>
     <string name="history_state_judging">Hakim sedang menimbang</string>
     <string name="history_state_rejudging">Hakim menimbang ulang</string>

@@ -474,6 +474,7 @@
     <string name="shell_load_failed">Wir konnten deinen Verlauf nicht laden.</string>
     <string name="shell_load_more">Mehr anzeigen</string>
     <string name="shell_untitled">Urteil ohne Titel</string>
+    <string name="shell_local_sign_in">Melde dich an, um deine Urteile auf jedem Gerät zu sehen</string>
     <string name="shell_case_waiting">Wartet auf Antwort</string>
     <string name="history_state_judging">Die Richter überlegen</string>
     <string name="history_state_rejudging">Die Richter überlegen noch mal</string>

@@ -482,6 +482,7 @@
     <string name="shell_load_failed">Nismo uspjeli učitati tvoju povijest.</string>
     <string name="shell_load_more">Prikaži više</string>
     <string name="shell_untitled">Presuda bez naslova</string>
+    <string name="shell_local_sign_in">Prijavi se da vidiš svoje presude na svakom uređaju</string>
     <string name="shell_case_waiting">Čeka odgovor</string>
     <string name="history_state_judging">Suci razmišljaju</string>
     <string name="history_state_rejudging">Suci ponovno razmišljaju</string>

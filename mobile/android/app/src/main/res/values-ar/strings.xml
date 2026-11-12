@@ -506,6 +506,7 @@
     <string name="shell_load_failed">تعذّر تحميل سجلك.</string>
     <string name="shell_load_more">عرض المزيد</string>
     <string name="shell_untitled">حكم بلا عنوان</string>
+    <string name="shell_local_sign_in">سجّل الدخول لترى أحكامك على أي جهاز</string>
     <string name="shell_case_waiting">بانتظار الرد</string>
     <string name="history_state_judging">القضاة يفكرون</string>
     <string name="history_state_rejudging">القضاة يعيدون النظر</string>

@@ -490,6 +490,7 @@
     <string name="shell_load_failed">Не удалось загрузить историю.</string>
     <string name="shell_load_more">Показать ещё</string>
     <string name="shell_untitled">Вердикт без названия</string>
+    <string name="shell_local_sign_in">Войдите, чтобы видеть вердикты на любом устройстве</string>
     <string name="shell_case_waiting">Ждём ответа</string>
     <string name="history_state_judging">Судьи думают</string>
     <string name="history_state_rejudging">Судьи снова думают</string>

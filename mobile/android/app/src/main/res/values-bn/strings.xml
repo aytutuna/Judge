@@ -474,6 +474,7 @@
     <string name="shell_load_failed">আপনার ইতিহাস লোড করা গেল না।</string>
     <string name="shell_load_more">আরও দেখুন</string>
     <string name="shell_untitled">শিরোনামহীন রায়</string>
+    <string name="shell_local_sign_in">যেকোনো ডিভাইসে আপনার রায় দেখতে সাইন ইন করুন</string>
     <string name="shell_case_waiting">উত্তরের অপেক্ষায়</string>
     <string name="history_state_judging">বিচারকেরা ভাবছেন</string>
     <string name="history_state_rejudging">বিচারকেরা আবার ভাবছেন</string>

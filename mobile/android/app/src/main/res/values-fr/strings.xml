@@ -482,6 +482,7 @@
     <string name="shell_load_failed">Impossible de charger ton historique.</string>
     <string name="shell_load_more">Afficher plus</string>
     <string name="shell_untitled">Verdict sans titre</string>
+    <string name="shell_local_sign_in">Connecte-toi pour retrouver tes verdicts sur tous tes appareils</string>
     <string name="shell_case_waiting">En attente de réponse</string>
     <string name="history_state_judging">Les juges réfléchissent</string>
     <string name="history_state_rejudging">Les juges réfléchissent à nouveau</string>
