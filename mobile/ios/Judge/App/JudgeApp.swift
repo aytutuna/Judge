@@ -73,7 +73,10 @@ struct RootView: View {
         }
         .task { await app.account.start() }
         .onChange(of: scenePhase, initial: true) { _, phase in
-            if phase == .active { app.analytics.becameActive() }
+            if phase == .active {
+                app.analytics.becameActive()
+                Task { await app.account.retryAppleCode() }
+            }
             if phase == .background { app.analytics.enteredBackground() }
         }
         .onChange(of: app.account.isSignedIn) { _, signedIn in

@@ -69,14 +69,19 @@ extension JudgeAPI {
 
     /// POST /api/v1/auth/apple/code: hands the server Apple's one-time
     /// authorization code under the new session's token. Sent on the raw
-    /// session so an answer never clears the token; callers ignore failures.
+    /// session so an answer never clears the token. Throws on any answer
+    /// that is not a success, so the caller can keep the code for a retry.
     func storeAppleAuthorizationCode(_ code: String, token: String) async throws {
         var request = makeRequest(url: endpoint("auth/apple/code"), method: "POST", timeout: AuthTimeout.call)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         addDevice(&request)
         request.httpBody = try JSONSerialization.data(withJSONObject: ["code": code])
-        _ = try await session.data(for: request)
+        let (data, response) = try await session.data(for: request)
+        guard let http = response as? HTTPURLResponse else { throw APIError.malformed }
+        guard (200..<300).contains(http.statusCode) else {
+            throw APIError.from(status: http.statusCode, body: data, retryAfterHeader: nil)
+        }
     }
 
     /// POST /api/auth/email-otp/send-verification-otp?lang=… : emails a

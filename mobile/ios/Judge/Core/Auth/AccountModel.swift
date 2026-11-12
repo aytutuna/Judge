@@ -89,6 +89,10 @@ final class AccountModel {
     private let apple: any AppleAuthorizing
     private let google: any GoogleAuthorizing
     private let ageRange: any AgeRangeAsking
+    /// Apple's authorization code while the server has not confirmed it, as
+    /// "<unix seconds> <code>". Kept in the Keychain like the session token.
+    private let appleCodes: any TokenStore
+    @ObservationIgnored private var sendingAppleCode = false
     @ObservationIgnored private var askingPlatform = false
     @ObservationIgnored private var platformTimedOut = false
     @ObservationIgnored private var ageListener: Task<Void, Never>?
@@ -112,12 +116,14 @@ final class AccountModel {
         api: JudgeAPI,
         apple: (any AppleAuthorizing)? = nil,
         google: (any GoogleAuthorizing)? = nil,
-        ageRange: (any AgeRangeAsking)? = nil
+        ageRange: (any AgeRangeAsking)? = nil,
+        appleCodes: (any TokenStore)? = nil
     ) {
         self.api = api
         self.apple = apple ?? AppleAuthorizer()
         self.google = google ?? GoogleOAuth()
         self.ageRange = ageRange ?? NoAgeRange()
+        self.appleCodes = appleCodes ?? KeychainTokenStore(service: "com.okjudge.judge.apple-code", account: "pending")
         isSignedIn = api.tokenStore.token()?.isEmpty == false
     }
 
@@ -169,6 +175,7 @@ final class AccountModel {
         guard usesNetwork else { return }
         if signInProviders == nil { await loadProviders() }
         if isSignedIn { await refresh() }
+        await retryAppleCode()
     }
 
     func loadProviders() async {
@@ -202,6 +209,7 @@ final class AccountModel {
                 if let id = fresh.user?.id { onUserKnown?(id) }
                 await settleAge()
                 runAfterAgeIfCleared()
+                await retryAppleCode()
             }
         } catch let error as APIError {
             if error.code == "signin_required" {
@@ -418,14 +426,43 @@ final class AccountModel {
             let identity = try await apple.authorize()
             let session = try await api.signInWithIDToken(provider: .apple, idToken: identity.identityToken, nonce: identity.rawNonce, apple: identity)
             await finishSignIn(session)
-            // Codes expire in minutes and work once: send it now. Any
-            // answer or failure is ignored; the sign-in stands.
+            // Codes expire in minutes and work once: send it now. A failure
+            // leaves the code kept for a retry; the sign-in stands.
             if let code = identity.authorizationCode, !code.isEmpty {
-                try? await api.storeAppleAuthorizationCode(code, token: session.token)
+                appleCodes.setToken("\(Int(Date().timeIntervalSince1970)) \(code)")
+                await retryAppleCode()
             }
         } catch {
             failure = Self.signInFailure(error)
         }
+    }
+
+    /// Sends the kept Apple code to the server until it confirms (or
+    /// refuses it for good). Apple's codes die after about five minutes, so
+    /// one older than ten is dropped. Runs at launch, after /me and when the
+    /// app becomes active.
+    func retryAppleCode() async {
+        guard isSignedIn, usesNetwork, !sendingAppleCode, let kept = appleCodes.token() else { return }
+        let parts = kept.split(separator: " ", maxSplits: 1)
+        guard parts.count == 2, let stamp = TimeInterval(parts[0]),
+              Date().timeIntervalSince1970 - stamp < 600
+        else {
+            appleCodes.clear()
+            return
+        }
+        guard let token = api.tokenStore.token() else { return }
+        sendingAppleCode = true
+        defer { sendingAppleCode = false }
+        do {
+            try await api.storeAppleAuthorizationCode(String(parts[1]), token: token)
+        } catch let error as APIError {
+            // A refusal other than "busy" or "slow down" will not change on a retry.
+            let status = Self.status(error)
+            guard (400..<500).contains(status), status != 408, status != 429 else { return }
+        } catch {
+            return
+        }
+        if appleCodes.token() == kept { appleCodes.clear() }
     }
 
     func signInWithGoogle() async {
@@ -728,6 +765,7 @@ final class AccountModel {
 
     private func clearSession(byUser: Bool = false) {
         api.tokenStore.clear()
+        appleCodes.clear()
         isSignedIn = false
         info = nil
         // The next person to sign in ticks the box for themselves; the

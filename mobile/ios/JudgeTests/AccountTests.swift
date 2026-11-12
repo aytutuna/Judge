@@ -92,7 +92,7 @@ final class AccountTests: XCTestCase {
         apple: Result<AppleIdentity, any Error> = .failure(IdentityProviderError.cancelled),
         google: Result<GoogleIdentity, any Error> = .failure(IdentityProviderError.cancelled)
     ) -> AccountModel {
-        let account = AccountModel(api: api(store), apple: FakeApple(apple), google: FakeGoogle(google))
+        let account = AccountModel(api: api(store), apple: FakeApple(apple), google: FakeGoogle(google), appleCodes: MemoryTokenStore())
         // The 18+ box is ticked unless a test is about it (AgeCheckTests).
         account.setAgeTicked(true)
         return account
@@ -216,6 +216,24 @@ final class AccountTests: XCTestCase {
             XCTAssertEqual(store.token(), "sess-new", "status \(status)")
             XCTAssertNil(account.failure, "status \(status)")
         }
+    }
+
+    @MainActor
+    func testAppleCodeIsKeptUntilTheServerConfirms() async throws {
+        route([
+            "/api/auth/sign-in/social": try json(200, ["token": "sess-new", "user": Self.userJSON]),
+            "/api/v1/auth/apple/code": try json(503, ["error": "later"]),
+            "/api/v1/me": try json(200, Self.meJSON),
+        ])
+        let account = model(apple: .success(AppleIdentity(identityToken: "jwt", rawNonce: "n", authorizationCode: "c0de")))
+        await account.signInWithApple()
+        StubURLProtocol.requests = []
+        route(["/api/v1/auth/apple/code": try json(200, ["stored": true])])
+        await account.retryAppleCode()
+        XCTAssertEqual(try body(request("/api/v1/auth/apple/code")) as NSDictionary, ["code": "c0de"] as NSDictionary)
+        StubURLProtocol.requests = []
+        await account.retryAppleCode()
+        XCTAssertNil(request("/api/v1/auth/apple/code"))
     }
 
     @MainActor
