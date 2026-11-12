@@ -115,15 +115,25 @@ final class StoryTests: XCTestCase {
         }
     }
 
+    private func result(_ dispute: DisputeType, _ trial: CruxTrial) -> VerdictResult {
+        VerdictResult(
+            verdict: .sideA, disputeType: dispute, headline: "", crux: "", splitPoints: nil, conditional: nil,
+            argumentMap: .empty, factsReliedOn: [], losingSideBestPoint: "", confidence: 3, runs: [.sideA],
+            demo: false, modelRefused: false, cruxTrial: trial, lean: .absent, escalated: false, lang: .en,
+            tier: nil, factCheck: nil, panel: nil
+        )
+    }
+
+    func testDoubtfulTrialLineUsesRestoredNames() {
+        let trial = CruxTrial(attack: "Party B disagrees.", outcome: .uncertain, reasoning: "Party B never answered.")
+        let nameMap = [NameMapping(original: "Dana", replacement: "Party B")]
+        let named = Names.personalizeResult(result(.factual, trial), nameMap: nameMap, selfLang: .en)
+        let text = Story.text(Story.Line(key: "trial.uncertain"), lang: .en, result: named)
+        XCTAssertTrue(text.contains("Dana"), text)
+        XCTAssertFalse(text.contains("Party B"), text)
+    }
+
     func testDoubtfulTrialLineSaysWhy() {
-        func result(_ dispute: DisputeType, _ trial: CruxTrial) -> VerdictResult {
-            VerdictResult(
-                verdict: .sideA, disputeType: dispute, headline: "", crux: "", splitPoints: nil, conditional: nil,
-                argumentMap: .empty, factsReliedOn: [], losingSideBestPoint: "", confidence: 3, runs: [.sideA],
-                demo: false, modelRefused: false, cruxTrial: trial, lean: .absent, escalated: false, lang: .en,
-                tier: nil, factCheck: nil, panel: nil
-            )
-        }
         let line = Story.Line(key: "trial.uncertain")
         let plain = Story.text(line, lang: .en)
         let reasoned = CruxTrial(attack: "Menus vary.", outcome: .uncertain, reasoning: "Only some list it.")

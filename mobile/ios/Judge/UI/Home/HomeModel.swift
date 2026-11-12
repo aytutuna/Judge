@@ -775,7 +775,7 @@ final class HomeModel {
         persist()
         try? history.save(session)
         arrivedID = session.id
-        arrived = payload.result.result
+        arrived = Names.personalizeResult(payload.result.result, nameMap: payload.nameMap, selfLang: session.sourceLang)
     }
 
     /// A connection lost after the background time ran out is the
