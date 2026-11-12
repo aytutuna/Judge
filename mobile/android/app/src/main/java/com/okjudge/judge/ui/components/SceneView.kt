@@ -80,8 +80,9 @@ private fun SceneWebView(mode: SceneMode, reducedMotion: Boolean, onGone: () -> 
     var loaded by remember { mutableStateOf(false) }
     // WebGL can drop its context in the background; the page then shows its flat fallback until reloaded.
     var lost by remember { mutableStateOf(false) }
+    // No WebView provider, or one being updated, throws here.
     val web = remember {
-        WebView(context).apply {
+        runCatching { WebView(context) }.getOrNull()?.apply {
             setBackgroundColor(Color.TRANSPARENT)
             isVerticalScrollBarEnabled = false
             isHorizontalScrollBarEnabled = false
@@ -109,6 +110,10 @@ private fun SceneWebView(mode: SceneMode, reducedMotion: Boolean, onGone: () -> 
             }
             loadUrl(SCENE_URL)
         }
+    }
+    if (web == null) {
+        LaunchedEffect(Unit) { gone() }
+        return
     }
 
     val you = LocalSides.current.you

@@ -76,8 +76,9 @@ private fun CourtWebView(scene: CourtScene, reducedMotion: Boolean, onGone: () -
     val context = LocalContext.current
     val gone by rememberUpdatedState(onGone)
     var loaded by remember { mutableStateOf(false) }
+    // No WebView provider, or one being updated, throws here.
     val web = remember {
-        WebView(context).apply {
+        runCatching { WebView(context) }.getOrNull()?.apply {
             setBackgroundColor(Color.TRANSPARENT)
             isVerticalScrollBarEnabled = false
             isHorizontalScrollBarEnabled = false
@@ -104,6 +105,10 @@ private fun CourtWebView(scene: CourtScene, reducedMotion: Boolean, onGone: () -
             }
             loadUrl(COURT_URL)
         }
+    }
+    if (web == null) {
+        LaunchedEffect(Unit) { gone() }
+        return
     }
 
     LaunchedEffect(loaded, scene, reducedMotion) {
