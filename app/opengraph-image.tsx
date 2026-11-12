@@ -14,7 +14,7 @@ export default async function Image() {
         title={t("en", "hero.titleLine1")}
         titleSerif={t("en", "hero.titleLine2")}
         subtitle="Describe the argument. Get the crux, a ruling and an honest confidence score."
-        footer="Steelman · Crux · Three judges · Cross-examination"
+        footer="Steelman · Crux · Three judges · Objection"
         tugA={50}
       />
     ),
