@@ -46,19 +46,20 @@ function emailOn(): Sent[] {
   return sent;
 }
 
-async function post(p: string, body: unknown): Promise<Response> {
+async function post(p: string, body: unknown, ip = "203.0.113.1"): Promise<Response> {
   const instance = await auth.getAuth();
   return instance.handler(
     new Request(`http://localhost:3601/api/auth${p}`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json", "x-forwarded-for": ip },
       body: JSON.stringify(body),
     }),
   );
 }
 
-const sendCode = (email: string) => post("/email-otp/send-verification-otp", { email, type: "sign-in" });
-const signIn = (email: string, otp: string) => post("/sign-in/email-otp", { email, otp });
+const sendCode = (email: string, ip?: string) =>
+  post("/email-otp/send-verification-otp", { email, type: "sign-in" }, ip);
+const signIn = (email: string, otp: string, ip?: string) => post("/sign-in/email-otp", { email, otp }, ip);
 
 describe("sign-in code limits per address", () => {
   it("stops sending after five codes an hour, aliases included", async () => {
@@ -86,5 +87,31 @@ describe("sign-in code limits per address", () => {
     const res = await signIn("guess@example.com", "000000");
     expect(res.status).toBe(429);
     expect(((await res.json()) as { code: string }).code).toBe("RATE_LIMITED");
+  });
+
+  it("does not let one IP block the same address from another", async () => {
+    emailOn();
+    for (let i = 0; i < 5; i++) expect((await sendCode("victim@example.com", "198.51.100.1")).status).toBe(200);
+    expect((await sendCode("victim@example.com", "198.51.100.1")).status).toBe(429);
+    expect((await sendCode("victim@example.com", "198.51.100.2")).status).toBe(200);
+    for (let i = 0; i < 10; i++) expect((await signIn("victim@example.com", "000000", "198.51.100.1")).status).not.toBe(429);
+    expect((await signIn("victim@example.com", "000000", "198.51.100.1")).status).toBe(429);
+    expect((await signIn("victim@example.com", "000000", "198.51.100.2")).status).not.toBe(429);
+  });
+
+  it("keeps a looser ceiling on the address across IPs", async () => {
+    emailOn();
+    // 5 per IP, 20 per address: the fifth IP's sends run into the ceiling.
+    let sent = 0;
+    let last = 200;
+    for (let ip = 1; ip <= 6 && last === 200; ip++) {
+      for (let i = 0; i < 5 && last === 200; i++) {
+        last = (await sendCode("many@example.com", `192.0.2.${ip}`)).status;
+        if (last === 200) sent++;
+      }
+    }
+    expect(sent).toBe(20);
+    expect(last).toBe(429);
+    expect((await sendCode("many@example.com", "192.0.2.99")).status).toBe(429);
   });
 });

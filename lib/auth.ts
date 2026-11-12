@@ -257,13 +257,24 @@ async function limitOrThrow(subject: string, bucket: UserBucket): Promise<void> 
   throw new APIError("TOO_MANY_REQUESTS", { message: "Too many attempts", code: "RATE_LIMITED" });
 }
 
-/** Per-address code limits, so aliases and many IPs share one budget. The
- * review address has its own cap (reviewSendAllowed). */
-async function limitCodeAddress(email: unknown, bucket: "code_send" | "code_attempt", env: Env): Promise<void> {
+/** Code limits by canonical address, so aliases share one budget: a tight one
+ * per address and IP (like password_signin, address alone would let anyone
+ * lock a victim out) and a looser one per address. The review address has its
+ * own send cap (reviewSendAllowed), but its code never changes, so guesses
+ * are still counted. */
+async function limitCodeAddress(
+  email: unknown,
+  kind: "send" | "attempt",
+  headers: Headers,
+  env: Env,
+): Promise<void> {
   if (typeof email !== "string") return;
   if (reviewAccount(env)?.email === email.trim().toLowerCase()) return;
   const claim = welcomeClaim(email);
-  if (claim) await limitOrThrow(claim, bucket);
+  if (!claim) return;
+  const bucket = kind === "send" ? "code_send" : "code_attempt";
+  await limitOrThrow(`${claim}:${visitorKey(clientIp(headers))}`, bucket);
+  await limitOrThrow(claim, `${bucket}_any`);
 }
 
 function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeof getDb>>) {
@@ -446,7 +457,7 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         if (ctx.path === SEND_CODE_PATH) {
           const body = ctx.body as { type?: unknown; email?: unknown } | undefined;
           if (body?.type !== "sign-in") throw new APIError("BAD_REQUEST", { message: "Only sign-in codes are supported" });
-          await limitCodeAddress(body.email, "code_send", env);
+          await limitCodeAddress(body.email, "send", ctx.headers ?? ctx.request?.headers ?? new Headers(), env);
           if (typeof body.email === "string") {
             const row = await ctx.context.internalAdapter.findVerificationValue(codeIdentifier(body.email));
             if (row && row.expiresAt > new Date()) {
@@ -455,7 +466,8 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
           }
         }
         if (ctx.path === CODE_SIGNIN_PATH) {
-          await limitCodeAddress((ctx.body as { email?: unknown } | undefined)?.email, "code_attempt", env);
+          const headers = ctx.headers ?? ctx.request?.headers ?? new Headers();
+          await limitCodeAddress((ctx.body as { email?: unknown } | undefined)?.email, "attempt", headers, env);
         }
         if (ctx.path === PASSWORD_SIGNIN_PATH) {
           // Every address counts the same, known or not, so the refusal

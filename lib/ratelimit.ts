@@ -174,7 +174,9 @@ export type UserBucket =
   | "apple_code"
   | "password_signin"
   | "code_send"
+  | "code_send_any"
   | "code_attempt"
+  | "code_attempt_any"
   | "password_set"
   | "events";
 
@@ -228,11 +230,17 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
     { limit: 10, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:ps10m" },
     { limit: 30, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:psday" },
   ],
-  /** Sign-in code emails per canonical address, whoever asks. */
+  /** Sign-in code emails, keyed canonical address and visitor IP. */
   code_send: [{ limit: 5, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:cs1h" }],
-  /** Sign-in code guesses per canonical address. A resend issues a new code
-   * and resets the per-code count, so this is the cap that survives it. */
+  /** Sign-in code emails per canonical address from anywhere: a looser
+   * ceiling, since a tight one by address alone would lock the owner out. */
+  code_send_any: [{ limit: 20, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:csa1h" }],
+  /** Sign-in code guesses, keyed canonical address and visitor IP. A resend
+   * issues a new code and resets the per-code count, so this is the cap that
+   * survives it. */
   code_attempt: [{ limit: 10, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:ca1h" }],
+  /** Sign-in code guesses per canonical address from anywhere. */
+  code_attempt_any: [{ limit: 30, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:caa1h" }],
   /** Setting or changing the password (POST /api/v1/me/password). */
   password_set: [
     { limit: 5, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:pw10m" },
