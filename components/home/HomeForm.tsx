@@ -62,6 +62,12 @@ function SideCard({ side, head, docked = false, children }: CardProps) {
             aria-label={side.namePlaceholder}
             autoComplete={side.letter === "A" ? "given-name" : "off"}
             onChange={(e) => side.onName(e.target.value)}
+            onKeyDown={(e) => {
+              // Enter in a name moves to the text instead of submitting the verdict.
+              if (e.key !== "Enter" || e.nativeEvent.isComposing) return;
+              e.preventDefault();
+              ref.current?.focus();
+            }}
           />
           {side.onRemove ? (
             <button type="button" className={styles.remove} onClick={side.onRemove} aria-label={side.removeLabel}>
