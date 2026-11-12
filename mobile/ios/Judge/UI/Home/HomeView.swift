@@ -32,7 +32,7 @@ struct HomeView: View {
 
     private enum CardKind { case list, composer, lifted }
 
-    private final class FrameBox {
+    @MainActor private final class FrameBox {
         var values: [Party: CGRect] = [:]
     }
 
@@ -109,7 +109,9 @@ struct HomeView: View {
                 RootBarTrailing()
             }
         }
-        .onPreferenceChange(CardFrames.self) { frames.values = $0 }
+        .onPreferenceChange(CardFrames.self) { [frames] value in
+            MainActor.assumeIsolated { frames.values = value }
+        }
         .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
             if active != nil { dismiss() }
         }
