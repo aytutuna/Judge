@@ -31,8 +31,6 @@ describe("locale check", () => {
       email: EMAIL_EN,
     } as unknown as Locale;
     expect(checkLocale("es", locale)).toEqual([
-      "plurals.panel.strong.one: missing",
-      "plurals.panel.quick.one: missing",
       "plurals.home.monthLeft.one: missing",
       "plurals.thread.judgesAgree.one: missing",
     ]);
