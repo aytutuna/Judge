@@ -1036,6 +1036,7 @@ limit within 5 minutes:
 | `many_accounts_per_device` | 1 | a device (the app's `Device-Id` header at sign-in) signs in to its third or later account; sign-in goes ahead |
 | `events_cap` | 1 | a batch of usage events is refused because 200,000 were stored in the last 24 hours |
 | `age_blocked` | 1 | an app reports, from the store's age signal, that an account belongs to someone under 18; the account is blocked (nothing is deleted) |
+| `grant_skipped` | 1 | a paid grant was skipped because a refund covers it; the line has the source and transaction id |
 | `ban` | 20 | fail2ban bans an address (from fail2ban's journal) |
 
 Change a limit with `ALERT_SIGNAL_<NAME>=n` in the env file, e.g.

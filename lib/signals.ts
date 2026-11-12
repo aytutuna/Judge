@@ -17,7 +17,8 @@ export type Signal =
   | "many_accounts_per_device"
   | "events_cap"
   | "age_blocked"
-  | "schema_drift";
+  | "schema_drift"
+  | "grant_skipped";
 
 export function signal(name: Signal, detail?: string): void {
   console.warn(detail ? `[signal:${name}] ${detail}` : `[signal:${name}]`);

@@ -21,6 +21,7 @@ import type { Client, InStatement, InValue, ResultSet } from "@libsql/client";
 import type { Entitlement, GrantSource, PremiumBlock, SubscriptionView } from "./account-types";
 import { getDb } from "./db";
 import { PRICING } from "./pricing";
+import { signal } from "./signals";
 
 const STALE_RESERVATION_MS = 10 * 60_000;
 const SWEEP_EVERY_MS = 60_000;
@@ -596,7 +597,9 @@ export async function grantCredits(g: {
       args: [g.userId, g.credits, nowIso, ...guard.args],
     },
   ]);
-  return { applied: results[0].rowsAffected === 1 };
+  const applied = results[0].rowsAffected === 1;
+  if (!applied && (await tombstoned(g.source, g.externalId, ""))) skipped(g.source, g.externalId);
+  return { applied };
 }
 
 /** Premium verdicts every new account starts with. */
@@ -740,7 +743,32 @@ export async function grantSubscription(g: {
       args: [g.source, g.originalTransactionId, id],
     },
   ]);
-  return { applied: results[0].rowsAffected === 1 };
+  const applied = results[0].rowsAffected === 1;
+  if (!applied) {
+    if (await tombstoned(g.source, g.originalTransactionId, periodStart)) skipped(g.source, g.externalId);
+  } else if (results[1].rowsAffected === 0 && g.source !== "admin") {
+    const rs = await (await client()).execute({
+      sql: "SELECT status FROM subscriptions WHERE source = ? AND original_transaction_id = ?",
+      args: [g.source, g.originalTransactionId],
+    });
+    const status = String(rs.rows[0]?.status);
+    if (status === "refunded" || status === "revoked") skipped(g.source, g.externalId);
+  }
+  return { applied };
+}
+
+/** A refund that arrived before its purchase, for a period that started
+ * before the refund: that purchase is skipped. */
+async function tombstoned(source: string, transactionId: string, periodStart: string): Promise<boolean> {
+  const rs = await (await client()).execute({
+    sql: "SELECT 1 FROM refund_tombstones WHERE source = ? AND transaction_id = ? AND created_at > ?",
+    args: [source, transactionId, periodStart],
+  });
+  return rs.rows.length > 0;
+}
+
+function skipped(source: string, transactionId: string): void {
+  signal("grant_skipped", `source=${source} transaction=${transactionId}`);
 }
 
 /** Records an existing subscription event (no new user id needed): the grant

@@ -1,7 +1,7 @@
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it, vi } from "vitest";
 import { createClient } from "@libsql/client";
 
 const dir = mkdtempSync(path.join(tmpdir(), "verdict-ent-"));
@@ -427,6 +427,22 @@ describe("entitlements: grants and store events", () => {
     await new Promise((r) => setTimeout(r, 10));
     expect(await subscribe(u, { otid, start: new Date() })).toEqual({ applied: true });
     expect((await ent.getEntitlement(u)).canUsePremium).toBe(true);
+  });
+
+  it("signals a paid grant skipped because of a refund", async () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const u = newUser();
+    await ent.refundPurchase({ source: "app_store", externalId: `rf-${u}`, transactionId: `sk-${u}` });
+    await subscribe(u, { otid: `sk-${u}`, ext: `evt-sk-${u}` });
+    expect(warn).toHaveBeenCalledWith(`[signal:grant_skipped] source=app_store transaction=evt-sk-${u}`);
+
+    const v = newUser();
+    await subscribe(v, { otid: `sv-${v}` });
+    await ent.refundPurchase({ source: "app_store", externalId: `rf-${v}`, transactionId: `sv-${v}` });
+    warn.mockClear();
+    await subscribe(v, { otid: `sv-${v}`, ext: `evt-sv-${v}` });
+    expect(warn).toHaveBeenCalledWith(`[signal:grant_skipped] source=app_store transaction=evt-sv-${v}`);
+    warn.mockRestore();
   });
 
   it("a tombstone only blocks the period it was made for", async () => {
