@@ -603,7 +603,7 @@ export function CaseScreen({ id }: { id: string }) {
   const lang = useLang();
   const viewer = useViewer();
   const base = `/api/v1/cases/${encodeURIComponent(id)}`;
-  const { load, setView } = useCase(base);
+  const { load, setView, reload } = useCase(base);
   const localNames = useCaseNames(id, "a");
   const view = load.view;
   // The server's encrypted copy, on any device; this browser's names for
@@ -716,6 +716,11 @@ export function CaseScreen({ id }: { id: string }) {
         <p className={load.status === "error" ? styles.error : styles.note} role={load.status === "loading" ? "status" : "alert"}>
           {message}
         </p>
+        {load.status === "error" ? (
+          <button type="button" className={`${account.btn} ${account.primary}`} onClick={reload}>
+            {t(lang, "case.retry")}
+          </button>
+        ) : null}
         {load.status === "signin" ? (
           <Link href={`/signin?next=${encodeURIComponent(`/c/${id}`)}`} className={`${account.btn} ${account.primary}`}>
             {t(lang, "nav.signIn")}

@@ -491,7 +491,7 @@ export function RespondScreen({ token }: { token: string }) {
   // view has loaded, hence the remembered id.
   const [knownId, setKnownId] = useState<string | null>(null);
   const claim = useClaim(knownId);
-  const { load, setView } = useCase(
+  const { load, setView, reload } = useCase(
     `/api/v1/respond/${encodeURIComponent(token)}`,
     claim ? { "Respondent-Claim": claim } : null,
   );
@@ -643,6 +643,11 @@ export function RespondScreen({ token }: { token: string }) {
         <p className={calm ? styles.note : styles.error} role={load.status === "loading" ? "status" : "alert"}>
           {message}
         </p>
+        {load.status === "error" && !closed ? (
+          <button type="button" className={`${account.btn} ${account.primary}`} onClick={reload}>
+            {t(lang, "case.retry")}
+          </button>
+        ) : null}
       </CaseShell>
     );
   }

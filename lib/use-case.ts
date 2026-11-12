@@ -125,11 +125,21 @@ export function useCase(
     };
   }, [load]);
 
+  // A first load that fails gets one quiet retry, then waits for the button.
+  useEffect(() => {
+    if (load.status !== "error" || failures.current !== 1) return;
+    const timer = setTimeout(() => setTick((n) => n + 1), 2000);
+    return () => clearTimeout(timer);
+  }, [load]);
+
   const setView = useCallback((view: CaseView) => {
     failures.current = 0;
     setLoad({ status: "ready", view, code: null });
   }, []);
-  const reload = useCallback(() => setTick((n) => n + 1), []);
+  const reload = useCallback(() => {
+    setLoad((prev) => (prev.view ? prev : { status: "loading", view: null, code: null }));
+    setTick((n) => n + 1);
+  }, []);
 
   return { load, setView, reload };
 }
