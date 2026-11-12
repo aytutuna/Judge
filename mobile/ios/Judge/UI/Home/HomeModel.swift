@@ -123,6 +123,8 @@ final class HomeModel {
     /// What a request judges, fixed when it was submitted.
     @ObservationIgnored private var premiumInput: PremiumInput?
     @ObservationIgnored private let keys = IdempotencyKeys()
+    /// Where the pending premium request is kept across launches; nil in tests.
+    @ObservationIgnored private let defaults: UserDefaults?
     /// The place picked for the verdict being asked for. A retry of the same
     /// request keeps it, so its Idempotency-Key still matches; it goes when
     /// the verdict arrives.
@@ -153,6 +155,54 @@ final class HomeModel {
         let lang: AppLang
         /// The evidence tokens.
         var extra = ""
+
+        var digest: String { IdempotencyKeys.digest([text, lang.rawValue, extra].joined(separator: "\n")) }
+    }
+
+    /// The pending premium request as kept in UserDefaults, so a resubmit
+    /// after the system killed the app reuses its venue and Idempotency-Key
+    /// (the server replays instead of charging again) and picks up the
+    /// verdict it already accepted. Only hashes of the text are kept.
+    private struct SavedRequest: Codable {
+        var request: String
+        var venue: String
+        var body: String?
+        var key: String?
+        var accepted: String?
+        var since: Date
+    }
+
+    private static let savedKey = "pendingVerdict"
+    private static let savedLifetime: TimeInterval = 30 * 60
+
+    private func loadSaved() -> SavedRequest? {
+        guard let defaults, let data = defaults.data(forKey: Self.savedKey) else { return nil }
+        guard let saved = try? JSONDecoder().decode(SavedRequest.self, from: data),
+              Date.now.timeIntervalSince(saved.since) < Self.savedLifetime
+        else {
+            defaults.removeObject(forKey: Self.savedKey)
+            return nil
+        }
+        return saved
+    }
+
+    /// An accepted verdict is waiting from an earlier launch.
+    var hasSavedVerdict: Bool { loadSaved()?.accepted != nil }
+
+    /// Writes the held venue, key and accepted id; nothing held clears it.
+    private func persist() {
+        guard let defaults else { return }
+        guard let held = heldVenue else {
+            defaults.removeObject(forKey: Self.savedKey)
+            return
+        }
+        let digest = held.key.digest
+        let earlier = loadSaved().flatMap { $0.request == digest ? $0 : nil }
+        var saved = SavedRequest(
+            request: digest, venue: held.id, body: keys.current?.hash, key: keys.current?.key, since: earlier?.since ?? .now
+        )
+        if let pending, pending.key == held.key { saved.accepted = pending.accepted.id }
+        defaults.set(try? JSONEncoder().encode(saved), forKey: Self.savedKey)
     }
 
     private struct PremiumInput: Equatable {
@@ -185,7 +235,8 @@ final class HomeModel {
     /// for; the server settles every verdict within about 10 minutes.
     static let resumeWindow: TimeInterval = 15 * 60
 
-    init() {
+    init(defaults: UserDefaults? = nil) {
+        self.defaults = defaults
         evidence = EvidenceModel(max: Self.maxEvidence)
     }
 
@@ -499,7 +550,14 @@ final class HomeModel {
             sides: typedSides(app)
         )
         let key = input.requestKey
-        if heldVenue?.key != key { heldVenue = (key, Venues.pickNew()) }
+        let saved = loadSaved().flatMap { $0.request == key.digest ? $0 : nil }
+        if pending?.key != key, let id = saved?.accepted {
+            pending = PendingVerdict(
+                accepted: VerdictAccepted(id: id, nameMap: [], replayed: true), key: key, since: saved?.since ?? .now, idempotencyKey: saved?.key
+            )
+        }
+        if heldVenue?.key != key { heldVenue = (key, saved?.venue ?? Venues.pickNew()) }
+        persist()
         input.venue = heldVenue?.id
         premiumInput = input
         judgingVenue = input.venue ?? Venues.fallback
@@ -595,8 +653,11 @@ final class HomeModel {
             sides: input.sides,
             venue: input.venue
         )
-        let token = keys.key(for: IdempotencyKeys.canonical(body))
         let key = input.requestKey
+        let saved = loadSaved().flatMap { $0.request == key.digest ? $0 : nil }
+        let canonical = IdempotencyKeys.canonical(body)
+        let token = keys.key(for: canonical, reusing: saved?.body == IdempotencyKeys.digest(canonical) ? saved?.key : nil)
+        persist()
         request = Task { [weak self] in
             await self?.judge(.post(body, idempotencyKey: token), requestKey: key, api: api, history: history)
         }
@@ -675,6 +736,7 @@ final class HomeModel {
                     accepted = fresh
                     acceptedAt = .now
                     pending = PendingVerdict(accepted: fresh, key: requestKey, since: .now, idempotencyKey: token)
+                    persist()
                 }
             }
             acceptedID = accepted.id
@@ -686,9 +748,13 @@ final class HomeModel {
             guard !Task.isCancelled else { return }
             if pending?.accepted.id == accepted.id { pending = nil }
             if let idempotencyKey { keys.clear(idempotencyKey) }
+            persist()
             deliver(payload, history: history)
         } catch let failure as VerdictPollError {
-            if !failure.resumable, let acceptedID, pending?.accepted.id == acceptedID { pending = nil }
+            if !failure.resumable, let acceptedID, pending?.accepted.id == acceptedID {
+                pending = nil
+                persist()
+            }
             guard !Task.isCancelled else { return }
             fail(failure.error, background: background)
         } catch let failure as APIError {
@@ -706,6 +772,7 @@ final class HomeModel {
         let session = VerdictSession(id: payload.id, original: payload.result, nameMap: payload.nameMap, translations: [:])
         sessions[session.id] = session
         heldVenue = nil
+        persist()
         try? history.save(session)
         arrivedID = session.id
         arrived = payload.result.result

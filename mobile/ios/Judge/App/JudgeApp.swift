@@ -71,7 +71,13 @@ struct RootView: View {
                 .environment(app)
                 .presentationDragIndicator(.visible)
         }
-        .task { await app.account.start() }
+        .task {
+            await app.account.start()
+            // A verdict accepted before the app was killed is in the list by now.
+            if app.home.hasSavedVerdict {
+                await app.historyList.refresh(user: app.historyUser, enabled: app.account.features.history, force: true)
+            }
+        }
         .onChange(of: scenePhase, initial: true) { _, phase in
             if phase == .active {
                 app.analytics.becameActive()

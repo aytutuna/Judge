@@ -145,7 +145,7 @@ final class AppModel {
             allowed: usageStats && sendsUsageEvents
         )
         history = HistoryStore(container: container)
-        home = HomeModel()
+        home = HomeModel(defaults: defaults)
         account = AccountModel(api: self.api, ageRange: DeclaredAgeRangeAsker())
         historyList = HistoryListModel(api: self.api, store: history, account: account)
         let gateway: (any PurchaseGateway)?

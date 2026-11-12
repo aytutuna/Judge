@@ -1,3 +1,4 @@
+import CryptoKit
 import Foundation
 
 /// One clarifying question (POST /api/v1/clarify, lib/types.ts ClarifyResponse).
@@ -43,18 +44,27 @@ struct EvidenceUploadItem: Decodable, Sendable, Equatable {
 /// different body, or a success, gets a new one.
 @MainActor
 final class IdempotencyKeys {
-    private var held: (body: String, key: String)?
+    private var held: (hash: String, key: String)?
 
-    func key(for body: String) -> String {
-        if let held, held.body == body { return held.key }
-        let key = UUID().uuidString.lowercased()
-        held = (body, key)
+    /// The key now held and a hash of the body it belongs to.
+    var current: (hash: String, key: String)? { held }
+
+    /// `reusing` is a key an earlier run of the app held for this same body.
+    func key(for body: String, reusing: String? = nil) -> String {
+        let hash = Self.digest(body)
+        if let held, held.hash == hash { return held.key }
+        let key = reusing ?? UUID().uuidString.lowercased()
+        held = (hash, key)
         return key
     }
 
     /// Forgets `key` once its request succeeded.
     func clear(_ key: String) {
         if held?.key == key { held = nil }
+    }
+
+    nonisolated static func digest(_ text: String) -> String {
+        SHA256.hash(data: Data(text.utf8)).map { String(format: "%02x", $0) }.joined()
     }
 
     /// The canonical text of a JSON body, for comparing requests.
