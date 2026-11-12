@@ -50,6 +50,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -109,6 +110,7 @@ import com.okjudge.judge.ui.history.HistoryPaging
 import com.okjudge.judge.ui.judging.rememberReducedMotion
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
+import kotlinx.coroutines.launch
 
 internal val menuScrim: Color
     @Composable get() = if (Palette.dark) Color.Black.copy(alpha = 0.5f) else Color(0xFF1C1916).copy(alpha = 0.28f)
@@ -562,13 +564,15 @@ private fun MenuCard(entry: HistoryEntry, now: Long, live: LiveState?, onOpen: (
     // A swipe asks first: removing from the account can't be undone. The row never settles open, so it
     // snaps back whether the dialog is confirmed or not.
     val ask by rememberUpdatedState(onAskRemove)
-    val state = rememberSwipeToDismissBoxState(confirmValueChange = { value ->
-        if (value == SwipeToDismissBoxValue.StartToEnd) ask()
-        false
-    })
+    val state = rememberSwipeToDismissBoxState()
+    val scope = rememberCoroutineScope()
     SwipeToDismissBox(
         state = state,
         enableDismissFromEndToStart = false,
+        onDismiss = { value ->
+            if (value == SwipeToDismissBoxValue.StartToEnd) ask()
+            scope.launch { state.reset() }
+        },
         backgroundContent = {
             Row(
                 Modifier.fillMaxSize().clip(RoundedCornerShape(12.dp)).background(Palette.terraTint).padding(horizontal = 16.dp),
