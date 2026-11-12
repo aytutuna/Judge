@@ -13,6 +13,7 @@ import com.okjudge.judge.core.model.CreateCaseRequest
 import com.okjudge.judge.core.model.ClarifyQuestion
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.WireJson
+import com.okjudge.judge.core.model.VerdictAccepted
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.core.model.VerdictRequest
 import com.okjudge.judge.core.model.VerdictSide
@@ -24,6 +25,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
+import java.security.MessageDigest
 import java.util.UUID
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -51,6 +53,8 @@ class VerdictFlow(
     private val caseNames: CaseNamesStore = MemoryCaseNames(),
     /** Picks where a new request's court is drawn; null leaves it to the server (the court). */
     private val pickVenue: () -> String? = { null },
+    /** Keeps the held key, venue and accepted verdict across a restart of the app. */
+    private val pending: PendingStore = MemoryPending(),
 ) {
     sealed interface State {
         data object Idle : State
@@ -130,15 +134,23 @@ class VerdictFlow(
      */
     @Volatile private var heldKey: Pair<String, String>? = null
 
+    /** The verdict the server accepted for the request being judged, until it settles. */
+    @Volatile private var acceptedId: String? = null
+
     fun keyFor(body: String): String {
-        heldKey?.let { (b, k) -> if (b == body) return k }
+        val hash = hashOf(body)
+        heldKey?.let { (h, k) -> if (h == hash) return k }
         val key = newKey()
-        heldKey = body to key
+        heldKey = hash to key
+        persist()
         return key
     }
 
     fun clearKey(key: String) {
-        if (heldKey?.second == key) heldKey = null
+        if (heldKey?.second == key) {
+            heldKey = null
+            persist()
+        }
     }
 
     /**
@@ -148,16 +160,40 @@ class VerdictFlow(
     @Volatile private var heldVenue: Pair<String, String?>? = null
 
     private fun venueFor(bare: String): String? {
-        heldVenue?.let { (b, v) -> if (b == bare) return v }
+        val hash = hashOf(bare)
+        heldVenue?.let { (h, v) -> if (h == hash) return v }
         val venue = pickVenue()
-        heldVenue = bare to venue
+        heldVenue = hash to venue
+        persist()
         return venue
+    }
+
+    init {
+        val saved = pending.load()
+        if (saved != null && clock() - saved.savedAt < SAVED_LIFETIME_MS) {
+            if (saved.venueHash != null) heldVenue = saved.venueHash to saved.venue
+            if (saved.keyHash != null && saved.key != null) heldKey = saved.keyHash to saved.key
+            acceptedId = saved.acceptedId
+        } else if (saved != null) {
+            pending.save(null)
+        }
+    }
+
+    private fun persist() {
+        val venue = heldVenue
+        val key = heldKey
+        if (venue == null && key == null) {
+            pending.save(null)
+        } else {
+            pending.save(SavedRequest(venue?.first, venue?.second, key?.first, key?.second, acceptedId, clock()))
+        }
     }
 
     private suspend fun succeed(outcome: VerdictOutcome) {
         history.save(outcome)
         val running = _state.value as? State.Running
         heldVenue = null
+        persist()
         _state.value = State.Succeeded(outcome, running?.argument.orEmpty(), running?.sides.orEmpty(), outcome.venue ?: running?.venue)
     }
 
@@ -264,8 +300,8 @@ class VerdictFlow(
                     report(res.error)
                 }
                 is ApiResult.Ok -> {
-                    clearKey(key)
                     heldVenue = null
+                    clearKey(key)
                     val created = res.value
                     caseNames.save(created.case.id, created.nameMap)
                     val other = otherName?.trim()?.takeIf { it.isNotEmpty() }
@@ -287,6 +323,7 @@ class VerdictFlow(
     /** Premium step 2 (judgePremium): the verdict itself. */
     private fun judgePremium(input: PremiumInput, clarifications: List<Clarification>?) {
         _lastError.value = null
+        acceptedId = null
         val request = VerdictRequest(
             argument = input.text,
             lang = input.lang.tag,
@@ -324,29 +361,54 @@ class VerdictFlow(
                         }
                         is VerdictSubmission.Accepted -> {
                             submission.accepted.entitlement?.let(onEntitlement)
-                            val end = api.awaitAccepted(submission.accepted)
-                            // A refused or failed verdict gave the unit back.
-                            scope.launch { refreshAccount() }
-                            when (end) {
-                                is PollOutcome.Ready -> {
-                                    clearKey(key)
-                                    // A retry that joined a running verdict got no name map: the writer's view has it.
-                                    val outcome = if (submission.accepted.replayed && end.outcome.nameMap.isEmpty()) {
-                                        val mine = (api.mineNameMap(end.outcome.id) as? ApiResult.Ok)?.value.orEmpty()
-                                        end.outcome.copy(nameMap = mine)
-                                    } else {
-                                        end.outcome
-                                    }
-                                    succeed(outcome)
-                                }
-                                is PollOutcome.Ended -> fail(end.error)
-                            }
+                            acceptedId = submission.accepted.id
+                            persist()
+                            settle(submission.accepted, key)
                             return@launch
                         }
                     }
                 }
             }
         }
+    }
+
+    /** Polls an accepted verdict to its end and shows the outcome. */
+    private suspend fun settle(accepted: VerdictAccepted, key: String?) {
+        val end = api.awaitAccepted(accepted)
+        // A refused or failed verdict gave the unit back.
+        scope.launch { refreshAccount() }
+        acceptedId = null
+        when (end) {
+            is PollOutcome.Ready -> {
+                key?.let(::clearKey)
+                // A retry that joined a running verdict got no name map: the writer's view has it.
+                val outcome = if (accepted.replayed && end.outcome.nameMap.isEmpty()) {
+                    val mine = (api.mineNameMap(end.outcome.id) as? ApiResult.Ok)?.value.orEmpty()
+                    end.outcome.copy(nameMap = mine)
+                } else {
+                    end.outcome
+                }
+                succeed(outcome)
+            }
+            is PollOutcome.Ended -> {
+                persist()
+                fail(end.error)
+            }
+        }
+    }
+
+    /**
+     * Picks up the verdict the server accepted before the app was killed: the
+     * judging screen opens on it as after any restart (no text to show).
+     */
+    fun resume() {
+        val id = acceptedId ?: return
+        if (!canStart()) return
+        _lastError.value = null
+        _state.value = State.Running(clock(), premium = true, venue = heldVenue?.second)
+        _navigation.trySend(Nav.Judging)
+        val key = heldKey?.second
+        job = scope.launch { settle(VerdictAccepted(id, pollAfterMs = 2000, nameMap = emptyList(), replayed = true), key) }
     }
 
     /** Abandons the request (the server may still finish and save it; the
@@ -373,6 +435,12 @@ class VerdictFlow(
         const val IN_PROGRESS_WAIT_MS = 300_000L
         const val MAX_QUESTIONS = 2
         const val MAX_ANSWER = 500
+
+        /** A kept request older than this is forgotten. */
+        const val SAVED_LIFETIME_MS = 30 * 60_000L
+
+        private fun hashOf(text: String): String =
+            MessageDigest.getInstance("SHA-256").digest(text.toByteArray()).joinToString("") { "%02x".format(it) }
 
         /** Clarify failures that stop on the form; anything else judges without questions. */
         fun stopsClarify(error: UiError): Boolean = error is UiError.Api && error.status in setOf(400, 401, 402, 403)

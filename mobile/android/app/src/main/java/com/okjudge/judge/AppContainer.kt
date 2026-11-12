@@ -21,6 +21,7 @@ import com.okjudge.judge.core.display.VenueBook
 import com.okjudge.judge.core.purchases.PurchaseController
 import com.okjudge.judge.core.purchases.PurchaseGateway
 import com.okjudge.judge.core.purchases.RevenueCatGateway
+import com.okjudge.judge.core.session.PrefsPending
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.LocalizedStrings
 import kotlinx.coroutines.CoroutineScope
@@ -29,6 +30,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import java.io.File
@@ -148,6 +150,11 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
         account.onSignedIn = { analytics.track("sign_in_completed") }
         appScope.launch { settings.usageStats.collect { analytics.allowed = it } }
         appScope.launch {
+            // A verdict accepted before the app was killed shows up on the judging screen.
+            account.state.first { it is Account.State.SignedIn }
+            verdictFlow.resume()
+        }
+        appScope.launch {
             account.providers.collect { (it as? Account.Providers.Ready)?.let { ready -> analytics.setServerOn(ready.config.features.analytics) } }
         }
         appScope.launch {
@@ -183,6 +190,7 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
             refreshAccount = { account.refresh() },
             caseNames = caseNames,
             pickVenue = { venues.pickNew() },
+            pending = PrefsPending(appContext.getSharedPreferences("pending_verdict", Context.MODE_PRIVATE)),
         )
     }
 }

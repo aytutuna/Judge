@@ -59,7 +59,7 @@ class PremiumFlowTest {
 
     private val fastPolls = PollPolicy(firstMs = 5, maxMs = 10, errorMaxMs = 20, maxErrors = 3, deadlineMs = 10_000)
 
-    private fun flow(pickVenue: () -> String? = { null }) = VerdictFlow(
+    private fun flow(pending: PendingStore = MemoryPending(), pickVenue: () -> String? = { null }) = VerdictFlow(
         JudgeApi(server.url("/").toString(), OkHttpClient(), "ua", pollPolicy = fastPolls),
         history, scope,
         clock = { now },
@@ -69,6 +69,7 @@ class PremiumFlowTest {
         sleep = { ms -> synchronized(sleeps) { sleeps += ms }; now += ms },
         newKey = { "key-${++keys}" },
         pickVenue = pickVenue,
+        pending = pending,
     )
 
     private val premium get() = Fixtures.verdicts["premiumVerdictResponse"]!!.jsonObject
@@ -306,6 +307,54 @@ class PremiumFlowTest {
         f.startPremium(argument, AppLang.EN, emptyList())
         assertTrue(f.settled() is VerdictFlow.State.Succeeded)
         assertEquals(listOf("key-1", "key-1"), routes.requestsTo(VERDICT).map { it.headers["Idempotency-Key"] })
+    }
+
+    @Test
+    fun verdict_afterARestart_theSameRequestKeepsItsKeyAndVenue() = runBlocking {
+        val store = MemoryPending()
+        routes.on(CLARIFY, Routes.json(200, clarify("none")))
+        routes.on(VERDICT, Routes.json(202, accepted))
+        routes.on(POLL, Routes.json(200, poll("failed_quota")))
+        val before = flow(store) { "farm" }
+        before.startPremium(argument, AppLang.EN, emptyList())
+        assertTrue(before.settled() is VerdictFlow.State.Failed)
+
+        routes.on(CLARIFY, Routes.json(200, clarify("none")))
+        routes.on(VERDICT, Routes.json(200, premium["response"].toString()))
+        val after = flow(store) { "ice" }
+        after.startPremium(argument, AppLang.EN, emptyList())
+        assertTrue(after.settled() is VerdictFlow.State.Succeeded)
+        assertEquals(listOf("key-1", "key-1"), routes.requestsTo(VERDICT).map { it.headers["Idempotency-Key"] })
+        assertEquals("farm", body(VERDICT, 1)["venue"]!!.jsonPrimitive.content)
+        assertNull("a verdict that arrived leaves nothing behind", store.load())
+    }
+
+    @Test
+    fun verdict_aRequestOlderThanHalfAnHour_isForgotten() = runBlocking {
+        val store = MemoryPending()
+        store.save(SavedRequest("v", "farm", "k", "old-key", "premium001", savedAt = now - VerdictFlow.SAVED_LIFETIME_MS))
+        routes.on(CLARIFY, Routes.json(200, clarify("none")))
+        routes.on(VERDICT, Routes.json(200, premium["response"].toString()))
+        val f = flow(store) { "ice" }
+        f.resume()
+        assertTrue(f.state.value is VerdictFlow.State.Idle)
+        f.startPremium(argument, AppLang.EN, emptyList())
+        assertTrue(f.settled() is VerdictFlow.State.Succeeded)
+        assertEquals("key-1", routes.requestsTo(VERDICT).single().headers["Idempotency-Key"])
+        assertEquals("ice", body(VERDICT)["venue"]!!.jsonPrimitive.content)
+    }
+
+    @Test
+    fun resume_pollsTheAcceptedVerdictAndShowsIt() = runBlocking {
+        val store = MemoryPending()
+        store.save(SavedRequest(null, null, "h", "key-9", "premium001", savedAt = now))
+        routes.on(POLL, Routes.json(200, poll("ready")))
+        val f = flow(pending = store)
+        f.resume()
+        val done = f.settled() as VerdictFlow.State.Succeeded
+        assertEquals("premium001", done.outcome.id)
+        assertEquals("premium001", history.rows.value.single().id)
+        assertNull(store.load())
     }
 
     @Test
