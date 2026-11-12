@@ -1,6 +1,7 @@
 package com.okjudge.judge.ui.verdict
 
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -40,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -62,6 +64,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
@@ -675,8 +678,8 @@ private fun SlotText(text: String, color: Color = Palette.muted) {
 }
 
 @Composable
-private fun Slot(content: @Composable () -> Unit) {
-    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(4.dp)) { content() }
+private fun Slot(gap: Dp = 4.dp, content: @Composable () -> Unit) {
+    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(gap)) { content() }
 }
 
 @Composable
@@ -719,29 +722,38 @@ private fun Slots(result: VerdictResult, parties: PartyLabels) {
 }
 
 @Composable
+private fun ObjectionToggle(open: Boolean, onToggle: () -> Unit) {
+    val s = LocalStrings.current
+    val turn by animateFloatAsState(if (open) 90f else 0f, label = "objection")
+    Row(
+        Modifier
+            .heightIn(min = 48.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .semantics(mergeDescendants = true) {
+                if (open) collapse { onToggle(); true } else expand { onToggle(); true }
+            }
+            .clickable(role = Role.Button, onClick = onToggle)
+            .padding(horizontal = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        Text(s.trialWhatWasTested, style = JudgeType.slotText.copy(color = Palette.ink2, fontWeight = FontWeight.SemiBold))
+        TintedIcon(rememberIcon(Palette.ink2) { JudgeIcons.chevron(it) }, 14, Modifier.rotate(turn))
+    }
+}
+
+@Composable
 private fun CruxTrialNote(trial: CruxTrial, mixed: Boolean) {
     val s = LocalStrings.current
     if (trial.trialOutcome == TrialOutcome.SURVIVED) {
         var open by rememberSaveable { mutableStateOf(false) }
-        Slot {
+        Slot(6.dp) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 TintedIcon(rememberIcon(Palette.ink2) { JudgeIcons.shield(it) }, 14)
                 Text(s.trialSurvived, style = JudgeType.slotText.copy(color = Palette.ink2))
             }
             if (trial.attack.isNotBlank()) {
-                Text(
-                    s.trialWhatWasTested,
-                    style = JudgeType.slotText.copy(color = Palette.ink2, fontWeight = FontWeight.SemiBold),
-                    modifier = Modifier
-                    .heightIn(min = 48.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .semantics(mergeDescendants = true) {
-                        if (open) collapse { open = false; true } else expand { open = true; true }
-                    }
-                    .clickable(role = Role.Button) { open = !open }
-                    .padding(4.dp)
-                    .wrapContentHeight(Alignment.CenterVertically),
-                )
+                ObjectionToggle(open) { open = !open }
                 if (open) {
                     SlotText("${s.trialAttackPrefix} ${trial.attack}")
                     if (trial.reasoning.isNotEmpty()) SlotText("${s.trialRefereePrefix} ${trial.reasoning}")
@@ -752,7 +764,7 @@ private fun CruxTrialNote(trial: CruxTrial, mixed: Boolean) {
     }
     val overturned = trial.trialOutcome == TrialOutcome.OVERTURNED
     val color = if (overturned) Palette.danger else Palette.ink2
-    Slot {
+    Slot(6.dp) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
             TintedIcon(remember(color) { JudgeIcons.alert(color) }, 14)
             Text(
@@ -765,11 +777,7 @@ private fun CruxTrialNote(trial: CruxTrial, mixed: Boolean) {
         if (mixed) SlotText(s.trialMixedNote)
         if (trial.reasoning.isNotBlank() && trial.attack.isNotBlank()) {
             var open by rememberSaveable { mutableStateOf(false) }
-            Text(
-                s.trialWhatWasTested,
-                style = JudgeType.slotText.copy(color = Palette.ink2, fontWeight = FontWeight.SemiBold),
-                modifier = Modifier.clip(RoundedCornerShape(8.dp)).clickable { open = !open }.padding(4.dp),
-            )
+            ObjectionToggle(open) { open = !open }
             if (open) SlotText("${s.trialAttackPrefix} ${trial.attack}")
         }
     }
