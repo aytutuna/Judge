@@ -44,42 +44,44 @@ fun TopBar(
         modifier.fillMaxWidth().heightIn(min = 56.dp).padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (backText != null) {
-            Row(
-                Modifier
-                    .weight(1f, fill = false)
-                    .heightIn(min = 44.dp)
-                    .clip(CircleShape)
-                    .semantics(mergeDescendants = true) { role = Role.Button }
-                    .clickable(onClick = onBack)
-                    .padding(start = 8.dp, end = 12.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
-            ) {
-                TintedIcon(rememberIcon(Palette.ink) { JudgeIcons.back(it) }, 18)
-                Text(
-                    backText,
-                    style = JudgeType.slotTitle.copy(fontSize = 15.sp),
-                    modifier = Modifier.weight(1f, fill = false),
-                )
-            }
-        } else {
-            Box(
-                Modifier
-                    .size(44.dp)
-                    .clip(CircleShape)
-                    .semantics {
-                        role = Role.Button
-                        contentDescription = backLabel ?: s.appCancel
-                    }
-                    .clickable(onClick = onBack),
-                contentAlignment = Alignment.Center,
-            ) {
-                TintedIcon(rememberIcon(Palette.ink) { JudgeIcons.back(it) }, 20)
+        // The back side takes whatever the trailing actions leave, so they always sit at the end.
+        Box(Modifier.weight(1f), contentAlignment = Alignment.CenterStart) {
+            if (backText != null) {
+                Row(
+                    Modifier
+                        .heightIn(min = 44.dp)
+                        .clip(CircleShape)
+                        .semantics(mergeDescendants = true) { role = Role.Button }
+                        .clickable(onClick = onBack)
+                        .padding(start = 8.dp, end = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    TintedIcon(rememberIcon(Palette.ink) { JudgeIcons.back(it) }, 18)
+                    Text(
+                        backText,
+                        style = JudgeType.slotTitle.copy(fontSize = 15.sp),
+                        modifier = Modifier.weight(1f, fill = false),
+                    )
+                }
+            } else {
+                Box(
+                    Modifier
+                        .size(44.dp)
+                        .clip(CircleShape)
+                        .semantics {
+                            role = Role.Button
+                            contentDescription = backLabel ?: s.appCancel
+                        }
+                        .clickable(onClick = onBack),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    TintedIcon(rememberIcon(Palette.ink) { JudgeIcons.back(it) }, 20)
+                }
             }
         }
         if (trailing != null) {
-            Box(Modifier.weight(1f).padding(start = 8.dp), contentAlignment = Alignment.CenterEnd) { trailing() }
+            Box(Modifier.padding(start = 8.dp), contentAlignment = Alignment.CenterEnd) { trailing() }
         }
     }
 }
