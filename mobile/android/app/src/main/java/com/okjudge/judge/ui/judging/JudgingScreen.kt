@@ -57,6 +57,9 @@ import com.okjudge.judge.core.display.CourtScene
 import com.okjudge.judge.core.display.Venues
 import com.okjudge.judge.core.display.PartyNames
 import com.okjudge.judge.core.display.Story
+import com.okjudge.judge.core.display.VerdictDisplay
+import com.okjudge.judge.core.model.DisputeType
+import com.okjudge.judge.core.model.TrialOutcome
 import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.LocalStrings
@@ -147,7 +150,7 @@ fun JudgingScreen(
     val lines = Story.WAITING.take(waiting + 1).map { Story.Line("story.${it.wire}") } + steps.mapNotNull { it.line }
     val beat = steps.lastOrNull()?.beat ?: Story.WAITING[waiting]
     val last = lines.lastIndex
-    val texts = lines.map { lineText(s, it) }
+    val texts = lines.map { lineText(s, it, result) }
 
     val screen = LocalConfiguration.current
     // Large screens let the card and the court grow; the court stops short of half the height so the log stays in view.
@@ -231,10 +234,20 @@ fun JudgingScreen(
 
 private val LEADING_SYMBOLS = Regex("^[\\p{So}\\p{Sk}\u200D\uFE0F\u20E3\u2713]+\\s*")
 
-private fun lineText(s: Strings, line: Story.Line): String = when {
+private fun lineText(s: Strings, line: Story.Line, result: VerdictResult?): String = when {
     line.n != null && line.total != null -> s.storyAgree(line.n.toString(), line.total.toString())
-    line.key.startsWith("trial.") -> (s.text(line.key) ?: "").replace(LEADING_SYMBOLS, "")
+    line.key.startsWith("trial.") -> trialLine(s, line.key, result)
     else -> s.text(line.key) ?: ""
+}
+
+// A doubtful stress test says why right in the log, and owns up to a mixed dispute.
+private fun trialLine(s: Strings, key: String, result: VerdictResult?): String {
+    val line = (s.text(key) ?: "").replace(LEADING_SYMBOLS, "")
+    val trial = result?.cruxTrial ?: return line
+    if (trial.trialOutcome == TrialOutcome.SURVIVED) return line
+    val why = VerdictDisplay.trialWhy(trial)
+    val mixed = if (result.dispute == DisputeType.MIXED) " ${s.trialMixedNote}" else ""
+    return "$line${if (why.isNotEmpty()) ": $why" else ""}$mixed"
 }
 
 /** The newest log line, typed out; the rest of it is laid out already, so nothing jumps. */
