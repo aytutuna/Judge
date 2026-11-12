@@ -81,6 +81,13 @@ const SCHEMA = [
     WHERE idempotency_key IS NOT NULL`,
   "CREATE INDEX IF NOT EXISTS premium_usage_user ON premium_usage (user_id, status, created_at)",
   "CREATE INDEX IF NOT EXISTS premium_usage_created ON premium_usage (created_at)",
+  // A refund that arrived before its purchase: the late purchase is skipped.
+  `CREATE TABLE IF NOT EXISTS refund_tombstones (
+    source          TEXT NOT NULL,
+    transaction_id  TEXT NOT NULL,
+    created_at      TEXT NOT NULL,
+    PRIMARY KEY (source, transaction_id)
+  )`,
   // Kept when an account is deleted: one welcome credit per email, ever.
   // age_blocked_at: that email's account was blocked by the age check
   // (lib/age.ts), so a new one starts blocked.
@@ -572,9 +579,10 @@ export async function grantCredits(g: {
     {
       sql: `INSERT INTO entitlement_grants
               (id, user_id, source, external_id, kind, product_id, credits_delta, note, created_at)
-            VALUES (?, ?, ?, ?, 'credits', ?, ?, ?, ?)
+            SELECT ?, ?, ?, ?, 'credits', ?, ?, ?, ?
+            WHERE NOT EXISTS (SELECT 1 FROM refund_tombstones WHERE source = ? AND transaction_id = ?)
             ON CONFLICT (source, external_id) DO NOTHING`,
-      args: [id, g.userId, g.source, g.externalId, g.productId ?? null, g.credits, g.note ?? null, nowIso],
+      args: [id, g.userId, g.source, g.externalId, g.productId ?? null, g.credits, g.note ?? null, nowIso, g.source, g.externalId],
     },
     {
       sql: `INSERT INTO entitlement_accounts (user_id, credits, updated_at)
@@ -678,9 +686,10 @@ export async function grantSubscription(g: {
   const results = await writeBatch([
     {
       sql: `INSERT INTO entitlement_grants (id, user_id, source, external_id, kind, product_id, created_at)
-            VALUES (?, ?, ?, ?, 'subscription_active', ?, ?)
+            SELECT ?, ?, ?, ?, 'subscription_active', ?, ?
+            WHERE NOT EXISTS (SELECT 1 FROM refund_tombstones WHERE source = ? AND transaction_id = ?)
             ON CONFLICT (source, external_id) DO NOTHING`,
-      args: [id, g.userId, g.source, g.externalId, g.productId, nowIso],
+      args: [id, g.userId, g.source, g.externalId, g.productId, nowIso, g.source, g.originalTransactionId],
     },
     {
       sql: `INSERT INTO subscriptions
@@ -698,7 +707,8 @@ export async function grantSubscription(g: {
               period_start = excluded.period_start,
               period_end = excluded.period_end,
               updated_at = excluded.updated_at
-            WHERE subscriptions.status <> 'active' OR excluded.period_end >= subscriptions.period_end`,
+            WHERE subscriptions.status NOT IN ('refunded', 'revoked')
+              AND (subscriptions.status <> 'active' OR excluded.period_end >= subscriptions.period_end)`,
       args: [
         subId,
         g.userId,
@@ -846,7 +856,16 @@ export async function refundPurchase(g: {
             WHERE id = (SELECT subscription_id FROM entitlement_grants WHERE id = ?)`,
       args: [nowIso, subGrantId],
     },
+    {
+      sql: `INSERT INTO refund_tombstones (source, transaction_id, created_at)
+            SELECT ?, ?, ?
+            WHERE NOT EXISTS (SELECT 1 FROM entitlement_grants WHERE source = ? AND external_id = ? AND kind = 'credits')
+              AND NOT EXISTS (SELECT 1 FROM subscriptions WHERE source = ? AND original_transaction_id = ?)
+            ON CONFLICT (source, transaction_id) DO NOTHING`,
+      args: [g.source, g.transactionId, nowIso, g.source, g.transactionId, g.source, g.transactionId],
+    },
   ]);
+  // A refund that matched nothing is kept as a tombstone, but is not "applied".
   return { applied: results[0].rowsAffected + results[2].rowsAffected > 0 };
 }
 

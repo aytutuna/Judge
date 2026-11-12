@@ -366,6 +366,49 @@ describe("entitlements: grants and store events", () => {
     });
   });
 
+  it("a refund that arrives first blocks the late credit purchase", async () => {
+    const u = newUser();
+    const tx = `GPA.early-${u}`;
+    expect(await ent.applyStoreEvent({ type: "refund", eventId: `rf-${u}`, source: "play_store", transactionId: tx })).toEqual({
+      applied: false,
+    });
+    const bought = await ent.applyStoreEvent({
+      type: "credits_purchased",
+      eventId: `pu-${u}`,
+      source: "play_store",
+      userId: u,
+      productId: "credits_5",
+      credits: 5,
+      transactionId: tx,
+    });
+    expect(bought).toEqual({ applied: false });
+    expect((await ent.getEntitlement(u)).credits).toBe(0);
+  });
+
+  it("a refund that arrives first blocks the late subscription", async () => {
+    const u = newUser();
+    const otid = `early-sub-${u}`;
+    await ent.refundPurchase({ source: "app_store", externalId: `rf-${u}`, transactionId: otid });
+    await subscribe(u, { otid });
+    expect((await ent.getEntitlement(u)).canUsePremium).toBe(false);
+  });
+
+  it("a later event does not reactivate a refunded or revoked subscription", async () => {
+    const u = newUser();
+    await subscribe(u, { otid: `r-${u}` });
+    await ent.refundPurchase({ source: "app_store", externalId: `rf-${u}`, transactionId: `r-${u}` });
+    await subscribe(u, { otid: `r-${u}`, days: 60 });
+    expect((await ent.getEntitlement(u)).canUsePremium).toBe(false);
+
+    const v = newUser();
+    await subscribe(v, { otid: `v-${v}` });
+    await ent.revokeAll(v, { externalId: `admin:revoke-${v}` });
+    await subscribe(v, { otid: `v-${v}`, days: 60 });
+    expect((await ent.getEntitlement(v)).canUsePremium).toBe(false);
+    await subscribe(v, { otid: `v2-${v}` });
+    expect((await ent.getEntitlement(v)).canUsePremium).toBe(true);
+  });
+
   it("revokeAll zeroes credits and revokes subscriptions; a later grant works again", async () => {
     const u = newUser();
     await credits(u, 4);
@@ -373,7 +416,7 @@ describe("entitlements: grants and store events", () => {
     expect(await ent.revokeAll(u, { externalId: `admin:revoke-${u}` })).toEqual({ applied: true });
     const e = await ent.getEntitlement(u);
     expect(e).toMatchObject({ credits: 0, subscription: null, canUsePremium: false });
-    await subscribe(u, { otid: `admin:${u}`, days: 7 });
+    await subscribe(u, { otid: `admin:${u}:again`, days: 7 });
     expect((await ent.getEntitlement(u)).subscription).not.toBeNull();
   });
 
