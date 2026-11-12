@@ -340,7 +340,7 @@ internal fun MenuPanel(
                                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp).testTag(PageBarTags.EMPTY),
                                 )
                                 if (!account.signedIn) {
-                                    Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                                    Box(Modifier.fillMaxWidth().padding(top = 12.dp), contentAlignment = Alignment.Center) {
                                         GhostButton(
                                             s.shellLocalSignIn, null, { onClose(); account.onSignIn() },
                                             Modifier.testTag(PageBarTags.EMPTY_SIGN_IN),

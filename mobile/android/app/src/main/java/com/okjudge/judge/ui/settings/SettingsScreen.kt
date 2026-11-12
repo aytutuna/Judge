@@ -115,7 +115,7 @@ fun SettingsScreen(
     }
     Column(modifier.fillMaxSize()) {
         Column(
-            Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 8.dp),
+            Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(start = 20.dp, top = 24.dp, end = 20.dp, bottom = 8.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
             AccountGroup(account, accountBusy, onSignIn, onOpenAccount, onOpenPricing, restore, onRestore)
@@ -261,7 +261,7 @@ fun AccountScreen(
     Column(modifier.fillMaxSize()) {
         TopBar(onBack = onBack)
         Column(
-            Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 8.dp),
+            Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(start = 20.dp, top = 24.dp, end = 20.dp, bottom = 8.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
             Text(s.accountTitle, style = JudgeType.sectionTitle)
