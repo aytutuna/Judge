@@ -48,6 +48,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
@@ -99,6 +100,9 @@ import kotlinx.coroutines.delay
 
 /** The least height the court is drawn at, however crowded the form is. */
 private val COURT_MIN_HEIGHT = 110.dp
+
+/** Below this window height (a phone on its side) the court is dropped. */
+private val SHORT_WINDOW = 480.dp
 
 /** From this width the court scales with the screen instead of stopping at phone size. */
 private val WIDE_SCREEN = 600.dp
@@ -320,9 +324,11 @@ fun HomeScreen(
     }
 
     val scroll = rememberScrollState()
+    // The window's height, not the free space: the keyboard must not swap the layout under the cursor.
+    val shortWindow = LocalConfiguration.current.screenHeightDp < SHORT_WINDOW.value
     BoxWithConstraints(modifier.fillMaxSize().background(Palette.ivory).imePadding().clearFocusOnTap()) {
-        // No court: the form and the composer scroll together from the top.
-        val flat = !LocalGamify.current
+        // No court, or no room for one: the form and the composer scroll together from the top.
+        val flat = !LocalGamify.current || shortWindow
         // A short screen with the keyboard up still has to leave room for the send row.
         val fieldMax = if (flat) 120.dp else maxHeight * 0.25f
         val form: @Composable () -> Unit = {
