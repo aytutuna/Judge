@@ -100,7 +100,7 @@ struct SettingsView: View {
             .background(Brand.ivory.ignoresSafeArea())
             .navigationTitle(L10n.appTabSettings(lang))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(Brand.ivory, for: .navigationBar)
+            .toolbarBackground(.hidden, for: .navigationBar)
             .toolbar {
                 RootBarLeading()
                 RootBarTrailing()
@@ -193,7 +193,7 @@ private struct LanguageList: View {
         .background(Brand.ivory.ignoresSafeArea())
         .navigationTitle(L10n.appSettingsLanguage(lang))
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(Brand.ivory, for: .navigationBar)
+        .toolbarBackground(.hidden, for: .navigationBar)
     }
 
     private func row(_ preference: LangPreference, title: String, subtitle: String?) -> some View {

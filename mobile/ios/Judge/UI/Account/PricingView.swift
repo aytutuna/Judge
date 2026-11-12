@@ -75,7 +75,7 @@ struct PricingView: View {
         }
         .background(Brand.ivory.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(Brand.ivory, for: .navigationBar)
+        .toolbarBackground(.hidden, for: .navigationBar)
         .toolbar {
             if inSheet {
                 ToolbarItem(placement: .topBarTrailing) {

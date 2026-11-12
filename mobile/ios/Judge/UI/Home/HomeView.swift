@@ -104,7 +104,7 @@ struct HomeView: View {
         }
         .background(Brand.ivory.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(Brand.ivory, for: .navigationBar)
+        .toolbarBackground(.hidden, for: .navigationBar)
         .toolbar {
             if home.clarify == nil {
                 RootBarLeading(locked: active != nil)

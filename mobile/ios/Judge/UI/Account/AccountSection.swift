@@ -182,7 +182,7 @@ struct AccountView: View {
         .background(Brand.ivory.ignoresSafeArea())
         .navigationTitle(L10n.accountTitle(lang))
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(Brand.ivory, for: .navigationBar)
+        .toolbarBackground(.hidden, for: .navigationBar)
         .alert(L10n.appAccountDeleteTitle(lang), isPresented: $confirmDelete) {
             Button(L10n.appAccountDeleteConfirm(lang), role: .destructive) {
                 Task { await app.account.deleteAccount() }

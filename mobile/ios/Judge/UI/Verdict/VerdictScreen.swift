@@ -124,7 +124,7 @@ private struct VerdictScreenContent: View {
         }
         .background(Brand.ivory.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(Brand.ivory, for: .navigationBar)
+        .toolbarBackground(.hidden, for: .navigationBar)
         .toolbar {
             VerdictBarTrailing(
                 shareURL: app.config.shareURL(id: model.session.id),
