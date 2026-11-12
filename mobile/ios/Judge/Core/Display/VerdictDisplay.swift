@@ -172,6 +172,12 @@ enum VerdictDisplay {
         return L10n.panelModels(lang, list: parts.joined(separator: " + "))
     }
 
+    /// Why a stress test left doubt: the referee's reason, else the objection.
+    static func trialWhy(_ trial: CruxTrial) -> String {
+        let reason = trial.reasoning.trimmingCharacters(in: .whitespacesAndNewlines)
+        return reason.isEmpty ? trial.attack.trimmingCharacters(in: .whitespacesAndNewlines) : reason
+    }
+
     /// Raw values are the scene bridge's (lib/scene-bridge.ts Vote).
     enum Vote: String, Sendable, Equatable {
         case a, b, c, d, other

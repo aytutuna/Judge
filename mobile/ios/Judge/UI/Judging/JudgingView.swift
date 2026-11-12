@@ -65,7 +65,7 @@ struct JudgingView: View {
     }
 
     private var liveText: String {
-        lines.last.map { Story.text($0, lang: lang) } ?? ""
+        lines.last.map { Story.text($0, lang: lang, result: result) } ?? ""
     }
 
     var body: some View {
@@ -146,7 +146,7 @@ struct JudgingView: View {
                 let live = index == lines.count - 1 && !over
                 HStack(alignment: .top, spacing: 10) {
                     mark(live: live)
-                    Text(Story.text(line, lang: lang))
+                    Text(Story.text(line, lang: lang, result: result))
                         .brandText(TypeStyle(face: .inter, weight: live ? 500 : 400, size: 14, lineHeight: 1.4, textStyle: .subheadline))
                         .foregroundStyle(live ? Brand.ink : Brand.muted)
                         .frame(maxWidth: .infinity, alignment: .leading)

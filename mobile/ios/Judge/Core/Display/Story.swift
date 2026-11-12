@@ -166,8 +166,9 @@ enum Story {
     }
 
     /// The text of a log line in the app's language. The trial lines come
-    /// without their leading emoji.
-    static func text(_ line: Line, lang: AppLang) -> String {
+    /// without their leading emoji; a doubtful one carries its reason and,
+    /// for a mixed dispute, the mixed note.
+    static func text(_ line: Line, lang: AppLang, result: VerdictResult? = nil) -> String {
         switch line.key {
         case "story.names": return L10n.storyNames(lang)
         case "story.facts": return L10n.storyFacts(lang)
@@ -180,11 +181,18 @@ enum Story {
         case "story.agree": return L10n.storyAgree(lang, n: String(line.vars?.n ?? 0), total: String(line.vars?.total ?? 0))
         case "story.split": return L10n.storySplit(lang)
         case "trial.survived": return stripLeadingEmoji(L10n.trialSurvived(lang))
-        case "trial.uncertain": return stripLeadingEmoji(L10n.trialUncertain(lang))
-        case "trial.overturned": return stripLeadingEmoji(L10n.trialOverturned(lang))
+        case "trial.uncertain": return doubt(stripLeadingEmoji(L10n.trialUncertain(lang)), result, lang)
+        case "trial.overturned": return doubt(stripLeadingEmoji(L10n.trialOverturned(lang)), result, lang)
         case "thinking.ready": return L10n.thinkingReady(lang)
         default: return ""
         }
+    }
+
+    private static func doubt(_ line: String, _ result: VerdictResult?, _ lang: AppLang) -> String {
+        guard let trial = result?.cruxTrial else { return line }
+        let why = VerdictDisplay.trialWhy(trial)
+        let mixed = result?.disputeType == .mixed ? " " + L10n.trialMixedNote(lang) : ""
+        return line + (why.isEmpty ? "" : ": " + why) + mixed
     }
 
     /// Drops a decorative leading emoji and the space after it (lib/text.ts

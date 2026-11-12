@@ -354,7 +354,7 @@ struct VerdictNotes: View {
         }
 
         if let trial = result.cruxTrial {
-            CruxTrialNote(trial: trial, lang: lang)
+            CruxTrialNote(trial: trial, mixed: result.disputeType == .mixed, lang: lang)
         }
         if result.modelRefused {
             Slot { SlotText(L10n.refusedNote(lang)) }
@@ -538,10 +538,11 @@ private struct SlotText: View {
     }
 }
 
-/// Outcome of the cross-examination: survived is neutral (never green);
-/// uncertain and overturned show the attack and the referee's reason.
+/// Outcome of the stress test: survived is neutral (never green);
+/// uncertain and overturned say why, with the objection tucked below.
 private struct CruxTrialNote: View {
     let trial: CruxTrial
+    let mixed: Bool
     let lang: AppLang
     @State private var expanded = false
 
@@ -577,14 +578,30 @@ private struct CruxTrialNote: View {
                 Label(overturned ? L10n.trialOverturned(lang) : L10n.trialUncertain(lang), systemImage: "exclamationmark.triangle")
                     .brandText(.slotText)
                     .foregroundStyle(overturned ? Brand.danger : Brand.ink2)
+                let why = VerdictDisplay.trialWhy(trial)
                 VStack(alignment: .leading, spacing: 4) {
-                    SlotText(L10n.trialAttackPrefix(lang) + " " + trial.attack)
-                    if !trial.reasoning.isEmpty {
-                        SlotText(L10n.trialRefereePrefix(lang) + " " + trial.reasoning)
+                    if !why.isEmpty {
+                        SlotText(L10n.trialRefereePrefix(lang) + " " + why)
+                    }
+                    if mixed {
+                        SlotText(L10n.trialMixedNote(lang))
                     }
                 }
                 .multilineTextAlignment(.leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                if !trial.reasoning.isEmpty, !trial.attack.isEmpty {
+                    DisclosureGroup(isExpanded: $expanded) {
+                        SlotText(L10n.trialAttackPrefix(lang) + " " + trial.attack)
+                            .multilineTextAlignment(.leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.top, 6)
+                    } label: {
+                        Text(L10n.trialWhatWasTested(lang))
+                            .brandText(.slotTitle)
+                            .foregroundStyle(Brand.ink2)
+                    }
+                    .tint(Brand.ink2)
+                }
             }
         }
     }
