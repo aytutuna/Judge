@@ -109,12 +109,13 @@ const hu: Locale = {
     "vote.dissolved": "félreértés",
     refusedNote: "Az MI ezt most kihagyta. Inkább semmit sem mutatunk, mint egy kamu ítéletet.",
     demoNote: "🎭 Demó mód: nincs beállítva API-kulcs, ez csak egy mintaítélet",
-    "trial.survived": "🛡️ Az ítélet kiállta a kemény kereszttüzet. A bizonyosság nem változik.",
-    "trial.uncertain": "⚠️ A kereszttűz komoly kétségeket vetett fel ezzel az ítélettel kapcsolatban",
-    "trial.overturned": "⚠️ Az ítélet nem állta ki a kereszttüzet",
-    "trial.whatWasTested": "Amit próbára tettünk",
+    "trial.survived": "🛡️ A terhelési teszt sikeres: egy különálló bíró a másik oldal legerősebb ellenvetésével próbálta megdönteni az ítéletet, de az megállt. A bizonyosság nem változik.",
+    "trial.uncertain": "⚠️ Terhelési teszt: a másik oldal legerősebb ellenvetése valódi kétséget hagyott ezzel az ítélettel kapcsolatban",
+    "trial.overturned": "⚠️ Az ítélet megbukott a terhelési teszten: a másik oldal legerősebb ellenvetése nagyobb súlyú volt nála",
+    "trial.whatWasTested": "Mit próbált a terhelési teszt",
     "trial.attackPrefix": "A legerősebb ellenvetés:",
-    "trial.refereePrefix": "Döntőbíró:",
+    "trial.refereePrefix": "Miért:",
+    "trial.mixedNote": "Ez vegyes vita: részben tények, részben értékek vagy szavak jelentése, ezért a tiszta győzelmet nehezebb megvédeni.",
     confidence: "Bizonyosság: {n}/{total}",
     verdictAria: "Ítélet: {label}",
     "party.a": "Fél A",
@@ -181,9 +182,9 @@ const hu: Locale = {
     "how.step4.title": "Három független bíró",
     "how.step4.body":
       "Három bíró dönt egymástól függetlenül, szoros állásnál pedig további bírák is beszállnak. A bizonyosság abból jön, mennyire értenek egyet, nem abból, milyen magabiztosan beszélnek.",
-    "how.step5.title": "Ítélet, aztán kereszttűz",
+    "how.step5.title": "Ítélet, aztán terhelési teszt",
     "how.step5.body":
-      "Megkapod az ítéletet és a bizonyossági pontszámot, mellé pedig a másik oldal legjobb érvét. A tényeken alapuló győzelem ráadásul kereszttűzbe is kerül, és ha meginog, figyelmeztetést kapsz.",
+      "Megkapod az ítéletet és a bizonyossági pontszámot, mellé pedig a másik oldal legjobb érvét. Ezután egy különálló bíró rádobja a másik oldal legerősebb ellenvetését a győztes ítéletre, és ha meginog, figyelmeztetést kapsz, az indokkal együtt.",
     "sample.title": "Így néz ki egy ítélet",
     "sample.kicker": "Az eredmény",
     "sample.lead":
@@ -209,7 +210,7 @@ const hu: Locale = {
       "Ítélethez fiók kell. A szöveged egy külső MI-szolgáltatáshoz kerül, hogy a neveket Fél A-ra és Fél B-re cserélje, és csak ez a változat kerül a bírák elé. Amit írtál, a nevekkel együtt titkosítva őrizzük meg, hogy újra megnézhesd; bármikor kérheted a törlését. A megosztási linkek az általad választott neveket mutatják, vagy egyet sem.",
     "faq.powers.q": "Mi van a háttérben?",
     "faq.powers.a":
-      "Egy külső szolgáltató MI-modellje. Három bíró fut párhuzamosan, kötött szerkezetű bírálati utasítás alapján, szoros állásnál pedig további bírák is csatlakoznak. A tényeken alapuló győztes ítéletek külön kereszttűzön is átmennek. A bizonyosságot egyszerű kód számolja: azt nézi, milyen gyakran értenek egyet a bírák.",
+      "Egy külső szolgáltató MI-modellje. Három bíró fut párhuzamosan, kötött szerkezetű bírálati utasítás alapján, szoros állásnál pedig további bírák is csatlakoznak. A tényeken alapuló győztes ítéletek ezután egy különálló bíró terhelési tesztjén is átmennek. A bizonyosságot egyszerű kód számolja: azt nézi, milyen gyakran értenek egyet a bírák.",
     "faq.taste.q": "Mi van, ha ez csak ízlés kérdése?",
     "faq.taste.a":
       "Akkor ezt meg is mondja: „Az értékrendeden múlik” vagy „Egy szó, két jelentés”. Azt is látod, merre hajlanak a bírák, egyértelműen kényszerdöntésként jelölve.",
@@ -242,7 +243,7 @@ const hu: Locale = {
     "about.limit4": "Szórakozásra és tisztánlátásra való, nem jogi, egészségügyi vagy pénzügyi tanács.",
     "about.builtTitle": "A motorháztető alatt",
     "about.built":
-      "A Judge egy külső szolgáltató MI-modelljével működik. Három bíró dolgozik párhuzamosan, szoros állásnál pedig további bírák is beszállnak. Az egyetértésük mértéke adja a bizonyossági pontszámot, a tényeken alapuló győztes ítéletnek pedig külön kereszttűzön is át kell mennie, mielőtt végleges lesz.",
+      "A Judge egy külső szolgáltató MI-modelljével működik. Három bíró dolgozik párhuzamosan, szoros állásnál pedig további bírák is beszállnak. Az egyetértésük mértéke adja a bizonyossági pontszámot, a tényeken alapuló győztes ítéletnek pedig egy különálló bíró terhelési tesztjén is át kell mennie, mielőtt végleges lesz.",
     "about.art": "Pixelgrafika: {pack}, készítette: {author}",
     "privacy.title": "Adatvédelem",
     "privacy.kicker": "Az adataid",

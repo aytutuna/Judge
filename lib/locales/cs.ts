@@ -109,12 +109,13 @@ const cs: Locale = {
     "vote.dissolved": "jiný význam",
     refusedNote: "AI se k tomu tentokrát nevyjádřila. Radši neukážeme nic, než abychom si verdikt vymýšleli.",
     demoNote: "🎭 Ukázkový režim: chybí klíč k AI, takže tohle je jen vzorový verdikt",
-    "trial.survived": "🛡️ Verdikt obstál i v tvrdém křížovém výslechu. Jistota zůstává.",
-    "trial.uncertain": "⚠️ Křížový výslech vzbudil o tomto verdiktu vážné pochybnosti",
-    "trial.overturned": "⚠️ Verdikt v křížovém výslechu neobstál",
-    "trial.whatWasTested": "Co se prověřovalo",
+    "trial.survived": "🛡️ Zátěžový test splněn: samostatný soudce se tento verdikt pokusil rozbít nejsilnější námitkou druhé strany a verdikt obstál. Jistota zůstává.",
+    "trial.uncertain": "⚠️ Zátěžový test: nejsilnější námitka druhé strany nechala o tomto verdiktu skutečné pochybnosti",
+    "trial.overturned": "⚠️ Zátěžový test neprošel: nejsilnější námitka druhé strany převážila nad tímto verdiktem",
+    "trial.whatWasTested": "Co zátěžový test zkoušel",
     "trial.attackPrefix": "Nejtvrdší námitka:",
-    "trial.refereePrefix": "Rozhodčí:",
+    "trial.refereePrefix": "Proč:",
+    "trial.mixedNote": "Je to smíšený spor: část fakta, část hodnoty nebo významy slov, takže čistou výhru je těžší obhájit.",
     confidence: "Jistota {n} z {total}",
     verdictAria: "Verdikt: {label}",
     "party.a": "Strana A",
@@ -179,9 +180,9 @@ const cs: Locale = {
     "how.step4.title": "Tři nezávislí soudci",
     "how.step4.body":
       "Tři soudci rozhodují každý zvlášť a při těsném výsledku se přidají další. Jistota vychází z toho, nakolik se shodnou, ne z toho, jak sebejistě znějí.",
-    "how.step5.title": "Verdikt, pak křížový výslech",
+    "how.step5.title": "Verdikt, pak zátěžový test",
     "how.step5.body":
-      "Dostaneš verdikt a skóre jistoty, k tomu nejsilnější argument druhé strany. Výhra postavená na faktech navíc projde křížovým výslechem, a když se zakymácí, dostaneš varování.",
+      "Dostaneš verdikt a skóre jistoty, k tomu nejsilnější argument druhé strany. Pak samostatný soudce vrhne nejsilnější námitku druhé strany na vítězný verdikt, a když se zakymácí, dostaneš varování i s důvodem.",
     "sample.title": "Jak vypadá verdikt",
     "sample.kicker": "Výsledek",
     "sample.lead":
@@ -206,7 +207,7 @@ const cs: Locale = {
       "Pro verdikt potřebuješ účet. Tvůj text jde do externí AI služby, aby se jména nahradila označeními Strana A a Strana B, a soudí se jen tahle verze. To, co napíšeš, včetně jmen, ukládáme šifrovaně, takže se k tomu můžeš vrátit; kdykoli můžeš požádat o odstranění. Sdílené odkazy ukazují jména, která si vybereš, nebo žádná.",
     "faq.powers.q": "Na čem to běží?",
     "faq.powers.a":
-      "AI model od externího poskytovatele. Tři soudci běží vedle sebe podle podrobného zadání a při těsném výsledku se přidají další. Vítězné verdikty postavené na faktech projdou vlastním křížovým výslechem. Jistotu počítá obyčejný kód, který sčítá, jak často se soudci shodnou.",
+      "AI model od externího poskytovatele. Tři soudci běží vedle sebe podle podrobného zadání a při těsném výsledku se přidají další. Vítězné verdikty postavené na faktech pak projdou zátěžovým testem u samostatného soudce. Jistotu počítá obyčejný kód, který sčítá, jak často se soudci shodnou.",
     "faq.taste.q": "A co když je to jen věc vkusu?",
     "faq.taste.a":
       "Pak ti to řekne: „Záleží na tvých hodnotách“ nebo „Stejné slovo, jiný význam“. Pořád uvidíš, kam se soudci přiklánějí, jasně označené jako vynucený verdikt.",
@@ -239,7 +240,7 @@ const cs: Locale = {
     "about.limit4": "Je to pro zábavu a jasno, ne právní, zdravotní ani finanční rada.",
     "about.builtTitle": "Pod kapotou",
     "about.built":
-      "Judge běží na AI modelu od externího poskytovatele. Tři soudci pracují souběžně a při těsném výsledku se přidají další. Míra jejich shody určuje skóre jistoty a vítězný verdikt postavený na faktech musí nejdřív obstát ve vlastním křížovém výslechu.",
+      "Judge běží na AI modelu od externího poskytovatele. Tři soudci pracují souběžně a při těsném výsledku se přidají další. Míra jejich shody určuje skóre jistoty a vítězný verdikt postavený na faktech musí nejdřív obstát v zátěžovém testu u samostatného soudce.",
     "about.art": "Pixel art: {pack} od {author}",
     "privacy.title": "Soukromí",
     "privacy.kicker": "Tvoje data",

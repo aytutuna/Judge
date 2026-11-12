@@ -109,12 +109,13 @@ const fi: Locale = {
     "vote.dissolved": "sanasekaannus",
     refusedNote: "Tekoäly jätti tämän väliin. Mieluummin ei mitään kuin keksitty tuomio.",
     demoNote: "🎭 Demotila: tekoälyavainta ei ole määritetty, joten tämä on esimerkkituomio",
-    "trial.survived": "🛡️ Tuomio kesti kovan ristikuulustelun. Varmuus pysyy ennallaan.",
-    "trial.uncertain": "⚠️ Ristikuulustelu herätti aiheellisia epäilyksiä tästä tuomiosta",
-    "trial.overturned": "⚠️ Tuomio ei kestänyt ristikuulustelua",
-    "trial.whatWasTested": "Mitä testattiin",
+    "trial.survived": "🛡️ Kestävyystesti läpäisty: erillinen tuomari yritti kaataa tuomion vastapuolen vahvimmalla vastaväitteellä, ja tuomio kesti. Varmuus pysyy ennallaan.",
+    "trial.uncertain": "⚠️ Kestävyystesti: vastapuolen vahvin vastaväite jätti aiheellisen epäilyksen tästä tuomiosta",
+    "trial.overturned": "⚠️ Kestävyystesti epäonnistui: vastapuolen vahvin vastaväite painoi enemmän kuin tämä tuomio",
+    "trial.whatWasTested": "Mitä kestävyystesti yritti",
     "trial.attackPrefix": "Kovin vastaväite:",
-    "trial.refereePrefix": "Erotuomari:",
+    "trial.refereePrefix": "Miksi:",
+    "trial.mixedNote": "Tämä on sekariita: osin tosiasioita, osin arvoja tai sanojen merkityksiä, joten selvää voittoa on vaikeampi puolustaa.",
     confidence: "Varmuus {n}/{total}",
     verdictAria: "Tuomio: {label}",
     "party.a": "Osapuoli A",
@@ -180,9 +181,9 @@ const fi: Locale = {
     "how.step4.title": "Kolme riippumatonta tuomaria",
     "how.step4.body":
       "Kolme tuomaria ratkaisee erikseen, ja tiukassa tilanteessa mukaan tulee lisää. Varmuus kertoo, kuinka yksimielisiä he ovat, ei sitä, kuinka varmalta he kuulostavat.",
-    "how.step5.title": "Ensin tuomio, sitten ristikuulustelu",
+    "how.step5.title": "Ensin tuomio, sitten kestävyystesti",
     "how.step5.body":
-      "Saat tuomion ja varmuusluvun sekä vastapuolen parhaan pointin. Faktoihin perustuva voitto joutuu vielä ristikuulusteluun, ja jos se horjuu, saat varoituksen.",
+      "Saat tuomion ja varmuusluvun sekä vastapuolen parhaan pointin. Sitten erillinen tuomari heittää vastapuolen vahvimman vastaväitteen voittanutta tuomiota vastaan, ja jos tuomio horjuu, saat varoituksen perusteluineen.",
     "sample.title": "Tältä tuomio näyttää",
     "sample.kicker": "Lopputulos",
     "sample.lead":
@@ -208,7 +209,7 @@ const fi: Locale = {
       "Tuomion saamiseen tarvitset tilin. Tekstisi lähetetään ulkopuoliseen tekoälypalveluun, jotta nimet voidaan vaihtaa muotoon Osapuoli A ja Osapuoli B, ja vain tämä versio ratkaistaan. Säilytämme kirjoittamasi, nimet mukaan lukien, salattuna, jotta näet sen myöhemmin uudelleen; voit pyytää sen poistamista milloin tahansa. Jakolinkeissä näkyvät valitsemasi nimet tai ei nimiä lainkaan.",
     "faq.powers.q": "Mihin se perustuu?",
     "faq.powers.a":
-      "Ulkopuolisen palveluntarjoajan tekoälymalliin. Kolme tuomaria toimii rinnakkain saman jäsennellyn ohjeistuksen pohjalta, ja tiukassa tilanteessa mukaan tulee lisää. Faktoihin perustuvat voittavat tuomiot joutuvat vielä omaan ristikuulusteluunsa. Varmuusluku syntyy tavallisella koodilla, joka laskee, kuinka usein tuomarit ovat samaa mieltä.",
+      "Ulkopuolisen palveluntarjoajan tekoälymalliin. Kolme tuomaria toimii rinnakkain saman jäsennellyn ohjeistuksen pohjalta, ja tiukassa tilanteessa mukaan tulee lisää. Faktoihin perustuvat voittavat tuomiot joutuvat sen jälkeen erillisen tuomarin kestävyystestiin. Varmuusluku syntyy tavallisella koodilla, joka laskee, kuinka usein tuomarit ovat samaa mieltä.",
     "faq.taste.q": "Entä jos kyse on vain makuasiasta?",
     "faq.taste.a":
       "Silloin se kertoo sen: ”Riippuu arvoistasi” tai ”Sama sana, eri merkitys”. Näet silti, kumpaan suuntaan tuomarit kallistuvat, selvästi merkittynä pakotetuksi valinnaksi.",
@@ -241,7 +242,7 @@ const fi: Locale = {
     "about.limit4": "Hauskanpitoon ja selkeyteen, ei oikeudellista, terveys- tai talousneuvontaa.",
     "about.builtTitle": "Konepellin alla",
     "about.built":
-      "Judge toimii ulkopuolisen palveluntarjoajan tekoälymallilla. Kolme tuomaria työskentelee rinnakkain, ja tiukassa tilanteessa mukaan tulee lisää. Heidän yksimielisyytensä määrää varmuusluvun, ja faktoihin perustuva voittava tuomio joutuu vielä omaan ristikuulusteluunsa ennen kuin se jää voimaan.",
+      "Judge toimii ulkopuolisen palveluntarjoajan tekoälymallilla. Kolme tuomaria työskentelee rinnakkain, ja tiukassa tilanteessa mukaan tulee lisää. Heidän yksimielisyytensä määrää varmuusluvun, ja faktoihin perustuva voittava tuomio joutuu vielä erillisen tuomarin kestävyystestiin ennen kuin se jää voimaan.",
     "about.art": "Pikselitaide: {pack}, tekijä {author}",
     "privacy.title": "Tietosuoja",
     "privacy.kicker": "Tietosi",

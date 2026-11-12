@@ -109,12 +109,13 @@ const id: Locale = {
     "vote.dissolved": "beda makna",
     refusedNote: "AI-nya memilih absen kali ini. Kami lebih baik tidak menampilkan apa-apa daripada mengarang putusan.",
     demoNote: "🎭 Mode demo: kunci AI belum dipasang, jadi ini contoh putusan",
-    "trial.survived": "🛡️ Putusan ini lolos uji silang yang ketat. Skor keyakinan tetap.",
-    "trial.uncertain": "⚠️ Uji silang menimbulkan keraguan serius soal putusan ini",
-    "trial.overturned": "⚠️ Putusan ini tidak lolos uji silang",
-    "trial.whatWasTested": "Yang diuji",
+    "trial.survived": "🛡️ Uji ketahanan lolos: hakim terpisah mencoba menjatuhkan putusan ini dengan keberatan terkuat pihak lain, dan putusan tetap bertahan. Skor keyakinan tetap.",
+    "trial.uncertain": "⚠️ Uji ketahanan: keberatan terkuat pihak lain meninggalkan keraguan nyata soal putusan ini",
+    "trial.overturned": "⚠️ Uji ketahanan gagal: keberatan terkuat pihak lain lebih berat daripada putusan ini",
+    "trial.whatWasTested": "Yang dicoba uji ketahanan",
     "trial.attackPrefix": "Sanggahan terberat:",
-    "trial.refereePrefix": "Wasit:",
+    "trial.refereePrefix": "Alasannya:",
+    "trial.mixedNote": "Ini perselisihan campuran: sebagian fakta, sebagian nilai atau makna kata, jadi kemenangan yang bersih lebih sulit dipertahankan.",
     confidence: "Keyakinan {n} dari {total}",
     verdictAria: "Putusan: {label}",
     "party.a": "Pihak A",
@@ -180,9 +181,9 @@ const id: Locale = {
     "how.step4.title": "Tiga hakim independen",
     "how.step4.body":
       "Tiga hakim memutuskan terpisah, dan kalau hasilnya tipis, hakim tambahan dipanggil. Skor keyakinan datang dari seberapa sepakat mereka, bukan dari seberapa yakin kedengarannya.",
-    "how.step5.title": "Putusan, lalu uji silang",
+    "how.step5.title": "Putusan, lalu uji ketahanan",
     "how.step5.body":
-      "Kamu dapat putusan dan skor keyakinan, plus poin terkuat pihak lain. Kemenangan berdasarkan fakta juga diuji silang, dan kalau goyah, kamu dapat peringatan.",
+      "Kamu dapat putusan dan skor keyakinan, plus poin terkuat pihak lain. Lalu hakim terpisah melemparkan keberatan terkuat pihak lain ke putusan yang menang, dan kalau goyah, kamu dapat peringatan beserta alasannya.",
     "sample.title": "Seperti apa putusannya",
     "sample.kicker": "Hasilnya",
     "sample.lead":
@@ -208,7 +209,7 @@ const id: Locale = {
       "Kamu perlu akun untuk mendapat putusan. Teksmu dikirim ke layanan AI pihak luar agar nama bisa diganti dengan Pihak A dan Pihak B, dan hanya versi itu yang dinilai. Kami menyimpan tulisanmu, termasuk nama, dalam bentuk terenkripsi, supaya kamu bisa melihatnya lagi; kamu bisa memintanya dihapus kapan saja. Tautan berbagi menampilkan nama yang kamu pilih, atau tanpa nama sama sekali.",
     "faq.powers.q": "Apa yang ada di baliknya?",
     "faq.powers.a":
-      "Model AI dari penyedia luar. Tiga hakim berjalan berdampingan dengan instruksi penilaian yang terstruktur, dan lebih banyak yang ikut kalau hasilnya tipis. Kemenangan berdasarkan fakta juga menjalani uji silangnya sendiri. Hitungan keyakinannya cuma kode biasa yang menghitung seberapa sering para hakim sepakat.",
+      "Model AI dari penyedia luar. Tiga hakim berjalan berdampingan dengan instruksi penilaian yang terstruktur, dan lebih banyak yang ikut kalau hasilnya tipis. Kemenangan berdasarkan fakta lalu menghadapi uji ketahanan dari hakim terpisah. Hitungan keyakinannya cuma kode biasa yang menghitung seberapa sering para hakim sepakat.",
     "faq.taste.q": "Bagaimana kalau ini cuma soal selera?",
     "faq.taste.a":
       "Kalau begitu, Judge akan bilang: “Tergantung nilai yang kamu pegang” atau “Kata sama, makna beda”. Kamu tetap bisa melihat ke mana hakim condong, dengan tanda jelas sebagai putusan terpaksa.",
@@ -241,7 +242,7 @@ const id: Locale = {
     "about.limit4": "Untuk seru-seruan dan kejelasan, bukan nasihat hukum, medis, atau keuangan.",
     "about.builtTitle": "Di balik layar",
     "about.built":
-      "Judge berjalan dengan model AI dari penyedia luar. Tiga hakim bekerja bersamaan dan lebih banyak yang ikut kalau hasilnya tipis. Tingkat kesepakatan mereka menentukan skor keyakinan, dan kemenangan berdasarkan fakta menjalani uji silangnya sendiri sebelum dinyatakan berlaku.",
+      "Judge berjalan dengan model AI dari penyedia luar. Tiga hakim bekerja bersamaan dan lebih banyak yang ikut kalau hasilnya tipis. Tingkat kesepakatan mereka menentukan skor keyakinan, dan kemenangan berdasarkan fakta menghadapi uji ketahanan dari hakim terpisah sebelum dinyatakan berlaku.",
     "about.art": "Pixel art: {pack} oleh {author}",
     "privacy.title": "Privasi",
     "privacy.kicker": "Datamu",

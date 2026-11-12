@@ -109,12 +109,13 @@ const sl: Locale = {
     "vote.dissolved": "nesporazum",
     refusedNote: "UI se je tokrat vzdržala. Raje ne pokažemo ničesar, kot da bi si razsodbo izmislili.",
     demoNote: "🎭 Demo način: ključ UI ni nastavljen, zato je to vzorčna razsodba",
-    "trial.survived": "🛡️ Razsodba je zdržala ostro navzkrižno zaslišanje. Zanesljivost ostaja enaka.",
-    "trial.uncertain": "⚠️ Navzkrižno zaslišanje je vzbudilo resne dvome o tej razsodbi",
-    "trial.overturned": "⚠️ Razsodba navzkrižnega zaslišanja ni zdržala",
-    "trial.whatWasTested": "Kaj smo preverili",
+    "trial.survived": "🛡️ Test vzdržljivosti opravljen: ločen sodnik je poskusil porušiti to razsodbo z najmočnejšim ugovorom druge plati, pa je zdržala. Zanesljivost ostaja enaka.",
+    "trial.uncertain": "⚠️ Test vzdržljivosti: najmočnejši ugovor druge plati je pustil resen dvom o tej razsodbi",
+    "trial.overturned": "⚠️ Test vzdržljivosti ni uspel: najmočnejši ugovor druge plati je pretehtal to razsodbo",
+    "trial.whatWasTested": "Kaj je poskusil test vzdržljivosti",
     "trial.attackPrefix": "Najostrejši ugovor:",
-    "trial.refereePrefix": "Razsodnik:",
+    "trial.refereePrefix": "Zakaj:",
+    "trial.mixedNote": "To je mešan spor: deloma dejstva, deloma vrednote ali pomeni besed, zato je čisto zmago težje zagovarjati.",
     confidence: "Zanesljivost: {n} od {total}",
     verdictAria: "Razsodba: {label}",
     "party.a": "Stranka A",
@@ -180,9 +181,9 @@ const sl: Locale = {
     "how.step4.title": "Trije neodvisni sodniki",
     "how.step4.body":
       "Trije sodniki razsojajo ločeno, ob tesnem izidu pa se pridruži še kdo. Zanesljivost izhaja iz tega, koliko se strinjajo, ne iz tega, kako prepričano zvenijo.",
-    "how.step5.title": "Razsodba, nato navzkrižno zaslišanje",
+    "how.step5.title": "Razsodba, nato test vzdržljivosti",
     "how.step5.body":
-      "Dobiš razsodbo in oceno zanesljivosti, zraven pa še najboljši argument druge plati. Zmaga na podlagi dejstev mora prestati še navzkrižno zaslišanje. Če se zamaje, dobiš opozorilo.",
+      "Dobiš razsodbo in oceno zanesljivosti, zraven pa še najboljši argument druge plati. Nato ločen sodnik vrže najmočnejši ugovor druge plati v zmagovito razsodbo. Če se zamaje, dobiš opozorilo z razlogom.",
     "sample.title": "Kako je videti razsodba",
     "sample.kicker": "Rezultat",
     "sample.lead":
@@ -208,7 +209,7 @@ const sl: Locale = {
       "Za razsodbo potrebuješ račun. Tvoje besedilo gre k zunanji storitvi UI, da imena zamenja z oznakama Stranka A in Stranka B, sodniki pa presojajo samo to različico. Kar napišeš, skupaj z imeni, hranimo šifrirano, da si ga lahko pozneje znova ogledaš; odstranitev lahko zahtevaš kadar koli. Povezave za deljenje pokažejo imena, ki jih izbereš, ali pa nobenih.",
     "faq.powers.q": "Kaj je v ozadju?",
     "faq.powers.a":
-      "Model UI zunanjega ponudnika. Trije sodniki tečejo vzporedno po natančnih navodilih za razsojanje, ob tesnem izidu pa se pridružijo še drugi. Zmagovite razsodbe o dejstvih gredo še skozi lastno navzkrižno zaslišanje. Zanesljivost izračuna preprosta koda, ki šteje, kako pogosto se sodniki strinjajo.",
+      "Model UI zunanjega ponudnika. Trije sodniki tečejo vzporedno po natančnih navodilih za razsojanje, ob tesnem izidu pa se pridružijo še drugi. Zmagovite razsodbe o dejstvih gredo nato še skozi test vzdržljivosti pri ločenem sodniku. Zanesljivost izračuna preprosta koda, ki šteje, kako pogosto se sodniki strinjajo.",
     "faq.taste.q": "Kaj pa, če gre samo za okus?",
     "faq.taste.a":
       "Potem dobiš tak odgovor: „Odvisno od tvojih vrednot“ ali „Ista beseda, različni pomeni“. Še vedno vidiš, na katero stran se nagibajo sodniki, jasno označeno kot odločitev na silo.",
@@ -241,7 +242,7 @@ const sl: Locale = {
     "about.limit4": "Za zabavo in jasnost, ne kot pravni, zdravstveni ali finančni nasvet.",
     "about.builtTitle": "Pod pokrovom",
     "about.built":
-      "Judge deluje na modelu UI zunanjega ponudnika. Trije sodniki delajo vzporedno, ob tesnem izidu pa se pridruži še kdo. Koliko se strinjajo, določa oceno zanesljivosti, zmagovita razsodba o dejstvih pa mora pred potrditvijo prestati še svoje navzkrižno zaslišanje.",
+      "Judge deluje na modelu UI zunanjega ponudnika. Trije sodniki delajo vzporedno, ob tesnem izidu pa se pridruži še kdo. Koliko se strinjajo, določa oceno zanesljivosti, zmagovita razsodba o dejstvih pa mora pred potrditvijo prestati še test vzdržljivosti pri ločenem sodniku.",
     "about.art": "Pixel art: {pack} avtorja {author}",
     "privacy.title": "Zasebnost",
     "privacy.kicker": "Tvoji podatki",

@@ -109,12 +109,13 @@ const nb: Locale = {
     "vote.dissolved": "ordstrid",
     refusedNote: "KI-en sto over denne. Vi viser heller ingenting enn en oppdiktet dom.",
     demoNote: "🎭 Demomodus: ingen KI-nøkkel er satt opp, så dette er en eksempeldom",
-    "trial.survived": "🛡️ Dommen holdt stand i et tøft kryssforhør. Sikkerheten er uendret.",
-    "trial.uncertain": "⚠️ Kryssforhøret skapte reell tvil om denne dommen",
-    "trial.overturned": "⚠️ Dommen holdt ikke stand i kryssforhøret",
-    "trial.whatWasTested": "Dette ble testet",
+    "trial.survived": "🛡️ Belastningstesten er bestått: en egen dommer prøvde å knekke dommen med den andre sidens sterkeste innvending, og den holdt. Sikkerheten er uendret.",
+    "trial.uncertain": "⚠️ Belastningstest: den andre sidens sterkeste innvending skapte reell tvil om dommen",
+    "trial.overturned": "⚠️ Belastningstesten feilet: den andre sidens sterkeste innvending veide tyngre enn dommen",
+    "trial.whatWasTested": "Dette prøvde belastningstesten",
     "trial.attackPrefix": "Sterkeste innvending:",
-    "trial.refereePrefix": "Oppmann:",
+    "trial.refereePrefix": "Hvorfor:",
+    "trial.mixedNote": "Dette er en blandet uenighet: dels fakta, dels verdier eller ords betydning, så en ren seier er vanskeligere å forsvare.",
     confidence: "Sikkerhet {n} av {total}",
     verdictAria: "Dom: {label}",
     "party.a": "Part A",
@@ -180,9 +181,9 @@ const nb: Locale = {
     "how.step4.title": "Tre uavhengige dommere",
     "how.step4.body":
       "Tre dommere avgjør hver for seg, og er det jevnt, kommer flere til. Sikkerheten kommer av hvor enige de er, ikke av hvor sikre de høres ut.",
-    "how.step5.title": "Dom, så kryssforhør",
+    "how.step5.title": "Dom, så belastningstest",
     "how.step5.body":
-      "Du får dommen og en sikkerhetsscore, pluss det beste poenget til den andre siden. En seier på fakta blir også kryssforhørt, og vakler den, får du en advarsel.",
+      "Du får dommen og en sikkerhetsscore, pluss det beste poenget til den andre siden. Deretter kaster en egen dommer den andre sidens sterkeste innvending mot en vinnende dom, og vakler den, får du en advarsel med begrunnelsen.",
     "sample.title": "Slik ser en dom ut",
     "sample.kicker": "Resultatet",
     "sample.lead":
@@ -208,7 +209,7 @@ const nb: Locale = {
       "Du trenger en konto for å få en dom. Teksten din sendes til en ekstern KI-tjeneste slik at navnene kan byttes ut med Part A og Part B, og bare den versjonen blir dømt. Vi lagrer det du skrev, navn inkludert, kryptert, så du kan se det igjen; du kan få det fjernet når som helst. Delingslenker viser navnene du velger, eller ingen.",
     "faq.powers.q": "Hva ligger bak?",
     "faq.powers.a":
-      "En KI-modell fra en ekstern leverandør. Tre dommere jobber side om side etter en fast, strukturert instruks, og flere blir med når det er jevnt. En dom som vinnes på fakta, får sitt eget kryssforhør. Sikkerhetsberegningen er vanlig kode som teller hvor ofte dommerne er enige.",
+      "En KI-modell fra en ekstern leverandør. Tre dommere jobber side om side etter en fast, strukturert instruks, og flere blir med når det er jevnt. En dom som vinnes på fakta, får deretter en belastningstest av en egen dommer. Sikkerhetsberegningen er vanlig kode som teller hvor ofte dommerne er enige.",
     "faq.taste.q": "Hva om det bare er en smakssak?",
     "faq.taste.a":
       "Da sier den det: «Det kommer an på hva du verdsetter» eller «Samme ord, ulik betydning». Du ser fortsatt hvilken vei dommerne heller, tydelig merket som et tvunget valg.",
@@ -241,7 +242,7 @@ const nb: Locale = {
     "about.limit4": "Det er for moro og klarhet, ikke juridisk, medisinsk eller økonomisk rådgivning.",
     "about.builtTitle": "Under panseret",
     "about.built":
-      "Judge kjører på en KI-modell fra en ekstern leverandør. Tre dommere jobber parallelt, og flere blir med når det er jevnt. Hvor enige de er, avgjør sikkerhetsscoren, og en vinnende dom på fakta må gjennom sitt eget kryssforhør før den blir stående.",
+      "Judge kjører på en KI-modell fra en ekstern leverandør. Tre dommere jobber parallelt, og flere blir med når det er jevnt. Hvor enige de er, avgjør sikkerhetsscoren, og en vinnende dom på fakta må gjennom en belastningstest hos en egen dommer før den blir stående.",
     "about.art": "Pikselkunst: {pack} av {author}",
     "privacy.title": "Personvern",
     "privacy.kicker": "Dine data",

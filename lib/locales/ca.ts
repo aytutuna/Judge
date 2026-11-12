@@ -109,12 +109,13 @@ const ca: Locale = {
     "vote.dissolved": "malentès",
     refusedNote: "La IA s'ha abstingut aquesta vegada. Preferim no mostrar res que inventar-nos un veredicte.",
     demoNote: "🎭 Mode demo: no hi ha cap clau d'IA configurada, així que això és un veredicte d'exemple",
-    "trial.survived": "🛡️ El veredicte ha superat una prova de foc exigent. La confiança es manté.",
-    "trial.uncertain": "⚠️ La prova de foc ha posat seriosament en dubte aquest veredicte",
-    "trial.overturned": "⚠️ El veredicte no ha superat la prova de foc",
-    "trial.whatWasTested": "Què s'ha posat a prova",
+    "trial.survived": "🛡️ Prova de resistència superada: un jutge a part ha intentat tombar aquest veredicte amb l'objecció més forta de l'altra part, i ha aguantat. La confiança es manté.",
+    "trial.uncertain": "⚠️ Prova de resistència: l'objecció més forta de l'altra part ha deixat dubtes reals sobre aquest veredicte",
+    "trial.overturned": "⚠️ Prova de resistència fallida: l'objecció més forta de l'altra part ha pesat més que aquest veredicte",
+    "trial.whatWasTested": "Què ha provat la prova de resistència",
     "trial.attackPrefix": "L'objecció més dura:",
-    "trial.refereePrefix": "Àrbitre:",
+    "trial.refereePrefix": "Per què:",
+    "trial.mixedNote": "És una disputa mixta: part fets, part valors o significats de paraules, així que una victòria neta és més difícil de defensar.",
     confidence: "Confiança: {n} de {total}",
     verdictAria: "Veredicte: {label}",
     "party.a": "Part A",
@@ -181,9 +182,9 @@ const ca: Locale = {
     "how.step4.title": "Tres jutges independents",
     "how.step4.body":
       "Tres jutges decideixen per separat i, si la cosa està igualada, se n'hi afegeixen més. La confiança depèn de fins a quin punt coincideixen, no de la seguretat amb què parlen.",
-    "how.step5.title": "Veredicte i prova de foc",
+    "how.step5.title": "Veredicte i prova de resistència",
     "how.step5.body":
-      "Reps el veredicte i una puntuació de confiança, a més del millor argument de l'altra part. Una victòria basada en fets també passa una prova de foc, i si trontolla, te n'avisem.",
+      "Reps el veredicte i una puntuació de confiança, a més del millor argument de l'altra part. Després un jutge a part llança l'objecció més forta de l'altra part contra un veredicte guanyador, i si trontolla, te n'avisem amb el motiu.",
     "sample.title": "Com és un veredicte",
     "sample.kicker": "El resultat",
     "sample.lead":
@@ -209,7 +210,7 @@ const ca: Locale = {
       "Necessites un compte per obtenir un veredicte. El teu text va a un servei d'IA extern perquè els noms es canviïn per Part A i Part B, i només es jutja aquesta versió. Guardem el que escrius, noms inclosos, xifrat, perquè el puguis tornar a veure; en pots demanar l'eliminació quan vulguis. Els enllaços per compartir mostren els noms que triïs, o cap.",
     "faq.powers.q": "Què hi ha al darrere?",
     "faq.powers.a":
-      "Un model d'IA d'un proveïdor extern. Tres jutges treballen en paral·lel amb unes instruccions de judici estructurades, i se n'hi afegeixen més si la cosa està igualada. Els veredictes guanyadors sobre fets passen la seva pròpia prova de foc. El càlcul de la confiança és codi senzill que compta com sovint coincideixen els jutges.",
+      "Un model d'IA d'un proveïdor extern. Tres jutges treballen en paral·lel amb unes instruccions de judici estructurades, i se n'hi afegeixen més si la cosa està igualada. Els veredictes guanyadors sobre fets passen després una prova de resistència a càrrec d'un jutge a part. El càlcul de la confiança és codi senzill que compta com sovint coincideixen els jutges.",
     "faq.taste.q": "I si només és qüestió de gustos?",
     "faq.taste.a":
       "Llavors t'ho dirà: «Depèn dels teus valors» o «Mateixa paraula, significats diferents». Igualment veuràs cap a on es decanten els jutges, ben marcat com a veredicte forçat.",
@@ -242,7 +243,7 @@ const ca: Locale = {
     "about.limit4": "És per divertir-se i veure-hi clar, no és assessorament legal, mèdic ni financer.",
     "about.builtTitle": "Per dins",
     "about.built":
-      "Judge funciona amb un model d'IA d'un proveïdor extern. Tres jutges treballen en paral·lel i, si la cosa està igualada, se n'hi afegeixen més. El grau d'acord entre ells fixa la puntuació de confiança, i un veredicte guanyador sobre fets passa la seva pròpia prova de foc abans de donar-se per bo.",
+      "Judge funciona amb un model d'IA d'un proveïdor extern. Tres jutges treballen en paral·lel i, si la cosa està igualada, se n'hi afegeixen més. El grau d'acord entre ells fixa la puntuació de confiança, i un veredicte guanyador sobre fets passa una prova de resistència a càrrec d'un jutge a part abans de donar-se per bo.",
     "about.art": "Pixel art: {pack} de {author}",
     "privacy.title": "Privadesa",
     "privacy.kicker": "Les teves dades",

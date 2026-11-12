@@ -109,12 +109,13 @@ const hr: Locale = {
     "vote.dissolved": "zbrka pojmova",
     refusedNote: "AI je ovaj put odustao. Radije nećemo pokazati ništa nego izmisliti presudu.",
     demoNote: "🎭 Demo način: AI ključ nije postavljen, pa je ovo primjer presude",
-    "trial.survived": "🛡️ Presuda je izdržala oštro unakrsno ispitivanje. Pouzdanost ostaje ista.",
-    "trial.uncertain": "⚠️ Unakrsno ispitivanje izazvalo je ozbiljne sumnje u ovu presudu",
-    "trial.overturned": "⚠️ Presuda nije izdržala unakrsno ispitivanje",
-    "trial.whatWasTested": "Što se provjeravalo",
+    "trial.survived": "🛡️ Test otpornosti položen: zaseban sudac pokušao je srušiti ovu presudu najjačom primjedbom druge strane, a ona je izdržala. Pouzdanost ostaje ista.",
+    "trial.uncertain": "⚠️ Test otpornosti: najjača primjedba druge strane ostavila je ozbiljnu sumnju u ovu presudu",
+    "trial.overturned": "⚠️ Test otpornosti nije prošao: najjača primjedba druge strane odvagnula je više od ove presude",
+    "trial.whatWasTested": "Što je test otpornosti pokušao",
     "trial.attackPrefix": "Najoštriji prigovor:",
-    "trial.refereePrefix": "Arbitar:",
+    "trial.refereePrefix": "Zašto:",
+    "trial.mixedNote": "Ovo je miješan spor: dijelom činjenice, dijelom vrijednosti ili značenja riječi, pa je čistu pobjedu teže obraniti.",
     confidence: "Pouzdanost {n} od {total}",
     verdictAria: "Presuda: {label}",
     "party.a": "Strana A",
@@ -180,9 +181,9 @@ const hr: Locale = {
     "how.step4.title": "Tri neovisna suca",
     "how.step4.body":
       "Tri suca presuđuju odvojeno, a kad je tijesno, uključuju se dodatni suci. Pouzdanost proizlazi iz toga koliko se slažu, a ne koliko sigurno zvuče.",
-    "how.step5.title": "Presuda, pa unakrsno ispitivanje",
+    "how.step5.title": "Presuda, pa test otpornosti",
     "how.step5.body":
-      "Dobivaš presudu i ocjenu pouzdanosti, a uz to i najjači argument druge strane. Pobjeda na temelju činjenica prolazi i unakrsno ispitivanje, a ako se zaljulja, dobivaš upozorenje.",
+      "Dobivaš presudu i ocjenu pouzdanosti, a uz to i najjači argument druge strane. Zatim zaseban sudac baca najjaču primjedbu druge strane na pobjedničku presudu, a ako se zaljulja, dobivaš upozorenje s razlogom.",
     "sample.title": "Kako izgleda presuda",
     "sample.kicker": "Rezultat",
     "sample.lead":
@@ -208,7 +209,7 @@ const hr: Locale = {
       "Za presudu ti treba račun. Tvoj tekst ide vanjskoj AI usluzi kako bi se imena zamijenila oznakama Strana A i Strana B, a suci presuđuju samo na temelju te verzije. Ono što napišeš, zajedno s imenima, čuvamo šifrirano kako bi ti ostalo dostupno; uklanjanje možeš zatražiti kad god želiš. Poveznice za dijeljenje prikazuju imena koja odabereš ili nikakva.",
     "faq.powers.q": "Što ga pokreće?",
     "faq.powers.a":
-      "AI model vanjskog pružatelja. Tri suca rade usporedno prema strukturiranim uputama za presuđivanje, a kad je tijesno, pridružuju im se dodatni suci. Pobjedničke presude o činjenicama prolaze vlastito unakrsno ispitivanje. Pouzdanost računa običan kod koji broji koliko se često suci slažu.",
+      "AI model vanjskog pružatelja. Tri suca rade usporedno prema strukturiranim uputama za presuđivanje, a kad je tijesno, pridružuju im se dodatni suci. Pobjedničke presude o činjenicama zatim prolaze test otpornosti kod zasebnog suca. Pouzdanost računa običan kod koji broji koliko se često suci slažu.",
     "faq.taste.q": "Što ako je to samo stvar ukusa?",
     "faq.taste.a":
       "Onda će ti to i reći: „Ovisi o tvojim vrijednostima“ ili „Ista riječ, različita značenja“. I dalje vidiš na koju stranu suci naginju, jasno označeno kao iznuđena odluka.",
@@ -241,7 +242,7 @@ const hr: Locale = {
     "about.limit4": "Služi za zabavu i jasnoću, a ne kao pravni, medicinski ili financijski savjet.",
     "about.builtTitle": "Ispod haube",
     "about.built":
-      "Judge radi na AI modelu vanjskog pružatelja. Tri suca rade usporedno, a kad je tijesno, pridružuju im se dodatni suci. Koliko se slažu, određuje ocjenu pouzdanosti, a pobjednička presuda o činjenicama, prije nego što postane konačna, prolazi vlastito unakrsno ispitivanje.",
+      "Judge radi na AI modelu vanjskog pružatelja. Tri suca rade usporedno, a kad je tijesno, pridružuju im se dodatni suci. Koliko se slažu, određuje ocjenu pouzdanosti, a pobjednička presuda o činjenicama, prije nego što postane konačna, prolazi test otpornosti kod zasebnog suca.",
     "about.art": "Pixel art: {pack} autora {author}",
     "privacy.title": "Privatnost",
     "privacy.kicker": "Tvoji podaci",
