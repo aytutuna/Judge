@@ -105,14 +105,10 @@ fun VerdictRoute(
     val url = shareUrl(shareBaseUrl, id)
 
     Column(Modifier.fillMaxSize()) {
-        if (details) {
-            TopBar(onBack = { showDetails(false) }, backLabel = s.appVerdictBack, backText = s.appVerdictBack)
-        } else {
-            TopBar(onBack = onBack, backLabel = backLabel)
-        }
         val saved = state.saved
         val view = state.view
         if (saved == null || view == null) {
+            TopBar(onBack = onBack, backLabel = backLabel)
             Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 if (state.loading) {
                     CircularProgressIndicator(color = Palette.ink)
@@ -142,6 +138,12 @@ fun VerdictRoute(
                 else -> null
             },
         )
+        val trailing: @Composable () -> Unit = { ShareActions(actions) }
+        if (details) {
+            TopBar(onBack = { showDetails(false) }, backLabel = s.appVerdictBack, backText = s.appVerdictBack, trailing = trailing)
+        } else {
+            TopBar(onBack = onBack, backLabel = backLabel, trailing = trailing)
+        }
         val width = Modifier.widthIn(max = 640.dp).fillMaxWidth()
         Column(
             Modifier
@@ -154,11 +156,11 @@ fun VerdictRoute(
         ) {
             val restored = remember(saved.nameMap, selfLang) { PartyNames.restoredNames(saved.nameMap, selfLang, view.result.sideCount) }
             if (details) {
-                VerdictDetails(shown, parties, restored, actions, width.padding(bottom = 32.dp))
+                VerdictDetails(shown, parties, restored, actions, width.padding(bottom = 32.dp), showShare = false)
             } else {
                 RulingSummary(
                     shown, parties, actions, onDetails = { showDetails(true) }, reducedMotion = rememberReducedMotion(), modifier = width,
-                    restoredNames = restored,
+                    restoredNames = restored, showShare = false,
                 )
                 // The sheet takes the form; re-judging, or why no more context fits, shows here.
                 if (appealState?.panel == true) AppealNote(area, width.padding(top = 16.dp))

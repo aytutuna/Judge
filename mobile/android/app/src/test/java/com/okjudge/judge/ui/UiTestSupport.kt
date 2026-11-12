@@ -67,6 +67,7 @@ fun SampleVerdict(
     modifier: Modifier = Modifier,
     status: TranslationStatus = TranslationStatus.ORIGINAL,
     summary: Boolean = false,
+    showShare: Boolean = true,
 ) {
     val selfLang = ContentLang.verdictLang(outcome.result.result)
     val s = UiTestSupport.s(lang)
@@ -76,9 +77,9 @@ fun SampleVerdict(
     val actions = CardActions(onShare = {}, onCopy = {}, copied = false)
     val restored = PartyNames.restoredNames(outcome.nameMap, selfLang, sides)
     if (summary) {
-        RulingSummary(view, parties, actions, onDetails = {}, reducedMotion = true, modifier = modifier, restoredNames = restored)
+        RulingSummary(view, parties, actions, onDetails = {}, reducedMotion = true, modifier = modifier, restoredNames = restored, showShare = showShare)
     } else {
-        VerdictDetails(view, parties, restored, actions, modifier)
+        VerdictDetails(view, parties, restored, actions, modifier, showShare)
     }
 }
 

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -30,11 +31,17 @@ import com.okjudge.judge.ui.theme.Palette
  * arrow as well.
  */
 @Composable
-fun TopBar(onBack: (() -> Unit)?, modifier: Modifier = Modifier, backLabel: String? = null, backText: String? = null) {
+fun TopBar(
+    onBack: (() -> Unit)?,
+    modifier: Modifier = Modifier,
+    backLabel: String? = null,
+    backText: String? = null,
+    trailing: (@Composable () -> Unit)? = null,
+) {
     if (onBack == null) return
     val s = LocalStrings.current
     Row(
-        modifier.fillMaxWidth().height(56.dp).padding(horizontal = 12.dp),
+        modifier.fillMaxWidth().heightIn(min = 56.dp).padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (backText != null) {
@@ -65,6 +72,9 @@ fun TopBar(onBack: (() -> Unit)?, modifier: Modifier = Modifier, backLabel: Stri
             ) {
                 TintedIcon(rememberIcon(Palette.ink) { JudgeIcons.back(it) }, 20)
             }
+        }
+        if (trailing != null) {
+            Box(Modifier.weight(1f).padding(start = 8.dp), contentAlignment = Alignment.CenterEnd) { trailing() }
         }
     }
 }

@@ -205,8 +205,10 @@ class ScreenshotsTest {
         val content: @Composable () -> Unit = {
             Themed(lang) {
                 Column(Modifier.fillMaxSize()) {
-                    TopBar(onBack = {}, backText = UiTestSupport.s(lang).appVerdictBack)
-                    SampleVerdict(outcome, lang, Modifier.padding(horizontal = 16.dp, vertical = 4.dp), status)
+                    TopBar(onBack = {}, backText = UiTestSupport.s(lang).appVerdictBack, trailing = {
+                        com.okjudge.judge.ui.verdict.ShareActions(com.okjudge.judge.ui.verdict.CardActions(onShare = {}, onCopy = {}, copied = false))
+                    })
+                    SampleVerdict(outcome, lang, Modifier.padding(horizontal = 16.dp, vertical = 4.dp), status, showShare = false)
                 }
             }
         }

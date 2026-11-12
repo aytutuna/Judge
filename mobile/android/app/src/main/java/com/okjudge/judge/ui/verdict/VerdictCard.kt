@@ -150,11 +150,12 @@ fun RulingSummary(
     modifier: Modifier = Modifier,
     scene: Boolean = true,
     restoredNames: List<String> = emptyList(),
+    showShare: Boolean = true,
 ) {
     val s = LocalStrings.current
     val result = view.result
     Column(modifier, verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        ShareRow(actions)
+        if (showShare) ShareActions(actions)
         result.appeal?.let { OutcomeBanner(it, parties) }
         Column(
             Modifier
@@ -222,6 +223,7 @@ fun VerdictDetails(
     restoredNames: List<String>,
     actions: CardActions,
     modifier: Modifier = Modifier,
+    showShare: Boolean = true,
 ) {
     val s = LocalStrings.current
     val result = view.result
@@ -229,7 +231,7 @@ fun VerdictDetails(
         modifier.alpha(if (view.status == TranslationStatus.LOADING) 0.55f else 1f),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        ShareRow(actions)
+        if (showShare) ShareActions(actions)
         result.appeal?.let { OutcomeBanner(it, parties) }
         DetailCard {
             TranslationLine(view)
@@ -537,11 +539,11 @@ fun VoteDot(vote: Vote?, sizeDp: Int) {
  */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun ShareRow(actions: CardActions) {
+fun ShareActions(actions: CardActions, modifier: Modifier = Modifier) {
     val s = LocalStrings.current
     val share = actions.onShare ?: return
     FlowRow(
-        Modifier.fillMaxWidth(),
+        modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -707,14 +709,14 @@ private fun Slots(result: VerdictResult, parties: PartyLabels) {
             LeanState.Tie -> Slot { SlotText(s.leanTie) }
             LeanState.None -> Unit
         }
-        result.cruxTrial?.let { CruxTrialNote(it) }
+        result.cruxTrial?.let { CruxTrialNote(it, result.dispute == DisputeType.MIXED) }
         if (result.refused) Slot { SlotText(s.refusedNote) }
         if (result.demo) Slot { SlotText(s.demoNote) }
     }
 }
 
 @Composable
-private fun CruxTrialNote(trial: CruxTrial) {
+private fun CruxTrialNote(trial: CruxTrial, mixed: Boolean) {
     val s = LocalStrings.current
     if (trial.trialOutcome == TrialOutcome.SURVIVED) {
         var open by rememberSaveable { mutableStateOf(false) }
@@ -747,8 +749,18 @@ private fun CruxTrialNote(trial: CruxTrial) {
                 style = JudgeType.slotText.copy(color = color),
             )
         }
-        SlotText("${s.trialAttackPrefix} ${trial.attack}")
-        if (trial.reasoning.isNotEmpty()) SlotText("${s.trialRefereePrefix} ${trial.reasoning}")
+        val why = VerdictDisplay.trialWhy(trial)
+        if (why.isNotEmpty()) SlotText("${s.trialRefereePrefix} $why")
+        if (mixed) SlotText(s.trialMixedNote)
+        if (trial.reasoning.isNotBlank() && trial.attack.isNotBlank()) {
+            var open by rememberSaveable { mutableStateOf(false) }
+            Text(
+                s.trialWhatWasTested,
+                style = JudgeType.slotText.copy(color = Palette.ink2, fontWeight = FontWeight.SemiBold),
+                modifier = Modifier.clip(RoundedCornerShape(8.dp)).clickable { open = !open }.padding(4.dp),
+            )
+            if (open) SlotText("${s.trialAttackPrefix} ${trial.attack}")
+        }
     }
 }
 
@@ -935,8 +947,7 @@ private fun Footnote(result: VerdictResult, parties: PartyLabels) {
         }
         add("${s.judgesVoted(result.runs.size)} $votes")
         if (result.premium) {
-            val models = result.panel?.models.orEmpty()
-            add(if (models.isNotEmpty()) "${s.panelPremium} ${VerdictDisplay.panelSummary(models, s)}" else s.panelPremium)
+            add(s.panelPremium)
         }
         VerdictDisplay.evidenceNote(result, s)?.let { add(it) }
     }
