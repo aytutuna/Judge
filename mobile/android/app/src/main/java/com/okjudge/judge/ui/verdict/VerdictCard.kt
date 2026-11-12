@@ -763,18 +763,20 @@ private fun CruxTrialNote(trial: CruxTrial, mixed: Boolean) {
         return
     }
     val overturned = trial.trialOutcome == TrialOutcome.OVERTURNED
+    val minor = trial.trialOutcome == TrialOutcome.MINOR
     val color = if (overturned) Palette.danger else Palette.ink2
     Slot(6.dp) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-            TintedIcon(remember(color) { JudgeIcons.alert(color) }, 14)
+            if (minor) TintedIcon(rememberIcon(Palette.ink2) { JudgeIcons.shield(it) }, 14)
+            else TintedIcon(remember(color) { JudgeIcons.alert(color) }, 14)
             Text(
-                if (overturned) s.trialOverturned else s.trialUncertain,
+                if (minor) s.trialMinor else if (overturned) s.trialOverturned else s.trialUncertain,
                 style = JudgeType.slotText.copy(color = color),
             )
         }
         val why = VerdictDisplay.trialWhy(trial)
         if (why.isNotEmpty()) SlotText("${s.trialRefereePrefix} $why")
-        if (mixed) SlotText(s.trialMixedNote)
+        if (mixed && !minor) SlotText(s.trialMixedNote)
         if (trial.reasoning.isNotBlank() && trial.attack.isNotBlank()) {
             var open by rememberSaveable { mutableStateOf(false) }
             ObjectionToggle(open) { open = !open }

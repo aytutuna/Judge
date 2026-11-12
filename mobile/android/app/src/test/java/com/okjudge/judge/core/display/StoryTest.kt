@@ -45,7 +45,7 @@ class StoryTest {
     @Test
     fun ending_matchesTheWeb() {
         val cases = vectors["endings"]!!.jsonArray.map { it.jsonObject }
-        assertEquals(23, cases.size)
+        assertEquals(24, cases.size)
         for (c in cases) {
             val name = c["name"]!!.jsonPrimitive.content
             val summary = c["summary"].orNull()?.let { summaryOf(it.jsonObject) }

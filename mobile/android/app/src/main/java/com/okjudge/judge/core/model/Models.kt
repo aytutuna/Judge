@@ -242,7 +242,7 @@ enum class ClaimKind(val raw: String) {
 }
 
 enum class TrialOutcome(val raw: String) {
-    SURVIVED("survived"), OVERTURNED("overturned"), UNCERTAIN("uncertain"), UNKNOWN("");
+    SURVIVED("survived"), OVERTURNED("overturned"), UNCERTAIN("uncertain"), MINOR("minor"), UNKNOWN("");
 
     companion object {
         fun of(raw: String?): TrialOutcome = entries.firstOrNull { it.raw == raw && it != UNKNOWN } ?: UNKNOWN

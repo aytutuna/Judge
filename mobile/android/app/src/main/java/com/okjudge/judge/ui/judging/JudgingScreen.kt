@@ -255,7 +255,7 @@ internal fun trialLine(s: Strings, key: String, result: VerdictResult?): String 
     val trial = result?.cruxTrial ?: return line
     if (trial.trialOutcome == TrialOutcome.SURVIVED) return line
     val why = VerdictDisplay.trialWhy(trial)
-    val mixed = if (result.dispute == DisputeType.MIXED) " ${s.trialMixedNote}" else ""
+    val mixed = if (result.dispute == DisputeType.MIXED && trial.trialOutcome != TrialOutcome.MINOR) " ${s.trialMixedNote}" else ""
     return "$line${if (why.isNotEmpty()) ": $why" else ""}$mixed"
 }
 

@@ -30,4 +30,13 @@ class JudgingTrialLineTest {
         assertTrue(line, line.contains("Ben has no proof."))
         assertFalse(line, line.contains("Party A"))
     }
+
+    @Test
+    fun minorLogLineSaysWhyButSkipsTheMixedNote() {
+        val minor = result.copy(disputeType = "mixed", cruxTrial = trial.copy(outcome = "minor"))
+        val s = UiTestSupport.s(AppLang.EN)
+        val line = trialLine(s, "trial.minor", withNames(minor, names))
+        assertTrue(line, line.contains("Ben has no proof."))
+        assertFalse(line, line.contains(s.trialMixedNote))
+    }
 }
