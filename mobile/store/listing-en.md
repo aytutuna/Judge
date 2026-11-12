@@ -105,7 +105,7 @@ Answer the questionnaires honestly; the expected outcome is a low rating, though
 
 Based on https://okjudge.com/privacy.
 
-Data collected, all linked to the user, none used for tracking:
+Data collected, none used for tracking. Keep this in step with mobile/ios/Judge/PrivacyInfo.xcprivacy.
 
 | Data | Why | Linked to user | Tracking |
 |---|---|---|---|
@@ -116,10 +116,15 @@ Data collected, all linked to the user, none used for tracking:
 | Purchase history (credit packs and the monthly plan) | App functionality: credits and plan | Yes | No |
 | User ID: the account ID, also used for store purchases | App functionality | Yes | No |
 | Other IDs: session token | App functionality | Yes | No |
+| Device ID: identifierForVendor on iOS, ANDROID_ID on Android, sent at sign-in and with usage events | App functionality (spotting many accounts on one device), analytics | Yes | No |
+| Product interaction: screens opened and steps taken, unless Usage statistics is off | Analytics | Yes | No |
+| Coarse location: the two-letter country Cloudflare derives from the IP, stored with usage events | Analytics | Yes | No |
+| Crash data, performance data, other diagnostic data (crash reports) | App functionality | No | No |
 
 Also true:
 - No advertising, no ad SDKs, no tracking across other apps and sites, no data sold.
-- Not collected: location, contacts, health, financial info, browsing history, device identifiers.
+- Not collected: precise location, contacts, health, financial info, browsing history.
+- The device ID is sent at sign-in even when Usage statistics is off, because it is how the server spots many accounts on one device.
 - A keyed hash of the IP address is kept up to 24 hours for rate limiting (translations and answers to two-sided cases) and is not saved with the verdict.
 - Data is encrypted in transit. User text is encrypted at rest.
 - Others who handle data: an outside AI service (US) reads the text and screenshots and runs the web search; Apple or Google for sign-in; an email provider for sign-in codes; RevenueCat for store purchases, keyed to the account ID; Cloudflare in front of the service. Servers are in Germany.
