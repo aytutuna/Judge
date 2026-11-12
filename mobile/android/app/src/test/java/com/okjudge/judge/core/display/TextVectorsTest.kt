@@ -2,6 +2,7 @@ package com.okjudge.judge.core.display
 
 import androidx.test.core.app.ApplicationProvider
 import com.okjudge.judge.Fixtures
+import com.okjudge.judge.core.model.CruxTrial
 import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LocalizedStrings
@@ -201,13 +202,8 @@ class TextVectorsTest {
     }
 
     @Test
-    fun panelSummary_countsSeatTiersWithoutModelNames() {
-        val en = s("en")
-        val text = VerdictDisplay.panelSummary(listOf("claude-sonnet-4", "claude-haiku-4", "claude-sonnet-4", "mystery"), en)
-        assertEquals("Judges: 3 strong + 1 quick", text)
-        assertEquals("Judges: 1 quick", VerdictDisplay.panelSummary(listOf("claude-haiku-4"), en))
-        val tr = s("tr")
-        assertEquals("Yargıçlar: 2 güçlü + 3 hızlı", VerdictDisplay.panelSummary(listOf("a-sonnet", "b-sonnet", "x-haiku", "y-haiku", "z-haiku"), tr))
-        assertEquals("Judges: 2 strong + 1 quick", VerdictDisplay.panelSummary(listOf("strong", "strong", "quick"), en))
+    fun trialWhy_prefersTheRefereeThenTheObjection() {
+        assertEquals("referee", VerdictDisplay.trialWhy(CruxTrial("attack", "uncertain", " referee ")))
+        assertEquals("attack", VerdictDisplay.trialWhy(CruxTrial("attack", "uncertain", "")))
     }
 }

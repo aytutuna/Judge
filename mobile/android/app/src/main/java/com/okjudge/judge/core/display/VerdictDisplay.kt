@@ -4,6 +4,7 @@ import com.okjudge.judge.core.model.FinalVerdict
 import com.okjudge.judge.core.model.Lean
 import com.okjudge.judge.core.model.LeanTally
 import com.okjudge.judge.core.model.Side
+import com.okjudge.judge.core.model.CruxTrial
 import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.i18n.Strings
 import java.util.Locale
@@ -157,20 +158,8 @@ object VerdictDisplay {
         }
     }
 
-    // The server sends "quick" or "strong"; "haiku" is the model id older stored verdicts carry.
-    private val QUICK_MODEL = Regex("haiku", RegexOption.IGNORE_CASE)
-
-    /** "Judges: 2 strong + 1 quick" (panelSummary). Users see seat tiers,
-     * never model names: the lite model is "quick", every other is "strong". */
-    fun panelSummary(models: List<String>, s: Strings): String {
-        val quick = models.count { it == "quick" || QUICK_MODEL.containsMatchIn(it) }
-        val strong = models.size - quick
-        val parts = buildList {
-            if (strong > 0) add(s.panelStrong(strong))
-            if (quick > 0) add(s.panelQuick(quick))
-        }
-        return s.panelModels(parts.joinToString(" + "))
-    }
+    /** Why a stress test left doubt: the referee's reasoning, else the objection itself. */
+    fun trialWhy(trial: CruxTrial): String = trial.reasoning.trim().ifEmpty { trial.attack.trim() }
 
     /** The evidence footnote line (evidenceNote): per party on two-sided verdicts, a count otherwise. */
     fun evidenceNote(result: VerdictResult, s: Strings): String? {
