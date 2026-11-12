@@ -7,7 +7,7 @@ const dir = mkdtempSync(path.join(tmpdir(), "verdict-welcome-"));
 process.env.DATABASE_URL = `file:${path.join(dir, "test.db").replace(/\\/g, "/")}`;
 process.env.BETTER_AUTH_SECRET = "test-secret-".padEnd(48, "x");
 
-const { createDevSession, deleteAuthUser, findOrCreateUserByEmail, retryWelcomeCredit, welcomeClaim } =
+const { createDevSession, deleteAuthUser, findOrCreateUserByEmail, retryWelcomeCredit, welcomeClaim, legacyWelcomeClaim, canonicalEmail } =
   await import("../lib/auth");
 const ent = await import("../lib/entitlements");
 const { getDb } = await import("../lib/db");
@@ -44,6 +44,17 @@ async function forgetWelcome(userId: string, email: string): Promise<void> {
   );
 }
 
+describe("canonical email", () => {
+  it("folds case, +tags and Gmail dots and domain", () => {
+    expect(canonicalEmail(" Me+1@Example.com ")).toBe("me@example.com");
+    expect(canonicalEmail("m.e+x@example.com")).toBe("m.e@example.com");
+    expect(canonicalEmail("m.e+x@googlemail.com")).toBe("me@gmail.com");
+    expect(canonicalEmail("M.E@gmail.com")).toBe("me@gmail.com");
+    expect(welcomeClaim("me+2@gmail.com")).toBe(welcomeClaim("m.e@googlemail.com"));
+    expect(welcomeClaim("a@example.com")).not.toBe(welcomeClaim("b@example.com"));
+  });
+});
+
 describe("welcome credit", () => {
   it("a new account starts with one credit", async () => {
     const { user } = await createDevSession("welcome1@verdict.local");
@@ -76,6 +87,23 @@ describe("welcome credit", () => {
     expect(user.id).not.toBe(first.user.id);
     expect(await ent.getEntitlement(user.id)).toMatchObject({ canUsePremium: false, credits: 0 });
     expect(await welcomeGrants(user.id)).toBe(0);
+  });
+
+  it("an alias of an address that had a credit gets none", async () => {
+    await createDevSession("alias1@verdict.local");
+    const { user } = await createDevSession("alias1+two@verdict.local");
+    expect(await ent.getEntitlement(user.id)).toMatchObject({ canUsePremium: false, credits: 0 });
+  });
+
+  it("an address with a claim stored under the old hash gets none", async () => {
+    const db = await getDb();
+    await ent.ensureEntitlementTables();
+    await db.execute({
+      sql: "INSERT INTO welcome_claims (claim, created_at) VALUES (?, ?)",
+      args: [legacyWelcomeClaim("old.Claim@verdict.local")!, new Date().toISOString()],
+    });
+    const { user } = await createDevSession("old.claim@verdict.local");
+    expect(await ent.getEntitlement(user.id)).toMatchObject({ canUsePremium: false, credits: 0 });
   });
 
   it("a grant lost at sign-up is given on a later look, once", async () => {

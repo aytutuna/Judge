@@ -117,11 +117,15 @@ export async function keepBlock(claim: string, now = new Date()): Promise<void> 
   });
 }
 
-/** When that email's earlier account was blocked, else null. */
-export async function keptBlock(claim: string): Promise<string | null> {
+/** When that email's earlier account was blocked, else null. `legacy` is the
+ * claim stored before aliases were folded together. */
+export async function keptBlock(claim: string, legacy?: string | null): Promise<string | null> {
   await ensureEntitlementTables();
   const db = await getDb();
-  const rs = await db.execute({ sql: "SELECT age_blocked_at FROM welcome_claims WHERE claim = ?", args: [claim] });
-  const at = rs.rows[0]?.age_blocked_at;
+  const rs = await db.execute({
+    sql: "SELECT min(age_blocked_at) AS at FROM welcome_claims WHERE claim IN (?, ?)",
+    args: [claim, legacy ?? claim],
+  });
+  const at = rs.rows[0]?.at;
   return at == null ? null : String(at);
 }

@@ -590,16 +590,19 @@ export async function grantCredits(g: {
 export const WELCOME_CREDITS = 1;
 
 /** The new account's welcome credit, once per `claim` (welcomeClaim of the
- * email in lib/auth) and once per account. */
-export async function grantWelcomeCredit(userId: string, claim: string): Promise<GrantResult> {
+ * email in lib/auth) and once per account. `legacy` is the claim as stored
+ * before aliases were folded together; if that exists the email has had its credit. */
+export async function grantWelcomeCredit(userId: string, claim: string, legacy?: string | null): Promise<GrantResult> {
   assertId(userId, "userId");
   const id = nanoid();
   const nowIso = iso(new Date());
   const guard = grantExists(id);
   const results = await writeBatch([
     {
-      sql: "INSERT INTO welcome_claims (claim, created_at) VALUES (?, ?) ON CONFLICT (claim) DO NOTHING",
-      args: [claim, nowIso],
+      sql: `INSERT INTO welcome_claims (claim, created_at)
+            SELECT ?, ? WHERE NOT EXISTS (SELECT 1 FROM welcome_claims WHERE claim = ?)
+            ON CONFLICT (claim) DO NOTHING`,
+      args: [claim, nowIso, legacy ?? claim],
     },
     {
       sql: `INSERT INTO entitlement_grants
@@ -622,18 +625,23 @@ export async function grantWelcomeCredit(userId: string, claim: string): Promise
  * failed write, or a restart right after the user row). Only for accounts
  * made since the first welcome credit went out, so older ones still get
  * nothing, and only while the email has no claim. */
-export async function grantMissedWelcomeCredit(userId: string, claim: string, createdAt: Date): Promise<GrantResult> {
+export async function grantMissedWelcomeCredit(
+  userId: string,
+  claim: string,
+  createdAt: Date,
+  legacy?: string | null,
+): Promise<GrantResult> {
   const db = await client();
   const rs = await db.execute({
     sql: `SELECT (SELECT min(created_at) FROM welcome_claims) AS since,
-                 EXISTS (SELECT 1 FROM welcome_claims WHERE claim = ?) AS claimed`,
-    args: [claim],
+                 EXISTS (SELECT 1 FROM welcome_claims WHERE claim IN (?, ?)) AS claimed`,
+    args: [claim, legacy ?? claim],
   });
   const row = rs.rows[0];
   if (row?.since == null || Number(row.claimed) === 1 || iso(createdAt) < String(row.since)) {
     return { applied: false };
   }
-  return grantWelcomeCredit(userId, claim);
+  return grantWelcomeCredit(userId, claim, legacy);
 }
 
 /**

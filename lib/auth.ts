@@ -86,11 +86,33 @@ export function derivedSecret(purpose: SecretPurpose, env: Env = process.env): B
   return secret ? createHmac("sha256", secret).update(`settle:${purpose}:v1`).digest() : null;
 }
 
-/** What the welcome credit is remembered by: a keyed hash of the email, so
- * deleting the account and signing up again with it gets no second one. */
-export function welcomeClaim(email: string): string | null {
+/** The address with the tricks that make one mailbox look like many removed:
+ * lowercase, no +tag, and for Gmail no dots and one domain. */
+export function canonicalEmail(email: string): string {
+  const [rawLocal, ...rest] = email.trim().toLowerCase().split("@");
+  if (!rest.length) return rawLocal;
+  let domain = rest.join("@");
+  let local = rawLocal.split("+")[0] || rawLocal;
+  if (domain === "googlemail.com") domain = "gmail.com";
+  if (domain === "gmail.com") local = local.replace(/\./g, "");
+  return `${local}@${domain}`;
+}
+
+function emailHash(email: string): string | null {
   const key = derivedSecret("welcome-claim");
-  return key && createHmac("sha256", key).update(email.trim().toLowerCase()).digest("hex");
+  return key && createHmac("sha256", key).update(email).digest("hex");
+}
+
+/** What the welcome credit is remembered by: a keyed hash of the canonical
+ * email, so deleting the account and signing up again with it, or with an
+ * alias of it, gets no second one. */
+export function welcomeClaim(email: string): string | null {
+  return emailHash(canonicalEmail(email));
+}
+
+/** The claim as it was stored before aliases were folded together. */
+export function legacyWelcomeClaim(email: string): string | null {
+  return emailHash(email.trim().toLowerCase());
 }
 
 /** True when accounts can work: a real secret, or any non-production run. */
@@ -449,13 +471,13 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         create: {
           before: async (user) => {
             const claim = welcomeClaim(user.email);
-            const blockedAt = claim && (await keptBlock(claim));
+            const blockedAt = claim && (await keptBlock(claim, legacyWelcomeClaim(user.email)));
             return blockedAt ? { data: { ...user, ageBlockedAt: new Date(blockedAt) } } : undefined;
           },
           after: async (user) => {
             const claim = welcomeClaim(user.email);
             if (!claim) return;
-            await grantWelcomeCredit(user.id, claim).catch((e: unknown) =>
+            await grantWelcomeCredit(user.id, claim, legacyWelcomeClaim(user.email)).catch((e: unknown) =>
               console.error("[auth] welcome credit failed:", e instanceof Error ? e.message : String(e)),
             );
           },
@@ -791,7 +813,7 @@ export async function retryWelcomeCredit(userId: string): Promise<boolean> {
   const ctx = await (await getAuth()).$context;
   const user = await ctx.internalAdapter.findUserById(userId);
   const claim = user && welcomeClaim(user.email);
-  return claim ? (await grantMissedWelcomeCredit(userId, claim, new Date(user.createdAt))).applied : false;
+  return claim ? (await grantMissedWelcomeCredit(userId, claim, new Date(user.createdAt), legacyWelcomeClaim(user.email))).applied : false;
 }
 
 /** The first of these ids that is an existing account, else null (store
