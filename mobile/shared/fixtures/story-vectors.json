@@ -619,6 +619,57 @@
       "finishAt": 10210
     },
     {
+      "name": "trial_minor",
+      "fromWaiting": 5,
+      "summary": {
+        "votes": [
+          "a",
+          "a",
+          "a"
+        ],
+        "escalated": false,
+        "extra": 0,
+        "winner": "a",
+        "trial": "minor"
+      },
+      "reduced": false,
+      "steps": [
+        {
+          "at": 450,
+          "beat": "vote1",
+          "line": {
+            "key": "story.count"
+          }
+        },
+        {
+          "at": 3510,
+          "beat": "trial",
+          "line": {
+            "key": "trial.minor"
+          }
+        },
+        {
+          "at": 8310,
+          "beat": "final",
+          "line": {
+            "key": "story.agree",
+            "vars": {
+              "n": 3,
+              "total": 3
+            }
+          }
+        },
+        {
+          "at": 8310,
+          "beat": "final",
+          "line": {
+            "key": "thinking.ready"
+          }
+        }
+      ],
+      "finishAt": 10210
+    },
+    {
       "name": "trial_uncertain",
       "fromWaiting": 5,
       "summary": {

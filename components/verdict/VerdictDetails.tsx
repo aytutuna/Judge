@@ -106,6 +106,7 @@ function CruxTrialNote({ trial, mixed, lang }: { trial: CruxTrial; mixed: boolea
       </div>
     );
   }
+  const minor = trial.outcome === "minor";
   const overturned = trial.outcome === "overturned";
   const why = trial.reasoning.trim() || trial.attack.trim();
   return (
@@ -114,14 +115,15 @@ function CruxTrialNote({ trial, mixed, lang }: { trial: CruxTrial; mixed: boolea
         className={overturned ? `${styles.noteText} ${styles.danger}` : styles.noteText}
         style={overturned ? undefined : { color: "var(--ink-2)" }}
       >
-        <AlertIcon /> {stripLeadingEmoji(t(lang, overturned ? "trial.overturned" : "trial.uncertain"))}
+        {minor ? <ShieldIcon /> : <AlertIcon />}{" "}
+        {stripLeadingEmoji(t(lang, minor ? "trial.minor" : overturned ? "trial.overturned" : "trial.uncertain"))}
       </p>
       {why ? (
         <p className={styles.noteText}>
           {t(lang, "trial.refereePrefix")} {why}
         </p>
       ) : null}
-      {mixed ? <p className={styles.noteText}>{t(lang, "trial.mixedNote")}</p> : null}
+      {mixed && !minor ? <p className={styles.noteText}>{t(lang, "trial.mixedNote")}</p> : null}
       {trial.reasoning.trim() && trial.attack.trim() ? (
         <details className={styles.disclosure}>
           <summary>{t(lang, "trial.whatWasTested")}</summary>

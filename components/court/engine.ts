@@ -613,7 +613,7 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
       }
     } else if (beat === "trial") {
       const eta = Math.max(to(atk, spot.atk, TRIAL_SPEED), to(adj, spot.adj, TRIAL_SPEED));
-      const answer = s.trial === "survived" ? "holds" : s.trial === "overturned" ? "crack" : "unsure";
+      const answer = s.trial === "survived" || s.trial === "minor" ? "holds" : s.trial === "overturned" ? "crack" : "unsure";
       if (still) hold(adj, answer);
       else if (!snap) {
         at(eta + 0.1, () => bubble(atk, "object", 1.1));

@@ -21,7 +21,7 @@ declare global {
 const BEATS = ["names", "facts", "judges", "bothSides", "crux", "ruling", "vote1", "more", "vote2", "trial", "final"];
 const SIDES = ["a", "b", "c", "d"];
 const VOTES = [...SIDES, "other"];
-const TRIALS = ["survived", "uncertain", "overturned"];
+const TRIALS = ["survived", "minor", "uncertain", "overturned"];
 
 function post(type: string) {
   const native = window as unknown as {

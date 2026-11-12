@@ -107,7 +107,7 @@ export function JudgingStory({
     const line = stripLeadingEmoji(s);
     if (!trial || trial.outcome === "survived") return line;
     const why = trial.reasoning.trim() || trial.attack.trim();
-    const mixed = result?.dispute_type === "mixed" ? ` ${t(lang, "trial.mixedNote")}` : "";
+    const mixed = result?.dispute_type === "mixed" && trial.outcome !== "minor" ? ` ${t(lang, "trial.mixedNote")}` : "";
     return `${line}${why ? `: ${why}` : ""}${mixed}`;
   };
 

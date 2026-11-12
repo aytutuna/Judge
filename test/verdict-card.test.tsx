@@ -141,6 +141,16 @@ describe("VerdictView", () => {
     expect(held).not.toContain(esc(t("en", "trial.mixedNote")));
   });
 
+  it("shows a minor objection calmly, with its reason and no mixed note", () => {
+    const trial = { attack: "Menus vary by country.", outcome: "minor" as const, reasoning: "Fair, but it only trims a phrase." };
+    const out = html(<VerdictView result={{ ...base, dispute_type: "mixed", crux_trial: trial }} lang="en" />);
+    expect(out).toContain(esc("The other side's lawyer made a fair point, but the ruling holds"));
+    expect(out).toContain("Why:");
+    expect(out).toContain("Fair, but it only trims a phrase.");
+    expect(out).not.toContain(esc(t("en", "trial.mixedNote")));
+    expect(out).not.toContain(esc(t("en", "trial.uncertain")));
+  });
+
   it("keeps why right under the headline when notes or branches follow", () => {
     const why = "Neither reading covers the whole menu.";
     const trial = html(

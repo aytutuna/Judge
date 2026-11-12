@@ -103,7 +103,7 @@ describe("ending", () => {
     expect(beats).toEqual(["vote1", "more", "final", "final"]);
   });
 
-  it.each(["survived", "uncertain", "overturned"] as const)("a %s trial comes before the final", (outcome) => {
+  it.each(["survived", "minor", "uncertain", "overturned"] as const)("a %s trial comes before the final", (outcome) => {
     const e = ending(5, summary({ trial: outcome }), false);
     const trial = e.steps.find((x) => x.beat === "trial");
     const count = e.steps.find((x) => x.beat === "vote1");

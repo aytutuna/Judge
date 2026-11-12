@@ -95,6 +95,7 @@ export type LineKey =
   | "story.agree"
   | "story.split"
   | "trial.survived"
+  | "trial.minor"
   | "trial.uncertain"
   | "trial.overturned"
   | "thinking.ready";
