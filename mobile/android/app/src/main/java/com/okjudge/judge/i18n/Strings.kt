@@ -584,6 +584,7 @@ class Strings(private val res: Resources) {
     val appHistoryPhoneOnly: String get() = res.getString(R.string.app_history_phone_only)
     val appHistoryPhoneOnlyNote: String get() = res.getString(R.string.app_history_phone_only_note)
     fun appHistoryRemoveConfirm(n: Int): String = res.getQuantityString(R.plurals.app_history_remove_confirm, n, n.toString())
+    fun appHistoryRemoveLinksConfirm(n: Int): String = res.getQuantityString(R.plurals.app_history_remove_links_confirm, n, n.toString())
     fun appHistoryPhoneOnlyAlso(n: Int): String = res.getQuantityString(R.plurals.app_history_phone_only_also, n, n.toString())
     fun appHistoryRemoveFailed(n: Int): String = res.getQuantityString(R.plurals.app_history_remove_failed, n, n.toString())
     val appHistoryOfflineRemove: String get() = res.getString(R.string.app_history_offline_remove)

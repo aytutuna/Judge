@@ -562,6 +562,12 @@
         <item quantity="many">Odstranit %1$s verdiktů ze svého účtu? Tvůj text i jména se vymažou a jejich sdílené odkazy přestanou fungovat, a to na všech zařízeních. Tohle nejde vrátit.</item>
         <item quantity="other">Odstranit %1$s verdiktů ze svého účtu? Tvůj text i jména se vymažou a jejich sdílené odkazy přestanou fungovat, a to na všech zařízeních. Tohle nejde vrátit.</item>
     </plurals>
+    <plurals name="app_history_remove_links_confirm">
+        <item quantity="one">Odstranit tenhle odkaz ze svého účtu? Tvůj text i jména se vymažou a odkaz přestane fungovat, a to na všech zařízeních. Tohle nejde vrátit.</item>
+        <item quantity="few">Odstranit %1$s odkazy ze svého účtu? Tvůj text i jména se vymažou a odkazy přestanou fungovat, a to na všech zařízeních. Tohle nejde vrátit.</item>
+        <item quantity="many">Odstranit %1$s odkazů ze svého účtu? Tvůj text i jména se vymažou a odkazy přestanou fungovat, a to na všech zařízeních. Tohle nejde vrátit.</item>
+        <item quantity="other">Odstranit %1$s odkazů ze svého účtu? Tvůj text i jména se vymažou a odkazy přestanou fungovat, a to na všech zařízeních. Tohle nejde vrátit.</item>
+    </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="one">Jeden verdikt uložený jen v tomhle telefonu se z něj smaže; jeho sdílený odkaz bude fungovat dál.</item>
         <item quantity="few">%1$s verdikty uložené jen v tomhle telefonu se z něj smažou; jejich sdílené odkazy budou fungovat dál.</item>

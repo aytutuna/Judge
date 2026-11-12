@@ -529,6 +529,9 @@
     <plurals name="app_history_remove_confirm">
         <item quantity="other">%1$s件の判定をアカウントから削除しますか？　あなたが書いた内容と名前が消去され、シェア用リンクは使えなくなります。すべての端末に反映されます。この操作は取り消せません。</item>
     </plurals>
+    <plurals name="app_history_remove_links_confirm">
+        <item quantity="other">%1$s件のリンクをアカウントから削除しますか？　あなたが書いた内容と名前が消去され、リンクは使えなくなります。すべての端末に反映されます。この操作は取り消せません。</item>
+    </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="other">この端末にだけ保存されている%1$s件は、この端末から削除されます。シェア用リンクはそのまま使えます。</item>
     </plurals>

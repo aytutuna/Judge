@@ -551,6 +551,11 @@
         <item quantity="many">Remover %1$s veredictos da tua conta? O que escreveste e os nomes são apagados e os links de partilha deixam de funcionar, em todos os dispositivos. Isto não pode ser desfeito.</item>
         <item quantity="other">Remover %1$s veredictos da tua conta? O que escreveste e os nomes são apagados e os links de partilha deixam de funcionar, em todos os dispositivos. Isto não pode ser desfeito.</item>
     </plurals>
+    <plurals name="app_history_remove_links_confirm">
+        <item quantity="one">Remover %1$s ligação da tua conta? O que escreveste e os nomes são apagados e a ligação deixa de funcionar, em todos os dispositivos. Isto não pode ser desfeito.</item>
+        <item quantity="many">Remover %1$s ligações da tua conta? O que escreveste e os nomes são apagados e as ligações deixam de funcionar, em todos os dispositivos. Isto não pode ser desfeito.</item>
+        <item quantity="other">Remover %1$s ligações da tua conta? O que escreveste e os nomes são apagados e as ligações deixam de funcionar, em todos os dispositivos. Isto não pode ser desfeito.</item>
+    </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="one">%1$s veredicto guardado só neste telemóvel é apagado daqui; o link de partilha continua ativo.</item>
         <item quantity="many">%1$s veredictos guardados só neste telemóvel são apagados daqui; os links de partilha continuam ativos.</item>

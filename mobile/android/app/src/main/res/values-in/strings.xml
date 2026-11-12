@@ -529,6 +529,9 @@
     <plurals name="app_history_remove_confirm">
         <item quantity="other">Hapus %1$s putusan dari akunmu di semua perangkat? Tulisanmu dan nama-namanya akan dihapus, dan tautan berbaginya berhenti berfungsi. Ini tidak bisa dibatalkan.</item>
     </plurals>
+    <plurals name="app_history_remove_links_confirm">
+        <item quantity="other">Hapus %1$s tautan dari akunmu di semua perangkat? Tulisanmu dan nama-namanya akan dihapus, dan tautannya berhenti berfungsi. Ini tidak bisa dibatalkan.</item>
+    </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="other">%1$s putusan yang hanya ada di ponsel ini juga akan dihapus dari ponsel; tautan berbaginya tetap berfungsi.</item>
     </plurals>

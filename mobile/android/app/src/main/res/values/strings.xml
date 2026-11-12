@@ -540,6 +540,10 @@
         <item quantity="one">Remove this verdict from your account? What you wrote and the names are erased and its share link stops working, on every device. This can\'t be undone.</item>
         <item quantity="other">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
     </plurals>
+    <plurals name="app_history_remove_links_confirm">
+        <item quantity="one">Remove this link from your account? What you wrote and the names are erased and the link stops working, on every device. This can\'t be undone.</item>
+        <item quantity="other">Remove %1$s links from your account? What you wrote and the names are erased and the links stop working, on every device. This can\'t be undone.</item>
+    </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="one">1 saved only on this phone is deleted from it; its share link keeps working.</item>
         <item quantity="other">%1$s saved only on this phone are deleted from it; their share links keep working.</item>

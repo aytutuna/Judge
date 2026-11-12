@@ -17,6 +17,8 @@ const da: AppLocale = {
       "Ikke på din konto, kun gemt på denne telefon. Sletter du en her, virker dens delingslink stadig.",
     "app.history.removeConfirm":
       "Vil du fjerne {n} domme fra din konto? Det, du skrev, og navnene bliver slettet, og deres delingslinks holder op med at virke på alle enheder. Det kan ikke fortrydes.",
+    "app.history.removeLinksConfirm":
+      "Vil du fjerne {n} links fra din konto? Det, du skrev, og navnene bliver slettet, og linkene holder op med at virke på alle enheder. Det kan ikke fortrydes.",
     "app.history.phoneOnlyAlso": "{n} domme, der kun er gemt på denne telefon, bliver slettet herfra; deres delingslinks virker stadig.",
     "app.history.removeFailed": "Vi kunne ikke fjerne {n} af dem. Tjek din forbindelse, og prøv igen.",
     "app.history.offlineRemove": "Du er offline. Du skal have forbindelse for at fjerne domme.",
@@ -156,6 +158,9 @@ const da: AppLocale = {
     "app.history.deleteConfirm": { one: "Vil du slette dommen fra denne telefon? Delingslinket virker stadig." },
     "app.history.removeConfirm": {
       one: "Vil du fjerne dommen fra din konto? Det, du skrev, og navnene bliver slettet, og dens delingslink holder op med at virke på alle enheder. Det kan ikke fortrydes.",
+    },
+    "app.history.removeLinksConfirm": {
+      one: "Vil du fjerne linket fra din konto? Det, du skrev, og navnene bliver slettet, og linket holder op med at virke på alle enheder. Det kan ikke fortrydes.",
     },
     "app.history.phoneOnlyAlso": { one: "1 dom, der kun er gemt på denne telefon, bliver slettet herfra; dens delingslink virker stadig." },
     "app.history.removeFailed": { one: "Vi kunne ikke fjerne den. Tjek din forbindelse, og prøv igen." },

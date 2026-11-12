@@ -18,6 +18,8 @@ const sk: AppLocale = {
       "Tieto verdikty nie sú v tvojom účte, sú uložené len v tomto telefóne. Keď tu niektorý vymažeš, jeho odkaz na zdieľanie bude fungovať ďalej.",
     "app.history.removeConfirm":
       "Odstrániť {n} verdiktov zo svojho účtu? Tvoj text aj mená sa vymažú na všetkých zariadeniach a ich odkazy na zdieľanie prestanú fungovať. Nedá sa to vrátiť späť.",
+    "app.history.removeLinksConfirm":
+      "Odstrániť {n} odkazov zo svojho účtu? Tvoj text aj mená sa vymažú na všetkých zariadeniach a odkazy prestanú fungovať. Nedá sa to vrátiť späť.",
     "app.history.phoneOnlyAlso":
       "{n} verdiktov uložených len v tomto telefóne sa z neho vymaže; ich odkazy na zdieľanie budú fungovať ďalej.",
     "app.history.removeFailed": "{n} z nich sa nepodarilo odstrániť. Skontroluj pripojenie a skús to znova.",
@@ -161,6 +163,10 @@ const sk: AppLocale = {
     "app.history.removeConfirm": {
       one: "Odstrániť tento verdikt zo svojho účtu? Tvoj text aj mená sa vymažú na všetkých zariadeniach a jeho odkaz na zdieľanie prestane fungovať. Nedá sa to vrátiť späť.",
       few: "Odstrániť {n} verdikty zo svojho účtu? Tvoj text aj mená sa vymažú na všetkých zariadeniach a ich odkazy na zdieľanie prestanú fungovať. Nedá sa to vrátiť späť.",
+    },
+    "app.history.removeLinksConfirm": {
+      one: "Odstrániť tento odkaz zo svojho účtu? Tvoj text aj mená sa vymažú na všetkých zariadeniach a odkaz prestane fungovať. Nedá sa to vrátiť späť.",
+      few: "Odstrániť {n} odkazy zo svojho účtu? Tvoj text aj mená sa vymažú na všetkých zariadeniach a odkazy prestanú fungovať. Nedá sa to vrátiť späť.",
     },
     "app.history.phoneOnlyAlso": {
       one: "1 verdikt uložený len v tomto telefóne sa z neho vymaže; jeho odkaz na zdieľanie bude fungovať ďalej.",

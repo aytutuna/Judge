@@ -651,6 +651,7 @@ enum L10n {
     static func appHistoryPhoneOnly(_ lang: AppLang) -> String { string("app.history.phoneOnly", lang) }
     static func appHistoryPhoneOnlyNote(_ lang: AppLang) -> String { string("app.history.phoneOnlyNote", lang) }
     static func appHistoryRemoveConfirm(_ lang: AppLang, n: Int) -> String { plural("app.history.removeConfirm", lang, n) }
+    static func appHistoryRemoveLinksConfirm(_ lang: AppLang, n: Int) -> String { plural("app.history.removeLinksConfirm", lang, n) }
     static func appHistoryPhoneOnlyAlso(_ lang: AppLang, n: Int) -> String { plural("app.history.phoneOnlyAlso", lang, n) }
     static func appHistoryRemoveFailed(_ lang: AppLang, n: Int) -> String { plural("app.history.removeFailed", lang, n) }
     static func appHistoryOfflineRemove(_ lang: AppLang) -> String { string("app.history.offlineRemove", lang) }

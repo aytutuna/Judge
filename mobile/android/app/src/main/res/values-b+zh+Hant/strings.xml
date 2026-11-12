@@ -529,6 +529,9 @@
     <plurals name="app_history_remove_confirm">
         <item quantity="other">要從你的帳號移除 %1$s 個判決嗎？所有裝置上都會跟著移除：你寫的內容和名字會被清除，分享連結也會對所有人失效。這個動作無法復原。</item>
     </plurals>
+    <plurals name="app_history_remove_links_confirm">
+        <item quantity="other">要從你的帳號移除 %1$s 個連結嗎？所有裝置上都會跟著移除：你寫的內容和名字會被清除，連結也會失效。這個動作無法復原。</item>
+    </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="other">只保存在這支手機上的 %1$s 個判決會從手機刪除，分享連結不會跟著失效。</item>
     </plurals>

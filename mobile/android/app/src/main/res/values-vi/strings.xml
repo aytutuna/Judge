@@ -529,6 +529,9 @@
     <plurals name="app_history_remove_confirm">
         <item quantity="other">Gỡ %1$s phán quyết khỏi tài khoản của bạn trên mọi thiết bị? Những gì bạn viết và các tên sẽ bị xóa, liên kết chia sẻ sẽ ngừng hoạt động. Không thể hoàn tác.</item>
     </plurals>
+    <plurals name="app_history_remove_links_confirm">
+        <item quantity="other">Gỡ %1$s liên kết khỏi tài khoản của bạn trên mọi thiết bị? Những gì bạn viết và các tên sẽ bị xóa, các liên kết sẽ ngừng hoạt động. Không thể hoàn tác.</item>
+    </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="other">%1$s phán quyết chỉ lưu trên điện thoại này sẽ bị xóa khỏi máy; liên kết chia sẻ vẫn hoạt động.</item>
     </plurals>

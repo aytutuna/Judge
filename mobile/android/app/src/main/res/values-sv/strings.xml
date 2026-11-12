@@ -540,6 +540,10 @@
         <item quantity="one">Ta bort domen från ditt konto? Det du skrev och namnen raderas och delningslänken slutar fungera, på alla enheter. Det går inte att ångra.</item>
         <item quantity="other">Ta bort %1$s domar från ditt konto? Det du skrev och namnen raderas och delningslänkarna slutar fungera, på alla enheter. Det går inte att ångra.</item>
     </plurals>
+    <plurals name="app_history_remove_links_confirm">
+        <item quantity="one">Ta bort länken från ditt konto? Det du skrev och namnen raderas och länken slutar fungera, på alla enheter. Det går inte att ångra.</item>
+        <item quantity="other">Ta bort %1$s länkar från ditt konto? Det du skrev och namnen raderas och länkarna slutar fungera, på alla enheter. Det går inte att ångra.</item>
+    </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="one">1 dom som bara finns på den här telefonen tas bort därifrån; delningslänken fortsätter att fungera.</item>
         <item quantity="other">%1$s domar som bara finns på den här telefonen tas bort därifrån; delningslänkarna fortsätter att fungera.</item>

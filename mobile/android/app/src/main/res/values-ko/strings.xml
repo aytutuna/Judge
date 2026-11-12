@@ -529,6 +529,9 @@
     <plurals name="app_history_remove_confirm">
         <item quantity="other">판결 %1$s건을 계정에서 삭제할까요? 내가 쓴 글과 이름이 지워지고 공유 링크도 더 이상 열리지 않아요. 모든 기기에 적용되며 되돌릴 수 없어요.</item>
     </plurals>
+    <plurals name="app_history_remove_links_confirm">
+        <item quantity="other">링크 %1$s개를 계정에서 삭제할까요? 내가 쓴 글과 이름이 지워지고 링크도 더 이상 열리지 않아요. 모든 기기에 적용되며 되돌릴 수 없어요.</item>
+    </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="other">이 휴대폰에만 저장된 %1$s건은 이 휴대폰에서만 삭제되고, 공유 링크는 계속 열려요.</item>
     </plurals>

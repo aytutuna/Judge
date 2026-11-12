@@ -27,6 +27,8 @@ export const APP_EN = {
     "Not in your account: these are saved on this phone only. Deleting one here doesn't take down its share link.",
   "app.history.removeConfirm":
     "Remove {n} verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can't be undone.",
+  "app.history.removeLinksConfirm":
+    "Remove {n} links from your account? What you wrote and the names are erased and the links stop working, on every device. This can't be undone.",
   "app.history.phoneOnlyAlso": "{n} saved only on this phone are deleted from it; their share links keep working.",
   "app.history.removeFailed": "Couldn't remove {n} of them. Check your connection and try again.",
   "app.history.offlineRemove": "You're offline. Removing needs a connection.",
@@ -195,6 +197,7 @@ export const APP_COUNT_KEYS = [
   "app.balance.left",
   "app.history.deleteConfirm",
   "app.history.removeConfirm",
+  "app.history.removeLinksConfirm",
   "app.history.phoneOnlyAlso",
   "app.history.removeFailed",
 ] as const satisfies readonly AppKey[];
@@ -206,6 +209,9 @@ export const APP_PLURALS_EN: Partial<Record<AppCountKey, PluralForms>> = {
   "app.history.deleteConfirm": { one: "Delete this verdict from this phone? Its share link keeps working." },
   "app.history.removeConfirm": {
     one: "Remove this verdict from your account? What you wrote and the names are erased and its share link stops working, on every device. This can't be undone.",
+  },
+  "app.history.removeLinksConfirm": {
+    one: "Remove this link from your account? What you wrote and the names are erased and the link stops working, on every device. This can't be undone.",
   },
   "app.history.phoneOnlyAlso": { one: "1 saved only on this phone is deleted from it; its share link keeps working." },
   "app.history.removeFailed": { one: "Couldn't remove it. Check your connection and try again." },

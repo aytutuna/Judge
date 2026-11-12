@@ -562,6 +562,12 @@
         <item quantity="many">Usunąć %1$s werdyktów ze swojego konta? Twoje teksty i imiona zostaną wymazane, a ich linki do udostępniania przestaną działać na wszystkich urządzeniach. Tego nie da się cofnąć.</item>
         <item quantity="other">Usunąć %1$s werdyktów ze swojego konta? Twoje teksty i imiona zostaną wymazane, a ich linki do udostępniania przestaną działać na wszystkich urządzeniach. Tego nie da się cofnąć.</item>
     </plurals>
+    <plurals name="app_history_remove_links_confirm">
+        <item quantity="one">Usunąć ten link ze swojego konta? Twój tekst i imiona zostaną wymazane, a link przestanie działać na wszystkich urządzeniach. Tego nie da się cofnąć.</item>
+        <item quantity="few">Usunąć %1$s linki ze swojego konta? Twoje teksty i imiona zostaną wymazane, a linki przestaną działać na wszystkich urządzeniach. Tego nie da się cofnąć.</item>
+        <item quantity="many">Usunąć %1$s linków ze swojego konta? Twoje teksty i imiona zostaną wymazane, a linki przestaną działać na wszystkich urządzeniach. Tego nie da się cofnąć.</item>
+        <item quantity="other">Usunąć %1$s linków ze swojego konta? Twoje teksty i imiona zostaną wymazane, a linki przestaną działać na wszystkich urządzeniach. Tego nie da się cofnąć.</item>
+    </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="one">1 werdykt zapisany tylko na tym telefonie zostanie z niego usunięty; jego link do udostępniania nadal będzie działać.</item>
         <item quantity="few">%1$s werdykty zapisane tylko na tym telefonie zostaną z niego usunięte; ich linki do udostępniania nadal będą działać.</item>

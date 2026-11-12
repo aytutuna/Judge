@@ -562,6 +562,12 @@
         <item quantity="few">Želiš iz svojega računa odstraniti %1$s razsodbe? Na vseh napravah se izbrišejo tvoje besedilo in imena, njihove povezave za deljenje pa prenehajo delovati. Tega ni mogoče razveljaviti.</item>
         <item quantity="other">Želiš iz svojega računa odstraniti %1$s razsodb? Na vseh napravah se izbrišejo tvoje besedilo in imena, njihove povezave za deljenje pa prenehajo delovati. Tega ni mogoče razveljaviti.</item>
     </plurals>
+    <plurals name="app_history_remove_links_confirm">
+        <item quantity="one">Želiš iz svojega računa odstraniti %1$s povezavo? Na vseh napravah se izbrišejo tvoje besedilo in imena, povezava pa preneha delovati. Tega ni mogoče razveljaviti.</item>
+        <item quantity="two">Želiš iz svojega računa odstraniti %1$s povezavi? Na vseh napravah se izbrišejo tvoje besedilo in imena, povezavi pa prenehata delovati. Tega ni mogoče razveljaviti.</item>
+        <item quantity="few">Želiš iz svojega računa odstraniti %1$s povezave? Na vseh napravah se izbrišejo tvoje besedilo in imena, povezave pa prenehajo delovati. Tega ni mogoče razveljaviti.</item>
+        <item quantity="other">Želiš iz svojega računa odstraniti %1$s povezav? Na vseh napravah se izbrišejo tvoje besedilo in imena, povezave pa prenehajo delovati. Tega ni mogoče razveljaviti.</item>
+    </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="one">%1$s razsodba, shranjena samo na tem telefonu, se izbriše s telefona; njena povezava za deljenje še vedno deluje.</item>
         <item quantity="two">%1$s razsodbi, shranjeni samo na tem telefonu, se izbrišeta s telefona; njuni povezavi za deljenje še vedno delujeta.</item>

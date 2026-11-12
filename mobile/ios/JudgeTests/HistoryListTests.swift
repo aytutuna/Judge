@@ -315,6 +315,10 @@ final class HistoryListTests: XCTestCase {
                 L10n.appHistoryRemoveConfirm(.en, n: 1) + " " + L10n.appHistoryPhoneOnlyAlso(.en, n: 1)
             )
             XCTAssertTrue(L10n.appHistoryRemoveConfirm(.en, n: 2).hasPrefix("Remove 2 verdicts from your account?"))
+            let links = entries.filter { $0.isCase && $0.removable }
+            XCTAssertFalse(links.isEmpty)
+            XCTAssertEqual(HistoryLabels.removeConfirm(links, lang: .en), L10n.appHistoryRemoveLinksConfirm(.en, n: links.count))
+            XCTAssertTrue(L10n.appHistoryRemoveLinksConfirm(.en, n: 2).hasPrefix("Remove 2 links from your account?"))
         }
     }
 

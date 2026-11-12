@@ -19,6 +19,8 @@ const es: AppLocale = {
       "No están en tu cuenta: solo se guardan en este teléfono. Eliminar uno aquí no desactiva su enlace para compartir.",
     "app.history.removeConfirm":
       "¿Eliminar {n} veredictos de tu cuenta? Lo que escribiste y los nombres se borrarán de todos los dispositivos, y sus enlaces para compartir dejarán de funcionar. No se puede deshacer.",
+    "app.history.removeLinksConfirm":
+      "¿Eliminar {n} enlaces de tu cuenta? Lo que escribiste y los nombres se borrarán de todos los dispositivos, y los enlaces dejarán de funcionar. No se puede deshacer.",
     "app.history.phoneOnlyAlso":
       "Además, se eliminarán {n} veredictos guardados solo en este teléfono; sus enlaces para compartir seguirán funcionando.",
     "app.history.removeFailed": "No se pudieron eliminar {n} veredictos. Revisa tu conexión e inténtalo de nuevo.",
@@ -161,6 +163,9 @@ const es: AppLocale = {
     },
     "app.history.removeConfirm": {
       one: "¿Eliminar este veredicto de tu cuenta? Lo que escribiste y los nombres se borrarán de todos los dispositivos, y su enlace para compartir dejará de funcionar. No se puede deshacer.",
+    },
+    "app.history.removeLinksConfirm": {
+      one: "¿Eliminar este enlace de tu cuenta? Lo que escribiste y los nombres se borrarán de todos los dispositivos, y el enlace dejará de funcionar. No se puede deshacer.",
     },
     "app.history.phoneOnlyAlso": {
       one: "Además, se eliminará 1 veredicto guardado solo en este teléfono; su enlace para compartir seguirá funcionando.",

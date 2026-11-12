@@ -551,6 +551,11 @@
         <item quantity="many">¿Eliminar %1$s veredictos de tu cuenta? Lo que escribiste y los nombres se borrarán de todos los dispositivos, y sus enlaces para compartir dejarán de funcionar. No se puede deshacer.</item>
         <item quantity="other">¿Eliminar %1$s veredictos de tu cuenta? Lo que escribiste y los nombres se borrarán de todos los dispositivos, y sus enlaces para compartir dejarán de funcionar. No se puede deshacer.</item>
     </plurals>
+    <plurals name="app_history_remove_links_confirm">
+        <item quantity="one">¿Eliminar este enlace de tu cuenta? Lo que escribiste y los nombres se borrarán de todos los dispositivos, y el enlace dejará de funcionar. No se puede deshacer.</item>
+        <item quantity="many">¿Eliminar %1$s enlaces de tu cuenta? Lo que escribiste y los nombres se borrarán de todos los dispositivos, y los enlaces dejarán de funcionar. No se puede deshacer.</item>
+        <item quantity="other">¿Eliminar %1$s enlaces de tu cuenta? Lo que escribiste y los nombres se borrarán de todos los dispositivos, y los enlaces dejarán de funcionar. No se puede deshacer.</item>
+    </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="one">Además, se eliminará 1 veredicto guardado solo en este teléfono; su enlace para compartir seguirá funcionando.</item>
         <item quantity="many">Además, se eliminarán %1$s veredictos guardados solo en este teléfono; sus enlaces para compartir seguirán funcionando.</item>

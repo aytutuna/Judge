@@ -540,6 +540,10 @@
         <item quantity="one">Vil du fjerne denne dommen fra kontoen din? Det du skrev og navnene slettes, og delingslenken slutter å virke på alle enheter. Dette kan ikke angres.</item>
         <item quantity="other">Vil du fjerne %1$s dommer fra kontoen din? Det du skrev og navnene slettes, og delingslenkene slutter å virke på alle enheter. Dette kan ikke angres.</item>
     </plurals>
+    <plurals name="app_history_remove_links_confirm">
+        <item quantity="one">Vil du fjerne denne lenken fra kontoen din? Det du skrev og navnene slettes, og lenken slutter å virke på alle enheter. Dette kan ikke angres.</item>
+        <item quantity="other">Vil du fjerne %1$s lenker fra kontoen din? Det du skrev og navnene slettes, og lenkene slutter å virke på alle enheter. Dette kan ikke angres.</item>
+    </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="one">1 dom som bare er lagret på denne telefonen, slettes herfra. Delingslenken virker fortsatt.</item>
         <item quantity="other">%1$s dommer som bare er lagret på denne telefonen, slettes herfra. Delingslenkene virker fortsatt.</item>

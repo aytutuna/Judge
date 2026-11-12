@@ -18,6 +18,8 @@ const id: AppLocale = {
       "Tidak ada di akunmu: putusan ini hanya tersimpan di ponsel ini. Menghapus putusan di sini tidak mematikan tautan berbaginya.",
     "app.history.removeConfirm":
       "Hapus {n} putusan dari akunmu di semua perangkat? Tulisanmu dan nama-namanya akan dihapus, dan tautan berbaginya berhenti berfungsi. Ini tidak bisa dibatalkan.",
+    "app.history.removeLinksConfirm":
+      "Hapus {n} tautan dari akunmu di semua perangkat? Tulisanmu dan nama-namanya akan dihapus, dan tautannya berhenti berfungsi. Ini tidak bisa dibatalkan.",
     "app.history.phoneOnlyAlso":
       "{n} putusan yang hanya ada di ponsel ini juga akan dihapus dari ponsel; tautan berbaginya tetap berfungsi.",
     "app.history.removeFailed": "{n} putusan gagal dihapus. Cek koneksimu, lalu coba lagi.",

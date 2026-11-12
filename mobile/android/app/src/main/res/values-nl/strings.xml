@@ -540,6 +540,10 @@
         <item quantity="one">Deze uitspraak uit je account verwijderen? Hij verdwijnt van al je apparaten: wat je schreef en de namen worden gewist en de deellink werkt niet meer. Dit kan niet ongedaan worden gemaakt.</item>
         <item quantity="other">%1$s uitspraken uit je account verwijderen? Ze verdwijnen van al je apparaten: wat je schreef en de namen worden gewist en de deellinks werken niet meer. Dit kan niet ongedaan worden gemaakt.</item>
     </plurals>
+    <plurals name="app_history_remove_links_confirm">
+        <item quantity="one">Deze link uit je account verwijderen? Hij verdwijnt van al je apparaten: wat je schreef en de namen worden gewist en de link werkt niet meer. Dit kan niet ongedaan worden gemaakt.</item>
+        <item quantity="other">%1$s links uit je account verwijderen? Ze verdwijnen van al je apparaten: wat je schreef en de namen worden gewist en de links werken niet meer. Dit kan niet ongedaan worden gemaakt.</item>
+    </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="one">1 uitspraak die alleen op deze telefoon staat, wordt hier verwijderd; de deellink blijft gewoon werken.</item>
         <item quantity="other">%1$s uitspraken die alleen op deze telefoon staan, worden hier verwijderd; hun deellinks blijven gewoon werken.</item>

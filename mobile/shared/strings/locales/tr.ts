@@ -17,6 +17,8 @@ const tr: AppLocale = {
       "Hesabında değil: bunlar sadece bu telefonda saklanıyor. Buradan silmek paylaşım linkini kaldırmaz.",
     "app.history.removeConfirm":
       "{n} karar hesabından kaldırılsın mı? Yazdıkların ve isimler silinir, paylaşım linkleri her cihazda çalışmayı bırakır. Bu geri alınamaz.",
+    "app.history.removeLinksConfirm":
+      "{n} bağlantı hesabından kaldırılsın mı? Yazdıkların ve isimler silinir, bağlantılar her cihazda çalışmayı bırakır. Bu geri alınamaz.",
     "app.history.phoneOnlyAlso": "Sadece bu telefonda saklanan {n} karar buradan silinir; paylaşım linkleri çalışmaya devam eder.",
     "app.history.removeFailed": "{n} karar kaldırılamadı. Bağlantını kontrol edip tekrar dene.",
     "app.history.offlineRemove": "Çevrimdışısın. Kaldırmak için bağlantı gerekir.",
@@ -156,6 +158,9 @@ const tr: AppLocale = {
     "app.history.deleteConfirm": { one: "Bu karar bu telefondan silinsin mi? Paylaşım linki çalışmaya devam eder." },
     "app.history.removeConfirm": {
       one: "Bu karar hesabından kaldırılsın mı? Yazdıkların ve isimler silinir, paylaşım linki her cihazda çalışmayı bırakır. Bu geri alınamaz.",
+    },
+    "app.history.removeLinksConfirm": {
+      one: "Bu bağlantı hesabından kaldırılsın mı? Yazdıkların ve isimler silinir, bağlantı her cihazda çalışmayı bırakır. Bu geri alınamaz.",
     },
     "app.history.phoneOnlyAlso": { one: "Sadece bu telefonda saklanan 1 karar buradan silinir; paylaşım linki çalışmaya devam eder." },
     "app.history.removeFailed": { one: "Kaldırılamadı. Bağlantını kontrol edip tekrar dene." },

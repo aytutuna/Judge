@@ -145,6 +145,7 @@ enum HistoryLabels {
         let phone = picked.filter(\.isPhone).count
         let account = picked.count - phone
         if account == 0 { return L10n.appHistoryDeleteConfirm(lang, n: phone) }
+        if phone == 0, picked.allSatisfy(\.isCase) { return L10n.appHistoryRemoveLinksConfirm(lang, n: account) }
         let removing = L10n.appHistoryRemoveConfirm(lang, n: account)
         return phone > 0 ? removing + " " + L10n.appHistoryPhoneOnlyAlso(lang, n: phone) : removing
     }
