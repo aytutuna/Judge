@@ -2,8 +2,13 @@ package com.okjudge.judge.core.auth
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
+import java.security.InvalidKeyException
+import java.security.KeyStoreException
+import java.security.UnrecoverableKeyException
+import javax.crypto.AEADBadTagException
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
@@ -58,6 +63,31 @@ class KeystoreTokenStoreTest {
         prefs.edit().putString(KeystoreTokenStore.KEY, "garbage").commit()
         assertNull(KeystoreTokenStore(prefs, FakeCipher()).get())
         assertNull(prefs.getString(KeystoreTokenStore.KEY, null))
+    }
+
+    private fun failing(error: Exception) = object : TokenCipher {
+        override fun encrypt(plain: String) = plain
+        override fun decrypt(sealed: String): String = throw error
+    }
+
+    @Test
+    fun aGoneKeyOrBadData_dropsTheToken() {
+        for (error in listOf(InvalidKeyException("invalidated"), UnrecoverableKeyException("gone"), AEADBadTagException("tag"))) {
+            prefs.edit().putString(KeystoreTokenStore.KEY, "sealed").commit()
+            assertNull(KeystoreTokenStore(prefs, failing(error)).get())
+            assertNull(prefs.getString(KeystoreTokenStore.KEY, null))
+        }
+    }
+
+    @Test
+    fun aTransientKeystoreError_signsOutThisRunButKeepsTheToken() {
+        prefs.edit().putString(KeystoreTokenStore.KEY, "sealed").commit()
+        assertNull(KeystoreTokenStore(prefs, failing(KeyStoreException("busy"))).get())
+        assertNotNull(prefs.getString(KeystoreTokenStore.KEY, null))
+        assertEquals("secret", KeystoreTokenStore(prefs, object : TokenCipher {
+            override fun encrypt(plain: String) = plain
+            override fun decrypt(sealed: String) = "secret"
+        }).get())
     }
 
     @Test

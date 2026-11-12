@@ -6,7 +6,10 @@ import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
 import com.okjudge.judge.core.api.TokenStore
+import java.security.InvalidKeyException
 import java.security.KeyStore
+import java.security.UnrecoverableKeyException
+import javax.crypto.AEADBadTagException
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
@@ -66,9 +69,11 @@ class KeystoreTokenCipher(private val alias: String = "judge_session_key") : Tok
  * decrypted token is cached in memory after the first read, so the per-call
  * lookup in JudgeApi costs nothing.
  *
- * A token that cannot be decrypted (the Keystore key is gone) counts as
- * signed out and is removed. When encryption fails the token is kept for
- * this process only rather than written in the clear.
+ * A token that cannot be decrypted because the Keystore key is gone or the
+ * stored data is bad counts as signed out and is removed. Any other failure
+ * (the Keystore busy or unavailable for a moment) signs out for this run
+ * only and keeps the stored token. When encryption fails the token is kept
+ * for this process only rather than written in the clear.
  */
 class KeystoreTokenStore(
     private val prefs: SharedPreferences,
@@ -117,11 +122,18 @@ class KeystoreTokenStore(
 
     private fun read(): String? {
         val sealed = prefs.getString(KEY, null) ?: return null
-        return runCatching { cipher.decrypt(sealed) }.getOrNull()?.takeIf { it.isNotBlank() } ?: run {
-            prefs.edit().remove(KEY).apply()
-            null
-        }
+        val opened = runCatching { cipher.decrypt(sealed) }
+        opened.getOrNull()?.takeIf { it.isNotBlank() }?.let { return it }
+        // A blank result has no failure behind it, and a blank token is useless.
+        if (opened.isSuccess || opened.exceptionOrNull()?.let(::isFinal) == true) prefs.edit().remove(KEY).apply()
+        return null
     }
+
+    /** The key is invalidated or gone, or the stored data is corrupt: retrying will never work. */
+    private fun isFinal(e: Throwable): Boolean =
+        generateSequence(e) { it.cause }.any {
+            it is InvalidKeyException || it is UnrecoverableKeyException || it is AEADBadTagException || it is IllegalArgumentException
+        }
 
     companion object {
         const val FILE = "session"
