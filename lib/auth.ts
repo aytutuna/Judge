@@ -269,7 +269,7 @@ async function limitCodeAddress(
   env: Env,
 ): Promise<void> {
   if (typeof email !== "string") return;
-  if (reviewAccount(env)?.email === email.trim().toLowerCase()) return;
+  if (kind === "send" && reviewAccount(env)?.email === email.trim().toLowerCase()) return;
   const claim = welcomeClaim(email);
   if (!claim) return;
   const bucket = kind === "send" ? "code_send" : "code_attempt";

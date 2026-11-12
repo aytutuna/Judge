@@ -50,19 +50,19 @@ function reviewOn(email = REVIEW_EMAIL, code = REVIEW_CODE): void {
   vi.stubEnv("REVIEW_ACCOUNT_CODE", code);
 }
 
-async function post(pathAndQuery: string, body: unknown): Promise<Response> {
+async function post(pathAndQuery: string, body: unknown, ip?: string): Promise<Response> {
   const instance = await auth.getAuth();
   return instance.handler(
     new Request(`${ORIGIN}/api/auth${pathAndQuery}`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json", ...(ip ? { "x-forwarded-for": ip } : {}) },
       body: JSON.stringify(body),
     }),
   );
 }
 
 const sendCode = (email: string) => post("/email-otp/send-verification-otp", { email, type: "sign-in" });
-const signIn = (email: string, otp: string) => post("/sign-in/email-otp", { email, otp });
+const signIn = (email: string, otp: string, ip?: string) => post("/sign-in/email-otp", { email, otp }, ip);
 
 function codeFrom(mail: Sent): string {
   const m = /\b(\d{6})\b/.exec(mail.text);
@@ -188,6 +188,16 @@ describe("store-review sign-in", () => {
     expect((await signIn("lock-review@okjudge.test", REVIEW_CODE)).status).toBe(200);
   });
 
+  it("the fixed code is still limited to ten guesses an hour", async () => {
+    emailOn();
+    reviewOn("guess-review@okjudge.test");
+    for (let i = 0; i < 10; i++) {
+      await signIn("guess-review@okjudge.test", "000000");
+    }
+    const res = await signIn("guess-review@okjudge.test", REVIEW_CODE);
+    expect(res.status).toBe(429);
+  });
+
   it("the review code expires like any other", async () => {
     emailOn();
     reviewOn("late-review@okjudge.test");
@@ -209,11 +219,12 @@ describe("store-review sign-in", () => {
       await sendCode("cap-review@okjudge.test");
       expect((await signIn("cap-review@okjudge.test", REVIEW_CODE)).status, `request ${i + 1}`).toBe(200);
     }
+    // The guess limit is per address and IP, so the eleventh request signs in from another.
     await sendCode("cap-review@okjudge.test");
-    expect((await signIn("cap-review@okjudge.test", REVIEW_CODE)).status).toBe(400);
+    expect((await signIn("cap-review@okjudge.test", REVIEW_CODE, "198.51.100.7")).status).toBe(400);
     vi.setSystemTime(Date.now() + 3_600_000 + 1_000);
     await sendCode("cap-review@okjudge.test");
-    expect((await signIn("cap-review@okjudge.test", REVIEW_CODE)).status).toBe(200);
+    expect((await signIn("cap-review@okjudge.test", REVIEW_CODE, "198.51.100.7")).status).toBe(200);
   });
 
   it("a review address needs a code to be sent first", async () => {
