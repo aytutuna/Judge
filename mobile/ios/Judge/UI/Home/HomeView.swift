@@ -411,7 +411,7 @@ struct HomeView: View {
 
     /// Dragging the top of the lifted box down and letting go with speed throws it back.
     private var pullDown: some Gesture {
-        DragGesture()
+        DragGesture(coordinateSpace: .global)
             .onChanged { dragY = max(0, $0.translation.height) }
             .onEnded { value in
                 if value.translation.height > 80 || value.predictedEndTranslation.height > 240 {
