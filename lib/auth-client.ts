@@ -177,7 +177,7 @@ export async function signOut(): Promise<void> {
 
 async function getJson<T>(path: string): Promise<T> {
   const res = await fetch(path, { credentials: "same-origin", cache: "no-store" });
-  if (!res.ok) throw new Error(`${path} answered HTTP ${res.status}`);
+  if (!res.ok) throw Object.assign(new Error(`${path} answered HTTP ${res.status}`), { status: res.status });
   return (await res.json()) as T;
 }
 

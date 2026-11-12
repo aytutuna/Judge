@@ -27,6 +27,7 @@ export type ViewerState = {
 };
 
 const IDLE: ViewerState = { status: "idle", me: null, config: null };
+const SIGNED_OUT: MeResponse = { user: null, entitlement: null, age: null };
 
 /** True when this deployment offers at least one way to sign in. Without
  * one, nothing should point a signed-out visitor to /signin. */
@@ -37,6 +38,10 @@ export function signInOffered(config: AppConfig | null): boolean {
 
 let state: ViewerState = IDLE;
 let inflight: Promise<void> | null = null;
+// Set when a refresh failed and the old answer was kept; the next focus
+// tries once more.
+let retryOnFocus = false;
+let retrying = false;
 const listeners = new Set<() => void>();
 
 function emit(next: ViewerState): void {
@@ -44,7 +49,8 @@ function emit(next: ViewerState): void {
   for (const fn of listeners) fn();
 }
 
-/** Fetch /me and /config. Concurrent callers share one request. */
+/** Fetch /me and /config. Concurrent callers share one request. A failed
+ * call keeps what the store already had; only a 401 from /me signs out. */
 export function refreshViewer(): Promise<void> {
   if (inflight) return inflight;
   if (state.status === "idle") emit({ ...state, status: "loading" });
@@ -52,13 +58,17 @@ export function refreshViewer(): Promise<void> {
     try {
       const { fetchConfig, fetchMe } = await import("./auth-client");
       const [config, me] = await Promise.allSettled([fetchConfig(), fetchMe()]);
+      const unauthorized = me.status === "rejected" && (me.reason as { status?: number })?.status === 401;
+      const failed = me.status === "rejected" && !unauthorized;
+      retryOnFocus = (failed || config.status === "rejected") && !retrying;
       emit({
-        status: me.status === "fulfilled" ? "ready" : "error",
-        me: me.status === "fulfilled" ? me.value : null,
-        config: config.status === "fulfilled" ? config.value : null,
+        status: failed && !state.me ? "error" : "ready",
+        me: me.status === "fulfilled" ? me.value : unauthorized ? SIGNED_OUT : state.me,
+        config: config.status === "fulfilled" ? config.value : state.config,
       });
     } catch {
-      emit({ status: "error", me: null, config: null });
+      retryOnFocus = !retrying;
+      emit({ ...state, status: state.me ? "ready" : "error" });
     } finally {
       inflight = null;
     }
@@ -85,16 +95,33 @@ export function applyEntitlement(entitlement: Entitlement): void {
 
 /** After sign-out or account deletion: signed out, config unchanged. */
 export function markSignedOut(): void {
-  emit({ ...state, status: "ready", me: { user: null, entitlement: null, age: null } });
+  emit({ ...state, status: "ready", me: SIGNED_OUT });
+}
+
+function retryNow(): void {
+  if (!retryOnFocus || document.visibilityState === "hidden") return;
+  retryOnFocus = false;
+  retrying = true;
+  void refreshViewer().finally(() => {
+    retrying = false;
+  });
 }
 
 function subscribe(onChange: () => void): () => void {
+  if (listeners.size === 0) {
+    window.addEventListener("focus", retryNow);
+    document.addEventListener("visibilitychange", retryNow);
+  }
   listeners.add(onChange);
   // First subscriber starts the load (client only: the server never
   // subscribes). Deferred so the store never emits during subscribe.
   if (state.status === "idle" && !inflight) void Promise.resolve().then(refreshViewer);
   return () => {
     listeners.delete(onChange);
+    if (listeners.size === 0) {
+      window.removeEventListener("focus", retryNow);
+      document.removeEventListener("visibilitychange", retryNow);
+    }
   };
 }
 
