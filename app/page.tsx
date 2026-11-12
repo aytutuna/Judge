@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useEffectEvent, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
 import { useEvidence } from "@/components/case/EvidencePicker";
 import { ClarifyStep, buildClarifications, type ClarifyQuestion } from "@/components/ClarifyStep";
 import { Balance } from "@/components/home/Balance";
@@ -15,6 +15,8 @@ import styles from "@/components/home/page.module.css";
 import { apiFetch } from "@/lib/api-fetch";
 import { MAX_EVIDENCE_PER_SIDE, type CreateCaseResponse } from "@/lib/case-types";
 import { saveCaseNames } from "@/lib/case-names-store";
+import { verdictLang } from "@/lib/content-lang";
+import { personalizeResult } from "@/lib/names";
 import { firstNameOf } from "@/lib/originals-types";
 import { ownerTokenIds } from "@/lib/owner-store";
 import { track, trackApiError } from "@/lib/analytics/client";
@@ -116,6 +118,10 @@ export default function Home() {
   const [phase, setPhase] = useState<Phase>("form");
   const [error, setError] = useState<string | null>(null);
   const [response, setResponse] = useState<VerdictResponse | null>(null);
+  const judgingResult = useMemo(
+    () => (response ? personalizeResult(response.result, response.name_map, verdictLang(response.result)) : null),
+    [response],
+  );
   const [accepted, setAccepted] = useState(false);
   const viewer = useViewer();
   // Nothing from it is listed here; the hook still settles entries left
@@ -631,7 +637,7 @@ export default function Home() {
               venue={parseVenue(response?.venue) ?? venue}
               accepted={accepted}
               done={response !== null}
-              result={response?.result ?? null}
+              result={judgingResult}
               onFinished={judgingFinished}
               onCancel={cancelJudging}
             />

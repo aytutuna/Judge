@@ -454,6 +454,17 @@ describe("personalizeResult", () => {
     expect(BASE).toEqual(frozen);
   });
 
+  it("restores names in the objection, which the judging log shows", () => {
+    const en: VerdictResult = {
+      ...BASE,
+      lang: "en",
+      crux_trial: { attack: "Party B never agreed to this.", outcome: "uncertain", reasoning: "Party A has no proof." },
+    };
+    const out = personalizeResult(en, map, "en");
+    expect(out.crux_trial?.attack).toBe("Deniz never agreed to this.");
+    expect(out.crux_trial?.reasoning).toBe("Ben has no proof.");
+  });
+
   it("returns the same object without a name map (share pages)", () => {
     expect(personalizeResult(BASE, undefined, "tr")).toBe(BASE);
     expect(personalizeResult(BASE, [], "tr")).toBe(BASE);
