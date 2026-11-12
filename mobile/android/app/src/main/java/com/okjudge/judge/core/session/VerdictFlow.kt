@@ -412,10 +412,13 @@ class VerdictFlow(
     }
 
     /** Abandons the request (the server may still finish and save it; the
-     * same request again keeps its key, so the server joins that verdict). */
+     * same request again keeps its key, so the server joins that verdict).
+     * The accepted id goes, so a relaunch does not reopen the judging screen. */
     fun cancel() {
         job?.cancel()
         job = null
+        acceptedId = null
+        persist()
         _premiumStep.value = PremiumStep.None
         _state.value = State.Idle
     }

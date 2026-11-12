@@ -358,6 +358,20 @@ class PremiumFlowTest {
     }
 
     @Test
+    fun cancel_forgetsTheAcceptedVerdictButKeepsTheKey() = runBlocking {
+        val store = MemoryPending()
+        store.save(SavedRequest(null, null, "h", "key-9", "premium001", savedAt = now))
+        val f = flow(pending = store)
+        f.cancel()
+        val kept = store.load()!!
+        assertNull(kept.acceptedId)
+        assertEquals("key-9", kept.key)
+        val after = flow(pending = store)
+        after.resume()
+        assertEquals(VerdictFlow.State.Idle, after.state.value)
+    }
+
+    @Test
     fun verdict_402_opensPricingAndRefreshesTheAccount() = runBlocking {
         val (status, json) = asyncError("no_credits")
         routes.on(CLARIFY, Routes.json(200, clarify("none")))
