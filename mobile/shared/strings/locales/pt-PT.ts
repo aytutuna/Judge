@@ -151,14 +151,14 @@ const ptPT: AppLocale = {
   },
   plurals: {
     "app.balance.left": { one: "Resta {n} veredicto" },
-    "app.history.deleteConfirm": { one: "Apagar este veredicto do telemóvel? O link de partilha continua ativo." },
+    "app.history.deleteConfirm": { one: "Apagar {n} veredicto do telemóvel? O link de partilha continua ativo." },
     "app.history.removeConfirm": {
-      one: "Remover este veredicto da tua conta? O que escreveste e os nomes são apagados e o link de partilha deixa de funcionar, em todos os dispositivos. Isto não pode ser desfeito.",
+      one: "Remover {n} veredicto da tua conta? O que escreveste e os nomes são apagados e o link de partilha deixa de funcionar, em todos os dispositivos. Isto não pode ser desfeito.",
     },
     "app.history.phoneOnlyAlso": {
-      one: "1 veredicto guardado só neste telemóvel é apagado daqui; o link de partilha continua ativo.",
+      one: "{n} veredicto guardado só neste telemóvel é apagado daqui; o link de partilha continua ativo.",
     },
-    "app.history.removeFailed": { one: "Não conseguimos removê-lo. Verifica a ligação e tenta outra vez." },
+    "app.history.removeFailed": { one: "Não conseguimos remover {n} veredicto. Verifica a ligação e tenta outra vez." },
   },
 };
 

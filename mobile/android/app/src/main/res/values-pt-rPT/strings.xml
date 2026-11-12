@@ -548,24 +548,24 @@
     <string name="app_history_device_only">Ficam guardados só neste telemóvel. Se apagares um aqui, o link de partilha continua ativo.</string>
     <string name="app_history_delete">Apagar</string>
     <plurals name="app_history_delete_confirm">
-        <item quantity="one">Apagar este veredicto do telemóvel? O link de partilha continua ativo.</item>
+        <item quantity="one">Apagar %1$s veredicto do telemóvel? O link de partilha continua ativo.</item>
         <item quantity="many">Apagar %1$s veredictos deste telemóvel? Os links de partilha continuam ativos.</item>
         <item quantity="other">Apagar %1$s veredictos deste telemóvel? Os links de partilha continuam ativos.</item>
     </plurals>
     <string name="app_history_phone_only">Só neste telemóvel</string>
     <string name="app_history_phone_only_note">Não estão na tua conta: ficam guardados só neste telemóvel. Se apagares um aqui, o link de partilha continua ativo.</string>
     <plurals name="app_history_remove_confirm">
-        <item quantity="one">Remover este veredicto da tua conta? O que escreveste e os nomes são apagados e o link de partilha deixa de funcionar, em todos os dispositivos. Isto não pode ser desfeito.</item>
+        <item quantity="one">Remover %1$s veredicto da tua conta? O que escreveste e os nomes são apagados e o link de partilha deixa de funcionar, em todos os dispositivos. Isto não pode ser desfeito.</item>
         <item quantity="many">Remover %1$s veredictos da tua conta? O que escreveste e os nomes são apagados e os links de partilha deixam de funcionar, em todos os dispositivos. Isto não pode ser desfeito.</item>
         <item quantity="other">Remover %1$s veredictos da tua conta? O que escreveste e os nomes são apagados e os links de partilha deixam de funcionar, em todos os dispositivos. Isto não pode ser desfeito.</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
-        <item quantity="one">1 veredicto guardado só neste telemóvel é apagado daqui; o link de partilha continua ativo.</item>
+        <item quantity="one">%1$s veredicto guardado só neste telemóvel é apagado daqui; o link de partilha continua ativo.</item>
         <item quantity="many">%1$s veredictos guardados só neste telemóvel são apagados daqui; os links de partilha continuam ativos.</item>
         <item quantity="other">%1$s veredictos guardados só neste telemóvel são apagados daqui; os links de partilha continuam ativos.</item>
     </plurals>
     <plurals name="app_history_remove_failed">
-        <item quantity="one">Não conseguimos removê-lo. Verifica a ligação e tenta outra vez.</item>
+        <item quantity="one">Não conseguimos remover %1$s veredicto. Verifica a ligação e tenta outra vez.</item>
         <item quantity="many">Não conseguimos remover %1$s deles. Verifica a ligação e tenta outra vez.</item>
         <item quantity="other">Não conseguimos remover %1$s deles. Verifica a ligação e tenta outra vez.</item>
     </plurals>

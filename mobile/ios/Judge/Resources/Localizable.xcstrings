@@ -20309,7 +20309,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Apagar este veredicto do telemóvel? O link de partilha continua ativo."
+                  "value" : "Apagar %lld veredicto do telemóvel? O link de partilha continua ativo."
                 }
               },
               "other" : {
@@ -22331,7 +22331,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "1 veredicto guardado só neste telemóvel é apagado daqui; o link de partilha continua ativo."
+                  "value" : "%lld veredicto guardado só neste telemóvel é apagado daqui; o link de partilha continua ativo."
                 }
               },
               "other" : {
@@ -23525,7 +23525,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Remover este veredicto da tua conta? O que escreveste e os nomes são apagados e o link de partilha deixa de funcionar, em todos os dispositivos. Isto não pode ser desfeito."
+                  "value" : "Remover %lld veredicto da tua conta? O que escreveste e os nomes são apagados e o link de partilha deixa de funcionar, em todos os dispositivos. Isto não pode ser desfeito."
                 }
               },
               "other" : {
@@ -24443,7 +24443,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Não conseguimos removê-lo. Verifica a ligação e tenta outra vez."
+                  "value" : "Não conseguimos remover %lld veredicto. Verifica a ligação e tenta outra vez."
                 }
               },
               "other" : {
