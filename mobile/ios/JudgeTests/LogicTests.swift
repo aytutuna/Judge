@@ -81,6 +81,7 @@ final class TugAndTiltTests: XCTestCase {
         XCTAssertEqual(VerdictDisplay.panelSummary(models: ["claude-haiku-4"], lang: .en), "Judges: 1 quick")
         let tr = VerdictDisplay.panelSummary(models: ["a-sonnet", "b-sonnet", "x-haiku", "y-haiku", "z-haiku"], lang: .tr)
         XCTAssertEqual(tr, "Yargıçlar: 2 güçlü + 3 hızlı")
+        XCTAssertEqual(VerdictDisplay.panelSummary(models: ["strong", "strong", "quick"], lang: .en), "Judges: 2 strong + 1 quick")
     }
 }
 

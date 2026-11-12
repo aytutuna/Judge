@@ -208,5 +208,6 @@ class TextVectorsTest {
         assertEquals("Judges: 1 quick", VerdictDisplay.panelSummary(listOf("claude-haiku-4"), en))
         val tr = s("tr")
         assertEquals("Yargıçlar: 2 güçlü + 3 hızlı", VerdictDisplay.panelSummary(listOf("a-sonnet", "b-sonnet", "x-haiku", "y-haiku", "z-haiku"), tr))
+        assertEquals("Judges: 2 strong + 1 quick", VerdictDisplay.panelSummary(listOf("strong", "strong", "quick"), en))
     }
 }

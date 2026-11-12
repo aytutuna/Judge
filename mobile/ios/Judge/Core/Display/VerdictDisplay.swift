@@ -161,9 +161,10 @@ enum VerdictDisplay {
 
     /// "Judges: 2 strong + 1 quick" for a premium panel. Users see seat
     /// tiers, never model names: the lite model is "quick", every other is
-    /// "strong".
+    /// "strong". The server sends "quick" or "strong"; "haiku" is the model
+    /// id older stored verdicts carry.
     static func panelSummary(models: [String], lang: AppLang) -> String {
-        let quick = models.filter { $0.lowercased().contains("haiku") }.count
+        let quick = models.filter { $0 == "quick" || $0.lowercased().contains("haiku") }.count
         let strong = models.count - quick
         var parts: [String] = []
         if strong > 0 { parts.append(L10n.panelStrong(lang, n: strong)) }

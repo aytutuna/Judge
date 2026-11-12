@@ -157,12 +157,13 @@ object VerdictDisplay {
         }
     }
 
+    // The server sends "quick" or "strong"; "haiku" is the model id older stored verdicts carry.
     private val QUICK_MODEL = Regex("haiku", RegexOption.IGNORE_CASE)
 
     /** "Judges: 2 strong + 1 quick" (panelSummary). Users see seat tiers,
      * never model names: the lite model is "quick", every other is "strong". */
     fun panelSummary(models: List<String>, s: Strings): String {
-        val quick = models.count { QUICK_MODEL.containsMatchIn(it) }
+        val quick = models.count { it == "quick" || QUICK_MODEL.containsMatchIn(it) }
         val strong = models.size - quick
         val parts = buildList {
             if (strong > 0) add(s.panelStrong(strong))
