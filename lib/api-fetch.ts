@@ -1,4 +1,5 @@
 import { SIDES_HEADER } from "@/lib/case-types";
+import { TRIAL_HEADER } from "@/lib/trial-compat";
 
 /** The most sides this client can show. */
 const MAX_SIDES = 4;
@@ -8,5 +9,6 @@ const MAX_SIDES = 4;
 export function apiFetch(input: RequestInfo | URL, init: RequestInit = {}): Promise<Response> {
   const headers = new Headers(init.headers);
   headers.set(SIDES_HEADER, String(MAX_SIDES));
+  headers.set(TRIAL_HEADER, "minor");
   return fetch(input, { ...init, headers });
 }

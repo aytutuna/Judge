@@ -9,6 +9,7 @@ import { checkIpLimits } from "@/lib/ratelimit";
 import type { StoredVerdictResponse } from "@/lib/types";
 import { getVerdictJob, failVerdictJob, isStale, maybeSweepVerdictJobs, type VerdictJob } from "@/lib/verdict-jobs";
 import { POLL_AFTER_MS, type VerdictOwnerState, type VerdictPollResponse } from "@/lib/verdict-poll";
+import { trialCompat } from "@/lib/trial-compat";
 
 export const runtime = "nodejs";
 
@@ -119,7 +120,7 @@ async function ownerState(
  * `{ status: "judging", pollAfterMs }`, a failed one
  * `{ status: "failed", code, error }` (both HTTP 200).
  */
-export async function GET(req: Request, ctx: RouteContext<"/api/v1/verdicts/[id]">) {
+export const GET = trialCompat(async (req: Request, ctx: RouteContext<"/api/v1/verdicts/[id]">) => {
   const { id } = await ctx.params;
   if (!ID_PATTERN.test(id)) return notFound();
   // Share viewers without a session are never affected.
@@ -163,4 +164,4 @@ export async function GET(req: Request, ctx: RouteContext<"/api/v1/verdicts/[id]
     ...(owner ? { owner: { ...owner.state, ...(appeal ? { appeal } : {}) } } : {}),
   };
   return NextResponse.json(body, { headers: NO_STORE });
-}
+});

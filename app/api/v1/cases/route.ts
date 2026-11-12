@@ -1,4 +1,5 @@
 import { createCaseHandler, listCasesHandler } from "@/lib/cases";
+import { trialCompat } from "@/lib/trial-compat";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -6,11 +7,11 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 150;
 
 /** POST /api/v1/cases: start a two-sided case (Premium). */
-export function POST(req: Request) {
+export const POST = trialCompat((req: Request) => {
   return createCaseHandler(req);
-}
+});
 
 /** GET /api/v1/cases: the signed-in owner's cases, newest first. */
-export function GET(req: Request) {
+export const GET = trialCompat((req: Request) => {
   return listCasesHandler(req);
-}
+});

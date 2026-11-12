@@ -1,4 +1,5 @@
 import { verdictAppealHandler } from "@/lib/verdict-appeals/http";
+import { trialCompat } from "@/lib/trial-compat";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -6,7 +7,7 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 300;
 
 /** POST /api/v1/verdicts/{id}/appeals: the writer adds context and gets a re-judge. */
-export async function POST(req: Request, ctx: RouteContext<"/api/v1/verdicts/[id]/appeals">) {
+export const POST = trialCompat(async (req: Request, ctx: RouteContext<"/api/v1/verdicts/[id]/appeals">) => {
   const { id } = await ctx.params;
   return verdictAppealHandler(req, id);
-}
+});
