@@ -20,11 +20,19 @@
 			remoteGlobalIDString = 4A1D00000000000000007A01;
 			remoteInfo = Judge;
 		};
+		4A1D0000000000000000C002 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4A1D0000000000000000AA01 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4A1D00000000000000007A01;
+			remoteInfo = Judge;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		4A1D0000000000000000F001 /* Judge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Judge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A1D0000000000000000F002 /* JudgeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JudgeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A1D0000000000000000F007 /* JudgeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JudgeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A1D0000000000000000F003 /* Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
 		4A1D0000000000000000F004 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		4A1D0000000000000000F005 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
@@ -64,6 +72,11 @@
 			path = JudgeTests;
 			sourceTree = "<group>";
 		};
+		4A1D00000000000000005A04 /* JudgeUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = JudgeUITests;
+			sourceTree = "<group>";
+		};
 		4A1D00000000000000005A03 /* SharedFixtures */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -92,6 +105,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4A1D0000000000000000B023 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -101,6 +121,7 @@
 				4A1D00000000000000006A03 /* Config */,
 				4A1D00000000000000005A01 /* Judge */,
 				4A1D00000000000000005A02 /* JudgeTests */,
+				4A1D00000000000000005A04 /* JudgeUITests */,
 				4A1D00000000000000005A03 /* SharedFixtures */,
 				4A1D00000000000000006A04 /* App Fixtures */,
 				4A1D00000000000000006A02 /* Products */,
@@ -112,6 +133,7 @@
 			children = (
 				4A1D0000000000000000F001 /* Judge.app */,
 				4A1D0000000000000000F002 /* JudgeTests.xctest */,
+				4A1D0000000000000000F007 /* JudgeUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -185,6 +207,29 @@
 			productReference = 4A1D0000000000000000F002 /* JudgeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		4A1D00000000000000007A03 /* JudgeUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A1D00000000000000009A04 /* Build configuration list for PBXNativeTarget "JudgeUITests" */;
+			buildPhases = (
+				4A1D0000000000000000B021 /* Sources */,
+				4A1D0000000000000000B023 /* Frameworks */,
+				4A1D0000000000000000B022 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4A1D0000000000000000D002 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				4A1D00000000000000005A04 /* JudgeUITests */,
+			);
+			name = JudgeUITests;
+			packageProductDependencies = (
+			);
+			productName = JudgeUITests;
+			productReference = 4A1D0000000000000000F007 /* JudgeUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -199,6 +244,10 @@
 						CreatedOnToolsVersion = 16.0;
 					};
 					4A1D00000000000000007A02 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 4A1D00000000000000007A01;
+					};
+					4A1D00000000000000007A03 = {
 						CreatedOnToolsVersion = 16.0;
 						TestTargetID = 4A1D00000000000000007A01;
 					};
@@ -268,6 +317,7 @@
 			targets = (
 				4A1D00000000000000007A01 /* Judge */,
 				4A1D00000000000000007A02 /* JudgeTests */,
+				4A1D00000000000000007A03 /* JudgeUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -282,6 +332,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4A1D0000000000000000B012 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4A1D0000000000000000B022 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -305,6 +362,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4A1D0000000000000000B021 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -312,6 +376,11 @@
 			isa = PBXTargetDependency;
 			target = 4A1D00000000000000007A01 /* Judge */;
 			targetProxy = 4A1D0000000000000000C001 /* PBXContainerItemProxy */;
+		};
+		4A1D0000000000000000D002 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4A1D00000000000000007A01 /* Judge */;
+			targetProxy = 4A1D0000000000000000C002 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -529,6 +598,38 @@
 			};
 			name = Release;
 		};
+		4A1D00000000000000008A07 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.okjudge.judge.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				TEST_TARGET_NAME = Judge;
+			};
+			name = Debug;
+		};
+		4A1D00000000000000008A08 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.okjudge.judge.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				TEST_TARGET_NAME = Judge;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -555,6 +656,15 @@
 			buildConfigurations = (
 				4A1D00000000000000008A05 /* Debug */,
 				4A1D00000000000000008A06 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4A1D00000000000000009A04 /* Build configuration list for PBXNativeTarget "JudgeUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A1D00000000000000008A07 /* Debug */,
+				4A1D00000000000000008A08 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
