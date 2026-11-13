@@ -357,6 +357,7 @@ struct HomeView: View {
         .neonEdge(colors.strong, focused: lifted || (writes && focused == focus), radius: Radius.block)
         .accessibilityElement(children: .contain)
         .accessibilityLabel(title)
+        .accessibilityIdentifier(lifted ? "side.lifted" : "side.card")
         .background {
             if !lifted {
                 GeometryReader { geo in

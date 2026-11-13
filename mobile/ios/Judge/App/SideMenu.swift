@@ -647,6 +647,7 @@ struct SideMenu: View {
         }
         .buttonStyle(.plain)
         .disabled(!entry.opens)
+        .accessibilityIdentifier(entry.isCase ? "menu.link" : "menu.verdict")
     }
 
     /// A card with delete on a swipe and a long press, where the entry can
