@@ -8,7 +8,9 @@ final class SideMenuUITests: UITestCase {
         XCTAssertTrue(wait(row))
         shot("8 side menu")
         XCTAssertFalse(app.buttons["Delete"].exists)
-        row.swipeLeft()
+        // swipeLeft() is fast enough to count as a full swipe, which opens the dialog straight away.
+        let start = row.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5))
+        start.press(forDuration: 0.05, thenDragTo: start.withOffset(CGVector(dx: -110, dy: 0)), withVelocity: 300, thenHoldForDuration: 0.3)
         let delete = app.buttons["Delete"]
         XCTAssertTrue(wait(delete))
         XCTAssertFalse(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'Remove'")).firstMatch.exists, "a full swipe opened the dialog")
@@ -28,12 +30,13 @@ final class SideMenuUITests: UITestCase {
         XCTAssertTrue(question.label.contains("link"), question.label)
         XCTAssertFalse(question.label.contains("verdict"), question.label)
         shot("10 remove all links")
-        // iOS 26 shows the dialog as a popover with no Cancel button; tapping outside it, on the menu panel, is its cancel.
+        // iOS 26 shows the dialog as a popover with no Cancel button, sitting over the Links heading.
+        // Tapping outside it is its cancel; the Verdicts heading is well clear and does nothing itself.
         let cancel = app.buttons["Cancel"]
         if cancel.exists {
             cancel.tap()
         } else {
-            removeAll.coordinate(withNormalizedOffset: CGVector(dx: -3, dy: 0.5)).tap()
+            press(app.staticTexts["Verdicts"])
         }
         XCTAssertTrue(wait(question, exists: false))
         XCTAssertTrue(removeAll.exists)
