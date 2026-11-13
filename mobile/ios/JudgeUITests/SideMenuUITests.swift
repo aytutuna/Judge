@@ -13,7 +13,7 @@ final class SideMenuUITests: UITestCase {
         start.press(forDuration: 0.05, thenDragTo: start.withOffset(CGVector(dx: -110, dy: 0)), withVelocity: 300, thenHoldForDuration: 0.3)
         let delete = app.buttons["Delete"]
         XCTAssertTrue(wait(delete))
-        XCTAssertFalse(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'Remove'")).firstMatch.exists, "a full swipe opened the dialog")
+        XCTAssertFalse(removeQuestion.exists, "a full swipe opened the dialog")
         XCTAssertTrue((row.frame.minY...row.frame.maxY).contains(delete.frame.midY), "the Delete button is the row's swipe action")
         XCTAssertEqual(delete.label, "Delete")
         shot("9 swiped verdict")
@@ -25,7 +25,7 @@ final class SideMenuUITests: UITestCase {
         let removeAll = app.buttons["Remove all"]
         XCTAssertTrue(wait(removeAll))
         removeAll.tap()
-        let question = app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'Remove'")).firstMatch
+        let question = removeQuestion
         XCTAssertTrue(wait(question))
         XCTAssertTrue(question.label.contains("link"), question.label)
         XCTAssertFalse(question.label.contains("verdict"), question.label)
@@ -38,7 +38,15 @@ final class SideMenuUITests: UITestCase {
         } else {
             press(app.staticTexts["Verdicts"])
         }
-        XCTAssertTrue(wait(question, exists: false))
+        // The closed popover's text can stay in the tree for a while, off screen.
+        let gone = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false OR hittable == false"), object: question)
+        XCTAssertEqual(XCTWaiter().wait(for: [gone], timeout: 10), .completed)
         XCTAssertTrue(removeAll.exists)
+        shot("11 remove all cancelled")
+    }
+
+    // "Removed by Sam" on a link row also starts with "Remove".
+    private var removeQuestion: XCUIElement {
+        app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'Remove ' AND label CONTAINS 'from your account'")).firstMatch
     }
 }
