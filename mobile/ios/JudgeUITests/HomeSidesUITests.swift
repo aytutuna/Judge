@@ -53,7 +53,10 @@ final class HomeSidesUITests: UITestCase {
         XCTAssertTrue(wait(more))
         press(more)
         XCTAssertTrue(wait(app.buttons["Party C"]))
-        XCTAssertTrue(list.buttons["Party C"].exists)
+        for label in [yours, theirs, "Party C"] {
+            XCTAssertTrue(list.buttons[label].exists, "\(label) is in the list")
+            XCTAssertLessThan(app.buttons[label].frame.maxY, send.frame.minY)
+        }
         XCTAssertEqual(app.textViews.count, 0)
         XCTAssertFalse(list.buttons["Get the verdict"].exists)
         shot("3 three sides in the list")
@@ -128,7 +131,12 @@ final class HomeSidesUITests: UITestCase {
         launch("home:en")
         addTheirSide()
         let card = lift(theirs)
-        let rest = card.frame
+        var last = CGRect.null
+        while last != card.frame {
+            last = card.frame
+            Thread.sleep(forTimeInterval: 0.4)
+        }
+        let rest = last
         for start in Start.allCases {
             let from = point(on: card, start)
             from.press(forDuration: 0.3, thenDragTo: from.withOffset(CGVector(dx: 0, dy: -25)), withVelocity: XCUIGestureVelocity(rawValue: 30), thenHoldForDuration: 0.6)
