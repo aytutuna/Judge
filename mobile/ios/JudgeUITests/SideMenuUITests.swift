@@ -7,9 +7,12 @@ final class SideMenuUITests: UITestCase {
         let row = app.buttons.matching(identifier: "menu.verdict").matching(NSPredicate(format: "label BEGINSWITH 'You are right'")).firstMatch
         XCTAssertTrue(wait(row))
         shot("8 side menu")
+        XCTAssertFalse(app.buttons["Delete"].exists)
         row.swipeLeft()
         let delete = app.buttons["Delete"]
         XCTAssertTrue(wait(delete))
+        XCTAssertFalse(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'Remove'")).firstMatch.exists, "a full swipe opened the dialog")
+        XCTAssertTrue((row.frame.minY...row.frame.maxY).contains(delete.frame.midY), "the Delete button is the row's swipe action")
         XCTAssertEqual(delete.label, "Delete")
         shot("9 swiped verdict")
         row.swipeRight()
@@ -30,7 +33,7 @@ final class SideMenuUITests: UITestCase {
         if cancel.exists {
             cancel.tap()
         } else {
-            app.coordinate(withNormalizedOffset: CGVector(dx: 0.1, dy: 0.97)).tap()
+            removeAll.coordinate(withNormalizedOffset: CGVector(dx: -3, dy: 0.5)).tap()
         }
         XCTAssertTrue(wait(question, exists: false))
         XCTAssertTrue(removeAll.exists)
