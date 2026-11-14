@@ -375,8 +375,8 @@ struct SideMenu: View {
         Task { _ = await list.remove(picked, user: user, enabled: enabled) }
     }
 
-    /// Asks about every link, not just those on the pages loaded so far.
-    private func removeAllLinks() {
+    /// Asks about every link or every verdict, not just those on the pages loaded so far.
+    private func removeAll(links: Bool) {
         let list = app.historyList
         let user = app.historyUser
         Task {
@@ -387,7 +387,7 @@ struct SideMenu: View {
                 cursor = list.next
             }
             confirmingAll = true
-            confirming = currentEntries.filter { $0.isCase && $0.removable }.map(\.id)
+            confirming = currentEntries.filter { $0.isCase == links && $0.removable }.map(\.id)
         }
     }
 
@@ -419,13 +419,17 @@ struct SideMenu: View {
                         .menuListRow()
                 }
                 if !verdicts.isEmpty {
-                    heading(L10n.navVerdicts(lang)).simultaneousGesture(closeDrag(width)).menuListRow()
+                    heading(L10n.navVerdicts(lang), id: "menu.heading.verdicts",
+                            removeAll: verdicts.contains(where: \.removable) ? { removeAll(links: false) } : nil)
+                        .simultaneousGesture(closeDrag(width))
+                        .menuListRow()
                     ForEach(verdicts) { entry in
                         entryRow(entry, entries: shown, width: width, lang: lang, now: now)
                     }
                 }
                 if !links.isEmpty {
-                    heading(L10n.navLinks(lang), removeAll: links.contains(where: \.removable) ? { removeAllLinks() } : nil)
+                    heading(L10n.navLinks(lang), id: "menu.heading.links",
+                            removeAll: links.contains(where: \.removable) ? { removeAll(links: true) } : nil)
                         .simultaneousGesture(closeDrag(width))
                         .menuListRow()
                     ForEach(links) { entry in
@@ -596,7 +600,7 @@ struct SideMenu: View {
     /// filler never pushes the list past the panel.
     private static func rowsHeight(_ count: Int) -> CGFloat { 180 + CGFloat(count) * 72 }
 
-    private func heading(_ title: String, removeAll: (() -> Void)? = nil) -> some View {
+    private func heading(_ title: String, id: String, removeAll: (() -> Void)? = nil) -> some View {
         HStack(spacing: 8) {
             Text(title)
                 .brandText(Self.headingType)
@@ -613,6 +617,7 @@ struct SideMenu: View {
                         .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
+                .accessibilityIdentifier(id + ".removeAll")
             }
         }
         .padding(.horizontal, 12)
