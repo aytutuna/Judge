@@ -15,6 +15,8 @@ declare global {
       set(scene: CourtScene | string): void;
       setReduced(on: boolean): void;
     };
+    /** The first scene, put there by the app before the page runs. */
+    judgeCourtFirst?: CourtScene;
   }
 }
 
@@ -64,3 +66,7 @@ window.judgeCourt = {
   set: (scene) => court.set(parse(scene)),
   setReduced: (on) => court.setReduced(!!on),
 };
+
+// Without it the art can be in before the app's first set arrives, and the
+// first frame would be the plain court.
+if (window.judgeCourtFirst) window.judgeCourt.set(window.judgeCourtFirst);
