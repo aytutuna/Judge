@@ -215,7 +215,7 @@ export function VerdictView({
           {t(lang, "card.appeal")}
         </button>
       ) : null}
-      {shareId && !loading ? <RatingRow id={verdictId ?? shareId} lang={lang} /> : null}
+      {shareId && !loading ? <RatingRow key={verdictId ?? shareId} id={verdictId ?? shareId} lang={lang} /> : null}
       {fresh && !publicNames ? <ConsentCard lang={lang} /> : null}
     </div>
   );
