@@ -13,6 +13,7 @@ import type { PartyLetter as CaseParty } from "@/lib/case-types";
 import type { InStatement } from "@libsql/client";
 import { getCase, type CaseRow } from "@/lib/cases/db";
 import { entitlementWriteBatch, refundStatements } from "@/lib/entitlements";
+import { ensureFeedbackTables, ratingWithdrawStatement } from "@/lib/feedback/db";
 import type { RemovalReason } from "@/lib/originals-types";
 import type { SignInRevocation } from "@/lib/signin-tokens";
 import { getDb, getVerdict } from "@/lib/db";
@@ -203,6 +204,7 @@ async function removeCaseSideOnce(
 export async function removeUserData(userId: string, now: Date = new Date(), opts: RemovalOptions = {}): Promise<void> {
   await ensureOriginalsTables();
   await ensureVerdictJobTables();
+  await ensureFeedbackTables();
   const nowIso = now.toISOString();
   // Answers waiting for an owner's side hold that owner's unit; it comes back
   // now instead of at the entitlements backstop.
@@ -253,6 +255,7 @@ export async function removeUserData(userId: string, now: Date = new Date(), opt
     { sql: "UPDATE case_invites SET user_id = NULL, claim_nonce = NULL WHERE user_id = ?", args: [userId] },
     { sql: "UPDATE case_seats SET user_id = NULL WHERE user_id = ?", args: [userId] },
     { sql: "UPDATE case_appeals SET user_id = NULL WHERE user_id = ?", args: [userId] },
+    ratingWithdrawStatement(userId, nowIso),
   ]);
   if (opts.log !== false) {
     await appendRemovalLog({

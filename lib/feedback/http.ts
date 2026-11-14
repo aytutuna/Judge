@@ -15,7 +15,8 @@ import { z } from "zod";
 import { API_ERROR_STATUS, apiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
 import { isSameOrigin, type ViewerSession } from "@/lib/auth";
 import { deadBearerResponse, lookupViewer } from "@/lib/bearer-guard";
-import { EN } from "@/lib/i18n";
+import { loadLocale, t } from "@/lib/i18n";
+import { isLang, type Lang } from "@/lib/langs";
 import { getPublicVerdict } from "@/lib/originals/display";
 import { ensureOriginalsTables } from "@/lib/originals/db";
 import { checkUserLimits } from "@/lib/ratelimit";
@@ -28,11 +29,14 @@ const ID_PATTERN = /^[A-Za-z0-9_-]{1,64}$/;
 const ConsentRequest = z.strictObject({
   choice: z.enum(["on", "off"]),
   source: z.enum(["card", "switch"]),
-  wordingKey: z.string().min(1).max(80),
+  wordingKey: z.enum(["consent.cardBody", "consent.switchDetail"]),
+  lang: z.string().refine(isLang),
   platform: z.enum(["ios", "android", "web"]),
 });
 
-const RatingRequest = z.strictObject({ rating: z.enum(["up", "down"]).nullable() });
+const RatingRequest = z.strictObject({
+  rating: z.enum(["up", "down"]).nullable(),
+});
 
 const MESSAGES: Partial<Record<ApiErrorCode, string>> = {
   invalid: "Invalid request",
@@ -97,24 +101,31 @@ export function consentGetHandler(req: Request): Promise<NextResponse> {
   });
 }
 
-/** POST /api/v1/me/consent { choice, source, wordingKey, platform } -> the new state.
- * `wordingKey` is the key of the text the person saw (the card's question or
- * the switch's label); the ledger keeps its English text. */
+/** POST /api/v1/me/consent { choice, source, wordingKey, lang, platform } -> the new state.
+ * `wordingKey` is the key of the text the person saw (the card's body or the
+ * switch's detail) and `lang` the language they saw it in; the ledger keeps
+ * that text as it reads now. */
 export function consentPostHandler(req: Request): Promise<NextResponse> {
   return guarded("consent write", async () => {
     const who = await signedIn(req, true);
     if ("response" in who) return who.response;
     const parsed = ConsentRequest.safeParse(await readJson(req));
-    if (!parsed.success || !Object.hasOwn(EN, parsed.data.wordingKey)) {
-      return fail("invalid", 'Send { "choice": "on" | "off", "source": "card" | "switch", "wordingKey": <a string key>, "platform": "ios" | "android" | "web" }.');
+    if (!parsed.success) {
+      return fail(
+        "invalid",
+        'Send { "choice": "on" | "off", "source": "card" | "switch", "wordingKey": "consent.cardBody" | "consent.switchDetail", "lang": <a language code>, "platform": "ios" | "android" | "web" }.',
+      );
     }
     const refused = await underLimit(who.viewer.user.id);
     if (refused) return refused;
     await ensureOriginalsTables();
     const { wordingKey } = parsed.data;
+    const lang = parsed.data.lang as Lang;
+    await loadLocale(lang);
     const state = await recordConsent(who.viewer.user.id, {
       ...parsed.data,
-      wordingText: EN[wordingKey as keyof typeof EN],
+      lang,
+      wordingText: t(lang, wordingKey),
     });
     return json(state);
   });

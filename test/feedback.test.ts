@@ -32,7 +32,7 @@ const dir = mkdtempSync(path.join(tmpdir(), "verdict-feedback-"));
 process.env.DATABASE_URL = `file:${path.join(dir, "test.db").replace(/\\/g, "/")}`;
 
 const { saveVerdictWithOriginals } = await import("../lib/originals/save");
-const { removeVerdict } = await import("../lib/originals/removal");
+const { removeVerdict, removeUserData } = await import("../lib/originals/removal");
 const { getVerdictMeta } = await import("../lib/originals/db");
 const { caseStampStatement } = await import("../lib/feedback/db");
 const { entitlementWriteBatch } = await import("../lib/entitlements");
@@ -70,7 +70,7 @@ const RESULT: VerdictResult = {
   demo: false,
   lang: "de",
 };
-const WORDING = "getVerdict";
+const WORDING = "consent.switchDetail";
 
 let n = 0;
 const vid = () => `f${++n}${Math.random().toString(36).slice(2, 8)}`;
@@ -105,7 +105,7 @@ function req(method: string, url: string, o: Opts = {}): Request {
 const getConsent = (o: Opts = {}) => consentRoute.GET(req("GET", "/api/v1/me/consent", o));
 const postConsent = (body: unknown, o: Opts = {}) => consentRoute.POST(req("POST", "/api/v1/me/consent", { ...o, body }));
 const choose = (choice: "on" | "off", o: Opts = {}) =>
-  postConsent({ choice, source: "switch", wordingKey: WORDING, platform: "ios" }, o);
+  postConsent({ choice, source: "switch", wordingKey: WORDING, lang: "en", platform: "ios" }, o);
 const rate = (id: string, body: unknown, o: Opts = {}) =>
   http.ratingPutHandler(req("PUT", `/api/v1/verdicts/${id}/rating`, { ...o, body }), id);
 const publicGet = (id: string, o: Opts = {}) =>
@@ -146,7 +146,7 @@ describe("consent: read and write", () => {
   });
 
   it("records a choice, keeps the English wording, and is never asked again", async () => {
-    const res = await postConsent({ choice: "off", source: "card", wordingKey: WORDING, platform: "android" }, { user: "u-card" });
+    const res = await postConsent({ choice: "off", source: "card", wordingKey: WORDING, lang: "en", platform: "android" }, { user: "u-card" });
     expect(res.status).toBe(200);
     expect(await json(res)).toMatchObject({ state: "off", policyVersion: POLICY_VERSION });
     expect(await json(await getConsent({ user: "u-card" }))).toMatchObject({ state: "off" });
@@ -156,19 +156,29 @@ describe("consent: read and write", () => {
       source: "card",
       policy_version: POLICY_VERSION,
       wording_key: WORDING,
-      wording_text: EN.getVerdict,
+      wording_text: EN["consent.switchDetail"],
+      lang: "en",
       platform: "android",
     });
     expect(String(row.at)).toMatch(/^\d{4}-\d\d-\d\dT/);
   });
 
+  it("keeps the text in the language it was shown in", async () => {
+    const res = await postConsent({ choice: "on", source: "card", wordingKey: "consent.cardBody", lang: "tr", platform: "ios" }, { user: "u-tr" });
+    expect(res.status).toBe(200);
+    const [row] = await all("SELECT lang, wording_text FROM consent_ledger WHERE user_id = 'u-tr'");
+    expect(row.lang).toBe("tr");
+    expect(row.wording_text).not.toBe(EN["consent.cardBody"]);
+    expect(String(row.wording_text).length).toBeGreaterThan(20);
+  });
+
   it("refuses a bad body, an unknown wording key and a cross-site cookie write", async () => {
     const bad = [
       {},
-      { choice: "maybe", source: "card", wordingKey: WORDING, platform: "ios" },
+      { choice: "maybe", source: "card", wordingKey: WORDING, lang: "en", platform: "ios" },
       { choice: "on", source: "card", wordingKey: "no.such.key", platform: "ios" },
-      { choice: "on", source: "card", wordingKey: WORDING, platform: "desktop" },
-      { choice: "on", source: "card", wordingKey: WORDING, platform: "ios", extra: 1 },
+      { choice: "on", source: "card", wordingKey: WORDING, lang: "en", platform: "desktop" },
+      { choice: "on", source: "card", wordingKey: WORDING, lang: "en", platform: "ios", extra: 1 },
     ];
     for (const body of bad) {
       const res = await postConsent(body, { user: "u-bad" });
@@ -220,7 +230,7 @@ describe("consent: which verdicts may train", () => {
   });
 
   it("a card answer of no thanks stamps nothing", async () => {
-    await postConsent({ choice: "off", source: "card", wordingKey: WORDING, platform: "web" }, { user: "u-no" });
+    await postConsent({ choice: "off", source: "card", wordingKey: WORDING, lang: "en", platform: "web" }, { user: "u-no" });
     const id = await save("u-no");
     const [row] = await all("SELECT training_ok_at FROM verdict_meta WHERE verdict_id = ?", [id]);
     expect(row.training_ok_at).toBeNull();
@@ -245,6 +255,36 @@ describe("consent: which verdicts may train", () => {
     const fresh = await save("u-w1");
     expect(await state(fresh)).toMatchObject({ training_withdrawn_at: null });
     expect((await state(fresh)).training_ok_at).not.toBeNull();
+  });
+
+  it("a round is stamped only when the first verdict and the rounds before it were", async () => {
+    const d = await getDb();
+    const addRound = async (round: string, root: string, at: string) => {
+      await d.execute({
+        sql: `INSERT INTO verdict_appeals (id, verdict_id, text, evidence, base_id, created_at, updated_at)
+              VALUES (?, ?, 'more', '[]', ?, ?, ?)`,
+        args: [round, root, root, at, at],
+      });
+      await save("u-rd", round);
+    };
+    const stamped = async (id: string) => (await all("SELECT training_ok_at FROM verdict_meta WHERE verdict_id = ?", [id]))[0].training_ok_at;
+
+    const offRoot = await save("u-rd");
+    await choose("on", { user: "u-rd" });
+    const round = vid();
+    await addRound(round, offRoot, "2026-11-02T00:00:00.000Z");
+    expect(await stamped(offRoot)).toBeNull();
+    expect(await stamped(round)).toBeNull();
+
+    const root = await save("u-rd");
+    const first = vid();
+    await addRound(first, root, "2026-11-02T00:00:00.000Z");
+    expect(await stamped(first)).not.toBeNull();
+    await choose("off", { user: "u-rd" });
+    await choose("on", { user: "u-rd" });
+    const second = vid();
+    await addRound(second, root, "2026-11-03T00:00:00.000Z");
+    expect(await stamped(second)).toBeNull();
   });
 
   describe("a case", () => {
@@ -298,10 +338,56 @@ describe("consent: which verdicts may train", () => {
       const [row] = await all("SELECT training_withdrawn_at FROM verdict_meta WHERE verdict_id = 'c-all-v'");
       expect(row.training_withdrawn_at).not.toBeNull();
     });
+
+    it("an appeal verdict needs the verdicts before it to be stamped", async () => {
+      await choose("on", { user: "u-pa" });
+      await choose("on", { user: "u-pb" });
+      const addAppeal = async (caseId: string, verdictId: string) => {
+        const db = await getDb();
+        await db.execute({ sql: "INSERT INTO verdicts (id, input, framework, result) VALUES (?, 'x', '{}', ?)", args: [verdictId, JSON.stringify(RESULT)] });
+        await db.execute({
+          sql: "INSERT INTO verdict_meta (verdict_id, kind, case_id, names_visible, created_at, updated_at) VALUES (?, 'case', ?, 1, ?, ?)",
+          args: [verdictId, caseId, now, now],
+        });
+        await db.execute({ sql: "INSERT INTO case_verdicts (case_id, seq, verdict_id, mode, created_at) VALUES (?, 2, ?, 'two_sided', ?)", args: [caseId, verdictId, now] });
+      };
+
+      const unstamped = await makeCase("c-first-off", "u-pa", "u-pb");
+      expect(await stamp(unstamped, "c-first-off")).toBe(now);
+      await entitlementWriteBatch([{ sql: "UPDATE verdict_meta SET training_ok_at = NULL WHERE verdict_id = ?", args: [unstamped] }]);
+      await addAppeal("c-first-off", "c-first-off-v2");
+      expect(await stamp("c-first-off-v2", "c-first-off")).toBeNull();
+
+      await makeCase("c-first-on", "u-pa", "u-pb");
+      await stamp("c-first-on-v", "c-first-on");
+      await addAppeal("c-first-on", "c-first-on-v2");
+      expect(await stamp("c-first-on-v2", "c-first-on")).toBe(now);
+    });
   });
 });
 
 describe("ratings", () => {
+  it("keeps whether the rater had consent on, and withdraws it when they turn it off", async () => {
+    const id = await save("u-owner6");
+    const row = async (user: string) =>
+      (await all("SELECT training_ok_at, training_withdrawn_at FROM verdict_ratings WHERE verdict_id = ? AND user_id = ?", [id, user]))[0];
+    await rate(id, { rating: "down" }, { user: "u-rc1" });
+    expect(await row("u-rc1")).toEqual({ training_ok_at: null, training_withdrawn_at: null });
+
+    await choose("on", { user: "u-rc2" });
+    await rate(id, { rating: "up" }, { user: "u-rc2" });
+    expect((await row("u-rc2")).training_ok_at).not.toBeNull();
+    await choose("off", { user: "u-rc2" });
+    expect((await row("u-rc2")).training_withdrawn_at).not.toBeNull();
+    await rate(id, { rating: "down" }, { user: "u-rc2" });
+    expect(await row("u-rc2")).toEqual({ training_ok_at: null, training_withdrawn_at: null });
+
+    await choose("on", { user: "u-rc3" });
+    await rate(id, { rating: "up" }, { user: "u-rc3" });
+    await removeUserData("u-rc3", new Date(), { log: false });
+    expect((await row("u-rc3")).training_withdrawn_at).not.toBeNull();
+  });
+
   it("sets, changes and clears one rating per viewer, kept with the verdict", async () => {
     const id = await save("u-owner");
     const rating = async (user: string) =>
