@@ -426,7 +426,7 @@ describe("GET /api/v1/me/history: one list", () => {
     expect(after[0]).toMatchObject({ id, state: "ready", verdict: "side_a", at: before.at });
   });
 
-  it("rows the viewer removed are not listed; the other side still sees them, with names", async () => {
+  it("removed rows stay listed: without names for whoever removed, with them for the other side", async () => {
     const u = await owner(5);
     const v = await saveVerdict(u);
     await removeVerdict((await getVerdictMeta(v))!, "owner");
@@ -442,8 +442,8 @@ describe("GET /api/v1/me/history: one list", () => {
     expect(removal.status).toBe(200);
 
     const rows = await all(u);
-    expect(rows.find((r) => r.id === v)).toBeUndefined();
-    expect(rows.find((r) => r.id === c.id)).toBeUndefined();
+    expect(rows.find((r) => r.id === v)).toMatchObject({ state: "removed", removed: true, headline: null, nameMap: [], verdict: null, removable: false });
+    expect(rows.find((r) => r.id === c.id)).toMatchObject({ state: "removed", removed: true, headline: null, nameMap: [], removable: false });
     const theirs = (await all(other))[0];
     expect(theirs).toMatchObject({ state: "removed_by_other", removed: true, headline: "Party A paid", verdict: "side_a", removable: false });
     expect(theirs.nameMap.length).toBeGreaterThan(0);
