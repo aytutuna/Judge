@@ -126,6 +126,17 @@ final class HistoryListTests: XCTestCase {
         }
     }
 
+    func testRowsTheViewerRemovedAreNotListed() {
+        var own = item("own", "2026-10-05T00:00:00.000Z", kind: "case")
+        own.state = "removed"
+        own.removed = true
+        var theirs = item("theirs", "2026-10-04T00:00:00.000Z", kind: "case")
+        theirs.state = "removed_by_other"
+        theirs.removed = true
+        let kept = item("kept", "2026-10-03T00:00:00.000Z")
+        XCTAssertEqual(HistoryEntry.merge(cached: [own, theirs, kept], saved: [], user: "u1").map(\.id), ["c:theirs", "v:kept"])
+    }
+
     @MainActor
     func testAnotherAccountAndSigningOutTakeTheAccountsRowsOff() throws {
         try withStore { store in

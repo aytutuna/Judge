@@ -109,16 +109,19 @@ enum HistoryEntry: Identifiable {
         return merge(cached: cached, saved: saved, user: user, cutoff: app.historyList.cutoff)
     }
 
-    /// The account's rows and the phone's own, newest first. A phone row
-    /// older than `cutoff` (the last account row loaded this session) waits
-    /// until the account's list is loaded that far: the account may have it.
+    /// The account's rows and the phone's own, newest first. A row the viewer
+    /// removed is left out; one the other side removed stays, as it tells
+    /// them something. A phone row older than `cutoff` (the last account row
+    /// loaded this session) waits until the account's list is loaded that
+    /// far: the account may have it.
     static func merge(cached: [HistoryItem], saved: [SavedVerdict], user: String?, cutoff: String? = nil) -> [HistoryEntry] {
         let listed = Set(cached.map(\.key))
         let phone = saved
             .filter { ($0.ownerUserID == nil || $0.ownerUserID == user) && !listed.contains("v:" + $0.id) }
             .map(HistoryEntry.phone)
             .filter { cutoff == nil || $0.at >= cutoff! }
-        return (cached.map(HistoryEntry.account) + phone)
+        let shown = cached.filter { $0.historyState != .removed }
+        return (shown.map(HistoryEntry.account) + phone)
             .map { ($0, $0.at) }
             .sorted { HistoryOrder.before(($0.1, $0.0.id), ($1.1, $1.0.id)) }
             .map(\.0)
