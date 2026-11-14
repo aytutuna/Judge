@@ -9,12 +9,12 @@ enum class ConsentState(val wire: String) {
     OFF("off");
 
     companion object {
-        fun fromWire(value: String?): ConsentState = entries.firstOrNull { it.wire == value } ?: NOT_ASKED
+        fun fromWire(value: String?): ConsentState? = entries.firstOrNull { it.wire == value }
     }
 }
 
 @Serializable
-data class ConsentResponse(val state: String = "not_asked")
+data class ConsentResponse(val state: String? = null)
 
 /** The viewer's "Fair verdict?" answer, kept with the verdict. */
 enum class Rating(val wire: String) {

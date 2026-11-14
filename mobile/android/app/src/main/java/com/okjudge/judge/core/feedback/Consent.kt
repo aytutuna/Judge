@@ -3,6 +3,7 @@ package com.okjudge.judge.core.feedback
 import com.okjudge.judge.core.api.ApiResult
 import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.model.ConsentState
+import com.okjudge.judge.i18n.AppLang
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,10 +26,10 @@ class Consent(private val api: JudgeApi, private val scope: CoroutineScope) {
         _state.value = null
     }
 
-    /** [source] is "card" or "switch"; [wordingKey] names the text the person saw. */
-    fun answer(on: Boolean, source: String, wordingKey: String) {
+    /** [source] is "card" or "switch"; [wordingKey] names the text the person saw, in [lang]. */
+    fun answer(on: Boolean, source: String, wordingKey: String, lang: AppLang) {
         scope.launch {
-            val res = api.setConsent(on, source, wordingKey)
+            val res = api.setConsent(on, source, wordingKey, lang)
             if (res is ApiResult.Ok) _state.value = res.value
         }
     }

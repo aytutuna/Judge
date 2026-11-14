@@ -402,12 +402,13 @@ class JudgeApi(
         return execute(getClient, req) { _, text -> decodeConsent(text) }
     }
 
-    /** POST /api/v1/me/consent: the choice, where it was made and the wording key of the text shown. */
-    suspend fun setConsent(on: Boolean, source: String, wordingKey: String): ApiResult<ConsentState> {
+    /** POST /api/v1/me/consent: the choice, where it was made, the wording key of the text shown and its language. */
+    suspend fun setConsent(on: Boolean, source: String, wordingKey: String, lang: AppLang): ApiResult<ConsentState> {
         val body = buildJsonObject {
             put("choice", if (on) "on" else "off")
             put("source", source)
             put("wordingKey", wordingKey)
+            put("lang", lang.tag)
             put("platform", "android")
         }.toString()
         val req = request(url("api", "v1", "me", "consent")).post(body.toRequestBody(JSON)).build()
@@ -432,6 +433,7 @@ class JudgeApi(
 
     private fun decodeConsent(text: String): ConsentState =
         ConsentState.fromWire(WireJson.json.decodeFromString(ConsentResponse.serializer(), text).state)
+            ?: throw SerializationException("unknown consent state")
 
     /** GET /api/v1/config: which sign-in methods the server offers. */
     suspend fun config(): ApiResult<ServerConfig> {

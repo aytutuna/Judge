@@ -596,7 +596,7 @@ fun JudgeRoot(
                                         onShared = { container.analytics.track("share_tapped") },
                                         feedback = true,
                                         consent = consent,
-                                        onConsent = { on -> container.consent.answer(on, "card", Consent.CARD_WORDING) },
+                                        onConsent = { on -> container.consent.answer(on, "card", Consent.CARD_WORDING, lang) },
                                     )
                                 }
                                 entry<CaseKey> { key ->
@@ -704,7 +704,7 @@ fun JudgeRoot(
                                         helpImprove = consent == ConsentState.ON,
                                         onHelpImprove = { on ->
                                             if (accountState is Account.State.SignedIn) {
-                                                container.consent.answer(on, "switch", Consent.SWITCH_WORDING)
+                                                container.consent.answer(on, "switch", Consent.SWITCH_WORDING, lang)
                                             } else if (backStack.lastOrNull() !is SignInKey) {
                                                 backStack.add(SignInKey(thenVerdict = false))
                                             }

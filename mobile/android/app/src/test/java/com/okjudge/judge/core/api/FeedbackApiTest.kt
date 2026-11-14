@@ -1,7 +1,9 @@
 package com.okjudge.judge.core.api
 
 import com.okjudge.judge.core.model.ConsentState
+import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.model.Rating
+import com.okjudge.judge.i18n.AppLang
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
@@ -39,15 +41,24 @@ class FeedbackApiTest {
     }
 
     @Test
+    fun consent_anUnknownStateIsAnErrorNotACard() = runBlocking {
+        server.enqueue(ok("""{"state":"maybe"}"""))
+        server.enqueue(ok("""{}"""))
+        assertEquals(ApiResult.Err(UiError.Unknown), api().consent())
+        assertEquals(ApiResult.Err(UiError.Unknown), api().consent())
+    }
+
+    @Test
     fun setConsent_sendsTheChoiceWordingAndPlatform() = runBlocking {
         server.enqueue(ok("""{"state":"on","updatedAt":"2026-11-14T10:00:00.000Z","policyVersion":"2026-11-14"}"""))
-        assertEquals(ApiResult.Ok(ConsentState.ON), api().setConsent(true, "card", "consent.cardBody"))
+        assertEquals(ApiResult.Ok(ConsentState.ON), api().setConsent(true, "card", "consent.cardBody", AppLang.TR))
         val sent = server.takeRequest()
         assertEquals("POST", sent.method)
         val body = Json.parseToJsonElement(sent.body!!.utf8()).jsonObject
         assertEquals("on", body["choice"]!!.jsonPrimitive.content)
         assertEquals("card", body["source"]!!.jsonPrimitive.content)
         assertEquals("consent.cardBody", body["wordingKey"]!!.jsonPrimitive.content)
+        assertEquals("tr", body["lang"]!!.jsonPrimitive.content)
         assertEquals("android", body["platform"]!!.jsonPrimitive.content)
     }
 
