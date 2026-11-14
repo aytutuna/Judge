@@ -22,7 +22,7 @@ final class SideMenuUITests: UITestCase {
 
     func testRemoveAllLinksAsksAboutLinks() {
         launch("menu:en")
-        let removeAll = app.buttons["Remove all"]
+        let removeAll = app.buttons["menu.heading.links.removeAll"]
         XCTAssertTrue(wait(removeAll))
         removeAll.tap()
         let question = removeQuestion
@@ -37,13 +37,44 @@ final class SideMenuUITests: UITestCase {
         if cancel.exists {
             cancel.tap()
         } else {
-            press(app.staticTexts["Verdicts"])
+            press(app.buttons["menu.heading.verdicts"])
         }
         // The closed popover's text can stay in the tree for a while, off screen.
         let gone = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false OR hittable == false"), object: question)
         XCTAssertEqual(XCTWaiter().wait(for: [gone], timeout: 10), .completed)
         XCTAssertTrue(removeAll.exists)
         shot("11 remove all cancelled")
+    }
+
+    func testRemoveAllVerdictsAsksAboutVerdicts() {
+        launch("menu:en")
+        let removeAll = app.buttons["menu.heading.verdicts.removeAll"]
+        XCTAssertTrue(wait(removeAll))
+        removeAll.tap()
+        let question = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'verdict' AND (label BEGINSWITH 'Remove ' OR label BEGINSWITH 'Delete ')")).firstMatch
+        XCTAssertTrue(wait(question))
+        let cancel = app.buttons["Cancel"]
+        if cancel.exists {
+            cancel.tap()
+        } else {
+            press(app.buttons["menu.heading.links"])
+        }
+        let gone = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false OR hittable == false"), object: question)
+        XCTAssertEqual(XCTWaiter().wait(for: [gone], timeout: 10), .completed)
+        XCTAssertTrue(removeAll.exists)
+    }
+
+    func testAHeadingFoldsItsRows() {
+        launch("menu:en")
+        let heading = app.buttons["menu.heading.verdicts"]
+        let rows = app.buttons.matching(identifier: "menu.verdict")
+        XCTAssertTrue(wait(rows.firstMatch))
+        heading.tap()
+        let folded = XCTNSPredicateExpectation(predicate: NSPredicate(format: "count == 0"), object: rows)
+        XCTAssertEqual(XCTWaiter().wait(for: [folded], timeout: 10), .completed)
+        XCTAssertTrue(app.buttons["menu.heading.verdicts.removeAll"].exists, "Remove all stays beside the heading")
+        heading.tap()
+        XCTAssertTrue(wait(rows.firstMatch))
     }
 
     // "Removed by Sam" on a link row also starts with "Remove".
