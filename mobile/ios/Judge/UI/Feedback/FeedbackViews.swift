@@ -51,7 +51,7 @@ struct RatingRow: View {
             Spacer()
         }
         .padding(.top, 8)
-        .task(id: id) {
+        .task(id: "\(id) \(app.account.isSignedIn)") {
             rating = nil
             guard app.account.isSignedIn else { return }
             rating = try? await app.api.rating(id: id)
