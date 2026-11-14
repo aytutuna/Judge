@@ -91,6 +91,24 @@ struct GhostButtonStyle: ButtonStyle {
     }
 }
 
+/// A destructive action: danger text in a tinted box with a danger border.
+struct DangerButtonStyle: ButtonStyle {
+    @Environment(\.isEnabled) private var isEnabled
+
+    func makeBody(configuration: Configuration) -> some View {
+        let shape = RoundedRectangle(cornerRadius: Radius.field, style: .continuous)
+        configuration.label
+            .brandText(.chip)
+            .foregroundStyle(Brand.danger)
+            .padding(.horizontal, 16)
+            .background(shape.fill(Brand.danger.opacity(configuration.isPressed ? 0.2 : 0.1)))
+            .overlay(shape.strokeBorder(Brand.danger.opacity(0.6), lineWidth: 1))
+            .contentShape(shape)
+            .scaleEffect(configuration.isPressed ? 0.98 : 1)
+            .opacity(isEnabled ? 1 : 0.4)
+    }
+}
+
 /// Terracotta text action (`.btnLink`).
 struct LinkButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {

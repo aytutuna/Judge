@@ -1,12 +1,11 @@
 import SwiftUI
 import UIKit
 
-/// Home, laid out like a chat: what has been added so far fills the page
-/// above, the box to write in is pinned to the bottom with its send button,
-/// and the other side comes as a card above it or as a link. The box holds
-/// the text, "Add context" and the counter; picked images show just above it.
-/// With more than one side nothing is pinned but the send row: the boxes
-/// stack in the page, in order, and only show their text. A tap lifts that
+/// Home, laid out like a chat: the boxes fill the page, in order, with "Add
+/// context" and the picked images just under them, then the buttons to add
+/// a side, and "Clear" at the very bottom. Only the send row (the counter
+/// and the send button) is pinned. With one side the box is written in where
+/// it stands; with more the boxes only show their text. A tap lifts that
 /// side's box above the keyboard to write in; drag it any way and let go
 /// with some speed to throw it back, or tap the dim page.
 struct HomeView: View {
@@ -38,7 +37,7 @@ struct HomeView: View {
         case extra(Int)
     }
 
-    private enum CardKind { case list, composer, lifted }
+    private enum CardKind { case list, lifted }
 
     @MainActor private final class FrameBox {
         var values: [Party: CGRect] = [:]
@@ -179,7 +178,7 @@ struct HomeView: View {
         }
     }
 
-    /// Everything but the box in use, from the bottom up. Two sides go to
+    /// The boxes and everything under them. Two sides go to
     /// the judges as one text with a name in front of each, and a link makes
     /// a two-sided case instead. Screenshots go with the whole case, not
     /// with one card: the judges get them as one set.
@@ -194,39 +193,56 @@ struct HomeView: View {
                         HomeCourt(busy: home.isBusy, covered: pageCovered || home.isJudging || !home.path.isEmpty, venue: home.homeVenue)
                     }
             }
-            ForEach(home.theirsOpen ? home.openSides : [], id: \.self) { side in
+            ForEach(home.openSides, id: \.self) { side in
                 sideCard(lang, home: home, side: side, kind: .list)
             }
-            if app.evidenceOn, !home.evidence.items.isEmpty || home.evidence.overLimit || home.evidence.failure != nil {
-                VStack(alignment: .leading, spacing: 10) {
-                    EvidenceRows(evidence: home.evidence, lang: lang, disabled: home.isBusy)
-                    EvidenceNotes(evidence: home.evidence, lang: lang)
-                }
-            }
-            if let error = home.error {
-                errorBanner(error, lang: lang)
-                    .id(Self.errorID)
-            }
-            if home.offersExample || !home.isBlank {
-                footer(lang, home: home)
+            if app.evidenceOffered {
+                contextBlock(lang, home: home)
             }
             if !home.theirsOpen {
                 otherSide(lang, home: home)
             } else if home.more.count < HomeModel.maxSides - 2 {
                 moreSides(lang, home: home)
             }
+            if let error = home.error {
+                errorBanner(error, lang: lang)
+                    .id(Self.errorID)
+            }
+            if home.offersExample {
+                exampleButton(lang, home: home)
+                    .padding(.horizontal, 4)
+            }
+            if !home.isBlank {
+                clearButton(lang, home: home)
+            }
         }
     }
 
-    /// The only box, or with several sides just the send row, and under it what is left to spend.
-    private func composer(_ lang: AppLang, home: HomeModel) -> some View {
-        // The gap is the glow's radius (12) plus 8, so it never touches the line.
-        VStack(spacing: home.theirsOpen ? 4 : 20) {
-            if home.theirsOpen {
-                bottomRow(lang, home: home, inComposer: true)
-            } else {
-                sideCard(lang, home: home, side: .a, kind: .composer)
+    /// "Add context" under the boxes, and the images picked so far under it.
+    private func contextBlock(_ lang: AppLang, home: HomeModel) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            if app.evidenceOffered, !home.evidence.full {
+                EvidenceAddButton(evidence: home.evidence, disabled: home.isBusy) {
+                    Label(L10n.appHomeAddContext(lang), systemImage: "paperclip")
+                        .brandText(Self.linkType)
+                        .foregroundStyle(Brand.ink2)
+                        .frame(minHeight: 44)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .padding(.horizontal, 4)
             }
+            if app.evidenceOn, !home.evidence.items.isEmpty || home.evidence.overLimit || home.evidence.failure != nil {
+                EvidenceRows(evidence: home.evidence, lang: lang, disabled: home.isBusy)
+                EvidenceNotes(evidence: home.evidence, lang: lang)
+            }
+        }
+    }
+
+    /// The send row, and under it what is left to spend.
+    private func composer(_ lang: AppLang, home: HomeModel) -> some View {
+        VStack(spacing: 4) {
+            bottomRow(lang, home: home)
             if home.isCheckingQuestions || home.isCreatingCase {
                 Text(home.isCreatingCase ? L10n.caseCreating(lang) : L10n.tierChecking(lang))
                     .brandText(.footnote)
@@ -242,10 +258,8 @@ struct HomeView: View {
         }
         .padding(.horizontal, 16)
         .padding(.bottom, 16)
-        // Stacked boxes scroll under the send row, so it needs its own ground.
-        .background {
-            if home.theirsOpen { Brand.ivory.ignoresSafeArea(edges: .bottom) }
-        }
+        // The boxes scroll under the send row, so it needs its own ground.
+        .background(Brand.ivory.ignoresSafeArea(edges: .bottom))
     }
 
     private func field(for side: Party) -> Field {
@@ -340,9 +354,8 @@ struct HomeView: View {
                     activate(side, home: home)
                 }
             }
-            // With several sides the send row is at the bottom of the page.
-            if lifted || !home.theirsOpen {
-                bottomRow(lang, home: home, inComposer: kind != .list)
+            if lifted {
+                bottomRow(lang, home: home)
             }
         }
         .padding(.horizontal, 16)
@@ -492,28 +505,14 @@ struct HomeView: View {
         }
     }
 
-    /// Under the text: "Add context" on the left, and in the composer the
-    /// counter and the send button on the right. Every box adds to the same
-    /// set of images.
-    private func bottomRow(_ lang: AppLang, home: HomeModel, inComposer: Bool) -> some View {
+    /// The counter and the send button.
+    private func bottomRow(_ lang: AppLang, home: HomeModel) -> some View {
         HStack(alignment: .center, spacing: 12) {
-            if app.evidenceOffered, !home.evidence.full {
-                EvidenceAddButton(evidence: home.evidence, disabled: home.isBusy) {
-                    Label(L10n.appHomeAddContext(lang), systemImage: "paperclip")
-                        .brandText(Self.linkType)
-                        .foregroundStyle(Brand.ink2)
-                        .frame(minHeight: 44)
-                        .contentShape(Rectangle())
-                }
-                .buttonStyle(.plain)
-            }
             Spacer(minLength: 0)
-            if inComposer {
-                counter(lang, home: home)
-                    .fixedSize()
-                sendButton(lang, home: home)
-                    .padding(.trailing, -6)
-            }
+            counter(lang, home: home)
+                .fixedSize()
+            sendButton(lang, home: home)
+                .padding(.trailing, -6)
         }
     }
 
@@ -699,18 +698,6 @@ struct HomeView: View {
         .disabled(!home.canSendLink(app))
     }
 
-    private func footer(_ lang: AppLang, home: HomeModel) -> some View {
-        FlowLayout(spacing: 16) {
-            if home.offersExample {
-                exampleButton(lang, home: home)
-            }
-            if !home.isBlank {
-                clearButton(lang, home: home)
-            }
-        }
-        .padding(.horizontal, 4)
-    }
-
     private func exampleButton(_ lang: AppLang, home: HomeModel) -> some View {
         Button {
             focused = nil
@@ -732,12 +719,9 @@ struct HomeView: View {
             withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) { home.judgeAnother() }
         } label: {
             Text(L10n.appHomeClear(lang))
-                .brandText(Self.linkType)
-                .foregroundStyle(Brand.ink2)
-                .frame(minHeight: 44)
-                .contentShape(Rectangle())
+                .frame(maxWidth: .infinity, minHeight: 44)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(DangerButtonStyle())
         .disabled(home.isBusy)
     }
 

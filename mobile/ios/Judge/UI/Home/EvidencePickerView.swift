@@ -4,7 +4,7 @@ import UniformTypeIdentifiers
 
 /// The context picker (components/case/EvidencePicker.tsx): picked images
 /// upload at once and each shows how it went; a read image can show what was
-/// read (only to the uploader). Home puts the add control inside its box
+/// read (only to the uploader). Home puts the add control under its boxes
 /// and the rows below it; the appeal form uses this whole picker (one image).
 struct EvidencePickerView: View {
     let evidence: EvidenceModel
