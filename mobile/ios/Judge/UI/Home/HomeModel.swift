@@ -61,10 +61,10 @@ final class HomeModel {
     private(set) var acceptedAt: Date?
     /// The sides the running request sent, for the judging cover.
     private(set) var judgedSides: [JudgedSide] = []
-    /// Where the judging court is drawn: picked when the request is submitted.
+    /// Where the judging court is drawn: the New page's court when the request is submitted.
     private(set) var judgingVenue = Venues.fallback
-    /// The New page's court: a new place only once something has been sent,
-    /// not every time the page comes back.
+    /// The New page's court: a new place only once a verdict or link has gone
+    /// out, behind whatever covers the page then, not every time it comes back.
     private(set) var homeVenue = Venues.pickNew()
     private(set) var error: APIError?
     private(set) var blockedUntil: Date?
@@ -486,7 +486,7 @@ final class HomeModel {
         let name = shownCaseName(app).trimmingCharacters(in: .whitespacesAndNewlines)
         let displayName: String? = name.isEmpty ? nil : name
         let sides = theirsOpen ? 2 + more.count : 2
-        let venue = caseVenue ?? Venues.pickNew()
+        let venue = caseVenue ?? homeVenue
         caseVenue = venue
         let body = JudgeAPI.createCaseBody(text: text, lang: lang, evidence: tokens, displayName: displayName, sides: sides, venue: venue)
         let token = keys.key(for: JudgeAPI.canonical(body))
@@ -560,7 +560,7 @@ final class HomeModel {
                 accepted: VerdictAccepted(id: id, nameMap: [], replayed: true), key: key, since: saved?.since ?? .now, idempotencyKey: saved?.key
             )
         }
-        if heldVenue?.key != key { heldVenue = (key, saved?.venue ?? Venues.pickNew()) }
+        if heldVenue?.key != key { heldVenue = (key, saved?.venue ?? homeVenue) }
         persist()
         input.venue = heldVenue?.id
         premiumInput = input
@@ -571,7 +571,6 @@ final class HomeModel {
         if let held = pending, held.key == key, Date.now.timeIntervalSince(held.since) < Self.resumeWindow {
             app.analytics.track("case_submitted")
             isJudging = true
-            homeVenue = Venues.pickNew()
             request = Task { [weak self] in
                 await self?.judge(.resume(held.accepted, idempotencyKey: held.idempotencyKey), requestKey: key, api: api, history: history)
             }
@@ -649,7 +648,6 @@ final class HomeModel {
         acceptedAt = nil
         pending = nil
         isJudging = true
-        homeVenue = Venues.pickNew()
         let body = VerdictRequest(
             argument: input.argument,
             lang: input.lang,
@@ -797,6 +795,7 @@ final class HomeModel {
         guard let id = arrivedID else { return }
         arrivedID = nil
         clearForm()
+        homeVenue = Venues.pickNew()
         path.append(.verdict(id: id))
     }
 
