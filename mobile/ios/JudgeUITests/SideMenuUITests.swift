@@ -32,12 +32,12 @@ final class SideMenuUITests: UITestCase {
         XCTAssertFalse(app.buttons["Delete"].exists, "the dialog's button says Remove all")
         shot("10 remove all links")
         // iOS 26 shows the dialog as a popover with no Cancel button, sitting over the Links heading.
-        // Tapping outside it is its cancel; the Verdicts heading is well clear and does nothing itself.
+        // Tapping the dim area outside it is its cancel.
         let cancel = app.buttons["Cancel"]
         if cancel.exists {
             cancel.tap()
         } else {
-            press(app.buttons["menu.heading.verdicts"])
+            tapOutside()
         }
         // The closed popover's text can stay in the tree for a while, off screen.
         let gone = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false OR hittable == false"), object: question)
@@ -57,7 +57,7 @@ final class SideMenuUITests: UITestCase {
         if cancel.exists {
             cancel.tap()
         } else {
-            press(app.buttons["menu.heading.links"])
+            tapOutside()
         }
         let gone = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false OR hittable == false"), object: question)
         XCTAssertEqual(XCTWaiter().wait(for: [gone], timeout: 10), .completed)
@@ -75,6 +75,10 @@ final class SideMenuUITests: UITestCase {
         XCTAssertTrue(app.buttons["menu.heading.verdicts.removeAll"].exists, "Remove all stays beside the heading")
         heading.tap()
         XCTAssertTrue(wait(rows.firstMatch))
+    }
+
+    private func tapOutside() {
+        app.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.95)).tap()
     }
 
     // "Removed by Sam" on a link row also starts with "Remove".

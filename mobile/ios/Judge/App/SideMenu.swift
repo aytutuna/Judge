@@ -273,8 +273,8 @@ struct SideMenu: View {
     @State private var confirmSignOut = false
     @State private var confirming: [String]?
     @State private var confirmingAll = false
-    @AppStorage("menu.verdictsFolded") private var verdictsFolded = false
-    @AppStorage("menu.linksFolded") private var linksFolded = false
+    @State private var verdictsFolded = false
+    @State private var linksFolded = false
     /// Rows near the end that are on screen.
     @State private var tailShown: Set<String> = []
     /// Where the sides of the owner's waiting links stand, by case id, while the menu is open.
