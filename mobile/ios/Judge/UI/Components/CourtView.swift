@@ -4,10 +4,12 @@ import WebKit
 
 /// The street court (Resources/Court, built by mobile/shared/scene) in a web
 /// view, driven through `window.judgeCourt`. Decorative: the log around it
-/// carries the meaning, and touches never reach the page. The still ground
-/// is drawn instead in screenshot states and tests, when the page fails, and
-/// until the page has painted its first frame. `covered` pauses it (the page
-/// is removed) while something is over the screen.
+/// carries the meaning, and touches never reach the page. While the page is
+/// loading or paused the New page shows the last frame its court drew, so the
+/// place doesn't flash to another; with no frame yet a loading page is an
+/// empty card. The still ground is drawn in screenshot states and tests and
+/// when the page fails. `covered` pauses it (the page is removed) while
+/// something is over the screen.
 struct CourtView: View {
     let scene: CourtScene
     var covered = false
@@ -23,9 +25,16 @@ struct CourtView: View {
     var body: some View {
         let shape = RoundedRectangle(cornerRadius: Radius.field, style: .continuous)
         ZStack {
-            Image("CourtGround")
-                .resizable()
-                .interpolation(.none)
+            if let still = CourtStill.image(for: scene) {
+                Image(uiImage: still)
+                    .resizable()
+            } else if running {
+                Brand.ivory2
+            } else {
+                Image("CourtGround")
+                    .resizable()
+                    .interpolation(.none)
+            }
             if running {
                 CourtWebView(scene: scene, reduced: reduceMotion, onReady: { ready = true }, onFailed: { failed = true })
                     .opacity(ready ? 1 : 0)
@@ -66,6 +75,23 @@ struct HomeCourt: View {
     }
 }
 
+/// The New page court's last drawn frame, also shown while the judging cover
+/// loads in the same place. Only one is kept: the page has one place at a
+/// time and a frame is a few megabytes.
+@MainActor
+enum CourtStill {
+    private static var kept: (venue: String, image: UIImage)?
+
+    static func image(for scene: CourtScene) -> UIImage? {
+        guard let kept, kept.venue == scene.venue else { return nil }
+        return kept.image
+    }
+
+    static func keep(_ image: UIImage, venue: String) {
+        kept = (venue, image)
+    }
+}
+
 private struct CourtWebView: UIViewRepresentable {
     let scene: CourtScene
     let reduced: Bool
@@ -79,6 +105,9 @@ private struct CourtWebView: UIViewRepresentable {
         let configuration = WKWebViewConfiguration()
         // The page posts "ready" once its art is drawn.
         configuration.userContentController.add(bridge, name: CourtBridge.name)
+        configuration.userContentController.addUserScript(WKUserScript(
+            source: "window.judgeCourtFirst = \(scene.json);", injectionTime: .atDocumentStart, forMainFrameOnly: true
+        ))
         let view = WKWebView(frame: .zero, configuration: configuration)
         view.isOpaque = false
         view.backgroundColor = .clear
@@ -130,6 +159,8 @@ final class CourtBridge: NSObject, WKScriptMessageHandler, WKNavigationDelegate 
     private var scene: CourtScene?
     private var reduced = false
     private var loaded = false
+    private var ready = false
+    private var still: Task<Void, Never>?
 
     func attach(_ view: WKWebView, scene: CourtScene, reduced: Bool, onReady: @escaping () -> Void, onFailed: @escaping () -> Void) {
         webView = view
@@ -159,6 +190,21 @@ final class CourtBridge: NSObject, WKScriptMessageHandler, WKNavigationDelegate 
             webView.evaluateJavaScript("window.judgeCourt.setReduced(\(reduced))", completionHandler: nil)
         }
         webView.evaluateJavaScript("window.judgeCourt.set(\(scene.json))", completionHandler: nil)
+        if ready { keepStill() }
+    }
+
+    /// A frame of the New page court, once the page has had a moment to draw it.
+    private func keepStill() {
+        still?.cancel()
+        guard let venue = scene?.homeVenue else { return }
+        still = Task { [weak self] in
+            try? await Task.sleep(for: .milliseconds(600))
+            guard let self, !Task.isCancelled, let webView = self.webView,
+                  let image = try? await webView.takeSnapshot(configuration: nil),
+                  self.scene?.homeVenue == venue
+            else { return }
+            CourtStill.keep(image, venue: venue)
+        }
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -188,6 +234,8 @@ final class CourtBridge: NSObject, WKScriptMessageHandler, WKNavigationDelegate 
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard let body = message.body as? [String: Any], body["type"] as? String == "ready" else { return }
+        ready = true
         onReady()
+        keepStill()
     }
 }

@@ -8,6 +8,17 @@ enum CourtScene: Sendable, Equatable {
     /// `sides` is how many stand at centre court before the verdict says.
     case judging(Story.Beat, Story.Summary?, sides: Int = 2, venue: String = Venues.fallback)
 
+    var venue: String {
+        switch self {
+        case .home(_, let venue), .judging(_, _, _, let venue): venue
+        }
+    }
+
+    /// The place of a New page court, the one scene whose still is kept.
+    var homeVenue: String? {
+        if case .home = self { venue } else { nil }
+    }
+
     /// The argument of `window.judgeCourt.set`.
     var json: String {
         switch self {
