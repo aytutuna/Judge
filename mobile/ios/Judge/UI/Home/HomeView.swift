@@ -210,7 +210,7 @@ struct HomeView: View {
             }
             if !home.theirsOpen {
                 otherSide(lang, home: home)
-            } else if home.canAddSide(app) || home.canSendLink(app) {
+            } else if home.more.count < HomeModel.maxSides - 2 {
                 moreSides(lang, home: home)
             }
         }
@@ -647,7 +647,7 @@ struct HomeView: View {
                 .frame(minHeight: 44)
         }
         .buttonStyle(GhostButtonStyle())
-        .disabled(home.isBusy || !home.canAddSide(app))
+        .disabled(home.isBusy)
     }
 
     private func addTheirSide(_ lang: AppLang, home: HomeModel) -> some View {
