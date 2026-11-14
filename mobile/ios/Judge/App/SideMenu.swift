@@ -299,7 +299,7 @@ struct SideMenu: View {
                     .keyboardShortcut(.cancelAction)
                     .accessibilityLabel(L10n.appClose(app.lang))
                     .transition(.opacity)
-                    panel(width: min(300, geo.size.width * 0.85))
+                    panel(width: min(300, geo.size.width * 0.85), height: geo.size.height)
                         .transition(.move(edge: .leading))
                 }
             }
@@ -391,7 +391,7 @@ struct SideMenu: View {
         }
     }
 
-    private func panel(width: CGFloat) -> some View {
+    private func panel(width: CGFloat, height: CGFloat) -> some View {
         let lang = app.lang
         let list = app.historyList
         let entries = currentEntries
@@ -487,9 +487,10 @@ struct SideMenu: View {
                         .simultaneousGesture(closeDrag(width))
                         .menuListRow()
                 }
-                // The list's own empty area takes the touch itself, so a plain row stands in for it.
+                // The list's own empty area takes the touch itself, so a plain row stands in
+                // for it. It only fills what the rows leave, or the list would always scroll.
                 Color.clear
-                    .frame(height: 200)
+                    .frame(height: max(0, height - 242 - Self.rowsHeight(shown.count)))
                     .contentShape(Rectangle())
                     .simultaneousGesture(closeDrag(width))
                     .menuListRow()
@@ -590,6 +591,10 @@ struct SideMenu: View {
         .buttonStyle(.plain)
         .accessibilityAddTraits(selected ? .isSelected : [])
     }
+
+    /// A generous guess at the height of the rows and headings shown, so the
+    /// filler never pushes the list past the panel.
+    private static func rowsHeight(_ count: Int) -> CGFloat { 180 + CGFloat(count) * 72 }
 
     private func heading(_ title: String, removeAll: (() -> Void)? = nil) -> some View {
         HStack(spacing: 8) {
