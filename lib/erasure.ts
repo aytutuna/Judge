@@ -13,8 +13,8 @@
  * - `legal_hold = 1` on a verdict or a case (set by hand in SQL, no API)
  *   keeps it out of the wipe; so does one held verdict of a case.
  *
- * Only items removed on or after the policy date are erased: the promise is
- * new, and older removals keep their text until someone decides otherwise.
+ * Only items removed on or after 2026-11-14, when the promise started, are
+ * erased: older removals keep their text until someone decides otherwise.
  *
  * Runs at startup and then daily. Server only.
  */
