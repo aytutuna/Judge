@@ -273,6 +273,8 @@ struct SideMenu: View {
     @State private var confirmSignOut = false
     @State private var confirming: [String]?
     @State private var confirmingAll = false
+    @AppStorage("menu.verdictsFolded") private var verdictsFolded = false
+    @AppStorage("menu.linksFolded") private var linksFolded = false
     /// Rows near the end that are on screen.
     @State private var tailShown: Set<String> = []
     /// Where the sides of the owner's waiting links stand, by case id, while the menu is open.
@@ -398,6 +400,7 @@ struct SideMenu: View {
         let verdicts = entries.filter { !$0.isCase }
         let links = entries.filter(\.isCase)
         let shown = verdicts + links
+        let shownCount = (verdictsFolded ? 0 : verdicts.count) + (linksFolded ? 0 : links.count)
         let now = list.now()
         let thinking = entries.contains { entry in
             if case .account(let item) = entry { return item.historyState?.thinking == true }
@@ -419,21 +422,25 @@ struct SideMenu: View {
                         .menuListRow()
                 }
                 if !verdicts.isEmpty {
-                    heading(L10n.navVerdicts(lang), id: "menu.heading.verdicts",
+                    heading(L10n.navVerdicts(lang), id: "menu.heading.verdicts", folded: $verdictsFolded,
                             removeAll: verdicts.contains(where: \.removable) ? { removeAll(links: false) } : nil)
                         .simultaneousGesture(closeDrag(width))
                         .menuListRow()
-                    ForEach(verdicts) { entry in
-                        entryRow(entry, entries: shown, width: width, lang: lang, now: now)
+                    if !verdictsFolded {
+                        ForEach(verdicts) { entry in
+                            entryRow(entry, entries: shown, width: width, lang: lang, now: now)
+                        }
                     }
                 }
                 if !links.isEmpty {
-                    heading(L10n.navLinks(lang), id: "menu.heading.links",
+                    heading(L10n.navLinks(lang), id: "menu.heading.links", folded: $linksFolded,
                             removeAll: links.contains(where: \.removable) ? { removeAll(links: true) } : nil)
                         .simultaneousGesture(closeDrag(width))
                         .menuListRow()
-                    ForEach(links) { entry in
-                        entryRow(entry, entries: shown, width: width, lang: lang, now: now)
+                    if !linksFolded {
+                        ForEach(links) { entry in
+                            entryRow(entry, entries: shown, width: width, lang: lang, now: now)
+                        }
                     }
                 }
                 if entries.isEmpty {
@@ -494,7 +501,7 @@ struct SideMenu: View {
                 // The list's own empty area takes the touch itself, so a plain row stands in
                 // for it. It only fills what the rows leave, or the list would always scroll.
                 Color.clear
-                    .frame(height: max(0, height - 242 - Self.rowsHeight(shown.count)))
+                    .frame(height: max(0, height - 242 - Self.rowsHeight(shownCount)))
                     .contentShape(Rectangle())
                     .simultaneousGesture(closeDrag(width))
                     .menuListRow()
@@ -600,13 +607,28 @@ struct SideMenu: View {
     /// filler never pushes the list past the panel.
     private static func rowsHeight(_ count: Int) -> CGFloat { 180 + CGFloat(count) * 72 }
 
-    private func heading(_ title: String, id: String, removeAll: (() -> Void)? = nil) -> some View {
+    private func heading(_ title: String, id: String, folded: Binding<Bool>, removeAll: (() -> Void)? = nil) -> some View {
         HStack(spacing: 8) {
-            Text(title)
-                .brandText(Self.headingType)
-                .foregroundStyle(Brand.muted)
-                .accessibilityAddTraits(.isHeader)
-            Spacer(minLength: 0)
+            Button {
+                withAnimation(reduceMotion ? nil : .easeOut(duration: 0.2)) { folded.wrappedValue.toggle() }
+            } label: {
+                HStack(spacing: 6) {
+                    Text(title)
+                        .brandText(Self.headingType)
+                        .foregroundStyle(Brand.muted)
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundStyle(Brand.muted)
+                        .rotationEffect(.degrees(folded.wrappedValue ? 0 : 90))
+                        .accessibilityHidden(true)
+                    Spacer(minLength: 0)
+                }
+                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityAddTraits(.isHeader)
+            .accessibilityIdentifier(id)
             if let removeAll {
                 Button(action: removeAll) {
                     Text(L10n.appHistoryRemoveAll(app.lang))
