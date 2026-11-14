@@ -193,6 +193,7 @@ struct HomeView: View {
                     .frame(maxWidth: .infinity)
                     .aspectRatio(16.0 / 9.0, contentMode: .fit)
                     .frame(maxHeight: writing ? 0 : nil)
+                    .frame(maxWidth: .infinity)
                     .padding(.bottom, writing ? -12 : 0)
                     .overlay {
                         HomeCourt(busy: home.isBusy, covered: pageCovered || home.isJudging || !home.path.isEmpty, venue: home.homeVenue)
@@ -208,7 +209,7 @@ struct HomeView: View {
             }
             if !home.theirsOpen {
                 otherSide(lang, home: home)
-            } else if home.more.count < HomeModel.maxSides - 2 {
+            } else if home.more.count < HomeModel.maxSides - 2 || home.canSendLink(app) {
                 moreSides(lang, home: home)
             }
             if let error = home.error {
@@ -658,11 +659,11 @@ struct HomeView: View {
     private func moreSides(_ lang: AppLang, home: HomeModel) -> some View {
         ViewThatFits(in: .horizontal) {
             HStack(spacing: 8) {
-                addSide(lang, home: home)
+                if home.more.count < HomeModel.maxSides - 2 { addSide(lang, home: home) }
                 if app.linkOn, home.canSendLink(app) { sendLink(lang, home: home) }
             }
             VStack(alignment: .leading, spacing: 8) {
-                addSide(lang, home: home)
+                if home.more.count < HomeModel.maxSides - 2 { addSide(lang, home: home) }
                 if app.linkOn, home.canSendLink(app) { sendLink(lang, home: home) }
             }
         }
