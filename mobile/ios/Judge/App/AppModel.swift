@@ -55,6 +55,7 @@ final class AppModel {
     let history: HistoryStore
     let home: HomeModel
     let account: AccountModel
+    let consent: ConsentModel
     /// In-app purchases (off without a RevenueCat key).
     let purchases: PurchaseModel
     /// Usage events for POST /api/v1/events.
@@ -80,7 +81,9 @@ final class AppModel {
     /// session token, so it shows offline. Nil signed out.
     var historyUser: String?
     /// Off for screenshot states: case pages neither load nor poll.
-    @ObservationIgnored var usesNetwork = true
+    @ObservationIgnored var usesNetwork = true {
+        didSet { consent.usesNetwork = usesNetwork }
+    }
     /// Screenshot states: the writer's gate (and typed context) a verdict
     /// screen opens with, the form out.
     @ObservationIgnored var appealSeed: (gate: CaseAppealGate, text: String)?
@@ -147,6 +150,7 @@ final class AppModel {
         history = HistoryStore(container: container)
         home = HomeModel(defaults: defaults)
         account = AccountModel(api: self.api, ageRange: DeclaredAgeRangeAsker())
+        consent = ConsentModel(api: self.api, defaults: defaults)
         historyList = HistoryListModel(api: self.api, store: history, account: account)
         let gateway: (any PurchaseGateway)?
         if let purchaseGateway {
@@ -161,6 +165,7 @@ final class AppModel {
         let list = historyList
         let store = history
         let purchases = self.purchases
+        let consent = self.consent
         let analytics = self.analytics
         account.listen(toAgeGates: ageGates)
         account.onConfig = { [weak analytics] config in
@@ -171,7 +176,8 @@ final class AppModel {
         }
         // Weak: the list holds the account, and a strong capture would keep
         // both alive after the app model is gone.
-        account.onSessionEnded = { [weak self, weak purchases, weak list] byUser in
+        account.onSessionEnded = { [weak self, weak purchases, weak list, weak consent] byUser in
+            consent?.reset()
             list?.reset()
             self?.historyUser = nil
             self?.dropAccountPages()
