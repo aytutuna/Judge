@@ -4,7 +4,8 @@ import type { Instrumentation } from "next";
  * Runs once when a server instance starts. Async verdicts left judging by a
  * previous process (killed or restarted mid-run) are failed and refunded
  * here once they pass the 10-minute mark, then every few minutes. Usage
- * events past their retention are deleted now and once a day.
+ * events past their retention are deleted now and once a day, and so is the
+ * text of verdicts and cases removed over 30 days ago (lib/erasure).
  */
 export async function register(): Promise<void> {
   // The SDK is only loaded with a DSN; without one it would just cost memory.
@@ -25,6 +26,8 @@ export async function register(): Promise<void> {
     startVerdictJobSweeper();
     const { startEventPruner } = await import("./lib/analytics/db");
     startEventPruner();
+    const { startErasureSweeper } = await import("./lib/erasure");
+    startErasureSweeper();
   }
 }
 

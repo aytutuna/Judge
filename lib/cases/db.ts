@@ -219,6 +219,10 @@ const ADDED_COLUMNS: [string, string][] = [
   ["removed_c_at", "TEXT"],
   ["removed_d_at", "TEXT"],
   ["venue", "TEXT"],
+  // When the 30-day wipe blanked the case's text (lib/erasure), and a flag
+  // set by hand in SQL to keep the case out of it.
+  ["erased_at", "TEXT"],
+  ["legal_hold", "INTEGER NOT NULL DEFAULT 0"],
 ];
 
 async function addCaseColumns(db: Client): Promise<void> {

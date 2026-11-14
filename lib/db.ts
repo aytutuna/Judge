@@ -26,6 +26,15 @@ const globalForDb = globalThis as unknown as {
   __verdictLibsqlReady?: Promise<void>;
 };
 
+/** Columns added after the first version. `erased_at`: when the 30-day wipe
+ * blanked the text (lib/erasure). `legal_hold`: set by hand in SQL, never
+ * through the app, to keep a verdict out of that wipe. */
+const ADDED_VERDICT_COLUMNS: [string, string][] = [
+  ["venue", "TEXT"],
+  ["erased_at", "TEXT"],
+  ["legal_hold", "INTEGER NOT NULL DEFAULT 0"],
+];
+
 async function migrate(client: Client): Promise<void> {
   // WAL only applies to a local file; remote libSQL manages its own journal.
   if (dbUrl().startsWith("file:")) await client.execute("PRAGMA journal_mode = WAL");
@@ -46,9 +55,11 @@ async function migrate(client: Client): Promise<void> {
     PRIMARY KEY (id, lang)
   )`);
   const info = await client.execute("PRAGMA table_info(verdicts)");
-  if (!info.rows.some((r) => String(r.name) === "venue")) {
+  const have = new Set(info.rows.map((r) => String(r.name)));
+  for (const [name, type] of ADDED_VERDICT_COLUMNS) {
+    if (have.has(name)) continue;
     try {
-      await client.execute("ALTER TABLE verdicts ADD COLUMN venue TEXT");
+      await client.execute(`ALTER TABLE verdicts ADD COLUMN ${name} ${type}`);
     } catch (e) {
       const message = e instanceof Error ? e.message : String(e);
       if (!/duplicate column name/i.test(message)) throw e;
