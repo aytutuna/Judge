@@ -45,7 +45,8 @@ extension JudgeAPI {
         let url = endpoint("verdicts").appending(component: id).appending(path: "rating")
         var request = makeRequest(url: url, method: "PUT", timeout: Timeout.get)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try JSONSerialization.data(withJSONObject: ["rating": rating?.rawValue ?? NSNull()])
+        let value: Any = rating.map { $0.rawValue as Any } ?? NSNull()
+        request.httpBody = try JSONSerialization.data(withJSONObject: ["rating": value])
         _ = try await send(request)
     }
 

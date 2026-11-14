@@ -9,7 +9,7 @@ struct ConsentCard: View {
         if app.consent.showCard {
             VStack(alignment: .leading, spacing: 10) {
                 Text(L10n.consentCardTitle(lang))
-                    .brandText(.headline)
+                    .brandText(.slotTitle)
                     .foregroundStyle(Brand.ink)
                 Text(L10n.consentCardBody(lang))
                     .brandText(.footnote)
@@ -22,7 +22,7 @@ struct ConsentCard: View {
                         Task { await app.consent.answerCard(false) }
                     }
                 }
-                .brandText(.subheadline)
+                .brandText(.chip)
                 .foregroundStyle(Brand.terraInk)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
