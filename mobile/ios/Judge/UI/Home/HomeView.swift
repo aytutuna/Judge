@@ -185,13 +185,20 @@ struct HomeView: View {
     private func form(_ lang: AppLang, home: HomeModel) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             if app.gamify {
-                // Takes what the boxes leave, never less than the court needs
-                // to draw: the page scrolls before the court shrinks.
+                // A fixed 16:9 frame, so more sides scroll the page instead of
+                // squeezing the court. It gives way while writing, which
+                // takes the court off the page as the keyboard used to.
+                let writing = focused != nil || pinned
                 Color.clear
-                    .frame(maxWidth: .infinity, minHeight: HomeCourt.minHeight)
+                    .frame(maxWidth: .infinity)
+                    .aspectRatio(16.0 / 9.0, contentMode: .fit)
+                    .frame(maxHeight: writing ? 0 : nil)
+                    .padding(.bottom, writing ? -12 : 0)
                     .overlay {
                         HomeCourt(busy: home.isBusy, covered: pageCovered || home.isJudging || !home.path.isEmpty, venue: home.homeVenue)
                     }
+                    .clipped()
+                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: writing)
             }
             ForEach(home.openSides, id: \.self) { side in
                 sideCard(lang, home: home, side: side, kind: .list)

@@ -52,7 +52,7 @@ struct CourtView: View {
     }
 }
 
-/// The New page's court in the room the form leaves, and nothing at all
+/// The New page's court in the frame the form gives it, and nothing at all
 /// when that is too little to see. It grows with the screen up to 1100pt wide.
 struct HomeCourt: View {
     let busy: Bool
