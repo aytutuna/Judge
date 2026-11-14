@@ -410,8 +410,12 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
       draw();
       opts.onReady?.();
     };
-    if (venue === "court") first();
-    else loadVenue(venue).then(first);
+    // The place can change while its art loads: start once the current one is in.
+    const start = (v: Venue): void => {
+      if (v === "court") return first();
+      loadVenue(v).then(() => (venue === v ? first() : start(venue)));
+    };
+    start(venue);
   });
 
   // Movement
