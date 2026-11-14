@@ -17,7 +17,10 @@ export function RatingRow({ id, lang }: { id: string; lang: Lang }) {
   const [rating, setRating] = useState<Rating | null>(null);
 
   useEffect(() => {
-    if (!signedIn) return;
+    if (!signedIn) {
+      setRating(null);
+      return;
+    }
     let live = true;
     void fetchRating(id).then((r) => live && setRating(r));
     return () => {
