@@ -40,35 +40,35 @@ export const PALETTE_ALPHA = {
 
 export type PaletteAlphaKey = keyof typeof PALETTE_ALPHA;
 
-/** Dark mode, same roles: the page and cards are warm near-blacks with cards
- * a step lighter, text is ivory, and the accents are lifted to keep their
- * contrast. Tints are roughly the accent washed over paper (sage's is
+/** Dark mode, same roles: the page is pure black (it saves power on OLED
+ * screens) with cards a step lighter, text is ivory, and the accents are
+ * lifted to keep their contrast. Tints are roughly the accent washed over paper (sage's is
  * pushed greener so it still reads as green); copy the hexes, don't
  * re-derive them. */
 export const PALETTE_DARK = {
-  ivory: "#15120F",
-  ivory2: "#27231F",
-  paper: "#1D1A17",
+  ivory: "#000000",
+  ivory2: "#161616",
+  paper: "#0D0D0D",
   ink: "#F1EBE1",
   ink2: "#CFC6BA",
   muted: "#A89E92",
   placeholder: "#9A9084",
   terra: "#D9694F",
   terraInk: "#EE8C74",
-  terraTint: "#432A22",
+  terraTint: "#341D16",
   sage: "#62A67E",
   sageStrong: "#6FC093",
   sageInk: "#97DDB4",
-  sageTint: "#223A2D",
-  stone: "#4F463C",
-  strata: "#3A342E",
+  sageTint: "#15291E",
+  stone: "#3A3A3A",
+  strata: "#262626",
   danger: "#F5727E",
 } as const satisfies Record<PaletteKey, string>;
 
 export const PALETTE_ALPHA_DARK = {
   line: "rgba(241, 235, 225, 0.1)",
   line2: "rgba(241, 235, 225, 0.16)",
-  glass: "rgba(29, 26, 23, 0.72)",
+  glass: "rgba(13, 13, 13, 0.72)",
 } as const satisfies Record<PaletteAlphaKey, string>;
 
 /** The same opaque colours as numbers (`0xRRGGBB`) for three.js. */

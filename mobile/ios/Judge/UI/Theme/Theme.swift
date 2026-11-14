@@ -36,22 +36,22 @@ enum PaletteHex {
     /// PALETTE_DARK: the same roles, copied as they are (the tints are not a
     /// plain mix of their accent).
     enum Dark {
-        static let ivory: UInt32 = 0x15120F
-        static let ivory2: UInt32 = 0x27231F
-        static let paper: UInt32 = 0x1D1A17
+        static let ivory: UInt32 = 0x000000
+        static let ivory2: UInt32 = 0x161616
+        static let paper: UInt32 = 0x0D0D0D
         static let ink: UInt32 = 0xF1EBE1
         static let ink2: UInt32 = 0xCFC6BA
         static let muted: UInt32 = 0xA89E92
         static let placeholder: UInt32 = 0x9A9084
         static let terra: UInt32 = 0xD9694F
         static let terraInk: UInt32 = 0xEE8C74
-        static let terraTint: UInt32 = 0x432A22
+        static let terraTint: UInt32 = 0x341D16
         static let sage: UInt32 = 0x62A67E
         static let sageStrong: UInt32 = 0x6FC093
         static let sageInk: UInt32 = 0x97DDB4
-        static let sageTint: UInt32 = 0x223A2D
-        static let stone: UInt32 = 0x4F463C
-        static let strata: UInt32 = 0x3A342E
+        static let sageTint: UInt32 = 0x15291E
+        static let stone: UInt32 = 0x3A3A3A
+        static let strata: UInt32 = 0x262626
         static let danger: UInt32 = 0xF5727E
 
         static let all: [String: UInt32] = [

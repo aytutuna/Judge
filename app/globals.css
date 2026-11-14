@@ -47,50 +47,50 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --ivory: #15120F;
-    --ivory-2: #27231F;
-    --paper: #1D1A17;
+    --ivory: #000000;
+    --ivory-2: #161616;
+    --paper: #0D0D0D;
     --ink: #F1EBE1;
     --ink-2: #CFC6BA;
     --muted: #A89E92;
     --placeholder: #9A9084;
     --terra: #D9694F;
     --terra-ink: #EE8C74;
-    --terra-tint: #432A22;
+    --terra-tint: #341D16;
     --sage: #62A67E;
     --sage-strong: #6FC093;
     --sage-ink: #97DDB4;
-    --sage-tint: #223A2D;
-    --stone: #4F463C;
-    --strata: #3A342E;
+    --sage-tint: #15291E;
+    --stone: #3A3A3A;
+    --strata: #262626;
     --danger: #F5727E;
     --line: rgba(241, 235, 225, 0.1);
     --line-2: rgba(241, 235, 225, 0.16);
-    --glass: rgba(29, 26, 23, 0.72);
+    --glass: rgba(13, 13, 13, 0.72);
   }
 }
 
 :root[data-theme="dark"] {
-  --ivory: #15120F;
-  --ivory-2: #27231F;
-  --paper: #1D1A17;
+  --ivory: #000000;
+  --ivory-2: #161616;
+  --paper: #0D0D0D;
   --ink: #F1EBE1;
   --ink-2: #CFC6BA;
   --muted: #A89E92;
   --placeholder: #9A9084;
   --terra: #D9694F;
   --terra-ink: #EE8C74;
-  --terra-tint: #432A22;
+  --terra-tint: #341D16;
   --sage: #62A67E;
   --sage-strong: #6FC093;
   --sage-ink: #97DDB4;
-  --sage-tint: #223A2D;
-  --stone: #4F463C;
-  --strata: #3A342E;
+  --sage-tint: #15291E;
+  --stone: #3A3A3A;
+  --strata: #262626;
   --danger: #F5727E;
   --line: rgba(241, 235, 225, 0.1);
   --line-2: rgba(241, 235, 225, 0.16);
-  --glass: rgba(29, 26, 23, 0.72);
+  --glass: rgba(13, 13, 13, 0.72);
 }
 
 /* Sides. The viewer's own party is sage and the other one terracotta
