@@ -109,7 +109,7 @@ struct VerdictDetails<Appeal: View>: View {
         .background(EdgeSwipeBack().frame(width: 0, height: 0))
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(.hidden, for: .navigationBar)
+        .clearBar()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {

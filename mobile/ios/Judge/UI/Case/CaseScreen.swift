@@ -68,7 +68,7 @@ private struct CaseScreenContent: View {
         .environment(\.sides, Sides(you: model.view?.yourParty))
         .background(Brand.ivory.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(.hidden, for: .navigationBar)
+        .clearBar()
         // Polling restarts whenever a new view arrives (generation), and
         // waits while the page's tab is hidden or the app is in the background.
         .task(id: tabShown && scenePhase == .active ? model.generation : -1) {

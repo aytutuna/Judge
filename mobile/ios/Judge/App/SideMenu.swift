@@ -19,6 +19,18 @@ extension View {
                 .contentShape(Circle())
         }
     }
+
+    /// No bar at all: no background, and on iOS 26 no blur or fade where the
+    /// page scrolls under it, so the buttons float on the page.
+    @ViewBuilder
+    func clearBar() -> some View {
+        if #available(iOS 26.0, *) {
+            toolbarBackground(.hidden, for: .navigationBar)
+                .scrollEdgeEffectHidden(true, for: .top)
+        } else {
+            toolbarBackground(.hidden, for: .navigationBar)
+        }
+    }
 }
 
 extension ToolbarContent {
