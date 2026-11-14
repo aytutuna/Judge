@@ -261,35 +261,39 @@ struct AppealSection<Draft: AppealDraft>: View {
                     .padding(.vertical, 12)
                     .background(RoundedRectangle(cornerRadius: 16, style: .continuous).fill(Brand.ivory2))
             }
-            VStack(alignment: .leading, spacing: 6) {
-                ZStack(alignment: .topLeading) {
-                    TextEditor(text: $model.appealText)
+            ZStack(alignment: .topLeading) {
+                TextEditor(text: $model.appealText)
+                    .brandText(TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5))
+                    .foregroundStyle(Brand.ink)
+                    .scrollContentBackground(.hidden)
+                    .frame(minHeight: 200)
+                    .padding(.horizontal, 9)
+                    .padding(.top, 6)
+                    // Room for the counter in the corner.
+                    .padding(.bottom, 26)
+                    .disabled(model.appealSending)
+                    .accessibilityLabel(L10n.appAppealPlaceholder(lang))
+                if model.appealText.isEmpty {
+                    Text(L10n.appAppealPlaceholder(lang))
                         .brandText(TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5))
-                        .foregroundStyle(Brand.ink)
-                        .scrollContentBackground(.hidden)
-                        .frame(minHeight: 200)
-                        .padding(.horizontal, 9)
-                        .padding(.vertical, 6)
-                        .disabled(model.appealSending)
-                        .accessibilityLabel(L10n.appAppealPlaceholder(lang))
-                    if model.appealText.isEmpty {
-                        Text(L10n.appAppealPlaceholder(lang))
-                            .brandText(TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5))
-                            .foregroundStyle(Brand.placeholder)
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 14)
-                            .allowsHitTesting(false)
-                            .accessibilityHidden(true)
-                    }
+                        .foregroundStyle(Brand.placeholder)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 14)
+                        .allowsHitTesting(false)
+                        .accessibilityHidden(true)
                 }
-                .paperSurface(radius: Radius.field, fill: Brand.ivory, border: Brand.line2)
+            }
+            .overlay(alignment: .bottomTrailing) {
                 Text(verbatim: "\(model.appealText.utf16.count) / \(CaseLogic.maxAppeal)")
                     .brandText(.footnote)
                     .monospacedDigit()
                     .foregroundStyle(Brand.muted)
-                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .padding(.horizontal, 14)
+                    .padding(.bottom, 8)
+                    .allowsHitTesting(false)
                     .accessibilityHidden(true)
             }
+            .paperSurface(radius: Radius.field, fill: Brand.ivory, border: Brand.line2)
             .onChange(of: model.appealText) { _, value in
                 let capped = HomeModel.capUTF16(value, max: CaseLogic.maxAppeal)
                 if capped != value { model.appealText = capped }
