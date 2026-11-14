@@ -287,6 +287,29 @@ describe("consent: which verdicts may train", () => {
     expect(await stamped(second)).toBeNull();
   });
 
+  it("a round after an unstamped round stays unstamped though the first verdict is eligible", async () => {
+    const d = await getDb();
+    await choose("on", { user: "u-rd2" });
+    const root = await save("u-rd2");
+    const addRound = async (round: string, at: string) => {
+      await d.execute({
+        sql: `INSERT INTO verdict_appeals (id, verdict_id, text, evidence, base_id, created_at, updated_at)
+              VALUES (?, ?, 'more', '[]', ?, ?, ?)`,
+        args: [round, root, root, at, at],
+      });
+      await save("u-rd2", round);
+    };
+    const stamped = async (id: string) => (await all("SELECT training_ok_at FROM verdict_meta WHERE verdict_id = ?", [id]))[0].training_ok_at;
+    const first = vid();
+    await addRound(first, "2026-11-02T00:00:00.000Z");
+    expect(await stamped(root)).not.toBeNull();
+    expect(await stamped(first)).not.toBeNull();
+    await d.execute({ sql: "UPDATE verdict_meta SET training_ok_at = NULL WHERE verdict_id = ?", args: [first] });
+    const second = vid();
+    await addRound(second, "2026-11-03T00:00:00.000Z");
+    expect(await stamped(second)).toBeNull();
+  });
+
   describe("a case", () => {
     const now = "2026-11-01T00:00:00.000Z";
 
