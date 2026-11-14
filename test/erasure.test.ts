@@ -189,6 +189,46 @@ describe("one-sided verdicts", () => {
     expect(await one("SELECT text, evidence FROM verdict_appeals WHERE id = ?", [round])).toEqual({ text: "", evidence: "[]" });
   });
 
+  it("a failed round, which has no verdict, is blanked with its root", async () => {
+    const root = await save();
+    const failed = vid();
+    const d = await db();
+    await d.execute({
+      sql: `INSERT INTO verdict_appeals (id, verdict_id, text, evidence, base_id, created_at, updated_at)
+            VALUES (?, ?, 'more context', '["scan"]', ?, ?, ?)`,
+      args: [failed, root, root, ago(50), ago(50)],
+    });
+    await removeAt(root, 35);
+    await sweepErasures(NOW);
+    expect(await one("SELECT text, evidence FROM verdict_appeals WHERE id = ?", [failed])).toEqual({ text: "", evidence: "[]" });
+    expect(await all("SELECT id FROM verdicts WHERE id = ?", [failed])).toEqual([]);
+  });
+
+  it("a failed round of a held verdict keeps its text", async () => {
+    const root = await save();
+    const failed = vid();
+    const d = await db();
+    await d.execute({
+      sql: `INSERT INTO verdict_appeals (id, verdict_id, text, evidence, base_id, created_at, updated_at)
+            VALUES (?, ?, 'more context', '["scan"]', ?, ?, ?)`,
+      args: [failed, root, root, ago(50), ago(50)],
+    });
+    await d.execute({ sql: "UPDATE verdicts SET legal_hold = 1 WHERE id = ?", args: [root] });
+    await removeAt(root, 35);
+    await sweepErasures(NOW);
+    expect(await one("SELECT text FROM verdict_appeals WHERE id = ?", [failed])).toEqual({ text: "more context" });
+  });
+
+  it("the floor is the first day of the promise, inclusive", async () => {
+    const before = await save();
+    const onDay = await save();
+    await removeVerdict((await getVerdictMeta(before))!, "owner", new Date("2026-11-13T23:59:59.999Z"));
+    await removeVerdict((await getVerdictMeta(onDay))!, "owner", new Date("2026-11-14T00:00:00.000Z"));
+    await sweepErasures(NOW);
+    expect(await one("SELECT erased_at FROM verdicts WHERE id = ?", [before])).toEqual({ erased_at: null });
+    expect(String((await one("SELECT erased_at FROM verdicts WHERE id = ?", [onDay])).erased_at)).toBe(NOW.toISOString());
+  });
+
   it("legal hold keeps it intact, and releasing it lets the next sweep erase", async () => {
     const id = await save();
     await removeAt(id, 60);

@@ -23,11 +23,12 @@ import type { InStatement } from "@libsql/client";
 import { getDb } from "@/lib/db";
 import { entitlementWriteBatch } from "@/lib/entitlements";
 import { ensureOriginalsTables } from "@/lib/originals/db";
-import { POLICY_VERSION } from "@/lib/policy";
 
 const DAY_MS = 24 * 60 * 60_000;
 export const ERASE_AFTER_MS = 30 * DAY_MS;
 const BATCH_LIMIT = 100;
+// The wipe promise started on this day. Not the policy version, which moves with every edit and would skip items still inside their 30 days.
+const ERASE_SINCE = "2026-11-14";
 
 /** Strings in a stored result that are enums or ids, not text. */
 const KEEP_KEYS = new Set([
@@ -110,7 +111,7 @@ async function eraseVerdicts(cutoff: string, nowIso: string): Promise<number> {
             AND COALESCE(m.kind, '') <> 'case'
             AND CASE WHEN ap.id IS NOT NULL THEN rm.removed_at ELSE m.removed_at END BETWEEN ? AND ?
           LIMIT ?`,
-    args: [POLICY_VERSION, cutoff, BATCH_LIMIT],
+    args: [ERASE_SINCE, cutoff, BATCH_LIMIT],
   });
   const ids = rs.rows.map((r) => String(r.id));
   if (ids.length === 0) return 0;
@@ -118,8 +119,11 @@ async function eraseVerdicts(cutoff: string, nowIso: string): Promise<number> {
   await entitlementWriteBatch([
     ...(await eraseVerdictStatements(ids, nowIso)),
     {
-      sql: `UPDATE verdict_appeals SET text = '', evidence = '[]', updated_at = ? WHERE id IN (${marks})`,
-      args: [nowIso, ...ids],
+      // A failed round has no verdict row of its own, so it is found through its root.
+      sql: `UPDATE verdict_appeals SET text = '', evidence = '[]', updated_at = ?
+            WHERE id IN (${marks})
+               OR (verdict_id IN (${marks}) AND NOT EXISTS (SELECT 1 FROM verdicts WHERE id = verdict_appeals.id))`,
+      args: [nowIso, ...ids, ...ids],
     },
   ]);
   return ids.length;
@@ -138,7 +142,7 @@ async function eraseCases(cutoff: string, nowIso: string): Promise<number> {
               SELECT 1 FROM case_verdicts cv JOIN verdicts v ON v.id = cv.verdict_id WHERE cv.case_id = c.id AND v.legal_hold = 1)
             AND MAX(c.removed_a_at, COALESCE(c.removed_b_at, ''), COALESCE(c.removed_c_at, ''), COALESCE(c.removed_d_at, '')) BETWEEN ? AND ?
           LIMIT ?`,
-    args: [POLICY_VERSION, cutoff, BATCH_LIMIT],
+    args: [ERASE_SINCE, cutoff, BATCH_LIMIT],
   });
   for (const row of rs.rows) {
     const id = String(row.id);
