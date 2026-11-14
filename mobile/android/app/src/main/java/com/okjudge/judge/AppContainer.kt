@@ -5,6 +5,7 @@ import com.okjudge.judge.core.analytics.Analytics
 import com.okjudge.judge.core.analytics.DeviceIdentity
 import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.api.TokenStore
+import com.okjudge.judge.core.feedback.Consent
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.cases.CaseNamesStore
 import com.okjudge.judge.core.cases.PrefsCaseNames
@@ -104,6 +105,8 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
             scope = appScope,
         )
     }
+
+    val consent: Consent by lazy { Consent(api, appScope) }
 
     val account: Account by lazy {
         Account(api, tokenStore, CredentialManagerGoogle(config.googleServerClientId), appScope, ageSignals = PlayAgeSignals(appContext))

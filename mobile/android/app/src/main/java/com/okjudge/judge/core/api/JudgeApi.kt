@@ -10,6 +10,9 @@ import com.okjudge.judge.core.model.CaseRemovalResponse
 import com.okjudge.judge.core.model.CaseResponse
 import com.okjudge.judge.core.model.CaseView
 import com.okjudge.judge.core.model.CaseWithNames
+import com.okjudge.judge.core.model.ConsentResponse
+import com.okjudge.judge.core.model.ConsentState
+import com.okjudge.judge.core.model.Rating
 import com.okjudge.judge.core.model.ClarifyRequest
 import com.okjudge.judge.core.model.InviteResponse
 import com.okjudge.judge.core.model.LiveCasesResponse
@@ -43,6 +46,8 @@ import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import okhttp3.CacheControl
@@ -390,6 +395,43 @@ class JudgeApi(
         val url = base.newBuilder().addPathSegments("api/v1/verdicts").addPathSegment(id).build()
         return execute(getClient, request(url).get().build()) { _, text -> WireJson.decodeStoredVerdict(text) }
     }
+
+    /** GET /api/v1/me/consent. */
+    suspend fun consent(): ApiResult<ConsentState> {
+        val req = request(url("api", "v1", "me", "consent")).cacheControl(CacheControl.FORCE_NETWORK).get().build()
+        return execute(getClient, req) { _, text -> decodeConsent(text) }
+    }
+
+    /** POST /api/v1/me/consent: the choice, where it was made and the wording key of the text shown. */
+    suspend fun setConsent(on: Boolean, source: String, wordingKey: String): ApiResult<ConsentState> {
+        val body = buildJsonObject {
+            put("choice", if (on) "on" else "off")
+            put("source", source)
+            put("wordingKey", wordingKey)
+            put("platform", "android")
+        }.toString()
+        val req = request(url("api", "v1", "me", "consent")).post(body.toRequestBody(JSON)).build()
+        return execute(accountClient, req) { _, text -> decodeConsent(text) }
+    }
+
+    /** The signed-in viewer's rating, from GET /api/v1/verdicts/{id} (absent when signed out). */
+    suspend fun rating(id: String): ApiResult<Rating?> {
+        val req = request(verdictUrl(id)).cacheControl(CacheControl.FORCE_NETWORK).get().build()
+        return execute(getClient, req) { _, text ->
+            val field = (WireJson.json.parseToJsonElement(text) as? JsonObject)?.get("rating")
+            Rating.fromWire((field as? JsonPrimitive)?.contentOrNull)
+        }
+    }
+
+    /** PUT /api/v1/verdicts/{id}/rating; null clears it. */
+    suspend fun setRating(id: String, rating: Rating?): ApiResult<Unit> {
+        val body = buildJsonObject { put("rating", rating?.wire) }.toString()
+        val req = request(verdictUrl(id, "rating")).put(body.toRequestBody(JSON)).build()
+        return execute(accountClient, req) { _, _ -> }
+    }
+
+    private fun decodeConsent(text: String): ConsentState =
+        ConsentState.fromWire(WireJson.json.decodeFromString(ConsentResponse.serializer(), text).state)
 
     /** GET /api/v1/config: which sign-in methods the server offers. */
     suspend fun config(): ApiResult<ServerConfig> {
