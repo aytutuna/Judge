@@ -29,6 +29,8 @@ struct HomeView: View {
     @State private var thrown = false
     /// Where each box sits on screen, read when one is lifted; not state, so scrolling doesn't redraw.
     @State private var frames = FrameBox()
+    /// Boxes lit up by a send that is missing their text.
+    @State private var flashing: Set<Party> = []
 
     private enum Field: Hashable {
         case mine, theirs
@@ -354,7 +356,7 @@ struct HomeView: View {
                     .gesture(throwDrag)
             }
         }
-        .neonEdge(colors.strong, focused: lifted || (writes && focused == focus), radius: Radius.block)
+        .neonEdge(colors.strong, focused: lifted || (writes && focused == focus) || flashing.contains(side), radius: Radius.block)
         .accessibilityElement(children: .contain)
         .accessibilityLabel(title)
         .accessibilityIdentifier(lifted ? "side.lifted" : "side.card")
@@ -522,7 +524,10 @@ struct HomeView: View {
         return Button {
             // Still enabled while waiting so the spinner isn't dimmed; a
             // tap then must not turn a case being created into a verdict.
-            guard home.canSubmit(app) else { return }
+            guard home.canSubmit(app) else {
+                flashShort(home: home)
+                return
+            }
             home.mode = .now
             submit()
         } label: {
@@ -545,8 +550,27 @@ struct HomeView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .disabled(!enabled)
+        .disabled(home.isBusy && !waiting)
         .accessibilityLabel(L10n.getVerdict(lang))
+    }
+
+    /// A send with too little written lights the boxes that need text, as if typed in.
+    private func flashShort(home: HomeModel) {
+        guard !home.isBusy else { return }
+        let texts = [home.argument] + (home.theirsOpen ? [home.otherSide] + home.more.map(\.text) : [])
+        let short = zip([Party.a, .b, .c, .d], texts).filter {
+            $0.1.trimmingCharacters(in: .whitespacesAndNewlines).utf16.count < HomeModel.minLength
+        }.map(\.0)
+        guard !short.isEmpty else { return }
+        Task {
+            let pulses = reduceMotion ? 1 : 2
+            for _ in 0..<pulses {
+                flashing = Set(short)
+                try? await Task.sleep(for: .milliseconds(reduceMotion ? 900 : 350))
+                flashing = []
+                if !reduceMotion { try? await Task.sleep(for: .milliseconds(200)) }
+            }
+        }
     }
 
     /// The card's close button: the second card goes back to one person writing,
