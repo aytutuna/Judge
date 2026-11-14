@@ -50,6 +50,23 @@ struct SettingsView: View {
                             .foregroundStyle(Brand.ink)
                     }
                     .tint(Brand.terraInk)
+                    Toggle(isOn: Binding(get: { app.consent.on }, set: { on in
+                        guard app.account.isSignedIn else {
+                            app.account.presentSignIn()
+                            return
+                        }
+                        Task { await app.consent.setSwitch(on) }
+                    })) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(L10n.consentSwitchTitle(lang))
+                                .brandText(.body)
+                                .foregroundStyle(Brand.ink)
+                            Text(L10n.consentSwitchDetail(lang))
+                                .brandText(.footnote)
+                                .foregroundStyle(Brand.muted)
+                        }
+                    }
+                    .tint(Brand.terraInk)
                     linkRow(L10n.appSettingsAbout(lang), path: "about")
                     linkRow(L10n.howTitle(lang), path: "#how")
                     linkRow(L10n.footerPrivacy(lang), path: "privacy")
@@ -123,6 +140,7 @@ struct SettingsView: View {
             }
             .onTabAppear {
                 Task { await app.account.refresh() }
+                Task { await app.consent.load() }
                 app.analytics.track("screen_view", ["screen": "settings"])
             }
             .onDisappear { app.purchases.clearRestoreResult() }

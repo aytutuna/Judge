@@ -75,6 +75,10 @@ private struct VerdictScreenContent: View {
                         )
                         .environment(app)
                     }
+                    if app.usesNetwork {
+                        ConsentCard(lang: lang)
+                        RatingRow(id: model.session.currentID, lang: lang)
+                    }
                     // The judging, busy and limit lines; the form is in the sheet.
                     if signedIn, appeal.panel, !appeal.area.inSheet {
                         AppealSection(
@@ -107,7 +111,10 @@ private struct VerdictScreenContent: View {
             }
         }
         .task(id: signedIn) {
-            if signedIn { await appeal.load() }
+            if signedIn {
+                await appeal.load()
+                await app.consent.load()
+            }
         }
         .task(id: appeal.judgingID) {
             if let round = appeal.judgingID { await appeal.follow(round) }
