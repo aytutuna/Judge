@@ -1,4 +1,4 @@
-import type { Key } from "./i18n";
+import type { Lang } from "./i18n";
 
 export type ConsentState = "not_asked" | "on" | "off";
 export type Rating = "up" | "down";
@@ -24,14 +24,15 @@ export async function fetchConsent(): Promise<ConsentState | null> {
 export async function saveConsent(
   choice: "on" | "off",
   source: "card" | "switch",
-  wordingKey: Key,
+  wordingKey: "consent.cardBody" | "consent.switchDetail",
+  lang: Lang,
 ): Promise<ConsentState | null> {
   try {
     const res = await fetch("/api/v1/me/consent", {
       method: "POST",
       headers: JSON_HEADERS,
       credentials: "same-origin",
-      body: JSON.stringify({ choice, source, wordingKey, platform: "web" }),
+      body: JSON.stringify({ choice, source, wordingKey, lang, platform: "web" }),
     });
     return res.ok ? ((await res.json()) as { state: ConsentState }).state : null;
   } catch {

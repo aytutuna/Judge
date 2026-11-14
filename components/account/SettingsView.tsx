@@ -32,7 +32,10 @@ export function SettingsView() {
   const signedIn = Boolean(viewer.me?.user);
   const [training, setTraining] = useState(false);
   useEffect(() => {
-    if (!signedIn) return;
+    if (!signedIn) {
+      setTraining(false);
+      return;
+    }
     let live = true;
     void fetchConsent().then((s) => live && setTraining(s === "on"));
     return () => {
@@ -42,7 +45,7 @@ export function SettingsView() {
   function changeTraining(on: boolean) {
     if (!signedIn) return askSignIn();
     setTraining(on);
-    void saveConsent(on ? "on" : "off", "switch", "consent.switchDetail").then((s) => {
+    void saveConsent(on ? "on" : "off", "switch", "consent.switchDetail", lang).then((s) => {
       if (s === null) setTraining(!on);
     });
   }

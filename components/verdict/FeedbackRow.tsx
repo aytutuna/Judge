@@ -80,7 +80,7 @@ export function ConsentCard({ lang }: { lang: Lang }) {
   if (!open) return null;
 
   function answer(choice: "on" | "off") {
-    void saveConsent(choice, "card", "consent.cardBody").then((s) => s && setOpen(false));
+    void saveConsent(choice, "card", "consent.cardBody", lang).then((s) => s && setOpen(false));
   }
 
   return (
