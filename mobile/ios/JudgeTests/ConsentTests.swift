@@ -25,10 +25,6 @@ final class ConsentTests: XCTestCase {
         )
     }
 
-    private func defaults() throws -> UserDefaults {
-        try XCTUnwrap(UserDefaults(suiteName: "judge.tests.\(UUID().uuidString)"))
-    }
-
     private func sentBody(_ request: URLRequest) throws -> [String: Any] {
         let data = try XCTUnwrap(request.httpBody)
         return try XCTUnwrap(try JSONSerialization.jsonObject(with: data) as? [String: Any])
@@ -36,7 +32,7 @@ final class ConsentTests: XCTestCase {
 
     func testCardShowsOnlyWhileNotAsked() async throws {
         StubURLProtocol.handler = { _ in stubReply(#"{"state":"not_asked","updatedAt":null,"policyVersion":"2026-11-14"}"#) }
-        let model = ConsentModel(api: api(), defaults: try defaults())
+        let model = ConsentModel(api: api())
         XCTAssertFalse(model.showCard)
         await model.load()
         XCTAssertTrue(model.showCard)
@@ -44,13 +40,12 @@ final class ConsentTests: XCTestCase {
     }
 
     func testCardAnswerIsSentAndNeverAsksAgain() async throws {
-        let store = try defaults()
         StubURLProtocol.handler = { request in
             request.httpMethod == "POST"
                 ? stubReply(#"{"state":"on","updatedAt":"2026-11-14T10:00:00.000Z","policyVersion":"2026-11-14"}"#)
                 : stubReply(#"{"state":"not_asked","updatedAt":null,"policyVersion":"2026-11-14"}"#)
         }
-        let model = ConsentModel(api: api(), defaults: store)
+        let model = ConsentModel(api: api())
         await model.load()
         await model.answerCard(true, lang: .tr)
         XCTAssertTrue(model.on)
@@ -61,12 +56,6 @@ final class ConsentTests: XCTestCase {
         XCTAssertEqual(body["wordingKey"] as? String, "consent.cardBody")
         XCTAssertEqual(body["lang"] as? String, "tr")
         XCTAssertEqual(body["platform"] as? String, "ios")
-
-        // A new run on the same device does not ask again, even if the server forgot.
-        StubURLProtocol.handler = { _ in stubReply(#"{"state":"not_asked","updatedAt":null,"policyVersion":"2026-11-14"}"#) }
-        let later = ConsentModel(api: api(), defaults: store)
-        await later.load()
-        XCTAssertFalse(later.showCard)
     }
 
     func testFailedAnswerKeepsTheCard() async throws {
@@ -75,7 +64,7 @@ final class ConsentTests: XCTestCase {
                 ? stubReply(#"{"error":"down","code":"unavailable"}"#, status: 503)
                 : stubReply(#"{"state":"not_asked","updatedAt":null,"policyVersion":"2026-11-14"}"#)
         }
-        let model = ConsentModel(api: api(), defaults: try defaults())
+        let model = ConsentModel(api: api())
         await model.load()
         await model.answerCard(false, lang: .en)
         XCTAssertTrue(model.showCard)
@@ -83,7 +72,7 @@ final class ConsentTests: XCTestCase {
 
     func testSwitchSendsItsOwnSource() async throws {
         StubURLProtocol.handler = { _ in stubReply(#"{"state":"off","updatedAt":null,"policyVersion":"2026-11-14"}"#) }
-        let model = ConsentModel(api: api(), defaults: try defaults())
+        let model = ConsentModel(api: api())
         await model.setSwitch(false, lang: .en)
         XCTAssertEqual(model.state, .off)
         let body = try sentBody(StubURLProtocol.requests.last!)

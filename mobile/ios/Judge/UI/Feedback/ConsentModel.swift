@@ -9,30 +9,24 @@ final class ConsentModel {
     private(set) var state: ConsentState?
 
     private let api: JudgeAPI
-    private let defaults: UserDefaults
     @ObservationIgnored var usesNetwork = true
-    private static let askedKey = "consent.asked"
 
-    init(api: JudgeAPI, defaults: UserDefaults) {
+    init(api: JudgeAPI) {
         self.api = api
-        self.defaults = defaults
     }
 
     var on: Bool { state == .on }
 
-    /// Never again once either answer was given, here or on another device.
-    var showCard: Bool { state == .notAsked && !defaults.bool(forKey: Self.askedKey) }
+    /// The account's own state decides, so it is never asked again once answered, on any device.
+    var showCard: Bool { state == .notAsked }
 
     func load() async {
         guard usesNetwork, let loaded = try? await api.consent() else { return }
         state = loaded
-        if loaded != .notAsked { defaults.set(true, forKey: Self.askedKey) }
     }
 
     func answerCard(_ on: Bool, lang: AppLang) async {
-        if await set(on, source: .card, key: "consent.cardBody", lang: lang) {
-            defaults.set(true, forKey: Self.askedKey)
-        }
+        await set(on, source: .card, key: "consent.cardBody", lang: lang)
     }
 
     func setSwitch(_ on: Bool, lang: AppLang) async {
