@@ -253,13 +253,16 @@ const tr: Locale = {
     "privacy.title": "Gizlilik",
     "privacy.kicker": "Verilerin",
     "privacy.lead":
-      "Kısacası: yazdıklarını, isimler dahil, şifreli olarak saklıyoruz; böylece istediğinde geri dönüp bakabilirsin. Yargıçlar her zaman isimleri çıkarılmış bir hâlini okur. İstediğin an kaldırılmasını isteyebilirsin. Hiçbir şey satmıyoruz.",
+      "Kısacası: yazdıklarını, isimler dahil, şifreli olarak saklıyoruz; böylece istediğinde geri dönüp bakabilirsin. Yargıçlar her zaman isimleri çıkarılmış bir hâlini okur. İstediğin an kaldırılmasını isteyebilirsin. Verilerini satmıyoruz. Judge bir gün satılırsa ya da birleşirse, bu politika kapsamında yeni sahibine geçer.",
     "privacy.storedTitle": "Neleri saklıyoruz",
     "privacy.stored":
-      "Her karar için metnini tam yazdığın gibi (yargıçların sorularına verdiğin cevaplar ve ekran görüntülerinden okunan yazıyla birlikte) ve hangi ismin hangi etikete dönüştüğünün listesini saklarız. Bunlar, veritabanında tutulmayan bir anahtarla şifrelenir. Ayrıca yargıçların okuduğu anonim hâli (isimler Taraf A ve Taraf B olarak), seçtiğin ayarları, kararı, varsa çevirisini ve paylaşım sayfasında görünmesini seçtiğin isimleri de saklarız. Judge'ın nasıl kullanıldığını da sayarız: hangi ekranlar ve özellikler, uygulama sürümü, cihaz modeli, sistem sürümü, dil ve bağlantının geldiği ülkeyle birlikte; uygulamalarda ayrıca bir cihaz tanımlayıcısı. Giriş yapmışsan bu, hesabına bağlanır. Kullanım olayları 90 gün, hesabınla cihazların arasındaki bağlantılar 180 gün saklanır. Uygulamalarda Ayarlar içinde bir Kullanım istatistikleri anahtarı var, tarayıcın Do Not Track ya da Global Privacy Control gönderdiğinde de web sitesi hiçbir şey göndermez. İçinde hiçbir zaman dava metni olmaz.",
+      "Her karar için metnini tam yazdığın gibi (yargıçların sorularına verdiğin cevaplar ve ekran görüntülerinden okunan yazıyla birlikte) ve hangi ismin hangi etikete dönüştüğünün listesini saklarız. Bunlar, veritabanında tutulmayan bir anahtarla şifrelenir. Ayrıca yargıçların okuduğu anonim hâli (isimler Taraf A ve Taraf B olarak), seçtiğin ayarları, kararı, varsa çevirisini ve paylaşım sayfasında görünmesini seçtiğin isimleri de saklarız. Judge'ın nasıl kullanıldığını da sayarız: hangi ekranlar ve özellikler, uygulama sürümü, cihaz modeli, sistem sürümü, dil ve bağlantının geldiği ülkeyle birlikte; uygulamalarda ayrıca bir cihaz tanımlayıcısı. Giriş yapmışsan bu, hesabına bağlanır. Kullanım olayları 90 gün, hesabınla cihazların arasındaki bağlantılar 180 gün saklanır. Uygulamalarda Ayarlar içinde bir Kullanım istatistikleri anahtarı var, tarayıcın Do Not Track ya da Global Privacy Control gönderdiğinde de web sitesi hiçbir şey göndermez. İçinde hiçbir zaman dava metni olmaz. Bir kararı puanlarsan, puanı kararla birlikte saklarız.",
+    "privacy.helpTitle": "Judge'ı geliştirmeye yardım et",
+    "privacy.help":
+      "Sen açmadıkça kapalıdır. Açıkken, yargıçların okuduğu anonim metni, kararlarını ve puanlarını Judge'ın yargıçlarını test etmek ve eğitmek için kullanabiliriz. İsimler hiçbir zaman buna dahil olmaz. Kapattığında, ürettiğin her şey için bu kullanım durur; açıp kapattığın zamanları da kaydederiz.",
     "privacy.notStoredTitle": "Neleri yapmıyoruz",
     "privacy.notStored":
-      "Reklam takibi yok, veri de satmıyoruz. Dil tercihin sadece tarayıcının yerel depolamasında durur, başka hiçbir yerde değil.",
+      "Reklam takibi yok. Dil tercihin sadece tarayıcının yerel depolamasında durur, başka hiçbir yerde değil.",
     "privacy.ipTitle": "Kullanım sınırı",
     "privacy.ip":
       "Mahkeme herkese açık kalsın diye her hesabın kaç karar, her ziyaretçinin kaç çeviri isteyebileceğine sınır koyuyoruz. Çeviriler ve iki taraflı bir davaya verilen cevaplar için IP adresinin kendisini değil, anahtarlı bir özetini (hash) kullanım sınırı deposunda en fazla 24 saat tutuyoruz. İnsan doğrulaması açıksa IP adresin doğrulama için Cloudflare'a da gider. Kararınla birlikte asla kaydedilmez.",
@@ -290,6 +293,18 @@ const tr: Locale = {
     "nav.settings": "Ayarlar",
     "settings.appearance": "Görünüm",
     "settings.darkMode": "Koyu mod",
+    "consent.cardTitle": "Judge'ı geliştirmeye yardım eder misin?",
+    "consent.cardBody":
+      "Judge'ın yargıçlarını test etmek ve eğitmek için anonim kararlarını ve puanlarını kullanmasına izin ver. İsimler hiçbir zaman dahil edilmez. Bunu Ayarlar'dan istediğin zaman değiştirebilirsin.",
+    "consent.cardYes": "Olur",
+    "consent.cardNo": "Hayır, teşekkürler",
+    "consent.switchTitle": "Judge'ı geliştirmeye yardım et",
+    "consent.switchDetail":
+      "Judge'ın yargıçlarını test etmek ve eğitmek için anonim kararlarını ve puanlarını kullanmasına izin verir. Sen açmadıkça kapalıdır.",
+    "rating.prompt": "Karar adil mi?",
+    "rating.fair": "Adil",
+    "rating.notFair": "Adil değil",
+    "rating.thanks": "Teşekkürler",
     "footer.pricing": "Fiyatlar",
     "tier.lockedSignIn": "(kilitli: kullanmak için giriş yap)",
     "tier.getPremium": "Daha fazla karar al",
@@ -744,7 +759,7 @@ const tr: Locale = {
       "Sen: asıl metnini ve isimleri, giriş yaptıysan her cihazda; giriş yapmadıysan kullandığın cihazda, tarayıcına ya da uygulamaya kaydedilen gizli bir kodla (biz bu kodun yalnızca karıştırılmış bir hâlini tutarız). Hesap gerekmeden önce giriş yapmadan yazılan kararlar ve giriş yapmadan cevapladığın davalar, başlıkları ve senin yazdığın isimlerle o tarayıcıdaki listede kalır, Kararlar sayfası onları göstersin diye: aynı tarayıcıyı kullanan herkes bu listeyi görür. Ortak bir bilgisayarda giriş yap ya da gizli pencere kullan; tarayıcıda sitenin verilerini silmek listeyi de siler. İki taraflı bir davada her kişi yalnızca kendi asıl metnini görür; karardan sonra ikisi de iki anonim anlatımı yargıçların okuduğu hâliyle görür. Yargıçlar (yapay zekâ sağlayıcımızın çalıştırdığı modeller): yalnızca anonim hâli. Paylaşım bağlantısı olan herkes: kararı, görünen isimlerle. Varsayılan olarak bunlar kendin için seçtiğin ad ve diğerlerinin senin yazdığın ilk adlarıdır; istediğin an değiştirebilir ya da isimleri kapatabilirsin, o zaman sayfa Taraf A ve Taraf B gösterir. Biz: asıl metinleri anahtarla çözebiliriz, saklanan metne de yalnızca senden gelen bir destek talebini ele almak, kötüye kullanımı araştırmak ya da yasa gerektirdiğinde bakarız.",
     "privacy.removalTitle": "Kaldırma",
     "privacy.removal":
-      "Kaldırılmasını karar sayfasından (giriş yaptıysan Kararlar sayfasından açabilirsin), iki taraflı bir davada dava sayfasından, hesabını silerek ya da e-postayla isteyebilirsin. Kaldırma, asıl metnini, isim listesini ve görünen isimleri siler (iki taraflı bir davada senin tarafının asıl metnini ve görünen adını); paylaşım bağlantısı ve önizleme görseli de herkes için açılmaz olur. Sohbet uygulamalarında önceden paylaşılmış önizlemeleri o uygulamalar saklar; yenileyene kadar görünmeye devam edebilirler. Anonim metni ve kararı, isimler olmadan kayıtlarımızda tutarız; bunlar artık bağlantıdan açılamaz. Hesabını silmek bunu tüm kararların ve davalardaki tarafların için yapar, giriş bilgilerini, kredilerini ve planını da siler. Kaldırılan veriler, yedeklerimizin süresi dolana kadar (en fazla 14 gün, aşağıya bak) yedeklerde kalır; bir yedeği geri yüklersek tüm kaldırmaları yeniden uygularız (bunun için neyin ne zaman kaldırıldığının bir listesini, hiçbir metin ya da isim olmadan tutarız).",
+      "Kaldırılmasını karar sayfasından (giriş yaptıysan Kararlar sayfasından açabilirsin), iki taraflı bir davada dava sayfasından, hesabını silerek ya da e-postayla isteyebilirsin. Kaldırma, asıl metnini, isim listesini ve görünen isimleri siler (iki taraflı bir davada senin tarafının asıl metnini ve görünen adını); paylaşım bağlantısı ve önizleme görseli de herkes için açılmaz olur. Sohbet uygulamalarında önceden paylaşılmış önizlemeleri o uygulamalar saklar; yenileyene kadar görünmeye devam edebilirler. Anonim metni ve kararı, isimler olmadan kayıtlarımızda tutarız; bunlar artık bağlantıdan açılamaz. Hesabını silmek bunu tüm kararların ve davalardaki tarafların için yapar, giriş bilgilerini, kredilerini ve planını da siler. Kaldırılan veriler, yedeklerimizin süresi dolana kadar (en fazla 14 gün, aşağıya bak) yedeklerde kalır; bir yedeği geri yüklersek tüm kaldırmaları yeniden uygularız (bunun için neyin ne zaman kaldırıldığının bir listesini, hiçbir metin ya da isim olmadan tutarız). Bir şeyi kaldırmandan otuz gün sonra, yasa daha uzun saklamamızı gerektirmedikçe anonim metni ve kararı da sileriz; yalnızca sonucu ve tarihleri tutarız.",
     "privacy.retentionTitle": "Ne kadar saklıyoruz",
     "privacy.retention":
       "Kararları ve asıl metinleri, kaldırılmasını isteyene ya da hesabını silene kadar saklarız. Bir arızadan kurtulabilmek için sunucunun ve veritabanının yedek kopyalarını en fazla 14 gün tutarız, sonra silinirler. Yedekler, şifreli asıl metinler de dahil sunucudaki verilerin aynısını içerir ve anahtar aynı sunucudadır; yani yedekler o şifrelemeyle değil, sunucunun kendisi gibi korunur. Kullanım sınırı özetleri en fazla 24 saat durur. Sunucu kayıtları barındırma sağlayıcımızın standart saklama süresine göre tutulur. Kullanım olayları 90 gün sonra, cihaz bağlantıları 180 gün kullanılmayınca silinir. Grafana Labs'a gönderilen günlükler ve ölçümler 14 gün saklanır.",

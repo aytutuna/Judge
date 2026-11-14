@@ -249,13 +249,15 @@ const sv: Locale = {
     "privacy.title": "Integritet",
     "privacy.kicker": "Dina uppgifter",
     "privacy.lead":
-      "Kort version: vi sparar det du skriver, namn inräknade, krypterat, så att du kan komma tillbaka till det. Domarna läser bara en version där namnen är borttagna. Du kan få det borttaget när som helst. Vi säljer ingenting.",
+      "Kort version: vi sparar det du skriver, namn inräknade, krypterat, så att du kan komma tillbaka till det. Domarna läser bara en version där namnen är borttagna. Du kan få det borttaget när som helst. Vi säljer inte dina uppgifter. Om Judge någon gång säljs eller går upp i ett annat bolag går det över till den nya ägaren enligt denna policy.",
     "privacy.storedTitle": "Det här sparar vi",
     "privacy.stored":
-      "För varje dom sparar vi din text precis som du skrev den (med dina svar på domarnas frågor och texten som lästs från eventuella skärmdumpar) och en lista över vilket namn som blev vilken etikett. De krypteras med en nyckel som inte lagras i databasen. Vi sparar också den anonymiserade versionen som domarna läser (namnen utbytta mot Part A och Part B), inställningarna du valde, domen, eventuell översättning och de namn du väljer att visa på delningssidan. Vi räknar också hur Judge används: vilka skärmar och funktioner, med appversion, enhetsmodell, systemversion, språk och landet för din anslutning, och i apparna ett enhets-id. När du är inloggad kopplas det till ditt konto. Användningshändelser sparas i 90 dagar och kopplingarna mellan ditt konto och dina enheter i 180 dagar. Apparna har en reglage, Användningsstatistik, i Inställningar, och webbplatsen skickar ingenting när din webbläsare skickar Do Not Track eller Global Privacy Control. Det innehåller aldrig text från fall.",
+      "För varje dom sparar vi din text precis som du skrev den (med dina svar på domarnas frågor och texten som lästs från eventuella skärmdumpar) och en lista över vilket namn som blev vilken etikett. De krypteras med en nyckel som inte lagras i databasen. Vi sparar också den anonymiserade versionen som domarna läser (namnen utbytta mot Part A och Part B), inställningarna du valde, domen, eventuell översättning och de namn du väljer att visa på delningssidan. Vi räknar också hur Judge används: vilka skärmar och funktioner, med appversion, enhetsmodell, systemversion, språk och landet för din anslutning, och i apparna ett enhets-id. När du är inloggad kopplas det till ditt konto. Användningshändelser sparas i 90 dagar och kopplingarna mellan ditt konto och dina enheter i 180 dagar. Apparna har en reglage, Användningsstatistik, i Inställningar, och webbplatsen skickar ingenting när din webbläsare skickar Do Not Track eller Global Privacy Control. Det innehåller aldrig text från fall. Om du betygsätter en dom sparar vi betyget tillsammans med den.",
+    "privacy.helpTitle": "Hjälp till att göra Judge bättre",
+    "privacy.help":
+      "Av, om du inte slår på det. När det är på kan vi använda den anonymiserade texten som domarna läser, deras domar och dina betyg för att testa och träna Judges domare. Namn är aldrig en del av det. Slår du av det upphör den användningen för allt du har gjort, och vi registrerar när du slog på eller av det.",
     "privacy.notStoredTitle": "Det här gör vi inte",
-    "privacy.notStored":
-      "Inga annonsspårare, och vi säljer aldrig data. Ditt språkval sparas i webbläsarens lokala lagring och ingen annanstans.",
+    "privacy.notStored": "Inga annonsspårare. Ditt språkval sparas i webbläsarens lokala lagring och ingen annanstans.",
     "privacy.ipTitle": "Användningsgränser",
     "privacy.ip":
       "För att hålla rätten öppen för alla begränsar vi hur många domar varje konto och hur många översättningar varje besökare kan be om. För översättningar, och för svar i ett tvåsidigt fall, sparar vi en hash av din IP-adress med hemlig nyckel, inte själva adressen, i vårt system för användningsgränser i upp till 24 timmar. Om människokontrollen är på skickas din IP-adress också till Cloudflare för den kontrollen. Den sparas aldrig tillsammans med din dom.",
@@ -286,6 +288,18 @@ const sv: Locale = {
     "nav.settings": "Inställningar",
     "settings.appearance": "Utseende",
     "settings.darkMode": "Mörkt läge",
+    "consent.cardTitle": "Vill du hjälpa till att göra Judge bättre?",
+    "consent.cardBody":
+      "Låt Judge använda dina anonymiserade domar och betyg för att testa och träna sina domare. Namn tas aldrig med. Du kan ändra detta i Inställningar.",
+    "consent.cardYes": "Gärna",
+    "consent.cardNo": "Nej tack",
+    "consent.switchTitle": "Hjälp till att göra Judge bättre",
+    "consent.switchDetail":
+      "Låter Judge använda dina anonymiserade domar och betyg för att testa och träna sina domare. Av, om du inte slår på det.",
+    "rating.prompt": "Rättvis dom?",
+    "rating.fair": "Rättvis",
+    "rating.notFair": "Orättvis",
+    "rating.thanks": "Tack",
     "footer.pricing": "Priser",
     "tier.lockedSignIn": "(låst: logga in för att använda)",
     "tier.getPremium": "Skaffa fler domar",
@@ -739,7 +753,7 @@ const sv: Locale = {
       "Du: din originaltext och namnen, på alla enheter när du är inloggad, eller på enheten du använde genom en privat kod som sparats i webbläsaren eller appen (vi sparar bara en förvrängd form av koden). Domar som togs fram när du var utloggad, innan ett konto krävdes, och fall som du svarade på utloggad ligger kvar i listan i den webbläsaren med sina rubriker och dina namn som du skrev dem, så att sidan Domar kan visa dem: alla som använder samma webbläsare ser listan. På en delad dator: logga in eller använd ett privat fönster; rensar du webbplatsens data i webbläsaren försvinner listan. I ett tvåsidigt fall ser var och en bara sitt eget original; efter domen ser båda de två anonymiserade berättelserna, som domarna läste dem. Domarna (AI-modeller som körs av vår AI-leverantör): bara den anonymiserade versionen. Alla med delningslänken: domen med visningsnamn. Som standard är det namnet du väljer för dig själv och de andras förnamn som du skrev dem; du kan ändra dem eller stänga av namnen när som helst, och då visar sidan Part A och Part B. Vi: vi kan dekryptera original med nyckeln och tittar på lagrad text bara för att hantera ett supportärende från dig, utreda missbruk eller när lagen kräver det.",
     "privacy.removalTitle": "Borttagning",
     "privacy.removal":
-      "Be om borttagning på domens sida (inloggad kan du öppna den från sidan Domar), på fallets sida för ett tvåsidigt fall, genom att radera ditt konto eller via mejl. Borttagning raderar din originaltext, namnlistan och visningsnamnen (i ett tvåsidigt fall din sidas original och ditt visningsnamn), och delningslänken och dess förhandsbild laddas inte längre för någon. Förhandsvisningar som redan delats i chattappar sparas av de apparna och kan fortsätta synas tills de uppdateras. Vi behåller den anonymiserade texten och domen, utan namn, i vårt register; de går inte längre att öppna via länken. Raderar du ditt konto händer detta för alla dina domar och dina sidor i tvåsidiga fall, och dina inloggningsuppgifter, krediter och ditt abonnemang raderas. Borttagen data ligger kvar i våra säkerhetskopior tills de löper ut (högst 14 dagar, se nedan); om vi någon gång återställer en säkerhetskopia gör vi om varje borttagning (för det sparar vi en lista över vad som togs bort och när, utan text eller namn).",
+      "Be om borttagning på domens sida (inloggad kan du öppna den från sidan Domar), på fallets sida för ett tvåsidigt fall, genom att radera ditt konto eller via mejl. Borttagning raderar din originaltext, namnlistan och visningsnamnen (i ett tvåsidigt fall din sidas original och ditt visningsnamn), och delningslänken och dess förhandsbild laddas inte längre för någon. Förhandsvisningar som redan delats i chattappar sparas av de apparna och kan fortsätta synas tills de uppdateras. Vi behåller den anonymiserade texten och domen, utan namn, i vårt register; de går inte längre att öppna via länken. Raderar du ditt konto händer detta för alla dina domar och dina sidor i tvåsidiga fall, och dina inloggningsuppgifter, krediter och ditt abonnemang raderas. Borttagen data ligger kvar i våra säkerhetskopior tills de löper ut (högst 14 dagar, se nedan); om vi någon gång återställer en säkerhetskopia gör vi om varje borttagning (för det sparar vi en lista över vad som togs bort och när, utan text eller namn). Trettio dagar efter att du har tagit bort något raderar vi också den anonymiserade texten och domen och behåller bara utfallet och datumen, om inte lagen kräver att vi sparar dem längre.",
     "privacy.retentionTitle": "Hur länge vi sparar det",
     "privacy.retention":
       "Vi sparar domar och original tills du ber om borttagning eller raderar ditt konto. För att kunna återhämta oss efter ett fel sparar vi säkerhetskopior av servern och dess databas i upp till 14 dagar, sedan raderas de. De innehåller samma data som servern, inklusive de krypterade originalen, och nyckeln finns på samma server, så säkerhetskopiorna skyddas på samma sätt som själva servern, inte av den krypteringen. Hashar för användningsgränser finns kvar i upp till 24 timmar. Serverloggar sparas enligt vår hostingleverantörs vanliga lagringstider. Användningshändelser raderas efter 90 dagar och enhetskopplingar efter 180 dagar utan användning. Loggar och mätvärden hos Grafana Labs sparas i 14 dagar.",

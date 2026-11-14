@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { legalLang, legalNotice, t, type Key, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { langDir, langTag } from "@/lib/langs";
+import { POLICY_VERSION } from "@/lib/policy";
 import { PRICING } from "@/lib/pricing";
 import { noOrphan } from "@/lib/text";
 import { useViewer } from "@/lib/use-viewer";
@@ -140,6 +141,7 @@ function ContactLine({ text, email }: { text: string; email: string }) {
 function Privacy({ lang, contactEmail }: { lang: Lang; contactEmail: string | null }) {
   const sections: [Key, Key][] = [
     ["privacy.storedTitle", "privacy.stored"],
+    ["privacy.helpTitle", "privacy.help"],
     ["privacy.accessTitle", "privacy.access"],
     ["privacy.removalTitle", "privacy.removal"],
     ["privacy.retentionTitle", "privacy.retention"],
@@ -198,9 +200,9 @@ function Terms({ lang, contactEmail, cap }: { lang: Lang; contactEmail: string |
   );
 }
 
-function termsDate(lang: Lang): string {
+function updatedOn(lang: Lang, iso: string): string {
   const date = new Intl.DateTimeFormat(langTag(lang), { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" });
-  return t(lang, "terms.updated", { date: date.format(new Date(`${TERMS_UPDATED}T00:00:00Z`)) });
+  return t(lang, "terms.updated", { date: date.format(new Date(`${iso}T00:00:00Z`)) });
 }
 
 /** `contactEmail` is null when no real address is configured; the privacy
@@ -235,7 +237,8 @@ export function InfoPage({
             <p className="kicker">{t(prose, `${page}.kicker`)}</p>
             <h1 className={styles.h1}>{noOrphan(t(prose, `${page}.title`))}</h1>
             <p className={styles.lead}>{t(prose, `${page}.lead`)}</p>
-            {page === "terms" ? <p className={styles.notice}>{termsDate(prose)}</p> : null}
+            {page === "terms" ? <p className={styles.notice}>{updatedOn(prose, TERMS_UPDATED)}</p> : null}
+            {page === "privacy" ? <p className={styles.notice}>{updatedOn(prose, POLICY_VERSION)}</p> : null}
             {notice ? <p className={styles.notice}>{notice}</p> : null}
           </header>
           {about ? null : (

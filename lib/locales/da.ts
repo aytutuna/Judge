@@ -249,13 +249,16 @@ const da: Locale = {
     "privacy.title": "Privatliv",
     "privacy.kicker": "Dine data",
     "privacy.lead":
-      "Kort fortalt: vi gemmer det, du skriver, krypteret og med navne, så du kan vende tilbage til det. Dommerne læser kun en version, hvor navnene er taget ud. Du kan til enhver tid få det fjernet. Vi sælger ingenting.",
+      "Kort fortalt: vi gemmer det, du skriver, krypteret og med navne, så du kan vende tilbage til det. Dommerne læser kun en version, hvor navnene er taget ud. Du kan til enhver tid få det fjernet. Vi sælger ikke dine data. Hvis Judge nogensinde bliver solgt eller fusioneret, går det videre til den nye ejer under denne politik.",
     "privacy.storedTitle": "Hvad vi gemmer",
     "privacy.stored":
-      "For hver dom gemmer vi din tekst præcis, som du skrev den (med dine svar på dommernes spørgsmål og teksten, der er læst fra eventuelle skærmbilleder), og en liste over, hvilket navn der blev til hvilken betegnelse. De er krypteret med en nøgle, som ikke ligger i databasen. Vi gemmer også den anonymiserede version, dommerne læser (navne byttet ud med Part A og Part B), de indstillinger, du valgte, dommen, en eventuel oversættelse og de navne, du vælger at vise på delingssiden. Vi tæller også, hvordan Judge bruges: hvilke skærme og funktioner, med appversion, enhedsmodel, systemversion, sprog og landet for din forbindelse, og i apperne et enheds-id. Når du er logget ind, knyttes det til din konto. Brugshændelser gemmes i 90 dage, og forbindelserne mellem din konto og dine enheder i 180 dage. Apperne har en kontakt, Brugsstatistik, i Indstillinger, og hjemmesiden sender ikke noget, når din browser sender Do Not Track eller Global Privacy Control. Det indeholder aldrig tekst fra sager.",
+      "For hver dom gemmer vi din tekst præcis, som du skrev den (med dine svar på dommernes spørgsmål og teksten, der er læst fra eventuelle skærmbilleder), og en liste over, hvilket navn der blev til hvilken betegnelse. De er krypteret med en nøgle, som ikke ligger i databasen. Vi gemmer også den anonymiserede version, dommerne læser (navne byttet ud med Part A og Part B), de indstillinger, du valgte, dommen, en eventuel oversættelse og de navne, du vælger at vise på delingssiden. Vi tæller også, hvordan Judge bruges: hvilke skærme og funktioner, med appversion, enhedsmodel, systemversion, sprog og landet for din forbindelse, og i apperne et enheds-id. Når du er logget ind, knyttes det til din konto. Brugshændelser gemmes i 90 dage, og forbindelserne mellem din konto og dine enheder i 180 dage. Apperne har en kontakt, Brugsstatistik, i Indstillinger, og hjemmesiden sender ikke noget, når din browser sender Do Not Track eller Global Privacy Control. Det indeholder aldrig tekst fra sager. Hvis du bedømmer en dom, gemmer vi bedømmelsen sammen med den.",
+    "privacy.helpTitle": "Hjælp med at gøre Judge bedre",
+    "privacy.help":
+      "Slået fra, medmindre du slår det til. Når det er slået til, må vi bruge den anonymiserede tekst, dommerne læser, deres domme og dine bedømmelser til at teste og træne Judges dommere. Navne er aldrig en del af det. Slår du det fra, stopper den brug for alt, du har lavet, og vi registrerer, hvornår du slog det til eller fra.",
     "privacy.notStoredTitle": "Hvad vi ikke gør",
     "privacy.notStored":
-      "Ingen annoncesporing, og vi sælger aldrig data. Dit sprogvalg ligger i din browsers lokale lager og ingen andre steder.",
+      "Ingen annoncesporing. Dit sprogvalg ligger i din browsers lokale lager og ingen andre steder.",
     "privacy.ipTitle": "Grænser for brug",
     "privacy.ip":
       "For at holde retten åben for alle begrænser vi, hvor mange domme hver konto og hvor mange oversættelser hver besøgende kan bede om. For oversættelser og for svar i en tosidet sag gemmer vi en nøglebaseret hash af din IP-adresse, ikke selve adressen, i vores lager til brugsgrænser i op til 24 timer. Hvis menneske-tjekket er slået til, sendes din IP-adresse også til Cloudflare til det tjek. Den bliver aldrig gemt sammen med din dom.",
@@ -286,6 +289,18 @@ const da: Locale = {
     "nav.settings": "Indstillinger",
     "settings.appearance": "Udseende",
     "settings.darkMode": "Mørk tilstand",
+    "consent.cardTitle": "Vil du hjælpe med at gøre Judge bedre?",
+    "consent.cardBody":
+      "Lad Judge bruge dine anonymiserede domme og bedømmelser til at teste og træne sine dommere. Navne er aldrig med. Du kan ændre det i Indstillinger.",
+    "consent.cardYes": "Ja tak",
+    "consent.cardNo": "Nej tak",
+    "consent.switchTitle": "Hjælp med at gøre Judge bedre",
+    "consent.switchDetail":
+      "Lader Judge bruge dine anonymiserede domme og bedømmelser til at teste og træne sine dommere. Slået fra, medmindre du slår det til.",
+    "rating.prompt": "Retfærdig dom?",
+    "rating.fair": "Retfærdig",
+    "rating.notFair": "Ikke retfærdig",
+    "rating.thanks": "Tak",
     "footer.pricing": "Priser",
     "tier.lockedSignIn": "(låst: log ind for at bruge det)",
     "tier.getPremium": "Få flere domme",
@@ -740,7 +755,7 @@ const da: Locale = {
       "Du: din originale tekst og navnene, på alle enheder, når du er logget ind, eller på den enhed, du brugte, via en privat kode, der er gemt i din browser eller appen (vi gemmer kun en forvrænget udgave af koden). Domme, der blev skrevet uden login, før det krævede en konto, og sager, du svarede på uden login, bliver stående på listen i den browser med deres overskrifter og dine navne, som du skrev dem, så siden Domme kan vise dem: alle, der bruger den samme browser, kan se listen. På en delt computer bør du logge ind eller bruge et privat vindue; sletter du sidens data i browseren, forsvinder listen. I en tosidet sag ser hver person kun sin egen original; efter dommen ser begge begge anonymiserede versioner, som dommerne læste dem. Dommerne (AI-modeller, som vores AI-udbyder kører): kun den anonymiserede version. Alle med delingslinket: dommen med de viste navne. Som standard er det det navn, du vælger til dig selv, og fornavnene på de andre, som du skrev dem; du kan til enhver tid ændre dem eller slå navne fra, og så viser siden Part A og Part B. Os: vi kan dekryptere originaler med nøglen og ser kun på gemt tekst for at behandle en supportanmodning fra dig, undersøge misbrug eller når loven kræver det.",
     "privacy.removalTitle": "Fjernelse",
     "privacy.removal":
-      "Du kan bede om fjernelse på dommens side (når du er logget ind, kan du åbne den fra siden Domme), på sagens side for en tosidet sag, ved at slette din konto eller via e-mail. Fjernelse sletter din originale tekst, navnelisten og de viste navne (i en tosidet sag din sides original og dit viste navn), og delingslinket og dets forhåndsvisningsbillede holder op med at virke for alle. Forhåndsvisninger, der allerede er sendt i chatapps, opbevares af de apps og kan blive ved med at blive vist, indtil de opdaterer dem. Vi beholder den anonymiserede tekst og dommen, uden navne, i vores registre; de kan ikke længere åbnes via linket. Sletter du din konto, sker det for alle dine domme og dine sider i sager, og dine loginoplysninger, kreditter og din plan bliver slettet. Fjernede data ligger i vores sikkerhedskopier, indtil de udløber (højst 14 dage, se nedenfor); hvis vi nogensinde gendanner en sikkerhedskopi, gennemfører vi alle fjernelser igen (til det gemmer vi en liste over, hvad der blev fjernet og hvornår, uden tekst eller navne).",
+      "Du kan bede om fjernelse på dommens side (når du er logget ind, kan du åbne den fra siden Domme), på sagens side for en tosidet sag, ved at slette din konto eller via e-mail. Fjernelse sletter din originale tekst, navnelisten og de viste navne (i en tosidet sag din sides original og dit viste navn), og delingslinket og dets forhåndsvisningsbillede holder op med at virke for alle. Forhåndsvisninger, der allerede er sendt i chatapps, opbevares af de apps og kan blive ved med at blive vist, indtil de opdaterer dem. Vi beholder den anonymiserede tekst og dommen, uden navne, i vores registre; de kan ikke længere åbnes via linket. Sletter du din konto, sker det for alle dine domme og dine sider i sager, og dine loginoplysninger, kreditter og din plan bliver slettet. Fjernede data ligger i vores sikkerhedskopier, indtil de udløber (højst 14 dage, se nedenfor); hvis vi nogensinde gendanner en sikkerhedskopi, gennemfører vi alle fjernelser igen (til det gemmer vi en liste over, hvad der blev fjernet og hvornår, uden tekst eller navne). Tredive dage efter, at du har fjernet noget, sletter vi også den anonymiserede tekst og dommen og beholder kun udfaldet og datoerne, medmindre loven kræver, at vi gemmer dem længere.",
     "privacy.retentionTitle": "Hvor længe vi gemmer det",
     "privacy.retention":
       "Vi gemmer domme og originaler, indtil du beder om fjernelse eller sletter din konto. For at kunne komme os efter et nedbrud gemmer vi sikkerhedskopier af serveren og dens database i op til 14 dage, hvorefter de slettes. De indeholder de samme data som serveren, også de krypterede originaler, og nøglen ligger på den samme server, så sikkerhedskopierne er beskyttet som selve serveren og ikke af den kryptering. Hashes til brugsgrænser holder i op til 24 timer. Serverlogs følger vores hostingudbyders almindelige opbevaringsperiode. Brugshændelser slettes efter 90 dage og enhedsforbindelser efter 180 dage uden brug. Logs og målinger hos Grafana Labs gemmes i 14 dage.",

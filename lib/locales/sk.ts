@@ -248,13 +248,16 @@ const sk: Locale = {
     "privacy.title": "Súkromie",
     "privacy.kicker": "Tvoje údaje",
     "privacy.lead":
-      "Stručne: to, čo napíšeš, aj s menami, uchovávame zašifrované, takže sa k tomu môžeš vrátiť. Sudcovia vždy čítajú len verziu bez mien. Kedykoľvek môžeš požiadať o odstránenie. Nič nepredávame.",
+      "Stručne: to, čo napíšeš, aj s menami, uchovávame zašifrované, takže sa k tomu môžeš vrátiť. Sudcovia vždy čítajú len verziu bez mien. Kedykoľvek môžeš požiadať o odstránenie. Tvoje údaje nepredávame. Ak bude Judge niekedy predaný alebo zlúčený s inou firmou, prejde na nového vlastníka podľa týchto zásad.",
     "privacy.storedTitle": "Čo uchovávame",
     "privacy.stored":
-      "Pri každom verdikte uchovávame tvoj text presne v pôvodnom znení (s tvojimi odpoveďami na otázky sudcov a s textom prečítaným zo snímok obrazovky) a zoznam toho, ktoré meno sa zmenilo na aké označenie. Tieto údaje sú zašifrované kľúčom, ktorý nie je uložený v databáze. Uchovávame aj anonymizovanú verziu, ktorú čítajú sudcovia (mená nahradené označeniami Strana A a Strana B), zvolené nastavenia, verdikt, prípadný preklad a mená, ktoré sa podľa tvojej voľby zobrazujú na stránke na zdieľanie. Počítame aj to, ako sa Judge používa: ktoré obrazovky a funkcie, s verziou aplikácie, modelom zariadenia, verziou systému, jazykom a krajinou tvojho pripojenia, v aplikáciách navyše identifikátor zariadenia. Keď si prihlásený, je to prepojené s tvojím účtom. Udalosti používania uchovávame 90 dní a väzby medzi účtom a zariadeniami 180 dní. Aplikácie majú v Nastaveniach prepínač Štatistiky používania a web nič neposiela, keď prehliadač pošle Do Not Track alebo Global Privacy Control. Nikdy to neobsahuje text žiadneho prípadu.",
+      "Pri každom verdikte uchovávame tvoj text presne v pôvodnom znení (s tvojimi odpoveďami na otázky sudcov a s textom prečítaným zo snímok obrazovky) a zoznam toho, ktoré meno sa zmenilo na aké označenie. Tieto údaje sú zašifrované kľúčom, ktorý nie je uložený v databáze. Uchovávame aj anonymizovanú verziu, ktorú čítajú sudcovia (mená nahradené označeniami Strana A a Strana B), zvolené nastavenia, verdikt, prípadný preklad a mená, ktoré sa podľa tvojej voľby zobrazujú na stránke na zdieľanie. Počítame aj to, ako sa Judge používa: ktoré obrazovky a funkcie, s verziou aplikácie, modelom zariadenia, verziou systému, jazykom a krajinou tvojho pripojenia, v aplikáciách navyše identifikátor zariadenia. Keď si prihlásený, je to prepojené s tvojím účtom. Udalosti používania uchovávame 90 dní a väzby medzi účtom a zariadeniami 180 dní. Aplikácie majú v Nastaveniach prepínač Štatistiky používania a web nič neposiela, keď prehliadač pošle Do Not Track alebo Global Privacy Control. Nikdy to neobsahuje text žiadneho prípadu. Ak verdikt ohodnotíš, hodnotenie uchováme spolu s ním.",
+    "privacy.helpTitle": "Pomôž zlepšiť Judge",
+    "privacy.help":
+      "Vypnuté, kým to nezapneš. Keď je to zapnuté, môžeme anonymizovaný text, ktorý čítajú sudcovia, ich verdikty a tvoje hodnotenia použiť na testovanie a trénovanie sudcov v Judge. Mená nikdy nie sú jeho súčasťou. Vypnutím sa toto používanie zastaví pri všetkom, čo pochádza od teba, a zaznamenávame, kedy bolo zapnuté alebo vypnuté.",
     "privacy.notStoredTitle": "Čo nerobíme",
     "privacy.notStored":
-      "Žiadne reklamné sledovače a údaje nikdy nepredávame. Tvoja voľba jazyka je uložená v lokálnom úložisku tvojho prehliadača a nikde inde.",
+      "Žiadne reklamné sledovače. Tvoja voľba jazyka je uložená v lokálnom úložisku tvojho prehliadača a nikde inde.",
     "privacy.ipTitle": "Obmedzenie počtu požiadaviek",
     "privacy.ip":
       "Aby súd zostal otvorený pre všetkých, obmedzujeme, koľko verdiktov si môže vyžiadať každý účet a koľko prekladov každý návštevník. Pri prekladoch a pri odpovediach v obojstrannom prípade uchovávame v úložisku limitov najviac 24 hodín kľúčovaný hash tvojej IP adresy, nie samotnú adresu. Ak je zapnutá kontrola, či si človek, tvoja IP adresa ide na túto kontrolu aj do Cloudflare. Nikdy sa neukladá s tvojím verdiktom.",
@@ -285,6 +288,18 @@ const sk: Locale = {
     "nav.settings": "Nastavenia",
     "settings.appearance": "Vzhľad",
     "settings.darkMode": "Tmavý režim",
+    "consent.cardTitle": "Pomôžeš zlepšiť Judge?",
+    "consent.cardBody":
+      "Dovoľ Judge používať tvoje anonymizované verdikty a hodnotenia na testovanie a trénovanie jeho sudcov. Mená sa nikdy nezahŕňajú. Môžeš to zmeniť v Nastaveniach.",
+    "consent.cardYes": "Jasné",
+    "consent.cardNo": "Nie, vďaka",
+    "consent.switchTitle": "Pomôž zlepšiť Judge",
+    "consent.switchDetail":
+      "Dovolí Judge používať tvoje anonymizované verdikty a hodnotenia na testovanie a trénovanie jeho sudcov. Vypnuté, kým to nezapneš.",
+    "rating.prompt": "Je verdikt spravodlivý?",
+    "rating.fair": "Spravodlivý",
+    "rating.notFair": "Nespravodlivý",
+    "rating.thanks": "Vďaka",
     "footer.pricing": "Cenník",
     "tier.lockedSignIn": "(zamknuté: najprv sa prihlás)",
     "tier.getPremium": "Získať viac verdiktov",
@@ -739,7 +754,7 @@ const sk: Locale = {
       "Ty: svoj pôvodný text a mená, po prihlásení na akomkoľvek zariadení, alebo na zariadení, kde text vznikol, cez súkromný kód uložený v prehliadači alebo v aplikácii (uchovávame len zakódovanú podobu tohto kódu). Verdikty napísané bez prihlásenia, ešte predtým, ako bol potrebný účet, a prípady s tvojou odpoveďou odoslanou bez prihlásenia zostávajú v zozname v tom prehliadači s nadpismi a tvojimi menami v pôvodnom znení, aby ich mohla ukázať stránka Verdikty: tento zoznam vidí každý, kto používa ten istý prehliadač. Na zdieľanom počítači sa prihlás alebo použi súkromné okno; vymazaním údajov stránky v prehliadači sa zoznam odstráni. V obojstrannom prípade vidí každý len svoj vlastný originál; po verdikte obaja vidia obe anonymizované verzie tak, ako ich čítali sudcovia. Sudcovia (AI modely, ktoré prevádzkuje náš poskytovateľ AI): len anonymizovanú verziu. Ktokoľvek s odkazom na zdieľanie: verdikt so zobrazovanými menami. Predvolene je to meno, ktoré si zvolíš pre seba, a krstné mená ostatných tak, ako sú v tvojom texte; kedykoľvek ich môžeš zmeniť alebo mená vypnúť a potom stránka ukazuje Strana A a Strana B. My: originály vieme pomocou kľúča dešifrovať a uložený text si prezeráme len pri vybavovaní tvojej žiadosti o podporu, pri vyšetrovaní zneužitia alebo keď to vyžaduje zákon.",
     "privacy.removalTitle": "Odstránenie",
     "privacy.removal":
-      "O odstránenie môžeš požiadať na stránke verdiktu (po prihlásení ju otvoríš zo stránky Verdikty), pri obojstrannom prípade na stránke prípadu, zrušením účtu alebo e-mailom. Odstránenie vymaže tvoj pôvodný text, zoznam mien a zobrazované mená (v obojstrannom prípade originál tvojej verzie a tvoje zobrazované meno) a odkaz na zdieľanie a jeho náhľadový obrázok sa prestanú načítavať pre všetkých. Náhľady, ktoré už boli poslané v chatovacích aplikáciách, si tieto aplikácie uchovávajú a môžu sa zobrazovať, kým ich neobnovia. Anonymizovaný text a verdikt bez mien si ponechávame v našich záznamoch; cez odkaz sa už nedajú otvoriť. Zrušenie účtu to urobí pre všetky tvoje verdikty a tvoje verzie v prípadoch a vymaže tvoje prihlasovacie údaje, kredity a plán. Odstránené údaje zostávajú v našich zálohách, kým zálohy nevypršia (najviac 14 dní, pozri nižšie); ak by sme niekedy obnovovali zálohu, všetky odstránenia uplatníme znova (na to uchovávame zoznam toho, čo a kedy bolo odstránené, bez textu a mien).",
+      "O odstránenie môžeš požiadať na stránke verdiktu (po prihlásení ju otvoríš zo stránky Verdikty), pri obojstrannom prípade na stránke prípadu, zrušením účtu alebo e-mailom. Odstránenie vymaže tvoj pôvodný text, zoznam mien a zobrazované mená (v obojstrannom prípade originál tvojej verzie a tvoje zobrazované meno) a odkaz na zdieľanie a jeho náhľadový obrázok sa prestanú načítavať pre všetkých. Náhľady, ktoré už boli poslané v chatovacích aplikáciách, si tieto aplikácie uchovávajú a môžu sa zobrazovať, kým ich neobnovia. Anonymizovaný text a verdikt bez mien si ponechávame v našich záznamoch; cez odkaz sa už nedajú otvoriť. Zrušenie účtu to urobí pre všetky tvoje verdikty a tvoje verzie v prípadoch a vymaže tvoje prihlasovacie údaje, kredity a plán. Odstránené údaje zostávajú v našich zálohách, kým zálohy nevypršia (najviac 14 dní, pozri nižšie); ak by sme niekedy obnovovali zálohu, všetky odstránenia uplatníme znova (na to uchovávame zoznam toho, čo a kedy bolo odstránené, bez textu a mien). Tridsať dní po tom, čo niečo odstrániš, vymažeme aj anonymizovaný text a verdikt a ponecháme len výsledok a dátumy, ak nám zákon nenariaďuje uchovávať ich dlhšie.",
     "privacy.retentionTitle": "Ako dlho údaje uchovávame",
     "privacy.retention":
       "Verdikty a originály uchovávame, kým nepožiadaš o odstránenie alebo nezrušíš účet. Na obnovu po poruche uchovávame záložné kópie servera a jeho databázy najviac 14 dní, potom sa vymažú. Obsahujú rovnaké údaje ako server vrátane zašifrovaných originálov a kľúč je na tom istom serveri, takže zálohy sú chránené rovnako ako samotný server, nie týmto šifrovaním. Hashe na obmedzenie počtu požiadaviek sa uchovávajú najviac 24 hodín. Serverové logy sa uchovávajú podľa štandardných lehôt nášho poskytovateľa hostingu. Udalosti používania sa mažú po 90 dňoch a väzby na zariadenia po 180 dňoch bez použitia. Logy a metriky odoslané do Grafana Labs sa uchovávajú 14 dní.",

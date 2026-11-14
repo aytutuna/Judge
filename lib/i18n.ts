@@ -241,13 +241,16 @@ const en = {
   "privacy.title": "Privacy",
   "privacy.kicker": "Your data",
   "privacy.lead":
-    "Short version: we keep what you write, names included, encrypted, so you can come back to it. The judges only ever read a version with the names taken out. You can have it removed any time. We sell nothing.",
+    "Short version: we keep what you write, names included, encrypted, so you can come back to it. The judges only ever read a version with the names taken out. You can have it removed any time. We don't sell your data. If Judge is ever sold or merged, it passes to the new owner under this policy.",
   "privacy.storedTitle": "What we store",
   "privacy.stored":
-    "For every verdict we keep your text exactly as you wrote it (with your answers to the judges' questions and the text read from any screenshots), and a list of which name became which label. These are encrypted with a key that isn't stored in the database. We also keep the anonymized version the judges read (names swapped for Party A and Party B), the settings you picked, the verdict, any translation, and the names you choose to show on the share page. We also count how Judge is used: which screens and features, with the app version, device model, system version, language and the country of your connection, and in the apps a device identifier. When you're signed in, this is tied to your account. Usage events are kept for 90 days and the links between your account and your devices for 180 days. The apps have a Usage statistics switch in Settings, and the website sends nothing when your browser sends Do Not Track or Global Privacy Control. It never includes any case text.",
+    "For every verdict we keep your text exactly as you wrote it (with your answers to the judges' questions and the text read from any screenshots), and a list of which name became which label. These are encrypted with a key that isn't stored in the database. We also keep the anonymized version the judges read (names swapped for Party A and Party B), the settings you picked, the verdict, any translation, and the names you choose to show on the share page. We also count how Judge is used: which screens and features, with the app version, device model, system version, language and the country of your connection, and in the apps a device identifier. When you're signed in, this is tied to your account. Usage events are kept for 90 days and the links between your account and your devices for 180 days. The apps have a Usage statistics switch in Settings, and the website sends nothing when your browser sends Do Not Track or Global Privacy Control. It never includes any case text. If you rate a verdict, we keep the rating with it.",
+  "privacy.helpTitle": "Help improve Judge",
+  "privacy.help":
+    "Off unless you turn it on. When it is on, we may use the anonymized text the judges read, their verdicts and your ratings to test and train Judge's judges. Names are never part of it. Turning it off stops that use for everything you made, and we record when you turned it on or off.",
   "privacy.notStoredTitle": "What we don't do",
   "privacy.notStored":
-    "No ad trackers, and we never sell data. Your language choice lives in your browser's local storage and nowhere else.",
+    "No ad trackers. Your language choice lives in your browser's local storage and nowhere else.",
   "privacy.ipTitle": "Rate limiting",
   "privacy.ip":
     "To keep the court open for everyone, we cap how many verdicts each account and how many translations each visitor can ask for. For translations, and for answers to a two-sided case, we keep a keyed hash of your IP address, not the address itself, in our rate-limit store for up to 24 hours. If the human check is on, your IP address also goes to Cloudflare for that check. It's never saved with your verdict.",
@@ -278,6 +281,18 @@ const en = {
   "nav.settings": "Settings",
   "settings.appearance": "Appearance",
   "settings.darkMode": "Dark mode",
+  "consent.cardTitle": "Help improve Judge?",
+  "consent.cardBody":
+    "Let Judge use your anonymized verdicts and ratings to test and train its judges. Names are never included. You can change this in Settings.",
+  "consent.cardYes": "Sure",
+  "consent.cardNo": "No thanks",
+  "consent.switchTitle": "Help improve Judge",
+  "consent.switchDetail":
+    "Lets Judge use your anonymized verdicts and ratings to test and train its judges. Off unless you turn it on.",
+  "rating.prompt": "Fair verdict?",
+  "rating.fair": "Fair",
+  "rating.notFair": "Not fair",
+  "rating.thanks": "Thanks",
   "footer.pricing": "Pricing",
   "tier.lockedSignIn": "(locked: sign in to use it)",
   "tier.getPremium": "Get more verdicts",
@@ -735,7 +750,7 @@ const en = {
     "You: your original text and names, on any device when you're signed in, or on the device you used through a private code saved in your browser or the app (we only keep a scrambled form of that code). Verdicts written signed out, before an account was needed, and cases you answered signed out stay listed in that browser with their headlines and your names as you wrote them, so the Verdicts page can show them: anyone using the same browser sees that list. On a shared computer, sign in or use a private window; clearing the site's data in the browser removes the list. In a two-sided case each person sees only their own original; after the verdict both see both anonymized accounts, as the judges read them. The judges (AI models run by our AI provider): only the anonymized version. Anyone with the share link: the verdict with display names. By default that's the name you choose for yourself and the first names of the others as you wrote them; you can change them or switch names off at any time, and then the page shows Party A and Party B. Us: we can decrypt originals with the key, and look at stored text only to handle a support request from you, investigate abuse, or when the law requires it.",
   "privacy.removalTitle": "Removal",
   "privacy.removal":
-    "Ask for removal on the verdict page (signed in, you can open it from the Verdicts page), on the case page for a two-sided case, by deleting your account, or by email. Removal erases your original text, the name list and the display names (in a two-sided case, your side's original and your display name), and the share link and its preview image stop loading for everyone. Previews already posted in chat apps are kept by those apps and may keep showing until they refresh them. We keep the anonymized text and the verdict, without names, in our records; they can no longer be opened through the link. Deleting your account does this for all your verdicts and your sides of cases, and deletes your sign-in details, credits and plan. Removed data stays in our backups until they expire (at most 14 days, see below); if we ever restore a backup, we apply every removal again (for that we keep a list of what was removed and when, with no text or names).",
+    "Ask for removal on the verdict page (signed in, you can open it from the Verdicts page), on the case page for a two-sided case, by deleting your account, or by email. Removal erases your original text, the name list and the display names (in a two-sided case, your side's original and your display name), and the share link and its preview image stop loading for everyone. Previews already posted in chat apps are kept by those apps and may keep showing until they refresh them. We keep the anonymized text and the verdict, without names, in our records; they can no longer be opened through the link. Deleting your account does this for all your verdicts and your sides of cases, and deletes your sign-in details, credits and plan. Removed data stays in our backups until they expire (at most 14 days, see below); if we ever restore a backup, we apply every removal again (for that we keep a list of what was removed and when, with no text or names). Thirty days after you remove something, we also erase the anonymized text and the verdict, keeping only the outcome and dates, unless the law requires us to keep them longer.",
   "privacy.retentionTitle": "How long we keep it",
   "privacy.retention":
     "We keep verdicts and originals until you ask for removal or delete your account. To recover from a failure, we keep backup copies of the server and its database for up to 14 days, then they're deleted. They hold the same data as the server, including the encrypted originals, and the key is on the same server, so the backups are protected like the server itself, not by that encryption. Rate-limit hashes last up to 24 hours. Usage events are deleted after 90 days, and device links after 180 days without use. Logs and metrics at Grafana Labs are kept for 14 days; other server logs follow our hosting provider's standard retention.",
