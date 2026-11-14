@@ -16,8 +16,7 @@ const ko: AppLocale = {
     "app.history.phoneOnlyNote": "계정에 없고 이 휴대폰에만 저장된 판결이에요. 여기서 삭제해도 공유 링크는 계속 열려요.",
     "app.history.removeConfirm":
       "판결 {n}건을 계정에서 삭제할까요? 내가 쓴 글과 이름이 지워지고 공유 링크도 더 이상 열리지 않아요. 모든 기기에 적용되며 되돌릴 수 없어요.",
-    "app.history.removeLinksConfirm":
-      "링크 {n}개를 계정에서 삭제할까요? 내가 쓴 글과 이름이 지워지고 링크도 더 이상 열리지 않아요. 모든 기기에 적용되며 되돌릴 수 없어요.",
+    "app.history.removeLinksConfirm": "링크 {n}개를 삭제할까요? 어디서도 더 이상 열리지 않아요. 되돌릴 수 없어요.",
     "app.history.phoneOnlyAlso": "이 휴대폰에만 저장된 {n}건은 이 휴대폰에서만 삭제되고, 공유 링크는 계속 열려요.",
     "app.history.removeFailed": "{n}건을 삭제하지 못했어요. 인터넷 연결을 확인하고 다시 시도해 주세요.",
     "app.history.offlineRemove": "오프라인 상태예요. 삭제하려면 인터넷 연결이 필요해요.",

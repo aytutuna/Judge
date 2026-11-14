@@ -552,9 +552,9 @@
         <item quantity="other">Remover %1$s vereditos da sua conta? O que você escreveu e os nomes são apagados, e os links de compartilhamento deles param de funcionar, em todos os dispositivos. Não dá para desfazer.</item>
     </plurals>
     <plurals name="app_history_remove_links_confirm">
-        <item quantity="one">Remover %1$s link da sua conta? O que você escreveu e os nomes são apagados, e o link para de funcionar, em todos os dispositivos. Não dá para desfazer.</item>
-        <item quantity="many">Remover %1$s links da sua conta? O que você escreveu e os nomes são apagados, e os links param de funcionar, em todos os dispositivos. Não dá para desfazer.</item>
-        <item quantity="other">Remover %1$s links da sua conta? O que você escreveu e os nomes são apagados, e os links param de funcionar, em todos os dispositivos. Não dá para desfazer.</item>
+        <item quantity="one">Remover %1$s link? Ele vai parar de funcionar em todo lugar. Não dá para desfazer.</item>
+        <item quantity="many">Remover %1$s links? Eles vão parar de funcionar em todo lugar. Não dá para desfazer.</item>
+        <item quantity="other">Remover %1$s links? Eles vão parar de funcionar em todo lugar. Não dá para desfazer.</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="one">%1$s veredito salvo só neste celular também é excluído daqui; o link de compartilhamento dele continua funcionando.</item>

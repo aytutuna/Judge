@@ -20,7 +20,7 @@ const ca: AppLocale = {
     "app.history.removeConfirm":
       "Vols eliminar {n} veredictes del teu compte? S'esborraran el que vas escriure i els noms, i els seus enllaços per compartir deixaran de funcionar a tots els dispositius. No es pot desfer.",
     "app.history.removeLinksConfirm":
-      "Vols eliminar {n} enllaços del teu compte? S'esborraran el que vas escriure i els noms, i els enllaços deixaran de funcionar a tots els dispositius. No es pot desfer.",
+      "Vols eliminar {n} enllaços? Deixaran de funcionar a tot arreu. No es pot desfer.",
     "app.history.phoneOnlyAlso":
       "També s'eliminaran del telèfon {n} veredictes que només hi estaven desats; els seus enllaços per compartir continuaran funcionant.",
     "app.history.removeFailed": "No n'hem pogut eliminar {n}. Comprova la connexió i torna-ho a provar.",
@@ -165,7 +165,7 @@ const ca: AppLocale = {
       one: "Vols eliminar aquest veredicte del teu compte? S'esborraran el que vas escriure i els noms, i el seu enllaç per compartir deixarà de funcionar a tots els dispositius. No es pot desfer.",
     },
     "app.history.removeLinksConfirm": {
-      one: "Vols eliminar aquest enllaç del teu compte? S'esborraran el que vas escriure i els noms, i l'enllaç deixarà de funcionar a tots els dispositius. No es pot desfer.",
+      one: "Vols eliminar aquest enllaç? Deixarà de funcionar a tot arreu. No es pot desfer.",
     },
     "app.history.phoneOnlyAlso": {
       one: "També s'eliminarà del telèfon 1 veredicte que només hi estava desat; el seu enllaç per compartir continuarà funcionant.",

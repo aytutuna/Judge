@@ -552,9 +552,9 @@
         <item quantity="other">Vols eliminar %1$s veredictes del teu compte? S\'esborraran el que vas escriure i els noms, i els seus enllaços per compartir deixaran de funcionar a tots els dispositius. No es pot desfer.</item>
     </plurals>
     <plurals name="app_history_remove_links_confirm">
-        <item quantity="one">Vols eliminar aquest enllaç del teu compte? S\'esborraran el que vas escriure i els noms, i l\'enllaç deixarà de funcionar a tots els dispositius. No es pot desfer.</item>
-        <item quantity="many">Vols eliminar %1$s enllaços del teu compte? S\'esborraran el que vas escriure i els noms, i els enllaços deixaran de funcionar a tots els dispositius. No es pot desfer.</item>
-        <item quantity="other">Vols eliminar %1$s enllaços del teu compte? S\'esborraran el que vas escriure i els noms, i els enllaços deixaran de funcionar a tots els dispositius. No es pot desfer.</item>
+        <item quantity="one">Vols eliminar aquest enllaç? Deixarà de funcionar a tot arreu. No es pot desfer.</item>
+        <item quantity="many">Vols eliminar %1$s enllaços? Deixaran de funcionar a tot arreu. No es pot desfer.</item>
+        <item quantity="other">Vols eliminar %1$s enllaços? Deixaran de funcionar a tot arreu. No es pot desfer.</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="one">També s\'eliminarà del telèfon 1 veredicte que només hi estava desat; el seu enllaç per compartir continuarà funcionant.</item>

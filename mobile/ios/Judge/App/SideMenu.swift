@@ -260,6 +260,7 @@ struct SideMenu: View {
     @State private var profileOpen = false
     @State private var confirmSignOut = false
     @State private var confirming: [String]?
+    @State private var confirmingAll = false
     /// Rows near the end that are on screen.
     @State private var tailShown: Set<String> = []
     /// Where the sides of the owner's waiting links stand, by case id, while the menu is open.
@@ -315,10 +316,10 @@ struct SideMenu: View {
         }
         .confirmationDialog(
             HistoryLabels.removeConfirm(currentEntries.filter { Set(confirming ?? []).contains($0.id) }, lang: app.lang),
-            isPresented: Binding(get: { confirming != nil }, set: { if !$0 { confirming = nil } }),
+            isPresented: Binding(get: { confirming != nil }, set: { if !$0 { confirming = nil; confirmingAll = false } }),
             titleVisibility: .visible
         ) {
-            Button(L10n.appHistoryDelete(app.lang), role: .destructive) { remove(confirming ?? []) }
+            Button(confirmingAll ? L10n.appHistoryRemoveAll(app.lang) : L10n.appHistoryDelete(app.lang), role: .destructive) { remove(confirming ?? []) }
             Button(L10n.appCancel(app.lang), role: .cancel) {}
         }
     }
@@ -373,6 +374,7 @@ struct SideMenu: View {
                 if list.next == at { break }
                 cursor = list.next
             }
+            confirmingAll = true
             confirming = currentEntries.filter { $0.isCase && $0.removable }.map(\.id)
         }
     }

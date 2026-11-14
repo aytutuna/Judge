@@ -20,7 +20,7 @@ const ptBR: AppLocale = {
     "app.history.removeConfirm":
       "Remover {n} vereditos da sua conta? O que você escreveu e os nomes são apagados, e os links de compartilhamento deles param de funcionar, em todos os dispositivos. Não dá para desfazer.",
     "app.history.removeLinksConfirm":
-      "Remover {n} links da sua conta? O que você escreveu e os nomes são apagados, e os links param de funcionar, em todos os dispositivos. Não dá para desfazer.",
+      "Remover {n} links? Eles vão parar de funcionar em todo lugar. Não dá para desfazer.",
     "app.history.phoneOnlyAlso":
       "{n} vereditos salvos só neste celular também são excluídos daqui; os links de compartilhamento deles continuam funcionando.",
     "app.history.removeFailed": "Não foi possível remover {n} deles. Confira sua conexão e tente de novo.",
@@ -165,7 +165,7 @@ const ptBR: AppLocale = {
       one: "Remover {n} veredito da sua conta? O que você escreveu e os nomes são apagados, e o link de compartilhamento dele para de funcionar, em todos os dispositivos. Não dá para desfazer.",
     },
     "app.history.removeLinksConfirm": {
-      one: "Remover {n} link da sua conta? O que você escreveu e os nomes são apagados, e o link para de funcionar, em todos os dispositivos. Não dá para desfazer.",
+      one: "Remover {n} link? Ele vai parar de funcionar em todo lugar. Não dá para desfazer.",
     },
     "app.history.phoneOnlyAlso": {
       one: "{n} veredito salvo só neste celular também é excluído daqui; o link de compartilhamento dele continua funcionando.",

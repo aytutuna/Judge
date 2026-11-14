@@ -18,7 +18,7 @@ const ptPT: AppLocale = {
     "app.history.removeConfirm":
       "Remover {n} veredictos da tua conta? O que escreveste e os nomes são apagados e os links de partilha deixam de funcionar, em todos os dispositivos. Isto não pode ser desfeito.",
     "app.history.removeLinksConfirm":
-      "Remover {n} ligações da tua conta? O que escreveste e os nomes são apagados e as ligações deixam de funcionar, em todos os dispositivos. Isto não pode ser desfeito.",
+      "Remover {n} ligações? Deixam de funcionar em qualquer lado. Isto não pode ser desfeito.",
     "app.history.phoneOnlyAlso":
       "{n} veredictos guardados só neste telemóvel são apagados daqui; os links de partilha continuam ativos.",
     "app.history.removeFailed": "Não conseguimos remover {n} deles. Verifica a ligação e tenta outra vez.",
@@ -160,7 +160,7 @@ const ptPT: AppLocale = {
       one: "Remover {n} veredicto da tua conta? O que escreveste e os nomes são apagados e o link de partilha deixa de funcionar, em todos os dispositivos. Isto não pode ser desfeito.",
     },
     "app.history.removeLinksConfirm": {
-      one: "Remover {n} ligação da tua conta? O que escreveste e os nomes são apagados e a ligação deixa de funcionar, em todos os dispositivos. Isto não pode ser desfeito.",
+      one: "Remover {n} ligação? Deixa de funcionar em qualquer lado. Isto não pode ser desfeito.",
     },
     "app.history.phoneOnlyAlso": {
       one: "{n} veredicto guardado só neste telemóvel é apagado daqui; o link de partilha continua ativo.",

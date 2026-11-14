@@ -29,6 +29,7 @@ final class SideMenuUITests: UITestCase {
         XCTAssertTrue(wait(question))
         XCTAssertTrue(question.label.contains("link"), question.label)
         XCTAssertFalse(question.label.contains("verdict"), question.label)
+        XCTAssertFalse(app.buttons["Delete"].exists, "the dialog's button says Remove all")
         shot("10 remove all links")
         // iOS 26 shows the dialog as a popover with no Cancel button, sitting over the Links heading.
         // Tapping outside it is its cancel; the Verdicts heading is well clear and does nothing itself.
@@ -47,6 +48,6 @@ final class SideMenuUITests: UITestCase {
 
     // "Removed by Sam" on a link row also starts with "Remove".
     private var removeQuestion: XCUIElement {
-        app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'Remove ' AND label CONTAINS 'from your account'")).firstMatch
+        app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'Remove ' AND label ENDSWITH 'undone.'")).firstMatch
     }
 }

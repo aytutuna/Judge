@@ -20,7 +20,7 @@ const fr: AppLocale = {
     "app.history.removeConfirm":
       "Supprimer {n} verdicts de ton compte, sur tous tes appareils ? Ce que tu as écrit et les noms seront effacés, et leurs liens de partage cesseront de fonctionner. Cette action est irréversible.",
     "app.history.removeLinksConfirm":
-      "Supprimer {n} liens de ton compte, sur tous tes appareils ? Ce que tu as écrit et les noms seront effacés, et les liens cesseront de fonctionner. Cette action est irréversible.",
+      "Supprimer {n} liens ? Ils ne fonctionneront plus nulle part. Cette action est irréversible.",
     "app.history.phoneOnlyAlso":
       "{n} verdicts enregistrés uniquement sur ce téléphone seront supprimés de l’appareil ; leurs liens de partage continueront de fonctionner.",
     "app.history.removeFailed": "Impossible d’en supprimer {n}. Vérifie ta connexion et réessaie.",
@@ -164,7 +164,7 @@ const fr: AppLocale = {
       one: "Supprimer {n} verdict de ton compte, sur tous tes appareils ? Ce que tu as écrit et les noms seront effacés, et son lien de partage cessera de fonctionner. Cette action est irréversible.",
     },
     "app.history.removeLinksConfirm": {
-      one: "Supprimer {n} lien de ton compte, sur tous tes appareils ? Ce que tu as écrit et les noms seront effacés, et le lien cessera de fonctionner. Cette action est irréversible.",
+      one: "Supprimer {n} lien ? Il ne fonctionnera plus nulle part. Cette action est irréversible.",
     },
     "app.history.phoneOnlyAlso": {
       one: "{n} verdict enregistré uniquement sur ce téléphone sera supprimé de l’appareil ; son lien de partage continuera de fonctionner.",

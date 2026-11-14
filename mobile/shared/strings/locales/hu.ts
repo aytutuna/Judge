@@ -18,7 +18,7 @@ const hu: AppLocale = {
     "app.history.removeConfirm":
       "Eltávolítod a kijelölt {n} ítéletet a fiókodból? Az eredeti szövegeid és a nevek törlődnek, a megosztási linkjeik pedig minden eszközön megszűnnek működni. Ez nem vonható vissza.",
     "app.history.removeLinksConfirm":
-      "Eltávolítod a kijelölt {n} linket a fiókodból? Az eredeti szövegeid és a nevek törlődnek, a linkek pedig minden eszközön megszűnnek működni. Ez nem vonható vissza.",
+      "Eltávolítod a kijelölt {n} linket? Mindenhol megszűnnek működni. Ez nem vonható vissza.",
     "app.history.phoneOnlyAlso": "A csak ezen a telefonon tárolt {n} ítélet innen törlődik; a megosztási linkjeik továbbra is működnek.",
     "app.history.removeFailed": "{n} ítéletet nem sikerült eltávolítani. Ellenőrizd az internetkapcsolatot, és próbáld újra.",
     "app.history.offlineRemove": "Nincs internetkapcsolat. Eltávolítani csak online lehet.",
@@ -159,7 +159,7 @@ const hu: AppLocale = {
       one: "Eltávolítod ezt az ítéletet a fiókodból? Az eredeti szöveged és a nevek törlődnek, a megosztási linkje pedig minden eszközön megszűnik működni. Ez nem vonható vissza.",
     },
     "app.history.removeLinksConfirm": {
-      one: "Eltávolítod ezt a linket a fiókodból? Az eredeti szöveged és a nevek törlődnek, a link pedig minden eszközön megszűnik működni. Ez nem vonható vissza.",
+      one: "Eltávolítod ezt a linket? Mindenhol megszűnik működni. Ez nem vonható vissza.",
     },
     "app.history.phoneOnlyAlso": { one: "A csak ezen a telefonon tárolt 1 ítélet innen törlődik; a megosztási linkje továbbra is működik." },
     "app.history.removeFailed": { one: "Nem sikerült eltávolítani az ítéletet. Ellenőrizd az internetkapcsolatot, és próbáld újra." },

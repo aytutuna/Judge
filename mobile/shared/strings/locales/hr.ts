@@ -20,8 +20,7 @@ const hr: AppLocale = {
       "Nisu na tvom računu: ove su presude spremljene samo na ovom telefonu. Ako neku od njih izbrišeš ovdje, njezina poveznica za dijeljenje i dalje radi.",
     "app.history.removeConfirm":
       "Ukloniti {n} presuda s tvog računa? Na svim uređajima brišu se tvoj tekst i imena, a poveznice za dijeljenje prestaju raditi. Ovo se ne može poništiti.",
-    "app.history.removeLinksConfirm":
-      "Ukloniti {n} poveznica s tvog računa? Na svim uređajima brišu se tvoj tekst i imena, a poveznice prestaju raditi. Ovo se ne može poništiti.",
+    "app.history.removeLinksConfirm": "Ukloniti {n} poveznica? Prestat će raditi posvuda. Ovo se ne može poništiti.",
     "app.history.phoneOnlyAlso":
       "S ovog telefona briše se i {n} presuda spremljenih samo na njemu; njihove poveznice za dijeljenje i dalje rade.",
     "app.history.removeFailed": "Nismo uspjeli ukloniti {n} presuda. Provjeri vezu i pokušaj ponovno.",
@@ -167,8 +166,8 @@ const hr: AppLocale = {
       few: "Ukloniti {n} presude s tvog računa? Na svim uređajima brišu se tvoj tekst i imena, a poveznice za dijeljenje prestaju raditi. Ovo se ne može poništiti.",
     },
     "app.history.removeLinksConfirm": {
-      one: "Ukloniti {n} poveznicu s tvog računa? Na svim uređajima brišu se tvoj tekst i imena, a poveznica prestaje raditi. Ovo se ne može poništiti.",
-      few: "Ukloniti {n} poveznice s tvog računa? Na svim uređajima brišu se tvoj tekst i imena, a poveznice prestaju raditi. Ovo se ne može poništiti.",
+      one: "Ukloniti {n} poveznicu? Prestat će raditi posvuda. Ovo se ne može poništiti.",
+      few: "Ukloniti {n} poveznice? Prestat će raditi posvuda. Ovo se ne može poništiti.",
     },
     "app.history.phoneOnlyAlso": {
       one: "S ovog telefona briše se i {n} presuda spremljena samo na njemu; poveznice za dijeljenje i dalje rade.",

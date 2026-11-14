@@ -20,8 +20,7 @@ const nb: AppLocale = {
       "Ikke i kontoen din: disse er bare lagret på denne telefonen. Sletter du en dom her, fjernes ikke delingslenken.",
     "app.history.removeConfirm":
       "Vil du fjerne {n} dommer fra kontoen din? Det du skrev og navnene slettes, og delingslenkene slutter å virke på alle enheter. Dette kan ikke angres.",
-    "app.history.removeLinksConfirm":
-      "Vil du fjerne {n} lenker fra kontoen din? Det du skrev og navnene slettes, og lenkene slutter å virke på alle enheter. Dette kan ikke angres.",
+    "app.history.removeLinksConfirm": "Vil du fjerne {n} lenker? De slutter å virke overalt. Dette kan ikke angres.",
     "app.history.phoneOnlyAlso":
       "{n} dommer som bare er lagret på denne telefonen, slettes herfra. Delingslenkene virker fortsatt.",
     "app.history.removeFailed": "Vi fikk ikke fjernet {n} av dem. Sjekk tilkoblingen og prøv igjen.",
@@ -182,7 +181,7 @@ const nb: AppLocale = {
       one: "Vil du fjerne denne dommen fra kontoen din? Det du skrev og navnene slettes, og delingslenken slutter å virke på alle enheter. Dette kan ikke angres.",
     },
     "app.history.removeLinksConfirm": {
-      one: "Vil du fjerne denne lenken fra kontoen din? Det du skrev og navnene slettes, og lenken slutter å virke på alle enheter. Dette kan ikke angres.",
+      one: "Vil du fjerne denne lenken? Den slutter å virke overalt. Dette kan ikke angres.",
     },
     "app.history.phoneOnlyAlso": {
       one: "1 dom som bare er lagret på denne telefonen, slettes herfra. Delingslenken virker fortsatt.",

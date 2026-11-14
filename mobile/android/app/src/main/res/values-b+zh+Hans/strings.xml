@@ -530,7 +530,7 @@
         <item quantity="other">要从你的账号中删除 %1$s 条裁决吗？在所有设备上，你写的内容和名字都会被抹去，分享链接也会失效。此操作无法撤销。</item>
     </plurals>
     <plurals name="app_history_remove_links_confirm">
-        <item quantity="other">要从你的账号中删除 %1$s 条链接吗？在所有设备上，你写的内容和名字都会被抹去，链接也会失效。此操作无法撤销。</item>
+        <item quantity="other">要删除 %1$s 条链接吗？它们会在所有地方失效。此操作无法撤销。</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="other">另有 %1$s 条只保存在这台手机上的裁决会从手机上删除，它们的分享链接仍然有效。</item>

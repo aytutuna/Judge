@@ -15,7 +15,7 @@ const zhHant: AppLocale = {
     "app.history.phoneOnly": "只在這支手機上",
     "app.history.phoneOnlyNote": "這些判決不在你的帳號中，只保存在這支手機上。在這裡刪除，分享連結不會跟著失效。",
     "app.history.removeConfirm": "要從你的帳號移除 {n} 個判決嗎？所有裝置上都會跟著移除：你寫的內容和名字會被清除，分享連結也會對所有人失效。這個動作無法復原。",
-    "app.history.removeLinksConfirm": "要從你的帳號移除 {n} 個連結嗎？所有裝置上都會跟著移除：你寫的內容和名字會被清除，連結也會失效。這個動作無法復原。",
+    "app.history.removeLinksConfirm": "要移除 {n} 個連結嗎？它們會在所有地方失效。這個動作無法復原。",
     "app.history.phoneOnlyAlso": "只保存在這支手機上的 {n} 個判決會從手機刪除，分享連結不會跟著失效。",
     "app.history.removeFailed": "有 {n} 個無法移除。檢查一下連線，再試一次。",
     "app.history.offlineRemove": "你目前離線，移除需要網路連線。",

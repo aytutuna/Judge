@@ -552,9 +552,9 @@
         <item quantity="other">Elimini %1$s de verdicte din contul tău, de pe toate dispozitivele? Ce ai scris și numele sunt șterse, iar linkurile lor de distribuire nu mai funcționează. Acțiunea nu poate fi anulată.</item>
     </plurals>
     <plurals name="app_history_remove_links_confirm">
-        <item quantity="one">Elimini linkul din contul tău, de pe toate dispozitivele? Ce ai scris și numele sunt șterse, iar linkul nu mai funcționează. Acțiunea nu poate fi anulată.</item>
-        <item quantity="few">Elimini %1$s linkuri din contul tău, de pe toate dispozitivele? Ce ai scris și numele sunt șterse, iar linkurile nu mai funcționează. Acțiunea nu poate fi anulată.</item>
-        <item quantity="other">Elimini %1$s de linkuri din contul tău, de pe toate dispozitivele? Ce ai scris și numele sunt șterse, iar linkurile nu mai funcționează. Acțiunea nu poate fi anulată.</item>
+        <item quantity="one">Elimini linkul? Nu va mai funcționa nicăieri. Acțiunea nu poate fi anulată.</item>
+        <item quantity="few">Elimini %1$s linkuri? Nu vor mai funcționa nicăieri. Acțiunea nu poate fi anulată.</item>
+        <item quantity="other">Elimini %1$s de linkuri? Nu vor mai funcționa nicăieri. Acțiunea nu poate fi anulată.</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="one">Se șterge și 1 verdict salvat doar pe acest telefon; linkul lui de distribuire rămâne activ.</item>

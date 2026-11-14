@@ -552,9 +552,9 @@
         <item quantity="other">Supprimer %1$s verdicts de ton compte, sur tous tes appareils ? Ce que tu as écrit et les noms seront effacés, et leurs liens de partage cesseront de fonctionner. Cette action est irréversible.</item>
     </plurals>
     <plurals name="app_history_remove_links_confirm">
-        <item quantity="one">Supprimer %1$s lien de ton compte, sur tous tes appareils ? Ce que tu as écrit et les noms seront effacés, et le lien cessera de fonctionner. Cette action est irréversible.</item>
-        <item quantity="many">Supprimer %1$s liens de ton compte, sur tous tes appareils ? Ce que tu as écrit et les noms seront effacés, et les liens cesseront de fonctionner. Cette action est irréversible.</item>
-        <item quantity="other">Supprimer %1$s liens de ton compte, sur tous tes appareils ? Ce que tu as écrit et les noms seront effacés, et les liens cesseront de fonctionner. Cette action est irréversible.</item>
+        <item quantity="one">Supprimer %1$s lien ? Il ne fonctionnera plus nulle part. Cette action est irréversible.</item>
+        <item quantity="many">Supprimer %1$s liens ? Ils ne fonctionneront plus nulle part. Cette action est irréversible.</item>
+        <item quantity="other">Supprimer %1$s liens ? Ils ne fonctionneront plus nulle part. Cette action est irréversible.</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="one">%1$s verdict enregistré uniquement sur ce téléphone sera supprimé de l’appareil ; son lien de partage continuera de fonctionner.</item>

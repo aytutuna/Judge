@@ -541,8 +541,8 @@
         <item quantity="other">Poistetaanko %1$s tuomiota tililtäsi? Poisto koskee kaikkia laitteitasi: kirjoittamasi teksti ja nimet pyyhitään, ja niiden jakolinkit lakkaavat toimimasta. Tätä ei voi perua.</item>
     </plurals>
     <plurals name="app_history_remove_links_confirm">
-        <item quantity="one">Poistetaanko tämä linkki tililtäsi? Poisto koskee kaikkia laitteitasi: kirjoittamasi teksti ja nimet pyyhitään, ja linkki lakkaa toimimasta. Tätä ei voi perua.</item>
-        <item quantity="other">Poistetaanko %1$s linkkiä tililtäsi? Poisto koskee kaikkia laitteitasi: kirjoittamasi teksti ja nimet pyyhitään, ja linkit lakkaavat toimimasta. Tätä ei voi perua.</item>
+        <item quantity="one">Poistetaanko tämä linkki? Se lakkaa toimimasta kaikkialla. Tätä ei voi perua.</item>
+        <item quantity="other">Poistetaanko %1$s linkkiä? Ne lakkaavat toimimasta kaikkialla. Tätä ei voi perua.</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="one">1 vain tähän puhelimeen tallennettu tuomio poistetaan puhelimesta; sen jakolinkki toimii edelleen.</item>

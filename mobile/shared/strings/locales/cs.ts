@@ -19,8 +19,7 @@ const cs: AppLocale = {
       "Tyhle verdikty nejsou ve tvém účtu, jsou uložené jen v tomhle telefonu. Když tu některý smažeš, jeho sdílený odkaz bude fungovat dál.",
     "app.history.removeConfirm":
       "Odstranit {n} verdiktů ze svého účtu? Tvůj text i jména se vymažou a jejich sdílené odkazy přestanou fungovat, a to na všech zařízeních. Tohle nejde vrátit.",
-    "app.history.removeLinksConfirm":
-      "Odstranit {n} odkazů ze svého účtu? Tvůj text i jména se vymažou a odkazy přestanou fungovat, a to na všech zařízeních. Tohle nejde vrátit.",
+    "app.history.removeLinksConfirm": "Odstranit {n} odkazů? Přestanou všude fungovat. Tohle nejde vrátit.",
     "app.history.phoneOnlyAlso":
       "{n} verdiktů uložených jen v tomhle telefonu se z něj smaže; jejich sdílené odkazy budou fungovat dál.",
     "app.history.removeFailed": "{n} z nich se nepodařilo odstranit. Zkontroluj připojení a zkus to znovu.",
@@ -166,8 +165,8 @@ const cs: AppLocale = {
       few: "Odstranit {n} verdikty ze svého účtu? Tvůj text i jména se vymažou a jejich sdílené odkazy přestanou fungovat, a to na všech zařízeních. Tohle nejde vrátit.",
     },
     "app.history.removeLinksConfirm": {
-      one: "Odstranit tenhle odkaz ze svého účtu? Tvůj text i jména se vymažou a odkaz přestane fungovat, a to na všech zařízeních. Tohle nejde vrátit.",
-      few: "Odstranit {n} odkazy ze svého účtu? Tvůj text i jména se vymažou a odkazy přestanou fungovat, a to na všech zařízeních. Tohle nejde vrátit.",
+      one: "Odstranit tenhle odkaz? Přestane všude fungovat. Tohle nejde vrátit.",
+      few: "Odstranit {n} odkazy? Přestanou všude fungovat. Tohle nejde vrátit.",
     },
     "app.history.phoneOnlyAlso": {
       one: "Jeden verdikt uložený jen v tomhle telefonu se z něj smaže; jeho sdílený odkaz bude fungovat dál.",

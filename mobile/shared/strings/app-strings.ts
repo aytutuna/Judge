@@ -28,7 +28,7 @@ export const APP_EN = {
   "app.history.removeConfirm":
     "Remove {n} verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can't be undone.",
   "app.history.removeLinksConfirm":
-    "Remove {n} links from your account? What you wrote and the names are erased and the links stop working, on every device. This can't be undone.",
+    "Remove {n} links? They stop working everywhere. This can't be undone.",
   "app.history.phoneOnlyAlso": "{n} saved only on this phone are deleted from it; their share links keep working.",
   "app.history.removeFailed": "Couldn't remove {n} of them. Check your connection and try again.",
   "app.history.offlineRemove": "You're offline. Removing needs a connection.",
@@ -211,7 +211,7 @@ export const APP_PLURALS_EN: Partial<Record<AppCountKey, PluralForms>> = {
     one: "Remove this verdict from your account? What you wrote and the names are erased and its share link stops working, on every device. This can't be undone.",
   },
   "app.history.removeLinksConfirm": {
-    one: "Remove this link from your account? What you wrote and the names are erased and the link stops working, on every device. This can't be undone.",
+    one: "Remove this link? It stops working everywhere. This can't be undone.",
   },
   "app.history.phoneOnlyAlso": { one: "1 saved only on this phone is deleted from it; its share link keeps working." },
   "app.history.removeFailed": { one: "Couldn't remove it. Check your connection and try again." },

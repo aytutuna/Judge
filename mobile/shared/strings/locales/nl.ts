@@ -19,7 +19,7 @@ const nl: AppLocale = {
     "app.history.removeConfirm":
       "{n} uitspraken uit je account verwijderen? Ze verdwijnen van al je apparaten: wat je schreef en de namen worden gewist en de deellinks werken niet meer. Dit kan niet ongedaan worden gemaakt.",
     "app.history.removeLinksConfirm":
-      "{n} links uit je account verwijderen? Ze verdwijnen van al je apparaten: wat je schreef en de namen worden gewist en de links werken niet meer. Dit kan niet ongedaan worden gemaakt.",
+      "{n} links verwijderen? Ze werken dan nergens meer. Dit kan niet ongedaan worden gemaakt.",
     "app.history.phoneOnlyAlso": "{n} uitspraken die alleen op deze telefoon staan, worden hier verwijderd; hun deellinks blijven gewoon werken.",
     "app.history.removeFailed": "{n} ervan konden niet worden verwijderd. Check je verbinding en probeer het opnieuw.",
     "app.history.offlineRemove": "Je bent offline. Om te verwijderen heb je een verbinding nodig.",
@@ -161,7 +161,7 @@ const nl: AppLocale = {
       one: "Deze uitspraak uit je account verwijderen? Hij verdwijnt van al je apparaten: wat je schreef en de namen worden gewist en de deellink werkt niet meer. Dit kan niet ongedaan worden gemaakt.",
     },
     "app.history.removeLinksConfirm": {
-      one: "Deze link uit je account verwijderen? Hij verdwijnt van al je apparaten: wat je schreef en de namen worden gewist en de link werkt niet meer. Dit kan niet ongedaan worden gemaakt.",
+      one: "Deze link verwijderen? Hij werkt dan nergens meer. Dit kan niet ongedaan worden gemaakt.",
     },
     "app.history.phoneOnlyAlso": { one: "1 uitspraak die alleen op deze telefoon staat, wordt hier verwijderd; de deellink blijft gewoon werken." },
     "app.history.removeFailed": { one: "Verwijderen is niet gelukt. Check je verbinding en probeer het opnieuw." },

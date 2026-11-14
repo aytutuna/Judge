@@ -552,9 +552,9 @@
         <item quantity="other">Ukloniti %1$s presuda s tvog računa? Na svim uređajima brišu se tvoj tekst i imena, a poveznice za dijeljenje prestaju raditi. Ovo se ne može poništiti.</item>
     </plurals>
     <plurals name="app_history_remove_links_confirm">
-        <item quantity="one">Ukloniti %1$s poveznicu s tvog računa? Na svim uređajima brišu se tvoj tekst i imena, a poveznica prestaje raditi. Ovo se ne može poništiti.</item>
-        <item quantity="few">Ukloniti %1$s poveznice s tvog računa? Na svim uređajima brišu se tvoj tekst i imena, a poveznice prestaju raditi. Ovo se ne može poništiti.</item>
-        <item quantity="other">Ukloniti %1$s poveznica s tvog računa? Na svim uređajima brišu se tvoj tekst i imena, a poveznice prestaju raditi. Ovo se ne može poništiti.</item>
+        <item quantity="one">Ukloniti %1$s poveznicu? Prestat će raditi posvuda. Ovo se ne može poništiti.</item>
+        <item quantity="few">Ukloniti %1$s poveznice? Prestat će raditi posvuda. Ovo se ne može poništiti.</item>
+        <item quantity="other">Ukloniti %1$s poveznica? Prestat će raditi posvuda. Ovo se ne može poništiti.</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="one">S ovog telefona briše se i %1$s presuda spremljena samo na njemu; poveznice za dijeljenje i dalje rade.</item>

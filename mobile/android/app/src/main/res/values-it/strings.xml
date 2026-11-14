@@ -552,9 +552,9 @@
         <item quantity="other">Rimuovere %1$s verdetti dal tuo account? Quello che hai scritto e i nomi vengono cancellati e i loro link di condivisione smettono di funzionare, su tutti i dispositivi. Non si può annullare.</item>
     </plurals>
     <plurals name="app_history_remove_links_confirm">
-        <item quantity="one">Rimuovere questo link dal tuo account? Quello che hai scritto e i nomi vengono cancellati e il link smette di funzionare, su tutti i dispositivi. Non si può annullare.</item>
-        <item quantity="many">Rimuovere %1$s link dal tuo account? Quello che hai scritto e i nomi vengono cancellati e i link smettono di funzionare, su tutti i dispositivi. Non si può annullare.</item>
-        <item quantity="other">Rimuovere %1$s link dal tuo account? Quello che hai scritto e i nomi vengono cancellati e i link smettono di funzionare, su tutti i dispositivi. Non si può annullare.</item>
+        <item quantity="one">Rimuovere questo link? Smetterà di funzionare ovunque. Non si può annullare.</item>
+        <item quantity="many">Rimuovere %1$s link? Smetteranno di funzionare ovunque. Non si può annullare.</item>
+        <item quantity="other">Rimuovere %1$s link? Smetteranno di funzionare ovunque. Non si può annullare.</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="one">%1$s verdetto salvato solo su questo telefono viene eliminato da qui; il suo link di condivisione continua a funzionare.</item>

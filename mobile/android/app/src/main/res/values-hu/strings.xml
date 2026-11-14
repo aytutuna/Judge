@@ -541,8 +541,8 @@
         <item quantity="other">Eltávolítod a kijelölt %1$s ítéletet a fiókodból? Az eredeti szövegeid és a nevek törlődnek, a megosztási linkjeik pedig minden eszközön megszűnnek működni. Ez nem vonható vissza.</item>
     </plurals>
     <plurals name="app_history_remove_links_confirm">
-        <item quantity="one">Eltávolítod ezt a linket a fiókodból? Az eredeti szöveged és a nevek törlődnek, a link pedig minden eszközön megszűnik működni. Ez nem vonható vissza.</item>
-        <item quantity="other">Eltávolítod a kijelölt %1$s linket a fiókodból? Az eredeti szövegeid és a nevek törlődnek, a linkek pedig minden eszközön megszűnnek működni. Ez nem vonható vissza.</item>
+        <item quantity="one">Eltávolítod ezt a linket? Mindenhol megszűnik működni. Ez nem vonható vissza.</item>
+        <item quantity="other">Eltávolítod a kijelölt %1$s linket? Mindenhol megszűnnek működni. Ez nem vonható vissza.</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="one">A csak ezen a telefonon tárolt 1 ítélet innen törlődik; a megosztási linkje továbbra is működik.</item>

@@ -21,7 +21,7 @@ const sl: AppLocale = {
     "app.history.removeConfirm":
       "Želiš iz svojega računa odstraniti {n} razsodb? Na vseh napravah se izbrišejo tvoje besedilo in imena, njihove povezave za deljenje pa prenehajo delovati. Tega ni mogoče razveljaviti.",
     "app.history.removeLinksConfirm":
-      "Želiš iz svojega računa odstraniti {n} povezav? Na vseh napravah se izbrišejo tvoje besedilo in imena, povezave pa prenehajo delovati. Tega ni mogoče razveljaviti.",
+      "Želiš odstraniti {n} povezav? Povsod bodo prenehale delovati. Tega ni mogoče razveljaviti.",
     "app.history.phoneOnlyAlso":
       "{n} razsodb, shranjenih samo na tem telefonu, se izbriše s telefona; njihove povezave za deljenje še vedno delujejo.",
     "app.history.removeFailed": "{n} razsodb ni bilo mogoče odstraniti. Preveri povezavo in poskusi znova.",
@@ -189,9 +189,9 @@ const sl: AppLocale = {
       few: "Želiš iz svojega računa odstraniti {n} razsodbe? Na vseh napravah se izbrišejo tvoje besedilo in imena, njihove povezave za deljenje pa prenehajo delovati. Tega ni mogoče razveljaviti.",
     },
     "app.history.removeLinksConfirm": {
-      one: "Želiš iz svojega računa odstraniti {n} povezavo? Na vseh napravah se izbrišejo tvoje besedilo in imena, povezava pa preneha delovati. Tega ni mogoče razveljaviti.",
-      two: "Želiš iz svojega računa odstraniti {n} povezavi? Na vseh napravah se izbrišejo tvoje besedilo in imena, povezavi pa prenehata delovati. Tega ni mogoče razveljaviti.",
-      few: "Želiš iz svojega računa odstraniti {n} povezave? Na vseh napravah se izbrišejo tvoje besedilo in imena, povezave pa prenehajo delovati. Tega ni mogoče razveljaviti.",
+      one: "Želiš odstraniti {n} povezavo? Povsod bo prenehala delovati. Tega ni mogoče razveljaviti.",
+      two: "Želiš odstraniti {n} povezavi? Povsod bosta prenehali delovati. Tega ni mogoče razveljaviti.",
+      few: "Želiš odstraniti {n} povezave? Povsod bodo prenehale delovati. Tega ni mogoče razveljaviti.",
     },
     "app.history.phoneOnlyAlso": {
       one: "{n} razsodba, shranjena samo na tem telefonu, se izbriše s telefona; njena povezava za deljenje še vedno deluje.",

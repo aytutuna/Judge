@@ -19,8 +19,7 @@ const sv: AppLocale = {
       "Inte i ditt konto: de här sparas bara på den här telefonen. Tar du bort en dom här fortsätter delningslänken att fungera.",
     "app.history.removeConfirm":
       "Ta bort {n} domar från ditt konto? Det du skrev och namnen raderas och delningslänkarna slutar fungera, på alla enheter. Det går inte att ångra.",
-    "app.history.removeLinksConfirm":
-      "Ta bort {n} länkar från ditt konto? Det du skrev och namnen raderas och länkarna slutar fungera, på alla enheter. Det går inte att ångra.",
+    "app.history.removeLinksConfirm": "Ta bort {n} länkar? De slutar fungera överallt. Det går inte att ångra.",
     "app.history.phoneOnlyAlso":
       "{n} domar som bara finns på den här telefonen tas bort därifrån; delningslänkarna fortsätter att fungera.",
     "app.history.removeFailed": "Det gick inte att ta bort {n} av dem. Kolla din uppkoppling och försök igen.",
@@ -164,7 +163,7 @@ const sv: AppLocale = {
       one: "Ta bort domen från ditt konto? Det du skrev och namnen raderas och delningslänken slutar fungera, på alla enheter. Det går inte att ångra.",
     },
     "app.history.removeLinksConfirm": {
-      one: "Ta bort länken från ditt konto? Det du skrev och namnen raderas och länken slutar fungera, på alla enheter. Det går inte att ångra.",
+      one: "Ta bort länken? Den slutar fungera överallt. Det går inte att ångra.",
     },
     "app.history.phoneOnlyAlso": {
       one: "1 dom som bara finns på den här telefonen tas bort därifrån; delningslänken fortsätter att fungera.",

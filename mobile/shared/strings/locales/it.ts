@@ -19,8 +19,7 @@ const it: AppLocale = {
       "Non sono nel tuo account: sono salvati solo su questo telefono. Se ne elimini uno qui, il suo link di condivisione continua a funzionare.",
     "app.history.removeConfirm":
       "Rimuovere {n} verdetti dal tuo account? Quello che hai scritto e i nomi vengono cancellati e i loro link di condivisione smettono di funzionare, su tutti i dispositivi. Non si può annullare.",
-    "app.history.removeLinksConfirm":
-      "Rimuovere {n} link dal tuo account? Quello che hai scritto e i nomi vengono cancellati e i link smettono di funzionare, su tutti i dispositivi. Non si può annullare.",
+    "app.history.removeLinksConfirm": "Rimuovere {n} link? Smetteranno di funzionare ovunque. Non si può annullare.",
     "app.history.phoneOnlyAlso":
       "{n} verdetti salvati solo su questo telefono vengono eliminati da qui; i loro link di condivisione continuano a funzionare.",
     "app.history.removeFailed": "Non è stato possibile rimuoverne {n}. Controlla la connessione e riprova.",
@@ -165,7 +164,7 @@ const it: AppLocale = {
       one: "Rimuovere questo verdetto dal tuo account? Quello che hai scritto e i nomi vengono cancellati e il suo link di condivisione smette di funzionare, su tutti i dispositivi. Non si può annullare.",
     },
     "app.history.removeLinksConfirm": {
-      one: "Rimuovere questo link dal tuo account? Quello che hai scritto e i nomi vengono cancellati e il link smette di funzionare, su tutti i dispositivi. Non si può annullare.",
+      one: "Rimuovere questo link? Smetterà di funzionare ovunque. Non si può annullare.",
     },
     "app.history.phoneOnlyAlso": {
       one: "{n} verdetto salvato solo su questo telefono viene eliminato da qui; il suo link di condivisione continua a funzionare.",

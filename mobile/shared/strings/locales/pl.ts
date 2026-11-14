@@ -19,8 +19,7 @@ const pl: AppLocale = {
       "Nie ma ich na twoim koncie: są zapisane tylko na tym telefonie. Usunięcie werdyktu tutaj nie wyłącza linku do udostępniania.",
     "app.history.removeConfirm":
       "Usunąć {n} werdyktów ze swojego konta? Twoje teksty i imiona zostaną wymazane, a ich linki do udostępniania przestaną działać na wszystkich urządzeniach. Tego nie da się cofnąć.",
-    "app.history.removeLinksConfirm":
-      "Usunąć {n} linków ze swojego konta? Twoje teksty i imiona zostaną wymazane, a linki przestaną działać na wszystkich urządzeniach. Tego nie da się cofnąć.",
+    "app.history.removeLinksConfirm": "Usunąć {n} linków? Przestaną działać wszędzie. Tego nie da się cofnąć.",
     "app.history.phoneOnlyAlso":
       "{n} werdyktów zapisanych tylko na tym telefonie zostanie z niego usuniętych; ich linki do udostępniania nadal będą działać.",
     "app.history.removeFailed": "Nie udało się usunąć {n} z nich. Sprawdź połączenie i spróbuj ponownie.",
@@ -173,9 +172,9 @@ const pl: AppLocale = {
       many: "Usunąć {n} werdyktów ze swojego konta? Twoje teksty i imiona zostaną wymazane, a ich linki do udostępniania przestaną działać na wszystkich urządzeniach. Tego nie da się cofnąć.",
     },
     "app.history.removeLinksConfirm": {
-      one: "Usunąć ten link ze swojego konta? Twój tekst i imiona zostaną wymazane, a link przestanie działać na wszystkich urządzeniach. Tego nie da się cofnąć.",
-      few: "Usunąć {n} linki ze swojego konta? Twoje teksty i imiona zostaną wymazane, a linki przestaną działać na wszystkich urządzeniach. Tego nie da się cofnąć.",
-      many: "Usunąć {n} linków ze swojego konta? Twoje teksty i imiona zostaną wymazane, a linki przestaną działać na wszystkich urządzeniach. Tego nie da się cofnąć.",
+      one: "Usunąć ten link? Przestanie działać wszędzie. Tego nie da się cofnąć.",
+      few: "Usunąć {n} linki? Przestaną działać wszędzie. Tego nie da się cofnąć.",
+      many: "Usunąć {n} linków? Przestaną działać wszędzie. Tego nie da się cofnąć.",
     },
     "app.history.phoneOnlyAlso": {
       one: "1 werdykt zapisany tylko na tym telefonie zostanie z niego usunięty; jego link do udostępniania nadal będzie działać.",

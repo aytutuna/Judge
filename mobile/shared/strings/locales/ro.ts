@@ -20,7 +20,7 @@ const ro: AppLocale = {
     "app.history.removeConfirm":
       "Elimini {n} de verdicte din contul tău, de pe toate dispozitivele? Ce ai scris și numele sunt șterse, iar linkurile lor de distribuire nu mai funcționează. Acțiunea nu poate fi anulată.",
     "app.history.removeLinksConfirm":
-      "Elimini {n} de linkuri din contul tău, de pe toate dispozitivele? Ce ai scris și numele sunt șterse, iar linkurile nu mai funcționează. Acțiunea nu poate fi anulată.",
+      "Elimini {n} de linkuri? Nu vor mai funcționa nicăieri. Acțiunea nu poate fi anulată.",
     "app.history.phoneOnlyAlso":
       "Se șterg și {n} de verdicte salvate doar pe acest telefon; linkurile lor de distribuire rămân active.",
     "app.history.removeFailed": "N-am putut elimina {n} dintre ele. Verifică-ți conexiunea și încearcă din nou.",
@@ -168,8 +168,8 @@ const ro: AppLocale = {
       few: "Elimini {n} verdicte din contul tău, de pe toate dispozitivele? Ce ai scris și numele sunt șterse, iar linkurile lor de distribuire nu mai funcționează. Acțiunea nu poate fi anulată.",
     },
     "app.history.removeLinksConfirm": {
-      one: "Elimini linkul din contul tău, de pe toate dispozitivele? Ce ai scris și numele sunt șterse, iar linkul nu mai funcționează. Acțiunea nu poate fi anulată.",
-      few: "Elimini {n} linkuri din contul tău, de pe toate dispozitivele? Ce ai scris și numele sunt șterse, iar linkurile nu mai funcționează. Acțiunea nu poate fi anulată.",
+      one: "Elimini linkul? Nu va mai funcționa nicăieri. Acțiunea nu poate fi anulată.",
+      few: "Elimini {n} linkuri? Nu vor mai funcționa nicăieri. Acțiunea nu poate fi anulată.",
     },
     "app.history.phoneOnlyAlso": {
       one: "Se șterge și 1 verdict salvat doar pe acest telefon; linkul lui de distribuire rămâne activ.",

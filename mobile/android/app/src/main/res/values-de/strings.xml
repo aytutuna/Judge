@@ -541,8 +541,8 @@
         <item quantity="other">%1$s Urteile aus deinem Konto entfernen? Sie verschwinden von allen Geräten: Was du geschrieben hast und die Namen werden gelöscht, und die geteilten Links funktionieren nicht mehr. Das lässt sich nicht rückgängig machen.</item>
     </plurals>
     <plurals name="app_history_remove_links_confirm">
-        <item quantity="one">Diesen Link aus deinem Konto entfernen? Er verschwindet von allen Geräten: Was du geschrieben hast und die Namen werden gelöscht, und der Link funktioniert nicht mehr. Das lässt sich nicht rückgängig machen.</item>
-        <item quantity="other">%1$s Links aus deinem Konto entfernen? Sie verschwinden von allen Geräten: Was du geschrieben hast und die Namen werden gelöscht, und die Links funktionieren nicht mehr. Das lässt sich nicht rückgängig machen.</item>
+        <item quantity="one">Diesen Link entfernen? Er funktioniert dann nirgends mehr. Das lässt sich nicht rückgängig machen.</item>
+        <item quantity="other">%1$s Links entfernen? Sie funktionieren dann nirgends mehr. Das lässt sich nicht rückgängig machen.</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="one">1 Urteil, das nur auf diesem Handy gespeichert ist, wird hier gelöscht; sein geteilter Link funktioniert weiter.</item>

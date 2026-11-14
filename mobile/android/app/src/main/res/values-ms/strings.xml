@@ -530,7 +530,7 @@
         <item quantity="other">Buang %1$s keputusan daripada akaun anda? Apa yang anda tulis dan nama-namanya akan dihapuskan, dan pautan kongsinya akan berhenti berfungsi pada setiap peranti. Tindakan ini tidak boleh dibatalkan.</item>
     </plurals>
     <plurals name="app_history_remove_links_confirm">
-        <item quantity="other">Buang %1$s pautan daripada akaun anda? Apa yang anda tulis dan nama-namanya akan dihapuskan, dan pautan itu akan berhenti berfungsi pada setiap peranti. Tindakan ini tidak boleh dibatalkan.</item>
+        <item quantity="other">Buang %1$s pautan? Pautan itu tidak lagi berfungsi di mana-mana. Tindakan ini tidak boleh dibatalkan.</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="other">%1$s keputusan yang hanya disimpan dalam telefon ini turut dipadam; pautan kongsinya akan terus berfungsi.</item>

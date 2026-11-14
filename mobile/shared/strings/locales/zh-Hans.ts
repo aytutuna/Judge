@@ -16,8 +16,7 @@ const zhHans: AppLocale = {
     "app.history.phoneOnlyNote": "不在你的账号里：这些只保存在这台手机上。在这里删掉一条，它的分享链接仍然有效。",
     "app.history.removeConfirm":
       "要从你的账号中删除 {n} 条裁决吗？在所有设备上，你写的内容和名字都会被抹去，分享链接也会失效。此操作无法撤销。",
-    "app.history.removeLinksConfirm":
-      "要从你的账号中删除 {n} 条链接吗？在所有设备上，你写的内容和名字都会被抹去，链接也会失效。此操作无法撤销。",
+    "app.history.removeLinksConfirm": "要删除 {n} 条链接吗？它们会在所有地方失效。此操作无法撤销。",
     "app.history.phoneOnlyAlso": "另有 {n} 条只保存在这台手机上的裁决会从手机上删除，它们的分享链接仍然有效。",
     "app.history.removeFailed": "有 {n} 条没能删除。检查一下网络连接，再试一次。",
     "app.history.offlineRemove": "你现在没联网，删除需要网络连接。",

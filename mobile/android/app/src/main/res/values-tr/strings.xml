@@ -541,8 +541,8 @@
         <item quantity="other">%1$s karar hesabından kaldırılsın mı? Yazdıkların ve isimler silinir, paylaşım linkleri her cihazda çalışmayı bırakır. Bu geri alınamaz.</item>
     </plurals>
     <plurals name="app_history_remove_links_confirm">
-        <item quantity="one">Bu bağlantı hesabından kaldırılsın mı? Yazdıkların ve isimler silinir, bağlantı her cihazda çalışmayı bırakır. Bu geri alınamaz.</item>
-        <item quantity="other">%1$s bağlantı hesabından kaldırılsın mı? Yazdıkların ve isimler silinir, bağlantılar her cihazda çalışmayı bırakır. Bu geri alınamaz.</item>
+        <item quantity="one">Bu bağlantı kaldırılsın mı? Her yerde çalışmayı bırakır. Bu geri alınamaz.</item>
+        <item quantity="other">%1$s bağlantı kaldırılsın mı? Her yerde çalışmayı bırakırlar. Bu geri alınamaz.</item>
     </plurals>
     <plurals name="app_history_phone_only_also">
         <item quantity="one">Sadece bu telefonda saklanan 1 karar buradan silinir; paylaşım linki çalışmaya devam eder.</item>
