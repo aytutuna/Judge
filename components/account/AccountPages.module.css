@@ -659,3 +659,11 @@
   flex-direction: column;
   gap: 14px;
 }
+
+.detail {
+  margin: 0;
+  padding: 0 4px 6px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}

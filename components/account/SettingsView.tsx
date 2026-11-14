@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { track } from "@/lib/analytics/client";
+import { askSignIn, fetchConsent, saveConsent } from "@/lib/feedback-client";
 import { t, type Key } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { setTheme, useDark } from "@/lib/theme";
@@ -27,6 +29,23 @@ export function SettingsView() {
   const dark = useDark();
 
   const viewer = useViewer();
+  const signedIn = Boolean(viewer.me?.user);
+  const [training, setTraining] = useState(false);
+  useEffect(() => {
+    if (!signedIn) return;
+    let live = true;
+    void fetchConsent().then((s) => live && setTraining(s === "on"));
+    return () => {
+      live = false;
+    };
+  }, [signedIn]);
+  function changeTraining(on: boolean) {
+    if (!signedIn) return askSignIn();
+    setTraining(on);
+    void saveConsent(on ? "on" : "off", "switch", "consent.switchDetail").then((s) => {
+      if (s === null) setTraining(!on);
+    });
+  }
   const nothingToShow = viewer.status === "ready" && !viewer.me?.user && !signInOffered(viewer.config);
 
   return (
@@ -61,6 +80,22 @@ export function SettingsView() {
               }}
             />
           </label>
+        </section>
+      </div>
+
+      <div className={styles.group}>
+        <section className={styles.card}>
+          <label className={`${styles.option} ${styles.switchRow}`}>
+            <span>{t(lang, "consent.switchTitle")}</span>
+            <input
+              type="checkbox"
+              role="switch"
+              className={styles.switch}
+              checked={training}
+              onChange={(e) => changeTraining(e.target.checked)}
+            />
+          </label>
+          <p className={styles.detail}>{t(lang, "consent.switchDetail")}</p>
         </section>
       </div>
 
