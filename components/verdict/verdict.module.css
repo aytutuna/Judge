@@ -818,3 +818,67 @@
   --side-ink: var(--party-d-ink);
   --side-tint: var(--party-d-tint);
 }
+
+/* "Fair verdict?" under a finished verdict: quiet, no card. */
+.rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--ink-2);
+}
+.thumb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.thumb svg {
+  width: 18px;
+  height: 18px;
+}
+.thumb:hover {
+  background: var(--well);
+}
+.thumb[aria-pressed="true"] {
+  color: var(--terra-ink);
+}
+.thumb:focus-visible {
+  outline: 2px solid var(--terra-ink);
+  outline-offset: 2px;
+}
+
+/* The ask-once "Help improve Judge?" card. */
+.consent {
+  padding: 14px 16px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-field);
+  background: var(--well);
+  color: var(--ink);
+}
+.consent h2 {
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.consent p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+.consentButtons {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.consentButtons > * {
+  flex: 1;
+}

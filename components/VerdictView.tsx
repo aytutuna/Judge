@@ -18,6 +18,7 @@ import { verdictLang } from "@/lib/content-lang";
 import { useVerdictTranslation, type TranslationView } from "@/lib/use-translation";
 import { ShareButtons } from "./ShareButtons";
 import type { OwnerShare } from "./ShareDialog";
+import { ConsentCard, RatingRow } from "./verdict/FeedbackRow";
 import { VerdictCard } from "./verdict/VerdictCard";
 import { VerdictDetails } from "./verdict/VerdictDetails";
 import { AppealOutcomeBanner } from "./case/AppealOutcome";
@@ -214,6 +215,8 @@ export function VerdictView({
           {t(lang, "card.appeal")}
         </button>
       ) : null}
+      {shareId && !loading ? <RatingRow id={shareId} lang={lang} /> : null}
+      {fresh && !publicNames ? <ConsentCard lang={lang} /> : null}
     </div>
   );
 }
