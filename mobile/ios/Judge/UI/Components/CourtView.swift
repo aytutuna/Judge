@@ -28,7 +28,7 @@ struct CourtView: View {
             if let still = CourtStill.image(for: scene) {
                 Image(uiImage: still)
                     .resizable()
-            } else if running {
+            } else if live && !failed {
                 Brand.ivory2
             } else {
                 Image("CourtGround")
@@ -199,8 +199,11 @@ final class CourtBridge: NSObject, WKScriptMessageHandler, WKNavigationDelegate 
         guard let venue = scene?.homeVenue else { return }
         still = Task { [weak self] in
             try? await Task.sleep(for: .milliseconds(600))
-            guard let self, !Task.isCancelled, let webView = self.webView,
-                  let image = try? await webView.takeSnapshot(configuration: nil),
+            guard let self, !Task.isCancelled, let webView = self.webView else { return }
+            // A phone's width is plenty for a moment's placeholder; the iPad court is far wider.
+            let size = WKSnapshotConfiguration()
+            size.snapshotWidth = NSNumber(value: Double(min(webView.bounds.width, 430)))
+            guard let image = try? await webView.takeSnapshot(configuration: size),
                   self.scene?.homeVenue == venue
             else { return }
             CourtStill.keep(image, venue: venue)
