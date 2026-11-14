@@ -55,7 +55,7 @@ const RESULT: VerdictResult = {
 };
 
 const DAY = 24 * 60 * 60_000;
-const NOW = new Date("2026-12-31T12:00:00.000Z");
+const NOW = new Date("2027-06-30T12:00:00.000Z");
 const ago = (days: number) => new Date(NOW.getTime() - days * DAY).toISOString();
 
 let n = 0;
@@ -150,6 +150,13 @@ describe("one-sided verdicts", () => {
     const translation = await one("SELECT result_json FROM verdict_translations WHERE id = ?", [id2]);
     expect(JSON.parse(String(translation.result_json))).toMatchObject({ lang: "de", confidence: 4, headline: "" });
     expect(created_at).toBeTruthy();
+  });
+
+  it("one removed before the policy date is left as it is", async () => {
+    const id = await save();
+    await removeVerdict((await getVerdictMeta(id))!, "owner", new Date("2026-11-13T12:00:00.000Z"));
+    expect((await sweepErasures(NOW)).verdicts).toBe(0);
+    expect(await one("SELECT erased_at FROM verdicts WHERE id = ?", [id])).toEqual({ erased_at: null });
   });
 
   it("a removed and erased verdict is still answered as removed, not as missing", async () => {

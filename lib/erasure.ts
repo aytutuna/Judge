@@ -13,6 +13,9 @@
  * - `legal_hold = 1` on a verdict or a case (set by hand in SQL, no API)
  *   keeps it out of the wipe; so does one held verdict of a case.
  *
+ * Only items removed on or after the policy date are erased: the promise is
+ * new, and older removals keep their text until someone decides otherwise.
+ *
  * Runs at startup and then daily. Server only.
  */
 
@@ -20,6 +23,7 @@ import type { InStatement } from "@libsql/client";
 import { getDb } from "@/lib/db";
 import { entitlementWriteBatch } from "@/lib/entitlements";
 import { ensureOriginalsTables } from "@/lib/originals/db";
+import { POLICY_VERSION } from "@/lib/policy";
 
 const DAY_MS = 24 * 60 * 60_000;
 export const ERASE_AFTER_MS = 30 * DAY_MS;
@@ -104,9 +108,9 @@ async function eraseVerdicts(cutoff: string, nowIso: string): Promise<number> {
           LEFT JOIN verdicts rv ON rv.id = ap.verdict_id
           WHERE v.erased_at IS NULL AND v.legal_hold = 0 AND COALESCE(rv.legal_hold, 0) = 0
             AND COALESCE(m.kind, '') <> 'case'
-            AND COALESCE(rm.removed_at, m.removed_at) < ?
+            AND CASE WHEN ap.id IS NOT NULL THEN rm.removed_at ELSE m.removed_at END BETWEEN ? AND ?
           LIMIT ?`,
-    args: [cutoff, BATCH_LIMIT],
+    args: [POLICY_VERSION, cutoff, BATCH_LIMIT],
   });
   const ids = rs.rows.map((r) => String(r.id));
   if (ids.length === 0) return 0;
@@ -132,9 +136,9 @@ async function eraseCases(cutoff: string, nowIso: string): Promise<number> {
                 WHEN 'a' THEN c.removed_a_at WHEN 'b' THEN c.removed_b_at WHEN 'c' THEN c.removed_c_at ELSE c.removed_d_at END IS NULL)
             AND NOT EXISTS (
               SELECT 1 FROM case_verdicts cv JOIN verdicts v ON v.id = cv.verdict_id WHERE cv.case_id = c.id AND v.legal_hold = 1)
-            AND MAX(c.removed_a_at, COALESCE(c.removed_b_at, ''), COALESCE(c.removed_c_at, ''), COALESCE(c.removed_d_at, '')) < ?
+            AND MAX(c.removed_a_at, COALESCE(c.removed_b_at, ''), COALESCE(c.removed_c_at, ''), COALESCE(c.removed_d_at, '')) BETWEEN ? AND ?
           LIMIT ?`,
-    args: [cutoff, BATCH_LIMIT],
+    args: [POLICY_VERSION, cutoff, BATCH_LIMIT],
   });
   for (const row of rs.rows) {
     const id = String(row.id);
