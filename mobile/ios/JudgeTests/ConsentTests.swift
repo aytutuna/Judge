@@ -52,13 +52,14 @@ final class ConsentTests: XCTestCase {
         }
         let model = ConsentModel(api: api(), defaults: store)
         await model.load()
-        await model.answerCard(true)
+        await model.answerCard(true, lang: .tr)
         XCTAssertTrue(model.on)
         XCTAssertFalse(model.showCard)
         let body = try sentBody(StubURLProtocol.requests.last!)
         XCTAssertEqual(body["choice"] as? String, "on")
         XCTAssertEqual(body["source"] as? String, "card")
         XCTAssertEqual(body["wordingKey"] as? String, "consent.cardBody")
+        XCTAssertEqual(body["lang"] as? String, "tr")
         XCTAssertEqual(body["platform"] as? String, "ios")
 
         // A new run on the same device does not ask again, even if the server forgot.
@@ -76,14 +77,14 @@ final class ConsentTests: XCTestCase {
         }
         let model = ConsentModel(api: api(), defaults: try defaults())
         await model.load()
-        await model.answerCard(false)
+        await model.answerCard(false, lang: .en)
         XCTAssertTrue(model.showCard)
     }
 
     func testSwitchSendsItsOwnSource() async throws {
         StubURLProtocol.handler = { _ in stubReply(#"{"state":"off","updatedAt":null,"policyVersion":"2026-11-14"}"#) }
         let model = ConsentModel(api: api(), defaults: try defaults())
-        await model.setSwitch(false)
+        await model.setSwitch(false, lang: .en)
         XCTAssertEqual(model.state, .off)
         let body = try sentBody(StubURLProtocol.requests.last!)
         XCTAssertEqual(body["source"] as? String, "switch")

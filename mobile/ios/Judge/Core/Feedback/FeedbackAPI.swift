@@ -21,13 +21,14 @@ extension JudgeAPI {
         return try consentState(from: try await send(request))
     }
 
-    func setConsent(on: Bool, source: ConsentSource, wordingKey: String) async throws -> ConsentState {
+    func setConsent(on: Bool, source: ConsentSource, wordingKey: String, lang: AppLang) async throws -> ConsentState {
         var request = makeRequest(url: endpoint("me").appending(path: "consent"), method: "POST", timeout: Timeout.get)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try JSONSerialization.data(withJSONObject: [
             "choice": on ? "on" : "off",
             "source": source.rawValue,
             "wordingKey": wordingKey,
+            "lang": lang.rawValue,
             "platform": "ios",
         ])
         return try consentState(from: try await send(request))

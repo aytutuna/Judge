@@ -16,10 +16,10 @@ struct ConsentCard: View {
                     .foregroundStyle(Brand.muted)
                 HStack(spacing: 16) {
                     Button(L10n.consentCardYes(lang)) {
-                        Task { await app.consent.answerCard(true) }
+                        Task { await app.consent.answerCard(true, lang: lang) }
                     }
                     Button(L10n.consentCardNo(lang)) {
-                        Task { await app.consent.answerCard(false) }
+                        Task { await app.consent.answerCard(false, lang: lang) }
                     }
                 }
                 .brandText(.chip)

@@ -29,21 +29,21 @@ final class ConsentModel {
         if loaded != .notAsked { defaults.set(true, forKey: Self.askedKey) }
     }
 
-    func answerCard(_ on: Bool) async {
-        if await set(on, source: .card, key: "consent.cardBody") {
+    func answerCard(_ on: Bool, lang: AppLang) async {
+        if await set(on, source: .card, key: "consent.cardBody", lang: lang) {
             defaults.set(true, forKey: Self.askedKey)
         }
     }
 
-    func setSwitch(_ on: Bool) async {
-        await set(on, source: .switchRow, key: "consent.switchDetail")
+    func setSwitch(_ on: Bool, lang: AppLang) async {
+        await set(on, source: .switchRow, key: "consent.switchDetail", lang: lang)
     }
 
     func reset() { state = nil }
 
     @discardableResult
-    private func set(_ on: Bool, source: JudgeAPI.ConsentSource, key: String) async -> Bool {
-        guard let next = try? await api.setConsent(on: on, source: source, wordingKey: key) else { return false }
+    private func set(_ on: Bool, source: JudgeAPI.ConsentSource, key: String, lang: AppLang) async -> Bool {
+        guard let next = try? await api.setConsent(on: on, source: source, wordingKey: key, lang: lang) else { return false }
         state = next
         return true
     }

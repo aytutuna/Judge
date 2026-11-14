@@ -55,7 +55,7 @@ struct SettingsView: View {
                             app.account.presentSignIn()
                             return
                         }
-                        Task { await app.consent.setSwitch(on) }
+                        Task { await app.consent.setSwitch(on, lang: lang) }
                     })) {
                         VStack(alignment: .leading, spacing: 2) {
                             Text(L10n.consentSwitchTitle(lang))
