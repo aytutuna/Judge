@@ -49,7 +49,7 @@ export type HistoryVerdictRow = {
   venue: Venue | null;
 };
 
-/** Stored one-sided verdicts the user owns, without the verdicts rounds of
+/** Stored one-sided verdicts the user owns and has not removed, without the verdicts rounds of
  * added context produced. One with three or four sides is listed only for a
  * client that can read it. Sorted by when the verdict was asked for (its
  * job), so a verdict keeps its place when it finishes. */
@@ -72,7 +72,7 @@ function verdictsQuery(userId: string, limit: number, cursor: Cursor, manySides:
             JOIN verdicts v ON v.id = m.verdict_id
             LEFT JOIN verdict_jobs j ON j.id = m.verdict_id
             LEFT JOIN originals o ON o.subject = 'verdict:' || m.verdict_id
-            WHERE m.owner_user_id = ? AND m.kind IN ('free','premium')
+            WHERE m.owner_user_id = ? AND m.kind IN ('free','premium') AND m.removed_at IS NULL
               AND NOT EXISTS (SELECT 1 FROM verdict_appeals a WHERE a.id = m.verdict_id)
           ) h WHERE (? = 1 OR COALESCE(json_valid(h.result), 0) = 0 OR json_extract(h.result, '$.parties') IS NULL) ${c.sql}
           ORDER BY h.at DESC, h.k DESC LIMIT ?`,
@@ -174,14 +174,14 @@ function caseColumns(party: string): string {
            ${party} AS vp`;
 }
 
-/** Cases the user started, by when they started them. */
+/** Cases the user started and has not removed, by when they started them. */
 function ownerCasesQuery(userId: string, limit: number, cursor: Cursor, manySides: boolean): InStatement {
   const c = after(cursor);
   return {
     sql: `SELECT h.* FROM (
             SELECT c.*, c.created_at AS at, 'c:' || c.id AS k, ${caseColumns("'a'")},
               NULL AS vp_nonce, NULL AS vp_hash
-            FROM cases c WHERE c.owner_id = ? AND (? = 1 OR c.sides <= 2)
+            FROM cases c WHERE c.owner_id = ? AND c.removed_a_at IS NULL AND (? = 1 OR c.sides <= 2)
           ) h WHERE 1 = 1 ${c.sql}
           ORDER BY h.at DESC, h.k DESC LIMIT ?`,
     args: [userId, manySides ? 1 : 0, ...c.args, limit],
@@ -207,7 +207,9 @@ function answeredCasesQuery(userId: string, limit: number, cursor: Cursor, manyS
             ) m
             JOIN cases c ON c.id = m.case_id
             JOIN case_sides s ON s.case_id = c.id AND s.party = m.vp
-            WHERE c.owner_id <> ? AND c.mode IS NOT 'one_sided' AND (? = 1 OR (c.sides <= 2 AND m.vp = 'b'))
+            WHERE c.owner_id <> ? AND c.mode IS NOT 'one_sided'
+              AND CASE m.vp WHEN 'b' THEN c.removed_b_at WHEN 'c' THEN c.removed_c_at ELSE c.removed_d_at END IS NULL
+              AND (? = 1 OR (c.sides <= 2 AND m.vp = 'b'))
           ) h WHERE 1 = 1 ${c.sql}
           ORDER BY h.at DESC, h.k DESC LIMIT ?`,
     args: [userId, userId, userId, manySides ? 1 : 0, ...c.args, limit],
