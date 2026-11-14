@@ -12,6 +12,7 @@ import type { PartyLetter as CaseParty } from "@/lib/case-types";
 import type { InStatement, InValue } from "@libsql/client";
 import { saveVerdict, STORED_FRAMEWORK } from "@/lib/db";
 import { entitlementWriteBatch, type StatementGuard } from "@/lib/entitlements";
+import { oneSidedStampStatement } from "@/lib/feedback/db";
 import type { Lang } from "@/lib/i18n";
 import {
   EMPTY_DISPLAY,
@@ -20,6 +21,7 @@ import {
   type DisplayState,
   type OriginalPayload,
 } from "@/lib/originals-types";
+import { POLICY_VERSION } from "@/lib/policy";
 import type { VerdictResult } from "@/lib/types";
 import type { Venue } from "@/lib/venues";
 import { aad, newOwnerToken, ownerTokenHash, sealJson } from "./crypto";
@@ -135,7 +137,7 @@ export function verdictWriteStatements(
     insert(
       `INSERT INTO verdict_meta
          (verdict_id, kind, owner_user_id, owner_token_hash, case_id, names_visible, display_sealed,
-          display_key_id, removed_at, removal_reason, created_at, updated_at)`,
+          display_key_id, removed_at, removal_reason, created_at, updated_at, policy_version, lang, sides)`,
       [
         v.id,
         v.kind,
@@ -149,10 +151,14 @@ export function verdictWriteStatements(
         null,
         nowIso,
         nowIso,
+        POLICY_VERSION,
+        lang,
+        v.result.parties?.length ?? 2,
       ],
       guard,
     ),
   ];
+  if (v.ownerUserId) stmts.push(oneSidedStampStatement(v.id, v.ownerUserId, nowIso));
   if (original) {
     stmts.push(
       insert(

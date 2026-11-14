@@ -23,6 +23,7 @@ import type { PartyLetter as CaseParty } from "@/lib/case-types";
 import type { Client, Row } from "@libsql/client";
 import { ensureCaseTables } from "@/lib/cases/db";
 import { getDb } from "@/lib/db";
+import { ensureFeedbackTables } from "@/lib/feedback/db";
 import { PARTY_CHECK, PARTY_CHECK_WIDE, rebuildTable } from "@/lib/db-rebuild";
 import type { RemovalReason } from "@/lib/originals-types";
 import { VerdictResult } from "@/lib/types";
@@ -119,8 +120,19 @@ const globalForOriginals = globalThis as unknown as {
   __judgeOriginalsReady?: { client: Client; ready: Promise<void> };
 };
 
-/** Columns added to verdict_meta after its first version. */
-const ADDED_META_COLUMNS: [string, string][] = [["names_confirmed_at", "TEXT"]];
+/** Columns added to verdict_meta after its first version. The last five are
+ * the training dataset's fields (see lib/feedback/db): when the verdict was
+ * stamped as usable for training and when that was withdrawn, the policy
+ * version it was made under, its content language and its number of sides.
+ * Verdicts from before them have none, and are never eligible. */
+const ADDED_META_COLUMNS: [string, string][] = [
+  ["names_confirmed_at", "TEXT"],
+  ["training_ok_at", "TEXT"],
+  ["training_withdrawn_at", "TEXT"],
+  ["policy_version", "TEXT"],
+  ["lang", "TEXT"],
+  ["sides", "INTEGER"],
+];
 
 async function addMetaColumns(db: Client): Promise<void> {
   const info = await db.execute("PRAGMA table_info(verdict_meta)");
@@ -147,6 +159,7 @@ async function widenChecks(db: Client): Promise<void> {
  * tables, and runs the backfills, once per process. Idempotent. */
 export async function ensureOriginalsTables(): Promise<void> {
   await ensureCaseTables();
+  await ensureFeedbackTables();
   const client = await getDb();
   const cached = globalForOriginals.__judgeOriginalsReady;
   if (cached?.client === client) return cached.ready;

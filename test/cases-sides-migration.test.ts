@@ -186,7 +186,11 @@ describe("party checks widened on a database from the two-sided era", () => {
     await reset();
     await ensureCaseTables();
 
-    for (const t of TABLES.filter((x) => x !== "cases")) expect(await rows(t)).toEqual(before[t]);
+    // The columns verdict_meta gained for training consent start empty.
+    const training = { training_ok_at: null, training_withdrawn_at: null, policy_version: null, lang: null, sides: null };
+    for (const t of TABLES.filter((x) => x !== "cases")) {
+      expect(await rows(t)).toEqual(t === "verdict_meta" ? before[t].map((r) => ({ ...r, ...training })) : before[t]);
+    }
     const cases = await rows("cases");
     expect(cases.map((r) => r.id)).toEqual(["case-1", "case-2"]);
     for (const [i, c] of cases.entries()) {

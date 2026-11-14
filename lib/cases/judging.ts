@@ -20,6 +20,7 @@ import { claudeJson, LITE_MODEL, withUsageMeter, type UsageTotals } from "@/lib/
 import type { InStatement } from "@libsql/client";
 import { STORED_FRAMEWORK } from "@/lib/db";
 import { consumeStatement, entitlementWriteBatch, refundStatements, type StatementGuard } from "@/lib/entitlements";
+import { caseStampStatement } from "@/lib/feedback/db";
 import { CASE_REMOVAL_REASON_SQL, ensureOriginalsTables } from "@/lib/originals/db";
 import { evidenceBlock } from "@/lib/evidence";
 import { loadLocales, voiceNote, type Lang } from "@/lib/i18n";
@@ -27,6 +28,7 @@ import { LANGS } from "@/lib/langs";
 import { APPEAL_JUDGE_NOTE, APPEAL_ONE_SIDED_JUDGE_NOTE } from "@/lib/judge";
 import { multiAppealNote } from "@/lib/judge-multi";
 import { partiesFor } from "@/lib/multi";
+import { POLICY_VERSION } from "@/lib/policy";
 import { judgeAnonymized, premiumLogLine, type JudgedOutcome, type PremiumStats } from "@/lib/premium/run";
 import type { AppealInfo, AppealOutcome, Dispute, DisputedFact, EvidenceUsed, VerdictResult } from "@/lib/types";
 import { composeForJudging, evidenceCounts, evidenceGroups, missingSides } from "./compose";
@@ -285,11 +287,13 @@ function verdictRowStatements(
       args: [verdictId, input, STORED_FRAMEWORK, JSON.stringify(result), caseId, ...runGuard.args],
     },
     {
-      sql: `INSERT INTO verdict_meta (verdict_id, kind, case_id, names_visible, removed_at, removal_reason, created_at, updated_at)
-            SELECT ?, 'case', ?, 1, c.removed_at, ${CASE_REMOVAL_REASON_SQL}, ?, ?
+      sql: `INSERT INTO verdict_meta (verdict_id, kind, case_id, names_visible, removed_at, removal_reason, created_at, updated_at,
+              policy_version, lang, sides)
+            SELECT ?, 'case', ?, 1, c.removed_at, ${CASE_REMOVAL_REASON_SQL}, ?, ?, ?, c.lang, c.sides
             FROM cases c WHERE c.id = ? AND EXISTS (SELECT 1 FROM verdicts WHERE id = ?)`,
-      args: [verdictId, caseId, nowIso, nowIso, caseId, verdictId],
+      args: [verdictId, caseId, nowIso, nowIso, POLICY_VERSION, caseId, verdictId],
     },
+    caseStampStatement(verdictId, caseId, nowIso),
   ];
 }
 
