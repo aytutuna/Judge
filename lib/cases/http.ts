@@ -112,6 +112,7 @@ import {
 } from "./service";
 import { parseVenue } from "@/lib/venues";
 import { effectiveStatus, materializeExpiry, maybeSweepCases } from "./sweep";
+import { ratingsFor } from "@/lib/feedback/db";
 import { buildCaseView, caseSummary, structuralAppealBlock } from "./view";
 
 const NO_STORE = { "Cache-Control": "no-store" } as const;
@@ -311,6 +312,11 @@ async function viewOriginals(row: CaseRow, party: PartyLetter, proven: boolean) 
   }
 }
 
+/** The viewer's own ratings of the case's verdicts; none when the read fails. */
+async function viewerRatings(userId: string, bundle: Awaited<ReturnType<typeof loadCaseBundle>>) {
+  return ratingsFor(userId, bundle.verdicts.map((v) => v.verdictId)).catch(() => undefined);
+}
+
 async function ownerView(row: CaseRow, req: Request, viewerId: string, now = new Date()): Promise<CaseView> {
   const bundle = await loadCaseBundle(row);
   const open = effectiveStatus(row, now) === "awaiting_respondent" && !row.removedAt;
@@ -321,6 +327,7 @@ async function ownerView(row: CaseRow, req: Request, viewerId: string, now = new
     inviteUrl: token ? inviteUrl(publicOrigin(req), token) : null,
     ownInvite: false,
     appealBlock: await appealBlockFor(row, bundle, "a", viewerId, now),
+    ratings: await viewerRatings(viewerId, bundle),
     originals: await viewOriginals(row, "a", true),
   });
 }
@@ -345,6 +352,7 @@ async function respondentView(
     appealBlock: await appealBlockFor(row, bundle, party, viewerId, now, claimOk),
     inAccount: viewerId !== null && row.mode === "two_sided" && who.userId === viewerId,
     inOtherAccount: claimOk && who.userId !== null && who.userId !== viewerId,
+    ratings: viewerId ? await viewerRatings(viewerId, bundle) : undefined,
     originals: await viewOriginals(row, party, provenParty(row, bundle.invites, party, viewerId, claim)),
   });
 }

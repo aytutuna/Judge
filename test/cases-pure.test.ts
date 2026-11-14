@@ -240,6 +240,13 @@ describe("CaseView visibility", () => {
     expect(resp.canJudgeNow).toBe(false);
   });
 
+  it("each verdict carries the viewer's own rating, and none when signed out", () => {
+    const b = judged("two_sided");
+    expect(buildCaseView(b, ctx("owner")).verdicts[0]).not.toHaveProperty("rating");
+    expect(buildCaseView(b, ctx("owner", { ratings: {} })).verdicts[0].rating).toBeNull();
+    expect(buildCaseView(b, ctx("owner", { ratings: { v1: "down" } })).verdicts[0].rating).toBe("down");
+  });
+
   it("no side A yet: ownerSideMissing for both roles, no judge-now, no link once the answer is in", () => {
     const waiting = bundle({ sides: [] });
     for (const role of ["owner", "respondent"] as const) {

@@ -53,6 +53,8 @@ export type ViewContext = {
   inAccount?: boolean;
   /** Respondent role, claim holder: side B is bound to some other account. */
   inOtherAccount?: boolean;
+  /** The signed-in viewer's ratings by verdict id; undefined when signed out. */
+  ratings?: Record<string, "up" | "down">;
   /** Decrypted by the caller: the viewer's own name map (null when not
    * stored or the viewer is not proven to be that party), both display
    * names, and the status of the viewer's side original. */
@@ -127,7 +129,14 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
     ? []
     : bundle.verdicts
         .filter((v) => v.result !== null)
-        .map((v) => ({ seq: v.seq, id: v.verdictId, result: v.result!, appealId: v.appealId, createdAt: v.createdAt }));
+        .map((v) => ({
+          seq: v.seq,
+          id: v.verdictId,
+          result: v.result!,
+          appealId: v.appealId,
+          createdAt: v.createdAt,
+          ...(ctx.ratings ? { rating: ctx.ratings[v.verdictId] ?? null } : {}),
+        }));
 
   // A respondent is asked about their own side, not about B.
   const respondentAnswered = bundle.sides.some((s) => s.party === (ctx.role === "respondent" ? yourParty : "b"));

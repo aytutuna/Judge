@@ -182,6 +182,8 @@ export type CaseVerdictView = {
   result: VerdictResult;
   appealId: string | null;
   createdAt: string;
+  /** The signed-in viewer's own "Fair verdict?" answer. Absent when signed out. */
+  rating?: "up" | "down" | null;
 };
 
 /** One invited side as the owner sees it. */

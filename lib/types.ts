@@ -428,6 +428,8 @@ export type StoredVerdictResponse = {
   /** The scene the court is set in; null or absent means the street court. */
   venue?: string | null;
   display?: { a: string | null; b: string | null; c?: string | null; d?: string | null; others: Record<string, string> } | null;
+  /** The signed-in viewer's own "Fair verdict?" answer. Absent when signed out. */
+  rating?: "up" | "down" | null;
   /** A one-sided verdict's added context, oldest first. The verdict of the
    * last judged one is the current ruling. */
   appeals?: VerdictAppealView[];

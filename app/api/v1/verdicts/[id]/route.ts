@@ -3,6 +3,7 @@ import { apiErrorBody } from "@/lib/api-errors";
 import { deadBearerResponse, lookupViewer } from "@/lib/bearer-guard";
 import { hidesFrom, VERDICT_UPDATE } from "@/lib/cases/capability";
 import { clientIp } from "@/lib/client-ip";
+import { ratingsFor } from "@/lib/feedback/db";
 import { getPublicVerdict } from "@/lib/originals/display";
 import type { VerdictMeta } from "@/lib/originals/db";
 import { checkIpLimits } from "@/lib/ratelimit";
@@ -114,7 +115,8 @@ async function ownerState(
 /**
  * GET /api/v1/verdicts/{id}: a stored verdict, public like a share link,
  * with the display names the share page shows (null = the labels),
- * `status: "ready"` and, on a one-sided verdict, its rounds of added
+ * `status: "ready"`, the signed-in viewer's own `rating` ("up", "down" or
+ * null) and, on a one-sided verdict, its rounds of added
  * context (`appeals`; the last judged one's verdict is the current ruling). The stored input text is never returned. A removed
  * verdict answers 410. An async verdict still being judged answers
  * `{ status: "judging", pollAfterMs }`, a failed one
@@ -124,10 +126,12 @@ export const GET = trialCompat(async (req: Request, ctx: RouteContext<"/api/v1/v
   const { id } = await ctx.params;
   if (!ID_PATTERN.test(id)) return notFound();
   // Share viewers without a session are never affected.
+  let viewerId: string | null = null;
   if (req.headers.has("authorization") || req.headers.has("cookie")) {
-    const { deadBearer, refused } = await lookupViewer(req);
+    const { viewer, deadBearer, refused } = await lookupViewer(req);
     if (deadBearer) return deadBearerResponse();
     if (refused) return refused;
+    viewerId = viewer?.user.id ?? null;
   }
   let found;
   try {
@@ -153,6 +157,8 @@ export const GET = trialCompat(async (req: Request, ctx: RouteContext<"/api/v1/v
   const owner = await ownerState(req, found.meta);
   const { verdictAppealState } = await import("@/lib/verdict-appeals/http");
   const { appeals, appeal } = found.meta ? await verdictAppealState(found.meta, owner ?? null) : {};
+  // The viewer's own "Fair verdict?" answer; left out when the lookup fails.
+  const rating = viewerId ? await ratingsFor(viewerId, [id]).then((r) => r[id] ?? null, () => undefined) : undefined;
   const body: StoredVerdictResponse & { status: "ready"; owner?: VerdictOwnerState } = {
     id: stored.id,
     result: stored.result,
@@ -160,6 +166,7 @@ export const GET = trialCompat(async (req: Request, ctx: RouteContext<"/api/v1/v
     venue: stored.venue,
     display,
     status: "ready",
+    ...(rating !== undefined ? { rating } : {}),
     ...(appeals ? { appeals } : {}),
     ...(owner ? { owner: { ...owner.state, ...(appeal ? { appeal } : {}) } } : {}),
   };
