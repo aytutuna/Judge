@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useMemo, useState, type ReactNode } from "react";
+import { clearFresh, isFresh } from "@/lib/fresh-verdict";
 import { verdictLang } from "@/lib/content-lang";
 import { t, type Lang } from "@/lib/i18n";
 import { langDir } from "@/lib/langs";
@@ -67,6 +68,8 @@ export function SharedVerdict({
   const mine = useMine(id, token, token ? true : signedIn);
   const [display, setDisplay] = useState<DisplayState | null>(null);
   const [removed, setRemoved] = useState(false);
+  const [fresh] = useState(() => isFresh(id));
+  useEffect(() => clearFresh(id), [id]);
   const removedHeadingId = useId();
   const label = t(lang, "translate.toggle");
   const ownView = mine && !mine.removed && mine.result ? mine : null;
@@ -152,6 +155,7 @@ export function SharedVerdict({
                 owner={owner && ownView.originalStatus === "stored" ? owner : undefined}
                 onAddContext={appeal.onAddContext}
                 focusAppeal={appeal.finished}
+                fresh={fresh}
               />
             </div>
           }

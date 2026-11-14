@@ -28,6 +28,7 @@ import { apiErrorMessage, t } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { resetScene } from "@/lib/scene-bridge";
 import { shareLink } from "@/lib/share-link";
+import { markFresh } from "@/lib/fresh-verdict";
 import { freshVenue, parseVenue, type Venue } from "@/lib/venues";
 import { MAX_ARGUMENT, inviteTextOk, joinSides, manySidesOk, type SideInput } from "@/lib/sides";
 import type { Clarification, ClarifyResponse, VerdictApiResponse, VerdictResponse } from "@/lib/types";
@@ -274,6 +275,7 @@ export default function Home() {
   function judgingFinished() {
     if (!response || opened.current) return;
     opened.current = true;
+    markFresh(response.id);
     router.push(`/v/${encodeURIComponent(response.id)}`);
   }
 
