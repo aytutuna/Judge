@@ -150,6 +150,16 @@
     <string name="nav_links">Linkuri</string>
     <string name="nav_tabs">Secțiuni</string>
     <string name="settings_dark_mode">Mod întunecat</string>
+    <string name="consent_card_title">Vrei să ajuți la îmbunătățirea Judge?</string>
+    <string name="consent_card_body">Lasă Judge să folosească verdictele și evaluările tale anonimizate pentru a-și testa și antrena judecătorii. Numele nu sunt incluse niciodată. Poți schimba asta în Setări.</string>
+    <string name="consent_card_yes">Sigur</string>
+    <string name="consent_card_no">Nu, mulțumesc</string>
+    <string name="consent_switch_title">Ajută la îmbunătățirea Judge</string>
+    <string name="consent_switch_detail">Permite ca Judge să folosească verdictele și evaluările tale anonimizate pentru a-și testa și antrena judecătorii. Dezactivat dacă nu îl activezi.</string>
+    <string name="rating_prompt">Verdict corect?</string>
+    <string name="rating_fair">Corect</string>
+    <string name="rating_not_fair">Incorect</string>
+    <string name="rating_thanks">Mulțumesc</string>
     <string name="tier_locked_sign_in">(blocat: conectează-te ca să-l folosești)</string>
     <string name="tier_get_premium">Ia mai multe verdicte</string>
     <string name="tier_checking">Verificăm dacă lipsește ceva…</string>

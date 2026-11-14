@@ -147,6 +147,16 @@
     <string name="nav_links">Links</string>
     <string name="nav_tabs">Bereiche</string>
     <string name="settings_dark_mode">Dunkelmodus</string>
+    <string name="consent_card_title">Hilfst du mit, Judge zu verbessern?</string>
+    <string name="consent_card_body">Erlaube Judge, deine anonymisierten Urteile und Bewertungen zu nutzen, um seine Richter zu testen und zu trainieren. Namen sind nie dabei. Du kannst das jederzeit in den Einstellungen ändern.</string>
+    <string name="consent_card_yes">Gern</string>
+    <string name="consent_card_no">Nein danke</string>
+    <string name="consent_switch_title">Hilf, Judge zu verbessern</string>
+    <string name="consent_switch_detail">Erlaubt Judge, deine anonymisierten Urteile und Bewertungen zu nutzen, um seine Richter zu testen und zu trainieren. Aus, solange du es nicht einschaltest.</string>
+    <string name="rating_prompt">Faires Urteil?</string>
+    <string name="rating_fair">Fair</string>
+    <string name="rating_not_fair">Nicht fair</string>
+    <string name="rating_thanks">Danke</string>
     <string name="tier_locked_sign_in">(gesperrt: zum Nutzen anmelden)</string>
     <string name="tier_get_premium">Mehr Urteile holen</string>
     <string name="tier_checking">Wir prüfen, ob etwas fehlt…</string>

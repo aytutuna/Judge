@@ -147,6 +147,16 @@
     <string name="nav_links">لنکس</string>
     <string name="nav_tabs">حصے</string>
     <string name="settings_dark_mode">ڈارک موڈ</string>
+    <string name="consent_card_title">کیا آپ Judge کو بہتر بنانے میں مدد کریں گے؟</string>
+    <string name="consent_card_body">Judge کو اپنے ججوں کو آزمانے اور تربیت دینے کے لیے آپ کے بغیر نام والے فیصلے اور ریٹنگز استعمال کرنے دیں۔ نام کبھی شامل نہیں کیے جاتے۔ آپ اسے سیٹنگز میں کبھی بھی بدل سکتے ہیں۔</string>
+    <string name="consent_card_yes">جی ضرور</string>
+    <string name="consent_card_no">نہیں، شکریہ</string>
+    <string name="consent_switch_title">Judge کو بہتر بنانے میں مدد کریں</string>
+    <string name="consent_switch_detail">Judge کو اپنے ججوں کو آزمانے اور تربیت دینے کے لیے آپ کے بغیر نام والے فیصلے اور ریٹنگز استعمال کرنے دیتا ہے۔ جب تک آپ آن نہ کریں، بند رہتا ہے۔</string>
+    <string name="rating_prompt">کیا فیصلہ منصفانہ ہے؟</string>
+    <string name="rating_fair">منصفانہ</string>
+    <string name="rating_not_fair">غیر منصفانہ</string>
+    <string name="rating_thanks">شکریہ</string>
     <string name="tier_locked_sign_in">(بند ہے: استعمال کے لیے سائن ان کریں)</string>
     <string name="tier_get_premium">مزید فیصلے لیں</string>
     <string name="tier_checking">دیکھ رہے ہیں کہ کچھ رہ تو نہیں گیا…</string>

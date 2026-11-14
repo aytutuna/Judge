@@ -150,6 +150,16 @@
     <string name="nav_links">Enllaços</string>
     <string name="nav_tabs">Seccions</string>
     <string name="settings_dark_mode">Mode fosc</string>
+    <string name="consent_card_title">Vols ajudar a millorar Judge?</string>
+    <string name="consent_card_body">Deixa que Judge faci servir els teus veredictes i valoracions anonimitzats per provar i entrenar els seus jutges. Els noms no s\'inclouen mai. Ho pots canviar a Configuració.</string>
+    <string name="consent_card_yes">És clar</string>
+    <string name="consent_card_no">No, gràcies</string>
+    <string name="consent_switch_title">Ajuda a millorar Judge</string>
+    <string name="consent_switch_detail">Permet que Judge faci servir els teus veredictes i valoracions anonimitzats per provar i entrenar els seus jutges. Desactivat si no l\'actives.</string>
+    <string name="rating_prompt">Veredicte just?</string>
+    <string name="rating_fair">Just</string>
+    <string name="rating_not_fair">Injust</string>
+    <string name="rating_thanks">Gràcies</string>
     <string name="tier_locked_sign_in">(bloquejat: inicia sessió per fer-lo servir)</string>
     <string name="tier_get_premium">Aconsegueix més veredictes</string>
     <string name="tier_checking">Comprovant si hi falta alguna cosa…</string>

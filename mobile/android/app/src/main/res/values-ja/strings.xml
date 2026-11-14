@@ -144,6 +144,16 @@
     <string name="nav_links">リンク</string>
     <string name="nav_tabs">セクション</string>
     <string name="settings_dark_mode">ダークモード</string>
+    <string name="consent_card_title">Judgeの改善に協力しますか？</string>
+    <string name="consent_card_body">Judgeの審査員のテストと学習のために、匿名化したあなたの判定と評価を使うことを許可します。名前は含まれません。設定からいつでも変更できます。</string>
+    <string name="consent_card_yes">協力する</string>
+    <string name="consent_card_no">今はしない</string>
+    <string name="consent_switch_title">Judgeの改善に協力する</string>
+    <string name="consent_switch_detail">Judgeの審査員のテストと学習のために、匿名化したあなたの判定と評価を使うことを許可します。オンにしない限りオフです。</string>
+    <string name="rating_prompt">公平な判定？</string>
+    <string name="rating_fair">公平</string>
+    <string name="rating_not_fair">公平ではない</string>
+    <string name="rating_thanks">ありがとう</string>
     <string name="tier_locked_sign_in">（ロック中：ログインすると使えます）</string>
     <string name="tier_get_premium">判定回数を追加</string>
     <string name="tier_checking">足りない情報がないか確認しています…</string>

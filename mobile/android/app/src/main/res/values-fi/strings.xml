@@ -147,6 +147,16 @@
     <string name="nav_links">Linkit</string>
     <string name="nav_tabs">Osiot</string>
     <string name="settings_dark_mode">Tumma tila</string>
+    <string name="consent_card_title">Autatko parantamaan Judgea?</string>
+    <string name="consent_card_body">Anna Judgen käyttää anonymisoituja tuomioitasi ja arvioitasi tuomariensa testaamiseen ja kouluttamiseen. Nimiä ei oteta koskaan mukaan. Voit muuttaa tätä Asetuksissa.</string>
+    <string name="consent_card_yes">Kyllä</string>
+    <string name="consent_card_no">Ei kiitos</string>
+    <string name="consent_switch_title">Auta parantamaan Judgea</string>
+    <string name="consent_switch_detail">Sallii Judgen käyttää anonymisoituja tuomioitasi ja arvioitasi tuomariensa testaamiseen ja kouluttamiseen. Pois päältä, ellet ota sitä käyttöön.</string>
+    <string name="rating_prompt">Oikeudenmukainen tuomio?</string>
+    <string name="rating_fair">Oikeudenmukainen</string>
+    <string name="rating_not_fair">Ei oikeudenmukainen</string>
+    <string name="rating_thanks">Kiitos</string>
     <string name="tier_locked_sign_in">(lukittu: vaatii kirjautumisen)</string>
     <string name="tier_get_premium">Hanki lisää tuomioita</string>
     <string name="tier_checking">Tarkistetaan, puuttuuko jotain…</string>

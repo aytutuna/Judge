@@ -150,6 +150,16 @@
     <string name="nav_links">Enlaces</string>
     <string name="nav_tabs">Secciones</string>
     <string name="settings_dark_mode">Modo oscuro</string>
+    <string name="consent_card_title">¿Quieres ayudar a mejorar Judge?</string>
+    <string name="consent_card_body">Deja que Judge use tus veredictos y valoraciones anonimizados para probar y entrenar a sus jueces. Los nombres nunca se incluyen. Puedes cambiarlo en Ajustes.</string>
+    <string name="consent_card_yes">Claro</string>
+    <string name="consent_card_no">No, gracias</string>
+    <string name="consent_switch_title">Ayuda a mejorar Judge</string>
+    <string name="consent_switch_detail">Permite que Judge use tus veredictos y valoraciones anonimizados para probar y entrenar a sus jueces. Desactivado a menos que lo actives.</string>
+    <string name="rating_prompt">¿Veredicto justo?</string>
+    <string name="rating_fair">Justo</string>
+    <string name="rating_not_fair">Injusto</string>
+    <string name="rating_thanks">Gracias</string>
     <string name="tier_locked_sign_in">(bloqueado: inicia sesión para usarlo)</string>
     <string name="tier_get_premium">Consigue más veredictos</string>
     <string name="tier_checking">Comprobando si falta algo…</string>

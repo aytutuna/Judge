@@ -147,6 +147,16 @@
     <string name="nav_links">ಲಿಂಕ್‌ಗಳು</string>
     <string name="nav_tabs">ವಿಭಾಗಗಳು</string>
     <string name="settings_dark_mode">ಡಾರ್ಕ್ ಮೋಡ್</string>
+    <string name="consent_card_title">Judge ಅನ್ನು ಉತ್ತಮಗೊಳಿಸಲು ಸಹಾಯ ಮಾಡುವಿರಾ?</string>
+    <string name="consent_card_body">Judge ನ ತೀರ್ಪುಗಾರರನ್ನು ಪರೀಕ್ಷಿಸಲು ಮತ್ತು ತರಬೇತಿಗೊಳಿಸಲು ಹೆಸರು ತೆಗೆದ ನಿಮ್ಮ ತೀರ್ಪುಗಳು ಮತ್ತು ರೇಟಿಂಗ್‌ಗಳನ್ನು ಬಳಸಲು ಅವಕಾಶ ಕೊಡಿ. ಹೆಸರುಗಳನ್ನು ಎಂದಿಗೂ ಸೇರಿಸುವುದಿಲ್ಲ. ಇದನ್ನು ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಯಾವಾಗ ಬೇಕಾದರೂ ಬದಲಿಸಬಹುದು.</string>
+    <string name="consent_card_yes">ಸರಿ</string>
+    <string name="consent_card_no">ಬೇಡ, ಧನ್ಯವಾದ</string>
+    <string name="consent_switch_title">Judge ಅನ್ನು ಉತ್ತಮಗೊಳಿಸಲು ಸಹಾಯ ಮಾಡಿ</string>
+    <string name="consent_switch_detail">Judge ನ ತೀರ್ಪುಗಾರರನ್ನು ಪರೀಕ್ಷಿಸಲು ಮತ್ತು ತರಬೇತಿಗೊಳಿಸಲು ಹೆಸರು ತೆಗೆದ ನಿಮ್ಮ ತೀರ್ಪುಗಳು ಮತ್ತು ರೇಟಿಂಗ್‌ಗಳನ್ನು ಬಳಸಲು ಅವಕಾಶ ನೀಡುತ್ತದೆ. ನೀವು ಆನ್ ಮಾಡದ ಹೊರತು ಆಫ್ ಆಗಿರುತ್ತದೆ.</string>
+    <string name="rating_prompt">ತೀರ್ಪು ನ್ಯಾಯಯುತವೇ?</string>
+    <string name="rating_fair">ನ್ಯಾಯಯುತ</string>
+    <string name="rating_not_fair">ನ್ಯಾಯಯುತವಲ್ಲ</string>
+    <string name="rating_thanks">ಧನ್ಯವಾದ</string>
     <string name="tier_locked_sign_in">(ಲಾಕ್ ಆಗಿದೆ: ಬಳಸಲು ಸೈನ್ ಇನ್ ಮಾಡಿ)</string>
     <string name="tier_get_premium">ಇನ್ನಷ್ಟು ತೀರ್ಪುಗಳನ್ನು ಪಡೆಯಿರಿ</string>
     <string name="tier_checking">ಏನಾದರೂ ಬಿಟ್ಟುಹೋಗಿದೆಯೇ ಎಂದು ನೋಡುತ್ತಿದ್ದೇವೆ…</string>

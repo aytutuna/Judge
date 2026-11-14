@@ -153,6 +153,16 @@
     <string name="nav_links">Linki</string>
     <string name="nav_tabs">Sekcje</string>
     <string name="settings_dark_mode">Tryb ciemny</string>
+    <string name="consent_card_title">Pomożesz ulepszyć Judge?</string>
+    <string name="consent_card_body">Pozwól, by Judge używał twoich zanonimizowanych werdyktów i ocen do testowania i trenowania swoich sędziów. Imiona nigdy nie są uwzględniane. Możesz to zmienić w Ustawieniach.</string>
+    <string name="consent_card_yes">Jasne</string>
+    <string name="consent_card_no">Nie, dziękuję</string>
+    <string name="consent_switch_title">Pomóż ulepszyć Judge</string>
+    <string name="consent_switch_detail">Pozwala Judge używać twoich zanonimizowanych werdyktów i ocen do testowania i trenowania jego sędziów. Wyłączone, dopóki tego nie włączysz.</string>
+    <string name="rating_prompt">Sprawiedliwy werdykt?</string>
+    <string name="rating_fair">Sprawiedliwy</string>
+    <string name="rating_not_fair">Niesprawiedliwy</string>
+    <string name="rating_thanks">Dzięki</string>
     <string name="tier_locked_sign_in">(zablokowane: zaloguj się, żeby użyć)</string>
     <string name="tier_get_premium">Kup więcej werdyktów</string>
     <string name="tier_checking">Sprawdzamy, czy czegoś nie brakuje…</string>

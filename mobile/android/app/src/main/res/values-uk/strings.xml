@@ -153,6 +153,16 @@
     <string name="nav_links">Посилання</string>
     <string name="nav_tabs">Розділи</string>
     <string name="settings_dark_mode">Темна тема</string>
+    <string name="consent_card_title">Допоможеш покращити Judge?</string>
+    <string name="consent_card_body">Дозволь Judge використовувати твої знеособлені вердикти й оцінки, щоб тестувати й навчати своїх суддів. Імена ніколи не додаються. Це можна змінити в Налаштуваннях.</string>
+    <string name="consent_card_yes">Звісно</string>
+    <string name="consent_card_no">Ні, дякую</string>
+    <string name="consent_switch_title">Допоможи покращити Judge</string>
+    <string name="consent_switch_detail">Дозволяє Judge використовувати твої знеособлені вердикти й оцінки, щоб тестувати й навчати своїх суддів. Вимкнено, доки ти його не ввімкнеш.</string>
+    <string name="rating_prompt">Справедливий вердикт?</string>
+    <string name="rating_fair">Справедливо</string>
+    <string name="rating_not_fair">Несправедливо</string>
+    <string name="rating_thanks">Дякую</string>
     <string name="tier_locked_sign_in">(заблоковано: увійди, щоб скористатися)</string>
     <string name="tier_get_premium">Більше вердиктів</string>
     <string name="tier_checking">Перевіряємо, чи нічого не бракує…</string>

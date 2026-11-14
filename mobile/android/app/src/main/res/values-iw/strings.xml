@@ -150,6 +150,16 @@
     <string name="nav_links">קישורים</string>
     <string name="nav_tabs">אזורים</string>
     <string name="settings_dark_mode">מצב כהה</string>
+    <string name="consent_card_title">רוצה לעזור לשפר את Judge?</string>
+    <string name="consent_card_body">אפשר ל-Judge להשתמש בפסקי הדין ובדירוגים האנונימיים שלך כדי לבדוק ולאמן את השופטים שלו. שמות לא נכללים אף פעם. אפשר לשנות את זה בהגדרות.</string>
+    <string name="consent_card_yes">בטח</string>
+    <string name="consent_card_no">לא, תודה</string>
+    <string name="consent_switch_title">עזור לשפר את Judge</string>
+    <string name="consent_switch_detail">מאפשר ל-Judge להשתמש בפסקי הדין ובדירוגים האנונימיים שלך כדי לבדוק ולאמן את השופטים שלו. כבוי אלא אם תדליק.</string>
+    <string name="rating_prompt">פסק דין הוגן?</string>
+    <string name="rating_fair">הוגן</string>
+    <string name="rating_not_fair">לא הוגן</string>
+    <string name="rating_thanks">תודה</string>
     <string name="tier_locked_sign_in">(נעול: צריך להתחבר כדי להשתמש)</string>
     <string name="tier_get_premium">עוד פסקי דין</string>
     <string name="tier_checking">בודקים אם חסר משהו…</string>

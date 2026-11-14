@@ -147,6 +147,16 @@
     <string name="nav_links">Links</string>
     <string name="nav_tabs">Sektioner</string>
     <string name="settings_dark_mode">Mørk tilstand</string>
+    <string name="consent_card_title">Vil du hjælpe med at gøre Judge bedre?</string>
+    <string name="consent_card_body">Lad Judge bruge dine anonymiserede domme og bedømmelser til at teste og træne sine dommere. Navne er aldrig med. Du kan ændre det i Indstillinger.</string>
+    <string name="consent_card_yes">Ja tak</string>
+    <string name="consent_card_no">Nej tak</string>
+    <string name="consent_switch_title">Hjælp med at gøre Judge bedre</string>
+    <string name="consent_switch_detail">Lader Judge bruge dine anonymiserede domme og bedømmelser til at teste og træne sine dommere. Slået fra, medmindre du slår det til.</string>
+    <string name="rating_prompt">Retfærdig dom?</string>
+    <string name="rating_fair">Retfærdig</string>
+    <string name="rating_not_fair">Ikke retfærdig</string>
+    <string name="rating_thanks">Tak</string>
     <string name="tier_locked_sign_in">(låst: log ind for at bruge det)</string>
     <string name="tier_get_premium">Få flere domme</string>
     <string name="tier_checking">Tjekker, om der mangler noget…</string>

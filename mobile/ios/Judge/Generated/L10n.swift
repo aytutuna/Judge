@@ -282,6 +282,16 @@ enum L10n {
     static func navLinks(_ lang: AppLang) -> String { string("nav.links", lang) }
     static func navTabs(_ lang: AppLang) -> String { string("nav.tabs", lang) }
     static func settingsDarkMode(_ lang: AppLang) -> String { string("settings.darkMode", lang) }
+    static func consentCardTitle(_ lang: AppLang) -> String { string("consent.cardTitle", lang) }
+    static func consentCardBody(_ lang: AppLang) -> String { string("consent.cardBody", lang) }
+    static func consentCardYes(_ lang: AppLang) -> String { string("consent.cardYes", lang) }
+    static func consentCardNo(_ lang: AppLang) -> String { string("consent.cardNo", lang) }
+    static func consentSwitchTitle(_ lang: AppLang) -> String { string("consent.switchTitle", lang) }
+    static func consentSwitchDetail(_ lang: AppLang) -> String { string("consent.switchDetail", lang) }
+    static func ratingPrompt(_ lang: AppLang) -> String { string("rating.prompt", lang) }
+    static func ratingFair(_ lang: AppLang) -> String { string("rating.fair", lang) }
+    static func ratingNotFair(_ lang: AppLang) -> String { string("rating.notFair", lang) }
+    static func ratingThanks(_ lang: AppLang) -> String { string("rating.thanks", lang) }
     static func tierLockedSignIn(_ lang: AppLang) -> String { string("tier.lockedSignIn", lang) }
     static func tierGetPremium(_ lang: AppLang) -> String { string("tier.getPremium", lang) }
     static func tierChecking(_ lang: AppLang) -> String { string("tier.checking", lang) }
@@ -906,6 +916,16 @@ enum L10n {
         "nav.links",
         "nav.tabs",
         "settings.darkMode",
+        "consent.cardTitle",
+        "consent.cardBody",
+        "consent.cardYes",
+        "consent.cardNo",
+        "consent.switchTitle",
+        "consent.switchDetail",
+        "rating.prompt",
+        "rating.fair",
+        "rating.notFair",
+        "rating.thanks",
         "tier.lockedSignIn",
         "tier.getPremium",
         "tier.checking",

@@ -153,6 +153,16 @@
     <string name="nav_links">Povezave</string>
     <string name="nav_tabs">Razdelki</string>
     <string name="settings_dark_mode">Temni način</string>
+    <string name="consent_card_title">Ali želiš pomagati izboljšati Judge?</string>
+    <string name="consent_card_body">Dovoli, da Judge uporablja tvoje anonimizirane razsodbe in ocene za preizkušanje in učenje svojih sodnikov. Imena niso nikoli vključena. To lahko spremeniš v Nastavitvah.</string>
+    <string name="consent_card_yes">Seveda</string>
+    <string name="consent_card_no">Ne, hvala</string>
+    <string name="consent_switch_title">Pomagaj izboljšati Judge</string>
+    <string name="consent_switch_detail">Judgeu dovoli uporabo tvojih anonimiziranih razsodb in ocen za preizkušanje in učenje njegovih sodnikov. Izklopljeno, dokler tega ne vklopiš.</string>
+    <string name="rating_prompt">Poštena razsodba?</string>
+    <string name="rating_fair">Poštena</string>
+    <string name="rating_not_fair">Nepoštena</string>
+    <string name="rating_thanks">Hvala</string>
     <string name="tier_locked_sign_in">(zaklenjeno: za uporabo se prijavi)</string>
     <string name="tier_get_premium">Več razsodb</string>
     <string name="tier_checking">Preverjamo, ali kaj manjka…</string>

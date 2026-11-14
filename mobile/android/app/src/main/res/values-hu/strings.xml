@@ -147,6 +147,16 @@
     <string name="nav_links">Linkek</string>
     <string name="nav_tabs">Szakaszok</string>
     <string name="settings_dark_mode">Sötét mód</string>
+    <string name="consent_card_title">Segítesz jobbá tenni a Judge-ot?</string>
+    <string name="consent_card_body">Engedd, hogy a Judge az anonimizált ítéleteidet és értékeléseidet használja a bírái teszteléséhez és tanításához. A nevek sosem kerülnek bele. Ezt bármikor megváltoztathatod a Beállításokban.</string>
+    <string name="consent_card_yes">Persze</string>
+    <string name="consent_card_no">Köszönöm, nem</string>
+    <string name="consent_switch_title">Segíts jobbá tenni a Judge-ot</string>
+    <string name="consent_switch_detail">Engedi, hogy a Judge az anonimizált ítéleteidet és értékeléseidet használja a bírái teszteléséhez és tanításához. Ki van kapcsolva, amíg be nem kapcsolod.</string>
+    <string name="rating_prompt">Igazságos ítélet?</string>
+    <string name="rating_fair">Igazságos</string>
+    <string name="rating_not_fair">Nem igazságos</string>
+    <string name="rating_thanks">Köszi</string>
     <string name="tier_locked_sign_in">(zárolva: a használatához lépj be)</string>
     <string name="tier_get_premium">További ítéletek</string>
     <string name="tier_checking">Megnézzük, hiányzik-e valami…</string>

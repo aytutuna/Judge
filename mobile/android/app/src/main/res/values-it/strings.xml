@@ -150,6 +150,16 @@
     <string name="nav_links">Link</string>
     <string name="nav_tabs">Sezioni</string>
     <string name="settings_dark_mode">Modalità scura</string>
+    <string name="consent_card_title">Vuoi aiutare a migliorare Judge?</string>
+    <string name="consent_card_body">Lascia che Judge usi i tuoi verdetti e le tue valutazioni anonimizzati per testare e addestrare i suoi giudici. I nomi non vengono mai inclusi. Puoi cambiarlo nelle Impostazioni.</string>
+    <string name="consent_card_yes">Certo</string>
+    <string name="consent_card_no">No, grazie</string>
+    <string name="consent_switch_title">Aiuta a migliorare Judge</string>
+    <string name="consent_switch_detail">Permette a Judge di usare i tuoi verdetti e le tue valutazioni anonimizzati per testare e addestrare i suoi giudici. Disattivato finché non lo attivi.</string>
+    <string name="rating_prompt">Verdetto giusto?</string>
+    <string name="rating_fair">Giusto</string>
+    <string name="rating_not_fair">Non giusto</string>
+    <string name="rating_thanks">Grazie</string>
     <string name="tier_locked_sign_in">(disponibile solo dopo l\'accesso)</string>
     <string name="tier_get_premium">Ottieni altri verdetti</string>
     <string name="tier_checking">Controlliamo se manca qualcosa…</string>

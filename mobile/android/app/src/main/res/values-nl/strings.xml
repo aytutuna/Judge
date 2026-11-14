@@ -147,6 +147,16 @@
     <string name="nav_links">Links</string>
     <string name="nav_tabs">Onderdelen</string>
     <string name="settings_dark_mode">Donkere modus</string>
+    <string name="consent_card_title">Help je Judge te verbeteren?</string>
+    <string name="consent_card_body">Laat Judge je geanonimiseerde uitspraken en beoordelingen gebruiken om zijn rechters te testen en te trainen. Namen zitten er nooit bij. Je kunt dit altijd wijzigen in Instellingen.</string>
+    <string name="consent_card_yes">Graag</string>
+    <string name="consent_card_no">Nee, bedankt</string>
+    <string name="consent_switch_title">Help Judge te verbeteren</string>
+    <string name="consent_switch_detail">Laat Judge je geanonimiseerde uitspraken en beoordelingen gebruiken om zijn rechters te testen en te trainen. Uit, tenzij je het aanzet.</string>
+    <string name="rating_prompt">Eerlijke uitspraak?</string>
+    <string name="rating_fair">Eerlijk</string>
+    <string name="rating_not_fair">Oneerlijk</string>
+    <string name="rating_thanks">Bedankt</string>
     <string name="tier_locked_sign_in">(op slot: log in om het te gebruiken)</string>
     <string name="tier_get_premium">Meer uitspraken</string>
     <string name="tier_checking">Even kijken of er iets ontbreekt…</string>

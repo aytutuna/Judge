@@ -147,6 +147,16 @@
     <string name="nav_links">లింక్‌లు</string>
     <string name="nav_tabs">విభాగాలు</string>
     <string name="settings_dark_mode">డార్క్ మోడ్</string>
+    <string name="consent_card_title">Judgeను మెరుగుపరచడంలో సహాయం చేస్తారా?</string>
+    <string name="consent_card_body">Judge జడ్జీలను పరీక్షించడానికి, శిక్షణ ఇవ్వడానికి పేర్లు తీసేసిన మీ తీర్పులను, రేటింగ్‌లను వాడుకోనివ్వండి. పేర్లు ఎప్పుడూ చేర్చం. దీన్ని సెట్టింగ్‌లలో ఎప్పుడైనా మార్చవచ్చు.</string>
+    <string name="consent_card_yes">సరే</string>
+    <string name="consent_card_no">వద్దు, ధన్యవాదాలు</string>
+    <string name="consent_switch_title">Judgeను మెరుగుపరచడంలో సహాయం చేయండి</string>
+    <string name="consent_switch_detail">Judge జడ్జీలను పరీక్షించడానికి, శిక్షణ ఇవ్వడానికి పేర్లు తీసేసిన మీ తీర్పులను, రేటింగ్‌లను వాడుకోనిస్తుంది. మీరు ఆన్ చేస్తే తప్ప ఆఫ్‌లోనే ఉంటుంది.</string>
+    <string name="rating_prompt">తీర్పు న్యాయంగా ఉందా?</string>
+    <string name="rating_fair">న్యాయం</string>
+    <string name="rating_not_fair">అన్యాయం</string>
+    <string name="rating_thanks">ధన్యవాదాలు</string>
     <string name="tier_locked_sign_in">(లాక్ అయింది: వాడాలంటే సైన్ ఇన్ చేయండి)</string>
     <string name="tier_get_premium">ఇంకా తీర్పులు తీసుకోండి</string>
     <string name="tier_checking">ఏమైనా మిస్ అయిందేమో చూస్తున్నాం…</string>

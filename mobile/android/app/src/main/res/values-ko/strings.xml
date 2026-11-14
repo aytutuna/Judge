@@ -144,6 +144,16 @@
     <string name="nav_links">링크</string>
     <string name="nav_tabs">섹션</string>
     <string name="settings_dark_mode">다크 모드</string>
+    <string name="consent_card_title">Judge 개선에 도움을 줄래요?</string>
+    <string name="consent_card_body">Judge의 판사들을 테스트하고 학습시키는 데 익명 처리된 내 판결과 평가를 쓰도록 허용해 주세요. 이름은 절대 포함되지 않아요. 설정에서 언제든 바꿀 수 있어요.</string>
+    <string name="consent_card_yes">좋아요</string>
+    <string name="consent_card_no">아니요</string>
+    <string name="consent_switch_title">Judge 개선에 도움 주기</string>
+    <string name="consent_switch_detail">Judge의 판사들을 테스트하고 학습시키는 데 익명 처리된 내 판결과 평가를 쓰도록 허용해요. 직접 켜지 않으면 꺼져 있어요.</string>
+    <string name="rating_prompt">공정한 판결인가요?</string>
+    <string name="rating_fair">공정해요</string>
+    <string name="rating_not_fair">공정하지 않아요</string>
+    <string name="rating_thanks">고마워요</string>
     <string name="tier_locked_sign_in">(잠김: 로그인하면 쓸 수 있어요)</string>
     <string name="tier_get_premium">판결 더 받기</string>
     <string name="tier_checking">빠진 내용이 있는지 확인하는 중…</string>

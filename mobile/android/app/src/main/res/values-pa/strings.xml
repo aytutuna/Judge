@@ -147,6 +147,16 @@
     <string name="nav_links">ਲਿੰਕ</string>
     <string name="nav_tabs">ਹਿੱਸੇ</string>
     <string name="settings_dark_mode">ਡਾਰਕ ਮੋਡ</string>
+    <string name="consent_card_title">Judge ਨੂੰ ਬਿਹਤਰ ਬਣਾਉਣ ਵਿੱਚ ਮਦਦ ਕਰੋਗੇ?</string>
+    <string name="consent_card_body">Judge ਨੂੰ ਆਪਣੇ ਜੱਜਾਂ ਨੂੰ ਪਰਖਣ ਅਤੇ ਸਿਖਲਾਈ ਦੇਣ ਲਈ ਤੁਹਾਡੇ ਨਾਂ-ਰਹਿਤ ਫ਼ੈਸਲੇ ਅਤੇ ਰੇਟਿੰਗਾਂ ਵਰਤਣ ਦਿਓ। ਨਾਂ ਕਦੇ ਸ਼ਾਮਲ ਨਹੀਂ ਕੀਤੇ ਜਾਂਦੇ। ਤੁਸੀਂ ਇਸ ਨੂੰ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਕਦੇ ਵੀ ਬਦਲ ਸਕਦੇ ਹੋ।</string>
+    <string name="consent_card_yes">ਹਾਂ, ਜ਼ਰੂਰ</string>
+    <string name="consent_card_no">ਨਹੀਂ, ਧੰਨਵਾਦ</string>
+    <string name="consent_switch_title">Judge ਨੂੰ ਬਿਹਤਰ ਬਣਾਉਣ ਵਿੱਚ ਮਦਦ ਕਰੋ</string>
+    <string name="consent_switch_detail">Judge ਨੂੰ ਆਪਣੇ ਜੱਜਾਂ ਨੂੰ ਪਰਖਣ ਅਤੇ ਸਿਖਲਾਈ ਦੇਣ ਲਈ ਤੁਹਾਡੇ ਨਾਂ-ਰਹਿਤ ਫ਼ੈਸਲੇ ਅਤੇ ਰੇਟਿੰਗਾਂ ਵਰਤਣ ਦਿੰਦਾ ਹੈ। ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਚਾਲੂ ਨਾ ਕਰੋ, ਬੰਦ ਰਹਿੰਦਾ ਹੈ।</string>
+    <string name="rating_prompt">ਕੀ ਫ਼ੈਸਲਾ ਨਿਆਂਪੂਰਨ ਹੈ?</string>
+    <string name="rating_fair">ਨਿਆਂਪੂਰਨ</string>
+    <string name="rating_not_fair">ਨਿਆਂਪੂਰਨ ਨਹੀਂ</string>
+    <string name="rating_thanks">ਧੰਨਵਾਦ</string>
     <string name="tier_locked_sign_in">(ਬੰਦ: ਵਰਤਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ)</string>
     <string name="tier_get_premium">ਹੋਰ ਫ਼ੈਸਲੇ ਲਓ</string>
     <string name="tier_checking">ਦੇਖ ਰਹੇ ਹਾਂ ਕਿ ਕੁਝ ਰਹਿ ਤਾਂ ਨਹੀਂ ਗਿਆ…</string>

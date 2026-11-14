@@ -144,6 +144,16 @@
     <string name="nav_links">链接</string>
     <string name="nav_tabs">版块</string>
     <string name="settings_dark_mode">深色模式</string>
+    <string name="consent_card_title">愿意帮助改进 Judge 吗？</string>
+    <string name="consent_card_body">允许 Judge 使用你的匿名裁决和评分，来测试和训练它的评委。名字永远不会包含在内。你可以随时在设置中更改。</string>
+    <string name="consent_card_yes">好的</string>
+    <string name="consent_card_no">不用了</string>
+    <string name="consent_switch_title">帮助改进 Judge</string>
+    <string name="consent_switch_detail">允许 Judge 使用你的匿名裁决和评分，来测试和训练它的评委。默认关闭，除非你自己打开。</string>
+    <string name="rating_prompt">裁决公平吗？</string>
+    <string name="rating_fair">公平</string>
+    <string name="rating_not_fair">不公平</string>
+    <string name="rating_thanks">谢谢</string>
     <string name="tier_locked_sign_in">（已锁定：登录后可用）</string>
     <string name="tier_get_premium">获取更多裁决</string>
     <string name="tier_checking">正在检查有没有遗漏……</string>

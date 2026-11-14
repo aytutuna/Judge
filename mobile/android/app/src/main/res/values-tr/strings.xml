@@ -147,6 +147,16 @@
     <string name="nav_links">Bağlantılar</string>
     <string name="nav_tabs">Bölümler</string>
     <string name="settings_dark_mode">Koyu mod</string>
+    <string name="consent_card_title">Judge\'ı geliştirmeye yardım eder misin?</string>
+    <string name="consent_card_body">Judge\'ın yargıçlarını test etmek ve eğitmek için anonim kararlarını ve puanlarını kullanmasına izin ver. İsimler hiçbir zaman dahil edilmez. Bunu Ayarlar\'dan istediğin zaman değiştirebilirsin.</string>
+    <string name="consent_card_yes">Olur</string>
+    <string name="consent_card_no">Hayır, teşekkürler</string>
+    <string name="consent_switch_title">Judge\'ı geliştirmeye yardım et</string>
+    <string name="consent_switch_detail">Judge\'ın yargıçlarını test etmek ve eğitmek için anonim kararlarını ve puanlarını kullanmasına izin verir. Sen açmadıkça kapalıdır.</string>
+    <string name="rating_prompt">Karar adil mi?</string>
+    <string name="rating_fair">Adil</string>
+    <string name="rating_not_fair">Adil değil</string>
+    <string name="rating_thanks">Teşekkürler</string>
     <string name="tier_locked_sign_in">(kilitli: kullanmak için giriş yap)</string>
     <string name="tier_get_premium">Daha fazla karar al</string>
     <string name="tier_checking">Eksik bir şey var mı diye bakıyoruz…</string>

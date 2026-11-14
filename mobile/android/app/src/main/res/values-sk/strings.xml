@@ -153,6 +153,16 @@
     <string name="nav_links">Odkazy</string>
     <string name="nav_tabs">Sekcie</string>
     <string name="settings_dark_mode">Tmavý režim</string>
+    <string name="consent_card_title">Pomôžeš zlepšiť Judge?</string>
+    <string name="consent_card_body">Dovoľ Judge používať tvoje anonymizované verdikty a hodnotenia na testovanie a trénovanie jeho sudcov. Mená sa nikdy nezahŕňajú. Môžeš to zmeniť v Nastaveniach.</string>
+    <string name="consent_card_yes">Jasné</string>
+    <string name="consent_card_no">Nie, vďaka</string>
+    <string name="consent_switch_title">Pomôž zlepšiť Judge</string>
+    <string name="consent_switch_detail">Dovolí Judge používať tvoje anonymizované verdikty a hodnotenia na testovanie a trénovanie jeho sudcov. Vypnuté, kým to nezapneš.</string>
+    <string name="rating_prompt">Je verdikt spravodlivý?</string>
+    <string name="rating_fair">Spravodlivý</string>
+    <string name="rating_not_fair">Nespravodlivý</string>
+    <string name="rating_thanks">Vďaka</string>
     <string name="tier_locked_sign_in">(zamknuté: najprv sa prihlás)</string>
     <string name="tier_get_premium">Získať viac verdiktov</string>
     <string name="tier_checking">Kontrolujem, či niečo nechýba…</string>

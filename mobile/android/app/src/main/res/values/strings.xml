@@ -147,6 +147,16 @@
     <string name="nav_links">Links</string>
     <string name="nav_tabs">Sections</string>
     <string name="settings_dark_mode">Dark mode</string>
+    <string name="consent_card_title">Help improve Judge?</string>
+    <string name="consent_card_body">Let Judge use your anonymized verdicts and ratings to test and train its judges. Names are never included. You can change this in Settings.</string>
+    <string name="consent_card_yes">Sure</string>
+    <string name="consent_card_no">No thanks</string>
+    <string name="consent_switch_title">Help improve Judge</string>
+    <string name="consent_switch_detail">Lets Judge use your anonymized verdicts and ratings to test and train its judges. Off unless you turn it on.</string>
+    <string name="rating_prompt">Fair verdict?</string>
+    <string name="rating_fair">Fair</string>
+    <string name="rating_not_fair">Not fair</string>
+    <string name="rating_thanks">Thanks</string>
     <string name="tier_locked_sign_in">(locked: sign in to use it)</string>
     <string name="tier_get_premium">Get more verdicts</string>
     <string name="tier_checking">Checking if anything\'s missing…</string>

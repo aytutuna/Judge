@@ -159,6 +159,16 @@
     <string name="nav_links">الروابط</string>
     <string name="nav_tabs">الأقسام</string>
     <string name="settings_dark_mode">الوضع الداكن</string>
+    <string name="consent_card_title">هل تساعد في تحسين Judge؟</string>
+    <string name="consent_card_body">اسمح لـ Judge باستخدام أحكامك وتقييماتك المجهولة الهوية لاختبار قضاته وتدريبهم. لا تُضمَّن الأسماء أبدًا. يمكنك تغيير ذلك من الإعدادات.</string>
+    <string name="consent_card_yes">بكل سرور</string>
+    <string name="consent_card_no">لا، شكرًا</string>
+    <string name="consent_switch_title">ساعد في تحسين Judge</string>
+    <string name="consent_switch_detail">يسمح لـ Judge باستخدام أحكامك وتقييماتك المجهولة الهوية لاختبار قضاته وتدريبهم. متوقف ما لم تُشغّله.</string>
+    <string name="rating_prompt">هل الحكم عادل؟</string>
+    <string name="rating_fair">عادل</string>
+    <string name="rating_not_fair">غير عادل</string>
+    <string name="rating_thanks">شكرًا</string>
     <string name="tier_locked_sign_in">(مقفل: سجّل الدخول لاستخدامه)</string>
     <string name="tier_get_premium">المزيد من الأحكام</string>
     <string name="tier_checking">نتحقق إن كان ينقص شيء…</string>

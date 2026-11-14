@@ -144,6 +144,16 @@
     <string name="nav_links">Tautan</string>
     <string name="nav_tabs">Bagian</string>
     <string name="settings_dark_mode">Mode gelap</string>
+    <string name="consent_card_title">Mau bantu tingkatkan Judge?</string>
+    <string name="consent_card_body">Izinkan Judge memakai putusan dan penilaian anonimmu untuk menguji dan melatih para hakimnya. Nama tidak pernah disertakan. Kamu bisa mengubahnya di Pengaturan.</string>
+    <string name="consent_card_yes">Boleh</string>
+    <string name="consent_card_no">Tidak, terima kasih</string>
+    <string name="consent_switch_title">Bantu tingkatkan Judge</string>
+    <string name="consent_switch_detail">Mengizinkan Judge memakai putusan dan penilaian anonimmu untuk menguji dan melatih para hakimnya. Nonaktif kecuali kamu mengaktifkannya.</string>
+    <string name="rating_prompt">Putusan ini adil?</string>
+    <string name="rating_fair">Adil</string>
+    <string name="rating_not_fair">Tidak adil</string>
+    <string name="rating_thanks">Terima kasih</string>
     <string name="tier_locked_sign_in">(terkunci: masuk dulu untuk memakainya)</string>
     <string name="tier_get_premium">Tambah putusan</string>
     <string name="tier_checking">Mengecek apakah ada yang kurang…</string>

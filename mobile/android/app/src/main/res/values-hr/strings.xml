@@ -150,6 +150,16 @@
     <string name="nav_links">Poveznice</string>
     <string name="nav_tabs">Odjeljci</string>
     <string name="settings_dark_mode">Tamni način rada</string>
+    <string name="consent_card_title">Želiš li pomoći poboljšati Judge?</string>
+    <string name="consent_card_body">Dopusti da Judge koristi tvoje anonimizirane presude i ocjene za testiranje i treniranje svojih sudaca. Imena se nikad ne uključuju. To možeš promijeniti u Postavkama.</string>
+    <string name="consent_card_yes">Naravno</string>
+    <string name="consent_card_no">Ne, hvala</string>
+    <string name="consent_switch_title">Pomozi poboljšati Judge</string>
+    <string name="consent_switch_detail">Dopušta Judgeu da koristi tvoje anonimizirane presude i ocjene za testiranje i treniranje svojih sudaca. Isključeno je dok ga ne uključiš.</string>
+    <string name="rating_prompt">Je li presuda pravedna?</string>
+    <string name="rating_fair">Pravedna</string>
+    <string name="rating_not_fair">Nepravedna</string>
+    <string name="rating_thanks">Hvala</string>
     <string name="tier_locked_sign_in">(zaključano: prijavi se za korištenje)</string>
     <string name="tier_get_premium">Nabavi još presuda</string>
     <string name="tier_checking">Provjeravamo nedostaje li nešto…</string>

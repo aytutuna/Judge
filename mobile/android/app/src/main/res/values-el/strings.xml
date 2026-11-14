@@ -147,6 +147,16 @@
     <string name="nav_links">Σύνδεσμοι</string>
     <string name="nav_tabs">Ενότητες</string>
     <string name="settings_dark_mode">Σκοτεινή λειτουργία</string>
+    <string name="consent_card_title">Θες να βοηθήσεις να γίνει καλύτερο το Judge;</string>
+    <string name="consent_card_body">Άφησε το Judge να χρησιμοποιεί τις ανωνυμοποιημένες αποφάσεις και βαθμολογίες σου για να δοκιμάζει και να εκπαιδεύει τους κριτές του. Τα ονόματα δεν περιλαμβάνονται ποτέ. Μπορείς να το αλλάξεις στις Ρυθμίσεις.</string>
+    <string name="consent_card_yes">Βεβαίως</string>
+    <string name="consent_card_no">Όχι, ευχαριστώ</string>
+    <string name="consent_switch_title">Βοήθησε να γίνει καλύτερο το Judge</string>
+    <string name="consent_switch_detail">Επιτρέπει στο Judge να χρησιμοποιεί τις ανωνυμοποιημένες αποφάσεις και βαθμολογίες σου για να δοκιμάζει και να εκπαιδεύει τους κριτές του. Απενεργοποιημένο αν δεν το ενεργοποιήσεις.</string>
+    <string name="rating_prompt">Δίκαιη απόφαση;</string>
+    <string name="rating_fair">Δίκαιη</string>
+    <string name="rating_not_fair">Άδικη</string>
+    <string name="rating_thanks">Ευχαριστώ</string>
     <string name="tier_locked_sign_in">(κλειδωμένο: συνδέσου για να το χρησιμοποιήσεις)</string>
     <string name="tier_get_premium">Περισσότερες αποφάσεις</string>
     <string name="tier_checking">Ελέγχουμε αν λείπει κάτι…</string>

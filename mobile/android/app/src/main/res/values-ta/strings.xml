@@ -147,6 +147,16 @@
     <string name="nav_links">இணைப்புகள்</string>
     <string name="nav_tabs">பிரிவுகள்</string>
     <string name="settings_dark_mode">டார்க் மோடு</string>
+    <string name="consent_card_title">Judge-ஐ மேம்படுத்த உதவுவீர்களா?</string>
+    <string name="consent_card_body">Judge-இன் நடுவர்களைச் சோதிக்கவும் பயிற்றுவிக்கவும் பெயர் நீக்கிய உங்கள் தீர்ப்புகளையும் மதிப்பீடுகளையும் பயன்படுத்த அனுமதியுங்கள். பெயர்கள் ஒருபோதும் சேர்க்கப்படாது. இதை அமைப்புகளில் எப்போது வேண்டுமானாலும் மாற்றலாம்.</string>
+    <string name="consent_card_yes">சரி</string>
+    <string name="consent_card_no">வேண்டாம், நன்றி</string>
+    <string name="consent_switch_title">Judge-ஐ மேம்படுத்த உதவுங்கள்</string>
+    <string name="consent_switch_detail">Judge-இன் நடுவர்களைச் சோதிக்கவும் பயிற்றுவிக்கவும் பெயர் நீக்கிய உங்கள் தீர்ப்புகளையும் மதிப்பீடுகளையும் பயன்படுத்த அனுமதிக்கிறது. நீங்கள் இயக்கும் வரை அணைந்தே இருக்கும்.</string>
+    <string name="rating_prompt">தீர்ப்பு நியாயமானதா?</string>
+    <string name="rating_fair">நியாயம்</string>
+    <string name="rating_not_fair">நியாயமில்லை</string>
+    <string name="rating_thanks">நன்றி</string>
     <string name="tier_locked_sign_in">(பூட்டப்பட்டது: பயன்படுத்த உள்நுழையுங்கள்)</string>
     <string name="tier_get_premium">இன்னும் தீர்ப்புகள் பெறுக</string>
     <string name="tier_checking">ஏதாவது விடுபட்டிருக்கிறதா என்று பார்க்கிறோம்…</string>

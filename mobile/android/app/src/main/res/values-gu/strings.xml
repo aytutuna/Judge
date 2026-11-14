@@ -147,6 +147,16 @@
     <string name="nav_links">લિંક્સ</string>
     <string name="nav_tabs">વિભાગો</string>
     <string name="settings_dark_mode">ડાર્ક મોડ</string>
+    <string name="consent_card_title">Judge ને વધુ સારું બનાવવામાં મદદ કરશો?</string>
+    <string name="consent_card_body">Judge ને તેના જજને ચકાસવા અને તૈયાર કરવા માટે તમારા નામ વગરના ચુકાદા અને રેટિંગ વાપરવા દો. નામ ક્યારેય સામેલ થતાં નથી. તમે તે સેટિંગ્સમાં બદલી શકો છો.</string>
+    <string name="consent_card_yes">હા, ચોક્કસ</string>
+    <string name="consent_card_no">ના, આભાર</string>
+    <string name="consent_switch_title">Judge ને વધુ સારું બનાવવામાં મદદ કરો</string>
+    <string name="consent_switch_detail">Judge ને તેના જજને ચકાસવા અને તૈયાર કરવા માટે તમારા નામ વગરના ચુકાદા અને રેટિંગ વાપરવા દે છે. તમે ચાલુ ન કરો ત્યાં સુધી બંધ રહે છે.</string>
+    <string name="rating_prompt">ચુકાદો ન્યાયી છે?</string>
+    <string name="rating_fair">ન્યાયી</string>
+    <string name="rating_not_fair">અન્યાયી</string>
+    <string name="rating_thanks">આભાર</string>
     <string name="tier_locked_sign_in">(લૉક છે: વાપરવા માટે સાઇન ઇન કરો)</string>
     <string name="tier_get_premium">વધુ ચુકાદા લો</string>
     <string name="tier_checking">કંઈ ખૂટે છે કે નહીં, એ જોઈએ છીએ…</string>

@@ -215,6 +215,16 @@ class Strings(private val res: Resources) {
     val navLinks: String get() = res.getString(R.string.nav_links)
     val navTabs: String get() = res.getString(R.string.nav_tabs)
     val settingsDarkMode: String get() = res.getString(R.string.settings_dark_mode)
+    val consentCardTitle: String get() = res.getString(R.string.consent_card_title)
+    val consentCardBody: String get() = res.getString(R.string.consent_card_body)
+    val consentCardYes: String get() = res.getString(R.string.consent_card_yes)
+    val consentCardNo: String get() = res.getString(R.string.consent_card_no)
+    val consentSwitchTitle: String get() = res.getString(R.string.consent_switch_title)
+    val consentSwitchDetail: String get() = res.getString(R.string.consent_switch_detail)
+    val ratingPrompt: String get() = res.getString(R.string.rating_prompt)
+    val ratingFair: String get() = res.getString(R.string.rating_fair)
+    val ratingNotFair: String get() = res.getString(R.string.rating_not_fair)
+    val ratingThanks: String get() = res.getString(R.string.rating_thanks)
     val tierLockedSignIn: String get() = res.getString(R.string.tier_locked_sign_in)
     val tierGetPremium: String get() = res.getString(R.string.tier_get_premium)
     val tierChecking: String get() = res.getString(R.string.tier_checking)
@@ -838,6 +848,16 @@ class Strings(private val res: Resources) {
             "nav.links" -> R.string.nav_links
             "nav.tabs" -> R.string.nav_tabs
             "settings.darkMode" -> R.string.settings_dark_mode
+            "consent.cardTitle" -> R.string.consent_card_title
+            "consent.cardBody" -> R.string.consent_card_body
+            "consent.cardYes" -> R.string.consent_card_yes
+            "consent.cardNo" -> R.string.consent_card_no
+            "consent.switchTitle" -> R.string.consent_switch_title
+            "consent.switchDetail" -> R.string.consent_switch_detail
+            "rating.prompt" -> R.string.rating_prompt
+            "rating.fair" -> R.string.rating_fair
+            "rating.notFair" -> R.string.rating_not_fair
+            "rating.thanks" -> R.string.rating_thanks
             "tier.lockedSignIn" -> R.string.tier_locked_sign_in
             "tier.getPremium" -> R.string.tier_get_premium
             "tier.checking" -> R.string.tier_checking

@@ -147,6 +147,16 @@
     <string name="nav_links">ଲିଙ୍କ</string>
     <string name="nav_tabs">ବିଭାଗ</string>
     <string name="settings_dark_mode">ଡାର୍କ ମୋଡ୍</string>
+    <string name="consent_card_title">Judge କୁ ଭଲ କରିବାରେ ସାହାଯ୍ୟ କରିବେ?</string>
+    <string name="consent_card_body">Judge ର ବିଚାରକମାନଙ୍କୁ ପରୀକ୍ଷା ଓ ତାଲିମ ଦେବା ପାଇଁ ଆପଣଙ୍କ ନାମ କାଢ଼ି ଦିଆଯାଇଥିବା ରାୟ ଓ ରେଟିଂ ବ୍ୟବହାର କରିବାକୁ ଦିଅନ୍ତୁ। ନାମ କେବେ ସାମିଲ ହୁଏ ନାହିଁ। ଆପଣ ଏହାକୁ ସେଟିଂସ୍‌ରେ ଯେକୌଣସି ସମୟରେ ବଦଳାଇପାରିବେ।</string>
+    <string name="consent_card_yes">ହଁ, ନିଶ୍ଚୟ</string>
+    <string name="consent_card_no">ନା, ଧନ୍ୟବାଦ</string>
+    <string name="consent_switch_title">Judge କୁ ଭଲ କରିବାରେ ସାହାଯ୍ୟ କରନ୍ତୁ</string>
+    <string name="consent_switch_detail">Judge ର ବିଚାରକମାନଙ୍କୁ ପରୀକ୍ଷା ଓ ତାଲିମ ଦେବା ପାଇଁ ଆପଣଙ୍କ ନାମ କାଢ଼ି ଦିଆଯାଇଥିବା ରାୟ ଓ ରେଟିଂ ବ୍ୟବହାର କରିବାକୁ ଦିଏ। ଆପଣ ଚାଲୁ ନକଲେ ବନ୍ଦ ରହେ।</string>
+    <string name="rating_prompt">ରାୟ ନ୍ୟାୟସଙ୍ଗତ କି?</string>
+    <string name="rating_fair">ନ୍ୟାୟସଙ୍ଗତ</string>
+    <string name="rating_not_fair">ନ୍ୟାୟସଙ୍ଗତ ନୁହେଁ</string>
+    <string name="rating_thanks">ଧନ୍ୟବାଦ</string>
     <string name="tier_locked_sign_in">(ଲକ୍: ବ୍ୟବହାର ପାଇଁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ)</string>
     <string name="tier_get_premium">ଅଧିକ ରାୟ ନିଅନ୍ତୁ</string>
     <string name="tier_checking">କିଛି ବାକି ରହିଲା କି ଦେଖୁଛୁ…</string>

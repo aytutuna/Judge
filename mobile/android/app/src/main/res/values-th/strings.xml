@@ -144,6 +144,16 @@
     <string name="nav_links">ลิงก์</string>
     <string name="nav_tabs">ส่วนต่าง ๆ</string>
     <string name="settings_dark_mode">โหมดมืด</string>
+    <string name="consent_card_title">ช่วยพัฒนา Judge ไหม</string>
+    <string name="consent_card_body">อนุญาตให้ Judge ใช้คำตัดสินและคะแนนแบบไม่มีชื่อของคุณเพื่อทดสอบและฝึกกรรมการของ Judge ชื่อจะไม่ถูกรวมไว้เลย คุณเปลี่ยนได้ทุกเมื่อในตั้งค่า</string>
+    <string name="consent_card_yes">ได้เลย</string>
+    <string name="consent_card_no">ไม่ล่ะ ขอบคุณ</string>
+    <string name="consent_switch_title">ช่วยพัฒนา Judge</string>
+    <string name="consent_switch_detail">อนุญาตให้ Judge ใช้คำตัดสินและคะแนนแบบไม่มีชื่อของคุณเพื่อทดสอบและฝึกกรรมการของ Judge ปิดอยู่ เว้นแต่คุณจะเปิดเอง</string>
+    <string name="rating_prompt">คำตัดสินยุติธรรมไหม</string>
+    <string name="rating_fair">ยุติธรรม</string>
+    <string name="rating_not_fair">ไม่ยุติธรรม</string>
+    <string name="rating_thanks">ขอบคุณ</string>
     <string name="tier_locked_sign_in">(ล็อกอยู่: เข้าสู่ระบบเพื่อใช้)</string>
     <string name="tier_get_premium">เติมคำตัดสิน</string>
     <string name="tier_checking">กำลังเช็กว่าขาดข้อมูลอะไรไหม…</string>

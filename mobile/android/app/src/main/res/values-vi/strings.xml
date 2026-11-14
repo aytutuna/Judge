@@ -144,6 +144,16 @@
     <string name="nav_links">Liên kết</string>
     <string name="nav_tabs">Mục</string>
     <string name="settings_dark_mode">Chế độ tối</string>
+    <string name="consent_card_title">Giúp cải thiện Judge nhé?</string>
+    <string name="consent_card_body">Cho phép Judge dùng các phán quyết và đánh giá đã ẩn danh của bạn để kiểm thử và huấn luyện các giám khảo. Tên không bao giờ được đưa vào. Bạn có thể đổi điều này trong Cài đặt.</string>
+    <string name="consent_card_yes">Được</string>
+    <string name="consent_card_no">Không, cảm ơn</string>
+    <string name="consent_switch_title">Giúp cải thiện Judge</string>
+    <string name="consent_switch_detail">Cho phép Judge dùng các phán quyết và đánh giá đã ẩn danh của bạn để kiểm thử và huấn luyện các giám khảo. Tắt, trừ khi bạn bật.</string>
+    <string name="rating_prompt">Phán quyết có công bằng không?</string>
+    <string name="rating_fair">Công bằng</string>
+    <string name="rating_not_fair">Không công bằng</string>
+    <string name="rating_thanks">Cảm ơn</string>
     <string name="tier_locked_sign_in">(đã khóa: đăng nhập để dùng)</string>
     <string name="tier_get_premium">Thêm lượt phán quyết</string>
     <string name="tier_checking">Đang xem có thiếu gì không…</string>

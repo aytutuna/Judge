@@ -147,6 +147,16 @@
     <string name="nav_links">লিংক</string>
     <string name="nav_tabs">বিভাগ</string>
     <string name="settings_dark_mode">ডার্ক মোড</string>
+    <string name="consent_card_title">Judge-কে আরও ভালো করতে সাহায্য করবেন?</string>
+    <string name="consent_card_body">Judge-এর বিচারকদের পরীক্ষা ও প্রশিক্ষণের জন্য আপনার নাম-সরানো রায় ও রেটিং ব্যবহার করতে দিন। নাম কখনও থাকে না। সেটিংসে গিয়ে যেকোনো সময় বদলাতে পারবেন।</string>
+    <string name="consent_card_yes">ঠিক আছে</string>
+    <string name="consent_card_no">না, ধন্যবাদ</string>
+    <string name="consent_switch_title">Judge-কে আরও ভালো করতে সাহায্য করুন</string>
+    <string name="consent_switch_detail">Judge-এর বিচারকদের পরীক্ষা ও প্রশিক্ষণের জন্য আপনার নাম-সরানো রায় ও রেটিং ব্যবহার করতে দেয়। আপনি চালু না করলে বন্ধ থাকে।</string>
+    <string name="rating_prompt">রায়টা কি ন্যায্য?</string>
+    <string name="rating_fair">ন্যায্য</string>
+    <string name="rating_not_fair">ন্যায্য নয়</string>
+    <string name="rating_thanks">ধন্যবাদ</string>
     <string name="tier_locked_sign_in">(লক করা: ব্যবহার করতে সাইন ইন করুন)</string>
     <string name="tier_get_premium">আরও রায় নিন</string>
     <string name="tier_checking">কিছু বাদ পড়েছে কি না দেখছি…</string>

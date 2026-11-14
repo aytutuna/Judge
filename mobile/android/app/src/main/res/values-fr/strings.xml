@@ -150,6 +150,16 @@
     <string name="nav_links">Liens</string>
     <string name="nav_tabs">Sections</string>
     <string name="settings_dark_mode">Mode sombre</string>
+    <string name="consent_card_title">Tu veux aider à améliorer Judge ?</string>
+    <string name="consent_card_body">Laisse Judge utiliser tes verdicts et tes notes anonymisés pour tester et entraîner ses juges. Les noms n’en font jamais partie. Tu peux changer ça dans les Réglages.</string>
+    <string name="consent_card_yes">Avec plaisir</string>
+    <string name="consent_card_no">Non merci</string>
+    <string name="consent_switch_title">Aider à améliorer Judge</string>
+    <string name="consent_switch_detail">Permet à Judge d’utiliser tes verdicts et tes notes anonymisés pour tester et entraîner ses juges. Désactivé tant que tu ne l’actives pas.</string>
+    <string name="rating_prompt">Verdict équitable ?</string>
+    <string name="rating_fair">Équitable</string>
+    <string name="rating_not_fair">Pas équitable</string>
+    <string name="rating_thanks">Merci</string>
     <string name="tier_locked_sign_in">(verrouillé : connecte-toi pour l’utiliser)</string>
     <string name="tier_get_premium">Obtenir plus de verdicts</string>
     <string name="tier_checking">On vérifie s’il manque quelque chose…</string>
