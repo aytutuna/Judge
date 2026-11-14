@@ -153,6 +153,15 @@ object JudgeIcons {
     /** The decisive dispute's bolt (DecisiveGlyph). */
     fun bolt(color: Color) = icon("bolt", 12f, P("M6.6 1 2.5 7h3L5 11l4.5-6.2h-3z", fill = color))
 
+    /** Thumb up; the down thumb is this one turned over. */
+    fun thumb(color: Color, filled: Boolean) = icon(
+        "thumb", 16f,
+        P(
+            "M2.5 7.2h2.3v6.3H2.5zM4.8 7.6 7.4 2.6c1 0 1.8.9 1.6 1.9L8.6 6.7h3.9a1.3 1.3 0 0 1 1.3 1.6l-1 4a1.3 1.3 0 0 1-1.3 1H4.8",
+            fill = if (filled) color else null, stroke = color, width = 1.4f,
+        ),
+    )
+
     fun external(color: Color) = icon("external", 10f, P("M4 2h4v4M8 2 3 7", stroke = color, width = 1.4f))
 }
 

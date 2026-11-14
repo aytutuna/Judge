@@ -3,6 +3,7 @@ package com.okjudge.judge.ui.verdict
 import com.okjudge.judge.FakeHistory
 import com.okjudge.judge.Fixtures
 import com.okjudge.judge.core.api.JudgeApi
+import com.okjudge.judge.core.model.Rating
 import com.okjudge.judge.i18n.AppLang
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -146,5 +147,25 @@ class VerdictViewModelTest {
         vm.onLang(AppLang.TR)
         vm.awaitStatus(TranslationStatus.OFFLINE)
         job.cancel()
+    }
+
+    private fun json(body: String) =
+        MockResponse.Builder().code(200).addHeader("Content-Type", "application/json").body(body).build()
+
+    @Test
+    fun rate_tapsSetAndClear_andARefusalPutsItBack() = runBlocking {
+        val vm = vm()
+        server.enqueue(json("""{"id":"x","rating":"up"}"""))
+        vm.loadRating("x")
+        assertEquals(Rating.UP, withTimeout(10_000) { vm.rating.first { it != null } })
+        server.enqueue(json("""{"rating":null}"""))
+        vm.rate(Rating.UP)
+        assertEquals(null, vm.rating.value)
+        server.takeRequest()
+        server.takeRequest()
+        server.enqueue(MockResponse.Builder().code(503).body("{}").build())
+        vm.rate(Rating.DOWN)
+        assertEquals(Rating.DOWN, vm.rating.value)
+        assertEquals(null, withTimeout(10_000) { vm.rating.first { it == null } })
     }
 }

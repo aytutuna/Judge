@@ -55,6 +55,8 @@ import com.okjudge.judge.AppContainer
 import com.okjudge.judge.BuildConfig
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import com.okjudge.judge.core.auth.Account
+import com.okjudge.judge.core.feedback.Consent
+import com.okjudge.judge.core.model.ConsentState
 import com.okjudge.judge.core.auth.AgeCheck
 import com.okjudge.judge.core.auth.AgeGate
 import com.okjudge.judge.core.display.Errors
@@ -575,6 +577,10 @@ fun JudgeRoot(
                                     } else {
                                         null
                                     }
+                                    val consent by container.consent.state.collectAsStateWithLifecycle()
+                                    LaunchedEffect(accountState is Account.State.SignedIn) {
+                                        if (accountState is Account.State.SignedIn) container.consent.refresh() else container.consent.clear()
+                                    }
                                     VerdictRoute(
                                         id = key.id,
                                         viewModel = vm,
@@ -588,6 +594,9 @@ fun JudgeRoot(
                                         onSignIn = { if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false)) },
                                         onPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
                                         onShared = { container.analytics.track("share_tapped") },
+                                        feedback = true,
+                                        consent = consent,
+                                        onConsent = { on -> container.consent.answer(on, "card", Consent.CARD_WORDING) },
                                     )
                                 }
                                 entry<CaseKey> { key ->
@@ -677,6 +686,10 @@ fun JudgeRoot(
                                         account.refresh()
                                     }
                                     ScreenView(container.analytics, "settings")
+                                    val consent by container.consent.state.collectAsStateWithLifecycle()
+                                    LaunchedEffect(accountState is Account.State.SignedIn) {
+                                        if (accountState is Account.State.SignedIn) container.consent.refresh() else container.consent.clear()
+                                    }
                                     SettingsScreen(
                                         langPref = langPref,
                                         versionName = container.config.versionName,
@@ -687,6 +700,14 @@ fun JudgeRoot(
                                         onAppearance = { a ->
                                             container.analytics.track("settings_changed", mapOf("key" to "appearance"))
                                             scope.launch { container.settings.setAppearance(a) }
+                                        },
+                                        helpImprove = consent == ConsentState.ON,
+                                        onHelpImprove = { on ->
+                                            if (accountState is Account.State.SignedIn) {
+                                                container.consent.answer(on, "switch", Consent.SWITCH_WORDING)
+                                            } else if (backStack.lastOrNull() !is SignInKey) {
+                                                backStack.add(SignInKey(thenVerdict = false))
+                                            }
                                         },
                                         usageStats = usageStats,
                                         onUsageStats = { on -> scope.launch { container.settings.setUsageStats(on) } },

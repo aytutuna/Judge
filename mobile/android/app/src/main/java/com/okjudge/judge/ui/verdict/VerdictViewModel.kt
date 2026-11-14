@@ -9,6 +9,7 @@ import com.okjudge.judge.core.data.SavedVerdict
 import com.okjudge.judge.core.display.ContentLang
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.model.ParsedResult
+import com.okjudge.judge.core.model.Rating
 import com.okjudge.judge.core.model.VerdictShape
 import com.okjudge.judge.core.model.WireJson
 import com.okjudge.judge.i18n.AppLang
@@ -140,6 +141,33 @@ class VerdictViewModel(
             TranslationEntry.Blocked(clock() + (wait * 1000).toLong())
         }
         else -> TranslationEntry.Failed(offline = false)
+    }
+
+    private val _rating = MutableStateFlow<Rating?>(null)
+
+    /** The signed-in viewer's answer to "Fair verdict?" for [ratedId], the latest round. */
+    val rating: StateFlow<Rating?> = _rating
+
+    private var ratedId: String? = null
+
+    fun loadRating(rulingId: String) {
+        if (ratedId != rulingId) _rating.value = null
+        ratedId = rulingId
+        viewModelScope.launch {
+            val res = api.rating(rulingId)
+            if (res is ApiResult.Ok && ratedId == rulingId) _rating.value = res.value
+        }
+    }
+
+    /** A tap on the chosen thumb clears it. Shown at once, put back if the server refuses. */
+    fun rate(tapped: Rating) {
+        val rulingId = ratedId ?: return
+        val before = _rating.value
+        val next = if (before == tapped) null else tapped
+        _rating.value = next
+        viewModelScope.launch {
+            if (api.setRating(rulingId, next) is ApiResult.Err && ratedId == rulingId && _rating.value == next) _rating.value = before
+        }
     }
 
     fun delete(onDone: () -> Unit) {

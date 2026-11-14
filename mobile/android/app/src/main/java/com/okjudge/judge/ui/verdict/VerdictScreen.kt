@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.okjudge.judge.core.cases.AppealArea
 import com.okjudge.judge.core.display.PartyNames
+import com.okjudge.judge.core.model.ConsentState
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.ui.cases.AppealDraft
@@ -69,10 +70,15 @@ fun VerdictRoute(
     onSignIn: () -> Unit = {},
     onPricing: () -> Unit = {},
     onShared: () -> Unit = {},
+    /** Shows the "Fair verdict?" thumbs, and the consent card while [consent] says nobody asked yet. */
+    feedback: Boolean = false,
+    consent: ConsentState? = null,
+    onConsent: (Boolean) -> Unit = {},
 ) {
     val lang = LocalLang.current
     LaunchedEffect(lang) { viewModel.onLang(lang) }
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val rating by viewModel.rating.collectAsStateWithLifecycle()
     val appealState = appeal?.let { it.state.collectAsStateWithLifecycle().value }
     val context = LocalContext.current
     val s = LocalStrings.current
@@ -119,6 +125,7 @@ fun VerdictRoute(
             return@Column
         }
         val selfLang = saved.lang
+        LaunchedEffect(saved.rulingId, signedOut, feedback) { if (feedback && !signedOut) viewModel.loadRating(saved.rulingId) }
         val parties = PartyNames.partyNames(saved.nameMap, selfLang, s, view.result.sideCount)
         val shown = remember(view, saved.nameMap, selfLang) { view.personalized(saved.nameMap, selfLang) }
         val area = appealState?.area ?: AppealArea.None
@@ -165,6 +172,10 @@ fun VerdictRoute(
                 // The sheet takes the form; re-judging, or why no more context fits, shows here.
                 if (appealState?.panel == true) AppealNote(area, width.padding(top = 16.dp))
                 Spacer(Modifier.height(32.dp))
+            }
+            if (feedback) {
+                if (consent == ConsentState.NOT_ASKED) ConsentCard(onConsent, width.padding(bottom = 16.dp))
+                RatingRow(rating, onRate = { if (signedOut) signInSheet = true else viewModel.rate(it) }, modifier = width.padding(bottom = 24.dp))
             }
         }
         if (appeal != null && appealState != null && appealState.open && area.opensSheet) {

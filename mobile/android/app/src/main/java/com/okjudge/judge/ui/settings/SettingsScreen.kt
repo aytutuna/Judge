@@ -61,6 +61,7 @@ object SettingsTags {
     const val RESTORE_NOTE = "settings.restoreNote"
     const val LANGUAGE = "settings.language"
     const val USAGE_STATS = "settings.usageStats"
+    const val HELP_IMPROVE = "settings.helpImprove"
     const val DARK_MODE = "settings.darkMode"
 
     /** A row of the language list: "settings.lang.system", "settings.lang.de". */
@@ -89,6 +90,8 @@ fun SettingsScreen(
     onRestore: () -> Unit = {},
     /** Gets the stored choice: dark for the switch on, light for off. */
     onAppearance: (Appearance) -> Unit = {},
+    helpImprove: Boolean = false,
+    onHelpImprove: (Boolean) -> Unit = {},
     usageStats: Boolean = true,
     onUsageStats: (Boolean) -> Unit = {},
 ) {
@@ -137,6 +140,8 @@ fun SettingsScreen(
 
             Column {
                 Group(s.footerPrivacy) {
+                    SwitchRow(s.consentSwitchTitle, helpImprove, SettingsTags.HELP_IMPROVE, onHelpImprove)
+                    HorizontalDivider(color = Palette.line)
                     SwitchRow(s.appSettingsUsageStats, usageStats, SettingsTags.USAGE_STATS, onUsageStats)
                     HorizontalDivider(color = Palette.line)
                     LinkRow(s.appSettingsAbout) { onOpenLink("$base/about") }
@@ -147,6 +152,7 @@ fun SettingsScreen(
                     HorizontalDivider(color = Palette.line)
                     LinkRow(s.appLegalTerms) { onOpenLink("$base/terms") }
                 }
+                Text(s.consentSwitchDetail, style = JudgeType.footnote, modifier = Modifier.padding(start = 4.dp, top = 8.dp, end = 4.dp))
                 Text(s.appSettingsUsageStatsHint, style = JudgeType.footnote, modifier = Modifier.padding(start = 4.dp, top = 8.dp, end = 4.dp))
             }
 
