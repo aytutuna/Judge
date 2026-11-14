@@ -87,6 +87,9 @@ enum Brand {
     static let stone = Color(light: PaletteHex.stone, dark: PaletteHex.Dark.stone)
     static let strata = Color(light: PaletteHex.strata, dark: PaletteHex.Dark.strata)
     static let danger = Color(light: PaletteHex.danger, dark: PaletteHex.Dark.danger)
+    /// The Gamify button's colour; not part of the shared palette.
+    static let ruby = Color(light: 0xB5123A, dark: 0xB5123A)
+    static let rubyInk = Color(light: 0x9B0E31, dark: 0xF0567A)
     static let line = Color(
         light: UIColor(hex: PaletteHex.ink, alpha: PaletteHex.lineAlpha),
         dark: UIColor(hex: PaletteHex.Dark.ink, alpha: PaletteHex.Dark.lineAlpha)

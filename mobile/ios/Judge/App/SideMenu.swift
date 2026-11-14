@@ -161,9 +161,9 @@ private struct GamifyToggleStyle: ToggleStyle {
         } label: {
             Image(systemName: "gamecontroller")
                 .font(.system(size: 17, weight: .medium))
-                .foregroundStyle(on ? Brand.terraInk : Brand.muted)
-                .roundPlate(tint: on ? Brand.terra.opacity(0.22) : nil)
-                .background(Circle().fill(Brand.terra.opacity(on ? 0.4 : 0)).blur(radius: 6))
+                .foregroundStyle(on ? Brand.rubyInk : Brand.muted)
+                .roundPlate(tint: on ? Brand.ruby.opacity(0.22) : nil)
+                .background(Circle().fill(Brand.ruby.opacity(on ? 0.4 : 0)).blur(radius: 6))
                 .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: on)
         }
         .buttonStyle(.plain)
