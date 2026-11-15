@@ -44,11 +44,15 @@ export function needsConfirmed(method: string, path: string): boolean {
   return method === "POST" && NEEDS_CONFIRMED.some((re) => re.test(path));
 }
 
-/** What a blocked account may still do: see its state, delete itself, and
+/** What a blocked account may still do: see its state, download its data, delete itself, and
  * finish a sign-in (the Apple code is kept so deletion can revoke it).
  * Sign-out is under /api/auth, which never asks for this. */
 function openWhenBlocked(method: string, path: string): boolean {
-  return (path === "/api/v1/me" && (method === "GET" || method === "DELETE")) || path.startsWith("/api/v1/auth/");
+  return (
+    (path === "/api/v1/me" && (method === "GET" || method === "DELETE")) ||
+    (path === "/api/v1/me/export" && method === "GET") ||
+    path.startsWith("/api/v1/auth/")
+  );
 }
 
 /** Why a signed-in request must be refused, or null. */

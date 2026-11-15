@@ -277,6 +277,7 @@ describe("age gate in the routes", () => {
     expect(ageRefusal("POST", "/api/v1/verdicts/v1/translate", fresh)).toBeNull();
     expect(ageRefusal("GET", "/api/v1/me", blocked)).toBeNull();
     expect(ageRefusal("DELETE", "/api/v1/me", blocked)).toBeNull();
+    expect(ageRefusal("GET", "/api/v1/me/export", blocked)).toBeNull();
     expect(ageRefusal("POST", "/api/v1/auth/apple/code", blocked)).toBeNull();
     expect(ageRefusal("POST", "/api/v1/me/age", blocked)).toBe("age_blocked");
     expect(ageRefusal("GET", "/api/v1/me/history", blocked)).toBe("age_blocked");

@@ -178,7 +178,8 @@ export type UserBucket =
   | "code_attempt"
   | "code_attempt_any"
   | "password_set"
-  | "events";
+  | "events"
+  | "data_export";
 
 type UserWindow = { limit: number; windowMs: number; redisWindow: `${number} ${"m" | "h" | "d"}`; prefix: string };
 
@@ -248,6 +249,11 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
   ],
   /** Usage event batches (POST /api/v1/events). */
   events: [{ limit: 300, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:evt1h" }],
+  /** The data download (GET /api/v1/me/export): it reads everything the account has. */
+  data_export: [
+    { limit: 3, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:dx1h" },
+    { limit: 10, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:dxday" },
+  ],
 };
 
 /** Per-IP buckets for the no-account endpoints (keyed by visitorKey):
