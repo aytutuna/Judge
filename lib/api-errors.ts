@@ -48,6 +48,10 @@ export const API_ERROR_STATUS = {
   age_blocked: 403,
   /** Starting a verdict or case before confirming the account holder is 18+. */
   age_unconfirmed: 403,
+  /** Starting a verdict, case, side or answer before agreeing that the text
+   * may hold private details (POST /api/v1/me/agreement; a signed-out answer
+   * sends `sensitiveAgreed`). */
+  agreement_required: 403,
   /** Replacing a password without the current one or a recent sign-in
    * (POST /api/v1/me/password). */
   password_required: 403,

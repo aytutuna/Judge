@@ -36,6 +36,7 @@ import {
 import { MAX_EVIDENCE_PER_SIDE } from "@/lib/case-types";
 import type { VerifiedEvidence } from "@/lib/evidence";
 import { evidenceEnabled } from "@/lib/features";
+import { agreementRefusal } from "@/lib/feedback/agreement";
 import { firstNameOf } from "@/lib/originals-types";
 import { saveVerdictWithOriginals } from "@/lib/originals/save";
 import { checkPremiumSiteCap, checkUserLimits, type UserBucket } from "@/lib/ratelimit";
@@ -236,6 +237,8 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
   const gate = await signedInGate(req);
   if ("response" in gate) return gate.response;
   const { userId } = gate;
+  const unagreed = await agreementRefusal(userId);
+  if (unagreed) return unagreed;
 
   // A retry of a key already reserved or finished gets its answer without
   // the limits, which would otherwise burn a slot or turn the replay away.

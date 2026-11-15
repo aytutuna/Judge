@@ -2,6 +2,7 @@
  * HTTP handlers for training consent and ratings:
  *   GET  /api/v1/me/consent             the account's current choice
  *   POST /api/v1/me/consent             record a choice (card answer or switch)
+ *   POST /api/v1/me/agreement           the one-time sensitive-details agreement
  *   PUT  /api/v1/verdicts/{id}/rating   set, change or clear "Fair verdict?"
  *
  * All need a signed-in account (cookie or bearer); a signed-out request is
@@ -21,6 +22,7 @@ import { getPublicVerdict } from "@/lib/originals/display";
 import { ensureOriginalsTables } from "@/lib/originals/db";
 import { checkUserLimits } from "@/lib/ratelimit";
 import { getVerdictJob } from "@/lib/verdict-jobs";
+import { recordSensitiveAgreement } from "./agreement";
 import { consentStatus } from "./ask";
 import { recordConsent, setRating } from "./db";
 
@@ -31,6 +33,11 @@ const ConsentRequest = z.strictObject({
   choice: z.enum(["on", "off"]),
   source: z.enum(["card", "switch"]),
   wordingKey: z.enum(["consent.cardBody", "consent.switchDetail"]),
+  lang: z.string().refine(isLang),
+  platform: z.enum(["ios", "android", "web"]),
+});
+
+const AgreementRequest = z.strictObject({
   lang: z.string().refine(isLang),
   platform: z.enum(["ios", "android", "web"]),
 });
@@ -93,9 +100,10 @@ async function underLimit(userId: string): Promise<NextResponse | null> {
   return fail("rate_limited", "Too many requests — take a breather and try again later.", limit.retryAfterSec);
 }
 
-/** GET /api/v1/me/consent -> { state: "not_asked" | "on" | "off", updatedAt, policyVersion, ask }.
+/** GET /api/v1/me/consent -> { state: "not_asked" | "on" | "off", updatedAt, policyVersion, ask, sensitiveAgreed }.
  * `ask` is true only while state is not_asked and the account has at least
- * two finished verdicts: the only time a client shows the card. */
+ * two finished verdicts: the only time a client shows the card.
+ * `sensitiveAgreed`: the account has made the one-time agreement. */
 export function consentGetHandler(req: Request): Promise<NextResponse> {
   return guarded("consent read", async () => {
     const who = await signedIn(req, false);
@@ -131,6 +139,22 @@ export function consentPostHandler(req: Request): Promise<NextResponse> {
       wordingText: t(lang, wordingKey),
     });
     return json({ ...state, ask: false });
+  });
+}
+
+/** POST /api/v1/me/agreement { lang, platform } -> { agreed: true, at }.
+ * Records that the person ticked the private-details notice (shown in `lang`)
+ * once for the account. Calling it again changes nothing. */
+export function agreementPostHandler(req: Request): Promise<NextResponse> {
+  return guarded("agreement", async () => {
+    const who = await signedIn(req, true);
+    if ("response" in who) return who.response;
+    const parsed = AgreementRequest.safeParse(await readJson(req));
+    if (!parsed.success) return fail("invalid", 'Send { "lang": <a language code>, "platform": "ios" | "android" | "web" }.');
+    const refused = await underLimit(who.viewer.user.id);
+    if (refused) return refused;
+    const at = await recordSensitiveAgreement(who.viewer.user.id, parsed.data.lang as Lang, parsed.data.platform);
+    return json({ agreed: true, at });
   });
 }
 

@@ -72,6 +72,7 @@ const { sweepCases } = await import("../lib/cases");
 const { removeUserData } = await import("../lib/originals/removal");
 const publicVerdict = await import("../app/api/v1/verdicts/[id]/route");
 const { inviteHash } = await import("../lib/cases/invite");
+const { agreementMissing, agreementRefusal } = await import("../lib/feedback/agreement");
 import type { CaseView } from "../lib/case-types";
 import type { CaseOriginalsResponse } from "../lib/originals-types";
 import type { VerdictResult } from "../lib/types";
@@ -335,6 +336,22 @@ describe("POST /api/v1/cases", () => {
     expect(off.res.status).toBe(503);
     expect(off.data.code).toBe("not_configured");
     expect(await credits(o)).toBe(1);
+  });
+
+  it("403 agreement_required before a unit is held, for starting a case and answering one", async () => {
+    const o = await owner(1);
+    vi.mocked(agreementRefusal).mockResolvedValueOnce(agreementMissing());
+    const refused = await create(o);
+    expect(refused.res.status).toBe(403);
+    expect(refused.data.code).toBe("agreement_required");
+    expect(await credits(o)).toBe(1);
+
+    const token = tokenOf((await create(o)).data.case);
+    vi.mocked(agreementRefusal).mockResolvedValueOnce(agreementMissing());
+    const answer = await respond(token, { user: uid("agree") });
+    expect(answer.status).toBe(403);
+    expect((await body(answer)).code).toBe("agreement_required");
+    expect((await getRespondent(token)).view?.status).toBe("awaiting_respondent");
   });
 
   it("validates the body: too_short, too_long, too_many_files, evidence_invalid, tier, bad JSON", async () => {
@@ -1388,6 +1405,17 @@ describe("a case started before side A is written", () => {
     const resp = (await getRespondent(tokenOf(c))).view!;
     expect(resp.ownerSideMissing).toBe(true);
     expect(resp.sides).toEqual([]);
+  });
+
+  it("403 agreement_required when the owner writes side A without having agreed", async () => {
+    const o = await owner(2);
+    const c = (await createBare(o)).data.case;
+    vi.mocked(agreementRefusal).mockResolvedValueOnce(agreementMissing());
+    const refused = await writeSide(o, c.id);
+    expect(refused.status).toBe(403);
+    expect((await body(refused)).code).toBe("agreement_required");
+    expect(m.anonymizeSubmission).not.toHaveBeenCalled();
+    expect((await writeSide(o, c.id)).status).toBe(201);
   });
 
   it("evidence without text is invalid, and an empty text still fails validation", async () => {

@@ -110,6 +110,7 @@ vi.mock("@/lib/evidence", () => ({
 
 import { POST } from "../app/api/verdict/route";
 import { POST as POST_V1 } from "../app/api/v1/verdict/route";
+import { agreementMissing, agreementRefusal } from "../lib/feedback/agreement";
 import { ESCALATION_CUTOFF_MS, TRIAL_CUTOFF_MS } from "../lib/premium/run";
 import type { Entitlement } from "../lib/account-types";
 import type { FactCheck, JudgeRunOutput, JudgeVerdict, VerdictResult } from "../lib/types";
@@ -409,6 +410,12 @@ describe("premium verdict: gates and error codes", () => {
   it("400 invalid for more than two clarifications", async () => {
     const c = { question: "Q?", answer: "A" };
     await expectError(await POST(request(premium({ clarifications: [c, c, c] }))), 400, "invalid");
+  });
+
+  it("403 agreement_required before a unit is reserved", async () => {
+    vi.mocked(agreementRefusal).mockResolvedValueOnce(agreementMissing());
+    await expectError(await POST(request(premium())), 403, "agreement_required");
+    expect(m.reservePremiumVerdict).not.toHaveBeenCalled();
   });
 
   it("401 signin_required without a session", async () => {

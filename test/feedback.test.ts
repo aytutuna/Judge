@@ -141,7 +141,7 @@ describe("consent: read and write", () => {
     expect((await getConsent()).status).toBe(401);
     const res = await getConsent({ user: "u-fresh" });
     expect(res.headers.get("cache-control")).toBe("no-store");
-    expect(await json(res)).toEqual({ state: "not_asked", updatedAt: null, policyVersion: POLICY_VERSION, ask: false });
+    expect(await json(res)).toEqual({ state: "not_asked", updatedAt: null, policyVersion: POLICY_VERSION, ask: false, sensitiveAgreed: false });
     expect(POLICY_VERSION).toBe("2026-11-14");
   });
 

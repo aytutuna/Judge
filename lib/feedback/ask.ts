@@ -7,6 +7,7 @@
 
 import { getDb } from "@/lib/db";
 import { ensureOriginalsTables } from "@/lib/originals/db";
+import { sensitiveAgreedAt } from "./agreement";
 import { getConsent, type ConsentView } from "./db";
 
 export const VERDICTS_BEFORE_ASK = 2;
@@ -27,11 +28,12 @@ export async function finishedVerdictCount(userId: string): Promise<number> {
   return Number(rs.rows[0].n);
 }
 
-export type ConsentStatus = ConsentView & { ask: boolean };
+export type ConsentStatus = ConsentView & { ask: boolean; sensitiveAgreed: boolean };
 
-/** The current choice, and whether the card should be shown now. */
+/** The current choice, whether the card should be shown now, and whether the
+ * account has made the one-time sensitive-details agreement. */
 export async function consentStatus(userId: string): Promise<ConsentStatus> {
   const view = await getConsent(userId);
   const ask = view.state === "not_asked" && (await finishedVerdictCount(userId)) >= VERDICTS_BEFORE_ASK;
-  return { ...view, ask };
+  return { ...view, ask, sensitiveAgreed: (await sensitiveAgreedAt(userId)) !== null };
 }

@@ -62,6 +62,7 @@ import { clientIp } from "@/lib/client-ip";
 import { entitlementWriteBatch, getEntitlement } from "@/lib/entitlements";
 import { handleEvidenceUpload, verifyEvidenceTokens, type EvidenceAudience, type VerifiedEvidence } from "@/lib/evidence";
 import { casesEnabled, evidenceEnabled } from "@/lib/features";
+import { agreementRefusal } from "@/lib/feedback/agreement";
 import { partiesFor } from "@/lib/multi";
 import { originalsKeyState } from "@/lib/originals/crypto";
 import { caseDisplayNames, partyOriginals } from "@/lib/originals/cases";
@@ -430,6 +431,8 @@ export function createCaseHandler(req: Request): Promise<NextResponse> {
     const gate = await signedIn(req);
     if ("response" in gate) return gate.response;
     const userId = gate.viewer.user.id;
+    const unagreed = await agreementRefusal(userId);
+    if (unagreed) return unagreed;
     const limited = await limitGate(userId, "case_create", true);
     if (limited) return limited;
     await maybeSweepCases();
@@ -478,6 +481,8 @@ export function writeSideHandler(req: Request, id: string): Promise<NextResponse
     const gate = await signedIn(req);
     if ("response" in gate) return gate.response;
     const userId = gate.viewer.user.id;
+    const unagreed = await agreementRefusal(userId);
+    if (unagreed) return unagreed;
     const limited = await limitGate(userId, "premium_verdict", true);
     if (limited) return limited;
     await maybeSweepCases();
@@ -783,6 +788,10 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
     const { viewer, deadBearer, refused } = await lookupViewer(req);
     if (deadBearer) return deadBearerResponse();
     if (refused) return refused;
+    if (viewer) {
+      const unagreed = await agreementRefusal(viewer.user.id);
+      if (unagreed) return unagreed;
+    }
     const proof = await heldProof(found, viewer?.user.id ?? null, claimHeader(req));
     const held = proof?.party ?? null;
     let party: "b" | "c" | "d" = held ?? found.party;

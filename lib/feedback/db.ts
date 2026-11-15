@@ -1,10 +1,16 @@
 /**
  * Training consent and "Fair verdict?" ratings. Server only.
  *
- * - consent_ledger: one row per choice (card answer or switch change), never
- *   updated or deleted (triggers refuse both). It records the account, the
- *   choice, the policy version in force, the wording key, the language and
- *   the text shown in it, and the platform.
+ * - consent_ledger: one row per choice (card answer or switch change) or
+ *   agreement, kept as proof. It records the account, the choice, the policy
+ *   version in force, the wording key, the language and the text shown in
+ *   it, and the platform. `kind` is 'training' (Help improve Judge) or
+ *   'sensitive' (the one-time agreement that a person's text may hold
+ *   private details). Triggers refuse every update and delete, except two:
+ *   deleting an account swaps its id for a random placeholder (the same on
+ *   all its rows) and stamps `unlinked_at`, and a row may be deleted six
+ *   years after that. A signed-out respondent's agreement is stored under
+ *   'guest:<case>:<party>' with `unlinked_at` set at once.
  * - consent_state: the account's current choice. No row means not asked yet;
  *   a row, either way, means the card is never shown again.
  * - verdict_ratings: one row per (verdict, account). Clearing a rating sets
@@ -39,13 +45,11 @@ const SCHEMA = [
     wording_key     TEXT NOT NULL,
     wording_text    TEXT NOT NULL,
     lang            TEXT NOT NULL DEFAULT 'en',
-    platform        TEXT NOT NULL CHECK (platform IN ('ios','android','web'))
+    platform        TEXT NOT NULL CHECK (platform IN ('ios','android','web')),
+    kind            TEXT NOT NULL DEFAULT 'training',
+    unlinked_at     TEXT
   )`,
   "CREATE INDEX IF NOT EXISTS consent_ledger_user ON consent_ledger (user_id, id)",
-  `CREATE TRIGGER IF NOT EXISTS consent_ledger_no_update BEFORE UPDATE ON consent_ledger
-    BEGIN SELECT RAISE(ABORT, 'consent_ledger is append-only'); END`,
-  `CREATE TRIGGER IF NOT EXISTS consent_ledger_no_delete BEFORE DELETE ON consent_ledger
-    BEGIN SELECT RAISE(ABORT, 'consent_ledger is append-only'); END`,
   `CREATE TABLE IF NOT EXISTS consent_state (
     user_id         TEXT PRIMARY KEY,
     choice          TEXT NOT NULL CHECK (choice IN ('on','off')),
@@ -65,6 +69,26 @@ const SCHEMA = [
   )`,
 ];
 
+/** The ledger's only two exceptions to append-only: the move to a placeholder
+ * id (nothing else about the row changes), and the delete six years later.
+ * Replaces the plain no-update and no-delete triggers in one batch, so the
+ * table is never unguarded. */
+const LEDGER_GUARDS = [
+  "DROP TRIGGER IF EXISTS consent_ledger_no_update",
+  "DROP TRIGGER IF EXISTS consent_ledger_no_delete",
+  `CREATE TRIGGER IF NOT EXISTS consent_ledger_guard_update BEFORE UPDATE ON consent_ledger
+    WHEN NOT (
+      OLD.user_id NOT GLOB 'deleted:*' AND NEW.user_id GLOB 'deleted:*'
+      AND OLD.unlinked_at IS NULL AND NEW.unlinked_at IS NOT NULL
+      AND NEW.id IS OLD.id AND NEW.kind IS OLD.kind AND NEW.choice IS OLD.choice AND NEW.source IS OLD.source
+      AND NEW.at IS OLD.at AND NEW.policy_version IS OLD.policy_version AND NEW.wording_key IS OLD.wording_key
+      AND NEW.wording_text IS OLD.wording_text AND NEW.lang IS OLD.lang AND NEW.platform IS OLD.platform)
+    BEGIN SELECT RAISE(ABORT, 'consent_ledger is append-only'); END`,
+  `CREATE TRIGGER IF NOT EXISTS consent_ledger_guard_delete BEFORE DELETE ON consent_ledger
+    WHEN OLD.unlinked_at IS NULL OR OLD.unlinked_at > strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-6 years')
+    BEGIN SELECT RAISE(ABORT, 'consent_ledger is append-only'); END`,
+];
+
 const globalForFeedback = globalThis as unknown as {
   __judgeFeedbackReady?: { client: Client; ready: Promise<void> };
 };
@@ -74,6 +98,8 @@ async function addColumns(client: Client): Promise<void> {
     ["verdict_ratings", "training_ok_at", "TEXT"],
     ["verdict_ratings", "training_withdrawn_at", "TEXT"],
     ["consent_ledger", "lang", "TEXT NOT NULL DEFAULT 'en'"],
+    ["consent_ledger", "kind", "TEXT NOT NULL DEFAULT 'training'"],
+    ["consent_ledger", "unlinked_at", "TEXT"],
   ];
   for (const [table, name, type] of added) {
     const info = await client.execute(`PRAGMA table_info(${table})`);
@@ -94,6 +120,7 @@ export async function ensureFeedbackTables(): Promise<void> {
   const ready = client
     .batch(SCHEMA, "write")
     .then(() => addColumns(client))
+    .then(() => client.batch(LEDGER_GUARDS, "write"))
     .then(
       () => undefined,
       (e: unknown) => {
