@@ -7,3 +7,7 @@ export const POLICY_VERSION = "2026-11-14";
  * back to when the dictionary has no text for the key. */
 export const SENSITIVE_AGREEMENT_EN =
   "My text may include private details, like health or relationships. Judge sends it, with names taken out, to an outside AI service to write my verdict, and keeps it until I remove it.";
+
+/** The postal address under "Who we are"; the policy shows it only when it is not empty. */
+// TODO: the owner will give the address.
+export const OWNER_ADDRESS = "";
