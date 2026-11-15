@@ -21,7 +21,8 @@ import { getPublicVerdict } from "@/lib/originals/display";
 import { ensureOriginalsTables } from "@/lib/originals/db";
 import { checkUserLimits } from "@/lib/ratelimit";
 import { getVerdictJob } from "@/lib/verdict-jobs";
-import { getConsent, recordConsent, setRating } from "./db";
+import { consentStatus } from "./ask";
+import { recordConsent, setRating } from "./db";
 
 const NO_STORE = { "Cache-Control": "no-store" } as const;
 const ID_PATTERN = /^[A-Za-z0-9_-]{1,64}$/;
@@ -92,16 +93,18 @@ async function underLimit(userId: string): Promise<NextResponse | null> {
   return fail("rate_limited", "Too many requests — take a breather and try again later.", limit.retryAfterSec);
 }
 
-/** GET /api/v1/me/consent -> { state: "not_asked" | "on" | "off", updatedAt, policyVersion } */
+/** GET /api/v1/me/consent -> { state: "not_asked" | "on" | "off", updatedAt, policyVersion, ask }.
+ * `ask` is true only while state is not_asked and the account has at least
+ * two finished verdicts: the only time a client shows the card. */
 export function consentGetHandler(req: Request): Promise<NextResponse> {
   return guarded("consent read", async () => {
     const who = await signedIn(req, false);
     if ("response" in who) return who.response;
-    return json(await getConsent(who.viewer.user.id));
+    return json(await consentStatus(who.viewer.user.id));
   });
 }
 
-/** POST /api/v1/me/consent { choice, source, wordingKey, lang, platform } -> the new state.
+/** POST /api/v1/me/consent { choice, source, wordingKey, lang, platform } -> the new state (ask: false).
  * `wordingKey` is the key of the text the person saw (the card's body or the
  * switch's detail) and `lang` the language they saw it in; the ledger keeps
  * that text as it reads now. */
@@ -127,7 +130,7 @@ export function consentPostHandler(req: Request): Promise<NextResponse> {
       lang,
       wordingText: t(lang, wordingKey),
     });
-    return json(state);
+    return json({ ...state, ask: false });
   });
 }
 
