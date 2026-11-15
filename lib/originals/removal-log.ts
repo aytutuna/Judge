@@ -6,11 +6,12 @@
  * restore (scripts/originals.ts replay-removals, run by verdict-restore)
  * applies every removal again. One JSON object per line: ids, party, reason
  * and time (and, for an account, the sign-in token revocation outcome), never
- * any text, names or tokens. Server only.
+ * any text, names or tokens. Entries older than RETENTION_MS are dropped
+ * daily (pruneRemovalLog). Server only.
  */
 
 import type { PartyLetter as CaseParty } from "@/lib/case-types";
-import { appendFile, readFile } from "node:fs/promises";
+import { appendFile, readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { RemovalReason } from "@/lib/originals-types";
 import type { SignInRevocation } from "@/lib/signin-tokens";
@@ -27,6 +28,17 @@ export type RemovalLogEntry =
        * only, never a token). Informational: replay ignores it. */
       signInTokens?: SignInRevocation;
     };
+
+export const RETENTION_MS = 90 * 24 * 60 * 60_000;
+
+/** Appends and the daily rewrite take turns, so a removal logged while the
+ * file is being rewritten is not lost. */
+let turn: Promise<unknown> = Promise.resolve();
+function inTurn<T>(fn: () => Promise<T>): Promise<T> {
+  const run = turn.then(fn, fn);
+  turn = run.catch(() => undefined);
+  return run;
+}
 
 /** Where the log lives, or null (disabled, or a remote database). */
 export function removalLogPath(env: NodeJS.ProcessEnv = process.env): string | null {
@@ -46,7 +58,7 @@ export async function appendRemovalLog(entry: RemovalLogEntry): Promise<void> {
   const file = removalLogPath();
   if (!file) return;
   try {
-    await appendFile(file, `${JSON.stringify(entry)}\n`, { encoding: "utf8", mode: 0o600 });
+    await inTurn(() => appendFile(file, `${JSON.stringify(entry)}\n`, { encoding: "utf8", mode: 0o600 }));
   } catch (e) {
     console.error(
       `[removal-log] could not record a removal in ${file} (a database restore would not re-apply it):`,
@@ -105,4 +117,32 @@ export async function readRemovalLog(file: string): Promise<{ entries: RemovalLo
     else skipped += 1;
   }
   return { entries, skipped };
+}
+
+/** Drops the entries older than RETENTION_MS from the log file, keeping
+ * every line it cannot read as an entry. Returns how many it dropped. A
+ * missing file or a disabled log drops nothing. */
+export async function pruneRemovalLog(now: Date = new Date()): Promise<number> {
+  const file = removalLogPath();
+  if (!file) return 0;
+  const cutoff = now.getTime() - RETENTION_MS;
+  return inTurn(async () => {
+    let raw: string;
+    try {
+      raw = await readFile(file, "utf8");
+    } catch (e) {
+      if ((e as NodeJS.ErrnoException).code === "ENOENT") return 0;
+      throw e;
+    }
+    const lines = raw.split(/\r?\n/).filter((l) => l.trim());
+    const kept = lines.filter((l) => {
+      const entry = parseRemovalLogLine(l);
+      return !entry || Date.parse(entry.at) >= cutoff;
+    });
+    if (kept.length === lines.length) return 0;
+    const tmp = `${file}.tmp`;
+    await writeFile(tmp, kept.map((l) => `${l}\n`).join(""), { encoding: "utf8", mode: 0o600 });
+    await rename(tmp, file);
+    return lines.length - kept.length;
+  });
 }

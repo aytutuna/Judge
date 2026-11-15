@@ -10,6 +10,8 @@
  * - A case: 30 days after the last party removed it, so a party that still
  *   sees it keeps it whole. The parties are the owner and every side that
  *   wrote an account.
+ * - The coded fingerprints and labels of a case's people are blanked with the
+ *   case (the rows stay).
  * - `legal_hold = 1` on a verdict or a case (set by hand in SQL, no API)
  *   keeps it out of the wipe; so does one held verdict of a case.
  *
@@ -153,6 +155,10 @@ async function eraseCases(cutoff: string, nowIso: string): Promise<number> {
       { sql: "UPDATE case_sides SET text = '' WHERE case_id = ?", args: [id] },
       { sql: "UPDATE case_appeals SET text = '' WHERE case_id = ?", args: [id] },
       { sql: "UPDATE case_evidence SET transcript = '' WHERE case_id = ?", args: [id] },
+      {
+        sql: "UPDATE case_people SET name_key = 'erased:' || lower(hex(randomblob(8))), label = '' WHERE case_id = ?",
+        args: [id],
+      },
       { sql: "UPDATE cases SET erased_at = ? WHERE id = ? AND erased_at IS NULL", args: [nowIso, id] },
     ]);
   }

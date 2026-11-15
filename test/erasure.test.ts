@@ -288,6 +288,9 @@ describe("cases", () => {
             VALUES (?, ?, 'a', 'appeal text', 'judged', 'r', 't', 1, ?, ?)`,
       args: [`${id}-ap`, id, at, at],
     });
+    for (const [key, label] of [["fp-dana", "Person C"], ["fp-eli", "Person D"]]) {
+      await d.execute({ sql: "INSERT INTO case_people (case_id, name_key, label) VALUES (?, ?, ?)", args: [id, `${key}-${id}`, label] });
+    }
     const verdictId = `${id}-v`;
     await d.execute({ sql: "INSERT INTO verdicts (id, input, framework, result, legal_hold) VALUES (?, 'both sides read', '{}', ?, ?)", args: [verdictId, JSON.stringify(RESULT), opts.holdVerdict ? 1 : 0] });
     await d.execute({
@@ -309,6 +312,7 @@ describe("cases", () => {
     await removeParty(id, "a", 100);
     expect((await sweepErasures(NOW)).cases).toBe(0);
     expect(await texts(id)).toMatchObject({ sides: "side a text,side b text", ev: "transcript,transcript", ap: "appeal text", input: "both sides read", erased: null });
+    expect(await all("SELECT label FROM case_people WHERE case_id = ? ORDER BY label", [id])).toEqual([{ label: "Person C" }, { label: "Person D" }]);
     // The verdict text is intact too.
     expect(String((await one("SELECT result FROM verdicts WHERE id = ?", [`${id}-v`])).result)).toContain("Party B is right");
   });
@@ -326,6 +330,11 @@ describe("cases", () => {
     const later = new Date(NOW.getTime() + 11 * DAY);
     expect((await sweepErasures(later)).cases).toBeGreaterThanOrEqual(1);
     expect(await texts(id)).toEqual({ sides: ",,", ev: ",,", ap: "", input: "", erased: later.toISOString() });
+    // The fingerprints and labels are blanked, the rows stay.
+    const people = await all("SELECT name_key, label FROM case_people WHERE case_id = ?", [id]);
+    expect(people).toHaveLength(2);
+    for (const p of people) expect(p).toMatchObject({ label: "", name_key: expect.stringMatching(/^erased:[0-9a-f]{16}$/) });
+    expect(new Set(people.map((p) => p.name_key)).size).toBe(2);
     const verdict = await one("SELECT result, erased_at FROM verdicts WHERE id = ?", [`${id}-v`]);
     expect(verdict.erased_at).toBe(later.toISOString());
     expect(JSON.parse(String(verdict.result))).toMatchObject({ verdict: "side_b", confidence: 4, headline: "" });

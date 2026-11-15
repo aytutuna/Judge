@@ -5,7 +5,9 @@ import type { Instrumentation } from "next";
  * previous process (killed or restarted mid-run) are failed and refunded
  * here once they pass the 10-minute mark, then every few minutes. Usage
  * events past their retention are deleted now and once a day, and so is the
- * text of verdicts and cases removed over 30 days ago (lib/erasure).
+ * text of verdicts and cases removed over 30 days ago (lib/erasure). Expired
+ * sign-in codes, old consent records and old removal-log entries go daily too
+ * (lib/cleanup).
  */
 export async function register(): Promise<void> {
   // The SDK is only loaded with a DSN; without one it would just cost memory.
@@ -28,6 +30,8 @@ export async function register(): Promise<void> {
     startEventPruner();
     const { startErasureSweeper } = await import("./lib/erasure");
     startErasureSweeper();
+    const { startCleanup } = await import("./lib/cleanup");
+    startCleanup();
   }
 }
 
