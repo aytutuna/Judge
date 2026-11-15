@@ -9,6 +9,7 @@
  * (replayRemoval). Server only.
  */
 
+import { randomBytes } from "node:crypto";
 import type { PartyLetter as CaseParty } from "@/lib/case-types";
 import type { InStatement } from "@libsql/client";
 import { getCase, type CaseRow } from "@/lib/cases/db";
@@ -192,6 +193,25 @@ async function removeCaseSideOnce(
   return removedAt ? { ok: true, row: fresh, removedAt } : { ok: false, code: "in_progress" };
 }
 
+/** Cuts the account's ratings and consent records loose from it. Each rating
+ * keeps its row under its own random id. The current choice goes. The ledger
+ * rows stay as proof, for six years, under one random id shared by the
+ * account's rows (its triggers allow exactly this change, see
+ * lib/feedback/db), and are deleted after that (lib/feedback/cleanup). */
+function unlinkFeedbackStatements(userId: string, nowIso: string): InStatement[] {
+  return [
+    {
+      sql: "UPDATE verdict_ratings SET user_id = 'deleted:' || lower(hex(randomblob(8))) WHERE user_id = ?",
+      args: [userId],
+    },
+    { sql: "DELETE FROM consent_state WHERE user_id = ?", args: [userId] },
+    {
+      sql: "UPDATE consent_ledger SET user_id = ?, unlinked_at = ? WHERE user_id = ?",
+      args: [`deleted:${randomBytes(8).toString("hex")}`, nowIso, userId],
+    },
+  ];
+}
+
 /**
  * Account deletion, in one batch: every verdict the user owns (including
  * premium verdicts saved before ownership rows existed), their side of
@@ -256,6 +276,7 @@ export async function removeUserData(userId: string, now: Date = new Date(), opt
     { sql: "UPDATE case_seats SET user_id = NULL WHERE user_id = ?", args: [userId] },
     { sql: "UPDATE case_appeals SET user_id = NULL WHERE user_id = ?", args: [userId] },
     ratingWithdrawStatement(userId, nowIso),
+    ...unlinkFeedbackStatements(userId, nowIso),
   ]);
   if (opts.log !== false) {
     await appendRemovalLog({

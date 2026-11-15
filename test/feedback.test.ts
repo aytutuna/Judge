@@ -408,7 +408,13 @@ describe("ratings", () => {
     await choose("on", { user: "u-rc3" });
     await rate(id, { rating: "up" }, { user: "u-rc3" });
     await removeUserData("u-rc3", new Date(), { log: false });
-    expect((await row("u-rc3")).training_withdrawn_at).not.toBeNull();
+    expect(await row("u-rc3")).toBeUndefined();
+    const [kept] = await all(
+      "SELECT rating, training_withdrawn_at FROM verdict_ratings WHERE verdict_id = ? AND user_id LIKE 'deleted:%'",
+      [id],
+    );
+    expect(kept.rating).toBe("up");
+    expect(kept.training_withdrawn_at).not.toBeNull();
   });
 
   it("sets, changes and clears one rating per viewer, kept with the verdict", async () => {
