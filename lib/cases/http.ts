@@ -62,7 +62,8 @@ import { clientIp } from "@/lib/client-ip";
 import { entitlementWriteBatch, getEntitlement } from "@/lib/entitlements";
 import { handleEvidenceUpload, verifyEvidenceTokens, type EvidenceAudience, type VerifiedEvidence } from "@/lib/evidence";
 import { casesEnabled, evidenceEnabled } from "@/lib/features";
-import { agreementRefusal } from "@/lib/feedback/agreement";
+import { agreementMissing, agreementRefusal, sensitiveText } from "@/lib/feedback/agreement";
+import { isLang } from "@/lib/langs";
 import { partiesFor } from "@/lib/multi";
 import { originalsKeyState } from "@/lib/originals/crypto";
 import { caseDisplayNames, partyOriginals } from "@/lib/originals/cases";
@@ -108,6 +109,7 @@ import {
   judgeNow,
   respondToCase,
   rotateInvite,
+  type SideAttest,
   submitAppeal,
   writeOwnerSide,
 } from "./service";
@@ -143,6 +145,7 @@ const MESSAGES: Partial<Record<ApiErrorCode, string>> = {
   removed: "This case was removed. Its links no longer work.",
   names_unavailable: "Names can't be saved on this server right now.",
   update_required: "This case has more than two sides. Update the app to open it.",
+  age_unconfirmed: "Confirm that you're 18 or older to continue.",
 };
 
 /** A case with three or four sides, asked by an app that does not send
@@ -788,9 +791,16 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
     const { viewer, deadBearer, refused } = await lookupViewer(req);
     if (deadBearer) return deadBearerResponse();
     if (refused) return refused;
+    let attest: SideAttest | null = null;
     if (viewer) {
       const unagreed = await agreementRefusal(viewer.user.id);
       if (unagreed) return unagreed;
+    } else {
+      // No account to carry the 18+ check and the agreement: they come with the answer.
+      if (parsed.data.adultConfirmed !== true) return fail("age_unconfirmed");
+      if (parsed.data.sensitiveAgreed !== true) return agreementMissing();
+      const lang = parsed.data.lang && isLang(parsed.data.lang) ? parsed.data.lang : row.lang;
+      attest = { lang, platform: parsed.data.platform ?? "web", text: await sensitiveText(lang) };
     }
     const proof = await heldProof(found, viewer?.user.id ?? null, claimHeader(req));
     const held = proof?.party ?? null;
@@ -874,6 +884,7 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
         party,
         ...(seatNonce() ? { seatNonce: seatNonce() } : {}),
         userId: viewer?.user.id ?? null,
+        attest,
         text: parsed.data.text,
         rawText: rawField(read.body, "text") ?? parsed.data.text,
         displayName: parsed.data.displayName || null,
@@ -919,6 +930,7 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
       row,
       ...(seatNonce() ? { seatNonce: seatNonce() } : {}),
       userId: viewer?.user.id ?? null,
+      attest,
       text: parsed.data.text,
       rawText: rawField(read.body, "text") ?? parsed.data.text,
       displayName: parsed.data.displayName || null,

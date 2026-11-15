@@ -43,7 +43,10 @@ import {
   type VerifiedEvidence,
 } from "@/lib/evidence";
 import type { Lang } from "@/lib/i18n";
+import { SENSITIVE_WORDING_KEY } from "@/lib/feedback/agreement";
+import type { ConsentPlatform } from "@/lib/feedback/db";
 import { partiesFor } from "@/lib/multi";
+import { POLICY_VERSION } from "@/lib/policy";
 import type { NameMapping } from "@/lib/types";
 import { composeForJudging } from "./compose";
 import {
@@ -96,6 +99,12 @@ export async function refundQuietly(reservationId: string | null): Promise<void>
   }
 }
 
+/** What a signed-out respondent confirmed with their answer: that they are 18
+ * or older and that their text may hold private details (the wording shown,
+ * in `lang`). Stored in case_side_attest, and the agreement also in the
+ * consent ledger under 'guest:<case>:<party>'. */
+export type SideAttest = { lang: Lang; platform: ConsentPlatform; text: string };
+
 /** Rows that persist one anonymized submission (side or appeal), each
  * guarded so nothing is written unless the state change it belongs to was. */
 export function submissionStatements(
@@ -105,6 +114,7 @@ export function submissionStatements(
   guard: StatementGuard,
   nowIso: string,
   appeal: { idSql: string; idArgs: (string | null)[] } | null,
+  attest: SideAttest | null = null,
 ): InStatement[] {
   const stmts: InStatement[] = [];
   if (!appeal) {
@@ -114,6 +124,29 @@ export function submissionStatements(
             ON CONFLICT DO NOTHING`,
       args: [caseId, party, sub.text, nowIso, ...guard.args],
     });
+    if (attest) {
+      stmts.push({
+        sql: `INSERT INTO case_side_attest (case_id, party, adult_confirmed_at, sensitive_agreed_at)
+              SELECT ?, ?, ?, ? WHERE ${guard.sql}
+              ON CONFLICT DO NOTHING`,
+        args: [caseId, party, nowIso, nowIso, ...guard.args],
+      });
+      stmts.push({
+        sql: `INSERT INTO consent_ledger (user_id, kind, choice, source, at, policy_version, wording_key, wording_text, lang, platform, unlinked_at)
+              SELECT ?, 'sensitive', 'on', 'card', ?, ?, ?, ?, ?, ?, ? WHERE ${guard.sql}`,
+        args: [
+          `guest:${caseId}:${party}`,
+          nowIso,
+          POLICY_VERSION,
+          SENSITIVE_WORDING_KEY,
+          attest.text,
+          attest.lang,
+          attest.platform,
+          nowIso,
+          ...guard.args,
+        ],
+      });
+    }
   }
   sub.evidence.forEach((item, i) => {
     stmts.push({
@@ -344,6 +377,8 @@ export type RespondInput = {
   /** The nonce of the seat this answer was proven through; the store only
    * applies while that seat still has it. */
   seatNonce?: string;
+  /** Set for a signed-out answer: what the respondent ticked. */
+  attest?: SideAttest | null;
   now?: Date;
 };
 
@@ -458,7 +493,7 @@ export async function respondToCase(input: RespondInput): Promise<RespondResult>
     try {
       const rs = await entitlementWriteBatch([
         store,
-        ...submissionStatements(row.id, "b", sub, guard, nowIso, null),
+        ...submissionStatements(row.id, "b", sub, guard, nowIso, null, input.attest ?? null),
         ...(original ? [original] : []),
         ...(ownerWrote && row.reservationId ? [holdStatement(row.reservationId, nowIso, guard)] : []),
       ]);

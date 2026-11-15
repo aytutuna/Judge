@@ -101,6 +101,15 @@ const SCHEMA = [
     submitted_at  TEXT NOT NULL,
     PRIMARY KEY (case_id, party)
   )`,
+  // A side written by someone who was signed out: when they ticked "I am 18
+  // or older" and the private-details agreement with their answer.
+  `CREATE TABLE IF NOT EXISTS case_side_attest (
+    case_id              TEXT NOT NULL,
+    party                TEXT NOT NULL CHECK (party IN ('a','b','c','d')),
+    adult_confirmed_at   TEXT NOT NULL,
+    sensitive_agreed_at  TEXT NOT NULL,
+    PRIMARY KEY (case_id, party)
+  )`,
   `CREATE TABLE IF NOT EXISTS case_appeals (
     id              TEXT PRIMARY KEY,
     case_id         TEXT NOT NULL,

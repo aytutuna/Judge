@@ -160,7 +160,7 @@ async function answer(token: string, user?: string): Promise<string | undefined>
     req("POST", `/api/v1/respond/${token}`, {
       ...(user ? { user, via: "bearer" as const } : {}),
       ip: ip(),
-      body: { text: SIDE_B, turnstileToken: "t" },
+      body: { text: SIDE_B, turnstileToken: "t", adultConfirmed: true, sensitiveAgreed: true },
     }),
     token,
   );

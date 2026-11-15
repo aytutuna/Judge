@@ -72,6 +72,14 @@ export const RespondRequest = z.object({
   turnstileToken: z.string().max(2048).optional(),
   /** How the respondent appears on the case's share pages; empty or null = "Party B". */
   displayName: z.union([z.literal(""), DisplayNameInput]).nullable().optional(),
+  /** Signed-out answers only (an account has both already): the person ticked
+   * "I am 18 or older" and the private-details agreement. Both must be true. */
+  adultConfirmed: z.boolean().optional(),
+  sensitiveAgreed: z.boolean().optional(),
+  /** The language the agreement was shown in (default: the case's) and the
+   * platform it was ticked on (default web). */
+  lang: z.string().max(16).optional(),
+  platform: z.enum(["ios", "android", "web"]).optional(),
 });
 export type RespondRequest = z.infer<typeof RespondRequest>;
 

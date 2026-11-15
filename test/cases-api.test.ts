@@ -198,7 +198,7 @@ function respond(token: string, opts: Opts & { text?: string; evidence?: string[
     req("POST", `/api/v1/respond/${token}`, {
       ...opts,
       ip: opts.ip ?? ip(),
-      body: { text: opts.text ?? SIDE_B, ...(opts.evidence ? { evidence: opts.evidence } : {}), turnstileToken: "t" },
+      body: { text: opts.text ?? SIDE_B, ...(opts.evidence ? { evidence: opts.evidence } : {}), turnstileToken: "t", adultConfirmed: true, sensitiveAgreed: true },
     }),
     token,
   );
@@ -520,6 +520,70 @@ describe("respondent: GET and POST /api/v1/respond/{token}", () => {
     expect((await body(failed)).code).toBe("anonymize_failed");
     const again = await respond(token);
     expect(again.status).toBe(202);
+  });
+
+  describe("a signed-out answer confirms 18+ and the private-details agreement", () => {
+    const answer = (token: string, extra: Record<string, unknown>, user?: string) =>
+      http.respondPostHandler(
+        req("POST", `/api/v1/respond/${token}`, { user, ip: ip(), body: { text: SIDE_B, turnstileToken: "t", ...extra } }),
+        token,
+      );
+    const attestRows = (caseId: string) =>
+      count("SELECT count(*) AS n FROM case_side_attest WHERE case_id = ?", [caseId]);
+
+    it("is refused without either tick, and nothing is stored", async () => {
+      const o = await owner(1);
+      const c = (await create(o)).data.case;
+      const token = tokenOf(c);
+      const noAge = await answer(token, { sensitiveAgreed: true });
+      expect(noAge.status).toBe(403);
+      expect((await body(noAge)).code).toBe("age_unconfirmed");
+      const falseAge = await answer(token, { adultConfirmed: false, sensitiveAgreed: true });
+      expect((await body(falseAge)).code).toBe("age_unconfirmed");
+      const noAgree = await answer(token, { adultConfirmed: true });
+      expect(noAgree.status).toBe(403);
+      expect((await body(noAgree)).code).toBe("agreement_required");
+      expect(await attestRows(c.id)).toBe(0);
+      expect((await getRespondent(token)).view?.status).toBe("awaiting_respondent");
+    });
+
+    it("stores both with the side, and the agreement in the ledger with its wording", async () => {
+      const o = await owner(1);
+      const c = (await create(o)).data.case;
+      const res = await answer(tokenOf(c), { adultConfirmed: true, sensitiveAgreed: true, lang: "tr", platform: "android" });
+      expect(res.status).toBe(202);
+      const db = await getDb();
+      const [side] = (await db.execute({ sql: "SELECT * FROM case_side_attest WHERE case_id = ?", args: [c.id] })).rows;
+      expect(side).toMatchObject({ party: "b" });
+      expect(side.adult_confirmed_at).toBe(side.sensitive_agreed_at);
+      const [row] = (
+        await db.execute({ sql: "SELECT * FROM consent_ledger WHERE user_id = ?", args: [`guest:${c.id}:b`] })
+      ).rows;
+      expect(row).toMatchObject({
+        kind: "sensitive",
+        choice: "on",
+        lang: "tr",
+        platform: "android",
+        wording_key: "consent.sensitiveBody",
+        at: side.sensitive_agreed_at,
+        unlinked_at: side.sensitive_agreed_at,
+      });
+    });
+
+    it("defaults to the case's language and the web, and a signed-in answer sends neither tick", async () => {
+      const o = await owner(2);
+      const guest = (await create(o)).data.case;
+      expect((await answer(tokenOf(guest), { adultConfirmed: true, sensitiveAgreed: true })).status).toBe(202);
+      const db = await getDb();
+      const [row] = (
+        await db.execute({ sql: "SELECT lang, platform FROM consent_ledger WHERE user_id = ?", args: [`guest:${guest.id}:b`] })
+      ).rows;
+      expect(row).toMatchObject({ lang: "en", platform: "web" });
+
+      const member = (await create(o)).data.case;
+      expect((await answer(tokenOf(member), {}, uid("member"))).status).toBe(202);
+      expect(await attestRows(member.id)).toBe(0);
+    });
   });
 
   it("own_case for the owner, captcha_failed on a bad Turnstile token (bearer sessions skip it)", async () => {
@@ -1179,7 +1243,7 @@ describe("originals, display names and removal of a side", () => {
     const answered = await http.respondPostHandler(
       req("POST", `/api/v1/respond/${token}`, {
         ip: ip(),
-        body: { text: SIDE_B, displayName: "Deniz", turnstileToken: "t" },
+        body: { text: SIDE_B, displayName: "Deniz", turnstileToken: "t", adultConfirmed: true, sensitiveAgreed: true },
       }),
       token,
     );

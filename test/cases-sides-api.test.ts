@@ -192,7 +192,7 @@ function respond(token: string, opts: Opts & { text?: string; evidence?: string[
     req("POST", `/api/v1/respond/${token}`, {
       ...opts,
       ip: opts.ip ?? ip(),
-      body: { text: opts.text ?? SIDE_B, ...(opts.evidence ? { evidence: opts.evidence } : {}), turnstileToken: "t" },
+      body: { text: opts.text ?? SIDE_B, ...(opts.evidence ? { evidence: opts.evidence } : {}), turnstileToken: "t", adultConfirmed: true, sensitiveAgreed: true },
     }),
     token,
   );
@@ -440,6 +440,18 @@ describe("a side the case went on without", () => {
 });
 
 describe("a case with three or four sides", () => {
+  it("keeps what each signed-out answer confirmed under that answer's side", async () => {
+    const o = await owner(2);
+    const made = await createMany(o, 3);
+    expect((await respondAs(made.shared, undefined, SIDE_B)).status).toBe(202);
+    expect((await respondAs(made.shared, undefined, SIDE_B)).status).toBe(202);
+    const db = await getDb();
+    const rows = (await db.execute({ sql: "SELECT party FROM case_side_attest WHERE case_id = ? ORDER BY party", args: [made.data.case.id] })).rows;
+    expect(rows.map((r) => r.party)).toEqual(["b", "c"]);
+    const guests = (await db.execute({ sql: "SELECT user_id FROM consent_ledger WHERE user_id LIKE ? ORDER BY user_id", args: [`guest:${made.data.case.id}:%`] })).rows;
+    expect(guests.map((r) => r.user_id)).toEqual([`guest:${made.data.case.id}:b`, `guest:${made.data.case.id}:c`]);
+  });
+
   it("is created only by a client that sends the capability header", async () => {
     const o = await owner(3);
     for (const headers of [OLD_APP, { "judge-sides": "2" }, { "judge-sides": "3x" }]) {

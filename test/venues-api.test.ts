@@ -181,7 +181,7 @@ function respond(token: string, opts: Opts & { text?: string; evidence?: string[
     req("POST", `/api/v1/respond/${token}`, {
       ...opts,
       ip: opts.ip ?? ip(),
-      body: { text: opts.text ?? SIDE_B, ...(opts.evidence ? { evidence: opts.evidence } : {}), turnstileToken: "t" },
+      body: { text: opts.text ?? SIDE_B, ...(opts.evidence ? { evidence: opts.evidence } : {}), turnstileToken: "t", adultConfirmed: true, sensitiveAgreed: true },
     }),
     token,
   );
