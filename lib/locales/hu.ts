@@ -290,13 +290,43 @@ const hu: Locale = {
     "settings.appearance": "Megjelenés",
     "settings.darkMode": "Sötét mód",
     "consent.cardTitle": "Segítesz jobbá tenni a Judge-ot?",
-    "consent.cardBody":
-      "Engedd, hogy a Judge az anonimizált ítéleteidet és értékeléseidet használja a bírái teszteléséhez és tanításához. A nevek sosem kerülnek bele. Ezt bármikor megváltoztathatod a Beállításokban.",
     "consent.cardYes": "Persze",
     "consent.cardNo": "Köszönöm, nem",
     "consent.switchTitle": "Segíts jobbá tenni a Judge-ot",
+    "consent.cardBody":
+      "Engedd, hogy a Judge az anonimizált ítéleteidet és értékeléseidet az MI betanítására használja. A nevek sosem kerülnek bele.",
+    "consent.cardLink": "Hogyan működik",
     "consent.switchDetail":
-      "Engedi, hogy a Judge az anonimizált ítéleteidet és értékeléseidet használja a bírái teszteléséhez és tanításához. Ki van kapcsolva, amíg be nem kapcsolod.",
+      "Engedi, hogy a Judge az anonimizált ítéleteidet és értékeléseidet az MI betanítására használja. Ki van kapcsolva, amíg be nem kapcsolod.",
+    "consent.sensitiveTitle": "Az első ítéleted előtt",
+    "consent.sensitiveBody":
+      "A szövegem tartalmazhat személyes részleteket, például egészségről vagy kapcsolatokról. A Judge a nevek nélkül elküldi egy külső MI-szolgáltatásnak, hogy megírja az ítéletemet, és addig őrzi, amíg el nem távolítom.",
+    "consent.sensitiveContinue": "Tovább",
+    "respond.adultConfirm": "Legalább 18 éves vagyok",
+    "account.export": "Adataim letöltése",
+    "account.exportHint":
+      "Kapj egy JSON-fájlt mindennel, amit a Judge rólad tárol.",
+    "account.exportBusy": "A fájl előkészítése…",
+    "account.exportFailed":
+      "Most nem tudtuk előkészíteni az adataidat. Megpróbálod újra?",
+    "deletePage.title": "A Judge-fiókod törlése",
+    "deletePage.lead":
+      "A Judge Aytu Tuna alkalmazása. A fiókodat és az adatait bármikor magad is törölheted, az alkalmazásban vagy a weboldalon.",
+    "deletePage.appTitle": "Az alkalmazásban",
+    "deletePage.app":
+      "Nyisd meg a Judge-ot, menj a Fiókhoz, koppints a Fiók törlése gombra, és erősítsd meg.",
+    "deletePage.webTitle": "A weboldalon",
+    "deletePage.web":
+      "Jelentkezz be az okjudge.com oldalon, nyisd meg a Fiókot, válaszd a Fiók törlése lehetőséget, és erősítsd meg.",
+    "deletePage.removedTitle": "Mi törlődik",
+    "deletePage.removed":
+      "A fiókod, a bejelentkezési nyilvántartás, a kreditek, a csomag és a használati események törlődnek. Az ítéleteid és az ügyekben szereplő oldalaid eltűnnek: az eredeti szöveg és a nevek azonnal törlődnek, az anonimizált szöveg és az ítélet 30 nappal később.",
+    "deletePage.keptTitle": "Mit tartunk meg",
+    "deletePage.kept":
+      "Az eltávolított ítéletek eredményét és dátumát, szöveg és nevek nélkül. Az értékeléseidet és a hozzájárulási nyilvántartást 6 évig, rád utaló kapcsolat nélkül. Az e-mail-címed kódolt alakját, hogy az ingyenes kreditekkel ne lehessen újra és újra visszaélni. A biztonsági mentések régebbi példányokat legfeljebb 14 napig őriznek.",
+    "deletePage.mailTitle": "Kérd e-mailben",
+    "deletePage.mail":
+      "Nem tudsz bejelentkezni? Írj a {email} címre a fiókod címéről, és kérd a törlését.",
     "rating.prompt": "Igazságos ítélet?",
     "rating.fair": "Igazságos",
     "rating.notFair": "Nem igazságos",

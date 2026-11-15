@@ -289,13 +289,42 @@ const sv: Locale = {
     "settings.appearance": "Utseende",
     "settings.darkMode": "Mörkt läge",
     "consent.cardTitle": "Vill du hjälpa till att göra Judge bättre?",
-    "consent.cardBody":
-      "Låt Judge använda dina anonymiserade domar och betyg för att testa och träna sina domare. Namn tas aldrig med. Du kan ändra detta i Inställningar.",
     "consent.cardYes": "Gärna",
     "consent.cardNo": "Nej tack",
     "consent.switchTitle": "Hjälp till att göra Judge bättre",
+    "consent.cardBody":
+      "Låt Judge använda dina anonymiserade domar och betyg för att träna AI. Namn tas aldrig med.",
+    "consent.cardLink": "Så fungerar det",
     "consent.switchDetail":
-      "Låter Judge använda dina anonymiserade domar och betyg för att testa och träna sina domare. Av, om du inte slår på det.",
+      "Låter Judge använda dina anonymiserade domar och betyg för att träna AI. Av, om du inte slår på det.",
+    "consent.sensitiveTitle": "Före din första dom",
+    "consent.sensitiveBody":
+      "Min text kan innehålla privata uppgifter, till exempel om hälsa eller relationer. Judge skickar den, utan namn, till en extern AI-tjänst som skriver min dom, och sparar den tills jag tar bort den.",
+    "consent.sensitiveContinue": "Fortsätt",
+    "respond.adultConfirm": "Jag är 18 år eller äldre",
+    "account.export": "Ladda ner mina data",
+    "account.exportHint": "Få en JSON-fil med allt Judge har om dig.",
+    "account.exportBusy": "Förbereder filen…",
+    "account.exportFailed":
+      "Vi kunde inte förbereda dina data just nu. Vill du försöka igen?",
+    "deletePage.title": "Radera ditt Judge-konto",
+    "deletePage.lead":
+      "Judge är en app från Aytu Tuna. Du kan när som helst radera kontot och dess data själv, i appen eller på webbplatsen.",
+    "deletePage.appTitle": "I appen",
+    "deletePage.app":
+      "Öppna Judge, gå till Konto, tryck på Radera konto och bekräfta.",
+    "deletePage.webTitle": "På webbplatsen",
+    "deletePage.web":
+      "Logga in på okjudge.com, öppna Konto, välj Radera konto och bekräfta.",
+    "deletePage.removedTitle": "Vad som raderas",
+    "deletePage.removed":
+      "Ditt konto, inloggningsuppgifter, krediter, abonnemang och användningshändelser raderas. Dina domar och dina sidor i ärenden tas bort: originaltexten och namnen raderas direkt, och den anonymiserade texten och domen 30 dagar senare.",
+    "deletePage.keptTitle": "Vad vi behåller",
+    "deletePage.kept":
+      "Utfallet och datumen för borttagna domar, utan text och namn. Dina betyg och samtyckesposter i 6 år, utan koppling till dig. En kodad form av din e-postadress, så att gratiskrediter inte missbrukas om och om igen. Säkerhetskopior har äldre kopior i upp till 14 dagar.",
+    "deletePage.mailTitle": "Fråga via e-post",
+    "deletePage.mail":
+      "Kan du inte logga in? Skriv till {email} från adressen på ditt konto och be oss radera det.",
     "rating.prompt": "Rättvis dom?",
     "rating.fair": "Rättvis",
     "rating.notFair": "Orättvis",

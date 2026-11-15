@@ -290,13 +290,41 @@ const vi: Locale = {
     "settings.appearance": "Giao diện",
     "settings.darkMode": "Chế độ tối",
     "consent.cardTitle": "Giúp cải thiện Judge nhé?",
-    "consent.cardBody":
-      "Cho phép Judge dùng các phán quyết và đánh giá đã ẩn danh của bạn để kiểm thử và huấn luyện các giám khảo. Tên không bao giờ được đưa vào. Bạn có thể đổi điều này trong Cài đặt.",
     "consent.cardYes": "Được",
     "consent.cardNo": "Không, cảm ơn",
     "consent.switchTitle": "Giúp cải thiện Judge",
+    "consent.cardBody":
+      "Cho phép Judge dùng các phán quyết và đánh giá đã ẩn danh của bạn để huấn luyện AI. Tên không bao giờ được đưa vào.",
+    "consent.cardLink": "Cách hoạt động",
     "consent.switchDetail":
-      "Cho phép Judge dùng các phán quyết và đánh giá đã ẩn danh của bạn để kiểm thử và huấn luyện các giám khảo. Tắt, trừ khi bạn bật.",
+      "Cho phép Judge dùng các phán quyết và đánh giá đã ẩn danh của bạn để huấn luyện AI. Tắt, trừ khi bạn bật.",
+    "consent.sensitiveTitle": "Trước phán quyết đầu tiên của bạn",
+    "consent.sensitiveBody":
+      "Văn bản của tôi có thể chứa chi tiết riêng tư, như sức khỏe hay các mối quan hệ. Judge gửi nó, đã bỏ tên, tới một dịch vụ AI bên ngoài để viết phán quyết cho tôi, và giữ cho đến khi tôi xóa.",
+    "consent.sensitiveContinue": "Tiếp tục",
+    "respond.adultConfirm": "Tôi từ 18 tuổi trở lên",
+    "account.export": "Tải dữ liệu của tôi",
+    "account.exportHint": "Nhận một tệp JSON chứa mọi thứ Judge lưu về bạn.",
+    "account.exportBusy": "Đang chuẩn bị tệp của bạn…",
+    "account.exportFailed":
+      "Hiện chưa chuẩn bị được dữ liệu của bạn. Bạn thử lại nhé?",
+    "deletePage.title": "Xóa tài khoản Judge của bạn",
+    "deletePage.lead":
+      "Judge là ứng dụng của Aytu Tuna. Bạn có thể tự xóa tài khoản và dữ liệu của nó bất cứ lúc nào, trong ứng dụng hoặc trên trang web.",
+    "deletePage.appTitle": "Trong ứng dụng",
+    "deletePage.app": "Mở Judge, vào Tài khoản, chạm Xóa tài khoản và xác nhận.",
+    "deletePage.webTitle": "Trên trang web",
+    "deletePage.web":
+      "Đăng nhập tại okjudge.com, mở Tài khoản, chọn Xóa tài khoản và xác nhận.",
+    "deletePage.removedTitle": "Những gì bị xóa",
+    "deletePage.removed":
+      "Tài khoản, bản ghi đăng nhập, tín dụng, gói và sự kiện sử dụng của bạn bị xóa. Phán quyết và phía của bạn trong các vụ việc bị gỡ: văn bản gốc và tên bị xóa ngay, văn bản đã ẩn danh và phán quyết bị xóa sau 30 ngày.",
+    "deletePage.keptTitle": "Những gì chúng tôi giữ",
+    "deletePage.kept":
+      "Kết quả và ngày của các phán quyết đã gỡ, không có văn bản hay tên. Đánh giá và bản ghi đồng ý của bạn trong 6 năm, không liên kết với bạn. Dạng đã mã hóa của email, để không ai lạm dụng tín dụng miễn phí nhiều lần. Bản sao lưu giữ các bản cũ tối đa 14 ngày.",
+    "deletePage.mailTitle": "Yêu cầu qua email",
+    "deletePage.mail":
+      "Không đăng nhập được? Hãy gửi email tới {email} từ địa chỉ của tài khoản và nhờ chúng tôi xóa nó.",
     "rating.prompt": "Phán quyết có công bằng không?",
     "rating.fair": "Công bằng",
     "rating.notFair": "Không công bằng",

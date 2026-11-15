@@ -289,13 +289,43 @@ const ptBR: Locale = {
     "settings.appearance": "Aparência",
     "settings.darkMode": "Modo escuro",
     "consent.cardTitle": "Quer ajudar a melhorar o Judge?",
-    "consent.cardBody":
-      "Deixe o Judge usar seus veredictos e avaliações anonimizados para testar e treinar seus juízes. Os nomes nunca são incluídos. Você pode mudar isso em Ajustes.",
     "consent.cardYes": "Claro",
     "consent.cardNo": "Não, obrigado",
     "consent.switchTitle": "Ajude a melhorar o Judge",
+    "consent.cardBody":
+      "Deixe o Judge usar seus veredictos e avaliações anonimizados para treinar IA. Os nomes nunca são incluídos.",
+    "consent.cardLink": "Como funciona",
     "consent.switchDetail":
-      "Permite que o Judge use seus veredictos e avaliações anonimizados para testar e treinar seus juízes. Desativado, a menos que você ative.",
+      "Permite que o Judge use seus veredictos e avaliações anonimizados para treinar IA. Desativado, a menos que você ative.",
+    "consent.sensitiveTitle": "Antes do seu primeiro veredicto",
+    "consent.sensitiveBody":
+      "Meu texto pode incluir detalhes privados, como saúde ou relacionamentos. O Judge o envia, sem os nomes, a um serviço de IA externo para escrever meu veredicto e o guarda até eu removê-lo.",
+    "consent.sensitiveContinue": "Continuar",
+    "respond.adultConfirm": "Tenho 18 anos ou mais",
+    "account.export": "Baixar meus dados",
+    "account.exportHint":
+      "Receba um arquivo JSON com tudo o que o Judge guarda sobre você.",
+    "account.exportBusy": "Preparando seu arquivo…",
+    "account.exportFailed":
+      "Não deu para preparar seus dados agora. Tenta de novo?",
+    "deletePage.title": "Excluir sua conta do Judge",
+    "deletePage.lead":
+      "O Judge é um app de Aytu Tuna. Você mesmo pode excluir sua conta e os dados dela quando quiser, no app ou no site.",
+    "deletePage.appTitle": "No app",
+    "deletePage.app":
+      "Abra o Judge, vá em Conta, toque em Excluir conta e confirme.",
+    "deletePage.webTitle": "No site",
+    "deletePage.web":
+      "Entre em okjudge.com, abra Conta, escolha Excluir conta e confirme.",
+    "deletePage.removedTitle": "O que é excluído",
+    "deletePage.removed":
+      "Sua conta, os registros de login, os créditos, o plano e os eventos de uso são excluídos. Seus veredictos e seus lados nos casos são removidos: o texto original e os nomes são apagados na hora, e o texto anonimizado e o veredicto 30 dias depois.",
+    "deletePage.keptTitle": "O que guardamos",
+    "deletePage.kept":
+      "O resultado e as datas dos veredictos removidos, sem texto nem nomes. Suas avaliações e os registros de consentimento por 6 anos, sem vínculo com você. Uma forma codificada do seu e-mail, para evitar o abuso repetido dos créditos grátis. Os backups guardam cópias mais antigas por até 14 dias.",
+    "deletePage.mailTitle": "Peça por e-mail",
+    "deletePage.mail":
+      "Não consegue entrar? Escreva para {email} do endereço da sua conta e peça que a excluamos.",
     "rating.prompt": "Veredito justo?",
     "rating.fair": "Justo",
     "rating.notFair": "Injusto",

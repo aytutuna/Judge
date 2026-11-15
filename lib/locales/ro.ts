@@ -289,13 +289,43 @@ const ro: Locale = {
     "settings.appearance": "Aspect",
     "settings.darkMode": "Mod întunecat",
     "consent.cardTitle": "Vrei să ajuți la îmbunătățirea Judge?",
-    "consent.cardBody":
-      "Lasă Judge să folosească verdictele și evaluările tale anonimizate pentru a-și testa și antrena judecătorii. Numele nu sunt incluse niciodată. Poți schimba asta în Setări.",
     "consent.cardYes": "Sigur",
     "consent.cardNo": "Nu, mulțumesc",
     "consent.switchTitle": "Ajută la îmbunătățirea Judge",
+    "consent.cardBody":
+      "Lasă Judge să folosească verdictele și evaluările tale anonimizate pentru a antrena IA. Numele nu sunt incluse niciodată.",
+    "consent.cardLink": "Cum funcționează",
     "consent.switchDetail":
-      "Permite ca Judge să folosească verdictele și evaluările tale anonimizate pentru a-și testa și antrena judecătorii. Dezactivat dacă nu îl activezi.",
+      "Permite ca Judge să folosească verdictele și evaluările tale anonimizate pentru a antrena IA. Dezactivat dacă nu îl activezi.",
+    "consent.sensitiveTitle": "Înainte de primul tău verdict",
+    "consent.sensitiveBody":
+      "Textul meu poate include detalii private, de exemplu despre sănătate sau relații. Judge îl trimite, fără nume, unui serviciu IA extern ca să scrie verdictul meu și îl păstrează până îl elimin.",
+    "consent.sensitiveContinue": "Continuă",
+    "respond.adultConfirm": "Am 18 ani sau mai mult",
+    "account.export": "Descarcă datele mele",
+    "account.exportHint":
+      "Primește un fișier JSON cu tot ce păstrează Judge despre tine.",
+    "account.exportBusy": "Se pregătește fișierul…",
+    "account.exportFailed":
+      "Nu ți-am putut pregăti datele acum. Încerci din nou?",
+    "deletePage.title": "Șterge contul tău Judge",
+    "deletePage.lead":
+      "Judge este o aplicație de Aytu Tuna. Poți șterge singur contul și datele lui oricând, în aplicație sau pe site.",
+    "deletePage.appTitle": "În aplicație",
+    "deletePage.app":
+      "Deschide Judge, mergi la Cont, atinge Șterge contul și confirmă.",
+    "deletePage.webTitle": "Pe site",
+    "deletePage.web":
+      "Conectează-te la okjudge.com, deschide Cont, alege Șterge contul și confirmă.",
+    "deletePage.removedTitle": "Ce se șterge",
+    "deletePage.removed":
+      "Se șterg contul, înregistrările de conectare, creditele, planul și evenimentele de utilizare. Verdictele tale și părțile tale din cazuri sunt eliminate: textul original și numele se șterg imediat, iar textul anonimizat și verdictul după 30 de zile.",
+    "deletePage.keptTitle": "Ce păstrăm",
+    "deletePage.kept":
+      "Rezultatul și datele verdictelor eliminate, fără text și nume. Evaluările tale și înregistrările consimțământului timp de 6 ani, fără legătură cu tine. O formă codificată a e-mailului tău, ca să nu se abuzeze repetat de creditele gratuite. Copiile de rezervă păstrează copii mai vechi până la 14 zile.",
+    "deletePage.mailTitle": "Cere prin e-mail",
+    "deletePage.mail":
+      "Nu te poți conecta? Scrie la {email} de la adresa contului tău și cere-ne să-l ștergem.",
     "rating.prompt": "Verdict corect?",
     "rating.fair": "Corect",
     "rating.notFair": "Incorect",

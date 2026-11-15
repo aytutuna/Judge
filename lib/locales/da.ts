@@ -290,13 +290,41 @@ const da: Locale = {
     "settings.appearance": "Udseende",
     "settings.darkMode": "Mørk tilstand",
     "consent.cardTitle": "Vil du hjælpe med at gøre Judge bedre?",
-    "consent.cardBody":
-      "Lad Judge bruge dine anonymiserede domme og bedømmelser til at teste og træne sine dommere. Navne er aldrig med. Du kan ændre det i Indstillinger.",
     "consent.cardYes": "Ja tak",
     "consent.cardNo": "Nej tak",
     "consent.switchTitle": "Hjælp med at gøre Judge bedre",
+    "consent.cardBody":
+      "Lad Judge bruge dine anonymiserede domme og bedømmelser til at træne AI. Navne er aldrig med.",
+    "consent.cardLink": "Sådan virker det",
     "consent.switchDetail":
-      "Lader Judge bruge dine anonymiserede domme og bedømmelser til at teste og træne sine dommere. Slået fra, medmindre du slår det til.",
+      "Lader Judge bruge dine anonymiserede domme og bedømmelser til at træne AI. Slået fra, medmindre du slår det til.",
+    "consent.sensitiveTitle": "Før din første dom",
+    "consent.sensitiveBody":
+      "Min tekst kan indeholde private oplysninger, for eksempel om helbred eller forhold. Judge sender den, uden navne, til en ekstern AI-tjeneste, som skriver min dom, og gemmer den, indtil jeg fjerner den.",
+    "consent.sensitiveContinue": "Fortsæt",
+    "respond.adultConfirm": "Jeg er 18 år eller ældre",
+    "account.export": "Download mine data",
+    "account.exportHint": "Få en JSON-fil med alt, hvad Judge har om dig.",
+    "account.exportBusy": "Gør filen klar…",
+    "account.exportFailed":
+      "Vi kunne ikke gøre dine data klar lige nu. Prøv igen?",
+    "deletePage.title": "Slet din Judge-konto",
+    "deletePage.lead":
+      "Judge er en app fra Aytu Tuna. Du kan selv slette din konto og dens data når som helst, i appen eller på hjemmesiden.",
+    "deletePage.appTitle": "I appen",
+    "deletePage.app": "Åbn Judge, gå til Konto, tryk på Slet konto og bekræft.",
+    "deletePage.webTitle": "På hjemmesiden",
+    "deletePage.web":
+      "Log ind på okjudge.com, åbn Konto, vælg Slet konto og bekræft.",
+    "deletePage.removedTitle": "Hvad der slettes",
+    "deletePage.removed":
+      "Din konto, loginoptegnelser, kreditter, abonnement og brugshændelser slettes. Dine domme og dine sider i sager fjernes: din originale tekst og dine navne slettes med det samme, og den anonymiserede tekst og dommen 30 dage senere.",
+    "deletePage.keptTitle": "Hvad vi beholder",
+    "deletePage.kept":
+      "Udfaldet og datoerne for fjernede domme, uden tekst og navne. Dine bedømmelser og samtykkeoptegnelser i 6 år, uden forbindelse til dig. En kodet form af din e-mail, så gratis kreditter ikke misbruges igen og igen. Sikkerhedskopier har ældre kopier i op til 14 dage.",
+    "deletePage.mailTitle": "Bed om det på e-mail",
+    "deletePage.mail":
+      "Kan du ikke logge ind? Skriv til {email} fra adressen på din konto og bed os slette den.",
     "rating.prompt": "Retfærdig dom?",
     "rating.fair": "Retfærdig",
     "rating.notFair": "Ikke retfærdig",

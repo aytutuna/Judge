@@ -216,11 +216,20 @@ class Strings(private val res: Resources) {
     val navTabs: String get() = res.getString(R.string.nav_tabs)
     val settingsDarkMode: String get() = res.getString(R.string.settings_dark_mode)
     val consentCardTitle: String get() = res.getString(R.string.consent_card_title)
-    val consentCardBody: String get() = res.getString(R.string.consent_card_body)
     val consentCardYes: String get() = res.getString(R.string.consent_card_yes)
     val consentCardNo: String get() = res.getString(R.string.consent_card_no)
     val consentSwitchTitle: String get() = res.getString(R.string.consent_switch_title)
+    val consentCardBody: String get() = res.getString(R.string.consent_card_body)
+    val consentCardLink: String get() = res.getString(R.string.consent_card_link)
     val consentSwitchDetail: String get() = res.getString(R.string.consent_switch_detail)
+    val consentSensitiveTitle: String get() = res.getString(R.string.consent_sensitive_title)
+    val consentSensitiveBody: String get() = res.getString(R.string.consent_sensitive_body)
+    val consentSensitiveContinue: String get() = res.getString(R.string.consent_sensitive_continue)
+    val respondAdultConfirm: String get() = res.getString(R.string.respond_adult_confirm)
+    val accountExport: String get() = res.getString(R.string.account_export)
+    val accountExportHint: String get() = res.getString(R.string.account_export_hint)
+    val accountExportBusy: String get() = res.getString(R.string.account_export_busy)
+    val accountExportFailed: String get() = res.getString(R.string.account_export_failed)
     val ratingPrompt: String get() = res.getString(R.string.rating_prompt)
     val ratingFair: String get() = res.getString(R.string.rating_fair)
     val ratingNotFair: String get() = res.getString(R.string.rating_not_fair)
@@ -850,11 +859,20 @@ class Strings(private val res: Resources) {
             "nav.tabs" -> R.string.nav_tabs
             "settings.darkMode" -> R.string.settings_dark_mode
             "consent.cardTitle" -> R.string.consent_card_title
-            "consent.cardBody" -> R.string.consent_card_body
             "consent.cardYes" -> R.string.consent_card_yes
             "consent.cardNo" -> R.string.consent_card_no
             "consent.switchTitle" -> R.string.consent_switch_title
+            "consent.cardBody" -> R.string.consent_card_body
+            "consent.cardLink" -> R.string.consent_card_link
             "consent.switchDetail" -> R.string.consent_switch_detail
+            "consent.sensitiveTitle" -> R.string.consent_sensitive_title
+            "consent.sensitiveBody" -> R.string.consent_sensitive_body
+            "consent.sensitiveContinue" -> R.string.consent_sensitive_continue
+            "respond.adultConfirm" -> R.string.respond_adult_confirm
+            "account.export" -> R.string.account_export
+            "account.exportHint" -> R.string.account_export_hint
+            "account.exportBusy" -> R.string.account_export_busy
+            "account.exportFailed" -> R.string.account_export_failed
             "rating.prompt" -> R.string.rating_prompt
             "rating.fair" -> R.string.rating_fair
             "rating.notFair" -> R.string.rating_not_fair

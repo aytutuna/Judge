@@ -289,13 +289,43 @@ const de: Locale = {
     "settings.appearance": "Erscheinungsbild",
     "settings.darkMode": "Dunkelmodus",
     "consent.cardTitle": "Hilfst du mit, Judge zu verbessern?",
-    "consent.cardBody":
-      "Erlaube Judge, deine anonymisierten Urteile und Bewertungen zu nutzen, um seine Richter zu testen und zu trainieren. Namen sind nie dabei. Du kannst das jederzeit in den Einstellungen ändern.",
     "consent.cardYes": "Gern",
     "consent.cardNo": "Nein danke",
     "consent.switchTitle": "Hilf, Judge zu verbessern",
+    "consent.cardBody":
+      "Erlaube Judge, deine anonymisierten Urteile und Bewertungen zum Trainieren von KI zu nutzen. Namen sind nie dabei.",
+    "consent.cardLink": "So funktioniert es",
     "consent.switchDetail":
-      "Erlaubt Judge, deine anonymisierten Urteile und Bewertungen zu nutzen, um seine Richter zu testen und zu trainieren. Aus, solange du es nicht einschaltest.",
+      "Erlaubt Judge, deine anonymisierten Urteile und Bewertungen zum Trainieren von KI zu nutzen. Aus, solange du es nicht einschaltest.",
+    "consent.sensitiveTitle": "Vor deinem ersten Urteil",
+    "consent.sensitiveBody":
+      "Mein Text kann private Angaben enthalten, etwa zu Gesundheit oder Beziehungen. Judge schickt ihn ohne Namen an einen externen KI-Dienst, der mein Urteil schreibt, und speichert ihn, bis ich ihn entferne.",
+    "consent.sensitiveContinue": "Weiter",
+    "respond.adultConfirm": "Ich bin 18 oder älter",
+    "account.export": "Meine Daten herunterladen",
+    "account.exportHint":
+      "Hol dir eine JSON-Datei mit allem, was Judge über dich speichert.",
+    "account.exportBusy": "Datei wird vorbereitet…",
+    "account.exportFailed":
+      "Wir konnten deine Daten gerade nicht bereitstellen. Magst du es noch einmal versuchen?",
+    "deletePage.title": "Dein Judge-Konto löschen",
+    "deletePage.lead":
+      "Judge ist eine App von Aytu Tuna. Du kannst dein Konto und seine Daten jederzeit selbst löschen, in der App oder auf der Website.",
+    "deletePage.appTitle": "In der App",
+    "deletePage.app":
+      "Öffne Judge, geh zu Konto, tippe auf Konto löschen und bestätige.",
+    "deletePage.webTitle": "Auf der Website",
+    "deletePage.web":
+      "Melde dich auf okjudge.com an, öffne Konto, wähle Konto löschen und bestätige.",
+    "deletePage.removedTitle": "Was gelöscht wird",
+    "deletePage.removed":
+      "Dein Konto, die Anmeldedaten, Guthaben, Tarif und Nutzungsereignisse werden gelöscht. Deine Urteile und deine Seiten in Fällen werden entfernt: Originaltext und Namen werden sofort gelöscht, der anonymisierte Text und das Urteil 30 Tage später.",
+    "deletePage.keptTitle": "Was wir behalten",
+    "deletePage.kept":
+      "Ergebnis und Daten entfernter Urteile, ohne Text und Namen. Deine Bewertungen und Einwilligungsnachweise für 6 Jahre, ohne Verbindung zu dir. Eine verschlüsselte Form deiner E-Mail-Adresse, damit gratis Guthaben nicht wiederholt missbraucht wird. Backups enthalten ältere Kopien bis zu 14 Tage.",
+    "deletePage.mailTitle": "Per E-Mail anfragen",
+    "deletePage.mail":
+      "Du kannst dich nicht anmelden? Schreib von der Adresse deines Kontos an {email} und bitte uns, es zu löschen.",
     "rating.prompt": "Faires Urteil?",
     "rating.fair": "Fair",
     "rating.notFair": "Nicht fair",

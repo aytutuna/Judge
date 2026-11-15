@@ -289,13 +289,42 @@ const nb: Locale = {
     "settings.appearance": "Utseende",
     "settings.darkMode": "Mørk modus",
     "consent.cardTitle": "Vil du hjelpe til med å gjøre Judge bedre?",
-    "consent.cardBody":
-      "La Judge bruke de anonymiserte dommene og vurderingene dine til å teste og trene dommerne sine. Navn tas aldri med. Du kan endre dette i Innstillinger.",
     "consent.cardYes": "Gjerne",
     "consent.cardNo": "Nei takk",
     "consent.switchTitle": "Hjelp til med å gjøre Judge bedre",
+    "consent.cardBody":
+      "La Judge bruke de anonymiserte dommene og vurderingene dine til å trene AI. Navn tas aldri med.",
+    "consent.cardLink": "Slik fungerer det",
     "consent.switchDetail":
-      "Lar Judge bruke de anonymiserte dommene og vurderingene dine til å teste og trene dommerne sine. Av, med mindre du slår det på.",
+      "Lar Judge bruke de anonymiserte dommene og vurderingene dine til å trene AI. Av, med mindre du slår det på.",
+    "consent.sensitiveTitle": "Før den første dommen din",
+    "consent.sensitiveBody":
+      "Teksten min kan inneholde private opplysninger, for eksempel om helse eller forhold. Judge sender den, uten navn, til en ekstern AI-tjeneste som skriver dommen min, og lagrer den til jeg fjerner den.",
+    "consent.sensitiveContinue": "Fortsett",
+    "respond.adultConfirm": "Jeg er 18 år eller eldre",
+    "account.export": "Last ned dataene mine",
+    "account.exportHint": "Få en JSON-fil med alt Judge har om deg.",
+    "account.exportBusy": "Gjør filen klar…",
+    "account.exportFailed":
+      "Vi kunne ikke gjøre dataene dine klare akkurat nå. Vil du prøve igjen?",
+    "deletePage.title": "Slett Judge-kontoen din",
+    "deletePage.lead":
+      "Judge er en app fra Aytu Tuna. Du kan når som helst slette kontoen og dataene selv, i appen eller på nettsiden.",
+    "deletePage.appTitle": "I appen",
+    "deletePage.app":
+      "Åpne Judge, gå til Konto, trykk på Slett konto og bekreft.",
+    "deletePage.webTitle": "På nettsiden",
+    "deletePage.web":
+      "Logg inn på okjudge.com, åpne Konto, velg Slett konto og bekreft.",
+    "deletePage.removedTitle": "Hva som slettes",
+    "deletePage.removed":
+      "Kontoen din, innloggingsopplysninger, kreditter, abonnement og brukshendelser slettes. Dommene dine og sidene dine i saker fjernes: den opprinnelige teksten og navnene slettes med en gang, og den anonymiserte teksten og dommen 30 dager senere.",
+    "deletePage.keptTitle": "Hva vi beholder",
+    "deletePage.kept":
+      "Utfallet og datoene for fjernede dommer, uten tekst og navn. Vurderingene dine og samtykkeloggen i 6 år, uten kobling til deg. En kodet form av e-posten din, så gratis kreditter ikke misbrukes gang på gang. Sikkerhetskopier har eldre kopier i opptil 14 dager.",
+    "deletePage.mailTitle": "Spør på e-post",
+    "deletePage.mail":
+      "Kommer du deg ikke inn? Skriv til {email} fra adressen på kontoen din og be oss slette den.",
     "rating.prompt": "Rettferdig dom?",
     "rating.fair": "Rettferdig",
     "rating.notFair": "Ikke rettferdig",

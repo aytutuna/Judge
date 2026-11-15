@@ -292,13 +292,43 @@ const pl: Locale = {
     "settings.appearance": "Wygląd",
     "settings.darkMode": "Tryb ciemny",
     "consent.cardTitle": "Pomożesz ulepszyć Judge?",
-    "consent.cardBody":
-      "Pozwól, by Judge używał twoich zanonimizowanych werdyktów i ocen do testowania i trenowania swoich sędziów. Imiona nigdy nie są uwzględniane. Możesz to zmienić w Ustawieniach.",
     "consent.cardYes": "Jasne",
     "consent.cardNo": "Nie, dziękuję",
     "consent.switchTitle": "Pomóż ulepszyć Judge",
+    "consent.cardBody":
+      "Pozwól, by Judge używał twoich zanonimizowanych werdyktów i ocen do trenowania sztucznej inteligencji. Imiona nigdy nie są uwzględniane.",
+    "consent.cardLink": "Jak to działa",
     "consent.switchDetail":
-      "Pozwala Judge używać twoich zanonimizowanych werdyktów i ocen do testowania i trenowania jego sędziów. Wyłączone, dopóki tego nie włączysz.",
+      "Pozwala Judge używać twoich zanonimizowanych werdyktów i ocen do trenowania sztucznej inteligencji. Wyłączone, dopóki tego nie włączysz.",
+    "consent.sensitiveTitle": "Przed twoim pierwszym werdyktem",
+    "consent.sensitiveBody":
+      "Mój tekst może zawierać prywatne szczegóły, na przykład o zdrowiu lub relacjach. Judge wysyła go bez imion do zewnętrznej usługi AI, która pisze mój werdykt, i przechowuje go, dopóki go nie usunę.",
+    "consent.sensitiveContinue": "Dalej",
+    "respond.adultConfirm": "Mam 18 lat lub więcej",
+    "account.export": "Pobierz moje dane",
+    "account.exportHint":
+      "Otrzymaj plik JSON ze wszystkim, co Judge o tobie przechowuje.",
+    "account.exportBusy": "Przygotowuję plik…",
+    "account.exportFailed":
+      "Nie udało się teraz przygotować twoich danych. Spróbujesz jeszcze raz?",
+    "deletePage.title": "Usuń swoje konto w Judge",
+    "deletePage.lead":
+      "Judge to aplikacja Aytu Tuna. Konto i jego dane możesz w każdej chwili usunąć sam, w aplikacji lub na stronie.",
+    "deletePage.appTitle": "W aplikacji",
+    "deletePage.app":
+      "Otwórz Judge, przejdź do Konta, kliknij Usuń konto i potwierdź.",
+    "deletePage.webTitle": "Na stronie",
+    "deletePage.web":
+      "Zaloguj się na okjudge.com, otwórz Konto, wybierz Usuń konto i potwierdź.",
+    "deletePage.removedTitle": "Co zostaje usunięte",
+    "deletePage.removed":
+      "Usuwamy twoje konto, zapisy logowania, kredyty, plan i zdarzenia użycia. Twoje werdykty i twoje strony w sprawach są usuwane: oryginalny tekst i imiona od razu, a zanonimizowany tekst i werdykt po 30 dniach.",
+    "deletePage.keptTitle": "Co zachowujemy",
+    "deletePage.kept":
+      "Wynik i daty usuniętych werdyktów, bez tekstu i imion. Twoje oceny i zapisy zgód przez 6 lat, bez powiązania z tobą. Zakodowaną postać twojego e-maila, by nie nadużywano wielokrotnie darmowych kredytów. Kopie zapasowe zawierają starsze kopie do 14 dni.",
+    "deletePage.mailTitle": "Poproś e-mailem",
+    "deletePage.mail":
+      "Nie możesz się zalogować? Napisz na {email} z adresu konta i poproś o jego usunięcie.",
     "rating.prompt": "Sprawiedliwy werdykt?",
     "rating.fair": "Sprawiedliwy",
     "rating.notFair": "Niesprawiedliwy",

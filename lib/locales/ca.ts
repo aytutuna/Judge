@@ -290,13 +290,43 @@ const ca: Locale = {
     "settings.appearance": "Aparença",
     "settings.darkMode": "Mode fosc",
     "consent.cardTitle": "Vols ajudar a millorar Judge?",
-    "consent.cardBody":
-      "Deixa que Judge faci servir els teus veredictes i valoracions anonimitzats per provar i entrenar els seus jutges. Els noms no s'inclouen mai. Ho pots canviar a Configuració.",
     "consent.cardYes": "És clar",
     "consent.cardNo": "No, gràcies",
     "consent.switchTitle": "Ajuda a millorar Judge",
+    "consent.cardBody":
+      "Deixa que Judge faci servir els teus veredictes i valoracions anonimitzats per entrenar la IA. Els noms no s'inclouen mai.",
+    "consent.cardLink": "Com funciona",
     "consent.switchDetail":
-      "Permet que Judge faci servir els teus veredictes i valoracions anonimitzats per provar i entrenar els seus jutges. Desactivat si no l'actives.",
+      "Permet que Judge faci servir els teus veredictes i valoracions anonimitzats per entrenar la IA. Desactivat si no l'actives.",
+    "consent.sensitiveTitle": "Abans del teu primer veredicte",
+    "consent.sensitiveBody":
+      "El meu text pot incloure detalls privats, com ara salut o relacions. Judge l'envia, sense els noms, a un servei d'IA extern per escriure el meu veredicte, i el guarda fins que l'elimini.",
+    "consent.sensitiveContinue": "Continua",
+    "respond.adultConfirm": "Tinc 18 anys o més",
+    "account.export": "Baixa les meves dades",
+    "account.exportHint":
+      "Obtén un fitxer JSON amb tot el que Judge guarda sobre tu.",
+    "account.exportBusy": "Preparant el fitxer…",
+    "account.exportFailed":
+      "Ara no hem pogut preparar les teves dades. Ho tornes a provar?",
+    "deletePage.title": "Elimina el teu compte de Judge",
+    "deletePage.lead":
+      "Judge és una aplicació d'Aytu Tuna. Pots eliminar el compte i les seves dades tu mateix, quan vulguis, a l'aplicació o al web.",
+    "deletePage.appTitle": "A l'aplicació",
+    "deletePage.app":
+      "Obre Judge, ves a Compte, toca Elimina el compte i confirma.",
+    "deletePage.webTitle": "Al web",
+    "deletePage.web":
+      "Inicia la sessió a okjudge.com, obre Compte, tria Elimina el compte i confirma.",
+    "deletePage.removedTitle": "Què s'elimina",
+    "deletePage.removed":
+      "S'eliminen el compte, els registres d'inici de sessió, els crèdits, el pla i els esdeveniments d'ús. Els veredictes i els teus bàndols dels casos s'eliminen: el text original i els noms s'esborren a l'acte, i el text anonimitzat i el veredicte 30 dies després.",
+    "deletePage.keptTitle": "Què guardem",
+    "deletePage.kept":
+      "El resultat i les dates dels veredictes eliminats, sense text ni noms. Les teves valoracions i els registres de consentiment durant 6 anys, sense cap vincle amb tu. Una forma codificada del correu, per evitar l'abús repetit dels crèdits gratuïts. Les còpies de seguretat guarden còpies antigues fins a 14 dies.",
+    "deletePage.mailTitle": "Demana-ho per correu",
+    "deletePage.mail":
+      "No pots iniciar la sessió? Escriu a {email} des de l'adreça del teu compte i demana que l'eliminem.",
     "rating.prompt": "Veredicte just?",
     "rating.fair": "Just",
     "rating.notFair": "Injust",

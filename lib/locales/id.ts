@@ -289,13 +289,42 @@ const id: Locale = {
     "settings.appearance": "Tampilan",
     "settings.darkMode": "Mode gelap",
     "consent.cardTitle": "Mau bantu tingkatkan Judge?",
-    "consent.cardBody":
-      "Izinkan Judge memakai putusan dan penilaian anonimmu untuk menguji dan melatih para hakimnya. Nama tidak pernah disertakan. Kamu bisa mengubahnya di Pengaturan.",
     "consent.cardYes": "Boleh",
     "consent.cardNo": "Tidak, terima kasih",
     "consent.switchTitle": "Bantu tingkatkan Judge",
+    "consent.cardBody":
+      "Izinkan Judge memakai putusan dan penilaian anonimmu untuk melatih AI. Nama tidak pernah disertakan.",
+    "consent.cardLink": "Cara kerjanya",
     "consent.switchDetail":
-      "Mengizinkan Judge memakai putusan dan penilaian anonimmu untuk menguji dan melatih para hakimnya. Nonaktif kecuali kamu mengaktifkannya.",
+      "Mengizinkan Judge memakai putusan dan penilaian anonimmu untuk melatih AI. Nonaktif kecuali kamu mengaktifkannya.",
+    "consent.sensitiveTitle": "Sebelum putusan pertamamu",
+    "consent.sensitiveBody":
+      "Teks saya mungkin berisi hal pribadi, seperti kesehatan atau hubungan. Judge mengirimkannya, tanpa nama, ke layanan AI pihak luar untuk menulis putusan saya, dan menyimpannya sampai saya menghapusnya.",
+    "consent.sensitiveContinue": "Lanjut",
+    "respond.adultConfirm": "Saya berusia 18 tahun atau lebih",
+    "account.export": "Unduh data saya",
+    "account.exportHint":
+      "Dapatkan berkas JSON berisi semua yang disimpan Judge tentangmu.",
+    "account.exportBusy": "Menyiapkan berkasmu…",
+    "account.exportFailed": "Datamu belum bisa disiapkan sekarang. Coba lagi?",
+    "deletePage.title": "Hapus akun Judge-mu",
+    "deletePage.lead":
+      "Judge adalah aplikasi dari Aytu Tuna. Kamu bisa menghapus akun dan datanya sendiri kapan saja, di aplikasi atau di situs web.",
+    "deletePage.appTitle": "Di aplikasi",
+    "deletePage.app":
+      "Buka Judge, masuk ke Akun, ketuk Hapus akun, lalu konfirmasi.",
+    "deletePage.webTitle": "Di situs web",
+    "deletePage.web":
+      "Masuk di okjudge.com, buka Akun, pilih Hapus akun, lalu konfirmasi.",
+    "deletePage.removedTitle": "Yang dihapus",
+    "deletePage.removed":
+      "Akun, catatan masuk, kredit, paket, dan peristiwa penggunaanmu dihapus. Putusan dan pihakmu dalam kasus dihapus: teks asli dan nama langsung dihapus, teks anonim dan putusannya 30 hari kemudian.",
+    "deletePage.keptTitle": "Yang kami simpan",
+    "deletePage.kept":
+      "Hasil dan tanggal putusan yang dihapus, tanpa teks dan nama. Penilaian dan catatan persetujuanmu selama 6 tahun, tanpa kaitan denganmu. Bentuk email yang diacak, untuk mencegah penyalahgunaan kredit gratis berulang kali. Cadangan menyimpan salinan lama paling lama 14 hari.",
+    "deletePage.mailTitle": "Minta lewat email",
+    "deletePage.mail":
+      "Tidak bisa masuk? Kirim email ke {email} dari alamat akunmu dan minta kami menghapusnya.",
     "rating.prompt": "Putusan ini adil?",
     "rating.fair": "Adil",
     "rating.notFair": "Tidak adil",

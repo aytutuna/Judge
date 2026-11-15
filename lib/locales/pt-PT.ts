@@ -289,13 +289,43 @@ const ptPT: Locale = {
     "settings.appearance": "Aspeto",
     "settings.darkMode": "Modo escuro",
     "consent.cardTitle": "Queres ajudar a melhorar o Judge?",
-    "consent.cardBody":
-      "Deixa o Judge usar os teus veredictos e avaliações anonimizados para testar e treinar os seus juízes. Os nomes nunca são incluídos. Podes alterar isto em Definições.",
     "consent.cardYes": "Claro",
     "consent.cardNo": "Não, obrigado",
     "consent.switchTitle": "Ajuda a melhorar o Judge",
+    "consent.cardBody":
+      "Deixa o Judge usar os teus veredictos e avaliações anonimizados para treinar IA. Os nomes nunca são incluídos.",
+    "consent.cardLink": "Como funciona",
     "consent.switchDetail":
-      "Permite que o Judge use os teus veredictos e avaliações anonimizados para testar e treinar os seus juízes. Desativado, a menos que o ativares.",
+      "Permite que o Judge use os teus veredictos e avaliações anonimizados para treinar IA. Desativado, a menos que o ativares.",
+    "consent.sensitiveTitle": "Antes do teu primeiro veredicto",
+    "consent.sensitiveBody":
+      "O meu texto pode incluir detalhes privados, como saúde ou relações. O Judge envia-o, sem os nomes, a um serviço de IA externo para escrever o meu veredicto e guarda-o até eu o remover.",
+    "consent.sensitiveContinue": "Continuar",
+    "respond.adultConfirm": "Tenho 18 anos ou mais",
+    "account.export": "Transferir os meus dados",
+    "account.exportHint":
+      "Recebe um ficheiro JSON com tudo o que o Judge guarda sobre ti.",
+    "account.exportBusy": "A preparar o ficheiro…",
+    "account.exportFailed":
+      "Não foi possível preparar os teus dados agora. Queres tentar de novo?",
+    "deletePage.title": "Apagar a tua conta do Judge",
+    "deletePage.lead":
+      "O Judge é uma app de Aytu Tuna. Podes apagar tu próprio a conta e os respetivos dados quando quiseres, na app ou no site.",
+    "deletePage.appTitle": "Na app",
+    "deletePage.app":
+      "Abre o Judge, vai a Conta, toca em Apagar conta e confirma.",
+    "deletePage.webTitle": "No site",
+    "deletePage.web":
+      "Inicia sessão em okjudge.com, abre Conta, escolhe Apagar conta e confirma.",
+    "deletePage.removedTitle": "O que é apagado",
+    "deletePage.removed":
+      "A tua conta, os registos de início de sessão, os créditos, o plano e os eventos de utilização são apagados. Os teus veredictos e os teus lados nos casos são removidos: o texto original e os nomes são apagados de imediato, e o texto anonimizado e o veredicto 30 dias depois.",
+    "deletePage.keptTitle": "O que guardamos",
+    "deletePage.kept":
+      "O resultado e as datas dos veredictos removidos, sem texto nem nomes. As tuas avaliações e os registos de consentimento durante 6 anos, sem ligação a ti. Uma forma codificada do teu e-mail, para evitar o abuso repetido dos créditos grátis. As cópias de segurança guardam cópias mais antigas até 14 dias.",
+    "deletePage.mailTitle": "Pede por e-mail",
+    "deletePage.mail":
+      "Não consegues iniciar sessão? Escreve para {email} a partir do endereço da tua conta e pede-nos que a apaguemos.",
     "rating.prompt": "Veredicto justo?",
     "rating.fair": "Justo",
     "rating.notFair": "Injusto",

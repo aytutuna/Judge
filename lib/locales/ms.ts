@@ -291,13 +291,43 @@ const ms: Locale = {
     "settings.appearance": "Penampilan",
     "settings.darkMode": "Mod gelap",
     "consent.cardTitle": "Mahu bantu tambah baik Judge?",
-    "consent.cardBody":
-      "Benarkan Judge menggunakan keputusan dan penilaian anda yang tanpa nama untuk menguji dan melatih hakimnya. Nama tidak pernah disertakan. Anda boleh mengubahnya dalam Tetapan.",
     "consent.cardYes": "Boleh",
     "consent.cardNo": "Tidak, terima kasih",
     "consent.switchTitle": "Bantu tambah baik Judge",
+    "consent.cardBody":
+      "Benarkan Judge menggunakan keputusan dan penilaian anda yang tanpa nama untuk melatih AI. Nama tidak pernah disertakan.",
+    "consent.cardLink": "Cara ia berfungsi",
     "consent.switchDetail":
-      "Membenarkan Judge menggunakan keputusan dan penilaian anda yang tanpa nama untuk menguji dan melatih hakimnya. Dimatikan melainkan anda menghidupkannya.",
+      "Membenarkan Judge menggunakan keputusan dan penilaian anda yang tanpa nama untuk melatih AI. Dimatikan melainkan anda menghidupkannya.",
+    "consent.sensitiveTitle": "Sebelum keputusan pertama anda",
+    "consent.sensitiveBody":
+      "Teks saya mungkin mengandungi butiran peribadi, seperti kesihatan atau hubungan. Judge menghantarnya, tanpa nama, kepada perkhidmatan AI luar untuk menulis keputusan saya, dan menyimpannya sehingga saya mengalihkannya.",
+    "consent.sensitiveContinue": "Teruskan",
+    "respond.adultConfirm": "Saya berumur 18 tahun atau lebih",
+    "account.export": "Muat turun data saya",
+    "account.exportHint":
+      "Dapatkan fail JSON dengan semua yang disimpan Judge tentang anda.",
+    "account.exportBusy": "Menyediakan fail anda…",
+    "account.exportFailed":
+      "Data anda tidak dapat disediakan sekarang. Cuba lagi?",
+    "deletePage.title": "Padam akaun Judge anda",
+    "deletePage.lead":
+      "Judge ialah aplikasi oleh Aytu Tuna. Anda boleh memadam akaun dan datanya sendiri pada bila-bila masa, dalam aplikasi atau di laman web.",
+    "deletePage.appTitle": "Dalam aplikasi",
+    "deletePage.app":
+      "Buka Judge, pergi ke Akaun, ketik Padam akaun dan sahkan.",
+    "deletePage.webTitle": "Di laman web",
+    "deletePage.web":
+      "Log masuk di okjudge.com, buka Akaun, pilih Padam akaun dan sahkan.",
+    "deletePage.removedTitle": "Apa yang dipadam",
+    "deletePage.removed":
+      "Akaun, rekod log masuk, kredit, pelan dan peristiwa penggunaan anda dipadam. Keputusan anda dan pihak anda dalam kes dialihkan: teks asal dan nama dipadam serta-merta, manakala teks tanpa nama dan keputusan 30 hari kemudian.",
+    "deletePage.keptTitle": "Apa yang kami simpan",
+    "deletePage.kept":
+      "Keputusan dan tarikh bagi keputusan yang dialihkan, tanpa teks dan nama. Penilaian dan rekod persetujuan anda selama 6 tahun, tanpa kaitan dengan anda. Bentuk e-mel anda yang dikodkan, untuk mencegah penyalahgunaan kredit percuma berulang kali. Sandaran menyimpan salinan lama sehingga 14 hari.",
+    "deletePage.mailTitle": "Minta melalui e-mel",
+    "deletePage.mail":
+      "Tidak dapat log masuk? E-mel {email} dari alamat akaun anda dan minta kami memadamnya.",
     "rating.prompt": "Keputusan yang adil?",
     "rating.fair": "Adil",
     "rating.notFair": "Tidak adil",

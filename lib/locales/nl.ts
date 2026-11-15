@@ -289,13 +289,43 @@ const nl: Locale = {
     "settings.appearance": "Weergave",
     "settings.darkMode": "Donkere modus",
     "consent.cardTitle": "Help je Judge te verbeteren?",
-    "consent.cardBody":
-      "Laat Judge je geanonimiseerde uitspraken en beoordelingen gebruiken om zijn rechters te testen en te trainen. Namen zitten er nooit bij. Je kunt dit altijd wijzigen in Instellingen.",
     "consent.cardYes": "Graag",
     "consent.cardNo": "Nee, bedankt",
     "consent.switchTitle": "Help Judge te verbeteren",
+    "consent.cardBody":
+      "Laat Judge je geanonimiseerde uitspraken en beoordelingen gebruiken om AI te trainen. Namen zitten er nooit bij.",
+    "consent.cardLink": "Hoe het werkt",
     "consent.switchDetail":
-      "Laat Judge je geanonimiseerde uitspraken en beoordelingen gebruiken om zijn rechters te testen en te trainen. Uit, tenzij je het aanzet.",
+      "Laat Judge je geanonimiseerde uitspraken en beoordelingen gebruiken om AI te trainen. Uit, tenzij je het aanzet.",
+    "consent.sensitiveTitle": "Voor je eerste uitspraak",
+    "consent.sensitiveBody":
+      "Mijn tekst kan privégegevens bevatten, zoals over gezondheid of relaties. Judge stuurt hem, zonder namen, naar een externe AI-dienst om mijn uitspraak te schrijven en bewaart hem tot ik hem verwijder.",
+    "consent.sensitiveContinue": "Verder",
+    "respond.adultConfirm": "Ik ben 18 jaar of ouder",
+    "account.export": "Mijn gegevens downloaden",
+    "account.exportHint":
+      "Krijg een JSON-bestand met alles wat Judge over je bewaart.",
+    "account.exportBusy": "Je bestand wordt klaargemaakt…",
+    "account.exportFailed":
+      "We konden je gegevens nu niet klaarmaken. Wil je het nog eens proberen?",
+    "deletePage.title": "Je Judge-account verwijderen",
+    "deletePage.lead":
+      "Judge is een app van Aytu Tuna. Je kunt je account en de gegevens ervan altijd zelf verwijderen, in de app of op de website.",
+    "deletePage.appTitle": "In de app",
+    "deletePage.app":
+      "Open Judge, ga naar Account, tik op Account verwijderen en bevestig.",
+    "deletePage.webTitle": "Op de website",
+    "deletePage.web":
+      "Log in op okjudge.com, open Account, kies Account verwijderen en bevestig.",
+    "deletePage.removedTitle": "Wat er wordt verwijderd",
+    "deletePage.removed":
+      "Je account, inloggegevens, tegoed, abonnement en gebruiksgebeurtenissen worden verwijderd. Je uitspraken en je kanten in zaken worden verwijderd: je originele tekst en namen worden meteen gewist, de geanonimiseerde tekst en de uitspraak 30 dagen later.",
+    "deletePage.keptTitle": "Wat we bewaren",
+    "deletePage.kept":
+      "De uitkomst en data van verwijderde uitspraken, zonder tekst en namen. Je beoordelingen en toestemmingsgegevens gedurende 6 jaar, zonder koppeling aan jou. Een versleutelde vorm van je e-mailadres, om herhaald misbruik van gratis tegoed te voorkomen. Back-ups bewaren oudere kopieën tot 14 dagen.",
+    "deletePage.mailTitle": "Vraag het per e-mail",
+    "deletePage.mail":
+      "Kun je niet inloggen? Mail naar {email} vanaf het adres van je account en vraag ons het te verwijderen.",
     "rating.prompt": "Eerlijke uitspraak?",
     "rating.fair": "Eerlijk",
     "rating.notFair": "Oneerlijk",

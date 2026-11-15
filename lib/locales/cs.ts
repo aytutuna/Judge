@@ -287,13 +287,42 @@ const cs: Locale = {
     "settings.appearance": "Vzhled",
     "settings.darkMode": "Tmavý režim",
     "consent.cardTitle": "Pomůžeš zlepšit Judge?",
-    "consent.cardBody":
-      "Dovol Judge používat tvoje anonymizované verdikty a hodnocení k testování a trénování jeho soudců. Jména se nikdy nezahrnují. Změnit to můžeš v Nastavení.",
     "consent.cardYes": "Jasně",
     "consent.cardNo": "Ne, díky",
     "consent.switchTitle": "Pomoz zlepšit Judge",
+    "consent.cardBody":
+      "Dovol Judge používat tvoje anonymizované verdikty a hodnocení k trénování umělé inteligence. Jména se nikdy nezahrnují.",
+    "consent.cardLink": "Jak to funguje",
     "consent.switchDetail":
-      "Dovolí Judge používat tvoje anonymizované verdikty a hodnocení k testování a trénování jeho soudců. Vypnuto, dokud to nezapneš.",
+      "Dovolí Judge používat tvoje anonymizované verdikty a hodnocení k trénování umělé inteligence. Vypnuto, dokud to nezapneš.",
+    "consent.sensitiveTitle": "Před tvým prvním verdiktem",
+    "consent.sensitiveBody":
+      "Můj text může obsahovat soukromé údaje, třeba o zdraví nebo vztazích. Judge ho po odstranění jmen pošle externí službě umělé inteligence, aby napsala můj verdikt, a uchová ho, dokud ho neodstraním.",
+    "consent.sensitiveContinue": "Pokračovat",
+    "respond.adultConfirm": "Je mi 18 let nebo víc",
+    "account.export": "Stáhnout moje data",
+    "account.exportHint":
+      "Získej soubor JSON se vším, co o tobě Judge uchovává.",
+    "account.exportBusy": "Připravuji soubor…",
+    "account.exportFailed": "Data se teď nepodařilo připravit. Zkusíš to znovu?",
+    "deletePage.title": "Smazat účet Judge",
+    "deletePage.lead":
+      "Judge je aplikace od Aytu Tuna. Účet i jeho data můžeš kdykoli smazat sám, v aplikaci nebo na webu.",
+    "deletePage.appTitle": "V aplikaci",
+    "deletePage.app":
+      "Otevři Judge, přejdi na Účet, klepni na Smazat účet a potvrď.",
+    "deletePage.webTitle": "Na webu",
+    "deletePage.web":
+      "Přihlas se na okjudge.com, otevři Účet, zvol Smazat účet a potvrď.",
+    "deletePage.removedTitle": "Co se smaže",
+    "deletePage.removed":
+      "Smaže se tvůj účet, záznamy o přihlášení, kredity, tarif a události používání. Tvoje verdikty a tvé strany případů se odstraní: původní text a jména se vymažou ihned, anonymizovaný text a verdikt o 30 dní později.",
+    "deletePage.keptTitle": "Co si necháme",
+    "deletePage.kept":
+      "Výsledek a data odstraněných verdiktů, bez textu a jmen. Tvoje hodnocení a záznamy o souhlasu po dobu 6 let, bez vazby na tebe. Zakódovanou podobu e-mailu, abychom zabránili opakovanému zneužívání bezplatných kreditů. Zálohy uchovávají starší kopie nejvýše 14 dní.",
+    "deletePage.mailTitle": "Požádej e-mailem",
+    "deletePage.mail":
+      "Nemůžeš se přihlásit? Napiš na {email} z adresy svého účtu a požádej nás o jeho smazání.",
     "rating.prompt": "Je verdikt spravedlivý?",
     "rating.fair": "Spravedlivý",
     "rating.notFair": "Nespravedlivý",

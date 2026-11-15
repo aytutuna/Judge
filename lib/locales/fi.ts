@@ -289,13 +289,43 @@ const fi: Locale = {
     "settings.appearance": "Ulkoasu",
     "settings.darkMode": "Tumma tila",
     "consent.cardTitle": "Autatko parantamaan Judgea?",
-    "consent.cardBody":
-      "Anna Judgen käyttää anonymisoituja tuomioitasi ja arvioitasi tuomariensa testaamiseen ja kouluttamiseen. Nimiä ei oteta koskaan mukaan. Voit muuttaa tätä Asetuksissa.",
     "consent.cardYes": "Kyllä",
     "consent.cardNo": "Ei kiitos",
     "consent.switchTitle": "Auta parantamaan Judgea",
+    "consent.cardBody":
+      "Anna Judgen käyttää anonymisoituja tuomioitasi ja arvioitasi tekoälyn kouluttamiseen. Nimiä ei oteta koskaan mukaan.",
+    "consent.cardLink": "Näin se toimii",
     "consent.switchDetail":
-      "Sallii Judgen käyttää anonymisoituja tuomioitasi ja arvioitasi tuomariensa testaamiseen ja kouluttamiseen. Pois päältä, ellet ota sitä käyttöön.",
+      "Sallii Judgen käyttää anonymisoituja tuomioitasi ja arvioitasi tekoälyn kouluttamiseen. Pois päältä, ellet ota sitä käyttöön.",
+    "consent.sensitiveTitle": "Ennen ensimmäistä tuomiotasi",
+    "consent.sensitiveBody":
+      "Tekstini voi sisältää yksityisiä tietoja, kuten terveyteen tai ihmissuhteisiin liittyviä. Judge lähettää sen ilman nimiä ulkopuoliselle tekoälypalvelulle tuomioni kirjoittamista varten ja säilyttää sen, kunnes poistan sen.",
+    "consent.sensitiveContinue": "Jatka",
+    "respond.adultConfirm": "Olen 18-vuotias tai vanhempi",
+    "account.export": "Lataa tietoni",
+    "account.exportHint":
+      "Saat JSON-tiedoston, jossa on kaikki, mitä Judge säilyttää sinusta.",
+    "account.exportBusy": "Valmistellaan tiedostoa…",
+    "account.exportFailed":
+      "Tietojasi ei voitu valmistella juuri nyt. Yritätkö uudelleen?",
+    "deletePage.title": "Poista Judge-tilisi",
+    "deletePage.lead":
+      "Judge on Aytu Tunan sovellus. Voit poistaa tilisi ja sen tiedot itse milloin tahansa sovelluksessa tai verkkosivulla.",
+    "deletePage.appTitle": "Sovelluksessa",
+    "deletePage.app":
+      "Avaa Judge, siirry kohtaan Tili, napauta Poista tili ja vahvista.",
+    "deletePage.webTitle": "Verkkosivulla",
+    "deletePage.web":
+      "Kirjaudu osoitteessa okjudge.com, avaa Tili, valitse Poista tili ja vahvista.",
+    "deletePage.removedTitle": "Mitä poistetaan",
+    "deletePage.removed":
+      "Tilisi, kirjautumistiedot, hyvitykset, tilaus ja käyttötapahtumat poistetaan. Tuomiosi ja puolesi jutuissa poistetaan: alkuperäinen teksti ja nimet pyyhitään heti, anonymisoitu teksti ja tuomio 30 päivää myöhemmin.",
+    "deletePage.keptTitle": "Mitä säilytämme",
+    "deletePage.kept":
+      "Poistettujen tuomioiden lopputuloksen ja päivämäärät ilman tekstiä ja nimiä. Arviosi ja suostumustietosi 6 vuotta ilman yhteyttä sinuun. Sähköpostiosoitteesi koodatun muodon, jotta ilmaisia hyvityksiä ei käytetä väärin uudelleen ja uudelleen. Varmuuskopioissa on vanhempia kopioita enintään 14 päivää.",
+    "deletePage.mailTitle": "Pyydä sähköpostilla",
+    "deletePage.mail":
+      "Etkö pääse kirjautumaan? Kirjoita osoitteeseen {email} tilisi osoitteesta ja pyydä meitä poistamaan se.",
     "rating.prompt": "Oikeudenmukainen tuomio?",
     "rating.fair": "Oikeudenmukainen",
     "rating.notFair": "Ei oikeudenmukainen",

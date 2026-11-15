@@ -282,13 +282,43 @@ const en = {
   "settings.appearance": "Appearance",
   "settings.darkMode": "Dark mode",
   "consent.cardTitle": "Help improve Judge?",
-  "consent.cardBody":
-    "Let Judge use your anonymized verdicts and ratings to test and train its judges. Names are never included. You can change this in Settings.",
   "consent.cardYes": "Sure",
   "consent.cardNo": "No thanks",
   "consent.switchTitle": "Help improve Judge",
+  "consent.cardBody":
+    "Let Judge use your anonymized verdicts and ratings to train AI. Names are never included.",
+  "consent.cardLink": "How it works",
   "consent.switchDetail":
-    "Lets Judge use your anonymized verdicts and ratings to test and train its judges. Off unless you turn it on.",
+    "Lets Judge use your anonymized verdicts and ratings to train AI. Off unless you turn it on.",
+  "consent.sensitiveTitle": "Before your first verdict",
+  "consent.sensitiveBody":
+    "My text may include private details, like health or relationships. Judge sends it, with names taken out, to an outside AI service to write my verdict, and keeps it until I remove it.",
+  "consent.sensitiveContinue": "Continue",
+  "respond.adultConfirm": "I am 18 or older",
+  "account.export": "Download my data",
+  "account.exportHint":
+    "Get a JSON file with everything Judge holds about you.",
+  "account.exportBusy": "Preparing your file…",
+  "account.exportFailed":
+    "We couldn't prepare your data just now. Mind trying again?",
+  "deletePage.title": "Delete your Judge account",
+  "deletePage.lead":
+    "Judge is an app by Aytu Tuna. You can delete your account and its data yourself, any time, in the app or on the website.",
+  "deletePage.appTitle": "In the app",
+  "deletePage.app":
+    "Open Judge, go to Account, tap Delete account and confirm.",
+  "deletePage.webTitle": "On the website",
+  "deletePage.web":
+    "Sign in at okjudge.com, open Account, choose Delete account and confirm.",
+  "deletePage.removedTitle": "What is deleted",
+  "deletePage.removed":
+    "Your account, sign-in records, credits, plan and usage events are deleted. Your verdicts and your sides of cases are removed: your original text and names are erased at once, and the anonymized text and verdict 30 days later.",
+  "deletePage.keptTitle": "What we keep",
+  "deletePage.kept":
+    "The outcome and dates of removed verdicts, with no text or names. Your ratings and consent records for 6 years, with no link to you. A scrambled form of your email, to stop repeat abuse of free credits. Backups hold older copies for up to 14 days.",
+  "deletePage.mailTitle": "Ask by email",
+  "deletePage.mail":
+    "Can't sign in? Email {email} from the address on your account and ask us to delete it.",
   "rating.prompt": "Fair verdict?",
   "rating.fair": "Fair",
   "rating.notFair": "Not fair",

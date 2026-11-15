@@ -289,13 +289,43 @@ const it: Locale = {
     "settings.appearance": "Aspetto",
     "settings.darkMode": "Modalità scura",
     "consent.cardTitle": "Vuoi aiutare a migliorare Judge?",
-    "consent.cardBody":
-      "Lascia che Judge usi i tuoi verdetti e le tue valutazioni anonimizzati per testare e addestrare i suoi giudici. I nomi non vengono mai inclusi. Puoi cambiarlo nelle Impostazioni.",
     "consent.cardYes": "Certo",
     "consent.cardNo": "No, grazie",
     "consent.switchTitle": "Aiuta a migliorare Judge",
+    "consent.cardBody":
+      "Lascia che Judge usi i tuoi verdetti e le tue valutazioni anonimizzati per addestrare l'IA. I nomi non vengono mai inclusi.",
+    "consent.cardLink": "Come funziona",
     "consent.switchDetail":
-      "Permette a Judge di usare i tuoi verdetti e le tue valutazioni anonimizzati per testare e addestrare i suoi giudici. Disattivato finché non lo attivi.",
+      "Permette a Judge di usare i tuoi verdetti e le tue valutazioni anonimizzati per addestrare l'IA. Disattivato finché non lo attivi.",
+    "consent.sensitiveTitle": "Prima del tuo primo verdetto",
+    "consent.sensitiveBody":
+      "Il mio testo può contenere dettagli privati, come salute o relazioni. Judge lo invia, senza i nomi, a un servizio di IA esterno per scrivere il mio verdetto, e lo conserva finché non lo rimuovo.",
+    "consent.sensitiveContinue": "Continua",
+    "respond.adultConfirm": "Ho 18 anni o più",
+    "account.export": "Scarica i miei dati",
+    "account.exportHint":
+      "Ottieni un file JSON con tutto ciò che Judge conserva su di te.",
+    "account.exportBusy": "Preparo il file…",
+    "account.exportFailed":
+      "Non siamo riusciti a preparare i tuoi dati. Riprovi?",
+    "deletePage.title": "Elimina il tuo account Judge",
+    "deletePage.lead":
+      "Judge è un'app di Aytu Tuna. Puoi eliminare tu stesso l'account e i suoi dati quando vuoi, nell'app o sul sito.",
+    "deletePage.appTitle": "Nell'app",
+    "deletePage.app":
+      "Apri Judge, vai su Account, tocca Elimina account e conferma.",
+    "deletePage.webTitle": "Sul sito",
+    "deletePage.web":
+      "Accedi a okjudge.com, apri Account, scegli Elimina account e conferma.",
+    "deletePage.removedTitle": "Cosa viene eliminato",
+    "deletePage.removed":
+      "Vengono eliminati l'account, i registri di accesso, i crediti, il piano e gli eventi d'uso. I tuoi verdetti e le tue parti nei casi vengono rimossi: il testo originale e i nomi sono cancellati subito, il testo anonimizzato e il verdetto 30 giorni dopo.",
+    "deletePage.keptTitle": "Cosa conserviamo",
+    "deletePage.kept":
+      "L'esito e le date dei verdetti rimossi, senza testo né nomi. Le tue valutazioni e i registri del consenso per 6 anni, senza alcun legame con te. Una forma codificata della tua email, per evitare abusi ripetuti dei crediti gratuiti. I backup conservano copie più vecchie fino a 14 giorni.",
+    "deletePage.mailTitle": "Chiedilo via email",
+    "deletePage.mail":
+      "Non riesci ad accedere? Scrivi a {email} dall'indirizzo del tuo account e chiedi di eliminarlo.",
     "rating.prompt": "Verdetto giusto?",
     "rating.fair": "Giusto",
     "rating.notFair": "Non giusto",

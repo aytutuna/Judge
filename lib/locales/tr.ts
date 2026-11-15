@@ -294,13 +294,42 @@ const tr: Locale = {
     "settings.appearance": "Görünüm",
     "settings.darkMode": "Koyu mod",
     "consent.cardTitle": "Judge'ı geliştirmeye yardım eder misin?",
-    "consent.cardBody":
-      "Judge'ın yargıçlarını test etmek ve eğitmek için anonim kararlarını ve puanlarını kullanmasına izin ver. İsimler hiçbir zaman dahil edilmez. Bunu Ayarlar'dan istediğin zaman değiştirebilirsin.",
     "consent.cardYes": "Olur",
     "consent.cardNo": "Hayır, teşekkürler",
     "consent.switchTitle": "Judge'ı geliştirmeye yardım et",
+    "consent.cardBody":
+      "Judge'ın yapay zekâyı eğitmek için anonim kararlarını ve puanlarını kullanmasına izin ver. İsimler hiçbir zaman dahil edilmez.",
+    "consent.cardLink": "Nasıl çalışır",
     "consent.switchDetail":
-      "Judge'ın yargıçlarını test etmek ve eğitmek için anonim kararlarını ve puanlarını kullanmasına izin verir. Sen açmadıkça kapalıdır.",
+      "Judge'ın yapay zekâyı eğitmek için anonim kararlarını ve puanlarını kullanmasına izin verir. Sen açmadıkça kapalıdır.",
+    "consent.sensitiveTitle": "İlk kararından önce",
+    "consent.sensitiveBody":
+      "Yazdıklarım sağlık ya da ilişkiler gibi özel ayrıntılar içerebilir. Judge bunu, isimler çıkarılmış hâlde, kararımı yazması için dışarıdaki bir yapay zekâ hizmetine gönderir ve ben kaldırana kadar saklar.",
+    "consent.sensitiveContinue": "Devam et",
+    "respond.adultConfirm": "18 yaşında veya daha büyüğüm",
+    "account.export": "Verilerimi indir",
+    "account.exportHint":
+      "Judge'ın senin hakkında tuttuğu her şeyi içeren bir JSON dosyası al.",
+    "account.exportBusy": "Dosyan hazırlanıyor…",
+    "account.exportFailed":
+      "Verilerini şu an hazırlayamadık. Bir daha dener misin?",
+    "deletePage.title": "Judge hesabını sil",
+    "deletePage.lead":
+      "Judge, Aytu Tuna'nın uygulamasıdır. Hesabını ve içindeki verileri istediğin zaman uygulamadan ya da web sitesinden kendin silebilirsin.",
+    "deletePage.appTitle": "Uygulamada",
+    "deletePage.app": "Judge'ı aç, Hesap'a git, Hesabı sil'e dokun ve onayla.",
+    "deletePage.webTitle": "Web sitesinde",
+    "deletePage.web":
+      "okjudge.com'da oturum aç, Hesap'ı aç, Hesabı sil'i seç ve onayla.",
+    "deletePage.removedTitle": "Neler silinir",
+    "deletePage.removed":
+      "Hesabın, oturum kayıtların, kredilerin, planın ve kullanım olayların silinir. Kararların ve davalardaki taraflarının kaydı kaldırılır: özgün metin ve isimler hemen silinir, anonim metin ve karar 30 gün sonra.",
+    "deletePage.keptTitle": "Neleri saklarız",
+    "deletePage.kept":
+      "Kaldırılan kararların sonucu ve tarihleri; metin ve isim olmadan. Puanların ve onay kayıtların 6 yıl boyunca, seninle bağlantısı olmadan. Ücretsiz kredilerin tekrar tekrar kötüye kullanılmasını önlemek için e-postanın kodlanmış hâli. Yedeklerde eski kopyalar en fazla 14 gün kalır.",
+    "deletePage.mailTitle": "E-postayla iste",
+    "deletePage.mail":
+      "Oturum açamıyor musun? Hesabının adresinden {email} adresine yazıp silmemizi iste.",
     "rating.prompt": "Karar adil mi?",
     "rating.fair": "Adil",
     "rating.notFair": "Adil değil",

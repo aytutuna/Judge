@@ -289,13 +289,42 @@ const hr: Locale = {
     "settings.appearance": "Izgled",
     "settings.darkMode": "Tamni način rada",
     "consent.cardTitle": "Želiš li pomoći poboljšati Judge?",
-    "consent.cardBody":
-      "Dopusti da Judge koristi tvoje anonimizirane presude i ocjene za testiranje i treniranje svojih sudaca. Imena se nikad ne uključuju. To možeš promijeniti u Postavkama.",
     "consent.cardYes": "Naravno",
     "consent.cardNo": "Ne, hvala",
     "consent.switchTitle": "Pomozi poboljšati Judge",
+    "consent.cardBody":
+      "Dopusti da Judge koristi tvoje anonimizirane presude i ocjene za treniranje umjetne inteligencije. Imena se nikad ne uključuju.",
+    "consent.cardLink": "Kako radi",
     "consent.switchDetail":
-      "Dopušta Judgeu da koristi tvoje anonimizirane presude i ocjene za testiranje i treniranje svojih sudaca. Isključeno je dok ga ne uključiš.",
+      "Dopušta Judgeu da koristi tvoje anonimizirane presude i ocjene za treniranje umjetne inteligencije. Isključeno je dok ga ne uključiš.",
+    "consent.sensitiveTitle": "Prije tvoje prve presude",
+    "consent.sensitiveBody":
+      "Moj tekst može sadržavati privatne podatke, na primjer o zdravlju ili odnosima. Judge ga bez imena šalje vanjskoj AI usluzi da napiše moju presudu i čuva ga dok ga ne uklonim.",
+    "consent.sensitiveContinue": "Nastavi",
+    "respond.adultConfirm": "Imam 18 ili više godina",
+    "account.export": "Preuzmi moje podatke",
+    "account.exportHint": "Dobij JSON datoteku sa svime što Judge čuva o tebi.",
+    "account.exportBusy": "Pripremam datoteku…",
+    "account.exportFailed":
+      "Trenutačno nismo mogli pripremiti tvoje podatke. Želiš li pokušati ponovno?",
+    "deletePage.title": "Izbriši svoj Judge račun",
+    "deletePage.lead":
+      "Judge je aplikacija koju je izradio Aytu Tuna. Račun i njegove podatke možeš sam izbrisati u bilo kojem trenutku, u aplikaciji ili na web-stranici.",
+    "deletePage.appTitle": "U aplikaciji",
+    "deletePage.app":
+      "Otvori Judge, idi na Račun, dodirni Izbriši račun i potvrdi.",
+    "deletePage.webTitle": "Na web-stranici",
+    "deletePage.web":
+      "Prijavi se na okjudge.com, otvori Račun, odaberi Izbriši račun i potvrdi.",
+    "deletePage.removedTitle": "Što se briše",
+    "deletePage.removed":
+      "Brišu se tvoj račun, zapisi o prijavi, krediti, plan i događaji korištenja. Tvoje presude i tvoje strane u slučajevima uklanjaju se: izvorni tekst i imena brišu se odmah, a anonimizirani tekst i presuda 30 dana poslije.",
+    "deletePage.keptTitle": "Što zadržavamo",
+    "deletePage.kept":
+      "Ishod i datume uklonjenih presuda, bez teksta i imena. Tvoje ocjene i zapise o privoli 6 godina, bez veze s tobom. Kodirani oblik tvoje e-pošte, kako se besplatni krediti ne bi iznova zlorabili. Sigurnosne kopije čuvaju starije primjerke najviše 14 dana.",
+    "deletePage.mailTitle": "Zatraži e-poštom",
+    "deletePage.mail":
+      "Ne možeš se prijaviti? Piši na {email} s adrese svojeg računa i zatraži da ga izbrišemo.",
     "rating.prompt": "Je li presuda pravedna?",
     "rating.fair": "Pravedna",
     "rating.notFair": "Nepravedna",

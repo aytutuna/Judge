@@ -283,11 +283,20 @@ enum L10n {
     static func navTabs(_ lang: AppLang) -> String { string("nav.tabs", lang) }
     static func settingsDarkMode(_ lang: AppLang) -> String { string("settings.darkMode", lang) }
     static func consentCardTitle(_ lang: AppLang) -> String { string("consent.cardTitle", lang) }
-    static func consentCardBody(_ lang: AppLang) -> String { string("consent.cardBody", lang) }
     static func consentCardYes(_ lang: AppLang) -> String { string("consent.cardYes", lang) }
     static func consentCardNo(_ lang: AppLang) -> String { string("consent.cardNo", lang) }
     static func consentSwitchTitle(_ lang: AppLang) -> String { string("consent.switchTitle", lang) }
+    static func consentCardBody(_ lang: AppLang) -> String { string("consent.cardBody", lang) }
+    static func consentCardLink(_ lang: AppLang) -> String { string("consent.cardLink", lang) }
     static func consentSwitchDetail(_ lang: AppLang) -> String { string("consent.switchDetail", lang) }
+    static func consentSensitiveTitle(_ lang: AppLang) -> String { string("consent.sensitiveTitle", lang) }
+    static func consentSensitiveBody(_ lang: AppLang) -> String { string("consent.sensitiveBody", lang) }
+    static func consentSensitiveContinue(_ lang: AppLang) -> String { string("consent.sensitiveContinue", lang) }
+    static func respondAdultConfirm(_ lang: AppLang) -> String { string("respond.adultConfirm", lang) }
+    static func accountExport(_ lang: AppLang) -> String { string("account.export", lang) }
+    static func accountExportHint(_ lang: AppLang) -> String { string("account.exportHint", lang) }
+    static func accountExportBusy(_ lang: AppLang) -> String { string("account.exportBusy", lang) }
+    static func accountExportFailed(_ lang: AppLang) -> String { string("account.exportFailed", lang) }
     static func ratingPrompt(_ lang: AppLang) -> String { string("rating.prompt", lang) }
     static func ratingFair(_ lang: AppLang) -> String { string("rating.fair", lang) }
     static func ratingNotFair(_ lang: AppLang) -> String { string("rating.notFair", lang) }
@@ -918,11 +927,20 @@ enum L10n {
         "nav.tabs",
         "settings.darkMode",
         "consent.cardTitle",
-        "consent.cardBody",
         "consent.cardYes",
         "consent.cardNo",
         "consent.switchTitle",
+        "consent.cardBody",
+        "consent.cardLink",
         "consent.switchDetail",
+        "consent.sensitiveTitle",
+        "consent.sensitiveBody",
+        "consent.sensitiveContinue",
+        "respond.adultConfirm",
+        "account.export",
+        "account.exportHint",
+        "account.exportBusy",
+        "account.exportFailed",
         "rating.prompt",
         "rating.fair",
         "rating.notFair",
