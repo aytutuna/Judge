@@ -779,6 +779,7 @@ const kn: Locale = {
     "error.password_required": "ನಿಮ್ಮ ಪ್ರಸ್ತುತ ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ.",
     "error.age_blocked": "Judge 18 ವರ್ಷ ಮತ್ತು ಮೇಲ್ಪಟ್ಟವರಿಗೆ ಮಾತ್ರ.",
     "error.age_unconfirmed": "ಮುಂದುವರಿಯಲು ನಿಮಗೆ 18 ವರ್ಷ ಅಥವಾ ಹೆಚ್ಚು ವಯಸ್ಸಾಗಿದೆ ಎಂದು ದೃಢೀಕರಿಸಿ.",
+    "error.agreement_required": "ಮುಂದುವರಿಯಲು ಖಾಸಗಿ ವಿವರಗಳ ಸೂಚನೆಗೆ ಒಪ್ಪಿಗೆ ನೀಡಿ.",
     "terms.title": "ಬಳಕೆಯ ನಿಯಮಗಳು",
     "terms.kicker": "ನಿಯಮಗಳ ಸಾರ",
     "terms.lead":

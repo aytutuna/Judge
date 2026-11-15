@@ -778,6 +778,7 @@ const sv: Locale = {
     "error.password_required": "Ange ditt nuvarande lösenord.",
     "error.age_blocked": "Judge är bara för personer som är 18 år eller äldre.",
     "error.age_unconfirmed": "Bekräfta att du är 18 år eller äldre för att fortsätta.",
+    "error.agreement_required": "Godkänn meddelandet om privata uppgifter för att fortsätta.",
     "terms.title": "Användarvillkor",
     "terms.kicker": "Reglerna",
     "terms.lead":

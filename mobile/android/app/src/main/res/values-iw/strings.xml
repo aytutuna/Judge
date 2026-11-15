@@ -541,6 +541,7 @@
     <string name="error_password_required">הזן את הסיסמה הנוכחית.</string>
     <string name="error_age_blocked">Judge מיועד לגילאי 18 ומעלה בלבד.</string>
     <string name="error_age_unconfirmed">כדי להמשיך צריך לאשר שגילך 18 ומעלה.</string>
+    <string name="error_agreement_required">אשר את ההודעה על פרטים פרטיים כדי להמשיך.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">חדש</string>
     <string name="app_tab_settings">הגדרות</string>

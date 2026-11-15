@@ -779,6 +779,7 @@ const da: Locale = {
     "error.password_required": "Skriv din nuværende adgangskode.",
     "error.age_blocked": "Judge er kun for personer på 18 år og derover.",
     "error.age_unconfirmed": "Bekræft, at du er 18 år eller ældre, for at fortsætte.",
+    "error.agreement_required": "Accepter beskeden om private oplysninger for at fortsætte.",
     "terms.title": "Brugsvilkår",
     "terms.kicker": "Reglerne",
     "terms.lead":

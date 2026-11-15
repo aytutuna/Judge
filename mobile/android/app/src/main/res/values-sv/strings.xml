@@ -532,6 +532,7 @@
     <string name="error_password_required">Ange ditt nuvarande lösenord.</string>
     <string name="error_age_blocked">Judge är bara för personer som är 18 år eller äldre.</string>
     <string name="error_age_unconfirmed">Bekräfta att du är 18 år eller äldre för att fortsätta.</string>
+    <string name="error_agreement_required">Godkänn meddelandet om privata uppgifter för att fortsätta.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nytt</string>
     <string name="app_tab_settings">Inställningar</string>

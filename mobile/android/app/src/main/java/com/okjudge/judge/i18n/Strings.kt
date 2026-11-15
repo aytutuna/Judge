@@ -582,6 +582,7 @@ class Strings(private val res: Resources) {
     val errorPasswordRequired: String get() = res.getString(R.string.error_password_required)
     val errorAgeBlocked: String get() = res.getString(R.string.error_age_blocked)
     val errorAgeUnconfirmed: String get() = res.getString(R.string.error_age_unconfirmed)
+    val errorAgreementRequired: String get() = res.getString(R.string.error_agreement_required)
     val appName: String get() = res.getString(R.string.app_name)
     val appTabNew: String get() = res.getString(R.string.app_tab_new)
     val appTabSettings: String get() = res.getString(R.string.app_tab_settings)
@@ -1185,6 +1186,7 @@ class Strings(private val res: Resources) {
             "error.password_required" -> R.string.error_password_required
             "error.age_blocked" -> R.string.error_age_blocked
             "error.age_unconfirmed" -> R.string.error_age_unconfirmed
+            "error.agreement_required" -> R.string.error_agreement_required
             "app.name" -> R.string.app_name
             "app.tab.new" -> R.string.app_tab_new
             "app.tab.settings" -> R.string.app_tab_settings

@@ -780,6 +780,7 @@ const ml: Locale = {
     "error.password_required": "നിങ്ങളുടെ നിലവിലെ പാസ്‌വേഡ് നൽകുക.",
     "error.age_blocked": "Judge 18 വയസും അതിൽ കൂടുതലും ഉള്ളവർക്ക് മാത്രമുള്ളതാണ്.",
     "error.age_unconfirmed": "തുടരാൻ നിങ്ങൾക്ക് 18 വയസോ അതിൽ കൂടുതലോ ഉണ്ടെന്ന് സ്ഥിരീകരിക്കൂ.",
+    "error.agreement_required": "തുടരാൻ സ്വകാര്യ വിവരങ്ങളെക്കുറിച്ചുള്ള അറിയിപ്പ് അംഗീകരിക്കുക.",
     "terms.title": "ഉപയോഗ നിബന്ധനകൾ",
     "terms.kicker": "നിയമങ്ങൾ",
     "terms.lead":

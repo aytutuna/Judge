@@ -649,6 +649,7 @@ enum L10n {
     static func errorPasswordRequired(_ lang: AppLang) -> String { string("error.password_required", lang) }
     static func errorAgeBlocked(_ lang: AppLang) -> String { string("error.age_blocked", lang) }
     static func errorAgeUnconfirmed(_ lang: AppLang) -> String { string("error.age_unconfirmed", lang) }
+    static func errorAgreementRequired(_ lang: AppLang) -> String { string("error.agreement_required", lang) }
     static func appName(_ lang: AppLang) -> String { string("app.name", lang) }
     static func appTabNew(_ lang: AppLang) -> String { string("app.tab.new", lang) }
     static func appTabSettings(_ lang: AppLang) -> String { string("app.tab.settings", lang) }
@@ -1253,6 +1254,7 @@ enum L10n {
         "error.password_required",
         "error.age_blocked",
         "error.age_unconfirmed",
+        "error.agreement_required",
         "app.name",
         "app.tab.new",
         "app.tab.settings",

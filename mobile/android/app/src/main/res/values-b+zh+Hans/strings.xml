@@ -523,6 +523,7 @@
     <string name="error_password_required">请输入当前密码。</string>
     <string name="error_age_blocked">Judge 仅限 18 岁及以上的人使用。</string>
     <string name="error_age_unconfirmed">请确认你已满 18 岁后继续。</string>
+    <string name="error_agreement_required">请同意关于私密内容的说明后继续。</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">新建</string>
     <string name="app_tab_settings">设置</string>

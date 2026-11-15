@@ -532,6 +532,7 @@
     <string name="error_password_required">Add meg a jelenlegi jelszavad.</string>
     <string name="error_age_blocked">A Judge csak 18 éves vagy idősebb embereknek szól.</string>
     <string name="error_age_unconfirmed">A folytatáshoz erősítsd meg, hogy legalább 18 éves vagy.</string>
+    <string name="error_agreement_required">A folytatáshoz fogadd el a privát adatokra vonatkozó tájékoztatót.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Új</string>
     <string name="app_tab_settings">Beállítások</string>

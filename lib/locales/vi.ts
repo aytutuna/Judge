@@ -780,6 +780,7 @@ const vi: Locale = {
     "error.password_required": "Nhập mật khẩu hiện tại của bạn.",
     "error.age_blocked": "Judge chỉ dành cho người từ 18 tuổi trở lên.",
     "error.age_unconfirmed": "Hãy xác nhận bạn từ 18 tuổi trở lên để tiếp tục.",
+    "error.agreement_required": "Hãy đồng ý với thông báo về chi tiết riêng tư để tiếp tục.",
     "terms.title": "Điều khoản sử dụng",
     "terms.kicker": "Quy tắc",
     "terms.lead":

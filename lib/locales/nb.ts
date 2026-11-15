@@ -777,6 +777,7 @@ const nb: Locale = {
     "error.password_required": "Skriv inn det nåværende passordet.",
     "error.age_blocked": "Judge er bare for folk som er 18 år eller eldre.",
     "error.age_unconfirmed": "Bekreft at du er 18 år eller eldre for å fortsette.",
+    "error.agreement_required": "Godta varselet om private opplysninger for å fortsette.",
     "terms.title": "Vilkår for bruk",
     "terms.kicker": "Reglene",
     "terms.lead":

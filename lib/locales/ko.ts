@@ -771,6 +771,7 @@ const ko: Locale = {
     "error.password_required": "현재 비밀번호를 입력해 주세요.",
     "error.age_blocked": "Judge는 18세 이상만 이용할 수 있어요.",
     "error.age_unconfirmed": "계속하려면 18세 이상인지 확인해 주세요.",
+    "error.agreement_required": "계속하려면 개인 정보 안내에 동의하세요.",
     "terms.title": "이용약관",
     "terms.kicker": "규칙",
     "terms.lead": "간단히 말하면, Judge는 성인을 위한 서비스이고, 재미와 생각 정리를 위한 것이며, AI는 틀릴 수 있어요. 글에 등장하는 사람들에게 공정하게 대해 주세요.",

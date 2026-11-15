@@ -778,6 +778,7 @@ const te: Locale = {
     "error.password_required": "మీ ప్రస్తుత పాస్‌వర్డ్ నమోదు చేయండి.",
     "error.age_blocked": "Judge 18 ఏళ్లు, అంతకంటే ఎక్కువ వయసు ఉన్నవాళ్లకు మాత్రమే.",
     "error.age_unconfirmed": "కొనసాగడానికి మీకు 18 ఏళ్లు లేదా అంతకంటే ఎక్కువ అని నిర్ధారించండి.",
+    "error.agreement_required": "కొనసాగడానికి ప్రైవేట్ వివరాల నోటీసుకు అంగీకరించండి.",
     "terms.title": "వినియోగ నిబంధనలు",
     "terms.kicker": "నియమాలు",
     "terms.lead":

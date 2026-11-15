@@ -751,6 +751,7 @@ const zhHant: Locale = {
     "error.password_required": "請輸入目前的密碼。",
     "error.age_blocked": "Judge 僅限 18 歲以上的人使用。",
     "error.age_unconfirmed": "請確認你已年滿 18 歲後繼續。",
+    "error.agreement_required": "請同意關於私密內容的說明後繼續。",
     "terms.title": "使用條款",
     "terms.kicker": "規則",
     "terms.lead": "簡單說：Judge 是給成年人用的，拿來玩、也幫你把事情想得更清楚，AI 也可能出錯。對你所寫到的人要公平。",

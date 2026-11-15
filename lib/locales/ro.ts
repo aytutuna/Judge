@@ -782,6 +782,7 @@ const ro: Locale = {
     "error.password_required": "Introdu parola actuală.",
     "error.age_blocked": "Judge e doar pentru persoane de 18 ani sau mai mari.",
     "error.age_unconfirmed": "Confirmă că ai 18 ani sau mai mult ca să continui.",
+    "error.agreement_required": "Acceptă notificarea despre detaliile private pentru a continua.",
     "terms.title": "Termeni de utilizare",
     "terms.kicker": "Regulile",
     "terms.lead":

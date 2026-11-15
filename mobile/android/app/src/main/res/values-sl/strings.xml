@@ -550,6 +550,7 @@
     <string name="error_password_required">Vnesite svoje trenutno geslo.</string>
     <string name="error_age_blocked">Judge je samo za osebe, starejše od 18 let.</string>
     <string name="error_age_unconfirmed">Za nadaljevanje potrdi, da si star 18 let ali več.</string>
+    <string name="error_agreement_required">Za nadaljevanje sprejmi obvestilo o zasebnih podrobnostih.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Novo</string>
     <string name="app_tab_settings">Nastavitve</string>

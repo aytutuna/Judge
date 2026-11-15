@@ -523,6 +523,7 @@
     <string name="error_password_required">現在のパスワードを入力してください。</string>
     <string name="error_age_blocked">Judgeは18歳以上の方のみ利用できます。</string>
     <string name="error_age_unconfirmed">続けるには、18歳以上であることを確認してください。</string>
+    <string name="error_agreement_required">続けるには、個人的な内容についての案内に同意してください。</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">新規</string>
     <string name="app_tab_settings">設定</string>

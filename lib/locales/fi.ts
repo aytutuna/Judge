@@ -778,6 +778,7 @@ const fi: Locale = {
     "error.password_required": "Anna nykyinen salasanasi.",
     "error.age_blocked": "Judge on tarkoitettu vain 18 vuotta täyttäneille.",
     "error.age_unconfirmed": "Vahvista, että olet 18-vuotias tai vanhempi, jatkaaksesi.",
+    "error.agreement_required": "Hyväksy yksityisiä tietoja koskeva ilmoitus jatkaaksesi.",
     "terms.title": "Käyttöehdot",
     "terms.kicker": "Säännöt",
     "terms.lead":

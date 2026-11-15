@@ -778,6 +778,7 @@ const ptPT: Locale = {
     "error.password_required": "Introduz a tua palavra-passe atual.",
     "error.age_blocked": "O Judge é só para quem tem 18 anos ou mais.",
     "error.age_unconfirmed": "Confirma que tens 18 anos ou mais para continuares.",
+    "error.agreement_required": "Concorda com o aviso sobre detalhes privados para continuar.",
     "terms.title": "Termos de Utilização",
     "terms.kicker": "As regras",
     "terms.lead":

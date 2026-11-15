@@ -773,6 +773,7 @@ const ja: Locale = {
     "error.password_required": "現在のパスワードを入力してください。",
     "error.age_blocked": "Judgeは18歳以上の方のみ利用できます。",
     "error.age_unconfirmed": "続けるには、18歳以上であることを確認してください。",
+    "error.agreement_required": "続けるには、個人的な内容についての案内に同意してください。",
     "terms.title": "利用規約",
     "terms.kicker": "ルール",
     "terms.lead": "かんたんに言うと、Judgeは大人向けで、楽しみとすっきり考えるためのもので、AIは間違えることがあります。書く相手には公平に接してください。",

@@ -532,6 +532,7 @@
     <string name="error_password_required">Εισήγαγε τον τρέχοντα κωδικό σου.</string>
     <string name="error_age_blocked">Το Judge είναι μόνο για άτομα 18 ετών και άνω.</string>
     <string name="error_age_unconfirmed">Επιβεβαίωσε ότι είσαι 18 ετών ή μεγαλύτερος/η για να συνεχίσεις.</string>
+    <string name="error_agreement_required">Αποδέξου την ειδοποίηση για ιδιωτικά στοιχεία για να συνεχίσεις.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Νέα διαφωνία</string>
     <string name="app_tab_settings">Ρυθμίσεις</string>

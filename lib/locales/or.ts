@@ -775,6 +775,7 @@ const or: Locale = {
     "error.password_required": "ଆପଣଙ୍କ ବର୍ତ୍ତମାନର ପାସୱାର୍ଡ ଲେଖନ୍ତୁ।",
     "error.age_blocked": "Judge କେବଳ 18 ବା ତା'ଠାରୁ ଅଧିକ ବୟସର ଲୋକଙ୍କ ପାଇଁ।",
     "error.age_unconfirmed": "ଆଗକୁ ବଢ଼ିବା ପାଇଁ ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣଙ୍କ ବୟସ 18 ବା ତା'ଠାରୁ ଅଧିକ।",
+    "error.agreement_required": "ଜାରି ରଖିବାକୁ ବ୍ୟକ୍ତିଗତ ବିବରଣୀ ବିଜ୍ଞପ୍ତିକୁ ସମ୍ମତି ଦିଅନ୍ତୁ।",
     "terms.title": "ବ୍ୟବହାର ସର୍ତ୍ତ",
     "terms.kicker": "ନିୟମ",
     "terms.lead":

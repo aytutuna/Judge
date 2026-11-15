@@ -777,6 +777,7 @@ const pa: Locale = {
     "error.password_required": "ਆਪਣਾ ਮੌਜੂਦਾ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ।",
     "error.age_blocked": "Judge ਸਿਰਫ਼ 18 ਸਾਲ ਜਾਂ ਵੱਧ ਉਮਰ ਦੇ ਲੋਕਾਂ ਲਈ ਹੈ।",
     "error.age_unconfirmed": "ਅੱਗੇ ਵਧਣ ਲਈ ਪੁਸ਼ਟੀ ਕਰੋ ਕਿ ਤੁਹਾਡੀ ਉਮਰ 18 ਸਾਲ ਜਾਂ ਵੱਧ ਹੈ।",
+    "error.agreement_required": "ਜਾਰੀ ਰੱਖਣ ਲਈ ਨਿੱਜੀ ਵੇਰਵਿਆਂ ਦੇ ਨੋਟਿਸ ਨਾਲ ਸਹਿਮਤ ਹੋਵੋ।",
     "terms.title": "ਵਰਤੋਂ ਦੀਆਂ ਸ਼ਰਤਾਂ",
     "terms.kicker": "ਨਿਯਮ",
     "terms.lead":

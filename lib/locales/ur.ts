@@ -776,6 +776,7 @@ const ur: Locale = {
     "error.password_required": "اپنا موجودہ پاس ورڈ درج کریں۔",
     "error.age_blocked": "Judge صرف 18 سال یا اس سے زیادہ عمر کے لوگوں کے لیے ہے۔",
     "error.age_unconfirmed": "آگے بڑھنے کے لیے تصدیق کریں کہ آپ کی عمر 18 سال یا اس سے زیادہ ہے۔",
+    "error.agreement_required": "جاری رکھنے کے لیے نجی تفصیلات کے نوٹس سے اتفاق کریں۔",
     "terms.title": "استعمال کی شرائط",
     "terms.kicker": "اصول",
     "terms.lead":

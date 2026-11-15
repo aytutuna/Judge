@@ -550,6 +550,7 @@
     <string name="error_password_required">Zadajte svoje súčasné heslo.</string>
     <string name="error_age_blocked">Judge je len pre ľudí od 18 rokov.</string>
     <string name="error_age_unconfirmed">Potvrď, že máš 18 rokov alebo viac, a pokračuj.</string>
+    <string name="error_agreement_required">Pre pokračovanie súhlaste s upozornením na súkromné údaje.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nový spor</string>
     <string name="app_tab_settings">Nastavenia</string>

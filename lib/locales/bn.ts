@@ -778,6 +778,7 @@ const bn: Locale = {
     "error.password_required": "আপনার বর্তমান পাসওয়ার্ড লিখুন।",
     "error.age_blocked": "Judge শুধু ১৮ বছর বা তার বেশি বয়সীদের জন্য।",
     "error.age_unconfirmed": "চালিয়ে যেতে নিশ্চিত করুন যে আপনার বয়স ১৮ বা তার বেশি।",
+    "error.agreement_required": "চালিয়ে যেতে ব্যক্তিগত তথ্যের নোটিশে সম্মতি দিন।",
     "terms.title": "ব্যবহারের শর্তাবলি",
     "terms.kicker": "নিয়মকানুন",
     "terms.lead":

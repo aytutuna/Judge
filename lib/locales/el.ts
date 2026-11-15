@@ -782,6 +782,7 @@ const el: Locale = {
     "error.password_required": "Εισήγαγε τον τρέχοντα κωδικό σου.",
     "error.age_blocked": "Το Judge είναι μόνο για άτομα 18 ετών και άνω.",
     "error.age_unconfirmed": "Επιβεβαίωσε ότι είσαι 18 ετών ή μεγαλύτερος/η για να συνεχίσεις.",
+    "error.agreement_required": "Αποδέξου την ειδοποίηση για ιδιωτικά στοιχεία για να συνεχίσεις.",
     "terms.title": "Όροι Χρήσης",
     "terms.kicker": "Οι κανόνες",
     "terms.lead":

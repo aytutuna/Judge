@@ -523,6 +523,7 @@
     <string name="error_password_required">กรอกรหัสผ่านปัจจุบันของคุณ</string>
     <string name="error_age_blocked">Judge ให้บริการเฉพาะผู้ที่อายุ 18 ปีขึ้นไป</string>
     <string name="error_age_unconfirmed">ยืนยันว่าคุณอายุ 18 ปีขึ้นไปเพื่อไปต่อ</string>
+    <string name="error_agreement_required">ยอมรับประกาศเกี่ยวกับรายละเอียดส่วนตัวเพื่อดำเนินการต่อ</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">ใหม่</string>
     <string name="app_tab_settings">ตั้งค่า</string>

@@ -777,6 +777,7 @@ const gu: Locale = {
     "error.password_required": "તમારો હાલનો પાસવર્ડ દાખલ કરો.",
     "error.age_blocked": "Judge ફક્ત 18 કે તેથી વધુ ઉંમરના લોકો માટે છે.",
     "error.age_unconfirmed": "આગળ વધવા માટે પુષ્ટિ કરો કે તમારી ઉંમર 18 કે તેથી વધુ છે.",
+    "error.agreement_required": "ચાલુ રાખવા માટે ખાનગી વિગતોની સૂચના સાથે સંમત થાઓ.",
     "terms.title": "ઉપયોગની શરતો",
     "terms.kicker": "નિયમો",
     "terms.lead":

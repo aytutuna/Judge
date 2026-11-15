@@ -780,6 +780,7 @@ const uk: Locale = {
     "error.password_required": "Введіть поточний пароль.",
     "error.age_blocked": "Judge лише для людей від 18 років.",
     "error.age_unconfirmed": "Підтверди, що тобі 18 років або більше, щоб продовжити.",
+    "error.agreement_required": "Щоб продовжити, погодьтеся зі повідомленням про приватні дані.",
     "terms.title": "Умови використання",
     "terms.kicker": "Правила",
     "terms.lead":

@@ -778,6 +778,7 @@ const sk: Locale = {
     "error.password_required": "Zadajte svoje súčasné heslo.",
     "error.age_blocked": "Judge je len pre ľudí od 18 rokov.",
     "error.age_unconfirmed": "Potvrď, že máš 18 rokov alebo viac, a pokračuj.",
+    "error.agreement_required": "Pre pokračovanie súhlaste s upozornením na súkromné údaje.",
     "terms.title": "Podmienky používania",
     "terms.kicker": "Pravidlá",
     "terms.lead":

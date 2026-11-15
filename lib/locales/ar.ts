@@ -775,6 +775,7 @@ const ar: Locale = {
     "error.password_required": "أدخل كلمة المرور الحالية.",
     "error.age_blocked": "Judge مخصص لمن بلغوا 18 عامًا فأكثر فقط.",
     "error.age_unconfirmed": "أكّد أن عمرك 18 عامًا أو أكثر للمتابعة.",
+    "error.agreement_required": "وافق على إشعار التفاصيل الخاصة للمتابعة.",
     "terms.title": "شروط الاستخدام",
     "terms.kicker": "القواعد",
     "terms.lead":

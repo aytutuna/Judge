@@ -523,6 +523,7 @@
     <string name="error_password_required">Nhập mật khẩu hiện tại của bạn.</string>
     <string name="error_age_blocked">Judge chỉ dành cho người từ 18 tuổi trở lên.</string>
     <string name="error_age_unconfirmed">Hãy xác nhận bạn từ 18 tuổi trở lên để tiếp tục.</string>
+    <string name="error_agreement_required">Hãy đồng ý với thông báo về chi tiết riêng tư để tiếp tục.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Mới</string>
     <string name="app_tab_settings">Cài đặt</string>

@@ -781,6 +781,7 @@ const hu: Locale = {
     "error.password_required": "Add meg a jelenlegi jelszavad.",
     "error.age_blocked": "A Judge csak 18 éves vagy idősebb embereknek szól.",
     "error.age_unconfirmed": "A folytatáshoz erősítsd meg, hogy legalább 18 éves vagy.",
+    "error.agreement_required": "A folytatáshoz fogadd el a privát adatokra vonatkozó tájékoztatót.",
     "terms.title": "Felhasználási feltételek",
     "terms.kicker": "A szabályok",
     "terms.lead":

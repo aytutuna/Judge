@@ -785,6 +785,7 @@ const ms: Locale = {
     "error.password_required": "Masukkan kata laluan semasa anda.",
     "error.age_blocked": "Judge hanya untuk mereka yang berumur 18 tahun ke atas.",
     "error.age_unconfirmed": "Sahkan bahawa anda berumur 18 tahun atau lebih untuk meneruskan.",
+    "error.agreement_required": "Setuju dengan notis butiran peribadi untuk meneruskan.",
     "terms.title": "Syarat Penggunaan",
     "terms.kicker": "Peraturannya",
     "terms.lead":

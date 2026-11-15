@@ -532,6 +532,7 @@
     <string name="error_password_required">Şu anki parolanı gir.</string>
     <string name="error_age_blocked">Judge yalnızca 18 yaş ve üzeri kişiler içindir.</string>
     <string name="error_age_unconfirmed">Devam etmek için 18 yaşında veya daha büyük olduğunu onayla.</string>
+    <string name="error_agreement_required">Devam etmek için özel ayrıntılar bildirimini kabul et.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Yeni</string>
     <string name="app_tab_settings">Ayarlar</string>

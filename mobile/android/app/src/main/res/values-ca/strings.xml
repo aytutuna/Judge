@@ -541,6 +541,7 @@
     <string name="error_password_required">Escriu la teva contrasenya actual.</string>
     <string name="error_age_blocked">Judge és només per a majors de 18 anys.</string>
     <string name="error_age_unconfirmed">Confirma que tens 18 anys o més per continuar.</string>
+    <string name="error_agreement_required">Accepta l\'avís sobre dades privades per continuar.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nou</string>
     <string name="app_tab_settings">Configuració</string>

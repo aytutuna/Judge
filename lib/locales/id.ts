@@ -778,6 +778,7 @@ const id: Locale = {
     "error.password_required": "Masukkan kata sandimu saat ini.",
     "error.age_blocked": "Judge hanya untuk orang berusia 18 tahun ke atas.",
     "error.age_unconfirmed": "Konfirmasi bahwa kamu berusia 18 tahun atau lebih untuk melanjutkan.",
+    "error.agreement_required": "Setujui pemberitahuan tentang detail pribadi untuk melanjutkan.",
     "terms.title": "Ketentuan Penggunaan",
     "terms.kicker": "Aturannya",
     "terms.lead":

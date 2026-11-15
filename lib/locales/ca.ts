@@ -781,6 +781,7 @@ const ca: Locale = {
     "error.password_required": "Escriu la teva contrasenya actual.",
     "error.age_blocked": "Judge és només per a majors de 18 anys.",
     "error.age_unconfirmed": "Confirma que tens 18 anys o més per continuar.",
+    "error.agreement_required": "Accepta l'avís sobre dades privades per continuar.",
     "terms.title": "Condicions d'ús",
     "terms.kicker": "Les normes",
     "terms.lead":

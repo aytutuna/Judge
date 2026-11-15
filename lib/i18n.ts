@@ -774,6 +774,7 @@ const en = {
   "error.password_required": "Enter your current password.",
   "error.age_blocked": "Judge is only for people 18 and older.",
   "error.age_unconfirmed": "Confirm that you're 18 or older to continue.",
+  "error.agreement_required": "Agree to the private details notice to continue.",
   "terms.title": "Terms of Use",
   "terms.kicker": "The rules",
   "terms.lead":
@@ -1046,6 +1047,7 @@ export const ERROR_KEY_BY_CODE: Partial<Record<string, Key>> = {
   update_required: "error.update_required",
   age_blocked: "error.age_blocked",
   age_unconfirmed: "error.age_unconfirmed",
+  agreement_required: "error.agreement_required",
   password_wrong: "error.password_wrong",
   password_required: "error.password_required",
 };

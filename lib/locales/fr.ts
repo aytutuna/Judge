@@ -780,6 +780,7 @@ const fr: Locale = {
     "error.password_required": "Saisis ton mot de passe actuel.",
     "error.age_blocked": "Judge est réservé aux personnes de 18 ans et plus.",
     "error.age_unconfirmed": "Confirme que tu as 18 ans ou plus pour continuer.",
+    "error.agreement_required": "Accepte l'avis sur les informations privées pour continuer.",
     "terms.title": "Conditions d’utilisation",
     "terms.kicker": "Les règles",
     "terms.lead":

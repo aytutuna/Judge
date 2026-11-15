@@ -532,6 +532,7 @@
     <string name="error_password_required">ଆପଣଙ୍କ ବର୍ତ୍ତମାନର ପାସୱାର୍ଡ ଲେଖନ୍ତୁ।</string>
     <string name="error_age_blocked">Judge କେବଳ 18 ବା ତା\'ଠାରୁ ଅଧିକ ବୟସର ଲୋକଙ୍କ ପାଇଁ।</string>
     <string name="error_age_unconfirmed">ଆଗକୁ ବଢ଼ିବା ପାଇଁ ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣଙ୍କ ବୟସ 18 ବା ତା\'ଠାରୁ ଅଧିକ।</string>
+    <string name="error_agreement_required">ଜାରି ରଖିବାକୁ ବ୍ୟକ୍ତିଗତ ବିବରଣୀ ବିଜ୍ଞପ୍ତିକୁ ସମ୍ମତି ଦିଅନ୍ତୁ।</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">ନୂଆ</string>
     <string name="app_tab_settings">ସେଟିଂସ୍</string>

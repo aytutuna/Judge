@@ -776,6 +776,7 @@ const th: Locale = {
     "error.password_required": "กรอกรหัสผ่านปัจจุบันของคุณ",
     "error.age_blocked": "Judge ให้บริการเฉพาะผู้ที่อายุ 18 ปีขึ้นไป",
     "error.age_unconfirmed": "ยืนยันว่าคุณอายุ 18 ปีขึ้นไปเพื่อไปต่อ",
+    "error.agreement_required": "ยอมรับประกาศเกี่ยวกับรายละเอียดส่วนตัวเพื่อดำเนินการต่อ",
     "terms.title": "ข้อกำหนดการใช้งาน",
     "terms.kicker": "กฎกติกา",
     "terms.lead":

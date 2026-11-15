@@ -780,6 +780,7 @@ const nl: Locale = {
     "error.password_required": "Vul je huidige wachtwoord in.",
     "error.age_blocked": "Judge is alleen voor mensen van 18 jaar en ouder.",
     "error.age_unconfirmed": "Bevestig dat je 18 jaar of ouder bent om verder te gaan.",
+    "error.agreement_required": "Ga akkoord met de melding over privégegevens om door te gaan.",
     "terms.title": "Gebruiksvoorwaarden",
     "terms.kicker": "De regels",
     "terms.lead":

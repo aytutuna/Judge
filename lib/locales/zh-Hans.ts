@@ -750,6 +750,7 @@ const zhHans: Locale = {
     "error.password_required": "请输入当前密码。",
     "error.age_blocked": "Judge 仅限 18 岁及以上的人使用。",
     "error.age_unconfirmed": "请确认你已满 18 岁后继续。",
+    "error.agreement_required": "请同意关于私密内容的说明后继续。",
     "terms.title": "使用条款",
     "terms.kicker": "规则",
     "terms.lead": "简单说：Judge 面向成年人，用来图个乐子、把事情想得更清楚，AI 也可能出错。对你所写到的人要公平。",

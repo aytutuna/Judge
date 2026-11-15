@@ -781,6 +781,7 @@ const ru: Locale = {
     "error.password_required": "Введите текущий пароль.",
     "error.age_blocked": "Judge только для людей от 18 лет.",
     "error.age_unconfirmed": "Подтвердите, что вам 18 лет или больше, чтобы продолжить.",
+    "error.agreement_required": "Чтобы продолжить, согласитесь с уведомлением о личных данных.",
     "terms.title": "Условия использования",
     "terms.kicker": "Правила",
     "terms.lead":

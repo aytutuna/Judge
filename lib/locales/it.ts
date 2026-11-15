@@ -781,6 +781,7 @@ const it: Locale = {
     "error.password_required": "Inserisci la tua password attuale.",
     "error.age_blocked": "Judge è solo per chi ha almeno 18 anni.",
     "error.age_unconfirmed": "Conferma di avere almeno 18 anni per continuare.",
+    "error.agreement_required": "Accetta l'avviso sui dettagli privati per continuare.",
     "terms.title": "Termini di utilizzo",
     "terms.kicker": "Le regole",
     "terms.lead":

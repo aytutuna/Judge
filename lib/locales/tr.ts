@@ -783,6 +783,7 @@ const tr: Locale = {
     "error.password_required": "Şu anki parolanı gir.",
     "error.age_blocked": "Judge yalnızca 18 yaş ve üzeri kişiler içindir.",
     "error.age_unconfirmed": "Devam etmek için 18 yaşında veya daha büyük olduğunu onayla.",
+    "error.agreement_required": "Devam etmek için özel ayrıntılar bildirimini kabul et.",
     "terms.title": "Kullanım Koşulları",
     "terms.kicker": "Kurallar",
     "terms.lead":

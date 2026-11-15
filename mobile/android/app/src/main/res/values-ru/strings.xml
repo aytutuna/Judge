@@ -550,6 +550,7 @@
     <string name="error_password_required">Введите текущий пароль.</string>
     <string name="error_age_blocked">Judge только для людей от 18 лет.</string>
     <string name="error_age_unconfirmed">Подтвердите, что вам 18 лет или больше, чтобы продолжить.</string>
+    <string name="error_agreement_required">Чтобы продолжить, согласитесь с уведомлением о личных данных.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Новый спор</string>
     <string name="app_tab_settings">Настройки</string>

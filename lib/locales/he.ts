@@ -768,6 +768,7 @@ const he: Locale = {
     "error.password_required": "הזן את הסיסמה הנוכחית.",
     "error.age_blocked": "Judge מיועד לגילאי 18 ומעלה בלבד.",
     "error.age_unconfirmed": "כדי להמשיך צריך לאשר שגילך 18 ומעלה.",
+    "error.agreement_required": "אשר את ההודעה על פרטים פרטיים כדי להמשיך.",
     "terms.title": "תנאי שימוש",
     "terms.kicker": "הכללים",
     "terms.lead":

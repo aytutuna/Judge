@@ -541,6 +541,7 @@
     <string name="error_password_required">Introdu parola actuală.</string>
     <string name="error_age_blocked">Judge e doar pentru persoane de 18 ani sau mai mari.</string>
     <string name="error_age_unconfirmed">Confirmă că ai 18 ani sau mai mult ca să continui.</string>
+    <string name="error_agreement_required">Acceptă notificarea despre detaliile private pentru a continua.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nou</string>
     <string name="app_tab_settings">Setări</string>
