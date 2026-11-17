@@ -48,6 +48,11 @@ const form: RespondForm = {
   sending: false,
   error: null,
   canSubmit: false,
+  askTicks: false,
+  adult: false,
+  setAdult: noop,
+  agreed: false,
+  setAgreed: noop,
   submit: async () => {},
 };
 
@@ -310,6 +315,14 @@ describe("respondent page", () => {
     expect(html).toContain(t("en", "respond.submit"));
     // Nothing of the owner's account before the verdict.
     expect(html).not.toContain(esc(t("en", "case.accountA")));
+  });
+
+  it("form: the 18+ and private-details ticks only when signed out", () => {
+    const signedIn = respondent(RESPONDENT.form);
+    expect(signedIn).not.toContain(esc(t("en", "respond.adultConfirm")));
+    const out = respondent(RESPONDENT.form, { form: { ...form, askTicks: true } });
+    expect(out).toContain(esc(t("en", "respond.adultConfirm")));
+    expect(out).toContain(esc(t("en", "consent.sensitiveBody")));
   });
 
   it("form on an old free case: screenshots like any case", () => {

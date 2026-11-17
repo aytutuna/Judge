@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
-import { apiFetch } from "@/lib/api-fetch";
+import { apiFetch, apiFetchAgreed } from "@/lib/api-fetch";
 import type { AppealResponse, CaseRemovalResponse, CaseView, OpenResponse, RespondResponse } from "@/lib/case-types";
 import { MAX_EVIDENCE_PER_SIDE } from "@/lib/case-types";
 import { forgetCaseNames, saveCaseNames, useCaseNames } from "@/lib/case-names-store";
@@ -92,6 +92,12 @@ export type RespondForm = {
   sending: boolean;
   error: string | null;
   canSubmit: boolean;
+  /** Signed out: the 18+ and private-details ticks are part of the form. */
+  askTicks: boolean;
+  adult: boolean;
+  setAdult: (v: boolean) => void;
+  agreed: boolean;
+  setAgreed: (v: boolean) => void;
   submit: () => Promise<void>;
 };
 
@@ -104,6 +110,7 @@ function useRespondForm(
   onDone: (view: CaseView, names: NameMapping[], claim: string | null) => void,
   suggestedName: string | null,
   claim: string | null,
+  signedOut: boolean,
 ): RespondForm {
   const [text, setText] = useState("");
   const lastBeat = useRef(0);
@@ -124,12 +131,18 @@ function useRespondForm(
   const [turnstileKey, setTurnstileKey] = useState(0);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [adult, setAdult] = useState(false);
+  const [agreed, setAgreed] = useState(false);
   const evidence = useEvidence(`/api/v1/respond/${encodeURIComponent(token)}/evidence`, MAX_EVIDENCE_PER_SIDE);
   const keyFor = useMemo(() => keyHolder(), []);
   const needsCheck = TURNSTILE_SITE_KEY !== "";
   const trimmed = text.trim();
   const canSubmit =
-    trimmed.length >= MIN_SIDE && !sending && !evidence.busy && (!needsCheck || turnstile !== null);
+    trimmed.length >= MIN_SIDE &&
+    !sending &&
+    !evidence.busy &&
+    (!needsCheck || turnstile !== null) &&
+    (!signedOut || (adult && agreed));
 
   async function submit() {
     if (!canSubmit) return;
@@ -145,14 +158,18 @@ function useRespondForm(
       ...(shownName ? { displayName: shownName } : {}),
     };
     try {
-      const res = await apiFetch(`/api/v1/respond/${encodeURIComponent(token)}`, {
+      const res = await apiFetchAgreed(`/api/v1/respond/${encodeURIComponent(token)}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Idempotency-Key": keyFor(JSON.stringify(payload)),
           ...(claim ? { "Respondent-Claim": claim } : {}),
         },
-        body: JSON.stringify({ ...payload, ...(check ? { turnstileToken: check } : {}) }),
+        body: JSON.stringify({
+          ...payload,
+          ...(check ? { turnstileToken: check } : {}),
+          ...(signedOut ? { adultConfirmed: true, sensitiveAgreed: true, lang, platform: "web" } : {}),
+        }),
       });
       const json: unknown = await res.json().catch(() => null);
       const ok = json as RespondResponse | null;
@@ -172,7 +189,24 @@ function useRespondForm(
     }
   }
 
-  return { text, setText: typed, name, setName, evidence, setTurnstile, turnstileKey, sending, error, canSubmit, submit };
+  return {
+    text,
+    setText: typed,
+    name,
+    setName,
+    evidence,
+    setTurnstile,
+    turnstileKey,
+    sending,
+    error,
+    canSubmit,
+    askTicks: signedOut,
+    adult,
+    setAdult,
+    agreed,
+    setAgreed,
+    submit,
+  };
 }
 
 function LockGlyph() {
@@ -305,6 +339,18 @@ export function RespondPanel({
               onAdd={form.evidence.add}
               onRemove={form.evidence.remove}
             />
+          ) : null}
+          {form.askTicks ? (
+            <div className={styles.stack}>
+              <label className={account.check}>
+                <input type="checkbox" checked={form.adult} onChange={(e) => form.setAdult(e.target.checked)} />
+                <span>{t(lang, "respond.adultConfirm")}</span>
+              </label>
+              <label className={account.check}>
+                <input type="checkbox" checked={form.agreed} onChange={(e) => form.setAgreed(e.target.checked)} />
+                <span>{t(lang, "consent.sensitiveBody")}</span>
+              </label>
+            </div>
           ) : null}
           {turnstile !== undefined ? turnstile : null}
           {form.error ? (
@@ -525,6 +571,7 @@ export function RespondScreen({ token }: { token: string }) {
     },
     firstNameOf(viewer.me?.user?.name),
     claim,
+    !viewer.me?.user,
   );
 
   // The first visit takes the next open side, so the owner sees it opened and
