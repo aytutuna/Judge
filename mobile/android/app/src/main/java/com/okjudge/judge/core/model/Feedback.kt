@@ -14,7 +14,10 @@ enum class ConsentState(val wire: String) {
 }
 
 @Serializable
-data class ConsentResponse(val state: String? = null)
+data class ConsentResponse(val state: String? = null, val ask: Boolean = false, val sensitiveAgreed: Boolean = false)
+
+/** [ask]: the server wants the "Help improve Judge" card shown now; [sensitiveAgreed]: the private details tick is on file. */
+data class ConsentStatus(val state: ConsentState, val ask: Boolean, val sensitiveAgreed: Boolean)
 
 /** The viewer's "Fair verdict?" answer, kept with the verdict. */
 enum class Rating(val wire: String) {

@@ -1,6 +1,7 @@
 package com.okjudge.judge.core.api
 
 import com.okjudge.judge.core.model.ConsentState
+import com.okjudge.judge.core.model.ConsentStatus
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.model.Rating
 import com.okjudge.judge.i18n.AppLang
@@ -35,9 +36,15 @@ class FeedbackApiTest {
 
     @Test
     fun consent_readsTheState() = runBlocking {
-        server.enqueue(ok("""{"state":"not_asked","updatedAt":null,"policyVersion":"2026-11-14"}"""))
-        assertEquals(ApiResult.Ok(ConsentState.NOT_ASKED), api().consent())
+        server.enqueue(ok("""{"state":"not_asked","updatedAt":null,"policyVersion":"2026-11-14","ask":true,"sensitiveAgreed":true}"""))
+        assertEquals(ApiResult.Ok(ConsentStatus(ConsentState.NOT_ASKED, ask = true, sensitiveAgreed = true)), api().consent())
         assertEquals("/api/v1/me/consent", server.takeRequest().url.encodedPath)
+    }
+
+    @Test
+    fun consent_askAndAgreementDefaultToFalseWhenTheServerLeavesThemOut() = runBlocking {
+        server.enqueue(ok("""{"state":"not_asked"}"""))
+        assertEquals(ApiResult.Ok(ConsentStatus(ConsentState.NOT_ASKED, ask = false, sensitiveAgreed = false)), api().consent())
     }
 
     @Test
@@ -51,7 +58,7 @@ class FeedbackApiTest {
     @Test
     fun setConsent_sendsTheChoiceWordingAndPlatform() = runBlocking {
         server.enqueue(ok("""{"state":"on","updatedAt":"2026-11-14T10:00:00.000Z","policyVersion":"2026-11-14"}"""))
-        assertEquals(ApiResult.Ok(ConsentState.ON), api().setConsent(true, "card", "consent.cardBody", AppLang.TR))
+        assertEquals(ApiResult.Ok(ConsentStatus(ConsentState.ON, ask = false, sensitiveAgreed = false)), api().setConsent(true, "card", "consent.cardBody", AppLang.TR))
         val sent = server.takeRequest()
         assertEquals("POST", sent.method)
         val body = Json.parseToJsonElement(sent.body!!.utf8()).jsonObject

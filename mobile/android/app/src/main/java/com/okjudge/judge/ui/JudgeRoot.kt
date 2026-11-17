@@ -577,7 +577,7 @@ fun JudgeRoot(
                                     } else {
                                         null
                                     }
-                                    val consent by container.consent.state.collectAsStateWithLifecycle()
+                                    val askConsent by container.consent.ask.collectAsStateWithLifecycle()
                                     LaunchedEffect(accountState is Account.State.SignedIn) {
                                         if (accountState is Account.State.SignedIn) container.consent.refresh() else container.consent.clear()
                                     }
@@ -595,8 +595,9 @@ fun JudgeRoot(
                                         onPricing = { if (backStack.lastOrNull() !is PricingKey) backStack.add(PricingKey) },
                                         onShared = { container.analytics.track("share_tapped") },
                                         feedback = true,
-                                        consent = consent,
+                                        askConsent = askConsent,
                                         onConsent = { on -> container.consent.answer(on, "card", Consent.CARD_WORDING, lang) },
+                                        onConsentInfo = { openLink(context, "$site/privacy#help-improve") },
                                     )
                                 }
                                 entry<CaseKey> { key ->

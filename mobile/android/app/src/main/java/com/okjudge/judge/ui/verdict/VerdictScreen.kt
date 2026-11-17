@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.okjudge.judge.core.cases.AppealArea
 import com.okjudge.judge.core.display.PartyNames
-import com.okjudge.judge.core.model.ConsentState
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.ui.cases.AppealDraft
@@ -70,10 +69,11 @@ fun VerdictRoute(
     onSignIn: () -> Unit = {},
     onPricing: () -> Unit = {},
     onShared: () -> Unit = {},
-    /** Shows the "Fair verdict?" thumbs, and the consent card while [consent] says nobody asked yet. */
+    /** Shows the "Fair verdict?" thumbs, and the consent card when the server says [askConsent]. */
     feedback: Boolean = false,
-    consent: ConsentState? = null,
+    askConsent: Boolean = false,
     onConsent: (Boolean) -> Unit = {},
+    onConsentInfo: () -> Unit = {},
 ) {
     val lang = LocalLang.current
     LaunchedEffect(lang) { viewModel.onLang(lang) }
@@ -174,7 +174,7 @@ fun VerdictRoute(
                 Spacer(Modifier.height(32.dp))
             }
             if (feedback) {
-                if (consent == ConsentState.NOT_ASKED) ConsentCard(onConsent, width.padding(bottom = 16.dp))
+                if (askConsent) ConsentCard(onConsent, onConsentInfo, width.padding(bottom = 16.dp))
                 RatingRow(rating, onRate = { if (signedOut) signInSheet = true else viewModel.rate(it) }, modifier = width.padding(bottom = 24.dp))
             }
         }

@@ -12,6 +12,7 @@ import com.okjudge.judge.core.model.CaseView
 import com.okjudge.judge.core.model.CaseWithNames
 import com.okjudge.judge.core.model.ConsentResponse
 import com.okjudge.judge.core.model.ConsentState
+import com.okjudge.judge.core.model.ConsentStatus
 import com.okjudge.judge.core.model.Rating
 import com.okjudge.judge.core.model.ClarifyRequest
 import com.okjudge.judge.core.model.InviteResponse
@@ -397,13 +398,13 @@ class JudgeApi(
     }
 
     /** GET /api/v1/me/consent. */
-    suspend fun consent(): ApiResult<ConsentState> {
+    suspend fun consent(): ApiResult<ConsentStatus> {
         val req = request(url("api", "v1", "me", "consent")).cacheControl(CacheControl.FORCE_NETWORK).get().build()
         return execute(getClient, req) { _, text -> decodeConsent(text) }
     }
 
     /** POST /api/v1/me/consent: the choice, where it was made, the wording key of the text shown and its language. */
-    suspend fun setConsent(on: Boolean, source: String, wordingKey: String, lang: AppLang): ApiResult<ConsentState> {
+    suspend fun setConsent(on: Boolean, source: String, wordingKey: String, lang: AppLang): ApiResult<ConsentStatus> {
         val body = buildJsonObject {
             put("choice", if (on) "on" else "off")
             put("source", source)
@@ -431,9 +432,11 @@ class JudgeApi(
         return execute(accountClient, req) { _, _ -> }
     }
 
-    private fun decodeConsent(text: String): ConsentState =
-        ConsentState.fromWire(WireJson.json.decodeFromString(ConsentResponse.serializer(), text).state)
-            ?: throw SerializationException("unknown consent state")
+    private fun decodeConsent(text: String): ConsentStatus {
+        val wire = WireJson.json.decodeFromString(ConsentResponse.serializer(), text)
+        val state = ConsentState.fromWire(wire.state) ?: throw SerializationException("unknown consent state")
+        return ConsentStatus(state, wire.ask, wire.sensitiveAgreed)
+    }
 
     /** GET /api/v1/config: which sign-in methods the server offers. */
     suspend fun config(): ApiResult<ServerConfig> {

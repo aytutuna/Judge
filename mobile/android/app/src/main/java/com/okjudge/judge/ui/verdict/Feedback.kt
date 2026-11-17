@@ -26,6 +26,7 @@ import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.PaperCard
+import com.okjudge.judge.ui.components.TextAction
 import com.okjudge.judge.ui.components.rememberIcon
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
@@ -34,18 +35,20 @@ object FeedbackTags {
     const val CARD = "feedback.card"
     const val YES = "feedback.yes"
     const val NO = "feedback.no"
+    const val INFO = "feedback.info"
     const val UP = "feedback.up"
     const val DOWN = "feedback.down"
 }
 
-/** Asked once, after a person's first verdict; either answer is final here and changeable in Settings. */
+/** Asked once, when the server says so; either answer is final here and changeable in Settings. */
 @Composable
-fun ConsentCard(onAnswer: (Boolean) -> Unit, modifier: Modifier = Modifier) {
+fun ConsentCard(onAnswer: (Boolean) -> Unit, onInfo: () -> Unit, modifier: Modifier = Modifier) {
     val s = LocalStrings.current
     PaperCard(modifier.testTag(FeedbackTags.CARD)) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(s.consentCardTitle, style = JudgeType.bodyStrong)
             Text(s.consentCardBody, style = JudgeType.slotText)
+            TextAction(s.consentCardLink, onInfo, Modifier.testTag(FeedbackTags.INFO))
             Row(Modifier.padding(top = 4.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 GhostButton(s.consentCardYes, null, { onAnswer(true) }, Modifier.testTag(FeedbackTags.YES))
                 GhostButton(s.consentCardNo, null, { onAnswer(false) }, Modifier.testTag(FeedbackTags.NO))
