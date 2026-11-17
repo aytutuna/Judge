@@ -10,13 +10,47 @@ export function askSignIn(): void {
   window.location.href = `/signin?next=${encodeURIComponent(window.location.pathname + window.location.search)}`;
 }
 
-/** GET /api/v1/me/consent. Null on any failure. */
-export async function fetchConsent(): Promise<ConsentState | null> {
+/** GET /api/v1/me/consent: the stored choice and whether the card should be shown now. Null on any failure. */
+export async function fetchConsent(): Promise<{ state: ConsentState; ask: boolean } | null> {
   try {
     const res = await fetch("/api/v1/me/consent", { credentials: "same-origin", cache: "no-store" });
-    return res.ok ? ((await res.json()) as { state: ConsentState }).state : null;
+    return res.ok ? ((await res.json()) as { state: ConsentState; ask: boolean }) : null;
   } catch {
     return null;
+  }
+}
+
+/** POST /api/v1/me/agreement. 401 when signed out. */
+export async function saveAgreement(lang: Lang): Promise<"ok" | "signin" | "failed"> {
+  try {
+    const res = await fetch("/api/v1/me/agreement", {
+      method: "POST",
+      headers: JSON_HEADERS,
+      credentials: "same-origin",
+      body: JSON.stringify({ lang, platform: "web" }),
+    });
+    if (res.ok) return "ok";
+    return res.status === 401 ? "signin" : "failed";
+  } catch {
+    return "failed";
+  }
+}
+
+/** GET /api/v1/me/export, saved as a file. False when it could not be fetched. */
+export async function downloadMyData(): Promise<boolean> {
+  try {
+    const res = await fetch("/api/v1/me/export", { credentials: "same-origin", cache: "no-store" });
+    if (!res.ok) return false;
+    const name = /filename="([^"]+)"/.exec(res.headers.get("content-disposition") ?? "")?.[1] ?? "judge-data.json";
+    const url = URL.createObjectURL(await res.blob());
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = name;
+    a.click();
+    URL.revokeObjectURL(url);
+    return true;
+  } catch {
+    return false;
   }
 }
 

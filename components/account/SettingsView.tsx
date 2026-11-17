@@ -37,7 +37,7 @@ export function SettingsView() {
       return;
     }
     let live = true;
-    void fetchConsent().then((s) => live && setTraining(s === "on"));
+    void fetchConsent().then((s) => live && setTraining(s?.state === "on"));
     return () => {
       live = false;
     };

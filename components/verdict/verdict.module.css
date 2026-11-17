@@ -874,6 +874,11 @@
   line-height: 1.45;
   color: var(--ink-2);
 }
+.consentLink {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 .consentButtons {
   display: flex;
   gap: 8px;

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { askSignIn, fetchConsent, fetchRating, saveConsent, saveRating, type Rating } from "@/lib/feedback-client";
 import { t, type Lang } from "@/lib/i18n";
@@ -64,8 +65,8 @@ export function RatingRow({ id, lang }: { id: string; lang: Lang }) {
   );
 }
 
-/** Asked once, after a person's first finished verdict. Any answer is
- * stored on the account, so the server never lets it show again. */
+/** Asked once, after a person's second finished verdict (the server's `ask`
+ * flag). Any answer is stored on the account, so it never shows again. */
 export function ConsentCard({ lang }: { lang: Lang }) {
   const viewer = useViewer();
   const signedIn = Boolean(viewer.me?.user);
@@ -74,7 +75,7 @@ export function ConsentCard({ lang }: { lang: Lang }) {
   useEffect(() => {
     if (!signedIn) return;
     let live = true;
-    void fetchConsent().then((s) => live && setOpen(s === "not_asked"));
+    void fetchConsent().then((s) => live && setOpen(s?.ask === true));
     return () => {
       live = false;
     };
@@ -89,7 +90,12 @@ export function ConsentCard({ lang }: { lang: Lang }) {
   return (
     <section className={styles.consent} aria-labelledby="consent-title">
       <h2 id="consent-title">{t(lang, "consent.cardTitle")}</h2>
-      <p>{t(lang, "consent.cardBody")}</p>
+      <p>
+        {t(lang, "consent.cardBody")}{" "}
+        <Link href="/privacy#help-improve" className={styles.consentLink}>
+          {t(lang, "consent.cardLink")}
+        </Link>
+      </p>
       <div className={styles.consentButtons}>
         <button type="button" className={`${styles.btn} ${styles.btnOutline}`} onClick={() => answer("on")}>
           {t(lang, "consent.cardYes")}
