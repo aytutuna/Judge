@@ -45,8 +45,7 @@ const sv: Locale = {
     "thinking.crux": "Letar efter kärnfrågan…",
     "thinking.judges": "Tre domare dömer var för sig…",
     "thinking.votes": "Räknar rösterna…",
-    "thinking.helper":
-      "Tre AI-domare dömer var för sig, och är det jämnt kallas fler in. Ge det en minut.",
+    "thinking.helper": "Tre AI-domare dömer var för sig, och är det jämnt kallas fler in. Ge det en minut.",
     "thinking.finish": "Närmar oss kärnfrågan…",
     "thinking.stillJudging": "Domarna funderar fortfarande. Häng kvar…",
     "thinking.ready": "Domen är klar.",
@@ -109,14 +108,17 @@ const sv: Locale = {
     "vote.dissolved": "ordstrid",
     refusedNote: "AI:n stod över den här gången. Vi visar hellre ingenting än en låtsasdom.",
     demoNote: "🎭 Demoläge: ingen AI-nyckel är inställd, så det här är en exempeldom",
-    "trial.survived": "🛡️ Invändningen avslogs: andra sidans advokat framförde sin starkaste invändning, och domen höll. Säkerheten är oförändrad.",
+    "trial.survived":
+      "🛡️ Invändningen avslogs: andra sidans advokat framförde sin starkaste invändning, och domen höll. Säkerheten är oförändrad.",
     "trial.uncertain": "⚠️ Andra sidans advokat gjorde en invändning, och den lämnade verkligt tvivel om domen",
-    "trial.overturned": "⚠️ Invändningen bifölls: domen står kvar, men andra sidans starkaste invändning försvagar den allvarligt",
+    "trial.overturned":
+      "⚠️ Invändningen bifölls: domen står kvar, men andra sidans starkaste invändning försvagar den allvarligt",
     "trial.minor": "🛡️ Andra sidans advokat hade en rimlig poäng, men domen står kvar",
     "trial.whatWasTested": "Invändningen",
     "trial.attackPrefix": "Invändning:",
     "trial.refereePrefix": "Varför:",
-    "trial.mixedNote": "Det här är en blandad tvist: delvis fakta, delvis värderingar eller ords betydelse, så en ren seger är svårare att försvara.",
+    "trial.mixedNote":
+      "Det här är en blandad tvist: delvis fakta, delvis värderingar eller ords betydelse, så en ren seger är svårare att försvara.",
     confidence: "Säkerhet {n} av {total}",
     verdictAria: "Dom: {label}",
     "party.a": "Part A",
@@ -128,16 +130,14 @@ const sv: Locale = {
     "shared.subtitle": "Någon delade den här domen",
     "shared.cta": "Avgör ditt eget bråk →",
     errorFallback: "Något gick fel. Vill du försöka igen?",
-    "error.not_configured":
-      "Domaren är inte igång än. Försök igen senare.",
+    "error.not_configured": "Domaren är inte igång än. Försök igen senare.",
     "error.quota": "Domarna har slut på sin AI-kvot för tillfället. Försök igen om några minuter.",
     "error.unavailable": "Vi når inte domarna just nu. Vänta en minut och försök igen.",
     "error.too_short": "Det var lite tunt. Berätta mer om bråket.",
     "error.too_long": "Det var mycket! Håll dig under 6000 tecken.",
     "error.invalid": "Den förfrågan såg inte rätt ut.",
     "error.rate_limited": "Ordning i salen! Du har nått gränsen för tillfället. Försök igen om {wait}.",
-    "error.daily_cap":
-      "Rätten har stängt för i dag. Den har hört alla argument den orkar. Öppnar igen om {wait}.",
+    "error.daily_cap": "Rätten har stängt för i dag. Den har hört alla argument den orkar. Öppnar igen om {wait}.",
     "error.captcha_failed": "Vi kunde inte avgöra om du är en människa. Gör kontrollen igen och skicka sedan.",
     "wait.moment": "några minuter",
     "wait.minute": "1 minut",
@@ -147,7 +147,8 @@ const sv: Locale = {
     "refused.headline": "AI:n ville inte ta ställning i den här",
     "refused.crux":
       "AI:ns säkerhetsfilter hindrade den från att döma i det här fallet. Hellre ingen dom än en påhittad.",
-    "refused.bestPoint": "Prova att formulera det på ett annat sätt. Eller acceptera att vissa bråk är för stora för en app.",
+    "refused.bestPoint":
+      "Prova att formulera det på ett annat sätt. Eller acceptera att vissa bråk är för stora för en app.",
     "refused.claim": "Överhoppat",
     "nav.skip": "Hoppa till innehållet",
     "nav.home": "Startsida för Judge",
@@ -237,10 +238,8 @@ const sv: Locale = {
     "about.limitsTitle": "Begränsningar",
     "about.limit1":
       "Den vet bara det du berättar, och hur du berättar påverkar resultatet. Ta med den andra sidan så som hen själv skulle säga det.",
-    "about.limit2":
-      "AI-domare kan ha fel om fakta. Varje dom listar fakta den lutar sig mot, så att du kan kolla dem.",
-    "about.limit3":
-      "Att byta ut namn fungerar oftast, men ovanliga namn eller smeknamn kan slinka igenom.",
+    "about.limit2": "AI-domare kan ha fel om fakta. Varje dom listar fakta den lutar sig mot, så att du kan kolla dem.",
+    "about.limit3": "Att byta ut namn fungerar oftast, men ovanliga namn eller smeknamn kan slinka igenom.",
     "about.limit4": "Det är till för skoj och tydlighet, inte juridisk, medicinsk eller ekonomisk rådgivning.",
     "about.builtTitle": "Under huven",
     "about.built":
@@ -250,32 +249,96 @@ const sv: Locale = {
     "privacy.kicker": "Dina uppgifter",
     "privacy.lead":
       "Kort version: vi sparar det du skriver, namn inräknade, krypterat, så att du kan komma tillbaka till det. Domarna läser bara en version där namnen är borttagna. Du kan få det borttaget när som helst. Vi säljer inte dina uppgifter. Om Judge någon gång säljs eller går upp i ett annat bolag går det över till den nya ägaren enligt denna policy.",
+    "privacy.whoTitle": "Vilka vi är",
+    "privacy.who":
+      "Judge drivs av Aytu Tuna, en privatperson i Kanada.\n{address}\nVi bestämmer vad som samlas in och varför. Den som ansvarar för personuppgifter är Aytu Tuna, ägare. Kontakt: {email}.",
     "privacy.storedTitle": "Det här sparar vi",
     "privacy.stored":
-      "För varje dom sparar vi din text precis som du skrev den (med dina svar på domarnas frågor och texten som lästs från eventuella skärmdumpar) och en lista över vilket namn som blev vilken etikett. De krypteras med en nyckel som inte lagras i databasen. Vi sparar också den anonymiserade versionen som domarna läser (namnen utbytta mot Part A och Part B), inställningarna du valde, domen, eventuell översättning och de namn du väljer att visa på delningssidan. Vi räknar också hur Judge används: vilka skärmar och funktioner, med appversion, enhetsmodell, systemversion, språk och landet för din anslutning, och i apparna ett enhets-id. När du är inloggad kopplas det till ditt konto. Användningshändelser sparas i 90 dagar och kopplingarna mellan ditt konto och dina enheter i 180 dagar. Apparna har en reglage, Användningsstatistik, i Inställningar, och webbplatsen skickar ingenting när din webbläsare skickar Do Not Track eller Global Privacy Control. Det innehåller aldrig text från fall. Om du betygsätter en dom sparar vi betyget tillsammans med den.",
+      "För varje dom sparar vi din text precis som du skrev den (med dina svar på domarnas frågor och texten som lästs från eventuella skärmdumpar) och en lista över vilket namn som blev vilken beteckning. De krypteras med en nyckel som inte finns i databasen. Vi sparar också den anonymiserade versionen som domarna läser (namn utbytta mot Part A och Part B), de inställningar du valde, domen, eventuell översättning och de namn du väljer att visa på delningssidan. Vi räknar också hur Judge används: vilka skärmar och funktioner, med appversion, enhetsmodell, systemversion, språk och landet för din anslutning, och i apparna ett enhets-id. När du är inloggad kopplas det till ditt konto. Användningshändelser sparas i 90 dagar och kopplingarna mellan ditt konto och dina enheter i 180 dagar. Apparna har ett reglage, Användningsstatistik, i Inställningar, och webbplatsen skickar ingenting när din webbläsare skickar Do Not Track eller Global Privacy Control. Det innehåller aldrig någon fälltext. Om du betygsätter en dom sparar vi betyget tillsammans med den. Ett betyg kan rensas; då behåller vi raden utan tummen upp eller ned. Vi sparar också en registrering av ditt godkännande om privata uppgifter och av dina val under Hjälp till att göra Judge bättre, med datum, språk och plattform och den formulering du såg.",
     "privacy.helpTitle": "Hjälp till att göra Judge bättre",
     "privacy.help":
-      "Av, om du inte slår på det. När det är på kan vi använda den anonymiserade texten som domarna läser, deras domar och dina betyg för att testa och träna Judges domare. Namn är aldrig en del av det. Slår du av det upphör den användningen för allt du har gjort, och vi registrerar när du slog på eller av det.",
-    "privacy.notStoredTitle": "Det här gör vi inte",
-    "privacy.notStored": "Inga annonsspårare. Ditt språkval sparas i webbläsarens lokala lagring och ingen annanstans.",
-    "privacy.ipTitle": "Användningsgränser",
-    "privacy.ip":
-      "För att hålla rätten öppen för alla begränsar vi hur många domar varje konto och hur många översättningar varje besökare kan be om. För översättningar, och för svar i ett tvåsidigt fall, sparar vi en hash av din IP-adress med hemlig nyckel, inte själva adressen, i vårt system för användningsgränser i upp till 24 timmar. Om människokontrollen är på skickas din IP-adress också till Cloudflare för den kontrollen. Den sparas aldrig tillsammans med din dom.",
-    "privacy.processorsTitle": "Vilka mer som hanterar din text",
-    "privacy.processors":
-      "Texten du skriver, med riktiga namn, går först till vår AI-leverantör i USA så att namnen kan tas bort. Bara den anonymiserade versionen döms; ditt original sparas krypterat, som beskrivs ovan. Om människokontrollen är på körs Cloudflare Turnstile i din webbläsare och stämmer av resultatet med Cloudflare. Om du loggar in sköter Apple eller Google (det du väljer) inloggningen, och inloggningsmejl skickas via Resend. Vår hostingleverantör sparar vanliga serverloggar. Köp i apparna går via App Store eller Google Play och hanteras av RevenueCat, som får ditt konto-id och din köphistorik. Grafana Labs får våra serverloggar och prestandamätningar, som lagras i EU i 14 dagar; loggarna innehåller ingen text från fall. Krasch- och felrapporter från apparna och den här webbplatsen går till Sentry, som lagrar dem i EU i upp till 30 dagar; de innehåller felet, app- eller webbläsarversionen och enhetsmodellen, men ingen text från fall, inget konto-id och ingen anslutningsadress.",
-    "privacy.shareTitle": "Delningslänkar",
-    "privacy.share":
-      "Alla som har länken till en dom kan se den, med de visningsnamn du valde (eller Part A och Part B om du stängde av namnen). Länkarna använder långa slumpmässiga id:n, och delningssidorna ber sökmotorer att inte indexera dem. Länken och förhandsbilden för en borttagen dom laddas inte längre; förhandsvisningar som redan delats i chattappar kan fortsätta synas tills apparna uppdaterar dem. Ta inte med adresser, telefonnummer eller annat som du inte vill ha på en sida som andra kan öppna.",
-    "privacy.contactTitle": "Kontakt",
-    "privacy.contact":
-      "Har du frågor, eller vill du se, rätta eller ta bort dina uppgifter? Mejla {email} med länken till domen eller fallet.",
-    "privacy.accountsTitle": "Konton",
-    "privacy.accounts":
-      "Judge är bara för personer som är 18 år eller äldre, och konton som vi upptäcker tillhör någon under 18 stängs. Du behöver ett konto för att få en dom; den andra sidan i ett tvåsidigt fall kan svara utan konto. Om du loggar in med Apple eller Google sparar vi den e-postadress, det namn och den länk till profilbilden som de delar med oss, plus vilken inloggningsmetod du använde, och Apple eller Google kan se att du har loggat in på Judge. Om du loggar in med en e-postlänk skickas mejlet via Resend, och för att kontrollera länken sparar vi tillfälligt en uppgift med din e-postadress: länken slutar fungera efter 10 minuter, och uppgiften raderas när länken har använts eller strax efter att den har gått ut. Vi sparar också dina sessionsuppgifter (en slumpmässig token och när den går ut, utan IP-adress eller webbläsaruppgifter, men apparna sparar också ett enhets-id när du loggar in), dina krediter, ditt abonnemang och dess historik, och vilka domar som har använt en kredit (bara domens id). Vi sparar också vilka domar och fall som är dina, så att du hittar dem på alla enheter. Raderar du ditt konto på kontosidan tas ditt konto, dina sessioner, användningshändelserna och kopplingen mellan ditt konto och dina enheter bort, och dina domar och dina sidor i tvåsidiga fall tas bort enligt beskrivningen under Borttagning. Vi sparar bara en förvrängd form av din e-postadress, så att ett nytt konto med den inte får en andra gratis dom och förblir stängt om ditt konto stängdes för att du är under 18. Inloggningskoder som skickas med e-post fungerar på samma sätt som länkar. Om du anger ett lösenord sparar vi bara en krypterad (hashad) form av det med ditt konto, aldrig själva lösenordet.",
+      "Av, om du inte slår på det. När det är på kan vi använda den anonymiserade texten som domarna läser, deras domar och dina betyg för att testa och träna AI-modeller: Judges egna och, om Judge någon gång säljs eller går upp i ett annat bolag, den nya ägarens. Namn är aldrig med. Slår du av det hålls allt du har skapat utanför all träning från och med då. Vi registrerar när du slog på eller av det.\n”Anonymiserad” betyder här att namnen har tagits bort; andra uppgifter du skrev kan fortfarande finnas i texten. Det gäller bara domar som görs medan det är på, och ett fall bara när alla som skrev en sida har det på. Modeller som redan är tränade ändras inte. Ingenting har tränats än. Judge fungerar likadant med det av.\nVi frågar en gång, på din egen doms sida efter din andra färdiga dom. Vi frågar aldrig på en dom som någon annan har delat med dig. Kortet säger: ”Låt Judge använda dina anonymiserade domar och betyg för att träna AI. Namn tas aldrig med.” Du kan ändra ditt svar i Inställningar när som helst.",
+    "privacy.purposesTitle": "Varför vi använder dina uppgifter",
+    "privacy.purposes":
+      "- För att ge dig en dom, sköta ditt konto och hantera köp och support. Grund (EU, Storbritannien och Brasilien): nödvändigt för att tillhandahålla tjänsten du bad om.\n- För att hålla Judge säkert och fungerande: användningsgränser, människokontrollen, att upptäcka personer som skördar gratiskrediter, felrapporter, användningsräkning och att behålla en förvrängd form av en e-postadress efter radering. Grund: vårt berättigade intresse av en säker, fungerande tjänst. Du kan invända via e-post. Apparna har ett reglage, Användningsstatistik, och din webbläsares Do Not Track eller Global Privacy Control stoppar webbplatsens egna användningshändelser.\n- För att kontrollera din ålder, även med din telefons ålderssignal. Grund: vårt berättigade intresse av att hålla Judge enbart för vuxna, eller en rättslig skyldighet där en ålderslag för appbutiker gäller.\n- För att behålla texten utan namn i 30 dagar efter att du tagit bort något, ifall av missbruk eller ett rättsligt krav. Grund: vårt berättigade intresse.\n- För att behålla bevis för vad du har godkänt: godkännandet om privata uppgifter och dina val under Hjälp till att göra Judge bättre. Grund: vårt berättigade intresse av att kunna visa vad du har godkänt.\n- För att använda dina anonymiserade domar och betyg för AI-träning. Grund: ditt samtycke, bara om du slår på det.\n- För att följa lagen och behålla register vi är skyldiga att behålla. Grund: rättslig förpliktelse.\nVi använder aldrig dina uppgifter för reklam och har inga annonsspårare. Om vi någon gång vill använda dem på ett nytt sätt säger vi det först och frågar igen om lagen kräver ditt samtycke.",
+    "privacy.sensitiveTitle": "Vad du bör lämna utanför",
+    "privacy.sensitive":
+      "Tvister kan beröra privata ämnen som hälsa, relationer, religion eller pengar. Skriv bara vad domen behöver och lämna privata uppgifter om andra utanför. Judge är inte till för nödfall eller juridisk rådgivning.\nFöre din första dom, din första sida av ett fall eller ditt första svar på ett fall ber vi dig kryssa i en ruta: ”Min text kan innehålla privata uppgifter, till exempel om hälsa eller relationer. Judge skickar den, utan namn, till en extern AI-tjänst som skriver min dom, och sparar den tills jag tar bort den.” Du kan bara gå vidare när den är ikryssad. Vi frågar en gång per konto; om du redan har ett konto frågar vi vid din nästa dom. De som svarar på ett fall utan konto ser samma ruta. Vi sparar en registrering av krysset med datum, språk, plattform och den formulering du såg.",
+    "privacy.othersTitle": "Personer du skriver om",
+    "privacy.others":
+      "Din text kan beskriva någon som inte använder Judge. Domarna ser personen bara under beteckningar som ”Person C”. Vi sparar personens namn krypterade, med ett kodat fingeravtryck av varje namn (en nyckelbaserad hash, inte namnet). Namn kan visas på en delningssida, som beskrivs under Vem som kan se vad. Om du nämns i någon annans fall, skriv till {email} med länken, så tar vi bort ditt namn från delningssidan eller tittar på din invändning.",
+    "privacy.automatedTitle": "Domar kommer från AI",
+    "privacy.automated":
+      "AI-modeller skriver din dom, utan att en människa läser den först. Den är en bedömning av argumentet som det skrevs, utifrån texten utan namn, eventuella visade webbkällor och dina svar. Den är inte juridisk rådgivning och inte bindande. Inget beslut om dig, ditt konto, ett pris eller din åtkomst fattas utifrån den. Den kan vara fel eller ensidig. Om du inte håller med, betygsätt den ”Orättvis”, lägg till sammanhang eller skriv till {email}, så tittar en människa på den. Den andra sidan i ett fall kan också be om det.",
+    "privacy.accessTitle": "Vem som kan se vad",
+    "privacy.access":
+      "Du: din originaltext och namnen, på alla enheter när du är inloggad, eller på enheten du använde genom en privat kod som sparats i webbläsaren eller appen (vi sparar bara en förvrängd form av koden). Domar som togs fram när du var utloggad, innan ett konto krävdes, och fall som du svarade på utloggad ligger kvar i listan i den webbläsaren med sina rubriker och dina namn som du skrev dem, så att sidan Domar kan visa dem: alla som använder samma webbläsare ser listan. På en delad dator: logga in eller använd ett privat fönster; rensar du webbplatsens data i webbläsaren försvinner listan. I ett tvåsidigt fall ser var och en bara sitt eget original; efter domen ser båda de två anonymiserade berättelserna, som domarna läste dem. Domarna (AI-modeller som körs av vår AI-leverantör): bara den anonymiserade versionen. Alla med delningslänken: domen med visningsnamn. Som standard är det namnet du väljer för dig själv och de andras förnamn som du skrev dem; du kan ändra dem eller stänga av namnen när som helst, och då visar sidan Part A och Part B. Vi: vi kan dekryptera original med nyckeln och tittar på lagrad text bara för att hantera ett supportärende från dig, utreda missbruk eller när lagen kräver det.",
+    "privacy.casesTitle": "Tvåsidiga fall och kompletteringar",
+    "privacy.cases":
+      "I ett tvåsidigt fall anonymiseras varje sida när den skickas, på samma sätt som vid en dom. Den anonymiserade texten är det domarna läser; varje persons sida som den skrevs, med dess namnlista, sparas krypterad och bara den personen kan se den. Varje person skriver det namn som ska visas på delningssidan när hen skickar sin sida; lämnas det tomt blir det Part A eller Part B. Den andra personen behöver inget konto; hens svar begränsas med en nyckelbaserad hash av IP-adressen. Inbjudningslänken sparas bara som hash. Om den andra personen svarar inloggad kopplas hens konto till hens sida, så att bara hen kan lägga till sammanhang senare eller se sitt original; om hen svarar utan att vara inloggad gör en privat kod i hens webbläsare detsamma, och loggar hen in senare i den webbläsaren kan hen behålla fallet i sitt konto. För att ge samma person samma beteckning i båda versionerna sparar servern kodade fingeravtryck av namn inne i varje fall (nyckelbaserade hashar, inte själva namnen). Fram till domen kan ingen av sidorna läsa den andras text; efter en tvåsidig dom kan båda läsa båda anonymiserade versionerna. Sammanhang som läggs till efter en dom (en komplettering) hanteras på samma sätt. När den andra personen svarar kan vi skicka dig ett kort e-postmeddelande utan någon fälltext, om e-post är konfigurerad. Någon av de två kan ta bort sin egen sida: originalet och visningsnamnet raderas, och fallets delningslänkar slutar fungera för alla. Att radera ditt konto gör detta för varje fall du startade eller svarade på. Ett fall som ingen svarar på löper ut efter 7 dagar, men din sidas text finns kvar tills du tar bort den. En person som svarar utan konto kryssar i ”Jag är 18 år eller äldre” och rutan om privata uppgifter innan hen skickar, och vi sparar båda kryssen tillsammans med hens sida.",
     "privacy.webSearchTitle": "Webbsökning och frågor",
     "privacy.webSearch":
       "Varje dom skickar den anonymiserade diskussionen till vår AI-leverantör med webbsökning påslagen. Modellen skriver sökfrågorna utifrån den anonymiserade texten, och resultaten kommer från leverantörens sökpartner. Källorna den använde visas i domen. Domarna kan först ställa upp till två frågor till dig: för att ta fram dem skickas din text som du skrev den, med namn, till AI-leverantören en gång till. Dina svar anonymiseras tillsammans med diskussionen innan den döms; frågorna och dina svar som du skrev dem sparas med ditt krypterade original.",
+    "privacy.evidenceTitle": "Skärmdumpar",
+    "privacy.evidence":
+      "Din webbläsare förminskar stora bilder innan de laddas upp. Varje bild skickas sedan en gång till en extern AI-tjänst så att den synliga texten kan läsas; vi sparar aldrig bilden. Den råa transkriberingen, som fortfarande kan innehålla namn, kommer tillbaka till dig i en signerad token som din webbläsare håller i upp till 6 timmar. När du skickar din sida anonymiseras transkriberingen tillsammans med din text: den anonymiserade transkriberingen visas för domarna och sparas med fallet, och den råa sparas krypterad med ditt original, där bara du kan se den. Telefonnummer, e-postadresser, användarnamn i sociala medier och kontonummer i den byts också ut mot platshållare för domarna.",
+    "privacy.accountsTitle": "Konton",
+    "privacy.accounts":
+      "Judge är bara för personer som är 18 år eller äldre, och konton som vi upptäcker tillhör någon under 18 stängs. Du behöver ett konto för att få en dom; den andra sidan i ett tvåsidigt fall kan svara utan. Om du loggar in med Apple eller Google sparar vi den e-postadress, det namn och den länk till profilbilden de delar med oss, plus vilken inloggningsmetod du använde, och Apple eller Google kan se att du loggade in på Judge. Om du loggar in med en e-postlänk eller kod skickas det e-postmeddelandet via Resend, och vi sparar kortvarigt en post med din e-postadress för att kontrollera den: den slutar fungera efter 10 minuter och posten raderas så fort den använts eller strax efter att den löpt ut. Om du sätter ett lösenord sparar vi med ditt konto bara en förvrängd (hashad) form av det, aldrig själva lösenordet. Vi sparar också dina sessionsposter (en slumpmässig token och när den löper ut, utan IP-adress eller webbläsaruppgifter, men apparna registrerar även ett enhets-id när du loggar in), dina krediter, din plan och dess historik och vilka domar som använde en kredit (bara domens id). Vi sparar också vilka domar och fall som är dina, så att du hittar dem på vilken enhet som helst. Att radera ditt konto på kontosidan (i apparna och på webbplatsen) tar bort ditt konto, inloggningsposter, krediter, plan och användningshändelser och tar bort dina domar och dina sidor i fall, som beskrivs under Borttagning. Vi behåller några saker efter radering, uppräknade under Det här behåller vi efter borttagning. Om du inte kan logga in förklarar sidan okjudge.com/delete-account hur du ber oss om det via e-post. Vi sparar bara en förvrängd form av din e-postadress, så att ett nytt konto med den inte får en andra gratis dom och förblir stängt om ditt konto stängdes för att du är under 18. Vi registrerar också om du bekräftade att du är 18 eller äldre, och hur (ett kryss eller din telefons ålderssignal; på Android frågar appen Google Play, på iPhone frågar den Apple).",
+    "privacy.removalTitle": "Borttagning",
+    "privacy.removal":
+      "Be om borttagning på domens sida (inloggad kan du öppna den från sidan Domar), på fallets sida för ett tvåsidigt fall, genom att radera ditt konto eller via e-post. Borttagningen raderar din originaltext, namnlistan och visningsnamnen (i ett tvåsidigt fall din sidas original och ditt visningsnamn), och delningslänken och dess förhandsvisningsbild slutar laddas för alla. Förhandsvisningar som redan lagts ut i chattappar behålls av de apparna och kan fortsätta visas tills de uppdaterar dem. Vi behåller den anonymiserade texten och domen, utan namn, i våra register; de går inte längre att öppna via länken. Att radera ditt konto gör detta för alla dina domar och dina sidor i fall och raderar dina inloggningsuppgifter, krediter och din plan. Borttagna uppgifter finns kvar i våra säkerhetskopior tills de löper ut (högst 14 dagar, se nedan); om vi någon gång återställer en säkerhetskopia tillämpar vi alla borttagningar igen (för det behåller vi en lista över vad som togs bort och när, utan text eller namn). Trettio dagar efter att du tagit bort något raderar vi också den anonymiserade texten och domen och behåller bara utfallet och datumen, om inte lagen kräver att vi behåller dem längre. Det gäller det som tas bort den 14 november 2026 (UTC) eller senare; äldre borttagningar behåller sin anonymiserade text. För ett fall börjar de trettio dagarna först när alla i det har tagit bort det. Domar och fall som ingen tar bort sparas tills du tar bort dem eller raderar ditt konto. En dom som gjordes utan inloggning, innan ett konto behövdes, kan tas bort genom att du skriver till {email} med dess länk.",
+    "privacy.afterRemovalTitle": "Det här behåller vi efter borttagning",
+    "privacy.afterRemoval":
+      "Efter borttagning, och efter de trettio dagarna, behåller vi fortfarande:\n- utfallet och poängen, de valda inställningarna, datum, id:n, vilka sidor och vilket språk det hade, och id:t för kontot som startade ett fall;\n- dina betyg. När du raderar ditt konto flyttas varje betyg till ett slumpmässigt id och leder inte längre till dig;\n- registreringen av dina val under Hjälp till att göra Judge bättre och av ditt godkännande om privata uppgifter (datum, språk, plattform och den formulering du såg), i 6 år efter att du raderat ditt konto, för att kunna visa vad du godkände. När du har raderat ditt konto har dessa poster ett slumpmässigt id och ingen koppling till ditt namn eller din e-post;\n- borttagningslistan med id:n, skäl, datum och fallets part, i 90 dagar, för att tillämpa borttagningar igen efter en återställning av en säkerhetskopia;\n- en förvrängd form av din e-post, för att stoppa upprepat missbruk av gratiskrediter (se Konton);\n- en enhetspost utan koppling till ditt konto, i upp till 180 dagar;\n- säkerhetskopior, i upp till 14 dagar.\nNär ett fall raderas töms de kodade fingeravtrycken och beteckningarna för dess namn, så de behålls inte.",
+    "privacy.retentionTitle": "Hur länge vi sparar det",
+    "privacy.retention":
+      "Vi sparar domar och original tills du ber om borttagning eller raderar ditt konto. För att kunna återhämta oss efter ett fel sparar vi säkerhetskopior av servern och dess databas i upp till 14 dagar, därefter raderas de. De innehåller samma uppgifter som servern, även de krypterade originalen, och nyckeln finns på samma server, så säkerhetskopiorna skyddas som själva servern, inte av den krypteringen. Hashar för användningsgränser finns kvar i upp till 48 timmar. Användningshändelser raderas efter 90 dagar och enhetskopplingar efter 180 dagar utan användning. Loggar och mätvärden hos Grafana Labs sparas i 14 dagar. Kraschrapporter hos Sentry sparas i upp till 30 dagar. Andra serverloggar följer vår webbhotells standardlagring. En inloggningskod löper ut efter 10 minuter, och utgångna koder raderas varje dag. En session upphör 30 dagar efter att du senast använde den. Borttagningslistan sparas i 90 dagar. Registreringar av dina samtyckesval sparas i 6 år efter att du raderat ditt konto och raderas sedan.",
+    "privacy.ipTitle": "Användningsgränser",
+    "privacy.ip":
+      "För att hålla rätten öppen för alla begränsar vi hur många domar varje konto och hur många översättningar varje besökare kan be om. För översättningar, svar i ett tvåsidigt fall, kontroll av en dom medan den bedöms och inloggningsförsök sparar vi en nyckelbaserad hash av din IP-adress, inte själva adressen, i upp till 48 timmar. Inloggningsgränserna håller själva adressen kortvarigt i serverns minne, i ungefär en minut, aldrig på disk. Om människokontrollen är på går din IP-adress också till Cloudflare för den kontrollen. Den sparas aldrig tillsammans med din dom.",
+    "privacy.processorsTitle": "Vilka mer som hanterar din text",
+    "privacy.processors":
+      "Texten du skriver, med riktiga namn, går först till vår AI-leverantör i USA så att namnen kan tas bort. Bara den anonymiserade versionen döms; ditt original sparas krypterat, som beskrivs ovan. Om människokontrollen är på körs Cloudflare Turnstile i din webbläsare och stämmer av resultatet med Cloudflare. Om du loggar in sköter Apple eller Google (den du väljer) den inloggningen, och inloggningsmejl skickas via Resend. Köp i apparna går via App Store eller Google Play och hanteras av RevenueCat, som får ditt konto-id och din köphistorik. Grafana Labs får våra serverloggar och prestandamätvärden, lagrade i EU i 14 dagar; loggarna innehåller ingen fälltext. Krasch- och felrapporter från apparna och den här webbplatsen går till Sentry, lagrade i EU i upp till 30 dagar; de innehåller felet, app- eller webbläsarversionen och enhetsmodellen, men ingen fälltext, inget konto-id och ingen anslutningsadress. Vårt webbhotell för standardmässiga serverloggar. Android-appen frågar Google Play om din åldersstatus och iPhone-appen frågar Apple. Vi är personuppgiftsansvariga; dessa leverantörer behandlar uppgifter för vår räkning.",
+    "privacy.shareTitle": "Delningslänkar",
+    "privacy.share":
+      "Alla som har länken till en dom kan se den, med de visningsnamn du valde (eller Part A och Part B om du stängde av namnen). Länkarna använder långa slumpmässiga id:n, och delningssidorna ber sökmotorer att inte indexera dem. Länken och förhandsbilden för en borttagen dom laddas inte längre; förhandsvisningar som redan delats i chattappar kan fortsätta synas tills apparna uppdaterar dem. Ta inte med adresser, telefonnummer eller annat som du inte vill ha på en sida som andra kan öppna.",
+    "privacy.locationTitle": "Var dina uppgifter finns",
+    "privacy.location":
+      "Våra servrar finns i Tyskland (OVH, Frankfurt). En del behandling sker i USA: vår AI-leverantör kör modellerna som tar bort namn, dömer, läser skärmdumpar och söker på webben; Cloudflare står framför okjudge.com som proxy och DNS (all trafik går genom den) och kör människokontrollen. Inloggningen går via Apple eller Google om du väljer dem, och inloggningsmejl via Resend. Uppgifter som behandlas i ett annat land kan omfattas av det landets lagar. Vi arbetar från Kanada och kan se dina uppgifter därifrån.",
+    "privacy.storageTitle": "Cookies och webbläsarlagring",
+    "privacy.storage":
+      "Webbplatsen använder en inloggningscookie (verdict.session_token) som håller dig inloggad, och kortlivade cookies medan du loggar in med Apple eller Google (verdict.state varar 5 minuter). Cloudflare, som kör människokontrollen, kan sätta egna cookies för det. Ingen används för spårning. Din webbläsares lokala lagring sparar ditt språk, ditt tema och ditt Gamify-val; ett osänt utkast (även texten du skrev) medan du loggar in; en lista över domar och fall du gjorde utan inloggning; privata koder som ger dig åtkomst till dina egna original; namnen du använde i ett fall; inbjudningskoder för fall du ombetts svara på; din åldersbekräftelse; den senast valda rätten; och vilka exempel du har sett. Sessionslagringen sparar e-postadressen och läget medan du väntar på ett inloggningsmejl, och användningsflaggor för fliken. Det stannar på din enhet. Att rensa webbplatsens data tar bort det. Apparna sparar liknande saker på enheten.",
+    "privacy.notStoredTitle": "Det här gör vi inte",
+    "privacy.notStored":
+      "Inga annonsspårare. Vi säljer inte dina uppgifter och delar dem inte för reklam. Webbplatsen och apparna spårar dig inte över andra webbplatser. Så svarar vi på Do Not Track: webbplatsen skickar inga användningshändelser från din webbläsare när den skickar Do Not Track eller Global Privacy Control, och reglaget Användningsstatistik i apparna gör detsamma för apparna. Vår server registrerar ändå några händelser kopplade till ditt konto (inloggning, fall och domar som gjorts eller misslyckats, köp) och vilken enhet du loggade in från. Vi använder aldrig din text för att träna något, om du inte har slagit på Hjälp till att göra Judge bättre.",
+    "privacy.securityTitle": "Så håller vi det säkert",
+    "privacy.security":
+      "Original, namnlistor, visningsnamn och Apples inloggningstokens är krypterade. Trafiken går över HTTPS. Krypteringsnyckeln finns på samma server som uppgifterna, så den skyddar inte mot någon som tar över servern. Om något går fel med dina personuppgifter meddelar vi de berörda och myndigheterna där lagen kräver det.",
+    "privacy.childrenTitle": "Ålder",
+    "privacy.children":
+      "Judge är för personer som är 18 år eller äldre. Vi ber alla som loggar in att bekräfta det, de som svarar på ett fall utan konto kryssar i ”Jag är 18 år eller äldre” innan de skickar, och apparna kan använda din telefons ålderssignal. Vi samlar inte medvetet in uppgifter från någon under 18. Om du tror att ett barn har ett konto, skriv till {email}, så stänger vi det och tar bort uppgifterna.",
+    "privacy.rightsTitle": "Dina rättigheter",
+    "privacy.rights":
+      "Var du än bor kan du be oss visa vad vi har, rätta det, ta bort det eller radera ditt konto, sluta använda det för träning och ge dig en kopia. Det mesta kan du göra själv: ta bort en dom eller ett fall på dess sida, radera ditt konto på kontosidan, ändra de visade namnen på en doms eller ett falls sida, ladda ner dina uppgifter och slå på eller av Hjälp till att göra Judge bättre (och i apparna Användningsstatistik) i Inställningar. För allt annat, skriv till {email} med länken till domen eller fallet. Vi kan be dig skriva från ditt kontos e-postadress eller bekräfta medan du är inloggad. Vi svarar inom 30 dagar, eller en månad om det är kortare. Det är gratis. Du behandlas inte sämre för att du använder dina rättigheter. Den som frågar åt dig behöver ditt skriftliga tillstånd.\nEn kopia av dina uppgifter är en JSON-fil. Välj Ladda ner mina uppgifter på kontosidan, i apparna eller på webbplatsen. Den innehåller ditt konto och dina inloggningsmetoder, dina domar och dina sidor i fall med dina egna texter och namn, utfallen, dina betyg, din samtyckeshistorik, dina enheter, användningshändelser och köp. Den innehåller inga inloggningstokens, ditt lösenord eller den förvrängda e-postadressen, och ingen annans text eller namn.\nDu behöver inte ge oss uppgifter, men utan din text och ett konto kan vi inte ge dig en dom.",
+    "privacy.regionEuTitle": "Om du är i EU eller Storbritannien",
+    "privacy.regionEu":
+      "- Personuppgiftsansvarig: se Vilka vi är.\n- Rättslig grund: se Varför vi använder dina uppgifter.\n- Du kan också be oss begränsa vår användning, invända mot användning som grundas på våra berättigade intressen, när som helst återkalla ditt samtycke (utan att det påverkar det vi gjorde tidigare) och klaga hos din dataskyddsmyndighet (i Storbritannien ICO).\n- Dina uppgifter behandlas i Tyskland, Kanada och USA, som beskrivs under Var dina uppgifter finns. Skriv till {email} om du vill veta mer om hur de överförs.\n- Automatiserade beslut: se Domar kommer från AI.",
+    "privacy.regionUsTitle": "Om du är i Kalifornien eller en annan amerikansk delstat",
+    "privacy.regionUs":
+      "- Under de senaste 12 månaderna har vi samlat in: identifierare (e-post, namn, konto- och enhets-id:n); din tvisttext och dina svar; betyg och samtyckesval; köphistorik; användnings- och enhetsdata (land, enhetsmodell, appversion); åldersbekräftelsen; och känsliga uppgifter (kontoinloggning och eventuella hälsouppgifter eller liknande i din text). Källor: du, din telefons inloggning och butik och våra egna appar. Ändamål: se Varför vi använder dina uppgifter. Mottagare: kategorierna under Vilka mer som hanterar din text.\n- Vi säljer eller delar inte personuppgifter för reklam och har inte gjort det de senaste 12 månaderna. Vi profilerar dig inte. Vi använder känsliga uppgifter bara för att ge dig tjänsten, så det finns inget att begränsa eller välja bort.\n- Rättigheter: få veta, få tillgång, rätta, radera och få en portabel kopia. Du kan använda ett befullmäktigat ombud. Vi svarar inom 30 dagar, eller en månad om det är kortare. För att överklaga ett avslag, skriv till {email} med ”Appeal”. Vi avgör ett överklagande inom 45 dagar. Om vi avslår det kan du kontakta din delstats Attorney General.\n- Lagring: se Hur länge vi sparar det och Det här behåller vi efter borttagning.\n- Do Not Track: se Det här gör vi inte. Inga reklam- eller spårningsföretag samlar in uppgifter på våra sidor. Cloudflare kör människokontrollen och ser din anslutning för det ändamålet.\n- Ingen under 18 får använda Judge, så vi säljer eller delar inte uppgifter om någon under 16. Andra delstaters rättigheter är samma lista.",
+    "privacy.regionCaTitle": "Om du är i Kanada eller Quebec",
+    "privacy.regionCa":
+      "Judge drivs från Kanada och hanterar personuppgifter enligt PIPEDA: vi samlar bara in det tjänsten behöver, använder det bara till det och skyddar det, och du kan be att få se, rätta eller ta bort det vi har om dig. Vi svarar inom 30 dagar. Du kan klaga hos Office of the Privacy Commissioner of Canada (priv.gc.ca). Om du är i Quebec:\n- Den som ansvarar för personuppgifter är Aytu Tuna, ägare, på {email}.\n- Vissa uppgifter skickas utanför Quebec: till vår server i Tyskland, till AI-leverantören och andra leverantörer i USA och till Kanada utanför Quebec.\n- Judge registrerar bara landet för din anslutning, för användningsräkning, och spårar inte din exakta plats. Domen bedömer argumentet du beskriver och används inte för att bygga en profil av dig. Användningsräkningen är kopplad till ditt konto, som beskrivs under Det här sparar vi.\n- Hjälp till att göra Judge bättre är av tills du slår på det, och du kan slå av det när som helst.\n- Du kan också be om att återkalla ditt samtycke, få dina uppgifter i ett vanligt format och klaga hos Commission d’accès à l’information.",
+    "privacy.regionBrTitle": "Om du är i Brasilien",
+    "privacy.regionBr":
+      "Personuppgiftsansvarig och kontakt: se Vilka vi är. {email} är också kanalen för LGPD-förfrågningar. Vi är personuppgiftsansvariga; leverantörerna under Vilka mer som hanterar din text agerar för oss. Rättslig grund: se Varför vi använder dina uppgifter. Du kan be oss bekräfta att vi behandlar dina uppgifter; ge dig tillgång till dem; rätta dem; anonymisera, blockera eller radera överflödiga eller olagliga uppgifter; ge dig portabilitet; radera uppgifter vi använder med ditt samtycke; berätta vem vi har delat dem med; informera dig om möjligheten att vägra samtycke och följderna av det; och återkalla ditt samtycke. Det är gratis. Du kan också klaga hos ANPD. Dina uppgifter skickas utomlands som beskrivs under Var dina uppgifter finns.",
+    "privacy.changesTitle": "Ändringar",
+    "privacy.changes":
+      "Om vi ändrar den här policyn på ett sätt som spelar roll uppdaterar vi datumet högst upp på sidan. Vi använder aldrig uppgifter du gav oss under en äldre policy för ett nytt ändamål utan att fråga dig först. Vi går igenom den minst en gång om året.",
+    "privacy.contactTitle": "Kontakt",
+    "privacy.contact":
+      "Har du frågor, eller vill du se, rätta eller ta bort dina uppgifter? Mejla {email} med länken till domen eller fallet.",
     "nav.signIn": "Logga in",
     "nav.account": "Konto",
     "nav.pricing": "Priser",
@@ -292,8 +355,7 @@ const sv: Locale = {
     "consent.cardYes": "Gärna",
     "consent.cardNo": "Nej tack",
     "consent.switchTitle": "Hjälp till att göra Judge bättre",
-    "consent.cardBody":
-      "Låt Judge använda dina anonymiserade domar och betyg för att träna AI. Namn tas aldrig med.",
+    "consent.cardBody": "Låt Judge använda dina anonymiserade domar och betyg för att träna AI. Namn tas aldrig med.",
     "consent.cardLink": "Så fungerar det",
     "consent.switchDetail":
       "Låter Judge använda dina anonymiserade domar och betyg för att träna AI. Av, om du inte slår på det.",
@@ -305,17 +367,14 @@ const sv: Locale = {
     "account.export": "Ladda ner mina data",
     "account.exportHint": "Få en JSON-fil med allt Judge har om dig.",
     "account.exportBusy": "Förbereder filen…",
-    "account.exportFailed":
-      "Vi kunde inte förbereda dina data just nu. Vill du försöka igen?",
+    "account.exportFailed": "Vi kunde inte förbereda dina data just nu. Vill du försöka igen?",
     "deletePage.title": "Radera ditt Judge-konto",
     "deletePage.lead":
       "Judge är en app från Aytu Tuna. Du kan när som helst radera kontot och dess data själv, i appen eller på webbplatsen.",
     "deletePage.appTitle": "I appen",
-    "deletePage.app":
-      "Öppna Judge, gå till Konto, tryck på Radera konto och bekräfta.",
+    "deletePage.app": "Öppna Judge, gå till Konto, tryck på Radera konto och bekräfta.",
     "deletePage.webTitle": "På webbplatsen",
-    "deletePage.web":
-      "Logga in på okjudge.com, öppna Konto, välj Radera konto och bekräfta.",
+    "deletePage.web": "Logga in på okjudge.com, öppna Konto, välj Radera konto och bekräfta.",
     "deletePage.removedTitle": "Vad som raderas",
     "deletePage.removed":
       "Ditt konto, inloggningsuppgifter, krediter, abonnemang och användningshändelser raderas. Dina domar och dina sidor i ärenden tas bort: originaltexten och namnen raderas direkt, och den anonymiserade texten och domen 30 dagar senare.",
@@ -323,8 +382,7 @@ const sv: Locale = {
     "deletePage.kept":
       "Utfallet och datumen för borttagna domar, utan text och namn. Dina betyg och samtyckesposter i 6 år, utan koppling till dig. En kodad form av din e-postadress, så att gratiskrediter inte missbrukas om och om igen. Säkerhetskopior har äldre kopior i upp till 14 dagar.",
     "deletePage.mailTitle": "Fråga via e-post",
-    "deletePage.mail":
-      "Kan du inte logga in? Skriv till {email} från adressen på ditt konto och be oss radera det.",
+    "deletePage.mail": "Kan du inte logga in? Skriv till {email} från adressen på ditt konto och be oss radera det.",
     "rating.prompt": "Rättvis dom?",
     "rating.fair": "Rättvis",
     "rating.notFair": "Orättvis",
@@ -342,8 +400,7 @@ const sv: Locale = {
     "clarify.back": "Ändra beskrivningen",
     "thinking.factcheck": "Kollar fakta på webben…",
     "thinking.factcheckDone": "Webbkollen är klar.",
-    "thinking.premiumHelper":
-      "Att kolla fakta på webben tar lite längre tid. Ge det en minut eller två.",
+    "thinking.premiumHelper": "Att kolla fakta på webben tar lite längre tid. Ge det en minut eller två.",
     "panel.premium": "Dömd med faktakoll på webben.",
     "factcheck.title": "Kollat på webben",
     "factcheck.lead": "Domarna såg de här sökresultaten innan de dömde. De är bevis, inte själva domen.",
@@ -354,8 +411,7 @@ const sv: Locale = {
     "factcheck.sources": "Källor",
     "factcheck.sourceAria": "{title}, öppnas i en ny flik",
     "factcheck.none": "Inget att kolla på webben: det här handlar om värderingar eller betydelser, inte fakta.",
-    "factcheck.noneFactual":
-      "Inget här gick att kolla på webben: fakta i det här fallet finns bara hos de inblandade.",
+    "factcheck.noneFactual": "Inget här gick att kolla på webben: fakta i det här fallet finns bara hos de inblandade.",
     "factcheck.unavailable": "Webbkollen blev inte klar den här gången, så domarna dömde utan den.",
     "signin.title": "Logga in",
     "signin.lead": "Logga in för att få en dom. Ett nytt konto får sin första dom gratis.",
@@ -463,8 +519,10 @@ const sv: Locale = {
     "error.too_large": "Den är för stor. Prova en mindre bild.",
     "error.unsupported_media": "Vi kan bara läsa PNG-, JPEG-, WebP- eller GIF-bilder.",
     "error.too_many_files": "Det är fler bilder än du kan lägga till här.",
-    "error.evidence_invalid": "En av dina bilder har gått ut eller kunde inte kontrolleras. Ta bort den och lägg till den igen.",
-    "error.anonymize_failed": "Vi kunde inte ta bort namnen ur din text. Försök igen, eller skriv initialer i stället för hela namn.",
+    "error.evidence_invalid":
+      "En av dina bilder har gått ut eller kunde inte kontrolleras. Ta bort den och lägg till den igen.",
+    "error.anonymize_failed":
+      "Vi kunde inte ta bort namnen ur din text. Försök igen, eller skriv initialer i stället för hela namn.",
     "mode.label": "Hur ska vi döma?",
     "mode.now": "Bara jag (direkt)",
     "mode.both": "Båda sidor (skicka en länk)",
@@ -486,7 +544,8 @@ const sv: Locale = {
     "case.status.expired": "Inbjudan har gått ut",
     "case.invite.copied": "Kopierad",
     "case.invite.share": "Dela",
-    "case.invite.shareText": "Jag har bett Judge avgöra vårt bråk. Berätta din sida här. Jag ser den inte förrän domen är klar.",
+    "case.invite.shareText":
+      "Jag har bett Judge avgöra vårt bråk. Berätta din sida här. Jag ser den inte förrän domen är klar.",
     "case.invite.reset": "Skapa en ny länk",
     "case.invite.resetConfirm": "Länken du redan har skickat slutar fungera. Vill du skapa en ny?",
     "case.invite.resetYes": "Ja, skapa en ny länk",
@@ -501,7 +560,8 @@ const sv: Locale = {
     "case.side.opened": "Öppnad",
     "case.side.typing": "Skriver…",
     "case.judgeAnswered": "Döm med sidorna som har svarat",
-    "case.judgeAnswered.confirm": "Vill du få en dom från sidorna som har svarat? De andra inbjudningarna stängs och de kan inte svara längre.",
+    "case.judgeAnswered.confirm":
+      "Vill du få en dom från sidorna som har svarat? De andra inbjudningarna stängs och de kan inte svara längre.",
     "case.cancel": "Avbryt",
     "case.retry": "Försök igen",
     "case.failedBody": "Du har fått tillbaka krediten. Du kan försöka igen nu.",
@@ -529,8 +589,7 @@ const sv: Locale = {
     "case.list.untitled": "Fall från {date}",
     "case.list.untitledSoon": "Fall",
     "respond.title": "Berätta din sida",
-    "respond.privacy":
-      "Namnen byts ut mot Part A och Part B innan domarna läser något. Du behöver inget konto.",
+    "respond.privacy": "Namnen byts ut mot Part A och Part B innan domarna läser något. Du behöver inget konto.",
     "respond.lang": "Domen skrivs på {lang}.",
     "respond.lang.en": "engelska",
     "respond.lang.tr": "turkiska",
@@ -544,8 +603,7 @@ const sv: Locale = {
     "case.write.submit": "Skicka min sida",
     "case.write.emailSubject": "Den andra har skrivit sin sida",
     "respond.sent": "Tack. Din sida är inskickad och domarna jobbar på det.",
-    "respond.sentWaiting":
-      "Tack. Din sida är inskickad. Domarna börjar när den andra har skrivit sin.",
+    "respond.sentWaiting": "Tack. Din sida är inskickad. Domarna börjar när den andra har skrivit sin.",
     "respond.ownInvite": "Det här är din egen inbjudningslänk. Skicka den till den andra personen.",
     "respond.expired": "Inbjudan har gått ut.",
     "respond.closed": "Det här fallet tar inte emot svar längre.",
@@ -610,8 +668,7 @@ const sv: Locale = {
     "home.says": "{name} säger:",
     "home.mySide": "Min sida:",
     "home.otherSide": "Den andras sida:",
-    "appeal.lead":
-      "Kostar 1 dom.",
+    "appeal.lead": "Kostar 1 dom.",
     "appeal.placeholder": "Vad missade domarna? Ett faktum, ett meddelande eller vad ni faktiskt kom överens om.",
     "appeal.submit": "Döm om med min komplettering",
     "appeal.sending": "Anonymiserar din komplettering…",
@@ -652,12 +709,6 @@ const sv: Locale = {
       "Kompletteringar: efter en dom kan var och en komplettera en gång. Domarna går igenom allt igen och säger om domen står fast, vändes eller ändrades. Tidigare domar går fortfarande att se.",
     "about.premium4":
       "Ett tvåsidigt fall kostar 1 dom. Den reserveras när du skickar länken och kommer tillbaka om ingen svarar inom 7 dagar.",
-    "privacy.casesTitle": "Tvåsidiga fall och kompletteringar",
-    "privacy.cases":
-      "I ett tvåsidigt fall anonymiseras varje sida när den skickas, på samma sätt som vid en dom. Den anonymiserade texten är det domarna läser; varje persons sida som den skrevs, med sin namnlista, sparas krypterad, och bara den personen kan se den. Var och en skriver in namnet som ska visas på delningssidan när hen skickar sin sida; lämnas fältet tomt blir det Part A eller Part B. Den andra personen behöver inget konto; hens svar begränsas med en hash av hens IP-adress med hemlig nyckel. Inbjudningslänken sparas bara som en hash. Om den andra personen svarar inloggad kopplas hens konto till hens sida, så att bara hen kan komplettera senare eller se sitt original; svarar hen utloggad gör en privat kod i hens webbläsare samma sak, och loggar hen in senare i den webbläsaren kan hen spara fallet i sitt konto. För att samma person ska få samma etikett i båda berättelserna sparar servern kodade fingeravtryck av namn inom varje fall (hashar med hemlig nyckel, inte själva namnen). Fram till domen kan ingen av sidorna läsa den andras text; efter en tvåsidig dom kan båda läsa de två anonymiserade berättelserna. Tillägg efter en dom (en komplettering) hanteras på samma sätt. När den andra personen svarar kan vi mejla dig en kort notis utan någon text från fallet, om e-postutskick är aktiverat. Var och en kan ta bort sin egen sida: originalet och visningsnamnet raderas, och fallets delningslänkar slutar fungera för alla. Raderar du ditt konto händer detta för alla fall du har startat eller svarat på.",
-    "privacy.evidenceTitle": "Skärmdumpar",
-    "privacy.evidence":
-      "Din webbläsare förminskar stora bilder innan de laddas upp. Varje bild skickas sedan en gång till en extern AI-tjänst så att den synliga texten kan läsas; vi sparar aldrig bilden. Den råa transkriberingen, som fortfarande kan innehålla namn, kommer tillbaka till dig i en signerad token som din webbläsare håller i upp till 6 timmar. När du skickar din sida anonymiseras transkriberingen tillsammans med din text: den anonymiserade transkriberingen visas för domarna och sparas med fallet, och den råa sparas krypterad med ditt original, där bara du kan se den. Telefonnummer, e-postadresser, användarnamn i sociala medier och kontonummer i den byts också ut mot platshållare för domarna.",
     "pricing.premium.f5": "Skärmdumpar som bevis, lästa och sedan slängda, utan extra kostnad",
     "pricing.premium.f6": "Komplettera efter en dom och få den omprövad (1 dom)",
     "pricing.premium.f7": "Hör båda sidor: skicka en privat länk så att den andra kan berätta sin",
@@ -777,21 +828,6 @@ const sv: Locale = {
     "stamp.dissolved": "Ordstrid",
     "bestPoint.of": "Bästa argumentet från {name}",
     "bestPoint.self": "Ditt bästa argument",
-    "privacy.accessTitle": "Vem som kan se vad",
-    "privacy.access":
-      "Du: din originaltext och namnen, på alla enheter när du är inloggad, eller på enheten du använde genom en privat kod som sparats i webbläsaren eller appen (vi sparar bara en förvrängd form av koden). Domar som togs fram när du var utloggad, innan ett konto krävdes, och fall som du svarade på utloggad ligger kvar i listan i den webbläsaren med sina rubriker och dina namn som du skrev dem, så att sidan Domar kan visa dem: alla som använder samma webbläsare ser listan. På en delad dator: logga in eller använd ett privat fönster; rensar du webbplatsens data i webbläsaren försvinner listan. I ett tvåsidigt fall ser var och en bara sitt eget original; efter domen ser båda de två anonymiserade berättelserna, som domarna läste dem. Domarna (AI-modeller som körs av vår AI-leverantör): bara den anonymiserade versionen. Alla med delningslänken: domen med visningsnamn. Som standard är det namnet du väljer för dig själv och de andras förnamn som du skrev dem; du kan ändra dem eller stänga av namnen när som helst, och då visar sidan Part A och Part B. Vi: vi kan dekryptera original med nyckeln och tittar på lagrad text bara för att hantera ett supportärende från dig, utreda missbruk eller när lagen kräver det.",
-    "privacy.removalTitle": "Borttagning",
-    "privacy.removal":
-      "Be om borttagning på domens sida (inloggad kan du öppna den från sidan Domar), på fallets sida för ett tvåsidigt fall, genom att radera ditt konto eller via mejl. Borttagning raderar din originaltext, namnlistan och visningsnamnen (i ett tvåsidigt fall din sidas original och ditt visningsnamn), och delningslänken och dess förhandsbild laddas inte längre för någon. Förhandsvisningar som redan delats i chattappar sparas av de apparna och kan fortsätta synas tills de uppdateras. Vi behåller den anonymiserade texten och domen, utan namn, i vårt register; de går inte längre att öppna via länken. Raderar du ditt konto händer detta för alla dina domar och dina sidor i tvåsidiga fall, och dina inloggningsuppgifter, krediter och ditt abonnemang raderas. Borttagen data ligger kvar i våra säkerhetskopior tills de löper ut (högst 14 dagar, se nedan); om vi någon gång återställer en säkerhetskopia gör vi om varje borttagning (för det sparar vi en lista över vad som togs bort och när, utan text eller namn). Trettio dagar efter att du har tagit bort något raderar vi också den anonymiserade texten och domen och behåller bara utfallet och datumen, om inte lagen kräver att vi sparar dem längre. För ett fall börjar de trettio dagarna först när alla i det har tagit bort det.",
-    "privacy.retentionTitle": "Hur länge vi sparar det",
-    "privacy.retention":
-      "Vi sparar domar och original tills du ber om borttagning eller raderar ditt konto. För att kunna återhämta oss efter ett fel sparar vi säkerhetskopior av servern och dess databas i upp till 14 dagar, sedan raderas de. De innehåller samma data som servern, inklusive de krypterade originalen, och nyckeln finns på samma server, så säkerhetskopiorna skyddas på samma sätt som själva servern, inte av den krypteringen. Hashar för användningsgränser finns kvar i upp till 24 timmar. Serverloggar sparas enligt vår hostingleverantörs vanliga lagringstider. Användningshändelser raderas efter 90 dagar och enhetskopplingar efter 180 dagar utan användning. Loggar och mätvärden hos Grafana Labs sparas i 14 dagar.",
-    "privacy.locationTitle": "Var dina uppgifter finns",
-    "privacy.location":
-      "Våra servrar finns i Tyskland (OVH, Frankfurt). En del behandling sker i USA: vår AI-leverantör kör modellerna som tar bort namn, dömer, läser skärmdumpar och söker på webben; Cloudflare ligger framför okjudge.com som proxy och DNS (all trafik går igenom den) och kör människokontrollen. Inloggning går via Apple eller Google om du väljer dem, och inloggningsmejl via Resend. Uppgifter som hanteras i ett annat land kan omfattas av det landets lagar.",
-    "privacy.rightsTitle": "Dina rättigheter (Kanada)",
-    "privacy.rights":
-      "Judge drivs från Kanada och hanterar personuppgifter enligt Kanadas federala integritetslag (PIPEDA): vi samlar bara in det tjänsten behöver, använder det bara till det och skyddar det, och du kan be att få se, rätta eller ta bort det vi har om dig. Vi svarar inom 30 dagar.",
     "footer.terms": "Villkor",
     "signin.legalTerms": "användarvillkor",
     "age.confirm": "Jag är 18 år eller äldre",

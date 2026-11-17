@@ -109,14 +109,18 @@ const hu: Locale = {
     "vote.dissolved": "félreértés",
     refusedNote: "Az MI ezt most kihagyta. Inkább semmit sem mutatunk, mint egy kamu ítéletet.",
     demoNote: "🎭 Demó mód: nincs beállítva API-kulcs, ez csak egy mintaítélet",
-    "trial.survived": "🛡️ A tiltakozást elutasították: a másik oldal ügyvédje előadta a legerősebb tiltakozását, az ítélet pedig megállt. A bizonyosság nem változik.",
-    "trial.uncertain": "⚠️ A másik oldal ügyvédje tiltakozott, és a tiltakozás valódi kétséget hagyott ezzel az ítélettel kapcsolatban",
-    "trial.overturned": "⚠️ A tiltakozásnak helyt adtak: az ítélet érvényben marad, de a másik oldal legerősebb tiltakozása komolyan gyengítette",
+    "trial.survived":
+      "🛡️ A tiltakozást elutasították: a másik oldal ügyvédje előadta a legerősebb tiltakozását, az ítélet pedig megállt. A bizonyosság nem változik.",
+    "trial.uncertain":
+      "⚠️ A másik oldal ügyvédje tiltakozott, és a tiltakozás valódi kétséget hagyott ezzel az ítélettel kapcsolatban",
+    "trial.overturned":
+      "⚠️ A tiltakozásnak helyt adtak: az ítélet érvényben marad, de a másik oldal legerősebb tiltakozása komolyan gyengítette",
     "trial.minor": "🛡️ A másik oldal ügyvédje jogos pontot említett, de az ítélet érvényben marad",
     "trial.whatWasTested": "A tiltakozás",
     "trial.attackPrefix": "Tiltakozás:",
     "trial.refereePrefix": "Miért:",
-    "trial.mixedNote": "Ez vegyes vita: részben tények, részben értékek vagy szavak jelentése, ezért a tiszta győzelmet nehezebb megvédeni.",
+    "trial.mixedNote":
+      "Ez vegyes vita: részben tények, részben értékek vagy szavak jelentése, ezért a tiszta győzelmet nehezebb megvédeni.",
     confidence: "Bizonyosság: {n}/{total}",
     verdictAria: "Ítélet: {label}",
     "party.a": "Fél A",
@@ -128,16 +132,14 @@ const hu: Locale = {
     "shared.subtitle": "Valaki megosztotta ezt az ítéletet",
     "shared.cta": "Dönts el te is egy vitát →",
     errorFallback: "Valami hiba történt. Megpróbálod újra?",
-    "error.not_configured":
-      "A bíró még nincs beállítva. Próbáld újra később.",
+    "error.not_configured": "A bíró még nincs beállítva. Próbáld újra később.",
     "error.quota": "A bírák egyelőre kifogytak az MI-keretükből. Próbáld újra pár perc múlva.",
     "error.unavailable": "Most nem érjük el a bírákat. Várj egy percet, és próbáld újra.",
     "error.too_short": "Ez kicsit kevés. Mesélj többet a vitáról.",
     "error.too_long": "Ez nagyon sok! Maradj 6000 karakter alatt.",
     "error.invalid": "Ez a kérés valahogy nem stimmel.",
     "error.rate_limited": "Csendet kérek! Egyelőre elérted a korlátot. Próbáld újra {wait} múlva.",
-    "error.daily_cap":
-      "Mára bezárt a bíróság: ennyi vita fért bele a napba. Újranyitás {wait} múlva.",
+    "error.daily_cap": "Mára bezárt a bíróság: ennyi vita fért bele a napba. Újranyitás {wait} múlva.",
     "error.captcha_failed": "Nem tudtuk megállapítani, hogy ember vagy-e. Próbáld újra az ellenőrzést, aztán küldd el.",
     "wait.moment": "pár perc",
     "wait.minute": "1 perc",
@@ -147,7 +149,8 @@ const hu: Locale = {
     "refused.headline": "Az MI ebbe nem akart beleszólni",
     "refused.crux":
       "Az MI biztonsági szűrője nem engedte, hogy ebben döntsön. Jobb a semmilyen ítélet, mint a kitalált.",
-    "refused.bestPoint": "Próbáld meg másképp megfogalmazni. Vagy fogadd el, hogy vannak viták, amelyek túl nagyok egy apphoz.",
+    "refused.bestPoint":
+      "Próbáld meg másképp megfogalmazni. Vagy fogadd el, hogy vannak viták, amelyek túl nagyok egy apphoz.",
     "refused.claim": "Kihagyva",
     "nav.skip": "Ugrás a tartalomra",
     "nav.home": "A Judge kezdőlapja",
@@ -173,7 +176,8 @@ const hu: Locale = {
     "how.kicker": "Öt lépés",
     "how.lead": "Nincs pénzfeldobás. Minden vita ugyanazon az öt lépésen megy át.",
     "how.step1.title": "Mindkét oldal a legjobb formájában",
-    "how.step1.body": "Mindkét oldal a lehető legerősebb formájában kerül terítékre, még az is, amelyikről azt hiszed, hogy nincs igaza.",
+    "how.step1.body":
+      "Mindkét oldal a lehető legerősebb formájában kerül terítékre, még az is, amelyikről azt hiszed, hogy nincs igaza.",
     "how.step2.title": "Az állítások szétválogatása",
     "how.step2.body":
       "Minden állítás címkét kap: tény, érték, definíció vagy logika, mert mindegyiket máshogy kell eldönteni.",
@@ -195,8 +199,7 @@ const hu: Locale = {
     "sample.nameB": "Te",
     "sample.label": "Te nyertél",
     "sample.headline": "Senki sem azért kér szendvicset, hogy hot dogot kapjon",
-    "sample.crux":
-      "Pusztán a formája alapján a hot dog elmenne szendvicsnek, de senki sem így használja a szót.",
+    "sample.crux": "Pusztán a formája alapján a hot dog elmenne szendvicsnek, de senki sem így használja a szót.",
     "sample.why":
       "Bence érve csak a formára épül. Egy szó azt jelenti, amire az emberek használják, és ha a büfében szendvicset kérsz, sosem hot dogot kapsz.",
     "sample.bestPoint":
@@ -239,8 +242,7 @@ const hu: Locale = {
       "Csak azt tudja, amit elmondasz neki, és az eredményt az is befolyásolja, hogyan meséled el. A másik fél álláspontját is írd le úgy, ahogy ő mondaná.",
     "about.limit2":
       "Az MI-bírák tévedhetnek a tényekben. Minden ítélet felsorolja, milyen tényekre épít, így ellenőrizheted őket.",
-    "about.limit3":
-      "A nevek cseréje többnyire működik, de a szokatlan nevek vagy becenevek néha átcsúsznak.",
+    "about.limit3": "A nevek cseréje többnyire működik, de a szokatlan nevek vagy becenevek néha átcsúsznak.",
     "about.limit4": "Szórakozásra és tisztánlátásra való, nem jogi, egészségügyi vagy pénzügyi tanács.",
     "about.builtTitle": "A motorháztető alatt",
     "about.built":
@@ -250,33 +252,96 @@ const hu: Locale = {
     "privacy.kicker": "Az adataid",
     "privacy.lead":
       "Röviden: amit írsz, a nevekkel együtt titkosítva tároljuk, hogy később visszatérhess hozzá. A bírák mindig csak egy olyan változatot olvasnak, amelyből kivettük a neveket. Bármikor kérheted a törlését. Az adataidat nem adjuk el. Ha a Judge-ot valaha eladják vagy összeolvasztják egy másik céggel, ennek az irányelvnek megfelelően az új tulajdonoshoz kerül.",
+    "privacy.whoTitle": "Kik vagyunk",
+    "privacy.who":
+      "A Judge-ot Aytu Tuna üzemelteti, magánszemély Kanadában.\n{address}\nMi döntjük el, mit gyűjtünk és miért. A személyes adatokért felelős személy Aytu Tuna, tulajdonos. Elérhetőség: {email}.",
     "privacy.storedTitle": "Mit tárolunk",
     "privacy.stored":
-      "Minden ítéletnél pontosan úgy tároljuk a szövegedet, ahogy megírtad (a bírák kérdéseire adott válaszaiddal és a képernyőképekből kiolvasott szöveggel együtt), valamint egy listát arról, melyik névből melyik címke lett. Ezeket egy olyan kulccsal titkosítjuk, amelyet nem az adatbázisban tárolunk. Emellett tároljuk a bírák által olvasott anonimizált változatot (a nevek helyén Fél A és Fél B), a választott beállításaidat, az ítéletet, az esetleges fordítást, valamint azokat a neveket, amelyeket a megosztási oldalon meg szeretnél jeleníteni. Azt is számoljuk, hogyan használják a Judge-ot: mely képernyőket és funkciókat, az alkalmazás verziójával, az eszköz típusával, a rendszer verziójával, a nyelvvel és a kapcsolatod országával, az alkalmazásokban pedig egy eszközazonosítóval. Ha be vagy jelentkezve, ez a fiókodhoz kapcsolódik. A használati eseményeket 90 napig őrizzük, a fiókod és az eszközeid közti kapcsolatokat 180 napig. Az alkalmazások Beállításaiban van egy Használati statisztika kapcsoló, a weboldal pedig semmit nem küld, ha a böngésződ Do Not Track vagy Global Privacy Control jelzést küld. Ügyek szövege soha nincs benne. Ha értékelsz egy ítéletet, az értékelést vele együtt megőrizzük.",
+      "Minden ítélethez eltároljuk a szöveget pontosan úgy, ahogy megírtad (a bírák kérdéseire adott válaszaiddal és a képernyőképekről kiolvasott szöveggel együtt), valamint egy listát arról, melyik név melyik címkévé vált. Ezeket egy olyan kulccsal titkosítjuk, amely nincs az adatbázisban. Eltároljuk a bírák által olvasott anonimizált változatot is (a nevek helyén A fél és B fél), a kiválasztott beállításaidat, az ítéletet, az esetleges fordítást és a megosztási oldalon megjeleníteni választott neveket. Azt is számoljuk, hogyan használják a Judge-ot: mely képernyőket és funkciókat, az alkalmazás verziójával, az eszköz típusával, a rendszer verziójával, a nyelvvel és a kapcsolat országával, az alkalmazásokban pedig egy eszközazonosítóval. Ha be vagy jelentkezve, ez a fiókodhoz kapcsolódik. A használati eseményeket 90 napig, a fiókod és az eszközeid közötti kapcsolatokat 180 napig őrizzük. Az alkalmazások Beállításaiban van egy Használati statisztika kapcsoló, a weboldal pedig semmit sem küld, ha a böngésződ Do Not Track vagy Global Privacy Control jelzést küld. Ebben soha nincs benne az ügy szövege. Ha értékelsz egy ítéletet, az értékelést az ítélettel együtt tároljuk. Az értékelés törölhető; ilyenkor a sort a pozitív vagy negatív jelölés nélkül őrizzük meg. Nyilvántartjuk a privát részletekről szóló beleegyezésedet és a Segíts jobbá tenni a Judge-ot választásaidat is, a dátummal, a nyelvvel és a platformmal, valamint azzal a szöveggel, amelyet láttál.",
     "privacy.helpTitle": "Segíts jobbá tenni a Judge-ot",
     "privacy.help":
-      "Alapból ki van kapcsolva, amíg be nem kapcsolod. Bekapcsolt állapotban a bírák által olvasott anonimizált szöveget, az ítéleteiket és az értékeléseidet felhasználhatjuk a Judge bíráinak teszteléséhez és tanításához. A nevek sosem részei ennek. Ha kikapcsolod, ez a felhasználás leáll mindenre, amit létrehoztál, és rögzítjük, mikor kapcsoltad be vagy ki.",
-    "privacy.notStoredTitle": "Amit nem teszünk",
-    "privacy.notStored":
-      "Nincsenek hirdetési nyomkövetők. A nyelvválasztásod csak a böngésződ helyi tárhelyén van meg, sehol máshol.",
+      'Alapból ki van kapcsolva, amíg be nem kapcsolod. Bekapcsolt állapotban a bírák által olvasott anonimizált szöveget, az ítéleteiket és az értékeléseidet felhasználhatjuk MI-modellek tesztelésére és tanítására: a Judge saját modelljeiére, és ha a Judge-ot valaha eladják vagy összeolvasztják, az új tulajdonos modelljeiére. A nevek sosem részei ennek. A kikapcsolás attól kezdve mindent kivon a tanításból, amit létrehozol. Rögzítjük, mikor kapcsoltad be vagy ki.\nAz „anonimizált" itt azt jelenti, hogy a neveket kivettük; az egyéb, általad leírt részletek még benne lehetnek a szövegben. Csak a bekapcsolt állapotban készült ítéletekre vonatkozik, egy ügyre pedig csak akkor, ha mindenki, aki valamelyik felet megírta, bekapcsolta. A már betanított modelleket nem változtatjuk meg. Eddig semmit sem tanítottunk be. A Judge kikapcsolt állapotban is ugyanúgy működik.\nEgyszer kérdezzük meg, a saját ítélet-oldaladon a második befejezett ítéleted után. Soha nem kérdezünk olyan ítéleten, amelyet valaki megosztott veled. A kártya ezt mondja: „Engedd, hogy a Judge az anonimizált ítéleteidet és értékeléseidet MI tanítására használja. A neveket soha nem tartalmazza." A válaszodat a Beállításokban bármikor megváltoztathatod.',
+    "privacy.purposesTitle": "Miért használjuk az adataidat",
+    "privacy.purposes":
+      "- Hogy ítéletet adjunk neked, működtessük a fiókodat, és kezeljük a vásárlásokat és a támogatást. Jogalap (EU, Egyesült Királyság és Brazília): szükséges az általad kért szolgáltatás nyújtásához.\n- Hogy a Judge biztonságos és működőképes maradjon: használati korlátok, az emberi ellenőrzés, az ingyenes kreditek farmolóinak kiszűrése, hibajelentések, használati számlálók, és az e-mail-cím kódolt alakjának megőrzése a törlés után. Jogalap: jogos érdekünk egy biztonságos, működő szolgáltatásban. E-mailben tiltakozhatsz. Az alkalmazásokban van Használati statisztika kapcsoló, a böngésződ Do Not Track vagy Global Privacy Control jelzése pedig leállítja a weboldal saját használati eseményeit.\n- Hogy ellenőrizzük a korodat, a telefonod életkorjelzését is beleértve. Jogalap: jogos érdekünk, hogy a Judge csak felnőtteké maradjon, vagy jogi kötelezettség ott, ahol alkalmazásbolti korhatártörvény érvényes.\n- Hogy a név nélküli szöveget 30 napig megőrizzük, miután eltávolítasz valamit, visszaélés vagy jogi igény esetére. Jogalap: jogos érdekünk.\n- Hogy megőrizzük annak bizonyítékát, amibe beleegyeztél: a privát részletekről szóló beleegyezést és a Segíts jobbá tenni a Judge-ot választásaidat. Jogalap: jogos érdekünk, hogy igazolni tudjuk, amibe beleegyeztél.\n- Hogy az anonimizált ítéleteidet és értékeléseidet MI tanítására használjuk. Jogalap: a hozzájárulásod, csak ha bekapcsolod.\n- Hogy betartsuk a törvényt, és vezessük a kötelező nyilvántartásokat. Jogalap: jogi kötelezettség.\nAz adataidat soha nem használjuk hirdetésekre, és nincsenek hirdetési követőink. Ha valaha új felhasználást szeretnénk, előbb szólunk, és újra megkérdezünk, ha a törvény a hozzájárulásodat kívánja.",
+    "privacy.sensitiveTitle": "Miről ne írj",
+    "privacy.sensitive":
+      'A viták érinthetnek privát témákat, például egészséget, kapcsolatokat, vallást vagy pénzt. Csak azt írd le, amire az ítéletnek szüksége van, és hagyd ki mások privát részleteit. A Judge nem vészhelyzetekre és nem jogi tanácsadásra való.\nAz első ítélet, egy ügy első felének vagy egy ügyre adott első válaszod előtt megkérünk, hogy pipálj be egy mezőt: „A szövegem privát részleteket is tartalmazhat, például egészségről vagy kapcsolatokról. A Judge névtelenítve elküldi egy külső MI-szolgáltatásnak az ítéletem megírásához, és addig őrzi, amíg el nem távolítom." Csak akkor folytathatod, ha be van pipálva. Fiókonként egyszer kérdezzük; ha már van fiókod, a következő ítéletednél kérdezzük meg. Aki fiók nélkül válaszol egy ügyre, ugyanezt a mezőt látja. A pipa nyilvántartását a dátummal, a nyelvvel, a platformmal és a látott szöveggel együtt őrizzük.',
+    "privacy.othersTitle": "Akikről írsz",
+    "privacy.others":
+      'A szövegedben szerepelhet valaki, aki nem használja a Judge-ot. A bírák csak olyan címkék alatt látják, mint a „C személy". A nevét titkosítva tároljuk, minden névhez egy kódolt ujjlenyomattal (kulcsos hash, nem maga a név). A nevek megjelenhetnek a megosztási oldalon, a Ki mit láthat részben leírtak szerint. Ha valaki más ügyében szerepel a neved, írj a {email} címre a linkkel, és eltávolítjuk a neved a megosztási oldalról, vagy megvizsgáljuk a tiltakozásodat.',
+    "privacy.automatedTitle": "Az ítéleteket MI írja",
+    "privacy.automated":
+      'Az ítéletedet MI-modellek írják, előtte egyetlen ember sem olvassa el. Ez egy vélemény az érvelésről úgy, ahogy megírták, a névtelenített szöveg, az esetlegesen megjelenített webes források és a válaszaid alapján. Nem jogi tanács, és nem kötelező érvényű. Ennek alapján semmilyen döntés nem születik rólad, a fiókodról, egy árról vagy a hozzáférésedről. Tévedhet vagy egyoldalú lehet. Ha nem értesz egyet, értékeld „Nem tisztességes"-nek, adj hozzá kontextust, vagy írj a {email} címre, és egy ember megnézi. Az ügy másik fele is kérheti.',
+    "privacy.accessTitle": "Ki mit láthat",
+    "privacy.access":
+      "Te: az eredeti szövegedet és a neveket, bármelyik eszközön, ha be vagy jelentkezve, vagy azon az eszközön, amelyet használtál, a böngészőben vagy az alkalmazásban mentett privát kód révén (ennek csak a kódolt alakját őrizzük). A bejelentkezés nélkül, még a fiókkötelezettség előtt írt ítéletek és a bejelentkezés nélkül megválaszolt ügyek a címükkel és a te általad írt nevekkel együtt a böngészőben listán maradnak, hogy az Ítéletek oldal megjeleníthesse őket: aki ugyanazt a böngészőt használja, látja ezt a listát. Közös számítógépen jelentkezz be, vagy használj privát ablakot; a webhely adatainak törlése a böngészőben eltávolítja a listát. Kétoldalú ügyben mindenki csak a saját eredetijét látja; az ítélet után mindketten látják mindkét anonimizált leírást, úgy, ahogy a bírák olvasták. A bírák (az MI-szolgáltatónk által futtatott modellek): csak az anonimizált változatot. Bárki, akinek megvan a megosztási link: az ítéletet a megjelenített nevekkel. Alapértelmezés szerint ez a saját magadnak választott név és a többiek keresztneve úgy, ahogy írtad; ezeket megváltoztathatod, vagy bármikor kikapcsolhatod a neveket, és akkor az oldal A felet és B felet mutat. Mi: a kulccsal vissza tudjuk fejteni az eredetiket, és a tárolt szöveget csak akkor nézzük meg, ha kezelnünk kell a te támogatási kérésedet, kivizsgálunk egy visszaélést, vagy ha a törvény megköveteli.",
+    "privacy.casesTitle": "Kétoldalú ügyek és fellebbezések",
+    "privacy.cases":
+      'Kétoldalú ügyben minden felet elküldéskor anonimizálunk, ugyanúgy, mint egy ítéletet. A bírák az anonimizált szöveget olvassák; mindenki saját, általa írt oldala a névlistájával együtt titkosítva van tárolva, és csak ő láthatja. Mindenki beírja azt a nevet, amelyet meg szeretne jeleníteni a megosztási oldalon, amikor elküldi a saját oldalát; ha üresen hagyja, A fél vagy B fél lesz. A másik személynek nincs szüksége fiókra; a válaszai korlátozását az IP-címének kulcsos hash-e végzi. A meghívó linket csak hash formájában tároljuk. Ha a másik személy bejelentkezve válaszol, a fiókja a saját oldalához kapcsolódik, így csak ő adhat később kontextust, vagy láthatja az eredetijét; ha bejelentkezés nélkül válaszol, ugyanezt a böngészőjében őrzött privát kód teszi, és ha később abban a böngészőben bejelentkezik, megtarthatja az ügyet a fiókjában. Hogy ugyanaz a személy mindkét leírásban ugyanazt a címkét kapja, a szerver minden ügyön belül kódolt névujjlenyomatokat tárol (kulcsos hash-eket, nem magukat a neveket). Az ítéletig egyik fél sem olvashatja a másik szövegét; kétoldalú ítélet után mindketten olvashatják mindkét anonimizált leírást. Az ítélet után hozzáadott kontextust (fellebbezést) ugyanígy kezeljük. Amikor a másik személy válaszol, rövid, az ügy szövegét nem tartalmazó e-mailt küldhetünk neked, ha az e-mail be van állítva. Bármelyikük eltávolíthatja a saját oldalát: az eredetije és a megjelenített neve törlődik, és az ügy megosztási linkjei mindenkinek leállnak. A fiókod törlése ezt megteszi minden ügyre, amelyet elindítottál vagy megválaszoltál. Az az ügy, amelyre senki sem válaszol, 7 nap után lejár, de a te oldalad szövege marad, amíg el nem távolítod. Aki fiók nélkül válaszol, elküldés előtt bejelöli, hogy „18 éves vagyok, vagy idősebb", és a privát részletek mezőt, és mindkét jelölést az oldalával együtt őrizzük.',
+    "privacy.webSearchTitle": "Webes keresés és kérdések",
+    "privacy.webSearch":
+      "Minden ítélet az anonimizált érvelést elküldi az MI-szolgáltatónknak, bekapcsolt webes kereséssel. A keresési kifejezéseket a modell ebből az anonimizált szövegből írja, az eredmények pedig a szolgáltató keresési partnerétől jönnek. A felhasznált források megjelennek az ítéleten. A bírák először legfeljebb két kérdést tehetnek fel neked: ezek kitalálásához a szöveged úgy, ahogy beírtad, a nevekkel együtt, még egyszer az MI-szolgáltatóhoz kerül. A válaszaidat az ítélet előtt az érveléssel együtt anonimizáljuk; a kérdéseket és a válaszaidat úgy, ahogy írtad, a titkosított eredetiddel együtt tároljuk.",
+    "privacy.evidenceTitle": "Képernyőképek",
+    "privacy.evidence":
+      "A böngésződ feltöltés előtt lekicsinyíti a nagy képeket. Minden kép ezután egyszer egy külső MI-szolgáltatáshoz kerül, hogy a látható szöveget kiolvassák; magát a képet soha nem tároljuk. A nyers átirat, amely még tartalmazhat neveket, egy aláírt tokenben jön vissza hozzád, amelyet a böngésződ legfeljebb 6 óráig tart meg. Amikor elküldöd az oldalad, az átiratot a szövegeddel együtt anonimizáljuk: az anonimizált átiratot megmutatjuk a bíráknak, és az üggyel együtt tároljuk, a nyers átiratot pedig az eredetiddel együtt titkosítva őrizzük, ahol csak te láthatod. A benne lévő telefonszámokat, e-mail-címeket, közösségi média felhasználóneveket és számlaszámokat a bírák számára helyőrzők váltják fel.",
+    "privacy.accountsTitle": "Fiókok",
+    "privacy.accounts":
+      "A Judge csak 18 éves és idősebb emberek számára való, és azokat a fiókokat, amelyekről kiderül, hogy 18 év alattiaké, lezárjuk. Ítélethez fiók kell; egy kétoldalú ügy másik fele fiók nélkül is válaszolhat. Ha Apple- vagy Google-fiókkal jelentkezel be, eltároljuk az általuk megosztott e-mail-címet, nevet és profilkép-linket, valamint azt, melyik bejelentkezési módot használtad; az Apple vagy a Google láthatja, hogy bejelentkeztél a Judge-ba. Ha e-mailes linkkel vagy kóddal jelentkezel be, az e-mail a Resenden keresztül megy ki, és az ellenőrzéséhez rövid időre eltárolunk egy rekordot az e-mail-címeddel: 10 perc után érvényét veszti, és használat után vagy nem sokkal a lejárata után törlődik. Ha jelszót állítasz be, a fiókoddal csak a kódolt (hash-elt) alakját tároljuk, magát a jelszót soha. Eltároljuk a munkamenet-rekordjaidat is (egy véletlen token és a lejárata, IP-cím és böngészőadatok nélkül, bár az alkalmazások bejelentkezéskor eszközazonosítót is rögzítenek), a krediteidet, a csomagodat és annak előzményeit, valamint azt, mely ítéletek használtak el kreditet (csak az ítélet azonosítóját). Azt is nyilvántartjuk, mely ítéletek és ügyek a tieid, hogy bármelyik eszközön megtaláld őket. A fiókod törlése a fiókoldalon (az alkalmazásokban és a weboldalon) eltávolítja a fiókodat, a bejelentkezési rekordjaidat, a krediteidet, a csomagodat és a használati eseményeidet, és eltávolítja az ítéleteidet és az ügyekben lévő feleidet az Eltávolítás részben leírtak szerint. Néhány dolgot a törlés után is megőrzünk, ezeket az Amit az eltávolítás vagy törlés után megőrzünk rész sorolja fel. Ha nem tudsz bejelentkezni, az okjudge.com/delete-account oldal elmagyarázza, hogyan kérheted ezt tőlünk e-mailben. Az e-mail-címednek csak a kódolt alakját őrizzük, hogy egy vele nyitott új fiók ne kapjon második ingyenes ítéletet, és zárva maradjon, ha a fiókodat azért zártuk le, mert 18 év alatti vagy. Azt is rögzítjük, hogy megerősítetted-e, hogy 18 éves vagy idősebb vagy, és hogyan (pipával, vagy a telefonod életkorjelzésével; Androidon az alkalmazás a Google Playt kérdezi, iPhone-on az Apple-t).",
+    "privacy.removalTitle": "Eltávolítás",
+    "privacy.removal":
+      "Az eltávolítást az ítélet oldalán kérheted (bejelentkezve az Ítéletek oldalról nyithatod meg), kétoldalú ügynél az ügy oldalán, a fiókod törlésével vagy e-mailben. Az eltávolítás törli az eredeti szövegedet, a névlistát és a megjelenített neveket (kétoldalú ügyben a te oldalad eredetijét és a megjelenített nevedet), a megosztási link és az előnézeti képe pedig mindenki számára leáll. A csevegőalkalmazásokba már beküldött előnézeteket ezek az alkalmazások őrzik, és addig is látszhatnak, amíg meg nem frissítik őket. Az anonimizált szöveget és az ítéletet, nevek nélkül, a nyilvántartásainkban megőrizzük; a linken keresztül már nem nyithatók meg. A fiók törlése ezt megteszi az összes ítéletedre és az ügyekben lévő feleidre, és törli a bejelentkezési adataidat, krediteidet és csomagodat. Az eltávolított adatok a biztonsági mentésekben maradnak, amíg azok le nem járnak (legfeljebb 14 nap, lásd lent); ha valaha visszaállítunk egy mentést, minden eltávolítást újra alkalmazunk (ehhez listát őrzünk arról, mi lett eltávolítva és mikor, szöveg és nevek nélkül). Harminc nappal azután, hogy eltávolítasz valamit, az anonimizált szöveget és az ítéletet is töröljük, csak az eredményt és a dátumokat tartjuk meg, hacsak a törvény hosszabb megőrzést nem ír elő. Ez a 2026. november 14-én (UTC) vagy azután eltávolított dolgokra vonatkozik; a régebbi eltávolítások megtartják az anonimizált szövegüket. Egy ügynél a harminc nap csak akkor kezdődik, amikor mindenki eltávolította. Azokat az ítéleteket és ügyeket, amelyeket senki sem távolít el, addig őrizzük, amíg el nem távolítod őket, vagy nem törlöd a fiókodat. A bejelentkezés nélkül, még a fiókkötelezettség előtt készült ítélet eltávolítható, ha a {email} címre írsz a linkjével.",
+    "privacy.afterRemovalTitle": "Amit az eltávolítás vagy törlés után megőrzünk",
+    "privacy.afterRemoval":
+      "Az eltávolítás után és a harminc nap után is megőrizzük:\n- az eredményt és a pontszámokat, a kiválasztott beállításokat, a dátumokat, az azonosítókat, azt, hogy az ügynek mely felei és nyelve voltak, és az ügyet elindító fiók azonosítóját;\n- az értékeléseidet. Amikor törlöd a fiókodat, minden értékelés egy véletlen azonosítóra kerül át, így már nem vezet hozzád;\n- a Segíts jobbá tenni a Judge-ot választásaid és a privát részletekről szóló beleegyezésed nyilvántartását (dátumok, nyelv, platform és a látott szöveg) a fiókod törlése után 6 évig, hogy igazolni tudjuk, amibe beleegyeztél. A fiókod törlése után ezek a rekordok véletlen azonosítót viselnek, és nincs kapcsolatuk a nevedhez vagy e-mail-címedhez;\n- az eltávolítási listát, amely azonosítókat, okokat, dátumokat és az ügy felét tartalmazza, 90 napig, hogy egy mentés visszaállítása után újra alkalmazhassuk az eltávolításokat;\n- az e-mail-címed kódolt alakját, hogy megakadályozzuk az ingyenes kreditekkel való ismételt visszaélést (lásd Fiókok);\n- egy fiókkapcsolat nélküli eszközrekordot, legfeljebb 180 napig;\n- a biztonsági mentéseket, legfeljebb 14 napig.\nAmikor egy ügyet törlünk, a nevei kódolt ujjlenyomatait és címkéit kiürítjük, így azokat nem őrizzük.",
+    "privacy.retentionTitle": "Meddig őrizzük meg",
+    "privacy.retention":
+      "Az ítéleteket és az eredetiket addig őrizzük, amíg el nem távolítást kérsz, vagy nem törlöd a fiókodat. A hibákból való felépüléshez a szerver és adatbázisa mentéseit legfeljebb 14 napig tartjuk meg, aztán törlődnek. Ugyanazokat az adatokat tartalmazzák, mint a szerver, a titkosított eredetiket is, és a kulcs ugyanazon a szerveren van, így a mentéseket maga a szerver védelme óvja, nem ez a titkosítás. A korlátozási hash-ek legfeljebb 48 óráig élnek. A használati eseményeket 90 nap után, az eszközkapcsolatokat 180 nap használaton kívüliség után töröljük. A Grafana Labsnél a naplókat és metrikákat 14 napig őrizzük. A Sentryben az összeomlási jelentéseket legfeljebb 30 napig őrizzük. A többi szervernapló a tárhelyszolgáltatónk szokásos megőrzési idejét követi. A bejelentkezési kód 10 perc után lejár, a lejárt kódokat naponta töröljük. A munkamenet az utolsó használat után 30 nappal véget ér. Az eltávolítási listát 90 napig őrizzük. A hozzájárulási választásaid nyilvántartását a fiókod törlése után 6 évig őrizzük, aztán töröljük.",
     "privacy.ipTitle": "Használati korlátok",
     "privacy.ip":
-      "Hogy a bíróság mindenkinek nyitva maradjon, korlátozzuk, hány ítéletet kérhet egy fiók, és hány fordítást egy látogató. A fordításoknál és a kétoldalú ügyekre adott válaszoknál nem magát az IP-címedet, hanem annak kulcsos hash-ét tároljuk a korlátozási tárolónkban, legfeljebb 24 órán át. Ha be van kapcsolva az emberellenőrzés, az IP-címed ehhez az ellenőrzéshez a Cloudflare-hez is eljut. Az ítéleteddel együtt sosem mentjük el.",
+      "Hogy a bíróság mindenki számára nyitva maradjon, korlátozzuk, hogy fiókonként hány ítéletet, látogatónként hány fordítást lehet kérni. A fordításoknál, a kétoldalú ügyre adott válaszoknál, az ítélet állapotának lekérdezésekor, amíg azt elbírálják, és a bejelentkezési kísérleteknél az IP-címed kulcsos hash-ét őrizzük, nem magát a címet, legfeljebb 48 óráig. A bejelentkezési korlátok magát a címet rövid ideig, nagyjából egy percig a szerver memóriájában tartják, soha nem lemezen. Ha az emberi ellenőrzés be van kapcsolva, az IP-címed ennek az ellenőrzésnek a céljából a Cloudflare-hez is eljut. Soha nem mentjük el az ítéleteddel együtt.",
     "privacy.processorsTitle": "Ki kezeli még a szövegedet",
     "privacy.processors":
-      "A begépelt szöveged, a valódi nevekkel együtt, először az Egyesült Államokban működő MI-szolgáltatónkhoz kerül, hogy kivegye belőle a neveket. Csak az anonimizált változat kerül a bírák elé; az eredetit titkosítva tároljuk, ahogy fent leírtuk. Ha be van kapcsolva az emberellenőrzés, a Cloudflare Turnstile a böngésződben fut, és az eredményt a Cloudflare-rel ellenőrzi. Ha belépsz, a belépést az Apple vagy a Google kezeli (amelyiket választod), a belépési e-maileket pedig a Resend küldi ki. A tárhelyszolgáltatónk szokásos szervernaplókat vezet. Az alkalmazásokon belüli vásárlások az App Store-on vagy a Google Play-en mennek keresztül, és a RevenueCat kezeli őket, amely megkapja a fiókod azonosítóját és a vásárlási előzményeidet. A Grafana Labs megkapja a szerver naplóit és a teljesítménymutatókat, amelyeket 14 napig tárol az EU-ban; a naplókban nincs ügyszöveg. Az alkalmazásokból és erről a weboldalról érkező összeomlás- és hibajelentések a Sentryhez kerülnek, ahol legfeljebb 30 napig tárolják őket az EU-ban; tartalmazzák a hibát, az alkalmazás vagy a böngésző verzióját és az eszköz típusát, de nem tartalmaznak ügyszöveget, fiókazonosítót vagy kapcsolati címet.",
+      "Az általad beírt szöveg, a valódi nevekkel együtt, először az Egyesült Államokban lévő MI-szolgáltatónkhoz kerül, hogy a neveket ki lehessen venni. Csak az anonimizált változatot bírálják el; az eredetit titkosítva tároljuk, ahogy fent leírtuk. Ha az emberi ellenőrzés be van kapcsolva, a Cloudflare Turnstile a böngésződben fut, és az eredményt a Cloudflare-nél ellenőrzi. Ha bejelentkezel, az Apple vagy a Google (amelyiket választod) kezeli a bejelentkezést, a bejelentkezési e-maileket pedig a Resend küldi. Az alkalmazásokon belüli vásárlások az App Storen vagy a Google Playen mennek keresztül, és a RevenueCat kezeli őket, amely megkapja a fiókazonosítódat és a vásárlási előzményeidet. A Grafana Labs megkapja a szerverünk naplóit és a teljesítménymetrikákat, az EU-ban tárolva 14 napig; a naplók nem tartalmaznak ügyszöveget. Az alkalmazásokból és erről a weboldalról érkező összeomlási és hibajelentések a Sentryhez kerülnek, az EU-ban tárolva legfeljebb 30 napig; tartalmazzák a hibát, az alkalmazás vagy a böngésző verzióját és az eszköz típusát, de nem tartalmaznak ügyszöveget, fiókazonosítót vagy kapcsolati címet. A tárhelyszolgáltatónk szokásos szervernaplókat vezet. Az Android-alkalmazás a Google Playtől kéri az életkori állapotot, az iPhone-alkalmazás az Apple-től. Mi vagyunk az adatkezelő; ezek a szolgáltatók a nevünkben kezelik az adatokat.",
     "privacy.shareTitle": "Megosztási linkek",
     "privacy.share":
-      "Aki megkapja egy ítélet linkjét, láthatja az ítéletet az általad választott megjelenített nevekkel (vagy Fél A-val és Fél B-vel, ha kikapcsoltad a neveket). A linkek hosszú, véletlenszerű azonosítókat használnak, a megosztási oldalak pedig arra kérik a keresőket, hogy ne indexeljék őket. Egy eltávolított ítélet linkje és előnézeti képe nem töltődik be többé; a csetalkalmazásokban már kiküldött előnézetek még látszhatnak, amíg az adott app nem frissíti őket. Ne írj bele címet, telefonszámot vagy bármi mást, amit nem szeretnél egy mások által is megnyitható oldalon látni.",
+      "Bárki, akinek megvan egy ítélet linkje, láthatja, a te általad választott megjelenített nevekkel (vagy A féllel és B féllel, ha kikapcsoltad a neveket). A linkek hosszú véletlen azonosítókat használnak, és a megosztási oldalak arra kérik a keresőket, hogy ne indexeljék őket. Egy eltávolított ítélet linkje és előnézeti képe leáll; a csevegőalkalmazásokba már beküldött előnézetek addig is látszhatnak, amíg ezek az alkalmazások nem frissítik őket. Hagyd ki a címeket, telefonszámokat és mindent, amit nem szeretnél olyan oldalon látni, amelyet mások megnyithatnak.",
+    "privacy.locationTitle": "Hol vannak az adataid",
+    "privacy.location":
+      "A szervereink Németországban vannak (OVH, Frankfurt). Egyes feldolgozások az Egyesült Államokban történnek: az MI-szolgáltatónk futtatja a modelleket, amelyek kiveszik a neveket, bíráskodnak, kiolvassák a képernyőképeket és keresnek a weben; a Cloudflare az okjudge.com előtt áll proxyként és DNS-ként (az összes forgalom rajta halad át), és az emberi ellenőrzést is ő futtatja. A bejelentkezés az Apple-n vagy a Google-ön keresztül megy, ha ezeket választod, a bejelentkezési e-mailek pedig a Resenden át. Egy másik országban kezelt adatokra az adott ország joga vonatkozhat. Kanadából dolgozunk, és onnan láthatjuk az adataidat.",
+    "privacy.storageTitle": "Sütik és böngészőtár",
+    "privacy.storage":
+      "A weboldal egy bejelentkezési sütit (verdict.session_token) használ, amely bejelentkezve tart, valamint rövid életű sütiket, amíg Apple- vagy Google-fiókkal jelentkezel be (a verdict.state 5 percig él). A Cloudflare, amely az emberi ellenőrzést futtatja, ehhez saját sütiket állíthat be. Egyiket sem használjuk követésre. A böngésződ helyi tárolója megőrzi a nyelvedet, a témádat és a Gamify választásodat; egy el nem küldött piszkozatot (a beírt szöveggel együtt) a bejelentkezés idejére; a bejelentkezés nélkül készített ítéletek és ügyek listáját; az eredetijeidhez hozzáférést adó privát kódokat; egy ügyben használt neveket; a megválaszolandó ügyek meghívókódjait; a korodra vonatkozó megerősítést; az utoljára választott bíróságot; és azt, hogy mely példákat láttad már. A munkamenet-tár az e-mail-címet és a módot tartja, amíg a bejelentkezési e-mailre vársz, és a lap használati jelzőit. Ez az eszközödön marad. A webhely adatainak törlése eltávolítja. Az alkalmazások hasonló dolgokat tárolnak az eszközön.",
+    "privacy.notStoredTitle": "Amit nem teszünk",
+    "privacy.notStored":
+      "Nincsenek hirdetési követők. Az adataidat nem adjuk el, és hirdetésekre sem osztjuk meg. A weboldal és az alkalmazások nem követnek más webhelyeken. Hogyan reagálunk a Do Not Trackre: a weboldal nem küld használati eseményeket a böngésződből, ha a böngésződ Do Not Track vagy Global Privacy Control jelzést küld, és az alkalmazások Használati statisztika kapcsolója ugyanezt teszi az alkalmazásokban. A szerverünk továbbra is rögzít néhány, a fiókodhoz kötött eseményt (bejelentkezés, létrehozott vagy sikertelen ügyek és ítéletek, vásárlások) és azt, hogy melyik eszközről jelentkeztél be. A szövegedet soha nem használjuk semmi tanítására, hacsak nem kapcsoltad be a Segíts jobbá tenni a Judge-ot.",
+    "privacy.securityTitle": "Biztonságban tartás",
+    "privacy.security":
+      "Az eredetiket, a névlistákat, a megjelenített neveket és az Apple bejelentkezési tokeneket titkosítjuk. A forgalom HTTPS-t használ. A titkosítási kulcs ugyanazon a szerveren van, mint az adatok, így nem véd az ellen, aki átveszi a szerver fölött az irányítást. Ha valami félremegy a személyes adataiddal, értesítjük az érintetteket és a hatóságokat, ahol a törvény megköveteli.",
+    "privacy.childrenTitle": "Életkor",
+    "privacy.children":
+      'A Judge 18 éves és idősebb emberek számára való. Mindenkit megkérünk, aki bejelentkezik, hogy ezt erősítse meg, a fiók nélkül ügyre válaszolók elküldés előtt bejelölik, hogy „18 éves vagyok, vagy idősebb", és az alkalmazások használhatják a telefonod életkorjelzését. Tudatosan nem gyűjtünk adatot senkitől, aki 18 év alatti. Ha úgy gondolod, hogy egy gyereknek van fiókja, írj a {email} címre, és lezárjuk, az adatait pedig eltávolítjuk.',
+    "privacy.rightsTitle": "A jogaid",
+    "privacy.rights":
+      "Bárhol élsz, kérheted, hogy mutassuk meg, mit őrzünk rólad, javítsuk ki, távolítsuk el, vagy töröljük a fiókodat, ne használjuk tanításra, és adjunk neked egy másolatot. A legtöbbet magad is megteheted: eltávolíthatsz egy ítéletet vagy ügyet annak oldalán, törölheted a fiókodat a fiókoldalon, megváltoztathatod az ítélet vagy ügy oldalán megjelenített neveket, letöltheted az adataidat, és a Beállításokban átkapcsolhatod a Segíts jobbá tenni a Judge-ot (az alkalmazásokban a Használati statisztikát is). Minden másért írj a {email} címre az ítélet vagy ügy linkjével. Megkérhetünk, hogy a fiókod e-mail-címéről írj, vagy bejelentkezve erősítsd meg. 30 napon belül válaszolunk, vagy egy hónapon belül, ha az rövidebb. Ingyenes. A jogaid gyakorlása miatt nem bánunk veled rosszabbul. Aki a nevedben kér, annak szükséges az írásbeli engedélyed.\nAz adataid másolata egy JSON-fájl. Válaszd az Adataim letöltése lehetőséget a fiókoldalon, az alkalmazásokban vagy a weboldalon. Tartalmazza a fiókodat és a bejelentkezési módjaidat, az ítéleteidet és az ügyekben lévő feleidet a saját szöveggel és nevekkel, az eredményeket, az értékeléseidet, a hozzájárulási előzményeidet, az eszközeidet, a használati eseményeket és a vásárlásokat. Nem tartalmaz bejelentkezési tokeneket, a jelszavadat vagy a kódolt e-mail-címet, és senki másnak a szövegét vagy neveit sem.\nNem kell adatot adnod nekünk, de a szöveged és egy fiók nélkül nem tudunk ítéletet adni.",
+    "privacy.regionEuTitle": "Ha az EU-ban vagy az Egyesült Királyságban vagy",
+    "privacy.regionEu":
+      "- Adatkezelő: lásd Kik vagyunk.\n- Jogalapok: lásd Miért használjuk az adataidat.\n- Kérheted a kezelés korlátozását is, tiltakozhatsz a jogos érdekeinken alapuló kezelés ellen, bármikor visszavonhatod a hozzájárulásodat (a korábbi kezelés jogszerűségét nem érintve), és panaszt tehetsz az adatvédelmi hatóságnál (az Egyesült Királyságban az ICO-nál).\n- Az adataidat Németországban, Kanadában és az Egyesült Államokban kezeljük, a Hol vannak az adataid részben leírtak szerint. Írj a {email} címre, ha többet szeretnél tudni arról, hogyan továbbítjuk őket.\n- Automatizált döntések: lásd Az ítéleteket MI írja.",
+    "privacy.regionUsTitle": "Ha Kaliforniában vagy egy másik amerikai államban vagy",
+    "privacy.regionUs":
+      '- Az elmúlt 12 hónapban gyűjtöttünk: azonosítókat (e-mail, név, fiók- és eszközazonosítók); a vitád szövegét és a válaszaidat; értékeléseket és hozzájárulási választásokat; vásárlási előzményeket; használati és eszközadatokat (ország, eszköztípus, alkalmazásverzió); az életkor megerősítését; és érzékeny információkat (fiókbejelentkezés, valamint a szövegedben szereplő egészségi vagy hasonló részletek). Források: te, a telefonod bejelentkezési szolgáltatása és boltja, és a saját alkalmazásaink. Célok: lásd Miért használjuk az adataidat. Címzettek: a Ki kezeli még a szövegedet részben szereplő kategóriák.\n- Személyes adatokat nem adunk el és nem osztunk meg hirdetési célra, és az elmúlt 12 hónapban sem tettük. Nem profilozunk. Az érzékeny információkat csak a szolgáltatás nyújtására használjuk, így nincs mit korlátozni vagy letiltani.\n- Jogok: tudni, hozzáférni, helyesbíteni, törölni, és hordozható másolatot kapni. Meghatalmazott képviselőt is igénybe vehetsz. 30 napon belül válaszolunk, vagy egy hónapon belül, ha az rövidebb. Egy elutasítás elleni fellebbezéshez írj a {email} címre „Appeal" jelzéssel. A fellebbezésről 45 napon belül döntünk. Ha elutasítjuk, fordulhatsz az államod főügyészéhez.\n- Megőrzés: lásd Meddig őrizzük meg és Amit az eltávolítás vagy törlés után megőrzünk.\n- Do Not Track: lásd Amit nem teszünk. Az oldalainkon egyetlen hirdetési vagy követő cég sem gyűjt adatot. A Cloudflare futtatja az emberi ellenőrzést, és erre a célra látja a kapcsolatodat.\n- 18 év alatti nem használhatja a Judge-ot, ezért 16 év alattiak adatait nem adjuk el és nem osztjuk meg. Más államok jogai ugyanezek.',
+    "privacy.regionCaTitle": "Ha Kanadában vagy Quebecben vagy",
+    "privacy.regionCa":
+      "A Judge-ot Kanadából üzemeltetik, és a személyes adatokat a PIPEDA szerint kezeli: csak azt gyűjtjük, amire a szolgáltatásnak szüksége van, csak arra használjuk, védjük, és kérheted, hogy megmutassuk, javítsuk vagy eltávolítsuk, amit rólad őrzünk. 30 napon belül válaszolunk. Panaszt tehetsz a Kanadai Adatvédelmi Biztos Hivatalánál (priv.gc.ca). Ha Quebecben vagy:\n- A személyes adatokért felelős személy Aytu Tuna, tulajdonos, a {email} címen.\n- Egyes adatok Quebecen kívülre kerülnek: a németországi szerverünkre, az MI-szolgáltatóhoz és más szállítókhoz az Egyesült Államokban, valamint Kanadába Quebecen kívülre.\n- A Judge csak a kapcsolatod országát rögzíti, használati számlálókhoz, és nem követi a pontos tartózkodási helyedet. Az ítélet az általad leírt érvelést bírálja el, és nem használjuk profil készítésére rólad. A használati számlálók a fiókodhoz kapcsolódnak, ahogy a Mit tárolunk részben le van írva.\n- A Segíts jobbá tenni a Judge-ot ki van kapcsolva, amíg be nem kapcsolod, és bármikor kikapcsolhatod.\n- Kérheted a hozzájárulás visszavonását, az adataid közkeletű formátumban való átadását, és panaszt tehetsz a Commission d'accès à l'informationnél.",
+    "privacy.regionBrTitle": "Ha Brazíliában vagy",
+    "privacy.regionBr":
+      "Adatkezelő és elérhetőség: lásd Kik vagyunk. A {email} az LGPD-kérelmek csatornája is. Mi vagyunk az adatkezelő; a Ki kezeli még a szövegedet részben szereplő szolgáltatók a nevünkben járnak el. Jogalapok: lásd Miért használjuk az adataidat. Kérheted, hogy erősítsük meg, hogy kezeljük az adataidat; adjunk hozzáférést; javítsuk ki őket; anonimizáljuk, zároljuk vagy töröljük a szükségtelen vagy jogellenes adatokat; biztosítsuk a hordozhatóságot; töröljük a hozzájárulásod alapján használt adatokat; mondjuk meg, kikkel osztottuk meg őket; tájékoztassunk a hozzájárulás megtagadásának lehetőségéről és következményéről; és visszavonhatod a hozzájárulásodat. Ingyenes. Panaszt is tehetsz az ANPD-nél. Az adataid külföldre kerülnek, a Hol vannak az adataid részben leírtak szerint.",
+    "privacy.changesTitle": "Változások",
+    "privacy.changes":
+      "Ha ezt az irányelvet lényeges módon megváltoztatjuk, frissítjük az oldal tetején lévő dátumot. A régebbi irányelv alapján megadott adataidat soha nem használjuk új célra anélkül, hogy előbb megkérdeznénk. Legalább évente egyszer átnézzük.",
     "privacy.contactTitle": "Kapcsolat",
     "privacy.contact":
       "Kérdésed van, vagy szeretnéd megnézni, kijavíttatni vagy töröltetni az adataidat? Írj nekünk ide: {email}, és küldd el az ítélet vagy az ügy linkjét.",
-    "privacy.accountsTitle": "Fiókok",
-    "privacy.accounts":
-      "A Judge csak 18 éves vagy idősebb embereknek szól, és azokat a fiókokat, amelyekről kiderül, hogy 18 év alattié, lezárjuk. Ítélethez fiók kell; egy kétoldalú ügyben a másik fél fiók nélkül is válaszolhat. Ha Apple- vagy Google-fiókkal lépsz be, tároljuk az általuk velünk megosztott e-mail-címet, nevet és profilkép-linket, valamint azt, hogy melyik belépési módot használtad, az Apple vagy a Google pedig láthatja, hogy beléptél a Judge-ba. Ha e-mailes linkkel lépsz be, azt az e-mailt a Resend küldi ki, a link ellenőrzéséhez pedig rövid ideig tárolunk egy bejegyzést az e-mail-címeddel: a link 10 perc után nem működik, a bejegyzést pedig felhasználáskor vagy nem sokkal a lejárata után töröljük. Tároljuk továbbá a munkameneteid adatait (egy véletlenszerű tokent és a lejárati idejét, IP-cím és böngészőadatok nélkül, bár az alkalmazások bejelentkezéskor eszközazonosítót is rögzítenek), a kreditjeidet, az előfizetésedet és annak előzményeit, valamint azt, hogy mely ítéletek használtak fel kreditet (csak az ítélet azonosítóját). Azt is tároljuk, mely ítéletek és ügyek a tieid, hogy bármelyik eszközön megtaláld őket. Ha a fiókoldalon törlöd a fiókodat, törlődik a fiókod, a munkameneteid, a használati események és a fiókod és az eszközeid közti kapcsolat, az ítéleteidet és az ügyekben beküldött verzióidat pedig az Eltávolítás részben leírtak szerint eltávolítjuk. Az e-mail-címedet csak hash-elt formában őrizzük meg, hogy egy vele létrehozott új fiók ne kapjon második ingyenes ítéletet, és zárva maradjon, ha a fiókodat azért zártuk le, mert 18 év alatti vagy. Az e-mailben küldött bejelentkezési kódok ugyanúgy működnek, mint a hivatkozások. Ha jelszót állítasz be, a fiókod mellett csak annak titkosított (hash) alakját tároljuk, magát a jelszót soha.",
-    "privacy.webSearchTitle": "Webes keresés és kérdések",
-    "privacy.webSearch":
-      "Minden ítéletnél elküldjük az anonimizált vitát az MI-szolgáltatónknak, bekapcsolt webes kereséssel. A keresőkifejezéseket a modell ebből az anonimizált szövegből írja meg, a találatok pedig a szolgáltató keresőpartnerétől jönnek. A felhasznált források megjelennek az ítéleten. A bírák előbb feltehetnek neked legfeljebb két kérdést: ezek kitalálásához a szöveged, úgy, ahogy begépelted, a nevekkel együtt még egyszer eljut az MI-szolgáltatóhoz. A válaszaidat az ítélet előtt a vitával együtt anonimizáljuk; a kérdéseket és a válaszaidat, ahogy megírtad őket, a titkosított eredeti szövegeddel együtt őrizzük meg.",
     "nav.signIn": "Belépés",
     "nav.account": "Fiók",
     "nav.pricing": "Árak",
@@ -304,17 +369,14 @@ const hu: Locale = {
     "consent.sensitiveContinue": "Tovább",
     "respond.adultConfirm": "Legalább 18 éves vagyok",
     "account.export": "Adataim letöltése",
-    "account.exportHint":
-      "Kapj egy JSON-fájlt mindennel, amit a Judge rólad tárol.",
+    "account.exportHint": "Kapj egy JSON-fájlt mindennel, amit a Judge rólad tárol.",
     "account.exportBusy": "A fájl előkészítése…",
-    "account.exportFailed":
-      "Most nem tudtuk előkészíteni az adataidat. Megpróbálod újra?",
+    "account.exportFailed": "Most nem tudtuk előkészíteni az adataidat. Megpróbálod újra?",
     "deletePage.title": "A Judge-fiókod törlése",
     "deletePage.lead":
       "A Judge Aytu Tuna alkalmazása. A fiókodat és az adatait bármikor magad is törölheted, az alkalmazásban vagy a weboldalon.",
     "deletePage.appTitle": "Az alkalmazásban",
-    "deletePage.app":
-      "Nyisd meg a Judge-ot, menj a Fiókhoz, koppints a Fiók törlése gombra, és erősítsd meg.",
+    "deletePage.app": "Nyisd meg a Judge-ot, menj a Fiókhoz, koppints a Fiók törlése gombra, és erősítsd meg.",
     "deletePage.webTitle": "A weboldalon",
     "deletePage.web":
       "Jelentkezz be az okjudge.com oldalon, nyisd meg a Fiókot, válaszd a Fiók törlése lehetőséget, és erősítsd meg.",
@@ -325,8 +387,7 @@ const hu: Locale = {
     "deletePage.kept":
       "Az eltávolított ítéletek eredményét és dátumát, szöveg és nevek nélkül. Az értékeléseidet és a hozzájárulási nyilvántartást 6 évig, rád utaló kapcsolat nélkül. Az e-mail-címed kódolt alakját, hogy az ingyenes kreditekkel ne lehessen újra és újra visszaélni. A biztonsági mentések régebbi példányokat legfeljebb 14 napig őriznek.",
     "deletePage.mailTitle": "Kérd e-mailben",
-    "deletePage.mail":
-      "Nem tudsz bejelentkezni? Írj a {email} címre a fiókod címéről, és kérd a törlését.",
+    "deletePage.mail": "Nem tudsz bejelentkezni? Írj a {email} címre a fiókod címéről, és kérd a törlését.",
     "rating.prompt": "Igazságos ítélet?",
     "rating.fair": "Igazságos",
     "rating.notFair": "Nem igazságos",
@@ -344,11 +405,11 @@ const hu: Locale = {
     "clarify.back": "Vita szerkesztése",
     "thinking.factcheck": "Ellenőrizzük a tényeket a neten…",
     "thinking.factcheckDone": "Kész a netes ellenőrzés.",
-    "thinking.premiumHelper":
-      "A netes tényellenőrzés kicsit tovább tart, akár egy-két percig is.",
+    "thinking.premiumHelper": "A netes tényellenőrzés kicsit tovább tart, akár egy-két percig is.",
     "panel.premium": "Netes tényellenőrzéssel ítélve.",
     "factcheck.title": "Ellenőrizve a neten",
-    "factcheck.lead": "A bírák ezeket a keresési találatokat látták, mielőtt döntöttek. Ezek bizonyítékok, nem maga az ítélet.",
+    "factcheck.lead":
+      "A bírák ezeket a keresési találatokat látták, mielőtt döntöttek. Ezek bizonyítékok, nem maga az ítélet.",
     "factcheck.status.supported": "Stimmel",
     "factcheck.status.refuted": "Nem stimmel",
     "factcheck.status.mixed": "Részben igaz",
@@ -436,7 +497,8 @@ const hu: Locale = {
     "pricing.premium.f3": "Legfeljebb két gyors kérdés, ha hiányzik egy fontos tény",
     "pricing.premium.f4": "Névcsere az ítélet előtt",
     "pricing.packsTitle": "Kreditcsomagok",
-    "pricing.packsLead": "Egyszer fizetsz, és akkor használod fel, amikor csak akarod. Minden ítélet egy kreditbe kerül.",
+    "pricing.packsLead":
+      "Egyszer fizetsz, és akkor használod fel, amikor csak akarod. Minden ítélet egy kreditbe kerül.",
     "pricing.pack": "{n} ítélet",
     "pricing.pack.one": "1 ítélet",
     "pricing.perVerdict": "Ítéletenként {price}",
@@ -444,7 +506,8 @@ const hu: Locale = {
     "pricing.monthly.renews": "Havonta megújul",
     "pricing.monthly.cap": "Havi {n} ítélet",
     "pricing.comingSoon": "Hamarosan",
-    "pricing.note": "Az árak amerikai dollárban értendők. A fizetés még nem érhető el, így egyelőre semmit sem lehet megvenni.",
+    "pricing.note":
+      "Az árak amerikai dollárban értendők. A fizetés még nem érhető el, így egyelőre semmit sem lehet megvenni.",
     "pricing.signIn": "Fiók létrehozása az ingyenes ítélethez",
     "pricing.preview": "Itt még nincsenek bekapcsolva az ítéletek. Ez az oldal csak előzetes.",
     "error.signin_required": "A folytatáshoz lépj be.",
@@ -465,7 +528,8 @@ const hu: Locale = {
     "error.unsupported_media": "Csak PNG, JPEG, WebP vagy GIF képet tudunk beolvasni.",
     "error.too_many_files": "Ide nem adhatsz hozzá ennyi képet.",
     "error.evidence_invalid": "Az egyik képed lejárt, vagy nem sikerült ellenőrizni. Távolítsd el, és add hozzá újra.",
-    "error.anonymize_failed": "Nem sikerült kivenni a neveket a szövegedből. Próbáld újra, vagy teljes nevek helyett írj monogramot.",
+    "error.anonymize_failed":
+      "Nem sikerült kivenni a neveket a szövegedből. Próbáld újra, vagy teljes nevek helyett írj monogramot.",
     "mode.label": "Hogyan döntsünk?",
     "mode.now": "Csak én (azonnal)",
     "mode.both": "Mindkét fél (linkkel)",
@@ -494,7 +558,8 @@ const hu: Locale = {
     "case.invite.resetYes": "Igen, kérek új linket",
     "case.invite.resetDone": "A régi linket kikapcsoltuk. Küldd el az újat.",
     "case.judgeNow": "Ítélet csak az én verzióm alapján",
-    "case.judgeNow.confirm": "Kérsz most egy egyoldalú ítéletet? A meghívó lezárul, és a másik fél már nem válaszolhat.",
+    "case.judgeNow.confirm":
+      "Kérsz most egy egyoldalú ítéletet? A meghívó lezárul, és a másik fél már nem válaszolhat.",
     "case.judgeNow.yes": "Igen, döntsenek most",
     "case.judgeExpired.confirm": "Kérsz ítéletet csak a te verziód alapján? Ez 1 ítéletbe kerül.",
     "case.judgeExpired.yes": "Igen, mehet (1 ítélet)",
@@ -503,7 +568,8 @@ const hu: Locale = {
     "case.side.opened": "Megnyitva",
     "case.side.typing": "Gépel…",
     "case.judgeAnswered": "Ítélet a válaszoló felek alapján",
-    "case.judgeAnswered.confirm": "Kérsz ítéletet a válaszoló felek alapján? A többi meghívó lezárul, és ők már nem válaszolhatnak.",
+    "case.judgeAnswered.confirm":
+      "Kérsz ítéletet a válaszoló felek alapján? A többi meghívó lezárul, és ők már nem válaszolhatnak.",
     "case.cancel": "Mégse",
     "case.retry": "Újrapróbálás",
     "case.failedBody": "Visszakaptad a kreditedet. Most újra megpróbálhatod.",
@@ -541,15 +607,12 @@ const hu: Locale = {
     "respond.submit": "Elküldöm a verziómat",
     "case.write.title": "A te verziód",
     "case.write.placeholder": "Mi a gond?",
-    "case.write.lead":
-      "Írd meg a verziódat, amikor készen állsz. A bírák akkor kezdenek, ha mindketten megírtátok.",
-    "case.write.leadAnswered":
-      "Ő már megírta a saját verzióját. Írd meg a tiédet, hogy megkapd az ítéletet.",
+    "case.write.lead": "Írd meg a verziódat, amikor készen állsz. A bírák akkor kezdenek, ha mindketten megírtátok.",
+    "case.write.leadAnswered": "Ő már megírta a saját verzióját. Írd meg a tiédet, hogy megkapd az ítéletet.",
     "case.write.submit": "Elküldöm a verziómat",
     "case.write.emailSubject": "A másik fél megírta a maga verzióját",
     "respond.sent": "Köszönjük! Megkaptuk a verziódat, a bírák már dolgoznak rajta.",
-    "respond.sentWaiting":
-      "Köszönjük! Megkaptuk a verziódat. A bírák akkor kezdenek, ha a másik is megírta az övét.",
+    "respond.sentWaiting": "Köszönjük! Megkaptuk a verziódat. A bírák akkor kezdenek, ha a másik is megírta az övét.",
     "respond.ownInvite": "Ez a saját meghívólinked. Küldd el a másik félnek.",
     "respond.expired": "Ez a meghívó lejárt.",
     "respond.closed": "Ez az ügy már nem fogad válaszokat.",
@@ -604,8 +667,7 @@ const hu: Locale = {
     "home.removeTheirSide": "Vedd ki az ő verzióját",
     "home.sendLink": "Küldj linket",
     "home.clear": "Törlés",
-    "home.lead":
-      "Írd le mindkét fél verzióját, vagy küldj egy linket a másiknak, hogy ő írja meg a sajátját.",
+    "home.lead": "Írd le mindkét fél verzióját, vagy küldj egy linket a másiknak, hogy ő írja meg a sajátját.",
     "home.leadSolo": "Írd le a te verziódat, és az övét is, ha ismered.",
     "home.theirSide": "Az ő verziója",
     "home.theirName": "Az ő neve",
@@ -615,9 +677,9 @@ const hu: Locale = {
     "home.says": "{name} szerint:",
     "home.mySide": "Az én verzióm:",
     "home.otherSide": "Az ő verziója:",
-    "appeal.lead":
-      "1 ítéletbe kerül.",
-    "appeal.placeholder": "Mi kerülte el a bírák figyelmét? Egy tény, egy üzenet vagy az, hogy miben állapodtatok meg valójában.",
+    "appeal.lead": "1 ítéletbe kerül.",
+    "appeal.placeholder":
+      "Mi kerülte el a bírák figyelmét? Egy tény, egy üzenet vagy az, hogy miben állapodtatok meg valójában.",
     "appeal.submit": "Újraítélés kiegészítéssel",
     "appeal.sending": "Kivesszük a neveket a kiegészítésedből…",
     "appeal.judging": "A bírák mindent újra átnéznek…",
@@ -649,7 +711,8 @@ const hu: Locale = {
     "about.casesTitle": "Mindkét fél meghallgatása",
     "about.cases1":
       "Kétoldalú ügyek: belépsz, leírod a verziódat, és elküldesz egy privát linket. A másik fél úgy írja meg a sajátját, hogy a tiédet nem látja, a bírák pedig mindkét beszámolót mérlegelik: miben értenek egyet, miben vitatkoznak, és milyen bizonyíték változtatna az ítéleten.",
-    "about.cases2": "Ha 7 napon belül senki sem válaszol, a link lejár. Ítéletet a saját verziód alapján ekkor is kérhetsz.",
+    "about.cases2":
+      "Ha 7 napon belül senki sem válaszol, a link lejár. Ítéletet a saját verziód alapján ekkor is kérhetsz.",
     "about.premiumTitle": "Extrák",
     "about.premium2":
       "Bizonyíték: csetekről vagy dokumentumokról készült képernyőképeket is csatolhatsz. Kiolvassuk belőlük a szöveget, elrejtjük a neveket, a képet pedig eldobjuk.",
@@ -657,12 +720,6 @@ const hu: Locale = {
       "Fellebbezés: az ítélet után mindkét fél egyszer kiegészítheti az ügyet. A bírák mindent újra átnéznek, és megmondják, hogy az ítélet marad, megfordult vagy változott. A korábbi ítéletek is megtekinthetők maradnak.",
     "about.premium4":
       "Egy kétoldalú ügy 1 ítéletbe kerül. A link elküldésekor félretesszük, és visszakapod, ha 7 napon belül senki sem válaszol.",
-    "privacy.casesTitle": "Kétoldalú ügyek és fellebbezések",
-    "privacy.cases":
-      "Egy kétoldalú ügyben mindkét fél verzióját beküldéskor anonimizáljuk, ugyanúgy, mint egy ítéletnél. A bírák az anonimizált szöveget olvassák; mindenki saját verzióját, ahogy megírta, a névlistájával együtt titkosítva tároljuk, és csak az adott személy láthatja. Mindenki a verziója beküldésekor adja meg, milyen név jelenjen meg a megosztási oldalon; ha üresen hagyja, Fél A vagy Fél B lesz. A másik félnek nem kell fiók; a válaszait az IP-címe kulcsos hash-ével korlátozzuk. A meghívólinket csak hash-ként tároljuk. Ha a másik fél belépve válaszol, a fiókját összekapcsoljuk a verziójával, így később csak ő adhat kiegészítést vagy láthatja az eredetijét; ha belépés nélkül válaszol, ugyanezt egy, a böngészőjében tárolt privát kód teszi lehetővé, és ha később abban a böngészőben belép, az ügyet a fiókjába mentheti. Hogy ugyanaz a személy mindkét beszámolóban ugyanazt a címkét kapja, a szerver minden ügyön belül kódolt ujjlenyomatokat tárol a nevekről (kulcsos hash-eket, nem magukat a neveket). Az ítéletig egyik fél sem olvashatja a másik szövegét; egy kétoldalú ítélet után mindketten olvashatják mindkét anonimizált beszámolót. Az ítélet után adott kiegészítéseket (fellebbezéseket) ugyanígy kezeljük. Amikor a másik fél válaszol, küldhetünk neked egy rövid értesítőt e-mailben, az ügy szövege nélkül, ha az e-mail-küldés be van állítva. Mindkét fél eltávolíthatja a saját verzióját: ilyenkor az eredetije és a megjelenített neve törlődik, az ügy megosztási linkjei pedig mindenkinek megszűnnek működni. A fiókod törlése ezt minden olyan ügynél elvégzi, amelyet elindítottál vagy amelyre válaszoltál.",
-    "privacy.evidenceTitle": "Képernyőképek",
-    "privacy.evidence":
-      "A böngésződ feltöltés előtt lekicsinyíti a nagy képeket. Ezután minden kép egyszer eljut egy külső MI-szolgáltatáshoz, hogy kiolvassa a látható szöveget; magát a képet sosem tároljuk. A nyers átirat, amelyben még nevek is lehetnek, egy aláírt tokenben jut vissza hozzád, amelyet a böngésződ legfeljebb 6 órán át őriz. Amikor beküldöd a verziódat, az átiratot a szövegeddel együtt anonimizáljuk: az anonimizált átiratot a bírák látják, és az üggyel együtt tároljuk, a nyers átiratot pedig titkosítva, az eredeti szöveged mellett őrizzük meg, ahol csak te láthatod. A benne szereplő telefonszámokat, e-mail-címeket, közösségimédia-felhasználóneveket és számlaszámokat a bírák számára szintén helyőrzőkre cseréljük.",
     "pricing.premium.f5": "Képernyőképek bizonyítéknak: beolvassuk, aztán eldobjuk, felár nélkül",
     "pricing.premium.f6": "Kiegészítés az ítélet után, újraítéléssel (1 ítélet)",
     "pricing.premium.f7": "Mindkét fél szóhoz jut: privát linket küldhetsz a másiknak, hogy elmondja a verzióját",
@@ -719,7 +776,8 @@ const hu: Locale = {
     "owner.unreadable": "Amit írtál, most nem jeleníthető meg.",
     "owner.claim": "Ítélet mentése a fiókodba",
     "owner.claimed": "Ez az ítélet már a fiókodban van.",
-    "owner.case": "Ez az ítélet egy ügyhöz tartozik. A neveket az ügy oldalán módosíthatod, és az ítéletet is ott távolíthatod el.",
+    "owner.case":
+      "Ez az ítélet egy ügyhöz tartozik. A neveket az ügy oldalán módosíthatod, és az ítéletet is ott távolíthatod el.",
     "owner.caseRespondent":
       "Ez az ítélet egy olyan ügyhöz tartozik, amelyre te válaszoltál. A neved módosításához vagy a verziód eltávolításához nyisd meg azt a meghívólinket, amelyről válaszoltál.",
     "owner.caseLink": "Ügy megnyitása",
@@ -782,21 +840,6 @@ const hu: Locale = {
     "stamp.dissolved": "Félreértés",
     "bestPoint.of": "{name} legjobb érve",
     "bestPoint.self": "A te legjobb érved",
-    "privacy.accessTitle": "Ki mit láthat",
-    "privacy.access":
-      "Te: az eredeti szövegedet és a neveket, belépve bármelyik eszközön, vagy azon az eszközön, amelyet használtál, egy a böngésződben vagy az appban elmentett privát kód révén (ennek a kódnak mi csak a hash-ét őrizzük meg). A belépés nélkül írt ítéletek – még abból az időből, amikor nem kellett hozzájuk fiók –, valamint azok az ügyek, amelyekre belépés nélkül válaszoltál, a címsorukkal és az általad írt nevekkel együtt abban a böngészőben listázva maradnak, hogy az Ítéletek oldal megjeleníthesse őket: ezt a listát bárki látja, aki ugyanazt a böngészőt használja. Közös számítógépen lépj be, vagy használj privát ablakot; ha a böngészőben törlöd az oldal adatait, a lista is törlődik. Egy kétoldalú ügyben mindenki csak a saját eredetijét látja; az ítélet után mindketten látják mindkét anonimizált beszámolót, úgy, ahogy a bírák olvasták. A bírák (az MI-szolgáltatónk által futtatott modellek): csak az anonimizált változatot. Bárki, akinél ott a megosztási link: az ítéletet a megjelenített nevekkel. Alapértelmezés szerint ez a magadnak választott név és a többiek keresztneve, ahogy te írtad; ezeket bármikor módosíthatod, vagy kikapcsolhatod a neveket, és akkor az oldal Fél A-t és Fél B-t mutat. Mi: a kulccsal vissza tudjuk fejteni az eredetiket, a tárolt szöveget pedig csak akkor nézzük meg, ha tőled érkezett támogatási kérést kezelünk, visszaélést vizsgálunk, vagy ha a törvény előírja.",
-    "privacy.removalTitle": "Eltávolítás",
-    "privacy.removal":
-      "Az eltávolítást kérheted az ítélet oldalán (belépve az Ítéletek oldalról is megnyithatod), kétoldalú ügynél az ügy oldalán, a fiókod törlésével vagy e-mailben. Az eltávolítás törli az eredeti szövegedet, a névlistát és a megjelenített neveket (kétoldalú ügyben a te verziód eredetijét és a megjelenített nevedet), a megosztási link és az előnézeti képe pedig senkinek sem töltődik be többé. A csetalkalmazásokban már kiküldött előnézeteket azok az appok tárolják, és amíg nem frissítik őket, még látszhatnak. Az anonimizált szöveget és az ítéletet nevek nélkül megőrizzük a nyilvántartásunkban; ezek a linken keresztül már nem nyithatók meg. A fiókod törlése ezt minden ítéletednél és az ügyekben beküldött összes verziódnál elvégzi, és törli a belépési adataidat, a kreditjeidet és az előfizetésedet. Az eltávolított adatok a biztonsági mentéseinkben maradnak, amíg azok le nem járnak (legfeljebb 14 nap, lásd lent); ha valaha visszaállítunk egy mentést, minden eltávolítást újra végrehajtunk (ehhez listát vezetünk arról, mit és mikor távolítottunk el, szöveg és nevek nélkül). Harminc nappal azután, hogy eltávolítasz valamit, az anonimizált szöveget és az ítéletet is töröljük, és csak az eredményt és a dátumokat tartjuk meg, hacsak a törvény nem ír elő hosszabb megőrzést. Ügy esetén a harminc nap csak akkor kezdődik, amikor mindenki eltávolította, aki részt vesz benne.",
-    "privacy.retentionTitle": "Meddig őrizzük meg",
-    "privacy.retention":
-      "Az ítéleteket és az eredeti szövegeket addig őrizzük, amíg nem kéred az eltávolításukat, vagy nem törlöd a fiókodat. Hogy egy hiba után helyre tudjuk állítani a rendszert, a szerverről és az adatbázisáról legfeljebb 14 napig biztonsági másolatot tartunk, utána töröljük őket. Ezek ugyanazokat az adatokat tartalmazzák, mint a szerver, a titkosított eredetiket is beleértve, a kulcs pedig ugyanazon a szerveren van, így a mentéseket nem ez a titkosítás védi, hanem ugyanúgy vannak védve, mint maga a szerver. A korlátozási hash-ek legfeljebb 24 óráig maradnak meg. A szervernaplókra a tárhelyszolgáltatónk szokásos megőrzési ideje vonatkozik. A használati eseményeket 90 nap után, az eszközkapcsolatokat 180 nap használat nélkül törlik. A Grafana Labsnek küldött naplókat és mutatókat 14 napig őrzik.",
-    "privacy.locationTitle": "Hol vannak az adataid",
-    "privacy.location":
-      "A szervereink Németországban vannak (OVH, Frankfurt). Az adatkezelés egy része az Egyesült Államokban történik: az MI-szolgáltatónk futtatja azokat a modelleket, amelyek kiveszik a neveket, döntenek, beolvassák a képernyőképeket és keresnek a weben; a Cloudflare proxyként és DNS-ként áll az okjudge.com előtt (minden forgalom rajta halad át), és ő futtatja az emberellenőrzést. A belépés az Apple-en vagy a Google-on keresztül történik, ha őket választod, a belépési e-mailek pedig a Resenden keresztül mennek ki. A más országban kezelt adatokra az adott ország törvényei vonatkozhatnak.",
-    "privacy.rightsTitle": "A jogaid (Kanada)",
-    "privacy.rights":
-      "A Judge-ot Kanadából üzemeltetjük, és a személyes adatokat a kanadai szövetségi adatvédelmi törvény (PIPEDA) szerint kezeljük: csak azt gyűjtjük, amire a szolgáltatásnak szüksége van, csak erre használjuk, védjük, és kérheted, hogy megnézhesd, kijavítsuk vagy töröljük, amit rólad tárolunk. 30 napon belül válaszolunk.",
     "footer.terms": "Feltételek",
     "signin.legalTerms": "Felhasználási feltételeket",
     "age.confirm": "Legalább 18 éves vagyok",

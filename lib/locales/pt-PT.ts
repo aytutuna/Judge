@@ -45,8 +45,7 @@ const ptPT: Locale = {
     "thinking.crux": "À procura do cerne da questão…",
     "thinking.judges": "Três juízes a decidir, cada um por si…",
     "thinking.votes": "A contar os votos…",
-    "thinking.helper":
-      "Três juízes de IA decidem em separado e, se estiver renhido, entram mais. Espera só um minuto.",
+    "thinking.helper": "Três juízes de IA decidem em separado e, se estiver renhido, entram mais. Espera só um minuto.",
     "thinking.finish": "Quase a chegar ao cerne…",
     "thinking.stillJudging": "Os juízes ainda estão a pensar. Só mais um bocadinho…",
     "thinking.ready": "O veredicto está pronto.",
@@ -109,14 +108,18 @@ const ptPT: Locale = {
     "vote.dissolved": "equívoco",
     refusedNote: "A IA ficou de fora desta. Preferimos não mostrar nada a inventar uma decisão.",
     demoNote: "🎭 Modo demo: não há chave de IA configurada, por isso este é um veredicto de exemplo",
-    "trial.survived": "🛡️ Objeção indeferida: o advogado do outro lado levantou a sua objeção mais forte, e a decisão aguentou. A confiança mantém-se.",
-    "trial.uncertain": "⚠️ O advogado do outro lado levantou uma objeção, e ela deixou dúvidas sérias sobre esta decisão",
-    "trial.overturned": "⚠️ Objeção deferida: a decisão mantém-se, mas a objeção mais forte do outro lado enfraquece-a seriamente",
+    "trial.survived":
+      "🛡️ Objeção indeferida: o advogado do outro lado levantou a sua objeção mais forte, e a decisão aguentou. A confiança mantém-se.",
+    "trial.uncertain":
+      "⚠️ O advogado do outro lado levantou uma objeção, e ela deixou dúvidas sérias sobre esta decisão",
+    "trial.overturned":
+      "⚠️ Objeção deferida: a decisão mantém-se, mas a objeção mais forte do outro lado enfraquece-a seriamente",
     "trial.minor": "🛡️ O advogado do outro lado fez uma observação justa, mas a decisão mantém-se",
     "trial.whatWasTested": "A objeção",
     "trial.attackPrefix": "Objeção:",
     "trial.refereePrefix": "Porquê:",
-    "trial.mixedNote": "Esta é uma disputa mista: em parte factos, em parte valores ou significados de palavras, por isso uma vitória limpa é mais difícil de defender.",
+    "trial.mixedNote":
+      "Esta é uma disputa mista: em parte factos, em parte valores ou significados de palavras, por isso uma vitória limpa é mais difícil de defender.",
     confidence: "Confiança: {n} de {total}",
     verdictAria: "Veredicto: {label}",
     "party.a": "Parte A",
@@ -177,8 +180,7 @@ const ptPT: Locale = {
     "how.step2.body":
       "Cada afirmação leva uma etiqueta: facto, valor, definição ou lógica, porque cada tipo se resolve à sua maneira.",
     "how.step3.title": "Encontrar o cerne",
-    "how.step3.body":
-      "Escava cada lado até aos alicerces e encontra a única coisa de que depende a discussão toda.",
+    "how.step3.body": "Escava cada lado até aos alicerces e encontra a única coisa de que depende a discussão toda.",
     "how.step4.title": "Três juízes independentes",
     "how.step4.body":
       "Três juízes decidem em separado e, se estiver renhido, entram mais. A confiança vem de quanto concordam, não de quão seguros parecem.",
@@ -194,8 +196,7 @@ const ptPT: Locale = {
     "sample.nameB": "Tu",
     "sample.label": "Tens razão",
     "sample.headline": "Ninguém pede uma sandes à espera de um cachorro",
-    "sample.crux":
-      "Só pela forma, um cachorro até podia passar por sandes, mas ninguém usa a palavra assim.",
+    "sample.crux": "Só pela forma, um cachorro até podia passar por sandes, mas ninguém usa a palavra assim.",
     "sample.why":
       "O argumento do Tiago assenta só na forma. Uma palavra quer dizer aquilo para que as pessoas a usam, e quem pede uma sandes num café nunca recebe um cachorro.",
     "sample.bestPoint":
@@ -238,8 +239,7 @@ const ptPT: Locale = {
       "Só sabe o que lhe contas, e a forma como contas a história influencia o resultado. Inclui o lado da outra pessoa como ela o contaria.",
     "about.limit2":
       "Os juízes de IA podem enganar-se nos factos. Cada veredicto lista os factos em que se apoia, para os poderes confirmar.",
-    "about.limit3":
-      "Trocar os nomes funciona quase sempre, mas nomes invulgares ou alcunhas podem escapar.",
+    "about.limit3": "Trocar os nomes funciona quase sempre, mas nomes invulgares ou alcunhas podem escapar.",
     "about.limit4": "É para diversão e clareza, não é aconselhamento jurídico, médico nem financeiro.",
     "about.builtTitle": "Por dentro",
     "about.built":
@@ -249,33 +249,96 @@ const ptPT: Locale = {
     "privacy.kicker": "Os teus dados",
     "privacy.lead":
       "Em resumo: guardamos o que escreves, nomes incluídos, encriptado, para poderes voltar a ele. Os juízes só leem uma versão sem os nomes. Podes pedir que seja apagado quando quiseres. Não vendemos os teus dados. Se o Judge for vendido ou fundido algum dia, passa para o novo proprietário ao abrigo desta política.",
+    "privacy.whoTitle": "Quem somos",
+    "privacy.who":
+      "O Judge é gerido por Aytu Tuna, pessoa singular no Canadá.\n{address}\nNós decidimos o que é recolhido e porquê. A pessoa responsável pelas informações pessoais é Aytu Tuna, proprietário. Contacto: {email}.",
     "privacy.storedTitle": "O que guardamos",
     "privacy.stored":
-      "Para cada veredicto guardamos o teu texto exatamente como o escreveste (com as tuas respostas às perguntas dos juízes e o texto lido de eventuais capturas de ecrã) e uma lista de que nome passou a que rótulo. Estes dados são encriptados com uma chave que não está guardada na base de dados. Guardamos também a versão anonimizada que os juízes leem (com os nomes trocados por Parte A e Parte B), as definições que escolheste, o veredicto, eventuais traduções e os nomes que escolhes mostrar na página de partilha. Contamos também como o Judge é usado: que ecrãs e funcionalidades, com a versão da app, o modelo do dispositivo, a versão do sistema, o idioma e o país da tua ligação, e nas apps um identificador do dispositivo. Quando tens a sessão iniciada, isto fica associado à tua conta. Os eventos de utilização guardam-se 90 dias e as ligações entre a tua conta e os teus dispositivos 180 dias. As apps têm nas Definições um interruptor «Estatísticas de utilização», e o site não envia nada quando o teu navegador envia Do Not Track ou Global Privacy Control. Nunca inclui texto de casos. Se avaliares um veredicto, guardamos a avaliação com ele.",
+      "Por cada veredicto guardamos o teu texto exatamente como o escreveste (com as tuas respostas às perguntas dos juízes e o texto lido de eventuais capturas de ecrã) e uma lista de que nome passou a que rótulo. Estes dados são encriptados com uma chave que não fica guardada na base de dados. Guardamos também a versão anonimizada que os juízes leem (com os nomes trocados por Parte A e Parte B), as definições que escolheste, o veredicto, qualquer tradução e os nomes que escolhes mostrar na página de partilha. Contamos ainda como o Judge é usado: que ecrãs e funcionalidades, com a versão da app, o modelo do dispositivo, a versão do sistema, o idioma e o país da tua ligação, e, nas apps, um identificador do dispositivo. Quando tens sessão iniciada, isto fica associado à tua conta. Os eventos de utilização são guardados durante 90 dias e as ligações entre a tua conta e os teus dispositivos durante 180 dias. As apps têm uma opção «Estatísticas de utilização» nas Definições, e o site não envia nada quando o teu navegador envia Do Not Track ou Global Privacy Control. Nunca inclui texto de casos. Se avaliares um veredicto, guardamos a avaliação com ele. Uma avaliação pode ser limpa; guardamos a linha sem o positivo ou negativo. Guardamos também um registo da tua aceitação sobre detalhes privados e das tuas escolhas em Ajuda a melhorar o Judge, com a data, o idioma e a plataforma, e o texto que viste.",
     "privacy.helpTitle": "Ajuda a melhorar o Judge",
     "privacy.help":
-      "Desativado, a menos que o atives. Quando está ativado, podemos usar o texto anonimizado que os juízes leem, os veredictos deles e as tuas avaliações para testar e treinar os juízes do Judge. Os nomes nunca fazem parte disso. Se o desativares, essa utilização termina para tudo o que criaste, e registamos quando o ativaste ou desativaste.",
-    "privacy.notStoredTitle": "O que não fazemos",
-    "privacy.notStored":
-      "Nada de rastreadores de publicidade. A tua escolha de idioma fica no armazenamento local do teu browser e em mais lado nenhum.",
-    "privacy.ipTitle": "Limites de utilização",
-    "privacy.ip":
-      "Para manter o tribunal aberto a toda a gente, limitamos quantos veredictos cada conta e quantas traduções cada visitante pode pedir. Para as traduções, e para as respostas a um caso a dois, guardamos um hash com chave do teu endereço IP, e não o endereço em si, no nosso registo de limites durante até 24 horas. Se a verificação humana estiver ativa, o teu endereço IP também vai para a Cloudflare para essa verificação. Nunca é guardado com o teu veredicto.",
-    "privacy.processorsTitle": "Quem mais trata o teu texto",
-    "privacy.processors":
-      "O texto que escreves, com os nomes verdadeiros, vai primeiro para o nosso fornecedor de IA nos Estados Unidos para que os nomes sejam retirados. Só a versão anonimizada é julgada; o teu original fica guardado encriptado, como descrito acima. Se a verificação humana estiver ativa, o Cloudflare Turnstile corre no teu browser e confirma o resultado com a Cloudflare. Se iniciares sessão, a Apple ou a Google (conforme escolheres) tratam desse início de sessão, e os e-mails de acesso são enviados através da Resend. O nosso fornecedor de alojamento mantém os registos de servidor habituais. As compras nas apps passam pela App Store ou pelo Google Play e são tratadas pela RevenueCat, que recebe o ID da tua conta e o histórico de compras. A Grafana Labs recebe os registos do servidor e as métricas de desempenho, guardados na UE durante 14 dias; os registos não têm texto de casos. Os relatórios de falhas e erros das apps e deste site vão para a Sentry, ficam guardados na UE até 30 dias e incluem o erro, a versão da app ou do browser e o modelo do dispositivo, mas não têm texto de casos, ID da conta nem endereço da ligação.",
-    "privacy.shareTitle": "Links de partilha",
-    "privacy.share":
-      "Qualquer pessoa com o link de um veredicto pode vê-lo, com os nomes a mostrar que escolheste (ou Parte A e Parte B, se desativaste os nomes). Os links usam identificadores aleatórios longos e as páginas de partilha pedem aos motores de pesquisa que não as indexem. O link e a imagem de pré-visualização de um veredicto removido deixam de abrir; as pré-visualizações já publicadas em apps de mensagens podem continuar a aparecer até essas apps as atualizarem. Não incluas moradas, números de telefone nem nada que não quisesses ver numa página que outras pessoas podem abrir.",
-    "privacy.contactTitle": "Contacto",
-    "privacy.contact":
-      "Tens perguntas, ou queres ver, corrigir ou apagar os teus dados? Envia um e-mail para {email} com o link do veredicto ou do caso.",
-    "privacy.accountsTitle": "Contas",
-    "privacy.accounts":
-      "O Judge é só para quem tem 18 anos ou mais, e as contas que descobrimos pertencer a alguém com menos de 18 anos são encerradas. Precisas de uma conta para obter um veredicto; a outra pessoa de um caso a dois pode responder sem conta. Se entrares com a Apple ou a Google, guardamos o endereço de e-mail, o nome e o link da fotografia de perfil que partilham connosco, além do método de acesso que usaste, e a Apple ou a Google podem ver que entraste no Judge. Se entrares com um link por e-mail, esse e-mail é enviado através da Resend e guardamos por pouco tempo um registo com o teu endereço de e-mail para validar o link: o link deixa de funcionar ao fim de 10 minutos e o registo é apagado assim que é usado ou pouco depois de expirar. Guardamos também os registos das tuas sessões (um token aleatório e a data em que expira, sem endereço IP nem dados do navegador, embora as apps também registem um identificador do dispositivo quando inicias a sessão), os teus créditos, o teu plano e o respetivo histórico, e que veredictos gastaram um crédito (só o ID do veredicto). Guardamos ainda que veredictos e casos são teus, para os encontrares em qualquer dispositivo. Apagar a conta na página da conta remove a tua conta, as sessões, os eventos de utilização e a ligação entre a tua conta e os teus dispositivos, e remove os teus veredictos e os teus lados dos casos como descrito em Remoção. Guardamos apenas uma forma baralhada do teu endereço de e-mail, para que uma conta nova com esse endereço não receba um segundo veredicto grátis, e continue encerrada se a tua conta foi encerrada por teres menos de 18 anos. Os códigos de início de sessão enviados por e-mail funcionam como as ligações. Se definires uma palavra-passe, guardamos com a tua conta apenas uma versão cifrada (hash) dela, nunca a palavra-passe em si.",
+      "Desativado, a menos que o atives. Quando está ativado, podemos usar o texto anonimizado que os juízes leem, os veredictos deles e as tuas avaliações para testar e treinar modelos de IA: os do próprio Judge e, se o Judge for um dia vendido ou fundido com outra empresa, os do novo proprietário. Os nomes nunca fazem parte disso. Se o desativares, tudo o que criaste fica fora de qualquer treino a partir daí. Registamos quando o ativaste ou desativaste.\n«Anonimizado» aqui quer dizer que os nomes foram retirados; outros detalhes que escreveste ainda podem estar no texto. Aplica-se só aos veredictos feitos enquanto está ativado, e a um caso só quando todas as pessoas que escreveram um lado o têm ativado. Os modelos já treinados não mudam. Ainda nada foi treinado. O Judge funciona da mesma maneira com isto desativado.\nPerguntamos uma só vez, na página do teu próprio veredicto, depois do teu segundo veredicto concluído. Nunca perguntamos num veredicto que outra pessoa tenha partilhado contigo. O cartão diz: «Deixa o Judge usar os teus veredictos e avaliações anonimizados para treinar IA. Os nomes nunca são incluídos.» Podes mudar a tua resposta nas Definições a qualquer momento.",
+    "privacy.purposesTitle": "Porque usamos os teus dados",
+    "privacy.purposes":
+      "- Para te dar um veredicto, gerir a tua conta e tratar de compras e suporte. Base (UE, Reino Unido e Brasil): necessário para prestar o serviço que pediste.\n- Para manter o Judge seguro e a funcionar: limites de utilização, a verificação humana, detetar quem junta créditos grátis, relatórios de erros, contagens de utilização e guardar uma forma baralhada do e-mail depois de o apagares. Base: o nosso interesse legítimo num serviço seguro e a funcionar. Podes opor-te por e-mail. As apps têm uma opção «Estatísticas de utilização», e o Do Not Track ou o Global Privacy Control do teu navegador impede os eventos de utilização do próprio site.\n- Para verificar a tua idade, incluindo o sinal de idade do teu telemóvel. Base: o nosso interesse legítimo em manter o Judge só para adultos, ou uma obrigação legal quando se aplica uma lei de idade de uma loja de apps.\n- Para guardar o texto sem os nomes durante 30 dias depois de removeres algo, em caso de abuso ou de reclamação legal. Base: o nosso interesse legítimo.\n- Para guardar a prova do que aceitaste: a aceitação sobre detalhes privados e as tuas escolhas em Ajuda a melhorar o Judge. Base: o nosso interesse legítimo em podermos mostrar o que aceitaste.\n- Para usar os teus veredictos anonimizados e as tuas avaliações no treino de IA. Base: o teu consentimento, só se o ativares.\n- Para cumprir a lei e guardar os registos que somos obrigados a guardar. Base: obrigação legal.\nNunca usamos os teus dados para publicidade e não temos rastreadores de publicidade. Se um dia quisermos uma nova utilização, avisamos-te primeiro e voltamos a perguntar se a lei exigir o teu consentimento.",
+    "privacy.sensitiveTitle": "O que deixar de fora",
+    "privacy.sensitive":
+      "As disputas podem tocar em assuntos privados, como saúde, relações, religião ou dinheiro. Escreve só o que o veredicto precisa e deixa de fora detalhes privados sobre outras pessoas. O Judge não serve para emergências nem para aconselhamento jurídico.\nAntes do teu primeiro veredicto, do teu primeiro lado de um caso ou da tua primeira resposta a um caso, pedimos-te que assinales uma caixa: «O meu texto pode incluir detalhes privados, como saúde ou relações. O Judge envia-o, sem os nomes, a um serviço de IA externo para escrever o meu veredicto e guarda-o até eu o remover.» Só podes continuar com ela assinalada. Perguntamos uma vez por conta; se já tens uma conta, perguntamos no teu próximo veredicto. Quem responde a um caso sem conta vê a mesma caixa. Guardamos um registo da marca, com a data, o idioma, a plataforma e o texto que viste.",
+    "privacy.othersTitle": "Pessoas sobre quem escreves",
+    "privacy.others":
+      "O teu texto pode descrever alguém que não usa o Judge. Os juízes só veem essa pessoa com rótulos como «Pessoa C». Guardamos os nomes dela encriptados, com uma impressão codificada de cada nome (um hash com chave, não o nome). Os nomes podem aparecer numa página de partilha, como descrito em Quem pode ver o quê. Se és nomeado no caso de outra pessoa, escreve para {email} com o link e retiramos o teu nome da página de partilha ou analisamos a tua oposição.",
+    "privacy.automatedTitle": "Os veredictos vêm de IA",
+    "privacy.automated":
+      "Modelos de IA escrevem o teu veredicto, sem que uma pessoa o leia primeiro. É uma opinião sobre o argumento tal como foi escrito, a partir do texto sem os nomes, das fontes da web mostradas e das tuas respostas. Não é aconselhamento jurídico e não é vinculativo. Nenhuma decisão sobre ti, a tua conta, um preço ou o teu acesso é tomada a partir dele. Pode estar errado ou ser parcial. Se discordares, avalia-o como «Injusto», acrescenta contexto ou escreve para {email} e uma pessoa vai analisá-lo. O outro lado de um caso também o pode pedir.",
+    "privacy.accessTitle": "Quem pode ver o quê",
+    "privacy.access":
+      "Tu: o teu texto original e os nomes, em qualquer dispositivo quando tens sessão iniciada, ou no dispositivo que usaste, através de um código privado guardado no teu browser ou na app (só guardamos uma forma baralhada desse código). Os veredictos escritos sem sessão iniciada, antes de ser preciso ter conta, e os casos a que respondeste sem sessão iniciada continuam listados nesse browser com os títulos e os teus nomes tal como os escreveste, para que a página «Veredictos» os possa mostrar: qualquer pessoa que use o mesmo browser vê essa lista. Num computador partilhado, inicia sessão ou usa uma janela privada; apagar os dados do site no browser remove a lista. Num caso a dois, cada pessoa só vê o seu próprio original; depois do veredicto, ambas veem os dois relatos anonimizados, tal como os juízes os leram. Os juízes (modelos de IA operados pelo nosso fornecedor de IA): só a versão anonimizada. Qualquer pessoa com o link de partilha: o veredicto com os nomes a mostrar. Por omissão, são o nome que escolhes para ti e os primeiros nomes das outras pessoas tal como os escreveste; podes alterá-los ou desativar os nomes a qualquer momento, e a página passa a mostrar Parte A e Parte B. Nós: podemos desencriptar os originais com a chave, e só vemos o texto guardado para tratar de um pedido de apoio teu, investigar abusos ou quando a lei o exige.",
+    "privacy.casesTitle": "Casos a dois e contexto acrescentado",
+    "privacy.cases":
+      "Num caso a dois, cada lado é anonimizado quando é enviado, tal como num veredicto. O texto anonimizado é o que os juízes leem; o lado de cada pessoa tal como o escreveu, com a respetiva lista de nomes, fica guardado encriptado e só essa pessoa o pode ver. Cada pessoa escreve o nome que quer mostrar na página de partilha ao enviar o seu lado; se o deixar vazio, aparece Parte A ou Parte B. A outra pessoa não precisa de conta; as respostas dela têm limite de utilização com um hash com chave do endereço IP. O link de convite é guardado só como hash. Se a outra pessoa responde com sessão iniciada, a conta dela fica associada ao lado dela, para que só ela possa acrescentar contexto mais tarde ou ver o original; se responde sem sessão, um código privado guardado no navegador faz o mesmo, e iniciar sessão depois nesse navegador permite-lhe manter o caso na conta. Para dar o mesmo rótulo à mesma pessoa nos dois lados, o servidor guarda impressões codificadas dos nomes dentro de cada caso (hashes com chave, não os nomes em si). Até ao veredicto, nenhum dos lados pode ler o texto do outro; depois de um veredicto a dois, ambos podem ler os dois relatos anonimizados. O contexto acrescentado depois de um veredicto é tratado da mesma maneira. Quando a outra pessoa responde, podemos enviar-te uma nota curta por e-mail, sem qualquer texto do caso, se o e-mail estiver configurado. Qualquer uma das pessoas pode remover o seu próprio lado: o original e o nome apresentado são apagados, e os links de partilha do caso deixam de funcionar para todos. Apagar a tua conta faz isto em todos os casos que abriste ou a que respondeste. Um caso a que ninguém responde expira ao fim de 7 dias, mas o texto do teu lado fica até o removeres. Quem responde sem conta assinala «Tenho 18 anos ou mais» e a caixa dos detalhes privados antes de enviar, e guardamos as duas marcas com o lado dessa pessoa.",
     "privacy.webSearchTitle": "Pesquisa na web e perguntas",
     "privacy.webSearch":
       "Cada veredicto envia a discussão anonimizada ao nosso fornecedor de IA com a pesquisa na web ativada. O modelo escreve as pesquisas a partir desse texto anonimizado e os resultados vêm do parceiro de pesquisa do fornecedor. As fontes usadas aparecem no veredicto. Os juízes podem primeiro fazer-te até duas perguntas: para as formular, o teu texto tal como o escreveste, nomes incluídos, vai mais uma vez para o fornecedor de IA. As tuas respostas são anonimizadas juntamente com a discussão antes do julgamento; as perguntas e as tuas respostas, tal como as escreveste, ficam guardadas com o teu original encriptado.",
+    "privacy.evidenceTitle": "Capturas de ecrã",
+    "privacy.evidence":
+      "O teu browser reduz as imagens grandes antes de as enviar. Depois, cada imagem vai uma vez para um serviço de IA externo para o texto visível ser lido; nunca guardamos a imagem. A transcrição em bruto, que ainda pode conter nomes, volta para ti dentro de um token assinado que o teu browser guarda durante até 6 horas. Quando envias o teu lado, a transcrição é anonimizada juntamente com o teu texto: a transcrição anonimizada é mostrada aos juízes e guardada com o caso, e a transcrição em bruto fica guardada encriptada com o teu original, onde só tu a podes ver. Os números de telefone, endereços de e-mail, nomes de utilizador de redes sociais e números de conta que lá apareçam também são substituídos por marcadores para os juízes.",
+    "privacy.accountsTitle": "Contas",
+    "privacy.accounts":
+      "O Judge é só para quem tem 18 anos ou mais, e as contas que descobrimos pertencer a alguém com menos de 18 anos são encerradas. Precisas de uma conta para obter um veredicto; a outra pessoa de um caso a dois pode responder sem conta. Se entrares com a Apple ou a Google, guardamos o endereço de e-mail, o nome e o link da fotografia de perfil que partilham connosco, além do método de início de sessão que usaste, e a Apple ou a Google podem ver que iniciaste sessão no Judge. Se entrares com um link ou código por e-mail, esse e-mail sai através da Resend, e guardamos por pouco tempo um registo com o teu endereço de e-mail para o verificar: deixa de funcionar ao fim de 10 minutos e o registo é apagado assim que é usado ou pouco depois de expirar. Se definires uma palavra-passe, guardamos com a tua conta apenas uma forma baralhada (hash) dela, nunca a palavra-passe em si. Guardamos também os teus registos de sessão (um token aleatório e quando expira, sem endereço IP nem dados do navegador, embora as apps também registem um identificador do dispositivo quando inicias sessão), os teus créditos, o teu plano e o respetivo histórico, e que veredictos usaram um crédito (só o ID do veredicto). Guardamos ainda quais os veredictos e casos que são teus, para os encontrares em qualquer dispositivo. Apagar a tua conta na página da conta (nas apps e no site) remove a tua conta, os registos de início de sessão, os créditos, o plano e os eventos de utilização, e remove os teus veredictos e os teus lados de casos como descrito em Remoção. Guardamos algumas coisas depois de apagares, listadas em O que guardamos depois da remoção. Se não consegues iniciar sessão, a página okjudge.com/delete-account explica como pedir por e-mail. Guardamos só uma forma baralhada do teu endereço de e-mail, para que uma conta nova com ele não receba um segundo veredicto grátis, e para que continue encerrada se a tua conta foi encerrada por teres menos de 18 anos. Registamos também se confirmaste ter 18 anos ou mais, e como (uma marca ou o sinal de idade do teu telemóvel; no Android a app consulta o Google Play, no iPhone consulta a Apple).",
+    "privacy.removalTitle": "Remoção",
+    "privacy.removal":
+      "Pede a remoção na página do veredicto (com sessão iniciada, podes abri-la a partir da página «Veredictos»), na página do caso, para um caso a dois, apagando a tua conta ou por e-mail. A remoção apaga o teu texto original, a lista de nomes e os nomes apresentados (num caso a dois, o original do teu lado e o teu nome apresentado), e o link de partilha e a sua imagem de pré-visualização deixam de carregar para todos. As pré-visualizações já publicadas em apps de mensagens ficam com essas apps e podem continuar a aparecer até as atualizarem. Guardamos o texto anonimizado e o veredicto, sem nomes, nos nossos registos; já não podem ser abertos pelo link. Apagar a tua conta faz isto com todos os teus veredictos e os teus lados de casos, e apaga os teus dados de início de sessão, créditos e plano. Os dados removidos ficam nas nossas cópias de segurança até expirarem (no máximo 14 dias, ver abaixo); se um dia restaurarmos uma cópia, voltamos a aplicar todas as remoções (para isso guardamos uma lista do que foi removido e quando, sem texto nem nomes). Trinta dias depois de removeres algo, apagamos também o texto anonimizado e o veredicto, guardando só o resultado e as datas, a menos que a lei nos obrigue a guardá-los durante mais tempo. Isto aplica-se ao que for removido a partir de 14 de novembro de 2026 (UTC); as remoções mais antigas mantêm o texto anonimizado. Num caso, os trinta dias só começam quando todas as pessoas envolvidas o removeram. Os veredictos e casos que ninguém remove são guardados até os removeres ou apagares a conta. Um veredicto feito sem sessão iniciada, antes de a conta ser necessária, pode ser removido escrevendo para {email} com o link dele.",
+    "privacy.afterRemovalTitle": "O que guardamos depois da remoção",
+    "privacy.afterRemoval":
+      "Depois da remoção, e passados os trinta dias, ainda guardamos:\n- o resultado e as pontuações, as definições escolhidas, as datas, os IDs, que lados e que idioma havia, e o ID da conta que abriu um caso;\n- as tuas avaliações. Quando apagas a tua conta, cada avaliação passa para um ID aleatório e deixa de levar a ti;\n- o registo das tuas escolhas em Ajuda a melhorar o Judge e da tua aceitação sobre detalhes privados (datas, idioma, plataforma e o texto que viste), durante 6 anos depois de apagares a tua conta, para provar o que aceitaste. Depois de apagares a conta, estes registos passam a ter um ID aleatório e nenhuma ligação ao teu nome ou e-mail;\n- a lista de remoções, que contém IDs, motivos, datas e a parte do caso, durante 90 dias, para voltar a aplicar as remoções depois de restaurar uma cópia de segurança;\n- uma forma baralhada do teu e-mail, para evitar o abuso repetido de créditos grátis (ver Contas);\n- um registo de dispositivo sem ligação à tua conta, até 180 dias;\n- cópias de segurança, até 14 dias.\nQuando um caso é apagado, as impressões codificadas e os rótulos dos nomes dele são esvaziados, por isso não são guardados.",
+    "privacy.retentionTitle": "Durante quanto tempo guardamos",
+    "privacy.retention":
+      "Guardamos os veredictos e os originais até pedires a remoção ou apagares a conta. Para recuperar de uma falha, guardamos cópias de segurança do servidor e da base de dados durante até 14 dias, e depois são apagadas. Contêm os mesmos dados que o servidor, incluindo os originais encriptados, e a chave está no mesmo servidor, por isso as cópias estão protegidas como o próprio servidor, não por essa encriptação. Os hashes dos limites de utilização duram até 48 horas. Os eventos de utilização são apagados ao fim de 90 dias e as ligações a dispositivos ao fim de 180 dias sem uso. Os registos e as métricas na Grafana Labs são guardados durante 14 dias. Os relatórios de falhas no Sentry são guardados até 30 dias. Os restantes registos do servidor seguem a retenção padrão do nosso fornecedor de alojamento. Um código de início de sessão expira ao fim de 10 minutos, e os códigos expirados são apagados todos os dias. Uma sessão termina 30 dias depois da tua última utilização. A lista de remoções é guardada durante 90 dias. Os registos das tuas escolhas de consentimento são guardados durante 6 anos depois de apagares a tua conta e depois apagados.",
+    "privacy.ipTitle": "Limites de utilização",
+    "privacy.ip":
+      "Para manter o tribunal aberto a toda a gente, limitamos quantos veredictos cada conta e quantas traduções cada visitante pode pedir. Para as traduções, as respostas a um caso a dois, a consulta de um veredicto enquanto está a ser julgado e as tentativas de início de sessão, guardamos um hash com chave do teu endereço IP, e não o endereço em si, durante até 48 horas. Os limites de início de sessão guardam por pouco tempo o próprio endereço na memória do servidor, cerca de um minuto, nunca em disco. Se a verificação humana estiver ativa, o teu endereço IP também vai para a Cloudflare para essa verificação. Nunca é guardado com o teu veredicto.",
+    "privacy.processorsTitle": "Quem mais trata o teu texto",
+    "privacy.processors":
+      "O texto que escreves, com os nomes verdadeiros, vai primeiro para o nosso fornecedor de IA nos Estados Unidos para que os nomes sejam retirados. Só a versão anonimizada é julgada; o teu original fica guardado encriptado, como descrito acima. Se a verificação humana estiver ativa, o Cloudflare Turnstile corre no teu navegador e confirma o resultado com a Cloudflare. Se iniciares sessão, a Apple ou a Google (a que escolheres) tratam desse início de sessão, e os e-mails de início de sessão saem através da Resend. As compras nas apps passam pela App Store ou pelo Google Play e são tratadas pela RevenueCat, que recebe o ID da tua conta e o teu histórico de compras. A Grafana Labs recebe os registos do servidor e as métricas de desempenho, guardados na UE durante 14 dias; os registos não contêm texto de casos. Os relatórios de falhas e de erros das apps e deste site vão para o Sentry, guardados na UE até 30 dias; incluem o erro, a versão da app ou do navegador e o modelo do dispositivo, mas nenhum texto de caso, ID de conta ou endereço de ligação. O nosso fornecedor de alojamento guarda registos padrão do servidor. A app Android consulta o Google Play sobre o teu escalão etário e a app iPhone consulta a Apple. Somos o responsável pelo tratamento; estes fornecedores tratam os dados em nosso nome.",
+    "privacy.shareTitle": "Links de partilha",
+    "privacy.share":
+      "Qualquer pessoa com o link de um veredicto pode vê-lo, com os nomes a mostrar que escolheste (ou Parte A e Parte B, se desativaste os nomes). Os links usam identificadores aleatórios longos e as páginas de partilha pedem aos motores de pesquisa que não as indexem. O link e a imagem de pré-visualização de um veredicto removido deixam de abrir; as pré-visualizações já publicadas em apps de mensagens podem continuar a aparecer até essas apps as atualizarem. Não incluas moradas, números de telefone nem nada que não quisesses ver numa página que outras pessoas podem abrir.",
+    "privacy.locationTitle": "Onde estão os teus dados",
+    "privacy.location":
+      "Os nossos servidores estão na Alemanha (OVH, Frankfurt). Parte do tratamento é feita nos Estados Unidos: o nosso fornecedor de IA corre os modelos que retiram os nomes, julgam, leem as capturas de ecrã e pesquisam na web; a Cloudflare está à frente do okjudge.com como proxy e DNS (todo o tráfego passa por ela) e corre a verificação humana. O início de sessão passa pela Apple ou pela Google se as escolheres, e os e-mails de início de sessão pela Resend. Os dados tratados noutro país podem estar sujeitos às leis desse país. Trabalhamos a partir do Canadá e podemos ver os teus dados de lá.",
+    "privacy.storageTitle": "Cookies e armazenamento do navegador",
+    "privacy.storage":
+      "O site usa um cookie de início de sessão (verdict.session_token) que te mantém com sessão iniciada, e cookies de curta duração enquanto inicias sessão com a Apple ou a Google (o verdict.state dura 5 minutos). A Cloudflare, que corre a verificação humana, pode colocar cookies próprios para isso. Nenhum é usado para rastreamento. O armazenamento local do teu navegador guarda o teu idioma, o teu tema e a tua escolha de Gamify; um rascunho por enviar (incluindo o texto que escreveste) enquanto inicias sessão; uma lista de veredictos e casos feitos sem sessão iniciada; códigos privados que dão acesso aos teus próprios originais; os nomes que usaste num caso; códigos de convite de casos a que te pediram que respondesses; a tua confirmação de idade; o último tribunal que escolheste; e que exemplos já viste. O armazenamento de sessão guarda o e-mail e o modo enquanto esperas por um e-mail de início de sessão, e marcadores de utilização do separador. Isto fica no teu dispositivo. Limpar os dados do site remove-o. As apps guardam coisas parecidas no dispositivo.",
+    "privacy.notStoredTitle": "O que não fazemos",
+    "privacy.notStored":
+      "Nada de rastreadores de publicidade. Não vendemos os teus dados nem os partilhamos para publicidade. O site e as apps não te seguem noutros sites. Como respondemos ao Do Not Track: o site não envia eventos de utilização do teu navegador quando este envia Do Not Track ou Global Privacy Control, e a opção «Estatísticas de utilização» das apps faz o mesmo nas apps. O nosso servidor continua a registar alguns eventos associados à tua conta (início de sessão, casos e veredictos feitos ou falhados, compras) e de que dispositivo iniciaste sessão. Nunca usamos o teu texto para treinar nada, a menos que tenhas ativado Ajuda a melhorar o Judge.",
+    "privacy.securityTitle": "Como protegemos",
+    "privacy.security":
+      "Os originais, as listas de nomes, os nomes apresentados e os tokens de início de sessão da Apple são encriptados. O tráfego usa HTTPS. A chave de encriptação está no mesmo servidor que os dados, por isso não protege contra quem tomar conta do servidor. Se algo correr mal com as tuas informações pessoais, avisamos as pessoas afetadas e as autoridades quando a lei o exigir.",
+    "privacy.childrenTitle": "Idade",
+    "privacy.children":
+      "O Judge é para quem tem 18 anos ou mais. Pedimos a todas as pessoas que iniciam sessão que o confirmem, quem responde a um caso sem conta assinala «Tenho 18 anos ou mais» antes de enviar, e as apps podem usar o sinal de idade do teu telemóvel. Não recolhemos dados de propósito de ninguém com menos de 18 anos. Se achas que uma criança tem uma conta, escreve para {email} e encerramo-la e removemos os dados.",
+    "privacy.rightsTitle": "Os teus direitos",
+    "privacy.rights":
+      "Onde quer que vivas, podes pedir-nos que te mostremos o que guardamos, que o corrijamos, que o removamos ou que apaguemos a tua conta, que deixemos de o usar para treino e que te demos uma cópia. Podes fazer quase tudo sozinho: remover um veredicto ou caso na página dele, apagar a tua conta na página da conta, mudar os nomes apresentados na página de um veredicto ou caso, transferir os teus dados e ligar ou desligar Ajuda a melhorar o Judge (e, nas apps, Estatísticas de utilização) nas Definições. Para qualquer outra coisa, escreve para {email} com o link do veredicto ou do caso. Podemos pedir-te que escrevas a partir do e-mail da tua conta ou que confirmes com sessão iniciada. Respondemos no prazo de 30 dias, ou de um mês se for menor. É grátis. Não serás tratado pior por usares os teus direitos. Quem pedir em teu nome precisa da tua autorização por escrito.\nUma cópia dos teus dados é um ficheiro JSON. Escolhe Transferir os meus dados na página da conta, nas apps ou no site. Traz a tua conta e os teus métodos de início de sessão, os teus veredictos e os teus lados de casos com os teus próprios textos e nomes, os resultados, as tuas avaliações, o teu histórico de consentimento, os teus dispositivos, eventos de utilização e compras. Não traz tokens de início de sessão, a tua palavra-passe nem o e-mail baralhado, nem o texto ou os nomes de mais ninguém.\nNão és obrigado a dar-nos dados, mas sem o teu texto e uma conta não conseguimos dar-te um veredicto.",
+    "privacy.regionEuTitle": "Se estás na UE ou no Reino Unido",
+    "privacy.regionEu":
+      "- Responsável pelo tratamento: ver Quem somos.\n- Bases legais: ver Porque usamos os teus dados.\n- Podes ainda pedir-nos que limitemos a nossa utilização, opor-te à utilização baseada nos nossos interesses legítimos, retirar o consentimento a qualquer momento (sem afetar o que fizemos antes) e apresentar queixa à tua autoridade de proteção de dados (no Reino Unido, a ICO).\n- Os teus dados são tratados na Alemanha, no Canadá e nos Estados Unidos, como descrito em Onde estão os teus dados. Escreve para {email} se quiseres saber mais sobre como são transferidos.\n- Decisões automatizadas: ver Os veredictos vêm de IA.",
+    "privacy.regionUsTitle": "Se estás na Califórnia ou noutro estado dos EUA",
+    "privacy.regionUs":
+      "- Nos últimos 12 meses, recolhemos: identificadores (e-mail, nome, IDs de conta e de dispositivo); o texto da tua disputa e as tuas respostas; avaliações e escolhas de consentimento; histórico de compras; dados de utilização e do dispositivo (país, modelo do dispositivo, versão da app); a confirmação de idade; e informações sensíveis (início de sessão na conta e quaisquer detalhes de saúde ou semelhantes no teu texto). Fontes: tu, o início de sessão e a loja do teu telemóvel, e as nossas próprias apps. Finalidades: ver Porque usamos os teus dados. Destinatários: as categorias em Quem mais trata o teu texto.\n- Não vendemos nem partilhamos informações pessoais para publicidade, e não o fizemos nos últimos 12 meses. Não criamos perfis teus. Usamos informações sensíveis apenas para prestar o serviço, por isso não há nada a limitar nem de que optar por sair.\n- Direitos: saber, aceder, corrigir, apagar e receber uma cópia portátil. Podes usar um representante autorizado. Respondemos no prazo de 30 dias, ou de um mês se for menor. Para recorrer de uma recusa, escreve para {email} com «Appeal». Decidimos um recurso em 45 dias. Se o recusarmos, podes contactar o procurador-geral do teu estado.\n- Retenção: ver Durante quanto tempo guardamos e O que guardamos depois da remoção.\n- Do Not Track: ver O que não fazemos. Nenhuma empresa de publicidade ou rastreamento recolhe dados nas nossas páginas. A Cloudflare corre a verificação humana e vê a tua ligação para esse fim.\n- Ninguém com menos de 18 anos pode usar o Judge, por isso não vendemos nem partilhamos dados de menores de 16. Os direitos de outros estados são a mesma lista.",
+    "privacy.regionCaTitle": "Se estás no Canadá ou no Quebeque",
+    "privacy.regionCa":
+      "O Judge é gerido a partir do Canadá e trata informações pessoais ao abrigo da PIPEDA: recolhemos apenas o que o serviço precisa, usamo-lo só para isso, protegemo-lo, e podes pedir para ver, corrigir ou remover o que temos sobre ti. Respondemos em 30 dias. Podes apresentar queixa ao Gabinete do Comissário para a Privacidade do Canadá (priv.gc.ca). Se estás no Quebeque:\n- A pessoa responsável pelas informações pessoais é Aytu Tuna, proprietário, em {email}.\n- Alguns dados são enviados para fora do Quebeque: para o nosso servidor na Alemanha, para o fornecedor de IA e outros fornecedores nos Estados Unidos, e para o Canadá fora do Quebeque.\n- O Judge regista apenas o país da tua ligação, para contagens de utilização, e não rastreia a tua localização exata. O veredicto julga o argumento que descreves e não é usado para criar um perfil teu. As contagens de utilização ficam associadas à tua conta como descrito em O que guardamos.\n- Ajuda a melhorar o Judge fica desativado até o ativares, e podes desativá-lo a qualquer momento.\n- Podes ainda pedir para retirar o consentimento, receber os teus dados num formato de uso corrente e apresentar queixa à Commission d’accès à l’information.",
+    "privacy.regionBrTitle": "Se estás no Brasil",
+    "privacy.regionBr":
+      "Responsável pelo tratamento e contacto: ver Quem somos. {email} é também o canal para pedidos ao abrigo da LGPD. Somos o responsável pelo tratamento; os fornecedores em Quem mais trata o teu texto agem por nós. Bases legais: ver Porque usamos os teus dados. Podes pedir-nos que confirmemos que tratamos os teus dados; que te demos acesso a eles; que os corrijamos; que anonimizemos, bloqueemos ou eliminemos dados excessivos ou ilícitos; que asseguremos a portabilidade; que eliminemos dados que usamos com base no teu consentimento; que te digamos com quem os partilhámos; que te informemos sobre a possibilidade de recusar o consentimento e as suas consequências; e que retiremos o teu consentimento. É grátis. Podes também apresentar queixa à ANPD. Os teus dados são enviados para o estrangeiro como descrito em Onde estão os teus dados.",
+    "privacy.changesTitle": "Alterações",
+    "privacy.changes":
+      "Se alterarmos esta política de forma relevante, atualizamos a data no topo desta página. Nunca usamos para um novo fim dados que nos deste ao abrigo de uma política antiga sem te perguntar primeiro. Revemo-la pelo menos uma vez por ano.",
+    "privacy.contactTitle": "Contacto",
+    "privacy.contact":
+      "Tens perguntas, ou queres ver, corrigir ou apagar os teus dados? Envia um e-mail para {email} com o link do veredicto ou do caso.",
     "nav.signIn": "Entrar",
     "nav.account": "Conta",
     "nav.pricing": "Preços",
@@ -303,20 +366,16 @@ const ptPT: Locale = {
     "consent.sensitiveContinue": "Continuar",
     "respond.adultConfirm": "Tenho 18 anos ou mais",
     "account.export": "Transferir os meus dados",
-    "account.exportHint":
-      "Recebe um ficheiro JSON com tudo o que o Judge guarda sobre ti.",
+    "account.exportHint": "Recebe um ficheiro JSON com tudo o que o Judge guarda sobre ti.",
     "account.exportBusy": "A preparar o ficheiro…",
-    "account.exportFailed":
-      "Não foi possível preparar os teus dados agora. Queres tentar de novo?",
+    "account.exportFailed": "Não foi possível preparar os teus dados agora. Queres tentar de novo?",
     "deletePage.title": "Apagar a tua conta do Judge",
     "deletePage.lead":
       "O Judge é uma app de Aytu Tuna. Podes apagar tu próprio a conta e os respetivos dados quando quiseres, na app ou no site.",
     "deletePage.appTitle": "Na app",
-    "deletePage.app":
-      "Abre o Judge, vai a Conta, toca em Apagar conta e confirma.",
+    "deletePage.app": "Abre o Judge, vai a Conta, toca em Apagar conta e confirma.",
     "deletePage.webTitle": "No site",
-    "deletePage.web":
-      "Inicia sessão em okjudge.com, abre Conta, escolhe Apagar conta e confirma.",
+    "deletePage.web": "Inicia sessão em okjudge.com, abre Conta, escolhe Apagar conta e confirma.",
     "deletePage.removedTitle": "O que é apagado",
     "deletePage.removed":
       "A tua conta, os registos de início de sessão, os créditos, o plano e os eventos de utilização são apagados. Os teus veredictos e os teus lados nos casos são removidos: o texto original e os nomes são apagados de imediato, e o texto anonimizado e o veredicto 30 dias depois.",
@@ -343,8 +402,7 @@ const ptPT: Locale = {
     "clarify.back": "Editar a discussão",
     "thinking.factcheck": "A verificar os factos na web…",
     "thinking.factcheckDone": "Verificação na web concluída.",
-    "thinking.premiumHelper":
-      "Verificar os factos na web demora um pouco mais. Conta com um ou dois minutos.",
+    "thinking.premiumHelper": "Verificar os factos na web demora um pouco mais. Conta com um ou dois minutos.",
     "panel.premium": "Julgado com verificação de factos na web.",
     "factcheck.title": "Verificado na web",
     "factcheck.lead": "Os juízes viram estes resultados de pesquisa antes de decidir. São provas, não a decisão em si.",
@@ -366,7 +424,8 @@ const ptPT: Locale = {
     "signin.emailLabel": "Endereço de e-mail",
     "signin.emailPlaceholder": "tu@exemplo.pt",
     "signin.emailSubmit": "Enviar-me um link de acesso",
-    "signin.emailSent": "Vê a tua caixa de entrada. Enviámos um link de acesso para {email}. Funciona durante 10 minutos.",
+    "signin.emailSent":
+      "Vê a tua caixa de entrada. Enviámos um link de acesso para {email}. Funciona durante 10 minutos.",
     "signin.emailInvalid": "Este endereço de e-mail não parece estar certo.",
     "signin.codeRequest": "Enviar-me um código",
     "signin.codeSent": "Enviámos um código para {email}. Funciona durante 10 minutos.",
@@ -386,7 +445,8 @@ const ptPT: Locale = {
     "signin.usePassword": "Usar antes uma palavra-passe",
     "signin.passwordWrong": "Este e-mail e esta palavra-passe não correspondem.",
     "signin.passwordShort": "Usa pelo menos 8 caracteres.",
-    "signin.createNote": "Vamos enviar-te um código por e-mail para confirmar este endereço. Só precisas de o fazer uma vez.",
+    "signin.createNote":
+      "Vamos enviar-te um código por e-mail para confirmar este endereço. Só precisas de o fazer uma vez.",
     "signin.passwordChoose": "Iniciaste sessão. Escolhe uma palavra-passe para a próxima vez.",
     "signin.passwordSave": "Guardar palavra-passe",
     "signin.passwordSaveFailed": "Não conseguimos guardar a palavra-passe. Tenta de novo.",
@@ -443,7 +503,8 @@ const ptPT: Locale = {
     "pricing.monthly.renews": "Renova-se todos os meses",
     "pricing.monthly.cap": "{n} veredictos por mês",
     "pricing.comingSoon": "Em breve",
-    "pricing.note": "Os preços estão em dólares americanos. Os pagamentos ainda não abriram, por isso hoje não é possível comprar nada.",
+    "pricing.note":
+      "Os preços estão em dólares americanos. Os pagamentos ainda não abriram, por isso hoje não é possível comprar nada.",
     "pricing.signIn": "Cria uma conta para o teu veredicto grátis",
     "pricing.preview": "Os veredictos ainda não estão ativos aqui. Esta página é uma pré-visualização.",
     "error.signin_required": "Entra para continuar.",
@@ -463,8 +524,10 @@ const ptPT: Locale = {
     "error.too_large": "É demasiado grande. Experimenta uma imagem mais pequena.",
     "error.unsupported_media": "Só conseguimos ler imagens PNG, JPEG, WebP ou GIF.",
     "error.too_many_files": "São mais imagens do que podes adicionar aqui.",
-    "error.evidence_invalid": "Uma das tuas imagens expirou ou não foi possível validá-la. Remove-a e volta a adicioná-la.",
-    "error.anonymize_failed": "Não conseguimos tirar os nomes do teu texto. Tenta outra vez, ou escreve iniciais em vez dos nomes completos.",
+    "error.evidence_invalid":
+      "Uma das tuas imagens expirou ou não foi possível validá-la. Remove-a e volta a adicioná-la.",
+    "error.anonymize_failed":
+      "Não conseguimos tirar os nomes do teu texto. Tenta outra vez, ou escreve iniciais em vez dos nomes completos.",
     "mode.label": "Como queres que julguemos?",
     "mode.now": "Só eu (na hora)",
     "mode.both": "Os dois lados (enviar link)",
@@ -486,13 +549,15 @@ const ptPT: Locale = {
     "case.status.expired": "O convite expirou",
     "case.invite.copied": "Copiado",
     "case.invite.share": "Partilhar",
-    "case.invite.shareText": "Pedi ao Judge para tirar a nossa teima. Conta aqui o teu lado. Só o vou ver depois do veredicto.",
+    "case.invite.shareText":
+      "Pedi ao Judge para tirar a nossa teima. Conta aqui o teu lado. Só o vou ver depois do veredicto.",
     "case.invite.reset": "Criar novo link",
     "case.invite.resetConfirm": "O link que já enviaste vai deixar de funcionar. Criar um novo?",
     "case.invite.resetYes": "Sim, criar novo link",
     "case.invite.resetDone": "O link antigo foi desativado. Envia o novo.",
     "case.judgeNow": "Julgar só com o meu lado",
-    "case.judgeNow.confirm": "Obter já um veredicto só com o teu lado? O convite fecha e a outra pessoa deixa de poder responder.",
+    "case.judgeNow.confirm":
+      "Obter já um veredicto só com o teu lado? O convite fecha e a outra pessoa deixa de poder responder.",
     "case.judgeNow.yes": "Sim, julgar já",
     "case.judgeExpired.confirm": "Obter um veredicto só com o teu lado? Isto gasta 1 veredicto.",
     "case.judgeExpired.yes": "Sim, gastar 1 veredicto",
@@ -501,7 +566,8 @@ const ptPT: Locale = {
     "case.side.opened": "Aberto",
     "case.side.typing": "A escrever…",
     "case.judgeAnswered": "Julgar com os lados que responderam",
-    "case.judgeAnswered.confirm": "Obter um veredicto com os lados que responderam? Os outros convites fecham e essas pessoas deixam de poder responder.",
+    "case.judgeAnswered.confirm":
+      "Obter um veredicto com os lados que responderam? Os outros convites fecham e essas pessoas deixam de poder responder.",
     "case.cancel": "Cancelar",
     "case.retry": "Tentar outra vez",
     "case.failedBody": "O teu crédito foi devolvido. Já podes tentar outra vez.",
@@ -539,15 +605,12 @@ const ptPT: Locale = {
     "respond.submit": "Enviar o meu lado",
     "case.write.title": "O teu lado",
     "case.write.placeholder": "Qual é o problema?",
-    "case.write.lead":
-      "Escreve o teu lado quando quiseres. Os juízes começam quando os dois tiverem escrito.",
-    "case.write.leadAnswered":
-      "A outra pessoa já escreveu o lado dela. Escreve o teu para receberes o veredicto.",
+    "case.write.lead": "Escreve o teu lado quando quiseres. Os juízes começam quando os dois tiverem escrito.",
+    "case.write.leadAnswered": "A outra pessoa já escreveu o lado dela. Escreve o teu para receberes o veredicto.",
     "case.write.submit": "Enviar o meu lado",
     "case.write.emailSubject": "A outra pessoa escreveu a sua versão",
     "respond.sent": "Obrigado. O teu lado chegou e os juízes já estão a tratar disso.",
-    "respond.sentWaiting":
-      "Obrigado. O teu lado chegou. Os juízes começam quando a outra pessoa escrever o dela.",
+    "respond.sentWaiting": "Obrigado. O teu lado chegou. Os juízes começam quando a outra pessoa escrever o dela.",
     "respond.ownInvite": "Este link de convite é teu. Envia-o à outra pessoa.",
     "respond.expired": "Este convite expirou.",
     "respond.closed": "Este caso já não aceita respostas.",
@@ -612,8 +675,7 @@ const ptPT: Locale = {
     "home.says": "{name} diz:",
     "home.mySide": "O meu lado:",
     "home.otherSide": "O outro lado:",
-    "appeal.lead":
-      "Gasta 1 veredicto.",
+    "appeal.lead": "Gasta 1 veredicto.",
     "appeal.placeholder": "O que é que escapou aos juízes? Um facto, uma mensagem ou o que ficou mesmo combinado.",
     "appeal.submit": "Julgar de novo com isto",
     "appeal.sending": "A anonimizar o teu contexto…",
@@ -646,7 +708,8 @@ const ptPT: Locale = {
     "about.casesTitle": "Ouvir os dois lados",
     "about.cases1":
       "Casos a dois: entras, escreves o teu lado e envias um link privado. A outra pessoa escreve o dela sem ver o teu, e os juízes pesam os dois relatos: em que concordam, o que contestam e que provas mudariam o veredicto.",
-    "about.cases2": "Se ninguém responder em 7 dias, o link deixa de funcionar. Ainda podes obter um veredicto só com o teu lado.",
+    "about.cases2":
+      "Se ninguém responder em 7 dias, o link deixa de funcionar. Ainda podes obter um veredicto só com o teu lado.",
     "about.premiumTitle": "Extras",
     "about.premium2":
       "Provas: junta capturas de ecrã de conversas ou documentos. Lemos o texto, escondemos os nomes e deitamos a imagem fora.",
@@ -654,12 +717,6 @@ const ptPT: Locale = {
       "Mais contexto: depois de um veredicto, cada pessoa pode acrescentar contexto uma vez. Os juízes voltam a analisar tudo e dizem se o veredicto se mantém, se foi invertido ou se mudou. Os veredictos anteriores continuam à vista.",
     "about.premium4":
       "Um caso a dois gasta 1 veredicto. Fica reservado quando envias o link e é devolvido se ninguém responder em 7 dias.",
-    "privacy.casesTitle": "Casos a dois e contexto acrescentado",
-    "privacy.cases":
-      "Num caso a dois, cada lado é anonimizado quando é enviado, tal como num veredicto. O texto anonimizado é o que os juízes leem; o lado de cada pessoa tal como o escreveu, com a respetiva lista de nomes, fica guardado encriptado e só essa pessoa o pode ver. Ao enviar o seu lado, cada pessoa escreve o nome que quer mostrar na página de partilha; se o deixar vazio, aparece Parte A ou Parte B. A outra pessoa não precisa de conta; as respostas dela têm limites de utilização com base num hash com chave do seu endereço IP. O link de convite é guardado apenas como hash. Se a outra pessoa responder com sessão iniciada, a conta dela fica associada ao seu lado, para que só ela possa acrescentar contexto mais tarde ou ver o seu original; se responder sem sessão iniciada, um código privado guardado no browser dela faz o mesmo e, se mais tarde iniciar sessão nesse browser, pode guardar o caso na sua conta. Para dar à mesma pessoa o mesmo rótulo nos dois relatos, o servidor guarda impressões digitais codificadas dos nomes dentro de cada caso (hashes com chave, não os nomes em si). Até ao veredicto, nenhum dos lados pode ler o texto do outro; depois de um veredicto a dois, as duas pessoas podem ler os dois relatos anonimizados. O contexto acrescentado depois de um veredicto (um recurso) é tratado da mesma forma. Quando a outra pessoa responde, podemos enviar-te por e-mail uma nota curta sem nenhum texto do caso, se o e-mail estiver configurado. Cada pessoa pode remover o seu próprio lado: o seu original e o seu nome a mostrar são apagados, e os links de partilha do caso deixam de funcionar para toda a gente. Apagar a conta faz isto em todos os casos que iniciaste ou a que respondeste.",
-    "privacy.evidenceTitle": "Capturas de ecrã",
-    "privacy.evidence":
-      "O teu browser reduz as imagens grandes antes de as enviar. Depois, cada imagem vai uma vez para um serviço de IA externo para o texto visível ser lido; nunca guardamos a imagem. A transcrição em bruto, que ainda pode conter nomes, volta para ti dentro de um token assinado que o teu browser guarda durante até 6 horas. Quando envias o teu lado, a transcrição é anonimizada juntamente com o teu texto: a transcrição anonimizada é mostrada aos juízes e guardada com o caso, e a transcrição em bruto fica guardada encriptada com o teu original, onde só tu a podes ver. Os números de telefone, endereços de e-mail, nomes de utilizador de redes sociais e números de conta que lá apareçam também são substituídos por marcadores para os juízes.",
     "pricing.premium.f5": "Capturas de ecrã como prova, lidas e depois apagadas, sem custo extra",
     "pricing.premium.f6": "Acrescentar contexto depois de um veredicto e pedir novo julgamento (1 veredicto)",
     "pricing.premium.f7": "Ouvir os dois lados: envia à outra pessoa um link privado para contar o dela",
@@ -779,21 +836,6 @@ const ptPT: Locale = {
     "stamp.dissolved": "Equívoco",
     "bestPoint.of": "O melhor argumento de {name}",
     "bestPoint.self": "O teu melhor argumento",
-    "privacy.accessTitle": "Quem pode ver o quê",
-    "privacy.access":
-      "Tu: o teu texto original e os nomes, em qualquer dispositivo quando tens sessão iniciada, ou no dispositivo que usaste, através de um código privado guardado no teu browser ou na app (só guardamos uma forma baralhada desse código). Os veredictos escritos sem sessão iniciada, antes de ser preciso ter conta, e os casos a que respondeste sem sessão iniciada continuam listados nesse browser com os títulos e os teus nomes tal como os escreveste, para que a página «Veredictos» os possa mostrar: qualquer pessoa que use o mesmo browser vê essa lista. Num computador partilhado, inicia sessão ou usa uma janela privada; apagar os dados do site no browser remove a lista. Num caso a dois, cada pessoa só vê o seu próprio original; depois do veredicto, ambas veem os dois relatos anonimizados, tal como os juízes os leram. Os juízes (modelos de IA operados pelo nosso fornecedor de IA): só a versão anonimizada. Qualquer pessoa com o link de partilha: o veredicto com os nomes a mostrar. Por omissão, são o nome que escolhes para ti e os primeiros nomes das outras pessoas tal como os escreveste; podes alterá-los ou desativar os nomes a qualquer momento, e a página passa a mostrar Parte A e Parte B. Nós: podemos desencriptar os originais com a chave, e só vemos o texto guardado para tratar de um pedido de apoio teu, investigar abusos ou quando a lei o exige.",
-    "privacy.removalTitle": "Remoção",
-    "privacy.removal":
-      "Pede a remoção na página do veredicto (com sessão iniciada, podes abri-la a partir da página «Veredictos»), na página do caso, para um caso a dois, apagando a tua conta ou por e-mail. A remoção apaga o teu texto original, a lista de nomes e os nomes a mostrar (num caso a dois, o original do teu lado e o teu nome a mostrar), e o link de partilha e a respetiva imagem de pré-visualização deixam de abrir para toda a gente. As pré-visualizações já publicadas em apps de mensagens ficam guardadas por essas apps e podem continuar a aparecer até elas as atualizarem. Mantemos o texto anonimizado e o veredicto, sem nomes, nos nossos registos; deixam de poder ser abertos através do link. Apagar a conta faz isto em todos os teus veredictos e nos teus lados dos casos, e apaga os teus dados de acesso, créditos e plano. Os dados removidos ficam nas nossas cópias de segurança até estas expirarem (no máximo 14 dias, ver abaixo); se alguma vez restaurarmos uma cópia de segurança, voltamos a aplicar todas as remoções (para isso guardamos uma lista do que foi removido e quando, sem texto nem nomes). Trinta dias depois de removeres algo, apagamos também o texto anonimizado e o veredicto, guardando apenas o resultado e as datas, a menos que a lei nos obrigue a guardá-los por mais tempo. No caso de um caso, os trinta dias só começam a contar quando todos os envolvidos o removeram.",
-    "privacy.retentionTitle": "Durante quanto tempo guardamos",
-    "privacy.retention":
-      "Guardamos os veredictos e os originais até pedires a remoção ou apagares a conta. Para recuperar de uma falha, guardamos cópias de segurança do servidor e da base de dados durante até 14 dias, e depois são apagadas. Contêm os mesmos dados que o servidor, incluindo os originais encriptados, e a chave está no mesmo servidor, por isso as cópias de segurança estão protegidas como o próprio servidor, e não por essa encriptação. Os hashes dos limites de utilização duram até 24 horas. Os registos do servidor seguem o prazo de conservação habitual do nosso fornecedor de alojamento. Os eventos de utilização são apagados após 90 dias e as ligações a dispositivos após 180 dias sem uso. Os registos e as métricas enviados à Grafana Labs ficam 14 dias.",
-    "privacy.locationTitle": "Onde estão os teus dados",
-    "privacy.location":
-      "Os nossos servidores estão na Alemanha (OVH, Frankfurt). Parte do tratamento é feita nos Estados Unidos: o nosso fornecedor de IA corre os modelos que retiram os nomes, julgam, leem as capturas de ecrã e pesquisam na web; a Cloudflare está à frente de okjudge.com como proxy e DNS (todo o tráfego passa por ela) e faz a verificação humana. O início de sessão passa pela Apple ou pela Google, se as escolheres, e os e-mails de acesso pela Resend. Os dados tratados noutro país podem estar sujeitos às leis desse país.",
-    "privacy.rightsTitle": "Os teus direitos (Canadá)",
-    "privacy.rights":
-      "O Judge é gerido a partir do Canadá e trata informações pessoais ao abrigo da lei federal de privacidade do Canadá (PIPEDA): recolhemos apenas o que o serviço precisa, usamo-lo só para isso, protegemo-lo, e podes pedir para ver, corrigir ou apagar o que temos sobre ti. Respondemos no prazo de 30 dias.",
     "footer.terms": "Termos",
     "signin.legalTerms": "Termos de Utilização",
     "age.confirm": "Tenho 18 anos ou mais",
@@ -842,7 +884,8 @@ const ptPT: Locale = {
     "home.monthLeft": { one: "Resta {n} de {cap} este mês" },
     "thread.judgesAgree": { one: "Juízes · {n} de {total} concorda" },
   },
-  legalNotice: "Esta tradução serve apenas para informação: se as duas versões divergirem, prevalece a versão em inglês.",
+  legalNotice:
+    "Esta tradução serve apenas para informação: se as duas versões divergirem, prevalece a versão em inglês.",
 };
 
 export default ptPT;

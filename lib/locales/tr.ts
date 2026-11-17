@@ -113,14 +113,17 @@ const tr: Locale = {
     "vote.dissolved": "anlam farkı",
     refusedNote: "Yapay zekâ bu kez pas geçti. Sahte bir karar göstermektense hiç göstermeyiz.",
     demoNote: "🎭 Demo modu: API anahtarı yok, bu örnek bir karar",
-    "trial.survived": "🛡️ İtiraz reddedildi: karşı tarafın avukatı en güçlü itirazını yaptı, karar ayakta kaldı. Güven puanı değişmedi.",
+    "trial.survived":
+      "🛡️ İtiraz reddedildi: karşı tarafın avukatı en güçlü itirazını yaptı, karar ayakta kaldı. Güven puanı değişmedi.",
     "trial.uncertain": "⚠️ Karşı tarafın avukatı itiraz etti ve itiraz bu karar hakkında ciddi şüphe bıraktı",
-    "trial.overturned": "⚠️ İtiraz kabul edildi: karar geçerli, ama karşı tarafın en güçlü itirazı onu ciddi biçimde zayıflattı",
+    "trial.overturned":
+      "⚠️ İtiraz kabul edildi: karar geçerli, ama karşı tarafın en güçlü itirazı onu ciddi biçimde zayıflattı",
     "trial.minor": "🛡️ Karşı tarafın avukatı haklı bir noktaya değindi, ama karar geçerli",
     "trial.whatWasTested": "İtiraz",
     "trial.attackPrefix": "İtiraz:",
     "trial.refereePrefix": "Neden:",
-    "trial.mixedNote": "Bu karma bir tartışma: biraz olgu, biraz değer ya da sözcük anlamı içeriyor; bu yüzden net bir galibiyeti savunmak daha zor.",
+    "trial.mixedNote":
+      "Bu karma bir tartışma: biraz olgu, biraz değer ya da sözcük anlamı içeriyor; bu yüzden net bir galibiyeti savunmak daha zor.",
     confidence: "Güven: {total} üzerinden {n}",
     verdictAria: "Karar: {label}",
     "party.a": "Taraf A",
@@ -132,16 +135,14 @@ const tr: Locale = {
     "shared.subtitle": "Biri bu kararı paylaştı",
     "shared.cta": "Sen de kendi tartışmanı çözdür →",
     errorFallback: "Bir şey ters gitti. Bir daha dener misin?",
-    "error.not_configured":
-      "Yargıç henüz kurulmamış. Biraz sonra yeniden dene.",
+    "error.not_configured": "Yargıç henüz kurulmamış. Biraz sonra yeniden dene.",
     "error.quota": "Yargıçların yapay zekâ kotası şimdilik doldu. Birkaç dakika sonra tekrar dene.",
     "error.unavailable": "Yargıçlara şu an ulaşamıyoruz. Bir dakika sonra tekrar dene.",
     "error.too_short": "Biraz kısa kaldı. Tartışmayı biraz daha anlat.",
     "error.too_long": "Epey uzun oldu. 6000 karakterin altında tut.",
     "error.invalid": "Bu istekte bir sorun var.",
     "error.rate_limited": "Ağır ol, burası mahkeme! Şimdilik sınıra geldin. {wait} sonra tekrar dene.",
-    "error.daily_cap":
-      "Mahkeme bugünlük kapandı, kaldırabileceği kadar kavga dinledi. {wait} sonra yine burada.",
+    "error.daily_cap": "Mahkeme bugünlük kapandı, kaldırabileceği kadar kavga dinledi. {wait} sonra yine burada.",
     "error.captcha_failed": "İnsan olduğunu doğrulayamadık. Kontrolü bir daha dene, sonra yeniden gönder.",
     "wait.moment": "birkaç dakika",
     "wait.minute": "1 dakika",
@@ -179,8 +180,7 @@ const tr: Locale = {
     "how.step1.title": "İki tarafa da hakkını ver",
     "how.step1.body": "Her taraf en güçlü hâliyle yeniden anlatılır, haksız bulduğun taraf bile.",
     "how.step2.title": "İddiaları ayır",
-    "how.step2.body":
-      "Her iddiaya olgu, değer, tanım ya da mantık etiketi konur, çünkü her biri başka yoldan çözülür.",
+    "how.step2.body": "Her iddiaya olgu, değer, tanım ya da mantık etiketi konur, çünkü her biri başka yoldan çözülür.",
     "how.step3.title": "Düğüm noktasını bul",
     "how.step3.body":
       "Her tarafın iddialarını temel taşına inene kadar kazar ve bütün kavganın döndüğü asıl noktayı bulur.",
@@ -203,8 +203,7 @@ const tr: Locale = {
       "Şekline bakarsan sosisli sandviç sayılabilir, ama günlük dilde sandviç deyince akla sosisli gelmez.",
     "sample.why":
       "Mert'in dayanağı sadece şekil. Ama bir kelimenin anlamını insanların onu nasıl kullandığı belirler, büfede sandviç isteyene de sosisli gelmez.",
-    "sample.bestPoint":
-      "İçine bir şey konmuş yarık bir ekmek, çoğu sözlükteki sandviç tanımına gerçekten uyuyor.",
+    "sample.bestPoint": "İçine bir şey konmuş yarık bir ekmek, çoğu sözlükteki sandviç tanımına gerçekten uyuyor.",
     "faq.title": "Merak edilenler",
     "faq.kicker": "SSS",
     "faq.fair.q": "Adil mi?",
@@ -243,8 +242,7 @@ const tr: Locale = {
       "Sadece ona anlattıklarını bilir ve hikâyeyi nasıl anlattığın sonucu etkiler. Karşı tarafı da onun anlatacağı gibi ekle.",
     "about.limit2":
       "Yapay zekâ yargıçları olgularda yanılabilir. Her karar dayandığı olguları listeler, sen de kontrol edebilirsin.",
-    "about.limit3":
-      "İsimleri değiştirmek çoğu zaman tutar, ama alışılmadık isimler ya da lakaplar gözden kaçabilir.",
+    "about.limit3": "İsimleri değiştirmek çoğu zaman tutar, ama alışılmadık isimler ya da lakaplar gözden kaçabilir.",
     "about.limit4": "Eğlence ve netlik için. Hukuki, tıbbi ya da mali tavsiye değil.",
     "about.builtTitle": "Perde arkası",
     "about.built":
@@ -254,33 +252,96 @@ const tr: Locale = {
     "privacy.kicker": "Verilerin",
     "privacy.lead":
       "Kısacası: yazdıklarını, isimler dahil, şifreli olarak saklıyoruz; böylece istediğinde geri dönüp bakabilirsin. Yargıçlar her zaman isimleri çıkarılmış bir hâlini okur. İstediğin an kaldırılmasını isteyebilirsin. Verilerini satmıyoruz. Judge bir gün satılırsa ya da birleşirse, bu politika kapsamında yeni sahibine geçer.",
+    "privacy.whoTitle": "Biz kimiz",
+    "privacy.who":
+      "Judge'ı Kanada'da yaşayan bir birey olan Aytu Tuna işletiyor.\n{address}\nNeyin neden toplanacağına biz karar veririz. Kişisel bilgilerden sorumlu kişi, sahibi Aytu Tuna'dır. İletişim: {email}.",
     "privacy.storedTitle": "Neleri saklıyoruz",
     "privacy.stored":
-      "Her karar için metnini tam yazdığın gibi (yargıçların sorularına verdiğin cevaplar ve ekran görüntülerinden okunan yazıyla birlikte) ve hangi ismin hangi etikete dönüştüğünün listesini saklarız. Bunlar, veritabanında tutulmayan bir anahtarla şifrelenir. Ayrıca yargıçların okuduğu anonim hâli (isimler Taraf A ve Taraf B olarak), seçtiğin ayarları, kararı, varsa çevirisini ve paylaşım sayfasında görünmesini seçtiğin isimleri de saklarız. Judge'ın nasıl kullanıldığını da sayarız: hangi ekranlar ve özellikler, uygulama sürümü, cihaz modeli, sistem sürümü, dil ve bağlantının geldiği ülkeyle birlikte; uygulamalarda ayrıca bir cihaz tanımlayıcısı. Giriş yapmışsan bu, hesabına bağlanır. Kullanım olayları 90 gün, hesabınla cihazların arasındaki bağlantılar 180 gün saklanır. Uygulamalarda Ayarlar içinde bir Kullanım istatistikleri anahtarı var, tarayıcın Do Not Track ya da Global Privacy Control gönderdiğinde de web sitesi hiçbir şey göndermez. İçinde hiçbir zaman dava metni olmaz. Bir kararı puanlarsan, puanı kararla birlikte saklarız.",
+      "Her karar için metnini tam yazdığın gibi (yargıçların sorularına verdiğin cevaplar ve ekran görüntülerinden okunan yazıyla birlikte) ve hangi ismin hangi etikete dönüştüğünün listesini saklarız. Bunlar, veritabanında tutulmayan bir anahtarla şifrelenir. Ayrıca yargıçların okuduğu anonim hâli (isimler Taraf A ve Taraf B olarak), seçtiğin ayarları, kararı, varsa çevirisini ve paylaşım sayfasında görünmesini seçtiğin isimleri de saklarız. Judge'ın nasıl kullanıldığını da sayarız: hangi ekranlar ve özellikler, uygulama sürümü, cihaz modeli, sistem sürümü, dil ve bağlantının geldiği ülkeyle birlikte; uygulamalarda ayrıca bir cihaz tanımlayıcısı. Giriş yapmışsan bu, hesabına bağlanır. Kullanım olayları 90 gün, hesabınla cihazların arasındaki bağlantılar 180 gün saklanır. Uygulamalarda Ayarlar içinde bir Kullanım istatistikleri anahtarı var, tarayıcın Do Not Track ya da Global Privacy Control gönderdiğinde de web sitesi hiçbir şey göndermez. İçinde hiçbir zaman dava metni olmaz. Bir kararı puanlarsan, puanı kararla birlikte saklarız. Puan temizlenebilir; o zaman satırı, olumlu ya da olumsuz bilgisi olmadan saklarız. Ayrıca özel ayrıntılar onayının ve Judge'ı geliştirmeye yardım et tercihlerinin kaydını da tarih, dil ve platform ile gördüğün ifadeyle birlikte tutarız.",
     "privacy.helpTitle": "Judge'ı geliştirmeye yardım et",
     "privacy.help":
-      "Sen açmadıkça kapalıdır. Açıkken, yargıçların okuduğu anonim metni, kararlarını ve puanlarını Judge'ın yargıçlarını test etmek ve eğitmek için kullanabiliriz. İsimler hiçbir zaman buna dahil olmaz. Kapattığında, ürettiğin her şey için bu kullanım durur; açıp kapattığın zamanları da kaydederiz.",
-    "privacy.notStoredTitle": "Neleri yapmıyoruz",
-    "privacy.notStored":
-      "Reklam takibi yok. Dil tercihin sadece tarayıcının yerel depolamasında durur, başka hiçbir yerde değil.",
-    "privacy.ipTitle": "Kullanım sınırı",
-    "privacy.ip":
-      "Mahkeme herkese açık kalsın diye her hesabın kaç karar, her ziyaretçinin kaç çeviri isteyebileceğine sınır koyuyoruz. Çeviriler ve iki taraflı bir davaya verilen cevaplar için IP adresinin kendisini değil, anahtarlı bir özetini (hash) kullanım sınırı deposunda en fazla 24 saat tutuyoruz. İnsan doğrulaması açıksa IP adresin doğrulama için Cloudflare'a da gider. Kararınla birlikte asla kaydedilmez.",
-    "privacy.processorsTitle": "Metnin başka kimin elinden geçiyor",
-    "privacy.processors":
-      "Yazdığın metin, gerçek isimler dahil, isimler çıkarılsın diye önce ABD'deki yapay zekâ sağlayıcımıza gider. Yalnızca anonim hâli yargılanır; asıl metnin yukarıda anlatıldığı gibi şifreli saklanır. İnsan doğrulaması açıksa Cloudflare Turnstile tarayıcında çalışır ve sonucu Cloudflare ile kontrol eder. Giriş yaparsan bu girişi seçtiğin Apple ya da Google yürütür, giriş e-postaları da Resend üzerinden gider. Barındırma sağlayıcımız standart sunucu kayıtlarını tutar. Uygulamalardaki satın alımlar App Store veya Google Play üzerinden geçer ve RevenueCat tarafından işlenir; RevenueCat hesap kimliğini ve satın alma geçmişini alır. Grafana Labs sunucu günlüklerimizi ve performans ölçümlerimizi alır, bunlar AB içinde 14 gün saklanır; günlüklerde dava metni yoktur. Uygulamalardan ve bu web sitesinden gelen çökme ve hata raporları Sentry'ye gider, AB içinde en fazla 30 gün saklanır; hatayı, uygulama veya tarayıcı sürümünü ve cihaz modelini içerir, ancak dava metni, hesap kimliği ya da bağlantı adresi içermez.",
-    "privacy.shareTitle": "Paylaşım bağlantıları",
-    "privacy.share":
-      "Bağlantısı olan herkes kararı, senin seçtiğin görünen isimlerle (isimleri kapattıysan Taraf A ve Taraf B olarak) görebilir. Bağlantılar uzun, rastgele kimlikler kullanır ve paylaşım sayfaları arama motorlarından dizine eklememelerini ister. Kaldırılan bir kararın bağlantısı ve önizleme görseli açılmaz olur; sohbet uygulamalarında önceden paylaşılmış önizlemeler, o uygulamalar yenileyene kadar görünmeye devam edebilir. Adres, telefon numarası ya da başkalarının açabileceği bir sayfada görmek istemeyeceğin hiçbir şey yazma.",
-    "privacy.contactTitle": "İletişim",
-    "privacy.contact":
-      "Bir sorun mu var, ya da verilerini görmek, düzeltmek veya kaldırmak mı istiyorsun? Kararın ya da davanın bağlantısıyla {email} adresine yaz.",
-    "privacy.accountsTitle": "Hesaplar",
-    "privacy.accounts":
-      "Judge yalnızca 18 yaş ve üzeri kişiler içindir ve 18 yaşından küçük birine ait olduğunu öğrendiğimiz hesaplar kapatılır. Karar almak için hesap gerekir; iki taraflı bir davada karşı taraf hesapsız da cevap verebilir. Apple ya da Google ile giriş yaparsan bizimle paylaştıkları e-posta adresini, adını ve profil fotoğrafı bağlantını, bir de hangi yolla giriş yaptığını saklarız. Apple ya da Google da Judge'a giriş yaptığını görebilir. E-posta bağlantısıyla giriş yaparsan o e-posta Resend üzerinden gönderilir, bağlantıyı doğrulamak için de e-posta adresinle kısa süreli bir kayıt tutarız: bağlantı 10 dakika sonra geçersiz olur, kayıt da kullanılınca ya da süresi dolduktan kısa süre sonra silinir. Ayrıca oturum kayıtlarını (rastgele bir anahtar ve bitiş tarihi; IP adresi ya da tarayıcı bilgisi yok, ama uygulamalar giriş yaptığında bir cihaz tanımlayıcısı da kaydeder), kredilerini, planını ve geçmişini, bir de hangi kararların kredi kullandığını (sadece kararın kimliği) saklarız. Hangi kararların ve davaların senin olduğunu da tutarız, böylece onları her cihazda bulabilirsin. Hesap sayfasından hesabını silersen hesabın, oturumların, kullanım olayların ve hesabınla cihazların arasındaki bağlantı silinir; kararların ve davalardaki tarafların da Kaldırma bölümünde anlatıldığı gibi kaldırılır. Yalnızca e-posta adresinin karıştırılmış bir hâlini tutarız, böylece aynı adresle açılan yeni bir hesap ikinci bir ücretsiz karar almaz ve hesabın 18 yaşından küçük olduğun için kapatıldıysa kapalı kalır. E-postayla gelen giriş kodları da bağlantılarla aynı şekilde çalışır. Bir parola belirlersen, hesabınla birlikte parolanın yalnızca karıştırılmış (özetlenmiş) halini saklarız, parolanın kendisini asla.",
+      'Sen açmadıkça kapalıdır. Açıkken, yargıçların okuduğu anonim metni, onların kararlarını ve puanlarını yapay zekâ modellerini test etmek ve eğitmek için kullanabiliriz: Judge\'ın kendi modellerini ve Judge bir gün satılırsa ya da birleşirse yeni sahibinin modellerini. İsimler hiçbir zaman buna dahil olmaz. Kapattığında, o andan sonra ürettiğin her şey her türlü eğitimin dışında kalır. Açıp kapattığın zamanları kaydederiz.\nBurada "anonim" isimlerin çıkarılmış olması demek; yazdığın diğer ayrıntılar metinde hâlâ olabilir. Yalnızca açıkken üretilen kararları kapsar; bir davada ise ancak tarafını yazmış herkesin bunu açık tuttuğu durumda geçerlidir. Önceden eğitilmiş modeller değişmez. Şimdiye kadar hiçbir şey eğitilmedi. Judge bu kapalıyken de aynı çalışır.\nBunu bir kez, kendi karar sayfanda ikinci kararın bittikten sonra soruyoruz. Birinin seninle paylaştığı bir karar sayfasında asla sormayız. Kartta şu yazar: "Judge, anonimleştirilmiş kararlarını ve puanlarını yapay zekâyı eğitmek için kullansın. İsimler asla dahil edilmez." Cevabını Ayarlar\'dan istediğin zaman değiştirebilirsin.',
+    "privacy.purposesTitle": "Verilerini neden kullanıyoruz",
+    "privacy.purposes":
+      "- Sana bir karar vermek, hesabını işletmek, satın alımları ve desteği yürütmek için. Dayanak (AB, Birleşik Krallık ve Brezilya): istediğin hizmeti sunmak için gerekli olması.\n- Judge'ı güvenli ve çalışır tutmak için: kullanım sınırları, insan doğrulaması, ücretsiz kredileri toplamaya çalışanları fark etmek, hata raporları, kullanım sayıları ve silinmeden sonra bir e-postanın karıştırılmış hâlini tutmak. Dayanak: güvenli ve çalışan bir hizmette meşru menfaatimiz. E-postayla itiraz edebilirsin. Uygulamalarda bir Kullanım istatistikleri anahtarı var; tarayıcının Do Not Track ya da Global Privacy Control'ü de web sitesinin kendi kullanım olaylarını durdurur.\n- Yaşını kontrol etmek, telefonunun yaş sinyali dahil. Dayanak: Judge'ı yalnızca yetişkinlere açık tutmakta meşru menfaatimiz ya da bir uygulama mağazası yaş yasasının geçerli olduğu yerde yasal yükümlülük.\n- Bir şeyi kaldırmandan sonraki 30 gün boyunca, kötüye kullanım ya da hukuki talep ihtimaline karşı isimleri çıkarılmış metni saklamak. Dayanak: meşru menfaatimiz.\n- Neyi kabul ettiğine dair kanıtı saklamak: özel ayrıntılar onayı ve Judge'ı geliştirmeye yardım et tercihlerin. Dayanak: neyi kabul ettiğini gösterebilmekte meşru menfaatimiz.\n- Anonimleştirilmiş kararlarını ve puanlarını yapay zekâ eğitiminde kullanmak. Dayanak: açık rızan, yalnızca sen açarsan.\n- Yasaya uymak ve tutmamız gereken kayıtları tutmak. Dayanak: yasal yükümlülük.\nVerilerini asla reklam için kullanmayız ve reklam takipçilerimiz yok. Yeni bir kullanım istersek önce sana söyleriz, yasa rızanı gerektiriyorsa yeniden sorarız.",
+    "privacy.sensitiveTitle": "Neleri yazma",
+    "privacy.sensitive":
+      'Anlaşmazlıklar sağlık, ilişkiler, din ya da para gibi özel konulara dokunabilir. Yalnızca kararın ihtiyaç duyduğunu yaz, başkalarına ait özel ayrıntıları dışarıda bırak. Judge acil durumlar ya da hukuki tavsiye için değildir.\nİlk kararından, bir davadaki ilk tarafından ya da bir davaya verdiğin ilk cevaptan önce senden bir kutuyu işaretlemeni isteriz: "Metnim sağlık ya da ilişkiler gibi özel ayrıntılar içerebilir. Judge bunu, isimler çıkarılmış hâlde, kararımı yazması için harici bir yapay zekâ hizmetine gönderir ve ben kaldırana kadar saklar." Devam edebilmen için işaretli olması gerekir. Bunu hesap başına bir kez soruyoruz; zaten hesabın varsa sonraki kararında soruyoruz. Hesapsız bir davaya cevap verenler aynı kutuyu görür. İşaretin kaydını tarih, dil, platform ve gördüğün ifadeyle birlikte tutarız.',
+    "privacy.othersTitle": "Hakkında yazdığın kişiler",
+    "privacy.others":
+      'Metnin, Judge kullanmayan birini anlatıyor olabilir. Yargıçlar onu yalnızca "Kişi C" gibi etiketlerle görür. İsimlerini şifreli olarak ve her ismin kodlanmış bir parmak iziyle (anahtarlı bir özet, ismin kendisi değil) saklarız. İsimler, Kim neyi görebilir bölümünde anlatıldığı gibi bir paylaşım sayfasında görünebilir. Başkasının davasında adın geçiyorsa bağlantıyla birlikte {email} adresine yaz; adını paylaşım sayfasından kaldırırız ya da itirazını inceleriz.',
+    "privacy.automatedTitle": "Kararları yapay zekâ verir",
+    "privacy.automated":
+      'Kararını yapay zekâ modelleri yazar, önce hiçbir insan okumaz. Bu, argümana yazıldığı hâliyle verilen bir görüştür; isimleri çıkarılmış metne, gösterilen web kaynaklarına ve cevaplarına dayanır. Hukuki tavsiye değildir ve bağlayıcı değildir. Ondan yola çıkılarak seni, hesabını, bir fiyatı ya da erişimini ilgilendiren hiçbir karar verilmez. Yanlış ya da tek taraflı olabilir. Katılmıyorsan "Adil değil" diye puanla, bağlam ekle ya da {email} adresine yaz; bir insan bakar. Davanın diğer tarafı da isteyebilir.',
+    "privacy.accessTitle": "Kim neyi görebilir",
+    "privacy.access":
+      "Sen: asıl metnini ve isimleri, giriş yaptıysan her cihazda; giriş yapmadıysan kullandığın cihazda, tarayıcına ya da uygulamaya kaydedilen gizli bir kodla (biz bu kodun yalnızca karıştırılmış bir hâlini tutarız). Hesap gerekmeden önce giriş yapmadan yazılan kararlar ve giriş yapmadan cevapladığın davalar, başlıkları ve senin yazdığın isimlerle o tarayıcıdaki listede kalır, Kararlar sayfası onları göstersin diye: aynı tarayıcıyı kullanan herkes bu listeyi görür. Ortak bir bilgisayarda giriş yap ya da gizli pencere kullan; tarayıcıda sitenin verilerini silmek listeyi de siler. İki taraflı bir davada her kişi yalnızca kendi asıl metnini görür; karardan sonra ikisi de iki anonim anlatımı yargıçların okuduğu hâliyle görür. Yargıçlar (yapay zekâ sağlayıcımızın çalıştırdığı modeller): yalnızca anonim hâli. Paylaşım bağlantısı olan herkes: kararı, görünen isimlerle. Varsayılan olarak bunlar kendin için seçtiğin ad ve diğerlerinin senin yazdığın ilk adlarıdır; istediğin an değiştirebilir ya da isimleri kapatabilirsin, o zaman sayfa Taraf A ve Taraf B gösterir. Biz: asıl metinleri anahtarla çözebiliriz, saklanan metne de yalnızca senden gelen bir destek talebini ele almak, kötüye kullanımı araştırmak ya da yasa gerektirdiğinde bakarız.",
+    "privacy.casesTitle": "İki taraflı davalar ve itirazlar",
+    "privacy.cases":
+      'İki taraflı bir davada her taraf, gönderildiği anda bir karardaki gibi anonimleştirilir. Yargıçlar anonim metni okur; her kişinin kendi yazdığı hâli, isim listesiyle birlikte şifreli saklanır ve yalnızca o kişi görebilir. Her kişi, tarafını gönderirken paylaşım sayfasında görünmesini istediği adı yazar; boş bırakırsa Taraf A ya da Taraf B görünür. Diğer kişinin hesap açması gerekmez; cevapları IP adresinin anahtarlı bir özetiyle sınırlanır. Davet bağlantısı sadece özet (hash) olarak saklanır. Diğer kişi giriş yapmışken cevap verirse, sonradan sadece o bilgi ekleyebilsin ve asıl metnini görebilsin diye hesabı kendi tarafına bağlanır; giriş yapmadan cevap verirse aynı işi gören gizli bir kod onun tarayıcısında saklanır; sonradan o tarayıcıda giriş yaparsa davayı hesabında tutmayı seçebilir. Aynı kişi iki anlatımda da aynı etiketi alsın diye sunucu, her davanın içinde isimlerin kodlanmış parmak izlerini tutar (isimlerin kendisini değil, anahtarlı özetlerini). Karar çıkana kadar iki taraf da diğerinin yazdığını okuyamaz; iki taraflı bir karardan sonra iki kişi de iki anonim anlatımı okuyabilir. Karardan sonra eklenen bilgiler (itirazlar) de aynı şekilde işlenir. Diğer kişi cevap verince, e-posta kuruluysa sana dava metni içermeyen kısa bir not gönderebiliriz. İki kişiden her biri kendi tarafını kaldırabilir: asıl metni ve görünen adı silinir, davanın paylaşım bağlantıları da herkes için çalışmaz olur. Hesabını silmek bunu başlattığın ya da cevap verdiğin her dava için yapar. Kimsenin cevaplamadığı bir dava 7 gün sonra sona erer, ama senin tarafının metni sen kaldırana kadar durur. Hesapsız cevap veren biri, göndermeden önce "18 yaşında ya da daha büyüğüm" kutusunu ve özel ayrıntılar kutusunu işaretler; ikisini de tarafıyla birlikte saklarız.',
     "privacy.webSearchTitle": "İnternet araması ve sorular",
     "privacy.webSearch":
       "Her karar, anonim tartışmayı internet araması açık olarak yapay zekâ sağlayıcımıza gönderir. Arama sorgularını model bu anonim metinden yazar, sonuçlar da sağlayıcının arama ortağından gelir. Kullanılan kaynaklar kararda gösterilir. Yargıçlar önce sana en fazla iki soru sorabilir: bu soruları bulmak için yazdığın metin, isimler dahil, bir kez daha yapay zekâ sağlayıcımıza gider. Cevapların yargılamadan önce tartışmayla birlikte anonimleştirilir; sorular ve cevapların, yazdığın hâliyle, şifreli asıl metninle birlikte saklanır.",
+    "privacy.evidenceTitle": "Ekran görüntüleri",
+    "privacy.evidence":
+      "Tarayıcın büyük görselleri yüklemeden önce küçültür. Sonra her görsel, görünen yazısı okunsun diye bir kez harici bir yapay zekâ hizmetine gider; görseli hiç saklamayız. İsimler hâlâ içinde olabilen ham döküm sana, tarayıcının en fazla 6 saat tuttuğu imzalı bir anahtarın içinde döner. Tarafını gönderdiğinde döküm metninle birlikte anonimleştirilir: anonim döküm yargıçlara gösterilir ve davayla birlikte saklanır, ham döküm de asıl metninle birlikte şifreli tutulur ve yalnızca sen görebilirsin. İçindeki telefon numaraları, e-posta adresleri, sosyal medya kullanıcı adları ve hesap numaraları da yargıçlar için yer tutucularla değiştirilir.",
+    "privacy.accountsTitle": "Hesaplar",
+    "privacy.accounts":
+      "Judge yalnızca 18 yaş ve üzeri kişiler içindir ve 18 yaşından küçük birine ait olduğunu öğrendiğimiz hesaplar kapatılır. Karar almak için hesap gerekir; iki taraflı bir davada karşı taraf hesapsız da cevap verebilir. Apple ya da Google ile giriş yaparsan bizimle paylaştıkları e-posta adresini, adını ve profil fotoğrafı bağlantını, bir de hangi yolla giriş yaptığını saklarız. Apple ya da Google da Judge'a giriş yaptığını görebilir. E-posta bağlantısı ya da kodla giriş yaparsan o e-posta Resend üzerinden gönderilir, bunu doğrulamak için de e-posta adresinle kısa süreli bir kayıt tutarız: 10 dakika sonra geçersiz olur, kullanılınca ya da süresi dolduktan kısa süre sonra silinir. Bir parola belirlersen, hesabınla birlikte parolanın yalnızca karıştırılmış (özetlenmiş) halini saklarız, parolanın kendisini asla. Ayrıca oturum kayıtlarını (rastgele bir anahtar ve bitiş tarihi; IP adresi ya da tarayıcı bilgisi yok, ama uygulamalar giriş yaptığında bir cihaz tanımlayıcısı da kaydeder), kredilerini, planını ve geçmişini, bir de hangi kararların kredi kullandığını (sadece kararın kimliği) saklarız. Hangi kararların ve davaların senin olduğunu da tutarız, böylece onları her cihazda bulabilirsin. Hesap sayfasından hesabını silersen (uygulamalarda ve web sitesinde) hesabın, giriş kayıtların, kredilerin, planın ve kullanım olayların silinir; kararların ve davalardaki tarafların da Kaldırma bölümünde anlatıldığı gibi kaldırılır. Silmeden sonra birkaç şeyi saklarız; bunlar Kaldırma ya da silmeden sonra neleri saklıyoruz bölümünde. Giriş yapamıyorsan okjudge.com/delete-account sayfası bunu bize e-postayla nasıl isteyeceğini anlatır. Yalnızca e-posta adresinin karıştırılmış bir hâlini tutarız, böylece aynı adresle açılan yeni bir hesap ikinci bir ücretsiz karar almaz ve hesabın 18 yaşından küçük olduğun için kapatıldıysa kapalı kalır. Ayrıca 18 yaşında ya da daha büyük olduğunu onaylayıp onaylamadığını ve nasıl onayladığını (bir işaret ya da telefonunun yaş sinyali; Android'de uygulama Google Play'e, iPhone'da Apple'a sorar) kaydederiz.",
+    "privacy.removalTitle": "Kaldırma",
+    "privacy.removal":
+      "Kaldırılmasını karar sayfasından (giriş yaptıysan Kararlar sayfasından açabilirsin), iki taraflı bir davada dava sayfasından, hesabını silerek ya da e-postayla isteyebilirsin. Kaldırma, asıl metnini, isim listesini ve görünen isimleri siler (iki taraflı bir davada senin tarafının asıl metnini ve görünen adını); paylaşım bağlantısı ve önizleme görseli de herkes için açılmaz olur. Sohbet uygulamalarında önceden paylaşılmış önizlemeleri o uygulamalar saklar; yenileyene kadar görünmeye devam edebilirler. Anonim metni ve kararı, isimler olmadan kayıtlarımızda tutarız; bunlar artık bağlantıdan açılamaz. Hesabını silmek bunu tüm kararların ve davalardaki tarafların için yapar, giriş bilgilerini, kredilerini ve planını da siler. Kaldırılan veriler, yedeklerimizin süresi dolana kadar (en fazla 14 gün, aşağıya bak) yedeklerde kalır; bir yedeği geri yüklersek tüm kaldırmaları yeniden uygularız (bunun için neyin ne zaman kaldırıldığının bir listesini, hiçbir metin ya da isim olmadan tutarız). Bir şeyi kaldırmandan otuz gün sonra, yasa daha uzun saklamamızı gerektirmedikçe anonim metni ve kararı da sileriz; yalnızca sonucu ve tarihleri tutarız. Bu, 14 Kasım 2026 (UTC) ve sonrasında kaldırılanlar için geçerlidir; daha eski kaldırmalarda anonim metin kalır. Bir dava için otuz gün, davadaki herkes onu kaldırdıktan sonra başlar. Kimsenin kaldırmadığı kararlar ve davalar, sen kaldırana ya da hesabını silene kadar saklanır. Hesap gerekmeden önce giriş yapmadan yapılmış bir karar, bağlantısıyla birlikte {email} adresine yazarak kaldırılabilir.",
+    "privacy.afterRemovalTitle": "Kaldırma ya da silmeden sonra neleri saklıyoruz",
+    "privacy.afterRemoval":
+      "Kaldırmadan sonra ve otuz günün ardından da şunları saklarız:\n- sonuç ve puanlar, seçilen ayarlar, tarihler, kimlikler, hangi tarafların ve dilin olduğu ve bir davayı başlatan hesabın kimliği;\n- puanların. Hesabını sildiğinde her puan rastgele bir kimliğe taşınır, artık sana çıkmaz;\n- Judge'ı geliştirmeye yardım et tercihlerinin ve özel ayrıntılar onayının kaydı (tarihler, dil, platform ve gördüğün ifade); neyi kabul ettiğini kanıtlamak için hesabını sildikten sonra 6 yıl. Hesabını sildiğinde bu kayıtlar rastgele bir kimlik taşır, adınla ya da e-postanla bağlantısı kalmaz;\n- kaldırma listesi: kimlikler, nedenler, tarihler ve davadaki taraf; bir yedek geri yüklendiğinde kaldırmaları yeniden uygulamak için 90 gün;\n- ücretsiz kredilerin tekrar kötüye kullanılmasını önlemek için e-postanın karıştırılmış bir hâli (bkz. Hesaplar);\n- hesap bağlantısı olmayan bir cihaz kaydı, en fazla 180 gün;\n- yedekler, en fazla 14 gün.\nBir dava silindiğinde, içindeki isimlerin kodlanmış parmak izleri ve etiketleri boşaltılır; yani saklanmaz.",
+    "privacy.retentionTitle": "Ne kadar saklıyoruz",
+    "privacy.retention":
+      "Kararları ve asıl metinleri, kaldırılmasını isteyene ya da hesabını silene kadar saklarız. Bir arızadan kurtulabilmek için sunucunun ve veritabanının yedek kopyalarını en fazla 14 gün tutarız, sonra silinirler. Yedekler, şifreli asıl metinler de dahil sunucudaki verilerin aynısını içerir ve anahtar aynı sunucudadır; yani yedekler o şifrelemeyle değil, sunucunun kendisi gibi korunur. Kullanım sınırı özetleri en fazla 48 saat durur. Kullanım olayları 90 gün sonra, cihaz bağlantıları 180 gün kullanılmayınca silinir. Grafana Labs'taki günlükler ve ölçümler 14 gün saklanır. Sentry'deki çökme raporları en fazla 30 gün saklanır. Diğer sunucu kayıtları barındırma sağlayıcımızın standart saklama süresine göre tutulur. Bir giriş kodu 10 dakika sonra geçersiz olur ve süresi dolan kodlar her gün silinir. Bir oturum, son kullanmandan 30 gün sonra biter. Kaldırma listesi 90 gün saklanır. Rıza tercihlerinin kayıtları, hesabını sildikten sonra 6 yıl saklanır, sonra silinir.",
+    "privacy.ipTitle": "Kullanım sınırı",
+    "privacy.ip":
+      "Mahkeme herkese açık kalsın diye her hesabın kaç karar, her ziyaretçinin kaç çeviri isteyebileceğine sınır koyuyoruz. Çeviriler, iki taraflı bir davaya verilen cevaplar, bir karar yargılanırken durumuna bakmak ve giriş denemeleri için IP adresinin kendisini değil, anahtarlı bir özetini (hash) en fazla 48 saat tutarız. Giriş sınırları, adresin kendisini sunucu belleğinde kısa süre, yaklaşık bir dakika tutar; asla diske yazılmaz. İnsan doğrulaması açıksa IP adresin doğrulama için Cloudflare'a da gider. Kararınla birlikte asla kaydedilmez.",
+    "privacy.processorsTitle": "Metnin başka kimin elinden geçiyor",
+    "privacy.processors":
+      "Yazdığın metin, gerçek isimler dahil, isimler çıkarılsın diye önce ABD'deki yapay zekâ sağlayıcımıza gider. Yalnızca anonim hâli yargılanır; asıl metnin yukarıda anlatıldığı gibi şifreli saklanır. İnsan doğrulaması açıksa Cloudflare Turnstile tarayıcında çalışır ve sonucu Cloudflare ile kontrol eder. Giriş yaparsan bu girişi seçtiğin Apple ya da Google yürütür, giriş e-postaları da Resend üzerinden gider. Uygulamalardaki satın alımlar App Store veya Google Play üzerinden geçer ve RevenueCat tarafından işlenir; RevenueCat hesap kimliğini ve satın alma geçmişini alır. Grafana Labs sunucu günlüklerimizi ve performans ölçümlerimizi alır, bunlar AB içinde 14 gün saklanır; günlüklerde dava metni yoktur. Uygulamalardan ve bu web sitesinden gelen çökme ve hata raporları Sentry'ye gider, AB içinde en fazla 30 gün saklanır; hatayı, uygulama veya tarayıcı sürümünü ve cihaz modelini içerir, ancak dava metni, hesap kimliği ya da bağlantı adresi içermez. Barındırma sağlayıcımız standart sunucu kayıtlarını tutar. Android uygulaması yaş durumunu Google Play'e, iPhone uygulaması Apple'a sorar. Veri sorumlusu biziz; bu sağlayıcılar verileri bizim adımıza işler.",
+    "privacy.shareTitle": "Paylaşım bağlantıları",
+    "privacy.share":
+      "Bağlantısı olan herkes kararı, senin seçtiğin görünen isimlerle (isimleri kapattıysan Taraf A ve Taraf B olarak) görebilir. Bağlantılar uzun, rastgele kimlikler kullanır ve paylaşım sayfaları arama motorlarından dizine eklememelerini ister. Kaldırılan bir kararın bağlantısı ve önizleme görseli açılmaz olur; sohbet uygulamalarında önceden paylaşılmış önizlemeler, o uygulamalar yenileyene kadar görünmeye devam edebilir. Adres, telefon numarası ya da başkalarının açabileceği bir sayfada görmek istemeyeceğin hiçbir şey yazma.",
+    "privacy.locationTitle": "Verilerin nerede",
+    "privacy.location":
+      "Sunucularımız Almanya'da (OVH, Frankfurt). Bazı işlemler Amerika Birleşik Devletleri'nde yapılır: isimleri çıkaran, yargılayan, ekran görüntülerini okuyan ve internette arama yapan modelleri yapay zekâ sağlayıcımız çalıştırır; Cloudflare, okjudge.com'un önünde vekil sunucu ve DNS olarak durur (tüm trafik ondan geçer) ve insan doğrulamasını yürütür. Onları seçersen giriş Apple ya da Google üzerinden, giriş e-postaları da Resend üzerinden gider. Başka bir ülkede işlenen veriler o ülkenin yasalarına tabi olabilir. Kanada'dan çalışıyoruz ve verilerini oradan görebiliriz.",
+    "privacy.storageTitle": "Çerezler ve tarayıcı depolaması",
+    "privacy.storage":
+      "Web sitesi seni oturum açık tutan bir giriş çerezi (verdict.session_token) kullanır; Apple ya da Google ile giriş yaparken de kısa ömürlü çerezler (verdict.state 5 dakika sürer) kullanır. İnsan doğrulamasını yürüten Cloudflare bunun için kendi çerezlerini koyabilir. Hiçbiri takip için kullanılmaz. Tarayıcının yerel depolaması dilini, temanı ve Gamify tercihini; giriş yaparken gönderilmemiş taslağı (yazdığın metin dahil); giriş yapmadan oluşturduğun kararların ve davaların listesini; kendi asıl metinlerine ulaşmanı sağlayan gizli kodları; bir davada kullandığın isimleri; cevaplaman istenen davaların davet kodlarını; yaş onayını; en son seçtiğin mahkemeyi ve hangi örnekleri gördüğünü tutar. Oturum depolaması, giriş e-postasını beklerken e-posta adresini ve modu, ayrıca sekme için kullanım işaretlerini tutar. Bunlar cihazında kalır. Sitenin verilerini silmek bunları kaldırır. Uygulamalar cihazda benzer şeyleri tutar.",
+    "privacy.notStoredTitle": "Neleri yapmıyoruz",
+    "privacy.notStored":
+      "Reklam takipçisi yok. Verilerini satmıyoruz ve reklam için paylaşmıyoruz. Web sitesi ve uygulamalar seni diğer sitelerde takip etmez. Do Not Track'e nasıl yanıt veriyoruz: tarayıcın Do Not Track ya da Global Privacy Control gönderdiğinde web sitesi tarayıcından hiçbir kullanım olayı göndermez, uygulamalarda da Kullanım istatistikleri anahtarı aynısını yapar. Sunucumuz yine de hesabına bağlı birkaç olayı (giriş, oluşturulan ya da başarısız olan davalar ve kararlar, satın alımlar) ve hangi cihazdan giriş yaptığını kaydeder. Judge'ı geliştirmeye yardım et'i açmadıkça metnini hiçbir şeyi eğitmek için kullanmayız.",
+    "privacy.securityTitle": "Güvende tutmak",
+    "privacy.security":
+      "Asıl metinler, isim listeleri, görünen isimler ve Apple giriş anahtarları şifrelenir. Trafik HTTPS kullanır. Şifreleme anahtarı verilerle aynı sunucuda durur; yani sunucuyu ele geçiren birine karşı koruma sağlamaz. Kişisel bilgilerinle ilgili bir şey ters giderse, yasanın gerektirdiği yerlerde etkilenen kişilere ve yetkililere haber veririz.",
+    "privacy.childrenTitle": "Yaş",
+    "privacy.children":
+      'Judge 18 yaş ve üzeri kişiler içindir. Giriş yapan herkesten bunu onaylamasını isteriz, hesapsız bir davaya cevap verenler göndermeden önce "18 yaşında ya da daha büyüğüm" kutusunu işaretler ve uygulamalar telefonunun yaş sinyalini kullanabilir. 18 yaşından küçük hiç kimseden bilerek veri toplamıyoruz. Bir çocuğun hesabı olduğunu düşünüyorsan {email} adresine yaz; hesabı kapatıp verileri kaldırırız.',
+    "privacy.rightsTitle": "Haklar",
+    "privacy.rights":
+      "Nerede yaşıyor olursan ol, elimizdeki verileri sana göstermemizi, düzeltmemizi, kaldırmamızı ya da hesabını silmemizi, eğitimde kullanmayı bırakmamızı ve sana bir kopyasını vermemizi isteyebilirsin. Çoğunu kendin yapabilirsin: bir kararı ya da davayı kendi sayfasında kaldır, hesabını hesap sayfasında sil, bir kararın ya da davanın sayfasında görünen isimleri değiştir, verilerini indir, Ayarlar'dan Judge'ı geliştirmeye yardım et'i (uygulamalarda Kullanım istatistiklerini de) aç ya da kapat. Başka her şey için kararın ya da davanın bağlantısıyla {email} adresine yaz. Hesabının e-postasından yazmanı ya da giriş yapmışken doğrulamanı isteyebiliriz. 30 gün içinde, ya da daha kısaysa bir ay içinde yanıt veririz. Ücretsizdir. Haklarını kullandığın için sana daha kötü davranılmaz. Senin adına başvuran birinin yazılı iznine ihtiyacı vardır.\nVerilerinin bir kopyası bir JSON dosyasıdır. Hesap sayfasında, uygulamalarda ya da web sitesinde Verilerimi indir'i seç. Hesabını ve giriş yöntemlerini, kararlarını ve davalardaki taraflarını kendi metnin ve isimlerinle, sonuçları, puanlarını, rıza geçmişini, cihazlarını, kullanım olaylarını ve satın alımlarını içerir. Giriş anahtarlarını, parolanı ya da karıştırılmış e-postayı içermez; başkasının metnini ya da isimlerini de içermez.\nBize veri vermek zorunda değilsin, ama metnin ve bir hesap olmadan sana karar veremeyiz.",
+    "privacy.regionEuTitle": "AB'de ya da Birleşik Krallık'taysan",
+    "privacy.regionEu":
+      "- Veri sorumlusu: Biz kimiz bölümüne bak.\n- Hukuki dayanaklar: Verilerini neden kullanıyoruz bölümüne bak.\n- Ayrıca kullanımı kısıtlamamızı, meşru menfaatlerimize dayanan kullanıma itiraz etmeyi, rızanı istediğin zaman geri çekmeyi (öncesinde yaptıklarımızı etkilemeden) ve veri koruma otoritene şikâyet etmeyi (Birleşik Krallık'ta ICO) isteyebilirsin.\n- Verilerin, Verilerin nerede bölümünde anlatıldığı gibi Almanya'da, Kanada'da ve Amerika Birleşik Devletleri'nde işlenir. Nasıl aktarıldığı hakkında daha fazlasını öğrenmek istiyorsan {email} adresine yaz.\n- Otomatik kararlar: Kararları yapay zekâ verir bölümüne bak.",
+    "privacy.regionUsTitle": "California'daysan ya da başka bir ABD eyaletindeysen",
+    "privacy.regionUs":
+      '- Son 12 ayda şunları topladık: tanımlayıcılar (e-posta, ad, hesap ve cihaz kimlikleri); anlaşmazlık metnin ve cevapların; puanlar ve rıza tercihleri; satın alma geçmişi; kullanım ve cihaz verileri (ülke, cihaz modeli, uygulama sürümü); yaş onayı; ve hassas bilgiler (hesap girişi ve metninde geçen sağlık ya da benzeri ayrıntılar). Kaynaklar: sen, telefonunun giriş hizmeti ve mağazası ve kendi uygulamalarımız. Amaçlar: Verilerini neden kullanıyoruz bölümüne bak. Alıcılar: Metnin başka kimin elinden geçiyor bölümündeki kategoriler.\n- Kişisel bilgileri reklam için satmıyoruz ya da paylaşmıyoruz ve son 12 ayda da yapmadık. Seni profillemiyoruz. Hassas bilgileri yalnızca sana hizmeti vermek için kullanırız; yani sınırlanacak ya da vazgeçilecek bir şey yok.\n- Haklar: bilme, erişme, düzeltme, silme ve taşınabilir bir kopya. Yetkili bir temsilci kullanabilirsin. 30 gün içinde, ya da daha kısaysa bir ay içinde yanıt veririz. Bir reddi temyiz etmek için {email} adresine "Appeal" yazarak yaz. Temyizi 45 gün içinde karara bağlarız. Reddedersek eyaletinin başsavcısına başvurabilirsin.\n- Saklama: Ne kadar saklıyoruz ve Kaldırma ya da silmeden sonra neleri saklıyoruz bölümlerine bak.\n- Do Not Track: Neleri yapmıyoruz bölümüne bak. Sayfalarımızda hiçbir reklam ya da takip şirketi veri toplamaz. Cloudflare insan doğrulamasını yürütür ve bu amaçla bağlantını görür.\n- 18 yaşından küçük kimse Judge\'ı kullanamaz; bu yüzden 16 yaşından küçük hiç kimsenin verisini satmıyoruz ya da paylaşmıyoruz. Diğer eyaletlerin hakları da aynı listedir.',
+    "privacy.regionCaTitle": "Kanada'daysan ya da Quebec'teysen",
+    "privacy.regionCa":
+      "Judge Kanada'dan işletilir ve kişisel bilgileri PIPEDA kapsamında işler: yalnızca hizmetin ihtiyaç duyduğunu toplarız, yalnızca bunun için kullanırız, koruruz; hakkında tuttuklarımızı görmeyi, düzeltmeyi ya da kaldırmayı isteyebilirsin. 30 gün içinde yanıt veririz. Kanada Gizlilik Komiserliği'ne (priv.gc.ca) şikâyet edebilirsin. Quebec'teysen:\n- Kişisel bilgilerden sorumlu kişi, sahibi Aytu Tuna'dır; {email} adresinden ulaşılır.\n- Bazı veriler Quebec dışına gönderilir: Almanya'daki sunucumuza, Amerika Birleşik Devletleri'ndeki yapay zekâ sağlayıcısına ve diğer sağlayıcılara ve Quebec dışındaki Kanada'ya.\n- Judge yalnızca bağlantının geldiği ülkeyi, kullanım sayıları için kaydeder; kesin konumunu izlemez. Karar, anlattığın argümanı yargılar ve senin bir profilini çıkarmak için kullanılmaz. Kullanım sayıları, Neleri saklıyoruz bölümünde anlatıldığı gibi hesabına bağlanır.\n- Judge'ı geliştirmeye yardım et sen açana kadar kapalıdır ve istediğin zaman kapatabilirsin.\n- Ayrıca rızanı geri çekmeyi, verilerini yaygın kullanılan bir biçimde almayı isteyebilirsin ve Commission d'accès à l'information'a şikâyet edebilirsin.",
+    "privacy.regionBrTitle": "Brezilya'daysan",
+    "privacy.regionBr":
+      "Veri sorumlusu ve iletişim: Biz kimiz bölümüne bak. {email} aynı zamanda LGPD talepleri için de kanaldır. Veri sorumlusu biziz; Metnin başka kimin elinden geçiyor bölümündeki sağlayıcılar bizim adımıza hareket eder. Hukuki dayanaklar: Verilerini neden kullanıyoruz bölümüne bak. Verilerini işlediğimizi doğrulamamızı; erişim vermemizi; düzeltmemizi; fazla ya da hukuka aykırı verileri anonimleştirmemizi, engellememizi ya da silmemizi; taşınabilirlik sağlamamızı; rızana dayanarak kullandığımız verileri silmemizi; kiminle paylaştığımızı söylememizi; rızayı reddetme seçeneğini ve sonucunu anlatmamızı ve rızanı geri çekmeyi isteyebilirsin. Ücretsizdir. ANPD'ye de şikâyet edebilirsin. Verilerin, Verilerin nerede bölümünde anlatıldığı gibi yurt dışına gönderilir.",
+    "privacy.changesTitle": "Değişiklikler",
+    "privacy.changes":
+      "Bu politikayı önemli bir şekilde değiştirirsek, sayfanın üstündeki tarihi güncelleriz. Eski bir politika kapsamında verdiğin verileri, önce sana sormadan yeni bir amaç için asla kullanmayız. Politikayı en az yılda bir gözden geçiririz.",
+    "privacy.contactTitle": "İletişim",
+    "privacy.contact":
+      "Bir sorun mu var, ya da verilerini görmek, düzeltmek veya kaldırmak mı istiyorsun? Kararın ya da davanın bağlantısıyla {email} adresine yaz.",
     "nav.signIn": "Giriş yap",
     "nav.account": "Hesap",
     "nav.pricing": "Fiyatlar",
@@ -308,19 +369,16 @@ const tr: Locale = {
     "consent.sensitiveContinue": "Devam et",
     "respond.adultConfirm": "18 yaşında veya daha büyüğüm",
     "account.export": "Verilerimi indir",
-    "account.exportHint":
-      "Judge'ın senin hakkında tuttuğu her şeyi içeren bir JSON dosyası al.",
+    "account.exportHint": "Judge'ın senin hakkında tuttuğu her şeyi içeren bir JSON dosyası al.",
     "account.exportBusy": "Dosyan hazırlanıyor…",
-    "account.exportFailed":
-      "Verilerini şu an hazırlayamadık. Bir daha dener misin?",
+    "account.exportFailed": "Verilerini şu an hazırlayamadık. Bir daha dener misin?",
     "deletePage.title": "Judge hesabını sil",
     "deletePage.lead":
       "Judge, Aytu Tuna'nın uygulamasıdır. Hesabını ve içindeki verileri istediğin zaman uygulamadan ya da web sitesinden kendin silebilirsin.",
     "deletePage.appTitle": "Uygulamada",
     "deletePage.app": "Judge'ı aç, Hesap'a git, Hesabı sil'e dokun ve onayla.",
     "deletePage.webTitle": "Web sitesinde",
-    "deletePage.web":
-      "okjudge.com'da oturum aç, Hesap'ı aç, Hesabı sil'i seç ve onayla.",
+    "deletePage.web": "okjudge.com'da oturum aç, Hesap'ı aç, Hesabı sil'i seç ve onayla.",
     "deletePage.removedTitle": "Neler silinir",
     "deletePage.removed":
       "Hesabın, oturum kayıtların, kredilerin, planın ve kullanım olayların silinir. Kararların ve davalardaki taraflarının kaydı kaldırılır: özgün metin ve isimler hemen silinir, anonim metin ve karar 30 gün sonra.",
@@ -328,8 +386,7 @@ const tr: Locale = {
     "deletePage.kept":
       "Kaldırılan kararların sonucu ve tarihleri; metin ve isim olmadan. Puanların ve onay kayıtların 6 yıl boyunca, seninle bağlantısı olmadan. Ücretsiz kredilerin tekrar tekrar kötüye kullanılmasını önlemek için e-postanın kodlanmış hâli. Yedeklerde eski kopyalar en fazla 14 gün kalır.",
     "deletePage.mailTitle": "E-postayla iste",
-    "deletePage.mail":
-      "Oturum açamıyor musun? Hesabının adresinden {email} adresine yazıp silmemizi iste.",
+    "deletePage.mail": "Oturum açamıyor musun? Hesabının adresinden {email} adresine yazıp silmemizi iste.",
     "rating.prompt": "Karar adil mi?",
     "rating.fair": "Adil",
     "rating.notFair": "Adil değil",
@@ -347,8 +404,7 @@ const tr: Locale = {
     "clarify.back": "Tartışmayı düzenle",
     "thinking.factcheck": "Olguları internette kontrol ediyoruz…",
     "thinking.factcheckDone": "İnternet kontrolü bitti.",
-    "thinking.premiumHelper":
-      "Olguları internette kontrol etmek biraz daha uzun sürer. Bir iki dakika verebilirsin.",
+    "thinking.premiumHelper": "Olguları internette kontrol etmek biraz daha uzun sürer. Bir iki dakika verebilirsin.",
     "panel.premium": "İnternette olgu kontrolüyle yargılandı.",
     "factcheck.title": "İnternette kontrol edildi",
     "factcheck.lead": "Yargıçlar karar vermeden önce bu arama sonuçlarını gördü. Bunlar kanıt, kararın kendisi değil.",
@@ -358,7 +414,8 @@ const tr: Locale = {
     "factcheck.status.unverified": "Doğrulanamadı",
     "factcheck.sources": "Kaynaklar",
     "factcheck.sourceAria": "{title}, yeni sekmede açılır",
-    "factcheck.none": "İnternette bakılacak bir şey yok: bu tartışma olgulara değil, değerlere ya da anlamlara dayanıyor.",
+    "factcheck.none":
+      "İnternette bakılacak bir şey yok: bu tartışma olgulara değil, değerlere ya da anlamlara dayanıyor.",
     "factcheck.noneFactual":
       "Burada internette kontrol edilebilecek bir şey yok: bu olaydaki olgular yalnızca taraflar arasında.",
     "factcheck.unavailable": "İnternet kontrolü bu kez tamamlanamadı, yargıçlar onsuz karar verdi.",
@@ -390,7 +447,8 @@ const tr: Locale = {
     "signin.usePassword": "Bunun yerine parola kullan",
     "signin.passwordWrong": "Bu e-posta ve parola eşleşmiyor.",
     "signin.passwordShort": "En az 8 karakter kullan.",
-    "signin.createNote": "Bu adresi doğrulamak için sana bir kod e-postalayacağız. Bunu yalnızca bir kez yapman yeterli.",
+    "signin.createNote":
+      "Bu adresi doğrulamak için sana bir kod e-postalayacağız. Bunu yalnızca bir kez yapman yeterli.",
     "signin.passwordChoose": "Giriş yaptın. Bir dahaki sefer için bir parola seç.",
     "signin.passwordSave": "Parolayı kaydet",
     "signin.passwordSaveFailed": "Parolayı kaydedemedik. Tekrar dene.",
@@ -469,7 +527,8 @@ const tr: Locale = {
     "error.unsupported_media": "Sadece PNG, JPEG, WebP ya da GIF görselleri okuyabiliyoruz.",
     "error.too_many_files": "Buraya ekleyebileceğinden fazla görsel var.",
     "error.evidence_invalid": "Görsellerinden biri eskidi ya da doğrulanamadı. Kaldırıp yeniden ekle.",
-    "error.anonymize_failed": "Metnindeki isimleri çıkaramadık. Tekrar dene ya da tam isimler yerine baş harflerini yaz.",
+    "error.anonymize_failed":
+      "Metnindeki isimleri çıkaramadık. Tekrar dene ya da tam isimler yerine baş harflerini yaz.",
     "mode.label": "Nasıl karar verelim?",
     "mode.now": "Sadece ben (hemen)",
     "mode.both": "İki taraf da (bağlantı gönder)",
@@ -507,7 +566,8 @@ const tr: Locale = {
     "case.side.opened": "Açtı",
     "case.side.typing": "Yazıyor…",
     "case.judgeAnswered": "Cevaplayan taraflarla karar ver",
-    "case.judgeAnswered.confirm": "Cevaplayan taraflarla bir karar mı istiyorsun? Diğer davetler kapanır, o kişiler artık cevap veremez.",
+    "case.judgeAnswered.confirm":
+      "Cevaplayan taraflarla bir karar mı istiyorsun? Diğer davetler kapanır, o kişiler artık cevap veremez.",
     "case.cancel": "Vazgeç",
     "case.retry": "Tekrar dene",
     "case.failedBody": "Kredin geri döndü. Şimdi tekrar deneyebilirsin.",
@@ -549,8 +609,7 @@ const tr: Locale = {
     "case.write.submit": "Tarafımı gönder",
     "case.write.emailSubject": "Karşı taraf kendi tarafını yazdı",
     "respond.sent": "Teşekkürler. Tarafın ulaştı, yargıçlar üzerinde çalışıyor.",
-    "respond.sentWaiting":
-      "Teşekkürler. Tarafın ulaştı. Yargıçlar diğer kişi de kendi tarafını yazınca başlar.",
+    "respond.sentWaiting": "Teşekkürler. Tarafın ulaştı. Yargıçlar diğer kişi de kendi tarafını yazınca başlar.",
     "respond.ownInvite": "Bu senin kendi davet bağlantın. Diğer kişiye gönder.",
     "respond.expired": "Bu davetin süresi doldu.",
     "respond.closed": "Bu dava artık cevap kabul etmiyor.",
@@ -605,8 +664,7 @@ const tr: Locale = {
     "home.removeTheirSide": "Karşı tarafı kaldır",
     "home.sendLink": "Bağlantı gönder",
     "home.clear": "Temizle",
-    "home.lead":
-      "İki tarafı da yaz ya da karşı tarafa bir bağlantı gönder, kendi tarafını o yazsın.",
+    "home.lead": "İki tarafı da yaz ya da karşı tarafa bir bağlantı gönder, kendi tarafını o yazsın.",
     "home.leadSolo": "Kendi tarafını yaz, biliyorsan onunkini de.",
     "home.theirSide": "Karşı taraf",
     "home.theirName": "Onun adı",
@@ -616,8 +674,7 @@ const tr: Locale = {
     "home.says": "{name} diyor ki:",
     "home.mySide": "Benim tarafım:",
     "home.otherSide": "Onun tarafı:",
-    "appeal.lead":
-      "1 karar hakkı kullanır.",
+    "appeal.lead": "1 karar hakkı kullanır.",
     "appeal.placeholder": "Yargıçlar neyi kaçırdı? Bir detay, bir mesaj ya da gerçekte ne kararlaştırıldığı.",
     "appeal.submit": "Bilgimle yeniden yargıla",
     "appeal.sending": "Bilgini anonimleştiriyoruz…",
@@ -650,7 +707,8 @@ const tr: Locale = {
     "about.casesTitle": "İki tarafı da dinlemek",
     "about.cases1":
       "İki taraflı davalar: giriş yapıp kendi tarafını yazar, özel bir bağlantı gönderirsin. Diğer kişi seninkini görmeden kendi tarafını yazar. Yargıçlar iki anlatımı birlikte tartar: iki tarafın neyde anlaştığını, neyi tartıştığını ve hangi kanıtın kararı değiştireceğini söyler.",
-    "about.cases2": "7 gün içinde kimse cevap vermezse bağlantı çalışmaz olur. Yine de sadece kendi tarafına göre karar alabilirsin.",
+    "about.cases2":
+      "7 gün içinde kimse cevap vermezse bağlantı çalışmaz olur. Yine de sadece kendi tarafına göre karar alabilirsin.",
     "about.premiumTitle": "Ekstralar",
     "about.premium2":
       "Kanıt: sohbet ya da belge ekran görüntüleri ekleyebilirsin. İçlerindeki yazıyı okur, isimleri gizler, görseli atarız.",
@@ -658,12 +716,6 @@ const tr: Locale = {
       "İtiraz: karardan sonra her kişi bir kez bilgi ekleyebilir. Yargıçlar her şeye yeniden bakar ve sonucu söyler: karar aynı kaldı, tersine döndü ya da değişti. Önceki kararlar görünür kalır.",
     "about.premium4":
       "İki taraflı bir dava 1 karar hakkı kullanır. Bağlantıyı gönderdiğinde ayrılır, 7 gün içinde kimse cevap vermezse geri gelir.",
-    "privacy.casesTitle": "İki taraflı davalar ve itirazlar",
-    "privacy.cases":
-      "İki taraflı bir davada her taraf, gönderildiği anda bir karardaki gibi anonimleştirilir. Yargıçlar anonim metni okur; her kişinin kendi yazdığı hâli, isim listesiyle birlikte şifreli saklanır ve yalnızca o kişi görebilir. Her kişi, tarafını gönderirken paylaşım sayfasında görünmesini istediği adı yazar; boş bırakırsa Taraf A ya da Taraf B görünür. Diğer kişinin hesap açması gerekmez; cevapları IP adresinin anahtarlı bir özetiyle sınırlanır. Davet bağlantısı sadece özet (hash) olarak saklanır. Diğer kişi giriş yapmışken cevap verirse, sonradan sadece o bilgi ekleyebilsin ve asıl metnini görebilsin diye hesabı kendi tarafına bağlanır; giriş yapmadan cevap verirse aynı işi gören gizli bir kod onun tarayıcısında saklanır; sonradan o tarayıcıda giriş yaparsa davayı hesabında tutmayı seçebilir. Aynı kişi iki anlatımda da aynı etiketi alsın diye sunucu, her davanın içinde isimlerin kodlanmış parmak izlerini tutar (isimlerin kendisini değil, anahtarlı özetlerini). Karar çıkana kadar iki taraf da diğerinin yazdığını okuyamaz; iki taraflı bir karardan sonra iki kişi de iki anonim anlatımı okuyabilir. Karardan sonra eklenen bilgiler (itirazlar) de aynı şekilde işlenir. Diğer kişi cevap verince, e-posta kuruluysa sana dava metni içermeyen kısa bir not gönderebiliriz. İki kişiden her biri kendi tarafını kaldırabilir: asıl metni ve görünen adı silinir, davanın paylaşım bağlantıları da herkes için çalışmaz olur. Hesabını silmek bunu başlattığın ya da cevap verdiğin her dava için yapar.",
-    "privacy.evidenceTitle": "Ekran görüntüleri",
-    "privacy.evidence":
-      "Tarayıcın büyük görselleri yüklemeden önce küçültür. Sonra her görsel, görünen yazısı okunsun diye bir kez harici bir yapay zekâ hizmetine gider; görseli hiç saklamayız. İsimler hâlâ içinde olabilen ham döküm sana, tarayıcının en fazla 6 saat tuttuğu imzalı bir anahtarın içinde döner. Tarafını gönderdiğinde döküm metninle birlikte anonimleştirilir: anonim döküm yargıçlara gösterilir ve davayla birlikte saklanır, ham döküm de asıl metninle birlikte şifreli tutulur ve yalnızca sen görebilirsin. İçindeki telefon numaraları, e-posta adresleri, sosyal medya kullanıcı adları ve hesap numaraları da yargıçlar için yer tutucularla değiştirilir.",
     "pricing.premium.f5": "Ekran görüntüsü kanıtı: okunur, sonra atılır, ek ücret yok",
     "pricing.premium.f6": "Karardan sonra bilgi ekleyip yeniden yargılatma (1 karar)",
     "pricing.premium.f7": "İki tarafı da dinle: diğer kişi kendi tarafını anlatsın diye ona özel bir bağlantı gönder",
@@ -783,21 +835,6 @@ const tr: Locale = {
     "stamp.dissolved": "Anlam farkı",
     "bestPoint.of": "{name} adına en güçlü nokta",
     "bestPoint.self": "Senin en güçlü noktan",
-    "privacy.accessTitle": "Kim neyi görebilir",
-    "privacy.access":
-      "Sen: asıl metnini ve isimleri, giriş yaptıysan her cihazda; giriş yapmadıysan kullandığın cihazda, tarayıcına ya da uygulamaya kaydedilen gizli bir kodla (biz bu kodun yalnızca karıştırılmış bir hâlini tutarız). Hesap gerekmeden önce giriş yapmadan yazılan kararlar ve giriş yapmadan cevapladığın davalar, başlıkları ve senin yazdığın isimlerle o tarayıcıdaki listede kalır, Kararlar sayfası onları göstersin diye: aynı tarayıcıyı kullanan herkes bu listeyi görür. Ortak bir bilgisayarda giriş yap ya da gizli pencere kullan; tarayıcıda sitenin verilerini silmek listeyi de siler. İki taraflı bir davada her kişi yalnızca kendi asıl metnini görür; karardan sonra ikisi de iki anonim anlatımı yargıçların okuduğu hâliyle görür. Yargıçlar (yapay zekâ sağlayıcımızın çalıştırdığı modeller): yalnızca anonim hâli. Paylaşım bağlantısı olan herkes: kararı, görünen isimlerle. Varsayılan olarak bunlar kendin için seçtiğin ad ve diğerlerinin senin yazdığın ilk adlarıdır; istediğin an değiştirebilir ya da isimleri kapatabilirsin, o zaman sayfa Taraf A ve Taraf B gösterir. Biz: asıl metinleri anahtarla çözebiliriz, saklanan metne de yalnızca senden gelen bir destek talebini ele almak, kötüye kullanımı araştırmak ya da yasa gerektirdiğinde bakarız.",
-    "privacy.removalTitle": "Kaldırma",
-    "privacy.removal":
-      "Kaldırılmasını karar sayfasından (giriş yaptıysan Kararlar sayfasından açabilirsin), iki taraflı bir davada dava sayfasından, hesabını silerek ya da e-postayla isteyebilirsin. Kaldırma, asıl metnini, isim listesini ve görünen isimleri siler (iki taraflı bir davada senin tarafının asıl metnini ve görünen adını); paylaşım bağlantısı ve önizleme görseli de herkes için açılmaz olur. Sohbet uygulamalarında önceden paylaşılmış önizlemeleri o uygulamalar saklar; yenileyene kadar görünmeye devam edebilirler. Anonim metni ve kararı, isimler olmadan kayıtlarımızda tutarız; bunlar artık bağlantıdan açılamaz. Hesabını silmek bunu tüm kararların ve davalardaki tarafların için yapar, giriş bilgilerini, kredilerini ve planını da siler. Kaldırılan veriler, yedeklerimizin süresi dolana kadar (en fazla 14 gün, aşağıya bak) yedeklerde kalır; bir yedeği geri yüklersek tüm kaldırmaları yeniden uygularız (bunun için neyin ne zaman kaldırıldığının bir listesini, hiçbir metin ya da isim olmadan tutarız). Bir şeyi kaldırmandan otuz gün sonra, yasa daha uzun saklamamızı gerektirmedikçe anonim metni ve kararı da sileriz; yalnızca sonucu ve tarihleri tutarız. Bir dava için otuz gün, davadaki herkes onu kaldırdıktan sonra başlar.",
-    "privacy.retentionTitle": "Ne kadar saklıyoruz",
-    "privacy.retention":
-      "Kararları ve asıl metinleri, kaldırılmasını isteyene ya da hesabını silene kadar saklarız. Bir arızadan kurtulabilmek için sunucunun ve veritabanının yedek kopyalarını en fazla 14 gün tutarız, sonra silinirler. Yedekler, şifreli asıl metinler de dahil sunucudaki verilerin aynısını içerir ve anahtar aynı sunucudadır; yani yedekler o şifrelemeyle değil, sunucunun kendisi gibi korunur. Kullanım sınırı özetleri en fazla 24 saat durur. Sunucu kayıtları barındırma sağlayıcımızın standart saklama süresine göre tutulur. Kullanım olayları 90 gün sonra, cihaz bağlantıları 180 gün kullanılmayınca silinir. Grafana Labs'a gönderilen günlükler ve ölçümler 14 gün saklanır.",
-    "privacy.locationTitle": "Verilerin nerede",
-    "privacy.location":
-      "Sunucularımız Almanya'da (OVH, Frankfurt). Bazı işlemler Amerika Birleşik Devletleri'nde yapılır: isimleri çıkaran, yargılayan, ekran görüntülerini okuyan ve internette arama yapan modelleri yapay zekâ sağlayıcımız çalıştırır; Cloudflare, okjudge.com'un önünde vekil sunucu ve DNS olarak durur (tüm trafik ondan geçer) ve insan doğrulamasını yürütür. Onları seçersen giriş Apple ya da Google üzerinden, giriş e-postaları da Resend üzerinden gider. Başka bir ülkede işlenen veriler o ülkenin yasalarına tabi olabilir.",
-    "privacy.rightsTitle": "Hakların (Kanada)",
-    "privacy.rights":
-      "Judge, Kanada'dan işletilir ve kişisel bilgileri Kanada'nın federal gizlilik yasasına (PIPEDA) göre işler: yalnızca hizmet için gerekeni toplarız, yalnızca bunun için kullanırız ve koruruz; hakkında tuttuklarımızı görmeyi, düzeltmeyi ya da kaldırmayı isteyebilirsin. 30 gün içinde yanıt veririz.",
     "footer.terms": "Koşullar",
     "signin.legalTerms": "Kullanım Koşulları",
     "age.confirm": "18 yaşında veya daha büyüğüm",

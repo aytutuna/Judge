@@ -19,7 +19,8 @@ const ms: Locale = {
     },
     caseReady: {
       subject: "Dia sudah menjawab: keputusan Judge anda telah siap",
-      intro: "Pihak satu lagi sudah menceritakan versinya, dan hakim telah membuat keputusan berdasarkan kedua-dua cerita.",
+      intro:
+        "Pihak satu lagi sudah menceritakan versinya, dan hakim telah membuat keputusan berdasarkan kedua-dua cerita.",
       button: "Lihat keputusan",
       note: "Anda menerima e-mel ini kerana anda memulakan kes ini di Judge.",
     },
@@ -107,16 +108,21 @@ const ms: Locale = {
     "vote.split": "berbelah",
     "vote.conditional": "bergantung",
     "vote.dissolved": "salah faham",
-    refusedNote: "AI tidak mahu masuk campur kali ini. Kami lebih rela tidak tunjuk apa-apa daripada mereka-reka keputusan.",
+    refusedNote:
+      "AI tidak mahu masuk campur kali ini. Kami lebih rela tidak tunjuk apa-apa daripada mereka-reka keputusan.",
     demoNote: "🎭 Mod demo: tiada kunci AI ditetapkan, jadi ini contoh keputusan",
-    "trial.survived": "🛡️ Bantahan ditolak: peguam pihak satu lagi mengemukakan bantahan paling kuatnya, dan keputusan ini tetap bertahan. Skor keyakinan tidak berubah.",
-    "trial.uncertain": "⚠️ Peguam pihak satu lagi membantah, dan bantahan itu meninggalkan keraguan sebenar tentang keputusan ini",
-    "trial.overturned": "⚠️ Bantahan diterima: keputusan kekal, tetapi bantahan paling kuat pihak satu lagi melemahkannya dengan serius",
+    "trial.survived":
+      "🛡️ Bantahan ditolak: peguam pihak satu lagi mengemukakan bantahan paling kuatnya, dan keputusan ini tetap bertahan. Skor keyakinan tidak berubah.",
+    "trial.uncertain":
+      "⚠️ Peguam pihak satu lagi membantah, dan bantahan itu meninggalkan keraguan sebenar tentang keputusan ini",
+    "trial.overturned":
+      "⚠️ Bantahan diterima: keputusan kekal, tetapi bantahan paling kuat pihak satu lagi melemahkannya dengan serius",
     "trial.minor": "🛡️ Peguam pihak satu lagi membangkitkan perkara yang wajar, tetapi keputusan kekal",
     "trial.whatWasTested": "Bantahan",
     "trial.attackPrefix": "Bantahan:",
     "trial.refereePrefix": "Sebabnya:",
-    "trial.mixedNote": "Ini pertikaian bercampur: sebahagian fakta, sebahagian nilai atau makna perkataan, jadi kemenangan yang jelas lebih sukar dipertahankan.",
+    "trial.mixedNote":
+      "Ini pertikaian bercampur: sebahagian fakta, sebahagian nilai atau makna perkataan, jadi kemenangan yang jelas lebih sukar dipertahankan.",
     confidence: "Keyakinan {n} daripada {total}",
     verdictAria: "Keputusan: {label}",
     "party.a": "Pihak A",
@@ -251,33 +257,96 @@ const ms: Locale = {
     "privacy.kicker": "Data anda",
     "privacy.lead":
       "Ringkasnya: kami simpan apa yang anda tulis, termasuk nama, secara disulitkan, supaya anda boleh kembali melihatnya. Hakim hanya membaca versi yang namanya sudah dikeluarkan. Anda boleh minta ia dibuang bila-bila masa. Kami tidak menjual data anda. Jika Judge dijual atau digabungkan pada suatu hari nanti, ia berpindah kepada pemilik baharu di bawah dasar ini.",
+    "privacy.whoTitle": "Siapa kami",
+    "privacy.who":
+      "Judge dikendalikan oleh Aytu Tuna, seorang individu di Kanada.\n{address}\nKami yang menentukan data apa yang dikumpulkan dan mengapa. Orang yang bertanggungjawab ke atas maklumat peribadi ialah Aytu Tuna, pemilik. Hubungi: {email}.",
     "privacy.storedTitle": "Apa yang kami simpan",
     "privacy.stored":
-      "Untuk setiap keputusan, kami simpan teks anda tepat seperti yang anda tulis (bersama jawapan anda kepada soalan hakim dan teks yang dibaca daripada mana-mana tangkapan skrin), serta senarai nama mana yang menjadi label mana. Semua ini disulitkan dengan kunci yang tidak disimpan dalam pangkalan data. Kami juga menyimpan versi tanpa nama yang dibaca oleh hakim (nama ditukar kepada Pihak A dan Pihak B), tetapan yang anda pilih, keputusan, sebarang terjemahan, dan nama yang anda pilih untuk dipaparkan di halaman kongsi. Kami juga mengira bagaimana Judge digunakan: skrin dan ciri mana, bersama versi aplikasi, model peranti, versi sistem, bahasa dan negara sambungan anda, dan dalam aplikasi satu pengecam peranti. Apabila anda log masuk, ia dikaitkan dengan akaun anda. Peristiwa penggunaan disimpan selama 90 hari dan pautan antara akaun dan peranti anda selama 180 hari. Aplikasi mempunyai suis Statistik penggunaan dalam Tetapan, dan laman web tidak menghantar apa-apa apabila pelayar anda menghantar Do Not Track atau Global Privacy Control. Ia tidak pernah mengandungi teks kes. Jika anda menilai sesuatu keputusan, kami simpan penilaian itu bersama keputusan tersebut.",
+      "Bagi setiap keputusan, kami simpan teks anda tepat seperti yang anda tulis (termasuk jawapan anda kepada soalan hakim dan teks yang dibaca daripada tangkapan skrin), dan senarai nama mana yang menjadi label apa. Semuanya disulitkan dengan kunci yang tidak disimpan dalam pangkalan data. Kami juga menyimpan versi tanpa nama yang dibaca oleh hakim (nama ditukar kepada Pihak A dan Pihak B), tetapan yang anda pilih, keputusan, terjemahan (jika ada), dan nama yang anda pilih untuk dipaparkan di halaman kongsi. Kami juga mengira bagaimana Judge digunakan: skrin dan ciri yang mana, bersama versi aplikasi, model peranti, versi sistem, bahasa dan negara sambungan anda, dan dalam aplikasi, pengecam peranti. Apabila anda log masuk, ini dikaitkan dengan akaun anda. Peristiwa penggunaan disimpan selama 90 hari dan pautan antara akaun dan peranti anda selama 180 hari. Aplikasi mempunyai suis Statistik penggunaan dalam Tetapan, dan laman web tidak menghantar apa-apa apabila pelayar anda menghantar isyarat Do Not Track atau Global Privacy Control. Ia tidak pernah merangkumi teks kes. Jika anda menilai sesuatu keputusan, kami simpan penilaian itu bersamanya. Penilaian boleh dikosongkan; kami simpan barisnya tanpa nilai suka atau tidak suka. Kami juga menyimpan rekod persetujuan anda tentang butiran peribadi dan pilihan Bantu tambah baik Judge anda, bersama tarikh, bahasa, platform dan perkataan yang anda lihat.",
     "privacy.helpTitle": "Bantu tambah baik Judge",
     "privacy.help":
-      "Dimatikan melainkan anda menghidupkannya. Apabila dihidupkan, kami mungkin menggunakan teks tanpa nama yang dibaca hakim, keputusan mereka dan penilaian anda untuk menguji dan melatih hakim Judge. Nama tidak pernah menjadi sebahagian daripadanya. Mematikannya menghentikan penggunaan itu untuk semua yang anda hasilkan, dan kami merekodkan bila anda menghidupkan atau mematikannya.",
-    "privacy.notStoredTitle": "Apa yang kami tidak lakukan",
-    "privacy.notStored":
-      "Tiada penjejak iklan. Pilihan bahasa anda disimpan dalam storan setempat pelayar anda dan tidak di tempat lain.",
-    "privacy.ipTitle": "Had penggunaan",
-    "privacy.ip":
-      "Supaya mahkamah kekal terbuka untuk semua, kami hadkan bilangan keputusan yang boleh diminta oleh setiap akaun dan bilangan terjemahan yang boleh diminta oleh setiap pelawat. Untuk terjemahan, dan untuk jawapan dalam kes dua pihak, kami simpan cincangan berkunci (keyed hash) alamat IP anda, bukan alamat itu sendiri, dalam storan had penggunaan kami sehingga 24 jam. Jika semakan manusia diaktifkan, alamat IP anda juga dihantar kepada Cloudflare untuk semakan itu. Ia tidak pernah disimpan bersama keputusan anda.",
-    "privacy.processorsTitle": "Siapa lagi yang mengendalikan teks anda",
-    "privacy.processors":
-      "Teks yang anda taip, termasuk nama sebenar, mula-mula dihantar kepada penyedia AI kami di Amerika Syarikat supaya nama boleh dikeluarkan. Hanya versi tanpa nama yang dinilai; teks asal anda disimpan secara disulitkan, seperti yang diterangkan di atas. Jika semakan manusia diaktifkan, Cloudflare Turnstile berjalan dalam pelayar anda dan menyemak hasilnya dengan Cloudflare. Jika anda log masuk, Apple atau Google (mana-mana yang anda pilih) mengendalikan log masuk itu, dan e-mel log masuk dihantar melalui Resend. Penyedia pengehosan kami menyimpan log pelayan yang standard. Pembelian dalam aplikasi melalui App Store atau Google Play dan dikendalikan oleh RevenueCat, yang menerima ID akaun dan sejarah pembelian anda. Grafana Labs menerima log pelayan dan metrik prestasi kami, yang disimpan di EU selama 14 hari; log tidak mengandungi teks kes. Laporan ranap dan ralat daripada aplikasi dan laman web ini dihantar kepada Sentry, disimpan di EU sehingga 30 hari; laporan itu mengandungi ralat, versi aplikasi atau pelayar dan model peranti, tetapi tiada teks kes, ID akaun atau alamat sambungan.",
-    "privacy.shareTitle": "Pautan kongsi",
-    "privacy.share":
-      "Sesiapa yang ada pautan ke sesuatu keputusan boleh melihatnya, dengan nama paparan yang anda pilih (atau Pihak A dan Pihak B jika anda mematikan nama). Pautan menggunakan ID rawak yang panjang, dan halaman kongsi meminta enjin carian supaya tidak mengindeksnya. Pautan dan imej pratonton keputusan yang dibuang akan berhenti dimuatkan; pratonton yang sudah disiarkan dalam aplikasi sembang mungkin terus kelihatan sehingga aplikasi itu menyegarkannya. Jangan masukkan alamat, nombor telefon atau apa-apa lagi yang anda tidak mahu ada di halaman yang boleh dibuka oleh orang lain.",
-    "privacy.contactTitle": "Hubungi kami",
-    "privacy.contact":
-      "Ada soalan, atau mahu melihat, membetulkan atau membuang data anda? Hantar e-mel ke {email} bersama pautan ke keputusan atau kes tersebut.",
-    "privacy.accountsTitle": "Akaun",
-    "privacy.accounts":
-      "Judge hanya untuk mereka yang berumur 18 tahun ke atas, dan akaun yang kami dapati milik seseorang di bawah 18 tahun akan ditutup. Anda perlukan akaun untuk mendapatkan keputusan; pihak satu lagi dalam kes dua pihak boleh menjawab tanpa akaun. Jika anda log masuk dengan Apple atau Google, kami simpan alamat e-mel, nama dan pautan gambar profil yang mereka kongsi dengan kami, serta kaedah log masuk yang anda gunakan, dan Apple atau Google boleh nampak bahawa anda log masuk ke Judge. Jika anda log masuk dengan pautan e-mel, e-mel itu dihantar melalui Resend, dan kami menyimpan rekod dengan alamat e-mel anda untuk seketika bagi menyemak pautan itu: pautan berhenti berfungsi selepas 10 minit dan rekod itu dipadam sebaik sahaja digunakan atau tidak lama selepas tamat tempoh. Kami juga menyimpan rekod sesi anda (token rawak dan masa ia tamat, tanpa alamat IP atau butiran pelayar, walaupun aplikasi turut merekodkan pengecam peranti semasa anda log masuk), kredit anda, pelan anda dan sejarahnya, serta keputusan mana yang menggunakan kredit (hanya ID keputusan). Kami juga menyimpan keputusan dan kes mana yang milik anda, supaya anda boleh menemuinya pada mana-mana peranti. Memadam akaun anda di halaman akaun akan membuang akaun, sesi, peristiwa penggunaan dan pautan antara akaun dengan peranti anda, serta membuang keputusan anda dan versi anda dalam kes seperti yang diterangkan di bawah Pembuangan. Kami hanya menyimpan bentuk alamat e-mel anda yang telah dikaburkan, supaya akaun baharu dengan alamat itu tidak mendapat keputusan percuma kali kedua, dan kekal ditutup jika akaun anda ditutup kerana anda berumur di bawah 18 tahun. Kod log masuk yang dihantar melalui e-mel berfungsi sama seperti pautan. Jika anda menetapkan kata laluan, kami hanya menyimpan bentuk yang disulitkan (hash) bersama akaun anda, tidak pernah kata laluan itu sendiri.",
+      'Dimatikan kecuali anda menghidupkannya. Apabila dihidupkan, kami boleh menggunakan teks tanpa nama yang dibaca oleh hakim, keputusan mereka dan penilaian anda untuk menguji dan melatih model AI: milik Judge sendiri dan, jika Judge dijual atau digabungkan pada suatu hari nanti, milik pemilik baharu. Nama tidak pernah menjadi sebahagiannya. Apabila anda mematikannya, semua yang anda hasilkan sejak itu tidak akan digunakan untuk latihan. Kami merekodkan bila anda menghidupkan atau mematikannya.\n"Tanpa nama" di sini bermaksud nama dikeluarkan; butiran lain yang anda tulis mungkin masih ada dalam teks. Ia hanya merangkumi keputusan yang dibuat semasa ia dihidupkan, dan sesuatu kes hanya apabila setiap orang yang menulis satu pihak telah menghidupkannya. Model yang sudah dilatih tidak berubah. Belum ada apa-apa yang dilatih lagi. Judge berfungsi sama sahaja apabila ia dimatikan.\nKami bertanya sekali sahaja, di halaman keputusan anda sendiri selepas keputusan kedua anda selesai. Kami tidak pernah bertanya pada keputusan yang dikongsi orang lain dengan anda. Kad itu berbunyi: "Benarkan Judge menggunakan keputusan dan penilaian anda yang tanpa nama untuk melatih AI. Nama tidak pernah disertakan." Anda boleh menukar jawapan anda dalam Tetapan pada bila-bila masa.',
+    "privacy.purposesTitle": "Mengapa kami menggunakan data anda",
+    "privacy.purposes":
+      "- Untuk memberi anda keputusan, menjalankan akaun anda, serta mengendalikan pembelian dan sokongan. Asas (EU, UK dan Brazil): diperlukan untuk menyediakan perkhidmatan yang anda minta.\n- Untuk memastikan Judge selamat dan berfungsi: had penggunaan, semakan manusia, mengesan orang yang menyalahgunakan kredit percuma, laporan ralat, pengiraan penggunaan, dan menyimpan bentuk e-mel yang telah diacak selepas pemadaman. Asas: kepentingan sah kami dalam perkhidmatan yang selamat dan berfungsi. Anda boleh membantah melalui e-mel. Aplikasi mempunyai suis Statistik penggunaan, dan Do Not Track atau Global Privacy Control pelayar anda menghentikan peristiwa penggunaan laman web itu sendiri.\n- Untuk menyemak umur anda, termasuk isyarat umur telefon anda. Asas: kepentingan sah kami dalam memastikan Judge hanya untuk orang dewasa, atau kewajipan undang-undang apabila undang-undang umur kedai aplikasi terpakai.\n- Untuk menyimpan teks yang namanya telah dikeluarkan selama 30 hari selepas anda membuang sesuatu, sekiranya berlaku penyalahgunaan atau tuntutan undang-undang. Asas: kepentingan sah kami.\n- Untuk menyimpan bukti apa yang anda bersetuju: persetujuan tentang butiran peribadi dan pilihan Bantu tambah baik Judge anda. Asas: kepentingan sah kami untuk dapat menunjukkan apa yang anda bersetuju.\n- Untuk menggunakan keputusan dan penilaian anda yang tanpa nama bagi latihan AI. Asas: persetujuan anda, hanya jika anda menghidupkannya.\n- Untuk mematuhi undang-undang dan menyimpan rekod yang wajib kami simpan. Asas: kewajipan undang-undang.\nKami tidak pernah menggunakan data anda untuk iklan dan kami tidak mempunyai penjejak iklan. Jika kami mahu penggunaan baharu pada suatu hari nanti, kami akan memberitahu anda dahulu dan bertanya semula jika undang-undang memerlukan persetujuan anda.",
+    "privacy.sensitiveTitle": "Apa yang patut ditinggalkan",
+    "privacy.sensitive":
+      'Pertikaian boleh menyentuh perkara peribadi seperti kesihatan, hubungan, agama atau wang. Tulis hanya apa yang diperlukan oleh keputusan, dan jangan tulis butiran peribadi tentang orang lain. Judge bukan untuk kecemasan atau nasihat undang-undang.\nSebelum keputusan pertama anda, sebelum anda menghantar versi pertama anda dalam sesuatu kes, atau sebelum jawapan pertama anda kepada sesuatu kes, kami meminta anda menanda satu kotak: "Teks saya mungkin mengandungi butiran peribadi, seperti kesihatan atau hubungan. Judge menghantarnya, tanpa nama, kepada perkhidmatan AI luar untuk menulis keputusan saya, dan menyimpannya sehingga saya membuangnya." Anda hanya boleh teruskan apabila ia ditanda. Kami bertanya sekali bagi setiap akaun; jika anda sudah mempunyai akaun, kami bertanya pada keputusan anda yang seterusnya. Orang yang menjawab kes tanpa akaun melihat kotak yang sama. Kami menyimpan rekod tanda itu bersama tarikh, bahasa, platform dan perkataan yang anda lihat.',
+    "privacy.othersTitle": "Orang yang anda tulis tentang",
+    "privacy.others":
+      'Teks anda mungkin menggambarkan seseorang yang tidak menggunakan Judge. Hakim hanya melihat mereka di bawah label seperti "Person C". Kami menyimpan nama mereka secara disulitkan, bersama cap jari berkod bagi setiap nama (cincangan berkunci, bukan nama itu sendiri). Nama boleh muncul di halaman kongsi seperti yang diterangkan dalam Siapa boleh lihat apa. Jika nama anda disebut dalam kes orang lain, e-melkan {email} dengan pautannya dan kami akan membuang nama anda daripada halaman kongsi atau mempertimbangkan bantahan anda.',
+    "privacy.automatedTitle": "Keputusan datang daripada AI",
+    "privacy.automated":
+      'Model AI menulis keputusan anda, tanpa sesiapa membacanya dahulu. Ia ialah pendapat tentang hujah seperti yang ditulis, daripada teks yang namanya telah dikeluarkan, sumber web yang dipaparkan dan jawapan anda. Ia bukan nasihat undang-undang dan tidak mengikat. Tiada keputusan tentang anda, akaun anda, harga atau akses anda dibuat daripadanya. Ia boleh tersilap atau berat sebelah. Jika anda tidak bersetuju, nilaikan ia "Tidak adil", tambah konteks, atau e-melkan {email} dan seseorang akan melihatnya. Pihak satu lagi dalam kes juga boleh meminta.',
+    "privacy.accessTitle": "Siapa boleh lihat apa",
+    "privacy.access":
+      "Anda: teks asal dan nama anda, pada mana-mana peranti apabila anda log masuk, atau pada peranti yang anda gunakan melalui kod peribadi yang disimpan dalam pelayar atau aplikasi anda (kami hanya menyimpan bentuk kod itu yang telah dikaburkan). Keputusan yang ditulis tanpa log masuk, sebelum akaun diperlukan, dan kes yang anda jawab tanpa log masuk kekal disenaraikan dalam pelayar itu bersama tajuknya dan nama anda seperti yang anda tulis, supaya halaman Keputusan boleh memaparkannya: sesiapa yang menggunakan pelayar yang sama akan nampak senarai itu. Pada komputer yang dikongsi, log masuk atau gunakan tetingkap peribadi; mengosongkan data laman dalam pelayar akan membuang senarai itu. Dalam kes dua pihak, setiap orang hanya melihat teks asalnya sendiri; selepas keputusan, kedua-duanya melihat kedua-dua cerita tanpa nama, seperti yang dibaca oleh hakim. Hakim (model AI yang dijalankan oleh penyedia AI kami): hanya versi tanpa nama. Sesiapa yang ada pautan kongsi: keputusan dengan nama paparan. Secara lalai, itu ialah nama yang anda pilih untuk diri sendiri dan nama pertama orang lain seperti yang anda tulis; anda boleh menukarnya atau mematikan nama bila-bila masa, dan halaman itu akan menunjukkan Pihak A dan Pihak B. Kami: kami boleh menyahsulit teks asal dengan kunci tersebut, dan hanya melihat teks yang disimpan untuk mengendalikan permintaan sokongan daripada anda, menyiasat penyalahgunaan, atau apabila dikehendaki oleh undang-undang.",
+    "privacy.casesTitle": "Kes dua pihak dan rayuan",
+    "privacy.cases":
+      'Dalam kes dua pihak, setiap versi dijadikan tanpa nama semasa dihantar, sama seperti keputusan biasa. Teks tanpa nama itulah yang dibaca oleh hakim; versi setiap orang seperti yang ditulisnya, bersama senarai namanya, disimpan secara disulitkan, dan hanya orang itu boleh melihatnya. Setiap orang menaip nama yang mahu dipaparkan di halaman kongsi semasa menghantar versinya; jika dibiarkan kosong, ia menjadi Pihak A atau Pihak B. Pihak satu lagi tidak perlukan akaun; jawapannya dihadkan menggunakan cincangan berkunci alamat IP-nya. Pautan jemputan hanya disimpan sebagai cincangan. Jika pihak satu lagi menjawab semasa log masuk, akaunnya dipautkan kepada versinya, jadi hanya dia boleh menambah konteks kemudian atau melihat teks asalnya; jika dia menjawab tanpa log masuk, kod peribadi yang disimpan dalam pelayarnya melakukan perkara yang sama, dan jika dia log masuk kemudian dalam pelayar itu, dia boleh menyimpan kes itu dalam akaunnya. Supaya orang yang sama mendapat label yang sama dalam kedua-dua versi, pelayan menyimpan cap jari berkod bagi nama dalam setiap kes (cincangan berkunci, bukan nama itu sendiri). Sehingga keputusan dibuat, tiada pihak boleh membaca teks pihak lain; selepas keputusan kes dua pihak, kedua-dua orang boleh membaca kedua-dua versi tanpa nama. Konteks yang ditambah selepas keputusan (rayuan) dikendalikan dengan cara yang sama. Apabila pihak satu lagi menjawab, kami boleh menghantar e-mel ringkas kepada anda tanpa sebarang teks kes, jika e-mel telah disediakan. Setiap orang boleh membuang versinya sendiri: teks asal dan nama paparannya dipadam, dan pautan kongsi kes itu berhenti berfungsi untuk semua orang. Memadam akaun anda melakukan ini untuk setiap kes yang anda mulakan atau jawab. Kes yang tiada siapa jawab tamat tempoh selepas 7 hari, tetapi teks versi anda kekal sehingga anda membuangnya. Orang yang menjawab tanpa akaun menanda "Saya berumur 18 tahun atau lebih" dan kotak butiran peribadi sebelum menghantar, dan kami menyimpan kedua-dua tanda itu bersama versinya.',
     "privacy.webSearchTitle": "Carian web dan soalan",
     "privacy.webSearch":
       "Setiap keputusan menghantar pertikaian tanpa nama kepada penyedia AI kami dengan carian web dihidupkan. Model menulis pertanyaan carian daripada teks tanpa nama itu, dan hasilnya datang daripada rakan carian penyedia tersebut. Sumber yang digunakan ditunjukkan pada keputusan. Hakim mungkin bertanya kepada anda sehingga dua soalan dahulu: untuk menghasilkan soalan itu, teks anda seperti yang ditaip, termasuk nama, dihantar sekali lagi kepada penyedia AI. Jawapan anda dijadikan tanpa nama bersama pertikaian sebelum penilaian; soalan dan jawapan anda seperti yang anda tulis disimpan bersama teks asal anda yang disulitkan.",
+    "privacy.evidenceTitle": "Tangkapan skrin",
+    "privacy.evidence":
+      "Pelayar anda mengecilkan imej besar sebelum memuat naiknya. Setiap imej kemudian dihantar sekali kepada perkhidmatan AI luar supaya teks yang kelihatan boleh dibaca; kami tidak pernah menyimpan imej itu. Transkrip mentah, yang mungkin masih mengandungi nama, dikembalikan kepada anda di dalam token bertandatangan yang disimpan oleh pelayar anda sehingga 6 jam. Apabila anda menghantar versi anda, transkrip itu dijadikan tanpa nama bersama teks anda: transkrip tanpa nama ditunjukkan kepada hakim dan disimpan bersama kes, manakala transkrip mentah disimpan secara disulitkan bersama teks asal anda, dan hanya anda boleh melihatnya. Nombor telefon, alamat e-mel, nama pengguna media sosial dan nombor akaun di dalamnya juga digantikan dengan pemegang tempat untuk hakim.",
+    "privacy.accountsTitle": "Akaun",
+    "privacy.accounts":
+      "Judge hanya untuk mereka yang berumur 18 tahun ke atas, dan akaun yang kami dapati milik seseorang di bawah 18 tahun akan ditutup. Anda perlukan akaun untuk mendapatkan keputusan; pihak satu lagi dalam kes dua pihak boleh menjawab tanpa akaun. Jika anda log masuk dengan Apple atau Google, kami simpan alamat e-mel, nama dan pautan gambar profil yang mereka kongsi dengan kami, serta kaedah log masuk yang anda gunakan, dan Apple atau Google boleh nampak bahawa anda log masuk ke Judge. Jika anda log masuk dengan pautan atau kod e-mel, e-mel itu dihantar melalui Resend, dan kami menyimpan rekod dengan alamat e-mel anda untuk seketika bagi menyemaknya: ia berhenti berfungsi selepas 10 minit dan dipadam sebaik sahaja digunakan atau tidak lama selepas tamat tempoh. Jika anda menetapkan kata laluan, kami hanya menyimpan bentuknya yang telah diacak (cincangan) bersama akaun anda, tidak pernah kata laluan itu sendiri. Kami juga menyimpan rekod sesi anda (token rawak dan masa ia tamat, tanpa alamat IP atau butiran pelayar, walaupun aplikasi turut merekodkan pengecam peranti semasa anda log masuk), kredit anda, pelan anda dan sejarahnya, serta keputusan mana yang menggunakan kredit (hanya ID keputusan). Kami juga menyimpan keputusan dan kes mana yang milik anda, supaya anda boleh menemuinya pada mana-mana peranti. Memadam akaun anda di halaman akaun (dalam aplikasi dan di laman web) membuang akaun, rekod log masuk, kredit, pelan dan peristiwa penggunaan anda, dan membuang keputusan anda serta versi anda dalam kes seperti yang diterangkan di bawah Pembuangan. Kami menyimpan beberapa perkara selepas pemadaman, disenaraikan di bawah Apa yang kami simpan selepas pembuangan atau pemadaman. Jika anda tidak boleh log masuk, halaman okjudge.com/delete-account menerangkan cara meminta kami melalui e-mel. Kami hanya menyimpan bentuk alamat e-mel anda yang telah diacak, supaya akaun baharu dengannya tidak mendapat keputusan percuma kedua, dan kekal ditutup jika akaun anda ditutup kerana anda di bawah 18 tahun. Kami juga merekodkan sama ada anda mengesahkan anda berumur 18 tahun atau lebih, dan bagaimana (tanda, atau isyarat umur telefon anda; pada Android aplikasi bertanya kepada Google Play, pada iPhone ia bertanya kepada Apple).",
+    "privacy.removalTitle": "Pembuangan",
+    "privacy.removal":
+      "Minta pembuangan di halaman keputusan (apabila log masuk, anda boleh membukanya dari halaman Keputusan), di halaman kes untuk kes dua pihak, dengan memadam akaun anda, atau melalui e-mel. Pembuangan memadam teks asal, senarai nama dan nama paparan anda (dalam kes dua pihak, teks asal versi anda dan nama paparan anda), dan pautan kongsi serta imej pratontonnya berhenti dimuatkan untuk semua orang. Pratonton yang sudah disiarkan dalam aplikasi sembang disimpan oleh aplikasi itu dan mungkin terus dipaparkan sehingga ia disegarkan. Kami menyimpan teks tanpa nama dan keputusan, tanpa nama, dalam rekod kami; ia tidak lagi boleh dibuka melalui pautan. Memadam akaun melakukan ini untuk semua keputusan anda dan versi anda dalam kes, dan memadam butiran log masuk, kredit dan pelan anda. Data yang dibuang kekal dalam sandaran sehingga ia tamat tempoh (paling lama 14 hari, lihat di bawah); jika kami memulihkan sandaran, kami menggunakan semula setiap pembuangan (untuk itu kami menyimpan senarai apa yang dibuang dan bila, tanpa teks atau nama). Tiga puluh hari selepas anda membuang sesuatu, kami juga memadam teks tanpa nama dan keputusannya, hanya menyimpan hasil dan tarikh, melainkan undang-undang menghendaki kami menyimpannya lebih lama. Ini terpakai pada perkara yang dibuang pada atau selepas 14 November 2026 (UTC); pembuangan yang lebih lama mengekalkan teks tanpa namanya. Bagi sesuatu kes, 30 hari hanya bermula apabila semua orang di dalamnya telah membuangnya. Keputusan dan kes yang tiada siapa buang disimpan sehingga anda membuangnya atau memadam akaun anda. Keputusan yang dibuat semasa belum log masuk, sebelum akaun diperlukan, boleh dibuang dengan menghantar e-mel kepada {email} bersama pautannya.",
+    "privacy.afterRemovalTitle": "Apa yang kami simpan selepas pembuangan atau pemadaman",
+    "privacy.afterRemoval":
+      "Selepas pembuangan, dan selepas 30 hari, kami masih menyimpan:\n- hasil dan skor, tetapan yang dipilih, tarikh, ID, dan pihak serta bahasa yang ada, dan ID akaun yang memulakan sesuatu kes;\n- penilaian anda. Apabila anda memadam akaun anda, setiap penilaian dipindahkan kepada ID rawak, jadi ia tidak lagi menuju kepada anda;\n- rekod pilihan Bantu tambah baik Judge dan persetujuan anda tentang butiran peribadi (tarikh, bahasa, platform dan perkataan yang anda lihat), selama 6 tahun selepas anda memadam akaun anda, untuk membuktikan apa yang anda bersetuju. Setelah anda memadam akaun anda, rekod ini membawa ID rawak dan tiada pautan kepada nama atau e-mel anda;\n- senarai pembuangan, yang mengandungi ID, sebab, tarikh dan pihak dalam kes, selama 90 hari, untuk menggunakan semula pembuangan selepas sandaran dipulihkan;\n- bentuk e-mel anda yang telah diacak, untuk menghentikan penyalahgunaan berulang kredit percuma (lihat Akaun);\n- rekod peranti tanpa pautan kepada akaun anda, paling lama 180 hari;\n- sandaran, paling lama 14 hari.\nApabila sesuatu kes dipadam, cap jari berkod dan label bagi nama di dalamnya dikosongkan, jadi ia tidak disimpan.",
+    "privacy.retentionTitle": "Berapa lama kami menyimpannya",
+    "privacy.retention":
+      "Kami menyimpan keputusan dan teks asal sehingga anda meminta pembuangan atau memadam akaun anda. Untuk pulih daripada kegagalan, kami menyimpan salinan sandaran pelayan dan pangkalan datanya sehingga 14 hari, kemudian ia dipadam. Ia mengandungi data yang sama dengan pelayan, termasuk teks asal yang disulitkan, dan kuncinya berada di pelayan yang sama, jadi sandaran dilindungi seperti pelayan itu sendiri, bukan oleh penyulitan itu. Cincangan had penggunaan bertahan paling lama 48 jam. Peristiwa penggunaan dipadam selepas 90 hari, dan pautan peranti selepas 180 hari tidak digunakan. Log dan metrik di Grafana Labs disimpan selama 14 hari. Laporan ranap di Sentry disimpan paling lama 30 hari. Log pelayan lain mengikut tempoh simpanan standard penyedia pengehosan kami. Kod log masuk tamat tempoh selepas 10 minit, dan kod yang telah tamat dipadam setiap hari. Sesi tamat 30 hari selepas anda terakhir menggunakannya. Senarai pembuangan disimpan selama 90 hari. Rekod pilihan persetujuan anda disimpan selama 6 tahun selepas anda memadam akaun anda, kemudian dipadam.",
+    "privacy.ipTitle": "Had penggunaan",
+    "privacy.ip":
+      "Supaya mahkamah kekal terbuka untuk semua, kami hadkan bilangan keputusan yang boleh diminta oleh setiap akaun dan bilangan terjemahan yang boleh diminta oleh setiap pelawat. Untuk terjemahan, jawapan dalam kes dua pihak, semakan keputusan semasa ia sedang dibicarakan, dan percubaan log masuk, kami simpan cincangan berkunci alamat IP anda, bukan alamat itu sendiri, paling lama 48 jam. Had log masuk menyimpan alamat itu sendiri seketika dalam memori pelayan, kira-kira seminit, tidak pernah pada cakera. Jika semakan manusia diaktifkan, alamat IP anda juga dihantar kepada Cloudflare untuk semakan itu. Ia tidak pernah disimpan bersama keputusan anda.",
+    "privacy.processorsTitle": "Siapa lagi yang mengendalikan teks anda",
+    "privacy.processors":
+      "Teks yang anda taip, termasuk nama sebenar, mula-mula dihantar kepada penyedia AI kami di Amerika Syarikat supaya nama itu dapat dikeluarkan. Hanya versi tanpa nama dibicarakan; teks asal anda disimpan secara disulitkan, seperti yang diterangkan di atas. Jika semakan manusia diaktifkan, Cloudflare Turnstile berjalan dalam pelayar anda dan menyemak hasilnya dengan Cloudflare. Jika anda log masuk, Apple atau Google (mana-mana yang anda pilih) mengendalikan log masuk itu, dan e-mel log masuk dihantar melalui Resend. Pembelian dalam aplikasi melalui App Store atau Google Play dan dikendalikan oleh RevenueCat, yang menerima ID akaun dan sejarah pembelian anda. Grafana Labs menerima log pelayan dan metrik prestasi kami, disimpan di EU selama 14 hari; log tidak mengandungi teks kes. Laporan ranap dan ralat daripada aplikasi dan laman web ini dihantar kepada Sentry, disimpan di EU paling lama 30 hari; ia merangkumi ralat, versi aplikasi atau pelayar dan model peranti, tetapi tiada teks kes, ID akaun atau alamat sambungan. Penyedia pengehosan kami menyimpan log pelayan standard. Aplikasi Android bertanya kepada Google Play tentang status umur anda dan aplikasi iPhone bertanya kepada Apple. Kami ialah pengawal data; penyedia ini mengendalikan data bagi pihak kami.",
+    "privacy.shareTitle": "Pautan kongsi",
+    "privacy.share":
+      "Sesiapa yang ada pautan ke sesuatu keputusan boleh melihatnya, dengan nama paparan yang anda pilih (atau Pihak A dan Pihak B jika anda mematikan nama). Pautan menggunakan ID rawak yang panjang, dan halaman kongsi meminta enjin carian supaya tidak mengindeksnya. Pautan dan imej pratonton keputusan yang dibuang akan berhenti dimuatkan; pratonton yang sudah disiarkan dalam aplikasi sembang mungkin terus kelihatan sehingga aplikasi itu menyegarkannya. Jangan masukkan alamat, nombor telefon atau apa-apa lagi yang anda tidak mahu ada di halaman yang boleh dibuka oleh orang lain.",
+    "privacy.locationTitle": "Di mana data anda",
+    "privacy.location":
+      "Pelayan kami berada di Jerman (OVH, Frankfurt). Sebahagian pemprosesan berlaku di Amerika Syarikat: penyedia AI kami menjalankan model yang mengeluarkan nama, membicarakan keputusan, membaca tangkapan skrin dan mencari di web; Cloudflare berada di hadapan okjudge.com sebagai proksi dan DNS (semua trafik melaluinya) dan menjalankan semakan manusia. Log masuk melalui Apple atau Google jika anda memilihnya, dan e-mel log masuk melalui Resend. Data yang diproses di negara lain boleh tertakluk kepada undang-undang negara itu. Kami bekerja dari Kanada dan boleh melihat data anda dari sana.",
+    "privacy.storageTitle": "Kuki dan storan pelayar",
+    "privacy.storage":
+      "Laman web menggunakan kuki log masuk (verdict.session_token) yang memastikan anda kekal log masuk, dan kuki jangka pendek semasa anda log masuk dengan Apple atau Google (verdict.state bertahan 5 minit). Cloudflare, yang menjalankan semakan manusia, mungkin menetapkan kukinya sendiri untuk itu. Tiada satu pun digunakan untuk penjejakan. Storan setempat pelayar anda menyimpan bahasa, tema dan pilihan Gamifikasi anda; draf yang belum dihantar semasa anda log masuk (termasuk teks yang anda taip); senarai keputusan dan kes yang anda buat semasa belum log masuk; kod peribadi yang membolehkan anda mencapai teks asal anda; nama yang anda gunakan dalam sesuatu kes; kod jemputan untuk kes yang anda diminta jawab; pengesahan umur anda; mahkamah terakhir yang anda pilih; dan contoh mana yang telah anda lihat. Storan sesi menyimpan alamat e-mel dan mod semasa anda menunggu e-mel log masuk, dan bendera penggunaan untuk tab. Ini kekal pada peranti anda. Mengosongkan data laman membuangnya. Aplikasi menyimpan perkara yang serupa pada peranti.",
+    "privacy.notStoredTitle": "Apa yang kami tidak lakukan",
+    "privacy.notStored":
+      "Tiada penjejak iklan. Kami tidak menjual data anda, dan kami tidak mengongsinya untuk pengiklanan. Laman web dan aplikasi tidak menjejaki anda merentasi laman lain. Cara kami menjawab Do Not Track: laman web tidak menghantar peristiwa penggunaan daripada pelayar anda apabila ia menghantar Do Not Track atau Global Privacy Control, dan suis Statistik penggunaan aplikasi melakukan perkara yang sama untuk aplikasi. Pelayan kami masih merekodkan beberapa peristiwa yang dikaitkan dengan akaun anda (log masuk, kes dan keputusan yang dibuat atau gagal, pembelian) dan peranti mana anda log masuk. Kami tidak pernah menggunakan teks anda untuk melatih apa-apa melainkan anda menghidupkan Bantu tambah baik Judge.",
+    "privacy.securityTitle": "Memastikan ia selamat",
+    "privacy.security":
+      "Teks asal, senarai nama, nama paparan dan token log masuk Apple disulitkan. Trafik menggunakan HTTPS. Kunci penyulitan berada pada pelayan yang sama dengan data, jadi ia tidak melindungi daripada seseorang yang mengambil alih pelayan. Jika sesuatu berlaku pada maklumat peribadi anda, kami memberitahu orang yang terjejas dan pihak berkuasa jika undang-undang mewajibkannya.",
+    "privacy.childrenTitle": "Umur",
+    "privacy.children":
+      'Judge untuk mereka yang berumur 18 tahun ke atas. Kami meminta semua orang yang log masuk mengesahkannya, orang yang menjawab kes tanpa akaun menanda "Saya berumur 18 tahun atau lebih" sebelum menghantar, dan aplikasi boleh menggunakan isyarat umur telefon anda. Kami tidak dengan sengaja mengumpul data daripada sesiapa di bawah 18 tahun. Jika anda fikir seorang kanak-kanak mempunyai akaun, e-melkan {email} dan kami akan menutupnya dan membuang datanya.',
+    "privacy.rightsTitle": "Hak anda",
+    "privacy.rights":
+      "Di mana-mana anda tinggal, anda boleh meminta kami menunjukkan apa yang kami simpan, membetulkannya, membuangnya atau memadam akaun anda, berhenti menggunakannya untuk latihan, dan memberi anda satu salinan. Kebanyakannya boleh anda lakukan sendiri: buang keputusan atau kes di halamannya, padam akaun anda di halaman akaun, tukar nama yang dipaparkan di halaman keputusan atau kes, muat turun data anda, dan tukar Bantu tambah baik Judge (dan, dalam aplikasi, Statistik penggunaan) dalam Tetapan. Untuk yang lain, e-melkan {email} bersama pautan keputusan atau kes. Kami mungkin meminta anda menulis daripada e-mel akaun anda atau mengesahkan semasa log masuk. Kami menjawab dalam masa 30 hari, atau sebulan jika lebih singkat. Ia percuma. Anda tidak akan dilayan lebih buruk kerana menggunakan hak anda. Orang yang meminta bagi pihak anda memerlukan kebenaran bertulis anda.\nSalinan data anda ialah fail JSON. Pilih Muat turun data saya di halaman akaun, dalam aplikasi atau di laman web. Ia mengandungi akaun dan kaedah log masuk anda, keputusan anda dan versi anda dalam kes dengan teks dan nama anda sendiri, hasil, penilaian anda, sejarah persetujuan anda, peranti anda, peristiwa penggunaan dan pembelian. Ia tidak mengandungi token log masuk, kata laluan anda atau e-mel yang diacak, dan tiada teks atau nama orang lain.\nAnda tidak wajib memberi kami data, tetapi tanpa teks anda dan akaun, kami tidak dapat memberi anda keputusan.",
+    "privacy.regionEuTitle": "Jika anda berada di EU atau UK",
+    "privacy.regionEu":
+      "- Pengawal: lihat Siapa kami.\n- Asas undang-undang: lihat Mengapa kami menggunakan data anda.\n- Anda juga boleh meminta kami menghadkan penggunaan, membantah penggunaan berdasarkan kepentingan sah kami, menarik balik persetujuan pada bila-bila masa (tanpa menjejaskan apa yang telah kami lakukan sebelum itu), dan membuat aduan kepada pihak berkuasa perlindungan data anda (di UK, ICO).\n- Data anda dikendalikan di Jerman, Kanada dan Amerika Syarikat, seperti yang diterangkan di bawah Di mana data anda. E-melkan {email} jika anda mahu tahu lebih lanjut tentang cara ia dipindahkan.\n- Keputusan automatik: lihat Keputusan datang daripada AI.",
+    "privacy.regionUsTitle": "Jika anda berada di California atau negeri AS yang lain",
+    "privacy.regionUs":
+      '- Dalam 12 bulan lalu kami mengumpul: pengecam (e-mel, nama, ID akaun dan peranti); teks pertikaian dan jawapan anda; penilaian dan pilihan persetujuan; sejarah pembelian; data penggunaan dan peranti (negara, model peranti, versi aplikasi); pengesahan umur; dan maklumat sensitif (log masuk akaun, dan sebarang butiran kesihatan atau yang serupa dalam teks anda). Sumber: anda, log masuk dan kedai telefon anda, dan aplikasi kami sendiri. Tujuan: lihat Mengapa kami menggunakan data anda. Penerima: kategori di bawah Siapa lagi yang mengendalikan teks anda.\n- Kami tidak menjual atau berkongsi maklumat peribadi untuk pengiklanan, dan tidak berbuat demikian dalam 12 bulan lalu. Kami tidak memprofilkan anda. Kami menggunakan maklumat sensitif hanya untuk menyediakan perkhidmatan kepada anda, jadi tiada apa yang perlu dihadkan atau ditolak.\n- Hak: mengetahui, mengakses, membetulkan, memadam, dan salinan yang boleh dipindahkan. Anda boleh menggunakan ejen yang diberi kuasa. Kami menjawab dalam masa 30 hari, atau sebulan jika lebih singkat. Untuk merayu terhadap penolakan, e-melkan {email} dengan "Appeal". Kami memutuskan rayuan dalam masa 45 hari. Jika kami menolaknya, anda boleh menghubungi Peguam Negara negeri anda.\n- Penyimpanan: lihat Berapa lama kami menyimpannya dan Apa yang kami simpan selepas pembuangan atau pemadaman.\n- Do Not Track: lihat Apa yang kami tidak lakukan. Tiada syarikat iklan atau penjejakan mengumpul data di halaman kami. Cloudflare menjalankan semakan manusia dan melihat sambungan anda untuk tujuan itu.\n- Tiada sesiapa di bawah 18 tahun boleh menggunakan Judge, jadi kami tidak menjual atau berkongsi data sesiapa di bawah 16 tahun. Hak negeri lain ialah senarai yang sama.',
+    "privacy.regionCaTitle": "Jika anda berada di Kanada atau Quebec",
+    "privacy.regionCa":
+      "Judge dikendalikan dari Kanada dan mengendalikan maklumat peribadi di bawah PIPEDA: kami hanya mengumpul apa yang diperlukan perkhidmatan, menggunakannya hanya untuk itu, melindunginya, dan anda boleh meminta untuk melihat, membetulkan atau membuang apa yang kami simpan tentang anda. Kami menjawab dalam masa 30 hari. Anda boleh membuat aduan kepada Pejabat Pesuruhjaya Privasi Kanada (priv.gc.ca). Jika anda berada di Quebec:\n- Orang yang bertanggungjawab ke atas maklumat peribadi ialah Aytu Tuna, pemilik, di {email}.\n- Sebahagian data dihantar ke luar Quebec: ke pelayan kami di Jerman, kepada penyedia AI dan vendor lain di Amerika Syarikat, dan ke Kanada di luar Quebec.\n- Judge hanya merekodkan negara sambungan anda, untuk pengiraan penggunaan, dan tidak menjejaki lokasi tepat anda. Keputusan membicarakan hujah yang anda huraikan dan tidak digunakan untuk membina profil tentang anda. Pengiraan penggunaan dikaitkan dengan akaun anda seperti yang diterangkan di bawah Apa yang kami simpan.\n- Bantu tambah baik Judge dimatikan sehingga anda menghidupkannya, dan anda boleh mematikannya pada bila-bila masa.\n- Anda juga boleh meminta untuk menarik balik persetujuan, mendapatkan data anda dalam format yang biasa digunakan, dan membuat aduan kepada Commission d'accès à l'information.",
+    "privacy.regionBrTitle": "Jika anda berada di Brazil",
+    "privacy.regionBr":
+      "Pengawal dan hubungan: lihat Siapa kami. {email} juga ialah saluran untuk permintaan LGPD. Kami ialah pengawal; penyedia di bawah Siapa lagi yang mengendalikan teks anda bertindak bagi pihak kami. Asas undang-undang: lihat Mengapa kami menggunakan data anda. Anda boleh meminta kami mengesahkan bahawa kami memproses data anda; memberi anda akses; membetulkannya; menjadikan tanpa nama, menyekat atau memadam data yang berlebihan atau menyalahi undang-undang; memberi kebolehpindahan; memadam data yang kami gunakan atas persetujuan anda; memberitahu anda dengan siapa kami mengongsinya; memberitahu anda tentang pilihan untuk menolak persetujuan dan kesannya; dan menarik balik persetujuan. Ia percuma. Anda juga boleh membuat aduan kepada ANPD. Data anda dihantar ke luar negara seperti yang diterangkan di bawah Di mana data anda.",
+    "privacy.changesTitle": "Perubahan",
+    "privacy.changes":
+      "Jika kami mengubah dasar ini dengan cara yang penting, kami mengemas kini tarikh di bahagian atas halaman ini. Kami tidak pernah menggunakan data yang anda berikan di bawah dasar lama untuk tujuan baharu tanpa bertanya kepada anda dahulu. Kami menyemaknya sekurang-kurangnya setahun sekali.",
+    "privacy.contactTitle": "Hubungi kami",
+    "privacy.contact":
+      "Ada soalan, atau mahu melihat, membetulkan atau membuang data anda? Hantar e-mel ke {email} bersama pautan ke keputusan atau kes tersebut.",
     "nav.signIn": "Log masuk",
     "nav.account": "Akaun",
     "nav.pricing": "Harga",
@@ -305,20 +374,16 @@ const ms: Locale = {
     "consent.sensitiveContinue": "Teruskan",
     "respond.adultConfirm": "Saya berumur 18 tahun atau lebih",
     "account.export": "Muat turun data saya",
-    "account.exportHint":
-      "Dapatkan fail JSON dengan semua yang disimpan Judge tentang anda.",
+    "account.exportHint": "Dapatkan fail JSON dengan semua yang disimpan Judge tentang anda.",
     "account.exportBusy": "Menyediakan fail anda…",
-    "account.exportFailed":
-      "Data anda tidak dapat disediakan sekarang. Cuba lagi?",
+    "account.exportFailed": "Data anda tidak dapat disediakan sekarang. Cuba lagi?",
     "deletePage.title": "Padam akaun Judge anda",
     "deletePage.lead":
       "Judge ialah aplikasi oleh Aytu Tuna. Anda boleh memadam akaun dan datanya sendiri pada bila-bila masa, dalam aplikasi atau di laman web.",
     "deletePage.appTitle": "Dalam aplikasi",
-    "deletePage.app":
-      "Buka Judge, pergi ke Akaun, ketik Padam akaun dan sahkan.",
+    "deletePage.app": "Buka Judge, pergi ke Akaun, ketik Padam akaun dan sahkan.",
     "deletePage.webTitle": "Di laman web",
-    "deletePage.web":
-      "Log masuk di okjudge.com, buka Akaun, pilih Padam akaun dan sahkan.",
+    "deletePage.web": "Log masuk di okjudge.com, buka Akaun, pilih Padam akaun dan sahkan.",
     "deletePage.removedTitle": "Apa yang dipadam",
     "deletePage.removed":
       "Akaun, rekod log masuk, kredit, pelan dan peristiwa penggunaan anda dipadam. Keputusan anda dan pihak anda dalam kes dialihkan: teks asal dan nama dipadam serta-merta, manakala teks tanpa nama dan keputusan 30 hari kemudian.",
@@ -326,8 +391,7 @@ const ms: Locale = {
     "deletePage.kept":
       "Keputusan dan tarikh bagi keputusan yang dialihkan, tanpa teks dan nama. Penilaian dan rekod persetujuan anda selama 6 tahun, tanpa kaitan dengan anda. Bentuk e-mel anda yang dikodkan, untuk mencegah penyalahgunaan kredit percuma berulang kali. Sandaran menyimpan salinan lama sehingga 14 hari.",
     "deletePage.mailTitle": "Minta melalui e-mel",
-    "deletePage.mail":
-      "Tidak dapat log masuk? E-mel {email} dari alamat akaun anda dan minta kami memadamnya.",
+    "deletePage.mail": "Tidak dapat log masuk? E-mel {email} dari alamat akaun anda dan minta kami memadamnya.",
     "rating.prompt": "Keputusan yang adil?",
     "rating.fair": "Adil",
     "rating.notFair": "Tidak adil",
@@ -367,7 +431,8 @@ const ms: Locale = {
     "signin.emailLabel": "Alamat e-mel",
     "signin.emailPlaceholder": "anda@contoh.com",
     "signin.emailSubmit": "Hantar pautan log masuk",
-    "signin.emailSent": "Semak peti masuk anda. Kami telah menghantar pautan log masuk ke {email}. Ia sah selama 10 minit.",
+    "signin.emailSent":
+      "Semak peti masuk anda. Kami telah menghantar pautan log masuk ke {email}. Ia sah selama 10 minit.",
     "signin.emailInvalid": "Alamat e-mel itu nampak tidak betul.",
     "signin.codeRequest": "Hantar kod ke e-mel saya",
     "signin.codeSent": "Kami telah menghantar kod ke {email}. Ia sah selama 10 minit.",
@@ -387,7 +452,8 @@ const ms: Locale = {
     "signin.usePassword": "Gunakan kata laluan sebaliknya",
     "signin.passwordWrong": "E-mel dan kata laluan itu tidak sepadan.",
     "signin.passwordShort": "Gunakan sekurang-kurangnya 8 aksara.",
-    "signin.createNote": "Kami akan e-melkan kod kepada anda untuk mengesahkan alamat ini. Anda hanya perlu berbuat demikian sekali.",
+    "signin.createNote":
+      "Kami akan e-melkan kod kepada anda untuk mengesahkan alamat ini. Anda hanya perlu berbuat demikian sekali.",
     "signin.passwordChoose": "Anda telah log masuk. Pilih kata laluan untuk kali seterusnya.",
     "signin.passwordSave": "Simpan kata laluan",
     "signin.passwordSaveFailed": "Kami tidak dapat menyimpan kata laluan. Cuba lagi.",
@@ -432,7 +498,8 @@ const ms: Locale = {
     "pricing.included.title": "Setiap keputusan",
     "pricing.buy.title": "Pek dan pelan bulanan",
     "pricing.premium.f1": "Fakta disemak di web, dengan sumbernya pada keputusan anda",
-    "pricing.premium.f2": "Tiga hakim AI dan skor keyakinan yang jujur, dengan lebih ramai dipanggil kalau keputusannya rapat",
+    "pricing.premium.f2":
+      "Tiga hakim AI dan skor keyakinan yang jujur, dengan lebih ramai dipanggil kalau keputusannya rapat",
     "pricing.premium.f3": "Sehingga dua soalan ringkas apabila ada fakta penting yang tertinggal",
     "pricing.premium.f4": "Nama ditukar sebelum penilaian",
     "pricing.packsTitle": "Pek kredit",
@@ -464,7 +531,8 @@ const ms: Locale = {
     "error.too_large": "Imej itu terlalu besar. Cuba imej yang lebih kecil.",
     "error.unsupported_media": "Kami hanya boleh membaca imej PNG, JPEG, WebP atau GIF.",
     "error.too_many_files": "Terlalu banyak imej untuk ditambah di sini.",
-    "error.evidence_invalid": "Salah satu imej anda sudah tamat tempoh atau tidak dapat disemak. Buang dan tambah semula.",
+    "error.evidence_invalid":
+      "Salah satu imej anda sudah tamat tempoh atau tidak dapat disemak. Buang dan tambah semula.",
     "error.anonymize_failed":
       "Kami tidak dapat mengeluarkan nama daripada teks anda. Cuba lagi, atau tulis huruf awal dan bukan nama penuh.",
     "mode.label": "Bagaimana kami patut menilainya?",
@@ -505,7 +573,8 @@ const ms: Locale = {
     "case.side.opened": "Dibuka",
     "case.side.typing": "Menaip…",
     "case.judgeAnswered": "Nilai dengan pihak yang sudah menjawab",
-    "case.judgeAnswered.confirm": "Mahu keputusan daripada pihak yang sudah menjawab? Jemputan lain akan ditutup dan mereka tidak boleh menjawab lagi.",
+    "case.judgeAnswered.confirm":
+      "Mahu keputusan daripada pihak yang sudah menjawab? Jemputan lain akan ditutup dan mereka tidak boleh menjawab lagi.",
     "case.cancel": "Batal",
     "case.retry": "Cuba lagi",
     "case.failedBody": "Kredit anda sudah dikembalikan. Anda boleh cuba lagi sekarang.",
@@ -527,7 +596,8 @@ const ms: Locale = {
     "case.judgingAlone": "Hakim sedang menilai versi anda.",
     "case.expiredBody":
       "Tiada jawapan dalam 7 hari, jadi kredit anda sudah dikembalikan. Anda masih boleh dapatkan keputusan berdasarkan versi anda sahaja.",
-    "case.expiredBodyFree": "Tiada jawapan dalam 7 hari. Anda masih boleh dapatkan keputusan berdasarkan versi anda sahaja.",
+    "case.expiredBodyFree":
+      "Tiada jawapan dalam 7 hari. Anda masih boleh dapatkan keputusan berdasarkan versi anda sahaja.",
     "case.oneSided": "Dinilai berdasarkan versi anda sahaja.",
     "case.startOver": "Mulakan kes baharu",
     "case.list.untitled": "Kes pada {date}",
@@ -543,10 +613,8 @@ const ms: Locale = {
     "respond.submit": "Hantar versi saya",
     "case.write.title": "Versi anda",
     "case.write.placeholder": "Apa masalahnya?",
-    "case.write.lead":
-      "Tulis versi anda bila-bila masa anda bersedia. Hakim bermula selepas kedua-duanya menulis.",
-    "case.write.leadAnswered":
-      "Dia sudah menulis versinya. Tulis versi anda untuk mendapat keputusan.",
+    "case.write.lead": "Tulis versi anda bila-bila masa anda bersedia. Hakim bermula selepas kedua-duanya menulis.",
+    "case.write.leadAnswered": "Dia sudah menulis versinya. Tulis versi anda untuk mendapat keputusan.",
     "case.write.submit": "Hantar versi saya",
     "case.write.emailSubject": "Pihak satu lagi sudah menulis versinya",
     "respond.sent": "Terima kasih. Versi anda sudah diterima dan hakim sedang menilai.",
@@ -617,9 +685,9 @@ const ms: Locale = {
     "home.says": "{name} berkata:",
     "home.mySide": "Versi saya:",
     "home.otherSide": "Versi dia:",
-    "appeal.lead":
-      "Menggunakan 1 keputusan.",
-    "appeal.placeholder": "Apa yang hakim terlepas pandang? Satu fakta, satu mesej, atau apa yang sebenarnya dipersetujui.",
+    "appeal.lead": "Menggunakan 1 keputusan.",
+    "appeal.placeholder":
+      "Apa yang hakim terlepas pandang? Satu fakta, satu mesej, atau apa yang sebenarnya dipersetujui.",
     "appeal.submit": "Nilai semula dengan konteks",
     "appeal.sending": "Mengeluarkan nama daripada konteks anda…",
     "appeal.judging": "Hakim sedang meneliti semuanya semula…",
@@ -660,15 +728,10 @@ const ms: Locale = {
       "Rayuan: selepas keputusan, setiap orang boleh menambah konteks sekali. Hakim meneliti semuanya semula dan menyatakan sama ada keputusan kekal, terbalik atau berubah. Keputusan terdahulu masih boleh dilihat.",
     "about.premium4":
       "Kes dua pihak menggunakan 1 keputusan. Ia ditahan apabila anda menghantar pautan dan dikembalikan jika tiada jawapan dalam masa 7 hari.",
-    "privacy.casesTitle": "Kes dua pihak dan rayuan",
-    "privacy.cases":
-      "Dalam kes dua pihak, setiap versi dijadikan tanpa nama semasa dihantar, sama seperti keputusan biasa. Teks tanpa nama itulah yang dibaca oleh hakim; versi setiap orang seperti yang ditulisnya, bersama senarai namanya, disimpan secara disulitkan, dan hanya orang itu boleh melihatnya. Setiap orang menaip nama yang mahu dipaparkan di halaman kongsi semasa menghantar versinya; jika dibiarkan kosong, ia menjadi Pihak A atau Pihak B. Pihak satu lagi tidak perlukan akaun; jawapannya dihadkan menggunakan cincangan berkunci alamat IP-nya. Pautan jemputan hanya disimpan sebagai cincangan. Jika pihak satu lagi menjawab semasa log masuk, akaunnya dipautkan kepada versinya, jadi hanya dia boleh menambah konteks kemudian atau melihat teks asalnya; jika dia menjawab tanpa log masuk, kod peribadi yang disimpan dalam pelayarnya melakukan perkara yang sama, dan jika dia log masuk kemudian dalam pelayar itu, dia boleh menyimpan kes itu dalam akaunnya. Supaya orang yang sama mendapat label yang sama dalam kedua-dua cerita, pelayan menyimpan cap jari berkod bagi nama dalam setiap kes (cincangan berkunci, bukan nama itu sendiri). Sehingga keputusan keluar, kedua-dua pihak tidak boleh membaca teks satu sama lain; selepas keputusan dua pihak, kedua-dua orang boleh membaca kedua-dua cerita tanpa nama. Konteks yang ditambah selepas keputusan (rayuan) dikendalikan dengan cara yang sama. Apabila pihak satu lagi menjawab, kami mungkin menghantar e-mel ringkas kepada anda tanpa sebarang teks kes, jika e-mel sudah disediakan. Setiap orang boleh membuang versinya sendiri: teks asal dan nama paparannya dihapuskan, dan pautan kongsi kes itu berhenti berfungsi untuk semua orang. Memadam akaun anda melakukan perkara ini untuk setiap kes yang anda mulakan atau jawab.",
-    "privacy.evidenceTitle": "Tangkapan skrin",
-    "privacy.evidence":
-      "Pelayar anda mengecilkan imej besar sebelum memuat naiknya. Setiap imej kemudian dihantar sekali kepada perkhidmatan AI luar supaya teks yang kelihatan boleh dibaca; kami tidak pernah menyimpan imej itu. Transkrip mentah, yang mungkin masih mengandungi nama, dikembalikan kepada anda di dalam token bertandatangan yang disimpan oleh pelayar anda sehingga 6 jam. Apabila anda menghantar versi anda, transkrip itu dijadikan tanpa nama bersama teks anda: transkrip tanpa nama ditunjukkan kepada hakim dan disimpan bersama kes, manakala transkrip mentah disimpan secara disulitkan bersama teks asal anda, dan hanya anda boleh melihatnya. Nombor telefon, alamat e-mel, nama pengguna media sosial dan nombor akaun di dalamnya juga digantikan dengan pemegang tempat untuk hakim.",
     "pricing.premium.f5": "Bukti tangkapan skrin, dibaca kemudian dibuang, tanpa kos tambahan",
     "pricing.premium.f6": "Tambah konteks selepas keputusan dan minta ia dinilai semula (1 keputusan)",
-    "pricing.premium.f7": "Dengar kedua-dua pihak: hantar pautan peribadi kepada pihak satu lagi untuk dia ceritakan versinya",
+    "pricing.premium.f7":
+      "Dengar kedua-dua pihak: hantar pautan peribadi kepada pihak satu lagi untuk dia ceritakan versinya",
     "langToggle.toTr": "Türkçeye geç",
     "langToggle.toEn": "Switch to English",
     "shared.subtitleHidden": "Seseorang berkongsi keputusan ini · nama disembunyikan",
@@ -785,21 +848,6 @@ const ms: Locale = {
     "stamp.dissolved": "Salah faham",
     "bestPoint.of": "Hujah terbaik {name}",
     "bestPoint.self": "Hujah terbaik anda",
-    "privacy.accessTitle": "Siapa boleh lihat apa",
-    "privacy.access":
-      "Anda: teks asal dan nama anda, pada mana-mana peranti apabila anda log masuk, atau pada peranti yang anda gunakan melalui kod peribadi yang disimpan dalam pelayar atau aplikasi anda (kami hanya menyimpan bentuk kod itu yang telah dikaburkan). Keputusan yang ditulis tanpa log masuk, sebelum akaun diperlukan, dan kes yang anda jawab tanpa log masuk kekal disenaraikan dalam pelayar itu bersama tajuknya dan nama anda seperti yang anda tulis, supaya halaman Keputusan boleh memaparkannya: sesiapa yang menggunakan pelayar yang sama akan nampak senarai itu. Pada komputer yang dikongsi, log masuk atau gunakan tetingkap peribadi; mengosongkan data laman dalam pelayar akan membuang senarai itu. Dalam kes dua pihak, setiap orang hanya melihat teks asalnya sendiri; selepas keputusan, kedua-duanya melihat kedua-dua cerita tanpa nama, seperti yang dibaca oleh hakim. Hakim (model AI yang dijalankan oleh penyedia AI kami): hanya versi tanpa nama. Sesiapa yang ada pautan kongsi: keputusan dengan nama paparan. Secara lalai, itu ialah nama yang anda pilih untuk diri sendiri dan nama pertama orang lain seperti yang anda tulis; anda boleh menukarnya atau mematikan nama bila-bila masa, dan halaman itu akan menunjukkan Pihak A dan Pihak B. Kami: kami boleh menyahsulit teks asal dengan kunci tersebut, dan hanya melihat teks yang disimpan untuk mengendalikan permintaan sokongan daripada anda, menyiasat penyalahgunaan, atau apabila dikehendaki oleh undang-undang.",
-    "privacy.removalTitle": "Pembuangan",
-    "privacy.removal":
-      "Minta pembuangan di halaman keputusan (jika log masuk, anda boleh membukanya dari halaman Keputusan), di halaman kes untuk kes dua pihak, dengan memadam akaun anda, atau melalui e-mel. Pembuangan menghapuskan teks asal anda, senarai nama dan nama paparan (dalam kes dua pihak, teks asal versi anda dan nama paparan anda), dan pautan kongsi serta imej pratontonnya berhenti dimuatkan untuk semua orang. Pratonton yang sudah disiarkan dalam aplikasi sembang disimpan oleh aplikasi tersebut dan mungkin terus kelihatan sehingga aplikasi itu menyegarkannya. Kami menyimpan teks tanpa nama dan keputusan, tanpa nama, dalam rekod kami; ia tidak lagi boleh dibuka melalui pautan. Memadam akaun anda melakukan perkara ini untuk semua keputusan anda dan versi anda dalam kes, serta memadam butiran log masuk, kredit dan pelan anda. Data yang dibuang kekal dalam sandaran kami sehingga sandaran itu tamat tempoh (paling lama 14 hari, lihat di bawah); jika kami memulihkan sandaran, kami akan menggunakan semula setiap pembuangan (untuk itu kami menyimpan senarai apa yang dibuang dan bila, tanpa sebarang teks atau nama). Tiga puluh hari selepas anda membuang sesuatu, kami juga memadam teks tanpa nama dan keputusan itu, hanya menyimpan hasil dan tarikh, kecuali undang-undang menghendaki kami menyimpannya lebih lama. Bagi sesuatu kes, tiga puluh hari hanya bermula selepas semua pihak di dalamnya telah mengalih keluarnya.",
-    "privacy.retentionTitle": "Berapa lama kami menyimpannya",
-    "privacy.retention":
-      "Kami menyimpan keputusan dan teks asal sehingga anda meminta pembuangan atau memadam akaun anda. Untuk pulih daripada kegagalan, kami menyimpan salinan sandaran pelayan dan pangkalan datanya sehingga 14 hari, kemudian ia dipadam. Sandaran itu mengandungi data yang sama seperti pelayan, termasuk teks asal yang disulitkan, dan kuncinya berada di pelayan yang sama, jadi sandaran dilindungi seperti pelayan itu sendiri, bukan oleh penyulitan tersebut. Cincangan had penggunaan kekal sehingga 24 jam. Log pelayan mengikut tempoh simpanan standard penyedia pengehosan kami. Peristiwa penggunaan dipadam selepas 90 hari, dan pautan peranti selepas 180 hari tanpa digunakan. Log dan metrik di Grafana Labs disimpan selama 14 hari.",
-    "privacy.locationTitle": "Di mana data anda",
-    "privacy.location":
-      "Pelayan kami berada di Jerman (OVH, Frankfurt). Sebahagian pemprosesan berlaku di Amerika Syarikat: penyedia AI kami menjalankan model yang mengeluarkan nama, menilai, membaca tangkapan skrin dan membuat carian web; Cloudflare berada di hadapan okjudge.com sebagai proksi dan DNS (semua trafik melaluinya) dan menjalankan semakan manusia. Log masuk melalui Apple atau Google jika anda memilihnya, dan e-mel log masuk melalui Resend. Data yang dikendalikan di negara lain boleh tertakluk kepada undang-undang negara tersebut.",
-    "privacy.rightsTitle": "Hak anda (Kanada)",
-    "privacy.rights":
-      "Judge dikendalikan dari Kanada dan mengendalikan maklumat peribadi di bawah undang-undang privasi persekutuan Kanada (PIPEDA): kami hanya mengumpul apa yang diperlukan oleh perkhidmatan, menggunakannya untuk tujuan itu sahaja, melindunginya, dan anda boleh meminta untuk melihat, membetulkan atau membuang apa yang kami simpan tentang anda. Kami menjawab dalam masa 30 hari.",
     "footer.terms": "Syarat",
     "signin.legalTerms": "Syarat Penggunaan",
     "age.confirm": "Saya berumur 18 tahun atau lebih",
@@ -845,7 +893,8 @@ const ms: Locale = {
     "terms.contactTitle": "Hubungi kami",
     "terms.contact": "Ada soalan tentang syarat ini? E-mel {email}.",
   },
-  legalNotice: "Jika terdapat perbezaan antara versi ini dengan versi bahasa Inggeris, versi bahasa Inggeris yang terpakai.",
+  legalNotice:
+    "Jika terdapat perbezaan antara versi ini dengan versi bahasa Inggeris, versi bahasa Inggeris yang terpakai.",
 };
 
 export default ms;

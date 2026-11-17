@@ -45,8 +45,7 @@ const hr: Locale = {
     "thinking.crux": "Tražimo srž…",
     "thinking.judges": "Tri suca odlučuju, svaki za sebe…",
     "thinking.votes": "Brojimo glasove…",
-    "thinking.helper":
-      "Tri AI suca presuđuju odvojeno, a kad je tijesno, uključuju se dodatni suci. Daj nam minutu.",
+    "thinking.helper": "Tri AI suca presuđuju odvojeno, a kad je tijesno, uključuju se dodatni suci. Daj nam minutu.",
     "thinking.finish": "Bližimo se srži…",
     "thinking.stillJudging": "Suci još razmišljaju. Strpi se malo…",
     "thinking.ready": "Presuda je gotova.",
@@ -109,14 +108,17 @@ const hr: Locale = {
     "vote.dissolved": "zbrka pojmova",
     refusedNote: "AI je ovaj put odustao. Radije nećemo pokazati ništa nego izmisliti presudu.",
     demoNote: "🎭 Demo način: AI ključ nije postavljen, pa je ovo primjer presude",
-    "trial.survived": "🛡️ Prigovor odbijen: odvjetnik druge strane iznio je svoj najjači prigovor, a presuda je izdržala. Pouzdanost ostaje ista.",
+    "trial.survived":
+      "🛡️ Prigovor odbijen: odvjetnik druge strane iznio je svoj najjači prigovor, a presuda je izdržala. Pouzdanost ostaje ista.",
     "trial.uncertain": "⚠️ Odvjetnik druge strane uložio je prigovor i on je ostavio ozbiljnu sumnju u ovu presudu",
-    "trial.overturned": "⚠️ Prigovor prihvaćen: presuda ostaje na snazi, ali ju je najjači prigovor druge strane ozbiljno oslabio",
+    "trial.overturned":
+      "⚠️ Prigovor prihvaćen: presuda ostaje na snazi, ali ju je najjači prigovor druge strane ozbiljno oslabio",
     "trial.minor": "🛡️ Odvjetnik druge strane iznio je opravdanu točku, ali presuda ostaje na snazi",
     "trial.whatWasTested": "Prigovor",
     "trial.attackPrefix": "Prigovor:",
     "trial.refereePrefix": "Zašto:",
-    "trial.mixedNote": "Ovo je miješan spor: dijelom činjenice, dijelom vrijednosti ili značenja riječi, pa je čistu pobjedu teže obraniti.",
+    "trial.mixedNote":
+      "Ovo je miješan spor: dijelom činjenice, dijelom vrijednosti ili značenja riječi, pa je čistu pobjedu teže obraniti.",
     confidence: "Pouzdanost {n} od {total}",
     verdictAria: "Presuda: {label}",
     "party.a": "Strana A",
@@ -144,8 +146,7 @@ const hr: Locale = {
     "wait.hour": "1 sat",
     "wait.hours": "{n} sati",
     "refused.headline": "AI se nije htio upletati u ovo",
-    "refused.crux":
-      "Sigurnosni filtar AI-ja nije mu dopustio da ovo presudi. Bolje nikakva presuda nego izmišljena.",
+    "refused.crux": "Sigurnosni filtar AI-ja nije mu dopustio da ovo presudi. Bolje nikakva presuda nego izmišljena.",
     "refused.bestPoint": "Pokušaj to reći drukčije. Ili prihvati da su neke svađe prevelike za jednu aplikaciju.",
     "refused.claim": "Preskočeno",
     "nav.skip": "Preskoči na sadržaj",
@@ -177,8 +178,7 @@ const hr: Locale = {
     "how.step2.body":
       "Svaka tvrdnja dobiva oznaku: činjenica, vrijednost, definicija ili logika, jer se svaka vrsta rješava na svoj način.",
     "how.step3.title": "Pronalazak srži",
-    "how.step3.body":
-      "Judge kopa ispod svake strane sve do temelja i pronalazi ono jedno o čemu ovisi cijela svađa.",
+    "how.step3.body": "Judge kopa ispod svake strane sve do temelja i pronalazi ono jedno o čemu ovisi cijela svađa.",
     "how.step4.title": "Tri neovisna suca",
     "how.step4.body":
       "Tri suca presuđuju odvojeno, a kad je tijesno, uključuju se dodatni suci. Pouzdanost proizlazi iz toga koliko se slažu, a ne koliko sigurno zvuče.",
@@ -194,12 +194,10 @@ const hr: Locale = {
     "sample.nameB": "Ti",
     "sample.label": "U pravu si",
     "sample.headline": "U pekari svi naručuju burek sa sirom",
-    "sample.crux":
-      "Po podrijetlu je burek samo onaj s mesom, ali u Hrvatskoj tu riječ gotovo nitko tako ne koristi.",
+    "sample.crux": "Po podrijetlu je burek samo onaj s mesom, ali u Hrvatskoj tu riječ gotovo nitko tako ne koristi.",
     "sample.why":
       "Lukin argument stoji samo na podrijetlu jela. Riječ znači ono za što je ljudi koriste, a burek sa sirom piše na cjeniku gotovo svake pekare.",
-    "sample.bestPoint":
-      "Tamo odakle burek dolazi, on doista znači samo pitu s mesom, a ostale pite imaju svoja imena.",
+    "sample.bestPoint": "Tamo odakle burek dolazi, on doista znači samo pitu s mesom, a ostale pite imaju svoja imena.",
     "faq.title": "Što nas ljudi pitaju",
     "faq.kicker": "Česta pitanja",
     "faq.fair.q": "Je li pošteno?",
@@ -238,8 +236,7 @@ const hr: Locale = {
       "Zna samo ono što mu ispričaš, a način na koji ispričaš priču utječe na ishod. Uključi i drugu stranu onako kako bi je ona iznijela.",
     "about.limit2":
       "AI suci mogu pogriješiti u činjenicama. Svaka presuda navodi činjenice na koje se oslanja, pa ih možeš provjeriti.",
-    "about.limit3":
-      "Zamjena imena uglavnom uspijeva, ali neobična imena ili nadimci mogu promaknuti.",
+    "about.limit3": "Zamjena imena uglavnom uspijeva, ali neobična imena ili nadimci mogu promaknuti.",
     "about.limit4": "Služi za zabavu i jasnoću, a ne kao pravni, medicinski ili financijski savjet.",
     "about.builtTitle": "Ispod haube",
     "about.built":
@@ -249,33 +246,96 @@ const hr: Locale = {
     "privacy.kicker": "Tvoji podaci",
     "privacy.lead":
       "Ukratko: ono što napišeš, zajedno s imenima, čuvamo šifrirano kako bi ti ostalo dostupno. Suci uvijek čitaju samo verziju iz koje su uklonjena imena. Uklanjanje možeš zatražiti kad god želiš. Tvoje podatke ne prodajemo. Ako Judge ikad bude prodan ili spojen s drugom tvrtkom, prelazi na novog vlasnika prema ovim pravilima.",
+    "privacy.whoTitle": "Tko smo",
+    "privacy.who":
+      "Judge vodi Aytu Tuna, fizička osoba u Kanadi.\n{address}\nMi odlučujemo što se prikuplja i zašto. Osoba odgovorna za osobne podatke je Aytu Tuna, vlasnik. Kontakt: {email}.",
     "privacy.storedTitle": "Što čuvamo",
     "privacy.stored":
-      "Za svaku presudu čuvamo tvoj tekst točno onako kako je napisan (s tvojim odgovorima na pitanja sudaca i tekstom pročitanim sa snimki zaslona) te popis koje je ime postalo koja oznaka. Ti su podaci šifrirani ključem koji se ne čuva u bazi podataka. Čuvamo i anonimiziranu verziju koju čitaju suci (imena zamijenjena oznakama Strana A i Strana B), postavke koje odabereš, presudu, eventualni prijevod i imena koja odlučiš prikazati na stranici za dijeljenje. Brojimo i kako se Judge koristi: koji se zasloni i funkcije koriste, uz verziju aplikacije, model uređaja, verziju sustava, jezik i zemlju tvoje veze, a u aplikacijama i identifikator uređaja. Kad si prijavljen, to se veže uz tvoj račun. Događaji korištenja čuvaju se 90 dana, a veze između tvog računa i uređaja 180 dana. Aplikacije imaju u Postavkama prekidač Statistika korištenja, a web stranica ne šalje ništa kad preglednik šalje Do Not Track ili Global Privacy Control. Nikad ne sadrži tekst slučajeva. Ako ocijeniš presudu, ocjenu čuvamo uz nju.",
+      "Za svaku presudu čuvamo tvoj tekst točno onako kako si ga napisao (s tvojim odgovorima na pitanja sudaca i tekstom pročitanim sa snimki zaslona) te popis toga koje je ime postalo koja oznaka. Šifrirani su ključem koji nije pohranjen u bazi podataka. Čuvamo i anonimiziranu verziju koju suci čitaju (imena zamijenjena Stranom A i Stranom B), postavke koje si odabrao, presudu, eventualni prijevod i imena koja odabereš prikazati na stranici za dijeljenje. Brojimo i kako se Judge koristi: koji zasloni i značajke, s verzijom aplikacije, modelom uređaja, verzijom sustava, jezikom i zemljom veze, a u aplikacijama s identifikatorom uređaja. Kad si prijavljen, to je povezano s tvojim računom. Događaje korištenja čuvamo 90 dana, a veze između računa i uređaja 180 dana. Aplikacije u Postavkama imaju prekidač Statistika korištenja, a web stranica ne šalje ništa kad tvoj preglednik šalje Do Not Track ili Global Privacy Control. Nikad ne sadrži tekst slučaja. Ako ocijeniš presudu, ocjenu čuvamo uz nju. Ocjena se može obrisati; tada čuvamo redak bez palca gore ili dolje. Čuvamo i zapis o tvojoj suglasnosti za privatne podatke i o tvojim odabirima za Pomozi poboljšati Judge, s datumom, jezikom i platformom te tekstom koji si vidio.",
     "privacy.helpTitle": "Pomozi poboljšati Judge",
     "privacy.help":
-      "Isključeno je dok ga ne uključiš. Kad je uključeno, anonimizirani tekst koji čitaju suci, njihove presude i tvoje ocjene možemo koristiti za testiranje i treniranje sudaca u Judgeu. Imena nikad nisu dio toga. Isključivanjem to korištenje prestaje za sve što potječe od tebe, a bilježimo kada je uključeno ili isključeno.",
-    "privacy.notStoredTitle": "Što ne radimo",
-    "privacy.notStored":
-      "Nema oglasnih alata za praćenje. Tvoj odabir jezika čuva se u lokalnoj pohrani tvog preglednika i nigdje drugdje.",
+      'Isključeno je dok ga ne uključiš. Kad je uključeno, anonimizirani tekst koji čitaju suci, njihove presude i tvoje ocjene možemo koristiti za testiranje i treniranje AI modela: Judgeovih vlastitih i, ako Judge ikad bude prodan ili spojen, modela novog vlasnika. Imena nikad nisu dio toga. Isključivanjem se od tog trenutka sve što stvoriš izuzima iz bilo kakvog treniranja. Bilježimo kada si ga uključio ili isključio.\n„Anonimiziran" ovdje znači da su imena uklonjena; ostali detalji koje si napisao mogu i dalje biti u tekstu. Odnosi se samo na presude nastale dok je uključeno, a na slučaj samo kad ga je uključio svatko tko je napisao neku stranu. Već istrenirani modeli ne mijenjaju se. Zasad ništa nije trenirano. Judge radi jednako i kad je isključeno.\nPitamo jednom, na tvojoj vlastitoj stranici presude nakon tvoje druge dovršene presude. Nikad ne pitamo na presudi koju je netko podijelio s tobom. Kartica kaže: „Dopusti da Judge koristi tvoje anonimizirane presude i ocjene za treniranje AI-ja. Imena nikad nisu uključena." Svoj odgovor možeš u svakom trenutku promijeniti u Postavkama.',
+    "privacy.purposesTitle": "Zašto koristimo tvoje podatke",
+    "privacy.purposes":
+      "- Da ti damo presudu, vodimo tvoj račun i obrađujemo kupnje i podršku. Osnova (EU, UK i Brazil): potrebno je za pružanje usluge koju tražiš.\n- Da Judge ostane siguran i ispravan: ograničenja korištenja, provjera da si čovjek, uočavanje osoba koje iskorištavaju besplatne kredite, izvješća o pogreškama, brojači korištenja i čuvanje šifriranog oblika e-adrese nakon brisanja. Osnova: naš legitimni interes za sigurnu, ispravnu uslugu. Možeš prigovoriti e-poštom. Aplikacije imaju prekidač Statistika korištenja, a Do Not Track ili Global Privacy Control u pregledniku zaustavlja vlastite događaje korištenja web stranice.\n- Da provjerimo tvoju dob, uključujući signal dobi s tvog telefona. Osnova: naš legitimni interes da Judge ostane samo za odrasle ili zakonska obveza gdje vrijedi zakon o dobi u trgovinama aplikacija.\n- Da 30 dana nakon što nešto ukloniš čuvamo tekst bez imena, u slučaju zlouporabe ili pravnog zahtjeva. Osnova: naš legitimni interes.\n- Da čuvamo dokaz o tome na što si pristao: suglasnost za privatne podatke i tvoje odabire za Pomozi poboljšati Judge. Osnova: naš legitimni interes da možemo pokazati na što si pristao.\n- Da tvoje anonimizirane presude i ocjene koristimo za treniranje AI-ja. Osnova: tvoja privola, samo ako je uključiš.\n- Da poštujemo zakon i vodimo evidencije koje moramo voditi. Osnova: zakonska obveza.\nTvoje podatke nikad ne koristimo za oglase i nemamo oglašivačke trackere. Ako ikad poželimo novu uporabu, prvo ćemo ti reći i ponovno pitati ako zakon traži tvoju privolu.",
+    "privacy.sensitiveTitle": "Što izostaviti",
+    "privacy.sensitive":
+      'Sporovi mogu dotaknuti privatne teme poput zdravlja, odnosa, vjere ili novca. Piši samo ono što presuda treba i izostavi privatne podatke o drugim ljudima. Judge nije za hitne slučajeve ni pravne savjete.\nPrije tvoje prve presude, prve strane slučaja ili prvog odgovora na slučaj tražimo da označiš okvir: „Moj tekst može sadržavati privatne podatke, poput zdravlja ili odnosa. Judge ga šalje, bez imena, vanjskoj AI usluzi da napiše moju presudu i čuva ga dok ga ne uklonim." Nastaviti možeš samo kad je označeno. Pitamo jednom po računu; ako već imaš račun, pitamo kod tvoje sljedeće presude. Osobe koje odgovaraju na slučaj bez računa vide isti okvir. Zapis o oznaci čuvamo s datumom, jezikom, platformom i tekstom koji si vidio.',
+    "privacy.othersTitle": "Ljudi o kojima pišeš",
+    "privacy.others":
+      'Tvoj tekst može opisivati nekoga tko ne koristi Judge. Suci ga vide samo pod oznakama poput „Osoba C". Njegova imena čuvamo šifrirana, uz kodirani otisak svakog imena (ključani hash, a ne samo ime). Imena se mogu pojaviti na stranici za dijeljenje kako je opisano u dijelu Tko što može vidjeti. Ako si imenovan u tuđem slučaju, piši na {email} s poveznicom i uklonit ćemo tvoje ime sa stranice za dijeljenje ili razmotriti tvoj prigovor.',
+    "privacy.automatedTitle": "Presude piše AI",
+    "privacy.automated":
+      'Tvoju presudu pišu AI modeli, a nijedan je čovjek prije ne čita. To je mišljenje o argumentu onako kako je napisan, iz teksta bez imena, eventualno prikazanih web izvora i tvojih odgovora. Nije pravni savjet i nije obvezujuće. Na temelju njega se ne donosi nikakva odluka o tebi, tvom računu, cijeni ili pristupu. Može biti pogrešna ili jednostrana. Ako se ne slažeš, ocijeni je kao „Nepravedna", dodaj kontekst ili piši na {email} i pogledat će je čovjek. To može zatražiti i druga strana slučaja.',
+    "privacy.accessTitle": "Tko što može vidjeti",
+    "privacy.access":
+      "Ti: svoj izvorni tekst i imena, na bilo kojem uređaju kad si prijavljen, ili na uređaju koji si koristio, putem privatnog koda spremljenog u pregledniku ili aplikaciji (čuvamo samo njegov šifrirani oblik). Presude napisane bez prijave, prije nego što je račun bio potreban, i slučajevi na koje si odgovorio bez prijave ostaju na popisu u tom pregledniku s naslovima i tvojim imenima onako kako si ih napisao, kako bi ih stranica Presude mogla prikazati: svatko tko koristi isti preglednik vidi taj popis. Na zajedničkom računalu prijavi se ili koristi privatni prozor; brisanje podataka web stranice u pregledniku uklanja popis. U dvostranom slučaju svaka osoba vidi samo svoj izvornik; nakon presude obje vide oba anonimizirana opisa onako kako su ih čitali suci. Suci (AI modeli koje pokreće naš AI pružatelj): samo anonimiziranu verziju. Svatko s poveznicom za dijeljenje: presudu s prikazanim imenima. Prema zadanim postavkama to je ime koje odabereš za sebe i imena drugih onako kako si ih napisao; možeš ih promijeniti ili u svakom trenutku isključiti imena, a tada stranica prikazuje Stranu A i Stranu B. Mi: izvornike možemo dešifrirati ključem i pohranjeni tekst gledamo samo da obradimo tvoj zahtjev za podršku, istražimo zlouporabu ili kad to zahtijeva zakon.",
+    "privacy.casesTitle": "Dvostrani slučajevi i žalbe",
+    "privacy.cases":
+      'U dvostranom slučaju svaka se strana anonimizira pri slanju, jednako kao presuda. Suci čitaju anonimizirani tekst; strana svake osobe onako kako ju je napisala, s popisom imena, pohranjena je šifrirana i vidi je samo ta osoba. Svaka osoba upisuje ime koje želi prikazati na stranici za dijeljenje kad šalje svoju stranu; ako ostavi prazno, bit će Strana A ili Strana B. Druga osoba ne treba račun; njezini se odgovori ograničavaju ključanim hashom njezine IP adrese. Poveznica za poziv pohranjuje se samo kao hash. Ako druga osoba odgovori prijavljena, njezin se račun povezuje s njezinom stranom, pa samo ona može kasnije dodati kontekst ili vidjeti svoj izvornik; ako odgovori bez prijave, isto čini privatni kod spremljen u njezinu pregledniku, a kasnija prijava u tom pregledniku omogućuje joj da slučaj zadrži na računu. Da ista osoba u oba opisa dobije istu oznaku, poslužitelj unutar svakog slučaja čuva kodirane otiske imena (ključane hasheve, a ne sama imena). Do presude nijedna strana ne može čitati tekst druge; nakon dvostrane presude obje osobe mogu čitati oba anonimizirana opisa. Kontekst dodan nakon presude (žalba) obrađuje se na isti način. Kad druga osoba odgovori, možemo ti poslati kratku e-poruku bez teksta slučaja, ako je e-pošta postavljena. Svaka osoba može ukloniti svoju stranu: njezin izvornik i prikazano ime se brišu, a poveznice za dijeljenje slučaja prestaju raditi za sve. Brisanje računa to čini za svaki slučaj koji si pokrenuo ili na koji si odgovorio. Slučaj na koji nitko ne odgovori istječe nakon 7 dana, ali tekst tvoje strane ostaje dok ga ne ukloniš. Osoba koja odgovara bez računa prije slanja označava „Imam 18 godina ili više" i okvir za privatne podatke, a obje oznake čuvamo uz njezinu stranu.',
+    "privacy.webSearchTitle": "Pretraživanje interneta i pitanja",
+    "privacy.webSearch":
+      "Svaka presuda šalje anonimizirani argument našem AI pružatelju s uključenim pretraživanjem interneta. Upite za pretraživanje model piše iz tog anonimiziranog teksta, a rezultati dolaze od pružateljeva partnera za pretraživanje. Korišteni izvori prikazani su na presudi. Suci te prvo mogu pitati do dva pitanja: da bi se ona smislila, tvoj tekst onako kako si ga upisao, s imenima, još jednom ide AI pružatelju. Tvoji se odgovori prije suđenja anonimiziraju zajedno s argumentom; pitanja i tvoji odgovori onako kako si ih napisao čuvaju se uz tvoj šifrirani izvornik.",
+    "privacy.evidenceTitle": "Snimke zaslona",
+    "privacy.evidence":
+      "Tvoj preglednik smanjuje velike slike prije prijenosa. Svaka slika zatim jednom ide vanjskoj AI usluzi kako bi se pročitao vidljivi tekst; samu sliku nikad ne pohranjujemo. Sirovi prijepis, koji još može sadržavati imena, vraća ti se u potpisanom tokenu koji tvoj preglednik drži do 6 sati. Kad pošalješ svoju stranu, prijepis se anonimizira zajedno s tvojim tekstom: anonimizirani prijepis prikazuje se sucima i pohranjuje uz slučaj, a sirovi se prijepis čuva šifriran uz tvoj izvornik, gdje ga vidiš samo ti. Telefonski brojevi, e-adrese, korisnička imena na društvenim mrežama i brojevi računa u njemu zamjenjuju se rezerviranim oznakama i za suce.",
+    "privacy.accountsTitle": "Računi",
+    "privacy.accounts":
+      "Judge je samo za osobe od 18 godina i starije, a računi za koje saznamo da pripadaju nekome mlađem od 18 zatvaraju se. Za presudu ti treba račun; druga strana dvostranog slučaja može odgovoriti i bez njega. Ako se prijaviš putem Applea ili Googlea, čuvamo e-adresu, ime i poveznicu na profilnu sliku koje dijele s nama, kao i koju si metodu prijave koristio; Apple ili Google vide da si se prijavio u Judge. Ako se prijaviš e-poštom putem poveznice ili koda, ta e-poruka odlazi preko Resenda, a radi provjere nakratko čuvamo zapis s tvojom e-adresom: prestaje vrijediti nakon 10 minuta i briše se nakon korištenja ili ubrzo nakon isteka. Ako postaviš lozinku, uz račun čuvamo samo njezin šifrirani (hashirani) oblik, nikad samu lozinku. Čuvamo i zapise sesija (nasumični token i vrijeme isteka, bez IP adrese i podataka o pregledniku, iako aplikacije pri prijavi bilježe i identifikator uređaja), tvoje kredite, plan i njegovu povijest te koje su presude potrošile kredit (samo ID presude). Čuvamo i koje su presude i slučajevi tvoji, da ih možeš pronaći na bilo kojem uređaju. Brisanje računa na stranici računa (u aplikacijama i na webu) uklanja tvoj račun, zapise prijave, kredite, plan i događaje korištenja te uklanja tvoje presude i tvoje strane slučajeva kako je opisano u dijelu Uklanjanje. Nekoliko stvari čuvamo nakon brisanja, navedene su u dijelu Što čuvamo nakon uklanjanja ili brisanja. Ako se ne možeš prijaviti, stranica okjudge.com/delete-account objašnjava kako nas zamoliti e-poštom. Čuvamo samo šifrirani oblik tvoje e-adrese, da novi račun s njom ne dobije drugu besplatnu presudu i da ostane zatvoren ako je tvoj račun zatvoren jer si mlađi od 18. Bilježimo i jesi li potvrdio da imaš 18 godina ili više te kako (oznakom ili signalom dobi s telefona; na Androidu aplikacija pita Google Play, na iPhoneu Apple).",
+    "privacy.removalTitle": "Uklanjanje",
+    "privacy.removal":
+      "Uklanjanje možeš zatražiti na stranici presude (prijavljen je otvaraš sa stranice Presude), na stranici slučaja kod dvostranog slučaja, brisanjem računa ili e-poštom. Uklanjanje briše tvoj izvorni tekst, popis imena i prikazana imena (u dvostranom slučaju izvornik tvoje strane i tvoje prikazano ime), a poveznica za dijeljenje i njezina slika pregleda prestaju se učitavati za sve. Preglede već objavljene u aplikacijama za razgovor čuvaju te aplikacije i mogu se i dalje prikazivati dok ih ne osvježe. Anonimizirani tekst i presudu, bez imena, čuvamo u svojim evidencijama; više se ne mogu otvoriti putem poveznice. Brisanje računa to čini za sve tvoje presude i tvoje strane slučajeva te briše podatke za prijavu, kredite i plan. Uklonjeni podaci ostaju u sigurnosnim kopijama dok ne isteknu (najviše 14 dana, vidi niže); ako ikad vratimo kopiju, ponovno primjenjujemo svako uklanjanje (za to čuvamo popis što je uklonjeno i kada, bez teksta i imena). Trideset dana nakon što nešto ukloniš brišemo i anonimizirani tekst i presudu, zadržavajući samo ishod i datume, osim ako zakon traži dulje čuvanje. To vrijedi za stvari uklonjene 14. studenoga 2026. (UTC) ili poslije; starija uklanjanja zadržavaju svoj anonimizirani tekst. Kod slučaja se trideset dana počinje brojiti tek kad ga ukloni svatko u njemu. Presude i slučajevi koje nitko ne ukloni čuvaju se dok ih ne ukloniš ili ne izbrišeš račun. Presuda napravljena bez prijave, prije nego što je račun bio potreban, može se ukloniti pisanjem na {email} s njezinom poveznicom.",
+    "privacy.afterRemovalTitle": "Što čuvamo nakon uklanjanja ili brisanja",
+    "privacy.afterRemoval":
+      "Nakon uklanjanja i nakon trideset dana i dalje čuvamo:\n- ishod i bodove, odabrane postavke, datume, ID-eve te koje je strane i jezik slučaj imao, i ID računa koji je pokrenuo slučaj;\n- tvoje ocjene. Kad izbrišeš račun, svaka se ocjena prebacuje na nasumični ID, pa više ne vodi do tebe;\n- zapis o tvojim odabirima za Pomozi poboljšati Judge i suglasnosti za privatne podatke (datumi, jezik, platforma i tekst koji si vidio), 6 godina nakon brisanja računa, kako bismo dokazali na što si pristao. Nakon brisanja računa ti zapisi nose nasumični ID i nemaju vezu s tvojim imenom ili e-adresom;\n- popis uklanjanja, koji sadrži ID-eve, razloge, datume i stranu slučaja, 90 dana, kako bismo ponovno primijenili uklanjanja nakon vraćanja sigurnosne kopije;\n- šifrirani oblik tvoje e-adrese, da spriječimo ponovnu zlouporabu besplatnih kredita (vidi Računi);\n- zapis uređaja bez veze s računom, do 180 dana;\n- sigurnosne kopije, do 14 dana.\nKad se slučaj briše, kodirani otisci i oznake njegovih imena se brišu, pa se ne čuvaju.",
+    "privacy.retentionTitle": "Koliko dugo čuvamo podatke",
+    "privacy.retention":
+      "Presude i izvornike čuvamo dok ne zatražiš uklanjanje ili ne izbrišeš račun. Da se oporavimo od kvara, sigurnosne kopije poslužitelja i njegove baze čuvamo do 14 dana, a zatim se brišu. Sadrže iste podatke kao poslužitelj, uključujući šifrirane izvornike, a ključ je na istom poslužitelju, pa su kopije zaštićene kao i sam poslužitelj, a ne tim šifriranjem. Hashevi ograničenja traju do 48 sati. Događaji korištenja brišu se nakon 90 dana, a veze uređaja nakon 180 dana bez korištenja. Zapisnici i metrike u Grafana Labsu čuvaju se 14 dana. Izvješća o rušenjima u Sentryju čuvaju se do 30 dana. Ostali zapisnici poslužitelja prate standardno razdoblje čuvanja našeg pružatelja hostinga. Kôd za prijavu istječe nakon 10 minuta, a istekli kodovi brišu se svaki dan. Sesija završava 30 dana nakon što si je zadnji put koristio. Popis uklanjanja čuva se 90 dana. Zapisi o tvojim odabirima privole čuvaju se 6 godina nakon brisanja računa, a zatim se brišu.",
     "privacy.ipTitle": "Ograničenje korištenja",
     "privacy.ip":
-      "Da bi sud ostao otvoren za sve, ograničavamo koliko presuda može zatražiti svaki račun i koliko prijevoda svaki posjetitelj. Za prijevode i za odgovore u dvostranom slučaju u spremištu za ograničenja čuvamo hash tvoje IP adrese izračunat s ključem (a ne samu adresu), i to najviše 24 sata. Ako je provjera jesi li čovjek uključena, tvoja IP adresa radi te provjere ide i Cloudflareu. Nikad se ne sprema uz tvoju presudu.",
+      "Da sud ostane otvoren za sve, ograničavamo koliko presuda može tražiti svaki račun i koliko prijevoda svaki posjetitelj. Za prijevode, odgovore na dvostrani slučaj, provjeru stanja presude dok se presuđuje i pokušaje prijave čuvamo ključani hash tvoje IP adrese, a ne samu adresu, do 48 sati. Ograničenja prijave samu adresu kratko, oko minutu, drže u memoriji poslužitelja, nikad na disku. Ako je provjera čovjeka uključena, tvoja IP adresa za tu provjeru ide i Cloudflareu. Nikad se ne sprema uz tvoju presudu.",
     "privacy.processorsTitle": "Tko još obrađuje tvoj tekst",
     "privacy.processors":
-      "Tekst koji upišeš, uključujući stvarna imena, najprije ide našem pružatelju AI usluga u Sjedinjenim Američkim Državama kako bi se imena uklonila. Presuđuje se samo anonimizirana verzija; tvoj izvornik čuva se šifrirano, kako je gore opisano. Ako je provjera jesi li čovjek uključena, Cloudflare Turnstile radi u tvom pregledniku i provjerava rezultat s Cloudflareom. Ako se prijaviš, prijavu obavlja Apple ili Google (ovisno o tome što odabereš), a e-poruke za prijavu šalju se putem Resenda. Naš pružatelj hostinga vodi uobičajene zapise poslužitelja. Kupnje u aplikacijama idu preko App Storea ili Google Playa, a obrađuje ih RevenueCat, koji dobiva ID tvog računa i povijest kupnji. Grafana Labs prima zapise našeg poslužitelja i metrike performansi, pohranjene u EU 14 dana; zapisi ne sadrže tekst slučajeva. Izvješća o rušenjima i pogreškama iz aplikacija i s ove web-stranice idu u Sentry, gdje se u EU pohranjuju do 30 dana; sadrže pogrešku, verziju aplikacije ili preglednika i model uređaja, ali ne i tekst slučajeva, ID računa ni adresu veze.",
+      "Tekst koji upišeš, uključujući prava imena, najprije ide našem AI pružatelju u Sjedinjenim Državama da se imena mogu ukloniti. Presuđuje se samo anonimiziranoj verziji; tvoj se izvornik čuva šifriran, kako je gore opisano. Ako je provjera čovjeka uključena, Cloudflare Turnstile radi u tvom pregledniku i provjerava rezultat kod Cloudflarea. Ako se prijaviš, prijavu obrađuje Apple ili Google (koji odabereš), a e-poruke za prijavu odlaze preko Resenda. Kupnje u aplikacijama idu preko App Storea ili Google Playa, a obrađuje ih RevenueCat, koji prima ID tvog računa i povijest kupnji. Grafana Labs prima zapisnike našeg poslužitelja i metrike performansi, pohranjene u EU 14 dana; zapisnici ne sadrže tekst slučajeva. Izvješća o rušenjima i pogreškama iz aplikacija i ove web stranice idu Sentryju, pohranjena u EU do 30 dana; sadrže pogrešku, verziju aplikacije ili preglednika i model uređaja, ali ne i tekst slučaja, ID računa ni adresu veze. Naš pružatelj hostinga vodi standardne zapisnike poslužitelja. Android aplikacija pita Google Play za status dobi, a iPhone aplikacija pita Apple. Mi smo voditelj obrade; ti pružatelji obrađuju podatke u naše ime.",
     "privacy.shareTitle": "Poveznice za dijeljenje",
     "privacy.share":
-      "Svatko tko ima poveznicu na presudu može je vidjeti, s prikazanim imenima koja odabereš (ili s oznakama Strana A i Strana B ako su imena isključena). Poveznice koriste duge nasumične identifikatore, a stranice za dijeljenje traže od tražilica da ih ne indeksiraju. Poveznica i slika pregleda uklonjene presude prestaju se učitavati; pregledi već objavljeni u aplikacijama za dopisivanje mogu se i dalje prikazivati dok ih te aplikacije ne osvježe. Ne upisuj adrese, brojeve telefona ni išta drugo što ne želiš vidjeti na stranici koju drugi mogu otvoriti.",
+      "Svatko s poveznicom na presudu može je vidjeti, s prikazanim imenima koja si odabrao (ili sa Stranom A i Stranom B ako si isključio imena). Poveznice koriste dugačke nasumične ID-eve, a stranice za dijeljenje traže od tražilica da ih ne indeksiraju. Poveznica uklonjene presude i njezina slika pregleda prestaju se učitavati; pregledi već objavljeni u aplikacijama za razgovor mogu se i dalje prikazivati dok ih te aplikacije ne osvježe. Izostavi adrese, telefonske brojeve i sve što ne bi želio vidjeti na stranici koju drugi mogu otvoriti.",
+    "privacy.locationTitle": "Gdje su tvoji podaci",
+    "privacy.location":
+      "Naši su poslužitelji u Njemačkoj (OVH, Frankfurt). Dio obrade odvija se u Sjedinjenim Državama: naš AI pružatelj pokreće modele koji uklanjaju imena, presuđuju, čitaju snimke zaslona i pretražuju web; Cloudflare stoji ispred okjudge.com kao proxy i DNS (sav promet prolazi kroz njega) i provodi provjeru čovjeka. Prijava ide preko Applea ili Googlea ako ih odabereš, a e-poruke za prijavu preko Resenda. Podaci obrađeni u drugoj zemlji mogu podlijegati zakonima te zemlje. Radimo iz Kanade i odande možemo vidjeti tvoje podatke.",
+    "privacy.storageTitle": "Kolačići i pohrana preglednika",
+    "privacy.storage":
+      "Web stranica koristi kolačić za prijavu (verdict.session_token) koji te drži prijavljenim te kratkotrajne kolačiće dok se prijavljuješ putem Applea ili Googlea (verdict.state traje 5 minuta). Cloudflare, koji provodi provjeru čovjeka, za to može postaviti vlastite kolačiće. Nijedan se ne koristi za praćenje. Lokalna pohrana preglednika čuva tvoj jezik, temu i odabir Gamify; neposlanu skicu (uključujući tekst koji si upisao) dok se prijavljuješ; popis presuda i slučajeva napravljenih bez prijave; privatne kodove koji ti omogućuju pristup vlastitim izvornicima; imena korištena u slučaju; kodove poziva za slučajeve na koje trebaš odgovoriti; potvrdu dobi; zadnji odabrani sud i koje si primjere već vidio. Pohrana sesije drži e-adresu i način rada dok čekaš e-poruku za prijavu te oznake korištenja za karticu. To ostaje na tvom uređaju. Brisanje podataka web stranice to uklanja. Aplikacije na uređaju čuvaju slične stvari.",
+    "privacy.notStoredTitle": "Što ne radimo",
+    "privacy.notStored":
+      "Nema oglašivačkih trackera. Tvoje podatke ne prodajemo i ne dijelimo ih za oglašavanje. Web stranica i aplikacije ne prate te po drugim stranicama. Kako odgovaramo na Do Not Track: web stranica ne šalje iz tvog preglednika nikakve događaje korištenja kad preglednik šalje Do Not Track ili Global Privacy Control, a prekidač Statistika korištenja u aplikacijama isto čini u aplikacijama. Naš poslužitelj i dalje bilježi nekoliko događaja povezanih s tvojim računom (prijava, napravljeni ili neuspjeli slučajevi i presude, kupnje) i s kojeg si se uređaja prijavio. Tvoj tekst nikad ne koristimo za treniranje ičega, osim ako si uključio Pomozi poboljšati Judge.",
+    "privacy.securityTitle": "Kako ga štitimo",
+    "privacy.security":
+      "Izvornici, popisi imena, prikazana imena i Appleovi tokeni za prijavu su šifrirani. Promet koristi HTTPS. Ključ za šifriranje nalazi se na istom poslužitelju kao i podaci, pa ne štiti od nekoga tko preuzme poslužitelj. Ako nešto pođe po zlu s tvojim osobnim podacima, obavijestit ćemo pogođene osobe i tijela gdje to zakon zahtijeva.",
+    "privacy.childrenTitle": "Dob",
+    "privacy.children":
+      'Judge je za osobe od 18 godina i starije. Svakoga tko se prijavi tražimo da to potvrdi, osobe koje odgovaraju na slučaj bez računa prije slanja označavaju „Imam 18 godina ili više", a aplikacije mogu koristiti signal dobi s telefona. Svjesno ne prikupljamo podatke ni od koga mlađeg od 18 godina. Ako misliš da dijete ima račun, piši na {email} i zatvorit ćemo ga i ukloniti podatke.',
+    "privacy.rightsTitle": "Tvoja prava",
+    "privacy.rights":
+      "Gdje god živio, možeš tražiti da ti pokažemo što čuvamo, ispravimo to, uklonimo ili izbrišemo tvoj račun, prestanemo to koristiti za treniranje i damo ti kopiju. Većinu možeš sam: ukloniti presudu ili slučaj na njegovoj stranici, izbrisati račun na stranici računa, promijeniti imena prikazana na stranici presude ili slučaja, preuzeti svoje podatke te prebaciti Pomozi poboljšati Judge (a u aplikacijama i Statistiku korištenja) u Postavkama. Za sve ostalo piši na {email} s poveznicom na presudu ili slučaj. Možemo te zamoliti da pišeš s e-adrese svog računa ili da potvrdiš prijavljen. Odgovaramo u roku od 30 dana, ili mjesec dana ako je to kraće. Besplatno je. Nećeš biti gore tretiran zbog korištenja svojih prava. Osobi koja traži u tvoje ime treba tvoje pisano dopuštenje.\nKopija tvojih podataka je JSON datoteka. Odaberi Preuzmi moje podatke na stranici računa, u aplikacijama ili na web stranici. Sadrži tvoj račun i načine prijave, tvoje presude i tvoje strane slučajeva s tvojim vlastitim tekstom i imenima, rezultate, tvoje ocjene, povijest suglasnosti, tvoje uređaje, događaje korištenja i kupnje. Ne sadrži tokene za prijavu, tvoju lozinku ni šifriranu e-adresu, kao ni tuđi tekst ili imena.\nNe moraš nam davati podatke, ali bez tvog teksta i računa ne možemo ti dati presudu.",
+    "privacy.regionEuTitle": "Ako si u EU ili UK",
+    "privacy.regionEu":
+      "- Voditelj obrade: vidi Tko smo.\n- Pravne osnove: vidi Zašto koristimo tvoje podatke.\n- Možeš tražiti i ograničenje obrade, prigovoriti obradi temeljenoj na našem legitimnom interesu, u svakom trenutku povući privolu (bez utjecaja na ono što smo učinili prije) i podnijeti pritužbu tijelu za zaštitu podataka (u UK-u ICO-u).\n- Tvoji se podaci obrađuju u Njemačkoj, Kanadi i Sjedinjenim Državama, kako je opisano u dijelu Gdje su tvoji podaci. Piši na {email} ako želiš znati više o tome kako se prenose.\n- Automatizirane odluke: vidi Presude piše AI.",
+    "privacy.regionUsTitle": "Ako si u Kaliforniji ili drugoj saveznoj državi SAD-a",
+    "privacy.regionUs":
+      '- U posljednjih 12 mjeseci prikupljali smo: identifikatore (e-adresa, ime, ID-evi računa i uređaja); tekst tvog spora i odgovore; ocjene i odabire privole; povijest kupnji; podatke o korištenju i uređaju (zemlja, model uređaja, verzija aplikacije); potvrdu dobi; i osjetljive informacije (prijava u račun i eventualni podaci o zdravlju ili slično u tvom tekstu). Izvori: ti, prijava i trgovina na tvom telefonu te naše vlastite aplikacije. Svrhe: vidi Zašto koristimo tvoje podatke. Primatelji: kategorije u dijelu Tko još obrađuje tvoj tekst.\n- Osobne podatke ne prodajemo niti dijelimo za oglašavanje i nismo to činili u posljednjih 12 mjeseci. Ne profiliramo te. Osjetljive informacije koristimo samo da ti pružimo uslugu, pa nema ničega što bi se ograničilo ili od čega bi se odustalo.\n- Prava: znati, pristupiti, ispraviti, izbrisati i prenosiva kopija. Možeš koristiti ovlaštenog zastupnika. Odgovaramo u roku od 30 dana, ili mjesec dana ako je to kraće. Za žalbu na odbijanje piši na {email} s oznakom „Appeal". O žalbi odlučujemo u roku od 45 dana. Ako je odbijemo, možeš se obratiti glavnom državnom odvjetniku svoje savezne države.\n- Čuvanje: vidi Koliko dugo čuvamo podatke i Što čuvamo nakon uklanjanja ili brisanja.\n- Do Not Track: vidi Što ne radimo. Na našim stranicama nijedna oglašivačka ili tvrtka za praćenje ne prikuplja podatke. Cloudflare provodi provjeru čovjeka i za tu svrhu vidi tvoju vezu.\n- Nitko mlađi od 18 godina ne smije koristiti Judge, pa ne prodajemo niti dijelimo podatke nikoga mlađeg od 16 godina. Prava drugih saveznih država isti su popis.',
+    "privacy.regionCaTitle": "Ako si u Kanadi ili Quebecu",
+    "privacy.regionCa":
+      "Judge se vodi iz Kanade i osobne podatke obrađuje prema PIPEDA-i: prikupljamo samo ono što usluga treba, koristimo to samo za to, štitimo to, a ti možeš tražiti uvid u ono što čuvamo o tebi, ispravak ili uklanjanje. Odgovaramo u roku od 30 dana. Možeš podnijeti pritužbu Uredu povjerenika za privatnost Kanade (priv.gc.ca). Ako si u Quebecu:\n- Osoba odgovorna za osobne podatke je Aytu Tuna, vlasnik, na {email}.\n- Neki se podaci šalju izvan Quebeca: na naš poslužitelj u Njemačkoj, AI pružatelju i drugim dobavljačima u Sjedinjenim Državama te u Kanadu izvan Quebeca.\n- Judge bilježi samo zemlju tvoje veze, za brojače korištenja, i ne prati tvoju preciznu lokaciju. Presuda ocjenjuje argument koji opišeš i ne koristi se za izradu tvog profila. Brojači korištenja povezani su s tvojim računom kako je opisano u dijelu Što čuvamo.\n- Pomozi poboljšati Judge isključeno je dok ga ne uključiš, a možeš ga isključiti u svakom trenutku.\n- Možeš tražiti i povlačenje privole, dobivanje svojih podataka u uobičajeno korištenom formatu te podnijeti pritužbu Commission d'accès à l'information.",
+    "privacy.regionBrTitle": "Ako si u Brazilu",
+    "privacy.regionBr":
+      "Voditelj obrade i kontakt: vidi Tko smo. {email} je ujedno i kanal za LGPD zahtjeve. Mi smo voditelj obrade; pružatelji iz dijela Tko još obrađuje tvoj tekst djeluju za nas. Pravne osnove: vidi Zašto koristimo tvoje podatke. Možeš tražiti da potvrdimo da obrađujemo tvoje podatke; da ti omogućimo pristup; da ih ispravimo; da anonimiziramo, blokiramo ili izbrišemo prekomjerne ili nezakonite podatke; prenosivost; da izbrišemo podatke koje koristimo na temelju tvoje privole; da ti kažemo s kim smo ih dijelili; da te informiramo o mogućnosti odbijanja privole i njezinim posljedicama; te povući privolu. Besplatno je. Možeš podnijeti pritužbu i ANPD-u. Tvoji se podaci šalju u inozemstvo kako je opisano u dijelu Gdje su tvoji podaci.",
+    "privacy.changesTitle": "Promjene",
+    "privacy.changes":
+      "Ako ova pravila promijenimo na način koji je važan, ažuriramo datum na vrhu ove stranice. Podatke koje si nam dao prema starijim pravilima nikad ne koristimo za novu svrhu a da te prethodno ne pitamo. Pregledavamo ih barem jednom godišnje.",
     "privacy.contactTitle": "Kontakt",
     "privacy.contact":
       "Imaš pitanje ili želiš vidjeti, ispraviti ili ukloniti svoje podatke? Piši na {email} i pošalji poveznicu na presudu ili slučaj.",
-    "privacy.accountsTitle": "Računi",
-    "privacy.accounts":
-      "Judge je samo za osobe od 18 godina nadalje, a računi za koje otkrijemo da pripadaju nekome mlađem od 18 godina zatvaraju se. Za presudu ti treba račun; druga strana u dvostranom slučaju može odgovoriti i bez njega. Ako se prijaviš putem Applea ili Googlea, čuvamo adresu e-pošte, ime i poveznicu na profilnu sliku koje s nama podijele te podatak o načinu prijave, a Apple ili Google mogu vidjeti da se prijavljuješ u Judge. Ako se prijaviš poveznicom poslanom e-poštom, ta se poruka šalje putem Resenda, a kratko čuvamo zapis s tvojom adresom e-pošte radi provjere poveznice: poveznica prestaje raditi nakon 10 minuta, a zapis se briše kad se iskoristi ili ubrzo nakon isteka. Čuvamo i zapise o tvojim sesijama (nasumični token i vrijeme isteka, bez IP adrese i podataka o pregledniku, ali aplikacije pri prijavi bilježe i identifikator uređaja), tvoje kredite, plan i njegovu povijest te koje su presude potrošile kredit (samo ID presude). Čuvamo i podatak o tome koje su presude i slučajevi tvoji, kako bi ti bili dostupni na svakom uređaju. Brisanjem računa na stranici računa uklanjaju se tvoj račun, sesije, događaji korištenja i veza između tvog računa i uređaja, kao i tvoje presude i tvoje strane u slučajevima, kako je opisano pod Uklanjanje. Zadržavamo samo hashirani oblik tvoje adrese e-pošte, kako novi račun s istom adresom ne bi dobio drugu besplatnu presudu i ostao zatvoren ako je tvoj račun zatvoren jer imaš manje od 18 godina. Kodovi za prijavu poslani e-poštom rade na isti način kao poveznice. Ako postaviš lozinku, uz tvoj račun čuvamo samo njezin šifrirani (hashirani) oblik, nikada samu lozinku.",
-    "privacy.webSearchTitle": "Pretraživanje interneta i pitanja",
-    "privacy.webSearch":
-      "Svaka presuda šalje anonimiziranu raspravu našem pružatelju AI usluga s uključenim pretraživanjem interneta. Model upite za pretraživanje sastavlja iz tog anonimiziranog teksta, a rezultati dolaze od partnera za pretraživanje tog pružatelja. Korišteni izvori prikazani su u presudi. Suci ti prije toga mogu postaviti najviše dva pitanja: da bi ih smislili, tvoj tekst u izvornom obliku, zajedno s imenima, još jednom ide pružatelju AI usluga. Tvoji odgovori anonimiziraju se zajedno s raspravom prije presuđivanja; pitanja i tvoji odgovori u izvornom obliku čuvaju se uz tvoj šifrirani izvornik.",
     "nav.signIn": "Prijava",
     "nav.account": "Račun",
     "nav.pricing": "Cijene",
@@ -305,17 +365,14 @@ const hr: Locale = {
     "account.export": "Preuzmi moje podatke",
     "account.exportHint": "Dobij JSON datoteku sa svime što Judge čuva o tebi.",
     "account.exportBusy": "Pripremam datoteku…",
-    "account.exportFailed":
-      "Trenutačno nismo mogli pripremiti tvoje podatke. Želiš li pokušati ponovno?",
+    "account.exportFailed": "Trenutačno nismo mogli pripremiti tvoje podatke. Želiš li pokušati ponovno?",
     "deletePage.title": "Izbriši svoj Judge račun",
     "deletePage.lead":
       "Judge je aplikacija koju je izradio Aytu Tuna. Račun i njegove podatke možeš sam izbrisati u bilo kojem trenutku, u aplikaciji ili na web-stranici.",
     "deletePage.appTitle": "U aplikaciji",
-    "deletePage.app":
-      "Otvori Judge, idi na Račun, dodirni Izbriši račun i potvrdi.",
+    "deletePage.app": "Otvori Judge, idi na Račun, dodirni Izbriši račun i potvrdi.",
     "deletePage.webTitle": "Na web-stranici",
-    "deletePage.web":
-      "Prijavi se na okjudge.com, otvori Račun, odaberi Izbriši račun i potvrdi.",
+    "deletePage.web": "Prijavi se na okjudge.com, otvori Račun, odaberi Izbriši račun i potvrdi.",
     "deletePage.removedTitle": "Što se briše",
     "deletePage.removed":
       "Brišu se tvoj račun, zapisi o prijavi, krediti, plan i događaji korištenja. Tvoje presude i tvoje strane u slučajevima uklanjaju se: izvorni tekst i imena brišu se odmah, a anonimizirani tekst i presuda 30 dana poslije.",
@@ -323,8 +380,7 @@ const hr: Locale = {
     "deletePage.kept":
       "Ishod i datume uklonjenih presuda, bez teksta i imena. Tvoje ocjene i zapise o privoli 6 godina, bez veze s tobom. Kodirani oblik tvoje e-pošte, kako se besplatni krediti ne bi iznova zlorabili. Sigurnosne kopije čuvaju starije primjerke najviše 14 dana.",
     "deletePage.mailTitle": "Zatraži e-poštom",
-    "deletePage.mail":
-      "Ne možeš se prijaviti? Piši na {email} s adrese svojeg računa i zatraži da ga izbrišemo.",
+    "deletePage.mail": "Ne možeš se prijaviti? Piši na {email} s adrese svojeg računa i zatraži da ga izbrišemo.",
     "rating.prompt": "Je li presuda pravedna?",
     "rating.fair": "Pravedna",
     "rating.notFair": "Nepravedna",
@@ -342,8 +398,7 @@ const hr: Locale = {
     "clarify.back": "Uredi raspravu",
     "thinking.factcheck": "Provjeravamo činjenice na internetu…",
     "thinking.factcheckDone": "Provjera na internetu je gotova.",
-    "thinking.premiumHelper":
-      "Provjera činjenica na internetu traje malo dulje. Daj nam minutu-dvije.",
+    "thinking.premiumHelper": "Provjera činjenica na internetu traje malo dulje. Daj nam minutu-dvije.",
     "panel.premium": "Presuđeno uz provjeru činjenica na internetu.",
     "factcheck.title": "Provjereno na internetu",
     "factcheck.lead": "Suci su vidjeli ove rezultate pretraživanja prije presude. To su dokazi, a ne sama presuda.",
@@ -353,7 +408,8 @@ const hr: Locale = {
     "factcheck.status.unverified": "Nije potvrđeno",
     "factcheck.sources": "Izvori",
     "factcheck.sourceAria": "{title}, otvara se u novoj kartici",
-    "factcheck.none": "Ovdje nema što tražiti na internetu: ova rasprava ovisi o vrijednostima ili značenjima, a ne o činjenicama.",
+    "factcheck.none":
+      "Ovdje nema što tražiti na internetu: ova rasprava ovisi o vrijednostima ili značenjima, a ne o činjenicama.",
     "factcheck.noneFactual":
       "Ovdje se ništa ne može provjeriti na internetu: činjenice u ovom slučaju poznaju samo uključene osobe.",
     "factcheck.unavailable": "Provjera na internetu ovaj put nije završila, pa su suci presudili bez nje.",
@@ -385,7 +441,8 @@ const hr: Locale = {
     "signin.usePassword": "Umjesto toga koristi lozinku",
     "signin.passwordWrong": "Ta e-pošta i lozinka se ne podudaraju.",
     "signin.passwordShort": "Koristi najmanje 8 znakova.",
-    "signin.createNote": "Poslat ćemo ti kod e-poštom kako bismo potvrdili ovu adresu. To trebaš napraviti samo jednom.",
+    "signin.createNote":
+      "Poslat ćemo ti kod e-poštom kako bismo potvrdili ovu adresu. To trebaš napraviti samo jednom.",
     "signin.passwordChoose": "Prijavljen si. Odaberi lozinku za sljedeći put.",
     "signin.passwordSave": "Spremi lozinku",
     "signin.passwordSaveFailed": "Lozinku nismo mogli spremiti. Pokušaj ponovno.",
@@ -462,8 +519,10 @@ const hr: Locale = {
     "error.too_large": "To je preveliko. Pokušaj s manjom slikom.",
     "error.unsupported_media": "Možemo čitati samo slike u formatu PNG, JPEG, WebP ili GIF.",
     "error.too_many_files": "To je više slika nego što ovdje možeš dodati.",
-    "error.evidence_invalid": "Jedna od tvojih slika je istekla ili se nije mogla provjeriti. Ukloni je i dodaj ponovno.",
-    "error.anonymize_failed": "Nismo uspjeli ukloniti imena iz tvog teksta. Pokušaj ponovno ili umjesto punih imena napiši inicijale.",
+    "error.evidence_invalid":
+      "Jedna od tvojih slika je istekla ili se nije mogla provjeriti. Ukloni je i dodaj ponovno.",
+    "error.anonymize_failed":
+      "Nismo uspjeli ukloniti imena iz tvog teksta. Pokušaj ponovno ili umjesto punih imena napiši inicijale.",
     "mode.label": "Kako da presudimo?",
     "mode.now": "Samo ja (odmah)",
     "mode.both": "Obje strane (pošalji poveznicu)",
@@ -501,7 +560,8 @@ const hr: Locale = {
     "case.side.opened": "Otvoreno",
     "case.side.typing": "Tipka…",
     "case.judgeAnswered": "Presudi na temelju strana koje su odgovorile",
-    "case.judgeAnswered.confirm": "Želiš presudu na temelju strana koje su odgovorile? Ostali pozivi se zatvaraju i te osobe više ne mogu odgovoriti.",
+    "case.judgeAnswered.confirm":
+      "Želiš presudu na temelju strana koje su odgovorile? Ostali pozivi se zatvaraju i te osobe više ne mogu odgovoriti.",
     "case.cancel": "Odustani",
     "case.retry": "Pokušaj ponovno",
     "case.failedBody": "Kredit ti je vraćen. Možeš pokušati ponovno.",
@@ -523,7 +583,8 @@ const hr: Locale = {
     "case.judgingAlone": "Suci rade na tvojoj strani.",
     "case.expiredBody":
       "Nitko nije odgovorio u roku od 7 dana, pa ti je kredit vraćen. I dalje možeš dobiti presudu samo na temelju svoje strane.",
-    "case.expiredBodyFree": "Nitko nije odgovorio u roku od 7 dana. I dalje možeš dobiti presudu samo na temelju svoje strane.",
+    "case.expiredBodyFree":
+      "Nitko nije odgovorio u roku od 7 dana. I dalje možeš dobiti presudu samo na temelju svoje strane.",
     "case.oneSided": "Presuđeno samo na temelju tvoje strane.",
     "case.startOver": "Pokreni novi slučaj",
     "case.list.untitled": "Slučaj od {date}",
@@ -544,8 +605,7 @@ const hr: Locale = {
     "case.write.submit": "Pošalji moju stranu",
     "case.write.emailSubject": "Druga strana je napisala svoje",
     "respond.sent": "Hvala. Tvoja strana je stigla i suci rade na tome.",
-    "respond.sentWaiting":
-      "Hvala. Tvoja strana je stigla. Suci počinju kad druga osoba napiše svoju.",
+    "respond.sentWaiting": "Hvala. Tvoja strana je stigla. Suci počinju kad druga osoba napiše svoju.",
     "respond.ownInvite": "Ovo je tvoja vlastita poveznica poziva. Pošalji je drugoj osobi.",
     "respond.expired": "Ovaj je poziv istekao.",
     "respond.closed": "Ovaj slučaj više ne prima odgovore.",
@@ -610,8 +670,7 @@ const hr: Locale = {
     "home.says": "{name} kaže:",
     "home.mySide": "Moja strana:",
     "home.otherSide": "Druga strana:",
-    "appeal.lead":
-      "Troši 1 presudu.",
+    "appeal.lead": "Troši 1 presudu.",
     "appeal.placeholder": "Što su suci propustili? Neka činjenica, poruka ili ono što je zapravo dogovoreno.",
     "appeal.submit": "Presudi ponovno",
     "appeal.sending": "Anonimiziramo tvoj kontekst…",
@@ -644,7 +703,8 @@ const hr: Locale = {
     "about.casesTitle": "Obje strane imaju riječ",
     "about.cases1":
       "Dvostrani slučajevi: prijaviš se, napišeš svoju stranu i pošalješ privatnu poveznicu. Druga osoba piše svoju, a da ne vidi tvoju. Suci važu oba iskaza: u čemu se slažete, oko čega se sporite i koji bi dokaz promijenio presudu.",
-    "about.cases2": "Ako nitko ne odgovori u roku od 7 dana, poveznica prestaje raditi. I dalje možeš dobiti presudu samo na temelju svoje strane.",
+    "about.cases2":
+      "Ako nitko ne odgovori u roku od 7 dana, poveznica prestaje raditi. I dalje možeš dobiti presudu samo na temelju svoje strane.",
     "about.premiumTitle": "Dodaci",
     "about.premium2":
       "Dokazi: dodaj snimke zaslona razgovora ili dokumenata. Pročitamo tekst u njima, sakrijemo imena i bacimo sliku.",
@@ -652,12 +712,6 @@ const hr: Locale = {
       "Žalbe: nakon presude svaka osoba može jednom dodati kontekst. Suci ponovno pogledaju sve i kažu ostaje li presuda ista, je li preokrenuta ili promijenjena. Ranije presude ostaju vidljive.",
     "about.premium4":
       "Dvostrani slučaj troši 1 presudu. Rezervira se kad pošalješ poveznicu i vraća ti se ako nitko ne odgovori u roku od 7 dana.",
-    "privacy.casesTitle": "Dvostrani slučajevi i žalbe",
-    "privacy.cases":
-      "U dvostranom slučaju svaka se strana anonimizira u trenutku slanja, na isti način kao i presuda. Suci čitaju anonimizirani tekst; strana svake osobe u izvornom obliku, s popisom imena, čuva se šifrirano i može je vidjeti samo ta osoba. Svaka osoba pri slanju svoje strane upisuje ime koje želi prikazati na stranici za dijeljenje; ako ga ostavi praznim, prikazuje se Strana A ili Strana B. Drugoj osobi ne treba račun; broj njezinih odgovora ograničava se pomoću hasha njezine IP adrese izračunatog s ključem. Poveznica poziva čuva se samo kao hash. Ako druga osoba odgovori dok je prijavljena, njezin se račun povezuje s njezinom stranom, pa samo ona kasnije može dodati kontekst ili vidjeti svoj izvornik; ako odgovori bez prijave, isto omogućuje privatni kod spremljen u njezinu pregledniku, a ako se kasnije prijavi u tom pregledniku, slučaj može spremiti na svoj račun. Kako bi ista osoba u oba iskaza dobila istu oznaku, poslužitelj unutar svakog slučaja čuva kodirane otiske imena (hasheve izračunate s ključem, a ne sama imena). Do presude nijedna strana ne može čitati tekst druge; nakon dvostrane presude obje osobe mogu čitati oba anonimizirana iskaza. Kontekst dodan nakon presude (žalba) obrađuje se na isti način. Kad druga osoba odgovori, možemo ti poslati kratku obavijest e-poštom bez ikakvog teksta iz slučaja, ako je e-pošta postavljena. Svaka osoba može ukloniti svoju stranu: brišu se njezin izvornik i prikazano ime, a poveznice za dijeljenje slučaja prestaju raditi za sve. Brisanje računa to čini za svaki slučaj koji je pokrenut s tvog računa ili na koji je s njega stigao odgovor.",
-    "privacy.evidenceTitle": "Snimke zaslona",
-    "privacy.evidence":
-      "Tvoj preglednik smanjuje velike slike prije učitavanja. Svaka slika zatim jednom ide vanjskoj AI usluzi kako bi se pročitao vidljivi tekst; samu sliku nikad ne spremamo. Sirovi prijepis, koji još može sadržavati imena, vraća ti se unutar potpisanog tokena koji tvoj preglednik čuva najviše 6 sati. Kad pošalješ svoju stranu, prijepis se anonimizira zajedno s tvojim tekstom: anonimizirani prijepis prikazuje se sucima i čuva uz slučaj, a sirovi prijepis čuva se šifrirano uz tvoj izvornik, gdje ga samo ti možeš vidjeti. Brojevi telefona, adrese e-pošte, korisnička imena na društvenim mrežama i brojevi računa u njemu također se za suce mijenjaju zamjenskim oznakama.",
     "pricing.premium.f5": "Snimke zaslona kao dokaz: pročitamo ih pa bacimo, bez doplate",
     "pricing.premium.f6": "Dodaj kontekst nakon presude i traži novu odluku (1 presuda)",
     "pricing.premium.f7": "Saslušaj obje strane: pošalji drugoj osobi privatnu poveznicu da ispriča svoju",
@@ -777,21 +831,6 @@ const hr: Locale = {
     "stamp.dissolved": "Nesporazum",
     "bestPoint.of": "Najjači argument koji iznosi {name}",
     "bestPoint.self": "Tvoj najjači argument",
-    "privacy.accessTitle": "Tko što može vidjeti",
-    "privacy.access":
-      "Ti: svoj izvorni tekst i imena, na bilo kojem uređaju uz prijavu, a bez prijave na uređaju na kojem je tekst napisan, putem privatnog koda spremljenog u pregledniku ili aplikaciji (mi čuvamo samo hashirani oblik tog koda). Presude napisane bez prijave, prije nego što je račun bio potreban, i slučajevi na koje odgovoriš bez prijave ostaju na popisu u tom pregledniku s naslovima i imenima onako kako su napisana, kako bi ih stranica „Presude“ mogla prikazati: svatko tko koristi isti preglednik vidi taj popis. Na zajedničkom računalu prijavi se ili koristi privatni prozor; brisanje podataka stranice u pregledniku uklanja popis. U dvostranom slučaju svaka osoba vidi samo svoj izvornik; nakon presude obje vide oba anonimizirana iskaza, onako kako su ih suci pročitali. Suci (AI modeli koje pokreće naš pružatelj AI usluga): samo anonimiziranu verziju. Svatko s poveznicom za dijeljenje: presudu s prikazanim imenima. Prema zadanim postavkama to su ime koje odabereš za sebe i imena ostalih (bez prezimena) onako kako se pojavljuju u tvom tekstu; možeš ih promijeniti ili isključiti imena u bilo kojem trenutku, a tada stranica prikazuje oznake Strana A i Strana B. Mi: izvornike možemo dešifrirati ključem, a pohranjeni tekst pregledavamo samo da bismo obradili tvoj zahtjev za podršku, istražili zlouporabu ili kad to zahtijeva zakon.",
-    "privacy.removalTitle": "Uklanjanje",
-    "privacy.removal":
-      "Uklanjanje možeš zatražiti na stranici presude (uz prijavu je možeš otvoriti sa stranice „Presude“), na stranici slučaja ako je riječ o dvostranom slučaju, brisanjem računa ili e-poštom. Uklanjanje briše tvoj izvorni tekst, popis imena i prikazana imena (u dvostranom slučaju izvornik tvoje strane i tvoje prikazano ime), a poveznica za dijeljenje i njezina slika pregleda prestaju se učitavati za sve. Preglede već objavljene u aplikacijama za dopisivanje čuvaju te aplikacije i mogu se prikazivati dok ih ne osvježe. Anonimizirani tekst i presudu, bez imena, zadržavamo u svojoj evidenciji; više se ne mogu otvoriti putem poveznice. Brisanje računa to čini za sve tvoje presude i tvoje strane u slučajevima te briše tvoje podatke za prijavu, kredite i plan. Uklonjeni podaci ostaju u našim sigurnosnim kopijama dok one ne isteknu (najviše 14 dana, vidi niže); ako ikad vratimo sigurnosnu kopiju, ponovno primjenjujemo sva uklanjanja (za to vodimo popis onoga što je uklonjeno i kada, bez ikakvog teksta ili imena). Trideset dana nakon što nešto ukloniš, brišemo i anonimizirani tekst i presudu, a zadržavamo samo ishod i datume, osim ako nas zakon ne obvezuje da ih čuvamo dulje. Kod slučaja trideset dana počinje teći tek kad ga ukloni svatko tko u njemu sudjeluje.",
-    "privacy.retentionTitle": "Koliko dugo čuvamo podatke",
-    "privacy.retention":
-      "Presude i izvornike čuvamo dok ne zatražiš uklanjanje ili ne izbrišeš račun. Za oporavak od kvara čuvamo sigurnosne kopije poslužitelja i njegove baze podataka najviše 14 dana, a zatim se brišu. One sadrže iste podatke kao i poslužitelj, uključujući šifrirane izvornike, a ključ je na istom poslužitelju, pa su sigurnosne kopije zaštićene kao i sam poslužitelj, a ne tim šifriranjem. Hashevi za ograničenje korištenja čuvaju se najviše 24 sata. Zapisi poslužitelja čuvaju se prema uobičajenom roku našeg pružatelja hostinga. Događaji korištenja brišu se nakon 90 dana, a veze s uređajima nakon 180 dana bez korištenja. Zapisi i metrike u Grafana Labsu čuvaju se 14 dana.",
-    "privacy.locationTitle": "Gdje su tvoji podaci",
-    "privacy.location":
-      "Naši su poslužitelji u Njemačkoj (OVH, Frankfurt). Dio obrade odvija se u Sjedinjenim Američkim Državama: naš pružatelj AI usluga pokreće modele koji uklanjaju imena, presuđuju, čitaju snimke zaslona i pretražuju internet; Cloudflare stoji ispred okjudge.com kao proxy i DNS (sav promet prolazi kroz njega) i provodi provjeru jesi li čovjek. Prijava ide preko Applea ili Googlea ako ih odabereš, a e-poruke za prijavu preko Resenda. Podaci obrađeni u drugoj zemlji mogu podlijegati zakonima te zemlje.",
-    "privacy.rightsTitle": "Tvoja prava (Kanada)",
-    "privacy.rights":
-      "Judge se vodi iz Kanade i s osobnim podacima postupa u skladu s kanadskim saveznim zakonom o privatnosti (PIPEDA): prikupljamo samo ono što je usluzi potrebno, koristimo to samo u tu svrhu i štitimo, a ti možeš zatražiti uvid u podatke koje o tebi imamo, njihov ispravak ili uklanjanje. Odgovaramo u roku od 30 dana.",
     "footer.terms": "Uvjeti",
     "signin.legalTerms": "Uvjete korištenja",
     "age.confirm": "Imam 18 ili više godina",

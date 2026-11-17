@@ -45,8 +45,7 @@ const vi: Locale = {
     "thinking.crux": "Đang truy tìm mấu chốt…",
     "thinking.judges": "Ba giám khảo đang cân nhắc, mỗi người tự quyết…",
     "thinking.votes": "Đang đếm phiếu…",
-    "thinking.helper":
-      "Ba giám khảo AI phân xử riêng rẽ, nếu sát nút sẽ gọi thêm giám khảo. Chờ chừng một phút nhé.",
+    "thinking.helper": "Ba giám khảo AI phân xử riêng rẽ, nếu sát nút sẽ gọi thêm giám khảo. Chờ chừng một phút nhé.",
     "thinking.finish": "Sắp chạm tới mấu chốt…",
     "thinking.stillJudging": "Ban giám khảo vẫn đang suy nghĩ. Chờ thêm chút nhé…",
     "thinking.ready": "Đã có phán quyết.",
@@ -109,14 +108,18 @@ const vi: Locale = {
     "vote.dissolved": "lệch nghĩa",
     refusedNote: "AI đã từ chối vụ này. Chúng tôi thà không hiện gì còn hơn bịa ra một phán quyết.",
     demoNote: "🎭 Chế độ demo: chưa thiết lập khóa AI nên đây là phán quyết mẫu",
-    "trial.survived": "🛡️ Bác bỏ phản đối: luật sư phía bên kia đã nêu phản đối mạnh nhất của mình, và phán quyết vẫn đứng vững. Độ tin cậy giữ nguyên.",
-    "trial.uncertain": "⚠️ Luật sư phía bên kia đã phản đối, và sự phản đối đó để lại nghi ngờ thật sự về phán quyết này",
-    "trial.overturned": "⚠️ Chấp nhận phản đối: phán quyết vẫn giữ nguyên, nhưng phản đối mạnh nhất của phía bên kia đã làm nó yếu đi nghiêm trọng",
+    "trial.survived":
+      "🛡️ Bác bỏ phản đối: luật sư phía bên kia đã nêu phản đối mạnh nhất của mình, và phán quyết vẫn đứng vững. Độ tin cậy giữ nguyên.",
+    "trial.uncertain":
+      "⚠️ Luật sư phía bên kia đã phản đối, và sự phản đối đó để lại nghi ngờ thật sự về phán quyết này",
+    "trial.overturned":
+      "⚠️ Chấp nhận phản đối: phán quyết vẫn giữ nguyên, nhưng phản đối mạnh nhất của phía bên kia đã làm nó yếu đi nghiêm trọng",
     "trial.minor": "🛡️ Luật sư phía bên kia nêu một điểm hợp lý, nhưng phán quyết vẫn giữ nguyên",
     "trial.whatWasTested": "Phản đối",
     "trial.attackPrefix": "Phản đối:",
     "trial.refereePrefix": "Lý do:",
-    "trial.mixedNote": "Đây là tranh chấp pha trộn: một phần là sự thật, một phần là giá trị hoặc nghĩa của từ, nên khó bảo vệ một chiến thắng rõ ràng hơn.",
+    "trial.mixedNote":
+      "Đây là tranh chấp pha trộn: một phần là sự thật, một phần là giá trị hoặc nghĩa của từ, nên khó bảo vệ một chiến thắng rõ ràng hơn.",
     confidence: "Độ tin cậy {n}/{total}",
     verdictAria: "Phán quyết: {label}",
     "party.a": "Bên A",
@@ -128,16 +131,14 @@ const vi: Locale = {
     "shared.subtitle": "Ai đó đã chia sẻ phán quyết này",
     "shared.cta": "Phân xử cuộc tranh cãi của bạn →",
     errorFallback: "Có lỗi xảy ra. Bạn thử lại nhé?",
-    "error.not_configured":
-      "Giám khảo chưa được thiết lập. Thử lại sau nhé.",
+    "error.not_configured": "Giám khảo chưa được thiết lập. Thử lại sau nhé.",
     "error.quota": "Ban giám khảo tạm thời đã dùng hết hạn mức AI. Thử lại sau vài phút nhé.",
     "error.unavailable": "Hiện chưa liên lạc được với ban giám khảo. Đợi một phút rồi thử lại nhé.",
     "error.too_short": "Hơi ít thông tin. Kể thêm về cuộc tranh cãi đi.",
     "error.too_long": "Dài quá! Giữ dưới 6.000 ký tự nhé.",
     "error.invalid": "Yêu cầu này có vẻ không hợp lệ.",
     "error.rate_limited": "Trật tự nào! Bạn đã chạm giới hạn tạm thời. Thử lại sau {wait} nhé.",
-    "error.daily_cap":
-      "Hôm nay tòa đóng cửa rồi: đã nghe hết số vụ có thể nghe. Quay lại sau {wait} nhé.",
+    "error.daily_cap": "Hôm nay tòa đóng cửa rồi: đã nghe hết số vụ có thể nghe. Quay lại sau {wait} nhé.",
     "error.captcha_failed": "Chúng tôi chưa xác định được bạn là người thật. Làm lại bước kiểm tra rồi gửi nhé.",
     "wait.moment": "vài phút",
     "wait.minute": "1 phút",
@@ -147,7 +148,8 @@ const vi: Locale = {
     "refused.headline": "AI không chịu phán vụ này",
     "refused.crux":
       "Bộ lọc an toàn của AI đã chặn việc phân xử vụ này. Thà không có phán quyết còn hơn một phán quyết bịa đặt.",
-    "refused.bestPoint": "Thử diễn đạt theo cách khác xem. Hoặc chấp nhận rằng có những vụ cãi nhau quá sức một ứng dụng.",
+    "refused.bestPoint":
+      "Thử diễn đạt theo cách khác xem. Hoặc chấp nhận rằng có những vụ cãi nhau quá sức một ứng dụng.",
     "refused.claim": "Bỏ qua",
     "nav.skip": "Chuyển đến nội dung",
     "nav.home": "Trang chủ Judge",
@@ -199,8 +201,7 @@ const vi: Locale = {
       "Xét riêng hình dạng thì bánh mì có thể xem là sandwich, nhưng chẳng ai thật sự dùng chữ đó như vậy.",
     "sample.why":
       "Lý lẽ của Minh chỉ dựa vào hình dạng. Một từ mang nghĩa theo cách người ta dùng nó, và gọi sandwich ở quán nào thì cũng chẳng bao giờ nhận được ổ bánh mì thịt.",
-    "sample.bestPoint":
-      "Ổ bánh mì xẻ đôi kẹp nhân đúng là khớp với hầu hết định nghĩa sandwich trong từ điển.",
+    "sample.bestPoint": "Ổ bánh mì xẻ đôi kẹp nhân đúng là khớp với hầu hết định nghĩa sandwich trong từ điển.",
     "faq.title": "Mọi người hay hỏi",
     "faq.kicker": "Hỏi đáp",
     "faq.fair.q": "Có công bằng không?",
@@ -239,8 +240,7 @@ const vi: Locale = {
       "Judge chỉ biết những gì bạn kể, và cách bạn kể ảnh hưởng đến kết quả. Hãy đưa cả phía bên kia vào, theo cách họ sẽ nói.",
     "about.limit2":
       "Giám khảo AI có thể nhầm về sự thật. Phán quyết nào cũng liệt kê những sự thật nó dựa vào để bạn kiểm tra.",
-    "about.limit3":
-      "Việc thay tên phần lớn đều hiệu quả, nhưng tên lạ hoặc biệt danh vẫn có thể lọt qua.",
+    "about.limit3": "Việc thay tên phần lớn đều hiệu quả, nhưng tên lạ hoặc biệt danh vẫn có thể lọt qua.",
     "about.limit4": "Để giải trí và cho rõ ràng, không phải tư vấn pháp lý, y tế hay tài chính.",
     "about.builtTitle": "Bên trong",
     "about.built":
@@ -250,33 +250,96 @@ const vi: Locale = {
     "privacy.kicker": "Dữ liệu của bạn",
     "privacy.lead":
       "Nói ngắn gọn: chúng tôi lưu những gì bạn viết, kể cả tên, ở dạng mã hóa để bạn có thể xem lại. Giám khảo chỉ đọc bản đã bỏ tên. Bạn có thể yêu cầu gỡ bỏ bất cứ lúc nào. Chúng tôi không bán dữ liệu của bạn. Nếu Judge có ngày được bán hoặc sáp nhập, nó sẽ chuyển sang chủ sở hữu mới theo chính sách này.",
+    "privacy.whoTitle": "Chúng tôi là ai",
+    "privacy.who":
+      "Judge do Aytu Tuna, một cá nhân ở Canada, vận hành.\n{address}\nChúng tôi quyết định thu thập gì và vì sao. Người chịu trách nhiệm về thông tin cá nhân là Aytu Tuna, chủ sở hữu. Liên hệ: {email}.",
     "privacy.storedTitle": "Chúng tôi lưu gì",
     "privacy.stored":
-      "Với mỗi phán quyết, chúng tôi lưu nội dung đúng như bạn đã viết (kèm câu trả lời của bạn cho các câu hỏi của giám khảo và chữ đọc được từ ảnh chụp màn hình, nếu có), cùng một danh sách cho biết tên nào đã được đổi thành nhãn nào. Những thứ này được mã hóa bằng một khóa không lưu trong cơ sở dữ liệu. Chúng tôi cũng lưu bản ẩn danh mà giám khảo đọc (tên được đổi thành Bên A và Bên B), các tùy chọn bạn đã chọn, phán quyết, bản dịch nếu có, và những tên bạn chọn hiển thị trên trang chia sẻ. Chúng tôi cũng đếm cách Judge được dùng: màn hình và tính năng nào, kèm phiên bản ứng dụng, mẫu thiết bị, phiên bản hệ thống, ngôn ngữ và quốc gia của kết nối của bạn, và trong ứng dụng có thêm mã nhận dạng thiết bị. Khi bạn đã đăng nhập, dữ liệu này gắn với tài khoản của bạn. Sự kiện sử dụng được giữ 90 ngày, còn liên kết giữa tài khoản và thiết bị của bạn được giữ 180 ngày. Ứng dụng có công tắc Thống kê sử dụng trong Cài đặt, và trang web không gửi gì khi trình duyệt của bạn gửi Do Not Track hoặc Global Privacy Control. Dữ liệu này không bao giờ chứa văn bản của vụ việc. Nếu bạn đánh giá một phán quyết, chúng tôi giữ đánh giá đó cùng với phán quyết.",
+      "Với mỗi phán quyết, chúng tôi lưu nguyên văn những gì bạn viết (kèm câu trả lời của bạn cho các câu hỏi của giám khảo và phần chữ đọc ra từ ảnh chụp màn hình), cùng danh sách cho biết tên nào được đổi thành nhãn nào. Những thứ này được mã hóa bằng một khóa không lưu trong cơ sở dữ liệu. Chúng tôi cũng lưu bản đã ẩn danh mà giám khảo đọc (tên được đổi thành Bên A và Bên B), các cài đặt bạn chọn, phán quyết, bản dịch (nếu có) và những cái tên bạn chọn hiển thị trên trang chia sẻ. Chúng tôi cũng đếm cách Judge được sử dụng: những màn hình và tính năng nào, cùng với phiên bản ứng dụng, mẫu thiết bị, phiên bản hệ thống, ngôn ngữ và quốc gia của kết nối, và trong ứng dụng còn có mã định danh thiết bị. Khi bạn đã đăng nhập, dữ liệu này gắn với tài khoản của bạn. Sự kiện sử dụng được giữ 90 ngày và liên kết giữa tài khoản với thiết bị được giữ 180 ngày. Ứng dụng có công tắc Thống kê sử dụng trong Cài đặt, và trang web không gửi gì khi trình duyệt của bạn gửi tín hiệu Do Not Track hoặc Global Privacy Control. Dữ liệu này không bao giờ có nội dung vụ việc. Nếu bạn đánh giá một phán quyết, chúng tôi lưu đánh giá cùng với nó. Đánh giá có thể được xóa; chúng tôi giữ lại dòng đó nhưng không còn giá trị thích hay không thích. Chúng tôi cũng lưu bản ghi việc bạn đồng ý về chi tiết riêng tư và các lựa chọn Giúp cải thiện Judge của bạn, kèm ngày, ngôn ngữ, nền tảng và nội dung bạn đã thấy.",
     "privacy.helpTitle": "Giúp cải thiện Judge",
     "privacy.help":
-      "Tắt, trừ khi bạn bật. Khi bật, chúng tôi có thể dùng văn bản đã ẩn danh mà các giám khảo đọc, phán quyết của họ và đánh giá của bạn để kiểm thử và huấn luyện các giám khảo của Judge. Tên không bao giờ nằm trong đó. Tắt đi sẽ dừng việc dùng này cho mọi thứ bạn đã tạo, và chúng tôi ghi lại lúc bạn bật hoặc tắt.",
-    "privacy.notStoredTitle": "Những gì chúng tôi không làm",
-    "privacy.notStored":
-      "Không có trình theo dõi quảng cáo. Lựa chọn ngôn ngữ của bạn chỉ nằm trong bộ nhớ cục bộ của trình duyệt, không ở đâu khác.",
-    "privacy.ipTitle": "Giới hạn lượt dùng",
-    "privacy.ip":
-      "Để tòa luôn mở cửa cho mọi người, chúng tôi giới hạn số phán quyết mỗi tài khoản và số bản dịch mỗi khách truy cập có thể yêu cầu. Với bản dịch, và với câu trả lời cho một vụ hai bên, chúng tôi lưu một mã băm có khóa của địa chỉ IP của bạn, không phải chính địa chỉ đó, trong kho giới hạn lượt dùng tối đa 24 giờ. Nếu bước kiểm tra người thật được bật, địa chỉ IP của bạn cũng được gửi tới Cloudflare cho bước kiểm tra đó. Địa chỉ này không bao giờ được lưu cùng phán quyết của bạn.",
-    "privacy.processorsTitle": "Ai khác xử lý nội dung của bạn",
-    "privacy.processors":
-      "Nội dung bạn nhập, kể cả tên thật, trước tiên được gửi tới nhà cung cấp AI của chúng tôi tại Hoa Kỳ để bỏ tên ra. Chỉ bản ẩn danh được đem ra phân xử; bản gốc của bạn được lưu ở dạng mã hóa như mô tả ở trên. Nếu bước kiểm tra người thật được bật, Cloudflare Turnstile chạy trong trình duyệt của bạn và xác minh kết quả với Cloudflare. Nếu bạn đăng nhập, Apple hoặc Google (tùy bạn chọn bên nào) xử lý việc đăng nhập đó, và email đăng nhập được gửi qua Resend. Nhà cung cấp dịch vụ lưu trữ của chúng tôi giữ nhật ký máy chủ tiêu chuẩn. Giao dịch mua trong ứng dụng đi qua App Store hoặc Google Play và do RevenueCat xử lý; RevenueCat nhận mã tài khoản và lịch sử mua của bạn. Grafana Labs nhận nhật ký máy chủ và số đo hiệu năng của chúng tôi, lưu tại EU trong 14 ngày; nhật ký không chứa văn bản của vụ việc. Báo cáo sự cố và lỗi từ các ứng dụng và trang web này được gửi tới Sentry, lưu tại EU tối đa 30 ngày; báo cáo gồm lỗi, phiên bản ứng dụng hoặc trình duyệt và kiểu thiết bị, nhưng không có văn bản của vụ việc, mã tài khoản hay địa chỉ kết nối.",
-    "privacy.shareTitle": "Liên kết chia sẻ",
-    "privacy.share":
-      "Bất kỳ ai có liên kết tới một phán quyết đều xem được nó, với tên hiển thị bạn đã chọn (hoặc Bên A và Bên B nếu bạn đã tắt tên). Liên kết dùng mã ngẫu nhiên dài, và trang chia sẻ yêu cầu công cụ tìm kiếm không lập chỉ mục. Liên kết và ảnh xem trước của một phán quyết đã gỡ sẽ không tải được nữa; các bản xem trước đã đăng trong ứng dụng nhắn tin có thể vẫn hiện cho đến khi các ứng dụng đó làm mới. Đừng ghi địa chỉ, số điện thoại hay bất cứ điều gì bạn không muốn xuất hiện trên một trang người khác có thể mở.",
-    "privacy.contactTitle": "Liên hệ",
-    "privacy.contact":
-      "Có câu hỏi, hoặc muốn xem, sửa hay gỡ bỏ dữ liệu của bạn? Gửi email tới {email} kèm liên kết tới phán quyết hoặc vụ.",
-    "privacy.accountsTitle": "Tài khoản",
-    "privacy.accounts":
-      "Judge chỉ dành cho người từ 18 tuổi trở lên, và những tài khoản mà chúng tôi phát hiện thuộc về người dưới 18 tuổi sẽ bị đóng. Bạn cần có tài khoản để nhận phán quyết; phía bên kia trong một vụ hai bên có thể trả lời mà không cần tài khoản. Nếu bạn đăng nhập bằng Apple hoặc Google, chúng tôi lưu địa chỉ email, tên và liên kết ảnh đại diện mà họ chia sẻ với chúng tôi, cùng phương thức đăng nhập bạn đã dùng, và Apple hoặc Google có thể biết bạn đã đăng nhập vào Judge. Nếu bạn đăng nhập bằng liên kết qua email, email đó được gửi qua Resend, và chúng tôi lưu tạm một bản ghi có địa chỉ email của bạn để xác minh liên kết: liên kết hết hiệu lực sau 10 phút, và bản ghi bị xóa khi đã được dùng hoặc ít lâu sau khi hết hạn. Chúng tôi cũng lưu các bản ghi phiên đăng nhập (một mã ngẫu nhiên và thời điểm hết hạn, không có địa chỉ IP hay thông tin trình duyệt, nhưng ứng dụng cũng ghi lại mã nhận dạng thiết bị khi bạn đăng nhập), số lượt của bạn, gói của bạn và lịch sử gói, và những phán quyết nào đã dùng một lượt (chỉ mã định danh của phán quyết). Chúng tôi cũng lưu những phán quyết và vụ nào là của bạn, để bạn tìm thấy chúng trên mọi thiết bị. Xóa tài khoản trên trang tài khoản sẽ xóa tài khoản, các phiên đăng nhập, sự kiện sử dụng và liên kết giữa tài khoản với thiết bị của bạn, đồng thời gỡ các phán quyết của bạn và phần của bạn trong các vụ như mô tả ở mục Gỡ bỏ. Chúng tôi chỉ giữ một dạng đã xáo trộn của địa chỉ email, để một tài khoản mới dùng địa chỉ đó không nhận được phán quyết miễn phí lần thứ hai, và vẫn bị đóng nếu tài khoản của bạn đã bị đóng vì bạn dưới 18 tuổi. Mã đăng nhập gửi qua email hoạt động giống như liên kết. Nếu bạn đặt mật khẩu, chúng tôi chỉ lưu cùng tài khoản của bạn dạng đã mã hóa (băm) của nó, không bao giờ lưu chính mật khẩu.",
+      'Mặc định là tắt, trừ khi bạn bật. Khi bật, chúng tôi có thể dùng văn bản đã ẩn danh mà giám khảo đọc, các phán quyết của họ và đánh giá của bạn để thử nghiệm và huấn luyện các mô hình AI: của chính Judge và, nếu Judge có ngày được bán hoặc sáp nhập, của chủ sở hữu mới. Tên không bao giờ nằm trong đó. Khi bạn tắt, mọi thứ bạn tạo ra từ lúc đó sẽ không được dùng để huấn luyện. Chúng tôi ghi lại thời điểm bạn bật hoặc tắt.\nỞ đây "ẩn danh" nghĩa là đã bỏ tên; những chi tiết khác bạn viết vẫn có thể còn trong văn bản. Nó chỉ áp dụng cho các phán quyết tạo ra khi đang bật, và với một vụ chỉ khi tất cả những người đã viết một bên đều bật. Các mô hình đã huấn luyện rồi sẽ không thay đổi. Hiện chưa có gì được dùng để huấn luyện. Judge hoạt động như nhau dù tắt.\nChúng tôi chỉ hỏi một lần, trên trang phán quyết của chính bạn sau phán quyết thứ hai của bạn hoàn tất. Chúng tôi không bao giờ hỏi trên phán quyết mà người khác chia sẻ với bạn. Thẻ ghi: "Cho phép Judge dùng các phán quyết và đánh giá đã ẩn danh của bạn để huấn luyện AI. Tên không bao giờ được đưa vào." Bạn có thể đổi câu trả lời trong Cài đặt bất cứ lúc nào.',
+    "privacy.purposesTitle": "Vì sao chúng tôi dùng dữ liệu của bạn",
+    "privacy.purposes":
+      "- Để đưa ra phán quyết cho bạn, vận hành tài khoản của bạn, và xử lý việc mua hàng và hỗ trợ. Cơ sở pháp lý (EU, Anh và Brazil): cần thiết để cung cấp dịch vụ bạn yêu cầu.\n- Để giữ Judge an toàn và hoạt động tốt: giới hạn lượt dùng, kiểm tra người thật, phát hiện người lợi dụng lượt miễn phí, báo cáo lỗi, thống kê sử dụng, và giữ dạng đã xáo trộn của email sau khi xóa. Cơ sở: lợi ích hợp pháp của chúng tôi trong việc có một dịch vụ an toàn, hoạt động tốt. Bạn có thể phản đối qua email. Ứng dụng có công tắc Thống kê sử dụng, và Do Not Track hoặc Global Privacy Control của trình duyệt sẽ dừng các sự kiện sử dụng của chính trang web.\n- Để kiểm tra tuổi của bạn, kể cả tín hiệu tuổi từ điện thoại của bạn. Cơ sở: lợi ích hợp pháp của chúng tôi trong việc giữ Judge chỉ dành cho người lớn, hoặc nghĩa vụ pháp lý khi áp dụng luật về độ tuổi của cửa hàng ứng dụng.\n- Để giữ văn bản đã bỏ tên trong 30 ngày sau khi bạn gỡ bỏ thứ gì đó, phòng trường hợp lạm dụng hoặc khiếu nại pháp lý. Cơ sở: lợi ích hợp pháp của chúng tôi.\n- Để giữ bằng chứng về những gì bạn đã đồng ý: việc đồng ý về chi tiết riêng tư và các lựa chọn Giúp cải thiện Judge của bạn. Cơ sở: lợi ích hợp pháp của chúng tôi trong việc chứng minh được bạn đã đồng ý gì.\n- Để dùng các phán quyết và đánh giá đã ẩn danh của bạn cho việc huấn luyện AI. Cơ sở: sự đồng ý của bạn, chỉ khi bạn bật.\n- Để tuân thủ pháp luật và giữ các hồ sơ chúng tôi buộc phải giữ. Cơ sở: nghĩa vụ pháp lý.\nChúng tôi không bao giờ dùng dữ liệu của bạn cho quảng cáo và không có công cụ theo dõi quảng cáo. Nếu sau này muốn dùng vào mục đích mới, chúng tôi sẽ báo trước và hỏi lại nếu luật yêu cầu sự đồng ý của bạn.",
+    "privacy.sensitiveTitle": "Nên tránh viết gì",
+    "privacy.sensitive":
+      'Tranh chấp có thể chạm tới những chủ đề riêng tư như sức khỏe, các mối quan hệ, tôn giáo hay tiền bạc. Chỉ viết những gì phán quyết cần, và đừng viết chi tiết riêng tư của người khác. Judge không dành cho trường hợp khẩn cấp hay tư vấn pháp lý.\nTrước phán quyết đầu tiên của bạn, trước khi bạn gửi bên đầu tiên của một vụ, hoặc trước câu trả lời đầu tiên của bạn cho một vụ, chúng tôi yêu cầu bạn đánh dấu một ô: "Văn bản của tôi có thể chứa chi tiết riêng tư, như sức khỏe hay các mối quan hệ. Judge gửi nó, đã bỏ tên, tới một dịch vụ AI bên ngoài để viết phán quyết cho tôi, và giữ cho đến khi tôi xóa." Bạn chỉ có thể tiếp tục khi đã đánh dấu. Chúng tôi hỏi một lần cho mỗi tài khoản; nếu bạn đã có tài khoản, chúng tôi hỏi ở phán quyết tiếp theo. Người trả lời một vụ mà không có tài khoản cũng thấy ô này. Chúng tôi lưu bản ghi việc đánh dấu kèm ngày, ngôn ngữ, nền tảng và nội dung bạn đã thấy.',
+    "privacy.othersTitle": "Những người bạn viết về",
+    "privacy.others":
+      'Văn bản của bạn có thể nhắc tới người không dùng Judge. Giám khảo chỉ thấy họ dưới các nhãn như "Person C". Chúng tôi lưu tên của họ ở dạng mã hóa, cùng một dấu vân tay mã hóa của mỗi tên (một mã băm có khóa, không phải chính cái tên). Tên có thể xuất hiện trên trang chia sẻ như mô tả ở mục Ai xem được gì. Nếu tên bạn xuất hiện trong vụ của người khác, hãy gửi email tới {email} kèm liên kết, chúng tôi sẽ gỡ tên bạn khỏi trang chia sẻ hoặc xem xét phản đối của bạn.',
+    "privacy.automatedTitle": "Phán quyết do AI đưa ra",
+    "privacy.automated":
+      'Các mô hình AI viết phán quyết của bạn, không có ai đọc trước. Đó là một ý kiến về lập luận đúng như đã viết, dựa trên văn bản đã bỏ tên, các nguồn trên mạng được hiển thị và câu trả lời của bạn. Nó không phải tư vấn pháp lý và không có tính ràng buộc. Không có quyết định nào về bạn, tài khoản, giá hay quyền truy cập của bạn được đưa ra từ nó. Nó có thể sai hoặc thiên về một phía. Nếu bạn không đồng ý, hãy đánh giá "Không công bằng", thêm bối cảnh, hoặc gửi email tới {email} và sẽ có người xem xét. Bên kia của vụ cũng có thể yêu cầu.',
+    "privacy.accessTitle": "Ai xem được gì",
+    "privacy.access":
+      "Bạn: bản gốc và các tên của bạn, trên mọi thiết bị khi bạn đã đăng nhập, hoặc trên thiết bị bạn đã dùng nhờ một mã riêng lưu trong trình duyệt hoặc ứng dụng (chúng tôi chỉ giữ dạng đã xáo trộn của mã đó). Các phán quyết tạo khi chưa đăng nhập, từ hồi chưa cần tài khoản, và các vụ bạn trả lời khi chưa đăng nhập vẫn được liệt kê trong trình duyệt đó kèm tiêu đề và các tên đúng như bạn viết, để mục Phán quyết hiển thị được: bất kỳ ai dùng cùng trình duyệt đều thấy danh sách này. Trên máy tính dùng chung, hãy đăng nhập hoặc dùng cửa sổ ẩn danh; xóa dữ liệu của trang trong trình duyệt sẽ xóa danh sách. Trong một vụ hai bên, mỗi người chỉ thấy bản gốc của mình; sau phán quyết, cả hai thấy cả hai lời kể đã ẩn danh, đúng như giám khảo đã đọc. Ban giám khảo (các mô hình AI do nhà cung cấp AI của chúng tôi vận hành): chỉ bản ẩn danh. Bất kỳ ai có liên kết chia sẻ: phán quyết kèm tên hiển thị. Mặc định đó là tên bạn chọn cho mình và tên gọi của những người khác đúng như bạn đã viết; bạn có thể đổi hoặc tắt tên bất cứ lúc nào, khi đó trang sẽ hiển thị Bên A và Bên B. Chúng tôi: có thể giải mã bản gốc bằng khóa, và chỉ xem văn bản đã lưu để xử lý yêu cầu hỗ trợ từ bạn, điều tra hành vi lạm dụng, hoặc khi pháp luật yêu cầu.",
+    "privacy.casesTitle": "Vụ hai bên và xét lại",
+    "privacy.cases":
+      'Trong một vụ hai bên, mỗi bên được ẩn danh khi gửi đi, giống như một phán quyết. Văn bản ẩn danh là thứ giám khảo đọc; phần của mỗi người như họ đã viết, cùng danh sách tên của nó, được lưu mã hóa và chỉ người đó xem được. Mỗi người gõ cái tên muốn hiển thị trên trang chia sẻ khi gửi phần của mình; để trống thì sẽ là Bên A hoặc Bên B. Người kia không cần tài khoản; các câu trả lời của họ bị giới hạn lượt dùng bằng mã băm có khóa của địa chỉ IP. Liên kết mời chỉ được lưu dưới dạng mã băm. Nếu người kia trả lời khi đã đăng nhập, tài khoản của họ được liên kết với phần của họ, nên chỉ họ mới thêm được bối cảnh sau này hoặc xem bản gốc của mình; nếu họ trả lời khi chưa đăng nhập, một mã riêng lưu trong trình duyệt của họ làm đúng việc đó, và đăng nhập sau trong trình duyệt ấy cho phép họ giữ vụ trong tài khoản của mình. Để cùng một người có cùng một nhãn trong cả hai phần, máy chủ lưu các dấu vân tay mã hóa của tên trong mỗi vụ (mã băm có khóa, không phải chính các tên). Cho đến khi có phán quyết, không bên nào đọc được văn bản của bên kia; sau phán quyết của một vụ hai bên, cả hai người đều đọc được cả hai phần đã ẩn danh. Bối cảnh thêm sau phán quyết (xét lại) được xử lý theo cách tương tự. Khi người kia trả lời, chúng tôi có thể gửi cho bạn một email ngắn không có nội dung vụ việc, nếu email đã được thiết lập. Mỗi người đều có thể gỡ bỏ phần của mình: bản gốc và tên hiển thị của họ bị xóa, và các liên kết chia sẻ của vụ ngừng hoạt động với mọi người. Xóa tài khoản của bạn cũng làm điều này với mọi vụ bạn đã bắt đầu hoặc trả lời. Một vụ không ai trả lời sẽ hết hạn sau 7 ngày, nhưng văn bản của phần bạn vẫn còn cho đến khi bạn gỡ bỏ. Người trả lời mà không có tài khoản phải đánh dấu "Tôi từ 18 tuổi trở lên" và ô chi tiết riêng tư trước khi gửi, và chúng tôi lưu cả hai lần đánh dấu cùng phần của họ.',
     "privacy.webSearchTitle": "Tìm kiếm trên mạng và câu hỏi",
     "privacy.webSearch":
       "Mỗi phán quyết gửi cuộc tranh cãi đã ẩn danh tới nhà cung cấp AI của chúng tôi với tính năng tìm kiếm trên mạng được bật. Mô hình tự viết truy vấn tìm kiếm từ văn bản ẩn danh đó, và kết quả đến từ đối tác tìm kiếm của nhà cung cấp. Các nguồn được dùng sẽ hiển thị trên phán quyết. Trước đó, giám khảo có thể hỏi bạn tối đa hai câu: để nghĩ ra các câu hỏi này, nội dung bạn đã nhập, kể cả tên, được gửi tới nhà cung cấp AI thêm một lần nữa. Câu trả lời của bạn được ẩn danh cùng với cuộc tranh cãi trước khi phân xử; các câu hỏi và câu trả lời đúng như bạn đã viết được lưu cùng bản gốc đã mã hóa của bạn.",
+    "privacy.evidenceTitle": "Ảnh chụp màn hình",
+    "privacy.evidence":
+      "Trình duyệt của bạn thu nhỏ ảnh lớn trước khi tải lên. Sau đó mỗi ảnh được gửi tới một dịch vụ AI bên ngoài một lần để đọc phần chữ hiển thị; chúng tôi không bao giờ lưu ảnh. Bản chép thô, vẫn có thể chứa tên, được trả về cho bạn trong một mã có chữ ký mà trình duyệt của bạn giữ tối đa 6 giờ. Khi bạn gửi lời kể của mình, bản chép được ẩn danh cùng với nội dung của bạn: bản chép đã ẩn danh được hiển thị cho giám khảo và lưu cùng vụ, còn bản chép thô được lưu ở dạng mã hóa cùng bản gốc của bạn, nơi chỉ bạn xem được. Số điện thoại, địa chỉ email, tên tài khoản mạng xã hội và số tài khoản trong đó cũng được thay bằng ký hiệu giữ chỗ trong bản giám khảo đọc.",
+    "privacy.accountsTitle": "Tài khoản",
+    "privacy.accounts":
+      "Judge chỉ dành cho người từ 18 tuổi trở lên, và các tài khoản chúng tôi phát hiện thuộc về người dưới 18 tuổi sẽ bị đóng. Bạn cần tài khoản để nhận phán quyết; bên kia của một vụ hai bên có thể trả lời mà không cần tài khoản. Nếu bạn đăng nhập bằng Apple hoặc Google, chúng tôi lưu địa chỉ email, tên và liên kết ảnh đại diện mà họ chia sẻ với chúng tôi, cùng phương thức đăng nhập bạn đã dùng, và Apple hoặc Google có thể thấy bạn đã đăng nhập Judge. Nếu bạn đăng nhập bằng liên kết hoặc mã qua email, email đó được gửi qua Resend, và chúng tôi giữ tạm một bản ghi có địa chỉ email của bạn để kiểm tra: nó hết hiệu lực sau 10 phút và bị xóa sau khi dùng hoặc ngay sau khi hết hạn. Nếu bạn đặt mật khẩu, chúng tôi chỉ lưu dạng đã xáo trộn (băm) của nó cùng tài khoản, không bao giờ lưu chính mật khẩu. Chúng tôi cũng lưu bản ghi phiên của bạn (một mã thông báo ngẫu nhiên và thời điểm hết hạn, không có địa chỉ IP hay thông tin trình duyệt, dù các ứng dụng cũng ghi mã định danh thiết bị khi bạn đăng nhập), lượt dùng của bạn, gói của bạn và lịch sử của nó, và phán quyết nào đã dùng một lượt (chỉ ID của phán quyết). Chúng tôi cũng lưu phán quyết và vụ nào là của bạn, để bạn tìm thấy chúng trên mọi thiết bị. Xóa tài khoản ở trang tài khoản (trong ứng dụng và trên trang web) sẽ xóa tài khoản, bản ghi đăng nhập, lượt dùng, gói và sự kiện sử dụng của bạn, và gỡ bỏ các phán quyết cùng phần của bạn trong các vụ như mô tả ở mục Gỡ bỏ. Chúng tôi giữ lại một vài thứ sau khi xóa, được liệt kê ở mục Những gì chúng tôi giữ sau khi gỡ bỏ hoặc xóa. Nếu bạn không đăng nhập được, trang okjudge.com/delete-account giải thích cách yêu cầu chúng tôi qua email. Chúng tôi chỉ giữ dạng đã xáo trộn của địa chỉ email của bạn, để tài khoản mới dùng email đó không nhận thêm một phán quyết miễn phí, và vẫn bị đóng nếu tài khoản của bạn bị đóng vì dưới 18 tuổi. Chúng tôi cũng ghi lại việc bạn đã xác nhận mình từ 18 tuổi trở lên hay chưa, và bằng cách nào (đánh dấu, hoặc tín hiệu tuổi từ điện thoại của bạn; trên Android ứng dụng hỏi Google Play, trên iPhone thì hỏi Apple).",
+    "privacy.removalTitle": "Gỡ bỏ",
+    "privacy.removal":
+      "Hãy yêu cầu gỡ bỏ trên trang phán quyết (khi đã đăng nhập, bạn có thể mở nó từ trang Phán quyết), trên trang vụ với một vụ hai bên, bằng cách xóa tài khoản, hoặc qua email. Gỡ bỏ sẽ xóa văn bản gốc, danh sách tên và tên hiển thị của bạn (trong một vụ hai bên là bản gốc của phần bạn và tên hiển thị của bạn), và liên kết chia sẻ cùng ảnh xem trước sẽ ngừng tải với mọi người. Các bản xem trước đã đăng trong ứng dụng chat do các ứng dụng đó giữ và có thể tiếp tục hiển thị cho đến khi chúng làm mới. Chúng tôi giữ văn bản đã ẩn danh và phán quyết, không có tên, trong hồ sơ của mình; chúng không còn mở được qua liên kết. Xóa tài khoản làm điều này với tất cả phán quyết và phần của bạn trong các vụ, đồng thời xóa thông tin đăng nhập, lượt dùng và gói của bạn. Dữ liệu đã gỡ bỏ vẫn nằm trong bản sao lưu cho đến khi chúng hết hạn (tối đa 14 ngày, xem bên dưới); nếu chúng tôi khôi phục một bản sao lưu, chúng tôi sẽ áp dụng lại mọi lần gỡ bỏ (vì vậy chúng tôi giữ danh sách những gì đã gỡ và khi nào, không có văn bản hay tên). Ba mươi ngày sau khi bạn gỡ bỏ thứ gì đó, chúng tôi cũng xóa văn bản đã ẩn danh và phán quyết, chỉ giữ kết quả và ngày, trừ khi luật yêu cầu chúng tôi giữ lâu hơn. Điều này áp dụng cho những thứ gỡ bỏ từ ngày 14 tháng 11 năm 2026 (UTC) trở đi; các lần gỡ bỏ cũ hơn vẫn giữ văn bản đã ẩn danh. Với một vụ, 30 ngày chỉ bắt đầu tính khi tất cả mọi người trong đó đã gỡ bỏ. Phán quyết và vụ không ai gỡ bỏ được giữ cho đến khi bạn gỡ bỏ hoặc xóa tài khoản. Một phán quyết tạo ra khi chưa đăng nhập, trước khi cần tài khoản, có thể được gỡ bỏ bằng cách gửi email tới {email} kèm liên kết của nó.",
+    "privacy.afterRemovalTitle": "Những gì chúng tôi giữ sau khi gỡ bỏ hoặc xóa",
+    "privacy.afterRemoval":
+      "Sau khi gỡ bỏ, và sau 30 ngày, chúng tôi vẫn giữ:\n- kết quả và điểm số, các cài đặt đã chọn, ngày, ID, và các bên cùng ngôn ngữ của nó, và ID của tài khoản đã bắt đầu một vụ;\n- các đánh giá của bạn. Khi bạn xóa tài khoản, mỗi đánh giá được chuyển sang một ID ngẫu nhiên nên không còn dẫn tới bạn;\n- bản ghi các lựa chọn Giúp cải thiện Judge và việc bạn đồng ý về chi tiết riêng tư (ngày, ngôn ngữ, nền tảng và nội dung bạn đã thấy), trong 6 năm sau khi bạn xóa tài khoản, để chứng minh bạn đã đồng ý gì. Khi bạn xóa tài khoản, các bản ghi này mang một ID ngẫu nhiên và không còn liên kết với tên hay email của bạn;\n- danh sách gỡ bỏ, gồm ID, lý do, ngày và bên của vụ, trong 90 ngày, để áp dụng lại các lần gỡ bỏ sau khi khôi phục sao lưu;\n- dạng đã xáo trộn của email của bạn, để chặn việc lợi dụng lượt miễn phí lặp đi lặp lại (xem Tài khoản);\n- bản ghi thiết bị không có liên kết tới tài khoản của bạn, tối đa 180 ngày;\n- bản sao lưu, tối đa 14 ngày.\nKhi một vụ bị xóa, các dấu vân tay mã hóa và nhãn của những cái tên trong đó được làm trống, nên không được giữ.",
+    "privacy.retentionTitle": "Chúng tôi giữ bao lâu",
+    "privacy.retention":
+      "Chúng tôi giữ phán quyết và bản gốc cho đến khi bạn yêu cầu gỡ bỏ hoặc xóa tài khoản. Để khôi phục sau sự cố, chúng tôi giữ các bản sao lưu của máy chủ và cơ sở dữ liệu tối đa 14 ngày, sau đó xóa. Chúng chứa cùng dữ liệu với máy chủ, kể cả các bản gốc đã mã hóa, và khóa nằm trên cùng máy chủ, nên bản sao lưu được bảo vệ như chính máy chủ, chứ không phải bằng lớp mã hóa đó. Mã băm giới hạn lượt dùng tồn tại tối đa 48 giờ. Sự kiện sử dụng bị xóa sau 90 ngày, và liên kết thiết bị bị xóa sau 180 ngày không dùng. Nhật ký và số liệu tại Grafana Labs được giữ 14 ngày. Báo cáo sự cố tại Sentry được giữ tối đa 30 ngày. Các nhật ký máy chủ khác theo thời hạn lưu giữ tiêu chuẩn của nhà cung cấp lưu trữ của chúng tôi. Mã đăng nhập hết hạn sau 10 phút, và các mã hết hạn bị xóa mỗi ngày. Một phiên kết thúc 30 ngày sau lần bạn dùng gần nhất. Danh sách gỡ bỏ được giữ 90 ngày. Bản ghi các lựa chọn đồng ý của bạn được giữ 6 năm sau khi bạn xóa tài khoản, rồi bị xóa.",
+    "privacy.ipTitle": "Giới hạn lượt dùng",
+    "privacy.ip":
+      "Để tòa luôn mở cửa cho mọi người, chúng tôi giới hạn số phán quyết mỗi tài khoản và số bản dịch mỗi khách truy cập có thể yêu cầu. Với bản dịch, câu trả lời cho một vụ hai bên, việc kiểm tra một phán quyết khi đang được xét, và các lần thử đăng nhập, chúng tôi lưu một mã băm có khóa của địa chỉ IP của bạn, không phải chính địa chỉ đó, tối đa 48 giờ. Giới hạn đăng nhập giữ chính địa chỉ đó trong bộ nhớ máy chủ khoảng một phút, không bao giờ ghi ra ổ đĩa. Nếu bật kiểm tra người thật, địa chỉ IP của bạn cũng được gửi tới Cloudflare cho việc kiểm tra đó. Nó không bao giờ được lưu cùng phán quyết của bạn.",
+    "privacy.processorsTitle": "Ai khác xử lý nội dung của bạn",
+    "privacy.processors":
+      "Văn bản bạn gõ, kể cả tên thật, trước tiên được gửi tới nhà cung cấp AI của chúng tôi ở Hoa Kỳ để bỏ tên đi. Chỉ phiên bản đã ẩn danh được xét; bản gốc của bạn được lưu mã hóa, như mô tả ở trên. Nếu bật kiểm tra người thật, Cloudflare Turnstile chạy trong trình duyệt của bạn và kiểm tra kết quả với Cloudflare. Nếu bạn đăng nhập, Apple hoặc Google (tùy bạn chọn) xử lý việc đăng nhập đó, và email đăng nhập được gửi qua Resend. Việc mua trong ứng dụng đi qua App Store hoặc Google Play và do RevenueCat xử lý, bên này nhận ID tài khoản và lịch sử mua của bạn. Grafana Labs nhận nhật ký máy chủ và số liệu hiệu năng của chúng tôi, lưu ở EU trong 14 ngày; nhật ký không chứa nội dung vụ việc. Báo cáo sự cố và lỗi từ các ứng dụng và trang web này được gửi tới Sentry, lưu ở EU tối đa 30 ngày; chúng gồm lỗi, phiên bản ứng dụng hoặc trình duyệt và mẫu thiết bị, nhưng không có nội dung vụ việc, ID tài khoản hay địa chỉ kết nối. Nhà cung cấp lưu trữ của chúng tôi giữ nhật ký máy chủ tiêu chuẩn. Ứng dụng Android hỏi Google Play về tình trạng tuổi của bạn và ứng dụng iPhone hỏi Apple. Chúng tôi là bên kiểm soát dữ liệu; các nhà cung cấp này xử lý dữ liệu thay mặt chúng tôi.",
+    "privacy.shareTitle": "Liên kết chia sẻ",
+    "privacy.share":
+      "Bất kỳ ai có liên kết tới một phán quyết đều xem được nó, với tên hiển thị bạn đã chọn (hoặc Bên A và Bên B nếu bạn đã tắt tên). Liên kết dùng mã ngẫu nhiên dài, và trang chia sẻ yêu cầu công cụ tìm kiếm không lập chỉ mục. Liên kết và ảnh xem trước của một phán quyết đã gỡ sẽ không tải được nữa; các bản xem trước đã đăng trong ứng dụng nhắn tin có thể vẫn hiện cho đến khi các ứng dụng đó làm mới. Đừng ghi địa chỉ, số điện thoại hay bất cứ điều gì bạn không muốn xuất hiện trên một trang người khác có thể mở.",
+    "privacy.locationTitle": "Dữ liệu của bạn nằm ở đâu",
+    "privacy.location":
+      "Máy chủ của chúng tôi ở Đức (OVH, Frankfurt). Một số xử lý diễn ra ở Hoa Kỳ: nhà cung cấp AI của chúng tôi chạy các mô hình bỏ tên, xét phán quyết, đọc ảnh chụp màn hình và tìm kiếm trên mạng; Cloudflare đứng trước okjudge.com làm proxy và DNS (mọi lưu lượng đều đi qua nó) và chạy việc kiểm tra người thật. Đăng nhập đi qua Apple hoặc Google nếu bạn chọn, và email đăng nhập đi qua Resend. Dữ liệu được xử lý ở nước khác có thể chịu luật của nước đó. Chúng tôi làm việc từ Canada và có thể thấy dữ liệu của bạn từ đó.",
+    "privacy.storageTitle": "Cookie và bộ nhớ trình duyệt",
+    "privacy.storage":
+      "Trang web dùng một cookie đăng nhập (verdict.session_token) giữ bạn đăng nhập, và các cookie ngắn hạn trong lúc bạn đăng nhập bằng Apple hoặc Google (verdict.state tồn tại 5 phút). Cloudflare, bên chạy việc kiểm tra người thật, có thể đặt cookie riêng cho việc đó. Không cái nào dùng để theo dõi. Bộ nhớ cục bộ của trình duyệt lưu ngôn ngữ, giao diện và lựa chọn Trò chơi của bạn; bản nháp chưa gửi trong lúc bạn đăng nhập (kể cả văn bản bạn đã gõ); danh sách các phán quyết và vụ bạn tạo khi chưa đăng nhập; các mã riêng cho phép bạn truy cập bản gốc của mình; những cái tên bạn dùng trong một vụ; mã mời của các vụ bạn được mời trả lời; xác nhận tuổi của bạn; tòa bạn chọn gần nhất; và những ví dụ bạn đã xem. Bộ nhớ phiên giữ địa chỉ email và chế độ trong lúc bạn chờ email đăng nhập, và các cờ sử dụng của tab. Những thứ này nằm trên thiết bị của bạn. Xóa dữ liệu của trang sẽ xóa chúng. Các ứng dụng giữ những thứ tương tự trên thiết bị.",
+    "privacy.notStoredTitle": "Những gì chúng tôi không làm",
+    "privacy.notStored":
+      "Không có công cụ theo dõi quảng cáo. Chúng tôi không bán dữ liệu của bạn và không chia sẻ nó cho quảng cáo. Trang web và ứng dụng không theo dõi bạn qua các trang khác. Cách chúng tôi phản hồi Do Not Track: trang web không gửi sự kiện sử dụng từ trình duyệt của bạn khi trình duyệt gửi Do Not Track hoặc Global Privacy Control, và công tắc Thống kê sử dụng của ứng dụng cũng làm vậy với ứng dụng. Máy chủ của chúng tôi vẫn ghi một vài sự kiện gắn với tài khoản của bạn (đăng nhập, các vụ và phán quyết được tạo hoặc thất bại, việc mua) và thiết bị bạn đã đăng nhập. Chúng tôi không bao giờ dùng văn bản của bạn để huấn luyện bất cứ thứ gì trừ khi bạn đã bật Giúp cải thiện Judge.",
+    "privacy.securityTitle": "Giữ an toàn",
+    "privacy.security":
+      "Bản gốc, danh sách tên, tên hiển thị và mã thông báo đăng nhập Apple được mã hóa. Lưu lượng dùng HTTPS. Khóa mã hóa nằm trên cùng máy chủ với dữ liệu, nên nó không bảo vệ trước người chiếm quyền máy chủ. Nếu có sự cố với thông tin cá nhân của bạn, chúng tôi sẽ báo cho những người bị ảnh hưởng và cơ quan có thẩm quyền khi luật yêu cầu.",
+    "privacy.childrenTitle": "Độ tuổi",
+    "privacy.children":
+      'Judge dành cho người từ 18 tuổi trở lên. Chúng tôi yêu cầu mọi người đăng nhập xác nhận điều đó, người trả lời một vụ không có tài khoản đánh dấu "Tôi từ 18 tuổi trở lên" trước khi gửi, và các ứng dụng có thể dùng tín hiệu tuổi từ điện thoại của bạn. Chúng tôi không cố ý thu thập dữ liệu của bất kỳ ai dưới 18 tuổi. Nếu bạn nghĩ một đứa trẻ có tài khoản, hãy gửi email tới {email} và chúng tôi sẽ đóng tài khoản và xóa dữ liệu.',
+    "privacy.rightsTitle": "Quyền của bạn",
+    "privacy.rights":
+      "Dù bạn sống ở đâu, bạn có thể yêu cầu chúng tôi cho bạn xem những gì chúng tôi đang giữ, sửa nó, gỡ bỏ nó hoặc xóa tài khoản của bạn, ngừng dùng nó cho huấn luyện, và đưa cho bạn một bản sao. Bạn có thể tự làm phần lớn: gỡ bỏ một phán quyết hoặc vụ trên trang của nó, xóa tài khoản ở trang tài khoản, đổi tên hiển thị trên trang của phán quyết hoặc vụ, tải dữ liệu của bạn xuống, và bật hoặc tắt Giúp cải thiện Judge (và, trong ứng dụng, Thống kê sử dụng) trong Cài đặt. Với những việc khác, hãy gửi email tới {email} kèm liên kết của phán quyết hoặc vụ. Chúng tôi có thể yêu cầu bạn viết từ email của tài khoản hoặc xác nhận khi đã đăng nhập. Chúng tôi trả lời trong vòng 30 ngày, hoặc một tháng nếu ngắn hơn. Miễn phí. Bạn sẽ không bị đối xử tệ hơn vì thực hiện quyền của mình. Người yêu cầu thay bạn cần có sự cho phép bằng văn bản của bạn.\nBản sao dữ liệu của bạn là một tệp JSON. Chọn Tải dữ liệu của tôi ở trang tài khoản, trong ứng dụng hoặc trên trang web. Nó gồm tài khoản và các phương thức đăng nhập của bạn, các phán quyết và phần của bạn trong các vụ với văn bản và tên của chính bạn, kết quả, đánh giá của bạn, lịch sử đồng ý, các thiết bị, sự kiện sử dụng và các lần mua. Nó không gồm mã thông báo đăng nhập, mật khẩu của bạn hay email đã xáo trộn, và không có văn bản hay tên của ai khác.\nBạn không bắt buộc phải cung cấp dữ liệu cho chúng tôi, nhưng nếu không có văn bản của bạn và một tài khoản, chúng tôi không thể đưa ra phán quyết.",
+    "privacy.regionEuTitle": "Nếu bạn ở EU hoặc Anh",
+    "privacy.regionEu":
+      "- Bên kiểm soát dữ liệu: xem Chúng tôi là ai.\n- Cơ sở pháp lý: xem Vì sao chúng tôi dùng dữ liệu của bạn.\n- Bạn cũng có thể yêu cầu chúng tôi hạn chế việc sử dụng, phản đối việc sử dụng dựa trên lợi ích hợp pháp của chúng tôi, rút lại sự đồng ý bất cứ lúc nào (không ảnh hưởng tới những gì đã làm trước đó), và khiếu nại với cơ quan bảo vệ dữ liệu của bạn (ở Anh là ICO).\n- Dữ liệu của bạn được xử lý ở Đức, Canada và Hoa Kỳ, như mô tả ở mục Dữ liệu của bạn nằm ở đâu. Hãy gửi email tới {email} nếu bạn muốn biết thêm về cách dữ liệu được chuyển.\n- Quyết định tự động: xem Phán quyết do AI đưa ra.",
+    "privacy.regionUsTitle": "Nếu bạn ở California hoặc một tiểu bang khác của Hoa Kỳ",
+    "privacy.regionUs":
+      '- Trong 12 tháng qua chúng tôi đã thu thập: mã định danh (email, tên, ID tài khoản và thiết bị); văn bản tranh chấp và câu trả lời của bạn; đánh giá và các lựa chọn đồng ý; lịch sử mua; dữ liệu sử dụng và thiết bị (quốc gia, mẫu thiết bị, phiên bản ứng dụng); xác nhận tuổi; và thông tin nhạy cảm (thông tin đăng nhập tài khoản, và bất kỳ chi tiết về sức khỏe hoặc tương tự trong văn bản của bạn). Nguồn: bạn, đăng nhập và cửa hàng trên điện thoại của bạn, và các ứng dụng của chúng tôi. Mục đích: xem Vì sao chúng tôi dùng dữ liệu của bạn. Bên nhận: các nhóm ở mục Ai khác xử lý nội dung của bạn.\n- Chúng tôi không bán hay chia sẻ thông tin cá nhân cho quảng cáo, và đã không làm vậy trong 12 tháng qua. Chúng tôi không lập hồ sơ về bạn. Chúng tôi chỉ dùng thông tin nhạy cảm để cung cấp dịch vụ cho bạn, nên không có gì để hạn chế hay từ chối.\n- Quyền: biết, truy cập, sửa, xóa, và một bản sao có thể chuyển. Bạn có thể dùng người đại diện được ủy quyền. Chúng tôi trả lời trong vòng 30 ngày, hoặc một tháng nếu ngắn hơn. Để kháng nghị khi bị từ chối, hãy gửi email tới {email} với nội dung "Appeal". Chúng tôi quyết định kháng nghị trong vòng 45 ngày. Nếu chúng tôi bác bỏ, bạn có thể liên hệ Tổng chưởng lý tiểu bang của bạn.\n- Lưu giữ: xem Chúng tôi giữ bao lâu và Những gì chúng tôi giữ sau khi gỡ bỏ hoặc xóa.\n- Do Not Track: xem Những gì chúng tôi không làm. Không có công ty quảng cáo hay theo dõi nào thu thập dữ liệu trên các trang của chúng tôi. Cloudflare chạy việc kiểm tra người thật và thấy kết nối của bạn cho mục đích đó.\n- Không ai dưới 18 tuổi được dùng Judge, nên chúng tôi không bán hay chia sẻ dữ liệu của bất kỳ ai dưới 16 tuổi. Quyền ở các tiểu bang khác là cùng một danh sách.',
+    "privacy.regionCaTitle": "Nếu bạn ở Canada hoặc Quebec",
+    "privacy.regionCa":
+      "Judge được vận hành từ Canada và xử lý thông tin cá nhân theo PIPEDA: chúng tôi chỉ thu thập những gì dịch vụ cần, chỉ dùng cho mục đích đó, bảo vệ nó, và bạn có thể yêu cầu xem, sửa hoặc gỡ bỏ những gì chúng tôi giữ về bạn. Chúng tôi trả lời trong vòng 30 ngày. Bạn có thể khiếu nại với Văn phòng Ủy viên Bảo vệ Quyền riêng tư của Canada (priv.gc.ca). Nếu bạn ở Quebec:\n- Người chịu trách nhiệm về thông tin cá nhân là Aytu Tuna, chủ sở hữu, tại {email}.\n- Một số dữ liệu được gửi ra ngoài Quebec: tới máy chủ của chúng tôi ở Đức, nhà cung cấp AI và các nhà cung cấp khác ở Hoa Kỳ, và tới Canada ngoài Quebec.\n- Judge chỉ ghi quốc gia của kết nối để thống kê sử dụng, và không theo dõi vị trí chính xác của bạn. Phán quyết xét lập luận bạn mô tả và không được dùng để lập hồ sơ về bạn. Thống kê sử dụng gắn với tài khoản của bạn như mô tả ở mục Chúng tôi lưu gì.\n- Giúp cải thiện Judge tắt cho tới khi bạn bật, và bạn có thể tắt bất cứ lúc nào.\n- Bạn cũng có thể yêu cầu rút lại sự đồng ý, nhận dữ liệu của bạn ở định dạng thông dụng, và khiếu nại với Commission d'accès à l'information.",
+    "privacy.regionBrTitle": "Nếu bạn ở Brazil",
+    "privacy.regionBr":
+      "Bên kiểm soát và liên hệ: xem Chúng tôi là ai. {email} cũng là kênh cho các yêu cầu theo LGPD. Chúng tôi là bên kiểm soát; các nhà cung cấp ở mục Ai khác xử lý nội dung của bạn hành động thay mặt chúng tôi. Cơ sở pháp lý: xem Vì sao chúng tôi dùng dữ liệu của bạn. Bạn có thể yêu cầu chúng tôi xác nhận rằng chúng tôi xử lý dữ liệu của bạn; cho bạn truy cập; sửa nó; ẩn danh, chặn hoặc xóa dữ liệu thừa hoặc trái luật; cung cấp khả năng chuyển dữ liệu; xóa dữ liệu chúng tôi dùng dựa trên sự đồng ý của bạn; cho bạn biết chúng tôi đã chia sẻ với ai; cho bạn biết về lựa chọn từ chối đồng ý và hệ quả của nó; và rút lại sự đồng ý. Miễn phí. Bạn cũng có thể khiếu nại với ANPD. Dữ liệu của bạn được gửi ra nước ngoài như mô tả ở mục Dữ liệu của bạn nằm ở đâu.",
+    "privacy.changesTitle": "Thay đổi",
+    "privacy.changes":
+      "Nếu chúng tôi thay đổi chính sách này theo cách quan trọng, chúng tôi cập nhật ngày ở đầu trang này. Chúng tôi không bao giờ dùng dữ liệu bạn đã cung cấp theo chính sách cũ cho một mục đích mới mà không hỏi bạn trước. Chúng tôi xem xét lại ít nhất mỗi năm một lần.",
+    "privacy.contactTitle": "Liên hệ",
+    "privacy.contact":
+      "Có câu hỏi, hoặc muốn xem, sửa hay gỡ bỏ dữ liệu của bạn? Gửi email tới {email} kèm liên kết tới phán quyết hoặc vụ.",
     "nav.signIn": "Đăng nhập",
     "nav.account": "Tài khoản",
     "nav.pricing": "Bảng giá",
@@ -306,16 +369,14 @@ const vi: Locale = {
     "account.export": "Tải dữ liệu của tôi",
     "account.exportHint": "Nhận một tệp JSON chứa mọi thứ Judge lưu về bạn.",
     "account.exportBusy": "Đang chuẩn bị tệp của bạn…",
-    "account.exportFailed":
-      "Hiện chưa chuẩn bị được dữ liệu của bạn. Bạn thử lại nhé?",
+    "account.exportFailed": "Hiện chưa chuẩn bị được dữ liệu của bạn. Bạn thử lại nhé?",
     "deletePage.title": "Xóa tài khoản Judge của bạn",
     "deletePage.lead":
       "Judge là ứng dụng của Aytu Tuna. Bạn có thể tự xóa tài khoản và dữ liệu của nó bất cứ lúc nào, trong ứng dụng hoặc trên trang web.",
     "deletePage.appTitle": "Trong ứng dụng",
     "deletePage.app": "Mở Judge, vào Tài khoản, chạm Xóa tài khoản và xác nhận.",
     "deletePage.webTitle": "Trên trang web",
-    "deletePage.web":
-      "Đăng nhập tại okjudge.com, mở Tài khoản, chọn Xóa tài khoản và xác nhận.",
+    "deletePage.web": "Đăng nhập tại okjudge.com, mở Tài khoản, chọn Xóa tài khoản và xác nhận.",
     "deletePage.removedTitle": "Những gì bị xóa",
     "deletePage.removed":
       "Tài khoản, bản ghi đăng nhập, tín dụng, gói và sự kiện sử dụng của bạn bị xóa. Phán quyết và phía của bạn trong các vụ việc bị gỡ: văn bản gốc và tên bị xóa ngay, văn bản đã ẩn danh và phán quyết bị xóa sau 30 ngày.",
@@ -342,18 +403,19 @@ const vi: Locale = {
     "clarify.back": "Sửa nội dung",
     "thinking.factcheck": "Đang kiểm chứng sự thật trên mạng…",
     "thinking.factcheckDone": "Đã kiểm chứng xong trên mạng.",
-    "thinking.premiumHelper":
-      "Kiểm chứng sự thật trên mạng mất thêm chút thời gian. Chờ một hai phút nhé.",
+    "thinking.premiumHelper": "Kiểm chứng sự thật trên mạng mất thêm chút thời gian. Chờ một hai phút nhé.",
     "panel.premium": "Đã phân xử kèm kiểm chứng trên mạng.",
     "factcheck.title": "Đã kiểm chứng trên mạng",
-    "factcheck.lead": "Giám khảo đã xem các kết quả tìm kiếm này trước khi phân xử. Đây là bằng chứng, không phải bản thân phán quyết.",
+    "factcheck.lead":
+      "Giám khảo đã xem các kết quả tìm kiếm này trước khi phân xử. Đây là bằng chứng, không phải bản thân phán quyết.",
     "factcheck.status.supported": "Đúng",
     "factcheck.status.refuted": "Không đúng",
     "factcheck.status.mixed": "Đúng một phần",
     "factcheck.status.unverified": "Chưa xác nhận được",
     "factcheck.sources": "Nguồn",
     "factcheck.sourceAria": "{title}, mở trong thẻ mới",
-    "factcheck.none": "Không có gì để tra trên mạng: vụ này xoay quanh giá trị hoặc cách hiểu từ ngữ, không phải sự thật.",
+    "factcheck.none":
+      "Không có gì để tra trên mạng: vụ này xoay quanh giá trị hoặc cách hiểu từ ngữ, không phải sự thật.",
     "factcheck.noneFactual":
       "Không có gì ở đây kiểm chứng được trên mạng: các sự thật trong vụ này chỉ những người trong cuộc mới biết.",
     "factcheck.unavailable": "Lần này việc kiểm chứng trên mạng chưa xong, nên giám khảo đã phân xử mà không có nó.",
@@ -365,7 +427,8 @@ const vi: Locale = {
     "signin.emailLabel": "Địa chỉ email",
     "signin.emailPlaceholder": "ban@vidu.com",
     "signin.emailSubmit": "Gửi liên kết đăng nhập qua email",
-    "signin.emailSent": "Kiểm tra hộp thư nhé. Chúng tôi đã gửi liên kết đăng nhập tới {email}. Liên kết có hiệu lực trong 10 phút.",
+    "signin.emailSent":
+      "Kiểm tra hộp thư nhé. Chúng tôi đã gửi liên kết đăng nhập tới {email}. Liên kết có hiệu lực trong 10 phút.",
     "signin.emailInvalid": "Địa chỉ email này có vẻ không đúng.",
     "signin.codeRequest": "Gửi mã qua email",
     "signin.codeSent": "Chúng tôi đã gửi mã tới {email}. Mã có hiệu lực trong 10 phút.",
@@ -457,14 +520,16 @@ const vi: Locale = {
     "error.case_closed": "Vụ này không nhận thêm nữa.",
     "error.case_expired": "Lời mời này đã hết hạn.",
     "error.appeal_used": "Bạn đã bổ sung thông tin cho vụ này rồi.",
-    "error.appeal_limit": "Bạn đã bổ sung thông tin cho phán quyết này hai lần. Mỗi phán quyết chỉ được bổ sung tối đa hai lần.",
+    "error.appeal_limit":
+      "Bạn đã bổ sung thông tin cho phán quyết này hai lần. Mỗi phán quyết chỉ được bổ sung tối đa hai lần.",
     "error.not_party": "Chỉ những người trong vụ này mới làm được việc đó.",
     "error.own_case": "Đây là lời mời của chính bạn. Hãy gửi liên kết cho người kia.",
     "error.too_large": "Ảnh quá lớn. Thử ảnh nhỏ hơn nhé.",
     "error.unsupported_media": "Chúng tôi chỉ đọc được ảnh PNG, JPEG, WebP hoặc GIF.",
     "error.too_many_files": "Số ảnh vượt quá mức cho phép ở đây.",
     "error.evidence_invalid": "Một ảnh của bạn đã hết hạn hoặc không kiểm tra được. Gỡ ảnh đó ra rồi thêm lại nhé.",
-    "error.anonymize_failed": "Chưa bỏ được tên khỏi nội dung của bạn. Thử lại, hoặc viết chữ cái đầu thay cho tên đầy đủ.",
+    "error.anonymize_failed":
+      "Chưa bỏ được tên khỏi nội dung của bạn. Thử lại, hoặc viết chữ cái đầu thay cho tên đầy đủ.",
     "mode.label": "Phân xử theo cách nào?",
     "mode.now": "Chỉ mình tôi (có ngay)",
     "mode.both": "Cả hai bên (gửi liên kết)",
@@ -493,7 +558,8 @@ const vi: Locale = {
     "case.invite.resetYes": "Có, tạo liên kết mới",
     "case.invite.resetDone": "Đã tắt liên kết cũ. Hãy gửi liên kết mới.",
     "case.judgeNow": "Chỉ phân xử phần của tôi",
-    "case.judgeNow.confirm": "Nhận phán quyết một phía ngay bây giờ? Lời mời sẽ đóng và người kia không trả lời được nữa.",
+    "case.judgeNow.confirm":
+      "Nhận phán quyết một phía ngay bây giờ? Lời mời sẽ đóng và người kia không trả lời được nữa.",
     "case.judgeNow.yes": "Có, phân xử ngay",
     "case.judgeExpired.confirm": "Nhận phán quyết chỉ dựa trên lời kể của bạn? Việc này dùng 1 lượt.",
     "case.judgeExpired.yes": "Có, dùng 1 lượt",
@@ -502,7 +568,8 @@ const vi: Locale = {
     "case.side.opened": "Đã mở",
     "case.side.typing": "Đang nhập…",
     "case.judgeAnswered": "Phân xử theo các phía đã trả lời",
-    "case.judgeAnswered.confirm": "Nhận phán quyết theo các phía đã trả lời? Các lời mời còn lại sẽ đóng và những người đó không trả lời được nữa.",
+    "case.judgeAnswered.confirm":
+      "Nhận phán quyết theo các phía đã trả lời? Các lời mời còn lại sẽ đóng và những người đó không trả lời được nữa.",
     "case.cancel": "Hủy",
     "case.retry": "Thử lại",
     "case.failedBody": "Lượt của bạn đã được hoàn lại. Bạn có thể thử lại ngay.",
@@ -524,7 +591,8 @@ const vi: Locale = {
     "case.judgingAlone": "Ban giám khảo đang xem lời kể của bạn.",
     "case.expiredBody":
       "Không ai trả lời trong 7 ngày nên lượt của bạn đã được hoàn lại. Bạn vẫn có thể nhận phán quyết chỉ dựa trên lời kể của bạn.",
-    "case.expiredBodyFree": "Không ai trả lời trong 7 ngày. Bạn vẫn có thể nhận phán quyết chỉ dựa trên lời kể của bạn.",
+    "case.expiredBodyFree":
+      "Không ai trả lời trong 7 ngày. Bạn vẫn có thể nhận phán quyết chỉ dựa trên lời kể của bạn.",
     "case.oneSided": "Chỉ phân xử dựa trên lời kể của bạn.",
     "case.startOver": "Bắt đầu vụ mới",
     "case.list.untitled": "Vụ ngày {date}",
@@ -540,14 +608,12 @@ const vi: Locale = {
     "respond.submit": "Gửi lời kể",
     "case.write.title": "Phía bạn",
     "case.write.placeholder": "Có chuyện gì vậy?",
-    "case.write.lead":
-      "Hãy viết phía của bạn khi sẵn sàng. Ban giám khảo bắt đầu khi cả hai đã viết.",
+    "case.write.lead": "Hãy viết phía của bạn khi sẵn sàng. Ban giám khảo bắt đầu khi cả hai đã viết.",
     "case.write.leadAnswered": "Họ đã viết phía của họ. Viết phía của bạn để nhận phán quyết.",
     "case.write.submit": "Gửi phía của tôi",
     "case.write.emailSubject": "Bên kia đã viết phần của họ",
     "respond.sent": "Cảm ơn bạn. Lời kể của bạn đã được gửi và ban giám khảo đang xử.",
-    "respond.sentWaiting":
-      "Cảm ơn bạn. Lời kể của bạn đã được gửi. Ban giám khảo bắt đầu khi người kia viết xong.",
+    "respond.sentWaiting": "Cảm ơn bạn. Lời kể của bạn đã được gửi. Ban giám khảo bắt đầu khi người kia viết xong.",
     "respond.ownInvite": "Đây là liên kết mời của chính bạn. Hãy gửi nó cho người kia.",
     "respond.expired": "Lời mời này đã hết hạn.",
     "respond.closed": "Vụ này không nhận câu trả lời nữa.",
@@ -612,9 +678,9 @@ const vi: Locale = {
     "home.says": "{name} nói:",
     "home.mySide": "Phía tôi:",
     "home.otherSide": "Phía bên kia:",
-    "appeal.lead":
-      "Dùng 1 lượt.",
-    "appeal.placeholder": "Ban giám khảo đã bỏ sót điều gì? Một sự thật, một tin nhắn hoặc điều hai bên đã thật sự thỏa thuận.",
+    "appeal.lead": "Dùng 1 lượt.",
+    "appeal.placeholder":
+      "Ban giám khảo đã bỏ sót điều gì? Một sự thật, một tin nhắn hoặc điều hai bên đã thật sự thỏa thuận.",
     "appeal.submit": "Xét lại với thông tin của tôi",
     "appeal.sending": "Đang ẩn tên trong thông tin bổ sung…",
     "appeal.judging": "Ban giám khảo đang xem lại toàn bộ…",
@@ -646,7 +712,8 @@ const vi: Locale = {
     "about.casesTitle": "Nghe cả hai bên",
     "about.cases1":
       "Vụ hai bên: đăng nhập, viết phần của bạn và gửi một liên kết riêng. Người kia viết phần của họ mà không thấy lời của bạn, và ban giám khảo cân nhắc cả hai lời kể: điều hai bên đồng ý, điều họ tranh cãi, và bằng chứng nào sẽ thay đổi phán quyết.",
-    "about.cases2": "Nếu không ai trả lời trong 7 ngày, liên kết sẽ ngừng hoạt động. Bạn vẫn có thể nhận phán quyết chỉ dựa trên lời kể của bạn.",
+    "about.cases2":
+      "Nếu không ai trả lời trong 7 ngày, liên kết sẽ ngừng hoạt động. Bạn vẫn có thể nhận phán quyết chỉ dựa trên lời kể của bạn.",
     "about.premiumTitle": "Tính năng thêm",
     "about.premium2":
       "Bằng chứng: thêm ảnh chụp màn hình đoạn chat hoặc tài liệu. Chúng tôi đọc chữ trong đó, ẩn tên rồi bỏ ảnh đi.",
@@ -654,12 +721,6 @@ const vi: Locale = {
       "Xét lại: sau phán quyết, mỗi người có thể bổ sung thông tin một lần. Ban giám khảo xem lại toàn bộ và cho biết phán quyết được giữ nguyên, bị đảo ngược hay thay đổi. Các phán quyết trước vẫn xem được.",
     "about.premium4":
       "Một vụ hai bên dùng 1 lượt. Lượt được giữ lại khi bạn gửi liên kết và hoàn lại nếu không ai trả lời trong 7 ngày.",
-    "privacy.casesTitle": "Vụ hai bên và xét lại",
-    "privacy.cases":
-      "Trong một vụ hai bên, lời kể của mỗi bên được ẩn danh ngay khi gửi, giống như một phán quyết thông thường. Giám khảo đọc văn bản đã ẩn danh; lời kể của mỗi người đúng như họ viết, cùng danh sách tên, được lưu ở dạng mã hóa và chỉ người đó xem được. Khi gửi lời kể của mình, mỗi người tự nhập tên muốn hiển thị trên trang chia sẻ; nếu để trống, tên hiển thị là Bên A hoặc Bên B. Người kia không cần tài khoản; câu trả lời của họ bị giới hạn lượt bằng một mã băm có khóa của địa chỉ IP. Liên kết mời chỉ được lưu dưới dạng mã băm. Nếu người kia trả lời khi đã đăng nhập, tài khoản của họ được gắn với lời kể của họ, để sau này chỉ họ mới bổ sung thông tin hoặc xem được bản gốc của mình; nếu họ trả lời khi chưa đăng nhập, một mã riêng lưu trong trình duyệt của họ làm việc tương tự, và nếu sau này đăng nhập trên chính trình duyệt đó, họ có thể lưu vụ vào tài khoản của mình. Để cùng một người mang cùng một nhãn trong cả hai lời kể, máy chủ lưu dấu vân tay dạng mã của các tên trong từng vụ (mã băm có khóa, không phải bản thân các tên). Trước khi có phán quyết, không bên nào đọc được lời của bên kia; sau một phán quyết hai bên, cả hai người đều đọc được cả hai lời kể đã ẩn danh. Thông tin bổ sung sau phán quyết (xét lại) được xử lý theo cách tương tự. Khi người kia trả lời, chúng tôi có thể gửi bạn một email ngắn không chứa nội dung nào của vụ, nếu email đã được thiết lập. Mỗi người đều có thể gỡ phần của mình: bản gốc và tên hiển thị của họ bị xóa, và các liên kết chia sẻ của vụ ngừng hoạt động với mọi người. Xóa tài khoản sẽ làm điều này cho mọi vụ bạn đã bắt đầu hoặc đã trả lời.",
-    "privacy.evidenceTitle": "Ảnh chụp màn hình",
-    "privacy.evidence":
-      "Trình duyệt của bạn thu nhỏ ảnh lớn trước khi tải lên. Sau đó mỗi ảnh được gửi tới một dịch vụ AI bên ngoài một lần để đọc phần chữ hiển thị; chúng tôi không bao giờ lưu ảnh. Bản chép thô, vẫn có thể chứa tên, được trả về cho bạn trong một mã có chữ ký mà trình duyệt của bạn giữ tối đa 6 giờ. Khi bạn gửi lời kể của mình, bản chép được ẩn danh cùng với nội dung của bạn: bản chép đã ẩn danh được hiển thị cho giám khảo và lưu cùng vụ, còn bản chép thô được lưu ở dạng mã hóa cùng bản gốc của bạn, nơi chỉ bạn xem được. Số điện thoại, địa chỉ email, tên tài khoản mạng xã hội và số tài khoản trong đó cũng được thay bằng ký hiệu giữ chỗ trong bản giám khảo đọc.",
     "pricing.premium.f5": "Bằng chứng ảnh chụp màn hình, đọc xong là bỏ, không tốn thêm",
     "pricing.premium.f6": "Bổ sung thông tin sau phán quyết để được xét lại (1 lượt)",
     "pricing.premium.f7": "Nghe cả hai bên: gửi người kia một liên kết riêng để họ kể phần của mình",
@@ -779,21 +840,6 @@ const vi: Locale = {
     "stamp.dissolved": "Lệch nghĩa",
     "bestPoint.of": "Điểm mạnh nhất của {name}",
     "bestPoint.self": "Điểm mạnh nhất của bạn",
-    "privacy.accessTitle": "Ai xem được gì",
-    "privacy.access":
-      "Bạn: bản gốc và các tên của bạn, trên mọi thiết bị khi bạn đã đăng nhập, hoặc trên thiết bị bạn đã dùng nhờ một mã riêng lưu trong trình duyệt hoặc ứng dụng (chúng tôi chỉ giữ dạng đã xáo trộn của mã đó). Các phán quyết tạo khi chưa đăng nhập, từ hồi chưa cần tài khoản, và các vụ bạn trả lời khi chưa đăng nhập vẫn được liệt kê trong trình duyệt đó kèm tiêu đề và các tên đúng như bạn viết, để mục Phán quyết hiển thị được: bất kỳ ai dùng cùng trình duyệt đều thấy danh sách này. Trên máy tính dùng chung, hãy đăng nhập hoặc dùng cửa sổ ẩn danh; xóa dữ liệu của trang trong trình duyệt sẽ xóa danh sách. Trong một vụ hai bên, mỗi người chỉ thấy bản gốc của mình; sau phán quyết, cả hai thấy cả hai lời kể đã ẩn danh, đúng như giám khảo đã đọc. Ban giám khảo (các mô hình AI do nhà cung cấp AI của chúng tôi vận hành): chỉ bản ẩn danh. Bất kỳ ai có liên kết chia sẻ: phán quyết kèm tên hiển thị. Mặc định đó là tên bạn chọn cho mình và tên gọi của những người khác đúng như bạn đã viết; bạn có thể đổi hoặc tắt tên bất cứ lúc nào, khi đó trang sẽ hiển thị Bên A và Bên B. Chúng tôi: có thể giải mã bản gốc bằng khóa, và chỉ xem văn bản đã lưu để xử lý yêu cầu hỗ trợ từ bạn, điều tra hành vi lạm dụng, hoặc khi pháp luật yêu cầu.",
-    "privacy.removalTitle": "Gỡ bỏ",
-    "privacy.removal":
-      "Bạn có thể yêu cầu gỡ bỏ ở trang phán quyết (khi đã đăng nhập, bạn mở được trang này từ mục Phán quyết), ở trang của vụ đối với vụ hai bên, bằng cách xóa tài khoản, hoặc qua email. Gỡ bỏ sẽ xóa bản gốc, danh sách tên và tên hiển thị (trong vụ hai bên là bản gốc và tên hiển thị trong phần của bạn), và liên kết chia sẻ cùng ảnh xem trước sẽ không tải được nữa với mọi người. Các bản xem trước đã đăng trong ứng dụng nhắn tin do chính các ứng dụng đó lưu giữ và có thể vẫn hiện cho đến khi chúng làm mới. Chúng tôi giữ văn bản ẩn danh và phán quyết, không kèm tên, trong hồ sơ của mình; chúng không còn mở được qua liên kết. Xóa tài khoản sẽ làm điều này cho tất cả phán quyết và phần của bạn trong các vụ, đồng thời xóa thông tin đăng nhập, lượt và gói của bạn. Dữ liệu đã gỡ vẫn còn trong các bản sao lưu cho đến khi chúng hết hạn (tối đa 14 ngày, xem bên dưới); nếu có lúc phải khôi phục một bản sao lưu, chúng tôi sẽ áp dụng lại mọi lần gỡ bỏ (vì thế chúng tôi giữ một danh sách những gì đã gỡ và thời điểm gỡ, không kèm văn bản hay tên). Ba mươi ngày sau khi bạn gỡ bỏ thứ gì đó, chúng tôi cũng xóa văn bản đã ẩn danh và phán quyết, chỉ giữ lại kết quả và các mốc ngày, trừ khi luật yêu cầu chúng tôi giữ lâu hơn. Với một vụ việc, ba mươi ngày chỉ bắt đầu tính khi tất cả mọi người trong đó đã xóa nó.",
-    "privacy.retentionTitle": "Chúng tôi giữ bao lâu",
-    "privacy.retention":
-      "Chúng tôi giữ phán quyết và bản gốc cho đến khi bạn yêu cầu gỡ bỏ hoặc xóa tài khoản. Để khôi phục khi có sự cố, chúng tôi giữ bản sao lưu của máy chủ và cơ sở dữ liệu tối đa 14 ngày, sau đó chúng bị xóa. Các bản sao lưu chứa cùng dữ liệu như trên máy chủ, kể cả bản gốc đã mã hóa, và khóa nằm trên cùng máy chủ, nên các bản sao lưu được bảo vệ giống như chính máy chủ, chứ không phải nhờ lớp mã hóa đó. Mã băm giới hạn lượt dùng tồn tại tối đa 24 giờ. Nhật ký máy chủ được lưu theo thời hạn tiêu chuẩn của nhà cung cấp dịch vụ lưu trữ. Sự kiện sử dụng bị xóa sau 90 ngày, còn liên kết thiết bị bị xóa sau 180 ngày không dùng. Nhật ký và số đo gửi cho Grafana Labs được giữ 14 ngày.",
-    "privacy.locationTitle": "Dữ liệu của bạn nằm ở đâu",
-    "privacy.location":
-      "Máy chủ của chúng tôi đặt tại Đức (OVH, Frankfurt). Một phần việc xử lý diễn ra tại Hoa Kỳ: nhà cung cấp AI của chúng tôi vận hành các mô hình bỏ tên, phân xử, đọc ảnh chụp màn hình và tìm kiếm trên mạng; Cloudflare đứng trước okjudge.com làm proxy và DNS (mọi lưu lượng đều đi qua đó) và chạy bước kiểm tra người thật. Đăng nhập đi qua Apple hoặc Google nếu bạn chọn chúng, và email đăng nhập đi qua Resend. Dữ liệu được xử lý ở quốc gia khác có thể chịu sự điều chỉnh của luật pháp nước đó.",
-    "privacy.rightsTitle": "Quyền của bạn (Canada)",
-    "privacy.rights":
-      "Judge được vận hành từ Canada và xử lý thông tin cá nhân theo luật quyền riêng tư liên bang của Canada (PIPEDA): chúng tôi chỉ thu thập những gì dịch vụ cần, chỉ dùng cho mục đích đó, bảo vệ dữ liệu, và bạn có thể yêu cầu xem, sửa hoặc gỡ bỏ những gì chúng tôi lưu về bạn. Chúng tôi phản hồi trong vòng 30 ngày.",
     "footer.terms": "Điều khoản",
     "signin.legalTerms": "Điều khoản sử dụng",
     "age.confirm": "Tôi từ 18 tuổi trở lên",

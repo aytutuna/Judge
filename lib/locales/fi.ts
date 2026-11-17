@@ -109,14 +109,18 @@ const fi: Locale = {
     "vote.dissolved": "sanasekaannus",
     refusedNote: "Tekoäly jätti tämän väliin. Mieluummin ei mitään kuin keksitty tuomio.",
     demoNote: "🎭 Demotila: tekoälyavainta ei ole määritetty, joten tämä on esimerkkituomio",
-    "trial.survived": "🛡️ Vastaväite hylättiin: vastapuolen asianajaja esitti vahvimman vastaväitteensä, ja tuomio kesti. Varmuus pysyy ennallaan.",
-    "trial.uncertain": "⚠️ Vastapuolen asianajaja esitti vastaväitteen, ja se jätti aiheellisen epäilyksen tästä tuomiosta",
-    "trial.overturned": "⚠️ Vastaväite hyväksyttiin: tuomio pysyy voimassa, mutta vastapuolen vahvin vastaväite heikentää sitä vakavasti",
+    "trial.survived":
+      "🛡️ Vastaväite hylättiin: vastapuolen asianajaja esitti vahvimman vastaväitteensä, ja tuomio kesti. Varmuus pysyy ennallaan.",
+    "trial.uncertain":
+      "⚠️ Vastapuolen asianajaja esitti vastaväitteen, ja se jätti aiheellisen epäilyksen tästä tuomiosta",
+    "trial.overturned":
+      "⚠️ Vastaväite hyväksyttiin: tuomio pysyy voimassa, mutta vastapuolen vahvin vastaväite heikentää sitä vakavasti",
     "trial.minor": "🛡️ Vastapuolen asianajaja huomautti aiheellisesta asiasta, mutta tuomio pysyy voimassa",
     "trial.whatWasTested": "Vastaväite",
     "trial.attackPrefix": "Vastaväite:",
     "trial.refereePrefix": "Miksi:",
-    "trial.mixedNote": "Tämä on sekariita: osin tosiasioita, osin arvoja tai sanojen merkityksiä, joten selvää voittoa on vaikeampi puolustaa.",
+    "trial.mixedNote":
+      "Tämä on sekariita: osin tosiasioita, osin arvoja tai sanojen merkityksiä, joten selvää voittoa on vaikeampi puolustaa.",
     confidence: "Varmuus {n}/{total}",
     verdictAria: "Tuomio: {label}",
     "party.a": "Osapuoli A",
@@ -129,7 +133,8 @@ const fi: Locale = {
     "shared.cta": "Ratkaise oma kiistasi →",
     errorFallback: "Jokin meni pieleen. Yritä uudelleen.",
     "error.not_configured": "Tuomaria ei ole vielä otettu käyttöön. Yritä myöhemmin uudelleen.",
-    "error.quota": "Tuomarit ovat käyttäneet tekoälykiintiönsä toistaiseksi loppuun. Yritä uudelleen muutaman minuutin päästä.",
+    "error.quota":
+      "Tuomarit ovat käyttäneet tekoälykiintiönsä toistaiseksi loppuun. Yritä uudelleen muutaman minuutin päästä.",
     "error.unavailable": "Emme saa juuri nyt yhteyttä tuomareihin. Odota hetki ja yritä uudelleen.",
     "error.too_short": "Vähän niukasti. Kerro kiistasta lisää.",
     "error.too_long": "Olipa paljon! Mahduta teksti alle 6 000 merkkiin.",
@@ -144,9 +149,9 @@ const fi: Locale = {
     "wait.hour": "1 tunnin",
     "wait.hours": "{n} tunnin",
     "refused.headline": "Tekoäly ei halunnut ottaa tähän kantaa",
-    "refused.crux":
-      "Tekoälyn turvasuodatin esti sitä ratkaisemasta tätä. Parempi ei tuomiota lainkaan kuin keksitty.",
-    "refused.bestPoint": "Kokeile muotoilla asia toisin. Tai hyväksy, että jotkin riidat ovat liian isoja sovellukselle.",
+    "refused.crux": "Tekoälyn turvasuodatin esti sitä ratkaisemasta tätä. Parempi ei tuomiota lainkaan kuin keksitty.",
+    "refused.bestPoint":
+      "Kokeile muotoilla asia toisin. Tai hyväksy, että jotkin riidat ovat liian isoja sovellukselle.",
     "refused.claim": "Ohitettu",
     "nav.skip": "Siirry sisältöön",
     "nav.home": "Judgen etusivu",
@@ -249,33 +254,96 @@ const fi: Locale = {
     "privacy.kicker": "Tietosi",
     "privacy.lead":
       "Lyhyesti: säilytämme kirjoittamasi, nimet mukaan lukien, salattuna, jotta voit palata siihen. Tuomarit lukevat aina vain version, josta nimet on poistettu. Voit pyytää poistoa milloin tahansa. Emme myy tietojasi. Jos Judge joskus myydään tai yhdistetään toiseen yhtiöön, se siirtyy uudelle omistajalle tämän käytännön mukaisesti.",
+    "privacy.whoTitle": "Keitä me olemme",
+    "privacy.who":
+      "Judgea ylläpitää Aytu Tuna, yksityishenkilö Kanadassa.\n{address}\nPäätämme, mitä kerätään ja miksi. Henkilötiedoista vastaa Aytu Tuna, omistaja. Yhteystiedot: {email}.",
     "privacy.storedTitle": "Mitä säilytämme",
     "privacy.stored":
-      "Jokaisesta tuomiosta säilytämme tekstisi täsmälleen sellaisena kuin kirjoitit sen (mukana vastauksesi tuomareiden kysymyksiin ja kuvakaappauksista luettu teksti) sekä listan siitä, mikä nimi vaihtui miksikin merkinnäksi. Nämä salataan avaimella, jota ei säilytetä tietokannassa. Säilytämme myös anonymisoidun version, jonka tuomarit lukevat (nimet vaihdettuina muotoon Osapuoli A ja Osapuoli B), valitsemasi asetukset, tuomion, mahdollisen käännöksen ja nimet, jotka valitset näytettäviksi jakosivulla. Laskemme myös, miten Judgea käytetään: mitä näkymiä ja toimintoja, sovelluksen versio, laitemalli, järjestelmäversio, kieli ja yhteytesi maa sekä sovelluksissa laitetunniste. Kun olet kirjautuneena, tiedot liitetään tiliisi. Käyttötapahtumat säilytetään 90 päivää ja tilisi ja laitteidesi väliset linkit 180 päivää. Sovelluksissa on Asetuksissa Käyttötilastot-kytkin, eikä verkkosivusto lähetä mitään, kun selaimesi lähettää Do Not Track- tai Global Privacy Control -signaalin. Mukana ei koskaan ole juttujen tekstiä. Jos arvioit tuomion, säilytämme arvion sen mukana.",
+      "Jokaisesta tuomiosta säilytämme tekstisi täsmälleen sellaisena kuin sen kirjoitit (mukaan lukien vastauksesi tuomareiden kysymyksiin ja kuvakaappauksista luettu teksti) sekä luettelon siitä, mikä nimi muuttui miksikin tunnisteeksi. Ne salataan avaimella, jota ei säilytetä tietokannassa. Säilytämme myös anonymisoidun version, jonka tuomarit lukevat (nimet korvattu sanoilla Osapuoli A ja Osapuoli B), valitsemasi asetukset, tuomion, mahdolliset käännökset ja nimet, jotka päätät näyttää jakosivulla. Laskemme myös, miten Judgea käytetään: mitä näkymiä ja toimintoja, sovelluksen version, laitemallin, järjestelmäversion, kielen ja yhteytesi maan kanssa, ja sovelluksissa laitetunnuksen. Kun olet kirjautuneena, tämä liitetään tiliisi. Käyttötapahtumat säilytetään 90 päivää ja tilisi ja laitteidesi väliset linkit 180 päivää. Sovelluksissa on Asetuksissa Käyttötilastot-kytkin, ja verkkosivusto ei lähetä mitään, kun selaimesi lähettää Do Not Track- tai Global Privacy Control -signaalin. Mukana ei ole koskaan jutun tekstiä. Jos arvioit tuomion, säilytämme arvion sen mukana. Arvion voi tyhjentää; silloin säilytämme rivin ilman ylä- tai alapeukkua. Säilytämme myös kirjauksen yksityisiä tietoja koskevasta suostumuksestasi ja Auta parantamaan Judgea -valinnoistasi päivämäärän, kielen ja alustan sekä näkemäsi sanamuodon kanssa.",
     "privacy.helpTitle": "Auta parantamaan Judgea",
     "privacy.help":
-      "Pois päältä, ellet ota sitä käyttöön. Kun se on päällä, voimme käyttää tuomarien lukemaa anonymisoitua tekstiä, heidän tuomioitaan ja arvioitasi Judgen tuomarien testaamiseen ja kouluttamiseen. Nimet eivät koskaan kuulu siihen. Kun kytket sen pois, tämä käyttö loppuu kaikelta, mitä olet tehnyt, ja kirjaamme ylös, milloin kytkit sen päälle tai pois.",
-    "privacy.notStoredTitle": "Mitä emme tee",
-    "privacy.notStored":
-      "Ei mainosseurantaa. Kielivalintasi on tallessa selaimesi paikallisessa tallennustilassa eikä missään muualla.",
-    "privacy.ipTitle": "Käyttörajat",
-    "privacy.ip":
-      "Jotta sali pysyy auki kaikille, rajoitamme, montako tuomiota kukin tili ja montako käännöstä kukin kävijä voi pyytää. Käännöksiä ja kaksipuolisten juttujen vastauksia varten säilytämme IP-osoitteestasi avaimellisen tiivisteen, emme itse osoitetta, käyttörajojen tietovarastossa enintään 24 tuntia. Jos ihmistarkistus on käytössä, IP-osoitteesi välitetään tarkistusta varten myös Cloudflarelle. Sitä ei koskaan tallenneta tuomiosi yhteyteen.",
-    "privacy.processorsTitle": "Kuka muu käsittelee tekstiäsi",
-    "privacy.processors":
-      "Kirjoittamasi teksti, oikeat nimet mukaan lukien, menee ensin Yhdysvalloissa toimivalle tekoälypalveluntarjoajallemme, jotta nimet voidaan poistaa. Vain anonymisoitu versio ratkaistaan; alkuperäinen tekstisi säilytetään salattuna, kuten yllä kerrotaan. Jos ihmistarkistus on käytössä, Cloudflare Turnstile toimii selaimessasi ja tarkistaa tuloksen Cloudflarelta. Jos kirjaudut sisään, kirjautumisen hoitaa valitsemasi Apple tai Google, ja kirjautumissähköpostit lähetetään Resendin kautta. Palvelintilan tarjoajamme säilyttää tavanomaiset palvelinlokit. Sovelluksen sisäiset ostokset kulkevat App Storen tai Google Playn kautta, ja ne käsittelee RevenueCat, joka saa tilisi tunnuksen ja ostohistoriasi. Grafana Labs saa palvelimemme lokit ja suorituskykymittarit, jotka tallennetaan EU:hun 14 päiväksi; lokeissa ei ole juttujen tekstiä. Sovellusten ja tämän sivuston kaatumis- ja virheraportit menevät Sentrylle, joka tallentaa ne EU:hun enintään 30 päiväksi; ne sisältävät virheen, sovelluksen tai selaimen version ja laitemallin, mutta eivät juttujen tekstiä, tilin tunnusta eivätkä yhteyden osoitetta.",
-    "privacy.shareTitle": "Jakolinkit",
-    "privacy.share":
-      "Kuka tahansa, jolla on tuomion linkki, voi nähdä sen valitsemillasi näyttönimillä (tai muodossa Osapuoli A ja Osapuoli B, jos otit nimet pois päältä). Linkeissä on pitkät satunnaiset tunnisteet, ja jakosivut pyytävät hakukoneita olemaan indeksoimatta niitä. Poistetun tuomion linkki ja esikatselukuva lakkaavat latautumasta; viestisovelluksiin jo jaetut esikatselut voivat näkyä, kunnes sovellukset päivittävät ne. Jätä pois osoitteet, puhelinnumerot ja kaikki muu, mitä et haluaisi sivulle, jonka muutkin voivat avata.",
-    "privacy.contactTitle": "Yhteystiedot",
-    "privacy.contact":
-      "Kysyttävää, tai haluatko nähdä, korjata tai poistaa tietosi? Lähetä sähköpostia osoitteeseen {email} ja liitä mukaan tuomion tai jutun linkki.",
-    "privacy.accountsTitle": "Tilit",
-    "privacy.accounts":
-      "Judge on tarkoitettu vain 18 vuotta täyttäneille, ja tilit, joiden saamme tietää kuuluvan alle 18-vuotiaalle, suljetaan. Tuomion saamiseen tarvitset tilin; kaksipuolisen jutun toinen osapuoli voi vastata ilman tiliä. Jos kirjaudut Applella tai Googlella, säilytämme sähköpostiosoitteen, nimen ja profiilikuvan linkin, jotka ne jakavat kanssamme, sekä tiedon siitä, millä tavalla kirjauduit, ja Apple tai Google voi nähdä, että kirjauduit Judgeen. Jos kirjaudut sähköpostilinkillä, viesti lähetetään Resendin kautta, ja säilytämme lyhyen aikaa sähköpostiosoitteesi sisältävää tietuetta linkin tarkistamista varten: linkki lakkaa toimimasta 10 minuutin kuluttua, ja tietue poistetaan, kun linkkiä on käytetty, tai pian sen vanhennuttua. Säilytämme myös istuntotietosi (satunnainen tunniste ja sen vanhenemisaika, ilman IP-osoitetta tai selaimen tietoja, mutta sovellukset tallentavat kirjautuessa myös laitetunnisteen), tuomiosaldosi, tilauksesi ja sen historian sekä tiedon siitä, mihin tuomioihin saldoa on käytetty (vain tuomion tunniste). Lisäksi säilytämme tiedon siitä, mitkä tuomiot ja jutut ovat sinun, jotta löydät ne millä tahansa laitteella. Kun poistat tilisi tilisivulta, poistetaan tilisi, istuntosi, käyttötapahtumat ja tilisi ja laitteidesi välinen linkki, ja tuomiosi ja osuutesi jutuista poistetaan kohdassa Poistaminen kuvatulla tavalla. Sähköpostiosoitteestasi säilytämme vain sekoitetun muodon, jotta samalla osoitteella luotu uusi tili ei saa toista ilmaista tuomiota ja pysyy suljettuna, jos tilisi suljettiin, koska olet alle 18-vuotias. Sähköpostitse lähetetyt kirjautumiskoodit toimivat samalla tavalla kuin linkit. Jos asetat salasanan, tallennamme tilisi yhteyteen vain sen salatun (tiivistetyn) muodon, emme koskaan itse salasanaa.",
+      "Pois päältä, ellet kytke sitä päälle. Kun se on päällä, voimme käyttää anonymisoitua tekstiä, jonka tuomarit lukevat, heidän tuomioitaan ja arvioitasi tekoälymallien testaamiseen ja kouluttamiseen: Judgen omien ja, jos Judge joskus myydään tai yhdistetään, uuden omistajan. Nimet eivät ole koskaan mukana. Kun kytket sen pois, kaikki tekemäsi jää siitä hetkestä lähtien koulutuksen ulkopuolelle. Kirjaamme, milloin kytkit sen päälle tai pois.\n»Anonymisoitu» tarkoittaa tässä, että nimet on poistettu; muita kirjoittamiasi yksityiskohtia tekstissä voi yhä olla. Se koskee vain tuomioita, jotka tehtiin sen ollessa päällä, ja juttua vain, jos se on päällä kaikilla, jotka ovat kirjoittaneet jonkin puolen. Jo koulutettuja malleja ei muuteta. Mitään ei ole vielä koulutettu. Judge toimii samalla tavalla, vaikka se on pois päältä.\nKysymme kerran oman tuomiosivusi kohdalla toisen valmistuneen tuomiosi jälkeen. Emme koskaan kysy tuomiosta, jonka joku muu on jakanut sinulle. Kortissa lukee: »Anna Judgen käyttää anonymisoituja tuomioitasi ja arvioitasi tekoälyn kouluttamiseen. Nimiä ei oteta koskaan mukaan.» Voit muuttaa vastaustasi Asetuksissa milloin tahansa.",
+    "privacy.purposesTitle": "Miksi käytämme tietojasi",
+    "privacy.purposes":
+      "- Tuomion antamiseen, tilisi pyörittämiseen sekä ostosten ja tuen hoitamiseen. Peruste (EU, Britannia ja Brasilia): tarpeen pyytämäsi palvelun tarjoamiseksi.\n- Judgen pitämiseen turvallisena ja toimivana: käyttörajat, ihmistarkistus, ilmaisten krediittien kalastelijoiden havaitseminen, virheraportit, käyttömäärät ja sähköpostiosoitteen sekoitetun muodon säilyttäminen tilin poistamisen jälkeen. Peruste: oikeutettu etumme turvalliseen ja toimivaan palveluun. Voit vastustaa sähköpostilla. Sovelluksissa on Käyttötilastot-kytkin, ja selaimesi Do Not Track tai Global Privacy Control pysäyttää verkkosivuston omat käyttötapahtumat.\n- Ikäsi tarkistamiseen, puhelimesi ikäsignaali mukaan lukien. Peruste: oikeutettu etumme pitää Judge vain aikuisille tarkoitettuna, tai lakisääteinen velvoite, jos sovelluskaupan ikälaki koskee asiaa.\n- Nimistä puhdistetun tekstin säilyttämiseen 30 päivää sen jälkeen, kun poistat jotain, väärinkäytön tai oikeudenkäynnin varalta. Peruste: oikeutettu etumme.\n- Todisteen säilyttämiseen siitä, mihin olet suostunut: yksityisiä tietoja koskeva suostumus ja Auta parantamaan Judgea -valintasi. Peruste: oikeutettu etumme voida osoittaa, mihin olet suostunut.\n- Anonymisoitujen tuomioidesi ja arvioidesi käyttämiseen tekoälyn koulutuksessa. Peruste: suostumuksesi, vain jos kytket sen päälle.\n- Lain noudattamiseen ja lakisääteisten tietojen säilyttämiseen. Peruste: lakisääteinen velvoite.\nEmme koskaan käytä tietojasi mainontaan, eikä meillä ole mainosseuraimia. Jos haluamme joskus uuden käyttötarkoituksen, kerromme siitä ensin ja pyydämme suostumuksesi uudelleen, jos laki sitä vaatii.",
+    "privacy.sensitiveTitle": "Mitä jättää pois",
+    "privacy.sensitive":
+      "Riidat voivat sivuta yksityisiä aiheita, kuten terveyttä, ihmissuhteita, uskontoa tai rahaa. Kirjoita vain se, mitä tuomio tarvitsee, ja jätä pois toisia ihmisiä koskevat yksityiset tiedot. Judge ei ole tarkoitettu hätätilanteisiin eikä oikeudellisiin neuvoihin.\nEnnen ensimmäistä tuomiotasi, ensimmäistä puoltasi jutussa tai ensimmäistä vastaustasi juttuun pyydämme sinua rastittamaan ruudun: »Tekstini voi sisältää yksityisiä tietoja, kuten terveyteen tai ihmissuhteisiin liittyviä. Judge lähettää sen ilman nimiä ulkopuoliselle tekoälypalvelulle tuomioni kirjoittamista varten ja säilyttää sen, kunnes poistan sen.» Voit jatkaa vasta, kun ruutu on rastitettu. Kysymme sen kerran tiliä kohden; jos sinulla on jo tili, kysymme sen seuraavan tuomiosi yhteydessä. Ihmiset, jotka vastaavat juttuun ilman tiliä, näkevät saman ruudun. Säilytämme kirjauksen rastista päivämäärän, kielen, alustan ja näkemäsi sanamuodon kanssa.",
+    "privacy.othersTitle": "Ihmiset, joista kirjoitat",
+    "privacy.others":
+      "Tekstisi voi kuvata jotakuta, joka ei käytä Judgea. Tuomarit näkevät hänet vain tunnisteilla, kuten »Henkilö C». Säilytämme heidän nimensä salattuina sekä jokaisesta nimestä koodatun sormenjäljen (avaimellinen tiiviste, ei itse nimi). Nimet voivat näkyä jakosivulla, kuten kohdassa Kuka näkee mitä kerrotaan. Jos sinut mainitaan jonkun toisen jutussa, lähetä sähköpostia osoitteeseen {email} linkin kanssa, niin poistamme nimesi jakosivulta tai käsittelemme vastalauseesi.",
+    "privacy.automatedTitle": "Tuomiot tulevat tekoälyltä",
+    "privacy.automated":
+      "Tekoälymallit kirjoittavat tuomiosi, eikä kukaan ihminen lue sitä ensin. Se on mielipide argumentista sellaisena kuin se kirjoitettiin, perustuen tekstiin ilman nimiä, mahdollisiin näytettyihin verkkolähteisiin ja vastauksiisi. Se ei ole oikeudellinen neuvo eikä sitova. Sen perusteella ei tehdä mitään sinua, tiliäsi, hintaa tai pääsyäsi koskevaa päätöstä. Se voi olla väärä tai yksipuolinen. Jos olet eri mieltä, arvioi se »Ei oikeudenmukainen», lisää taustatietoa tai lähetä sähköpostia osoitteeseen {email}, niin ihminen perehtyy siihen. Myös jutun toinen osapuoli voi pyytää tätä.",
+    "privacy.accessTitle": "Kuka näkee mitä",
+    "privacy.access":
+      "Sinä: alkuperäisen tekstisi ja nimesi millä tahansa laitteella, kun olet kirjautuneena, tai käyttämälläsi laitteella selaimeen tai sovellukseen tallennetun yksityisen koodin kautta (säilytämme koodista vain sekoitetun muodon). Ilman kirjautumista kirjoitetut tuomiot, ennen kuin tiliä tarvittiin, ja ilman kirjautumista vastaamasi jutut pysyvät listattuina kyseisessä selaimessa otsikoineen ja nimineen sellaisina kuin ne kirjoitit, jotta Tuomiot-sivu voi näyttää ne: kaikki, jotka käyttävät samaa selainta, näkevät tämän listan. Jaetulla tietokoneella kirjaudu sisään tai käytä yksityistä ikkunaa; sivuston tietojen tyhjentäminen selaimessa poistaa listan. Kaksipuolisessa jutussa kukin näkee vain oman alkuperäisensä; tuomion jälkeen molemmat näkevät molemmat anonymisoidut esitykset sellaisina kuin tuomarit ne lukivat. Tuomarit (tekoälypalveluntarjoajamme käyttämät tekoälymallit): vain anonymisoidun version. Kaikki, joilla on jakolinkki: tuomion näyttönimineen. Oletuksena se on nimi, jonka valitset itsellesi, ja muiden etunimet sellaisina kuin ne kirjoitit; voit muuttaa niitä tai kytkeä nimet pois milloin tahansa, jolloin sivulla lukee Osapuoli A ja Osapuoli B. Me: voimme purkaa alkuperäiset avaimella ja katsomme tallennettua tekstiä vain käsitelläksemme sinulta tulevan tukipyynnön, tutkiaksemme väärinkäyttöä tai kun laki sitä vaatii.",
+    "privacy.casesTitle": "Kaksipuoliset jutut ja lisätiedot",
+    "privacy.cases":
+      "Kaksipuolisessa jutussa kukin puoli anonymisoidaan lähetettäessä samalla tavalla kuin tuomio. Tuomarit lukevat anonymisoidun tekstin; kunkin henkilön puoli sellaisena kuin hän sen kirjoitti, nimiluetteloineen, tallennetaan salattuna, ja vain kyseinen henkilö voi nähdä sen. Kukin kirjoittaa nimen, jonka haluaa näkyvän jakosivulla, kun lähettää puolensa; jos kenttä jää tyhjäksi, nimi on Osapuoli A tai Osapuoli B. Toinen henkilö ei tarvitse tiliä; hänen vastauksiaan rajoitetaan hänen IP-osoitteensa avaimellisella tiivisteellä. Kutsulinkki tallennetaan vain tiivisteenä. Jos toinen henkilö vastaa kirjautuneena, hänen tilinsä liitetään hänen puoleensa, joten vain hän voi lisätä taustatietoa myöhemmin tai nähdä alkuperäisensä; jos hän vastaa ilman kirjautumista, hänen selaimeensa tallennettu yksityinen koodi tekee saman, ja kirjautuminen myöhemmin samassa selaimessa antaa hänen pitää jutun tilissään. Jotta sama henkilö saa saman tunnisteen molemmissa tileissä, palvelin säilyttää nimistä koodattuja sormenjälkiä kunkin jutun sisällä (avaimellisia tiivisteitä, ei itse nimiä). Ennen tuomiota kumpikaan puoli ei voi lukea toisen tekstiä; kaksipuolisen tuomion jälkeen molemmat voivat lukea molemmat anonymisoidut esitykset. Tuomion jälkeen lisätty taustatieto (lisätiedot) käsitellään samalla tavalla. Kun toinen henkilö vastaa, voimme lähettää sinulle lyhyen viestin ilman jutun tekstiä, jos sähköposti on otettu käyttöön. Kumpi tahansa voi poistaa oman puolensa: hänen alkuperäisensä ja näyttönimensä poistetaan, ja jutun jakolinkit lakkaavat toimimasta kaikilta. Tilisi poistaminen tekee tämän jokaiselle jutulle, jonka aloitit tai johon vastasit. Juttu, johon kukaan ei vastaa, vanhenee 7 päivässä, mutta puolesi teksti säilyy, kunnes poistat sen. Ilman tiliä vastaava rastittaa ennen lähettämistä »Olen vähintään 18-vuotias» ja yksityisten tietojen ruudun, ja säilytämme molemmat rastit hänen puolensa mukana.",
     "privacy.webSearchTitle": "Verkkohaku ja kysymykset",
     "privacy.webSearch":
-      "Jokainen tuomio lähettää anonymisoidun kiistan tekoälypalveluntarjoajallemme verkkohaku käytössä. Malli kirjoittaa hakulausekkeet tästä anonymisoidusta tekstistä, ja tulokset tulevat palveluntarjoajan hakukumppanilta. Käytetyt lähteet näytetään tuomiossa. Tuomarit voivat ensin kysyä sinulta enintään kaksi kysymystä: niiden laatimista varten tekstisi sellaisena kuin kirjoitit sen, nimet mukaan lukien, lähetetään tekoälypalveluntarjoajalle vielä kerran. Vastauksesi anonymisoidaan yhdessä kiistan kanssa ennen ratkaisua; kysymykset ja vastauksesi sellaisina kuin kirjoitit ne säilytetään salatun alkuperäisen tekstisi kanssa.",
+      "Jokainen tuomio lähettää anonymisoidun argumentin tekoälypalveluntarjoajallemme verkkohaku päällä. Malli kirjoittaa hakulausekkeet tästä anonymisoidusta tekstistä, ja tulokset tulevat palveluntarjoajan hakukumppanilta. Käytetyt lähteet näytetään tuomiossa. Tuomarit voivat ensin esittää sinulle enintään kaksi kysymystä: niiden keksimiseksi tekstisi sellaisena kuin sen kirjoitit, nimet mukaan lukien, menee tekoälypalveluntarjoajalle vielä kerran. Vastauksesi anonymisoidaan yhdessä argumentin kanssa ennen ratkaisua; kysymykset ja vastauksesi sellaisina kuin ne kirjoitit säilytetään salatun alkuperäisen mukana.",
+    "privacy.evidenceTitle": "Kuvakaappaukset",
+    "privacy.evidence":
+      "Selaimesi pienentää suuret kuvat ennen lähettämistä. Kukin kuva menee sitten kerran ulkopuoliselle tekoälypalvelulle, jotta näkyvä teksti voidaan lukea; emme koskaan tallenna kuvaa. Raakatekstitys, joka voi yhä sisältää nimiä, palaa sinulle allekirjoitetussa tunnisteessa, jota selaimesi säilyttää enintään 6 tuntia. Kun lähetät puolesi, tekstitys anonymisoidaan yhdessä tekstisi kanssa: anonymisoitu tekstitys näytetään tuomareille ja tallennetaan jutun mukana, ja raakatekstitys säilytetään salattuna alkuperäisesi mukana, jossa vain sinä voit nähdä sen. Siinä olevat puhelinnumerot, sähköpostiosoitteet, sosiaalisen median tunnukset ja tilinumerot korvataan paikkamerkeillä myös tuomareille.",
+    "privacy.accountsTitle": "Tilit",
+    "privacy.accounts":
+      "Judge on tarkoitettu vain 18 vuotta täyttäneille, ja tilit, joiden havaitsemme kuuluvan alle 18-vuotiaalle, suljetaan. Tarvitset tilin saadaksesi tuomion; kaksipuolisen jutun toinen osapuoli voi vastata ilman tiliä. Jos kirjaudut Applella tai Googlella, säilytämme heidän meille jakamansa sähköpostiosoitteen, nimen ja profiilikuvan linkin sekä sen, mitä kirjautumistapaa käytit, ja Apple tai Google voi nähdä, että kirjauduit Judgeen. Jos kirjaudut sähköpostilinkillä tai -koodilla, kyseinen viesti lähtee Resendin kautta, ja säilytämme hetken kirjauksen sähköpostiosoitteellasi sen tarkistamiseksi: se lakkaa toimimasta 10 minuutin kuluttua ja poistetaan käytön jälkeen tai pian vanhenemisen jälkeen. Jos asetat salasanan, säilytämme tililläsi vain sen sekoitetun (tiivistetyn) muodon, emme koskaan itse salasanaa. Säilytämme myös istuntotietueesi (satunnaisen tunnisteen ja sen vanhenemisajan, ilman IP-osoitetta tai selaimen tietoja, vaikka sovellukset kirjaavat kirjautuessasi myös laitetunnuksen), krediittisi, tilauksesi ja sen historian sekä sen, mitkä tuomiot käyttivät krediitin (vain tuomion tunnuksen). Säilytämme myös tiedon siitä, mitkä tuomiot ja jutut ovat sinun, jotta löydät ne millä tahansa laitteella. Tilin poistaminen tilisivulla (sovelluksissa ja verkkosivustolla) poistaa tilisi, kirjautumistietueet, krediitit, tilauksen ja käyttötapahtumat sekä poistaa tuomiosi ja puolesi jutuissa kohdassa Poistaminen kuvatulla tavalla. Säilytämme muutaman asian poiston jälkeen; ne on lueteltu kohdassa Mitä säilytämme poiston jälkeen. Jos et pääse kirjautumaan, sivu okjudge.com/delete-account kertoo, miten pyydät meiltä poistoa sähköpostilla. Säilytämme sähköpostiosoitteestasi vain sekoitetun muodon, jotta sillä luotu uusi tili ei saa toista ilmaista tuomiota ja pysyy suljettuna, jos tilisi suljettiin, koska olet alle 18-vuotias. Kirjaamme myös, vahvistitko olevasi vähintään 18-vuotias ja miten (rastilla tai puhelimesi ikäsignaalilla; Androidilla sovellus kysyy Google Playltä, iPhonella Applelta).",
+    "privacy.removalTitle": "Poistaminen",
+    "privacy.removal":
+      "Pyydä poistoa tuomion sivulla (kirjautuneena sen voi avata Tuomiot-sivulta), jutun sivulla kaksipuolisessa jutussa, poistamalla tilisi tai sähköpostilla. Poisto poistaa alkuperäisen tekstisi, nimiluettelon ja näyttönimet (kaksipuolisessa jutussa puolesi alkuperäisen ja näyttönimesi), ja jakolinkki ja sen esikatselukuva lakkaavat latautumasta kaikilta. Keskustelusovelluksiin jo lähetetyt esikatselut säilyvät kyseisissä sovelluksissa ja voivat näkyä, kunnes ne päivittävät ne. Säilytämme anonymisoidun tekstin ja tuomion ilman nimiä tietueissamme; niitä ei voi enää avata linkin kautta. Tilisi poistaminen tekee tämän kaikille tuomioillesi ja puolillesi jutuissa sekä poistaa kirjautumistietosi, krediittisi ja tilauksesi. Poistetut tiedot pysyvät varmuuskopioissamme, kunnes ne vanhenevat (enintään 14 päivää, ks. alla); jos joskus palautamme varmuuskopion, sovellamme jokaisen poiston uudelleen (sitä varten säilytämme luetteloa siitä, mitä poistettiin ja milloin, ilman tekstiä tai nimiä). Kolmenkymmenen päivän kuluttua poistosta poistamme myös anonymisoidun tekstin ja tuomion ja säilytämme vain lopputuloksen ja päivämäärät, ellei laki vaadi meitä säilyttämään niitä pidempään. Tämä koskee 14. marraskuuta 2026 (UTC) tai sen jälkeen poistettuja asioita; vanhempien poistojen anonymisoitu teksti säilyy. Jutun kohdalla kolmekymmentä päivää alkaa vasta, kun kaikki siinä mukana olevat ovat poistaneet sen. Tuomiot ja jutut, joita kukaan ei poista, säilytetään, kunnes poistat ne tai poistat tilisi. Ilman kirjautumista tehdyn tuomion, ennen kuin tiliä tarvittiin, voi poistaa lähettämällä sähköpostia osoitteeseen {email} sen linkin kanssa.",
+    "privacy.afterRemovalTitle": "Mitä säilytämme poiston jälkeen",
+    "privacy.afterRemoval":
+      "Poiston ja kolmenkymmenen päivän jälkeen säilytämme yhä:\n- lopputuloksen ja pisteet, valitut asetukset, päivämäärät, tunnukset sekä sen, mitä puolia ja kieltä jutussa oli, ja jutun aloittaneen tilin tunnuksen;\n- arviosi. Kun poistat tilisi, jokainen arvio siirretään satunnaiseen tunnukseen, joten se ei enää johda sinuun;\n- kirjauksen Auta parantamaan Judgea -valinnoistasi ja yksityisiä tietoja koskevasta suostumuksestasi (päivämäärät, kieli, alusta ja näkemäsi sanamuoto) 6 vuoden ajan tilisi poistamisen jälkeen, jotta voimme todistaa, mihin olet suostunut. Kun poistat tilisi, nämä kirjaukset saavat satunnaisen tunnuksen eikä niissä ole linkkiä nimeesi tai sähköpostiisi;\n- poistoluettelon, jossa on tunnuksia, syitä, päivämääriä ja jutun osapuoli, 90 päivää, jotta poistot voidaan soveltaa uudelleen varmuuskopion palautuksen jälkeen;\n- sähköpostisi sekoitetun muodon ilmaisten krediittien toistuvan väärinkäytön estämiseksi (ks. Tilit);\n- laitetietueen ilman tilisi linkkiä enintään 180 päivää;\n- varmuuskopiot enintään 14 päivää.\nKun juttu poistetaan, sen nimien koodatut sormenjäljet ja tunnisteet tyhjennetään, joten niitä ei säilytetä.",
+    "privacy.retentionTitle": "Kuinka kauan säilytämme",
+    "privacy.retention":
+      "Säilytämme tuomiot ja alkuperäiset tekstit, kunnes pyydät poistoa tai poistat tilisi. Vikatilanteista palautumista varten säilytämme palvelimesta ja sen tietokannasta varmuuskopioita enintään 14 päivää, minkä jälkeen ne poistetaan. Niissä on samat tiedot kuin palvelimella, salatut alkuperäiset tekstit mukaan lukien, ja avain on samalla palvelimella, joten varmuuskopiot on suojattu samoin kuin itse palvelin, ei tuolla salauksella. Käyttörajojen tiivisteet säilyvät enintään 48 tuntia. Käyttötapahtumat poistetaan 90 päivän jälkeen ja laitelinkit 180 päivän käyttämättömyyden jälkeen. Grafana Labsille lähetetyt lokit ja mittarit säilytetään 14 päivää. Sentryn kaatumisraportit säilytetään enintään 30 päivää. Muut palvelinlokit säilytetään palvelintilan tarjoajamme tavanomaisen käytännön mukaisesti. Kirjautumiskoodi vanhenee 10 minuutissa, ja vanhentuneet koodit poistetaan päivittäin. Istunto päättyy 30 päivää sen jälkeen, kun käytit sitä viimeksi. Poistoluettelo säilytetään 90 päivää. Suostumusvalintojesi kirjaukset säilytetään 6 vuotta tilisi poistamisen jälkeen, minkä jälkeen ne poistetaan.",
+    "privacy.ipTitle": "Käyttörajat",
+    "privacy.ip":
+      "Pitääksemme oikeussalin avoinna kaikille rajoitamme, montako tuomiota kukin tili ja montako käännöstä kukin kävijä voi pyytää. Käännöksistä, kaksipuolisen jutun vastauksista, tuomion tilan tarkistamisesta sen ratkaisun aikana ja kirjautumisyrityksistä säilytämme IP-osoitteesi avaimellisen tiivisteen, emme itse osoitetta, enintään 48 tuntia. Kirjautumisrajoitukset pitävät osoitteen itsensä hetken palvelimen muistissa, noin minuutin, eivät koskaan levyllä. Jos ihmistarkistus on käytössä, IP-osoitteesi menee tarkistusta varten myös Cloudflarelle. Sitä ei koskaan tallenneta tuomiosi mukana.",
+    "privacy.processorsTitle": "Kuka muu käsittelee tekstiäsi",
+    "privacy.processors":
+      "Kirjoittamasi teksti, oikeat nimet mukaan lukien, menee ensin Yhdysvalloissa toimivalle tekoälypalveluntarjoajallemme, jotta nimet voidaan poistaa. Vain anonymisoitu versio ratkaistaan; alkuperäinen tekstisi säilytetään salattuna, kuten yllä kerrotaan. Jos ihmistarkistus on käytössä, Cloudflare Turnstile toimii selaimessasi ja tarkistaa tuloksen Cloudflarelta. Jos kirjaudut sisään, kirjautumisen hoitaa valitsemasi Apple tai Google, ja kirjautumissähköpostit lähetetään Resendin kautta. Sovelluksen sisäiset ostokset kulkevat App Storen tai Google Playn kautta, ja ne käsittelee RevenueCat, joka saa tilisi tunnuksen ja ostohistoriasi. Grafana Labs saa palvelimemme lokit ja suorituskykymittarit, jotka tallennetaan EU:hun 14 päiväksi; lokeissa ei ole juttujen tekstiä. Sovellusten ja tämän sivuston kaatumis- ja virheraportit menevät Sentrylle, joka tallentaa ne EU:hun enintään 30 päiväksi; ne sisältävät virheen, sovelluksen tai selaimen version ja laitemallin, mutta eivät juttujen tekstiä, tilin tunnusta eivätkä yhteyden osoitetta. Palvelintilan tarjoajamme säilyttää tavanomaiset palvelinlokit. Android-sovellus kysyy ikätilasi Google Playltä ja iPhone-sovellus Applelta. Me olemme rekisterinpitäjä; nämä palveluntarjoajat käsittelevät tietoja puolestamme.",
+    "privacy.shareTitle": "Jakolinkit",
+    "privacy.share":
+      "Jokainen, jolla on tuomion linkki, näkee sen valitsemiesi näyttönimien kanssa (tai nimillä Osapuoli A ja Osapuoli B, jos kytkit nimet pois). Linkit käyttävät pitkiä satunnaisia tunnuksia, ja jakosivut pyytävät hakukoneita olemaan indeksoimatta niitä. Poistetun tuomion linkki ja esikatselukuva lakkaavat latautumasta; keskustelusovelluksiin jo lähetetyt esikatselut voivat näkyä, kunnes nämä sovellukset päivittävät ne. Jätä pois osoitteet, puhelinnumerot ja kaikki muu, mitä et haluaisi sivulle, jonka muut voivat avata.",
+    "privacy.locationTitle": "Missä tietosi ovat",
+    "privacy.location":
+      "Palvelimemme ovat Saksassa (OVH, Frankfurt). Osa käsittelystä tapahtuu Yhdysvalloissa: tekoälypalveluntarjoajamme ajaa mallit, jotka poistavat nimet, ratkaisevat, lukevat kuvakaappauksia ja hakevat verkosta; Cloudflare on okjudge.com:n edessä välityspalvelimena ja DNS:nä (kaikki liikenne kulkee sen kautta) ja ajaa ihmistarkistuksen. Kirjautuminen kulkee Applen tai Googlen kautta, jos valitset ne, ja kirjautumissähköpostit Resendin kautta. Toisessa maassa käsiteltyihin tietoihin voi soveltua kyseisen maan laki. Työskentelemme Kanadasta ja voimme nähdä tietosi sieltä.",
+    "privacy.storageTitle": "Evästeet ja selaimen tallennustila",
+    "privacy.storage":
+      "Verkkosivusto käyttää kirjautumisevästettä (verdict.session_token), joka pitää sinut kirjautuneena, ja lyhytikäisiä evästeitä, kun kirjaudut Applella tai Googlella (verdict.state kestää 5 minuuttia). Ihmistarkistuksen ajava Cloudflare voi asettaa sitä varten omia evästeitään. Mitään niistä ei käytetä seurantaan. Selaimesi paikallinen tallennustila säilyttää kielesi, teemasi ja Gamify-valintasi; lähettämättömän luonnoksen (kirjoittamasi teksti mukaan lukien) kirjautumisen ajan; luettelon tuomioista ja jutuista, jotka teit ilman kirjautumista; yksityiset koodit, joilla pääset alkuperäisiisi; jutussa käyttämäsi nimet; kutsukoodit juttuihin, joihin sinua on pyydetty vastaamaan; ikävahvistuksesi; viimeksi valitsemasi oikeussalin; ja mitkä esimerkit olet nähnyt. Istuntotallennus säilyttää sähköpostiosoitteen ja tilan, kun odotat kirjautumissähköpostia, sekä välilehden käyttölippuja. Nämä pysyvät laitteellasi. Sivuston tietojen tyhjentäminen poistaa ne. Sovellukset säilyttävät vastaavia asioita laitteella.",
+    "privacy.notStoredTitle": "Mitä emme tee",
+    "privacy.notStored":
+      "Ei mainosseuraimia. Emme myy tietojasi emmekä jaa niitä mainontaa varten. Verkkosivusto ja sovellukset eivät seuraa sinua muilla sivustoilla. Miten vastaamme Do Not Trackiin: verkkosivusto ei lähetä käyttötapahtumia selaimestasi, kun se lähettää Do Not Track- tai Global Privacy Control -signaalin, ja sovellusten Käyttötilastot-kytkin tekee saman sovelluksille. Palvelimemme kirjaa silti muutaman tiliisi liitetyn tapahtuman (kirjautuminen, tehdyt tai epäonnistuneet jutut ja tuomiot, ostokset) ja sen, miltä laitteelta kirjauduit. Emme koskaan käytä tekstiäsi minkään kouluttamiseen, ellet ole kytkenyt Auta parantamaan Judgea päälle.",
+    "privacy.securityTitle": "Tietojen suojaaminen",
+    "privacy.security":
+      "Alkuperäiset tekstit, nimiluettelot, näyttönimet ja Apple-kirjautumisen tunnisteet salataan. Liikenne käyttää HTTPS:ää. Salausavain on samalla palvelimella kuin tiedot, joten se ei suojaa siltä, joka ottaa palvelimen haltuunsa. Jos henkilötiedoillesi tapahtuu jotain pahaa, kerromme asiasta niille, joita se koskee, ja viranomaisille, kun laki sitä vaatii.",
+    "privacy.childrenTitle": "Ikä",
+    "privacy.children":
+      "Judge on tarkoitettu vähintään 18-vuotiaille. Pyydämme jokaista kirjautujaa vahvistamaan sen, ilman tiliä juttuun vastaavat rastittavat »Olen vähintään 18-vuotias» ennen lähettämistä, ja sovellukset voivat käyttää puhelimesi ikäsignaalia. Emme tietoisesti kerää tietoja alle 18-vuotiailta. Jos uskot, että lapsella on tili, lähetä sähköpostia osoitteeseen {email}, niin suljemme sen ja poistamme tiedot.",
+    "privacy.rightsTitle": "Oikeutesi",
+    "privacy.rights":
+      "Asuitpa missä tahansa, voit pyytää meitä näyttämään, mitä säilytämme, korjaamaan sen, poistamaan sen tai poistamaan tilisi, lopettamaan sen käytön koulutukseen ja antamaan sinulle kopion. Voit tehdä suurimman osan itse: poistaa tuomion tai jutun sen sivulla, poistaa tilisi tilisivulla, muuttaa tuomion tai jutun sivulla näkyviä nimiä, ladata tietosi ja vaihtaa Auta parantamaan Judgea -asetusta (ja sovelluksissa Käyttötilastoja) Asetuksissa. Kaikessa muussa lähetä sähköpostia osoitteeseen {email} tuomion tai jutun linkin kanssa. Voimme pyytää sinua kirjoittamaan tilisi sähköpostiosoitteesta tai vahvistamaan kirjautuneena. Vastaamme 30 päivän kuluessa tai yhden kuukauden kuluessa, jos se on lyhyempi aika. Se on ilmaista. Sinua ei kohdella huonommin sen vuoksi, että käytät oikeuksiasi. Joku, joka pyytää puolestasi, tarvitsee kirjallisen valtuutuksesi.\nKopio tiedoistasi on JSON-tiedosto. Valitse Lataa tietoni tilisivulla, sovelluksissa tai verkkosivustolla. Se sisältää tilisi ja kirjautumistapasi, tuomiosi ja puolesi jutuissa omine teksteineen ja nimineen, tulokset, arviosi, suostumushistoriasi, laitteesi, käyttötapahtumat ja ostokset. Se ei sisällä kirjautumistunnisteita, salasanaasi eikä sähköpostin sekoitettua muotoa, eikä kenenkään muun tekstiä tai nimiä.\nSinun ei ole pakko antaa meille tietoja, mutta ilman tekstiäsi ja tiliä emme voi antaa sinulle tuomiota.",
+    "privacy.regionEuTitle": "Jos olet EU:ssa tai Britanniassa",
+    "privacy.regionEu":
+      "- Rekisterinpitäjä: ks. Keitä me olemme.\n- Käsittelyperusteet: ks. Miksi käytämme tietojasi.\n- Voit myös pyytää käytön rajoittamista, vastustaa oikeutettuihin etuihimme perustuvaa käyttöä, peruuttaa suostumuksesi milloin tahansa (sen vaikuttamatta aiemmin tehtyyn) ja tehdä valituksen tietosuojaviranomaiselle (Britanniassa ICO:lle).\n- Tietojasi käsitellään Saksassa, Kanadassa ja Yhdysvalloissa kohdassa Missä tietosi ovat kuvatulla tavalla. Lähetä sähköpostia osoitteeseen {email}, jos haluat tietää lisää siitä, miten ne siirretään.\n- Automaattiset päätökset: ks. Tuomiot tulevat tekoälyltä.",
+    "privacy.regionUsTitle": "Jos olet Kaliforniassa tai jossakin toisessa Yhdysvaltain osavaltiossa",
+    "privacy.regionUs":
+      "- Viimeisten 12 kuukauden aikana keräsimme: tunnisteet (sähköposti, nimi, tili- ja laitetunnukset); riitatekstisi ja vastauksesi; arviot ja suostumusvalinnat; ostohistorian; käyttö- ja laitetiedot (maa, laitemalli, sovellusversio); ikävahvistuksen; ja arkaluonteisia tietoja (tilin kirjautumistiedot sekä tekstissäsi mahdollisesti olevat terveyteen tai vastaavaan liittyvät tiedot). Lähteet: sinä, puhelimesi kirjautuminen ja kauppa sekä omat sovelluksemme. Tarkoitukset: ks. Miksi käytämme tietojasi. Vastaanottajat: kohdassa Kuka muu käsittelee tekstiäsi mainitut ryhmät.\n- Emme myy emmekä jaa henkilötietoja mainontaa varten emmekä ole tehneet niin viimeisten 12 kuukauden aikana. Emme profiloi sinua. Käytämme arkaluonteisia tietoja vain palvelun tarjoamiseen, joten ei ole mitään, mitä rajoittaa tai josta kieltäytyä.\n- Oikeudet: tietää, saada pääsy, oikaista, poistaa ja saada siirrettävä kopio. Voit käyttää valtuutettua asiamiestä. Vastaamme 30 päivän kuluessa tai yhden kuukauden kuluessa, jos se on lyhyempi aika. Kieltäytymisen valittamiseksi lähetä sähköpostia osoitteeseen {email} otsikolla »Appeal». Ratkaisemme valituksen 45 päivässä. Jos hylkäämme sen, voit ottaa yhteyttä osavaltiosi oikeusministeriin (Attorney General).\n- Säilytys: ks. Kuinka kauan säilytämme ja Mitä säilytämme poiston jälkeen.\n- Do Not Track: ks. Mitä emme tee. Mikään mainos- tai seurantayritys ei kerää tietoja sivuillamme. Cloudflare ajaa ihmistarkistuksen ja näkee yhteytesi tähän tarkoitukseen.\n- Kukaan alle 18-vuotias ei saa käyttää Judgea, joten emme myy emmekä jaa kenenkään alle 16-vuotiaan tietoja. Muiden osavaltioiden oikeudet ovat sama luettelo.",
+    "privacy.regionCaTitle": "Jos olet Kanadassa tai Quebecissä",
+    "privacy.regionCa":
+      "Judgea ylläpidetään Kanadasta, ja se käsittelee henkilötietoja Kanadan liittovaltion tietosuojalain (PIPEDA) mukaisesti: keräämme vain sen, mitä palvelu tarvitsee, käytämme sitä vain siihen ja suojaamme sen, ja voit pyytää nähdä, korjata tai poistaa sinusta säilyttämämme tiedot. Vastaamme 30 päivän kuluessa. Voit tehdä valituksen Kanadan tietosuojavaltuutetun toimistolle (priv.gc.ca). Jos olet Quebecissä:\n- Henkilötiedoista vastaa Aytu Tuna, omistaja, osoitteessa {email}.\n- Osa tiedoista lähetetään Quebecin ulkopuolelle: palvelimellemme Saksaan, tekoälypalveluntarjoajalle ja muille toimittajille Yhdysvaltoihin sekä Kanadaan Quebecin ulkopuolelle.\n- Judge kirjaa vain yhteytesi maan käyttömääriä varten eikä seuraa tarkkaa sijaintiasi. Tuomio arvioi kuvaamasi argumentin, eikä sitä käytetä profiilin rakentamiseen sinusta. Käyttömäärät liitetään tiliisi kohdassa Mitä säilytämme kuvatulla tavalla.\n- Auta parantamaan Judgea on pois päältä, kunnes kytket sen päälle, ja voit kytkeä sen pois milloin tahansa.\n- Voit myös pyytää suostumuksen peruuttamista, saada tietosi yleisesti käytetyssä muodossa ja tehdä valituksen Commission d'accès à l'information -viranomaiselle.",
+    "privacy.regionBrTitle": "Jos olet Brasiliassa",
+    "privacy.regionBr":
+      "Rekisterinpitäjä ja yhteystiedot: ks. Keitä me olemme. {email} on myös LGPD-pyyntöjen kanava. Me olemme rekisterinpitäjä; kohdassa Kuka muu käsittelee tekstiäsi mainitut palveluntarjoajat toimivat puolestamme. Käsittelyperusteet: ks. Miksi käytämme tietojasi. Voit pyytää meitä vahvistamaan, että käsittelemme tietojasi; antamaan pääsyn niihin; korjaamaan ne; anonymisoimaan, estämään tai poistamaan liialliset tai lainvastaiset tiedot; antamaan siirrettävyyden; poistamaan suostumuksellasi käyttämämme tiedot; kertomaan, kenen kanssa olemme jakaneet ne; kertomaan sinulle mahdollisuudesta kieltäytyä suostumuksesta ja sen seurauksista; ja peruuttamaan suostumuksen. Se on ilmaista. Voit myös tehdä valituksen ANPD:lle. Tietosi lähetetään ulkomaille kohdassa Missä tietosi ovat kuvatulla tavalla.",
+    "privacy.changesTitle": "Muutokset",
+    "privacy.changes":
+      "Jos muutamme tätä käytäntöä merkittävällä tavalla, päivitämme päivämäärän tämän sivun ylälaitaan. Emme koskaan käytä aiemman käytännön aikana antamiasi tietoja uuteen tarkoitukseen kysymättä sinulta ensin. Tarkistamme sen vähintään kerran vuodessa.",
+    "privacy.contactTitle": "Yhteystiedot",
+    "privacy.contact":
+      "Kysyttävää tai haluatko nähdä, korjata tai poistaa tietosi? Lähetä sähköpostia osoitteeseen {email} tuomion tai jutun linkin kanssa.",
     "nav.signIn": "Kirjaudu",
     "nav.account": "Tili",
     "nav.pricing": "Hinnat",
@@ -303,20 +371,16 @@ const fi: Locale = {
     "consent.sensitiveContinue": "Jatka",
     "respond.adultConfirm": "Olen 18-vuotias tai vanhempi",
     "account.export": "Lataa tietoni",
-    "account.exportHint":
-      "Saat JSON-tiedoston, jossa on kaikki, mitä Judge säilyttää sinusta.",
+    "account.exportHint": "Saat JSON-tiedoston, jossa on kaikki, mitä Judge säilyttää sinusta.",
     "account.exportBusy": "Valmistellaan tiedostoa…",
-    "account.exportFailed":
-      "Tietojasi ei voitu valmistella juuri nyt. Yritätkö uudelleen?",
+    "account.exportFailed": "Tietojasi ei voitu valmistella juuri nyt. Yritätkö uudelleen?",
     "deletePage.title": "Poista Judge-tilisi",
     "deletePage.lead":
       "Judge on Aytu Tunan sovellus. Voit poistaa tilisi ja sen tiedot itse milloin tahansa sovelluksessa tai verkkosivulla.",
     "deletePage.appTitle": "Sovelluksessa",
-    "deletePage.app":
-      "Avaa Judge, siirry kohtaan Tili, napauta Poista tili ja vahvista.",
+    "deletePage.app": "Avaa Judge, siirry kohtaan Tili, napauta Poista tili ja vahvista.",
     "deletePage.webTitle": "Verkkosivulla",
-    "deletePage.web":
-      "Kirjaudu osoitteessa okjudge.com, avaa Tili, valitse Poista tili ja vahvista.",
+    "deletePage.web": "Kirjaudu osoitteessa okjudge.com, avaa Tili, valitse Poista tili ja vahvista.",
     "deletePage.removedTitle": "Mitä poistetaan",
     "deletePage.removed":
       "Tilisi, kirjautumistiedot, hyvitykset, tilaus ja käyttötapahtumat poistetaan. Tuomiosi ja puolesi jutuissa poistetaan: alkuperäinen teksti ja nimet pyyhitään heti, anonymisoitu teksti ja tuomio 30 päivää myöhemmin.",
@@ -343,8 +407,7 @@ const fi: Locale = {
     "clarify.back": "Muokkaa kiistaa",
     "thinking.factcheck": "Tarkistetaan faktoja verkosta…",
     "thinking.factcheckDone": "Verkkotarkistus valmis.",
-    "thinking.premiumHelper":
-      "Faktojen tarkistaminen verkosta vie vähän pidempään. Anna sille minuutti tai kaksi.",
+    "thinking.premiumHelper": "Faktojen tarkistaminen verkosta vie vähän pidempään. Anna sille minuutti tai kaksi.",
     "panel.premium": "Faktat tarkistettu verkosta ennen ratkaisua.",
     "factcheck.title": "Tarkistettu verkosta",
     "factcheck.lead": "Tuomarit näkivät nämä hakutulokset ennen ratkaisua. Ne ovat todisteita, eivät itse tuomio.",
@@ -354,9 +417,9 @@ const fi: Locale = {
     "factcheck.status.unverified": "Ei voitu varmistaa",
     "factcheck.sources": "Lähteet",
     "factcheck.sourceAria": "{title}, avautuu uudelle välilehdelle",
-    "factcheck.none": "Verkosta ei ole mitään tarkistettavaa: tämä ratkeaa arvojen tai merkitysten, ei faktojen perusteella.",
-    "factcheck.noneFactual":
-      "Tästä ei löydy mitään verkosta tarkistettavaa: faktat ovat vain osapuolten tiedossa.",
+    "factcheck.none":
+      "Verkosta ei ole mitään tarkistettavaa: tämä ratkeaa arvojen tai merkitysten, ei faktojen perusteella.",
+    "factcheck.noneFactual": "Tästä ei löydy mitään verkosta tarkistettavaa: faktat ovat vain osapuolten tiedossa.",
     "factcheck.unavailable": "Verkkotarkistus ei tällä kertaa valmistunut, joten tuomarit ratkaisivat ilman sitä.",
     "signin.title": "Kirjaudu sisään",
     "signin.lead": "Kirjaudu, niin saat tuomion. Uusi tili saa ensimmäisen tuomionsa ilmaiseksi.",
@@ -386,7 +449,8 @@ const fi: Locale = {
     "signin.usePassword": "Käytä sen sijaan salasanaa",
     "signin.passwordWrong": "Sähköposti ja salasana eivät täsmää.",
     "signin.passwordShort": "Käytä vähintään 8 merkkiä.",
-    "signin.createNote": "Lähetämme sinulle koodin sähköpostiin osoitteen vahvistamiseksi. Se tarvitsee tehdä vain kerran.",
+    "signin.createNote":
+      "Lähetämme sinulle koodin sähköpostiin osoitteen vahvistamiseksi. Se tarvitsee tehdä vain kerran.",
     "signin.passwordChoose": "Olet kirjautunut sisään. Valitse salasana seuraavaa kertaa varten.",
     "signin.passwordSave": "Tallenna salasana",
     "signin.passwordSaveFailed": "Salasanan tallennus epäonnistui. Yritä uudelleen.",
@@ -443,7 +507,8 @@ const fi: Locale = {
     "pricing.monthly.renews": "Uusiutuu kuukausittain",
     "pricing.monthly.cap": "{n} tuomiota kuukaudessa",
     "pricing.comingSoon": "Tulossa pian",
-    "pricing.note": "Hinnat ovat Yhdysvaltain dollareina. Maksaminen ei ole vielä mahdollista, joten mitään ei voi vielä ostaa.",
+    "pricing.note":
+      "Hinnat ovat Yhdysvaltain dollareina. Maksaminen ei ole vielä mahdollista, joten mitään ei voi vielä ostaa.",
     "pricing.signIn": "Luo tili, niin saat ilmaisen tuomion",
     "pricing.preview": "Tuomiot eivät ole vielä käytössä täällä. Tämä sivu on esikatselu.",
     "error.signin_required": "Kirjaudu, niin voit jatkaa.",
@@ -464,7 +529,8 @@ const fi: Locale = {
     "error.unsupported_media": "Osaamme lukea vain PNG-, JPEG-, WebP- ja GIF-kuvia.",
     "error.too_many_files": "Kuvia on enemmän kuin tähän voi lisätä.",
     "error.evidence_invalid": "Yksi kuvistasi vanhentui tai sitä ei voitu tarkistaa. Poista se ja lisää uudelleen.",
-    "error.anonymize_failed": "Emme saaneet nimiä pois tekstistäsi. Yritä uudelleen tai kirjoita nimien sijaan nimikirjaimet.",
+    "error.anonymize_failed":
+      "Emme saaneet nimiä pois tekstistäsi. Yritä uudelleen tai kirjoita nimien sijaan nimikirjaimet.",
     "mode.label": "Miten ratkaistaan?",
     "mode.now": "Vain minä (heti)",
     "mode.both": "Molemmat puolet (lähetä linkki)",
@@ -502,7 +568,8 @@ const fi: Locale = {
     "case.side.opened": "Avattu",
     "case.side.typing": "Kirjoittaa…",
     "case.judgeAnswered": "Ratkaise vastanneiden puolilla",
-    "case.judgeAnswered.confirm": "Haluatko tuomion vastanneiden puolilla? Muut kutsut sulkeutuvat, eivätkä he voi enää vastata.",
+    "case.judgeAnswered.confirm":
+      "Haluatko tuomion vastanneiden puolilla? Muut kutsut sulkeutuvat, eivätkä he voi enää vastata.",
     "case.cancel": "Peruuta",
     "case.retry": "Yritä uudelleen",
     "case.failedBody": "Tuomio palautettiin saldoosi. Voit yrittää nyt uudelleen.",
@@ -530,7 +597,8 @@ const fi: Locale = {
     "case.list.untitled": "Juttu ({date})",
     "case.list.untitledSoon": "Juttu",
     "respond.title": "Kerro oma puolesi",
-    "respond.privacy": "Nimet vaihdetaan muotoon Osapuoli A ja Osapuoli B ennen kuin tuomarit lukevat mitään. Et tarvitse tiliä.",
+    "respond.privacy":
+      "Nimet vaihdetaan muotoon Osapuoli A ja Osapuoli B ennen kuin tuomarit lukevat mitään. Et tarvitse tiliä.",
     "respond.lang": "Tuomion kieli: {lang}.",
     "respond.lang.en": "englanti",
     "respond.lang.tr": "turkki",
@@ -539,10 +607,8 @@ const fi: Locale = {
     "respond.submit": "Lähetä kertomukseni",
     "case.write.title": "Sinun puolesi",
     "case.write.placeholder": "Mikä ongelma on?",
-    "case.write.lead":
-      "Kirjoita puolesi, kun olet valmis. Tuomarit aloittavat, kun molemmat ovat kirjoittaneet.",
-    "case.write.leadAnswered":
-      "Toinen on kirjoittanut puolensa. Kirjoita omasi, niin saat tuomion.",
+    "case.write.lead": "Kirjoita puolesi, kun olet valmis. Tuomarit aloittavat, kun molemmat ovat kirjoittaneet.",
+    "case.write.leadAnswered": "Toinen on kirjoittanut puolensa. Kirjoita omasi, niin saat tuomion.",
     "case.write.submit": "Lähetä puoleni",
     "case.write.emailSubject": "Toinen osapuoli on kirjoittanut oman puolensa",
     "respond.sent": "Kiitos. Kertomuksesi on perillä, ja tuomarit ovat asian kimpussa.",
@@ -612,8 +678,7 @@ const fi: Locale = {
     "home.says": "{name} sanoo:",
     "home.mySide": "Minun puoleni:",
     "home.otherSide": "Toisen puoli:",
-    "appeal.lead":
-      "Käyttää 1 tuomion.",
+    "appeal.lead": "Käyttää 1 tuomion.",
     "appeal.placeholder": "Mitä tuomarit eivät huomanneet? Fakta, viesti tai se, mistä oikeasti sovittiin.",
     "appeal.submit": "Ratkaise uudelleen",
     "appeal.sending": "Anonymisoidaan lisätietojasi…",
@@ -633,7 +698,8 @@ const fi: Locale = {
     "appeal.generic.changed": "Uusi tieto muutti tuomiota.",
     "appeal.previous": "Aiempi tuomio",
     "appeal.failed": "Uudelleenratkaisu ei onnistunut. Tuomio palautettiin saldoosi; voit yrittää uudelleen.",
-    "appeal.refused": "Tuomarit eivät suostuneet ratkaisemaan uudelleen noilla tiedoilla. Tuomio palautettiin saldoosi.",
+    "appeal.refused":
+      "Tuomarit eivät suostuneet ratkaisemaan uudelleen noilla tiedoilla. Tuomio palautettiin saldoosi.",
     "appeal.history": "Tuomiohistoria",
     "faq.both.q": "Voiko toinen osapuoli kertoa oman puolensa?",
     "faq.both.a":
@@ -646,7 +712,8 @@ const fi: Locale = {
     "about.casesTitle": "Molempien kuuleminen",
     "about.cases1":
       "Kaksipuoliset jutut: kirjaudu, kirjoita oma kertomuksesi ja lähetä yksityinen linkki. Toinen kirjoittaa omansa näkemättä sinun tekstiäsi, ja tuomarit punnitsevat molempia kertomuksia: mistä ollaan samaa mieltä, mistä kiistellään ja mikä todiste muuttaisi tuomion.",
-    "about.cases2": "Jos kukaan ei vastaa 7 päivän kuluessa, linkki lakkaa toimimasta. Voit silti saada tuomion pelkän oman puolesi perusteella.",
+    "about.cases2":
+      "Jos kukaan ei vastaa 7 päivän kuluessa, linkki lakkaa toimimasta. Voit silti saada tuomion pelkän oman puolesi perusteella.",
     "about.premiumTitle": "Lisäominaisuudet",
     "about.premium2":
       "Todisteet: lisää kuvakaappauksia keskusteluista tai asiakirjoista. Luemme niiden tekstin, piilotamme nimet ja heitämme kuvan pois.",
@@ -654,12 +721,6 @@ const fi: Locale = {
       "Lisätiedot: tuomion jälkeen kumpikin voi lisätä tietoa kerran. Tuomarit käyvät kaiken läpi uudelleen ja kertovat, pysyikö tuomio, kääntyikö se vai muuttuiko se. Aiemmat tuomiot jäävät näkyviin.",
     "about.premium4":
       "Kaksipuolinen juttu käyttää 1 tuomion. Se varataan, kun lähetät linkin, ja palautuu, jos kukaan ei vastaa 7 päivän kuluessa.",
-    "privacy.casesTitle": "Kaksipuoliset jutut ja lisätiedot",
-    "privacy.cases":
-      "Kaksipuolisessa jutussa kumpikin kertomus anonymisoidaan lähetettäessä samalla tavalla kuin tavallisessa tuomiossa. Tuomarit lukevat anonymisoidun tekstin; kunkin oma kertomus sellaisena kuin hän sen kirjoitti, nimilistoineen, säilytetään salattuna, ja vain hän voi nähdä sen. Lähettäessään kertomuksensa kumpikin kirjoittaa nimen, jonka haluaa näkyvän jakosivulla; jos kenttä jätetään tyhjäksi, näkyy Osapuoli A tai Osapuoli B. Toinen osapuoli ei tarvitse tiliä; hänen vastauksiaan rajoitetaan hänen IP-osoitteensa avaimellisella tiivisteellä. Kutsulinkki säilytetään vain tiivisteenä. Jos toinen osapuoli vastaa kirjautuneena, hänen tilinsä liitetään hänen kertomukseensa, jotta vain hän voi myöhemmin lisätä tietoa tai nähdä alkuperäisen tekstinsä; jos hän vastaa kirjautumatta, saman hoitaa hänen selaimeensa tallennettu yksityinen koodi, ja jos hän kirjautuu myöhemmin samassa selaimessa, hän voi tallentaa jutun tililleen. Jotta sama henkilö saa saman merkinnän molemmissa kertomuksissa, palvelin säilyttää jokaisen jutun sisällä nimien koodattuja sormenjälkiä (avaimellisia tiivisteitä, ei itse nimiä). Ennen tuomiota kumpikaan ei voi lukea toisen tekstiä; kaksipuolisen tuomion jälkeen molemmat voivat lukea molemmat anonymisoidut kertomukset. Tuomion jälkeen lisätyt tiedot käsitellään samalla tavalla. Kun toinen osapuoli vastaa, voimme lähettää sinulle sähköpostitse lyhyen ilmoituksen ilman jutun tekstiä, jos sähköposti on käytössä. Kumpi tahansa voi poistaa oman kertomuksensa: hänen alkuperäinen tekstinsä ja näyttönimensä pyyhitään, ja jutun jakolinkit lakkaavat toimimasta kaikilta. Tilin poistaminen tekee saman jokaiselle jutulle, jonka aloitit tai johon vastasit.",
-    "privacy.evidenceTitle": "Kuvakaappaukset",
-    "privacy.evidence":
-      "Selaimesi pienentää isot kuvat ennen lähettämistä. Sen jälkeen jokainen kuva lähetetään kerran ulkopuoliseen tekoälypalveluun, jotta näkyvä teksti voidaan lukea; emme koskaan säilytä kuvaa. Raaka tekstivedos, jossa voi vielä olla nimiä, palaa sinulle allekirjoitetun tunnisteen sisällä, jota selaimesi säilyttää enintään 6 tuntia. Kun lähetät kertomuksesi, vedos anonymisoidaan yhdessä tekstisi kanssa: anonymisoitu vedos näytetään tuomareille ja säilytetään jutun kanssa, ja raaka vedos säilytetään salattuna alkuperäisen tekstisi kanssa, jossa vain sinä näet sen. Siinä olevat puhelinnumerot, sähköpostiosoitteet, somen käyttäjänimet ja tilinumerot korvataan tuomareita varten myös paikkamerkeillä.",
     "pricing.premium.f5": "Kuvakaappaukset todisteiksi: luetaan ja heitetään pois, ei lisämaksua",
     "pricing.premium.f6": "Lisää tietoa tuomion jälkeen, niin asia ratkaistaan uudelleen (1 tuomio)",
     "pricing.premium.f7": "Kuule molempia: lähetä toiselle yksityinen linkki, jolla hän kertoo oman puolensa",
@@ -779,21 +840,6 @@ const fi: Locale = {
     "stamp.dissolved": "Merkitysero",
     "bestPoint.of": "{name}: paras pointti",
     "bestPoint.self": "Sinun paras pointtisi",
-    "privacy.accessTitle": "Kuka näkee mitä",
-    "privacy.access":
-      "Sinä: alkuperäisen tekstisi ja nimet, millä tahansa laitteella kirjautuneena, tai käyttämälläsi laitteella selaimeesi tai sovellukseen tallennetun yksityisen koodin avulla (säilytämme koodista vain sekoitetun muodon). Kirjautumatta kirjoitetut tuomiot ajalta, jolloin tiliä ei vielä tarvittu, sekä jutut, joihin vastasit kirjautumatta, pysyvät selaimen listassa otsikkoineen ja nimineen sellaisina kuin kirjoitit ne, jotta Tuomiot-sivu voi näyttää ne: kuka tahansa samaa selainta käyttävä näkee listan. Yhteiskäyttöisellä tietokoneella kirjaudu sisään tai käytä yksityistä ikkunaa; sivuston tietojen tyhjentäminen selaimesta poistaa listan. Kaksipuolisessa jutussa kukin näkee vain oman alkuperäisen tekstinsä; tuomion jälkeen molemmat näkevät molemmat anonymisoidut kertomukset sellaisina kuin tuomarit ne lukivat. Tuomarit (tekoälypalveluntarjoajamme ajamat tekoälymallit): vain anonymisoidun version. Kuka tahansa, jolla on jakolinkki: tuomion näyttönimineen. Oletuksena ne ovat itsellesi valitsemasi nimi ja muiden etunimet sellaisina kuin kirjoitit ne; voit muuttaa niitä tai ottaa nimet pois päältä milloin tahansa, jolloin sivulla näkyvät Osapuoli A ja Osapuoli B. Me: voimme purkaa alkuperäisten tekstien salauksen avaimella, ja katsomme tallennettua tekstiä vain käsitelläksemme sinulta tulleen tukipyynnön, tutkiaksemme väärinkäyttöä tai kun laki sitä edellyttää.",
-    "privacy.removalTitle": "Poistaminen",
-    "privacy.removal":
-      "Voit pyytää poistoa tuomion sivulla (kirjautuneena voit avata sen Tuomiot-sivulta), kaksipuolisessa jutussa jutun sivulla, poistamalla tilisi tai sähköpostitse. Poisto pyyhkii alkuperäisen tekstisi, nimilistan ja näyttönimet (kaksipuolisessa jutussa oman kertomuksesi alkuperäisen tekstin ja näyttönimesi), ja jakolinkki ja sen esikatselukuva lakkaavat latautumasta kaikille. Viestisovelluksiin jo jaetut esikatselut ovat näiden sovellusten tallessa ja voivat näkyä, kunnes sovellukset päivittävät ne. Säilytämme anonymisoidun tekstin ja tuomion ilman nimiä tiedoissamme; niitä ei voi enää avata linkin kautta. Tilin poistaminen tekee saman kaikille tuomioillesi ja osuuksillesi jutuista sekä poistaa kirjautumistietosi, tuomiosaldosi ja tilauksesi. Poistetut tiedot säilyvät varmuuskopioissamme, kunnes ne vanhenevat (enintään 14 päivää, katso alta); jos joskus palautamme varmuuskopion, teemme jokaisen poiston uudelleen (sitä varten säilytämme listaa siitä, mitä poistettiin ja milloin, ilman tekstejä tai nimiä). Kolmenkymmenen päivän kuluttua siitä, kun poistat jotakin, poistamme myös anonymisoidun tekstin ja tuomion ja säilytämme vain lopputuloksen ja päivämäärät, ellei laki edellytä, että säilytämme niitä pidempään. Jutun kohdalla kolmenkymmenen päivän aika alkaa vasta, kun kaikki siihen osallistuvat ovat poistaneet sen.",
-    "privacy.retentionTitle": "Kuinka kauan säilytämme",
-    "privacy.retention":
-      "Säilytämme tuomiot ja alkuperäiset tekstit, kunnes pyydät poistoa tai poistat tilisi. Vikatilanteista palautumista varten säilytämme palvelimesta ja sen tietokannasta varmuuskopioita enintään 14 päivää, minkä jälkeen ne poistetaan. Niissä on samat tiedot kuin palvelimella, salatut alkuperäiset tekstit mukaan lukien, ja avain on samalla palvelimella, joten varmuuskopiot on suojattu samoin kuin itse palvelin, ei tuolla salauksella. Käyttörajojen tiivisteet säilyvät enintään 24 tuntia. Palvelinlokit säilytetään palvelintilan tarjoajamme tavanomaisen käytännön mukaan. Käyttötapahtumat poistetaan 90 päivän jälkeen ja laitelinkit 180 päivän käyttämättömyyden jälkeen. Grafana Labsille lähetetyt lokit ja mittarit säilytetään 14 päivää.",
-    "privacy.locationTitle": "Missä tietosi ovat",
-    "privacy.location":
-      "Palvelimemme ovat Saksassa (OVH, Frankfurt). Osa käsittelystä tapahtuu Yhdysvalloissa: tekoälypalveluntarjoajamme ajaa mallit, jotka poistavat nimet, ratkaisevat, lukevat kuvakaappaukset ja hakevat verkosta; Cloudflare toimii okjudge.comin edessä välityspalvelimena ja DNS-palveluna (kaikki liikenne kulkee sen kautta) ja hoitaa ihmistarkistuksen. Kirjautuminen kulkee Applen tai Googlen kautta, jos valitset ne, ja kirjautumissähköpostit Resendin kautta. Toisessa maassa käsiteltyihin tietoihin voidaan soveltaa kyseisen maan lakeja.",
-    "privacy.rightsTitle": "Oikeutesi (Kanada)",
-    "privacy.rights":
-      "Judgea ylläpidetään Kanadasta, ja se käsittelee henkilötietoja Kanadan liittovaltion tietosuojalain (PIPEDA) mukaisesti: keräämme vain sen, mitä palvelu tarvitsee, käytämme sitä vain siihen ja suojaamme sen, ja voit pyytää nähdä, korjata tai poistaa sinusta säilyttämämme tiedot. Vastaamme 30 päivän kuluessa.",
     "footer.terms": "Ehdot",
     "signin.legalTerms": "käyttöehdot",
     "age.confirm": "Olen 18-vuotias tai vanhempi",

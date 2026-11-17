@@ -45,8 +45,7 @@ const sl: Locale = {
     "thinking.crux": "Iščemo jedro spora…",
     "thinking.judges": "Trije sodniki se odločajo, vsak zase…",
     "thinking.votes": "Štejemo glasove…",
-    "thinking.helper":
-      "Trije sodniki UI razsojajo ločeno, ob tesnem izidu pa se jim pridruži še kdo. Daj nam minutko.",
+    "thinking.helper": "Trije sodniki UI razsojajo ločeno, ob tesnem izidu pa se jim pridruži še kdo. Daj nam minutko.",
     "thinking.finish": "Bližamo se jedru…",
     "thinking.stillJudging": "Sodniki še premišljujejo. Še malo potrpi…",
     "thinking.ready": "Razsodba je pripravljena.",
@@ -109,14 +108,17 @@ const sl: Locale = {
     "vote.dissolved": "nesporazum",
     refusedNote: "UI se je tokrat vzdržala. Raje ne pokažemo ničesar, kot da bi si razsodbo izmislili.",
     demoNote: "🎭 Demo način: ključ UI ni nastavljen, zato je to vzorčna razsodba",
-    "trial.survived": "🛡️ Ugovor zavrnjen: odvetnik druge plati je podal svoj najmočnejši ugovor, razsodba pa je zdržala. Zanesljivost ostaja enaka.",
+    "trial.survived":
+      "🛡️ Ugovor zavrnjen: odvetnik druge plati je podal svoj najmočnejši ugovor, razsodba pa je zdržala. Zanesljivost ostaja enaka.",
     "trial.uncertain": "⚠️ Odvetnik druge plati je podal ugovor in ta je pustil resen dvom o tej razsodbi",
-    "trial.overturned": "⚠️ Ugovor sprejet: razsodba ostaja v veljavi, vendar jo je najmočnejši ugovor druge plati resno oslabil",
+    "trial.overturned":
+      "⚠️ Ugovor sprejet: razsodba ostaja v veljavi, vendar jo je najmočnejši ugovor druge plati resno oslabil",
     "trial.minor": "🛡️ Odvetnik druge plati je navedel upravičeno točko, vendar razsodba ostaja v veljavi",
     "trial.whatWasTested": "Ugovor",
     "trial.attackPrefix": "Ugovor:",
     "trial.refereePrefix": "Zakaj:",
-    "trial.mixedNote": "To je mešan spor: deloma dejstva, deloma vrednote ali pomeni besed, zato je čisto zmago težje zagovarjati.",
+    "trial.mixedNote":
+      "To je mešan spor: deloma dejstva, deloma vrednote ali pomeni besed, zato je čisto zmago težje zagovarjati.",
     confidence: "Zanesljivost: {n} od {total}",
     verdictAria: "Razsodba: {label}",
     "party.a": "Stranka A",
@@ -135,8 +137,7 @@ const sl: Locale = {
     "error.too_long": "To je pa veliko! Ostani pod 6000 znaki.",
     "error.invalid": "Ta zahteva ni videti v redu.",
     "error.rate_limited": "Mir v dvorani! Za zdaj je meja dosežena. Poskusi znova čez {wait}.",
-    "error.daily_cap":
-      "Sodišče je za danes zaprto. Slišalo je vse prepire, ki jih zmore. Spet odpremo čez {wait}.",
+    "error.daily_cap": "Sodišče je za danes zaprto. Slišalo je vse prepire, ki jih zmore. Spet odpremo čez {wait}.",
     "error.captcha_failed": "Nismo mogli preveriti, da si človek. Ponovi preverjanje in nato pošlji.",
     "wait.moment": "nekaj minut",
     "wait.minute": "minuto",
@@ -144,8 +145,7 @@ const sl: Locale = {
     "wait.hour": "eno uro",
     "wait.hours": "{n} ur",
     "refused.headline": "UI se o tem ni hotela izreči",
-    "refused.crux":
-      "Varnostni filter UI ji ni dovolil razsoditi o tem. Bolje nobena razsodba kot izmišljena.",
+    "refused.crux": "Varnostni filter UI ji ni dovolil razsoditi o tem. Bolje nobena razsodba kot izmišljena.",
     "refused.bestPoint": "Poskusi povedati drugače. Ali pa sprejmi, da so nekateri prepiri preveliki za aplikacijo.",
     "refused.claim": "Izpuščeno",
     "nav.skip": "Preskoči na vsebino",
@@ -194,12 +194,10 @@ const sl: Locale = {
     "sample.nameB": "Ti",
     "sample.label": "Prav imaš",
     "sample.headline": "Nihče ne naroči sendviča v upanju na hot dog",
-    "sample.crux":
-      "Po obliki bi hot dog lahko šel za sendvič, a besede v resnici nihče ne uporablja tako.",
+    "sample.crux": "Po obliki bi hot dog lahko šel za sendvič, a besede v resnici nihče ne uporablja tako.",
     "sample.why":
       "Žigov argument sloni samo na obliki. Beseda pomeni to, za kar jo ljudje uporabljajo, in kdor kjer koli naroči sendvič, ne dobi hot doga.",
-    "sample.bestPoint":
-      "Prerezana štručka z nadevom res ustreza večini slovarskih opredelitev sendviča.",
+    "sample.bestPoint": "Prerezana štručka z nadevom res ustreza večini slovarskih opredelitev sendviča.",
     "faq.title": "Kaj ljudi zanima",
     "faq.kicker": "Pogosta vprašanja",
     "faq.fair.q": "Je pošteno?",
@@ -238,8 +236,7 @@ const sl: Locale = {
       "Ve samo to, kar mu poveš, in to, kako zgodbo poveš, vpliva na izid. Dodaj tudi plat druge osebe, tako kot bi jo povedala sama.",
     "about.limit2":
       "Sodniki UI se lahko pri dejstvih zmotijo. Vsaka razsodba našteje dejstva, na katera se opira, da jih lahko preveriš.",
-    "about.limit3":
-      "Zamenjava imen večinoma deluje, nenavadna imena ali vzdevki pa lahko uidejo.",
+    "about.limit3": "Zamenjava imen večinoma deluje, nenavadna imena ali vzdevki pa lahko uidejo.",
     "about.limit4": "Za zabavo in jasnost, ne kot pravni, zdravstveni ali finančni nasvet.",
     "about.builtTitle": "Pod pokrovom",
     "about.built":
@@ -249,33 +246,96 @@ const sl: Locale = {
     "privacy.kicker": "Tvoji podatki",
     "privacy.lead":
       "Na kratko: kar napišeš, skupaj z imeni, hranimo šifrirano, da se lahko vrneš k temu. Sodniki vedno berejo samo različico brez imen. Odstranitev lahko zahtevaš kadar koli. Tvojih podatkov ne prodajamo. Če bo Judge kdaj prodan ali združen z drugim podjetjem, preide na novega lastnika po teh pravilih.",
+    "privacy.whoTitle": "Kdo smo",
+    "privacy.who":
+      "Judge vodi Aytu Tuna, posameznik v Kanadi.\n{address}\nMi odločamo, kaj se zbira in zakaj. Oseba, odgovorna za osebne podatke, je Aytu Tuna, lastnik. Stik: {email}.",
     "privacy.storedTitle": "Kaj hranimo",
     "privacy.stored":
-      "Za vsako razsodbo hranimo tvoje besedilo točno tako, kot je bilo napisano (z odgovori na vprašanja sodnikov in besedilom, prebranim s posnetkov zaslona), in seznam, katero ime je postalo katera oznaka. Oboje je šifrirano s ključem, ki ni shranjen v podatkovni zbirki. Hranimo tudi anonimizirano različico, ki jo berejo sodniki (imena zamenjana z oznakama Stranka A in Stranka B), izbrane nastavitve, razsodbo, morebitni prevod in imena, ki jih izbereš za prikaz na strani za deljenje. Štejemo tudi, kako se uporablja Judge: kateri zasloni in funkcije, z različico aplikacije, modelom naprave, različico sistema, jezikom in državo tvoje povezave, v aplikacijah pa še identifikator naprave. Ko si prijavljen, je to povezano z računom. Dogodke uporabe hranimo 90 dni, povezave med računom in napravami 180 dni. Aplikacije imajo v Nastavitvah stikalo Statistika uporabe, spletna stran pa ne pošlje ničesar, kadar brskalnik pošlje Do Not Track ali Global Privacy Control. Nikoli ne vsebuje besedila sporov. Če oceniš razsodbo, oceno hranimo skupaj z njo.",
+      "Za vsako razsodbo hranimo tvoje besedilo natanko tako, kot si ga napisal (z odgovori na vprašanja sodnikov in besedilom, prebranim s posnetkov zaslona), ter seznam, katero ime je postalo katera oznaka. Šifrirani so s ključem, ki ni shranjen v zbirki podatkov. Hranimo tudi anonimizirano različico, ki jo berejo sodniki (imena zamenjana s Stranko A in Stranko B), nastavitve, ki si jih izbral, razsodbo, morebitni prevod in imena, ki jih izbereš za prikaz na strani za deljenje. Štejemo tudi, kako se Judge uporablja: kateri zasloni in funkcije, z različico aplikacije, modelom naprave, različico sistema, jezikom in državo povezave, v aplikacijah pa z identifikatorjem naprave. Ko si prijavljen, je to povezano z tvojim računom. Dogodke uporabe hranimo 90 dni, povezave med računom in napravami pa 180 dni. Aplikacije imajo v Nastavitvah stikalo Statistika uporabe, spletno mesto pa ne pošlje ničesar, kadar tvoj brskalnik pošlje Do Not Track ali Global Privacy Control. Nikoli ne vsebuje besedila primera. Če razsodbo oceniš, oceno hranimo z njo. Oceno je mogoče izbrisati; vrstico potem hranimo brez palca gor ali dol. Hranimo tudi zapis o tvojem soglasju za zasebne podrobnosti in o tvojih izbirah pri Pomagaj izboljšati Judge, z datumom, jezikom in platformo ter besedilom, ki si ga videl.",
     "privacy.helpTitle": "Pomagaj izboljšati Judge",
     "privacy.help":
-      "Izklopljeno, dokler tega ne vklopiš. Ko je vklopljeno, lahko anonimizirano besedilo, ki ga berejo sodniki, njihove razsodbe in tvoje ocene uporabimo za preizkušanje in učenje sodnikov v Judge. Imena nikoli niso del tega. Z izklopom se ta uporaba ustavi za vse, kar izvira od tebe, beležimo pa, kdaj je bilo vklopljeno ali izklopljeno.",
-    "privacy.notStoredTitle": "Česa ne počnemo",
-    "privacy.notStored":
-      "Brez oglasnih sledilnikov. Tvoja izbira jezika je shranjena v lokalni shrambi brskalnika in nikjer drugje.",
-    "privacy.ipTitle": "Omejevanje uporabe",
-    "privacy.ip":
-      "Da sodišče ostane odprto za vse, omejimo, koliko razsodb lahko zahteva vsak račun in koliko prevodov vsak obiskovalec. Za prevode in odgovore v dvostranskem sporu do 24 ur hranimo v shrambi za omejevanje uporabe zgoščeno vrednost (s ključem) tvojega naslova IP, ne pa samega naslova. Če je preverjanje, da si človek, vklopljeno, gre tvoj naslov IP za to preverjanje tudi k podjetju Cloudflare. Nikoli ni shranjen skupaj s tvojo razsodbo.",
-    "privacy.processorsTitle": "Kdo še obdeluje tvoje besedilo",
-    "privacy.processors":
-      "Besedilo, ki ga vneseš, skupaj s pravimi imeni, najprej gre k našemu ponudniku UI v Združenih državah, da se imena odstranijo. Presoja se samo anonimizirana različica; izvirnik je shranjen šifrirano, kot je opisano zgoraj. Če je preverjanje, da si človek, vklopljeno, se v tvojem brskalniku izvaja Cloudflare Turnstile, ki rezultat preveri pri podjetju Cloudflare. Če se prijaviš, prijavo izvede Apple ali Google (kar izbereš), e-poštna sporočila za prijavo pa pošiljamo prek storitve Resend. Naš ponudnik gostovanja hrani običajne strežniške dnevnike. Nakupi v aplikacijah potekajo prek App Store ali Google Play, obdeluje jih RevenueCat, ki prejme ID tvojega računa in zgodovino nakupov. Grafana Labs prejema dnevnike strežnika in meritve delovanja, ki se v EU hranijo 14 dni; dnevniki ne vsebujejo besedila sporov. Poročila o zrušitvah in napakah iz aplikacij in s tega spletnega mesta gredo v Sentry, kjer se v EU hranijo do 30 dni; vsebujejo napako, različico aplikacije ali brskalnika in model naprave, ne vsebujejo pa besedila sporov, ID-ja računa ali naslova povezave.",
-    "privacy.shareTitle": "Povezave za deljenje",
-    "privacy.share":
-      "Vsak, ki ima povezavo do razsodbe, jo lahko vidi, s prikaznimi imeni, ki jih izbereš (ali z oznakama Stranka A in Stranka B, če imena izklopiš). Povezave uporabljajo dolge naključne ID-je, strani za deljenje pa iskalnikom sporočajo, naj jih ne indeksirajo. Povezava odstranjene razsodbe in njena slika za predogled se nehata nalagati; predogledi, ki so že objavljeni v aplikacijah za klepet, so lahko še vidni, dokler jih te aplikacije ne osvežijo. Ne vpisuj naslovov, telefonskih številk ali česar koli drugega, kar ne sodi na stran, ki jo lahko odprejo drugi.",
-    "privacy.contactTitle": "Stik",
-    "privacy.contact":
-      "Imaš vprašanje ali želiš videti, popraviti ali odstraniti svoje podatke? Piši na {email} in priloži povezavo do razsodbe ali spora.",
-    "privacy.accountsTitle": "Računi",
-    "privacy.accounts":
-      "Judge je samo za osebe, starejše od 18 let, računi, za katere ugotovimo, da pripadajo osebi, mlajši od 18 let, pa se zaprejo. Za razsodbo potrebuješ račun; druga stran v dvostranskem sporu lahko odgovori tudi brez njega. Če se prijaviš z računom Apple ali Google, hranimo e-poštni naslov, ime in povezavo do profilne slike, ki nam jih posredujeta, ter način prijave, ki ga uporabiš, Apple oziroma Google pa lahko vidi, da se prijavljaš v Judge. Če se prijaviš s povezavo po e-pošti, to sporočilo pošljemo prek storitve Resend in za preverjanje povezave za kratek čas hranimo zapis s tvojim e-poštnim naslovom: povezava preneha delovati po 10 minutah, zapis pa izbrišemo, ko je uporabljen, ali kmalu po izteku. Hranimo tudi zapise tvojih sej (naključni žeton in čas poteka, brez naslova IP ali podatkov o brskalniku, aplikacije pa ob prijavi zabeležijo tudi identifikator naprave), tvoje kredite, naročnino in njeno zgodovino ter to, katere razsodbe so porabile kredit (samo ID razsodbe). Hranimo tudi, katere razsodbe in spori so tvoji, da jih najdeš na kateri koli napravi. Ko izbrišeš račun na strani računa, se izbrišejo tvoj račun, seje, dogodki uporabe in povezava med računom in napravami, tvoje razsodbe in tvoje plati v sporih pa se odstranijo, kot je opisano v razdelku Odstranitev. Obdržimo samo zakodirano obliko tvojega e-poštnega naslova, da nov račun z istim naslovom ne dobi še ene brezplačne razsodbe in ostane zaprt, če je bil tvoj račun zaprt, ker si mlajši od 18 let. Prijavne kode, poslane po e-pošti, delujejo enako kot povezave. Če nastavite geslo, ob vašem računu hranimo le njegovo zašifrirano (zgoščeno) obliko, nikoli samega gesla.",
+      'Izklopljeno, dokler tega ne vklopiš. Ko je vklopljeno, lahko anonimizirano besedilo, ki ga berejo sodniki, njihove razsodbe in tvoje ocene uporabimo za preizkušanje in učenje modelov UI: Judgeovih lastnih in, če bo Judge kdaj prodan ali združen, modelov novega lastnika. Imena nikoli niso del tega. Z izklopom je od takrat naprej vse, kar ustvariš, izvzeto iz kakršnega koli učenja. Beležimo, kdaj si ga vklopil ali izklopil.\n„Anonimizirano" tu pomeni, da so imena odstranjena; druge podrobnosti, ki si jih napisal, so lahko še vedno v besedilu. Zajema samo razsodbe, nastale med vklopom, primer pa samo, kadar ga imajo vklopljenega vsi, ki so napisali kakšno stran. Že naučeni modeli se ne spremenijo. Doslej ni bilo naučeno nič. Judge deluje enako tudi z izklopom.\nVprašamo enkrat, na tvoji lastni strani razsodbe po tvoji drugi dokončani razsodbi. Nikoli ne vprašamo na razsodbi, ki jo je nekdo delil s teboj. Kartica pravi: „Naj Judge uporabi tvoje anonimizirane razsodbe in ocene za učenje UI. Imena niso nikoli vključena." Svoj odgovor lahko kadar koli spremeniš v Nastavitvah.',
+    "privacy.purposesTitle": "Zakaj uporabljamo tvoje podatke",
+    "privacy.purposes":
+      "- Da ti damo razsodbo, upravljamo tvoj račun ter obravnavamo nakupe in podporo. Podlaga (EU, Združeno kraljestvo in Brazilija): potrebno je za zagotavljanje storitve, ki jo zahtevaš.\n- Da je Judge varen in deluje: omejitve uporabe, preverjanje, da si človek, odkrivanje ljudi, ki izkoriščajo brezplačne kredite, poročila o napakah, števci uporabe in hramba šifrirane oblike e-pošte po izbrisu. Podlaga: naš zakoniti interes za varno, delujočo storitev. Ugovarjaš lahko po e-pošti. Aplikacije imajo stikalo Statistika uporabe, Do Not Track ali Global Privacy Control v brskalniku pa ustavi spletnemu mestu lastne dogodke uporabe.\n- Da preverimo tvojo starost, vključno s starostnim signalom telefona. Podlaga: naš zakoniti interes, da Judge ostane samo za odrasle, ali zakonska obveznost, kjer velja zakon o starosti v trgovinah z aplikacijami.\n- Da 30 dni po tem, ko nekaj odstraniš, hranimo besedilo brez imen, za primer zlorabe ali pravnega zahtevka. Podlaga: naš zakoniti interes.\n- Da hranimo dokaz o tem, s čimer si se strinjal: soglasje za zasebne podrobnosti in tvoje izbire pri Pomagaj izboljšati Judge. Podlaga: naš zakoniti interes, da lahko pokažemo, s čimer si se strinjal.\n- Da tvoje anonimizirane razsodbe in ocene uporabimo za učenje UI. Podlaga: tvoja privolitev, samo če to vklopiš.\n- Da spoštujemo zakon in vodimo evidence, ki jih moramo voditi. Podlaga: zakonska obveznost.\nTvojih podatkov nikoli ne uporabljamo za oglase in nimamo oglaševalskih sledilnikov. Če bomo kdaj želeli novo rabo, ti bomo to povedali vnaprej in te znova vprašali, če zakon zahteva tvojo privolitev.",
+    "privacy.sensitiveTitle": "Česa ne napisati",
+    "privacy.sensitive":
+      'Spori se lahko dotikajo zasebnih tem, kot so zdravje, odnosi, vera ali denar. Piši samo, kar razsodba potrebuje, in izpusti zasebne podrobnosti o drugih ljudeh. Judge ni za nujne primere ali pravne nasvete.\nPred tvojo prvo razsodbo, prvo stranjo primera ali prvim odgovorom na primer te prosimo, da označiš polje: „Moje besedilo lahko vsebuje zasebne podrobnosti, na primer o zdravju ali odnosih. Judge ga brez imen pošlje zunanji storitvi UI, da napiše mojo razsodbo, in ga hrani, dokler ga ne odstranim." Nadaljuješ lahko samo, ko je označeno. Vprašamo enkrat na račun; če že imaš račun, vprašamo ob tvoji naslednji razsodbi. Ljudje, ki odgovorijo na primer brez računa, vidijo isto polje. Zapis o oznaki hranimo z datumom, jezikom, platformo in besedilom, ki si ga videl.',
+    "privacy.othersTitle": "Ljudje, o katerih pišeš",
+    "privacy.others":
+      'Tvoje besedilo lahko opisuje nekoga, ki Judge ne uporablja. Sodniki ga vidijo samo pod oznakami, kot je „Oseba C". Njegova imena hranimo šifrirana, skupaj s kodiranim prstnim odtisom vsakega imena (ključen zgoščeni niz, ne samo ime). Imena se lahko pojavijo na strani za deljenje, kot je opisano v razdelku Kdo vidi kaj. Če si imenovan v tujem primeru, piši na {email} s povezavo in odstranili bomo tvoje ime s strani za deljenje ali obravnavali tvoj ugovor.',
+    "privacy.automatedTitle": "Razsodbe piše UI",
+    "privacy.automated":
+      'Tvojo razsodbo pišejo modeli UI, nobena oseba je ne prebere vnaprej. To je mnenje o argumentu, kot je bil napisan, iz besedila brez imen, morebitnih prikazanih spletnih virov in tvojih odgovorov. Ni pravni nasvet in ni zavezujoča. Na njeni podlagi se ne sprejme nobena odločitev o tebi, tvojem računu, ceni ali dostopu. Lahko je napačna ali enostranska. Če se ne strinjaš, jo oceni kot „Nepravična", dodaj kontekst ali piši na {email} in jo bo pogledala oseba. Prosi lahko tudi druga stran primera.',
+    "privacy.accessTitle": "Kdo vidi kaj",
+    "privacy.access":
+      "Ti: svoje izvirno besedilo in imena, na kateri koli napravi, ko si prijavljen, ali na napravi, ki si jo uporabil, prek zasebne kode, shranjene v brskalniku ali aplikaciji (hranimo samo njeno šifrirano obliko). Razsodbe, napisane brez prijave, preden je bil račun potreben, in primeri, na katere si odgovoril brez prijave, ostanejo na seznamu v tem brskalniku z naslovi in tvojimi imeni, kot si jih napisal, da jih lahko pokaže stran Razsodbe: vsak, ki uporablja isti brskalnik, vidi ta seznam. Na skupnem računalniku se prijavi ali uporabi zasebno okno; brisanje podatkov spletnega mesta v brskalniku seznam odstrani. Pri dvostranskem primeru vsak vidi samo svoj izvirnik; po razsodbi oba vidita oba anonimizirana opisa, kot so ju brali sodniki. Sodniki (modeli UI, ki jih poganja naš ponudnik UI): samo anonimizirano različico. Vsak, ki ima povezavo za deljenje: razsodbo s prikazanimi imeni. Privzeto je to ime, ki ga izbereš zase, in imena drugih, kot si jih napisal; lahko jih spremeniš ali imena kadar koli izklopiš, nato stran prikazuje Stranko A in Stranko B. Mi: izvirnike lahko dešifriramo s ključem in shranjeno besedilo pogledamo samo za obravnavo tvoje prošnje za podporo, preiskavo zlorabe ali kadar to zahteva zakon.",
+    "privacy.casesTitle": "Dvostranski primeri in ponovne presoje",
+    "privacy.cases":
+      'Pri dvostranskem sporu se vsaka stran ob pošiljanju anonimizira, enako kot razsodba. Sodniki berejo anonimizirano besedilo; stran vsake osebe, kot jo je napisala, s seznamom imen, je shranjena šifrirano in jo lahko vidi samo ta oseba. Vsaka oseba ob pošiljanju svoje strani vpiše ime, ki naj se prikaže na strani za deljenje; če ga pusti prazno, je to Stranka A ali Stranka B. Druga oseba ne potrebuje računa; njeni odgovori so omejeni s ključnim zgoščenim nizom njenega naslova IP. Povezava z vabilom je shranjena samo kot zgoščeni niz. Če druga oseba odgovori prijavljena, je njen račun povezan z njeno stranjo, zato lahko samo ona pozneje doda kontekst ali vidi svoj izvirnik; če odgovori brez prijave, isto naredi zasebna koda, shranjena v njenem brskalniku, poznejša prijava v tem brskalniku pa ji omogoči, da primer obdrži v računu. Da ima ista oseba v obeh opisih isto oznako, strežnik znotraj vsakega primera hrani kodirane prstne odtise imen (ključne zgoščene nize, ne samih imen). Do razsodbe nobena stran ne more brati besedila druge; po dvostranski razsodbi lahko obe osebi bereta oba anonimizirana opisa. Kontekst, dodan po razsodbi (ponovna presoja), se obravnava enako. Ko druga oseba odgovori, ti lahko pošljemo kratko e-sporočilo brez besedila primera, če je e-pošta nastavljena. Vsaka od oseb lahko odstrani svojo stran: njen izvirnik in prikazano ime se izbrišeta, povezave za deljenje primera pa za vse nehajo delovati. Izbris računa to naredi za vsak primer, ki si ga začel ali na katerega si odgovoril. Primer, na katerega nihče ne odgovori, poteče po 7 dneh, vendar besedilo tvoje strani ostane, dokler ga ne odstraniš. Oseba, ki odgovori brez računa, pred pošiljanjem označi „Star/-a sem 18 let ali več" in polje zasebnih podrobnosti, obe oznaki pa hranimo z njeno stranjo.',
     "privacy.webSearchTitle": "Spletno iskanje in vprašanja",
     "privacy.webSearch":
-      "Vsaka razsodba pošlje anonimiziran prepir našemu ponudniku UI z vklopljenim spletnim iskanjem. Iskalne poizvedbe model napiše iz tega anonimiziranega besedila, rezultati pa prihajajo od iskalnega partnerja ponudnika. Uporabljeni viri so prikazani v razsodbi. Sodniki ti lahko najprej zastavijo največ dve vprašanji: da jih pripravijo, gre tvoje besedilo v izvirni obliki, skupaj z imeni, še enkrat k ponudniku UI. Tvoji odgovori so pred razsojanjem anonimizirani skupaj s prepirom; vprašanja in tvoji odgovori v izvirni obliki se hranijo skupaj s tvojim šifriranim izvirnikom.",
+      "Vsaka razsodba pošlje anonimiziran argument našemu ponudniku UI z vklopljenim spletnim iskanjem. Iskalne poizvedbe model napiše iz tega anonimiziranega besedila, rezultati pa pridejo od ponudnikovega iskalnega partnerja. Uporabljeni viri so prikazani na razsodbi. Sodniki ti lahko najprej zastavijo do dve vprašanji: da bi ju sestavili, gre tvoje besedilo, kot si ga vtipkal, z imeni vred, še enkrat k ponudniku UI. Tvoji odgovori se pred sojenjem anonimizirajo skupaj z argumentom; vprašanja in tvoji odgovori, kot si jih napisal, se hranijo s tvojim šifriranim izvirnikom.",
+    "privacy.evidenceTitle": "Posnetki zaslona",
+    "privacy.evidence":
+      "Tvoj brskalnik velike slike pred nalaganjem pomanjša. Vsaka slika nato enkrat gre zunanji storitvi UI, da se prebere vidno besedilo; same slike nikoli ne shranjujemo. Surov prepis, ki lahko še vedno vsebuje imena, se ti vrne v podpisanem žetonu, ki ga tvoj brskalnik hrani do 6 ur. Ko pošlješ svojo stran, se prepis anonimizira skupaj z tvojim besedilom: anonimizirani prepis je prikazan sodnikom in shranjen s primerom, surovi prepis pa je shranjen šifriran s tvojim izvirnikom, kjer ga vidiš samo ti. Telefonske številke, e-poštni naslovi, uporabniška imena na družbenih omrežjih in številke računov v njem so za sodnike prav tako zamenjani z označbami mesta.",
+    "privacy.accountsTitle": "Računi",
+    "privacy.accounts":
+      "Judge je samo za ljudi, starejše od 18 let, računi, za katere ugotovimo, da pripadajo nekomu mlajšemu od 18, pa se zaprejo. Za razsodbo potrebuješ račun; druga stran dvostranskega primera lahko odgovori tudi brez njega. Če se prijaviš z Applom ali Googlom, hranimo e-poštni naslov, ime in povezavo do profilne slike, ki nam jih delita, ter katero metodo prijave si uporabil; Apple ali Google lahko vidita, da si se prijavil v Judge. Če se prijaviš s povezavo ali kodo po e-pošti, to e-sporočilo gre prek Resenda, za njegovo preverjanje pa za kratek čas hranimo zapis z tvojim e-poštnim naslovom: preneha veljati po 10 minutah in se izbriše po uporabi ali kmalu po poteku. Če nastaviš geslo, z računom hranimo samo njegovo šifrirano (zgoščeno) obliko, nikoli samega gesla. Hranimo tudi zapise sej (naključen žeton in čas poteka, brez naslova IP in podatkov o brskalniku, čeprav aplikacije ob prijavi beležijo tudi identifikator naprave), tvoje kredite, paket in njegovo zgodovino ter to, katere razsodbe so porabile kredit (samo ID razsodbe). Hranimo tudi, katere razsodbe in primeri so tvoji, da jih najdeš na kateri koli napravi. Izbris računa na strani računa (v aplikacijah in na spletu) odstrani tvoj račun, zapise prijave, kredite, paket in dogodke uporabe ter odstrani tvoje razsodbe in tvoje strani primerov, kot je opisano v razdelku Odstranitev. Nekaj stvari po izbrisu obdržimo, naštete so v razdelku Kaj hranimo po odstranitvi ali izbrisu. Če se ne moreš prijaviti, stran okjudge.com/delete-account pojasni, kako nas prositi po e-pošti. Hranimo samo šifrirano obliko tvojega e-poštnega naslova, da novi račun z njim ne dobi druge brezplačne razsodbe in ostane zaprt, če je bil tvoj račun zaprt, ker si mlajši od 18. Beležimo tudi, ali si potrdil, da si star 18 let ali več, in kako (z oznako ali starostnim signalom telefona; na Androidu aplikacija vpraša Google Play, na iPhonu Apple).",
+    "privacy.removalTitle": "Odstranitev",
+    "privacy.removal":
+      "Odstranitev lahko zahtevaš na strani razsodbe (prijavljen jo odpreš s strani Razsodbe), pri dvostranskem primeru na strani primera, z izbrisom računa ali po e-pošti. Odstranitev izbriše tvoje izvirno besedilo, seznam imen in prikazana imena (pri dvostranskem primeru izvirnik tvoje strani in tvoje prikazano ime), povezava za deljenje in njena predogledna slika pa se za vse nehata nalagati. Predoglede, ki so že objavljeni v klepetalnih aplikacijah, hranijo te aplikacije in se lahko še prikazujejo, dokler jih ne osvežijo. Anonimizirano besedilo in razsodbo, brez imen, hranimo v svojih evidencah; prek povezave ju ni več mogoče odpreti. Izbris računa to naredi za vse tvoje razsodbe in tvoje strani primerov ter izbriše podatke za prijavo, kredite in paket. Odstranjeni podatki ostanejo v varnostnih kopijah, dokler te ne potečejo (največ 14 dni, glej spodaj); če kdaj obnovimo kopijo, vsako odstranitev znova uporabimo (za to hranimo seznam, kaj je bilo odstranjeno in kdaj, brez besedila in imen). Trideset dni po tem, ko nekaj odstraniš, izbrišemo tudi anonimizirano besedilo in razsodbo ter obdržimo samo izid in datume, razen če zakon zahteva daljšo hrambo. To velja za stvari, odstranjene 14. novembra 2026 (UTC) ali pozneje; starejše odstranitve obdržijo svoje anonimizirano besedilo. Pri primeru se trideset dni začne šele, ko ga odstranijo vsi v njem. Razsodbe in primeri, ki jih nihče ne odstrani, se hranijo, dokler jih ne odstraniš ali ne izbrišeš računa. Razsodbo, narejeno brez prijave, preden je bil račun potreben, lahko odstraniš s pisanjem na {email} z njeno povezavo.",
+    "privacy.afterRemovalTitle": "Kaj hranimo po odstranitvi ali izbrisu",
+    "privacy.afterRemoval":
+      "Po odstranitvi in po tridesetih dneh še vedno hranimo:\n- izid in ocene, izbrane nastavitve, datume, ID-je ter katere strani in jezik je imel primer, in ID računa, ki je primer začel;\n- tvoje ocene. Ko izbrišeš račun, se vsaka ocena premakne na naključen ID, tako da ne vodi več do tebe;\n- zapis o tvojih izbirah pri Pomagaj izboljšati Judge in o soglasju za zasebne podrobnosti (datumi, jezik, platforma in besedilo, ki si ga videl), 6 let po izbrisu računa, da dokažemo, s čimer si se strinjal. Ko izbrišeš račun, ti zapisi nosijo naključen ID in nimajo povezave z imenom ali e-pošto;\n- seznam odstranitev, ki vsebuje ID-je, razloge, datume in stran primera, 90 dni, da po obnovi varnostne kopije odstranitve znova uporabimo;\n- šifrirano obliko tvoje e-pošte, da preprečimo ponavljajočo se zlorabo brezplačnih kreditov (glej Računi);\n- zapis naprave brez povezave z računom, do 180 dni;\n- varnostne kopije, do 14 dni.\nKo se primer izbriše, se kodirani prstni odtisi in oznake njegovih imen izpraznijo, zato se ne hranijo.",
+    "privacy.retentionTitle": "Kako dolgo hranimo podatke",
+    "privacy.retention":
+      "Razsodbe in izvirnike hranimo, dokler ne zahtevaš odstranitve ali ne izbrišeš računa. Za okrevanje po okvari hranimo varnostne kopije strežnika in njegove zbirke do 14 dni, nato se izbrišejo. Vsebujejo iste podatke kot strežnik, tudi šifrirane izvirnike, ključ pa je na istem strežniku, zato so kopije zaščitene kot strežnik sam, ne s tem šifriranjem. Zgoščeni nizi omejitev trajajo do 48 ur. Dogodki uporabe se izbrišejo po 90 dneh, povezave naprav pa po 180 dneh brez uporabe. Dnevniki in metrike pri Grafana Labs se hranijo 14 dni. Poročila o zrušitvah pri Sentryju se hranijo do 30 dni. Drugi dnevniki strežnika sledijo standardnemu obdobju hrambe našega ponudnika gostovanja. Koda za prijavo poteče po 10 minutah, potekle kode se brišejo vsak dan. Seja se konča 30 dni po tvoji zadnji uporabi. Seznam odstranitev se hrani 90 dni. Zapisi o tvojih izbirah privolitve se hranijo 6 let po izbrisu računa, nato se izbrišejo.",
+    "privacy.ipTitle": "Omejevanje uporabe",
+    "privacy.ip":
+      "Da sodišče ostane odprto za vse, omejujemo, koliko razsodb lahko zahteva vsak račun in koliko prevodov vsak obiskovalec. Za prevode, odgovore na dvostranski primer, preverjanje stanja razsodbe med sojenjem in poskuse prijave hranimo ključni zgoščeni niz tvojega naslova IP, ne samega naslova, do 48 ur. Omejitve prijave samega naslova za kratek čas, približno minuto, hranijo v pomnilniku strežnika, nikoli na disku. Če je preverjanje človeka vklopljeno, tvoj naslov IP za to preverjanje gre tudi k Cloudflareu. Nikoli se ne shrani z razsodbo.",
+    "privacy.processorsTitle": "Kdo še obdeluje tvoje besedilo",
+    "privacy.processors":
+      "Besedilo, ki ga vtipkaš, z resničnimi imeni vred, najprej gre našemu ponudniku UI v Združenih državah, da se imena lahko odstranijo. Sodi se samo anonimizirana različica; tvoj izvirnik je shranjen šifriran, kot je opisano zgoraj. Če je preverjanje človeka vklopljeno, Cloudflare Turnstile teče v tvojem brskalniku in rezultat preveri pri Cloudflareu. Če se prijaviš, prijavo obdela Apple ali Google (kogar izbereš), e-sporočila za prijavo pa odidejo prek Resenda. Nakupi v aplikacijah potekajo prek App Storea ali Google Play in jih obdeluje RevenueCat, ki prejme ID tvojega računa in zgodovino nakupov. Grafana Labs prejema dnevnike našega strežnika in metrike delovanja, shranjene v EU 14 dni; dnevniki ne vsebujejo besedila primerov. Poročila o zrušitvah in napakah iz aplikacij in tega spletnega mesta gredo k Sentryju, shranjena v EU do 30 dni; vsebujejo napako, različico aplikacije ali brskalnika in model naprave, ne vsebujejo pa besedila primera, ID-ja računa ali naslova povezave. Naš ponudnik gostovanja vodi standardne dnevnike strežnika. Aplikacija za Android vpraša Google Play za starostni status, aplikacija za iPhone pa Apple. Mi smo upravljavec; ti ponudniki obdelujejo podatke v našem imenu.",
+    "privacy.shareTitle": "Povezave za deljenje",
+    "privacy.share":
+      "Vsak, ki ima povezavo do razsodbe, jo lahko vidi, s prikazanimi imeni, ki si jih izbral (ali s Stranko A in Stranko B, če si imena izklopil). Povezave uporabljajo dolge naključne ID-je, strani za deljenje pa iskalnike prosijo, naj jih ne indeksirajo. Povezava odstranjene razsodbe in njena predogledna slika se nehata nalagati; predogledi, že objavljeni v klepetalnih aplikacijah, se lahko še prikazujejo, dokler jih te aplikacije ne osvežijo. Izpusti naslove, telefonske številke in vse, česar ne bi želel imeti na strani, ki jo lahko odprejo drugi.",
+    "privacy.locationTitle": "Kje so tvoji podatki",
+    "privacy.location":
+      "Naši strežniki so v Nemčiji (OVH, Frankfurt). Nekaj obdelave poteka v Združenih državah: naš ponudnik UI poganja modele, ki odstranjujejo imena, sodijo, berejo posnetke zaslona in iščejo po spletu; Cloudflare stoji pred okjudge.com kot posrednik in DNS (ves promet gre skozenj) in izvaja preverjanje človeka. Prijava poteka prek Appla ali Googla, če ju izbereš, e-sporočila za prijavo pa prek Resenda. Podatki, obdelani v drugi državi, so lahko predmet zakonov te države. Delamo iz Kanade in od tam lahko vidimo tvoje podatke.",
+    "privacy.storageTitle": "Piškotki in shramba brskalnika",
+    "privacy.storage":
+      "Spletno mesto uporablja piškotek za prijavo (verdict.session_token), ki te drži prijavljenega, in kratkotrajne piškotke med prijavo z Applom ali Googlom (verdict.state traja 5 minut). Cloudflare, ki izvaja preverjanje človeka, lahko za to nastavi lastne piškotke. Nobeden se ne uporablja za sledenje. Lokalna shramba brskalnika hrani tvoj jezik, temo in izbiro Gamify; neposlan osnutek (z besedilom, ki si ga vtipkal) med prijavo; seznam razsodb in primerov, narejenih brez prijave; zasebne kode, ki ti omogočajo dostop do lastnih izvirnikov; imena, uporabljena v primeru; kode vabil za primere, na katere naj odgovoriš; potrditev starosti; nazadnje izbrano sodišče in to, katere primere si že videl. Shramba seje hrani e-poštni naslov in način, medtem ko čakaš na e-sporočilo za prijavo, ter zastavice uporabe za zavihek. To ostane na tvoji napravi. Brisanje podatkov spletnega mesta jo odstrani. Aplikacije na napravi hranijo podobne stvari.",
+    "privacy.notStoredTitle": "Česa ne počnemo",
+    "privacy.notStored":
+      "Nobenih oglaševalskih sledilnikov. Tvojih podatkov ne prodajamo in jih ne delimo za oglaševanje. Spletno mesto in aplikacije te ne sledijo po drugih straneh. Kako se odzivamo na Do Not Track: spletno mesto iz tvojega brskalnika ne pošilja nobenih dogodkov uporabe, kadar brskalnik pošlje Do Not Track ali Global Privacy Control, stikalo Statistika uporabe v aplikacijah pa isto stori v aplikacijah. Naš strežnik še vedno beleži nekaj dogodkov, povezanih z tvojim računom (prijava, narejeni ali neuspeli primeri in razsodbe, nakupi), in iz katere naprave si se prijavil. Tvojega besedila nikoli ne uporabimo za učenje česar koli, razen če si vklopil Pomagaj izboljšati Judge.",
+    "privacy.securityTitle": "Kako ga varujemo",
+    "privacy.security":
+      "Izvirniki, seznami imen, prikazana imena in Applovi žetoni za prijavo so šifrirani. Promet uporablja HTTPS. Ključ za šifriranje je na istem strežniku kot podatki, zato ne ščiti pred nekom, ki prevzame strežnik. Če gre z osebnimi podatki kaj narobe, obvestimo prizadete osebe in organe, kjer to zahteva zakon.",
+    "privacy.childrenTitle": "Starost",
+    "privacy.children":
+      'Judge je za ljudi, starejše od 18 let. Vsakogar, ki se prijavi, prosimo, naj to potrdi, ljudje, ki odgovorijo na primer brez računa, pred pošiljanjem označijo „Star/-a sem 18 let ali več", aplikacije pa lahko uporabijo starostni signal telefona. Zavestno ne zbiramo podatkov nikogar, mlajšega od 18 let. Če meniš, da ima otrok račun, piši na {email}, mi pa ga zapremo in podatke odstranimo.',
+    "privacy.rightsTitle": "Tvoje pravice",
+    "privacy.rights":
+      "Kjer koli živiš, lahko zahtevaš, da ti pokažemo, kaj hranimo, to popravimo, odstranimo ali izbrišemo tvoj račun, nehamo uporabljati za učenje in ti damo kopijo. Večino lahko narediš sam: odstraniš razsodbo ali primer na njegovi strani, izbrišeš račun na strani računa, spremeniš imena, prikazana na strani razsodbe ali primera, preneseš svoje podatke ter v Nastavitvah preklopiš Pomagaj izboljšati Judge (in v aplikacijah Statistiko uporabe). Za vse drugo piši na {email} s povezavo do razsodbe ali primera. Lahko te prosimo, da pišeš z e-poštnega naslova svojega računa ali potrdiš prijavljen. Odgovorimo v 30 dneh ali v enem mesecu, če je to krajše. Brezplačno je. Zaradi uveljavljanja pravic ne boš obravnavan slabše. Oseba, ki prosi v tvojem imenu, potrebuje tvoje pisno dovoljenje.\nKopija tvojih podatkov je datoteka JSON. Izberi Prenesi moje podatke na strani računa, v aplikacijah ali na spletu. Vsebuje tvoj račun in načine prijave, tvoje razsodbe in tvoje strani primerov z lastnim besedilom in imeni, izide, tvoje ocene, zgodovino soglasij, tvoje naprave, dogodke uporabe in nakupe. Ne vsebuje žetonov za prijavo, tvojega gesla ali šifriranega e-poštnega naslova, niti ničesar od besedila ali imen drugih.\nPodatkov nam ni treba dati, vendar brez tvojega besedila in računa ne moremo dati razsodbe.",
+    "privacy.regionEuTitle": "Če si v EU ali Združenem kraljestvu",
+    "privacy.regionEu":
+      "- Upravljavec: glej Kdo smo.\n- Pravne podlage: glej Zakaj uporabljamo tvoje podatke.\n- Zahtevaš lahko tudi omejitev obdelave, ugovarjaš obdelavi na podlagi našega zakonitega interesa, kadar koli prekličeš privolitev (brez vpliva na to, kar smo naredili prej) in vložiš pritožbo pri organu za varstvo podatkov (v Združenem kraljestvu pri ICO).\n- Tvoji podatki se obdelujejo v Nemčiji, Kanadi in Združenih državah, kot je opisano v razdelku Kje so tvoji podatki. Piši na {email}, če želiš vedeti več o tem, kako se prenašajo.\n- Avtomatizirane odločitve: glej Razsodbe piše UI.",
+    "privacy.regionUsTitle": "Če si v Kaliforniji ali drugi zvezni državi ZDA",
+    "privacy.regionUs":
+      '- V zadnjih 12 mesecih smo zbirali: identifikatorje (e-pošta, ime, ID-ji računa in naprav); besedilo tvojega spora in odgovore; ocene in izbire privolitve; zgodovino nakupov; podatke o uporabi in napravi (država, model naprave, različica aplikacije); potrditev starosti; in občutljive informacije (prijava v račun in morebitne podrobnosti o zdravju ali podobno v tvojem besedilu). Viri: ti, prijava in trgovina na tvojem telefonu ter naše lastne aplikacije. Nameni: glej Zakaj uporabljamo tvoje podatke. Prejemniki: kategorije v razdelku Kdo še obdeluje tvoje besedilo.\n- Osebnih podatkov ne prodajamo in jih ne delimo za oglaševanje, v zadnjih 12 mesecih pa tudi nismo. Ne profiliramo te. Občutljive informacije uporabljamo samo za zagotavljanje storitve, zato ni ničesar za omejiti ali zavrniti.\n- Pravice: vedeti, dostop, popravek, izbris in prenosljiva kopija. Uporabiš lahko pooblaščenega zastopnika. Odgovorimo v 30 dneh ali v enem mesecu, če je to krajše. Za pritožbo na zavrnitev piši na {email} z oznako „Appeal". O pritožbi odločimo v 45 dneh. Če jo zavrnemo, se lahko obrneš na generalnega državnega tožilca svoje zvezne države.\n- Hramba: glej Kako dolgo hranimo podatke in Kaj hranimo po odstranitvi ali izbrisu.\n- Do Not Track: glej Česa ne počnemo. Na naših straneh nobeno oglaševalsko ali sledilno podjetje ne zbira podatkov. Cloudflare izvaja preverjanje človeka in za ta namen vidi tvojo povezavo.\n- Nihče, mlajši od 18 let, ne sme uporabljati Judge, zato ne prodajamo in ne delimo podatkov nikogar, mlajšega od 16 let. Pravice drugih zveznih držav so isti seznam.',
+    "privacy.regionCaTitle": "Če si v Kanadi ali Quebecu",
+    "privacy.regionCa":
+      "Judge se vodi iz Kanade in osebne podatke obdeluje po PIPEDA: zbiramo samo, kar storitev potrebuje, uporabljamo samo za to, to varujemo, ti pa lahko zahtevaš vpogled v to, kar hranimo o tebi, popravek ali odstranitev. Odgovorimo v 30 dneh. Pritožiš se lahko Uradu kanadskega pooblaščenca za zasebnost (priv.gc.ca). Če si v Quebecu:\n- Oseba, odgovorna za osebne podatke, je Aytu Tuna, lastnik, na {email}.\n- Nekateri podatki se pošiljajo zunaj Quebeca: na naš strežnik v Nemčiji, ponudniku UI in drugim dobaviteljem v Združenih državah ter v Kanado zunaj Quebeca.\n- Judge beleži samo državo tvoje povezave, za števce uporabe, in ne sledi tvoji natančni lokaciji. Razsodba sodi argument, ki ga opišeš, in se ne uporablja za izdelavo tvojega profila. Števci uporabe so povezani z tvojim računom, kot je opisano v razdelku Kaj hranimo.\n- Pomagaj izboljšati Judge je izklopljeno, dokler ga ne vklopiš, in ga lahko kadar koli izklopiš.\n- Zahtevaš lahko tudi preklic privolitve, prejem svojih podatkov v splošno uporabljani obliki in vložiš pritožbo pri Commission d'accès à l'information.",
+    "privacy.regionBrTitle": "Če si v Braziliji",
+    "privacy.regionBr":
+      "Upravljavec in stik: glej Kdo smo. {email} je tudi kanal za zahtevke po LGPD. Mi smo upravljavec; ponudniki iz razdelka Kdo še obdeluje tvoje besedilo delujejo za nas. Pravne podlage: glej Zakaj uporabljamo tvoje podatke. Zahtevaš lahko, da potrdimo, da obdelujemo tvoje podatke; da ti omogočimo dostop; da jih popravimo; da anonimiziramo, blokiramo ali izbrišemo odvečne ali nezakonite podatke; prenosljivost; da izbrišemo podatke, ki jih uporabljamo na podlagi tvoje privolitve; da ti povemo, s kom smo jih delili; da te obvestimo o možnosti zavrnitve privolitve in njenih posledicah; ter prekličeš privolitev. Brezplačno je. Pritožiš se lahko tudi pri ANPD. Tvoji podatki se pošiljajo v tujino, kot je opisano v razdelku Kje so tvoji podatki.",
+    "privacy.changesTitle": "Spremembe",
+    "privacy.changes":
+      "Če ta pravila spremenimo na pomemben način, posodobimo datum na vrhu te strani. Podatkov, ki si nam jih dal po starejših pravilih, nikoli ne uporabimo za nov namen, ne da bi te prej vprašali. Pregledamo jih vsaj enkrat na leto.",
+    "privacy.contactTitle": "Stik",
+    "privacy.contact":
+      "Imaš vprašanje ali želiš videti, popraviti ali odstraniti svoje podatke? Piši na {email} in priloži povezavo do razsodbe ali primera.",
     "nav.signIn": "Prijava",
     "nav.account": "Račun",
     "nav.pricing": "Cene",
@@ -305,17 +365,14 @@ const sl: Locale = {
     "account.export": "Prenesi moje podatke",
     "account.exportHint": "Prejmi datoteko JSON z vsem, kar Judge hrani o tebi.",
     "account.exportBusy": "Pripravljam datoteko…",
-    "account.exportFailed":
-      "Podatkov zdaj ni bilo mogoče pripraviti. Poskusiš znova?",
+    "account.exportFailed": "Podatkov zdaj ni bilo mogoče pripraviti. Poskusiš znova?",
     "deletePage.title": "Izbriši svoj račun Judge",
     "deletePage.lead":
       "Judge je aplikacija avtorja Aytu Tuna. Račun in njegove podatke lahko kadar koli izbrišeš sam, v aplikaciji ali na spletu.",
     "deletePage.appTitle": "V aplikaciji",
-    "deletePage.app":
-      "Odpri Judge, pojdi na Račun, tapni Izbriši račun in potrdi.",
+    "deletePage.app": "Odpri Judge, pojdi na Račun, tapni Izbriši račun in potrdi.",
     "deletePage.webTitle": "Na spletu",
-    "deletePage.web":
-      "Prijavi se na okjudge.com, odpri Račun, izberi Izbriši račun in potrdi.",
+    "deletePage.web": "Prijavi se na okjudge.com, odpri Račun, izberi Izbriši račun in potrdi.",
     "deletePage.removedTitle": "Kaj se izbriše",
     "deletePage.removed":
       "Izbrišejo se tvoj račun, zapisi o prijavi, krediti, načrt in dogodki uporabe. Tvoje razsodbe in tvoje strani v primerih se odstranijo: izvirno besedilo in imena se izbrišejo takoj, anonimizirano besedilo in razsodba 30 dni pozneje.",
@@ -342,8 +399,7 @@ const sl: Locale = {
     "clarify.back": "Uredi prepir",
     "thinking.factcheck": "Preverjamo dejstva na spletu…",
     "thinking.factcheckDone": "Spletno preverjanje je končano.",
-    "thinking.premiumHelper":
-      "Preverjanje dejstev na spletu traja malo dlje. Daj nam minuto ali dve.",
+    "thinking.premiumHelper": "Preverjanje dejstev na spletu traja malo dlje. Daj nam minuto ali dve.",
     "panel.premium": "Razsojeno s spletnim preverjanjem dejstev.",
     "factcheck.title": "Preverjeno na spletu",
     "factcheck.lead": "Sodniki so te zadetke iskanja videli pred razsodbo. So dokazi, ne razsodba sama.",
@@ -354,8 +410,7 @@ const sl: Locale = {
     "factcheck.sources": "Viri",
     "factcheck.sourceAria": "{title}, odpre se v novem zavihku",
     "factcheck.none": "Na spletu ni kaj preverjati: tu gre za vrednote ali pomene, ne za dejstva.",
-    "factcheck.noneFactual":
-      "Tu ni ničesar, kar bi se dalo preveriti na spletu: dejstva poznajo samo vpleteni.",
+    "factcheck.noneFactual": "Tu ni ničesar, kar bi se dalo preveriti na spletu: dejstva poznajo samo vpleteni.",
     "factcheck.unavailable": "Spletno preverjanje se tokrat ni končalo, zato so sodniki razsodili brez njega.",
     "signin.title": "Prijava",
     "signin.lead": "Prijavi se in dobi razsodbo. Nov račun dobi prvo razsodbo brezplačno.",
@@ -463,7 +518,8 @@ const sl: Locale = {
     "error.unsupported_media": "Beremo lahko samo slike PNG, JPEG, WebP ali GIF.",
     "error.too_many_files": "To je več slik, kot jih lahko dodaš tukaj.",
     "error.evidence_invalid": "Ena od slik je potekla ali je ni bilo mogoče preveriti. Odstrani jo in jo dodaj znova.",
-    "error.anonymize_failed": "Imen iz besedila nismo mogli odstraniti. Poskusi znova ali namesto polnih imen napiši začetnice.",
+    "error.anonymize_failed":
+      "Imen iz besedila nismo mogli odstraniti. Poskusi znova ali namesto polnih imen napiši začetnice.",
     "mode.label": "Kako naj razsodimo?",
     "mode.now": "Samo jaz (takoj)",
     "mode.both": "Obe plati (pošlji povezavo)",
@@ -485,14 +541,14 @@ const sl: Locale = {
     "case.status.expired": "Povabilo je poteklo",
     "case.invite.copied": "Kopirano",
     "case.invite.share": "Deli",
-    "case.invite.shareText":
-      "Najin prepir naj razsodi Judge. Tukaj povej svojo plat – do razsodbe je ne morem videti.",
+    "case.invite.shareText": "Najin prepir naj razsodi Judge. Tukaj povej svojo plat – do razsodbe je ne morem videti.",
     "case.invite.reset": "Nova povezava",
     "case.invite.resetConfirm": "Že poslana povezava bo prenehala delovati. Ustvarim novo?",
     "case.invite.resetYes": "Da, ustvari novo",
     "case.invite.resetDone": "Stara povezava je izklopljena. Pošlji novo.",
     "case.judgeNow": "Razsodi samo mojo plat",
-    "case.judgeNow.confirm": "Želiš enostransko razsodbo zdaj? Povabilo se zapre in druga oseba ne more več odgovoriti.",
+    "case.judgeNow.confirm":
+      "Želiš enostransko razsodbo zdaj? Povabilo se zapre in druga oseba ne more več odgovoriti.",
     "case.judgeNow.yes": "Da, razsodi zdaj",
     "case.judgeExpired.confirm": "Želiš razsodbo samo na podlagi svoje plati? To porabi 1 razsodbo.",
     "case.judgeExpired.yes": "Da, porabi 1 razsodbo",
@@ -501,7 +557,8 @@ const sl: Locale = {
     "case.side.opened": "Odprto",
     "case.side.typing": "Tipka…",
     "case.judgeAnswered": "Razsodi s platmi, ki so odgovorile",
-    "case.judgeAnswered.confirm": "Želiš razsodbo s platmi, ki so odgovorile? Druga povabila se zaprejo in te osebe ne morejo več odgovoriti.",
+    "case.judgeAnswered.confirm":
+      "Želiš razsodbo s platmi, ki so odgovorile? Druga povabila se zaprejo in te osebe ne morejo več odgovoriti.",
     "case.cancel": "Prekliči",
     "case.retry": "Poskusi znova",
     "case.failedBody": "Kredit ti je vrnjen. Zdaj lahko poskusiš znova.",
@@ -539,15 +596,12 @@ const sl: Locale = {
     "respond.submit": "Pošlji mojo plat",
     "case.write.title": "Tvoja plat",
     "case.write.placeholder": "Kaj je narobe?",
-    "case.write.lead":
-      "Napiši svojo plat, ko si pripravljen. Sodniki začnejo, ko sta napisala oba.",
-    "case.write.leadAnswered":
-      "Druga oseba je že napisala svojo plat. Napiši svojo in dobil boš sodbo.",
+    "case.write.lead": "Napiši svojo plat, ko si pripravljen. Sodniki začnejo, ko sta napisala oba.",
+    "case.write.leadAnswered": "Druga oseba je že napisala svojo plat. Napiši svojo in dobil boš sodbo.",
     "case.write.submit": "Pošlji mojo plat",
     "case.write.emailSubject": "Druga stran je napisala svoje",
     "respond.sent": "Hvala. Tvoja plat je oddana, sodniki so že pri delu.",
-    "respond.sentWaiting":
-      "Hvala. Tvoja plat je oddana. Sodniki začnejo, ko svojo napiše še druga oseba.",
+    "respond.sentWaiting": "Hvala. Tvoja plat je oddana. Sodniki začnejo, ko svojo napiše še druga oseba.",
     "respond.ownInvite": "To je tvoja lastna povezava za povabilo. Pošlji jo drugi osebi.",
     "respond.expired": "To povabilo je poteklo.",
     "respond.closed": "Ta spor ne sprejema več odgovorov.",
@@ -612,8 +666,7 @@ const sl: Locale = {
     "home.says": "{name} pravi:",
     "home.mySide": "Moja plat:",
     "home.otherSide": "Plat druge osebe:",
-    "appeal.lead":
-      "Porabi 1 razsodbo.",
+    "appeal.lead": "Porabi 1 razsodbo.",
     "appeal.placeholder": "Kaj so sodniki spregledali? Dejstvo, sporočilo ali to, kar je bilo v resnici dogovorjeno.",
     "appeal.submit": "Znova razsodi s tem",
     "appeal.sending": "Anonimiziramo tvoj kontekst…",
@@ -646,7 +699,8 @@ const sl: Locale = {
     "about.casesTitle": "Slišimo obe plati",
     "about.cases1":
       "Dvostranski spori: prijavi se, napiši svojo plat in pošlji zasebno povezavo. Druga oseba napiše svojo, ne da bi videla tvojo, sodniki pa pretehtajo obe pripovedi: v čem se strinjata, kaj je sporno in kateri dokaz bi spremenil razsodbo.",
-    "about.cases2": "Če v 7 dneh nihče ne odgovori, povezava preneha delovati. Še vedno lahko dobiš razsodbo samo na podlagi svoje plati.",
+    "about.cases2":
+      "Če v 7 dneh nihče ne odgovori, povezava preneha delovati. Še vedno lahko dobiš razsodbo samo na podlagi svoje plati.",
     "about.premiumTitle": "Dodatki",
     "about.premium2":
       "Dokazi: dodaj posnetke zaslona klepetov ali dokumentov. Preberemo besedilo na njih, skrijemo imena in sliko zavržemo.",
@@ -654,12 +708,6 @@ const sl: Locale = {
       "Ponovna presoja: po razsodbi lahko vsaka oseba enkrat doda kontekst. Sodniki znova pregledajo vse in povedo, ali razsodba ostaja, je obrnjena ali spremenjena. Prejšnje razsodbe ostanejo na ogled.",
     "about.premium4":
       "Dvostranski spor porabi 1 razsodbo. Rezervirana je, ko pošlješ povezavo, in se vrne, če v 7 dneh nihče ne odgovori.",
-    "privacy.casesTitle": "Dvostranski spori in ponovne presoje",
-    "privacy.cases":
-      "V dvostranskem sporu se vsaka plat anonimizira ob pošiljanju, enako kot pri razsodbi. Sodniki berejo anonimizirano besedilo; plat vsake osebe v izvirni obliki, s seznamom imen, je shranjena šifrirano in jo lahko vidi samo ta oseba. Vsaka oseba ob pošiljanju svoje plati vpiše ime, ki naj bo prikazano na strani za deljenje; če polje pusti prazno, se prikaže Stranka A ali Stranka B. Druga oseba ne potrebuje računa; število njenih odgovorov omejujemo prek zgoščene vrednosti (s ključem) njenega naslova IP. Povezava za povabilo je shranjena samo kot zgoščena vrednost. Če druga oseba odgovori prijavljena, se njen račun poveže z njeno platjo, tako da lahko samo ona pozneje doda kontekst ali vidi svoj izvirnik; če odgovori neprijavljena, enako nalogo opravlja zasebna koda, shranjena v njenem brskalniku, in če se pozneje v tem brskalniku prijavi, lahko spor shrani v svoj račun. Da ista oseba v obeh pripovedih dobi isto oznako, strežnik v vsakem sporu hrani kodirane prstne odtise imen (zgoščene vrednosti s ključem, ne samih imen). Do razsodbe nobena plat ne more prebrati besedila druge; po dvostranski razsodbi lahko obe osebi prebereta obe anonimizirani pripovedi. Kontekst, dodan po razsodbi (ponovna presoja), se obdeluje enako. Ko druga oseba odgovori, ti lahko, če je e-pošta nastavljena, pošljemo kratko obvestilo brez besedila spora. Vsaka oseba lahko odstrani svojo plat: njen izvirnik in prikazno ime se izbrišeta, povezave za deljenje tega spora pa prenehajo delovati za vse. Izbris računa to naredi za vse spore, ki jih začneš ali na katere odgovoriš.",
-    "privacy.evidenceTitle": "Posnetki zaslona",
-    "privacy.evidence":
-      "Tvoj brskalnik velike slike pred nalaganjem pomanjša. Nato gre vsaka slika enkrat k zunanji storitvi UI, da se prebere vidno besedilo; slike nikoli ne shranimo. Surovi prepis, ki lahko še vsebuje imena, se ti vrne v podpisanem žetonu, ki ga brskalnik hrani do 6 ur. Ko pošlješ svojo plat, se prepis anonimizira skupaj s tvojim besedilom: anonimizirani prepis vidijo sodniki in je shranjen s sporom, surovi prepis pa je shranjen šifrirano skupaj s tvojim izvirnikom, kjer ga vidiš samo ti. Telefonske številke, e-poštni naslovi, uporabniška imena na družbenih omrežjih in številke računov v njem so za sodnike prav tako zamenjani z nadomestnimi oznakami.",
     "pricing.premium.f5": "Dokazi s posnetkov zaslona: preberemo jih in zavržemo, brez doplačila",
     "pricing.premium.f6": "Dodaj kontekst po razsodbi in dobi ponovno presojo (1 razsodba)",
     "pricing.premium.f7": "Slišimo obe plati: drugi osebi pošlji zasebno povezavo, da pove svojo",
@@ -779,21 +827,6 @@ const sl: Locale = {
     "stamp.dissolved": "Nesporazum",
     "bestPoint.of": "Najboljši argument: {name}",
     "bestPoint.self": "Tvoj najboljši argument",
-    "privacy.accessTitle": "Kdo vidi kaj",
-    "privacy.access":
-      "Ti: svoje izvirno besedilo in imena, na kateri koli napravi, ko se prijaviš, ali na napravi, s katere je bilo besedilo poslano, prek zasebne kode, shranjene v brskalniku ali aplikaciji (mi hranimo samo zakodirano obliko te kode). Razsodbe, napisane brez prijave, preden je bil račun obvezen, in spori, na katere odgovoriš brez prijave, ostanejo na seznamu v tem brskalniku z naslovi in imeni, kot so bili napisani, da jih lahko prikaže stran Razsodbe: vsak, ki uporablja isti brskalnik, vidi ta seznam. Na skupnem računalniku se prijavi ali uporabi zasebno okno; brisanje podatkov spletnega mesta v brskalniku odstrani seznam. V dvostranskem sporu vsaka oseba vidi samo svoj izvirnik; po razsodbi obe vidita obe anonimizirani pripovedi, tako kot so ju prebrali sodniki. Sodniki (modeli UI, ki jih poganja naš ponudnik UI): samo anonimizirano različico. Vsak s povezavo za deljenje: razsodbo s prikaznimi imeni. Privzeto je to ime, ki ga izbereš zase, in imena (brez priimkov) drugih oseb, kot so zapisana v tvojem besedilu; kadar koli jih lahko spremeniš ali imena izklopiš, takrat stran pokaže oznaki Stranka A in Stranka B. Mi: izvirnike lahko dešifriramo s ključem, shranjeno besedilo pa pogledamo samo, da obravnavamo tvojo prošnjo za podporo, preiščemo zlorabo ali kadar to zahteva zakon.",
-    "privacy.removalTitle": "Odstranitev",
-    "privacy.removal":
-      "Odstranitev lahko zahtevaš na strani razsodbe (po prijavi jo odpreš s strani Razsodbe), pri dvostranskem sporu na strani spora, z izbrisom računa ali po e-pošti. Odstranitev izbriše tvoje izvirno besedilo, seznam imen in prikazna imena (v dvostranskem sporu izvirnik tvoje plati in tvoje prikazno ime), povezava za deljenje in njena slika za predogled pa se nehata nalagati za vse. Predoglede, ki so že objavljeni v aplikacijah za klepet, hranijo te aplikacije in so lahko še vidni, dokler jih ne osvežijo. Anonimizirano besedilo in razsodbo brez imen obdržimo v svojih evidencah; prek povezave ju ni več mogoče odpreti. Izbris računa to naredi za vse tvoje razsodbe in tvoje plati v sporih ter izbriše tvoje podatke za prijavo, kredite in naročnino. Odstranjeni podatki ostanejo v varnostnih kopijah, dokler te ne potečejo (največ 14 dni, glej spodaj); če kdaj obnovimo varnostno kopijo, znova izvedemo vse odstranitve (za to hranimo seznam, kaj je bilo odstranjeno in kdaj, brez besedila ali imen). Trideset dni po tem, ko nekaj odstraniš, izbrišemo tudi anonimizirano besedilo in razsodbo ter obdržimo le izid in datume, razen če zakon zahteva, da jih hranimo dlje. Pri primeru teče trideset dni šele, ko ga odstranijo vsi, ki so v njem.",
-    "privacy.retentionTitle": "Kako dolgo hranimo podatke",
-    "privacy.retention":
-      "Razsodbe in izvirnike hranimo, dokler ne zahtevaš odstranitve ali izbrišeš računa. Za obnovo po okvari hranimo varnostne kopije strežnika in njegove podatkovne zbirke do 14 dni, nato jih izbrišemo. Vsebujejo enake podatke kot strežnik, vključno s šifriranimi izvirniki, ključ pa je na istem strežniku, zato so varnostne kopije zaščitene enako kot sam strežnik, ne s tem šifriranjem. Zgoščene vrednosti za omejevanje uporabe ostanejo do 24 ur. Strežniški dnevniki se hranijo po običajnem roku našega ponudnika gostovanja. Dogodki uporabe se izbrišejo po 90 dneh, povezave z napravami pa po 180 dneh brez uporabe. Dnevniki in meritve, poslani Grafana Labs, se hranijo 14 dni.",
-    "privacy.locationTitle": "Kje so tvoji podatki",
-    "privacy.location":
-      "Naši strežniki so v Nemčiji (OVH, Frankfurt). Del obdelave poteka v Združenih državah: naš ponudnik UI poganja modele, ki odstranjujejo imena, razsojajo, berejo posnetke zaslona in iščejo po spletu; Cloudflare stoji pred okjudge.com kot posredniški strežnik in DNS (ves promet gre skozenj) in izvaja preverjanje, da si človek. Prijava poteka prek računa Apple ali Google, če ga izbereš, e-poštna sporočila za prijavo pa prek storitve Resend. Za podatke, ki se obdelujejo v drugi državi, lahko veljajo zakoni te države.",
-    "privacy.rightsTitle": "Tvoje pravice (Kanada)",
-    "privacy.rights":
-      "Judge upravljamo iz Kanade in osebne podatke obdelujemo v skladu s kanadskim zveznim zakonom o varstvu zasebnosti (PIPEDA): zbiramo samo to, kar storitev potrebuje, uporabljamo samo za ta namen in to varujemo, ti pa lahko zahtevaš vpogled, popravek ali odstranitev podatkov, ki jih hranimo o tebi. Odgovorimo v 30 dneh.",
     "footer.terms": "Pogoji",
     "signin.legalTerms": "pogoji uporabe",
     "age.confirm": "Star sem 18 let ali več",

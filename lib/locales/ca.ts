@@ -109,14 +109,18 @@ const ca: Locale = {
     "vote.dissolved": "malentès",
     refusedNote: "La IA s'ha abstingut aquesta vegada. Preferim no mostrar res que inventar-nos un veredicte.",
     demoNote: "🎭 Mode demo: no hi ha cap clau d'IA configurada, així que això és un veredicte d'exemple",
-    "trial.survived": "🛡️ Objecció rebutjada: l'advocat de l'altra part ha plantejat la seva objecció més forta, i el veredicte ha aguantat. La confiança es manté.",
-    "trial.uncertain": "⚠️ L'advocat de l'altra part ha objectat, i l'objecció ha deixat dubtes reals sobre aquest veredicte",
-    "trial.overturned": "⚠️ Objecció acceptada: el veredicte es manté, però l'objecció més forta de l'altra part el debilita seriosament",
+    "trial.survived":
+      "🛡️ Objecció rebutjada: l'advocat de l'altra part ha plantejat la seva objecció més forta, i el veredicte ha aguantat. La confiança es manté.",
+    "trial.uncertain":
+      "⚠️ L'advocat de l'altra part ha objectat, i l'objecció ha deixat dubtes reals sobre aquest veredicte",
+    "trial.overturned":
+      "⚠️ Objecció acceptada: el veredicte es manté, però l'objecció més forta de l'altra part el debilita seriosament",
     "trial.minor": "🛡️ L'advocat de l'altra part ha fet una observació justa, però el veredicte es manté",
     "trial.whatWasTested": "L'objecció",
     "trial.attackPrefix": "Objecció:",
     "trial.refereePrefix": "Per què:",
-    "trial.mixedNote": "És una disputa mixta: part fets, part valors o significats de paraules, així que una victòria neta és més difícil de defensar.",
+    "trial.mixedNote":
+      "És una disputa mixta: part fets, part valors o significats de paraules, així que una victòria neta és més difícil de defensar.",
     confidence: "Confiança: {n} de {total}",
     verdictAria: "Veredicte: {label}",
     "party.a": "Part A",
@@ -128,8 +132,7 @@ const ca: Locale = {
     "shared.subtitle": "Algú ha compartit aquest veredicte",
     "shared.cta": "Resol la teva pròpia discussió →",
     errorFallback: "Alguna cosa ha fallat. Ho tornes a provar?",
-    "error.not_configured":
-      "El jutge encara no està configurat. Torna-ho a provar més tard.",
+    "error.not_configured": "El jutge encara no està configurat. Torna-ho a provar més tard.",
     "error.quota": "Els jutges han esgotat la quota d'IA de moment. Torna-ho a provar d'aquí a uns minuts.",
     "error.unavailable": "Ara mateix no podem contactar amb els jutges. Espera un minut i torna-ho a provar.",
     "error.too_short": "Amb això no en tenim prou. Explica'ns més coses de la discussió.",
@@ -138,7 +141,8 @@ const ca: Locale = {
     "error.rate_limited": "Ordre a la sala! De moment has arribat al límit. Torna-ho a provar d'aquí a {wait}.",
     "error.daily_cap":
       "La sala tanca per avui: ja ha escoltat totes les discussions que podia. Tornem a obrir d'aquí a {wait}.",
-    "error.captcha_failed": "No hem pogut comprovar que siguis una persona. Torna a fer la verificació i després envia-ho.",
+    "error.captcha_failed":
+      "No hem pogut comprovar que siguis una persona. Torna a fer la verificació i després envia-ho.",
     "wait.moment": "uns minuts",
     "wait.minute": "1 minut",
     "wait.minutes": "{n} minuts",
@@ -147,7 +151,8 @@ const ca: Locale = {
     "refused.headline": "La IA no s'ha volgut pronunciar sobre això",
     "refused.crux":
       "El filtre de seguretat de la IA no l'ha deixat jutjar aquest cas. Millor cap veredicte que un d'inventat.",
-    "refused.bestPoint": "Prova d'explicar-ho d'una altra manera. O accepta que hi ha baralles massa grosses per a una app.",
+    "refused.bestPoint":
+      "Prova d'explicar-ho d'una altra manera. O accepta que hi ha baralles massa grosses per a una app.",
     "refused.claim": "Omès",
     "nav.skip": "Salta al contingut",
     "nav.home": "Pàgina d'inici de Judge",
@@ -178,8 +183,7 @@ const ca: Locale = {
     "how.step2.body":
       "Cada afirmació s'etiqueta com a fet, valor, definició o lògica, perquè cada tipus es resol a la seva manera.",
     "how.step3.title": "Trobar el quid",
-    "how.step3.body":
-      "Excava sota cada postura fins a la roca mare i troba l'única cosa de què depèn tota la baralla.",
+    "how.step3.body": "Excava sota cada postura fins a la roca mare i troba l'única cosa de què depèn tota la baralla.",
     "how.step4.title": "Tres jutges independents",
     "how.step4.body":
       "Tres jutges decideixen per separat i, si la cosa està igualada, se n'hi afegeixen més. La confiança depèn de fins a quin punt coincideixen, no de la seguretat amb què parlen.",
@@ -250,33 +254,96 @@ const ca: Locale = {
     "privacy.kicker": "Les teves dades",
     "privacy.lead":
       "En poques paraules: guardem el que escrius, noms inclosos, xifrat, perquè hi puguis tornar. Els jutges només llegeixen una versió sense els noms. En pots demanar l'eliminació quan vulguis. No venem les teves dades. Si Judge es ven o es fusiona algun dia, passa al nou propietari sota aquesta política.",
+    "privacy.whoTitle": "Qui som",
+    "privacy.who":
+      "Judge el gestiona Aytu Tuna, una persona física al Canadà.\n{address}\nDecidim nosaltres què es recull i per què. La persona responsable de la informació personal és Aytu Tuna, propietari. Contacte: {email}.",
     "privacy.storedTitle": "Què guardem",
     "privacy.stored":
-      "De cada veredicte guardem el teu text tal com el vas escriure (amb les respostes a les preguntes dels jutges i el text llegit de les captures de pantalla) i una llista de quin nom es va convertir en quina etiqueta. Tot això es xifra amb una clau que no es guarda a la base de dades. També guardem la versió anonimitzada que llegeixen els jutges (amb els noms canviats per Part A i Part B), la configuració que vas triar, el veredicte, la traducció si n'hi ha, i els noms que tries mostrar a la pàgina compartida. També comptem com s'usa Judge: quines pantalles i funcions, amb la versió de l'aplicació, el model del dispositiu, la versió del sistema, l'idioma i el país de la teva connexió, i a les aplicacions un identificador del dispositiu. Si has iniciat la sessió, això queda lligat al teu compte. Els esdeveniments d'ús es guarden 90 dies i els enllaços entre el teu compte i els teus dispositius, 180 dies. Les aplicacions tenen un interruptor «Estadístiques d'ús» a Configuració, i el web no envia res quan el navegador envia Do Not Track o Global Privacy Control. Mai inclou text de cap cas. Si valores un veredicte, en guardem la valoració amb ell.",
+      "De cada veredicte guardem el teu text tal com el vas escriure (amb les respostes a les preguntes dels jutges i el text llegit de les captures de pantalla) i una llista de quin nom es va convertir en quina etiqueta. Tot això es xifra amb una clau que no es guarda a la base de dades. També guardem la versió anonimitzada que llegeixen els jutges (amb els noms canviats per Part A i Part B), els ajustos que vas triar, el veredicte, qualsevol traducció i els noms que triïs mostrar a la pàgina per compartir. També comptem com s'utilitza Judge: quines pantalles i funcions, amb la versió de l'aplicació, el model del dispositiu, la versió del sistema, l'idioma i el país de la teva connexió, i a les aplicacions un identificador del dispositiu. Si has iniciat sessió, això queda associat al teu compte. Els esdeveniments d'ús es guarden 90 dies i els vincles entre el teu compte i els teus dispositius 180 dies. Les aplicacions tenen un interruptor «Estadístiques d'ús» a Configuració, i el web no envia res quan el navegador envia Do Not Track o Global Privacy Control. Mai inclou text de cap cas. Si valores un veredicte, guardem la valoració amb ell. Una valoració es pot esborrar; llavors guardem la fila sense el polze amunt o avall. També guardem un registre de la teva acceptació sobre les dades privades i de les teves decisions a Ajuda a millorar Judge, amb la data, l'idioma i la plataforma, i el text que vas veure.",
     "privacy.helpTitle": "Ajuda a millorar Judge",
     "privacy.help":
-      "Desactivat si no l'actives. Quan està activat, podem fer servir el text anonimitzat que llegeixen els jutges, els seus veredictes i les teves valoracions per provar i entrenar els jutges de Judge. Els noms no hi entren mai. Si el desactives, aquest ús s'atura per a tot el que has creat, i registrem quan l'has activat o desactivat.",
-    "privacy.notStoredTitle": "Què no fem",
-    "privacy.notStored":
-      "Cap rastrejador publicitari. L'idioma que tries es guarda a l'emmagatzematge local del navegador i enlloc més.",
-    "privacy.ipTitle": "Límits d'ús",
-    "privacy.ip":
-      "Perquè la sala continuï oberta per a tothom, limitem quants veredictes pot demanar cada compte i quantes traduccions cada visitant. Per a les traduccions, i per a les respostes en un cas de dues parts, guardem un hash amb clau de la teva adreça IP, no l'adreça en si, al nostre registre de límits durant un màxim de 24 hores. Si la verificació humana està activada, la teva adreça IP també s'envia a Cloudflare per fer-la. Mai no es guarda amb el teu veredicte.",
-    "privacy.processorsTitle": "Qui més tracta el teu text",
-    "privacy.processors":
-      "El text que escrius, noms reals inclosos, va primer al nostre proveïdor d'IA als Estats Units perquè se'n puguin treure els noms. Només es jutja la versió anonimitzada; l'original es guarda xifrat, tal com s'explica més amunt. Si la verificació humana està activada, Cloudflare Turnstile s'executa al teu navegador i comprova el resultat amb Cloudflare. Si inicies sessió, Apple o Google (el que triïs) gestionen l'inici de sessió, i els correus d'inici de sessió s'envien a través de Resend. El nostre proveïdor d'allotjament conserva els registres estàndard del servidor. Les compres a les aplicacions passen per l'App Store o Google Play i les gestiona RevenueCat, que rep l'identificador del teu compte i l'historial de compres. Grafana Labs rep els registres del servidor i les mètriques de rendiment, que es guarden a la UE durant 14 dies; els registres no contenen text de cap cas. Els informes de fallades i d'errors de les aplicacions i d'aquest web van a Sentry, es guarden a la UE fins a 30 dies i inclouen l'error, la versió de l'aplicació o del navegador i el model del dispositiu, però no text de cap cas, identificador del compte ni adreça de connexió.",
-    "privacy.shareTitle": "Enllaços per compartir",
-    "privacy.share":
-      "Qualsevol persona amb l'enllaç d'un veredicte el pot veure, amb els noms visibles que hagis triat (o Part A i Part B si has desactivat els noms). Els enllaços fan servir identificadors llargs i aleatoris, i les pàgines compartides demanen als cercadors que no les indexin. L'enllaç i la imatge de previsualització d'un veredicte eliminat deixen de carregar-se; les previsualitzacions ja publicades en apps de xat poden continuar apareixent fins que aquestes apps les actualitzin. No hi posis adreces, números de telèfon ni res que no voldries en una pàgina que altres poden obrir.",
-    "privacy.contactTitle": "Contacte",
-    "privacy.contact":
-      "Tens preguntes, o vols veure, corregir o eliminar les teves dades? Escriu a {email} amb l'enllaç al veredicte o al cas.",
-    "privacy.accountsTitle": "Comptes",
-    "privacy.accounts":
-      "Judge és només per a majors de 18 anys, i els comptes que descobrim que són d'una persona menor de 18 anys es tanquen. Necessites un compte per obtenir un veredicte; l'altra part d'un cas de dues parts pot respondre sense compte. Si inicies sessió amb Apple o Google, guardem l'adreça electrònica, el nom i l'enllaç a la foto de perfil que ens comparteixen, i també quin mètode d'inici de sessió has fet servir; Apple o Google poden veure que has iniciat sessió a Judge. Si inicies sessió amb un enllaç per correu, aquest correu s'envia a través de Resend, i guardem breument un registre amb la teva adreça electrònica per comprovar l'enllaç: deixa de funcionar al cap de 10 minuts i s'esborra quan es fa servir o poc després que caduqui. També guardem els registres de sessió (un testimoni aleatori i quan caduca, sense adreça IP ni dades del navegador, tot i que les aplicacions també registren un identificador del dispositiu quan inicies la sessió), els teus crèdits, el teu pla i el seu historial, i quins veredictes han fet servir un crèdit (només l'identificador del veredicte). També guardem quins veredictes i casos són teus, perquè els puguis trobar des de qualsevol dispositiu. Si elimines el compte a la pàgina del compte, s'esborren el teu compte, les sessions, els esdeveniments d'ús i l'enllaç entre el teu compte i els teus dispositius, i s'eliminen els teus veredictes i les teves versions dels casos tal com s'explica a «Eliminació». Només conservem una forma codificada de la teva adreça electrònica, perquè un compte nou amb la mateixa adreça no obtingui un segon veredicte gratuït i es mantingui tancat si el teu compte es va tancar perquè ets menor de 18 anys. Els codis d'inici de sessió enviats per correu funcionen igual que els enllaços. Si defineixes una contrasenya, només en desem amb el teu compte una versió xifrada (hash), mai la contrasenya mateixa.",
+      "Desactivat si no l'actives. Quan està activat, podem fer servir el text anonimitzat que llegeixen els jutges, els seus veredictes i les teves valoracions per provar i entrenar models d'IA: els del mateix Judge i, si Judge es ven o es fusiona algun dia, els del nou propietari. Els noms no hi entren mai. Si el desactives, tot el que has creat queda fora de qualsevol entrenament a partir d'aquell moment. Registrem quan l'has activat o desactivat.\n«Anonimitzat» vol dir aquí que s'han tret els noms; altres detalls que has escrit encara poden ser al text. Només s'aplica als veredictes fets mentre està activat, i a un cas només quan totes les persones que han escrit una part el tenen activat. Els models ja entrenats no canvien. De moment no s'ha entrenat res. Judge funciona igual amb això desactivat.\nEl preguntem una sola vegada, a la pàgina del teu propi veredicte, després del teu segon veredicte acabat. Mai el preguntem en un veredicte que algú altre hagi compartit amb tu. La targeta diu: «Deixa que Judge faci servir els teus veredictes i valoracions anonimitzats per entrenar la IA. Els noms no s'inclouen mai.» Pots canviar la resposta a Configuració en qualsevol moment.",
+    "privacy.purposesTitle": "Per què fem servir les teves dades",
+    "privacy.purposes":
+      "- Per donar-te un veredicte, gestionar el teu compte i atendre compres i assistència. Base (UE, Regne Unit i Brasil): necessari per prestar el servei que has demanat.\n- Per mantenir Judge segur i en funcionament: límits d'ús, la verificació humana, detectar qui acumula crèdits gratuïts, informes d'errors, recomptes d'ús i guardar una forma embrollada del correu electrònic després de l'eliminació. Base: el nostre interès legítim a tenir un servei segur i que funcioni. T'hi pots oposar per correu electrònic. Les aplicacions tenen un interruptor «Estadístiques d'ús», i el Do Not Track o el Global Privacy Control del navegador atura els esdeveniments d'ús del web.\n- Per comprovar la teva edat, inclòs el senyal d'edat del teu telèfon. Base: el nostre interès legítim a mantenir Judge només per a adults, o una obligació legal quan s'aplica una llei d'edat d'una botiga d'aplicacions.\n- Per guardar el text sense els noms durant 30 dies després que eliminis alguna cosa, per si hi ha abús o una reclamació legal. Base: el nostre interès legítim.\n- Per guardar la prova del que has acceptat: l'acceptació sobre les dades privades i les teves decisions a Ajuda a millorar Judge. Base: el nostre interès legítim a poder demostrar el que has acceptat.\n- Per fer servir els teus veredictes anonimitzats i les teves valoracions per entrenar IA. Base: el teu consentiment, només si l'actives.\n- Per complir la llei i guardar els registres que estem obligats a guardar. Base: obligació legal.\nMai fem servir les teves dades per a publicitat i no tenim rastrejadors publicitaris. Si algun dia volem un ús nou, t'ho diem abans i et tornem a preguntar si la llei exigeix el teu consentiment.",
+    "privacy.sensitiveTitle": "Què és millor no escriure",
+    "privacy.sensitive":
+      "Les disputes poden tocar temes privats com la salut, les relacions, la religió o els diners. Escriu només el que necessita el veredicte i deixa fora els detalls privats d'altres persones. Judge no és per a emergències ni per a assessorament legal.\nAbans del teu primer veredicte, la teva primera part d'un cas o la teva primera resposta a un cas, et demanem que marquis una casella: «El meu text pot incloure detalls privats, com ara salut o relacions. Judge l'envia, sense els noms, a un servei d'IA extern per escriure el meu veredicte, i el guarda fins que l'elimini.» Només pots continuar amb la casella marcada. La preguntem una vegada per compte; si ja tens un compte, la preguntem al teu proper veredicte. Les persones que responen a un cas sense compte veuen la mateixa casella. Guardem un registre de la marca, amb la data, l'idioma, la plataforma i el text que vas veure.",
+    "privacy.othersTitle": "Les persones de qui escrius",
+    "privacy.others":
+      "El teu text pot descriure algú que no fa servir Judge. Els jutges només el veuen amb etiquetes com «Persona C». Guardem els seus noms xifrats, amb una empremta codificada de cada nom (un hash amb clau, no el nom). Els noms poden aparèixer en una pàgina per compartir tal com es descriu a Qui pot veure què. Si et nomenen en el cas d'una altra persona, escriu a {email} amb l'enllaç i traurem el teu nom de la pàgina per compartir o estudiarem la teva oposició.",
+    "privacy.automatedTitle": "Els veredictes els escriu una IA",
+    "privacy.automated":
+      "Models d'IA escriuen el teu veredicte, sense que cap persona el llegeixi abans. És una opinió sobre l'argument tal com es va escriure, a partir del text sense noms, les fonts web mostrades i les teves respostes. No és assessorament legal ni és vinculant. No es pren cap decisió sobre tu, el teu compte, un preu o el teu accés a partir d'ell. Pot ser erroni o parcial. Si no hi estàs d'acord, valora'l com a «Injust», afegeix context o escriu a {email} i una persona el revisarà. L'altra part d'un cas també ho pot demanar.",
+    "privacy.accessTitle": "Qui pot veure què",
+    "privacy.access":
+      "Tu: el teu text original i els noms, des de qualsevol dispositiu si has iniciat sessió, o des del dispositiu que vas fer servir gràcies a un codi privat guardat al navegador o a l'app (nosaltres només en guardem una forma codificada). Els veredictes escrits sense iniciar sessió, abans que calgués un compte, i els casos que has respost sense iniciar sessió continuen a la llista d'aquell navegador amb els titulars i els noms tal com els vas escriure, perquè la pàgina «Veredictes» els pugui mostrar: qualsevol persona que faci servir el mateix navegador veu aquesta llista. En un ordinador compartit, inicia sessió o fes servir una finestra privada; si esborres les dades del lloc al navegador, s'esborra la llista. En un cas de dues parts, cada persona només veu el seu propi original; després del veredicte, totes dues veuen els dos relats anonimitzats, tal com els llegeixen els jutges. Els jutges (models d'IA executats pel nostre proveïdor d'IA): només la versió anonimitzada. Qualsevol persona amb l'enllaç per compartir: el veredicte amb els noms visibles. Per defecte, són el nom que tries per a tu i els noms de pila de les altres persones tal com els vas escriure; els pots canviar o desactivar els noms en qualsevol moment, i aleshores la pàgina mostra Part A i Part B. Nosaltres: podem desxifrar els originals amb la clau, i només mirem el text desat per atendre una sol·licitud d'assistència teva, investigar un abús o quan la llei ho exigeix.",
+    "privacy.casesTitle": "Casos de dues parts i apel·lacions",
+    "privacy.cases":
+      "En un cas de dues parts, cada versió s'anonimitza en el moment d'enviar-la, igual que un veredicte. Els jutges llegeixen el text anonimitzat; la versió de cada persona tal com la va escriure, amb la seva llista de noms, es guarda xifrada i només aquesta persona la pot veure. Cada persona escriu el nom que vol mostrar a la pàgina per compartir quan envia la seva versió; si el deixa buit, apareix Part A o Part B. L'altra persona no necessita compte; les seves respostes tenen un límit d'ús basat en un hash amb clau de la seva adreça IP. L'enllaç d'invitació només es guarda com a hash. Si l'altra persona respon havent iniciat sessió, el seu compte queda vinculat a la seva versió, de manera que només ella pot afegir context més endavant o veure el seu original; si respon sense iniciar sessió, un codi privat guardat al seu navegador fa la mateixa funció, i si més endavant inicia sessió en aquest navegador, pot mantenir el cas al seu compte. Per donar la mateixa etiqueta a la mateixa persona a les dues versions, el servidor guarda empremtes codificades dels noms dins de cada cas (hashes amb clau, no els noms mateixos). Fins al veredicte, cap de les dues parts pot llegir el text de l'altra; després d'un veredicte de dues parts, totes dues poden llegir les dues versions anonimitzades. El context afegit després d'un veredicte (una apel·lació) es tracta de la mateixa manera. Quan l'altra persona respon, et podem enviar un breu correu electrònic sense cap text del cas, si el correu està configurat. Qualsevol de les dues persones pot eliminar la seva pròpia versió: s'esborren el seu original i el nom que mostra, i els enllaços per compartir del cas deixen de funcionar per a tothom. Eliminar el teu compte fa això amb tots els casos que has obert o als quals has respost. Un cas al qual ningú respon caduca als 7 dies, però el text de la teva part es queda fins que l'eliminis. Qui respon sense compte marca «Tinc 18 anys o més» i la casella de dades privades abans d'enviar, i guardem les dues marques amb la seva part.",
     "privacy.webSearchTitle": "Cerca a internet i preguntes",
     "privacy.webSearch":
       "Cada veredicte envia la discussió anonimitzada al nostre proveïdor d'IA amb la cerca a internet activada. El model escriu les consultes de cerca a partir d'aquest text anonimitzat, i els resultats provenen del soci de cerca del proveïdor. Les fonts que s'han fet servir es mostren al veredicte. Abans, els jutges et poden fer fins a dues preguntes: per formular-les, el teu text tal com l'has escrit, noms inclosos, va una vegada més al proveïdor d'IA. Les teves respostes s'anonimitzen juntament amb la discussió abans de jutjar; les preguntes i les respostes tal com les vas escriure es guarden amb el teu original xifrat.",
+    "privacy.evidenceTitle": "Captures de pantalla",
+    "privacy.evidence":
+      "El teu navegador redueix les imatges grans abans de pujar-les. Després, cada imatge va un cop a un servei d'IA extern perquè se'n pugui llegir el text visible; mai no guardem la imatge. La transcripció en brut, que encara pot contenir noms, et torna dins d'un testimoni signat que el teu navegador conserva fins a 6 hores. Quan envies la teva versió, la transcripció s'anonimitza juntament amb el teu text: la transcripció anonimitzada es mostra als jutges i es guarda amb el cas, i la transcripció en brut es guarda xifrada amb el teu original, on només tu la pots veure. Els números de telèfon, les adreces electròniques, els noms d'usuari de xarxes socials i els números de compte que contingui també se substitueixen per marcadors per als jutges.",
+    "privacy.accountsTitle": "Comptes",
+    "privacy.accounts":
+      "Judge és només per a majors de 18 anys, i els comptes que descobrim que són d'una persona menor de 18 anys es tanquen. Necessites un compte per obtenir un veredicte; l'altra part d'un cas de dues parts pot respondre sense. Si inicies sessió amb Apple o Google, guardem l'adreça de correu electrònic, el nom i l'enllaç a la foto de perfil que ens comparteixen, a més del mètode d'inici de sessió que has fet servir, i Apple o Google poden veure que has iniciat sessió a Judge. Si inicies sessió amb un enllaç o un codi per correu electrònic, aquest correu surt a través de Resend, i guardem breument un registre amb la teva adreça de correu per comprovar-ho: deixa de funcionar als 10 minuts i el registre s'esborra tan bon punt s'utilitza o poc després que caduqui. Si defineixes una contrasenya, guardem amb el teu compte només una forma embrollada (hash) d'aquesta, mai la contrasenya mateixa. També guardem els registres de les teves sessions (un testimoni aleatori i quan caduca, sense adreça IP ni dades del navegador, tot i que les aplicacions també registren un identificador del dispositiu quan inicies sessió), els teus crèdits, el teu pla i el seu historial, i quins veredictes han fet servir un crèdit (només l'ID del veredicte). També guardem quins veredictes i casos són teus, perquè els trobis en qualsevol dispositiu. Eliminar el teu compte a la pàgina del compte (a les aplicacions i al web) elimina el teu compte, els registres d'inici de sessió, els crèdits, el pla i els esdeveniments d'ús, i elimina els teus veredictes i les teves parts dels casos tal com es descriu a Eliminació. Guardem algunes coses després de l'eliminació, llistades a Què guardem després de l'eliminació. Si no pots iniciar sessió, la pàgina okjudge.com/delete-account explica com demanar-ho per correu electrònic. Guardem només una forma embrollada de la teva adreça de correu, perquè un compte nou amb ella no rebi un segon veredicte gratuït, i perquè continuï tancat si el teu compte es va tancar per ser menor de 18 anys. També registrem si has confirmat que tens 18 anys o més, i com (una marca o el senyal d'edat del teu telèfon; a Android l'aplicació ho consulta a Google Play, a l'iPhone ho consulta a Apple).",
+    "privacy.removalTitle": "Eliminació",
+    "privacy.removal":
+      "Pots demanar l'eliminació a la pàgina del veredicte (si has iniciat sessió, la pots obrir des de la pàgina «Veredictes»), a la pàgina del cas si és un cas de dues parts, eliminant el compte o per correu electrònic. L'eliminació esborra el teu text original, la llista de noms i els noms que es mostren (en un cas de dues parts, l'original de la teva part i el teu nom que es mostra), i l'enllaç per compartir i la seva imatge de previsualització deixen de carregar-se per a tothom. Les previsualitzacions ja publicades en aplicacions de missatgeria les conserven aquestes aplicacions i poden continuar veient-se fins que les actualitzin. Guardem el text anonimitzat i el veredicte, sense noms, als nostres registres; ja no es poden obrir des de l'enllaç. Eliminar el teu compte fa això amb tots els teus veredictes i les teves parts dels casos, i esborra les dades d'inici de sessió, els crèdits i el pla. Les dades eliminades es queden a les nostres còpies de seguretat fins que caduquen (14 dies com a màxim, vegeu més avall); si algun dia restaurem una còpia, tornem a aplicar totes les eliminacions (per això guardem una llista del que s'ha eliminat i quan, sense text ni noms). Trenta dies després que eliminis alguna cosa, també esborrem el text anonimitzat i el veredicte, i guardem només el resultat i les dates, tret que la llei ens obligui a guardar-los més temps. Això s'aplica al que s'elimini a partir del 14 de novembre de 2026 (UTC); les eliminacions anteriors conserven el seu text anonimitzat. En un cas, els trenta dies només comencen quan totes les persones implicades l'han eliminat. Els veredictes i casos que ningú elimina es guarden fins que els eliminis o eliminis el compte. Un veredicte fet sense haver iniciat sessió, abans que calgués un compte, es pot eliminar escrivint a {email} amb el seu enllaç.",
+    "privacy.afterRemovalTitle": "Què guardem després de l'eliminació",
+    "privacy.afterRemoval":
+      "Després de l'eliminació, i passats els trenta dies, encara guardem:\n- el resultat i les puntuacions, els ajustos triats, les dates, els ID, quines parts i quin idioma hi havia, i l'ID del compte que va obrir un cas;\n- les teves valoracions. Quan elimines el compte, cada valoració passa a un ID aleatori i ja no porta a tu;\n- el registre de les teves decisions a Ajuda a millorar Judge i de la teva acceptació sobre dades privades (dates, idioma, plataforma i el text que vas veure), durant 6 anys després que eliminis el compte, per demostrar el que has acceptat. Un cop eliminat el compte, aquests registres porten un ID aleatori i cap vincle amb el teu nom ni el teu correu;\n- la llista d'eliminacions, que conté ID, motius, dates i la part del cas, durant 90 dies, per tornar a aplicar les eliminacions després de restaurar una còpia de seguretat;\n- una forma embrollada del teu correu, per evitar l'abús repetit de crèdits gratuïts (vegeu Comptes);\n- un registre de dispositiu sense vincle amb el teu compte, fins a 180 dies;\n- les còpies de seguretat, fins a 14 dies.\nQuan s'esborra un cas, les empremtes codificades i les etiquetes dels seus noms es buiden, de manera que no es guarden.",
+    "privacy.retentionTitle": "Quant de temps ho guardem",
+    "privacy.retention":
+      "Guardem els veredictes i els originals fins que en demanes l'eliminació o elimines el compte. Per poder recuperar-nos d'una fallada, guardem còpies de seguretat del servidor i de la seva base de dades durant un màxim de 14 dies, i després s'esborren. Contenen les mateixes dades que el servidor, inclosos els originals xifrats, i la clau és al mateix servidor, així que les còpies estan protegides igual que el servidor mateix, no per aquest xifratge. Els hashes dels límits d'ús duren fins a 48 hores. Els esdeveniments d'ús s'esborren als 90 dies i els vincles amb dispositius als 180 dies sense ús. Els registres i les mètriques a Grafana Labs es guarden 14 dies. Els informes de fallades a Sentry es guarden fins a 30 dies. Els altres registres del servidor segueixen la conservació estàndard del nostre proveïdor d'allotjament. Un codi d'inici de sessió caduca als 10 minuts, i els codis caducats s'esborren cada dia. Una sessió acaba 30 dies després de l'últim ús. La llista d'eliminacions es guarda 90 dies. Els registres de les teves decisions de consentiment es guarden 6 anys després que eliminis el compte i després s'esborren.",
+    "privacy.ipTitle": "Límits d'ús",
+    "privacy.ip":
+      "Perquè la sala continuï oberta per a tothom, limitem quants veredictes pot demanar cada compte i quantes traduccions cada visitant. Per a les traduccions, les respostes en un cas de dues parts, la consulta d'un veredicte mentre es jutja i els intents d'inici de sessió, guardem un hash amb clau de la teva adreça IP, no l'adreça mateixa, durant un màxim de 48 hores. Els límits d'inici de sessió guarden breument l'adreça mateixa a la memòria del servidor, durant aproximadament un minut, mai al disc. Si la verificació humana està activada, la teva adreça IP també arriba a Cloudflare per a aquesta verificació. Mai es guarda amb el teu veredicte.",
+    "privacy.processorsTitle": "Qui més tracta el teu text",
+    "privacy.processors":
+      "El text que escrius, noms reals inclosos, va primer al nostre proveïdor d'IA als Estats Units perquè se'n puguin treure els noms. Només es jutja la versió anonimitzada; l'original es guarda xifrat, tal com s'explica més amunt. Si la verificació humana està activada, Cloudflare Turnstile s'executa al teu navegador i comprova el resultat amb Cloudflare. Si inicies sessió, Apple o Google (el que triïs) gestionen aquest inici de sessió, i els correus d'inici de sessió surten a través de Resend. Les compres a les aplicacions passen per l'App Store o Google Play i les gestiona RevenueCat, que rep l'ID del teu compte i el teu historial de compres. Grafana Labs rep els registres del servidor i les mètriques de rendiment, que es guarden a la UE durant 14 dies; els registres no contenen text de cap cas. Els informes de fallades i d'errors de les aplicacions i d'aquest web van a Sentry, que els guarda a la UE fins a 30 dies; inclouen l'error, la versió de l'aplicació o del navegador i el model del dispositiu, però cap text de cas, ID de compte ni adreça de connexió. El nostre proveïdor d'allotjament guarda registres estàndard del servidor. L'aplicació d'Android consulta a Google Play la teva franja d'edat i la de l'iPhone ho consulta a Apple. Som el responsable del tractament; aquests proveïdors tracten les dades en nom nostre.",
+    "privacy.shareTitle": "Enllaços per compartir",
+    "privacy.share":
+      "Qualsevol persona amb l'enllaç d'un veredicte el pot veure, amb els noms visibles que hagis triat (o Part A i Part B si has desactivat els noms). Els enllaços fan servir identificadors llargs i aleatoris, i les pàgines compartides demanen als cercadors que no les indexin. L'enllaç i la imatge de previsualització d'un veredicte eliminat deixen de carregar-se; les previsualitzacions ja publicades en apps de xat poden continuar apareixent fins que aquestes apps les actualitzin. No hi posis adreces, números de telèfon ni res que no voldries en una pàgina que altres poden obrir.",
+    "privacy.locationTitle": "On són les teves dades",
+    "privacy.location":
+      "Els nostres servidors són a Alemanya (OVH, Frankfurt). Una part del tractament es fa als Estats Units: el nostre proveïdor d'IA executa els models que treuen els noms, jutgen, llegeixen les captures i fan cerques a internet; Cloudflare és davant d'okjudge.com com a servidor intermediari i DNS (tot el trànsit hi passa) i executa la verificació humana. L'inici de sessió passa per Apple o Google si els tries, i els correus d'inici de sessió per Resend. Les dades tractades en un altre país poden estar subjectes a les lleis d'aquest país. Treballem des del Canadà i des d'allà podem veure les teves dades.",
+    "privacy.storageTitle": "Galetes i emmagatzematge del navegador",
+    "privacy.storage":
+      "El web fa servir una galeta d'inici de sessió (verdict.session_token) que et manté amb la sessió iniciada, i galetes de curta durada mentre inicies sessió amb Apple o Google (verdict.state dura 5 minuts). Cloudflare, que executa la verificació humana, pot posar-hi galetes pròpies. Cap s'utilitza per al rastreig. L'emmagatzematge local del navegador guarda el teu idioma, el tema i l'elecció de Gamify; un esborrany sense enviar (inclòs el text que has escrit) mentre inicies sessió; una llista de veredictes i casos fets sense sessió iniciada; codis privats que et permeten accedir als teus originals; els noms que has fet servir en un cas; codis d'invitació dels casos als quals t'han demanat que responguis; la teva confirmació d'edat; l'últim tribunal que has triat; i quins exemples has vist. L'emmagatzematge de sessió guarda l'adreça de correu i el mode mentre esperes un correu d'inici de sessió, i indicadors d'ús de la pestanya. Això es queda al teu dispositiu. Esborrar les dades del lloc ho elimina. Les aplicacions guarden coses semblants al dispositiu.",
+    "privacy.notStoredTitle": "Què no fem",
+    "privacy.notStored":
+      "Cap rastrejador publicitari. No venem les teves dades ni les compartim per a publicitat. El web i les aplicacions no et rastregen entre altres llocs. Com responem a Do Not Track: el web no envia esdeveniments d'ús des del teu navegador quan aquest envia Do Not Track o Global Privacy Control, i l'interruptor «Estadístiques d'ús» de les aplicacions fa el mateix a les aplicacions. El nostre servidor continua registrant alguns esdeveniments lligats al teu compte (inici de sessió, casos i veredictes fets o fallits, compres) i des de quin dispositiu has iniciat sessió. Mai fem servir el teu text per entrenar res tret que hagis activat Ajuda a millorar Judge.",
+    "privacy.securityTitle": "Com ho protegim",
+    "privacy.security":
+      "Els originals, les llistes de noms, els noms que es mostren i els testimonis d'inici de sessió d'Apple estan xifrats. El trànsit fa servir HTTPS. La clau de xifratge és al mateix servidor que les dades, així que no protegeix contra algú que prengui el control del servidor. Si alguna cosa surt malament amb la teva informació personal, avisem les persones afectades i les autoritats quan la llei ho exigeix.",
+    "privacy.childrenTitle": "Edat",
+    "privacy.children":
+      "Judge és per a majors de 18 anys. Demanem a tothom que inicia sessió que ho confirmi, qui respon a un cas sense compte marca «Tinc 18 anys o més» abans d'enviar, i les aplicacions poden fer servir el senyal d'edat del teu telèfon. No recollim a consciència dades de menors de 18 anys. Si creus que un menor té un compte, escriu a {email} i el tanquem i eliminem les dades.",
+    "privacy.rightsTitle": "Els teus drets",
+    "privacy.rights":
+      "Visquis on visquis, ens pots demanar que et mostrem què guardem, que ho corregim, que ho eliminem o que eliminem el teu compte, que deixem d'usar-ho per a l'entrenament i que et donem una còpia. Gairebé tot ho pots fer tu mateix: eliminar un veredicte o un cas a la seva pàgina, eliminar el compte a la pàgina del compte, canviar els noms que es mostren a la pàgina d'un veredicte o d'un cas, baixar les teves dades i activar o desactivar Ajuda a millorar Judge (i, a les aplicacions, Estadístiques d'ús) a Configuració. Per a qualsevol altra cosa, escriu a {email} amb l'enllaç del veredicte o del cas. Et podem demanar que escriguis des del correu del teu compte o que ho confirmis amb la sessió iniciada. Responem en un termini de 30 dies, o d'un mes si és més curt. És gratuït. No et tractarem pitjor per exercir els teus drets. Qui ho demani en nom teu necessita el teu permís per escrit.\nUna còpia de les teves dades és un fitxer JSON. Tria Baixa les meves dades a la pàgina del compte, a les aplicacions o al web. Conté el teu compte i els mètodes d'inici de sessió, els teus veredictes i les teves parts dels casos amb els teus propis textos i noms, els resultats, les teves valoracions, l'historial de consentiments, els teus dispositius, esdeveniments d'ús i compres. No conté testimonis d'inici de sessió, la teva contrasenya ni el correu embrollat, ni el text o els noms de ningú més.\nNo estàs obligat a donar-nos dades, però sense el teu text i sense un compte no et podem donar un veredicte.",
+    "privacy.regionEuTitle": "Si ets a la UE o al Regne Unit",
+    "privacy.regionEu":
+      "- Responsable del tractament: vegeu Qui som.\n- Bases jurídiques: vegeu Per què fem servir les teves dades.\n- També ens pots demanar que limitem l'ús, oposar-te a l'ús basat en els nostres interessos legítims, retirar el consentiment en qualsevol moment (sense afectar el que hem fet abans) i presentar una reclamació davant la teva autoritat de protecció de dades (al Regne Unit, l'ICO).\n- Les teves dades es tracten a Alemanya, al Canadà i als Estats Units, tal com es descriu a On són les teves dades. Escriu a {email} si vols saber més sobre com es transfereixen.\n- Decisions automatitzades: vegeu Els veredictes els escriu una IA.",
+    "privacy.regionUsTitle": "Si ets a Califòrnia o en un altre estat dels EUA",
+    "privacy.regionUs":
+      "- Els darrers 12 mesos hem recollit: identificadors (correu, nom, ID de compte i de dispositiu); el text de la teva disputa i les teves respostes; valoracions i decisions de consentiment; historial de compres; dades d'ús i del dispositiu (país, model del dispositiu, versió de l'aplicació); la confirmació d'edat; i informació sensible (inici de sessió del compte i qualsevol detall de salut o semblant al teu text). Fonts: tu, l'inici de sessió i la botiga del teu telèfon, i les nostres aplicacions. Finalitats: vegeu Per què fem servir les teves dades. Destinataris: les categories de Qui més tracta el teu text.\n- No venem ni compartim informació personal per a publicitat, i no ho hem fet els darrers 12 mesos. No et fem perfils. Fem servir la informació sensible només per prestar-te el servei, així que no hi ha res a limitar ni del qual excloure's.\n- Drets: saber, accedir, corregir, eliminar i obtenir una còpia portable. Pots fer servir un agent autoritzat. Responem en un termini de 30 dies, o d'un mes si és més curt. Per recórrer una denegació, escriu a {email} amb «Appeal». Resolem un recurs en 45 dies. Si el denegem, pots adreçar-te al fiscal general del teu estat.\n- Conservació: vegeu Quant de temps ho guardem i Què guardem després de l'eliminació.\n- Do Not Track: vegeu Què no fem. Cap empresa de publicitat o de rastreig recull dades a les nostres pàgines. Cloudflare executa la verificació humana i veu la teva connexió amb aquesta finalitat.\n- Ningú menor de 18 anys pot fer servir Judge, així que no venem ni compartim les dades de ningú menor de 16. Els drets d'altres estats són la mateixa llista.",
+    "privacy.regionCaTitle": "Si ets al Canadà o al Quebec",
+    "privacy.regionCa":
+      "Judge es gestiona des del Canadà i tracta la informació personal d'acord amb la PIPEDA: només recollim el que el servei necessita, ho fem servir només per a això, ho protegim, i pots demanar veure, corregir o eliminar el que tenim sobre tu. Responem en 30 dies. Pots presentar una queixa davant l'Oficina del Comissionat de Privadesa del Canadà (priv.gc.ca). Si ets al Quebec:\n- La persona responsable de la informació personal és Aytu Tuna, propietari, a {email}.\n- Algunes dades s'envien fora del Quebec: al nostre servidor a Alemanya, al proveïdor d'IA i a altres proveïdors als Estats Units, i al Canadà fora del Quebec.\n- Judge només registra el país de la teva connexió, per als recomptes d'ús, i no rastreja la teva ubicació exacta. El veredicte jutja l'argument que descrius i no s'utilitza per fer-te un perfil. Els recomptes d'ús queden lligats al teu compte tal com es descriu a Què guardem.\n- Ajuda a millorar Judge està desactivat fins que l'actives, i el pots desactivar en qualsevol moment.\n- També pots demanar retirar el consentiment, obtenir les teves dades en un format d'ús comú i presentar una queixa davant la Commission d'accès à l'information.",
+    "privacy.regionBrTitle": "Si ets al Brasil",
+    "privacy.regionBr":
+      "Responsable del tractament i contacte: vegeu Qui som. {email} és també el canal per a les sol·licituds de la LGPD. Som el responsable del tractament; els proveïdors de Qui més tracta el teu text actuen per compte nostre. Bases jurídiques: vegeu Per què fem servir les teves dades. Ens pots demanar que confirmem que tractem les teves dades; que et n'oferim l'accés; que les corregim; que anonimitzem, bloquegem o eliminem les dades excessives o il·lícites; que en garantim la portabilitat; que eliminem les dades que fem servir amb el teu consentiment; que et diguem amb qui les hem compartit; que t'informem de la possibilitat de denegar el consentiment i de les seves conseqüències; i que retirem el teu consentiment. És gratuït. També pots presentar una queixa davant l'ANPD. Les teves dades s'envien a l'estranger tal com es descriu a On són les teves dades.",
+    "privacy.changesTitle": "Canvis",
+    "privacy.changes":
+      "Si canviem aquesta política d'una manera que importi, actualitzem la data a la part superior d'aquesta pàgina. Mai fem servir per a un nou fi dades que ens vas donar amb una política anterior sense preguntar-te-ho abans. La revisem almenys un cop l'any.",
+    "privacy.contactTitle": "Contacte",
+    "privacy.contact":
+      "Tens preguntes, o vols veure, corregir o eliminar les teves dades? Escriu a {email} amb l'enllaç al veredicte o al cas.",
     "nav.signIn": "Inicia sessió",
     "nav.account": "Compte",
     "nav.pricing": "Preus",
@@ -304,20 +371,16 @@ const ca: Locale = {
     "consent.sensitiveContinue": "Continua",
     "respond.adultConfirm": "Tinc 18 anys o més",
     "account.export": "Baixa les meves dades",
-    "account.exportHint":
-      "Obtén un fitxer JSON amb tot el que Judge guarda sobre tu.",
+    "account.exportHint": "Obtén un fitxer JSON amb tot el que Judge guarda sobre tu.",
     "account.exportBusy": "Preparant el fitxer…",
-    "account.exportFailed":
-      "Ara no hem pogut preparar les teves dades. Ho tornes a provar?",
+    "account.exportFailed": "Ara no hem pogut preparar les teves dades. Ho tornes a provar?",
     "deletePage.title": "Elimina el teu compte de Judge",
     "deletePage.lead":
       "Judge és una aplicació d'Aytu Tuna. Pots eliminar el compte i les seves dades tu mateix, quan vulguis, a l'aplicació o al web.",
     "deletePage.appTitle": "A l'aplicació",
-    "deletePage.app":
-      "Obre Judge, ves a Compte, toca Elimina el compte i confirma.",
+    "deletePage.app": "Obre Judge, ves a Compte, toca Elimina el compte i confirma.",
     "deletePage.webTitle": "Al web",
-    "deletePage.web":
-      "Inicia la sessió a okjudge.com, obre Compte, tria Elimina el compte i confirma.",
+    "deletePage.web": "Inicia la sessió a okjudge.com, obre Compte, tria Elimina el compte i confirma.",
     "deletePage.removedTitle": "Què s'elimina",
     "deletePage.removed":
       "S'eliminen el compte, els registres d'inici de sessió, els crèdits, el pla i els esdeveniments d'ús. Els veredictes i els teus bàndols dels casos s'eliminen: el text original i els noms s'esborren a l'acte, i el text anonimitzat i el veredicte 30 dies després.",
@@ -344,21 +407,23 @@ const ca: Locale = {
     "clarify.back": "Edita la discussió",
     "thinking.factcheck": "Comprovant els fets a internet…",
     "thinking.factcheckDone": "Comprovació a internet acabada.",
-    "thinking.premiumHelper":
-      "Comprovar els fets a internet triga una mica més. Pot ser qüestió d'un minut o dos.",
+    "thinking.premiumHelper": "Comprovar els fets a internet triga una mica més. Pot ser qüestió d'un minut o dos.",
     "panel.premium": "Jutjat amb comprovació de fets a internet.",
     "factcheck.title": "Comprovat a internet",
-    "factcheck.lead": "Els jutges han vist aquests resultats de cerca abans de decidir. Són proves, no el veredicte en si.",
+    "factcheck.lead":
+      "Els jutges han vist aquests resultats de cerca abans de decidir. Són proves, no el veredicte en si.",
     "factcheck.status.supported": "Se sosté",
     "factcheck.status.refuted": "No se sosté",
     "factcheck.status.mixed": "En part cert",
     "factcheck.status.unverified": "Sense confirmar",
     "factcheck.sources": "Fonts",
     "factcheck.sourceAria": "{title}, s'obre en una pestanya nova",
-    "factcheck.none": "No hi ha res a buscar a internet: aquí el que compta són els valors o els significats, no els fets.",
+    "factcheck.none":
+      "No hi ha res a buscar a internet: aquí el que compta són els valors o els significats, no els fets.",
     "factcheck.noneFactual":
       "Aquí no hi ha res que es pugui comprovar a internet: els fets d'aquest cas només els coneixen les persones implicades.",
-    "factcheck.unavailable": "Aquesta vegada la comprovació a internet no ha acabat, així que els jutges han decidit sense.",
+    "factcheck.unavailable":
+      "Aquesta vegada la comprovació a internet no ha acabat, així que els jutges han decidit sense.",
     "signin.title": "Inicia sessió",
     "signin.lead": "Inicia sessió per obtenir un veredicte. Els comptes nous tenen el primer veredicte gratis.",
     "signin.apple": "Continua amb Apple",
@@ -367,7 +432,8 @@ const ca: Locale = {
     "signin.emailLabel": "Adreça electrònica",
     "signin.emailPlaceholder": "tu@exemple.com",
     "signin.emailSubmit": "Envia'm un enllaç per entrar",
-    "signin.emailSent": "Mira la safata d'entrada. Hem enviat un enllaç per entrar a {email}. Funciona durant 10 minuts.",
+    "signin.emailSent":
+      "Mira la safata d'entrada. Hem enviat un enllaç per entrar a {email}. Funciona durant 10 minuts.",
     "signin.emailInvalid": "Aquesta adreça electrònica no sembla correcta.",
     "signin.codeRequest": "Envia'm un codi per correu",
     "signin.codeSent": "Hem enviat un codi a {email}. Funciona durant 10 minuts.",
@@ -432,7 +498,8 @@ const ca: Locale = {
     "pricing.included.title": "Cada veredicte inclou",
     "pricing.buy.title": "Paquets i pla mensual",
     "pricing.premium.f1": "Fets comprovats a internet, amb les fonts al teu veredicte",
-    "pricing.premium.f2": "Tres jutges d'IA i una puntuació de confiança honesta, i més jutges si la cosa està igualada",
+    "pricing.premium.f2":
+      "Tres jutges d'IA i una puntuació de confiança honesta, i més jutges si la cosa està igualada",
     "pricing.premium.f3": "Fins a dues preguntes ràpides si falta un fet clau",
     "pricing.premium.f4": "Noms canviats abans de jutjar",
     "pricing.packsTitle": "Paquets de crèdits",
@@ -444,7 +511,8 @@ const ca: Locale = {
     "pricing.monthly.renews": "Es renova cada mes",
     "pricing.monthly.cap": "{n} veredictes al mes",
     "pricing.comingSoon": "Aviat",
-    "pricing.note": "Els preus són en dòlars dels EUA. Encara no s'accepten pagaments, així que avui no es pot comprar res.",
+    "pricing.note":
+      "Els preus són en dòlars dels EUA. Encara no s'accepten pagaments, així que avui no es pot comprar res.",
     "pricing.signIn": "Crea un compte per al veredicte gratis",
     "pricing.preview": "Aquí els veredictes encara no estan activats. Aquesta pàgina és una vista prèvia.",
     "error.signin_required": "Inicia sessió per continuar.",
@@ -453,7 +521,8 @@ const ca: Locale = {
     "error.fair_use": "Ja has fet servir els veredictes d'aquest mes. En tindràs més el dia {date}.",
     "error.fair_useSoon": "Ja has fet servir els veredictes d'aquest mes. Aviat en tindràs més.",
     "error.in_progress": "Encara s'està preparant aquest veredicte. Espera un moment.",
-    "error.bad_origin": "Aquesta sol·licitud ve d'un lloc que no reconeixem. Torna a carregar la pàgina i prova-ho de nou.",
+    "error.bad_origin":
+      "Aquesta sol·licitud ve d'un lloc que no reconeixem. Torna a carregar la pàgina i prova-ho de nou.",
     "error.not_found": "No ho hem trobat.",
     "error.case_closed": "Aquest cas ja no ho admet.",
     "error.case_expired": "Aquesta invitació ha caducat.",
@@ -465,7 +534,8 @@ const ca: Locale = {
     "error.unsupported_media": "Només podem llegir imatges PNG, JPEG, WebP o GIF.",
     "error.too_many_files": "Són més imatges de les que pots afegir aquí.",
     "error.evidence_invalid": "Una de les imatges ha caducat o no s'ha pogut verificar. Treu-la i torna-la a afegir.",
-    "error.anonymize_failed": "No hem pogut treure els noms del text. Torna-ho a provar, o escriu inicials en lloc de noms complets.",
+    "error.anonymize_failed":
+      "No hem pogut treure els noms del text. Torna-ho a provar, o escriu inicials en lloc de noms complets.",
     "mode.label": "Com ho jutgem?",
     "mode.now": "Només jo (a l'instant)",
     "mode.both": "Totes dues parts (amb enllaç)",
@@ -494,7 +564,8 @@ const ca: Locale = {
     "case.invite.resetYes": "Sí, crea un enllaç nou",
     "case.invite.resetDone": "L'enllaç antic s'ha desactivat. Envia el nou.",
     "case.judgeNow": "Jutja només la meva versió",
-    "case.judgeNow.confirm": "Vols un veredicte ara, només amb la teva versió? La invitació es tanca i l'altra persona ja no podrà respondre.",
+    "case.judgeNow.confirm":
+      "Vols un veredicte ara, només amb la teva versió? La invitació es tanca i l'altra persona ja no podrà respondre.",
     "case.judgeNow.yes": "Sí, jutja-ho ara",
     "case.judgeExpired.confirm": "Vols un veredicte només amb la teva versió? Gastarà 1 veredicte.",
     "case.judgeExpired.yes": "Sí, gasta 1 veredicte",
@@ -503,7 +574,8 @@ const ca: Locale = {
     "case.side.opened": "Ha obert",
     "case.side.typing": "Escrivint…",
     "case.judgeAnswered": "Jutja amb les parts que han respost",
-    "case.judgeAnswered.confirm": "Vols un veredicte amb les parts que han respost? Les altres invitacions es tanquen i aquestes persones ja no podran respondre.",
+    "case.judgeAnswered.confirm":
+      "Vols un veredicte amb les parts que han respost? Les altres invitacions es tanquen i aquestes persones ja no podran respondre.",
     "case.cancel": "Cancel·la",
     "case.retry": "Torna-ho a provar",
     "case.failedBody": "T'hem tornat el crèdit. Ja ho pots tornar a provar.",
@@ -541,10 +613,8 @@ const ca: Locale = {
     "respond.submit": "Envia la meva versió",
     "case.write.title": "La teva versió",
     "case.write.placeholder": "Quin és el problema?",
-    "case.write.lead":
-      "Escriu la teva versió quan vulguis. Els jutges comencen quan les dues parts hagin escrit.",
-    "case.write.leadAnswered":
-      "Ja ha escrit la seva versió. Escriu la teva per obtenir el veredicte.",
+    "case.write.lead": "Escriu la teva versió quan vulguis. Els jutges comencen quan les dues parts hagin escrit.",
+    "case.write.leadAnswered": "Ja ha escrit la seva versió. Escriu la teva per obtenir el veredicte.",
     "case.write.submit": "Envia la meva versió",
     "case.write.emailSubject": "L'altra persona ja ha escrit la seva versió",
     "respond.sent": "Gràcies. Hem rebut la teva versió i els jutges ja hi estan treballant.",
@@ -604,8 +674,7 @@ const ca: Locale = {
     "home.removeTheirSide": "Treu la seva versió",
     "home.sendLink": "Envia-li un enllaç",
     "home.clear": "Esborra",
-    "home.lead":
-      "Escriu les dues versions o envia un enllaç a l'altra persona perquè escrigui la seva.",
+    "home.lead": "Escriu les dues versions o envia un enllaç a l'altra persona perquè escrigui la seva.",
     "home.leadSolo": "Escriu la teva versió, i la de l'altra persona si la coneixes.",
     "home.theirSide": "La seva versió",
     "home.theirName": "El seu nom",
@@ -615,8 +684,7 @@ const ca: Locale = {
     "home.says": "{name} diu:",
     "home.mySide": "La meva versió:",
     "home.otherSide": "La versió de l'altra persona:",
-    "appeal.lead":
-      "Gasta 1 veredicte.",
+    "appeal.lead": "Gasta 1 veredicte.",
     "appeal.placeholder": "Què s'han deixat els jutges? Un fet, un missatge o el que realment vau acordar.",
     "appeal.submit": "Torna a jutjar amb el meu context",
     "appeal.sending": "Anonimitzant el teu context…",
@@ -649,7 +717,8 @@ const ca: Locale = {
     "about.casesTitle": "Escoltar les dues parts",
     "about.cases1":
       "Casos de dues parts: inicia sessió, escriu la teva versió i envia un enllaç privat. L'altra persona escriu la seva sense veure la teva, i els jutges sospesen tots dos relats: en què coincideixen, en què discrepen i quina prova canviaria el veredicte.",
-    "about.cases2": "Si ningú no respon en 7 dies, l'enllaç deixa de funcionar. Encara pots obtenir un veredicte només amb la teva versió.",
+    "about.cases2":
+      "Si ningú no respon en 7 dies, l'enllaç deixa de funcionar. Encara pots obtenir un veredicte només amb la teva versió.",
     "about.premiumTitle": "Extres",
     "about.premium2":
       "Proves: afegeix captures de xats o documents. En llegim el text, n'amaguem els noms i llencem la imatge.",
@@ -657,15 +726,10 @@ const ca: Locale = {
       "Apel·lacions: després d'un veredicte, cada persona pot afegir context un cop. Els jutges ho tornen a mirar tot i diuen si el veredicte es manté, s'ha capgirat o ha canviat. Els veredictes anteriors es poden continuar consultant.",
     "about.premium4":
       "Un cas de dues parts gasta 1 veredicte. Queda reservat quan envies l'enllaç i el recuperes si ningú no respon en 7 dies.",
-    "privacy.casesTitle": "Casos de dues parts i apel·lacions",
-    "privacy.cases":
-      "En un cas de dues parts, cada versió s'anonimitza en el moment d'enviar-la, igual que un veredicte. Els jutges llegeixen el text anonimitzat; la versió de cada persona tal com la va escriure, amb la seva llista de noms, es guarda xifrada i només la pot veure aquesta persona. Cada persona escriu el nom que vol mostrar a la pàgina compartida quan envia la seva versió; si el deixa en blanc, hi apareix Part A o Part B. L'altra persona no necessita compte; les seves respostes tenen un límit d'ús basat en un hash amb clau de la seva adreça IP. L'enllaç d'invitació només es guarda com a hash. Si l'altra persona respon amb la sessió iniciada, el seu compte queda vinculat a la seva versió, de manera que només ella pot afegir context més endavant o veure el seu original; si respon sense iniciar sessió, ho fa un codi privat guardat al seu navegador, i si més endavant inicia sessió en aquell navegador, pot guardar el cas al seu compte. Perquè una mateixa persona tingui la mateixa etiqueta en tots dos relats, el servidor guarda empremtes codificades dels noms dins de cada cas (hashes amb clau, no els noms en si). Fins al veredicte, cap de les parts pot llegir el text de l'altra; després d'un veredicte de dues parts, totes dues persones poden llegir els dos relats anonimitzats. El context afegit després d'un veredicte (una apel·lació) es tracta de la mateixa manera. Quan l'altra persona respon, és possible que t'enviem un correu breu sense cap text del cas, si el correu està configurat. Cadascuna de les dues persones pot eliminar la seva versió: se n'esborren l'original i el nom visible, i els enllaços per compartir del cas deixen de funcionar per a tothom. Eliminar el compte fa això amb tots els casos que has començat o respost.",
-    "privacy.evidenceTitle": "Captures de pantalla",
-    "privacy.evidence":
-      "El teu navegador redueix les imatges grans abans de pujar-les. Després, cada imatge va un cop a un servei d'IA extern perquè se'n pugui llegir el text visible; mai no guardem la imatge. La transcripció en brut, que encara pot contenir noms, et torna dins d'un testimoni signat que el teu navegador conserva fins a 6 hores. Quan envies la teva versió, la transcripció s'anonimitza juntament amb el teu text: la transcripció anonimitzada es mostra als jutges i es guarda amb el cas, i la transcripció en brut es guarda xifrada amb el teu original, on només tu la pots veure. Els números de telèfon, les adreces electròniques, els noms d'usuari de xarxes socials i els números de compte que contingui també se substitueixen per marcadors per als jutges.",
     "pricing.premium.f5": "Captures com a prova, llegides i després descartades, sense cost addicional",
     "pricing.premium.f6": "Afegeix context després d'un veredicte i fes que es torni a jutjar (1 veredicte)",
-    "pricing.premium.f7": "Escolta les dues parts: envia a l'altra persona un enllaç privat perquè expliqui la seva versió",
+    "pricing.premium.f7":
+      "Escolta les dues parts: envia a l'altra persona un enllaç privat perquè expliqui la seva versió",
     "langToggle.toTr": "Türkçeye geç",
     "langToggle.toEn": "Switch to English",
     "shared.subtitleHidden": "Algú ha compartit aquest veredicte · noms amagats",
@@ -782,21 +846,6 @@ const ca: Locale = {
     "stamp.dissolved": "Malentès",
     "bestPoint.of": "El millor argument que té {name}",
     "bestPoint.self": "El teu millor argument",
-    "privacy.accessTitle": "Qui pot veure què",
-    "privacy.access":
-      "Tu: el teu text original i els noms, des de qualsevol dispositiu si has iniciat sessió, o des del dispositiu que vas fer servir gràcies a un codi privat guardat al navegador o a l'app (nosaltres només en guardem una forma codificada). Els veredictes escrits sense iniciar sessió, abans que calgués un compte, i els casos que has respost sense iniciar sessió continuen a la llista d'aquell navegador amb els titulars i els noms tal com els vas escriure, perquè la pàgina «Veredictes» els pugui mostrar: qualsevol persona que faci servir el mateix navegador veu aquesta llista. En un ordinador compartit, inicia sessió o fes servir una finestra privada; si esborres les dades del lloc al navegador, s'esborra la llista. En un cas de dues parts, cada persona només veu el seu propi original; després del veredicte, totes dues veuen els dos relats anonimitzats, tal com els llegeixen els jutges. Els jutges (models d'IA executats pel nostre proveïdor d'IA): només la versió anonimitzada. Qualsevol persona amb l'enllaç per compartir: el veredicte amb els noms visibles. Per defecte, són el nom que tries per a tu i els noms de pila de les altres persones tal com els vas escriure; els pots canviar o desactivar els noms en qualsevol moment, i aleshores la pàgina mostra Part A i Part B. Nosaltres: podem desxifrar els originals amb la clau, i només mirem el text desat per atendre una sol·licitud d'assistència teva, investigar un abús o quan la llei ho exigeix.",
-    "privacy.removalTitle": "Eliminació",
-    "privacy.removal":
-      "Pots demanar l'eliminació a la pàgina del veredicte (si has iniciat sessió, la pots obrir des de la pàgina «Veredictes»), a la pàgina del cas si és un cas de dues parts, eliminant el compte o per correu electrònic. L'eliminació esborra el teu text original, la llista de noms i els noms visibles (en un cas de dues parts, l'original de la teva versió i el teu nom visible), i l'enllaç per compartir i la imatge de previsualització deixen de carregar-se per a tothom. Les previsualitzacions ja publicades en apps de xat les conserven aquestes apps i poden continuar apareixent fins que les actualitzin. Conservem el text anonimitzat i el veredicte, sense noms, als nostres registres; ja no es poden obrir des de l'enllaç. Eliminar el compte fa això amb tots els teus veredictes i les teves versions dels casos, i esborra les teves dades d'inici de sessió, els crèdits i el pla. Les dades eliminades es mantenen a les còpies de seguretat fins que caduquen (com a màxim 14 dies, mira més avall); si mai restaurem una còpia, tornem a aplicar totes les eliminacions (per això guardem una llista del que s'ha eliminat i quan, sense cap text ni nom). Trenta dies després que eliminis alguna cosa, també esborrem el text anonimitzat i el veredicte, i només en conservem el resultat i les dates, tret que la llei ens obligui a guardar-los més temps. En un cas, els trenta dies només comencen quan tothom qui hi participa l'ha eliminat.",
-    "privacy.retentionTitle": "Quant de temps ho guardem",
-    "privacy.retention":
-      "Guardem els veredictes i els originals fins que en demanes l'eliminació o elimines el compte. Per poder recuperar-nos d'una fallada, guardem còpies de seguretat del servidor i de la seva base de dades durant un màxim de 14 dies, i després s'esborren. Contenen les mateixes dades que el servidor, inclosos els originals xifrats, i la clau és al mateix servidor, de manera que les còpies estan protegides igual que el servidor, no per aquest xifratge. Els hashes del límit d'ús duren com a màxim 24 hores. Els registres del servidor segueixen el període de conservació estàndard del nostre proveïdor d'allotjament. Els esdeveniments d'ús s'esborren als 90 dies, i els enllaços als dispositius als 180 dies sense ús. Els registres i les mètriques que van a Grafana Labs es guarden 14 dies.",
-    "privacy.locationTitle": "On són les teves dades",
-    "privacy.location":
-      "Els nostres servidors són a Alemanya (OVH, Frankfurt). Una part del tractament es fa als Estats Units: el nostre proveïdor d'IA executa els models que treuen els noms, jutgen, llegeixen les captures i fan cerques a internet; Cloudflare està davant d'okjudge.com com a proxy i DNS (tot el trànsit hi passa) i fa la verificació humana. L'inici de sessió passa per Apple o Google si els tries, i els correus d'inici de sessió, per Resend. Les dades tractades en un altre país poden estar subjectes a les lleis d'aquell país.",
-    "privacy.rightsTitle": "Els teus drets (Canadà)",
-    "privacy.rights":
-      "Judge es gestiona des del Canadà i tracta la informació personal d'acord amb la llei federal de privadesa del Canadà (PIPEDA): només recollim el que el servei necessita, ho fem servir només per a això, ho protegim, i pots demanar veure, corregir o eliminar el que tenim sobre tu. Responem en un termini de 30 dies.",
     "footer.terms": "Condicions",
     "signin.legalTerms": "Condicions d'ús",
     "age.confirm": "Tinc 18 anys o més",

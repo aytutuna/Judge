@@ -45,8 +45,7 @@ const ro: Locale = {
     "thinking.crux": "Căutăm miezul problemei…",
     "thinking.judges": "Trei judecători decid, fiecare pe cont propriu…",
     "thinking.votes": "Numărăm voturile…",
-    "thinking.helper":
-      "Trei judecători AI decid separat, iar când e la limită mai vin și alții. Durează cam un minut.",
+    "thinking.helper": "Trei judecători AI decid separat, iar când e la limită mai vin și alții. Durează cam un minut.",
     "thinking.finish": "Ne apropiem de miezul problemei…",
     "thinking.stillJudging": "Judecătorii încă se gândesc. Mai ai puțină răbdare…",
     "thinking.ready": "Verdictul e gata.",
@@ -109,14 +108,18 @@ const ro: Locale = {
     "vote.dissolved": "sensuri diferite",
     refusedNote: "AI-ul a stat deoparte de data asta. Decât un verdict inventat, mai bine nimic.",
     demoNote: "🎭 Mod demo: nu e configurată nicio cheie AI, deci ăsta e un verdict de exemplu",
-    "trial.survived": "🛡️ Obiecție respinsă: avocatul celeilalte părți și-a ridicat cea mai puternică obiecție, iar verdictul a rezistat. Încrederea rămâne aceeași.",
-    "trial.uncertain": "⚠️ Avocatul celeilalte părți a ridicat o obiecție, iar obiecția a lăsat îndoieli reale despre acest verdict",
-    "trial.overturned": "⚠️ Obiecție admisă: verdictul rămâne în picioare, dar cea mai puternică obiecție a celeilalte părți îl slăbește serios",
+    "trial.survived":
+      "🛡️ Obiecție respinsă: avocatul celeilalte părți și-a ridicat cea mai puternică obiecție, iar verdictul a rezistat. Încrederea rămâne aceeași.",
+    "trial.uncertain":
+      "⚠️ Avocatul celeilalte părți a ridicat o obiecție, iar obiecția a lăsat îndoieli reale despre acest verdict",
+    "trial.overturned":
+      "⚠️ Obiecție admisă: verdictul rămâne în picioare, dar cea mai puternică obiecție a celeilalte părți îl slăbește serios",
     "trial.minor": "🛡️ Avocatul celeilalte părți a adus un argument întemeiat, dar verdictul rămâne în picioare",
     "trial.whatWasTested": "Obiecția",
     "trial.attackPrefix": "Obiecție:",
     "trial.refereePrefix": "De ce:",
-    "trial.mixedNote": "Este o dispută mixtă: în parte fapte, în parte valori sau sensuri ale cuvintelor, așa că o victorie netă e mai greu de apărat.",
+    "trial.mixedNote":
+      "Este o dispută mixtă: în parte fapte, în parte valori sau sensuri ale cuvintelor, așa că o victorie netă e mai greu de apărat.",
     confidence: "Încredere: {n} din {total}",
     verdictAria: "Verdict: {label}",
     "party.a": "Partea A",
@@ -135,8 +138,7 @@ const ro: Locale = {
     "error.too_long": "E cam mult! Rămâi sub 6000 de caractere.",
     "error.invalid": "Cererea asta nu pare în regulă.",
     "error.rate_limited": "Liniște în sală! Ai atins limita deocamdată. Încearcă din nou peste {wait}.",
-    "error.daily_cap":
-      "Gata ședința pe azi: tribunalul a ascultat câte certuri a putut duce. Revine peste {wait}.",
+    "error.daily_cap": "Gata ședința pe azi: tribunalul a ascultat câte certuri a putut duce. Revine peste {wait}.",
     "error.captcha_failed": "N-am putut verifica dacă ești om. Mai fă o dată verificarea, apoi trimite.",
     "wait.moment": "câteva minute",
     "wait.minute": "un minut",
@@ -146,7 +148,8 @@ const ro: Locale = {
     "refused.headline": "AI-ul n-a vrut să se bage în asta",
     "refused.crux":
       "Filtrul de siguranță al AI-ului nu l-a lăsat să judece asta. Mai bine niciun verdict decât unul inventat.",
-    "refused.bestPoint": "Încearcă s-o formulezi altfel. Sau acceptă că unele certuri sunt prea mari pentru o aplicație.",
+    "refused.bestPoint":
+      "Încearcă s-o formulezi altfel. Sau acceptă că unele certuri sunt prea mari pentru o aplicație.",
     "refused.claim": "Omis",
     "nav.skip": "Sari la conținut",
     "nav.home": "Pagina principală Judge",
@@ -177,8 +180,7 @@ const ro: Locale = {
     "how.step2.body":
       "Fiecare afirmație primește eticheta de fapt, valoare, definiție sau logică, pentru că fiecare tip se lămurește în felul lui.",
     "how.step3.title": "Găsește miezul problemei",
-    "how.step3.body":
-      "Sapă sub fiecare parte până la temelie și găsește singurul lucru de care depinde toată cearta.",
+    "how.step3.body": "Sapă sub fiecare parte până la temelie și găsește singurul lucru de care depinde toată cearta.",
     "how.step4.title": "Trei judecători independenți",
     "how.step4.body":
       "Trei judecători decid separat, iar când e la limită mai vin și alții. Încrederea vine din cât de mult sunt de acord, nu din cât de siguri par.",
@@ -194,8 +196,7 @@ const ro: Locale = {
     "sample.nameB": "Tu",
     "sample.label": "Tu ai dreptate",
     "sample.headline": "Nimeni nu comandă un sandviș sperând să primească un hot-dog",
-    "sample.crux":
-      "Strict după formă, hot-dogul ar putea trece drept sandviș, dar nimeni nu folosește cuvântul așa.",
+    "sample.crux": "Strict după formă, hot-dogul ar putea trece drept sandviș, dar nimeni nu folosește cuvântul așa.",
     "sample.why":
       "Argumentul lui Andrei se bazează doar pe formă. Un cuvânt înseamnă ce înțeleg oamenii prin el, iar la niciun fast-food nu primești hot-dog când ceri un sandviș.",
     "sample.bestPoint":
@@ -238,8 +239,7 @@ const ro: Locale = {
       "Știe doar ce îi spui, iar felul în care spui povestea influențează rezultatul. Include și varianta celeilalte părți, așa cum ar spune-o ea.",
     "about.limit2":
       "Judecătorii AI pot greși faptele. Fiecare verdict listează faptele pe care se sprijină, ca să le poți verifica.",
-    "about.limit3":
-      "Înlocuirea numelor merge de cele mai multe ori, dar numele neobișnuite sau poreclele pot scăpa.",
+    "about.limit3": "Înlocuirea numelor merge de cele mai multe ori, dar numele neobișnuite sau poreclele pot scăpa.",
     "about.limit4": "E pentru distracție și claritate, nu consultanță juridică, medicală sau financiară.",
     "about.builtTitle": "Sub capotă",
     "about.built":
@@ -249,33 +249,96 @@ const ro: Locale = {
     "privacy.kicker": "Datele tale",
     "privacy.lead":
       "Pe scurt: păstrăm ce scrii, inclusiv numele, criptat, ca să poți reveni la el. Judecătorii citesc mereu doar o variantă din care numele au fost scoase. Poți cere oricând să fie eliminat. Nu îți vindem datele. Dacă Judge va fi vreodată vândut sau fuzionat, va trece la noul proprietar în baza acestei politici.",
+    "privacy.whoTitle": "Cine suntem",
+    "privacy.who":
+      "Judge este operat de Aytu Tuna, persoană fizică din Canada.\n{address}\nNoi decidem ce se colectează și de ce. Persoana responsabilă de informațiile personale este Aytu Tuna, proprietar. Contact: {email}.",
     "privacy.storedTitle": "Ce stocăm",
     "privacy.stored":
-      "Pentru fiecare verdict păstrăm textul tău exact cum l-ai scris (cu răspunsurile tale la întrebările judecătorilor și textul citit din eventualele capturi de ecran) și o listă cu ce nume a devenit ce etichetă. Acestea sunt criptate cu o cheie care nu e stocată în baza de date. Mai păstrăm varianta anonimizată pe care o citesc judecătorii (cu numele înlocuite cu Partea A și Partea B), setările alese de tine, verdictul, eventuala traducere și numele pe care alegi să le afișezi pe pagina de distribuire. Numărăm și cum este folosit Judge: ce ecrane și funcții, cu versiunea aplicației, modelul dispozitivului, versiunea sistemului, limba și țara conexiunii tale, iar în aplicații un identificator al dispozitivului. Când ești conectat, acestea sunt legate de contul tău. Evenimentele de utilizare se păstrează 90 de zile, iar legăturile dintre contul tău și dispozitive 180 de zile. Aplicațiile au în Setări un comutator Statistici de utilizare, iar site-ul nu trimite nimic când browserul tău trimite Do Not Track sau Global Privacy Control. Nu conțin niciodată textul vreunui caz. Dacă evaluezi un verdict, păstrăm evaluarea împreună cu el.",
+      "Pentru fiecare verdict păstrăm textul tău exact cum l-ai scris (cu răspunsurile tale la întrebările judecătorilor și textul citit din eventualele capturi de ecran) și o listă cu ce nume a devenit ce etichetă. Acestea sunt criptate cu o cheie care nu este stocată în baza de date. Păstrăm și varianta anonimizată pe care o citesc judecătorii (cu numele înlocuite cu Partea A și Partea B), setările alese de tine, verdictul, orice traducere și numele pe care alegi să le afișezi pe pagina de distribuire. Numărăm și cum este folosit Judge: ce ecrane și funcții, cu versiunea aplicației, modelul dispozitivului, versiunea sistemului, limba și țara conexiunii tale și, în aplicații, un identificator al dispozitivului. Când ești conectat, acestea sunt legate de contul tău. Evenimentele de utilizare se păstrează 90 de zile, iar legăturile dintre contul tău și dispozitivele tale 180 de zile. Aplicațiile au în Setări un comutator Statistici de utilizare, iar site-ul nu trimite nimic când browserul tău trimite Do Not Track sau Global Privacy Control. Nu include niciodată textul vreunui caz. Dacă evaluezi un verdict, păstrăm evaluarea împreună cu el. O evaluare poate fi ștearsă; păstrăm atunci rândul fără degetul în sus sau în jos. Păstrăm și o înregistrare a acordului tău privind detaliile private și a alegerilor tale la Ajută la îmbunătățirea Judge, cu data, limba și platforma, și formularea pe care ai văzut-o.",
     "privacy.helpTitle": "Ajută la îmbunătățirea Judge",
     "privacy.help":
-      "Este dezactivat dacă nu îl activezi. Când e activat, putem folosi textul anonimizat pe care îl citesc judecătorii, verdictele lor și evaluările tale pentru a testa și a antrena judecătorii Judge. Numele nu fac niciodată parte din asta. Dacă îl dezactivezi, această utilizare se oprește pentru tot ce ai creat, iar noi înregistrăm când l-ai activat sau dezactivat.",
-    "privacy.notStoredTitle": "Ce nu facem",
-    "privacy.notStored":
-      "Nu folosim trackere de reclame. Limba aleasă stă în stocarea locală a browserului tău și nicăieri altundeva.",
-    "privacy.ipTitle": "Limitarea utilizării",
-    "privacy.ip":
-      "Ca tribunalul să rămână deschis pentru toată lumea, limităm câte verdicte poate cere fiecare cont și câte traduceri poate cere fiecare vizitator. Pentru traduceri și pentru răspunsurile dintr-un caz cu două părți, păstrăm în baza de date pentru limitare un hash cu cheie al adresei tale IP, nu adresa în sine, timp de cel mult 24 de ore. Dacă verificarea anti-robot e activă, adresa ta IP ajunge și la Cloudflare pentru acea verificare. Nu e salvată niciodată împreună cu verdictul tău.",
-    "privacy.processorsTitle": "Cine îți mai procesează textul",
-    "privacy.processors":
-      "Textul pe care îl scrii, inclusiv numele reale, ajunge mai întâi la furnizorul nostru AI din Statele Unite, ca numele să poată fi scoase. Doar varianta anonimizată e judecată; originalul tău e stocat criptat, așa cum am descris mai sus. Dacă verificarea anti-robot e activă, Cloudflare Turnstile rulează în browserul tău și verifică rezultatul cu Cloudflare. Dacă te conectezi, Apple sau Google (cel pe care îl alegi) se ocupă de conectare, iar e-mailurile de conectare sunt trimise prin Resend. Furnizorul nostru de găzduire păstrează jurnalele standard ale serverului. Achizițiile din aplicații trec prin App Store sau Google Play și sunt gestionate de RevenueCat, care primește ID-ul contului tău și istoricul achizițiilor. Grafana Labs primește jurnalele serverului și măsurătorile de performanță, stocate în UE timp de 14 zile; jurnalele nu conțin text din cazuri. Rapoartele de blocări și de erori din aplicații și de pe acest site ajung la Sentry, stocate în UE până la 30 de zile; conțin eroarea, versiunea aplicației sau a browserului și modelul dispozitivului, dar nu conțin text din cazuri, ID-ul contului sau adresa conexiunii.",
-    "privacy.shareTitle": "Linkuri de distribuire",
-    "privacy.share":
-      "Oricine are linkul unui verdict îl poate vedea, cu numele afișate pe care le-ai ales (sau Partea A și Partea B, dacă ai dezactivat numele). Linkurile folosesc ID-uri lungi și aleatorii, iar paginile de distribuire le cer motoarelor de căutare să nu le indexeze. Linkul și imaginea de previzualizare ale unui verdict eliminat nu se mai încarcă; previzualizările deja postate în aplicațiile de chat pot apărea în continuare până când acele aplicații le reîmprospătează. Nu include adrese, numere de telefon sau orice altceva ce n-ai vrea pe o pagină pe care o pot deschide alții.",
-    "privacy.contactTitle": "Contact",
-    "privacy.contact":
-      "Ai întrebări sau vrei să vezi, să corectezi ori să elimini datele tale? Scrie la {email} și trimite linkul verdictului sau al cazului.",
-    "privacy.accountsTitle": "Conturi",
-    "privacy.accounts":
-      "Judge e doar pentru persoane de 18 ani sau mai mari, iar conturile despre care aflăm că aparțin cuiva sub 18 ani sunt închise. Ai nevoie de un cont ca să primești un verdict; cealaltă parte dintr-un caz cu două părți poate răspunde fără cont. Dacă te conectezi cu Apple sau Google, păstrăm adresa de e-mail, numele și linkul pozei de profil pe care ni le transmit, plus metoda de conectare pe care ai folosit-o, iar Apple sau Google pot vedea că te-ai conectat la Judge. Dacă te conectezi cu un link primit pe e-mail, acel e-mail e trimis prin Resend, iar noi păstrăm pentru scurt timp o înregistrare cu adresa ta de e-mail ca să verificăm linkul: linkul nu mai funcționează după 10 minute, iar înregistrarea e ștearsă după ce e folosită sau la scurt timp după ce expiră. Mai păstrăm înregistrările sesiunilor tale (un token aleatoriu și momentul în care expiră, fără adresă IP sau detalii despre browser, deși aplicațiile înregistrează și un identificator al dispozitivului când te conectezi), creditele tale, planul tău și istoricul lui și ce verdicte au folosit un credit (doar ID-ul verdictului). Mai păstrăm și ce verdicte și cazuri sunt ale tale, ca să le găsești pe orice dispozitiv. Dacă îți ștergi contul din pagina contului, sunt șterse contul tău, sesiunile, evenimentele de utilizare și legătura dintre cont și dispozitivele tale, iar verdictele tale și părțile tale din cazuri sunt eliminate așa cum e descris la Eliminare. Păstrăm doar o formă codificată a adresei tale de e-mail, ca un cont nou cu aceeași adresă să nu primească un al doilea verdict gratuit, și să rămână închis dacă contul tău a fost închis pentru că ai sub 18 ani. Codurile de conectare trimise pe e-mail funcționează la fel ca linkurile. Dacă setezi o parolă, păstrăm la contul tău doar o formă criptată (hash) a ei, niciodată parola în sine.",
+      "Este dezactivat dacă nu îl activezi. Când e activat, putem folosi textul anonimizat pe care îl citesc judecătorii, verdictele lor și evaluările tale pentru a testa și a antrena modele IA: cele ale Judge și, dacă Judge este vreodată vândut sau fuzionat, cele ale noului proprietar. Numele nu fac niciodată parte din asta. Dacă îl dezactivezi, tot ce ai creat rămâne în afara oricărui antrenament din acel moment. Înregistrăm când l-ai activat sau dezactivat.\n„Anonimizat” înseamnă aici că numele au fost scoase; alte detalii pe care le-ai scris pot rămâne în text. Se aplică doar verdictelor făcute cât timp este activat, iar unui caz doar când toți cei care au scris o parte îl au activat. Modelele deja antrenate nu se schimbă. Încă nu s-a antrenat nimic. Judge funcționează la fel și cu el dezactivat.\nÎntrebăm o singură dată, pe pagina propriului tău verdict, după al doilea verdict încheiat. Nu întrebăm niciodată pe un verdict pe care ți l-a distribuit altcineva. Cardul spune: „Lasă Judge să folosească verdictele și evaluările tale anonimizate pentru a antrena IA. Numele nu sunt incluse niciodată.” Poți schimba răspunsul în Setări oricând.",
+    "privacy.purposesTitle": "De ce folosim datele tale",
+    "privacy.purposes":
+      "- Ca să-ți dăm un verdict, să administrăm contul tău și să ne ocupăm de achiziții și asistență. Temei (UE, Regatul Unit și Brazilia): necesar pentru a furniza serviciul cerut de tine.\n- Ca să păstrăm Judge sigur și funcțional: limite de utilizare, verificarea anti-robot, depistarea celor care strâng credite gratuite, rapoarte de erori, numărători de utilizare și păstrarea unei forme codificate a e-mailului după ștergere. Temei: interesul nostru legitim pentru un serviciu sigur și funcțional. Te poți opune prin e-mail. Aplicațiile au un comutator Statistici de utilizare, iar Do Not Track sau Global Privacy Control din browserul tău oprește evenimentele de utilizare ale site-ului.\n- Ca să-ți verificăm vârsta, inclusiv semnalul de vârstă al telefonului tău. Temei: interesul nostru legitim de a păstra Judge doar pentru adulți sau o obligație legală acolo unde se aplică o lege privind vârsta într-un magazin de aplicații.\n- Ca să păstrăm textul fără nume 30 de zile după ce elimini ceva, în caz de abuz sau de pretenție legală. Temei: interesul nostru legitim.\n- Ca să păstrăm dovada a ceea ce ai acceptat: acordul privind detaliile private și alegerile tale la Ajută la îmbunătățirea Judge. Temei: interesul nostru legitim de a putea arăta ce ai acceptat.\n- Ca să folosim verdictele și evaluările tale anonimizate pentru antrenarea IA. Temei: consimțământul tău, doar dacă îl activezi.\n- Ca să respectăm legea și să păstrăm evidențele pe care suntem obligați să le păstrăm. Temei: obligație legală.\nNu folosim niciodată datele tale pentru reclame și nu avem trackere de reclame. Dacă vom vrea vreodată o utilizare nouă, îți spunem mai întâi și te întrebăm din nou dacă legea cere consimțământul tău.",
+    "privacy.sensitiveTitle": "Ce să lași deoparte",
+    "privacy.sensitive":
+      "Disputele pot atinge subiecte private, precum sănătatea, relațiile, religia sau banii. Scrie doar ce are nevoie verdictul și lasă deoparte detaliile private despre alte persoane. Judge nu e pentru urgențe sau consiliere juridică.\nÎnainte de primul tău verdict, de prima ta parte dintr-un caz sau de primul tău răspuns la un caz, îți cerem să bifezi o casetă: „Textul meu poate include detalii private, de exemplu despre sănătate sau relații. Judge îl trimite, fără nume, unui serviciu IA extern ca să scrie verdictul meu și îl păstrează până îl elimin.” Poți continua doar cu ea bifată. O cerem o dată pe cont; dacă ai deja un cont, o cerem la următorul tău verdict. Cei care răspund la un caz fără cont văd aceeași casetă. Păstrăm o înregistrare a bifei, cu data, limba, platforma și formularea pe care ai văzut-o.",
+    "privacy.othersTitle": "Persoanele despre care scrii",
+    "privacy.others":
+      "Textul tău poate descrie pe cineva care nu folosește Judge. Judecătorii îl văd doar sub etichete precum „Persoana C”. Păstrăm numele lui criptate, cu o amprentă codificată a fiecărui nume (un hash cu cheie, nu numele). Numele pot apărea pe o pagină de distribuire, așa cum e descris la Cine ce poate vedea. Dacă ești numit în cazul altcuiva, scrie la {email} cu linkul și îți scoatem numele de pe pagina de distribuire sau analizăm obiecția ta.",
+    "privacy.automatedTitle": "Verdictele vin de la IA",
+    "privacy.automated":
+      "Modele IA scriu verdictul tău, fără ca o persoană să-l citească mai întâi. Este o opinie despre argument așa cum a fost scris, pornind de la textul fără nume, de la sursele web afișate și de la răspunsurile tale. Nu este consiliere juridică și nu este obligatoriu. Nicio decizie despre tine, contul tău, un preț sau accesul tău nu se ia pe baza lui. Poate fi greșit sau părtinitor. Dacă nu ești de acord, evaluează-l „Incorect”, adaugă context sau scrie la {email} și o persoană îl va analiza. Poate cere și cealaltă parte dintr-un caz.",
+    "privacy.accessTitle": "Cine ce poate vedea",
+    "privacy.access":
+      "Tu: textul tău original și numele, pe orice dispozitiv dacă te-ai conectat, sau pe dispozitivul folosit, printr-un cod privat salvat în browser sau în aplicație (noi păstrăm doar o formă codificată a acestui cod). Verdictele scrise fără conectare, înainte să fie nevoie de un cont, și cazurile la care ai răspuns fără conectare rămân listate în acel browser cu titlurile lor și cu numele așa cum le-ai scris, ca pagina Verdicte să le poată arăta: oricine folosește același browser vede lista. Pe un calculator folosit de mai multe persoane, conectează-te sau folosește o fereastră privată; dacă ștergi din browser datele site-ului, se șterge și lista. Într-un caz cu două părți, fiecare persoană își vede doar propriul original; după verdict, amândouă văd ambele relatări anonimizate, așa cum le-au citit judecătorii. Judecătorii (modele AI rulate de furnizorul nostru AI): doar varianta anonimizată. Oricine are linkul de distribuire: verdictul cu numele afișate. Implicit, acesta e numele pe care ți-l alegi pentru tine, iar pentru ceilalți, prenumele lor așa cum le-ai scris; le poți schimba sau poți dezactiva numele oricând, iar atunci pagina arată Partea A și Partea B. Noi: putem decripta originalele cu cheia și ne uităm la textul stocat doar ca să rezolvăm o cerere de asistență de la tine, să investigăm un abuz sau când legea o cere.",
+    "privacy.casesTitle": "Cazuri cu două părți și contestații",
+    "privacy.cases":
+      "Într-un caz cu două părți, fiecare parte e anonimizată când e trimisă, la fel ca un verdict. Judecătorii citesc textul anonimizat; varianta fiecărei persoane, așa cum a scris-o, împreună cu lista ei de nume, e stocată criptat și doar acea persoană o poate vedea. Fiecare persoană scrie numele pe care vrea să-l afișeze pe pagina de distribuire când își trimite partea; dacă îl lasă gol, apare Partea A sau Partea B. Cealaltă persoană nu are nevoie de cont; răspunsurile ei sunt limitate cu un hash cu cheie al adresei IP. Linkul de invitație e stocat doar ca hash. Dacă cealaltă persoană răspunde conectată, contul ei e legat de partea ei, ca doar ea să poată adăuga context mai târziu sau să-și vadă originalul; dacă răspunde fără conectare, un cod privat păstrat în browserul ei face același lucru, iar dacă se conectează mai târziu în acel browser, poate păstra cazul în contul ei. Ca aceeași persoană să primească aceeași etichetă în ambele variante, serverul păstrează amprente codificate ale numelor în fiecare caz (hash-uri cu cheie, nu numele în sine). Până la verdict, niciuna dintre părți nu poate citi textul celeilalte; după un verdict cu două părți, ambele pot citi cele două variante anonimizate. Contextul adăugat după un verdict (o contestație) este tratat la fel. Când cealaltă persoană răspunde, îți putem trimite un scurt e-mail, fără niciun text al cazului, dacă e-mailul e configurat. Oricare dintre persoane își poate elimina propria parte: originalul și numele afișat sunt șterse, iar linkurile de distribuire ale cazului nu mai funcționează pentru nimeni. Ștergerea contului tău face asta pentru fiecare caz pe care l-ai început sau la care ai răspuns. Un caz la care nimeni nu răspunde expiră după 7 zile, dar textul părții tale rămâne până îl elimini. O persoană care răspunde fără cont bifează „Am 18 ani sau mai mult” și caseta cu detalii private înainte de trimitere, iar noi păstrăm ambele bife împreună cu partea ei.",
     "privacy.webSearchTitle": "Căutare pe web și întrebări",
     "privacy.webSearch":
       "Fiecare verdict trimite disputa anonimizată la furnizorul nostru AI, cu căutarea pe web activată. Modelul formulează căutările pe baza acestui text anonimizat, iar rezultatele vin de la partenerul de căutare al furnizorului. Sursele folosite apar în verdict. Judecătorii îți pot pune mai întâi cel mult două întrebări: ca să le formuleze, textul tău așa cum l-ai scris, inclusiv numele, ajunge încă o dată la furnizorul AI. Răspunsurile tale sunt anonimizate împreună cu disputa înainte de judecare; întrebările și răspunsurile tale, așa cum le-ai scris, sunt păstrate cu originalul tău criptat.",
+    "privacy.evidenceTitle": "Capturi de ecran",
+    "privacy.evidence":
+      "Browserul tău micșorează imaginile mari înainte să le încarce. Apoi fiecare imagine ajunge o dată la un serviciu AI extern, ca textul vizibil să poată fi citit; nu stocăm niciodată imaginea. Transcrierea brută, care poate conține încă nume, îți revine într-un token semnat pe care browserul tău îl păstrează cel mult 6 ore. Când îți trimiți partea, transcrierea e anonimizată împreună cu textul tău: transcrierea anonimizată le e arătată judecătorilor și e stocată cu cazul, iar transcrierea brută e păstrată criptat cu originalul tău, unde doar tu o poți vedea. Numerele de telefon, adresele de e-mail, numele de utilizator de pe rețelele sociale și numerele de cont din ea sunt și ele înlocuite cu substituenți pentru judecători.",
+    "privacy.accountsTitle": "Conturi",
+    "privacy.accounts":
+      "Judge e doar pentru persoane de 18 ani sau mai mari, iar conturile despre care aflăm că aparțin cuiva sub 18 ani sunt închise. Ai nevoie de un cont ca să primești un verdict; cealaltă parte dintr-un caz cu două părți poate răspunde fără cont. Dacă te conectezi cu Apple sau Google, păstrăm adresa de e-mail, numele și linkul către poza de profil pe care ni le dau, plus metoda de conectare folosită, iar Apple sau Google pot vedea că te-ai conectat la Judge. Dacă te conectezi cu un link sau un cod prin e-mail, acel e-mail pleacă prin Resend, iar noi păstrăm pe scurt o înregistrare cu adresa ta de e-mail ca să-l verificăm: nu mai funcționează după 10 minute, iar înregistrarea e ștearsă imediat ce e folosit sau la scurt timp după expirare. Dacă îți setezi o parolă, păstrăm cu contul tău doar o formă codificată (hash) a ei, niciodată parola în sine. Păstrăm și înregistrările sesiunilor tale (un token aleatoriu și când expiră, fără adresă IP sau detalii despre browser, deși aplicațiile înregistrează și un identificator al dispozitivului când te conectezi), creditele tale, planul tău și istoricul lui, și ce verdicte au folosit un credit (doar ID-ul verdictului). Păstrăm și ce verdicte și cazuri sunt ale tale, ca să le găsești pe orice dispozitiv. Ștergerea contului din pagina contului (în aplicații și pe site) elimină contul tău, înregistrările de conectare, creditele, planul și evenimentele de utilizare și elimină verdictele tale și părțile tale din cazuri, așa cum e descris la Eliminare. Păstrăm câteva lucruri după ștergere, enumerate la Ce păstrăm după eliminare. Dacă nu te poți conecta, pagina okjudge.com/delete-account explică cum să ceri asta prin e-mail. Păstrăm doar o formă codificată a adresei tale de e-mail, ca un cont nou cu ea să nu primească un al doilea verdict gratuit și să rămână închis dacă contul tău a fost închis pentru că ai sub 18 ani. Înregistrăm și dacă ai confirmat că ai 18 ani sau mai mult, și cum (o bifă sau semnalul de vârstă al telefonului; pe Android aplicația întreabă Google Play, pe iPhone întreabă Apple).",
+    "privacy.removalTitle": "Eliminare",
+    "privacy.removal":
+      "Poți cere eliminarea din pagina verdictului (dacă te-ai conectat, o poți deschide din pagina Verdicte), din pagina cazului pentru un caz cu două părți, ștergându-ți contul sau prin e-mail. Eliminarea șterge textul tău original, lista de nume și numele afișate (într-un caz cu două părți, originalul părții tale și numele tău afișat), iar linkul de distribuire și imaginea lui de previzualizare nu se mai încarcă pentru nimeni. Previzualizările deja postate în aplicații de mesagerie rămân la acele aplicații și pot continua să apară până le reîmprospătează. Păstrăm textul anonimizat și verdictul, fără nume, în evidențele noastre; nu mai pot fi deschise prin link. Ștergerea contului tău face asta pentru toate verdictele tale și părțile tale din cazuri și șterge datele de conectare, creditele și planul. Datele eliminate rămân în copiile noastre de siguranță până expiră (cel mult 14 zile, vezi mai jos); dacă restaurăm vreodată o copie, aplicăm din nou toate eliminările (pentru asta păstrăm o listă cu ce a fost eliminat și când, fără text sau nume). La treizeci de zile după ce elimini ceva, ștergem și textul anonimizat și verdictul, păstrând doar rezultatul și datele, dacă legea nu ne obligă să le păstrăm mai mult. Se aplică celor eliminate de la 14 noiembrie 2026 (UTC); eliminările mai vechi își păstrează textul anonimizat. Pentru un caz, cele treizeci de zile încep doar după ce toți cei implicați l-au eliminat. Verdictele și cazurile pe care nu le elimină nimeni se păstrează până le elimini sau îți ștergi contul. Un verdict făcut fără conectare, înainte să fie nevoie de cont, poate fi eliminat scriind la {email} cu linkul lui.",
+    "privacy.afterRemovalTitle": "Ce păstrăm după eliminare",
+    "privacy.afterRemoval":
+      "După eliminare, și după cele treizeci de zile, tot păstrăm:\n- rezultatul și scorurile, setările alese, datele, ID-urile, ce părți și ce limbă a avut, și ID-ul contului care a început un caz;\n- evaluările tale. Când îți ștergi contul, fiecare evaluare e mutată pe un ID aleatoriu, deci nu mai duce la tine;\n- înregistrarea alegerilor tale la Ajută la îmbunătățirea Judge și a acordului tău privind detaliile private (date, limbă, platformă și formularea pe care ai văzut-o), 6 ani după ce îți ștergi contul, ca să dovedim ce ai acceptat. După ce ștergi contul, aceste înregistrări poartă un ID aleatoriu și nicio legătură cu numele sau e-mailul tău;\n- lista eliminărilor, care conține ID-uri, motive, date și partea din caz, 90 de zile, ca să aplicăm din nou eliminările după o restaurare de copie de siguranță;\n- o formă codificată a e-mailului tău, pentru a opri abuzul repetat de credite gratuite (vezi Conturi);\n- o înregistrare a dispozitivului fără legătură cu contul tău, până la 180 de zile;\n- copiile de siguranță, până la 14 zile.\nCând un caz e șters, amprentele codificate și etichetele numelor lui sunt golite, deci nu se păstrează.",
+    "privacy.retentionTitle": "Cât timp păstrăm datele",
+    "privacy.retention":
+      "Păstrăm verdictele și originalele până când ceri eliminarea lor sau îți ștergi contul. Ca să putem recupera totul după o defecțiune, păstrăm copii de siguranță ale serverului și ale bazei lui de date până la 14 zile, apoi sunt șterse. Conțin aceleași date ca serverul, inclusiv originalele criptate, iar cheia se află pe același server, deci copiile sunt protejate ca serverul însuși, nu de acea criptare. Hash-urile pentru limitarea utilizării durează până la 48 de ore. Evenimentele de utilizare sunt șterse după 90 de zile, iar legăturile cu dispozitivele după 180 de zile fără utilizare. Jurnalele și metricile la Grafana Labs se păstrează 14 zile. Rapoartele de crash la Sentry se păstrează până la 30 de zile. Celelalte jurnale ale serverului urmează păstrarea standard a furnizorului nostru de găzduire. Un cod de conectare expiră după 10 minute, iar codurile expirate sunt șterse în fiecare zi. O sesiune se încheie la 30 de zile după ultima utilizare. Lista eliminărilor se păstrează 90 de zile. Înregistrările alegerilor tale de consimțământ se păstrează 6 ani după ce îți ștergi contul, apoi sunt șterse.",
+    "privacy.ipTitle": "Limitarea utilizării",
+    "privacy.ip":
+      "Ca tribunalul să rămână deschis pentru toată lumea, limităm câte verdicte poate cere fiecare cont și câte traduceri poate cere fiecare vizitator. Pentru traduceri, răspunsurile la un caz cu două părți, verificarea unui verdict cât timp e judecat și încercările de conectare, păstrăm un hash cu cheie al adresei tale IP, nu adresa în sine, până la 48 de ore. Limitele de conectare rețin pe scurt adresa în sine în memoria serverului, aproximativ un minut, niciodată pe disc. Dacă verificarea anti-robot e activă, adresa ta IP ajunge și la Cloudflare pentru acea verificare. Nu e salvată niciodată împreună cu verdictul tău.",
+    "privacy.processorsTitle": "Cine îți mai procesează textul",
+    "privacy.processors":
+      "Textul pe care îl scrii, inclusiv numele reale, ajunge mai întâi la furnizorul nostru AI din Statele Unite, ca numele să poată fi scoase. Doar varianta anonimizată e judecată; originalul tău e stocat criptat, așa cum e descris mai sus. Dacă verificarea anti-robot e activă, Cloudflare Turnstile rulează în browserul tău și verifică rezultatul cu Cloudflare. Dacă te conectezi, Apple sau Google (cel ales de tine) se ocupă de conectare, iar e-mailurile de conectare pleacă prin Resend. Achizițiile din aplicații trec prin App Store sau Google Play și sunt gestionate de RevenueCat, care primește ID-ul contului tău și istoricul achizițiilor. Grafana Labs primește jurnalele serverului și metricile de performanță, stocate în UE 14 zile; jurnalele nu conțin text de caz. Rapoartele de crash și de eroare ale aplicațiilor și ale acestui site merg la Sentry, stocate în UE până la 30 de zile; includ eroarea, versiunea aplicației sau a browserului și modelul dispozitivului, dar niciun text de caz, ID de cont sau adresă de conexiune. Furnizorul nostru de găzduire păstrează jurnale standard ale serverului. Aplicația Android întreabă Google Play de intervalul tău de vârstă, iar aplicația iPhone întreabă Apple. Noi suntem operatorul; acești furnizori prelucrează datele în numele nostru.",
+    "privacy.shareTitle": "Linkuri de distribuire",
+    "privacy.share":
+      "Oricine are linkul unui verdict îl poate vedea, cu numele afișate pe care le-ai ales (sau Partea A și Partea B, dacă ai dezactivat numele). Linkurile folosesc ID-uri lungi și aleatorii, iar paginile de distribuire le cer motoarelor de căutare să nu le indexeze. Linkul și imaginea de previzualizare ale unui verdict eliminat nu se mai încarcă; previzualizările deja postate în aplicațiile de chat pot apărea în continuare până când acele aplicații le reîmprospătează. Nu include adrese, numere de telefon sau orice altceva ce n-ai vrea pe o pagină pe care o pot deschide alții.",
+    "privacy.locationTitle": "Unde sunt datele tale",
+    "privacy.location":
+      "Serverele noastre sunt în Germania (OVH, Frankfurt). O parte din procesare are loc în Statele Unite: furnizorul nostru AI rulează modelele care scot numele, judecă, citesc capturile de ecran și caută pe web; Cloudflare stă în fața okjudge.com ca proxy și DNS (tot traficul trece prin el) și rulează verificarea anti-robot. Conectarea trece prin Apple sau Google dacă le alegi, iar e-mailurile de conectare prin Resend. Datele prelucrate în altă țară pot fi supuse legilor acelei țări. Lucrăm din Canada și ne putem vedea datele tale de acolo.",
+    "privacy.storageTitle": "Cookie-uri și stocarea din browser",
+    "privacy.storage":
+      "Site-ul folosește un cookie de conectare (verdict.session_token) care te ține conectat și cookie-uri de scurtă durată cât te conectezi cu Apple sau Google (verdict.state ține 5 minute). Cloudflare, care rulează verificarea anti-robot, poate seta cookie-uri proprii pentru asta. Niciunul nu e folosit pentru urmărire. Stocarea locală a browserului tău păstrează limba, tema și alegerea Gamify; o ciornă netrimisă (inclusiv textul pe care l-ai scris) cât te conectezi; o listă cu verdictele și cazurile făcute fără conectare; coduri private care îți dau acces la originalele tale; numele pe care le-ai folosit într-un caz; coduri de invitație pentru cazurile la care ai fost rugat să răspunzi; confirmarea vârstei; ultimul tribunal ales; și ce exemple ai văzut. Stocarea de sesiune păstrează adresa de e-mail și modul cât aștepți un e-mail de conectare, și indicatori de utilizare pentru filă. Acestea rămân pe dispozitivul tău. Ștergerea datelor site-ului le elimină. Aplicațiile păstrează lucruri similare pe dispozitiv.",
+    "privacy.notStoredTitle": "Ce nu facem",
+    "privacy.notStored":
+      "Nu folosim trackere de reclame. Nu îți vindem datele și nu le partajăm pentru publicitate. Site-ul și aplicațiile nu te urmăresc pe alte site-uri. Cum răspundem la Do Not Track: site-ul nu trimite evenimente de utilizare din browserul tău când acesta trimite Do Not Track sau Global Privacy Control, iar comutatorul Statistici de utilizare al aplicațiilor face la fel pentru aplicații. Serverul nostru tot înregistrează câteva evenimente legate de contul tău (conectare, cazuri și verdicte făcute sau eșuate, achiziții) și de pe ce dispozitiv te-ai conectat. Nu folosim niciodată textul tău ca să antrenăm ceva, decât dacă ai activat Ajută la îmbunătățirea Judge.",
+    "privacy.securityTitle": "Cum îl protejăm",
+    "privacy.security":
+      "Originalele, listele de nume, numele afișate și token-urile de conectare Apple sunt criptate. Traficul folosește HTTPS. Cheia de criptare se află pe același server cu datele, deci nu protejează împotriva cuiva care preia serverul. Dacă ceva merge prost cu informațiile tale personale, anunțăm persoanele afectate și autoritățile acolo unde legea o cere.",
+    "privacy.childrenTitle": "Vârsta",
+    "privacy.children":
+      "Judge e pentru persoane de 18 ani sau mai mari. Cerem tuturor celor care se conectează să confirme asta, cei care răspund la un caz fără cont bifează „Am 18 ani sau mai mult” înainte de trimitere, iar aplicațiile pot folosi semnalul de vârstă al telefonului tău. Nu colectăm cu bună știință date de la nimeni sub 18 ani. Dacă crezi că un copil are un cont, scrie la {email} și îl închidem și ștergem datele.",
+    "privacy.rightsTitle": "Drepturile tale",
+    "privacy.rights":
+      "Oriunde locuiești, ne poți cere să-ți arătăm ce păstrăm, să corectăm, să eliminăm sau să-ți ștergem contul, să nu mai folosim datele pentru antrenare și să-ți dăm o copie. Poți face aproape tot singur: elimini un verdict sau un caz din pagina lui, îți ștergi contul din pagina contului, schimbi numele afișate în pagina unui verdict sau caz, îți descarci datele și activezi sau dezactivezi Ajută la îmbunătățirea Judge (și, în aplicații, Statistici de utilizare) în Setări. Pentru orice altceva, scrie la {email} cu linkul verdictului sau al cazului. Îți putem cere să scrii de pe e-mailul contului tău sau să confirmi cât ești conectat. Răspundem în 30 de zile sau într-o lună, dacă e mai puțin. E gratuit. Nu vei fi tratat mai prost pentru că îți exerciți drepturile. Cine cere în numele tău are nevoie de permisiunea ta scrisă.\nO copie a datelor tale este un fișier JSON. Alege Descarcă datele mele în pagina contului, în aplicații sau pe site. Conține contul și metodele tale de conectare, verdictele și părțile tale din cazuri cu propriile tale texte și nume, rezultatele, evaluările tale, istoricul consimțămintelor, dispozitivele tale, evenimentele de utilizare și achizițiile. Nu conține token-uri de conectare, parola ta sau e-mailul codificat, și nici textul sau numele altcuiva.\nNu ești obligat să ne dai date, dar fără textul tău și fără un cont nu putem să-ți dăm un verdict.",
+    "privacy.regionEuTitle": "Dacă ești în UE sau în Regatul Unit",
+    "privacy.regionEu":
+      "- Operator: vezi Cine suntem.\n- Temeiuri legale: vezi De ce folosim datele tale.\n- Ne mai poți cere să restrângem utilizarea, te poți opune utilizării bazate pe interesele noastre legitime, poți retrage consimțământul oricând (fără a afecta ce am făcut înainte) și poți depune o plângere la autoritatea ta pentru protecția datelor (în Regatul Unit, ICO).\n- Datele tale sunt prelucrate în Germania, Canada și Statele Unite, așa cum e descris la Unde sunt datele tale. Scrie la {email} dacă vrei să afli mai multe despre cum sunt transferate.\n- Decizii automatizate: vezi Verdictele vin de la IA.",
+    "privacy.regionUsTitle": "Dacă ești în California sau în alt stat american",
+    "privacy.regionUs":
+      "- În ultimele 12 luni am colectat: identificatori (e-mail, nume, ID-uri de cont și de dispozitiv); textul disputei tale și răspunsurile tale; evaluări și alegeri de consimțământ; istoricul achizițiilor; date de utilizare și despre dispozitiv (țară, modelul dispozitivului, versiunea aplicației); confirmarea vârstei; și informații sensibile (conectarea la cont și orice detalii de sănătate sau similare din textul tău). Surse: tu, conectarea și magazinul telefonului tău, și aplicațiile noastre. Scopuri: vezi De ce folosim datele tale. Destinatari: categoriile de la Cine îți mai procesează textul.\n- Nu vindem și nu partajăm informații personale pentru publicitate și nu am făcut-o în ultimele 12 luni. Nu îți facem profiluri. Folosim informațiile sensibile doar ca să-ți oferim serviciul, deci nu e nimic de limitat sau de refuzat.\n- Drepturi: să știi, să accesezi, să corectezi, să ștergi și să primești o copie portabilă. Poți folosi un agent autorizat. Răspundem în 30 de zile sau într-o lună, dacă e mai puțin. Ca să contești o refuzare, scrie la {email} cu „Appeal”. Decidem asupra unei contestații în 45 de zile. Dacă o respingem, poți contacta procurorul general al statului tău.\n- Păstrare: vezi Cât timp păstrăm datele și Ce păstrăm după eliminare.\n- Do Not Track: vezi Ce nu facem. Nicio companie de reclame sau de urmărire nu colectează date pe paginile noastre. Cloudflare rulează verificarea anti-robot și îți vede conexiunea în acest scop.\n- Nimeni sub 18 ani nu poate folosi Judge, deci nu vindem și nu partajăm datele nimănui sub 16 ani. Drepturile altor state sunt aceeași listă.",
+    "privacy.regionCaTitle": "Dacă ești în Canada sau în Quebec",
+    "privacy.regionCa":
+      "Judge este operat din Canada și tratează informațiile personale conform PIPEDA: colectăm doar ce îi trebuie serviciului, le folosim doar pentru asta, le protejăm, iar tu poți cere să vezi, să corectezi sau să elimini ce avem despre tine. Răspundem în 30 de zile. Poți depune o plângere la Oficiul Comisarului pentru Confidențialitate al Canadei (priv.gc.ca). Dacă ești în Quebec:\n- Persoana responsabilă de informațiile personale este Aytu Tuna, proprietar, la {email}.\n- Unele date sunt trimise în afara Quebecului: la serverul nostru din Germania, la furnizorul AI și alți furnizori din Statele Unite și în Canada, în afara Quebecului.\n- Judge înregistrează doar țara conexiunii tale, pentru numărătorile de utilizare, și nu îți urmărește locația exactă. Verdictul judecă argumentul pe care îl descrii și nu este folosit pentru a-ți face un profil. Numărătorile de utilizare sunt legate de contul tău, așa cum e descris la Ce stocăm.\n- Ajută la îmbunătățirea Judge e dezactivat până îl activezi, și îl poți dezactiva oricând.\n- Poți cere și să-ți retragi consimțământul, să-ți primești datele într-un format de uz curent și poți depune o plângere la Commission d’accès à l’information.",
+    "privacy.regionBrTitle": "Dacă ești în Brazilia",
+    "privacy.regionBr":
+      "Operator și contact: vezi Cine suntem. {email} este și canalul pentru cererile LGPD. Noi suntem operatorul; furnizorii de la Cine îți mai procesează textul acționează pentru noi. Temeiuri legale: vezi De ce folosim datele tale. Ne poți cere să confirmăm că îți prelucrăm datele; să-ți dăm acces la ele; să le corectăm; să anonimizăm, să blocăm sau să eliminăm datele excesive sau ilegale; să-ți asigurăm portabilitatea; să eliminăm datele pe care le folosim pe baza consimțământului tău; să-ți spunem cu cine le-am partajat; să te informăm despre posibilitatea de a refuza consimțământul și consecințele ei; și să-ți retragem consimțământul. E gratuit. Poți depune și o plângere la ANPD. Datele tale sunt trimise în străinătate așa cum e descris la Unde sunt datele tale.",
+    "privacy.changesTitle": "Modificări",
+    "privacy.changes":
+      "Dacă modificăm această politică într-un mod important, actualizăm data de la începutul paginii. Nu folosim niciodată pentru un scop nou datele pe care ni le-ai dat sub o politică mai veche fără să te întrebăm mai întâi. O revizuim cel puțin o dată pe an.",
+    "privacy.contactTitle": "Contact",
+    "privacy.contact":
+      "Ai întrebări sau vrei să vezi, să corectezi ori să elimini datele tale? Scrie la {email} și trimite linkul verdictului sau al cazului.",
     "nav.signIn": "Conectează-te",
     "nav.account": "Cont",
     "nav.pricing": "Prețuri",
@@ -303,20 +366,16 @@ const ro: Locale = {
     "consent.sensitiveContinue": "Continuă",
     "respond.adultConfirm": "Am 18 ani sau mai mult",
     "account.export": "Descarcă datele mele",
-    "account.exportHint":
-      "Primește un fișier JSON cu tot ce păstrează Judge despre tine.",
+    "account.exportHint": "Primește un fișier JSON cu tot ce păstrează Judge despre tine.",
     "account.exportBusy": "Se pregătește fișierul…",
-    "account.exportFailed":
-      "Nu ți-am putut pregăti datele acum. Încerci din nou?",
+    "account.exportFailed": "Nu ți-am putut pregăti datele acum. Încerci din nou?",
     "deletePage.title": "Șterge contul tău Judge",
     "deletePage.lead":
       "Judge este o aplicație de Aytu Tuna. Poți șterge singur contul și datele lui oricând, în aplicație sau pe site.",
     "deletePage.appTitle": "În aplicație",
-    "deletePage.app":
-      "Deschide Judge, mergi la Cont, atinge Șterge contul și confirmă.",
+    "deletePage.app": "Deschide Judge, mergi la Cont, atinge Șterge contul și confirmă.",
     "deletePage.webTitle": "Pe site",
-    "deletePage.web":
-      "Conectează-te la okjudge.com, deschide Cont, alege Șterge contul și confirmă.",
+    "deletePage.web": "Conectează-te la okjudge.com, deschide Cont, alege Șterge contul și confirmă.",
     "deletePage.removedTitle": "Ce se șterge",
     "deletePage.removed":
       "Se șterg contul, înregistrările de conectare, creditele, planul și evenimentele de utilizare. Verdictele tale și părțile tale din cazuri sunt eliminate: textul original și numele se șterg imediat, iar textul anonimizat și verdictul după 30 de zile.",
@@ -324,8 +383,7 @@ const ro: Locale = {
     "deletePage.kept":
       "Rezultatul și datele verdictelor eliminate, fără text și nume. Evaluările tale și înregistrările consimțământului timp de 6 ani, fără legătură cu tine. O formă codificată a e-mailului tău, ca să nu se abuzeze repetat de creditele gratuite. Copiile de rezervă păstrează copii mai vechi până la 14 zile.",
     "deletePage.mailTitle": "Cere prin e-mail",
-    "deletePage.mail":
-      "Nu te poți conecta? Scrie la {email} de la adresa contului tău și cere-ne să-l ștergem.",
+    "deletePage.mail": "Nu te poți conecta? Scrie la {email} de la adresa contului tău și cere-ne să-l ștergem.",
     "rating.prompt": "Verdict corect?",
     "rating.fair": "Corect",
     "rating.notFair": "Incorect",
@@ -343,11 +401,11 @@ const ro: Locale = {
     "clarify.back": "Editează disputa",
     "thinking.factcheck": "Verificăm faptele pe web…",
     "thinking.factcheckDone": "Verificarea pe web s-a încheiat.",
-    "thinking.premiumHelper":
-      "Verificarea faptelor pe web durează un pic mai mult. Dă-i un minut sau două.",
+    "thinking.premiumHelper": "Verificarea faptelor pe web durează un pic mai mult. Dă-i un minut sau două.",
     "panel.premium": "Judecat cu verificarea faptelor pe web.",
     "factcheck.title": "Verificat pe web",
-    "factcheck.lead": "Judecătorii au văzut aceste rezultate ale căutării înainte să decidă. Sunt dovezi, nu verdictul în sine.",
+    "factcheck.lead":
+      "Judecătorii au văzut aceste rezultate ale căutării înainte să decidă. Sunt dovezi, nu verdictul în sine.",
     "factcheck.status.supported": "Se confirmă",
     "factcheck.status.refuted": "Nu se confirmă",
     "factcheck.status.mixed": "Parțial adevărat",
@@ -386,7 +444,8 @@ const ro: Locale = {
     "signin.usePassword": "Folosește în schimb o parolă",
     "signin.passwordWrong": "Acest e-mail și această parolă nu se potrivesc.",
     "signin.passwordShort": "Folosește cel puțin 8 caractere.",
-    "signin.createNote": "Îți vom trimite un cod pe e-mail pentru a confirma această adresă. Trebuie să faci asta o singură dată.",
+    "signin.createNote":
+      "Îți vom trimite un cod pe e-mail pentru a confirma această adresă. Trebuie să faci asta o singură dată.",
     "signin.passwordChoose": "Ești conectat. Alege o parolă pentru data viitoare.",
     "signin.passwordSave": "Salvează parola",
     "signin.passwordSaveFailed": "Nu am putut salva parola. Încearcă din nou.",
@@ -428,7 +487,8 @@ const ro: Locale = {
     "pricing.lead":
       "Fă-ți un cont și primul verdict e gratuit, cu toate funcțiile. După aceea, alege un pachet sau treci pe planul lunar.",
     "pricing.titleMember": "Ia mai multe verdicte.",
-    "pricing.leadMember": "Alege un pachet sau treci pe planul lunar. Fiecare verdict primește echipa completă de judecători.",
+    "pricing.leadMember":
+      "Alege un pachet sau treci pe planul lunar. Fiecare verdict primește echipa completă de judecători.",
     "pricing.included.title": "Fiecare verdict include",
     "pricing.buy.title": "Pachete și planul lunar",
     "pricing.premium.f1": "Faptele verificate pe web, cu sursele în verdict",
@@ -444,7 +504,8 @@ const ro: Locale = {
     "pricing.monthly.renews": "Se reînnoiește lunar",
     "pricing.monthly.cap": "{n} de verdicte pe lună",
     "pricing.comingSoon": "În curând",
-    "pricing.note": "Prețurile sunt în dolari americani. Plățile nu sunt încă active, așa că azi nu poți cumpăra nimic.",
+    "pricing.note":
+      "Prețurile sunt în dolari americani. Plățile nu sunt încă active, așa că azi nu poți cumpăra nimic.",
     "pricing.signIn": "Fă-ți cont pentru verdictul gratuit",
     "pricing.preview": "Verdictele nu sunt încă activate aici. Pagina asta e o previzualizare.",
     "error.signin_required": "Conectează-te ca să continui.",
@@ -458,14 +519,17 @@ const ro: Locale = {
     "error.case_closed": "Cazul ăsta nu mai permite asta.",
     "error.case_expired": "Invitația a expirat.",
     "error.appeal_used": "Ai adăugat deja context la acest caz.",
-    "error.appeal_limit": "Ai adăugat deja de două ori context la acest verdict. Mai mult nu se poate pentru un verdict.",
+    "error.appeal_limit":
+      "Ai adăugat deja de două ori context la acest verdict. Mai mult nu se poate pentru un verdict.",
     "error.not_party": "Doar persoanele din acest caz pot face asta.",
     "error.own_case": "Asta e propria ta invitație. Trimite linkul celeilalte persoane.",
     "error.too_large": "E prea mare. Încearcă o imagine mai mică.",
     "error.unsupported_media": "Putem citi doar imagini PNG, JPEG, WebP sau GIF.",
     "error.too_many_files": "Sunt mai multe imagini decât poți adăuga aici.",
-    "error.evidence_invalid": "Una dintre imaginile tale a expirat sau n-a putut fi verificată. Elimin-o și adaug-o din nou.",
-    "error.anonymize_failed": "N-am putut scoate numele din textul tău. Încearcă din nou sau scrie inițiale în loc de nume complete.",
+    "error.evidence_invalid":
+      "Una dintre imaginile tale a expirat sau n-a putut fi verificată. Elimin-o și adaug-o din nou.",
+    "error.anonymize_failed":
+      "N-am putut scoate numele din textul tău. Încearcă din nou sau scrie inițiale în loc de nume complete.",
     "mode.label": "Cum să judecăm?",
     "mode.now": "Doar eu (imediat)",
     "mode.both": "Ambele părți (trimiți un link)",
@@ -504,7 +568,8 @@ const ro: Locale = {
     "case.side.opened": "Deschis",
     "case.side.typing": "Scrie…",
     "case.judgeAnswered": "Judecă cu părțile care au răspuns",
-    "case.judgeAnswered.confirm": "Vrei o hotărâre cu părțile care au răspuns? Celelalte invitații se închid și acele persoane nu vor mai putea răspunde.",
+    "case.judgeAnswered.confirm":
+      "Vrei o hotărâre cu părțile care au răspuns? Celelalte invitații se închid și acele persoane nu vor mai putea răspunde.",
     "case.cancel": "Anulează",
     "case.retry": "Încearcă din nou",
     "case.failedBody": "Ți-ai primit creditul înapoi. Poți încerca din nou acum.",
@@ -542,15 +607,12 @@ const ro: Locale = {
     "respond.submit": "Trimite partea mea",
     "case.write.title": "Partea ta",
     "case.write.placeholder": "Care e problema?",
-    "case.write.lead":
-      "Scrie-ți partea când ești gata. Judecătorii încep după ce ați scris amândoi.",
-    "case.write.leadAnswered":
-      "Cealaltă persoană și-a scris partea. Scrie-o pe a ta ca să primești verdictul.",
+    "case.write.lead": "Scrie-ți partea când ești gata. Judecătorii încep după ce ați scris amândoi.",
+    "case.write.leadAnswered": "Cealaltă persoană și-a scris partea. Scrie-o pe a ta ca să primești verdictul.",
     "case.write.submit": "Trimite partea mea",
     "case.write.emailSubject": "Cealaltă persoană și-a scris versiunea",
     "respond.sent": "Mulțumim. Partea ta a ajuns, iar judecătorii lucrează la ea.",
-    "respond.sentWaiting":
-      "Mulțumim. Partea ta a ajuns. Judecătorii încep după ce scrie și cealaltă persoană.",
+    "respond.sentWaiting": "Mulțumim. Partea ta a ajuns. Judecătorii încep după ce scrie și cealaltă persoană.",
     "respond.ownInvite": "Asta e propria ta invitație. Trimite-o celeilalte persoane.",
     "respond.expired": "Invitația a expirat.",
     "respond.closed": "Cazul ăsta nu mai acceptă răspunsuri.",
@@ -605,8 +667,7 @@ const ro: Locale = {
     "home.removeTheirSide": "Elimină cealaltă parte",
     "home.sendLink": "Trimite un link",
     "home.clear": "Șterge",
-    "home.lead":
-      "Scrie ambele părți sau trimite-i celeilalte persoane un link ca să-și scrie varianta.",
+    "home.lead": "Scrie ambele părți sau trimite-i celeilalte persoane un link ca să-și scrie varianta.",
     "home.leadSolo": "Scrie-ți partea și, dacă o știi, varianta celeilalte persoane.",
     "home.theirSide": "Cealaltă parte",
     "home.theirName": "Numele celeilalte părți",
@@ -616,8 +677,7 @@ const ro: Locale = {
     "home.says": "{name} spune:",
     "home.mySide": "Partea mea:",
     "home.otherSide": "Cealaltă parte:",
-    "appeal.lead":
-      "Folosește 1 verdict.",
+    "appeal.lead": "Folosește 1 verdict.",
     "appeal.placeholder": "Ce le-a scăpat judecătorilor? Un fapt, un mesaj sau ce ați stabilit cu adevărat.",
     "appeal.submit": "Judecă din nou cu contextul meu",
     "appeal.sending": "Îți anonimizăm contextul…",
@@ -650,7 +710,8 @@ const ro: Locale = {
     "about.casesTitle": "Ascultăm ambele părți",
     "about.cases1":
       "Cazuri cu două părți: te conectezi, îți scrii varianta și trimiți un link privat. Cealaltă persoană își scrie varianta fără s-o vadă pe a ta, iar judecătorii cântăresc ambele relatări: pe ce sunt de acord, ce contestă și ce dovezi ar schimba verdictul.",
-    "about.cases2": "Dacă nu răspunde nimeni în 7 zile, linkul nu mai funcționează. Poți primi totuși un verdict doar pe partea ta.",
+    "about.cases2":
+      "Dacă nu răspunde nimeni în 7 zile, linkul nu mai funcționează. Poți primi totuși un verdict doar pe partea ta.",
     "about.premiumTitle": "Extra",
     "about.premium2":
       "Dovezi: adaugă capturi de ecran cu conversații sau documente. Citim textul din ele, ascundem numele și aruncăm imaginea.",
@@ -658,12 +719,6 @@ const ro: Locale = {
       "Contestații: după un verdict, fiecare persoană poate adăuga context o dată. Judecătorii se uită din nou la tot și spun dacă verdictul rămâne, s-a inversat sau s-a schimbat. Verdictele anterioare rămân vizibile.",
     "about.premium4":
       "Un caz cu două părți folosește 1 verdict. E rezervat când trimiți linkul și îți revine dacă nu răspunde nimeni în 7 zile.",
-    "privacy.casesTitle": "Cazuri cu două părți și contestații",
-    "privacy.cases":
-      "Într-un caz cu două părți, fiecare parte e anonimizată când e trimisă, la fel ca un verdict. Judecătorii citesc textul anonimizat; varianta fiecărei persoane, așa cum a scris-o, împreună cu lista ei de nume, e stocată criptat și doar acea persoană o poate vedea. Fiecare persoană scrie, când își trimite partea, numele pe care vrea să-l afișeze pe pagina de distribuire; dacă rămâne gol, apare Partea A sau Partea B. Cealaltă persoană nu are nevoie de cont; răspunsurile ei sunt limitate cu ajutorul unui hash cu cheie al adresei IP. Linkul invitației e stocat doar ca hash. Dacă cealaltă persoană răspunde după ce s-a conectat, contul ei e legat de partea ei, ca doar ea să poată adăuga context mai târziu sau să-și vadă originalul; dacă răspunde fără să se conecteze, același lucru îl face un cod privat păstrat în browserul ei, iar dacă se conectează mai târziu în acel browser, poate păstra cazul în contul ei. Ca aceeași persoană să primească aceeași etichetă în ambele relatări, serverul păstrează în fiecare caz amprente codificate ale numelor (hash-uri cu cheie, nu numele în sine). Până la verdict, niciuna dintre părți nu poate citi textul celeilalte; după un verdict pe ambele părți, ambele persoane pot citi ambele relatări anonimizate. Contextul adăugat după un verdict (o contestație) e tratat la fel. Când cealaltă persoană răspunde, s-ar putea să-ți trimitem un scurt e-mail fără niciun text din caz, dacă e-mailul e configurat. Oricare persoană își poate elimina propria parte: originalul și numele afișat sunt șterse, iar linkurile de distribuire ale cazului nu mai funcționează pentru nimeni. Ștergerea contului face asta pentru fiecare caz pe care l-ai pornit sau la care ai răspuns.",
-    "privacy.evidenceTitle": "Capturi de ecran",
-    "privacy.evidence":
-      "Browserul tău micșorează imaginile mari înainte să le încarce. Apoi fiecare imagine ajunge o dată la un serviciu AI extern, ca textul vizibil să poată fi citit; nu stocăm niciodată imaginea. Transcrierea brută, care poate conține încă nume, îți revine într-un token semnat pe care browserul tău îl păstrează cel mult 6 ore. Când îți trimiți partea, transcrierea e anonimizată împreună cu textul tău: transcrierea anonimizată le e arătată judecătorilor și e stocată cu cazul, iar transcrierea brută e păstrată criptat cu originalul tău, unde doar tu o poți vedea. Numerele de telefon, adresele de e-mail, numele de utilizator de pe rețelele sociale și numerele de cont din ea sunt și ele înlocuite cu substituenți pentru judecători.",
     "pricing.premium.f5": "Capturi de ecran ca dovezi, citite și apoi aruncate, fără cost în plus",
     "pricing.premium.f6": "Adaugi context după un verdict și ceri o rejudecare (1 verdict)",
     "pricing.premium.f7": "Ascultă ambele părți: trimite-i celeilalte persoane un link privat ca să-și spună varianta",
@@ -783,21 +838,6 @@ const ro: Locale = {
     "stamp.dissolved": "Sensuri diferite",
     "bestPoint.of": "Cel mai bun argument pentru {name}",
     "bestPoint.self": "Cel mai bun argument al tău",
-    "privacy.accessTitle": "Cine ce poate vedea",
-    "privacy.access":
-      "Tu: textul tău original și numele, pe orice dispozitiv dacă te-ai conectat, sau pe dispozitivul folosit, printr-un cod privat salvat în browser sau în aplicație (noi păstrăm doar o formă codificată a acestui cod). Verdictele scrise fără conectare, înainte să fie nevoie de un cont, și cazurile la care ai răspuns fără conectare rămân listate în acel browser cu titlurile lor și cu numele așa cum le-ai scris, ca pagina Verdicte să le poată arăta: oricine folosește același browser vede lista. Pe un calculator folosit de mai multe persoane, conectează-te sau folosește o fereastră privată; dacă ștergi din browser datele site-ului, se șterge și lista. Într-un caz cu două părți, fiecare persoană își vede doar propriul original; după verdict, amândouă văd ambele relatări anonimizate, așa cum le-au citit judecătorii. Judecătorii (modele AI rulate de furnizorul nostru AI): doar varianta anonimizată. Oricine are linkul de distribuire: verdictul cu numele afișate. Implicit, acesta e numele pe care ți-l alegi pentru tine, iar pentru ceilalți, prenumele lor așa cum le-ai scris; le poți schimba sau poți dezactiva numele oricând, iar atunci pagina arată Partea A și Partea B. Noi: putem decripta originalele cu cheia și ne uităm la textul stocat doar ca să rezolvăm o cerere de asistență de la tine, să investigăm un abuz sau când legea o cere.",
-    "privacy.removalTitle": "Eliminare",
-    "privacy.removal":
-      "Poți cere eliminarea din pagina verdictului (dacă te-ai conectat, o poți deschide din pagina Verdicte), din pagina cazului pentru un caz cu două părți, ștergându-ți contul sau prin e-mail. Eliminarea șterge textul tău original, lista de nume și numele afișate (într-un caz cu două părți, originalul părții tale și numele tău afișat), iar linkul de distribuire și imaginea lui de previzualizare nu se mai încarcă pentru nimeni. Previzualizările deja postate în aplicațiile de chat sunt păstrate de acele aplicații și pot apărea în continuare până când le reîmprospătează. Păstrăm textul anonimizat și verdictul, fără nume, în evidențele noastre; ele nu mai pot fi deschise prin link. Ștergerea contului face asta pentru toate verdictele tale și părțile tale din cazuri și îți șterge datele de conectare, creditele și planul. Datele eliminate rămân în copiile noastre de siguranță până când acestea expiră (cel mult 14 zile, vezi mai jos); dacă vreodată restaurăm o copie de siguranță, aplicăm din nou fiecare eliminare (pentru asta păstrăm o listă cu ce a fost eliminat și când, fără texte sau nume). La treizeci de zile după ce ștergi ceva, ștergem și textul anonimizat și verdictul, păstrând doar rezultatul și datele, cu excepția cazului în care legea ne impune să le păstrăm mai mult. Pentru un caz, cele treizeci de zile încep abia după ce toți cei implicați l-au eliminat.",
-    "privacy.retentionTitle": "Cât timp păstrăm datele",
-    "privacy.retention":
-      "Păstrăm verdictele și originalele până când ceri eliminarea lor sau îți ștergi contul. Ca să putem recupera totul după o defecțiune, păstrăm copii de siguranță ale serverului și ale bazei lui de date timp de cel mult 14 zile, apoi sunt șterse. Ele conțin aceleași date ca serverul, inclusiv originalele criptate, iar cheia se află pe același server, așa că aceste copii sunt protejate la fel ca serverul însuși, nu prin acea criptare. Hash-urile pentru limitarea utilizării durează cel mult 24 de ore. Jurnalele serverului urmează perioada standard de păstrare a furnizorului nostru de găzduire. Evenimentele de utilizare sunt șterse după 90 de zile, iar legăturile cu dispozitivele după 180 de zile fără utilizare. Jurnalele și măsurătorile trimise la Grafana Labs se păstrează 14 zile.",
-    "privacy.locationTitle": "Unde sunt datele tale",
-    "privacy.location":
-      "Serverele noastre sunt în Germania (OVH, Frankfurt). O parte din procesare are loc în Statele Unite: furnizorul nostru AI rulează modelele care scot numele, judecă, citesc capturile de ecran și caută pe web; Cloudflare stă în fața okjudge.com ca proxy și DNS (tot traficul trece prin el) și rulează verificarea anti-robot. Conectarea trece prin Apple sau Google, dacă le alegi, iar e-mailurile de conectare prin Resend. Datele procesate în altă țară pot fi supuse legilor acelei țări.",
-    "privacy.rightsTitle": "Drepturile tale (Canada)",
-    "privacy.rights":
-      "Judge este operat din Canada și tratează informațiile personale conform legii federale canadiene privind confidențialitatea (PIPEDA): colectăm doar ce îi trebuie serviciului, le folosim doar pentru asta, le protejăm, iar tu poți cere să vezi, să corectezi sau să elimini ce deținem despre tine. Răspundem în termen de 30 de zile.",
     "footer.terms": "Termeni",
     "signin.legalTerms": "Termenii de utilizare",
     "age.confirm": "Am 18 ani sau mai mult",

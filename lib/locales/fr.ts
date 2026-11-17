@@ -109,14 +109,18 @@ const fr: Locale = {
     "vote.dissolved": "quiproquo",
     refusedNote: "L’IA a préféré passer son tour. Mieux vaut ne rien afficher qu’un faux verdict.",
     demoNote: "🎭 Mode démo : aucune clé d’IA configurée, voici donc un exemple de verdict",
-    "trial.survived": "🛡️ Objection rejetée : l’avocat de l’autre camp a soulevé sa plus forte objection, et le verdict a tenu. L’indice de confiance ne bouge pas.",
-    "trial.uncertain": "⚠️ L’avocat de l’autre camp a fait objection, et cette objection a laissé un vrai doute sur ce verdict",
-    "trial.overturned": "⚠️ Objection retenue : le verdict tient, mais la plus forte objection de l’autre camp l’affaiblit sérieusement",
+    "trial.survived":
+      "🛡️ Objection rejetée : l’avocat de l’autre camp a soulevé sa plus forte objection, et le verdict a tenu. L’indice de confiance ne bouge pas.",
+    "trial.uncertain":
+      "⚠️ L’avocat de l’autre camp a fait objection, et cette objection a laissé un vrai doute sur ce verdict",
+    "trial.overturned":
+      "⚠️ Objection retenue : le verdict tient, mais la plus forte objection de l’autre camp l’affaiblit sérieusement",
     "trial.minor": "🛡️ L’avocat de l’autre camp a soulevé un point juste, mais le verdict tient",
     "trial.whatWasTested": "L’objection",
     "trial.attackPrefix": "Objection :",
     "trial.refereePrefix": "Pourquoi :",
-    "trial.mixedNote": "C’est un différend mixte : en partie des faits, en partie des valeurs ou le sens des mots, donc une victoire nette est plus difficile à défendre.",
+    "trial.mixedNote":
+      "C’est un différend mixte : en partie des faits, en partie des valeurs ou le sens des mots, donc une victoire nette est plus difficile à défendre.",
     confidence: "Confiance : {n} sur {total}",
     verdictAria: "Verdict : {label}",
     "party.a": "Partie A",
@@ -137,7 +141,8 @@ const fr: Locale = {
     "error.rate_limited": "Silence dans la salle ! Tu as atteint la limite pour l’instant. Réessaie dans {wait}.",
     "error.daily_cap":
       "La séance est levée pour aujourd’hui : la cour a entendu toutes les disputes qu’elle pouvait encaisser. Retour dans {wait}.",
-    "error.captcha_failed": "Impossible de vérifier que tu n’es pas un robot. Refais la vérification, puis envoie à nouveau.",
+    "error.captcha_failed":
+      "Impossible de vérifier que tu n’es pas un robot. Refais la vérification, puis envoie à nouveau.",
     "wait.moment": "quelques minutes",
     "wait.minute": "1 minute",
     "wait.minutes": "{n} minutes",
@@ -146,7 +151,8 @@ const fr: Locale = {
     "refused.headline": "L’IA a refusé de se prononcer sur ce coup-là",
     "refused.crux":
       "Le filtre de sécurité de l’IA l’a empêchée de juger ce débat. Mieux vaut aucun verdict qu’un verdict inventé.",
-    "refused.bestPoint": "Essaie de le formuler autrement. Ou admets que certaines disputes sont trop grosses pour une appli.",
+    "refused.bestPoint":
+      "Essaie de le formuler autrement. Ou admets que certaines disputes sont trop grosses pour une appli.",
     "refused.claim": "Ignoré",
     "nav.skip": "Aller au contenu",
     "nav.home": "Page d’accueil de Judge",
@@ -248,34 +254,97 @@ const fr: Locale = {
     "privacy.title": "Confidentialité",
     "privacy.kicker": "Tes données",
     "privacy.lead":
-      "En bref : on conserve ce que tu écris, noms compris, de façon chiffrée, pour que tu puisses y revenir. Les juges, eux, ne lisent qu’une version sans les noms. Tu peux en demander la suppression à tout moment. On ne vend pas tes données. Si Judge est un jour vendu ou fusionné, il passe au nouveau propriétaire selon cette politique.",
+      "En bref : on conserve ce que tu écris, noms compris, chiffré, pour que tu puisses y revenir. Les juges ne lisent jamais qu’une version dont les noms ont été retirés. Tu peux la faire supprimer à tout moment. On ne vend pas tes données. Si Judge est un jour vendu ou fusionné, il passe au nouveau propriétaire selon cette politique.",
+    "privacy.whoTitle": "Qui on est",
+    "privacy.who":
+      "Judge est exploité par Aytu Tuna, une personne physique au Canada.\n{address}\nOn décide de ce qui est collecté et pourquoi. La personne responsable des renseignements personnels est Aytu Tuna, propriétaire. Contact : {email}.",
     "privacy.storedTitle": "Ce qu’on conserve",
     "privacy.stored":
-      "Pour chaque verdict, on conserve ton texte exactement tel que tu l’as écrit (avec tes réponses aux questions des juges et le texte lu dans tes éventuelles captures d’écran), ainsi que la liste indiquant quel nom est devenu quelle étiquette. Ces données sont chiffrées avec une clé qui n’est pas stockée dans la base de données. On conserve aussi la version anonymisée que lisent les juges (noms remplacés par Partie A et Partie B), les réglages que tu as choisis, le verdict, son éventuelle traduction et les noms que tu choisis d’afficher sur la page de partage. On compte aussi comment Judge est utilisé : quels écrans et quelles fonctions, avec la version de l’appli, le modèle de l’appareil, la version du système, la langue et le pays de ta connexion, et dans les applis un identifiant d’appareil. Quand tu es connecté, cela est lié à ton compte. Les événements d’usage sont conservés 90 jours, et les liens entre ton compte et tes appareils 180 jours. Les applis ont un réglage « Statistiques d’utilisation » dans les Réglages, et le site n’envoie rien quand ton navigateur envoie Do Not Track ou Global Privacy Control. Jamais de texte de dossier là-dedans. Si tu notes un verdict, on garde la note avec lui.",
+      "Pour chaque verdict, on conserve ton texte exactement tel que tu l’as écrit (avec tes réponses aux questions des juges et le texte lu dans tes éventuelles captures d’écran), ainsi que la liste indiquant quel nom est devenu quelle étiquette. Ces données sont chiffrées avec une clé qui n’est pas stockée dans la base de données. On conserve aussi la version anonymisée que lisent les juges (noms remplacés par Partie A et Partie B), les réglages que tu as choisis, le verdict, son éventuelle traduction et les noms que tu choisis d’afficher sur la page de partage. On compte aussi comment Judge est utilisé : quels écrans et quelles fonctions, avec la version de l’appli, le modèle de l’appareil, la version du système, la langue et le pays de ta connexion, et dans les applis un identifiant d’appareil. Quand tu es connecté, cela est lié à ton compte. Les événements d’usage sont conservés 90 jours, et les liens entre ton compte et tes appareils 180 jours. Les applis ont un réglage « Statistiques d’utilisation » dans les Réglages, et le site n’envoie rien quand ton navigateur envoie Do Not Track ou Global Privacy Control. Jamais de texte de dossier là-dedans. Si tu notes un verdict, on garde la note avec lui. Une note peut être effacée ; on garde alors la ligne sans le pouce levé ou baissé. On conserve aussi une trace de ton accord sur les détails privés et de tes choix pour Aide à améliorer Judge, avec la date, la langue et la plateforme, et le texte que tu as vu.",
     "privacy.helpTitle": "Aide à améliorer Judge",
     "privacy.help":
-      "Désactivé tant que tu ne l’actives pas. Quand c’est activé, on peut utiliser le texte anonymisé que lisent les juges, leurs verdicts et tes notes pour tester et entraîner les juges de Judge. Les noms n’en font jamais partie. Si tu le désactives, cet usage s’arrête pour tout ce que tu as créé, et on enregistre quand tu l’as activé ou désactivé.",
-    "privacy.notStoredTitle": "Ce qu’on ne fait pas",
-    "privacy.notStored":
-      "Aucun traceur publicitaire. Ton choix de langue reste dans le stockage local de ton navigateur, et nulle part ailleurs.",
-    "privacy.ipTitle": "Limitation d’usage",
-    "privacy.ip":
-      "Pour que la cour reste ouverte à tous, on limite le nombre de verdicts que chaque compte peut demander, et le nombre de traductions que chaque visiteur peut demander. Pour les traductions, et pour les réponses à un dossier à deux voix, on conserve une empreinte à clé (hash) de ton adresse IP, pas l’adresse elle-même, dans notre stockage de limitation d’usage, pendant 24 heures maximum. Si la vérification anti-robot est activée, ton adresse IP est aussi transmise à Cloudflare pour cette vérification. Elle n’est jamais enregistrée avec ton verdict.",
-    "privacy.processorsTitle": "Qui d’autre traite ton texte",
-    "privacy.processors":
-      "Le texte que tu saisis, vrais noms compris, est d’abord envoyé à notre fournisseur d’IA aux États-Unis pour que les noms en soient retirés. Seule la version anonymisée est jugée ; ton original est stocké chiffré, comme décrit plus haut. Si la vérification anti-robot est activée, Cloudflare Turnstile s’exécute dans ton navigateur et vérifie le résultat auprès de Cloudflare. Si tu te connectes, Apple ou Google (selon ton choix) gère cette connexion, et les e-mails de connexion sont envoyés via Resend. Notre hébergeur conserve des journaux serveur standards. Les achats dans les applis passent par l’App Store ou Google Play et sont gérés par RevenueCat, qui reçoit l’identifiant de ton compte et ton historique d’achats. Grafana Labs reçoit les journaux du serveur et les mesures de performance, conservés dans l’UE pendant 14 jours ; les journaux ne contiennent aucun texte de dossier. Les rapports de plantage et d’erreur des applis et de ce site vont à Sentry, qui les conserve dans l’UE jusqu’à 30 jours ; ils contiennent l’erreur, la version de l’appli ou du navigateur et le modèle de l’appareil, mais aucun texte de dossier, ni identifiant de compte, ni adresse de connexion.",
-    "privacy.shareTitle": "Liens de partage",
-    "privacy.share":
-      "Toute personne qui a le lien d’un verdict peut le voir, avec les noms affichés que tu as choisis (ou Partie A et Partie B si tu as désactivé les noms). Les liens utilisent de longs identifiants aléatoires, et les pages de partage demandent aux moteurs de recherche de ne pas les indexer. Le lien et l’image d’aperçu d’un verdict supprimé ne se chargent plus ; les aperçus déjà publiés dans des applis de messagerie peuvent rester visibles jusqu’à ce que ces applis les actualisent. N’indique pas d’adresse, de numéro de téléphone ni rien d’autre que tu ne voudrais pas voir sur une page que d’autres peuvent ouvrir.",
-    "privacy.contactTitle": "Contact",
-    "privacy.contact":
-      "Une question, ou une demande pour consulter, corriger ou supprimer tes données ? Écris à {email} avec le lien du verdict ou du dossier.",
-    "privacy.accountsTitle": "Comptes",
-    "privacy.accounts":
-      "Judge est réservé aux personnes de 18 ans et plus, et les comptes dont on apprend qu’ils appartiennent à une personne de moins de 18 ans sont fermés. Il faut un compte pour obtenir un verdict ; l’autre personne d’un dossier à deux voix peut répondre sans compte. Si tu te connectes avec Apple ou Google, on conserve l’adresse e-mail, le nom et le lien de la photo de profil qu’ils nous transmettent, ainsi que la méthode de connexion utilisée, et Apple ou Google peuvent voir ta connexion à Judge. Si tu te connectes avec un lien par e-mail, cet e-mail est envoyé via Resend, et on garde brièvement un enregistrement contenant ton adresse e-mail pour vérifier le lien : le lien cesse de fonctionner au bout de 10 minutes, et l’enregistrement est supprimé dès qu’il est utilisé ou peu après son expiration. On conserve aussi tes sessions (un jeton aléatoire et sa date d’expiration, sans adresse IP ni informations sur le navigateur, mais les applis enregistrent aussi un identifiant d’appareil quand tu te connectes), tes crédits, ton offre et son historique, et les verdicts qui ont utilisé un crédit (uniquement l’identifiant du verdict). On garde aussi la trace des verdicts et des dossiers qui t’appartiennent, pour que tu les retrouves sur n’importe quel appareil. Supprimer ton compte depuis la page Compte efface ton compte, tes sessions, les événements d’usage et le lien entre ton compte et tes appareils, et supprime tes verdicts et tes versions dans les dossiers comme décrit dans la section Suppression. On ne garde qu’une forme brouillée de ton adresse e-mail, pour qu’un nouveau compte créé avec elle n’obtienne pas un second verdict gratuit et reste fermé si ton compte a été fermé parce que tu as moins de 18 ans. Les codes de connexion envoyés par e-mail fonctionnent comme les liens. Si tu définis un mot de passe, nous ne conservons avec ton compte qu'une version hachée de celui-ci, jamais le mot de passe lui-même.",
+      "Désactivé tant que tu ne l’actives pas. Quand c’est activé, on peut utiliser le texte anonymisé que lisent les juges, leurs verdicts et tes notes pour tester et entraîner des modèles d’IA : ceux de Judge et, si Judge est un jour vendu ou fusionné, ceux du nouveau propriétaire. Les noms n’en font jamais partie. Si tu le désactives, tout ce que tu as créé reste hors de tout entraînement à partir de ce moment. On enregistre quand tu l’as activé ou désactivé.\n« Anonymisé » veut dire ici que les noms sont retirés ; d’autres détails que tu as écrits peuvent encore se trouver dans le texte. Cela ne concerne que les verdicts créés pendant que c’est activé, et un dossier seulement quand toutes les personnes qui ont écrit une version l’ont activé. Les modèles déjà entraînés ne sont pas modifiés. Rien n’a encore été entraîné. Judge fonctionne pareil quand c’est désactivé.\nOn te le demande une seule fois, sur la page de ton propre verdict, après ton deuxième verdict terminé. On ne le demande jamais sur un verdict que quelqu’un d’autre a partagé avec toi. La carte dit : « Laisse Judge utiliser tes verdicts et tes notes anonymisés pour entraîner l’IA. Les noms n’en font jamais partie.» Tu peux changer ta réponse dans les Réglages en tout temps.",
+    "privacy.purposesTitle": "Pourquoi on utilise tes données",
+    "privacy.purposes":
+      "- Pour te donner un verdict, gérer ton compte, et traiter les achats et l’assistance. Fondement (UE, Royaume-Uni et Brésil) : nécessaire pour fournir le service que tu as demandé.\n- Pour garder Judge sûr et en état de marche : limites d’usage, vérification anti-robot, repérage des gens qui accumulent des crédits gratuits, rapports d’erreur, statistiques d’utilisation, et conservation d’une forme brouillée d’un courriel après la suppression. Fondement : notre intérêt légitime à offrir un service sûr et fonctionnel. Tu peux t’y opposer par courriel. Les applis ont un réglage « Statistiques d’utilisation », et le Do Not Track ou le Global Privacy Control de ton navigateur arrête les événements d’usage du site.\n- Pour vérifier ton âge, y compris le signal d’âge de ton téléphone. Fondement : notre intérêt légitime à garder Judge réservé aux adultes, ou une obligation légale quand une loi d’une boutique d’applis sur l’âge s’applique.\n- Pour garder le texte sans les noms pendant 30 jours après que tu as supprimé quelque chose, en cas d’abus ou de réclamation en justice. Fondement : notre intérêt légitime.\n- Pour garder la preuve de ce que tu as accepté : l’accord sur les détails privés et tes choix pour Aide à améliorer Judge. Fondement : notre intérêt légitime à pouvoir montrer ce que tu as accepté.\n- Pour utiliser tes verdicts anonymisés et tes notes pour l’entraînement d’IA. Fondement : ton consentement, seulement si tu l’actives.\n- Pour respecter la loi et garder les registres qu’on est tenu de garder. Fondement : obligation légale.\nOn n’utilise jamais tes données pour de la publicité et on n’a aucun traceur publicitaire. Si on veut un jour un nouvel usage, on te le dit d’abord et on te redemande si la loi exige ton consentement.",
+    "privacy.sensitiveTitle": "Ce qu’il vaut mieux omettre",
+    "privacy.sensitive":
+      "Les litiges peuvent toucher à des sujets privés comme la santé, les relations, la religion ou l’argent. Écris seulement ce dont le verdict a besoin, et laisse de côté les détails privés sur d’autres personnes. Judge n’est pas fait pour les urgences ni pour les conseils juridiques.\nAvant ton premier verdict, ta première version d’un dossier ou ta première réponse à un dossier, on te demande de cocher une case : « Mon texte peut contenir des détails privés, comme la santé ou les relations. Judge l’envoie, sans les noms, à un service d’IA externe pour rédiger mon verdict, et le garde jusqu’à ce que je le retire.» Tu ne peux continuer que si elle est cochée. On le demande une fois par compte ; si tu as déjà un compte, on le demande à ton prochain verdict. Les personnes qui répondent à un dossier sans compte voient la même case. On garde une trace de la case cochée, avec la date, la langue, la plateforme et le texte que tu as vu.",
+    "privacy.othersTitle": "Les personnes dont tu parles",
+    "privacy.others":
+      "Ton texte peut décrire quelqu’un qui n’utilise pas Judge. Les juges ne le voient que sous des étiquettes comme « Personne C ». On conserve ses noms chiffrés, avec une empreinte codée de chaque nom (une empreinte à clé, pas le nom). Les noms peuvent apparaître sur une page de partage comme décrit sous Qui peut voir quoi. Si tu es nommé dans le dossier de quelqu’un d’autre, écris à {email} avec le lien et on retirera ton nom de la page de partage ou on examinera ton opposition.",
+    "privacy.automatedTitle": "Les verdicts viennent d’une IA",
+    "privacy.automated":
+      "Ce sont des modèles d’IA qui rédigent ton verdict, sans qu’une personne le lise d’abord. C’est un avis sur l’argument tel qu’il a été écrit, à partir du texte sans les noms, des sources web affichées et de tes réponses. Ce n’est pas un conseil juridique et il n’a aucune force obligatoire. Aucune décision sur toi, ton compte, un prix ou ton accès n’est prise à partir de lui. Il peut être erroné ou partial. Si tu n’es pas d’accord, note-le « Pas équitable », ajoute du contexte, ou écris à {email} et une personne s’en occupera. L’autre partie d’un dossier peut le demander aussi.",
+    "privacy.accessTitle": "Qui peut voir quoi",
+    "privacy.access":
+      "Toi : ton texte original et tes noms, sur n’importe quel appareil quand tu es connecté, ou sur l’appareil que tu as utilisé grâce à un code privé conservé dans ton navigateur ou l’appli (on n’en garde qu’une forme brouillée). Les verdicts rédigés sans être connecté, avant qu’un compte soit exigé, et les dossiers auxquels tu as répondu sans être connecté restent listés dans ce navigateur avec leurs titres et tes noms tels que tu les as écrits, pour que la page Verdicts puisse les afficher : toute personne qui utilise le même navigateur voit cette liste. Sur un ordinateur partagé, connecte-toi ou utilise une fenêtre privée ; effacer les données du site dans le navigateur supprime la liste. Dans un dossier à deux voix, chaque personne ne voit que son propre original ; après le verdict, les deux voient les deux versions anonymisées, telles que les juges les ont lues. Les juges (des modèles d’IA exécutés par notre fournisseur d’IA) : seulement la version anonymisée. Toute personne qui a le lien de partage : le verdict avec les noms affichés. Par défaut, c’est le nom que tu as choisi pour toi et les prénoms des autres tels que tu les as écrits ; tu peux les changer ou désactiver les noms en tout temps, et la page affiche alors Partie A et Partie B. Nous : on peut déchiffrer les originaux avec la clé, et on ne consulte le texte conservé que pour traiter une demande d’assistance de ta part, enquêter sur un abus, ou quand la loi l’exige.",
+    "privacy.casesTitle": "Dossiers à deux voix et appels",
+    "privacy.cases":
+      "Dans un dossier à deux voix, chaque version est anonymisée au moment où elle est envoyée, de la même façon qu’un verdict. Les juges lisent le texte anonymisé ; la version de chaque personne telle qu’elle l’a écrite, avec sa liste de noms, est stockée chiffrée, et seule cette personne peut la voir. Chaque personne saisit le nom qu’elle veut voir affiché sur la page de partage en envoyant sa version ; si le champ reste vide, c’est Partie A ou Partie B qui s’affiche. L’autre personne n’a pas besoin de compte ; ses réponses sont limitées à l’aide d’une empreinte à clé de son adresse IP. Le lien d’invitation n’est stocké que sous forme d’empreinte (hash). Si l’autre personne répond en étant connectée, son compte est lié à sa version, pour qu’elle seule puisse ajouter du contexte plus tard ou voir son original ; si elle répond sans être connectée, un code privé conservé dans son navigateur joue le même rôle, et si elle se connecte plus tard dans ce navigateur, elle peut garder le dossier dans son compte. Pour donner la même étiquette à la même personne dans les deux versions, le serveur conserve des empreintes codées des noms à l’intérieur de chaque dossier (des empreintes à clé, pas les noms eux-mêmes). Jusqu’au verdict, aucune des deux personnes ne peut lire le texte de l’autre ; après un verdict à deux voix, les deux peuvent lire les deux versions anonymisées. Le contexte ajouté après un verdict (un appel) est traité de la même façon. Quand l’autre personne répond, on peut t’envoyer un court courriel, sans aucun texte du dossier, si l’envoi de courriels est configuré. Chacune des deux personnes peut supprimer sa propre version : son original et son nom affiché sont effacés, et les liens de partage du dossier cessent de fonctionner pour tout le monde. Supprimer ton compte fait la même chose pour chaque dossier que tu as ouvert ou auquel tu as répondu. Un dossier auquel personne ne répond expire après 7 jours, mais le texte de ta version reste jusqu’à ce que tu le supprimes. Une personne qui répond sans compte coche « J’ai 18 ans ou plus » et la case des détails privés avant d’envoyer, et on garde les deux cases cochées avec sa version.",
     "privacy.webSearchTitle": "Recherche web et questions",
     "privacy.webSearch":
-      "Chaque verdict envoie le débat anonymisé à notre fournisseur d’IA avec la recherche web activée. Le modèle rédige les requêtes de recherche à partir de ce texte anonymisé, et les résultats viennent du partenaire de recherche du fournisseur. Les sources utilisées sont affichées dans le verdict. Les juges peuvent d’abord te poser jusqu’à deux questions : pour les formuler, ton texte tel que tu l’as saisi, noms compris, est envoyé une fois de plus au fournisseur d’IA. Tes réponses sont anonymisées avec le débat avant le jugement ; les questions et tes réponses telles que tu les as écrites sont conservées avec ton original chiffré.",
+      "Chaque verdict envoie l’argument anonymisé à notre fournisseur d’IA avec la recherche web activée. Le modèle rédige les requêtes de recherche à partir de ce texte anonymisé, et les résultats viennent du partenaire de recherche du fournisseur. Les sources utilisées sont affichées sur le verdict. Les juges peuvent d’abord te poser jusqu’à deux questions : pour les formuler, ton texte tel que tu l’as saisi, noms compris, est envoyé une fois de plus au fournisseur d’IA. Tes réponses sont anonymisées avec l’argument avant le jugement ; les questions et tes réponses telles que tu les as écrites sont conservées avec ton original chiffré.",
+    "privacy.evidenceTitle": "Captures d’écran",
+    "privacy.evidence":
+      "Ton navigateur réduit les grandes images avant de les téléverser. Chaque image est ensuite envoyée une fois à un service d’IA externe pour que le texte visible soit lu ; on ne conserve jamais l’image. La transcription brute, qui peut encore contenir des noms, te revient dans un jeton signé que ton navigateur garde jusqu’à 6 heures. Quand tu envoies ta version, la transcription est anonymisée avec ton texte : la transcription anonymisée est montrée aux juges et stockée avec le dossier, et la transcription brute est conservée chiffrée avec ton original, où toi seul peux la voir. Les numéros de téléphone, adresses courriel, identifiants de réseaux sociaux et numéros de compte qu’elle contient sont remplacés par des marqueurs, y compris pour les juges.",
+    "privacy.accountsTitle": "Comptes",
+    "privacy.accounts":
+      "Judge est réservé aux personnes de 18 ans et plus, et les comptes dont on apprend qu’ils appartiennent à une personne de moins de 18 ans sont fermés. Il faut un compte pour obtenir un verdict ; l’autre personne d’un dossier à deux voix peut répondre sans compte. Si tu te connectes avec Apple ou Google, on conserve l’adresse courriel, le nom et le lien de la photo de profil qu’ils nous transmettent, ainsi que la méthode de connexion utilisée, et Apple ou Google peuvent voir ta connexion à Judge. Si tu te connectes avec un lien ou un code envoyé par courriel, ce courriel est envoyé via Resend, et on garde brièvement un enregistrement contenant ton adresse courriel pour le vérifier : il cesse de fonctionner au bout de 10 minutes, et l’enregistrement est supprimé dès qu’il est utilisé ou peu après son expiration. Si tu définis un mot de passe, nous ne conservons avec ton compte qu’une version hachée de celui-ci, jamais le mot de passe lui-même. On conserve aussi tes sessions (un jeton aléatoire et sa date d’expiration, sans adresse IP ni informations sur le navigateur, mais les applis enregistrent aussi un identifiant d’appareil quand tu te connectes), tes crédits, ton offre et son historique, et les verdicts qui ont utilisé un crédit (uniquement l’identifiant du verdict). On garde aussi la trace des verdicts et des dossiers qui t’appartiennent, pour que tu les retrouves sur n’importe quel appareil. Supprimer ton compte depuis la page Compte (dans les applis et sur le site) efface ton compte, tes informations de connexion, tes crédits, ton offre et tes événements d’usage, et supprime tes verdicts et tes versions dans les dossiers comme décrit dans la section Suppression. On garde quelques éléments après la suppression, énumérés sous Ce qu’on garde après la suppression. Si tu ne peux pas te connecter, la page okjudge.com/delete-account explique comment nous écrire pour le demander. On ne garde qu’une forme brouillée de ton adresse courriel, pour qu’un nouveau compte créé avec elle n’obtienne pas un second verdict gratuit et reste fermé si ton compte a été fermé parce que tu as moins de 18 ans. On enregistre aussi si tu as confirmé avoir 18 ans ou plus, et comment (une case cochée, ou le signal d’âge de ton téléphone ; sur Android l’appli interroge Google Play, sur iPhone elle interroge Apple).",
+    "privacy.removalTitle": "Suppression",
+    "privacy.removal":
+      "Demande la suppression depuis la page du verdict (avec ton compte, tu peux l’ouvrir depuis la page Verdicts), depuis la page du dossier pour un dossier à deux voix, en supprimant ton compte, ou par courriel. La suppression efface ton texte original, la liste des noms et les noms affichés (dans un dossier à deux voix, l’original de ta version et ton nom affiché), et le lien de partage et son image d’aperçu ne se chargent plus pour personne. Les aperçus déjà publiés dans des applis de messagerie sont conservés par ces applis et peuvent rester visibles jusqu’à ce qu’elles les actualisent. On conserve le texte anonymisé et le verdict, sans les noms, dans nos archives ; ils ne peuvent plus être ouverts via le lien. Supprimer ton compte fait la même chose pour tous tes verdicts et tes versions dans les dossiers, et supprime tes informations de connexion, tes crédits et ton offre. Les données supprimées restent dans nos sauvegardes jusqu’à leur expiration (14 jours maximum, voir plus bas) ; si on restaure un jour une sauvegarde, on réapplique toutes les suppressions (pour cela, on conserve une liste de ce qui a été supprimé et quand, sans aucun texte ni nom). Trente jours après que tu as supprimé quelque chose, on efface aussi le texte anonymisé et le verdict, en gardant seulement le résultat et les dates, sauf si la loi nous impose de les garder plus longtemps. Cela s’applique à ce qui est supprimé à partir du 14 novembre 2026 (UTC) ; les suppressions plus anciennes gardent leur texte anonymisé. Pour un dossier, les trente jours ne commencent qu’une fois que toutes les personnes concernées l’ont supprimé. Les verdicts et les dossiers que personne ne supprime sont conservés jusqu’à ce que tu les supprimes ou que tu supprimes ton compte. Un verdict créé sans être connecté, avant qu’un compte soit exigé, peut être supprimé en écrivant à {email} avec son lien.",
+    "privacy.afterRemovalTitle": "Ce qu’on garde après la suppression",
+    "privacy.afterRemoval":
+      "Après la suppression, et après les trente jours, on garde encore :\n- le résultat et les scores, les réglages choisis, les dates, les identifiants, les parties en cause et la langue, ainsi que l’identifiant du compte qui a ouvert un dossier ;\n- tes notes. Quand tu supprimes ton compte, chaque note est déplacée vers un identifiant aléatoire, et ne mène donc plus à toi ;\n- la trace de tes choix pour Aide à améliorer Judge et de ton accord sur les détails privés (dates, langue, plateforme et texte que tu as vu), pendant 6 ans après la suppression de ton compte, pour prouver ce que tu as accepté. Une fois ton compte supprimé, ces enregistrements portent un identifiant aléatoire et aucun lien avec ton nom ou ton courriel ;\n- la liste des suppressions, qui contient des identifiants, des motifs, des dates et la partie au dossier, pendant 90 jours, pour réappliquer les suppressions après une restauration de sauvegarde ;\n- une forme brouillée de ton courriel, pour empêcher les abus répétés de crédits gratuits (voir Comptes) ;\n- un enregistrement d’appareil sans lien avec ton compte, jusqu’à 180 jours ;\n- les sauvegardes, jusqu’à 14 jours.\nQuand un dossier est effacé, les empreintes codées et les étiquettes de ses noms sont vidées, donc elles ne sont pas conservées.",
+    "privacy.retentionTitle": "Combien de temps on conserve",
+    "privacy.retention":
+      "On conserve les verdicts et les originaux jusqu’à ce que tu en demandes la suppression ou que tu supprimes ton compte. Pour pouvoir nous remettre d’une panne, on garde des copies de sauvegarde du serveur et de sa base de données pendant 14 jours maximum, puis elles sont supprimées. Elles contiennent les mêmes données que le serveur, y compris les originaux chiffrés, et la clé se trouve sur le même serveur : les sauvegardes sont donc protégées comme le serveur lui-même, pas par ce chiffrement. Les empreintes de limitation d’usage sont conservées 48 heures maximum. Les événements d’usage sont supprimés au bout de 90 jours, et les liens avec les appareils après 180 jours sans utilisation. Les journaux et mesures chez Grafana Labs sont conservés 14 jours. Les rapports de plantage chez Sentry sont conservés jusqu’à 30 jours. Les autres journaux serveur suivent la durée de conservation standard de notre hébergeur. Un code de connexion expire après 10 minutes, et les codes expirés sont supprimés chaque jour. Une session se termine 30 jours après ta dernière utilisation. La liste des suppressions est conservée 90 jours. Les traces de tes choix de consentement sont conservées 6 ans après la suppression de ton compte, puis supprimées.",
+    "privacy.ipTitle": "Limitation d’usage",
+    "privacy.ip":
+      "Pour que la cour reste ouverte à tous, on limite le nombre de verdicts que chaque compte peut demander, et le nombre de traductions que chaque visiteur peut demander. Pour les traductions, les réponses à un dossier à deux voix, la consultation d’un verdict pendant qu’il est jugé et les tentatives de connexion, on conserve une empreinte à clé (hash) de ton adresse IP, pas l’adresse elle-même, pendant 48 heures maximum. Les limites de connexion gardent brièvement l’adresse elle-même dans la mémoire du serveur, environ une minute, jamais sur disque. Si la vérification anti-robot est activée, ton adresse IP est aussi transmise à Cloudflare pour cette vérification. Elle n’est jamais enregistrée avec ton verdict.",
+    "privacy.processorsTitle": "Qui d’autre traite ton texte",
+    "privacy.processors":
+      "Le texte que tu saisis, vrais noms compris, est d’abord envoyé à notre fournisseur d’IA aux États-Unis pour que les noms en soient retirés. Seule la version anonymisée est jugée ; ton original est stocké chiffré, comme décrit plus haut. Si la vérification anti-robot est activée, Cloudflare Turnstile s’exécute dans ton navigateur et vérifie le résultat auprès de Cloudflare. Si tu te connectes, Apple ou Google (selon ton choix) gère cette connexion, et les courriels de connexion sont envoyés via Resend. Les achats dans les applis passent par l’App Store ou Google Play et sont gérés par RevenueCat, qui reçoit l’identifiant de ton compte et ton historique d’achats. Grafana Labs reçoit les journaux du serveur et les mesures de performance, conservés dans l’UE pendant 14 jours ; les journaux ne contiennent aucun texte de dossier. Les rapports de plantage et d’erreur des applis et de ce site vont à Sentry, qui les conserve dans l’UE jusqu’à 30 jours ; ils contiennent l’erreur, la version de l’appli ou du navigateur et le modèle de l’appareil, mais aucun texte de dossier, ni identifiant de compte, ni adresse de connexion. Notre hébergeur conserve des journaux serveur standards. L’appli Android interroge Google Play pour connaître ton statut d’âge et l’appli iPhone interroge Apple. On est le responsable du traitement ; ces fournisseurs traitent les données en notre nom.",
+    "privacy.shareTitle": "Liens de partage",
+    "privacy.share":
+      "Toute personne qui a le lien d’un verdict peut le voir, avec les noms affichés que tu as choisis (ou Partie A et Partie B si tu as désactivé les noms). Les liens utilisent de longs identifiants aléatoires, et les pages de partage demandent aux moteurs de recherche de ne pas les indexer. Le lien d’un verdict supprimé et son image d’aperçu ne se chargent plus ; les aperçus déjà publiés dans des applis de messagerie peuvent rester visibles jusqu’à ce que ces applis les actualisent. Évite les adresses, les numéros de téléphone ou tout ce que tu ne voudrais pas voir sur une page que d’autres peuvent ouvrir.",
+    "privacy.locationTitle": "Où sont tes données",
+    "privacy.location":
+      "Nos serveurs sont en Allemagne (OVH, Francfort). Certains traitements ont lieu aux États-Unis : notre fournisseur d’IA exécute les modèles qui retirent les noms, jugent, lisent les captures d’écran et font les recherches web ; Cloudflare se place devant okjudge.com comme proxy et DNS (tout le trafic passe par lui) et gère la vérification anti-robot. La connexion passe par Apple ou Google si tu les choisis, et les courriels de connexion par Resend. Les données traitées dans un autre pays peuvent être soumises aux lois de ce pays. On travaille depuis le Canada et on peut voir tes données de là.",
+    "privacy.storageTitle": "Témoins et stockage du navigateur",
+    "privacy.storage":
+      "Le site utilise un témoin de connexion (verdict.session_token) qui te garde connecté, et des témoins de courte durée pendant la connexion avec Apple ou Google (verdict.state dure 5 minutes). Cloudflare, qui gère la vérification anti-robot, peut déposer ses propres témoins pour cela. Aucun n’est utilisé pour le suivi. Le stockage local de ton navigateur garde ta langue, ton thème et ton choix Gamify ; un brouillon non envoyé (y compris le texte que tu as saisi) pendant que tu te connectes ; une liste des verdicts et dossiers créés sans être connecté ; des codes privés qui te permettent d’accéder à tes propres originaux ; les noms que tu as utilisés dans un dossier ; des codes d’invitation pour les dossiers auxquels on t’a demandé de répondre ; ta confirmation d’âge ; le dernier tribunal choisi ; et les exemples que tu as déjà vus. Le stockage de session garde l’adresse courriel et le mode pendant que tu attends un courriel de connexion, et des indicateurs d’usage pour l’onglet. Cela reste sur ton appareil. Effacer les données du site les supprime. Les applis gardent des choses semblables sur l’appareil.",
+    "privacy.notStoredTitle": "Ce qu’on ne fait pas",
+    "privacy.notStored":
+      "Aucun traceur publicitaire. On ne vend pas tes données, et on ne les partage pas à des fins publicitaires. Le site et les applis ne te suivent pas d’un site à l’autre. Comment on réagit à Do Not Track : le site n’envoie aucun événement d’usage depuis ton navigateur quand il envoie Do Not Track ou Global Privacy Control, et le réglage « Statistiques d’utilisation » des applis fait la même chose pour les applis. Notre serveur enregistre quand même quelques événements liés à ton compte (connexion, dossiers et verdicts créés ou échoués, achats) et l’appareil depuis lequel tu t’es connecté. On n’utilise jamais ton texte pour entraîner quoi que ce soit, sauf si tu as activé Aide à améliorer Judge.",
+    "privacy.securityTitle": "La sécurité",
+    "privacy.security":
+      "Les originaux, les listes de noms, les noms affichés et les jetons de connexion Apple sont chiffrés. Le trafic passe par HTTPS. La clé de chiffrement se trouve sur le même serveur que les données, donc elle ne protège pas contre quelqu’un qui prendrait le contrôle du serveur. Si un incident touche tes renseignements personnels, on avise les personnes concernées et les autorités quand la loi l’exige.",
+    "privacy.childrenTitle": "Âge",
+    "privacy.children":
+      "Judge est réservé aux personnes de 18 ans et plus. On demande à toute personne qui se connecte de le confirmer, les personnes qui répondent à un dossier sans compte cochent « J’ai 18 ans ou plus » avant d’envoyer, et les applis peuvent utiliser le signal d’âge de ton téléphone. On ne collecte pas sciemment de données auprès de personnes de moins de 18 ans. Si tu penses qu’un enfant a un compte, écris à {email} et on le ferme et on supprime les données.",
+    "privacy.rightsTitle": "Tes droits",
+    "privacy.rights":
+      "Où que tu habites, tu peux nous demander de te montrer ce qu’on détient, de le corriger, de le supprimer ou de supprimer ton compte, d’arrêter de l’utiliser pour l’entraînement, et de t’en donner une copie. Tu peux faire presque tout toi-même : supprimer un verdict ou un dossier sur sa page, supprimer ton compte sur la page Compte, changer les noms affichés sur la page d’un verdict ou d’un dossier, télécharger tes données, et régler Aide à améliorer Judge (et, dans les applis, Statistiques d’utilisation) dans les Réglages. Pour tout le reste, écris à {email} avec le lien du verdict ou du dossier. On peut te demander d’écrire depuis le courriel de ton compte ou de confirmer une fois connecté. On répond sous 30 jours, ou un mois si c’est plus court. C’est gratuit. Tu ne seras pas moins bien traité parce que tu exerces tes droits. Une personne qui demande pour toi a besoin de ta permission écrite.\nUne copie de tes données est un fichier JSON. Choisis Télécharger mes données sur la page Compte, dans les applis ou sur le site. Il contient ton compte et tes méthodes de connexion, tes verdicts et tes versions de dossiers avec tes propres textes et noms, les résultats, tes notes, l’historique de tes consentements, tes appareils, tes événements d’usage et tes achats. Il ne contient pas les jetons de connexion, ton mot de passe ni le courriel brouillé, ni le texte ou les noms de qui que ce soit d’autre.\nTu n’es pas obligé de nous donner des données, mais sans ton texte et sans compte, on ne peut pas te donner de verdict.",
+    "privacy.regionEuTitle": "Si tu es dans l’UE ou au Royaume-Uni",
+    "privacy.regionEu":
+      "- Responsable du traitement : voir Qui on est.\n- Fondements juridiques : voir Pourquoi on utilise tes données.\n- Tu peux aussi nous demander de limiter notre utilisation, t’opposer à une utilisation fondée sur nos intérêts légitimes, retirer ton consentement en tout temps (sans effet sur ce qu’on a fait avant), et déposer une plainte auprès de ton autorité de protection des données (au Royaume-Uni, l’ICO).\n- Tes données sont traitées en Allemagne, au Canada et aux États-Unis, comme décrit sous Où sont tes données. Écris à {email} si tu veux en savoir plus sur la façon dont elles sont transférées.\n- Décisions automatisées : voir Les verdicts viennent d’une IA.",
+    "privacy.regionUsTitle": "Si tu es en Californie ou dans un autre État américain",
+    "privacy.regionUs":
+      "- Au cours des 12 derniers mois, on a collecté : des identifiants (courriel, nom, identifiants de compte et d’appareil) ; ton texte de litige et tes réponses ; des notes et des choix de consentement ; l’historique d’achats ; des données d’usage et d’appareil (pays, modèle d’appareil, version de l’appli) ; la confirmation d’âge ; et des renseignements sensibles (connexion au compte, et tout détail de santé ou semblable dans ton texte). Sources : toi, la connexion et la boutique de ton téléphone, et nos propres applis. Finalités : voir Pourquoi on utilise tes données. Destinataires : les catégories sous Qui d’autre traite ton texte.\n- On ne vend ni ne partage de renseignements personnels à des fins publicitaires, et on ne l’a pas fait au cours des 12 derniers mois. On ne fait pas de profilage. On n’utilise les renseignements sensibles que pour te fournir le service, donc il n’y a rien à limiter ni de quoi se retirer.\n- Droits : savoir, accéder, corriger, supprimer et obtenir une copie portable. Tu peux recourir à un représentant autorisé. On répond sous 30 jours, ou un mois si c’est plus court. Pour faire appel d’un refus, écris à {email} avec « Appeal ». On tranche un appel sous 45 jours. Si on le refuse, tu peux contacter le procureur général de ton État.\n- Conservation : voir Combien de temps on conserve et Ce qu’on garde après la suppression.\n- Do Not Track : voir Ce qu’on ne fait pas. Aucune entreprise de publicité ou de suivi ne collecte de données sur nos pages. Cloudflare gère la vérification anti-robot et voit ta connexion à cette fin.\n- Personne de moins de 18 ans ne peut utiliser Judge, donc on ne vend ni ne partage les données de personnes de moins de 16 ans. Les droits des autres États sont la même liste.",
+    "privacy.regionCaTitle": "Si tu es au Canada ou au Québec",
+    "privacy.regionCa":
+      "Judge est exploité depuis le Canada et traite les renseignements personnels conformément à la LPRPDE : on ne collecte que ce dont le service a besoin, on ne l’utilise qu’à cette fin, on le protège, et tu peux demander à consulter, corriger ou supprimer ce qu’on détient à ton sujet. On répond sous 30 jours. Tu peux déposer une plainte auprès du Commissariat à la protection de la vie privée du Canada (priv.gc.ca). Si tu es au Québec :\n- La personne responsable de la protection des renseignements personnels est Aytu Tuna, propriétaire, à {email}.\n- Certaines données sont envoyées hors du Québec : à notre serveur en Allemagne, au fournisseur d’IA et à d’autres fournisseurs aux États-Unis, et au Canada hors Québec.\n- Judge n’enregistre que le pays de ta connexion, pour les statistiques d’utilisation, et ne suit pas ta position précise. Le verdict juge l’argument que tu décris et n’est pas utilisé pour établir un profil de toi. Les statistiques d’utilisation sont liées à ton compte comme décrit sous Ce qu’on conserve.\n- Aide à améliorer Judge est désactivé tant que tu ne l’actives pas, et tu peux le désactiver en tout temps.\n- Tu peux aussi demander de retirer ton consentement, obtenir tes données dans un format technologique couramment utilisé, et déposer une plainte auprès de la Commission d’accès à l’information.",
+    "privacy.regionBrTitle": "Si tu es au Brésil",
+    "privacy.regionBr":
+      "Responsable du traitement et contact : voir Qui on est. {email} est aussi le canal pour les demandes LGPD. On est le responsable du traitement ; les fournisseurs mentionnés sous Qui d’autre traite ton texte agissent pour nous. Fondements juridiques : voir Pourquoi on utilise tes données. Tu peux nous demander de confirmer qu’on traite tes données ; de te donner accès ; de les corriger ; d’anonymiser, bloquer ou supprimer les données excessives ou illicites ; de te donner la portabilité ; de supprimer les données qu’on utilise avec ton consentement ; de te dire avec qui on les a partagées ; de te renseigner sur la possibilité de refuser ton consentement et ses conséquences ; et de retirer ton consentement. C’est gratuit. Tu peux aussi déposer une plainte auprès de l’ANPD. Tes données sont envoyées à l’étranger comme décrit sous Où sont tes données.",
+    "privacy.changesTitle": "Modifications",
+    "privacy.changes":
+      "Si on modifie cette politique de façon importante, on met à jour la date en haut de cette page. On n’utilise jamais les données que tu nous as données sous une ancienne politique pour une nouvelle finalité sans te le demander d’abord. On la révise au moins une fois par année.",
+    "privacy.contactTitle": "Contact",
+    "privacy.contact":
+      "Des questions, ou une demande pour voir, corriger ou supprimer tes données ? Écris à {email} avec le lien du verdict ou du dossier.",
     "nav.signIn": "Se connecter",
     "nav.account": "Compte",
     "nav.pricing": "Tarifs",
@@ -303,20 +372,16 @@ const fr: Locale = {
     "consent.sensitiveContinue": "Continuer",
     "respond.adultConfirm": "J’ai 18 ans ou plus",
     "account.export": "Télécharger mes données",
-    "account.exportHint":
-      "Obtiens un fichier JSON avec tout ce que Judge conserve à ton sujet.",
+    "account.exportHint": "Obtiens un fichier JSON avec tout ce que Judge conserve à ton sujet.",
     "account.exportBusy": "Préparation du fichier…",
-    "account.exportFailed":
-      "Impossible de préparer tes données pour l’instant. Tu veux bien réessayer ?",
+    "account.exportFailed": "Impossible de préparer tes données pour l’instant. Tu veux bien réessayer ?",
     "deletePage.title": "Supprimer ton compte Judge",
     "deletePage.lead":
       "Judge est une application d’Aytu Tuna. Tu peux supprimer ton compte et ses données toi-même, quand tu veux, dans l’application ou sur le site.",
     "deletePage.appTitle": "Dans l’application",
-    "deletePage.app":
-      "Ouvre Judge, va dans Compte, touche Supprimer le compte et confirme.",
+    "deletePage.app": "Ouvre Judge, va dans Compte, touche Supprimer le compte et confirme.",
     "deletePage.webTitle": "Sur le site",
-    "deletePage.web":
-      "Connecte-toi à okjudge.com, ouvre Compte, choisis Supprimer le compte et confirme.",
+    "deletePage.web": "Connecte-toi à okjudge.com, ouvre Compte, choisis Supprimer le compte et confirme.",
     "deletePage.removedTitle": "Ce qui est supprimé",
     "deletePage.removed":
       "Ton compte, tes données de connexion, tes crédits, ton forfait et tes événements d’utilisation sont supprimés. Tes verdicts et tes parties de cas sont retirés : le texte d’origine et les noms sont effacés tout de suite, le texte anonymisé et le verdict 30 jours plus tard.",
@@ -343,18 +408,19 @@ const fr: Locale = {
     "clarify.back": "Modifier le débat",
     "thinking.factcheck": "On vérifie les faits sur le web…",
     "thinking.factcheckDone": "Vérification sur le web terminée.",
-    "thinking.premiumHelper":
-      "Vérifier les faits sur le web prend un peu plus de temps. Compte une minute ou deux.",
+    "thinking.premiumHelper": "Vérifier les faits sur le web prend un peu plus de temps. Compte une minute ou deux.",
     "panel.premium": "Jugé avec une vérification des faits sur le web.",
     "factcheck.title": "Vérifié sur le web",
-    "factcheck.lead": "Les juges ont vu ces résultats de recherche avant de trancher. Ce sont des éléments de preuve, pas le verdict lui-même.",
+    "factcheck.lead":
+      "Les juges ont vu ces résultats de recherche avant de trancher. Ce sont des éléments de preuve, pas le verdict lui-même.",
     "factcheck.status.supported": "Confirmé",
     "factcheck.status.refuted": "Démenti",
     "factcheck.status.mixed": "En partie vrai",
     "factcheck.status.unverified": "Non confirmé",
     "factcheck.sources": "Sources",
     "factcheck.sourceAria": "{title}, s’ouvre dans un nouvel onglet",
-    "factcheck.none": "Rien à chercher sur le web : ce débat porte sur des valeurs ou sur le sens des mots, pas sur des faits.",
+    "factcheck.none":
+      "Rien à chercher sur le web : ce débat porte sur des valeurs ou sur le sens des mots, pas sur des faits.",
     "factcheck.noneFactual":
       "Rien ici ne peut être vérifié sur le web : les faits de ce débat ne sont connus que des personnes concernées.",
     "factcheck.unavailable": "La vérification sur le web n’a pas abouti cette fois, les juges ont donc tranché sans.",
@@ -366,7 +432,8 @@ const fr: Locale = {
     "signin.emailLabel": "Adresse e-mail",
     "signin.emailPlaceholder": "toi@exemple.com",
     "signin.emailSubmit": "M’envoyer un lien de connexion",
-    "signin.emailSent": "Regarde ta boîte de réception. On a envoyé un lien de connexion à {email}. Il est valable 10 minutes.",
+    "signin.emailSent":
+      "Regarde ta boîte de réception. On a envoyé un lien de connexion à {email}. Il est valable 10 minutes.",
     "signin.emailInvalid": "Cette adresse e-mail n’a pas l’air correcte.",
     "signin.codeRequest": "M’envoyer un code par e-mail",
     "signin.codeSent": "On a envoyé un code à {email}. Il est valable 10 minutes.",
@@ -386,7 +453,8 @@ const fr: Locale = {
     "signin.usePassword": "Utiliser un mot de passe à la place",
     "signin.passwordWrong": "Cet e-mail et ce mot de passe ne correspondent pas.",
     "signin.passwordShort": "Utilise au moins 8 caractères.",
-    "signin.createNote": "Nous t'enverrons un code par e-mail pour confirmer cette adresse. Tu n'as à le faire qu'une seule fois.",
+    "signin.createNote":
+      "Nous t'enverrons un code par e-mail pour confirmer cette adresse. Tu n'as à le faire qu'une seule fois.",
     "signin.passwordChoose": "Tu es connecté. Choisis un mot de passe pour la prochaine fois.",
     "signin.passwordSave": "Enregistrer le mot de passe",
     "signin.passwordSaveFailed": "Nous n'avons pas pu enregistrer le mot de passe. Réessaie.",
@@ -443,7 +511,8 @@ const fr: Locale = {
     "pricing.monthly.renews": "Se renouvelle chaque mois",
     "pricing.monthly.cap": "{n} verdicts par mois",
     "pricing.comingSoon": "Bientôt disponible",
-    "pricing.note": "Prix en dollars américains. Les paiements ne sont pas encore ouverts, donc rien ne peut être acheté pour l’instant.",
+    "pricing.note":
+      "Prix en dollars américains. Les paiements ne sont pas encore ouverts, donc rien ne peut être acheté pour l’instant.",
     "pricing.signIn": "Crée un compte pour ton verdict gratuit",
     "pricing.preview": "Les verdicts ne sont pas encore activés ici. Cette page est un aperçu.",
     "error.signin_required": "Connecte-toi pour continuer.",
@@ -463,8 +532,10 @@ const fr: Locale = {
     "error.too_large": "C’est trop lourd. Essaie une image plus petite.",
     "error.unsupported_media": "On ne peut lire que les images PNG, JPEG, WebP ou GIF.",
     "error.too_many_files": "Tu ne peux pas ajouter autant d’images ici.",
-    "error.evidence_invalid": "Une de tes images a expiré ou n’a pas pu être vérifiée. Retire-la et ajoute-la à nouveau.",
-    "error.anonymize_failed": "Impossible de retirer les noms de ton texte. Réessaie, ou écris des initiales plutôt que des noms complets.",
+    "error.evidence_invalid":
+      "Une de tes images a expiré ou n’a pas pu être vérifiée. Retire-la et ajoute-la à nouveau.",
+    "error.anonymize_failed":
+      "Impossible de retirer les noms de ton texte. Réessaie, ou écris des initiales plutôt que des noms complets.",
     "mode.label": "Comment veux-tu qu’on juge ?",
     "mode.now": "Juste moi (immédiat)",
     "mode.both": "Les deux camps (lien à envoyer)",
@@ -477,7 +548,8 @@ const fr: Locale = {
     "case.title": "Ton dossier",
     "case.loading": "Chargement du dossier…",
     "case.loadFailed": "Impossible de charger ce dossier. Réessaie dans un instant.",
-    "case.notFound": "Impossible de trouver ce dossier. Il a peut-être été supprimé, ou il appartient à un autre compte.",
+    "case.notFound":
+      "Impossible de trouver ce dossier. Il a peut-être été supprimé, ou il appartient à un autre compte.",
     "case.signIn": "Connecte-toi pour voir ton dossier.",
     "case.status.awaiting": "En attente de l’autre camp",
     "case.status.judging": "Les juges s’en occupent",
@@ -503,7 +575,8 @@ const fr: Locale = {
     "case.side.opened": "Ouvert",
     "case.side.typing": "Écrit…",
     "case.judgeAnswered": "Juger avec les camps qui ont répondu",
-    "case.judgeAnswered.confirm": "Obtenir un verdict avec les camps qui ont répondu ? Les autres invitations se ferment et ces personnes ne pourront plus répondre.",
+    "case.judgeAnswered.confirm":
+      "Obtenir un verdict avec les camps qui ont répondu ? Les autres invitations se ferment et ces personnes ne pourront plus répondre.",
     "case.cancel": "Annuler",
     "case.retry": "Réessayer",
     "case.failedBody": "Ton crédit t’a été rendu. Tu peux réessayer maintenant.",
@@ -525,7 +598,8 @@ const fr: Locale = {
     "case.judgingAlone": "Les juges examinent ta version.",
     "case.expiredBody":
       "Personne n’a répondu en 7 jours, ton crédit t’a donc été rendu. Tu peux quand même obtenir un verdict sur ta seule version.",
-    "case.expiredBodyFree": "Personne n’a répondu en 7 jours. Tu peux quand même obtenir un verdict sur ta seule version.",
+    "case.expiredBodyFree":
+      "Personne n’a répondu en 7 jours. Tu peux quand même obtenir un verdict sur ta seule version.",
     "case.oneSided": "Jugé sur ta version seulement.",
     "case.startOver": "Ouvrir un nouveau dossier",
     "case.list.untitled": "Dossier du {date}",
@@ -537,12 +611,12 @@ const fr: Locale = {
     "respond.lang.en": "anglais",
     "respond.lang.tr": "turc",
     "respond.label": "Ta version",
-    "respond.placeholder": "Qu’est-ce qui s’est passé, de ton point de vue ? Écris-le comme si tu le racontais à un proche.",
+    "respond.placeholder":
+      "Qu’est-ce qui s’est passé, de ton point de vue ? Écris-le comme si tu le racontais à un proche.",
     "respond.submit": "Envoyer ma version",
     "case.write.title": "Ta version",
     "case.write.placeholder": "C’est quoi, le problème ?",
-    "case.write.lead":
-      "Écris ta version quand tu veux. Les juges démarrent dès que vous avez écrit tous les deux.",
+    "case.write.lead": "Écris ta version quand tu veux. Les juges démarrent dès que vous avez écrit tous les deux.",
     "case.write.leadAnswered": "L’autre a écrit sa version. Écris la tienne pour avoir le verdict.",
     "case.write.submit": "Envoyer ma version",
     "case.write.emailSubject": "L'autre personne a écrit sa version",
@@ -553,7 +627,8 @@ const fr: Locale = {
     "respond.expired": "Cette invitation a expiré.",
     "respond.closed": "Ce dossier n’accepte plus de réponses.",
     "respond.withoutYou": "Ce dossier a été tranché sans ta version.",
-    "respond.failed": "Les juges n’ont pas pu terminer ce dossier. La personne à l’origine de l’invitation peut réessayer.",
+    "respond.failed":
+      "Les juges n’ont pas pu terminer ce dossier. La personne à l’origine de l’invitation peut réessayer.",
     "respond.notFound": "Ce lien d’invitation ne fonctionne pas. Il a peut-être été désactivé, ou il est incomplet.",
     "respond.loading": "Ouverture de l’invitation…",
     "respond.inviteTitle": "Cette invitation",
@@ -603,8 +678,7 @@ const fr: Locale = {
     "home.removeTheirSide": "Retirer sa version",
     "home.sendLink": "Envoie-lui un lien",
     "home.clear": "Effacer",
-    "home.lead":
-      "Écris les deux versions, ou envoie un lien à l’autre personne pour qu’elle écrive la sienne.",
+    "home.lead": "Écris les deux versions, ou envoie un lien à l’autre personne pour qu’elle écrive la sienne.",
     "home.leadSolo": "Écris ta version, et celle d’en face si tu la connais.",
     "home.theirSide": "Sa version",
     "home.theirName": "Son nom",
@@ -614,9 +688,9 @@ const fr: Locale = {
     "home.says": "{name} dit :",
     "home.mySide": "Ma version :",
     "home.otherSide": "Sa version :",
-    "appeal.lead":
-      "Coûte 1 verdict.",
-    "appeal.placeholder": "Qu’est-ce que les juges ont raté ? Un fait, un message ou ce qui avait vraiment été convenu.",
+    "appeal.lead": "Coûte 1 verdict.",
+    "appeal.placeholder":
+      "Qu’est-ce que les juges ont raté ? Un fait, un message ou ce qui avait vraiment été convenu.",
     "appeal.submit": "Rejuger avec mon contexte",
     "appeal.sending": "Anonymisation de ton contexte…",
     "appeal.judging": "Les juges réexaminent tout…",
@@ -648,7 +722,8 @@ const fr: Locale = {
     "about.casesTitle": "Entendre les deux camps",
     "about.cases1":
       "Les dossiers à deux voix : connecte-toi, écris ta version et envoie un lien privé. L’autre personne écrit la sienne sans voir la tienne, et les juges pèsent les deux versions : ce sur quoi vous êtes d’accord, ce que vous contestez et quelle preuve changerait le verdict.",
-    "about.cases2": "Si personne ne répond sous 7 jours, le lien cesse de fonctionner. Tu peux quand même obtenir un verdict sur ta seule version.",
+    "about.cases2":
+      "Si personne ne répond sous 7 jours, le lien cesse de fonctionner. Tu peux quand même obtenir un verdict sur ta seule version.",
     "about.premiumTitle": "Les extras",
     "about.premium2":
       "Preuves : ajoute des captures d’écran de conversations ou de documents. On lit le texte qu’elles contiennent, on masque les noms et on jette l’image.",
@@ -656,15 +731,10 @@ const fr: Locale = {
       "Appel : après un verdict, chaque personne peut ajouter du contexte une fois. Les juges réexaminent tout et indiquent si le verdict est maintenu, renversé ou modifié. Les verdicts précédents restent consultables.",
     "about.premium4":
       "Un dossier à deux voix utilise 1 verdict. Il est réservé quand tu envoies le lien et t’est rendu si personne ne répond sous 7 jours.",
-    "privacy.casesTitle": "Dossiers à deux voix et appels",
-    "privacy.cases":
-      "Dans un dossier à deux voix, chaque version est anonymisée au moment où elle est envoyée, de la même façon qu’un verdict. Les juges lisent le texte anonymisé ; la version de chaque personne telle qu’elle l’a écrite, avec sa liste de noms, est stockée chiffrée, et seule cette personne peut la voir. Chaque personne saisit le nom qu’elle veut voir affiché sur la page de partage en envoyant sa version ; si le champ reste vide, c’est Partie A ou Partie B qui s’affiche. L’autre personne n’a pas besoin de compte ; ses réponses sont limitées à l’aide d’une empreinte à clé de son adresse IP. Le lien d’invitation n’est stocké que sous forme d’empreinte (hash). Si l’autre personne répond en étant connectée, son compte est lié à sa version, pour qu’elle seule puisse ajouter du contexte plus tard ou voir son original ; si elle répond sans être connectée, un code privé conservé dans son navigateur joue le même rôle, et si elle se connecte plus tard dans ce navigateur, elle peut garder le dossier dans son compte. Pour donner la même étiquette à la même personne dans les deux versions, le serveur conserve des empreintes codées des noms à l’intérieur de chaque dossier (des empreintes à clé, pas les noms eux-mêmes). Jusqu’au verdict, aucune des deux personnes ne peut lire le texte de l’autre ; après un verdict à deux voix, les deux peuvent lire les deux versions anonymisées. Le contexte ajouté après un verdict (un appel) est traité de la même façon. Quand l’autre personne répond, on peut t’envoyer un court e-mail, sans aucun texte du dossier, si l’envoi d’e-mails est configuré. Chacune des deux personnes peut supprimer sa propre version : son original et son nom affiché sont effacés, et les liens de partage du dossier cessent de fonctionner pour tout le monde. Supprimer ton compte fait la même chose pour chaque dossier que tu as ouvert ou auquel tu as répondu.",
-    "privacy.evidenceTitle": "Captures d’écran",
-    "privacy.evidence":
-      "Ton navigateur réduit les grandes images avant de les envoyer. Chaque image est ensuite envoyée une fois à un service d’IA externe pour que le texte visible soit lu ; on ne stocke jamais l’image. La transcription brute, qui peut encore contenir des noms, te revient dans un jeton signé que ton navigateur garde pendant 6 heures maximum. Quand tu envoies ta version, la transcription est anonymisée avec ton texte : la transcription anonymisée est montrée aux juges et stockée avec le dossier, et la transcription brute est conservée chiffrée avec ton original, où elle n’est visible que par toi. Les numéros de téléphone, adresses e-mail, pseudos de réseaux sociaux et numéros de compte qu’elle contient sont aussi remplacés par des marqueurs pour les juges.",
     "pricing.premium.f5": "Captures d’écran comme preuves, lues puis jetées, sans supplément",
     "pricing.premium.f6": "Ajoute du contexte après un verdict et fais rejuger (1 verdict)",
-    "pricing.premium.f7": "Les deux camps entendus : envoie un lien privé à l’autre personne pour qu’elle donne sa version",
+    "pricing.premium.f7":
+      "Les deux camps entendus : envoie un lien privé à l’autre personne pour qu’elle donne sa version",
     "langToggle.toTr": "Türkçeye geç",
     "langToggle.toEn": "Switch to English",
     "shared.subtitleHidden": "Quelqu’un a partagé ce verdict · noms masqués",
@@ -696,7 +766,8 @@ const fr: Locale = {
     "case.displayName": "Ton nom sur le verdict partagé",
     "case.displaySave": "Enregistrer le nom",
     "respond.keep": "Garder ce dossier dans ton compte",
-    "respond.kept": "Ce dossier est maintenant dans ton compte. Il apparaît sur ta page Verdicts, sur tous tes appareils.",
+    "respond.kept":
+      "Ce dossier est maintenant dans ton compte. Il apparaît sur ta page Verdicts, sur tous tes appareils.",
     "respond.remove": "Supprimer ma version",
     "respond.remove.confirm":
       "Supprimer ton texte original et ton nom affiché ? Les liens de partage du dossier cesseront de fonctionner (les aperçus déjà publiés dans des conversations peuvent rester visibles jusqu’à ce que ces applis les actualisent). Cette action est irréversible.",
@@ -781,21 +852,6 @@ const fr: Locale = {
     "stamp.dissolved": "Quiproquo",
     "bestPoint.of": "Meilleur argument côté {name}",
     "bestPoint.self": "Ton meilleur argument",
-    "privacy.accessTitle": "Qui peut voir quoi",
-    "privacy.access":
-      "Toi : ton texte original et les noms, sur n’importe quel appareil quand tu utilises ton compte, ou sinon sur l’appareil utilisé, grâce à un code privé enregistré dans ton navigateur ou dans l’appli (on ne garde qu’une forme brouillée de ce code). Les verdicts écrits sans connexion, avant qu’un compte soit nécessaire, et les dossiers auxquels tu as répondu sans connexion restent listés dans ce navigateur avec leurs titres et tes noms tels que tu les as écrits, pour que la page Verdicts puisse les afficher : toute personne qui utilise le même navigateur voit cette liste. Sur un ordinateur partagé, connecte-toi ou utilise une fenêtre de navigation privée ; effacer les données du site dans le navigateur supprime la liste. Dans un dossier à deux voix, chaque personne ne voit que son propre original ; après le verdict, les deux voient les deux versions anonymisées, telles que les juges les ont lues. Les juges (des modèles d’IA exécutés par notre fournisseur d’IA) : uniquement la version anonymisée. Toute personne qui a le lien de partage : le verdict avec les noms affichés. Par défaut, ce sont le nom que tu choisis pour toi et les prénoms des autres tels que tu les as écrits ; tu peux les modifier ou désactiver les noms à tout moment, et la page affiche alors Partie A et Partie B. Nous : on peut déchiffrer les originaux avec la clé, et on ne regarde le texte conservé que pour traiter une demande d’assistance de ta part, enquêter sur un abus ou quand la loi l’exige.",
-    "privacy.removalTitle": "Suppression",
-    "privacy.removal":
-      "Demande la suppression depuis la page du verdict (avec ton compte, tu peux l’ouvrir depuis la page Verdicts), depuis la page du dossier pour un dossier à deux voix, en supprimant ton compte, ou par e-mail. La suppression efface ton texte original, la liste des noms et les noms affichés (dans un dossier à deux voix, l’original de ta version et ton nom affiché), et le lien de partage et son image d’aperçu ne se chargent plus pour personne. Les aperçus déjà publiés dans des applis de messagerie sont conservés par ces applis et peuvent rester visibles jusqu’à ce qu’elles les actualisent. On conserve le texte anonymisé et le verdict, sans les noms, dans nos archives ; ils ne peuvent plus être ouverts via le lien. Supprimer ton compte fait la même chose pour tous tes verdicts et tes versions dans les dossiers, et supprime tes informations de connexion, tes crédits et ton offre. Les données supprimées restent dans nos sauvegardes jusqu’à leur expiration (14 jours maximum, voir plus bas) ; si on restaure un jour une sauvegarde, on réapplique toutes les suppressions (pour cela, on conserve une liste de ce qui a été supprimé et quand, sans aucun texte ni nom). Trente jours après que tu as supprimé quelque chose, on efface aussi le texte anonymisé et le verdict, en gardant seulement le résultat et les dates, sauf si la loi nous impose de les garder plus longtemps. Pour une affaire, les trente jours ne commencent qu'une fois que toutes les personnes concernées l'ont supprimée.",
-    "privacy.retentionTitle": "Combien de temps on conserve",
-    "privacy.retention":
-      "On conserve les verdicts et les originaux jusqu’à ce que tu en demandes la suppression ou que tu supprimes ton compte. Pour pouvoir nous remettre d’une panne, on garde des copies de sauvegarde du serveur et de sa base de données pendant 14 jours maximum, puis elles sont supprimées. Elles contiennent les mêmes données que le serveur, y compris les originaux chiffrés, et la clé se trouve sur le même serveur : les sauvegardes sont donc protégées comme le serveur lui-même, pas par ce chiffrement. Les empreintes de limitation d’usage sont conservées 24 heures maximum. Les journaux serveur suivent la durée de conservation standard de notre hébergeur. Les événements d’usage sont supprimés au bout de 90 jours, et les liens avec les appareils après 180 jours sans utilisation. Les journaux et mesures envoyés à Grafana Labs sont conservés 14 jours.",
-    "privacy.locationTitle": "Où sont tes données",
-    "privacy.location":
-      "Nos serveurs sont en Allemagne (OVH, Francfort). Certains traitements ont lieu aux États-Unis : notre fournisseur d’IA exécute les modèles qui retirent les noms, jugent, lisent les captures d’écran et font les recherches web ; Cloudflare se place devant okjudge.com comme proxy et DNS (tout le trafic passe par lui) et gère la vérification anti-robot. La connexion passe par Apple ou Google si tu les choisis, et les e-mails de connexion par Resend. Les données traitées dans un autre pays peuvent être soumises aux lois de ce pays.",
-    "privacy.rightsTitle": "Tes droits (Canada)",
-    "privacy.rights":
-      "Judge est exploité depuis le Canada et traite les renseignements personnels conformément à la loi fédérale canadienne sur la protection des renseignements personnels (LPRPDE) : on ne collecte que ce dont le service a besoin, on ne l’utilise qu’à cette fin, on le protège, et tu peux demander à consulter, corriger ou supprimer ce qu’on détient à ton sujet. On répond sous 30 jours.",
     "footer.terms": "Conditions",
     "signin.legalTerms": "Conditions d’utilisation",
     "age.confirm": "J’ai 18 ans ou plus",
@@ -844,7 +900,8 @@ const fr: Locale = {
     "home.monthLeft": { one: "Il t’en reste {n} sur {cap} ce mois-ci" },
     "thread.judgesAgree": { one: "Juges · {n} sur {total} d’accord" },
   },
-  legalNotice: "En cas de différence entre cette traduction et la version anglaise, c’est la version anglaise qui fait foi.",
+  legalNotice:
+    "En cas de différence entre cette traduction et la version anglaise, c’est la version anglaise qui fait foi.",
 };
 
 export default fr;

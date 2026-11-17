@@ -109,14 +109,18 @@ const id: Locale = {
     "vote.dissolved": "beda makna",
     refusedNote: "AI-nya memilih absen kali ini. Kami lebih baik tidak menampilkan apa-apa daripada mengarang putusan.",
     demoNote: "🎭 Mode demo: kunci AI belum dipasang, jadi ini contoh putusan",
-    "trial.survived": "🛡️ Keberatan ditolak: pengacara pihak lain mengajukan keberatan terkuatnya, dan putusan tetap bertahan. Skor keyakinan tetap.",
-    "trial.uncertain": "⚠️ Pengacara pihak lain mengajukan keberatan, dan keberatan itu meninggalkan keraguan nyata soal putusan ini",
-    "trial.overturned": "⚠️ Keberatan diterima: putusan tetap berlaku, tetapi keberatan terkuat pihak lain melemahkannya secara serius",
+    "trial.survived":
+      "🛡️ Keberatan ditolak: pengacara pihak lain mengajukan keberatan terkuatnya, dan putusan tetap bertahan. Skor keyakinan tetap.",
+    "trial.uncertain":
+      "⚠️ Pengacara pihak lain mengajukan keberatan, dan keberatan itu meninggalkan keraguan nyata soal putusan ini",
+    "trial.overturned":
+      "⚠️ Keberatan diterima: putusan tetap berlaku, tetapi keberatan terkuat pihak lain melemahkannya secara serius",
     "trial.minor": "🛡️ Pengacara pihak lain mengajukan poin yang wajar, tetapi putusan tetap berlaku",
     "trial.whatWasTested": "Keberatan",
     "trial.attackPrefix": "Keberatan:",
     "trial.refereePrefix": "Alasannya:",
-    "trial.mixedNote": "Ini perselisihan campuran: sebagian fakta, sebagian nilai atau makna kata, jadi kemenangan yang bersih lebih sulit dipertahankan.",
+    "trial.mixedNote":
+      "Ini perselisihan campuran: sebagian fakta, sebagian nilai atau makna kata, jadi kemenangan yang bersih lebih sulit dipertahankan.",
     confidence: "Keyakinan {n} dari {total}",
     verdictAria: "Putusan: {label}",
     "party.a": "Pihak A",
@@ -134,7 +138,8 @@ const id: Locale = {
     "error.too_short": "Ceritanya masih terlalu singkat. Ceritakan lebih banyak soal perdebatannya.",
     "error.too_long": "Wah, panjang sekali! Usahakan kurang dari 6.000 karakter.",
     "error.invalid": "Ada yang aneh dengan permintaan ini.",
-    "error.rate_limited": "Harap tenang di ruang sidang! Kamu sudah mencapai batas untuk sekarang. Coba lagi {wait} lagi.",
+    "error.rate_limited":
+      "Harap tenang di ruang sidang! Kamu sudah mencapai batas untuk sekarang. Coba lagi {wait} lagi.",
     "error.daily_cap":
       "Sidang hari ini sudah ditutup: semua perdebatan yang sanggup didengar sudah didengar. Dibuka lagi {wait} lagi.",
     "error.captcha_failed": "Kami belum bisa memastikan kamu manusia. Ulangi pengecekannya, lalu kirim.",
@@ -146,7 +151,8 @@ const id: Locale = {
     "refused.headline": "AI-nya tidak mau berpendapat soal yang satu ini",
     "refused.crux":
       "Filter keamanan AI-nya mencegahnya menilai yang satu ini. Lebih baik tanpa putusan daripada putusan karangan.",
-    "refused.bestPoint": "Coba ceritakan dengan cara lain. Atau terima saja bahwa ada perdebatan yang terlalu besar untuk sebuah aplikasi.",
+    "refused.bestPoint":
+      "Coba ceritakan dengan cara lain. Atau terima saja bahwa ada perdebatan yang terlalu besar untuk sebuah aplikasi.",
     "refused.claim": "Dilewati",
     "nav.skip": "Langsung ke konten",
     "nav.home": "Beranda Judge",
@@ -238,8 +244,7 @@ const id: Locale = {
       "Judge hanya tahu apa yang kamu ceritakan, dan cara kamu bercerita ikut menentukan hasilnya. Sertakan versi pihak lain seperti cara dia sendiri mengatakannya.",
     "about.limit2":
       "Hakim AI bisa salah soal fakta. Setiap putusan mendaftar fakta yang jadi pegangannya supaya kamu bisa mengeceknya.",
-    "about.limit3":
-      "Penggantian nama biasanya berhasil, tapi nama yang tidak umum atau nama panggilan bisa lolos.",
+    "about.limit3": "Penggantian nama biasanya berhasil, tapi nama yang tidak umum atau nama panggilan bisa lolos.",
     "about.limit4": "Untuk seru-seruan dan kejelasan, bukan nasihat hukum, medis, atau keuangan.",
     "about.builtTitle": "Di balik layar",
     "about.built":
@@ -249,33 +254,96 @@ const id: Locale = {
     "privacy.kicker": "Datamu",
     "privacy.lead":
       "Singkatnya: kami menyimpan tulisanmu, termasuk nama, dalam bentuk terenkripsi, supaya kamu bisa membukanya lagi. Para hakim hanya membaca versi yang namanya sudah dihapus. Kamu bisa memintanya dihapus kapan saja. Kami tidak menjual datamu. Kalau suatu saat Judge dijual atau digabung, Judge beralih ke pemilik baru di bawah kebijakan ini.",
+    "privacy.whoTitle": "Siapa kami",
+    "privacy.who":
+      "Judge dijalankan oleh Aytu Tuna, perorangan di Kanada.\n{address}\nKami yang menentukan data apa yang dikumpulkan dan untuk apa. Penanggung jawab informasi pribadi adalah Aytu Tuna, pemilik. Kontak: {email}.",
     "privacy.storedTitle": "Yang kami simpan",
     "privacy.stored":
-      "Untuk setiap putusan, kami menyimpan teksmu persis seperti yang kamu tulis (beserta jawabanmu atas pertanyaan hakim dan teks yang dibaca dari tangkapan layar), serta daftar nama mana yang menjadi label apa. Semua itu dienkripsi dengan kunci yang tidak disimpan di basis data. Kami juga menyimpan versi anonim yang dibaca hakim (nama diganti dengan Pihak A dan Pihak B), pengaturan yang kamu pilih, putusannya, terjemahan jika ada, dan nama yang kamu pilih untuk ditampilkan di halaman berbagi. Kami juga menghitung bagaimana Judge dipakai: layar dan fitur apa saja, beserta versi aplikasi, model perangkat, versi sistem, bahasa, dan negara koneksimu, dan di aplikasi ada pengenal perangkat. Saat kamu masuk, data ini dikaitkan dengan akunmu. Peristiwa penggunaan disimpan 90 hari dan tautan antara akunmu dan perangkatmu 180 hari. Aplikasi punya sakelar Statistik penggunaan di Pengaturan, dan situs web tidak mengirim apa pun saat browsermu mengirim Do Not Track atau Global Privacy Control. Isinya tidak pernah memuat teks kasus. Kalau kamu menilai sebuah putusan, penilaian itu kami simpan bersamanya.",
+      "Untuk setiap putusan, kami menyimpan teksmu persis seperti yang kamu tulis (termasuk jawabanmu atas pertanyaan para hakim dan teks yang dibaca dari tangkapan layar), dan daftar nama mana yang menjadi label apa. Semuanya dienkripsi dengan kunci yang tidak disimpan di database. Kami juga menyimpan versi anonim yang dibaca para hakim (nama diganti menjadi Pihak A dan Pihak B), pengaturan yang kamu pilih, putusan, terjemahan (jika ada), dan nama yang kamu pilih untuk ditampilkan di halaman berbagi. Kami juga menghitung bagaimana Judge digunakan: layar dan fitur apa saja, beserta versi aplikasi, model perangkat, versi sistem, bahasa, dan negara tempat koneksimu, dan di aplikasi juga pengenal perangkat. Saat kamu sudah masuk, data ini terkait dengan akunmu. Peristiwa penggunaan disimpan selama 90 hari dan tautan antara akunmu dan perangkatmu selama 180 hari. Aplikasi punya sakelar Statistik penggunaan di Pengaturan, dan situs web tidak mengirim apa pun saat browsermu mengirim Do Not Track atau Global Privacy Control. Data ini tidak pernah berisi teks kasus. Jika kamu menilai sebuah putusan, kami menyimpan penilaian itu bersamanya. Penilaian bisa dihapus; kami menyimpan barisnya tanpa nilai suka atau tidak suka. Kami juga menyimpan catatan persetujuanmu soal hal pribadi dan pilihan Bantu tingkatkan Judge-mu, dengan tanggal, bahasa, platform, dan kalimat yang kamu lihat.",
     "privacy.helpTitle": "Bantu tingkatkan Judge",
     "privacy.help":
-      "Nonaktif kecuali kamu mengaktifkannya. Saat aktif, kami boleh memakai teks anonim yang dibaca para hakim, putusan mereka, dan penilaianmu untuk menguji dan melatih hakim Judge. Nama tidak pernah menjadi bagian darinya. Menonaktifkannya menghentikan pemakaian itu untuk semua yang kamu buat, dan kami mencatat kapan kamu mengaktifkan atau menonaktifkannya.",
-    "privacy.notStoredTitle": "Yang tidak kami lakukan",
-    "privacy.notStored":
-      "Tidak ada pelacak iklan. Pilihan bahasamu disimpan di penyimpanan lokal browser kamu, tidak di tempat lain.",
-    "privacy.ipTitle": "Pembatasan penggunaan",
-    "privacy.ip":
-      "Supaya ruang sidang tetap terbuka untuk semua orang, kami membatasi berapa banyak putusan yang bisa diminta tiap akun dan berapa banyak terjemahan yang bisa diminta tiap pengunjung. Untuk terjemahan, dan untuk jawaban dalam kasus dua pihak, kami menyimpan hash berkunci dari alamat IP-mu, bukan alamatnya sendiri, di penyimpanan pembatasan penggunaan kami hingga 24 jam. Jika pengecekan manusia aktif, alamat IP-mu juga dikirim ke Cloudflare untuk pengecekan itu. Alamat itu tidak pernah disimpan bersama putusanmu.",
-    "privacy.processorsTitle": "Siapa lagi yang menangani teksmu",
-    "privacy.processors":
-      "Teks yang kamu ketik, termasuk nama asli, pertama-tama dikirim ke penyedia AI kami di Amerika Serikat agar nama-namanya bisa dihapus. Hanya versi anonim yang dinilai; teks aslimu disimpan terenkripsi, seperti dijelaskan di atas. Jika pengecekan manusia aktif, Cloudflare Turnstile berjalan di browser kamu dan memeriksa hasilnya dengan Cloudflare. Jika kamu masuk, Apple atau Google (mana pun yang kamu pilih) menangani proses masuk itu, dan email masuk dikirim lewat Resend. Penyedia hosting kami menyimpan log server standar. Pembelian di aplikasi lewat App Store atau Google Play dan ditangani RevenueCat, yang menerima ID akunmu dan riwayat pembelianmu. Grafana Labs menerima log server dan metrik kinerja kami, yang disimpan di UE selama 14 hari; log tidak berisi teks kasus. Laporan crash dan error dari aplikasi dan situs web ini dikirim ke Sentry, disimpan di UE hingga 30 hari; isinya error, versi aplikasi atau browser, dan model perangkat, tetapi tanpa teks kasus, ID akun, atau alamat koneksi.",
-    "privacy.shareTitle": "Tautan berbagi",
-    "privacy.share":
-      "Siapa pun yang punya tautan ke sebuah putusan bisa melihatnya, dengan nama tampilan yang kamu pilih (atau Pihak A dan Pihak B jika kamu mematikan nama). Tautan memakai ID acak yang panjang, dan halaman berbagi meminta mesin pencari untuk tidak mengindeksnya. Tautan dan gambar pratinjau putusan yang sudah dihapus tidak bisa dimuat lagi; pratinjau yang sudah terkirim di aplikasi chat mungkin masih terlihat sampai aplikasi tersebut memperbaruinya. Jangan sertakan alamat, nomor telepon, atau apa pun yang tidak ingin kamu tampilkan di halaman yang bisa dibuka orang lain.",
-    "privacy.contactTitle": "Kontak",
-    "privacy.contact":
-      "Ada pertanyaan, atau ingin melihat, memperbaiki, atau menghapus datamu? Kirim email ke {email} beserta tautan ke putusan atau kasusnya.",
-    "privacy.accountsTitle": "Akun",
-    "privacy.accounts":
-      "Judge hanya untuk orang berusia 18 tahun ke atas, dan akun yang kami ketahui milik orang di bawah 18 tahun akan ditutup. Kamu perlu akun untuk mendapat putusan; pihak lain dalam kasus dua pihak bisa menjawab tanpa akun. Jika kamu masuk dengan Apple atau Google, kami menyimpan alamat email, nama, dan tautan foto profil yang mereka bagikan kepada kami, serta metode masuk yang kamu pakai, dan Apple atau Google bisa melihat bahwa kamu masuk ke Judge. Jika kamu masuk dengan tautan email, email itu dikirim lewat Resend, dan kami menyimpan sebentar catatan berisi alamat emailmu untuk memeriksa tautannya: tautan itu tidak berlaku lagi setelah 10 menit, dan catatannya dihapus begitu dipakai atau tidak lama setelah kedaluwarsa. Kami juga menyimpan catatan sesimu (token acak dan waktu kedaluwarsanya, tanpa alamat IP atau detail browser, tetapi aplikasi juga mencatat pengenal perangkat saat kamu masuk), kreditmu, langgananmu beserta riwayatnya, dan putusan mana yang memakai kredit (hanya ID putusannya). Kami juga mencatat putusan dan kasus mana yang milikmu, supaya kamu bisa menemukannya di perangkat mana pun. Menghapus akunmu di halaman akun akan menghapus akun, sesi, peristiwa penggunaan, dan tautan antara akunmu dan perangkatmu, serta menghapus putusanmu dan versimu dalam kasus seperti dijelaskan di bagian Penghapusan. Kami hanya menyimpan bentuk acak dari alamat emailmu, supaya akun baru dengan alamat yang sama tidak mendapat putusan gratis kedua dan tetap ditutup jika akunmu ditutup karena kamu berusia di bawah 18 tahun. Kode masuk yang dikirim lewat email bekerja sama seperti tautan. Jika kamu mengatur kata sandi, kami hanya menyimpan bentuk terenkripsi (hash) darinya bersama akunmu, tidak pernah kata sandi itu sendiri.",
+      'Mati kecuali kamu menyalakannya. Saat menyala, kami boleh memakai teks anonim yang dibaca para hakim, putusan mereka, dan penilaianmu untuk menguji dan melatih model AI: milik Judge sendiri dan, jika Judge suatu saat dijual atau digabung, milik pemilik baru. Nama tidak pernah disertakan. Jika kamu mematikannya, semua yang kamu buat sejak saat itu tidak akan dipakai untuk pelatihan. Kami mencatat kapan kamu menyalakan atau mematikannya.\n"Anonim" di sini artinya nama sudah dihapus; detail lain yang kamu tulis mungkin masih ada di teks. Ini hanya mencakup putusan yang dibuat saat pengaturan menyala, dan satu kasus hanya jika semua orang yang menulis sebuah pihak menyalakannya. Model yang sudah dilatih tidak berubah. Belum ada yang dipakai untuk melatih. Judge bekerja sama saja saat dimatikan.\nKami bertanya sekali, di halaman putusanmu sendiri setelah putusan keduamu selesai. Kami tidak pernah bertanya di putusan yang dibagikan orang lain kepadamu. Kartunya berbunyi: "Izinkan Judge memakai putusan dan penilaian anonimmu untuk melatih AI. Nama tidak pernah disertakan." Kamu bisa mengubah jawabanmu di Pengaturan kapan saja.',
+    "privacy.purposesTitle": "Mengapa kami memakai datamu",
+    "privacy.purposes":
+      "- Untuk memberimu putusan, menjalankan akunmu, serta menangani pembelian dan dukungan. Dasar hukum (UE, Inggris, dan Brasil): diperlukan untuk menyediakan layanan yang kamu minta.\n- Untuk menjaga Judge tetap aman dan berfungsi: pembatasan penggunaan, pengecekan manusia, mendeteksi orang yang memanfaatkan kredit gratis, laporan error, penghitungan penggunaan, dan menyimpan bentuk teracak dari email setelah penghapusan. Dasar: kepentingan sah kami atas layanan yang aman dan berfungsi. Kamu bisa menolaknya lewat email. Aplikasi punya sakelar Statistik penggunaan, dan Do Not Track atau Global Privacy Control di browsermu menghentikan peristiwa penggunaan milik situs web sendiri.\n- Untuk memeriksa usiamu, termasuk sinyal usia dari ponselmu. Dasar: kepentingan sah kami menjaga Judge hanya untuk orang dewasa, atau kewajiban hukum jika undang-undang usia toko aplikasi berlaku.\n- Untuk menyimpan teks yang namanya sudah dihapus selama 30 hari setelah kamu menghapus sesuatu, untuk berjaga-jaga dari penyalahgunaan atau klaim hukum. Dasar: kepentingan sah kami.\n- Untuk menyimpan bukti apa yang kamu setujui: persetujuan soal hal pribadi dan pilihan Bantu tingkatkan Judge-mu. Dasar: kepentingan sah kami untuk bisa menunjukkan apa yang kamu setujui.\n- Untuk memakai putusan dan penilaian anonimmu untuk pelatihan AI. Dasar: persetujuanmu, hanya jika kamu menyalakannya.\n- Untuk mematuhi hukum dan menyimpan catatan yang wajib kami simpan. Dasar: kewajiban hukum.\nKami tidak pernah memakai datamu untuk iklan dan kami tidak punya pelacak iklan. Jika suatu saat kami ingin penggunaan baru, kami memberitahumu dulu dan bertanya lagi jika hukum mensyaratkan persetujuanmu.",
+    "privacy.sensitiveTitle": "Apa yang sebaiknya tidak ditulis",
+    "privacy.sensitive":
+      'Perselisihan bisa menyentuh hal-hal pribadi seperti kesehatan, hubungan, agama, atau uang. Tulis hanya yang dibutuhkan putusan, dan jangan tulis detail pribadi orang lain. Judge bukan untuk keadaan darurat atau nasihat hukum.\nSebelum putusan pertamamu, sebelum kamu mengirim sisi pertamamu dalam sebuah kasus, atau sebelum jawaban pertamamu atas sebuah kasus, kami meminta kamu mencentang sebuah kotak: "Teks saya mungkin berisi hal pribadi, seperti kesehatan atau hubungan. Judge mengirimkannya, tanpa nama, ke layanan AI pihak luar untuk menulis putusan saya, dan menyimpannya sampai saya menghapusnya." Kamu hanya bisa lanjut jika sudah dicentang. Kami menanyakannya sekali per akun; jika kamu sudah punya akun, kami menanyakannya pada putusan berikutnya. Orang yang menjawab kasus tanpa akun melihat kotak yang sama. Kami menyimpan catatan centang itu dengan tanggal, bahasa, platform, dan kalimat yang kamu lihat.',
+    "privacy.othersTitle": "Orang yang kamu tulis",
+    "privacy.others":
+      'Tulisanmu mungkin menyebut orang yang tidak memakai Judge. Para hakim hanya melihat mereka dengan label seperti "Person C". Kami menyimpan nama mereka terenkripsi, dengan sidik jari berkode dari tiap nama (hash berkunci, bukan namanya). Nama bisa muncul di halaman berbagi seperti dijelaskan di Siapa bisa melihat apa. Jika namamu ada di kasus orang lain, kirim email ke {email} dengan tautannya dan kami akan menghapus namamu dari halaman berbagi atau menimbang keberatanmu.',
+    "privacy.automatedTitle": "Putusan berasal dari AI",
+    "privacy.automated":
+      'Model AI menulis putusanmu, tanpa ada orang yang membacanya lebih dulu. Putusan adalah pendapat atas argumen sebagaimana ditulis, dari teks yang namanya sudah dihapus, sumber web yang ditampilkan, dan jawabanmu. Ini bukan nasihat hukum dan tidak mengikat. Tidak ada keputusan tentang kamu, akunmu, harga, atau aksesmu yang dibuat darinya. Putusan bisa salah atau berat sebelah. Jika kamu tidak setuju, beri penilaian "Tidak adil", tambahkan konteks, atau kirim email ke {email} dan seseorang akan memeriksanya. Pihak lain dalam sebuah kasus juga boleh meminta.',
+    "privacy.accessTitle": "Siapa bisa melihat apa",
+    "privacy.access":
+      "Kamu: teks asli dan nama-namamu, di perangkat mana pun saat kamu masuk, atau di perangkat yang kamu pakai melalui kode pribadi yang disimpan di browser atau aplikasimu (kami hanya menyimpan bentuk acak dari kode itu). Putusan yang ditulis tanpa masuk sebelum akun diwajibkan, serta kasus yang kamu jawab tanpa masuk, tetap tercantum di browser itu beserta judulnya dan nama-nama seperti yang kamu tulis, supaya halaman Putusan bisa menampilkannya: siapa pun yang memakai browser yang sama bisa melihat daftar itu. Di komputer bersama, masuklah ke akunmu atau pakai jendela pribadi; menghapus data situs di browser akan menghapus daftar itu. Dalam kasus dua pihak, tiap orang hanya melihat teks aslinya sendiri; setelah putusan, keduanya melihat kedua cerita yang sudah dianonimkan, seperti yang dibaca hakim. Para hakim (model AI yang dijalankan penyedia AI kami): hanya versi anonim. Siapa pun yang punya tautan berbagi: putusan beserta nama tampilan. Secara bawaan, itu adalah nama yang kamu pilih untuk dirimu dan nama depan orang lain seperti yang kamu tulis; kamu bisa mengubahnya atau mematikan nama kapan saja, lalu halaman akan menampilkan Pihak A dan Pihak B. Kami: kami bisa mendekripsi teks asli dengan kunci tersebut, dan hanya melihat teks tersimpan untuk menangani permintaan bantuan darimu, menyelidiki penyalahgunaan, atau jika diwajibkan oleh hukum.",
+    "privacy.casesTitle": "Kasus dua pihak dan banding",
+    "privacy.cases":
+      'Dalam kasus dua pihak, tiap sisi dianonimkan saat dikirim, sama seperti putusan. Teks anonim itulah yang dibaca para hakim; sisi tiap orang persis seperti yang ia tulis, beserta daftar namanya, disimpan terenkripsi dan hanya orang itu yang bisa melihatnya. Tiap orang mengetik nama yang ingin ditampilkan di halaman berbagi saat mengirim sisinya; jika dikosongkan, namanya Pihak A atau Pihak B. Orang yang satunya tidak perlu akun; jawabannya dibatasi penggunaannya dengan hash berkunci dari alamat IP-nya. Tautan undangan hanya disimpan sebagai hash. Jika orang yang satunya menjawab dalam keadaan masuk, akunnya dikaitkan dengan sisinya, sehingga hanya dia yang bisa menambah konteks nanti atau melihat teks aslinya; jika ia menjawab tanpa masuk, kode pribadi yang tersimpan di browsernya melakukan hal yang sama, dan masuk di browser itu belakangan memungkinkannya menyimpan kasus itu di akunnya. Agar orang yang sama mendapat label yang sama di kedua sisi, server menyimpan sidik jari berkode dari nama-nama di dalam tiap kasus (hash berkunci, bukan namanya sendiri). Sampai putusan keluar, tidak ada pihak yang bisa membaca teks pihak lain; setelah putusan kasus dua pihak, keduanya bisa membaca kedua sisi anonim. Konteks yang ditambahkan setelah putusan (banding) ditangani dengan cara yang sama. Saat orang yang satunya menjawab, kami bisa mengirimimu email singkat tanpa teks kasus, jika email sudah diatur. Masing-masing bisa menghapus sisinya sendiri: teks aslinya dan nama tampilannya dihapus, dan tautan berbagi kasus itu berhenti berfungsi untuk semua orang. Menghapus akunmu melakukan ini untuk setiap kasus yang kamu mulai atau jawab. Kasus yang tidak dijawab siapa pun kedaluwarsa setelah 7 hari, tetapi teks sisimu tetap ada sampai kamu menghapusnya. Orang yang menjawab tanpa akun mencentang "Saya berusia 18 tahun atau lebih" dan kotak hal pribadi sebelum mengirim, dan kami menyimpan kedua centang itu bersama sisinya.',
     "privacy.webSearchTitle": "Pencarian web dan pertanyaan",
     "privacy.webSearch":
       "Setiap putusan mengirim argumen yang sudah dianonimkan ke penyedia AI kami dengan pencarian web aktif. Model menulis kueri pencariannya dari teks anonim itu, dan hasilnya berasal dari mitra pencarian milik penyedia tersebut. Sumber yang dipakai ditampilkan di putusan. Para hakim mungkin lebih dulu mengajukan hingga dua pertanyaan kepadamu: untuk menyusunnya, teksmu seperti yang kamu ketik, termasuk nama, dikirim sekali lagi ke penyedia AI. Jawabanmu dianonimkan bersama argumennya sebelum dinilai; pertanyaan dan jawabanmu seperti yang kamu tulis disimpan bersama teks aslimu yang terenkripsi.",
+    "privacy.evidenceTitle": "Tangkapan layar",
+    "privacy.evidence":
+      "Browser kamu memperkecil gambar besar sebelum mengunggahnya. Setiap gambar lalu dikirim sekali ke layanan AI pihak luar agar teks yang terlihat bisa dibaca; kami tidak pernah menyimpan gambarnya. Transkrip mentahnya, yang masih bisa berisi nama, dikembalikan kepadamu di dalam token bertanda tangan yang disimpan browser kamu hingga 6 jam. Saat kamu mengirim versimu, transkrip itu dianonimkan bersama teksmu: transkrip anonim ditunjukkan kepada hakim dan disimpan bersama kasusnya, sedangkan transkrip mentah disimpan terenkripsi bersama teks aslimu, dan hanya kamu yang bisa melihatnya. Nomor telepon, alamat email, nama akun media sosial, dan nomor rekening atau nomor akun di dalamnya juga diganti dengan teks pengganti untuk hakim.",
+    "privacy.accountsTitle": "Akun",
+    "privacy.accounts":
+      "Judge hanya untuk orang berusia 18 tahun ke atas, dan akun yang kami temukan milik orang di bawah 18 tahun ditutup. Kamu butuh akun untuk mendapat putusan; pihak lain dalam kasus dua pihak bisa menjawab tanpa akun. Jika kamu masuk dengan Apple atau Google, kami menyimpan alamat email, nama, dan tautan foto profil yang mereka bagikan kepada kami, serta metode masuk yang kamu pakai, dan Apple atau Google bisa melihat bahwa kamu masuk ke Judge. Jika kamu masuk dengan tautan atau kode lewat email, email itu dikirim lewat Resend, dan kami menyimpan sebentar catatan berisi alamat emailmu untuk memeriksanya: berlaku 10 menit, dan dihapus setelah dipakai atau tak lama setelah kedaluwarsa. Jika kamu mengatur kata sandi, kami hanya menyimpan bentuk teracaknya (hash) bersama akunmu, tidak pernah kata sandinya sendiri. Kami juga menyimpan catatan sesimu (token acak dan waktu kedaluwarsanya, tanpa alamat IP atau detail browser, meskipun aplikasi juga mencatat pengenal perangkat saat kamu masuk), kreditmu, paketmu beserta riwayatnya, dan putusan mana yang memakai kredit (hanya ID putusannya). Kami juga menyimpan putusan dan kasus mana yang milikmu, supaya kamu bisa menemukannya di perangkat mana pun. Menghapus akun di halaman akun (di aplikasi dan di situs web) menghapus akun, catatan masuk, kredit, paket, dan peristiwa penggunaanmu, dan menghapus putusanmu serta sisimu dalam kasus seperti dijelaskan di Penghapusan. Kami menyimpan beberapa hal setelah penghapusan, tercantum di Yang kami simpan setelah penghapusan. Jika kamu tidak bisa masuk, halaman okjudge.com/delete-account menjelaskan cara meminta lewat email. Kami hanya menyimpan bentuk teracak dari alamat emailmu, agar akun baru dengan email itu tidak mendapat putusan gratis kedua, dan tetap ditutup jika akunmu ditutup karena berusia di bawah 18 tahun. Kami juga mencatat apakah kamu sudah mengonfirmasi usia 18 tahun atau lebih, dan bagaimana (centang, atau sinyal usia dari ponselmu; di Android aplikasi bertanya ke Google Play, di iPhone bertanya ke Apple).",
+    "privacy.removalTitle": "Penghapusan",
+    "privacy.removal":
+      "Minta penghapusan di halaman putusan (jika sudah masuk, kamu bisa membukanya dari halaman Putusan), di halaman kasus untuk kasus dua pihak, dengan menghapus akunmu, atau lewat email. Penghapusan menghapus teks asli, daftar nama, dan nama tampilanmu (dalam kasus dua pihak, teks asli sisimu dan nama tampilanmu), dan tautan berbagi beserta gambar pratinjaunya berhenti dimuat untuk semua orang. Pratinjau yang sudah diposting di aplikasi obrolan disimpan oleh aplikasi itu dan mungkin tetap tampil sampai mereka menyegarkannya. Kami menyimpan teks anonim dan putusan, tanpa nama, di catatan kami; keduanya tidak bisa lagi dibuka lewat tautan. Menghapus akun melakukan ini untuk semua putusanmu dan sisimu dalam kasus, serta menghapus data masukmu, kredit, dan paketmu. Data yang dihapus tetap ada di cadangan sampai cadangan itu kedaluwarsa (paling lama 14 hari, lihat di bawah); jika kami suatu saat memulihkan cadangan, kami menerapkan ulang setiap penghapusan (untuk itu kami menyimpan daftar apa yang dihapus dan kapan, tanpa teks atau nama). Tiga puluh hari setelah kamu menghapus sesuatu, kami juga menghapus teks anonim dan putusannya, dan hanya menyimpan hasil dan tanggalnya, kecuali hukum mewajibkan kami menyimpannya lebih lama. Ini berlaku untuk hal yang dihapus pada atau setelah 14 November 2026 (UTC); penghapusan yang lebih lama tetap menyimpan teks anonimnya. Untuk sebuah kasus, 30 hari baru mulai dihitung setelah semua orang di dalamnya menghapusnya. Putusan dan kasus yang tidak dihapus siapa pun disimpan sampai kamu menghapusnya atau menghapus akunmu. Putusan yang dibuat saat belum masuk, sebelum akun diperlukan, bisa dihapus dengan mengirim email ke {email} beserta tautannya.",
+    "privacy.afterRemovalTitle": "Yang kami simpan setelah penghapusan",
+    "privacy.afterRemoval":
+      "Setelah penghapusan, dan setelah 30 hari, kami masih menyimpan:\n- hasil dan skor, pengaturan yang dipilih, tanggal, ID, dan pihak serta bahasa apa saja yang ada, dan ID akun yang memulai sebuah kasus;\n- penilaianmu. Saat kamu menghapus akun, tiap penilaian dipindahkan ke ID acak, sehingga tidak lagi mengarah kepadamu;\n- catatan pilihan Bantu tingkatkan Judge dan persetujuanmu soal hal pribadi (tanggal, bahasa, platform, dan kalimat yang kamu lihat), selama 6 tahun setelah kamu menghapus akun, untuk membuktikan apa yang kamu setujui. Setelah kamu menghapus akun, catatan ini membawa ID acak dan tidak terhubung ke nama atau emailmu;\n- daftar penghapusan, yang berisi ID, alasan, tanggal, dan pihak dalam kasus, selama 90 hari, untuk menerapkan ulang penghapusan setelah pemulihan cadangan;\n- bentuk teracak dari emailmu, untuk mencegah penyalahgunaan kredit gratis berulang (lihat Akun);\n- catatan perangkat tanpa tautan ke akunmu, paling lama 180 hari;\n- cadangan, paling lama 14 hari.\nSaat sebuah kasus dihapus, sidik jari berkode dan label dari nama-nama di dalamnya dikosongkan, jadi tidak disimpan.",
+    "privacy.retentionTitle": "Berapa lama kami menyimpannya",
+    "privacy.retention":
+      "Kami menyimpan putusan dan teks asli sampai kamu meminta penghapusan atau menghapus akunmu. Untuk pulih dari kegagalan, kami menyimpan salinan cadangan server dan databasenya paling lama 14 hari, lalu menghapusnya. Isinya sama dengan server, termasuk teks asli yang terenkripsi, dan kuncinya ada di server yang sama, jadi cadangan dilindungi seperti server itu sendiri, bukan oleh enkripsi tersebut. Hash pembatasan penggunaan disimpan paling lama 48 jam. Peristiwa penggunaan dihapus setelah 90 hari, dan tautan perangkat dihapus setelah 180 hari tanpa dipakai. Log dan metrik di Grafana Labs disimpan 14 hari. Laporan crash di Sentry disimpan paling lama 30 hari. Log server lainnya mengikuti masa retensi standar penyedia hosting kami. Kode masuk kedaluwarsa setelah 10 menit, dan kode yang kedaluwarsa dihapus setiap hari. Sesi berakhir 30 hari setelah terakhir kamu pakai. Daftar penghapusan disimpan 90 hari. Catatan pilihan persetujuanmu disimpan 6 tahun setelah kamu menghapus akun, lalu dihapus.",
+    "privacy.ipTitle": "Pembatasan penggunaan",
+    "privacy.ip":
+      "Supaya ruang sidang tetap terbuka untuk semua orang, kami membatasi berapa banyak putusan yang bisa diminta tiap akun dan berapa banyak terjemahan yang bisa diminta tiap pengunjung. Untuk terjemahan, jawaban dalam kasus dua pihak, pengecekan putusan saat sedang diadili, dan percobaan masuk, kami menyimpan hash berkunci dari alamat IP-mu, bukan alamatnya sendiri, paling lama 48 jam. Pembatasan masuk menyimpan alamat itu sendiri sebentar di memori server, sekitar satu menit, tidak pernah di disk. Jika pengecekan manusia aktif, alamat IP-mu juga dikirim ke Cloudflare untuk pengecekan itu. Alamat itu tidak pernah disimpan bersama putusanmu.",
+    "privacy.processorsTitle": "Siapa lagi yang menangani teksmu",
+    "privacy.processors":
+      "Teks yang kamu ketik, termasuk nama asli, lebih dulu dikirim ke penyedia AI kami di Amerika Serikat agar namanya bisa dihapus. Hanya versi anonim yang diadili; teks asli milikmu disimpan terenkripsi, seperti dijelaskan di atas. Jika pengecekan manusia aktif, Cloudflare Turnstile berjalan di browsermu dan memeriksa hasilnya dengan Cloudflare. Jika kamu masuk, Apple atau Google (mana pun yang kamu pilih) menangani proses masuk itu, dan email masuk dikirim lewat Resend. Pembelian di aplikasi berjalan lewat App Store atau Google Play dan ditangani RevenueCat, yang menerima ID akun dan riwayat pembelianmu. Grafana Labs menerima log server dan metrik kinerja kami, disimpan di UE selama 14 hari; log tidak berisi teks kasus. Laporan crash dan error dari aplikasi dan situs web ini dikirim ke Sentry, disimpan di UE paling lama 30 hari; isinya error, versi aplikasi atau browser, dan model perangkat, tetapi tanpa teks kasus, ID akun, atau alamat koneksi. Penyedia hosting kami menyimpan log server standar. Aplikasi Android bertanya ke Google Play soal status usiamu dan aplikasi iPhone bertanya ke Apple. Kami adalah pengendali data; penyedia-penyedia ini menangani data atas nama kami.",
+    "privacy.shareTitle": "Tautan berbagi",
+    "privacy.share":
+      "Siapa pun yang punya tautan ke sebuah putusan bisa melihatnya, dengan nama tampilan yang kamu pilih (atau Pihak A dan Pihak B jika kamu mematikan nama). Tautan memakai ID acak yang panjang, dan halaman berbagi meminta mesin pencari untuk tidak mengindeksnya. Tautan dan gambar pratinjau putusan yang sudah dihapus tidak bisa dimuat lagi; pratinjau yang sudah terkirim di aplikasi chat mungkin masih terlihat sampai aplikasi tersebut memperbaruinya. Jangan sertakan alamat, nomor telepon, atau apa pun yang tidak ingin kamu tampilkan di halaman yang bisa dibuka orang lain.",
+    "privacy.locationTitle": "Di mana datamu berada",
+    "privacy.location":
+      "Server kami ada di Jerman (OVH, Frankfurt). Sebagian pemrosesan terjadi di Amerika Serikat: penyedia AI kami menjalankan model yang menghapus nama, mengadili, membaca tangkapan layar, dan mencari di web; Cloudflare berada di depan okjudge.com sebagai proxy dan DNS (semua lalu lintas melewatinya) dan menjalankan pengecekan manusia. Proses masuk lewat Apple atau Google jika kamu memilihnya, dan email masuk lewat Resend. Data yang diproses di negara lain bisa tunduk pada hukum negara itu. Kami bekerja dari Kanada dan bisa melihat datamu dari sana.",
+    "privacy.storageTitle": "Cookie dan penyimpanan browser",
+    "privacy.storage":
+      "Situs web memakai cookie masuk (verdict.session_token) yang menjaga kamu tetap masuk, dan cookie berumur pendek saat kamu masuk dengan Apple atau Google (verdict.state berlaku 5 menit). Cloudflare, yang menjalankan pengecekan manusia, mungkin memasang cookie-nya sendiri untuk itu. Tidak ada yang dipakai untuk pelacakan. Penyimpanan lokal browsermu menyimpan bahasa, tema, dan pilihan Gamifikasimu; draf yang belum terkirim saat kamu masuk (termasuk teks yang kamu ketik); daftar putusan dan kasus yang kamu buat saat belum masuk; kode pribadi yang memungkinkan kamu mengakses teks asli milikmu; nama yang kamu pakai dalam sebuah kasus; kode undangan untuk kasus yang kamu diminta jawab; konfirmasi usiamu; pengadilan yang terakhir kamu pilih; dan contoh mana yang sudah kamu lihat. Penyimpanan sesi menyimpan alamat email dan mode saat kamu menunggu email masuk, serta penanda penggunaan untuk tab. Semua ini tetap di perangkatmu. Menghapus data situs akan menghapusnya. Aplikasi menyimpan hal serupa di perangkat.",
+    "privacy.notStoredTitle": "Yang tidak kami lakukan",
+    "privacy.notStored":
+      "Tidak ada pelacak iklan. Kami tidak menjual datamu, dan tidak membagikannya untuk iklan. Situs web dan aplikasi tidak melacakmu di situs lain. Cara kami menanggapi Do Not Track: situs web tidak mengirim peristiwa penggunaan dari browsermu saat browser mengirim Do Not Track atau Global Privacy Control, dan sakelar Statistik penggunaan di aplikasi melakukan hal yang sama untuk aplikasi. Server kami tetap mencatat beberapa peristiwa yang terkait dengan akunmu (masuk, kasus dan putusan yang dibuat atau gagal, pembelian) dan dari perangkat mana kamu masuk. Kami tidak pernah memakai tekstmu untuk melatih apa pun kecuali kamu menyalakan Bantu tingkatkan Judge.",
+    "privacy.securityTitle": "Menjaga keamanannya",
+    "privacy.security":
+      "Teks asli, daftar nama, nama tampilan, dan token masuk Apple dienkripsi. Lalu lintas memakai HTTPS. Kunci enkripsi berada di server yang sama dengan datanya, jadi tidak melindungi dari orang yang menguasai server. Jika terjadi masalah dengan informasi pribadimu, kami memberi tahu orang yang terdampak dan pihak berwenang sebagaimana diwajibkan hukum.",
+    "privacy.childrenTitle": "Usia",
+    "privacy.children":
+      'Judge untuk orang berusia 18 tahun ke atas. Kami meminta semua orang yang masuk untuk mengonfirmasinya, orang yang menjawab kasus tanpa akun mencentang "Saya berusia 18 tahun atau lebih" sebelum mengirim, dan aplikasi mungkin memakai sinyal usia dari ponselmu. Kami tidak dengan sengaja mengumpulkan data dari siapa pun di bawah 18 tahun. Jika kamu mengira ada anak yang punya akun, kirim email ke {email} dan kami menutup akunnya serta menghapus datanya.',
+    "privacy.rightsTitle": "Hak-hakmu",
+    "privacy.rights":
+      "Di mana pun kamu tinggal, kamu bisa meminta kami menunjukkan apa yang kami simpan, memperbaikinya, menghapusnya atau menghapus akunmu, berhenti memakainya untuk pelatihan, dan memberimu salinan. Sebagian besar bisa kamu lakukan sendiri: hapus putusan atau kasus di halamannya, hapus akunmu di halaman akun, ubah nama yang tampil di halaman putusan atau kasus, unduh datamu, dan ubah Bantu tingkatkan Judge (dan, di aplikasi, Statistik penggunaan) di Pengaturan. Untuk hal lain, kirim email ke {email} beserta tautan putusan atau kasusnya. Kami mungkin meminta kamu menulis dari email akunmu atau mengonfirmasi saat sudah masuk. Kami menjawab dalam 30 hari, atau satu bulan jika lebih singkat. Gratis. Kamu tidak akan diperlakukan lebih buruk karena menggunakan hakmu. Orang yang meminta atas namamu memerlukan izin tertulis darimu.\nSalinan datamu berupa file JSON. Pilih Unduh data saya di halaman akun, di aplikasi atau di situs web. Isinya akunmu dan metode masuk, putusanmu dan sisimu dalam kasus dengan teks dan namamu sendiri, hasilnya, penilaianmu, riwayat persetujuanmu, perangkatmu, peristiwa penggunaan, dan pembelian. Isinya tidak mencakup token masuk, kata sandimu, atau email yang diacak, dan tidak ada teks atau nama orang lain.\nKamu tidak wajib memberi kami data, tetapi tanpa teksmu dan sebuah akun kami tidak bisa memberimu putusan.",
+    "privacy.regionEuTitle": "Jika kamu di UE atau Inggris",
+    "privacy.regionEu":
+      "- Pengendali data: lihat Siapa kami.\n- Dasar hukum: lihat Mengapa kami memakai datamu.\n- Kamu juga bisa meminta kami membatasi penggunaan, menolak penggunaan yang didasarkan pada kepentingan sah kami, menarik persetujuan kapan saja (tanpa memengaruhi apa yang sudah kami lakukan sebelumnya), dan mengadu ke otoritas perlindungan datamu (di Inggris, ICO).\n- Datamu diproses di Jerman, Kanada, dan Amerika Serikat, seperti dijelaskan di Di mana datamu berada. Kirim email ke {email} jika kamu ingin tahu lebih banyak tentang cara pemindahannya.\n- Keputusan otomatis: lihat Putusan berasal dari AI.",
+    "privacy.regionUsTitle": "Jika kamu di California atau negara bagian AS lainnya",
+    "privacy.regionUs":
+      '- Dalam 12 bulan terakhir kami mengumpulkan: pengenal (email, nama, ID akun dan perangkat); teks perselisihan dan jawabanmu; penilaian dan pilihan persetujuan; riwayat pembelian; data penggunaan dan perangkat (negara, model perangkat, versi aplikasi); konfirmasi usia; dan informasi sensitif (data masuk akun, dan detail kesehatan atau sejenisnya di tekstmu). Sumber: kamu, proses masuk dan toko di ponselmu, dan aplikasi kami sendiri. Tujuan: lihat Mengapa kami memakai datamu. Penerima: kategori di Siapa lagi yang menangani teksmu.\n- Kami tidak menjual atau membagikan informasi pribadi untuk iklan, dan tidak melakukannya dalam 12 bulan terakhir. Kami tidak membuat profil tentangmu. Kami memakai informasi sensitif hanya untuk memberimu layanan, jadi tidak ada yang perlu dibatasi atau ditolak.\n- Hak: mengetahui, mengakses, memperbaiki, menghapus, dan salinan yang portabel. Kamu bisa memakai agen yang berwenang. Kami menjawab dalam 30 hari, atau satu bulan jika lebih singkat. Untuk mengajukan banding atas penolakan, kirim email ke {email} dengan tulisan "Appeal". Kami memutuskan banding dalam 45 hari. Jika kami menolaknya, kamu bisa menghubungi Jaksa Agung negara bagianmu.\n- Penyimpanan: lihat Berapa lama kami menyimpannya dan Yang kami simpan setelah penghapusan.\n- Do Not Track: lihat Yang tidak kami lakukan. Tidak ada perusahaan iklan atau pelacak yang mengumpulkan data di halaman kami. Cloudflare menjalankan pengecekan manusia dan melihat koneksimu untuk tujuan itu.\n- Tidak ada orang di bawah 18 tahun yang boleh memakai Judge, jadi kami tidak menjual atau membagikan data siapa pun di bawah 16 tahun. Hak di negara bagian lain sama daftarnya.',
+    "privacy.regionCaTitle": "Jika kamu di Kanada atau Quebec",
+    "privacy.regionCa":
+      "Judge dijalankan dari Kanada dan menangani informasi pribadi berdasarkan PIPEDA: kami hanya mengumpulkan apa yang dibutuhkan layanan, memakainya hanya untuk itu, melindunginya, dan kamu bisa meminta untuk melihat, memperbaiki, atau menghapus apa yang kami simpan tentangmu. Kami menjawab dalam 30 hari. Kamu bisa mengadu ke Kantor Komisioner Privasi Kanada (priv.gc.ca). Jika kamu di Quebec:\n- Penanggung jawab informasi pribadi adalah Aytu Tuna, pemilik, di {email}.\n- Sebagian data dikirim ke luar Quebec: ke server kami di Jerman, ke penyedia AI dan vendor lain di Amerika Serikat, dan ke Kanada di luar Quebec.\n- Judge hanya mencatat negara koneksimu, untuk penghitungan penggunaan, dan tidak melacak lokasi tepatmu. Putusan menilai argumen yang kamu uraikan dan tidak dipakai untuk membuat profil tentangmu. Penghitungan penggunaan terkait dengan akunmu seperti dijelaskan di Yang kami simpan.\n- Bantu tingkatkan Judge mati sampai kamu menyalakannya, dan kamu bisa mematikannya kapan saja.\n- Kamu juga bisa meminta menarik persetujuan, mendapatkan datamu dalam format yang umum dipakai, dan mengadu ke Commission d'accès à l'information.",
+    "privacy.regionBrTitle": "Jika kamu di Brasil",
+    "privacy.regionBr":
+      "Pengendali dan kontak: lihat Siapa kami. {email} juga merupakan saluran untuk permintaan LGPD. Kami adalah pengendali; penyedia di Siapa lagi yang menangani teksmu bertindak atas nama kami. Dasar hukum: lihat Mengapa kami memakai datamu. Kamu bisa meminta kami mengonfirmasi bahwa kami memproses datamu; memberimu akses; memperbaikinya; menganonimkan, memblokir, atau menghapus data yang berlebihan atau melanggar hukum; memberi portabilitas; menghapus data yang kami pakai berdasarkan persetujuanmu; memberi tahu dengan siapa kami membagikannya; memberi tahu tentang pilihan menolak persetujuan dan akibatnya; dan menarik persetujuan. Gratis. Kamu juga bisa mengadu ke ANPD. Datamu dikirim ke luar negeri seperti dijelaskan di Di mana datamu berada.",
+    "privacy.changesTitle": "Perubahan",
+    "privacy.changes":
+      "Jika kami mengubah kebijakan ini dengan cara yang penting, kami memperbarui tanggal di bagian atas halaman ini. Kami tidak pernah memakai data yang kamu berikan di bawah kebijakan lama untuk tujuan baru tanpa bertanya kepadamu lebih dulu. Kami meninjaunya setidaknya setahun sekali.",
+    "privacy.contactTitle": "Kontak",
+    "privacy.contact":
+      "Ada pertanyaan, atau ingin melihat, memperbaiki, atau menghapus datamu? Kirim email ke {email} beserta tautan ke putusan atau kasusnya.",
     "nav.signIn": "Masuk",
     "nav.account": "Akun",
     "nav.pricing": "Harga",
@@ -303,19 +371,16 @@ const id: Locale = {
     "consent.sensitiveContinue": "Lanjut",
     "respond.adultConfirm": "Saya berusia 18 tahun atau lebih",
     "account.export": "Unduh data saya",
-    "account.exportHint":
-      "Dapatkan berkas JSON berisi semua yang disimpan Judge tentangmu.",
+    "account.exportHint": "Dapatkan berkas JSON berisi semua yang disimpan Judge tentangmu.",
     "account.exportBusy": "Menyiapkan berkasmu…",
     "account.exportFailed": "Datamu belum bisa disiapkan sekarang. Coba lagi?",
     "deletePage.title": "Hapus akun Judge-mu",
     "deletePage.lead":
       "Judge adalah aplikasi dari Aytu Tuna. Kamu bisa menghapus akun dan datanya sendiri kapan saja, di aplikasi atau di situs web.",
     "deletePage.appTitle": "Di aplikasi",
-    "deletePage.app":
-      "Buka Judge, masuk ke Akun, ketuk Hapus akun, lalu konfirmasi.",
+    "deletePage.app": "Buka Judge, masuk ke Akun, ketuk Hapus akun, lalu konfirmasi.",
     "deletePage.webTitle": "Di situs web",
-    "deletePage.web":
-      "Masuk di okjudge.com, buka Akun, pilih Hapus akun, lalu konfirmasi.",
+    "deletePage.web": "Masuk di okjudge.com, buka Akun, pilih Hapus akun, lalu konfirmasi.",
     "deletePage.removedTitle": "Yang dihapus",
     "deletePage.removed":
       "Akun, catatan masuk, kredit, paket, dan peristiwa penggunaanmu dihapus. Putusan dan pihakmu dalam kasus dihapus: teks asli dan nama langsung dihapus, teks anonim dan putusannya 30 hari kemudian.",
@@ -323,8 +388,7 @@ const id: Locale = {
     "deletePage.kept":
       "Hasil dan tanggal putusan yang dihapus, tanpa teks dan nama. Penilaian dan catatan persetujuanmu selama 6 tahun, tanpa kaitan denganmu. Bentuk email yang diacak, untuk mencegah penyalahgunaan kredit gratis berulang kali. Cadangan menyimpan salinan lama paling lama 14 hari.",
     "deletePage.mailTitle": "Minta lewat email",
-    "deletePage.mail":
-      "Tidak bisa masuk? Kirim email ke {email} dari alamat akunmu dan minta kami menghapusnya.",
+    "deletePage.mail": "Tidak bisa masuk? Kirim email ke {email} dari alamat akunmu dan minta kami menghapusnya.",
     "rating.prompt": "Putusan ini adil?",
     "rating.fair": "Adil",
     "rating.notFair": "Tidak adil",
@@ -342,8 +406,7 @@ const id: Locale = {
     "clarify.back": "Ubah perdebatannya",
     "thinking.factcheck": "Mengecek fakta di web…",
     "thinking.factcheckDone": "Pengecekan web selesai.",
-    "thinking.premiumHelper":
-      "Mengecek fakta di web butuh waktu sedikit lebih lama. Tunggu satu-dua menit, ya.",
+    "thinking.premiumHelper": "Mengecek fakta di web butuh waktu sedikit lebih lama. Tunggu satu-dua menit, ya.",
     "panel.premium": "Dinilai dengan cek fakta di web.",
     "factcheck.title": "Dicek di web",
     "factcheck.lead": "Para hakim melihat hasil pencarian ini sebelum memutuskan. Ini bukti, bukan putusannya.",
@@ -385,7 +448,8 @@ const id: Locale = {
     "signin.usePassword": "Pakai kata sandi saja",
     "signin.passwordWrong": "Email dan kata sandi itu tidak cocok.",
     "signin.passwordShort": "Gunakan minimal 8 karakter.",
-    "signin.createNote": "Kami akan mengirim kode lewat email untuk mengonfirmasi alamat ini. Kamu hanya perlu melakukannya sekali.",
+    "signin.createNote":
+      "Kami akan mengirim kode lewat email untuk mengonfirmasi alamat ini. Kamu hanya perlu melakukannya sekali.",
     "signin.passwordChoose": "Kamu sudah masuk. Pilih kata sandi untuk lain kali.",
     "signin.passwordSave": "Simpan kata sandi",
     "signin.passwordSaveFailed": "Kami tidak bisa menyimpan kata sandinya. Coba lagi.",
@@ -463,7 +527,8 @@ const id: Locale = {
     "error.unsupported_media": "Kami hanya bisa membaca gambar PNG, JPEG, WebP, atau GIF.",
     "error.too_many_files": "Itu melebihi jumlah gambar yang bisa ditambahkan di sini.",
     "error.evidence_invalid": "Salah satu gambarmu kedaluwarsa atau tidak bisa diperiksa. Hapus, lalu tambahkan lagi.",
-    "error.anonymize_failed": "Kami tidak bisa menghapus nama dari teksmu. Coba lagi, atau tulis inisial saja, bukan nama lengkap.",
+    "error.anonymize_failed":
+      "Kami tidak bisa menghapus nama dari teksmu. Coba lagi, atau tulis inisial saja, bukan nama lengkap.",
     "mode.label": "Mau dinilai bagaimana?",
     "mode.now": "Aku saja (langsung)",
     "mode.both": "Dua pihak (kirim tautan)",
@@ -501,7 +566,8 @@ const id: Locale = {
     "case.side.opened": "Dibuka",
     "case.side.typing": "Mengetik…",
     "case.judgeAnswered": "Putuskan dari pihak yang sudah menjawab",
-    "case.judgeAnswered.confirm": "Minta putusan dari pihak yang sudah menjawab? Undangan lainnya ditutup dan mereka tidak bisa menjawab lagi.",
+    "case.judgeAnswered.confirm":
+      "Minta putusan dari pihak yang sudah menjawab? Undangan lainnya ditutup dan mereka tidak bisa menjawab lagi.",
     "case.cancel": "Batal",
     "case.retry": "Coba lagi",
     "case.failedBody": "Kreditmu sudah kembali. Kamu bisa coba lagi sekarang.",
@@ -538,14 +604,12 @@ const id: Locale = {
     "respond.submit": "Kirim versiku",
     "case.write.title": "Versimu",
     "case.write.placeholder": "Apa masalahnya?",
-    "case.write.lead":
-      "Tulis versimu kapan pun kamu siap. Hakim mulai setelah kalian berdua menulis.",
+    "case.write.lead": "Tulis versimu kapan pun kamu siap. Hakim mulai setelah kalian berdua menulis.",
     "case.write.leadAnswered": "Dia sudah menulis versinya. Tulis versimu untuk mendapat putusan.",
     "case.write.submit": "Kirim versiku",
     "case.write.emailSubject": "Pihak lain sudah menulis versinya",
     "respond.sent": "Terima kasih. Versimu sudah masuk dan hakim sedang menilainya.",
-    "respond.sentWaiting":
-      "Terima kasih. Versimu sudah masuk. Hakim mulai setelah orang satunya menulis versinya.",
+    "respond.sentWaiting": "Terima kasih. Versimu sudah masuk. Hakim mulai setelah orang satunya menulis versinya.",
     "respond.ownInvite": "Ini tautan undanganmu sendiri. Kirim ke lawan debatmu.",
     "respond.expired": "Undangan ini sudah kedaluwarsa.",
     "respond.closed": "Kasus ini sudah tidak menerima jawaban.",
@@ -560,7 +624,8 @@ const id: Locale = {
     "evidence.label": "Tangkapan layar (opsional)",
     "evidence.add": "Tambah tangkapan layar",
     "evidence.addOne": "Tambah satu tangkapan layar",
-    "evidence.hint": "Maksimal {n} gambar. Kami membaca teksnya, menyembunyikan nama, dan tidak pernah menyimpan gambarnya.",
+    "evidence.hint":
+      "Maksimal {n} gambar. Kami membaca teksnya, menyembunyikan nama, dan tidak pernah menyimpan gambarnya.",
     "evidence.hintOne": "Satu gambar. Kami membaca teksnya, menyembunyikan nama, dan tidak pernah menyimpan gambarnya.",
     "evidence.reading": "Membaca…",
     "evidence.ok": "Terbaca",
@@ -600,8 +665,7 @@ const id: Locale = {
     "home.removeTheirSide": "Hapus versi dia",
     "home.sendLink": "Kirim tautan",
     "home.clear": "Bersihkan",
-    "home.lead":
-      "Tulis versi kedua pihak, atau kirim tautan ke lawan debatmu agar dia menulis versinya sendiri.",
+    "home.lead": "Tulis versi kedua pihak, atau kirim tautan ke lawan debatmu agar dia menulis versinya sendiri.",
     "home.leadSolo": "Tulis versimu, dan versi dia juga kalau kamu tahu.",
     "home.theirSide": "Versi dia",
     "home.theirName": "Nama dia",
@@ -611,8 +675,7 @@ const id: Locale = {
     "home.says": "Kata {name}:",
     "home.mySide": "Versiku:",
     "home.otherSide": "Versi dia:",
-    "appeal.lead":
-      "Memakai 1 putusan.",
+    "appeal.lead": "Memakai 1 putusan.",
     "appeal.placeholder": "Apa yang terlewat oleh hakim? Fakta, pesan, atau apa yang sebenarnya disepakati.",
     "appeal.submit": "Nilai ulang dengan konteksku",
     "appeal.sending": "Menganonimkan konteksmu…",
@@ -645,7 +708,8 @@ const id: Locale = {
     "about.casesTitle": "Mendengar kedua pihak",
     "about.cases1":
       "Kasus dua pihak: masuk, tulis versimu, lalu kirim tautan pribadi. Lawan debatmu menulis versinya tanpa melihat punyamu, dan hakim menimbang kedua cerita: apa yang mereka sepakati, apa yang diperdebatkan, dan bukti apa yang bisa mengubah putusannya.",
-    "about.cases2": "Kalau tidak ada yang menjawab dalam 7 hari, tautannya berhenti berfungsi. Kamu tetap bisa minta putusan dari versimu saja.",
+    "about.cases2":
+      "Kalau tidak ada yang menjawab dalam 7 hari, tautannya berhenti berfungsi. Kamu tetap bisa minta putusan dari versimu saja.",
     "about.premiumTitle": "Fitur tambahan",
     "about.premium2":
       "Bukti: tambahkan tangkapan layar chat atau dokumen. Kami membaca teks di dalamnya, menyembunyikan nama, dan membuang gambarnya.",
@@ -653,12 +717,6 @@ const id: Locale = {
       "Banding: setelah putusan keluar, tiap orang bisa sekali menambahkan konteks. Hakim menilai ulang semuanya dan menyatakan apakah putusannya tetap, berbalik, atau berubah. Putusan sebelumnya tetap bisa dilihat.",
     "about.premium4":
       "Kasus dua pihak memakai 1 putusan. Putusan itu ditahan saat kamu mengirim tautan dan dikembalikan kalau tidak ada yang menjawab dalam 7 hari.",
-    "privacy.casesTitle": "Kasus dua pihak dan banding",
-    "privacy.cases":
-      "Dalam kasus dua pihak, setiap versi dianonimkan saat dikirim, dengan cara yang sama seperti putusan biasa. Teks anonim itulah yang dibaca hakim; versi tiap orang seperti yang mereka tulis, beserta daftar namanya, disimpan terenkripsi dan hanya bisa dilihat oleh orang itu. Saat mengirim versinya, tiap orang mengetik nama yang ingin ditampilkan di halaman berbagi; jika dikosongkan, yang tampil adalah Pihak A atau Pihak B. Pihak lain tidak perlu akun; jawabannya dibatasi dengan hash berkunci dari alamat IP-nya. Tautan undangan hanya disimpan dalam bentuk hash. Jika pihak lain menjawab sambil masuk ke akunnya, akunnya ditautkan ke versinya, sehingga hanya dia yang nanti bisa menambahkan konteks atau melihat teks aslinya; jika dia menjawab tanpa masuk, kode pribadi yang disimpan di browser-nya melakukan hal yang sama, dan jika nanti dia masuk di browser itu, dia bisa menyimpan kasusnya di akunnya. Agar orang yang sama mendapat label yang sama di kedua cerita, server menyimpan sidik jari nama yang dikodekan di dalam tiap kasus (hash berkunci, bukan namanya sendiri). Sampai putusan keluar, tidak ada pihak yang bisa membaca teks pihak lain; setelah putusan dua pihak, keduanya bisa membaca kedua cerita yang sudah dianonimkan. Konteks yang ditambahkan setelah putusan (banding) ditangani dengan cara yang sama. Saat pihak lain menjawab, kami mungkin mengirimimu email singkat tanpa isi kasus apa pun, jika email sudah disiapkan. Masing-masing orang bisa menghapus versinya sendiri: teks asli dan nama tampilannya dihapus, dan tautan berbagi kasus itu berhenti berfungsi untuk semua orang. Menghapus akunmu melakukan hal ini untuk setiap kasus yang kamu mulai atau jawab.",
-    "privacy.evidenceTitle": "Tangkapan layar",
-    "privacy.evidence":
-      "Browser kamu memperkecil gambar besar sebelum mengunggahnya. Setiap gambar lalu dikirim sekali ke layanan AI pihak luar agar teks yang terlihat bisa dibaca; kami tidak pernah menyimpan gambarnya. Transkrip mentahnya, yang masih bisa berisi nama, dikembalikan kepadamu di dalam token bertanda tangan yang disimpan browser kamu hingga 6 jam. Saat kamu mengirim versimu, transkrip itu dianonimkan bersama teksmu: transkrip anonim ditunjukkan kepada hakim dan disimpan bersama kasusnya, sedangkan transkrip mentah disimpan terenkripsi bersama teks aslimu, dan hanya kamu yang bisa melihatnya. Nomor telepon, alamat email, nama akun media sosial, dan nomor rekening atau nomor akun di dalamnya juga diganti dengan teks pengganti untuk hakim.",
     "pricing.premium.f5": "Bukti tangkapan layar, dibaca lalu dibuang, tanpa biaya tambahan",
     "pricing.premium.f6": "Tambah konteks setelah putusan dan minta dinilai ulang (1 putusan)",
     "pricing.premium.f7": "Dengar kedua pihak: kirim tautan pribadi ke lawan debatmu agar dia bisa menulis versinya",
@@ -778,21 +836,6 @@ const id: Locale = {
     "stamp.dissolved": "Beda makna",
     "bestPoint.of": "Poin terkuat {name}",
     "bestPoint.self": "Poin terkuatmu",
-    "privacy.accessTitle": "Siapa bisa melihat apa",
-    "privacy.access":
-      "Kamu: teks asli dan nama-namamu, di perangkat mana pun saat kamu masuk, atau di perangkat yang kamu pakai melalui kode pribadi yang disimpan di browser atau aplikasimu (kami hanya menyimpan bentuk acak dari kode itu). Putusan yang ditulis tanpa masuk sebelum akun diwajibkan, serta kasus yang kamu jawab tanpa masuk, tetap tercantum di browser itu beserta judulnya dan nama-nama seperti yang kamu tulis, supaya halaman Putusan bisa menampilkannya: siapa pun yang memakai browser yang sama bisa melihat daftar itu. Di komputer bersama, masuklah ke akunmu atau pakai jendela pribadi; menghapus data situs di browser akan menghapus daftar itu. Dalam kasus dua pihak, tiap orang hanya melihat teks aslinya sendiri; setelah putusan, keduanya melihat kedua cerita yang sudah dianonimkan, seperti yang dibaca hakim. Para hakim (model AI yang dijalankan penyedia AI kami): hanya versi anonim. Siapa pun yang punya tautan berbagi: putusan beserta nama tampilan. Secara bawaan, itu adalah nama yang kamu pilih untuk dirimu dan nama depan orang lain seperti yang kamu tulis; kamu bisa mengubahnya atau mematikan nama kapan saja, lalu halaman akan menampilkan Pihak A dan Pihak B. Kami: kami bisa mendekripsi teks asli dengan kunci tersebut, dan hanya melihat teks tersimpan untuk menangani permintaan bantuan darimu, menyelidiki penyalahgunaan, atau jika diwajibkan oleh hukum.",
-    "privacy.removalTitle": "Penghapusan",
-    "privacy.removal":
-      "Minta penghapusan di halaman putusan (jika masuk, kamu bisa membukanya dari halaman Putusan), di halaman kasus untuk kasus dua pihak, dengan menghapus akunmu, atau lewat email. Penghapusan menghapus teks aslimu, daftar nama, dan nama tampilan (dalam kasus dua pihak, teks asli versimu dan nama tampilanmu), dan tautan berbagi serta gambar pratinjaunya tidak bisa dimuat lagi oleh siapa pun. Pratinjau yang sudah terkirim di aplikasi chat disimpan oleh aplikasi tersebut dan mungkin masih terlihat sampai aplikasinya memperbaruinya. Kami tetap menyimpan teks anonim dan putusannya, tanpa nama, dalam catatan kami; keduanya tidak bisa dibuka lagi melalui tautan. Menghapus akunmu melakukan hal ini untuk semua putusan dan versimu dalam kasus, serta menghapus data masuk, kredit, dan langgananmu. Data yang dihapus tetap ada di cadangan kami sampai cadangan itu kedaluwarsa (paling lama 14 hari, lihat di bawah); jika kami memulihkan cadangan, kami menerapkan ulang setiap penghapusan (untuk itu kami menyimpan daftar apa yang dihapus dan kapan, tanpa teks atau nama). Tiga puluh hari setelah kamu menghapus sesuatu, kami juga menghapus teks anonim dan putusannya, dengan hanya menyisakan hasil dan tanggal, kecuali hukum mewajibkan kami menyimpannya lebih lama. Untuk sebuah kasus, tiga puluh hari baru dihitung setelah semua pihak di dalamnya menghapusnya.",
-    "privacy.retentionTitle": "Berapa lama kami menyimpannya",
-    "privacy.retention":
-      "Kami menyimpan putusan dan teks asli sampai kamu meminta penghapusan atau menghapus akunmu. Untuk pemulihan jika terjadi gangguan, kami menyimpan salinan cadangan server dan basis datanya hingga 14 hari, lalu salinan itu dihapus. Cadangan tersebut berisi data yang sama dengan server, termasuk teks asli yang terenkripsi, dan kuncinya ada di server yang sama, jadi cadangan dilindungi seperti server itu sendiri, bukan oleh enkripsi tersebut. Hash pembatasan penggunaan bertahan hingga 24 jam. Log server mengikuti masa simpan standar penyedia hosting kami. Peristiwa penggunaan dihapus setelah 90 hari, dan tautan perangkat setelah 180 hari tanpa dipakai. Log dan metrik di Grafana Labs disimpan 14 hari.",
-    "privacy.locationTitle": "Di mana datamu berada",
-    "privacy.location":
-      "Server kami berada di Jerman (OVH, Frankfurt). Sebagian pemrosesan berlangsung di Amerika Serikat: penyedia AI kami menjalankan model yang menghapus nama, menilai, membaca tangkapan layar, dan mencari di web; Cloudflare berada di depan okjudge.com sebagai proxy dan DNS (semua lalu lintas melewatinya) dan menjalankan pengecekan manusia. Proses masuk berjalan lewat Apple atau Google jika kamu memilihnya, dan email masuk lewat Resend. Data yang ditangani di negara lain bisa tunduk pada hukum negara tersebut.",
-    "privacy.rightsTitle": "Hak-hakmu (Kanada)",
-    "privacy.rights":
-      "Judge dijalankan dari Kanada dan menangani informasi pribadi berdasarkan undang-undang privasi federal Kanada (PIPEDA): kami hanya mengumpulkan yang dibutuhkan layanan, hanya memakainya untuk itu, melindunginya, dan kamu bisa meminta untuk melihat, memperbaiki, atau menghapus data tentangmu yang kami simpan. Kami menjawab dalam 30 hari.",
     "footer.terms": "Ketentuan",
     "signin.legalTerms": "Ketentuan Penggunaan",
     "age.confirm": "Saya berusia 18 tahun atau lebih",

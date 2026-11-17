@@ -109,14 +109,19 @@ const de: Locale = {
     "vote.dissolved": "Missverständnis",
     refusedNote: "Die KI hat bei diesem Fall gepasst. Lieber zeigen wir gar nichts als ein erfundenes Urteil.",
     demoNote: "🎭 Demo-Modus: kein KI-Schlüssel eingerichtet, daher ein Beispielurteil",
-    "trial.survived": "🛡️ Einspruch abgewiesen: Der Anwalt der Gegenseite hat seinen stärksten Einspruch erhoben, und das Urteil hat gehalten. Die Sicherheit bleibt unverändert.",
-    "trial.uncertain": "⚠️ Der Anwalt der Gegenseite hat Einspruch erhoben, und der Einspruch hat echte Zweifel an diesem Urteil hinterlassen",
-    "trial.overturned": "⚠️ Einspruch stattgegeben: Das Urteil bleibt bestehen, wird aber durch den stärksten Einspruch der Gegenseite ernsthaft geschwächt",
-    "trial.minor": "🛡️ Der Anwalt der Gegenseite hat einen berechtigten Punkt angesprochen, aber das Urteil gilt weiterhin",
+    "trial.survived":
+      "🛡️ Einspruch abgewiesen: Der Anwalt der Gegenseite hat seinen stärksten Einspruch erhoben, und das Urteil hat gehalten. Die Sicherheit bleibt unverändert.",
+    "trial.uncertain":
+      "⚠️ Der Anwalt der Gegenseite hat Einspruch erhoben, und der Einspruch hat echte Zweifel an diesem Urteil hinterlassen",
+    "trial.overturned":
+      "⚠️ Einspruch stattgegeben: Das Urteil bleibt bestehen, wird aber durch den stärksten Einspruch der Gegenseite ernsthaft geschwächt",
+    "trial.minor":
+      "🛡️ Der Anwalt der Gegenseite hat einen berechtigten Punkt angesprochen, aber das Urteil gilt weiterhin",
     "trial.whatWasTested": "Der Einspruch",
     "trial.attackPrefix": "Einspruch:",
     "trial.refereePrefix": "Warum:",
-    "trial.mixedNote": "Das ist ein gemischter Streit: teils Fakten, teils Werte oder Wortbedeutungen, deshalb ist ein klarer Sieg schwerer zu verteidigen.",
+    "trial.mixedNote":
+      "Das ist ein gemischter Streit: teils Fakten, teils Werte oder Wortbedeutungen, deshalb ist ein klarer Sieg schwerer zu verteidigen.",
     confidence: "Sicherheit {n} von {total}",
     verdictAria: "Urteil: {label}",
     "party.a": "Partei A",
@@ -135,9 +140,9 @@ const de: Locale = {
     "error.too_long": "Das ist eine Menge! Bleib unter 6.000 Zeichen.",
     "error.invalid": "Mit dieser Anfrage stimmt etwas nicht.",
     "error.rate_limited": "Ruhe im Saal! Du hast vorerst das Limit erreicht. Versuch es in {wait} noch mal.",
-    "error.daily_cap":
-      "Feierabend im Gerichtssaal: Für heute ist kein Streit mehr drin. In {wait} geht's weiter.",
-    "error.captcha_failed": "Wir konnten nicht prüfen, ob du ein Mensch bist. Mach den Check noch mal und schick es dann ab.",
+    "error.daily_cap": "Feierabend im Gerichtssaal: Für heute ist kein Streit mehr drin. In {wait} geht's weiter.",
+    "error.captcha_failed":
+      "Wir konnten nicht prüfen, ob du ein Mensch bist. Mach den Check noch mal und schick es dann ab.",
     "wait.moment": "ein paar Minuten",
     "wait.minute": "einer Minute",
     "wait.minutes": "{n} Minuten",
@@ -146,7 +151,8 @@ const de: Locale = {
     "refused.headline": "Die KI wollte sich hier nicht festlegen",
     "refused.crux":
       "Der Sicherheitsfilter der KI hat sie davon abgehalten, das zu beurteilen. Lieber kein Urteil als ein erfundenes.",
-    "refused.bestPoint": "Formulier es mal anders. Oder akzeptier, dass manche Konflikte eine Nummer zu groß für eine App sind.",
+    "refused.bestPoint":
+      "Formulier es mal anders. Oder akzeptier, dass manche Konflikte eine Nummer zu groß für eine App sind.",
     "refused.claim": "Übersprungen",
     "nav.skip": "Zum Inhalt springen",
     "nav.home": "Judge-Startseite",
@@ -194,8 +200,7 @@ const de: Locale = {
     "sample.nameB": "Du",
     "sample.label": "Du hast recht",
     "sample.headline": "Niemand bestellt ein Sandwich und hofft auf einen Döner",
-    "sample.crux":
-      "Rein von der Form her könnte ein Döner als Sandwich durchgehen, aber so benutzt niemand das Wort.",
+    "sample.crux": "Rein von der Form her könnte ein Döner als Sandwich durchgehen, aber so benutzt niemand das Wort.",
     "sample.why":
       "Jonas stützt sich nur auf die Form. Ein Wort bedeutet, wofür die Leute es benutzen, und wer beim Bäcker ein Sandwich bestellt, bekommt nie einen Döner.",
     "sample.bestPoint":
@@ -249,33 +254,96 @@ const de: Locale = {
     "privacy.kicker": "Deine Daten",
     "privacy.lead":
       "Kurz gesagt: Was du schreibst, speichern wir samt Namen verschlüsselt, damit du später darauf zurückkommen kannst. Die Richter lesen immer nur eine Fassung ohne Namen. Du kannst es jederzeit entfernen lassen. Wir verkaufen deine Daten nicht. Falls Judge je verkauft oder mit einem anderen Unternehmen zusammengeführt wird, geht es im Rahmen dieser Richtlinie an den neuen Eigentümer über.",
+    "privacy.whoTitle": "Wer wir sind",
+    "privacy.who":
+      "Judge wird von Aytu Tuna betrieben, einer Einzelperson in Kanada.\n{address}\nWir entscheiden, was erhoben wird und warum. Verantwortlich für personenbezogene Daten ist Aytu Tuna, Inhaber. Kontakt: {email}.",
     "privacy.storedTitle": "Was wir speichern",
     "privacy.stored":
-      "Zu jedem Urteil speichern wir deinen Text genau so, wie du ihn geschrieben hast (mit deinen Antworten auf die Fragen der Richter und dem Text, der aus Screenshots gelesen wurde), und eine Liste, welcher Name zu welchem Label wurde. Beides ist mit einem Schlüssel verschlüsselt, der nicht in der Datenbank liegt. Außerdem speichern wir die anonymisierte Fassung, die die Richter lesen (Namen ersetzt durch Partei A und Partei B), die Einstellungen, die du gewählt hast, das Urteil, eine etwaige Übersetzung und die Namen, die du auf der Teilen-Seite zeigen willst. Wir zählen außerdem, wie Judge genutzt wird: welche Bildschirme und Funktionen, mit App-Version, Gerätemodell, Systemversion, Sprache und dem Land deiner Verbindung, in den Apps zusätzlich eine Gerätekennung. Bist du angemeldet, wird das deinem Konto zugeordnet. Nutzungsereignisse bewahren wir 90 Tage auf, die Verknüpfungen zwischen deinem Konto und deinen Geräten 180 Tage. Die Apps haben in den Einstellungen einen Schalter „Nutzungsstatistik“, und die Website sendet nichts, wenn dein Browser Do Not Track oder Global Privacy Control sendet. Fallinhalte sind nie dabei. Wenn du ein Urteil bewertest, speichern wir die Bewertung dazu.",
+      "Zu jedem Urteil speichern wir deinen Text genau so, wie du ihn geschrieben hast (mit deinen Antworten auf die Fragen der Richter und dem Text, der aus Screenshots gelesen wurde), und eine Liste, welcher Name zu welchem Platzhalter wurde. Diese Daten werden mit einem Schlüssel verschlüsselt, der nicht in der Datenbank liegt. Außerdem speichern wir die anonymisierte Fassung, die die Richter lesen (Namen ersetzt durch Partei A und Partei B), die Einstellungen, die du gewählt hast, das Urteil, jede Übersetzung und die Namen, die du auf der Teilen-Seite anzeigen lässt. Wir zählen auch, wie Judge genutzt wird: welche Bildschirme und Funktionen, mit App-Version, Gerätemodell, Systemversion, Sprache und dem Land deiner Verbindung, und in den Apps eine Gerätekennung. Wenn du angemeldet bist, wird das deinem Konto zugeordnet. Nutzungsereignisse werden 90 Tage gespeichert, die Verknüpfungen zwischen deinem Konto und deinen Geräten 180 Tage. Die Apps haben in den Einstellungen einen Schalter „Nutzungsstatistik“, und die Website sendet nichts, wenn dein Browser Do Not Track oder Global Privacy Control sendet. Fallinhalte sind dabei nie enthalten. Wenn du ein Urteil bewertest, speichern wir die Bewertung dazu. Eine Bewertung lässt sich zurücknehmen; dann behalten wir die Zeile ohne Daumen hoch oder runter. Außerdem speichern wir einen Nachweis über dein Einverständnis zu privaten Angaben und über deine Entscheidungen bei Hilf, Judge zu verbessern, mit Datum, Sprache und Plattform sowie dem Wortlaut, den du gesehen hast.",
     "privacy.helpTitle": "Hilf, Judge zu verbessern",
     "privacy.help":
-      "Aus, solange du es nicht einschaltest. Wenn es an ist, dürfen wir den anonymisierten Text, den die Richter lesen, ihre Urteile und deine Bewertungen nutzen, um die Richter von Judge zu testen und zu trainieren. Namen sind nie Teil davon. Schaltest du es aus, endet diese Nutzung für alles, was du erstellt hast, und wir halten fest, wann du es ein- oder ausgeschaltet hast.",
-    "privacy.notStoredTitle": "Was wir nicht tun",
-    "privacy.notStored":
-      "Keine Werbetracker. Deine Sprachwahl liegt im lokalen Speicher deines Browsers und nirgendwo sonst.",
-    "privacy.ipTitle": "Begrenzung der Anfragen",
-    "privacy.ip":
-      "Damit der Gerichtssaal für alle offen bleibt, begrenzen wir, wie viele Urteile jedes Konto und wie viele Übersetzungen jeder Besucher anfordern kann. Für Übersetzungen und für Antworten in einem zweiseitigen Fall legen wir bis zu 24 Stunden lang einen mit geheimem Schlüssel erzeugten Hash deiner IP-Adresse (nicht die Adresse selbst) in unserem Speicher für die Anfragebegrenzung ab. Ist der Bot-Check aktiv, geht deine IP-Adresse dafür auch an Cloudflare. Sie wird nie mit deinem Urteil gespeichert.",
-    "privacy.processorsTitle": "Wer deinen Text sonst noch verarbeitet",
-    "privacy.processors":
-      "Der Text, den du eingibst, geht samt echter Namen zuerst an unseren KI-Anbieter in den USA, damit die Namen entfernt werden. Beurteilt wird nur die anonymisierte Fassung; dein Original wird wie oben beschrieben verschlüsselt gespeichert. Ist der Bot-Check aktiv, läuft Cloudflare Turnstile in deinem Browser und prüft das Ergebnis bei Cloudflare. Wenn du dich anmeldest, übernimmt Apple oder Google (je nachdem, was du wählst) die Anmeldung, und Anmelde-E-Mails werden über Resend verschickt. Unser Hosting-Anbieter führt übliche Server-Logs. Käufe in den Apps laufen über den App Store oder Google Play und werden von RevenueCat abgewickelt, das deine Konto-ID und deinen Kaufverlauf erhält. Grafana Labs erhält unsere Server-Logs und Leistungsmetriken, die 14 Tage in der EU gespeichert werden; die Logs enthalten keine Falltexte. Absturz- und Fehlerberichte aus den Apps und dieser Website gehen an Sentry und werden bis zu 30 Tage in der EU gespeichert; sie enthalten den Fehler, die App- oder Browserversion und das Gerätemodell, aber keine Falltexte, keine Konto-ID und keine Verbindungsadresse.",
-    "privacy.shareTitle": "Geteilte Links",
-    "privacy.share":
-      "Jeder mit dem Link zu einem Urteil kann es sehen, mit den Anzeigenamen, die du gewählt hast (oder Partei A und Partei B, wenn du Namen ausgeschaltet hast). Links verwenden lange, zufällige IDs, und Teilen-Seiten bitten Suchmaschinen, sie nicht zu indexieren. Bei einem entfernten Urteil laden Link und Vorschaubild nicht mehr; Vorschauen, die schon in Chat-Apps gepostet wurden, können sichtbar bleiben, bis diese Apps sie aktualisieren. Lass Adressen, Telefonnummern und alles andere weg, was du nicht auf einer Seite haben willst, die andere öffnen können.",
-    "privacy.contactTitle": "Kontakt",
-    "privacy.contact":
-      "Du hast Fragen oder möchtest deine Daten einsehen, berichtigen oder entfernen lassen? Schreib an {email} und schick den Link zum Urteil oder Fall mit.",
-    "privacy.accountsTitle": "Konten",
-    "privacy.accounts":
-      "Judge ist nur für Menschen ab 18, und Konten, von denen wir erfahren, dass sie jemandem unter 18 gehören, werden geschlossen. Für ein Urteil brauchst du ein Konto; die Gegenseite in einem zweiseitigen Fall kann ohne Konto antworten. Meldest du dich mit Apple oder Google an, speichern wir die E-Mail-Adresse, den Namen und den Link zum Profilbild, die sie mit uns teilen, sowie die Anmeldemethode, die du genutzt hast, und Apple oder Google können sehen, dass du dich bei Judge angemeldet hast. Meldest du dich mit einem E-Mail-Link an, wird diese E-Mail über Resend verschickt, und wir speichern kurz einen Eintrag mit deiner E-Mail-Adresse, um den Link zu prüfen: Er funktioniert nach 10 Minuten nicht mehr und wird gelöscht, sobald er benutzt wurde oder kurz nachdem er abgelaufen ist. Außerdem speichern wir deine Sitzungsdaten (ein zufälliges Token und wann es abläuft, ohne IP-Adresse oder Browserangaben, wobei die Apps bei der Anmeldung aber auch eine Gerätekennung speichern), deine Credits, deinen Tarif und dessen Verlauf sowie, welche Urteile einen Credit verbraucht haben (nur die ID des Urteils). Wir speichern auch, welche Urteile und Fälle dir gehören, damit du sie auf jedem Gerät findest. Wenn du dein Konto auf der Kontoseite löschst, werden dein Konto, deine Sitzungen, die Nutzungsereignisse und die Verknüpfung zwischen deinem Konto und deinen Geräten entfernt, und deine Urteile und deine Beiträge zu Fällen werden wie unter „Entfernen“ beschrieben entfernt. Wir behalten nur eine unkenntlich gemachte Form deiner E-Mail-Adresse, damit ein neues Konto damit kein zweites Gratisurteil bekommt und geschlossen bleibt, wenn dein Konto geschlossen wurde, weil du unter 18 bist. Per E-Mail gesendete Anmeldecodes funktionieren genauso wie Links. Wenn du ein Passwort festlegst, speichern wir mit deinem Konto nur eine verschlüsselte (gehashte) Form davon, niemals das Passwort selbst.",
+      "Aus, solange du es nicht einschaltest. Wenn es an ist, dürfen wir den anonymisierten Text, den die Richter lesen, ihre Urteile und deine Bewertungen nutzen, um KI-Modelle zu testen und zu trainieren: die von Judge und, falls Judge einmal verkauft oder fusioniert wird, die des neuen Eigentümers. Namen sind nie dabei. Wenn du es ausschaltest, bleibt alles, was du erstellt hast, ab dann aus jedem Training heraus. Wir halten fest, wann du es ein- oder ausgeschaltet hast.\n„Anonymisiert“ heißt hier, dass die Namen entfernt sind; andere Angaben, die du geschrieben hast, können noch im Text stehen. Es gilt nur für Urteile, die entstehen, während es an ist, und für einen Fall nur, wenn alle, die eine Seite geschrieben haben, es an haben. Bereits trainierte Modelle ändern sich nicht. Bisher wurde noch nichts trainiert. Judge funktioniert mit „aus“ genauso.\nWir fragen einmal, auf der Seite deines eigenen Urteils, nach deinem zweiten abgeschlossenen Urteil. Bei einem Urteil, das jemand anderes mit dir geteilt hat, fragen wir nie. Auf der Karte steht: „Erlaube Judge, deine anonymisierten Urteile und Bewertungen zum Trainieren von KI zu nutzen. Namen sind nie dabei.“ Du kannst deine Antwort jederzeit in den Einstellungen ändern.",
+    "privacy.purposesTitle": "Wofür wir deine Daten nutzen",
+    "privacy.purposes":
+      "- Um dir ein Urteil zu geben, dein Konto zu führen und Käufe und Support abzuwickeln. Grundlage (EU, Vereinigtes Königreich und Brasilien): nötig, um den Dienst zu erbringen, den du angefragt hast.\n- Um Judge sicher und funktionsfähig zu halten: Anfragebegrenzung, der Bot-Check, das Erkennen von Leuten, die Gratis-Credits abgreifen, Fehlerberichte, Nutzungszählungen und das Aufbewahren einer verschlüsselten Form einer E-Mail-Adresse nach dem Löschen. Grundlage: unser berechtigtes Interesse an einem sicheren, funktionierenden Dienst. Du kannst per E-Mail widersprechen. Die Apps haben einen Schalter „Nutzungsstatistik“, und Do Not Track oder Global Privacy Control deines Browsers stoppt die eigenen Nutzungsereignisse der Website.\n- Um dein Alter zu prüfen, auch über das Alterssignal deines Telefons. Grundlage: unser berechtigtes Interesse, Judge nur für Erwachsene zu halten, oder eine gesetzliche Pflicht, wo ein Altersgesetz für App-Stores gilt.\n- Um den Text ohne Namen 30 Tage lang aufzubewahren, nachdem du etwas entfernt hast, für den Fall von Missbrauch oder eines rechtlichen Anspruchs. Grundlage: unser berechtigtes Interesse.\n- Um nachzuweisen, wozu du dich einverstanden erklärt hast: das Einverständnis zu privaten Angaben und deine Entscheidungen bei Hilf, Judge zu verbessern. Grundlage: unser berechtigtes Interesse, zeigen zu können, wozu du zugestimmt hast.\n- Um deine anonymisierten Urteile und Bewertungen für KI-Training zu nutzen. Grundlage: deine Einwilligung, nur wenn du es einschaltest.\n- Um das Gesetz einzuhalten und Aufzeichnungen aufzubewahren, die wir aufbewahren müssen. Grundlage: rechtliche Verpflichtung.\nWir nutzen deine Daten nie für Werbung und haben keine Werbetracker. Wenn wir je eine neue Nutzung wollen, sagen wir es dir vorher und fragen erneut, wenn das Gesetz deine Einwilligung verlangt.",
+    "privacy.sensitiveTitle": "Was du weglassen solltest",
+    "privacy.sensitive":
+      "Streitigkeiten können private Themen berühren, etwa Gesundheit, Beziehungen, Religion oder Geld. Schreib nur, was das Urteil braucht, und lass private Angaben über andere Menschen weg. Judge ist nicht für Notfälle oder Rechtsberatung gedacht.\nVor deinem ersten Urteil, deiner ersten Seite in einem Fall oder deiner ersten Antwort auf einen Fall bitten wir dich, ein Kästchen anzukreuzen: „Mein Text kann private Angaben enthalten, etwa zu Gesundheit oder Beziehungen. Judge schickt ihn ohne Namen an einen externen KI-Dienst, der mein Urteil schreibt, und speichert ihn, bis ich ihn entferne.“ Du kannst nur weitermachen, wenn es angekreuzt ist. Wir fragen einmal pro Konto; wenn du schon ein Konto hast, fragen wir bei deinem nächsten Urteil. Wer ohne Konto auf einen Fall antwortet, sieht dasselbe Kästchen. Wir speichern einen Nachweis über das Häkchen mit Datum, Sprache, Plattform und dem Wortlaut, den du gesehen hast.",
+    "privacy.othersTitle": "Menschen, über die du schreibst",
+    "privacy.others":
+      "Dein Text kann jemanden beschreiben, der Judge nicht nutzt. Die Richter sehen diese Person nur unter Platzhaltern wie „Person C“. Wir speichern ihre Namen verschlüsselt, mit einem codierten Fingerabdruck jedes Namens (ein Schlüssel-Hash, nicht der Name). Namen können auf einer Teilen-Seite erscheinen, wie unter Wer was sehen kann beschrieben. Wenn du im Fall von jemand anderem genannt wirst, schreib an {email} mit dem Link, und wir entfernen deinen Namen von der Teilen-Seite oder prüfen deinen Widerspruch.",
+    "privacy.automatedTitle": "Urteile kommen von einer KI",
+    "privacy.automated":
+      "KI-Modelle schreiben dein Urteil, ohne dass es vorher ein Mensch liest. Es ist eine Einschätzung des Arguments so, wie es geschrieben wurde, aus dem Text ohne Namen, den angezeigten Webquellen und deinen Antworten. Es ist keine Rechtsberatung und nicht bindend. Aufgrund des Urteils wird keine Entscheidung über dich, dein Konto, einen Preis oder deinen Zugang getroffen. Es kann falsch oder einseitig sein. Wenn du nicht einverstanden bist, bewerte es mit „Nicht fair“, ergänze Kontext oder schreib an {email}, und ein Mensch sieht es sich an. Auch die Gegenseite eines Falls kann das verlangen.",
+    "privacy.accessTitle": "Wer was sehen kann",
+    "privacy.access":
+      "Du: deinen Originaltext und die Namen, auf jedem Gerät, wenn du angemeldet bist, oder auf dem Gerät, das du benutzt hast, über einen privaten Code, der in deinem Browser oder der App gespeichert ist (wir behalten nur eine unkenntlich gemachte Form dieses Codes). Urteile, die ohne Anmeldung erstellt wurden, bevor ein Konto nötig war, und Fälle, auf die du ohne Anmeldung geantwortet hast, bleiben mit ihren Überschriften und deinen Namen, so wie du sie geschrieben hast, in diesem Browser aufgelistet, damit die Seite „Urteile“ sie anzeigen kann: Jeder, der denselben Browser nutzt, sieht diese Liste. Melde dich an einem gemeinsam genutzten Computer an oder nutze ein privates Fenster; wenn du die Websitedaten im Browser löschst, verschwindet die Liste. In einem zweiseitigen Fall sieht jede Person nur ihr eigenes Original; nach dem Urteil sehen beide beide anonymisierten Darstellungen, so wie die Richter sie lesen. Die Richter (KI-Modelle, die unser KI-Anbieter betreibt): nur die anonymisierte Fassung. Jeder mit dem geteilten Link: das Urteil mit Anzeigenamen. Standardmäßig sind das der Name, den du für dich wählst, und die Vornamen der anderen, so wie du sie geschrieben hast; du kannst sie jederzeit ändern oder Namen ausschalten, dann zeigt die Seite Partei A und Partei B. Wir: Wir können Originale mit dem Schlüssel entschlüsseln und sehen gespeicherte Texte nur an, um eine Supportanfrage von dir zu bearbeiten, Missbrauch zu untersuchen oder wenn das Gesetz es verlangt.",
+    "privacy.casesTitle": "Zweiseitige Fälle und Einsprüche",
+    "privacy.cases":
+      "In einem zweiseitigen Fall wird jede Seite beim Absenden anonymisiert, genau wie bei einem Urteil. Die Richter lesen den anonymisierten Text; die Seite jeder Person, so wie sie sie geschrieben hat, samt ihrer Namensliste, wird verschlüsselt gespeichert, und nur diese Person kann sie sehen. Jede Person gibt beim Absenden ihrer Seite den Namen ein, der auf der Teilen-Seite erscheinen soll; bleibt das Feld leer, erscheint Partei A oder Partei B. Die andere Person braucht kein Konto; ihre Antworten werden mit einem Schlüssel-Hash ihrer IP-Adresse begrenzt. Der Einladungslink wird nur als Hash gespeichert. Antwortet die andere Person angemeldet, wird ihr Konto mit ihrer Seite verknüpft, sodass nur sie später Kontext ergänzen oder ihr Original sehen kann; antwortet sie ohne Anmeldung, erfüllt ein privater Code in ihrem Browser denselben Zweck, und meldet sie sich später in diesem Browser an, kann sie den Fall in ihrem Konto behalten. Damit dieselbe Person in beiden Fassungen denselben Platzhalter bekommt, speichert der Server in jedem Fall codierte Fingerabdrücke der Namen (Schlüssel-Hashes, nicht die Namen selbst). Bis zum Urteil kann keine Seite den Text der anderen lesen; nach einem zweiseitigen Urteil können beide Seiten beide anonymisierten Fassungen lesen. Kontext, der nach einem Urteil ergänzt wird (ein Einspruch), wird genauso behandelt. Wenn die andere Person antwortet, schicken wir dir womöglich eine kurze E-Mail ohne jeden Falltext, falls E-Mail eingerichtet ist. Jede der beiden Personen kann ihre eigene Seite entfernen: Original und Anzeigename werden gelöscht, und die Teilen-Links des Falls funktionieren für alle nicht mehr. Dein Konto zu löschen tut das für jeden Fall, den du gestartet oder beantwortet hast. Ein Fall, den niemand beantwortet, läuft nach 7 Tagen ab, aber der Text deiner Seite bleibt, bis du ihn entfernst. Wer ohne Konto antwortet, kreuzt vor dem Absenden „Ich bin 18 oder älter“ und das Kästchen zu privaten Angaben an, und wir speichern beide Häkchen bei seiner Seite.",
     "privacy.webSearchTitle": "Websuche und Rückfragen",
     "privacy.webSearch":
       "Jedes Urteil schickt den anonymisierten Streit mit aktivierter Websuche an unseren KI-Anbieter. Das Modell formuliert die Suchanfragen aus diesem anonymisierten Text, die Ergebnisse kommen vom Suchpartner des Anbieters. Die genutzten Quellen werden beim Urteil angezeigt. Die Richter können dir vorher bis zu zwei Fragen stellen: Um sie zu formulieren, geht dein Text so, wie du ihn eingegeben hast, samt Namen noch einmal an den KI-Anbieter. Deine Antworten werden vor der Beurteilung zusammen mit dem Streit anonymisiert; die Fragen und deine Antworten, so wie du sie geschrieben hast, werden mit deinem verschlüsselten Original gespeichert.",
+    "privacy.evidenceTitle": "Screenshots",
+    "privacy.evidence":
+      "Dein Browser verkleinert große Bilder vor dem Hochladen. Danach geht jedes Bild einmal an einen externen KI-Dienst, damit der sichtbare Text gelesen werden kann; das Bild selbst speichern wir nie. Die rohe Abschrift, die noch Namen enthalten kann, kommt in einem signierten Token zu dir zurück, das dein Browser bis zu 6 Stunden aufbewahrt. Wenn du deine Seite abschickst, wird die Abschrift zusammen mit deinem Text anonymisiert: Die anonymisierte Abschrift wird den Richtern gezeigt und mit dem Fall gespeichert, die rohe Abschrift wird verschlüsselt mit deinem Original aufbewahrt, wo nur du sie sehen kannst. Telefonnummern, E-Mail-Adressen, Social-Media-Namen und Kontonummern darin werden für die Richter ebenfalls durch Platzhalter ersetzt.",
+    "privacy.accountsTitle": "Konten",
+    "privacy.accounts":
+      "Judge ist nur für Menschen ab 18, und Konten, von denen wir erfahren, dass sie jemandem unter 18 gehören, werden geschlossen. Für ein Urteil brauchst du ein Konto; die Gegenseite in einem zweiseitigen Fall kann ohne antworten. Wenn du dich mit Apple oder Google anmeldest, speichern wir die E-Mail-Adresse, den Namen und den Link zum Profilbild, die sie uns mitgeben, dazu die genutzte Anmeldemethode, und Apple oder Google können sehen, dass du dich bei Judge angemeldet hast. Wenn du dich mit einem E-Mail-Link oder -Code anmeldest, geht diese E-Mail über Resend raus, und wir speichern kurz einen Eintrag mit deiner E-Mail-Adresse, um ihn zu prüfen: Er funktioniert nach 10 Minuten nicht mehr und der Eintrag wird gelöscht, sobald er benutzt wurde oder kurz nach Ablauf. Wenn du ein Passwort festlegst, speichern wir mit deinem Konto nur eine verschlüsselte (gehashte) Form davon, nie das Passwort selbst. Außerdem speichern wir deine Sitzungseinträge (ein zufälliges Token und sein Ablaufdatum, ohne IP-Adresse und Browserdetails, wobei die Apps bei der Anmeldung zusätzlich eine Gerätekennung erfassen), deine Credits, deinen Tarif und seinen Verlauf und welche Urteile einen Credit verbraucht haben (nur die ID des Urteils). Wir speichern auch, welche Urteile und Fälle dir gehören, damit du sie auf jedem Gerät findest. Dein Konto auf der Kontoseite (in den Apps und auf der Website) zu löschen entfernt dein Konto, Anmeldeeinträge, Credits, Tarif und Nutzungsereignisse und entfernt deine Urteile und deine Seiten in Fällen, wie unter Entfernen beschrieben. Einiges behalten wir nach dem Löschen, aufgelistet unter Was wir nach dem Entfernen behalten. Wenn du dich nicht anmelden kannst, erklärt die Seite okjudge.com/delete-account, wie du uns per E-Mail darum bittest. Wir speichern nur eine verschlüsselte Form deiner E-Mail-Adresse, damit ein neues Konto damit kein zweites Gratis-Urteil bekommt und geschlossen bleibt, wenn dein Konto geschlossen wurde, weil du unter 18 bist. Wir halten auch fest, ob du bestätigt hast, 18 oder älter zu sein, und wie (ein Häkchen oder das Alterssignal deines Telefons; auf Android fragt die App Google Play, auf dem iPhone fragt sie Apple).",
+    "privacy.removalTitle": "Entfernen",
+    "privacy.removal":
+      "Du kannst die Entfernung auf der Urteilsseite beantragen (angemeldet erreichst du sie über die Seite „Urteile“), bei einem zweiseitigen Fall auf der Fallseite, indem du dein Konto löschst, oder per E-Mail. Beim Entfernen werden dein Originaltext, die Namensliste und die Anzeigenamen gelöscht (in einem zweiseitigen Fall das Original deiner Seite und dein Anzeigename), und der Teilen-Link samt Vorschaubild lädt für niemanden mehr. Vorschauen, die schon in Chat-Apps gepostet wurden, behalten diese Apps und zeigen sie womöglich weiter, bis sie sie aktualisieren. Den anonymisierten Text und das Urteil ohne Namen behalten wir in unseren Unterlagen; über den Link lassen sie sich nicht mehr öffnen. Dein Konto zu löschen tut das für alle deine Urteile und deine Seiten in Fällen und löscht deine Anmeldedaten, Credits und deinen Tarif. Entfernte Daten bleiben in unseren Backups, bis diese ablaufen (höchstens 14 Tage, siehe unten); falls wir je ein Backup zurückspielen, wenden wir alle Entfernungen erneut an (dafür führen wir eine Liste, was wann entfernt wurde, ohne Text oder Namen). Dreißig Tage nachdem du etwas entfernt hast, löschen wir auch den anonymisierten Text und das Urteil und behalten nur das Ergebnis und die Daten, sofern das Gesetz uns nicht zu längerer Aufbewahrung verpflichtet. Das gilt für alles, was am oder nach dem 14. November 2026 (UTC) entfernt wurde; ältere Entfernungen behalten ihren anonymisierten Text. Bei einem Fall beginnen die dreißig Tage erst, wenn alle Beteiligten ihn entfernt haben. Urteile und Fälle, die niemand entfernt, bleiben, bis du sie entfernst oder dein Konto löschst. Ein Urteil, das abgemeldet entstand, bevor ein Konto nötig war, kann entfernt werden, indem du {email} mit dem Link schreibst.",
+    "privacy.afterRemovalTitle": "Was wir nach dem Entfernen behalten",
+    "privacy.afterRemoval":
+      "Nach dem Entfernen und nach den dreißig Tagen behalten wir weiterhin:\n- das Ergebnis und die Bewertungszahlen, die gewählten Einstellungen, Daten, IDs, welche Seiten und welche Sprache es hatte, und die ID des Kontos, das einen Fall gestartet hat;\n- deine Bewertungen. Wenn du dein Konto löschst, wird jede Bewertung auf eine zufällige ID umgestellt und führt nicht mehr zu dir;\n- den Nachweis deiner Entscheidungen bei Hilf, Judge zu verbessern und deines Einverständnisses zu privaten Angaben (Daten, Sprache, Plattform und der Wortlaut, den du gesehen hast), 6 Jahre nach dem Löschen deines Kontos, um nachzuweisen, wozu du zugestimmt hast. Sobald du dein Konto löschst, tragen diese Einträge eine zufällige ID und keine Verbindung zu deinem Namen oder deiner E-Mail;\n- die Entfernungsliste mit IDs, Gründen, Daten und der Fallpartei, 90 Tage lang, um Entfernungen nach einem Backup-Rückspielen erneut anzuwenden;\n- eine verschlüsselte Form deiner E-Mail, um wiederholten Missbrauch von Gratis-Credits zu verhindern (siehe Konten);\n- einen Geräteeintrag ohne Verknüpfung zu deinem Konto, bis zu 180 Tage;\n- Backups, bis zu 14 Tage.\nWird ein Fall gelöscht, werden die codierten Fingerabdrücke und Platzhalter seiner Namen geleert und deshalb nicht behalten.",
+    "privacy.retentionTitle": "Wie lange wir speichern",
+    "privacy.retention":
+      "Urteile und Originale speichern wir, bis du ihre Entfernung beantragst oder dein Konto löschst. Um uns von Ausfällen erholen zu können, bewahren wir Backups des Servers und seiner Datenbank bis zu 14 Tage auf, danach werden sie gelöscht. Sie enthalten dieselben Daten wie der Server, auch die verschlüsselten Originale, und der Schlüssel liegt auf demselben Server; die Backups sind also wie der Server selbst geschützt, nicht durch diese Verschlüsselung. Hashes für die Anfragebegrenzung halten bis zu 48 Stunden. Nutzungsereignisse werden nach 90 Tagen gelöscht, Geräteverknüpfungen nach 180 Tagen ohne Nutzung. Logs und Metriken bei Grafana Labs werden 14 Tage aufbewahrt. Absturzberichte bei Sentry werden bis zu 30 Tage aufbewahrt. Andere Server-Logs folgen der üblichen Aufbewahrung unseres Hosting-Anbieters. Ein Anmeldecode läuft nach 10 Minuten ab, und abgelaufene Codes werden täglich gelöscht. Eine Sitzung endet 30 Tage nach deiner letzten Nutzung. Die Entfernungsliste wird 90 Tage aufbewahrt. Die Nachweise über deine Einwilligungsentscheidungen werden 6 Jahre nach dem Löschen deines Kontos aufbewahrt und dann gelöscht.",
+    "privacy.ipTitle": "Begrenzung der Anfragen",
+    "privacy.ip":
+      "Damit der Gerichtssaal für alle offen bleibt, begrenzen wir, wie viele Urteile jedes Konto und wie viele Übersetzungen jeder Besucher anfordern kann. Für Übersetzungen, Antworten in einem zweiseitigen Fall, die Statusabfrage eines Urteils, während es beurteilt wird, und Anmeldeversuche speichern wir einen mit einem Schlüssel erzeugten Hash deiner IP-Adresse (nicht die Adresse selbst) bis zu 48 Stunden. Die Anmeldebegrenzung hält die Adresse selbst kurz im Arbeitsspeicher des Servers, etwa eine Minute, nie auf der Festplatte. Wenn der Bot-Check aktiv ist, geht deine IP-Adresse für diese Prüfung auch an Cloudflare. Sie wird nie mit deinem Urteil gespeichert.",
+    "privacy.processorsTitle": "Wer deinen Text sonst noch verarbeitet",
+    "privacy.processors":
+      "Der Text, den du eingibst, geht samt echter Namen zuerst an unseren KI-Anbieter in den USA, damit die Namen entfernt werden. Beurteilt wird nur die anonymisierte Fassung; dein Original wird wie oben beschrieben verschlüsselt gespeichert. Wenn der Bot-Check aktiv ist, läuft Cloudflare Turnstile in deinem Browser und prüft das Ergebnis bei Cloudflare. Wenn du dich anmeldest, wickeln Apple oder Google (was du wählst) die Anmeldung ab, und Anmelde-E-Mails gehen über Resend raus. Käufe in den Apps laufen über den App Store oder Google Play und werden von RevenueCat abgewickelt, das deine Konto-ID und deinen Kaufverlauf erhält. Grafana Labs erhält unsere Server-Logs und Leistungsmetriken, in der EU 14 Tage gespeichert; die Logs enthalten keinen Falltext. Absturz- und Fehlerberichte aus den Apps und von dieser Website gehen an Sentry, in der EU bis zu 30 Tage gespeichert; sie enthalten den Fehler, die App- oder Browserversion und das Gerätemodell, aber keinen Falltext, keine Konto-ID und keine Verbindungsadresse. Unser Hosting-Anbieter führt übliche Server-Logs. Die Android-App fragt bei Google Play deinen Altersstatus ab, die iPhone-App bei Apple. Wir sind der Verantwortliche; diese Anbieter verarbeiten Daten in unserem Auftrag.",
+    "privacy.shareTitle": "Geteilte Links",
+    "privacy.share":
+      "Jeder mit dem Link zu einem Urteil kann es sehen, mit den Anzeigenamen, die du gewählt hast (oder Partei A und Partei B, wenn du Namen ausgeschaltet hast). Links verwenden lange, zufällige IDs, und Teilen-Seiten bitten Suchmaschinen, sie nicht zu indexieren. Bei einem entfernten Urteil laden Link und Vorschaubild nicht mehr; Vorschauen, die schon in Chat-Apps gepostet wurden, können sichtbar bleiben, bis diese Apps sie aktualisieren. Lass Adressen, Telefonnummern und alles andere weg, was du nicht auf einer Seite haben willst, die andere öffnen können.",
+    "privacy.locationTitle": "Wo deine Daten liegen",
+    "privacy.location":
+      "Unsere Server stehen in Deutschland (OVH, Frankfurt). Ein Teil der Verarbeitung findet in den USA statt: Unser KI-Anbieter betreibt die Modelle, die Namen entfernen, urteilen, Screenshots lesen und im Netz suchen; Cloudflare steht als Proxy und DNS vor okjudge.com (der gesamte Verkehr läuft darüber) und führt den Bot-Check aus. Die Anmeldung läuft über Apple oder Google, wenn du sie wählst, und Anmelde-E-Mails über Resend. Daten, die in einem anderen Land verarbeitet werden, können den Gesetzen dieses Landes unterliegen. Wir arbeiten von Kanada aus und können deine Daten von dort sehen.",
+    "privacy.storageTitle": "Cookies und Browser-Speicher",
+    "privacy.storage":
+      "Die Website nutzt ein Anmelde-Cookie (verdict.session_token), das dich angemeldet hält, und kurzlebige Cookies, während du dich mit Apple oder Google anmeldest (verdict.state hält 5 Minuten). Cloudflare, das den Bot-Check ausführt, kann dafür eigene Cookies setzen. Keines wird zum Tracking genutzt. Der lokale Speicher deines Browsers hält deine Sprache, dein Design und deine Gamify-Wahl; einen ungesendeten Entwurf (auch den eingetippten Text), während du dich anmeldest; eine Liste der Urteile und Fälle, die du abgemeldet erstellt hast; private Codes, über die du an deine eigenen Originale kommst; die Namen, die du in einem Fall benutzt hast; Einladungscodes für Fälle, auf die du antworten solltest; deine Altersbestätigung; das zuletzt gewählte Gericht; und welche Beispiele du gesehen hast. Der Sitzungsspeicher hält die E-Mail-Adresse und den Modus, während du auf eine Anmelde-E-Mail wartest, und Nutzungsmarker für den Tab. Das bleibt auf deinem Gerät. Wenn du die Websitedaten löschst, ist es weg. Die Apps speichern Ähnliches auf dem Gerät.",
+    "privacy.notStoredTitle": "Was wir nicht tun",
+    "privacy.notStored":
+      "Keine Werbetracker. Wir verkaufen deine Daten nicht und geben sie nicht für Werbung weiter. Website und Apps verfolgen dich nicht über andere Seiten hinweg. So gehen wir mit Do Not Track um: Die Website sendet aus deinem Browser keine Nutzungsereignisse, wenn er Do Not Track oder Global Privacy Control sendet, und der Schalter „Nutzungsstatistik“ der Apps tut dasselbe für die Apps. Unser Server erfasst trotzdem einige Ereignisse, die zu deinem Konto gehören (Anmeldung, erstellte oder gescheiterte Fälle und Urteile, Käufe), und von welchem Gerät du dich angemeldet hast. Wir nutzen deinen Text nie, um irgendetwas zu trainieren, außer du hast Hilf, Judge zu verbessern eingeschaltet.",
+    "privacy.securityTitle": "So schützen wir die Daten",
+    "privacy.security":
+      "Originale, Namenslisten, Anzeigenamen und Apple-Anmelde-Token sind verschlüsselt. Der Datenverkehr läuft über HTTPS. Der Schlüssel liegt auf demselben Server wie die Daten, schützt also nicht vor jemandem, der den Server übernimmt. Wenn mit deinen persönlichen Daten etwas schiefgeht, informieren wir die Betroffenen und die Behörden, wo das Gesetz es verlangt.",
+    "privacy.childrenTitle": "Alter",
+    "privacy.children":
+      "Judge ist für Menschen ab 18. Wir bitten alle, die sich anmelden, das zu bestätigen, wer ohne Konto auf einen Fall antwortet, kreuzt vor dem Absenden „Ich bin 18 oder älter“ an, und die Apps können das Alterssignal deines Telefons nutzen. Wir erheben wissentlich keine Daten von Menschen unter 18. Wenn du glaubst, dass ein Kind ein Konto hat, schreib an {email}, und wir schließen es und entfernen die Daten.",
+    "privacy.rightsTitle": "Deine Rechte",
+    "privacy.rights":
+      "Egal, wo du lebst: Du kannst uns bitten, dir zu zeigen, was wir gespeichert haben, es zu berichtigen, zu entfernen oder dein Konto zu löschen, es nicht mehr fürs Training zu nutzen und dir eine Kopie zu geben. Das meiste kannst du selbst erledigen: ein Urteil oder einen Fall auf seiner Seite entfernen, dein Konto auf der Kontoseite löschen, die angezeigten Namen auf der Seite eines Urteils oder Falls ändern, deine Daten herunterladen und Hilf, Judge zu verbessern (und in den Apps die Nutzungsstatistik) in den Einstellungen umschalten. Für alles andere schreib an {email} mit dem Link zum Urteil oder Fall. Wir bitten dich womöglich, von der E-Mail-Adresse deines Kontos zu schreiben oder angemeldet zu bestätigen. Wir antworten innerhalb von 30 Tagen oder einem Monat, falls der kürzer ist. Es ist kostenlos. Du wirst nicht schlechter behandelt, wenn du deine Rechte nutzt. Wer für dich anfragt, braucht deine schriftliche Erlaubnis.\nEine Kopie deiner Daten ist eine JSON-Datei. Wähle Meine Daten herunterladen auf der Kontoseite, in den Apps oder auf der Website. Sie enthält dein Konto und deine Anmeldemethoden, deine Urteile und deine Seiten in Fällen mit deinen eigenen Texten und Namen, die Ergebnisse, deine Bewertungen, deinen Einwilligungsverlauf, deine Geräte, Nutzungsereignisse und Käufe. Sie enthält keine Anmelde-Token, dein Passwort und nicht die verschlüsselte E-Mail, und weder Text noch Namen anderer Personen.\nDu musst uns keine Daten geben, aber ohne deinen Text und ein Konto können wir dir kein Urteil geben.",
+    "privacy.regionEuTitle": "Wenn du in der EU oder im Vereinigten Königreich bist",
+    "privacy.regionEu":
+      "- Verantwortlicher: siehe Wer wir sind.\n- Rechtsgrundlagen: siehe Wofür wir deine Daten nutzen.\n- Du kannst außerdem verlangen, dass wir die Nutzung einschränken, der Nutzung auf Grundlage unserer berechtigten Interessen widersprechen, deine Einwilligung jederzeit widerrufen (ohne dass dies das davor Getane berührt) und dich bei deiner Datenschutzbehörde beschweren (im Vereinigten Königreich beim ICO).\n- Deine Daten werden in Deutschland, Kanada und den USA verarbeitet, wie unter Wo deine Daten liegen beschrieben. Schreib an {email}, wenn du mehr darüber wissen willst, wie sie übermittelt werden.\n- Automatisierte Entscheidungen: siehe Urteile kommen von einer KI.",
+    "privacy.regionUsTitle": "Wenn du in Kalifornien oder einem anderen US-Bundesstaat bist",
+    "privacy.regionUs":
+      "- In den letzten 12 Monaten haben wir erhoben: Kennungen (E-Mail, Name, Konto- und Geräte-IDs); deinen Streittext und deine Antworten; Bewertungen und Einwilligungsentscheidungen; Kaufverlauf; Nutzungs- und Gerätedaten (Land, Gerätemodell, App-Version); die Altersbestätigung; und sensible Daten (Kontoanmeldung und alle Angaben zu Gesundheit oder Ähnlichem in deinem Text). Quellen: du, die Anmeldung und der Store deines Telefons und unsere eigenen Apps. Zwecke: siehe Wofür wir deine Daten nutzen. Empfänger: die Kategorien unter Wer deinen Text sonst noch verarbeitet.\n- Wir verkaufen oder teilen keine personenbezogenen Daten für Werbung und haben das in den letzten 12 Monaten nicht getan. Wir erstellen keine Profile von dir. Sensible Daten nutzen wir nur, um dir den Dienst zu bieten, also gibt es nichts zu beschränken oder abzulehnen.\n- Rechte: wissen, Zugang, Berichtigung, Löschung und eine übertragbare Kopie. Du kannst einen Bevollmächtigten einsetzen. Wir antworten innerhalb von 30 Tagen oder einem Monat, falls der kürzer ist. Um gegen eine Ablehnung vorzugehen, schreib an {email} mit „Appeal“. Über einen Einspruch entscheiden wir innerhalb von 45 Tagen. Lehnen wir ihn ab, kannst du dich an den Attorney General deines Bundesstaats wenden.\n- Aufbewahrung: siehe Wie lange wir speichern und Was wir nach dem Entfernen behalten.\n- Do Not Track: siehe Was wir nicht tun. Auf unseren Seiten erheben keine Werbe- oder Tracking-Firmen Daten. Cloudflare führt den Bot-Check aus und sieht dafür deine Verbindung.\n- Niemand unter 18 darf Judge nutzen, also verkaufen oder teilen wir keine Daten von Menschen unter 16. Die Rechte anderer Bundesstaaten sind dieselbe Liste.",
+    "privacy.regionCaTitle": "Wenn du in Kanada oder Québec bist",
+    "privacy.regionCa":
+      "Judge wird von Kanada aus betrieben und verarbeitet personenbezogene Daten nach dem PIPEDA: Wir erheben nur, was der Dienst braucht, nutzen es nur dafür und schützen es, und du kannst verlangen, einzusehen, zu berichtigen oder zu entfernen, was wir über dich haben. Wir antworten innerhalb von 30 Tagen. Du kannst dich beim Office of the Privacy Commissioner of Canada beschweren (priv.gc.ca). Wenn du in Québec bist:\n- Verantwortlich für personenbezogene Daten ist Aytu Tuna, Inhaber, unter {email}.\n- Manche Daten gehen aus Québec hinaus: an unseren Server in Deutschland, an den KI-Anbieter und andere Dienstleister in den USA und nach Kanada außerhalb von Québec.\n- Judge erfasst nur das Land deiner Verbindung, für Nutzungszählungen, und verfolgt nicht deinen genauen Standort. Das Urteil beurteilt das Argument, das du beschreibst, und wird nicht genutzt, um ein Profil von dir zu erstellen. Nutzungszählungen sind deinem Konto zugeordnet, wie unter Was wir speichern beschrieben.\n- Hilf, Judge zu verbessern ist aus, bis du es einschaltest, und du kannst es jederzeit ausschalten.\n- Du kannst außerdem verlangen, deine Einwilligung zu widerrufen, deine Daten in einem gängigen Format zu erhalten, und dich bei der Commission d’accès à l’information beschweren.",
+    "privacy.regionBrTitle": "Wenn du in Brasilien bist",
+    "privacy.regionBr":
+      "Verantwortlicher und Kontakt: siehe Wer wir sind. {email} ist auch der Kanal für Anfragen nach der LGPD. Wir sind der Verantwortliche; die Anbieter unter Wer deinen Text sonst noch verarbeitet handeln für uns. Rechtsgrundlagen: siehe Wofür wir deine Daten nutzen. Du kannst von uns verlangen, zu bestätigen, dass wir deine Daten verarbeiten; dir Zugang zu geben; sie zu berichtigen; übermäßige oder unrechtmäßige Daten zu anonymisieren, zu sperren oder zu löschen; Datenübertragbarkeit zu gewähren; Daten zu löschen, die wir auf Grundlage deiner Einwilligung nutzen; dir zu sagen, mit wem wir sie geteilt haben; dich über die Möglichkeit, die Einwilligung zu verweigern, und ihre Folgen zu informieren; und deine Einwilligung zu widerrufen. Es ist kostenlos. Du kannst dich auch bei der ANPD beschweren. Deine Daten werden ins Ausland gesendet, wie unter Wo deine Daten liegen beschrieben.",
+    "privacy.changesTitle": "Änderungen",
+    "privacy.changes":
+      "Wenn wir diese Erklärung in einer Weise ändern, die ins Gewicht fällt, aktualisieren wir das Datum oben auf dieser Seite. Daten, die du uns unter einer älteren Erklärung gegeben hast, nutzen wir nie für einen neuen Zweck, ohne dich vorher zu fragen. Wir prüfen sie mindestens einmal im Jahr.",
+    "privacy.contactTitle": "Kontakt",
+    "privacy.contact":
+      "Du hast Fragen oder möchtest deine Daten einsehen, berichtigen oder entfernen lassen? Schreib an {email} und schick den Link zum Urteil oder Fall mit.",
     "nav.signIn": "Anmelden",
     "nav.account": "Konto",
     "nav.pricing": "Preise",
@@ -303,20 +371,16 @@ const de: Locale = {
     "consent.sensitiveContinue": "Weiter",
     "respond.adultConfirm": "Ich bin 18 oder älter",
     "account.export": "Meine Daten herunterladen",
-    "account.exportHint":
-      "Hol dir eine JSON-Datei mit allem, was Judge über dich speichert.",
+    "account.exportHint": "Hol dir eine JSON-Datei mit allem, was Judge über dich speichert.",
     "account.exportBusy": "Datei wird vorbereitet…",
-    "account.exportFailed":
-      "Wir konnten deine Daten gerade nicht bereitstellen. Magst du es noch einmal versuchen?",
+    "account.exportFailed": "Wir konnten deine Daten gerade nicht bereitstellen. Magst du es noch einmal versuchen?",
     "deletePage.title": "Dein Judge-Konto löschen",
     "deletePage.lead":
       "Judge ist eine App von Aytu Tuna. Du kannst dein Konto und seine Daten jederzeit selbst löschen, in der App oder auf der Website.",
     "deletePage.appTitle": "In der App",
-    "deletePage.app":
-      "Öffne Judge, geh zu Konto, tippe auf Konto löschen und bestätige.",
+    "deletePage.app": "Öffne Judge, geh zu Konto, tippe auf Konto löschen und bestätige.",
     "deletePage.webTitle": "Auf der Website",
-    "deletePage.web":
-      "Melde dich auf okjudge.com an, öffne Konto, wähle Konto löschen und bestätige.",
+    "deletePage.web": "Melde dich auf okjudge.com an, öffne Konto, wähle Konto löschen und bestätige.",
     "deletePage.removedTitle": "Was gelöscht wird",
     "deletePage.removed":
       "Dein Konto, die Anmeldedaten, Guthaben, Tarif und Nutzungsereignisse werden gelöscht. Deine Urteile und deine Seiten in Fällen werden entfernt: Originaltext und Namen werden sofort gelöscht, der anonymisierte Text und das Urteil 30 Tage später.",
@@ -343,11 +407,11 @@ const de: Locale = {
     "clarify.back": "Streit bearbeiten",
     "thinking.factcheck": "Wir prüfen die Fakten im Netz…",
     "thinking.factcheckDone": "Faktencheck im Netz abgeschlossen.",
-    "thinking.premiumHelper":
-      "Die Faktenprüfung im Netz dauert etwas länger. Gib uns ein, zwei Minuten.",
+    "thinking.premiumHelper": "Die Faktenprüfung im Netz dauert etwas länger. Gib uns ein, zwei Minuten.",
     "panel.premium": "Mit Faktencheck im Netz beurteilt.",
     "factcheck.title": "Im Netz geprüft",
-    "factcheck.lead": "Diese Suchergebnisse lagen den Richtern vor dem Urteil vor. Sie sind Belege, nicht das Urteil selbst.",
+    "factcheck.lead":
+      "Diese Suchergebnisse lagen den Richtern vor dem Urteil vor. Sie sind Belege, nicht das Urteil selbst.",
     "factcheck.status.supported": "Stimmt",
     "factcheck.status.refuted": "Stimmt nicht",
     "factcheck.status.mixed": "Stimmt teilweise",
@@ -357,7 +421,8 @@ const de: Locale = {
     "factcheck.none": "Nichts im Netz nachzuschlagen: Hier geht es um Werte oder Bedeutungen, nicht um Fakten.",
     "factcheck.noneFactual":
       "Hier ließ sich nichts im Netz prüfen: Die Fakten in diesem Fall kennen nur die Beteiligten.",
-    "factcheck.unavailable": "Der Faktencheck im Netz wurde diesmal nicht fertig, also haben die Richter ohne ihn geurteilt.",
+    "factcheck.unavailable":
+      "Der Faktencheck im Netz wurde diesmal nicht fertig, also haben die Richter ohne ihn geurteilt.",
     "signin.title": "Anmelden",
     "signin.lead": "Melde dich an, um ein Urteil zu bekommen. Neue Konten erhalten das erste Urteil gratis.",
     "signin.apple": "Weiter mit Apple",
@@ -444,7 +509,8 @@ const de: Locale = {
     "pricing.monthly.renews": "Verlängert sich monatlich",
     "pricing.monthly.cap": "{n} Urteile pro Monat",
     "pricing.comingSoon": "Bald verfügbar",
-    "pricing.note": "Preise in US-Dollar. Zahlungen sind noch nicht freigeschaltet, du kannst heute also noch nichts kaufen.",
+    "pricing.note":
+      "Preise in US-Dollar. Zahlungen sind noch nicht freigeschaltet, du kannst heute also noch nichts kaufen.",
     "pricing.signIn": "Konto für dein Gratisurteil erstellen",
     "pricing.preview": "Urteile sind hier noch nicht freigeschaltet. Diese Seite ist eine Vorschau.",
     "error.signin_required": "Melde dich an, um weiterzumachen.",
@@ -453,7 +519,8 @@ const de: Locale = {
     "error.fair_use": "Deine Urteile für diesen Monat sind aufgebraucht. Neue gibt's am {date}.",
     "error.fair_useSoon": "Deine Urteile für diesen Monat sind aufgebraucht. Bald gibt's neue.",
     "error.in_progress": "An diesem Urteil wird noch gearbeitet. Einen Moment noch.",
-    "error.bad_origin": "Diese Anfrage kam von einer Quelle, die wir nicht kennen. Lade die Seite neu und versuch es noch mal.",
+    "error.bad_origin":
+      "Diese Anfrage kam von einer Quelle, die wir nicht kennen. Lade die Seite neu und versuch es noch mal.",
     "error.not_found": "Das konnten wir nicht finden.",
     "error.case_closed": "Bei diesem Fall geht das nicht mehr.",
     "error.case_expired": "Diese Einladung ist abgelaufen.",
@@ -464,7 +531,8 @@ const de: Locale = {
     "error.too_large": "Das ist zu groß. Versuch es mit einem kleineren Bild.",
     "error.unsupported_media": "Wir können nur PNG-, JPEG-, WebP- oder GIF-Bilder lesen.",
     "error.too_many_files": "Das sind mehr Bilder, als du hier hinzufügen kannst.",
-    "error.evidence_invalid": "Eines deiner Bilder ist abgelaufen oder ließ sich nicht prüfen. Entfern es und füg es neu hinzu.",
+    "error.evidence_invalid":
+      "Eines deiner Bilder ist abgelaufen oder ließ sich nicht prüfen. Entfern es und füg es neu hinzu.",
     "error.anonymize_failed":
       "Wir konnten die Namen nicht aus deinem Text entfernen. Versuch es noch mal oder schreib Initialen statt voller Namen.",
     "mode.label": "Wie sollen wir urteilen?",
@@ -479,7 +547,8 @@ const de: Locale = {
     "case.title": "Dein Fall",
     "case.loading": "Fall wird geladen…",
     "case.loadFailed": "Wir konnten diesen Fall nicht laden. Versuch es gleich noch mal.",
-    "case.notFound": "Wir konnten diesen Fall nicht finden. Vielleicht wurde er gelöscht oder gehört zu einem anderen Konto.",
+    "case.notFound":
+      "Wir konnten diesen Fall nicht finden. Vielleicht wurde er gelöscht oder gehört zu einem anderen Konto.",
     "case.signIn": "Melde dich an, um deinen Fall zu sehen.",
     "case.status.awaiting": "Wartet auf die Gegenseite",
     "case.status.judging": "Die Richter sind dran",
@@ -505,7 +574,8 @@ const de: Locale = {
     "case.side.opened": "Geöffnet",
     "case.side.typing": "Schreibt…",
     "case.judgeAnswered": "Mit den Seiten beurteilen, die geantwortet haben",
-    "case.judgeAnswered.confirm": "Ein Urteil aus den Seiten, die geantwortet haben? Die übrigen Einladungen werden geschlossen und diese Leute können nicht mehr antworten.",
+    "case.judgeAnswered.confirm":
+      "Ein Urteil aus den Seiten, die geantwortet haben? Die übrigen Einladungen werden geschlossen und diese Leute können nicht mehr antworten.",
     "case.cancel": "Abbrechen",
     "case.retry": "Noch mal versuchen",
     "case.failedBody": "Dein Credit ist wieder da. Du kannst es jetzt noch mal versuchen.",
@@ -527,7 +597,8 @@ const de: Locale = {
     "case.judgingAlone": "Die Richter sehen sich deine Seite an.",
     "case.expiredBody":
       "In 7 Tagen hat niemand geantwortet, also ist dein Credit wieder da. Du kannst trotzdem ein Urteil nur über deine Seite bekommen.",
-    "case.expiredBodyFree": "In 7 Tagen hat niemand geantwortet. Du kannst trotzdem ein Urteil nur über deine Seite bekommen.",
+    "case.expiredBodyFree":
+      "In 7 Tagen hat niemand geantwortet. Du kannst trotzdem ein Urteil nur über deine Seite bekommen.",
     "case.oneSided": "Nur auf Basis deiner Seite beurteilt.",
     "case.startOver": "Neuen Fall starten",
     "case.list.untitled": "Fall vom {date}",
@@ -545,8 +616,7 @@ const de: Locale = {
     "case.write.placeholder": "Was ist das Problem?",
     "case.write.lead":
       "Schreib deine Seite, wenn du so weit bist. Die Richter legen los, sobald ihr beide geschrieben habt.",
-    "case.write.leadAnswered":
-      "Die andere Seite hat geschrieben. Schreib deine, dann bekommst du das Urteil.",
+    "case.write.leadAnswered": "Die andere Seite hat geschrieben. Schreib deine, dann bekommst du das Urteil.",
     "case.write.submit": "Meine Seite senden",
     "case.write.emailSubject": "Die Gegenseite hat geschrieben",
     "respond.sent": "Danke. Deine Seite ist angekommen, und die Richter sind dran.",
@@ -556,8 +626,10 @@ const de: Locale = {
     "respond.expired": "Diese Einladung ist abgelaufen.",
     "respond.closed": "Dieser Fall nimmt keine Antworten mehr an.",
     "respond.withoutYou": "Dieser Fall wurde ohne deine Seite entschieden.",
-    "respond.failed": "Die Richter sind mit diesem Fall nicht fertig geworden. Die Person, die dich eingeladen hat, kann es noch mal versuchen.",
-    "respond.notFound": "Dieser Einladungslink funktioniert nicht. Vielleicht wurde er deaktiviert, oder ein Teil fehlt.",
+    "respond.failed":
+      "Die Richter sind mit diesem Fall nicht fertig geworden. Die Person, die dich eingeladen hat, kann es noch mal versuchen.",
+    "respond.notFound":
+      "Dieser Einladungslink funktioniert nicht. Vielleicht wurde er deaktiviert, oder ein Teil fehlt.",
     "respond.loading": "Einladung wird geöffnet…",
     "respond.inviteTitle": "Diese Einladung",
     "respond.startOwn": "Hast du selbst einen Streit zu klären?",
@@ -606,10 +678,8 @@ const de: Locale = {
     "home.removeTheirSide": "Gegenseite entfernen",
     "home.sendLink": "Per Link einladen",
     "home.clear": "Leeren",
-    "home.lead":
-      "Schreib beide Seiten auf oder schick der anderen Person einen Link für ihre Seite.",
-    "home.leadSolo":
-      "Schreib deine Seite auf und, wenn du sie kennst, auch die der anderen Person.",
+    "home.lead": "Schreib beide Seiten auf oder schick der anderen Person einen Link für ihre Seite.",
+    "home.leadSolo": "Schreib deine Seite auf und, wenn du sie kennst, auch die der anderen Person.",
     "home.theirSide": "Gegenseite",
     "home.theirName": "Name der anderen Person",
     "home.theirPlaceholder": "Was sagt die andere Person? Schreib es so, wie sie es sagen würde.",
@@ -618,8 +688,7 @@ const de: Locale = {
     "home.says": "{name} sagt:",
     "home.mySide": "Meine Seite:",
     "home.otherSide": "Die andere Seite:",
-    "appeal.lead":
-      "Kostet 1 Urteil.",
+    "appeal.lead": "Kostet 1 Urteil.",
     "appeal.placeholder": "Was haben die Richter übersehen? Ein Fakt, eine Nachricht oder was wirklich abgemacht war.",
     "appeal.submit": "Neu beurteilen lassen",
     "appeal.sending": "Dein Kontext wird anonymisiert…",
@@ -652,7 +721,8 @@ const de: Locale = {
     "about.casesTitle": "Beide Seiten hören",
     "about.cases1":
       "Zweiseitige Fälle: Melde dich an, schreib deine Seite und schick einen privaten Link. Die andere Person schreibt ihre Seite, ohne deine zu sehen, und die Richter wägen beide Darstellungen ab: worin ihr euch einig seid, was umstritten ist und welche Belege das Urteil ändern würden.",
-    "about.cases2": "Antwortet innerhalb von 7 Tagen niemand, funktioniert der Link nicht mehr. Ein Urteil nur über deine Seite kannst du trotzdem bekommen.",
+    "about.cases2":
+      "Antwortet innerhalb von 7 Tagen niemand, funktioniert der Link nicht mehr. Ein Urteil nur über deine Seite kannst du trotzdem bekommen.",
     "about.premiumTitle": "Extras",
     "about.premium2":
       "Belege: Füg Screenshots von Chats oder Dokumenten hinzu. Wir lesen den Text darin, verbergen die Namen und werfen das Bild weg.",
@@ -660,12 +730,6 @@ const de: Locale = {
       "Einspruch: Nach einem Urteil kann jede Person einmal Kontext ergänzen. Die Richter sehen sich alles noch mal an und sagen, ob das Urteil bleibt, gekippt wird oder sich ändert. Frühere Urteile bleiben sichtbar.",
     "about.premium4":
       "Ein zweiseitiger Fall kostet 1 Urteil. Es wird reserviert, wenn du den Link schickst, und kommt zurück, wenn innerhalb von 7 Tagen niemand antwortet.",
-    "privacy.casesTitle": "Zweiseitige Fälle und Einsprüche",
-    "privacy.cases":
-      "In einem zweiseitigen Fall wird jede Seite beim Absenden anonymisiert, genau wie bei einem Urteil. Die Richter lesen den anonymisierten Text; die Seite jeder Person, so wie sie sie geschrieben hat, wird mit ihrer Namensliste verschlüsselt gespeichert, und nur diese Person kann sie sehen. Beim Absenden ihrer Seite gibt jede Person den Namen ein, der auf der Teilen-Seite erscheinen soll; bleibt das Feld leer, steht dort Partei A oder Partei B. Die andere Person braucht kein Konto; ihre Antworten werden über einen Hash ihrer IP-Adresse mit geheimem Schlüssel begrenzt. Der Einladungslink wird nur als Hash gespeichert. Antwortet die andere Person angemeldet, wird ihr Konto mit ihrer Seite verknüpft, sodass nur sie später Kontext ergänzen oder ihr Original sehen kann; antwortet sie ohne Anmeldung, übernimmt das ein privater Code in ihrem Browser, und wenn sie sich später in diesem Browser anmeldet, kann sie den Fall in ihrem Konto speichern. Damit dieselbe Person in beiden Darstellungen dasselbe Label bekommt, speichert der Server innerhalb jedes Falls codierte Fingerabdrücke von Namen (Hashes mit geheimem Schlüssel, nicht die Namen selbst). Bis zum Urteil kann keine Seite den Text der anderen lesen; nach einem zweiseitigen Urteil können beide Personen beide anonymisierten Darstellungen lesen. Kontext, der nach einem Urteil ergänzt wird (ein Einspruch), wird genauso behandelt. Wenn die andere Person antwortet, schicken wir dir eventuell eine kurze E-Mail ohne Text aus dem Fall, sofern E-Mail eingerichtet ist. Jede Person kann ihre eigene Seite entfernen: Ihr Original und ihr Anzeigename werden gelöscht, und die geteilten Links des Falls funktionieren für niemanden mehr. Wenn du dein Konto löschst, geschieht das für jeden Fall, den du gestartet oder beantwortet hast.",
-    "privacy.evidenceTitle": "Screenshots",
-    "privacy.evidence":
-      "Dein Browser verkleinert große Bilder vor dem Hochladen. Danach geht jedes Bild einmal an einen externen KI-Dienst, damit der sichtbare Text gelesen werden kann; das Bild selbst speichern wir nie. Die rohe Abschrift, die noch Namen enthalten kann, kommt in einem signierten Token zu dir zurück, das dein Browser bis zu 6 Stunden aufbewahrt. Wenn du deine Seite abschickst, wird die Abschrift zusammen mit deinem Text anonymisiert: Die anonymisierte Abschrift wird den Richtern gezeigt und mit dem Fall gespeichert, die rohe Abschrift wird verschlüsselt mit deinem Original aufbewahrt, wo nur du sie sehen kannst. Telefonnummern, E-Mail-Adressen, Social-Media-Namen und Kontonummern darin werden für die Richter ebenfalls durch Platzhalter ersetzt.",
     "pricing.premium.f5": "Screenshots als Belege, gelesen und dann gelöscht, ohne Aufpreis",
     "pricing.premium.f6": "Nach einem Urteil Kontext ergänzen und neu beurteilen lassen (1 Urteil)",
     "pricing.premium.f7": "Beide Seiten hören: Schick der anderen Person einen privaten Link für ihre Seite",
@@ -785,21 +849,6 @@ const de: Locale = {
     "stamp.dissolved": "Missverständnis",
     "bestPoint.of": "Stärkstes Argument von {name}",
     "bestPoint.self": "Dein stärkstes Argument",
-    "privacy.accessTitle": "Wer was sehen kann",
-    "privacy.access":
-      "Du: deinen Originaltext und die Namen, auf jedem Gerät, wenn du angemeldet bist, oder auf dem Gerät, das du benutzt hast, über einen privaten Code, der in deinem Browser oder der App gespeichert ist (wir behalten nur eine unkenntlich gemachte Form dieses Codes). Urteile, die ohne Anmeldung erstellt wurden, bevor ein Konto nötig war, und Fälle, auf die du ohne Anmeldung geantwortet hast, bleiben mit ihren Überschriften und deinen Namen, so wie du sie geschrieben hast, in diesem Browser aufgelistet, damit die Seite „Urteile“ sie anzeigen kann: Jeder, der denselben Browser nutzt, sieht diese Liste. Melde dich an einem gemeinsam genutzten Computer an oder nutze ein privates Fenster; wenn du die Websitedaten im Browser löschst, verschwindet die Liste. In einem zweiseitigen Fall sieht jede Person nur ihr eigenes Original; nach dem Urteil sehen beide beide anonymisierten Darstellungen, so wie die Richter sie lesen. Die Richter (KI-Modelle, die unser KI-Anbieter betreibt): nur die anonymisierte Fassung. Jeder mit dem geteilten Link: das Urteil mit Anzeigenamen. Standardmäßig sind das der Name, den du für dich wählst, und die Vornamen der anderen, so wie du sie geschrieben hast; du kannst sie jederzeit ändern oder Namen ausschalten, dann zeigt die Seite Partei A und Partei B. Wir: Wir können Originale mit dem Schlüssel entschlüsseln und sehen gespeicherte Texte nur an, um eine Supportanfrage von dir zu bearbeiten, Missbrauch zu untersuchen oder wenn das Gesetz es verlangt.",
-    "privacy.removalTitle": "Entfernen",
-    "privacy.removal":
-      "Du kannst die Entfernung auf der Urteilsseite beantragen (angemeldet erreichst du sie über die Seite „Urteile“), bei einem zweiseitigen Fall auf der Fallseite, indem du dein Konto löschst, oder per E-Mail. Beim Entfernen werden dein Originaltext, die Namensliste und die Anzeigenamen gelöscht (in einem zweiseitigen Fall das Original deiner Seite und dein Anzeigename), und der geteilte Link und sein Vorschaubild laden für niemanden mehr. Vorschauen, die schon in Chat-Apps gepostet wurden, liegen bei diesen Apps und können sichtbar bleiben, bis sie aktualisiert werden. Den anonymisierten Text und das Urteil behalten wir ohne Namen in unseren Unterlagen; über den Link lassen sie sich nicht mehr öffnen. Wenn du dein Konto löschst, geschieht das für alle deine Urteile und deine Beiträge zu Fällen, und deine Anmeldedaten, Credits und dein Tarif werden gelöscht. Entfernte Daten bleiben in unseren Backups, bis diese ablaufen (höchstens 14 Tage, siehe unten); falls wir je ein Backup wiederherstellen, wenden wir jede Entfernung erneut an (dafür führen wir eine Liste, was wann entfernt wurde, ohne Text oder Namen). Dreißig Tage nachdem du etwas entfernt hast, löschen wir auch den anonymisierten Text und das Urteil und behalten nur das Ergebnis und die Datumsangaben, es sei denn, das Gesetz verlangt, sie länger aufzubewahren. Bei einem Fall beginnen die dreißig Tage erst, wenn alle Beteiligten ihn entfernt haben.",
-    "privacy.retentionTitle": "Wie lange wir speichern",
-    "privacy.retention":
-      "Urteile und Originale speichern wir, bis du ihre Entfernung beantragst oder dein Konto löschst. Um uns von Ausfällen erholen zu können, bewahren wir Backups des Servers und seiner Datenbank bis zu 14 Tage auf, danach werden sie gelöscht. Sie enthalten dieselben Daten wie der Server, einschließlich der verschlüsselten Originale, und der Schlüssel liegt auf demselben Server; die Backups sind also wie der Server selbst geschützt, nicht durch diese Verschlüsselung. Hashes für die Anfragebegrenzung werden höchstens 24 Stunden aufbewahrt. Server-Logs folgen der üblichen Aufbewahrungsfrist unseres Hosting-Anbieters. Nutzungsereignisse werden nach 90 Tagen gelöscht, Geräteverknüpfungen nach 180 Tagen ohne Nutzung. Logs und Metriken bei Grafana Labs werden 14 Tage aufbewahrt.",
-    "privacy.locationTitle": "Wo deine Daten liegen",
-    "privacy.location":
-      "Unsere Server stehen in Deutschland (OVH, Frankfurt). Ein Teil der Verarbeitung findet in den USA statt: Unser KI-Anbieter betreibt die Modelle, die Namen entfernen, urteilen, Screenshots lesen und im Netz suchen; Cloudflare ist okjudge.com als Proxy und DNS vorgeschaltet (der gesamte Datenverkehr läuft darüber) und betreibt den Bot-Check. Die Anmeldung läuft über Apple oder Google, wenn du sie wählst, und Anmelde-E-Mails laufen über Resend. Daten, die in einem anderen Land verarbeitet werden, können den Gesetzen dieses Landes unterliegen.",
-    "privacy.rightsTitle": "Deine Rechte (Kanada)",
-    "privacy.rights":
-      "Judge wird von Kanada aus betrieben und verarbeitet personenbezogene Daten nach dem kanadischen Bundesdatenschutzgesetz (PIPEDA): Wir erheben nur, was der Dienst braucht, nutzen es nur dafür und schützen es, und du kannst verlangen, die Daten, die wir über dich haben, einzusehen, zu berichtigen oder zu entfernen. Wir antworten innerhalb von 30 Tagen.",
     "footer.terms": "Bedingungen",
     "signin.legalTerms": "Nutzungsbedingungen",
     "age.confirm": "Ich bin 18 oder älter",

@@ -109,14 +109,18 @@ const nl: Locale = {
     "vote.dissolved": "misverstand",
     refusedNote: "De AI heeft deze overgeslagen. We laten liever niets zien dan een nepuitspraak.",
     demoNote: "🎭 Demomodus: er is geen AI-sleutel ingesteld, dus dit is een voorbeelduitspraak",
-    "trial.survived": "🛡️ Bezwaar afgewezen: de advocaat van de andere kant bracht zijn sterkste bezwaar in, en de uitspraak hield stand. De zekerheid blijft gelijk.",
-    "trial.uncertain": "⚠️ De advocaat van de andere kant maakte bezwaar, en dat bezwaar liet echte twijfel over deze uitspraak achter",
-    "trial.overturned": "⚠️ Bezwaar toegewezen: de uitspraak blijft staan, maar het sterkste bezwaar van de andere kant verzwakt haar ernstig",
+    "trial.survived":
+      "🛡️ Bezwaar afgewezen: de advocaat van de andere kant bracht zijn sterkste bezwaar in, en de uitspraak hield stand. De zekerheid blijft gelijk.",
+    "trial.uncertain":
+      "⚠️ De advocaat van de andere kant maakte bezwaar, en dat bezwaar liet echte twijfel over deze uitspraak achter",
+    "trial.overturned":
+      "⚠️ Bezwaar toegewezen: de uitspraak blijft staan, maar het sterkste bezwaar van de andere kant verzwakt haar ernstig",
     "trial.minor": "🛡️ De advocaat van de andere kant had een terecht punt, maar de uitspraak blijft staan",
     "trial.whatWasTested": "Het bezwaar",
     "trial.attackPrefix": "Bezwaar:",
     "trial.refereePrefix": "Waarom:",
-    "trial.mixedNote": "Dit is een gemengde kwestie: deels feiten, deels waarden of woordbetekenissen, dus een zuivere winst is lastiger te verdedigen.",
+    "trial.mixedNote":
+      "Dit is een gemengde kwestie: deels feiten, deels waarden of woordbetekenissen, dus een zuivere winst is lastiger te verdedigen.",
     confidence: "Zekerheid {n} van {total}",
     verdictAria: "Uitspraak: {label}",
     "party.a": "Partij A",
@@ -135,9 +139,9 @@ const nl: Locale = {
     "error.too_long": "Dat is een hoop! Houd het onder de 6000 tekens.",
     "error.invalid": "Er klopte iets niet aan dat verzoek.",
     "error.rate_limited": "Stilte in de rechtszaal! Je zit even aan je limiet. Probeer het over {wait} opnieuw.",
-    "error.daily_cap":
-      "De rechtbank is dicht voor vandaag: meer ruzies kan ze niet aan. Over {wait} weer open.",
-    "error.captcha_failed": "We konden niet vaststellen dat je een mens bent. Doe de check opnieuw en verstuur het dan.",
+    "error.daily_cap": "De rechtbank is dicht voor vandaag: meer ruzies kan ze niet aan. Over {wait} weer open.",
+    "error.captcha_failed":
+      "We konden niet vaststellen dat je een mens bent. Doe de check opnieuw en verstuur het dan.",
     "wait.moment": "een paar minuten",
     "wait.minute": "1 minuut",
     "wait.minutes": "{n} minuten",
@@ -146,7 +150,8 @@ const nl: Locale = {
     "refused.headline": "De AI wilde zich hier niet over uitspreken",
     "refused.crux":
       "Het veiligheidsfilter van de AI hield het beoordelen tegen. Liever geen uitspraak dan een verzonnen uitspraak.",
-    "refused.bestPoint": "Probeer het anders te verwoorden. Of accepteer dat sommige ruzies te groot zijn voor een app.",
+    "refused.bestPoint":
+      "Probeer het anders te verwoorden. Of accepteer dat sommige ruzies te groot zijn voor een app.",
     "refused.claim": "Overgeslagen",
     "nav.skip": "Naar de inhoud",
     "nav.home": "Startpagina van Judge",
@@ -172,7 +177,8 @@ const nl: Locale = {
     "how.kicker": "Vijf stappen",
     "how.lead": "Geen kop of munt. Elke discussie doorloopt dezelfde vijf stappen.",
     "how.step1.title": "Geef beide kanten een eerlijke kans",
-    "how.step1.body": "Elke kant wordt zo sterk mogelijk neergezet, ook de kant waarvan jij denkt dat die ongelijk heeft.",
+    "how.step1.body":
+      "Elke kant wordt zo sterk mogelijk neergezet, ook de kant waarvan jij denkt dat die ongelijk heeft.",
     "how.step2.title": "Sorteer de beweringen",
     "how.step2.body":
       "Elke bewering krijgt een label: feit, waarde, definitie of logica. Elk soort los je namelijk op een andere manier op.",
@@ -194,8 +200,7 @@ const nl: Locale = {
     "sample.nameB": "Jij",
     "sample.label": "Jij hebt gelijk",
     "sample.headline": "Niemand bestelt een sandwich in de hoop op een hotdog",
-    "sample.crux":
-      "Puur op vorm kan een hotdog doorgaan voor een sandwich, maar zo gebruikt niemand het woord echt.",
+    "sample.crux": "Puur op vorm kan een hotdog doorgaan voor een sandwich, maar zo gebruikt niemand het woord echt.",
     "sample.why":
       "Daan leunt alleen op de vorm. Een woord betekent wat mensen ermee bedoelen, en wie in de lunchroom een sandwich bestelt, krijgt nooit een hotdog.",
     "sample.bestPoint":
@@ -238,8 +243,7 @@ const nl: Locale = {
       "Het weet alleen wat jij vertelt, en hoe je het verhaal brengt, bepaalt mee hoe het uitpakt. Zet de andere kant erin zoals die het zelf zou zeggen.",
     "about.limit2":
       "AI-rechters kunnen feiten verkeerd hebben. Elke uitspraak noemt de feiten waar hij op leunt, zodat je ze kunt checken.",
-    "about.limit3":
-      "Namen vervangen lukt meestal, maar ongewone namen of bijnamen kunnen erdoorheen glippen.",
+    "about.limit3": "Namen vervangen lukt meestal, maar ongewone namen of bijnamen kunnen erdoorheen glippen.",
     "about.limit4": "Het is voor de lol en voor duidelijkheid, geen juridisch, medisch of financieel advies.",
     "about.builtTitle": "Onder de motorkap",
     "about.built":
@@ -249,33 +253,96 @@ const nl: Locale = {
     "privacy.kicker": "Jouw gegevens",
     "privacy.lead":
       "Kort gezegd: we bewaren wat je schrijft, inclusief namen, versleuteld, zodat je er later naar terug kunt. De rechters lezen altijd alleen een versie zonder namen. Je kunt het op elk moment laten verwijderen. We verkopen je gegevens niet. Als Judge ooit wordt verkocht of fuseert, gaat het onder dit beleid over naar de nieuwe eigenaar.",
+    "privacy.whoTitle": "Wie we zijn",
+    "privacy.who":
+      "Judge wordt gerund door Aytu Tuna, een particulier in Canada.\n{address}\nWij bepalen wat er wordt verzameld en waarom. De verantwoordelijke voor persoonsgegevens is Aytu Tuna, eigenaar. Contact: {email}.",
     "privacy.storedTitle": "Wat we bewaren",
     "privacy.stored":
-      "Bij elke uitspraak bewaren we je tekst precies zoals je die schreef (met je antwoorden op de vragen van de rechters en de tekst uit eventuele screenshots), plus een lijst van welke naam welk label werd. Die zijn versleuteld met een sleutel die niet in de database staat. Daarnaast bewaren we de geanonimiseerde versie die de rechters lezen (namen vervangen door Partij A en Partij B), de instellingen die je koos, de uitspraak, een eventuele vertaling en de namen die je op de deelpagina wilt tonen. We tellen ook hoe Judge wordt gebruikt: welke schermen en functies, met de appversie, het apparaatmodel, de systeemversie, de taal en het land van je verbinding, en in de apps een apparaat-ID. Als je bent ingelogd, wordt dit aan je account gekoppeld. Gebruiksgebeurtenissen bewaren we 90 dagen en de koppelingen tussen je account en je apparaten 180 dagen. De apps hebben in Instellingen een schakelaar Gebruiksstatistieken, en de website stuurt niets als je browser Do Not Track of Global Privacy Control meestuurt. Er zit nooit tekst van een zaak in. Als je een uitspraak beoordeelt, bewaren we de beoordeling erbij.",
+      "Bij elke uitspraak bewaren we je tekst precies zoals je die schreef (met je antwoorden op de vragen van de rechters en de tekst uit eventuele screenshots), plus een lijst van welke naam welk label werd. Die worden versleuteld met een sleutel die niet in de database staat. We bewaren ook de geanonimiseerde versie die de rechters lezen (namen vervangen door Partij A en Partij B), de instellingen die je koos, de uitspraak, eventuele vertalingen en de namen die je op de deelpagina laat zien. We tellen ook hoe Judge wordt gebruikt: welke schermen en functies, met appversie, apparaatmodel, systeemversie, taal en het land van je verbinding, en in de apps een apparaat-ID. Als je bent ingelogd, wordt dit aan je account gekoppeld. Gebruiksgebeurtenissen worden 90 dagen bewaard en de koppelingen tussen je account en je apparaten 180 dagen. De apps hebben in Instellingen een schakelaar Gebruiksstatistieken, en de website stuurt niets als je browser Do Not Track of Global Privacy Control meestuurt. Er zit nooit zaaktekst in. Als je een uitspraak beoordeelt, bewaren we de beoordeling erbij. Een beoordeling kan worden gewist; dan houden we de rij zonder de duim omhoog of omlaag. We bewaren ook een vastlegging van je akkoord met privégegevens en van je keuzes bij Help Judge te verbeteren, met de datum, de taal en het platform, en de tekst die je zag.",
     "privacy.helpTitle": "Help Judge te verbeteren",
     "privacy.help":
-      "Uit, tenzij je het aanzet. Als het aan staat, mogen we de geanonimiseerde tekst die de rechters lezen, hun uitspraken en je beoordelingen gebruiken om de rechters van Judge te testen en te trainen. Namen maken er nooit deel van uit. Zet je het uit, dan stopt dat gebruik voor alles wat je hebt gemaakt, en we leggen vast wanneer je het aan- of uitzette.",
-    "privacy.notStoredTitle": "Wat we niet doen",
-    "privacy.notStored":
-      "Geen advertentietrackers. Je taalkeuze staat in de lokale opslag van je browser en nergens anders.",
-    "privacy.ipTitle": "Gebruikslimieten",
-    "privacy.ip":
-      "Om de rechtbank voor iedereen open te houden, begrenzen we hoeveel uitspraken elk account en hoeveel vertalingen elke bezoeker kan aanvragen. Voor vertalingen en voor antwoorden in een tweezijdige zaak bewaren we een gesleutelde hash van je IP-adres, niet het adres zelf, maximaal 24 uur in onze opslag voor gebruikslimieten. Staat de menscheck aan, dan gaat je IP-adres voor die check ook naar Cloudflare. Het wordt nooit bij je uitspraak opgeslagen.",
-    "privacy.processorsTitle": "Wie je tekst nog meer verwerkt",
-    "privacy.processors":
-      "De tekst die je typt, met echte namen, gaat eerst naar onze AI-aanbieder in de Verenigde Staten, zodat de namen eruit gehaald kunnen worden. Alleen de geanonimiseerde versie wordt beoordeeld; je origineel wordt versleuteld bewaard, zoals hierboven beschreven. Staat de menscheck aan, dan draait Cloudflare Turnstile in je browser en controleert het resultaat bij Cloudflare. Log je in, dan regelt Apple of Google (welke je ook kiest) die inlog, en inlogmails gaan via Resend. Onze hostingprovider bewaart standaard serverlogs. Aankopen in de apps lopen via de App Store of Google Play en worden afgehandeld door RevenueCat, dat je account-ID en aankoopgeschiedenis krijgt. Grafana Labs krijgt onze serverlogs en prestatiemetingen, die 14 dagen in de EU worden bewaard; de logs bevatten geen tekst van zaken. Crash- en foutrapporten van de apps en deze website gaan naar Sentry en worden tot 30 dagen in de EU bewaard; ze bevatten de fout, de app- of browserversie en het apparaatmodel, maar geen tekst van zaken, account-ID of verbindingsadres.",
-    "privacy.shareTitle": "Deellinks",
-    "privacy.share":
-      "Iedereen met de link naar een uitspraak kan die zien, met de weergavenamen die jij koos (of Partij A en Partij B als je namen hebt uitgezet). Links gebruiken lange willekeurige ID's, en deelpagina's vragen zoekmachines om ze niet te indexeren. De link en de previewafbeelding van een verwijderde uitspraak laden niet meer; previews die al in chatapps zijn geplaatst, kunnen zichtbaar blijven tot die apps ze vernieuwen. Laat adressen, telefoonnummers en alles wat je niet op een pagina wilt die anderen kunnen openen, achterwege.",
-    "privacy.contactTitle": "Contact",
-    "privacy.contact":
-      "Vragen, of wil je je gegevens inzien, corrigeren of laten verwijderen? Mail naar {email} met de link naar de uitspraak of zaak.",
-    "privacy.accountsTitle": "Accounts",
-    "privacy.accounts":
-      "Judge is alleen voor mensen van 18 jaar en ouder, en accounts waarvan we merken dat ze van iemand onder de 18 zijn, worden gesloten. Voor een uitspraak heb je een account nodig; de andere kant van een tweezijdige zaak kan zonder account antwoorden. Log je in met Apple of Google, dan bewaren we het e-mailadres, de naam en de link naar de profielfoto die ze met ons delen, plus welke inlogmethode je gebruikte, en Apple of Google kan zien dat je bij Judge bent ingelogd. Log je in met een e-maillink, dan gaat die e-mail via Resend en bewaren we kort een record met je e-mailadres om de link te controleren: die werkt na 10 minuten niet meer en het record wordt verwijderd zodra de link gebruikt is of kort nadat hij verlopen is. We bewaren ook je sessiegegevens (een willekeurig token en wanneer het verloopt, zonder IP-adres of browsergegevens, al leggen de apps bij het inloggen wel een apparaat-ID vast), je credits, je abonnement en de geschiedenis daarvan, en welke uitspraken een credit hebben gebruikt (alleen de ID van de uitspraak). Ook houden we bij welke uitspraken en zaken van jou zijn, zodat je ze op elk apparaat terugvindt. Verwijder je je account op de accountpagina, dan verdwijnen je account, je sessies, de gebruiksgebeurtenissen en de koppeling tussen je account en je apparaten, en worden je uitspraken en jouw kant in zaken verwijderd zoals beschreven onder Verwijderen. We bewaren alleen een gehashte vorm van je e-mailadres, zodat een nieuw account met dat adres geen tweede gratis uitspraak krijgt, en blijft gesloten als je account is gesloten omdat je onder de 18 bent. Inlogcodes per e-mail werken op dezelfde manier als links. Als je een wachtwoord instelt, bewaren we bij je account alleen een versleutelde (gehashte) versie ervan, nooit het wachtwoord zelf.",
+      "Uit, tenzij je het aanzet. Als het aan staat, mogen we de geanonimiseerde tekst die de rechters lezen, hun uitspraken en je beoordelingen gebruiken om AI-modellen te testen en te trainen: die van Judge zelf en, als Judge ooit wordt verkocht of gefuseerd, die van de nieuwe eigenaar. Namen zijn er nooit bij. Als je het uitzet, blijft alles wat je maakte vanaf dat moment buiten elke training. We leggen vast wanneer je het aan- of uitzette.\n„Geanonimiseerd” betekent hier dat de namen eruit zijn gehaald; andere details die je schreef kunnen nog in de tekst staan. Het geldt alleen voor uitspraken die zijn gemaakt terwijl het aan staat, en voor een zaak alleen als iedereen die een kant schreef het aan heeft. Modellen die al getraind zijn, veranderen niet. Er is nog niets getraind. Judge werkt hetzelfde met het uit.\nWe vragen het één keer, op de pagina van je eigen uitspraak, na je tweede voltooide uitspraak. We vragen het nooit bij een uitspraak die iemand anders met je deelde. Op de kaart staat: „Laat Judge je geanonimiseerde uitspraken en beoordelingen gebruiken om AI te trainen. Namen zitten er nooit bij.” Je kunt je antwoord op elk moment wijzigen in Instellingen.",
+    "privacy.purposesTitle": "Waarom we je gegevens gebruiken",
+    "privacy.purposes":
+      "- Om je een uitspraak te geven, je account te beheren en aankopen en support af te handelen. Grondslag (EU, Verenigd Koninkrijk en Brazilië): nodig om de dienst te leveren waar je om vroeg.\n- Om Judge veilig en werkend te houden: gebruikslimieten, de menscheck, mensen opsporen die gratis tegoeden oogsten, foutmeldingen, gebruikstellingen en het bewaren van een versluierde vorm van een e-mailadres na verwijdering. Grondslag: ons gerechtvaardigd belang bij een veilige, werkende dienst. Je kunt per e-mail bezwaar maken. De apps hebben een schakelaar Gebruiksstatistieken, en Do Not Track of Global Privacy Control van je browser stopt de eigen gebruiksgebeurtenissen van de website.\n- Om je leeftijd te controleren, ook met het leeftijdssignaal van je telefoon. Grondslag: ons gerechtvaardigd belang om Judge alleen voor volwassenen te houden, of een wettelijke plicht waar een leeftijdswet voor appstores geldt.\n- Om de tekst zonder namen 30 dagen te bewaren nadat je iets verwijdert, voor het geval van misbruik of een juridische claim. Grondslag: ons gerechtvaardigd belang.\n- Om te bewijzen waarmee je akkoord ging: het akkoord met privégegevens en je keuzes bij Help Judge te verbeteren. Grondslag: ons gerechtvaardigd belang om te kunnen laten zien waarmee je akkoord ging.\n- Om je geanonimiseerde uitspraken en beoordelingen te gebruiken voor AI-training. Grondslag: jouw toestemming, alleen als je het aanzet.\n- Om de wet na te leven en gegevens te bewaren die we moeten bewaren. Grondslag: wettelijke verplichting.\nWe gebruiken je gegevens nooit voor advertenties en we hebben geen advertentietrackers. Als we ooit een nieuw gebruik willen, vertellen we het je eerst en vragen we opnieuw als de wet je toestemming vereist.",
+    "privacy.sensitiveTitle": "Wat je beter weglaat",
+    "privacy.sensitive":
+      "Conflicten kunnen privéonderwerpen raken, zoals gezondheid, relaties, religie of geld. Schrijf alleen wat de uitspraak nodig heeft en laat privédetails over anderen weg. Judge is niet voor noodgevallen of juridisch advies.\nVoor je eerste uitspraak, je eerste kant van een zaak of je eerste antwoord op een zaak vragen we je een vakje aan te vinken: „Mijn tekst kan privégegevens bevatten, zoals over gezondheid of relaties. Judge stuurt hem, zonder namen, naar een externe AI-dienst om mijn uitspraak te schrijven en bewaart hem tot ik hem verwijder.” Je kunt alleen verder als het is aangevinkt. We vragen het één keer per account; als je al een account hebt, vragen we het bij je volgende uitspraak. Mensen die zonder account op een zaak antwoorden, zien hetzelfde vakje. We bewaren een vastlegging van het vinkje, met de datum, de taal, het platform en de tekst die je zag.",
+    "privacy.othersTitle": "Mensen over wie je schrijft",
+    "privacy.others":
+      "Je tekst kan iemand beschrijven die Judge niet gebruikt. De rechters zien die persoon alleen onder labels zoals „Persoon C”. We bewaren hun namen versleuteld, met een gecodeerde vingerafdruk van elke naam (een hash met sleutel, niet de naam). Namen kunnen op een deelpagina verschijnen, zoals beschreven onder Wie wat kan zien. Als je wordt genoemd in de zaak van iemand anders, mail {email} met de link en we halen je naam van de deelpagina of kijken naar je bezwaar.",
+    "privacy.automatedTitle": "Uitspraken komen van AI",
+    "privacy.automated":
+      "AI-modellen schrijven je uitspraak, zonder dat eerst een mens die leest. Het is een mening over het argument zoals het is geschreven, op basis van de tekst zonder namen, eventuele getoonde webbronnen en je antwoorden. Het is geen juridisch advies en niet bindend. Op basis ervan wordt geen enkel besluit genomen over jou, je account, een prijs of je toegang. Het kan fout of eenzijdig zijn. Als je het er niet mee eens bent, beoordeel de uitspraak als „Oneerlijk”, voeg context toe of mail {email} en een mens kijkt ernaar. De andere kant van een zaak kan dat ook vragen.",
+    "privacy.accessTitle": "Wie wat kan zien",
+    "privacy.access":
+      "Jij: je oorspronkelijke tekst en namen, op elk apparaat als je bent ingelogd, of op het apparaat dat je gebruikte via een privécode die in je browser of de app is opgeslagen (wij bewaren alleen een gehashte vorm van die code). Uitspraken die zonder inloggen zijn geschreven, toen er nog geen account nodig was, en zaken waarop je zonder inloggen hebt geantwoord, blijven in die browser in de lijst staan met hun koppen en je namen zoals je ze schreef, zodat de pagina Uitspraken ze kan tonen: iedereen die dezelfde browser gebruikt, ziet die lijst. Log op een gedeelde computer in of gebruik een privévenster; als je de sitegegevens in de browser wist, verdwijnt de lijst ook. In een tweezijdige zaak ziet ieder alleen het eigen origineel; na de uitspraak zien ze allebei beide geanonimiseerde verhalen, zoals de rechters ze lazen. De rechters (AI-modellen die onze AI-aanbieder draait): alleen de geanonimiseerde versie. Iedereen met de deellink: de uitspraak met weergavenamen. Standaard zijn dat de naam die je voor jezelf kiest en de voornamen van de anderen zoals je ze schreef; je kunt ze op elk moment aanpassen of namen uitzetten, en dan toont de pagina Partij A en Partij B. Wij: we kunnen originelen met de sleutel ontsleutelen, en bekijken opgeslagen tekst alleen om een supportverzoek van jou af te handelen, misbruik te onderzoeken of als de wet het vereist.",
+    "privacy.casesTitle": "Tweezijdige zaken en aanvullingen",
+    "privacy.cases":
+      "In een tweezijdige zaak wordt elke kant geanonimiseerd zodra die wordt verstuurd, net als bij een uitspraak. De rechters lezen de geanonimiseerde tekst; ieders kant zoals die geschreven is, met de bijbehorende namenlijst, wordt versleuteld bewaard en alleen die persoon kan hem zien. Iedereen typt bij het versturen van zijn kant de naam die op de deelpagina moet verschijnen; blijft die leeg, dan is het Partij A of Partij B. De andere persoon heeft geen account nodig; zijn antwoorden worden begrensd met een hash met sleutel van zijn IP-adres. De uitnodigingslink wordt alleen als hash bewaard. Antwoordt de andere persoon ingelogd, dan wordt zijn account aan zijn kant gekoppeld, zodat alleen hij later context kan toevoegen of zijn origineel kan zien; antwoordt hij uitgelogd, dan doet een privécode in zijn browser hetzelfde, en als hij later in die browser inlogt, kan hij de zaak in zijn account houden. Om dezelfde persoon in beide versies hetzelfde label te geven, bewaart de server binnen elke zaak gecodeerde vingerafdrukken van namen (hashes met sleutel, niet de namen zelf). Tot de uitspraak kan geen van beide kanten de tekst van de ander lezen; na een tweezijdige uitspraak kunnen beiden beide geanonimiseerde versies lezen. Context die na een uitspraak wordt toegevoegd (een aanvulling) wordt op dezelfde manier behandeld. Als de andere persoon antwoordt, sturen we je misschien een korte e-mail zonder enige zaaktekst, als e-mail is ingesteld. Beide personen kunnen hun eigen kant verwijderen: hun origineel en weergavenaam worden gewist en de deellinks van de zaak werken voor niemand meer. Je account verwijderen doet dit voor elke zaak die je startte of beantwoordde. Een zaak die niemand beantwoordt, verloopt na 7 dagen, maar de tekst van jouw kant blijft staan tot je hem verwijdert. Wie zonder account antwoordt, vinkt „Ik ben 18 jaar of ouder” en het vakje voor privégegevens aan voor het versturen, en we bewaren beide vinkjes bij zijn kant.",
     "privacy.webSearchTitle": "Zoeken op het web en vragen",
     "privacy.webSearch":
       "Bij elke uitspraak gaat de geanonimiseerde discussie naar onze AI-aanbieder, met zoeken op het web aan. Het model stelt de zoekopdrachten op uit die geanonimiseerde tekst, en de resultaten komen van de zoekpartner van de aanbieder. De gebruikte bronnen staan bij de uitspraak. De rechters kunnen je eerst maximaal twee vragen stellen: om die te bedenken gaat je tekst zoals je die typte, met namen, nog een keer naar de AI-aanbieder. Je antwoorden worden samen met de discussie geanonimiseerd voordat er geoordeeld wordt; de vragen en je antwoorden zoals je ze schreef, worden bewaard bij je versleutelde origineel.",
+    "privacy.evidenceTitle": "Screenshots",
+    "privacy.evidence":
+      "Je browser verkleint grote afbeeldingen voordat ze worden geüpload. Daarna gaat elke afbeelding één keer naar een externe AI-dienst zodat de zichtbare tekst gelezen kan worden; de afbeelding zelf bewaren we nooit. De ruwe transcriptie, waar nog namen in kunnen staan, komt bij je terug in een ondertekend token dat je browser maximaal 6 uur bewaart. Als je jouw kant verstuurt, wordt de transcriptie samen met je tekst geanonimiseerd: de geanonimiseerde transcriptie gaat naar de rechters en wordt bij de zaak opgeslagen, en de ruwe transcriptie wordt versleuteld bij je origineel bewaard, waar alleen jij hem kunt zien. Telefoonnummers, e-mailadressen, gebruikersnamen op sociale media en rekeningnummers erin worden voor de rechters ook vervangen door een neutrale aanduiding.",
+    "privacy.accountsTitle": "Accounts",
+    "privacy.accounts":
+      "Judge is alleen voor mensen van 18 jaar en ouder, en accounts waarvan we merken dat ze van iemand onder de 18 zijn, worden gesloten. Voor een uitspraak heb je een account nodig; de andere kant in een tweezijdige zaak kan zonder account antwoorden. Als je inlogt met Apple of Google, bewaren we het e-mailadres, de naam en de link naar de profielfoto die ze ons geven, plus welke inlogmethode je gebruikte, en Apple of Google kunnen zien dat je bij Judge inlogde. Als je inlogt met een e-maillink of -code, gaat die e-mail via Resend de deur uit en bewaren we kort een vermelding met je e-mailadres om dat te controleren: die werkt na 10 minuten niet meer en de vermelding wordt gewist zodra hij is gebruikt of kort na het verlopen. Als je een wachtwoord instelt, bewaren we bij je account alleen een versluierde (gehashte) vorm ervan, nooit het wachtwoord zelf. We bewaren ook je sessiegegevens (een willekeurig token en wanneer het verloopt, zonder IP-adres of browsergegevens, al leggen de apps bij het inloggen ook een apparaat-ID vast), je tegoeden, je abonnement en de geschiedenis daarvan, en welke uitspraken een tegoed gebruikten (alleen het ID van de uitspraak). We bewaren ook welke uitspraken en zaken van jou zijn, zodat je ze op elk apparaat terugvindt. Je account verwijderen op de accountpagina (in de apps en op de website) verwijdert je account, inloggegevens, tegoeden, abonnement en gebruiksgebeurtenissen, en verwijdert je uitspraken en je kanten van zaken zoals beschreven onder Verwijderen. Sommige dingen bewaren we na verwijdering, opgesomd onder Wat we bewaren na verwijdering. Als je niet kunt inloggen, legt de pagina okjudge.com/delete-account uit hoe je het ons per e-mail vraagt. We bewaren alleen een versluierde vorm van je e-mailadres, zodat een nieuw account daarmee geen tweede gratis uitspraak krijgt en gesloten blijft als je account werd gesloten omdat je onder de 18 bent. We leggen ook vast of je bevestigde dat je 18 of ouder bent, en hoe (een vinkje of het leeftijdssignaal van je telefoon; op Android vraagt de app het aan Google Play, op iPhone aan Apple).",
+    "privacy.removalTitle": "Verwijderen",
+    "privacy.removal":
+      "Vraag verwijdering aan op de pagina van de uitspraak (ingelogd kun je die openen vanaf de pagina Uitspraken), op de pagina van de zaak bij een tweezijdige zaak, door je account te verwijderen of per e-mail. Bij verwijdering worden je originele tekst, de namenlijst en de weergavenamen gewist (in een tweezijdige zaak het origineel van jouw kant en je weergavenaam), en de deellink en de voorbeeldafbeelding laden voor niemand meer. Voorbeelden die al in chat-apps zijn geplaatst, worden door die apps bewaard en kunnen blijven verschijnen tot ze ze vernieuwen. We bewaren de geanonimiseerde tekst en de uitspraak, zonder namen, in onze administratie; ze zijn via de link niet meer te openen. Je account verwijderen doet dit voor al je uitspraken en je kanten van zaken en wist je inloggegevens, tegoeden en abonnement. Verwijderde gegevens blijven in onze back-ups tot die verlopen (maximaal 14 dagen, zie hieronder); als we ooit een back-up terugzetten, passen we alle verwijderingen opnieuw toe (daarvoor bewaren we een lijst van wat wanneer is verwijderd, zonder tekst of namen). Dertig dagen nadat je iets verwijdert, wissen we ook de geanonimiseerde tekst en de uitspraak en houden we alleen de uitkomst en de data, tenzij de wet ons verplicht ze langer te bewaren. Dit geldt voor wat op of na 14 november 2026 (UTC) is verwijderd; oudere verwijderingen houden hun geanonimiseerde tekst. Bij een zaak beginnen de dertig dagen pas als iedereen die erbij betrokken is hem heeft verwijderd. Uitspraken en zaken die niemand verwijdert, worden bewaard tot je ze verwijdert of je account verwijdert. Een uitspraak die uitgelogd is gemaakt, voordat een account nodig was, kun je laten verwijderen door {email} te mailen met de link ervan.",
+    "privacy.afterRemovalTitle": "Wat we bewaren na verwijdering",
+    "privacy.afterRemoval":
+      "Na verwijdering, en na de dertig dagen, bewaren we nog steeds:\n- de uitkomst en scores, de gekozen instellingen, data, ID's, welke kanten en welke taal het had, en het ID van het account dat een zaak startte;\n- je beoordelingen. Als je je account verwijdert, wordt elke beoordeling naar een willekeurig ID verplaatst, zodat ze niet meer naar jou leidt;\n- de vastlegging van je keuzes bij Help Judge te verbeteren en van je akkoord met privégegevens (data, taal, platform en de tekst die je zag), 6 jaar nadat je je account hebt verwijderd, om te bewijzen waarmee je akkoord ging. Zodra je je account verwijdert, dragen deze vastleggingen een willekeurig ID en geen link met je naam of e-mailadres;\n- de verwijderlijst, met ID's, redenen, data en de partij in de zaak, 90 dagen, om verwijderingen opnieuw toe te passen na het terugzetten van een back-up;\n- een versluierde vorm van je e-mailadres, om herhaald misbruik van gratis tegoeden te voorkomen (zie Accounts);\n- een apparaatvermelding zonder koppeling met je account, maximaal 180 dagen;\n- back-ups, maximaal 14 dagen.\nAls een zaak wordt gewist, worden de gecodeerde vingerafdrukken en labels van de namen geleegd, dus die bewaren we niet.",
+    "privacy.retentionTitle": "Hoe lang we het bewaren",
+    "privacy.retention":
+      "We bewaren uitspraken en originelen tot je om verwijdering vraagt of je account verwijdert. Om na een storing te kunnen herstellen, bewaren we back-ups van de server en de database maximaal 14 dagen, daarna worden ze gewist. Ze bevatten dezelfde gegevens als de server, inclusief de versleutelde originelen, en de sleutel staat op dezelfde server, dus de back-ups zijn beschermd zoals de server zelf, niet door die versleuteling. Hashes voor gebruikslimieten blijven maximaal 48 uur. Gebruiksgebeurtenissen worden na 90 dagen gewist en apparaatkoppelingen na 180 dagen zonder gebruik. Logs en metrics bij Grafana Labs worden 14 dagen bewaard. Crashrapporten bij Sentry worden maximaal 30 dagen bewaard. Andere serverlogs volgen de standaardbewaartermijn van onze hostingprovider. Een inlogcode verloopt na 10 minuten en verlopen codes worden elke dag gewist. Een sessie eindigt 30 dagen nadat je hem voor het laatst gebruikte. De verwijderlijst wordt 90 dagen bewaard. Vastleggingen van je toestemmingskeuzes worden 6 jaar bewaard nadat je je account hebt verwijderd en dan gewist.",
+    "privacy.ipTitle": "Gebruikslimieten",
+    "privacy.ip":
+      "Om de rechtbank voor iedereen open te houden, begrenzen we hoeveel uitspraken elk account en hoeveel vertalingen elke bezoeker kan aanvragen. Voor vertalingen, antwoorden in een tweezijdige zaak, het opvragen van de status van een uitspraak terwijl die wordt beoordeeld en inlogpogingen bewaren we een hash met sleutel van je IP-adres, niet het adres zelf, maximaal 48 uur. Inloglimieten houden het adres zelf kort in het geheugen van de server, ongeveer een minuut, nooit op schijf. Staat de menscheck aan, dan gaat je IP-adres voor die controle ook naar Cloudflare. Het wordt nooit bij je uitspraak opgeslagen.",
+    "privacy.processorsTitle": "Wie je tekst nog meer verwerkt",
+    "privacy.processors":
+      "De tekst die je typt, met echte namen, gaat eerst naar onze AI-aanbieder in de Verenigde Staten, zodat de namen eruit gehaald kunnen worden. Alleen de geanonimiseerde versie wordt beoordeeld; je origineel wordt versleuteld bewaard, zoals hierboven beschreven. Staat de menscheck aan, dan draait Cloudflare Turnstile in je browser en controleert het resultaat bij Cloudflare. Als je inlogt, handelen Apple of Google (wat je kiest) die inlog af en gaan inlogmails via Resend de deur uit. Aankopen in de apps lopen via de App Store of Google Play en worden afgehandeld door RevenueCat, dat je account-ID en aankoopgeschiedenis ontvangt. Grafana Labs ontvangt onze serverlogs en prestatiemetrics, in de EU 14 dagen bewaard; de logs bevatten geen zaaktekst. Crash- en foutrapporten van de apps en deze website gaan naar Sentry, in de EU maximaal 30 dagen bewaard; ze bevatten de fout, de app- of browserversie en het apparaatmodel, maar geen zaaktekst, account-ID of verbindingsadres. Onze hostingprovider bewaart standaard serverlogs. De Android-app vraagt Google Play om je leeftijdsstatus en de iPhone-app vraagt Apple. Wij zijn de verwerkingsverantwoordelijke; deze aanbieders verwerken gegevens namens ons.",
+    "privacy.shareTitle": "Deellinks",
+    "privacy.share":
+      "Iedereen met de link naar een uitspraak kan die zien, met de weergavenamen die jij koos (of Partij A en Partij B als je namen hebt uitgezet). Links gebruiken lange willekeurige ID's, en deelpagina's vragen zoekmachines om ze niet te indexeren. De link en de previewafbeelding van een verwijderde uitspraak laden niet meer; previews die al in chatapps zijn geplaatst, kunnen zichtbaar blijven tot die apps ze vernieuwen. Laat adressen, telefoonnummers en alles wat je niet op een pagina wilt die anderen kunnen openen, achterwege.",
+    "privacy.locationTitle": "Waar je gegevens staan",
+    "privacy.location":
+      "Onze servers staan in Duitsland (OVH, Frankfurt). Een deel van de verwerking gebeurt in de Verenigde Staten: onze AI-aanbieder draait de modellen die namen verwijderen, oordelen, screenshots lezen en op het web zoeken; Cloudflare staat als proxy en DNS voor okjudge.com (al het verkeer loopt erdoorheen) en voert de menscheck uit. Inloggen loopt via Apple of Google als je die kiest, en inlogmails via Resend. Gegevens die in een ander land worden verwerkt, kunnen onder de wetten van dat land vallen. We werken vanuit Canada en kunnen je gegevens vandaar zien.",
+    "privacy.storageTitle": "Cookies en browseropslag",
+    "privacy.storage":
+      "De website gebruikt een inlogcookie (verdict.session_token) die je ingelogd houdt, en kortlevende cookies terwijl je inlogt met Apple of Google (verdict.state duurt 5 minuten). Cloudflare, dat de menscheck uitvoert, kan daarvoor eigen cookies plaatsen. Geen enkele wordt voor tracking gebruikt. De lokale opslag van je browser bewaart je taal, je thema en je Gamify-keuze; een niet-verstuurd concept (ook de tekst die je typte) terwijl je inlogt; een lijst van uitspraken en zaken die je uitgelogd maakte; privécodes waarmee je bij je eigen originelen komt; de namen die je in een zaak gebruikte; uitnodigingscodes voor zaken waarop je werd gevraagd te antwoorden; je leeftijdsbevestiging; de laatst gekozen rechtbank; en welke voorbeelden je zag. De sessieopslag bewaart het e-mailadres en de modus terwijl je op een inlogmail wacht, en gebruiksvlaggen voor het tabblad. Dit blijft op je apparaat. Websitegegevens wissen verwijdert het. De apps bewaren vergelijkbare dingen op het apparaat.",
+    "privacy.notStoredTitle": "Wat we niet doen",
+    "privacy.notStored":
+      "Geen advertentietrackers. We verkopen je gegevens niet en delen ze niet voor advertenties. De website en apps volgen je niet over andere sites. Hoe we met Do Not Track omgaan: de website stuurt geen gebruiksgebeurtenissen vanuit je browser als die Do Not Track of Global Privacy Control meestuurt, en de schakelaar Gebruiksstatistieken van de apps doet hetzelfde voor de apps. Onze server legt wel enkele gebeurtenissen vast die aan je account hangen (inloggen, gemaakte of mislukte zaken en uitspraken, aankopen) en vanaf welk apparaat je inlogde. We gebruiken je tekst nooit om iets te trainen, tenzij je Help Judge te verbeteren hebt aangezet.",
+    "privacy.securityTitle": "Zo houden we het veilig",
+    "privacy.security":
+      "Originelen, namenlijsten, weergavenamen en Apple-inlogtokens zijn versleuteld. Het verkeer loopt via HTTPS. De sleutel staat op dezelfde server als de gegevens, dus hij beschermt niet tegen iemand die de server overneemt. Als er iets misgaat met je persoonsgegevens, informeren we de getroffen mensen en de autoriteiten waar de wet dat vereist.",
+    "privacy.childrenTitle": "Leeftijd",
+    "privacy.children":
+      "Judge is voor mensen van 18 jaar en ouder. We vragen iedereen die inlogt dat te bevestigen, wie zonder account op een zaak antwoordt vinkt voor het versturen „Ik ben 18 jaar of ouder” aan, en de apps kunnen het leeftijdssignaal van je telefoon gebruiken. We verzamelen niet bewust gegevens van mensen onder de 18. Als je denkt dat een kind een account heeft, mail {email} en we sluiten het en verwijderen de gegevens.",
+    "privacy.rightsTitle": "Je rechten",
+    "privacy.rights":
+      "Waar je ook woont, je kunt ons vragen te laten zien wat we bewaren, het te corrigeren, te verwijderen of je account te verwijderen, het niet meer voor training te gebruiken en je een kopie te geven. Het meeste kun je zelf doen: een uitspraak of zaak op zijn pagina verwijderen, je account op de accountpagina verwijderen, de getoonde namen op de pagina van een uitspraak of zaak wijzigen, je gegevens downloaden en Help Judge te verbeteren (en in de apps Gebruiksstatistieken) omzetten in Instellingen. Voor al het andere mail je {email} met de link naar de uitspraak of zaak. We kunnen je vragen te mailen vanaf het e-mailadres van je account of ingelogd te bevestigen. We antwoorden binnen 30 dagen, of een maand als dat korter is. Het is gratis. Je wordt niet slechter behandeld omdat je je rechten gebruikt. Iemand die namens jou vraagt, heeft je schriftelijke toestemming nodig.\nEen kopie van je gegevens is een JSON-bestand. Kies Mijn gegevens downloaden op de accountpagina, in de apps of op de website. Het bevat je account en inlogmethoden, je uitspraken en je kanten van zaken met je eigen teksten en namen, de uitkomsten, je beoordelingen, je toestemmingsgeschiedenis, je apparaten, gebruiksgebeurtenissen en aankopen. Het bevat geen inlogtokens, je wachtwoord of het versluierde e-mailadres, en geen tekst of namen van anderen.\nJe hoeft ons geen gegevens te geven, maar zonder je tekst en een account kunnen we je geen uitspraak geven.",
+    "privacy.regionEuTitle": "Als je in de EU of het Verenigd Koninkrijk bent",
+    "privacy.regionEu":
+      "- Verwerkingsverantwoordelijke: zie Wie we zijn.\n- Rechtsgronden: zie Waarom we je gegevens gebruiken.\n- Je kunt ons ook vragen ons gebruik te beperken, bezwaar maken tegen gebruik op grond van onze gerechtvaardigde belangen, je toestemming op elk moment intrekken (zonder gevolg voor wat we eerder deden) en klagen bij je gegevensbeschermingsautoriteit (in het Verenigd Koninkrijk de ICO).\n- Je gegevens worden verwerkt in Duitsland, Canada en de Verenigde Staten, zoals beschreven onder Waar je gegevens staan. Mail {email} als je meer wilt weten over hoe ze worden doorgegeven.\n- Geautomatiseerde besluiten: zie Uitspraken komen van AI.",
+    "privacy.regionUsTitle": "Als je in Californië of een andere Amerikaanse staat bent",
+    "privacy.regionUs":
+      "- In de afgelopen 12 maanden verzamelden we: identificatiegegevens (e-mail, naam, account- en apparaat-ID's); je geschiltekst en antwoorden; beoordelingen en toestemmingskeuzes; aankoopgeschiedenis; gebruiks- en apparaatgegevens (land, apparaatmodel, appversie); de leeftijdsbevestiging; en gevoelige gegevens (accountinlog en alle gezondheids- of vergelijkbare details in je tekst). Bronnen: jij, de inlog en de store van je telefoon, en onze eigen apps. Doeleinden: zie Waarom we je gegevens gebruiken. Ontvangers: de categorieën onder Wie je tekst nog meer verwerkt.\n- We verkopen of delen geen persoonsgegevens voor advertenties en hebben dat de afgelopen 12 maanden niet gedaan. We maken geen profielen van je. We gebruiken gevoelige gegevens alleen om je de dienst te leveren, dus er is niets te beperken of waarvoor je je kunt afmelden.\n- Rechten: weten, inzien, corrigeren, verwijderen en een overdraagbare kopie. Je kunt een gemachtigde gebruiken. We antwoorden binnen 30 dagen, of een maand als dat korter is. Om in beroep te gaan tegen een weigering mail je {email} met „Appeal”. We beslissen binnen 45 dagen over een beroep. Wijzen we het af, dan kun je contact opnemen met de Attorney General van je staat.\n- Bewaartermijn: zie Hoe lang we het bewaren en Wat we bewaren na verwijdering.\n- Do Not Track: zie Wat we niet doen. Geen advertentie- of trackingbedrijven verzamelen gegevens op onze pagina's. Cloudflare voert de menscheck uit en ziet daarvoor je verbinding.\n- Niemand onder de 18 mag Judge gebruiken, dus we verkopen of delen geen gegevens van mensen onder de 16. De rechten in andere staten zijn dezelfde lijst.",
+    "privacy.regionCaTitle": "Als je in Canada of Québec bent",
+    "privacy.regionCa":
+      "Judge wordt vanuit Canada gerund en verwerkt persoonsgegevens volgens de PIPEDA: we verzamelen alleen wat de dienst nodig heeft, gebruiken het alleen daarvoor en beschermen het, en je kunt vragen te zien, te corrigeren of te verwijderen wat we over je hebben. We antwoorden binnen 30 dagen. Je kunt klagen bij het Office of the Privacy Commissioner of Canada (priv.gc.ca). Als je in Québec bent:\n- De verantwoordelijke voor persoonsgegevens is Aytu Tuna, eigenaar, via {email}.\n- Sommige gegevens gaan buiten Québec: naar onze server in Duitsland, naar de AI-aanbieder en andere leveranciers in de Verenigde Staten en naar Canada buiten Québec.\n- Judge legt alleen het land van je verbinding vast, voor gebruikstellingen, en volgt je exacte locatie niet. De uitspraak beoordeelt het argument dat je beschrijft en wordt niet gebruikt om een profiel van je op te bouwen. Gebruikstellingen zijn aan je account gekoppeld zoals beschreven onder Wat we bewaren.\n- Help Judge te verbeteren staat uit tot je het aanzet, en je kunt het op elk moment uitzetten.\n- Je kunt ook vragen je toestemming in te trekken, je gegevens in een gangbaar formaat te krijgen en klagen bij de Commission d’accès à l’information.",
+    "privacy.regionBrTitle": "Als je in Brazilië bent",
+    "privacy.regionBr":
+      "Verwerkingsverantwoordelijke en contact: zie Wie we zijn. {email} is ook het kanaal voor LGPD-verzoeken. Wij zijn de verwerkingsverantwoordelijke; de aanbieders onder Wie je tekst nog meer verwerkt handelen namens ons. Rechtsgronden: zie Waarom we je gegevens gebruiken. Je kunt ons vragen te bevestigen dat we je gegevens verwerken; je toegang te geven; ze te corrigeren; buitensporige of onrechtmatige gegevens te anonimiseren, te blokkeren of te verwijderen; overdraagbaarheid te geven; gegevens te verwijderen die we op basis van je toestemming gebruiken; te zeggen met wie we ze deelden; je te informeren over de mogelijkheid toestemming te weigeren en de gevolgen daarvan; en je toestemming in te trekken. Het is gratis. Je kunt ook klagen bij de ANPD. Je gegevens worden naar het buitenland gestuurd zoals beschreven onder Waar je gegevens staan.",
+    "privacy.changesTitle": "Wijzigingen",
+    "privacy.changes":
+      "Als we dit beleid op een belangrijke manier wijzigen, passen we de datum bovenaan deze pagina aan. We gebruiken gegevens die je ons onder een ouder beleid gaf nooit voor een nieuw doel zonder het je eerst te vragen. We herzien het minstens één keer per jaar.",
+    "privacy.contactTitle": "Contact",
+    "privacy.contact":
+      "Vragen, of wil je je gegevens inzien, corrigeren of laten verwijderen? Mail naar {email} met de link naar de uitspraak of zaak.",
     "nav.signIn": "Inloggen",
     "nav.account": "Account",
     "nav.pricing": "Prijzen",
@@ -303,20 +370,16 @@ const nl: Locale = {
     "consent.sensitiveContinue": "Verder",
     "respond.adultConfirm": "Ik ben 18 jaar of ouder",
     "account.export": "Mijn gegevens downloaden",
-    "account.exportHint":
-      "Krijg een JSON-bestand met alles wat Judge over je bewaart.",
+    "account.exportHint": "Krijg een JSON-bestand met alles wat Judge over je bewaart.",
     "account.exportBusy": "Je bestand wordt klaargemaakt…",
-    "account.exportFailed":
-      "We konden je gegevens nu niet klaarmaken. Wil je het nog eens proberen?",
+    "account.exportFailed": "We konden je gegevens nu niet klaarmaken. Wil je het nog eens proberen?",
     "deletePage.title": "Je Judge-account verwijderen",
     "deletePage.lead":
       "Judge is een app van Aytu Tuna. Je kunt je account en de gegevens ervan altijd zelf verwijderen, in de app of op de website.",
     "deletePage.appTitle": "In de app",
-    "deletePage.app":
-      "Open Judge, ga naar Account, tik op Account verwijderen en bevestig.",
+    "deletePage.app": "Open Judge, ga naar Account, tik op Account verwijderen en bevestig.",
     "deletePage.webTitle": "Op de website",
-    "deletePage.web":
-      "Log in op okjudge.com, open Account, kies Account verwijderen en bevestig.",
+    "deletePage.web": "Log in op okjudge.com, open Account, kies Account verwijderen en bevestig.",
     "deletePage.removedTitle": "Wat er wordt verwijderd",
     "deletePage.removed":
       "Je account, inloggegevens, tegoed, abonnement en gebruiksgebeurtenissen worden verwijderd. Je uitspraken en je kanten in zaken worden verwijderd: je originele tekst en namen worden meteen gewist, de geanonimiseerde tekst en de uitspraak 30 dagen later.",
@@ -343,11 +406,11 @@ const nl: Locale = {
     "clarify.back": "Discussie aanpassen",
     "thinking.factcheck": "Feiten checken op het web…",
     "thinking.factcheckDone": "Webcheck klaar.",
-    "thinking.premiumHelper":
-      "Feiten checken op het web duurt wat langer. Geef het een minuutje of twee.",
+    "thinking.premiumHelper": "Feiten checken op het web duurt wat langer. Geef het een minuutje of twee.",
     "panel.premium": "Beoordeeld met een factcheck op het web.",
     "factcheck.title": "Gecheckt op het web",
-    "factcheck.lead": "De rechters zagen deze zoekresultaten voordat ze oordeelden. Het is bewijs, niet de uitspraak zelf.",
+    "factcheck.lead":
+      "De rechters zagen deze zoekresultaten voordat ze oordeelden. Het is bewijs, niet de uitspraak zelf.",
     "factcheck.status.supported": "Klopt",
     "factcheck.status.refuted": "Klopt niet",
     "factcheck.status.mixed": "Deels waar",
@@ -355,8 +418,7 @@ const nl: Locale = {
     "factcheck.sources": "Bronnen",
     "factcheck.sourceAria": "{title}, opent in een nieuw tabblad",
     "factcheck.none": "Niets om op te zoeken: deze discussie draait om waarden of betekenissen, niet om feiten.",
-    "factcheck.noneFactual":
-      "Hier viel niets op het web te checken: de feiten spelen zich af tussen de mensen zelf.",
+    "factcheck.noneFactual": "Hier viel niets op het web te checken: de feiten spelen zich af tussen de mensen zelf.",
     "factcheck.unavailable": "De webcheck is deze keer niet afgerond, dus de rechters oordeelden zonder.",
     "signin.title": "Inloggen",
     "signin.lead": "Log in voor een uitspraak. Een nieuw account krijgt de eerste uitspraak gratis.",
@@ -453,7 +515,8 @@ const nl: Locale = {
     "error.fair_use": "Je hebt de uitspraken van deze maand gebruikt. Op {date} komen er nieuwe.",
     "error.fair_useSoon": "Je hebt de uitspraken van deze maand gebruikt. Binnenkort komen er nieuwe.",
     "error.in_progress": "Aan die uitspraak wordt nog gewerkt. Even geduld.",
-    "error.bad_origin": "Dat verzoek kwam van een plek die we niet kennen. Laad de pagina opnieuw en probeer het nog eens.",
+    "error.bad_origin":
+      "Dat verzoek kwam van een plek die we niet kennen. Laad de pagina opnieuw en probeer het nog eens.",
     "error.not_found": "Dat konden we niet vinden.",
     "error.case_closed": "Deze zaak neemt dat niet meer aan.",
     "error.case_expired": "Deze uitnodiging is verlopen.",
@@ -464,8 +527,10 @@ const nl: Locale = {
     "error.too_large": "Dat is te groot. Probeer een kleinere afbeelding.",
     "error.unsupported_media": "We kunnen alleen PNG-, JPEG-, WebP- of GIF-afbeeldingen lezen.",
     "error.too_many_files": "Dat zijn meer afbeeldingen dan je hier kunt toevoegen.",
-    "error.evidence_invalid": "Een van je afbeeldingen is verlopen of kon niet worden gecontroleerd. Verwijder hem en voeg hem opnieuw toe.",
-    "error.anonymize_failed": "We konden de namen niet uit je tekst halen. Probeer het opnieuw, of gebruik initialen in plaats van volledige namen.",
+    "error.evidence_invalid":
+      "Een van je afbeeldingen is verlopen of kon niet worden gecontroleerd. Verwijder hem en voeg hem opnieuw toe.",
+    "error.anonymize_failed":
+      "We konden de namen niet uit je tekst halen. Probeer het opnieuw, of gebruik initialen in plaats van volledige namen.",
     "mode.label": "Hoe zullen we oordelen?",
     "mode.now": "Alleen ik (direct)",
     "mode.both": "Beide kanten (stuur een link)",
@@ -478,7 +543,8 @@ const nl: Locale = {
     "case.title": "Je zaak",
     "case.loading": "Zaak laden…",
     "case.loadFailed": "We konden deze zaak niet laden. Probeer het zo nog eens.",
-    "case.notFound": "We konden deze zaak niet vinden. Misschien is hij verwijderd, of hoort hij bij een ander account.",
+    "case.notFound":
+      "We konden deze zaak niet vinden. Misschien is hij verwijderd, of hoort hij bij een ander account.",
     "case.signIn": "Log in om je zaak te zien.",
     "case.status.awaiting": "Wachten op de andere kant",
     "case.status.judging": "De rechters zijn ermee bezig",
@@ -503,7 +569,8 @@ const nl: Locale = {
     "case.side.opened": "Geopend",
     "case.side.typing": "Typt…",
     "case.judgeAnswered": "Beoordelen met de kanten die geantwoord hebben",
-    "case.judgeAnswered.confirm": "Een uitspraak van de kanten die geantwoord hebben? De andere uitnodigingen sluiten en die mensen kunnen niet meer antwoorden.",
+    "case.judgeAnswered.confirm":
+      "Een uitspraak van de kanten die geantwoord hebben? De andere uitnodigingen sluiten en die mensen kunnen niet meer antwoorden.",
     "case.cancel": "Annuleren",
     "case.retry": "Opnieuw proberen",
     "case.failedBody": "Je credit is terug. Je kunt het nu opnieuw proberen.",
@@ -525,7 +592,8 @@ const nl: Locale = {
     "case.judgingAlone": "De rechters buigen zich over jouw kant.",
     "case.expiredBody":
       "Niemand antwoordde binnen 7 dagen, dus je credit is terug. Je kunt nog steeds een uitspraak krijgen op alleen jouw kant.",
-    "case.expiredBodyFree": "Niemand antwoordde binnen 7 dagen. Je kunt nog steeds een uitspraak krijgen op alleen jouw kant.",
+    "case.expiredBodyFree":
+      "Niemand antwoordde binnen 7 dagen. Je kunt nog steeds een uitspraak krijgen op alleen jouw kant.",
     "case.oneSided": "Alleen op jouw kant beoordeeld.",
     "case.startOver": "Nieuwe zaak starten",
     "case.list.untitled": "Zaak van {date}",
@@ -537,19 +605,18 @@ const nl: Locale = {
     "respond.lang.en": "Engels",
     "respond.lang.tr": "Turks",
     "respond.label": "Jouw kant",
-    "respond.placeholder": "Wat is er gebeurd, vanuit jou gezien? Schrijf het zoals je het aan een vriend zou vertellen.",
+    "respond.placeholder":
+      "Wat is er gebeurd, vanuit jou gezien? Schrijf het zoals je het aan een vriend zou vertellen.",
     "respond.submit": "Mijn kant versturen",
     "case.write.title": "Jouw kant",
     "case.write.placeholder": "Wat is het probleem?",
     "case.write.lead":
       "Schrijf je kant op als je er klaar voor bent. De rechters beginnen zodra jullie allebei hebben geschreven.",
-    "case.write.leadAnswered":
-      "De ander heeft zijn kant geschreven. Schrijf de jouwe om het vonnis te krijgen.",
+    "case.write.leadAnswered": "De ander heeft zijn kant geschreven. Schrijf de jouwe om het vonnis te krijgen.",
     "case.write.submit": "Mijn kant versturen",
     "case.write.emailSubject": "De ander heeft geschreven",
     "respond.sent": "Bedankt. Je kant is binnen en de rechters zijn ermee bezig.",
-    "respond.sentWaiting":
-      "Bedankt. Je kant is binnen. De rechters beginnen zodra de ander de zijne heeft geschreven.",
+    "respond.sentWaiting": "Bedankt. Je kant is binnen. De rechters beginnen zodra de ander de zijne heeft geschreven.",
     "respond.ownInvite": "Dit is je eigen uitnodigingslink. Stuur hem naar de ander.",
     "respond.expired": "Deze uitnodiging is verlopen.",
     "respond.closed": "Deze zaak neemt geen antwoorden meer aan.",
@@ -564,7 +631,8 @@ const nl: Locale = {
     "evidence.label": "Screenshots (optioneel)",
     "evidence.add": "Screenshots toevoegen",
     "evidence.addOne": "Screenshot toevoegen",
-    "evidence.hint": "Maximaal {n} afbeeldingen. We lezen de tekst, verbergen de namen en bewaren de afbeeldingen nooit.",
+    "evidence.hint":
+      "Maximaal {n} afbeeldingen. We lezen de tekst, verbergen de namen en bewaren de afbeeldingen nooit.",
     "evidence.hintOne": "Eén afbeelding. We lezen de tekst, verbergen de namen en bewaren de afbeelding nooit.",
     "evidence.reading": "Lezen…",
     "evidence.ok": "Gelezen",
@@ -614,8 +682,7 @@ const nl: Locale = {
     "home.says": "{name} zegt:",
     "home.mySide": "Mijn kant:",
     "home.otherSide": "De andere kant:",
-    "appeal.lead":
-      "Kost 1 uitspraak.",
+    "appeal.lead": "Kost 1 uitspraak.",
     "appeal.placeholder": "Wat hebben de rechters gemist? Een feit, een bericht of wat er echt is afgesproken.",
     "appeal.submit": "Opnieuw laten beoordelen",
     "appeal.sending": "Je aanvulling anonimiseren…",
@@ -648,7 +715,8 @@ const nl: Locale = {
     "about.casesTitle": "Beide kanten horen",
     "about.cases1":
       "Tweezijdige zaken: log in, schrijf jouw kant en stuur een privélink. De ander schrijft zijn of haar kant zonder de jouwe te zien, en de rechters wegen beide verhalen: waar jullie het over eens zijn, waarover niet, en welk bewijs de uitspraak zou veranderen.",
-    "about.cases2": "Antwoordt niemand binnen 7 dagen, dan werkt de link niet meer. Je kunt nog steeds een uitspraak krijgen op alleen jouw kant.",
+    "about.cases2":
+      "Antwoordt niemand binnen 7 dagen, dan werkt de link niet meer. Je kunt nog steeds een uitspraak krijgen op alleen jouw kant.",
     "about.premiumTitle": "Extra's",
     "about.premium2":
       "Bewijs: voeg screenshots van chats of documenten toe. We lezen de tekst erin, verbergen de namen en gooien de afbeelding weg.",
@@ -656,12 +724,6 @@ const nl: Locale = {
       "Aanvullen: na een uitspraak kan ieder één keer iets aanvullen. De rechters kijken opnieuw naar alles en zeggen of de uitspraak blijft staan, wordt omgedraaid of wordt aangepast. Eerdere uitspraken blijven zichtbaar.",
     "about.premium4":
       "Een tweezijdige zaak kost 1 uitspraak. Die wordt gereserveerd als je de link stuurt en komt terug als niemand binnen 7 dagen antwoordt.",
-    "privacy.casesTitle": "Tweezijdige zaken en aanvullingen",
-    "privacy.cases":
-      "In een tweezijdige zaak wordt elke kant geanonimiseerd zodra die wordt verstuurd, net als bij een uitspraak. De rechters lezen de geanonimiseerde tekst; ieders kant zoals die geschreven is, met de bijbehorende namenlijst, wordt versleuteld opgeslagen en alleen die persoon kan hem zien. Bij het versturen van de eigen kant typt ieder de naam die op de deelpagina moet staan; blijft die leeg, dan is het Partij A of Partij B. De ander heeft geen account nodig; voor diens antwoorden geldt een limiet op basis van een gesleutelde hash van het IP-adres. De uitnodigingslink wordt alleen als hash opgeslagen. Antwoordt de ander terwijl die is ingelogd, dan wordt het account aan die kant gekoppeld, zodat alleen die persoon later iets kan aanvullen of het origineel kan zien; antwoordt de ander zonder in te loggen, dan doet een privécode in de browser van die persoon hetzelfde; logt die persoon later in die browser in, dan kan die de zaak in het eigen account bewaren. Om dezelfde persoon in beide verhalen hetzelfde label te geven, bewaart de server binnen elke zaak gecodeerde vingerafdrukken van namen (gesleutelde hashes, niet de namen zelf). Tot de uitspraak kan geen van beiden de tekst van de ander lezen; na een tweezijdige uitspraak kunnen ze allebei beide geanonimiseerde verhalen lezen. Een aanvulling na een uitspraak wordt op dezelfde manier behandeld. Antwoordt de ander, dan kunnen we je een korte mail sturen zonder tekst uit de zaak, als e-mail is ingesteld. Ieder kan de eigen kant verwijderen: het origineel en de weergavenaam worden gewist, en de deellinks van de zaak werken voor niemand meer. Als je je account verwijdert, gebeurt dit voor elke zaak die je begon of waarop je antwoordde.",
-    "privacy.evidenceTitle": "Screenshots",
-    "privacy.evidence":
-      "Je browser verkleint grote afbeeldingen voordat ze worden geüpload. Daarna gaat elke afbeelding één keer naar een externe AI-dienst zodat de zichtbare tekst gelezen kan worden; de afbeelding zelf bewaren we nooit. De ruwe transcriptie, waar nog namen in kunnen staan, komt bij je terug in een ondertekend token dat je browser maximaal 6 uur bewaart. Als je jouw kant verstuurt, wordt de transcriptie samen met je tekst geanonimiseerd: de geanonimiseerde transcriptie gaat naar de rechters en wordt bij de zaak opgeslagen, en de ruwe transcriptie wordt versleuteld bij je origineel bewaard, waar alleen jij hem kunt zien. Telefoonnummers, e-mailadressen, gebruikersnamen op sociale media en rekeningnummers erin worden voor de rechters ook vervangen door een neutrale aanduiding.",
     "pricing.premium.f5": "Screenshots als bewijs: gelezen en daarna weggegooid, zonder extra kosten",
     "pricing.premium.f6": "Na een uitspraak iets aanvullen en opnieuw laten beoordelen (1 uitspraak)",
     "pricing.premium.f7": "Hoor beide kanten: stuur de ander een privélink, zodat die ook aan het woord komt",
@@ -781,21 +843,6 @@ const nl: Locale = {
     "stamp.dissolved": "Misverstand",
     "bestPoint.of": "Sterkste punt van {name}",
     "bestPoint.self": "Jouw sterkste punt",
-    "privacy.accessTitle": "Wie wat kan zien",
-    "privacy.access":
-      "Jij: je oorspronkelijke tekst en namen, op elk apparaat als je bent ingelogd, of op het apparaat dat je gebruikte via een privécode die in je browser of de app is opgeslagen (wij bewaren alleen een gehashte vorm van die code). Uitspraken die zonder inloggen zijn geschreven, toen er nog geen account nodig was, en zaken waarop je zonder inloggen hebt geantwoord, blijven in die browser in de lijst staan met hun koppen en je namen zoals je ze schreef, zodat de pagina Uitspraken ze kan tonen: iedereen die dezelfde browser gebruikt, ziet die lijst. Log op een gedeelde computer in of gebruik een privévenster; als je de sitegegevens in de browser wist, verdwijnt de lijst ook. In een tweezijdige zaak ziet ieder alleen het eigen origineel; na de uitspraak zien ze allebei beide geanonimiseerde verhalen, zoals de rechters ze lazen. De rechters (AI-modellen die onze AI-aanbieder draait): alleen de geanonimiseerde versie. Iedereen met de deellink: de uitspraak met weergavenamen. Standaard zijn dat de naam die je voor jezelf kiest en de voornamen van de anderen zoals je ze schreef; je kunt ze op elk moment aanpassen of namen uitzetten, en dan toont de pagina Partij A en Partij B. Wij: we kunnen originelen met de sleutel ontsleutelen, en bekijken opgeslagen tekst alleen om een supportverzoek van jou af te handelen, misbruik te onderzoeken of als de wet het vereist.",
-    "privacy.removalTitle": "Verwijderen",
-    "privacy.removal":
-      "Vraag verwijdering aan op de pagina van de uitspraak (ingelogd kun je die openen vanaf de pagina Uitspraken), op de pagina van de zaak bij een tweezijdige zaak, door je account te verwijderen of per e-mail. Verwijderen wist je oorspronkelijke tekst, de namenlijst en de weergavenamen (in een tweezijdige zaak het origineel van jouw kant en je weergavenaam), en de deellink en de previewafbeelding laden voor niemand meer. Previews die al in chatapps zijn geplaatst, worden door die apps bewaard en kunnen zichtbaar blijven tot die apps ze vernieuwen. De geanonimiseerde tekst en de uitspraak houden we zonder namen in onze administratie; die zijn niet meer via de link te openen. Je account verwijderen doet dit voor al je uitspraken en jouw kant in zaken, en wist ook je inloggegevens, credits en abonnement. Verwijderde gegevens blijven in onze back-ups staan tot die verlopen (maximaal 14 dagen, zie hieronder); als we ooit een back-up terugzetten, voeren we elke verwijdering opnieuw uit (daarvoor houden we een lijst bij van wat wanneer is verwijderd, zonder tekst of namen). Dertig dagen nadat je iets hebt verwijderd, wissen we ook de geanonimiseerde tekst en de uitspraak en houden we alleen de uitkomst en de datums over, tenzij de wet ons verplicht ze langer te bewaren. Bij een zaak gaan de dertig dagen pas in wanneer iedereen die erin zit haar heeft verwijderd.",
-    "privacy.retentionTitle": "Hoe lang we het bewaren",
-    "privacy.retention":
-      "We bewaren uitspraken en originelen tot je om verwijdering vraagt of je account verwijdert. Om na een storing te kunnen herstellen, bewaren we back-ups van de server en de database maximaal 14 dagen, daarna worden ze gewist. Ze bevatten dezelfde gegevens als de server, inclusief de versleutelde originelen, en de sleutel staat op dezelfde server, dus de back-ups zijn beveiligd zoals de server zelf, niet door die versleuteling. Hashes voor gebruikslimieten blijven maximaal 24 uur bewaard. Voor serverlogs geldt de standaard bewaartermijn van onze hostingprovider. Gebruiksgebeurtenissen worden na 90 dagen verwijderd en apparaatkoppelingen na 180 dagen zonder gebruik. Logs en metingen bij Grafana Labs worden 14 dagen bewaard.",
-    "privacy.locationTitle": "Waar je gegevens staan",
-    "privacy.location":
-      "Onze servers staan in Duitsland (OVH, Frankfurt). Een deel van de verwerking gebeurt in de Verenigde Staten: onze AI-aanbieder draait de modellen die namen verwijderen, oordelen, screenshots lezen en op het web zoeken; Cloudflare staat als proxy en DNS vóór okjudge.com (al het verkeer loopt erdoorheen) en voert de menscheck uit. Inloggen loopt via Apple of Google als je die kiest, en inlogmails via Resend. Gegevens die in een ander land worden verwerkt, kunnen onder de wetten van dat land vallen.",
-    "privacy.rightsTitle": "Je rechten (Canada)",
-    "privacy.rights":
-      "Judge wordt vanuit Canada gerund en verwerkt persoonsgegevens volgens de federale privacywet van Canada (PIPEDA): we verzamelen alleen wat de dienst nodig heeft, gebruiken het alleen daarvoor en beschermen het, en je kunt vragen om in te zien, te corrigeren of te verwijderen wat we over je hebben. We antwoorden binnen 30 dagen.",
     "footer.terms": "Voorwaarden",
     "signin.legalTerms": "gebruiksvoorwaarden",
     "age.confirm": "Ik ben 18 jaar of ouder",

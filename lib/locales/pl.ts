@@ -45,8 +45,7 @@ const pl: Locale = {
     "thinking.crux": "Szukamy sedna…",
     "thinking.judges": "Trzech sędziów decyduje, każdy osobno…",
     "thinking.votes": "Liczymy głosy…",
-    "thinking.helper":
-      "Trzech sędziów AI decyduje osobno, a przy wyrównanym wyniku dochodzą kolejni. Daj im chwilę.",
+    "thinking.helper": "Trzech sędziów AI decyduje osobno, a przy wyrównanym wyniku dochodzą kolejni. Daj im chwilę.",
     "thinking.finish": "Zbliżamy się do sedna…",
     "thinking.stillJudging": "Sędziowie wciąż myślą. Jeszcze chwila…",
     "thinking.ready": "Werdykt gotowy.",
@@ -109,14 +108,18 @@ const pl: Locale = {
     "vote.dissolved": "spór o słowa",
     refusedNote: "Tym razem AI wstrzymuje się od głosu. Wolimy nic nie pokazać, niż udawać werdykt.",
     demoNote: "🎭 Tryb demo: brak klucza AI, więc to przykładowy werdykt",
-    "trial.survived": "🛡️ Sprzeciw oddalony: adwokat drugiej strony zgłosił swój najmocniejszy sprzeciw, a werdykt się obronił. Pewność bez zmian.",
-    "trial.uncertain": "⚠️ Adwokat drugiej strony zgłosił sprzeciw i ten sprzeciw zostawił realne wątpliwości co do tego werdyktu",
-    "trial.overturned": "⚠️ Sprzeciw uwzględniony: werdykt pozostaje w mocy, ale najmocniejszy sprzeciw drugiej strony poważnie go osłabił",
+    "trial.survived":
+      "🛡️ Sprzeciw oddalony: adwokat drugiej strony zgłosił swój najmocniejszy sprzeciw, a werdykt się obronił. Pewność bez zmian.",
+    "trial.uncertain":
+      "⚠️ Adwokat drugiej strony zgłosił sprzeciw i ten sprzeciw zostawił realne wątpliwości co do tego werdyktu",
+    "trial.overturned":
+      "⚠️ Sprzeciw uwzględniony: werdykt pozostaje w mocy, ale najmocniejszy sprzeciw drugiej strony poważnie go osłabił",
     "trial.minor": "🛡️ Adwokat drugiej strony zwrócił uwagę na słuszny szczegół, ale werdykt pozostaje w mocy",
     "trial.whatWasTested": "Sprzeciw",
     "trial.attackPrefix": "Sprzeciw:",
     "trial.refereePrefix": "Dlaczego:",
-    "trial.mixedNote": "To spór mieszany: po części fakty, po części wartości lub znaczenia słów, więc czystą wygraną trudniej obronić.",
+    "trial.mixedNote":
+      "To spór mieszany: po części fakty, po części wartości lub znaczenia słów, więc czystą wygraną trudniej obronić.",
     confidence: "Pewność: {n} z {total}",
     verdictAria: "Werdykt: {label}",
     "party.a": "Strona A",
@@ -135,8 +138,7 @@ const pl: Locale = {
     "error.too_long": "Sporo tego! Zmieść się w 6000 znaków.",
     "error.invalid": "To żądanie wygląda na nieprawidłowe.",
     "error.rate_limited": "Spokój na sali! Limit na razie wyczerpany. Spróbuj ponownie za {wait}.",
-    "error.daily_cap":
-      "Sąd na dziś zamknięty – wysłuchał już tylu sporów, ile był w stanie. Wracamy za {wait}.",
+    "error.daily_cap": "Sąd na dziś zamknięty – wysłuchał już tylu sporów, ile był w stanie. Wracamy za {wait}.",
     "error.captcha_failed":
       "Nie udało się potwierdzić, że jesteś człowiekiem. Przejdź weryfikację jeszcze raz i wyślij ponownie.",
     "wait.moment": "kilka minut",
@@ -145,10 +147,8 @@ const pl: Locale = {
     "wait.hour": "godzinę",
     "wait.hours": "{n} godzin",
     "refused.headline": "AI nie chce się wypowiadać w tej sprawie",
-    "refused.crux":
-      "Filtr bezpieczeństwa AI nie pozwolił rozstrzygnąć tej sprawy. Lepiej żaden werdykt niż zmyślony.",
-    "refused.bestPoint":
-      "Spróbuj ująć to inaczej. Albo pogódź się z tym, że niektóre spory są za duże na aplikację.",
+    "refused.crux": "Filtr bezpieczeństwa AI nie pozwolił rozstrzygnąć tej sprawy. Lepiej żaden werdykt niż zmyślony.",
+    "refused.bestPoint": "Spróbuj ująć to inaczej. Albo pogódź się z tym, że niektóre spory są za duże na aplikację.",
     "refused.claim": "Pominięto",
     "nav.skip": "Przejdź do treści",
     "nav.home": "Strona główna Judge",
@@ -197,8 +197,7 @@ const pl: Locale = {
     "sample.nameB": "Ty",
     "sample.label": "Masz rację",
     "sample.headline": "Nikt nie zamawia kanapki z nadzieją na hot doga",
-    "sample.crux":
-      "Pod względem kształtu hot dog mógłby uchodzić za kanapkę, ale nikt tak tego słowa nie używa.",
+    "sample.crux": "Pod względem kształtu hot dog mógłby uchodzić za kanapkę, ale nikt tak tego słowa nie używa.",
     "sample.why":
       "Argument Kuby opiera się wyłącznie na kształcie. Słowo znaczy to, co ludzie mają na myśli, kiedy go używają, a zamówienie kanapki w żadnym barze nie kończy się hot dogiem.",
     "sample.bestPoint":
@@ -241,8 +240,7 @@ const pl: Locale = {
       "Wie tylko to, co mu powiesz, a sposób opowiedzenia historii wpływa na wynik. Opisz drugą stronę tak, jak sama by to ujęła.",
     "about.limit2":
       "Sędziowie AI mogą się mylić co do faktów. Każdy werdykt wypisuje fakty, na których się opiera, więc możesz je sprawdzić.",
-    "about.limit3":
-      "Zamiana imion zwykle działa, ale nietypowe imiona albo ksywki mogą się prześlizgnąć.",
+    "about.limit3": "Zamiana imion zwykle działa, ale nietypowe imiona albo ksywki mogą się prześlizgnąć.",
     "about.limit4": "To zabawa i sposób na jaśniejsze spojrzenie, a nie porada prawna, medyczna ani finansowa.",
     "about.builtTitle": "Pod maską",
     "about.built":
@@ -252,33 +250,96 @@ const pl: Locale = {
     "privacy.kicker": "Twoje dane",
     "privacy.lead":
       "W skrócie: przechowujemy to, co piszesz, łącznie z imionami, w formie zaszyfrowanej, żeby można było do tego wrócić. Sędziowie zawsze czytają tylko wersję bez imion. W każdej chwili możesz poprosić o usunięcie. Nie sprzedajemy twoich danych. Jeśli Judge zostanie kiedyś sprzedany lub połączony z inną firmą, przejdzie na nowego właściciela na podstawie tej polityki.",
+    "privacy.whoTitle": "Kim jesteśmy",
+    "privacy.who":
+      "Judge prowadzi Aytu Tuna, osoba prywatna w Kanadzie.\n{address}\nTo my decydujemy, co jest zbierane i po co. Osobą odpowiedzialną za dane osobowe jest Aytu Tuna, właściciel. Kontakt: {email}.",
     "privacy.storedTitle": "Co przechowujemy",
     "privacy.stored":
-      "Przy każdym werdykcie przechowujemy twój tekst dokładnie w takiej postaci, w jakiej go wpisano (z odpowiedziami na pytania sędziów i tekstem odczytanym ze zrzutów ekranu), oraz listę, które imię zamieniono na którą etykietę. Obie te rzeczy są szyfrowane kluczem, który nie jest przechowywany w bazie danych. Przechowujemy też zanonimizowaną wersję, którą czytają sędziowie (imiona zamienione na Stronę A i Stronę B), wybrane przez ciebie ustawienia, werdykt, ewentualne tłumaczenie oraz imiona, które zdecydujesz się pokazać na stronie udostępniania. Liczymy też, jak używa się Judge: z których ekranów i funkcji korzystasz, z wersją aplikacji, modelem urządzenia, wersją systemu, językiem i krajem twojego połączenia, a w aplikacjach także identyfikatorem urządzenia. Gdy jesteś zalogowany, jest to powiązane z twoim kontem. Zdarzenia użycia przechowujemy 90 dni, a powiązania między kontem a urządzeniami 180 dni. Aplikacje mają w Ustawieniach przełącznik Statystyki użycia, a strona nic nie wysyła, gdy przeglądarka wysyła Do Not Track lub Global Privacy Control. Nigdy nie ma w tym tekstu spraw. Jeśli ocenisz werdykt, zachowamy ocenę razem z nim.",
+      "Przy każdym werdykcie zachowujemy twój tekst dokładnie tak, jak go napisałeś (wraz z twoimi odpowiedziami na pytania sędziów i tekstem odczytanym ze zrzutów ekranu) oraz listę tego, które imię zamieniło się w którą etykietę. Są one zaszyfrowane kluczem, którego nie ma w bazie danych. Przechowujemy też zanonimizowaną wersję czytaną przez sędziów (imiona zamienione na Stronę A i Stronę B), wybrane ustawienia, werdykt, ewentualne tłumaczenie oraz imiona, które wybierzesz do pokazania na stronie udostępniania. Liczymy też, jak używany jest Judge: które ekrany i funkcje, razem z wersją aplikacji, modelem urządzenia, wersją systemu, językiem i krajem połączenia, a w aplikacjach także identyfikatorem urządzenia. Gdy jesteś zalogowany, jest to powiązane z twoim kontem. Zdarzenia użycia przechowujemy 90 dni, a powiązania między kontem a urządzeniami 180 dni. Aplikacje mają w Ustawieniach przełącznik Statystyki użycia, a strona nie wysyła nic, gdy przeglądarka wysyła Do Not Track lub Global Privacy Control. Nigdy nie zawiera to tekstu sprawy. Jeśli ocenisz werdykt, zachowujemy ocenę razem z nim. Ocenę można wyczyścić; wtedy zachowujemy wiersz bez informacji o kciuku w górę lub w dół. Przechowujemy też zapis twojej zgody na prywatne szczegóły i twoich wyborów w sprawie Pomóż ulepszyć Judge, z datą, językiem i platformą oraz sformułowaniem, które widziałeś.",
     "privacy.helpTitle": "Pomóż ulepszyć Judge",
     "privacy.help":
-      "Wyłączone, dopóki tego nie włączysz. Gdy jest włączone, możemy używać zanonimizowanego tekstu czytanego przez sędziów, ich werdyktów i twoich ocen do testowania i trenowania sędziów Judge. Imiona nigdy nie są jego częścią. Wyłączenie zatrzymuje takie wykorzystanie wszystkiego, co od ciebie pochodzi, a my zapisujemy, kiedy zostało włączone lub wyłączone.",
-    "privacy.notStoredTitle": "Czego nie robimy",
-    "privacy.notStored":
-      "Żadnych trackerów reklamowych. Wybrany język jest zapisany w pamięci lokalnej twojej przeglądarki i nigdzie indziej.",
+      'Wyłączone, dopóki tego nie włączysz. Gdy jest włączone, możemy używać zanonimizowanego tekstu czytanego przez sędziów, ich werdyktów i twoich ocen do testowania i trenowania modeli AI: własnych modeli Judge i, jeśli Judge zostanie kiedyś sprzedany lub połączony z inną firmą, modeli nowego właściciela. Imiona nigdy nie są jego częścią. Wyłączenie wyklucza z jakiegokolwiek trenowania wszystko, co stworzysz od tej chwili. Zapisujemy, kiedy to włączyłeś lub wyłączyłeś.\n„Zanonimizowany" oznacza tu, że imiona zostały usunięte; inne szczegóły, które napisałeś, nadal mogą być w tekście. Obejmuje to tylko werdykty powstałe, gdy było włączone, a sprawę tylko wtedy, gdy każdy, kto napisał którąś stronę, ma to włączone. Modele już wytrenowane nie są zmieniane. Na razie nic nie zostało wytrenowane. Judge działa tak samo z wyłączonym.\nPytamy raz, na twojej własnej stronie werdyktu po drugim ukończonym werdykcie. Nigdy nie pytamy na werdykcie, który ktoś ci udostępnił. Karta mówi: „Pozwól, by Judge używał twoich zanonimizowanych werdyktów i ocen do trenowania AI. Imiona nigdy nie są uwzględniane." Odpowiedź możesz w każdej chwili zmienić w Ustawieniach.',
+    "privacy.purposesTitle": "Po co używamy twoich danych",
+    "privacy.purposes":
+      "- Aby wydać ci werdykt, prowadzić twoje konto oraz obsługiwać zakupy i pomoc. Podstawa (UE, Wielka Brytania i Brazylia): jest to potrzebne do świadczenia usługi, o którą prosisz.\n- Aby Judge był bezpieczny i działał: limity użycia, weryfikacja, że jesteś człowiekiem, wykrywanie osób wyłudzających darmowe kredyty, raporty o błędach, liczniki użycia oraz przechowywanie zakodowanej postaci adresu e-mail po usunięciu konta. Podstawa: nasz prawnie uzasadniony interes w bezpiecznej i działającej usłudze. Możesz zgłosić sprzeciw e-mailem. Aplikacje mają przełącznik Statystyki użycia, a Do Not Track lub Global Privacy Control w przeglądarce wstrzymuje zdarzenia użycia strony.\n- Aby sprawdzić twój wiek, w tym sygnał wieku z telefonu. Podstawa: nasz prawnie uzasadniony interes w utrzymaniu Judge tylko dla dorosłych albo obowiązek prawny tam, gdzie obowiązuje ustawa o wieku w sklepach z aplikacjami.\n- Aby przez 30 dni po usunięciu czegoś przechowywać tekst bez imion, na wypadek nadużycia lub roszczenia prawnego. Podstawa: nasz prawnie uzasadniony interes.\n- Aby przechowywać dowód tego, na co się zgodziłeś: zgody na prywatne szczegóły i wyborów w sprawie Pomóż ulepszyć Judge. Podstawa: nasz prawnie uzasadniony interes w możliwości wykazania, na co się zgodziłeś.\n- Aby używać twoich zanonimizowanych werdyktów i ocen do trenowania AI. Podstawa: twoja zgoda, tylko jeśli to włączysz.\n- Aby przestrzegać prawa i prowadzić zapisy, które musimy prowadzić. Podstawa: obowiązek prawny.\nNigdy nie używamy twoich danych do reklam i nie mamy trackerów reklamowych. Jeśli kiedyś będziemy chcieli nowego zastosowania, najpierw ci o tym powiemy i znów zapytamy, jeśli prawo wymaga twojej zgody.",
+    "privacy.sensitiveTitle": "Czego nie wpisywać",
+    "privacy.sensitive":
+      'Spory mogą dotykać prywatnych tematów, takich jak zdrowie, relacje, religia czy pieniądze. Pisz tylko to, czego potrzebuje werdykt, i pomijaj prywatne szczegóły dotyczące innych osób. Judge nie służy do nagłych wypadków ani porad prawnych.\nPrzed pierwszym werdyktem, pierwszą stroną sprawy lub pierwszą odpowiedzią w sprawie prosimy o zaznaczenie pola: „Mój tekst może zawierać prywatne szczegóły, na przykład o zdrowiu lub relacjach. Judge wysyła go, bez imion, do zewnętrznej usługi AI, która pisze mój werdykt, i przechowuje go, dopóki go nie usunę." Możesz kontynuować tylko po zaznaczeniu. Pytamy raz na konto; jeśli masz już konto, zapytamy przy twoim następnym werdykcie. Osoby odpowiadające na sprawę bez konta widzą to samo pole. Przechowujemy zapis zaznaczenia z datą, językiem, platformą i sformułowaniem, które widziałeś.',
+    "privacy.othersTitle": "Osoby, o których piszesz",
+    "privacy.others":
+      'Twój tekst może opisywać kogoś, kto nie korzysta z Judge. Sędziowie widzą go tylko pod etykietami, takimi jak „Osoba C". Jego imiona przechowujemy zaszyfrowane, razem z zakodowanym odciskiem każdego imienia (skrót z kluczem, nie samo imię). Imiona mogą pojawić się na stronie udostępniania, jak opisano w części Kto co widzi. Jeśli pojawiasz się w cudzej sprawie, napisz na {email} i dołącz link, a usuniemy twoje imię ze strony udostępniania albo rozpatrzymy twój sprzeciw.',
+    "privacy.automatedTitle": "Werdykty pochodzą od AI",
+    "privacy.automated":
+      'Twój werdykt pisują modele AI, a żaden człowiek nie czyta go wcześniej. To opinia o argumentacji w takiej postaci, w jakiej została napisana, oparta na tekście bez imion, ewentualnych pokazanych źródłach z sieci i twoich odpowiedziach. Nie jest to porada prawna i nie jest wiążąca. Nie podejmujemy na jej podstawie żadnej decyzji o tobie, twoim koncie, cenie ani dostępie. Może być błędna lub jednostronna. Jeśli się nie zgadzasz, oceń ją jako „Niesprawiedliwy", dodaj kontekst albo napisz na {email}, a zajmie się tym człowiek. Druga strona sprawy też może o to poprosić.',
+    "privacy.accessTitle": "Kto co widzi",
+    "privacy.access":
+      "Ty: swój oryginalny tekst i imiona, na każdym urządzeniu, gdy jesteś zalogowany, albo na urządzeniu, którego użyłeś, przez prywatny kod zapisany w przeglądarce lub aplikacji (przechowujemy tylko zakodowaną postać tego kodu). Werdykty napisane bez logowania, zanim konto było potrzebne, oraz sprawy, na które odpowiedziałeś bez logowania, zostają na liście w tej przeglądarce z nagłówkami i twoimi imionami tak, jak je napisałeś, żeby strona Werdykty mogła je pokazać: każdy, kto używa tej samej przeglądarki, widzi tę listę. Na wspólnym komputerze zaloguj się lub użyj okna prywatnego; wyczyszczenie danych witryny w przeglądarce usuwa listę. W sprawie dwustronnej każda osoba widzi tylko swój oryginał; po werdykcie obie widzą oba zanonimizowane opisy, tak jak czytali je sędziowie. Sędziowie (modele AI uruchamiane przez naszego dostawcę AI): tylko wersję zanonimizowaną. Każdy, kto ma link do udostępnienia: werdykt z wyświetlanymi imionami. Domyślnie jest to imię, które wybierasz dla siebie, i pierwsze imiona pozostałych osób tak, jak je napisałeś; możesz je zmienić lub w każdej chwili wyłączyć imiona, wtedy strona pokazuje Stronę A i Stronę B. My: możemy odszyfrować oryginały kluczem i zaglądamy do przechowywanego tekstu tylko po to, by obsłużyć twoje zgłoszenie do pomocy, zbadać nadużycie lub gdy wymaga tego prawo.",
+    "privacy.casesTitle": "Sprawy dwustronne i odwołania",
+    "privacy.cases":
+      'W sprawie dwustronnej każda strona jest anonimizowana w chwili wysłania, tak samo jak werdykt. Sędziowie czytają zanonimizowany tekst; strona każdej osoby w oryginalnym brzmieniu, z listą imion, jest przechowywana zaszyfrowana i tylko ta osoba może ją zobaczyć. Każda osoba wpisuje imię, które ma być pokazane na stronie udostępniania, gdy wysyła swoją stronę; jeśli zostawi puste, będzie to Strona A lub Strona B. Druga osoba nie potrzebuje konta; jej odpowiedzi są ograniczane limitem za pomocą skrótu z kluczem jej adresu IP. Link z zaproszeniem jest przechowywany tylko jako skrót. Jeśli druga osoba odpowie, będąc zalogowana, jej konto zostaje powiązane z jej stroną, więc tylko ona może później dodać kontekst lub zobaczyć swój oryginał; jeśli odpowie bez logowania, robi to samo prywatny kod zapisany w jej przeglądarce, a późniejsze zalogowanie się w tej przeglądarce pozwala zachować sprawę na koncie. Aby ta sama osoba miała tę samą etykietę w obu opisach, serwer przechowuje w każdej sprawie zakodowane odciski imion (skróty z kluczem, nie same imiona). Do werdyktu żadna ze stron nie może czytać tekstu drugiej; po werdykcie w sprawie dwustronnej obie osoby mogą czytać oba zanonimizowane opisy. Kontekst dodany po werdykcie (odwołanie) jest obsługiwany tak samo. Gdy druga osoba odpowie, możemy wysłać ci krótką wiadomość e-mail bez tekstu sprawy, jeśli e-mail jest skonfigurowany. Każda z osób może usunąć własną stronę: jej oryginał i wyświetlane imię są kasowane, a linki do udostępniania sprawy przestają działać dla wszystkich. Usunięcie konta robi to dla każdej sprawy, którą założyłeś lub na którą odpowiedziałeś. Sprawa, na którą nikt nie odpowie, wygasa po 7 dniach, ale tekst twojej strony zostaje, dopóki go nie usuniesz. Osoba odpowiadająca bez konta zaznacza „Mam 18 lat lub więcej" oraz pole prywatnych szczegółów przed wysłaniem, a oba zaznaczenia przechowujemy razem z jej stroną.',
+    "privacy.webSearchTitle": "Wyszukiwanie w sieci i pytania",
+    "privacy.webSearch":
+      "Każdy werdykt wysyła zanonimizowaną argumentację do naszego dostawcy AI z włączonym wyszukiwaniem w sieci. Model pisze zapytania wyszukiwania na podstawie tego zanonimizowanego tekstu, a wyniki pochodzą od partnera wyszukiwania dostawcy. Użyte źródła są pokazane przy werdykcie. Sędziowie mogą najpierw zadać ci do dwóch pytań: aby je wymyślić, twój tekst w takiej postaci, w jakiej go wpisałeś, wraz z imionami, trafia do dostawcy AI jeszcze raz. Twoje odpowiedzi są anonimizowane razem z argumentacją przed osądzeniem; pytania i twoje odpowiedzi w oryginalnym brzmieniu są przechowywane razem z twoim zaszyfrowanym oryginałem.",
+    "privacy.evidenceTitle": "Zrzuty ekranu",
+    "privacy.evidence":
+      "Przeglądarka zmniejsza duże obrazy przed wysłaniem. Następnie każdy obraz trafia raz do zewnętrznej usługi AI, aby odczytać widoczny tekst; samego obrazu nigdy nie przechowujemy. Surowy zapis, który nadal może zawierać imiona, wraca do ciebie w podpisanym tokenie, który przeglądarka trzyma do 6 godzin. Gdy wysyłasz swoją stronę, zapis jest anonimizowany razem z twoim tekstem: zanonimizowany zapis jest pokazywany sędziom i przechowywany ze sprawą, a surowy zapis jest przechowywany zaszyfrowany razem z twoim oryginałem, gdzie widzisz go tylko ty. Numery telefonów, adresy e-mail, nazwy w mediach społecznościowych i numery kont w nim są dla sędziów zastępowane znacznikami.",
+    "privacy.accountsTitle": "Konta",
+    "privacy.accounts":
+      "Judge jest tylko dla osób w wieku 18 lat i więcej, a konta, o których dowiemy się, że należą do kogoś poniżej 18 lat, są zamykane. Do werdyktu potrzebujesz konta; druga strona sprawy dwustronnej może odpowiedzieć bez niego. Jeśli logujesz się przez Apple lub Google, przechowujemy adres e-mail, imię i link do zdjęcia profilowego, które nam udostępniają, oraz informację, której metody logowania użyłeś; Apple lub Google widzą, że zalogowałeś się do Judge. Jeśli logujesz się linkiem lub kodem z e-maila, ten e-mail wychodzi przez Resend, a do jego sprawdzenia przez krótki czas przechowujemy zapis z twoim adresem e-mail: przestaje działać po 10 minutach i jest usuwany po użyciu lub wkrótce po wygaśnięciu. Jeśli ustawisz hasło, przechowujemy z kontem tylko jego zakodowaną (zahaszowaną) postać, nigdy samo hasło. Przechowujemy też zapisy sesji (losowy token i czas wygaśnięcia, bez adresu IP ani danych przeglądarki, choć aplikacje zapisują też identyfikator urządzenia przy logowaniu), twoje kredyty, plan i jego historię oraz informację, które werdykty zużyły kredyt (tylko identyfikator werdyktu). Zapisujemy też, które werdykty i sprawy są twoje, żebyś mógł je znaleźć na każdym urządzeniu. Usunięcie konta na stronie konta (w aplikacjach i na stronie) usuwa twoje konto, zapisy logowania, kredyty, plan i zdarzenia użycia oraz usuwa twoje werdykty i twoje strony spraw tak, jak opisano w części Usuwanie. Kilka rzeczy zostaje po usunięciu, są wymienione w części Co zachowujemy po usunięciu. Jeśli nie możesz się zalogować, strona okjudge.com/delete-account wyjaśnia, jak poprosić nas o to e-mailem. Przechowujemy tylko zakodowaną postać twojego adresu e-mail, żeby nowe konto z tym adresem nie dostało drugiego darmowego werdyktu i pozostawało zamknięte, jeśli twoje konto zamknięto, bo masz mniej niż 18 lat. Zapisujemy też, czy potwierdziłeś, że masz 18 lat lub więcej, i jak (zaznaczeniem albo sygnałem wieku z telefonu; w Androidzie aplikacja pyta Google Play, na iPhonie pyta Apple).",
+    "privacy.removalTitle": "Usuwanie",
+    "privacy.removal":
+      "O usunięcie możesz poprosić na stronie werdyktu (po zalogowaniu otworzysz ją ze strony Werdykty), na stronie sprawy w przypadku sprawy dwustronnej, usuwając konto lub e-mailem. Usunięcie kasuje twój oryginalny tekst, listę imion i wyświetlane imiona (w sprawie dwustronnej oryginał twojej strony i twoje wyświetlane imię), a link do udostępniania i jego obraz podglądu przestają się ładować dla wszystkich. Podglądy już wysłane w komunikatorach są przechowywane przez te aplikacje i mogą nadal się pokazywać, dopóki ich nie odświeżą. Zachowujemy w naszych zapisach zanonimizowany tekst i werdykt, bez imion; nie da się ich już otworzyć przez link. Usunięcie konta robi to dla wszystkich twoich werdyktów i twoich stron spraw oraz kasuje dane logowania, kredyty i plan. Usunięte dane zostają w kopiach zapasowych, dopóki te nie wygasną (najwyżej 14 dni, zobacz niżej); jeśli kiedykolwiek przywrócimy kopię, ponownie stosujemy każde usunięcie (przechowujemy w tym celu listę tego, co i kiedy usunięto, bez tekstu i imion). Trzydzieści dni po usunięciu czegoś kasujemy też zanonimizowany tekst i werdykt, zachowując tylko wynik i daty, chyba że prawo wymaga dłuższego przechowywania. Dotyczy to rzeczy usuniętych 14 listopada 2026 (UTC) lub później; starsze usunięcia zachowują swój zanonimizowany tekst. W przypadku sprawy trzydzieści dni liczy się dopiero od chwili, gdy wszyscy w niej ją usunęli. Werdykty i sprawy, których nikt nie usunie, są przechowywane, dopóki ich nie usuniesz lub nie skasujesz konta. Werdykt napisany bez logowania, zanim konto było potrzebne, można usunąć, pisząc na {email} z jego linkiem.",
+    "privacy.afterRemovalTitle": "Co zachowujemy po usunięciu",
+    "privacy.afterRemoval":
+      "Po usunięciu i po upływie trzydziestu dni nadal zachowujemy:\n- wynik i punkty, wybrane ustawienia, daty, identyfikatory oraz informację, jakie strony i język miała sprawa, i identyfikator konta, które ją założyło;\n- twoje oceny. Gdy usuniesz konto, każda ocena zostaje przeniesiona pod losowy identyfikator, więc nie prowadzi już do ciebie;\n- zapis twoich wyborów w sprawie Pomóż ulepszyć Judge i zgody na prywatne szczegóły (daty, język, platforma i sformułowanie, które widziałeś), przez 6 lat po usunięciu konta, aby udowodnić, na co się zgodziłeś. Po usunięciu konta zapisy te mają losowy identyfikator i nie są powiązane z twoim imieniem ani e-mailem;\n- listę usunięć, zawierającą identyfikatory, powody, daty i stronę sprawy, przez 90 dni, aby ponownie zastosować usunięcia po przywróceniu kopii zapasowej;\n- zakodowaną postać twojego adresu e-mail, aby powstrzymać wielokrotne nadużywanie darmowych kredytów (zobacz Konta);\n- zapis urządzenia bez powiązania z kontem, do 180 dni;\n- kopie zapasowe, do 14 dni.\nGdy sprawa jest kasowana, zakodowane odciski i etykiety jej imion są czyszczone, więc nie są przechowywane.",
+    "privacy.retentionTitle": "Jak długo przechowujemy dane",
+    "privacy.retention":
+      "Werdykty i oryginały przechowujemy, dopóki nie poprosisz o usunięcie lub nie skasujesz konta. Aby odzyskać dane po awarii, przechowujemy kopie zapasowe serwera i jego bazy danych do 14 dni, potem są usuwane. Zawierają te same dane co serwer, w tym zaszyfrowane oryginały, a klucz jest na tym samym serwerze, więc kopie są chronione tak jak sam serwer, a nie tym szyfrowaniem. Skróty limitów użycia trwają do 48 godzin. Zdarzenia użycia są usuwane po 90 dniach, a powiązania urządzeń po 180 dniach bez użycia. Logi i metryki w Grafana Labs są przechowywane 14 dni. Raporty o awariach w Sentry są przechowywane do 30 dni. Pozostałe logi serwera podlegają standardowemu okresowi przechowywania naszego dostawcy hostingu. Kod logowania wygasa po 10 minutach, a wygasłe kody są usuwane codziennie. Sesja kończy się 30 dni po ostatnim użyciu. Lista usunięć jest przechowywana 90 dni. Zapisy twoich wyborów dotyczących zgód są przechowywane 6 lat po usunięciu konta, a potem kasowane.",
     "privacy.ipTitle": "Limity użycia",
     "privacy.ip":
-      "Żeby usługa była dostępna dla wszystkich, ograniczamy liczbę werdyktów na konto i liczbę tłumaczeń na odwiedzającego. Przy tłumaczeniach i odpowiedziach w sprawach dwustronnych przechowujemy w magazynie limitów, przez maksymalnie 24 godziny, skrót (hash) twojego adresu IP liczony z tajnym kluczem, a nie sam adres. Jeśli weryfikacja człowieka jest włączona, twój adres IP trafia też do Cloudflare na potrzeby tej weryfikacji. Nigdy nie jest zapisywany razem z twoim werdyktem.",
+      "Aby sąd pozostał otwarty dla wszystkich, ograniczamy, ile werdyktów może poprosić każde konto i ile tłumaczeń każdy odwiedzający. Dla tłumaczeń, odpowiedzi w sprawie dwustronnej, sprawdzania werdyktu w trakcie jego osądzania i prób logowania przechowujemy skrót z kluczem twojego adresu IP, nie sam adres, do 48 godzin. Limity logowania przez chwilę, około minuty, trzymają sam adres w pamięci serwera, nigdy na dysku. Jeśli weryfikacja człowieka jest włączona, twój adres IP trafia też do Cloudflare na potrzeby tej weryfikacji. Nigdy nie jest zapisywany razem z twoim werdyktem.",
     "privacy.processorsTitle": "Kto jeszcze przetwarza twój tekst",
     "privacy.processors":
-      "Wpisany przez ciebie tekst, łącznie z prawdziwymi imionami, najpierw trafia do naszego dostawcy AI w Stanach Zjednoczonych, żeby usunąć z niego imiona. Ocenie podlega tylko wersja zanonimizowana; twój oryginał jest przechowywany w formie zaszyfrowanej, jak opisano wyżej. Jeśli weryfikacja człowieka jest włączona, Cloudflare Turnstile działa w twojej przeglądarce i sprawdza wynik w Cloudflare. Jeśli się logujesz, logowanie obsługuje Apple albo Google (zależnie od wyboru), a e-maile do logowania wysyłamy przez Resend. Nasz dostawca hostingu prowadzi standardowe logi serwera. Zakupy w aplikacjach idą przez App Store lub Google Play i obsługuje je RevenueCat, który dostaje identyfikator twojego konta i historię zakupów. Grafana Labs dostaje logi naszego serwera i metryki wydajności, przechowywane w UE przez 14 dni; logi nie zawierają tekstu spraw. Raporty o awariach i błędach z aplikacji i tej strony trafiają do Sentry, gdzie są przechowywane w UE do 30 dni; zawierają błąd, wersję aplikacji lub przeglądarki i model urządzenia, ale nie zawierają tekstu spraw, identyfikatora konta ani adresu połączenia.",
+      "Tekst, który wpisujesz, wraz z prawdziwymi imionami, trafia najpierw do naszego dostawcy AI w Stanach Zjednoczonych, aby można było usunąć imiona. Osądzana jest tylko wersja zanonimizowana; twój oryginał jest przechowywany zaszyfrowany, jak opisano wyżej. Jeśli weryfikacja człowieka jest włączona, Cloudflare Turnstile działa w twojej przeglądarce i sprawdza wynik w Cloudflare. Jeśli się logujesz, logowanie obsługuje Apple lub Google (które wybierzesz), a e-maile logowania wychodzą przez Resend. Zakupy w aplikacjach przechodzą przez App Store lub Google Play i są obsługiwane przez RevenueCat, który otrzymuje identyfikator konta i historię zakupów. Grafana Labs otrzymuje logi naszego serwera i metryki wydajności, przechowywane w UE przez 14 dni; logi nie zawierają tekstu spraw. Raporty o awariach i błędach z aplikacji i tej strony trafiają do Sentry, przechowywane w UE do 30 dni; zawierają błąd, wersję aplikacji lub przeglądarki i model urządzenia, ale nie zawierają tekstu sprawy, identyfikatora konta ani adresu połączenia. Nasz dostawca hostingu prowadzi standardowe logi serwera. Aplikacja na Androida pyta Google Play o status wieku, a aplikacja na iPhone'a pyta Apple. Jesteśmy administratorem danych; ci dostawcy przetwarzają dane w naszym imieniu.",
     "privacy.shareTitle": "Linki do udostępniania",
     "privacy.share":
-      "Każdy, kto ma link do werdyktu, może go zobaczyć z wybranymi przez ciebie nazwami wyświetlanymi (albo ze Stroną A i Stroną B, jeśli wyłączysz imiona). Linki zawierają długie losowe identyfikatory, a strony udostępniania proszą wyszukiwarki, żeby ich nie indeksowały. Link do usuniętego werdyktu i jego obrazek podglądu przestają się wczytywać; podglądy wysłane już w komunikatorach mogą być widoczne, dopóki te aplikacje ich nie odświeżą. Nie podawaj adresów, numerów telefonów ani niczego, czego nie chcesz mieć na stronie, którą mogą otworzyć inni.",
+      "Każdy, kto ma link do werdyktu, może go zobaczyć, z wyświetlanymi imionami, które wybrałeś (albo ze Stroną A i Stroną B, jeśli wyłączyłeś imiona). Linki używają długich losowych identyfikatorów, a strony udostępniania proszą wyszukiwarki o ich nieindeksowanie. Link usuniętego werdyktu i jego obraz podglądu przestają się ładować; podglądy już wysłane w komunikatorach mogą nadal się pokazywać, dopóki te aplikacje ich nie odświeżą. Pomijaj adresy, numery telefonów i wszystko, czego nie chciałbyś widzieć na stronie, którą mogą otworzyć inni.",
+    "privacy.locationTitle": "Gdzie są twoje dane",
+    "privacy.location":
+      "Nasze serwery są w Niemczech (OVH, Frankfurt). Część przetwarzania odbywa się w Stanach Zjednoczonych: nasz dostawca AI uruchamia modele, które usuwają imiona, osądzają, odczytują zrzuty ekranu i przeszukują sieć; Cloudflare stoi przed okjudge.com jako proxy i DNS (przechodzi przez niego cały ruch) i przeprowadza weryfikację człowieka. Logowanie przechodzi przez Apple lub Google, jeśli je wybierzesz, a e-maile logowania przez Resend. Dane przetwarzane w innym kraju mogą podlegać prawu tego kraju. Pracujemy z Kanady i stamtąd możemy widzieć twoje dane.",
+    "privacy.storageTitle": "Pliki cookie i pamięć przeglądarki",
+    "privacy.storage":
+      "Strona używa ciasteczka logowania (verdict.session_token), które utrzymuje cię zalogowanym, oraz krótkotrwałych ciasteczek podczas logowania przez Apple lub Google (verdict.state trwa 5 minut). Cloudflare, który przeprowadza weryfikację człowieka, może w tym celu ustawić własne ciasteczka. Żadne nie służą do śledzenia. Pamięć lokalna przeglądarki przechowuje twój język, motyw i wybór Gamify; niewysłany szkic (razem z wpisanym tekstem) na czas logowania; listę werdyktów i spraw utworzonych bez logowania; prywatne kody, które pozwalają ci dotrzeć do własnych oryginałów; imiona użyte w sprawie; kody zaproszeń do spraw, na które masz odpowiedzieć; potwierdzenie wieku; ostatnio wybrany sąd i to, które przykłady już widziałeś. Pamięć sesji przechowuje adres e-mail i tryb, gdy czekasz na e-mail logowania, oraz znaczniki użycia dla karty. Zostaje to na twoim urządzeniu. Wyczyszczenie danych witryny je usuwa. Aplikacje przechowują podobne rzeczy na urządzeniu.",
+    "privacy.notStoredTitle": "Czego nie robimy",
+    "privacy.notStored":
+      "Żadnych trackerów reklamowych. Nie sprzedajemy twoich danych i nie udostępniamy ich do reklam. Strona ani aplikacje nie śledzą cię na innych stronach. Jak reagujemy na Do Not Track: strona nie wysyła z przeglądarki żadnych zdarzeń użycia, gdy przeglądarka wysyła Do Not Track lub Global Privacy Control, a przełącznik Statystyki użycia w aplikacjach robi to samo w aplikacjach. Nasz serwer nadal zapisuje kilka zdarzeń powiązanych z twoim kontem (logowanie, utworzone lub nieudane sprawy i werdykty, zakupy) oraz to, z jakiego urządzenia się logowałeś. Nigdy nie używamy twojego tekstu do trenowania czegokolwiek, chyba że włączyłeś Pomóż ulepszyć Judge.",
+    "privacy.securityTitle": "Jak go chronimy",
+    "privacy.security":
+      "Oryginały, listy imion, wyświetlane imiona i tokeny logowania Apple są zaszyfrowane. Ruch korzysta z HTTPS. Klucz szyfrowania jest na tym samym serwerze co dane, więc nie chroni przed kimś, kto przejmie serwer. Jeśli coś pójdzie źle z twoimi danymi osobowymi, powiadomimy osoby, których to dotyczy, i organy tam, gdzie wymaga tego prawo.",
+    "privacy.childrenTitle": "Wiek",
+    "privacy.children":
+      'Judge jest dla osób w wieku 18 lat i więcej. Prosimy każdego, kto się loguje, o potwierdzenie tego; osoby odpowiadające na sprawę bez konta zaznaczają „Mam 18 lat lub więcej" przed wysłaniem, a aplikacje mogą używać sygnału wieku z telefonu. Nie zbieramy świadomie danych od nikogo poniżej 18 lat. Jeśli uważasz, że dziecko ma konto, napisz na {email}, a zamkniemy je i usuniemy dane.',
+    "privacy.rightsTitle": "Twoje prawa",
+    "privacy.rights":
+      "Gdziekolwiek mieszkasz, możesz poprosić nas o pokazanie, co przechowujemy, poprawienie tego, usunięcie go lub skasowanie konta, zaprzestanie używania go do trenowania i przekazanie ci kopii. Większość możesz zrobić sam: usunąć werdykt lub sprawę na jej stronie, skasować konto na stronie konta, zmienić imiona pokazywane na stronie werdyktu lub sprawy, pobrać swoje dane oraz przełączyć Pomóż ulepszyć Judge (a w aplikacjach także Statystyki użycia) w Ustawieniach. W pozostałych sprawach napisz na {email} z linkiem do werdyktu lub sprawy. Możemy poprosić, żebyś napisał z adresu e-mail swojego konta albo potwierdził to po zalogowaniu. Odpowiadamy w ciągu 30 dni lub miesiąca, jeśli to krócej. Jest to bezpłatne. Nie będziesz gorzej traktowany za korzystanie ze swoich praw. Osoba, która prosi w twoim imieniu, potrzebuje twojej pisemnej zgody.\nKopia twoich danych to plik JSON. Wybierz Pobierz moje dane na stronie konta, w aplikacjach lub na stronie. Zawiera twoje konto i metody logowania, twoje werdykty i twoje strony spraw z twoim własnym tekstem i imionami, wyniki, twoje oceny, historię zgód, urządzenia, zdarzenia użycia i zakupy. Nie zawiera tokenów logowania, twojego hasła ani zakodowanego adresu e-mail oraz niczyjego cudzego tekstu ani imion.\nNie musisz nam podawać danych, ale bez twojego tekstu i konta nie możemy wydać ci werdyktu.",
+    "privacy.regionEuTitle": "Jeśli jesteś w UE lub Wielkiej Brytanii",
+    "privacy.regionEu":
+      "- Administrator: zobacz Kim jesteśmy.\n- Podstawy prawne: zobacz Po co używamy twoich danych.\n- Możesz też poprosić nas o ograniczenie przetwarzania, sprzeciwić się przetwarzaniu opartemu na naszym prawnie uzasadnionym interesie, w każdej chwili cofnąć zgodę (bez wpływu na to, co zrobiliśmy wcześniej) i złożyć skargę do organu ochrony danych (w Wielkiej Brytanii do ICO).\n- Twoje dane są przetwarzane w Niemczech, Kanadzie i Stanach Zjednoczonych, jak opisano w części Gdzie są twoje dane. Napisz na {email}, jeśli chcesz wiedzieć więcej o tym, jak są przekazywane.\n- Zautomatyzowane decyzje: zobacz Werdykty pochodzą od AI.",
+    "privacy.regionUsTitle": "Jeśli jesteś w Kalifornii lub innym stanie USA",
+    "privacy.regionUs":
+      '- W ciągu ostatnich 12 miesięcy zbieraliśmy: identyfikatory (e-mail, imię, identyfikatory konta i urządzenia); tekst twojego sporu i odpowiedzi; oceny i wybory dotyczące zgód; historię zakupów; dane o użyciu i urządzeniu (kraj, model urządzenia, wersja aplikacji); potwierdzenie wieku; oraz informacje wrażliwe (dane logowania do konta i wszelkie szczegóły o zdrowiu lub podobne w twoim tekście). Źródła: ty, logowanie i sklep w twoim telefonie oraz nasze własne aplikacje. Cele: zobacz Po co używamy twoich danych. Odbiorcy: kategorie opisane w części Kto jeszcze przetwarza twój tekst.\n- Nie sprzedajemy ani nie udostępniamy danych osobowych do reklam i nie robiliśmy tego w ciągu ostatnich 12 miesięcy. Nie tworzymy twojego profilu. Informacji wrażliwych używamy tylko po to, by świadczyć ci usługę, więc nie ma czego ograniczać ani z czego rezygnować.\n- Prawa: wiedzieć, mieć dostęp, poprawiać, usuwać i otrzymać przenośną kopię. Możesz skorzystać z upoważnionego przedstawiciela. Odpowiadamy w ciągu 30 dni lub miesiąca, jeśli to krócej. Aby odwołać się od odmowy, napisz na {email} z dopiskiem „Appeal". Odwołanie rozpatrujemy w ciągu 45 dni. Jeśli je odrzucimy, możesz zwrócić się do prokuratora generalnego swojego stanu.\n- Przechowywanie: zobacz Jak długo przechowujemy dane i Co zachowujemy po usunięciu.\n- Do Not Track: zobacz Czego nie robimy. Na naszych stronach żadne firmy reklamowe ani śledzące nie zbierają danych. Cloudflare przeprowadza weryfikację człowieka i w tym celu widzi twoje połączenie.\n- Nikt poniżej 18 lat nie może używać Judge, więc nie sprzedajemy ani nie udostępniamy danych nikogo poniżej 16 lat. Prawa w innych stanach to ta sama lista.',
+    "privacy.regionCaTitle": "Jeśli jesteś w Kanadzie lub Quebecu",
+    "privacy.regionCa":
+      "Judge działa z Kanady i przetwarza dane osobowe zgodnie z PIPEDA: zbieramy tylko to, czego potrzebuje usługa, używamy tego tylko do niej, chronimy to, a ty możesz poprosić o wgląd w to, co o tobie przechowujemy, poprawienie tego lub usunięcie. Odpowiadamy w ciągu 30 dni. Możesz złożyć skargę do Urzędu Komisarza ds. Prywatności Kanady (priv.gc.ca). Jeśli jesteś w Quebecu:\n- Osobą odpowiedzialną za dane osobowe jest Aytu Tuna, właściciel, pod adresem {email}.\n- Część danych jest wysyłana poza Quebec: na nasz serwer w Niemczech, do dostawcy AI i innych dostawców w Stanach Zjednoczonych oraz do Kanady poza Quebecem.\n- Judge zapisuje tylko kraj twojego połączenia, na potrzeby liczników użycia, i nie śledzi twojej dokładnej lokalizacji. Werdykt ocenia argumentację, którą opisujesz, i nie służy do budowania twojego profilu. Liczniki użycia są powiązane z twoim kontem, jak opisano w części Co przechowujemy.\n- Pomóż ulepszyć Judge jest wyłączone, dopóki tego nie włączysz, i możesz je wyłączyć w każdej chwili.\n- Możesz też poprosić o wycofanie zgody, o otrzymanie swoich danych w powszechnie używanym formacie i złożyć skargę do Commission d'accès à l'information.",
+    "privacy.regionBrTitle": "Jeśli jesteś w Brazylii",
+    "privacy.regionBr":
+      "Administrator i kontakt: zobacz Kim jesteśmy. {email} jest też kanałem dla wniosków LGPD. Jesteśmy administratorem; dostawcy opisani w części Kto jeszcze przetwarza twój tekst działają na nasze zlecenie. Podstawy prawne: zobacz Po co używamy twoich danych. Możesz poprosić nas o potwierdzenie, że przetwarzamy twoje dane; udostępnienie ich; poprawienie; anonimizację, zablokowanie lub usunięcie danych nadmiarowych lub przetwarzanych niezgodnie z prawem; przeniesienie; usunięcie danych, których używamy na podstawie twojej zgody; poinformowanie, komu je udostępniliśmy; poinformowanie o możliwości odmowy zgody i jej skutkach; oraz o wycofanie zgody. Jest to bezpłatne. Możesz też złożyć skargę do ANPD. Twoje dane są wysyłane za granicę, jak opisano w części Gdzie są twoje dane.",
+    "privacy.changesTitle": "Zmiany",
+    "privacy.changes":
+      "Jeśli zmienimy tę politykę w istotny sposób, zaktualizujemy datę u góry tej strony. Nigdy nie użyjemy danych, które nam przekazałeś na podstawie starszej polityki, do nowego celu bez wcześniejszego zapytania cię o zgodę. Przeglądamy ją co najmniej raz w roku.",
     "privacy.contactTitle": "Kontakt",
     "privacy.contact":
       "Masz pytania albo chcesz zobaczyć, poprawić lub usunąć swoje dane? Napisz na {email} i dołącz link do werdyktu lub sprawy.",
-    "privacy.accountsTitle": "Konta",
-    "privacy.accounts":
-      "Judge jest tylko dla osób w wieku 18 lat i więcej, a konta, o których dowiemy się, że należą do osób poniżej 18 lat, są zamykane. Do werdyktu potrzebne jest konto; druga strona sprawy dwustronnej może odpowiedzieć bez niego. Jeśli logujesz się przez Apple albo Google, przechowujemy udostępnione nam przez nich adres e-mail, imię i nazwisko oraz link do zdjęcia profilowego, a także informację, której metody logowania użyto; Apple albo Google mogą też zobaczyć, że logujesz się do Judge. Jeśli logujesz się linkiem z e-maila, wiadomość wysyłamy przez Resend, a do sprawdzenia linku przez krótki czas przechowujemy rekord z twoim adresem e-mail: link przestaje działać po 10 minutach, a rekord jest usuwany po użyciu albo wkrótce po wygaśnięciu. Przechowujemy też twoje sesje (losowy token i czas jego wygaśnięcia, bez adresu IP i danych przeglądarki, choć aplikacje przy logowaniu zapisują też identyfikator urządzenia), twoją pulę werdyktów, twój plan i jego historię oraz informację, które werdykty zostały opłacone z puli (tylko identyfikator werdyktu). Zapisujemy też, które werdykty i sprawy należą do ciebie, żeby można je było znaleźć na każdym urządzeniu. Usunięcie konta na stronie konta kasuje twoje konto, sesje, zdarzenia użycia i powiązanie konta z urządzeniami, a twoje werdykty i twoje wersje w sprawach usuwa w sposób opisany w części „Usuwanie”. Zachowujemy tylko przekształconą (zahaszowaną) postać twojego adresu e-mail, żeby nowe konto z tym adresem nie dostało drugiego darmowego werdyktu i pozostało zamknięte, jeśli twoje konto zostało zamknięte, bo masz mniej niż 18 lat. Kody logowania wysyłane e-mailem działają tak samo jak linki. Jeśli ustawisz hasło, przechowujemy przy twoim koncie tylko jego zaszyfrowaną (zahaszowaną) postać, nigdy samo hasło.",
-    "privacy.webSearchTitle": "Wyszukiwanie w sieci i pytania",
-    "privacy.webSearch":
-      "Każdy werdykt wysyła zanonimizowany opis sporu do naszego dostawcy AI z włączonym wyszukiwaniem w sieci. Model sam tworzy zapytania na podstawie tego zanonimizowanego tekstu, a wyniki pochodzą od partnera wyszukiwania dostawcy. Wykorzystane źródła są pokazane w werdykcie. Sędziowie mogą najpierw zadać ci do dwóch pytań: żeby je ułożyć, twój tekst w oryginalnej postaci, łącznie z imionami, trafia do dostawcy AI jeszcze raz. Twoje odpowiedzi są anonimizowane razem z opisem sporu przed oceną; pytania i twoje odpowiedzi w oryginalnej postaci są przechowywane razem z zaszyfrowanym oryginałem.",
     "nav.signIn": "Zaloguj się",
     "nav.account": "Konto",
     "nav.pricing": "Cennik",
@@ -306,20 +367,16 @@ const pl: Locale = {
     "consent.sensitiveContinue": "Dalej",
     "respond.adultConfirm": "Mam 18 lat lub więcej",
     "account.export": "Pobierz moje dane",
-    "account.exportHint":
-      "Otrzymaj plik JSON ze wszystkim, co Judge o tobie przechowuje.",
+    "account.exportHint": "Otrzymaj plik JSON ze wszystkim, co Judge o tobie przechowuje.",
     "account.exportBusy": "Przygotowuję plik…",
-    "account.exportFailed":
-      "Nie udało się teraz przygotować twoich danych. Spróbujesz jeszcze raz?",
+    "account.exportFailed": "Nie udało się teraz przygotować twoich danych. Spróbujesz jeszcze raz?",
     "deletePage.title": "Usuń swoje konto w Judge",
     "deletePage.lead":
       "Judge to aplikacja Aytu Tuna. Konto i jego dane możesz w każdej chwili usunąć sam, w aplikacji lub na stronie.",
     "deletePage.appTitle": "W aplikacji",
-    "deletePage.app":
-      "Otwórz Judge, przejdź do Konta, kliknij Usuń konto i potwierdź.",
+    "deletePage.app": "Otwórz Judge, przejdź do Konta, kliknij Usuń konto i potwierdź.",
     "deletePage.webTitle": "Na stronie",
-    "deletePage.web":
-      "Zaloguj się na okjudge.com, otwórz Konto, wybierz Usuń konto i potwierdź.",
+    "deletePage.web": "Zaloguj się na okjudge.com, otwórz Konto, wybierz Usuń konto i potwierdź.",
     "deletePage.removedTitle": "Co zostaje usunięte",
     "deletePage.removed":
       "Usuwamy twoje konto, zapisy logowania, kredyty, plan i zdarzenia użycia. Twoje werdykty i twoje strony w sprawach są usuwane: oryginalny tekst i imiona od razu, a zanonimizowany tekst i werdykt po 30 dniach.",
@@ -327,8 +384,7 @@ const pl: Locale = {
     "deletePage.kept":
       "Wynik i daty usuniętych werdyktów, bez tekstu i imion. Twoje oceny i zapisy zgód przez 6 lat, bez powiązania z tobą. Zakodowaną postać twojego e-maila, by nie nadużywano wielokrotnie darmowych kredytów. Kopie zapasowe zawierają starsze kopie do 14 dni.",
     "deletePage.mailTitle": "Poproś e-mailem",
-    "deletePage.mail":
-      "Nie możesz się zalogować? Napisz na {email} z adresu konta i poproś o jego usunięcie.",
+    "deletePage.mail": "Nie możesz się zalogować? Napisz na {email} z adresu konta i poproś o jego usunięcie.",
     "rating.prompt": "Sprawiedliwy werdykt?",
     "rating.fair": "Sprawiedliwy",
     "rating.notFair": "Niesprawiedliwy",
@@ -346,8 +402,7 @@ const pl: Locale = {
     "clarify.back": "Edytuj opis sporu",
     "thinking.factcheck": "Sprawdzamy fakty w sieci…",
     "thinking.factcheckDone": "Sprawdzanie w sieci zakończone.",
-    "thinking.premiumHelper":
-      "Sprawdzanie faktów w sieci trwa trochę dłużej. Daj nam minutę lub dwie.",
+    "thinking.premiumHelper": "Sprawdzanie faktów w sieci trwa trochę dłużej. Daj nam minutę lub dwie.",
     "panel.premium": "Ocenione z weryfikacją faktów w sieci.",
     "factcheck.title": "Sprawdzone w sieci",
     "factcheck.lead": "Sędziowie widzieli te wyniki wyszukiwania przed werdyktem. To dowody, a nie sam werdykt.",
@@ -358,8 +413,7 @@ const pl: Locale = {
     "factcheck.sources": "Źródła",
     "factcheck.sourceAria": "{title}, otwiera się w nowej karcie",
     "factcheck.none": "Nie ma czego sprawdzać w sieci: tu chodzi o wartości lub znaczenia, nie o fakty.",
-    "factcheck.noneFactual":
-      "Nic tu nie da się sprawdzić w sieci: fakty w tej sprawie znają tylko zaangażowane osoby.",
+    "factcheck.noneFactual": "Nic tu nie da się sprawdzić w sieci: fakty w tej sprawie znają tylko zaangażowane osoby.",
     "factcheck.unavailable": "Tym razem sprawdzanie w sieci się nie zakończyło, więc sędziowie zdecydowali bez niego.",
     "signin.title": "Zaloguj się",
     "signin.lead": "Zaloguj się, żeby dostać werdykt. Nowe konto dostaje pierwszy werdykt za darmo.",
@@ -490,8 +544,7 @@ const pl: Locale = {
     "case.status.expired": "Zaproszenie wygasło",
     "case.invite.copied": "Skopiowano",
     "case.invite.share": "Udostępnij",
-    "case.invite.shareText":
-      "Judge ma rozstrzygnąć nasz spór. Opisz tu swoją wersję. Nie zobaczę jej przed werdyktem.",
+    "case.invite.shareText": "Judge ma rozstrzygnąć nasz spór. Opisz tu swoją wersję. Nie zobaczę jej przed werdyktem.",
     "case.invite.reset": "Utwórz nowy link",
     "case.invite.resetConfirm": "Wysłany już link przestanie działać. Utworzyć nowy?",
     "case.invite.resetYes": "Tak, utwórz nowy link",
@@ -507,7 +560,8 @@ const pl: Locale = {
     "case.side.opened": "Otwarte",
     "case.side.typing": "Pisze…",
     "case.judgeAnswered": "Oceń na podstawie stron, które odpowiedziały",
-    "case.judgeAnswered.confirm": "Chcesz werdykt na podstawie stron, które odpowiedziały? Pozostałe zaproszenia się zamkną i te osoby nie będą mogły już odpowiedzieć.",
+    "case.judgeAnswered.confirm":
+      "Chcesz werdykt na podstawie stron, które odpowiedziały? Pozostałe zaproszenia się zamkną i te osoby nie będą mogły już odpowiedzieć.",
     "case.cancel": "Anuluj",
     "case.retry": "Spróbuj ponownie",
     "case.failedBody": "Werdykt wrócił do twojej puli. Możesz spróbować ponownie.",
@@ -546,20 +600,18 @@ const pl: Locale = {
     "respond.submit": "Wyślij moją wersję",
     "case.write.title": "Twoja wersja",
     "case.write.placeholder": "O co chodzi?",
-    "case.write.lead":
-      "Napisz swoją wersję, kiedy będziesz gotowy. Sędziowie zaczną, gdy oboje napiszecie.",
-    "case.write.leadAnswered":
-      "Druga strona napisała już swoją wersję. Napisz swoją, a dostaniesz werdykt.",
+    "case.write.lead": "Napisz swoją wersję, kiedy będziesz gotowy. Sędziowie zaczną, gdy oboje napiszecie.",
+    "case.write.leadAnswered": "Druga strona napisała już swoją wersję. Napisz swoją, a dostaniesz werdykt.",
     "case.write.submit": "Wyślij moją wersję",
     "case.write.emailSubject": "Druga strona napisała swoją wersję",
     "respond.sent": "Dzięki. Twoja wersja dotarła, a sędziowie już nad nią pracują.",
-    "respond.sentWaiting":
-      "Dzięki. Twoja wersja dotarła. Sędziowie zaczną, gdy druga osoba napisze swoją.",
+    "respond.sentWaiting": "Dzięki. Twoja wersja dotarła. Sędziowie zaczną, gdy druga osoba napisze swoją.",
     "respond.ownInvite": "To twój własny link z zaproszeniem. Wyślij go drugiej osobie.",
     "respond.expired": "To zaproszenie wygasło.",
     "respond.closed": "Ta sprawa nie przyjmuje już odpowiedzi.",
     "respond.withoutYou": "Ta sprawa została rozstrzygnięta bez twojej wersji.",
-    "respond.failed": "Sędziowie nie dali rady rozstrzygnąć tej sprawy. Osoba, która cię zaprosiła, może spróbować ponownie.",
+    "respond.failed":
+      "Sędziowie nie dali rady rozstrzygnąć tej sprawy. Osoba, która cię zaprosiła, może spróbować ponownie.",
     "respond.notFound": "Ten link z zaproszeniem nie działa. Mógł zostać wyłączony albo brakuje jego części.",
     "respond.loading": "Otwieramy zaproszenie…",
     "respond.inviteTitle": "To zaproszenie",
@@ -619,8 +671,7 @@ const pl: Locale = {
     "home.says": "{name} mówi:",
     "home.mySide": "Moja wersja:",
     "home.otherSide": "Wersja drugiej strony:",
-    "appeal.lead":
-      "Zużywa 1 werdykt.",
+    "appeal.lead": "Zużywa 1 werdykt.",
     "appeal.placeholder": "Co umknęło sędziom? Fakt, wiadomość albo to, na co naprawdę się umówiliście.",
     "appeal.submit": "Oceń ponownie z kontekstem",
     "appeal.sending": "Anonimizujemy twój kontekst…",
@@ -662,12 +713,6 @@ const pl: Locale = {
       "Odwołania: po werdykcie każda osoba może raz dodać kontekst. Sędziowie przyglądają się wszystkiemu od nowa i mówią, czy werdykt się utrzymał, został odwrócony, czy się zmienił. Wcześniejsze werdykty nadal można obejrzeć.",
     "about.premium4":
       "Sprawa dwustronna zużywa 1 werdykt. Jest rezerwowany, gdy wysyłasz link, i wraca, jeśli nikt nie odpowie w ciągu 7 dni.",
-    "privacy.casesTitle": "Sprawy dwustronne i odwołania",
-    "privacy.cases":
-      "W sprawie dwustronnej każda wersja jest anonimizowana w chwili wysłania, tak samo jak przy zwykłym werdykcie. Sędziowie czytają tekst zanonimizowany; wersja każdej osoby w oryginale, wraz z listą imion, jest przechowywana w formie zaszyfrowanej i widzi ją tylko ta osoba. Wysyłając swoją wersję, każda osoba wpisuje imię, które ma się wyświetlać na stronie udostępniania; jeśli pole zostanie puste, pojawi się Strona A albo Strona B. Druga osoba nie potrzebuje konta; liczbę jej odpowiedzi ograniczamy na podstawie skrótu (hash) jej adresu IP liczonego z tajnym kluczem. Link z zaproszeniem jest przechowywany tylko jako skrót (hash). Jeśli druga osoba odpowiada po zalogowaniu, jej konto zostaje powiązane z jej wersją, więc tylko ona może później dodać kontekst albo zobaczyć swój oryginał; jeśli odpowiada bez logowania, to samo zapewnia prywatny kod zapisany w jej przeglądarce, a jeśli później zaloguje się w tej przeglądarce, może zachować sprawę na swoim koncie. Żeby ta sama osoba miała tę samą etykietę w obu relacjach, serwer przechowuje w ramach każdej sprawy zakodowane odciski imion (skróty liczone z tajnym kluczem, a nie same imiona). Przed werdyktem żadna ze stron nie może przeczytać tekstu drugiej; po werdykcie w sprawie dwustronnej obie osoby mogą przeczytać obie zanonimizowane relacje. Kontekst dodany po werdykcie (odwołanie) jest traktowany tak samo. Gdy druga osoba odpowie, możemy wysłać ci krótką wiadomość e-mail bez żadnej treści sprawy, jeśli wysyłka e-maili jest skonfigurowana. Każda z osób może usunąć swoją wersję: jej oryginał i nazwa wyświetlana zostają wymazane, a linki do udostępniania sprawy przestają działać dla wszystkich. Usunięcie konta robi to samo we wszystkich twoich sprawach: zarówno rozpoczętych przez ciebie, jak i tych, w których odpowiadasz.",
-    "privacy.evidenceTitle": "Zrzuty ekranu",
-    "privacy.evidence":
-      "Twoja przeglądarka zmniejsza duże obrazy przed wysłaniem. Następnie każdy obraz raz trafia do zewnętrznej usługi AI, żeby odczytać widoczny tekst; samego obrazu nigdy nie przechowujemy. Surowa transkrypcja, która może jeszcze zawierać imiona, wraca do ciebie w podpisanym tokenie, który twoja przeglądarka przechowuje przez maksymalnie 6 godzin. Gdy wysyłasz swoją wersję, transkrypcja jest anonimizowana razem z twoim tekstem: zanonimizowana transkrypcja trafia do sędziów i jest przechowywana razem ze sprawą, a surowa transkrypcja jest przechowywana w formie zaszyfrowanej z twoim oryginałem, gdzie widzisz ją tylko ty. Numery telefonów, adresy e-mail, nazwy kont w mediach społecznościowych i numery kont, które się w niej znajdują, są dla sędziów również zastępowane symbolami zastępczymi.",
     "pricing.premium.f5": "Zrzuty ekranu jako dowody – odczytane, a potem usunięte, bez dopłat",
     "pricing.premium.f6": "Dodanie kontekstu po werdykcie i ponowna ocena (1 werdykt)",
     "pricing.premium.f7": "Obie strony: wyślij drugiej osobie prywatny link, żeby opisała swoją wersję",
@@ -787,21 +832,6 @@ const pl: Locale = {
     "stamp.dissolved": "Spór o słowa",
     "bestPoint.of": "Najmocniejszy argument: {name}",
     "bestPoint.self": "Twój najmocniejszy argument",
-    "privacy.accessTitle": "Kto co widzi",
-    "privacy.access":
-      "Ty: swój oryginalny tekst i imiona – na każdym urządzeniu po zalogowaniu albo na urządzeniu, z którego korzystasz, dzięki prywatnemu kodowi zapisanemu w przeglądarce lub aplikacji (my przechowujemy tylko przekształconą postać tego kodu). Werdykty uzyskane bez logowania, zanim konto było wymagane, oraz sprawy, w których twoją odpowiedź wysłano bez logowania, pozostają na liście w tamtej przeglądarce wraz z nagłówkami i imionami w takiej postaci, w jakiej je wpisano, żeby mogły się pojawić na stronie „Werdykty”: każdy, kto korzysta z tej samej przeglądarki, widzi tę listę. Na wspólnym komputerze zaloguj się albo użyj okna prywatnego; wyczyszczenie danych strony w przeglądarce usuwa listę. W sprawie dwustronnej każda osoba widzi tylko swój oryginał; po werdykcie obie widzą obie zanonimizowane relacje, tak jak czytają je sędziowie. Sędziowie (modele AI uruchamiane przez naszego dostawcę AI): tylko wersję zanonimizowaną. Każdy, kto ma link do udostępniania: werdykt z nazwami wyświetlanymi. Domyślnie to imię, które wybierasz dla siebie, oraz imiona pozostałych osób w takiej postaci, w jakiej je wpisano; możesz je zmienić albo wyłączyć w dowolnym momencie, a wtedy strona pokazuje Stronę A i Stronę B. My: możemy odszyfrować oryginały za pomocą klucza, a zapisany tekst oglądamy tylko po to, żeby obsłużyć twoje zgłoszenie do pomocy, zbadać nadużycie albo gdy wymaga tego prawo.",
-    "privacy.removalTitle": "Usuwanie",
-    "privacy.removal":
-      "O usunięcie możesz poprosić na stronie werdyktu (po zalogowaniu otworzysz ją ze strony „Werdykty”), na stronie sprawy w przypadku sprawy dwustronnej, usuwając konto albo e-mailem. Usunięcie wymazuje twój oryginalny tekst, listę imion i nazwy wyświetlane (w sprawie dwustronnej: oryginał twojej wersji i twoją nazwę wyświetlaną), a link do udostępniania i jego obrazek podglądu przestają się wczytywać dla wszystkich. Podglądy wysłane już w komunikatorach są przechowywane przez te aplikacje i mogą być widoczne, dopóki ich nie odświeżą. Zanonimizowany tekst i werdykt, bez imion, zachowujemy w naszych zapisach; nie da się ich już otworzyć przez link. Usunięcie konta robi to dla wszystkich twoich werdyktów i twoich wersji w sprawach, a także kasuje dane logowania, pulę werdyktów i plan. Usunięte dane pozostają w kopiach zapasowych, dopóki te nie wygasną (najwyżej 14 dni, patrz niżej); jeśli kiedykolwiek przywrócimy kopię zapasową, ponownie zastosujemy każde usunięcie (w tym celu przechowujemy listę tego, co i kiedy usunięto, bez żadnych tekstów ani imion). Trzydzieści dni po tym, jak coś usuniesz, kasujemy też zanonimizowany tekst i werdykt, zachowując tylko wynik i daty, chyba że prawo wymaga od nas przechowywania ich dłużej. W przypadku sprawy trzydzieści dni zaczyna biec dopiero wtedy, gdy usuną ją wszyscy jej uczestnicy.",
-    "privacy.retentionTitle": "Jak długo przechowujemy dane",
-    "privacy.retention":
-      "Werdykty i oryginały przechowujemy, dopóki nie poprosisz o ich usunięcie albo nie usuniesz konta. Na wypadek awarii przechowujemy kopie zapasowe serwera i jego bazy danych przez najwyżej 14 dni, po czym są usuwane. Zawierają te same dane co serwer, łącznie z zaszyfrowanymi oryginałami, a klucz znajduje się na tym samym serwerze, więc kopie zapasowe są chronione tak jak sam serwer, a nie przez to szyfrowanie. Skróty (hashe) używane do limitów są przechowywane najwyżej 24 godziny. Logi serwera podlegają standardowym zasadom przechowywania naszego dostawcy hostingu. Zdarzenia użycia usuwamy po 90 dniach, a powiązania z urządzeniami po 180 dniach bez użycia. Logi i metryki wysłane do Grafana Labs są przechowywane 14 dni.",
-    "privacy.locationTitle": "Gdzie są twoje dane",
-    "privacy.location":
-      "Nasze serwery znajdują się w Niemczech (OVH, Frankfurt). Część przetwarzania odbywa się w Stanach Zjednoczonych: nasz dostawca AI uruchamia modele, które usuwają imiona, wydają werdykty, odczytują zrzuty ekranu i przeszukują sieć; Cloudflare działa przed okjudge.com jako proxy i DNS (przechodzi przez niego cały ruch) i obsługuje weryfikację człowieka. Logowanie odbywa się przez Apple albo Google, jeśli je wybierzesz, a e-maile do logowania idą przez Resend. Dane przetwarzane w innym kraju mogą podlegać prawu tego kraju.",
-    "privacy.rightsTitle": "Twoje prawa (Kanada)",
-    "privacy.rights":
-      "Judge jest prowadzony z Kanady i przetwarza dane osobowe zgodnie z kanadyjską federalną ustawą o ochronie prywatności (PIPEDA): zbieramy tylko to, czego potrzebuje usługa, wykorzystujemy to wyłącznie w tym celu i chronimy te dane, a ty możesz poprosić o wgląd w dane, które o tobie przechowujemy, ich poprawienie lub usunięcie. Odpowiadamy w ciągu 30 dni.",
     "footer.terms": "Warunki",
     "signin.legalTerms": "Warunki korzystania",
     "age.confirm": "Mam 18 lat lub więcej",
