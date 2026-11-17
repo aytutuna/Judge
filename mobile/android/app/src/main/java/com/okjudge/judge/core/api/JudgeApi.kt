@@ -84,7 +84,9 @@ sealed interface ApiResult<out T> {
  * Every call carries `Authorization: Bearer` while [tokenStore] holds a
  * session; a 401 `signin_required` to such a call clears it and calls
  * [onSignedOut]. A 403 `age_blocked` or `age_unconfirmed` to any call is
- * passed to [onAgeGate]. Sign-in requests also carry [deviceId] as `Device-Id`.
+ * passed to [onAgeGate]. A 403 `agreement_required` to a signed-in call waits
+ * for [askAgreement] and, when the person agreed, sends the same request once
+ * more. Sign-in requests also carry [deviceId] as `Device-Id`.
  *
  * Main-safe: the call, the body read and the JSON decode all run on [io], so
  * callers on Dispatchers.Main never touch the socket.
@@ -100,6 +102,7 @@ class JudgeApi(
     private val pollPolicy: PollPolicy = PollPolicy(),
     private val deviceId: String? = null,
     private val onAgeGate: (code: String) -> Unit = {},
+    private val askAgreement: suspend () -> Boolean = { false },
 ) {
     data class Timeouts(
         val verdictSec: Long = 310,
@@ -525,6 +528,16 @@ class JudgeApi(
     /** POST /api/auth/sign-out: ends the session on the server. */
     suspend fun signOut(): ApiResult<Unit> = postAuth(url("api", "auth", "sign-out"), JsonObject(emptyMap())) { _, _ -> }
 
+    /** POST /api/v1/me/agreement: the private details notice was ticked, in [lang]. */
+    suspend fun agree(lang: AppLang): ApiResult<Unit> {
+        val body = buildJsonObject {
+            put("lang", lang.tag)
+            put("platform", "android")
+        }.toString()
+        val req = request(url("api", "v1", "me", "agreement")).post(body.toRequestBody(JSON)).build()
+        return execute(accountClient, req) { _, _ -> }
+    }
+
     /** DELETE /api/v1/me: deletes the account (the server keeps verdict rows, anonymized). */
     suspend fun deleteAccount(): ApiResult<Unit> {
         val body = buildJsonObject { put("confirm", "delete") }.toString()
@@ -589,14 +602,8 @@ class JudgeApi(
 
     private suspend fun <T> execute(client: OkHttpClient, request: Request, decode: (status: Int, body: String) -> T): ApiResult<T> {
         val sentAuth = request.header("Authorization")
-        val result = try {
-            withContext(io) { exchange(client, request, decode) }
-        } catch (e: CancellationException) {
-            throw e
-        } catch (e: IOException) {
-            currentCoroutineContext().ensureActive()
-            ApiResult.Err(transportError(e))
-        }
+        var result = attempt(client, request, decode)
+        if (sentAuth != null && agreementMissing(result) && askAgreement()) result = attempt(client, request, decode)
         // Sign-out runs back on the caller's dispatcher: it may touch UI state.
         val error = (result as? ApiResult.Err)?.error as? UiError.Api
         // Only the session this request used ends (not one from a sign-in since).
@@ -609,6 +616,19 @@ class JudgeApi(
         if (stillCurrent && ageCode != null) onAgeGate(ageCode)
         return result
     }
+
+    private suspend fun <T> attempt(client: OkHttpClient, request: Request, decode: (status: Int, body: String) -> T): ApiResult<T> =
+        try {
+            withContext(io) { exchange(client, request, decode) }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: IOException) {
+            currentCoroutineContext().ensureActive()
+            ApiResult.Err(transportError(e))
+        }
+
+    private fun agreementMissing(result: ApiResult<*>): Boolean =
+        (result as? ApiResult.Err)?.error.let { it is UiError.Api && it.status == 403 && it.code == AGREEMENT_REQUIRED }
 
     /** Runs on [io]: executes the call, reads the body and decodes it. */
     private suspend fun <T> exchange(client: OkHttpClient, request: Request, decode: (status: Int, body: String) -> T): ApiResult<T> =
@@ -633,6 +653,8 @@ class JudgeApi(
 
         /** The most sides of a case this build can show (SIDES_HEADER on the web). */
         const val SIDES_SUPPORTED = 4
+
+        const val AGREEMENT_REQUIRED = "agreement_required"
 
         private val JSON = "application/json; charset=utf-8".toMediaType()
         private val EVENTS_JSON = "application/json".toMediaType()

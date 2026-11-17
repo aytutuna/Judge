@@ -107,6 +107,7 @@ import com.okjudge.judge.ui.theme.JudgeTheme
 import com.okjudge.judge.ui.theme.LightPalette
 import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.verdict.VerdictAppealViewModel
+import com.okjudge.judge.ui.verdict.AgreementSheet
 import com.okjudge.judge.ui.verdict.VerdictRoute
 import com.okjudge.judge.ui.verdict.VerdictViewModel
 import com.okjudge.judge.core.analytics.Analytics
@@ -800,6 +801,14 @@ fun JudgeRoot(
                         }
                     }
                 }
+                }
+                val agreement by container.agreement.state.collectAsStateWithLifecycle()
+                if (agreement.open) {
+                    AgreementSheet(
+                        state = agreement,
+                        onContinue = { container.agreement.confirm(lang) },
+                        onDismiss = container.agreement::decline,
+                    )
                 }
                 AgeOverlay(
                     gate = ageGate,

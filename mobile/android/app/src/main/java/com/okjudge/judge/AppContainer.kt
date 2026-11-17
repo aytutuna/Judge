@@ -5,6 +5,7 @@ import com.okjudge.judge.core.analytics.Analytics
 import com.okjudge.judge.core.analytics.DeviceIdentity
 import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.api.TokenStore
+import com.okjudge.judge.core.feedback.Agreement
 import com.okjudge.judge.core.feedback.Consent
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.cases.CaseNamesStore
@@ -90,9 +91,13 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
             client = okHttp,
             userAgent = config.userAgent,
             tokenStore = tokenStore,
-            onSignedOut = { account.onSessionExpired() },
+            onSignedOut = {
+                agreement.cancel()
+                account.onSessionExpired()
+            },
             deviceId = deviceId,
             onAgeGate = { account.onAgeGate(it) },
+            askAgreement = { agreement.ask() },
         )
     }
 
@@ -107,6 +112,8 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
     }
 
     val consent: Consent by lazy { Consent(api, appScope) }
+
+    val agreement: Agreement by lazy { Agreement(api, appScope) }
 
     val account: Account by lazy {
         Account(api, tokenStore, CredentialManagerGoogle(config.googleServerClientId), appScope, ageSignals = PlayAgeSignals(appContext))
@@ -157,6 +164,7 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
     /** Keeps the Verdicts cache with the session: signing out (or deleting the account) takes the account's rows off the phone. */
     fun start() {
         account.onEndedByUser = {
+            agreement.cancel()
             history.forgetAccounts()
             drafts.save(null)
             accountEnded.tryEmit(Unit)

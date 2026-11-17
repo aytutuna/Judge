@@ -65,9 +65,9 @@ object AgeTags {
     const val ERROR = "age.error"
 }
 
-/** "I'm 18 or older", the whole row tappable. */
+/** "I'm 18 or older" (or another [label]), the whole row tappable. */
 @Composable
-fun AgeCheckbox(ticked: Boolean, onTicked: (Boolean) -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true) {
+fun AgeCheckbox(ticked: Boolean, onTicked: (Boolean) -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true, label: String? = null) {
     val s = LocalStrings.current
     Row(
         modifier
@@ -90,7 +90,7 @@ fun AgeCheckbox(ticked: Boolean, onTicked: (Boolean) -> Unit, modifier: Modifier
         ) {
             if (ticked) TintedIcon(rememberIcon(Palette.ivory) { JudgeIcons.check(it) }, 16)
         }
-        Text(s.appAgeCheckbox, style = JudgeType.bodyStrong)
+        Text(label ?: s.appAgeCheckbox, style = JudgeType.bodyStrong)
     }
 }
 
