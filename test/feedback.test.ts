@@ -142,7 +142,7 @@ describe("consent: read and write", () => {
     const res = await getConsent({ user: "u-fresh" });
     expect(res.headers.get("cache-control")).toBe("no-store");
     expect(await json(res)).toEqual({ state: "not_asked", updatedAt: null, policyVersion: POLICY_VERSION, ask: false, sensitiveAgreed: false });
-    expect(POLICY_VERSION).toBe("2026-11-14");
+    expect(POLICY_VERSION).toBe("2026-11-17");
   });
 
   it("records a choice, keeps the English wording, and is never asked again", async () => {
