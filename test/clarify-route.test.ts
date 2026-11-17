@@ -100,6 +100,16 @@ describe("POST /api/v1/clarify", () => {
     expect(m.checkUserLimits).toHaveBeenCalledWith("u1", "clarify");
   });
 
+  it("asks in the language the argument is written in, not the app's", async () => {
+    const turkish = "Ev arkadaşım internet faturasının yarısını bana ödetmek istiyor ama ben evde olmadığım zamanlar için ödemeyeceğimizi konuşmuştuk.";
+    await POST(request({ argument: turkish, lang: "en" }));
+    expect(m.claudeJson.mock.calls[0][0].system).toContain("in Turkish");
+    await POST(request({ argument: ARGUMENT, lang: "tr" }));
+    expect(m.claudeJson.mock.calls[1][0].system).toContain("in English");
+    await POST(request({ argument: "ok ok ok ok ok ok ok ok", lang: "tr" }));
+    expect(m.claudeJson.mock.calls[2][0].system).toContain("in Turkish");
+  });
+
   it("an account on its welcome credit alone gets the smaller welcome bucket", async () => {
     m.hasWelcomeCreditOnly.mockResolvedValue(true);
     expect((await POST(request({ argument: ARGUMENT, lang: "en" }))).status).toBe(200);

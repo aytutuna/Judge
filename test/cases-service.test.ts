@@ -65,4 +65,27 @@ describe("case service on a fresh database", () => {
     expect(answered.ok && answered.row.status).toBe("judging");
     expect(await removeCaseSide(created.row, "a", "party_a")).toEqual({ ok: false, code: "in_progress" });
   });
+
+  it("judges in the language side A wrote in, and keeps it when the other side writes another", async () => {
+    await ent.grantCredits({ userId: "o2", credits: 2, source: "admin", externalId: "g:o2" });
+    const created = await svc.createCase({
+      ownerId: "o2",
+      text: "Ev arkadaşım internet faturasının yarısını bana ödetmek istiyor ama ben evde olmadığım zamanlar için ödemeyeceğimizi konuşmuştuk.",
+      lang: "en",
+      evidence: [],
+    });
+    expect(created.ok && created.row.lang).toBe("tr");
+    if (!created.ok) return;
+    const answered = await svc.respondToCase({
+      row: created.row,
+      userId: null,
+      text: "My roommate says I owe him half of the internet bill, but we never agreed that I would pay for it when I was away.",
+      evidence: [],
+      origin: "http://localhost",
+    });
+    expect(answered.ok && answered.row.lang).toBe("tr");
+
+    const unplaced = await svc.createCase({ ownerId: "o2", text: "Hi, bill dispute again over the rent.", lang: "de", evidence: [] });
+    expect(unplaced.ok && unplaced.row.lang).toBe("de");
+  });
 });

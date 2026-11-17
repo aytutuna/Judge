@@ -344,7 +344,8 @@ describe("premium verdict: success", () => {
   });
 
   it("passes the fact-check block to the panel and the anonymized text to the fact-check", async () => {
-    await POST(request(premium({ lang: "tr" })));
+    const turkish = "Ev arkadaşım internet faturasının yarısını bana ödetmek istiyor ama ben evde olmadığım zamanlar için ödemeyeceğimizi konuşmuştuk.";
+    await POST(request(premium({ argument: turkish, lang: "en" })));
     expect(m.runFactCheck).toHaveBeenCalledWith(ANON, "tr");
     const [text, lang, context] = m.judgePremiumPanel.mock.calls[0];
     expect(text).toBe(ANON);

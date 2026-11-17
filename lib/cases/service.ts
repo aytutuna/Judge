@@ -22,6 +22,7 @@ import type { InStatement } from "@libsql/client";
 import { CASE_EXPIRY_DAYS, type PartyLetter } from "@/lib/case-types";
 import type { PremiumBlock } from "@/lib/account-types";
 import { STORED_FRAMEWORK } from "@/lib/db";
+import { answerLang } from "@/lib/detect-lang";
 import {
   entitlementWriteBatch,
   holdStatement,
@@ -257,6 +258,9 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
   }
   const reservationId = reserved.reservation.id;
   const count = Math.max(2, Math.min(4, input.sides ?? 2));
+  // The case is judged in the language side A wrote in, and keeps it whatever
+  // the other sides write. Started without text it keeps the app language.
+  const lang = input.text !== undefined ? answerLang(input.text, input.lang) : input.lang;
 
   const caseId = nanoid(12);
   const nonce = newInviteNonce();
@@ -281,7 +285,7 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
           narrator: "Party A",
           text,
           evidence: input.evidence,
-          lang: input.lang,
+          lang,
           twoSided: true,
           opponentRequired: true,
           ...sidesOption(count),
@@ -316,7 +320,7 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
           caseId,
           input.ownerId,
           STORED_FRAMEWORK,
-          input.lang,
+          lang,
           nonce,
           inviteHash(token),
           key,

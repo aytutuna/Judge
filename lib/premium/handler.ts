@@ -24,6 +24,7 @@ import { API_ERROR_STATUS, apiErrorBody, type ApiErrorBody, type ApiErrorCode } 
 import { isSameOrigin, premiumEnabled } from "@/lib/auth";
 import { lookupViewer } from "@/lib/bearer-guard";
 import { getVerdict } from "@/lib/db";
+import { answerLang } from "@/lib/detect-lang";
 import {
   consumePremiumVerdict,
   getEntitlement,
@@ -561,5 +562,6 @@ export async function clarifyHandler(req: Request): Promise<NextResponse> {
     return blocked(entitlement.blockedReason ?? "premium_required", entitlement.resetsAt);
   }
 
-  return NextResponse.json(await clarifyQuestions(parsed.data.argument, parsed.data.lang));
+  const lang = answerLang(parsed.data.argument, parsed.data.lang);
+  return NextResponse.json(await clarifyQuestions(parsed.data.argument, lang));
 }

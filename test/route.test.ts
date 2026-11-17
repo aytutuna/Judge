@@ -50,7 +50,8 @@ describe("POST /api/verdict", () => {
       expect(await res.json()).toEqual({ ok: true });
       const [passedReq, data] = premiumVerdict.mock.calls.at(-1)!;
       expect(passedReq).toBe(req);
-      expect(data).toMatchObject({ argument: ARGUMENT, lang: "tr" });
+      // The argument is English, so it is judged in English whatever the app sent.
+      expect(data).toMatchObject({ argument: ARGUMENT, lang: "en" });
     }
     expect(premiumVerdict).toHaveBeenCalledTimes(3);
   });

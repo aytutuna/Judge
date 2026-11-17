@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { rejectDeadBearer } from "@/lib/bearer-guard";
+import { answerLang } from "@/lib/detect-lang";
 import { premiumVerdict } from "@/lib/premium/handler";
 import { VerdictRequest } from "@/lib/types";
 
@@ -47,5 +48,8 @@ export async function POST(req: Request): Promise<NextResponse> {
   // Every verdict is premium. A `tier` sent by older app builds ("free"
   // included) is ignored: they get a premium verdict, or the usual
   // sign-in and out-of-credits errors.
-  return premiumVerdict(req, parsed.data, body);
+  // The verdict answers in the language the dispute is written in; the app's
+  // language is only the fallback when the text cannot be placed.
+  const lang = answerLang(parsed.data.argument, parsed.data.lang);
+  return premiumVerdict(req, { ...parsed.data, lang }, body);
 }
