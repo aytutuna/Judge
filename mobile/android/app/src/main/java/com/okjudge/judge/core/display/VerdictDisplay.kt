@@ -22,6 +22,7 @@ object VerdictDisplay {
     fun tugFinal(result: VerdictResult): Int = if (result.isMany) 50 else when (result.finalVerdict) {
         FinalVerdict.SIDE_A -> 80
         FinalVerdict.SIDE_B -> 20
+        FinalVerdict.CONDITIONAL, FinalVerdict.DISSOLVED -> 50
         else -> result.lean?.let { if (it.party == "a") 62 else 38 } ?: 50
     }
 
@@ -46,7 +47,7 @@ object VerdictDisplay {
 
     /**
      * Party A's share of the votes for either side, for the lean bar: the
-     * middle when it was too close or split (or no vote picked a side), null
+     * middle for any verdict that names no winner (or when no vote picked a side), null
      * when there is nothing to show (no votes, a refusal).
      */
     fun leanShare(result: VerdictResult): Float? {

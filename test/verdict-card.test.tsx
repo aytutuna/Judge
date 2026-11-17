@@ -287,6 +287,15 @@ describe("SampleVerdict", () => {
   });
 });
 
+describe("tugFinal for depends on values", () => {
+  it("stays level with a forced lean", () => {
+    const lean = { party: "a" as const, unanimous: true, reason: "r" };
+    expect(tugFinal({ ...base, verdict: "conditional", lean })).toBe(50);
+    expect(tugFinal({ ...base, verdict: "dissolved", lean })).toBe(50);
+    expect(tugFinal({ ...base, verdict: "too_close", lean })).toBe(62);
+  });
+});
+
 describe("leanShare", () => {
   const run = (verdict: VerdictResult["verdict"], runs: VerdictResult["runs"], more: Partial<VerdictResult> = {}) =>
     leanShare({ ...base, verdict, runs, ...more });
@@ -308,6 +317,12 @@ describe("leanShare", () => {
     expect(run("conditional", ["conditional", "side_a", "side_a"])).toBe(0.5);
     expect(run("conditional", ["conditional", "conditional", "conditional"])).toBe(0.5);
     expect(run("too_close", ["conditional", "side_a", "side_b"])).toBe(0.5);
+  });
+
+  it("shows the 1-1-1 and 2-1 splits without tilting a side that did not win", () => {
+    expect(run("too_close", ["side_a", "side_b", "conditional"])).toBe(0.5);
+    expect(run("side_a", ["side_a", "side_a", "conditional"])).toBe(1);
+    expect(run("conditional", ["side_a", "conditional", "conditional"])).toBe(0.5);
   });
 
   it("is null for a refusal or no runs", () => {

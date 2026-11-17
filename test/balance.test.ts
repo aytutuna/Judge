@@ -109,6 +109,12 @@ describe("sceneVerdictFrom", () => {
     expect(sceneVerdictFrom(leanB)).toEqual({ tugA: 38, votes: ["other", "other", "other"] });
   });
 
+  it("depends on values stays level whatever the forced lean", () => {
+    const lean = { party: "a" as const, unanimous: true, reason: "r" };
+    expect(sceneVerdictFrom(result({ verdict: "conditional", runs: ["conditional", "conditional", "side_a"], lean })).tugA).toBe(50);
+    expect(sceneVerdictFrom(result({ verdict: "dissolved", runs: ["dissolved", "dissolved", "side_a"], lean })).tugA).toBe(50);
+  });
+
   it("a lean tie (lean: null) and too_close without a lean are level", () => {
     expect(sceneVerdictFrom(result({ verdict: "dissolved", runs: ["dissolved"], lean: null })).tugA).toBe(50);
     expect(sceneVerdictFrom(result({ verdict: "too_close", runs: ["side_a", "side_b"] })).tugA).toBe(50);

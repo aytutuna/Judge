@@ -91,6 +91,9 @@ export function tugFinal(result: VerdictResult): number {
       return 80;
     case "side_b":
       return 20;
+    case "conditional":
+    case "dissolved":
+      return 50; // depends on values: no side is right, whatever the forced pick
     default:
       if (result.lean) return result.lean.party === "a" ? 62 : 38;
       return 50;

@@ -24,6 +24,8 @@ final class TugAndTiltTests: XCTestCase {
         XCTAssertEqual(VerdictDisplay.tugFinal(result(.split, lean: lean(.b))), 38)
         XCTAssertEqual(VerdictDisplay.tugFinal(result(.conditional, lean: .tie)), 50)
         XCTAssertEqual(VerdictDisplay.tugFinal(result(.dissolved)), 50)
+        XCTAssertEqual(VerdictDisplay.tugFinal(result(.conditional, lean: lean(.a))), 50)
+        XCTAssertEqual(VerdictDisplay.tugFinal(result(.dissolved, lean: lean(.b))), 50)
         // A winner ignores a stray lean.
         XCTAssertEqual(VerdictDisplay.tugFinal(result(.sideB, lean: lean(.a))), 20)
     }

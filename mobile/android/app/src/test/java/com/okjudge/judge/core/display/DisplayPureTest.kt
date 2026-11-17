@@ -1,6 +1,7 @@
 package com.okjudge.judge.core.display
 
 import com.okjudge.judge.Fixtures
+import com.okjudge.judge.core.model.Lean
 import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.isNull
@@ -63,6 +64,12 @@ class DisplayPureTest {
         assertNull(VerdictDisplay.why(VerdictResult(verdict = "side_a")))
         assertNull(VerdictDisplay.why(VerdictResult(verdict = "side_a", why = " \n")))
         assertNull(VerdictDisplay.why(VerdictResult(verdict = "side_a", why = "Menus list them apart.", modelRefused = true)))
+    }
+
+    @Test
+    fun dependsOnValues_staysLevelWithAForcedLean() {
+        assertEquals(50, VerdictDisplay.tugFinal(VerdictResult(verdict = "conditional", lean = Lean(party = "a", unanimous = true, reason = ""))))
+        assertEquals(50, VerdictDisplay.tugFinal(VerdictResult(verdict = "dissolved", lean = Lean(party = "b", unanimous = true, reason = ""))))
     }
 
     @Test

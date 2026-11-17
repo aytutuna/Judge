@@ -344,8 +344,8 @@
       "bIsSelf": false,
       "label": "It depends on your values",
       "confidence": "Confidence 3 of 3",
-      "tugA": 62,
-      "svgRotateDeg": -4.125,
+      "tugA": 50,
+      "svgRotateDeg": 0,
       "cruxStyle": "serif",
       "leanTally": {
         "for": 2,
@@ -394,8 +394,8 @@
       "bIsSelf": false,
       "label": "Değerlerine bağlı",
       "confidence": "Güven: 3 üzerinden 3",
-      "tugA": 62,
-      "svgRotateDeg": -4.125,
+      "tugA": 50,
+      "svgRotateDeg": 0,
       "cruxStyle": "serif",
       "leanTally": {
         "for": 2,
