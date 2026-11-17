@@ -112,6 +112,8 @@ class JudgeApi(
         /** Account deletion anonymizes every verdict the account owns, which can take a while. */
         val deleteSec: Long = 90,
         val evidenceSec: Long = 120,
+        /** The export decrypts and gathers everything the account holds. */
+        val exportSec: Long = 90,
     )
 
     private val base: HttpUrl = baseUrl.trimEnd('/').toHttpUrl()
@@ -155,6 +157,11 @@ class JudgeApi(
         .readTimeout(timeouts.accountSec, TimeUnit.SECONDS)
         .callTimeout(timeouts.accountSec, TimeUnit.SECONDS)
         .retryOnConnectionFailure(false)
+        .build()
+
+    private val exportClient = accountClient.newBuilder()
+        .readTimeout(timeouts.exportSec, TimeUnit.SECONDS)
+        .callTimeout(timeouts.exportSec, TimeUnit.SECONDS)
         .build()
 
     private val deleteClient = accountClient.newBuilder()
@@ -536,6 +543,12 @@ class JudgeApi(
         }.toString()
         val req = request(url("api", "v1", "me", "agreement")).post(body.toRequestBody(JSON)).build()
         return execute(accountClient, req) { _, _ -> }
+    }
+
+    /** GET /api/v1/me/export: everything held about the account, as the JSON text of the file to save. */
+    suspend fun exportData(): ApiResult<String> {
+        val req = request(url("api", "v1", "me", "export")).cacheControl(CacheControl.FORCE_NETWORK).get().build()
+        return execute(exportClient, req) { _, text -> text }
     }
 
     /** DELETE /api/v1/me: deletes the account (the server keeps verdict rows, anonymized). */

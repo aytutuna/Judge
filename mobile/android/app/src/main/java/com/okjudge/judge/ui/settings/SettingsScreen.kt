@@ -55,6 +55,8 @@ object SettingsTags {
     const val SIGN_IN = "settings.signIn"
     const val SIGN_OUT = "settings.signOut"
     const val DELETE = "settings.delete"
+    const val EXPORT = "settings.export"
+    const val EXPORT_NOTE = "settings.exportNote"
     const val ACCOUNT = "settings.account"
     const val PRICING = "settings.pricing"
     const val RESTORE = "settings.restore"
@@ -70,6 +72,9 @@ object SettingsTags {
 
 /** "Restore purchases" in the account group; shown while the store is ready for this account. */
 data class RestoreUi(val working: Boolean = false, val notice: PurchaseController.RestoreNotice? = null)
+
+/** "Download my data" on the account page: [failed] shows the retry note. */
+data class ExportUi(val busy: Boolean, val failed: Boolean, val onExport: () -> Unit)
 
 /** Account, language, dark mode and privacy choices, links out to the website, then sign out. */
 @Composable
@@ -257,6 +262,7 @@ fun AccountScreen(
     onBack: () -> Unit,
     onManageSubscription: () -> Unit,
     modifier: Modifier = Modifier,
+    export: ExportUi? = null,
 ) {
     val s = LocalStrings.current
     // A subscription that still renews keeps billing after the account is gone.
@@ -277,6 +283,19 @@ fun AccountScreen(
                         s.accountSignedInAs(it.email),
                         style = JudgeType.body.copy(color = Palette.ink2),
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
+                    )
+                    HorizontalDivider(color = Palette.line)
+                }
+                if (export != null) {
+                    ActionRow(s.accountExport, Modifier.testTag(SettingsTags.EXPORT), enabled = !export.busy, onClick = export.onExport)
+                    Text(
+                        when {
+                            export.busy -> s.accountExportBusy
+                            export.failed -> s.accountExportFailed
+                            else -> s.accountExportHint
+                        },
+                        style = JudgeType.footnote.copy(color = if (export.failed && !export.busy) Palette.danger else Palette.ink2),
+                        modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 12.dp).testTag(SettingsTags.EXPORT_NOTE),
                     )
                     HorizontalDivider(color = Palette.line)
                 }

@@ -4,7 +4,13 @@ import com.okjudge.judge.core.model.ConsentState
 import com.okjudge.judge.core.model.ConsentStatus
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.model.Rating
+import com.okjudge.judge.core.feedback.DataExport
 import com.okjudge.judge.i18n.AppLang
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withTimeout
+import java.time.LocalDate
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
@@ -67,6 +73,41 @@ class FeedbackApiTest {
         assertEquals("consent.cardBody", body["wordingKey"]!!.jsonPrimitive.content)
         assertEquals("tr", body["lang"]!!.jsonPrimitive.content)
         assertEquals("android", body["platform"]!!.jsonPrimitive.content)
+    }
+
+    @Test
+    fun exportData_returnsTheFileTextAsIs() = runBlocking {
+        server.enqueue(ok("""{"exportedAt":"2026-11-14","verdicts":[]}"""))
+        assertEquals(ApiResult.Ok("""{"exportedAt":"2026-11-14","verdicts":[]}"""), api().exportData())
+        val sent = server.takeRequest()
+        assertEquals("GET", sent.method)
+        assertEquals("/api/v1/me/export", sent.url.encodedPath)
+    }
+
+    @Test
+    fun exportData_aRateLimitIsAnError() = runBlocking {
+        server.enqueue(MockResponse.Builder().code(429).body("""{"error":"slow","code":"rate_limited"}""").build())
+        assertEquals("rate_limited", ((api().exportData() as ApiResult.Err).error as UiError.Api).code)
+    }
+
+    @Test
+    fun dataExport_isReadyWithTheDatedFileName() = runBlocking {
+        server.enqueue(ok("""{"a":1}"""))
+        val export = DataExport(api(), CoroutineScope(Dispatchers.Unconfined)) { LocalDate.of(2026, 11, 14) }
+        export.start()
+        withTimeout(5000) { while (export.state.value == DataExport.State.Busy) delay(10) }
+        assertEquals(DataExport.State.Ready("judge-data-2026-11-14.json", """{"a":1}"""), export.state.value)
+        export.done()
+        assertEquals(DataExport.State.Idle, export.state.value)
+    }
+
+    @Test
+    fun dataExport_failsWhenTheServerRefuses() = runBlocking {
+        server.enqueue(MockResponse.Builder().code(503).body("""{"error":"x","code":"unavailable"}""").build())
+        val export = DataExport(api(), CoroutineScope(Dispatchers.Unconfined))
+        export.start()
+        withTimeout(5000) { while (export.state.value == DataExport.State.Busy) delay(10) }
+        assertEquals(DataExport.State.Failed, export.state.value)
     }
 
     @Test

@@ -5,6 +5,8 @@ import android.content.Context
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -51,11 +53,14 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import com.okjudge.judge.AppContainer
 import com.okjudge.judge.BuildConfig
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.feedback.Consent
+import com.okjudge.judge.core.feedback.DataExport
 import com.okjudge.judge.core.model.ConsentState
 import com.okjudge.judge.core.auth.AgeCheck
 import com.okjudge.judge.core.auth.AgeGate
@@ -95,6 +100,7 @@ import com.okjudge.judge.core.purchases.PurchaseController
 import com.okjudge.judge.core.model.PricingInfo
 import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.judging.rememberReducedMotion
+import com.okjudge.judge.ui.settings.ExportUi
 import com.okjudge.judge.ui.settings.RestoreUi
 import com.okjudge.judge.ui.settings.AccountScreen
 import com.okjudge.judge.ui.settings.SettingsScreen
@@ -732,9 +738,34 @@ fun JudgeRoot(
                                     LaunchedEffect(accountState is Account.State.SignedOut) {
                                         if (accountState is Account.State.SignedOut) backStack.removeAll { it is AccountKey }
                                     }
+                                    val export by container.dataExport.state.collectAsStateWithLifecycle()
+                                    val saveExport = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
+                                        val ready = container.dataExport.state.value as? DataExport.State.Ready
+                                        if (uri == null || ready == null) {
+                                            container.dataExport.done()
+                                        } else {
+                                            scope.launch {
+                                                val saved = withContext(Dispatchers.IO) {
+                                                    runCatching { context.contentResolver.openOutputStream(uri)!!.use { it.write(ready.json.toByteArray()) } }
+                                                }
+                                                if (saved.isSuccess) container.dataExport.done() else container.dataExport.failed()
+                                            }
+                                        }
+                                    }
+                                    (export as? DataExport.State.Ready)?.takeIf { !it.picking }?.let { ready ->
+                                        LaunchedEffect(ready) {
+                                            container.dataExport.picking()
+                                            saveExport.launch(ready.name)
+                                        }
+                                    }
                                     AccountScreen(
                                         account = accountState,
                                         busy = accountBusy,
+                                        export = ExportUi(
+                                            busy = export == DataExport.State.Busy || export is DataExport.State.Ready,
+                                            failed = export == DataExport.State.Failed,
+                                            onExport = container.dataExport::start,
+                                        ),
                                         // App scope: leaving the screen must not stop a deletion halfway.
                                         onDelete = { container.appScope.launch { account.deleteAccount() } },
                                         onBack = { backStack.removeAll { it is AccountKey } },
