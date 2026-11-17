@@ -565,6 +565,9 @@ export async function writeOwnerSide(input: WriteSideInput): Promise<WriteSideRe
     const answered = many ? bundle.sides.length === row.sides - 1 : bundle.sides.some((s) => s.party === "b");
     const anyAnswer = bundle.sides.length > 0;
     const context = rosterContext(bundle);
+    // A case started from a link takes the language side A writes in, until
+    // another side has seen what language the verdict will be in.
+    const lang = anyAnswer ? row.lang : answerLang(input.text, row.lang);
 
     let sub: AnonymizedSubmission;
     try {
@@ -573,7 +576,7 @@ export async function writeOwnerSide(input: WriteSideInput): Promise<WriteSideRe
           narrator: "Party A",
           text: input.text,
           evidence: input.evidence,
-          lang: row.lang,
+          lang,
           twoSided: true,
           opponentRequired: true,
           ...sidesOption(row.sides),
@@ -619,10 +622,10 @@ export async function writeOwnerSide(input: WriteSideInput): Promise<WriteSideRe
           args: [token, nowIso, nowIso, display?.sealed ?? null, display?.kid ?? null, row.id, nowIso],
         }
       : {
-          sql: `UPDATE cases SET judging_token = ?, updated_at = ?,
+          sql: `UPDATE cases SET judging_token = ?, updated_at = ?, lang = ?,
                   display_a_sealed = COALESCE(?, display_a_sealed), display_key_id = COALESCE(?, display_key_id)
                 ${open}`,
-          args: [token, nowIso, display?.sealed ?? null, display?.kid ?? null, row.id, nowIso],
+          args: [token, nowIso, lang, display?.sealed ?? null, display?.kid ?? null, row.id, nowIso],
         };
     let won = false;
     try {

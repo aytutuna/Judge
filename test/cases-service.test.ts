@@ -88,4 +88,28 @@ describe("case service on a fresh database", () => {
     const unplaced = await svc.createCase({ ownerId: "o2", text: "Hi, bill dispute again over the rent.", lang: "de", evidence: [] });
     expect(unplaced.ok && unplaced.row.lang).toBe("de");
   });
+
+  it("a case started from a link takes the language side A is written in, unless another side already answered", async () => {
+    await ent.grantCredits({ userId: "o3", credits: 2, source: "admin", externalId: "g:o3" });
+    const turkish =
+      "Ev arkadaşım internet faturasının yarısını bana ödetmek istiyor ama ben evde olmadığım zamanlar için ödemeyeceğimizi konuşmuştuk.";
+    const first = await svc.createCase({ ownerId: "o3", lang: "en", evidence: [] });
+    expect(first.ok && first.row.lang).toBe("en");
+    if (!first.ok) return;
+    const written = await svc.writeOwnerSide({ row: first.row, text: turkish, evidence: [], origin: "http://localhost" });
+    expect(written.ok && written.row.lang).toBe("tr");
+
+    const second = await svc.createCase({ ownerId: "o3", lang: "en", evidence: [] });
+    if (!second.ok) throw new Error("create failed");
+    const answered = await svc.respondToCase({
+      row: second.row,
+      userId: null,
+      text: "My roommate says I owe him half of the internet bill, but we never agreed that I would pay for it when I was away.",
+      evidence: [],
+      origin: "http://localhost",
+    });
+    expect(answered.ok).toBe(true);
+    const late = await svc.writeOwnerSide({ row: second.row, text: turkish, evidence: [], origin: "http://localhost" });
+    expect(late.ok && late.row.lang).toBe("en");
+  });
 });
