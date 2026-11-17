@@ -62,10 +62,12 @@ class VerdictViewModel(
     val state: StateFlow<VerdictUiState> =
         combine(history.observe(id), lang, entries) { saved, lang, entries ->
             latestSaved = saved
-            if (saved == null || lang == null) {
-                VerdictUiState(loading = saved == null && lang == null, saved = saved)
+            if (saved == null) {
+                VerdictUiState(loading = lang == null)
             } else {
-                VerdictUiState(loading = false, saved = saved, view = viewFor(saved, lang, entries[lang]))
+                // Until a language is asked for, the verdict reads as it was written.
+                val shown = lang ?: ContentLang.verdictLang(saved.original.result)
+                VerdictUiState(loading = false, saved = saved, view = viewFor(saved, shown, entries[shown]))
             }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), VerdictUiState())
 
@@ -88,8 +90,7 @@ class VerdictViewModel(
         val before = uiLang
         uiLang = target
         if (before == target) return
-        if (before != null) return onLang(target)
-        viewModelScope.launch { history.observeFirst(id)?.let { onLang(it.lang) } }
+        if (before != null) onLang(target)
     }
 
     fun onLang(target: AppLang) {

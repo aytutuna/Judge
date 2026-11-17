@@ -85,6 +85,18 @@ class VerdictViewModelTest {
     }
 
     @Test
+    fun aUiLanguageChangeRightAfterTheFirstIsNotOverwritten() = runBlocking {
+        server.enqueue(MockResponse.Builder().code(200).body(translateBody()).build())
+        val vm = vm()
+        val job = CoroutineScope(Dispatchers.Unconfined).launch { vm.state.collect {} }
+        vm.onUiLang(AppLang.EN)
+        vm.onUiLang(AppLang.TR)
+        vm.awaitStatus(TranslationStatus.TRANSLATED)
+        assertEquals(1, server.requestCount)
+        job.cancel()
+    }
+
+    @Test
     fun otherLanguage_fetchesOnce_cachesIt_andSwitchingBackIsInstant() = runBlocking {
         server.enqueue(MockResponse.Builder().code(200).body(translateBody()).build())
         val vm = vm()
