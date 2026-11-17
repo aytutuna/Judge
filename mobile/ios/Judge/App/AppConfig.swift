@@ -79,4 +79,6 @@ struct AppConfig: Sendable, Equatable {
 
     var termsURL: URL { siteURL("terms") }
     var privacyURL: URL { siteURL("privacy") }
+    /// The privacy page at its "Help improve Judge" section.
+    var helpImproveURL: URL { URL(string: privacyURL.absoluteString + "#help-improve") ?? privacyURL }
 }

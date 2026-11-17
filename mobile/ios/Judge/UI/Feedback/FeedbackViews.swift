@@ -1,8 +1,9 @@
 import SwiftUI
 
-/// Asked once, under the first finished verdict.
+/// Asked once, under the verdict after the person's second finished one.
 struct ConsentCard: View {
     @Environment(AppModel.self) private var app
+    @State private var webLink: WebLink?
     let lang: AppLang
 
     var body: some View {
@@ -14,6 +15,11 @@ struct ConsentCard: View {
                 Text(L10n.consentCardBody(lang))
                     .brandText(.footnote)
                     .foregroundStyle(Brand.muted)
+                Button(L10n.consentCardLink(lang)) {
+                    webLink = WebLink(url: app.config.helpImproveURL)
+                }
+                .brandText(.footnote)
+                .foregroundStyle(Brand.terraInk)
                 HStack(spacing: 16) {
                     Button(L10n.consentCardYes(lang)) {
                         Task { await app.consent.answerCard(true, lang: lang) }
@@ -29,6 +35,9 @@ struct ConsentCard: View {
             .padding(14)
             .background(RoundedRectangle(cornerRadius: 14).fill(Brand.paper))
             .accessibilityElement(children: .contain)
+            .sheet(item: $webLink) { link in
+                SafariView(url: link.url).ignoresSafeArea()
+            }
         }
     }
 }
