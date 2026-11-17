@@ -337,7 +337,7 @@ export default function Home() {
     setChecking(true);
     let found: ClarifyQuestion[] = [];
     try {
-      const res = await apiFetch("/api/v1/clarify", {
+      const res = await apiFetchAgreed("/api/v1/clarify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ argument: input.argument, lang }),

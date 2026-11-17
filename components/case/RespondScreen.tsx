@@ -327,19 +327,6 @@ export function RespondPanel({
               aria-describedby={form.error ? "respond-error" : undefined}
             />
           </div>
-          {evidence ? (
-            <EvidencePicker
-              lang={lang}
-              max={MAX_EVIDENCE_PER_SIDE}
-              items={form.evidence.items}
-              full={form.evidence.full}
-              failure={form.evidence.failure}
-              overLimit={form.evidence.overLimit}
-              disabled={form.sending}
-              onAdd={form.evidence.add}
-              onRemove={form.evidence.remove}
-            />
-          ) : null}
           {form.askTicks ? (
             <div className={styles.stack}>
               <label className={account.check}>
@@ -351,6 +338,19 @@ export function RespondPanel({
                 <span>{t(lang, "consent.sensitiveBody")}</span>
               </label>
             </div>
+          ) : null}
+          {evidence ? (
+            <EvidencePicker
+              lang={lang}
+              max={MAX_EVIDENCE_PER_SIDE}
+              items={form.evidence.items}
+              full={form.evidence.full}
+              failure={form.evidence.failure}
+              overLimit={form.evidence.overLimit}
+              disabled={form.sending || (form.askTicks && !(form.adult && form.agreed))}
+              onAdd={form.evidence.add}
+              onRemove={form.evidence.remove}
+            />
           ) : null}
           {turnstile !== undefined ? turnstile : null}
           {form.error ? (

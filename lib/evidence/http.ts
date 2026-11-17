@@ -10,6 +10,7 @@ import { isSameOrigin } from "@/lib/auth";
 import { lookupViewer } from "@/lib/bearer-guard";
 import { getEntitlement, hasWelcomeCreditOnly } from "@/lib/entitlements";
 import { evidenceEnabled } from "@/lib/features";
+import { agreementRefusal } from "@/lib/feedback/agreement";
 import { checkUserLimits } from "@/lib/ratelimit";
 import { handleEvidenceUpload } from "./upload";
 
@@ -35,6 +36,8 @@ export async function evidenceUploadRoute(req: Request): Promise<Response> {
   if (!viewer) return fail("signin_required", "Sign in to add evidence.");
   if (viewer.via === "cookie" && !isSameOrigin(req)) return fail("bad_origin", "This request came from another site.");
   const userId = viewer.user.id;
+  const unagreed = await agreementRefusal(userId);
+  if (unagreed) return unagreed;
 
   let welcome: boolean;
   try {

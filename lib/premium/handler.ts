@@ -537,6 +537,8 @@ export async function clarifyHandler(req: Request): Promise<NextResponse> {
   const gate = await signedInGate(req);
   if ("response" in gate) return gate.response;
   const { userId } = gate;
+  const unagreed = await agreementRefusal(userId);
+  if (unagreed) return unagreed;
 
   let welcome: boolean;
   try {
