@@ -60,8 +60,7 @@ export function SharedVerdict({
   cardClassName?: string;
   cta?: ReactNode;
 }) {
-  const [picked, setPicked] = useState<Lang>(initialLang);
-  const lang = useLocaleLang(picked);
+  const [picked, setPicked] = useState<Lang | null>(null);
   const token = useOwnerToken(id);
   const viewer = useViewer();
   const signedIn = viewer.status === "ready" || viewer.status === "error" ? Boolean(viewer.me?.user) : null;
@@ -71,8 +70,12 @@ export function SharedVerdict({
   const [fresh] = useState(() => isFresh(id));
   useEffect(() => clearFresh(id), [id]);
   const removedHeadingId = useId();
-  const label = t(lang, "translate.toggle");
   const ownView = mine && !mine.removed && mine.result ? mine : null;
+  // The writer reads the verdict in the language it was written in; anyone
+  // else starts in their browser's language and gets it translated.
+  const wanted = picked ?? (ownView || fresh ? verdictLang(result) : initialLang);
+  const lang = useLocaleLang(wanted);
+  const label = t(lang, "translate.toggle");
   const appeal = useVerdictAppeal({
     id,
     lang,
@@ -128,7 +131,7 @@ export function SharedVerdict({
       <span className={styles.langLabel} aria-hidden>
         {label}
       </span>
-      <LangPicker lang={picked} onSelect={setPicked} label={label} />
+      <LangPicker lang={wanted} onSelect={setPicked} label={label} />
     </div>
   );
 
