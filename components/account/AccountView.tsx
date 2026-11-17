@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { downloadMyData } from "@/lib/feedback-client";
 import { t, tWithDate, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { langTag } from "@/lib/langs";
@@ -131,10 +132,23 @@ export type AccountDetailProps = {
   deleted: boolean;
   deleteError: string | null;
   onDelete: () => void;
+  exporting?: boolean;
+  exportError?: boolean;
+  onExport?: () => void;
 };
 
 /** /settings/account: the email and deleting the account. */
-export function AccountDetailPanel({ lang, viewer, deleting, deleted, deleteError, onDelete }: AccountDetailProps) {
+export function AccountDetailPanel({
+  lang,
+  viewer,
+  deleting,
+  deleted,
+  deleteError,
+  onDelete,
+  exporting = false,
+  exportError = false,
+  onExport,
+}: AccountDetailProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const cancelRef = useRef<HTMLButtonElement>(null);
 
@@ -157,6 +171,20 @@ export function AccountDetailPanel({ lang, viewer, deleting, deleted, deleteErro
       <section className={styles.card}>
         <p className={styles.muted}>{t(lang, "account.signedInAs", { email: user.email })}</p>
       </section>
+
+      {onExport ? (
+        <section className={styles.card}>
+          <p className={styles.muted}>{t(lang, "account.exportHint")}</p>
+          {exportError ? (
+            <p className={styles.error} role="alert">
+              {t(lang, "account.exportFailed")}
+            </p>
+          ) : null}
+          <button type="button" className={`${styles.btn} ${styles.secondary}`} disabled={exporting} onClick={onExport}>
+            {exporting ? t(lang, "account.exportBusy") : t(lang, "account.export")}
+          </button>
+        </section>
+      ) : null}
 
       <section className={styles.card}>
         {deleteError ? (
@@ -242,12 +270,21 @@ export function AccountDetailSection() {
   const [deleting, setDeleting] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState(false);
 
   useEffect(() => {
     if (!deleted) return;
     const id = setTimeout(() => router.replace("/"), DELETED_HOLD_MS);
     return () => clearTimeout(id);
   }, [deleted, router]);
+
+  async function exportData() {
+    setExporting(true);
+    setExportError(false);
+    setExportError(!(await downloadMyData()));
+    setExporting(false);
+  }
 
   async function remove() {
     setDeleting(true);
@@ -273,6 +310,9 @@ export function AccountDetailSection() {
       deleted={deleted}
       deleteError={deleteError}
       onDelete={() => void remove()}
+      exporting={exporting}
+      exportError={exportError}
+      onExport={() => void exportData()}
     />
   );
 }

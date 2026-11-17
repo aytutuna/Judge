@@ -54,6 +54,16 @@ function detail(over: Partial<AccountDetailProps>): string {
   );
 }
 
+describe("AccountDetailPanel export", () => {
+  it("offers Download my data only when the page wires it", () => {
+    expect(detail({})).not.toContain(esc(t("en", "account.export")));
+    const html = detail({ onExport: noop });
+    expect(html).toContain(esc(t("en", "account.export")));
+    expect(detail({ onExport: noop, exporting: true })).toContain(esc(t("en", "account.exportBusy")));
+    expect(detail({ onExport: noop, exportError: true })).toContain(esc(t("en", "account.exportFailed")));
+  });
+});
+
 describe("AccountPanel", () => {
   it("loading and error states", () => {
     expect(panel({ viewer: { status: "loading", me: null, config: null } })).toContain(
