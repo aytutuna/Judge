@@ -70,6 +70,7 @@ vi.mock("node:fs/promises", async (importOriginal) =>
 import { POST } from "../app/api/v1/evidence/route";
 import { handleEvidenceUpload } from "../lib/evidence/upload";
 import { verifyEvidenceTokens } from "../lib/evidence/token";
+import { agreementMissing, agreementRefusal } from "../lib/feedback/agreement";
 import type { EvidenceUploadResponse } from "../lib/case-types";
 import { CHAT_TRANSCRIPT, gif, jpeg, png, textFile } from "./evidence-fixtures";
 
@@ -272,6 +273,15 @@ describe("POST /api/v1/evidence gates", () => {
     const res = await POST(upload());
     expect(res.status).toBe(403);
     expect((await res.json()).code).toBe("bad_origin");
+  });
+
+  it("403 agreement_required before anything is read or sent", async () => {
+    vi.mocked(agreementRefusal).mockResolvedValueOnce(agreementMissing());
+    const res = await POST(upload());
+    expect(res.status).toBe(403);
+    expect((await res.json()).code).toBe("agreement_required");
+    expect(m.getEntitlement).not.toHaveBeenCalled();
+    expect(m.claudeJson).not.toHaveBeenCalled();
   });
 
   it("needs usable Premium, without spending anything", async () => {

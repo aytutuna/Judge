@@ -46,6 +46,7 @@ vi.mock("@/lib/claude", async (importOriginal) => ({
 
 import { maxDuration, POST } from "../app/api/v1/clarify/route";
 import type { Entitlement } from "../lib/account-types";
+import { agreementMissing, agreementRefusal } from "../lib/feedback/agreement";
 
 const ARGUMENT = "Mark says I owe him for dinner; I say we agreed to split it.";
 const CAN: Entitlement = { canUsePremium: true, blockedReason: null, credits: 3, subscription: null, resetsAt: null };
@@ -111,6 +112,12 @@ describe("POST /api/v1/clarify", () => {
     await expectError(await POST(request({ argument: "x".repeat(6001) })), 400, "too_long");
     await expectError(await POST(request({ argument: ARGUMENT, lang: "xx" })), 400, "invalid");
     expect(m.calls).toEqual([]);
+  });
+
+  it("403 agreement_required before the text goes to the model", async () => {
+    vi.mocked(agreementRefusal).mockResolvedValueOnce(agreementMissing());
+    await expectError(await POST(request({ argument: ARGUMENT, lang: "en" })), 403, "agreement_required");
+    expect(m.claudeJson).not.toHaveBeenCalled();
   });
 
   it("401 signin_required without a session", async () => {
