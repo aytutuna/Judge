@@ -78614,7 +78614,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge'ın yapay zekâyı eğitmek için anonim kararlarını ve puanlarını kullanmasına izin ver. İsimler hiçbir zaman dahil edilmez."
+            "value" : "Judge'ın yapay zekâyı eğitmek için senin anonim kararlarını ve puanlarını kullanmasına izin ver. İsimler hiçbir zaman dahil edilmez."
           }
         },
         "uk" : {
@@ -80822,7 +80822,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge'ın yapay zekâyı eğitmek için anonim kararlarını ve puanlarını kullanmasına izin verir. Sen açmadıkça kapalıdır."
+            "value" : "Judge'ın yapay zekâyı eğitmek için senin anonim kararlarını ve puanlarını kullanmasına izin verir. Sen açmadıkça kapalıdır."
           }
         },
         "uk" : {

@@ -131,9 +131,8 @@ and one premium unit, so the account is the main gate. On top of that,
 reach without an account (translations, the respondent's answer, polling)
 per visitor IP. An IPv6 visitor is counted per /64 prefix, since one client
 usually holds a whole /64. The store only sees a keyed hash (HMAC-SHA256
-with `RATE_LIMIT_SALT`) of the IPv4 address or IPv6 prefix, kept for up to
-24 hours. The store is Upstash Redis when configured, else the app's
-memory. If Redis is down or slow, requests are refused (`503 unavailable`)
+with `RATE_LIMIT_SALT`) of the IPv4 address or IPv6 prefix. The store is Upstash Redis when configured, else the app's
+memory; entries last up to 24 hours in memory and up to 48 hours in Redis (the expiry of a one-day window). If Redis is down or slow, requests are refused (`503 unavailable`)
 rather than let through unmetered. The Cloudflare Turnstile check
 (`lib/turnstile.ts`) guards the steps that need no account: asking for a
 sign-in email and the respondent's answer to a two-sided case.
