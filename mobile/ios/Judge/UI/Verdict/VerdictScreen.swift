@@ -246,6 +246,7 @@ struct VerdictSections<Appeal: View>: View {
             try? await Task.sleep(for: .milliseconds(300))
             appealShown = true
         }
+        .onAppear { model.ensure(model.shown) }
         .onChange(of: lang) { _, newLang in model.languageChanged(to: newLang) }
     }
 

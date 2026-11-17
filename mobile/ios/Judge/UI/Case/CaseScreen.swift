@@ -202,6 +202,7 @@ private struct CaseScreenContent: View {
                     verdict: current,
                     names: model.names,
                     shareable: view.removed == nil,
+                    asWritten: view.role != .respondent,
                     appeal: (draft: model, area: area, evidenceOn: evidenceOn)
                 )
                 .id("\(current.id)-\(model.names.count)")
@@ -450,13 +451,14 @@ private struct CaseVerdictBlock: View {
         verdict: CaseVerdict,
         names: [NameMapping],
         shareable: Bool,
+        asWritten: Bool = true,
         appeal: (draft: CaseModel, area: CaseLogic.AppealArea, evidenceOn: Bool)? = nil
     ) {
         self.app = app
         self.shareable = shareable
         self.appeal = appeal
         let session = VerdictSession(id: verdict.id, original: verdict.result, nameMap: names, translations: [:])
-        _model = State(initialValue: VerdictModel(session: session, api: app.api) { _, _, _ in })
+        _model = State(initialValue: VerdictModel(session: session, opening: asWritten ? nil : app.lang, api: app.api) { _, _, _ in })
     }
 
     var body: some View {
@@ -490,7 +492,7 @@ private struct VerdictHistory: View {
                     .accessibilityAddTraits(.isHeader)
                 ForEach(earlier, id: \.id) { verdict in
                     DisclosureGroup {
-                        CaseVerdictBlock(app: app, verdict: verdict, names: names, shareable: view.removed == nil)
+                        CaseVerdictBlock(app: app, verdict: verdict, names: names, shareable: view.removed == nil, asWritten: view.role != .respondent)
                             .padding(.top, 10)
                     } label: {
                         HStack {

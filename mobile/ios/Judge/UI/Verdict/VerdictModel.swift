@@ -16,11 +16,17 @@ final class VerdictModel {
     private let onTranslated: @MainActor (VerdictSession, AppLang, RawResult) -> Void
     @ObservationIgnored private var inFlight: Set<AppLang> = []
 
-    init(session: VerdictSession, api: JudgeAPI, onTranslated: @escaping @MainActor (VerdictSession, AppLang, RawResult) -> Void) {
+    /// `opening` is the language to start in; by default the one it was written in.
+    init(
+        session: VerdictSession,
+        opening: AppLang? = nil,
+        api: JudgeAPI,
+        onTranslated: @escaping @MainActor (VerdictSession, AppLang, RawResult) -> Void
+    ) {
         self.session = session
         self.api = api
         self.onTranslated = onTranslated
-        shown = session.sourceLang
+        shown = opening ?? session.sourceLang
         entries = session.translations.mapValues { TranslationEntry.result($0) }
     }
 

@@ -401,4 +401,13 @@ final class VerdictAppealTests: XCTestCase {
         XCTAssertEqual(screen.shown, session.sourceLang)
         XCTAssertEqual(screen.view().status, .original)
     }
+
+    @MainActor
+    func testAVerdictCanOpenInAnotherLanguageForSomeoneWhoDidNotWriteIt() throws {
+        let payload = try Fixtures.sample("win_a_self")
+        let session = VerdictSession(id: payload.id, original: payload.result, nameMap: payload.nameMap, translations: [:])
+        let other: AppLang = session.sourceLang == .tr ? .en : .tr
+        let screen = VerdictModel(session: session, opening: other, api: api()) { _, _, _ in }
+        XCTAssertEqual(screen.shown, other)
+    }
 }
