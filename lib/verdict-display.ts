@@ -91,6 +91,9 @@ export function tugFinal(result: VerdictResult): number {
       return 80;
     case "side_b":
       return 20;
+    case "conditional":
+    case "dissolved":
+      return 50; // depends on values: no side is right, whatever the forced pick
     default:
       if (result.lean) return result.lean.party === "a" ? 62 : 38;
       return 50;
@@ -98,12 +101,13 @@ export function tugFinal(result: VerdictResult): number {
 }
 
 /** Party A's share of the judge votes for either side, 0 to 1, for the lean
- * bar. Half for a too-close or split ruling or when nobody voted for a side;
+ * bar. Half for any verdict that names no winner (a lone vote for a side must
+ * not tilt "depends on your values") or when nobody voted for a side;
  * null when there is nothing to show (a refusal, no runs). */
 export function leanShare(r: VerdictResult): number | null {
   if (r.parties) return null;
   if (r.model_refused || !r.runs.length) return null;
-  if (r.verdict === "too_close" || r.verdict === "split") return 0.5;
+  if (r.verdict !== "side_a" && r.verdict !== "side_b") return 0.5;
   const a = r.runs.filter((v) => v === "side_a").length;
   const b = r.runs.filter((v) => v === "side_b").length;
   return a + b ? a / (a + b) : 0.5;

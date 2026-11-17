@@ -1,6 +1,7 @@
 package com.okjudge.judge.core.display
 
 import com.okjudge.judge.Fixtures
+import com.okjudge.judge.core.model.Lean
 import com.okjudge.judge.core.model.VerdictResult
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.isNull
@@ -63,6 +64,12 @@ class DisplayPureTest {
         assertNull(VerdictDisplay.why(VerdictResult(verdict = "side_a")))
         assertNull(VerdictDisplay.why(VerdictResult(verdict = "side_a", why = " \n")))
         assertNull(VerdictDisplay.why(VerdictResult(verdict = "side_a", why = "Menus list them apart.", modelRefused = true)))
+    }
+
+    @Test
+    fun dependsOnValues_staysLevelWithAForcedLean() {
+        assertEquals(50, VerdictDisplay.tugFinal(VerdictResult(verdict = "conditional", lean = Lean(party = "a", unanimous = true, reason = ""))))
+        assertEquals(50, VerdictDisplay.tugFinal(VerdictResult(verdict = "dissolved", lean = Lean(party = "b", unanimous = true, reason = ""))))
     }
 
     @Test
@@ -189,6 +196,7 @@ class DisplayPureTest {
         assertEquals("too close sits in the middle", 0.5f, VerdictDisplay.leanShare(VerdictResult(verdict = "too_close", runs = listOf("side_a", "side_b", "side_a"))))
         assertEquals(0.5f, VerdictDisplay.leanShare(VerdictResult(verdict = "split", runs = listOf("side_a", "side_a", "split"))))
         assertEquals(0.5f, VerdictDisplay.leanShare(VerdictResult(verdict = "dissolved", runs = listOf("dissolved", "conditional", "dissolved"))))
+        assertEquals("depends on values ignores a lone side vote", 0.5f, VerdictDisplay.leanShare(VerdictResult(verdict = "conditional", runs = listOf("conditional", "conditional", "side_a"))))
         assertNull(VerdictDisplay.leanShare(VerdictResult(verdict = "side_a")))
         assertNull(VerdictDisplay.leanShare(VerdictResult(verdict = "side_a", runs = listOf("side_a"), modelRefused = true)))
     }

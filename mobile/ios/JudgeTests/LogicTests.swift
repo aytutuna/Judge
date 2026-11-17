@@ -24,6 +24,8 @@ final class TugAndTiltTests: XCTestCase {
         XCTAssertEqual(VerdictDisplay.tugFinal(result(.split, lean: lean(.b))), 38)
         XCTAssertEqual(VerdictDisplay.tugFinal(result(.conditional, lean: .tie)), 50)
         XCTAssertEqual(VerdictDisplay.tugFinal(result(.dissolved)), 50)
+        XCTAssertEqual(VerdictDisplay.tugFinal(result(.conditional, lean: lean(.a))), 50)
+        XCTAssertEqual(VerdictDisplay.tugFinal(result(.dissolved, lean: lean(.b))), 50)
         // A winner ignores a stray lean.
         XCTAssertEqual(VerdictDisplay.tugFinal(result(.sideB, lean: lean(.a))), 20)
     }
@@ -42,6 +44,9 @@ final class TugAndTiltTests: XCTestCase {
         var split = result(.split)
         split.runs = [.split, .split, .sideA]
         XCTAssertEqual(VerdictCard.leanShare(split), 0.5)
+        var depends = result(.conditional)
+        depends.runs = [.conditional, .conditional, .sideA]
+        XCTAssertEqual(VerdictCard.leanShare(depends), 0.5, "a lone side vote must not tilt depends on your values")
         var sideless = result(.conditional)
         sideless.runs = [.conditional, .conditional]
         XCTAssertEqual(VerdictCard.leanShare(sideless), 0.5)

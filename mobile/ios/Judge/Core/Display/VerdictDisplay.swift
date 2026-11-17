@@ -111,12 +111,14 @@ enum VerdictDisplay {
     }
 
     /// Party A's share of the tug-of-war bar, in percent: 80/20 for a win,
-    /// a fixed 62/38 for a forced-ruling lean, 50 otherwise.
+    /// a fixed 62/38 for a forced-ruling lean (not on depends-on-values or
+    /// same-word verdicts), 50 otherwise.
     static func tugFinal(_ result: VerdictResult) -> Int {
         if result.isMany { return 50 }
         switch result.verdict {
         case .sideA: return 80
         case .sideB: return 20
+        case .conditional, .dissolved: return 50
         default:
             guard let lean = result.lean.value else { return 50 }
             return lean.party == .a ? 62 : 38
