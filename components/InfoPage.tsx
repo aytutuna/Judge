@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import { legalLang, legalNotice, t, type Key, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { langDir, langTag } from "@/lib/langs";
-import { POLICY_VERSION } from "@/lib/policy";
+import { OWNER_ADDRESS, POLICY_VERSION } from "@/lib/policy";
 import { PRICING } from "@/lib/pricing";
 import { noOrphan } from "@/lib/text";
 import { useViewer } from "@/lib/use-viewer";
@@ -124,50 +124,102 @@ function ArtCredit({ text }: { text: string }) {
   );
 }
 
-/** A sentence with an {email} slot, the address as a real link. */
+/** A sentence with {email} slots, each one a real link. */
 function ContactLine({ text, email }: { text: string; email: string }) {
-  const [before, after = ""] = text.split("{email}");
   return (
-    <p>
-      {before}
-      <a href={`mailto:${email}`} className={styles.link}>
-        {email}
-      </a>
-      {after}
-    </p>
+    <>
+      {text.split("{email}").map((part, i) => (
+        <span key={i}>
+          {i > 0 ? (
+            <a href={`mailto:${email}`} className={styles.link}>
+              {email}
+            </a>
+          ) : null}
+          {part}
+        </span>
+      ))}
+    </>
   );
 }
 
-function Privacy({ lang, contactEmail }: { lang: Lang; contactEmail: string | null }) {
-  const sections: [Key, Key][] = [
-    ["privacy.storedTitle", "privacy.stored"],
-    ["privacy.helpTitle", "privacy.help"],
-    ["privacy.accessTitle", "privacy.access"],
-    ["privacy.removalTitle", "privacy.removal"],
-    ["privacy.retentionTitle", "privacy.retention"],
-    ["privacy.locationTitle", "privacy.location"],
-    ["privacy.notStoredTitle", "privacy.notStored"],
-    ["privacy.accountsTitle", "privacy.accounts"],
-    ["privacy.webSearchTitle", "privacy.webSearch"],
-    // Disclosed whether or not this deployment has switched them on: what
-    // happens to the data when they are used never depends on a flag.
-    ["privacy.casesTitle", "privacy.cases"],
-    ["privacy.evidenceTitle", "privacy.evidence"],
-    ["privacy.ipTitle", "privacy.ip"],
-    ["privacy.processorsTitle", "privacy.processors"],
-    ["privacy.shareTitle", "privacy.share"],
-    ["privacy.rightsTitle", "privacy.rights"],
-  ];
+/** A policy body: one paragraph per line, runs of "- " lines as a list. The
+ * {address} line is dropped when there is no address. */
+function PolicyBody({ text, email }: { text: string; email: string | null }) {
+  const lines = text.split("\n").filter((l) => OWNER_ADDRESS || !l.includes("{address}"));
+  const blocks: (string | string[])[] = [];
+  for (const line of lines) {
+    const item = line.startsWith("- ") ? line.slice(2) : null;
+    const last = blocks[blocks.length - 1];
+    if (item === null) blocks.push(line);
+    else if (Array.isArray(last)) last.push(item);
+    else blocks.push([item]);
+  }
+  const fill = (s: string) => {
+    const filled = s.replace("{address}", OWNER_ADDRESS);
+    return email ? <ContactLine text={filled} email={email} /> : filled.replace("{email}", "");
+  };
   return (
     <>
-      {sections.map(([title, body]) => (
-        <Section key={title} title={t(lang, title)} id={title === "privacy.helpTitle" ? "help-improve" : undefined}>
-          <p>{t(lang, body)}</p>
+      {blocks.map((b, i) =>
+        Array.isArray(b) ? (
+          <ul key={i} className={styles.bullets}>
+            {b.map((item, k) => (
+              <li key={k}>{fill(item)}</li>
+            ))}
+          </ul>
+        ) : (
+          <p key={i}>{fill(b)}</p>
+        ),
+      )}
+    </>
+  );
+}
+
+const PRIVACY_SECTIONS = [
+  "who",
+  "stored",
+  "help",
+  "purposes",
+  "sensitive",
+  "others",
+  "automated",
+  "access",
+  "cases",
+  "webSearch",
+  "evidence",
+  "accounts",
+  "removal",
+  "afterRemoval",
+  "retention",
+  "ip",
+  "processors",
+  "share",
+  "location",
+  "storage",
+  "notStored",
+  "security",
+  "children",
+  "rights",
+  "regionEu",
+  "regionUs",
+  "regionCa",
+  "regionBr",
+  "changes",
+] as const;
+
+function Privacy({ lang, contactEmail }: { lang: Lang; contactEmail: string | null }) {
+  return (
+    <>
+      {PRIVACY_SECTIONS.map((name) => (
+        <Section key={name} title={t(lang, `privacy.${name}Title`)} id={name === "help" ? "help-improve" : undefined}>
+          <PolicyBody text={t(lang, `privacy.${name}`)} email={contactEmail} />
         </Section>
       ))}
       {contactEmail ? (
         <Section title={t(lang, "privacy.contactTitle")}>
-          <ContactLine text={t(lang, "privacy.contact")} email={contactEmail} />
+          <p>
+            <ContactLine text={t(lang, "privacy.contact")} email={contactEmail} />
+          </p>
         </Section>
       ) : null}
       <p>
@@ -198,7 +250,9 @@ function Terms({ lang, contactEmail, cap }: { lang: Lang; contactEmail: string |
       ))}
       {contactEmail ? (
         <Section title={t(lang, "terms.contactTitle")}>
-          <ContactLine text={t(lang, "terms.contact")} email={contactEmail} />
+          <p>
+            <ContactLine text={t(lang, "terms.contact")} email={contactEmail} />
+          </p>
         </Section>
       ) : null}
     </>
