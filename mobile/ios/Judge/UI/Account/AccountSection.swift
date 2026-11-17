@@ -135,11 +135,20 @@ struct AccountSection: View {
 /// Settings → Account page: the email and Delete account, with its
 /// confirmation. Deleting takes the account's verdicts off the phone; ones
 /// no account has stay.
+/// The data export waiting in the share sheet.
+private struct ExportedFile: Identifiable {
+    let url: URL
+    var id: URL { url }
+}
+
 struct AccountView: View {
     @Environment(AppModel.self) private var app
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
     @State private var confirmDelete = false
+    @State private var exporting = false
+    @State private var exportFailed = false
+    @State private var exported: ExportedFile?
 
     var body: some View {
         let account = app.account
@@ -177,9 +186,36 @@ struct AccountView: View {
                 }
             }
             .listRowBackground(Brand.paper)
+            Section {
+                Button {
+                    Task { await exportData() }
+                } label: {
+                    HStack {
+                        Text(exporting ? L10n.accountExportBusy(lang) : L10n.accountExport(lang))
+                            .brandText(.body)
+                            .foregroundStyle(Brand.ink)
+                        Spacer()
+                        if exporting {
+                            ProgressView().tint(Brand.muted)
+                        }
+                    }
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .disabled(exporting)
+            } footer: {
+                Text(exportFailed ? L10n.accountExportFailed(lang) : L10n.accountExportHint(lang))
+                    .brandText(.footnote)
+                    .foregroundStyle(exportFailed ? Brand.danger : Brand.muted)
+            }
+            .listRowBackground(Brand.paper)
         }
         .scrollContentBackground(.hidden)
         .background(Brand.ivory.ignoresSafeArea())
+        .sheet(item: $exported) { file in
+            ActivityView(items: [file.url])
+                .presentationDetents([.medium, .large])
+        }
         .navigationTitle(L10n.accountTitle(lang))
         .navigationBarTitleDisplayMode(.inline)
         .clearBar()
@@ -202,6 +238,17 @@ struct AccountView: View {
         }
         .onChange(of: account.isSignedIn) { _, signedIn in
             if !signedIn { dismiss() }
+        }
+    }
+
+    private func exportData() async {
+        exporting = true
+        exportFailed = false
+        defer { exporting = false }
+        do {
+            exported = ExportedFile(url: try await app.api.exportData())
+        } catch {
+            exportFailed = true
         }
     }
 }
