@@ -131,6 +131,8 @@ const LATIN_LETTERS: Partial<Record<string, RegExp>> = {
   vi: /[Ạ-ỹơư]/g,
 };
 
+const AFRIKAANS = words(`ek jy nie sê`);
+
 const PT_BR = words(`você vocês pra tá tô né gente celular legal cara ônibus`);
 const PT_PT = words(`facto telemóvel autocarro comboio ecrã estás tens fazes consigo miúdo rapariga contactar`);
 
@@ -165,6 +167,9 @@ function latin(text: string, hint?: Lang): Lang | null {
   scores.sort((a, b) => b[1] - a[1]);
   const [key, best] = scores[0];
   const runnerUp = scores[1][1];
+  // Azerbaijani, Lithuanian and Afrikaans borrow the function words of Turkish, Polish and Dutch.
+  if (/[əėįųū]/.test(lower)) return null;
+  if (key === "nl" && tokens.some((w) => AFRIKAANS.has(w))) return null;
   if (best < 3 || best / tokens.length < MIN_WORD_SHARE) return null;
   if (best - runnerUp < 2 || runnerUp > best * MAX_RUNNER_UP) return null;
   const variant = VARIANTS[key];
@@ -182,6 +187,8 @@ function arabic(text: string): Lang | null {
 }
 
 function cyrillic(text: string): Lang | null {
+  // Kazakh, Kyrgyz and Belarusian letters: not Russian or Ukrainian.
+  if (/[әғқңөұүһў]/i.test(text)) return null;
   const uk = count(text, /[іїєґ]/g);
   const ru = count(text, /[ыэё]/g);
   if (uk !== ru) return uk > ru ? "uk" : "ru";

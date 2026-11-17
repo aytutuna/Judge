@@ -97,6 +97,16 @@ describe("detectLang", () => {
     expect(detectLang("Իմ սենյակակիցն ասում է, որ ես պետք է վճարեմ ինտերնետի հաշվի կեսը, բայց մենք երբեք չենք համաձայնել։")).toBeNull();
   });
 
+  it("does not map a neighbouring language onto a supported one", () => {
+    // Kazakh, Belarusian, Kyrgyz, Azerbaijani, Lithuanian and Afrikaans.
+    expect(detectLang("Менің бөлмелес досым интернет шотының жартысын төлеуім керек дейді, бірақ біз ешқашан олай келіспегенбіз.")).toBeNull();
+    expect(detectLang("Мой сусед па пакоі кажа, што я павінен яму палову рахунку за інтэрнэт, але мы ніколі пра гэта не дамаўляліся і ўсё.")).toBeNull();
+    expect(detectLang("Менин бөлмөдөш досум интернет эсебинин жарымын төлөшүм керек дейт, бирок биз эч качан макул болгон эмеспиз, ушул үчүн.")).toBeNull();
+    expect(detectLang("Otaq yoldaşım deyir ki, internet haqqının yarısını mən ödəməliyəm, amma biz bunu heç vaxt razılaşdırmamışdıq.")).toBeNull();
+    expect(detectLang("Mano kambario draugas sako, kad turiu sumokėti pusę interneto sąskaitos, bet mes niekada dėl to nesusitarėme ir nieko.")).toBeNull();
+    expect(detectLang("My kamermaat sê dat ek die helfte van die internetrekening moet betaal, maar ons het nooit daaroor saamgestem nie.")).toBeNull();
+  });
+
   it("settles Portuguese and Chinese variants by the app language only when the text cannot", () => {
     const pt = "Meu amigo disse que eu devo dinheiro para ele porque ele pagou o jantar, mas nós combinamos que cada um pagaria o seu.";
     expect(detectLang(pt, "pt-PT")).toBe("pt-PT");
