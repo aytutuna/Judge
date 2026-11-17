@@ -164,6 +164,12 @@ struct HomeView: View {
         .fullScreenCover(isPresented: $home.isJudging) {
             JudgingCover(home: home, lang: lang, gamify: app.gamify)
                 .environment(\.sceneLive, sceneLive)
+                // The root sheet cannot open over this cover.
+                .sheet(isPresented: Binding(get: { app.agreement.asking }, set: { if !$0 { app.agreement.cancel() } })) {
+                    AgreementSheet()
+                        .environment(app)
+                        .presentationDragIndicator(.visible)
+                }
         }
         .sheet(item: $home.shareLink) { link in
             ActivityView(items: [L10n.caseInviteShareText(lang), link.url]) {

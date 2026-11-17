@@ -19,7 +19,14 @@ final class AgreementModel {
         guard waiting == nil else { return false }
         failed = false
         asking = true
-        return await withCheckedContinuation { waiting = $0 }
+        return await withTaskCancellationHandler {
+            await withCheckedContinuation { continuation in
+                waiting = continuation
+                if Task.isCancelled { finish(false) }
+            }
+        } onCancel: {
+            Task { @MainActor in self.finish(false) }
+        }
     }
 
     func confirm(lang: AppLang) async {

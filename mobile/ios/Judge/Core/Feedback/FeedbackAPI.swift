@@ -49,7 +49,7 @@ extension JudgeAPI {
         let (data, response) = try await exchange(request)
         let disposition = response.value(forHTTPHeaderField: "Content-Disposition") ?? ""
         var name = "judge-data.json"
-        if let found = disposition.firstMatch(of: /filename="([w.-]+)"/) { name = String(found.1) }
+        if let found = disposition.firstMatch(of: /filename="([\w.-]+)"/) { name = String(found.1) }
         let folder = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
         try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
         let file = folder.appending(path: name)
