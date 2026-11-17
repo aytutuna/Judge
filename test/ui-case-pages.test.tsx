@@ -200,6 +200,15 @@ describe("owner case page", () => {
     expect(html).toContain(t("en", "appeal.submit"));
   });
 
+  it("judged: the verdict keeps its own language and direction under an app in another language", () => {
+    const [first] = OWNER.judged.verdicts;
+    const arabic = { ...OWNER.judged, verdicts: [{ ...first, result: { ...first.result, lang: "ar" as const } }] };
+    const html = owner(arabic);
+    expect(html).toContain('lang="ar" dir="rtl"');
+    expect(html).toContain(t("ar", "twoSided.badge"));
+    expect(html).toContain(t("en", "appeal.title"));
+  });
+
   it("appealed: the outcome banner, the earlier verdict and the added context", () => {
     const html = owner(OWNER.appealed);
     expect(html).toContain(t("en", "appeal.outcome.changed"));
@@ -250,7 +259,8 @@ describe("owner case page", () => {
     expect(html).toContain("Party A (you)");
     expect(html).toContain("Your account (Party A)");
     const tr = owner(OWNER.judged, { names: [], lang: "tr" });
-    expect(tr).toContain("Taraf A (sen)");
+    // The verdict is English, so its labels stay English; the accounts below follow the app.
+    expect(tr).toContain("Party A (you)");
     expect(tr).toContain("Senin anlatımın (Taraf A)");
   });
 

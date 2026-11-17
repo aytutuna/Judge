@@ -16,6 +16,7 @@ import type {
 import { apiFetchAgreed } from "@/lib/api-fetch";
 import { forgetCaseNames, saveCaseNames, useCaseNames } from "@/lib/case-names-store";
 import { trackApiError } from "@/lib/analytics/client";
+import { verdictLang } from "@/lib/content-lang";
 import { apiErrorMessage, t, tWithDate, type Key, type Lang } from "@/lib/i18n";
 import { langDir } from "@/lib/langs";
 import { useLang } from "@/lib/lang";
@@ -293,6 +294,8 @@ export function CasePanel({
   const deleteCancelRef = useRef<HTMLButtonElement>(null);
 
   const current = view.verdicts.at(-1) ?? null;
+  // The writer reads the verdict as it was written; the rest of the page stays in the app language.
+  const verdictText = current ? verdictLang(current.result) : lang;
   const appealJudging = view.appeals.some((a) => a.status === "judging");
   const canRemove = view.status !== "judging" && !appealJudging && !view.removed;
   const ownSide = view.sides.filter((s) => s.party === view.yourParty);
@@ -460,16 +463,18 @@ export function CasePanel({
           judged ? (
             <div className={styles.stack}>
               {view.mode === "one_sided" ? <p className={styles.note}>{t(lang, "case.oneSided")}</p> : null}
-              <VerdictView
-                result={current.result}
-                nameMap={names}
-                shareId={view.removed ? undefined : current.id}
-                lang={lang}
-                fresh={fresh}
-                selfParty="A"
-                viewerIsSelfParty
-                focusAppeal={focusAppeal}
-              />
+              <div lang={verdictText} dir={langDir(verdictText)} className="min-w-0">
+                <VerdictView
+                  result={current.result}
+                  nameMap={names}
+                  shareId={view.removed ? undefined : current.id}
+                  lang={verdictText}
+                  fresh={fresh}
+                  selfParty="A"
+                  viewerIsSelfParty
+                  focusAppeal={focusAppeal}
+                />
+              </div>
             </div>
           ) : null
         }
