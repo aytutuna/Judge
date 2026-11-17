@@ -43,9 +43,10 @@ data class VerdictUiState(
 )
 
 /**
- * One saved verdict, shown in the UI language. The original and every
- * fetched translation stay available, so switching back is instant; fetched
- * translations are cached in the history row for offline use.
+ * One saved verdict, shown as it was written until the UI language changes.
+ * The original and every fetched translation stay available, so switching
+ * back is instant; fetched translations are cached in the history row for
+ * offline use.
  */
 class VerdictViewModel(
     private val id: String,
@@ -78,7 +79,19 @@ class VerdictViewModel(
         }
     }
 
-    /** Called whenever the UI language changes (and once on first show). */
+    private var uiLang: AppLang? = null
+
+    /** Called with the UI language on first show and whenever it changes. The
+     * first call shows the verdict in the language it was written in; only a
+     * later change of the UI language translates it. */
+    fun onUiLang(target: AppLang) {
+        val before = uiLang
+        uiLang = target
+        if (before == target) return
+        if (before != null) return onLang(target)
+        viewModelScope.launch { history.observeFirst(id)?.let { onLang(it.lang) } }
+    }
+
     fun onLang(target: AppLang) {
         if (lang.value == target) return
         // A language change forgets retryable failures (dropRetryable).

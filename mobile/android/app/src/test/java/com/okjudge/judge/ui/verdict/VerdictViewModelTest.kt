@@ -67,6 +67,24 @@ class VerdictViewModelTest {
     }
 
     @Test
+    fun opensInTheLanguageItWasWrittenIn_andTranslatesOnlyWhenTheUiLanguageChanges() = runBlocking {
+        server.enqueue(MockResponse.Builder().code(200).body(translateBody()).build())
+        val vm = vm()
+        val job = CoroutineScope(Dispatchers.Unconfined).launch { vm.state.collect {} }
+        vm.onUiLang(AppLang.TR)
+        val view = vm.awaitStatus(TranslationStatus.ORIGINAL)
+        assertEquals(outcome.result.result.headline, view.result.headline)
+        vm.onUiLang(AppLang.TR)
+        assertEquals(0, server.requestCount)
+        vm.onUiLang(AppLang.EN)
+        vm.awaitStatus(TranslationStatus.ORIGINAL)
+        vm.onUiLang(AppLang.TR)
+        vm.awaitStatus(TranslationStatus.TRANSLATED)
+        assertEquals(1, server.requestCount)
+        job.cancel()
+    }
+
+    @Test
     fun otherLanguage_fetchesOnce_cachesIt_andSwitchingBackIsInstant() = runBlocking {
         server.enqueue(MockResponse.Builder().code(200).body(translateBody()).build())
         val vm = vm()

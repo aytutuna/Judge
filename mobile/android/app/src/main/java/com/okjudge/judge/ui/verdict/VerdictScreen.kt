@@ -76,7 +76,7 @@ fun VerdictRoute(
     onConsentInfo: () -> Unit = {},
 ) {
     val lang = LocalLang.current
-    LaunchedEffect(lang) { viewModel.onLang(lang) }
+    LaunchedEffect(lang) { viewModel.onUiLang(lang) }
     val state by viewModel.state.collectAsStateWithLifecycle()
     val rating by viewModel.rating.collectAsStateWithLifecycle()
     val appealState = appeal?.let { it.state.collectAsStateWithLifecycle().value }
