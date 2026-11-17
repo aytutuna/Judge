@@ -189,6 +189,7 @@ class DisplayPureTest {
         assertEquals("too close sits in the middle", 0.5f, VerdictDisplay.leanShare(VerdictResult(verdict = "too_close", runs = listOf("side_a", "side_b", "side_a"))))
         assertEquals(0.5f, VerdictDisplay.leanShare(VerdictResult(verdict = "split", runs = listOf("side_a", "side_a", "split"))))
         assertEquals(0.5f, VerdictDisplay.leanShare(VerdictResult(verdict = "dissolved", runs = listOf("dissolved", "conditional", "dissolved"))))
+        assertEquals("depends on values ignores a lone side vote", 0.5f, VerdictDisplay.leanShare(VerdictResult(verdict = "conditional", runs = listOf("conditional", "conditional", "side_a"))))
         assertNull(VerdictDisplay.leanShare(VerdictResult(verdict = "side_a")))
         assertNull(VerdictDisplay.leanShare(VerdictResult(verdict = "side_a", runs = listOf("side_a"), modelRefused = true)))
     }

@@ -303,6 +303,13 @@ describe("leanShare", () => {
     expect(run("dissolved", ["dissolved", "conditional", "dissolved"])).toBe(0.5);
   });
 
+  it("stays in the middle when the verdict names no winner, whatever the votes", () => {
+    expect(run("conditional", ["conditional", "conditional", "side_a"])).toBe(0.5);
+    expect(run("conditional", ["conditional", "side_a", "side_a"])).toBe(0.5);
+    expect(run("conditional", ["conditional", "conditional", "conditional"])).toBe(0.5);
+    expect(run("too_close", ["conditional", "side_a", "side_b"])).toBe(0.5);
+  });
+
   it("is null for a refusal or no runs", () => {
     expect(run("side_a", [])).toBeNull();
     expect(run("side_a", ["side_a"], { model_refused: true })).toBeNull();

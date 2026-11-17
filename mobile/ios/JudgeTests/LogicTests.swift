@@ -42,6 +42,9 @@ final class TugAndTiltTests: XCTestCase {
         var split = result(.split)
         split.runs = [.split, .split, .sideA]
         XCTAssertEqual(VerdictCard.leanShare(split), 0.5)
+        var depends = result(.conditional)
+        depends.runs = [.conditional, .conditional, .sideA]
+        XCTAssertEqual(VerdictCard.leanShare(depends), 0.5, "a lone side vote must not tilt depends on your values")
         var sideless = result(.conditional)
         sideless.runs = [.conditional, .conditional]
         XCTAssertEqual(VerdictCard.leanShare(sideless), 0.5)

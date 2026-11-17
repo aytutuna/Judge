@@ -51,7 +51,7 @@ object VerdictDisplay {
      */
     fun leanShare(result: VerdictResult): Float? {
         if (result.refused || result.runs.isEmpty() || result.isMany) return null
-        if (result.finalVerdict == FinalVerdict.TOO_CLOSE || result.finalVerdict == FinalVerdict.SPLIT) return 0.5f
+        if (result.finalVerdict != FinalVerdict.SIDE_A && result.finalVerdict != FinalVerdict.SIDE_B) return 0.5f
         val a = result.runs.count { it == "side_a" }
         val b = result.runs.count { it == "side_b" }
         return if (a + b == 0) 0.5f else a.toFloat() / (a + b)

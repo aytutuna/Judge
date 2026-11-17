@@ -34,6 +34,36 @@ function run(
   };
 }
 
+describe("aggregate with a values-dependent vote", () => {
+  it("2 conditional + 1 side_a is conditional, never a side win", () => {
+    const r = aggregate([run("conditional"), run("conditional"), run("side_a")]);
+    expect(r.verdict).toBe("conditional");
+    expect(r.runs).toEqual(["conditional", "conditional", "side_a"]);
+  });
+
+  it("1 conditional + 2 side_a is a side_a win", () => {
+    const r = aggregate([run("conditional"), run("side_a"), run("side_a")]);
+    expect(r.verdict).toBe("side_a");
+    expect(r.lean).toBeUndefined();
+  });
+
+  it("3 conditional is conditional at full agreement", () => {
+    const r = aggregate([run("conditional"), run("conditional"), run("conditional")]);
+    expect(r.verdict).toBe("conditional");
+    expect(r.confidence).toBe(5);
+  });
+
+  it("1 conditional + 1 side_a + 1 side_b is too close", () => {
+    const r = aggregate([
+      run("conditional", "values", "side_a"),
+      run("side_a", "values", "side_a"),
+      run("side_b", "values", "side_b"),
+    ]);
+    expect(r.verdict).toBe("too_close");
+    expect(r.confidence).toBe(1);
+  });
+});
+
 describe("aggregate", () => {
   it("unanimous 3/3 with same dispute type -> confidence 5", () => {
     const r = aggregate([run("side_a"), run("side_a"), run("side_a")]);

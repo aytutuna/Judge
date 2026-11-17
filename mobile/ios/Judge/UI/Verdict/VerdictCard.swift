@@ -21,12 +21,12 @@ struct VerdictCard: View {
     @Environment(\.sides) private var sides
     @State private var appeared = false
 
-    /// Party A's share of the votes cast for a side, for the lean bar. Too
-    /// close or split sits in the middle; nil (no bar) without votes or on
+    /// Party A's share of the votes cast for a side, for the lean bar. Any
+    /// verdict without a winner sits in the middle; nil (no bar) without votes or on
     /// a refusal.
     static func leanShare(_ result: VerdictResult) -> Double? {
         guard !result.isMany, !result.modelRefused, !result.runs.isEmpty else { return nil }
-        if result.verdict == .tooClose || result.verdict == .split { return 0.5 }
+        if result.verdict != .sideA && result.verdict != .sideB { return 0.5 }
         let votes = result.runs.map(VerdictDisplay.vote)
         let a = votes.filter { $0 == .a }.count
         let counted = a + votes.filter { $0 == .b }.count
