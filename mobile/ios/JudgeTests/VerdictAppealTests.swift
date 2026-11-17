@@ -384,12 +384,21 @@ final class VerdictAppealTests: XCTestCase {
         let payload = try Fixtures.sample("win_a_self")
         let session = VerdictSession(id: payload.id, original: payload.result, nameMap: payload.nameMap, translations: [:])
         let screen = VerdictModel(session: session, api: api()) { _, _, _ in }
-        screen.ensure(.tr)
+        screen.languageChanged(to: .tr)
         try await PremiumFixtures.waitUntil("the first translation") { router.count("POST", Self.verdictPath + "/translate") == 1 }
 
         let later = try Fixtures.sample("win_b_named")
-        screen.show(session.withRuling(VerdictPayload(id: "r1", result: later.result, nameMap: [])), lang: .tr)
+        screen.show(session.withRuling(VerdictPayload(id: "r1", result: later.result, nameMap: [])))
         try await PremiumFixtures.waitUntil("the round's translation") { router.count("POST", Self.roundPath + "/translate") == 1 }
         XCTAssertEqual(screen.session.currentID, "r1")
+    }
+
+    @MainActor
+    func testAVerdictOpensInTheLanguageItWasWrittenIn() throws {
+        let payload = try Fixtures.sample("win_a_self")
+        let session = VerdictSession(id: payload.id, original: payload.result, nameMap: payload.nameMap, translations: [:])
+        let screen = VerdictModel(session: session, api: api()) { _, _, _ in }
+        XCTAssertEqual(screen.shown, session.sourceLang)
+        XCTAssertEqual(screen.view().status, .original)
     }
 }

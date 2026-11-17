@@ -1,8 +1,8 @@
 import SwiftUI
 
 /// The ruling card, the rows that open its details and the share actions.
-/// The text follows the UI language: a verdict written in the other
-/// language is fetched translated (and cached in history) with the original
+/// The text opens in the language it was written in; when the UI language
+/// changes it is fetched translated (and cached in history) with the original
 /// kept for switching back. The signed-in writer can add context in a
 /// sheet; a round's verdict then takes the card's place.
 struct VerdictScreen: View {
@@ -38,7 +38,7 @@ private struct VerdictScreenContent: View {
         // A round's verdict takes over the screen, the thread's session and
         // the saved entry.
         let adding = VerdictAppealModel(id: session.id, api: app.api, account: app.account, shown: { verdict.session }) { next in
-            verdict.show(next, lang: app.lang)
+            verdict.show(next)
             home.updateSession(next)
             try? history.saveRuling(next)
         }
@@ -175,7 +175,7 @@ struct VerdictSections<Appeal: View>: View {
 
     var body: some View {
         let session = model.session
-        let view = model.view(for: lang)
+        let view = model.view()
         let selfLang = session.sourceLang
         let parties = Names.partyNames(session.nameMap, lang: lang, selfLang: selfLang, sides: view.result.sideCount)
         let result = Names.personalizeResult(view.result, nameMap: session.nameMap, selfLang: selfLang)
@@ -246,7 +246,6 @@ struct VerdictSections<Appeal: View>: View {
             try? await Task.sleep(for: .milliseconds(300))
             appealShown = true
         }
-        .onAppear { model.ensure(lang) }
         .onChange(of: lang) { _, newLang in model.languageChanged(to: newLang) }
     }
 

@@ -68,7 +68,7 @@ struct VerdictDetails<Appeal: View>: View {
 
     var body: some View {
         let session = model.session
-        let view = model.view(for: lang)
+        let view = model.view()
         let selfLang = session.sourceLang
         let parties = Names.partyNames(session.nameMap, lang: lang, selfLang: selfLang, sides: view.result.sideCount)
         let result = Names.personalizeResult(view.result, nameMap: session.nameMap, selfLang: selfLang)

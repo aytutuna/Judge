@@ -8,6 +8,9 @@ import Observation
 final class VerdictModel {
     private(set) var session: VerdictSession
     private(set) var entries: [AppLang: TranslationEntry]
+    /// The language the text is shown in. A verdict opens as it was written;
+    /// only a change of the UI language afterwards translates it.
+    private(set) var shown: AppLang
 
     private let api: JudgeAPI
     private let onTranslated: @MainActor (VerdictSession, AppLang, RawResult) -> Void
@@ -17,16 +20,18 @@ final class VerdictModel {
         self.session = session
         self.api = api
         self.onTranslated = onTranslated
+        shown = session.sourceLang
         entries = session.translations.mapValues { TranslationEntry.result($0) }
     }
 
-    func view(for lang: AppLang) -> TranslationView {
-        TranslationLogic.view(original: session.original.result, lang: lang, entry: entries[lang])
+    func view() -> TranslationView {
+        TranslationLogic.view(original: session.original.result, lang: shown, entry: entries[shown])
     }
 
-    /// Call on every language change: forgets retryable failures and fetches
-    /// the language when the original is written in the other one.
+    /// Call when the UI language changes: forgets retryable failures and
+    /// fetches the language when the original is written in the other one.
     func languageChanged(to lang: AppLang) {
+        shown = lang
         entries = TranslationLogic.dropRetryable(entries)
         ensure(lang)
     }
@@ -54,11 +59,11 @@ final class VerdictModel {
 
     /// A later ruling (context added) takes the screen; it is translated
     /// under its own id.
-    func show(_ next: VerdictSession, lang: AppLang) {
+    func show(_ next: VerdictSession) {
         session = next
         entries = next.translations.mapValues { TranslationEntry.result($0) }
         inFlight = []
-        ensure(lang)
+        ensure(shown)
     }
 
     private func receive(_ outcome: Result<TranslatePayload, APIError>, lang: AppLang, for id: String) {
