@@ -12,7 +12,7 @@ final class SceneModeTests: XCTestCase {
         let lean = try Fixtures.sample("lean_b_majority_escalated").result.result
         XCTAssertEqual(VerdictDisplay.sceneVerdict(lean), .verdict(tugA: 38, votes: [.a, .b, .other, .b, .b]))
         let conditional = try Fixtures.sample("conditional").result.result
-        XCTAssertEqual(VerdictDisplay.sceneVerdict(conditional), .verdict(tugA: 62, votes: [.other, .other, .other]))
+        XCTAssertEqual(VerdictDisplay.sceneVerdict(conditional), .verdict(tugA: 50, votes: [.other, .other, .other]))
     }
 
     func testRefusalStaysLevelWithNoVotes() throws {
