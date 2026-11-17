@@ -12,7 +12,7 @@ import { ENDING_MAX_MS } from "@/components/court/story";
 import { AppShell } from "@/components/shell/AppShell";
 import { refreshHistory, useHistory } from "@/components/shell/useHistory";
 import styles from "@/components/home/page.module.css";
-import { apiFetch } from "@/lib/api-fetch";
+import { apiFetch, apiFetchAgreed } from "@/lib/api-fetch";
 import { MAX_EVIDENCE_PER_SIDE, type CreateCaseResponse } from "@/lib/case-types";
 import { saveCaseNames } from "@/lib/case-names-store";
 import { verdictLang } from "@/lib/content-lang";
@@ -398,7 +398,7 @@ export default function Home() {
     const waitUntil = Date.now() + IN_PROGRESS_WAIT_MS;
     try {
       for (;;) {
-        const res = await apiFetch("/api/v1/verdict", {
+        const res = await apiFetchAgreed("/api/v1/verdict", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -470,7 +470,7 @@ export default function Home() {
     const key = keyFor(request);
     const body = JSON.stringify({ ...JSON.parse(request), venue: premiumKey.current?.venue });
     try {
-      const res = await apiFetch("/api/v1/cases", {
+      const res = await apiFetchAgreed("/api/v1/cases", {
         method: "POST",
         headers: { "Content-Type": "application/json", "Idempotency-Key": key },
         body,

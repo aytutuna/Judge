@@ -5,6 +5,7 @@ import { useEffect, type ReactNode } from "react";
 import type { Lang } from "@/lib/i18n";
 import { langDir } from "@/lib/langs";
 import { AgeGate } from "../AgeGate";
+import { AgreementGate } from "../AgreementGate";
 import { SiteFooter, SiteHeader, SkipLink } from "../SiteChrome";
 import { GamifyButton } from "./GamifyButton";
 import { SideMenu } from "./SideMenu";
@@ -81,6 +82,7 @@ export function AppShell({
       {children}
       {footer ? <SiteFooter lang={lang} toggle={toggle} /> : null}
       <AgeGate lang={lang} />
+      <AgreementGate lang={lang} />
     </div>
   );
 }

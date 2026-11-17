@@ -13,7 +13,7 @@ import type {
   LiveState,
   PartyLetter,
 } from "@/lib/case-types";
-import { apiFetch } from "@/lib/api-fetch";
+import { apiFetchAgreed } from "@/lib/api-fetch";
 import { forgetCaseNames, saveCaseNames, useCaseNames } from "@/lib/case-names-store";
 import { trackApiError } from "@/lib/analytics/client";
 import { apiErrorMessage, t, tWithDate, type Key, type Lang } from "@/lib/i18n";
@@ -644,7 +644,7 @@ export function CaseScreen({ id }: { id: string }) {
     setBusy(true);
     setActionError(null);
     try {
-      const res = await apiFetch(`${base}${path}`, init);
+      const res = await apiFetchAgreed(`${base}${path}`, init);
       const json: unknown = await res.json().catch(() => null);
       if (!res.ok) {
         trackApiError(json, res.status);
