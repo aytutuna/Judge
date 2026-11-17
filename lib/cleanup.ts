@@ -12,7 +12,6 @@ import { ensureFeedbackTables } from "@/lib/feedback/db";
 import { pruneRemovalLog } from "@/lib/originals/removal-log";
 
 const DAY_MS = 24 * 60 * 60_000;
-const LEDGER_KEEP_YEARS = 6;
 
 /** Better Auth only deletes an expired code when the same address signs in
  * again, so the rest would stay with the address in them. The typeof check
@@ -34,14 +33,13 @@ async function purgeVerification(nowIso: string): Promise<number> {
 
 /** Ledger rows whose account was deleted at least six years ago (the table's
  * trigger refuses any other delete). */
-async function pruneLedger(now: Date): Promise<number> {
+async function pruneLedger(): Promise<number> {
   await ensureFeedbackTables();
-  const cutoff = new Date(now);
-  cutoff.setUTCFullYear(cutoff.getUTCFullYear() - LEDGER_KEEP_YEARS);
   const db = await getDb();
+  // The cutoff comes from the database clock, the one the delete trigger checks.
   const rs = await db.execute({
-    sql: "DELETE FROM consent_ledger WHERE unlinked_at IS NOT NULL AND unlinked_at < ?",
-    args: [cutoff.toISOString()],
+    sql: "DELETE FROM consent_ledger WHERE unlinked_at IS NOT NULL AND unlinked_at < strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-6 years')",
+    args: [],
   });
   return rs.rowsAffected;
 }
@@ -52,7 +50,7 @@ export async function runCleanup(now: Date = new Date()): Promise<CleanupCounts>
   const counts: CleanupCounts = { verification: 0, ledger: 0, removalLog: 0 };
   const steps: [keyof CleanupCounts, () => Promise<number>][] = [
     ["verification", () => purgeVerification(now.toISOString())],
-    ["ledger", () => pruneLedger(now)],
+    ["ledger", () => pruneLedger()],
     ["removalLog", () => pruneRemovalLog(now)],
   ];
   for (const [name, step] of steps) {

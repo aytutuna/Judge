@@ -197,7 +197,7 @@ async function removeCaseSideOnce(
  * keeps its row under its own random id. The current choice goes. The ledger
  * rows stay as proof, for six years, under one random id shared by the
  * account's rows (its triggers allow exactly this change, see
- * lib/feedback/db), and are deleted after that (lib/feedback/cleanup). */
+ * lib/feedback/db), and are deleted after that (lib/cleanup). */
 function unlinkFeedbackStatements(userId: string, nowIso: string): InStatement[] {
   return [
     {
