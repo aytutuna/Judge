@@ -76,10 +76,11 @@ const SCHEMA = [
 const LEDGER_GUARDS = [
   "DROP TRIGGER IF EXISTS consent_ledger_no_update",
   "DROP TRIGGER IF EXISTS consent_ledger_no_delete",
+  "DROP TRIGGER IF EXISTS consent_ledger_guard_update",
   `CREATE TRIGGER IF NOT EXISTS consent_ledger_guard_update BEFORE UPDATE ON consent_ledger
     WHEN NOT (
       OLD.user_id NOT GLOB 'deleted:*' AND NEW.user_id GLOB 'deleted:*'
-      AND OLD.unlinked_at IS NULL AND NEW.unlinked_at IS NOT NULL
+      AND OLD.unlinked_at IS NULL AND NEW.unlinked_at >= strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-1 day')
       AND NEW.id IS OLD.id AND NEW.kind IS OLD.kind AND NEW.choice IS OLD.choice AND NEW.source IS OLD.source
       AND NEW.at IS OLD.at AND NEW.policy_version IS OLD.policy_version AND NEW.wording_key IS OLD.wording_key
       AND NEW.wording_text IS OLD.wording_text AND NEW.lang IS OLD.lang AND NEW.platform IS OLD.platform)
