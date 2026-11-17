@@ -21,9 +21,9 @@ import { AppShell } from "./shell/AppShell";
 
 export const TERMS_UPDATED = "2026-10-30";
 
-function Section({ title, children }: { title: string; children: ReactNode }) {
+function Section({ title, children, id }: { title: string; children: ReactNode; id?: string }) {
   return (
-    <section className={styles.section}>
+    <section className={styles.section} id={id}>
       <h2 className={styles.h2}>{noOrphan(title)}</h2>
       {children}
     </section>
@@ -161,7 +161,7 @@ function Privacy({ lang, contactEmail }: { lang: Lang; contactEmail: string | nu
   return (
     <>
       {sections.map(([title, body]) => (
-        <Section key={title} title={t(lang, title)}>
+        <Section key={title} title={t(lang, title)} id={title === "privacy.helpTitle" ? "help-improve" : undefined}>
           <p>{t(lang, body)}</p>
         </Section>
       ))}
@@ -170,6 +170,11 @@ function Privacy({ lang, contactEmail }: { lang: Lang; contactEmail: string | nu
           <ContactLine text={t(lang, "privacy.contact")} email={contactEmail} />
         </Section>
       ) : null}
+      <p>
+        <Link href="/delete-account" className={styles.link}>
+          {t(lang, "deletePage.title")}
+        </Link>
+      </p>
     </>
   );
 }

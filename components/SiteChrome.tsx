@@ -89,6 +89,9 @@ export function SiteFooter({ lang, toggle = false }: { lang: Lang; toggle?: bool
               <li>
                 <Link href="/terms">{t(lang, "footer.terms")}</Link>
               </li>
+              <li>
+                <Link href="/delete-account">{t(lang, "deletePage.title")}</Link>
+              </li>
               {CONTACT_EMAIL ? (
                 <li>
                   <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
