@@ -38,6 +38,12 @@ import styles from "./verdict/verdict.module.css";
  * The last one is the current ruling, so the page shows it (with how it
  * compares to the one before) under this verdict's link; the writer also
  * gets the earlier ones and "Add context" as the card's action. */
+/** The writer of the text the verdict is in reads it as written (side A of a
+ * case); anyone else starts in their browser's language and gets it translated. */
+export function startLang(result: ShownVerdict["result"], initialLang: Lang, fresh: boolean, ownParty: string | null): Lang {
+  return fresh || ownParty === "a" ? verdictLang(result) : initialLang;
+}
+
 export function SharedVerdict({
   id,
   result,
@@ -71,9 +77,7 @@ export function SharedVerdict({
   useEffect(() => clearFresh(id), [id]);
   const removedHeadingId = useId();
   const ownView = mine && !mine.removed && mine.result ? mine : null;
-  // The writer reads the verdict in the language it was written in; anyone
-  // else starts in their browser's language and gets it translated.
-  const wanted = picked ?? (ownView || fresh ? verdictLang(result) : initialLang);
+  const wanted = picked ?? startLang(result, initialLang, fresh, ownView?.case?.party ?? (ownView ? "a" : null));
   const lang = useLocaleLang(wanted);
   const label = t(lang, "translate.toggle");
   const appeal = useVerdictAppeal({

@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { AppealSection, appealArea, type AppealDraft, type AppealSubject } from "../components/case/AppealForm";
 import type { EvidenceController } from "../components/case/EvidencePicker";
 import { VerdictHistory } from "../components/case/VerdictHistory";
-import { SharedVerdict } from "../components/SharedVerdict";
+import { SharedVerdict, startLang } from "../components/SharedVerdict";
 import { useVerdictAppeal, withRoundNames } from "../components/VerdictAppeal";
 import { VerdictView } from "../components/VerdictView";
 import { t } from "../lib/i18n";
@@ -184,5 +184,19 @@ describe("Add context on a one-sided verdict", () => {
         { original: "Selin", replacement: "Person C" },
       ]),
     ).toEqual([...base, { original: "Selin", replacement: "Person C" }]);
+  });
+});
+
+describe("the language a share page opens in", () => {
+  const turkish = { ...first, lang: "tr" as const };
+
+  it("is the verdict's for its writer and for side A of a case", () => {
+    expect(startLang(turkish, "en", false, "a")).toBe("tr");
+    expect(startLang(turkish, "en", true, null)).toBe("tr");
+  });
+
+  it("stays the browser's for a case respondent and for other readers", () => {
+    expect(startLang(turkish, "en", false, "b")).toBe("en");
+    expect(startLang(turkish, "en", false, null)).toBe("en");
   });
 });
