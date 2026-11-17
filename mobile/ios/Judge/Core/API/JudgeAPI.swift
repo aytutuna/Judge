@@ -41,6 +41,9 @@ struct JudgeAPI: Sendable {
     /// Hears every 403 `age_blocked` / `age_unconfirmed` to the current
     /// session (AccountModel shows the gate it calls for).
     let ageGate: AsyncStream<String>.Continuation?
+    /// Asked on a 403 `agreement_required`; true once the person agreed, and
+    /// then the request is sent again.
+    let askAgreement: (@Sendable () async -> Bool)?
 
     init(
         baseURL: URL,
@@ -49,7 +52,8 @@ struct JudgeAPI: Sendable {
         session: URLSession = JudgeAPI.makeSession(),
         pollPolicy: PollPolicy = .standard,
         deviceID: String? = nil,
-        ageGate: AsyncStream<String>.Continuation? = nil
+        ageGate: AsyncStream<String>.Continuation? = nil,
+        askAgreement: (@Sendable () async -> Bool)? = nil
     ) {
         self.baseURL = baseURL
         self.userAgent = userAgent
@@ -58,6 +62,7 @@ struct JudgeAPI: Sendable {
         self.pollPolicy = pollPolicy
         self.deviceID = deviceID
         self.ageGate = ageGate
+        self.askAgreement = askAgreement
     }
 
     /// No cookies, no cache; the long verdict timeout as the session default
@@ -167,6 +172,17 @@ struct JudgeAPI: Sendable {
 
     /// `send`, keeping the response for callers that branch on the status.
     func exchange(_ request: URLRequest) async throws -> (data: Data, response: HTTPURLResponse) {
+        do {
+            return try await exchangeOnce(request)
+        } catch let failure as APIError where failure.code == Self.agreementCode && request.value(forHTTPHeaderField: "Authorization") != nil {
+            guard let askAgreement, await askAgreement() else { throw failure }
+            return try await exchangeOnce(request)
+        }
+    }
+
+    static let agreementCode = "agreement_required"
+
+    private func exchangeOnce(_ request: URLRequest) async throws -> (data: Data, response: HTTPURLResponse) {
         let received: (Data, URLResponse)
         do {
             received = try await session.data(for: request)

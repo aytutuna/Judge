@@ -95,6 +95,11 @@ struct RootView: View {
         .sheet(item: $webLink) { link in
             SafariView(url: link.url).ignoresSafeArea()
         }
+        .sheet(isPresented: Binding(get: { app.agreement.asking }, set: { if !$0 { app.agreement.cancel() } })) {
+            AgreementSheet()
+                .environment(app)
+                .presentationDragIndicator(.visible)
+        }
         // Outside the sheets, so they follow the app's language too.
         .environment(\.locale, lang.locale)
         .environment(\.layoutDirection, lang.isRTL ? .rightToLeft : .leftToRight)

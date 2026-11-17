@@ -56,6 +56,7 @@ final class AppModel {
     let home: HomeModel
     let account: AccountModel
     let consent: ConsentModel
+    let agreement: AgreementModel
     /// In-app purchases (off without a RevenueCat key).
     let purchases: PurchaseModel
     /// Usage events for POST /api/v1/events.
@@ -137,8 +138,11 @@ final class AppModel {
         gamify = defaults.object(forKey: Self.gamifyKey) as? Bool ?? true
         let deviceID = DeviceIdentity.deviceID(defaults)
         let (ageGates, ageGateSink) = AsyncStream.makeStream(of: String.self)
+        let agreement = AgreementModel()
+        self.agreement = agreement
         let judgeAPI = api ?? JudgeAPI(
-            baseURL: config.apiBaseURL, userAgent: config.userAgent, tokenStore: tokenStore, deviceID: deviceID, ageGate: ageGateSink
+            baseURL: config.apiBaseURL, userAgent: config.userAgent, tokenStore: tokenStore, deviceID: deviceID, ageGate: ageGateSink,
+            askAgreement: { await agreement.ask() }
         )
         self.api = judgeAPI
         analytics = Analytics(
@@ -151,6 +155,8 @@ final class AppModel {
         home = HomeModel(defaults: defaults)
         account = AccountModel(api: self.api, ageRange: DeclaredAgeRangeAsker())
         consent = ConsentModel(api: self.api)
+        let agreeAPI = self.api
+        agreement.send = { lang in try await agreeAPI.agreeToSensitive(lang: lang) }
         historyList = HistoryListModel(api: self.api, store: history, account: account)
         let gateway: (any PurchaseGateway)?
         if let purchaseGateway {
@@ -176,8 +182,9 @@ final class AppModel {
         }
         // Weak: the list holds the account, and a strong capture would keep
         // both alive after the app model is gone.
-        account.onSessionEnded = { [weak self, weak purchases, weak list, weak consent] byUser in
+        account.onSessionEnded = { [weak self, weak purchases, weak list, weak consent, weak agreement] byUser in
             consent?.reset()
+            agreement?.cancel()
             list?.reset()
             self?.historyUser = nil
             self?.dropAccountPages()
