@@ -198,7 +198,7 @@ async function removeCaseSideOnce(
  * rows stay as proof, for six years, under one random id shared by the
  * account's rows (its triggers allow exactly this change, see
  * lib/feedback/db), and are deleted after that (lib/cleanup). */
-function unlinkFeedbackStatements(userId: string, nowIso: string): InStatement[] {
+function unlinkFeedbackStatements(userId: string): InStatement[] {
   return [
     {
       sql: "UPDATE verdict_ratings SET user_id = 'deleted:' || lower(hex(randomblob(8))) WHERE user_id = ?",
@@ -206,8 +206,10 @@ function unlinkFeedbackStatements(userId: string, nowIso: string): InStatement[]
     },
     { sql: "DELETE FROM consent_state WHERE user_id = ?", args: [userId] },
     {
-      sql: "UPDATE consent_ledger SET user_id = ?, unlinked_at = ? WHERE user_id = ?",
-      args: [`deleted:${randomBytes(8).toString("hex")}`, nowIso, userId],
+      // The database clock, which the table's trigger checks; a replayed
+      // removal carries an old time that it would refuse.
+      sql: "UPDATE consent_ledger SET user_id = ?, unlinked_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now') WHERE user_id = ?",
+      args: [`deleted:${randomBytes(8).toString("hex")}`, userId],
     },
   ];
 }
@@ -276,7 +278,7 @@ export async function removeUserData(userId: string, now: Date = new Date(), opt
     { sql: "UPDATE case_seats SET user_id = NULL WHERE user_id = ?", args: [userId] },
     { sql: "UPDATE case_appeals SET user_id = NULL WHERE user_id = ?", args: [userId] },
     ratingWithdrawStatement(userId, nowIso),
-    ...unlinkFeedbackStatements(userId, nowIso),
+    ...unlinkFeedbackStatements(userId),
   ]);
   if (opts.log !== false) {
     await appendRemovalLog({

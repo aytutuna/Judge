@@ -16,6 +16,7 @@ const { removeUserData } = await import("../lib/originals/removal");
 const { ensureOriginalsTables } = await import("../lib/originals/db");
 const { appendRemovalLog, pruneRemovalLog } = await import("../lib/originals/removal-log");
 const { recordConsent, setRating } = await import("../lib/feedback/db");
+const { backdateUnlinked } = await import("./ledger-backdate");
 
 afterAll(() => {
   const g = globalThis as unknown as { __verdictLibsql?: { close(): void } };
@@ -62,7 +63,9 @@ describe("consent records after an account is deleted", () => {
     await ensureOriginalsTables();
     await recordConsent(id, { choice: "on", source: "card", wordingKey: "consent.cardBody", wordingText: "w", lang: "en", platform: "web" });
     await setRating(`v-${id}`, id, "up");
-    if (deletedDaysAgo !== null) await removeUserData(id, new Date(NOW.getTime() - deletedDaysAgo * DAY), { log: false });
+    if (deletedDaysAgo === null) return;
+    await removeUserData(id, new Date(), { log: false });
+    await backdateUnlinked(ago(deletedDaysAgo));
   }
 
   it("keeps them for six years after the deletion, then deletes them", async () => {
