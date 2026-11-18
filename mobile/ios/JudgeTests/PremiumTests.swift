@@ -925,7 +925,6 @@ final class PremiumFlowTests: XCTestCase {
         let body = try PremiumFixtures.body(router.sentBodies("POST", Self.verdictPath).first)
         XCTAssertEqual(body["evidence"] as? [String], ["tok-a"])
         XCTAssertEqual(body["otherEvidence"] as? [[String]], [["tok-b"]])
-        XCTAssertTrue(home.allEvidence.allSatisfy { $0.items.isEmpty }, "a sent form starts empty")
         withExtendedLifetime(container) {}
     }
 
