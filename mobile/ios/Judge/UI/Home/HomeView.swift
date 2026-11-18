@@ -3,8 +3,8 @@ import UIKit
 
 /// Home, laid out like a chat: the boxes fill the page, in order, each with
 /// its own "Add context" and picked images at its bottom edge, then the
-/// buttons to add a side, and "Clear" at the very bottom. Only the send row (the counter
-/// and the send button) is pinned. With one side the box is written in where
+/// buttons to add a side. Only the send row (the counter, "Clear" and the
+/// send button) is pinned. With one side the box is written in where
 /// it stands; with more the boxes only show their text. A tap lifts that
 /// side's box above the keyboard to write in; drag it any way and let go
 /// with some speed to throw it back, or tap the dim page.
@@ -221,9 +221,6 @@ struct HomeView: View {
             if home.offersExample {
                 exampleButton(lang, home: home)
                     .padding(.horizontal, 4)
-            }
-            if !home.isBlank {
-                clearButton(lang, home: home)
             }
         }
     }
@@ -548,6 +545,9 @@ struct HomeView: View {
             Spacer(minLength: 0)
             counter(lang, home: home)
                 .fixedSize()
+            if !home.isBlank {
+                clearButton(lang, home: home)
+            }
             sendButton(lang, home: home)
                 .padding(.trailing, -6)
         }
@@ -750,16 +750,26 @@ struct HomeView: View {
         .disabled(home.isBusy)
     }
 
+    /// Beside the send button: icon and word when they fit, the icon alone when they don't.
     private func clearButton(_ lang: AppLang, home: HomeModel) -> some View {
-        Button {
+        let title = L10n.appHomeClear(lang)
+        return Button {
             focused = nil
             withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) { home.judgeAnother() }
         } label: {
-            Text(L10n.appHomeClear(lang))
-                .frame(maxWidth: .infinity, minHeight: 44)
+            ViewThatFits(in: .horizontal) {
+                Label(title, systemImage: "trash")
+                    .lineLimit(1)
+                    .frame(minHeight: 40)
+                Image(systemName: "trash")
+                    .frame(width: 24, minHeight: 40)
+            }
         }
         .buttonStyle(DangerButtonStyle())
+        .frame(minHeight: 44)
+        .layoutPriority(-1)
         .disabled(home.isBusy)
+        .accessibilityLabel(title)
     }
 
     /// The joined text's length against the limit, as the single field had it.
