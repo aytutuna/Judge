@@ -747,6 +747,7 @@ struct SideMenu: View {
         switch notice {
         case .offline: return L10n.appHistoryOfflineRemove(lang)
         case .removeFailed(let n): return L10n.appHistoryRemoveFailed(lang, n: n)
+        case .rateLimited(let error): return ErrorText.message(error, lang: lang)
         case .openFailed: return L10n.errorFallback(lang)
         case .loadMoreFailed: return L10n.shellLoadFailed(lang)
         }

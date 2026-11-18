@@ -135,7 +135,7 @@ enum HistoryEntry: Identifiable {
 @Observable
 final class HistoryListModel {
     enum Notice: Equatable {
-        case offline, removeFailed(Int), openFailed, loadMoreFailed
+        case offline, removeFailed(Int), rateLimited(APIError), openFailed, loadMoreFailed
     }
 
     static let limit = 20
@@ -220,12 +220,9 @@ final class HistoryListModel {
     private func afterFirstPage(_ page: HistoryPage) {
         let pageLast = page.items.last
         var deeper = false
-        if loadedAt != nil, page.next != nil {
-            if loadedAll {
-                deeper = true
-            } else if let last, let pageLast {
-                deeper = HistoryOrder.before((pageLast.at, pageLast.key), (last.at, last.key))
-            }
+        // A state with no cursor left cannot continue from a page 1 that now has one.
+        if loadedAt != nil, page.next != nil, next != nil, let last, let pageLast {
+            deeper = HistoryOrder.before((pageLast.at, pageLast.key), (last.at, last.key))
         }
         loadedAt = now()
         guard !deeper else { return }
@@ -266,10 +263,11 @@ final class HistoryListModel {
         }
         var failedIDs: Set<String> = []
         var offline = false
+        var limited: APIError?
         var stale = false
         for entry in picked {
             guard case .account(let item) = entry else { continue }
-            guard let user, !offline, usesNetwork else {
+            guard let user, !offline, limited == nil, usesNetwork else {
                 failedIDs.insert(item.key)
                 continue
             }
@@ -281,6 +279,9 @@ final class HistoryListModel {
                 if error == .offline {
                     offline = true
                     failedIDs.insert(item.key)
+                } else if error.code == "rate_limited" {
+                    limited = error
+                    failedIDs.insert(item.key)
                 } else if let code = error.code, code == "not_found" || code == "removed" {
                     // Removed meanwhile, or not this account's any more: the list catches up.
                     stale = true
@@ -291,7 +292,13 @@ final class HistoryListModel {
                 failedIDs.insert(item.key)
             }
         }
-        notice = offline ? .offline : failedIDs.isEmpty ? nil : .removeFailed(failedIDs.count)
+        if offline {
+            notice = .offline
+        } else if let limited {
+            notice = .rateLimited(limited)
+        } else {
+            notice = failedIDs.isEmpty ? nil : .removeFailed(failedIDs.count)
+        }
         if stale { await refresh(user: user, enabled: enabled, force: true) }
         return failedIDs
     }
