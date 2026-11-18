@@ -194,9 +194,10 @@ flow, natively (app/page.tsx):
   every 4 s for up to 300 s; a 202 is polled until it is ready. The
   answer's entitlement shows at once and `/me` is refetched after every
   outcome.
-- **Screenshots** (when `features.evidence`): up to three from the photo
-  library, downscaled to 1600 px and re-encoded as JPEG on white (no EXIF),
-  except small PNG and GIF files; each uploads at once to
+- **Screenshots** (when `features.evidence`): up to three per side box from
+  the photo library, each added inside its own box (side A's tokens go in `evidence`, the others
+  in `otherEvidence`), downscaled to 1600 px and re-encoded as JPEG on white
+  (no EXIF), except small PNG and GIF files; each uploads at once to
   `POST /api/v1/evidence` (multipart, `image` parts). Only the tokens of
   images read successfully are sent, in order; images still being read
   hold the submit.

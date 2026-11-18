@@ -879,6 +879,13 @@ describe("premium verdict with evidence", () => {
     expect(four.status).toBe(400);
   });
 
+  it("the same image in two boxes is refused", async () => {
+    const res = await POST(request(premium({ evidence: ["v1.a"], otherEvidence: [["v1.a"]] })));
+    expect(res.status).toBe(400);
+    expect((await res.json()).code).toBe("evidence_invalid");
+    expect(m.reservePremiumVerdict).not.toHaveBeenCalled();
+  });
+
   it("images for a side the request does not have are refused", async () => {
     const res = await POST(request(premium({ otherEvidence: [["v1.1"], ["v1.2"]] })));
     expect(res.status).toBe(400);

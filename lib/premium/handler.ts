@@ -290,6 +290,10 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
     if (!evidenceEnabled()) {
       return fail("evidence_invalid", "Screenshot evidence is not available on this server right now.");
     }
+    // One image belongs to one side.
+    if (tokenLists.reduce((n, l) => n + new Set(l).size, 0) > new Set(tokenLists.flat()).size) {
+      return fail("evidence_invalid", "An image can only be added to one side.");
+    }
     try {
       const { verifyEvidenceTokens } = await import("@/lib/evidence");
       const verified = tokenLists.map((tokens) => verifyEvidenceTokens(tokens, { type: "user", userId }, MAX_EVIDENCE_PER_SIDE));
