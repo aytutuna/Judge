@@ -19,51 +19,101 @@
   min-height: 0;
 }
 
-/* Takes whatever height the form leaves, never less than the 110px the court
-   needs to draw (the middle scrolls first, then the page), and is the one thing that may be
-   wider than the column: the court scales with the screen. */
+/* A fixed 16:9 frame that scrolls with the page, so more sides push the page
+   down instead of squeezing the court. It folds away while a box is written
+   in, as the apps' does under the keyboard. */
 .stage {
-  flex: 1 1 0;
-  min-height: 110px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-rows: 1fr;
   margin-top: 16px;
+  transition:
+    grid-template-rows var(--dur-1) ease-in-out,
+    margin-top var(--dur-1) ease-in-out;
 }
-
+.stage[data-writing] {
+  grid-template-rows: 0fr;
+  margin-top: 0;
+}
 .court {
-  flex: 1;
   min-height: 0;
-  width: 92vw;
+  overflow: hidden;
 }
 
-/* Scrolls when short of room, and keeps what it holds against the composer.
-   The side margins leave room for the cards' edges inside the scroll box. */
+/* The boxes stack in the page and scroll with it. */
 .mid {
-  flex: 0 1 auto;
-  min-height: 56px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-inline: -8px;
-  padding: 16px 8px 12px;
-  overflow-y: auto;
+  padding: 16px 0 12px;
 }
 
 /* No court: the form rests in the middle of the screen, typed in or not. */
-:global(html[data-game="off"]) .form {
-  justify-content: center;
+:global(html[data-game="off"]) .form .mid {
+  margin-block: auto;
 }
 :global(html[data-game="off"]) .form .stage {
   display: none;
 }
 
+/* The counter and the send row stay at the bottom of the screen. --vv-bottom is
+   how much of it the on-screen keyboard covers. */
 .dock {
+  position: sticky;
+  bottom: var(--vv-bottom, 0px);
+  z-index: 5;
   flex: none;
+  margin-top: auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 4px;
+  padding-top: 8px;
   padding-bottom: max(16px, env(safe-area-inset-bottom));
+  background: var(--ivory);
+  container-type: inline-size;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* Beside the send button: icon and word when they fit, the icon alone when they don't. */
+.clear {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid color-mix(in srgb, var(--danger) 60%, transparent);
+  border-radius: var(--radius-field);
+  background: color-mix(in srgb, var(--danger) 10%, transparent);
+  color: var(--danger);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.clear:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.clear svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+.clearLabel {
+  white-space: nowrap;
+}
+@container (max-width: 340px) {
+  .clear {
+    padding: 0 8px;
+  }
+  .clearLabel {
+    display: none;
+  }
 }
 
 .quiet {
@@ -149,7 +199,8 @@
   --side-tint: var(--party-d-tint);
   --side-strong: var(--party-d-strong);
 }
-.card:focus-within {
+.card:focus-within,
+.card[data-flash] {
   border-color: color-mix(in srgb, var(--side-strong) 95%, transparent);
   box-shadow: 0 0 12px color-mix(in srgb, var(--side-strong) 60%, transparent);
 }
@@ -240,10 +291,6 @@
   resize: none;
   overflow-y: auto;
 }
-.card[data-docked] .editor {
-  min-height: 45px;
-  max-height: min(158px, 22dvh);
-}
 .editor::placeholder {
   color: var(--placeholder);
 }
@@ -251,14 +298,8 @@
   outline: none;
 }
 
-.row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 44px;
-}
-
 .context {
+  align-self: flex-start;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -286,13 +327,8 @@
   flex-direction: column;
   gap: 8px;
 }
-.card[data-docked] .files {
-  max-height: 24dvh;
-  overflow-y: auto;
-}
 
 .count {
-  margin-inline-start: auto;
   color: var(--muted);
   font-size: 12px;
   font-variant-numeric: tabular-nums;
@@ -338,10 +374,10 @@
 .send:not(:disabled):active > span {
   transform: scale(0.94);
 }
-.send:disabled {
+.send[aria-disabled] {
   cursor: default;
 }
-.send:disabled > span {
+.send[aria-disabled] > span {
   opacity: 0.35;
 }
 .send[data-busy] > span {
@@ -379,6 +415,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .stage,
+  .card {
+    transition: none;
+  }
   .spinner {
     animation-duration: 2.4s;
   }

@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type FocusEvent, type ReactNode } from "react";
 import { EvidenceAdd, EvidenceNotes, EvidenceRows, type EvidenceController } from "@/components/case/EvidencePicker";
+import { useReducedMotion } from "@/components/scene/useReducedMotion";
+import { flashSteps, runFlash, shortBoxes } from "@/lib/flash";
 import { t, type Lang } from "@/lib/i18n";
 import { langTag } from "@/lib/langs";
 import { MAX_ARGUMENT, type SideInput } from "@/lib/sides";
@@ -32,12 +34,12 @@ type CardProps = {
   side: Side;
   /** The name header; one lone side goes without it. */
   head: boolean;
-  /** The composer at the bottom, as opposed to a card in the middle. */
-  docked?: boolean;
+  /** Lit as if written in: a send went out with this box too short. */
+  flash?: boolean;
   children?: ReactNode;
 };
 
-function SideCard({ side, head, docked = false, children }: CardProps) {
+function SideCard({ side, head, flash = false, children }: CardProps) {
   const ref = useRef<HTMLTextAreaElement>(null);
 
   // Grows with the text; the CSS min and max heights bound it.
@@ -49,7 +51,7 @@ function SideCard({ side, head, docked = false, children }: CardProps) {
   }, [side.value]);
 
   return (
-    <div className={styles.card} data-side={side.letter} data-docked={docked ? "" : undefined} role="group" aria-label={head ? side.label : undefined}>
+    <div className={styles.card} data-side={side.letter} data-flash={flash ? "" : undefined} role="group" aria-label={head ? side.label : undefined}>
       {head ? (
         <div className={styles.cardHead}>
           <span className={styles.avatar} aria-hidden>
@@ -156,25 +158,43 @@ export function HomeForm(p: HomeFormProps) {
   const { lang, evidence } = p;
   const more = p.more ?? NO_MORE;
   const tag = langTag(lang);
+  const reduced = useReducedMotion();
+
+  // The boxes that light up when a send is tapped with too little written.
+  const [flashing, setFlashing] = useState<readonly number[]>([]);
+  const [short, setShort] = useState<{ boxes: number[] } | null>(null);
+  useEffect(() => {
+    if (!short) return;
+    return runFlash(flashSteps(reduced), (lit) => setFlashing(lit ? short.boxes : []));
+  }, [short, reduced]);
+  const flashShort = () => {
+    if (p.holding) return;
+    const texts = [p.mine, ...(p.theirsOpen ? [p.theirs, ...more.map((s) => s.text)] : [])];
+    const boxes = shortBoxes(texts);
+    if (boxes.length) setShort({ boxes });
+  };
   const submit = () => {
     if (p.canSubmit) p.onSubmit();
+    else flashShort();
+  };
+
+  // The court gives way while a box is being written in, as the apps' does under the keyboard.
+  const [writing, setWriting] = useState(false);
+  const isField = (el: EventTarget | null) => el instanceof HTMLTextAreaElement || el instanceof HTMLInputElement;
+  const onFocus = (e: FocusEvent) => {
+    if (isField(e.target)) setWriting(true);
+  };
+  const onBlur = (e: FocusEvent) => {
+    if (!isField(e.relatedTarget)) setWriting(false);
   };
 
   // Opening or removing their side swaps the composer, so focus moves to the new one.
-  const mid = useRef<HTMLDivElement>(null);
   const focusNext = useRef<string | null>(null);
   useEffect(() => {
     if (!focusNext.current) return;
     document.getElementById(focusNext.current)?.focus();
     focusNext.current = null;
   }, [p.theirsOpen, more.length]);
-
-  // Short of room the middle rests at its top; keep the part by the composer in view.
-  const pictured = evidence?.map((e) => `${e.items.length}${e.failure ? "f" : ""}${e.overLimit ? "o" : ""}`).join();
-  useLayoutEffect(() => {
-    const el = mid.current;
-    if (el) el.scrollTop = el.scrollHeight;
-  }, [p.error, p.theirsOpen, more.length, pictured]);
 
   /** The images of box `i` (sides A to D), and the notes when picking went wrong. */
   const files = (i: number) => {
@@ -189,8 +209,8 @@ export function HomeForm(p: HomeFormProps) {
   };
 
   const addContext = (i: number) =>
-    evidence ? (
-      <EvidenceAdd disabled={evidence[i].full} className={styles.context} onAdd={evidence[i].add} onSignIn={p.onAddContextSignIn}>
+    evidence && !evidence[i].full ? (
+      <EvidenceAdd disabled={false} className={styles.context} onAdd={evidence[i].add} onSignIn={p.onAddContextSignIn}>
         <svg viewBox="0 0 24 24" aria-hidden>
           <path
             d="M21 11.5 12.5 20a5.5 5.5 0 0 1-7.8-7.8l8.5-8.5a3.7 3.7 0 0 1 5.2 5.2l-8.5 8.5a1.8 1.8 0 0 1-2.6-2.6L15 7"
@@ -205,11 +225,11 @@ export function HomeForm(p: HomeFormProps) {
       </EvidenceAdd>
     ) : null;
 
-  /** The part of a box under its text: its images and its Add context button. */
+  /** The part of a box under its text: Add context, then the images picked for it. */
   const context = (i: number) => (
     <>
+      {addContext(i)}
       {files(i)}
-      {evidence ? <div className={styles.row}>{addContext(i)}</div> : null}
     </>
   );
 
@@ -288,12 +308,11 @@ export function HomeForm(p: HomeFormProps) {
           },
         }
       : null;
-  const composer = !p.theirsOpen ? mine : (sideD ?? sideC ?? theirs);
-  const composerIndex = !p.theirsOpen ? 0 : sideD ? 3 : sideC ? 2 : 1;
-  const lastText = (more.length ? more[more.length - 1].text : p.theirs).trim();
+  const cards = [mine, ...(p.theirsOpen ? [theirs, ...(sideC ? [sideC] : []), ...(sideD ? [sideD] : [])] : [])];
   const othersEmpty = !p.theirs.trim() && more.every((s) => !s.text.trim());
-  // Another side once the last one has text, or links for everyone else while none has.
-  const room = p.theirsOpen && more.length < 2 && (lastText !== "" || (p.onInvite !== undefined && othersEmpty));
+  // Another side while there are fewer than four, and links for everyone else while none has text.
+  const canAddSide = !p.theirsOpen || more.length < 2;
+  const offerLink = p.onInvite !== undefined && othersEmpty;
 
   return (
     <form
@@ -302,28 +321,20 @@ export function HomeForm(p: HomeFormProps) {
         e.preventDefault();
         submit();
       }}
+      onFocus={onFocus}
+      onBlur={onBlur}
     >
       <fieldset className={styles.form} disabled={p.holding} data-blank={p.blank ? "" : undefined}>
-        <div className={styles.stage}>
+        <div className={styles.stage} data-writing={writing ? "" : undefined}>
           <HomeCourt className={styles.court} busy={p.holding} venue={p.venue} />
         </div>
 
-        <div className={styles.mid} ref={mid}>
-          {p.theirsOpen ? (
-            <SideCard side={mine} head>
-              {context(0)}
+        <div className={styles.mid}>
+          {cards.map((side, i) => (
+            <SideCard key={side.id} side={side} head={p.theirsOpen} flash={flashing.includes(i)}>
+              {context(i)}
             </SideCard>
-          ) : null}
-          {p.theirsOpen && sideC ? (
-            <SideCard side={theirs} head>
-              {context(1)}
-            </SideCard>
-          ) : null}
-          {p.theirsOpen && sideD ? (
-            <SideCard side={sideC as Side} head>
-              {context(2)}
-            </SideCard>
-          ) : null}
+          ))}
 
           {p.error ? (
             <p className={styles.error} id="home-error" role="alert">
@@ -331,8 +342,8 @@ export function HomeForm(p: HomeFormProps) {
             </p>
           ) : null}
 
-          <div className={styles.quiet}>
-            {p.blank ? (
+          {p.blank ? (
+            <div className={styles.quiet}>
               <button type="button" onClick={p.onExample}>
                 <svg viewBox="0 0 20 20" aria-hidden>
                   <path
@@ -346,34 +357,32 @@ export function HomeForm(p: HomeFormProps) {
                 </svg>
                 {t(lang, "home.example")}
               </button>
-            ) : (
-              <button type="button" onClick={p.onClear}>
-                {t(lang, "home.clear")}
-              </button>
-            )}
-          </div>
+            </div>
+          ) : null}
 
-          {p.theirsOpen && !room ? null : (
+          {canAddSide || offerLink ? (
             <div className={styles.chips}>
-              <button
-                type="button"
-                className={styles.chip}
-                onClick={() => {
-                  if (p.theirsOpen) {
-                    focusNext.current = more.length ? "side-d" : "side-c";
-                    p.onAddMore?.();
-                  } else {
-                    focusNext.current = "other-side";
-                    p.onAddTheirs();
-                  }
-                }}
-              >
-                <svg viewBox="0 0 16 16" aria-hidden>
-                  <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-                </svg>
-                {t(lang, p.theirsOpen ? "home.addSide" : "home.addTheirSide")}
-              </button>
-              {p.onInvite && othersEmpty ? (
+              {canAddSide ? (
+                <button
+                  type="button"
+                  className={styles.chip}
+                  onClick={() => {
+                    if (p.theirsOpen) {
+                      focusNext.current = more.length ? "side-d" : "side-c";
+                      p.onAddMore?.();
+                    } else {
+                      focusNext.current = "other-side";
+                      p.onAddTheirs();
+                    }
+                  }}
+                >
+                  <svg viewBox="0 0 16 16" aria-hidden>
+                    <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                  </svg>
+                  {t(lang, p.theirsOpen ? "home.addSide" : "home.addTheirSide")}
+                </button>
+              ) : null}
+              {offerLink ? (
                 <button type="button" className={styles.chip} disabled={!p.canInvite} onClick={p.onInvite}>
                   <svg viewBox="0 0 20 20" aria-hidden>
                     <path
@@ -389,43 +398,54 @@ export function HomeForm(p: HomeFormProps) {
                 </button>
               ) : null}
             </div>
-          )}
+          ) : null}
         </div>
 
         <div className={styles.dock}>
-          <SideCard key={composer.id} side={composer} head={p.theirsOpen} docked>
-            {files(composerIndex)}
-            <div className={styles.row}>
-              {addContext(composerIndex)}
-              <span className={styles.count} data-warn={p.length > WARN_AT ? "" : undefined} aria-hidden>
-                {p.length.toLocaleString(tag)} / {MAX_ARGUMENT.toLocaleString(tag)}
-              </span>
-              <button
-                type="submit"
-                className={styles.send}
-                data-busy={p.holding ? "" : undefined}
-                disabled={!p.canSubmit}
-                aria-label={t(lang, "getVerdict")}
-              >
-                <span>
-                  {p.holding ? (
-                    <span className={styles.spinner} aria-hidden />
-                  ) : (
-                    <svg viewBox="0 0 20 20" aria-hidden>
-                      <path
-                        d="M10 16V4M4.5 9.5 10 4l5.5 5.5"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  )}
-                </span>
+          <div className={styles.bar}>
+            <span className={styles.count} data-warn={p.length > WARN_AT ? "" : undefined} aria-hidden>
+              {p.length.toLocaleString(tag)} / {MAX_ARGUMENT.toLocaleString(tag)}
+            </span>
+            {p.blank ? null : (
+              <button type="button" className={styles.clear} aria-label={t(lang, "home.clear")} onClick={p.onClear}>
+                <svg viewBox="0 0 20 20" aria-hidden>
+                  <path
+                    d="M4 6h12M8 6V4h4v2M6 6l.7 10h6.6L14 6M8.5 9v4M11.5 9v4"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <span className={styles.clearLabel}>{t(lang, "home.clear")}</span>
               </button>
-            </div>
-          </SideCard>
+            )}
+            <button
+              type="submit"
+              className={styles.send}
+              data-busy={p.holding ? "" : undefined}
+              aria-disabled={p.canSubmit || p.holding ? undefined : true}
+              aria-label={t(lang, "getVerdict")}
+            >
+              <span>
+                {p.holding ? (
+                  <span className={styles.spinner} aria-hidden />
+                ) : (
+                  <svg viewBox="0 0 20 20" aria-hidden>
+                    <path
+                      d="M10 16V4M4.5 9.5 10 4l5.5 5.5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                )}
+              </span>
+            </button>
+          </div>
           {p.status ? <p className={styles.status}>{p.status}</p> : null}
         </div>
       </fieldset>

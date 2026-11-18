@@ -58,7 +58,7 @@ describe("HomeForm", () => {
     expect(html).toContain(t("en", "home.addTheirSide"));
     expect(html.match(/<textarea/g)).toHaveLength(1);
     expect(html).toContain(esc(t("en", "home.yourPlaceholder")));
-    expect(html).toMatch(new RegExp(`<button type="submit"[^>]*disabled[^>]*aria-label="${t("en", "getVerdict")}"`));
+    expect(html).toMatch(new RegExp(`<button type="submit"[^>]*aria-disabled="true"[^>]*aria-label="${t("en", "getVerdict")}"`));
     expect(html).toContain("0 / 6,000");
     expect(html).not.toContain(t("en", "home.clear"));
     expect(html).not.toContain(t("en", "home.addContext"));
@@ -91,6 +91,23 @@ describe("HomeForm", () => {
     expect(html).not.toMatch(/<button type="submit"[^>]*disabled/);
   });
 
+  it("Clear sits in the send row, between the counter and Send, and only once something is typed", () => {
+    const typed = form({ mine: "A long enough argument about the dishes.", blank: false });
+    const counter = typed.indexOf("0 / 6,000");
+    const clear = typed.indexOf(`aria-label="${t("en", "home.clear")}"`);
+    const send = typed.indexOf('type="submit"');
+    expect(counter).toBeGreaterThan(-1);
+    expect(clear).toBeGreaterThan(counter);
+    expect(send).toBeGreaterThan(clear);
+    expect(form()).not.toContain(`aria-label="${t("en", "home.clear")}"`);
+  });
+
+  it("every box comes before the counter and the send row", () => {
+    const html = form({ theirsOpen: true, blank: false, mine: "Mine", theirs: "Theirs" });
+    expect(html.indexOf('id="argument"')).toBeLessThan(html.indexOf("/ 6,000"));
+    expect(html.indexOf('id="other-side"')).toBeLessThan(html.indexOf("/ 6,000"));
+  });
+
   it("their side open: yours moves up as a card, theirs takes the composer and can be removed", () => {
     const html = form({ theirsOpen: true, blank: false, mine: "Mine", theirs: "Theirs" });
     expect(html.match(/<textarea/g)).toHaveLength(2);
@@ -118,6 +135,13 @@ describe("HomeForm", () => {
     expect(html.match(/aria-label="Remove image 1"/g)).toHaveLength(1);
     expect(html).toContain(esc(t("en", "evidence.limit")));
     expect(html).not.toContain(t("en", "evidence.hint", { n: 3 }));
+  });
+
+  it("context: Add context comes before the images of its box, and goes once the box is full", () => {
+    const item = { id: "a", n: 1, name: "chat.png", thumb: null, status: "ok" as const, token: "t", preview: null };
+    const html = form({ evidence: [{ ...evidence, items: [item] }, evidence, evidence, evidence] });
+    expect(html.indexOf(t("en", "home.addContext"))).toBeLessThan(html.indexOf('aria-label="Remove image 1"'));
+    expect(form({ evidence: [{ ...evidence, items: [item], full: true }] })).not.toContain(t("en", "home.addContext"));
   });
 
   it("context: one box alone holds the control and the rows of side A", () => {

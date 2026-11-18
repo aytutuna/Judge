@@ -57,7 +57,7 @@ describe("EvidencePicker", () => {
     expect(html).not.toContain("multiple");
   });
 
-  it("per-image status, labelled remove buttons and the uploader-only preview", () => {
+  it("per-image status and labelled remove buttons, with no text preview", () => {
     const html = picker([
       item({ id: "a", n: 1, status: "ok", token: "v1.x.y", preview: "21:02 ME: Did you pay?", thumb: "blob:1" }),
       item({ id: "b", n: 2, status: "reading" }),
@@ -69,8 +69,8 @@ describe("EvidencePicker", () => {
     expect(html).toContain(t("en", "evidence.ok"));
     expect(html).toContain(t("en", "evidence.reading"));
     expect(html).toContain(t("en", "evidence.status.refused"));
-    expect(html).toContain(t("en", "evidence.preview"));
-    expect(html).toContain("21:02 ME: Did you pay?");
+    expect(html).not.toContain(t("en", "evidence.preview"));
+    expect(html).not.toContain("21:02 ME: Did you pay?");
     // Full: the add button is disabled.
     expect(html).toMatch(/<button type="button" class="[^"]*" disabled="">/);
     // A polite live region reads the statuses.

@@ -264,13 +264,6 @@ export function EvidenceRows({
                     <path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
                   </svg>
                 </button>
-                {it.status === "ok" && it.preview ? (
-                  <details className={styles.evPreview}>
-                    <summary>{t(lang, "evidence.preview")}</summary>
-                    <p>{t(lang, "evidence.previewNote")}</p>
-                    <pre>{it.preview}</pre>
-                  </details>
-                ) : null}
               </li>
             );
           })}

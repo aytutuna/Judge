@@ -146,6 +146,7 @@ describe("court story", () => {
 describe("home form with more sides", () => {
   const props = (over: Partial<HomeFormProps> = {}): HomeFormProps => ({
     lang: "en",
+    venue: "court",
     mine: text,
     onMine: noop,
     mineName: "",
@@ -172,18 +173,18 @@ describe("home form with more sides", () => {
   const form = (over: Partial<HomeFormProps> = {}) => html(<HomeForm {...props(over)} />);
   const more = (n: number) => Array.from({ length: n }, () => ({ text, name: "" }));
 
-  it("offers another side once the second has text, up to four", () => {
+  it("offers another side until there are four, empty or not", () => {
     expect(form()).toContain(t("en", "home.addSide"));
-    expect(form({ theirs: "" })).not.toContain(t("en", "home.addSide"));
+    expect(form({ theirs: "" })).toContain(t("en", "home.addSide"));
     expect(form({ more: more(1) })).toContain(t("en", "home.addSide"));
     expect(form({ more: more(2) })).not.toContain(t("en", "home.addSide"));
   });
 
-  it("shows a card per side, the last one as the composer", () => {
+  it("shows a card per side", () => {
     const out = form({ more: more(2) });
     expect(out.match(/<textarea/g)).toHaveLength(4);
     expect(out).toContain('data-side="C"');
-    expect(out).toContain('data-side="D" data-docked');
+    expect(out).toContain('data-side="D"');
   });
 
   it("only the last side can be removed", () => {
@@ -191,10 +192,10 @@ describe("home form with more sides", () => {
     expect(form({ more: more(2) }).match(/aria-label="Remove their side"/g)).toHaveLength(1);
   });
 
-  it("two sides look as before: no add row until their side has text", () => {
+  it("keeps the add side button while their side is open and empty", () => {
     const out = form({ theirs: "", theirsOpen: true });
     expect(out).not.toContain(t("en", "home.addTheirSide"));
-    expect(out).not.toContain(t("en", "home.addSide"));
+    expect(out).toContain(t("en", "home.addSide"));
   });
 
   it("offers links for every other side while none of them has text", () => {

@@ -619,12 +619,19 @@ export default function Home() {
     const vv = window.visualViewport;
     if (phase !== "form" || !vv) return;
     const root = document.documentElement;
-    const size = () => root.style.setProperty("--vvh", `${vv.height}px`);
+    const size = () => {
+      root.style.setProperty("--vvh", `${vv.height}px`);
+      // What the keyboard covers, so the send row can sit above it.
+      root.style.setProperty("--vv-bottom", `${Math.max(0, window.innerHeight - vv.height - vv.offsetTop)}px`);
+    };
     size();
     vv.addEventListener("resize", size);
+    vv.addEventListener("scroll", size);
     return () => {
       vv.removeEventListener("resize", size);
+      vv.removeEventListener("scroll", size);
       root.style.removeProperty("--vvh");
+      root.style.removeProperty("--vv-bottom");
     };
   }, [phase]);
 

@@ -8,13 +8,3 @@
   image-rendering: pixelated;
   -webkit-tap-highlight-color: transparent;
 }
-
-.home {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  container-type: size;
-}
-.fit {
-  width: min(100cqw, 177.78cqh);
-}
