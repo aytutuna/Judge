@@ -23,6 +23,8 @@ describe("home venue", () => {
 
   it("picks another place after a send, and keeps that one", () => {
     const first = homeVenue();
+    // The pick avoids the last place this device showed.
+    localStorage.setItem("judge-venue-last", first);
     const next = repickHomeVenue();
     expect(next).not.toBe(first);
     expect(homeVenue()).toBe(next);
