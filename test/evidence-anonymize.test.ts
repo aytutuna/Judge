@@ -144,6 +144,8 @@ describe("pure helpers", () => {
     expect(tr).toContain(`"bence X" -> "Party B'ye göre X"`);
     expect(tr).toContain(`"annemizin" -> "Party B ile Party A'nın annesinin"`);
     expect(sys).toContain('The speaker "ME" is the narrator: write "Party B" instead.');
+    const self = submissionSystem({ narrator: "Party C", selfLabel: "Party A", twoSided: true });
+    expect(self).toContain('The speaker "ME" is not the narrator but "Party A": write "Party A" instead.');
     expect(sys).toContain("labels already in use: Party A, Party B, Person C");
     expect(sys).toContain('{"original": "I", "replacement": "Party B"}');
   });

@@ -107,6 +107,7 @@ export async function anonymizeSides(input: {
     input.sides.map((side, i) =>
       anonymizeSubmission({
         narrator: labels[i] as PartyLabel,
+        selfLabel: "Party A",
         text: i === 0 ? withClarifications(side.text, input.clarifications, input.lang) : side.text,
         evidence: (i === 0 ? input.evidence : input.otherEvidence?.[i - 1]) ?? [],
         lang: input.lang,

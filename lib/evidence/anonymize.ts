@@ -94,7 +94,7 @@ function manySidesRules(n: Narrator, input: Pick<SubmissionInput, "sides">): { o
 
 /** The system prompt for one submission. Exported for tests. */
 export function submissionSystem(
-  input: Pick<SubmissionInput, "narrator" | "twoSided" | "roster"> & Partial<Pick<SubmissionInput, "text" | "lang" | "sides">>,
+  input: Pick<SubmissionInput, "narrator" | "twoSided" | "roster"> & Partial<Pick<SubmissionInput, "text" | "lang" | "sides" | "selfLabel">>,
 ): string {
   const n = input.narrator;
   const many = sidesOf(input) > 2 ? manySidesRules(n, input) : null;
@@ -121,7 +121,7 @@ In the ACCOUNT:
 
 In each EVIDENCE transcript:
 - Keep the structure exactly: the first line in square brackets, one line per message as "time speaker: message", then the "Other text:" and "Description:" lines if present.
-- The speaker "${SELF_SPEAKER}" is the narrator: write "${n}" instead.
+- The speaker "${SELF_SPEAKER}" is ${input.selfLabel && input.selfLabel !== n ? `not the narrator but "${input.selfLabel}"` : "the narrator"}: write "${input.selfLabel ?? n}" instead.
 - Replace names in the bracketed title, in speaker labels and inside messages with the labels. A chat title or speaker is the person behind that name: use the label that person has in the account.
 - Do NOT rewrite messages into the third person: they are quoted words. Keep every message verbatim except for names.
 
@@ -496,7 +496,7 @@ async function attempt(
   const turkish = isTurkishText(input.text);
   const rawCombined = [input.text, ...input.evidence.map((e) => e.transcript)].join("\n\n");
   let text = data.text;
-  let transcripts = input.evidence.map((_, i) => replaceSelfSpeaker(byIndex.get(i) ?? "", narrator));
+  let transcripts = input.evidence.map((_, i) => replaceSelfSpeaker(byIndex.get(i) ?? "", input.selfLabel ?? narrator));
   const listed = data.replacements.filter(
     (r) => typeof r?.original === "string" && typeof r?.replacement === "string",
   );

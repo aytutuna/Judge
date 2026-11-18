@@ -21,6 +21,8 @@ export type SubmissionInput = {
   /** The raw account or appeal text (clarification answers already folded in). */
   text: string;
   evidence: VerifiedEvidence[];
+  /** Who the screenshots' own "ME" speaker is; the narrator when absent. */
+  selfLabel?: PartyLabel;
   lang: Lang;
   /** Two-sided: the person the narrator argues with is the other party label. */
   twoSided?: boolean;

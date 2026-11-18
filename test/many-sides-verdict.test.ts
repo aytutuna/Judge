@@ -304,6 +304,7 @@ describe("the async path with typed sides", () => {
     expect(prepared.ok && prepared.prepared.evidenceCounts).toEqual([1, 0, 2]);
     const calls = m.anonymizeSubmission.mock.calls.map(([i]) => ({ n: i.narrator, e: i.evidence.length }));
     expect(calls.map((c) => c.e)).toEqual([1, 0, 2]);
+    expect(m.anonymizeSubmission.mock.calls.map(([i]) => (i as { selfLabel?: string }).selfLabel)).toEqual(["Party A", "Party A", "Party A"]);
     expect(vi.mocked(evidenceBlock)).toHaveBeenLastCalledWith([
       { party: "a", idPrefix: "A", items: [chat("one")] },
       { party: "c", idPrefix: "C", items: [chat("three"), chat("four")] },
