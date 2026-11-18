@@ -403,7 +403,7 @@ struct HomeView: View {
                     .gesture(throwDrag)
             }
         }
-        .neonEdge(colors.strong, focused: lifted || (writes && focused == focus) || flashing.contains(side), radius: Radius.block)
+        .neonEdge(flashing.contains(side) ? Brand.danger : colors.strong, focused: lifted || (writes && focused == focus) || flashing.contains(side), radius: Radius.block)
         .accessibilityElement(children: .contain)
         .accessibilityLabel(title)
         .accessibilityIdentifier(lifted ? "side.lifted" : "side.card")
