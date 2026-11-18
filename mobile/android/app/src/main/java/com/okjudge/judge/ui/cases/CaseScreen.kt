@@ -138,6 +138,7 @@ object CaseTags {
     const val APPEAL_TEXT = "case.appealText"
     const val APPEAL_SUBMIT = "case.appealSubmit"
     const val APPEAL_NOTE = "case.appealNote"
+    const val APPEAL_COUNTER = "case.appealCounter"
     const val APPEAL_SIGN_IN = "case.appealSignIn"
     const val APPEAL_PRICING = "case.appealPricing"
     const val WRITE_TEXT = "case.writeText"
@@ -897,8 +898,7 @@ fun AppealPanel(
                         .heightIn(min = 200.dp)
                         .clip(JudgeShapes.field)
                         .background(Palette.ivory)
-                        .border(1.dp, Palette.line2, JudgeShapes.field)
-                        .padding(14.dp),
+                        .border(1.dp, Palette.line2, JudgeShapes.field),
                 ) {
                     BasicTextField(
                         value = draft.text,
@@ -909,7 +909,8 @@ fun AppealPanel(
                         keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .heightIn(min = 170.dp)
+                            .heightIn(min = 154.dp)
+                            .padding(start = 14.dp, top = 14.dp, end = 14.dp, bottom = 32.dp)
                             .semantics { contentDescription = s.appAppealPlaceholder }
                             .testTag(CaseTags.APPEAL_TEXT),
                         decorationBox = { inner ->
@@ -917,13 +918,12 @@ fun AppealPanel(
                             inner()
                         },
                     )
+                    Text(
+                        "${draft.text.length} / ${CaseLogic.MAX_APPEAL_CHARS}",
+                        style = JudgeType.footnote,
+                        modifier = Modifier.align(Alignment.BottomEnd).padding(end = 14.dp, bottom = 8.dp).testTag(CaseTags.APPEAL_COUNTER),
+                    )
                 }
-                Text(
-                    "${draft.text.length} / ${CaseLogic.MAX_APPEAL_CHARS}",
-                    style = JudgeType.footnote,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.fillMaxWidth(),
-                )
                 if (evidenceOn) {
                     val pick = rememberEvidencePicker(draft.evidence.room, actions.onAddEvidence)
                     EvidencePicker(draft.evidence, disabled = draft.sending, onAdd = pick, onRemove = actions.onRemoveEvidence)
