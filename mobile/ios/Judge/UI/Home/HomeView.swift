@@ -229,7 +229,7 @@ struct HomeView: View {
     }
 
     /// "Add context" at the bottom of a box, and the images picked for that side under it.
-    private func contextBlock(_ lang: AppLang, home: HomeModel, side: Party) -> some View {
+    private func contextBlock(_ lang: AppLang, home: HomeModel, side: Party, capped: Bool = false) -> some View {
         let evidence = home.pool(for: side)
         return VStack(alignment: .leading, spacing: 10) {
             if !evidence.full {
@@ -242,11 +242,35 @@ struct HomeView: View {
                 }
                 .buttonStyle(.plain)
             }
-            if app.evidenceOn, !evidence.items.isEmpty || evidence.overLimit || evidence.failure != nil {
-                EvidenceRows(evidence: evidence, lang: lang, disabled: home.isBusy)
-                EvidenceNotes(evidence: evidence, lang: lang)
+            if showsRows(evidence) {
+                if capped {
+                    // The lifted box leaves room for this much; more scrolls.
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 10) {
+                            EvidenceRows(evidence: evidence, lang: lang, disabled: home.isBusy)
+                            EvidenceNotes(evidence: evidence, lang: lang)
+                        }
+                    }
+                    .frame(maxHeight: Self.liftedRowsMax)
+                } else {
+                    EvidenceRows(evidence: evidence, lang: lang, disabled: home.isBusy)
+                    EvidenceNotes(evidence: evidence, lang: lang)
+                }
             }
         }
+    }
+
+    private static let liftedRowsMax: CGFloat = 100
+    private static let addContextRow: CGFloat = 54
+
+    private func showsRows(_ evidence: EvidenceModel) -> Bool {
+        app.evidenceOn && (!evidence.items.isEmpty || evidence.overLimit || evidence.failure != nil)
+    }
+
+    /// What the lifted box's context block takes out of the editor's room.
+    private func contextHeight(home: HomeModel, side: Party) -> CGFloat {
+        guard app.evidenceOffered else { return 0 }
+        return Self.addContextRow + (showsRows(home.pool(for: side)) ? Self.liftedRowsMax : 0)
     }
 
     /// The send row, and under it what is left to spend.
@@ -356,7 +380,7 @@ struct HomeView: View {
                     placeholder: placeholder,
                     label: label,
                     lines: range,
-                    room: lifted ? room : nil
+                    room: lifted ? room - contextHeight(home: home, side: side) : nil
                 )
                 .disabled(home.isBusy)
             } else {
@@ -365,7 +389,7 @@ struct HomeView: View {
                 }
             }
             if app.evidenceOffered {
-                contextBlock(lang, home: home, side: side)
+                contextBlock(lang, home: home, side: side, capped: lifted)
             }
             if lifted {
                 bottomRow(lang, home: home)

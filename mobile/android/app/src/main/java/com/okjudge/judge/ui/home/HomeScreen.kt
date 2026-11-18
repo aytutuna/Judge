@@ -553,7 +553,11 @@ private fun SideCard(
                 }
             },
         )
-        if (evidence != null && evidence.hasRows) EvidenceRows(evidence, disabled = !enabled, onRemove = onRemoveEvidence)
+        if (evidence != null && evidence.hasRows) {
+            // The composer's rows scroll inside the same cap as its text, so the send row keeps its room.
+            val rows = if (fieldMax == Dp.Unspecified) Modifier else Modifier.heightIn(max = fieldMax).verticalScroll(rememberScrollState())
+            EvidenceRows(evidence, disabled = !enabled, onRemove = onRemoveEvidence, modifier = rows)
+        }
         if (onAddContext != null || count != null || trailing != null) {
             Row(Modifier.fillMaxWidth().bringIntoViewRequester(sendRow), verticalAlignment = Alignment.CenterVertically) {
                 // The label gives way, the counter and the send button keep their size.
