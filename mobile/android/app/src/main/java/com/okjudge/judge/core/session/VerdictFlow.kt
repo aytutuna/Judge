@@ -53,6 +53,8 @@ class VerdictFlow(
     private val caseNames: CaseNamesStore = MemoryCaseNames(),
     /** Picks where a new request's court is drawn; null leaves it to the server (the court). */
     private val pickVenue: () -> String? = { null },
+    /** A verdict or a case went through: the place for the next one can be picked. */
+    private val onSent: () -> Unit = {},
     /** Keeps the held key, venue and accepted verdict across a restart of the app. */
     private val pending: PendingStore = MemoryPending(),
 ) {
@@ -194,6 +196,7 @@ class VerdictFlow(
         val running = _state.value as? State.Running
         heldVenue = null
         persist()
+        onSent()
         _state.value = State.Succeeded(outcome, running?.argument.orEmpty(), running?.sides.orEmpty(), outcome.venue ?: running?.venue)
     }
 
@@ -307,6 +310,7 @@ class VerdictFlow(
                 }
                 is ApiResult.Ok -> {
                     heldVenue = null
+                    onSent()
                     clearKey(key)
                     val created = res.value
                     caseNames.save(created.case.id, created.nameMap)

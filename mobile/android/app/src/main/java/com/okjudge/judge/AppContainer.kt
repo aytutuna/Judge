@@ -214,7 +214,8 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
             onEntitlement = { account.applyEntitlement(it) },
             refreshAccount = { account.refresh() },
             caseNames = caseNames,
-            pickVenue = { venues.pickNew() },
+            pickVenue = { venues.home.value },
+            onSent = venues::renew,
             pending = PrefsPending(appContext.getSharedPreferences("pending_verdict", Context.MODE_PRIVATE)),
         )
     }

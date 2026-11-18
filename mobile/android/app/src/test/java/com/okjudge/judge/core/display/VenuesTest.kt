@@ -15,6 +15,7 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Test
@@ -61,6 +62,15 @@ class VenuesTest {
     @Test
     fun theBundledListIsTheSharedOne() {
         assertEquals(strings(vectors), book().load())
+    }
+
+    @Test
+    fun theHomeVenueStaysUntilItIsRenewed() {
+        val book = book()
+        val kept = book.home.value
+        assertEquals(kept, book.home.value)
+        book.renew()
+        assertNotEquals(kept, book.home.value)
     }
 
     @Test

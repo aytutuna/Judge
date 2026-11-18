@@ -440,7 +440,7 @@ fun JudgeRoot(
                                             if (counted(started) == Submitted.PRICING) openPricing()
                                         }
                                     }
-                                    val venue = remember { container.venues.pickNew() }
+                                    val venue by container.venues.home.collectAsStateWithLifecycle()
                                     HomeScreen(
                                         state = state,
                                         venue = venue,

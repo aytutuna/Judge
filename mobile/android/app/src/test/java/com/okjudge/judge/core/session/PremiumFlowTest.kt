@@ -59,7 +59,7 @@ class PremiumFlowTest {
 
     private val fastPolls = PollPolicy(firstMs = 5, maxMs = 10, errorMaxMs = 20, maxErrors = 3, deadlineMs = 10_000)
 
-    private fun flow(pending: PendingStore = MemoryPending(), pickVenue: () -> String? = { null }) = VerdictFlow(
+    private fun flow(pending: PendingStore = MemoryPending(), onSent: () -> Unit = {}, pickVenue: () -> String? = { null }) = VerdictFlow(
         JudgeApi(server.url("/").toString(), OkHttpClient(), "ua", pollPolicy = fastPolls),
         history, scope,
         clock = { now },
@@ -69,6 +69,7 @@ class PremiumFlowTest {
         sleep = { ms -> synchronized(sleeps) { sleeps += ms }; now += ms },
         newKey = { "key-${++keys}" },
         pickVenue = pickVenue,
+        onSent = onSent,
         pending = pending,
     )
 
@@ -263,6 +264,24 @@ class PremiumFlowTest {
         f.settled()
         waitFor { routes.requestsTo(VERDICT).size == 3 }
         assertEquals("ice", body(VERDICT, 2)["venue"]!!.jsonPrimitive.content)
+    }
+
+    @Test
+    fun theNextVenueIsPickedOnlyOnceASendWentThrough() = runBlocking {
+        var sent = 0
+        routes.on(CLARIFY, Routes.json(200, clarify("none")))
+        routes.on(VERDICT, Routes.json(500, """{"error":"Something went wrong.","code":"internal"}"""))
+        val f = flow(onSent = { sent++ })
+        f.startPremium(argument, AppLang.EN, emptyList())
+        f.settled()
+        assertEquals(0, sent)
+
+        routes.on(CLARIFY, Routes.json(200, clarify("none")))
+        routes.on(VERDICT, Routes.json(200, premium["response"].toString()))
+        f.acknowledge()
+        f.startPremium(argument, AppLang.EN, emptyList())
+        f.settled()
+        assertEquals(1, sent)
     }
 
     @Test

@@ -2,6 +2,9 @@ package com.okjudge.judge.core.display
 
 import android.content.SharedPreferences
 import android.content.res.AssetManager
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
@@ -30,6 +33,15 @@ class VenueBook(private val assets: AssetManager, private val prefs: SharedPrefe
             assets.open("venues.json").use { Json.decodeFromString(ListSerializer(String.serializer()), it.readBytes().decodeToString()) }
         }.getOrNull()
         return read?.takeIf { it.isNotEmpty() } ?: listOf(Venues.COURT)
+    }
+
+    private val _home by lazy { MutableStateFlow(pickNew()) }
+
+    /** The venue Home shows and judging reuses, until a send goes through and [renew] picks the next. */
+    val home: StateFlow<String> get() = _home.asStateFlow()
+
+    fun renew() {
+        _home.value = pickNew()
     }
 
     /** A fresh pick, remembered as the last one shown. */
