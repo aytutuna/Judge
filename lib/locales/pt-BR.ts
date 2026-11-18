@@ -786,6 +786,10 @@ const ptBR: Locale = {
     "shell.loading": "Carregando seu histórico…",
     "shell.loadFailed": "Não conseguimos carregar seu histórico.",
     "shell.loadMore": "Mostrar mais",
+    "shell.removeAll": "Remover tudo",
+    "shell.removeConfirm": "Remover {n} vereditos da sua conta? O que você escreveu e os nomes são apagados, e os links de compartilhamento deles param de funcionar, em todos os dispositivos. Não dá para desfazer.",
+    "shell.removeLinksConfirm": "Remover {n} links? Eles vão parar de funcionar em todo lugar. Não dá para desfazer.",
+    "shell.removeFailed": "Não foi possível remover {n} deles. Confira sua conexão e tente de novo.",
     "shell.untitled": "Veredito sem título",
     "shell.local": "Estes ficam salvos só neste navegador.",
     "shell.localSignIn": "Entre para ver seus vereditos em qualquer dispositivo",
@@ -879,6 +883,15 @@ const ptBR: Locale = {
     "terms.contact": "Dúvidas sobre estes termos? Escreva para {email}.",
   },
   plurals: {
+    "shell.removeConfirm": {
+      one: "Remover {n} veredito da sua conta? O que você escreveu e os nomes são apagados, e o link de compartilhamento dele para de funcionar, em todos os dispositivos. Não dá para desfazer.",
+    },
+    "shell.removeLinksConfirm": {
+      one: "Remover {n} link? Ele vai parar de funcionar em todo lugar. Não dá para desfazer.",
+    },
+    "shell.removeFailed": {
+      one: "Não foi possível remover {n} veredito. Confira sua conexão e tente de novo.",
+    },
     "home.monthLeft": { one: "Resta {n} de {cap} neste mês" },
     "thread.judgesAgree": { one: "Juízes · {n} de {total} concorda" },
   },

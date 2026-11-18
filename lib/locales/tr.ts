@@ -787,6 +787,10 @@ const tr: Locale = {
     "shell.loading": "Geçmişin yükleniyor…",
     "shell.loadFailed": "Geçmişini yükleyemedik.",
     "shell.loadMore": "Daha fazla göster",
+    "shell.removeAll": "Tümünü kaldır",
+    "shell.removeConfirm": "{n} karar hesabından kaldırılsın mı? Yazdıkların ve isimler silinir, paylaşım linkleri her cihazda çalışmayı bırakır. Bu geri alınamaz.",
+    "shell.removeLinksConfirm": "{n} bağlantı kaldırılsın mı? Her yerde çalışmayı bırakırlar. Bu geri alınamaz.",
+    "shell.removeFailed": "{n} karar kaldırılamadı. Bağlantını kontrol edip tekrar dene.",
     "shell.untitled": "Başlıksız karar",
     "shell.local": "Bunlar sadece bu tarayıcıda saklanır.",
     "shell.localSignIn": "Kararlarını her cihazda görmek için giriş yap",
@@ -882,6 +886,15 @@ const tr: Locale = {
   // Turkish says 1 like any other number; these keys can be handed 1, so the
   // check wants the form spelled out.
   plurals: {
+    "shell.removeConfirm": {
+      one: "Bu karar hesabından kaldırılsın mı? Yazdıkların ve isimler silinir, paylaşım linki her cihazda çalışmayı bırakır. Bu geri alınamaz.",
+    },
+    "shell.removeLinksConfirm": {
+      one: "Bu bağlantı kaldırılsın mı? Her yerde çalışmayı bırakır. Bu geri alınamaz.",
+    },
+    "shell.removeFailed": {
+      one: "Kaldırılamadı. Bağlantını kontrol edip tekrar dene.",
+    },
     "home.monthLeft": { one: "Bu ay {cap} kararın {n} tanesi kaldı" },
     "thread.judgesAgree": { one: "Yargıçlar · {n}/{total} aynı fikirde" },
   },

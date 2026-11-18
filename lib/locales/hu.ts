@@ -792,6 +792,10 @@ const hu: Locale = {
     "shell.loading": "Előzmények betöltése…",
     "shell.loadFailed": "Nem sikerült betölteni az előzményeidet.",
     "shell.loadMore": "Továbbiak",
+    "shell.removeAll": "Összes eltávolítása",
+    "shell.removeConfirm": "Eltávolítod a kijelölt {n} ítéletet a fiókodból? Az eredeti szövegeid és a nevek törlődnek, a megosztási linkjeik pedig minden eszközön megszűnnek működni. Ez nem vonható vissza.",
+    "shell.removeLinksConfirm": "Eltávolítod a kijelölt {n} linket? Mindenhol megszűnnek működni. Ez nem vonható vissza.",
+    "shell.removeFailed": "{n} ítéletet nem sikerült eltávolítani. Ellenőrizd az internetkapcsolatot, és próbáld újra.",
     "shell.untitled": "Cím nélküli ítélet",
     "shell.local": "Ezek csak ebben a böngészőben vannak elmentve.",
     "shell.localSignIn": "Lépj be, hogy bármelyik eszközön lásd az ítéleteidet",
@@ -885,6 +889,15 @@ const hu: Locale = {
     "terms.contact": "Kérdésed van a feltételekről? Írj e-mailt ide: {email}.",
   },
   plurals: {
+    "shell.removeConfirm": {
+      one: "Eltávolítod ezt az ítéletet a fiókodból? Az eredeti szöveged és a nevek törlődnek, a megosztási linkje pedig minden eszközön megszűnik működni. Ez nem vonható vissza.",
+    },
+    "shell.removeLinksConfirm": {
+      one: "Eltávolítod ezt a linket? Mindenhol megszűnik működni. Ez nem vonható vissza.",
+    },
+    "shell.removeFailed": {
+      one: "Nem sikerült eltávolítani az ítéletet. Ellenőrizd az internetkapcsolatot, és próbáld újra.",
+    },
     "home.monthLeft": { one: "Ebben a hónapban még {n}/{cap} maradt" },
     "thread.judgesAgree": { one: "Bírák · {n}/{total} egyetért" },
   },

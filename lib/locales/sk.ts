@@ -781,6 +781,10 @@ const sk: Locale = {
     "shell.loading": "Načítavam históriu…",
     "shell.loadFailed": "Históriu sa nepodarilo načítať.",
     "shell.loadMore": "Zobraziť viac",
+    "shell.removeAll": "Odstrániť všetko",
+    "shell.removeConfirm": "Odstrániť {n} verdiktov zo svojho účtu? Tvoj text aj mená sa vymažú na všetkých zariadeniach a ich odkazy na zdieľanie prestanú fungovať. Nedá sa to vrátiť späť.",
+    "shell.removeLinksConfirm": "Odstrániť {n} odkazov? Prestanú všade fungovať. Nedá sa to vrátiť späť.",
+    "shell.removeFailed": "{n} z nich sa nepodarilo odstrániť. Skontroluj pripojenie a skús to znova.",
     "shell.untitled": "Verdikt bez názvu",
     "shell.local": "Tieto verdikty sú uložené len v tomto prehliadači.",
     "shell.localSignIn": "Prihlás sa a uvidíš svoje verdikty na každom zariadení",
@@ -874,6 +878,18 @@ const sk: Locale = {
     "terms.contact": "Máš otázky k týmto podmienkam? Napíš na {email}.",
   },
   plurals: {
+    "shell.removeConfirm": {
+      one: "Odstrániť tento verdikt zo svojho účtu? Tvoj text aj mená sa vymažú na všetkých zariadeniach a jeho odkaz na zdieľanie prestane fungovať. Nedá sa to vrátiť späť.",
+      few: "Odstrániť {n} verdikty zo svojho účtu? Tvoj text aj mená sa vymažú na všetkých zariadeniach a ich odkazy na zdieľanie prestanú fungovať. Nedá sa to vrátiť späť.",
+    },
+    "shell.removeLinksConfirm": {
+      one: "Odstrániť tento odkaz? Prestane všade fungovať. Nedá sa to vrátiť späť.",
+      few: "Odstrániť {n} odkazy? Prestanú všade fungovať. Nedá sa to vrátiť späť.",
+    },
+    "shell.removeFailed": {
+      one: "Nepodarilo sa ho odstrániť. Skontroluj pripojenie a skús to znova.",
+      few: "{n} z nich sa nepodarilo odstrániť. Skontroluj pripojenie a skús to znova.",
+    },
     "judgesVoted.other": { few: "Hlasovali {n} nezávislí AI sudcovia:" },
     "wait.minutes": { few: "{n} minúty" },
     "wait.hours": { few: "{n} hodiny" },

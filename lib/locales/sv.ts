@@ -780,6 +780,10 @@ const sv: Locale = {
     "shell.loading": "Laddar din historik…",
     "shell.loadFailed": "Vi kunde inte ladda din historik.",
     "shell.loadMore": "Visa fler",
+    "shell.removeAll": "Ta bort alla",
+    "shell.removeConfirm": "Ta bort {n} domar från ditt konto? Det du skrev och namnen raderas och delningslänkarna slutar fungera, på alla enheter. Det går inte att ångra.",
+    "shell.removeLinksConfirm": "Ta bort {n} länkar? De slutar fungera överallt. Det går inte att ångra.",
+    "shell.removeFailed": "Det gick inte att ta bort {n} av dem. Kolla din uppkoppling och försök igen.",
     "shell.untitled": "Dom utan titel",
     "shell.local": "De här sparas bara i den här webbläsaren.",
     "shell.localSignIn": "Logga in för att se dina domar på alla enheter",
@@ -874,6 +878,15 @@ const sv: Locale = {
     "terms.contact": "Frågor om villkoren? Mejla {email}.",
   },
   plurals: {
+    "shell.removeConfirm": {
+      one: "Ta bort domen från ditt konto? Det du skrev och namnen raderas och delningslänken slutar fungera, på alla enheter. Det går inte att ångra.",
+    },
+    "shell.removeLinksConfirm": {
+      one: "Ta bort länken? Den slutar fungera överallt. Det går inte att ångra.",
+    },
+    "shell.removeFailed": {
+      one: "Det gick inte att ta bort den. Kolla din uppkoppling och försök igen.",
+    },
     "home.monthLeft": { one: "{n} av {cap} kvar den här månaden" },
     "thread.judgesAgree": { one: "Domare · {n} av {total} är överens" },
   },

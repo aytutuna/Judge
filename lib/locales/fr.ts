@@ -804,6 +804,10 @@ const fr: Locale = {
     "shell.loading": "Chargement de ton historique…",
     "shell.loadFailed": "Impossible de charger ton historique.",
     "shell.loadMore": "Afficher plus",
+    "shell.removeAll": "Tout retirer",
+    "shell.removeConfirm": "Supprimer {n} verdicts de ton compte, sur tous tes appareils ? Ce que tu as écrit et les noms seront effacés, et leurs liens de partage cesseront de fonctionner. Cette action est irréversible.",
+    "shell.removeLinksConfirm": "Supprimer {n} liens ? Ils ne fonctionneront plus nulle part. Cette action est irréversible.",
+    "shell.removeFailed": "Impossible d’en supprimer {n}. Vérifie ta connexion et réessaie.",
     "shell.untitled": "Verdict sans titre",
     "shell.local": "Ces verdicts ne sont enregistrés que dans ce navigateur.",
     "shell.localSignIn": "Connecte-toi pour retrouver tes verdicts sur tous tes appareils",
@@ -897,6 +901,15 @@ const fr: Locale = {
     "terms.contact": "Des questions sur ces conditions ? Écris à {email}.",
   },
   plurals: {
+    "shell.removeConfirm": {
+      one: "Supprimer {n} verdict de ton compte, sur tous tes appareils ? Ce que tu as écrit et les noms seront effacés, et son lien de partage cessera de fonctionner. Cette action est irréversible.",
+    },
+    "shell.removeLinksConfirm": {
+      one: "Supprimer {n} lien ? Il ne fonctionnera plus nulle part. Cette action est irréversible.",
+    },
+    "shell.removeFailed": {
+      one: "Impossible d’en supprimer {n}. Vérifie ta connexion et réessaie.",
+    },
     "home.monthLeft": { one: "Il t’en reste {n} sur {cap} ce mois-ci" },
     "thread.judgesAgree": { one: "Juges · {n} sur {total} d’accord" },
   },

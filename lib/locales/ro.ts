@@ -790,6 +790,10 @@ const ro: Locale = {
     "shell.loading": "Se încarcă istoricul…",
     "shell.loadFailed": "N-am putut încărca istoricul.",
     "shell.loadMore": "Arată mai multe",
+    "shell.removeAll": "Elimină tot",
+    "shell.removeConfirm": "Elimini {n} de verdicte din contul tău, de pe toate dispozitivele? Ce ai scris și numele sunt șterse, iar linkurile lor de distribuire nu mai funcționează. Acțiunea nu poate fi anulată.",
+    "shell.removeLinksConfirm": "Elimini {n} de linkuri? Nu vor mai funcționa nicăieri. Acțiunea nu poate fi anulată.",
+    "shell.removeFailed": "N-am putut elimina {n} dintre ele. Verifică-ți conexiunea și încearcă din nou.",
     "shell.untitled": "Verdict fără titlu",
     "shell.local": "Acestea sunt salvate doar în acest browser.",
     "shell.localSignIn": "Conectează-te ca să-ți vezi verdictele pe orice dispozitiv",
@@ -885,6 +889,18 @@ const ro: Locale = {
   // Romanian puts "de" after numbers from 20 up ("20 de minute"), so the base
   // strings carry it and "few" (2–19, 101–119…) drops it.
   plurals: {
+    "shell.removeConfirm": {
+      one: "Elimini verdictul din contul tău, de pe toate dispozitivele? Ce ai scris și numele sunt șterse, iar linkul lui de distribuire nu mai funcționează. Acțiunea nu poate fi anulată.",
+      few: "Elimini {n} verdicte din contul tău, de pe toate dispozitivele? Ce ai scris și numele sunt șterse, iar linkurile lor de distribuire nu mai funcționează. Acțiunea nu poate fi anulată.",
+    },
+    "shell.removeLinksConfirm": {
+      one: "Elimini linkul? Nu va mai funcționa nicăieri. Acțiunea nu poate fi anulată.",
+      few: "Elimini {n} linkuri? Nu vor mai funcționa nicăieri. Acțiunea nu poate fi anulată.",
+    },
+    "shell.removeFailed": {
+      one: "N-am putut elimina verdictul. Verifică-ți conexiunea și încearcă din nou.",
+      few: "N-am putut elimina {n} dintre ele. Verifică-ți conexiunea și încearcă din nou.",
+    },
     "judgesVoted.other": { few: "{n} judecători AI independenți au votat:" },
     "wait.minutes": { few: "{n} minute" },
     "wait.hours": { few: "{n} ore" },

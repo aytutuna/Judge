@@ -801,6 +801,10 @@ const de: Locale = {
     "shell.loading": "Dein Verlauf wird geladen…",
     "shell.loadFailed": "Wir konnten deinen Verlauf nicht laden.",
     "shell.loadMore": "Mehr anzeigen",
+    "shell.removeAll": "Alle entfernen",
+    "shell.removeConfirm": "{n} Urteile aus deinem Konto entfernen? Sie verschwinden von allen Geräten: Was du geschrieben hast und die Namen werden gelöscht, und die geteilten Links funktionieren nicht mehr. Das lässt sich nicht rückgängig machen.",
+    "shell.removeLinksConfirm": "{n} Links entfernen? Sie funktionieren dann nirgends mehr. Das lässt sich nicht rückgängig machen.",
+    "shell.removeFailed": "{n} davon konnten nicht entfernt werden. Prüf deine Verbindung und versuch es noch mal.",
     "shell.untitled": "Urteil ohne Titel",
     "shell.local": "Diese Urteile sind nur in diesem Browser gespeichert.",
     "shell.localSignIn": "Melde dich an, um deine Urteile auf jedem Gerät zu sehen",
@@ -894,6 +898,15 @@ const de: Locale = {
     "terms.contact": "Fragen zu diesen Bedingungen? Schreib an {email}.",
   },
   plurals: {
+    "shell.removeConfirm": {
+      one: "Dieses Urteil aus deinem Konto entfernen? Es verschwindet von allen Geräten: Was du geschrieben hast und die Namen werden gelöscht, und der geteilte Link funktioniert nicht mehr. Das lässt sich nicht rückgängig machen.",
+    },
+    "shell.removeLinksConfirm": {
+      one: "Diesen Link entfernen? Er funktioniert dann nirgends mehr. Das lässt sich nicht rückgängig machen.",
+    },
+    "shell.removeFailed": {
+      one: "Das Urteil konnte nicht entfernt werden. Prüf deine Verbindung und versuch es noch mal.",
+    },
     "home.monthLeft": { one: "Noch {n} von {cap} diesen Monat" },
     "thread.judgesAgree": { one: "Richter · {n} von {total} einig" },
   },

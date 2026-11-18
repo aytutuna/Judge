@@ -788,6 +788,10 @@ const ptPT: Locale = {
     "shell.loading": "A carregar o teu histórico…",
     "shell.loadFailed": "Não conseguimos carregar o teu histórico.",
     "shell.loadMore": "Mostrar mais",
+    "shell.removeAll": "Remover tudo",
+    "shell.removeConfirm": "Remover {n} veredictos da tua conta? O que escreveste e os nomes são apagados e os links de partilha deixam de funcionar, em todos os dispositivos. Isto não pode ser desfeito.",
+    "shell.removeLinksConfirm": "Remover {n} ligações? Deixam de funcionar em qualquer lado. Isto não pode ser desfeito.",
+    "shell.removeFailed": "Não conseguimos remover {n} deles. Verifica a ligação e tenta outra vez.",
     "shell.untitled": "Veredicto sem título",
     "shell.local": "Estes só estão guardados neste browser.",
     "shell.localSignIn": "Entra para veres os teus veredictos em qualquer dispositivo",
@@ -881,6 +885,15 @@ const ptPT: Locale = {
     "terms.contact": "Dúvidas sobre estes termos? Escreve para {email}.",
   },
   plurals: {
+    "shell.removeConfirm": {
+      one: "Remover {n} veredicto da tua conta? O que escreveste e os nomes são apagados e o link de partilha deixa de funcionar, em todos os dispositivos. Isto não pode ser desfeito.",
+    },
+    "shell.removeLinksConfirm": {
+      one: "Remover {n} ligação? Deixa de funcionar em qualquer lado. Isto não pode ser desfeito.",
+    },
+    "shell.removeFailed": {
+      one: "Não conseguimos remover {n} veredicto. Verifica a ligação e tenta outra vez.",
+    },
     "home.monthLeft": { one: "Resta {n} de {cap} este mês" },
     "thread.judgesAgree": { one: "Juízes · {n} de {total} concorda" },
   },

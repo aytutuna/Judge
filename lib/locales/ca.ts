@@ -798,6 +798,10 @@ const ca: Locale = {
     "shell.loading": "Carregant l'historial…",
     "shell.loadFailed": "No hem pogut carregar l'historial.",
     "shell.loadMore": "Mostra'n més",
+    "shell.removeAll": "Elimina-ho tot",
+    "shell.removeConfirm": "Vols eliminar {n} veredictes del teu compte? S'esborraran el que vas escriure i els noms, i els seus enllaços per compartir deixaran de funcionar a tots els dispositius. No es pot desfer.",
+    "shell.removeLinksConfirm": "Vols eliminar {n} enllaços? Deixaran de funcionar a tot arreu. No es pot desfer.",
+    "shell.removeFailed": "No n'hem pogut eliminar {n}. Comprova la connexió i torna-ho a provar.",
     "shell.untitled": "Veredicte sense títol",
     "shell.local": "Només es guarden en aquest navegador.",
     "shell.localSignIn": "Inicia sessió per veure els teus veredictes des de qualsevol dispositiu",
@@ -891,6 +895,15 @@ const ca: Locale = {
     "terms.contact": "Tens preguntes sobre aquestes condicions? Escriu a {email}.",
   },
   plurals: {
+    "shell.removeConfirm": {
+      one: "Vols eliminar aquest veredicte del teu compte? S'esborraran el que vas escriure i els noms, i el seu enllaç per compartir deixarà de funcionar a tots els dispositius. No es pot desfer.",
+    },
+    "shell.removeLinksConfirm": {
+      one: "Vols eliminar aquest enllaç? Deixarà de funcionar a tot arreu. No es pot desfer.",
+    },
+    "shell.removeFailed": {
+      one: "No l'hem pogut eliminar. Comprova la connexió i torna-ho a provar.",
+    },
     "home.monthLeft": { one: "Te'n queda {n} de {cap} aquest mes" },
     "thread.judgesAgree": { one: "Jutges · {n} de {total} hi està d'acord" },
   },

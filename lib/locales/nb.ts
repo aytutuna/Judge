@@ -779,6 +779,10 @@ const nb: Locale = {
     "shell.loading": "Laster historikken din…",
     "shell.loadFailed": "Vi fikk ikke lastet historikken din.",
     "shell.loadMore": "Vis flere",
+    "shell.removeAll": "Fjern alle",
+    "shell.removeConfirm": "Vil du fjerne {n} dommer fra kontoen din? Det du skrev og navnene slettes, og delingslenkene slutter å virke på alle enheter. Dette kan ikke angres.",
+    "shell.removeLinksConfirm": "Vil du fjerne {n} lenker? De slutter å virke overalt. Dette kan ikke angres.",
+    "shell.removeFailed": "Vi fikk ikke fjernet {n} av dem. Sjekk tilkoblingen og prøv igjen.",
     "shell.untitled": "Dom uten tittel",
     "shell.local": "Disse er bare lagret i denne nettleseren.",
     "shell.localSignIn": "Logg inn for å se dommene dine på alle enheter",
@@ -872,6 +876,15 @@ const nb: Locale = {
     "terms.contact": "Spørsmål om disse vilkårene? Send e-post til {email}.",
   },
   plurals: {
+    "shell.removeConfirm": {
+      one: "Vil du fjerne denne dommen fra kontoen din? Det du skrev og navnene slettes, og delingslenken slutter å virke på alle enheter. Dette kan ikke angres.",
+    },
+    "shell.removeLinksConfirm": {
+      one: "Vil du fjerne denne lenken? Den slutter å virke overalt. Dette kan ikke angres.",
+    },
+    "shell.removeFailed": {
+      one: "Vi fikk ikke fjernet den. Sjekk tilkoblingen og prøv igjen.",
+    },
     "home.monthLeft": { one: "{n} av {cap} igjen denne måneden" },
     "thread.judgesAgree": { one: "Dommere · {n} av {total} enige" },
   },

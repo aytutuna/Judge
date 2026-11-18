@@ -779,6 +779,10 @@ const sl: Locale = {
     "shell.loading": "Nalagamo zgodovino…",
     "shell.loadFailed": "Zgodovine nismo mogli naložiti.",
     "shell.loadMore": "Pokaži več",
+    "shell.removeAll": "Odstrani vse",
+    "shell.removeConfirm": "Želiš iz svojega računa odstraniti {n} razsodb? Na vseh napravah se izbrišejo tvoje besedilo in imena, njihove povezave za deljenje pa prenehajo delovati. Tega ni mogoče razveljaviti.",
+    "shell.removeLinksConfirm": "Želiš odstraniti {n} povezav? Povsod bodo prenehale delovati. Tega ni mogoče razveljaviti.",
+    "shell.removeFailed": "{n} razsodb ni bilo mogoče odstraniti. Preveri povezavo in poskusi znova.",
     "shell.untitled": "Razsodba brez naslova",
     "shell.local": "Te razsodbe so shranjene samo v tem brskalniku.",
     "shell.localSignIn": "Prijavi se in imej razsodbe na vseh napravah",
@@ -872,6 +876,21 @@ const sl: Locale = {
     "terms.contact": "Vprašanja o teh pogojih? Piši na {email}.",
   },
   plurals: {
+    "shell.removeConfirm": {
+      one: "Želiš iz svojega računa odstraniti {n} razsodbo? Na vseh napravah se izbrišejo tvoje besedilo in imena, njena povezava za deljenje pa preneha delovati. Tega ni mogoče razveljaviti.",
+      two: "Želiš iz svojega računa odstraniti {n} razsodbi? Na vseh napravah se izbrišejo tvoje besedilo in imena, njuni povezavi za deljenje pa prenehata delovati. Tega ni mogoče razveljaviti.",
+      few: "Želiš iz svojega računa odstraniti {n} razsodbe? Na vseh napravah se izbrišejo tvoje besedilo in imena, njihove povezave za deljenje pa prenehajo delovati. Tega ni mogoče razveljaviti.",
+    },
+    "shell.removeLinksConfirm": {
+      one: "Želiš odstraniti {n} povezavo? Povsod bo prenehala delovati. Tega ni mogoče razveljaviti.",
+      two: "Želiš odstraniti {n} povezavi? Povsod bosta prenehali delovati. Tega ni mogoče razveljaviti.",
+      few: "Želiš odstraniti {n} povezave? Povsod bodo prenehale delovati. Tega ni mogoče razveljaviti.",
+    },
+    "shell.removeFailed": {
+      one: "{n} razsodbe ni bilo mogoče odstraniti. Preveri povezavo in poskusi znova.",
+      two: "{n} razsodb ni bilo mogoče odstraniti. Preveri povezavo in poskusi znova.",
+      few: "{n} razsodb ni bilo mogoče odstraniti. Preveri povezavo in poskusi znova.",
+    },
     "judgesVoted.other": {
       one: "{n} neodvisen sodnik UI je glasoval:",
       two: "{n} neodvisna sodnika UI sta glasovala:",

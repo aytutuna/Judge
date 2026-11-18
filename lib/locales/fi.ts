@@ -792,6 +792,10 @@ const fi: Locale = {
     "shell.loading": "Ladataan historiaa…",
     "shell.loadFailed": "Historiaa ei saatu ladattua.",
     "shell.loadMore": "Näytä lisää",
+    "shell.removeAll": "Poista kaikki",
+    "shell.removeConfirm": "Poistetaanko {n} tuomiota tililtäsi? Poisto koskee kaikkia laitteitasi: kirjoittamasi teksti ja nimet pyyhitään, ja niiden jakolinkit lakkaavat toimimasta. Tätä ei voi perua.",
+    "shell.removeLinksConfirm": "Poistetaanko {n} linkkiä? Ne lakkaavat toimimasta kaikkialla. Tätä ei voi perua.",
+    "shell.removeFailed": "{n} tuomion poistaminen ei onnistunut. Tarkista yhteys ja yritä uudelleen.",
     "shell.untitled": "Nimetön tuomio",
     "shell.local": "Nämä on tallennettu vain tähän selaimeen.",
     "shell.localSignIn": "Kirjaudu, niin näet tuomiosi kaikilla laitteilla",
@@ -885,6 +889,15 @@ const fi: Locale = {
     "terms.contact": "Kysyttävää näistä ehdoista? Kirjoita osoitteeseen {email}.",
   },
   plurals: {
+    "shell.removeConfirm": {
+      one: "Poistetaanko tämä tuomio tililtäsi? Poisto koskee kaikkia laitteitasi: kirjoittamasi teksti ja nimet pyyhitään, ja sen jakolinkki lakkaa toimimasta. Tätä ei voi perua.",
+    },
+    "shell.removeLinksConfirm": {
+      one: "Poistetaanko tämä linkki? Se lakkaa toimimasta kaikkialla. Tätä ei voi perua.",
+    },
+    "shell.removeFailed": {
+      one: "Poistaminen ei onnistunut. Tarkista yhteys ja yritä uudelleen.",
+    },
     "home.monthLeft": { one: "Tässä kuussa jäljellä {n}/{cap}" },
     "thread.judgesAgree": { one: "Tuomarit · {n}/{total} samaa mieltä" },
   },

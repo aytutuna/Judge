@@ -784,6 +784,11 @@ const en = {
   "shell.loading": "Loading your history…",
   "shell.loadFailed": "We couldn't load your history.",
   "shell.loadMore": "Show more",
+  "shell.removeAll": "Remove all",
+  "shell.removeConfirm":
+    "Remove {n} verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can't be undone.",
+  "shell.removeLinksConfirm": "Remove {n} links? They stop working everywhere. This can't be undone.",
+  "shell.removeFailed": "Couldn't remove {n} of them. Check your connection and try again.",
   "shell.untitled": "Untitled verdict",
   "shell.local": "These are saved in this browser only.",
   "shell.localSignIn": "Sign in to see your verdicts on any device",
@@ -928,6 +933,9 @@ export const COUNT_KEYS = [
   "home.left.other",
   "home.monthLeft",
   "thread.judgesAgree",
+  "shell.removeConfirm",
+  "shell.removeLinksConfirm",
+  "shell.removeFailed",
 ] as const satisfies readonly Key[];
 
 export type CountKey = (typeof COUNT_KEYS)[number];
@@ -935,7 +943,19 @@ export type CountKey = (typeof COUNT_KEYS)[number];
 export const COUNTS_FROM_ONE = [
   "home.monthLeft",
   "thread.judgesAgree",
+  "shell.removeConfirm",
+  "shell.removeLinksConfirm",
+  "shell.removeFailed",
 ] as const satisfies readonly CountKey[];
+
+/** English forms for a count of 1; English has no locale file. */
+const EN_PLURALS: Partial<Record<CountKey, PluralForms>> = {
+  "shell.removeConfirm": {
+    one: "Remove this verdict from your account? What you wrote and the names are erased and its share link stops working, on every device. This can't be undone.",
+  },
+  "shell.removeLinksConfirm": { one: "Remove this link? It stops working everywhere. This can't be undone." },
+  "shell.removeFailed": { one: "Couldn't remove it. Check your connection and try again." },
+};
 
 export type PluralForms = Partial<Record<Exclude<Intl.LDMLPluralRule, "other">, string>>;
 
@@ -1042,7 +1062,7 @@ export function pluralCategory(lang: Lang, n: number): Intl.LDMLPluralRule {
 export function t(lang: Lang, key: Key, vars?: Record<string, string | number>): string {
   const dict = loaded[lang];
   let s: string = dict?.strings[key] ?? en[key];
-  const forms = dict?.plurals?.[key as CountKey];
+  const forms = lang === "en" ? EN_PLURALS[key as CountKey] : dict?.plurals?.[key as CountKey];
   if (forms && typeof vars?.n === "number") {
     const category = pluralCategory(lang, vars.n);
     if (category !== "other") s = forms[category] ?? s;

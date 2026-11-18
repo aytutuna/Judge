@@ -781,6 +781,10 @@ const da: Locale = {
     "shell.loading": "Henter din historik…",
     "shell.loadFailed": "Vi kunne ikke hente din historik.",
     "shell.loadMore": "Vis flere",
+    "shell.removeAll": "Fjern alle",
+    "shell.removeConfirm": "Vil du fjerne {n} domme fra din konto? Det, du skrev, og navnene bliver slettet, og deres delingslinks holder op med at virke på alle enheder. Det kan ikke fortrydes.",
+    "shell.removeLinksConfirm": "Vil du fjerne {n} links? De holder op med at virke overalt. Det kan ikke fortrydes.",
+    "shell.removeFailed": "Vi kunne ikke fjerne {n} af dem. Tjek din forbindelse, og prøv igen.",
     "shell.untitled": "Dom uden titel",
     "shell.local": "De her er kun gemt i denne browser.",
     "shell.localSignIn": "Log ind for at se dine domme på alle enheder",
@@ -874,6 +878,15 @@ const da: Locale = {
     "terms.contact": "Spørgsmål til disse vilkår? Skriv til {email}.",
   },
   plurals: {
+    "shell.removeConfirm": {
+      one: "Vil du fjerne dommen fra din konto? Det, du skrev, og navnene bliver slettet, og dens delingslink holder op med at virke på alle enheder. Det kan ikke fortrydes.",
+    },
+    "shell.removeLinksConfirm": {
+      one: "Vil du fjerne linket? Det holder op med at virke overalt. Det kan ikke fortrydes.",
+    },
+    "shell.removeFailed": {
+      one: "Vi kunne ikke fjerne den. Tjek din forbindelse, og prøv igen.",
+    },
     "home.monthLeft": { one: "{n} af {cap} tilbage denne måned" },
     "thread.judgesAgree": { one: "Dommere · {n} af {total} er enig" },
   },

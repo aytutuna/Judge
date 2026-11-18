@@ -778,6 +778,10 @@ const cs: Locale = {
     "shell.loading": "Načítáme historii…",
     "shell.loadFailed": "Historii se nepodařilo načíst.",
     "shell.loadMore": "Zobrazit další",
+    "shell.removeAll": "Odebrat vše",
+    "shell.removeConfirm": "Odstranit {n} verdiktů ze svého účtu? Tvůj text i jména se vymažou a jejich sdílené odkazy přestanou fungovat, a to na všech zařízeních. Tohle nejde vrátit.",
+    "shell.removeLinksConfirm": "Odstranit {n} odkazů? Přestanou všude fungovat. Tohle nejde vrátit.",
+    "shell.removeFailed": "{n} z nich se nepodařilo odstranit. Zkontroluj připojení a zkus to znovu.",
     "shell.untitled": "Verdikt bez názvu",
     "shell.local": "Tyhle verdikty jsou uložené jen v tomto prohlížeči.",
     "shell.localSignIn": "Přihlas se a uvidíš svoje verdikty na každém zařízení",
@@ -871,6 +875,18 @@ const cs: Locale = {
     "terms.contact": "Máš k těmto podmínkám otázky? Napiš na {email}.",
   },
   plurals: {
+    "shell.removeConfirm": {
+      one: "Odstranit tenhle verdikt ze svého účtu? Tvůj text i jména se vymažou a jeho sdílený odkaz přestane fungovat, a to na všech zařízeních. Tohle nejde vrátit.",
+      few: "Odstranit {n} verdikty ze svého účtu? Tvůj text i jména se vymažou a jejich sdílené odkazy přestanou fungovat, a to na všech zařízeních. Tohle nejde vrátit.",
+    },
+    "shell.removeLinksConfirm": {
+      one: "Odstranit tenhle odkaz? Přestane všude fungovat. Tohle nejde vrátit.",
+      few: "Odstranit {n} odkazy? Přestanou všude fungovat. Tohle nejde vrátit.",
+    },
+    "shell.removeFailed": {
+      one: "Verdikt se nepodařilo odstranit. Zkontroluj připojení a zkus to znovu.",
+      few: "{n} z nich se nepodařilo odstranit. Zkontroluj připojení a zkus to znovu.",
+    },
     "judgesVoted.other": { few: "Hlasovali {n} nezávislí AI soudci:" },
     "wait.minutes": { few: "{n} minuty" },
     "wait.hours": { few: "{n} hodiny" },

@@ -795,6 +795,10 @@ const nl: Locale = {
     "shell.loading": "Je geschiedenis laden…",
     "shell.loadFailed": "We konden je geschiedenis niet laden.",
     "shell.loadMore": "Meer tonen",
+    "shell.removeAll": "Alles verwijderen",
+    "shell.removeConfirm": "{n} uitspraken uit je account verwijderen? Ze verdwijnen van al je apparaten: wat je schreef en de namen worden gewist en de deellinks werken niet meer. Dit kan niet ongedaan worden gemaakt.",
+    "shell.removeLinksConfirm": "{n} links verwijderen? Ze werken dan nergens meer. Dit kan niet ongedaan worden gemaakt.",
+    "shell.removeFailed": "{n} ervan konden niet worden verwijderd. Check je verbinding en probeer het opnieuw.",
     "shell.untitled": "Uitspraak zonder titel",
     "shell.local": "Deze staan alleen in deze browser.",
     "shell.localSignIn": "Log in om je uitspraken op elk apparaat te zien",
@@ -888,6 +892,15 @@ const nl: Locale = {
     "terms.contact": "Vragen over deze voorwaarden? Mail naar {email}.",
   },
   plurals: {
+    "shell.removeConfirm": {
+      one: "Deze uitspraak uit je account verwijderen? Hij verdwijnt van al je apparaten: wat je schreef en de namen worden gewist en de deellink werkt niet meer. Dit kan niet ongedaan worden gemaakt.",
+    },
+    "shell.removeLinksConfirm": {
+      one: "Deze link verwijderen? Hij werkt dan nergens meer. Dit kan niet ongedaan worden gemaakt.",
+    },
+    "shell.removeFailed": {
+      one: "Verwijderen is niet gelukt. Check je verbinding en probeer het opnieuw.",
+    },
     "home.monthLeft": { one: "Nog {n} van {cap} deze maand" },
     "thread.judgesAgree": { one: "Rechters · {n} van {total} eens" },
   },

@@ -784,6 +784,10 @@ const pl: Locale = {
     "shell.loading": "Wczytywanie historii…",
     "shell.loadFailed": "Nie udało się wczytać historii.",
     "shell.loadMore": "Pokaż więcej",
+    "shell.removeAll": "Usuń wszystko",
+    "shell.removeConfirm": "Usunąć {n} werdyktów ze swojego konta? Twoje teksty i imiona zostaną wymazane, a ich linki do udostępniania przestaną działać na wszystkich urządzeniach. Tego nie da się cofnąć.",
+    "shell.removeLinksConfirm": "Usunąć {n} linków? Przestaną działać wszędzie. Tego nie da się cofnąć.",
+    "shell.removeFailed": "Nie udało się usunąć {n} z nich. Sprawdź połączenie i spróbuj ponownie.",
     "shell.untitled": "Werdykt bez tytułu",
     "shell.local": "Te werdykty są zapisane tylko w tej przeglądarce.",
     "shell.localSignIn": "Zaloguj się, żeby widzieć werdykty na każdym urządzeniu",
@@ -877,6 +881,21 @@ const pl: Locale = {
     "terms.contact": "Pytania o te warunki? Napisz na {email}.",
   },
   plurals: {
+    "shell.removeConfirm": {
+      one: "Usunąć ten werdykt ze swojego konta? Twój tekst i imiona zostaną wymazane, a jego link do udostępniania przestanie działać na wszystkich urządzeniach. Tego nie da się cofnąć.",
+      few: "Usunąć {n} werdykty ze swojego konta? Twoje teksty i imiona zostaną wymazane, a ich linki do udostępniania przestaną działać na wszystkich urządzeniach. Tego nie da się cofnąć.",
+      many: "Usunąć {n} werdyktów ze swojego konta? Twoje teksty i imiona zostaną wymazane, a ich linki do udostępniania przestaną działać na wszystkich urządzeniach. Tego nie da się cofnąć.",
+    },
+    "shell.removeLinksConfirm": {
+      one: "Usunąć ten link? Przestanie działać wszędzie. Tego nie da się cofnąć.",
+      few: "Usunąć {n} linki? Przestaną działać wszędzie. Tego nie da się cofnąć.",
+      many: "Usunąć {n} linków? Przestaną działać wszędzie. Tego nie da się cofnąć.",
+    },
+    "shell.removeFailed": {
+      one: "Nie udało się usunąć werdyktu. Sprawdź połączenie i spróbuj ponownie.",
+      few: "Nie udało się usunąć {n} z nich. Sprawdź połączenie i spróbuj ponownie.",
+      many: "Nie udało się usunąć {n} z nich. Sprawdź połączenie i spróbuj ponownie.",
+    },
     "judgesVoted.other": {
       few: "Zagłosowało {n} niezależnych sędziów AI:",
       many: "Zagłosowało {n} niezależnych sędziów AI:",

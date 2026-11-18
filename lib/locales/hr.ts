@@ -783,6 +783,10 @@ const hr: Locale = {
     "shell.loading": "Učitavamo tvoju povijest…",
     "shell.loadFailed": "Nismo uspjeli učitati tvoju povijest.",
     "shell.loadMore": "Prikaži više",
+    "shell.removeAll": "Ukloni sve",
+    "shell.removeConfirm": "Ukloniti {n} presuda s tvog računa? Na svim uređajima brišu se tvoj tekst i imena, a poveznice za dijeljenje prestaju raditi. Ovo se ne može poništiti.",
+    "shell.removeLinksConfirm": "Ukloniti {n} poveznica? Prestat će raditi posvuda. Ovo se ne može poništiti.",
+    "shell.removeFailed": "Nismo uspjeli ukloniti {n} presuda. Provjeri vezu i pokušaj ponovno.",
     "shell.untitled": "Presuda bez naslova",
     "shell.local": "Spremljeno samo u ovom pregledniku.",
     "shell.localSignIn": "Prijavi se da vidiš svoje presude na svakom uređaju",
@@ -876,6 +880,18 @@ const hr: Locale = {
     "terms.contact": "Pitanja o ovim uvjetima? Pošalji e-poštu na {email}.",
   },
   plurals: {
+    "shell.removeConfirm": {
+      one: "Ukloniti {n} presudu s tvog računa? Na svim uređajima brišu se tvoj tekst i imena, a poveznice za dijeljenje prestaju raditi. Ovo se ne može poništiti.",
+      few: "Ukloniti {n} presude s tvog računa? Na svim uređajima brišu se tvoj tekst i imena, a poveznice za dijeljenje prestaju raditi. Ovo se ne može poništiti.",
+    },
+    "shell.removeLinksConfirm": {
+      one: "Ukloniti {n} poveznicu? Prestat će raditi posvuda. Ovo se ne može poništiti.",
+      few: "Ukloniti {n} poveznice? Prestat će raditi posvuda. Ovo se ne može poništiti.",
+    },
+    "shell.removeFailed": {
+      one: "Nismo uspjeli ukloniti {n} presudu. Provjeri vezu i pokušaj ponovno.",
+      few: "Nismo uspjeli ukloniti {n} presude. Provjeri vezu i pokušaj ponovno.",
+    },
     "judgesVoted.other": {
       one: "{n} neovisni AI sudac glasao je:",
       few: "{n} neovisna AI suca glasala su:",

@@ -798,6 +798,10 @@ const it: Locale = {
     "shell.loading": "Caricamento della cronologia…",
     "shell.loadFailed": "Non siamo riusciti a caricare la cronologia.",
     "shell.loadMore": "Mostra altri",
+    "shell.removeAll": "Rimuovi tutto",
+    "shell.removeConfirm": "Rimuovere {n} verdetti dal tuo account? Quello che hai scritto e i nomi vengono cancellati e i loro link di condivisione smettono di funzionare, su tutti i dispositivi. Non si può annullare.",
+    "shell.removeLinksConfirm": "Rimuovere {n} link? Smetteranno di funzionare ovunque. Non si può annullare.",
+    "shell.removeFailed": "Non è stato possibile rimuoverne {n}. Controlla la connessione e riprova.",
     "shell.untitled": "Verdetto senza titolo",
     "shell.local": "Sono salvati solo in questo browser.",
     "shell.localSignIn": "Accedi per vedere i tuoi verdetti su qualsiasi dispositivo",
@@ -891,6 +895,15 @@ const it: Locale = {
     "terms.contact": "Domande su questi termini? Scrivi a {email}.",
   },
   plurals: {
+    "shell.removeConfirm": {
+      one: "Rimuovere questo verdetto dal tuo account? Quello che hai scritto e i nomi vengono cancellati e il suo link di condivisione smette di funzionare, su tutti i dispositivi. Non si può annullare.",
+    },
+    "shell.removeLinksConfirm": {
+      one: "Rimuovere questo link? Smetterà di funzionare ovunque. Non si può annullare.",
+    },
+    "shell.removeFailed": {
+      one: "Non è stato possibile rimuoverlo. Controlla la connessione e riprova.",
+    },
     "home.monthLeft": { one: "Ne resta {n} su {cap} questo mese" },
     "thread.judgesAgree": { one: "Giudici · {n} su {total} d'accordo" },
   },
