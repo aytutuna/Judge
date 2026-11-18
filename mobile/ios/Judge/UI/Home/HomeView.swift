@@ -539,15 +539,15 @@ struct HomeView: View {
         }
     }
 
-    /// The counter, Clear and the send button.
+    /// Clear at the leading edge, the counter and the send button at the trailing one.
     private func bottomRow(_ lang: AppLang, home: HomeModel) -> some View {
         HStack(alignment: .center, spacing: 12) {
-            Spacer(minLength: 0).layoutPriority(-1)
-            counter(lang, home: home)
-                .fixedSize()
             if !home.isBlank {
                 clearButton(lang, home: home)
             }
+            Spacer(minLength: 0).layoutPriority(-1)
+            counter(lang, home: home)
+                .fixedSize()
             sendButton(lang, home: home)
                 .padding(.trailing, -6)
         }
@@ -750,7 +750,7 @@ struct HomeView: View {
         .disabled(home.isBusy)
     }
 
-    /// Beside the send button: icon and word when they fit, the icon alone when they don't.
+    /// At the leading edge of the send row: icon and word when they fit, the icon alone when they don't.
     private func clearButton(_ lang: AppLang, home: HomeModel) -> some View {
         let title = L10n.appHomeClear(lang)
         return Button {
