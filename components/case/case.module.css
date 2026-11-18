@@ -221,9 +221,19 @@
 .tall {
   min-height: 220px;
 }
+/* The counter sits inside the box, bottom end; the text leaves room for it. */
+.countBox {
+  position: relative;
+}
+.countBox .textarea {
+  padding-bottom: 36px;
+}
 .countEnd {
-  align-self: flex-end;
+  position: absolute;
+  inset-inline-end: 16px;
+  bottom: 10px;
   font-size: 13px;
+  pointer-events: none;
 }
 .facts {
   display: flex;

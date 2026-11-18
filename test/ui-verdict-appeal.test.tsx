@@ -91,6 +91,13 @@ describe("Add context on a one-sided verdict", () => {
     expect(other).not.toContain(t("en", "appeal.title"));
   });
 
+  it("keeps the counter inside the text box, after the textarea", () => {
+    const form = renderToStaticMarkup(
+      <AppealSection lang="en" view={subject({ allowed: true, blockedBy: null })} signInHref="/signin" draft={draft} />,
+    );
+    expect(form).toMatch(/<div class="[^"]*countBox[^"]*"><textarea[^>]*><\/textarea><span class="[^"]*countEnd[^"]*" aria-hidden="true">0 \/ /);
+  });
+
   it("uses the case appeal's states", () => {
     const form = renderToStaticMarkup(
       <AppealSection lang="en" view={subject({ allowed: true, blockedBy: null })} signInHref="/signin" draft={draft} />,

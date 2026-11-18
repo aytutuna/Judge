@@ -260,7 +260,7 @@ export function AppealSection({
           void draft.submit();
         }}
       >
-        <div className={styles.field}>
+        <div className={`${styles.field} ${styles.countBox}`}>
           <textarea
             id={fieldId}
             aria-label={t(lang, "appeal.title")}
