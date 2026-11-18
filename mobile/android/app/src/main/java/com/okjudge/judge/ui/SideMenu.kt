@@ -626,7 +626,7 @@ private fun MenuCard(entry: HistoryEntry, now: Long, live: LiveState?, onOpen: (
     // A swipe asks first: removing from the account can't be undone. The row never settles open, so it
     // snaps back whether the dialog is confirmed or not.
     val ask by rememberUpdatedState(onAskRemove)
-    val state = rememberSwipeToDismissBoxState()
+    val state = rememberSwipeToDismissBoxState(positionalThreshold = { it * 0.6f })
     val scope = rememberCoroutineScope()
     SwipeToDismissBox(
         state = state,
