@@ -110,20 +110,47 @@
 .clearLabel {
   white-space: nowrap;
 }
-/* Widths measured with the counter at 6,000 / 6,000 and Send; Telugu has the longest label. */
+/* Estimated from the widths at the counter's 6,000 / 6,000 and Send: English fits above 250px, the longest labels (Telugu, Kannada) need about 300px. */
 @container (max-width: 250px) {
   .clear {
+    min-width: 44px;
     padding: 0 8px;
   }
   .clearLabel {
     display: none;
   }
 }
-@container (max-width: 300px) {
-  :lang(te) .clear {
+@container (max-width: 280px) {
+  :lang(el) .clear,
+  :lang(ms) .clear,
+  :lang(id) .clear,
+  :lang(ru) .clear,
+  :lang(or) .clear,
+  :lang(gu) .clear,
+  :lang(hi) .clear,
+  :lang(fi) .clear {
+    min-width: 44px;
     padding: 0 8px;
   }
-  :lang(te) .clearLabel {
+  :lang(el) .clearLabel,
+  :lang(ms) .clearLabel,
+  :lang(id) .clearLabel,
+  :lang(ru) .clearLabel,
+  :lang(or) .clearLabel,
+  :lang(gu) .clearLabel,
+  :lang(hi) .clearLabel,
+  :lang(fi) .clearLabel {
+    display: none;
+  }
+}
+@container (max-width: 300px) {
+  :lang(te) .clear,
+  :lang(kn) .clear {
+    min-width: 44px;
+    padding: 0 8px;
+  }
+  :lang(te) .clearLabel,
+  :lang(kn) .clearLabel {
     display: none;
   }
 }
