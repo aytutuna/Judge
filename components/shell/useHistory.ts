@@ -52,6 +52,8 @@ export type HistoryItem = {
   yourMove: boolean;
   contextAdded: boolean;
   removed: boolean;
+  /** The viewer may remove it now. */
+  removable: boolean;
   /** Where the row opens; null when it is listed but not linked. */
   href: string | null;
 };
@@ -119,6 +121,7 @@ export function fromRow(row: HistoryRow): HistoryItem {
     yourMove: row.yourMove,
     contextAdded: row.contextAdded,
     removed: row.removed,
+    removable: row.removable,
     href: hrefOf(row),
   };
 }
@@ -140,9 +143,16 @@ function fromEntry(e: HistoryEntry): HistoryItem {
     yourMove: false,
     contextAdded: false,
     removed,
+    removable: !removed && !pending,
     // Its share page 404s until the verdict is stored, and closes once removed.
     href: removed || pending ? null : `/v/${encodeURIComponent(e.id)}`,
   };
+}
+
+/** The rows the menu lists: one the viewer removed is left out, one the
+ * other side removed stays, as it tells them something. */
+export function visibleItems(items: HistoryItem[]): HistoryItem[] {
+  return items.filter((i) => i.state !== "removed");
 }
 
 /** Newest first; local entries' times are compared as dates. */
@@ -227,6 +237,16 @@ export async function refreshHistory(): Promise<void> {
   }
 }
 
+/** Loads every page left, so "Remove all" can name everything it removes. */
+export async function loadAllHistory(): Promise<void> {
+  for (;;) {
+    const cursor = state?.data?.next;
+    if (!cursor) return;
+    await loadMore();
+    if (state?.data?.next === cursor) return;
+  }
+}
+
 async function loadMore(): Promise<void> {
   const start = state;
   if (!start?.data?.next || start.loadingMore) return;
@@ -254,22 +274,32 @@ function patchRow(key: string, update: (row: HistoryRow) => HistoryRow): void {
   emit({ ...state, data: { ...data, rows: data.rows.map((r) => (r === row ? next : r)) } });
 }
 
+const asRemoved = (r: HistoryRow): HistoryRow => ({
+  ...r,
+  state: "removed",
+  yourMove: false,
+  removable: false,
+  verdict: null,
+  contextAdded: false,
+  contextBy: null,
+  headline: null,
+  excerpt: null,
+  nameMap: [],
+  expiresAt: null,
+  removed: true,
+});
+
 /** After the writer removed a verdict: its row goes muted at once, on
  * whichever page it was loaded, in the account's list and this browser's. */
 export function markVerdictRemoved(id: string): void {
   markHistoryRemoved(id);
-  patchRow(`v:${id}`, (r) => ({
-    ...r,
-    state: "removed",
-    yourMove: false,
-    removable: false,
-    verdict: null,
-    contextAdded: false,
-    contextBy: null,
-    headline: null,
-    nameMap: [],
-    removed: true,
-  }));
+  patchRow(`v:${id}`, asRemoved);
+}
+
+/** After the viewer removed a case (their own or one they answered). */
+export function markCaseRemoved(id: string): void {
+  dropAnswered(id);
+  patchRow(`c:${id}`, asRemoved);
 }
 
 // Side B is linked to no account: only this browser's claim keeps the case.
@@ -449,7 +479,7 @@ export function useHistory(viewer: ViewerState, poll = false): HistoryView & { l
     return () => clearInterval(timer);
   }, [thinking]);
 
-  const items = useMemo(() => mergeHistory(mine?.data ?? null, local, answered), [mine?.data, local, answered]);
+  const items = useMemo(() => visibleItems(mergeHistory(mine?.data ?? null, local, answered)), [mine?.data, local, answered]);
   return {
     items,
     status: mine
