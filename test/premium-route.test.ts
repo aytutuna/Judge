@@ -762,7 +762,7 @@ describe("premium verdict with evidence", () => {
 
   beforeEach(() => {
     vi.stubEnv("EVIDENCE_ENABLED", "");
-    m.verifyEvidenceTokens.mockReturnValue({ ok: true, items: [{ kind: "chat", transcript: "21:02 ME: hi" }] });
+    m.verifyEvidenceTokens.mockReturnValue({ ok: true, items: [{ kind: "chat", transcript: "21:02 ME: hi" }], shas: ["sha-tok"] });
     m.anonymizeSubmission.mockResolvedValue({
       text: ANON,
       evidence: [{ kind: "chat", transcript: "21:02 Party A: hi" }],
@@ -822,7 +822,7 @@ describe("premium verdict with evidence", () => {
       "v1.a": { kind: "chat", transcript: "21:02 ME: hi" },
       "v1.b": { kind: "chat", transcript: "21:03 THEM: no" },
     };
-    m.verifyEvidenceTokens.mockImplementation((list: string[]) => ({ ok: true, items: list.map((t) => tokens[t]) }));
+    m.verifyEvidenceTokens.mockImplementation((list: string[]) => ({ ok: true, items: list.map((t) => tokens[t]), shas: list }));
     m.anonymizeSubmission.mockResolvedValue({
       text: ANON,
       evidence: [
@@ -853,6 +853,7 @@ describe("premium verdict with evidence", () => {
     m.verifyEvidenceTokens.mockImplementation((list: string[]) => ({
       ok: true,
       items: list.map(() => ({ kind: "chat", transcript: "21:03 THEM: no" })),
+      shas: list,
     }));
     m.anonymizeSubmission.mockResolvedValue({
       text: ANON,
@@ -869,7 +870,7 @@ describe("premium verdict with evidence", () => {
 
   it("a box over its limit is refused before any unit is reserved", async () => {
     m.verifyEvidenceTokens.mockImplementation((list: string[]) =>
-      list[0] === "v1.b" ? { ok: false, code: "too_many_files" } : { ok: true, items: [{ kind: "chat", transcript: "x" }] },
+      list[0] === "v1.b" ? { ok: false, code: "too_many_files" } : { ok: true, items: [{ kind: "chat", transcript: "x" }], shas: list },
     );
     const res = await POST(request(premium({ evidence: ["v1.a"], otherEvidence: [["v1.b"]] })));
     expect(res.status).toBe(400);
@@ -879,8 +880,13 @@ describe("premium verdict with evidence", () => {
     expect(four.status).toBe(400);
   });
 
-  it("the same image in two boxes is refused", async () => {
-    const res = await POST(request(premium({ evidence: ["v1.a"], otherEvidence: [["v1.a"]] })));
+  it("the same image in two boxes is refused even when each upload has its own token", async () => {
+    m.verifyEvidenceTokens.mockImplementation((list: string[]) => ({
+      ok: true,
+      items: list.map(() => ({ kind: "chat", transcript: "x" })),
+      shas: ["same-bytes"],
+    }));
+    const res = await POST(request(premium({ evidence: ["v1.a"], otherEvidence: [["v1.b"]] })));
     expect(res.status).toBe(400);
     expect((await res.json()).code).toBe("evidence_invalid");
     expect(m.reservePremiumVerdict).not.toHaveBeenCalled();

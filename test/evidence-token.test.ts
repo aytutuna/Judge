@@ -87,13 +87,14 @@ describe("evidence tokens", () => {
   it("verifies a submission's tokens: count cap, any bad one fails, duplicates count once", () => {
     const one = sign().token;
     const two = sign({ sha: "def456", kind: "document", transcript: "[Document]\nOther text: 40" }).token;
-    expect(verifyEvidenceTokens(undefined, USER, 3, NOW)).toEqual({ ok: true, items: [] });
+    expect(verifyEvidenceTokens(undefined, USER, 3, NOW)).toEqual({ ok: true, items: [], shas: [] });
     expect(verifyEvidenceTokens([one, two], USER, 3, NOW)).toEqual({
       ok: true,
       items: [
         { kind: "chat", transcript: TRANSCRIPT },
         { kind: "document", transcript: "[Document]\nOther text: 40" },
       ],
+      shas: ["abc123", "def456"],
     });
     expect(verifyEvidenceTokens([one, one], USER, 3, NOW)).toMatchObject({ ok: true, items: [{ kind: "chat" }] });
     expect(verifyEvidenceTokens([one, two], USER, 1, NOW)).toEqual({ ok: false, code: "too_many_files" });

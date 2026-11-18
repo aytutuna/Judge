@@ -132,6 +132,7 @@ describe("handleEvidenceUpload", () => {
     expect(verifyEvidenceTokens([item.token!], USER, 3)).toEqual({
       ok: true,
       items: [{ kind: "chat", transcript: item.preview }],
+      shas: [expect.any(String)],
     });
 
     // The model got the image (media type from the bytes) before the text.

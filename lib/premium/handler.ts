@@ -290,10 +290,6 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
     if (!evidenceEnabled()) {
       return fail("evidence_invalid", "Screenshot evidence is not available on this server right now.");
     }
-    // One image belongs to one side.
-    if (tokenLists.reduce((n, l) => n + new Set(l).size, 0) > new Set(tokenLists.flat()).size) {
-      return fail("evidence_invalid", "An image can only be added to one side.");
-    }
     try {
       const { verifyEvidenceTokens } = await import("@/lib/evidence");
       const verified = tokenLists.map((tokens) => verifyEvidenceTokens(tokens, { type: "user", userId }, MAX_EVIDENCE_PER_SIDE));
@@ -302,6 +298,11 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
         return v.code === "too_many_files"
           ? fail("too_many_files", `Attach at most ${MAX_EVIDENCE_PER_SIDE} images.`)
           : fail("evidence_invalid", "An evidence image expired or could not be verified. Add it again.");
+      }
+      // One image belongs to one side; compared by hash, as every upload gets its own token.
+      const shas = verified.flatMap((v) => (v.ok ? v.shas : []));
+      if (shas.length > new Set(shas).size) {
+        return fail("evidence_invalid", "An image can only be added to one side.");
       }
       const perSide = verified.map((v) => (v.ok ? v.items : []));
       evidence = perSide[0];

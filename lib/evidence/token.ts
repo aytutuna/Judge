@@ -125,8 +125,8 @@ export function verifyEvidenceTokens(
   audience: EvidenceAudience,
   max: number,
   now: Date = new Date(),
-): { ok: true; items: VerifiedEvidence[] } | { ok: false; code: "evidence_invalid" | "too_many_files" } {
-  if (!tokens || tokens.length === 0) return { ok: true, items: [] };
+): { ok: true; items: VerifiedEvidence[]; shas: string[] } | { ok: false; code: "evidence_invalid" | "too_many_files" } {
+  if (!tokens || tokens.length === 0) return { ok: true, items: [], shas: [] };
   if (tokens.length > max) return { ok: false, code: "too_many_files" };
   const items: VerifiedEvidence[] = [];
   const seen = new Set<string>();
@@ -137,5 +137,5 @@ export function verifyEvidenceTokens(
     seen.add(verified.sha);
     items.push({ kind: verified.kind, transcript: verified.transcript });
   }
-  return { ok: true, items };
+  return { ok: true, items, shas: [...seen] };
 }
