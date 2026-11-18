@@ -167,6 +167,7 @@ object HistoryLabels {
         val account = picked.count { it is HistoryEntry.Account }
         val phone = picked.size - account
         if (account == 0) return s.appHistoryDeleteConfirm(phone)
+        if (phone == 0 && picked.all { it.isCase }) return s.appHistoryRemoveLinksConfirm(account)
         return listOfNotNull(s.appHistoryRemoveConfirm(account), if (phone > 0) s.appHistoryPhoneOnlyAlso(phone) else null).joinToString(" ")
     }
 }

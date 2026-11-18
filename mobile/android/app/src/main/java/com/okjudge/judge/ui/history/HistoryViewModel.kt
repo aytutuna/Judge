@@ -55,8 +55,9 @@ sealed interface HistoryEntry {
 }
 
 /**
- * The account's rows and the phone's own, newest first. A phone row older
- * than [cutoff] (the last account row loaded this session) waits until the
+ * The account's rows and the phone's own, newest first. A row the viewer
+ * removed is left out; one the other side removed stays, as it tells them
+ * something. A phone row older than [cutoff] (the last account row loaded this session) waits until the
  * account's list is loaded that far: the account may have it.
  */
 fun mergeHistory(cached: List<HistoryItem>, saved: List<SavedVerdict>, user: String?, cutoff: String? = null): List<HistoryEntry> {
@@ -65,7 +66,8 @@ fun mergeHistory(cached: List<HistoryItem>, saved: List<SavedVerdict>, user: Str
         .filter { (it.ownerUserId == null || it.ownerUserId == user) && "v:${it.id}" !in listed }
         .map { HistoryEntry.Phone(it) }
         .filter { cutoff == null || it.at >= cutoff }
-    return (cached.map { HistoryEntry.Account(it) } + phone).sortedWith { x, y -> HistoryOrder.compare(x.at to x.key, y.at to y.key) }
+    val shown = cached.filter { it.historyState != HistoryState.REMOVED }
+    return (shown.map { HistoryEntry.Account(it) } + phone).sortedWith { x, y -> HistoryOrder.compare(x.at to x.key, y.at to y.key) }
 }
 
 /** Paging of the account's list in this session. */
@@ -168,25 +170,37 @@ class HistoryViewModel(
     }
 
     fun loadMore() {
-        val id = user.value ?: return
         val p = _paging.value
-        val cursor = p.next ?: return
         if (p.loading || p.loadingMore) return
+        viewModelScope.launch { loadNext() }
+    }
+
+    /** Every page of the account's list, for Remove all; stops at the first page that fails. */
+    suspend fun loadAll() {
+        while (loadNext()) Unit
+    }
+
+    /** One more page; false when there is none or it failed. */
+    private suspend fun loadNext(): Boolean {
+        val id = user.value ?: return false
+        _paging.first { !it.loading && !it.loadingMore }
+        val p = _paging.value
+        val cursor = p.next ?: return false
         _paging.update { it.copy(loadingMore = true) }
         if (_notice.value == HistoryNotice.LoadMoreFailed) _notice.value = null
-        viewModelScope.launch {
-            when (val res = api.history(LIMIT, cursor)) {
-                is ApiResult.Ok -> {
-                    if (user.value != id) return@launch
-                    history.applyPage(id, res.value, above = p.last)
-                    _paging.update {
-                        it.copy(loadingMore = false, next = res.value.next, last = res.value.items.lastOrNull() ?: it.last, loadedAll = res.value.next == null)
-                    }
+        return when (val res = api.history(LIMIT, cursor)) {
+            is ApiResult.Ok -> {
+                if (user.value != id) return false
+                history.applyPage(id, res.value, above = p.last)
+                _paging.update {
+                    it.copy(loadingMore = false, next = res.value.next, last = res.value.items.lastOrNull() ?: it.last, loadedAll = res.value.next == null)
                 }
-                is ApiResult.Err -> {
-                    _paging.update { it.copy(loadingMore = false) }
-                    _notice.value = HistoryNotice.LoadMoreFailed
-                }
+                true
+            }
+            is ApiResult.Err -> {
+                _paging.update { it.copy(loadingMore = false) }
+                _notice.value = HistoryNotice.LoadMoreFailed
+                false
             }
         }
     }

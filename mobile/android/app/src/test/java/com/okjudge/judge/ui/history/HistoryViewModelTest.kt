@@ -188,10 +188,9 @@ class HistoryViewModelTest {
         assertEquals(setOf("c:c3"), failed)
         assertEquals(HistoryNotice.RemoveFailed(1), model.notice.value)
 
-        val after = entries(model, 4).filterIsInstance<HistoryEntry.Account>().associateBy { it.key }
-        assertEquals("removed", after.getValue("v:v1").item.state)
-        assertNull(after.getValue("v:v1").item.headline)
-        assertEquals(true, after.getValue("c:c2").item.removed)
+        // The rows the viewer removed leave the list; the one that failed stays.
+        val after = entries(model, 1).filterIsInstance<HistoryEntry.Account>().associateBy { it.key }
+        assertEquals(setOf("c:c3"), after.keys)
         assertEquals("ready", after.getValue("c:c3").item.state)
         assertNull("the phone's copy goes with the account's", repo.observe("v1").first())
         assertNull("phone rows are deleted here", repo.observe("phone1").first())

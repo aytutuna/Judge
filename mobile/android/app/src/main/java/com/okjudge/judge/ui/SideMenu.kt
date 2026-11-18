@@ -133,6 +133,7 @@ object PageBarTags {
     const val PHONE_NOTE = "bar.menu.phoneNote"
     const val CONFIRM_DELETE = "bar.menu.confirmDelete"
     fun recent(key: String) = "bar.menu.recent.$key"
+    fun removeAll(heading: String) = "$heading.removeAll"
 }
 
 /** What the profile row of the side menu does, with the signed-in user (null when signed out). */
@@ -195,7 +196,7 @@ private val BarPlate = 48.dp
 private fun GamifyButton(on: Boolean, onChange: (Boolean) -> Unit) {
     val s = LocalStrings.current
     val spec = if (rememberReducedMotion()) snap<Color>() else tween(150)
-    val tint by animateColorAsState(if (on) Palette.terraTint else Palette.ink.copy(alpha = 0.08f), spec, label = "tint")
+    val tint by animateColorAsState(if (on) Palette.ruby.copy(alpha = 0.22f) else Palette.ink.copy(alpha = 0.08f), spec, label = "tint")
     val glow by animateDpAsState(if (on && Build.VERSION.SDK_INT >= 28) 8.dp else 0.dp, if (rememberReducedMotion()) snap() else tween(150), label = "glow")
     Box(
         Modifier
@@ -208,12 +209,12 @@ private fun GamifyButton(on: Boolean, onChange: (Boolean) -> Unit) {
         Box(
             Modifier
                 .size(BarPlate)
-                .shadow(glow, CircleShape, ambientColor = Palette.terra, spotColor = Palette.terra)
+                .shadow(glow, CircleShape, ambientColor = Palette.ruby.copy(alpha = 0.4f), spotColor = Palette.ruby.copy(alpha = 0.4f))
                 .clip(CircleShape)
                 .background(tint),
             contentAlignment = Alignment.Center,
         ) {
-            TintedIcon(JudgeIcons.gamepad(if (on) Palette.terraInk else Palette.muted), 22)
+            TintedIcon(JudgeIcons.gamepad(if (on) Palette.rubyInk else Palette.muted), 22)
         }
     }
 }
@@ -255,8 +256,10 @@ internal fun MenuPanel(
     account: AccountActions = AccountActions(false, null, {}, {}, {}),
     paging: HistoryPaging = HistoryPaging(),
     notice: HistoryNotice? = null,
-    onRemove: (HistoryEntry) -> Unit = {},
+    onRemove: (List<HistoryEntry>) -> Unit = {},
     onLoadMore: () -> Unit = {},
+    /** Reads every page of the account's list, so Remove all covers rows not on screen yet. */
+    onLoadAll: suspend () -> Unit = {},
     onRetry: () -> Unit = {},
     /** Link rows that are being read live, by case id. */
     live: Map<String, LiveState> = emptyMap(),
@@ -270,6 +273,25 @@ internal fun MenuPanel(
     val verdicts = remember(entries) { entries.filter { !it.isCase } }
     val links = remember(entries) { entries.filter { it.isCase } }
     var confirmKey by rememberSaveable { mutableStateOf<String?>(null) }
+    // Set while a Remove all waits for its confirm: false for the verdicts, true for the links.
+    var confirmAll by rememberSaveable { mutableStateOf<Boolean?>(null) }
+    var verdictsFolded by rememberSaveable { mutableStateOf(false) }
+    var linksFolded by rememberSaveable { mutableStateOf(false) }
+    var loadingAll by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+    val askAll: (Boolean) -> Unit = { links ->
+        if (!loadingAll) {
+            loadingAll = true
+            scope.launch {
+                try {
+                    onLoadAll()
+                } finally {
+                    loadingAll = false
+                }
+                confirmAll = links
+            }
+        }
+    }
     val listState = rememberLazyListState()
     val nearEnd by remember {
         derivedStateOf {
@@ -325,8 +347,8 @@ internal fun MenuPanel(
                         )
                     }
                 }
-                cards(s.navVerdicts, PageBarTags.VERDICTS, verdicts, now, live, onOpen) { confirmKey = it }
-                cards(s.navLinks, PageBarTags.LINKS, links, now, live, onOpen) { confirmKey = it }
+                cards(s.navVerdicts, PageBarTags.VERDICTS, verdicts, verdictsFolded, { verdictsFolded = !verdictsFolded }, { askAll(false) }, now, live, onOpen) { confirmKey = it }
+                cards(s.navLinks, PageBarTags.LINKS, links, linksFolded, { linksFolded = !linksFolded }, { askAll(true) }, now, live, onOpen) { confirmKey = it }
                 if (entries.isEmpty()) {
                     when {
                         paging.loading -> item(key = "loading") {
@@ -395,18 +417,27 @@ internal fun MenuPanel(
             }
         }
     }
-    confirmKey?.let { key ->
-        val picked = entries.filter { it.key == key }
+    if (confirmKey != null || confirmAll != null) {
+        val all = confirmAll
+        val picked = if (all != null) entries.filter { it.isCase == all && it.removable } else entries.filter { it.key == confirmKey }
+        val close = { confirmKey = null; confirmAll = null }
         AlertDialog(
-            onDismissRequest = { confirmKey = null },
+            onDismissRequest = close,
             text = { Text(HistoryLabels.removeConfirm(picked, s), style = JudgeType.body) },
             confirmButton = {
                 TextButton(
-                    onClick = { confirmKey = null; picked.forEach(onRemove) },
+                    onClick = { close(); if (picked.isNotEmpty()) onRemove(picked) },
                     modifier = Modifier.testTag(PageBarTags.CONFIRM_DELETE),
-                ) { Text(if (picked.any { it is HistoryEntry.Account }) s.verdictRemoveYes else s.appHistoryDelete, color = Palette.danger) }
+                ) {
+                    val label = when {
+                        all != null -> s.appHistoryRemoveAll
+                        picked.any { it is HistoryEntry.Account } -> s.verdictRemoveYes
+                        else -> s.appHistoryDelete
+                    }
+                    Text(label, color = Palette.danger)
+                }
             },
-            dismissButton = { TextButton(onClick = { confirmKey = null }) { Text(s.appCancel, color = Palette.ink) } },
+            dismissButton = { TextButton(onClick = close) { Text(s.appCancel, color = Palette.ink) } },
             containerColor = Palette.paper,
         )
     }
@@ -417,13 +448,17 @@ private fun LazyListScope.cards(
     heading: String,
     tag: String,
     list: List<HistoryEntry>,
+    folded: Boolean,
+    onFold: () -> Unit,
+    onRemoveAll: () -> Unit,
     now: Long,
     live: Map<String, LiveState>,
     onOpen: (HistoryEntry) -> Unit,
     onAskRemove: (String) -> Unit,
 ) {
     if (list.isEmpty()) return
-    item(key = tag) { SectionHeading(heading, tag) }
+    item(key = tag) { SectionHeading(heading, tag, folded, onFold, onRemoveAll.takeIf { list.any { it.removable } }) }
+    if (folded) return
     items(list, key = { it.key }) { e -> MenuCard(e, now, e.waitingLinkId?.let { live[it] }, { onOpen(e) }, { onAskRemove(e.key) }) }
 }
 
@@ -482,20 +517,47 @@ private fun MenuRow(label: String, on: Boolean, onClick: () -> Unit, modifier: M
 }
 
 @Composable
-private fun SectionHeading(label: String, tag: String) {
+private fun SectionHeading(label: String, tag: String, folded: Boolean, onFold: () -> Unit, onRemoveAll: (() -> Unit)?) {
+    val s = LocalStrings.current
     val line = Palette.line
     Row(
         Modifier
             .padding(top = 8.dp)
             .fillMaxWidth()
             .heightIn(min = 48.dp)
-            .semantics { heading() }
             .drawBehind { drawLine(line, Offset(0f, size.height), Offset(size.width, size.height), 1.dp.toPx()) }
-            .padding(horizontal = 12.dp)
-            .testTag(tag),
+            .padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(label, style = JudgeType.small.copy(fontWeight = FontWeight.Bold, color = Palette.muted))
+        Row(
+            Modifier
+                .weight(1f)
+                .heightIn(min = 48.dp)
+                .semantics(mergeDescendants = true) {
+                    heading()
+                    role = Role.Button
+                    if (folded) expand { onFold(); true } else collapse { onFold(); true }
+                }
+                .clickable(onClick = onFold)
+                .testTag(tag),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+        ) {
+            Text(label, style = JudgeType.small.copy(fontWeight = FontWeight.Bold, color = Palette.muted))
+            TintedIcon(JudgeIcons.caret(Palette.muted), 12, Modifier.rotate(if (folded) -90f else 0f))
+        }
+        if (onRemoveAll != null) {
+            Box(
+                Modifier
+                    .heightIn(min = 48.dp)
+                    .clickable(role = Role.Button, onClick = onRemoveAll)
+                    .padding(start = 12.dp)
+                    .testTag(PageBarTags.removeAll(tag)),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(s.appHistoryRemoveAll, style = JudgeType.small.copy(fontWeight = FontWeight.SemiBold, color = Palette.danger))
+            }
+        }
     }
 }
 
@@ -544,8 +606,8 @@ private fun RecentCard(entry: HistoryEntry, now: Long, live: LiveState?, interac
 }
 
 /**
- * A card that opens its page, and where it can be removed also swipes (from the start edge, since a
- * swipe toward the end is what closes the drawer) and asks on a long press.
+ * A card that opens its page, and where it can be removed also swipes (from the end edge, with a trash
+ * icon behind it) and asks on a long press.
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -568,20 +630,18 @@ private fun MenuCard(entry: HistoryEntry, now: Long, live: LiveState?, onOpen: (
     val scope = rememberCoroutineScope()
     SwipeToDismissBox(
         state = state,
-        enableDismissFromEndToStart = false,
+        enableDismissFromStartToEnd = false,
         onDismiss = { value ->
-            if (value == SwipeToDismissBoxValue.StartToEnd) ask()
+            if (value == SwipeToDismissBoxValue.EndToStart) ask()
             scope.launch { state.reset() }
         },
         backgroundContent = {
             Row(
                 Modifier.fillMaxSize().clip(RoundedCornerShape(12.dp)).background(Palette.terraTint).padding(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.Start,
+                horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 TintedIcon(rememberIcon(Palette.danger) { JudgeIcons.trash(it) }, 18)
-                Spacer(Modifier.size(8.dp))
-                Text(s.appHistoryDelete, style = JudgeType.small.copy(color = Palette.danger))
             }
         },
     ) {

@@ -14,7 +14,8 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTouchInput
-import androidx.compose.ui.test.swipeRight
+import androidx.compose.ui.test.swipeLeft
+import com.okjudge.judge.core.model.HistoryState
 import com.okjudge.judge.core.model.LiveState
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.ui.history.HistoryEntry
@@ -48,7 +49,7 @@ class MenuHistoryTest {
     private fun menu(
         list: List<HistoryEntry> = entries,
         onOpen: (HistoryEntry) -> Unit = {},
-        onRemove: (HistoryEntry) -> Unit = {},
+        onRemove: (List<HistoryEntry>) -> Unit = {},
         paging: HistoryPaging = HistoryPaging(),
         notice: HistoryNotice? = null,
         onLoadMore: () -> Unit = {},
@@ -131,7 +132,7 @@ class MenuHistoryTest {
     @Test
     fun longPress_asksBeforeRemoving_inPlainWords() {
         val removed = mutableListOf<String>()
-        menu(onRemove = { removed += it.key })
+        menu(onRemove = { removed += it.map(HistoryEntry::key) })
         compose.onNodeWithTag(PageBarTags.recent("v:verdict0021")).performTouchInput { longClick() }
         compose.onNodeWithText(
             "Remove this verdict from your account? What you wrote and the names are erased and its share link stops working, on every device. This can't be undone.",
@@ -149,10 +150,10 @@ class MenuHistoryTest {
     }
 
     @Test
-    fun aSwipeFromTheStartEdge_asksToRemoveToo_andOnesThatCannotBeRemovedDoNot() {
+    fun aSwipeFromTheEndEdge_asksToRemoveToo_andOnesThatCannotBeRemovedDoNot() {
         val removed = mutableListOf<String>()
-        menu(onRemove = { removed += it.key })
-        compose.onNodeWithTag(PageBarTags.recent("v:verdict0021")).performTouchInput { swipeRight() }
+        menu(onRemove = { removed += it.map(HistoryEntry::key) })
+        compose.onNodeWithTag(PageBarTags.recent("v:verdict0021")).performTouchInput { swipeLeft() }
         compose.waitForIdle()
         compose.onNodeWithTag(PageBarTags.CONFIRM_DELETE).performClick()
         assertEquals(listOf("v:verdict0021"), removed)
@@ -160,6 +161,50 @@ class MenuHistoryTest {
         // Still being judged: nothing to remove from here.
         compose.onNodeWithTag(PageBarTags.recent("v:verdict0020")).performTouchInput { longClick() }
         compose.onNodeWithTag(PageBarTags.CONFIRM_DELETE).assertDoesNotExist()
+    }
+
+    @Test
+    fun aHeading_foldsItsRowsAndOpensThemAgain() {
+        menu()
+        compose.onNodeWithTag(PageBarTags.recent("v:verdict0021")).assertExists()
+        compose.onNodeWithTag(PageBarTags.VERDICTS).performClick()
+        compose.onNodeWithTag(PageBarTags.recent("v:verdict0021")).assertDoesNotExist()
+        compose.onNodeWithTag(PageBarTags.recent("c:case0000013")).assertExists()
+        compose.onNodeWithTag(PageBarTags.VERDICTS).performClick()
+        compose.onNodeWithTag(PageBarTags.recent("v:verdict0021")).assertExists()
+    }
+
+    @Test
+    fun removeAll_asksAboutEveryRemovableRow_andPassesThemOnTogether() {
+        val removed = mutableListOf<List<String>>()
+        var loaded = 0
+        compose.setContent {
+            Themed(AppLang.EN) {
+                MenuPanel(
+                    selected = Tab.NEW, entries = entries, hidden = false, firstRow = FocusRequester(), onSelect = {}, onOpen = {}, onClose = {},
+                    onRemove = { removed += it.map(HistoryEntry::key) }, onLoadAll = { loaded++ }, now = now,
+                )
+            }
+        }
+        compose.onNodeWithTag(PageBarTags.removeAll(PageBarTags.VERDICTS)).performClick()
+        compose.waitForIdle()
+        assertEquals(1, loaded)
+        val picked = entries.filter { !it.isCase && it.removable }
+        compose.onNodeWithText(HistoryLabels.removeConfirm(picked, en), substring = true).assertExists()
+        compose.onNodeWithTag(PageBarTags.CONFIRM_DELETE).performClick()
+        assertEquals(listOf(picked.map { it.key }), removed)
+        assertTrue(picked.size > 1)
+    }
+
+    @Test
+    fun theLinksConfirmSaysLinks_andRowsTheViewerRemovedAreLeftOut() {
+        val links = entries.filter { it.isCase }.take(2)
+        assertEquals(en.appHistoryRemoveLinksConfirm(2), HistoryLabels.removeConfirm(links, en))
+
+        val gone = item("verdict0021").copy(state = HistoryState.REMOVED.raw, removed = true, removable = false)
+        val byOther = item("case0000012").copy(state = HistoryState.REMOVED_BY_OTHER.raw)
+        val keys = mergeHistory(listOf(gone, byOther), emptyList(), user = "u1").map { it.key }
+        assertEquals(listOf(byOther.key), keys)
     }
 
     @Test
