@@ -5,6 +5,7 @@ import { EvidenceAdd, EvidenceNotes, EvidenceRows, type EvidenceController } fro
 import { t, type Lang } from "@/lib/i18n";
 import { langTag } from "@/lib/langs";
 import { MAX_ARGUMENT, type SideInput } from "@/lib/sides";
+import type { Venue } from "@/lib/venues";
 import { HomeCourt } from "@/components/court/HomeCourt";
 import styles from "./HomeForm.module.css";
 
@@ -107,6 +108,8 @@ function SideCard({ side, head, docked = false, children }: CardProps) {
 
 export type HomeFormProps = {
   lang: Lang;
+  /** The place the court on the form is set in. */
+  venue: Venue;
   mine: string;
   onMine: (value: string) => void;
   mineName: string;
@@ -302,7 +305,7 @@ export function HomeForm(p: HomeFormProps) {
     >
       <fieldset className={styles.form} disabled={p.holding} data-blank={p.blank ? "" : undefined}>
         <div className={styles.stage}>
-          <HomeCourt className={styles.court} busy={p.holding} />
+          <HomeCourt className={styles.court} busy={p.holding} venue={p.venue} />
         </div>
 
         <div className={styles.mid} ref={mid}>

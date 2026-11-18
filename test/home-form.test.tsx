@@ -11,6 +11,7 @@ const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/'/g, "&#x27;");
 function form(over: Partial<HomeFormProps> = {}): string {
   const props: HomeFormProps = {
     lang: "en",
+    venue: "court",
     mine: "",
     onMine: noop,
     mineName: "",

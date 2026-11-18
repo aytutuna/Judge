@@ -29,7 +29,8 @@ import { useLang } from "@/lib/lang";
 import { resetScene } from "@/lib/scene-bridge";
 import { shareLink } from "@/lib/share-link";
 import { markFresh } from "@/lib/fresh-verdict";
-import { freshVenue, parseVenue, type Venue } from "@/lib/venues";
+import { holdRequest, homeVenue, repickHomeVenue, type HeldRequest } from "@/lib/home-venue";
+import { parseVenue, type Venue } from "@/lib/venues";
 import { MAX_ARGUMENT, inviteTextOk, joinSides, manySidesOk, type SideInput } from "@/lib/sides";
 import type { Clarification, ClarifyResponse, VerdictApiResponse, VerdictResponse } from "@/lib/types";
 import { applyEntitlement, refreshViewer, useViewer } from "@/lib/use-viewer";
@@ -139,8 +140,10 @@ export default function Home() {
   // of the same request reuses it, so the server replays or waits instead
   // of charging again. A success or a different request gets a new key.
   // The scene picked for the request is held with it, so a retry keeps it.
-  const premiumKey = useRef<{ request: string; key: string; venue: Venue } | null>(null);
+  const premiumKey = useRef<HeldRequest | null>(null);
   const [venue, setVenue] = useState<Venue>("court");
+  // The court on the form; the case is judged in this place, and a new one is picked after a send.
+  const [courtVenue, setCourtVenue] = useState<Venue>(homeVenue);
   // The name the last example wrote, which "New argument" drops but keeps a typed one.
   const exampleName = useRef<string | null>(null);
   // Screenshot evidence and two-sided cases, each only when this deployment
@@ -286,6 +289,7 @@ export default function Home() {
     if (!response || opened.current) return;
     opened.current = true;
     markFresh(response.id);
+    repickHomeVenue();
     router.push(`/v/${encodeURIComponent(response.id)}`);
   }
 
@@ -382,11 +386,8 @@ export default function Home() {
   }
 
   function keyFor(request: string): string {
-    const held = premiumKey.current;
-    if (held?.request === request) return held.key;
-    const key = idempotencyKey();
-    premiumKey.current = { request, key, venue: freshVenue() };
-    return key;
+    premiumKey.current = holdRequest(premiumKey.current, request, courtVenue, idempotencyKey);
+    return premiumKey.current.key;
   }
 
   /** Step 2: the verdict itself. */
@@ -506,6 +507,7 @@ export default function Home() {
       if (signal.aborted) return;
       const link = created.case.inviteUrl;
       reset();
+      setCourtVenue(repickHomeVenue());
       if (link && (await shareLink(lang, link)) === "copied") showToast(t(lang, "case.invite.copied"));
     } catch {
       if (signal.aborted) return;
@@ -661,6 +663,7 @@ export default function Home() {
           ) : (
             <HomeForm
               lang={lang}
+              venue={courtVenue}
               mine={argument}
               onMine={setArgument}
               mineName={shownMineName}
