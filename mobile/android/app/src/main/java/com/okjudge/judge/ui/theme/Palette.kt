@@ -41,6 +41,9 @@ class JudgePalette(
     val mainTop: Color,
     val mainBottom: Color,
     val warmShadow: Color,
+    // The Gamify button's colour; not part of the shared palette.
+    val ruby: Color = Color(0xFFB5123A),
+    val rubyInk: Color,
 ) {
     /** Opaque colours by lib/palette.ts key, for the drift test. */
     val byKey: Map<String, Color>
@@ -82,6 +85,7 @@ val LightPalette = JudgePalette(
     mainTop = Color(0xFFF9F8F6),
     mainBottom = Color(0xFFF2F0EC),
     warmShadow = Color(0xFF3C2814),
+    rubyInk = Color(0xFF9B0E31),
 )
 
 val DarkPalette = JudgePalette(
@@ -111,6 +115,7 @@ val DarkPalette = JudgePalette(
     mainTop = Color(0xFF191613),
     mainBottom = Color(0xFF000000),
     warmShadow = Color.Black,
+    rubyInk = Color(0xFFF0567A),
 )
 
 val LocalPalette = staticCompositionLocalOf { LightPalette }
