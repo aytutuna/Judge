@@ -182,7 +182,7 @@ export function HomeForm(p: HomeFormProps) {
   const [writing, setWriting] = useState(false);
   const isField = (el: EventTarget | null) => el instanceof HTMLTextAreaElement || el instanceof HTMLInputElement;
   const onFocus = (e: FocusEvent) => {
-    if (isField(e.target)) setWriting(true);
+    if (isField(e.target) && window.matchMedia("(pointer: coarse)").matches) setWriting(true);
   };
   const onBlur = (e: FocusEvent) => {
     if (!isField(e.relatedTarget)) setWriting(false);
