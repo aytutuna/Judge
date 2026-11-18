@@ -838,7 +838,7 @@ private fun ClearButton(compact: Boolean, enabled: Boolean, onClick: () -> Unit)
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(CLEAR_GAP),
         ) {
-            TintedIcon(rememberIcon(Palette.danger) { JudgeIcons.trash(it) }, CLEAR_ICON.value.toInt())
+            TintedIcon(rememberIcon(Palette.danger) { JudgeIcons.trash(it) }, (CLEAR_ICON.value * LocalDensity.current.fontScale).toInt())
             if (!compact) Text(s.appHomeClear, style = JudgeType.small.copy(color = Palette.danger), maxLines = 1)
         }
     }
@@ -862,7 +862,7 @@ private fun SendRow(count: Int, showClear: Boolean, clearEnabled: Boolean, onCle
         val room = constraints.maxWidth - sendP.width - counterP.width - 2 * gap
         val clearP = if (showClear) {
             val label = measurer.measure(s.appHomeClear, style, maxLines = 1).size.width
-            val full = (CLEAR_PAD * 2 + CLEAR_ICON + CLEAR_GAP).roundToPx() + label
+            val full = (CLEAR_PAD * 2 + CLEAR_GAP).roundToPx() + (CLEAR_ICON.toPx() * fontScale).toInt() + label
             subcompose("clear") { ClearButton(compact = full > room, enabled = clearEnabled, onClick = onClear) }.first().measure(Constraints())
         } else {
             null
