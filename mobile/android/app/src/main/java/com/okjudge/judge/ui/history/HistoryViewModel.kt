@@ -1,5 +1,6 @@
 package com.okjudge.judge.ui.history
 
+import kotlinx.coroutines.CancellationException
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.okjudge.judge.core.api.ApiResult
@@ -188,7 +189,13 @@ class HistoryViewModel(
         val cursor = p.next ?: return false
         _paging.update { it.copy(loadingMore = true) }
         if (_notice.value == HistoryNotice.LoadMoreFailed) _notice.value = null
-        return when (val res = api.history(LIMIT, cursor)) {
+        val res = try {
+            api.history(LIMIT, cursor)
+        } catch (e: CancellationException) {
+            _paging.update { it.copy(loadingMore = false) }
+            throw e
+        }
+        return when (res) {
             is ApiResult.Ok -> {
                 if (user.value != id) return false
                 history.applyPage(id, res.value, above = p.last)
