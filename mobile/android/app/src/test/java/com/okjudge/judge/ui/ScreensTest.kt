@@ -1,6 +1,9 @@
 package com.okjudge.judge.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -38,6 +41,7 @@ import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.assertWidthIsEqualTo
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onLast
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -110,14 +114,20 @@ class ScreensTest {
     @get:Rule
     val compose = createComposeRule()
 
-    private fun home(lang: AppLang, initial: HomeUiState = HomeUiState(), onSendLink: () -> Unit = {}, onAddContextSignIn: () -> Unit = {}) {
+    private fun home(
+        lang: AppLang,
+        initial: HomeUiState = HomeUiState(),
+        onSendLink: () -> Unit = {},
+        onAddContextSignIn: () -> Unit = {},
+        onSubmit: () -> Unit = {},
+    ) {
         compose.setContent {
             Themed(lang) {
                 var state by remember { mutableStateOf(initial) }
                 HomeScreen(
                     state = state,
                     onArgumentChange = { state = state.copy(argument = it) },
-                    onSubmit = {},
+                    onSubmit = onSubmit,
                     onDismissError = { state = state.copy(error = null) },
                     onOtherSideChange = { state = state.copy(otherSide = it) },
                     onOtherName = { state = state.copy(otherName = it) },
@@ -135,17 +145,21 @@ class ScreensTest {
 
     @Test
     fun home_disabledUntil20Chars_andCountsWhatIsSent() {
-        home(AppLang.EN)
+        var sent = 0
+        home(AppLang.EN, onSubmit = { sent++ })
         val en = UiTestSupport.s(AppLang.EN)
         compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("0 / 6,000")
-        compose.onNodeWithTag(HomeTags.SUBMIT).assertIsNotEnabled()
+        compose.onNodeWithTag(HomeTags.SUBMIT).performClick()
         compose.onNodeWithTag(HomeTags.INPUT).performTextInput("nineteen characters")
-        compose.onNodeWithTag(HomeTags.SUBMIT).assertIsNotEnabled()
+        compose.onNodeWithTag(HomeTags.SUBMIT).performClick()
+        assertEquals("too short: nothing is sent", 0, sent)
         compose.onNodeWithTag(HomeTags.INPUT).performTextInput("!")
-        compose.onNodeWithTag(HomeTags.SUBMIT).assertIsEnabled()
+        compose.onNodeWithTag(HomeTags.SUBMIT).performClick()
+        assertEquals(1, sent)
         compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("20 / 6,000")
         compose.onNodeWithTag(HomeTags.ADD_THEIRS).performClick()
         compose.onNodeWithTag(HomeTags.NAME).performTextInput("Alex")
+        compose.onNodeWithTag(HomeTags.OTHER).performClick()
         compose.onNodeWithTag(HomeTags.OTHER).performTextInput("It is a sandwich.")
         val joined = HomeUiState.joined("nineteen characters!", "It is a sandwich.", "Alex", "", en)
         assertEquals("Alex says: nineteen characters!\n\nTheir side: It is a sandwich.", joined)
@@ -155,8 +169,10 @@ class ScreensTest {
     @Test
     fun home_bothSidesTogetherCanGoOverTheLimit() {
         val half = "x".repeat(3000)
-        home(AppLang.EN, HomeUiState(argument = half, otherSide = half, theirsOpen = true))
-        compose.onNodeWithTag(HomeTags.SUBMIT).assertIsNotEnabled()
+        var submitted = 0
+        home(AppLang.EN, HomeUiState(argument = half, otherSide = half, theirsOpen = true), onSubmit = { submitted++ })
+        compose.onNodeWithTag(HomeTags.SUBMIT).performClick()
+        assertEquals(0, submitted)
         val sent = HomeUiState.joined(half, half, "", "", UiTestSupport.s(AppLang.EN)).length
         assertTrue(sent > 6000)
         compose.onNodeWithTag(HomeTags.COUNTER).assertTextEquals("${"%,d".format(sent)} / 6,000")
@@ -215,7 +231,10 @@ class ScreensTest {
         compose.onNodeWithTag(HomeTags.ADD_THEIRS).performClick()
         compose.onNodeWithTag(HomeTags.ADD_THEIRS).assertDoesNotExist()
         compose.onNodeWithTag(HomeTags.NAME).assertExists()
+        compose.onNodeWithTag(HomeTags.OTHER).performClick()
         compose.onNodeWithTag(HomeTags.OTHER).performTextInput("I did them on Sunday.")
+        compose.onNodeWithTag(HomeTags.CLOSE).performClick()
+        compose.waitUntil(2_000) { compose.onAllNodesWithTag(HomeTags.LIFTED).fetchSemanticsNodes().isEmpty() }
         compose.onNodeWithContentDescription(en.appHomeRemoveTheirSide).performClick()
         compose.onNodeWithTag(HomeTags.OTHER).assertDoesNotExist()
         compose.onNodeWithTag(HomeTags.ADD_THEIRS).assertExists()
@@ -258,7 +277,10 @@ class ScreensTest {
         home(AppLang.EN)
         compose.onNodeWithTag(HomeTags.EXAMPLE).assertExists().performClick()
         compose.onNodeWithTag(HomeTags.EXAMPLE).assertExists()
+        compose.onNodeWithTag(HomeTags.INPUT).performClick()
         compose.onNodeWithTag(HomeTags.INPUT).performTextInput(" and more")
+        compose.onNodeWithTag(HomeTags.CLOSE).performClick()
+        compose.waitUntil(2_000) { compose.onAllNodesWithTag(HomeTags.LIFTED).fetchSemanticsNodes().isEmpty() }
         compose.onNodeWithTag(HomeTags.EXAMPLE).assertDoesNotExist()
     }
 
@@ -405,7 +427,15 @@ class ScreensTest {
 
     @Test
     fun home_tapOutsideATextBoxPutsTheFocusAway() {
-        home(AppLang.EN)
+        // Off touch mode the platform hands the focus to the first focusable thing once it is cleared; this is it.
+        compose.setContent {
+            Themed(AppLang.EN) {
+                Column {
+                    Box(Modifier.size(1.dp).focusable())
+                    HomeScreen(HomeUiState(), {}, {}, {}, modifier = Modifier.weight(1f))
+                }
+            }
+        }
         compose.onNodeWithTag(HomeTags.INPUT).performClick()
         compose.onNodeWithTag(HomeTags.INPUT).assertIsFocused()
         compose.onNodeWithTag(HomeTags.INPUT).performClick()

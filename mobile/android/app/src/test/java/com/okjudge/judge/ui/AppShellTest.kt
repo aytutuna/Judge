@@ -16,6 +16,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.getOrNull
 import androidx.core.view.WindowCompat
 import androidx.test.core.app.ApplicationProvider
 import com.okjudge.judge.JudgeApp
@@ -166,7 +167,10 @@ class AppShellTest {
         compose.onNodeWithContentDescription(en.navTabs).assertIsFocused()
     }
 
-    private fun typed(tag: String) = compose.onNodeWithTag(tag).fetchSemanticsNode().config[SemanticsProperties.EditableText].text
+    // A box that is not written in shows its text instead of an editor.
+    private fun typed(tag: String): String = compose.onNodeWithTag(tag).fetchSemanticsNode().config.let { config ->
+        config.getOrNull(SemanticsProperties.EditableText)?.text ?: config[SemanticsProperties.Text].joinToString("") { it.text }
+    }
 
     @Test
     fun example_fillsBothSides_andClearEmptiesIt() {

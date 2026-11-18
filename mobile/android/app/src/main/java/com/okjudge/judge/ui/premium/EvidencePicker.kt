@@ -168,7 +168,6 @@ private fun statusText(status: EvidenceStatus): String = LocalStrings.current.te
 private fun ItemRow(item: EvidenceItem, disabled: Boolean, onRemove: (String) -> Unit) {
     val s = LocalStrings.current
     val name = s.evidenceThumb(item.n.toString())
-    var open by rememberSaveable(item.id) { mutableStateOf(false) }
     Column(
         Modifier
             .fillMaxWidth()
@@ -212,22 +211,6 @@ private fun ItemRow(item: EvidenceItem, disabled: Boolean, onRemove: (String) ->
                     .testTag(EvidenceTags.remove(item.n)),
                 contentAlignment = Alignment.Center,
             ) { TintedIcon(rememberIcon(Palette.ink2) { JudgeIcons.close(it) }, 14) }
-        }
-        val preview = item.preview
-        if (item.status == EvidenceStatus.OK && preview != null) {
-            Text(
-                (if (open) "▾ " else "▸ ") + s.evidencePreview,
-                style = JudgeType.slotText.copy(color = Palette.ink2, fontWeight = FontWeight.SemiBold),
-                modifier = Modifier.clip(RoundedCornerShape(6.dp)).clickable(role = Role.Button) { open = !open }.padding(vertical = 4.dp),
-            )
-            if (open) {
-                Text(s.evidencePreviewNote, style = JudgeType.slotText)
-                Text(
-                    preview,
-                    style = JudgeType.slotText.copy(color = Palette.ink, fontFamily = FontFamily.Monospace, fontSize = 12.sp),
-                    modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).background(Palette.well).padding(10.dp),
-                )
-            }
         }
     }
 }

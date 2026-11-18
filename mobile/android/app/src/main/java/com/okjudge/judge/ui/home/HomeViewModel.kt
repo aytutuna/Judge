@@ -137,6 +137,9 @@ data class HomeUiState(
         get() = theirsOpen && more.size < MAX_SIDES - 2 && !holding &&
             ((more.lastOrNull()?.text ?: otherSide).isNotBlank() || (casesOn && !hasWrittenOtherSide))
 
+    /** The add-side button is drawn under the cards while there is room for another, whatever they hold. */
+    val showsAddSide: Boolean get() = theirsOpen && more.size < MAX_SIDES - 2
+
     /**
      * "Send them a link": from the start, with nothing written, or with your
      * side written as for a verdict. Context images only go with a written side.

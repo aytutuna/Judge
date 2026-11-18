@@ -139,18 +139,19 @@ class PremiumScreensTest {
             EvidenceItem("ev3", 3, EvidenceStatus.UNREADABLE),
         )
         val removed = mutableListOf<String>()
+        var sent = 0
         compose.setContent {
             Themed(AppLang.EN) {
-                HomeScreen(premiumHome(EvidenceState(items, max = 3)), {}, {}, {}, onRemoveEvidence = { _, id -> removed += id })
+                HomeScreen(premiumHome(EvidenceState(items, max = 3)), {}, { sent++ }, {}, onRemoveEvidence = { _, id -> removed += id })
             }
         }
         compose.onNodeWithTag(EvidenceTags.status(1)).assertTextContains(en.evidenceOk)
         compose.onNodeWithTag(EvidenceTags.status(2)).assertTextContains(en.evidenceReading)
         compose.onNodeWithTag(EvidenceTags.status(3)).assertTextContains(en.evidenceStatusUnreadable)
         compose.onAllNodesWithTag(EvidenceTags.ADD).assertCountEquals(0)
-        compose.onNodeWithTag(HomeTags.SUBMIT).assertIsNotEnabled()
-        compose.onNodeWithText(en.evidencePreview, substring = true).performClick()
-        compose.onNodeWithText("Sam: it's a hot dog").assertExists()
+        compose.onNodeWithTag(HomeTags.SUBMIT).performClick()
+        assertEquals("a screenshot still being read holds the send back", 0, sent)
+        compose.onNodeWithText(en.evidencePreview, substring = true).assertDoesNotExist()
         compose.onNodeWithTag(EvidenceTags.remove(3)).performClick()
         assertEquals(listOf("ev3"), removed)
     }
@@ -164,10 +165,12 @@ class PremiumScreensTest {
         compose.onNodeWithTag(EvidenceTags.ADD).assertIsEnabled().assertTextContains(en.appHomeAddContext)
         compose.onNodeWithTag(HomeTags.COUNTER).assertExists()
         compose.onNodeWithTag(EvidenceTags.item(1)).assertExists()
+        // As on iOS: the box, then Add context, then the pictures picked.
         val box = compose.onNodeWithTag(HomeTags.INPUT).fetchSemanticsNode().boundsInRoot
-        assertTrue(compose.onNodeWithTag(EvidenceTags.ADD).fetchSemanticsNode().boundsInRoot.top >= box.bottom)
+        val add = compose.onNodeWithTag(EvidenceTags.ADD).fetchSemanticsNode().boundsInRoot
         val row = compose.onNodeWithTag(EvidenceTags.item(1)).fetchSemanticsNode().boundsInRoot
-        assertTrue(row.top >= box.bottom && row.bottom <= compose.onNodeWithTag(EvidenceTags.ADD).fetchSemanticsNode().boundsInRoot.top)
+        assertTrue(add.top >= box.bottom)
+        assertTrue(row.top >= add.bottom)
         compose.onNodeWithText(en.text("evidence.hintOne")!!, substring = true).assertDoesNotExist()
     }
 
