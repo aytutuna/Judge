@@ -58,6 +58,8 @@ data class HomeUiState(
     /** Asking whether facts are missing (POST /clarify). */
     val checking: Boolean = false,
     val evidence: EvidenceState = EvidenceState(max = MAX_EVIDENCE_PER_SIDE),
+    /** The screenshots of sides B, C and D. */
+    val otherEvidence: List<EvidenceState> = List(MAX_SIDES - 1) { EvidenceState(max = MAX_EVIDENCE_PER_SIDE) },
     /** Your name over your card, in the joined text and on a new case's share pages; null until typed. */
     val typedName: String? = null,
     /** The account's first name, prefilled until the owner types. */
@@ -82,6 +84,23 @@ data class HomeUiState(
     /** "Add context" is drawn whenever the deployment offers it; signed out, a tap goes to sign-in. */
     val evidenceOffered: Boolean get() = features.evidence
 
+    /** The screenshots added inside [side]'s box. */
+    fun evidenceOf(side: Side): EvidenceState = if (side == Side.A) evidence else otherEvidence[side.ordinal - 1]
+
+    private val allEvidence: List<EvidenceState> get() = listOf(evidence) + otherEvidence
+
+    /**
+     * Tokens of sides B to D, one list per side after A as the server counts them: only sides in the
+     * request, and none at all when nothing was added outside box A.
+     */
+    val otherTokens: List<List<String>>
+        get() {
+            if (!evidenceOn) return emptyList()
+            val sides = if (more.isNotEmpty()) 1 + more.size else if (otherSide.isNotBlank()) 1 else 0
+            val lists = otherEvidence.take(sides).map { it.tokens }
+            return if (lists.all { it.isEmpty() }) emptyList() else lists
+        }
+
     /** Signed in with nothing left to spend; unknown while the account loads, so the server decides then. */
     val outOfUnits: Boolean get() = signedIn && entitlement != null && Tiers.remaining(entitlement) == null
 
@@ -89,7 +108,7 @@ data class HomeUiState(
     val holding: Boolean get() = checking || creating
 
     /** Nothing typed, attached or opened: Home has nothing to clear. */
-    val blank: Boolean get() = argument.isEmpty() && otherSide.isEmpty() && evidence.items.isEmpty() && !theirsOpen && more.isEmpty()
+    val blank: Boolean get() = argument.isEmpty() && otherSide.isEmpty() && allEvidence.all { it.items.isEmpty() } && !theirsOpen && more.isEmpty()
 
     /** An example writes over the form, so it never replaces the user's text. */
     val offersExample: Boolean get() = blank || exampleText == exampleMark(argument, shownName, otherSide, otherName, more)
@@ -105,7 +124,7 @@ data class HomeUiState(
         get() = writtenLength >= ArgumentRules.MIN &&
             // The judges read three or four accounts one by one: each needs a side worth judging.
             (more.isEmpty() || (listOf(argument, otherSide) + more.map { it.text }).all { it.jsTrim().length >= ArgumentRules.MIN }) &&
-            !holding && !(evidenceOn && evidence.busy)
+            !holding && !(evidenceOn && allEvidence.any { it.busy })
 
     /** A side other than yours has text: that is a verdict to get now, not a link to send. */
     private val hasWrittenOtherSide: Boolean get() = (listOf(otherSide) + more.map { it.text }).any { it.isNotBlank() }
@@ -124,7 +143,9 @@ data class HomeUiState(
      */
     val canSendLink: Boolean
         // With the second card open they write both; the link comes back once a third side is added and none has text.
-        get() = casesOn && !holding && !hasWrittenOtherSide && (!theirsOpen || more.isNotEmpty()) && !(evidenceOn && evidence.busy) &&
+        get() = casesOn && !holding && !hasWrittenOtherSide && (!theirsOpen || more.isNotEmpty()) && !(evidenceOn && allEvidence.any { it.busy }) &&
+            // The invite carries side A's images only.
+            otherEvidence.all { it.items.isEmpty() } &&
             if (argument.jsTrim().isEmpty()) !evidenceOn || evidence.items.isEmpty() else ArgumentRules.canSubmit(argument)
 
     /** What the judges read: your side as written, or both sides joined with a name in front of each. */
@@ -194,6 +215,11 @@ class HomeViewModel(
 
     val evidence = EvidenceController(viewModelScope, MAX_EVIDENCE_PER_SIDE, uploadEvidence)
 
+    /** Sides B, C and D's screenshots. */
+    private val otherEvidence = List(MAX_SIDES - 1) { EvidenceController(viewModelScope, MAX_EVIDENCE_PER_SIDE, uploadEvidence) }
+
+    private val boxes = listOf(evidence) + otherEvidence
+
     private val _shareLink = Channel<String>(Channel.BUFFERED)
 
     /** The link of a case just created, once: the screen opens the share sheet and Home stays, empty. */
@@ -215,7 +241,7 @@ class HomeViewModel(
         }
         // Refused tokens would fail the same way on every retry.
         viewModelScope.launch {
-            flow.lastError.collect { if ((it as? UiError.Api)?.code == "evidence_invalid") evidence.invalidateTokens() }
+            flow.lastError.collect { if ((it as? UiError.Api)?.code == "evidence_invalid") boxes.forEach { box -> box.invalidateTokens() } }
         }
         // A restored draft with their side written needs the card that shows it.
         if (!saved.get<String>(KEY_OTHER).isNullOrEmpty()) saved[KEY_THEIRS_OPEN] = true
@@ -243,7 +269,13 @@ class HomeViewModel(
         HomeUiState(argument, error, blocked, otherSide = other, otherName = otherName, theirsOpen = open, exampleText = example, more = more)
     }
 
-    private val premium = combine(accountState, providers, flow.premiumStep, evidence.state) { account, prov, step, ev ->
+    private val premium = combine(
+        accountState,
+        providers,
+        flow.premiumStep,
+        evidence.state,
+        combine(otherEvidence.map { it.state }) { it.toList() },
+    ) { account, prov, step, ev, others ->
         val config = (prov as? Account.Providers.Ready)?.config
         PremiumPart(
             entitlement = (account as? Account.State.SignedIn)?.me?.entitlement,
@@ -251,6 +283,7 @@ class HomeViewModel(
             signedIn = account is Account.State.SignedIn,
             checking = step == VerdictFlow.PremiumStep.Checking,
             evidence = ev,
+            otherEvidence = others,
         )
     }
 
@@ -260,6 +293,7 @@ class HomeViewModel(
         val signedIn: Boolean,
         val checking: Boolean,
         val evidence: EvidenceState,
+        val otherEvidence: List<EvidenceState>,
     )
 
     private val casePart = combine(
@@ -287,6 +321,7 @@ class HomeViewModel(
             signedIn = p.signedIn,
             checking = p.checking,
             evidence = p.evidence,
+            otherEvidence = p.otherEvidence,
         )
     }.stateIn(
         viewModelScope,
@@ -381,6 +416,7 @@ class HomeViewModel(
         val more = extraSides()
         if (more.isEmpty()) return
         saveExtraSides(more.dropLast(1))
+        otherEvidence[more.size].clear()
         if (more.size == 1) {
             dropExampleName()
             saved[KEY_EXAMPLE_TEXT] = null
@@ -407,6 +443,7 @@ class HomeViewModel(
         saved[KEY_OTHER] = ""
         saved[KEY_OTHER_NAME] = ""
         saveExtraSides(emptyList())
+        otherEvidence.forEach { it.clear() }
         // The example's own name would otherwise go out with a link case.
         dropExampleName()
         saved[KEY_EXAMPLE_TEXT] = null
@@ -420,9 +457,9 @@ class HomeViewModel(
         }
     }
 
-    fun onAddEvidence(sources: List<ImageSource>) = evidence.add(sources)
+    fun onAddEvidence(side: Side, sources: List<ImageSource>) = boxes[side.ordinal].add(sources)
 
-    fun onRemoveEvidence(id: String) = evidence.remove(id)
+    fun onRemoveEvidence(side: Side, id: String) = boxes[side.ordinal].remove(id)
 
     /**
      * Starts a verdict on what was written, joined in the words of [strings]
@@ -436,7 +473,7 @@ class HomeViewModel(
         if (!s.signedIn) return Submitted.SIGN_IN
         if (s.outOfUnits) return Submitted.PRICING
         val tokens = if (s.evidenceOn) s.evidence.tokens else emptyList()
-        return if (flow.startPremium(s.outgoing(strings), lang, tokens, s.sides)) Submitted.CHECKING else Submitted.NOTHING
+        return if (flow.startPremium(s.outgoing(strings), lang, tokens, s.sides, s.otherTokens)) Submitted.CHECKING else Submitted.NOTHING
     }
 
     /** "Send them a link to write it": a two-sided case, with your side if it is written; the other person writes theirs. */
@@ -456,7 +493,7 @@ class HomeViewModel(
     fun clear() {
         saved[KEY_ARGUMENT] = ""
         removeTheirSide()
-        evidence.clear()
+        boxes.forEach { it.clear() }
         flow.dismissError()
     }
 

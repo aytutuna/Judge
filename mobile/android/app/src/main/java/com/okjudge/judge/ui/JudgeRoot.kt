@@ -479,9 +479,9 @@ fun JudgeRoot(
                                         onExtraSide = vm::onExtraSideChange,
                                         onExtraName = vm::onExtraName,
                                         onClear = vm::clear,
-                                        onAddEvidence = {
+                                        onAddEvidence = { side, sources ->
                                             analytics.track("evidence_added")
-                                            vm.onAddEvidence(it)
+                                            vm.onAddEvidence(side, sources)
                                         },
                                         onRemoveEvidence = vm::onRemoveEvidence,
                                         onDisplayName = vm::onDisplayName,

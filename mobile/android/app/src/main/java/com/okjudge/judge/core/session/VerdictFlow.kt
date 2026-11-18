@@ -123,7 +123,7 @@ class VerdictFlow(
     val shareLink: Flow<String> = _shareLink.receiveAsFlow()
 
     /** What a premium request judges, fixed when it is submitted. */
-    private data class PremiumInput(val text: String, val lang: AppLang, val evidence: List<String>, val sides: List<Side>)
+    private data class PremiumInput(val text: String, val lang: AppLang, val evidence: List<String>, val otherEvidence: List<List<String>>, val sides: List<Side>)
 
     @Volatile private var premiumInput: PremiumInput? = null
 
@@ -230,10 +230,16 @@ class VerdictFlow(
      * verdict: it goes ahead without questions. Account problems (401, 402),
      * a refusal (403) and bad input (400) stop on Home with the error.
      */
-    fun startPremium(argument: String, lang: AppLang, evidence: List<String>, sides: List<Side> = emptyList()): Boolean {
+    fun startPremium(
+        argument: String,
+        lang: AppLang,
+        evidence: List<String>,
+        sides: List<Side> = emptyList(),
+        otherEvidence: List<List<String>> = emptyList(),
+    ): Boolean {
         if (!canStart()) return false
         _lastError.value = null
-        val input = PremiumInput(argument.trim(), lang, evidence.toList(), sides)
+        val input = PremiumInput(argument.trim(), lang, evidence.toList(), otherEvidence.map { it.toList() }, sides)
         premiumInput = input
         _premiumStep.value = PremiumStep.Checking
         job = scope.launch {
@@ -330,6 +336,7 @@ class VerdictFlow(
             tier = "premium",
             clarifications = clarifications,
             evidence = input.evidence.takeIf { it.isNotEmpty() },
+            otherEvidence = input.otherEvidence.takeIf { lists -> lists.any { it.isNotEmpty() } },
             // Three or four sides go as typed; `argument` is all of them joined.
             sides = input.sides.takeIf { it.size > 2 }?.map { VerdictSide(it.text, it.name.ifEmpty { null }) },
         )

@@ -266,6 +266,8 @@ data class VerdictRequest(
     val tier: String = "premium",
     val clarifications: List<Clarification>? = null,
     val evidence: List<String>? = null,
+    /** Tokens of sides B, C and D in that order, one list per side after A; [evidence] is side A's. */
+    val otherEvidence: List<List<String>>? = null,
     /** Sides A to C or D as typed, when there are more than two; [argument] is then all of them joined. */
     val sides: List<VerdictSide>? = null,
     /** The place the court is drawn in, picked on the phone (core/display/Venues.kt). */

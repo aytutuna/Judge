@@ -77,6 +77,7 @@ import com.okjudge.judge.core.display.Venues
 import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.display.PartyNames
 import com.okjudge.judge.core.display.UiError
+import com.okjudge.judge.core.evidence.EvidenceState
 import com.okjudge.judge.core.evidence.ImageSource
 import com.okjudge.judge.core.model.Side
 import com.okjudge.judge.core.premium.Tiers
@@ -161,8 +162,8 @@ fun HomeScreen(
     onExtraSide: (index: Int, text: String) -> Unit = { _, _ -> },
     onExtraName: (index: Int, name: String) -> Unit = { _, _ -> },
     onClear: () -> Unit = {},
-    onAddEvidence: (List<ImageSource>) -> Unit = {},
-    onRemoveEvidence: (String) -> Unit = {},
+    onAddEvidence: (Side, List<ImageSource>) -> Unit = { _, _ -> },
+    onRemoveEvidence: (Side, String) -> Unit = { _, _ -> },
     onDisplayName: (String) -> Unit = {},
     onAddContextSignIn: () -> Unit = {},
 ) {
@@ -181,11 +182,13 @@ fun HomeScreen(
     val blocked = blockedUntil != null && now < blockedUntil
     val length = state.outgoing(s).length
 
-    // The server takes one set of screenshots for the verdict, so they belong to the case.
+    // Every box holds its own screenshots, so each has a picker.
     // Signed out, the tap asks for sign-in instead of opening the picker; the draft stays in Home's state.
-    val picker = rememberEvidencePicker(state.evidence.room, onAddEvidence)
-    val pickContext = if (state.evidenceOn) picker else if (state.evidenceOffered) onAddContextSignIn else null
-    val addContext = pickContext.takeIf { !state.evidence.full }
+    val pickers = Side.entries.map { side -> rememberEvidencePicker(state.evidenceOf(side).room) { onAddEvidence(side, it) } }
+    val addContext: (Side) -> (() -> Unit)? = { side ->
+        val pick = if (state.evidenceOn) pickers[side.ordinal] else if (state.evidenceOffered) onAddContextSignIn else null
+        pick.takeIf { !state.evidenceOf(side).full }
+    }
 
     val column = Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(horizontal = 16.dp)
     val send: @Composable () -> Unit = {
@@ -260,7 +263,9 @@ fun HomeScreen(
             enabled = !state.holding,
             onRemove = if (!last || side == Side.A) null else if (others) onRemoveLastSide else onRemoveTheirSide,
             removeTag = if (others) HomeTags.REMOVE_SIDE else HomeTags.REMOVE_THEIRS,
-            onAddContext = addContext.takeIf { side == Side.A || last },
+            onAddContext = addContext(side),
+            evidence = state.evidenceOf(side).takeIf { state.evidenceOn },
+            onRemoveEvidence = { onRemoveEvidence(side, it) },
             count = length.takeIf { last },
             trailing = send.takeIf { last },
             fieldMax = if (last) fieldMax else Dp.Unspecified,
@@ -268,9 +273,6 @@ fun HomeScreen(
     }
     val middle: @Composable ColumnScope.() -> Unit = {
         if (state.theirsOpen) openSides.dropLast(1).forEach { card(it, Dp.Unspecified) }
-        if (state.evidenceOn && state.evidence.hasRows) {
-            EvidenceRows(state.evidence, disabled = state.holding, onRemove = onRemoveEvidence)
-        }
         state.error?.let { ErrorBanner(it, onDismissError) }
         if (state.offersExample || !state.blank) {
             FlowRow(
@@ -361,7 +363,9 @@ fun HomeScreen(
                     maxLines = 7,
                     tag = HomeTags.INPUT,
                     enabled = !state.holding,
-                    onAddContext = addContext,
+                    onAddContext = addContext(Side.A),
+                    evidence = state.evidence.takeIf { state.evidenceOn },
+                    onRemoveEvidence = { onRemoveEvidence(Side.A, it) },
                     count = length,
                     trailing = send,
                     fieldMax = fieldMax,
@@ -461,6 +465,8 @@ private fun SideCard(
     onRemove: (() -> Unit)? = null,
     removeTag: String = HomeTags.REMOVE_THEIRS,
     onAddContext: (() -> Unit)? = null,
+    evidence: EvidenceState? = null,
+    onRemoveEvidence: (String) -> Unit = {},
     count: Int? = null,
     trailing: (@Composable () -> Unit)? = null,
     fieldMax: Dp = Dp.Unspecified,
@@ -547,6 +553,7 @@ private fun SideCard(
                 }
             },
         )
+        if (evidence != null && evidence.hasRows) EvidenceRows(evidence, disabled = !enabled, onRemove = onRemoveEvidence)
         if (onAddContext != null || count != null || trailing != null) {
             Row(Modifier.fillMaxWidth().bringIntoViewRequester(sendRow), verticalAlignment = Alignment.CenterVertically) {
                 // The label gives way, the counter and the send button keep their size.

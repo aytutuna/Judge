@@ -7,6 +7,12 @@ import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.auth.Routes
 import com.okjudge.judge.core.cases.MemoryCaseNames
+import com.okjudge.judge.core.api.ApiResult
+import com.okjudge.judge.core.evidence.ImageSource
+import com.okjudge.judge.core.evidence.Prepared
+import com.okjudge.judge.core.evidence.PreparedImage
+import com.okjudge.judge.core.model.EvidenceItemResult
+import com.okjudge.judge.core.model.EvidenceUploadResponse
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.okjudge.judge.core.display.ExampleBook
@@ -332,5 +338,74 @@ class HomeViewModelTest {
         } finally {
             server.close()
         }
+    }
+
+    private fun evidenceVm(): HomeViewModel {
+        var n = 0
+        val ready = Account.Providers.Ready(ServerConfig(features = Features(cases = true, evidence = true)))
+        return HomeViewModel(
+            SavedStateHandle(), flow, flowOf(signedIn(null)), flowOf(ready),
+            uploadEvidence = { images ->
+                ApiResult.Ok(EvidenceUploadResponse(images.map { EvidenceItemResult(index = n++ % images.size, status = "ok", kind = "chat", token = "tok-$n") }))
+            },
+        )
+    }
+
+    private fun shot() = ImageSource { Prepared.Ready(PreparedImage("x".toByteArray(), "image/jpeg")) }
+
+    private suspend fun HomeViewModel.settled(): HomeUiState =
+        withTimeout(5_000) { state.first { s -> !s.evidence.busy && s.otherEvidence.none { it.busy } } }
+
+    @Test
+    fun evidence_belongsToTheBoxItWasAddedTo_withItsOwnLimit() = runBlocking {
+        val vm = evidenceVm()
+        vm.addTheirSide()
+        vm.onAddEvidence(Side.A, List(5) { shot() })
+        vm.onAddEvidence(Side.B, listOf(shot()))
+        val st = vm.settled()
+        assertEquals(MAX_EVIDENCE_PER_SIDE, st.evidenceOf(Side.A).items.size)
+        assertEquals(1, st.evidenceOf(Side.B).items.size)
+        assertTrue(st.evidenceOf(Side.C).items.isEmpty())
+        assertEquals(1, st.evidenceOf(Side.B).tokens.size)
+    }
+
+    @Test
+    fun otherTokens_oneListPerSideInTheRequest_orNoneWhenOnlyAHasImages() = runBlocking {
+        val vm = evidenceVm(); vm.addTheirSide()
+        vm.onAddEvidence(Side.A, listOf(shot()))
+        vm.settled()
+        vm.onOtherSideChange(argument)
+        assertTrue(vm.state.value.otherTokens.isEmpty())
+        vm.onAddEvidence(Side.B, listOf(shot()))
+        assertEquals(1, vm.settled().otherTokens.size)
+        vm.addSide()
+        vm.addSide()
+        vm.onAddEvidence(Side.D, listOf(shot()))
+        val st = vm.settled()
+        assertEquals(listOf(1, 0, 1), st.otherTokens.map { it.size })
+        assertFalse("an invite only carries side A's images", st.canSendLink)
+    }
+
+    @Test
+    fun imagesInABoxWithoutAWrittenSide_areLeftOut() = runBlocking {
+        val vm = evidenceVm(); vm.addTheirSide()
+        vm.onAddEvidence(Side.B, listOf(shot()))
+        assertTrue(vm.settled().otherTokens.isEmpty())
+    }
+
+    @Test
+    fun removingASide_clearsItsImages_andClearEmptiesEveryBox() = runBlocking {
+        val vm = evidenceVm(); vm.addTheirSide(); vm.addSide(); vm.addSide()
+        Side.entries.forEach { vm.onAddEvidence(it, listOf(shot())) }
+        assertTrue(vm.settled().evidenceOf(Side.D).items.isNotEmpty())
+        vm.removeLastSide()
+        val st = vm.state.value
+        assertTrue(st.evidenceOf(Side.D).items.isEmpty())
+        assertEquals(1, st.evidenceOf(Side.C).items.size)
+        vm.removeTheirSide()
+        assertTrue(listOf(Side.B, Side.C).all { vm.state.value.evidenceOf(it).items.isEmpty() })
+        assertEquals(1, vm.state.value.evidence.items.size)
+        vm.clear()
+        assertTrue(vm.state.value.blank)
     }
 }

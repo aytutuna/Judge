@@ -432,4 +432,27 @@ class PremiumFlowTest {
         const val VERDICT = "POST /api/v1/verdict"
         const val POLL = "GET /api/v1/verdicts/premium001"
     }
+
+    @Test
+    fun verdict_sendsEachSidesTokens_andLeavesOtherEvidenceOutWhenOnlyAHasImages() = runBlocking {
+        routes.on(CLARIFY, Routes.json(200, clarify("none")))
+        routes.on(VERDICT, Routes.json(200, premium["response"].toString()))
+        val f = flow()
+        f.startPremium(argument, AppLang.EN, listOf("a1"), otherEvidence = listOf(listOf("b1", "b2"), emptyList()))
+        f.settled()
+        val sent = body(VERDICT)
+        assertEquals(listOf("a1"), sent["evidence"]!!.jsonArray.map { it.jsonPrimitive.content })
+        assertEquals(
+            listOf(listOf("b1", "b2"), emptyList()),
+            sent["otherEvidence"]!!.jsonArray.map { side -> side.jsonArray.map { it.jsonPrimitive.content } },
+        )
+
+        routes.on(CLARIFY, Routes.json(200, clarify("none")))
+        routes.on(VERDICT, Routes.json(200, premium["response"].toString()))
+        f.acknowledge()
+        f.startPremium(argument, AppLang.EN, listOf("a1"), otherEvidence = listOf(emptyList()))
+        f.settled()
+        waitFor { routes.requestsTo(VERDICT).size == 2 }
+        assertFalse(body(VERDICT, 1).containsKey("otherEvidence"))
+    }
 }

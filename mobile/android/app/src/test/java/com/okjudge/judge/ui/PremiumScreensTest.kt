@@ -32,6 +32,8 @@ import com.okjudge.judge.core.model.FactCheck
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.core.model.WireJson
 import com.okjudge.judge.i18n.AppLang
+import com.okjudge.judge.core.model.Side
+import com.okjudge.judge.ui.home.ExtraSide
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeTags
 import com.okjudge.judge.ui.home.HomeUiState
@@ -139,7 +141,7 @@ class PremiumScreensTest {
         val removed = mutableListOf<String>()
         compose.setContent {
             Themed(AppLang.EN) {
-                HomeScreen(premiumHome(EvidenceState(items, max = 3)), {}, {}, {}, onRemoveEvidence = { removed += it })
+                HomeScreen(premiumHome(EvidenceState(items, max = 3)), {}, {}, {}, onRemoveEvidence = { _, id -> removed += id })
             }
         }
         compose.onNodeWithTag(EvidenceTags.status(1)).assertTextContains(en.evidenceOk)
@@ -154,7 +156,7 @@ class PremiumScreensTest {
     }
 
     @Test
-    fun home_addContext_isInTheBox_withTheCounter_andTheRowsAbove() {
+    fun home_addContext_isInTheBox_withTheCounter_andTheRowsBetween() {
         val items = listOf(EvidenceItem("ev1", 1, EvidenceStatus.OK, token = "t"))
         compose.setContent {
             Themed(AppLang.EN) { HomeScreen(premiumHome(EvidenceState(items, max = 3)), {}, {}, {}) }
@@ -164,7 +166,8 @@ class PremiumScreensTest {
         compose.onNodeWithTag(EvidenceTags.item(1)).assertExists()
         val box = compose.onNodeWithTag(HomeTags.INPUT).fetchSemanticsNode().boundsInRoot
         assertTrue(compose.onNodeWithTag(EvidenceTags.ADD).fetchSemanticsNode().boundsInRoot.top >= box.bottom)
-        assertTrue(compose.onNodeWithTag(EvidenceTags.item(1)).fetchSemanticsNode().boundsInRoot.bottom <= box.top)
+        val row = compose.onNodeWithTag(EvidenceTags.item(1)).fetchSemanticsNode().boundsInRoot
+        assertTrue(row.top >= box.bottom && row.bottom <= compose.onNodeWithTag(EvidenceTags.ADD).fetchSemanticsNode().boundsInRoot.top)
         compose.onNodeWithText(en.text("evidence.hintOne")!!, substring = true).assertDoesNotExist()
     }
 
@@ -177,6 +180,23 @@ class PremiumScreensTest {
         compose.onAllNodesWithTag(HomeTags.COUNTER).assertCountEquals(1)
     }
 
+
+    @Test
+    fun home_eachBoxShowsOnlyItsOwnImages() {
+        val items = listOf(EvidenceItem("ev1", 1, EvidenceStatus.OK, token = "t"))
+        val state = premiumHome(EvidenceState(max = 3)).copy(
+            theirsOpen = true,
+            more = listOf(ExtraSide("c")),
+            otherEvidence = listOf(EvidenceState(max = 3), EvidenceState(items, max = 3), EvidenceState(max = 3)),
+        )
+        compose.setContent { Themed(AppLang.EN) { HomeScreen(state, {}, {}, {}) } }
+        compose.onAllNodesWithTag(EvidenceTags.ADD).assertCountEquals(3)
+        compose.onAllNodesWithTag(EvidenceTags.item(1)).assertCountEquals(1)
+        val row = compose.onNodeWithTag(EvidenceTags.item(1)).fetchSemanticsNode().boundsInRoot
+        val c = compose.onNodeWithTag(HomeTags.side(Side.C)).fetchSemanticsNode().boundsInRoot
+        val b = compose.onNodeWithTag(HomeTags.OTHER).fetchSemanticsNode().boundsInRoot
+        assertTrue("the image sits in box C", row.top >= c.bottom && row.top > b.bottom)
+    }
     @Test
     fun home_checking_showsTheStatusLine() {
         compose.setContent {
