@@ -762,7 +762,7 @@ struct HomeView: View {
                     .lineLimit(1)
                     .frame(minHeight: 40)
                 Image(systemName: "trash")
-                    .frame(width: 24, minHeight: 40)
+                    .frame(width: 24, height: 40)
             }
         }
         .buttonStyle(DangerButtonStyle())
