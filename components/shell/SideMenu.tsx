@@ -7,9 +7,15 @@ import { saveDraftForSignIn } from "@/lib/draft";
 import { t, type Key, type Lang } from "@/lib/i18n";
 import { useViewer } from "@/lib/use-viewer";
 import { liveLabel, stateLabel, titleOf, tone } from "./history-labels";
-import { useHistory, type HistoryItem } from "./useHistory";
+import { removeItems } from "./history-remove";
+import { loadAllHistory, useHistory, type HistoryItem } from "./useHistory";
 import { useLive } from "./useLive";
 import styles from "./shell.module.css";
+
+/** Which headings are folded, kept for the session. */
+const folded = { verdicts: false, links: false };
+
+type Confirm = { kind: HistoryItem["kind"]; ids: string[] | null };
 
 type Props = {
   lang: Lang;
@@ -70,6 +76,37 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
   const showSignIn = accountEntry(viewer.config, viewer.me) === "signin" && !pathname?.startsWith("/signin");
   const [profileOpen, setProfileOpen] = useState(false);
   const profileId = useId();
+  const [, setFolds] = useState(0);
+  const [confirm, setConfirm] = useState<Confirm | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [failed, setFailed] = useState(0);
+
+  const targets = confirm
+    ? history.items.filter(
+        (i) => i.kind === confirm.kind && i.removable && (confirm.ids === null || confirm.ids.includes(i.id)),
+      )
+    : [];
+
+  function toggle(which: "verdicts" | "links") {
+    folded[which] = !folded[which];
+    setFolds((n) => n + 1);
+  }
+
+  async function removeAll(kind: HistoryItem["kind"]) {
+    setFailed(0);
+    setBusy(true);
+    await loadAllHistory();
+    setBusy(false);
+    setConfirm({ kind, ids: null });
+  }
+
+  async function run() {
+    setBusy(true);
+    const bad = await removeItems(targets);
+    setBusy(false);
+    setConfirm(null);
+    setFailed(bad);
+  }
 
   function row(href: string, label: Key, onClick?: (e: MouseEvent) => void) {
     return (
@@ -87,12 +124,39 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
     );
   }
 
-  function section(heading: Key, items: HistoryItem[]) {
+  function confirmText(c: Confirm, n: number) {
+    return t(lang, c.kind === "case" ? "shell.removeLinksConfirm" : "shell.removeConfirm", { n });
+  }
+
+  function section(heading: Key, which: "verdicts" | "links", items: HistoryItem[]) {
     if (items.length === 0) return null;
+    const isFolded = folded[which];
+    const listId = `${profileId}-${which}`;
+    const kind = which === "links" ? "case" : "verdict";
     return (
       <section>
-        <h2 className={styles.menuHeading}>{t(lang, heading)}</h2>
-        <ul>
+        <div className={styles.menuHeadRow}>
+          <h2 className={styles.menuHeading}>
+            <button
+              type="button"
+              className={styles.fold}
+              aria-expanded={!isFolded}
+              aria-controls={listId}
+              onClick={() => toggle(which)}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden className={styles.chevron} data-folded={isFolded ? "" : undefined}>
+                <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              {t(lang, heading)}
+            </button>
+          </h2>
+          {items.some((i) => i.removable) ? (
+            <button type="button" className={styles.removeAll} disabled={busy} onClick={() => void removeAll(kind)}>
+              {t(lang, "shell.removeAll")}
+            </button>
+          ) : null}
+        </div>
+        <ul id={listId} hidden={isFolded}>
           {items.map((item) => {
             const typing = item.kind === "case" && item.state === "waiting" ? liveLabel(lang, live.get(item.id)) : null;
             const state = typing ?? (item.kind === "verdict" && item.state === "removed" ? null : stateLabel(lang, item));
@@ -107,7 +171,7 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
               </>
             );
             return (
-              <li key={`${item.kind}-${item.id}`}>
+              <li key={`${item.kind}-${item.id}`} className={styles.recentItem}>
                 {item.href ? (
                   <Link
                     href={item.href}
@@ -123,6 +187,29 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
                     {inner}
                   </span>
                 )}
+                {item.removable ? (
+                  <button
+                    type="button"
+                    className={styles.trash}
+                    aria-label={t(lang, item.kind === "verdict" ? "verdict.remove" : "case.remove")}
+                    disabled={busy}
+                    onClick={() => {
+                      setFailed(0);
+                      setConfirm({ kind: item.kind, ids: [item.id] });
+                    }}
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden>
+                      <path
+                        d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={1.8}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                ) : null}
               </li>
             );
           })}
@@ -154,8 +241,8 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
               </Link>
             </p>
           ) : null}
-          {section("nav.verdicts", verdicts)}
-          {section("nav.links", links)}
+          {section("nav.verdicts", "verdicts", verdicts)}
+          {section("nav.links", "links", links)}
           {history.items.length === 0 ? (
             history.status === "loading" ? (
               <p className={styles.note} role="status">
@@ -175,12 +262,30 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
               </button>
             </>
           ) : null}
+          {failed > 0 ? (
+            <p className={styles.note} role="alert">
+              {t(lang, "shell.removeFailed", { n: failed })}
+            </p>
+          ) : null}
           {history.more ? (
             <button type="button" className={styles.more} disabled={history.loadingMore} onClick={history.loadMore}>
               {history.loadingMore ? t(lang, "shell.loading") : t(lang, "shell.loadMore")}
             </button>
           ) : null}
         </div>
+        {confirm && targets.length > 0 ? (
+          <div className={styles.confirm} role="alertdialog" aria-label={confirmText(confirm, targets.length)}>
+            <p>{confirmText(confirm, targets.length)}</p>
+            <div className={styles.confirmButtons}>
+              <button type="button" className={styles.more} disabled={busy} onClick={() => setConfirm(null)}>
+                {t(lang, "case.cancel")}
+              </button>
+              <button type="button" className={styles.confirmYes} disabled={busy} onClick={() => void run()}>
+                {t(lang, confirm.ids === null ? "shell.removeAll" : "verdict.remove.yes")}
+              </button>
+            </div>
+          </div>
+        ) : null}
         <div className={styles.menuEnd}>
           <div id={profileId} className={styles.profileItems} hidden={!profileOpen}>
             <Link href="/pricing" className={styles.menuRow} onClick={close}>

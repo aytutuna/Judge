@@ -120,8 +120,8 @@ function listed(history: Record<string, unknown> = {}, over: Partial<ComponentPr
 describe("the menu's lists", () => {
   it("splits verdicts and links under their headings, Verdicts first", () => {
     const html = listed();
-    const verdicts = html.indexOf(`>${t("en", "nav.verdicts")}</h2>`);
-    const links = html.indexOf(`>${t("en", "nav.links")}</h2>`);
+    const verdicts = html.indexOf(`>${t("en", "nav.verdicts")}</button></h2>`);
+    const links = html.indexOf(`>${t("en", "nav.links")}</button></h2>`);
     expect(verdicts).toBeGreaterThan(0);
     expect(links).toBeGreaterThan(verdicts);
     expect(html.indexOf('href="/v/today1"')).toBeLessThan(links);
@@ -129,13 +129,22 @@ describe("the menu's lists", () => {
     expect(html).not.toContain('href="/verdicts"');
   });
 
+  it("folds each heading, offers Remove all, and puts a trash on every removable row", () => {
+    const html = listed();
+    expect(html.split('aria-expanded="true"').length - 1).toBe(2);
+    expect(html.split(`>${t("en", "shell.removeAll")}</button>`).length - 1).toBe(2);
+    const trash = html.split('aria-label="Remove this verdict"').length - 1;
+    expect(trash).toBe(ITEMS.filter((i) => i.kind === "verdict" && i.removable).length);
+    expect(html).not.toContain('aria-label="Remove this verdict" disabled');
+  });
+
   it("hides a section with no items", () => {
     const verdictsOnly = listed({ items: ITEMS.filter((i) => i.kind === "verdict") });
-    expect(verdictsOnly).toContain(`>${t("en", "nav.verdicts")}</h2>`);
-    expect(verdictsOnly).not.toContain(`>${t("en", "nav.links")}</h2>`);
+    expect(verdictsOnly).toContain(`>${t("en", "nav.verdicts")}</button></h2>`);
+    expect(verdictsOnly).not.toContain(`>${t("en", "nav.links")}</button></h2>`);
     const linksOnly = listed({ items: ITEMS.filter((i) => i.kind === "case") });
-    expect(linksOnly).not.toContain(`>${t("en", "nav.verdicts")}</h2>`);
-    expect(linksOnly).toContain(`>${t("en", "nav.links")}</h2>`);
+    expect(linksOnly).not.toContain(`>${t("en", "nav.verdicts")}</button></h2>`);
+    expect(linksOnly).toContain(`>${t("en", "nav.links")}</button></h2>`);
   });
 
   it("links verdicts and cases, each with its state, names put back", () => {
@@ -222,7 +231,7 @@ describe("the menu's lists", () => {
 
   it("speaks Turkish", () => {
     const html = listed({}, { lang: "tr" });
-    expect(html).toContain(`>${t("tr", "nav.links")}</h2>`);
+    expect(html).toContain(`>${t("tr", "nav.links")}</button></h2>`);
     expect(html).toContain(t("tr", "history.state.waiting", { name: "Deniz" }));
   });
 });
@@ -254,7 +263,7 @@ describe("SideMenu", () => {
     const items = Array.from({ length: 30 }, (_, i) => fromRow(row({ id: `many${i}`, headline: `Many ${i}` })));
     const html = listed({ items });
     for (const item of items) expect(html).toContain(titleOf("en", item));
-    expect(html.indexOf("Many 29")).toBeLessThan(html.indexOf("aria-controls="));
+    expect(html.indexOf("Many 29")).toBeLessThan(html.indexOf('aria-expanded="false" aria-controls='));
   });
 
   it("speaks Turkish", () => {
@@ -264,7 +273,7 @@ describe("SideMenu", () => {
 
   it("puts the profile above Settings, with Pricing and Sign in behind it", () => {
     const html = menu();
-    const profile = html.indexOf('aria-controls=');
+    const profile = html.indexOf('aria-expanded="false" aria-controls=');
     expect(profile).toBeGreaterThan(html.indexOf('href="/"'));
     expect(html.indexOf('href="/settings"')).toBeGreaterThan(profile);
     expect(html).toContain(t("en", "nav.account"));

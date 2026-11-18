@@ -33,6 +33,9 @@ describe("locale check", () => {
     expect(checkLocale("es", locale)).toEqual([
       "plurals.home.monthLeft.one: missing",
       "plurals.thread.judgesAgree.one: missing",
+      "plurals.shell.removeConfirm.one: missing",
+      "plurals.shell.removeLinksConfirm.one: missing",
+      "plurals.shell.removeFailed.one: missing",
     ]);
   });
 

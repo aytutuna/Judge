@@ -168,21 +168,131 @@ html:not([data-game="off"]) .gamify {
   flex: none;
   color: var(--ink-2);
 }
-.menuHeading {
+.menuHeadRow {
   display: flex;
   align-items: center;
+  gap: 8px;
   min-height: 44px;
   margin: 8px 0;
   padding: 0 12px;
   border-bottom: 1px solid var(--line);
+}
+.menuList > section:first-child .menuHeadRow {
+  margin-top: 0;
+}
+.menuHeading {
+  flex: 1;
+  margin: 0;
   color: var(--muted);
   font: inherit;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.04em;
 }
-.menuList > section:first-child .menuHeading {
-  margin-top: 0;
+.fold {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.chevron {
+  width: 16px;
+  height: 16px;
+  transform: rotate(90deg);
+  transition: transform var(--dur-1) ease-out;
+}
+.chevron[data-folded] {
+  transform: none;
+}
+:dir(rtl) .chevron[data-folded] {
+  transform: scaleX(-1);
+}
+.removeAll {
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: var(--danger);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.removeAll:disabled,
+.trash:disabled {
+  opacity: 0.4;
+}
+.recentItem {
+  position: relative;
+}
+.recentItem > .recent {
+  padding-inline-end: 44px;
+}
+.trash {
+  position: absolute;
+  inset-block-start: 4px;
+  inset-inline-end: 4px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  color: var(--danger);
+  opacity: 0;
+  cursor: pointer;
+}
+.trash svg {
+  width: 18px;
+  height: 18px;
+}
+.recentItem:hover > .trash,
+.trash:focus-visible {
+  opacity: 1;
+}
+@media (hover: none) {
+  .trash {
+    opacity: 0.7;
+  }
+}
+.confirm {
+  margin: 8px 0 0;
+  padding: 12px;
+  border: 1px solid var(--danger);
+  border-radius: 12px;
+  background: var(--paper);
+  font-size: 14px;
+  line-height: 1.4;
+}
+.confirm p {
+  margin: 0 0 12px;
+}
+.confirmButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.confirmYes {
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--danger);
+  border-radius: 12px;
+  background: none;
+  color: var(--danger);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
 }
 .menuEnd {
   padding-top: 12px;
