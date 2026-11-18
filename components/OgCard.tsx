@@ -7,12 +7,15 @@
  * Server-only (reads the font files from disk).
  */
 
+import { readFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { PALETTE, PALETTE_ALPHA, sideColors } from "@/lib/palette";
-import { BrandMark } from "./BrandMark";
 
 export const OG_SIZE = { width: 1200, height: 630 };
+
+// The 3D mark at 4x its 72px slot (the PNG has a little transparent margin).
+const MARK = `data:image/png;base64,${readFileSync(join(process.cwd(), "assets/og-mark.png")).toString("base64")}`;
 
 /** Nobody is known to be looking at a link preview, so Party A, who
  * started it, is the green side. Tug-bar fills use the 3:1 mark colours and
@@ -109,7 +112,8 @@ export function OgCard({
     >
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <BrandMark size={62} light />
+          {/* eslint-disable-next-line @next/next/no-img-element -- Satori, not the browser */}
+          <img src={MARK} width={72} height={72} alt="" style={{ margin: -5, flexShrink: 0 }} />
           <div
             style={{
               display: "flex",
