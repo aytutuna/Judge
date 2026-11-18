@@ -91,12 +91,12 @@ data class HomeUiState(
 
     /**
      * Tokens of sides B to D, one list per side after A as the server counts them: only sides in the
-     * request, and none at all when nothing was added outside box A.
+     * request (B counts whenever its box is open), and none at all when nothing was added outside box A.
      */
     val otherTokens: List<List<String>>
         get() {
             if (!evidenceOn) return emptyList()
-            val sides = if (more.isNotEmpty()) 1 + more.size else if (otherSide.isNotBlank()) 1 else 0
+            val sides = if (more.isNotEmpty()) 1 + more.size else if (theirsOpen) 1 else 0
             val lists = otherEvidence.take(sides).map { it.tokens }
             return if (lists.all { it.isEmpty() }) emptyList() else lists
         }

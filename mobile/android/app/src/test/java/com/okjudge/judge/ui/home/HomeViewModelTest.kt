@@ -387,10 +387,10 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun imagesInABoxWithoutAWrittenSide_areLeftOut() = runBlocking {
+    fun imagesInAnOpenBoxWithoutText_stillCount() = runBlocking {
         val vm = evidenceVm(); vm.addTheirSide()
         vm.onAddEvidence(Side.B, listOf(shot()))
-        assertTrue(vm.settled().otherTokens.isEmpty())
+        assertEquals(listOf(1), vm.settled().otherTokens.map { it.size })
     }
 
     @Test

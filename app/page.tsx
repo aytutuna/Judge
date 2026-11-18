@@ -691,7 +691,8 @@ export default function Home() {
               holding={holding}
               error={error}
               status={progress ?? (entitlement ? <Balance lang={lang} entitlement={entitlement} /> : null)}
-              evidence={evidenceOffered ? evidence : undefined}              onAddContextSignIn={signedIn ? undefined : addContextSignIn}
+              evidence={evidenceOffered ? evidence : undefined}
+              onAddContextSignIn={signedIn ? undefined : addContextSignIn}
             />
           )}
         </div>

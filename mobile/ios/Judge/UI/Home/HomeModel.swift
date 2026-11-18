@@ -267,11 +267,11 @@ final class HomeModel {
     }
 
     /// Tokens for the sides after A, as many lists as the request has sides:
-    /// the joined text has B only when B wrote something. Empty when no
-    /// side but A has images.
+    /// B counts whenever its box is open. Empty when no side but A has
+    /// images.
     func otherTokens(_ app: AppModel) -> [[String]] {
         guard app.evidenceOn else { return [] }
-        let count = more.isEmpty ? (otherSide.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? 0 : 1) : 1 + more.count
+        let count = more.isEmpty ? (theirsOpen ? 1 : 0) : 1 + more.count
         let lists = otherEvidence.prefix(count).map(\.tokens)
         return lists.contains { !$0.isEmpty } ? lists : []
     }

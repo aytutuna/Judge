@@ -151,7 +151,7 @@ const EVIDENCE_MARK = /\n\nEVIDENCE (?:FROM PARTY [A-D] )?\(machine transcripts/
 export function splitStoredInput(v: Pick<StoredVerdict, "input" | "result">): { account: string; evidence: string | null } {
   const blocks = Object.values(v.result.evidence_used ?? {}).filter((n) => n > 0).length;
   const marks = blocks > 0 ? [...v.input.matchAll(EVIDENCE_MARK)] : [];
-  const at = marks.length >= blocks ? (marks[marks.length - blocks]?.index ?? -1) : -1;
+  const at = marks.length > 0 ? (marks[Math.max(0, marks.length - blocks)]?.index ?? -1) : -1;
   return at < 0 ? { account: v.input, evidence: null } : { account: v.input.slice(0, at), evidence: v.input.slice(at + 2) };
 }
 

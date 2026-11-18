@@ -904,11 +904,15 @@ final class PremiumFlowTests: XCTestCase {
         let home = app.home
         home.argument = "My flatmate keeps eating my food and says it was fair game."
         home.addTheirSide()
-        home.otherSide = "I never touch anything labelled and I told them so twice."
         func attach(_ box: EvidenceModel, _ token: String) {
             let ids = box.reserve(1)
             box.apply([EvidenceUploadItem(index: 0, status: "ok", token: token, preview: "p")], sent: ids)
         }
+        attach(home.pool(for: .b), "tok-b")
+        XCTAssertEqual(home.otherTokens(app), [["tok-b"]], "an open box counts even without text")
+        home.evidence.clear()
+        home.pool(for: .b).clear()
+        home.otherSide = "I never touch anything labelled and I told them so twice."
         attach(home.evidence, "tok-a")
         XCTAssertTrue(home.otherTokens(app).isEmpty, "only box A has images")
         attach(home.pool(for: .b), "tok-b")
