@@ -228,7 +228,7 @@ html:not([data-game="off"]) .gamify {
   cursor: pointer;
 }
 .removeAll:disabled,
-.trash:disabled {
+.recentItem:hover > .trash:disabled {
   opacity: 0.4;
 }
 .recentItem {

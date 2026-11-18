@@ -242,6 +242,8 @@ export async function loadAllHistory(): Promise<void> {
   for (;;) {
     const cursor = state?.data?.next;
     if (!cursor) return;
+    while (state?.loadingMore) await new Promise((r) => setTimeout(r, 50));
+    if (state?.data?.next !== cursor) continue;
     await loadMore();
     if (state?.data?.next === cursor) return;
   }
