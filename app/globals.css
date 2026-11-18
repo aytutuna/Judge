@@ -40,6 +40,10 @@
 
   --danger: #B3261E;
 
+  /* Gamify button */
+  --ruby: #B5123A;
+  --ruby-ink: #9B0E31;
+
   --line: rgba(28, 25, 22, 0.1);
   --line-2: rgba(28, 25, 22, 0.14);
   --glass: rgba(255, 255, 255, 0.68);
@@ -64,6 +68,8 @@
     --stone: #3A3A3A;
     --strata: #262626;
     --danger: #F5727E;
+    --ruby: #B5123A;
+    --ruby-ink: #F0567A;
     --line: rgba(241, 235, 225, 0.1);
     --line-2: rgba(241, 235, 225, 0.16);
     --glass: rgba(13, 13, 13, 0.72);
@@ -88,6 +94,8 @@
   --stone: #3A3A3A;
   --strata: #262626;
   --danger: #F5727E;
+  --ruby: #B5123A;
+  --ruby-ink: #F0567A;
   --line: rgba(241, 235, 225, 0.1);
   --line-2: rgba(241, 235, 225, 0.16);
   --glass: rgba(13, 13, 13, 0.72);

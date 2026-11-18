@@ -31,6 +31,11 @@ export const PALETTE = {
 
 export type PaletteKey = keyof typeof PALETTE;
 
+/** The Gamify button's red. Kept out of PALETTE: the apps' generated tokens
+ * come from that, and each app defines its own copy of these two. */
+export const RUBY = { ruby: "#B5123A", rubyInk: "#9B0E31" } as const;
+export const RUBY_DARK = { ruby: "#B5123A", rubyInk: "#F0567A" } as const;
+
 /** Translucent colours, written exactly as in globals.css. */
 export const PALETTE_ALPHA = {
   line: "rgba(28, 25, 22, 0.1)",

@@ -7,6 +7,8 @@ import {
   PALETTE_ALPHA_DARK,
   PALETTE_DARK,
   PALETTE_NUM,
+  RUBY,
+  RUBY_DARK,
   contrast,
   cssVarName,
   greenParty,
@@ -57,6 +59,12 @@ describe("palette", () => {
     }
   });
 
+  it("the Gamify ruby is declared with the same hexes in light and dark", () => {
+    for (const [key, hex] of Object.entries(RUBY)) expect(tokens.get(cssVarName(key as PaletteKey))!.toUpperCase(), key).toBe(hex);
+    const dark = tokenBlock(css.slice(css.indexOf("@media (prefers-color-scheme: dark) {")), MEDIA_DARK);
+    for (const [key, hex] of Object.entries(RUBY_DARK)) expect(dark.get(cssVarName(key as PaletteKey))!.toUpperCase(), key).toBe(hex);
+  });
+
   it("every translucent palette colour is declared in globals.css with the same value", () => {
     for (const key of Object.keys(PALETTE_ALPHA) as PaletteAlphaKey[]) {
       const name = cssVarName(key);
@@ -67,7 +75,7 @@ describe("palette", () => {
 
   it("the token block declares nothing the palette does not know about", () => {
     const known = new Set(
-      [...Object.keys(PALETTE), ...Object.keys(PALETTE_ALPHA)].map((k) =>
+      [...Object.keys(PALETTE), ...Object.keys(PALETTE_ALPHA), ...Object.keys(RUBY)].map((k) =>
         cssVarName(k as PaletteKey),
       ),
     );
@@ -88,7 +96,7 @@ describe("palette", () => {
     expect(at).toBeGreaterThan(css.indexOf(":root {"));
     expect(css).toMatch(/@media \(prefers-color-scheme: dark\) \{\s*:root:not\(\[data-theme="light"\]\) \{/);
     expect(css).toMatch(/color-scheme:\s*light dark;/);
-    const dark = { ...PALETTE_DARK, ...PALETTE_ALPHA_DARK };
+    const dark = { ...PALETTE_DARK, ...PALETTE_ALPHA_DARK, ...RUBY_DARK };
     const keys = Object.keys(dark) as (PaletteKey | PaletteAlphaKey)[];
     const block = tokenBlock(css.slice(at), MEDIA_DARK);
     expect([...block.keys()].sort()).toEqual(keys.map(cssVarName).sort());
