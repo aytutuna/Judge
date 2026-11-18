@@ -111,6 +111,20 @@ class HistoryViewModelTest {
     }
 
     @Test
+    fun aPageOneThatGrewPastOnePage_bringsPagingBack() = runBlocking {
+        server.enqueue(json(200, pageJson(listOf(item("a", "2026-10-05T00:00:00.000Z")), null)))
+        server.enqueue(json(200, pageJson(listOf(item("b", "2026-10-07T00:00:00.000Z"), item("a", "2026-10-05T00:00:00.000Z")), "cur2")))
+        val model = vm()
+        user.value = "u1"
+        take()
+        withTimeout(5_000) { model.paging.first { it.loadedAll } }
+        model.refresh(force = true)
+        take()
+        withTimeout(5_000) { model.paging.first { it.next == "cur2" } }
+        assertEquals(false, model.paging.value.loadedAll)
+    }
+
+    @Test
     fun aShowMoreThatFails_saysSo_andTheNextTryClearsIt() = runBlocking {
         server.enqueue(json(200, pageJson(listOf(item("a", "2026-10-05T00:00:00.000Z")), "cur1")))
         server.enqueue(json(500, """{"error":"Something went wrong."}"""))

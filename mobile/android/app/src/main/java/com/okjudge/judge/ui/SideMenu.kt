@@ -95,6 +95,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.okjudge.judge.core.model.LiveState
 import com.okjudge.judge.core.model.Viewer
+import com.okjudge.judge.core.display.Errors
+import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.i18n.Strings
@@ -337,7 +339,7 @@ internal fun MenuPanel(
                 if (notice != null) {
                     item(key = "notice") {
                         Text(
-                            noticeText(notice, s),
+                            noticeText(notice, s, LocalLang.current),
                             style = JudgeType.small.copy(color = Palette.danger),
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -469,9 +471,10 @@ internal fun liveLabel(live: LiveState?, s: Strings): String? = when (live) {
     else -> null
 }
 
-private fun noticeText(notice: HistoryNotice, s: Strings) = when (notice) {
+private fun noticeText(notice: HistoryNotice, s: Strings, lang: AppLang) = when (notice) {
     HistoryNotice.Offline -> s.appHistoryOfflineRemove
     is HistoryNotice.RemoveFailed -> s.appHistoryRemoveFailed(notice.count)
+    is HistoryNotice.RateLimited -> Errors.message(notice.error, s, lang)
     HistoryNotice.OpenFailed -> s.errorFallback
     HistoryNotice.LoadMoreFailed -> s.shellLoadFailed
 }

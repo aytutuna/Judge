@@ -91,6 +91,7 @@ data class HistoryPaging(
 sealed interface HistoryNotice {
     data object Offline : HistoryNotice
     data class RemoveFailed(val count: Int) : HistoryNotice
+    data class RateLimited(val error: UiError) : HistoryNotice
     data object OpenFailed : HistoryNotice
     data object LoadMoreFailed : HistoryNotice
 }
@@ -164,8 +165,9 @@ class HistoryViewModel(
     /** Page 1 reloaded keeps what Show more loaded below it. */
     private fun afterFirstPage(now: HistoryPaging, page: HistoryPage): HistoryPaging {
         val pageLast = page.items.lastOrNull()
-        val deeper = now.loadedAt != null && page.next != null &&
-            (now.loadedAll || (now.last != null && pageLast != null && HistoryOrder.compare(pageLast.at to pageLast.key, now.last.at to now.last.key) < 0))
+        // A state with no cursor left cannot continue from a page 1 that now has one.
+        val deeper = now.loadedAt != null && page.next != null && now.next != null &&
+            now.last != null && pageLast != null && HistoryOrder.compare(pageLast.at to pageLast.key, now.last.at to now.last.key) < 0
         if (deeper) return now.copy(loading = false, failed = false, loadedAt = clock())
         return HistoryPaging(next = page.next, last = pageLast, loadedAll = page.next == null, loadedAt = clock())
     }
@@ -224,9 +226,10 @@ class HistoryViewModel(
             picked.filterIsInstance<HistoryEntry.Phone>().forEach { history.delete(it.verdict.id) }
             val failed = linkedSetOf<String>()
             var offline = false
+            var limited: UiError? = null
             var stale = false
             for (entry in picked.filterIsInstance<HistoryEntry.Account>()) {
-                if (offline || id == null) {
+                if (offline || limited != null || id == null) {
                     failed += entry.key
                     continue
                 }
@@ -237,6 +240,10 @@ class HistoryViewModel(
                         offline = true
                         failed += entry.key
                     }
+                    error is UiError.Api && (error.code == "rate_limited" || error.status == 429) -> {
+                        limited = error
+                        failed += entry.key
+                    }
                     // Removed meanwhile (or not this account's any more): the list catches up.
                     error is UiError.Api && error.code in GONE -> stale = true
                     else -> failed += entry.key
@@ -244,6 +251,7 @@ class HistoryViewModel(
             }
             _notice.value = when {
                 offline -> HistoryNotice.Offline
+                limited != null -> HistoryNotice.RateLimited(limited)
                 failed.isNotEmpty() -> HistoryNotice.RemoveFailed(failed.size)
                 else -> null
             }
