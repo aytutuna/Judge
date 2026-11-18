@@ -403,9 +403,6 @@ export function HomeForm(p: HomeFormProps) {
 
         <div className={styles.dock}>
           <div className={styles.bar}>
-            <span className={styles.count} data-warn={p.length > WARN_AT ? "" : undefined} aria-hidden>
-              {p.length.toLocaleString(tag)} / {MAX_ARGUMENT.toLocaleString(tag)}
-            </span>
             {p.blank ? null : (
               <button type="button" className={styles.clear} aria-label={t(lang, "home.clear")} onClick={p.onClear}>
                 <svg viewBox="0 0 20 20" aria-hidden>
@@ -421,6 +418,9 @@ export function HomeForm(p: HomeFormProps) {
                 <span className={styles.clearLabel}>{t(lang, "home.clear")}</span>
               </button>
             )}
+            <span className={styles.count} data-warn={p.length > WARN_AT ? "" : undefined} aria-hidden>
+              {p.length.toLocaleString(tag)} / {MAX_ARGUMENT.toLocaleString(tag)}
+            </span>
             <button
               type="submit"
               className={styles.send}

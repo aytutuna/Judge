@@ -75,11 +75,13 @@
 .bar {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   gap: 12px;
 }
+.bar .count {
+  margin-inline-start: auto;
+}
 
-/* Beside the send button: icon and word when they fit, the icon alone when they don't. */
+/* At the leading edge of the send row: icon and word when they fit, the icon alone when they don't. */
 .clear {
   display: inline-flex;
   align-items: center;
@@ -107,7 +109,7 @@
 .clearLabel {
   white-space: nowrap;
 }
-@container (max-width: 340px) {
+@container (max-width: 280px) {
   .clear {
     padding: 0 8px;
   }

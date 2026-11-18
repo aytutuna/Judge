@@ -91,14 +91,15 @@ describe("HomeForm", () => {
     expect(html).not.toMatch(/<button type="submit"[^>]*disabled/);
   });
 
-  it("Clear sits in the send row, between the counter and Send, and only once something is typed", () => {
+  it("Clear sits in the send row, at the leading edge before the counter and Send, and only once something is typed", () => {
     const typed = form({ mine: "A long enough argument about the dishes.", blank: false });
     const counter = typed.indexOf("0 / 6,000");
     const clear = typed.indexOf(`aria-label="${t("en", "home.clear")}"`);
     const send = typed.indexOf('type="submit"');
     expect(counter).toBeGreaterThan(-1);
-    expect(clear).toBeGreaterThan(counter);
-    expect(send).toBeGreaterThan(clear);
+    expect(clear).toBeGreaterThan(-1);
+    expect(counter).toBeGreaterThan(clear);
+    expect(send).toBeGreaterThan(counter);
     expect(form()).not.toContain(`aria-label="${t("en", "home.clear")}"`);
   });
 
