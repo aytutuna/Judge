@@ -281,6 +281,16 @@
   height: 15px;
 }
 
+.files {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.card[data-docked] .files {
+  max-height: 24dvh;
+  overflow-y: auto;
+}
+
 .count {
   margin-inline-start: auto;
   color: var(--muted);

@@ -141,8 +141,8 @@ export type HomeFormProps = {
   error: string | null;
   /** "Checking…" or "Creating…" while holding, else the balance. */
   status: ReactNode;
-  /** Context uploads, when this deployment has them. */
-  evidence?: EvidenceController;
+  /** Context uploads, when this deployment has them: one per side box, A to D. */
+  evidence?: readonly EvidenceController[];
   /** Signed out: "Add context" asks for sign-in instead of picking a file. */
   onAddContextSignIn?: () => void;
 };
@@ -167,26 +167,48 @@ export function HomeForm(p: HomeFormProps) {
   }, [p.theirsOpen, more.length]);
 
   // Short of room the middle rests at its top; keep the part by the composer in view.
+  const pictured = evidence?.map((e) => `${e.items.length}${e.failure ? "f" : ""}${e.overLimit ? "o" : ""}`).join();
   useLayoutEffect(() => {
     const el = mid.current;
     if (el) el.scrollTop = el.scrollHeight;
-  }, [p.error, p.theirsOpen, more.length, evidence?.items.length, evidence?.failure, evidence?.overLimit]);
+  }, [p.error, p.theirsOpen, more.length, pictured]);
 
-  const addContext = evidence ? (
-    <EvidenceAdd disabled={evidence.full} className={styles.context} onAdd={evidence.add} onSignIn={p.onAddContextSignIn}>
-      <svg viewBox="0 0 24 24" aria-hidden>
-        <path
-          d="M21 11.5 12.5 20a5.5 5.5 0 0 1-7.8-7.8l8.5-8.5a3.7 3.7 0 0 1 5.2 5.2l-8.5 8.5a1.8 1.8 0 0 1-2.6-2.6L15 7"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-      {t(lang, "home.addContext")}
-    </EvidenceAdd>
-  ) : null;
+  /** The images of box `i` (sides A to D), and the notes when picking went wrong. */
+  const files = (i: number) => {
+    const e = evidence?.[i];
+    if (!e || p.onAddContextSignIn || !(e.items.length || e.failure || e.overLimit)) return null;
+    return (
+      <div className={styles.files}>
+        <EvidenceRows lang={lang} items={e.items} onRemove={e.remove} />
+        <EvidenceNotes lang={lang} overLimit={e.overLimit} failure={e.failure} />
+      </div>
+    );
+  };
+
+  const addContext = (i: number) =>
+    evidence ? (
+      <EvidenceAdd disabled={evidence[i].full} className={styles.context} onAdd={evidence[i].add} onSignIn={p.onAddContextSignIn}>
+        <svg viewBox="0 0 24 24" aria-hidden>
+          <path
+            d="M21 11.5 12.5 20a5.5 5.5 0 0 1-7.8-7.8l8.5-8.5a3.7 3.7 0 0 1 5.2 5.2l-8.5 8.5a1.8 1.8 0 0 1-2.6-2.6L15 7"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        {t(lang, "home.addContext")}
+      </EvidenceAdd>
+    ) : null;
+
+  /** The part of a box under its text: its images and its Add context button. */
+  const context = (i: number) => (
+    <>
+      {files(i)}
+      {evidence ? <div className={styles.row}>{addContext(i)}</div> : null}
+    </>
+  );
 
   const mine: Side = {
     id: "argument",
@@ -264,6 +286,7 @@ export function HomeForm(p: HomeFormProps) {
         }
       : null;
   const composer = !p.theirsOpen ? mine : (sideD ?? sideC ?? theirs);
+  const composerIndex = !p.theirsOpen ? 0 : sideD ? 3 : sideC ? 2 : 1;
   const lastText = (more.length ? more[more.length - 1].text : p.theirs).trim();
   const othersEmpty = !p.theirs.trim() && more.every((s) => !s.text.trim());
   // Another side once the last one has text, or links for everyone else while none has.
@@ -285,17 +308,18 @@ export function HomeForm(p: HomeFormProps) {
         <div className={styles.mid} ref={mid}>
           {p.theirsOpen ? (
             <SideCard side={mine} head>
-              {addContext ? <div className={styles.row}>{addContext}</div> : null}
+              {context(0)}
             </SideCard>
           ) : null}
-          {p.theirsOpen && sideC ? <SideCard side={theirs} head /> : null}
-          {p.theirsOpen && sideD ? <SideCard side={sideC as Side} head /> : null}
-
-          {evidence && !p.onAddContextSignIn ? (
-            <>
-              <EvidenceRows lang={lang} items={evidence.items} onRemove={evidence.remove} />
-              <EvidenceNotes lang={lang} overLimit={evidence.overLimit} failure={evidence.failure} />
-            </>
+          {p.theirsOpen && sideC ? (
+            <SideCard side={theirs} head>
+              {context(1)}
+            </SideCard>
+          ) : null}
+          {p.theirsOpen && sideD ? (
+            <SideCard side={sideC as Side} head>
+              {context(2)}
+            </SideCard>
           ) : null}
 
           {p.error ? (
@@ -367,8 +391,9 @@ export function HomeForm(p: HomeFormProps) {
 
         <div className={styles.dock}>
           <SideCard key={composer.id} side={composer} head={p.theirsOpen} docked>
+            {files(composerIndex)}
             <div className={styles.row}>
-              {addContext}
+              {addContext(composerIndex)}
               <span className={styles.count} data-warn={p.length > WARN_AT ? "" : undefined} aria-hidden>
                 {p.length.toLocaleString(tag)} / {MAX_ARGUMENT.toLocaleString(tag)}
               </span>

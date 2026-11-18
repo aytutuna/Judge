@@ -83,6 +83,8 @@ function wakefulSleep(ms: number): Promise<void> {
 type PremiumInput = {
   argument: string;
   evidence: string[];
+  /** Tokens of the images in sides B to D, in order; empty when none have any. */
+  otherEvidence: string[][];
   mine: JudgedSide | null;
   theirs: JudgedSide | null;
   /** Sides C and D. */
@@ -146,7 +148,12 @@ export default function Home() {
   const router = useRouter();
   const [creating, setCreating] = useState(false);
   const [toast, showToast] = useToast();
-  const evidence = useEvidence(EVIDENCE_ENDPOINT, MAX_EVIDENCE_PER_SIDE);
+  // One picker per side box, A to D: a screenshot belongs to the box it was added in.
+  const evidenceA = useEvidence(EVIDENCE_ENDPOINT, MAX_EVIDENCE_PER_SIDE);
+  const evidenceB = useEvidence(EVIDENCE_ENDPOINT, MAX_EVIDENCE_PER_SIDE);
+  const evidenceC = useEvidence(EVIDENCE_ENDPOINT, MAX_EVIDENCE_PER_SIDE);
+  const evidenceD = useEvidence(EVIDENCE_ENDPOINT, MAX_EVIDENCE_PER_SIDE);
+  const evidence = [evidenceA, evidenceB, evidenceC, evidenceD];
   // The current argument. "New argument" or leaving the page aborts it:
   // the clarify check is cancelled, while a verdict or case already sent
   // runs to the end so its owner token and history entry are kept, just
@@ -226,6 +233,8 @@ export default function Home() {
   const shownMineName = mineName ?? firstNameOf(viewer.me?.user?.name) ?? "";
   const joined = joinSides(lang, { text: argument, name: shownMineName }, { text: otherSide, name: otherName }, more);
 
+  const reading = evidence.some((e) => e.busy);
+
   // Until /me answers, a click could send a signed-in writer to sign in.
   // If it failed, the server decides (401 when signed out).
   const viewerKnown = viewer.status === "ready" || viewer.status === "error";
@@ -236,7 +245,7 @@ export default function Home() {
     joined.length <= MAX_ARGUMENT &&
     viewerKnown &&
     !holding &&
-    !(evidenceOn && evidence.busy);
+    !(evidenceOn && reading);
 
   // A link needs a side worth judging, or none at all (the other person can
   // write theirs first); text with a few words or only images does not count.
@@ -244,8 +253,9 @@ export default function Home() {
     (!theirsOpen || (!otherSide.trim() && more.every((s) => !s.text.trim()))) &&
     viewerKnown &&
     !holding &&
-    !(evidenceOn && evidence.busy) &&
-    inviteTextOk(argument, evidence.items.length);
+    !(evidenceOn && reading) &&
+    !evidence.slice(1).some((e) => e.items.length > 0) &&
+    inviteTextOk(argument, evidenceA.items.length);
 
   function signInFirst() {
     saveDraftForSignIn();
@@ -322,9 +332,12 @@ export default function Home() {
   async function submitPremium() {
     track("case_submitted");
     // Judged as submitted: later edits never mix into this request.
+    const others = evidence.slice(1, theirsOpen ? 2 + more.length : 1).map((e) => (evidenceOn ? e.tokens : []));
+    const otherTokens = others.some((tokens) => tokens.length > 0) ? others : [];
     const input: PremiumInput = {
       argument: joined,
-      evidence: evidenceOn ? evidence.tokens : [],
+      evidence: evidenceOn ? evidenceA.tokens : [],
+      otherEvidence: otherTokens,
       mine: argument.trim() ? { name: shownMineName, text: argument.trim() } : null,
       theirs: otherSide.trim() ? { name: otherName, text: otherSide.trim() } : null,
       more: more.map((s) => ({ name: s.name, text: s.text.trim() })),
@@ -389,6 +402,7 @@ export default function Home() {
       lang,
       ...(clarifications ? { clarifications } : {}),
       ...(input.evidence.length ? { evidence: input.evidence } : {}),
+      ...(input.otherEvidence.length ? { otherEvidence: input.otherEvidence } : {}),
       ...(input.more.length ? { sides: typedSides(input) } : {}),
     });
     const key = keyFor(request);
@@ -453,7 +467,7 @@ export default function Home() {
    * other side's account fills the gaps. */
   async function createCase() {
     track("case_submitted");
-    const tokens = evidenceOn ? evidence.tokens : [];
+    const tokens = evidenceOn ? evidenceA.tokens : [];
     const text = argument.trim() ? argument : undefined;
     const signal = threadSignal();
     clearDraft();
@@ -526,7 +540,7 @@ export default function Home() {
     setCreating(false);
     setQuestions([]);
     setAnswers({});
-    evidence.clear();
+    for (const e of evidence) e.clear();
     setPhase("form");
     window.scrollTo({ top: 0 });
   }
@@ -552,6 +566,7 @@ export default function Home() {
     setOtherSide("");
     setOtherName("");
     setMore([]);
+    for (const e of evidence.slice(1)) e.clear();
     setTheirsOpen(false);
     if (mineName !== null && mineName === exampleName.current) setMineName(null);
     exampleName.current = null;
@@ -661,9 +676,12 @@ export default function Home() {
               onMoreText={(i, text) => setMore((m) => m.map((s, j) => (j === i ? { ...s, text } : s)))}
               onMoreName={(i, name) => setMore((m) => m.map((s, j) => (j === i ? { ...s, name } : s)))}
               onAddMore={() => setMore((m) => [...m, { text: "", name: "" }])}
-              onRemoveMore={() => setMore((m) => m.slice(0, -1))}
+              onRemoveMore={() => {
+                evidence[1 + more.length].clear();
+                setMore((m) => m.slice(0, -1));
+              }}
               length={joined.length}
-              blank={!argument && !theirsOpen && evidence.items.length === 0}
+              blank={!argument && !theirsOpen && evidenceA.items.length === 0}
               onClear={reset}
               onExample={() => void fillExample()}
               canSubmit={canSubmit}
@@ -673,8 +691,7 @@ export default function Home() {
               holding={holding}
               error={error}
               status={progress ?? (entitlement ? <Balance lang={lang} entitlement={entitlement} /> : null)}
-              evidence={evidenceOffered ? evidence : undefined}
-              onAddContextSignIn={signedIn ? undefined : addContextSignIn}
+              evidence={evidenceOffered ? evidence : undefined}              onAddContextSignIn={signedIn ? undefined : addContextSignIn}
             />
           )}
         </div>

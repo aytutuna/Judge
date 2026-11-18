@@ -101,24 +101,48 @@ describe("HomeForm", () => {
     expect(html.match(/type="submit"/g)).toHaveLength(1);
   });
 
-  it("context: the add control sits in the composer, the rows and notes above it", () => {
+  it("context: each box has its own add control, its own rows and its own notes", () => {
+    const item = { id: "a", n: 1, name: "chat.png", thumb: null, status: "ok" as const, token: "t", preview: null };
+    const none = [evidence, evidence, evidence, evidence];
     const html = form({
-      evidence: {
-        ...evidence,
-        items: [{ id: "a", n: 1, name: "chat.png", thumb: null, status: "ok", token: "t", preview: null }],
-        overLimit: true,
-      },
+      theirsOpen: true,
+      theirs: "Theirs",
+      evidence: [none[0], { ...evidence, items: [item], overLimit: true }, none[2], none[3]],
     });
-    expect(html).toContain(t("en", "home.addContext"));
-    expect(html).toContain('aria-label="Remove image 1"');
+    expect(html.match(new RegExp(t("en", "home.addContext"), "g"))).toHaveLength(2);
+    const second = html.indexOf('id="other-side"');
+    const rows = html.indexOf('aria-label="Remove image 1"');
+    expect(second).toBeGreaterThan(-1);
+    expect(rows).toBeGreaterThan(second);
+    expect(html.match(/aria-label="Remove image 1"/g)).toHaveLength(1);
     expect(html).toContain(esc(t("en", "evidence.limit")));
     expect(html).not.toContain(t("en", "evidence.hint", { n: 3 }));
   });
 
+  it("context: one box alone holds the control and the rows of side A", () => {
+    const item = { id: "a", n: 1, name: "chat.png", thumb: null, status: "ok" as const, token: "t", preview: null };
+    const html = form({ evidence: [{ ...evidence, items: [item] }, evidence, evidence, evidence] });
+    expect(html.match(new RegExp(t("en", "home.addContext"), "g"))).toHaveLength(1);
+    expect(html).toContain('aria-label="Remove image 1"');
+  });
+
+  it("context: sides C and D each carry a control", () => {
+    const four = [evidence, evidence, evidence, evidence];
+    const html = form({
+      theirsOpen: true,
+      more: [
+        { text: "c", name: "" },
+        { text: "d", name: "" },
+      ],
+      evidence: four,
+    });
+    expect(html.match(new RegExp(t("en", "home.addContext"), "g"))).toHaveLength(4);
+  });
+
   it("context: signed out the control is the same as signed in", () => {
-    const signedOut = form({ evidence, onAddContextSignIn: noop });
+    const signedOut = form({ evidence: [evidence], onAddContextSignIn: noop });
     expect(signedOut).toContain(t("en", "home.addContext"));
-    expect(signedOut.match(/<button[^>]*>/g)).toEqual(form({ evidence }).match(/<button[^>]*>/g));
+    expect(signedOut.match(/<button[^>]*>/g)).toEqual(form({ evidence: [evidence] }).match(/<button[^>]*>/g));
   });
 
   it("context: signed out shows no evidence rows or notes", () => {
@@ -127,7 +151,7 @@ describe("HomeForm", () => {
       items: [{ id: "a", n: 1, name: "chat.png", thumb: null, status: "ok" as const, token: "t", preview: null }],
       overLimit: true,
     };
-    const html = form({ evidence: withItem, onAddContextSignIn: noop });
+    const html = form({ evidence: [withItem], onAddContextSignIn: noop });
     expect(html).toContain(t("en", "home.addContext"));
     expect(html).not.toContain('aria-label="Remove image 1"');
     expect(html).not.toContain(esc(t("en", "evidence.limit")));
