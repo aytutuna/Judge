@@ -95,6 +95,7 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
 
   async function removeAll(kind: HistoryItem["kind"]) {
     setFailed(0);
+    setLimited(null);
     setBusy(true);
     await loadAllHistory();
     setBusy(false);
@@ -197,6 +198,7 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
                     disabled={busy}
                     onClick={() => {
                       setFailed(0);
+                      setLimited(null);
                       setConfirm({ kind: item.kind, ids: [item.id] });
                     }}
                   >
@@ -266,7 +268,7 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
           ) : null}
           {failed > 0 ? (
             <p className={styles.note} role="alert">
-              {t(lang, "shell.removeFailed", { n: failed })}
+              {limited ?? t(lang, "shell.removeFailed", { n: failed })}
             </p>
           ) : null}
           {history.more ? (
