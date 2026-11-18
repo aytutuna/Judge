@@ -539,10 +539,10 @@ struct HomeView: View {
         }
     }
 
-    /// The counter and the send button.
+    /// The counter, Clear and the send button.
     private func bottomRow(_ lang: AppLang, home: HomeModel) -> some View {
         HStack(alignment: .center, spacing: 12) {
-            Spacer(minLength: 0)
+            Spacer(minLength: 0).layoutPriority(-1)
             counter(lang, home: home)
                 .fixedSize()
             if !home.isBlank {
@@ -767,7 +767,7 @@ struct HomeView: View {
         }
         .buttonStyle(DangerButtonStyle())
         .frame(minHeight: 44)
-        .layoutPriority(-1)
+        .contentShape(Rectangle())
         .disabled(home.isBusy)
         .accessibilityLabel(title)
     }
