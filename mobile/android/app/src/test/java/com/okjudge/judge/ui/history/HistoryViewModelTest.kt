@@ -125,6 +125,41 @@ class HistoryViewModelTest {
     }
 
     @Test
+    fun aPageOneRefreshAfterEverythingLoaded_keepsLoadedAll() = runBlocking {
+        val one = pageJson(listOf(item("a", "2026-10-05T00:00:00.000Z"), item("b", "2026-10-04T00:00:00.000Z")), "cur1")
+        server.enqueue(json(200, one))
+        server.enqueue(json(200, pageJson(listOf(item("c", "2026-10-01T00:00:00.000Z")), null)))
+        server.enqueue(json(200, one))
+        val model = vm()
+        user.value = "u1"
+        take()
+        withTimeout(5_000) { model.paging.first { it.next == "cur1" && !it.loading } }
+        model.loadMore()
+        take()
+        withTimeout(5_000) { model.paging.first { it.loadedAll && !it.loadingMore } }
+        model.refresh(force = true)
+        take()
+        withTimeout(5_000) { model.paging.first { it.loadedAt != null && !it.loading } }
+        keys(model, "v:a", "v:b", "v:c")
+        assertEquals(true, model.paging.value.loadedAll)
+        assertNull(model.paging.value.next)
+    }
+
+    @Test
+    fun aPageOneWithNoRowFromTheLoadedList_startsPagingOver() = runBlocking {
+        server.enqueue(json(200, pageJson(listOf(item("a", "2026-10-05T00:00:00.000Z")), null)))
+        server.enqueue(json(200, pageJson((1..20).map { item("n$it", "2026-10-%02dT00:00:00.000Z".format(30 - it)) }, "cur2")))
+        val model = vm()
+        user.value = "u1"
+        take()
+        withTimeout(5_000) { model.paging.first { it.loadedAll } }
+        model.refresh(force = true)
+        take()
+        withTimeout(5_000) { model.paging.first { it.next == "cur2" } }
+        assertEquals(false, model.paging.value.loadedAll)
+    }
+
+    @Test
     fun aShowMoreThatFails_saysSo_andTheNextTryClearsIt() = runBlocking {
         server.enqueue(json(200, pageJson(listOf(item("a", "2026-10-05T00:00:00.000Z")), "cur1")))
         server.enqueue(json(500, """{"error":"Something went wrong."}"""))

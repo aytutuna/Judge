@@ -80,6 +80,8 @@ data class HistoryPaging(
     val loadingMore: Boolean = false,
     /** The last row loaded this session. */
     val last: HistoryItem? = null,
+    /** Key of the newest row loaded, to tell a page 1 that joins the list from one with a gap. */
+    val top: String? = null,
     val loadedAll: Boolean = false,
     /** When page 1 was last loaded; null: not this session. */
     val loadedAt: Long? = null,
@@ -165,11 +167,13 @@ class HistoryViewModel(
     /** Page 1 reloaded keeps what Show more loaded below it. */
     private fun afterFirstPage(now: HistoryPaging, page: HistoryPage): HistoryPaging {
         val pageLast = page.items.lastOrNull()
-        // A state with no cursor left cannot continue from a page 1 that now has one.
-        val deeper = now.loadedAt != null && page.next != null && now.next != null &&
-            now.last != null && pageLast != null && HistoryOrder.compare(pageLast.at to pageLast.key, now.last.at to now.last.key) < 0
-        if (deeper) return now.copy(loading = false, failed = false, loadedAt = clock())
-        return HistoryPaging(next = page.next, last = pageLast, loadedAll = page.next == null, loadedAt = clock())
+        val top = page.items.firstOrNull()?.key
+        // Once everything is loaded, a page 1 full of new rows only joins the list if it reaches the old top.
+        val deeper = now.loadedAt != null && page.next != null &&
+            now.last != null && pageLast != null && HistoryOrder.compare(pageLast.at to pageLast.key, now.last.at to now.last.key) < 0 &&
+            (!now.loadedAll || page.items.any { it.key == now.top })
+        if (deeper) return now.copy(loading = false, failed = false, top = top, loadedAt = clock())
+        return HistoryPaging(next = page.next, last = pageLast, top = top, loadedAll = page.next == null, loadedAt = clock())
     }
 
     fun loadMore() {

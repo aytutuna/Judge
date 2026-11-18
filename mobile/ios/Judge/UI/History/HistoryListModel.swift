@@ -150,6 +150,7 @@ final class HistoryListModel {
     /// The last row loaded this session.
     private(set) var last: HistoryItem?
     private(set) var loadedAll = false
+    private var top: String?
     /// When page 1 was last loaded; nil: not this session.
     private(set) var loadedAt: Date?
     var notice: Notice?
@@ -181,6 +182,7 @@ final class HistoryListModel {
         loadingMore = false
         last = nil
         loadedAll = false
+        top = nil
         loadedAt = nil
         notice = nil
         owner = nil
@@ -220,11 +222,14 @@ final class HistoryListModel {
     private func afterFirstPage(_ page: HistoryPage) {
         let pageLast = page.items.last
         var deeper = false
-        // A state with no cursor left cannot continue from a page 1 that now has one.
-        if loadedAt != nil, page.next != nil, next != nil, let last, let pageLast {
-            deeper = HistoryOrder.before((pageLast.at, pageLast.key), (last.at, last.key))
+        // Once everything is loaded, a page 1 full of new rows only joins the list if it reaches the old top.
+        if loadedAt != nil, page.next != nil, let last, let pageLast,
+           HistoryOrder.before((pageLast.at, pageLast.key), (last.at, last.key)),
+           !loadedAll || page.items.contains(where: { $0.key == top }) {
+            deeper = true
         }
         loadedAt = now()
+        top = page.items.first?.key
         guard !deeper else { return }
         next = page.next
         last = pageLast

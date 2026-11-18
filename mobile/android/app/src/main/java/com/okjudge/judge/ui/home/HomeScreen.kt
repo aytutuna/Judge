@@ -818,7 +818,7 @@ private fun ClearButton(compact: Boolean, enabled: Boolean, onClick: () -> Unit)
     val s = LocalStrings.current
     Box(
         Modifier
-            .defaultMinSize(minHeight = 44.dp)
+            .defaultMinSize(minWidth = 44.dp, minHeight = 44.dp)
             .alpha(if (enabled) 1f else 0.4f)
             .semantics {
                 role = Role.Button

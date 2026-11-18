@@ -384,6 +384,46 @@ final class HistoryListTests: XCTestCase {
     }
 
     @MainActor
+    func testAPageOneRefreshAfterEverythingLoadedKeepsLoadedAll() async throws {
+        let container = HistoryContainer.inMemory()
+        let router = StubRouter()
+        let one = try PremiumFixtures.json(200, try pageBody([item("a", "2026-10-05T00:00:00.000Z"), item("b", "2026-10-04T00:00:00.000Z")], next: "cur1"))
+        router.on(
+            "GET", "/api/v1/me/history",
+            one,
+            try PremiumFixtures.json(200, try pageBody([item("c", "2026-10-01T00:00:00.000Z")], next: nil)),
+            one
+        )
+        let (app, list) = try model(container, router: router)
+        await list.refresh(user: "u1", enabled: true)
+        await list.loadMore(user: "u1")
+        await list.refresh(user: "u1", enabled: true, force: true)
+        XCTAssertEqual(try app.history.cached(user: "u1").map(\.key), ["v:a", "v:b", "v:c"])
+        XCTAssertTrue(list.loadedAll)
+        XCTAssertNil(list.next)
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
+    func testAPageOneWithNoRowFromTheLoadedListStartsPagingOver() async throws {
+        let container = HistoryContainer.inMemory()
+        let router = StubRouter()
+        let fresh = (1...20).map { item("n\($0)", String(format: "2026-10-%02dT00:00:00.000Z", 30 - $0)) }
+        router.on(
+            "GET", "/api/v1/me/history",
+            try PremiumFixtures.json(200, try pageBody([item("a", "2026-10-05T00:00:00.000Z")], next: nil)),
+            try PremiumFixtures.json(200, try pageBody(fresh, next: "cur2"))
+        )
+        let (_, list) = try model(container, router: router)
+        await list.refresh(user: "u1", enabled: true)
+        XCTAssertTrue(list.loadedAll)
+        await list.refresh(user: "u1", enabled: true, force: true)
+        XCTAssertFalse(list.loadedAll)
+        XCTAssertEqual(list.next, "cur2")
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
     func testAShowMoreThatFailsSaysSoAndTheNextTryClearsIt() async throws {
         let container = HistoryContainer.inMemory()
         let router = StubRouter()
