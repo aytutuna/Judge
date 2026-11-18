@@ -68,8 +68,10 @@ final class HomeModel {
     private(set) var homeVenue = Venues.pickNew()
     private(set) var error: APIError?
     private(set) var blockedUntil: Date?
-    /// Screenshots picked for the next request.
+    /// Screenshots picked in your box (side A).
     let evidence: EvidenceModel
+    /// Screenshots picked in the boxes of sides B, C and D.
+    let otherEvidence: [EvidenceModel]
     /// Just me (a verdict now) or both sides (a case), when cases are offered.
     var mode: HomeMode = .now
     /// Your name over your card, in the joined text and on a new case's
@@ -212,13 +214,16 @@ final class HomeModel {
         let argument: String
         let lang: AppLang
         let evidence: [String]
+        /// Tokens of sides B to D, one list per side.
+        var otherEvidence: [[String]] = []
         /// Every side as typed, when there are more than two.
         var sides: [VerdictRequest.Side]? = nil
         /// The place picked for this request.
         var venue: String? = nil
 
         var requestKey: RequestKey {
-            RequestKey(text: argument, lang: lang, extra: "premium:" + evidence.joined(separator: ","))
+            let others = otherEvidence.map { $0.joined(separator: ",") }.joined(separator: "|")
+            return RequestKey(text: argument, lang: lang, extra: "premium:" + evidence.joined(separator: ",") + (others.isEmpty ? "" : "+" + others))
         }
     }
 
@@ -241,6 +246,34 @@ final class HomeModel {
     init(defaults: UserDefaults? = nil) {
         self.defaults = defaults
         evidence = EvidenceModel(max: Self.maxEvidence)
+        otherEvidence = (1..<Self.maxSides).map { _ in EvidenceModel(max: Self.maxEvidence) }
+    }
+
+    /// The pickers of all four boxes, A first.
+    var allEvidence: [EvidenceModel] { [evidence] + otherEvidence }
+
+    /// The picker of one side's box.
+    func pool(for side: Party) -> EvidenceModel {
+        switch side {
+        case .a, .unknown: return evidence
+        case .b: return otherEvidence[0]
+        case .c: return otherEvidence[1]
+        case .d: return otherEvidence[2]
+        }
+    }
+
+    func clearEvidence() {
+        allEvidence.forEach { $0.clear() }
+    }
+
+    /// Tokens for the sides after A, as many lists as the request has sides:
+    /// the joined text has B only when B wrote something. Empty when no
+    /// side but A has images.
+    func otherTokens(_ app: AppModel) -> [[String]] {
+        guard app.evidenceOn else { return [] }
+        let count = more.isEmpty ? (otherSide.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? 0 : 1) : 1 + more.count
+        let lists = otherEvidence.prefix(count).map(\.tokens)
+        return lists.contains { !$0.isEmpty } ? lists : []
     }
 
     /// What the judges read: your side as written, or with the other side
@@ -318,7 +351,7 @@ final class HomeModel {
     var isBusy: Bool { isCheckingQuestions || isJudging || isCreatingCase }
 
     /// Nothing typed, attached or opened: Home has nothing to clear.
-    var isBlank: Bool { argument.isEmpty && otherSide.isEmpty && evidence.items.isEmpty && !theirsOpen && more.isEmpty }
+    var isBlank: Bool { argument.isEmpty && otherSide.isEmpty && allEvidence.allSatisfy { $0.items.isEmpty } && !theirsOpen && more.isEmpty }
 
     /// An example writes over the form, so it never replaces the user's text.
     var offersExample: Bool { isBlank || formText == exampleForm }
@@ -339,7 +372,7 @@ final class HomeModel {
         if !more.isEmpty, ([argument, otherSide] + more.map(\.text)).contains(where: { $0.trimmingCharacters(in: .whitespacesAndNewlines).utf16.count < Self.minLength }) {
             return false
         }
-        if app.evidenceOn, evidence.busy { return false }
+        if app.evidenceOn, allEvidence.contains(where: \.busy) { return false }
         if let blockedUntil, blockedUntil > now { return false }
         return true
     }
@@ -350,7 +383,9 @@ final class HomeModel {
         // With the second card open they write both; the link comes back once a
         // third side is added and none of them has text.
         guard !isBusy, !hasWrittenOtherSide, !theirsOpen || !more.isEmpty else { return false }
-        if app.evidenceOn, evidence.busy { return false }
+        if app.evidenceOn, allEvidence.contains(where: \.busy) { return false }
+        // A case's other sides write their own images through their links.
+        if otherEvidence.contains(where: { !$0.items.isEmpty }) { return false }
         if let blockedUntil, blockedUntil > now { return false }
         if argument.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return evidence.items.isEmpty }
         // Only your side is written, so the check that every card is long enough does not apply.
@@ -443,6 +478,7 @@ final class HomeModel {
         otherSide = ""
         otherName = nil
         more = []
+        otherEvidence.forEach { $0.clear() }
         if caseName == exampleForm?.myName { caseName = nil }
         exampleForm = nil
     }
@@ -458,6 +494,7 @@ final class HomeModel {
     func removeLastSide() {
         guard !more.isEmpty else { return }
         more.removeLast()
+        otherEvidence[more.count + 1].clear()
         if more.isEmpty, caseName == exampleForm?.myName { caseName = nil }
     }
 
@@ -503,7 +540,7 @@ final class HomeModel {
                 self.homeVenue = Venues.pickNew()
                 names.save(caseID: created.view.id, created.nameMap)
                 if let entitlement = created.entitlement { self.account?.applyEntitlement(entitlement) }
-                self.evidence.clear()
+                self.clearEvidence()
                 self.argument = ""
                 self.caseName = nil
                 self.otherName = nil
@@ -551,6 +588,7 @@ final class HomeModel {
             argument: outgoing(app),
             lang: app.lang,
             evidence: app.evidenceOn ? evidence.tokens : [],
+            otherEvidence: otherTokens(app),
             sides: typedSides(app)
         )
         let key = input.requestKey
@@ -654,6 +692,7 @@ final class HomeModel {
             tier: Tier.premium.rawValue,
             clarifications: clarifications,
             evidence: input.evidence.isEmpty ? nil : input.evidence,
+            otherEvidence: input.otherEvidence.isEmpty ? nil : input.otherEvidence,
             sides: input.sides,
             venue: input.venue
         )
@@ -823,7 +862,7 @@ final class HomeModel {
         mode = .now
         error = nil
         clarify = nil
-        evidence.clear()
+        clearEvidence()
     }
 
     /// "Try an example": both names and both sides from a random example this
@@ -855,7 +894,7 @@ final class HomeModel {
         isJudging = false
         if failure.code == "evidence_invalid" {
             // A token expired or failed its check: those images must be added again.
-            evidence.invalidateTokens()
+            allEvidence.forEach { $0.invalidateTokens() }
         }
         if case .server(let status, _) = failure, status == 401, let account {
             // signin_required, or sign_in_required from a server that wants

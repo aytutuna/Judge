@@ -893,6 +893,73 @@ final class PremiumFlowTests: XCTestCase {
     }
 
     @MainActor
+    func testEachBoxSendsItsOwnImagesAndOthersAreOmittedWhenEmpty() async throws {
+        let container = HistoryContainer.inMemory()
+        let router = StubRouter()
+        router.on("POST", Self.clarifyPath, try questions("none"))
+        router.on("POST", Self.verdictPath, try accepted())
+        router.on("GET", "/api/v1/verdicts/premium001", try ready())
+        router.on("GET", Self.mePath, try me("credits7"))
+        let app = try premiumApp(router, container: container)
+        let home = app.home
+        home.argument = "My flatmate keeps eating my food and says it was fair game."
+        home.addTheirSide()
+        home.otherSide = "I never touch anything labelled and I told them so twice."
+        func attach(_ box: EvidenceModel, _ token: String) {
+            let ids = box.reserve(1)
+            box.apply([EvidenceUploadItem(index: 0, status: "ok", token: token, preview: "p")], sent: ids)
+        }
+        attach(home.evidence, "tok-a")
+        XCTAssertTrue(home.otherTokens(app).isEmpty, "only box A has images")
+        attach(home.pool(for: .b), "tok-b")
+        XCTAssertEqual(home.otherTokens(app), [["tok-b"]])
+
+        home.addSide()
+        home.more[0].text = "I saw the whole thing and both of them are exaggerating."
+        XCTAssertEqual(home.otherTokens(app), [["tok-b"], []], "one list per side after A")
+        home.removeLastSide()
+        XCTAssertEqual(home.otherTokens(app), [["tok-b"]])
+
+        home.submit(app: app)
+        try await PremiumFixtures.waitUntil("the verdict") { home.arrived != nil }
+        let body = try PremiumFixtures.body(router.sentBodies("POST", Self.verdictPath).first)
+        XCTAssertEqual(body["evidence"] as? [String], ["tok-a"])
+        XCTAssertEqual(body["otherEvidence"] as? [[String]], [["tok-b"]])
+        XCTAssertTrue(home.allEvidence.allSatisfy { $0.items.isEmpty }, "a sent form starts empty")
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
+    func testRemovingASideClearsItsImagesAndClearClearsAll() throws {
+        let home = HomeModel()
+        func attach(_ box: EvidenceModel) {
+            let ids = box.reserve(2)
+            box.apply([
+                EvidenceUploadItem(index: 0, status: "ok", token: "t1", preview: "p"),
+                EvidenceUploadItem(index: 1, status: "ok", token: "t2", preview: "p"),
+            ], sent: ids)
+        }
+        home.addTheirSide()
+        home.addSide()
+        home.addSide()
+        attach(home.pool(for: .b))
+        attach(home.pool(for: .c))
+        attach(home.pool(for: .d))
+        XCTAssertEqual(home.pool(for: .d).room, 1, "the limit is per box")
+
+        home.removeLastSide()
+        XCTAssertTrue(home.pool(for: .d).items.isEmpty)
+        XCTAssertEqual(home.pool(for: .c).tokens, ["t1", "t2"])
+        home.removeTheirSide()
+        XCTAssertTrue(home.otherEvidence.allSatisfy { $0.items.isEmpty })
+
+        attach(home.evidence)
+        home.judgeAnother()
+        XCTAssertTrue(home.isBlank)
+        XCTAssertTrue(home.evidence.items.isEmpty)
+    }
+
+    @MainActor
     func testNothingLeftOpensPricingWithoutARequest() async throws {
         let container = HistoryContainer.inMemory()
         let router = StubRouter()

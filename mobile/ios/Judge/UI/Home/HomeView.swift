@@ -1,9 +1,9 @@
 import SwiftUI
 import UIKit
 
-/// Home, laid out like a chat: the boxes fill the page, in order, with "Add
-/// context" and the picked images just under them, then the buttons to add
-/// a side, and "Clear" at the very bottom. Only the send row (the counter
+/// Home, laid out like a chat: the boxes fill the page, in order, each with
+/// its own "Add context" and picked images at its bottom edge, then the
+/// buttons to add a side, and "Clear" at the very bottom. Only the send row (the counter
 /// and the send button) is pinned. With one side the box is written in where
 /// it stands; with more the boxes only show their text. A tap lifts that
 /// side's box above the keyboard to write in; drag it any way and let go
@@ -186,8 +186,7 @@ struct HomeView: View {
 
     /// The boxes and everything under them. Two sides go to
     /// the judges as one text with a name in front of each, and a link makes
-    /// a two-sided case instead. Screenshots go with the whole case, not
-    /// with one card: the judges get them as one set.
+    /// a two-sided case instead. Screenshots belong to the card they were added to.
     private func form(_ lang: AppLang, home: HomeModel) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             if app.gamify {
@@ -210,9 +209,6 @@ struct HomeView: View {
             ForEach(home.openSides, id: \.self) { side in
                 sideCard(lang, home: home, side: side, kind: .list)
             }
-            if app.evidenceOffered {
-                contextBlock(lang, home: home)
-            }
             if !home.theirsOpen {
                 otherSide(lang, home: home)
             } else if home.more.count < HomeModel.maxSides - 2 || home.canSendLink(app) {
@@ -232,11 +228,12 @@ struct HomeView: View {
         }
     }
 
-    /// "Add context" under the boxes, and the images picked so far under it.
-    private func contextBlock(_ lang: AppLang, home: HomeModel) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            if app.evidenceOffered, !home.evidence.full {
-                EvidenceAddButton(evidence: home.evidence, disabled: home.isBusy) {
+    /// "Add context" at the bottom of a box, and the images picked for that side under it.
+    private func contextBlock(_ lang: AppLang, home: HomeModel, side: Party) -> some View {
+        let evidence = home.pool(for: side)
+        return VStack(alignment: .leading, spacing: 10) {
+            if !evidence.full {
+                EvidenceAddButton(evidence: evidence, disabled: home.isBusy) {
                     Label(L10n.appHomeAddContext(lang), systemImage: "paperclip")
                         .brandText(Self.linkType)
                         .foregroundStyle(Brand.ink2)
@@ -244,11 +241,10 @@ struct HomeView: View {
                         .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                .padding(.horizontal, 4)
             }
-            if app.evidenceOn, !home.evidence.items.isEmpty || home.evidence.overLimit || home.evidence.failure != nil {
-                EvidenceRows(evidence: home.evidence, lang: lang, disabled: home.isBusy)
-                EvidenceNotes(evidence: home.evidence, lang: lang)
+            if app.evidenceOn, !evidence.items.isEmpty || evidence.overLimit || evidence.failure != nil {
+                EvidenceRows(evidence: evidence, lang: lang, disabled: home.isBusy)
+                EvidenceNotes(evidence: evidence, lang: lang)
             }
         }
     }
@@ -367,6 +363,9 @@ struct HomeView: View {
                 preview(text(of: side, home: home).wrappedValue, placeholder: placeholder, label: label, lines: range) {
                     activate(side, home: home)
                 }
+            }
+            if app.evidenceOffered {
+                contextBlock(lang, home: home, side: side)
             }
             if lifted {
                 bottomRow(lang, home: home)

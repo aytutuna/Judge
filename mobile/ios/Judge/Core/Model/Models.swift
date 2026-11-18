@@ -305,6 +305,8 @@ struct VerdictRequest: Encodable, Sendable, Equatable {
     var clarifications: [Clarification]?
     /// Premium only: signed tokens from POST /api/v1/evidence, in order.
     var evidence: [String]? = nil
+    /// Tokens for the sides after A (entry 0 is B), one list per side the request has.
+    var otherEvidence: [[String]]? = nil
     /// Sides A to C or D as typed, when there are more than two; `argument`
     /// is then all of them joined.
     var sides: [Side]? = nil

@@ -189,7 +189,7 @@ final class AppModel {
             self?.historyUser = nil
             self?.dropAccountPages()
             self?.caseModels = [:]
-            self?.home.evidence.clear()
+            self?.home.clearEvidence()
             purchases?.userSignedOut()
             self?.forgetUser()
             // Real names kept for this account's cases go with it, and so do
