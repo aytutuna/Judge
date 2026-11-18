@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 import { t, type Key, type Lang } from "@/lib/i18n";
-import { BrandMark } from "../BrandMark";
+import { BrandLogo } from "../BrandLogo";
 import styles from "./thread.module.css";
 
 export type ThreadProps = {
@@ -83,7 +83,7 @@ export function Thread(props: ThreadProps) {
         <li className={styles.judges} data-turn="judges">
           {plain ? null : (
             <p className={styles.who}>
-              <BrandMark size={18} />
+              <BrandLogo size={18} />
               {judgesLabel ?? t(lang, "thread.judges")}
             </p>
           )}
