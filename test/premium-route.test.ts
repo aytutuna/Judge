@@ -817,6 +817,75 @@ describe("premium verdict with evidence", () => {
     expect(m.reservePremiumVerdict).not.toHaveBeenCalled();
   });
 
+  it("images in their side's box are verified on their own and read as that side's evidence", async () => {
+    const tokens: Record<string, { kind: string; transcript: string }> = {
+      "v1.a": { kind: "chat", transcript: "21:02 ME: hi" },
+      "v1.b": { kind: "chat", transcript: "21:03 THEM: no" },
+    };
+    m.verifyEvidenceTokens.mockImplementation((list: string[]) => ({ ok: true, items: list.map((t) => tokens[t]) }));
+    m.anonymizeSubmission.mockResolvedValue({
+      text: ANON,
+      evidence: [
+        { kind: "chat", transcript: "21:02 Party A: hi" },
+        { kind: "chat", transcript: "21:03 Party B: no" },
+      ],
+      nameMap: [{ original: "I", replacement: "Party A" }],
+      people: [],
+    });
+    const res = await POST(request(premium({ evidence: ["v1.a"], otherEvidence: [["v1.b"]] })));
+    expect(res.status).toBe(200);
+    expect(m.verifyEvidenceTokens.mock.calls.map(([list]) => list)).toEqual([["v1.a"], ["v1.b"]]);
+    expect(m.anonymizeSubmission.mock.calls[0][0].evidence).toEqual([tokens["v1.a"], tokens["v1.b"]]);
+    expect(m.evidenceBlock).toHaveBeenCalledWith([
+      { party: "a", idPrefix: "A", items: [{ kind: "chat", transcript: "21:02 Party A: hi" }] },
+      { party: "b", idPrefix: "B", items: [{ kind: "chat", transcript: "21:03 Party B: no" }] },
+    ]);
+    expect(m.saved.at(-1)?.original).toMatchObject({
+      evidence: [
+        { kind: "chat", transcript: "21:02 ME: hi" },
+        { kind: "chat", transcript: "21:03 THEM: no", side: "b" },
+      ],
+    });
+    expect(m.saveVerdict.mock.calls[0][0].result.evidence_used).toEqual({ a: 1, b: 1 });
+  });
+
+  it("images in their side's box alone are not read as the asker's", async () => {
+    m.verifyEvidenceTokens.mockImplementation((list: string[]) => ({
+      ok: true,
+      items: list.map(() => ({ kind: "chat", transcript: "21:03 THEM: no" })),
+    }));
+    m.anonymizeSubmission.mockResolvedValue({
+      text: ANON,
+      evidence: [{ kind: "chat", transcript: "21:03 Party B: no" }],
+      nameMap: [],
+      people: [],
+    });
+    await POST(request(premium({ otherEvidence: [["v1.b"]] })));
+    expect(m.evidenceBlock).toHaveBeenCalledWith([
+      { party: "b", idPrefix: "B", items: [{ kind: "chat", transcript: "21:03 Party B: no" }] },
+    ]);
+    expect(m.saveVerdict.mock.calls[0][0].result.evidence_used).toEqual({ a: 0, b: 1 });
+  });
+
+  it("a box over its limit is refused before any unit is reserved", async () => {
+    m.verifyEvidenceTokens.mockImplementation((list: string[]) =>
+      list[0] === "v1.b" ? { ok: false, code: "too_many_files" } : { ok: true, items: [{ kind: "chat", transcript: "x" }] },
+    );
+    const res = await POST(request(premium({ evidence: ["v1.a"], otherEvidence: [["v1.b"]] })));
+    expect(res.status).toBe(400);
+    expect((await res.json()).code).toBe("too_many_files");
+    expect(m.reservePremiumVerdict).not.toHaveBeenCalled();
+    const four = await POST(request(premium({ otherEvidence: [["v1.1", "v1.2", "v1.3", "v1.4"]] })));
+    expect(four.status).toBe(400);
+  });
+
+  it("images for a side the request does not have are refused", async () => {
+    const res = await POST(request(premium({ otherEvidence: [["v1.1"], ["v1.2"]] })));
+    expect(res.status).toBe(400);
+    expect((await res.json()).code).toBe("invalid");
+    expect(m.reservePremiumVerdict).not.toHaveBeenCalled();
+  });
+
   it("without evidence the panel gets exactly the three arguments it always did", async () => {
     await POST(request(premium()));
     expect(m.judgePremiumPanel.mock.calls[0]).toHaveLength(3);

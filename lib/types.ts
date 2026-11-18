@@ -345,8 +345,11 @@ export const VerdictRequest = z.object({
   tier: Tier.optional(),
   /** Answers to the clarifying questions. */
   clarifications: z.array(Clarification).max(2).optional(),
-  /** Signed evidence tokens from POST /api/v1/evidence. */
+  /** Signed evidence tokens from POST /api/v1/evidence: the images of side A. */
   evidence: z.array(z.string().min(1).max(16_000)).max(3).optional(),
+  /** The images of the other sides, in order: entry 0 is side B, then C and D.
+   * At most one entry per side after A (one with no `sides`). */
+  otherEvidence: z.array(z.array(z.string().min(1).max(16_000)).max(3)).max(3).optional(),
   /** Three or four typed sides, in the order A to D. Only builds that know
    * about more than two sides send it; `argument` is still required and
    * holds the same sides joined. */
@@ -362,6 +365,10 @@ export const VerdictRequest = z.object({
     .optional(),
   /** The scene the court is set in (lib/venues); anything not on the list is ignored. */
   venue: z.unknown().optional(),
+}).superRefine((req, ctx) => {
+  if ((req.otherEvidence?.length ?? 0) > (req.sides?.length ?? 2) - 1) {
+    ctx.addIssue({ code: "custom", path: ["otherEvidence"], message: "Images were attached to a side that is not in the request." });
+  }
 });
 export type VerdictRequest = z.infer<typeof VerdictRequest>;
 

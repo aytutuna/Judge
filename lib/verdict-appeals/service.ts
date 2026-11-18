@@ -142,14 +142,16 @@ export function roundsBlock(appeals: readonly VerdictAppealRow[]): "busy" | "app
   return appeals.filter((a) => a.status === "judged").length >= MAX_VERDICT_APPEALS ? "appeal_limit" : null;
 }
 
-const EVIDENCE_MARK = "\n\nEVIDENCE (machine transcripts";
+const EVIDENCE_MARK = /\n\nEVIDENCE (?:FROM PARTY [A-D] )?\(machine transcripts/g;
 
 /** A stored one-sided input: the account the judges read, and the EVIDENCE
- * block premium appends when screenshots were attached. That block is always
- * last, and only there when evidence was used: the same heading typed into
- * the account stays part of the account. */
+ * blocks premium appends when screenshots were attached (one, or one per side
+ * with images). They are always last, and only there when evidence was used:
+ * the same heading typed into the account stays part of the account. */
 export function splitStoredInput(v: Pick<StoredVerdict, "input" | "result">): { account: string; evidence: string | null } {
-  const at = (v.result.evidence_used?.a ?? 0) > 0 ? v.input.lastIndexOf(EVIDENCE_MARK) : -1;
+  const blocks = Object.values(v.result.evidence_used ?? {}).filter((n) => n > 0).length;
+  const marks = blocks > 0 ? [...v.input.matchAll(EVIDENCE_MARK)] : [];
+  const at = marks.length >= blocks ? (marks[marks.length - blocks]?.index ?? -1) : -1;
   return at < 0 ? { account: v.input, evidence: null } : { account: v.input.slice(0, at), evidence: v.input.slice(at + 2) };
 }
 
@@ -384,8 +386,9 @@ export async function runVerdictAppeal(p: VerdictAppealRun): Promise<void> {
       return;
     }
 
-    const images = (root.result.evidence_used?.a ?? 0) + [...earlier, current].reduce((n, a) => n + a.evidence.length, 0);
-    const next = normalizeCaseResult(outcome.result, { twoSided: false, evidenceUsed: { a: images, b: 0 } });
+    const used = root.result.evidence_used ?? { a: 0, b: 0 };
+    const images = used.a + [...earlier, current].reduce((n, a) => n + a.evidence.length, 0);
+    const next = normalizeCaseResult(outcome.result, { twoSided: false, evidenceUsed: { ...used, a: images } });
     const label = appealOutcome(base.result, next);
     const summary = await withUsageMeter(() => appealSummary(base.result, next, { party: "a", text: current.text }, lang, label));
     usage = mergeUsage(usage, summary.usage);

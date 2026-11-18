@@ -284,7 +284,33 @@ describe("the async path with typed sides", () => {
     expect(run.outcome.nameMap).toContainEqual({ original: "Bo", replacement: "Party B" });
   });
 
-  it("evidence belongs to side A and is counted per side", async () => {
+  it("each side's images are read as that side's own and counted per side", async () => {
+    m.anonymizeSubmission.mockImplementation(async (input: { narrator: string; text: string; evidence: { kind: string; transcript: string }[] }) => ({
+      text: input.text,
+      evidence: input.evidence,
+      nameMap: [{ original: "I", replacement: input.narrator }],
+      people: [],
+    }));
+    const { preparePremium } = await import("../lib/premium/run");
+    const { evidenceBlock } = await import("@/lib/evidence");
+    const chat = (transcript: string) => ({ kind: "chat" as const, transcript });
+    const prepared = await preparePremium({
+      argument: ARGUMENT,
+      lang: "en",
+      sides: SIDES,
+      evidence: [chat("one")],
+      otherEvidence: [[], [chat("three"), chat("four")]],
+    });
+    expect(prepared.ok && prepared.prepared.evidenceCounts).toEqual([1, 0, 2]);
+    const calls = m.anonymizeSubmission.mock.calls.map(([i]) => ({ n: i.narrator, e: i.evidence.length }));
+    expect(calls.map((c) => c.e)).toEqual([1, 0, 2]);
+    expect(vi.mocked(evidenceBlock)).toHaveBeenLastCalledWith([
+      { party: "a", idPrefix: "A", items: [chat("one")] },
+      { party: "c", idPrefix: "C", items: [chat("three"), chat("four")] },
+    ]);
+  });
+
+  it("evidence of side A alone stays the asker's block and is counted per side", async () => {
     m.anonymizeSubmission.mockImplementation(async (input: { narrator: string; text: string; evidence: { kind: string; transcript: string }[] }) => ({
       text: input.text,
       evidence: input.evidence.map((e) => ({ ...e, transcript: `Party A said: ${e.transcript}` })),
@@ -300,7 +326,10 @@ describe("the async path with typed sides", () => {
       sides: SIDES,
       evidence: [{ kind: "chat", transcript: "ME: hi" }],
     });
-    expect(prepared.ok && prepared.prepared.evidenceCount).toBe(1);
+    expect(prepared.ok && prepared.prepared.evidenceCounts).toEqual([1, 0, 0]);
+    expect(vi.mocked(evidenceBlock)).toHaveBeenLastCalledWith([
+      { party: null, idPrefix: "E", items: [{ kind: "chat", transcript: "Party A said: ME: hi" }] },
+    ]);
     const calls = m.anonymizeSubmission.mock.calls.map(([i]) => ({ n: i.narrator, e: i.evidence.length }));
     expect(calls.find((c) => c.n === "Party A")?.e).toBe(1);
     expect(calls.filter((c) => c.n !== "Party A").every((c) => c.e === 0)).toBe(true);

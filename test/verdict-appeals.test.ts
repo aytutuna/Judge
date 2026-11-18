@@ -606,6 +606,15 @@ describe("rounds and removal", () => {
       account: typed,
       evidence: "EVIDENCE (machine transcripts y):\n[E1]",
     });
+    const perSide = "EVIDENCE FROM PARTY B (machine transcripts of images Party B attached; they show only what was on screen):\n[B1]";
+    const own = "EVIDENCE FROM PARTY A (machine transcripts of images Party A attached; they show only what was on screen):\n[A1]";
+    expect(
+      splitStoredInput({ input: `text\n\n${own}\n\n${perSide}`, result: result({ evidence_used: { a: 1, b: 1 } }) }),
+    ).toEqual({ account: "text", evidence: `${own}\n\n${perSide}` });
+    expect(splitStoredInput({ input: `text\n\n${own}\n\n${perSide}`, result: result({ evidence_used: { a: 0, b: 1 } }) })).toEqual({
+      account: `text\n\n${own}`,
+      evidence: perSide,
+    });
     const round = (status: "judging" | "judged" | "failed") => ({
       id: "x",
       verdictId: "v",

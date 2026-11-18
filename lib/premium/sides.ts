@@ -14,13 +14,15 @@ import { composeSides, partiesFor } from "../multi";
 import type { Lang } from "../i18n";
 import type { Clarification, NameMapping, TypedSide } from "../types";
 import { withClarifications } from "./context";
+import { sideEvidenceGroups } from "../evidence/groups";
 import type { AnonymizedSubmission, KnownPerson, VerifiedEvidence } from "../evidence/types";
 
 export type SidesPrepared = {
   anonymized: string;
   nameMap: NameMapping[];
   evidenceText: string | null;
-  evidenceCount: number;
+  /** Images read per side, A first. */
+  evidenceCounts: number[];
 };
 
 const PERSON = /(?<![\p{L}])Person ([E-Z])(?![\p{L}\p{N}])/gu;
@@ -74,15 +76,18 @@ export function unifyBystanders(
 }
 
 /**
- * Anonymizes the typed sides. Side A also gets the clarification answers and
- * the evidence (both belong to the person asking). Throws AnonymizeError, like
- * anonymizeSubmission, when a name could not be taken out.
+ * Anonymizes the typed sides. Side A also gets the clarification answers
+ * (they belong to the person asking). Each side's images are read as that
+ * side's own account. Throws AnonymizeError, like anonymizeSubmission, when a
+ * name could not be taken out.
  */
 export async function anonymizeSides(input: {
   sides: readonly TypedSide[];
   clarifications?: Clarification[];
   lang: Lang;
   evidence?: VerifiedEvidence[];
+  /** Images of sides B to D, in order. */
+  otherEvidence?: VerifiedEvidence[][];
 }): Promise<SidesPrepared> {
   const { anonymizeSubmission, evidenceBlock } = await import("../evidence");
   const count = input.sides.length;
@@ -103,7 +108,7 @@ export async function anonymizeSides(input: {
       anonymizeSubmission({
         narrator: labels[i] as PartyLabel,
         text: i === 0 ? withClarifications(side.text, input.clarifications, input.lang) : side.text,
-        evidence: i === 0 ? (input.evidence ?? []) : [],
+        evidence: (i === 0 ? input.evidence : input.otherEvidence?.[i - 1]) ?? [],
         lang: input.lang,
         twoSided: true,
         sides: { count, names },
@@ -113,7 +118,7 @@ export async function anonymizeSides(input: {
   );
 
   const unified = unifyBystanders(
-    subs.map((s, i) => ({ text: s.text, nameMap: s.nameMap, more: i === 0 ? s.evidence.map((e) => e.transcript) : [] })),
+    subs.map((s) => ({ text: s.text, nameMap: s.nameMap, more: s.evidence.map((e) => e.transcript) })),
   );
   // The writer typed every side. Side A's own "I" stays; for the others
   // the narrator word is not the writer, so each is listed by the name the
@@ -125,11 +130,11 @@ export async function anonymizeSides(input: {
   });
   const nameMap = maps.reduce<NameMapping[]>((acc, m) => mergeNameMaps(acc, m), []);
 
-  const evidenceItems = subs[0].evidence.map((e, i) => ({ ...e, transcript: unified[0].more[i] }));
+  const evidence = subs.map((s, i) => s.evidence.map((e, j) => ({ ...e, transcript: unified[i].more[j] })));
   return {
     anonymized: composeSides(parties.map((party, i) => ({ party, text: unified[i].text }))),
     nameMap,
-    evidenceCount: evidenceItems.length,
-    evidenceText: evidenceItems.length ? evidenceBlock([{ party: null, idPrefix: "E", items: evidenceItems }]) : null,
+    evidenceCounts: evidence.map((items) => items.length),
+    evidenceText: evidenceBlock(sideEvidenceGroups(evidence)),
   };
 }

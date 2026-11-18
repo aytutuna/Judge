@@ -40,6 +40,7 @@ import {
   type PanelOptions,
 } from "./panel";
 import type { VerifiedEvidence } from "../evidence";
+import { sideEvidenceGroups } from "../evidence/groups";
 
 /** Escalation starts only before this much of the request has passed, the
  * crux trial only before the second mark, and (on case, evidence and appeal
@@ -62,6 +63,8 @@ export type PremiumInput = {
   lang: Lang;
   /** Verified evidence transcripts (raw). Absent or empty: today's path. */
   evidence?: VerifiedEvidence[];
+  /** The images of the other sides: entry 0 is side B, then C and D. */
+  otherEvidence?: VerifiedEvidence[][];
   /** Three or four typed sides (VerdictRequest.sides); `argument` is then
    * not read. Absent: today's path. */
   sides?: TypedSide[];
@@ -187,7 +190,8 @@ export type PreparedPremium = {
   nameMap: NameMapping[];
   /** The anonymized EVIDENCE block, or null without evidence. */
   evidenceText: string | null;
-  evidenceCount: number;
+  /** Images read per side, side A first. */
+  evidenceCounts: number[];
   /** Three or four sides: the judges pick among these. Absent for the usual verdict. */
   parties?: PartyId[];
 };
@@ -199,32 +203,39 @@ export type PreparedPremium = {
  * or the database. Never throws.
  */
 export async function preparePremium(
-  { argument, clarifications, lang, evidence, sides }: Pick<PremiumInput, "argument" | "clarifications" | "lang" | "evidence" | "sides">,
+  { argument, clarifications, lang, evidence, otherEvidence, sides }: Pick<
+    PremiumInput,
+    "argument" | "clarifications" | "lang" | "evidence" | "otherEvidence" | "sides"
+  >,
 ): Promise<{ ok: true; prepared: PreparedPremium } | { ok: false; error: string }> {
   const argumentText = withClarifications(argument, clarifications, lang);
   try {
     if (sides) {
-      const prepared = await anonymizeSides({ sides, clarifications, lang, evidence });
+      const prepared = await anonymizeSides({ sides, clarifications, lang, evidence, otherEvidence });
       return { ok: true, prepared: { ...prepared, parties: partiesFor(sides.length) } };
     }
-    if (evidence && evidence.length > 0) {
+    const perSide = [evidence ?? [], ...(otherEvidence ?? [])];
+    const images = perSide.flat();
+    if (images.length > 0) {
       // Loaded only with evidence, so a plain premium request runs exactly
-      // as before. One call anonymizes the account and its transcripts with
-      // one name map.
+      // as before. One call anonymizes the account and every side's
+      // transcripts with one name map; they are split by side afterwards.
       const ev = await import("../evidence");
-      const sub = await ev.anonymizeSubmission({ narrator: "Party A", text: argumentText, evidence, lang });
+      const sub = await ev.anonymizeSubmission({ narrator: "Party A", text: argumentText, evidence: images, lang });
+      let from = 0;
+      const anonymized = perSide.map((items) => sub.evidence.slice(from, (from += items.length)));
       return {
         ok: true,
         prepared: {
           anonymized: sub.text,
           nameMap: sub.nameMap,
-          evidenceCount: sub.evidence.length,
-          evidenceText: ev.evidenceBlock([{ party: null, idPrefix: "E", items: sub.evidence }]),
+          evidenceCounts: anonymized.map((items) => items.length),
+          evidenceText: ev.evidenceBlock(sideEvidenceGroups(anonymized)),
         },
       };
     }
     const { text, nameMap } = await anonymize(argumentText);
-    return { ok: true, prepared: { anonymized: text, nameMap, evidenceText: null, evidenceCount: 0 } };
+    return { ok: true, prepared: { anonymized: text, nameMap, evidenceText: null, evidenceCounts: [] } };
   } catch (e) {
     return { ok: false, error: e instanceof Error ? e.message : String(e) };
   }
@@ -233,7 +244,7 @@ export async function preparePremium(
 /** The judge step after preparePremium (fact-check, panel, escalation, crux
  * trial). Sees only the prepared, anonymized text. */
 async function judgePrepared(
-  { anonymized, nameMap, evidenceText, evidenceCount, parties }: PreparedPremium,
+  { anonymized, nameMap, evidenceText, evidenceCounts, parties }: PreparedPremium,
   { lang }: Pick<PremiumInput, "lang">,
   startedAt: number,
   now: () => number,
@@ -250,8 +261,8 @@ async function judgePrepared(
     result: {
       ...judged.result,
       evidence_used: parties
-        ? Object.fromEntries(parties.map((p, i) => [p, i === 0 ? evidenceCount : 0])) as EvidenceUsed
-        : { a: evidenceCount, b: 0 },
+        ? Object.fromEntries(parties.map((p, i) => [p, evidenceCounts[i] ?? 0])) as EvidenceUsed
+        : { a: evidenceCounts[0] ?? 0, b: evidenceCounts[1] ?? 0 },
     },
     input: `${anonymized}
 

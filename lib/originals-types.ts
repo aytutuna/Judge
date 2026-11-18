@@ -21,8 +21,9 @@ export type OriginalPayload = {
   text: string;
   /** Premium only: the questions and answers as sent (skipped answers kept as ""). */
   clarifications?: { question: string; answer: string }[];
-  /** Raw rendered transcripts from the verified evidence tokens, in submission order. */
-  evidence?: { kind: EvidenceKind; transcript: string }[];
+  /** Raw rendered transcripts from the verified evidence tokens, in submission
+   * order. `side` is set on a verdict typed with images on a side other than A. */
+  evidence?: { kind: EvidenceKind; transcript: string; side?: "b" | "c" | "d" }[];
   /** The normalized map the anonymizer returned for this submission (original -> label). */
   nameMap: NameMapping[];
 };

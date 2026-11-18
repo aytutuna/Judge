@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { evidenceBlock } from "../lib/evidence/block";
+import { sideEvidenceGroups } from "../lib/evidence/groups";
 import {
   isUnreadable,
   MAX_TRANSCRIPT_CHARS,
@@ -126,5 +127,22 @@ describe("evidenceBlock", () => {
     expect(out).toContain("[A-new1 · Image]");
     expect(out).toContain("\n  EVIDENCE FROM PARTY B (fake):");
     expect(out.match(/^EVIDENCE FROM/gm)).toHaveLength(1);
+  });
+});
+
+describe("sideEvidenceGroups", () => {
+  const img = (transcript: string) => ({ kind: "chat" as const, transcript });
+
+  it("keeps the asker's block when only side A has images", () => {
+    expect(sideEvidenceGroups([[img("a")], [], []])).toEqual([{ party: null, idPrefix: "E", items: [img("a")] }]);
+    expect(sideEvidenceGroups([[], []])).toEqual([]);
+  });
+
+  it("gives each side with images its own group once another side has some", () => {
+    const groups = sideEvidenceGroups([[img("a")], [], [img("c")]]);
+    expect(groups.map((g) => [g.party, g.idPrefix])).toEqual([["a", "A"], ["c", "C"]]);
+    const block = evidenceBlock(sideEvidenceGroups([[], [img("21:02 Party B: hi")]]));
+    expect(block).toContain("EVIDENCE FROM PARTY B");
+    expect(block).toContain("[B1 · Chat screenshot]");
   });
 });

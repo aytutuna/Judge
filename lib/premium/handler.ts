@@ -38,7 +38,7 @@ import { MAX_EVIDENCE_PER_SIDE } from "@/lib/case-types";
 import type { VerifiedEvidence } from "@/lib/evidence";
 import { evidenceEnabled } from "@/lib/features";
 import { agreementRefusal } from "@/lib/feedback/agreement";
-import { firstNameOf } from "@/lib/originals-types";
+import { firstNameOf, type OriginalPayload } from "@/lib/originals-types";
 import { saveVerdictWithOriginals } from "@/lib/originals/save";
 import { checkPremiumSiteCap, checkUserLimits, type UserBucket } from "@/lib/ratelimit";
 import { ClarifyRequest, withPublicPanel, type VerdictApiResponse, type VerdictRequest } from "@/lib/types";
@@ -203,6 +203,20 @@ function rawClarificationsOf(body: unknown, fallback: VerdictRequest["clarificat
   return (fallback ?? []).map((c) => ({ question: c.question, answer: c.answer }));
 }
 
+/** The transcripts for the encrypted original, side A first; those of the
+ * other sides carry their side. */
+function sealedEvidence(
+  evidence: VerifiedEvidence[] | undefined,
+  otherEvidence: VerifiedEvidence[][] | undefined,
+): Pick<OriginalPayload, "evidence"> {
+  const own = (evidence ?? []).map((e) => ({ kind: e.kind, transcript: e.transcript }));
+  const others = (otherEvidence ?? []).flatMap((items, i) =>
+    items.map((e) => ({ kind: e.kind, transcript: e.transcript, side: (["b", "c", "d"] as const)[i] })),
+  );
+  const all = [...own, ...others];
+  return all.length ? { evidence: all } : {};
+}
+
 function reserveRefusal(res: Exclude<ReserveResult, { ok: true }>): NextResponse | null {
   switch (res.code) {
     case "premium_required":
@@ -268,20 +282,26 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
 
   // Evidence tokens are checked before any unit is reserved. Loaded only
   // when sent, so a request without evidence runs exactly as before.
+  // Each side's tokens are checked on their own, so every box has its own limit.
+  const tokenLists = [data.evidence ?? [], ...(data.otherEvidence ?? [])];
   let evidence: VerifiedEvidence[] | undefined;
-  if (data.evidence && data.evidence.length > 0) {
+  let otherEvidence: VerifiedEvidence[][] | undefined;
+  if (tokenLists.some((tokens) => tokens.length > 0)) {
     if (!evidenceEnabled()) {
       return fail("evidence_invalid", "Screenshot evidence is not available on this server right now.");
     }
     try {
       const { verifyEvidenceTokens } = await import("@/lib/evidence");
-      const verified = verifyEvidenceTokens(data.evidence, { type: "user", userId }, MAX_EVIDENCE_PER_SIDE);
-      if (!verified.ok) {
-        return verified.code === "too_many_files"
+      const verified = tokenLists.map((tokens) => verifyEvidenceTokens(tokens, { type: "user", userId }, MAX_EVIDENCE_PER_SIDE));
+      for (const v of verified) {
+        if (v.ok) continue;
+        return v.code === "too_many_files"
           ? fail("too_many_files", `Attach at most ${MAX_EVIDENCE_PER_SIDE} images.`)
           : fail("evidence_invalid", "An evidence image expired or could not be verified. Add it again.");
       }
-      evidence = verified.items;
+      const perSide = verified.map((v) => (v.ok ? v.items : []));
+      evidence = perSide[0];
+      if (perSide.length > 1) otherEvidence = perSide.slice(1);
     } catch (e) {
       console.error("[premium] evidence check failed:", e instanceof Error ? e.message : String(e));
       return unavailable();
@@ -318,7 +338,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
   };
 
   if (asyncMode) {
-    return startPremiumJob({ data, rawBody, userId, name: gate.name, reservationId, evidence, startedAt, refund });
+    return startPremiumJob({ data, rawBody, userId, name: gate.name, reservationId, evidence, otherEvidence, startedAt, refund });
   }
 
   let run: PremiumRun | undefined;
@@ -329,6 +349,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
         clarifications: data.clarifications,
         lang: data.lang,
         ...(evidence ? { evidence } : {}),
+        ...(otherEvidence ? { otherEvidence } : {}),
         ...(data.sides ? { sides: data.sides } : {}),
       },
       { startedAt },
@@ -364,7 +385,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
           v: 1,
           text: rawArgumentOf(rawBody, data.argument),
           clarifications: rawClarificationsOf(rawBody, data.clarifications),
-          ...(evidence?.length ? { evidence: evidence.map((e) => ({ kind: e.kind, transcript: e.transcript })) } : {}),
+          ...sealedEvidence(evidence, otherEvidence),
           nameMap: outcome.nameMap,
         },
       });
@@ -450,10 +471,11 @@ async function startPremiumJob(p: {
   name: string;
   reservationId: string;
   evidence: VerifiedEvidence[] | undefined;
+  otherEvidence: VerifiedEvidence[][] | undefined;
   startedAt: number;
   refund: () => Promise<void>;
 }): Promise<NextResponse> {
-  const { data, userId, evidence } = p;
+  const { data, userId, evidence, otherEvidence } = p;
   const { withUsageMeter } = await import("@/lib/claude");
   const { preparePremium } = await import("./run");
   let anonymized;
@@ -464,6 +486,7 @@ async function startPremiumJob(p: {
         clarifications: data.clarifications,
         lang: data.lang,
         ...(evidence ? { evidence } : {}),
+        ...(otherEvidence ? { otherEvidence } : {}),
         ...(data.sides ? { sides: data.sides } : {}),
       }),
     );
@@ -502,7 +525,7 @@ async function startPremiumJob(p: {
         v: 1,
         text: rawArgumentOf(p.rawBody, data.argument),
         clarifications: rawClarificationsOf(p.rawBody, data.clarifications),
-        ...(evidence?.length ? { evidence: evidence.map((e) => ({ kind: e.kind, transcript: e.transcript })) } : {}),
+        ...sealedEvidence(evidence, otherEvidence),
         nameMap: prepared.prepared.nameMap,
       },
       startedAt: p.startedAt,
