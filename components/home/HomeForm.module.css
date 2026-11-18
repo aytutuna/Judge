@@ -79,6 +79,7 @@
 }
 .bar .count {
   margin-inline-start: auto;
+  white-space: nowrap;
 }
 
 /* At the leading edge of the send row: icon and word when they fit, the icon alone when they don't. */
@@ -86,7 +87,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  min-height: 40px;
+  min-height: 44px;
   padding: 0 12px;
   border: 1px solid color-mix(in srgb, var(--danger) 60%, transparent);
   border-radius: var(--radius-field);
@@ -109,11 +110,20 @@
 .clearLabel {
   white-space: nowrap;
 }
-@container (max-width: 280px) {
+/* Widths measured with the counter at 6,000 / 6,000 and Send; Telugu has the longest label. */
+@container (max-width: 250px) {
   .clear {
     padding: 0 8px;
   }
   .clearLabel {
+    display: none;
+  }
+}
+@container (max-width: 300px) {
+  :lang(te) .clear {
+    padding: 0 8px;
+  }
+  :lang(te) .clearLabel {
     display: none;
   }
 }
