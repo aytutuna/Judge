@@ -347,6 +347,6 @@ want one until it passes a session token.
   `ofl/instrumentserif/`. PostScript names: `Inter-Regular`,
   `InterTight-Regular`, `InstrumentSerif-Regular`, `InstrumentSerif-Italic`.
   Weights are set through the variation axes (`BrandFont`).
-- **Icon and launch mark** are rendered from the brand mark geometry
-  (`app/icon.svg`): a 1024 px opaque PNG for the icon, and a transparent
-  mark at @1x/@2x/@3x for the launch screen.
+- **Icon and launch mark** are the 3D mark (the web's `app/icon.png` is
+  the same art on the Stone plate): a 1024 px opaque PNG for the icon, and a
+  transparent mark at @1x/@2x/@3x for the launch screen.
