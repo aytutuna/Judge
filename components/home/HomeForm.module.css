@@ -199,10 +199,13 @@
   --side-tint: var(--party-d-tint);
   --side-strong: var(--party-d-strong);
 }
-.card:focus-within,
-.card[data-flash] {
+.card:focus-within {
   border-color: color-mix(in srgb, var(--side-strong) 95%, transparent);
   box-shadow: 0 0 12px color-mix(in srgb, var(--side-strong) 60%, transparent);
+}
+.card[data-flash] {
+  border-color: color-mix(in srgb, var(--danger) 95%, transparent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--danger) 60%, transparent);
 }
 
 .cardHead {
