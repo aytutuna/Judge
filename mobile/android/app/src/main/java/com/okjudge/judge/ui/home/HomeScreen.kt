@@ -645,7 +645,7 @@ private fun SideCard(
     Column(
         modifier
             .fillMaxWidth()
-            .neonEdge(colors.strong, focused || lifted || flash, JudgeShapes.block)
+            .neonEdge(if (flash) Palette.danger else colors.strong, focused || lifted || flash, JudgeShapes.block)
             .onFocusChanged {
                 focused = it.hasFocus
                 onFocus(it.hasFocus)
