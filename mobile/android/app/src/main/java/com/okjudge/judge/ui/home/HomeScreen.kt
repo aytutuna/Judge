@@ -812,7 +812,7 @@ private fun Counter(count: Int, lang: AppLang, modifier: Modifier = Modifier) {
     )
 }
 
-/** Beside the send button: icon and word when they fit, the icon alone when they don't. */
+/** At the leading edge of the send row: icon and word when they fit, the icon alone when they don't. */
 @Composable
 private fun ClearButton(compact: Boolean, enabled: Boolean, onClick: () -> Unit) {
     val s = LocalStrings.current
@@ -848,7 +848,7 @@ private val CLEAR_PAD = 12.dp
 private val CLEAR_GAP = 6.dp
 private val CLEAR_ICON = 14.dp
 
-/** The counter, Clear and the send button in one right-aligned row; Clear gives way first, down to its icon. */
+/** Clear at the leading edge, the counter and the send button at the trailing one; Clear gives way first, down to its icon. */
 @Composable
 private fun SendRow(count: Int, showClear: Boolean, clearEnabled: Boolean, onClear: () -> Unit, send: @Composable () -> Unit) {
     val s = LocalStrings.current
@@ -868,14 +868,12 @@ private fun SendRow(count: Int, showClear: Boolean, clearEnabled: Boolean, onCle
             null
         }
         layout(constraints.maxWidth, 44.dp.roundToPx()) {
+            val y = 44.dp.roundToPx()
             var x = constraints.maxWidth - sendP.width
-            sendP.placeRelative(x, (44.dp.roundToPx() - sendP.height) / 2)
-            if (clearP != null) {
-                x -= gap + clearP.width
-                clearP.placeRelative(x, (44.dp.roundToPx() - clearP.height) / 2)
-            }
+            sendP.placeRelative(x, (y - sendP.height) / 2)
             x -= gap + counterP.width
-            counterP.placeRelative(x, (44.dp.roundToPx() - counterP.height) / 2)
+            counterP.placeRelative(x, (y - counterP.height) / 2)
+            clearP?.placeRelative(0, (y - clearP.height) / 2)
         }
     }
 }

@@ -89,15 +89,15 @@ class HomeBoxesScreenTest {
     }
 
     @Test
-    fun clearSitsInTheSendRow_nextToSend_onlyOnceThereIsSomethingToClear() {
+    fun clearSitsInTheSendRow_atTheLeadingEdge_onlyOnceThereIsSomethingToClear() {
         home(HomeUiState())
         compose.onNodeWithTag(HomeTags.CLEAR).assertDoesNotExist()
         compose.onNodeWithTag(HomeTags.INPUT).performTextInput(sam)
         val clear = compose.onNodeWithTag(HomeTags.CLEAR).fetchSemanticsNode().boundsInRoot
         val send = compose.onNodeWithTag(HomeTags.SUBMIT).fetchSemanticsNode().boundsInRoot
         val counter = compose.onNodeWithTag(HomeTags.COUNTER).fetchSemanticsNode().boundsInRoot
-        assertTrue(clear.right <= send.left)
-        assertTrue(counter.right <= clear.left)
+        assertTrue(clear.right <= counter.left)
+        assertTrue(counter.right <= send.left)
         assertEquals(clear.center.y, send.center.y, 4f)
         compose.onNodeWithTag(HomeTags.CLEAR).performClick()
         compose.onNodeWithTag(HomeTags.CLEAR).assertDoesNotExist()
