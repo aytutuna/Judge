@@ -80,6 +80,7 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
   const [confirm, setConfirm] = useState<Confirm | null>(null);
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(0);
+  const [limited, setLimited] = useState<string | null>(null);
 
   const targets = confirm
     ? history.items.filter(
@@ -102,10 +103,11 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
 
   async function run() {
     setBusy(true);
-    const bad = await removeItems(targets);
+    const res = await removeItems(targets, lang);
     setBusy(false);
     setConfirm(null);
-    setFailed(bad);
+    setFailed(res.failed);
+    setLimited(res.limited);
   }
 
   function row(href: string, label: Key, onClick?: (e: MouseEvent) => void) {

@@ -63,8 +63,19 @@ describe("removing rows", () => {
   it("counts the failures when removing several, and carries on past them", async () => {
     mocked.fetch.mockResolvedValueOnce({ ok: false, status: 500 }).mockRejectedValueOnce(new Error("offline"));
     const items = ["a", "b", "c"].map((id) => fromRow(row({ id })));
-    expect(await removeItems(items)).toBe(2);
+    expect(await removeItems(items, "en")).toEqual({ failed: 2, limited: null });
     expect(mocked.fetch).toHaveBeenCalledTimes(3);
+  });
+
+  it("stops at a rate limit and reports the rest as not removed", async () => {
+    mocked.fetch
+      .mockResolvedValueOnce({ ok: true, status: 200 })
+      .mockResolvedValue({ ok: false, status: 429, json: async () => ({ code: "rate_limited", retryAfterSec: 300 }) });
+    const items = ["a", "b", "c", "d"].map((id) => fromRow(row({ id })));
+    const res = await removeItems(items, "en");
+    expect(res.failed).toBe(3);
+    expect(res.limited).toMatch(/limit/);
+    expect(mocked.fetch).toHaveBeenCalledTimes(2);
   });
 
   it("counts a row that is already gone as removed", async () => {

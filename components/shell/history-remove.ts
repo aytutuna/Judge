@@ -1,4 +1,5 @@
 import { apiFetch } from "@/lib/api-fetch";
+import { apiErrorMessage, type Lang } from "@/lib/i18n";
 import { forgetCaseNames } from "@/lib/case-names-store";
 import { forgetOwnerToken, loadOwnerToken, ownerHeaders } from "@/lib/owner-store";
 import { loadClaim } from "@/lib/respondent-store";
@@ -12,10 +13,16 @@ function inviteToken(item: HistoryItem): string | null {
   return item.href?.startsWith("/r/") ? item.href.slice(3) : null;
 }
 
+type Outcome = "done" | "failed" | { limited: unknown };
+
 /** The same removal calls the verdict and case pages make. False when it
  * failed and is worth another try; a row that is already gone counts as done
  * and the list catches up. */
 export async function removeItem(item: HistoryItem): Promise<boolean> {
+  return (await attempt(item)) === "done";
+}
+
+async function attempt(item: HistoryItem): Promise<Outcome> {
   const id = encodeURIComponent(item.id);
   let path: string;
   let init: RequestInit;
@@ -24,7 +31,7 @@ export async function removeItem(item: HistoryItem): Promise<boolean> {
     init = { method: "POST", headers: { ...JSON_HEADERS, ...ownerHeaders(loadOwnerToken(item.id)) }, body: body() };
   } else if (item.role === "respondent") {
     const token = inviteToken(item);
-    if (!token) return false;
+    if (!token) return "failed";
     const claim = loadClaim(item.id);
     path = `/api/v1/respond/${token}/removal`;
     init = {
@@ -40,11 +47,12 @@ export async function removeItem(item: HistoryItem): Promise<boolean> {
     const res = await apiFetch(path, init);
     if (res.status === 404 || res.status === 410) {
       void refreshHistory();
-      return true;
+      return "done";
     }
-    if (!res.ok) return false;
+    if (res.status === 429) return { limited: await res.json().catch(() => null) };
+    if (!res.ok) return "failed";
   } catch {
-    return false;
+    return "failed";
   }
   if (item.kind === "verdict") {
     forgetOwnerToken(item.id);
@@ -53,12 +61,18 @@ export async function removeItem(item: HistoryItem): Promise<boolean> {
     forgetCaseNames(item.id);
     markCaseRemoved(item.id);
   }
-  return true;
+  return "done";
 }
 
-/** Removes `items` one after the other; how many failed. */
-export async function removeItems(items: readonly HistoryItem[]): Promise<number> {
+/** Removes `items` one after the other; how many failed, and the rate-limit
+ * message when the server said to slow down, which ends the run since every
+ * further call would be refused too. */
+export async function removeItems(items: readonly HistoryItem[], lang: Lang): Promise<{ failed: number; limited: string | null }> {
   let failed = 0;
-  for (const item of items) if (!(await removeItem(item))) failed++;
-  return failed;
+  for (let i = 0; i < items.length; i++) {
+    const out = await attempt(items[i]);
+    if (out === "failed") failed++;
+    else if (out !== "done") return { failed: failed + items.length - i, limited: apiErrorMessage(lang, out.limited, 429) };
+  }
+  return { failed, limited: null };
 }
