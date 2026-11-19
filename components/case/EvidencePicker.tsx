@@ -87,7 +87,7 @@ export function applyUploadResult(
 let seq = 0;
 const nextId = () => `ev${(seq += 1)}`;
 
-export function useEvidence(endpoint: string, max: number): EvidenceController {
+export function useEvidence(endpoint: string, max: number, headers?: Record<string, string>): EvidenceController {
   const [items, setItems] = useState<EvidenceItem[]>([]);
   const [failure, setFailure] = useState<UploadFailure | null>(null);
   const [overLimit, setOverLimit] = useState(false);
@@ -155,7 +155,7 @@ export function useEvidence(endpoint: string, max: number): EvidenceController {
         const sentIds = send.map((s) => s.id);
         let response: EvidenceUploadResponse | null = null;
         try {
-          const res = await apiFetchAgreed(endpoint, { method: "POST", body: form });
+          const res = await apiFetchAgreed(endpoint, { method: "POST", headers, body: form });
           const json: unknown = await res.json().catch(() => null);
           if (res.ok && json && Array.isArray((json as EvidenceUploadResponse).items)) {
             response = json as EvidenceUploadResponse;
@@ -169,7 +169,7 @@ export function useEvidence(endpoint: string, max: number): EvidenceController {
         setItems((prev) => applyUploadResult(prev, sentIds, response));
       })();
     },
-    [endpoint, items.length, max],
+    [endpoint, headers, items.length, max],
   );
 
   const remove = useCallback(
