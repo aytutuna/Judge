@@ -38,7 +38,6 @@
     <string name="verdict_too_close">För jämnt för att avgöra</string>
     <string name="lean_title">Framtvingat avgörande: %1$s har mer rätt</string>
     <string name="lean_title_self">Framtvingat avgörande: du har mer rätt</string>
-    <string name="lean_unanimous">Alla domare lutade åt det här hållet.</string>
     <string name="lean_majority">Domarna lutade åt det här hållet med %1$s–%2$s.</string>
     <string name="lean_tie">Även när de tvingades välja delade sig domarna mitt itu.</string>
     <string name="split_win">%1$s har rätt i det här:</string>
@@ -71,7 +70,6 @@
         <item quantity="one">%1$s oberoende AI-domare röstade:</item>
         <item quantity="other">%1$s oberoende AI-domare röstade:</item>
     </plurals>
-    <string name="escalated">Det var jämnt, så vi kallade in fler domare.</string>
     <string name="translate_loading">Översätter…</string>
     <string name="translate_from_en">Översatt från engelska</string>
     <string name="translate_from_tr">Översatt från turkiska</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">För skoj och tydlighet, inte juridisk rådgivning.</string>
     <string name="footer_language">Språk</string>
     <string name="not_found_title">Den här domen har lämnat rättssalen</string>
-    <string name="not_found_body">Kanske har länken ett stavfel, eller så finns domen inte längre.</string>
     <string name="nav_sign_in">Logga in</string>
     <string name="nav_account">Konto</string>
     <string name="nav_pricing">Priser</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">Fortsätt</string>
     <string name="respond_adult_confirm">Jag är 18 år eller äldre</string>
     <string name="account_export">Ladda ner mina data</string>
-    <string name="account_export_hint">Få en JSON-fil med allt Judge har om dig.</string>
     <string name="account_export_busy">Förbereder filen…</string>
     <string name="account_export_failed">Vi kunde inte förbereda dina data just nu. Vill du försöka igen?</string>
     <string name="rating_prompt">Rättvis dom?</string>
@@ -179,7 +175,6 @@
     <string name="thinking_factcheck">Kollar fakta på webben…</string>
     <string name="thinking_factcheck_done">Webbkollen är klar.</string>
     <string name="thinking_premium_helper">Att kolla fakta på webben tar lite längre tid. Ge det en minut eller två.</string>
-    <string name="panel_premium">Dömd med faktakoll på webben.</string>
     <string name="factcheck_title">Kollat på webben</string>
     <string name="factcheck_lead">Domarna såg de här sökresultaten innan de dömde. De är bevis, inte själva domen.</string>
     <string name="factcheck_status_supported">Stämmer</string>
@@ -233,13 +228,10 @@
     <string name="account_delete_yes">Ja, radera det</string>
     <string name="account_delete_cancel">Behåll mitt konto</string>
     <string name="account_delete_failed">Vi kunde inte radera kontot just nu. Vill du försöka igen?</string>
-    <string name="account_sign_in_prompt">Logga in för att se ditt abonnemang och dina krediter.</string>
     <string name="account_load_failed">Vi kunde inte ladda ditt konto. Försök igen om en stund.</string>
     <string name="account_loading">Laddar ditt konto…</string>
     <string name="pricing_title">Din första dom bjuder vi på.</string>
-    <string name="pricing_lead">Skapa ett konto så är din första dom gratis, med alla funktioner. Sedan väljer du ett paket eller ett månadsabonnemang.</string>
     <string name="pricing_title_member">Skaffa fler domar.</string>
-    <string name="pricing_lead_member">Välj ett paket eller ett månadsabonnemang. Varje dom får hela panelen.</string>
     <string name="pricing_included_title">Varje dom</string>
     <string name="pricing_buy_title">Paket och månadsabonnemang</string>
     <string name="pricing_premium_f1">Fakta kollas på webben, med källorna i din dom</string>
@@ -381,7 +373,6 @@
     <string name="evidence_remove">Ta bort bild %1$s</string>
     <string name="evidence_thumb">Bild %1$s</string>
     <string name="evidence_preview">Det här läste vi</string>
-    <string name="evidence_preview_note">Bara du ser det här. Namnen döljs innan domarna läser det.</string>
     <string name="evidence_status_unreadable">Hittade ingen text</string>
     <string name="evidence_status_refused">Läsaren tackade nej till bilden</string>
     <string name="evidence_status_unsupported">Inte PNG, JPEG, WebP eller GIF</string>
@@ -408,8 +399,6 @@
     <string name="home_remove_their_side">Ta bort den andras sida</string>
     <string name="home_send_link">Skicka en länk</string>
     <string name="home_clear">Rensa</string>
-    <string name="home_lead">Skriv båda sidorna, eller skicka en länk så att den andra kan skriva sin.</string>
-    <string name="home_lead_solo">Skriv din sida, och den andras om du känner till den.</string>
     <string name="home_their_side">Den andras sida</string>
     <string name="home_their_name">Den andras namn</string>
     <string name="home_their_placeholder">Vad säger den andra? Skriv det så som hen skulle säga det.</string>
@@ -674,7 +663,6 @@
     <string name="app_purchase_buying">Köper…</string>
     <string name="app_purchase_success">Tack! Köpet är klart.</string>
     <string name="app_purchase_pending">Ditt köp behandlas. Det kan ta en minut innan det syns.</string>
-    <string name="app_purchase_arriving">Dina krediter är på väg…</string>
     <string name="app_purchase_slow">Det kan ta en minut innan de syns här.</string>
     <string name="app_purchase_failed">Köpet gick inte igenom. Försök igen om en stund.</string>
     <string name="app_purchase_restore">Återställ köp</string>

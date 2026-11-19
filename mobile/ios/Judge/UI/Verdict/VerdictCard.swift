@@ -338,13 +338,9 @@ struct VerdictNotes: View {
                         .foregroundStyle(Brand.ink)
                 }
                 SlotText(lean.reason)
-                if result.runs.count >= 2 {
-                    if lean.unanimous {
-                        SlotText(L10n.leanUnanimous(lang))
-                    } else {
-                        let tally = VerdictDisplay.leanTally(lean, runCount: result.runs.count)
-                        SlotText(L10n.leanMajority(lang, forValue: String(tally.forValue), against: String(tally.against)))
-                    }
+                if result.runs.count >= 2 && !lean.unanimous {
+                    let tally = VerdictDisplay.leanTally(lean, runCount: result.runs.count)
+                    SlotText(L10n.leanMajority(lang, forValue: String(tally.forValue), against: String(tally.against)))
                 }
             }
         case .tie:

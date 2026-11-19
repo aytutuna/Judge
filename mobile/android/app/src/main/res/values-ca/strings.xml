@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Massa igualat per decidir</string>
     <string name="lean_title">Veredicte forçat: %1$s té més raó</string>
     <string name="lean_title_self">Veredicte forçat: tens més raó</string>
-    <string name="lean_unanimous">Tots els jutges s\'han decantat cap a aquest costat.</string>
     <string name="lean_majority">Els jutges s\'han decantat cap a aquest costat per %1$s a %2$s.</string>
     <string name="lean_tie">Fins i tot obligats a triar, els jutges han quedat partits per la meitat.</string>
     <string name="split_win">%1$s té raó en això:</string>
@@ -72,7 +71,6 @@
         <item quantity="many">%1$s jutges d\'IA independents han votat:</item>
         <item quantity="other">%1$s jutges d\'IA independents han votat:</item>
     </plurals>
-    <string name="escalated">Estava molt igualat, així que hem fet venir més jutges.</string>
     <string name="translate_loading">Traduint…</string>
     <string name="translate_from_en">Traduït de l\'anglès</string>
     <string name="translate_from_tr">Traduït del turc</string>
@@ -140,7 +138,6 @@
     <string name="footer_note">Per divertir-se i veure-hi clar. No és assessorament legal.</string>
     <string name="footer_language">Idioma</string>
     <string name="not_found_title">Aquest veredicte ha abandonat la sala</string>
-    <string name="not_found_body">Potser l\'enllaç té algun error, o el veredicte ja no hi és.</string>
     <string name="nav_sign_in">Inicia sessió</string>
     <string name="nav_account">Compte</string>
     <string name="nav_pricing">Preus</string>
@@ -162,7 +159,6 @@
     <string name="consent_sensitive_continue">Continua</string>
     <string name="respond_adult_confirm">Tinc 18 anys o més</string>
     <string name="account_export">Baixa les meves dades</string>
-    <string name="account_export_hint">Obtén un fitxer JSON amb tot el que Judge guarda sobre tu.</string>
     <string name="account_export_busy">Preparant el fitxer…</string>
     <string name="account_export_failed">Ara no hem pogut preparar les teves dades. Ho tornes a provar?</string>
     <string name="rating_prompt">Veredicte just?</string>
@@ -182,7 +178,6 @@
     <string name="thinking_factcheck">Comprovant els fets a internet…</string>
     <string name="thinking_factcheck_done">Comprovació a internet acabada.</string>
     <string name="thinking_premium_helper">Comprovar els fets a internet triga una mica més. Pot ser qüestió d\'un minut o dos.</string>
-    <string name="panel_premium">Jutjat amb comprovació de fets a internet.</string>
     <string name="factcheck_title">Comprovat a internet</string>
     <string name="factcheck_lead">Els jutges han vist aquests resultats de cerca abans de decidir. Són proves, no el veredicte en si.</string>
     <string name="factcheck_status_supported">Se sosté</string>
@@ -236,13 +231,10 @@
     <string name="account_delete_yes">Sí, elimina\'l</string>
     <string name="account_delete_cancel">Em quedo el compte</string>
     <string name="account_delete_failed">Ara mateix no hem pogut eliminar el compte. Ho tornes a provar?</string>
-    <string name="account_sign_in_prompt">Inicia sessió per veure el teu pla i els crèdits.</string>
     <string name="account_load_failed">No hem pogut carregar el compte. Torna-ho a provar d\'aquí a una estona.</string>
     <string name="account_loading">Carregant el compte…</string>
     <string name="pricing_title">El primer veredicte, et convidem.</string>
-    <string name="pricing_lead">Crea un compte i el primer veredicte és gratis, amb totes les funcions. Després, tria un paquet o passa\'t al pla mensual.</string>
     <string name="pricing_title_member">Aconsegueix més veredictes.</string>
-    <string name="pricing_lead_member">Tria un paquet o passa\'t al pla mensual. Cada veredicte compta amb tots els jutges.</string>
     <string name="pricing_included_title">Cada veredicte inclou</string>
     <string name="pricing_buy_title">Paquets i pla mensual</string>
     <string name="pricing_premium_f1">Fets comprovats a internet, amb les fonts al teu veredicte</string>
@@ -387,7 +379,6 @@
     <string name="evidence_remove">Treu la imatge %1$s</string>
     <string name="evidence_thumb">Imatge %1$s</string>
     <string name="evidence_preview">Què hi hem llegit</string>
-    <string name="evidence_preview_note">Això només ho veus tu. Els noms s\'amaguen abans que ho llegeixin els jutges.</string>
     <string name="evidence_status_unreadable">No s\'hi ha pogut llegir cap text</string>
     <string name="evidence_status_refused">El lector ha rebutjat aquesta imatge</string>
     <string name="evidence_status_unsupported">No és PNG, JPEG, WebP ni GIF</string>
@@ -414,8 +405,6 @@
     <string name="home_remove_their_side">Treu la seva versió</string>
     <string name="home_send_link">Envia-li un enllaç</string>
     <string name="home_clear">Esborra</string>
-    <string name="home_lead">Escriu les dues versions o envia un enllaç a l\'altra persona perquè escrigui la seva.</string>
-    <string name="home_lead_solo">Escriu la teva versió, i la de l\'altra persona si la coneixes.</string>
     <string name="home_their_side">La seva versió</string>
     <string name="home_their_name">El seu nom</string>
     <string name="home_their_placeholder">Què diu l\'altra persona? Escriu-ho tal com ho diria ella.</string>
@@ -689,7 +678,6 @@
     <string name="app_purchase_buying">Comprant…</string>
     <string name="app_purchase_success">Gràcies! La compra s\'ha completat.</string>
     <string name="app_purchase_pending">La compra s\'està processant. Pot trigar un minut a aparèixer.</string>
-    <string name="app_purchase_arriving">Els teus crèdits són de camí…</string>
     <string name="app_purchase_slow">Pot trigar un minut a aparèixer aquí.</string>
     <string name="app_purchase_failed">La compra no s\'ha completat. Torna-ho a provar d\'aquí a un moment.</string>
     <string name="app_purchase_restore">Restaura les compres</string>

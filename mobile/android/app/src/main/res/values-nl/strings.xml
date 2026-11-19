@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Te nipt om te beslissen</string>
     <string name="lean_title">Gedwongen keuze: %1$s heeft meer gelijk</string>
     <string name="lean_title_self">Gedwongen keuze: jij hebt meer gelijk</string>
-    <string name="lean_unanimous">Alle rechters neigden deze kant op.</string>
     <string name="lean_majority">De rechters neigden %1$s–%2$s deze kant op.</string>
     <string name="lean_tie">Zelfs toen ze moesten kiezen, waren de rechters precies verdeeld.</string>
     <string name="split_win">%1$s heeft hierin gelijk:</string>
@@ -71,7 +70,6 @@
         <item quantity="one">%1$s onafhankelijke AI-rechters stemden:</item>
         <item quantity="other">%1$s onafhankelijke AI-rechters stemden:</item>
     </plurals>
-    <string name="escalated">Het was nipt, dus we hebben er extra rechters bij gehaald.</string>
     <string name="translate_loading">Vertalen…</string>
     <string name="translate_from_en">Vertaald uit het Engels</string>
     <string name="translate_from_tr">Vertaald uit het Turks</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">Voor de lol en voor duidelijkheid, geen juridisch advies.</string>
     <string name="footer_language">Taal</string>
     <string name="not_found_title">Deze uitspraak heeft de rechtszaal al verlaten</string>
-    <string name="not_found_body">Misschien zit er een typfout in de link, of is de uitspraak weg.</string>
     <string name="nav_sign_in">Inloggen</string>
     <string name="nav_account">Account</string>
     <string name="nav_pricing">Prijzen</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">Verder</string>
     <string name="respond_adult_confirm">Ik ben 18 jaar of ouder</string>
     <string name="account_export">Mijn gegevens downloaden</string>
-    <string name="account_export_hint">Krijg een JSON-bestand met alles wat Judge over je bewaart.</string>
     <string name="account_export_busy">Je bestand wordt klaargemaakt…</string>
     <string name="account_export_failed">We konden je gegevens nu niet klaarmaken. Wil je het nog eens proberen?</string>
     <string name="rating_prompt">Eerlijke uitspraak?</string>
@@ -179,7 +175,6 @@
     <string name="thinking_factcheck">Feiten checken op het web…</string>
     <string name="thinking_factcheck_done">Webcheck klaar.</string>
     <string name="thinking_premium_helper">Feiten checken op het web duurt wat langer. Geef het een minuutje of twee.</string>
-    <string name="panel_premium">Beoordeeld met een factcheck op het web.</string>
     <string name="factcheck_title">Gecheckt op het web</string>
     <string name="factcheck_lead">De rechters zagen deze zoekresultaten voordat ze oordeelden. Het is bewijs, niet de uitspraak zelf.</string>
     <string name="factcheck_status_supported">Klopt</string>
@@ -233,13 +228,10 @@
     <string name="account_delete_yes">Ja, verwijderen</string>
     <string name="account_delete_cancel">Account houden</string>
     <string name="account_delete_failed">We konden het account nu niet verwijderen. Wil je het nog eens proberen?</string>
-    <string name="account_sign_in_prompt">Log in om je abonnement en credits te zien.</string>
     <string name="account_load_failed">We konden je account niet laden. Probeer het zo nog eens.</string>
     <string name="account_loading">Je account laden…</string>
     <string name="pricing_title">Je eerste uitspraak is van het huis.</string>
-    <string name="pricing_lead">Maak een account aan en je eerste uitspraak is gratis, met alles erop en eraan. Daarna kies je een bundel of neem je een maandabonnement.</string>
     <string name="pricing_title_member">Meer uitspraken.</string>
-    <string name="pricing_lead_member">Kies een bundel of neem een maandabonnement. Elke uitspraak krijgt het volledige panel.</string>
     <string name="pricing_included_title">Bij elke uitspraak</string>
     <string name="pricing_buy_title">Bundels en maandabonnement</string>
     <string name="pricing_premium_f1">Feiten gecheckt op het web, met de bronnen bij je uitspraak</string>
@@ -381,7 +373,6 @@
     <string name="evidence_remove">Afbeelding %1$s verwijderen</string>
     <string name="evidence_thumb">Afbeelding %1$s</string>
     <string name="evidence_preview">Wat we lazen</string>
-    <string name="evidence_preview_note">Alleen jij ziet dit. Namen worden verborgen voordat de rechters het lezen.</string>
     <string name="evidence_status_unreadable">Geen tekst gevonden</string>
     <string name="evidence_status_refused">De lezer weigerde deze afbeelding</string>
     <string name="evidence_status_unsupported">Geen PNG, JPEG, WebP of GIF</string>
@@ -408,8 +399,6 @@
     <string name="home_remove_their_side">Kant van de ander verwijderen</string>
     <string name="home_send_link">Stuur een link</string>
     <string name="home_clear">Wissen</string>
-    <string name="home_lead">Schrijf beide kanten op, of stuur de ander een link om het zelf te doen.</string>
-    <string name="home_lead_solo">Schrijf jouw kant op en die van de ander als je die kent.</string>
     <string name="home_their_side">Kant van de ander</string>
     <string name="home_their_name">Naam van de ander</string>
     <string name="home_their_placeholder">Wat zegt de ander? Schrijf het zoals die het zelf zou zeggen.</string>
@@ -674,7 +663,6 @@
     <string name="app_purchase_buying">Kopen…</string>
     <string name="app_purchase_success">Bedankt! Je aankoop is gelukt.</string>
     <string name="app_purchase_pending">Je aankoop wordt verwerkt. Het kan een minuutje duren voordat je hem ziet.</string>
-    <string name="app_purchase_arriving">Je credits komen eraan…</string>
     <string name="app_purchase_slow">Het kan een minuutje duren voordat ze hier verschijnen.</string>
     <string name="app_purchase_failed">De aankoop is niet gelukt. Probeer het zo nog eens.</string>
     <string name="app_purchase_restore">Aankopen herstellen</string>

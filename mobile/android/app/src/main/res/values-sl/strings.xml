@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Preveč izenačeno za razsodbo</string>
     <string name="lean_title">Odločitev na silo: %1$s ima bolj prav</string>
     <string name="lean_title_self">Odločitev na silo: ti imaš bolj prav</string>
-    <string name="lean_unanimous">Vsi sodniki se nagibajo na to stran.</string>
     <string name="lean_majority">Sodniki se nagibajo na to stran: %1$s–%2$s.</string>
     <string name="lean_tie">Tudi ko so morali izbrati, so se sodniki razdelili točno na pol.</string>
     <string name="split_win">%1$s ima prav glede tega:</string>
@@ -73,7 +72,6 @@
         <item quantity="few">%1$s neodvisni sodniki UI so glasovali:</item>
         <item quantity="other">%1$s neodvisnih sodnikov UI je glasovalo:</item>
     </plurals>
-    <string name="escalated">Bilo je tesno, zato smo poklicali dodatne sodnike.</string>
     <string name="translate_loading">Prevajamo…</string>
     <string name="translate_from_en">Prevedeno iz angleščine</string>
     <string name="translate_from_tr">Prevedeno iz turščine</string>
@@ -143,7 +141,6 @@
     <string name="footer_note">Za zabavo in jasnost, ne kot pravni nasvet.</string>
     <string name="footer_language">Jezik</string>
     <string name="not_found_title">Ta razsodba je že zapustila dvorano</string>
-    <string name="not_found_body">Morda je v povezavi tipkarska napaka ali pa razsodbe ni več.</string>
     <string name="nav_sign_in">Prijava</string>
     <string name="nav_account">Račun</string>
     <string name="nav_pricing">Cene</string>
@@ -165,7 +162,6 @@
     <string name="consent_sensitive_continue">Naprej</string>
     <string name="respond_adult_confirm">Star sem 18 let ali več</string>
     <string name="account_export">Prenesi moje podatke</string>
-    <string name="account_export_hint">Prejmi datoteko JSON z vsem, kar Judge hrani o tebi.</string>
     <string name="account_export_busy">Pripravljam datoteko…</string>
     <string name="account_export_failed">Podatkov zdaj ni bilo mogoče pripraviti. Poskusiš znova?</string>
     <string name="rating_prompt">Poštena razsodba?</string>
@@ -185,7 +181,6 @@
     <string name="thinking_factcheck">Preverjamo dejstva na spletu…</string>
     <string name="thinking_factcheck_done">Spletno preverjanje je končano.</string>
     <string name="thinking_premium_helper">Preverjanje dejstev na spletu traja malo dlje. Daj nam minuto ali dve.</string>
-    <string name="panel_premium">Razsojeno s spletnim preverjanjem dejstev.</string>
     <string name="factcheck_title">Preverjeno na spletu</string>
     <string name="factcheck_lead">Sodniki so te zadetke iskanja videli pred razsodbo. So dokazi, ne razsodba sama.</string>
     <string name="factcheck_status_supported">Drži</string>
@@ -239,13 +234,10 @@
     <string name="account_delete_yes">Da, izbriši</string>
     <string name="account_delete_cancel">Obdrži račun</string>
     <string name="account_delete_failed">Računa trenutno nismo mogli izbrisati. Poskusiš znova?</string>
-    <string name="account_sign_in_prompt">Prijavi se in poglej svojo naročnino in kredite.</string>
     <string name="account_load_failed">Računa nismo mogli naložiti. Poskusi znova čez trenutek.</string>
     <string name="account_loading">Nalagamo tvoj račun…</string>
     <string name="pricing_title">Prva razsodba gre na naš račun.</string>
-    <string name="pricing_lead">Ustvari račun in prva razsodba je brezplačna, z vsemi funkcijami. Potem izberi paket ali mesečno naročnino.</string>
     <string name="pricing_title_member">Več razsodb.</string>
-    <string name="pricing_lead_member">Izberi paket ali mesečno naročnino. Pri vsaki razsodbi sodelujejo vsi sodniki.</string>
     <string name="pricing_included_title">Vsaka razsodba</string>
     <string name="pricing_buy_title">Paketi in mesečna naročnina</string>
     <string name="pricing_premium_f1">Dejstva, preverjena na spletu, z viri v razsodbi</string>
@@ -393,7 +385,6 @@
     <string name="evidence_remove">Odstrani sliko %1$s</string>
     <string name="evidence_thumb">Slika %1$s</string>
     <string name="evidence_preview">Kaj smo prebrali</string>
-    <string name="evidence_preview_note">To vidiš samo ti. Imena so skrita, preden to preberejo sodniki.</string>
     <string name="evidence_status_unreadable">Besedila ni bilo mogoče prebrati</string>
     <string name="evidence_status_refused">Bralnik je to sliko zavrnil</string>
     <string name="evidence_status_unsupported">Ni PNG, JPEG, WebP ali GIF</string>
@@ -420,8 +411,6 @@
     <string name="home_remove_their_side">Odstrani drugo plat</string>
     <string name="home_send_link">Pošlji povezavo</string>
     <string name="home_clear">Počisti</string>
-    <string name="home_lead">Napiši obe plati ali drugi osebi pošlji povezavo, da napiše svojo.</string>
-    <string name="home_lead_solo">Napiši svojo plat, pa še plat druge osebe, če jo poznaš.</string>
     <string name="home_their_side">Druga plat</string>
     <string name="home_their_name">Ime druge osebe</string>
     <string name="home_their_placeholder">Kaj pravi druga oseba? Napiši tako, kot bi povedala sama.</string>
@@ -704,7 +693,6 @@
     <string name="app_purchase_buying">Nakup poteka…</string>
     <string name="app_purchase_success">Hvala! Nakup je uspel.</string>
     <string name="app_purchase_pending">Nakup je v obdelavi. Lahko traja minuto, preden se prikaže.</string>
-    <string name="app_purchase_arriving">Krediti so na poti…</string>
     <string name="app_purchase_slow">Lahko traja minuto, preden se prikaže tukaj.</string>
     <string name="app_purchase_failed">Nakup ni uspel. Poskusi znova čez trenutek.</string>
     <string name="app_purchase_restore">Obnovi nakupe</string>

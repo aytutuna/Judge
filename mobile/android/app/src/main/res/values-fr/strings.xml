@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Trop serré pour trancher</string>
     <string name="lean_title">Verdict forcé : %1$s a plutôt raison</string>
     <string name="lean_title_self">Verdict forcé : tu as plutôt raison</string>
-    <string name="lean_unanimous">Tous les juges penchent de ce côté.</string>
     <string name="lean_majority">Les juges penchent de ce côté, à %1$s contre %2$s.</string>
     <string name="lean_tie">Même forcés à choisir, les juges restent partagés à égalité.</string>
     <string name="split_win">%1$s a raison sur ce point :</string>
@@ -72,7 +71,6 @@
         <item quantity="many">%1$s juges IA indépendants ont voté :</item>
         <item quantity="other">%1$s juges IA indépendants ont voté :</item>
     </plurals>
-    <string name="escalated">C’était serré, alors on a fait venir des juges en renfort.</string>
     <string name="translate_loading">Traduction…</string>
     <string name="translate_from_en">Traduit de l’anglais</string>
     <string name="translate_from_tr">Traduit du turc</string>
@@ -140,7 +138,6 @@
     <string name="footer_note">Pour s’amuser et y voir clair, pas un conseil juridique.</string>
     <string name="footer_language">Langue</string>
     <string name="not_found_title">Ce verdict a quitté la salle d’audience</string>
-    <string name="not_found_body">Le lien contient peut-être une faute de frappe, ou le verdict n’existe plus.</string>
     <string name="nav_sign_in">Se connecter</string>
     <string name="nav_account">Compte</string>
     <string name="nav_pricing">Tarifs</string>
@@ -162,7 +159,6 @@
     <string name="consent_sensitive_continue">Continuer</string>
     <string name="respond_adult_confirm">J’ai 18 ans ou plus</string>
     <string name="account_export">Télécharger mes données</string>
-    <string name="account_export_hint">Obtiens un fichier JSON avec tout ce que Judge conserve à ton sujet.</string>
     <string name="account_export_busy">Préparation du fichier…</string>
     <string name="account_export_failed">Impossible de préparer tes données pour l’instant. Tu veux bien réessayer ?</string>
     <string name="rating_prompt">Verdict équitable ?</string>
@@ -182,7 +178,6 @@
     <string name="thinking_factcheck">On vérifie les faits sur le web…</string>
     <string name="thinking_factcheck_done">Vérification sur le web terminée.</string>
     <string name="thinking_premium_helper">Vérifier les faits sur le web prend un peu plus de temps. Compte une minute ou deux.</string>
-    <string name="panel_premium">Jugé avec une vérification des faits sur le web.</string>
     <string name="factcheck_title">Vérifié sur le web</string>
     <string name="factcheck_lead">Les juges ont vu ces résultats de recherche avant de trancher. Ce sont des éléments de preuve, pas le verdict lui-même.</string>
     <string name="factcheck_status_supported">Confirmé</string>
@@ -236,13 +231,10 @@
     <string name="account_delete_yes">Oui, supprimer</string>
     <string name="account_delete_cancel">Garder mon compte</string>
     <string name="account_delete_failed">Impossible de supprimer le compte pour l’instant. Tu veux bien réessayer ?</string>
-    <string name="account_sign_in_prompt">Connecte-toi pour voir ton offre et tes crédits.</string>
     <string name="account_load_failed">Impossible de charger ton compte. Réessaie dans un instant.</string>
     <string name="account_loading">Chargement de ton compte…</string>
     <string name="pricing_title">Ton premier verdict est offert.</string>
-    <string name="pricing_lead">Crée un compte et ton premier verdict est gratuit, avec toutes les fonctionnalités. Ensuite, choisis un pack ou passe à l’abonnement mensuel.</string>
     <string name="pricing_title_member">Obtiens plus de verdicts.</string>
-    <string name="pricing_lead_member">Choisis un pack ou passe à l’abonnement mensuel. Chaque verdict mobilise tous les juges.</string>
     <string name="pricing_included_title">Dans chaque verdict</string>
     <string name="pricing_buy_title">Packs et abonnement mensuel</string>
     <string name="pricing_premium_f1">Faits vérifiés sur le web, avec les sources dans ton verdict</string>
@@ -387,7 +379,6 @@
     <string name="evidence_remove">Retirer l’image %1$s</string>
     <string name="evidence_thumb">Image %1$s</string>
     <string name="evidence_preview">Ce qu’on a lu</string>
-    <string name="evidence_preview_note">Ceci n’est visible que par toi. Les noms sont masqués avant que les juges le lisent.</string>
     <string name="evidence_status_unreadable">Aucun texte lisible</string>
     <string name="evidence_status_refused">Lecture refusée pour cette image</string>
     <string name="evidence_status_unsupported">Ni PNG, ni JPEG, ni WebP, ni GIF</string>
@@ -414,8 +405,6 @@
     <string name="home_remove_their_side">Retirer sa version</string>
     <string name="home_send_link">Envoie-lui un lien</string>
     <string name="home_clear">Effacer</string>
-    <string name="home_lead">Écris les deux versions, ou envoie un lien à l’autre personne pour qu’elle écrive la sienne.</string>
-    <string name="home_lead_solo">Écris ta version, et celle d’en face si tu la connais.</string>
     <string name="home_their_side">Sa version</string>
     <string name="home_their_name">Son nom</string>
     <string name="home_their_placeholder">Que dit l’autre personne ? Raconte-le avec ses mots.</string>
@@ -689,7 +678,6 @@
     <string name="app_purchase_buying">Achat en cours…</string>
     <string name="app_purchase_success">Merci ! Ton achat est validé.</string>
     <string name="app_purchase_pending">Ton achat est en cours de traitement. Il peut mettre une minute à apparaître.</string>
-    <string name="app_purchase_arriving">Tes crédits arrivent…</string>
     <string name="app_purchase_slow">Ils peuvent mettre une minute à apparaître ici.</string>
     <string name="app_purchase_failed">L’achat n’a pas abouti. Réessaie dans un instant.</string>
     <string name="app_purchase_restore">Restaurer les achats</string>

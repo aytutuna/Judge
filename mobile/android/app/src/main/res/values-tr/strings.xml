@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Başa baş, karar çıkmadı</string>
     <string name="lean_title">Zorunlu hüküm: %1$s daha haklı</string>
     <string name="lean_title_self">Zorunlu hüküm: sen daha haklısın</string>
-    <string name="lean_unanimous">Bütün yargıçlar bu taraftan yana.</string>
     <string name="lean_majority">Yargıçlar bu tarafı %1$s–%2$s seçti.</string>
     <string name="lean_tie">Seçmeye zorlanınca bile yargıçlar tam ortadan bölündü.</string>
     <string name="split_win">%1$s şu konuda haklı:</string>
@@ -71,7 +70,6 @@
         <item quantity="one">%1$s bağımsız yapay zekâ yargıcı oy verdi:</item>
         <item quantity="other">%1$s bağımsız yapay zekâ yargıcı oy verdi:</item>
     </plurals>
-    <string name="escalated">Oylar çok yakındı, o yüzden ek yargıç çağırdık.</string>
     <string name="translate_loading">Çevriliyor…</string>
     <string name="translate_from_en">İngilizceden çevrildi</string>
     <string name="translate_from_tr">Türkçeden çevrildi</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">Eğlence ve netlik için, hukuki tavsiye değil.</string>
     <string name="footer_language">Dil</string>
     <string name="not_found_title">Bu karar salonu çoktan terk etmiş</string>
-    <string name="not_found_body">Bağlantıda bir yazım hatası olabilir ya da karar artık yok.</string>
     <string name="nav_sign_in">Giriş yap</string>
     <string name="nav_account">Hesap</string>
     <string name="nav_pricing">Fiyatlar</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">Devam et</string>
     <string name="respond_adult_confirm">18 yaşında veya daha büyüğüm</string>
     <string name="account_export">Verilerimi indir</string>
-    <string name="account_export_hint">Judge\'ın senin hakkında tuttuğu her şeyi içeren bir JSON dosyası al.</string>
     <string name="account_export_busy">Dosyan hazırlanıyor…</string>
     <string name="account_export_failed">Verilerini şu an hazırlayamadık. Bir daha dener misin?</string>
     <string name="rating_prompt">Karar adil mi?</string>
@@ -179,7 +175,6 @@
     <string name="thinking_factcheck">Olguları internette kontrol ediyoruz…</string>
     <string name="thinking_factcheck_done">İnternet kontrolü bitti.</string>
     <string name="thinking_premium_helper">Olguları internette kontrol etmek biraz daha uzun sürer. Bir iki dakika verebilirsin.</string>
-    <string name="panel_premium">İnternette olgu kontrolüyle yargılandı.</string>
     <string name="factcheck_title">İnternette kontrol edildi</string>
     <string name="factcheck_lead">Yargıçlar karar vermeden önce bu arama sonuçlarını gördü. Bunlar kanıt, kararın kendisi değil.</string>
     <string name="factcheck_status_supported">Doğru çıktı</string>
@@ -233,13 +228,10 @@
     <string name="account_delete_yes">Evet, sil</string>
     <string name="account_delete_cancel">Hesabım kalsın</string>
     <string name="account_delete_failed">Hesabı şu an silemedik. Bir daha dener misin?</string>
-    <string name="account_sign_in_prompt">Planını ve kredilerini görmek için giriş yap.</string>
     <string name="account_load_failed">Hesabını yükleyemedik. Birazdan tekrar dene.</string>
     <string name="account_loading">Hesabın yükleniyor…</string>
     <string name="pricing_title">İlk kararın bizden.</string>
-    <string name="pricing_lead">Bir hesap aç, ilk kararın tüm özellikleriyle ücretsiz. Sonrasında bir paket seç ya da aylık plana geç.</string>
     <string name="pricing_title_member">Daha fazla karar al.</string>
-    <string name="pricing_lead_member">Bir paket seç ya da aylık plana geç. Her karar eksiksiz yargılanır.</string>
     <string name="pricing_included_title">Her kararda</string>
     <string name="pricing_buy_title">Paketler ve aylık plan</string>
     <string name="pricing_premium_f1">Olgular internette kontrol edilir, kaynaklar kararında görünür</string>
@@ -381,7 +373,6 @@
     <string name="evidence_remove">%1$s. görseli kaldır</string>
     <string name="evidence_thumb">%1$s. görsel</string>
     <string name="evidence_preview">Ne okuduk</string>
-    <string name="evidence_preview_note">Bunu sadece sen görüyorsun. Yargıçlar okumadan önce isimler gizlenir.</string>
     <string name="evidence_status_unreadable">Okunacak bir yazı bulamadık</string>
     <string name="evidence_status_refused">Okuyucu bu görseli okumayı reddetti</string>
     <string name="evidence_status_unsupported">PNG, JPEG, WebP ya da GIF değil</string>
@@ -408,8 +399,6 @@
     <string name="home_remove_their_side">Karşı tarafı kaldır</string>
     <string name="home_send_link">Bağlantı gönder</string>
     <string name="home_clear">Temizle</string>
-    <string name="home_lead">İki tarafı da yaz ya da karşı tarafa bir bağlantı gönder, kendi tarafını o yazsın.</string>
-    <string name="home_lead_solo">Kendi tarafını yaz, biliyorsan onunkini de.</string>
     <string name="home_their_side">Karşı taraf</string>
     <string name="home_their_name">Onun adı</string>
     <string name="home_their_placeholder">O ne diyor? Onun anlatacağı gibi yaz.</string>
@@ -674,7 +663,6 @@
     <string name="app_purchase_buying">Satın alınıyor…</string>
     <string name="app_purchase_success">Teşekkürler! Satın alma tamamlandı.</string>
     <string name="app_purchase_pending">Satın alman işleniyor. Hesabına yansıması bir dakika sürebilir.</string>
-    <string name="app_purchase_arriving">Kredilerin yolda…</string>
     <string name="app_purchase_slow">Burada görünmesi bir dakika sürebilir.</string>
     <string name="app_purchase_failed">Satın alma tamamlanamadı. Birazdan tekrar dene.</string>
     <string name="app_purchase_restore">Satın alımları geri yükle</string>

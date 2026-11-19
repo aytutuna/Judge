@@ -292,19 +292,13 @@ struct VerdictDetails<Appeal: View>: View {
         }
     }
 
-    /// "Three judges ruled on their own: Sam · Sam · Alex", the panel and
-    /// the evidence note.
+    /// "Three judges ruled on their own: Sam · Sam · Alex" and the evidence
+    /// note.
     @ViewBuilder
     private func votes(_ result: VerdictResult, parties: PartyNames) -> some View {
         if !result.runs.isEmpty {
             VStack(spacing: 2) {
-                if result.escalated {
-                    Text(L10n.escalated(lang))
-                }
                 Text(L10n.judgesVoted(lang, n: result.runs.count) + " " + VerdictDisplay.votesText(result, parties: parties, lang: lang))
-                if result.isPremium && result.factCheck?.status == .checked {
-                    Text(L10n.panelPremium(lang))
-                }
                 if let evidence = TwoSidedDisplay.evidenceNote(result, lang: lang) {
                     Text(evidence)
                 }

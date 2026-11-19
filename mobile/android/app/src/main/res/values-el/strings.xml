@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Πολύ οριακό για να κριθεί</string>
     <string name="lean_title">Αναγκαστική απόφαση υπέρ: %1$s</string>
     <string name="lean_title_self">Αναγκαστική απόφαση: έχεις πιο δίκιο</string>
-    <string name="lean_unanimous">Όλοι οι κριτές έγειραν προς τα εδώ.</string>
     <string name="lean_majority">Οι κριτές έγειραν προς τα εδώ με %1$s–%2$s.</string>
     <string name="lean_tie">Ακόμα κι όταν πιέστηκαν να διαλέξουν, οι κριτές μοιράστηκαν στη μέση.</string>
     <string name="split_win">%1$s – έχει δίκιο εδώ:</string>
@@ -71,7 +70,6 @@
         <item quantity="one">%1$s ανεξάρτητοι κριτές AI ψήφισαν:</item>
         <item quantity="other">%1$s ανεξάρτητοι κριτές AI ψήφισαν:</item>
     </plurals>
-    <string name="escalated">Ήταν οριακό, οπότε φωνάξαμε κι άλλους κριτές.</string>
     <string name="translate_loading">Μετάφραση…</string>
     <string name="translate_from_en">Μετάφραση από τα αγγλικά</string>
     <string name="translate_from_tr">Μετάφραση από τα τουρκικά</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">Για πλάκα και για καθαρή ματιά, όχι νομική συμβουλή.</string>
     <string name="footer_language">Γλώσσα</string>
     <string name="not_found_title">Αυτή η απόφαση έφυγε από την αίθουσα</string>
-    <string name="not_found_body">Ίσως ο σύνδεσμος έχει κάποιο λάθος ή η απόφαση δεν υπάρχει πια.</string>
     <string name="nav_sign_in">Σύνδεση</string>
     <string name="nav_account">Λογαριασμός</string>
     <string name="nav_pricing">Τιμές</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">Συνέχεια</string>
     <string name="respond_adult_confirm">Είμαι 18 ετών ή μεγαλύτερος/η</string>
     <string name="account_export">Λήψη των δεδομένων μου</string>
-    <string name="account_export_hint">Πάρε ένα αρχείο JSON με ό,τι κρατά το Judge για σένα.</string>
     <string name="account_export_busy">Το αρχείο ετοιμάζεται…</string>
     <string name="account_export_failed">Δεν μπορέσαμε να ετοιμάσουμε τα δεδομένα σου τώρα. Θες να ξαναδοκιμάσεις;</string>
     <string name="rating_prompt">Δίκαιη απόφαση;</string>
@@ -179,7 +175,6 @@
     <string name="thinking_factcheck">Ελέγχουμε τα γεγονότα στο ίντερνετ…</string>
     <string name="thinking_factcheck_done">Ο έλεγχος στο ίντερνετ ολοκληρώθηκε.</string>
     <string name="thinking_premium_helper">Ο έλεγχος των γεγονότων στο ίντερνετ θέλει λίγο παραπάνω. Δώσε μας ένα-δυο λεπτά.</string>
-    <string name="panel_premium">Κρίθηκε με έλεγχο γεγονότων στο ίντερνετ.</string>
     <string name="factcheck_title">Ελέγχθηκε στο ίντερνετ</string>
     <string name="factcheck_lead">Οι κριτές είδαν αυτά τα αποτελέσματα αναζήτησης πριν αποφασίσουν. Είναι στοιχεία, όχι η ίδια η απόφαση.</string>
     <string name="factcheck_status_supported">Ισχύει</string>
@@ -233,13 +228,10 @@
     <string name="account_delete_yes">Ναι, διάγραψέ τον</string>
     <string name="account_delete_cancel">Κράτα τον λογαριασμό μου</string>
     <string name="account_delete_failed">Δεν μπορέσαμε να διαγράψουμε τον λογαριασμό τώρα. Δοκιμάζεις ξανά;</string>
-    <string name="account_sign_in_prompt">Συνδέσου για να δεις το πρόγραμμα και το υπόλοιπό σου.</string>
     <string name="account_load_failed">Δεν μπορέσαμε να φορτώσουμε τον λογαριασμό σου. Δοκίμασε ξανά σε λίγο.</string>
     <string name="account_loading">Φόρτωση λογαριασμού…</string>
     <string name="pricing_title">Την πρώτη απόφαση την κερνάμε εμείς.</string>
-    <string name="pricing_lead">Φτιάξε λογαριασμό και η πρώτη σου απόφαση είναι δωρεάν, με όλες τις λειτουργίες. Μετά διαλέγεις πακέτο ή μηνιαίο πρόγραμμα.</string>
     <string name="pricing_title_member">Περισσότερες αποφάσεις.</string>
-    <string name="pricing_lead_member">Διάλεξε πακέτο ή μηνιαίο πρόγραμμα. Κάθε απόφαση βγαίνει από την πλήρη σύνθεση κριτών.</string>
     <string name="pricing_included_title">Σε κάθε απόφαση</string>
     <string name="pricing_buy_title">Πακέτα και μηνιαίο πρόγραμμα</string>
     <string name="pricing_premium_f1">Έλεγχος γεγονότων στο ίντερνετ, με τις πηγές πάνω στην απόφασή σου</string>
@@ -381,7 +373,6 @@
     <string name="evidence_remove">Αφαίρεση εικόνας %1$s</string>
     <string name="evidence_thumb">Εικόνα %1$s</string>
     <string name="evidence_preview">Τι διαβάσαμε</string>
-    <string name="evidence_preview_note">Αυτό το βλέπεις μόνο εσύ. Τα ονόματα κρύβονται πριν το διαβάσουν οι κριτές.</string>
     <string name="evidence_status_unreadable">Δεν βρέθηκε κείμενο</string>
     <string name="evidence_status_refused">Η εικόνα απορρίφθηκε</string>
     <string name="evidence_status_unsupported">Δεν είναι PNG, JPEG, WebP ή GIF</string>
@@ -408,8 +399,6 @@
     <string name="home_remove_their_side">Αφαίρεσε την άλλη πλευρά</string>
     <string name="home_send_link">Στείλε σύνδεσμο</string>
     <string name="home_clear">Καθαρισμός</string>
-    <string name="home_lead">Γράψε και τις δύο πλευρές ή στείλε σύνδεσμο στο άλλο άτομο για να γράψει τη δική του.</string>
-    <string name="home_lead_solo">Γράψε τη δική σου πλευρά, και την άλλη αν την ξέρεις.</string>
     <string name="home_their_side">Η άλλη πλευρά</string>
     <string name="home_their_name">Το όνομα της άλλης πλευράς</string>
     <string name="home_their_placeholder">Τι λέει η άλλη πλευρά; Γράψ\' το όπως θα το έλεγε η ίδια.</string>
@@ -674,7 +663,6 @@
     <string name="app_purchase_buying">Αγορά…</string>
     <string name="app_purchase_success">Ευχαριστούμε! Η αγορά ολοκληρώθηκε.</string>
     <string name="app_purchase_pending">Η αγορά σου βρίσκεται σε επεξεργασία. Ίσως χρειαστεί ένα λεπτό για να εμφανιστεί.</string>
-    <string name="app_purchase_arriving">Οι αποφάσεις που αγόρασες έρχονται…</string>
     <string name="app_purchase_slow">Ίσως χρειαστεί ένα λεπτό για να εμφανιστούν εδώ.</string>
     <string name="app_purchase_failed">Η αγορά δεν ολοκληρώθηκε. Δοκίμασε ξανά σε λίγο.</string>
     <string name="app_purchase_restore">Επαναφορά αγορών</string>

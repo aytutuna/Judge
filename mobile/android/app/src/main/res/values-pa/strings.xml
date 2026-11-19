@@ -38,7 +38,6 @@
     <string name="verdict_too_close">ਫਸਵੀਂ ਟੱਕਰ, ਫ਼ੈਸਲਾ ਨਹੀਂ ਹੋ ਸਕਿਆ</string>
     <string name="lean_title">ਮਜਬੂਰੀ ਦਾ ਫ਼ੈਸਲਾ: %1$s ਜ਼ਿਆਦਾ ਸਹੀ ਹੈ</string>
     <string name="lean_title_self">ਮਜਬੂਰੀ ਦਾ ਫ਼ੈਸਲਾ: ਤੁਸੀਂ ਜ਼ਿਆਦਾ ਸਹੀ ਹੋ</string>
-    <string name="lean_unanimous">ਸਾਰੇ ਜੱਜਾਂ ਦਾ ਝੁਕਾਅ ਇਸੇ ਪਾਸੇ ਸੀ।</string>
     <string name="lean_majority">ਜੱਜਾਂ ਦਾ ਝੁਕਾਅ %1$s–%2$s ਨਾਲ ਇਸ ਪਾਸੇ ਸੀ।</string>
     <string name="lean_tie">ਚੁਣਨ ਲਈ ਜ਼ੋਰ ਪਾਉਣ ’ਤੇ ਵੀ ਜੱਜ ਅੱਧੋ-ਅੱਧ ਵੰਡੇ ਰਹੇ।</string>
     <string name="split_win">%1$s ਇਸ ਗੱਲ ’ਤੇ ਸਹੀ ਹੈ:</string>
@@ -71,7 +70,6 @@
         <item quantity="one">%1$s ਆਜ਼ਾਦ AI ਜੱਜਾਂ ਨੇ ਵੋਟ ਪਾਈ:</item>
         <item quantity="other">%1$s ਆਜ਼ਾਦ AI ਜੱਜਾਂ ਨੇ ਵੋਟ ਪਾਈ:</item>
     </plurals>
-    <string name="escalated">ਟੱਕਰ ਫਸਵੀਂ ਸੀ, ਇਸ ਲਈ ਅਸੀਂ ਹੋਰ ਜੱਜ ਬੁਲਾ ਲਏ।</string>
     <string name="translate_loading">ਅਨੁਵਾਦ ਹੋ ਰਿਹਾ ਹੈ…</string>
     <string name="translate_from_en">ਅੰਗਰੇਜ਼ੀ ਤੋਂ ਅਨੁਵਾਦ</string>
     <string name="translate_from_tr">ਤੁਰਕੀ ਤੋਂ ਅਨੁਵਾਦ</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">ਮਨੋਰੰਜਨ ਅਤੇ ਸਾਫ਼ ਸੋਚ ਲਈ, ਕਾਨੂੰਨੀ ਸਲਾਹ ਨਹੀਂ।</string>
     <string name="footer_language">ਭਾਸ਼ਾ</string>
     <string name="not_found_title">ਇਹ ਫ਼ੈਸਲਾ ਅਦਾਲਤ ’ਚੋਂ ਜਾ ਚੁੱਕਾ ਹੈ</string>
-    <string name="not_found_body">ਸ਼ਾਇਦ ਲਿੰਕ ਵਿੱਚ ਕੋਈ ਗ਼ਲਤੀ ਹੈ, ਜਾਂ ਫ਼ੈਸਲਾ ਹੁਣ ਮੌਜੂਦ ਨਹੀਂ।</string>
     <string name="nav_sign_in">ਸਾਈਨ ਇਨ</string>
     <string name="nav_account">ਖਾਤਾ</string>
     <string name="nav_pricing">ਕੀਮਤਾਂ</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">ਜਾਰੀ ਰੱਖੋ</string>
     <string name="respond_adult_confirm">ਮੇਰੀ ਉਮਰ 18 ਸਾਲ ਜਾਂ ਵੱਧ ਹੈ</string>
     <string name="account_export">ਮੇਰਾ ਡੇਟਾ ਡਾਊਨਲੋਡ ਕਰੋ</string>
-    <string name="account_export_hint">Judge ਕੋਲ ਤੁਹਾਡੇ ਬਾਰੇ ਜੋ ਕੁਝ ਹੈ, ਉਹ ਸਭ ਇੱਕ JSON ਫ਼ਾਈਲ ਵਿੱਚ ਲਓ।</string>
     <string name="account_export_busy">ਤੁਹਾਡੀ ਫ਼ਾਈਲ ਤਿਆਰ ਹੋ ਰਹੀ ਹੈ…</string>
     <string name="account_export_failed">ਹੁਣ ਤੁਹਾਡਾ ਡੇਟਾ ਤਿਆਰ ਨਹੀਂ ਹੋ ਸਕਿਆ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋਗੇ?</string>
     <string name="rating_prompt">ਕੀ ਫ਼ੈਸਲਾ ਨਿਆਂਪੂਰਨ ਹੈ?</string>
@@ -179,7 +175,6 @@
     <string name="thinking_factcheck">ਵੈੱਬ ’ਤੇ ਤੱਥ ਜਾਂਚ ਰਹੇ ਹਾਂ…</string>
     <string name="thinking_factcheck_done">ਵੈੱਬ ਜਾਂਚ ਪੂਰੀ ਹੋਈ।</string>
     <string name="thinking_premium_helper">ਵੈੱਬ ’ਤੇ ਤੱਥ ਜਾਂਚਣ ਨੂੰ ਥੋੜ੍ਹਾ ਹੋਰ ਸਮਾਂ ਲੱਗਦਾ ਹੈ। ਇੱਕ-ਦੋ ਮਿੰਟ ਦਿਓ।</string>
-    <string name="panel_premium">ਵੈੱਬ ’ਤੇ ਤੱਥ ਜਾਂਚ ਕੇ ਫ਼ੈਸਲਾ ਕੀਤਾ।</string>
     <string name="factcheck_title">ਵੈੱਬ ’ਤੇ ਜਾਂਚਿਆ</string>
     <string name="factcheck_lead">ਫ਼ੈਸਲੇ ਤੋਂ ਪਹਿਲਾਂ ਜੱਜਾਂ ਨੇ ਇਹ ਸਰਚ ਨਤੀਜੇ ਦੇਖੇ। ਇਹ ਸਬੂਤ ਹਨ, ਫ਼ੈਸਲਾ ਨਹੀਂ।</string>
     <string name="factcheck_status_supported">ਸਹੀ ਨਿਕਲਿਆ</string>
@@ -233,13 +228,10 @@
     <string name="account_delete_yes">ਹਾਂ, ਮਿਟਾ ਦਿਓ</string>
     <string name="account_delete_cancel">ਖਾਤਾ ਰਹਿਣ ਦਿਓ</string>
     <string name="account_delete_failed">ਇਸ ਵੇਲੇ ਖਾਤਾ ਨਹੀਂ ਮਿਟ ਸਕਿਆ। ਇੱਕ ਵਾਰ ਫਿਰ ਕੋਸ਼ਿਸ਼ ਕਰੋਗੇ?</string>
-    <string name="account_sign_in_prompt">ਆਪਣਾ ਪਲਾਨ ਅਤੇ ਕ੍ਰੈਡਿਟ ਦੇਖਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ।</string>
     <string name="account_load_failed">ਤੁਹਾਡਾ ਖਾਤਾ ਲੋਡ ਨਹੀਂ ਹੋ ਸਕਿਆ। ਥੋੜ੍ਹੀ ਦੇਰ ਬਾਅਦ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
     <string name="account_loading">ਤੁਹਾਡਾ ਖਾਤਾ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ…</string>
     <string name="pricing_title">ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਸਾਡੇ ਵੱਲੋਂ।</string>
-    <string name="pricing_lead">ਖਾਤਾ ਬਣਾਓ ਅਤੇ ਤੁਹਾਡਾ ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਮੁਫ਼ਤ ਹੈ, ਸਾਰੀਆਂ ਸਹੂਲਤਾਂ ਨਾਲ। ਉਸ ਤੋਂ ਬਾਅਦ ਕੋਈ ਪੈਕ ਚੁਣੋ ਜਾਂ ਮਹੀਨਾਵਾਰ ਪਲਾਨ ਲਓ।</string>
     <string name="pricing_title_member">ਹੋਰ ਫ਼ੈਸਲੇ ਲਓ।</string>
-    <string name="pricing_lead_member">ਕੋਈ ਪੈਕ ਚੁਣੋ ਜਾਂ ਮਹੀਨਾਵਾਰ ਪਲਾਨ ਲਓ। ਹਰ ਫ਼ੈਸਲੇ ਨੂੰ ਜੱਜਾਂ ਦਾ ਪੂਰਾ ਪੈਨਲ ਮਿਲਦਾ ਹੈ।</string>
     <string name="pricing_included_title">ਹਰ ਫ਼ੈਸਲੇ ਵਿੱਚ</string>
     <string name="pricing_buy_title">ਪੈਕ ਅਤੇ ਮਹੀਨਾਵਾਰ ਪਲਾਨ</string>
     <string name="pricing_premium_f1">ਵੈੱਬ ’ਤੇ ਤੱਥਾਂ ਦੀ ਜਾਂਚ, ਸਰੋਤ ਤੁਹਾਡੇ ਫ਼ੈਸਲੇ ’ਤੇ</string>
@@ -381,7 +373,6 @@
     <string name="evidence_remove">ਤਸਵੀਰ %1$s ਹਟਾਓ</string>
     <string name="evidence_thumb">ਤਸਵੀਰ %1$s</string>
     <string name="evidence_preview">ਅਸੀਂ ਕੀ ਪੜ੍ਹਿਆ</string>
-    <string name="evidence_preview_note">ਇਹ ਸਿਰਫ਼ ਤੁਸੀਂ ਦੇਖ ਸਕਦੇ ਹੋ। ਜੱਜਾਂ ਦੇ ਪੜ੍ਹਨ ਤੋਂ ਪਹਿਲਾਂ ਨਾਂ ਲੁਕਾ ਦਿੱਤੇ ਜਾਂਦੇ ਹਨ।</string>
     <string name="evidence_status_unreadable">ਕੋਈ ਲਿਖਤ ਨਹੀਂ ਪੜ੍ਹੀ ਜਾ ਸਕੀ</string>
     <string name="evidence_status_refused">ਇਹ ਤਸਵੀਰ ਪੜ੍ਹਨ ਤੋਂ ਨਾਂਹ ਕਰ ਦਿੱਤੀ ਗਈ</string>
     <string name="evidence_status_unsupported">PNG, JPEG, WebP ਜਾਂ GIF ਨਹੀਂ</string>
@@ -408,8 +399,6 @@
     <string name="home_remove_their_side">ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ ਹਟਾਓ</string>
     <string name="home_send_link">ਲਿੰਕ ਭੇਜੋ</string>
     <string name="home_clear">ਸਾਫ਼ ਕਰੋ</string>
-    <string name="home_lead">ਦੋਵੇਂ ਪੱਖ ਲਿਖੋ, ਜਾਂ ਦੂਜੀ ਧਿਰ ਨੂੰ ਲਿੰਕ ਭੇਜੋ ਤਾਂ ਜੋ ਉਹ ਆਪਣਾ ਪੱਖ ਆਪ ਲਿਖਣ।</string>
-    <string name="home_lead_solo">ਆਪਣਾ ਪੱਖ ਲਿਖੋ, ਅਤੇ ਜੇ ਪਤਾ ਹੋਵੇ ਤਾਂ ਉਨ੍ਹਾਂ ਦਾ ਵੀ।</string>
     <string name="home_their_side">ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ</string>
     <string name="home_their_name">ਉਨ੍ਹਾਂ ਦਾ ਨਾਂ</string>
     <string name="home_their_placeholder">ਉਹ ਕੀ ਕਹਿੰਦੇ ਹਨ? ਉਵੇਂ ਲਿਖੋ ਜਿਵੇਂ ਉਹ ਆਪ ਕਹਿਣਗੇ।</string>
@@ -674,7 +663,6 @@
     <string name="app_purchase_buying">ਖ਼ਰੀਦ ਹੋ ਰਹੀ ਹੈ…</string>
     <string name="app_purchase_success">ਸ਼ੁਕਰੀਆ! ਤੁਹਾਡੀ ਖ਼ਰੀਦ ਪੂਰੀ ਹੋ ਗਈ।</string>
     <string name="app_purchase_pending">ਤੁਹਾਡੀ ਖ਼ਰੀਦ ਪ੍ਰੋਸੈੱਸ ਹੋ ਰਹੀ ਹੈ। ਦਿਖਣ ਵਿੱਚ ਇੱਕ ਮਿੰਟ ਲੱਗ ਸਕਦਾ ਹੈ।</string>
-    <string name="app_purchase_arriving">ਤੁਹਾਡੇ ਕ੍ਰੈਡਿਟ ਆ ਰਹੇ ਹਨ…</string>
     <string name="app_purchase_slow">ਇੱਥੇ ਦਿਖਣ ਵਿੱਚ ਇੱਕ ਮਿੰਟ ਲੱਗ ਸਕਦਾ ਹੈ।</string>
     <string name="app_purchase_failed">ਖ਼ਰੀਦ ਪੂਰੀ ਨਹੀਂ ਹੋ ਸਕੀ। ਥੋੜ੍ਹੀ ਦੇਰ ਬਾਅਦ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
     <string name="app_purchase_restore">ਖ਼ਰੀਦਾਂ ਰੀਸਟੋਰ ਕਰੋ</string>

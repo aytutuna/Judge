@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Zbyt wyrównane, by rozstrzygnąć</string>
     <string name="lean_title">Werdykt na siłę: %1$s ma więcej racji</string>
     <string name="lean_title_self">Werdykt na siłę: masz więcej racji</string>
-    <string name="lean_unanimous">Wszyscy sędziowie skłaniali się ku tej stronie.</string>
     <string name="lean_majority">Sędziowie skłaniali się ku tej stronie stosunkiem głosów %1$s–%2$s.</string>
     <string name="lean_tie">Nawet zmuszeni do wyboru, sędziowie podzielili się dokładnie po równo.</string>
     <string name="split_win">%1$s ma rację co do tego:</string>
@@ -73,7 +72,6 @@
         <item quantity="many">Zagłosowało %1$s niezależnych sędziów AI:</item>
         <item quantity="other">Zagłosowało %1$s niezależnych sędziów AI:</item>
     </plurals>
-    <string name="escalated">Było blisko, więc wezwaliśmy dodatkowych sędziów.</string>
     <string name="translate_loading">Tłumaczenie…</string>
     <string name="translate_from_en">Przetłumaczono z angielskiego</string>
     <string name="translate_from_tr">Przetłumaczono z tureckiego</string>
@@ -143,7 +141,6 @@
     <string name="footer_note">Dla zabawy i jaśniejszego spojrzenia. To nie porada prawna.</string>
     <string name="footer_language">Język</string>
     <string name="not_found_title">Ten werdykt opuścił salę sądową</string>
-    <string name="not_found_body">Może w linku jest literówka albo werdykt już nie istnieje.</string>
     <string name="nav_sign_in">Zaloguj się</string>
     <string name="nav_account">Konto</string>
     <string name="nav_pricing">Cennik</string>
@@ -165,7 +162,6 @@
     <string name="consent_sensitive_continue">Dalej</string>
     <string name="respond_adult_confirm">Mam 18 lat lub więcej</string>
     <string name="account_export">Pobierz moje dane</string>
-    <string name="account_export_hint">Otrzymaj plik JSON ze wszystkim, co Judge o tobie przechowuje.</string>
     <string name="account_export_busy">Przygotowuję plik…</string>
     <string name="account_export_failed">Nie udało się teraz przygotować twoich danych. Spróbujesz jeszcze raz?</string>
     <string name="rating_prompt">Sprawiedliwy werdykt?</string>
@@ -185,7 +181,6 @@
     <string name="thinking_factcheck">Sprawdzamy fakty w sieci…</string>
     <string name="thinking_factcheck_done">Sprawdzanie w sieci zakończone.</string>
     <string name="thinking_premium_helper">Sprawdzanie faktów w sieci trwa trochę dłużej. Daj nam minutę lub dwie.</string>
-    <string name="panel_premium">Ocenione z weryfikacją faktów w sieci.</string>
     <string name="factcheck_title">Sprawdzone w sieci</string>
     <string name="factcheck_lead">Sędziowie widzieli te wyniki wyszukiwania przed werdyktem. To dowody, a nie sam werdykt.</string>
     <string name="factcheck_status_supported">Potwierdzone</string>
@@ -239,13 +234,10 @@
     <string name="account_delete_yes">Tak, usuń</string>
     <string name="account_delete_cancel">Zostaw moje konto</string>
     <string name="account_delete_failed">Nie udało się teraz usunąć konta. Spróbujesz jeszcze raz?</string>
-    <string name="account_sign_in_prompt">Zaloguj się, żeby zobaczyć swój plan i pulę werdyktów.</string>
     <string name="account_load_failed">Nie udało się wczytać konta. Spróbuj za chwilę.</string>
     <string name="account_loading">Wczytywanie konta…</string>
     <string name="pricing_title">Pierwszy werdykt na nasz koszt.</string>
-    <string name="pricing_lead">Załóż konto, a pierwszy werdykt dostaniesz za darmo, ze wszystkimi funkcjami. Potem wybierz pakiet albo plan miesięczny.</string>
     <string name="pricing_title_member">Kup więcej werdyktów.</string>
-    <string name="pricing_lead_member">Wybierz pakiet albo plan miesięczny. Każdy werdykt wydaje pełny skład sędziów.</string>
     <string name="pricing_included_title">Każdy werdykt</string>
     <string name="pricing_buy_title">Pakiety i plan miesięczny</string>
     <string name="pricing_premium_f1">Fakty sprawdzone w sieci, ze źródłami w twoim werdykcie</string>
@@ -393,7 +385,6 @@
     <string name="evidence_remove">Usuń obraz %1$s</string>
     <string name="evidence_thumb">Obraz %1$s</string>
     <string name="evidence_preview">Co odczytaliśmy</string>
-    <string name="evidence_preview_note">Widzisz to tylko ty. Imiona są ukrywane, zanim przeczytają to sędziowie.</string>
     <string name="evidence_status_unreadable">Nie znaleziono tekstu</string>
     <string name="evidence_status_refused">Czytnik odmówił odczytania tego obrazu</string>
     <string name="evidence_status_unsupported">To nie PNG, JPEG, WebP ani GIF</string>
@@ -420,8 +411,6 @@
     <string name="home_remove_their_side">Usuń drugą stronę</string>
     <string name="home_send_link">Wyślij link</string>
     <string name="home_clear">Wyczyść</string>
-    <string name="home_lead">Opisz obie wersje albo wyślij drugiej osobie link, żeby opisała swoją.</string>
-    <string name="home_lead_solo">Opisz swoją wersję, a jeśli ją znasz, także wersję drugiej strony.</string>
     <string name="home_their_side">Druga strona</string>
     <string name="home_their_name">Imię drugiej osoby</string>
     <string name="home_their_placeholder">Co mówi druga strona? Napisz to tak, jak sama by to ujęła.</string>
@@ -704,7 +693,6 @@
     <string name="app_purchase_buying">Trwa zakup…</string>
     <string name="app_purchase_success">Dzięki! Zakup się udał.</string>
     <string name="app_purchase_pending">Przetwarzamy twój zakup. Może minąć minuta, zanim go zobaczysz.</string>
-    <string name="app_purchase_arriving">Twoje werdykty są już w drodze…</string>
     <string name="app_purchase_slow">Może minąć minuta, zanim się tu pojawią.</string>
     <string name="app_purchase_failed">Zakup się nie udał. Spróbuj ponownie za chwilę.</string>
     <string name="app_purchase_restore">Przywróć zakupy</string>

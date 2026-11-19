@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Quá sát, khó phân định</string>
     <string name="lean_title">Buộc phải chọn: %1$s đúng hơn</string>
     <string name="lean_title_self">Buộc phải chọn: bạn đúng hơn</string>
-    <string name="lean_unanimous">Tất cả giám khảo đều nghiêng về phía này.</string>
     <string name="lean_majority">Ban giám khảo nghiêng về phía này với tỉ số %1$s–%2$s.</string>
     <string name="lean_tie">Dù bị ép phải chọn, ban giám khảo vẫn chia đều hai phe.</string>
     <string name="split_win">%1$s đúng ở điểm này:</string>
@@ -70,7 +69,6 @@
     <plurals name="judges_voted">
         <item quantity="other">%1$s giám khảo AI độc lập đã bỏ phiếu:</item>
     </plurals>
-    <string name="escalated">Kết quả sát nút nên chúng tôi đã gọi thêm giám khảo.</string>
     <string name="translate_loading">Đang dịch…</string>
     <string name="translate_from_en">Dịch từ tiếng Anh</string>
     <string name="translate_from_tr">Dịch từ tiếng Thổ Nhĩ Kỳ</string>
@@ -134,7 +132,6 @@
     <string name="footer_note">Để giải trí và cho rõ ràng, không phải tư vấn pháp lý.</string>
     <string name="footer_language">Ngôn ngữ</string>
     <string name="not_found_title">Phán quyết này đã rời phòng xử</string>
-    <string name="not_found_body">Có thể liên kết bị gõ sai, hoặc phán quyết không còn nữa.</string>
     <string name="nav_sign_in">Đăng nhập</string>
     <string name="nav_account">Tài khoản</string>
     <string name="nav_pricing">Bảng giá</string>
@@ -156,7 +153,6 @@
     <string name="consent_sensitive_continue">Tiếp tục</string>
     <string name="respond_adult_confirm">Tôi từ 18 tuổi trở lên</string>
     <string name="account_export">Tải dữ liệu của tôi</string>
-    <string name="account_export_hint">Nhận một tệp JSON chứa mọi thứ Judge lưu về bạn.</string>
     <string name="account_export_busy">Đang chuẩn bị tệp của bạn…</string>
     <string name="account_export_failed">Hiện chưa chuẩn bị được dữ liệu của bạn. Bạn thử lại nhé?</string>
     <string name="rating_prompt">Phán quyết có công bằng không?</string>
@@ -176,7 +172,6 @@
     <string name="thinking_factcheck">Đang kiểm chứng sự thật trên mạng…</string>
     <string name="thinking_factcheck_done">Đã kiểm chứng xong trên mạng.</string>
     <string name="thinking_premium_helper">Kiểm chứng sự thật trên mạng mất thêm chút thời gian. Chờ một hai phút nhé.</string>
-    <string name="panel_premium">Đã phân xử kèm kiểm chứng trên mạng.</string>
     <string name="factcheck_title">Đã kiểm chứng trên mạng</string>
     <string name="factcheck_lead">Giám khảo đã xem các kết quả tìm kiếm này trước khi phân xử. Đây là bằng chứng, không phải bản thân phán quyết.</string>
     <string name="factcheck_status_supported">Đúng</string>
@@ -230,13 +225,10 @@
     <string name="account_delete_yes">Có, xóa đi</string>
     <string name="account_delete_cancel">Giữ tài khoản</string>
     <string name="account_delete_failed">Chưa xóa được tài khoản lúc này. Bạn thử lại nhé?</string>
-    <string name="account_sign_in_prompt">Đăng nhập để xem gói và số lượt của bạn.</string>
     <string name="account_load_failed">Không tải được tài khoản. Thử lại sau giây lát nhé.</string>
     <string name="account_loading">Đang tải tài khoản…</string>
     <string name="pricing_title">Phán quyết đầu tiên, chúng tôi mời.</string>
-    <string name="pricing_lead">Tạo tài khoản là có ngay phán quyết đầu tiên miễn phí, đủ mọi tính năng. Sau đó, chọn một gói lượt hoặc dùng gói tháng.</string>
     <string name="pricing_title_member">Thêm lượt phán quyết.</string>
-    <string name="pricing_lead_member">Chọn một gói lượt hoặc dùng gói tháng. Phán quyết nào cũng có đủ ban giám khảo.</string>
     <string name="pricing_included_title">Mỗi phán quyết</string>
     <string name="pricing_buy_title">Gói lượt và gói tháng</string>
     <string name="pricing_premium_f1">Sự thật được kiểm chứng trên mạng, kèm nguồn ngay trên phán quyết</string>
@@ -375,7 +367,6 @@
     <string name="evidence_remove">Gỡ ảnh %1$s</string>
     <string name="evidence_thumb">Ảnh %1$s</string>
     <string name="evidence_preview">Những gì chúng tôi đọc được</string>
-    <string name="evidence_preview_note">Chỉ bạn thấy phần này. Tên sẽ được ẩn trước khi giám khảo đọc.</string>
     <string name="evidence_status_unreadable">Không đọc được chữ nào</string>
     <string name="evidence_status_refused">Trình đọc đã từ chối ảnh này</string>
     <string name="evidence_status_unsupported">Không phải PNG, JPEG, WebP hay GIF</string>
@@ -402,8 +393,6 @@
     <string name="home_remove_their_side">Bỏ phía bên kia</string>
     <string name="home_send_link">Gửi liên kết</string>
     <string name="home_clear">Xóa</string>
-    <string name="home_lead">Kể phần của cả hai bên, hoặc gửi liên kết để người kia tự kể phần của họ.</string>
-    <string name="home_lead_solo">Kể phần của bạn, và cả phần của người kia nếu bạn biết.</string>
     <string name="home_their_side">Phía bên kia</string>
     <string name="home_their_name">Tên người kia</string>
     <string name="home_their_placeholder">Người kia nói gì? Kể đúng như cách họ sẽ nói.</string>
@@ -659,7 +648,6 @@
     <string name="app_purchase_buying">Đang mua…</string>
     <string name="app_purchase_success">Cảm ơn bạn! Giao dịch đã thành công.</string>
     <string name="app_purchase_pending">Giao dịch đang được xử lý. Có thể mất một phút để hiện ra.</string>
-    <string name="app_purchase_arriving">Lượt của bạn đang được cộng vào…</string>
     <string name="app_purchase_slow">Có thể mất một phút để hiện ở đây.</string>
     <string name="app_purchase_failed">Giao dịch chưa thành công. Thử lại sau giây lát nhé.</string>
     <string name="app_purchase_restore">Khôi phục giao dịch mua</string>

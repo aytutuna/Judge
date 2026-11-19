@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Moc těsné na verdikt</string>
     <string name="lean_title">Vynucený verdikt: větší pravdu má %1$s</string>
     <string name="lean_title_self">Vynucený verdikt: větší pravdu máš ty</string>
-    <string name="lean_unanimous">Všichni soudci se přiklonili sem.</string>
     <string name="lean_majority">Soudci se sem přiklonili v poměru %1$s–%2$s.</string>
     <string name="lean_tie">Ani když museli vybrat, soudci se neshodli. Přesně půl na půl.</string>
     <string name="split_win">V tomhle má pravdu %1$s:</string>
@@ -73,7 +72,6 @@
         <item quantity="many">Hlasovalo %1$s nezávislých AI soudců:</item>
         <item quantity="other">Hlasovalo %1$s nezávislých AI soudců:</item>
     </plurals>
-    <string name="escalated">Bylo to těsné, tak jsme přizvali další soudce.</string>
     <string name="translate_loading">Překládáme…</string>
     <string name="translate_from_en">Přeloženo z angličtiny</string>
     <string name="translate_from_tr">Přeloženo z turečtiny</string>
@@ -143,7 +141,6 @@
     <string name="footer_note">Pro zábavu a jasno, ne jako právní rada.</string>
     <string name="footer_language">Jazyk</string>
     <string name="not_found_title">Tenhle verdikt už opustil soudní síň</string>
-    <string name="not_found_body">Možná je v odkazu překlep, nebo verdikt už neexistuje.</string>
     <string name="nav_sign_in">Přihlásit se</string>
     <string name="nav_account">Účet</string>
     <string name="nav_pricing">Ceník</string>
@@ -165,7 +162,6 @@
     <string name="consent_sensitive_continue">Pokračovat</string>
     <string name="respond_adult_confirm">Je mi 18 let nebo víc</string>
     <string name="account_export">Stáhnout moje data</string>
-    <string name="account_export_hint">Získej soubor JSON se vším, co o tobě Judge uchovává.</string>
     <string name="account_export_busy">Připravuji soubor…</string>
     <string name="account_export_failed">Data se teď nepodařilo připravit. Zkusíš to znovu?</string>
     <string name="rating_prompt">Je verdikt spravedlivý?</string>
@@ -185,7 +181,6 @@
     <string name="thinking_factcheck">Ověřujeme fakta na webu…</string>
     <string name="thinking_factcheck_done">Ověření na webu je hotové.</string>
     <string name="thinking_premium_helper">Ověřování faktů na webu chvilku trvá. Dej tomu minutu nebo dvě.</string>
-    <string name="panel_premium">Souzeno s ověřením faktů na webu.</string>
     <string name="factcheck_title">Ověřeno na webu</string>
     <string name="factcheck_lead">Soudci tyto výsledky hledání viděli, než rozhodli. Jsou to podklady, ne samotný verdikt.</string>
     <string name="factcheck_status_supported">Sedí</string>
@@ -239,13 +234,10 @@
     <string name="account_delete_yes">Ano, smazat</string>
     <string name="account_delete_cancel">Ponechat účet</string>
     <string name="account_delete_failed">Účet se teď nepodařilo smazat. Zkusíš to znovu?</string>
-    <string name="account_sign_in_prompt">Přihlas se a uvidíš svůj plán a kredity.</string>
     <string name="account_load_failed">Účet se nepodařilo načíst. Zkus to za chvilku.</string>
     <string name="account_loading">Načítáme tvůj účet…</string>
     <string name="pricing_title">První verdikt máš od nás.</string>
-    <string name="pricing_lead">Založ si účet a první verdikt máš zdarma, se vším všudy. Potom si vyber balíček nebo měsíční plán.</string>
     <string name="pricing_title_member">Získej další verdikty.</string>
-    <string name="pricing_lead_member">Vyber si balíček nebo měsíční plán. Každý verdikt posoudí kompletní sestava soudců.</string>
     <string name="pricing_included_title">Každý verdikt</string>
     <string name="pricing_buy_title">Balíčky a měsíční plán</string>
     <string name="pricing_premium_f1">Fakta ověřená na webu, se zdroji přímo u verdiktu</string>
@@ -393,7 +385,6 @@
     <string name="evidence_remove">Odebrat obrázek %1$s</string>
     <string name="evidence_thumb">Obrázek %1$s</string>
     <string name="evidence_preview">Co jsme přečetli</string>
-    <string name="evidence_preview_note">Vidíš to jen ty. Než to soudci přečtou, jména se skryjí.</string>
     <string name="evidence_status_unreadable">Nenašli jsme žádný text</string>
     <string name="evidence_status_refused">Čtečka tenhle obrázek odmítla</string>
     <string name="evidence_status_unsupported">Není to PNG, JPEG, WebP ani GIF</string>
@@ -420,8 +411,6 @@
     <string name="home_remove_their_side">Odebrat pohled druhé strany</string>
     <string name="home_send_link">Pošli odkaz</string>
     <string name="home_clear">Vymazat</string>
-    <string name="home_lead">Napiš oba pohledy, nebo pošli druhé straně odkaz, ať napíše ten svůj.</string>
-    <string name="home_lead_solo">Napiš svůj pohled, případně i ten druhý, pokud ho znáš.</string>
     <string name="home_their_side">Pohled druhé strany</string>
     <string name="home_their_name">Jméno druhé strany</string>
     <string name="home_their_placeholder">Co říká druhá strana? Napiš to tak, jak by to řekla ona.</string>
@@ -704,7 +693,6 @@
     <string name="app_purchase_buying">Nákup probíhá…</string>
     <string name="app_purchase_success">Díky! Nákup proběhl.</string>
     <string name="app_purchase_pending">Nákup se zpracovává. Může chvilku trvat, než se projeví.</string>
-    <string name="app_purchase_arriving">Kredity jsou na cestě…</string>
     <string name="app_purchase_slow">Může chvilku trvat, než se tu objeví.</string>
     <string name="app_purchase_failed">Nákup neproběhl. Zkus to za chvilku znovu.</string>
     <string name="app_purchase_restore">Obnovit nákupy</string>

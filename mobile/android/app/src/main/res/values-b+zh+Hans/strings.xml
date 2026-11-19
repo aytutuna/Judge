@@ -38,7 +38,6 @@
     <string name="verdict_too_close">难分高下</string>
     <string name="lean_title">硬要选的话：%1$s更有理</string>
     <string name="lean_title_self">硬要选的话：你更有理</string>
-    <string name="lean_unanimous">所有评委都倾向这一边。</string>
     <string name="lean_majority">评委以 %1$s 比 %2$s 倾向这一边。</string>
     <string name="lean_tie">就算硬要选，评委们也正好对半分。</string>
     <string name="split_win">%1$s说得对的地方：</string>
@@ -70,7 +69,6 @@
     <plurals name="judges_voted">
         <item quantity="other">%1$s 位独立 AI 评委投票：</item>
     </plurals>
-    <string name="escalated">票数太接近，所以我们加派了评委。</string>
     <string name="translate_loading">翻译中……</string>
     <string name="translate_from_en">译自英语</string>
     <string name="translate_from_tr">译自土耳其语</string>
@@ -134,7 +132,6 @@
     <string name="footer_note">图个乐，理个清，不构成法律建议。</string>
     <string name="footer_language">语言</string>
     <string name="not_found_title">这份裁决已经退庭了</string>
-    <string name="not_found_body">可能是链接打错了，也可能是裁决已经不在了。</string>
     <string name="nav_sign_in">登录</string>
     <string name="nav_account">账号</string>
     <string name="nav_pricing">价格</string>
@@ -156,7 +153,6 @@
     <string name="consent_sensitive_continue">继续</string>
     <string name="respond_adult_confirm">我已满 18 岁</string>
     <string name="account_export">下载我的数据</string>
-    <string name="account_export_hint">获取一个 JSON 文件，包含 Judge 保存的有关你的一切。</string>
     <string name="account_export_busy">正在准备你的文件…</string>
     <string name="account_export_failed">暂时无法准备你的数据。再试一次？</string>
     <string name="rating_prompt">裁决公平吗？</string>
@@ -176,7 +172,6 @@
     <string name="thinking_factcheck">正在联网核实事实……</string>
     <string name="thinking_factcheck_done">联网核实完成。</string>
     <string name="thinking_premium_helper">联网核实事实要多花点时间，等一两分钟。</string>
-    <string name="panel_premium">本次裁决经过联网核实。</string>
     <string name="factcheck_title">联网核实</string>
     <string name="factcheck_lead">评委裁决前看过这些搜索结果。它们是证据，不是裁决本身。</string>
     <string name="factcheck_status_supported">站得住</string>
@@ -230,13 +225,10 @@
     <string name="account_delete_yes">是的，删除</string>
     <string name="account_delete_cancel">保留我的账号</string>
     <string name="account_delete_failed">暂时没能删除账号，再试一次吧？</string>
-    <string name="account_sign_in_prompt">登录后查看你的套餐和次数。</string>
     <string name="account_load_failed">没能加载你的账号，请稍后再试。</string>
     <string name="account_loading">正在加载你的账号……</string>
     <string name="pricing_title">第一次裁决，我们请客。</string>
-    <string name="pricing_lead">注册账号，第一次裁决免费，所有功能全都有。之后可以买次数包，或者按月订阅。</string>
     <string name="pricing_title_member">获取更多裁决。</string>
-    <string name="pricing_lead_member">买次数包或按月订阅。每次裁决都是完整的评委阵容。</string>
     <string name="pricing_included_title">每次裁决都包含</string>
     <string name="pricing_buy_title">次数包和月度套餐</string>
     <string name="pricing_premium_f1">联网核实事实，来源附在裁决上</string>
@@ -375,7 +367,6 @@
     <string name="evidence_remove">移除图片 %1$s</string>
     <string name="evidence_thumb">图片 %1$s</string>
     <string name="evidence_preview">我们读到的内容</string>
-    <string name="evidence_preview_note">只有你能看到。评委读取之前，名字会被隐藏。</string>
     <string name="evidence_status_unreadable">没读到任何文字</string>
     <string name="evidence_status_refused">读取器拒绝处理这张图片</string>
     <string name="evidence_status_unsupported">不是 PNG、JPEG、WebP 或 GIF</string>
@@ -402,8 +393,6 @@
     <string name="home_remove_their_side">移除对方的说法</string>
     <string name="home_send_link">发个链接</string>
     <string name="home_clear">清空</string>
-    <string name="home_lead">把双方的说法都写下来，或者给对方发个链接，让对方自己写。</string>
-    <string name="home_lead_solo">写下你的说法，知道对方怎么说的话也写上。</string>
     <string name="home_their_side">对方的说法</string>
     <string name="home_their_name">对方的名字</string>
     <string name="home_their_placeholder">对方怎么说？照对方的口吻写下来。</string>
@@ -659,7 +648,6 @@
     <string name="app_purchase_buying">购买中……</string>
     <string name="app_purchase_success">谢谢！购买成功。</string>
     <string name="app_purchase_pending">订单正在处理中，可能要过一分钟才会显示。</string>
-    <string name="app_purchase_arriving">次数正在到账……</string>
     <string name="app_purchase_slow">可能要过一分钟才会在这里显示。</string>
     <string name="app_purchase_failed">购买没有成功，稍后再试一次。</string>
     <string name="app_purchase_restore">恢复购买</string>

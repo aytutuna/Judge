@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Майже нічия</string>
     <string name="lean_title">Вимушений вердикт: %1$s ближче до правди</string>
     <string name="lean_title_self">Вимушений вердикт: ти ближче до правди</string>
-    <string name="lean_unanimous">Усі судді схилилися в цей бік.</string>
     <string name="lean_majority">Судді схилилися в цей бік з рахунком %1$s:%2$s.</string>
     <string name="lean_tie">Навіть коли їх змусили обрати, судді розділилися порівну.</string>
     <string name="split_win">%1$s має рацію тут:</string>
@@ -73,7 +72,6 @@
         <item quantity="many">Проголосували %1$s незалежних ШІ-суддів:</item>
         <item quantity="other">Проголосували %1$s незалежних ШІ-суддів:</item>
     </plurals>
-    <string name="escalated">Голоси розділилися майже порівну, тож ми покликали ще суддів.</string>
     <string name="translate_loading">Перекладаємо…</string>
     <string name="translate_from_en">Перекладено з англійської</string>
     <string name="translate_from_tr">Перекладено з турецької</string>
@@ -143,7 +141,6 @@
     <string name="footer_note">Для розваги й ясності. Це не юридична консультація.</string>
     <string name="footer_language">Мова</string>
     <string name="not_found_title">Цей вердикт уже залишив зал суду</string>
-    <string name="not_found_body">Можливо, у посиланні помилка, або вердикту більше немає.</string>
     <string name="nav_sign_in">Увійти</string>
     <string name="nav_account">Акаунт</string>
     <string name="nav_pricing">Ціни</string>
@@ -165,7 +162,6 @@
     <string name="consent_sensitive_continue">Продовжити</string>
     <string name="respond_adult_confirm">Мені 18 років або більше</string>
     <string name="account_export">Завантажити мої дані</string>
-    <string name="account_export_hint">Отримай файл JSON з усім, що Judge зберігає про тебе.</string>
     <string name="account_export_busy">Готуємо файл…</string>
     <string name="account_export_failed">Зараз не вдалося підготувати твої дані. Спробуєш ще раз?</string>
     <string name="rating_prompt">Справедливий вердикт?</string>
@@ -185,7 +181,6 @@
     <string name="thinking_factcheck">Перевіряємо факти в інтернеті…</string>
     <string name="thinking_factcheck_done">Перевірку в інтернеті завершено.</string>
     <string name="thinking_premium_helper">Перевірка фактів в інтернеті триває трохи довше. Дай їй хвилину-дві.</string>
-    <string name="panel_premium">Вердикт із перевіркою фактів в інтернеті.</string>
     <string name="factcheck_title">Перевірено в інтернеті</string>
     <string name="factcheck_lead">Судді бачили ці результати пошуку перед вердиктом. Це докази, а не сам вердикт.</string>
     <string name="factcheck_status_supported">Підтверджується</string>
@@ -239,13 +234,10 @@
     <string name="account_delete_yes">Так, видалити</string>
     <string name="account_delete_cancel">Залишити акаунт</string>
     <string name="account_delete_failed">Зараз не вдалося видалити акаунт. Спробуєш ще раз?</string>
-    <string name="account_sign_in_prompt">Увійди, щоб побачити свій тариф і баланс вердиктів.</string>
     <string name="account_load_failed">Не вдалося завантажити акаунт. Спробуй ще раз за хвилину.</string>
     <string name="account_loading">Завантажуємо акаунт…</string>
     <string name="pricing_title">Перший вердикт — за наш рахунок.</string>
-    <string name="pricing_lead">Створи акаунт, і перший вердикт буде безкоштовним, з усіма функціями. Далі обери пакет або оформи підписку.</string>
     <string name="pricing_title_member">Більше вердиктів.</string>
-    <string name="pricing_lead_member">Обери пакет або оформи підписку. Кожен вердикт розглядає повний склад суддів.</string>
     <string name="pricing_included_title">У кожному вердикті</string>
     <string name="pricing_buy_title">Пакети й місячна підписка</string>
     <string name="pricing_premium_f1">Перевірка фактів в інтернеті з джерелами у вердикті</string>
@@ -393,7 +385,6 @@
     <string name="evidence_remove">Видалити зображення %1$s</string>
     <string name="evidence_thumb">Зображення %1$s</string>
     <string name="evidence_preview">Що ми прочитали</string>
-    <string name="evidence_preview_note">Це бачиш лише ти. Перш ніж судді це прочитають, імена буде приховано.</string>
     <string name="evidence_status_unreadable">Тексту не знайдено</string>
     <string name="evidence_status_refused">Це зображення відхилено під час розпізнавання</string>
     <string name="evidence_status_unsupported">Не PNG, JPEG, WebP чи GIF</string>
@@ -420,8 +411,6 @@
     <string name="home_remove_their_side">Прибрати іншу сторону</string>
     <string name="home_send_link">Надіслати посилання</string>
     <string name="home_clear">Очистити</string>
-    <string name="home_lead">Напиши версії обох сторін або надішли іншій людині посилання, щоб вона написала свою.</string>
-    <string name="home_lead_solo">Напиши свою версію, а якщо знаєш, то й версію іншої сторони.</string>
     <string name="home_their_side">Інша сторона</string>
     <string name="home_their_name">Ім’я іншої людини</string>
     <string name="home_their_placeholder">Що каже інша людина? Опиши так, як розповіла б вона сама.</string>
@@ -704,7 +693,6 @@
     <string name="app_purchase_buying">Купуємо…</string>
     <string name="app_purchase_success">Дякуємо! Покупка пройшла успішно.</string>
     <string name="app_purchase_pending">Покупка обробляється. Може минути хвилина, поки вона з’явиться.</string>
-    <string name="app_purchase_arriving">Вердикти вже в дорозі…</string>
     <string name="app_purchase_slow">Може минути хвилина, поки вони з’являться тут.</string>
     <string name="app_purchase_failed">Покупка не вдалася. Спробуй ще раз за мить.</string>
     <string name="app_purchase_restore">Відновити покупки</string>

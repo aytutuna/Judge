@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Dødt løp</string>
     <string name="lean_title">Tvunget valg: %1$s har mest rett</string>
     <string name="lean_title_self">Tvunget valg: du har mest rett</string>
-    <string name="lean_unanimous">Alle dommerne heller mot denne siden.</string>
     <string name="lean_majority">Dommerne heller mot denne siden, %1$s–%2$s.</string>
     <string name="lean_tie">Selv når de måtte velge, delte dommerne seg på midten.</string>
     <string name="split_win">%1$s har rett i dette:</string>
@@ -71,7 +70,6 @@
         <item quantity="one">%1$s uavhengige KI-dommere stemte:</item>
         <item quantity="other">%1$s uavhengige KI-dommere stemte:</item>
     </plurals>
-    <string name="escalated">Det var jevnt, så vi hentet inn flere dommere.</string>
     <string name="translate_loading">Oversetter…</string>
     <string name="translate_from_en">Oversatt fra engelsk</string>
     <string name="translate_from_tr">Oversatt fra tyrkisk</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">For moro og klarhet, ikke juridisk rådgivning.</string>
     <string name="footer_language">Språk</string>
     <string name="not_found_title">Denne dommen har forlatt rettssalen</string>
-    <string name="not_found_body">Kanskje lenken har en skrivefeil, eller så er dommen borte.</string>
     <string name="nav_sign_in">Logg inn</string>
     <string name="nav_account">Konto</string>
     <string name="nav_pricing">Priser</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">Fortsett</string>
     <string name="respond_adult_confirm">Jeg er 18 år eller eldre</string>
     <string name="account_export">Last ned dataene mine</string>
-    <string name="account_export_hint">Få en JSON-fil med alt Judge har om deg.</string>
     <string name="account_export_busy">Gjør filen klar…</string>
     <string name="account_export_failed">Vi kunne ikke gjøre dataene dine klare akkurat nå. Vil du prøve igjen?</string>
     <string name="rating_prompt">Rettferdig dom?</string>
@@ -179,7 +175,6 @@
     <string name="thinking_factcheck">Sjekker fakta på nettet…</string>
     <string name="thinking_factcheck_done">Nettsjekken er ferdig.</string>
     <string name="thinking_premium_helper">Det tar litt lenger tid å sjekke fakta på nettet. Gi det et minutt eller to.</string>
-    <string name="panel_premium">Dømt med faktasjekk på nettet.</string>
     <string name="factcheck_title">Sjekket på nettet</string>
     <string name="factcheck_lead">Dommerne så disse søkeresultatene før de avgjorde. De er bevis, ikke selve dommen.</string>
     <string name="factcheck_status_supported">Holder vann</string>
@@ -233,13 +228,10 @@
     <string name="account_delete_yes">Ja, slett den</string>
     <string name="account_delete_cancel">Behold kontoen</string>
     <string name="account_delete_failed">Vi fikk ikke slettet kontoen akkurat nå. Vil du prøve igjen?</string>
-    <string name="account_sign_in_prompt">Logg inn for å se abonnementet og kredittene dine.</string>
     <string name="account_load_failed">Vi fikk ikke lastet kontoen din. Prøv igjen om litt.</string>
     <string name="account_loading">Laster kontoen din…</string>
     <string name="pricing_title">Den første dommen spanderer vi.</string>
-    <string name="pricing_lead">Opprett en konto, så er den første dommen gratis, med alle funksjoner. Etter det velger du en pakke eller går over til månedsabonnement.</string>
     <string name="pricing_title_member">Få flere dommer.</string>
-    <string name="pricing_lead_member">Velg en pakke eller et månedsabonnement. Hver dom får hele panelet.</string>
     <string name="pricing_included_title">I hver dom</string>
     <string name="pricing_buy_title">Pakker og månedsabonnement</string>
     <string name="pricing_premium_f1">Fakta sjekket på nettet, med kildene i dommen din</string>
@@ -381,7 +373,6 @@
     <string name="evidence_remove">Fjern bilde %1$s</string>
     <string name="evidence_thumb">Bilde %1$s</string>
     <string name="evidence_preview">Dette leste vi</string>
-    <string name="evidence_preview_note">Bare du ser dette. Navn skjules før dommerne leser det.</string>
     <string name="evidence_status_unreadable">Fant ingen tekst</string>
     <string name="evidence_status_refused">Leseren avviste dette bildet</string>
     <string name="evidence_status_unsupported">Ikke PNG, JPEG, WebP eller GIF</string>
@@ -408,8 +399,6 @@
     <string name="home_remove_their_side">Fjern den andres side</string>
     <string name="home_send_link">Send en lenke</string>
     <string name="home_clear">Tøm</string>
-    <string name="home_lead">Skriv begge sider, eller send en lenke så den andre kan skrive sin.</string>
-    <string name="home_lead_solo">Skriv din side, og den andres hvis du kjenner den.</string>
     <string name="home_their_side">Den andres side</string>
     <string name="home_their_name">Den andres navn</string>
     <string name="home_their_placeholder">Hva sier den andre? Skriv det med den andres ord.</string>
@@ -674,7 +663,6 @@
     <string name="app_purchase_buying">Kjøper…</string>
     <string name="app_purchase_success">Takk! Kjøpet er gjennomført.</string>
     <string name="app_purchase_pending">Kjøpet behandles. Det kan ta et minutt før det dukker opp.</string>
-    <string name="app_purchase_arriving">Kredittene dine er på vei…</string>
     <string name="app_purchase_slow">Det kan ta et minutt før det dukker opp her.</string>
     <string name="app_purchase_failed">Kjøpet gikk ikke gjennom. Prøv igjen om litt.</string>
     <string name="app_purchase_restore">Gjenopprett kjøp</string>

@@ -38,7 +38,6 @@
     <string name="verdict_too_close">צמוד מכדי להכריע</string>
     <string name="lean_title">הכרעה כפויה: הכף נוטה לטובת %1$s</string>
     <string name="lean_title_self">הכרעה כפויה: הכף נוטה לטובתך</string>
-    <string name="lean_unanimous">כל השופטים נטו לכיוון הזה.</string>
     <string name="lean_majority">השופטים נטו לכיוון הזה, %1$s מול %2$s.</string>
     <string name="lean_tie">גם כשנאלצו לבחור, השופטים התחלקו חצי-חצי.</string>
     <string name="split_win">בזה הצדק עם %1$s:</string>
@@ -72,7 +71,6 @@
         <item quantity="two">שני שופטי AI עצמאיים הצביעו:</item>
         <item quantity="other">%1$s שופטי AI עצמאיים הצביעו:</item>
     </plurals>
-    <string name="escalated">היה צמוד, אז הזמנו עוד שופטים.</string>
     <string name="translate_loading">מתרגמים…</string>
     <string name="translate_from_en">תורגם מאנגלית</string>
     <string name="translate_from_tr">תורגם מטורקית</string>
@@ -140,7 +138,6 @@
     <string name="footer_note">בשביל הכיף והבהירות, לא ייעוץ משפטי.</string>
     <string name="footer_language">שפה</string>
     <string name="not_found_title">פסק הדין הזה כבר יצא מהאולם</string>
-    <string name="not_found_body">אולי יש טעות בקישור, או שפסק הדין כבר לא קיים.</string>
     <string name="nav_sign_in">התחברות</string>
     <string name="nav_account">חשבון</string>
     <string name="nav_pricing">מחירים</string>
@@ -162,7 +159,6 @@
     <string name="consent_sensitive_continue">המשך</string>
     <string name="respond_adult_confirm">אני בגיל 18 ומעלה</string>
     <string name="account_export">הורדת הנתונים שלי</string>
-    <string name="account_export_hint">קבל קובץ JSON עם כל מה ש-Judge שומר עליך.</string>
     <string name="account_export_busy">מכין את הקובץ…</string>
     <string name="account_export_failed">לא הצלחנו להכין את הנתונים שלך כרגע. אפשר לנסות שוב?</string>
     <string name="rating_prompt">פסק דין הוגן?</string>
@@ -182,7 +178,6 @@
     <string name="thinking_factcheck">בודקים את העובדות ברשת…</string>
     <string name="thinking_factcheck_done">הבדיקה ברשת הסתיימה.</string>
     <string name="thinking_premium_helper">בדיקת העובדות ברשת לוקחת קצת יותר זמן. עוד דקה או שתיים.</string>
-    <string name="panel_premium">נשפט עם בדיקת עובדות ברשת.</string>
     <string name="factcheck_title">נבדק ברשת</string>
     <string name="factcheck_lead">השופטים ראו את תוצאות החיפוש האלה לפני ההכרעה. הן ראיות, לא ההכרעה עצמה.</string>
     <string name="factcheck_status_supported">מחזיק מים</string>
@@ -236,13 +231,10 @@
     <string name="account_delete_yes">כן, למחוק</string>
     <string name="account_delete_cancel">להשאיר את החשבון</string>
     <string name="account_delete_failed">לא הצלחנו למחוק את החשבון כרגע. אפשר לנסות שוב?</string>
-    <string name="account_sign_in_prompt">צריך להתחבר כדי לראות את התוכנית והקרדיטים.</string>
     <string name="account_load_failed">לא הצלחנו לטעון את החשבון. אפשר לנסות שוב עוד רגע.</string>
     <string name="account_loading">טוענים את החשבון…</string>
     <string name="pricing_title">פסק הדין הראשון עלינו.</string>
-    <string name="pricing_lead">פותחים חשבון, ופסק הדין הראשון בחינם, עם כל האפשרויות. אחר כך אפשר לבחור חבילה או תוכנית חודשית.</string>
     <string name="pricing_title_member">עוד פסקי דין.</string>
-    <string name="pricing_lead_member">אפשר לבחור חבילה או תוכנית חודשית. כל פסק דין מקבל את ההרכב המלא.</string>
     <string name="pricing_included_title">בכל פסק דין</string>
     <string name="pricing_buy_title">חבילות ותוכנית חודשית</string>
     <string name="pricing_premium_f1">העובדות נבדקות ברשת, עם המקורות בפסק הדין</string>
@@ -387,7 +379,6 @@
     <string name="evidence_remove">הסרת תמונה %1$s</string>
     <string name="evidence_thumb">תמונה %1$s</string>
     <string name="evidence_preview">מה קראנו</string>
-    <string name="evidence_preview_note">זה מוצג רק לך. השמות מוסתרים לפני שהשופטים קוראים.</string>
     <string name="evidence_status_unreadable">לא נמצא טקסט לקריאה</string>
     <string name="evidence_status_refused">מערכת הקריאה סירבה לתמונה הזו</string>
     <string name="evidence_status_unsupported">לא PNG, JPEG, WebP או GIF</string>
@@ -414,8 +405,6 @@
     <string name="home_remove_their_side">להסיר את הצד השני</string>
     <string name="home_send_link">לשלוח קישור</string>
     <string name="home_clear">ניקוי</string>
-    <string name="home_lead">אפשר לכתוב את שני הצדדים, או לשלוח לצד השני קישור כדי שיכתוב את שלו.</string>
-    <string name="home_lead_solo">אפשר לכתוב את הצד שלך, וגם את הצד השני אם הוא ידוע לך.</string>
     <string name="home_their_side">הצד השני</string>
     <string name="home_their_name">השם של הצד השני</string>
     <string name="home_their_placeholder">מה הצד השני אומר? כדאי לכתוב את זה במילים שלו.</string>
@@ -689,7 +678,6 @@
     <string name="app_purchase_buying">הרכישה מתבצעת…</string>
     <string name="app_purchase_success">תודה! הרכישה הושלמה.</string>
     <string name="app_purchase_pending">הרכישה בטיפול. ייתכן שייקח רגע עד שהיא תופיע.</string>
-    <string name="app_purchase_arriving">הקרדיטים בדרך…</string>
     <string name="app_purchase_slow">ייתכן שייקח רגע עד שזה יופיע כאן.</string>
     <string name="app_purchase_failed">הרכישה לא הושלמה. אפשר לנסות שוב עוד רגע.</string>
     <string name="app_purchase_restore">שחזור רכישות</string>

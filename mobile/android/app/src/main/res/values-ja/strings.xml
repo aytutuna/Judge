@@ -38,7 +38,6 @@
     <string name="verdict_too_close">甲乙つけがたい</string>
     <string name="lean_title">あえて判定：%1$sがやや優勢</string>
     <string name="lean_title_self">あえて判定：あなたがやや優勢</string>
-    <string name="lean_unanimous">審査員は全員こちら寄りでした。</string>
     <string name="lean_majority">審査員は%1$s対%2$sでこちら寄りでした。</string>
     <string name="lean_tie">あえて選ばせても、審査員の意見は真っ二つに割れました。</string>
     <string name="split_win">%1$sが正しい点：</string>
@@ -70,7 +69,6 @@
     <plurals name="judges_voted">
         <item quantity="other">%1$s人の独立したAI審査員が投票しました：</item>
     </plurals>
-    <string name="escalated">僅差だったので、審査員を追加しました。</string>
     <string name="translate_loading">翻訳中…</string>
     <string name="translate_from_en">英語から翻訳</string>
     <string name="translate_from_tr">トルコ語から翻訳</string>
@@ -134,7 +132,6 @@
     <string name="footer_note">楽しく、すっきり考えるためのもの。法的なアドバイスではありません。</string>
     <string name="footer_language">言語</string>
     <string name="not_found_title">この判定はもう退廷しました</string>
-    <string name="not_found_body">リンクに誤りがあるか、判定が削除された可能性があります。</string>
     <string name="nav_sign_in">ログイン</string>
     <string name="nav_account">アカウント</string>
     <string name="nav_pricing">料金</string>
@@ -156,7 +153,6 @@
     <string name="consent_sensitive_continue">続ける</string>
     <string name="respond_adult_confirm">18歳以上です</string>
     <string name="account_export">データをダウンロード</string>
-    <string name="account_export_hint">Judgeが保管しているあなたの情報をすべて、JSONファイルで受け取れます。</string>
     <string name="account_export_busy">ファイルを準備しています…</string>
     <string name="account_export_failed">今はデータを準備できませんでした。もう一度お試しください。</string>
     <string name="rating_prompt">公平な判定？</string>
@@ -176,7 +172,6 @@
     <string name="thinking_factcheck">ネットで事実を確認しています…</string>
     <string name="thinking_factcheck_done">ネットでの確認が終わりました。</string>
     <string name="thinking_premium_helper">ネットで事実を確認するので、少し時間がかかります。1〜2分お待ちください。</string>
-    <string name="panel_premium">ネットでのファクトチェック付きで判定しました。</string>
     <string name="factcheck_title">ネットで確認済み</string>
     <string name="factcheck_lead">審査員は判定の前にこれらの検索結果を見ています。これは判定の材料で、判定そのものではありません。</string>
     <string name="factcheck_status_supported">裏付けあり</string>
@@ -230,13 +225,10 @@
     <string name="account_delete_yes">削除する</string>
     <string name="account_delete_cancel">アカウントを残す</string>
     <string name="account_delete_failed">いまはアカウントを削除できませんでした。もう一度お試しください。</string>
-    <string name="account_sign_in_prompt">プランとクレジットを見るにはログインしてください。</string>
     <string name="account_load_failed">アカウントを読み込めませんでした。少ししてからもう一度お試しください。</string>
     <string name="account_loading">アカウントを読み込み中…</string>
     <string name="pricing_title">最初の判定は無料です。</string>
-    <string name="pricing_lead">アカウントを作成すると、最初の判定はすべての機能つきで無料。その後はパックか月額プランを選べます。</string>
     <string name="pricing_title_member">判定をもっと。</string>
-    <string name="pricing_lead_member">パックか月額プランを選べます。どの判定も審査員がフルメンバーで担当します。</string>
     <string name="pricing_included_title">すべての判定に</string>
     <string name="pricing_buy_title">パックと月額プラン</string>
     <string name="pricing_premium_f1">ネットで事実を確認し、出典も判定に表示</string>
@@ -375,7 +367,6 @@
     <string name="evidence_remove">画像%1$sを削除</string>
     <string name="evidence_thumb">画像%1$s</string>
     <string name="evidence_preview">読み取った内容</string>
-    <string name="evidence_preview_note">これはあなたにしか見えません。審査員が読む前に名前は隠されます。</string>
     <string name="evidence_status_unreadable">文字を読み取れませんでした</string>
     <string name="evidence_status_refused">この画像の読み取りは見送られました</string>
     <string name="evidence_status_unsupported">PNG、JPEG、WebP、GIF以外の形式です</string>
@@ -402,8 +393,6 @@
     <string name="home_remove_their_side">相手の言い分を削除</string>
     <string name="home_send_link">リンクを送る</string>
     <string name="home_clear">クリア</string>
-    <string name="home_lead">両方の言い分を書くか、相手にリンクを送って言い分を書いてもらいましょう。</string>
-    <string name="home_lead_solo">あなたの言い分を書いてください。わかれば相手の言い分も。</string>
     <string name="home_their_side">相手の言い分</string>
     <string name="home_their_name">相手の名前</string>
     <string name="home_their_placeholder">相手はなんと言っていますか？　相手になったつもりで書いてください。</string>
@@ -659,7 +648,6 @@
     <string name="app_purchase_buying">購入中…</string>
     <string name="app_purchase_success">ありがとうございます！　購入が完了しました。</string>
     <string name="app_purchase_pending">購入を処理しています。反映まで1分ほどかかることがあります。</string>
-    <string name="app_purchase_arriving">クレジットを反映しています…</string>
     <string name="app_purchase_slow">ここに表示されるまで1分ほどかかることがあります。</string>
     <string name="app_purchase_failed">購入を完了できませんでした。少ししてからもう一度お試しください。</string>
     <string name="app_purchase_restore">購入を復元</string>

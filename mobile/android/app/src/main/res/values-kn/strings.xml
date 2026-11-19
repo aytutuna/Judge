@@ -38,7 +38,6 @@
     <string name="verdict_too_close">ತೀರಾ ಸಮಬಲ, ಹೇಳುವುದು ಕಷ್ಟ</string>
     <string name="lean_title">ಬಲವಂತದ ತೀರ್ಪು: %1$s ಹೇಳಿದ್ದು ಹೆಚ್ಚು ಸರಿ</string>
     <string name="lean_title_self">ಬಲವಂತದ ತೀರ್ಪು: ನೀವು ಹೇಳಿದ್ದು ಹೆಚ್ಚು ಸರಿ</string>
-    <string name="lean_unanimous">ಎಲ್ಲಾ ತೀರ್ಪುಗಾರರೂ ಇದೇ ಕಡೆ ವಾಲಿದರು.</string>
     <string name="lean_majority">ತೀರ್ಪುಗಾರರು %1$s–%2$s ಮತಗಳಿಂದ ಇದೇ ಕಡೆ ವಾಲಿದರು.</string>
     <string name="lean_tie">ಒಂದು ಕಡೆ ಆರಿಸಲೇಬೇಕು ಎಂದಾಗಲೂ ತೀರ್ಪುಗಾರರು ಸರಿಯಾಗಿ ಅರ್ಧ-ಅರ್ಧ ಹಂಚಿಹೋದರು.</string>
     <string name="split_win">ಈ ವಿಷಯದಲ್ಲಿ %1$s ಸರಿ:</string>
@@ -71,7 +70,6 @@
         <item quantity="one">%1$s ಸ್ವತಂತ್ರ AI ತೀರ್ಪುಗಾರರ ಮತಗಳು:</item>
         <item quantity="other">%1$s ಸ್ವತಂತ್ರ AI ತೀರ್ಪುಗಾರರ ಮತಗಳು:</item>
     </plurals>
-    <string name="escalated">ಮತಗಳು ತೀರಾ ಹತ್ತಿರ ಇದ್ದವು, ಹಾಗಾಗಿ ಹೆಚ್ಚುವರಿ ತೀರ್ಪುಗಾರರನ್ನು ಕರೆದೆವು.</string>
     <string name="translate_loading">ಅನುವಾದಿಸುತ್ತಿದ್ದೇವೆ…</string>
     <string name="translate_from_en">ಇಂಗ್ಲಿಷ್‌ನಿಂದ ಅನುವಾದಿಸಲಾಗಿದೆ</string>
     <string name="translate_from_tr">ಟರ್ಕಿಶ್‌ನಿಂದ ಅನುವಾದಿಸಲಾಗಿದೆ</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">ಮೋಜು ಮತ್ತು ಸ್ಪಷ್ಟತೆಗಾಗಿ, ಕಾನೂನು ಸಲಹೆಗಲ್ಲ.</string>
     <string name="footer_language">ಭಾಷೆ</string>
     <string name="not_found_title">ಈ ತೀರ್ಪು ಕೋರ್ಟ್ ಬಿಟ್ಟು ಹೊರಟುಹೋಗಿದೆ</string>
-    <string name="not_found_body">ಲಿಂಕ್‌ನಲ್ಲಿ ತಪ್ಪಿರಬಹುದು, ಅಥವಾ ತೀರ್ಪು ಈಗ ಇಲ್ಲದಿರಬಹುದು.</string>
     <string name="nav_sign_in">ಸೈನ್ ಇನ್</string>
     <string name="nav_account">ಖಾತೆ</string>
     <string name="nav_pricing">ಬೆಲೆಗಳು</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">ಮುಂದುವರಿಸಿ</string>
     <string name="respond_adult_confirm">ನನಗೆ 18 ವರ್ಷ ಅಥವಾ ಹೆಚ್ಚು ವಯಸ್ಸಾಗಿದೆ</string>
     <string name="account_export">ನನ್ನ ಡೇಟಾ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</string>
-    <string name="account_export_hint">Judge ನಿಮ್ಮ ಬಗ್ಗೆ ಇಟ್ಟುಕೊಂಡಿರುವ ಎಲ್ಲವನ್ನೂ ಒಂದು JSON ಫೈಲ್‌ನಲ್ಲಿ ಪಡೆಯಿರಿ.</string>
     <string name="account_export_busy">ನಿಮ್ಮ ಫೈಲ್ ಸಿದ್ಧವಾಗುತ್ತಿದೆ…</string>
     <string name="account_export_failed">ಈಗ ನಿಮ್ಮ ಡೇಟಾ ಸಿದ್ಧಪಡಿಸಲು ಆಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸುವಿರಾ?</string>
     <string name="rating_prompt">ತೀರ್ಪು ನ್ಯಾಯಯುತವೇ?</string>
@@ -179,7 +175,6 @@
     <string name="thinking_factcheck">ವೆಬ್‌ನಲ್ಲಿ ಸಂಗತಿಗಳನ್ನು ಪರಿಶೀಲಿಸುತ್ತಿದ್ದೇವೆ…</string>
     <string name="thinking_factcheck_done">ವೆಬ್ ಪರಿಶೀಲನೆ ಮುಗಿಯಿತು.</string>
     <string name="thinking_premium_helper">ವೆಬ್‌ನಲ್ಲಿ ಸಂಗತಿಗಳನ್ನು ಪರಿಶೀಲಿಸಲು ಸ್ವಲ್ಪ ಹೆಚ್ಚು ಸಮಯ ಬೇಕು. ಒಂದೆರಡು ನಿಮಿಷ ಕಾಯಿರಿ.</string>
-    <string name="panel_premium">ವೆಬ್‌ನಲ್ಲಿ ಸಂಗತಿಗಳನ್ನು ಪರಿಶೀಲಿಸಿ ಕೊಟ್ಟ ತೀರ್ಪು.</string>
     <string name="factcheck_title">ವೆಬ್‌ನಲ್ಲಿ ಪರಿಶೀಲಿಸಲಾಗಿದೆ</string>
     <string name="factcheck_lead">ತೀರ್ಪು ಕೊಡುವ ಮೊದಲು ತೀರ್ಪುಗಾರರು ಈ ಹುಡುಕಾಟ ಫಲಿತಾಂಶಗಳನ್ನು ನೋಡಿದ್ದರು. ಇವು ಪುರಾವೆಗಳು, ತೀರ್ಪು ಅಲ್ಲ.</string>
     <string name="factcheck_status_supported">ಸರಿಯಾಗಿದೆ</string>
@@ -233,13 +228,10 @@
     <string name="account_delete_yes">ಹೌದು, ಅಳಿಸಿ</string>
     <string name="account_delete_cancel">ಖಾತೆ ಇರಲಿ</string>
     <string name="account_delete_failed">ಈಗ ಖಾತೆ ಅಳಿಸಲು ಆಗಲಿಲ್ಲ. ಇನ್ನೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸುತ್ತೀರಾ?</string>
-    <string name="account_sign_in_prompt">ನಿಮ್ಮ ಪ್ಲಾನ್ ಮತ್ತು ಕ್ರೆಡಿಟ್‌ಗಳನ್ನು ನೋಡಲು ಸೈನ್ ಇನ್ ಮಾಡಿ.</string>
     <string name="account_load_failed">ನಿಮ್ಮ ಖಾತೆ ಲೋಡ್ ಆಗಲಿಲ್ಲ. ಸ್ವಲ್ಪ ಹೊತ್ತಿನ ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
     <string name="account_loading">ನಿಮ್ಮ ಖಾತೆ ಲೋಡ್ ಆಗುತ್ತಿದೆ…</string>
     <string name="pricing_title">ನಿಮ್ಮ ಮೊದಲ ತೀರ್ಪು ನಮ್ಮ ಕಡೆಯಿಂದ ಉಚಿತ.</string>
-    <string name="pricing_lead">ಖಾತೆ ತೆರೆಯಿರಿ, ನಿಮ್ಮ ಮೊದಲ ತೀರ್ಪು ಎಲ್ಲಾ ಸೌಲಭ್ಯಗಳ ಸಮೇತ ಉಚಿತ. ಅದರ ನಂತರ ಒಂದು ಪ್ಯಾಕ್ ಆರಿಸಿ ಅಥವಾ ಮಾಸಿಕ ಪ್ಲಾನ್ ತೆಗೆದುಕೊಳ್ಳಿ.</string>
     <string name="pricing_title_member">ಇನ್ನಷ್ಟು ತೀರ್ಪುಗಳನ್ನು ಪಡೆಯಿರಿ.</string>
-    <string name="pricing_lead_member">ಒಂದು ಪ್ಯಾಕ್ ಆರಿಸಿ ಅಥವಾ ಮಾಸಿಕ ಪ್ಲಾನ್ ತೆಗೆದುಕೊಳ್ಳಿ. ಪ್ರತಿ ತೀರ್ಪಿಗೂ ಪೂರ್ಣ ತೀರ್ಪುಗಾರರ ತಂಡ.</string>
     <string name="pricing_included_title">ಪ್ರತಿ ತೀರ್ಪಿನಲ್ಲೂ</string>
     <string name="pricing_buy_title">ಪ್ಯಾಕ್‌ಗಳು ಮತ್ತು ಮಾಸಿಕ ಪ್ಲಾನ್</string>
     <string name="pricing_premium_f1">ವೆಬ್‌ನಲ್ಲಿ ಸಂಗತಿಗಳ ಪರಿಶೀಲನೆ, ಮೂಲಗಳು ನಿಮ್ಮ ತೀರ್ಪಿನಲ್ಲೇ</string>
@@ -381,7 +373,6 @@
     <string name="evidence_remove">ಚಿತ್ರ %1$s ತೆಗೆದುಹಾಕಿ</string>
     <string name="evidence_thumb">ಚಿತ್ರ %1$s</string>
     <string name="evidence_preview">ನಾವು ಓದಿದ್ದು</string>
-    <string name="evidence_preview_note">ಇದು ನಿಮಗೆ ಮಾತ್ರ ಕಾಣುತ್ತದೆ. ತೀರ್ಪುಗಾರರು ಓದುವ ಮೊದಲೇ ಹೆಸರುಗಳನ್ನು ಮರೆಮಾಡಲಾಗುತ್ತದೆ.</string>
     <string name="evidence_status_unreadable">ಯಾವ ಪಠ್ಯವೂ ಓದಲು ಸಿಗಲಿಲ್ಲ</string>
     <string name="evidence_status_refused">ಈ ಚಿತ್ರವನ್ನು ಓದಲು ನಿರಾಕರಿಸಲಾಯಿತು</string>
     <string name="evidence_status_unsupported">PNG, JPEG, WebP ಅಥವಾ GIF ಅಲ್ಲ</string>
@@ -408,8 +399,6 @@
     <string name="home_remove_their_side">ಅವರ ಕಡೆ ತೆಗೆದುಹಾಕಿ</string>
     <string name="home_send_link">ಲಿಂಕ್ ಕಳುಹಿಸಿ</string>
     <string name="home_clear">ತೆರವುಗೊಳಿಸಿ</string>
-    <string name="home_lead">ಎರಡೂ ಕಡೆಯ ಮಾತು ನೀವೇ ಬರೆಯಿರಿ, ಅಥವಾ ಎದುರಿನವರಿಗೆ ಲಿಂಕ್ ಕಳುಹಿಸಿ, ಅವರ ಮಾತು ಅವರೇ ಬರೆಯಲಿ.</string>
-    <string name="home_lead_solo">ನಿಮ್ಮ ಕಡೆಯ ಮಾತು ಬರೆಯಿರಿ, ಗೊತ್ತಿದ್ದರೆ ಅವರದನ್ನೂ.</string>
     <string name="home_their_side">ಅವರ ಕಡೆ</string>
     <string name="home_their_name">ಅವರ ಹೆಸರು</string>
     <string name="home_their_placeholder">ಅವರು ಏನು ಹೇಳುತ್ತಾರೆ? ಅವರು ಹೇಳುವ ಹಾಗೆಯೇ ಬರೆಯಿರಿ.</string>
@@ -674,7 +663,6 @@
     <string name="app_purchase_buying">ಖರೀದಿಸಲಾಗುತ್ತಿದೆ…</string>
     <string name="app_purchase_success">ಧನ್ಯವಾದಗಳು! ನಿಮ್ಮ ಖರೀದಿ ಪೂರ್ಣಗೊಂಡಿದೆ.</string>
     <string name="app_purchase_pending">ನಿಮ್ಮ ಖರೀದಿ ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿದೆ. ಅದು ಕಾಣಿಸಿಕೊಳ್ಳಲು ಒಂದು ನಿಮಿಷ ಆಗಬಹುದು.</string>
-    <string name="app_purchase_arriving">ನಿಮ್ಮ ಕ್ರೆಡಿಟ್‌ಗಳು ಬರುತ್ತಿವೆ…</string>
     <string name="app_purchase_slow">ಇಲ್ಲಿ ಕಾಣಿಸಿಕೊಳ್ಳಲು ಒಂದು ನಿಮಿಷ ಆಗಬಹುದು.</string>
     <string name="app_purchase_failed">ಖರೀದಿ ಪೂರ್ಣಗೊಳ್ಳಲಿಲ್ಲ. ಸ್ವಲ್ಪ ಹೊತ್ತು ಬಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
     <string name="app_purchase_restore">ಖರೀದಿಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸಿ</string>

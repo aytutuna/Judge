@@ -153,8 +153,7 @@ fun PricingScreen(
                     )
 
                     val notice = when (store.notice) {
-                        PurchaseController.Notice.ARRIVING -> "${s.appPurchaseSuccess} ${s.appPurchaseArriving}"
-                        PurchaseController.Notice.ARRIVED -> s.appPurchaseSuccess
+                        PurchaseController.Notice.ARRIVING, PurchaseController.Notice.ARRIVED -> s.appPurchaseSuccess
                         PurchaseController.Notice.SLOW -> "${s.appPurchaseSuccess} ${s.appPurchaseSlow}"
                         PurchaseController.Notice.FAILED -> s.appPurchaseFailed
                         PurchaseController.Notice.AGE_UNCONFIRMED -> s.appAgeRequired

@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Zu knapp für ein Urteil</string>
     <string name="lean_title">Erzwungenes Urteil: %1$s liegt eher richtig</string>
     <string name="lean_title_self">Erzwungenes Urteil: Du liegst eher richtig</string>
-    <string name="lean_unanimous">Alle Richter tendierten in diese Richtung.</string>
     <string name="lean_majority">Die Richter tendierten mit %1$s:%2$s in diese Richtung.</string>
     <string name="lean_tie">Selbst als sie sich festlegen mussten, blieb es bei den Richtern unentschieden.</string>
     <string name="split_win">%1$s hat hier recht:</string>
@@ -71,7 +70,6 @@
         <item quantity="one">%1$s unabhängige KI-Richter haben abgestimmt:</item>
         <item quantity="other">%1$s unabhängige KI-Richter haben abgestimmt:</item>
     </plurals>
-    <string name="escalated">Es war knapp, also haben wir weitere Richter dazugeholt.</string>
     <string name="translate_loading">Wird übersetzt…</string>
     <string name="translate_from_en">Aus dem Englischen übersetzt</string>
     <string name="translate_from_tr">Aus dem Türkischen übersetzt</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">Zum Spaß und für mehr Klarheit, keine Rechtsberatung.</string>
     <string name="footer_language">Sprache</string>
     <string name="not_found_title">Dieses Urteil hat den Gerichtssaal verlassen</string>
-    <string name="not_found_body">Vielleicht ist im Link ein Tippfehler, oder das Urteil gibt es nicht mehr.</string>
     <string name="nav_sign_in">Anmelden</string>
     <string name="nav_account">Konto</string>
     <string name="nav_pricing">Preise</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">Weiter</string>
     <string name="respond_adult_confirm">Ich bin 18 oder älter</string>
     <string name="account_export">Meine Daten herunterladen</string>
-    <string name="account_export_hint">Hol dir eine JSON-Datei mit allem, was Judge über dich speichert.</string>
     <string name="account_export_busy">Datei wird vorbereitet…</string>
     <string name="account_export_failed">Wir konnten deine Daten gerade nicht bereitstellen. Magst du es noch einmal versuchen?</string>
     <string name="rating_prompt">Faires Urteil?</string>
@@ -179,7 +175,6 @@
     <string name="thinking_factcheck">Wir prüfen die Fakten im Netz…</string>
     <string name="thinking_factcheck_done">Faktencheck im Netz abgeschlossen.</string>
     <string name="thinking_premium_helper">Die Faktenprüfung im Netz dauert etwas länger. Gib uns ein, zwei Minuten.</string>
-    <string name="panel_premium">Mit Faktencheck im Netz beurteilt.</string>
     <string name="factcheck_title">Im Netz geprüft</string>
     <string name="factcheck_lead">Diese Suchergebnisse lagen den Richtern vor dem Urteil vor. Sie sind Belege, nicht das Urteil selbst.</string>
     <string name="factcheck_status_supported">Stimmt</string>
@@ -233,13 +228,10 @@
     <string name="account_delete_yes">Ja, löschen</string>
     <string name="account_delete_cancel">Konto behalten</string>
     <string name="account_delete_failed">Wir konnten das Konto gerade nicht löschen. Versuchst du es noch mal?</string>
-    <string name="account_sign_in_prompt">Melde dich an, um deinen Tarif und deine Credits zu sehen.</string>
     <string name="account_load_failed">Wir konnten dein Konto nicht laden. Versuch es gleich noch mal.</string>
     <string name="account_loading">Dein Konto wird geladen…</string>
     <string name="pricing_title">Dein erstes Urteil geht auf uns.</string>
-    <string name="pricing_lead">Erstell ein Konto, und dein erstes Urteil ist gratis, mit allen Funktionen. Danach wählst du ein Paket oder das Monatsabo.</string>
     <string name="pricing_title_member">Hol dir mehr Urteile.</string>
-    <string name="pricing_lead_member">Wähl ein Paket oder das Monatsabo. Jedes Urteil bekommt die volle Richterbank.</string>
     <string name="pricing_included_title">Bei jedem Urteil dabei</string>
     <string name="pricing_buy_title">Pakete und Monatsabo</string>
     <string name="pricing_premium_f1">Fakten im Netz geprüft, mit den Quellen in deinem Urteil</string>
@@ -381,7 +373,6 @@
     <string name="evidence_remove">Bild %1$s entfernen</string>
     <string name="evidence_thumb">Bild %1$s</string>
     <string name="evidence_preview">Was wir gelesen haben</string>
-    <string name="evidence_preview_note">Nur du siehst das. Bevor die Richter es lesen, werden die Namen verborgen.</string>
     <string name="evidence_status_unreadable">Kein Text lesbar</string>
     <string name="evidence_status_refused">Auslesen dieses Bilds abgelehnt</string>
     <string name="evidence_status_unsupported">Kein PNG, JPEG, WebP oder GIF</string>
@@ -408,8 +399,6 @@
     <string name="home_remove_their_side">Gegenseite entfernen</string>
     <string name="home_send_link">Per Link einladen</string>
     <string name="home_clear">Leeren</string>
-    <string name="home_lead">Schreib beide Seiten auf oder schick der anderen Person einen Link für ihre Seite.</string>
-    <string name="home_lead_solo">Schreib deine Seite auf und, wenn du sie kennst, auch die der anderen Person.</string>
     <string name="home_their_side">Gegenseite</string>
     <string name="home_their_name">Name der anderen Person</string>
     <string name="home_their_placeholder">Was sagt die andere Person? Schreib es so, wie sie es sagen würde.</string>
@@ -674,7 +663,6 @@
     <string name="app_purchase_buying">Wird gekauft…</string>
     <string name="app_purchase_success">Danke! Dein Kauf hat geklappt.</string>
     <string name="app_purchase_pending">Dein Kauf wird bearbeitet. Es kann eine Minute dauern, bis er angezeigt wird.</string>
-    <string name="app_purchase_arriving">Deine Credits sind unterwegs…</string>
     <string name="app_purchase_slow">Bis alles hier angezeigt wird, kann es eine Minute dauern.</string>
     <string name="app_purchase_failed">Der Kauf hat nicht geklappt. Versuch es gleich noch mal.</string>
     <string name="app_purchase_restore">Käufe wiederherstellen</string>

@@ -38,7 +38,6 @@
     <string name="verdict_too_close">काँटे की टक्कर</string>
     <string name="lean_title">मजबूरन फ़ैसला: %1$s ज़्यादा सही है</string>
     <string name="lean_title_self">मजबूरन फ़ैसला: आप ज़्यादा सही हैं</string>
-    <string name="lean_unanimous">सभी जजों का झुकाव इसी तरफ़ था।</string>
     <string name="lean_majority">जजों का झुकाव %1$s–%2$s से इसी तरफ़ था।</string>
     <string name="lean_tie">चुनने को कहा गया, तब भी जज आधे-आधे बँट गए।</string>
     <string name="split_win">%1$s इस बात पर सही है:</string>
@@ -71,7 +70,6 @@
         <item quantity="one">%1$s स्वतंत्र AI जजों ने वोट दिया:</item>
         <item quantity="other">%1$s स्वतंत्र AI जजों ने वोट दिया:</item>
     </plurals>
-    <string name="escalated">मामला करीबी था, इसलिए हमने और जज बुलाए।</string>
     <string name="translate_loading">अनुवाद हो रहा है…</string>
     <string name="translate_from_en">अंग्रेज़ी से अनुवाद</string>
     <string name="translate_from_tr">तुर्की से अनुवाद</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">मज़े और साफ़ सोच के लिए, कानूनी सलाह नहीं।</string>
     <string name="footer_language">भाषा</string>
     <string name="not_found_title">यह फ़ैसला अदालत से जा चुका है</string>
-    <string name="not_found_body">शायद लिंक में कोई टाइपो है, या फ़ैसला अब मौजूद नहीं है।</string>
     <string name="nav_sign_in">साइन इन</string>
     <string name="nav_account">अकाउंट</string>
     <string name="nav_pricing">कीमतें</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">आगे बढ़ें</string>
     <string name="respond_adult_confirm">मेरी उम्र 18 साल या उससे ज़्यादा है</string>
     <string name="account_export">मेरा डेटा डाउनलोड करें</string>
-    <string name="account_export_hint">Judge के पास आपके बारे में जो कुछ है, वह सब एक JSON फ़ाइल में पाएँ।</string>
     <string name="account_export_busy">आपकी फ़ाइल तैयार हो रही है…</string>
     <string name="account_export_failed">अभी आपका डेटा तैयार नहीं हो सका। फिर से कोशिश करेंगे?</string>
     <string name="rating_prompt">क्या फ़ैसला निष्पक्ष है?</string>
@@ -179,7 +175,6 @@
     <string name="thinking_factcheck">वेब पर तथ्य जाँच रहे हैं…</string>
     <string name="thinking_factcheck_done">वेब पर जाँच पूरी हुई।</string>
     <string name="thinking_premium_helper">वेब पर तथ्य जाँचने में थोड़ा ज़्यादा समय लगता है। एक-दो मिनट दें।</string>
-    <string name="panel_premium">वेब पर तथ्यों की जाँच के साथ फ़ैसला हुआ।</string>
     <string name="factcheck_title">वेब पर जाँचा गया</string>
     <string name="factcheck_lead">फ़ैसले से पहले जजों ने ये सर्च नतीजे देखे। ये सबूत हैं, ख़ुद फ़ैसला नहीं।</string>
     <string name="factcheck_status_supported">सही निकला</string>
@@ -233,13 +228,10 @@
     <string name="account_delete_yes">हाँ, डिलीट करें</string>
     <string name="account_delete_cancel">अकाउंट रहने दें</string>
     <string name="account_delete_failed">अभी अकाउंट डिलीट नहीं हो पाया। एक बार फिर कोशिश करें?</string>
-    <string name="account_sign_in_prompt">अपना प्लान और क्रेडिट देखने के लिए साइन इन करें।</string>
     <string name="account_load_failed">आपका अकाउंट लोड नहीं हो पाया। थोड़ी देर में फिर कोशिश करें।</string>
     <string name="account_loading">आपका अकाउंट लोड हो रहा है…</string>
     <string name="pricing_title">पहला फ़ैसला हमारी तरफ़ से।</string>
-    <string name="pricing_lead">अकाउंट बनाइए और पहला फ़ैसला मुफ़्त पाइए, सारी सुविधाओं के साथ। उसके बाद कोई पैक चुनें या मासिक प्लान लें।</string>
     <string name="pricing_title_member">और फ़ैसले पाएँ।</string>
-    <string name="pricing_lead_member">कोई पैक चुनें या मासिक प्लान लें। हर फ़ैसले में जजों का पूरा पैनल होता है।</string>
     <string name="pricing_included_title">हर फ़ैसले में</string>
     <string name="pricing_buy_title">पैक और मासिक प्लान</string>
     <string name="pricing_premium_f1">वेब पर जाँचे गए तथ्य, आपके फ़ैसले पर स्रोतों के साथ</string>
@@ -381,7 +373,6 @@
     <string name="evidence_remove">तस्वीर %1$s हटाएँ</string>
     <string name="evidence_thumb">तस्वीर %1$s</string>
     <string name="evidence_preview">हमने क्या पढ़ा</string>
-    <string name="evidence_preview_note">यह सिर्फ़ आपको दिखता है। जजों के पढ़ने से पहले नाम छिपा दिए जाते हैं।</string>
     <string name="evidence_status_unreadable">कोई टेक्स्ट नहीं पढ़ा जा सका</string>
     <string name="evidence_status_refused">रीडर ने यह तस्वीर पढ़ने से मना कर दिया</string>
     <string name="evidence_status_unsupported">PNG, JPEG, WebP या GIF नहीं है</string>
@@ -408,8 +399,6 @@
     <string name="home_remove_their_side">उनकी बात हटाएँ</string>
     <string name="home_send_link">लिंक भेजें</string>
     <string name="home_clear">साफ़ करें</string>
-    <string name="home_lead">दोनों पक्षों की बात लिखें, या दूसरे व्यक्ति को लिंक भेजें ताकि वे अपनी बात ख़ुद लिखें।</string>
-    <string name="home_lead_solo">अपनी बात लिखें, और पता हो तो उनकी भी।</string>
     <string name="home_their_side">उनकी बात</string>
     <string name="home_their_name">उनका नाम</string>
     <string name="home_their_placeholder">उनका क्या कहना है? वैसे ही लिखें जैसे वे ख़ुद कहते।</string>
@@ -674,7 +663,6 @@
     <string name="app_purchase_buying">ख़रीदारी हो रही है…</string>
     <string name="app_purchase_success">शुक्रिया! आपकी ख़रीदारी पूरी हो गई।</string>
     <string name="app_purchase_pending">आपकी ख़रीदारी प्रोसेस हो रही है। दिखने में एक मिनट लग सकता है।</string>
-    <string name="app_purchase_arriving">आपके क्रेडिट आ रहे हैं…</string>
     <string name="app_purchase_slow">यहाँ दिखने में एक मिनट लग सकता है।</string>
     <string name="app_purchase_failed">ख़रीदारी पूरी नहीं हो पाई। थोड़ी देर में फिर कोशिश करें।</string>
     <string name="app_purchase_restore">ख़रीदारी रीस्टोर करें</string>

@@ -38,7 +38,6 @@
     <string name="verdict_too_close">अगदी अटीतटीचे, निकाल लागेना</string>
     <string name="lean_title">सक्तीचा कौल: %1$s जास्त बरोबर</string>
     <string name="lean_title_self">सक्तीचा कौल: तुम्ही जास्त बरोबर</string>
-    <string name="lean_unanimous">सगळ्या परीक्षकांचा कल याच बाजूला होता.</string>
     <string name="lean_majority">परीक्षकांचा कल %1$s–%2$s असा याच बाजूला होता.</string>
     <string name="lean_tie">निवड करायला भाग पाडले तरी परीक्षकांची मते अगदी अर्धी-अर्धी पडली.</string>
     <string name="split_win">या मुद्द्यावर %1$s बरोबर आहे:</string>
@@ -71,7 +70,6 @@
         <item quantity="one">%1$s स्वतंत्र AI परीक्षकांनी मत दिले:</item>
         <item quantity="other">%1$s स्वतंत्र AI परीक्षकांनी मत दिले:</item>
     </plurals>
-    <string name="escalated">मते अटीतटीची होती, म्हणून आणखी परीक्षक बोलावले.</string>
     <string name="translate_loading">अनुवाद होत आहे…</string>
     <string name="translate_from_en">इंग्रजीतून अनुवादित</string>
     <string name="translate_from_tr">तुर्कीतून अनुवादित</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">मजेसाठी आणि स्पष्टतेसाठी, कायदेशीर सल्ला नाही.</string>
     <string name="footer_language">भाषा</string>
     <string name="not_found_title">हा निकाल कोर्टातून निघून गेला आहे</string>
-    <string name="not_found_body">कदाचित लिंकमध्ये टायपो असेल, किंवा हा निकाल आता उपलब्ध नाही.</string>
     <string name="nav_sign_in">साइन इन</string>
     <string name="nav_account">खाते</string>
     <string name="nav_pricing">किंमत</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">पुढे जा</string>
     <string name="respond_adult_confirm">माझे वय 18 किंवा जास्त आहे</string>
     <string name="account_export">माझा डेटा डाउनलोड करा</string>
-    <string name="account_export_hint">Judge कडे तुमच्याबद्दल असलेले सर्व काही एका JSON फाइलमध्ये मिळवा.</string>
     <string name="account_export_busy">तुमची फाइल तयार होत आहे…</string>
     <string name="account_export_failed">आत्ता तुमचा डेटा तयार करता आला नाही. पुन्हा प्रयत्न करता का?</string>
     <string name="rating_prompt">निकाल न्याय्य आहे का?</string>
@@ -179,7 +175,6 @@
     <string name="thinking_factcheck">तथ्ये वेबवर तपासत आहोत…</string>
     <string name="thinking_factcheck_done">वेब तपासणी पूर्ण झाली.</string>
     <string name="thinking_premium_helper">तथ्ये वेबवर तपासायला जरा जास्त वेळ लागतो. एक-दोन मिनिटे थांबा.</string>
-    <string name="panel_premium">वेबवरील तथ्य-तपासणीसह निकाल दिला.</string>
     <string name="factcheck_title">वेबवर तपासले</string>
     <string name="factcheck_lead">निकाल देण्याआधी परीक्षकांनी हे सर्च परिणाम पाहिले. हे पुरावे आहेत, निकाल नव्हे.</string>
     <string name="factcheck_status_supported">खरे ठरले</string>
@@ -233,13 +228,10 @@
     <string name="account_delete_yes">हो, डिलीट करा</string>
     <string name="account_delete_cancel">खाते राहू द्या</string>
     <string name="account_delete_failed">आत्ता खाते डिलीट करता आले नाही. पुन्हा प्रयत्न कराल का?</string>
-    <string name="account_sign_in_prompt">तुमचा प्लॅन आणि क्रेडिट पाहण्यासाठी साइन इन करा.</string>
     <string name="account_load_failed">तुमचे खाते लोड करता आले नाही. थोड्या वेळाने पुन्हा प्रयत्न करा.</string>
     <string name="account_loading">तुमचे खाते लोड होत आहे…</string>
     <string name="pricing_title">पहिला निकाल आमच्याकडून.</string>
-    <string name="pricing_lead">खाते उघडा, तुमचा पहिला निकाल सगळ्या सुविधांसह मोफत. त्यानंतर एखादा पॅक निवडा किंवा मासिक प्लॅन घ्या.</string>
     <string name="pricing_title_member">आणखी निकाल घ्या.</string>
-    <string name="pricing_lead_member">एखादा पॅक निवडा किंवा मासिक प्लॅन घ्या. प्रत्येक निकालाला परीक्षकांचे पूर्ण मंडळ मिळते.</string>
     <string name="pricing_included_title">प्रत्येक निकालात</string>
     <string name="pricing_buy_title">पॅक आणि मासिक प्लॅन</string>
     <string name="pricing_premium_f1">तथ्ये वेबवर तपासली जातात, स्रोत तुमच्या निकालावर दिसतात</string>
@@ -381,7 +373,6 @@
     <string name="evidence_remove">फोटो %1$s काढा</string>
     <string name="evidence_thumb">फोटो %1$s</string>
     <string name="evidence_preview">आम्ही काय वाचले</string>
-    <string name="evidence_preview_note">हे फक्त तुम्हाला दिसते. परीक्षक वाचण्याआधी नावे लपवली जातात.</string>
     <string name="evidence_status_unreadable">कोणताही मजकूर वाचता आला नाही</string>
     <string name="evidence_status_refused">AI ने हा फोटो वाचायला नकार दिला</string>
     <string name="evidence_status_unsupported">PNG, JPEG, WebP किंवा GIF नाही</string>
@@ -408,8 +399,6 @@
     <string name="home_remove_their_side">त्यांची बाजू काढा</string>
     <string name="home_send_link">लिंक पाठवा</string>
     <string name="home_clear">साफ करा</string>
-    <string name="home_lead">दोन्ही बाजू लिहा, किंवा लिंक पाठवा, म्हणजे समोरची व्यक्ती आपली बाजू स्वतः लिहील.</string>
-    <string name="home_lead_solo">तुमची बाजू लिहा, आणि माहीत असेल तर त्यांचीही.</string>
     <string name="home_their_side">त्यांची बाजू</string>
     <string name="home_their_name">त्यांचे नाव</string>
     <string name="home_their_placeholder">त्यांचे म्हणणे काय आहे? ते मांडतील तसेच लिहा.</string>
@@ -674,7 +663,6 @@
     <string name="app_purchase_buying">खरेदी होत आहे…</string>
     <string name="app_purchase_success">धन्यवाद! तुमची खरेदी पूर्ण झाली.</string>
     <string name="app_purchase_pending">तुमच्या खरेदीवर प्रक्रिया सुरू आहे. ती दिसायला एखादे मिनिट लागू शकते.</string>
-    <string name="app_purchase_arriving">तुमचे क्रेडिट येत आहेत…</string>
     <string name="app_purchase_slow">इथे दिसायला एखादे मिनिट लागू शकते.</string>
     <string name="app_purchase_failed">खरेदी पूर्ण झाली नाही. थोड्या वेळाने पुन्हा प्रयत्न करा.</string>
     <string name="app_purchase_restore">खरेदी रिस्टोअर करा</string>
