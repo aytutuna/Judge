@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">तीन स्वतंत्र जज · जजों को नाम नहीं दिखते</string>
     <string name="hero_lead">बताइए, झगड़ा किस बात पर है। तीन AI जज अपना-अपना फ़ैसला अलग से करते हैं, और भरोसा स्कोर बताता है कि वे आपस में कितना सहमत हैं।</string>
     <string name="input_label">बहस</string>
-    <string name="placeholder">क्या हुआ? कौन क्या कह रहा है, और क्यों?\n\nसामने वाले की बात वैसे ही लिखें जैसे वे ख़ुद कहते। जज वैसे भी दोनों पक्षों की सबसे मज़बूत दलील तैयार करते हैं।</string>
+    <string name="placeholder">क्या हुआ? कौन क्या कह रहा है, और क्यों?</string>
     <string name="get_verdict">फ़ैसला करवाएँ</string>
     <string name="thinking_eyebrow">जज क्या कर रहे हैं</string>
     <string name="thinking_read">दोनों पक्ष पढ़कर हर एक की सबसे मज़बूत दलील बना रहे हैं…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">असली पेच ढूँढ रहे हैं…</string>
     <string name="thinking_judges">तीन जज अपना-अपना फ़ैसला कर रहे हैं…</string>
     <string name="thinking_votes">वोट गिन रहे हैं…</string>
-    <string name="thinking_helper">तीन AI जज अलग-अलग फ़ैसला करते हैं, और मामला करीबी हो तो और जज बुलाए जाते हैं। बस एक मिनट।</string>
+    <string name="thinking_helper">बस एक मिनट दें।</string>
     <string name="thinking_finish">असली पेच के करीब पहुँच रहे हैं…</string>
-    <string name="thinking_still_judging">जज अभी भी सोच रहे हैं। थोड़ा सब्र रखें…</string>
+    <string name="thinking_still_judging">अभी काम चल रहा है…</string>
     <string name="thinking_ready">फ़ैसला तैयार है।</string>
     <string name="story_names">नाम हटा रहे हैं, ताकि किसी को इस आधार पर न परखा जाए कि वह कौन है</string>
     <string name="story_facts">अलग जाँचकर्ता वेब पर तथ्य खोजता है</string>
@@ -73,14 +73,14 @@
     <string name="translate_loading">अनुवाद हो रहा है…</string>
     <string name="translate_from_en">अंग्रेज़ी से अनुवाद</string>
     <string name="translate_from_tr">तुर्की से अनुवाद</string>
-    <string name="translate_failed">अभी अनुवाद नहीं हो पाया, इसलिए मूल रूप दिखा रहे हैं।</string>
+    <string name="translate_failed">अनुवाद नहीं हो पाया।</string>
     <string name="translate_toggle">फ़ैसले की भाषा</string>
     <string name="vote_split">बँटा हुआ</string>
     <string name="vote_conditional">निर्भर करता है</string>
     <string name="vote_dissolved">शब्दों का फेर</string>
-    <string name="refused_note">इस बार AI ने फ़ैसला करने से मना कर दिया। नकली फ़ैसला दिखाने से अच्छा है कि कुछ न दिखाएँ।</string>
+    <string name="refused_note">इस बार AI ने फ़ैसला करने से मना कर दिया।</string>
     <string name="demo_note">डेमो मोड: कोई AI कुंजी सेट नहीं है, इसलिए यह एक नमूना फ़ैसला है</string>
-    <string name="trial_survived">आपत्ति खारिज: दूसरे पक्ष के वकील ने अपनी सबसे मज़बूत आपत्ति रखी, और फ़ैसला टिका रहा। भरोसा स्कोर जस का तस है।</string>
+    <string name="trial_survived">आपत्ति खारिज: फ़ैसला टिका रहा।</string>
     <string name="trial_uncertain">दूसरे पक्ष के वकील ने आपत्ति जताई, और उस आपत्ति ने इस फ़ैसले पर सच्चा शक छोड़ा</string>
     <string name="trial_overturned">आपत्ति स्वीकार: फ़ैसला कायम है, पर दूसरे पक्ष की सबसे मज़बूत आपत्ति ने उसे गंभीर रूप से कमज़ोर कर दिया</string>
     <string name="trial_minor">दूसरे पक्ष के वकील ने एक जायज़ बात उठाई, पर फ़ैसला कायम है</string>
@@ -117,7 +117,7 @@
         <item quantity="one">%1$s घंटे</item>
         <item quantity="other">%1$s घंटे</item>
     </plurals>
-    <string name="examples_label">कुछ सूझ नहीं रहा? इनमें से कोई आज़माएँ:</string>
+    <string name="examples_label">कोई एक आज़माएँ:</string>
     <string name="example_hotdog_label">🍔 क्या वड़ा पाव बर्गर है?</string>
     <string name="example_hotdog_text">मेरा दोस्त रोहन कहता है कि वड़ा पाव भी बर्गर ही है: बन के बीच में तली हुई पैटी, बात ख़त्म। मेरा कहना है कि वह अपनी अलग चीज़ है। बर्गर ऑर्डर करके कोई वड़ा पाव की उम्मीद नहीं करता, और किसी मेन्यू में वह बर्गर वाले हिस्से में नहीं लिखा होता।</string>
     <string name="example_tomato_label">🍅 क्या टमाटर फल है?</string>
@@ -166,7 +166,7 @@
     <string name="tier_get_premium">और फ़ैसले पाएँ</string>
     <string name="tier_checking">देख रहे हैं कि कुछ छूटा तो नहीं…</string>
     <string name="clarify_title">जजों के फ़ैसले से पहले</string>
-    <string name="clarify_lead">इन बातों से बदल सकता है कि कौन सही है। जितना पता हो, उतना बताएँ, या छोड़ दें।</string>
+    <string name="clarify_lead">इन बातों से बदल सकता है कि कौन सही है।</string>
     <string name="clarify_answer_aria">सवाल %1$s का जवाब:</string>
     <string name="clarify_placeholder">आपका जवाब (ज़रूरी नहीं)</string>
     <string name="clarify_skip">छोड़ें और फ़ैसला करवाएँ</string>
@@ -174,19 +174,19 @@
     <string name="clarify_back">बहस में बदलाव करें</string>
     <string name="thinking_factcheck">वेब पर तथ्य जाँच रहे हैं…</string>
     <string name="thinking_factcheck_done">वेब पर जाँच पूरी हुई।</string>
-    <string name="thinking_premium_helper">वेब पर तथ्य जाँचने में थोड़ा ज़्यादा समय लगता है। एक-दो मिनट दें।</string>
+    <string name="thinking_premium_helper">एक-दो मिनट दें।</string>
     <string name="factcheck_title">वेब पर जाँचा गया</string>
-    <string name="factcheck_lead">फ़ैसले से पहले जजों ने ये सर्च नतीजे देखे। ये सबूत हैं, ख़ुद फ़ैसला नहीं।</string>
+    <string name="factcheck_lead">फ़ैसले से पहले जजों ने ये सर्च नतीजे देखे।</string>
     <string name="factcheck_status_supported">सही निकला</string>
     <string name="factcheck_status_refuted">ग़लत निकला</string>
     <string name="factcheck_status_mixed">आधा सच</string>
     <string name="factcheck_status_unverified">पुष्टि नहीं हुई</string>
     <string name="factcheck_sources">स्रोत</string>
-    <string name="factcheck_none">वेब पर देखने लायक कुछ नहीं: यह बहस तथ्यों पर नहीं, मूल्यों या मतलबों पर टिकी है।</string>
-    <string name="factcheck_none_factual">यहाँ वेब पर जाँचने लायक कुछ नहीं: इस मामले के तथ्य सिर्फ़ इसमें शामिल लोगों के बीच के हैं।</string>
+    <string name="factcheck_none">वेब पर जाँचने लायक कुछ नहीं।</string>
+    <string name="factcheck_none_factual">वेब पर जाँचने लायक कुछ नहीं।</string>
     <string name="factcheck_unavailable">इस बार वेब पर जाँच पूरी नहीं हुई, इसलिए जजों ने उसके बिना फ़ैसला किया।</string>
     <string name="signin_title">साइन इन</string>
-    <string name="signin_lead">फ़ैसला पाने के लिए साइन इन करें। नए अकाउंट का पहला फ़ैसला मुफ़्त है।</string>
+    <string name="signin_lead">पहला फ़ैसला मुफ़्त है।</string>
     <string name="signin_apple">Apple से जारी रखें</string>
     <string name="signin_google">Google से जारी रखें</string>
     <string name="signin_email_toggle">ईमेल से जारी रखें</string>
@@ -204,7 +204,7 @@
     <string name="signin_use_password">इसके बजाय पासवर्ड इस्तेमाल करें</string>
     <string name="signin_password_wrong">यह ईमेल और पासवर्ड मेल नहीं खाते।</string>
     <string name="signin_password_short">कम से कम 8 अक्षर इस्तेमाल करें।</string>
-    <string name="signin_create_note">इस पते की पुष्टि के लिए हम आपको ईमेल पर एक कोड भेजेंगे। यह बस एक बार करना होगा।</string>
+    <string name="signin_create_note">पुष्टि के लिए हम आपको ईमेल पर एक कोड भेजेंगे।</string>
     <string name="signin_password_choose">आप साइन इन हैं। अगली बार के लिए एक पासवर्ड चुनें।</string>
     <string name="signin_password_save">पासवर्ड सहेजें</string>
     <string name="signin_password_save_failed">पासवर्ड सहेजा नहीं जा सका। फिर कोशिश करें।</string>
@@ -239,7 +239,7 @@
     <string name="pricing_premium_f3">कोई अहम तथ्य छूटा हो तो ज़्यादा से ज़्यादा दो छोटे सवाल</string>
     <string name="pricing_premium_f4">फ़ैसले से पहले नाम हटा दिए जाते हैं</string>
     <string name="pricing_packs_title">क्रेडिट पैक</string>
-    <string name="pricing_packs_lead">एक बार पेमेंट करें, जब चाहें इस्तेमाल करें। हर फ़ैसले में एक क्रेडिट लगता है।</string>
+    <string name="pricing_packs_lead">हर फ़ैसले में एक क्रेडिट लगता है।</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s फ़ैसले</item>
         <item quantity="other">%1$s फ़ैसले</item>
@@ -325,8 +325,8 @@
     <string name="case_context_d">पक्ष D की जोड़ी गई जानकारी</string>
     <string name="case_context_you">आपकी जोड़ी गई जानकारी (%1$s)</string>
     <string name="case_evidence_item">तस्वीर %1$s, जैसे जजों ने पढ़ी</string>
-    <string name="case_answered">जवाब आ गया है। जज उस पर काम कर रहे हैं।</string>
-    <string name="case_judging_alone">जज आपकी बात पर काम कर रहे हैं।</string>
+    <string name="case_answered">जज इस पर काम कर रहे हैं।</string>
+    <string name="case_judging_alone">जज इस पर काम कर रहे हैं।</string>
     <string name="case_expired_body">7 दिन में किसी ने जवाब नहीं दिया, इसलिए आपका क्रेडिट वापस आ गया है। आप अब भी सिर्फ़ अपनी बात पर फ़ैसला करवा सकते हैं।</string>
     <string name="case_expired_body_free">7 दिन में किसी ने जवाब नहीं दिया। आप अब भी सिर्फ़ अपनी बात पर फ़ैसला करवा सकते हैं।</string>
     <string name="case_one_sided">सिर्फ़ आपकी बात के आधार पर फ़ैसला हुआ।</string>
@@ -343,12 +343,12 @@
     <string name="respond_submit">मेरी बात भेजें</string>
     <string name="case_write_title">आपकी बात</string>
     <string name="case_write_placeholder">समस्या क्या है?</string>
-    <string name="case_write_lead">जब तैयार हों, अपनी बात लिखें। दोनों के लिख लेने पर जज शुरू करेंगे।</string>
+    <string name="case_write_lead">दोनों के लिख लेने पर जज शुरू करेंगे।</string>
     <string name="case_write_lead_answered">उन्होंने अपनी बात लिख दी है। फ़ैसला पाने के लिए अपनी लिखें।</string>
     <string name="case_write_submit">मेरी बात भेजें</string>
     <string name="case_write_email_subject">दूसरे पक्ष ने अपनी बात लिख दी है</string>
-    <string name="respond_sent">शुक्रिया। आपकी बात पहुँच गई है और जज उस पर लगे हैं।</string>
-    <string name="respond_sent_waiting">शुक्रिया। आपकी बात पहुँच गई है। दूसरे के लिखते ही जज शुरू करेंगे।</string>
+    <string name="respond_sent">आपकी बात पहुँच गई है।</string>
+    <string name="respond_sent_waiting">आपकी बात पहुँच गई है। दूसरे व्यक्ति का इंतज़ार है।</string>
     <string name="respond_own_invite">यह आपका अपना न्योता लिंक है। इसे दूसरे व्यक्ति को भेजें।</string>
     <string name="respond_expired">इस न्योते की मियाद ख़त्म हो गई है।</string>
     <string name="respond_closed">यह केस अब जवाब नहीं ले रहा।</string>
@@ -412,7 +412,7 @@
     <string name="appeal_submit">मेरी जानकारी के साथ दोबारा फ़ैसला करें</string>
     <string name="appeal_sending">आपकी जानकारी से नाम हटा रहे हैं…</string>
     <string name="appeal_judging">जज सब कुछ फिर से देख रहे हैं…</string>
-    <string name="appeal_upsell">कुछ छूट गया? जानकारी जोड़ें और 1 फ़ैसला लगाकर दोबारा फ़ैसला करवाएँ।</string>
+    <string name="appeal_upsell">कुछ छूट गया? जानकारी जोड़ें, 1 फ़ैसला लगेगा।</string>
     <string name="appeal_sign_in">जानकारी जोड़ने के लिए साइन इन करें</string>
     <string name="appeal_used">इस केस में आपकी ओर से जानकारी पहले ही जोड़ी जा चुकी है।</string>
     <string name="appeal_limit">दो बार जानकारी जोड़ी जा चुकी है। एक फ़ैसले के लिए इतनी ही सीमा है।</string>
@@ -456,7 +456,7 @@
     <string name="case_display_name">शेयर किए गए फ़ैसले पर आपका नाम</string>
     <string name="case_display_save">नाम सेव करें</string>
     <string name="respond_keep">यह केस अपने अकाउंट में रखें</string>
-    <string name="respond_kept">यह केस अब आपके अकाउंट में है। यह हर डिवाइस पर आपके “फ़ैसले” पेज पर दिखता है।</string>
+    <string name="respond_kept">आपके अकाउंट में सेव है।</string>
     <string name="respond_remove">मेरी बात हटाएँ</string>
     <string name="respond_remove_confirm">आपका मूल टेक्स्ट और आपका दिखने वाला नाम हटा दें? केस के शेयर लिंक काम करना बंद कर देंगे (चैट में पहले से भेजे गए प्रीव्यू तब तक दिख सकते हैं जब तक वे ऐप उन्हें रीफ़्रेश न करें)। इसे पहले जैसा नहीं किया जा सकता।</string>
     <string name="names_title">शेयर पेज पर नाम</string>
@@ -535,7 +535,7 @@
     <string name="app_tab_new">नया</string>
     <string name="app_tab_settings">सेटिंग्स</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">अभी तक कोई फ़ैसला नहीं। अपनी पहली बहस सुलझाएँ, उसका फ़ैसला यहीं दिखेगा।</string>
+    <string name="app_history_empty">अभी तक कोई फ़ैसला नहीं।</string>
     <string name="app_history_device_only">ये सिर्फ़ इसी फ़ोन में सेव हैं। यहाँ से कोई फ़ैसला हटाने पर भी उसका शेयर लिंक बंद नहीं होता।</string>
     <string name="app_history_delete">हटाएँ</string>
     <string name="app_history_remove_all">सभी हटाएँ</string>
@@ -544,7 +544,7 @@
         <item quantity="other">इस फ़ोन से %1$s फ़ैसले हटाएँ? उनके शेयर लिंक काम करते रहेंगे।</item>
     </plurals>
     <string name="app_history_phone_only">सिर्फ़ इसी फ़ोन में</string>
-    <string name="app_history_phone_only_note">आपके अकाउंट में नहीं: ये सिर्फ़ इसी फ़ोन में सेव हैं। यहाँ से कोई फ़ैसला हटाने पर भी उसका शेयर लिंक बंद नहीं होता।</string>
+    <string name="app_history_phone_only_note">कोई फ़ैसला हटाने पर भी उसका शेयर लिंक बंद नहीं होता।</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="one">अपने अकाउंट से %1$s फ़ैसला हटाएँ? आपका लिखा टेक्स्ट और नाम हर डिवाइस से मिट जाएँगे, और उसका शेयर लिंक काम करना बंद कर देगा। इसे पहले जैसा नहीं किया जा सकता।</item>
         <item quantity="other">अपने अकाउंट से %1$s फ़ैसले हटाएँ? आपका लिखा टेक्स्ट और नाम हर डिवाइस से मिट जाएँगे, और उनके शेयर लिंक काम करना बंद कर देंगे। इसे पहले जैसा नहीं किया जा सकता।</item>
@@ -565,9 +565,9 @@
     <string name="app_pricing_free_account">Apple, Google या ईमेल से साइन इन करें</string>
     <string name="app_pricing_context">जानकारी की तस्वीरें पढ़कर फेंक दी जाती हैं, बिना किसी अतिरिक्त खर्च के</string>
     <string name="app_pricing_headline">पहला फ़ैसला हमारी तरफ़ से।</string>
-    <string name="app_pricing_sub">अकाउंट बनाइए और पहला फ़ैसला मुफ़्त पाइए, सारी सुविधाओं के साथ। उसके बाद कोई पैक चुनें या मासिक प्लान लें।</string>
+    <string name="app_pricing_sub">उसके बाद कोई पैक चुनें या मासिक प्लान लें।</string>
     <string name="app_pricing_headline_member">और फ़ैसले पाएँ।</string>
-    <string name="app_pricing_sub_member">कोई पैक चुनें या मासिक प्लान लें। हर फ़ैसले में जजों का पूरा पैनल होता है।</string>
+    <string name="app_pricing_sub_member">कोई पैक चुनें या मासिक प्लान लें।</string>
     <plurals name="app_balance_left">
         <item quantity="one">%1$s फ़ैसला बाकी</item>
         <item quantity="other">%1$s फ़ैसले बाकी</item>
@@ -661,9 +661,9 @@
     <string name="app_appeal_used">इस केस में आपकी ओर से जानकारी पहले ही जोड़ी जा चुकी है।</string>
     <string name="app_appeal_limit">दो बार जानकारी जोड़ी जा चुकी है। एक फ़ैसले के लिए इतनी ही सीमा है।</string>
     <string name="app_purchase_buying">ख़रीदारी हो रही है…</string>
-    <string name="app_purchase_success">शुक्रिया! आपकी ख़रीदारी पूरी हो गई।</string>
-    <string name="app_purchase_pending">आपकी ख़रीदारी प्रोसेस हो रही है। दिखने में एक मिनट लग सकता है।</string>
-    <string name="app_purchase_slow">यहाँ दिखने में एक मिनट लग सकता है।</string>
+    <string name="app_purchase_success">ख़रीदारी पूरी हो गई।</string>
+    <string name="app_purchase_pending">आपकी ख़रीदारी प्रोसेस हो रही है।</string>
+    <string name="app_purchase_slow">क्रेडिट आने में एक मिनट लग सकता है।</string>
     <string name="app_purchase_failed">ख़रीदारी पूरी नहीं हो पाई। थोड़ी देर में फिर कोशिश करें।</string>
     <string name="app_purchase_restore">ख़रीदारी रीस्टोर करें</string>
     <string name="app_purchase_restore_done">आपकी ख़रीदारी रीस्टोर हो गई।</string>

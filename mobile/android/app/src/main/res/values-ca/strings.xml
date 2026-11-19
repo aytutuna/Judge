@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">Tres jutges independents · Els jutges no veuen mai els noms</string>
     <string name="hero_lead">Explica\'ns de què va la baralla. Tres jutges d\'IA decideixen cadascun pel seu compte, i la puntuació de confiança mostra fins a quin punt coincideixen.</string>
     <string name="input_label">La discussió</string>
-    <string name="placeholder">Què va passar? Qui diu què, i per què?\n\nExplica la postura de l\'altra persona tal com ho faria ella. De totes maneres, els jutges presenten totes dues postures en la seva versió més sòlida.</string>
+    <string name="placeholder">Què va passar? Qui diu què, i per què?</string>
     <string name="get_verdict">Demana el veredicte</string>
     <string name="thinking_eyebrow">Què fan els jutges</string>
     <string name="thinking_read">Llegint les dues versions i presentant cadascuna en la seva millor forma…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">Buscant el quid de la qüestió…</string>
     <string name="thinking_judges">Tres jutges decidint, cadascun pel seu compte…</string>
     <string name="thinking_votes">Comptant els vots…</string>
-    <string name="thinking_helper">Tres jutges d\'IA decideixen per separat i, si la cosa està igualada, se n\'hi afegeixen més. Pot trigar un minut.</string>
+    <string name="thinking_helper">Dona-li un minut.</string>
     <string name="thinking_finish">Arribant al quid…</string>
-    <string name="thinking_still_judging">Els jutges encara s\'ho estan pensant. Una mica de paciència…</string>
+    <string name="thinking_still_judging">Encara hi treballem…</string>
     <string name="thinking_ready">Ja tenim el veredicte.</string>
     <string name="story_names">Traiem els noms perquè ningú sigui jutjat per qui és</string>
     <string name="story_facts">Un verificador a part comprova els fets a la xarxa</string>
@@ -74,14 +74,14 @@
     <string name="translate_loading">Traduint…</string>
     <string name="translate_from_en">Traduït de l\'anglès</string>
     <string name="translate_from_tr">Traduït del turc</string>
-    <string name="translate_failed">Ara mateix no l\'hem pogut traduir, així que et mostrem l\'original.</string>
+    <string name="translate_failed">No s\'ha pogut traduir.</string>
     <string name="translate_toggle">Idioma del veredicte</string>
     <string name="vote_split">dividit</string>
     <string name="vote_conditional">depèn</string>
     <string name="vote_dissolved">malentès</string>
-    <string name="refused_note">La IA s\'ha abstingut aquesta vegada. Preferim no mostrar res que inventar-nos un veredicte.</string>
+    <string name="refused_note">La IA s\'ha abstingut aquesta vegada.</string>
     <string name="demo_note">Mode demo: no hi ha cap clau d\'IA configurada, així que això és un veredicte d\'exemple</string>
-    <string name="trial_survived">Objecció rebutjada: l\'advocat de l\'altra part ha plantejat la seva objecció més forta, i el veredicte ha aguantat. La confiança es manté.</string>
+    <string name="trial_survived">Objecció desestimada: el veredicte es manté.</string>
     <string name="trial_uncertain">L\'advocat de l\'altra part ha objectat, i l\'objecció ha deixat dubtes reals sobre aquest veredicte</string>
     <string name="trial_overturned">Objecció acceptada: el veredicte es manté, però l\'objecció més forta de l\'altra part el debilita seriosament</string>
     <string name="trial_minor">L\'advocat de l\'altra part ha fet una observació justa, però el veredicte es manté</string>
@@ -120,7 +120,7 @@
         <item quantity="many">%1$s hores</item>
         <item quantity="other">%1$s hores</item>
     </plurals>
-    <string name="examples_label">No saps per on començar? Prova\'n un:</string>
+    <string name="examples_label">Prova\'n un:</string>
     <string name="example_hotdog_label">🌭 Un frankfurt és un entrepà?</string>
     <string name="example_hotdog_text">El meu amic Pau diu que un frankfurt és un entrepà: és pa obert amb alguna cosa a dins, i punt. Jo dic que és una cosa a part. Ningú no demana un entrepà esperant que li portin un frankfurt, i cap carta no el posa entre els entrepans.</string>
     <string name="example_tomato_label">🍅 El tomàquet és una fruita?</string>
@@ -169,7 +169,7 @@
     <string name="tier_get_premium">Aconsegueix més veredictes</string>
     <string name="tier_checking">Comprovant si hi falta alguna cosa…</string>
     <string name="clarify_title">Abans que els jutges decideixin</string>
-    <string name="clarify_lead">Aquests detalls podrien canviar qui té raó. Respon el que puguis, o deixa-ho estar.</string>
+    <string name="clarify_lead">Aquests detalls podrien canviar qui té raó.</string>
     <string name="clarify_answer_aria">Resposta a la pregunta %1$s:</string>
     <string name="clarify_placeholder">La teva resposta (opcional)</string>
     <string name="clarify_skip">Omet i jutja</string>
@@ -177,19 +177,19 @@
     <string name="clarify_back">Edita la discussió</string>
     <string name="thinking_factcheck">Comprovant els fets a internet…</string>
     <string name="thinking_factcheck_done">Comprovació a internet acabada.</string>
-    <string name="thinking_premium_helper">Comprovar els fets a internet triga una mica més. Pot ser qüestió d\'un minut o dos.</string>
+    <string name="thinking_premium_helper">Dona-li un minut o dos.</string>
     <string name="factcheck_title">Comprovat a internet</string>
-    <string name="factcheck_lead">Els jutges han vist aquests resultats de cerca abans de decidir. Són proves, no el veredicte en si.</string>
+    <string name="factcheck_lead">Els jutges van veure aquests resultats de cerca abans de decidir.</string>
     <string name="factcheck_status_supported">Se sosté</string>
     <string name="factcheck_status_refuted">No se sosté</string>
     <string name="factcheck_status_mixed">En part cert</string>
     <string name="factcheck_status_unverified">Sense confirmar</string>
     <string name="factcheck_sources">Fonts</string>
-    <string name="factcheck_none">No hi ha res a buscar a internet: aquí el que compta són els valors o els significats, no els fets.</string>
-    <string name="factcheck_none_factual">Aquí no hi ha res que es pugui comprovar a internet: els fets d\'aquest cas només els coneixen les persones implicades.</string>
+    <string name="factcheck_none">Res a comprovar a internet.</string>
+    <string name="factcheck_none_factual">Res a comprovar a internet.</string>
     <string name="factcheck_unavailable">Aquesta vegada la comprovació a internet no ha acabat, així que els jutges han decidit sense.</string>
     <string name="signin_title">Inicia sessió</string>
-    <string name="signin_lead">Inicia sessió per obtenir un veredicte. Els comptes nous tenen el primer veredicte gratis.</string>
+    <string name="signin_lead">El primer veredicte és gratis.</string>
     <string name="signin_apple">Continua amb Apple</string>
     <string name="signin_google">Continua amb Google</string>
     <string name="signin_email_toggle">Entra amb el correu</string>
@@ -207,7 +207,7 @@
     <string name="signin_use_password">Fes servir una contrasenya</string>
     <string name="signin_password_wrong">Aquest correu i aquesta contrasenya no coincideixen.</string>
     <string name="signin_password_short">Fes servir almenys 8 caràcters.</string>
-    <string name="signin_create_note">T\'enviarem un codi per correu per confirmar aquesta adreça. Només ho has de fer una vegada.</string>
+    <string name="signin_create_note">T\'enviarem un codi per correu per confirmar-ho.</string>
     <string name="signin_password_choose">Has iniciat la sessió. Tria una contrasenya per a la propera vegada.</string>
     <string name="signin_password_save">Desa la contrasenya</string>
     <string name="signin_password_save_failed">No hem pogut desar la contrasenya. Torna-ho a provar.</string>
@@ -242,7 +242,7 @@
     <string name="pricing_premium_f3">Fins a dues preguntes ràpides si falta un fet clau</string>
     <string name="pricing_premium_f4">Noms canviats abans de jutjar</string>
     <string name="pricing_packs_title">Paquets de crèdits</string>
-    <string name="pricing_packs_lead">Paga un cop i fes-los servir quan vulguis. Cada veredicte gasta un crèdit.</string>
+    <string name="pricing_packs_lead">Cada veredicte gasta un crèdit.</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s veredictes</item>
         <item quantity="many">%1$s veredictes</item>
@@ -330,8 +330,8 @@
     <string name="case_context_d">Context afegit per Part D</string>
     <string name="case_context_you">Context que has afegit (%1$s)</string>
     <string name="case_evidence_item">Imatge %1$s, tal com la llegeixen els jutges</string>
-    <string name="case_answered">Ja ha respost. Els jutges hi estan treballant.</string>
-    <string name="case_judging_alone">Els jutges estan treballant amb la teva versió.</string>
+    <string name="case_answered">Els jutges hi estan treballant.</string>
+    <string name="case_judging_alone">Els jutges hi estan treballant.</string>
     <string name="case_expired_body">Ningú no ha respost en 7 dies, així que t\'hem tornat el crèdit. Encara pots obtenir un veredicte només amb la teva versió.</string>
     <string name="case_expired_body_free">Ningú no ha respost en 7 dies. Encara pots obtenir un veredicte només amb la teva versió.</string>
     <string name="case_one_sided">Jutjat només amb la teva versió.</string>
@@ -348,12 +348,12 @@
     <string name="respond_submit">Envia la meva versió</string>
     <string name="case_write_title">La teva versió</string>
     <string name="case_write_placeholder">Quin és el problema?</string>
-    <string name="case_write_lead">Escriu la teva versió quan vulguis. Els jutges comencen quan les dues parts hagin escrit.</string>
+    <string name="case_write_lead">Els jutges comencen quan les dues parts hagin escrit.</string>
     <string name="case_write_lead_answered">Ja ha escrit la seva versió. Escriu la teva per obtenir el veredicte.</string>
     <string name="case_write_submit">Envia la meva versió</string>
     <string name="case_write_email_subject">L\'altra persona ja ha escrit la seva versió</string>
-    <string name="respond_sent">Gràcies. Hem rebut la teva versió i els jutges ja hi estan treballant.</string>
-    <string name="respond_sent_waiting">Gràcies. Ja tenim la teva versió. Els jutges comencen quan l\'altra persona hagi escrit la seva.</string>
+    <string name="respond_sent">La teva versió ja hi és.</string>
+    <string name="respond_sent_waiting">La teva versió ja hi és. Esperant l\'altra persona.</string>
     <string name="respond_own_invite">Aquest és el teu propi enllaç d\'invitació. Envia\'l a l\'altra persona.</string>
     <string name="respond_expired">Aquesta invitació ha caducat.</string>
     <string name="respond_closed">Aquest cas ja no admet respostes.</string>
@@ -418,7 +418,7 @@
     <string name="appeal_submit">Torna a jutjar amb el meu context</string>
     <string name="appeal_sending">Anonimitzant el teu context…</string>
     <string name="appeal_judging">Els jutges ho tornen a mirar tot…</string>
-    <string name="appeal_upsell">Hi falta alguna cosa? Afegeix context i fes que es torni a jutjar per 1 veredicte.</string>
+    <string name="appeal_upsell">Hi falta alguna cosa? Afegeix context per 1 veredicte.</string>
     <string name="appeal_sign_in">Inicia sessió per afegir context</string>
     <string name="appeal_used">Ja has afegit context a aquest cas.</string>
     <string name="appeal_limit">Ja has afegit context dues vegades. És el límit per veredicte.</string>
@@ -462,7 +462,7 @@
     <string name="case_display_name">El teu nom al veredicte compartit</string>
     <string name="case_display_save">Desa el nom</string>
     <string name="respond_keep">Guarda aquest cas al teu compte</string>
-    <string name="respond_kept">Aquest cas ja és al teu compte. Apareix a la teva pàgina «Veredictes» a tots els dispositius.</string>
+    <string name="respond_kept">Guardat al teu compte.</string>
     <string name="respond_remove">Elimina la meva versió</string>
     <string name="respond_remove_confirm">Vols eliminar el teu text original i el teu nom visible? Els enllaços per compartir del cas deixaran de funcionar (les previsualitzacions ja publicades en xats poden continuar apareixent fins que aquestes apps les actualitzin). No es pot desfer.</string>
     <string name="names_title">Noms a la pàgina compartida</string>
@@ -544,7 +544,7 @@
     <string name="app_tab_new">Nou</string>
     <string name="app_tab_settings">Configuració</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">Encara no tens cap veredicte. Resol la teva primera discussió i apareixerà aquí.</string>
+    <string name="app_history_empty">Encara no hi ha veredictes.</string>
     <string name="app_history_device_only">Només es desen en aquest telèfon. Si n\'elimines un aquí, el seu enllaç per compartir continuarà funcionant.</string>
     <string name="app_history_delete">Elimina</string>
     <string name="app_history_remove_all">Elimina-ho tot</string>
@@ -554,7 +554,7 @@
         <item quantity="other">Vols eliminar %1$s veredictes del telèfon? Els seus enllaços per compartir continuaran funcionant.</item>
     </plurals>
     <string name="app_history_phone_only">Només en aquest telèfon</string>
-    <string name="app_history_phone_only_note">No són al teu compte: només es desen en aquest telèfon. Si n\'elimines un aquí, el seu enllaç per compartir continuarà funcionant.</string>
+    <string name="app_history_phone_only_note">Esborrar-ne un no desactiva l\'enllaç per compartir-lo.</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="one">Vols eliminar aquest veredicte del teu compte? S\'esborraran el que vas escriure i els noms, i el seu enllaç per compartir deixarà de funcionar a tots els dispositius. No es pot desfer.</item>
         <item quantity="many">Vols eliminar %1$s veredictes del teu compte? S\'esborraran el que vas escriure i els noms, i els seus enllaços per compartir deixaran de funcionar a tots els dispositius. No es pot desfer.</item>
@@ -579,9 +579,9 @@
     <string name="app_pricing_free_account">Inicia sessió amb Apple, Google o el correu</string>
     <string name="app_pricing_context">Imatges de context, llegides i després esborrades, sense cost addicional</string>
     <string name="app_pricing_headline">El primer veredicte, et convidem.</string>
-    <string name="app_pricing_sub">Crea un compte i el primer veredicte és gratis, amb totes les funcions. Després, tria un paquet o passa\'t al pla mensual.</string>
+    <string name="app_pricing_sub">Després tria un paquet o passa\'t al pla mensual.</string>
     <string name="app_pricing_headline_member">Aconsegueix més veredictes.</string>
-    <string name="app_pricing_sub_member">Tria un paquet o passa\'t al pla mensual. Cada veredicte compta amb tots els jutges.</string>
+    <string name="app_pricing_sub_member">Tria un paquet o passa\'t al pla mensual.</string>
     <plurals name="app_balance_left">
         <item quantity="one">Et queda %1$s veredicte</item>
         <item quantity="many">Et queden %1$s veredictes</item>
@@ -676,9 +676,9 @@
     <string name="app_appeal_used">Ja has afegit context a aquest cas.</string>
     <string name="app_appeal_limit">Ja has afegit context dues vegades. És el límit per veredicte.</string>
     <string name="app_purchase_buying">Comprant…</string>
-    <string name="app_purchase_success">Gràcies! La compra s\'ha completat.</string>
-    <string name="app_purchase_pending">La compra s\'està processant. Pot trigar un minut a aparèixer.</string>
-    <string name="app_purchase_slow">Pot trigar un minut a aparèixer aquí.</string>
+    <string name="app_purchase_success">Compra completada.</string>
+    <string name="app_purchase_pending">La compra s\'està processant.</string>
+    <string name="app_purchase_slow">Els crèdits poden trigar un minut.</string>
     <string name="app_purchase_failed">La compra no s\'ha completat. Torna-ho a provar d\'aquí a un moment.</string>
     <string name="app_purchase_restore">Restaura les compres</string>
     <string name="app_purchase_restore_done">S\'han restaurat les compres.</string>

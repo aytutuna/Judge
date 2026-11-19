@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">Tre oberoende domare · Domarna ser aldrig några namn</string>
     <string name="hero_lead">Berätta vad bråket handlar om. Tre AI-domare dömer var för sig, och säkerhetspoängen visar hur överens de är.</string>
     <string name="input_label">Diskussionen</string>
-    <string name="placeholder">Vad hände? Vem säger vad, och varför?\n\nBeskriv den andras sida så som hen själv skulle säga det. Domarna bygger ändå upp den starkaste versionen av båda sidor.</string>
+    <string name="placeholder">Vad hände? Vem säger vad, och varför?</string>
     <string name="get_verdict">Få domen</string>
     <string name="thinking_eyebrow">Det här gör domarna</string>
     <string name="thinking_read">Läser båda sidor och ger var och en sin bästa chans…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">Letar efter kärnfrågan…</string>
     <string name="thinking_judges">Tre domare dömer var för sig…</string>
     <string name="thinking_votes">Räknar rösterna…</string>
-    <string name="thinking_helper">Tre AI-domare dömer var för sig, och är det jämnt kallas fler in. Ge det en minut.</string>
+    <string name="thinking_helper">Ge det en minut.</string>
     <string name="thinking_finish">Närmar oss kärnfrågan…</string>
-    <string name="thinking_still_judging">Domarna funderar fortfarande. Häng kvar…</string>
+    <string name="thinking_still_judging">Jobbar fortfarande…</string>
     <string name="thinking_ready">Domen är klar.</string>
     <string name="story_names">Vi tar bort namnen så att ingen bedöms efter vem de är</string>
     <string name="story_facts">En separat kontrollant slår upp fakta på nätet</string>
@@ -73,14 +73,14 @@
     <string name="translate_loading">Översätter…</string>
     <string name="translate_from_en">Översatt från engelska</string>
     <string name="translate_from_tr">Översatt från turkiska</string>
-    <string name="translate_failed">Det gick inte att översätta just nu, så här är originalet.</string>
+    <string name="translate_failed">Det gick inte att översätta.</string>
     <string name="translate_toggle">Domens språk</string>
     <string name="vote_split">delad</string>
     <string name="vote_conditional">beror på</string>
     <string name="vote_dissolved">ordstrid</string>
-    <string name="refused_note">AI:n stod över den här gången. Vi visar hellre ingenting än en låtsasdom.</string>
+    <string name="refused_note">AI:n stod över den här gången.</string>
     <string name="demo_note">Demoläge: ingen AI-nyckel är inställd, så det här är en exempeldom</string>
-    <string name="trial_survived">Invändningen avslogs: andra sidans advokat framförde sin starkaste invändning, och domen höll. Säkerheten är oförändrad.</string>
+    <string name="trial_survived">Invändningen avslogs: domen höll.</string>
     <string name="trial_uncertain">Andra sidans advokat gjorde en invändning, och den lämnade verkligt tvivel om domen</string>
     <string name="trial_overturned">Invändningen bifölls: domen står kvar, men andra sidans starkaste invändning försvagar den allvarligt</string>
     <string name="trial_minor">Andra sidans advokat hade en rimlig poäng, men domen står kvar</string>
@@ -117,7 +117,7 @@
         <item quantity="one">%1$s timmar</item>
         <item quantity="other">%1$s timmar</item>
     </plurals>
-    <string name="examples_label">Fastnat? Prova någon av de här:</string>
+    <string name="examples_label">Prova en:</string>
     <string name="example_hotdog_label">🌭 Är korv med bröd en macka?</string>
     <string name="example_hotdog_text">Min kompis Oskar säger att korv med bröd är en macka: fyllning i ett delat bröd, punkt slut. Jag säger att det är en egen grej. Ingen beställer en macka och väntar sig en korv, och ingen meny listar den bland mackorna.</string>
     <string name="example_tomato_label">🍅 Är tomaten en frukt?</string>
@@ -166,7 +166,7 @@
     <string name="tier_get_premium">Skaffa fler domar</string>
     <string name="tier_checking">Kollar om något saknas…</string>
     <string name="clarify_title">Innan domarna dömer</string>
-    <string name="clarify_lead">De här detaljerna kan ändra vem som har rätt. Svara på det du kan, eller hoppa över.</string>
+    <string name="clarify_lead">De här detaljerna kan ändra vem som har rätt.</string>
     <string name="clarify_answer_aria">Svar på fråga %1$s:</string>
     <string name="clarify_placeholder">Ditt svar (valfritt)</string>
     <string name="clarify_skip">Hoppa över och döm</string>
@@ -174,19 +174,19 @@
     <string name="clarify_back">Ändra beskrivningen</string>
     <string name="thinking_factcheck">Kollar fakta på webben…</string>
     <string name="thinking_factcheck_done">Webbkollen är klar.</string>
-    <string name="thinking_premium_helper">Att kolla fakta på webben tar lite längre tid. Ge det en minut eller två.</string>
+    <string name="thinking_premium_helper">Ge det en minut eller två.</string>
     <string name="factcheck_title">Kollat på webben</string>
-    <string name="factcheck_lead">Domarna såg de här sökresultaten innan de dömde. De är bevis, inte själva domen.</string>
+    <string name="factcheck_lead">Domarna såg de här sökresultaten innan de dömde.</string>
     <string name="factcheck_status_supported">Stämmer</string>
     <string name="factcheck_status_refuted">Stämmer inte</string>
     <string name="factcheck_status_mixed">Delvis sant</string>
     <string name="factcheck_status_unverified">Gick inte att bekräfta</string>
     <string name="factcheck_sources">Källor</string>
-    <string name="factcheck_none">Inget att kolla på webben: det här handlar om värderingar eller betydelser, inte fakta.</string>
-    <string name="factcheck_none_factual">Inget här gick att kolla på webben: fakta i det här fallet finns bara hos de inblandade.</string>
+    <string name="factcheck_none">Inget att kolla på webben.</string>
+    <string name="factcheck_none_factual">Inget att kolla på webben.</string>
     <string name="factcheck_unavailable">Webbkollen blev inte klar den här gången, så domarna dömde utan den.</string>
     <string name="signin_title">Logga in</string>
-    <string name="signin_lead">Logga in för att få en dom. Ett nytt konto får sin första dom gratis.</string>
+    <string name="signin_lead">Din första dom är gratis.</string>
     <string name="signin_apple">Fortsätt med Apple</string>
     <string name="signin_google">Fortsätt med Google</string>
     <string name="signin_email_toggle">Använd e-post i stället</string>
@@ -204,7 +204,7 @@
     <string name="signin_use_password">Använd ett lösenord i stället</string>
     <string name="signin_password_wrong">Den e-postadressen och det lösenordet stämmer inte överens.</string>
     <string name="signin_password_short">Använd minst 8 tecken.</string>
-    <string name="signin_create_note">Vi mejlar dig en kod för att bekräfta adressen. Det behöver du bara göra en gång.</string>
+    <string name="signin_create_note">Vi mejlar dig en kod för att bekräfta.</string>
     <string name="signin_password_choose">Du är inloggad. Välj ett lösenord till nästa gång.</string>
     <string name="signin_password_save">Spara lösenord</string>
     <string name="signin_password_save_failed">Vi kunde inte spara lösenordet. Försök igen.</string>
@@ -239,7 +239,7 @@
     <string name="pricing_premium_f3">Upp till två snabba frågor när en viktig detalj saknas</string>
     <string name="pricing_premium_f4">Namnen byts ut innan domen</string>
     <string name="pricing_packs_title">Kreditpaket</string>
-    <string name="pricing_packs_lead">Betala en gång och använd krediterna när du vill. Varje dom kostar en kredit.</string>
+    <string name="pricing_packs_lead">Varje dom kostar en kredit.</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s domar</item>
         <item quantity="other">%1$s domar</item>
@@ -325,8 +325,8 @@
     <string name="case_context_d">Part D kompletterade</string>
     <string name="case_context_you">Din komplettering (%1$s)</string>
     <string name="case_evidence_item">Bild %1$s, som domarna läste den</string>
-    <string name="case_answered">Den andra har svarat. Domarna jobbar på det.</string>
-    <string name="case_judging_alone">Domarna jobbar med din sida.</string>
+    <string name="case_answered">Domarna jobbar på det.</string>
+    <string name="case_judging_alone">Domarna jobbar på det.</string>
     <string name="case_expired_body">Ingen svarade inom 7 dagar, så du har fått tillbaka krediten. Du kan ändå få en dom på bara din sida.</string>
     <string name="case_expired_body_free">Ingen svarade inom 7 dagar. Du kan ändå få en dom på bara din sida.</string>
     <string name="case_one_sided">Dömt utifrån bara din sida.</string>
@@ -343,12 +343,12 @@
     <string name="respond_submit">Skicka min sida</string>
     <string name="case_write_title">Din sida</string>
     <string name="case_write_placeholder">Vad är problemet?</string>
-    <string name="case_write_lead">Skriv din sida när du är redo. Domarna börjar när ni båda har skrivit.</string>
+    <string name="case_write_lead">Domarna börjar när ni båda har skrivit.</string>
     <string name="case_write_lead_answered">Den andra har skrivit sin sida. Skriv din för att få domen.</string>
     <string name="case_write_submit">Skicka min sida</string>
     <string name="case_write_email_subject">Den andra har skrivit sin sida</string>
-    <string name="respond_sent">Tack. Din sida är inskickad och domarna jobbar på det.</string>
-    <string name="respond_sent_waiting">Tack. Din sida är inskickad. Domarna börjar när den andra har skrivit sin.</string>
+    <string name="respond_sent">Din sida är inskickad.</string>
+    <string name="respond_sent_waiting">Din sida är inskickad. Väntar på den andra.</string>
     <string name="respond_own_invite">Det här är din egen inbjudningslänk. Skicka den till den andra personen.</string>
     <string name="respond_expired">Inbjudan har gått ut.</string>
     <string name="respond_closed">Det här fallet tar inte emot svar längre.</string>
@@ -412,7 +412,7 @@
     <string name="appeal_submit">Döm om med min komplettering</string>
     <string name="appeal_sending">Anonymiserar din komplettering…</string>
     <string name="appeal_judging">Domarna går igenom allt igen…</string>
-    <string name="appeal_upsell">Saknas något? Komplettera och få det omprövat för 1 dom.</string>
+    <string name="appeal_upsell">Saknas något? Komplettera för 1 dom.</string>
     <string name="appeal_sign_in">Logga in för att komplettera</string>
     <string name="appeal_used">Du har redan kompletterat det här fallet.</string>
     <string name="appeal_limit">Du har kompletterat två gånger. Det är gränsen för en dom.</string>
@@ -456,7 +456,7 @@
     <string name="case_display_name">Ditt namn på den delade domen</string>
     <string name="case_display_save">Spara namn</string>
     <string name="respond_keep">Spara fallet i ditt konto</string>
-    <string name="respond_kept">Fallet finns nu i ditt konto. Det syns på sidan Domar på alla enheter.</string>
+    <string name="respond_kept">Sparat i ditt konto.</string>
     <string name="respond_remove">Ta bort min sida</string>
     <string name="respond_remove_confirm">Ta bort din originaltext och ditt visningsnamn? Fallets delningslänkar slutar fungera (förhandsvisningar som redan delats i chattar kan synas tills apparna uppdaterar dem). Det går inte att ångra.</string>
     <string name="names_title">Namn på den delade sidan</string>
@@ -535,7 +535,7 @@
     <string name="app_tab_new">Nytt</string>
     <string name="app_tab_settings">Inställningar</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">Inga domar än. Avgör ditt första bråk så dyker domen upp här.</string>
+    <string name="app_history_empty">Inga domar än.</string>
     <string name="app_history_device_only">Sparas bara på den här telefonen. Tar du bort en dom här fortsätter delningslänken att fungera.</string>
     <string name="app_history_delete">Ta bort</string>
     <string name="app_history_remove_all">Ta bort alla</string>
@@ -544,7 +544,7 @@
         <item quantity="other">Ta bort %1$s domar från den här telefonen? Delningslänkarna fortsätter att fungera.</item>
     </plurals>
     <string name="app_history_phone_only">Bara på den här telefonen</string>
-    <string name="app_history_phone_only_note">Inte i ditt konto: de här sparas bara på den här telefonen. Tar du bort en dom här fortsätter delningslänken att fungera.</string>
+    <string name="app_history_phone_only_note">Att ta bort en dom tar inte bort delningslänken.</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="one">Ta bort domen från ditt konto? Det du skrev och namnen raderas och delningslänken slutar fungera, på alla enheter. Det går inte att ångra.</item>
         <item quantity="other">Ta bort %1$s domar från ditt konto? Det du skrev och namnen raderas och delningslänkarna slutar fungera, på alla enheter. Det går inte att ångra.</item>
@@ -565,9 +565,9 @@
     <string name="app_pricing_free_account">Logga in med Apple, Google eller e-post</string>
     <string name="app_pricing_context">Bilder till kompletteringen läses och kastas sedan, utan extra kostnad</string>
     <string name="app_pricing_headline">Din första dom bjuder vi på.</string>
-    <string name="app_pricing_sub">Skapa ett konto så är din första dom gratis, med alla funktioner. Sedan väljer du ett paket eller ett månadsabonnemang.</string>
+    <string name="app_pricing_sub">Sedan väljer du ett paket eller ett månadsabonnemang.</string>
     <string name="app_pricing_headline_member">Skaffa fler domar.</string>
-    <string name="app_pricing_sub_member">Välj ett paket eller ett månadsabonnemang. Varje dom får hela panelen.</string>
+    <string name="app_pricing_sub_member">Välj ett paket eller ett månadsabonnemang.</string>
     <plurals name="app_balance_left">
         <item quantity="one">%1$s dom kvar</item>
         <item quantity="other">%1$s domar kvar</item>
@@ -661,9 +661,9 @@
     <string name="app_appeal_used">Du har redan kompletterat det här fallet.</string>
     <string name="app_appeal_limit">Du har kompletterat två gånger. Det är gränsen för en dom.</string>
     <string name="app_purchase_buying">Köper…</string>
-    <string name="app_purchase_success">Tack! Köpet är klart.</string>
-    <string name="app_purchase_pending">Ditt köp behandlas. Det kan ta en minut innan det syns.</string>
-    <string name="app_purchase_slow">Det kan ta en minut innan de syns här.</string>
+    <string name="app_purchase_success">Köpet är klart.</string>
+    <string name="app_purchase_pending">Ditt köp behandlas.</string>
+    <string name="app_purchase_slow">Krediterna kan ta en minut.</string>
     <string name="app_purchase_failed">Köpet gick inte igenom. Försök igen om en stund.</string>
     <string name="app_purchase_restore">Återställ köp</string>
     <string name="app_purchase_restore_done">Dina köp har återställts.</string>

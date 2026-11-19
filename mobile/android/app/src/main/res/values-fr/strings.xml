@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">Trois juges indépendants · Les juges ne voient jamais les noms</string>
     <string name="hero_lead">Dis-nous sur quoi porte la dispute. Trois juges IA tranchent chacun de leur côté, et l’indice de confiance montre à quel point ils sont d’accord.</string>
     <string name="input_label">Le débat</string>
-    <string name="placeholder">Qu’est-ce qui s’est passé ? Qui dit quoi, et pourquoi ?\n\nDonne aussi la version d’en face, telle que l’autre la raconterait. De toute façon, les juges construisent la meilleure défense possible pour chaque camp.</string>
+    <string name="placeholder">Qu’est-ce qui s’est passé ? Qui dit quoi, et pourquoi ?</string>
     <string name="get_verdict">Obtenir le verdict</string>
     <string name="thinking_eyebrow">Ce que font les juges</string>
     <string name="thinking_read">On lit les deux versions et on présente chacune sous son meilleur jour…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">On traque le nœud du débat…</string>
     <string name="thinking_judges">Trois juges tranchent, chacun de son côté…</string>
     <string name="thinking_votes">On compte les voix…</string>
-    <string name="thinking_helper">Trois juges IA tranchent séparément, et si c’est serré, d’autres viennent en renfort. Compte une minute.</string>
+    <string name="thinking_helper">Compte une minute.</string>
     <string name="thinking_finish">On approche du nœud du débat…</string>
-    <string name="thinking_still_judging">Les juges réfléchissent encore. Tiens bon…</string>
+    <string name="thinking_still_judging">Toujours en cours…</string>
     <string name="thinking_ready">Le verdict est prêt.</string>
     <string name="story_names">On retire les noms pour que personne ne soit jugé sur qui il est</string>
     <string name="story_facts">Un vérificateur à part cherche les faits sur le web</string>
@@ -74,14 +74,14 @@
     <string name="translate_loading">Traduction…</string>
     <string name="translate_from_en">Traduit de l’anglais</string>
     <string name="translate_from_tr">Traduit du turc</string>
-    <string name="translate_failed">Impossible de traduire pour l’instant, alors voici l’original.</string>
+    <string name="translate_failed">Traduction impossible.</string>
     <string name="translate_toggle">Langue du verdict</string>
     <string name="vote_split">partagé</string>
     <string name="vote_conditional">ça dépend</string>
     <string name="vote_dissolved">quiproquo</string>
-    <string name="refused_note">L’IA a préféré passer son tour. Mieux vaut ne rien afficher qu’un faux verdict.</string>
+    <string name="refused_note">L’IA a préféré passer son tour.</string>
     <string name="demo_note">Mode démo : aucune clé d’IA configurée, voici donc un exemple de verdict</string>
-    <string name="trial_survived">Objection rejetée : l’avocat de l’autre camp a soulevé sa plus forte objection, et le verdict a tenu. L’indice de confiance ne bouge pas.</string>
+    <string name="trial_survived">Objection rejetée : le verdict a tenu.</string>
     <string name="trial_uncertain">L’avocat de l’autre camp a fait objection, et cette objection a laissé un vrai doute sur ce verdict</string>
     <string name="trial_overturned">Objection retenue : le verdict tient, mais la plus forte objection de l’autre camp l’affaiblit sérieusement</string>
     <string name="trial_minor">L’avocat de l’autre camp a soulevé un point juste, mais le verdict tient</string>
@@ -120,7 +120,7 @@
         <item quantity="many">%1$s heures</item>
         <item quantity="other">%1$s heures</item>
     </plurals>
-    <string name="examples_label">En panne d’idées ? Essaie l’un de ces exemples :</string>
+    <string name="examples_label">Essaie-en un :</string>
     <string name="example_hotdog_label">🌭 Un hot-dog, c’est un sandwich ?</string>
     <string name="example_hotdog_text">Mon pote Théo dit qu’un hot-dog est un sandwich : une garniture dans du pain coupé, point final. Moi, je dis que c’est une catégorie à part. Personne ne commande un sandwich en s’attendant à recevoir un hot-dog, et aucune carte ne le range avec les sandwichs.</string>
     <string name="example_tomato_label">🍅 La tomate, c’est un fruit ?</string>
@@ -169,7 +169,7 @@
     <string name="tier_get_premium">Obtenir plus de verdicts</string>
     <string name="tier_checking">On vérifie s’il manque quelque chose…</string>
     <string name="clarify_title">Avant que les juges tranchent</string>
-    <string name="clarify_lead">Ces détails pourraient changer qui a raison. Réponds à ce que tu peux, ou passe.</string>
+    <string name="clarify_lead">Ces détails pourraient changer qui a raison.</string>
     <string name="clarify_answer_aria">Réponse à la question %1$s :</string>
     <string name="clarify_placeholder">Ta réponse (facultatif)</string>
     <string name="clarify_skip">Passer et juger</string>
@@ -177,19 +177,19 @@
     <string name="clarify_back">Modifier le débat</string>
     <string name="thinking_factcheck">On vérifie les faits sur le web…</string>
     <string name="thinking_factcheck_done">Vérification sur le web terminée.</string>
-    <string name="thinking_premium_helper">Vérifier les faits sur le web prend un peu plus de temps. Compte une minute ou deux.</string>
+    <string name="thinking_premium_helper">Compte une minute ou deux.</string>
     <string name="factcheck_title">Vérifié sur le web</string>
-    <string name="factcheck_lead">Les juges ont vu ces résultats de recherche avant de trancher. Ce sont des éléments de preuve, pas le verdict lui-même.</string>
+    <string name="factcheck_lead">Les juges ont vu ces résultats de recherche avant de statuer.</string>
     <string name="factcheck_status_supported">Confirmé</string>
     <string name="factcheck_status_refuted">Démenti</string>
     <string name="factcheck_status_mixed">En partie vrai</string>
     <string name="factcheck_status_unverified">Non confirmé</string>
     <string name="factcheck_sources">Sources</string>
-    <string name="factcheck_none">Rien à chercher sur le web : ce débat porte sur des valeurs ou sur le sens des mots, pas sur des faits.</string>
-    <string name="factcheck_none_factual">Rien ici ne peut être vérifié sur le web : les faits de ce débat ne sont connus que des personnes concernées.</string>
+    <string name="factcheck_none">Rien à vérifier sur le web.</string>
+    <string name="factcheck_none_factual">Rien à vérifier sur le web.</string>
     <string name="factcheck_unavailable">La vérification sur le web n’a pas abouti cette fois, les juges ont donc tranché sans.</string>
     <string name="signin_title">Connexion</string>
-    <string name="signin_lead">Connecte-toi pour obtenir un verdict. Avec un nouveau compte, le premier verdict est offert.</string>
+    <string name="signin_lead">Ton premier verdict est offert.</string>
     <string name="signin_apple">Continuer avec Apple</string>
     <string name="signin_google">Continuer avec Google</string>
     <string name="signin_email_toggle">Continuer par e-mail</string>
@@ -207,7 +207,7 @@
     <string name="signin_use_password">Utiliser un mot de passe à la place</string>
     <string name="signin_password_wrong">Cet e-mail et ce mot de passe ne correspondent pas.</string>
     <string name="signin_password_short">Utilise au moins 8 caractères.</string>
-    <string name="signin_create_note">Nous t\'enverrons un code par e-mail pour confirmer cette adresse. Tu n\'as à le faire qu\'une seule fois.</string>
+    <string name="signin_create_note">On t’envoie un code par e-mail pour confirmer.</string>
     <string name="signin_password_choose">Tu es connecté. Choisis un mot de passe pour la prochaine fois.</string>
     <string name="signin_password_save">Enregistrer le mot de passe</string>
     <string name="signin_password_save_failed">Nous n\'avons pas pu enregistrer le mot de passe. Réessaie.</string>
@@ -242,7 +242,7 @@
     <string name="pricing_premium_f3">Jusqu’à deux petites questions quand il manque un fait clé</string>
     <string name="pricing_premium_f4">Noms remplacés avant le jugement</string>
     <string name="pricing_packs_title">Packs de crédits</string>
-    <string name="pricing_packs_lead">Paie une fois et utilise tes crédits quand tu veux. Chaque verdict utilise un crédit.</string>
+    <string name="pricing_packs_lead">Chaque verdict utilise un crédit.</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s verdicts</item>
         <item quantity="many">%1$s verdicts</item>
@@ -330,8 +330,8 @@
     <string name="case_context_d">Partie D a ajouté du contexte</string>
     <string name="case_context_you">Contexte que tu as ajouté (%1$s)</string>
     <string name="case_evidence_item">Image %1$s, telle que les juges l’ont lue</string>
-    <string name="case_answered">L’autre a répondu. Les juges s’en occupent.</string>
-    <string name="case_judging_alone">Les juges examinent ta version.</string>
+    <string name="case_answered">Les juges s’en occupent.</string>
+    <string name="case_judging_alone">Les juges s’en occupent.</string>
     <string name="case_expired_body">Personne n’a répondu en 7 jours, ton crédit t’a donc été rendu. Tu peux quand même obtenir un verdict sur ta seule version.</string>
     <string name="case_expired_body_free">Personne n’a répondu en 7 jours. Tu peux quand même obtenir un verdict sur ta seule version.</string>
     <string name="case_one_sided">Jugé sur ta version seulement.</string>
@@ -348,12 +348,12 @@
     <string name="respond_submit">Envoyer ma version</string>
     <string name="case_write_title">Ta version</string>
     <string name="case_write_placeholder">C’est quoi, le problème ?</string>
-    <string name="case_write_lead">Écris ta version quand tu veux. Les juges démarrent dès que vous avez écrit tous les deux.</string>
+    <string name="case_write_lead">Les juges démarrent dès que vous avez écrit tous les deux.</string>
     <string name="case_write_lead_answered">L’autre a écrit sa version. Écris la tienne pour avoir le verdict.</string>
     <string name="case_write_submit">Envoyer ma version</string>
     <string name="case_write_email_subject">L\'autre personne a écrit sa version</string>
-    <string name="respond_sent">Merci. Ta version est bien arrivée et les juges s’en occupent.</string>
-    <string name="respond_sent_waiting">Merci. Ta version est bien arrivée. Les juges démarrent dès que l’autre personne a écrit la sienne.</string>
+    <string name="respond_sent">Ta version est arrivée.</string>
+    <string name="respond_sent_waiting">Ta version est arrivée. On attend l’autre personne.</string>
     <string name="respond_own_invite">C’est ton propre lien d’invitation. Envoie-le à l’autre personne.</string>
     <string name="respond_expired">Cette invitation a expiré.</string>
     <string name="respond_closed">Ce dossier n’accepte plus de réponses.</string>
@@ -418,7 +418,7 @@
     <string name="appeal_submit">Rejuger avec mon contexte</string>
     <string name="appeal_sending">Anonymisation de ton contexte…</string>
     <string name="appeal_judging">Les juges réexaminent tout…</string>
-    <string name="appeal_upsell">Il manque quelque chose ? Ajoute du contexte et fais rejuger pour 1 verdict.</string>
+    <string name="appeal_upsell">Il manque quelque chose ? Ajoute du contexte pour 1 verdict.</string>
     <string name="appeal_sign_in">Connecte-toi pour ajouter du contexte</string>
     <string name="appeal_used">Tu as déjà ajouté du contexte à ce dossier.</string>
     <string name="appeal_limit">Tu as ajouté du contexte deux fois. C’est la limite pour un verdict.</string>
@@ -462,7 +462,7 @@
     <string name="case_display_name">Ton nom sur le verdict partagé</string>
     <string name="case_display_save">Enregistrer le nom</string>
     <string name="respond_keep">Garder ce dossier dans ton compte</string>
-    <string name="respond_kept">Ce dossier est maintenant dans ton compte. Il apparaît sur ta page Verdicts, sur tous tes appareils.</string>
+    <string name="respond_kept">Conservé dans ton compte.</string>
     <string name="respond_remove">Supprimer ma version</string>
     <string name="respond_remove_confirm">Supprimer ton texte original et ton nom affiché ? Les liens de partage du dossier cesseront de fonctionner (les aperçus déjà publiés dans des conversations peuvent rester visibles jusqu’à ce que ces applis les actualisent). Cette action est irréversible.</string>
     <string name="names_title">Noms sur la page partagée</string>
@@ -544,7 +544,7 @@
     <string name="app_tab_new">Nouveau</string>
     <string name="app_tab_settings">Réglages</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">Aucun verdict pour l’instant. Fais trancher ton premier débat et il apparaîtra ici.</string>
+    <string name="app_history_empty">Aucun verdict pour l’instant.</string>
     <string name="app_history_device_only">Enregistrés uniquement sur ce téléphone. En supprimer un ici ne désactive pas son lien de partage.</string>
     <string name="app_history_delete">Supprimer</string>
     <string name="app_history_remove_all">Tout retirer</string>
@@ -554,7 +554,7 @@
         <item quantity="other">Supprimer %1$s verdicts de ce téléphone ? Leurs liens de partage continueront de fonctionner.</item>
     </plurals>
     <string name="app_history_phone_only">Uniquement sur ce téléphone</string>
-    <string name="app_history_phone_only_note">Pas dans ton compte : ces verdicts sont enregistrés uniquement sur ce téléphone. En supprimer un ici ne désactive pas son lien de partage.</string>
+    <string name="app_history_phone_only_note">Supprimer un verdict ne désactive pas son lien de partage.</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="one">Supprimer %1$s verdict de ton compte, sur tous tes appareils ? Ce que tu as écrit et les noms seront effacés, et son lien de partage cessera de fonctionner. Cette action est irréversible.</item>
         <item quantity="many">Supprimer %1$s verdicts de ton compte, sur tous tes appareils ? Ce que tu as écrit et les noms seront effacés, et leurs liens de partage cesseront de fonctionner. Cette action est irréversible.</item>
@@ -579,9 +579,9 @@
     <string name="app_pricing_free_account">Connecte-toi avec Apple, Google ou par e-mail</string>
     <string name="app_pricing_context">Les images de contexte sont lues puis jetées, sans frais en plus</string>
     <string name="app_pricing_headline">Ton premier verdict est offert.</string>
-    <string name="app_pricing_sub">Crée un compte et ton premier verdict est gratuit, avec toutes les fonctionnalités. Ensuite, choisis un pack ou passe à l’abonnement mensuel.</string>
+    <string name="app_pricing_sub">Choisis ensuite un pack ou passe à l’abonnement mensuel.</string>
     <string name="app_pricing_headline_member">Obtiens plus de verdicts.</string>
-    <string name="app_pricing_sub_member">Choisis un pack ou passe à l’abonnement mensuel. Chaque verdict mobilise tous les juges.</string>
+    <string name="app_pricing_sub_member">Choisis un pack ou passe à l’abonnement mensuel.</string>
     <plurals name="app_balance_left">
         <item quantity="one">Il te reste %1$s verdict</item>
         <item quantity="many">Il te reste %1$s verdicts</item>
@@ -676,9 +676,9 @@
     <string name="app_appeal_used">Tu as déjà ajouté du contexte à ce dossier.</string>
     <string name="app_appeal_limit">Tu as ajouté du contexte deux fois. C’est la limite pour un verdict.</string>
     <string name="app_purchase_buying">Achat en cours…</string>
-    <string name="app_purchase_success">Merci ! Ton achat est validé.</string>
-    <string name="app_purchase_pending">Ton achat est en cours de traitement. Il peut mettre une minute à apparaître.</string>
-    <string name="app_purchase_slow">Ils peuvent mettre une minute à apparaître ici.</string>
+    <string name="app_purchase_success">Achat validé.</string>
+    <string name="app_purchase_pending">Ton achat est en cours de traitement.</string>
+    <string name="app_purchase_slow">Les crédits peuvent mettre une minute.</string>
     <string name="app_purchase_failed">L’achat n’a pas abouti. Réessaie dans un instant.</string>
     <string name="app_purchase_restore">Restaurer les achats</string>
     <string name="app_purchase_restore_done">Tes achats ont été restaurés.</string>
