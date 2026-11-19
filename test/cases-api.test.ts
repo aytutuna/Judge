@@ -445,6 +445,7 @@ describe("respondent: GET and POST /api/v1/respond/{token}", () => {
     await expectDead(
       await http.respondOriginalsHandler(req("GET", `/api/v1/respond/${token}/originals`, { headers: dead }), token),
     );
+    await expectDead(await http.respondEvidenceHandler(req("POST", `/api/v1/respond/${token}/evidence`, { headers: dead }), token));
     expect(m.anonymizeSubmission.mock.calls.length).toBe(anonymizedBefore);
     expect((await getRespondent(token)).res.status).toBe(200);
   });

@@ -1113,7 +1113,8 @@ export function respondEvidenceHandler(req: Request, token: string): Promise<Nex
     const found = await caseByToken(token, req);
     if (!found) return fail("not_found", "No invite with that link.");
     const { row } = found;
-    const { viewer, refused } = await lookupViewer(req);
+    const { viewer, deadBearer, refused } = await lookupViewer(req);
+    if (deadBearer) return deadBearerResponse();
     if (refused) return refused;
     if (viewer) {
       const unagreed = await agreementRefusal(viewer.user.id);
