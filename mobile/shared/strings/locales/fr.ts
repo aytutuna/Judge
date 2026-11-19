@@ -7,7 +7,7 @@ const fr: AppLocale = {
     "app.tab.new": "Nouveau",
     "app.tab.settings": "Réglages",
     "app.input.counter": "{count} / {max}",
-    "app.history.empty": "Aucun verdict pour l’instant. Fais trancher ton premier débat et il apparaîtra ici.",
+    "app.history.empty": "Aucun verdict pour l’instant.",
     "app.history.deviceOnly":
       "Enregistrés uniquement sur ce téléphone. En supprimer un ici ne désactive pas son lien de partage.",
     "app.history.delete": "Supprimer",
@@ -16,7 +16,7 @@ const fr: AppLocale = {
       "Supprimer {n} verdicts de ce téléphone ? Leurs liens de partage continueront de fonctionner.",
     "app.history.phoneOnly": "Uniquement sur ce téléphone",
     "app.history.phoneOnlyNote":
-      "Pas dans ton compte : ces verdicts sont enregistrés uniquement sur ce téléphone. En supprimer un ici ne désactive pas son lien de partage.",
+      "Supprimer un verdict ne désactive pas son lien de partage.",
     "app.history.removeConfirm":
       "Supprimer {n} verdicts de ton compte, sur tous tes appareils ? Ce que tu as écrit et les noms seront effacés, et leurs liens de partage cesseront de fonctionner. Cette action est irréversible.",
     "app.history.removeLinksConfirm":
@@ -29,9 +29,9 @@ const fr: AppLocale = {
     "app.pricing.context": "Les images de contexte sont lues puis jetées, sans frais en plus",
     "app.pricing.headline": "Ton premier verdict est offert.",
     "app.pricing.sub":
-      "Crée un compte et ton premier verdict est gratuit, avec toutes les fonctionnalités. Ensuite, choisis un pack ou passe à l’abonnement mensuel.",
+      "Choisis ensuite un pack ou passe à l’abonnement mensuel.",
     "app.pricing.headlineMember": "Obtiens plus de verdicts.",
-    "app.pricing.subMember": "Choisis un pack ou passe à l’abonnement mensuel. Chaque verdict mobilise tous les juges.",
+    "app.pricing.subMember": "Choisis un pack ou passe à l’abonnement mensuel.",
     "app.balance.left": "Il te reste {n} verdicts",
     "app.balance.monthly": "Il t’en reste {left} sur {cap} ce mois-ci",
     "app.balance.none": "Il ne te reste aucun verdict",
@@ -129,9 +129,9 @@ const fr: AppLocale = {
     "app.appeal.used": "Tu as déjà ajouté du contexte à ce dossier.",
     "app.appeal.limit": "Tu as ajouté du contexte deux fois. C’est la limite pour un verdict.",
     "app.purchase.buying": "Achat en cours…",
-    "app.purchase.success": "Merci ! Ton achat est validé.",
-    "app.purchase.pending": "Ton achat est en cours de traitement. Il peut mettre une minute à apparaître.",
-    "app.purchase.slow": "Ils peuvent mettre une minute à apparaître ici.",
+    "app.purchase.success": "Achat validé.",
+    "app.purchase.pending": "Ton achat est en cours de traitement.",
+    "app.purchase.slow": "Les crédits peuvent mettre une minute.",
     "app.purchase.failed": "L’achat n’a pas abouti. Réessaie dans un instant.",
     "app.purchase.restore": "Restaurer les achats",
     "app.purchase.restoreDone": "Tes achats ont été restaurés.",

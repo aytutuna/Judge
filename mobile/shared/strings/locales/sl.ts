@@ -8,7 +8,7 @@ const sl: AppLocale = {
     "app.tab.settings": "Nastavitve",
     "app.input.counter": "{count} / {max}",
     "app.history.empty":
-      "Razsodb še ni. Ko razčistiš prvi prepir, se razsodba prikaže tukaj.",
+      "Razsodb še ni.",
     "app.history.deviceOnly":
       "Shranjeno samo na tem telefonu. Če razsodbo izbrišeš tukaj, njena povezava za deljenje še vedno deluje.",
     "app.history.delete": "Izbriši",
@@ -17,7 +17,7 @@ const sl: AppLocale = {
       "Želiš s tega telefona izbrisati {n} razsodb? Njihove povezave za deljenje še vedno delujejo.",
     "app.history.phoneOnly": "Samo na tem telefonu",
     "app.history.phoneOnlyNote":
-      "Ni v tvojem računu: te razsodbe so shranjene samo na tem telefonu. Če razsodbo izbrišeš tukaj, njena povezava za deljenje še vedno deluje.",
+      "Izbris razsodbe ne odstrani njene povezave za deljenje.",
     "app.history.removeConfirm":
       "Želiš iz svojega računa odstraniti {n} razsodb? Na vseh napravah se izbrišejo tvoje besedilo in imena, njihove povezave za deljenje pa prenehajo delovati. Tega ni mogoče razveljaviti.",
     "app.history.removeLinksConfirm":
@@ -30,10 +30,10 @@ const sl: AppLocale = {
     "app.pricing.context": "Slike konteksta se preberejo in zavržejo, brez dodatnih stroškov",
     "app.pricing.headline": "Prva razsodba gre na naš račun.",
     "app.pricing.sub":
-      "Ustvari račun in prva razsodba je brezplačna, z vsemi funkcijami. Potem izberi paket ali mesečno naročnino.",
+      "Potem izberi paket ali mesečno naročnino.",
     "app.pricing.headlineMember": "Več razsodb.",
     "app.pricing.subMember":
-      "Izberi paket ali mesečno naročnino. Pri vsaki razsodbi sodelujejo vsi sodniki.",
+      "Izberi paket ali mesečno naročnino.",
     "app.balance.left": "Na voljo še {n} razsodb",
     "app.balance.monthly": "Ta mesec na voljo še {left} od {cap}",
     "app.balance.none": "Nimaš več razsodb",
@@ -145,10 +145,10 @@ const sl: AppLocale = {
     "app.appeal.limit":
       "Kontekst je dodan že dvakrat. To je meja za eno razsodbo.",
     "app.purchase.buying": "Nakup poteka…",
-    "app.purchase.success": "Hvala! Nakup je uspel.",
+    "app.purchase.success": "Nakup je uspel.",
     "app.purchase.pending":
-      "Nakup je v obdelavi. Lahko traja minuto, preden se prikaže.",
-    "app.purchase.slow": "Lahko traja minuto, preden se prikaže tukaj.",
+      "Nakup je v obdelavi.",
+    "app.purchase.slow": "Krediti lahko potrebujejo minuto.",
     "app.purchase.failed": "Nakup ni uspel. Poskusi znova čez trenutek.",
     "app.purchase.restore": "Obnovi nakupe",
     "app.purchase.restoreDone": "Nakupi so obnovljeni.",

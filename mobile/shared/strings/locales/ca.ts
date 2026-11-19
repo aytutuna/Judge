@@ -7,7 +7,7 @@ const ca: AppLocale = {
     "app.tab.new": "Nou",
     "app.tab.settings": "Configuració",
     "app.input.counter": "{count} / {max}",
-    "app.history.empty": "Encara no tens cap veredicte. Resol la teva primera discussió i apareixerà aquí.",
+    "app.history.empty": "Encara no hi ha veredictes.",
     "app.history.deviceOnly":
       "Només es desen en aquest telèfon. Si n'elimines un aquí, el seu enllaç per compartir continuarà funcionant.",
     "app.history.delete": "Elimina",
@@ -16,7 +16,7 @@ const ca: AppLocale = {
       "Vols eliminar {n} veredictes del telèfon? Els seus enllaços per compartir continuaran funcionant.",
     "app.history.phoneOnly": "Només en aquest telèfon",
     "app.history.phoneOnlyNote":
-      "No són al teu compte: només es desen en aquest telèfon. Si n'elimines un aquí, el seu enllaç per compartir continuarà funcionant.",
+      "Esborrar-ne un no desactiva l'enllaç per compartir-lo.",
     "app.history.removeConfirm":
       "Vols eliminar {n} veredictes del teu compte? S'esborraran el que vas escriure i els noms, i els seus enllaços per compartir deixaran de funcionar a tots els dispositius. No es pot desfer.",
     "app.history.removeLinksConfirm":
@@ -30,9 +30,9 @@ const ca: AppLocale = {
       "Imatges de context, llegides i després esborrades, sense cost addicional",
     "app.pricing.headline": "El primer veredicte, et convidem.",
     "app.pricing.sub":
-      "Crea un compte i el primer veredicte és gratis, amb totes les funcions. Després, tria un paquet o passa't al pla mensual.",
+      "Després tria un paquet o passa't al pla mensual.",
     "app.pricing.headlineMember": "Aconsegueix més veredictes.",
-    "app.pricing.subMember": "Tria un paquet o passa't al pla mensual. Cada veredicte compta amb tots els jutges.",
+    "app.pricing.subMember": "Tria un paquet o passa't al pla mensual.",
     "app.balance.left": "Et queden {n} veredictes",
     "app.balance.monthly": "Et queden {left} de {cap} aquest mes",
     "app.balance.none": "No et queden veredictes",
@@ -130,9 +130,9 @@ const ca: AppLocale = {
     "app.appeal.used": "Ja has afegit context a aquest cas.",
     "app.appeal.limit": "Ja has afegit context dues vegades. És el límit per veredicte.",
     "app.purchase.buying": "Comprant…",
-    "app.purchase.success": "Gràcies! La compra s'ha completat.",
-    "app.purchase.pending": "La compra s'està processant. Pot trigar un minut a aparèixer.",
-    "app.purchase.slow": "Pot trigar un minut a aparèixer aquí.",
+    "app.purchase.success": "Compra completada.",
+    "app.purchase.pending": "La compra s'està processant.",
+    "app.purchase.slow": "Els crèdits poden trigar un minut.",
     "app.purchase.failed": "La compra no s'ha completat. Torna-ho a provar d'aquí a un moment.",
     "app.purchase.restore": "Restaura les compres",
     "app.purchase.restoreDone": "S'han restaurat les compres.",

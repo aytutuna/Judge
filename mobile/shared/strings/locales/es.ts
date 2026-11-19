@@ -7,7 +7,7 @@ const es: AppLocale = {
     "app.tab.new": "Nueva",
     "app.tab.settings": "Ajustes",
     "app.input.counter": "{count} / {max}",
-    "app.history.empty": "Aún no tienes veredictos. Resuelve tu primera discusión y aparecerá aquí.",
+    "app.history.empty": "Aún no hay veredictos.",
     "app.history.deviceOnly":
       "Solo se guardan en este teléfono. Eliminar uno aquí no desactiva su enlace para compartir.",
     "app.history.delete": "Eliminar",
@@ -16,7 +16,7 @@ const es: AppLocale = {
       "¿Eliminar {n} veredictos de este teléfono? Sus enlaces para compartir seguirán funcionando.",
     "app.history.phoneOnly": "Solo en este teléfono",
     "app.history.phoneOnlyNote":
-      "No están en tu cuenta: solo se guardan en este teléfono. Eliminar uno aquí no desactiva su enlace para compartir.",
+      "Borrar uno no desactiva su enlace para compartir.",
     "app.history.removeConfirm":
       "¿Eliminar {n} veredictos de tu cuenta? Lo que escribiste y los nombres se borrarán de todos los dispositivos, y sus enlaces para compartir dejarán de funcionar. No se puede deshacer.",
     "app.history.removeLinksConfirm":
@@ -30,9 +30,9 @@ const es: AppLocale = {
       "Las imágenes de contexto se leen y luego se descartan, sin coste adicional",
     "app.pricing.headline": "Tu primer veredicto corre por nuestra cuenta.",
     "app.pricing.sub":
-      "Crea una cuenta y tu primer veredicto es gratis, con todas las funciones. Después, elige un paquete o pásate al plan mensual.",
+      "Luego elige un paquete o pásate al plan mensual.",
     "app.pricing.headlineMember": "Consigue más veredictos.",
-    "app.pricing.subMember": "Elige un paquete o pásate al plan mensual. Cada veredicto cuenta con el panel completo de jueces.",
+    "app.pricing.subMember": "Elige un paquete o pásate al plan mensual.",
     "app.balance.left": "Te quedan {n} veredictos",
     "app.balance.monthly": "Disponibles este mes: {left} de {cap}",
     "app.balance.none": "No te quedan veredictos",
@@ -130,9 +130,9 @@ const es: AppLocale = {
     "app.appeal.used": "Ya has añadido contexto a este caso.",
     "app.appeal.limit": "Ya has añadido contexto dos veces. Es el límite para un veredicto.",
     "app.purchase.buying": "Comprando…",
-    "app.purchase.success": "¡Gracias! Tu compra se completó.",
-    "app.purchase.pending": "Tu compra se está procesando. Puede tardar un minuto en aparecer.",
-    "app.purchase.slow": "Puede tardar un minuto en aparecer aquí.",
+    "app.purchase.success": "Compra completada.",
+    "app.purchase.pending": "Tu compra se está procesando.",
+    "app.purchase.slow": "Los créditos pueden tardar un minuto.",
     "app.purchase.failed": "La compra no se completó. Vuelve a intentarlo en un momento.",
     "app.purchase.restore": "Restaurar compras",
     "app.purchase.restoreDone": "Se restauraron tus compras.",

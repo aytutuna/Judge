@@ -8,15 +8,14 @@ const pl: AppLocale = {
     "app.tab.new": "Nowy",
     "app.tab.settings": "Ustawienia",
     "app.input.counter": "{count} / {max}",
-    "app.history.empty": "Nie masz jeszcze werdyktów. Rozstrzygnij pierwszy spór, a werdykt pojawi się tutaj.",
+    "app.history.empty": "Brak werdyktów.",
     "app.history.deviceOnly":
       "Zapisane tylko na tym telefonie. Usunięcie werdyktu tutaj nie wyłącza linku do udostępniania.",
     "app.history.delete": "Usuń",
     "app.history.removeAll": "Usuń wszystko",
     "app.history.deleteConfirm": "Usunąć {n} werdyktów z tego telefonu? Ich linki do udostępniania nadal będą działać.",
     "app.history.phoneOnly": "Tylko na tym telefonie",
-    "app.history.phoneOnlyNote":
-      "Nie ma ich na twoim koncie: są zapisane tylko na tym telefonie. Usunięcie werdyktu tutaj nie wyłącza linku do udostępniania.",
+    "app.history.phoneOnlyNote": "Usunięcie werdyktu nie wyłącza linku do udostępniania.",
     "app.history.removeConfirm":
       "Usunąć {n} werdyktów ze swojego konta? Twoje teksty i imiona zostaną wymazane, a ich linki do udostępniania przestaną działać na wszystkich urządzeniach. Tego nie da się cofnąć.",
     "app.history.removeLinksConfirm": "Usunąć {n} linków? Przestaną działać wszędzie. Tego nie da się cofnąć.",
@@ -28,10 +27,9 @@ const pl: AppLocale = {
     "app.pricing.context":
       "Obrazy z kontekstem są czytane, a potem wyrzucane, bez dodatkowych kosztów",
     "app.pricing.headline": "Pierwszy werdykt na nasz koszt.",
-    "app.pricing.sub":
-      "Załóż konto, a pierwszy werdykt dostaniesz za darmo, ze wszystkimi funkcjami. Potem wybierz pakiet albo plan miesięczny.",
+    "app.pricing.sub": "Potem wybierz pakiet albo plan miesięczny.",
     "app.pricing.headlineMember": "Kup więcej werdyktów.",
-    "app.pricing.subMember": "Wybierz pakiet albo plan miesięczny. Każdy werdykt wydaje pełny skład sędziów.",
+    "app.pricing.subMember": "Wybierz pakiet albo plan miesięczny.",
     "app.balance.left": "Zostało ci {n} werdyktów",
     "app.balance.monthly": "Zostało w tym miesiącu: {left} z {cap}",
     "app.balance.none": "Skończyły ci się werdykty",
@@ -129,8 +127,8 @@ const pl: AppLocale = {
     "app.appeal.used": "Twój kontekst do tej sprawy został już dodany.",
     "app.appeal.limit": "Kontekst dodano już dwa razy. To limit dla jednego werdyktu.",
     "app.purchase.buying": "Trwa zakup…",
-    "app.purchase.success": "Dzięki! Zakup się udał.",
-    "app.purchase.pending": "Przetwarzamy twój zakup. Może minąć minuta, zanim go zobaczysz.",
+    "app.purchase.success": "Zakup zakończony.",
+    "app.purchase.pending": "Przetwarzamy twój zakup.",
     "app.purchase.slow": "Może minąć minuta, zanim się tu pojawią.",
     "app.purchase.failed": "Zakup się nie udał. Spróbuj ponownie za chwilę.",
     "app.purchase.restore": "Przywróć zakupy",
