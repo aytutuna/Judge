@@ -128,7 +128,6 @@ const th: AppLocale = {
     "app.purchase.buying": "กำลังซื้อ…",
     "app.purchase.success": "ขอบคุณ! ซื้อสำเร็จแล้ว",
     "app.purchase.pending": "กำลังดำเนินการคำสั่งซื้อของคุณ อาจใช้เวลาสักครู่กว่าจะขึ้น",
-    "app.purchase.arriving": "เครดิตของคุณกำลังมา…",
     "app.purchase.slow": "อาจใช้เวลาสักครู่กว่าจะขึ้นที่นี่",
     "app.purchase.failed": "ซื้อไม่สำเร็จ ลองใหม่อีกสักครู่",
     "app.purchase.restore": "กู้คืนการซื้อ",

@@ -128,7 +128,6 @@ const hu: AppLocale = {
     "app.purchase.buying": "Vásárlás…",
     "app.purchase.success": "Köszönjük! Sikeres volt a vásárlás.",
     "app.purchase.pending": "A vásárlásod feldolgozás alatt van. Eltarthat egy percig, mire megjelenik.",
-    "app.purchase.arriving": "Úton vannak a kreditjeid…",
     "app.purchase.slow": "Eltarthat egy percig, mire itt megjelenik.",
     "app.purchase.failed": "A vásárlás nem sikerült. Próbáld újra egy kicsit később.",
     "app.purchase.restore": "Vásárlások visszaállítása",

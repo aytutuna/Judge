@@ -124,7 +124,6 @@ const ko: AppLocale = {
     "app.purchase.buying": "구매 중…",
     "app.purchase.success": "감사해요! 구매가 완료됐어요.",
     "app.purchase.pending": "구매를 처리하고 있어요. 반영되기까지 1분 정도 걸릴 수 있어요.",
-    "app.purchase.arriving": "크레딧이 곧 들어와요…",
     "app.purchase.slow": "여기에 표시되기까지 1분 정도 걸릴 수 있어요.",
     "app.purchase.failed": "구매가 완료되지 않았어요. 잠시 후 다시 시도해 주세요.",
     "app.purchase.restore": "구매 복원",

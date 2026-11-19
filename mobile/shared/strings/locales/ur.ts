@@ -128,7 +128,6 @@ const ur: AppLocale = {
     "app.purchase.buying": "خریداری ہو رہی ہے…",
     "app.purchase.success": "شکریہ! آپ کی خریداری مکمل ہو گئی۔",
     "app.purchase.pending": "آپ کی خریداری پراسیس ہو رہی ہے۔ نظر آنے میں ایک منٹ لگ سکتا ہے۔",
-    "app.purchase.arriving": "آپ کے کریڈٹس آ رہے ہیں…",
     "app.purchase.slow": "یہاں نظر آنے میں ایک منٹ لگ سکتا ہے۔",
     "app.purchase.failed": "خریداری مکمل نہیں ہو سکی۔ تھوڑی دیر میں دوبارہ کوشش کریں۔",
     "app.purchase.restore": "خریداریاں بحال کریں",

@@ -148,7 +148,6 @@ const sl: AppLocale = {
     "app.purchase.success": "Hvala! Nakup je uspel.",
     "app.purchase.pending":
       "Nakup je v obdelavi. Lahko traja minuto, preden se prikaže.",
-    "app.purchase.arriving": "Krediti so na poti…",
     "app.purchase.slow": "Lahko traja minuto, preden se prikaže tukaj.",
     "app.purchase.failed": "Nakup ni uspel. Poskusi znova čez trenutek.",
     "app.purchase.restore": "Obnovi nakupe",

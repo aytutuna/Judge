@@ -129,7 +129,6 @@ const da: AppLocale = {
     "app.purchase.buying": "Køber…",
     "app.purchase.success": "Tak! Dit køb er gennemført.",
     "app.purchase.pending": "Dit køb bliver behandlet. Der kan gå et minut, før det dukker op.",
-    "app.purchase.arriving": "Dine kreditter er på vej…",
     "app.purchase.slow": "Der kan gå et minut, før det dukker op her.",
     "app.purchase.failed": "Købet gik ikke igennem. Prøv igen om lidt.",
     "app.purchase.restore": "Gendan køb",

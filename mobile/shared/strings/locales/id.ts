@@ -130,7 +130,6 @@ const id: AppLocale = {
     "app.purchase.buying": "Membeli…",
     "app.purchase.success": "Terima kasih! Pembelianmu berhasil.",
     "app.purchase.pending": "Pembelianmu sedang diproses. Mungkin perlu semenit sampai muncul.",
-    "app.purchase.arriving": "Kreditmu sedang dikirim…",
     "app.purchase.slow": "Mungkin perlu semenit sampai muncul di sini.",
     "app.purchase.failed": "Pembelian tidak berhasil. Coba lagi sebentar lagi.",
     "app.purchase.restore": "Pulihkan pembelian",

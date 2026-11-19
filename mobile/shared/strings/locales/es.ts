@@ -132,7 +132,6 @@ const es: AppLocale = {
     "app.purchase.buying": "Comprando…",
     "app.purchase.success": "¡Gracias! Tu compra se completó.",
     "app.purchase.pending": "Tu compra se está procesando. Puede tardar un minuto en aparecer.",
-    "app.purchase.arriving": "Tus créditos están en camino…",
     "app.purchase.slow": "Puede tardar un minuto en aparecer aquí.",
     "app.purchase.failed": "La compra no se completó. Vuelve a intentarlo en un momento.",
     "app.purchase.restore": "Restaurar compras",

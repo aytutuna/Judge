@@ -128,7 +128,6 @@ const pa: AppLocale = {
     "app.purchase.buying": "ਖ਼ਰੀਦ ਹੋ ਰਹੀ ਹੈ…",
     "app.purchase.success": "ਸ਼ੁਕਰੀਆ! ਤੁਹਾਡੀ ਖ਼ਰੀਦ ਪੂਰੀ ਹੋ ਗਈ।",
     "app.purchase.pending": "ਤੁਹਾਡੀ ਖ਼ਰੀਦ ਪ੍ਰੋਸੈੱਸ ਹੋ ਰਹੀ ਹੈ। ਦਿਖਣ ਵਿੱਚ ਇੱਕ ਮਿੰਟ ਲੱਗ ਸਕਦਾ ਹੈ।",
-    "app.purchase.arriving": "ਤੁਹਾਡੇ ਕ੍ਰੈਡਿਟ ਆ ਰਹੇ ਹਨ…",
     "app.purchase.slow": "ਇੱਥੇ ਦਿਖਣ ਵਿੱਚ ਇੱਕ ਮਿੰਟ ਲੱਗ ਸਕਦਾ ਹੈ।",
     "app.purchase.failed": "ਖ਼ਰੀਦ ਪੂਰੀ ਨਹੀਂ ਹੋ ਸਕੀ। ਥੋੜ੍ਹੀ ਦੇਰ ਬਾਅਦ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
     "app.purchase.restore": "ਖ਼ਰੀਦਾਂ ਰੀਸਟੋਰ ਕਰੋ",

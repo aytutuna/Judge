@@ -131,7 +131,6 @@ const ml: AppLocale = {
     "app.purchase.buying": "വാങ്ങുന്നു…",
     "app.purchase.success": "നന്ദി! വാങ്ങൽ പൂർത്തിയായി.",
     "app.purchase.pending": "നിങ്ങളുടെ വാങ്ങൽ പ്രോസസ്സ് ചെയ്യുന്നു. ഇവിടെ കാണാൻ ഒരു മിനിറ്റ് എടുത്തേക്കാം.",
-    "app.purchase.arriving": "നിങ്ങളുടെ ക്രെഡിറ്റുകൾ ഉടൻ എത്തും…",
     "app.purchase.slow": "ഇവിടെ കാണാൻ ഒരു മിനിറ്റ് എടുത്തേക്കാം.",
     "app.purchase.failed": "വാങ്ങൽ പൂർത്തിയായില്ല. അൽപം കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കൂ.",
     "app.purchase.restore": "വാങ്ങലുകൾ പുനഃസ്ഥാപിക്കൂ",

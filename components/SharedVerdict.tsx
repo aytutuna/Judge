@@ -195,9 +195,9 @@ export function SharedVerdict({
 
   return (
     <>
-      <h1 className={kickerClassName}>
-        {t(initialLang, publicNames && publicNames.length > 0 ? "shared.subtitle" : "shared.subtitleHidden")}
-      </h1>
+      {publicNames && publicNames.length > 0 ? null : (
+        <h1 className={kickerClassName}>{t(initialLang, "shared.subtitleHidden")}</h1>
+      )}
       <div className={cardClassName}>
         <div lang={lang} dir={langDir(lang)} className="flex flex-col gap-4 min-w-0">
           {langRow}

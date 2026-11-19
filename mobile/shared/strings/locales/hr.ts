@@ -131,7 +131,6 @@ const hr: AppLocale = {
     "app.purchase.buying": "Kupnja…",
     "app.purchase.success": "Hvala! Kupnja je uspjela.",
     "app.purchase.pending": "Kupnja se obrađuje. Može potrajati minutu dok se ne pojavi.",
-    "app.purchase.arriving": "Krediti su na putu…",
     "app.purchase.slow": "Može potrajati minutu dok se ovdje ne pojavi.",
     "app.purchase.failed": "Kupnja nije uspjela. Pokušaj ponovno za trenutak.",
     "app.purchase.restore": "Vrati kupnje",

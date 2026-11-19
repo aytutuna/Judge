@@ -127,7 +127,6 @@ const vi: AppLocale = {
     "app.purchase.buying": "Đang mua…",
     "app.purchase.success": "Cảm ơn bạn! Giao dịch đã thành công.",
     "app.purchase.pending": "Giao dịch đang được xử lý. Có thể mất một phút để hiện ra.",
-    "app.purchase.arriving": "Lượt của bạn đang được cộng vào…",
     "app.purchase.slow": "Có thể mất một phút để hiện ở đây.",
     "app.purchase.failed": "Giao dịch chưa thành công. Thử lại sau giây lát nhé.",
     "app.purchase.restore": "Khôi phục giao dịch mua",

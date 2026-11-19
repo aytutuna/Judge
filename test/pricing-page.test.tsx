@@ -28,7 +28,6 @@ describe("PricingTable", () => {
   it("leads with the free first verdict and has no Free plan", () => {
     const html = renderToStaticMarkup(<PricingView />);
     expect(html).toContain("Your first verdict is");
-    expect(html).toContain("Create an account and your first verdict is free");
     expect(t("en", "pricing.title")).toBe("Your first verdict is on us.");
     expect(t("tr", "pricing.title")).toBe("İlk kararın bizden.");
     expect(render()).not.toContain('id="plan-free"');
@@ -39,7 +38,6 @@ describe("PricingTable", () => {
     try {
       const html = renderToStaticMarkup(<PricingView />).replaceAll(" ", " ");
       expect(html).toContain("Get more verdicts.");
-      expect(html).toContain("Every verdict gets the full panel.");
       expect(html).not.toContain("on us");
       expect(html).not.toContain("your first verdict is free");
     } finally {

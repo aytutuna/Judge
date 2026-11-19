@@ -130,7 +130,6 @@ const nl: AppLocale = {
     "app.purchase.buying": "Kopen…",
     "app.purchase.success": "Bedankt! Je aankoop is gelukt.",
     "app.purchase.pending": "Je aankoop wordt verwerkt. Het kan een minuutje duren voordat je hem ziet.",
-    "app.purchase.arriving": "Je credits komen eraan…",
     "app.purchase.slow": "Het kan een minuutje duren voordat ze hier verschijnen.",
     "app.purchase.failed": "De aankoop is niet gelukt. Probeer het zo nog eens.",
     "app.purchase.restore": "Aankopen herstellen",

@@ -129,7 +129,6 @@ const fi: AppLocale = {
     "app.purchase.buying": "Ostetaan…",
     "app.purchase.success": "Kiitos! Ostos onnistui.",
     "app.purchase.pending": "Ostostasi käsitellään. Voi kestää hetken, ennen kuin se näkyy.",
-    "app.purchase.arriving": "Tuomiosi ovat tulossa…",
     "app.purchase.slow": "Voi kestää hetken, ennen kuin ne näkyvät täällä.",
     "app.purchase.failed": "Ostos ei onnistunut. Yritä hetken päästä uudelleen.",
     "app.purchase.restore": "Palauta ostokset",

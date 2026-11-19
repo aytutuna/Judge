@@ -130,7 +130,6 @@ const ru: AppLocale = {
     "app.purchase.buying": "Оформляем покупку…",
     "app.purchase.success": "Спасибо! Покупка прошла успешно.",
     "app.purchase.pending": "Покупка обрабатывается. Это может занять около минуты.",
-    "app.purchase.arriving": "Вердикты уже в пути…",
     "app.purchase.slow": "Они могут появиться здесь примерно через минуту.",
     "app.purchase.failed": "Покупка не прошла. Попробуйте чуть позже.",
     "app.purchase.restore": "Восстановить покупки",

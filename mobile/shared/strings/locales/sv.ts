@@ -130,7 +130,6 @@ const sv: AppLocale = {
     "app.purchase.buying": "Köper…",
     "app.purchase.success": "Tack! Köpet är klart.",
     "app.purchase.pending": "Ditt köp behandlas. Det kan ta en minut innan det syns.",
-    "app.purchase.arriving": "Dina krediter är på väg…",
     "app.purchase.slow": "Det kan ta en minut innan de syns här.",
     "app.purchase.failed": "Köpet gick inte igenom. Försök igen om en stund.",
     "app.purchase.restore": "Återställ köp",

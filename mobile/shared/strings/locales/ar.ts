@@ -146,7 +146,6 @@ const ar: AppLocale = {
     "app.purchase.success": "شكرًا! تمت عملية الشراء.",
     "app.purchase.pending":
       "عملية الشراء قيد المعالجة. قد يستغرق ظهورها دقيقة.",
-    "app.purchase.arriving": "رصيدك في الطريق…",
     "app.purchase.slow": "قد يستغرق ظهوره هنا دقيقة.",
     "app.purchase.failed": "لم تكتمل عملية الشراء. حاول مجددًا بعد قليل.",
     "app.purchase.restore": "استعادة المشتريات",
