@@ -136220,25 +136220,25 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Płacisz raz i korzystasz, kiedy chcesz. Każdy spór zużywa jeden werdykt."
+            "value" : "Każdy spór zużywa jeden werdykt."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pague uma vez e use quando quiser. Cada veredito usa um crédito."
+            "value" : "Cada veredito usa um crédito."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pagas uma vez e usas quando quiseres. Cada veredicto gasta um crédito."
+            "value" : "Cada veredicto gasta um crédito."
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Plătești o dată și le folosești oricând. Fiecare verdict folosește un credit."
+            "value" : "Fiecare verdict folosește un credit."
           }
         },
         "ru" : {
@@ -136250,7 +136250,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zaplatíš raz a kredity minieš, kedy chceš. Každý verdikt stojí jeden kredit."
+            "value" : "Každý verdikt stojí jeden kredit."
           }
         },
         "sl" : {
@@ -140660,7 +140660,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ИИ отказался судить этот спор. Лучше ничего не показать, чем выдумать вердикт."
+            "value" : "ИИ отказался судить этот спор."
           }
         },
         "sk" : {
@@ -143300,7 +143300,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "התיק הזה נמצא עכשיו בחשבון שלך. הוא מופיע בדף \"פסקי דין\" בכל מכשיר."
+            "value" : "נשמר בחשבון שלך."
           }
         },
         "hi" : {

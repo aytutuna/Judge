@@ -473,7 +473,7 @@ const pl: Locale = {
     "pricing.premium.f3": "Do dwóch krótkich pytań, gdy brakuje kluczowego faktu",
     "pricing.premium.f4": "Imiona zamienione przed oceną",
     "pricing.packsTitle": "Pakiety werdyktów",
-    "pricing.packsLead": "Płacisz raz i korzystasz, kiedy chcesz. Każdy spór zużywa jeden werdykt.",
+    "pricing.packsLead": "Każdy spór zużywa jeden werdykt.",
     "pricing.pack": "{n} werdyktów",
     "pricing.pack.one": "1 werdykt",
     "pricing.perVerdict": "{price} za werdykt",

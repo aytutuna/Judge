@@ -470,7 +470,7 @@ const sk: Locale = {
     "pricing.premium.f3": "Najviac dve rýchle otázky, keď chýba kľúčový fakt",
     "pricing.premium.f4": "Mená nahradené ešte pred posudzovaním",
     "pricing.packsTitle": "Balíky kreditov",
-    "pricing.packsLead": "Zaplatíš raz a kredity minieš, kedy chceš. Každý verdikt stojí jeden kredit.",
+    "pricing.packsLead": "Každý verdikt stojí jeden kredit.",
     "pricing.pack": "{n} verdiktov",
     "pricing.pack.one": "1 verdikt",
     "pricing.perVerdict": "{price} za verdikt",

@@ -245,7 +245,7 @@
     <string name="pricing_premium_f3">Najviac dve rýchle otázky, keď chýba kľúčový fakt</string>
     <string name="pricing_premium_f4">Mená nahradené ešte pred posudzovaním</string>
     <string name="pricing_packs_title">Balíky kreditov</string>
-    <string name="pricing_packs_lead">Zaplatíš raz a kredity minieš, kedy chceš. Každý verdikt stojí jeden kredit.</string>
+    <string name="pricing_packs_lead">Každý verdikt stojí jeden kredit.</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s verdiktov</item>
         <item quantity="few">%1$s verdikty</item>

@@ -471,7 +471,7 @@ const ro: Locale = {
     "pricing.premium.f3": "Cel mult două întrebări rapide când lipsește un fapt-cheie",
     "pricing.premium.f4": "Numele înlocuite înainte de judecare",
     "pricing.packsTitle": "Pachete de credite",
-    "pricing.packsLead": "Plătești o dată și le folosești oricând. Fiecare verdict folosește un credit.",
+    "pricing.packsLead": "Fiecare verdict folosește un credit.",
     "pricing.pack": "{n} de verdicte",
     "pricing.pack.one": "1 verdict",
     "pricing.perVerdict": "{price} pe verdict",

@@ -242,7 +242,7 @@
     <string name="pricing_premium_f3">Cel mult două întrebări rapide când lipsește un fapt-cheie</string>
     <string name="pricing_premium_f4">Numele înlocuite înainte de judecare</string>
     <string name="pricing_packs_title">Pachete de credite</string>
-    <string name="pricing_packs_lead">Plătești o dată și le folosești oricând. Fiecare verdict folosește un credit.</string>
+    <string name="pricing_packs_lead">Fiecare verdict folosește un credit.</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s de verdicte</item>
         <item quantity="few">%1$s verdicte</item>

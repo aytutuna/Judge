@@ -245,7 +245,7 @@
     <string name="pricing_premium_f3">Do dwóch krótkich pytań, gdy brakuje kluczowego faktu</string>
     <string name="pricing_premium_f4">Imiona zamienione przed oceną</string>
     <string name="pricing_packs_title">Pakiety werdyktów</string>
-    <string name="pricing_packs_lead">Płacisz raz i korzystasz, kiedy chcesz. Każdy spór zużywa jeden werdykt.</string>
+    <string name="pricing_packs_lead">Każdy spór zużywa jeden werdykt.</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s werdyktów</item>
         <item quantity="few">%1$s werdykty</item>

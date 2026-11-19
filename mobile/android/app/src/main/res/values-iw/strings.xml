@@ -462,7 +462,7 @@
     <string name="case_display_name">השם שלך בדף השיתוף</string>
     <string name="case_display_save">שמירת השם</string>
     <string name="respond_keep">לשמור את התיק הזה בחשבון</string>
-    <string name="respond_kept">התיק הזה נמצא עכשיו בחשבון שלך. הוא מופיע בדף \"פסקי דין\" בכל מכשיר.</string>
+    <string name="respond_kept">נשמר בחשבון שלך.</string>
     <string name="respond_remove">הסרת הצד שלי</string>
     <string name="respond_remove_confirm">להסיר את הטקסט המקורי שלך ואת שם התצוגה שלך? קישורי השיתוף של התיק יפסיקו לעבוד (תצוגות מקדימות שכבר פורסמו בצ\'אטים עשויות להמשיך להופיע עד שהאפליקציות האלה ירעננו אותן). אי אפשר לבטל את זה.</string>
     <string name="names_title">השמות בדף השיתוף</string>
