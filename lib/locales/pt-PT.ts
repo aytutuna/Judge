@@ -473,7 +473,7 @@ const ptPT: Locale = {
     "pricing.premium.f3": "Até duas perguntas rápidas quando falta um facto importante",
     "pricing.premium.f4": "Nomes trocados antes do julgamento",
     "pricing.packsTitle": "Pacotes de créditos",
-    "pricing.packsLead": "Pagas uma vez e usas quando quiseres. Cada veredicto gasta um crédito.",
+    "pricing.packsLead": "Cada veredicto gasta um crédito.",
     "pricing.pack": "{n} veredictos",
     "pricing.pack.one": "1 veredicto",
     "pricing.perVerdict": "{price} por veredicto",

@@ -242,7 +242,7 @@
     <string name="pricing_premium_f3">Até duas perguntas rápidas quando falta um facto importante</string>
     <string name="pricing_premium_f4">Nomes trocados antes do julgamento</string>
     <string name="pricing_packs_title">Pacotes de créditos</string>
-    <string name="pricing_packs_lead">Pagas uma vez e usas quando quiseres. Cada veredicto gasta um crédito.</string>
+    <string name="pricing_packs_lead">Cada veredicto gasta um crédito.</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s veredictos</item>
         <item quantity="many">%1$s veredictos</item>

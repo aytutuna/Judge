@@ -80,7 +80,7 @@
     <string name="vote_split">пополам</string>
     <string name="vote_conditional">смотря как</string>
     <string name="vote_dissolved">путаница в словах</string>
-    <string name="refused_note">ИИ отказался судить этот спор. Лучше ничего не показать, чем выдумать вердикт.</string>
+    <string name="refused_note">ИИ отказался судить этот спор.</string>
     <string name="demo_note">Демо-режим: ключ ИИ не настроен, это пример вердикта</string>
     <string name="trial_survived">Возражение отклонено: вердикт устоял.</string>
     <string name="trial_uncertain">Адвокат другой стороны выдвинул возражение, и оно оставило серьёзные сомнения в этом вердикте</string>
