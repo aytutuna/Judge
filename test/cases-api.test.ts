@@ -132,6 +132,8 @@ function okOutcome(r: VerdictResult = result(), extra: { refused?: boolean; degr
 
 type Opts = { user?: string; via?: "cookie" | "bearer"; body?: unknown; headers?: Record<string, string>; ip?: string };
 
+const TICKS = { "adult-confirmed": "true", "sensitive-agreed": "true" };
+
 function req(method: string, url: string, opts: Opts = {}): Request {
   const headers: Record<string, string> = { "content-type": "application/json", ...opts.headers };
   if (opts.user) headers["x-test-user"] = opts.user;
@@ -621,7 +623,7 @@ describe("respondent: GET and POST /api/v1/respond/{token}", () => {
     const o = await owner();
     const { data } = await create(o);
     const token = tokenOf(data.case);
-    const up = await http.respondEvidenceHandler(req("POST", `/api/v1/respond/${token}/evidence`, { body: { images: [] } }), token);
+    const up = await http.respondEvidenceHandler(req("POST", `/api/v1/respond/${token}/evidence`, { headers: TICKS, body: { images: [] } }), token);
     expect(up.status).toBe(200);
     expect(m.handleEvidenceUpload.mock.calls[0][1]).toEqual({ type: "respondent", caseId: data.case.id });
     expect((await http.respondEvidenceHandler(req("POST", "/api/v1/respond/x/evidence"), "x")).status).toBe(404);
@@ -632,8 +634,29 @@ describe("respondent: GET and POST /api/v1/respond/{token}", () => {
     const view = await getOwner(o, data.case.id);
     expect(view.sides.find((s) => s.party === "b")!.evidence[0].transcript).toBe("21:02 Party B: did you pay?");
     expect(view.verdicts[0].result.evidence_used).toEqual({ a: 0, b: 1 });
-    const closed = await http.respondEvidenceHandler(req("POST", `/api/v1/respond/${token}/evidence`), token);
+    const closed = await http.respondEvidenceHandler(req("POST", `/api/v1/respond/${token}/evidence`, { headers: TICKS }), token);
     expect((await body(closed)).code).toBe("case_closed");
+  });
+
+  it("respondent evidence needs the agreement signed in, or both ticks signed out", async () => {
+    const o = await owner();
+    const token = tokenOf((await create(o)).data.case);
+    const upload = (opts: Opts) => http.respondEvidenceHandler(req("POST", `/api/v1/respond/${token}/evidence`, opts), token);
+    const calls = () => m.handleEvidenceUpload.mock.calls.length;
+    const before = calls();
+    const none = await upload({});
+    expect(none.status).toBe(403);
+    expect((await body(none)).code).toBe("age_unconfirmed");
+    const onlyAge = await upload({ headers: { "adult-confirmed": "true" } });
+    expect((await body(onlyAge)).code).toBe("agreement_required");
+    expect((await body(await upload({ headers: { "sensitive-agreed": "true" } }))).code).toBe("age_unconfirmed");
+    vi.mocked(agreementRefusal).mockResolvedValueOnce(agreementMissing());
+    const signedIn = await upload({ user: uid("ev-agree") });
+    expect(signedIn.status).toBe(403);
+    expect((await body(signedIn)).code).toBe("agreement_required");
+    expect(calls()).toBe(before);
+    expect((await upload({ headers: TICKS })).status).toBe(200);
+    expect(calls()).toBe(before + 1);
   });
 });
 
