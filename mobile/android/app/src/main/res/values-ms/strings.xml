@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Terlalu tipis untuk diputuskan</string>
     <string name="lean_title">Keputusan paksa: %1$s lebih betul</string>
     <string name="lean_title_self">Keputusan paksa: anda lebih betul</string>
-    <string name="lean_unanimous">Semua hakim condong ke arah ini.</string>
     <string name="lean_majority">Hakim condong ke arah ini %1$s–%2$s.</string>
     <string name="lean_tie">Walaupun dipaksa memilih, hakim tetap berbelah sama rata.</string>
     <string name="split_win">%1$s betul tentang ini:</string>
@@ -70,7 +69,6 @@
     <plurals name="judges_voted">
         <item quantity="other">%1$s hakim AI bebas mengundi:</item>
     </plurals>
-    <string name="escalated">Keputusannya rapat, jadi kami panggil hakim tambahan.</string>
     <string name="translate_loading">Menterjemah…</string>
     <string name="translate_from_en">Diterjemah daripada bahasa Inggeris</string>
     <string name="translate_from_tr">Diterjemah daripada bahasa Turki</string>
@@ -134,7 +132,6 @@
     <string name="footer_note">Untuk suka-suka dan kejelasan, bukan nasihat undang-undang.</string>
     <string name="footer_language">Bahasa</string>
     <string name="not_found_title">Keputusan ini sudah meninggalkan mahkamah</string>
-    <string name="not_found_body">Mungkin ada salah taip dalam pautan, atau keputusan itu sudah tiada.</string>
     <string name="nav_sign_in">Log masuk</string>
     <string name="nav_account">Akaun</string>
     <string name="nav_pricing">Harga</string>
@@ -156,7 +153,6 @@
     <string name="consent_sensitive_continue">Teruskan</string>
     <string name="respond_adult_confirm">Saya berumur 18 tahun atau lebih</string>
     <string name="account_export">Muat turun data saya</string>
-    <string name="account_export_hint">Dapatkan fail JSON dengan semua yang disimpan Judge tentang anda.</string>
     <string name="account_export_busy">Menyediakan fail anda…</string>
     <string name="account_export_failed">Data anda tidak dapat disediakan sekarang. Cuba lagi?</string>
     <string name="rating_prompt">Keputusan yang adil?</string>
@@ -176,7 +172,6 @@
     <string name="thinking_factcheck">Menyemak fakta di web…</string>
     <string name="thinking_factcheck_done">Semakan web selesai.</string>
     <string name="thinking_premium_helper">Semakan fakta di web ambil masa lebih sedikit. Tunggu seminit dua ya.</string>
-    <string name="panel_premium">Dinilai dengan semakan fakta di web.</string>
     <string name="factcheck_title">Disemak di web</string>
     <string name="factcheck_lead">Hakim melihat hasil carian ini sebelum memutuskan. Ini bukti, bukan keputusan itu sendiri.</string>
     <string name="factcheck_status_supported">Benar</string>
@@ -230,13 +225,10 @@
     <string name="account_delete_yes">Ya, padam</string>
     <string name="account_delete_cancel">Kekalkan akaun saya</string>
     <string name="account_delete_failed">Kami tidak dapat memadam akaun sekarang. Boleh cuba lagi?</string>
-    <string name="account_sign_in_prompt">Log masuk untuk melihat pelan dan kredit anda.</string>
     <string name="account_load_failed">Kami tidak dapat memuatkan akaun anda. Cuba lagi sebentar nanti.</string>
     <string name="account_loading">Memuatkan akaun anda…</string>
     <string name="pricing_title">Keputusan pertama anda, kami belanja.</string>
-    <string name="pricing_lead">Buat akaun dan keputusan pertama anda percuma, lengkap dengan semua ciri. Selepas itu, pilih pek atau langgan bulanan.</string>
     <string name="pricing_title_member">Dapatkan lebih banyak keputusan.</string>
-    <string name="pricing_lead_member">Pilih pek atau langgan bulanan. Setiap keputusan dinilai oleh panel penuh.</string>
     <string name="pricing_included_title">Setiap keputusan</string>
     <string name="pricing_buy_title">Pek dan pelan bulanan</string>
     <string name="pricing_premium_f1">Fakta disemak di web, dengan sumbernya pada keputusan anda</string>
@@ -375,7 +367,6 @@
     <string name="evidence_remove">Buang imej %1$s</string>
     <string name="evidence_thumb">Imej %1$s</string>
     <string name="evidence_preview">Apa yang kami baca</string>
-    <string name="evidence_preview_note">Hanya anda yang nampak ini. Nama disembunyikan sebelum hakim membacanya.</string>
     <string name="evidence_status_unreadable">Tiada teks yang dapat dibaca</string>
     <string name="evidence_status_refused">Pembaca menolak imej ini</string>
     <string name="evidence_status_unsupported">Bukan PNG, JPEG, WebP atau GIF</string>
@@ -402,8 +393,6 @@
     <string name="home_remove_their_side">Buang versi dia</string>
     <string name="home_send_link">Hantar pautan</string>
     <string name="home_clear">Kosongkan</string>
-    <string name="home_lead">Tulis kedua-dua versi, atau hantar pautan kepada pihak satu lagi supaya dia menulis versinya sendiri.</string>
-    <string name="home_lead_solo">Tulis versi anda, dan versi dia juga kalau anda tahu.</string>
     <string name="home_their_side">Versi dia</string>
     <string name="home_their_name">Nama dia</string>
     <string name="home_their_placeholder">Apa kata dia? Tulis seperti yang dia sendiri akan katakan.</string>
@@ -659,7 +648,6 @@
     <string name="app_purchase_buying">Membeli…</string>
     <string name="app_purchase_success">Terima kasih! Pembelian anda berjaya.</string>
     <string name="app_purchase_pending">Pembelian anda sedang diproses. Mungkin mengambil masa seminit untuk muncul.</string>
-    <string name="app_purchase_arriving">Kredit anda sedang dalam perjalanan…</string>
     <string name="app_purchase_slow">Mungkin mengambil masa seminit untuk muncul di sini.</string>
     <string name="app_purchase_failed">Pembelian tidak berjaya. Cuba lagi sebentar nanti.</string>
     <string name="app_purchase_restore">Pulihkan pembelian</string>

@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Prea echilibrat ca să decidem</string>
     <string name="lean_title">Verdict forțat: %1$s are mai multă dreptate</string>
     <string name="lean_title_self">Verdict forțat: tu ai mai multă dreptate</string>
-    <string name="lean_unanimous">Toți judecătorii au înclinat în partea asta.</string>
     <string name="lean_majority">Judecătorii au înclinat în partea asta: %1$s–%2$s.</string>
     <string name="lean_tie">Chiar și puși să aleagă, judecătorii s-au împărțit exact la jumătate.</string>
     <string name="split_win">%1$s are dreptate aici:</string>
@@ -72,7 +71,6 @@
         <item quantity="few">%1$s judecători AI independenți au votat:</item>
         <item quantity="other">%1$s de judecători AI independenți au votat:</item>
     </plurals>
-    <string name="escalated">A fost la limită, așa că am chemat judecători în plus.</string>
     <string name="translate_loading">Traducem…</string>
     <string name="translate_from_en">Tradus din engleză</string>
     <string name="translate_from_tr">Tradus din turcă</string>
@@ -140,7 +138,6 @@
     <string name="footer_note">Pentru distracție și claritate, nu consultanță juridică.</string>
     <string name="footer_language">Limbă</string>
     <string name="not_found_title">Verdictul ăsta a părăsit sala</string>
-    <string name="not_found_body">Poate linkul are o greșeală de scriere sau verdictul nu mai există.</string>
     <string name="nav_sign_in">Conectează-te</string>
     <string name="nav_account">Cont</string>
     <string name="nav_pricing">Prețuri</string>
@@ -162,7 +159,6 @@
     <string name="consent_sensitive_continue">Continuă</string>
     <string name="respond_adult_confirm">Am 18 ani sau mai mult</string>
     <string name="account_export">Descarcă datele mele</string>
-    <string name="account_export_hint">Primește un fișier JSON cu tot ce păstrează Judge despre tine.</string>
     <string name="account_export_busy">Se pregătește fișierul…</string>
     <string name="account_export_failed">Nu ți-am putut pregăti datele acum. Încerci din nou?</string>
     <string name="rating_prompt">Verdict corect?</string>
@@ -182,7 +178,6 @@
     <string name="thinking_factcheck">Verificăm faptele pe web…</string>
     <string name="thinking_factcheck_done">Verificarea pe web s-a încheiat.</string>
     <string name="thinking_premium_helper">Verificarea faptelor pe web durează un pic mai mult. Dă-i un minut sau două.</string>
-    <string name="panel_premium">Judecat cu verificarea faptelor pe web.</string>
     <string name="factcheck_title">Verificat pe web</string>
     <string name="factcheck_lead">Judecătorii au văzut aceste rezultate ale căutării înainte să decidă. Sunt dovezi, nu verdictul în sine.</string>
     <string name="factcheck_status_supported">Se confirmă</string>
@@ -236,13 +231,10 @@
     <string name="account_delete_yes">Da, șterge-l</string>
     <string name="account_delete_cancel">Păstrez contul</string>
     <string name="account_delete_failed">N-am putut șterge contul acum. Mai încerci o dată?</string>
-    <string name="account_sign_in_prompt">Conectează-te ca să-ți vezi planul și creditele.</string>
     <string name="account_load_failed">N-am putut încărca contul tău. Încearcă din nou peste puțin timp.</string>
     <string name="account_loading">Se încarcă contul…</string>
     <string name="pricing_title">Primul verdict e din partea casei.</string>
-    <string name="pricing_lead">Fă-ți un cont și primul verdict e gratuit, cu toate funcțiile. După aceea, alege un pachet sau treci pe planul lunar.</string>
     <string name="pricing_title_member">Ia mai multe verdicte.</string>
-    <string name="pricing_lead_member">Alege un pachet sau treci pe planul lunar. Fiecare verdict primește echipa completă de judecători.</string>
     <string name="pricing_included_title">Fiecare verdict include</string>
     <string name="pricing_buy_title">Pachete și planul lunar</string>
     <string name="pricing_premium_f1">Faptele verificate pe web, cu sursele în verdict</string>
@@ -387,7 +379,6 @@
     <string name="evidence_remove">Elimină imaginea %1$s</string>
     <string name="evidence_thumb">Imaginea %1$s</string>
     <string name="evidence_preview">Ce am citit</string>
-    <string name="evidence_preview_note">Doar tu vezi asta. Numele sunt ascunse înainte să citească judecătorii.</string>
     <string name="evidence_status_unreadable">N-am găsit niciun text</string>
     <string name="evidence_status_refused">Cititorul a refuzat imaginea asta</string>
     <string name="evidence_status_unsupported">Nu e PNG, JPEG, WebP sau GIF</string>
@@ -414,8 +405,6 @@
     <string name="home_remove_their_side">Elimină cealaltă parte</string>
     <string name="home_send_link">Trimite un link</string>
     <string name="home_clear">Șterge</string>
-    <string name="home_lead">Scrie ambele părți sau trimite-i celeilalte persoane un link ca să-și scrie varianta.</string>
-    <string name="home_lead_solo">Scrie-ți partea și, dacă o știi, varianta celeilalte persoane.</string>
     <string name="home_their_side">Cealaltă parte</string>
     <string name="home_their_name">Numele celeilalte părți</string>
     <string name="home_their_placeholder">Ce zice cealaltă persoană? Scrie așa cum ar spune-o ea.</string>
@@ -689,7 +678,6 @@
     <string name="app_purchase_buying">Achiziție în curs…</string>
     <string name="app_purchase_success">Mulțumim! Achiziția a reușit.</string>
     <string name="app_purchase_pending">Achiziția ta e în curs de procesare. Poate dura un minut până apare.</string>
-    <string name="app_purchase_arriving">Creditele tale sunt pe drum…</string>
     <string name="app_purchase_slow">Poate dura un minut până apar aici.</string>
     <string name="app_purchase_failed">Achiziția n-a reușit. Încearcă din nou peste câteva clipe.</string>
     <string name="app_purchase_restore">Restaurează achizițiile</string>

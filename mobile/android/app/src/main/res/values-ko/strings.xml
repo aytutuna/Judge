@@ -38,7 +38,6 @@
     <string name="verdict_too_close">너무 팽팽해서 못 가려요</string>
     <string name="lean_title">굳이 고르자면: %1$s 쪽이 더 맞아요</string>
     <string name="lean_title_self">굳이 고르자면: 내가 더 맞아요</string>
-    <string name="lean_unanimous">판사 전원이 이쪽으로 기울었어요.</string>
     <string name="lean_majority">판사들이 이쪽으로 기울었어요 (%1$s–%2$s).</string>
     <string name="lean_tie">억지로 고르게 해도 판사들 의견이 딱 반으로 갈렸어요.</string>
     <string name="split_win">%1$s 쪽이 맞는 부분:</string>
@@ -70,7 +69,6 @@
     <plurals name="judges_voted">
         <item quantity="other">독립된 AI 판사 %1$s명의 투표:</item>
     </plurals>
-    <string name="escalated">박빙이라 판사를 더 불렀어요.</string>
     <string name="translate_loading">번역 중…</string>
     <string name="translate_from_en">영어에서 번역됨</string>
     <string name="translate_from_tr">튀르키예어에서 번역됨</string>
@@ -134,7 +132,6 @@
     <string name="footer_note">재미와 생각 정리를 위한 서비스예요. 법률 조언이 아니에요.</string>
     <string name="footer_language">언어</string>
     <string name="not_found_title">이 판결은 이미 법정을 떠났어요</string>
-    <string name="not_found_body">링크에 오타가 있거나 판결이 없어졌을 수 있어요.</string>
     <string name="nav_sign_in">로그인</string>
     <string name="nav_account">계정</string>
     <string name="nav_pricing">요금</string>
@@ -156,7 +153,6 @@
     <string name="consent_sensitive_continue">계속</string>
     <string name="respond_adult_confirm">만 18세 이상이에요</string>
     <string name="account_export">내 데이터 내려받기</string>
-    <string name="account_export_hint">Judge가 보관 중인 내 정보를 모두 JSON 파일로 받아요.</string>
     <string name="account_export_busy">파일을 준비하는 중이에요…</string>
     <string name="account_export_failed">지금은 데이터를 준비하지 못했어요. 다시 시도해 주시겠어요?</string>
     <string name="rating_prompt">공정한 판결인가요?</string>
@@ -176,7 +172,6 @@
     <string name="thinking_factcheck">웹에서 사실 확인하는 중…</string>
     <string name="thinking_factcheck_done">웹 확인 완료.</string>
     <string name="thinking_premium_helper">웹에서 사실을 확인하느라 조금 더 걸려요. 1~2분만 기다려 주세요.</string>
-    <string name="panel_premium">웹 사실 확인을 거친 판결이에요.</string>
     <string name="factcheck_title">웹에서 확인한 내용</string>
     <string name="factcheck_lead">판사들이 판결 전에 본 검색 결과예요. 판결 자체가 아니라 판결의 근거예요.</string>
     <string name="factcheck_status_supported">사실로 확인</string>
@@ -230,13 +225,10 @@
     <string name="account_delete_yes">네, 삭제할게요</string>
     <string name="account_delete_cancel">계정 유지</string>
     <string name="account_delete_failed">지금은 계정을 삭제하지 못했어요. 다시 한번 해 볼까요?</string>
-    <string name="account_sign_in_prompt">로그인하면 요금제와 크레딧을 볼 수 있어요.</string>
     <string name="account_load_failed">계정 정보를 불러오지 못했어요. 잠시 후 다시 시도해 주세요.</string>
     <string name="account_loading">계정 정보를 불러오는 중…</string>
     <string name="pricing_title">첫 판결은 무료예요.</string>
-    <string name="pricing_lead">계정을 만들면 첫 판결을 모든 기능 그대로 무료로 받을 수 있어요. 그다음엔 팩을 고르거나 월간 요금제를 이용해 보세요.</string>
     <string name="pricing_title_member">판결을 더 받아 보세요.</string>
-    <string name="pricing_lead_member">팩을 고르거나 월간 요금제를 이용해 보세요. 판결마다 판사단 전체가 참여해요.</string>
     <string name="pricing_included_title">모든 판결에 포함</string>
     <string name="pricing_buy_title">판결 팩과 월간 요금제</string>
     <string name="pricing_premium_f1">웹으로 사실을 확인하고, 판결에 출처까지 표시</string>
@@ -375,7 +367,6 @@
     <string name="evidence_remove">이미지 %1$s 삭제</string>
     <string name="evidence_thumb">이미지 %1$s</string>
     <string name="evidence_preview">읽어 낸 내용</string>
-    <string name="evidence_preview_note">나만 볼 수 있어요. 판사들이 읽기 전에 이름은 가려져요.</string>
     <string name="evidence_status_unreadable">읽을 수 있는 글자가 없어요</string>
     <string name="evidence_status_refused">읽기 도구가 이 이미지를 거절했어요</string>
     <string name="evidence_status_unsupported">PNG, JPEG, WebP, GIF 파일이 아니에요</string>
@@ -402,8 +393,6 @@
     <string name="home_remove_their_side">상대방 입장 삭제</string>
     <string name="home_send_link">링크 보내기</string>
     <string name="home_clear">지우기</string>
-    <string name="home_lead">양쪽 입장을 다 쓰거나, 상대방에게 링크를 보내서 직접 쓰게 해 보세요.</string>
-    <string name="home_lead_solo">내 입장을 쓰고, 상대방 입장도 알면 함께 써 주세요.</string>
     <string name="home_their_side">상대방 입장</string>
     <string name="home_their_name">상대방 이름</string>
     <string name="home_their_placeholder">상대방은 뭐라고 하나요? 상대방이 직접 말하듯이 써 주세요.</string>
@@ -659,7 +648,6 @@
     <string name="app_purchase_buying">구매 중…</string>
     <string name="app_purchase_success">감사해요! 구매가 완료됐어요.</string>
     <string name="app_purchase_pending">구매를 처리하고 있어요. 반영되기까지 1분 정도 걸릴 수 있어요.</string>
-    <string name="app_purchase_arriving">크레딧이 곧 들어와요…</string>
     <string name="app_purchase_slow">여기에 표시되기까지 1분 정도 걸릴 수 있어요.</string>
     <string name="app_purchase_failed">구매가 완료되지 않았어요. 잠시 후 다시 시도해 주세요.</string>
     <string name="app_purchase_restore">구매 복원</string>

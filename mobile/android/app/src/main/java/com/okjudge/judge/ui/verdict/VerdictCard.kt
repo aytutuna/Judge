@@ -702,14 +702,9 @@ private fun Slots(result: VerdictResult, parties: PartyLabels) {
                     Text(if (self) s.leanTitleSelf else s.leanTitle(name), style = JudgeType.slotTitle)
                 }
                 SlotText(l.reason)
-                if (result.runs.size >= 2) {
-                    val text = if (l.unanimous) {
-                        s.leanUnanimous
-                    } else {
-                        val t = VerdictDisplay.leanTally(l, result.runs.size)
-                        s.leanMajority(t.forVotes.toString(), t.against.toString())
-                    }
-                    SlotText(text)
+                if (result.runs.size >= 2 && !l.unanimous) {
+                    val t = VerdictDisplay.leanTally(l, result.runs.size)
+                    SlotText(s.leanMajority(t.forVotes.toString(), t.against.toString()))
                 }
             }
             LeanState.Tie -> Slot { SlotText(s.leanTie) }
@@ -960,16 +955,12 @@ private fun Footnote(result: VerdictResult, parties: PartyLabels) {
     if (result.runs.isEmpty()) return
     val s = LocalStrings.current
     val lines = buildList {
-        if (result.escalated == true) add(s.escalated)
         val votes = if (result.isMany) {
             (result.votes ?: emptyList()).joinToString(" · ") { manyVoteName(it, parties, s) }
         } else {
             result.runs.joinToString(" · ") { voteName(it, parties, s) }
         }
         add("${s.judgesVoted(result.runs.size)} $votes")
-        if (result.premium && result.factCheck?.status == "checked") {
-            add(s.panelPremium)
-        }
         VerdictDisplay.evidenceNote(result, s)?.let { add(it) }
     }
     Text(

@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Liian tasaväkinen ratkaistavaksi</string>
     <string name="lean_title">Jos on pakko valita: %1$s on enemmän oikeassa</string>
     <string name="lean_title_self">Jos on pakko valita: sinä olet enemmän oikeassa</string>
-    <string name="lean_unanimous">Kaikki tuomarit kallistuivat tälle puolelle.</string>
     <string name="lean_majority">Tuomarit kallistuivat tälle puolelle äänin %1$s–%2$s.</string>
     <string name="lean_tie">Vaikka tuomarit pakotettiin valitsemaan, äänet menivät tasan.</string>
     <string name="split_win">%1$s on oikeassa tässä:</string>
@@ -71,7 +70,6 @@
         <item quantity="one">%1$s riippumatonta tekoälytuomaria äänesti:</item>
         <item quantity="other">%1$s riippumatonta tekoälytuomaria äänesti:</item>
     </plurals>
-    <string name="escalated">Oli tiukkaa, joten kutsuimme lisää tuomareita.</string>
     <string name="translate_loading">Käännetään…</string>
     <string name="translate_from_en">Käännetty englannista</string>
     <string name="translate_from_tr">Käännetty turkista</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">Hauskanpitoon ja selkeyteen, ei oikeudellista neuvontaa.</string>
     <string name="footer_language">Kieli</string>
     <string name="not_found_title">Tämä tuomio on jo poistunut salista</string>
-    <string name="not_found_body">Linkissä voi olla kirjoitusvirhe, tai tuomiota ei enää ole.</string>
     <string name="nav_sign_in">Kirjaudu</string>
     <string name="nav_account">Tili</string>
     <string name="nav_pricing">Hinnat</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">Jatka</string>
     <string name="respond_adult_confirm">Olen 18-vuotias tai vanhempi</string>
     <string name="account_export">Lataa tietoni</string>
-    <string name="account_export_hint">Saat JSON-tiedoston, jossa on kaikki, mitä Judge säilyttää sinusta.</string>
     <string name="account_export_busy">Valmistellaan tiedostoa…</string>
     <string name="account_export_failed">Tietojasi ei voitu valmistella juuri nyt. Yritätkö uudelleen?</string>
     <string name="rating_prompt">Oikeudenmukainen tuomio?</string>
@@ -179,7 +175,6 @@
     <string name="thinking_factcheck">Tarkistetaan faktoja verkosta…</string>
     <string name="thinking_factcheck_done">Verkkotarkistus valmis.</string>
     <string name="thinking_premium_helper">Faktojen tarkistaminen verkosta vie vähän pidempään. Anna sille minuutti tai kaksi.</string>
-    <string name="panel_premium">Faktat tarkistettu verkosta ennen ratkaisua.</string>
     <string name="factcheck_title">Tarkistettu verkosta</string>
     <string name="factcheck_lead">Tuomarit näkivät nämä hakutulokset ennen ratkaisua. Ne ovat todisteita, eivät itse tuomio.</string>
     <string name="factcheck_status_supported">Pitää paikkansa</string>
@@ -233,13 +228,10 @@
     <string name="account_delete_yes">Kyllä, poista</string>
     <string name="account_delete_cancel">Älä poista</string>
     <string name="account_delete_failed">Tilin poistaminen ei onnistunut juuri nyt. Yritä uudelleen.</string>
-    <string name="account_sign_in_prompt">Kirjaudu, niin näet tilauksesi ja saldosi.</string>
     <string name="account_load_failed">Tiliäsi ei saatu ladattua. Yritä hetken päästä uudelleen.</string>
     <string name="account_loading">Ladataan tiliäsi…</string>
     <string name="pricing_title">Ensimmäinen tuomio on meiltä.</string>
-    <string name="pricing_lead">Luo tili, niin ensimmäinen tuomiosi on ilmainen kaikkine ominaisuuksineen. Sen jälkeen voit valita paketin tai kuukausitilauksen.</string>
     <string name="pricing_title_member">Hanki lisää tuomioita.</string>
-    <string name="pricing_lead_member">Valitse paketti tai kuukausitilaus. Jokaisen tuomion ratkaisee koko tuomaristö.</string>
     <string name="pricing_included_title">Jokaisessa tuomiossa</string>
     <string name="pricing_buy_title">Paketit ja kuukausitilaus</string>
     <string name="pricing_premium_f1">Faktat tarkistetaan verkosta, ja lähteet näkyvät tuomiossasi</string>
@@ -381,7 +373,6 @@
     <string name="evidence_remove">Poista kuva %1$s</string>
     <string name="evidence_thumb">Kuva %1$s</string>
     <string name="evidence_preview">Mitä luimme</string>
-    <string name="evidence_preview_note">Vain sinä näet tämän. Nimet piilotetaan ennen kuin tuomarit lukevat sen.</string>
     <string name="evidence_status_unreadable">Tekstiä ei löytynyt</string>
     <string name="evidence_status_refused">Lukija ei suostunut käsittelemään tätä kuvaa</string>
     <string name="evidence_status_unsupported">Ei PNG, JPEG, WebP tai GIF</string>
@@ -408,8 +399,6 @@
     <string name="home_remove_their_side">Poista toisen puoli</string>
     <string name="home_send_link">Lähetä linkki</string>
     <string name="home_clear">Tyhjennä</string>
-    <string name="home_lead">Kirjoita molemmat puolet tai lähetä toiselle linkki, niin hän kirjoittaa omansa.</string>
-    <string name="home_lead_solo">Kirjoita oma puolesi ja toisen puoli, jos tiedät sen.</string>
     <string name="home_their_side">Toisen puoli</string>
     <string name="home_their_name">Toisen nimi</string>
     <string name="home_their_placeholder">Mitä toinen sanoo? Kirjoita se niin kuin hän itse sen sanoisi.</string>
@@ -674,7 +663,6 @@
     <string name="app_purchase_buying">Ostetaan…</string>
     <string name="app_purchase_success">Kiitos! Ostos onnistui.</string>
     <string name="app_purchase_pending">Ostostasi käsitellään. Voi kestää hetken, ennen kuin se näkyy.</string>
-    <string name="app_purchase_arriving">Tuomiosi ovat tulossa…</string>
     <string name="app_purchase_slow">Voi kestää hetken, ennen kuin ne näkyvät täällä.</string>
     <string name="app_purchase_failed">Ostos ei onnistunut. Yritä hetken päästä uudelleen.</string>
     <string name="app_purchase_restore">Palauta ostokset</string>

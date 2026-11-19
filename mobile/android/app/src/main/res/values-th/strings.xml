@@ -38,7 +38,6 @@
     <string name="verdict_too_close">สูสีจนตัดสินไม่ได้</string>
     <string name="lean_title">ถ้าต้องฟันธง: %1$s ถูกกว่า</string>
     <string name="lean_title_self">ถ้าต้องฟันธง: คุณถูกกว่า</string>
-    <string name="lean_unanimous">กรรมการทุกคนเอนมาทางนี้</string>
     <string name="lean_majority">กรรมการเอนมาทางนี้ %1$s–%2$s</string>
     <string name="lean_tie">ต่อให้ต้องฟันธง กรรมการก็ยังแบ่งกันครึ่งต่อครึ่ง</string>
     <string name="split_win">ข้อที่ %1$s ถูก:</string>
@@ -70,7 +69,6 @@
     <plurals name="judges_voted">
         <item quantity="other">กรรมการ AI อิสระ %1$s คนโหวต:</item>
     </plurals>
-    <string name="escalated">ผลสูสี เลยเรียกกรรมการมาเพิ่ม</string>
     <string name="translate_loading">กำลังแปล…</string>
     <string name="translate_from_en">แปลจากภาษาอังกฤษ</string>
     <string name="translate_from_tr">แปลจากภาษาตุรกี</string>
@@ -134,7 +132,6 @@
     <string name="footer_note">เพื่อความสนุกและความชัดเจน ไม่ใช่คำปรึกษาทางกฎหมาย</string>
     <string name="footer_language">ภาษา</string>
     <string name="not_found_title">คำตัดสินนี้หายไปจากสารบบแล้ว</string>
-    <string name="not_found_body">ลิงก์อาจพิมพ์ผิด หรือคำตัดสินถูกลบไปแล้ว</string>
     <string name="nav_sign_in">เข้าสู่ระบบ</string>
     <string name="nav_account">บัญชี</string>
     <string name="nav_pricing">ราคา</string>
@@ -156,7 +153,6 @@
     <string name="consent_sensitive_continue">ไปต่อ</string>
     <string name="respond_adult_confirm">ฉันอายุ 18 ปีขึ้นไป</string>
     <string name="account_export">ดาวน์โหลดข้อมูลของฉัน</string>
-    <string name="account_export_hint">รับไฟล์ JSON ที่มีทุกอย่างที่ Judge เก็บไว้เกี่ยวกับคุณ</string>
     <string name="account_export_busy">กำลังเตรียมไฟล์ของคุณ…</string>
     <string name="account_export_failed">ตอนนี้เตรียมข้อมูลของคุณไม่ได้ ลองอีกครั้งไหม</string>
     <string name="rating_prompt">คำตัดสินยุติธรรมไหม</string>
@@ -176,7 +172,6 @@
     <string name="thinking_factcheck">กำลังเช็กข้อเท็จจริงบนเว็บ…</string>
     <string name="thinking_factcheck_done">เช็กบนเว็บเสร็จแล้ว</string>
     <string name="thinking_premium_helper">การเช็กข้อเท็จจริงบนเว็บใช้เวลานานขึ้นอีกหน่อย รอสักนาทีสองนาทีนะ</string>
-    <string name="panel_premium">ตัดสินพร้อมเช็กข้อเท็จจริงบนเว็บ</string>
     <string name="factcheck_title">เช็กบนเว็บแล้ว</string>
     <string name="factcheck_lead">กรรมการเห็นผลการค้นหาเหล่านี้ก่อนตัดสิน ผลเหล่านี้เป็นหลักฐาน ไม่ใช่ตัวคำตัดสิน</string>
     <string name="factcheck_status_supported">จริง</string>
@@ -230,13 +225,10 @@
     <string name="account_delete_yes">ใช่ ลบเลย</string>
     <string name="account_delete_cancel">เก็บบัญชีไว้</string>
     <string name="account_delete_failed">ตอนนี้ลบบัญชีไม่ได้ ลองอีกครั้งนะ</string>
-    <string name="account_sign_in_prompt">เข้าสู่ระบบเพื่อดูแพ็กเกจและเครดิตของคุณ</string>
     <string name="account_load_failed">โหลดบัญชีไม่ได้ ลองใหม่อีกสักครู่</string>
     <string name="account_loading">กำลังโหลดบัญชีของคุณ…</string>
     <string name="pricing_title">คำตัดสินแรก เราเลี้ยงเอง</string>
-    <string name="pricing_lead">สร้างบัญชีแล้วรับคำตัดสินแรกฟรี ใช้ได้ทุกฟีเจอร์ หลังจากนั้นเลือกแพ็กเครดิตหรือสมัครรายเดือน</string>
     <string name="pricing_title_member">เติมคำตัดสิน</string>
-    <string name="pricing_lead_member">เลือกแพ็กเครดิตหรือสมัครรายเดือน ทุกคำตัดสินได้กรรมการครบชุด</string>
     <string name="pricing_included_title">ในทุกคำตัดสิน</string>
     <string name="pricing_buy_title">แพ็กเครดิตและแพ็กเกจรายเดือน</string>
     <string name="pricing_premium_f1">เช็กข้อเท็จจริงบนเว็บ พร้อมแหล่งข้อมูลในคำตัดสิน</string>
@@ -375,7 +367,6 @@
     <string name="evidence_remove">ลบภาพที่ %1$s</string>
     <string name="evidence_thumb">ภาพที่ %1$s</string>
     <string name="evidence_preview">สิ่งที่เราอ่านได้</string>
-    <string name="evidence_preview_note">มีแค่คุณที่เห็นส่วนนี้ ชื่อจะถูกซ่อนก่อนที่กรรมการจะอ่าน</string>
     <string name="evidence_status_unreadable">อ่านข้อความไม่ได้เลย</string>
     <string name="evidence_status_refused">ระบบอ่านภาพไม่รับภาพนี้</string>
     <string name="evidence_status_unsupported">ไม่ใช่ไฟล์ PNG, JPEG, WebP หรือ GIF</string>
@@ -402,8 +393,6 @@
     <string name="home_remove_their_side">ลบฝั่งของเขา</string>
     <string name="home_send_link">ส่งลิงก์</string>
     <string name="home_clear">ล้าง</string>
-    <string name="home_lead">เขียนทั้งสองฝั่งเลย หรือส่งลิงก์ให้อีกฝ่ายมาเขียนฝั่งของเขาเอง</string>
-    <string name="home_lead_solo">เขียนฝั่งของคุณ และฝั่งของเขาด้วยถ้าคุณรู้</string>
     <string name="home_their_side">ฝั่งของเขา</string>
     <string name="home_their_name">ชื่อของเขา</string>
     <string name="home_their_placeholder">เขาว่ายังไง? เขียนแบบที่เขาจะพูดเอง</string>
@@ -659,7 +648,6 @@
     <string name="app_purchase_buying">กำลังซื้อ…</string>
     <string name="app_purchase_success">ขอบคุณ! ซื้อสำเร็จแล้ว</string>
     <string name="app_purchase_pending">กำลังดำเนินการคำสั่งซื้อของคุณ อาจใช้เวลาสักครู่กว่าจะขึ้น</string>
-    <string name="app_purchase_arriving">เครดิตของคุณกำลังมา…</string>
     <string name="app_purchase_slow">อาจใช้เวลาสักครู่กว่าจะขึ้นที่นี่</string>
     <string name="app_purchase_failed">ซื้อไม่สำเร็จ ลองใหม่อีกสักครู่</string>
     <string name="app_purchase_restore">กู้คืนการซื้อ</string>

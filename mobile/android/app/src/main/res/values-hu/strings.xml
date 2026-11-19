@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Fej fej mellett</string>
     <string name="lean_title">Kényszerdöntés: inkább %1$s nyer</string>
     <string name="lean_title_self">Kényszerdöntés: inkább te nyersz</string>
-    <string name="lean_unanimous">Minden bíró erre hajlott.</string>
     <string name="lean_majority">A bírák %1$s–%2$s arányban erre hajlottak.</string>
     <string name="lean_tie">Döntésre kényszerítve is pontosan kettéoszlottak a bírák.</string>
     <string name="split_win">Ebben %1$s nyer:</string>
@@ -71,7 +70,6 @@
         <item quantity="one">%1$s független MI-bíró szavazott:</item>
         <item quantity="other">%1$s független MI-bíró szavazott:</item>
     </plurals>
-    <string name="escalated">Szoros volt, ezért további bírákat is behívtunk.</string>
     <string name="translate_loading">Fordítás…</string>
     <string name="translate_from_en">Angolból fordítva</string>
     <string name="translate_from_tr">Törökből fordítva</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">Szórakozásra és tisztánlátásra, nem jogi tanács.</string>
     <string name="footer_language">Nyelv</string>
     <string name="not_found_title">Ez az ítélet már elhagyta a tárgyalótermet</string>
-    <string name="not_found_body">Lehet, hogy elírás van a linkben, vagy az ítélet már nincs meg.</string>
     <string name="nav_sign_in">Belépés</string>
     <string name="nav_account">Fiók</string>
     <string name="nav_pricing">Árak</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">Tovább</string>
     <string name="respond_adult_confirm">Legalább 18 éves vagyok</string>
     <string name="account_export">Adataim letöltése</string>
-    <string name="account_export_hint">Kapj egy JSON-fájlt mindennel, amit a Judge rólad tárol.</string>
     <string name="account_export_busy">A fájl előkészítése…</string>
     <string name="account_export_failed">Most nem tudtuk előkészíteni az adataidat. Megpróbálod újra?</string>
     <string name="rating_prompt">Igazságos ítélet?</string>
@@ -179,7 +175,6 @@
     <string name="thinking_factcheck">Ellenőrizzük a tényeket a neten…</string>
     <string name="thinking_factcheck_done">Kész a netes ellenőrzés.</string>
     <string name="thinking_premium_helper">A netes tényellenőrzés kicsit tovább tart, akár egy-két percig is.</string>
-    <string name="panel_premium">Netes tényellenőrzéssel ítélve.</string>
     <string name="factcheck_title">Ellenőrizve a neten</string>
     <string name="factcheck_lead">A bírák ezeket a keresési találatokat látták, mielőtt döntöttek. Ezek bizonyítékok, nem maga az ítélet.</string>
     <string name="factcheck_status_supported">Stimmel</string>
@@ -233,13 +228,10 @@
     <string name="account_delete_yes">Igen, törlöm</string>
     <string name="account_delete_cancel">Megtartom a fiókot</string>
     <string name="account_delete_failed">Most nem sikerült törölni a fiókot. Megpróbálod újra?</string>
-    <string name="account_sign_in_prompt">Lépj be, hogy lásd az előfizetésedet és a kreditjeidet.</string>
     <string name="account_load_failed">Nem sikerült betölteni a fiókodat. Próbáld újra egy kicsit később.</string>
     <string name="account_loading">Fiók betöltése…</string>
     <string name="pricing_title">Az első ítélet ajándék.</string>
-    <string name="pricing_lead">Hozz létre egy fiókot, és az első ítéleted ingyenes, minden funkcióval. Utána válassz csomagot, vagy fizess elő havonta.</string>
     <string name="pricing_title_member">Még több ítélet.</string>
-    <string name="pricing_lead_member">Válassz csomagot, vagy fizess elő havonta. Minden ítéletnél a teljes bírói testület dönt.</string>
     <string name="pricing_included_title">Minden ítéletben</string>
     <string name="pricing_buy_title">Csomagok és havi előfizetés</string>
     <string name="pricing_premium_f1">Netes tényellenőrzés, forrásokkal az ítéletben</string>
@@ -381,7 +373,6 @@
     <string name="evidence_remove">%1$s. kép eltávolítása</string>
     <string name="evidence_thumb">%1$s. kép</string>
     <string name="evidence_preview">Amit kiolvastunk</string>
-    <string name="evidence_preview_note">Ezt csak te látod. A neveket elrejtjük, mielőtt a bírák elolvassák.</string>
     <string name="evidence_status_unreadable">Nem találtunk benne szöveget</string>
     <string name="evidence_status_refused">A beolvasó nem dolgozta fel ezt a képet</string>
     <string name="evidence_status_unsupported">Nem PNG, JPEG, WebP vagy GIF</string>
@@ -408,8 +399,6 @@
     <string name="home_remove_their_side">Vedd ki az ő verzióját</string>
     <string name="home_send_link">Küldj linket</string>
     <string name="home_clear">Törlés</string>
-    <string name="home_lead">Írd le mindkét fél verzióját, vagy küldj egy linket a másiknak, hogy ő írja meg a sajátját.</string>
-    <string name="home_lead_solo">Írd le a te verziódat, és az övét is, ha ismered.</string>
     <string name="home_their_side">Az ő verziója</string>
     <string name="home_their_name">Az ő neve</string>
     <string name="home_their_placeholder">Mit mond ő? Írd le úgy, ahogy ő mondaná.</string>
@@ -674,7 +663,6 @@
     <string name="app_purchase_buying">Vásárlás…</string>
     <string name="app_purchase_success">Köszönjük! Sikeres volt a vásárlás.</string>
     <string name="app_purchase_pending">A vásárlásod feldolgozás alatt van. Eltarthat egy percig, mire megjelenik.</string>
-    <string name="app_purchase_arriving">Úton vannak a kreditjeid…</string>
     <string name="app_purchase_slow">Eltarthat egy percig, mire itt megjelenik.</string>
     <string name="app_purchase_failed">A vásárlás nem sikerült. Próbáld újra egy kicsit később.</string>
     <string name="app_purchase_restore">Vásárlások visszaállítása</string>

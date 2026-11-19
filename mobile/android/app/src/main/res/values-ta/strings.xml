@@ -38,7 +38,6 @@
     <string name="verdict_too_close">இழுபறி: முடிவு சொல்ல முடியவில்லை</string>
     <string name="lean_title">கட்டாயத் தீர்ப்பு: %1$s பக்கம் நியாயம் அதிகம்</string>
     <string name="lean_title_self">கட்டாயத் தீர்ப்பு: உங்கள் பக்கம் நியாயம் அதிகம்</string>
-    <string name="lean_unanimous">எல்லா நடுவர்களும் இந்தப் பக்கமே சாய்ந்தார்கள்.</string>
     <string name="lean_majority">நடுவர்கள் %1$s–%2$s என்ற கணக்கில் இந்தப் பக்கம் சாய்ந்தார்கள்.</string>
     <string name="lean_tie">ஒரு பக்கத்தைத் தேர்ந்தெடுக்கச் சொன்னபோதும், நடுவர்கள் சரிபாதியாகப் பிரிந்தார்கள்.</string>
     <string name="split_win">%1$s சொல்வது இதில் சரி:</string>
@@ -71,7 +70,6 @@
         <item quantity="one">%1$s தனித்தனி AI நடுவர்கள் வாக்களித்தார்கள்:</item>
         <item quantity="other">%1$s தனித்தனி AI நடுவர்கள் வாக்களித்தார்கள்:</item>
     </plurals>
-    <string name="escalated">இழுபறியாக இருந்ததால் கூடுதல் நடுவர்களை அழைத்தோம்.</string>
     <string name="translate_loading">மொழிபெயர்க்கிறோம்…</string>
     <string name="translate_from_en">ஆங்கிலத்திலிருந்து மொழிபெயர்க்கப்பட்டது</string>
     <string name="translate_from_tr">துருக்கிஷ் மொழியிலிருந்து மொழிபெயர்க்கப்பட்டது</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">விளையாட்டுக்கும் தெளிவுக்கும்தான், சட்ட ஆலோசனை அல்ல.</string>
     <string name="footer_language">மொழி</string>
     <string name="not_found_title">இந்தத் தீர்ப்பு மன்றத்தை விட்டுப் போய்விட்டது</string>
-    <string name="not_found_body">லிங்கில் எழுத்துப்பிழை இருக்கலாம், அல்லது தீர்ப்பு இப்போது இல்லை.</string>
     <string name="nav_sign_in">உள்நுழைக</string>
     <string name="nav_account">கணக்கு</string>
     <string name="nav_pricing">விலை</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">தொடர்க</string>
     <string name="respond_adult_confirm">எனக்கு 18 வயது அல்லது அதற்கு மேல்</string>
     <string name="account_export">என் தரவைப் பதிவிறக்கு</string>
-    <string name="account_export_hint">Judge உங்களைப் பற்றி வைத்திருக்கும் அனைத்தையும் ஒரு JSON கோப்பாகப் பெறுங்கள்.</string>
     <string name="account_export_busy">உங்கள் கோப்பு தயாராகிறது…</string>
     <string name="account_export_failed">இப்போது உங்கள் தரவைத் தயாரிக்க முடியவில்லை. மீண்டும் முயல்வீர்களா?</string>
     <string name="rating_prompt">தீர்ப்பு நியாயமானதா?</string>
@@ -179,7 +175,6 @@
     <string name="thinking_factcheck">உண்மைகளை இணையத்தில் சரிபார்க்கிறோம்…</string>
     <string name="thinking_factcheck_done">இணையச் சரிபார்ப்பு முடிந்தது.</string>
     <string name="thinking_premium_helper">இணையத்தில் உண்மைகளைச் சரிபார்க்க இன்னும் கொஞ்சம் நேரம் ஆகும். ஒன்றிரண்டு நிமிடங்கள் கொடுங்கள்.</string>
-    <string name="panel_premium">இணையச் சரிபார்ப்புடன் தீர்ப்பளிக்கப்பட்டது.</string>
     <string name="factcheck_title">இணையத்தில் சரிபார்க்கப்பட்டது</string>
     <string name="factcheck_lead">தீர்ப்பு சொல்வதற்கு முன் நடுவர்கள் இந்தத் தேடல் முடிவுகளைப் பார்த்தார்கள். இவை ஆதாரங்கள், தீர்ப்பு அல்ல.</string>
     <string name="factcheck_status_supported">உண்மைதான்</string>
@@ -233,13 +228,10 @@
     <string name="account_delete_yes">ஆம், நீக்கு</string>
     <string name="account_delete_cancel">கணக்கு இருக்கட்டும்</string>
     <string name="account_delete_failed">இப்போது கணக்கை நீக்க முடியவில்லை. மீண்டும் முயல்கிறீர்களா?</string>
-    <string name="account_sign_in_prompt">உங்கள் பிளானையும் கிரெடிட்களையும் பார்க்க உள்நுழையுங்கள்.</string>
     <string name="account_load_failed">உங்கள் கணக்கை ஏற்ற முடியவில்லை. சிறிது நேரத்தில் மீண்டும் முயலுங்கள்.</string>
     <string name="account_loading">உங்கள் கணக்கை ஏற்றுகிறோம்…</string>
     <string name="pricing_title">முதல் தீர்ப்பு எங்கள் செலவில்.</string>
-    <string name="pricing_lead">கணக்கைத் தொடங்குங்கள், முதல் தீர்ப்பு எல்லா அம்சங்களுடனும் இலவசம். அதன் பிறகு ஒரு பேக்கைத் தேர்ந்தெடுங்கள் அல்லது மாதாந்திர பிளானுக்கு மாறுங்கள்.</string>
     <string name="pricing_title_member">இன்னும் தீர்ப்புகள் பெறுங்கள்.</string>
-    <string name="pricing_lead_member">ஒரு பேக்கைத் தேர்ந்தெடுங்கள் அல்லது மாதாந்திர பிளானுக்கு மாறுங்கள். ஒவ்வொரு தீர்ப்புக்கும் முழு நடுவர் குழு.</string>
     <string name="pricing_included_title">ஒவ்வொரு தீர்ப்பிலும்</string>
     <string name="pricing_buy_title">பேக்குகளும் மாதாந்திர பிளானும்</string>
     <string name="pricing_premium_f1">உண்மைகள் இணையத்தில் சரிபார்க்கப்படும், மூலங்கள் உங்கள் தீர்ப்பில் இருக்கும்</string>
@@ -381,7 +373,6 @@
     <string name="evidence_remove">%1$s-வது படத்தை நீக்கு</string>
     <string name="evidence_thumb">படம் %1$s</string>
     <string name="evidence_preview">நாங்கள் படித்தது</string>
-    <string name="evidence_preview_note">இது உங்களுக்கு மட்டுமே தெரியும். நடுவர்கள் படிக்கும் முன் பெயர்கள் மறைக்கப்படும்.</string>
     <string name="evidence_status_unreadable">எந்த உரையையும் படிக்க முடியவில்லை</string>
     <string name="evidence_status_refused">இந்தப் படத்தைப் படிக்க மறுக்கப்பட்டது</string>
     <string name="evidence_status_unsupported">PNG, JPEG, WebP அல்லது GIF அல்ல</string>
@@ -408,8 +399,6 @@
     <string name="home_remove_their_side">மறுதரப்பை நீக்கவும்</string>
     <string name="home_send_link">லிங்க் அனுப்புங்க</string>
     <string name="home_clear">அழி</string>
-    <string name="home_lead">இரு தரப்பையும் எழுதுங்கள், அல்லது மற்றவர் தன் தரப்பை எழுத அவருக்கு ஒரு லிங்க் அனுப்புங்கள்.</string>
-    <string name="home_lead_solo">உங்கள் தரப்பை எழுதுங்கள், தெரிந்தால் மறுதரப்பையும்.</string>
     <string name="home_their_side">மறுதரப்பு</string>
     <string name="home_their_name">மற்றவர் பெயர்</string>
     <string name="home_their_placeholder">அவர்கள் என்ன சொல்கிறார்கள்? அவர்கள் சொல்வதுபோலவே எழுதுங்கள்.</string>
@@ -674,7 +663,6 @@
     <string name="app_purchase_buying">வாங்கப்படுகிறது…</string>
     <string name="app_purchase_success">நன்றி! வாங்குதல் வெற்றிகரமாக முடிந்தது.</string>
     <string name="app_purchase_pending">உங்கள் வாங்குதல் செயலாக்கப்படுகிறது. அது தெரிய ஒரு நிமிடம் ஆகலாம்.</string>
-    <string name="app_purchase_arriving">உங்கள் கிரெடிட்கள் வந்துகொண்டிருக்கின்றன…</string>
     <string name="app_purchase_slow">இங்கே தெரிய ஒரு நிமிடம் ஆகலாம்.</string>
     <string name="app_purchase_failed">வாங்குதல் நடக்கவில்லை. சிறிது நேரத்தில் மீண்டும் முயலுங்கள்.</string>
     <string name="app_purchase_restore">வாங்கியவற்றை மீட்டெடு</string>

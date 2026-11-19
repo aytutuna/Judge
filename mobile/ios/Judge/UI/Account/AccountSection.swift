@@ -66,9 +66,6 @@ struct AccountSection: View {
 
     private func signedOut(_ lang: AppLang) -> some View {
         Group {
-            Text(L10n.accountSignInPrompt(lang))
-                .brandText(.body)
-                .foregroundStyle(Brand.ink2)
             actionRow(L10n.signinTitle(lang), busy: false, color: Brand.terraInk) {
                 app.account.presentSignIn()
             }
@@ -204,9 +201,11 @@ struct AccountView: View {
                 .buttonStyle(.plain)
                 .disabled(exporting)
             } footer: {
-                Text(exportFailed ? L10n.accountExportFailed(lang) : L10n.accountExportHint(lang))
-                    .brandText(.footnote)
-                    .foregroundStyle(exportFailed ? Brand.danger : Brand.muted)
+                if exportFailed {
+                    Text(L10n.accountExportFailed(lang))
+                        .brandText(.footnote)
+                        .foregroundStyle(Brand.danger)
+                }
             }
             .listRowBackground(Brand.paper)
         }

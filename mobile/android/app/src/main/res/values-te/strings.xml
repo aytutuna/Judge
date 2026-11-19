@@ -38,7 +38,6 @@
     <string name="verdict_too_close">హోరాహోరీ, తేల్చలేం</string>
     <string name="lean_title">బలవంతపు తీర్పు: %1$s మాటే కాస్త ఎక్కువ కరెక్ట్</string>
     <string name="lean_title_self">బలవంతపు తీర్పు: మీ మాటే కాస్త ఎక్కువ కరెక్ట్</string>
-    <string name="lean_unanimous">జడ్జీలంతా ఇటువైపే మొగ్గారు.</string>
     <string name="lean_majority">జడ్జీలు %1$s–%2$s తేడాతో ఇటువైపు మొగ్గారు.</string>
     <string name="lean_tie">ఎంచుకోమని నొక్కి అడిగినా, జడ్జీలు సరిగ్గా సగం సగం చీలిపోయారు.</string>
     <string name="split_win">ఈ విషయంలో %1$s మాటే కరెక్ట్:</string>
@@ -71,7 +70,6 @@
         <item quantity="one">%1$s స్వతంత్ర AI జడ్జీలు ఓటు వేశారు:</item>
         <item quantity="other">%1$s స్వతంత్ర AI జడ్జీలు ఓటు వేశారు:</item>
     </plurals>
-    <string name="escalated">పోటీ హోరాహోరీగా ఉంది, అందుకే ఇంకొందరు జడ్జీలను పిలిచాం.</string>
     <string name="translate_loading">అనువదిస్తున్నాం…</string>
     <string name="translate_from_en">ఇంగ్లీష్ నుంచి అనువాదం</string>
     <string name="translate_from_tr">టర్కిష్ నుంచి అనువాదం</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">సరదా కోసం, స్పష్టత కోసం. న్యాయ సలహా కాదు.</string>
     <string name="footer_language">భాష</string>
     <string name="not_found_title">ఈ తీర్పు కోర్టు వదిలి వెళ్లిపోయింది</string>
-    <string name="not_found_body">లింక్‌లో అక్షర దోషం ఉండొచ్చు, లేదా ఆ తీర్పు ఇప్పుడు లేకపోవచ్చు.</string>
     <string name="nav_sign_in">సైన్ ఇన్</string>
     <string name="nav_account">అకౌంట్</string>
     <string name="nav_pricing">ధరలు</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">కొనసాగండి</string>
     <string name="respond_adult_confirm">నాకు 18 ఏళ్లు లేదా అంతకంటే ఎక్కువ</string>
     <string name="account_export">నా డేటాను డౌన్‌లోడ్ చేయండి</string>
-    <string name="account_export_hint">Judge మీ గురించి ఉంచిన ప్రతిదీ ఒక JSON ఫైల్‌లో పొందండి.</string>
     <string name="account_export_busy">మీ ఫైల్ సిద్ధమవుతోంది…</string>
     <string name="account_export_failed">ఇప్పుడు మీ డేటా సిద్ధం చేయలేకపోయాం. మళ్లీ ప్రయత్నిస్తారా?</string>
     <string name="rating_prompt">తీర్పు న్యాయంగా ఉందా?</string>
@@ -179,7 +175,6 @@
     <string name="thinking_factcheck">వెబ్‌లో వాస్తవాలు చెక్ చేస్తున్నాం…</string>
     <string name="thinking_factcheck_done">వెబ్ చెక్ పూర్తయింది.</string>
     <string name="thinking_premium_helper">వెబ్‌లో వాస్తవాలు చెక్ చేయడానికి కాస్త ఎక్కువ టైమ్ పడుతుంది. ఒకటి రెండు నిమిషాలు ఆగండి.</string>
-    <string name="panel_premium">వెబ్‌లో వాస్తవాలు చెక్ చేసి జడ్జ్ చేశాం.</string>
     <string name="factcheck_title">వెబ్‌లో చెక్ చేసినవి</string>
     <string name="factcheck_lead">తీర్పు చెప్పే ముందు జడ్జీలు ఈ సెర్చ్ ఫలితాలు చూశారు. ఇవి ఆధారాలు మాత్రమే, తీర్పు కాదు.</string>
     <string name="factcheck_status_supported">నిజమే</string>
@@ -233,13 +228,10 @@
     <string name="account_delete_yes">అవును, డిలీట్ చేయండి</string>
     <string name="account_delete_cancel">నా అకౌంట్ ఉంచండి</string>
     <string name="account_delete_failed">ఇప్పుడు అకౌంట్ డిలీట్ చేయలేకపోయాం. ఇంకోసారి ప్రయత్నిస్తారా?</string>
-    <string name="account_sign_in_prompt">మీ ప్లాన్, క్రెడిట్లు చూడటానికి సైన్ ఇన్ చేయండి.</string>
     <string name="account_load_failed">మీ అకౌంట్ లోడ్ కాలేదు. కాసేపాగి మళ్లీ ప్రయత్నించండి.</string>
     <string name="account_loading">మీ అకౌంట్ లోడ్ అవుతోంది…</string>
     <string name="pricing_title">మీ మొదటి తీర్పు మా ఖాతాలో.</string>
-    <string name="pricing_lead">అకౌంట్ తెరవండి, మీ మొదటి తీర్పు ఉచితం, అన్ని ఫీచర్లతో. ఆ తర్వాత ఒక ప్యాక్ ఎంచుకోండి, లేదా నెలవారీ ప్లాన్ తీసుకోండి.</string>
     <string name="pricing_title_member">ఇంకా తీర్పులు తీసుకోండి.</string>
-    <string name="pricing_lead_member">ఒక ప్యాక్ ఎంచుకోండి, లేదా నెలవారీ ప్లాన్ తీసుకోండి. ప్రతి తీర్పుకూ పూర్తి జడ్జీల బృందం ఉంటుంది.</string>
     <string name="pricing_included_title">ప్రతి తీర్పులో</string>
     <string name="pricing_buy_title">ప్యాక్‌లు, నెలవారీ ప్లాన్</string>
     <string name="pricing_premium_f1">వెబ్‌లో వాస్తవాల చెక్, సోర్సులు మీ తీర్పులోనే</string>
@@ -381,7 +373,6 @@
     <string name="evidence_remove">ఇమేజ్ %1$s తీసేయండి</string>
     <string name="evidence_thumb">ఇమేజ్ %1$s</string>
     <string name="evidence_preview">మేం చదివింది</string>
-    <string name="evidence_preview_note">ఇది మీకు మాత్రమే కనిపిస్తుంది. జడ్జీలు చదివే ముందే పేర్లు దాచేస్తాం.</string>
     <string name="evidence_status_unreadable">టెక్స్ట్ ఏదీ చదవలేకపోయాం</string>
     <string name="evidence_status_refused">ఈ ఇమేజ్‌ను చదవడానికి రీడర్ నిరాకరించింది</string>
     <string name="evidence_status_unsupported">PNG, JPEG, WebP లేదా GIF కాదు</string>
@@ -408,8 +399,6 @@
     <string name="home_remove_their_side">వాళ్ల వైపు కథ తీసేయండి</string>
     <string name="home_send_link">లింక్ పంపండి</string>
     <string name="home_clear">క్లియర్ చేయండి</string>
-    <string name="home_lead">రెండు వైపుల కథా మీరే రాయండి, లేదా అవతలి వ్యక్తికి లింక్ పంపి వాళ్ల కథ వాళ్లనే రాయమనండి.</string>
-    <string name="home_lead_solo">మీ వైపు కథ రాయండి, వాళ్ల వైపు తెలిస్తే అది కూడా.</string>
     <string name="home_their_side">వాళ్ల వైపు కథ</string>
     <string name="home_their_name">వాళ్ల పేరు</string>
     <string name="home_their_placeholder">వాళ్లు ఏమంటున్నారు? వాళ్లు ఎలా చెబుతారో అలాగే రాయండి.</string>
@@ -674,7 +663,6 @@
     <string name="app_purchase_buying">కొనుగోలు జరుగుతోంది…</string>
     <string name="app_purchase_success">థ్యాంక్స్! మీ కొనుగోలు పూర్తయింది.</string>
     <string name="app_purchase_pending">మీ కొనుగోలు ప్రాసెస్ అవుతోంది. కనిపించడానికి ఒక నిమిషం పట్టొచ్చు.</string>
-    <string name="app_purchase_arriving">మీ క్రెడిట్లు వస్తున్నాయి…</string>
     <string name="app_purchase_slow">ఇక్కడ కనిపించడానికి ఒక నిమిషం పట్టొచ్చు.</string>
     <string name="app_purchase_failed">కొనుగోలు పూర్తి కాలేదు. కాసేపాగి మళ్లీ ప్రయత్నించండి.</string>
     <string name="app_purchase_restore">కొనుగోళ్లను రీస్టోర్ చేయండి</string>

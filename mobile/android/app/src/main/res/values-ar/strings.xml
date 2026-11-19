@@ -38,7 +38,6 @@
     <string name="verdict_too_close">الفارق أضيق من أن يُحسم</string>
     <string name="lean_title">ترجيح إجباري: %1$s أقرب إلى الحق</string>
     <string name="lean_title_self">ترجيح إجباري: أنت أقرب إلى الحق</string>
-    <string name="lean_unanimous">كل القضاة مالوا إلى هذا الجانب.</string>
     <string name="lean_majority">مال القضاة إلى هذا الجانب بنتيجة %1$s–%2$s.</string>
     <string name="lean_tie">حتى حين طُلب منهم الاختيار، انقسم القضاة مناصفةً.</string>
     <string name="split_win">%1$s على حق في هذه النقطة:</string>
@@ -75,7 +74,6 @@
         <item quantity="many">صوّت %1$s من قضاة الذكاء الاصطناعي المستقلين:</item>
         <item quantity="other">صوّت %1$s من قضاة الذكاء الاصطناعي المستقلين:</item>
     </plurals>
-    <string name="escalated">كانت النتيجة متقاربة، فاستدعينا قضاة إضافيين.</string>
     <string name="translate_loading">جارٍ الترجمة…</string>
     <string name="translate_from_en">مترجَم من الإنجليزية</string>
     <string name="translate_from_tr">مترجَم من التركية</string>
@@ -149,7 +147,6 @@
     <string name="footer_note">للتسلية والوضوح، لا للاستشارة القانونية.</string>
     <string name="footer_language">اللغة</string>
     <string name="not_found_title">هذا الحكم غادر قاعة المحكمة</string>
-    <string name="not_found_body">ربما في الرابط خطأ مطبعي، أو أن الحكم لم يعد موجودًا.</string>
     <string name="nav_sign_in">تسجيل الدخول</string>
     <string name="nav_account">الحساب</string>
     <string name="nav_pricing">الأسعار</string>
@@ -171,7 +168,6 @@
     <string name="consent_sensitive_continue">متابعة</string>
     <string name="respond_adult_confirm">عمري 18 عامًا أو أكثر</string>
     <string name="account_export">تنزيل بياناتي</string>
-    <string name="account_export_hint">احصل على ملف JSON يضم كل ما يحتفظ به Judge عنك.</string>
     <string name="account_export_busy">جارٍ تجهيز ملفك…</string>
     <string name="account_export_failed">تعذّر تجهيز بياناتك الآن. هل تحاول مرة أخرى؟</string>
     <string name="rating_prompt">هل الحكم عادل؟</string>
@@ -191,7 +187,6 @@
     <string name="thinking_factcheck">نتحقق من الحقائق على الويب…</string>
     <string name="thinking_factcheck_done">انتهى التحقق على الويب.</string>
     <string name="thinking_premium_helper">التحقق من الحقائق على الويب يستغرق وقتًا أطول قليلًا. امنحنا دقيقة أو دقيقتين.</string>
-    <string name="panel_premium">صدر الحكم بعد تحقق من الحقائق على الويب.</string>
     <string name="factcheck_title">تم التحقق على الويب</string>
     <string name="factcheck_lead">اطّلع القضاة على نتائج البحث هذه قبل الحكم. هي أدلة، وليست الحكم نفسه.</string>
     <string name="factcheck_status_supported">صحيح</string>
@@ -245,13 +240,10 @@
     <string name="account_delete_yes">نعم، احذفه</string>
     <string name="account_delete_cancel">الإبقاء على حسابي</string>
     <string name="account_delete_failed">تعذّر حذف الحساب الآن. هلّا حاولت مرة أخرى؟</string>
-    <string name="account_sign_in_prompt">سجّل الدخول لترى خطتك ورصيدك.</string>
     <string name="account_load_failed">تعذّر تحميل حسابك. حاول مجددًا بعد قليل.</string>
     <string name="account_loading">جارٍ تحميل حسابك…</string>
     <string name="pricing_title">حكمك الأول على حسابنا.</string>
-    <string name="pricing_lead">أنشئ حسابًا واحصل على أول حكم مجانًا، بكل المزايا. بعد ذلك، اختر باقة أو اشترك شهريًا.</string>
     <string name="pricing_title_member">احصل على المزيد من الأحكام.</string>
-    <string name="pricing_lead_member">اختر باقة أو اشترك شهريًا. كل حكم يحصل على هيئة القضاة كاملة.</string>
     <string name="pricing_included_title">في كل حكم</string>
     <string name="pricing_buy_title">الباقات والخطة الشهرية</string>
     <string name="pricing_premium_f1">تحقق من الحقائق على الويب، مع المصادر في حكمك</string>
@@ -405,7 +397,6 @@
     <string name="evidence_remove">حذف الصورة %1$s</string>
     <string name="evidence_thumb">الصورة %1$s</string>
     <string name="evidence_preview">ما قرأناه</string>
-    <string name="evidence_preview_note">هذا يظهر لك وحدك. تُخفى الأسماء قبل أن يقرأه القضاة.</string>
     <string name="evidence_status_unreadable">لم نجد نصًا نقرؤه</string>
     <string name="evidence_status_refused">رفض القارئ هذه الصورة</string>
     <string name="evidence_status_unsupported">ليست PNG أو JPEG أو WebP أو GIF</string>
@@ -432,8 +423,6 @@
     <string name="home_remove_their_side">أزل رواية الطرف الآخر</string>
     <string name="home_send_link">أرسل له رابطًا</string>
     <string name="home_clear">مسح</string>
-    <string name="home_lead">اكتب رواية الطرفين، أو أرسل إلى الطرف الآخر رابطًا ليكتب روايته بنفسه.</string>
-    <string name="home_lead_solo">اكتب روايتك، ورواية الطرف الآخر إن كنت تعرفها.</string>
     <string name="home_their_side">رواية الطرف الآخر</string>
     <string name="home_their_name">اسم الطرف الآخر</string>
     <string name="home_their_placeholder">ماذا يقول الطرف الآخر؟ اكتب روايته كما يرويها هو.</string>
@@ -734,7 +723,6 @@
     <string name="app_purchase_buying">جارٍ الشراء…</string>
     <string name="app_purchase_success">شكرًا! تمت عملية الشراء.</string>
     <string name="app_purchase_pending">عملية الشراء قيد المعالجة. قد يستغرق ظهورها دقيقة.</string>
-    <string name="app_purchase_arriving">رصيدك في الطريق…</string>
     <string name="app_purchase_slow">قد يستغرق ظهوره هنا دقيقة.</string>
     <string name="app_purchase_failed">لم تكتمل عملية الشراء. حاول مجددًا بعد قليل.</string>
     <string name="app_purchase_restore">استعادة المشتريات</string>

@@ -28,7 +28,6 @@ import com.okjudge.judge.core.model.ClarifyResponse
 import com.okjudge.judge.core.model.Features
 import com.okjudge.judge.core.model.MeResponse
 import com.okjudge.judge.core.model.PricingInfo
-import com.okjudge.judge.core.model.FactCheck
 import com.okjudge.judge.core.model.VerdictOutcome
 import com.okjudge.judge.core.model.WireJson
 import com.okjudge.judge.i18n.AppLang
@@ -357,7 +356,7 @@ class PremiumScreensTest {
                 )
             }
         }
-        compose.onNodeWithText(en.appPurchaseArriving, substring = true).assertExists()
+        compose.onNodeWithText(en.appPurchaseSuccess).assertExists()
         store = store.copy(notice = PurchaseController.Notice.ARRIVED)
         compose.onNodeWithText(en.appPurchaseSuccess).assertExists()
         store = store.copy(notice = PurchaseController.Notice.SLOW)
@@ -428,7 +427,7 @@ class PremiumScreensTest {
         WireJson.decodeVerdictResponse(Fixtures.verdicts["premiumVerdictResponse"]!!.jsonObject["response"].toString())
 
     @Test
-    fun premiumVerdict_showsBadgePanelAndFactCheck() {
+    fun premiumVerdict_showsFactCheck() {
         val outcome = premiumOutcome()
         compose.setContent {
             Themed(AppLang.EN) {
@@ -438,19 +437,6 @@ class PremiumScreensTest {
         compose.onNodeWithText(en.factcheckTitle).assertExists()
         compose.onNodeWithText(en.factcheckStatusSupported.uppercase(Locale.US)).assertExists()
         compose.onNodeWithText("example.com").assertExists()
-        compose.onNodeWithText(en.panelPremium, substring = true).assertExists()
-    }
-
-    @Test
-    fun premiumVerdict_withNothingChecked_hasNoWebFactCheckLine() {
-        val base = premiumOutcome()
-        val outcome = base.copy(result = base.result.copy(result = base.result.result.copy(factCheck = FactCheck(status = "none"))))
-        compose.setContent {
-            Themed(AppLang.EN) {
-                SampleVerdict(outcome, AppLang.EN, Modifier.verticalScroll(rememberScrollState()).padding(16.dp))
-            }
-        }
-        compose.onNodeWithText(en.panelPremium, substring = true).assertDoesNotExist()
     }
 
     private fun caseVerdict(view: String): VerdictOutcome {
