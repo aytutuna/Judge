@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">Drei unabhängige Richter · Namen sehen sie nie</string>
     <string name="hero_lead">Erzähl uns, worum es im Streit geht. Drei KI-Richter entscheiden jeweils für sich, und der Sicherheitswert zeigt, wie einig sie sich sind.</string>
     <string name="input_label">Der Streit</string>
-    <string name="placeholder">Was ist passiert? Wer sagt was, und warum?\n\nGib die Sicht der anderen Person so wieder, wie sie es sagen würde. Die Richter suchen so oder so für beide Seiten die stärksten Argumente.</string>
+    <string name="placeholder">Was ist passiert? Wer sagt was, und warum?</string>
     <string name="get_verdict">Urteil holen</string>
     <string name="thinking_eyebrow">Was die Richter gerade tun</string>
     <string name="thinking_read">Wir lesen beide Seiten und machen jede so stark wie möglich…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">Wir suchen den Knackpunkt…</string>
     <string name="thinking_judges">Drei Richter entscheiden, jeder für sich…</string>
     <string name="thinking_votes">Wir zählen die Stimmen…</string>
-    <string name="thinking_helper">Drei KI-Richter urteilen getrennt, und bei knappen Fällen kommen weitere dazu. Das dauert einen Moment.</string>
+    <string name="thinking_helper">Gib uns eine Minute.</string>
     <string name="thinking_finish">Gleich haben wir den Knackpunkt…</string>
-    <string name="thinking_still_judging">Die Richter überlegen noch. Einen Moment Geduld…</string>
+    <string name="thinking_still_judging">Wir arbeiten noch…</string>
     <string name="thinking_ready">Das Urteil steht.</string>
     <string name="story_names">Namen werden entfernt, damit niemand nach seiner Person beurteilt wird</string>
     <string name="story_facts">Ein separater Prüfer recherchiert die Fakten im Netz</string>
@@ -73,14 +73,14 @@
     <string name="translate_loading">Wird übersetzt…</string>
     <string name="translate_from_en">Aus dem Englischen übersetzt</string>
     <string name="translate_from_tr">Aus dem Türkischen übersetzt</string>
-    <string name="translate_failed">Die Übersetzung hat gerade nicht geklappt, hier ist das Original.</string>
+    <string name="translate_failed">Übersetzung fehlgeschlagen.</string>
     <string name="translate_toggle">Sprache des Urteils</string>
     <string name="vote_split">teils, teils</string>
     <string name="vote_conditional">kommt drauf an</string>
     <string name="vote_dissolved">Missverständnis</string>
-    <string name="refused_note">Die KI hat bei diesem Fall gepasst. Lieber zeigen wir gar nichts als ein erfundenes Urteil.</string>
+    <string name="refused_note">Die KI hat bei diesem Fall gepasst.</string>
     <string name="demo_note">Demo-Modus: kein KI-Schlüssel eingerichtet, daher ein Beispielurteil</string>
-    <string name="trial_survived">Einspruch abgewiesen: Der Anwalt der Gegenseite hat seinen stärksten Einspruch erhoben, und das Urteil hat gehalten. Die Sicherheit bleibt unverändert.</string>
+    <string name="trial_survived">Einspruch abgewiesen: Das Urteil hat gehalten.</string>
     <string name="trial_uncertain">Der Anwalt der Gegenseite hat Einspruch erhoben, und der Einspruch hat echte Zweifel an diesem Urteil hinterlassen</string>
     <string name="trial_overturned">Einspruch stattgegeben: Das Urteil bleibt bestehen, wird aber durch den stärksten Einspruch der Gegenseite ernsthaft geschwächt</string>
     <string name="trial_minor">Der Anwalt der Gegenseite hat einen berechtigten Punkt angesprochen, aber das Urteil gilt weiterhin</string>
@@ -117,7 +117,7 @@
         <item quantity="one">%1$s Stunden</item>
         <item quantity="other">%1$s Stunden</item>
     </plurals>
-    <string name="examples_label">Keine Idee? Probier eins davon:</string>
+    <string name="examples_label">Probier eins:</string>
     <string name="example_hotdog_label">🥙 Ist ein Döner ein Sandwich?</string>
     <string name="example_hotdog_text">Mein Kumpel Jonas sagt, ein Döner ist ein Sandwich: Füllung in aufgeschnittenem Brot, fertig. Ich sage, Döner ist sein eigenes Ding. Niemand bestellt ein Sandwich und erwartet einen Döner, und auf keiner Karte steht er unter Sandwiches.</string>
     <string name="example_tomato_label">🍅 Ist die Tomate Obst oder Gemüse?</string>
@@ -166,7 +166,7 @@
     <string name="tier_get_premium">Mehr Urteile holen</string>
     <string name="tier_checking">Wir prüfen, ob etwas fehlt…</string>
     <string name="clarify_title">Bevor die Richter urteilen</string>
-    <string name="clarify_lead">Diese Details könnten ändern, wer recht hat. Beantworte, was du kannst, oder überspring sie.</string>
+    <string name="clarify_lead">Diese Details könnten ändern, wer recht hat.</string>
     <string name="clarify_answer_aria">Antwort auf Frage %1$s:</string>
     <string name="clarify_placeholder">Deine Antwort (optional)</string>
     <string name="clarify_skip">Überspringen und Urteil holen</string>
@@ -174,19 +174,19 @@
     <string name="clarify_back">Streit bearbeiten</string>
     <string name="thinking_factcheck">Wir prüfen die Fakten im Netz…</string>
     <string name="thinking_factcheck_done">Faktencheck im Netz abgeschlossen.</string>
-    <string name="thinking_premium_helper">Die Faktenprüfung im Netz dauert etwas länger. Gib uns ein, zwei Minuten.</string>
+    <string name="thinking_premium_helper">Gib uns ein, zwei Minuten.</string>
     <string name="factcheck_title">Im Netz geprüft</string>
-    <string name="factcheck_lead">Diese Suchergebnisse lagen den Richtern vor dem Urteil vor. Sie sind Belege, nicht das Urteil selbst.</string>
+    <string name="factcheck_lead">Die Richter haben diese Suchergebnisse vor dem Urteil gesehen.</string>
     <string name="factcheck_status_supported">Stimmt</string>
     <string name="factcheck_status_refuted">Stimmt nicht</string>
     <string name="factcheck_status_mixed">Stimmt teilweise</string>
     <string name="factcheck_status_unverified">Nicht bestätigt</string>
     <string name="factcheck_sources">Quellen</string>
-    <string name="factcheck_none">Nichts im Netz nachzuschlagen: Hier geht es um Werte oder Bedeutungen, nicht um Fakten.</string>
-    <string name="factcheck_none_factual">Hier ließ sich nichts im Netz prüfen: Die Fakten in diesem Fall kennen nur die Beteiligten.</string>
+    <string name="factcheck_none">Nichts im Netz zu prüfen.</string>
+    <string name="factcheck_none_factual">Nichts im Netz zu prüfen.</string>
     <string name="factcheck_unavailable">Der Faktencheck im Netz wurde diesmal nicht fertig, also haben die Richter ohne ihn geurteilt.</string>
     <string name="signin_title">Anmelden</string>
-    <string name="signin_lead">Melde dich an, um ein Urteil zu bekommen. Neue Konten erhalten das erste Urteil gratis.</string>
+    <string name="signin_lead">Dein erstes Urteil ist gratis.</string>
     <string name="signin_apple">Weiter mit Apple</string>
     <string name="signin_google">Weiter mit Google</string>
     <string name="signin_email_toggle">Lieber per E-Mail</string>
@@ -204,7 +204,7 @@
     <string name="signin_use_password">Stattdessen ein Passwort verwenden</string>
     <string name="signin_password_wrong">E-Mail und Passwort passen nicht zusammen.</string>
     <string name="signin_password_short">Verwende mindestens 8 Zeichen.</string>
-    <string name="signin_create_note">Wir schicken dir einen Code, um diese Adresse zu bestätigen. Das musst du nur einmal tun.</string>
+    <string name="signin_create_note">Wir schicken dir zur Bestätigung einen Code.</string>
     <string name="signin_password_choose">Du bist angemeldet. Wähle ein Passwort für das nächste Mal.</string>
     <string name="signin_password_save">Passwort speichern</string>
     <string name="signin_password_save_failed">Das Passwort konnte nicht gespeichert werden. Versuche es erneut.</string>
@@ -239,7 +239,7 @@
     <string name="pricing_premium_f3">Bis zu zwei kurze Rückfragen, wenn ein wichtiger Fakt fehlt</string>
     <string name="pricing_premium_f4">Namen werden vor dem Urteil ausgetauscht</string>
     <string name="pricing_packs_title">Credit-Pakete</string>
-    <string name="pricing_packs_lead">Einmal zahlen, jederzeit nutzen. Jedes Urteil verbraucht einen Credit.</string>
+    <string name="pricing_packs_lead">Jedes Urteil verbraucht einen Credit.</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s Urteile</item>
         <item quantity="other">%1$s Urteile</item>
@@ -325,8 +325,8 @@
     <string name="case_context_d">Ergänzung von Partei D</string>
     <string name="case_context_you">Deine Ergänzung (%1$s)</string>
     <string name="case_evidence_item">Bild %1$s, wie die Richter es lesen</string>
-    <string name="case_answered">Die Antwort ist da. Die Richter sind dran.</string>
-    <string name="case_judging_alone">Die Richter sehen sich deine Seite an.</string>
+    <string name="case_answered">Die Richter sind dran.</string>
+    <string name="case_judging_alone">Die Richter sind dran.</string>
     <string name="case_expired_body">In 7 Tagen hat niemand geantwortet, also ist dein Credit wieder da. Du kannst trotzdem ein Urteil nur über deine Seite bekommen.</string>
     <string name="case_expired_body_free">In 7 Tagen hat niemand geantwortet. Du kannst trotzdem ein Urteil nur über deine Seite bekommen.</string>
     <string name="case_one_sided">Nur auf Basis deiner Seite beurteilt.</string>
@@ -343,12 +343,12 @@
     <string name="respond_submit">Meine Seite abschicken</string>
     <string name="case_write_title">Deine Seite</string>
     <string name="case_write_placeholder">Was ist das Problem?</string>
-    <string name="case_write_lead">Schreib deine Seite, wenn du so weit bist. Die Richter legen los, sobald ihr beide geschrieben habt.</string>
+    <string name="case_write_lead">Die Richter starten, sobald ihr beide geschrieben habt.</string>
     <string name="case_write_lead_answered">Die andere Seite hat geschrieben. Schreib deine, dann bekommst du das Urteil.</string>
     <string name="case_write_submit">Meine Seite senden</string>
     <string name="case_write_email_subject">Die Gegenseite hat geschrieben</string>
-    <string name="respond_sent">Danke. Deine Seite ist angekommen, und die Richter sind dran.</string>
-    <string name="respond_sent_waiting">Danke. Deine Seite ist angekommen. Die Richter legen los, sobald die andere Person ihre geschrieben hat.</string>
+    <string name="respond_sent">Deine Seite ist da.</string>
+    <string name="respond_sent_waiting">Deine Seite ist da. Wir warten auf die andere Person.</string>
     <string name="respond_own_invite">Das ist dein eigener Einladungslink. Schick ihn an die andere Person.</string>
     <string name="respond_expired">Diese Einladung ist abgelaufen.</string>
     <string name="respond_closed">Dieser Fall nimmt keine Antworten mehr an.</string>
@@ -412,7 +412,7 @@
     <string name="appeal_submit">Neu beurteilen lassen</string>
     <string name="appeal_sending">Dein Kontext wird anonymisiert…</string>
     <string name="appeal_judging">Die Richter sehen sich alles noch mal an…</string>
-    <string name="appeal_upsell">Fehlt etwas? Ergänze Kontext und lass den Fall für 1 Urteil neu beurteilen.</string>
+    <string name="appeal_upsell">Fehlt etwas? Ergänze Kontext für 1 Urteil.</string>
     <string name="appeal_sign_in">Melde dich an, um Kontext zu ergänzen</string>
     <string name="appeal_used">Du hast diesem Fall schon Kontext hinzugefügt.</string>
     <string name="appeal_limit">Du hast schon zweimal Kontext ergänzt. Mehr geht pro Urteil nicht.</string>
@@ -456,7 +456,7 @@
     <string name="case_display_name">Dein Name im geteilten Urteil</string>
     <string name="case_display_save">Namen speichern</string>
     <string name="respond_keep">Diesen Fall in deinem Konto speichern</string>
-    <string name="respond_kept">Dieser Fall ist jetzt in deinem Konto. Du siehst ihn auf jedem Gerät auf der Seite „Urteile“.</string>
+    <string name="respond_kept">In deinem Konto gespeichert.</string>
     <string name="respond_remove">Meine Seite entfernen</string>
     <string name="respond_remove_confirm">Deinen Originaltext und deinen Anzeigenamen entfernen? Die geteilten Links des Falls funktionieren dann nicht mehr (Vorschauen, die schon in Chats gepostet wurden, können sichtbar bleiben, bis diese Apps sie aktualisieren). Das lässt sich nicht rückgängig machen.</string>
     <string name="names_title">Namen auf der geteilten Seite</string>
@@ -535,7 +535,7 @@
     <string name="app_tab_new">Neu</string>
     <string name="app_tab_settings">Einstellungen</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">Noch keine Urteile. Kläre deinen ersten Streit, dann erscheint das Urteil hier.</string>
+    <string name="app_history_empty">Noch keine Urteile.</string>
     <string name="app_history_device_only">Nur auf diesem Handy gespeichert. Wenn du hier ein Urteil löschst, funktioniert der geteilte Link weiter.</string>
     <string name="app_history_delete">Löschen</string>
     <string name="app_history_remove_all">Alle entfernen</string>
@@ -544,7 +544,7 @@
         <item quantity="other">%1$s Urteile von diesem Handy löschen? Die geteilten Links funktionieren weiter.</item>
     </plurals>
     <string name="app_history_phone_only">Nur auf diesem Handy</string>
-    <string name="app_history_phone_only_note">Nicht in deinem Konto: Diese Urteile sind nur auf diesem Handy gespeichert. Wenn du hier eins löschst, funktioniert sein geteilter Link weiter.</string>
+    <string name="app_history_phone_only_note">Löschen deaktiviert den Teilen-Link nicht.</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="one">Dieses Urteil aus deinem Konto entfernen? Es verschwindet von allen Geräten: Was du geschrieben hast und die Namen werden gelöscht, und der geteilte Link funktioniert nicht mehr. Das lässt sich nicht rückgängig machen.</item>
         <item quantity="other">%1$s Urteile aus deinem Konto entfernen? Sie verschwinden von allen Geräten: Was du geschrieben hast und die Namen werden gelöscht, und die geteilten Links funktionieren nicht mehr. Das lässt sich nicht rückgängig machen.</item>
@@ -565,9 +565,9 @@
     <string name="app_pricing_free_account">Mit Apple, Google oder E-Mail anmelden</string>
     <string name="app_pricing_context">Kontextbilder werden gelesen und dann verworfen, ohne Aufpreis</string>
     <string name="app_pricing_headline">Dein erstes Urteil geht auf uns.</string>
-    <string name="app_pricing_sub">Erstell ein Konto, und dein erstes Urteil ist gratis, mit allen Funktionen. Danach wählst du ein Paket oder das Monatsabo.</string>
+    <string name="app_pricing_sub">Dann wähl ein Paket oder das Monatsabo.</string>
     <string name="app_pricing_headline_member">Hol dir mehr Urteile.</string>
-    <string name="app_pricing_sub_member">Wähl ein Paket oder das Monatsabo. Jedes Urteil bekommt die volle Richterbank.</string>
+    <string name="app_pricing_sub_member">Wähl ein Paket oder das Monatsabo.</string>
     <plurals name="app_balance_left">
         <item quantity="one">1 Urteil übrig</item>
         <item quantity="other">%1$s Urteile übrig</item>
@@ -661,9 +661,9 @@
     <string name="app_appeal_used">Du hast diesem Fall schon Kontext hinzugefügt.</string>
     <string name="app_appeal_limit">Du hast schon zweimal Kontext ergänzt. Mehr geht pro Urteil nicht.</string>
     <string name="app_purchase_buying">Wird gekauft…</string>
-    <string name="app_purchase_success">Danke! Dein Kauf hat geklappt.</string>
-    <string name="app_purchase_pending">Dein Kauf wird bearbeitet. Es kann eine Minute dauern, bis er angezeigt wird.</string>
-    <string name="app_purchase_slow">Bis alles hier angezeigt wird, kann es eine Minute dauern.</string>
+    <string name="app_purchase_success">Kauf abgeschlossen.</string>
+    <string name="app_purchase_pending">Dein Kauf wird bearbeitet.</string>
+    <string name="app_purchase_slow">Credits können eine Minute brauchen.</string>
     <string name="app_purchase_failed">Der Kauf hat nicht geklappt. Versuch es gleich noch mal.</string>
     <string name="app_purchase_restore">Käufe wiederherstellen</string>
     <string name="app_purchase_restore_done">Deine Käufe wurden wiederhergestellt.</string>

@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">Три независимых судьи · Судьи не видят имён</string>
     <string name="hero_lead">Расскажите, о чём спор. Три ИИ-судьи выносят решение независимо друг от друга, а оценка уверенности показывает, насколько они согласны.</string>
     <string name="input_label">Спор</string>
-    <string name="placeholder">Что случилось? Кто что говорит и почему?\n\nОпишите позицию другого человека так, как её описал бы он сам. Судьи в любом случае выстроят самые сильные доводы для обеих сторон.</string>
+    <string name="placeholder">Что случилось? Кто что говорит и почему?</string>
     <string name="get_verdict">Узнать вердикт</string>
     <string name="thinking_eyebrow">Что делают судьи</string>
     <string name="thinking_read">Читаем обе версии и излагаем каждую как можно убедительнее…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">Ищем суть спора…</string>
     <string name="thinking_judges">Три судьи решают, каждый сам по себе…</string>
     <string name="thinking_votes">Считаем голоса…</string>
-    <string name="thinking_helper">Три ИИ-судьи выносят решение по отдельности, а если голоса близки, подключаются ещё. Это займёт около минуты.</string>
+    <string name="thinking_helper">Подождите минуту.</string>
     <string name="thinking_finish">Подбираемся к сути…</string>
-    <string name="thinking_still_judging">Судьи всё ещё думают. Потерпите немного…</string>
+    <string name="thinking_still_judging">Всё ещё работаем…</string>
     <string name="thinking_ready">Вердикт готов.</string>
     <string name="story_names">Убираем имена, чтобы никого не судили за то, кто он</string>
     <string name="story_facts">Отдельный проверяющий ищет факты в сети</string>
@@ -75,14 +75,14 @@
     <string name="translate_loading">Переводим…</string>
     <string name="translate_from_en">Переведено с английского</string>
     <string name="translate_from_tr">Переведено с турецкого</string>
-    <string name="translate_failed">Сейчас перевести не получилось, поэтому показываем оригинал.</string>
+    <string name="translate_failed">Не удалось перевести.</string>
     <string name="translate_toggle">Язык вердикта</string>
     <string name="vote_split">пополам</string>
     <string name="vote_conditional">смотря как</string>
     <string name="vote_dissolved">путаница в словах</string>
     <string name="refused_note">ИИ отказался судить этот спор. Лучше ничего не показать, чем выдумать вердикт.</string>
     <string name="demo_note">Демо-режим: ключ ИИ не настроен, это пример вердикта</string>
-    <string name="trial_survived">Возражение отклонено: адвокат другой стороны выдвинул своё самое сильное возражение, но вердикт устоял. Уверенность не изменилась.</string>
+    <string name="trial_survived">Возражение отклонено: вердикт устоял.</string>
     <string name="trial_uncertain">Адвокат другой стороны выдвинул возражение, и оно оставило серьёзные сомнения в этом вердикте</string>
     <string name="trial_overturned">Возражение принято: вердикт остаётся в силе, но самое сильное возражение другой стороны серьёзно его ослабило</string>
     <string name="trial_minor">Адвокат другой стороны указал на справедливый момент, но вердикт остаётся в силе</string>
@@ -123,7 +123,7 @@
         <item quantity="many">%1$s часов</item>
         <item quantity="other">%1$s часов</item>
     </plurals>
-    <string name="examples_label">Не знаете, с чего начать? Попробуйте:</string>
+    <string name="examples_label">Попробуйте один:</string>
     <string name="example_hotdog_label">🌭 Хот-дог — это сэндвич?</string>
     <string name="example_hotdog_text">Мой друг Миша говорит, что хот-дог — это сэндвич: начинка в разрезанной булке, и точка. А по-моему, это отдельное блюдо. Никто не заказывает сэндвич в надежде получить хот-дог, и ни в одном меню он не значится среди сэндвичей.</string>
     <string name="example_tomato_label">🍅 Помидор — это ягода?</string>
@@ -172,7 +172,7 @@
     <string name="tier_get_premium">Больше вердиктов</string>
     <string name="tier_checking">Проверяем, всего ли хватает…</string>
     <string name="clarify_title">Прежде чем судьи вынесут вердикт</string>
-    <string name="clarify_lead">От этих деталей может зависеть, кто прав. Ответьте, на что можете, или пропустите.</string>
+    <string name="clarify_lead">От этих деталей может зависеть, кто прав.</string>
     <string name="clarify_answer_aria">Ответ на вопрос %1$s:</string>
     <string name="clarify_placeholder">Ваш ответ (необязательно)</string>
     <string name="clarify_skip">Пропустить и судить</string>
@@ -180,19 +180,19 @@
     <string name="clarify_back">Изменить описание</string>
     <string name="thinking_factcheck">Проверяем факты в интернете…</string>
     <string name="thinking_factcheck_done">Проверка в интернете закончена.</string>
-    <string name="thinking_premium_helper">Проверка фактов в интернете занимает чуть больше времени. Подождите минуту-другую.</string>
+    <string name="thinking_premium_helper">Подождите минуту-другую.</string>
     <string name="factcheck_title">Проверено в интернете</string>
-    <string name="factcheck_lead">Судьи видели эти результаты поиска до вынесения вердикта. Это доказательства, а не сам вердикт.</string>
+    <string name="factcheck_lead">Судьи видели эти результаты поиска до вынесения вердикта.</string>
     <string name="factcheck_status_supported">Подтверждается</string>
     <string name="factcheck_status_refuted">Не подтверждается</string>
     <string name="factcheck_status_mixed">Отчасти верно</string>
     <string name="factcheck_status_unverified">Не удалось проверить</string>
     <string name="factcheck_sources">Источники</string>
-    <string name="factcheck_none">В интернете проверять нечего: здесь всё упирается в ценности или смыслы, а не в факты.</string>
-    <string name="factcheck_none_factual">Здесь нечего проверить в интернете: факты в этом споре известны только его участникам.</string>
+    <string name="factcheck_none">В интернете проверять нечего.</string>
+    <string name="factcheck_none_factual">В интернете проверять нечего.</string>
     <string name="factcheck_unavailable">Проверка в интернете в этот раз не завершилась, поэтому судьи решали без неё.</string>
     <string name="signin_title">Вход</string>
-    <string name="signin_lead">Войдите, чтобы получить вердикт. Для нового аккаунта первый вердикт бесплатный.</string>
+    <string name="signin_lead">Первый вердикт бесплатный.</string>
     <string name="signin_apple">Продолжить с Apple</string>
     <string name="signin_google">Продолжить с Google</string>
     <string name="signin_email_toggle">Войти по почте</string>
@@ -210,7 +210,7 @@
     <string name="signin_use_password">Лучше войти с паролем</string>
     <string name="signin_password_wrong">Эта почта и пароль не совпадают.</string>
     <string name="signin_password_short">Используйте не меньше 8 символов.</string>
-    <string name="signin_create_note">Мы отправим вам код на почту, чтобы подтвердить этот адрес. Это нужно сделать всего один раз.</string>
+    <string name="signin_create_note">Мы отправим вам код на почту для подтверждения.</string>
     <string name="signin_password_choose">Вы вошли. Выберите пароль на следующий раз.</string>
     <string name="signin_password_save">Сохранить пароль</string>
     <string name="signin_password_save_failed">Не удалось сохранить пароль. Попробуйте ещё раз.</string>
@@ -245,7 +245,7 @@
     <string name="pricing_premium_f3">До двух коротких вопросов, если не хватает важного факта</string>
     <string name="pricing_premium_f4">Имена заменяются ещё до вынесения вердикта</string>
     <string name="pricing_packs_title">Пакеты вердиктов</string>
-    <string name="pricing_packs_lead">Платите один раз, а тратите когда угодно: на каждый спор уходит один вердикт из пакета.</string>
+    <string name="pricing_packs_lead">На каждый спор уходит один вердикт из пакета.</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s вердикт</item>
         <item quantity="few">%1$s вердикта</item>
@@ -335,8 +335,8 @@
     <string name="case_context_d">Подробности от Стороны D</string>
     <string name="case_context_you">Ваши подробности (%1$s)</string>
     <string name="case_evidence_item">Изображение %1$s — так, как его прочли судьи</string>
-    <string name="case_answered">Ответ получен. Судьи уже работают.</string>
-    <string name="case_judging_alone">Судьи разбирают вашу версию.</string>
+    <string name="case_answered">Судьи уже работают.</string>
+    <string name="case_judging_alone">Судьи уже работают.</string>
     <string name="case_expired_body">За 7 дней никто не ответил, поэтому вердикт вернулся на баланс. Вы всё ещё можете получить вердикт только по своей версии.</string>
     <string name="case_expired_body_free">За 7 дней никто не ответил. Вы всё ещё можете получить вердикт только по своей версии.</string>
     <string name="case_one_sided">Вердикт вынесен только по вашей версии.</string>
@@ -353,12 +353,12 @@
     <string name="respond_submit">Отправить мою версию</string>
     <string name="case_write_title">Ваша версия</string>
     <string name="case_write_placeholder">В чём проблема?</string>
-    <string name="case_write_lead">Напишите свою версию, когда будете готовы. Судьи начнут, когда напишете оба.</string>
+    <string name="case_write_lead">Судьи начнут, когда напишете оба.</string>
     <string name="case_write_lead_answered">Другая сторона уже написала свою версию. Напишите свою, чтобы получить вердикт.</string>
     <string name="case_write_submit">Отправить мою версию</string>
     <string name="case_write_email_subject">Другая сторона написала свою версию</string>
-    <string name="respond_sent">Спасибо! Ваша версия получена, судьи уже работают.</string>
-    <string name="respond_sent_waiting">Спасибо! Ваша версия получена. Судьи начнут, когда другая сторона напишет свою.</string>
+    <string name="respond_sent">Ваша версия получена.</string>
+    <string name="respond_sent_waiting">Ваша версия получена. Ждём другую сторону.</string>
     <string name="respond_own_invite">Это ваша собственная ссылка-приглашение. Отправьте её другому человеку.</string>
     <string name="respond_expired">Срок действия приглашения истёк.</string>
     <string name="respond_closed">Это дело больше не принимает ответы.</string>
@@ -424,7 +424,7 @@
     <string name="appeal_submit">Отправить на пересмотр</string>
     <string name="appeal_sending">Убираем имена из ваших подробностей…</string>
     <string name="appeal_judging">Судьи пересматривают всё заново…</string>
-    <string name="appeal_upsell">Чего-то не хватает? Добавьте подробности и получите пересмотр за 1 вердикт.</string>
+    <string name="appeal_upsell">Чего-то не хватает? Добавьте подробности за 1 вердикт.</string>
     <string name="appeal_sign_in">Войдите, чтобы добавить подробности</string>
     <string name="appeal_used">Вы уже добавляли подробности к этому делу.</string>
     <string name="appeal_limit">Вы уже дважды добавляли подробности. Для одного вердикта это предел.</string>
@@ -468,7 +468,7 @@
     <string name="case_display_name">Ваше имя в вердикте по ссылке</string>
     <string name="case_display_save">Сохранить имя</string>
     <string name="respond_keep">Сохранить это дело в аккаунте</string>
-    <string name="respond_kept">Теперь это дело в вашем аккаунте. Оно видно на странице «Вердикты» на любом устройстве.</string>
+    <string name="respond_kept">Сохранено в вашем аккаунте.</string>
     <string name="respond_remove">Удалить мою версию</string>
     <string name="respond_remove_confirm">Удалить ваш исходный текст и отображаемое имя? Ссылки на дело перестанут работать (превью, уже отправленные в чаты, могут показываться, пока эти приложения их не обновят). Отменить это нельзя.</string>
     <string name="names_title">Имена на странице по ссылке</string>
@@ -553,7 +553,7 @@
     <string name="app_tab_new">Новый спор</string>
     <string name="app_tab_settings">Настройки</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">Вердиктов пока нет. Рассудите первый спор — вердикт появится здесь.</string>
+    <string name="app_history_empty">Вердиктов пока нет.</string>
     <string name="app_history_device_only">Вердикты хранятся только на этом телефоне. Если удалить вердикт здесь, ссылка на него продолжит работать.</string>
     <string name="app_history_delete">Удалить</string>
     <string name="app_history_remove_all">Удалить все</string>
@@ -564,7 +564,7 @@
         <item quantity="other">Удалить %1$s вердиктов с этого телефона? Ссылки на них продолжат работать.</item>
     </plurals>
     <string name="app_history_phone_only">Только на этом телефоне</string>
-    <string name="app_history_phone_only_note">Их нет в вашем аккаунте: эти вердикты хранятся только на этом телефоне. Если удалить вердикт здесь, ссылка на него продолжит работать.</string>
+    <string name="app_history_phone_only_note">Удаление вердикта не отключает ссылку на него.</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="one">Удалить %1$s вердикт из аккаунта на всех устройствах? Ваш текст и имена сотрутся, а ссылка на него перестанет работать. Отменить это нельзя.</item>
         <item quantity="few">Удалить %1$s вердикта из аккаунта на всех устройствах? Ваш текст и имена сотрутся, а ссылки на них перестанут работать. Отменить это нельзя.</item>
@@ -593,9 +593,9 @@
     <string name="app_pricing_free_account">Вход через Apple, Google или почту</string>
     <string name="app_pricing_context">Картинки с подробностями читаются и сразу удаляются, без доплаты</string>
     <string name="app_pricing_headline">Первый вердикт — за наш счёт.</string>
-    <string name="app_pricing_sub">Создайте аккаунт, и первый вердикт со всеми возможностями будет бесплатным. Дальше выберите пакет или оформите подписку.</string>
+    <string name="app_pricing_sub">Дальше выберите пакет или оформите подписку.</string>
     <string name="app_pricing_headline_member">Больше вердиктов.</string>
-    <string name="app_pricing_sub_member">Выберите пакет или оформите подписку. Каждый вердикт выносит полный состав судей.</string>
+    <string name="app_pricing_sub_member">Выберите пакет или оформите подписку.</string>
     <plurals name="app_balance_left">
         <item quantity="one">Остался %1$s вердикт</item>
         <item quantity="few">Осталось %1$s вердикта</item>
@@ -691,9 +691,9 @@
     <string name="app_appeal_used">Вы уже добавляли подробности к этому делу.</string>
     <string name="app_appeal_limit">Вы уже дважды добавляли подробности. Для одного вердикта это предел.</string>
     <string name="app_purchase_buying">Оформляем покупку…</string>
-    <string name="app_purchase_success">Спасибо! Покупка прошла успешно.</string>
-    <string name="app_purchase_pending">Покупка обрабатывается. Это может занять около минуты.</string>
-    <string name="app_purchase_slow">Они могут появиться здесь примерно через минуту.</string>
+    <string name="app_purchase_success">Покупка завершена.</string>
+    <string name="app_purchase_pending">Покупка обрабатывается.</string>
+    <string name="app_purchase_slow">Кредиты могут появиться через минуту.</string>
     <string name="app_purchase_failed">Покупка не прошла. Попробуйте чуть позже.</string>
     <string name="app_purchase_restore">Восстановить покупки</string>
     <string name="app_purchase_restore_done">Покупки восстановлены.</string>

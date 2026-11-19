@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">Τρεις ανεξάρτητοι κριτές · Οι κριτές δεν βλέπουν ονόματα</string>
     <string name="hero_lead">Πες μας για τι τσακώνεστε. Τρεις κριτές AI αποφασίζουν ο καθένας χωριστά, και ο βαθμός βεβαιότητας δείχνει πόσο συμφωνούν.</string>
     <string name="input_label">Η διαφωνία</string>
-    <string name="placeholder">Τι έγινε; Ποιος λέει τι και γιατί;\n\nΓράψε και την άποψη του άλλου όπως θα την έλεγε ο ίδιος. Οι κριτές έτσι κι αλλιώς χτίζουν την πιο δυνατή εκδοχή και για τις δύο πλευρές.</string>
+    <string name="placeholder">Τι έγινε; Ποιος λέει τι και γιατί;</string>
     <string name="get_verdict">Δες την απόφαση</string>
     <string name="thinking_eyebrow">Τι κάνουν οι κριτές</string>
     <string name="thinking_read">Διαβάζουμε και τις δύο πλευρές στην πιο δυνατή τους εκδοχή…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">Ψάχνουμε την ουσία…</string>
     <string name="thinking_judges">Τρεις κριτές αποφασίζουν, ο καθένας μόνος του…</string>
     <string name="thinking_votes">Μετράμε τις ψήφους…</string>
-    <string name="thinking_helper">Τρεις κριτές AI αποφασίζουν χωριστά, κι αν είναι οριακό, έρχονται κι άλλοι. Δώσε μας ένα λεπτό.</string>
+    <string name="thinking_helper">Δώσε μας ένα λεπτό.</string>
     <string name="thinking_finish">Φτάνουμε στην ουσία…</string>
-    <string name="thinking_still_judging">Οι κριτές ακόμα σκέφτονται. Λίγη υπομονή…</string>
+    <string name="thinking_still_judging">Δουλεύουμε ακόμα…</string>
     <string name="thinking_ready">Η απόφαση είναι έτοιμη.</string>
     <string name="story_names">Αφαιρούμε τα ονόματα, ώστε κανείς να μην κρίνεται από το ποιος είναι</string>
     <string name="story_facts">Ένας ξεχωριστός ελεγκτής ψάχνει τα στοιχεία στο διαδίκτυο</string>
@@ -73,14 +73,14 @@
     <string name="translate_loading">Μετάφραση…</string>
     <string name="translate_from_en">Μετάφραση από τα αγγλικά</string>
     <string name="translate_from_tr">Μετάφραση από τα τουρκικά</string>
-    <string name="translate_failed">Δεν μπορέσαμε να το μεταφράσουμε τώρα, οπότε να το πρωτότυπο.</string>
+    <string name="translate_failed">Η μετάφραση απέτυχε.</string>
     <string name="translate_toggle">Γλώσσα απόφασης</string>
     <string name="vote_split">μοιρασμένο</string>
     <string name="vote_conditional">εξαρτάται</string>
     <string name="vote_dissolved">θέμα λέξεων</string>
-    <string name="refused_note">Το AI δεν πήρε θέση σε αυτό. Προτιμάμε να μη δείξουμε τίποτα παρά μια ψεύτικη απόφαση.</string>
+    <string name="refused_note">Το AI δεν πήρε θέση σε αυτό.</string>
     <string name="demo_note">Λειτουργία demo: δεν υπάρχει κλειδί AI, οπότε αυτή είναι ενδεικτική απόφαση</string>
-    <string name="trial_survived">Η ένσταση απορρίφθηκε: ο δικηγόρος της άλλης πλευράς έκανε την πιο ισχυρή του ένσταση, κι η απόφαση άντεξε. Η βεβαιότητα μένει ίδια.</string>
+    <string name="trial_survived">Η ένσταση απορρίφθηκε: η απόφαση άντεξε.</string>
     <string name="trial_uncertain">Ο δικηγόρος της άλλης πλευράς έκανε ένσταση και η ένσταση άφησε σοβαρές αμφιβολίες για αυτή την απόφαση</string>
     <string name="trial_overturned">Η ένσταση έγινε δεκτή: η απόφαση ισχύει, αλλά η πιο ισχυρή ένσταση της άλλης πλευράς την αποδυναμώνει σοβαρά</string>
     <string name="trial_minor">Ο δικηγόρος της άλλης πλευράς έθεσε ένα δίκαιο σημείο, αλλά η απόφαση ισχύει</string>
@@ -117,7 +117,7 @@
         <item quantity="one">%1$s ώρες</item>
         <item quantity="other">%1$s ώρες</item>
     </plurals>
-    <string name="examples_label">Κόλλησες; Δοκίμασε ένα από αυτά:</string>
+    <string name="examples_label">Δοκίμασε ένα:</string>
     <string name="example_hotdog_label">🥙 Η πίτα γύρο είναι σάντουιτς;</string>
     <string name="example_hotdog_text">Ο φίλος μου ο Νίκος λέει ότι η πίτα γύρο είναι σάντουιτς: γέμιση μέσα σε ψωμί, τελεία και παύλα. Εγώ λέω ότι είναι κάτι ξεχωριστό. Κανείς δεν παραγγέλνει σάντουιτς περιμένοντας πίτα γύρο, και κανένα σουβλατζίδικο δεν τη γράφει στα σάντουιτς.</string>
     <string name="example_tomato_label">🍅 Η ντομάτα είναι φρούτο;</string>
@@ -166,7 +166,7 @@
     <string name="tier_get_premium">Περισσότερες αποφάσεις</string>
     <string name="tier_checking">Ελέγχουμε αν λείπει κάτι…</string>
     <string name="clarify_title">Πριν αποφασίσουν οι κριτές</string>
-    <string name="clarify_lead">Αυτές οι λεπτομέρειες μπορεί να αλλάξουν το ποιος έχει δίκιο. Απάντησε σε ό,τι μπορείς ή προσπέρασέ το.</string>
+    <string name="clarify_lead">Αυτές οι λεπτομέρειες μπορεί να αλλάξουν ποιος έχει δίκιο.</string>
     <string name="clarify_answer_aria">Απάντηση στην ερώτηση %1$s:</string>
     <string name="clarify_placeholder">Η απάντησή σου (προαιρετικά)</string>
     <string name="clarify_skip">Συνέχεια χωρίς απαντήσεις</string>
@@ -174,19 +174,19 @@
     <string name="clarify_back">Άλλαξε το κείμενο</string>
     <string name="thinking_factcheck">Ελέγχουμε τα γεγονότα στο ίντερνετ…</string>
     <string name="thinking_factcheck_done">Ο έλεγχος στο ίντερνετ ολοκληρώθηκε.</string>
-    <string name="thinking_premium_helper">Ο έλεγχος των γεγονότων στο ίντερνετ θέλει λίγο παραπάνω. Δώσε μας ένα-δυο λεπτά.</string>
+    <string name="thinking_premium_helper">Δώσε μας ένα-δυο λεπτά.</string>
     <string name="factcheck_title">Ελέγχθηκε στο ίντερνετ</string>
-    <string name="factcheck_lead">Οι κριτές είδαν αυτά τα αποτελέσματα αναζήτησης πριν αποφασίσουν. Είναι στοιχεία, όχι η ίδια η απόφαση.</string>
+    <string name="factcheck_lead">Οι κριτές είδαν αυτά τα αποτελέσματα αναζήτησης πριν αποφασίσουν.</string>
     <string name="factcheck_status_supported">Ισχύει</string>
     <string name="factcheck_status_refuted">Δεν ισχύει</string>
     <string name="factcheck_status_mixed">Ισχύει εν μέρει</string>
     <string name="factcheck_status_unverified">Δεν επιβεβαιώθηκε</string>
     <string name="factcheck_sources">Πηγές</string>
-    <string name="factcheck_none">Δεν υπάρχει κάτι να ψάξουμε στο ίντερνετ: εδώ μετράνε οι αξίες ή τα νοήματα, όχι τα γεγονότα.</string>
-    <string name="factcheck_none_factual">Τίποτα εδώ δεν ελέγχεται στο ίντερνετ: τα γεγονότα τα ξέρουν μόνο όσοι ήταν εκεί.</string>
+    <string name="factcheck_none">Δεν υπάρχει κάτι να ελεγχθεί στο ίντερνετ.</string>
+    <string name="factcheck_none_factual">Δεν υπάρχει κάτι να ελεγχθεί στο ίντερνετ.</string>
     <string name="factcheck_unavailable">Ο έλεγχος στο ίντερνετ δεν ολοκληρώθηκε αυτή τη φορά, οπότε οι κριτές αποφάσισαν χωρίς αυτόν.</string>
     <string name="signin_title">Σύνδεση</string>
-    <string name="signin_lead">Συνδέσου για να ζητήσεις απόφαση. Κάθε νέος λογαριασμός παίρνει την πρώτη του απόφαση δωρεάν.</string>
+    <string name="signin_lead">Η πρώτη σου απόφαση είναι δωρεάν.</string>
     <string name="signin_apple">Συνέχεια με Apple</string>
     <string name="signin_google">Συνέχεια με Google</string>
     <string name="signin_email_toggle">Σύνδεση με email</string>
@@ -204,7 +204,7 @@
     <string name="signin_use_password">Χρήση κωδικού πρόσβασης</string>
     <string name="signin_password_wrong">Αυτό το email και ο κωδικός δεν ταιριάζουν.</string>
     <string name="signin_password_short">Χρησιμοποίησε τουλάχιστον 8 χαρακτήρες.</string>
-    <string name="signin_create_note">Θα σου στείλουμε έναν κωδικό με email για να επιβεβαιώσουμε τη διεύθυνση. Χρειάζεται να το κάνεις μόνο μία φορά.</string>
+    <string name="signin_create_note">Θα σου στείλουμε έναν κωδικό με email για επιβεβαίωση.</string>
     <string name="signin_password_choose">Συνδέθηκες. Διάλεξε έναν κωδικό για την επόμενη φορά.</string>
     <string name="signin_password_save">Αποθήκευση κωδικού</string>
     <string name="signin_password_save_failed">Δεν μπορέσαμε να αποθηκεύσουμε τον κωδικό. Δοκίμασε ξανά.</string>
@@ -239,7 +239,7 @@
     <string name="pricing_premium_f3">Έως δύο σύντομες ερωτήσεις όταν λείπει κάτι κρίσιμο</string>
     <string name="pricing_premium_f4">Τα ονόματα αντικαθίστανται πριν από την κρίση</string>
     <string name="pricing_packs_title">Πακέτα αποφάσεων</string>
-    <string name="pricing_packs_lead">Πληρώνεις μία φορά και τις χρησιμοποιείς όποτε θες. Κάθε διαφωνία κοστίζει μία απόφαση.</string>
+    <string name="pricing_packs_lead">Κάθε απόφαση χρησιμοποιεί μία πίστωση.</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s αποφάσεις</item>
         <item quantity="other">%1$s αποφάσεις</item>
@@ -325,8 +325,8 @@
     <string name="case_context_d">Η Πλευρά D πρόσθεσε πληροφορίες</string>
     <string name="case_context_you">Πληροφορίες που πρόσθεσες (%1$s)</string>
     <string name="case_evidence_item">Εικόνα %1$s, όπως τη διάβασαν οι κριτές</string>
-    <string name="case_answered">Απάντησε. Οι κριτές το δουλεύουν.</string>
-    <string name="case_judging_alone">Οι κριτές δουλεύουν τη δική σου πλευρά.</string>
+    <string name="case_answered">Οι κριτές το δουλεύουν.</string>
+    <string name="case_judging_alone">Οι κριτές το δουλεύουν.</string>
     <string name="case_expired_body">Κανείς δεν απάντησε σε 7 μέρες, οπότε η δεσμευμένη απόφαση σου επιστράφηκε. Μπορείς ακόμα να ζητήσεις απόφαση μόνο με τη δική σου πλευρά.</string>
     <string name="case_expired_body_free">Κανείς δεν απάντησε σε 7 μέρες. Μπορείς ακόμα να ζητήσεις απόφαση μόνο με τη δική σου πλευρά.</string>
     <string name="case_one_sided">Κρίθηκε μόνο με τη δική σου πλευρά.</string>
@@ -343,12 +343,12 @@
     <string name="respond_submit">Στείλε την πλευρά μου</string>
     <string name="case_write_title">Η πλευρά σου</string>
     <string name="case_write_placeholder">Ποιο είναι το πρόβλημα;</string>
-    <string name="case_write_lead">Γράψε την πλευρά σου όποτε είσαι έτοιμος. Οι κριτές ξεκινούν όταν γράψετε και οι δύο.</string>
+    <string name="case_write_lead">Οι κριτές ξεκινούν όταν γράψετε και οι δύο.</string>
     <string name="case_write_lead_answered">Ο άλλος έγραψε την πλευρά του. Γράψε τη δική σου για να πάρεις την ετυμηγορία.</string>
     <string name="case_write_submit">Στείλε την πλευρά μου</string>
     <string name="case_write_email_subject">Η άλλη πλευρά έγραψε την εκδοχή της</string>
-    <string name="respond_sent">Ευχαριστούμε. Η πλευρά σου στάλθηκε και οι κριτές το δουλεύουν.</string>
-    <string name="respond_sent_waiting">Ευχαριστούμε. Η πλευρά σου στάλθηκε. Οι κριτές ξεκινούν όταν γράψει και ο άλλος τη δική του.</string>
+    <string name="respond_sent">Η πλευρά σου στάλθηκε.</string>
+    <string name="respond_sent_waiting">Η πλευρά σου στάλθηκε. Περιμένουμε τον άλλον.</string>
     <string name="respond_own_invite">Αυτός είναι ο δικός σου σύνδεσμος πρόσκλησης. Στείλ\' τον στο άλλο άτομο.</string>
     <string name="respond_expired">Αυτή η πρόσκληση έληξε.</string>
     <string name="respond_closed">Αυτή η υπόθεση δεν δέχεται πια απαντήσεις.</string>
@@ -412,7 +412,7 @@
     <string name="appeal_submit">Νέα κρίση με τις πληροφορίες μου</string>
     <string name="appeal_sending">Ανωνυμοποιούμε τις πληροφορίες σου…</string>
     <string name="appeal_judging">Οι κριτές ξανακοιτάζουν τα πάντα…</string>
-    <string name="appeal_upsell">Λείπει κάτι; Πρόσθεσε πληροφορίες και ζήτα νέα κρίση. Κοστίζει 1 απόφαση.</string>
+    <string name="appeal_upsell">Λείπει κάτι; Πρόσθεσε πληροφορίες με 1 απόφαση.</string>
     <string name="appeal_sign_in">Συνδέσου για να προσθέσεις πληροφορίες</string>
     <string name="appeal_used">Έχεις ήδη προσθέσει πληροφορίες σε αυτή την υπόθεση.</string>
     <string name="appeal_limit">Έχεις προσθέσει πληροφορίες δύο φορές. Αυτό είναι το όριο για μία απόφαση.</string>
@@ -456,7 +456,7 @@
     <string name="case_display_name">Το όνομά σου στην κοινοποιημένη απόφαση</string>
     <string name="case_display_save">Αποθήκευση ονόματος</string>
     <string name="respond_keep">Κράτα αυτή την υπόθεση στον λογαριασμό σου</string>
-    <string name="respond_kept">Αυτή η υπόθεση είναι πλέον στον λογαριασμό σου. Εμφανίζεται στη σελίδα «Αποφάσεις» σε κάθε συσκευή.</string>
+    <string name="respond_kept">Αποθηκεύτηκε στον λογαριασμό σου.</string>
     <string name="respond_remove">Αφαίρεση της πλευράς μου</string>
     <string name="respond_remove_confirm">Να αφαιρεθούν το αρχικό σου κείμενο και το εμφανιζόμενο όνομά σου; Οι σύνδεσμοι κοινοποίησης της υπόθεσης σταματούν να λειτουργούν (προεπισκοπήσεις που έχουν ήδη σταλεί σε συνομιλίες μπορεί να εμφανίζονται μέχρι να τις ανανεώσουν οι εφαρμογές). Αυτό δεν αναιρείται.</string>
     <string name="names_title">Ονόματα στην κοινοποιημένη σελίδα</string>
@@ -535,7 +535,7 @@
     <string name="app_tab_new">Νέα διαφωνία</string>
     <string name="app_tab_settings">Ρυθμίσεις</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">Δεν έχεις αποφάσεις ακόμα. Λύσε την πρώτη σου διαφωνία και η απόφαση θα εμφανιστεί εδώ.</string>
+    <string name="app_history_empty">Δεν υπάρχουν αποφάσεις ακόμα.</string>
     <string name="app_history_device_only">Αποθηκεύονται μόνο σε αυτό το τηλέφωνο. Αν διαγράψεις μια απόφαση από εδώ, ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.</string>
     <string name="app_history_delete">Διαγραφή</string>
     <string name="app_history_remove_all">Αφαίρεση όλων</string>
@@ -544,7 +544,7 @@
         <item quantity="other">Να διαγραφούν %1$s αποφάσεις από αυτό το τηλέφωνο; Οι σύνδεσμοι κοινοποίησής τους θα συνεχίσουν να λειτουργούν.</item>
     </plurals>
     <string name="app_history_phone_only">Μόνο σε αυτό το τηλέφωνο</string>
-    <string name="app_history_phone_only_note">Αυτές οι αποφάσεις δεν υπάρχουν στον λογαριασμό σου· είναι αποθηκευμένες μόνο σε αυτό το τηλέφωνο. Αν διαγράψεις μία από εδώ, ο σύνδεσμος κοινοποίησής της θα συνεχίσει να λειτουργεί.</string>
+    <string name="app_history_phone_only_note">Η διαγραφή δεν απενεργοποιεί τον σύνδεσμο κοινής χρήσης.</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="one">Να αφαιρεθεί αυτή η απόφαση από τον λογαριασμό σου, σε όλες τις συσκευές; Όσα έγραψες και τα ονόματα σβήνονται και ο σύνδεσμος κοινοποίησής της σταματά να λειτουργεί. Αυτό δεν αναιρείται.</item>
         <item quantity="other">Να αφαιρεθούν %1$s αποφάσεις από τον λογαριασμό σου, σε όλες τις συσκευές; Όσα έγραψες και τα ονόματα σβήνονται και οι σύνδεσμοι κοινοποίησής τους σταματούν να λειτουργούν. Αυτό δεν αναιρείται.</item>
@@ -565,9 +565,9 @@
     <string name="app_pricing_free_account">Σύνδεση με Apple, Google ή email</string>
     <string name="app_pricing_context">Οι εικόνες με πληροφορίες διαβάζονται και μετά πετιούνται, χωρίς επιπλέον κόστος</string>
     <string name="app_pricing_headline">Την πρώτη απόφαση την κερνάμε εμείς.</string>
-    <string name="app_pricing_sub">Φτιάξε λογαριασμό και η πρώτη σου απόφαση είναι δωρεάν, με όλες τις λειτουργίες. Μετά διαλέγεις πακέτο ή μηνιαίο πρόγραμμα.</string>
+    <string name="app_pricing_sub">Μετά διάλεξε πακέτο ή μηνιαίο πρόγραμμα.</string>
     <string name="app_pricing_headline_member">Περισσότερες αποφάσεις.</string>
-    <string name="app_pricing_sub_member">Διάλεξε πακέτο ή μηνιαίο πρόγραμμα. Κάθε απόφαση βγαίνει από την πλήρη σύνθεση κριτών.</string>
+    <string name="app_pricing_sub_member">Διάλεξε πακέτο ή μηνιαίο πρόγραμμα.</string>
     <plurals name="app_balance_left">
         <item quantity="one">Σου έμεινε %1$s απόφαση</item>
         <item quantity="other">Σου έμειναν %1$s αποφάσεις</item>
@@ -661,9 +661,9 @@
     <string name="app_appeal_used">Έχεις ήδη προσθέσει πληροφορίες σε αυτή την υπόθεση.</string>
     <string name="app_appeal_limit">Έχεις προσθέσει πληροφορίες δύο φορές. Αυτό είναι το όριο για μία απόφαση.</string>
     <string name="app_purchase_buying">Αγορά…</string>
-    <string name="app_purchase_success">Ευχαριστούμε! Η αγορά ολοκληρώθηκε.</string>
-    <string name="app_purchase_pending">Η αγορά σου βρίσκεται σε επεξεργασία. Ίσως χρειαστεί ένα λεπτό για να εμφανιστεί.</string>
-    <string name="app_purchase_slow">Ίσως χρειαστεί ένα λεπτό για να εμφανιστούν εδώ.</string>
+    <string name="app_purchase_success">Η αγορά ολοκληρώθηκε.</string>
+    <string name="app_purchase_pending">Η αγορά σου βρίσκεται σε επεξεργασία.</string>
+    <string name="app_purchase_slow">Οι πιστώσεις ίσως αργήσουν ένα λεπτό.</string>
     <string name="app_purchase_failed">Η αγορά δεν ολοκληρώθηκε. Δοκίμασε ξανά σε λίγο.</string>
     <string name="app_purchase_restore">Επαναφορά αγορών</string>
     <string name="app_purchase_restore_done">Οι αγορές σου επαναφέρθηκαν.</string>

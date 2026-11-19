@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">ତିନି ଜଣ ସ୍ୱାଧୀନ ବିଚାରକ · ବିଚାରକମାନେ ନାମ ଦେଖନ୍ତି ନାହିଁ</string>
     <string name="hero_lead">ଝଗଡ଼ାଟା କେଉଁ କଥାକୁ ନେଇ, କୁହନ୍ତୁ। ତିନି ଜଣ AI ବିଚାରକ ଅଲଗା ଅଲଗା ନିଜ ରାୟ ଦିଅନ୍ତି, ଆଉ ଭରସା ସ୍କୋର୍ ଦେଖାଏ ସେମାନେ କେତେ ଏକମତ।</string>
     <string name="input_label">ବିବାଦ</string>
-    <string name="placeholder">କ\'ଣ ହେଲା? କିଏ କ\'ଣ କହୁଛି, ଆଉ କାହିଁକି?\n\nଅନ୍ୟ ଜଣଙ୍କ କଥା ସେ ଯେମିତି କହନ୍ତେ ସେମିତି ଲେଖନ୍ତୁ। ବିଚାରକମାନେ ଯେମିତି ହେଉ ଦୁଇ ପକ୍ଷର ସବୁଠୁ ମଜବୁତ ଯୁକ୍ତି ଗଢ଼ନ୍ତି।</string>
+    <string name="placeholder">କ\'ଣ ହେଲା? କିଏ କ\'ଣ କହୁଛି, ଆଉ କାହିଁକି?</string>
     <string name="get_verdict">ରାୟ ଜାଣନ୍ତୁ</string>
     <string name="thinking_eyebrow">ବିଚାରକମାନେ କ\'ଣ କରୁଛନ୍ତି</string>
     <string name="thinking_read">ଦୁଇ ପକ୍ଷ ପଢ଼ି ପ୍ରତ୍ୟେକକୁ ପୂରା ସୁଯୋଗ ଦେଉଛୁ…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">ଅସଲ କଥାଟି ଖୋଜୁଛୁ…</string>
     <string name="thinking_judges">ତିନି ଜଣ ବିଚାରକ ଅଲଗା ଅଲଗା ଭାବୁଛନ୍ତି…</string>
     <string name="thinking_votes">ଭୋଟ୍ ଗଣୁଛୁ…</string>
-    <string name="thinking_helper">ତିନି ଜଣ AI ବିଚାରକ ଅଲଗା ଅଲଗା ରାୟ ଦିଅନ୍ତି, ଭୋଟ୍ ପାଖାପାଖି ହେଲେ ଆହୁରି ବିଚାରକ ଆସନ୍ତି। ଟିକେ ସମୟ ଲାଗିପାରେ।</string>
+    <string name="thinking_helper">ଟିକେ ସମୟ ଲାଗିପାରେ।</string>
     <string name="thinking_finish">ଅସଲ କଥାର ପାଖାପାଖି ପହଞ୍ଚିଲୁଣି…</string>
-    <string name="thinking_still_judging">ବିଚାରକମାନେ ଏବେ ବି ଭାବୁଛନ୍ତି। ଟିକେ ଧୈର୍ଯ୍ୟ ଧରନ୍ତୁ…</string>
+    <string name="thinking_still_judging">ଏବେ ବି କାମ ଚାଲିଛି…</string>
     <string name="thinking_ready">ରାୟ ପ୍ରସ୍ତୁତ।</string>
     <string name="story_names">ନାମ କାଢ଼ି ଦେଉଛୁ, ଯେପରି କେହି ସେ କିଏ ସେଥିପାଇଁ ବିଚାରିତ ନହୁଅନ୍ତି</string>
     <string name="story_facts">ଅଲଗା ଯାଞ୍ଚକାରୀ ୱେବରେ ତଥ୍ୟ ଖୋଜନ୍ତି</string>
@@ -73,14 +73,14 @@
     <string name="translate_loading">ଅନୁବାଦ ହେଉଛି…</string>
     <string name="translate_from_en">ଇଂରାଜୀରୁ ଅନୁବାଦିତ</string>
     <string name="translate_from_tr">ତୁର୍କୀରୁ ଅନୁବାଦିତ</string>
-    <string name="translate_failed">ଏବେ ଅନୁବାଦ ହୋଇପାରିଲା ନାହିଁ, ତେଣୁ ମୂଳ ଲେଖା ଦେଖାଉଛୁ।</string>
+    <string name="translate_failed">ଅନୁବାଦ ହୋଇପାରିଲା ନାହିଁ।</string>
     <string name="translate_toggle">ରାୟର ଭାଷା</string>
     <string name="vote_split">ବିଭକ୍ତ</string>
     <string name="vote_conditional">ନିର୍ଭର କରେ</string>
     <string name="vote_dissolved">ଶବ୍ଦର ଗୋଳମାଳ</string>
-    <string name="refused_note">ଏଥର AI ଏଥିରୁ ଦୂରେଇ ରହିଲା। ମିଛ ରାୟ ଦେଖାଇବା ଅପେକ୍ଷା କିଛି ନ ଦେଖାଇବା ଭଲ।</string>
+    <string name="refused_note">ଏଥର AI ଏଥିରୁ ଦୂରେଇ ରହିଲା।</string>
     <string name="demo_note">ଡେମୋ ମୋଡ୍: AI ସଂଯୋଗ ସେଟ୍ ହୋଇନାହିଁ, ତେଣୁ ଏହା ଏକ ନମୁନା ରାୟ</string>
-    <string name="trial_survived">ଆପତ୍ତି ଖାରଜ: ଅନ୍ୟ ପକ୍ଷର ଓକିଲ ନିଜର ସବୁଠୁ କଡ଼ା ଆପତ୍ତି ଉଠାଇଲେ, ଆଉ ରାୟ ଟିକି ରହିଲା। ଭରସା ସ୍କୋର୍ ବଦଳିଲା ନାହିଁ।</string>
+    <string name="trial_survived">ଆପତ୍ତି ଖାରଜ: ରାୟ ଟିକି ରହିଲା।</string>
     <string name="trial_uncertain">ଅନ୍ୟ ପକ୍ଷର ଓକିଲ ଆପତ୍ତି ଉଠାଇଲେ, ଆଉ ସେହି ଆପତ୍ତି ଏହି ରାୟ ଉପରେ ପ୍ରକୃତ ସନ୍ଦେହ ଛାଡ଼ିଗଲା</string>
     <string name="trial_overturned">ଆପତ୍ତି ଗ୍ରହଣ: ରାୟ ବଳବତ୍ତର ଅଛି, କିନ୍ତୁ ଅନ୍ୟ ପକ୍ଷର ସବୁଠୁ କଡ଼ା ଆପତ୍ତି ତାକୁ ଗୁରୁତର ଭାବେ ଦୁର୍ବଳ କରିଦେଲା</string>
     <string name="trial_minor">ଅନ୍ୟ ପକ୍ଷର ଓକିଲ ଏକ ଉଚିତ କଥା ଉଠାଇଲେ, କିନ୍ତୁ ରାୟ ବଳବତ୍ତର ଅଛି</string>
@@ -117,7 +117,7 @@
         <item quantity="one">%1$s ଘଣ୍ଟା</item>
         <item quantity="other">%1$s ଘଣ୍ଟା</item>
     </plurals>
-    <string name="examples_label">ଅଟକି ଗଲେ? ଏଥିରୁ ଗୋଟିଏ ଚେଷ୍ଟା କରନ୍ତୁ:</string>
+    <string name="examples_label">ଗୋଟିଏ ଚେଷ୍ଟା କରନ୍ତୁ:</string>
     <string name="example_hotdog_label">🥟 ସିଙ୍ଗଡ଼ା କ\'ଣ ପିଠା?</string>
     <string name="example_hotdog_text">ମୋ ସାଙ୍ଗ ସୁବ୍ରତ କହୁଛି ସିଙ୍ଗଡ଼ା ବି ଗୋଟେ ପିଠା: ମଇଦା ଖୋଳ ଭିତରେ ପୁର, ବାସ୍ ସେତିକି। ମୁଁ କହୁଛି ସିଙ୍ଗଡ଼ା ନିଜେ ଅଲଗା ଜିନିଷ। ପିଠା ମାଗି କେହି ସିଙ୍ଗଡ଼ା ଆଶା କରେ ନାହିଁ, ଆଉ କୌଣସି ମିଠା ଦୋକାନ ତାକୁ ପିଠା ତାଲିକାରେ ରଖେ ନାହିଁ।</string>
     <string name="example_tomato_label">🍅 ଟମାଟୋ କ\'ଣ ଫଳ?</string>
@@ -166,7 +166,7 @@
     <string name="tier_get_premium">ଅଧିକ ରାୟ ନିଅନ୍ତୁ</string>
     <string name="tier_checking">କିଛି ବାକି ରହିଲା କି ଦେଖୁଛୁ…</string>
     <string name="clarify_title">ବିଚାରକମାନେ ରାୟ ଦେବା ଆଗରୁ</string>
-    <string name="clarify_lead">ଏହି ବିବରଣୀ କିଏ ଠିକ୍ ତାହା ବଦଳାଇପାରେ। ଯେତିକି ଜାଣନ୍ତି ଉତ୍ତର ଦିଅନ୍ତୁ, ନହେଲେ ଛାଡ଼ିଦିଅନ୍ତୁ।</string>
+    <string name="clarify_lead">ଏହି ବିବରଣୀ କିଏ ଠିକ୍ ତାହା ବଦଳାଇପାରେ।</string>
     <string name="clarify_answer_aria">ପ୍ରଶ୍ନ %1$sର ଉତ୍ତର:</string>
     <string name="clarify_placeholder">ଆପଣଙ୍କ ଉତ୍ତର (ଇଚ୍ଛାଧୀନ)</string>
     <string name="clarify_skip">ଛାଡ଼ି ରାୟ ଦିଅନ୍ତୁ</string>
@@ -174,19 +174,19 @@
     <string name="clarify_back">ବିବାଦ ବଦଳାନ୍ତୁ</string>
     <string name="thinking_factcheck">ୱେବ୍‌ରେ ତଥ୍ୟ ଯାଞ୍ଚ କରୁଛୁ…</string>
     <string name="thinking_factcheck_done">ୱେବ୍ ଯାଞ୍ଚ ସରିଲା।</string>
-    <string name="thinking_premium_helper">ୱେବ୍‌ରେ ତଥ୍ୟ ଯାଞ୍ଚ କରିବାକୁ ଟିକେ ଅଧିକ ସମୟ ଲାଗେ। ଗୋଟେ ଦୁଇଟା ମିନିଟ୍ ଦିଅନ୍ତୁ।</string>
+    <string name="thinking_premium_helper">ଗୋଟେ ଦୁଇଟା ମିନିଟ୍ ଦିଅନ୍ତୁ।</string>
     <string name="factcheck_title">ୱେବ୍‌ରେ ଯାଞ୍ଚ ହେଲା</string>
-    <string name="factcheck_lead">ରାୟ ଦେବା ଆଗରୁ ବିଚାରକମାନେ ଏହି ସର୍ଚ୍ଚ ଫଳାଫଳ ଦେଖିଥିଲେ। ଏଗୁଡ଼ିକ ପ୍ରମାଣ, ରାୟ ନିଜେ ନୁହେଁ।</string>
+    <string name="factcheck_lead">ରାୟ ଦେବା ଆଗରୁ ବିଚାରକମାନେ ଏହି ସର୍ଚ୍ଚ ଫଳାଫଳ ଦେଖିଥିଲେ।</string>
     <string name="factcheck_status_supported">ଠିକ୍ ବାହାରିଲା</string>
     <string name="factcheck_status_refuted">ଭୁଲ ବାହାରିଲା</string>
     <string name="factcheck_status_mixed">ଆଂଶିକ ସତ</string>
     <string name="factcheck_status_unverified">ନିଶ୍ଚିତ ହୋଇପାରିଲା ନାହିଁ</string>
     <string name="factcheck_sources">ସୂତ୍ର</string>
-    <string name="factcheck_none">ୱେବ୍‌ରେ ଖୋଜିବାକୁ କିଛି ନାହିଁ: ଏହା ତଥ୍ୟ ଉପରେ ନୁହେଁ, ମୂଲ୍ୟବୋଧ ବା ଅର୍ଥ ଉପରେ ନିର୍ଭର କରେ।</string>
-    <string name="factcheck_none_factual">ଏଠାରେ ୱେବ୍‌ରେ ଯାଞ୍ଚ ହେବା ଭଳି କିଛି ନାହିଁ: ଏଥିର ତଥ୍ୟ କେବଳ ଜଡ଼ିତ ଲୋକଙ୍କ ଭିତରେ।</string>
+    <string name="factcheck_none">ୱେବ୍‌ରେ ଯାଞ୍ଚ କରିବାକୁ କିଛି ନାହିଁ।</string>
+    <string name="factcheck_none_factual">ୱେବ୍‌ରେ ଯାଞ୍ଚ କରିବାକୁ କିଛି ନାହିଁ।</string>
     <string name="factcheck_unavailable">ଏଥର ୱେବ୍ ଯାଞ୍ଚ ସରିଲା ନାହିଁ, ତେଣୁ ବିଚାରକମାନେ ତାହା ବିନା ରାୟ ଦେଲେ।</string>
     <string name="signin_title">ସାଇନ୍ ଇନ୍</string>
-    <string name="signin_lead">ରାୟ ପାଇବାକୁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ। ନୂଆ ଆକାଉଣ୍ଟର ପ୍ରଥମ ରାୟ ମାଗଣା।</string>
+    <string name="signin_lead">ଆପଣଙ୍କ ପ୍ରଥମ ରାୟ ମାଗଣା।</string>
     <string name="signin_apple">Apple ସହ ଆଗକୁ ବଢ଼ନ୍ତୁ</string>
     <string name="signin_google">Google ସହ ଆଗକୁ ବଢ଼ନ୍ତୁ</string>
     <string name="signin_email_toggle">ବଦଳରେ ଇମେଲ୍ ବ୍ୟବହାର କରନ୍ତୁ</string>
@@ -204,7 +204,7 @@
     <string name="signin_use_password">ବଦଳରେ ପାସୱାର୍ଡ ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="signin_password_wrong">ଏହି ଇମେଲ୍ ଏବଂ ପାସୱାର୍ଡ ମେଳ ଖାଉନାହିଁ।</string>
     <string name="signin_password_short">ଅତି କମରେ 8ଟି ଅକ୍ଷର ବ୍ୟବହାର କରନ୍ତୁ।</string>
-    <string name="signin_create_note">ଏହି ଠିକଣା ନିଶ୍ଚିତ କରିବାକୁ ଆମେ ଆପଣଙ୍କୁ ଇମେଲରେ ଏକ କୋଡ୍ ପଠାଇବୁ। ଏହା କେବଳ ଥରେ କରିବାକୁ ପଡ଼ିବ।</string>
+    <string name="signin_create_note">ନିଶ୍ଚିତ କରିବାକୁ ଆମେ ଆପଣଙ୍କୁ ଇମେଲରେ ଏକ କୋଡ୍ ପଠାଇବୁ।</string>
     <string name="signin_password_choose">ଆପଣ ସାଇନ୍ ଇନ୍ କରିଛନ୍ତି। ପରବର୍ତ୍ତୀ ଥର ପାଇଁ ଏକ ପାସୱାର୍ଡ ବାଛନ୍ତୁ।</string>
     <string name="signin_password_save">ପାସୱାର୍ଡ ସାଇତନ୍ତୁ</string>
     <string name="signin_password_save_failed">ପାସୱାର୍ଡ ସାଇତିହେଲା ନାହିଁ। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>
@@ -239,7 +239,7 @@
     <string name="pricing_premium_f3">କୌଣସି ଜରୁରୀ ତଥ୍ୟ ଛାଡ଼ିଯାଇଥିଲେ ସର୍ବାଧିକ ଦୁଇଟି ଛୋଟ ପ୍ରଶ୍ନ</string>
     <string name="pricing_premium_f4">ବିଚାର ଆଗରୁ ନାମ ବଦଳାଇ ଦିଆଯାଏ</string>
     <string name="pricing_packs_title">କ୍ରେଡିଟ୍ ପ୍ୟାକ୍</string>
-    <string name="pricing_packs_lead">ଥରେ ଦେୟ ଦିଅନ୍ତୁ, ଯେବେ ଇଚ୍ଛା ବ୍ୟବହାର କରନ୍ତୁ। ପ୍ରତ୍ୟେକ ରାୟରେ ଗୋଟିଏ କ୍ରେଡିଟ୍ ଖର୍ଚ୍ଚ ହୁଏ।</string>
+    <string name="pricing_packs_lead">ପ୍ରତ୍ୟେକ ରାୟରେ ଗୋଟିଏ କ୍ରେଡିଟ୍ ଖର୍ଚ୍ଚ ହୁଏ।</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$sଟି ରାୟ</item>
         <item quantity="other">%1$sଟି ରାୟ</item>
@@ -325,8 +325,8 @@
     <string name="case_context_d">ପକ୍ଷ D ଯୋଡ଼ିଥିବା ବିବରଣୀ</string>
     <string name="case_context_you">ଆପଣ ଯୋଡ଼ିଥିବା ବିବରଣୀ (%1$s)</string>
     <string name="case_evidence_item">ଛବି %1$s, ବିଚାରକମାନେ ଯେମିତି ପଢ଼ିଲେ</string>
-    <string name="case_answered">ସେ ଉତ୍ତର ଦେଲେଣି। ବିଚାରକମାନେ କାମରେ ଲାଗିଛନ୍ତି।</string>
-    <string name="case_judging_alone">ବିଚାରକମାନେ ଆପଣଙ୍କ କଥା ଉପରେ କାମ କରୁଛନ୍ତି।</string>
+    <string name="case_answered">ବିଚାରକମାନେ କାମରେ ଲାଗିଛନ୍ତି।</string>
+    <string name="case_judging_alone">ବିଚାରକମାନେ କାମରେ ଲାଗିଛନ୍ତି।</string>
     <string name="case_expired_body">7 ଦିନରେ କେହି ଉତ୍ତର ଦେଲେ ନାହିଁ, ତେଣୁ ଆପଣଙ୍କ କ୍ରେଡିଟ୍ ଫେରିଆସିଛି। ତଥାପି କେବଳ ଆପଣଙ୍କ କଥା ଆଧାରରେ ରାୟ ନେଇପାରିବେ।</string>
     <string name="case_expired_body_free">7 ଦିନରେ କେହି ଉତ୍ତର ଦେଲେ ନାହିଁ। ତଥାପି କେବଳ ଆପଣଙ୍କ କଥା ଆଧାରରେ ରାୟ ନେଇପାରିବେ।</string>
     <string name="case_one_sided">କେବଳ ଆପଣଙ୍କ କଥା ଆଧାରରେ ବିଚାର ହେଲା।</string>
@@ -343,12 +343,12 @@
     <string name="respond_submit">ମୋ କଥା ପଠାନ୍ତୁ</string>
     <string name="case_write_title">ଆପଣଙ୍କ କଥା</string>
     <string name="case_write_placeholder">ସମସ୍ୟା କ\'ଣ?</string>
-    <string name="case_write_lead">ପ୍ରସ୍ତୁତ ହେଲେ ଆପଣଙ୍କ କଥା ଲେଖନ୍ତୁ। ଦୁହେଁ ଲେଖିଲେ ବିଚାରକମାନେ ଆରମ୍ଭ କରିବେ।</string>
+    <string name="case_write_lead">ଦୁହେଁ ଲେଖିଲେ ବିଚାରକମାନେ ଆରମ୍ଭ କରିବେ।</string>
     <string name="case_write_lead_answered">ସେ ନିଜ କଥା ଲେଖିସାରିଛନ୍ତି। ରାୟ ପାଇବାକୁ ଆପଣଙ୍କର ଲେଖନ୍ତୁ।</string>
     <string name="case_write_submit">ମୋ କଥା ପଠାନ୍ତୁ</string>
     <string name="case_write_email_subject">ଅନ୍ୟ ପକ୍ଷ ନିଜ କଥା ଲେଖିଛନ୍ତି</string>
-    <string name="respond_sent">ଧନ୍ୟବାଦ। ଆପଣଙ୍କ କଥା ପହଞ୍ଚିଗଲା, ବିଚାରକମାନେ କାମରେ ଲାଗିଛନ୍ତି।</string>
-    <string name="respond_sent_waiting">ଧନ୍ୟବାଦ। ଆପଣଙ୍କ କଥା ପହଞ୍ଚିଗଲା। ଅନ୍ୟ ଜଣକ ଲେଖିଲେ ବିଚାରକମାନେ ଆରମ୍ଭ କରିବେ।</string>
+    <string name="respond_sent">ଆପଣଙ୍କ କଥା ପହଞ୍ଚିଗଲା।</string>
+    <string name="respond_sent_waiting">ଆପଣଙ୍କ କଥା ପହଞ୍ଚିଗଲା। ଅନ୍ୟ ଜଣକ ପାଇଁ ଅପେକ୍ଷା ଚାଲିଛି।</string>
     <string name="respond_own_invite">ଏହା ଆପଣଙ୍କ ନିଜ ନିମନ୍ତ୍ରଣ ଲିଙ୍କ୍। ଅନ୍ୟ ଜଣଙ୍କୁ ପଠାନ୍ତୁ।</string>
     <string name="respond_expired">ଏହି ନିମନ୍ତ୍ରଣର ମିଆଦ ସରିଗଲା।</string>
     <string name="respond_closed">ଏହି ମାମଲା ଆଉ ଉତ୍ତର ନେଉନାହିଁ।</string>
@@ -412,7 +412,7 @@
     <string name="appeal_submit">ମୋ ବିବରଣୀ ସହ ପୁଣି ବିଚାର କରନ୍ତୁ</string>
     <string name="appeal_sending">ଆପଣଙ୍କ ବିବରଣୀ ନାମହୀନ କରୁଛୁ…</string>
     <string name="appeal_judging">ବିଚାରକମାନେ ସବୁକିଛି ପୁଣି ଦେଖୁଛନ୍ତି…</string>
-    <string name="appeal_upsell">କିଛି ବାକି ରହିଲା? ବିବରଣୀ ଯୋଡ଼ି ପୁଣି ବିଚାର କରାନ୍ତୁ, 1ଟି ରାୟ ଖର୍ଚ୍ଚରେ।</string>
+    <string name="appeal_upsell">କିଛି ବାକି ରହିଲା? 1ଟି ରାୟ ବଦଳରେ ବିବରଣୀ ଯୋଡ଼ନ୍ତୁ।</string>
     <string name="appeal_sign_in">ବିବରଣୀ ଯୋଡ଼ିବାକୁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ</string>
     <string name="appeal_used">ଆପଣ ଏହି ମାମଲାରେ ଆଗରୁ ବିବରଣୀ ଯୋଡ଼ିସାରିଛନ୍ତି।</string>
     <string name="appeal_limit">ଆପଣ ଦୁଇ ଥର ବିବରଣୀ ଯୋଡ଼ିସାରିଲେଣି। ଗୋଟିଏ ରାୟ ପାଇଁ ଏତିକି ହିଁ ସୀମା।</string>
@@ -456,7 +456,7 @@
     <string name="case_display_name">ସେୟାର୍ ହୋଇଥିବା ରାୟରେ ଆପଣଙ୍କ ନାମ</string>
     <string name="case_display_save">ନାମ ସେଭ୍ କରନ୍ତୁ</string>
     <string name="respond_keep">ଏହି ମାମଲା ଆପଣଙ୍କ ଆକାଉଣ୍ଟରେ ରଖନ୍ତୁ</string>
-    <string name="respond_kept">ଏହି ମାମଲା ଏବେ ଆପଣଙ୍କ ଆକାଉଣ୍ଟରେ ଅଛି। ଏହା ସବୁ ଡିଭାଇସ୍‌ରେ ଆପଣଙ୍କ “ରାୟ” ପୃଷ୍ଠାରେ ଦେଖାଯାଏ।</string>
+    <string name="respond_kept">ଆପଣଙ୍କ ଆକାଉଣ୍ଟରେ ସାଇତା ହୋଇଛି।</string>
     <string name="respond_remove">ମୋ କଥା ହଟାନ୍ତୁ</string>
     <string name="respond_remove_confirm">ଆପଣଙ୍କ ମୂଳ ଲେଖା ଓ ପ୍ରଦର୍ଶିତ ନାମ ହଟାଇବେ? ମାମଲାର ସେୟାର୍ ଲିଙ୍କ୍ କାମ କରିବା ବନ୍ଦ କରିବ (ଚାଟ୍‌ରେ ଆଗରୁ ପୋଷ୍ଟ ହୋଇଥିବା ପ୍ରିଭ୍ୟୁ ସେହି ଆପ୍ ରିଫ୍ରେସ୍ ନ କରିବା ଯାଏଁ ଦେଖାଯାଇପାରେ)। ଏହାକୁ ଆଉ ଫେରାଇହେବ ନାହିଁ।</string>
     <string name="names_title">ସେୟାର୍ ପୃଷ୍ଠାରେ ନାମ</string>
@@ -535,7 +535,7 @@
     <string name="app_tab_new">ନୂଆ</string>
     <string name="app_tab_settings">ସେଟିଂସ୍</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">ଏଯାଏଁ କୌଣସି ରାୟ ନାହିଁ। ଆପଣଙ୍କ ପ୍ରଥମ ଝଗଡ଼ା ମେଣ୍ଟାନ୍ତୁ, ତା\'ର ରାୟ ଏଠାରେ ଦେଖାଯିବ।</string>
+    <string name="app_history_empty">ଏଯାଏଁ କୌଣସି ରାୟ ନାହିଁ।</string>
     <string name="app_history_device_only">କେବଳ ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଛି। ଏଠାରୁ କୌଣସି ରାୟ ଡିଲିଟ୍ କଲେ ବି ତା\'ର ସେୟାର୍ ଲିଙ୍କ୍ ବନ୍ଦ ହୁଏ ନାହିଁ।</string>
     <string name="app_history_delete">ଡିଲିଟ୍</string>
     <string name="app_history_remove_all">ସବୁ ହଟାନ୍ତୁ</string>
@@ -544,7 +544,7 @@
         <item quantity="other">ଏହି ଫୋନ୍‌ରୁ %1$sଟି ରାୟ ଡିଲିଟ୍ କରିବେ? ସେଗୁଡ଼ିକର ସେୟାର୍ ଲିଙ୍କ୍ ଚାଲୁ ରହିବ।</item>
     </plurals>
     <string name="app_history_phone_only">କେବଳ ଏହି ଫୋନ୍‌ରେ</string>
-    <string name="app_history_phone_only_note">ଆପଣଙ୍କ ଆକାଉଣ୍ଟରେ ନାହିଁ: ଏଗୁଡ଼ିକ କେବଳ ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୋଇଛି। ଏଠାରୁ କୌଣସି ରାୟ ଡିଲିଟ୍ କଲେ ବି ତା\'ର ସେୟାର୍ ଲିଙ୍କ୍ ବନ୍ଦ ହୁଏ ନାହିଁ।</string>
+    <string name="app_history_phone_only_note">ଡିଲିଟ୍ କଲେ ବି ସେୟାର୍ ଲିଙ୍କ୍ ବନ୍ଦ ହୁଏ ନାହିଁ।</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="one">ଆପଣଙ୍କ ଆକାଉଣ୍ଟରୁ ଏହି ରାୟ ହଟାଇବେ? ସବୁ ଡିଭାଇସ୍‌ରେ ଆପଣ ଲେଖିଥିବା କଥା ଓ ନାମଗୁଡ଼ିକ ଲିଭିଯିବ, ଆଉ ଏହାର ସେୟାର୍ ଲିଙ୍କ୍ କାମ କରିବା ବନ୍ଦ କରିବ। ଏହାକୁ ଆଉ ଫେରାଇହେବ ନାହିଁ।</item>
         <item quantity="other">ଆପଣଙ୍କ ଆକାଉଣ୍ଟରୁ %1$sଟି ରାୟ ହଟାଇବେ? ସବୁ ଡିଭାଇସ୍‌ରେ ଆପଣ ଲେଖିଥିବା କଥା ଓ ନାମଗୁଡ଼ିକ ଲିଭିଯିବ, ଆଉ ସେଗୁଡ଼ିକର ସେୟାର୍ ଲିଙ୍କ୍ କାମ କରିବା ବନ୍ଦ କରିବ। ଏହାକୁ ଆଉ ଫେରାଇହେବ ନାହିଁ।</item>
@@ -565,9 +565,9 @@
     <string name="app_pricing_free_account">Apple, Google ବା ଇମେଲ୍ ସହ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ</string>
     <string name="app_pricing_context">ବିବରଣୀର ଛବି ପଢ଼ି ପରେ ଫିଙ୍ଗି ଦିଆଯାଏ, ଅତିରିକ୍ତ ଖର୍ଚ୍ଚ ନାହିଁ</string>
     <string name="app_pricing_headline">ପ୍ରଥମ ରାୟ ଆମ ତରଫରୁ।</string>
-    <string name="app_pricing_sub">ଆକାଉଣ୍ଟ ଖୋଲନ୍ତୁ, ପ୍ରଥମ ରାୟ ସବୁ ସୁବିଧା ସହ ମାଗଣା। ତା\'ପରେ ଗୋଟେ ପ୍ୟାକ୍ ବାଛନ୍ତୁ ବା ମାସିକ ପ୍ଲାନ୍ ନିଅନ୍ତୁ।</string>
+    <string name="app_pricing_sub">ତା\'ପରେ ଗୋଟେ ପ୍ୟାକ୍ ବାଛନ୍ତୁ ବା ମାସିକ ପ୍ଲାନ୍ ନିଅନ୍ତୁ।</string>
     <string name="app_pricing_headline_member">ଅଧିକ ରାୟ ନିଅନ୍ତୁ।</string>
-    <string name="app_pricing_sub_member">ଗୋଟେ ପ୍ୟାକ୍ ବାଛନ୍ତୁ ବା ମାସିକ ପ୍ଲାନ୍ ନିଅନ୍ତୁ। ପ୍ରତ୍ୟେକ ରାୟରେ ପୂରା ବିଚାରକ ଦଳ କାମ କରେ।</string>
+    <string name="app_pricing_sub_member">ଗୋଟେ ପ୍ୟାକ୍ ବାଛନ୍ତୁ ବା ମାସିକ ପ୍ଲାନ୍ ନିଅନ୍ତୁ।</string>
     <plurals name="app_balance_left">
         <item quantity="one">%1$sଟି ରାୟ ବାକି</item>
         <item quantity="other">%1$sଟି ରାୟ ବାକି</item>
@@ -661,9 +661,9 @@
     <string name="app_appeal_used">ଆପଣ ଏହି ମାମଲାରେ ଆଗରୁ ବିବରଣୀ ଯୋଡ଼ିସାରିଛନ୍ତି।</string>
     <string name="app_appeal_limit">ଆପଣ ଦୁଇ ଥର ବିବରଣୀ ଯୋଡ଼ିସାରିଲେଣି। ଗୋଟିଏ ରାୟ ପାଇଁ ଏତିକି ହିଁ ସୀମା।</string>
     <string name="app_purchase_buying">କିଣାଯାଉଛି…</string>
-    <string name="app_purchase_success">ଧନ୍ୟବାଦ! ଆପଣଙ୍କ କିଣା ସଫଳ ହେଲା।</string>
-    <string name="app_purchase_pending">ଆପଣଙ୍କ କିଣା ପ୍ରକ୍ରିୟାରେ ଅଛି। ଏଠାରେ ଦେଖାଯିବାକୁ ମିନିଟିଏ ଲାଗିପାରେ।</string>
-    <string name="app_purchase_slow">ଏଠାରେ ଦେଖାଯିବାକୁ ମିନିଟିଏ ଲାଗିପାରେ।</string>
+    <string name="app_purchase_success">କିଣା ସଫଳ ହେଲା।</string>
+    <string name="app_purchase_pending">ଆପଣଙ୍କ କିଣା ପ୍ରକ୍ରିୟାରେ ଅଛି।</string>
+    <string name="app_purchase_slow">କ୍ରେଡିଟ୍ ଆସିବାକୁ ମିନିଟିଏ ଲାଗିପାରେ।</string>
     <string name="app_purchase_failed">କିଣା ସଫଳ ହେଲା ନାହିଁ। ଟିକେ ପରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="app_purchase_restore">ପୂର୍ବ କିଣା ପୁନଃସ୍ଥାପନ କରନ୍ତୁ</string>
     <string name="app_purchase_restore_done">ଆପଣଙ୍କ ପୂର୍ବ କିଣା ପୁନଃସ୍ଥାପିତ ହେଲା।</string>

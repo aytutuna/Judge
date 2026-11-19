@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">Üç bağımsız yargıç · Yargıçlar isimleri görmez</string>
     <string name="hero_lead">Neyi tartıştığını anlat. Üç yapay zekâ yargıcı ayrı ayrı karar verir, ne kadar anlaştıklarını da güven puanından görürsün.</string>
     <string name="input_label">Tartışma</string>
-    <string name="placeholder">Ne oldu? Kim ne diyor, neden?\n\nKarşı tarafın görüşünü onun anlatacağı gibi yaz. Yargıçlar zaten iki tarafı da en güçlü hâliyle ele alır.</string>
+    <string name="placeholder">Ne oldu? Kim ne diyor, neden?</string>
     <string name="get_verdict">Kararı öğren</string>
     <string name="thinking_eyebrow">Yargıçlar ne yapıyor</string>
     <string name="thinking_read">İki tarafı da okuyup en sağlam hâline getiriyoruz…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">Düğümü arıyoruz…</string>
     <string name="thinking_judges">Üç yargıç ayrı ayrı düşünüyor…</string>
     <string name="thinking_votes">Oyları sayıyoruz…</string>
-    <string name="thinking_helper">Üç yapay zekâ yargıcı ayrı ayrı karar veriyor, oylar başa baş giderse ek yargıç da geliyor. Bir dakika sürebilir.</string>
+    <string name="thinking_helper">Bir dakika sürebilir.</string>
     <string name="thinking_finish">Düğüme yaklaşıyoruz…</string>
-    <string name="thinking_still_judging">Yargıçlar hâlâ düşünüyor, biraz sabır…</string>
+    <string name="thinking_still_judging">Hâlâ çalışıyoruz…</string>
     <string name="thinking_ready">Karar hazır.</string>
     <string name="story_names">İsimleri çıkarıyoruz, kimse kim olduğuna göre yargılanmasın</string>
     <string name="story_facts">Ayrı bir kontrolcü gerçekleri internette arıyor</string>
@@ -73,14 +73,14 @@
     <string name="translate_loading">Çevriliyor…</string>
     <string name="translate_from_en">İngilizceden çevrildi</string>
     <string name="translate_from_tr">Türkçeden çevrildi</string>
-    <string name="translate_failed">Şu an çeviremedik, o yüzden aslını gösteriyoruz.</string>
+    <string name="translate_failed">Çevrilemedi.</string>
     <string name="translate_toggle">Kararın dili</string>
     <string name="vote_split">bölünmüş</string>
     <string name="vote_conditional">duruma bağlı</string>
     <string name="vote_dissolved">anlam farkı</string>
-    <string name="refused_note">Yapay zekâ bu kez pas geçti. Sahte bir karar göstermektense hiç göstermeyiz.</string>
+    <string name="refused_note">Yapay zekâ bu kez pas geçti.</string>
     <string name="demo_note">Demo modu: API anahtarı yok, bu örnek bir karar</string>
-    <string name="trial_survived">İtiraz reddedildi: karşı tarafın avukatı en güçlü itirazını yaptı, karar ayakta kaldı. Güven puanı değişmedi.</string>
+    <string name="trial_survived">İtiraz reddedildi: karar ayakta kaldı.</string>
     <string name="trial_uncertain">Karşı tarafın avukatı itiraz etti ve itiraz bu karar hakkında ciddi şüphe bıraktı</string>
     <string name="trial_overturned">İtiraz kabul edildi: karar geçerli, ama karşı tarafın en güçlü itirazı onu ciddi biçimde zayıflattı</string>
     <string name="trial_minor">Karşı tarafın avukatı haklı bir noktaya değindi, ama karar geçerli</string>
@@ -117,7 +117,7 @@
         <item quantity="one">%1$s saat</item>
         <item quantity="other">%1$s saat</item>
     </plurals>
-    <string name="examples_label">Fikir mi lazım? Şunlardan birini dene:</string>
+    <string name="examples_label">Birini dene:</string>
     <string name="example_hotdog_label">🌭 Sosisli bir sandviç mi?</string>
     <string name="example_hotdog_text">Arkadaşım Mert sosislinin bir sandviç olduğunu söylüyor: dilimlenmiş ekmeğin içinde bir dolgu, bu kadar. Bence sosisli kendi başına bir şey. Kimse sandviç isteyip önüne sosisli gelmesini beklemez, hiçbir menü onu sandviçlerin altında yazmaz.</string>
     <string name="example_tomato_label">🍅 Domates meyve mi?</string>
@@ -166,7 +166,7 @@
     <string name="tier_get_premium">Daha fazla karar al</string>
     <string name="tier_checking">Eksik bir şey var mı diye bakıyoruz…</string>
     <string name="clarify_title">Yargıçlar karar vermeden önce</string>
-    <string name="clarify_lead">Bu ayrıntılar kimin haklı olduğunu değiştirebilir. Bildiklerini yaz ya da geç.</string>
+    <string name="clarify_lead">Bu ayrıntılar kimin haklı olduğunu değiştirebilir.</string>
     <string name="clarify_answer_aria">%1$s. sorunun cevabı:</string>
     <string name="clarify_placeholder">Cevabın (isteğe bağlı)</string>
     <string name="clarify_skip">Geç, kararı ver</string>
@@ -174,19 +174,19 @@
     <string name="clarify_back">Tartışmayı düzenle</string>
     <string name="thinking_factcheck">Olguları internette kontrol ediyoruz…</string>
     <string name="thinking_factcheck_done">İnternet kontrolü bitti.</string>
-    <string name="thinking_premium_helper">Olguları internette kontrol etmek biraz daha uzun sürer. Bir iki dakika verebilirsin.</string>
+    <string name="thinking_premium_helper">Bir iki dakika sürebilir.</string>
     <string name="factcheck_title">İnternette kontrol edildi</string>
-    <string name="factcheck_lead">Yargıçlar karar vermeden önce bu arama sonuçlarını gördü. Bunlar kanıt, kararın kendisi değil.</string>
+    <string name="factcheck_lead">Yargıçlar karar vermeden önce bu arama sonuçlarını gördü.</string>
     <string name="factcheck_status_supported">Doğru çıktı</string>
     <string name="factcheck_status_refuted">Yanlış çıktı</string>
     <string name="factcheck_status_mixed">Kısmen doğru</string>
     <string name="factcheck_status_unverified">Doğrulanamadı</string>
     <string name="factcheck_sources">Kaynaklar</string>
-    <string name="factcheck_none">İnternette bakılacak bir şey yok: bu tartışma olgulara değil, değerlere ya da anlamlara dayanıyor.</string>
-    <string name="factcheck_none_factual">Burada internette kontrol edilebilecek bir şey yok: bu olaydaki olgular yalnızca taraflar arasında.</string>
+    <string name="factcheck_none">İnternette bakılacak bir şey yok.</string>
+    <string name="factcheck_none_factual">İnternette bakılacak bir şey yok.</string>
     <string name="factcheck_unavailable">İnternet kontrolü bu kez tamamlanamadı, yargıçlar onsuz karar verdi.</string>
     <string name="signin_title">Giriş yap</string>
-    <string name="signin_lead">Karar almak için giriş yap. Yeni bir hesabın ilk kararı ücretsiz.</string>
+    <string name="signin_lead">İlk kararın ücretsiz.</string>
     <string name="signin_apple">Apple ile devam et</string>
     <string name="signin_google">Google ile devam et</string>
     <string name="signin_email_toggle">E-postayla devam et</string>
@@ -204,7 +204,7 @@
     <string name="signin_use_password">Bunun yerine parola kullan</string>
     <string name="signin_password_wrong">Bu e-posta ve parola eşleşmiyor.</string>
     <string name="signin_password_short">En az 8 karakter kullan.</string>
-    <string name="signin_create_note">Bu adresi doğrulamak için sana bir kod e-postalayacağız. Bunu yalnızca bir kez yapman yeterli.</string>
+    <string name="signin_create_note">Doğrulamak için sana bir kod e-postalayacağız.</string>
     <string name="signin_password_choose">Giriş yaptın. Bir dahaki sefer için bir parola seç.</string>
     <string name="signin_password_save">Parolayı kaydet</string>
     <string name="signin_password_save_failed">Parolayı kaydedemedik. Tekrar dene.</string>
@@ -239,7 +239,7 @@
     <string name="pricing_premium_f3">Önemli bir olgu eksikse en fazla iki kısa soru</string>
     <string name="pricing_premium_f4">Yargılamadan önce isimler gizlenir</string>
     <string name="pricing_packs_title">Kredi paketleri</string>
-    <string name="pricing_packs_lead">Bir kez öde, istediğin zaman kullan. Her karar bir kredi kullanır.</string>
+    <string name="pricing_packs_lead">Her karar bir kredi kullanır.</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s karar</item>
         <item quantity="other">%1$s karar</item>
@@ -325,8 +325,8 @@
     <string name="case_context_d">Taraf D\'nin eklediği bilgi</string>
     <string name="case_context_you">Senin eklediğin bilgi (%1$s)</string>
     <string name="case_evidence_item">%1$s. görsel, yargıçların okuduğu hâliyle</string>
-    <string name="case_answered">Cevap verdi. Yargıçlar üzerinde çalışıyor.</string>
-    <string name="case_judging_alone">Yargıçlar senin tarafın üzerinde çalışıyor.</string>
+    <string name="case_answered">Yargıçlar üzerinde çalışıyor.</string>
+    <string name="case_judging_alone">Yargıçlar üzerinde çalışıyor.</string>
     <string name="case_expired_body">7 gün içinde kimse cevap vermedi, kredin geri döndü. Yine de sadece kendi tarafına göre karar alabilirsin.</string>
     <string name="case_expired_body_free">7 gün içinde kimse cevap vermedi. Yine de sadece kendi tarafına göre karar alabilirsin.</string>
     <string name="case_one_sided">Sadece senin tarafına göre karar verildi.</string>
@@ -343,12 +343,12 @@
     <string name="respond_submit">Tarafımı gönder</string>
     <string name="case_write_title">Senin tarafın</string>
     <string name="case_write_placeholder">Sorun ne?</string>
-    <string name="case_write_lead">Hazır olduğunda tarafını yaz. Yargıçlar iki taraf da yazınca başlar.</string>
+    <string name="case_write_lead">Yargıçlar iki taraf da yazınca başlar.</string>
     <string name="case_write_lead_answered">Karşı taraf kendi tarafını yazdı. Kararı almak için seninkini yaz.</string>
     <string name="case_write_submit">Tarafımı gönder</string>
     <string name="case_write_email_subject">Karşı taraf kendi tarafını yazdı</string>
-    <string name="respond_sent">Teşekkürler. Tarafın ulaştı, yargıçlar üzerinde çalışıyor.</string>
-    <string name="respond_sent_waiting">Teşekkürler. Tarafın ulaştı. Yargıçlar diğer kişi de kendi tarafını yazınca başlar.</string>
+    <string name="respond_sent">Tarafın ulaştı.</string>
+    <string name="respond_sent_waiting">Tarafın ulaştı. Diğer kişi bekleniyor.</string>
     <string name="respond_own_invite">Bu senin kendi davet bağlantın. Diğer kişiye gönder.</string>
     <string name="respond_expired">Bu davetin süresi doldu.</string>
     <string name="respond_closed">Bu dava artık cevap kabul etmiyor.</string>
@@ -412,7 +412,7 @@
     <string name="appeal_submit">Bilgimle yeniden yargıla</string>
     <string name="appeal_sending">Bilgini anonimleştiriyoruz…</string>
     <string name="appeal_judging">Yargıçlar her şeye yeniden bakıyor…</string>
-    <string name="appeal_upsell">Eksik bir şey mi var? Bilgi ekle, 1 karar hakkıyla yeniden yargılansın.</string>
+    <string name="appeal_upsell">Eksik bir şey mi var? 1 karar hakkıyla bilgi ekle.</string>
     <string name="appeal_sign_in">Bilgi eklemek için giriş yap</string>
     <string name="appeal_used">Bu davaya zaten bilgi ekledin.</string>
     <string name="appeal_limit">İki kez bilgi ekledin. Bir karar için sınır bu.</string>
@@ -456,7 +456,7 @@
     <string name="case_display_name">Paylaşılan kararda görünecek adın</string>
     <string name="case_display_save">Adı kaydet</string>
     <string name="respond_keep">Bu davayı hesabında tut</string>
-    <string name="respond_kept">Bu dava artık hesabında. Her cihazda Kararlar sayfanda görünür.</string>
+    <string name="respond_kept">Hesabında saklandı.</string>
     <string name="respond_remove">Tarafımı kaldır</string>
     <string name="respond_remove_confirm">Yazdığın asıl metin ve görünen adın kaldırılsın mı? Davanın paylaşım bağlantıları çalışmaz olur (sohbetlerde önceden paylaşılmış önizlemeler, o uygulamalar yenileyene kadar görünmeye devam edebilir). Bu geri alınamaz.</string>
     <string name="names_title">Paylaşılan sayfadaki isimler</string>
@@ -535,7 +535,7 @@
     <string name="app_tab_new">Yeni</string>
     <string name="app_tab_settings">Ayarlar</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">Henüz kararın yok. İlk tartışmanı çözdüğünde burada görünür.</string>
+    <string name="app_history_empty">Henüz karar yok.</string>
     <string name="app_history_device_only">Sadece bu telefonda saklanır. Buradan silmek paylaşım linkini kaldırmaz.</string>
     <string name="app_history_delete">Sil</string>
     <string name="app_history_remove_all">Tümünü kaldır</string>
@@ -544,7 +544,7 @@
         <item quantity="other">Bu telefondan %1$s karar silinsin mi? Paylaşım linkleri çalışmaya devam eder.</item>
     </plurals>
     <string name="app_history_phone_only">Sadece bu telefonda</string>
-    <string name="app_history_phone_only_note">Hesabında değil: bunlar sadece bu telefonda saklanıyor. Buradan silmek paylaşım linkini kaldırmaz.</string>
+    <string name="app_history_phone_only_note">Birini silmek paylaşım linkini kaldırmaz.</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="one">Bu karar hesabından kaldırılsın mı? Yazdıkların ve isimler silinir, paylaşım linki her cihazda çalışmayı bırakır. Bu geri alınamaz.</item>
         <item quantity="other">%1$s karar hesabından kaldırılsın mı? Yazdıkların ve isimler silinir, paylaşım linkleri her cihazda çalışmayı bırakır. Bu geri alınamaz.</item>
@@ -565,9 +565,9 @@
     <string name="app_pricing_free_account">Apple, Google ya da e-postayla giriş yap</string>
     <string name="app_pricing_context">Ayrıntı görselleri okunur, sonra atılır, ekstra ücret yok</string>
     <string name="app_pricing_headline">İlk karar bizden.</string>
-    <string name="app_pricing_sub">Hesap açtığında ilk kararın bütün özellikleriyle ücretsiz. Sonrasında bir paket seç ya da aylık plana geç.</string>
+    <string name="app_pricing_sub">Sonrasında bir paket seç ya da aylık plana geç.</string>
     <string name="app_pricing_headline_member">Daha fazla karar al.</string>
-    <string name="app_pricing_sub_member">Bir paket seç ya da aylık plana geç. Her karar eksiksiz yargılanır.</string>
+    <string name="app_pricing_sub_member">Bir paket seç ya da aylık plana geç.</string>
     <plurals name="app_balance_left">
         <item quantity="one">%1$s karar hakkın kaldı</item>
         <item quantity="other">%1$s karar hakkın kaldı</item>
@@ -661,9 +661,9 @@
     <string name="app_appeal_used">Bu davaya zaten ayrıntı ekledin.</string>
     <string name="app_appeal_limit">İki kez ayrıntı ekledin. Bir karar için sınır bu.</string>
     <string name="app_purchase_buying">Satın alınıyor…</string>
-    <string name="app_purchase_success">Teşekkürler! Satın alma tamamlandı.</string>
-    <string name="app_purchase_pending">Satın alman işleniyor. Hesabına yansıması bir dakika sürebilir.</string>
-    <string name="app_purchase_slow">Burada görünmesi bir dakika sürebilir.</string>
+    <string name="app_purchase_success">Satın alma tamamlandı.</string>
+    <string name="app_purchase_pending">Satın alman işleniyor.</string>
+    <string name="app_purchase_slow">Krediler bir dakika sürebilir.</string>
     <string name="app_purchase_failed">Satın alma tamamlanamadı. Birazdan tekrar dene.</string>
     <string name="app_purchase_restore">Satın alımları geri yükle</string>
     <string name="app_purchase_restore_done">Satın alımların geri yüklendi.</string>

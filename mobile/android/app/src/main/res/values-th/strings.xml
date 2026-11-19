@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">กรรมการอิสระ 3 คน · ตัดสินโดยไม่เห็นชื่อ</string>
     <string name="hero_lead">เล่ามาว่าเถียงกันเรื่องอะไร กรรมการ AI 3 คนจะตัดสินแยกกัน แล้วคะแนนความมั่นใจจะบอกว่าพวกเขาเห็นตรงกันแค่ไหน</string>
     <string name="input_label">เรื่องที่เถียงกัน</string>
-    <string name="placeholder">เกิดอะไรขึ้น? ใครพูดว่าอะไร และเพราะอะไร?\n\nเล่าฝั่งของอีกคนแบบที่เขาจะพูดเอง ยังไงกรรมการก็จะหาเหตุผลที่หนักแน่นที่สุดให้ทั้งสองฝ่าย</string>
+    <string name="placeholder">เกิดอะไรขึ้น? ใครพูดว่าอะไร และเพราะอะไร?</string>
     <string name="get_verdict">ตัดสินเลย</string>
     <string name="thinking_eyebrow">กรรมการกำลังทำอะไรอยู่</string>
     <string name="thinking_read">กำลังอ่านทั้งสองฝั่ง และหาเหตุผลที่ดีที่สุดให้แต่ละฝั่ง…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">กำลังตามหาหัวใจของเรื่อง…</string>
     <string name="thinking_judges">กรรมการ 3 คนกำลังตัดสิน ต่างคนต่างคิด…</string>
     <string name="thinking_votes">กำลังนับคะแนนโหวต…</string>
-    <string name="thinking_helper">กรรมการ AI 3 คนตัดสินแยกกัน ถ้าสูสีจะเรียกกรรมการเพิ่ม รอสักครู่นะ</string>
+    <string name="thinking_helper">รอสักครู่นะ</string>
     <string name="thinking_finish">ใกล้เจอหัวใจของเรื่องแล้ว…</string>
-    <string name="thinking_still_judging">กรรมการยังคิดอยู่ อดใจรออีกนิดนะ…</string>
+    <string name="thinking_still_judging">ยังทำอยู่…</string>
     <string name="thinking_ready">คำตัดสินออกแล้ว</string>
     <string name="story_names">ลบชื่อออก เพื่อไม่ให้ใครถูกตัดสินจากว่าเขาเป็นใคร</string>
     <string name="story_facts">ตัวตรวจแยกต่างหากค้นข้อเท็จจริงบนเว็บ</string>
@@ -72,14 +72,14 @@
     <string name="translate_loading">กำลังแปล…</string>
     <string name="translate_from_en">แปลจากภาษาอังกฤษ</string>
     <string name="translate_from_tr">แปลจากภาษาตุรกี</string>
-    <string name="translate_failed">ตอนนี้แปลไม่ได้ เลยแสดงต้นฉบับให้ก่อน</string>
+    <string name="translate_failed">แปลไม่ได้</string>
     <string name="translate_toggle">ภาษาของคำตัดสิน</string>
     <string name="vote_split">คนละส่วน</string>
     <string name="vote_conditional">แล้วแต่</string>
     <string name="vote_dissolved">เข้าใจคำต่างกัน</string>
-    <string name="refused_note">รอบนี้ AI ขอไม่ตัดสิน เราขอไม่แสดงอะไรเลย ดีกว่าแต่งคำตัดสินขึ้นมาเอง</string>
+    <string name="refused_note">รอบนี้ AI ขอไม่ตัดสิน</string>
     <string name="demo_note">โหมดเดโม: ยังไม่ได้ตั้งค่าคีย์ AI นี่จึงเป็นคำตัดสินตัวอย่าง</string>
-    <string name="trial_survived">ยกข้อคัดค้าน: ทนายของอีกฝ่ายยกข้อคัดค้านที่หนักที่สุดขึ้นมา แต่คำตัดสินยังอยู่ ความมั่นใจยังเท่าเดิม</string>
+    <string name="trial_survived">ยกข้อคัดค้าน: คำตัดสินยังอยู่</string>
     <string name="trial_uncertain">ทนายของอีกฝ่ายคัดค้าน และข้อคัดค้านนั้นทิ้งข้อสงสัยจริงจังไว้กับคำตัดสินนี้</string>
     <string name="trial_overturned">รับข้อคัดค้าน: คำตัดสินยังมีผล แต่ข้อคัดค้านที่หนักที่สุดของอีกฝ่ายทำให้คำตัดสินอ่อนลงอย่างมาก</string>
     <string name="trial_minor">ทนายของอีกฝ่ายชี้ประเด็นที่สมเหตุสมผล แต่คำตัดสินยังมีผล</string>
@@ -114,7 +114,7 @@
     <plurals name="wait_hours">
         <item quantity="other">%1$s ชั่วโมง</item>
     </plurals>
-    <string name="examples_label">นึกไม่ออก? ลองเรื่องพวกนี้:</string>
+    <string name="examples_label">ลองดูสักเรื่อง:</string>
     <string name="example_hotdog_label">🌭 ฮอตดอกนับเป็นแซนด์วิชไหม?</string>
     <string name="example_hotdog_text">ภูมิบอกว่าฮอตดอกคือแซนด์วิช เพราะมันคือไส้ที่อยู่ในขนมปังผ่ากลาง จบข่าว ส่วนเราว่าฮอตดอกก็คือฮอตดอก เป็นอาหารอีกแบบหนึ่ง ไม่มีใครสั่งแซนด์วิชแล้วคิดว่าจะได้ฮอตดอก และไม่มีเมนูไหนจัดมันไว้ในหมวดแซนด์วิช</string>
     <string name="example_tomato_label">🍅 มะเขือเทศเป็นผลไม้ไหม?</string>
@@ -163,7 +163,7 @@
     <string name="tier_get_premium">เติมคำตัดสิน</string>
     <string name="tier_checking">กำลังเช็กว่าขาดข้อมูลอะไรไหม…</string>
     <string name="clarify_title">ก่อนกรรมการตัดสิน</string>
-    <string name="clarify_lead">รายละเอียดเหล่านี้อาจเปลี่ยนว่าใครถูก ตอบเท่าที่ตอบได้ หรือข้ามไปก็ได้</string>
+    <string name="clarify_lead">รายละเอียดเหล่านี้อาจเปลี่ยนว่าใครถูก</string>
     <string name="clarify_answer_aria">คำตอบข้อที่ %1$s:</string>
     <string name="clarify_placeholder">คำตอบของคุณ (ไม่บังคับ)</string>
     <string name="clarify_skip">ข้ามแล้วตัดสินเลย</string>
@@ -171,19 +171,19 @@
     <string name="clarify_back">แก้ไขเรื่องที่เล่า</string>
     <string name="thinking_factcheck">กำลังเช็กข้อเท็จจริงบนเว็บ…</string>
     <string name="thinking_factcheck_done">เช็กบนเว็บเสร็จแล้ว</string>
-    <string name="thinking_premium_helper">การเช็กข้อเท็จจริงบนเว็บใช้เวลานานขึ้นอีกหน่อย รอสักนาทีสองนาทีนะ</string>
+    <string name="thinking_premium_helper">รอสักนาทีสองนาทีนะ</string>
     <string name="factcheck_title">เช็กบนเว็บแล้ว</string>
-    <string name="factcheck_lead">กรรมการเห็นผลการค้นหาเหล่านี้ก่อนตัดสิน ผลเหล่านี้เป็นหลักฐาน ไม่ใช่ตัวคำตัดสิน</string>
+    <string name="factcheck_lead">กรรมการเห็นผลการค้นหาเหล่านี้ก่อนตัดสิน</string>
     <string name="factcheck_status_supported">จริง</string>
     <string name="factcheck_status_refuted">ไม่จริง</string>
     <string name="factcheck_status_mixed">จริงบางส่วน</string>
     <string name="factcheck_status_unverified">ยืนยันไม่ได้</string>
     <string name="factcheck_sources">แหล่งข้อมูล</string>
-    <string name="factcheck_none">ไม่มีอะไรให้ค้นบนเว็บ เรื่องนี้ขึ้นอยู่กับคุณค่าหรือความหมาย ไม่ใช่ข้อเท็จจริง</string>
-    <string name="factcheck_none_factual">ไม่มีอะไรในนี้ที่เช็กบนเว็บได้ ข้อเท็จจริงของเรื่องนี้รู้กันแค่คนที่เกี่ยวข้อง</string>
+    <string name="factcheck_none">ไม่มีอะไรให้เช็กบนเว็บ</string>
+    <string name="factcheck_none_factual">ไม่มีอะไรให้เช็กบนเว็บ</string>
     <string name="factcheck_unavailable">รอบนี้การเช็กบนเว็บไม่เสร็จ กรรมการจึงตัดสินโดยไม่มีผลนั้น</string>
     <string name="signin_title">เข้าสู่ระบบ</string>
-    <string name="signin_lead">เข้าสู่ระบบเพื่อขอคำตัดสิน บัญชีใหม่ได้คำตัดสินแรกฟรี</string>
+    <string name="signin_lead">คำตัดสินแรกของคุณฟรี</string>
     <string name="signin_apple">ดำเนินการต่อด้วย Apple</string>
     <string name="signin_google">ดำเนินการต่อด้วย Google</string>
     <string name="signin_email_toggle">ใช้อีเมลแทน</string>
@@ -201,7 +201,7 @@
     <string name="signin_use_password">ใช้รหัสผ่านแทน</string>
     <string name="signin_password_wrong">อีเมลกับรหัสผ่านนี้ไม่ตรงกัน</string>
     <string name="signin_password_short">ใช้อย่างน้อย 8 ตัวอักษร</string>
-    <string name="signin_create_note">เราจะส่งรหัสไปทางอีเมลเพื่อยืนยันที่อยู่นี้ ทำเพียงครั้งเดียวเท่านั้น</string>
+    <string name="signin_create_note">เราจะส่งรหัสไปทางอีเมลเพื่อยืนยัน</string>
     <string name="signin_password_choose">คุณลงชื่อเข้าใช้แล้ว เลือกรหัสผ่านไว้ใช้ครั้งหน้า</string>
     <string name="signin_password_save">บันทึกรหัสผ่าน</string>
     <string name="signin_password_save_failed">บันทึกรหัสผ่านไม่ได้ ลองอีกครั้ง</string>
@@ -236,7 +236,7 @@
     <string name="pricing_premium_f3">คำถามสั้น ๆ สูงสุด 2 ข้อ เมื่อยังขาดข้อเท็จจริงสำคัญ</string>
     <string name="pricing_premium_f4">ซ่อนชื่อจริงก่อนตัดสิน</string>
     <string name="pricing_packs_title">แพ็กเครดิต</string>
-    <string name="pricing_packs_lead">จ่ายครั้งเดียว ใช้เมื่อไรก็ได้ คำตัดสินแต่ละครั้งใช้ 1 เครดิต</string>
+    <string name="pricing_packs_lead">คำตัดสินแต่ละครั้งใช้ 1 เครดิต</string>
     <plurals name="pricing_pack">
         <item quantity="other">คำตัดสิน %1$s ครั้ง</item>
     </plurals>
@@ -320,8 +320,8 @@
     <string name="case_context_d">ฝ่าย D เพิ่มบริบท</string>
     <string name="case_context_you">บริบทที่คุณเพิ่ม (%1$s)</string>
     <string name="case_evidence_item">ภาพที่ %1$s แบบที่กรรมการอ่าน</string>
-    <string name="case_answered">อีกฝ่ายตอบแล้ว กรรมการกำลังตัดสิน</string>
-    <string name="case_judging_alone">กรรมการกำลังตัดสินจากฝั่งของคุณ</string>
+    <string name="case_answered">กรรมการกำลังตัดสิน</string>
+    <string name="case_judging_alone">กรรมการกำลังตัดสิน</string>
     <string name="case_expired_body">ไม่มีใครตอบภายใน 7 วัน คุณจึงได้เครดิตคืน แต่ยังขอคำตัดสินจากฝั่งของคุณอย่างเดียวได้</string>
     <string name="case_expired_body_free">ไม่มีใครตอบภายใน 7 วัน แต่คุณยังขอคำตัดสินจากฝั่งของคุณอย่างเดียวได้</string>
     <string name="case_one_sided">ตัดสินจากฝั่งของคุณเท่านั้น</string>
@@ -338,12 +338,12 @@
     <string name="respond_submit">ส่งฝั่งของฉัน</string>
     <string name="case_write_title">ฝั่งของคุณ</string>
     <string name="case_write_placeholder">มีปัญหาอะไร?</string>
-    <string name="case_write_lead">เขียนฝั่งของคุณเมื่อพร้อม กรรมการจะเริ่มเมื่อเขียนครบทั้งสองฝ่าย</string>
+    <string name="case_write_lead">กรรมการจะเริ่มเมื่อเขียนครบทั้งสองฝ่าย</string>
     <string name="case_write_lead_answered">เขาเขียนฝั่งของเขาแล้ว เขียนฝั่งของคุณเพื่อรับคำตัดสิน</string>
     <string name="case_write_submit">ส่งฝั่งของฉัน</string>
     <string name="case_write_email_subject">อีกฝ่ายเขียนฝั่งของเขาแล้ว</string>
-    <string name="respond_sent">ขอบคุณนะ ได้รับฝั่งของคุณแล้ว กรรมการกำลังตัดสิน</string>
-    <string name="respond_sent_waiting">ขอบคุณนะ ได้รับฝั่งของคุณแล้ว กรรมการจะเริ่มเมื่ออีกฝ่ายเขียนเสร็จ</string>
+    <string name="respond_sent">ได้รับฝั่งของคุณแล้ว</string>
+    <string name="respond_sent_waiting">ได้รับฝั่งของคุณแล้ว รออีกฝ่ายอยู่</string>
     <string name="respond_own_invite">นี่คือลิงก์คำเชิญของคุณเอง ส่งให้อีกฝ่ายนะ</string>
     <string name="respond_expired">คำเชิญนี้หมดอายุแล้ว</string>
     <string name="respond_closed">เคสนี้ไม่รับคำตอบแล้ว</string>
@@ -406,7 +406,7 @@
     <string name="appeal_submit">ตัดสินใหม่พร้อมบริบทของฉัน</string>
     <string name="appeal_sending">กำลังซ่อนชื่อในบริบทของคุณ…</string>
     <string name="appeal_judging">กรรมการกำลังดูทุกอย่างใหม่อีกรอบ…</string>
-    <string name="appeal_upsell">มีอะไรขาดไปไหม? เพิ่มรายละเอียดแล้วให้ตัดสินใหม่ ใช้คำตัดสิน 1 ครั้ง</string>
+    <string name="appeal_upsell">มีอะไรขาดไปไหม? เพิ่มรายละเอียดโดยใช้คำตัดสิน 1 ครั้ง</string>
     <string name="appeal_sign_in">เข้าสู่ระบบเพื่อเพิ่มรายละเอียด</string>
     <string name="appeal_used">คุณเพิ่มรายละเอียดในเคสนี้ไปแล้ว</string>
     <string name="appeal_limit">คุณเพิ่มรายละเอียดไปแล้ว 2 ครั้ง ซึ่งเป็นจำนวนสูงสุดต่อหนึ่งคำตัดสิน</string>
@@ -450,7 +450,7 @@
     <string name="case_display_name">ชื่อของคุณในคำตัดสินที่แชร์</string>
     <string name="case_display_save">บันทึกชื่อ</string>
     <string name="respond_keep">เก็บเคสนี้ไว้ในบัญชีของคุณ</string>
-    <string name="respond_kept">เคสนี้อยู่ในบัญชีของคุณแล้ว และจะแสดงในหน้า “คำตัดสิน” บนทุกอุปกรณ์</string>
+    <string name="respond_kept">บันทึกไว้ในบัญชีของคุณแล้ว</string>
     <string name="respond_remove">ลบฝั่งของฉัน</string>
     <string name="respond_remove_confirm">ลบข้อความต้นฉบับและชื่อที่แสดงของคุณไหม? ลิงก์แชร์ของเคสจะใช้ไม่ได้ (ภาพตัวอย่างที่โพสต์ในแชตไปแล้วอาจยังแสดงอยู่จนกว่าแอปเหล่านั้นจะรีเฟรช) ย้อนกลับไม่ได้</string>
     <string name="names_title">ชื่อในหน้าที่แชร์</string>
@@ -526,7 +526,7 @@
     <string name="app_tab_new">ใหม่</string>
     <string name="app_tab_settings">ตั้งค่า</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">ยังไม่มีคำตัดสิน ลองเคลียร์เรื่องที่เถียงกันเรื่องแรกดู แล้วคำตัดสินจะขึ้นที่นี่</string>
+    <string name="app_history_empty">ยังไม่มีคำตัดสิน</string>
     <string name="app_history_device_only">บันทึกไว้ในโทรศัพท์เครื่องนี้เท่านั้น ถึงจะลบออกจากที่นี่ ลิงก์แชร์ก็ยังใช้ได้อยู่</string>
     <string name="app_history_delete">ลบ</string>
     <string name="app_history_remove_all">ลบทั้งหมด</string>
@@ -534,7 +534,7 @@
         <item quantity="other">ลบคำตัดสิน %1$s รายการออกจากโทรศัพท์เครื่องนี้ไหม? ลิงก์แชร์จะยังใช้ได้อยู่</item>
     </plurals>
     <string name="app_history_phone_only">เฉพาะในโทรศัพท์เครื่องนี้</string>
-    <string name="app_history_phone_only_note">ไม่ได้อยู่ในบัญชีของคุณ รายการเหล่านี้บันทึกไว้ในโทรศัพท์เครื่องนี้เท่านั้น ถึงจะลบออกจากที่นี่ ลิงก์แชร์ก็ยังใช้ได้อยู่</string>
+    <string name="app_history_phone_only_note">ลบรายการแล้ว ลิงก์แชร์ก็ยังใช้ได้อยู่</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="other">ลบคำตัดสิน %1$s รายการออกจากบัญชีของคุณไหม? สิ่งที่คุณเขียนและชื่อจะถูกลบ และลิงก์แชร์จะใช้ไม่ได้อีก มีผลกับทุกอุปกรณ์ ย้อนกลับไม่ได้</item>
     </plurals>
@@ -551,9 +551,9 @@
     <string name="app_pricing_free_account">เข้าสู่ระบบด้วย Apple, Google หรืออีเมล</string>
     <string name="app_pricing_context">รูปที่เพิ่มจะถูกอ่านแล้วทิ้ง ไม่มีค่าใช้จ่ายเพิ่ม</string>
     <string name="app_pricing_headline">คำตัดสินแรก เราเลี้ยงเอง</string>
-    <string name="app_pricing_sub">สร้างบัญชีแล้วรับคำตัดสินแรกฟรี ใช้ได้ทุกฟีเจอร์ หลังจากนั้นเลือกแพ็กเครดิตหรือสมัครรายเดือน</string>
+    <string name="app_pricing_sub">หลังจากนั้นเลือกแพ็กเครดิตหรือสมัครรายเดือน</string>
     <string name="app_pricing_headline_member">เติมคำตัดสิน</string>
-    <string name="app_pricing_sub_member">เลือกแพ็กเครดิตหรือสมัครรายเดือน ทุกคำตัดสินได้กรรมการครบชุด</string>
+    <string name="app_pricing_sub_member">เลือกแพ็กเครดิตหรือสมัครรายเดือน</string>
     <plurals name="app_balance_left">
         <item quantity="other">เหลือคำตัดสิน %1$s ครั้ง</item>
     </plurals>
@@ -646,9 +646,9 @@
     <string name="app_appeal_used">คุณเพิ่มรายละเอียดในเคสนี้ไปแล้ว</string>
     <string name="app_appeal_limit">คุณเพิ่มรายละเอียดไปแล้ว 2 ครั้ง ซึ่งเป็นจำนวนสูงสุดต่อหนึ่งคำตัดสิน</string>
     <string name="app_purchase_buying">กำลังซื้อ…</string>
-    <string name="app_purchase_success">ขอบคุณ! ซื้อสำเร็จแล้ว</string>
-    <string name="app_purchase_pending">กำลังดำเนินการคำสั่งซื้อของคุณ อาจใช้เวลาสักครู่กว่าจะขึ้น</string>
-    <string name="app_purchase_slow">อาจใช้เวลาสักครู่กว่าจะขึ้นที่นี่</string>
+    <string name="app_purchase_success">ซื้อสำเร็จแล้ว</string>
+    <string name="app_purchase_pending">กำลังดำเนินการคำสั่งซื้อของคุณ</string>
+    <string name="app_purchase_slow">เครดิตอาจใช้เวลาสักครู่</string>
     <string name="app_purchase_failed">ซื้อไม่สำเร็จ ลองใหม่อีกสักครู่</string>
     <string name="app_purchase_restore">กู้คืนการซื้อ</string>
     <string name="app_purchase_restore_done">กู้คืนการซื้อแล้ว</string>

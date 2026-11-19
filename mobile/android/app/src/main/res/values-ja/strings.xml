@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">3人の独立した審査員 · 審査員は名前を見ません</string>
     <string name="hero_lead">何で揉めているのか教えてください。3人のAI審査員がそれぞれ単独で判定し、どれだけ意見がそろったかを信頼度で示します。</string>
     <string name="input_label">揉めごとの内容</string>
-    <string name="placeholder">何がありましたか？　誰が何を、なぜ言っていますか？\n\n相手の言い分も、相手が言いそうな形で書いてください。どのみち審査員は、両方の言い分をいちばん強い形にしてから検討します。</string>
+    <string name="placeholder">何がありましたか？　誰が何を、なぜ言っていますか？</string>
     <string name="get_verdict">判定する</string>
     <string name="thinking_eyebrow">審査員がしていること</string>
     <string name="thinking_read">両方の言い分を読み、それぞれをいちばん強い形にしています…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">核心を探しています…</string>
     <string name="thinking_judges">3人の審査員がそれぞれ判定中…</string>
     <string name="thinking_votes">票を数えています…</string>
-    <string name="thinking_helper">3人のAI審査員が別々に判定し、僅差なら審査員を追加します。1分ほどお待ちください。</string>
+    <string name="thinking_helper">1分ほどお待ちください。</string>
     <string name="thinking_finish">核心に迫っています…</string>
-    <string name="thinking_still_judging">審査員はまだ考え中です。もう少しだけ…</string>
+    <string name="thinking_still_judging">まだ処理中です…</string>
     <string name="thinking_ready">判定が出ました。</string>
     <string name="story_names">名前を取り除いて、誰かを人柄で裁かないようにします</string>
     <string name="story_facts">別のチェック役がウェブで事実を調べます</string>
@@ -72,14 +72,14 @@
     <string name="translate_loading">翻訳中…</string>
     <string name="translate_from_en">英語から翻訳</string>
     <string name="translate_from_tr">トルコ語から翻訳</string>
-    <string name="translate_failed">いまは翻訳できなかったため、原文を表示しています。</string>
+    <string name="translate_failed">翻訳できませんでした。</string>
     <string name="translate_toggle">判定の言語</string>
     <string name="vote_split">両者に一理</string>
     <string name="vote_conditional">条件しだい</string>
     <string name="vote_dissolved">言葉のズレ</string>
-    <string name="refused_note">今回はAIが判定を見送りました。それらしい判定をでっち上げるより、何も出さないほうがいいと考えています。</string>
+    <string name="refused_note">今回はAIが判定を見送りました。</string>
     <string name="demo_note">デモモード：AIキーが未設定のため、これはサンプルの判定です</string>
-    <string name="trial_survived">異議が却下されました：相手側の弁護人がいちばん強い異議を唱えましたが、判定は持ちこたえました。信頼度はそのままです。</string>
+    <string name="trial_survived">異議が却下されました：判定は持ちこたえました。</string>
     <string name="trial_uncertain">相手側の弁護人が異議を唱え、この判定に無視できない疑問が残りました</string>
     <string name="trial_overturned">異議が認められました：判定は有効ですが、相手側のいちばん強い異議により大きく弱まりました</string>
     <string name="trial_minor">相手側の弁護人が的を射た指摘をしましたが、判定は変わりません</string>
@@ -114,7 +114,7 @@
     <plurals name="wait_hours">
         <item quantity="other">%1$s時間</item>
     </plurals>
-    <string name="examples_label">迷ったら、例を試してみてください：</string>
+    <string name="examples_label">例を試す：</string>
     <string name="example_hotdog_label">🍜 カップ焼きそばは焼きそば？</string>
     <string name="example_hotdog_text">友だちの翔太は、カップ焼きそばは焼きそばじゃないと言います。お湯を注いで湯切りするだけで、一度も焼いていないから、と。私は、みんな焼きそばと呼んで焼きそばとして食べているんだから焼きそばだと思います。焼きそばのつもりで買って、違うものが出てきたと思う人はいません。</string>
     <string name="example_tomato_label">🍅 トマトは果物？</string>
@@ -163,7 +163,7 @@
     <string name="tier_get_premium">判定回数を追加</string>
     <string name="tier_checking">足りない情報がないか確認しています…</string>
     <string name="clarify_title">判定の前に</string>
-    <string name="clarify_lead">次の点しだいで、どちらが正しいかが変わるかもしれません。わかる範囲で答えるか、スキップしてください。</string>
+    <string name="clarify_lead">次の点しだいで、どちらが正しいかが変わるかもしれません。</string>
     <string name="clarify_answer_aria">質問%1$sへの回答：</string>
     <string name="clarify_placeholder">回答（任意）</string>
     <string name="clarify_skip">スキップして判定</string>
@@ -171,19 +171,19 @@
     <string name="clarify_back">内容を編集</string>
     <string name="thinking_factcheck">ネットで事実を確認しています…</string>
     <string name="thinking_factcheck_done">ネットでの確認が終わりました。</string>
-    <string name="thinking_premium_helper">ネットで事実を確認するので、少し時間がかかります。1〜2分お待ちください。</string>
+    <string name="thinking_premium_helper">1〜2分お待ちください。</string>
     <string name="factcheck_title">ネットで確認済み</string>
-    <string name="factcheck_lead">審査員は判定の前にこれらの検索結果を見ています。これは判定の材料で、判定そのものではありません。</string>
+    <string name="factcheck_lead">審査員は判定の前にこれらの検索結果を見ています。</string>
     <string name="factcheck_status_supported">裏付けあり</string>
     <string name="factcheck_status_refuted">誤り</string>
     <string name="factcheck_status_mixed">一部正しい</string>
     <string name="factcheck_status_unverified">確認できず</string>
     <string name="factcheck_sources">出典</string>
-    <string name="factcheck_none">ネットで調べることはありません。この件は事実ではなく、価値観や言葉の意味の問題です。</string>
-    <string name="factcheck_none_factual">ネットで確認できることはありませんでした。この件の事実は、当事者のあいだのことだからです。</string>
+    <string name="factcheck_none">ネットで確認することはありません。</string>
+    <string name="factcheck_none_factual">ネットで確認することはありません。</string>
     <string name="factcheck_unavailable">今回はネットでの確認が終わらなかったため、審査員は確認なしで判定しました。</string>
     <string name="signin_title">ログイン</string>
-    <string name="signin_lead">判定を受けるにはログインしてください。新しいアカウントなら最初の判定は無料です。</string>
+    <string name="signin_lead">最初の判定は無料です。</string>
     <string name="signin_apple">Appleで続ける</string>
     <string name="signin_google">Googleで続ける</string>
     <string name="signin_email_toggle">メールアドレスで続ける</string>
@@ -201,7 +201,7 @@
     <string name="signin_use_password">代わりにパスワードを使う</string>
     <string name="signin_password_wrong">メールアドレスとパスワードが一致しません。</string>
     <string name="signin_password_short">8文字以上にしてください。</string>
-    <string name="signin_create_note">このアドレスを確認するため、コードをメールで送ります。必要なのは一度だけです。</string>
+    <string name="signin_create_note">確認用のコードをメールで送ります。</string>
     <string name="signin_password_choose">ログインしました。次回のためにパスワードを決めてください。</string>
     <string name="signin_password_save">パスワードを保存</string>
     <string name="signin_password_save_failed">パスワードを保存できませんでした。もう一度試してください。</string>
@@ -236,7 +236,7 @@
     <string name="pricing_premium_f3">重要な事実が足りないときは、最大2つの短い質問</string>
     <string name="pricing_premium_f4">判定の前に名前を置き換え</string>
     <string name="pricing_packs_title">クレジットパック</string>
-    <string name="pricing_packs_lead">一度払えば、いつでも使えます。判定1回につき1クレジットを使います。</string>
+    <string name="pricing_packs_lead">判定1回につき1クレジットを使います。</string>
     <plurals name="pricing_pack">
         <item quantity="other">%1$s回分</item>
     </plurals>
@@ -320,8 +320,8 @@
     <string name="case_context_d">当事者Dの補足</string>
     <string name="case_context_you">あなたの補足（%1$s）</string>
     <string name="case_evidence_item">画像%1$s（審査員が読んだ形）</string>
-    <string name="case_answered">返事がありました。審査員が判定中です。</string>
-    <string name="case_judging_alone">審査員があなたの言い分を判定中です。</string>
+    <string name="case_answered">審査員が判定中です。</string>
+    <string name="case_judging_alone">審査員が判定中です。</string>
     <string name="case_expired_body">7日間返事がなかったので、クレジットは戻りました。あなたの言い分だけで判定を受けることもできます。</string>
     <string name="case_expired_body_free">7日間返事がありませんでした。あなたの言い分だけで判定を受けることもできます。</string>
     <string name="case_one_sided">あなたの言い分だけで判定しました。</string>
@@ -338,12 +338,12 @@
     <string name="respond_submit">言い分を送る</string>
     <string name="case_write_title">あなたの言い分</string>
     <string name="case_write_placeholder">何があったの？</string>
-    <string name="case_write_lead">準備ができたら言い分を書いてください。二人とも書き終えたら審査員が始めます。</string>
+    <string name="case_write_lead">二人とも書き終えたら審査員が始めます。</string>
     <string name="case_write_lead_answered">相手が言い分を書きました。あなたも書いて判定を受けましょう。</string>
     <string name="case_write_submit">言い分を送る</string>
     <string name="case_write_email_subject">相手が言い分を書きました</string>
-    <string name="respond_sent">ありがとうございます。言い分が届き、審査員が判定を始めました。</string>
-    <string name="respond_sent_waiting">ありがとうございます。言い分が届きました。相手が書き終えたら審査員が始めます。</string>
+    <string name="respond_sent">言い分が届きました。</string>
+    <string name="respond_sent_waiting">言い分が届きました。相手を待っています。</string>
     <string name="respond_own_invite">これはあなた自身の招待リンクです。相手に送ってください。</string>
     <string name="respond_expired">この招待は期限切れです。</string>
     <string name="respond_closed">このケースはもう回答を受け付けていません。</string>
@@ -406,7 +406,7 @@
     <string name="appeal_submit">補足して再判定</string>
     <string name="appeal_sending">補足を匿名化しています…</string>
     <string name="appeal_judging">審査員がすべてを見直しています…</string>
-    <string name="appeal_upsell">何か足りませんか？　補足すれば判定1回分で再判定できます。</string>
+    <string name="appeal_upsell">何か足りませんか？　補足すると判定1回分を使います。</string>
     <string name="appeal_sign_in">ログインして補足する</string>
     <string name="appeal_used">このケースにはすでに補足を追加しています。</string>
     <string name="appeal_limit">補足はすでに2回しています。1つの判定ではそれが上限です。</string>
@@ -450,7 +450,7 @@
     <string name="case_display_name">シェアされる判定に表示する名前</string>
     <string name="case_display_save">名前を保存</string>
     <string name="respond_keep">このケースをアカウントに保存</string>
-    <string name="respond_kept">このケースはアカウントに保存されました。どの端末でも「判定一覧」ページに表示されます。</string>
+    <string name="respond_kept">アカウントに保存しました。</string>
     <string name="respond_remove">自分の言い分を削除</string>
     <string name="respond_remove_confirm">あなたの元の文章と表示名を削除しますか？　ケースのシェア用リンクは使えなくなります（チャットにすでに投稿されたプレビューは、そのアプリが更新するまで表示されることがあります）。この操作は取り消せません。</string>
     <string name="names_title">シェアページに表示する名前</string>
@@ -526,7 +526,7 @@
     <string name="app_tab_new">新規</string>
     <string name="app_tab_settings">設定</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">まだ判定はありません。最初の揉めごとに白黒つけると、ここに表示されます。</string>
+    <string name="app_history_empty">まだ判定はありません。</string>
     <string name="app_history_device_only">この端末にだけ保存されています。ここで削除しても、シェア用リンクはそのまま使えます。</string>
     <string name="app_history_delete">削除</string>
     <string name="app_history_remove_all">すべて削除</string>
@@ -534,7 +534,7 @@
         <item quantity="other">この端末から%1$s件の判定を削除しますか？　シェア用リンクはそのまま使えます。</item>
     </plurals>
     <string name="app_history_phone_only">この端末にのみ保存</string>
-    <string name="app_history_phone_only_note">アカウントには保存されておらず、この端末にだけ保存されています。ここで削除しても、シェア用リンクはそのまま使えます。</string>
+    <string name="app_history_phone_only_note">削除しても、シェア用リンクはそのまま使えます。</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="other">%1$s件の判定をアカウントから削除しますか？　あなたが書いた内容と名前が消去され、シェア用リンクは使えなくなります。すべての端末に反映されます。この操作は取り消せません。</item>
     </plurals>
@@ -551,9 +551,9 @@
     <string name="app_pricing_free_account">Apple、Google、またはメールアドレスでログイン</string>
     <string name="app_pricing_context">補足の画像は読み取ったあと破棄されます。追加料金はかかりません</string>
     <string name="app_pricing_headline">最初の判定は無料です。</string>
-    <string name="app_pricing_sub">アカウントを作成すると、最初の判定はすべての機能つきで無料。その後はパックか月額プランを選べます。</string>
+    <string name="app_pricing_sub">その後はパックか月額プランを選べます。</string>
     <string name="app_pricing_headline_member">判定をもっと。</string>
-    <string name="app_pricing_sub_member">パックか月額プランを選べます。どの判定も審査員がフルメンバーで担当します。</string>
+    <string name="app_pricing_sub_member">パックか月額プランを選べます。</string>
     <plurals name="app_balance_left">
         <item quantity="other">残り%1$s回</item>
     </plurals>
@@ -646,9 +646,9 @@
     <string name="app_appeal_used">このケースにはすでに補足を追加しています。</string>
     <string name="app_appeal_limit">補足はすでに2回しています。1つの判定ではそれが上限です。</string>
     <string name="app_purchase_buying">購入中…</string>
-    <string name="app_purchase_success">ありがとうございます！　購入が完了しました。</string>
-    <string name="app_purchase_pending">購入を処理しています。反映まで1分ほどかかることがあります。</string>
-    <string name="app_purchase_slow">ここに表示されるまで1分ほどかかることがあります。</string>
+    <string name="app_purchase_success">購入が完了しました。</string>
+    <string name="app_purchase_pending">購入を処理しています。</string>
+    <string name="app_purchase_slow">クレジットの反映に1分ほどかかることがあります。</string>
     <string name="app_purchase_failed">購入を完了できませんでした。少ししてからもう一度お試しください。</string>
     <string name="app_purchase_restore">購入を復元</string>
     <string name="app_purchase_restore_done">購入を復元しました。</string>

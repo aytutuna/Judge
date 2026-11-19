@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">三位独立评委 · 全程看不到名字</string>
     <string name="hero_lead">说说你们在争什么。三位 AI 评委各自独立裁决，可信度会告诉你他们的意见有多一致。</string>
     <string name="input_label">争论内容</string>
-    <string name="placeholder">发生了什么？谁怎么说，为什么？\n\n对方的观点，也照对方自己的口吻写上。无论如何，评委都会替双方把理由讲到最有力。</string>
+    <string name="placeholder">发生了什么？谁怎么说，为什么？</string>
     <string name="get_verdict">立即裁决</string>
     <string name="thinking_eyebrow">评委正在做什么</string>
     <string name="thinking_read">正在通读双方说法，把各自的理由摆到最强……</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">正在寻找症结……</string>
     <string name="thinking_judges">三位评委正在各自裁决……</string>
     <string name="thinking_votes">正在计票……</string>
-    <string name="thinking_helper">三位 AI 评委分别裁决，票数接近时还会加派评委。稍等一分钟。</string>
+    <string name="thinking_helper">稍等一分钟。</string>
     <string name="thinking_finish">快找到症结了……</string>
-    <string name="thinking_still_judging">评委们还在思考，再等等……</string>
+    <string name="thinking_still_judging">还在处理……</string>
     <string name="thinking_ready">裁决出炉了。</string>
     <string name="story_names">先去掉名字，免得有人因为身份被评判</string>
     <string name="story_facts">另有核查员在网上查证事实</string>
@@ -72,14 +72,14 @@
     <string name="translate_loading">翻译中……</string>
     <string name="translate_from_en">译自英语</string>
     <string name="translate_from_tr">译自土耳其语</string>
-    <string name="translate_failed">暂时没法翻译，先给你看原文。</string>
+    <string name="translate_failed">无法翻译。</string>
     <string name="translate_toggle">裁决语言</string>
     <string name="vote_split">各有理</string>
     <string name="vote_conditional">看情况</string>
     <string name="vote_dissolved">词义不同</string>
-    <string name="refused_note">AI 这次选择不评。与其假装给个裁决，我们宁可什么都不显示。</string>
+    <string name="refused_note">AI 这次选择不评。</string>
     <string name="demo_note">演示模式：还没配置 AI 密钥，这是一份示例裁决</string>
-    <string name="trial_survived">异议被驳回：对方律师提出了最有力的异议，裁决依然成立。可信度不变。</string>
+    <string name="trial_survived">异议被驳回：裁决依然成立。</string>
     <string name="trial_uncertain">对方律师提出异议，这一异议让这份裁决留下了实质的疑问</string>
     <string name="trial_overturned">异议成立：裁决依然有效，但对方最有力的异议已将其严重削弱</string>
     <string name="trial_minor">对方律师提出了一个合理的观点，但裁决依然成立</string>
@@ -114,7 +114,7 @@
     <plurals name="wait_hours">
         <item quantity="other">%1$s 小时</item>
     </plurals>
-    <string name="examples_label">不知道写什么？试试这些：</string>
+    <string name="examples_label">试试这个：</string>
     <string name="example_hotdog_label">🥙 肉夹馍算中式汉堡吗？</string>
     <string name="example_hotdog_text">我朋友阿杰说肉夹馍就是中式汉堡：饼里夹肉，没什么好争的。我说肉夹馍就是肉夹馍。没人去快餐店点汉堡是想吃肉夹馍，也没有哪家店的菜单会把它列在汉堡那一栏。</string>
     <string name="example_tomato_label">🍅 西红柿是水果吗？</string>
@@ -163,7 +163,7 @@
     <string name="tier_get_premium">获取更多裁决</string>
     <string name="tier_checking">正在检查有没有遗漏……</string>
     <string name="clarify_title">评委裁决之前</string>
-    <string name="clarify_lead">这些细节可能会改变谁对谁错。能答的就答，也可以跳过。</string>
+    <string name="clarify_lead">这些细节可能会改变谁对谁错。</string>
     <string name="clarify_answer_aria">问题 %1$s 的回答：</string>
     <string name="clarify_placeholder">你的回答（选填）</string>
     <string name="clarify_skip">跳过，直接裁决</string>
@@ -171,19 +171,19 @@
     <string name="clarify_back">修改争论内容</string>
     <string name="thinking_factcheck">正在联网核实事实……</string>
     <string name="thinking_factcheck_done">联网核实完成。</string>
-    <string name="thinking_premium_helper">联网核实事实要多花点时间，等一两分钟。</string>
+    <string name="thinking_premium_helper">等一两分钟。</string>
     <string name="factcheck_title">联网核实</string>
-    <string name="factcheck_lead">评委裁决前看过这些搜索结果。它们是证据，不是裁决本身。</string>
+    <string name="factcheck_lead">评委裁决前看过这些搜索结果。</string>
     <string name="factcheck_status_supported">站得住</string>
     <string name="factcheck_status_refuted">站不住</string>
     <string name="factcheck_status_mixed">部分属实</string>
     <string name="factcheck_status_unverified">无法确认</string>
     <string name="factcheck_sources">来源</string>
-    <string name="factcheck_none">没什么可上网查的：这件事关乎价值观或词义，而不是事实。</string>
-    <string name="factcheck_none_factual">这里没什么能上网核实的：涉及的事实只有当事人自己清楚。</string>
+    <string name="factcheck_none">没什么可上网查的。</string>
+    <string name="factcheck_none_factual">没什么可上网查的。</string>
     <string name="factcheck_unavailable">这次联网核实没完成，评委在没有它的情况下作出了裁决。</string>
     <string name="signin_title">登录</string>
-    <string name="signin_lead">登录后即可获取裁决。新账号首次裁决免费。</string>
+    <string name="signin_lead">首次裁决免费。</string>
     <string name="signin_apple">通过 Apple 继续</string>
     <string name="signin_google">通过 Google 继续</string>
     <string name="signin_email_toggle">改用邮箱</string>
@@ -201,7 +201,7 @@
     <string name="signin_use_password">改用密码登录</string>
     <string name="signin_password_wrong">该邮箱和密码不匹配。</string>
     <string name="signin_password_short">至少使用 8 个字符。</string>
-    <string name="signin_create_note">我们会通过邮件发送验证码来确认此地址，只需做这一次。</string>
+    <string name="signin_create_note">我们会通过邮件发送验证码来确认。</string>
     <string name="signin_password_choose">你已登录。请为下次选一个密码。</string>
     <string name="signin_password_save">保存密码</string>
     <string name="signin_password_save_failed">密码没能保存。请重试。</string>
@@ -236,7 +236,7 @@
     <string name="pricing_premium_f3">缺少关键事实时，最多问你两个小问题</string>
     <string name="pricing_premium_f4">评判前先替换名字</string>
     <string name="pricing_packs_title">次数包</string>
-    <string name="pricing_packs_lead">一次付费，随时使用。每次裁决消耗 1 次。</string>
+    <string name="pricing_packs_lead">每次裁决消耗 1 次。</string>
     <plurals name="pricing_pack">
         <item quantity="other">%1$s 次裁决</item>
     </plurals>
@@ -320,8 +320,8 @@
     <string name="case_context_d">当事人D补充了说明</string>
     <string name="case_context_you">你补充的说明（%1$s）</string>
     <string name="case_evidence_item">图片 %1$s（评委读到的内容）</string>
-    <string name="case_answered">对方已回复，评委正在处理。</string>
-    <string name="case_judging_alone">评委正在处理你这边的说法。</string>
+    <string name="case_answered">评委正在处理。</string>
+    <string name="case_judging_alone">评委正在处理。</string>
     <string name="case_expired_body">7 天内没人回复，次数已退还给你。你仍然可以只凭自己的说法获取裁决。</string>
     <string name="case_expired_body_free">7 天内没人回复。你仍然可以只凭自己的说法获取裁决。</string>
     <string name="case_one_sided">仅根据你一方的说法裁决。</string>
@@ -338,12 +338,12 @@
     <string name="respond_submit">发送我的说法</string>
     <string name="case_write_title">你的说法</string>
     <string name="case_write_placeholder">怎么了？</string>
-    <string name="case_write_lead">准备好了就写下你的说法。你们两边都写完，评委才会开始。</string>
+    <string name="case_write_lead">你们两边都写完，评委才会开始。</string>
     <string name="case_write_lead_answered">对方已经写好了说法。写下你的，就能拿到裁决。</string>
     <string name="case_write_submit">发送我的说法</string>
     <string name="case_write_email_subject">对方已经写好了他们的说法</string>
-    <string name="respond_sent">谢谢！你的说法已提交，评委正在处理。</string>
-    <string name="respond_sent_waiting">谢谢！你的说法已提交。对方写完后，评委才会开始。</string>
+    <string name="respond_sent">你的说法已提交。</string>
+    <string name="respond_sent_waiting">你的说法已提交，正在等对方。</string>
     <string name="respond_own_invite">这是你自己的邀请链接，请发给对方。</string>
     <string name="respond_expired">这个邀请已过期。</string>
     <string name="respond_closed">这个案子已经不再接受回复了。</string>
@@ -406,7 +406,7 @@
     <string name="appeal_submit">带上补充重新裁决</string>
     <string name="appeal_sending">正在匿名处理你的补充……</string>
     <string name="appeal_judging">评委正在重新审视所有内容……</string>
-    <string name="appeal_upsell">有遗漏？补充说明，花 1 次裁决重新评判。</string>
+    <string name="appeal_upsell">有遗漏？补充说明，花 1 次裁决。</string>
     <string name="appeal_sign_in">登录后补充说明</string>
     <string name="appeal_used">你已经给这个案子补充过说明了。</string>
     <string name="appeal_limit">你已经补充过两次了，一份裁决最多补充两次。</string>
@@ -450,7 +450,7 @@
     <string name="case_display_name">你在分享页上显示的名字</string>
     <string name="case_display_save">保存名字</string>
     <string name="respond_keep">把这个案子保存到你的账号</string>
-    <string name="respond_kept">这个案子已保存到你的账号，在任何设备的“裁决”页面上都能看到。</string>
+    <string name="respond_kept">已保存到你的账号。</string>
     <string name="respond_remove">删除我的说法</string>
     <string name="respond_remove_confirm">删除你的原文和显示名称？案子的分享链接将会失效（已经发到聊天里的预览，在这些应用刷新前可能仍会显示）。此操作无法撤销。</string>
     <string name="names_title">分享页面上的名字</string>
@@ -526,7 +526,7 @@
     <string name="app_tab_new">新建</string>
     <string name="app_tab_settings">设置</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">还没有裁决。第一场争论评出结果后，裁决会出现在这里。</string>
+    <string name="app_history_empty">还没有裁决。</string>
     <string name="app_history_device_only">只保存在这台手机上。在这里删掉一条裁决，它的分享链接仍然有效。</string>
     <string name="app_history_delete">删除</string>
     <string name="app_history_remove_all">全部移除</string>
@@ -534,7 +534,7 @@
         <item quantity="other">要从这台手机上删除 %1$s 条裁决吗？分享链接仍然有效。</item>
     </plurals>
     <string name="app_history_phone_only">只在这台手机上</string>
-    <string name="app_history_phone_only_note">不在你的账号里：这些只保存在这台手机上。在这里删掉一条，它的分享链接仍然有效。</string>
+    <string name="app_history_phone_only_note">删掉一条，它的分享链接仍然有效。</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="other">要从你的账号中删除 %1$s 条裁决吗？在所有设备上，你写的内容和名字都会被抹去，分享链接也会失效。此操作无法撤销。</item>
     </plurals>
@@ -551,9 +551,9 @@
     <string name="app_pricing_free_account">用 Apple、Google 或邮箱登录</string>
     <string name="app_pricing_context">补充说明的图片读完即丢，不另外收费</string>
     <string name="app_pricing_headline">第一次裁决，我们请客。</string>
-    <string name="app_pricing_sub">注册账号，第一次裁决免费，所有功能都能用。之后可以买次数包，或者按月订阅。</string>
+    <string name="app_pricing_sub">之后可以买次数包，或者按月订阅。</string>
     <string name="app_pricing_headline_member">获取更多裁决。</string>
-    <string name="app_pricing_sub_member">买次数包或按月订阅。每次裁决都有完整的评委阵容。</string>
+    <string name="app_pricing_sub_member">买次数包或按月订阅。</string>
     <plurals name="app_balance_left">
         <item quantity="other">还剩 %1$s 次裁决</item>
     </plurals>
@@ -646,9 +646,9 @@
     <string name="app_appeal_used">你已经给这个案子补充过说明了。</string>
     <string name="app_appeal_limit">你已经补充过两次了，一份裁决最多补充两次。</string>
     <string name="app_purchase_buying">购买中……</string>
-    <string name="app_purchase_success">谢谢！购买成功。</string>
-    <string name="app_purchase_pending">订单正在处理中，可能要过一分钟才会显示。</string>
-    <string name="app_purchase_slow">可能要过一分钟才会在这里显示。</string>
+    <string name="app_purchase_success">购买成功。</string>
+    <string name="app_purchase_pending">订单正在处理中。</string>
+    <string name="app_purchase_slow">次数可能要过一分钟才到账。</string>
     <string name="app_purchase_failed">购买没有成功，稍后再试一次。</string>
     <string name="app_purchase_restore">恢复购买</string>
     <string name="app_purchase_restore_done">已恢复你的购买。</string>

@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">Tiga hakim independen · Hakim tak pernah melihat nama</string>
     <string name="hero_lead">Ceritakan apa yang kalian ributkan. Tiga hakim AI memutuskan sendiri-sendiri, dan skor keyakinan menunjukkan seberapa sepakat mereka.</string>
     <string name="input_label">Perdebatannya</string>
-    <string name="placeholder">Apa yang terjadi? Siapa bilang apa, dan kenapa?\n\nTulis versi pihak lain seperti yang akan dia katakan sendiri. Apa pun yang kamu tulis, para hakim tetap menyusun argumen terkuat untuk kedua pihak.</string>
+    <string name="placeholder">Apa yang terjadi? Siapa bilang apa, dan kenapa?</string>
     <string name="get_verdict">Minta putusan</string>
     <string name="thinking_eyebrow">Yang sedang dikerjakan hakim</string>
     <string name="thinking_read">Membaca kedua pihak dan menyusun versi terkuat masing-masing…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">Memburu inti masalahnya…</string>
     <string name="thinking_judges">Tiga hakim memutuskan, masing-masing sendiri…</string>
     <string name="thinking_votes">Menghitung suara…</string>
-    <string name="thinking_helper">Tiga hakim AI memutuskan terpisah, dan kalau hasilnya tipis, hakim tambahan ikut turun tangan. Tunggu sebentar, ya.</string>
+    <string name="thinking_helper">Tunggu sebentar, ya.</string>
     <string name="thinking_finish">Hampir sampai ke inti masalahnya…</string>
-    <string name="thinking_still_judging">Para hakim masih berpikir. Sabar sebentar, ya…</string>
+    <string name="thinking_still_judging">Masih diproses…</string>
     <string name="thinking_ready">Putusan sudah siap.</string>
     <string name="story_names">Nama dihapus supaya tak ada yang dinilai dari siapa dia</string>
     <string name="story_facts">Pemeriksa terpisah mencari faktanya di web</string>
@@ -72,14 +72,14 @@
     <string name="translate_loading">Menerjemahkan…</string>
     <string name="translate_from_en">Diterjemahkan dari bahasa Inggris</string>
     <string name="translate_from_tr">Diterjemahkan dari bahasa Turki</string>
-    <string name="translate_failed">Belum bisa diterjemahkan sekarang, jadi ini versi aslinya.</string>
+    <string name="translate_failed">Tidak bisa diterjemahkan.</string>
     <string name="translate_toggle">Bahasa putusan</string>
     <string name="vote_split">terbelah</string>
     <string name="vote_conditional">tergantung</string>
     <string name="vote_dissolved">beda makna</string>
-    <string name="refused_note">AI-nya memilih absen kali ini. Kami lebih baik tidak menampilkan apa-apa daripada mengarang putusan.</string>
+    <string name="refused_note">AI-nya memilih absen kali ini.</string>
     <string name="demo_note">Mode demo: kunci AI belum dipasang, jadi ini contoh putusan</string>
-    <string name="trial_survived">Keberatan ditolak: pengacara pihak lain mengajukan keberatan terkuatnya, dan putusan tetap bertahan. Skor keyakinan tetap.</string>
+    <string name="trial_survived">Keberatan ditolak: putusan tetap bertahan.</string>
     <string name="trial_uncertain">Pengacara pihak lain mengajukan keberatan, dan keberatan itu meninggalkan keraguan nyata soal putusan ini</string>
     <string name="trial_overturned">Keberatan diterima: putusan tetap berlaku, tetapi keberatan terkuat pihak lain melemahkannya secara serius</string>
     <string name="trial_minor">Pengacara pihak lain mengajukan poin yang wajar, tetapi putusan tetap berlaku</string>
@@ -114,7 +114,7 @@
     <plurals name="wait_hours">
         <item quantity="other">%1$s jam</item>
     </plurals>
-    <string name="examples_label">Bingung mulai dari mana? Coba salah satu ini:</string>
+    <string name="examples_label">Coba salah satu:</string>
     <string name="example_hotdog_label">🌭 Hot dog itu sandwich?</string>
     <string name="example_hotdog_text">Temanku Dimas bilang hot dog itu sandwich: isian yang diapit roti belah, titik. Menurutku hot dog ya hot dog. Nggak ada orang pesan sandwich lalu berharap dapat hot dog, dan nggak ada menu yang menaruhnya di bagian sandwich.</string>
     <string name="example_tomato_label">🍅 Tomat itu buah?</string>
@@ -163,7 +163,7 @@
     <string name="tier_get_premium">Tambah putusan</string>
     <string name="tier_checking">Mengecek apakah ada yang kurang…</string>
     <string name="clarify_title">Sebelum hakim memutuskan</string>
-    <string name="clarify_lead">Detail ini bisa mengubah siapa yang benar. Jawab yang kamu tahu, atau lewati.</string>
+    <string name="clarify_lead">Detail ini bisa mengubah siapa yang benar.</string>
     <string name="clarify_answer_aria">Jawaban untuk pertanyaan %1$s:</string>
     <string name="clarify_placeholder">Jawabanmu (opsional)</string>
     <string name="clarify_skip">Lewati dan putuskan</string>
@@ -171,19 +171,19 @@
     <string name="clarify_back">Ubah perdebatannya</string>
     <string name="thinking_factcheck">Mengecek fakta di web…</string>
     <string name="thinking_factcheck_done">Pengecekan web selesai.</string>
-    <string name="thinking_premium_helper">Mengecek fakta di web butuh waktu sedikit lebih lama. Tunggu satu-dua menit, ya.</string>
+    <string name="thinking_premium_helper">Tunggu satu-dua menit, ya.</string>
     <string name="factcheck_title">Dicek di web</string>
-    <string name="factcheck_lead">Para hakim melihat hasil pencarian ini sebelum memutuskan. Ini bukti, bukan putusannya.</string>
+    <string name="factcheck_lead">Para hakim melihat hasil pencarian ini sebelum memutuskan.</string>
     <string name="factcheck_status_supported">Terbukti</string>
     <string name="factcheck_status_refuted">Terbantahkan</string>
     <string name="factcheck_status_mixed">Sebagian benar</string>
     <string name="factcheck_status_unverified">Tak bisa dipastikan</string>
     <string name="factcheck_sources">Sumber</string>
-    <string name="factcheck_none">Tidak ada yang perlu dicari di web: perdebatan ini soal nilai atau makna, bukan fakta.</string>
-    <string name="factcheck_none_factual">Tidak ada yang bisa dicek di web: fakta dalam kasus ini hanya diketahui orang-orang yang terlibat.</string>
+    <string name="factcheck_none">Tidak ada yang perlu dicek di web.</string>
+    <string name="factcheck_none_factual">Tidak ada yang perlu dicek di web.</string>
     <string name="factcheck_unavailable">Pengecekan web kali ini tidak selesai, jadi hakim memutuskan tanpanya.</string>
     <string name="signin_title">Masuk</string>
-    <string name="signin_lead">Masuk untuk mendapat putusan. Akun baru dapat putusan pertama gratis.</string>
+    <string name="signin_lead">Putusan pertamamu gratis.</string>
     <string name="signin_apple">Lanjutkan dengan Apple</string>
     <string name="signin_google">Lanjutkan dengan Google</string>
     <string name="signin_email_toggle">Pakai email saja</string>
@@ -201,7 +201,7 @@
     <string name="signin_use_password">Pakai kata sandi saja</string>
     <string name="signin_password_wrong">Email dan kata sandi itu tidak cocok.</string>
     <string name="signin_password_short">Gunakan minimal 8 karakter.</string>
-    <string name="signin_create_note">Kami akan mengirim kode lewat email untuk mengonfirmasi alamat ini. Kamu hanya perlu melakukannya sekali.</string>
+    <string name="signin_create_note">Kami akan mengirim kode lewat email untuk konfirmasi.</string>
     <string name="signin_password_choose">Kamu sudah masuk. Pilih kata sandi untuk lain kali.</string>
     <string name="signin_password_save">Simpan kata sandi</string>
     <string name="signin_password_save_failed">Kami tidak bisa menyimpan kata sandinya. Coba lagi.</string>
@@ -236,7 +236,7 @@
     <string name="pricing_premium_f3">Hingga dua pertanyaan singkat kalau ada fakta penting yang kurang</string>
     <string name="pricing_premium_f4">Nama diganti sebelum dinilai</string>
     <string name="pricing_packs_title">Paket kredit</string>
-    <string name="pricing_packs_lead">Bayar sekali, pakai kapan saja. Setiap putusan memakai satu kredit.</string>
+    <string name="pricing_packs_lead">Setiap putusan memakai satu kredit.</string>
     <plurals name="pricing_pack">
         <item quantity="other">%1$s putusan</item>
     </plurals>
@@ -320,8 +320,8 @@
     <string name="case_context_d">Pihak D menambahkan konteks</string>
     <string name="case_context_you">Konteks yang kamu tambahkan (%1$s)</string>
     <string name="case_evidence_item">Gambar %1$s, seperti yang dibaca hakim</string>
-    <string name="case_answered">Dia sudah menjawab. Hakim sedang menilai.</string>
-    <string name="case_judging_alone">Hakim sedang menilai versimu.</string>
+    <string name="case_answered">Para hakim sedang menilai.</string>
+    <string name="case_judging_alone">Para hakim sedang menilai.</string>
     <string name="case_expired_body">Tidak ada yang menjawab dalam 7 hari, jadi kreditmu sudah kembali. Kamu tetap bisa minta putusan dari versimu saja.</string>
     <string name="case_expired_body_free">Tidak ada yang menjawab dalam 7 hari. Kamu tetap bisa minta putusan dari versimu saja.</string>
     <string name="case_one_sided">Diputuskan dari versimu saja.</string>
@@ -338,12 +338,12 @@
     <string name="respond_submit">Kirim versiku</string>
     <string name="case_write_title">Versimu</string>
     <string name="case_write_placeholder">Apa masalahnya?</string>
-    <string name="case_write_lead">Tulis versimu kapan pun kamu siap. Hakim mulai setelah kalian berdua menulis.</string>
+    <string name="case_write_lead">Hakim mulai setelah kalian berdua menulis.</string>
     <string name="case_write_lead_answered">Dia sudah menulis versinya. Tulis versimu untuk mendapat putusan.</string>
     <string name="case_write_submit">Kirim versiku</string>
     <string name="case_write_email_subject">Pihak lain sudah menulis versinya</string>
-    <string name="respond_sent">Terima kasih. Versimu sudah masuk dan hakim sedang menilainya.</string>
-    <string name="respond_sent_waiting">Terima kasih. Versimu sudah masuk. Hakim mulai setelah orang satunya menulis versinya.</string>
+    <string name="respond_sent">Versimu sudah masuk.</string>
+    <string name="respond_sent_waiting">Versimu sudah masuk. Menunggu orang satunya.</string>
     <string name="respond_own_invite">Ini tautan undanganmu sendiri. Kirim ke lawan debatmu.</string>
     <string name="respond_expired">Undangan ini sudah kedaluwarsa.</string>
     <string name="respond_closed">Kasus ini sudah tidak menerima jawaban.</string>
@@ -406,7 +406,7 @@
     <string name="appeal_submit">Nilai ulang dengan konteksku</string>
     <string name="appeal_sending">Menganonimkan konteksmu…</string>
     <string name="appeal_judging">Hakim sedang menilai ulang semuanya…</string>
-    <string name="appeal_upsell">Ada yang kurang? Tambah konteks dan minta dinilai ulang dengan 1 putusan.</string>
+    <string name="appeal_upsell">Ada yang kurang? Tambah konteks dengan 1 putusan.</string>
     <string name="appeal_sign_in">Masuk untuk menambah konteks</string>
     <string name="appeal_used">Kamu sudah menambahkan konteks ke kasus ini.</string>
     <string name="appeal_limit">Kamu sudah dua kali menambahkan konteks. Itu batas untuk satu putusan.</string>
@@ -450,7 +450,7 @@
     <string name="case_display_name">Namamu di putusan yang dibagikan</string>
     <string name="case_display_save">Simpan nama</string>
     <string name="respond_keep">Simpan kasus ini di akunmu</string>
-    <string name="respond_kept">Kasus ini sudah tersimpan di akunmu dan muncul di halaman Putusan di semua perangkatmu.</string>
+    <string name="respond_kept">Tersimpan di akunmu.</string>
     <string name="respond_remove">Hapus versiku</string>
     <string name="respond_remove_confirm">Hapus teks aslimu dan nama tampilanmu? Tautan berbagi kasus ini berhenti berfungsi (pratinjau yang sudah terkirim di chat mungkin masih terlihat sampai aplikasinya memperbaruinya). Ini tidak bisa dibatalkan.</string>
     <string name="names_title">Nama di halaman berbagi</string>
@@ -526,7 +526,7 @@
     <string name="app_tab_new">Baru</string>
     <string name="app_tab_settings">Pengaturan</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">Belum ada putusan. Tuntaskan perdebatan pertamamu, nanti putusannya muncul di sini.</string>
+    <string name="app_history_empty">Belum ada putusan.</string>
     <string name="app_history_device_only">Hanya tersimpan di ponsel ini. Menghapus putusan di sini tidak mematikan tautan berbaginya.</string>
     <string name="app_history_delete">Hapus</string>
     <string name="app_history_remove_all">Hapus semua</string>
@@ -534,7 +534,7 @@
         <item quantity="other">Hapus %1$s putusan dari ponsel ini? Tautan berbaginya tetap berfungsi.</item>
     </plurals>
     <string name="app_history_phone_only">Hanya di ponsel ini</string>
-    <string name="app_history_phone_only_note">Tidak ada di akunmu: putusan ini hanya tersimpan di ponsel ini. Menghapus putusan di sini tidak mematikan tautan berbaginya.</string>
+    <string name="app_history_phone_only_note">Menghapus putusan tidak mematikan tautan berbaginya.</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="other">Hapus %1$s putusan dari akunmu di semua perangkat? Tulisanmu dan nama-namanya akan dihapus, dan tautan berbaginya berhenti berfungsi. Ini tidak bisa dibatalkan.</item>
     </plurals>
@@ -551,9 +551,9 @@
     <string name="app_pricing_free_account">Masuk dengan Apple, Google, atau email</string>
     <string name="app_pricing_context">Gambar konteks dibaca lalu dibuang, tanpa biaya tambahan</string>
     <string name="app_pricing_headline">Putusan pertamamu kami traktir.</string>
-    <string name="app_pricing_sub">Buat akun dan putusan pertamamu gratis, lengkap dengan semua fitur. Setelah itu, pilih paket atau berlangganan bulanan.</string>
+    <string name="app_pricing_sub">Setelah itu, pilih paket atau berlangganan bulanan.</string>
     <string name="app_pricing_headline_member">Tambah putusan.</string>
-    <string name="app_pricing_sub_member">Pilih paket atau berlangganan bulanan. Setiap putusan dinilai oleh panel hakim lengkap.</string>
+    <string name="app_pricing_sub_member">Pilih paket atau berlangganan bulanan.</string>
     <plurals name="app_balance_left">
         <item quantity="other">Sisa %1$s putusan</item>
     </plurals>
@@ -646,9 +646,9 @@
     <string name="app_appeal_used">Kamu sudah menambahkan konteks ke kasus ini.</string>
     <string name="app_appeal_limit">Kamu sudah dua kali menambahkan konteks. Itu batas untuk satu putusan.</string>
     <string name="app_purchase_buying">Membeli…</string>
-    <string name="app_purchase_success">Terima kasih! Pembelianmu berhasil.</string>
-    <string name="app_purchase_pending">Pembelianmu sedang diproses. Mungkin perlu semenit sampai muncul.</string>
-    <string name="app_purchase_slow">Mungkin perlu semenit sampai muncul di sini.</string>
+    <string name="app_purchase_success">Pembelian selesai.</string>
+    <string name="app_purchase_pending">Pembelianmu sedang diproses.</string>
+    <string name="app_purchase_slow">Kredit mungkin perlu semenit untuk muncul.</string>
     <string name="app_purchase_failed">Pembelian tidak berhasil. Coba lagi sebentar lagi.</string>
     <string name="app_purchase_restore">Pulihkan pembelian</string>
     <string name="app_purchase_restore_done">Pembelianmu sudah dipulihkan.</string>
