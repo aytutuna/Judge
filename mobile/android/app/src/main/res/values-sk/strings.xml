@@ -693,7 +693,7 @@
     <string name="app_purchase_buying">Nákup prebieha…</string>
     <string name="app_purchase_success">Nákup dokončený.</string>
     <string name="app_purchase_pending">Nákup sa spracúva.</string>
-    <string name="app_purchase_slow">Môže chvíľu trvať, kým sa to tu objaví.</string>
+    <string name="app_purchase_slow">Kredity môžu chvíľu trvať.</string>
     <string name="app_purchase_failed">Nákup sa nepodaril. Skús to znova o chvíľu.</string>
     <string name="app_purchase_restore">Obnoviť nákupy</string>
     <string name="app_purchase_restore_done">Nákupy sú obnovené.</string>

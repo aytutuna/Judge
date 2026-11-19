@@ -693,7 +693,7 @@
     <string name="app_purchase_buying">Trwa zakup…</string>
     <string name="app_purchase_success">Zakup zakończony.</string>
     <string name="app_purchase_pending">Przetwarzamy twój zakup.</string>
-    <string name="app_purchase_slow">Może minąć minuta, zanim się tu pojawią.</string>
+    <string name="app_purchase_slow">Kredyty mogą pojawić się po minucie.</string>
     <string name="app_purchase_failed">Zakup się nie udał. Spróbuj ponownie za chwilę.</string>
     <string name="app_purchase_restore">Przywróć zakupy</string>
     <string name="app_purchase_restore_done">Zakupy zostały przywrócone.</string>

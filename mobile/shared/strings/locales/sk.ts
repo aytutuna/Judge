@@ -127,7 +127,7 @@ const sk: AppLocale = {
     "app.purchase.buying": "Nákup prebieha…",
     "app.purchase.success": "Nákup dokončený.",
     "app.purchase.pending": "Nákup sa spracúva.",
-    "app.purchase.slow": "Môže chvíľu trvať, kým sa to tu objaví.",
+    "app.purchase.slow": "Kredity môžu chvíľu trvať.",
     "app.purchase.failed": "Nákup sa nepodaril. Skús to znova o chvíľu.",
     "app.purchase.restore": "Obnoviť nákupy",
     "app.purchase.restoreDone": "Nákupy sú obnovené.",
