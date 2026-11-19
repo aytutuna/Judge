@@ -40,6 +40,16 @@ export function LangPicker({
           </option>
         ))}
       </select>
+      {compact ? (
+        <span className={styles.short} aria-hidden>
+          {/* Two Chinese scripts can't share "ZH", so they keep their first two characters. */}
+          {shortName(lang)}
+        </span>
+      ) : null}
     </span>
   );
+}
+
+function shortName(l: Lang) {
+  return l.startsWith("zh") ? LANGS[l].native.slice(0, 2) : l.toUpperCase();
 }
