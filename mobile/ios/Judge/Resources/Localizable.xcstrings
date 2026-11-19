@@ -36044,7 +36044,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Może minąć minuta, zanim się tu pojawią."
+            "value" : "Kredyty mogą pojawić się po minucie."
           }
         },
         "pt-BR" : {
@@ -36074,7 +36074,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Môže chvíľu trvať, kým sa to tu objaví."
+            "value" : "Kredity môžu chvíľu trvať."
           }
         },
         "sl" : {
