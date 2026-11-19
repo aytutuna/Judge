@@ -133,7 +133,6 @@ const el: AppLocale = {
     "app.purchase.buying": "Αγορά…",
     "app.purchase.success": "Ευχαριστούμε! Η αγορά ολοκληρώθηκε.",
     "app.purchase.pending": "Η αγορά σου βρίσκεται σε επεξεργασία. Ίσως χρειαστεί ένα λεπτό για να εμφανιστεί.",
-    "app.purchase.arriving": "Οι αποφάσεις που αγόρασες έρχονται…",
     "app.purchase.slow": "Ίσως χρειαστεί ένα λεπτό για να εμφανιστούν εδώ.",
     "app.purchase.failed": "Η αγορά δεν ολοκληρώθηκε. Δοκίμασε ξανά σε λίγο.",
     "app.purchase.restore": "Επαναφορά αγορών",

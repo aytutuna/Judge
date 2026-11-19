@@ -129,7 +129,6 @@ const ptPT: AppLocale = {
     "app.purchase.buying": "A comprar…",
     "app.purchase.success": "Obrigado! A compra foi concluída.",
     "app.purchase.pending": "A tua compra está a ser processada. Pode demorar um minuto a aparecer.",
-    "app.purchase.arriving": "Os teus créditos estão a caminho…",
     "app.purchase.slow": "Pode demorar um minuto a aparecer aqui.",
     "app.purchase.failed": "A compra não foi concluída. Tenta outra vez daqui a pouco.",
     "app.purchase.restore": "Restaurar compras",

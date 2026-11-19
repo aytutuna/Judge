@@ -129,7 +129,6 @@ const or: AppLocale = {
     "app.purchase.buying": "କିଣାଯାଉଛି…",
     "app.purchase.success": "ଧନ୍ୟବାଦ! ଆପଣଙ୍କ କିଣା ସଫଳ ହେଲା।",
     "app.purchase.pending": "ଆପଣଙ୍କ କିଣା ପ୍ରକ୍ରିୟାରେ ଅଛି। ଏଠାରେ ଦେଖାଯିବାକୁ ମିନିଟିଏ ଲାଗିପାରେ।",
-    "app.purchase.arriving": "ଆପଣଙ୍କ କ୍ରେଡିଟ୍ ଆସୁଛି…",
     "app.purchase.slow": "ଏଠାରେ ଦେଖାଯିବାକୁ ମିନିଟିଏ ଲାଗିପାରେ।",
     "app.purchase.failed": "କିଣା ସଫଳ ହେଲା ନାହିଁ। ଟିକେ ପରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।",
     "app.purchase.restore": "ପୂର୍ବ କିଣା ପୁନଃସ୍ଥାପନ କରନ୍ତୁ",

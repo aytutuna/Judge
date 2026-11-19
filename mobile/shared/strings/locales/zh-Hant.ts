@@ -119,7 +119,6 @@ const zhHant: AppLocale = {
     "app.purchase.buying": "購買中…",
     "app.purchase.success": "謝謝！購買完成。",
     "app.purchase.pending": "正在處理你的購買，可能要等一下才會顯示。",
-    "app.purchase.arriving": "你的額度馬上就到…",
     "app.purchase.slow": "可能要等一下才會顯示在這裡。",
     "app.purchase.failed": "購買沒有完成，請稍後再試。",
     "app.purchase.restore": "回復購買項目",

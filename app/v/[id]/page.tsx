@@ -124,10 +124,7 @@ export default async function SharedVerdictPage({ params }: PageProps<"/v/[id]">
               kickerClassName={`kicker ${styles.kicker}`}
               cardClassName={styles.card}
               cta={
-                <section aria-labelledby="cta-title" className={styles.cta}>
-                  <h2 id="cta-title" className={styles.ctaTitle}>
-                    {t(lang, "shared.ctaLead")}
-                  </h2>
+                <section className={styles.cta}>
                   <Link href="/" className={styles.ctaLink}>
                     {t(lang, "shared.cta")}
                   </Link>

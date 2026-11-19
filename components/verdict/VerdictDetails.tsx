@@ -236,12 +236,8 @@ export function VerdictDetails({
                 {leanIsSelf ? t(lang, "lean.titleSelf") : t(lang, "lean.title", { name: leanName })}
               </p>
               <p className={styles.noteText}>{lean.reason}</p>
-              {result.runs.length >= 2 ? (
-                <p className={styles.noteText}>
-                  {lean.unanimous
-                    ? t(lang, "lean.unanimous")
-                    : t(lang, "lean.majority", leanTally(lean, result.runs.length))}
-                </p>
+              {result.runs.length >= 2 && !lean.unanimous ? (
+                <p className={styles.noteText}>{t(lang, "lean.majority", leanTally(lean, result.runs.length))}</p>
               ) : null}
             </div>
           ) : lean === null ? (
@@ -351,12 +347,6 @@ export function VerdictDetails({
 
         {result.runs.length > 0 ? (
           <p className={styles.footnote}>
-            {result.escalated ? (
-              <>
-                {t(lang, "escalated")}
-                <br />
-              </>
-            ) : null}
             {t(lang, result.runs.length === 1 ? "judgesVoted.one" : "judgesVoted.other", {
               n: result.runs.length,
             })}{" "}
@@ -367,12 +357,6 @@ export function VerdictDetails({
                 return r === "side_a" ? nameA : r === "side_b" ? nameB : t(lang, VOTE_KEY[r]);
               })
               .join(" · ")}
-            {result.tier === "premium" && result.fact_check?.status === "checked" ? (
-              <>
-                <br />
-                {t(lang, "panel.premium")}
-              </>
-            ) : null}
             {evidenceLine ? (
               <>
                 <br />

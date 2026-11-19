@@ -128,7 +128,6 @@ const tr: AppLocale = {
     "app.purchase.buying": "Satın alınıyor…",
     "app.purchase.success": "Teşekkürler! Satın alma tamamlandı.",
     "app.purchase.pending": "Satın alman işleniyor. Hesabına yansıması bir dakika sürebilir.",
-    "app.purchase.arriving": "Kredilerin yolda…",
     "app.purchase.slow": "Burada görünmesi bir dakika sürebilir.",
     "app.purchase.failed": "Satın alma tamamlanamadı. Birazdan tekrar dene.",
     "app.purchase.restore": "Satın alımları geri yükle",

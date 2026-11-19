@@ -129,7 +129,6 @@ const bn: AppLocale = {
     "app.purchase.buying": "কেনা হচ্ছে…",
     "app.purchase.success": "ধন্যবাদ! কেনাকাটা সম্পন্ন হয়েছে।",
     "app.purchase.pending": "আপনার কেনাকাটা প্রসেস হচ্ছে। দেখা যেতে এক মিনিটের মতো লাগতে পারে।",
-    "app.purchase.arriving": "আপনার ক্রেডিট আসছে…",
     "app.purchase.slow": "এখানে দেখা যেতে এক মিনিটের মতো লাগতে পারে।",
     "app.purchase.failed": "কেনাকাটা সম্পন্ন হয়নি। একটু পরে আবার চেষ্টা করুন।",
     "app.purchase.restore": "কেনাকাটা ফিরিয়ে আনুন",

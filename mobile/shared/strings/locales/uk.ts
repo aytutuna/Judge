@@ -131,7 +131,6 @@ const uk: AppLocale = {
     "app.purchase.buying": "Купуємо…",
     "app.purchase.success": "Дякуємо! Покупка пройшла успішно.",
     "app.purchase.pending": "Покупка обробляється. Може минути хвилина, поки вона з’явиться.",
-    "app.purchase.arriving": "Вердикти вже в дорозі…",
     "app.purchase.slow": "Може минути хвилина, поки вони з’являться тут.",
     "app.purchase.failed": "Покупка не вдалася. Спробуй ще раз за мить.",
     "app.purchase.restore": "Відновити покупки",

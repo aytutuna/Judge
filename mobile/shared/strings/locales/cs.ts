@@ -130,7 +130,6 @@ const cs: AppLocale = {
     "app.purchase.buying": "Nákup probíhá…",
     "app.purchase.success": "Díky! Nákup proběhl.",
     "app.purchase.pending": "Nákup se zpracovává. Může chvilku trvat, než se projeví.",
-    "app.purchase.arriving": "Kredity jsou na cestě…",
     "app.purchase.slow": "Může chvilku trvat, než se tu objeví.",
     "app.purchase.failed": "Nákup neproběhl. Zkus to za chvilku znovu.",
     "app.purchase.restore": "Obnovit nákupy",

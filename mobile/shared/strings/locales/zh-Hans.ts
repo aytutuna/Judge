@@ -120,7 +120,6 @@ const zhHans: AppLocale = {
     "app.purchase.buying": "购买中……",
     "app.purchase.success": "谢谢！购买成功。",
     "app.purchase.pending": "订单正在处理中，可能要过一分钟才会显示。",
-    "app.purchase.arriving": "次数正在到账……",
     "app.purchase.slow": "可能要过一分钟才会在这里显示。",
     "app.purchase.failed": "购买没有成功，稍后再试一次。",
     "app.purchase.restore": "恢复购买",

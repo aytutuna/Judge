@@ -147,7 +147,6 @@ const gu: AppLocale = {
     "app.purchase.success": "આભાર! તમારી ખરીદી પૂરી થઈ.",
     "app.purchase.pending":
       "તમારી ખરીદી પ્રોસેસ થઈ રહી છે. દેખાતાં એકાદ મિનિટ લાગી શકે.",
-    "app.purchase.arriving": "તમારી ક્રેડિટ આવી રહી છે…",
     "app.purchase.slow": "અહીં દેખાતાં એકાદ મિનિટ લાગી શકે.",
     "app.purchase.failed": "ખરીદી પૂરી ન થઈ. થોડી વારમાં ફરી પ્રયાસ કરો.",
     "app.purchase.restore": "ખરીદી રિસ્ટોર કરો",

@@ -38,11 +38,9 @@ export function SampleVerdict({ lang }: { lang: Lang }) {
     <section id="sample" aria-labelledby="sample-title" className={styles.sample}>
       <div className={`wrap ${styles.grid}`}>
         <div className={styles.copy}>
-          <p className="kicker">{t(lang, "sample.kicker")}</p>
           <h2 id="sample-title" className={styles.title}>
             {noOrphan(t(lang, "sample.title"))}
           </h2>
-          <p className={styles.lead}>{t(lang, "sample.lead")}</p>
         </div>
 
         <div className={`${styles.cardWrap} flex flex-col gap-3`} data-you="b">

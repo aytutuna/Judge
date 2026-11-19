@@ -181,7 +181,6 @@ export function PricingView() {
           <PageIntro
             kicker={t(lang, "nav.pricing")}
             title={t(lang, member ? "pricing.titleMember" : "pricing.title")}
-            lead={t(lang, member ? "pricing.leadMember" : "pricing.lead")}
           />
         }
       />

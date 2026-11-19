@@ -131,7 +131,6 @@ const fr: AppLocale = {
     "app.purchase.buying": "Achat en cours…",
     "app.purchase.success": "Merci ! Ton achat est validé.",
     "app.purchase.pending": "Ton achat est en cours de traitement. Il peut mettre une minute à apparaître.",
-    "app.purchase.arriving": "Tes crédits arrivent…",
     "app.purchase.slow": "Ils peuvent mettre une minute à apparaître ici.",
     "app.purchase.failed": "L’achat n’a pas abouti. Réessaie dans un instant.",
     "app.purchase.restore": "Restaurer les achats",

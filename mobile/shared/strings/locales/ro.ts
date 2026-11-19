@@ -132,7 +132,6 @@ const ro: AppLocale = {
     "app.purchase.buying": "Achiziție în curs…",
     "app.purchase.success": "Mulțumim! Achiziția a reușit.",
     "app.purchase.pending": "Achiziția ta e în curs de procesare. Poate dura un minut până apare.",
-    "app.purchase.arriving": "Creditele tale sunt pe drum…",
     "app.purchase.slow": "Poate dura un minut până apar aici.",
     "app.purchase.failed": "Achiziția n-a reușit. Încearcă din nou peste câteva clipe.",
     "app.purchase.restore": "Restaurează achizițiile",

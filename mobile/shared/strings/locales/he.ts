@@ -128,7 +128,6 @@ const he: AppLocale = {
     "app.purchase.buying": "הרכישה מתבצעת…",
     "app.purchase.success": "תודה! הרכישה הושלמה.",
     "app.purchase.pending": "הרכישה בטיפול. ייתכן שייקח רגע עד שהיא תופיע.",
-    "app.purchase.arriving": "הקרדיטים בדרך…",
     "app.purchase.slow": "ייתכן שייקח רגע עד שזה יופיע כאן.",
     "app.purchase.failed": "הרכישה לא הושלמה. אפשר לנסות שוב עוד רגע.",
     "app.purchase.restore": "שחזור רכישות",

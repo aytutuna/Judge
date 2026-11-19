@@ -129,7 +129,6 @@ const te: AppLocale = {
     "app.purchase.buying": "కొనుగోలు జరుగుతోంది…",
     "app.purchase.success": "థ్యాంక్స్! మీ కొనుగోలు పూర్తయింది.",
     "app.purchase.pending": "మీ కొనుగోలు ప్రాసెస్ అవుతోంది. కనిపించడానికి ఒక నిమిషం పట్టొచ్చు.",
-    "app.purchase.arriving": "మీ క్రెడిట్లు వస్తున్నాయి…",
     "app.purchase.slow": "ఇక్కడ కనిపించడానికి ఒక నిమిషం పట్టొచ్చు.",
     "app.purchase.failed": "కొనుగోలు పూర్తి కాలేదు. కాసేపాగి మళ్లీ ప్రయత్నించండి.",
     "app.purchase.restore": "కొనుగోళ్లను రీస్టోర్ చేయండి",

@@ -124,7 +124,6 @@ const ja: AppLocale = {
     "app.purchase.buying": "購入中…",
     "app.purchase.success": "ありがとうございます！　購入が完了しました。",
     "app.purchase.pending": "購入を処理しています。反映まで1分ほどかかることがあります。",
-    "app.purchase.arriving": "クレジットを反映しています…",
     "app.purchase.slow": "ここに表示されるまで1分ほどかかることがあります。",
     "app.purchase.failed": "購入を完了できませんでした。少ししてからもう一度お試しください。",
     "app.purchase.restore": "購入を復元",

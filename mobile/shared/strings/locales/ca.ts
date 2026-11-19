@@ -132,7 +132,6 @@ const ca: AppLocale = {
     "app.purchase.buying": "Comprant…",
     "app.purchase.success": "Gràcies! La compra s'ha completat.",
     "app.purchase.pending": "La compra s'està processant. Pot trigar un minut a aparèixer.",
-    "app.purchase.arriving": "Els teus crèdits són de camí…",
     "app.purchase.slow": "Pot trigar un minut a aparèixer aquí.",
     "app.purchase.failed": "La compra no s'ha completat. Torna-ho a provar d'aquí a un moment.",
     "app.purchase.restore": "Restaura les compres",

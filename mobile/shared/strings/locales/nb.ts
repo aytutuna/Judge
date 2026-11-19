@@ -148,7 +148,6 @@ const nb: AppLocale = {
     "app.purchase.success": "Takk! Kjøpet er gjennomført.",
     "app.purchase.pending":
       "Kjøpet behandles. Det kan ta et minutt før det dukker opp.",
-    "app.purchase.arriving": "Kredittene dine er på vei…",
     "app.purchase.slow": "Det kan ta et minutt før det dukker opp her.",
     "app.purchase.failed": "Kjøpet gikk ikke gjennom. Prøv igjen om litt.",
     "app.purchase.restore": "Gjenopprett kjøp",
