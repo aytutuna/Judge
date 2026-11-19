@@ -189,10 +189,11 @@ export function HomeForm(p: HomeFormProps) {
   };
 
   // Opening or removing their side swaps the composer, so focus moves to the new one.
+  // Not on touch screens, where that would pop the keyboard up (the apps don't either).
   const focusNext = useRef<string | null>(null);
   useEffect(() => {
     if (!focusNext.current) return;
-    document.getElementById(focusNext.current)?.focus();
+    if (!window.matchMedia("(pointer: coarse)").matches) document.getElementById(focusNext.current)?.focus();
     focusNext.current = null;
   }, [p.theirsOpen, more.length]);
 
