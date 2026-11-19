@@ -7,15 +7,14 @@ const nl: AppLocale = {
     "app.tab.new": "Nieuw",
     "app.tab.settings": "Instellingen",
     "app.input.counter": "{count} / {max}",
-    "app.history.empty": "Nog geen uitspraken. Leg je eerste discussie voor, dan verschijnt de uitspraak hier.",
+    "app.history.empty": "Nog geen uitspraken.",
     "app.history.deviceOnly":
       "Alleen op deze telefoon bewaard. Verwijder je hier een uitspraak, dan blijft de deellink gewoon werken.",
     "app.history.delete": "Verwijderen",
     "app.history.removeAll": "Alles verwijderen",
     "app.history.deleteConfirm": "{n} uitspraken van deze telefoon verwijderen? De deellinks blijven gewoon werken.",
     "app.history.phoneOnly": "Alleen op deze telefoon",
-    "app.history.phoneOnlyNote":
-      "Niet in je account: deze staan alleen op deze telefoon. Verwijder je hier een uitspraak, dan blijft de deellink gewoon werken.",
+    "app.history.phoneOnlyNote": "Een uitspraak verwijderen haalt de deellink niet offline.",
     "app.history.removeConfirm":
       "{n} uitspraken uit je account verwijderen? Ze verdwijnen van al je apparaten: wat je schreef en de namen worden gewist en de deellinks werken niet meer. Dit kan niet ongedaan worden gemaakt.",
     "app.history.removeLinksConfirm":
@@ -27,10 +26,9 @@ const nl: AppLocale = {
     "app.pricing.context":
       "Afbeeldingen bij de aanvulling worden gelezen en daarna weggegooid, zonder extra kosten",
     "app.pricing.headline": "Je eerste uitspraak is van het huis.",
-    "app.pricing.sub":
-      "Maak een account aan en je eerste uitspraak is gratis, met alles erop en eraan. Daarna kies je een bundel of neem je een maandabonnement.",
+    "app.pricing.sub": "Daarna kies je een bundel of neem je een maandabonnement.",
     "app.pricing.headlineMember": "Meer uitspraken.",
-    "app.pricing.subMember": "Kies een bundel of neem een maandabonnement. Elke uitspraak krijgt het volledige panel.",
+    "app.pricing.subMember": "Kies een bundel of neem een maandabonnement.",
     "app.balance.left": "Nog {n} uitspraken over",
     "app.balance.monthly": "Nog {left} van {cap} deze maand",
     "app.balance.none": "Geen uitspraken meer over",
@@ -128,9 +126,9 @@ const nl: AppLocale = {
     "app.appeal.used": "Je hebt bij deze zaak al iets aangevuld.",
     "app.appeal.limit": "Je hebt al twee keer iets aangevuld. Meer kan niet bij één uitspraak.",
     "app.purchase.buying": "Kopen…",
-    "app.purchase.success": "Bedankt! Je aankoop is gelukt.",
-    "app.purchase.pending": "Je aankoop wordt verwerkt. Het kan een minuutje duren voordat je hem ziet.",
-    "app.purchase.slow": "Het kan een minuutje duren voordat ze hier verschijnen.",
+    "app.purchase.success": "Aankoop gelukt.",
+    "app.purchase.pending": "Je aankoop wordt verwerkt.",
+    "app.purchase.slow": "Credits kunnen een minuutje duren.",
     "app.purchase.failed": "De aankoop is niet gelukt. Probeer het zo nog eens.",
     "app.purchase.restore": "Aankopen herstellen",
     "app.purchase.restoreDone": "Je aankopen zijn hersteld.",

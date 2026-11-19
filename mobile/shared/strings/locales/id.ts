@@ -7,7 +7,7 @@ const id: AppLocale = {
     "app.tab.new": "Baru",
     "app.tab.settings": "Pengaturan",
     "app.input.counter": "{count} / {max}",
-    "app.history.empty": "Belum ada putusan. Tuntaskan perdebatan pertamamu, nanti putusannya muncul di sini.",
+    "app.history.empty": "Belum ada putusan.",
     "app.history.deviceOnly":
       "Hanya tersimpan di ponsel ini. Menghapus putusan di sini tidak mematikan tautan berbaginya.",
     "app.history.delete": "Hapus",
@@ -15,7 +15,7 @@ const id: AppLocale = {
     "app.history.deleteConfirm": "Hapus {n} putusan dari ponsel ini? Tautan berbaginya tetap berfungsi.",
     "app.history.phoneOnly": "Hanya di ponsel ini",
     "app.history.phoneOnlyNote":
-      "Tidak ada di akunmu: putusan ini hanya tersimpan di ponsel ini. Menghapus putusan di sini tidak mematikan tautan berbaginya.",
+      "Menghapus putusan tidak mematikan tautan berbaginya.",
     "app.history.removeConfirm":
       "Hapus {n} putusan dari akunmu di semua perangkat? Tulisanmu dan nama-namanya akan dihapus, dan tautan berbaginya berhenti berfungsi. Ini tidak bisa dibatalkan.",
     "app.history.removeLinksConfirm":
@@ -28,9 +28,9 @@ const id: AppLocale = {
     "app.pricing.context": "Gambar konteks dibaca lalu dibuang, tanpa biaya tambahan",
     "app.pricing.headline": "Putusan pertamamu kami traktir.",
     "app.pricing.sub":
-      "Buat akun dan putusan pertamamu gratis, lengkap dengan semua fitur. Setelah itu, pilih paket atau berlangganan bulanan.",
+      "Setelah itu, pilih paket atau berlangganan bulanan.",
     "app.pricing.headlineMember": "Tambah putusan.",
-    "app.pricing.subMember": "Pilih paket atau berlangganan bulanan. Setiap putusan dinilai oleh panel hakim lengkap.",
+    "app.pricing.subMember": "Pilih paket atau berlangganan bulanan.",
     "app.balance.left": "Sisa {n} putusan",
     "app.balance.monthly": "Sisa {left} dari {cap} bulan ini",
     "app.balance.none": "Jatah putusan habis",
@@ -128,9 +128,9 @@ const id: AppLocale = {
     "app.appeal.used": "Kamu sudah menambahkan konteks ke kasus ini.",
     "app.appeal.limit": "Kamu sudah dua kali menambahkan konteks. Itu batas untuk satu putusan.",
     "app.purchase.buying": "Membeli…",
-    "app.purchase.success": "Terima kasih! Pembelianmu berhasil.",
-    "app.purchase.pending": "Pembelianmu sedang diproses. Mungkin perlu semenit sampai muncul.",
-    "app.purchase.slow": "Mungkin perlu semenit sampai muncul di sini.",
+    "app.purchase.success": "Pembelian selesai.",
+    "app.purchase.pending": "Pembelianmu sedang diproses.",
+    "app.purchase.slow": "Kredit mungkin perlu semenit untuk muncul.",
     "app.purchase.failed": "Pembelian tidak berhasil. Coba lagi sebentar lagi.",
     "app.purchase.restore": "Pulihkan pembelian",
     "app.purchase.restoreDone": "Pembelianmu sudah dipulihkan.",

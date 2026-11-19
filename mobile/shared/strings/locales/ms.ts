@@ -8,15 +8,14 @@ const ms: AppLocale = {
     "app.tab.new": "Baharu",
     "app.tab.settings": "Tetapan",
     "app.input.counter": "{count} / {max}",
-    "app.history.empty": "Belum ada keputusan. Selesaikan pertikaian pertama anda dan ia akan muncul di sini.",
+    "app.history.empty": "Belum ada keputusan.",
     "app.history.deviceOnly":
       "Disimpan dalam telefon ini sahaja. Memadam satu keputusan di sini tidak mematikan pautan kongsinya.",
     "app.history.delete": "Padam",
     "app.history.removeAll": "Alih keluar semua",
     "app.history.deleteConfirm": "Padam {n} keputusan daripada telefon ini? Pautan kongsinya akan terus berfungsi.",
     "app.history.phoneOnly": "Dalam telefon ini sahaja",
-    "app.history.phoneOnlyNote":
-      "Tiada dalam akaun anda: keputusan ini disimpan dalam telefon ini sahaja. Memadam satu keputusan di sini tidak mematikan pautan kongsinya.",
+    "app.history.phoneOnlyNote": "Memadam satu tidak mematikan pautan kongsinya.",
     "app.history.removeConfirm":
       "Buang {n} keputusan daripada akaun anda? Apa yang anda tulis dan nama-namanya akan dihapuskan, dan pautan kongsinya akan berhenti berfungsi pada setiap peranti. Tindakan ini tidak boleh dibatalkan.",
     "app.history.removeLinksConfirm":
@@ -28,10 +27,9 @@ const ms: AppLocale = {
     "app.pricing.free.account": "Log masuk dengan Apple, Google atau e-mel",
     "app.pricing.context": "Imej konteks dibaca kemudian dibuang, tanpa kos tambahan",
     "app.pricing.headline": "Keputusan pertama anda, kami belanja.",
-    "app.pricing.sub":
-      "Buat akaun dan keputusan pertama anda percuma, lengkap dengan semua ciri. Selepas itu, pilih pek atau langgan bulanan.",
+    "app.pricing.sub": "Selepas itu, pilih pek atau langgan bulanan.",
     "app.pricing.headlineMember": "Dapatkan lebih banyak keputusan.",
-    "app.pricing.subMember": "Pilih pek atau langgan bulanan. Setiap keputusan dinilai oleh panel penuh.",
+    "app.pricing.subMember": "Pilih pek atau langgan bulanan.",
     "app.balance.left": "Tinggal {n} keputusan",
     "app.balance.monthly": "Tinggal {left} daripada {cap} bulan ini",
     "app.balance.none": "Keputusan sudah habis",
@@ -130,9 +128,9 @@ const ms: AppLocale = {
     "app.appeal.used": "Anda sudah menambah konteks pada kes ini.",
     "app.appeal.limit": "Anda sudah menambah konteks dua kali. Itu had untuk satu keputusan.",
     "app.purchase.buying": "Membeli…",
-    "app.purchase.success": "Terima kasih! Pembelian anda berjaya.",
-    "app.purchase.pending": "Pembelian anda sedang diproses. Mungkin mengambil masa seminit untuk muncul.",
-    "app.purchase.slow": "Mungkin mengambil masa seminit untuk muncul di sini.",
+    "app.purchase.success": "Pembelian selesai.",
+    "app.purchase.pending": "Pembelian anda sedang diproses.",
+    "app.purchase.slow": "Kredit mungkin ambil masa seminit.",
     "app.purchase.failed": "Pembelian tidak berjaya. Cuba lagi sebentar nanti.",
     "app.purchase.restore": "Pulihkan pembelian",
     "app.purchase.restoreDone": "Pembelian anda sudah dipulihkan.",

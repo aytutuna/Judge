@@ -7,7 +7,7 @@ const sv: AppLocale = {
     "app.tab.new": "Nytt",
     "app.tab.settings": "Inställningar",
     "app.input.counter": "{count} / {max}",
-    "app.history.empty": "Inga domar än. Avgör ditt första bråk så dyker domen upp här.",
+    "app.history.empty": "Inga domar än.",
     "app.history.deviceOnly":
       "Sparas bara på den här telefonen. Tar du bort en dom här fortsätter delningslänken att fungera.",
     "app.history.delete": "Ta bort",
@@ -16,7 +16,7 @@ const sv: AppLocale = {
       "Ta bort {n} domar från den här telefonen? Delningslänkarna fortsätter att fungera.",
     "app.history.phoneOnly": "Bara på den här telefonen",
     "app.history.phoneOnlyNote":
-      "Inte i ditt konto: de här sparas bara på den här telefonen. Tar du bort en dom här fortsätter delningslänken att fungera.",
+      "Att ta bort en dom tar inte bort delningslänken.",
     "app.history.removeConfirm":
       "Ta bort {n} domar från ditt konto? Det du skrev och namnen raderas och delningslänkarna slutar fungera, på alla enheter. Det går inte att ångra.",
     "app.history.removeLinksConfirm": "Ta bort {n} länkar? De slutar fungera överallt. Det går inte att ångra.",
@@ -28,9 +28,9 @@ const sv: AppLocale = {
     "app.pricing.context": "Bilder till kompletteringen läses och kastas sedan, utan extra kostnad",
     "app.pricing.headline": "Din första dom bjuder vi på.",
     "app.pricing.sub":
-      "Skapa ett konto så är din första dom gratis, med alla funktioner. Sedan väljer du ett paket eller ett månadsabonnemang.",
+      "Sedan väljer du ett paket eller ett månadsabonnemang.",
     "app.pricing.headlineMember": "Skaffa fler domar.",
-    "app.pricing.subMember": "Välj ett paket eller ett månadsabonnemang. Varje dom får hela panelen.",
+    "app.pricing.subMember": "Välj ett paket eller ett månadsabonnemang.",
     "app.balance.left": "{n} domar kvar",
     "app.balance.monthly": "{left} av {cap} kvar den här månaden",
     "app.balance.none": "Inga domar kvar",
@@ -128,9 +128,9 @@ const sv: AppLocale = {
     "app.appeal.used": "Du har redan kompletterat det här fallet.",
     "app.appeal.limit": "Du har kompletterat två gånger. Det är gränsen för en dom.",
     "app.purchase.buying": "Köper…",
-    "app.purchase.success": "Tack! Köpet är klart.",
-    "app.purchase.pending": "Ditt köp behandlas. Det kan ta en minut innan det syns.",
-    "app.purchase.slow": "Det kan ta en minut innan de syns här.",
+    "app.purchase.success": "Köpet är klart.",
+    "app.purchase.pending": "Ditt köp behandlas.",
+    "app.purchase.slow": "Krediterna kan ta en minut.",
     "app.purchase.failed": "Köpet gick inte igenom. Försök igen om en stund.",
     "app.purchase.restore": "Återställ köp",
     "app.purchase.restoreDone": "Dina köp har återställts.",
