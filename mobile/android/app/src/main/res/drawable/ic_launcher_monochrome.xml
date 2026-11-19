@@ -9,8 +9,8 @@
     <group
         android:pivotX="512"
         android:pivotY="512"
-        android:scaleX="1.1"
-        android:scaleY="1.1"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
         android:translateX="256"
         android:translateY="256">
         <path
