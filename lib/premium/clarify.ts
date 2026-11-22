@@ -1,6 +1,6 @@
 /**
  * Premium clarifying questions: before judging, ask at most two short
- * questions about missing facts that would change who wins. Fail-open: any
+ * questions, and only about missing facts that would change who wins. Fail-open: any
  * failure means no questions, and the client simply goes on to judge.
  *
  * The raw text goes to the model here (names are only removed later, with
@@ -16,22 +16,50 @@ export const CLARIFY_TIMEOUT_MS = 20_000;
 const MAX_QUESTIONS = 2;
 const MAX_QUESTION_CHARS = 140;
 
-export const CLARIFY_SYSTEM = `You help an impartial judge settle an argument between two parties. Before the judge rules, you may ask the person describing the argument up to 2 short questions.
+export const CLARIFY_SYSTEM = `You help an impartial judge settle an argument between two parties. Before the judge rules, you may ask the person describing the argument a question, but only when the judge would otherwise have to guess who wins.
 
-Ask ONLY about missing facts that would change who wins and that the text does not already answer: what was agreed, what actually happened, numbers, dates or the exact claim each side made. Never ask about values, priorities or preferences (the judge has a value framework for those), never ask for names or personal details, and never ask something the text already answers. Each question is one short sentence, at most 20 words, addressed to the person asking ("you"), written in the language requested below.
+The default is no questions. Most arguments need none: the judge rules on what is written, and a detail left out is fine when it would not change the result. Ask only about a missing fact that decides who wins and that the text does not already answer: what was agreed, what actually happened, a number, a date or the exact claim one side made. Never ask about values, priorities or preferences (the judge has a value framework for those), never ask for names or personal details, and never ask something the text already answers.
 
-If nothing decisive is missing, return an empty questions array. Most well-described arguments need no questions.`;
+For each question, give its two most likely answers and who wins with each: side_1 is the party the text mentions first, side_2 the other one, neither for a tie or a split. If both answers give the same winner, the question does not matter, so leave it out. One question is almost always enough; add a second only when it is about a different fact and just as decisive. Never more than 2.
+
+Each question is one short sentence, at most 20 words, addressed to the person asking ("you"), written in the language requested below.`;
 
 const LANGUAGE_LINE: Partial<Record<Lang, string>> = {
   en: "\n\nLANGUAGE: write the questions in English.",
   tr: '\n\nLANGUAGE: write the questions in Turkish, in everyday words, addressing the person with informal "sen", never "siz".',
 };
 
+const WINNER = { type: "string", enum: ["side_1", "side_2", "neither"] } as const;
+
 const SCHEMA = {
   type: "object",
-  properties: { questions: { type: "array", items: { type: "string" } } },
+  properties: {
+    questions: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          question: { type: "string" },
+          answer_1: { type: "string" },
+          winner_1: WINNER,
+          answer_2: { type: "string" },
+          winner_2: WINNER,
+        },
+        required: ["question", "answer_1", "winner_1", "answer_2", "winner_2"],
+      },
+    },
+  },
   required: ["questions"],
 } as const;
+
+const WINNERS = new Set<unknown>(WINNER.enum);
+
+/** A question only counts when its two likely answers change the winner. */
+function decisive(q: unknown): q is { question: string } {
+  if (typeof q !== "object" || q === null) return false;
+  const { question, winner_1, winner_2 } = q as Record<string, unknown>;
+  return typeof question === "string" && WINNERS.has(winner_1) && WINNERS.has(winner_2) && winner_1 !== winner_2;
+}
 
 /** A question cut to the length cap at a word boundary. */
 function shorten(text: string): string {
@@ -42,16 +70,16 @@ function shorten(text: string): string {
   return `${(space > 60 ? cut.slice(0, space) : cut).trimEnd()}…`;
 }
 
-/** The model's questions as the API shape: trimmed, capped, empties dropped,
- * ids q1/q2. Pure. */
+/** The model's decisive questions as the API shape: trimmed, capped,
+ * empties dropped, ids q1/q2. Pure. */
 export function toClarifyResponse(raw: unknown): ClarifyResponse {
   const list =
     typeof raw === "object" && raw !== null && Array.isArray((raw as { questions?: unknown }).questions)
       ? ((raw as { questions: unknown[] }).questions)
       : [];
   const texts = list
-    .filter((q): q is string => typeof q === "string")
-    .map(shorten)
+    .filter(decisive)
+    .map((q) => shorten(q.question))
     .filter((q) => /\p{L}/u.test(q))
     .slice(0, MAX_QUESTIONS);
   return { questions: texts.map((text, i) => ({ id: `q${i + 1}`, text })) };

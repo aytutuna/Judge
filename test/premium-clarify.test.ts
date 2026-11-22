@@ -8,6 +8,10 @@ import { idempotencyKey, withClarifications } from "../lib/premium/context";
 
 const mockClaude = vi.mocked(claudeJson);
 
+function q(question: string, winner_1 = "side_1", winner_2 = "side_2") {
+  return { question, answer_1: "yes", winner_1, answer_2: "no", winner_2 };
+}
+
 beforeEach(() => {
   mockClaude.mockReset();
   vi.spyOn(console, "warn").mockImplementation(() => {});
@@ -18,7 +22,10 @@ afterEach(() => {
 
 describe("clarifyQuestions", () => {
   it("asks Haiku at low effort within the clarify budget and returns ids q1/q2", async () => {
-    mockClaude.mockResolvedValue({ ok: true, data: { questions: ["Did B agree beforehand?", "How much was it?"] } });
+    mockClaude.mockResolvedValue({
+      ok: true,
+      data: { questions: [q("Did B agree beforehand?"), q("How much was it?", "side_2", "neither")] },
+    });
     const res = await clarifyQuestions("Mark says I owe him; I say we split it.", "en");
     expect(res).toEqual({
       questions: [
@@ -48,7 +55,8 @@ describe("clarifyQuestions", () => {
   it("never asks about values or for names (prompt rules)", () => {
     expect(CLARIFY_SYSTEM).toContain("Never ask about values");
     expect(CLARIFY_SYSTEM).toContain("never ask for names");
-    expect(CLARIFY_SYSTEM).toContain("up to 2 short questions");
+    expect(CLARIFY_SYSTEM).toContain("The default is no questions");
+    expect(CLARIFY_SYSTEM).toContain("Never more than 2");
   });
 
   it("fails open with no questions on errors, refusals, timeouts and throws", async () => {
@@ -62,8 +70,10 @@ describe("clarifyQuestions", () => {
 });
 
 describe("toClarifyResponse", () => {
-  it("trims, drops empties and non-strings, and keeps at most two", () => {
-    expect(toClarifyResponse({ questions: ["  ", 3, " First? ", "Second?", "Third?"] })).toEqual({
+  it("trims, drops empties and malformed items, and keeps at most two", () => {
+    expect(
+      toClarifyResponse({ questions: [q("  "), 3, "Bare?", q(" First? "), q("Second?"), q("Third?")] }),
+    ).toEqual({
       questions: [
         { id: "q1", text: "First?" },
         { id: "q2", text: "Second?" },
@@ -73,10 +83,18 @@ describe("toClarifyResponse", () => {
 
   it("cuts long questions to 140 characters at a word boundary", () => {
     const long = `${"word ".repeat(60)}end?`;
-    const [q] = toClarifyResponse({ questions: [long] }).questions;
-    expect(q.text.length).toBeLessThanOrEqual(140);
-    expect(q.text.endsWith("…")).toBe(true);
-    expect(q.text).not.toMatch(/wor…$/);
+    const [first] = toClarifyResponse({ questions: [q(long)] }).questions;
+    expect(first.text.length).toBeLessThanOrEqual(140);
+    expect(first.text.endsWith("…")).toBe(true);
+    expect(first.text).not.toMatch(/wor…$/);
+  });
+
+  it("drops questions whose answers don't change the winner", () => {
+    expect(
+      toClarifyResponse({
+        questions: [q("Same either way?", "side_1", "side_1"), q("Was it agreed?"), q("Odd?", "side_1", "maybe")],
+      }),
+    ).toEqual({ questions: [{ id: "q1", text: "Was it agreed?" }] });
   });
 
   it("reads a malformed payload as no questions", () => {
