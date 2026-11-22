@@ -360,7 +360,7 @@ const es: Locale = {
     "consent.cardLink": "Cómo funciona",
     "consent.switchDetail":
       "Permite que Judge use tus veredictos y valoraciones anonimizados para entrenar IA. Desactivado a menos que lo actives.",
-    "consent.sensitiveTitle": "Antes de tu primer veredicto",
+    "consent.sensitiveTitle": "Antes de empezar",
     "consent.sensitiveBody":
       "Mi texto puede incluir datos privados, como salud o relaciones. Judge lo envía, sin nombres, a un servicio de IA externo para redactar mi veredicto, y lo conserva hasta que lo elimine.",
     "consent.sensitiveContinue": "Continuar",

@@ -80312,271 +80312,271 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "قبل حكمك الأول"
+            "value" : "قبل أن تبدأ"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "আপনার প্রথম রায়ের আগে"
+            "value" : "শুরুর আগে"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Abans del teu primer veredicte"
+            "value" : "Abans de començar"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Před tvým prvním verdiktem"
+            "value" : "Než začneš"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Før din første dom"
+            "value" : "Før du starter"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vor deinem ersten Urteil"
+            "value" : "Bevor du startest"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Πριν από την πρώτη σου απόφαση"
+            "value" : "Πριν ξεκινήσεις"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Before your first verdict"
+            "value" : "Before you start"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Antes de tu primer veredicto"
+            "value" : "Antes de empezar"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ennen ensimmäistä tuomiotasi"
+            "value" : "Ennen aloitusta"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Avant ton premier verdict"
+            "value" : "Avant de commencer"
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "તમારા પહેલા ચુકાદા પહેલાં"
+            "value" : "શરૂ કરતા પહેલાં"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "לפני פסק הדין הראשון שלך"
+            "value" : "לפני שמתחילים"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "आपके पहले फ़ैसले से पहले"
+            "value" : "शुरू करने से पहले"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prije tvoje prve presude"
+            "value" : "Prije početka"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Az első ítéleted előtt"
+            "value" : "Mielőtt elkezdesz"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sebelum putusan pertamamu"
+            "value" : "Sebelum mulai"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prima del tuo primo verdetto"
+            "value" : "Prima di iniziare"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最初の判定の前に"
+            "value" : "はじめる前に"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ನಿಮ್ಮ ಮೊದಲ ತೀರ್ಪಿನ ಮೊದಲು"
+            "value" : "ಪ್ರಾರಂಭಿಸುವ ಮೊದಲು"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "첫 판결에 앞서"
+            "value" : "시작하기 전에"
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "നിങ്ങളുടെ ആദ്യ വിധിക്ക് മുമ്പ്"
+            "value" : "തുടങ്ങുന്നതിന് മുമ്പ്"
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "तुमच्या पहिल्या निकालापूर्वी"
+            "value" : "सुरू करण्यापूर्वी"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sebelum keputusan pertama anda"
+            "value" : "Sebelum bermula"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Før den første dommen din"
+            "value" : "Før du starter"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Voor je eerste uitspraak"
+            "value" : "Voor je begint"
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଆପଣଙ୍କ ପ୍ରଥମ ରାୟ ପୂର୍ବରୁ"
+            "value" : "ଆରମ୍ଭ ପୂର୍ବରୁ"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਤੁਹਾਡੇ ਪਹਿਲੇ ਫ਼ੈਸਲੇ ਤੋਂ ਪਹਿਲਾਂ"
+            "value" : "ਸ਼ੁਰੂ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Przed twoim pierwszym werdyktem"
+            "value" : "Zanim zaczniesz"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Antes do seu primeiro veredicto"
+            "value" : "Antes de começar"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Antes do teu primeiro veredicto"
+            "value" : "Antes de começar"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Înainte de primul tău verdict"
+            "value" : "Înainte să începi"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Перед вашим первым вердиктом"
+            "value" : "Прежде чем начать"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pred tvojím prvým verdiktom"
+            "value" : "Skôr než začneš"
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pred tvojo prvo razsodbo"
+            "value" : "Preden začneš"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Före din första dom"
+            "value" : "Innan du börjar"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "உங்கள் முதல் தீர்ப்புக்கு முன்"
+            "value" : "தொடங்கும் முன்"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "మీ మొదటి తీర్పు ముందు"
+            "value" : "ప్రారంభించే ముందు"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ก่อนคำตัดสินแรกของคุณ"
+            "value" : "ก่อนเริ่มต้น"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "İlk kararından önce"
+            "value" : "Başlamadan önce"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Перед твоїм першим вердиктом"
+            "value" : "Перш ніж почати"
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "آپ کے پہلے فیصلے سے پہلے"
+            "value" : "شروع کرنے سے پہلے"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Trước phán quyết đầu tiên của bạn"
+            "value" : "Trước khi bắt đầu"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在你的第一份裁决之前"
+            "value" : "开始之前"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在你的第一份判決之前"
+            "value" : "開始之前"
           }
         }
       }

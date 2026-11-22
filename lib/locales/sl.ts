@@ -357,7 +357,7 @@ const sl: Locale = {
     "consent.cardLink": "Kako deluje",
     "consent.switchDetail":
       "Judgeu dovoli uporabo tvojih anonimiziranih razsodb in ocen za učenje umetne inteligence. Izklopljeno, dokler tega ne vklopiš.",
-    "consent.sensitiveTitle": "Pred tvojo prvo razsodbo",
+    "consent.sensitiveTitle": "Preden začneš",
     "consent.sensitiveBody":
       "Moje besedilo lahko vsebuje zasebne podrobnosti, na primer o zdravju ali odnosih. Judge ga brez imen pošlje zunanji storitvi umetne inteligence, da napiše mojo razsodbo, in ga hrani, dokler ga ne odstranim.",
     "consent.sensitiveContinue": "Naprej",

@@ -359,7 +359,7 @@ const ur: Locale = {
     "consent.cardLink": "یہ کیسے کام کرتا ہے",
     "consent.switchDetail":
       "Judge کو AI کی تربیت کے لیے آپ کے بغیر نام والے فیصلے اور ریٹنگز استعمال کرنے دیتا ہے۔ جب تک آپ آن نہ کریں، بند رہتا ہے۔",
-    "consent.sensitiveTitle": "آپ کے پہلے فیصلے سے پہلے",
+    "consent.sensitiveTitle": "شروع کرنے سے پہلے",
     "consent.sensitiveBody":
       "میری تحریر میں صحت یا رشتوں جیسی نجی تفصیلات ہو سکتی ہیں۔ Judge اسے نام ہٹا کر میرا فیصلہ لکھنے کے لیے ایک بیرونی AI سروس کو بھیجتا ہے، اور میرے ہٹانے تک رکھتا ہے۔",
     "consent.sensitiveContinue": "جاری رکھیں",

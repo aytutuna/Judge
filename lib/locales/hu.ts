@@ -363,7 +363,7 @@ const hu: Locale = {
     "consent.cardLink": "Hogyan működik",
     "consent.switchDetail":
       "Engedi, hogy a Judge az anonimizált ítéleteidet és értékeléseidet az MI betanítására használja. Ki van kapcsolva, amíg be nem kapcsolod.",
-    "consent.sensitiveTitle": "Az első ítéleted előtt",
+    "consent.sensitiveTitle": "Mielőtt elkezdesz",
     "consent.sensitiveBody":
       "A szövegem tartalmazhat személyes részleteket, például egészségről vagy kapcsolatokról. A Judge a nevek nélkül elküldi egy külső MI-szolgáltatásnak, hogy megírja az ítéletemet, és addig őrzi, amíg el nem távolítom.",
     "consent.sensitiveContinue": "Tovább",

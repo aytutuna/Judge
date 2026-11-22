@@ -154,7 +154,7 @@
     <string name="consent_card_body">Judge\'ın yapay zekâyı eğitmek için senin anonim kararlarını ve puanlarını kullanmasına izin ver. İsimler hiçbir zaman dahil edilmez.</string>
     <string name="consent_card_link">Nasıl çalışır</string>
     <string name="consent_switch_detail">Judge\'ın yapay zekâyı eğitmek için senin anonim kararlarını ve puanlarını kullanmasına izin verir. Sen açmadıkça kapalıdır.</string>
-    <string name="consent_sensitive_title">İlk kararından önce</string>
+    <string name="consent_sensitive_title">Başlamadan önce</string>
     <string name="consent_sensitive_body">Yazdıklarım sağlık ya da ilişkiler gibi özel ayrıntılar içerebilir. Judge bunu, isimler çıkarılmış hâlde, kararımı yazması için dışarıdaki bir yapay zekâ hizmetine gönderir ve ben kaldırana kadar saklar.</string>
     <string name="consent_sensitive_continue">Devam et</string>
     <string name="respond_adult_confirm">18 yaşında veya daha büyüğüm</string>

@@ -154,7 +154,7 @@
     <string name="consent_card_body">AI ಅನ್ನು ತರಬೇತಿಗೊಳಿಸಲು ಹೆಸರು ತೆಗೆದ ನಿಮ್ಮ ತೀರ್ಪುಗಳು ಮತ್ತು ರೇಟಿಂಗ್‌ಗಳನ್ನು Judge ಬಳಸಲು ಅವಕಾಶ ಕೊಡಿ. ಹೆಸರುಗಳನ್ನು ಎಂದಿಗೂ ಸೇರಿಸುವುದಿಲ್ಲ.</string>
     <string name="consent_card_link">ಇದು ಹೇಗೆ ಕೆಲಸ ಮಾಡುತ್ತದೆ</string>
     <string name="consent_switch_detail">AI ಅನ್ನು ತರಬೇತಿಗೊಳಿಸಲು ಹೆಸರು ತೆಗೆದ ನಿಮ್ಮ ತೀರ್ಪುಗಳು ಮತ್ತು ರೇಟಿಂಗ್‌ಗಳನ್ನು Judge ಬಳಸಲು ಅವಕಾಶ ನೀಡುತ್ತದೆ. ನೀವು ಆನ್ ಮಾಡದ ಹೊರತು ಆಫ್ ಆಗಿರುತ್ತದೆ.</string>
-    <string name="consent_sensitive_title">ನಿಮ್ಮ ಮೊದಲ ತೀರ್ಪಿನ ಮೊದಲು</string>
+    <string name="consent_sensitive_title">ಪ್ರಾರಂಭಿಸುವ ಮೊದಲು</string>
     <string name="consent_sensitive_body">ನನ್ನ ಬರಹದಲ್ಲಿ ಆರೋಗ್ಯ ಅಥವಾ ಸಂಬಂಧಗಳಂತಹ ಖಾಸಗಿ ವಿವರಗಳು ಇರಬಹುದು. Judge ಹೆಸರುಗಳನ್ನು ತೆಗೆದು ಅದನ್ನು ನನ್ನ ತೀರ್ಪು ಬರೆಯಲು ಹೊರಗಿನ AI ಸೇವೆಗೆ ಕಳುಹಿಸುತ್ತದೆ, ಮತ್ತು ನಾನು ತೆಗೆಯುವವರೆಗೆ ಇಟ್ಟುಕೊಳ್ಳುತ್ತದೆ.</string>
     <string name="consent_sensitive_continue">ಮುಂದುವರಿಸಿ</string>
     <string name="respond_adult_confirm">ನನಗೆ 18 ವರ್ಷ ಅಥವಾ ಹೆಚ್ಚು ವಯಸ್ಸಾಗಿದೆ</string>

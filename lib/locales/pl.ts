@@ -361,7 +361,7 @@ const pl: Locale = {
     "consent.cardLink": "Jak to działa",
     "consent.switchDetail":
       "Pozwala Judge używać twoich zanonimizowanych werdyktów i ocen do trenowania sztucznej inteligencji. Wyłączone, dopóki tego nie włączysz.",
-    "consent.sensitiveTitle": "Przed twoim pierwszym werdyktem",
+    "consent.sensitiveTitle": "Zanim zaczniesz",
     "consent.sensitiveBody":
       "Mój tekst może zawierać prywatne szczegóły, na przykład o zdrowiu lub relacjach. Judge wysyła go bez imion do zewnętrznej usługi AI, która pisze mój werdykt, i przechowuje go, dopóki go nie usunę.",
     "consent.sensitiveContinue": "Dalej",

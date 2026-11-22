@@ -154,7 +154,7 @@
     <string name="consent_card_body">Let Judge use your anonymized verdicts and ratings to train AI. Names are never included.</string>
     <string name="consent_card_link">How it works</string>
     <string name="consent_switch_detail">Lets Judge use your anonymized verdicts and ratings to train AI. Off unless you turn it on.</string>
-    <string name="consent_sensitive_title">Before your first verdict</string>
+    <string name="consent_sensitive_title">Before you start</string>
     <string name="consent_sensitive_body">My text may include private details, like health or relationships. Judge sends it, with names taken out, to an outside AI service to write my verdict, and keeps it until I remove it.</string>
     <string name="consent_sensitive_continue">Continue</string>
     <string name="respond_adult_confirm">I am 18 or older</string>

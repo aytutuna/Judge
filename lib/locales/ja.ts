@@ -356,7 +356,7 @@ const ja: Locale = {
     "consent.cardLink": "しくみ",
     "consent.switchDetail":
       "匿名化したあなたの判定と評価を、AIの学習に使うことをJudgeに許可します。オンにしない限りオフです。",
-    "consent.sensitiveTitle": "最初の判定の前に",
+    "consent.sensitiveTitle": "はじめる前に",
     "consent.sensitiveBody":
       "私のテキストには、健康や人間関係など、プライベートな内容が含まれることがあります。Judgeは名前を除いたうえで、判定を書くために外部のAIサービスへ送信し、私が削除するまで保管します。",
     "consent.sensitiveContinue": "続ける",

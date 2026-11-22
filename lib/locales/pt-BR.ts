@@ -361,7 +361,7 @@ const ptBR: Locale = {
     "consent.cardLink": "Como funciona",
     "consent.switchDetail":
       "Permite que o Judge use seus veredictos e avaliações anonimizados para treinar IA. Desativado, a menos que você ative.",
-    "consent.sensitiveTitle": "Antes do seu primeiro veredicto",
+    "consent.sensitiveTitle": "Antes de começar",
     "consent.sensitiveBody":
       "Meu texto pode incluir detalhes privados, como saúde ou relacionamentos. O Judge o envia, sem os nomes, a um serviço de IA externo para escrever meu veredicto e o guarda até eu removê-lo.",
     "consent.sensitiveContinue": "Continuar",

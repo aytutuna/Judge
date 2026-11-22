@@ -349,7 +349,7 @@ const gu: Locale = {
     "consent.cardLink": "તે કેવી રીતે કામ કરે છે",
     "consent.switchDetail":
       "Judge ને AI ને તૈયાર કરવા માટે તમારા નામ વગરના ચુકાદા અને રેટિંગ વાપરવા દે છે. તમે ચાલુ ન કરો ત્યાં સુધી બંધ રહે છે.",
-    "consent.sensitiveTitle": "તમારા પહેલા ચુકાદા પહેલાં",
+    "consent.sensitiveTitle": "શરૂ કરતા પહેલાં",
     "consent.sensitiveBody":
       "મારા લખાણમાં આરોગ્ય કે સંબંધો જેવી ખાનગી વિગતો હોઈ શકે છે. Judge નામ કાઢીને તેને મારો ચુકાદો લખવા માટે બહારની AI સેવાને મોકલે છે, અને હું દૂર ન કરું ત્યાં સુધી રાખે છે.",
     "consent.sensitiveContinue": "આગળ વધો",

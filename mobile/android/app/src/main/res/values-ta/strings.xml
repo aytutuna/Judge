@@ -154,7 +154,7 @@
     <string name="consent_card_body">AI-ஐப் பயிற்றுவிக்க பெயர் நீக்கிய உங்கள் தீர்ப்புகளையும் மதிப்பீடுகளையும் Judge பயன்படுத்த அனுமதியுங்கள். பெயர்கள் ஒருபோதும் சேர்க்கப்படுவதில்லை.</string>
     <string name="consent_card_link">இது எப்படி வேலை செய்கிறது</string>
     <string name="consent_switch_detail">AI-ஐப் பயிற்றுவிக்க பெயர் நீக்கிய உங்கள் தீர்ப்புகளையும் மதிப்பீடுகளையும் Judge பயன்படுத்த அனுமதிக்கிறது. நீங்கள் இயக்காத வரை முடக்கத்தில் இருக்கும்.</string>
-    <string name="consent_sensitive_title">உங்கள் முதல் தீர்ப்புக்கு முன்</string>
+    <string name="consent_sensitive_title">தொடங்கும் முன்</string>
     <string name="consent_sensitive_body">என் எழுத்தில் உடல்நலம் அல்லது உறவுகள் போன்ற தனிப்பட்ட விவரங்கள் இருக்கலாம். Judge பெயர்களை நீக்கி அதை என் தீர்ப்பை எழுத வெளிப்புற AI சேவைக்கு அனுப்பி, நான் நீக்கும் வரை வைத்திருக்கும்.</string>
     <string name="consent_sensitive_continue">தொடர்க</string>
     <string name="respond_adult_confirm">எனக்கு 18 வயது அல்லது அதற்கு மேல்</string>

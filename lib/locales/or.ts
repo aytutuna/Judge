@@ -352,7 +352,7 @@ const or: Locale = {
     "consent.cardLink": "ଏହା କିପରି କାମ କରେ",
     "consent.switchDetail":
       "AI କୁ ତାଲିମ ଦେବା ପାଇଁ ଆପଣଙ୍କ ନାମ କାଢ଼ି ଦିଆଯାଇଥିବା ରାୟ ଓ ରେଟିଂ Judge କୁ ବ୍ୟବହାର କରିବାକୁ ଦିଏ। ଆପଣ ଚାଲୁ ନକଲେ ବନ୍ଦ ରହେ।",
-    "consent.sensitiveTitle": "ଆପଣଙ୍କ ପ୍ରଥମ ରାୟ ପୂର୍ବରୁ",
+    "consent.sensitiveTitle": "ଆରମ୍ଭ ପୂର୍ବରୁ",
     "consent.sensitiveBody":
       "ମୋ ଲେଖାରେ ସ୍ୱାସ୍ଥ୍ୟ କିମ୍ବା ସମ୍ପର୍କ ଭଳି ବ୍ୟକ୍ତିଗତ ବିବରଣୀ ଥାଇପାରେ। Judge ନାମ କାଢ଼ି ମୋ ରାୟ ଲେଖିବା ପାଇଁ ଏହାକୁ ଏକ ବାହାରର AI ସେବାକୁ ପଠାଏ, ଏବଂ ମୁଁ ହଟାଇବା ପର୍ଯ୍ୟନ୍ତ ରଖେ।",
     "consent.sensitiveContinue": "ଜାରି ରଖନ୍ତୁ",

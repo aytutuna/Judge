@@ -368,7 +368,7 @@ const ms: Locale = {
     "consent.cardLink": "Cara ia berfungsi",
     "consent.switchDetail":
       "Membenarkan Judge menggunakan keputusan dan penilaian anda yang tanpa nama untuk melatih AI. Dimatikan melainkan anda menghidupkannya.",
-    "consent.sensitiveTitle": "Sebelum keputusan pertama anda",
+    "consent.sensitiveTitle": "Sebelum bermula",
     "consent.sensitiveBody":
       "Teks saya mungkin mengandungi butiran peribadi, seperti kesihatan atau hubungan. Judge menghantarnya, tanpa nama, kepada perkhidmatan AI luar untuk menulis keputusan saya, dan menyimpannya sehingga saya mengalihkannya.",
     "consent.sensitiveContinue": "Teruskan",

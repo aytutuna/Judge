@@ -358,7 +358,7 @@ const sk: Locale = {
     "consent.cardLink": "Ako to funguje",
     "consent.switchDetail":
       "Dovolí Judge používať tvoje anonymizované verdikty a hodnotenia na trénovanie umelej inteligencie. Vypnuté, kým to nezapneš.",
-    "consent.sensitiveTitle": "Pred tvojím prvým verdiktom",
+    "consent.sensitiveTitle": "Skôr než začneš",
     "consent.sensitiveBody":
       "Môj text môže obsahovať súkromné údaje, napríklad o zdraví alebo vzťahoch. Judge ho po odstránení mien pošle externej službe umelej inteligencie, aby napísala môj verdikt, a uchová ho, kým ho neodstránim.",
     "consent.sensitiveContinue": "Pokračovať",

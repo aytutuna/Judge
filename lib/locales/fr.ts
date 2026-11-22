@@ -366,7 +366,7 @@ const fr: Locale = {
     "consent.cardLink": "Comment ça marche",
     "consent.switchDetail":
       "Permet à Judge d’utiliser tes verdicts et tes notes anonymisés pour entraîner l’IA. Désactivé tant que tu ne l’actives pas.",
-    "consent.sensitiveTitle": "Avant ton premier verdict",
+    "consent.sensitiveTitle": "Avant de commencer",
     "consent.sensitiveBody":
       "Mon texte peut contenir des détails privés, comme la santé ou les relations. Judge l’envoie, sans les noms, à un service d’IA externe pour rédiger mon verdict, et le garde jusqu’à ce que je le retire.",
     "consent.sensitiveContinue": "Continuer",

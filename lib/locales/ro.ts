@@ -360,7 +360,7 @@ const ro: Locale = {
     "consent.cardLink": "Cum funcționează",
     "consent.switchDetail":
       "Permite ca Judge să folosească verdictele și evaluările tale anonimizate pentru a antrena IA. Dezactivat dacă nu îl activezi.",
-    "consent.sensitiveTitle": "Înainte de primul tău verdict",
+    "consent.sensitiveTitle": "Înainte să începi",
     "consent.sensitiveBody":
       "Textul meu poate include detalii private, de exemplu despre sănătate sau relații. Judge îl trimite, fără nume, unui serviciu IA extern ca să scrie verdictul meu și îl păstrează până îl elimin.",
     "consent.sensitiveContinue": "Continuă",

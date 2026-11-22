@@ -349,7 +349,7 @@ const he: Locale = {
     "consent.cardLink": "איך זה עובד",
     "consent.switchDetail":
       "מאפשר ל-Judge להשתמש בפסקי הדין ובדירוגים האנונימיים שלך כדי לאמן בינה מלאכותית. כבוי אלא אם תדליק.",
-    "consent.sensitiveTitle": "לפני פסק הדין הראשון שלך",
+    "consent.sensitiveTitle": "לפני שמתחילים",
     "consent.sensitiveBody":
       "הטקסט שלי עשוי לכלול פרטים פרטיים, כמו בריאות או מערכות יחסים. Judge שולח אותו, בלי שמות, לשירות בינה מלאכותית חיצוני שכותב את פסק הדין שלי, ושומר אותו עד שאסיר אותו.",
     "consent.sensitiveContinue": "המשך",

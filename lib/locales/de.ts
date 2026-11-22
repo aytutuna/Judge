@@ -365,7 +365,7 @@ const de: Locale = {
     "consent.cardLink": "So funktioniert es",
     "consent.switchDetail":
       "Erlaubt Judge, deine anonymisierten Urteile und Bewertungen zum Trainieren von KI zu nutzen. Aus, solange du es nicht einschaltest.",
-    "consent.sensitiveTitle": "Vor deinem ersten Urteil",
+    "consent.sensitiveTitle": "Bevor du startest",
     "consent.sensitiveBody":
       "Mein Text kann private Angaben enthalten, etwa zu Gesundheit oder Beziehungen. Judge schickt ihn ohne Namen an einen externen KI-Dienst, der mein Urteil schreibt, und speichert ihn, bis ich ihn entferne.",
     "consent.sensitiveContinue": "Weiter",

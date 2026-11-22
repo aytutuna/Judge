@@ -349,7 +349,7 @@ const ar: Locale = {
     "consent.cardLink": "كيف يعمل",
     "consent.switchDetail":
       "يسمح لـ Judge باستخدام أحكامك وتقييماتك المجهولة الهوية لتدريب الذكاء الاصطناعي. متوقف ما لم تُشغّله.",
-    "consent.sensitiveTitle": "قبل حكمك الأول",
+    "consent.sensitiveTitle": "قبل أن تبدأ",
     "consent.sensitiveBody":
       "قد يتضمن نصي تفاصيل خاصة، مثل الصحة أو العلاقات. يرسله Judge بعد حذف الأسماء إلى خدمة ذكاء اصطناعي خارجية لكتابة حكمي، ويحتفظ به إلى أن أزيله.",
     "consent.sensitiveContinue": "متابعة",

@@ -157,7 +157,7 @@
     <string name="consent_card_body">Laisse Judge utiliser tes verdicts et tes notes anonymisés pour entraîner l’IA. Les noms n’en font jamais partie.</string>
     <string name="consent_card_link">Comment ça marche</string>
     <string name="consent_switch_detail">Permet à Judge d’utiliser tes verdicts et tes notes anonymisés pour entraîner l’IA. Désactivé tant que tu ne l’actives pas.</string>
-    <string name="consent_sensitive_title">Avant ton premier verdict</string>
+    <string name="consent_sensitive_title">Avant de commencer</string>
     <string name="consent_sensitive_body">Mon texte peut contenir des détails privés, comme la santé ou les relations. Judge l’envoie, sans les noms, à un service d’IA externe pour rédiger mon verdict, et le garde jusqu’à ce que je le retire.</string>
     <string name="consent_sensitive_continue">Continuer</string>
     <string name="respond_adult_confirm">J’ai 18 ans ou plus</string>

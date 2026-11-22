@@ -157,7 +157,7 @@
     <string name="consent_card_body">Deixa que Judge faci servir els teus veredictes i valoracions anonimitzats per entrenar la IA. Els noms no s\'inclouen mai.</string>
     <string name="consent_card_link">Com funciona</string>
     <string name="consent_switch_detail">Permet que Judge faci servir els teus veredictes i valoracions anonimitzats per entrenar la IA. Desactivat si no l\'actives.</string>
-    <string name="consent_sensitive_title">Abans del teu primer veredicte</string>
+    <string name="consent_sensitive_title">Abans de començar</string>
     <string name="consent_sensitive_body">El meu text pot incloure detalls privats, com ara salut o relacions. Judge l\'envia, sense els noms, a un servei d\'IA extern per escriure el meu veredicte, i el guarda fins que l\'elimini.</string>
     <string name="consent_sensitive_continue">Continua</string>
     <string name="respond_adult_confirm">Tinc 18 anys o més</string>

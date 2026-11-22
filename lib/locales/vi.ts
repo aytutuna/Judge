@@ -361,7 +361,7 @@ const vi: Locale = {
     "consent.cardLink": "Cách hoạt động",
     "consent.switchDetail":
       "Cho phép Judge dùng các phán quyết và đánh giá đã ẩn danh của bạn để huấn luyện AI. Tắt, trừ khi bạn bật.",
-    "consent.sensitiveTitle": "Trước phán quyết đầu tiên của bạn",
+    "consent.sensitiveTitle": "Trước khi bắt đầu",
     "consent.sensitiveBody":
       "Văn bản của tôi có thể chứa chi tiết riêng tư, như sức khỏe hay các mối quan hệ. Judge gửi nó, đã bỏ tên, tới một dịch vụ AI bên ngoài để viết phán quyết cho tôi, và giữ cho đến khi tôi xóa.",
     "consent.sensitiveContinue": "Tiếp tục",

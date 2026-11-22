@@ -154,7 +154,7 @@
     <string name="consent_card_body">Laat Judge je geanonimiseerde uitspraken en beoordelingen gebruiken om AI te trainen. Namen zitten er nooit bij.</string>
     <string name="consent_card_link">Hoe het werkt</string>
     <string name="consent_switch_detail">Laat Judge je geanonimiseerde uitspraken en beoordelingen gebruiken om AI te trainen. Uit, tenzij je het aanzet.</string>
-    <string name="consent_sensitive_title">Voor je eerste uitspraak</string>
+    <string name="consent_sensitive_title">Voor je begint</string>
     <string name="consent_sensitive_body">Mijn tekst kan privégegevens bevatten, zoals over gezondheid of relaties. Judge stuurt hem, zonder namen, naar een externe AI-dienst om mijn uitspraak te schrijven en bewaart hem tot ik hem verwijder.</string>
     <string name="consent_sensitive_continue">Verder</string>
     <string name="respond_adult_confirm">Ik ben 18 jaar of ouder</string>

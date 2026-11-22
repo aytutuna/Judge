@@ -365,7 +365,7 @@ const id: Locale = {
     "consent.cardLink": "Cara kerjanya",
     "consent.switchDetail":
       "Mengizinkan Judge memakai putusan dan penilaian anonimmu untuk melatih AI. Nonaktif kecuali kamu mengaktifkannya.",
-    "consent.sensitiveTitle": "Sebelum putusan pertamamu",
+    "consent.sensitiveTitle": "Sebelum mulai",
     "consent.sensitiveBody":
       "Teks saya mungkin berisi hal pribadi, seperti kesehatan atau hubungan. Judge mengirimkannya, tanpa nama, ke layanan AI pihak luar untuk menulis putusan saya, dan menyimpannya sampai saya menghapusnya.",
     "consent.sensitiveContinue": "Lanjut",

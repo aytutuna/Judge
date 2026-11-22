@@ -341,7 +341,7 @@ const zhHant: Locale = {
     "consent.cardBody": "允許 Judge 使用你的匿名判決和評分來訓練 AI。名字絕不會包含在內。",
     "consent.cardLink": "運作方式",
     "consent.switchDetail": "允許 Judge 使用你的匿名判決和評分來訓練 AI。預設關閉，除非你自己開啟。",
-    "consent.sensitiveTitle": "在你的第一份判決之前",
+    "consent.sensitiveTitle": "開始之前",
     "consent.sensitiveBody":
       "我的文字可能包含私人細節，例如健康或感情方面的內容。Judge 會去掉名字後，把它傳送給外部的 AI 服務來撰寫我的判決，並保存到我刪除為止。",
     "consent.sensitiveContinue": "繼續",

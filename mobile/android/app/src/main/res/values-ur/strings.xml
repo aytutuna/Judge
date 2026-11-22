@@ -154,7 +154,7 @@
     <string name="consent_card_body">Judge کو AI کی تربیت کے لیے آپ کے بغیر نام والے فیصلے اور ریٹنگز استعمال کرنے دیں۔ نام کبھی شامل نہیں کیے جاتے۔</string>
     <string name="consent_card_link">یہ کیسے کام کرتا ہے</string>
     <string name="consent_switch_detail">Judge کو AI کی تربیت کے لیے آپ کے بغیر نام والے فیصلے اور ریٹنگز استعمال کرنے دیتا ہے۔ جب تک آپ آن نہ کریں، بند رہتا ہے۔</string>
-    <string name="consent_sensitive_title">آپ کے پہلے فیصلے سے پہلے</string>
+    <string name="consent_sensitive_title">شروع کرنے سے پہلے</string>
     <string name="consent_sensitive_body">میری تحریر میں صحت یا رشتوں جیسی نجی تفصیلات ہو سکتی ہیں۔ Judge اسے نام ہٹا کر میرا فیصلہ لکھنے کے لیے ایک بیرونی AI سروس کو بھیجتا ہے، اور میرے ہٹانے تک رکھتا ہے۔</string>
     <string name="consent_sensitive_continue">جاری رکھیں</string>
     <string name="respond_adult_confirm">میری عمر 18 سال یا اس سے زیادہ ہے</string>

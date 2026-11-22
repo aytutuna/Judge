@@ -157,7 +157,7 @@
     <string name="consent_card_body">אפשר ל-Judge להשתמש בפסקי הדין ובדירוגים האנונימיים שלך כדי לאמן בינה מלאכותית. שמות לא נכללים אף פעם.</string>
     <string name="consent_card_link">איך זה עובד</string>
     <string name="consent_switch_detail">מאפשר ל-Judge להשתמש בפסקי הדין ובדירוגים האנונימיים שלך כדי לאמן בינה מלאכותית. כבוי אלא אם תדליק.</string>
-    <string name="consent_sensitive_title">לפני פסק הדין הראשון שלך</string>
+    <string name="consent_sensitive_title">לפני שמתחילים</string>
     <string name="consent_sensitive_body">הטקסט שלי עשוי לכלול פרטים פרטיים, כמו בריאות או מערכות יחסים. Judge שולח אותו, בלי שמות, לשירות בינה מלאכותית חיצוני שכותב את פסק הדין שלי, ושומר אותו עד שאסיר אותו.</string>
     <string name="consent_sensitive_continue">המשך</string>
     <string name="respond_adult_confirm">אני בגיל 18 ומעלה</string>

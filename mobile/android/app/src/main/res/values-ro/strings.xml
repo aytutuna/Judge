@@ -157,7 +157,7 @@
     <string name="consent_card_body">Lasă Judge să folosească verdictele și evaluările tale anonimizate pentru a antrena IA. Numele nu sunt incluse niciodată.</string>
     <string name="consent_card_link">Cum funcționează</string>
     <string name="consent_switch_detail">Permite ca Judge să folosească verdictele și evaluările tale anonimizate pentru a antrena IA. Dezactivat dacă nu îl activezi.</string>
-    <string name="consent_sensitive_title">Înainte de primul tău verdict</string>
+    <string name="consent_sensitive_title">Înainte să începi</string>
     <string name="consent_sensitive_body">Textul meu poate include detalii private, de exemplu despre sănătate sau relații. Judge îl trimite, fără nume, unui serviciu IA extern ca să scrie verdictul meu și îl păstrează până îl elimin.</string>
     <string name="consent_sensitive_continue">Continuă</string>
     <string name="respond_adult_confirm">Am 18 ani sau mai mult</string>

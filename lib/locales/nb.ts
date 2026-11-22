@@ -358,7 +358,7 @@ const nb: Locale = {
     "consent.cardLink": "Slik fungerer det",
     "consent.switchDetail":
       "Lar Judge bruke de anonymiserte dommene og vurderingene dine til å trene AI. Av, med mindre du slår det på.",
-    "consent.sensitiveTitle": "Før den første dommen din",
+    "consent.sensitiveTitle": "Før du starter",
     "consent.sensitiveBody":
       "Teksten min kan inneholde private opplysninger, for eksempel om helse eller forhold. Judge sender den, uten navn, til en ekstern AI-tjeneste som skriver dommen min, og lagrer den til jeg fjerner den.",
     "consent.sensitiveContinue": "Fortsett",

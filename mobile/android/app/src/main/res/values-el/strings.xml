@@ -154,7 +154,7 @@
     <string name="consent_card_body">Άφησε το Judge να χρησιμοποιεί τις ανωνυμοποιημένες αποφάσεις και βαθμολογίες σου για να εκπαιδεύει την τεχνητή νοημοσύνη. Τα ονόματα δεν περιλαμβάνονται ποτέ.</string>
     <string name="consent_card_link">Πώς λειτουργεί</string>
     <string name="consent_switch_detail">Επιτρέπει στο Judge να χρησιμοποιεί τις ανωνυμοποιημένες αποφάσεις και βαθμολογίες σου για να εκπαιδεύει την τεχνητή νοημοσύνη. Απενεργοποιημένο αν δεν το ενεργοποιήσεις.</string>
-    <string name="consent_sensitive_title">Πριν από την πρώτη σου απόφαση</string>
+    <string name="consent_sensitive_title">Πριν ξεκινήσεις</string>
     <string name="consent_sensitive_body">Το κείμενό μου μπορεί να περιέχει ιδιωτικά στοιχεία, όπως για την υγεία ή τις σχέσεις. Το Judge το στέλνει, χωρίς ονόματα, σε εξωτερική υπηρεσία τεχνητής νοημοσύνης για να γράψει την απόφασή μου και το κρατά μέχρι να το αφαιρέσω.</string>
     <string name="consent_sensitive_continue">Συνέχεια</string>
     <string name="respond_adult_confirm">Είμαι 18 ετών ή μεγαλύτερος/η</string>

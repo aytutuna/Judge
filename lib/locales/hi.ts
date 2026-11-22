@@ -351,7 +351,7 @@ const hi: Locale = {
     "consent.cardLink": "यह कैसे काम करता है",
     "consent.switchDetail":
       "Judge को AI को ट्रेन करने के लिए आपके नाम-रहित फ़ैसले और रेटिंग इस्तेमाल करने देता है। जब तक आप चालू न करें, यह बंद रहता है।",
-    "consent.sensitiveTitle": "आपके पहले फ़ैसले से पहले",
+    "consent.sensitiveTitle": "शुरू करने से पहले",
     "consent.sensitiveBody":
       "मेरे टेक्स्ट में सेहत या रिश्तों जैसी निजी बातें हो सकती हैं। Judge उसे नाम हटाकर मेरा फ़ैसला लिखने के लिए एक बाहरी AI सेवा को भेजता है, और मेरे हटाने तक रखता है।",
     "consent.sensitiveContinue": "आगे बढ़ें",

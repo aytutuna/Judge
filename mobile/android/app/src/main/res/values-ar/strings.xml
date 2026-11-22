@@ -166,7 +166,7 @@
     <string name="consent_card_body">اسمح لـ Judge باستخدام أحكامك وتقييماتك المجهولة الهوية لتدريب الذكاء الاصطناعي. لا تُضمَّن الأسماء أبدًا.</string>
     <string name="consent_card_link">كيف يعمل</string>
     <string name="consent_switch_detail">يسمح لـ Judge باستخدام أحكامك وتقييماتك المجهولة الهوية لتدريب الذكاء الاصطناعي. متوقف ما لم تُشغّله.</string>
-    <string name="consent_sensitive_title">قبل حكمك الأول</string>
+    <string name="consent_sensitive_title">قبل أن تبدأ</string>
     <string name="consent_sensitive_body">قد يتضمن نصي تفاصيل خاصة، مثل الصحة أو العلاقات. يرسله Judge بعد حذف الأسماء إلى خدمة ذكاء اصطناعي خارجية لكتابة حكمي، ويحتفظ به إلى أن أزيله.</string>
     <string name="consent_sensitive_continue">متابعة</string>
     <string name="respond_adult_confirm">عمري 18 عامًا أو أكثر</string>

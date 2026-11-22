@@ -357,7 +357,7 @@ const cs: Locale = {
     "consent.cardLink": "Jak to funguje",
     "consent.switchDetail":
       "Dovolí Judge používat tvoje anonymizované verdikty a hodnocení k trénování umělé inteligence. Vypnuto, dokud to nezapneš.",
-    "consent.sensitiveTitle": "Před tvým prvním verdiktem",
+    "consent.sensitiveTitle": "Než začneš",
     "consent.sensitiveBody":
       "Můj text může obsahovat soukromé údaje, třeba o zdraví nebo vztazích. Judge ho po odstranění jmen pošle externí službě umělé inteligence, aby napsala můj verdikt, a uchová ho, dokud ho neodstraním.",
     "consent.sensitiveContinue": "Pokračovat",

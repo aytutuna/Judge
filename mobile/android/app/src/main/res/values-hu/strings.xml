@@ -154,7 +154,7 @@
     <string name="consent_card_body">Engedd, hogy a Judge az anonimizált ítéleteidet és értékeléseidet az MI betanítására használja. A nevek sosem kerülnek bele.</string>
     <string name="consent_card_link">Hogyan működik</string>
     <string name="consent_switch_detail">Engedi, hogy a Judge az anonimizált ítéleteidet és értékeléseidet az MI betanítására használja. Ki van kapcsolva, amíg be nem kapcsolod.</string>
-    <string name="consent_sensitive_title">Az első ítéleted előtt</string>
+    <string name="consent_sensitive_title">Mielőtt elkezdesz</string>
     <string name="consent_sensitive_body">A szövegem tartalmazhat személyes részleteket, például egészségről vagy kapcsolatokról. A Judge a nevek nélkül elküldi egy külső MI-szolgáltatásnak, hogy megírja az ítéletemet, és addig őrzi, amíg el nem távolítom.</string>
     <string name="consent_sensitive_continue">Tovább</string>
     <string name="respond_adult_confirm">Legalább 18 éves vagyok</string>

@@ -365,7 +365,7 @@ const fi: Locale = {
     "consent.cardLink": "Näin se toimii",
     "consent.switchDetail":
       "Sallii Judgen käyttää anonymisoituja tuomioitasi ja arvioitasi tekoälyn kouluttamiseen. Pois päältä, ellet ota sitä käyttöön.",
-    "consent.sensitiveTitle": "Ennen ensimmäistä tuomiotasi",
+    "consent.sensitiveTitle": "Ennen aloitusta",
     "consent.sensitiveBody":
       "Tekstini voi sisältää yksityisiä tietoja, kuten terveyteen tai ihmissuhteisiin liittyviä. Judge lähettää sen ilman nimiä ulkopuoliselle tekoälypalvelulle tuomioni kirjoittamista varten ja säilyttää sen, kunnes poistan sen.",
     "consent.sensitiveContinue": "Jatka",

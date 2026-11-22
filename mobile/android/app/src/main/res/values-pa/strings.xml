@@ -154,7 +154,7 @@
     <string name="consent_card_body">Judge ਨੂੰ AI ਨੂੰ ਸਿਖਲਾਈ ਦੇਣ ਲਈ ਤੁਹਾਡੇ ਨਾਂ-ਰਹਿਤ ਫ਼ੈਸਲੇ ਅਤੇ ਰੇਟਿੰਗਾਂ ਵਰਤਣ ਦਿਓ। ਨਾਂ ਕਦੇ ਸ਼ਾਮਲ ਨਹੀਂ ਕੀਤੇ ਜਾਂਦੇ।</string>
     <string name="consent_card_link">ਇਹ ਕਿਵੇਂ ਕੰਮ ਕਰਦਾ ਹੈ</string>
     <string name="consent_switch_detail">Judge ਨੂੰ AI ਨੂੰ ਸਿਖਲਾਈ ਦੇਣ ਲਈ ਤੁਹਾਡੇ ਨਾਂ-ਰਹਿਤ ਫ਼ੈਸਲੇ ਅਤੇ ਰੇਟਿੰਗਾਂ ਵਰਤਣ ਦਿੰਦਾ ਹੈ। ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਚਾਲੂ ਨਾ ਕਰੋ, ਬੰਦ ਰਹਿੰਦਾ ਹੈ।</string>
-    <string name="consent_sensitive_title">ਤੁਹਾਡੇ ਪਹਿਲੇ ਫ਼ੈਸਲੇ ਤੋਂ ਪਹਿਲਾਂ</string>
+    <string name="consent_sensitive_title">ਸ਼ੁਰੂ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ</string>
     <string name="consent_sensitive_body">ਮੇਰੀ ਲਿਖਤ ਵਿੱਚ ਸਿਹਤ ਜਾਂ ਰਿਸ਼ਤਿਆਂ ਵਰਗੇ ਨਿੱਜੀ ਵੇਰਵੇ ਹੋ ਸਕਦੇ ਹਨ। Judge ਨਾਂ ਹਟਾ ਕੇ ਇਸ ਨੂੰ ਮੇਰਾ ਫ਼ੈਸਲਾ ਲਿਖਣ ਲਈ ਬਾਹਰੀ AI ਸੇਵਾ ਨੂੰ ਭੇਜਦਾ ਹੈ, ਅਤੇ ਮੇਰੇ ਹਟਾਉਣ ਤੱਕ ਰੱਖਦਾ ਹੈ।</string>
     <string name="consent_sensitive_continue">ਜਾਰੀ ਰੱਖੋ</string>
     <string name="respond_adult_confirm">ਮੇਰੀ ਉਮਰ 18 ਸਾਲ ਜਾਂ ਵੱਧ ਹੈ</string>

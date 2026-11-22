@@ -365,7 +365,7 @@ const ca: Locale = {
     "consent.cardLink": "Com funciona",
     "consent.switchDetail":
       "Permet que Judge faci servir els teus veredictes i valoracions anonimitzats per entrenar la IA. Desactivat si no l'actives.",
-    "consent.sensitiveTitle": "Abans del teu primer veredicte",
+    "consent.sensitiveTitle": "Abans de començar",
     "consent.sensitiveBody":
       "El meu text pot incloure detalls privats, com ara salut o relacions. Judge l'envia, sense els noms, a un servei d'IA extern per escriure el meu veredicte, i el guarda fins que l'elimini.",
     "consent.sensitiveContinue": "Continua",

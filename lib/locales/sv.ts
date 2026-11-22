@@ -359,7 +359,7 @@ const sv: Locale = {
     "consent.cardLink": "Så fungerar det",
     "consent.switchDetail":
       "Låter Judge använda dina anonymiserade domar och betyg för att träna AI. Av, om du inte slår på det.",
-    "consent.sensitiveTitle": "Före din första dom",
+    "consent.sensitiveTitle": "Innan du börjar",
     "consent.sensitiveBody":
       "Min text kan innehålla privata uppgifter, till exempel om hälsa eller relationer. Judge skickar den, utan namn, till en extern AI-tjänst som skriver min dom, och sparar den tills jag tar bort den.",
     "consent.sensitiveContinue": "Fortsätt",
