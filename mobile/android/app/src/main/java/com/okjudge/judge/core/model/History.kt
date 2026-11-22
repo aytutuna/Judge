@@ -111,7 +111,7 @@ fun decodeWrittenSides(body: String): WrittenSides {
         ?.let { (it["text"] as? JsonPrimitive)?.contentOrNull?.trim() }?.takeIf { it.isNotEmpty() }
     val others = (root["otherSides"] as? JsonArray).orEmpty().mapNotNull { entry ->
         val obj = entry as? JsonObject ?: return@mapNotNull null
-        val party = (obj["party"] as? JsonPrimitive)?.contentOrNull ?: return@mapNotNull null
+        val party = (obj["party"] as? JsonPrimitive)?.contentOrNull?.takeIf { Side.of(it) != null } ?: return@mapNotNull null
         val text = (obj["text"] as? JsonPrimitive)?.contentOrNull?.takeIf { it.isNotEmpty() } ?: return@mapNotNull null
         WrittenOther(party, text)
     }

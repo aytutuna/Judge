@@ -860,8 +860,8 @@ private fun WrittenSection(written: WrittenSides, sides: Int) {
     DetailSection(writtenTitle(written, s)) {
         written.own?.let { WrittenText(it, if (written.others.isEmpty()) null else s.writtenYours) }
         written.others.forEach { other ->
-            val label = Side.of(other.party)?.let { PartyNames.label(it, s) }
-            WrittenText(CaseLogic.localizeLabelsAuto(other.text, sides), label)
+            val side = Side.of(other.party) ?: return@forEach
+            WrittenText(CaseLogic.localizeLabelsAuto(other.text, sides), PartyNames.label(side, s))
         }
     }
 }

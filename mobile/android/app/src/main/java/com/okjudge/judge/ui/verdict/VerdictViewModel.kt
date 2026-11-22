@@ -179,10 +179,20 @@ class VerdictViewModel(
     /** The signed-in writer's own text; null when there is none to show. */
     val written: StateFlow<WrittenSides?> = _written
 
-    fun loadWritten() {
+    private var writtenLoaded = false
+
+    /** Fetches once per sign-in; signing out drops it, and a failed fetch may be tried again. */
+    fun loadWritten(signedOut: Boolean) {
+        if (signedOut) {
+            writtenLoaded = false
+            _written.value = null
+            return
+        }
+        if (writtenLoaded) return
+        writtenLoaded = true
         viewModelScope.launch {
             val res = api.writtenSides(id)
-            if (res is ApiResult.Ok) _written.value = res.value.takeIf { !it.isEmpty }
+            if (res is ApiResult.Ok) _written.value = res.value.takeIf { !it.isEmpty } else writtenLoaded = false
         }
     }
 

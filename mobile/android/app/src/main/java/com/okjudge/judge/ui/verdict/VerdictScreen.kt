@@ -87,7 +87,7 @@ fun VerdictRoute(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val rating by viewModel.rating.collectAsStateWithLifecycle()
     val written by viewModel.written.collectAsStateWithLifecycle()
-    LaunchedEffect(id, signedOut) { if (!signedOut) viewModel.loadWritten() }
+    LaunchedEffect(id, signedOut) { viewModel.loadWritten(signedOut) }
     val appealState = appeal?.let { it.state.collectAsStateWithLifecycle().value }
     val context = LocalContext.current
     val s = LocalStrings.current
