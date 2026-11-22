@@ -423,6 +423,7 @@ The website and the future iOS/Android app share one JSON API. Base URL
 | `POST /api/v1/verdicts/{id}/removal` | Writer: `{ "confirm": "remove" }` blanks the original and names and closes the link (idempotent) |
 | `POST /api/v1/verdicts/{id}/claim` | Signed in + `X-Owner-Token`: keep a token-owned verdict in the account |
 | `POST /api/v1/verdicts/{id}/translate?lang=en\|tr` | A stored verdict in the other language |
+| `POST /api/v1/auth/lookup` | `{ "email" }` → `{ "method": "password" \| "code" \| "new" }`: how the address signs in (a password, an emailed code, or no account yet). Per address and IP 10 in 10 minutes, per IP 30 in 10 minutes, then `429 rate_limited` with `Retry-After`; `400 invalid` for anything but an email |
 | `POST /api/v1/auth/dev-login` | Local testing only (see above); 404 everywhere else |
 | `POST /api/v1/evidence` | Premium: transcribe 1 to 3 evidence images, get signed evidence tokens |
 | `POST /api/v1/cases` | Start a two-sided case (signed in; holds 1 premium verdict; `"tier"` is ignored) |
