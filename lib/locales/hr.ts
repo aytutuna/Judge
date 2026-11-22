@@ -456,7 +456,7 @@ const hr: Locale = {
     "signin.providerUnavailable": "Još nije dostupno",
     "signin.failed": "Nismo te uspjeli prijaviti. Možeš pokušati ponovno?",
     "signin.legal":
-      "Nastavkom potvrđuješ da imaš 18 ili više godina i prihvaćaš {terms} i {privacy}.",
+      "Nastavkom potvrđuješ da imaš 18 ili više godina i prihvaćaš {terms} i {privacy}. Tvoje rasprave čita vanjska AI usluga.",
     "signin.legalLink": "Pravila privatnosti",
     "signin.loading": "Učitavamo načine prijave…",
     "signin.or": "ili",

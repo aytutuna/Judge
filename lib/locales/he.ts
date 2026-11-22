@@ -445,7 +445,7 @@ const he: Locale = {
     "signin.providerUnavailable": "עוד לא זמין",
     "signin.failed": "לא הצלחנו לחבר אותך. אפשר לנסות שוב?",
     "signin.legal":
-      "המשך מהווה אישור שגילך 18 ומעלה והסכמה ל{terms} ול{privacy}.",
+      "המשך מהווה אישור שגילך 18 ומעלה והסכמה ל{terms} ול{privacy}. שירות AI חיצוני קורא את הוויכוחים שלך.",
     "signin.legalLink": "מדיניות הפרטיות",
     "signin.loading": "טוענים את אפשרויות ההתחברות…",
     "signin.or": "או",

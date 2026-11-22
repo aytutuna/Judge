@@ -462,7 +462,7 @@ const nl: Locale = {
     "signin.providerUnavailable": "Nog niet beschikbaar",
     "signin.failed": "Inloggen lukte niet. Wil je het nog eens proberen?",
     "signin.legal":
-      "Door verder te gaan, bevestig je dat je 18 of ouder bent en ga je akkoord met de {terms} en het {privacy}.",
+      "Door verder te gaan, bevestig je dat je 18 of ouder bent en ga je akkoord met de {terms} en het {privacy}. Een externe AI leest je discussies.",
     "signin.legalLink": "privacybeleid",
     "signin.loading": "Inlogopties laden…",
     "signin.or": "of",

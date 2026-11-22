@@ -459,7 +459,7 @@ const ptBR: Locale = {
     "signin.providerUnavailable": "Ainda não disponível",
     "signin.failed": "Não conseguimos fazer você entrar. Pode tentar de novo?",
     "signin.legal":
-      "Ao continuar, você confirma ter 18 anos ou mais e concorda com os {terms} e com a {privacy}.",
+      "Ao continuar, você confirma ter 18 anos ou mais e concorda com os {terms} e com a {privacy}. Uma IA externa lê suas discussões.",
     "signin.legalLink": "Política de Privacidade",
     "signin.loading": "Carregando as opções para entrar…",
     "signin.or": "ou",

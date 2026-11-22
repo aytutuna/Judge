@@ -455,7 +455,7 @@ const sk: Locale = {
     "signin.providerUnavailable": "Zatiaľ nedostupné",
     "signin.failed": "Nepodarilo sa ťa prihlásiť. Skúsiš to znova?",
     "signin.legal":
-      "Pokračovaním potvrdzuješ, že máš 18 rokov alebo viac, a súhlasíš s {terms} a so {privacy}.",
+      "Pokračovaním potvrdzuješ, že máš 18 rokov alebo viac, a súhlasíš s {terms} a so {privacy}. Tvoje spory číta externá AI.",
     "signin.legalLink": "zásadami ochrany súkromia",
     "signin.loading": "Načítavam možnosti prihlásenia…",
     "signin.or": "alebo",

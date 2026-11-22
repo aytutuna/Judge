@@ -447,7 +447,7 @@ const ko: Locale = {
     "signin.providerUnavailable": "아직 이용할 수 없어요",
     "signin.failed": "로그인하지 못했어요. 다시 한번 해 볼까요?",
     "signin.legal":
-      "계속하면 만 18세 이상이며 {terms}과 {privacy}에 동의하는 것으로 봐요.",
+      "계속하면 만 18세 이상이며 {terms}과 {privacy}에 동의하는 것으로 봐요. 논쟁 내용은 외부 AI가 읽어요.",
     "signin.legalLink": "개인정보 처리방침",
     "signin.loading": "로그인 방법을 불러오는 중…",
     "signin.or": "또는",

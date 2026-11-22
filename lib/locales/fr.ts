@@ -468,7 +468,7 @@ const fr: Locale = {
     "signin.providerUnavailable": "Pas encore disponible",
     "signin.failed": "Impossible de te connecter. Tu veux bien réessayer ?",
     "signin.legal":
-      "En continuant, tu confirmes avoir 18 ans ou plus et tu acceptes les {terms} et la {privacy}.",
+      "En continuant, tu confirmes avoir 18 ans ou plus et tu acceptes les {terms} et la {privacy}. Une IA externe lit tes débats.",
     "signin.legalLink": "Politique de confidentialité",
     "signin.loading": "Chargement des options de connexion…",
     "signin.or": "ou",

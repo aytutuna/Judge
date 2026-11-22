@@ -455,7 +455,7 @@ const en = {
   "signin.unavailable": "Sign-in isn't set up on this site yet.",
   "signin.providerUnavailable": "Not available yet",
   "signin.failed": "We couldn't sign you in. Mind trying again?",
-  "signin.legal": "By continuing, you confirm you're 18 or older and agree to the {terms} and the {privacy}.",
+  "signin.legal": "By continuing, you confirm you're 18 or older and agree to the {terms} and the {privacy}. An outside AI reads your arguments.",
   "signin.legalLink": "Privacy Policy",
   "signin.loading": "Loading sign-in options…",
   "signin.or": "or",

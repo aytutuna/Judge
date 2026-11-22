@@ -462,7 +462,7 @@ const tr: Locale = {
     "signin.providerUnavailable": "Henüz kullanılamıyor",
     "signin.failed": "Giriş yapamadık. Bir daha dener misin?",
     "signin.legal":
-      "Devam ederek 18 yaşında veya daha büyük olduğunu doğrulamış, {terms}'nı ve {privacy}'nı kabul etmiş olursun.",
+      "Devam ederek 18 yaşında veya daha büyük olduğunu doğrulamış, {terms}'nı ve {privacy}'nı kabul etmiş olursun. Tartışmalarını harici bir yapay zekâ okur.",
     "signin.legalLink": "Gizlilik Politikası",
     "signin.loading": "Giriş seçenekleri yükleniyor…",
     "signin.or": "veya",

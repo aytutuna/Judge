@@ -466,7 +466,7 @@ const it: Locale = {
     "signin.providerUnavailable": "Non ancora disponibile",
     "signin.failed": "Non siamo riusciti a farti accedere. Riprovi?",
     "signin.legal":
-      "Continuando confermi di avere almeno 18 anni e accetti i nostri {terms} e la nostra {privacy}.",
+      "Continuando confermi di avere almeno 18 anni e accetti i nostri {terms} e la nostra {privacy}. Le tue discussioni vengono lette da un'IA esterna.",
     "signin.legalLink": "Informativa sulla privacy",
     "signin.loading": "Caricamento delle opzioni di accesso…",
     "signin.or": "oppure",

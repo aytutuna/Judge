@@ -454,7 +454,7 @@ const sl: Locale = {
     "signin.providerUnavailable": "Še ni na voljo",
     "signin.failed": "Prijava ni uspela. Poskusiš znova?",
     "signin.legal":
-      "Z nadaljevanjem potrjuješ, da imaš 18 let ali več, in se strinjaš s {terms} in {privacy}.",
+      "Z nadaljevanjem potrjuješ, da imaš 18 let ali več, in se strinjaš s {terms} in {privacy}. Tvoje prepire bere zunanja storitev UI.",
     "signin.legalLink": "politiko zasebnosti",
     "signin.loading": "Nalagamo možnosti prijave…",
     "signin.or": "ali",

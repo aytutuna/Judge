@@ -459,7 +459,7 @@ const ro: Locale = {
     "signin.providerUnavailable": "Încă nu e disponibil",
     "signin.failed": "N-am reușit să te conectăm. Mai încerci o dată?",
     "signin.legal":
-      "Dacă continui, confirmi că ai 18 ani sau mai mult și ești de acord cu {terms} și cu {privacy}.",
+      "Dacă continui, confirmi că ai 18 ani sau mai mult și ești de acord cu {terms} și cu {privacy}. Disputele tale sunt citite de un AI extern.",
     "signin.legalLink": "Politica de confidențialitate",
     "signin.loading": "Se încarcă opțiunile de conectare…",
     "signin.or": "sau",

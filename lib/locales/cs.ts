@@ -453,7 +453,7 @@ const cs: Locale = {
     "signin.providerUnavailable": "Zatím nedostupné",
     "signin.failed": "Přihlášení se nepovedlo. Zkusíš to znovu?",
     "signin.legal":
-      "Pokračováním potvrzuješ, že ti je 18 let nebo víc, a souhlasíš s {terms} a se {privacy}.",
+      "Pokračováním potvrzuješ, že ti je 18 let nebo víc, a souhlasíš s {terms} a se {privacy}. Tvoje spory čte externí AI.",
     "signin.legalLink": "zásadami ochrany soukromí",
     "signin.loading": "Načítáme možnosti přihlášení…",
     "signin.or": "nebo",

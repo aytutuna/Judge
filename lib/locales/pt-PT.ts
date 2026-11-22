@@ -460,7 +460,7 @@ const ptPT: Locale = {
     "signin.providerUnavailable": "Ainda não disponível",
     "signin.failed": "Não conseguimos iniciar a tua sessão. Tentas outra vez?",
     "signin.legal":
-      "Ao continuar, confirmas que tens 18 anos ou mais e aceitas os {terms} e a {privacy}.",
+      "Ao continuar, confirmas que tens 18 anos ou mais e aceitas os {terms} e a {privacy}. Uma IA externa lê as tuas discussões.",
     "signin.legalLink": "Política de Privacidade",
     "signin.loading": "A carregar as opções de acesso…",
     "signin.or": "ou",

@@ -463,7 +463,7 @@ const id: Locale = {
     "signin.providerUnavailable": "Belum tersedia",
     "signin.failed": "Gagal masuk. Coba lagi, ya?",
     "signin.legal":
-      "Dengan melanjutkan, kamu menyatakan berusia 18 tahun atau lebih dan menyetujui {terms} dan {privacy}.",
+      "Dengan melanjutkan, kamu menyatakan berusia 18 tahun atau lebih dan menyetujui {terms} dan {privacy}. AI pihak luar membaca argumenmu.",
     "signin.legalLink": "Kebijakan Privasi",
     "signin.loading": "Memuat pilihan masuk…",
     "signin.or": "atau",

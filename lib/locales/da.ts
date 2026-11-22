@@ -455,7 +455,7 @@ const da: Locale = {
     "signin.providerUnavailable": "Ikke tilgængeligt endnu",
     "signin.failed": "Vi kunne ikke logge dig ind. Vil du prøve igen?",
     "signin.legal":
-      "Ved at fortsætte bekræfter du, at du er 18 år eller ældre, og accepterer {terms} og {privacy}.",
+      "Ved at fortsætte bekræfter du, at du er 18 år eller ældre, og accepterer {terms} og {privacy}. En ekstern AI læser dine diskussioner.",
     "signin.legalLink": "privatlivspolitikken",
     "signin.loading": "Henter loginmuligheder…",
     "signin.or": "eller",

@@ -467,7 +467,7 @@ const ca: Locale = {
     "signin.providerUnavailable": "Encara no disponible",
     "signin.failed": "No hem pogut iniciar la teva sessió. Ho tornes a provar?",
     "signin.legal":
-      "Si continues, confirmes que tens 18 anys o més i acceptes les {terms} i la {privacy}.",
+      "Si continues, confirmes que tens 18 anys o més i acceptes les {terms} i la {privacy}. Una IA externa llegeix les teves discussions.",
     "signin.legalLink": "Política de privadesa",
     "signin.loading": "Carregant les opcions d'inici de sessió…",
     "signin.or": "o",

@@ -456,7 +456,7 @@ const nb: Locale = {
     "signin.providerUnavailable": "Ikke tilgjengelig ennå",
     "signin.failed": "Vi fikk ikke logget deg inn. Vil du prøve igjen?",
     "signin.legal":
-      "Ved å fortsette bekrefter du at du er 18 år eller eldre og godtar {terms} og {privacy}.",
+      "Ved å fortsette bekrefter du at du er 18 år eller eldre og godtar {terms} og {privacy}. En ekstern KI leser diskusjonene dine.",
     "signin.legalLink": "personvernerklæringen",
     "signin.loading": "Laster innloggingsvalg…",
     "signin.or": "eller",

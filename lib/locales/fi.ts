@@ -464,7 +464,7 @@ const fi: Locale = {
     "signin.providerUnavailable": "Ei vielä käytettävissä",
     "signin.failed": "Kirjautuminen ei onnistunut. Yritä uudelleen.",
     "signin.legal":
-      "Jatkamalla vahvistat olevasi vähintään 18-vuotias ja hyväksyt {terms} ja {privacy}.",
+      "Jatkamalla vahvistat olevasi vähintään 18-vuotias ja hyväksyt {terms} ja {privacy}. Ulkopuolinen tekoäly lukee kiistasi.",
     "signin.legalLink": "tietosuojakäytännön",
     "signin.loading": "Ladataan kirjautumisvaihtoehtoja…",
     "signin.or": "tai",

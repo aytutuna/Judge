@@ -455,7 +455,7 @@ const ja: Locale = {
     "signin.providerUnavailable": "まだ利用できません",
     "signin.failed": "ログインできませんでした。もう一度お試しください。",
     "signin.legal":
-      "続行すると、18歳以上であること、および{terms}と{privacy}に同意したものとみなされます。",
+      "続行すると、18歳以上であること、および{terms}と{privacy}に同意したものとみなされます。書いた内容は外部のAIが読み取ります。",
     "signin.legalLink": "プライバシーポリシー",
     "signin.loading": "ログイン方法を読み込み中…",
     "signin.or": "または",

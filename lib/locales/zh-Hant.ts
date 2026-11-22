@@ -436,7 +436,7 @@ const zhHant: Locale = {
     "signin.providerUnavailable": "尚未開放",
     "signin.failed": "登入失敗，可以再試一次嗎？",
     "signin.legal":
-      "繼續即表示你確認已年滿 18 歲，並同意{terms}和{privacy}。",
+      "繼續即表示你確認已年滿 18 歲，並同意{terms}和{privacy}。你的爭論內容會由外部 AI 讀取。",
     "signin.legalLink": "隱私權政策",
     "signin.loading": "正在載入登入選項…",
     "signin.or": "或",

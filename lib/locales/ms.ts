@@ -467,7 +467,7 @@ const ms: Locale = {
     "signin.providerUnavailable": "Belum tersedia",
     "signin.failed": "Log masuk tidak berjaya. Boleh cuba lagi?",
     "signin.legal":
-      "Dengan meneruskan, anda mengesahkan bahawa anda berumur 18 tahun atau lebih dan bersetuju dengan {terms} dan {privacy}.",
+      "Dengan meneruskan, anda mengesahkan bahawa anda berumur 18 tahun atau lebih dan bersetuju dengan {terms} dan {privacy}. AI luar membaca pertikaian anda.",
     "signin.legalLink": "Dasar Privasi",
     "signin.loading": "Memuatkan pilihan log masuk…",
     "signin.or": "atau",

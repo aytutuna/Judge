@@ -457,7 +457,7 @@ const pl: Locale = {
     "signin.providerUnavailable": "Jeszcze niedostępne",
     "signin.failed": "Nie udało się zalogować. Spróbujesz jeszcze raz?",
     "signin.legal":
-      "Kontynuując, potwierdzasz, że masz co najmniej 18 lat, i akceptujesz {terms} i {privacy}.",
+      "Kontynuując, potwierdzasz, że masz co najmniej 18 lat, i akceptujesz {terms} i {privacy}. Twoje spory czyta zewnętrzna usługa AI.",
     "signin.legalLink": "Politykę prywatności",
     "signin.loading": "Wczytywanie opcji logowania…",
     "signin.or": "lub",

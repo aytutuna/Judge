@@ -465,7 +465,7 @@ const de: Locale = {
     "signin.providerUnavailable": "Noch nicht verfügbar",
     "signin.failed": "Die Anmeldung hat nicht geklappt. Versuchst du es noch mal?",
     "signin.legal":
-      "Wenn du fortfährst, bestätigst du, dass du mindestens 18 bist, und stimmst den {terms} und der {privacy} zu.",
+      "Wenn du fortfährst, bestätigst du, dass du mindestens 18 bist, und stimmst den {terms} und der {privacy} zu. Eine externe KI liest deine Streitfälle.",
     "signin.legalLink": "Datenschutzerklärung",
     "signin.loading": "Anmeldeoptionen werden geladen…",
     "signin.or": "oder",

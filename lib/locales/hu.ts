@@ -462,7 +462,7 @@ const hu: Locale = {
     "signin.providerUnavailable": "Még nem elérhető",
     "signin.failed": "Nem sikerült a belépés. Megpróbálod újra?",
     "signin.legal":
-      "A folytatással megerősíted, hogy elmúltál 18 éves, és elfogadod a {terms} és az {privacy}.",
+      "A folytatással megerősíted, hogy elmúltál 18 éves, és elfogadod a {terms} és az {privacy}. A vitáidat egy külső MI olvassa.",
     "signin.legalLink": "Adatvédelmi tájékoztatót",
     "signin.loading": "Belépési lehetőségek betöltése…",
     "signin.or": "vagy",

@@ -455,7 +455,7 @@ const sv: Locale = {
     "signin.providerUnavailable": "Inte tillgängligt än",
     "signin.failed": "Vi kunde inte logga in dig. Vill du försöka igen?",
     "signin.legal":
-      "Genom att fortsätta bekräftar du att du är 18 år eller äldre och godkänner våra {terms} och vår {privacy}.",
+      "Genom att fortsätta bekräftar du att du är 18 år eller äldre och godkänner våra {terms} och vår {privacy}. En extern AI läser dina argument.",
     "signin.legalLink": "integritetspolicy",
     "signin.loading": "Laddar inloggningsalternativ…",
     "signin.or": "eller",
