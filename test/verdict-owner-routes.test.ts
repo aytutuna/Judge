@@ -37,6 +37,7 @@ const ohttp = await import("../lib/originals/http");
 const publicRoute = await import("../app/api/v1/verdicts/[id]/route");
 const translateRoute = await import("../app/api/verdict/[id]/translate/route");
 const { getDb } = await import("../lib/db");
+const { aad, sealJson } = await import("../lib/originals/crypto");
 import type { DisplayState, MineResponse, OwnerVerdictListResponse } from "../lib/originals-types";
 import type { VerdictResult } from "../lib/types";
 
@@ -347,6 +348,64 @@ describe("removal", () => {
     expect(body.case).toEqual({ id: "caseowner001", party: "a" });
     expect((await remove("caseV1", { user: "u-case" })).status).toBe(409);
     expect((await mine("caseV1", { user: "someone" })).status).toBe(404);
+  });
+});
+
+describe("a case party's view of the sides", () => {
+  async function caseVerdict(removedB = false) {
+    const db = await getDb();
+    const { ensureOriginalsTables } = await import("../lib/originals/db");
+    await ensureOriginalsTables();
+    const now = new Date().toISOString();
+    const cid = `sides${++n}`;
+    await db.execute({
+      sql: `INSERT INTO cases (id, owner_id, status, mode, framework, lang, invite_nonce, invite_hash, expires_at, created_at, updated_at)
+            VALUES (?, 'u-sides', 'judged', 'two_sided', '{"preset":"balanced"}', 'en', 'n', ?, ?, ?, ?)`,
+      args: [cid, `h-${cid}`, now, now, now],
+    });
+    for (const [party, text] of [["a", "Party A paid. Party B keeps asking."], ["b", "Party B says Party A owes money."]]) {
+      await db.execute({ sql: "INSERT INTO case_sides (case_id, party, text, submitted_at) VALUES (?, ?, ?, ?)", args: [cid, party, text, now] });
+    }
+    if (removedB) await db.execute({ sql: "UPDATE cases SET removed_b_at = ? WHERE id = ?", args: [now, cid] });
+    const sealed = sealJson({ v: 1, text: "Harry keeps asking me", nameMap: [] }, aad.original(`case:${cid}:side:a`));
+    await db.execute({
+      sql: `INSERT INTO originals (subject, kind, verdict_id, case_id, party, sealed, key_id, removed_at, created_at, updated_at)
+            VALUES (?, 'side', NULL, ?, 'a', ?, ?, NULL, ?, ?)`,
+      args: [`case:${cid}:side:a`, cid, sealed!.sealed, sealed!.kid, now, now],
+    });
+    const vId = `cv${cid}`;
+    await db.execute({ sql: "INSERT INTO verdicts (id, input, framework, result) VALUES (?, 'x', '{}', ?)", args: [vId, JSON.stringify(RESULT)] });
+    await db.execute({
+      sql: "INSERT INTO verdict_meta (verdict_id, kind, case_id, created_at, updated_at) VALUES (?, 'case', ?, ?, ?)",
+      args: [vId, cid, now, now],
+    });
+    return { cid, vId, db, now };
+  }
+
+  it("gives the owner their own side as written and the other side as the judges read it, once judged", async () => {
+    const { cid, vId, db, now } = await caseVerdict();
+    const early = await json<MineResponse>(await mine(vId, { user: "u-sides" }));
+    expect(early.original?.text).toBe("Harry keeps asking me");
+    expect(early.otherSides).toEqual([]);
+    await db.execute({
+      sql: "INSERT INTO case_verdicts (case_id, seq, verdict_id, appeal_id, mode, created_at) VALUES (?, 1, ?, NULL, 'two_sided', ?)",
+      args: [cid, vId, now],
+    });
+    const body = await json<MineResponse>(await mine(vId, { user: "u-sides" }));
+    expect(body.original?.text).toBe("Harry keeps asking me");
+    expect(body.otherSides).toEqual([{ party: "b", text: "Party B says Party A owes money." }]);
+    expect((await mine(vId, { user: "stranger" })).status).toBe(404);
+    expect((await mine(vId)).status).toBe(404);
+  });
+
+  it("leaves out a side its writer removed", async () => {
+    const { cid, vId, db, now } = await caseVerdict(true);
+    await db.execute({
+      sql: "INSERT INTO case_verdicts (case_id, seq, verdict_id, appeal_id, mode, created_at) VALUES (?, 1, ?, NULL, 'two_sided', ?)",
+      args: [cid, vId, now],
+    });
+    const body = await json<MineResponse>(await mine(vId, { user: "u-sides" }));
+    expect(body.otherSides).toEqual([]);
   });
 });
 

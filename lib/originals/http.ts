@@ -20,9 +20,10 @@ import { NextResponse } from "next/server";
 import { API_ERROR_STATUS, apiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
 import { isSameOrigin, type ViewerSession } from "@/lib/auth";
 import { deadBearerResponse, lookupViewer } from "@/lib/bearer-guard";
-import { getCase, getInvites, type CaseRow } from "@/lib/cases/db";
+import { getCase, getInvites, loadCaseBundle, type CaseRow } from "@/lib/cases/db";
 import { acceptsManySides, hidesFrom, VERDICT_UPDATE } from "@/lib/cases/capability";
 import { partyOfViewer } from "@/lib/cases/party";
+import { twoSidedJudged } from "@/lib/cases/view";
 import { clientIp } from "@/lib/client-ip";
 import { getVerdict } from "@/lib/db";
 import { entitlementWriteBatch } from "@/lib/entitlements";
@@ -160,6 +161,16 @@ async function originalOf(meta: VerdictMeta): Promise<{ status: OriginalStatus; 
   return original ? { status: "stored", original } : { status: "unreadable", original: null };
 }
 
+/** The other parties' anonymized accounts, as the judges read them: only
+ * after a two-sided verdict, only for a party who has a side of their own,
+ * and nothing for a side its writer removed. */
+async function otherSides(row: CaseRow, party: CaseParty): Promise<{ party: CaseParty; text: string }[]> {
+  const bundle = await loadCaseBundle(row);
+  if (!twoSidedJudged(bundle) || !bundle.sides.some((s) => s.party === party)) return [];
+  const removed = { a: row.removedAAt, b: row.removedBAt, c: row.removedCAt, d: row.removedDAt };
+  return bundle.sides.filter((s) => s.party !== party && !removed[s.party]).map((s) => ({ party: s.party, text: s.text }));
+}
+
 /** GET /api/v1/verdicts/{id}/mine */
 export function mineHandler(req: Request, id: string): Promise<NextResponse> {
   return guarded("mine", async () => {
@@ -198,11 +209,12 @@ export function mineHandler(req: Request, id: string): Promise<NextResponse> {
       const body: MineResponse = {
         ...base,
         result: stored.result,
-        original: null,
+        original: own.side.original,
         originalStatus: own.side.status,
         nameMap: own.names ?? [],
         display: { ...caseDisplayNames(caseParty.row, caseParty.party, true), others: {}, namesVisible: caseParty.row.namesVisible },
         removed: null,
+        otherSides: await otherSides(caseParty.row, caseParty.party),
       };
       return json(body);
     }

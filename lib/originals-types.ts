@@ -241,6 +241,9 @@ export type MineResponse = {
   suggested: { a: string | null };
   removed: { at: string; reason: RemovalReason | null } | null;
   case: { id: string; party: "a" | "b" | "c" | "d" } | null;
+  /** A case party after a two-sided verdict: the other sides as the judges
+   * read them (anonymized). `original` is then the party's own side. */
+  otherSides?: { party: "a" | "b" | "c" | "d"; text: string }[];
   via: "session" | "token";
   /** The writer has saved the share-page names (or switched them off)
    * before: clients do not prompt for them again before a share. */
