@@ -72,7 +72,7 @@ export function RatingRow({ id, lang, hidden = false }: { id: string; lang: Lang
 /** The one-time consent card and the rating row share a spot: the row waits
  * until the card is answered, then takes its place. */
 export function FeedbackRow({ id, lang, showConsent }: { id?: string; lang: Lang; showConsent: boolean }) {
-  const [asking, setAsking] = useState(false);
+  const [asking, setAsking] = useState(showConsent);
   return (
     <>
       {showConsent ? <ConsentCard lang={lang} onAsking={setAsking} /> : null}
@@ -88,19 +88,28 @@ export function ConsentCard({ lang, onAsking }: { lang: Lang; onAsking?: (asking
   const signedIn = Boolean(viewer.me?.user);
   const [open, setOpen] = useState(false);
   const [leaving, setLeaving] = useState(false);
+  const [checked, setChecked] = useState(!signedIn);
 
   useEffect(() => {
-    if (!signedIn) return;
+    if (!signedIn) {
+      setChecked(true);
+      return;
+    }
     let live = true;
-    void fetchConsent().then((s) => live && setOpen(s?.ask === true));
+    void fetchConsent().then((s) => {
+      if (!live) return;
+      setOpen(s?.ask === true);
+      setChecked(true);
+    });
     return () => {
       live = false;
     };
   }, [signedIn]);
 
   useEffect(() => {
-    onAsking?.(open && !leaving);
-  }, [open, leaving, onAsking]);
+    onAsking?.(!checked || (open && !leaving));
+    return () => onAsking?.(false);
+  }, [checked, open, leaving, onAsking]);
 
   // transitionend never fires without a transition (reduced motion), so a timer backs it up
   useEffect(() => {
@@ -123,6 +132,7 @@ export function ConsentCard({ lang, onAsking }: { lang: Lang; onAsking?: (asking
   return (
     <div
       className={`${styles.collapse} ${leaving ? styles.collapsed : ""}`}
+      inert={leaving}
       onTransitionEnd={(e) => e.target === e.currentTarget && leaving && setOpen(false)}
     >
       <div className={styles.collapseClip}>
