@@ -138,6 +138,21 @@ struct MineVerdict: Sendable, Equatable {
     var nameMap: [NameMapping]
 }
 
+/// What the people in an argument wrote, from the same answer: the viewer's
+/// own text with names, and after a two-sided verdict the other sides as the
+/// judges read them.
+struct WrittenSides: Sendable, Equatable {
+    struct Other: Sendable, Equatable {
+        var party: Party
+        var text: String
+    }
+
+    var own: String?
+    var others: [Other]
+
+    var isEmpty: Bool { own == nil && others.isEmpty }
+}
+
 extension JudgeAPI {
     /// GET /api/v1/me/history: the account's verdicts and cases, newest first.
     func history(limit: Int = 20, cursor: String? = nil) async throws -> HistoryPage {
@@ -180,5 +195,22 @@ extension JudgeAPI {
         var result: RawResult?
         if object["result"] is [String: Any] { result = try? WireDecoding.rawResult(object["result"]) }
         return MineVerdict(result: result, nameMap: WireDecoding.nameMapList(object["nameMap"]))
+    }
+
+    /// GET /api/v1/verdicts/{id}/mine: the viewer's own text and the other sides.
+    func writtenSides(id: String) async throws -> WrittenSides {
+        let url = endpoint("verdicts").appending(component: id).appending(path: "mine")
+        let data = try await send(makeRequest(url: url, method: "GET", timeout: PremiumTimeout.mine))
+        guard let object = try? WireDecoding.topLevelObject(data) else { throw APIError.malformed }
+        var own: String?
+        if object["originalStatus"] as? String == "stored", let original = object["original"] as? [String: Any],
+           let text = (original["text"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty {
+            own = text
+        }
+        let others = (object["otherSides"] as? [[String: Any]] ?? []).compactMap { entry -> WrittenSides.Other? in
+            guard let party = entry["party"] as? String, let text = entry["text"] as? String, !text.isEmpty else { return nil }
+            return WrittenSides.Other(party: Party(rawValue: party) ?? .unknown, text: text)
+        }
+        return WrittenSides(own: own, others: others)
     }
 }

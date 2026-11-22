@@ -172,6 +172,8 @@ struct VerdictSections<Appeal: View>: View {
     @Environment(AppModel.self) private var app
     @Environment(\.sides) private var sides
     @State private var openedAtStart = false
+    /// The viewer's own text and the other sides, for the signed-in writer or party.
+    @State private var written: WrittenSides?
 
     var body: some View {
         let session = model.session
@@ -206,7 +208,7 @@ struct VerdictSections<Appeal: View>: View {
                 status: view.status
             )
             if !result.modelRefused {
-                VerdictReasons(result: result, parties: parties, lang: lang) { showDetails = true }
+                VerdictReasons(result: result, parties: parties, lang: lang, written: written) { showDetails = true }
             }
             if offered {
                 VerdictAppealButton(lang: lang) { openAppeal() }
@@ -222,6 +224,7 @@ struct VerdictSections<Appeal: View>: View {
                 lang: lang,
                 shareURL: shareURL,
                 onAddContext: offered ? { openAppeal() } : nil,
+                written: written,
                 appealShown: $detailsAppealShown,
                 appeal: appeal
             )
@@ -245,6 +248,10 @@ struct VerdictSections<Appeal: View>: View {
             guard appealStartsOpen, offered else { return }
             try? await Task.sleep(for: .milliseconds(300))
             appealShown = true
+        }
+        .task(id: app.account.isSignedIn) {
+            guard app.usesNetwork, app.account.isSignedIn else { return }
+            written = try? await app.api.writtenSides(id: model.session.id)
         }
         .onAppear { model.ensure(model.shown) }
         .onChange(of: lang) { _, newLang in model.languageChanged(to: newLang) }

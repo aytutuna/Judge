@@ -7,6 +7,7 @@ struct VerdictReasons: View {
     let result: VerdictResult
     let parties: PartyNames
     let lang: AppLang
+    var written: WrittenSides?
     let onOpen: () -> Void
 
     var body: some View {
@@ -15,6 +16,7 @@ struct VerdictReasons: View {
             result.crux.isEmpty ? nil : L10n.cruxShort(lang),
             VerdictDisplay.hasSides(result) ? L10n.appVerdictSides(lang) : nil,
             result.losingSideBestPoint.isEmpty ? nil : VerdictDisplay.bestPointTitle(result.verdict, parties: parties, lang: lang),
+            written.flatMap { $0.isEmpty ? nil : ($0.others.isEmpty ? L10n.writtenYou(lang) : L10n.writtenEach(lang)) },
         ].compactMap { $0 }
         if !rows.isEmpty {
             VStack(spacing: 0) {
@@ -61,6 +63,7 @@ struct VerdictDetails<Appeal: View>: View {
     let lang: AppLang
     let shareURL: URL?
     var onAddContext: (() -> Void)?
+    var written: WrittenSides?
     /// The "Add context & appeal" sheet over this screen.
     @Binding var appealShown: Bool
     @ViewBuilder var appeal: () -> Appeal
@@ -241,6 +244,20 @@ struct VerdictDetails<Appeal: View>: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
+        if let written, !written.isEmpty {
+            card {
+                SectionTitle(text: written.others.isEmpty ? L10n.writtenYou(lang) : L10n.writtenEach(lang))
+                if let own = written.own {
+                    writtenText(own, title: written.others.isEmpty ? nil : L10n.writtenYours(lang))
+                }
+                ForEach(Array(written.others.enumerated()), id: \.offset) { _, other in
+                    writtenText(
+                        CaseLogic.localizeLabels(other.text, lang: ContentLang.of(other.text), sides: result.sideCount),
+                        title: other.party.label(lang)
+                    )
+                }
+            }
+        }
         if !result.factsReliedOn.isEmpty {
             card {
                 FactsView(facts: result.factsReliedOn, lang: lang)
@@ -262,6 +279,20 @@ struct VerdictDetails<Appeal: View>: View {
             card {
                 WouldChangeBlock(items: changes, lang: lang)
             }
+        }
+    }
+
+    private func writtenText(_ text: String, title: String?) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            if let title {
+                Text(title)
+                    .brandText(TypeStyle(face: .inter, weight: 600, size: 12, lineHeight: 1.3, textStyle: .footnote))
+                    .foregroundStyle(Brand.muted)
+            }
+            Text(text)
+                .brandText(TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5))
+                .foregroundStyle(Brand.ink)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 
