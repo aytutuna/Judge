@@ -1,9 +1,10 @@
 "use client";
 
-import { useId, useState, type ReactNode } from "react";
-import type { CruxTrial, VerdictResult } from "@/lib/types";
+import { Fragment, useId, useState, type ReactNode } from "react";
+import type { CruxTrial, PartyId, VerdictResult } from "@/lib/types";
 import { KIND_KEY, t, type Key, type Lang } from "@/lib/i18n";
 import { cruxStyle } from "@/lib/crux-style";
+import { localizeLabelsAuto, partyLabel } from "@/lib/names";
 import { stripLeadingEmoji } from "@/lib/text";
 import { leanTally } from "@/lib/verdict-display";
 import { FactCheckList } from "../FactCheckList";
@@ -152,16 +153,22 @@ function Detail({ title, children }: { title?: string; children: ReactNode }) {
  * rows, always in the markup (hidden until a row is pressed) so the share
  * page text stays readable without script. Nothing for a refusal.
  */
+/** What the people in the argument wrote, for the writer or a party only:
+ * their own words with names, and each other side as the judges read it. */
+export type WrittenSides = { own: string | null; others: { party: PartyId; text: string }[] };
+
 export function VerdictDetails({
   result,
   parties,
   lang,
   loading = false,
+  written = null,
 }: {
   result: VerdictResult;
   parties: PartyLabels;
   lang: Lang;
   loading?: boolean;
+  written?: WrittenSides | null;
 }) {
   const [open, setOpen] = useState(false);
   const panelId = useId();
@@ -183,10 +190,12 @@ export function VerdictDetails({
     Boolean(result.agreed_facts?.length || result.disputed_facts?.length || (manySides && result.disputes?.length));
   const evidenceLine = evidenceNote(result, lang);
   const bestTitle = bestPointTitle(lang, result, parties);
+  const writtenTitle = written && (written.own || written.others.length) ? t(lang, written.others.length ? "written.each" : "written.you") : null;
   const rows = [
     result.crux ? stripLeadingEmoji(t(lang, "cruxShort")) : null,
     hasSides ? t(lang, "card.sides") : null,
     result.losing_side_best_point ? bestTitle : null,
+    writtenTitle,
   ].filter((r): r is string => r !== null);
   const face = cruxStyle(result.crux) === "serif" ? styles.cruxSerif : styles.cruxSans;
 
@@ -316,6 +325,23 @@ export function VerdictDetails({
         {result.losing_side_best_point ? (
           <Detail title={bestTitle}>
             <p className={styles.bestText}>{result.losing_side_best_point}</p>
+          </Detail>
+        ) : null}
+
+        {written && writtenTitle ? (
+          <Detail title={writtenTitle}>
+            {written.own ? (
+              <>
+                {written.others.length ? <h4 className={styles.sectionTitle}>{t(lang, "written.yours")}</h4> : null}
+                <p className={styles.writtenText}>{written.own}</p>
+              </>
+            ) : null}
+            {written.others.map((o) => (
+              <Fragment key={o.party}>
+                <h4 className={styles.sectionTitle}>{partyLabel(lang, o.party)}</h4>
+                <p className={styles.writtenText}>{localizeLabelsAuto(o.text, result.parties?.length ?? 2)}</p>
+              </Fragment>
+            ))}
           </Detail>
         ) : null}
 

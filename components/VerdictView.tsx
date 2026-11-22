@@ -20,7 +20,7 @@ import { ShareButtons } from "./ShareButtons";
 import type { OwnerShare } from "./ShareDialog";
 import { FeedbackRow } from "./verdict/FeedbackRow";
 import { VerdictCard } from "./verdict/VerdictCard";
-import { VerdictDetails } from "./verdict/VerdictDetails";
+import { VerdictDetails, type WrittenSides } from "./verdict/VerdictDetails";
 import { AppealOutcomeBanner } from "./case/AppealOutcome";
 import styles from "./verdict/verdict.module.css";
 
@@ -105,6 +105,7 @@ export function VerdictView({
   publicNames = false,
   selfDisplayName = null,
   owner,
+  written = null,
 }: {
   result: VerdictResult;
   nameMap?: NameMapping[];
@@ -120,6 +121,8 @@ export function VerdictView({
   /** The display name the viewer chose for their own party (shown on the share page). */
   selfDisplayName?: string | null;
   owner?: OwnerShare;
+  /** The writer's or a party's own account (and the other sides'): never on a share page. */
+  written?: WrittenSides | null;
 }) {
   const storeLang = useLang();
   const opts = useMemo(() => ({ noSelf: publicNames }), [publicNames]);
@@ -209,7 +212,7 @@ export function VerdictView({
         highlight={fresh}
         animate
       />
-      <VerdictDetails result={result} parties={parties} lang={lang} loading={loading} />
+      <VerdictDetails result={result} parties={parties} lang={lang} loading={loading} written={written} />
       {onAddContext ? (
         <button type="button" onClick={onAddContext} className={styles.appeal}>
           {t(lang, "card.appeal")}
