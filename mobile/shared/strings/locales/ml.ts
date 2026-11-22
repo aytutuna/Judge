@@ -137,11 +137,11 @@ const ml: AppLocale = {
     "app.purchase.restore": "വാങ്ങലുകൾ പുനഃസ്ഥാപിക്കൂ",
     "app.purchase.restoreDone": "നിങ്ങളുടെ വാങ്ങലുകൾ പുനഃസ്ഥാപിച്ചു.",
     "app.purchase.restoreNone": "പുനഃസ്ഥാപിക്കാൻ വാങ്ങലുകളൊന്നുമില്ല.",
-    "app.signin.legal": "പുറത്തുള്ള ഒരു എഐ നിങ്ങളുടെ തർക്കങ്ങൾ വായിക്കും. തുടരുന്നതിലൂടെ നിങ്ങൾ ഞങ്ങളുടെ ",
+    "app.signin.legal": "തുടരുന്നതിലൂടെ നിങ്ങൾക്ക് 18 വയസ്സോ അതിൽ കൂടുതലോ ഉണ്ടെന്ന് സ്ഥിരീകരിക്കുകയും ഞങ്ങളുടെ ",
     "app.signin.legalTerms": "ഉപയോഗ നിബന്ധനകൾ",
     "app.signin.legalAnd": ", ",
     "app.signin.legalPrivacy": "സ്വകാര്യതാ നയം",
-    "app.signin.legalAfter": " എന്നിവ അംഗീകരിക്കുന്നു.",
+    "app.signin.legalAfter": " എന്നിവ അംഗീകരിക്കുകയും ചെയ്യുന്നു. പുറത്തുള്ള ഒരു എഐ നിങ്ങളുടെ തർക്കങ്ങൾ വായിക്കും.",
     "app.legal.terms": "ഉപയോഗ നിബന്ധനകൾ",
     "app.legal.privacy": "സ്വകാര്യതാ നയം",
     "app.pricing.autoRenew":

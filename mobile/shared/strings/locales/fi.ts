@@ -135,11 +135,11 @@ const fi: AppLocale = {
     "app.purchase.restore": "Palauta ostokset",
     "app.purchase.restoreDone": "Ostoksesi on palautettu.",
     "app.purchase.restoreNone": "Palautettavia ostoksia ei ole.",
-    "app.signin.legal": "Ulkopuolinen tekoäly lukee kiistasi. Jatkamalla hyväksyt ",
+    "app.signin.legal": "Jatkamalla vahvistat olevasi vähintään 18-vuotias ja hyväksyt ",
     "app.signin.legalTerms": "käyttöehdot",
     "app.signin.legalAnd": " ja ",
     "app.signin.legalPrivacy": "tietosuojakäytännön",
-    "app.signin.legalAfter": ".",
+    "app.signin.legalAfter": ". Ulkopuolinen tekoäly lukee kiistasi.",
     "app.legal.terms": "Käyttöehdot",
     "app.legal.privacy": "Tietosuojakäytäntö",
     "app.pricing.autoRenew":

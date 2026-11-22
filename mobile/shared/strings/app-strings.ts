@@ -164,11 +164,11 @@ export const APP_EN = {
   // where its grammar wants them: legal + [legalTerms] + legalAnd +
   // [legalPrivacy] + legalAfter. Every piece carries its own spaces, so
   // languages written without them (ja, zh, th) join up.
-  "app.signin.legal": "An outside AI reads your arguments. By continuing you agree to the ",
+  "app.signin.legal": "By continuing, you confirm you're 18 or older and agree to the ",
   "app.signin.legalTerms": "Terms",
-  "app.signin.legalAnd": " and ",
+  "app.signin.legalAnd": " and the ",
   "app.signin.legalPrivacy": "Privacy Policy",
-  "app.signin.legalAfter": ".",
+  "app.signin.legalAfter": ". An outside AI reads your arguments.",
   // Links under the plans (the stores want both next to a subscription) and in Settings.
   "app.legal.terms": "Terms of Use",
   "app.legal.privacy": "Privacy Policy",

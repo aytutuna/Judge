@@ -138,11 +138,11 @@ const ms: AppLocale = {
     "app.purchase.restore": "Pulihkan pembelian",
     "app.purchase.restoreDone": "Pembelian anda sudah dipulihkan.",
     "app.purchase.restoreNone": "Tiada pembelian untuk dipulihkan.",
-    "app.signin.legal": "AI luar membaca pertikaian anda. Dengan meneruskan, anda bersetuju dengan ",
+    "app.signin.legal": "Dengan meneruskan, anda mengesahkan bahawa anda berumur 18 tahun atau lebih dan bersetuju dengan ",
     "app.signin.legalTerms": "Syarat Penggunaan",
     "app.signin.legalAnd": " dan ",
     "app.signin.legalPrivacy": "Dasar Privasi",
-    "app.signin.legalAfter": ".",
+    "app.signin.legalAfter": ". AI luar membaca pertikaian anda.",
     "app.legal.terms": "Syarat Penggunaan",
     "app.legal.privacy": "Dasar Privasi",
     "app.pricing.autoRenew":

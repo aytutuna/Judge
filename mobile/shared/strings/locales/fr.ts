@@ -137,11 +137,11 @@ const fr: AppLocale = {
     "app.purchase.restore": "Restaurer les achats",
     "app.purchase.restoreDone": "Tes achats ont été restaurés.",
     "app.purchase.restoreNone": "Aucun achat à restaurer.",
-    "app.signin.legal": "Une IA externe lit tes débats. En continuant, tu acceptes les ",
+    "app.signin.legal": "En continuant, tu confirmes avoir 18 ans ou plus et tu acceptes les ",
     "app.signin.legalTerms": "Conditions d’utilisation",
     "app.signin.legalAnd": " et la ",
     "app.signin.legalPrivacy": "Politique de confidentialité",
-    "app.signin.legalAfter": ".",
+    "app.signin.legalAfter": ". Une IA externe lit tes débats.",
     "app.legal.terms": "Conditions d’utilisation",
     "app.legal.privacy": "Politique de confidentialité",
     "app.pricing.autoRenew":

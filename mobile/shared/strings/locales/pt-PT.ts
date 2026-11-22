@@ -135,11 +135,11 @@ const ptPT: AppLocale = {
     "app.purchase.restore": "Restaurar compras",
     "app.purchase.restoreDone": "As tuas compras foram restauradas.",
     "app.purchase.restoreNone": "Não há compras para restaurar.",
-    "app.signin.legal": "Uma IA externa lê as tuas discussões. Ao continuar, aceitas os ",
+    "app.signin.legal": "Ao continuar, confirmas que tens 18 anos ou mais e aceitas os ",
     "app.signin.legalTerms": "Termos de Utilização",
     "app.signin.legalAnd": " e a ",
     "app.signin.legalPrivacy": "Política de Privacidade",
-    "app.signin.legalAfter": ".",
+    "app.signin.legalAfter": ". Uma IA externa lê as tuas discussões.",
     "app.legal.terms": "Termos de Utilização",
     "app.legal.privacy": "Política de Privacidade",
     "app.pricing.autoRenew":

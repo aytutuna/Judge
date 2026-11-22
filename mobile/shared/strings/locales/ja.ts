@@ -130,11 +130,11 @@ const ja: AppLocale = {
     "app.purchase.restore": "購入を復元",
     "app.purchase.restoreDone": "購入を復元しました。",
     "app.purchase.restoreNone": "復元できる購入はありません。",
-    "app.signin.legal": "書いた内容は外部のAIが読み取ります。",
+    "app.signin.legal": "続行すると、18歳以上であること、および",
     "app.signin.legalTerms": "利用規約",
     "app.signin.legalAnd": "と",
     "app.signin.legalPrivacy": "プライバシーポリシー",
-    "app.signin.legalAfter": "には、続行した時点で同意したものとみなされます。",
+    "app.signin.legalAfter": "に同意したものとみなされます。書いた内容は外部のAIが読み取ります。",
     "app.legal.terms": "利用規約",
     "app.legal.privacy": "プライバシーポリシー",
     "app.pricing.autoRenew":

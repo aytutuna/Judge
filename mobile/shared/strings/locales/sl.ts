@@ -154,11 +154,11 @@ const sl: AppLocale = {
     "app.purchase.restore": "Obnovi nakupe",
     "app.purchase.restoreDone": "Nakupi so obnovljeni.",
     "app.purchase.restoreNone": "Ni nakupov za obnovitev.",
-    "app.signin.legal": "Tvoje prepire bere zunanja storitev UI. Z nadaljevanjem se strinjaš s ",
+    "app.signin.legal": "Z nadaljevanjem potrjuješ, da imaš 18 let ali več, in se strinjaš s ",
     "app.signin.legalTerms": "pogoji uporabe",
     "app.signin.legalAnd": " in ",
     "app.signin.legalPrivacy": "politiko zasebnosti",
-    "app.signin.legalAfter": ".",
+    "app.signin.legalAfter": ". Tvoje prepire bere zunanja storitev UI.",
     "app.legal.terms": "Pogoji uporabe",
     "app.legal.privacy": "Politika zasebnosti",
     "app.pricing.autoRenew":

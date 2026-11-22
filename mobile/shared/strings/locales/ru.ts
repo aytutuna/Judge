@@ -136,11 +136,11 @@ const ru: AppLocale = {
     "app.purchase.restore": "Восстановить покупки",
     "app.purchase.restoreDone": "Покупки восстановлены.",
     "app.purchase.restoreNone": "Покупок для восстановления нет.",
-    "app.signin.legal": "Ваши споры читает внешний ИИ. Продолжая, вы принимаете ",
+    "app.signin.legal": "Продолжая, вы подтверждаете, что вам есть 18 лет, и принимаете ",
     "app.signin.legalTerms": "Условия использования",
     "app.signin.legalAnd": " и ",
     "app.signin.legalPrivacy": "Политику конфиденциальности",
-    "app.signin.legalAfter": ".",
+    "app.signin.legalAfter": ". Ваши споры читает внешний ИИ.",
     "app.legal.terms": "Условия использования",
     "app.legal.privacy": "Политика конфиденциальности",
     "app.pricing.autoRenew":

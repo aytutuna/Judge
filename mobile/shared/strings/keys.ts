@@ -77,7 +77,7 @@ export const WEB_KEYS: readonly string[] = [
   "wait.*",
   "turnstile.label",
   // Sign-in (Apple, Google, email code) and the account screen. The dev
-  // login keys stay web-only.
+  // login note stays web-only.
   "signin.title",
   "signin.lead",
   "signin.apple",
@@ -97,6 +97,11 @@ export const WEB_KEYS: readonly string[] = [
   "signin.forgot",
   "signin.useCode",
   "signin.usePassword",
+  "signin.continue",
+  "signin.lastUsed",
+  "signin.codeResendIn",
+  "signin.skip",
+  "signin.dev",
   "account.*",
   // Settings / links out to the website
   "footer.about",

@@ -137,11 +137,11 @@ const hr: AppLocale = {
     "app.purchase.restore": "Vrati kupnje",
     "app.purchase.restoreDone": "Kupnje su vraćene.",
     "app.purchase.restoreNone": "Nema kupnji za vraćanje.",
-    "app.signin.legal": "Tvoje rasprave čita vanjska AI usluga. Nastavkom prihvaćaš ",
+    "app.signin.legal": "Nastavkom potvrđuješ da imaš 18 ili više godina i prihvaćaš ",
     "app.signin.legalTerms": "Uvjete korištenja",
     "app.signin.legalAnd": " i ",
     "app.signin.legalPrivacy": "Pravila privatnosti",
-    "app.signin.legalAfter": ".",
+    "app.signin.legalAfter": ". Tvoje rasprave čita vanjska AI usluga.",
     "app.legal.terms": "Uvjeti korištenja",
     "app.legal.privacy": "Pravila privatnosti",
     "app.pricing.autoRenew":

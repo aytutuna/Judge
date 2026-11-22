@@ -153,11 +153,11 @@ const gu: AppLocale = {
     "app.purchase.restore": "ખરીદી રિસ્ટોર કરો",
     "app.purchase.restoreDone": "તમારી ખરીદી રિસ્ટોર થઈ ગઈ.",
     "app.purchase.restoreNone": "રિસ્ટોર કરવા જેવી કોઈ ખરીદી નથી.",
-    "app.signin.legal": "તમારી દલીલો એક બહારની AI સેવા વાંચે છે. આગળ વધીને તમે અમારી ",
+    "app.signin.legal": "આગળ વધીને તમે પુષ્ટિ કરો છો કે તમારી ઉંમર 18 કે તેથી વધુ છે અને તમે અમારી ",
     "app.signin.legalTerms": "ઉપયોગની શરતો",
     "app.signin.legalAnd": " અને ",
     "app.signin.legalPrivacy": "ગોપનીયતા નીતિ",
-    "app.signin.legalAfter": " સાથે સંમત થાઓ છો.",
+    "app.signin.legalAfter": " સાથે સંમત થાઓ છો. તમારી દલીલો એક બહારની AI સેવા વાંચે છે.",
     "app.legal.terms": "ઉપયોગની શરતો",
     "app.legal.privacy": "ગોપનીયતા નીતિ",
     "app.pricing.autoRenew":

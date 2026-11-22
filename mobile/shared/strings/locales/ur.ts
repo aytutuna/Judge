@@ -134,11 +134,11 @@ const ur: AppLocale = {
     "app.purchase.restore": "خریداریاں بحال کریں",
     "app.purchase.restoreDone": "آپ کی خریداریاں بحال ہو گئیں۔",
     "app.purchase.restoreNone": "بحال کرنے کے لیے کوئی خریداری نہیں ملی۔",
-    "app.signin.legal": "آپ کی بحثیں ایک بیرونی اے آئی پڑھتا ہے۔ جاری رکھنے کا مطلب ہے کہ آپ ہماری ",
+    "app.signin.legal": "جاری رکھنے کا مطلب ہے کہ آپ تصدیق کرتے ہیں کہ آپ کی عمر 18 سال یا زیادہ ہے اور ہماری ",
     "app.signin.legalTerms": "استعمال کی شرائط",
     "app.signin.legalAnd": " اور ",
     "app.signin.legalPrivacy": "رازداری کی پالیسی",
-    "app.signin.legalAfter": " سے متفق ہیں۔",
+    "app.signin.legalAfter": " سے متفق ہیں۔ آپ کی بحثیں ایک بیرونی اے آئی پڑھتا ہے۔",
     "app.legal.terms": "استعمال کی شرائط",
     "app.legal.privacy": "رازداری کی پالیسی",
     "app.pricing.autoRenew":

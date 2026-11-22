@@ -135,11 +135,11 @@ const de: AppLocale = {
     "app.purchase.restore": "Käufe wiederherstellen",
     "app.purchase.restoreDone": "Deine Käufe wurden wiederhergestellt.",
     "app.purchase.restoreNone": "Keine Käufe zum Wiederherstellen gefunden.",
-    "app.signin.legal": "Eine externe KI liest deine Streitfälle. Wenn du fortfährst, stimmst du der ",
+    "app.signin.legal": "Wenn du fortfährst, bestätigst du, dass du mindestens 18 bist, und stimmst den ",
     "app.signin.legalTerms": "Nutzungsbedingungen",
     "app.signin.legalAnd": " und der ",
     "app.signin.legalPrivacy": "Datenschutzerklärung",
-    "app.signin.legalAfter": " zu.",
+    "app.signin.legalAfter": " zu. Eine externe KI liest deine Streitfälle.",
     "app.legal.terms": "Nutzungsbedingungen",
     "app.legal.privacy": "Datenschutzerklärung",
     "app.pricing.autoRenew":

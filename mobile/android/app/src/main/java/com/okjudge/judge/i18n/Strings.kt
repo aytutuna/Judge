@@ -282,9 +282,14 @@ class Strings(private val res: Resources) {
     val signinPasswordSave: String get() = res.getString(R.string.signin_password_save)
     val signinPasswordSaveFailed: String get() = res.getString(R.string.signin_password_save_failed)
     val signinPasswordSubmit: String get() = res.getString(R.string.signin_password_submit)
+    val signinDev: String get() = res.getString(R.string.signin_dev)
     val signinProviderUnavailable: String get() = res.getString(R.string.signin_provider_unavailable)
     val signinFailed: String get() = res.getString(R.string.signin_failed)
     val signinLoading: String get() = res.getString(R.string.signin_loading)
+    val signinContinue: String get() = res.getString(R.string.signin_continue)
+    val signinLastUsed: String get() = res.getString(R.string.signin_last_used)
+    fun signinCodeResendIn(n: String): String = res.getString(R.string.signin_code_resend_in, n)
+    val signinSkip: String get() = res.getString(R.string.signin_skip)
     val accountTitle: String get() = res.getString(R.string.account_title)
     fun accountSignedInAs(email: String): String = res.getString(R.string.account_signed_in_as, email)
     val accountPlan: String get() = res.getString(R.string.account_plan)
@@ -923,9 +928,13 @@ class Strings(private val res: Resources) {
             "signin.passwordSave" -> R.string.signin_password_save
             "signin.passwordSaveFailed" -> R.string.signin_password_save_failed
             "signin.passwordSubmit" -> R.string.signin_password_submit
+            "signin.dev" -> R.string.signin_dev
             "signin.providerUnavailable" -> R.string.signin_provider_unavailable
             "signin.failed" -> R.string.signin_failed
             "signin.loading" -> R.string.signin_loading
+            "signin.continue" -> R.string.signin_continue
+            "signin.lastUsed" -> R.string.signin_last_used
+            "signin.skip" -> R.string.signin_skip
             "account.title" -> R.string.account_title
             "account.plan" -> R.string.account_plan
             "account.credits" -> R.string.account_credits

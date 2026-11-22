@@ -349,9 +349,14 @@ enum L10n {
     static func signinPasswordSave(_ lang: AppLang) -> String { string("signin.passwordSave", lang) }
     static func signinPasswordSaveFailed(_ lang: AppLang) -> String { string("signin.passwordSaveFailed", lang) }
     static func signinPasswordSubmit(_ lang: AppLang) -> String { string("signin.passwordSubmit", lang) }
+    static func signinDev(_ lang: AppLang) -> String { string("signin.dev", lang) }
     static func signinProviderUnavailable(_ lang: AppLang) -> String { string("signin.providerUnavailable", lang) }
     static func signinFailed(_ lang: AppLang) -> String { string("signin.failed", lang) }
     static func signinLoading(_ lang: AppLang) -> String { string("signin.loading", lang) }
+    static func signinContinue(_ lang: AppLang) -> String { string("signin.continue", lang) }
+    static func signinLastUsed(_ lang: AppLang) -> String { string("signin.lastUsed", lang) }
+    static func signinCodeResendIn(_ lang: AppLang, n: String) -> String { format("signin.codeResendIn", lang, n) }
+    static func signinSkip(_ lang: AppLang) -> String { string("signin.skip", lang) }
     static func accountTitle(_ lang: AppLang) -> String { string("account.title", lang) }
     static func accountSignedInAs(_ lang: AppLang, email: String) -> String { format("account.signedInAs", lang, email) }
     static func accountPlan(_ lang: AppLang) -> String { string("account.plan", lang) }
@@ -991,9 +996,13 @@ enum L10n {
         "signin.passwordSave",
         "signin.passwordSaveFailed",
         "signin.passwordSubmit",
+        "signin.dev",
         "signin.providerUnavailable",
         "signin.failed",
         "signin.loading",
+        "signin.continue",
+        "signin.lastUsed",
+        "signin.skip",
         "account.title",
         "account.plan",
         "account.credits",

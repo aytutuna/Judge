@@ -1010,7 +1010,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Excluir sua conta? Seus créditos, seu plano e seus dados de login são apagados. Seus vereditos e o seu lado em cada caso são removidos: o que você escreveu e os nomes são apagados, e os links de compartilhamento param de funcionar."
+            "value" : "Excluir sua conta? Seus créditos, seu plano e seus dados de acesso são apagados. Seus vereditos e o seu lado em cada caso são removidos: o que você escreveu e os nomes são apagados, e os links de compartilhamento param de funcionar."
           }
         },
         "pt-PT" : {
@@ -42224,271 +42224,271 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يقرأ ذكاء اصطناعي خارجي ما تكتبه من خلافات. بالمتابعة، أنت توافق على "
+            "value" : "بالمتابعة، تؤكد أن عمرك 18 عامًا أو أكثر وتوافق على "
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "আপনার তর্কগুলো একটি বাইরের এআই পড়ে। চালিয়ে গেলে আপনি আমাদের "
+            "value" : "চালিয়ে গেলে আপনি নিশ্চিত করছেন যে আপনার বয়স ১৮ বা তার বেশি এবং আপনি আমাদের "
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Una IA externa llegeix les teves discussions. Si continues, acceptes les "
+            "value" : "Si continues, confirmes que tens 18 anys o més i acceptes les "
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tvoje spory čte externí AI. Pokračováním souhlasíš se "
+            "value" : "Pokračováním potvrzuješ, že ti je 18 let nebo víc, a souhlasíš s "
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "En ekstern AI læser dine diskussioner. Ved at fortsætte accepterer du "
+            "value" : "Ved at fortsætte bekræfter du, at du er 18 år eller ældre, og accepterer "
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Eine externe KI liest deine Streitfälle. Wenn du fortfährst, stimmst du der "
+            "value" : "Wenn du fortfährst, bestätigst du, dass du mindestens 18 bist, und stimmst den "
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Τις διαφωνίες σου τις διαβάζει ένα εξωτερικό AI. Αν συνεχίσεις, αποδέχεσαι τους "
+            "value" : "Αν συνεχίσεις, επιβεβαιώνεις ότι είσαι τουλάχιστον 18 ετών και αποδέχεσαι τους "
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "An outside AI reads your arguments. By continuing you agree to the "
+            "value" : "By continuing, you confirm you're 18 or older and agree to the "
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Una IA externa lee tus discusiones. Al continuar, aceptas los "
+            "value" : "Al continuar, confirmas que tienes 18 años o más y aceptas las "
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ulkopuolinen tekoäly lukee kiistasi. Jatkamalla hyväksyt "
+            "value" : "Jatkamalla vahvistat olevasi vähintään 18-vuotias ja hyväksyt "
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Une IA externe lit tes débats. En continuant, tu acceptes les "
+            "value" : "En continuant, tu confirmes avoir 18 ans ou plus et tu acceptes les "
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "તમારી દલીલો એક બહારની AI સેવા વાંચે છે. આગળ વધીને તમે અમારી "
+            "value" : "આગળ વધીને તમે પુષ્ટિ કરો છો કે તમારી ઉંમર 18 કે તેથી વધુ છે અને તમે અમારી "
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "שירות AI חיצוני קורא את הוויכוחים שלך. המשך השימוש מהווה הסכמה "
+            "value" : "המשך מהווה אישור שגילך 18 ומעלה והסכמה ל"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "आपकी बहसें एक बाहरी AI पढ़ता है। आगे बढ़ने का मतलब है कि आप हमारी "
+            "value" : "आगे बढ़ने का मतलब है कि आप पुष्टि करते हैं कि आपकी उम्र 18 या उससे ज़्यादा है और आप हमारी "
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tvoje rasprave čita vanjska AI usluga. Nastavkom prihvaćaš "
+            "value" : "Nastavkom potvrđuješ da imaš 18 ili više godina i prihvaćaš "
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A vitáidat egy külső MI olvassa. A folytatással elfogadod a "
+            "value" : "A folytatással megerősíted, hogy elmúltál 18 éves, és elfogadod a "
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AI pihak luar membaca argumenmu. Dengan melanjutkan, kamu menyetujui "
+            "value" : "Dengan melanjutkan, kamu menyatakan berusia 18 tahun atau lebih dan menyetujui "
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Le tue discussioni vengono lette da un’IA esterna. Continuando accetti le nostre "
+            "value" : "Continuando confermi di avere almeno 18 anni e accetti i nostri "
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "書いた内容は外部のAIが読み取ります。"
+            "value" : "続行すると、18歳以上であること、および"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ನಿಮ್ಮ ವಾದಗಳನ್ನು ಹೊರಗಿನ AI ಓದುತ್ತದೆ. ಮುಂದುವರಿಯುವ ಮೂಲಕ ನೀವು ನಮ್ಮ "
+            "value" : "ಮುಂದುವರಿಯುವ ಮೂಲಕ ನಿಮಗೆ 18 ವರ್ಷ ಅಥವಾ ಹೆಚ್ಚು ಎಂದು ದೃಢಪಡಿಸಿ, ನಮ್ಮ "
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "논쟁 내용은 외부 AI가 읽어요. 계속하면 "
+            "value" : "계속하면 만 18세 이상이며 "
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "പുറത്തുള്ള ഒരു എഐ നിങ്ങളുടെ തർക്കങ്ങൾ വായിക്കും. തുടരുന്നതിലൂടെ നിങ്ങൾ ഞങ്ങളുടെ "
+            "value" : "തുടരുന്നതിലൂടെ നിങ്ങൾക്ക് 18 വയസ്സോ അതിൽ കൂടുതലോ ഉണ്ടെന്ന് സ്ഥിരീകരിക്കുകയും ഞങ്ങളുടെ "
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "तुमचे वाद बाहेरची एक AI सेवा वाचते. पुढे गेल्यास तुम्ही "
+            "value" : "पुढे गेल्यास तुम्ही 18 वर्षांचे किंवा त्याहून मोठे असल्याची पुष्टी करता आणि "
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AI luar membaca pertikaian anda. Dengan meneruskan, anda bersetuju dengan "
+            "value" : "Dengan meneruskan, anda mengesahkan bahawa anda berumur 18 tahun atau lebih dan bersetuju dengan "
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "En ekstern KI leser diskusjonene dine. Ved å fortsette godtar du "
+            "value" : "Ved å fortsette bekrefter du at du er 18 år eller eldre og godtar "
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Een externe AI leest je discussies. Door verder te gaan, ga je akkoord met de "
+            "value" : "Door verder te gaan, bevestig je dat je 18 of ouder bent en ga je akkoord met de "
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଏକ ବାହାର AI ଆପଣଙ୍କ ବିବାଦ ପଢ଼େ। ଆଗକୁ ବଢ଼ିଲେ ଆପଣ ଆମ "
+            "value" : "ଆଗକୁ ବଢ଼ିଲେ ଆପଣ ନିଶ୍ଚିତ କରୁଛନ୍ତି ଯେ ଆପଣଙ୍କ ବୟସ 18 କିମ୍ବା ତାଠାରୁ ଅଧିକ ଏବଂ ଆମ "
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਤੁਹਾਡੀਆਂ ਬਹਿਸਾਂ ਇੱਕ ਬਾਹਰੀ AI ਸੇਵਾ ਪੜ੍ਹਦੀ ਹੈ। ਜਾਰੀ ਰੱਖ ਕੇ ਤੁਸੀਂ ਸਾਡੀਆਂ "
+            "value" : "ਜਾਰੀ ਰੱਖ ਕੇ ਤੁਸੀਂ ਪੁਸ਼ਟੀ ਕਰਦੇ ਹੋ ਕਿ ਤੁਹਾਡੀ ਉਮਰ 18 ਸਾਲ ਜਾਂ ਵੱਧ ਹੈ ਅਤੇ ਸਾਡੀਆਂ "
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Twoje spory czyta zewnętrzna usługa AI. Kontynuując, akceptujesz "
+            "value" : "Kontynuując, potwierdzasz, że masz co najmniej 18 lat, i akceptujesz "
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uma IA externa lê suas discussões. Ao continuar, você concorda com os "
+            "value" : "Ao continuar, você confirma ter 18 anos ou mais e concorda com os "
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uma IA externa lê as tuas discussões. Ao continuar, aceitas os "
+            "value" : "Ao continuar, confirmas que tens 18 anos ou mais e aceitas os "
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Disputele tale sunt citite de un AI extern. Dacă continui, ești de acord cu "
+            "value" : "Dacă continui, confirmi că ai 18 ani sau mai mult și ești de acord cu "
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ваши споры читает внешний ИИ. Продолжая, вы принимаете "
+            "value" : "Продолжая, вы подтверждаете, что вам есть 18 лет, и принимаете "
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tvoje spory číta externá AI. Pokračovaním súhlasíš s "
+            "value" : "Pokračovaním potvrdzuješ, že máš 18 rokov alebo viac, a súhlasíš s "
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tvoje prepire bere zunanja storitev UI. Z nadaljevanjem se strinjaš s "
+            "value" : "Z nadaljevanjem potrjuješ, da imaš 18 let ali več, in se strinjaš s "
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "En extern AI läser dina argument. Genom att fortsätta godkänner du våra "
+            "value" : "Genom att fortsätta bekräftar du att du är 18 år eller äldre och godkänner våra "
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ஒரு வெளி AI உங்கள் வாக்குவாதங்களைப் படிக்கிறது. தொடர்வதன் மூலம் "
+            "value" : "தொடர்வதன் மூலம் உங்களுக்கு 18 வயது அல்லது அதற்கு மேல் என்பதை உறுதிசெய்கிறீர்கள்; "
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "మీ వాదనలను బయటి AI సేవ ఒకటి చదువుతుంది. కొనసాగితే మీరు మా "
+            "value" : "కొనసాగితే మీకు 18 ఏళ్లు లేదా అంతకంటే ఎక్కువ అని నిర్ధారిస్తూ, మా "
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AI ภายนอกจะอ่านเรื่องที่คุณเล่า การดำเนินการต่อถือว่าคุณยอมรับ"
+            "value" : "การดำเนินการต่อถือว่าคุณยืนยันว่าอายุ 18 ปีขึ้นไปและยอมรับ"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tartışmalarını harici bir yapay zekâ okur. Devam ederek "
+            "value" : "Devam ederek 18 yaşında veya daha büyük olduğunu doğrulamış, "
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Твої суперечки читає сторонній ШІ. Продовжуючи, ти погоджуєшся з "
+            "value" : "Продовжуючи, ти підтверджуєш, що тобі 18 або більше, і погоджуєшся з "
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "آپ کی بحثیں ایک بیرونی اے آئی پڑھتا ہے۔ جاری رکھنے کا مطلب ہے کہ آپ ہماری "
+            "value" : "جاری رکھنے کا مطلب ہے کہ آپ تصدیق کرتے ہیں کہ آپ کی عمر 18 سال یا زیادہ ہے اور ہماری "
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Một dịch vụ AI bên ngoài sẽ đọc các cuộc tranh cãi của bạn. Tiếp tục nghĩa là bạn đồng ý với "
+            "value" : "Tiếp tục nghĩa là bạn xác nhận mình từ 18 tuổi trở lên và đồng ý với "
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "外部 AI 会读取你的争论内容。继续即表示你同意"
+            "value" : "继续即表示你确认已年满 18 岁，并同意"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "你的爭論內容會由外部 AI 讀取。繼續即表示你同意"
+            "value" : "繼續即表示你確認已年滿 18 歲，並同意"
           }
         }
       }
@@ -42500,271 +42500,271 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". يقرأ ذكاء اصطناعي خارجي ما تكتبه من خلافات."
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " মেনে নিচ্ছেন।"
+            "value" : " মেনে নিচ্ছেন। আপনার তর্কগুলো একটি বাইরের এআই পড়ে।"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". Una IA externa llegeix les teves discussions."
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". Tvoje spory čte externí AI."
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". En ekstern AI læser dine diskussioner."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " zu."
+            "value" : " zu. Eine externe KI liest deine Streitfälle."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". Τις διαφωνίες σου τις διαβάζει ένα εξωτερικό AI."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". An outside AI reads your arguments."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". Una IA externa lee tus discusiones."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". Ulkopuolinen tekoäly lukee kiistasi."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". Une IA externe lit tes débats."
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " સાથે સંમત થાઓ છો."
+            "value" : " સાથે સંમત થાઓ છો. તમારી દલીલો એક બહારની AI સેવા વાંચે છે."
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". שירות AI חיצוני קורא את הוויכוחים שלך."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " से सहमत हैं।"
+            "value" : " से सहमत हैं। आपकी बहसें एक बाहरी AI पढ़ता है।"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". Tvoje rasprave čita vanjska AI usluga."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". A vitáidat egy külső MI olvassa."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". AI pihak luar membaca argumenmu."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". Le tue discussioni vengono lette da un'IA esterna."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "には、続行した時点で同意したものとみなされます。"
+            "value" : "に同意したものとみなされます。書いた内容は外部のAIが読み取ります。"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಗೆ ಒಪ್ಪುತ್ತೀರಿ."
+            "value" : " ಇವೆರಡಕ್ಕೂ ಒಪ್ಪುತ್ತೀರಿ. ನಿಮ್ಮ ವಾದಗಳನ್ನು ಹೊರಗಿನ AI ಓದುತ್ತದೆ."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "에 동의하는 것으로 봐요."
+            "value" : "에 동의하는 것으로 봐요. 논쟁 내용은 외부 AI가 읽어요."
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " എന്നിവ അംഗീകരിക്കുന്നു."
+            "value" : " എന്നിവ അംഗീകരിക്കുകയും ചെയ്യുന്നു. പുറത്തുള്ള ഒരു എഐ നിങ്ങളുടെ തർക്കങ്ങൾ വായിക്കും."
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " मान्य करता."
+            "value" : " मान्य करता. तुमचे वाद बाहेरची एक AI सेवा वाचते."
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". AI luar membaca pertikaian anda."
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". En ekstern KI leser diskusjonene dine."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". Een externe AI leest je discussies."
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " ସହ ସହମତ ହେଉଛନ୍ତି।"
+            "value" : " ସହ ସହମତ ହେଉଛନ୍ତି। ଏକ ବାହାର AI ଆପଣଙ୍କ ବିବାଦ ପଢ଼େ।"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " ਨਾਲ ਸਹਿਮਤ ਹੁੰਦੇ ਹੋ।"
+            "value" : " ਨਾਲ ਸਹਿਮਤ ਹੁੰਦੇ ਹੋ। ਤੁਹਾਡੀਆਂ ਬਹਿਸਾਂ ਇੱਕ ਬਾਹਰੀ AI ਸੇਵਾ ਪੜ੍ਹਦੀ ਹੈ।"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". Twoje spory czyta zewnętrzna usługa AI."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". Uma IA externa lê suas discussões."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". Uma IA externa lê as tuas discussões."
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". Disputele tale sunt citite de un AI extern."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". Ваши споры читает внешний ИИ."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". Tvoje spory číta externá AI."
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". Tvoje prepire bere zunanja storitev UI."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". En extern AI läser dina argument."
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " ஏற்கிறீர்கள்."
+            "value" : " ஏற்கிறீர்கள். ஒரு வெளி AI உங்கள் வாக்குவாதங்களைப் படிக்கிறது."
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " అంగీకరించినట్టే."
+            "value" : " అంగీకరించినట్టే. మీ వాదనలను బయటి AI సేవ ఒకటి చదువుతుంది."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ของเรา"
+            "value" : "ของเรา AI ภายนอกจะอ่านเรื่องที่คุณเล่า"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " kabul etmiş olursun."
+            "value" : "'nı kabul etmiş olursun. Tartışmalarını harici bir yapay zekâ okur."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". Твої суперечки читає сторонній ШІ."
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " سے متفق ہیں۔"
+            "value" : " سے متفق ہیں۔ آپ کی بحثیں ایک بیرونی اے آئی پڑھتا ہے۔"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "."
+            "value" : ". Một dịch vụ AI bên ngoài sẽ đọc các cuộc tranh cãi của bạn."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "。"
+            "value" : "。外部 AI 会读取你的争论内容。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "。"
+            "value" : "。你的爭論內容會由外部 AI 讀取。"
           }
         }
       }
@@ -42782,7 +42782,7 @@
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " ও "
+            "value" : " আর "
           }
         },
         "ca" : {
@@ -42794,7 +42794,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " a "
+            "value" : " a se "
           }
         },
         "da" : {
@@ -42818,7 +42818,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " and "
+            "value" : " and the "
           }
         },
         "es" : {
@@ -42848,7 +42848,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " ו"
+            "value" : " ול"
           }
         },
         "hi" : {
@@ -42896,7 +42896,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " 및 "
+            "value" : "과 "
           }
         },
         "ml" : {
@@ -42908,7 +42908,7 @@
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " आणि "
+            "value" : " व "
           }
         },
         "ms" : {
@@ -42938,7 +42938,7 @@
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " ਅਤੇ "
+            "value" : " ਅਤੇ ਸਾਡੀ "
           }
         },
         "pl" : {
@@ -42950,7 +42950,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " e a "
+            "value" : " e com a "
           }
         },
         "pt-PT" : {
@@ -42962,7 +42962,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " și "
+            "value" : " și cu "
           }
         },
         "ru" : {
@@ -42974,7 +42974,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " a "
+            "value" : " a so "
           }
         },
         "sl" : {
@@ -42998,25 +42998,25 @@
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " మరియు "
+            "value" : ", "
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " และ "
+            "value" : "และ"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " ve "
+            "value" : "'nı ve "
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " і "
+            "value" : " та "
           }
         },
         "ur" : {
@@ -43040,7 +43040,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "與"
+            "value" : "和"
           }
         }
       }
@@ -43124,7 +43124,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "למדיניות הפרטיות"
+            "value" : "מדיניות הפרטיות"
           }
         },
         "hi" : {
@@ -43286,7 +43286,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gizlilik Politikası'nı"
+            "value" : "Gizlilik Politikası"
           }
         },
         "uk" : {
@@ -43334,13 +43334,13 @@
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ব্যবহারের শর্তাবলী"
+            "value" : "ব্যবহারের শর্তাবলি"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Condicions d’ús"
+            "value" : "Condicions d'ús"
           }
         },
         "cs" : {
@@ -43352,7 +43352,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "vilkårene"
+            "value" : "brugsvilkårene"
           }
         },
         "de" : {
@@ -43376,7 +43376,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Términos de uso"
+            "value" : "Condiciones de uso"
           }
         },
         "fi" : {
@@ -43400,13 +43400,13 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "לתנאי השימוש"
+            "value" : "תנאי השימוש"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "उपयोग की शर्तों"
+            "value" : "इस्तेमाल की शर्तें"
           }
         },
         "hr" : {
@@ -43424,13 +43424,13 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ketentuan Layanan"
+            "value" : "Ketentuan Penggunaan"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Condizioni d’uso"
+            "value" : "Termini di utilizzo"
           }
         },
         "ja" : {
@@ -43472,7 +43472,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "bruksvilkårene"
+            "value" : "vilkårene"
           }
         },
         "nl" : {
@@ -43484,7 +43484,7 @@
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ବ୍ୟବହାର ଶର୍ତ୍ତାବଳୀ"
+            "value" : "ବ୍ୟବହାର ସର୍ତ୍ତ"
           }
         },
         "pa" : {
@@ -43496,7 +43496,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Regulamin"
+            "value" : "Warunki korzystania"
           }
         },
         "pt-BR" : {
@@ -43544,13 +43544,13 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "பயன்பாட்டு விதிமுறைகள்"
+            "value" : "பயன்பாட்டு விதிமுறைகளை"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "వినియోగ నిబంధనలు"
+            "value" : "వినియోగ నిబంధనలకు"
           }
         },
         "th" : {
@@ -43562,7 +43562,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kullanım Koşulları'nı"
+            "value" : "Kullanım Koşulları"
           }
         },
         "uk" : {
@@ -155365,6 +155365,558 @@
         }
       }
     },
+    "signin.codeResendIn" : {
+      "comment" : "Generated by mobile/shared/strings/export-strings.ts from lib/i18n.ts. Do not edit.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إعادة الإرسال خلال %1$@ ث"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ সেকেন্ডে আবার পাঠান"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reenvia en %1$@ s"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Znovu za %1$@ s"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send igen om %1$@ s"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erneut senden in %1$@ s"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επανάληψη σε %1$@ δ"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resend in %1$@s"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reenviar en %1$@ s"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lähetä uudelleen %1$@ s kuluttua"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Renvoyer dans %1$@ s"
+          }
+        },
+        "gu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ સેકન્ડમાં ફરી મોકલો"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שליחה חוזרת בעוד %1$@ שנ׳"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ सेकंड में दोबारा भेजें"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ponovo za %1$@ s"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Újraküldés %1$@ mp múlva"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kirim ulang dalam %1$@ dtk"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reinvia tra %1$@ s"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@秒後に再送"
+          }
+        },
+        "kn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ ಸೆಕೆಂಡ್‌ನಲ್ಲಿ ಮತ್ತೆ ಕಳುಹಿಸಿ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@초 후 다시 보내기"
+          }
+        },
+        "ml" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ സെക്കൻഡിൽ വീണ്ടും അയയ്ക്കാം"
+          }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ सेकंदात पुन्हा पाठवा"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hantar semula dalam %1$@ s"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send på nytt om %1$@ s"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opnieuw sturen over %1$@ s"
+          }
+        },
+        "or" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ ସେକେଣ୍ଡରେ ପୁଣି ପଠାନ୍ତୁ"
+          }
+        },
+        "pa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ ਸਕਿੰਟ ਵਿੱਚ ਦੁਬਾਰਾ ਭੇਜੋ"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyślij ponownie za %1$@ s"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reenviar em %1$@ s"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reenviar em %1$@ s"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retrimite în %1$@ s"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отправить снова через %1$@ с"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Znova za %1$@ s"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Znova čez %1$@ s"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skicka igen om %1$@ s"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ வினாடியில் மீண்டும் அனுப்பலாம்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ సెకన్లలో మళ్లీ పంపండి"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ส่งอีกครั้งใน %1$@ วินาที"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ sn sonra yeniden gönder"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Надіслати ще раз через %1$@ с"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ سیکنڈ میں دوبارہ بھیجیں"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gửi lại sau %1$@ giây"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ 秒后重发"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ 秒後重寄"
+          }
+        }
+      }
+    },
+    "signin.continue" : {
+      "comment" : "Generated by mobile/shared/strings/export-strings.ts from lib/i18n.ts. Do not edit.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "متابعة"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "চালিয়ে যান"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continua"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokračovat"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fortsæt"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weiter"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Συνέχεια"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuar"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jatka"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuer"
+          }
+        },
+        "gu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "આગળ વધો"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "המשך"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आगे बढ़ें"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nastavi"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tovább"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lanjut"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continua"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "続ける"
+          }
+        },
+        "kn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ಮುಂದುವರಿಸಿ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "계속"
+          }
+        },
+        "ml" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "തുടരുക"
+          }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पुढे जा"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teruskan"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fortsett"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verder"
+          }
+        },
+        "or" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ଜାରି ରଖନ୍ତୁ"
+          }
+        },
+        "pa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ਜਾਰੀ ਰੱਖੋ"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dalej"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuar"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuar"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuă"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продолжить"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokračovať"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naprej"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fortsätt"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "தொடர்க"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "కొనసాగండి"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไปต่อ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Devam et"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продовжити"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جاری رکھیں"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiếp tục"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "继续"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "繼續"
+          }
+        }
+      }
+    },
     "signin.create" : {
       "comment" : "Generated by mobile/shared/strings/export-strings.ts from lib/i18n.ts. Do not edit.",
       "extractionState" : "manual",
@@ -155913,6 +156465,282 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "我們會用電子郵件寄送驗證碼來確認此地址，只需做這一次。"
+          }
+        }
+      }
+    },
+    "signin.dev" : {
+      "comment" : "Generated by mobile/shared/strings/export-strings.ts from lib/i18n.ts. Do not edit.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المتابعة كمستخدم تجريبي"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "টেস্ট ইউজার হিসেবে চালিয়ে যান"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continua com a usuari de prova"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokračovat jako testovací uživatel"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fortsæt som testbruger"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Als Testnutzer fortfahren"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Συνέχεια ως δοκιμαστικός χρήστης"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue as test user"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuar como usuario de prueba"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jatka testikäyttäjänä"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuer en tant qu’utilisateur test"
+          }
+        },
+        "gu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ટેસ્ટ યુઝર તરીકે આગળ વધો"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "המשך כמשתמש בדיקה"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "टेस्ट यूज़र के तौर पर जारी रखें"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nastavi kao testni korisnik"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Folytatás tesztfelhasználóként"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lanjutkan sebagai pengguna uji"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continua come utente di test"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テストユーザーとして続ける"
+          }
+        },
+        "kn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ಟೆಸ್ಟ್ ಬಳಕೆದಾರರಾಗಿ ಮುಂದುವರಿಯಿರಿ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "테스트 사용자로 계속하기"
+          }
+        },
+        "ml" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ടെസ്റ്റ് യൂസറായി തുടരൂ"
+          }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "टेस्ट युजर म्हणून पुढे जा"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teruskan sebagai pengguna ujian"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fortsett som testbruker"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doorgaan als testgebruiker"
+          }
+        },
+        "or" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ଟେଷ୍ଟ ୟୁଜର୍ ଭାବେ ଆଗକୁ ବଢ଼ନ୍ତୁ"
+          }
+        },
+        "pa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ਟੈਸਟ ਯੂਜ਼ਰ ਵਜੋਂ ਜਾਰੀ ਰੱਖੋ"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontynuuj jako użytkownik testowy"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuar como usuário de teste"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuar como utilizador de teste"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuă ca utilizator de test"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Войти как тестовый пользователь"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokračovať ako testovací používateľ"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nadaljuj kot testni uporabnik"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fortsätt som testanvändare"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "சோதனைப் பயனராகத் தொடர்க"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "టెస్ట్ యూజర్‌గా కొనసాగండి"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ดำเนินการต่อในฐานะผู้ใช้ทดสอบ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Test kullanıcısı olarak devam et"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продовжити як тестовий користувач"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ٹیسٹ یوزر کے طور پر جاری رکھیں"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiếp tục với tư cách người dùng thử"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以测试用户继续"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以測試使用者繼續"
           }
         }
       }
@@ -157754,7 +158582,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Não conseguimos fazer seu login. Pode tentar de novo?"
+            "value" : "Não conseguimos fazer você entrar. Pode tentar de novo?"
           }
         },
         "pt-PT" : {
@@ -158401,6 +159229,282 @@
         }
       }
     },
+    "signin.lastUsed" : {
+      "comment" : "Generated by mobile/shared/strings/export-strings.ts from lib/i18n.ts. Do not edit.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "آخر استخدام"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "সর্বশেষ ব্যবহৃত"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Darrer ús"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naposledy"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sidst brugt"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zuletzt genutzt"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τελευταία χρήση"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last used"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Último uso"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viimeksi käytetty"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dernière utilisation"
+          }
+        },
+        "gu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "છેલ્લે વપરાયેલ"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שימוש אחרון"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पिछली बार इस्तेमाल किया"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zadnje korišteno"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Legutóbb használt"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terakhir dipakai"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ultimo utilizzo"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "前回使用"
+          }
+        },
+        "kn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ಕೊನೆಯದಾಗಿ ಬಳಸಿದ್ದು"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "마지막으로 사용"
+          }
+        },
+        "ml" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "അവസാനം ഉപയോഗിച്ചത്"
+          }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "शेवटचे वापरलेले"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terakhir digunakan"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sist brukt"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laatst gebruikt"
+          }
+        },
+        "or" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ଶେଷ ବ୍ୟବହୃତ"
+          }
+        },
+        "pa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ਆਖ਼ਰੀ ਵਾਰ ਵਰਤਿਆ"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ostatnio używane"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Último uso"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Última utilização"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ultima utilizare"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Последний вход"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naposledy použité"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nazadnje uporabljeno"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Senast använd"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "கடைசியாகப் பயன்படுத்தியது"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "చివరిగా వాడినది"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้ล่าสุด"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Son kullanılan"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Останній вхід"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "آخری بار استعمال کیا"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dùng gần nhất"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上次使用"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上次使用"
+          }
+        }
+      }
+    },
     "signin.lead" : {
       "comment" : "Generated by mobile/shared/strings/export-strings.ts from lib/i18n.ts. Do not edit.",
       "extractionState" : "manual",
@@ -158858,7 +159962,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Carregando as opções de login…"
+            "value" : "Carregando as opções para entrar…"
           }
         },
         "pt-PT" : {
@@ -161709,6 +162813,282 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "尚未開放"
+          }
+        }
+      }
+    },
+    "signin.skip" : {
+      "comment" : "Generated by mobile/shared/strings/export-strings.ts from lib/i18n.ts. Do not edit.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تخطّي"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "এড়িয়ে যান"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Omet"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přeskočit"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spring over"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Überspringen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Παράλειψη"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Omitir"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ohita"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passer"
+          }
+        },
+        "gu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "છોડી દો"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "דילוג"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "छोड़ें"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preskoči"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kihagyás"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lewati"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salta"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スキップ"
+          }
+        },
+        "kn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ಬಿಟ್ಟುಬಿಡಿ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "건너뛰기"
+          }
+        },
+        "ml" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ഒഴിവാക്കുക"
+          }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "वगळा"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Langkau"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hopp over"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overslaan"
+          }
+        },
+        "or" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ଛାଡ଼ନ୍ତୁ"
+          }
+        },
+        "pa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ਛੱਡੋ"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pomiń"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pular"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saltar"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Omite"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пропустить"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preskočiť"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preskoči"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoppa över"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "தவிர்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "దాటవేయి"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ข้าม"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atla"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пропустити"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "چھوڑیں"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bỏ qua"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跳过"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "略過"
           }
         }
       }
