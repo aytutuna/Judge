@@ -856,7 +856,7 @@
 }
 
 /* The ask-once "Help improve Judge?" card. */
-.consentWrap {
+.collapse {
   display: grid;
   grid-template-rows: 1fr;
   opacity: 1;
@@ -864,16 +864,16 @@
     grid-template-rows 280ms ease-out,
     opacity 280ms ease-out;
 }
-.consentLeaving {
+.collapsed {
   grid-template-rows: 0fr;
   opacity: 0;
 }
-.consentClip {
+.collapseClip {
   overflow: hidden;
   min-height: 0;
 }
 @media (prefers-reduced-motion: reduce) {
-  .consentWrap {
+  .collapse {
     transition: none;
   }
 }
