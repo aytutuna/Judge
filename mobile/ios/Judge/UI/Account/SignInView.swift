@@ -1,9 +1,8 @@
 import SwiftUI
 
-/// The sign-in sheet: the 18+ checkbox (unless the phone already said 18+),
-/// Apple, then Google, then email with a password or an emailed six-digit
-/// code, with the outside-AI consent line at the bottom. Only methods the server reports as available
-/// are shown.
+/// The sign-in sheet: Apple, Google, then an email that leads to its
+/// password or an emailed six-digit code, with the consent line at the
+/// bottom. Only methods the server reports as available are shown.
 struct SignInView: View {
     @Environment(AppModel.self) private var app
     @State private var webLink: WebLink?
@@ -100,6 +99,8 @@ struct SignInView: View {
                     switch account.step {
                     case .choose:
                         chooser(lang, providers: providers, account: account)
+                    case .password:
+                        passwordScreen(lang, account: account)
                     case .code(let email):
                         codeForm(lang, email: email, account: account)
                     case .choosePassword:
@@ -118,10 +119,6 @@ struct SignInView: View {
 
     @ViewBuilder
     private func chooser(_ lang: AppLang, providers: SignInProviders, account: AccountModel) -> some View {
-        if account.needsAgeCheckbox {
-            AgeCheckbox(lang: lang, ticked: account.ageTicked) { account.setAgeTicked($0) }
-                .disabled(account.busy != nil)
-        }
         if providers.apple {
             Button {
                 app.analytics.track("sign_in_started", ["provider": "apple"])
@@ -133,7 +130,8 @@ struct SignInView: View {
                 }
             }
             .buttonStyle(AppleButtonStyle())
-            .disabled(account.busy != nil || !account.ageAllowsSignIn)
+            .disabled(account.busy != nil)
+            .overlay(alignment: .trailing) { lastUsedTag(lang, .apple, tint: AppleButtonStyle.label) }
         }
         if providers.google {
             Button {
@@ -145,7 +143,8 @@ struct SignInView: View {
                 }
             }
             .buttonStyle(OutlineButtonStyle())
-            .disabled(account.busy != nil || !account.ageAllowsSignIn)
+            .disabled(account.busy != nil)
+            .overlay(alignment: .trailing) { lastUsedTag(lang, .google, tint: Brand.muted) }
         }
         if providers.emailCode {
             if providers.apple || providers.google {
@@ -155,85 +154,111 @@ struct SignInView: View {
         }
     }
 
-    /// Email, and under it a password when the server has them and the mode
-    /// asks for one; links below move between the modes. A server without
-    /// passwords only has the code.
+    /// The "Last used" tag, on the method the last sign-in on this phone used.
+    @ViewBuilder
+    private func lastUsedTag(_ lang: AppLang, _ method: AccountModel.LastMethod, tint: Color) -> some View {
+        if app.account.lastMethod == method {
+            Text(L10n.signinLastUsed(lang))
+                .brandText(.footnote)
+                .foregroundStyle(tint)
+                .padding(.trailing, 20)
+                .allowsHitTesting(false)
+        }
+    }
+
     private func emailForm(_ lang: AppLang, account: AccountModel) -> some View {
         @Bindable var account = account
-        let passwords = account.passwordSignIn
-        let mode: AccountModel.Mode = passwords ? account.mode : .code
-        let hasPassword = mode == .password || mode == .create
-        let signingIn = mode == .password
-        let busyKind: AccountModel.Busy = signingIn ? .password : .sendCode
-        let emailType: UITextContentType = hasPassword ? .username : .emailAddress
         return VStack(alignment: .leading, spacing: 10) {
-            Text(L10n.signinEmailLabel(lang))
-                .brandText(.slotTitle)
-                .foregroundStyle(Brand.ink)
+            HStack {
+                Text(L10n.signinEmailLabel(lang))
+                    .brandText(.slotTitle)
+                    .foregroundStyle(Brand.ink)
+                Spacer(minLength: 12)
+                if account.lastMethod == .email {
+                    Text(L10n.signinLastUsed(lang))
+                        .brandText(.footnote)
+                        .foregroundStyle(Brand.muted)
+                }
+            }
             TextField("", text: $account.email, prompt: Text(L10n.signinEmailPlaceholder(lang)).foregroundStyle(Brand.placeholder))
                 .focused($focus, equals: .email)
-                .textContentType(emailType)
+                .textContentType(account.passwordSignIn ? .username : .emailAddress)
                 .keyboardType(.emailAddress)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
-                .submitLabel(hasPassword ? .next : .send)
-                .onSubmit {
-                    if hasPassword { focus = .password } else { sendCode() }
-                }
+                .submitLabel(.continue)
+                .onSubmit { continueWithEmail() }
+                .disabled(account.busy != nil)
                 .brandText(.body)
                 .foregroundStyle(Brand.ink)
                 .padding(.horizontal, 16)
                 .frame(minHeight: 52)
                 .paperSurface(radius: Radius.field, fill: Brand.paper, border: focus == .email ? Brand.terraInk : Brand.line2)
                 .accessibilityLabel(L10n.signinEmailLabel(lang))
-            if hasPassword {
-                Text(mode == .create ? L10n.signinPasswordNew(lang) : L10n.signinPassword(lang))
-                    .brandText(.slotTitle)
-                    .foregroundStyle(Brand.ink)
-                passwordField(lang, text: $account.password, creating: mode == .create) {
-                    submit(signingIn: signingIn)
-                }
-            }
-            if mode == .create {
-                Text(L10n.signinCreateNote(lang))
-                    .brandText(.footnote)
-                    .foregroundStyle(Brand.muted)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            Button { submit(signingIn: signingIn) } label: {
-                if account.busy == busyKind {
-                    ProgressView().tint(Brand.ink)
+            Button { continueWithEmail() } label: {
+                if account.busy == .sendCode {
+                    ProgressView().tint(Brand.ivory)
                 } else {
-                    Text(signingIn ? L10n.signinPasswordSubmit(lang) : L10n.appSigninCodeRequest(lang))
+                    Text(L10n.signinContinue(lang))
                 }
             }
-            .buttonStyle(OutlineButtonStyle())
-            .disabled(signingIn ? !account.canSignInWithPassword : !account.canSendCode)
-            if passwords {
-                modeLinks(lang, mode: mode, disabled: account.busy != nil)
-            }
+            .buttonStyle(PrimaryButtonStyle())
+            .disabled(!account.canSendCode)
         }
     }
 
-    private func modeLinks(_ lang: AppLang, mode: AccountModel.Mode, disabled: Bool) -> some View {
-        VStack(alignment: .leading, spacing: 0) {
-            if mode == .password {
-                modeLink(L10n.signinForgot(lang), to: .forgot)
-                modeLink(L10n.signinCreate(lang), to: .create)
-                modeLink(L10n.signinUseCode(lang), to: .code)
-            } else {
-                modeLink(L10n.signinUsePassword(lang), to: .password)
+    /// The address takes a password (sign in) or has none yet (create one).
+    private func passwordScreen(_ lang: AppLang, account: AccountModel) -> some View {
+        @Bindable var account = account
+        let creating = account.mode == .create
+        return VStack(alignment: .leading, spacing: 12) {
+            Text(account.email)
+                .brandText(.slotTitle)
+                .foregroundStyle(Brand.ink)
+                .fixedSize(horizontal: false, vertical: true)
+            Text(creating ? L10n.signinPasswordNew(lang) : L10n.signinPassword(lang))
+                .brandText(.slotTitle)
+                .foregroundStyle(Brand.ink)
+            passwordField(lang, text: $account.password, creating: creating) {
+                submitPassword(creating: creating)
             }
+            Button { submitPassword(creating: creating) } label: {
+                if account.busy == (creating ? .sendCode : .password) {
+                    ProgressView().tint(Brand.ivory)
+                } else {
+                    Text(creating ? L10n.signinContinue(lang) : L10n.signinPasswordSubmit(lang))
+                }
+            }
+            .buttonStyle(PrimaryButtonStyle())
+            .disabled(creating ? !account.canSendCode : !account.canSignInWithPassword)
+            VStack(alignment: .leading, spacing: 0) {
+                if !creating {
+                    Button(L10n.signinForgot(lang)) {
+                        showPassword = false
+                        Task {
+                            await app.account.forgotPassword(lang: lang)
+                            if case .code = app.account.step { focus = .code }
+                        }
+                    }
+                    .buttonStyle(LinkButtonStyle())
+                    Button(L10n.signinUseCode(lang)) {
+                        showPassword = false
+                        Task {
+                            await app.account.useCode(lang: lang)
+                            if case .code = app.account.step { focus = .code }
+                        }
+                    }
+                    .buttonStyle(LinkButtonStyle())
+                }
+                Button(L10n.appSigninChangeEmail(lang)) {
+                    showPassword = false
+                    app.account.changeEmail()
+                    focus = .email
+                }
+                .buttonStyle(LinkButtonStyle())
+            }
+            .disabled(account.busy != nil)
         }
-        .disabled(disabled)
-    }
-
-    private func modeLink(_ title: String, to mode: AccountModel.Mode) -> some View {
-        Button(title) {
-            showPassword = false
-            app.account.setMode(mode)
-        }
-        .buttonStyle(LinkButtonStyle())
     }
 
     /// A password box with a show/hide link under it. `onSubmit` runs on the
@@ -266,7 +291,7 @@ struct SignInView: View {
         }
     }
 
-    /// Signed in by the code: choose a password; the sheet stays until one is saved.
+    /// Signed in by the code: choose a password, or skip.
     private func passwordChoice(_ lang: AppLang, account: AccountModel) -> some View {
         @Bindable var account = account
         return VStack(alignment: .leading, spacing: 12) {
@@ -291,13 +316,9 @@ struct SignInView: View {
             }
             .buttonStyle(PrimaryButtonStyle())
             .disabled(account.busy != nil || account.password.isEmpty)
-            if account.failure != nil {
-                Button(L10n.accountSignOut(lang)) {
-                    Task { await app.account.signOutFromPasswordStep() }
-                }
+            Button(L10n.signinSkip(lang)) { app.account.skipPassword() }
                 .buttonStyle(LinkButtonStyle())
                 .disabled(account.busy != nil)
-            }
         }
     }
 
@@ -325,7 +346,7 @@ struct SignInView: View {
                 .onChange(of: account.code) { old, new in
                     let digits = AccountModel.digits(new)
                     if digits != new { account.code = digits }
-                    if digits.count == AccountModel.codeLength, AccountModel.digits(old).count < AccountModel.codeLength {
+                    if AccountModel.digits(old).count < AccountModel.codeLength, app.account.shouldAutoSubmitCode {
                         Task { await app.account.verifyCode() }
                     }
                 }
@@ -341,10 +362,11 @@ struct SignInView: View {
             .buttonStyle(PrimaryButtonStyle())
             .disabled(!account.canVerifyCode)
             HStack {
-                Button(L10n.appSigninCodeResend(lang)) {
+                Button(account.resendIn > 0 ? L10n.signinCodeResendIn(lang, n: String(account.resendIn)) : L10n.appSigninCodeResend(lang)) {
                     Task { await app.account.resendCode(lang: lang) }
                 }
                 .buttonStyle(LinkButtonStyle())
+                .disabled(account.resendIn > 0)
                 Spacer(minLength: 12)
                 Button(L10n.appSigninChangeEmail(lang)) {
                     app.account.changeEmail()
@@ -383,17 +405,25 @@ struct SignInView: View {
             })
     }
 
-    private func submit(signingIn: Bool) {
-        guard signingIn else {
-            sendCode()
-            return
+    private func continueWithEmail() {
+        guard app.account.canSendCode else { return }
+        app.analytics.track("sign_in_started", ["provider": "email"])
+        Task {
+            await app.account.continueWithEmail(lang: app.lang)
+            switch app.account.step {
+            case .code: focus = .code
+            case .password: focus = .password
+            default: break
+            }
         }
-        app.analytics.track("sign_in_started", ["provider": "password"])
-        Task { await app.account.signInWithPassword() }
     }
 
-    private func sendCode() {
-        app.analytics.track("sign_in_started", ["provider": "email"])
+    private func submitPassword(creating: Bool) {
+        guard creating else {
+            app.analytics.track("sign_in_started", ["provider": "password"])
+            Task { await app.account.signInWithPassword() }
+            return
+        }
         Task {
             await app.account.sendCode(lang: app.lang)
             if case .code = app.account.step { focus = .code }
