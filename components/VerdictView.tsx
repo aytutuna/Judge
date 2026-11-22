@@ -121,7 +121,7 @@ export function VerdictView({
   /** The display name the viewer chose for their own party (shown on the share page). */
   selfDisplayName?: string | null;
   owner?: OwnerShare;
-  /** The writer's or a party's own account (and the other sides'): never on a share page. */
+  /** Only for the writer or a case party, never on a share page. */
   written?: WrittenSides | null;
 }) {
   const storeLang = useLang();

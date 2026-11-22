@@ -146,6 +146,10 @@ function Detail({ title, children }: { title?: string; children: ReactNode }) {
   );
 }
 
+/** What the people in the argument wrote, for the writer or a party only:
+ * their own words with names, and each other side as the judges read it. */
+export type WrittenSides = { own: string | null; others: { party: PartyId; text: string }[] };
+
 /**
  * Under the card: rows that open the details (what the ruling turns on, how
  * each side got there, the losing side's best point) and the details
@@ -153,10 +157,6 @@ function Detail({ title, children }: { title?: string; children: ReactNode }) {
  * rows, always in the markup (hidden until a row is pressed) so the share
  * page text stays readable without script. Nothing for a refusal.
  */
-/** What the people in the argument wrote, for the writer or a party only:
- * their own words with names, and each other side as the judges read it. */
-export type WrittenSides = { own: string | null; others: { party: PartyId; text: string }[] };
-
 export function VerdictDetails({
   result,
   parties,

@@ -150,7 +150,7 @@ export function SharedVerdict({
         <Thread
           lang={initialLang}
           argument={ownText}
-          unwritten={written !== null}
+          unwritten={written !== null && ownText !== null}
           missing={ownView.originalStatus === "unreadable" ? "owner.unreadable" : "owner.notStored"}
           verdict={
             <div lang={lang} dir={langDir(lang)} className="flex flex-col gap-4 min-w-0">
