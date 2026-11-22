@@ -27,8 +27,10 @@ final class ConsentModel {
 
     func load() async {
         guard usesNetwork, let loaded = try? await api.consent() else { return }
-        state = loaded.state
-        ask = loaded.ask
+        withAnimation(.easeOut(duration: 0.28)) {
+            state = loaded.state
+            ask = loaded.ask
+        }
     }
 
     func answerCard(_ on: Bool, lang: AppLang) async {
