@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from "react";
 import type { AgeState, AppConfig, Entitlement, MeResponse } from "./account-types";
+import { commitSignIn } from "./last-signin";
 
 /**
  * Client store for "who is signed in, what can they use, and what does this
@@ -61,6 +62,7 @@ export function refreshViewer(): Promise<void> {
       const unauthorized = me.status === "rejected" && (me.reason as { status?: number })?.status === 401;
       const failed = me.status === "rejected" && !unauthorized;
       retryOnFocus = (failed || config.status === "rejected") && !retrying;
+      if (me.status === "fulfilled" && me.value.user) commitSignIn(me.value.user.email);
       emit({
         status: failed && !state.me ? "error" : "ready",
         me: me.status === "fulfilled" ? me.value : unauthorized ? SIGNED_OUT : state.me,
