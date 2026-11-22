@@ -24,6 +24,7 @@ import com.github.takahirom.roborazzi.captureRoboImage
 import com.okjudge.judge.Fixtures
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.auth.SignInError
+import com.okjudge.judge.core.auth.SignInMethod
 import com.okjudge.judge.core.data.Appearance
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.model.Entitlement
@@ -352,6 +353,12 @@ class ScreenshotsTest {
     }
 
     @Test
+    fun signin_last_used_en() = capture("signin_last_used_en") {
+        val state = SignInUiState(providers = bothProviders, email = "ada@example.com", lastUsed = SignInMethod.GOOGLE)
+        Themed(AppLang.EN) { SignInScreen(state, onBack = {}, actions = SignInActions()) }
+    }
+
+    @Test
     fun signin_tr() = capture("signin_tr") {
         Themed(AppLang.TR) { SignInScreen(SignInUiState(providers = bothProviders), onBack = {}, actions = SignInActions()) }
     }
@@ -363,6 +370,7 @@ class ScreenshotsTest {
             step = SignInStep.CODE,
             email = "ada@example.com",
             code = "482913",
+            resendIn = 18,
             error = SignInError.CODE_INVALID,
         )
         Themed(AppLang.EN) { SignInScreen(state, onBack = {}, actions = SignInActions()) }
@@ -376,6 +384,7 @@ class ScreenshotsTest {
     fun signin_password_en() = capture("signin_password_en") {
         val state = SignInUiState(
             providers = passwordProviders,
+            step = SignInStep.PASSWORD,
             email = "ada@example.com",
             password = "made-up-pass",
             error = SignInError.PASSWORD_WRONG,
@@ -385,7 +394,13 @@ class ScreenshotsTest {
 
     @Test
     fun signin_create_en() = capture("signin_create_en") {
-        val state = SignInUiState(providers = passwordProviders, mode = SignInMode.CREATE, email = "ada@example.com", password = "made-up-pass")
+        val state = SignInUiState(
+            providers = passwordProviders,
+            step = SignInStep.PASSWORD,
+            mode = SignInMode.CREATE,
+            email = "ada@example.com",
+            password = "made-up-pass",
+        )
         Themed(AppLang.EN) { SignInScreen(state, onBack = {}, actions = SignInActions()) }
     }
 

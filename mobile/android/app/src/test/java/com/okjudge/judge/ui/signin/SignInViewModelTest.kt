@@ -9,12 +9,15 @@ import com.okjudge.judge.core.auth.FakeGoogle
 import com.okjudge.judge.core.auth.GoogleIdResult
 import com.okjudge.judge.core.auth.Routes
 import com.okjudge.judge.core.auth.Routes.Companion.CONFIG
+import com.okjudge.judge.core.auth.Routes.Companion.LOOKUP
 import com.okjudge.judge.core.auth.Routes.Companion.PASSWORD_SIGN_IN
 import com.okjudge.judge.core.auth.Routes.Companion.SET_PASSWORD
 import com.okjudge.judge.core.auth.Routes.Companion.SEND_CODE
 import com.okjudge.judge.core.auth.Routes.Companion.VERIFY_CODE
 import com.okjudge.judge.core.auth.Routes.Companion.json
+import com.okjudge.judge.core.auth.LastSignInStore
 import com.okjudge.judge.core.auth.SignInError
+import com.okjudge.judge.core.auth.SignInMethod
 import com.okjudge.judge.i18n.AppLang
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -48,6 +51,9 @@ class SignInViewModelTest {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Unconfined)
     private val tokens = MemoryTokenStore()
     private val google = FakeGoogle(GoogleIdResult.Token("id"))
+    private val context: Context = ApplicationProvider.getApplicationContext()
+    private val last = LastSignInStore(context.getSharedPreferences(LastSignInStore.FILE, Context.MODE_PRIVATE))
+    private lateinit var account: Account
 
     @Before
     fun setUp() {
@@ -66,33 +72,26 @@ class SignInViewModelTest {
         Dispatchers.resetMain()
     }
 
-    /** The 18+ box is ticked unless a test is about it. */
-    private fun vm(ticked: Boolean = true): SignInViewModel {
+    private fun vm(): SignInViewModel {
         val api = JudgeApi(server.url("/").toString(), OkHttpClient(), "ua", tokens)
-        return SignInViewModel(Account(api, tokens, google, scope)).also { it.onAgeTicked(ticked) }
+        account = Account(api, tokens, google, scope)
+        return SignInViewModel(account, last)
     }
 
     private suspend fun SignInViewModel.await(predicate: (SignInUiState) -> Boolean): SignInUiState =
         withTimeout(10_000) { state.first(predicate) }
 
     @Test
-    fun signInWaitsForThe18PlusBox() = runBlocking {
-        val vm = vm(ticked = false)
+    fun continuing_countsAsTheConsent() = runBlocking {
+        routes.always(SEND_CODE, json(200, """{"success":true}"""))
+        val vm = vm()
         vm.await { it.providers is Account.Providers.Ready }
+        assertFalse(account.ageTicked.value)
+        assertTrue(vm.state.value.canGoogle)
         vm.onEmailChange("ada@example.com")
-        val unticked = vm.state.value
-        assertTrue(unticked.ageNeeded)
-        assertFalse(unticked.canGoogle)
-        assertFalse(unticked.canRequestCode)
-        vm.google(ApplicationProvider.getApplicationContext())
-        vm.requestCode(AppLang.EN)
-        assertEquals(0, google.calls)
-        assertTrue(routes.requestsTo(SEND_CODE).isEmpty())
-
-        vm.onAgeTicked(true)
-        val ticked = vm.await { it.ageTicked }
-        assertTrue(ticked.canGoogle)
-        assertTrue(ticked.canRequestCode)
+        vm.continueWithEmail(AppLang.EN)
+        vm.await { it.step == SignInStep.CODE }
+        assertTrue(account.ageTicked.value)
     }
 
     @Test
@@ -106,7 +105,7 @@ class SignInViewModelTest {
     fun aBadAddress_isCaughtBeforeAnyRequest() = runBlocking {
         val vm = vm()
         vm.onEmailChange("not-an-email")
-        vm.requestCode(AppLang.EN)
+        vm.continueWithEmail(AppLang.EN)
         assertEquals(SignInError.INVALID_EMAIL, vm.state.value.error)
         assertTrue(routes.requestsTo(SEND_CODE).isEmpty())
         vm.onEmailChange("ok@example.com")
@@ -120,7 +119,7 @@ class SignInViewModelTest {
         routes.on(VERIFY_CODE, Routes.grant("session"))
         val vm = vm()
         vm.onEmailChange(" ada@example.com ")
-        vm.requestCode(AppLang.TR)
+        vm.continueWithEmail(AppLang.TR)
         var s = vm.await { it.step == SignInStep.CODE && it.busy == null }
         assertEquals("ada@example.com", s.email)
         assertEquals("tr", routes.requestsTo(SEND_CODE).single().url.queryParameter("lang"))
@@ -130,47 +129,120 @@ class SignInViewModelTest {
         vm.onCodeChange("1234567")
         assertEquals("123456", vm.state.value.code)
 
-        vm.submitCode()
+        // The sixth digit submits by itself.
         s = vm.await { it.busy == null && it.error != null }
         assertEquals(SignInError.CODE_INVALID, s.error)
         assertNull(tokens.get())
 
         vm.onCodeChange("654321")
-        vm.submitCode()
         vm.await { it.done }
         assertEquals("session", tokens.get())
+        assertEquals(2, routes.requestsTo(VERIFY_CODE).size)
+        assertEquals(SignInMethod.EMAIL, last.method)
+        assertEquals("ada@example.com", last.email)
     }
 
     @Test
-    fun resend_andChangeEmail() = runBlocking {
+    fun resend_waitsOutTheCountdown_andChangeEmailGoesBack() = runBlocking {
         routes.always(SEND_CODE, json(200, """{"success":true}"""))
         val vm = vm()
         vm.onEmailChange("ada@example.com")
-        vm.requestCode(AppLang.EN)
-        vm.await { it.step == SignInStep.CODE && it.busy == null }
-        vm.onCodeChange("111")
+        vm.continueWithEmail(AppLang.EN)
+        vm.await { it.step == SignInStep.CODE && it.busy == null && it.resendIn > 0 }
         vm.resend(AppLang.EN)
-        val s = vm.await { it.busy == null && routes.requestsTo(SEND_CODE).size == 2 }
-        assertEquals("", s.code)
-        assertEquals(SignInStep.CODE, s.step)
+        assertEquals(1, routes.requestsTo(SEND_CODE).size)
+        vm.await { it.resendIn < SignInUiState.RESEND_SECONDS }
 
         vm.changeEmail()
         assertEquals(SignInStep.EMAIL, vm.state.value.step)
         assertEquals("ada@example.com", vm.state.value.email)
+        assertEquals(0, vm.state.value.resendIn)
+    }
+
+    @Test
+    fun theLastSignIn_prefillsTheAddress() = runBlocking {
+        last.save(SignInMethod.GOOGLE, "ada@example.com")
+        val s = vm().state.value
+        assertEquals("ada@example.com", s.email)
+        assertEquals(SignInMethod.GOOGLE, s.lastUsed)
     }
 
     private fun withPasswords() = routes.always(CONFIG, Routes.config(google = true, emailCode = true, password = true))
 
-    /** Create or forgot: the email, then the emailed code, up to the choose-password step or the end. */
+    /** From the address to the sixth digit of the emailed code, which submits it, by whichever path [mode] takes. */
     private suspend fun SignInViewModel.throughTheCode(mode: SignInMode, password: String? = null) {
+        val method = when (mode) {
+            SignInMode.CREATE -> "new"
+            SignInMode.CODE -> "code"
+            else -> "password"
+        }
+        routes.always(LOOKUP, json(200, """{"method":"$method"}"""))
         await { it.passwordSignIn }
-        setMode(mode)
         onEmailChange("ada@example.com")
-        if (password != null) onPasswordChange(password)
-        requestCode(AppLang.EN)
+        continueWithEmail(AppLang.EN)
+        if (mode == SignInMode.CREATE) {
+            await { it.step == SignInStep.PASSWORD }
+            onPasswordChange(password!!)
+            requestCode(AppLang.EN)
+        }
+        if (mode == SignInMode.FORGOT) {
+            await { it.step == SignInStep.PASSWORD }
+            forgotPassword(AppLang.EN)
+        }
         await { it.step == SignInStep.CODE && it.busy == null }
         onCodeChange("123456")
-        submitCode()
+    }
+
+    @Test
+    fun lookup_picksTheScreen() = runBlocking {
+        withPasswords()
+        routes.on(LOOKUP, json(200, """{"method":"password"}"""))
+        routes.on(LOOKUP, json(200, """{"method":"new"}"""))
+        routes.on(LOOKUP, json(503, """{"code":"unavailable"}"""))
+        routes.always(SEND_CODE, json(200, """{"success":true}"""))
+        val vm = vm()
+        vm.await { it.passwordSignIn }
+        vm.onEmailChange("ada@example.com")
+
+        vm.continueWithEmail(AppLang.EN)
+        var s = vm.await { it.step == SignInStep.PASSWORD }
+        assertEquals(SignInMode.PASSWORD, s.mode)
+        vm.changeEmail()
+
+        vm.continueWithEmail(AppLang.EN)
+        s = vm.await { it.step == SignInStep.PASSWORD }
+        assertEquals(SignInMode.CREATE, s.mode)
+        vm.changeEmail()
+
+        // A failed lookup still leads to the password screen, which offers the code.
+        vm.continueWithEmail(AppLang.EN)
+        s = vm.await { it.step == SignInStep.PASSWORD }
+        assertEquals(SignInMode.PASSWORD, s.mode)
+        assertTrue(routes.requestsTo(SEND_CODE).isEmpty())
+    }
+
+    @Test
+    fun lookup_codeAccount_sendsTheCodeAtOnce() = runBlocking {
+        withPasswords()
+        routes.always(LOOKUP, json(200, """{"method":"code"}"""))
+        routes.always(SEND_CODE, json(200, """{"success":true}"""))
+        val vm = vm()
+        vm.await { it.passwordSignIn }
+        vm.onEmailChange("ada@example.com")
+        vm.continueWithEmail(AppLang.EN)
+        val s = vm.await { it.step == SignInStep.CODE }
+        assertEquals(SignInMode.CODE, s.mode)
+    }
+
+    @Test
+    fun withoutPasswords_theCodeGoesOutWithoutALookup() = runBlocking {
+        routes.always(SEND_CODE, json(200, """{"success":true}"""))
+        val vm = vm()
+        vm.await { it.providers is Account.Providers.Ready }
+        vm.onEmailChange("ada@example.com")
+        vm.continueWithEmail(AppLang.EN)
+        vm.await { it.step == SignInStep.CODE }
+        assertTrue(routes.requestsTo(LOOKUP).isEmpty())
     }
 
     @Test
@@ -201,6 +273,8 @@ class SignInViewModelTest {
         assertEquals("pw-session", tokens.get())
         assertTrue(routes.requestsTo(PASSWORD_SIGN_IN).last().body!!.utf8().contains("\"email\":\"ada@example.com\""))
         assertEquals("", vm.state.value.password)
+        assertEquals(SignInMethod.EMAIL, last.method)
+        assertEquals("ada@example.com", last.email)
     }
 
     @Test
@@ -209,17 +283,22 @@ class SignInViewModelTest {
         routes.always(SEND_CODE, json(200, """{"success":true}"""))
         routes.on(VERIFY_CODE, Routes.grant("new-session"))
         routes.on(SET_PASSWORD, json(200, """{"ok":true}"""))
+        routes.always(LOOKUP, json(200, """{"method":"new"}"""))
         val vm = vm()
         vm.await { it.passwordSignIn }
-        vm.setMode(SignInMode.CREATE)
         vm.onEmailChange("ada@example.com")
+        vm.continueWithEmail(AppLang.EN)
+        vm.await { it.step == SignInStep.PASSWORD }
         assertFalse("create needs a password before the code", vm.state.value.canRequestCode)
         vm.onPasswordChange("short")
         vm.requestCode(AppLang.EN)
         assertEquals(SignInError.PASSWORD_SHORT, vm.state.value.error)
         assertTrue(routes.requestsTo(SEND_CODE).isEmpty())
 
-        vm.throughTheCode(SignInMode.CREATE, "made-up-pass")
+        vm.onPasswordChange("made-up-pass")
+        vm.requestCode(AppLang.EN)
+        vm.await { it.step == SignInStep.CODE && it.busy == null }
+        vm.onCodeChange("123456")
         vm.await { it.done }
         assertEquals("new-session", tokens.get())
         val save = routes.requestsTo(SET_PASSWORD).single()
@@ -265,6 +344,20 @@ class SignInViewModelTest {
         vm.savePassword()
         vm.await { it.done }
         assertEquals(1, routes.requestsTo(SET_PASSWORD).size)
+    }
+
+    @Test
+    fun skippingThePassword_staysSignedIn() = runBlocking {
+        withPasswords()
+        routes.always(SEND_CODE, json(200, """{"success":true}"""))
+        routes.on(VERIFY_CODE, Routes.grant("reset-session"))
+        val vm = vm()
+        vm.throughTheCode(SignInMode.FORGOT)
+        vm.await { it.step == SignInStep.CHOOSE_PASSWORD && it.busy == null }
+        vm.skipPassword()
+        vm.await { it.done }
+        assertEquals("reset-session", tokens.get())
+        assertTrue(routes.requestsTo(SET_PASSWORD).isEmpty())
     }
 
     @Test
@@ -351,5 +444,6 @@ class SignInViewModelTest {
         vm.google(host)
         vm.await { it.done }
         assertEquals("g-session", tokens.get())
+        assertEquals(SignInMethod.GOOGLE, last.method)
     }
 }

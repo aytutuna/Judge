@@ -22,6 +22,7 @@ import androidx.compose.ui.test.assertContentDescriptionEquals
 import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
@@ -58,12 +59,14 @@ import com.okjudge.judge.ui.signin.SignInTags
 import com.okjudge.judge.ui.signin.SignInScreen
 import com.okjudge.judge.ui.signin.SignInMode
 import com.okjudge.judge.ui.signin.SignInActions
+import com.okjudge.judge.ui.signin.SignInBusy
 import com.okjudge.judge.core.model.SignInProviders
 import com.okjudge.judge.core.model.ServerConfig
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.MeResponse
 import com.okjudge.judge.core.model.SubscriptionView
 import com.okjudge.judge.core.auth.SignInError
+import com.okjudge.judge.core.auth.SignInMethod
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.core.display.ContentLang
@@ -825,8 +828,8 @@ class ScreensTest {
     }
 
     @Test
-    fun signIn_choosePassword_afterAFailedSave_offersTryAgainAndSignOut() {
-        var signedOut = 0
+    fun signIn_choosePassword_afterAFailedSave_offersTryAgain_andSkip() {
+        var skipped = 0
         val providers = Account.Providers.Ready(ServerConfig(SignInProviders(emailCode = true, password = true)))
         compose.setContent {
             Themed(AppLang.EN) {
@@ -838,63 +841,121 @@ class ScreensTest {
                         error = SignInError.PASSWORD_SAVE_FAILED,
                     ),
                     onBack = {},
-                    actions = SignInActions(onSignOut = { signedOut++ }),
+                    actions = SignInActions(onSkip = { skipped++ }),
                 )
             }
         }
         val s = UiTestSupport.s(AppLang.EN)
         compose.onNodeWithTag(SignInTags.SAVE_PASSWORD).assertIsEnabled().assertTextContains(s.appRetry)
-        compose.onNodeWithTag(SignInTags.SIGN_OUT).performClick()
-        assertEquals(1, signedOut)
+        compose.onNodeWithTag(SignInTags.SKIP).performClick()
+        assertEquals(1, skipped)
     }
 
     @Test
-    fun signIn_choosePassword_hasNoSignOutBeforeAFailure() {
-        val providers = Account.Providers.Ready(ServerConfig(SignInProviders(emailCode = true, password = true)))
-        compose.setContent {
-            Themed(AppLang.EN) {
-                SignInScreen(
-                    SignInUiState(providers = providers, step = SignInStep.CHOOSE_PASSWORD, password = "made-up-pass"),
-                    onBack = {},
-                    actions = SignInActions(),
-                )
-            }
-        }
-        compose.onNodeWithTag(SignInTags.SIGN_OUT).assertDoesNotExist()
-    }
-
-    @Test
-    fun signIn_passwordForm_hidesThePasswordWhenTyped_andSwitchesMode() {
-        val modes = mutableListOf<SignInMode>()
+    fun signIn_passwordForm_hidesThePasswordWhenTyped_andOffersForgotAndCode() {
+        var forgot = 0
+        var code = 0
         var signedIn = 0
         val providers = Account.Providers.Ready(ServerConfig(SignInProviders(emailCode = true, password = true)))
         compose.setContent {
             Themed(AppLang.EN) {
                 SignInScreen(
-                    SignInUiState(providers = providers, ageNeeded = false, email = "ada@example.com", password = "made-up-pass"),
+                    SignInUiState(providers = providers, step = SignInStep.PASSWORD, email = "ada@example.com", password = "made-up-pass"),
                     onBack = {},
-                    actions = SignInActions(onMode = { modes += it }, onSignInWithPassword = { signedIn++ }),
+                    actions = SignInActions(onForgot = { forgot++ }, onUseCode = { code++ }, onSignInWithPassword = { signedIn++ }),
                 )
             }
         }
+        compose.onNodeWithText("ada@example.com").assertExists()
         compose.onNodeWithTag(SignInTags.SUBMIT_PASSWORD).assertIsEnabled().performClick()
         assertEquals(1, signedIn)
         compose.onNodeWithTag(SignInTags.PASSWORD).assert(SemanticsMatcher.keyIsDefined(SemanticsProperties.Password))
         compose.onNodeWithTag(SignInTags.FORGOT).performClick()
-        compose.onNodeWithTag(SignInTags.CREATE).performClick()
         compose.onNodeWithTag(SignInTags.USE_CODE).performClick()
-        assertEquals(listOf(SignInMode.FORGOT, SignInMode.CREATE, SignInMode.CODE), modes)
+        assertEquals(1, forgot)
+        assertEquals(1, code)
     }
 
     @Test
-    fun signIn_withoutPasswordsOnTheServer_showsOnlyTheCodeForm() {
+    fun signIn_newAddress_asksForAPasswordFirst() {
+        var requested = 0
+        val providers = Account.Providers.Ready(ServerConfig(SignInProviders(emailCode = true, password = true)))
+        compose.setContent {
+            Themed(AppLang.EN) {
+                SignInScreen(
+                    SignInUiState(providers = providers, step = SignInStep.PASSWORD, mode = SignInMode.CREATE, email = "ada@example.com", password = "made-up-pass"),
+                    onBack = {},
+                    actions = SignInActions(onRequestCode = { requested++ }),
+                )
+            }
+        }
+        compose.onNodeWithTag(SignInTags.NEW_PASSWORD).assert(SemanticsMatcher.keyIsDefined(SemanticsProperties.Password))
+        compose.onNodeWithTag(SignInTags.SUBMIT_PASSWORD).assertDoesNotExist()
+        compose.onNodeWithTag(SignInTags.REQUEST_CODE).assertIsEnabled().performClick()
+        assertEquals(1, requested)
+    }
+
+    @Test
+    fun signIn_emailScreen_hasNoAgeBox_andTagsTheLastMethod() {
+        var continued = 0
+        val providers = Account.Providers.Ready(ServerConfig(SignInProviders(google = true, emailCode = true, password = true)))
+        compose.setContent {
+            Themed(AppLang.EN) {
+                SignInScreen(
+                    SignInUiState(providers = providers, email = "ada@example.com", lastUsed = SignInMethod.EMAIL),
+                    onBack = {},
+                    actions = SignInActions(onContinue = { continued++ }),
+                )
+            }
+        }
+        val s = UiTestSupport.s(AppLang.EN)
+        compose.onNodeWithText(s.appAgeCheckbox).assertDoesNotExist()
+        compose.onNodeWithTag(SignInTags.GOOGLE).assertIsEnabled()
+        compose.onAllNodesWithTag(SignInTags.LAST_USED).assertCountEquals(1)
+        compose.onNodeWithTag(SignInTags.CONTINUE).assertIsEnabled().performClick()
+        assertEquals(1, continued)
+    }
+
+    @Test
+    fun signIn_emailField_isLockedWhileTheLookupRuns() {
+        val providers = Account.Providers.Ready(ServerConfig(SignInProviders(emailCode = true, password = true)))
+        compose.setContent {
+            Themed(AppLang.EN) {
+                SignInScreen(
+                    SignInUiState(providers = providers, email = "ada@example.com", busy = SignInBusy.SEND),
+                    onBack = {},
+                    actions = SignInActions(),
+                )
+            }
+        }
+        compose.onNodeWithTag(SignInTags.EMAIL).assertIsNotEnabled()
+        compose.onNodeWithTag(SignInTags.CONTINUE).assertIsNotEnabled()
+    }
+
+    @Test
+    fun signIn_codeStep_resendShowsTheCountdown() {
         val providers = Account.Providers.Ready(ServerConfig(SignInProviders(emailCode = true)))
         compose.setContent {
-            Themed(AppLang.EN) { SignInScreen(SignInUiState(providers = providers, ageNeeded = false), onBack = {}, actions = SignInActions()) }
+            Themed(AppLang.EN) {
+                SignInScreen(
+                    SignInUiState(providers = providers, step = SignInStep.CODE, email = "ada@example.com", resendIn = 24),
+                    onBack = {},
+                    actions = SignInActions(),
+                )
+            }
         }
-        compose.onNodeWithTag(SignInTags.REQUEST_CODE).assertExists()
+        compose.onNodeWithTag(SignInTags.RESEND).assertIsNotEnabled().assertTextContains(UiTestSupport.s(AppLang.EN).signinCodeResendIn("24"))
+    }
+
+    @Test
+    fun signIn_withoutPasswordsOnTheServer_showsOnlyTheEmailScreen() {
+        val providers = Account.Providers.Ready(ServerConfig(SignInProviders(emailCode = true)))
+        compose.setContent {
+            Themed(AppLang.EN) { SignInScreen(SignInUiState(providers = providers), onBack = {}, actions = SignInActions()) }
+        }
+        compose.onNodeWithTag(SignInTags.CONTINUE).assertExists()
         compose.onNodeWithTag(SignInTags.PASSWORD).assertDoesNotExist()
-        compose.onNodeWithTag(SignInTags.USE_PASSWORD).assertDoesNotExist()
+        compose.onNodeWithTag(SignInTags.USE_CODE).assertDoesNotExist()
     }
 
     @Test
