@@ -8,7 +8,8 @@ import type { AuthProviders } from "@/lib/account-types";
 import { t, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { refreshViewer, useViewer, viewerSignedIn } from "@/lib/use-viewer";
-import { AdultCheck, forgetAdultTick, rememberAdultTick } from "../AgeGate";
+import { lastSignIn, startSignIn, type SignInMethodUsed } from "@/lib/last-signin";
+import { forgetAdultTick, rememberAdultTick } from "../AgeGate";
 import { Turnstile, TURNSTILE_SITE_KEY } from "../Turnstile";
 import styles from "./AccountPages.module.css";
 import { PageShell } from "./PageShell";
@@ -136,15 +137,14 @@ export type SignInPanelProps = {
   providers: AuthProviders | null;
   pending: boolean;
   error: string | null;
-  emailOpen: boolean;
   email: string;
+  /** The email was accepted and its password step is showing. */
+  emailStep: boolean;
   sentTo: string | null;
   /** The emailed code being typed (email code sign-in, after `sentTo`). */
   code: string;
   captcha: React.ReactNode;
   canSendEmail: boolean;
-  /** "I'm 18 or older" is ticked: nothing can be used until it is. */
-  adult: boolean;
   mode: SignInMode;
   password: string;
   showPassword: boolean;
@@ -152,16 +152,20 @@ export type SignInPanelProps = {
   choosing: boolean;
   /** `error` belongs to the email area's fields, not the top of the card. */
   errorInForm: boolean;
-  onAdult: (v: boolean) => void;
-  onMode: (mode: SignInMode) => void;
+  /** Seconds until another code may be asked for. */
+  resendIn: number;
+  lastUsed: SignInMethodUsed | null;
   onPassword: (value: string) => void;
   onShowPassword: () => void;
   onSignInPassword: () => void;
   onSavePassword: () => void;
+  onSkip: () => void;
   onProvider: (p: "apple" | "google") => void;
-  onToggleEmail: () => void;
   onEmail: (value: string) => void;
+  onContinue: () => void;
   onSendEmail: () => void;
+  onForgot: () => void;
+  onUseCode: () => void;
   onCode: (value: string) => void;
   onVerify: () => void;
   onResend: () => void;
@@ -175,40 +179,43 @@ export function SignInPanel({
   providers,
   pending,
   error,
-  emailOpen,
   email,
+  emailStep,
   sentTo,
   code,
   captcha,
   canSendEmail,
-  adult,
   mode,
   password,
   showPassword,
   choosing,
   errorInForm,
-  onAdult,
-  onMode,
+  resendIn,
+  lastUsed,
   onPassword,
   onShowPassword,
   onSignInPassword,
   onSavePassword,
+  onSkip,
   onProvider,
-  onToggleEmail,
   onEmail,
+  onContinue,
   onSendEmail,
+  onForgot,
+  onUseCode,
   onCode,
   onVerify,
   onResend,
   onChangeEmail,
   onDev,
 }: SignInPanelProps) {
-  const emailFormId = useId();
+  const formId = useId();
   const loading = providers === null;
   const byCode = providers?.emailCode === true;
   const byPassword = byCode && providers?.password === true;
   const codeStep = Boolean(providers?.email && byCode && sentTo);
   const none = providers !== null && !providers.apple && !providers.google && !providers.email && !providers.dev;
+  const lastUsedTag = <span className={styles.tag}>{t(lang, "signin.lastUsed")}</span>;
 
   const providerButton = (p: "apple" | "google") => {
     const available = providers?.[p] === true;
@@ -216,7 +223,7 @@ export function SignInPanel({
       <button
         type="button"
         className={`${styles.btn} ${p === "apple" && available ? styles.primary : styles.secondary}`}
-        disabled={!available || pending || !adult}
+        disabled={!available || pending}
         onClick={() => onProvider(p)}
       >
         {p === "apple" ? <AppleLogo /> : <GoogleLogo />}
@@ -226,19 +233,20 @@ export function SignInPanel({
             <span className={styles.btnSub}>{t(lang, "signin.providerUnavailable")}</span>
           ) : null}
         </span>
+        {available && lastUsed === p ? <span className={`${styles.tag} ${styles.tagOnBtn}`}>{t(lang, "signin.lastUsed")}</span> : null}
       </button>
     );
   };
 
   const formError =
     errorInForm && error ? (
-      <p id={`${emailFormId}-error`} className={styles.error} role="alert">
+      <p id={`${formId}-error`} className={styles.error} role="alert">
         {error}
       </p>
     ) : null;
 
   const passwordField = (kind: "current" | "new") => {
-    const id = `${emailFormId}-${kind === "new" ? "newpw" : "pw"}`;
+    const id = `${formId}-${kind === "new" ? "newpw" : "pw"}`;
     return (
       <>
         <label className={styles.label} htmlFor={id}>
@@ -249,10 +257,11 @@ export function SignInPanel({
           className={styles.input}
           type={showPassword ? "text" : "password"}
           autoComplete={kind === "new" ? "new-password" : "current-password"}
+          autoFocus
           required
           maxLength={128}
           aria-invalid={formError ? true : undefined}
-          aria-describedby={formError ? `${emailFormId}-error` : undefined}
+          aria-describedby={formError ? `${formId}-error` : undefined}
           value={password}
           onChange={(e) => onPassword(e.target.value)}
         />
@@ -262,6 +271,11 @@ export function SignInPanel({
       </>
     );
   };
+
+  // Lets a password manager tie the password to the address.
+  const usernameField = (
+    <input type="email" autoComplete="username" className="sr-only" tabIndex={-1} aria-hidden readOnly value={email || sentTo || ""} />
+  );
 
   if (choosing) {
     return (
@@ -276,80 +290,138 @@ export function SignInPanel({
             if (password !== "" && !pending) onSavePassword();
           }}
         >
-          <input
-            type="email"
-            autoComplete="username"
-            className="sr-only"
-            tabIndex={-1}
-            aria-hidden
-            readOnly
-            value={email || sentTo || ""}
-          />
+          {usernameField}
           {passwordField("new")}
           {formError}
           <button type="submit" className={`${styles.btn} ${styles.primary}`} disabled={password === "" || pending}>
             {t(lang, "signin.passwordSave")}
+          </button>
+          <button type="button" className={styles.textBtn} disabled={pending} onClick={onSkip}>
+            {t(lang, "signin.skip")}
           </button>
         </form>
       </div>
     );
   }
 
-  const emailArea =
-    byPassword && !sentTo ? (
+  const passwordStep = (
+    <form
+      className={styles.field}
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (pending || password === "") return;
+        if (mode === "create") onSendEmail();
+        else onSignInPassword();
+      }}
+    >
+      <div className={styles.who}>
+        <span className={styles.whoEmail}>{email}</span>
+        <button type="button" className={styles.textBtn} disabled={pending} onClick={onChangeEmail}>
+          {t(lang, "signin.changeEmail")}
+        </button>
+      </div>
+      {usernameField}
+      {passwordField(mode === "create" ? "new" : "current")}
+      {formError}
+      <button type="submit" className={`${styles.btn} ${styles.secondary}`} disabled={pending || password === ""}>
+        {t(lang, mode === "create" ? "signin.continue" : "signin.passwordSubmit")}
+      </button>
+      {mode === "password" ? (
+        <>
+          <button type="button" className={styles.textBtn} disabled={pending} onClick={onForgot}>
+            {t(lang, "signin.forgot")}
+          </button>
+          <button type="button" className={styles.textBtn} disabled={pending} onClick={onUseCode}>
+            {t(lang, "signin.useCode")}
+          </button>
+        </>
+      ) : null}
+    </form>
+  );
+
+  const codeForm = (
+    <>
+      <p id={`${formId}-sent`} className={styles.ok} role="status">
+        {t(lang, "signin.codeSent", { email: sentTo ?? "" })}
+      </p>
       <form
         className={styles.field}
         onSubmit={(e) => {
           e.preventDefault();
-          if (!adult || pending || !canSendEmail) return;
-          if (mode === "password") {
-            if (password !== "") onSignInPassword();
-          } else onSendEmail();
+          if (code.length === CODE_LENGTH && !pending) onVerify();
         }}
       >
-        <label className={styles.label} htmlFor={`${emailFormId}-email`}>
-          {t(lang, "signin.emailLabel")}
+        <label className={styles.label} htmlFor={`${formId}-code`}>
+          {t(lang, "signin.codeLabel")}
         </label>
         <input
-          id={`${emailFormId}-email`}
-          className={styles.input}
-          type="email"
-          inputMode="email"
-          autoComplete={mode === "password" || mode === "create" ? "username" : "email"}
+          id={`${formId}-code`}
+          className={`${styles.input} ${styles.codeInput}`}
+          type="text"
+          inputMode="numeric"
+          autoComplete="one-time-code"
+          pattern="[0-9]*"
+          autoFocus
           required
-          value={email}
-          placeholder={t(lang, "signin.emailPlaceholder")}
-          onChange={(e) => onEmail(e.target.value)}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={`${formId}-sent${error ? ` ${formId}-error` : ""}`}
+          value={code}
+          onChange={(e) => onCode(digitsOnly(e.target.value))}
         />
-        {mode === "password" || mode === "create" ? passwordField(mode === "create" ? "new" : "current") : null}
-        {mode === "create" ? <p className={styles.small}>{t(lang, "signin.createNote")}</p> : null}
-        {formError}
-        <button
-          type="submit"
-          className={`${styles.btn} ${styles.secondary}`}
-          disabled={!canSendEmail || pending || !adult || ((mode === "password" || mode === "create") && password === "")}
-        >
-          {t(lang, mode === "password" ? "signin.passwordSubmit" : "signin.codeRequest")}
+        {error ? (
+          <p id={`${formId}-error`} className={styles.error} role="alert">
+            {error}
+          </p>
+        ) : null}
+        <button type="submit" className={`${styles.btn} ${styles.primary}`} disabled={code.length !== CODE_LENGTH || pending}>
+          {t(lang, "signin.codeSubmit")}
         </button>
-        {mode === "password" ? (
-          <>
-            <button type="button" className={styles.textBtn} disabled={pending} onClick={() => onMode("forgot")}>
-              {t(lang, "signin.forgot")}
-            </button>
-            <button type="button" className={styles.textBtn} disabled={pending} onClick={() => onMode("create")}>
-              {t(lang, "signin.create")}
-            </button>
-            <button type="button" className={styles.textBtn} disabled={pending} onClick={() => onMode("code")}>
-              {t(lang, "signin.useCode")}
-            </button>
-          </>
-        ) : (
-          <button type="button" className={styles.textBtn} disabled={pending} onClick={() => onMode("password")}>
-            {t(lang, "signin.usePassword")}
-          </button>
-        )}
       </form>
-    ) : null;
+      <button type="button" className={styles.textBtn} disabled={pending || resendIn > 0} onClick={onResend}>
+        {resendIn > 0 ? t(lang, "signin.codeResendIn", { n: resendIn }) : t(lang, "signin.codeResend")}
+      </button>
+      <button type="button" className={styles.textBtn} disabled={pending} onClick={onChangeEmail}>
+        {t(lang, "signin.changeEmail")}
+      </button>
+    </>
+  );
+
+  const emailForm = (
+    <form
+      className={styles.field}
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (canSendEmail && !pending) onContinue();
+      }}
+    >
+      <div className={styles.labelRow}>
+        <label className={styles.label} htmlFor={`${formId}-email`}>
+          {t(lang, "signin.emailLabel")}
+        </label>
+        {lastUsed === "email" ? lastUsedTag : null}
+      </div>
+      <input
+        id={`${formId}-email`}
+        className={styles.input}
+        type="email"
+        inputMode="email"
+        autoComplete="username"
+        required
+        value={email}
+        placeholder={t(lang, "signin.emailPlaceholder")}
+        aria-invalid={formError ? true : undefined}
+        aria-describedby={formError ? `${formId}-error` : undefined}
+        onChange={(e) => onEmail(e.target.value)}
+      />
+      {!byCode ? captcha : null}
+      {formError}
+      <button type="submit" className={`${styles.btn} ${styles.secondary}`} disabled={!canSendEmail || pending}>
+        {t(lang, "signin.continue")}
+      </button>
+    </form>
+  );
+
+  const choose = !codeStep && !(emailStep && byPassword) && !sentTo;
 
   return (
     <div className={styles.card}>
@@ -357,196 +429,124 @@ export function SignInPanel({
         {loading ? t(lang, "signin.loading") : ""}
       </p>
       {none ? <p className={styles.notice}>{t(lang, "signin.unavailable")}</p> : null}
-      {error && !codeStep && !(errorInForm && byPassword) ? (
+      {error && !errorInForm && !codeStep ? (
         <p className={styles.error} role="alert">
           {error}
         </p>
       ) : null}
 
-      {none ? null : <AdultCheck lang={lang} checked={adult} onChange={onAdult} />}
-
-      {providerButton("apple")}
-      {providerButton("google")}
-
-      {providers?.email ? (
+      {choose ? (
         <>
-          <div className={styles.divider} aria-hidden />
-          {sentTo && byCode ? (
+          {providerButton("apple")}
+          {providerButton("google")}
+          {providers?.email ? (
             <>
-              <p id={`${emailFormId}-sent`} className={styles.ok} role="status">
-                {t(lang, "signin.codeSent", { email: sentTo })}
-              </p>
-              <form
-                className={styles.field}
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (code.length === CODE_LENGTH && adult && !pending) onVerify();
-                }}
-              >
-                <label className={styles.label} htmlFor={`${emailFormId}-code`}>
-                  {t(lang, "signin.codeLabel")}
-                </label>
-                <input
-                  id={`${emailFormId}-code`}
-                  className={`${styles.input} ${styles.codeInput}`}
-                  type="text"
-                  inputMode="numeric"
-                  autoComplete="one-time-code"
-                  pattern="[0-9]*"
-                  autoFocus
-                  required
-                  aria-invalid={error ? true : undefined}
-                  aria-describedby={`${emailFormId}-sent${error ? ` ${emailFormId}-error` : ""}`}
-                  value={code}
-                  onChange={(e) => onCode(digitsOnly(e.target.value))}
-                />
-                {error ? (
-                  <p id={`${emailFormId}-error`} className={styles.error} role="alert">
-                    {error}
-                  </p>
-                ) : null}
-                <button
-                  type="submit"
-                  className={`${styles.btn} ${styles.primary}`}
-                  disabled={code.length !== CODE_LENGTH || pending || !adult}
-                >
-                  {t(lang, "signin.codeSubmit")}
-                </button>
-              </form>
-              <button type="button" className={styles.textBtn} disabled={pending || !adult} onClick={onResend}>
-                {t(lang, "signin.codeResend")}
-              </button>
-              <button type="button" className={styles.textBtn} disabled={pending} onClick={onChangeEmail}>
-                {t(lang, "signin.changeEmail")}
-              </button>
+              <div className={styles.or} aria-hidden>
+                {t(lang, "signin.or")}
+              </div>
+              {emailForm}
             </>
-          ) : sentTo ? (
-            <p className={styles.ok} role="status">
-              {t(lang, "signin.emailSent", { email: sentTo })}
-            </p>
-          ) : emailArea ? (
-            emailArea
-          ) : (
-            <>
-              <button
-                type="button"
-                className={styles.textBtn}
-                aria-expanded={emailOpen}
-                aria-controls={emailFormId}
-                disabled={!adult}
-                onClick={onToggleEmail}
-              >
-                {t(lang, "signin.emailToggle")}
+          ) : null}
+          {providers?.dev ? (
+            <div className={styles.devBox}>
+              <button type="button" className={`${styles.btn} ${styles.secondary}`} disabled={pending} onClick={onDev}>
+                {t(lang, "signin.dev")}
               </button>
-              <form
-                id={emailFormId}
-                hidden={!emailOpen}
-                className={styles.field}
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (canSendEmail && adult) onSendEmail();
-                }}
-              >
-                <label className={styles.label} htmlFor={`${emailFormId}-email`}>
-                  {t(lang, "signin.emailLabel")}
-                </label>
-                <input
-                  id={`${emailFormId}-email`}
-                  className={styles.input}
-                  type="email"
-                  inputMode="email"
-                  autoComplete="email"
-                  required
-                  value={email}
-                  placeholder={t(lang, "signin.emailPlaceholder")}
-                  onChange={(e) => onEmail(e.target.value)}
-                />
-                {emailOpen && !byCode ? captcha : null}
-                <button
-                  type="submit"
-                  className={`${styles.btn} ${styles.secondary}`}
-                  disabled={!canSendEmail || pending || !adult}
-                >
-                  {t(lang, byCode ? "signin.codeRequest" : "signin.emailSubmit")}
-                </button>
-              </form>
-            </>
-          )}
+              <p className={styles.small}>{t(lang, "signin.devNote")}</p>
+            </div>
+          ) : null}
+          <p className={styles.small}>
+            {t(lang, "signin.legal")
+              .split(/(\{terms\}|\{privacy\})/)
+              .map((part, i) =>
+                part === "{terms}" ? (
+                  <Link key={i} href="/terms" className={styles.link}>
+                    {t(lang, "signin.legalTerms")}
+                  </Link>
+                ) : part === "{privacy}" ? (
+                  <Link key={i} href="/privacy" className={styles.link}>
+                    {t(lang, "signin.legalLink")}
+                  </Link>
+                ) : (
+                  part
+                ),
+              )}
+          </p>
         </>
-      ) : null}
-
-      {providers?.dev ? (
-        <div className={styles.devBox}>
-          <button
-            type="button"
-            className={`${styles.btn} ${styles.secondary}`}
-            disabled={pending || !adult}
-            onClick={onDev}
-          >
-            {t(lang, "signin.dev")}
-          </button>
-          <p className={styles.small}>{t(lang, "signin.devNote")}</p>
-        </div>
-      ) : null}
-
-      <p className={styles.small}>
-        {t(lang, "signin.legal")
-          .split(/(\{terms\}|\{privacy\})/)
-          .map((part, i) =>
-            part === "{terms}" ? (
-              <Link key={i} href="/terms" className={styles.link}>
-                {t(lang, "signin.legalTerms")}
-              </Link>
-            ) : part === "{privacy}" ? (
-              <Link key={i} href="/privacy" className={styles.link}>
-                {t(lang, "signin.legalLink")}
-              </Link>
-            ) : (
-              part
-            ),
-          )}
-      </p>
+      ) : codeStep ? (
+        codeForm
+      ) : sentTo ? (
+        <p className={styles.ok} role="status">
+          {t(lang, "signin.emailSent", { email: sentTo })}
+        </p>
+      ) : (
+        passwordStep
+      )}
     </div>
   );
 }
 
-/** /signin: Apple and Google first, then email with a password (or a code,
- * or a link), the dev test login only where the server reports it. Signed-in visitors go to
- * /account. `next` is the raw ?next= value. */
-export function SignInView({ next: rawNext }: { next?: string | string[] }) {
+const RESEND_SECONDS = 30;
+
+/** /signin: Apple and Google first, then email (the server says whether it
+ * takes a password or a code), the dev test login only where the server
+ * reports it. Signed-in visitors go to /account. `next` is the raw ?next=
+ * value, `failed` is set when Apple or Google sent the visitor back with an
+ * error. */
+export function SignInView({ next: rawNext, failed }: { next?: string | string[]; failed?: boolean }) {
   const lang = useLang();
   const router = useRouter();
   const { me, config, status } = useViewer();
   const next = safeNext(rawNext);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [emailOpen, setEmailOpen] = useState(false);
   const [email, setEmail] = useState("");
+  const [emailStep, setEmailStep] = useState(false);
   const [sentTo, setSentTo] = useState<string | null>(null);
   const [code, setCode] = useState("");
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const [adult, setAdult] = useState(false);
   const [mode, setMode] = useState<SignInMode>("password");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [choosing, setChoosing] = useState(false);
   const [errorInForm, setErrorInForm] = useState(false);
+  const [resendIn, setResendIn] = useState(0);
+  const [lastUsed, setLastUsed] = useState<SignInMethodUsed | null>(null);
 
   const signedIn = Boolean(me?.user);
   // A mobile browser can reload the tab while the user reads the mail.
   useEffect(() => {
     const kept = readSentTo();
-    if (!kept) return;
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time read of browser storage
-    setSentTo(kept.email);
-    setMode(kept.mode);
+    const last = lastSignIn();
+    /* eslint-disable react-hooks/set-state-in-effect -- one-time read of browser storage */
+    if (kept) {
+      setSentTo(kept.email);
+      setEmail(kept.email);
+      setMode(kept.mode);
+    } else if (last) {
+      setEmail(last.email);
+    }
+    if (last) setLastUsed(last.method);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
   // Back here from Apple or Google without signing in, or a fresh visit:
   // whatever was ticked before no longer counts.
   useEffect(() => forgetAdultTick(), []);
   useEffect(() => {
+    if (!failed) return;
+    /* eslint-disable react-hooks/set-state-in-effect -- the provider redirected back with an error */
+    setError(t(lang, "signin.failed"));
+    setErrorInForm(false);
+    /* eslint-enable react-hooks/set-state-in-effect */
+  }, [failed, lang]);
+  useEffect(() => {
     if (signedIn) router.replace(next);
   }, [signedIn, next, router]);
+  useEffect(() => {
+    if (resendIn <= 0) return;
+    const id = setTimeout(() => setResendIn((n) => n - 1), 1000);
+    return () => clearTimeout(id);
+  }, [resendIn]);
 
   // The code endpoints are not behind the widget (see lib/auth.ts); only the
   // magic link is.
@@ -590,10 +590,11 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     setPending(true);
     setError(null);
     rememberAdultTick();
+    startSignIn(p);
     signInStarted(p);
     const client = await loadClient();
     if (!client) return;
-    const res = await client.signInWithProvider(p, next);
+    const res = await client.signInWithProvider(p, next, `/signin?next=${encodeURIComponent(next)}`);
     // Success leaves the page for Apple or Google; only failure lands here.
     if (!res.ok) {
       forgetAdultTick();
@@ -605,13 +606,10 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
 
   async function signInPassword() {
     const to = email.trim();
-    if (!EMAIL_RE.test(to)) {
-      fail(t(lang, "signin.emailInvalid"));
-      return;
-    }
     setPending(true);
     setError(null);
     rememberAdultTick();
+    startSignIn("email", to);
     signInStarted("password");
     const client = await loadClient();
     if (!client) return;
@@ -626,19 +624,53 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     await finish();
   }
 
-  async function sendEmail() {
+  // Which way the address signs in decides the next screen: a password for
+  // an account that has one, the emailed code for an account that has none,
+  // and a new password plus the code for an address with no account.
+  async function continueWithEmail() {
     const to = email.trim();
     if (!EMAIL_RE.test(to)) {
       fail(t(lang, "signin.emailInvalid"));
       return;
     }
-    if (mode === "create" && password.length < PASSWORD_MIN) {
+    if (!byPassword) {
+      await sendEmail("code");
+      return;
+    }
+    setPending(true);
+    setError(null);
+    const client = await loadClient();
+    if (!client) return;
+    const res = await client.lookupEmail(to);
+    if (!res.ok) {
+      trackError(res.code);
+      fail(t(lang, client.codeErrorKey(res, "send")));
+      setPending(false);
+      return;
+    }
+    if (res.method === "code") {
+      await sendEmail("code");
+      return;
+    }
+    setPending(false);
+    changeMode(res.method === "password" ? "password" : "create");
+    setEmailStep(true);
+  }
+
+  async function sendEmail(sendMode: SignInMode) {
+    const to = email.trim();
+    if (!EMAIL_RE.test(to)) {
+      fail(t(lang, "signin.emailInvalid"));
+      return;
+    }
+    if (sendMode === "create" && password.length < PASSWORD_MIN) {
       fail(t(lang, "signin.passwordShort"));
       return;
     }
     setPending(true);
     setError(null);
     rememberAdultTick();
+    startSignIn("email", to);
     signInStarted("email");
     const client = await loadClient();
     if (!client) return;
@@ -647,8 +679,11 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
       setPending(false);
       if (res.ok) {
         setCode("");
+        setMode(sendMode);
+        if (sendMode !== "create") setPassword("");
         setSentTo(to);
-        keepSentTo(to, mode);
+        setResendIn(RESEND_SECONDS);
+        keepSentTo(to, sendMode);
       } else {
         forgetAdultTick();
         trackError(res.code);
@@ -711,14 +746,20 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
     await finish();
   }
 
-  async function verifyCode() {
-    if (!sentTo || code.length !== CODE_LENGTH) return;
+  async function skipPassword() {
+    setPending(true);
+    await finish();
+  }
+
+  async function verifyCode(entered: string) {
+    if (!sentTo || entered.length !== CODE_LENGTH) return;
     setPending(true);
     setError(null);
     rememberAdultTick();
+    startSignIn("email", sentTo);
     const client = await loadClient();
     if (!client) return;
-    const res = await client.signInWithCode(sentTo, code);
+    const res = await client.signInWithCode(sentTo, entered);
     if (!res.ok) {
       forgetAdultTick();
       trackError(res.code);
@@ -751,15 +792,17 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
   }
 
   async function resendCode() {
-    if (!sentTo) return;
+    if (!sentTo || resendIn > 0) return;
     setPending(true);
     setError(null);
     const client = await loadClient();
     if (!client) return;
     const res = await client.sendSignInCode(sentTo, lang);
     setPending(false);
-    if (res.ok) setCode("");
-    else {
+    if (res.ok) {
+      setCode("");
+      setResendIn(RESEND_SECONDS);
+    } else {
       trackError(res.code);
       fail(t(lang, client.codeErrorKey(res, "send")));
     }
@@ -768,12 +811,14 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
   function changeEmail() {
     setSentTo(null);
     keepSentTo(null);
+    setEmailStep(false);
+    changeMode("password");
     setCode("");
-    setError(null);
+    setResendIn(0);
   }
 
-  function changeMode(next: SignInMode) {
-    setMode(next);
+  function changeMode(to: SignInMode) {
+    setMode(to);
     setPassword("");
     setShowPassword(false);
     setError(null);
@@ -816,8 +861,8 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
         providers={config?.signIn ?? (status === "ready" || status === "error" ? NO_PROVIDERS : null)}
         pending={pending || signedIn}
         error={error}
-        emailOpen={emailOpen}
         email={email}
+        emailStep={emailStep}
         sentTo={sentTo}
         code={code}
         captcha={
@@ -826,14 +871,13 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
           ) : null
         }
         canSendEmail={canSendEmail}
-        adult={adult}
         mode={mode}
         password={password}
         showPassword={showPassword}
         choosing={choosing}
         errorInForm={errorInForm}
-        onAdult={setAdult}
-        onMode={changeMode}
+        resendIn={resendIn}
+        lastUsed={lastUsed}
         onPassword={(v) => {
           setPassword(v);
           setError(null);
@@ -841,15 +885,24 @@ export function SignInView({ next: rawNext }: { next?: string | string[] }) {
         onShowPassword={() => setShowPassword((v) => !v)}
         onSignInPassword={() => void signInPassword()}
         onSavePassword={() => void storePassword()}
+        onSkip={() => void skipPassword()}
         onProvider={(p) => void provider(p)}
-        onToggleEmail={() => setEmailOpen((o) => !o)}
-        onEmail={setEmail}
-        onSendEmail={() => void sendEmail()}
-        onCode={(v) => {
-          setCode(v);
+        onEmail={(v) => {
+          setEmail(v);
           setError(null);
         }}
-        onVerify={() => void verifyCode()}
+        onContinue={() => void continueWithEmail()}
+        onSendEmail={() => void sendEmail("create")}
+        onForgot={() => void sendEmail("forgot")}
+        onUseCode={() => void sendEmail("code")}
+        onCode={(v) => {
+          // Six digits typed or pasted submit themselves, once.
+          const complete = v.length === CODE_LENGTH && code.length < CODE_LENGTH;
+          setCode(v);
+          setError(null);
+          if (complete && !pending) void verifyCode(v);
+        }}
+        onVerify={() => void verifyCode(code)}
         onResend={() => void resendCode()}
         onChangeEmail={changeEmail}
         onDev={() => void dev()}

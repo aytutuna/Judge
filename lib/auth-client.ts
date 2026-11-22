@@ -30,13 +30,37 @@ function failure(error: { code?: string; status?: number } | null | undefined): 
 export async function signInWithProvider(
   provider: "apple" | "google",
   callbackURL: string,
+  errorCallbackURL: string,
 ): Promise<Outcome> {
   try {
-    const { error } = await authClient.signIn.social({ provider, callbackURL });
+    const { error } = await authClient.signIn.social({ provider, callbackURL, errorCallbackURL });
     return error ? failure(error) : { ok: true };
   } catch {
     return { ok: false, code: "network" };
   }
+}
+
+/** POST /api/v1/auth/lookup: which sign-in an address takes. A failure
+ * carries the HTTP status (429 is the rate limit). */
+export async function lookupEmail(
+  email: string,
+): Promise<{ ok: true; method: "password" | "code" | "new" } | Failed> {
+  let res: Response;
+  try {
+    res = await fetch("/api/v1/auth/lookup", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+  } catch {
+    return { ok: false, code: "network" };
+  }
+  if (!res.ok) return { ok: false, code: `http_${res.status}`, status: res.status };
+  const body = (await res.json().catch(() => null)) as { method?: unknown } | null;
+  const method = body?.method;
+  return method === "password" || method === "code" || method === "new"
+    ? { ok: true, method }
+    : { ok: false, code: "failed" };
 }
 
 /** Emails a sign-in link. `captchaToken` is the Turnstile token when the

@@ -8,6 +8,6 @@ export const metadata: Metadata = {
 };
 
 export default async function SignInPage({ searchParams }: PageProps<"/signin">) {
-  const { next } = await searchParams;
-  return <SignInView next={next} />;
+  const { next, error } = await searchParams;
+  return <SignInView next={next} failed={error !== undefined} />;
 }
