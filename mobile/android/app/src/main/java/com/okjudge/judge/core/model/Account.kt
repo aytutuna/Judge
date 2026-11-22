@@ -1,5 +1,6 @@
 package com.okjudge.judge.core.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /** Sign-in methods the deployment offers right now (AuthProviders in lib/account-types.ts). */
@@ -116,3 +117,14 @@ data class SessionGrant(
     @Serializable
     data class GrantUser(val id: String = "", val email: String = "", val name: String? = null)
 }
+
+/** Where an address goes next on the sign-in screen (POST /api/v1/auth/lookup). */
+@Serializable
+enum class EmailMethod {
+    @SerialName("password") PASSWORD,
+    @SerialName("code") CODE,
+    @SerialName("new") NEW,
+}
+
+@Serializable
+data class EmailLookup(val method: EmailMethod)

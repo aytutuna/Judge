@@ -6,6 +6,7 @@ import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.api.TokenStore
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.model.AgeStatus
+import com.okjudge.judge.core.model.EmailMethod
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.MeResponse
 import com.okjudge.judge.core.model.ServerConfig
@@ -313,6 +314,17 @@ class Account(
                 is ApiResult.Ok -> complete(res.value)
                 is ApiResult.Err -> SignInResult.Error(socialError(res.error))
             }
+        }
+
+    /**
+     * Which sign-in the address takes. A server without the lookup (404) has
+     * no passwords, so it is the code; any other failure falls back to the
+     * password screen, which still offers the code.
+     */
+    suspend fun emailMethod(email: String): EmailMethod =
+        when (val res = api.lookupEmail(email.trim())) {
+            is ApiResult.Ok -> res.value
+            is ApiResult.Err -> if (res.error is UiError.Api && res.error.status == 404) EmailMethod.CODE else EmailMethod.PASSWORD
         }
 
     /** Emails a sign-in code; null when it was sent. */

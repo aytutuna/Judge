@@ -13,6 +13,8 @@ import com.okjudge.judge.core.model.CaseWithNames
 import com.okjudge.judge.core.model.ConsentResponse
 import com.okjudge.judge.core.model.ConsentState
 import com.okjudge.judge.core.model.ConsentStatus
+import com.okjudge.judge.core.model.EmailLookup
+import com.okjudge.judge.core.model.EmailMethod
 import com.okjudge.judge.core.model.Rating
 import com.okjudge.judge.core.model.ClarifyRequest
 import com.okjudge.judge.core.model.InviteResponse
@@ -483,6 +485,12 @@ class JudgeApi(
         },
         signIn = true,
     ) { _, text -> decodeGrant(text) }
+
+    /** POST /api/v1/auth/lookup: which sign-in an address takes (404 when the server has no passwords). */
+    suspend fun lookupEmail(email: String): ApiResult<EmailMethod> = postAuth(
+        url("api", "v1", "auth", "lookup"),
+        buildJsonObject { put("email", email) },
+    ) { _, text -> WireJson.json.decodeFromString(EmailLookup.serializer(), text).method }
 
     /** POST /api/auth/email-otp/send-verification-otp: emails a sign-in code in [lang]. */
     suspend fun sendSignInCode(email: String, lang: AppLang): ApiResult<Unit> {

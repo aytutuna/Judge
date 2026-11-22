@@ -8,11 +8,13 @@ import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.auth.Routes.Companion.CONFIG
 import com.okjudge.judge.core.auth.Routes.Companion.DELETE_ME
 import com.okjudge.judge.core.auth.Routes.Companion.GOOGLE
+import com.okjudge.judge.core.auth.Routes.Companion.LOOKUP
 import com.okjudge.judge.core.auth.Routes.Companion.ME
 import com.okjudge.judge.core.auth.Routes.Companion.SEND_CODE
 import com.okjudge.judge.core.auth.Routes.Companion.SIGN_OUT
 import com.okjudge.judge.core.auth.Routes.Companion.VERIFY_CODE
 import com.okjudge.judge.core.auth.Routes.Companion.json
+import com.okjudge.judge.core.model.EmailMethod
 import com.okjudge.judge.core.model.MeResponse
 import com.okjudge.judge.core.model.WireJson
 import com.okjudge.judge.i18n.AppLang
@@ -239,6 +241,22 @@ class AccountTest {
         assertEquals(SignInError.INVALID_EMAIL, account.sendCode("a@b", AppLang.EN))
         assertFalse(Account.looksLikeEmail("a@b"))
         assertTrue(Account.looksLikeEmail(" coder@example.com "))
+    }
+
+    @Test
+    fun lookup_picksTheScreenAndFallsBackToThePassword() = runBlocking {
+        routes.on(LOOKUP, json(200, """{"method":"new"}"""))
+        routes.on(LOOKUP, json(200, """{"method":"code"}"""))
+        routes.on(LOOKUP, json(404, """{"code":"not_found"}"""))
+        routes.on(LOOKUP, json(429, """{"code":"rate_limited"}"""))
+        routes.on(LOOKUP, json(200, """{"method":"password"}"""))
+        val account = account()
+        assertEquals(EmailMethod.NEW, account.emailMethod(" a@example.com "))
+        assertEquals("a@example.com", bodyOf(LOOKUP)["email"]!!.jsonPrimitive.content)
+        assertEquals(EmailMethod.CODE, account.emailMethod("a@example.com"))
+        assertEquals(EmailMethod.CODE, account.emailMethod("a@example.com"))
+        assertEquals(EmailMethod.PASSWORD, account.emailMethod("a@example.com"))
+        assertEquals(EmailMethod.PASSWORD, account.emailMethod("a@example.com"))
     }
 
     // --- /me ---

@@ -53,6 +53,7 @@ class Routes : Dispatcher() {
         const val SIGN_OUT = "POST /api/auth/sign-out"
         const val PASSWORD_SIGN_IN = "POST /api/auth/sign-in/email"
         const val SET_PASSWORD = "POST /api/v1/me/password"
+        const val LOOKUP = "POST /api/v1/auth/lookup"
 
         fun config(google: Boolean, emailCode: Boolean, apple: Boolean = false, password: Boolean = false) = json(
             200,
