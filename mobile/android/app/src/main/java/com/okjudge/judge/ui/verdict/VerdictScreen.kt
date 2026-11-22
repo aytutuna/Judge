@@ -5,6 +5,11 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -174,7 +179,12 @@ fun VerdictRoute(
                 Spacer(Modifier.height(32.dp))
             }
             if (feedback) {
-                if (askConsent) ConsentCard(onConsent, onConsentInfo, width.padding(bottom = 16.dp))
+                AnimatedVisibility(
+                    visible = askConsent,
+                    exit = fadeOut(tween(280, easing = FastOutSlowInEasing)) + shrinkVertically(tween(280, easing = FastOutSlowInEasing)),
+                ) {
+                    ConsentCard(onConsent, onConsentInfo, width.padding(bottom = 16.dp))
+                }
                 RatingRow(rating, onRate = { if (signedOut) signInSheet = true else viewModel.rate(it) }, modifier = width.padding(bottom = 24.dp))
             }
         }

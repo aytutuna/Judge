@@ -20,13 +20,18 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import com.okjudge.judge.core.model.Rating
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.PaperCard
-import com.okjudge.judge.ui.components.TextAction
 import com.okjudge.judge.ui.components.rememberIcon
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
@@ -44,11 +49,16 @@ object FeedbackTags {
 @Composable
 fun ConsentCard(onAnswer: (Boolean) -> Unit, onInfo: () -> Unit, modifier: Modifier = Modifier) {
     val s = LocalStrings.current
+    val linkStyle = TextLinkStyles(SpanStyle(color = Palette.terraInk, textDecoration = TextDecoration.Underline))
+    val body = buildAnnotatedString {
+        append(s.consentCardBody)
+        append(" ")
+        withLink(LinkAnnotation.Clickable(tag = "info", styles = linkStyle) { onInfo() }) { append(s.consentCardLink) }
+    }
     PaperCard(modifier.testTag(FeedbackTags.CARD)) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(s.consentCardTitle, style = JudgeType.bodyStrong)
-            Text(s.consentCardBody, style = JudgeType.slotText)
-            TextAction(s.consentCardLink, onInfo, Modifier.testTag(FeedbackTags.INFO))
+            Text(body, style = JudgeType.slotText, modifier = Modifier.testTag(FeedbackTags.INFO))
             Row(Modifier.padding(top = 4.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 GhostButton(s.consentCardYes, null, { onAnswer(true) }, Modifier.testTag(FeedbackTags.YES))
                 GhostButton(s.consentCardNo, null, { onAnswer(false) }, Modifier.testTag(FeedbackTags.NO))

@@ -41,9 +41,15 @@ class Consent(private val api: JudgeApi, private val scope: CoroutineScope) {
 
     /** [source] is "card" or "switch"; [wordingKey] names the text the person saw, in [lang]. */
     fun answer(on: Boolean, source: String, wordingKey: String, lang: AppLang) {
+        // The card leaves at once and comes back if the save fails.
+        val card = source == "card"
+        if (card) {
+            if (!_ask.value) return
+            _ask.value = false
+        }
         scope.launch {
             val res = api.setConsent(on, source, wordingKey, lang)
-            if (res is ApiResult.Ok) apply(res.value)
+            if (res is ApiResult.Ok) apply(res.value) else if (card) _ask.value = true
         }
     }
 
