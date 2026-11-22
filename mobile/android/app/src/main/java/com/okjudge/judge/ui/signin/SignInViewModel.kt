@@ -4,18 +4,26 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.okjudge.judge.core.auth.Account
-import com.okjudge.judge.core.auth.AgeCheck
+import com.okjudge.judge.core.auth.LastSignInStore
 import com.okjudge.judge.core.auth.SignInError
+import com.okjudge.judge.core.auth.SignInMethod
 import com.okjudge.judge.core.auth.SignInResult
+import com.okjudge.judge.core.model.EmailMethod
 import com.okjudge.judge.i18n.AppLang
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-/** CHOOSE_PASSWORD: signed in by the code, choosing a password; there is no way past it. */
-enum class SignInStep { EMAIL, CODE, CHOOSE_PASSWORD }
+/**
+ * EMAIL: Google and the address. PASSWORD: the address is known and takes a
+ * password (sign in, or create one). CHOOSE_PASSWORD: signed in by the code,
+ * offered a password.
+ */
+enum class SignInStep { EMAIL, PASSWORD, CODE, CHOOSE_PASSWORD }
 
 /**
  * What the email area is doing: sign in with a password, make an account
@@ -38,9 +46,9 @@ data class SignInUiState(
     val error: SignInError? = null,
     /** Signed in: the screen hands over to where the user was going. */
     val done: Boolean = false,
-    /** The "I'm 18 or older" box, required unless the phone already said 18+. */
-    val ageNeeded: Boolean = true,
-    val ageTicked: Boolean = false,
+    /** Seconds until another code may be asked for. */
+    val resendIn: Int = 0,
+    val lastUsed: SignInMethod? = null,
 ) {
     private val providerFlags get() = (providers as? Account.Providers.Ready)?.config?.signIn
 
@@ -54,11 +62,10 @@ data class SignInUiState(
     /** The mode in effect: a server without passwords only has the code. */
     val flow: SignInMode get() = if (passwordSignIn) mode else SignInMode.CODE
 
-    val ageOk: Boolean get() = !ageNeeded || ageTicked
-    val canGoogle: Boolean get() = busy == null && ageOk
-    val canRequestCode: Boolean
-        get() = busy == null && ageOk && email.isNotBlank() && (flow != SignInMode.CREATE || password.isNotEmpty())
-    val canSignInWithPassword: Boolean get() = busy == null && ageOk && email.isNotBlank() && password.isNotEmpty()
+    val canGoogle: Boolean get() = busy == null
+    val canContinue: Boolean get() = busy == null && email.isNotBlank()
+    val canRequestCode: Boolean get() = canContinue && (flow != SignInMode.CREATE || password.isNotEmpty())
+    val canSignInWithPassword: Boolean get() = canContinue && password.isNotEmpty()
     val canSavePassword: Boolean get() = busy == null && password.isNotEmpty()
     val canSubmitCode: Boolean get() = busy == null && code.length == CODE_LENGTH
 
@@ -66,18 +73,19 @@ data class SignInUiState(
         const val CODE_LENGTH = 6
         const val PASSWORD_MIN = 8
         const val PASSWORD_MAX = 128
+        const val RESEND_SECONDS = 30
     }
 }
 
 /** The sign-in screen: Google, a password, or an emailed six-digit code. */
-class SignInViewModel(private val account: Account) : ViewModel() {
-    private val _state = MutableStateFlow(SignInUiState(providers = account.providers.value))
+class SignInViewModel(private val account: Account, private val last: LastSignInStore) : ViewModel() {
+    private val _state = MutableStateFlow(
+        SignInUiState(providers = account.providers.value, email = last.email, lastUsed = last.method),
+    )
     val state: StateFlow<SignInUiState> = _state.asStateFlow()
 
     init {
         viewModelScope.launch { account.providers.collect { p -> _state.update { it.copy(providers = p) } } }
-        viewModelScope.launch { account.platformAge.collect { p -> _state.update { it.copy(ageNeeded = AgeCheck.needsCheckbox(p)) } } }
-        viewModelScope.launch { account.ageTicked.collect { t -> _state.update { it.copy(ageTicked = t) } } }
         account.loadProviders()
     }
 
@@ -87,20 +95,42 @@ class SignInViewModel(private val account: Account) : ViewModel() {
         _state.update { it.copy(email = text.take(MAX_EMAIL), error = null) }
     }
 
-    fun onAgeTicked(ticked: Boolean) = account.setAgeTicked(ticked)
-
     fun onPasswordChange(text: String) {
         _state.update { it.copy(password = text.take(SignInUiState.PASSWORD_MAX), error = null) }
     }
 
-    fun setMode(mode: SignInMode) {
-        if (_state.value.busy != null) return
-        _state.update { it.copy(mode = mode, step = SignInStep.EMAIL, code = "", password = "", error = null) }
+    /** The email screen's Continue: the server says whether the address takes a password or the code. */
+    fun continueWithEmail(lang: AppLang) {
+        val s = _state.value
+        if (!s.canContinue) return
+        if (!Account.looksLikeEmail(s.email)) {
+            _state.update { it.copy(error = SignInError.INVALID_EMAIL) }
+            return
+        }
+        if (!s.passwordSignIn) return send(lang, SignInMode.CODE)
+        _state.update { it.copy(busy = SignInBusy.SEND, error = null) }
+        viewModelScope.launch {
+            when (account.emailMethod(s.email)) {
+                EmailMethod.CODE -> send(lang, SignInMode.CODE)
+                EmailMethod.PASSWORD -> _state.update { it.copy(busy = null, step = SignInStep.PASSWORD, mode = SignInMode.PASSWORD, password = "") }
+                EmailMethod.NEW -> _state.update { it.copy(busy = null, step = SignInStep.PASSWORD, mode = SignInMode.CREATE, password = "") }
+            }
+        }
+    }
+
+    fun forgotPassword(lang: AppLang) {
+        if (_state.value.busy == null) send(lang, SignInMode.FORGOT)
+    }
+
+    fun useCode(lang: AppLang) {
+        if (_state.value.busy == null) send(lang, SignInMode.CODE)
     }
 
     fun onCodeChange(text: String) {
         val digits = text.filter { it in '0'..'9' }.take(SignInUiState.CODE_LENGTH)
+        val complete = digits.length == SignInUiState.CODE_LENGTH && digits != _state.value.code
         _state.update { it.copy(code = digits, error = null) }
+        if (complete) submitCode()
     }
 
     fun requestCode(lang: AppLang) {
@@ -114,7 +144,7 @@ class SignInViewModel(private val account: Account) : ViewModel() {
             _state.update { it.copy(error = SignInError.PASSWORD_SHORT) }
             return
         }
-        send(lang)
+        send(lang, s.flow)
     }
 
     fun signInWithPassword() {
@@ -125,23 +155,40 @@ class SignInViewModel(private val account: Account) : ViewModel() {
             return
         }
         _state.update { it.copy(busy = SignInBusy.PASSWORD, error = null) }
-        viewModelScope.launch { finish(account.signInWithPassword(s.email, s.password)) }
+        account.setAgeTicked(true)
+        viewModelScope.launch { finish(account.signInWithPassword(s.email, s.password), SignInMethod.EMAIL, s.email.trim()) }
     }
 
     fun resend(lang: AppLang) {
-        if (_state.value.busy != null) return
-        send(lang)
+        val s = _state.value
+        if (s.busy == null && s.resendIn == 0) send(lang, s.mode)
     }
 
-    private fun send(lang: AppLang) {
+    private fun send(lang: AppLang, mode: SignInMode) {
         val email = _state.value.email.trim()
         _state.update { it.copy(busy = SignInBusy.SEND, error = null) }
+        // Continuing is the consent the screen's last line states.
+        account.setAgeTicked(true)
         viewModelScope.launch {
             val error = account.sendCode(email, lang)
             _state.update {
-                if (error == null) it.copy(busy = null, step = SignInStep.CODE, code = "", email = email)
+                if (error == null) it.copy(busy = null, step = SignInStep.CODE, mode = mode, code = "", email = email)
                 else it.copy(busy = null, error = error)
             }
+            if (error == null) startCountdown()
+        }
+    }
+
+    private var countdown: Job? = null
+
+    private fun startCountdown() {
+        countdown?.cancel()
+        countdown = viewModelScope.launch {
+            for (n in SignInUiState.RESEND_SECONDS downTo 1) {
+                _state.update { it.copy(resendIn = n) }
+                delay(1000)
+            }
+            _state.update { it.copy(resendIn = 0) }
         }
     }
 
@@ -149,10 +196,14 @@ class SignInViewModel(private val account: Account) : ViewModel() {
         val s = _state.value
         if (!s.canSubmitCode) return
         _state.update { it.copy(busy = SignInBusy.VERIFY, error = null) }
+        account.setAgeTicked(true)
         val setsPassword = s.flow == SignInMode.CREATE || s.flow == SignInMode.FORGOT
         viewModelScope.launch {
             val result = account.verifyCode(s.email, s.code)
-            if (result != SignInResult.Success || !(setsPassword || account.needsPassword)) return@launch finish(result)
+            if (result != SignInResult.Success || !(setsPassword || account.needsPassword)) {
+                return@launch finish(result, SignInMethod.EMAIL, s.email.trim())
+            }
+            rememberSignIn(SignInMethod.EMAIL, s.email.trim())
             // The address is proven and the account exists: ask for the password, or save the one typed for create.
             _state.update { it.copy(busy = null, step = SignInStep.CHOOSE_PASSWORD, code = "", error = null) }
             if (s.flow == SignInMode.CREATE) savePassword()
@@ -182,16 +233,24 @@ class SignInViewModel(private val account: Account) : ViewModel() {
         }
     }
 
+    /** Stays signed in without a password. */
+    fun skipPassword() {
+        if (_state.value.step != SignInStep.CHOOSE_PASSWORD) return
+        _state.update { it.copy(password = "", done = true) }
+    }
+
     fun changeEmail() {
         if (_state.value.busy != null) return
-        _state.update { it.copy(step = SignInStep.EMAIL, code = "", error = null) }
+        countdown?.cancel()
+        _state.update { it.copy(step = SignInStep.EMAIL, mode = SignInMode.PASSWORD, code = "", password = "", resendIn = 0, error = null) }
     }
 
     /** [host] is the Activity the account picker attaches to. */
     fun google(host: Context) {
         if (!_state.value.canGoogle) return
         _state.update { it.copy(busy = SignInBusy.GOOGLE, error = null) }
-        viewModelScope.launch { finish(account.signInWithGoogle(host)) }
+        account.setAgeTicked(true)
+        viewModelScope.launch { finish(account.signInWithGoogle(host), SignInMethod.GOOGLE) }
     }
 
     fun signInDev() {
@@ -200,7 +259,13 @@ class SignInViewModel(private val account: Account) : ViewModel() {
         viewModelScope.launch { finish(account.signInDev()) }
     }
 
-    private fun finish(result: SignInResult) {
+    private fun rememberSignIn(method: SignInMethod, email: String?) {
+        last.save(method, email)
+        _state.update { it.copy(lastUsed = method) }
+    }
+
+    private fun finish(result: SignInResult, method: SignInMethod? = null, email: String? = null) {
+        if (result == SignInResult.Success && method != null) rememberSignIn(method, email)
         _state.update {
             when (result) {
                 SignInResult.Success -> it.copy(busy = null, password = "", done = true)

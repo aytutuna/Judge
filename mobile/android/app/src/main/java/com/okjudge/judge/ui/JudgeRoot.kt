@@ -776,7 +776,7 @@ fun JudgeRoot(
                                     )
                                 }
                                 entry<SignInKey> { key ->
-                                    val vm = viewModel { SignInViewModel(account) }
+                                    val vm = viewModel { SignInViewModel(account, container.lastSignIn) }
                                     val state by vm.state.collectAsStateWithLifecycle()
                                     ScreenView(container.analytics, "sign_in")
                                     LaunchedEffect(state.done) {
@@ -796,28 +796,25 @@ fun JudgeRoot(
                                                 vm.google(context)
                                             },
                                             onEmailChange = vm::onEmailChange,
-                                            onRequestCode = {
+                                            onContinue = {
                                                 container.analytics.track("sign_in_started", mapOf("provider" to "email"))
-                                                vm.requestCode(lang)
+                                                vm.continueWithEmail(lang)
                                             },
+                                            onRequestCode = { vm.requestCode(lang) },
                                             onPasswordChange = vm::onPasswordChange,
                                             onSignInWithPassword = {
                                                 container.analytics.track("sign_in_started", mapOf("provider" to "password"))
                                                 vm.signInWithPassword()
                                             },
-                                            onMode = vm::setMode,
+                                            onForgot = { vm.forgotPassword(lang) },
+                                            onUseCode = { vm.useCode(lang) },
                                             onSavePassword = vm::savePassword,
-                                            // App scope: leaving the screen must not stop the sign-out halfway.
-                                            onSignOut = {
-                                                container.appScope.launch { account.signOut() }
-                                                backStack.removeAll { it is SignInKey }
-                                            },
+                                            onSkip = vm::skipPassword,
                                             onCodeChange = vm::onCodeChange,
                                             onSubmitCode = vm::submitCode,
                                             onResend = { vm.resend(lang) },
                                             onChangeEmail = vm::changeEmail,
                                             onRetryProviders = vm::retryProviders,
-                                            onAgeTicked = vm::onAgeTicked,
                                             onDevSignIn = if (BuildConfig.DEBUG) vm::signInDev else null,
                                             onOpenTerms = { openLink(context, "$site/terms") },
                                             onOpenPrivacy = { openLink(context, "$site/privacy") },

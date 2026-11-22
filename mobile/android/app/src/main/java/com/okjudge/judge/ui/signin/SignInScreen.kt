@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
@@ -67,10 +68,10 @@ import androidx.compose.ui.unit.sp
 import com.okjudge.judge.R
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.auth.SignInError
+import com.okjudge.judge.core.auth.SignInMethod
 import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.i18n.Strings
-import com.okjudge.judge.ui.age.AgeCheckbox
 import com.okjudge.judge.ui.components.CardElevation
 import com.okjudge.judge.ui.components.PrimaryButton
 import com.okjudge.judge.ui.components.TextAction
@@ -85,6 +86,7 @@ object SignInTags {
     const val GOOGLE = "signin.google"
     const val DEV = "signin.dev"
     const val EMAIL = "signin.email"
+    const val CONTINUE = "signin.continue"
     const val REQUEST_CODE = "signin.requestCode"
     const val CODE = "signin.code"
     const val SUBMIT_CODE = "signin.submitCode"
@@ -93,30 +95,31 @@ object SignInTags {
     const val PASSWORD = "signin.password"
     const val SUBMIT_PASSWORD = "signin.submitPassword"
     const val FORGOT = "signin.forgot"
-    const val CREATE = "signin.create"
     const val USE_CODE = "signin.useCode"
-    const val USE_PASSWORD = "signin.usePassword"
     const val NEW_PASSWORD = "signin.newPassword"
     const val SAVE_PASSWORD = "signin.savePassword"
-    const val SIGN_OUT = "signin.signOut"
+    const val SKIP = "signin.skip"
+    const val RESEND = "signin.resend"
+    const val LAST_USED = "signin.lastUsed"
 }
 
 /** Everything the sign-in screen can ask for; no-ops by default (previews, screenshots). */
 data class SignInActions(
     val onGoogle: () -> Unit = {},
     val onEmailChange: (String) -> Unit = {},
+    val onContinue: () -> Unit = {},
     val onRequestCode: () -> Unit = {},
     val onPasswordChange: (String) -> Unit = {},
     val onSignInWithPassword: () -> Unit = {},
-    val onMode: (SignInMode) -> Unit = {},
+    val onForgot: () -> Unit = {},
+    val onUseCode: () -> Unit = {},
     val onSavePassword: () -> Unit = {},
-    val onSignOut: () -> Unit = {},
+    val onSkip: () -> Unit = {},
     val onCodeChange: (String) -> Unit = {},
     val onSubmitCode: () -> Unit = {},
     val onResend: () -> Unit = {},
     val onChangeEmail: () -> Unit = {},
     val onRetryProviders: () -> Unit = {},
-    val onAgeTicked: (Boolean) -> Unit = {},
     val onOpenTerms: () -> Unit = {},
     val onOpenPrivacy: () -> Unit = {},
     /** Set in debug builds only; the button is drawn when it is. */
@@ -124,9 +127,9 @@ data class SignInActions(
 )
 
 /**
- * Sign-in: Google, a password and/or an emailed code, whichever the server offers, the
- * 18+ checkbox above them unless the phone already said 18+, and the consent
- * line for the outside AI at the bottom.
+ * Sign-in: Google and an email address, whichever the server offers. The
+ * address leads to a password or an emailed code. The consent line (18+ and
+ * the outside AI) sits at the bottom.
  */
 @Composable
 fun SignInScreen(
@@ -169,16 +172,14 @@ fun SignInScreen(
                         is Account.Providers.Ready -> if (state.noneAvailable) {
                             Unavailable(s, onRetry = actions.onRetryProviders)
                         } else {
-                            if (state.ageNeeded && state.step == SignInStep.EMAIL) {
-                                AgeCheckbox(state.ageTicked, actions.onAgeTicked, Modifier.padding(bottom = 14.dp), enabled = state.busy == null)
+                            if (state.showGoogle && state.step == SignInStep.EMAIL) {
+                                GoogleButton(s.signinGoogle, enabled = state.canGoogle, lastUsed = state.lastUsed == SignInMethod.GOOGLE, onClick = actions.onGoogle)
                             }
-                            if (state.showGoogle && !choosing) {
-                                GoogleButton(s.signinGoogle, enabled = state.canGoogle, onClick = actions.onGoogle)
-                            }
-                            if (state.showGoogle && state.showEmail && !choosing) OrDivider(s.appSigninOr)
+                            if (state.showGoogle && state.showEmail && state.step == SignInStep.EMAIL) OrDivider(s.appSigninOr)
                             if (state.showEmail) {
                                 when (state.step) {
                                     SignInStep.EMAIL -> EmailStep(state, actions)
+                                    SignInStep.PASSWORD -> PasswordStep(state, actions)
                                     SignInStep.CODE -> CodeStep(state, actions)
                                     SignInStep.CHOOSE_PASSWORD -> ChoosePasswordStep(state, actions)
                                 }
@@ -190,7 +191,7 @@ fun SignInScreen(
                 }
 
                 actions.onDevSignIn?.let {
-                    GhostButton("Developer sign-in", null, it, Modifier.padding(top = 16.dp).testTag(SignInTags.DEV), enabled = state.busy == null)
+                    GhostButton(s.signinDev, null, it, Modifier.padding(top = 16.dp).testTag(SignInTags.DEV), enabled = state.busy == null)
                 }
 
                 LegalLine(s, actions.onOpenTerms, actions.onOpenPrivacy, Modifier.padding(top = 32.dp))
@@ -225,13 +226,30 @@ private fun Unavailable(s: Strings, onRetry: () -> Unit) {
 }
 
 @Composable
-private fun GoogleButton(text: String, enabled: Boolean, onClick: () -> Unit) {
-    OutlinePill(
-        text,
-        enabled,
-        onClick,
-        Modifier.testTag(SignInTags.GOOGLE),
-        icon = { Image(painterResource(R.drawable.ic_google_g), contentDescription = null, modifier = Modifier.size(20.dp)) },
+private fun GoogleButton(text: String, enabled: Boolean, lastUsed: Boolean, onClick: () -> Unit) {
+    Box {
+        OutlinePill(
+            text,
+            enabled,
+            onClick,
+            Modifier.testTag(SignInTags.GOOGLE),
+            icon = { Image(painterResource(R.drawable.ic_google_g), contentDescription = null, modifier = Modifier.size(20.dp)) },
+        )
+        // On the button's edge, so a long translation of the label never runs into it.
+        if (lastUsed) LastUsedTag(Modifier.align(Alignment.TopEnd).padding(end = 16.dp).offset(y = (-9).dp))
+    }
+}
+
+@Composable
+private fun LastUsedTag(modifier: Modifier = Modifier) {
+    Text(
+        LocalStrings.current.signinLastUsed,
+        style = JudgeType.footnote.copy(fontSize = 11.sp, lineHeight = 14.sp, color = Palette.terraInk),
+        modifier = modifier
+            .clip(JudgeShapes.chip)
+            .background(Palette.terraTint)
+            .padding(horizontal = 8.dp, vertical = 2.dp)
+            .testTag(SignInTags.LAST_USED),
     )
 }
 
@@ -274,85 +292,72 @@ private fun OrDivider(text: String) {
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun EmailStep(state: SignInUiState, actions: SignInActions) {
     val s = LocalStrings.current
-    val focus = LocalFocusManager.current
-    val flow = state.flow
-    val passwordNext = flow == SignInMode.PASSWORD || flow == SignInMode.CREATE
-    Text(s.signinEmailLabel, style = JudgeType.slotTitle, modifier = Modifier.padding(bottom = 8.dp))
+    Row(Modifier.fillMaxWidth().padding(bottom = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+        Text(s.signinEmailLabel, style = JudgeType.slotTitle, modifier = Modifier.weight(1f))
+        if (state.lastUsed == SignInMethod.EMAIL) LastUsedTag()
+    }
     Field(
         value = state.email,
         onChange = actions.onEmailChange,
         placeholder = s.signinEmailPlaceholder,
-        keyboard = KeyboardOptions(
-            keyboardType = KeyboardType.Email,
-            imeAction = if (passwordNext) ImeAction.Next else ImeAction.Send,
-            autoCorrectEnabled = false,
-        ),
-        onIme = if (passwordNext) ({ focus.moveFocus(FocusDirection.Down); Unit }) else actions.onRequestCode,
-        modifier = Modifier
-            .semantics {
-                contentType = when (flow) {
-                    SignInMode.PASSWORD -> ContentType.Username
-                    SignInMode.CREATE -> ContentType.NewUsername
-                    else -> ContentType.EmailAddress
-                }
-            }
-            .testTag(SignInTags.EMAIL),
+        keyboard = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Go, autoCorrectEnabled = false),
+        onIme = actions.onContinue,
+        enabled = state.busy == null,
+        modifier = Modifier.semantics { contentType = ContentType.Username + ContentType.EmailAddress }.testTag(SignInTags.EMAIL),
     )
-    if (flow == SignInMode.PASSWORD) {
-        Text(s.signinPassword, style = JudgeType.slotTitle, modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
-        PasswordField(
-            value = state.password,
-            onChange = actions.onPasswordChange,
-            autofill = ContentType.Password,
-            onDone = actions.onSignInWithPassword,
-            modifier = Modifier.testTag(SignInTags.PASSWORD),
-        )
+    PrimaryButton(
+        text = s.signinContinue,
+        enabled = state.canContinue,
+        onClick = actions.onContinue,
+        modifier = Modifier.fillMaxWidth().padding(top = 16.dp).testTag(SignInTags.CONTINUE),
+    )
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun PasswordStep(state: SignInUiState, actions: SignInActions) {
+    val s = LocalStrings.current
+    val creating = state.flow == SignInMode.CREATE
+    Text(state.email, style = JudgeType.bodyStrong)
+    TextAction(
+        s.appSigninChangeEmail,
+        onClick = { if (state.busy == null) actions.onChangeEmail() },
+        color = Palette.ink2,
+        modifier = Modifier.padding(bottom = 10.dp),
+    )
+    Text(
+        if (creating) s.signinPasswordNew else s.signinPassword,
+        style = JudgeType.slotTitle,
+        modifier = Modifier.padding(bottom = 8.dp),
+    )
+    PasswordField(
+        value = state.password,
+        onChange = actions.onPasswordChange,
+        autofill = if (creating) ContentType.NewPassword else ContentType.Password,
+        onDone = if (creating) actions.onRequestCode else actions.onSignInWithPassword,
+        modifier = Modifier.testTag(if (creating) SignInTags.NEW_PASSWORD else SignInTags.PASSWORD),
+    )
+    if (creating) {
         PrimaryButton(
-            text = s.signinPasswordSubmit,
-            enabled = state.canSignInWithPassword,
-            onClick = actions.onSignInWithPassword,
-            modifier = Modifier.fillMaxWidth().padding(top = 16.dp).testTag(SignInTags.SUBMIT_PASSWORD),
-        )
-        FlowRow(Modifier.fillMaxWidth().padding(top = 10.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-            TextAction(s.signinForgot, onClick = { actions.onMode(SignInMode.FORGOT) }, modifier = Modifier.testTag(SignInTags.FORGOT))
-            TextAction(s.signinCreate, onClick = { actions.onMode(SignInMode.CREATE) }, modifier = Modifier.testTag(SignInTags.CREATE))
-        }
-        TextAction(
-            s.signinUseCode,
-            onClick = { actions.onMode(SignInMode.CODE) },
-            color = Palette.ink2,
-            modifier = Modifier.testTag(SignInTags.USE_CODE),
+            text = s.signinContinue,
+            enabled = state.canRequestCode,
+            onClick = actions.onRequestCode,
+            modifier = Modifier.fillMaxWidth().padding(top = 16.dp).testTag(SignInTags.REQUEST_CODE),
         )
         return
     }
-    if (flow == SignInMode.CREATE) {
-        Text(s.signinPasswordNew, style = JudgeType.slotTitle, modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
-        PasswordField(
-            value = state.password,
-            onChange = actions.onPasswordChange,
-            autofill = ContentType.NewPassword,
-            onDone = actions.onRequestCode,
-            modifier = Modifier.testTag(SignInTags.NEW_PASSWORD),
-        )
-        Text(s.signinCreateNote, style = JudgeType.footnote, modifier = Modifier.padding(top = 10.dp))
-    }
-    OutlinePill(
-        text = s.appSigninCodeRequest,
-        enabled = state.canRequestCode,
-        onClick = actions.onRequestCode,
-        modifier = Modifier.padding(top = 16.dp).testTag(SignInTags.REQUEST_CODE),
+    PrimaryButton(
+        text = s.signinPasswordSubmit,
+        enabled = state.canSignInWithPassword,
+        onClick = actions.onSignInWithPassword,
+        modifier = Modifier.fillMaxWidth().padding(top = 16.dp).testTag(SignInTags.SUBMIT_PASSWORD),
     )
-    if (state.passwordSignIn) {
-        TextAction(
-            s.signinUsePassword,
-            onClick = { actions.onMode(SignInMode.PASSWORD) },
-            color = Palette.ink2,
-            modifier = Modifier.padding(top = 6.dp).testTag(SignInTags.USE_PASSWORD),
-        )
+    FlowRow(Modifier.fillMaxWidth().padding(top = 10.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+        TextAction(s.signinForgot, onClick = actions.onForgot, modifier = Modifier.testTag(SignInTags.FORGOT))
+        TextAction(s.signinUseCode, onClick = actions.onUseCode, color = Palette.ink2, modifier = Modifier.testTag(SignInTags.USE_CODE))
     }
 }
 
@@ -374,15 +379,12 @@ private fun ChoosePasswordStep(state: SignInUiState, actions: SignInActions) {
         onClick = actions.onSavePassword,
         modifier = Modifier.fillMaxWidth().padding(top = 16.dp).testTag(SignInTags.SAVE_PASSWORD),
     )
-    // No skip, but a save that keeps failing must not trap the person.
-    if (state.error != null) {
-        TextAction(
-            s.accountSignOut,
-            onClick = actions.onSignOut,
-            color = Palette.ink2,
-            modifier = Modifier.padding(top = 6.dp).testTag(SignInTags.SIGN_OUT),
-        )
-    }
+    TextAction(
+        s.signinSkip,
+        onClick = { if (state.busy == null) actions.onSkip() },
+        color = Palette.ink2,
+        modifier = Modifier.padding(top = 6.dp).testTag(SignInTags.SKIP),
+    )
 }
 
 /** A password box with a show switch; [autofill] tells password managers which kind it is. */
@@ -432,6 +434,7 @@ private fun CodeStep(state: SignInUiState, actions: SignInActions) {
         placeholder = "000000",
         keyboard = KeyboardOptions(keyboardType = KeyboardType.NumberPassword, imeAction = ImeAction.Done, autoCorrectEnabled = false),
         onIme = actions.onSubmitCode,
+        enabled = state.busy == null,
         textStyle = JudgeType.body.copy(
             fontFamily = FontFamily.Monospace,
             fontWeight = FontWeight.SemiBold,
@@ -442,7 +445,7 @@ private fun CodeStep(state: SignInUiState, actions: SignInActions) {
         ),
         minHeight = 60.dp,
         align = Alignment.Center,
-        modifier = Modifier.testTag(SignInTags.CODE),
+        modifier = Modifier.semantics { contentType = ContentType.SmsOtpCode }.testTag(SignInTags.CODE),
     )
     PrimaryButton(
         text = s.appSigninCodeSubmit,
@@ -454,7 +457,12 @@ private fun CodeStep(state: SignInUiState, actions: SignInActions) {
         Modifier.fillMaxWidth().padding(top = 10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        TextAction(s.appSigninCodeResend, onClick = { if (state.busy == null) actions.onResend() })
+        TextAction(
+            if (state.resendIn > 0) s.signinCodeResendIn(state.resendIn.toString()) else s.appSigninCodeResend,
+            onClick = actions.onResend,
+            enabled = state.busy == null && state.resendIn == 0,
+            modifier = Modifier.testTag(SignInTags.RESEND),
+        )
         TextAction(s.appSigninChangeEmail, onClick = { if (state.busy == null) actions.onChangeEmail() }, color = Palette.ink2)
     }
 }
@@ -472,6 +480,7 @@ internal fun Field(
     align: Alignment = Alignment.CenterStart,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     trailing: (@Composable () -> Unit)? = null,
+    enabled: Boolean = true,
 ) {
     var focused by remember { mutableStateOf(false) }
     Box(
@@ -488,6 +497,7 @@ internal fun Field(
             BasicTextField(
                 value = value,
                 onValueChange = onChange,
+                enabled = enabled,
                 textStyle = textStyle,
                 singleLine = true,
                 cursorBrush = SolidColor(Palette.terraInk),
@@ -524,7 +534,7 @@ private fun ErrorNote(text: String) {
     )
 }
 
-/** "An outside AI reads your arguments. By continuing you agree to the Terms and Privacy Policy." with both links tappable. */
+/** "By continuing, you confirm you're 18 or older and agree to the Terms and the Privacy Policy. An outside AI reads your arguments." with both links tappable. */
 @Composable
 private fun LegalLine(s: Strings, onOpenTerms: () -> Unit, onOpenPrivacy: () -> Unit, modifier: Modifier = Modifier) {
     val linkStyle = TextLinkStyles(SpanStyle(color = Palette.terraInk, textDecoration = TextDecoration.Underline))

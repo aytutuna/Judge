@@ -13,6 +13,7 @@ import com.okjudge.judge.core.cases.CaseNamesStore
 import com.okjudge.judge.core.cases.PrefsCaseNames
 import com.okjudge.judge.core.auth.CredentialManagerGoogle
 import com.okjudge.judge.core.auth.KeystoreTokenStore
+import com.okjudge.judge.core.auth.LastSignInStore
 import com.okjudge.judge.core.auth.PlayAgeSignals
 import com.okjudge.judge.core.data.DataStoreSettings
 import com.okjudge.judge.core.data.HistoryDb
@@ -141,6 +142,8 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
     val drafts: PrefsDraft by lazy { PrefsDraft(appContext.getSharedPreferences("home_draft", Context.MODE_PRIVATE)) }
 
     val settings: SettingsStore by lazy { DataStoreSettings(appContext) }
+
+    val lastSignIn: LastSignInStore by lazy { LastSignInStore(appContext.getSharedPreferences(LastSignInStore.FILE, Context.MODE_PRIVATE)) }
 
     val examples: ExampleBook by lazy {
         ExampleBook(appContext.assets, appContext.getSharedPreferences(ExampleBook.FILE, Context.MODE_PRIVATE))
