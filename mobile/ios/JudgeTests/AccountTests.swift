@@ -90,9 +90,11 @@ final class AccountTests: XCTestCase {
     private func model(
         _ store: any TokenStore = MemoryTokenStore(),
         apple: Result<AppleIdentity, any Error> = .failure(IdentityProviderError.cancelled),
-        google: Result<GoogleIdentity, any Error> = .failure(IdentityProviderError.cancelled)
+        google: Result<GoogleIdentity, any Error> = .failure(IdentityProviderError.cancelled),
+        defaults: UserDefaults? = nil
     ) -> AccountModel {
-        let account = AccountModel(api: api(store), apple: FakeApple(apple), google: FakeGoogle(google), appleCodes: MemoryTokenStore())
+        let defaults = defaults ?? UserDefaults(suiteName: UUID().uuidString) ?? .standard
+        let account = AccountModel(api: api(store), apple: FakeApple(apple), google: FakeGoogle(google), appleCodes: MemoryTokenStore(), defaults: defaults)
         // The 18+ box is ticked unless a test is about it (AgeCheckTests).
         account.setAgeTicked(true)
         return account
@@ -480,8 +482,8 @@ final class AccountTests: XCTestCase {
     // MARK: - Password
 
     @MainActor
-    private func passwordModel(_ store: any TokenStore = MemoryTokenStore()) -> AccountModel {
-        let account = model(store)
+    private func passwordModel(_ store: any TokenStore = MemoryTokenStore(), defaults: UserDefaults? = nil) -> AccountModel {
+        let account = model(store, defaults: defaults)
         account.preload(config: ServerConfig(signIn: SignInProviders(emailCode: true, password: true)), info: nil)
         return account
     }
@@ -611,12 +613,11 @@ final class AccountTests: XCTestCase {
     }
 
     @MainActor
-    func testASaveThatKeepsFailingCanBeLeftBySigningOut() async throws {
+    func testASaveThatKeepsFailingCanBeSkipped() async throws {
         route([
             "/api/auth/email-otp/send-verification-otp": try json(200, ["success": true]),
             "/api/auth/sign-in/email-otp": try json(200, ["token": "sess-code", "user": Self.userJSON]),
             "/api/v1/me/password": try json(429, ["code": "rate_limited"]),
-            "/api/auth/sign-out": try json(200, ["success": true]),
             "/api/v1/me": try json(200, Self.meJSON),
         ])
         let store = MemoryTokenStore()
@@ -631,12 +632,152 @@ final class AccountTests: XCTestCase {
         XCTAssertEqual(account.step, .choosePassword)
         XCTAssertNotNil(account.failure)
 
-        await account.signOutFromPasswordStep()
-        XCTAssertFalse(account.isSignedIn)
-        XCTAssertNil(store.token())
+        account.skipPassword()
+        XCTAssertTrue(account.isSignedIn)
+        XCTAssertEqual(store.token(), "sess-code")
         XCTAssertFalse(account.isSignInPresented)
-        XCTAssertEqual(account.step, .choose)
-        XCTAssertNotNil(request("/api/auth/sign-out"))
+    }
+
+    // MARK: - Identifier-first
+
+    func testLookupDecodesTheThreeMethods() throws {
+        struct Body: Decodable { var method: EmailMethod }
+        for (text, method) in [("password", EmailMethod.password), ("code", .code), ("new", .new)] {
+            let body = Data("{\"method\":\"\(text)\"}".utf8)
+            XCTAssertEqual(try JSONDecoder().decode(Body.self, from: body).method, method)
+        }
+    }
+
+    @MainActor
+    private func lookup(_ reply: StubURLProtocol.Reply, passwords: Bool = true) async throws -> AccountModel {
+        route([
+            "/api/v1/auth/lookup": reply,
+            "/api/auth/email-otp/send-verification-otp": try json(200, ["success": true]),
+        ])
+        let account = passwordModel()
+        if !passwords { account.preload(config: ServerConfig(signIn: SignInProviders(emailCode: true)), info: nil) }
+        account.email = " Ann@Example.com "
+        await account.continueWithEmail(lang: .en)
+        return account
+    }
+
+    @MainActor
+    func testLookupSendsTheAddressAndOpensThePasswordScreen() async throws {
+        let account = try await lookup(try json(200, ["method": "password"]))
+        XCTAssertEqual(try body(request("/api/v1/auth/lookup")) as? [String: String], ["email": "Ann@Example.com"])
+        XCTAssertEqual(account.step, .password)
+        XCTAssertEqual(account.mode, .password)
+        XCTAssertNil(request("/api/auth/email-otp/send-verification-otp"))
+    }
+
+    @MainActor
+    func testANewAddressCreatesAPasswordFirst() async throws {
+        let account = try await lookup(try json(200, ["method": "new"]))
+        XCTAssertEqual(account.step, .password)
+        XCTAssertEqual(account.mode, .create)
+    }
+
+    @MainActor
+    func testAnAccountWithoutAPasswordGetsTheCodeAtOnce() async throws {
+        let account = try await lookup(try json(200, ["method": "code"]))
+        XCTAssertEqual(account.step, .code(email: "Ann@Example.com"))
+        XCTAssertEqual(account.mode, .code)
+        XCTAssertEqual(account.resendIn, AccountModel.resendSeconds)
+    }
+
+    @MainActor
+    func testALookupThatIsMissingMeansTheCode() async throws {
+        let account = try await lookup(try json(404, ["code": "not_found"]))
+        XCTAssertEqual(account.step, .code(email: "Ann@Example.com"))
+    }
+
+    @MainActor
+    func testALookupThatFailsFallsBackToThePasswordScreen() async throws {
+        for status in [429, 503] {
+            let account = try await lookup(try json(status, ["code": "x"]))
+            XCTAssertEqual(account.step, .password)
+            XCTAssertEqual(account.mode, .password)
+            XCTAssertNil(account.failure)
+        }
+    }
+
+    @MainActor
+    func testAServerWithoutPasswordsSkipsTheLookup() async throws {
+        let account = try await lookup(try json(200, ["method": "password"]), passwords: false)
+        XCTAssertNil(request("/api/v1/auth/lookup"))
+        XCTAssertEqual(account.step, .code(email: "Ann@Example.com"))
+    }
+
+    @MainActor
+    func testSendingACodeForAForgottenPasswordClearsTheField() async throws {
+        route(["/api/auth/email-otp/send-verification-otp": try json(200, ["success": true])])
+        let account = passwordModel()
+        account.email = "ann@example.com"
+        account.password = "wrong guess"
+        await account.forgotPassword(lang: .en)
+        XCTAssertEqual(account.mode, .forgot)
+        XCTAssertEqual(account.password, "")
+    }
+
+    @MainActor
+    func testTheResendWaitsOutItsCountdown() async throws {
+        route(["/api/auth/email-otp/send-verification-otp": try json(200, ["success": true])])
+        let account = model()
+        account.email = "ann@example.com"
+        await account.sendCode(lang: .en)
+        let sent = StubURLProtocol.requests.count
+        await account.resendCode(lang: .en)
+        XCTAssertEqual(StubURLProtocol.requests.count, sent, "resend is off while the countdown runs")
+        account.changeEmail()
+        XCTAssertEqual(account.resendIn, 0)
+    }
+
+    @MainActor
+    func testARefusedCodeIsNotSentAgainOnItsOwn() async throws {
+        let (account, _) = try await codeStep(verify: try json(400, ["code": "INVALID_OTP"]))
+        XCTAssertEqual(account.failure, .codeInvalid)
+        XCTAssertFalse(account.shouldAutoSubmitCode)
+        account.code = "000001"
+        XCTAssertTrue(account.shouldAutoSubmitCode)
+    }
+
+    @MainActor
+    func testTheLastSignInIsRemembered() async throws {
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: UUID().uuidString))
+        route([
+            "/api/auth/sign-in/email": try json(200, ["token": "sess-pw", "user": Self.userJSON]),
+            "/api/v1/me": try json(200, Self.meJSON),
+        ])
+        let account = passwordModel(defaults: defaults)
+        account.email = " Ann@Example.com "
+        account.password = "correct horse"
+        await account.signInWithPassword()
+        XCTAssertEqual(account.lastMethod, .email)
+
+        let next = AccountModel(api: api(MemoryTokenStore()), appleCodes: MemoryTokenStore(), defaults: defaults)
+        XCTAssertEqual(next.lastMethod, .email)
+        XCTAssertEqual(next.email, "Ann@Example.com")
+    }
+
+    @MainActor
+    func testThePendingActionRunsWhenTheSheetClosesAfterSignIn() async throws {
+        route([
+            "/api/auth/sign-in/email": try json(200, ["token": "sess-pw", "user": Self.userJSON]),
+            "/api/v1/me": try json(200, Self.meJSON),
+        ])
+        let account = passwordModel()
+        var ran = 0
+        account.requireSignIn { ran += 1 }
+        XCTAssertTrue(account.isSignInPresented)
+        account.email = "ann@example.com"
+        account.password = "correct horse"
+        await account.signInWithPassword()
+        XCTAssertFalse(account.isSignInPresented, "the sheet closes itself")
+        XCTAssertEqual(ran, 0, "it waits for the sheet to be gone")
+        account.signInDismissed()
+        XCTAssertEqual(ran, 1)
+        account.signInDismissed()
+        XCTAssertEqual(ran, 1)
     }
 
     @MainActor

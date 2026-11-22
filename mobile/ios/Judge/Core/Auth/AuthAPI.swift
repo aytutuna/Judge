@@ -4,6 +4,10 @@ import Foundation
 /// endpoints under `/api/auth`. Better Auth error bodies are
 /// `{ message, code }`; `APIError.code` carries their code
 /// (`INVALID_OTP`, `OTP_EXPIRED`, `TOO_MANY_ATTEMPTS`, ...).
+enum EmailMethod: String, Decodable {
+    case password, code, new
+}
+
 extension JudgeAPI {
     enum AuthTimeout {
         static let call: TimeInterval = 20
@@ -82,6 +86,17 @@ extension JudgeAPI {
         guard (200..<300).contains(http.statusCode) else {
             throw APIError.from(status: http.statusCode, body: data, retryAfterHeader: nil)
         }
+    }
+
+    /// POST /api/v1/auth/lookup: which sign-in an address takes.
+    func lookupEmail(_ email: String) async throws -> EmailMethod {
+        var request = makeRequest(url: endpoint("auth/lookup"), method: "POST", timeout: AuthTimeout.call)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try JSONSerialization.data(withJSONObject: ["email": email])
+        let data = try await send(request)
+        struct Body: Decodable { var method: EmailMethod }
+        guard let body = try? JSONDecoder().decode(Body.self, from: data) else { throw APIError.malformed }
+        return body.method
     }
 
     /// POST /api/auth/email-otp/send-verification-otp?lang=… : emails a

@@ -19,6 +19,8 @@ final class AccountModel {
 
     enum Step: Equatable {
         case choose
+        /// The address is known: sign in with its password, or make one.
+        case password
         /// The code was emailed to this address.
         case code(email: String)
         /// Signed in by the code and choosing a password; there is no way past it.
@@ -30,6 +32,11 @@ final class AccountModel {
     /// first, then the password) or sign in by code alone.
     enum Mode: Equatable {
         case password, create, forgot, code
+    }
+
+    /// The method of the last successful sign-in on this phone, for the "Last used" tag.
+    enum LastMethod: String {
+        case apple, google, email
     }
 
     enum Busy: Equatable {
@@ -73,6 +80,9 @@ final class AccountModel {
     /// Kept in memory only, until the account has it or the sheet is left.
     var password = ""
     var isSignInPresented = false
+    /// Seconds until another code may be asked for.
+    private(set) var resendIn = 0
+    private(set) var lastMethod: LastMethod?
 
     /// The phone's answer, asked at most once per run; nil until it answered.
     private(set) var platformAge: PlatformAge?
@@ -109,17 +119,28 @@ final class AccountModel {
     /// the user asked for).
     @ObservationIgnored private var afterSignIn: (() -> Void)?
     @ObservationIgnored private var presentTask: Task<Void, Never>?
+    @ObservationIgnored private var countdown: Task<Void, Never>?
+    /// The code the server just refused: typing it again does not send it on its own.
+    @ObservationIgnored private var rejectedCode: String?
+    @ObservationIgnored private let defaults: UserDefaults
 
     static let codeLength = 6
+    static let resendSeconds = 30
+    private static let lastMethodKey = "lastSignInMethod"
+    private static let lastEmailKey = "lastSignInEmail"
 
     init(
         api: JudgeAPI,
         apple: (any AppleAuthorizing)? = nil,
         google: (any GoogleAuthorizing)? = nil,
         ageRange: (any AgeRangeAsking)? = nil,
-        appleCodes: (any TokenStore)? = nil
+        appleCodes: (any TokenStore)? = nil,
+        defaults: UserDefaults = .standard
     ) {
         self.api = api
+        self.defaults = defaults
+        lastMethod = defaults.string(forKey: Self.lastMethodKey).flatMap(LastMethod.init)
+        email = defaults.string(forKey: Self.lastEmailKey) ?? ""
         self.apple = apple ?? AppleAuthorizer()
         self.google = google ?? GoogleOAuth()
         self.ageRange = ageRange ?? NoAgeRange()
@@ -418,14 +439,16 @@ final class AccountModel {
     // MARK: - Providers
 
     func signInWithApple() async {
-        guard busy == nil, ageAllowsSignIn else { return }
+        guard busy == nil else { return }
+        // Continuing is the consent the sign-in screen's last line states.
+        setAgeTicked(true)
         busy = .apple
         failure = nil
         defer { busy = nil }
         do {
             let identity = try await apple.authorize()
             let session = try await api.signInWithIDToken(provider: .apple, idToken: identity.identityToken, nonce: identity.rawNonce, apple: identity)
-            await finishSignIn(session)
+            await finishSignIn(session, via: .apple, email: identity.email)
             // Codes expire in minutes and work once: send it now. A failure
             // leaves the code kept for a retry; the sign-in stands.
             if let code = identity.authorizationCode, !code.isEmpty {
@@ -466,14 +489,15 @@ final class AccountModel {
     }
 
     func signInWithGoogle() async {
-        guard busy == nil, ageAllowsSignIn else { return }
+        guard busy == nil else { return }
+        setAgeTicked(true)
         busy = .google
         failure = nil
         defer { busy = nil }
         do {
             let identity = try await google.authorize()
             let session = try await api.signInWithIDToken(provider: .google, idToken: identity.idToken, nonce: identity.rawNonce)
-            await finishSignIn(session)
+            await finishSignIn(session, via: .google)
         } catch {
             failure = Self.signInFailure(error)
         }
@@ -493,9 +517,9 @@ final class AccountModel {
     private var hasEmail: Bool { !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
 
     var canSendCode: Bool {
-        busy == nil && ageAllowsSignIn && hasEmail && (mode != .create || !password.isEmpty)
+        busy == nil && hasEmail && (mode != .create || !password.isEmpty)
     }
-    var canSignInWithPassword: Bool { busy == nil && ageAllowsSignIn && hasEmail && !password.isEmpty }
+    var canSignInWithPassword: Bool { busy == nil && hasEmail && !password.isEmpty }
     var canVerifyCode: Bool { busy == nil && Self.digits(code).count == Self.codeLength }
 
     /// Keeps digits only, at most six (paste-friendly).
@@ -503,9 +527,66 @@ final class AccountModel {
         String(text.filter { $0.isASCII && $0.isNumber }.prefix(codeLength))
     }
 
+    /// The Continue button: the server says whether the address takes a
+    /// password, the code, or has no account yet. A server without the
+    /// lookup (404) has no passwords, so it is the code; any other failure
+    /// falls back to the password screen, which still offers the code.
+    func continueWithEmail(lang: AppLang) async {
+        let address = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard busy == nil else { return }
+        guard Self.isPlausibleEmail(address) else {
+            failure = .emailInvalid
+            return
+        }
+        email = address
+        guard passwordSignIn else {
+            mode = .code
+            await sendCode(lang: lang)
+            return
+        }
+        busy = .sendCode
+        failure = nil
+        let method = await lookup(address)
+        busy = nil
+        switch method {
+        case .code:
+            mode = .code
+            await sendCode(lang: lang)
+        case .password:
+            password = ""
+            mode = .password
+            step = .password
+        case .new:
+            password = ""
+            mode = .create
+            step = .password
+        }
+    }
+
+    private func lookup(_ address: String) async -> EmailMethod {
+        do {
+            return try await api.lookupEmail(address)
+        } catch {
+            if let error = error as? APIError, Self.status(error) == 404 { return .code }
+            return .password
+        }
+    }
+
+    func forgotPassword(lang: AppLang) async {
+        guard busy == nil else { return }
+        setMode(.forgot)
+        await sendCode(lang: lang)
+    }
+
+    func useCode(lang: AppLang) async {
+        guard busy == nil else { return }
+        setMode(.code)
+        await sendCode(lang: lang)
+    }
+
     func sendCode(lang: AppLang) async {
         let address = email.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard busy == nil, ageAllowsSignIn else { return }
+        guard busy == nil else { return }
         guard Self.isPlausibleEmail(address) else {
             failure = .emailInvalid
             return
@@ -514,6 +595,7 @@ final class AccountModel {
             failure = .passwordShort
             return
         }
+        setAgeTicked(true)
         busy = .sendCode
         failure = nil
         defer { busy = nil }
@@ -521,11 +603,17 @@ final class AccountModel {
             try await api.sendSignInCode(email: address, lang: lang)
             email = address
             code = ""
+            rejectedCode = nil
+            if mode != .create { password = "" }
             step = .code(email: address)
+            startCountdown()
         } catch {
             failure = Self.sendFailure(error)
         }
     }
+
+    /// A full code goes on its own, unless it is the one just refused.
+    var shouldAutoSubmitCode: Bool { canVerifyCode && Self.digits(code) != rejectedCode }
 
     func verifyCode() async {
         guard case .code(let address) = step, busy == nil else { return }
@@ -534,13 +622,15 @@ final class AccountModel {
             failure = .codeInvalid
             return
         }
+        setAgeTicked(true)
         busy = .verifyCode
         failure = nil
         do {
             let session = try await api.signInWithCode(email: address, code: entered)
-            await finishSignIn(session, byCode: true)
+            await finishSignIn(session, byCode: true, via: .email, email: address)
         } catch {
             failure = Self.codeFailure(error)
+            if failure == .codeInvalid { rejectedCode = entered }
         }
         busy = nil
         // Create asked for the password up front: save it now that the
@@ -554,17 +644,18 @@ final class AccountModel {
 
     func signInWithPassword() async {
         let address = email.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard busy == nil, ageAllowsSignIn, !password.isEmpty else { return }
+        guard busy == nil, !password.isEmpty else { return }
         guard Self.isPlausibleEmail(address) else {
             failure = .emailInvalid
             return
         }
+        setAgeTicked(true)
         busy = .password
         failure = nil
         defer { busy = nil }
         do {
             let session = try await api.signInWithPassword(email: address, password: password)
-            await finishSignIn(session)
+            await finishSignIn(session, via: .email, email: address)
         } catch {
             failure = Self.passwordFailure(error)
         }
@@ -583,10 +674,9 @@ final class AccountModel {
         if await storePassword(password) { isSignInPresented = false }
     }
 
-    /// The password step has no skip, but a save that keeps failing must not
-    /// trap the person: this signs out and closes the sheet.
-    func signOutFromPasswordStep() async {
-        await signOut()
+    /// Stays signed in without a password.
+    func skipPassword() {
+        guard step == .choosePassword, busy == nil else { return }
         isSignInPresented = false
     }
 
@@ -631,13 +721,15 @@ final class AccountModel {
     }
 
     func resendCode(lang: AppLang) async {
-        guard case .code(let address) = step, busy == nil else { return }
+        guard case .code(let address) = step, busy == nil, resendIn == 0 else { return }
         busy = .sendCode
         failure = nil
         defer { busy = nil }
         do {
             try await api.sendSignInCode(email: address, lang: lang)
             code = ""
+            rejectedCode = nil
+            startCountdown()
         } catch {
             failure = Self.sendFailure(error)
         }
@@ -645,9 +737,41 @@ final class AccountModel {
 
     func changeEmail() {
         guard busy == nil else { return }
+        stopCountdown()
         step = .choose
+        mode = .password
         code = ""
+        password = ""
         failure = nil
+    }
+
+    private func startCountdown() {
+        countdown?.cancel()
+        resendIn = Self.resendSeconds
+        countdown = Task { [weak self] in
+            while let self, self.resendIn > 0 {
+                try? await Task.sleep(for: .seconds(1))
+                guard !Task.isCancelled else { return }
+                self.resendIn -= 1
+            }
+        }
+    }
+
+    private func stopCountdown() {
+        countdown?.cancel()
+        countdown = nil
+        resendIn = 0
+    }
+
+    /// Google gives no address of its own, and Apple may hide it: the
+    /// email then stays what it was.
+    private func remember(_ method: LastMethod, email: String?) {
+        lastMethod = method
+        defaults.set(method.rawValue, forKey: Self.lastMethodKey)
+        if let email, !email.isEmpty {
+            self.email = email
+            defaults.set(email, forKey: Self.lastEmailKey)
+        }
     }
 
     // MARK: - Session
@@ -655,8 +779,9 @@ final class AccountModel {
     /// A code sign-in keeps the sheet open on the password form when the
     /// person is creating an account or resetting a password, or when /me says
     /// the account has none. If /me can't be read the sign-in just finishes.
-    private func finishSignIn(_ session: AuthSession, byCode: Bool = false) async {
+    private func finishSignIn(_ session: AuthSession, byCode: Bool = false, via method: LastMethod, email: String? = nil) async {
         api.tokenStore.setToken(session.token)
+        remember(method, email: email)
         isSignedIn = true
         info = session.user.map { AccountInfo(user: $0, entitlement: nil) }
         notice = nil
@@ -778,6 +903,7 @@ final class AccountModel {
         code = ""
         password = ""
         mode = .password
+        stopCountdown()
         onSessionEnded?(byUser)
     }
 
