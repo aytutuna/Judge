@@ -22,6 +22,7 @@ vi.mock("@/lib/auth", () => ({
   isSameOrigin: m.isSameOrigin,
   resolveViewer: async (req: Request) => ({ viewer: (await m.getViewer(req)) ?? null, deadBearer: false }),
   hasDeadBearer: async () => false,
+  derivedSecret: () => Buffer.alloc(32, 7),
 }));
 vi.mock("@/lib/ratelimit", () => ({
   checkUserLimits: m.checkUserLimits,
@@ -89,7 +90,7 @@ async function save(ownerUserId: string | null, id = vid()) {
   return { id, ...out };
 }
 
-type Opts = { user?: string; via?: "cookie" | "bearer"; token?: string; cross?: boolean; body?: unknown; name?: string };
+type Opts = { claim?: string; user?: string; via?: "cookie" | "bearer"; token?: string; cross?: boolean; body?: unknown; name?: string };
 
 function req(method: string, url: string, o: Opts = {}): Request {
   const headers: Record<string, string> = { "content-type": "application/json" };
@@ -97,6 +98,7 @@ function req(method: string, url: string, o: Opts = {}): Request {
   if (o.via) headers["x-test-via"] = o.via;
   if (o.name) headers["x-test-name"] = o.name;
   if (o.token) headers["x-owner-token"] = o.token;
+  if (o.claim) headers["respondent-claim"] = o.claim;
   if (o.cross) headers["x-test-cross"] = "1";
   return new Request(`${ORIGIN}${url}`, {
     method,
@@ -352,60 +354,89 @@ describe("removal", () => {
 });
 
 describe("a case party's view of the sides", () => {
-  async function caseVerdict(removedB = false) {
+  async function caseVerdict() {
     const db = await getDb();
     const { ensureOriginalsTables } = await import("../lib/originals/db");
     await ensureOriginalsTables();
     const now = new Date().toISOString();
     const cid = `sides${++n}`;
+    const nonce = `nonce${n}`;
     await db.execute({
-      sql: `INSERT INTO cases (id, owner_id, status, mode, framework, lang, invite_nonce, invite_hash, expires_at, created_at, updated_at)
-            VALUES (?, 'u-sides', 'judged', 'two_sided', '{"preset":"balanced"}', 'en', 'n', ?, ?, ?, ?)`,
-      args: [cid, `h-${cid}`, now, now, now],
+      sql: `INSERT INTO cases (id, owner_id, status, mode, framework, lang, invite_nonce, invite_hash, expires_at, created_at, updated_at, respondent_user_id, respondent_claim_nonce)
+            VALUES (?, 'u-sides', 'judged', 'two_sided', '{"preset":"balanced"}', 'en', 'n', ?, ?, ?, ?, 'u-b', ?)`,
+      args: [cid, `h-${cid}`, now, now, now, nonce],
     });
-    for (const [party, text] of [["a", "Party A paid. Party B keeps asking."], ["b", "Party B says Party A owes money."]]) {
-      await db.execute({ sql: "INSERT INTO case_sides (case_id, party, text, submitted_at) VALUES (?, ?, ?, ?)", args: [cid, party, text, now] });
+    const texts = { a: "Party A paid. Party B keeps asking.", b: "Party B says Party A owes money." };
+    const written = { a: "Harry keeps asking me", b: "I lent Sam twenty pounds" };
+    for (const party of ["a", "b"] as const) {
+      await db.execute({ sql: "INSERT INTO case_sides (case_id, party, text, submitted_at) VALUES (?, ?, ?, ?)", args: [cid, party, texts[party], now] });
+      const subject = `case:${cid}:side:${party}`;
+      const sealed = sealJson({ v: 1, text: written[party], nameMap: [] }, aad.original(subject));
+      await db.execute({
+        sql: `INSERT INTO originals (subject, kind, verdict_id, case_id, party, sealed, key_id, removed_at, created_at, updated_at)
+              VALUES (?, 'side', NULL, ?, ?, ?, ?, NULL, ?, ?)`,
+        args: [subject, cid, party, sealed!.sealed, sealed!.kid, now, now],
+      });
     }
-    if (removedB) await db.execute({ sql: "UPDATE cases SET removed_b_at = ? WHERE id = ?", args: [now, cid] });
-    const sealed = sealJson({ v: 1, text: "Harry keeps asking me", nameMap: [] }, aad.original(`case:${cid}:side:a`));
-    await db.execute({
-      sql: `INSERT INTO originals (subject, kind, verdict_id, case_id, party, sealed, key_id, removed_at, created_at, updated_at)
-            VALUES (?, 'side', NULL, ?, 'a', ?, ?, NULL, ?, ?)`,
-      args: [`case:${cid}:side:a`, cid, sealed!.sealed, sealed!.kid, now, now],
-    });
     const vId = `cv${cid}`;
     await db.execute({ sql: "INSERT INTO verdicts (id, input, framework, result) VALUES (?, 'x', '{}', ?)", args: [vId, JSON.stringify(RESULT)] });
     await db.execute({
       sql: "INSERT INTO verdict_meta (verdict_id, kind, case_id, created_at, updated_at) VALUES (?, 'case', ?, ?, ?)",
       args: [vId, cid, now, now],
     });
-    return { cid, vId, db, now };
+    const judge = () =>
+      db.execute({
+        sql: "INSERT INTO case_verdicts (case_id, seq, verdict_id, appeal_id, mode, created_at) VALUES (?, 1, ?, NULL, 'two_sided', ?)",
+        args: [cid, vId, now],
+      });
+    return { cid, vId, nonce, judge };
   }
 
   it("gives the owner their own side as written and the other side as the judges read it, once judged", async () => {
-    const { cid, vId, db, now } = await caseVerdict();
+    const { vId, judge } = await caseVerdict();
     const early = await json<MineResponse>(await mine(vId, { user: "u-sides" }));
     expect(early.original?.text).toBe("Harry keeps asking me");
     expect(early.otherSides).toEqual([]);
-    await db.execute({
-      sql: "INSERT INTO case_verdicts (case_id, seq, verdict_id, appeal_id, mode, created_at) VALUES (?, 1, ?, NULL, 'two_sided', ?)",
-      args: [cid, vId, now],
-    });
+    await judge();
     const body = await json<MineResponse>(await mine(vId, { user: "u-sides" }));
     expect(body.original?.text).toBe("Harry keeps asking me");
     expect(body.otherSides).toEqual([{ party: "b", text: "Party B says Party A owes money." }]);
-    expect((await mine(vId, { user: "stranger" })).status).toBe(404);
-    expect((await mine(vId)).status).toBe(404);
   });
 
-  it("leaves out a side its writer removed", async () => {
-    const { cid, vId, db, now } = await caseVerdict(true);
-    await db.execute({
-      sql: "INSERT INTO case_verdicts (case_id, seq, verdict_id, appeal_id, mode, created_at) VALUES (?, 1, ?, NULL, 'two_sided', ?)",
-      args: [cid, vId, now],
-    });
+  it("gives side B, by account or by claim, their own original and side A as the judges read it", async () => {
+    const { cid, vId, nonce, judge } = await caseVerdict();
+    await judge();
+    const { respondentClaim } = await import("../lib/cases/invite");
+    const claim = respondentClaim(cid, nonce)!;
+    for (const who of [{ user: "u-b" }, { claim }]) {
+      const body = await json<MineResponse>(await mine(vId, who));
+      expect(body.case).toEqual({ id: cid, party: "b" });
+      expect(body.original?.text).toBe("I lent Sam twenty pounds");
+      expect(body.otherSides).toEqual([{ party: "a", text: "Party A paid. Party B keeps asking." }]);
+    }
+  });
+
+  it("gives nothing to a stranger, a signed-out caller or an owner-token holder of another verdict", async () => {
+    const { vId, judge } = await caseVerdict();
+    await judge();
+    const other = await save(null);
+    expect((await mine(vId, { user: "stranger" })).status).toBe(404);
+    expect((await mine(vId)).status).toBe(404);
+    expect((await mine(vId, { token: other.ownerToken! })).status).toBe(404);
+    expect((await mine(vId, { claim: "x".repeat(22) })).status).toBe(404);
+  });
+
+  it("answers removed, with no text, once a side is removed", async () => {
+    const { cid, vId, judge } = await caseVerdict();
+    await judge();
+    const { getCase } = await import("../lib/cases/db");
+    const { removeCaseSide } = await import("../lib/originals/removal");
+    const res = await removeCaseSide((await getCase(cid))!, "b", "party_b");
+    expect(res.ok).toBe(true);
     const body = await json<MineResponse>(await mine(vId, { user: "u-sides" }));
-    expect(body.otherSides).toEqual([]);
+    expect(body.removed).not.toBeNull();
+    expect(body.original).toBeNull();
+    expect(body.otherSides).toBeUndefined();
   });
 });
 

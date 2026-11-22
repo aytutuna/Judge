@@ -163,12 +163,11 @@ async function originalOf(meta: VerdictMeta): Promise<{ status: OriginalStatus; 
 
 /** The other parties' anonymized accounts, as the judges read them: only
  * after a two-sided verdict, only for a party who has a side of their own,
- * and nothing for a side its writer removed. */
+ * (a removed side closes the whole case, so mine answers removed before this). */
 async function otherSides(row: CaseRow, party: CaseParty): Promise<{ party: CaseParty; text: string }[]> {
   const bundle = await loadCaseBundle(row);
   if (!twoSidedJudged(bundle) || !bundle.sides.some((s) => s.party === party)) return [];
-  const removed = { a: row.removedAAt, b: row.removedBAt, c: row.removedCAt, d: row.removedDAt };
-  return bundle.sides.filter((s) => s.party !== party && !removed[s.party]).map((s) => ({ party: s.party, text: s.text }));
+  return bundle.sides.filter((s) => s.party !== party).map((s) => ({ party: s.party, text: s.text }));
 }
 
 /** GET /api/v1/verdicts/{id}/mine */
