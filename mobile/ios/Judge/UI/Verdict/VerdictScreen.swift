@@ -21,6 +21,8 @@ private struct VerdictScreenContent: View {
     @State private var appeal: VerdictAppealModel
     @State private var showPricing = false
     @State private var viewed = false
+    /// The signed-in writer's own text, from the server.
+    @State private var written: WrittenSides?
 
     private static let topID = "verdict.top"
     private static let appealID = "verdict.appeal"
@@ -64,7 +66,8 @@ private struct VerdictScreenContent: View {
                         shareInBar: true,
                         appealArea: area,
                         appealStartsOpen: appeal.open,
-                        onAppealOpen: { appeal.openForm() }
+                        onAppealOpen: { appeal.openForm() },
+                        written: written
                     ) {
                         AppealSheet(
                             model: appeal,
@@ -109,6 +112,13 @@ private struct VerdictScreenContent: View {
                 guard finished else { return }
                 withAnimation { proxy.scrollTo(Self.topID, anchor: .top) }
             }
+        }
+        .task(id: signedIn) {
+            guard signedIn, app.usesNetwork else {
+                written = nil
+                return
+            }
+            written = try? await app.api.writtenSides(id: model.session.id)
         }
         .task(id: signedIn) {
             if signedIn {
@@ -161,6 +171,8 @@ struct VerdictSections<Appeal: View>: View {
     /// Opens the sheet as the screen comes up (screenshot states).
     var appealStartsOpen = false
     var onAppealOpen: () -> Void = {}
+    /// What the writer wrote, shown in the details of their own screen only.
+    var written: WrittenSides?
     /// The sheet's content.
     @ViewBuilder var appeal: () -> Appeal
 
@@ -172,8 +184,6 @@ struct VerdictSections<Appeal: View>: View {
     @Environment(AppModel.self) private var app
     @Environment(\.sides) private var sides
     @State private var openedAtStart = false
-    /// The viewer's own text and the other sides, for the signed-in writer or party.
-    @State private var written: WrittenSides?
 
     var body: some View {
         let session = model.session
@@ -248,10 +258,6 @@ struct VerdictSections<Appeal: View>: View {
             guard appealStartsOpen, offered else { return }
             try? await Task.sleep(for: .milliseconds(300))
             appealShown = true
-        }
-        .task(id: app.account.isSignedIn) {
-            guard app.usesNetwork, app.account.isSignedIn else { return }
-            written = try? await app.api.writtenSides(id: model.session.id)
         }
         .onAppear { model.ensure(model.shown) }
         .onChange(of: lang) { _, newLang in model.languageChanged(to: newLang) }

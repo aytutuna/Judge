@@ -208,8 +208,10 @@ extension JudgeAPI {
             own = text
         }
         let others = (object["otherSides"] as? [[String: Any]] ?? []).compactMap { entry -> WrittenSides.Other? in
-            guard let party = entry["party"] as? String, let text = entry["text"] as? String, !text.isEmpty else { return nil }
-            return WrittenSides.Other(party: Party(rawValue: party) ?? .unknown, text: text)
+            guard let raw = entry["party"] as? String, let party = Party(rawValue: raw), party != .unknown,
+                  let text = entry["text"] as? String, !text.isEmpty
+            else { return nil }
+            return WrittenSides.Other(party: party, text: text)
         }
         return WrittenSides(own: own, others: others)
     }
