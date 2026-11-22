@@ -8,6 +8,8 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
@@ -185,7 +187,14 @@ fun VerdictRoute(
                 ) {
                     ConsentCard(onConsent, onConsentInfo, width.padding(bottom = 16.dp))
                 }
-                RatingRow(rating, onRate = { if (signedOut) signInSheet = true else viewModel.rate(it) }, modifier = width.padding(bottom = 24.dp))
+                // The row waits for the consent card and takes its place once it is answered.
+                AnimatedVisibility(
+                    visible = !askConsent,
+                    enter = fadeIn(tween(280, easing = FastOutSlowInEasing)) + expandVertically(tween(280, easing = FastOutSlowInEasing)),
+                    exit = fadeOut(tween(280, easing = FastOutSlowInEasing)) + shrinkVertically(tween(280, easing = FastOutSlowInEasing)),
+                ) {
+                    RatingRow(rating, onRate = { if (signedOut) signInSheet = true else viewModel.rate(it) }, modifier = width.padding(bottom = 24.dp))
+                }
             }
         }
         if (appeal != null && appealState != null && appealState.open && area.opensSheet) {
