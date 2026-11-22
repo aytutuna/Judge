@@ -60,16 +60,22 @@ struct RatingRow: View {
     @State private var rating: Rating?
 
     var body: some View {
-        HStack(spacing: 14) {
-            Spacer()
-            Text(L10n.ratingPrompt(lang))
-                .brandText(.footnote)
-                .foregroundStyle(Brand.muted)
-            thumb(.up, "hand.thumbsup", L10n.ratingFair(lang))
-            thumb(.down, "hand.thumbsdown", L10n.ratingNotFair(lang))
-            Spacer()
+        // The consent card goes first; the row takes its place once it is answered.
+        Group {
+            if !app.consent.showCard {
+                HStack(spacing: 14) {
+                    Spacer()
+                    Text(L10n.ratingPrompt(lang))
+                        .brandText(.footnote)
+                        .foregroundStyle(Brand.muted)
+                    thumb(.up, "hand.thumbsup", L10n.ratingFair(lang))
+                    thumb(.down, "hand.thumbsdown", L10n.ratingNotFair(lang))
+                    Spacer()
+                }
+                .padding(.top, 8)
+                .transition(.opacity.combined(with: .scale(scale: 0.96, anchor: .top)))
+            }
         }
-        .padding(.top, 8)
         .task(id: "\(id) \(app.account.isSignedIn)") {
             rating = nil
             guard app.account.isSignedIn else { return }
