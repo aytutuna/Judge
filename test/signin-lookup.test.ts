@@ -1,7 +1,12 @@
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
+import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+vi.mock("../lib/ratelimit", async (orig) => {
+  const real = await orig<typeof import("../lib/ratelimit")>();
+  return { ...real, checkUserLimits: vi.fn(real.checkUserLimits) };
+});
 
 const dir = mkdtempSync(path.join(tmpdir(), "verdict-lookup-"));
 process.env.DATABASE_URL = `file:${path.join(dir, "test.db").split(path.sep).join("/")}`;
@@ -10,6 +15,7 @@ process.env.BETTER_AUTH_URL = "http://localhost:3602";
 
 const auth = await import("../lib/auth");
 const { POST } = await import("../app/api/v1/auth/lookup/route");
+const limits = await import("../lib/ratelimit");
 
 afterAll(() => {
   const g = globalThis as unknown as { __verdictLibsql?: { close(): void } };
@@ -19,6 +25,11 @@ afterAll(() => {
   } catch {
     // Left for the OS temp cleaner.
   }
+});
+
+beforeEach(() => {
+  vi.stubEnv("RESEND_API_KEY", "re_test");
+  vi.stubEnv("EMAIL_FROM", "Judge <signin@verdict.example.org>");
 });
 
 afterEach(() => {
@@ -75,6 +86,32 @@ describe("POST /api/v1/auth/lookup", () => {
     expect(((await res.json()) as { code: string }).code).toBe("rate_limited");
     expect(Number(res.headers.get("retry-after"))).toBeGreaterThan(0);
     expect((await lookup({ email: "busy@example.com" }, "198.51.100.2")).status).toBe(200);
+  });
+
+  it("keeps a looser ceiling on the address across IPs", async () => {
+    let ok = 0;
+    let last = 200;
+    for (let ip = 1; ip <= 5 && last === 200; ip++) {
+      for (let i = 0; i < 8 && last === 200; i++) {
+        last = (await lookup({ email: "many@example.com" }, `203.0.113.${ip}`)).status;
+        if (last === 200) ok++;
+      }
+    }
+    expect(ok).toBe(30);
+    expect(last).toBe(429);
+  });
+
+  it("answers 404 when the server has no password sign-in", async () => {
+    vi.stubEnv("RESEND_API_KEY", "");
+    const res = await lookup({ email: "off@example.com" });
+    expect(res.status).toBe(404);
+  });
+
+  it("answers 503 when the limiter is unavailable", async () => {
+    vi.mocked(limits.checkUserLimits).mockResolvedValueOnce({ ok: false, code: "unavailable", error: "down" });
+    const res = await lookup({ email: "down@example.com" });
+    expect(res.status).toBe(503);
+    expect(((await res.json()) as { code: string }).code).toBe("unavailable");
   });
 
   it("caps one IP across many addresses at thirty", async () => {

@@ -178,6 +178,7 @@ export type UserBucket =
   | "code_attempt"
   | "code_attempt_any"
   | "signin_lookup"
+  | "signin_lookup_any"
   | "password_set"
   | "events"
   | "data_export";
@@ -245,6 +246,8 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
   code_attempt_any: [{ limit: 30, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:caa1h" }],
   /** Which sign-in an address takes (POST /api/v1/auth/lookup), keyed canonical address and visitor IP. */
   signin_lookup: [{ limit: 10, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:sl10m" }],
+  /** Sign-in lookups per canonical address from anywhere: a looser ceiling, like code_send_any. */
+  signin_lookup_any: [{ limit: 30, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:sla1h" }],
   /** Setting or changing the password (POST /api/v1/me/password). */
   password_set: [
     { limit: 5, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:pw10m" },
