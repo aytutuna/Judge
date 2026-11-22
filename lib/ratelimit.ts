@@ -177,6 +177,7 @@ export type UserBucket =
   | "code_send_any"
   | "code_attempt"
   | "code_attempt_any"
+  | "signin_lookup"
   | "password_set"
   | "events"
   | "data_export";
@@ -242,6 +243,8 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
   code_attempt: [{ limit: 10, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:ca1h" }],
   /** Sign-in code guesses per canonical address from anywhere. */
   code_attempt_any: [{ limit: 30, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:caa1h" }],
+  /** Which sign-in an address takes (POST /api/v1/auth/lookup), keyed canonical address and visitor IP. */
+  signin_lookup: [{ limit: 10, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:sl10m" }],
   /** Setting or changing the password (POST /api/v1/me/password). */
   password_set: [
     { limit: 5, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:pw10m" },
@@ -268,6 +271,7 @@ export type IpBucket =
   | "verdict_owner"
   | "verdict_poll"
   | "revenuecat_webhook"
+  | "signin_lookup"
   | "events";
 
 export const IP_LIMITS: Record<IpBucket, readonly UserWindow[]> = {
@@ -293,6 +297,11 @@ export const IP_LIMITS: Record<IpBucket, readonly UserWindow[]> = {
   ],
   /** RevenueCat's servers posting purchase events (counted after the secret checks out). */
   revenuecat_webhook: [{ limit: 600, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:rc10m" }],
+  /** Sign-in lookups from one address, whichever emails it tries. */
+  signin_lookup: [
+    { limit: 30, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:sl10m" },
+    { limit: 200, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:ip:slday" },
+  ],
   /** Signed-out usage event batches. */
   events: [
     { limit: 10, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:evt10m" },

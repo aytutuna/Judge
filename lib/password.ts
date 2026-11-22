@@ -17,6 +17,17 @@ export async function hasPassword(userId: string): Promise<boolean> {
   return Boolean((await ctx.internalAdapter.findCredentialAccount(userId))?.password);
 }
 
+export type SignInMethod = "password" | "code" | "new";
+
+/** Which way an address signs in: with its password, by emailed code (an
+ * account with no password), or as a new account. */
+export async function signInMethod(email: string): Promise<SignInMethod> {
+  const ctx = await (await getAuth()).$context;
+  const found = await ctx.internalAdapter.findUserByEmail(email.trim().toLowerCase());
+  if (!found) return "new";
+  return (await hasPassword(found.user.id)) ? "password" : "code";
+}
+
 export type PasswordResult = "ok" | "current_required" | "current_wrong" | "unverified";
 
 /** Writes for one account run one at a time, so two first-password requests
