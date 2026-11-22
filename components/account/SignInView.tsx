@@ -409,6 +409,7 @@ export function SignInPanel({
         required
         value={email}
         placeholder={t(lang, "signin.emailPlaceholder")}
+        disabled={pending}
         aria-invalid={formError ? true : undefined}
         aria-describedby={formError ? `${formId}-error` : undefined}
         onChange={(e) => onEmail(e.target.value)}
@@ -642,18 +643,16 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
     const client = await loadClient();
     if (!client) return;
     const res = await client.lookupEmail(to);
-    if (!res.ok) {
-      trackError(res.code);
-      fail(t(lang, client.codeErrorKey(res, "send")));
-      setPending(false);
-      return;
-    }
-    if (res.method === "code") {
+    // A refused or failed lookup is not a dead end: the password screen
+    // still offers the code.
+    const method = res.ok ? res.method : "password";
+    if (!res.ok) trackError(res.code);
+    if (method === "code") {
       await sendEmail("code");
       return;
     }
     setPending(false);
-    changeMode(res.method === "password" ? "password" : "create");
+    changeMode(method === "password" ? "password" : "create");
     setEmailStep(true);
   }
 

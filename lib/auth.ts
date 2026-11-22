@@ -356,6 +356,9 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         : []
       : [...(origin ? [origin] : []), "http://localhost:*", "http://127.0.0.1:*", "http://[::1]:*"],
     database: { dialect: new LibsqlDialect({ client }), type: "sqlite" },
+    // Browser sign-in errors that carry no callback of their own (lost
+    // state, a bad callback URL) land on the sign-in page.
+    onAPIError: { errorURL: "/signin" },
     session: { expiresIn: SESSION_DAYS * 24 * 60 * 60, updateAge: 24 * 60 * 60 },
     user: {
       deleteUser: { enabled: false },
