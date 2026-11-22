@@ -71,6 +71,7 @@ export function ConsentCard({ lang }: { lang: Lang }) {
   const viewer = useViewer();
   const signedIn = Boolean(viewer.me?.user);
   const [open, setOpen] = useState(false);
+  const [leaving, setLeaving] = useState(false);
 
   useEffect(() => {
     if (!signedIn) return;
@@ -81,29 +82,58 @@ export function ConsentCard({ lang }: { lang: Lang }) {
     };
   }, [signedIn]);
 
+  // transitionend never fires without a transition (reduced motion), so a timer backs it up
+  useEffect(() => {
+    if (!leaving) return;
+    const timer = setTimeout(() => setOpen(false), 400);
+    return () => clearTimeout(timer);
+  }, [leaving]);
+
   if (!open) return null;
 
   function answer(choice: "on" | "off") {
-    void saveConsent(choice, "card", "consent.cardBody", lang).then((s) => s && setOpen(false));
+    setLeaving(true);
+    void saveConsent(choice, "card", "consent.cardBody", lang).then((s) => {
+      if (s) return;
+      setOpen(true);
+      setLeaving(false);
+    });
   }
 
   return (
-    <section className={styles.consent} aria-labelledby="consent-title">
-      <h2 id="consent-title">{t(lang, "consent.cardTitle")}</h2>
-      <p>
-        {t(lang, "consent.cardBody")}{" "}
-        <Link href="/privacy#help-improve" className={styles.consentLink}>
-          {t(lang, "consent.cardLink")}
-        </Link>
-      </p>
-      <div className={styles.consentButtons}>
-        <button type="button" className={`${styles.btn} ${styles.btnOutline}`} onClick={() => answer("on")}>
-          {t(lang, "consent.cardYes")}
-        </button>
-        <button type="button" className={`${styles.btn} ${styles.btnOutline}`} onClick={() => answer("off")}>
-          {t(lang, "consent.cardNo")}
-        </button>
+    <div
+      className={`${styles.consentWrap} ${leaving ? styles.consentLeaving : ""}`}
+      onTransitionEnd={(e) => e.target === e.currentTarget && leaving && setOpen(false)}
+    >
+      <div className={styles.consentClip}>
+        <section className={styles.consent} aria-labelledby="consent-title">
+          <h2 id="consent-title">{t(lang, "consent.cardTitle")}</h2>
+          <p>
+            {t(lang, "consent.cardBody")}{" "}
+            <Link href="/privacy#help-improve" className={styles.consentLink}>
+              {t(lang, "consent.cardLink")}
+            </Link>
+          </p>
+          <div className={styles.consentButtons}>
+            <button
+              type="button"
+              className={`${styles.btn} ${styles.btnOutline}`}
+              disabled={leaving}
+              onClick={() => answer("on")}
+            >
+              {t(lang, "consent.cardYes")}
+            </button>
+            <button
+              type="button"
+              className={`${styles.btn} ${styles.btnOutline}`}
+              disabled={leaving}
+              onClick={() => answer("off")}
+            >
+              {t(lang, "consent.cardNo")}
+            </button>
+          </div>
+        </section>
       </div>
-    </section>
+    </div>
   );
 }

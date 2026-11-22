@@ -856,6 +856,27 @@
 }
 
 /* The ask-once "Help improve Judge?" card. */
+.consentWrap {
+  display: grid;
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transition:
+    grid-template-rows 280ms ease-out,
+    opacity 280ms ease-out;
+}
+.consentLeaving {
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
+.consentClip {
+  overflow: hidden;
+  min-height: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .consentWrap {
+    transition: none;
+  }
+}
 .consent {
   padding: 14px 16px;
   border: 1px solid var(--line-2);
