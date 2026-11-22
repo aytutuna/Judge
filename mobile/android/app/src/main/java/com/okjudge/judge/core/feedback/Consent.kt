@@ -22,6 +22,9 @@ class Consent(private val api: JudgeApi, private val scope: CoroutineScope) {
     private val _ask = MutableStateFlow(false)
     val ask: StateFlow<Boolean> = _ask.asStateFlow()
 
+    // A refresh that lands while the card's answer is being saved must not bring the card back.
+    private var cardPending = false
+
     fun refresh() {
         scope.launch {
             val res = api.consent()
@@ -36,7 +39,7 @@ class Consent(private val api: JudgeApi, private val scope: CoroutineScope) {
 
     private fun apply(status: ConsentStatus) {
         _state.value = status.state
-        _ask.value = status.ask
+        _ask.value = status.ask && !cardPending
     }
 
     /** [source] is "card" or "switch"; [wordingKey] names the text the person saw, in [lang]. */
@@ -46,10 +49,13 @@ class Consent(private val api: JudgeApi, private val scope: CoroutineScope) {
         if (card) {
             if (!_ask.value) return
             _ask.value = false
+            cardPending = true
         }
         scope.launch {
             val res = api.setConsent(on, source, wordingKey, lang)
-            if (res is ApiResult.Ok) apply(res.value) else if (card) _ask.value = true
+            if (card) cardPending = false
+            // A save that fails after sign-out (clear() ran) leaves the card gone.
+            if (res is ApiResult.Ok) apply(res.value) else if (card && _state.value != null) _ask.value = true
         }
     }
 
