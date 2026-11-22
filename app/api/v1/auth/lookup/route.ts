@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 
 const NO_STORE = { "Cache-Control": "no-store" } as const;
 
-const LookupRequest = z.strictObject({ email: z.email().max(254) });
+const LookupRequest = z.strictObject({ email: z.string().trim().pipe(z.email().max(254)) });
 
 const fail = (code: "invalid" | "rate_limited" | "unavailable", status: number, message: string, headers = {}) =>
   NextResponse.json(apiErrorBody(code, message), { status, headers: { ...NO_STORE, ...headers } });
@@ -30,7 +30,7 @@ export async function POST(req: Request): Promise<NextResponse> {
     // handled below
   }
   const parsed = LookupRequest.safeParse(body);
-  const email = parsed.success ? parsed.data.email.trim() : "";
+  const email = parsed.success ? parsed.data.email: "";
   const claim = parsed.success ? welcomeClaim(email) : null;
   if (!claim) return fail("invalid", 400, 'Send {"email": "..."}.');
 
