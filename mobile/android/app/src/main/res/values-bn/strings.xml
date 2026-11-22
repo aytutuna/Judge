@@ -155,7 +155,7 @@
     <string name="consent_card_link">কীভাবে কাজ করে</string>
     <string name="consent_switch_detail">Judge-কে আপনার নাম-সরানো রায় ও রেটিং এআই প্রশিক্ষণে ব্যবহার করতে দেয়। আপনি চালু না করলে বন্ধ থাকে।</string>
     <string name="consent_sensitive_title">শুরুর আগে</string>
-    <string name="consent_sensitive_body">আমার লেখায় স্বাস্থ্য বা সম্পর্কের মতো ব্যক্তিগত বিষয় থাকতে পারে। Judge নাম সরিয়ে সেটি আমার রায় লেখার জন্য একটি বাইরের এআই পরিষেবায় পাঠায়, এবং আমি না সরানো পর্যন্ত রেখে দেয়।</string>
+    <string name="consent_sensitive_body">আমার লেখায় স্বাস্থ্য বা সম্পর্কের মতো ব্যক্তিগত বিষয় থাকতে পারে। Judge নাম সরিয়ে সেটি আমার রায় লেখার জন্য একটি বাইরের এআই পরিষেবা প্রদানকারীকে পাঠায়, এবং আমি না সরানো পর্যন্ত রেখে দেয়।</string>
     <string name="consent_sensitive_continue">চালিয়ে যান</string>
     <string name="respond_adult_confirm">আমার বয়স ১৮ বা তার বেশি</string>
     <string name="account_export">আমার তথ্য ডাউনলোড করুন</string>

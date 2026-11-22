@@ -367,7 +367,7 @@ const ca: Locale = {
       "Permet que Judge faci servir els teus veredictes i valoracions anonimitzats per entrenar la IA. Desactivat si no l'actives.",
     "consent.sensitiveTitle": "Abans de començar",
     "consent.sensitiveBody":
-      "El meu text pot incloure detalls privats, com ara salut o relacions. Judge l'envia, sense els noms, a un servei d'IA extern per escriure el meu veredicte, i el guarda fins que l'elimini.",
+      "El meu text pot incloure detalls privats, com ara salut o relacions. Judge l'envia, sense els noms, a un proveïdor de serveis d'IA extern per escriure el meu veredicte, i el guarda fins que l'elimini.",
     "consent.sensitiveContinue": "Continua",
     "respond.adultConfirm": "Tinc 18 anys o més",
     "account.export": "Baixa les meves dades",

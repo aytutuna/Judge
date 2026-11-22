@@ -152,7 +152,7 @@
     <string name="consent_card_link">ทำงานอย่างไร</string>
     <string name="consent_switch_detail">อนุญาตให้ Judge ใช้คำตัดสินและคะแนนแบบไม่มีชื่อของคุณเพื่อฝึก AI ปิดอยู่ เว้นแต่คุณจะเปิดเอง</string>
     <string name="consent_sensitive_title">ก่อนเริ่มต้น</string>
-    <string name="consent_sensitive_body">ข้อความของฉันอาจมีรายละเอียดส่วนตัว เช่น เรื่องสุขภาพหรือความสัมพันธ์ Judge จะนำชื่อออกแล้วส่งไปยังบริการ AI ภายนอกเพื่อเขียนคำตัดสินของฉัน และเก็บไว้จนกว่าฉันจะลบ</string>
+    <string name="consent_sensitive_body">ข้อความของฉันอาจมีรายละเอียดส่วนตัว เช่น เรื่องสุขภาพหรือความสัมพันธ์ Judge จะนำชื่อออกแล้วส่งไปยังผู้ให้บริการ AI ภายนอกเพื่อเขียนคำตัดสินของฉัน และเก็บไว้จนกว่าฉันจะลบ</string>
     <string name="consent_sensitive_continue">ไปต่อ</string>
     <string name="respond_adult_confirm">ฉันอายุ 18 ปีขึ้นไป</string>
     <string name="account_export">ดาวน์โหลดข้อมูลของฉัน</string>

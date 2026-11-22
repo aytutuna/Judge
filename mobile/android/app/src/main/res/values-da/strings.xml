@@ -155,7 +155,7 @@
     <string name="consent_card_link">Sådan virker det</string>
     <string name="consent_switch_detail">Lader Judge bruge dine anonymiserede domme og bedømmelser til at træne AI. Slået fra, medmindre du slår det til.</string>
     <string name="consent_sensitive_title">Før du starter</string>
-    <string name="consent_sensitive_body">Min tekst kan indeholde private oplysninger, for eksempel om helbred eller forhold. Judge sender den, uden navne, til en ekstern AI-tjeneste, som skriver min dom, og gemmer den, indtil jeg fjerner den.</string>
+    <string name="consent_sensitive_body">Min tekst kan indeholde private oplysninger, for eksempel om helbred eller forhold. Judge sender den, uden navne, til en ekstern AI-tjenesteudbyder, som skriver min dom, og gemmer den, indtil jeg fjerner den.</string>
     <string name="consent_sensitive_continue">Fortsæt</string>
     <string name="respond_adult_confirm">Jeg er 18 år eller ældre</string>
     <string name="account_export">Download mine data</string>

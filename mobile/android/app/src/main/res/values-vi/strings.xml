@@ -152,7 +152,7 @@
     <string name="consent_card_link">Cách hoạt động</string>
     <string name="consent_switch_detail">Cho phép Judge dùng các phán quyết và đánh giá đã ẩn danh của bạn để huấn luyện AI. Tắt, trừ khi bạn bật.</string>
     <string name="consent_sensitive_title">Trước khi bắt đầu</string>
-    <string name="consent_sensitive_body">Văn bản của tôi có thể chứa chi tiết riêng tư, như sức khỏe hay các mối quan hệ. Judge gửi nó, đã bỏ tên, tới một dịch vụ AI bên ngoài để viết phán quyết cho tôi, và giữ cho đến khi tôi xóa.</string>
+    <string name="consent_sensitive_body">Văn bản của tôi có thể chứa chi tiết riêng tư, như sức khỏe hay các mối quan hệ. Judge gửi nó, đã bỏ tên, tới một nhà cung cấp dịch vụ AI bên ngoài để viết phán quyết cho tôi, và giữ cho đến khi tôi xóa.</string>
     <string name="consent_sensitive_continue">Tiếp tục</string>
     <string name="respond_adult_confirm">Tôi từ 18 tuổi trở lên</string>
     <string name="account_export">Tải dữ liệu của tôi</string>

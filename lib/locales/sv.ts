@@ -361,7 +361,7 @@ const sv: Locale = {
       "Låter Judge använda dina anonymiserade domar och betyg för att träna AI. Av, om du inte slår på det.",
     "consent.sensitiveTitle": "Innan du börjar",
     "consent.sensitiveBody":
-      "Min text kan innehålla privata uppgifter, till exempel om hälsa eller relationer. Judge skickar den, utan namn, till en extern AI-tjänst som skriver min dom, och sparar den tills jag tar bort den.",
+      "Min text kan innehålla privata uppgifter, till exempel om hälsa eller relationer. Judge skickar den, utan namn, till en extern AI-tjänsteleverantör som skriver min dom, och sparar den tills jag tar bort den.",
     "consent.sensitiveContinue": "Fortsätt",
     "respond.adultConfirm": "Jag är 18 år eller äldre",
     "account.export": "Ladda ner mina data",

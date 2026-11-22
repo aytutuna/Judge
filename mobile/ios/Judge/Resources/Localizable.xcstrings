@@ -79760,271 +79760,271 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "قد يتضمن نصي تفاصيل خاصة، مثل الصحة أو العلاقات. يرسله Judge بعد حذف الأسماء إلى خدمة ذكاء اصطناعي خارجية لكتابة حكمي، ويحتفظ به إلى أن أزيله."
+            "value" : "قد يتضمن نصي تفاصيل خاصة، مثل الصحة أو العلاقات. يرسله Judge بعد حذف الأسماء إلى مزوّد خدمة ذكاء اصطناعي خارجي لكتابة حكمي، ويحتفظ به إلى أن أزيله."
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "আমার লেখায় স্বাস্থ্য বা সম্পর্কের মতো ব্যক্তিগত বিষয় থাকতে পারে। Judge নাম সরিয়ে সেটি আমার রায় লেখার জন্য একটি বাইরের এআই পরিষেবায় পাঠায়, এবং আমি না সরানো পর্যন্ত রেখে দেয়।"
+            "value" : "আমার লেখায় স্বাস্থ্য বা সম্পর্কের মতো ব্যক্তিগত বিষয় থাকতে পারে। Judge নাম সরিয়ে সেটি আমার রায় লেখার জন্য একটি বাইরের এআই পরিষেবা প্রদানকারীকে পাঠায়, এবং আমি না সরানো পর্যন্ত রেখে দেয়।"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "El meu text pot incloure detalls privats, com ara salut o relacions. Judge l'envia, sense els noms, a un servei d'IA extern per escriure el meu veredicte, i el guarda fins que l'elimini."
+            "value" : "El meu text pot incloure detalls privats, com ara salut o relacions. Judge l'envia, sense els noms, a un proveïdor de serveis d'IA extern per escriure el meu veredicte, i el guarda fins que l'elimini."
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Můj text může obsahovat soukromé údaje, třeba o zdraví nebo vztazích. Judge ho po odstranění jmen pošle externí službě umělé inteligence, aby napsala můj verdikt, a uchová ho, dokud ho neodstraním."
+            "value" : "Můj text může obsahovat soukromé údaje, třeba o zdraví nebo vztazích. Judge ho po odstranění jmen pošle externímu poskytovateli služby umělé inteligence, aby napsala můj verdikt, a uchová ho, dokud ho neodstraním."
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Min tekst kan indeholde private oplysninger, for eksempel om helbred eller forhold. Judge sender den, uden navne, til en ekstern AI-tjeneste, som skriver min dom, og gemmer den, indtil jeg fjerner den."
+            "value" : "Min tekst kan indeholde private oplysninger, for eksempel om helbred eller forhold. Judge sender den, uden navne, til en ekstern AI-tjenesteudbyder, som skriver min dom, og gemmer den, indtil jeg fjerner den."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mein Text kann private Angaben enthalten, etwa zu Gesundheit oder Beziehungen. Judge schickt ihn ohne Namen an einen externen KI-Dienst, der mein Urteil schreibt, und speichert ihn, bis ich ihn entferne."
+            "value" : "Mein Text kann private Angaben enthalten, etwa zu Gesundheit oder Beziehungen. Judge schickt ihn ohne Namen an einen externen KI-Dienstleister, der mein Urteil schreibt, und speichert ihn, bis ich ihn entferne."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Το κείμενό μου μπορεί να περιέχει ιδιωτικά στοιχεία, όπως για την υγεία ή τις σχέσεις. Το Judge το στέλνει, χωρίς ονόματα, σε εξωτερική υπηρεσία τεχνητής νοημοσύνης για να γράψει την απόφασή μου και το κρατά μέχρι να το αφαιρέσω."
+            "value" : "Το κείμενό μου μπορεί να περιέχει ιδιωτικά στοιχεία, όπως για την υγεία ή τις σχέσεις. Το Judge το στέλνει, χωρίς ονόματα, σε εξωτερικό πάροχο υπηρεσίας τεχνητής νοημοσύνης για να γράψει την απόφασή μου και το κρατά μέχρι να το αφαιρέσω."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "My text may include private details, like health or relationships. Judge sends it, with names taken out, to an outside AI service to write my verdict, and keeps it until I remove it."
+            "value" : "My text may include private details, like health or relationships. Judge sends it, with names taken out, to an outside AI service provider to write my verdict, and keeps it until I remove it."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mi texto puede incluir datos privados, como salud o relaciones. Judge lo envía, sin nombres, a un servicio de IA externo para redactar mi veredicto, y lo conserva hasta que lo elimine."
+            "value" : "Mi texto puede incluir datos privados, como salud o relaciones. Judge lo envía, sin nombres, a un proveedor de servicios de IA externo para redactar mi veredicto, y lo conserva hasta que lo elimine."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tekstini voi sisältää yksityisiä tietoja, kuten terveyteen tai ihmissuhteisiin liittyviä. Judge lähettää sen ilman nimiä ulkopuoliselle tekoälypalvelulle tuomioni kirjoittamista varten ja säilyttää sen, kunnes poistan sen."
+            "value" : "Tekstini voi sisältää yksityisiä tietoja, kuten terveyteen tai ihmissuhteisiin liittyviä. Judge lähettää sen ilman nimiä ulkopuoliselle tekoälypalvelun tarjoajalle tuomioni kirjoittamista varten ja säilyttää sen, kunnes poistan sen."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mon texte peut contenir des détails privés, comme la santé ou les relations. Judge l’envoie, sans les noms, à un service d’IA externe pour rédiger mon verdict, et le garde jusqu’à ce que je le retire."
+            "value" : "Mon texte peut contenir des détails privés, comme la santé ou les relations. Judge l’envoie, sans les noms, à un fournisseur de services d’IA externe pour rédiger mon verdict, et le garde jusqu’à ce que je le retire."
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "મારા લખાણમાં આરોગ્ય કે સંબંધો જેવી ખાનગી વિગતો હોઈ શકે છે. Judge નામ કાઢીને તેને મારો ચુકાદો લખવા માટે બહારની AI સેવાને મોકલે છે, અને હું દૂર ન કરું ત્યાં સુધી રાખે છે."
+            "value" : "મારા લખાણમાં આરોગ્ય કે સંબંધો જેવી ખાનગી વિગતો હોઈ શકે છે. Judge નામ કાઢીને તેને મારો ચુકાદો લખવા માટે બહારના AI સેવા પ્રદાતાને મોકલે છે, અને હું દૂર ન કરું ત્યાં સુધી રાખે છે."
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "הטקסט שלי עשוי לכלול פרטים פרטיים, כמו בריאות או מערכות יחסים. Judge שולח אותו, בלי שמות, לשירות בינה מלאכותית חיצוני שכותב את פסק הדין שלי, ושומר אותו עד שאסיר אותו."
+            "value" : "הטקסט שלי עשוי לכלול פרטים פרטיים, כמו בריאות או מערכות יחסים. Judge שולח אותו, בלי שמות, לספק שירות בינה מלאכותית חיצוני שכותב את פסק הדין שלי, ושומר אותו עד שאסיר אותו."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "मेरे टेक्स्ट में सेहत या रिश्तों जैसी निजी बातें हो सकती हैं। Judge उसे नाम हटाकर मेरा फ़ैसला लिखने के लिए एक बाहरी AI सेवा को भेजता है, और मेरे हटाने तक रखता है।"
+            "value" : "मेरे टेक्स्ट में सेहत या रिश्तों जैसी निजी बातें हो सकती हैं। Judge उसे नाम हटाकर मेरा फ़ैसला लिखने के लिए एक बाहरी AI सेवा प्रदाता को भेजता है, और मेरे हटाने तक रखता है।"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Moj tekst može sadržavati privatne podatke, na primjer o zdravlju ili odnosima. Judge ga bez imena šalje vanjskoj AI usluzi da napiše moju presudu i čuva ga dok ga ne uklonim."
+            "value" : "Moj tekst može sadržavati privatne podatke, na primjer o zdravlju ili odnosima. Judge ga bez imena šalje vanjskom pružatelju AI usluge da napiše moju presudu i čuva ga dok ga ne uklonim."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A szövegem tartalmazhat személyes részleteket, például egészségről vagy kapcsolatokról. A Judge a nevek nélkül elküldi egy külső MI-szolgáltatásnak, hogy megírja az ítéletemet, és addig őrzi, amíg el nem távolítom."
+            "value" : "A szövegem tartalmazhat személyes részleteket, például egészségről vagy kapcsolatokról. A Judge a nevek nélkül elküldi egy külső MI-szolgáltatónak, hogy megírja az ítéletemet, és addig őrzi, amíg el nem távolítom."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Teks saya mungkin berisi hal pribadi, seperti kesehatan atau hubungan. Judge mengirimkannya, tanpa nama, ke layanan AI pihak luar untuk menulis putusan saya, dan menyimpannya sampai saya menghapusnya."
+            "value" : "Teks saya mungkin berisi hal pribadi, seperti kesehatan atau hubungan. Judge mengirimkannya, tanpa nama, ke penyedia layanan AI pihak luar untuk menulis putusan saya, dan menyimpannya sampai saya menghapusnya."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Il mio testo può contenere dettagli privati, come salute o relazioni. Judge lo invia, senza i nomi, a un servizio di IA esterno per scrivere il mio verdetto, e lo conserva finché non lo rimuovo."
+            "value" : "Il mio testo può contenere dettagli privati, come salute o relazioni. Judge lo invia, senza i nomi, a un fornitore di servizi di IA esterno per scrivere il mio verdetto, e lo conserva finché non lo rimuovo."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "私のテキストには、健康や人間関係など、プライベートな内容が含まれることがあります。Judgeは名前を除いたうえで、判定を書くために外部のAIサービスへ送信し、私が削除するまで保管します。"
+            "value" : "私のテキストには、健康や人間関係など、プライベートな内容が含まれることがあります。Judgeは名前を除いたうえで、判定を書くために外部のAIサービス提供事業者へ送信し、私が削除するまで保管します。"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ನನ್ನ ಬರಹದಲ್ಲಿ ಆರೋಗ್ಯ ಅಥವಾ ಸಂಬಂಧಗಳಂತಹ ಖಾಸಗಿ ವಿವರಗಳು ಇರಬಹುದು. Judge ಹೆಸರುಗಳನ್ನು ತೆಗೆದು ಅದನ್ನು ನನ್ನ ತೀರ್ಪು ಬರೆಯಲು ಹೊರಗಿನ AI ಸೇವೆಗೆ ಕಳುಹಿಸುತ್ತದೆ, ಮತ್ತು ನಾನು ತೆಗೆಯುವವರೆಗೆ ಇಟ್ಟುಕೊಳ್ಳುತ್ತದೆ."
+            "value" : "ನನ್ನ ಬರಹದಲ್ಲಿ ಆರೋಗ್ಯ ಅಥವಾ ಸಂಬಂಧಗಳಂತಹ ಖಾಸಗಿ ವಿವರಗಳು ಇರಬಹುದು. Judge ಹೆಸರುಗಳನ್ನು ತೆಗೆದು ಅದನ್ನು ನನ್ನ ತೀರ್ಪು ಬರೆಯಲು ಹೊರಗಿನ AI ಸೇವಾ ಪೂರೈಕೆದಾರರಿಗೆ ಕಳುಹಿಸುತ್ತದೆ, ಮತ್ತು ನಾನು ತೆಗೆಯುವವರೆಗೆ ಇಟ್ಟುಕೊಳ್ಳುತ್ತದೆ."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "내 글에는 건강이나 인간관계처럼 사적인 내용이 있을 수 있어요. Judge는 이름을 뺀 글을 내 판결을 쓰기 위해 외부 AI 서비스로 보내고, 내가 삭제할 때까지 보관해요."
+            "value" : "내 글에는 건강이나 인간관계처럼 사적인 내용이 있을 수 있어요. Judge는 이름을 뺀 글을 내 판결을 쓰기 위해 외부 AI 서비스 제공업체로 보내고, 내가 삭제할 때까지 보관해요."
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "എന്റെ എഴുത്തിൽ ആരോഗ്യം, ബന്ധങ്ങൾ പോലുള്ള സ്വകാര്യ വിവരങ്ങൾ ഉണ്ടാകാം. Judge പേരുകൾ നീക്കി അത് എന്റെ വിധി എഴുതാൻ ഒരു പുറത്തെ AI സേവനത്തിന് അയയ്ക്കുകയും ഞാൻ നീക്കുന്നതുവരെ സൂക്ഷിക്കുകയും ചെയ്യുന്നു."
+            "value" : "എന്റെ എഴുത്തിൽ ആരോഗ്യം, ബന്ധങ്ങൾ പോലുള്ള സ്വകാര്യ വിവരങ്ങൾ ഉണ്ടാകാം. Judge പേരുകൾ നീക്കി അത് എന്റെ വിധി എഴുതാൻ ഒരു പുറത്തെ AI സേവന ദാതാവിന് അയയ്ക്കുകയും ഞാൻ നീക്കുന്നതുവരെ സൂക്ഷിക്കുകയും ചെയ്യുന്നു."
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "माझ्या मजकुरात आरोग्य किंवा नातेसंबंधांसारखे खाजगी तपशील असू शकतात. Judge तो नावे काढून माझा निकाल लिहिण्यासाठी बाहेरच्या AI सेवेकडे पाठवतो आणि मी काढून टाकेपर्यंत ठेवतो."
+            "value" : "माझ्या मजकुरात आरोग्य किंवा नातेसंबंधांसारखे खाजगी तपशील असू शकतात. Judge तो नावे काढून माझा निकाल लिहिण्यासाठी बाहेरच्या AI सेवा पुरवठादाराकडे पाठवतो आणि मी काढून टाकेपर्यंत ठेवतो."
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Teks saya mungkin mengandungi butiran peribadi, seperti kesihatan atau hubungan. Judge menghantarnya, tanpa nama, kepada perkhidmatan AI luar untuk menulis keputusan saya, dan menyimpannya sehingga saya mengalihkannya."
+            "value" : "Teks saya mungkin mengandungi butiran peribadi, seperti kesihatan atau hubungan. Judge menghantarnya, tanpa nama, kepada penyedia perkhidmatan AI luar untuk menulis keputusan saya, dan menyimpannya sehingga saya mengalihkannya."
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Teksten min kan inneholde private opplysninger, for eksempel om helse eller forhold. Judge sender den, uten navn, til en ekstern AI-tjeneste som skriver dommen min, og lagrer den til jeg fjerner den."
+            "value" : "Teksten min kan inneholde private opplysninger, for eksempel om helse eller forhold. Judge sender den, uten navn, til en ekstern AI-tjenesteleverandør som skriver dommen min, og lagrer den til jeg fjerner den."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mijn tekst kan privégegevens bevatten, zoals over gezondheid of relaties. Judge stuurt hem, zonder namen, naar een externe AI-dienst om mijn uitspraak te schrijven en bewaart hem tot ik hem verwijder."
+            "value" : "Mijn tekst kan privégegevens bevatten, zoals over gezondheid of relaties. Judge stuurt hem, zonder namen, naar een externe AI-dienstverlener om mijn uitspraak te schrijven en bewaart hem tot ik hem verwijder."
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ମୋ ଲେଖାରେ ସ୍ୱାସ୍ଥ୍ୟ କିମ୍ବା ସମ୍ପର୍କ ଭଳି ବ୍ୟକ୍ତିଗତ ବିବରଣୀ ଥାଇପାରେ। Judge ନାମ କାଢ଼ି ମୋ ରାୟ ଲେଖିବା ପାଇଁ ଏହାକୁ ଏକ ବାହାରର AI ସେବାକୁ ପଠାଏ, ଏବଂ ମୁଁ ହଟାଇବା ପର୍ଯ୍ୟନ୍ତ ରଖେ।"
+            "value" : "ମୋ ଲେଖାରେ ସ୍ୱାସ୍ଥ୍ୟ କିମ୍ବା ସମ୍ପର୍କ ଭଳି ବ୍ୟକ୍ତିଗତ ବିବରଣୀ ଥାଇପାରେ। Judge ନାମ କାଢ଼ି ମୋ ରାୟ ଲେଖିବା ପାଇଁ ଏହାକୁ ଏକ ବାହାରର AI ସେବା ପ୍ରଦାନକାରୀଙ୍କୁ ପଠାଏ, ଏବଂ ମୁଁ ହଟାଇବା ପର୍ଯ୍ୟନ୍ତ ରଖେ।"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਮੇਰੀ ਲਿਖਤ ਵਿੱਚ ਸਿਹਤ ਜਾਂ ਰਿਸ਼ਤਿਆਂ ਵਰਗੇ ਨਿੱਜੀ ਵੇਰਵੇ ਹੋ ਸਕਦੇ ਹਨ। Judge ਨਾਂ ਹਟਾ ਕੇ ਇਸ ਨੂੰ ਮੇਰਾ ਫ਼ੈਸਲਾ ਲਿਖਣ ਲਈ ਬਾਹਰੀ AI ਸੇਵਾ ਨੂੰ ਭੇਜਦਾ ਹੈ, ਅਤੇ ਮੇਰੇ ਹਟਾਉਣ ਤੱਕ ਰੱਖਦਾ ਹੈ।"
+            "value" : "ਮੇਰੀ ਲਿਖਤ ਵਿੱਚ ਸਿਹਤ ਜਾਂ ਰਿਸ਼ਤਿਆਂ ਵਰਗੇ ਨਿੱਜੀ ਵੇਰਵੇ ਹੋ ਸਕਦੇ ਹਨ। Judge ਨਾਂ ਹਟਾ ਕੇ ਇਸ ਨੂੰ ਮੇਰਾ ਫ਼ੈਸਲਾ ਲਿਖਣ ਲਈ ਬਾਹਰੀ AI ਸੇਵਾ ਪ੍ਰਦਾਤਾ ਨੂੰ ਭੇਜਦਾ ਹੈ, ਅਤੇ ਮੇਰੇ ਹਟਾਉਣ ਤੱਕ ਰੱਖਦਾ ਹੈ।"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mój tekst może zawierać prywatne szczegóły, na przykład o zdrowiu lub relacjach. Judge wysyła go bez imion do zewnętrznej usługi AI, która pisze mój werdykt, i przechowuje go, dopóki go nie usunę."
+            "value" : "Mój tekst może zawierać prywatne szczegóły, na przykład o zdrowiu lub relacjach. Judge wysyła go bez imion do zewnętrznego dostawcy usług AI, który pisze mój werdykt, i przechowuje go, dopóki go nie usunę."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Meu texto pode incluir detalhes privados, como saúde ou relacionamentos. O Judge o envia, sem os nomes, a um serviço de IA externo para escrever meu veredicto e o guarda até eu removê-lo."
+            "value" : "Meu texto pode incluir detalhes privados, como saúde ou relacionamentos. O Judge o envia, sem os nomes, a um provedor de serviços de IA externo para escrever meu veredicto e o guarda até eu removê-lo."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O meu texto pode incluir detalhes privados, como saúde ou relações. O Judge envia-o, sem os nomes, a um serviço de IA externo para escrever o meu veredicto e guarda-o até eu o remover."
+            "value" : "O meu texto pode incluir detalhes privados, como saúde ou relações. O Judge envia-o, sem os nomes, a um fornecedor de serviços de IA externo para escrever o meu veredicto e guarda-o até eu o remover."
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Textul meu poate include detalii private, de exemplu despre sănătate sau relații. Judge îl trimite, fără nume, unui serviciu IA extern ca să scrie verdictul meu și îl păstrează până îl elimin."
+            "value" : "Textul meu poate include detalii private, de exemplu despre sănătate sau relații. Judge îl trimite, fără nume, unui furnizor de servicii IA extern ca să scrie verdictul meu și îl păstrează până îl elimin."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Мой текст может содержать личные подробности, например о здоровье или отношениях. Judge отправляет его без имён во внешний ИИ-сервис, чтобы написать мой вердикт, и хранит, пока я его не удалю."
+            "value" : "Мой текст может содержать личные подробности, например о здоровье или отношениях. Judge отправляет его без имён внешнему поставщику ИИ-услуг, чтобы написать мой вердикт, и хранит, пока я его не удалю."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Môj text môže obsahovať súkromné údaje, napríklad o zdraví alebo vzťahoch. Judge ho po odstránení mien pošle externej službe umelej inteligencie, aby napísala môj verdikt, a uchová ho, kým ho neodstránim."
+            "value" : "Môj text môže obsahovať súkromné údaje, napríklad o zdraví alebo vzťahoch. Judge ho po odstránení mien pošle externému poskytovateľovi služby umelej inteligencie, aby napísal môj verdikt, a uchová ho, kým ho neodstránim."
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Moje besedilo lahko vsebuje zasebne podrobnosti, na primer o zdravju ali odnosih. Judge ga brez imen pošlje zunanji storitvi umetne inteligence, da napiše mojo razsodbo, in ga hrani, dokler ga ne odstranim."
+            "value" : "Moje besedilo lahko vsebuje zasebne podrobnosti, na primer o zdravju ali odnosih. Judge ga brez imen pošlje zunanjemu ponudniku storitve umetne inteligence, da napiše mojo razsodbo, in ga hrani, dokler ga ne odstranim."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Min text kan innehålla privata uppgifter, till exempel om hälsa eller relationer. Judge skickar den, utan namn, till en extern AI-tjänst som skriver min dom, och sparar den tills jag tar bort den."
+            "value" : "Min text kan innehålla privata uppgifter, till exempel om hälsa eller relationer. Judge skickar den, utan namn, till en extern AI-tjänsteleverantör som skriver min dom, och sparar den tills jag tar bort den."
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "என் எழுத்தில் உடல்நலம் அல்லது உறவுகள் போன்ற தனிப்பட்ட விவரங்கள் இருக்கலாம். Judge பெயர்களை நீக்கி அதை என் தீர்ப்பை எழுத வெளிப்புற AI சேவைக்கு அனுப்பி, நான் நீக்கும் வரை வைத்திருக்கும்."
+            "value" : "என் எழுத்தில் உடல்நலம் அல்லது உறவுகள் போன்ற தனிப்பட்ட விவரங்கள் இருக்கலாம். Judge பெயர்களை நீக்கி அதை என் தீர்ப்பை எழுத வெளிப்புற AI சேவை வழங்குநருக்கு அனுப்பி, நான் நீக்கும் வரை வைத்திருக்கும்."
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "నా రాతలో ఆరోగ్యం, సంబంధాలు వంటి వ్యక్తిగత వివరాలు ఉండవచ్చు. Judge పేర్లు తీసేసి, నా తీర్పు రాయడానికి దాన్ని బయటి AI సేవకు పంపి, నేను తొలగించే వరకు ఉంచుతుంది."
+            "value" : "నా రాతలో ఆరోగ్యం, సంబంధాలు వంటి వ్యక్తిగత వివరాలు ఉండవచ్చు. Judge పేర్లు తీసేసి, నా తీర్పు రాయడానికి దాన్ని బయటి AI సేవా ప్రదాతకు పంపి, నేను తొలగించే వరకు ఉంచుతుంది."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ข้อความของฉันอาจมีรายละเอียดส่วนตัว เช่น เรื่องสุขภาพหรือความสัมพันธ์ Judge จะนำชื่อออกแล้วส่งไปยังบริการ AI ภายนอกเพื่อเขียนคำตัดสินของฉัน และเก็บไว้จนกว่าฉันจะลบ"
+            "value" : "ข้อความของฉันอาจมีรายละเอียดส่วนตัว เช่น เรื่องสุขภาพหรือความสัมพันธ์ Judge จะนำชื่อออกแล้วส่งไปยังผู้ให้บริการ AI ภายนอกเพื่อเขียนคำตัดสินของฉัน และเก็บไว้จนกว่าฉันจะลบ"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yazdıklarım sağlık ya da ilişkiler gibi özel ayrıntılar içerebilir. Judge bunu, isimler çıkarılmış hâlde, kararımı yazması için dışarıdaki bir yapay zekâ hizmetine gönderir ve ben kaldırana kadar saklar."
+            "value" : "Yazdıklarım sağlık ya da ilişkiler gibi özel ayrıntılar içerebilir. Judge bunu, isimler çıkarılmış hâlde, kararımı yazması için dışarıdaki bir yapay zekâ hizmet sağlayıcısına gönderir ve ben kaldırana kadar saklar."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Мій текст може містити особисті подробиці, наприклад про здоров'я чи стосунки. Judge надсилає його без імен зовнішньому ШІ-сервісу, щоб той написав мій вердикт, і зберігає, доки я його не видалю."
+            "value" : "Мій текст може містити особисті подробиці, наприклад про здоров'я чи стосунки. Judge надсилає його без імен зовнішньому постачальнику ШІ-послуг, щоб той написав мій вердикт, і зберігає, доки я його не видалю."
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "میری تحریر میں صحت یا رشتوں جیسی نجی تفصیلات ہو سکتی ہیں۔ Judge اسے نام ہٹا کر میرا فیصلہ لکھنے کے لیے ایک بیرونی AI سروس کو بھیجتا ہے، اور میرے ہٹانے تک رکھتا ہے۔"
+            "value" : "میری تحریر میں صحت یا رشتوں جیسی نجی تفصیلات ہو سکتی ہیں۔ Judge اسے نام ہٹا کر میرا فیصلہ لکھنے کے لیے ایک بیرونی AI سروس فراہم کنندہ کو بھیجتا ہے، اور میرے ہٹانے تک رکھتا ہے۔"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Văn bản của tôi có thể chứa chi tiết riêng tư, như sức khỏe hay các mối quan hệ. Judge gửi nó, đã bỏ tên, tới một dịch vụ AI bên ngoài để viết phán quyết cho tôi, và giữ cho đến khi tôi xóa."
+            "value" : "Văn bản của tôi có thể chứa chi tiết riêng tư, như sức khỏe hay các mối quan hệ. Judge gửi nó, đã bỏ tên, tới một nhà cung cấp dịch vụ AI bên ngoài để viết phán quyết cho tôi, và giữ cho đến khi tôi xóa."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "我的文字可能包含私人细节，比如健康或感情方面的内容。Judge 会去掉名字后，把它发送给外部的 AI 服务来撰写我的裁决，并保存到我删除为止。"
+            "value" : "我的文字可能包含私人细节，比如健康或感情方面的内容。Judge 会去掉名字后，把它发送给外部的 AI 服务提供商来撰写我的裁决，并保存到我删除为止。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "我的文字可能包含私人細節，例如健康或感情方面的內容。Judge 會去掉名字後，把它傳送給外部的 AI 服務來撰寫我的判決，並保存到我刪除為止。"
+            "value" : "我的文字可能包含私人細節，例如健康或感情方面的內容。Judge 會去掉名字後，把它傳送給外部的 AI 服務供應商來撰寫我的判決，並保存到我刪除為止。"
           }
         }
       }

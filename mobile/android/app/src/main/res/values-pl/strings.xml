@@ -161,7 +161,7 @@
     <string name="consent_card_link">Jak to działa</string>
     <string name="consent_switch_detail">Pozwala Judge używać twoich zanonimizowanych werdyktów i ocen do trenowania sztucznej inteligencji. Wyłączone, dopóki tego nie włączysz.</string>
     <string name="consent_sensitive_title">Zanim zaczniesz</string>
-    <string name="consent_sensitive_body">Mój tekst może zawierać prywatne szczegóły, na przykład o zdrowiu lub relacjach. Judge wysyła go bez imion do zewnętrznej usługi AI, która pisze mój werdykt, i przechowuje go, dopóki go nie usunę.</string>
+    <string name="consent_sensitive_body">Mój tekst może zawierać prywatne szczegóły, na przykład o zdrowiu lub relacjach. Judge wysyła go bez imion do zewnętrznego dostawcy usług AI, który pisze mój werdykt, i przechowuje go, dopóki go nie usunę.</string>
     <string name="consent_sensitive_continue">Dalej</string>
     <string name="respond_adult_confirm">Mam 18 lat lub więcej</string>
     <string name="account_export">Pobierz moje dane</string>

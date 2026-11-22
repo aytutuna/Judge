@@ -161,7 +161,7 @@
     <string name="consent_card_link">Kako deluje</string>
     <string name="consent_switch_detail">Judgeu dovoli uporabo tvojih anonimiziranih razsodb in ocen za učenje umetne inteligence. Izklopljeno, dokler tega ne vklopiš.</string>
     <string name="consent_sensitive_title">Preden začneš</string>
-    <string name="consent_sensitive_body">Moje besedilo lahko vsebuje zasebne podrobnosti, na primer o zdravju ali odnosih. Judge ga brez imen pošlje zunanji storitvi umetne inteligence, da napiše mojo razsodbo, in ga hrani, dokler ga ne odstranim.</string>
+    <string name="consent_sensitive_body">Moje besedilo lahko vsebuje zasebne podrobnosti, na primer o zdravju ali odnosih. Judge ga brez imen pošlje zunanjemu ponudniku storitve umetne inteligence, da napiše mojo razsodbo, in ga hrani, dokler ga ne odstranim.</string>
     <string name="consent_sensitive_continue">Naprej</string>
     <string name="respond_adult_confirm">Star sem 18 let ali več</string>
     <string name="account_export">Prenesi moje podatke</string>

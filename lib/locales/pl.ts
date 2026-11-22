@@ -363,7 +363,7 @@ const pl: Locale = {
       "Pozwala Judge używać twoich zanonimizowanych werdyktów i ocen do trenowania sztucznej inteligencji. Wyłączone, dopóki tego nie włączysz.",
     "consent.sensitiveTitle": "Zanim zaczniesz",
     "consent.sensitiveBody":
-      "Mój tekst może zawierać prywatne szczegóły, na przykład o zdrowiu lub relacjach. Judge wysyła go bez imion do zewnętrznej usługi AI, która pisze mój werdykt, i przechowuje go, dopóki go nie usunę.",
+      "Mój tekst może zawierać prywatne szczegóły, na przykład o zdrowiu lub relacjach. Judge wysyła go bez imion do zewnętrznego dostawcy usług AI, który pisze mój werdykt, i przechowuje go, dopóki go nie usunę.",
     "consent.sensitiveContinue": "Dalej",
     "respond.adultConfirm": "Mam 18 lat lub więcej",
     "account.export": "Pobierz moje dane",

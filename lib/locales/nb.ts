@@ -360,7 +360,7 @@ const nb: Locale = {
       "Lar Judge bruke de anonymiserte dommene og vurderingene dine til å trene AI. Av, med mindre du slår det på.",
     "consent.sensitiveTitle": "Før du starter",
     "consent.sensitiveBody":
-      "Teksten min kan inneholde private opplysninger, for eksempel om helse eller forhold. Judge sender den, uten navn, til en ekstern AI-tjeneste som skriver dommen min, og lagrer den til jeg fjerner den.",
+      "Teksten min kan inneholde private opplysninger, for eksempel om helse eller forhold. Judge sender den, uten navn, til en ekstern AI-tjenesteleverandør som skriver dommen min, og lagrer den til jeg fjerner den.",
     "consent.sensitiveContinue": "Fortsett",
     "respond.adultConfirm": "Jeg er 18 år eller eldre",
     "account.export": "Last ned dataene mine",

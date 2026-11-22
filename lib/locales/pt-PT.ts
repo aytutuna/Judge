@@ -362,7 +362,7 @@ const ptPT: Locale = {
       "Permite que o Judge use os teus veredictos e avaliações anonimizados para treinar IA. Desativado, a menos que o ativares.",
     "consent.sensitiveTitle": "Antes de começar",
     "consent.sensitiveBody":
-      "O meu texto pode incluir detalhes privados, como saúde ou relações. O Judge envia-o, sem os nomes, a um serviço de IA externo para escrever o meu veredicto e guarda-o até eu o remover.",
+      "O meu texto pode incluir detalhes privados, como saúde ou relações. O Judge envia-o, sem os nomes, a um fornecedor de serviços de IA externo para escrever o meu veredicto e guarda-o até eu o remover.",
     "consent.sensitiveContinue": "Continuar",
     "respond.adultConfirm": "Tenho 18 anos ou mais",
     "account.export": "Transferir os meus dados",

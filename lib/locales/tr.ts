@@ -365,7 +365,7 @@ const tr: Locale = {
       "Judge'ın yapay zekâyı eğitmek için senin anonim kararlarını ve puanlarını kullanmasına izin verir. Sen açmadıkça kapalıdır.",
     "consent.sensitiveTitle": "Başlamadan önce",
     "consent.sensitiveBody":
-      "Yazdıklarım sağlık ya da ilişkiler gibi özel ayrıntılar içerebilir. Judge bunu, isimler çıkarılmış hâlde, kararımı yazması için dışarıdaki bir yapay zekâ hizmetine gönderir ve ben kaldırana kadar saklar.",
+      "Yazdıklarım sağlık ya da ilişkiler gibi özel ayrıntılar içerebilir. Judge bunu, isimler çıkarılmış hâlde, kararımı yazması için dışarıdaki bir yapay zekâ hizmet sağlayıcısına gönderir ve ben kaldırana kadar saklar.",
     "consent.sensitiveContinue": "Devam et",
     "respond.adultConfirm": "18 yaşında veya daha büyüğüm",
     "account.export": "Verilerimi indir",

@@ -361,7 +361,7 @@ const da: Locale = {
       "Lader Judge bruge dine anonymiserede domme og bedømmelser til at træne AI. Slået fra, medmindre du slår det til.",
     "consent.sensitiveTitle": "Før du starter",
     "consent.sensitiveBody":
-      "Min tekst kan indeholde private oplysninger, for eksempel om helbred eller forhold. Judge sender den, uden navne, til en ekstern AI-tjeneste, som skriver min dom, og gemmer den, indtil jeg fjerner den.",
+      "Min tekst kan indeholde private oplysninger, for eksempel om helbred eller forhold. Judge sender den, uden navne, til en ekstern AI-tjenesteudbyder, som skriver min dom, og gemmer den, indtil jeg fjerner den.",
     "consent.sensitiveContinue": "Fortsæt",
     "respond.adultConfirm": "Jeg er 18 år eller ældre",
     "account.export": "Download mine data",

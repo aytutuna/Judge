@@ -161,7 +161,7 @@
     <string name="consent_card_link">Как это работает</string>
     <string name="consent_switch_detail">Позволяет Judge использовать ваши обезличенные вердикты и оценки для обучения ИИ. Выключено, пока вы не включите.</string>
     <string name="consent_sensitive_title">Прежде чем начать</string>
-    <string name="consent_sensitive_body">Мой текст может содержать личные подробности, например о здоровье или отношениях. Judge отправляет его без имён во внешний ИИ-сервис, чтобы написать мой вердикт, и хранит, пока я его не удалю.</string>
+    <string name="consent_sensitive_body">Мой текст может содержать личные подробности, например о здоровье или отношениях. Judge отправляет его без имён внешнему поставщику ИИ-услуг, чтобы написать мой вердикт, и хранит, пока я его не удалю.</string>
     <string name="consent_sensitive_continue">Продолжить</string>
     <string name="respond_adult_confirm">Мне 18 лет или больше</string>
     <string name="account_export">Скачать мои данные</string>

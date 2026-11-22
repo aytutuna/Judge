@@ -365,7 +365,7 @@ const hu: Locale = {
       "Engedi, hogy a Judge az anonimizált ítéleteidet és értékeléseidet az MI betanítására használja. Ki van kapcsolva, amíg be nem kapcsolod.",
     "consent.sensitiveTitle": "Mielőtt elkezdesz",
     "consent.sensitiveBody":
-      "A szövegem tartalmazhat személyes részleteket, például egészségről vagy kapcsolatokról. A Judge a nevek nélkül elküldi egy külső MI-szolgáltatásnak, hogy megírja az ítéletemet, és addig őrzi, amíg el nem távolítom.",
+      "A szövegem tartalmazhat személyes részleteket, például egészségről vagy kapcsolatokról. A Judge a nevek nélkül elküldi egy külső MI-szolgáltatónak, hogy megírja az ítéletemet, és addig őrzi, amíg el nem távolítom.",
     "consent.sensitiveContinue": "Tovább",
     "respond.adultConfirm": "Legalább 18 éves vagyok",
     "account.export": "Adataim letöltése",

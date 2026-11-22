@@ -161,7 +161,7 @@
     <string name="consent_card_link">Як це працює</string>
     <string name="consent_switch_detail">Дозволяє Judge використовувати твої знеособлені вердикти й оцінки, щоб навчати ШІ. Вимкнено, доки ти його не ввімкнеш.</string>
     <string name="consent_sensitive_title">Перш ніж почати</string>
-    <string name="consent_sensitive_body">Мій текст може містити особисті подробиці, наприклад про здоров\'я чи стосунки. Judge надсилає його без імен зовнішньому ШІ-сервісу, щоб той написав мій вердикт, і зберігає, доки я його не видалю.</string>
+    <string name="consent_sensitive_body">Мій текст може містити особисті подробиці, наприклад про здоров\'я чи стосунки. Judge надсилає його без імен зовнішньому постачальнику ШІ-послуг, щоб той написав мій вердикт, і зберігає, доки я його не видалю.</string>
     <string name="consent_sensitive_continue">Продовжити</string>
     <string name="respond_adult_confirm">Мені 18 років або більше</string>
     <string name="account_export">Завантажити мої дані</string>

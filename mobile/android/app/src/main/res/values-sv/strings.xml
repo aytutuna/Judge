@@ -155,7 +155,7 @@
     <string name="consent_card_link">Så fungerar det</string>
     <string name="consent_switch_detail">Låter Judge använda dina anonymiserade domar och betyg för att träna AI. Av, om du inte slår på det.</string>
     <string name="consent_sensitive_title">Innan du börjar</string>
-    <string name="consent_sensitive_body">Min text kan innehålla privata uppgifter, till exempel om hälsa eller relationer. Judge skickar den, utan namn, till en extern AI-tjänst som skriver min dom, och sparar den tills jag tar bort den.</string>
+    <string name="consent_sensitive_body">Min text kan innehålla privata uppgifter, till exempel om hälsa eller relationer. Judge skickar den, utan namn, till en extern AI-tjänsteleverantör som skriver min dom, och sparar den tills jag tar bort den.</string>
     <string name="consent_sensitive_continue">Fortsätt</string>
     <string name="respond_adult_confirm">Jag är 18 år eller äldre</string>
     <string name="account_export">Ladda ner mina data</string>

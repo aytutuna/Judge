@@ -359,7 +359,7 @@ const cs: Locale = {
       "Dovolí Judge používat tvoje anonymizované verdikty a hodnocení k trénování umělé inteligence. Vypnuto, dokud to nezapneš.",
     "consent.sensitiveTitle": "Než začneš",
     "consent.sensitiveBody":
-      "Můj text může obsahovat soukromé údaje, třeba o zdraví nebo vztazích. Judge ho po odstranění jmen pošle externí službě umělé inteligence, aby napsala můj verdikt, a uchová ho, dokud ho neodstraním.",
+      "Můj text může obsahovat soukromé údaje, třeba o zdraví nebo vztazích. Judge ho po odstranění jmen pošle externímu poskytovateli služby umělé inteligence, aby napsala můj verdikt, a uchová ho, dokud ho neodstraním.",
     "consent.sensitiveContinue": "Pokračovat",
     "respond.adultConfirm": "Je mi 18 let nebo víc",
     "account.export": "Stáhnout moje data",

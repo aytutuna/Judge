@@ -368,7 +368,7 @@ const fr: Locale = {
       "Permet à Judge d’utiliser tes verdicts et tes notes anonymisés pour entraîner l’IA. Désactivé tant que tu ne l’actives pas.",
     "consent.sensitiveTitle": "Avant de commencer",
     "consent.sensitiveBody":
-      "Mon texte peut contenir des détails privés, comme la santé ou les relations. Judge l’envoie, sans les noms, à un service d’IA externe pour rédiger mon verdict, et le garde jusqu’à ce que je le retire.",
+      "Mon texte peut contenir des détails privés, comme la santé ou les relations. Judge l’envoie, sans les noms, à un fournisseur de services d’IA externe pour rédiger mon verdict, et le garde jusqu’à ce que je le retire.",
     "consent.sensitiveContinue": "Continuer",
     "respond.adultConfirm": "J’ai 18 ans ou plus",
     "account.export": "Télécharger mes données",

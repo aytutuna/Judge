@@ -155,7 +155,7 @@
     <string name="consent_card_link">Näin se toimii</string>
     <string name="consent_switch_detail">Sallii Judgen käyttää anonymisoituja tuomioitasi ja arvioitasi tekoälyn kouluttamiseen. Pois päältä, ellet ota sitä käyttöön.</string>
     <string name="consent_sensitive_title">Ennen aloitusta</string>
-    <string name="consent_sensitive_body">Tekstini voi sisältää yksityisiä tietoja, kuten terveyteen tai ihmissuhteisiin liittyviä. Judge lähettää sen ilman nimiä ulkopuoliselle tekoälypalvelulle tuomioni kirjoittamista varten ja säilyttää sen, kunnes poistan sen.</string>
+    <string name="consent_sensitive_body">Tekstini voi sisältää yksityisiä tietoja, kuten terveyteen tai ihmissuhteisiin liittyviä. Judge lähettää sen ilman nimiä ulkopuoliselle tekoälypalvelun tarjoajalle tuomioni kirjoittamista varten ja säilyttää sen, kunnes poistan sen.</string>
     <string name="consent_sensitive_continue">Jatka</string>
     <string name="respond_adult_confirm">Olen 18-vuotias tai vanhempi</string>
     <string name="account_export">Lataa tietoni</string>

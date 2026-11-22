@@ -355,7 +355,7 @@ const en = {
     "Lets Judge use your anonymized verdicts and ratings to train AI. Off unless you turn it on.",
   "consent.sensitiveTitle": "Before you start",
   "consent.sensitiveBody":
-    "My text may include private details, like health or relationships. Judge sends it, with names taken out, to an outside AI service to write my verdict, and keeps it until I remove it.",
+    "My text may include private details, like health or relationships. Judge sends it, with names taken out, to an outside AI service provider to write my verdict, and keeps it until I remove it.",
   "consent.sensitiveContinue": "Continue",
   "respond.adultConfirm": "I am 18 or older",
   "account.export": "Download my data",

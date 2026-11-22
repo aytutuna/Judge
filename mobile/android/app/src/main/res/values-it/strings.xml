@@ -158,7 +158,7 @@
     <string name="consent_card_link">Come funziona</string>
     <string name="consent_switch_detail">Permette a Judge di usare i tuoi verdetti e le tue valutazioni anonimizzati per addestrare l\'IA. Disattivato finché non lo attivi.</string>
     <string name="consent_sensitive_title">Prima di iniziare</string>
-    <string name="consent_sensitive_body">Il mio testo può contenere dettagli privati, come salute o relazioni. Judge lo invia, senza i nomi, a un servizio di IA esterno per scrivere il mio verdetto, e lo conserva finché non lo rimuovo.</string>
+    <string name="consent_sensitive_body">Il mio testo può contenere dettagli privati, come salute o relazioni. Judge lo invia, senza i nomi, a un fornitore di servizi di IA esterno per scrivere il mio verdetto, e lo conserva finché non lo rimuovo.</string>
     <string name="consent_sensitive_continue">Continua</string>
     <string name="respond_adult_confirm">Ho 18 anni o più</string>
     <string name="account_export">Scarica i miei dati</string>

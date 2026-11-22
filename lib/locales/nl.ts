@@ -366,7 +366,7 @@ const nl: Locale = {
       "Laat Judge je geanonimiseerde uitspraken en beoordelingen gebruiken om AI te trainen. Uit, tenzij je het aanzet.",
     "consent.sensitiveTitle": "Voor je begint",
     "consent.sensitiveBody":
-      "Mijn tekst kan privégegevens bevatten, zoals over gezondheid of relaties. Judge stuurt hem, zonder namen, naar een externe AI-dienst om mijn uitspraak te schrijven en bewaart hem tot ik hem verwijder.",
+      "Mijn tekst kan privégegevens bevatten, zoals over gezondheid of relaties. Judge stuurt hem, zonder namen, naar een externe AI-dienstverlener om mijn uitspraak te schrijven en bewaart hem tot ik hem verwijder.",
     "consent.sensitiveContinue": "Verder",
     "respond.adultConfirm": "Ik ben 18 jaar of ouder",
     "account.export": "Mijn gegevens downloaden",

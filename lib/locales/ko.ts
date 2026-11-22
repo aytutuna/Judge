@@ -353,7 +353,7 @@ const ko: Locale = {
       "AI를 학습시키는 데 익명 처리된 내 판결과 평가를 Judge가 쓰도록 허용해요. 직접 켜지 않으면 꺼져 있어요.",
     "consent.sensitiveTitle": "시작하기 전에",
     "consent.sensitiveBody":
-      "내 글에는 건강이나 인간관계처럼 사적인 내용이 있을 수 있어요. Judge는 이름을 뺀 글을 내 판결을 쓰기 위해 외부 AI 서비스로 보내고, 내가 삭제할 때까지 보관해요.",
+      "내 글에는 건강이나 인간관계처럼 사적인 내용이 있을 수 있어요. Judge는 이름을 뺀 글을 내 판결을 쓰기 위해 외부 AI 서비스 제공업체로 보내고, 내가 삭제할 때까지 보관해요.",
     "consent.sensitiveContinue": "계속",
     "respond.adultConfirm": "만 18세 이상이에요",
     "account.export": "내 데이터 내려받기",

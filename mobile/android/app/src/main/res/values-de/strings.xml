@@ -155,7 +155,7 @@
     <string name="consent_card_link">So funktioniert es</string>
     <string name="consent_switch_detail">Erlaubt Judge, deine anonymisierten Urteile und Bewertungen zum Trainieren von KI zu nutzen. Aus, solange du es nicht einschaltest.</string>
     <string name="consent_sensitive_title">Bevor du startest</string>
-    <string name="consent_sensitive_body">Mein Text kann private Angaben enthalten, etwa zu Gesundheit oder Beziehungen. Judge schickt ihn ohne Namen an einen externen KI-Dienst, der mein Urteil schreibt, und speichert ihn, bis ich ihn entferne.</string>
+    <string name="consent_sensitive_body">Mein Text kann private Angaben enthalten, etwa zu Gesundheit oder Beziehungen. Judge schickt ihn ohne Namen an einen externen KI-Dienstleister, der mein Urteil schreibt, und speichert ihn, bis ich ihn entferne.</string>
     <string name="consent_sensitive_continue">Weiter</string>
     <string name="respond_adult_confirm">Ich bin 18 oder älter</string>
     <string name="account_export">Meine Daten herunterladen</string>

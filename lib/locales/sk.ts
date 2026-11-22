@@ -360,7 +360,7 @@ const sk: Locale = {
       "Dovolí Judge používať tvoje anonymizované verdikty a hodnotenia na trénovanie umelej inteligencie. Vypnuté, kým to nezapneš.",
     "consent.sensitiveTitle": "Skôr než začneš",
     "consent.sensitiveBody":
-      "Môj text môže obsahovať súkromné údaje, napríklad o zdraví alebo vzťahoch. Judge ho po odstránení mien pošle externej službe umelej inteligencie, aby napísala môj verdikt, a uchová ho, kým ho neodstránim.",
+      "Môj text môže obsahovať súkromné údaje, napríklad o zdraví alebo vzťahoch. Judge ho po odstránení mien pošle externému poskytovateľovi služby umelej inteligencie, aby napísal môj verdikt, a uchová ho, kým ho neodstránim.",
     "consent.sensitiveContinue": "Pokračovať",
     "respond.adultConfirm": "Mám 18 rokov alebo viac",
     "account.export": "Stiahnuť moje údaje",

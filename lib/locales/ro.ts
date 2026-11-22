@@ -362,7 +362,7 @@ const ro: Locale = {
       "Permite ca Judge să folosească verdictele și evaluările tale anonimizate pentru a antrena IA. Dezactivat dacă nu îl activezi.",
     "consent.sensitiveTitle": "Înainte să începi",
     "consent.sensitiveBody":
-      "Textul meu poate include detalii private, de exemplu despre sănătate sau relații. Judge îl trimite, fără nume, unui serviciu IA extern ca să scrie verdictul meu și îl păstrează până îl elimin.",
+      "Textul meu poate include detalii private, de exemplu despre sănătate sau relații. Judge îl trimite, fără nume, unui furnizor de servicii IA extern ca să scrie verdictul meu și îl păstrează până îl elimin.",
     "consent.sensitiveContinue": "Continuă",
     "respond.adultConfirm": "Am 18 ani sau mai mult",
     "account.export": "Descarcă datele mele",

@@ -359,7 +359,7 @@ const sl: Locale = {
       "Judgeu dovoli uporabo tvojih anonimiziranih razsodb in ocen za učenje umetne inteligence. Izklopljeno, dokler tega ne vklopiš.",
     "consent.sensitiveTitle": "Preden začneš",
     "consent.sensitiveBody":
-      "Moje besedilo lahko vsebuje zasebne podrobnosti, na primer o zdravju ali odnosih. Judge ga brez imen pošlje zunanji storitvi umetne inteligence, da napiše mojo razsodbo, in ga hrani, dokler ga ne odstranim.",
+      "Moje besedilo lahko vsebuje zasebne podrobnosti, na primer o zdravju ali odnosih. Judge ga brez imen pošlje zunanjemu ponudniku storitve umetne inteligence, da napiše mojo razsodbo, in ga hrani, dokler ga ne odstranim.",
     "consent.sensitiveContinue": "Naprej",
     "respond.adultConfirm": "Star sem 18 let ali več",
     "account.export": "Prenesi moje podatke",

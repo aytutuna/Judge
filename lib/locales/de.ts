@@ -367,7 +367,7 @@ const de: Locale = {
       "Erlaubt Judge, deine anonymisierten Urteile und Bewertungen zum Trainieren von KI zu nutzen. Aus, solange du es nicht einschaltest.",
     "consent.sensitiveTitle": "Bevor du startest",
     "consent.sensitiveBody":
-      "Mein Text kann private Angaben enthalten, etwa zu Gesundheit oder Beziehungen. Judge schickt ihn ohne Namen an einen externen KI-Dienst, der mein Urteil schreibt, und speichert ihn, bis ich ihn entferne.",
+      "Mein Text kann private Angaben enthalten, etwa zu Gesundheit oder Beziehungen. Judge schickt ihn ohne Namen an einen externen KI-Dienstleister, der mein Urteil schreibt, und speichert ihn, bis ich ihn entferne.",
     "consent.sensitiveContinue": "Weiter",
     "respond.adultConfirm": "Ich bin 18 oder älter",
     "account.export": "Meine Daten herunterladen",
