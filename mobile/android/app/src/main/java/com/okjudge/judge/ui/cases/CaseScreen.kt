@@ -85,6 +85,7 @@ import com.okjudge.judge.core.model.CaseView
 import com.okjudge.judge.core.model.LiveState
 import com.okjudge.judge.core.model.NameMapping
 import com.okjudge.judge.core.model.Side
+import com.okjudge.judge.core.model.WrittenSides
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.i18n.Strings
@@ -242,6 +243,7 @@ private fun CaseScreenBody(
                 CaseVerdict(
                     current, state.names, linked = view.removed == null, actions, addContext,
                     details = true,
+                    written = state.written,
                     onDetails = {},
                     reducedMotion = reducedMotion,
                     modifier = Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(top = 4.dp, bottom = 32.dp),
@@ -562,6 +564,7 @@ private fun Body(
                 CaseVerdict(
                     current, state.names, linked = view.removed == null, actions, onAddContext,
                     details = false,
+                    written = state.written,
                     onDetails = onDetails,
                     reducedMotion = reducedMotion,
                     modifier = Modifier.testTag(CaseTags.VERDICT),
@@ -702,6 +705,7 @@ private fun CaseVerdict(
     onDetails: () -> Unit,
     reducedMotion: Boolean,
     modifier: Modifier = Modifier,
+    written: WrittenSides? = null,
 ) {
     val s = LocalStrings.current
     val result = verdict.result
@@ -723,9 +727,9 @@ private fun CaseVerdict(
     )
     val restored = PartyNames.restoredNames(names, selfLang, result.sideCount)
     if (details) {
-        VerdictDetails(view, parties, restored, cardActions, modifier)
+        VerdictDetails(view, parties, restored, cardActions, modifier, written = written)
     } else {
-        RulingSummary(view, parties, cardActions, onDetails, reducedMotion, modifier, restoredNames = restored)
+        RulingSummary(view, parties, cardActions, onDetails, reducedMotion, modifier, restoredNames = restored, written = written)
     }
 }
 

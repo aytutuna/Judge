@@ -86,6 +86,8 @@ fun VerdictRoute(
     LaunchedEffect(lang) { viewModel.onUiLang(lang) }
     val state by viewModel.state.collectAsStateWithLifecycle()
     val rating by viewModel.rating.collectAsStateWithLifecycle()
+    val written by viewModel.written.collectAsStateWithLifecycle()
+    LaunchedEffect(id, signedOut) { if (!signedOut) viewModel.loadWritten() }
     val appealState = appeal?.let { it.state.collectAsStateWithLifecycle().value }
     val context = LocalContext.current
     val s = LocalStrings.current
@@ -170,11 +172,11 @@ fun VerdictRoute(
         ) {
             val restored = remember(saved.nameMap, selfLang) { PartyNames.restoredNames(saved.nameMap, selfLang, view.result.sideCount) }
             if (details) {
-                VerdictDetails(shown, parties, restored, actions, width.padding(bottom = 32.dp), showShare = false)
+                VerdictDetails(shown, parties, restored, actions, width.padding(bottom = 32.dp), showShare = false, written = written)
             } else {
                 RulingSummary(
                     shown, parties, actions, onDetails = { showDetails(true) }, reducedMotion = rememberReducedMotion(), modifier = width,
-                    restoredNames = restored, showShare = false,
+                    restoredNames = restored, showShare = false, written = written,
                 )
                 // The sheet takes the form; re-judging, or why no more context fits, shows here.
                 if (appealState?.panel == true) AppealNote(area, width.padding(top = 16.dp))

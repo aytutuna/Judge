@@ -22,6 +22,8 @@ import com.okjudge.judge.core.model.EvidenceUploadResponse
 import com.okjudge.judge.core.model.HistoryPage
 import com.okjudge.judge.core.model.MeResponse
 import com.okjudge.judge.core.model.MineVerdict
+import com.okjudge.judge.core.model.WrittenSides
+import com.okjudge.judge.core.model.decodeWrittenSides
 import com.okjudge.judge.core.model.NameMapping
 import com.okjudge.judge.core.model.ServerConfig
 import com.okjudge.judge.core.model.SessionGrant
@@ -345,6 +347,12 @@ class JudgeApi(
     suspend fun mineVerdict(id: String): ApiResult<MineVerdict> {
         val req = request(verdictUrl(id, "mine")).cacheControl(CacheControl.FORCE_NETWORK).get().build()
         return execute(getClient, req) { _, text -> decodeMineVerdict(text) }
+    }
+
+    /** GET /api/v1/verdicts/{id}/mine: the viewer's own text and, on a two-sided verdict, the other sides. */
+    suspend fun writtenSides(id: String): ApiResult<WrittenSides> {
+        val req = request(verdictUrl(id, "mine")).cacheControl(CacheControl.FORCE_NETWORK).get().build()
+        return execute(getClient, req) { _, text -> decodeWrittenSides(text) }
     }
 
     /**

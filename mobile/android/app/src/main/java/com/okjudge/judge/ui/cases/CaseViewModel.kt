@@ -19,6 +19,7 @@ import com.okjudge.judge.core.model.CaseView
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.NameMapping
 import com.okjudge.judge.core.model.WireJson
+import com.okjudge.judge.core.model.WrittenSides
 import com.okjudge.judge.core.model.WriteSideRequest
 import com.okjudge.judge.ui.home.MAX_EVIDENCE_PER_SIDE
 import kotlinx.coroutines.Job
@@ -63,6 +64,8 @@ data class CaseUiState(
     val namesError: NamesError? = null,
     val namesSaved: Boolean = false,
     val typedName: String? = null,
+    /** The viewer's own text and the other sides, for the shown ruling's details. */
+    val written: WrittenSides? = null,
 ) {
     /** Party A's names: the server's copy, else this phone's (owner view only). */
     val names: List<NameMapping>
@@ -133,6 +136,7 @@ class CaseViewModel(
     }.stateIn(viewModelScope, SharingStarted.Eagerly, _state.value)
 
     private var failures = 0
+    private var writtenFor: String? = null
     private var foreground = true
     private var pollJob: Job? = null
     private var appealKey: Pair<String, String>? = null
@@ -181,6 +185,14 @@ class CaseViewModel(
                 else -> null
             }
             s.copy(status = CaseLoadStatus.READY, view = view, overlay = overlay)
+        }
+        val current = view.current?.takeIf { view.status == CaseStatus.JUDGED }
+        if (current != null && current.id != writtenFor) {
+            writtenFor = current.id
+            viewModelScope.launch {
+                val res = api.writtenSides(current.id)
+                if (res is ApiResult.Ok && writtenFor == current.id) _state.update { it.copy(written = res.value.takeIf { w -> !w.isEmpty }) }
+            }
         }
         schedule()
     }

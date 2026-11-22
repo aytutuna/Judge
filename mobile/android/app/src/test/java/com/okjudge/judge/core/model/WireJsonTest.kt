@@ -108,4 +108,15 @@ class WireJsonTest {
         assertTrue(VerdictShape.looksLikeVerdict(JsonObject(raw - "why")))
         assertFalse(VerdictShape.looksLikeVerdict(JsonObject(raw + ("why" to JsonPrimitive(3)))))
     }
+
+    @Test
+    fun writtenSides_readsTheOwnTextAndTheOtherSides() {
+        val body = """{"originalStatus":"stored","original":{"text":"  Harry keeps asking me  "},
+            "otherSides":[{"party":"b","text":"Party B says Party A owes money."},{"party":"c","text":""}]}"""
+        val written = decodeWrittenSides(body)
+        assertEquals("Harry keeps asking me", written.own)
+        assertEquals(listOf(WrittenOther("b", "Party B says Party A owes money.")), written.others)
+        val removed = decodeWrittenSides("""{"originalStatus":"removed","original":null}""")
+        assertTrue(removed.isEmpty)
+    }
 }

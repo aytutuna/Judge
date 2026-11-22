@@ -94,6 +94,30 @@ fun decodeHistoryPage(body: String): HistoryPage {
 /** GET /api/v1/verdicts/{id}/mine, the parts the app reads to keep an account verdict on the phone. */
 data class MineVerdict(val result: ParsedResult?, val nameMap: List<NameMapping>, val removed: Boolean)
 
+/**
+ * What the people in an argument wrote, from the same answer: the viewer's own
+ * text with names and, after a two-sided verdict, the other sides as the judges read them.
+ */
+data class WrittenSides(val own: String?, val others: List<WrittenOther>) {
+    val isEmpty: Boolean get() = own == null && others.isEmpty()
+}
+
+data class WrittenOther(val party: String, val text: String)
+
+fun decodeWrittenSides(body: String): WrittenSides {
+    val root = WireJson.json.parseToJsonElement(body) as? JsonObject ?: throw SerializationException("not an object")
+    val stored = (root["originalStatus"] as? JsonPrimitive)?.contentOrNull == "stored"
+    val own = (root["original"] as? JsonObject)?.takeIf { stored }
+        ?.let { (it["text"] as? JsonPrimitive)?.contentOrNull?.trim() }?.takeIf { it.isNotEmpty() }
+    val others = (root["otherSides"] as? JsonArray).orEmpty().mapNotNull { entry ->
+        val obj = entry as? JsonObject ?: return@mapNotNull null
+        val party = (obj["party"] as? JsonPrimitive)?.contentOrNull ?: return@mapNotNull null
+        val text = (obj["text"] as? JsonPrimitive)?.contentOrNull?.takeIf { it.isNotEmpty() } ?: return@mapNotNull null
+        WrittenOther(party, text)
+    }
+    return WrittenSides(own, others)
+}
+
 fun decodeMineVerdict(body: String): MineVerdict {
     val root = WireJson.json.parseToJsonElement(body) as? JsonObject ?: throw SerializationException("not an object")
     val result = root["result"]?.takeIf { it is JsonObject }?.let { WireJson.decodeResult(it) }

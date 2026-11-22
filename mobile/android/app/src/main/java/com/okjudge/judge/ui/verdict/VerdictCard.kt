@@ -71,7 +71,9 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.okjudge.judge.core.display.ConditionalClause
 import com.okjudge.judge.core.display.FactSources
+import com.okjudge.judge.core.cases.CaseLogic
 import com.okjudge.judge.core.display.PartyLabels
+import com.okjudge.judge.core.display.PartyNames
 import com.okjudge.judge.core.display.RestoreNames
 import com.okjudge.judge.core.display.VerdictDisplay
 import com.okjudge.judge.core.display.Vote
@@ -87,6 +89,7 @@ import com.okjudge.judge.core.model.NameMapping
 import com.okjudge.judge.core.model.Side
 import com.okjudge.judge.core.model.TrialOutcome
 import com.okjudge.judge.core.model.VerdictResult
+import com.okjudge.judge.core.model.WrittenSides
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
@@ -133,6 +136,7 @@ object VerdictTags {
     const val CRUX_ROW = "verdict.row.crux"
     const val SIDES_ROW = "verdict.row.sides"
     const val BEST_ROW = "verdict.row.best"
+    const val WRITTEN_ROW = "verdict.row.written"
     const val SIDE_LIST = "verdict.sides"
     const val OTHERS = "verdict.others"
 
@@ -157,6 +161,7 @@ fun RulingSummary(
     scene: Boolean = true,
     restoredNames: List<String> = emptyList(),
     showShare: Boolean = true,
+    written: WrittenSides? = null,
 ) {
     val s = LocalStrings.current
     val result = view.result
@@ -202,6 +207,7 @@ fun RulingSummary(
                 if (result.crux.isNotEmpty()) add(s.cruxShort to VerdictTags.CRUX_ROW)
                 if (VerdictDisplay.hasSides(result)) add(s.appVerdictSides to VerdictTags.SIDES_ROW)
                 if (result.losingSideBestPoint.isNotEmpty()) add(bestPointTitle(result, parties, s) to VerdictTags.BEST_ROW)
+                if (written != null && !written.isEmpty) add(writtenTitle(written, s) to VerdictTags.WRITTEN_ROW)
             }
             if (rows.isNotEmpty()) {
                 Column(Modifier.fillMaxWidth().clip(JudgeShapes.block).background(Palette.paper)) {
@@ -230,6 +236,7 @@ fun VerdictDetails(
     actions: CardActions,
     modifier: Modifier = Modifier,
     showShare: Boolean = true,
+    written: WrittenSides? = null,
 ) {
     val s = LocalStrings.current
     val result = view.result
@@ -261,6 +268,7 @@ fun VerdictDetails(
             if (result.losingSideBestPoint.isNotEmpty()) {
                 DetailSection(bestPointTitle(result, parties, s)) { Text(result.losingSideBestPoint, style = SectionText) }
             }
+            if (written != null && !written.isEmpty) WrittenSection(written, result.sideCount)
             if (result.factsReliedOn.isNotEmpty()) FactsSection(result.factsReliedOn)
             if (result.isTwoSided || result.isMany) TwoSidedFacts(result, parties)
             result.factCheck?.let { FactCheckSection(it, result.dispute) }
@@ -841,6 +849,29 @@ private fun BranchText(lead: String, rest: String, arrow: String?) {
         append(rest)
     }
     Text(text, style = JudgeType.branch)
+}
+
+private fun writtenTitle(written: WrittenSides, s: Strings): String = if (written.others.isEmpty()) s.writtenYou else s.writtenEach
+
+/** The viewer's own text as written, then each other side as the judges read it. */
+@Composable
+private fun WrittenSection(written: WrittenSides, sides: Int) {
+    val s = LocalStrings.current
+    DetailSection(writtenTitle(written, s)) {
+        written.own?.let { WrittenText(it, if (written.others.isEmpty()) null else s.writtenYours) }
+        written.others.forEach { other ->
+            val label = Side.of(other.party)?.let { PartyNames.label(it, s) }
+            WrittenText(CaseLogic.localizeLabelsAuto(other.text, sides), label)
+        }
+    }
+}
+
+@Composable
+private fun WrittenText(text: String, title: String?) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        if (title != null) Text(title, style = JudgeType.footnote.copy(fontWeight = FontWeight.SemiBold))
+        Text(text, style = SectionText)
+    }
 }
 
 /** What each side stands on (their bedrock), then the claims that got them there. */
