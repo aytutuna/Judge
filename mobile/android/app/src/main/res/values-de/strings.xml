@@ -504,6 +504,9 @@
     <string name="history_answered">Du hast geantwortet</string>
     <string name="thread_label">Dieser Streit</string>
     <string name="thread_you">Du hast geschrieben</string>
+    <string name="written_you">Was du geschrieben hast</string>
+    <string name="written_each">Was jede Seite geschrieben hat</string>
+    <string name="written_yours">Du</string>
     <string name="thread_judges">Die Richter</string>
     <string name="thread_placeholder">Worum geht es im Streit? Wer sagt was, und warum?</string>
     <string name="thread_placeholder_two_sided">Was ist aus deiner Sicht passiert?</string>

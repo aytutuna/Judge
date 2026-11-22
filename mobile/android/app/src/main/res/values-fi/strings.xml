@@ -504,6 +504,9 @@
     <string name="history_answered">Vastasit</string>
     <string name="thread_label">Tämä kiista</string>
     <string name="thread_you">Kirjoitit</string>
+    <string name="written_you">Mitä kirjoitit</string>
+    <string name="written_each">Mitä kumpikin osapuoli kirjoitti</string>
+    <string name="written_yours">Sinä</string>
     <string name="thread_judges">Tuomarit</string>
     <string name="thread_placeholder">Mistä kiistellään? Kuka sanoo mitä ja miksi?</string>
     <string name="thread_placeholder_two_sided">Mitä tapahtui sinun näkökulmastasi?</string>

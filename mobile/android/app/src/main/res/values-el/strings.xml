@@ -504,6 +504,9 @@
     <string name="history_answered">Απάντησες</string>
     <string name="thread_label">Αυτή η διαφωνία</string>
     <string name="thread_you">Έγραψες</string>
+    <string name="written_you">Αυτό που έγραψες</string>
+    <string name="written_each">Τι έγραψε κάθε πλευρά</string>
+    <string name="written_yours">Εσύ</string>
     <string name="thread_judges">Οι κριτές</string>
     <string name="thread_placeholder">Ποια είναι η διαφωνία; Ποιος λέει τι και γιατί;</string>
     <string name="thread_placeholder_two_sided">Τι έγινε, από τη δική σου σκοπιά;</string>

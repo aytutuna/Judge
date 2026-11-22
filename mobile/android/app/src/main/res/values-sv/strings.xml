@@ -504,6 +504,9 @@
     <string name="history_answered">Du svarade</string>
     <string name="thread_label">Det här bråket</string>
     <string name="thread_you">Du skrev</string>
+    <string name="written_you">Det du skrev</string>
+    <string name="written_each">Det varje sida skrev</string>
+    <string name="written_yours">Du</string>
     <string name="thread_judges">Domarna</string>
     <string name="thread_placeholder">Vad handlar bråket om? Vem säger vad, och varför?</string>
     <string name="thread_placeholder_two_sided">Vad hände, sett från ditt håll?</string>

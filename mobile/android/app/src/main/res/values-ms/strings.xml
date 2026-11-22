@@ -498,6 +498,9 @@
     <string name="history_answered">Anda menjawab</string>
     <string name="thread_label">Pertikaian ini</string>
     <string name="thread_you">Anda tulis</string>
+    <string name="written_you">Apa yang anda tulis</string>
+    <string name="written_each">Apa yang ditulis setiap pihak</string>
+    <string name="written_yours">Anda</string>
     <string name="thread_judges">Hakim</string>
     <string name="thread_placeholder">Apa pertikaiannya? Siapa kata apa, dan kenapa?</string>
     <string name="thread_placeholder_two_sided">Apa yang berlaku, dari sudut anda?</string>

@@ -510,6 +510,9 @@
     <string name="history_answered">Você respondeu</string>
     <string name="thread_label">Esta discussão</string>
     <string name="thread_you">Você escreveu</string>
+    <string name="written_you">O que você escreveu</string>
+    <string name="written_each">O que cada lado escreveu</string>
+    <string name="written_yours">Você</string>
     <string name="thread_judges">Os juízes</string>
     <string name="thread_placeholder">Qual é a discussão? Quem diz o quê, e por quê?</string>
     <string name="thread_placeholder_two_sided">O que aconteceu, do seu ponto de vista?</string>

@@ -504,6 +504,9 @@
     <string name="history_answered">You answered</string>
     <string name="thread_label">This argument</string>
     <string name="thread_you">You wrote</string>
+    <string name="written_you">What you wrote</string>
+    <string name="written_each">What each side wrote</string>
+    <string name="written_yours">You</string>
     <string name="thread_judges">The judges</string>
     <string name="thread_placeholder">What\'s the argument? Who says what, and why?</string>
     <string name="thread_placeholder_two_sided">What happened, from where you stand?</string>

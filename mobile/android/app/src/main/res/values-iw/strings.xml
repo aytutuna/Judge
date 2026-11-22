@@ -510,6 +510,9 @@
     <string name="history_answered">ענית</string>
     <string name="thread_label">הוויכוח הזה</string>
     <string name="thread_you">כתבת</string>
+    <string name="written_you">מה שכתבת</string>
+    <string name="written_each">מה שכל צד כתב</string>
+    <string name="written_yours">אתה</string>
     <string name="thread_judges">השופטים</string>
     <string name="thread_placeholder">מה הוויכוח? מי אומר מה, ולמה?</string>
     <string name="thread_placeholder_two_sided">מה קרה, מנקודת המבט שלך?</string>

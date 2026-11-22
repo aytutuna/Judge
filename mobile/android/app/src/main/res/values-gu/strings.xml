@@ -504,6 +504,9 @@
     <string name="history_answered">તમે જવાબ આપ્યો</string>
     <string name="thread_label">આ વિવાદ</string>
     <string name="thread_you">તમે લખ્યું</string>
+    <string name="written_you">તમે જે લખ્યું</string>
+    <string name="written_each">દરેક પક્ષે જે લખ્યું</string>
+    <string name="written_yours">તમે</string>
     <string name="thread_judges">જજ</string>
     <string name="thread_placeholder">વિવાદ શેનો છે? કોણ શું કહે છે, અને કેમ?</string>
     <string name="thread_placeholder_two_sided">તમારી નજરે શું થયું?</string>

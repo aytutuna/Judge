@@ -498,6 +498,9 @@
     <string name="history_answered">あなたが回答</string>
     <string name="thread_label">この揉めごと</string>
     <string name="thread_you">あなたの投稿</string>
+    <string name="written_you">あなたが書いたこと</string>
+    <string name="written_each">それぞれが書いたこと</string>
+    <string name="written_yours">あなた</string>
     <string name="thread_judges">審査員</string>
     <string name="thread_placeholder">どんな揉めごとですか？　誰が何を、なぜ言っていますか？</string>
     <string name="thread_placeholder_two_sided">あなたから見て、何がありましたか？</string>

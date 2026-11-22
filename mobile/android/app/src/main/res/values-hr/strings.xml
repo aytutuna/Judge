@@ -510,6 +510,9 @@
     <string name="history_answered">Tvoj odgovor je poslan</string>
     <string name="thread_label">Ova rasprava</string>
     <string name="thread_you">Tvoj tekst</string>
+    <string name="written_you">Što si napisao</string>
+    <string name="written_each">Što je napisala svaka strana</string>
+    <string name="written_yours">Ti</string>
     <string name="thread_judges">Suci</string>
     <string name="thread_placeholder">O čemu je rasprava? Tko što tvrdi i zašto?</string>
     <string name="thread_placeholder_two_sided">Što se dogodilo, iz tvoje perspektive?</string>

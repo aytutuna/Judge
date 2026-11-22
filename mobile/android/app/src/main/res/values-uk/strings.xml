@@ -516,6 +516,9 @@
     <string name="history_answered">Відповідь надіслано</string>
     <string name="thread_label">Ця суперечка</string>
     <string name="thread_you">Твій текст</string>
+    <string name="written_you">Що ви написали</string>
+    <string name="written_each">Що написала кожна сторона</string>
+    <string name="written_yours">Ви</string>
     <string name="thread_judges">Судді</string>
     <string name="thread_placeholder">Про що суперечка? Хто що каже і чому?</string>
     <string name="thread_placeholder_two_sided">Як усе було з твого боку?</string>

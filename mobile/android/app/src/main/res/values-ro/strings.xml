@@ -510,6 +510,9 @@
     <string name="history_answered">Ai răspuns</string>
     <string name="thread_label">Disputa asta</string>
     <string name="thread_you">Ai scris</string>
+    <string name="written_you">Ce ai scris</string>
+    <string name="written_each">Ce a scris fiecare parte</string>
+    <string name="written_yours">Tu</string>
     <string name="thread_judges">Judecătorii</string>
     <string name="thread_placeholder">Care e disputa? Cine ce susține și de ce?</string>
     <string name="thread_placeholder_two_sided">Ce s-a întâmplat, din punctul tău de vedere?</string>

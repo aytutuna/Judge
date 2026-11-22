@@ -516,6 +516,9 @@
     <string name="history_answered">Odpowiedź wysłana</string>
     <string name="thread_label">Ten spór</string>
     <string name="thread_you">Twój opis</string>
+    <string name="written_you">Co napisałeś</string>
+    <string name="written_each">Co napisała każda strona</string>
+    <string name="written_yours">Ty</string>
     <string name="thread_judges">Sędziowie</string>
     <string name="thread_placeholder">O co chodzi w sporze? Kto co mówi i dlaczego?</string>
     <string name="thread_placeholder_two_sided">Co się stało z twojej perspektywy?</string>

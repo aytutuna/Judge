@@ -498,6 +498,9 @@
     <string name="history_answered">내가 답변함</string>
     <string name="thread_label">이 논쟁</string>
     <string name="thread_you">내가 쓴 글</string>
+    <string name="written_you">내가 쓴 내용</string>
+    <string name="written_each">각자가 쓴 내용</string>
+    <string name="written_yours">나</string>
     <string name="thread_judges">판사들</string>
     <string name="thread_placeholder">어떤 논쟁인가요? 누가 뭐라고 하는지, 이유는 뭔지 써 주세요.</string>
     <string name="thread_placeholder_two_sided">무슨 일이 있었는지 내 입장에서 써 주세요.</string>

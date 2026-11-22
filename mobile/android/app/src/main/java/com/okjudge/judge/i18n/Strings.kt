@@ -563,6 +563,9 @@ class Strings(private val res: Resources) {
     val historyAnswered: String get() = res.getString(R.string.history_answered)
     val threadLabel: String get() = res.getString(R.string.thread_label)
     val threadYou: String get() = res.getString(R.string.thread_you)
+    val writtenYou: String get() = res.getString(R.string.written_you)
+    val writtenEach: String get() = res.getString(R.string.written_each)
+    val writtenYours: String get() = res.getString(R.string.written_yours)
     val threadJudges: String get() = res.getString(R.string.thread_judges)
     val threadPlaceholder: String get() = res.getString(R.string.thread_placeholder)
     val threadPlaceholderTwoSided: String get() = res.getString(R.string.thread_placeholder_two_sided)
@@ -1180,6 +1183,9 @@ class Strings(private val res: Resources) {
             "history.answered" -> R.string.history_answered
             "thread.label" -> R.string.thread_label
             "thread.you" -> R.string.thread_you
+            "written.you" -> R.string.written_you
+            "written.each" -> R.string.written_each
+            "written.yours" -> R.string.written_yours
             "thread.judges" -> R.string.thread_judges
             "thread.placeholder" -> R.string.thread_placeholder
             "thread.placeholderTwoSided" -> R.string.thread_placeholder_two_sided

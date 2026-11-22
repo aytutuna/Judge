@@ -498,6 +498,9 @@
     <string name="history_answered">你已回复</string>
     <string name="thread_label">这场争论</string>
     <string name="thread_you">你写的</string>
+    <string name="written_you">你写的内容</string>
+    <string name="written_each">双方各自写的内容</string>
+    <string name="written_yours">你</string>
     <string name="thread_judges">评委</string>
     <string name="thread_placeholder">在争什么？谁说了什么，为什么？</string>
     <string name="thread_placeholder_two_sided">从你的角度看，发生了什么？</string>

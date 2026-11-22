@@ -516,6 +516,9 @@
     <string name="history_answered">Tvoje odpověď</string>
     <string name="thread_label">Tenhle spor</string>
     <string name="thread_you">Tvůj text</string>
+    <string name="written_you">Co jste napsali</string>
+    <string name="written_each">Co napsala každá strana</string>
+    <string name="written_yours">Vy</string>
     <string name="thread_judges">Soudci</string>
     <string name="thread_placeholder">O co jde? Kdo co tvrdí a proč?</string>
     <string name="thread_placeholder_two_sided">Co se stalo, jak to vidíš ty?</string>
