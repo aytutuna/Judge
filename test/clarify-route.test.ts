@@ -69,7 +69,20 @@ beforeEach(() => {
   m.getEntitlement.mockResolvedValue(CAN);
   m.hasWelcomeCreditOnly.mockResolvedValue(false);
   m.checkUserLimits.mockResolvedValue({ ok: true });
-  m.claudeJson.mockResolvedValue({ ok: true, data: { questions: ["Did you agree to split before ordering?"] } });
+  m.claudeJson.mockResolvedValue({
+    ok: true,
+    data: {
+      questions: [
+        {
+          question: "Did you agree to split before ordering?",
+          answer_1: "yes",
+          winner_1: "side_1",
+          answer_2: "no",
+          winner_2: "side_2",
+        },
+      ],
+    },
+  });
   vi.spyOn(console, "warn").mockImplementation(() => {});
   vi.spyOn(console, "error").mockImplementation(() => {});
 });
