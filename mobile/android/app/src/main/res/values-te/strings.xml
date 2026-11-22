@@ -170,7 +170,7 @@
     <string name="tier_get_premium">ఇంకా తీర్పులు తీసుకోండి</string>
     <string name="tier_checking">ఏమైనా మిస్ అయిందేమో చూస్తున్నాం…</string>
     <string name="clarify_title">జడ్జీలు తీర్పు చెప్పే ముందు</string>
-    <string name="clarify_lead">ఈ వివరాలతో ఎవరి మాట కరెక్టో మారిపోవచ్చు. తెలిసినవాటికి జవాబివ్వండి, లేదా వదిలేయండి.</string>
+    <string name="clarify_lead">ఈ వివరాలతో ఎవరి మాట కరెక్టో మారిపోవచ్చు.</string>
     <string name="clarify_answer_aria">ప్రశ్న %1$sకి జవాబు:</string>
     <string name="clarify_placeholder">మీ జవాబు (ఐచ్ఛికం)</string>
     <string name="clarify_skip">వదిలేసి జడ్జ్ చేయండి</string>

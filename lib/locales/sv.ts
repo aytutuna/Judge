@@ -392,7 +392,7 @@ const sv: Locale = {
     "tier.getPremium": "Skaffa fler domar",
     "tier.checking": "Kollar om något saknas…",
     "clarify.title": "Innan domarna dömer",
-    "clarify.lead": "De här detaljerna kan ändra vem som har rätt. Svara på det du kan, eller hoppa över.",
+    "clarify.lead": "De här detaljerna kan ändra vem som har rätt.",
     "clarify.answerAria": "Svar på fråga {n}:",
     "clarify.placeholder": "Ditt svar (valfritt)",
     "clarify.skip": "Hoppa över och döm",

@@ -373,7 +373,7 @@ const zhHant: Locale = {
     "tier.getPremium": "取得更多判決",
     "tier.checking": "檢查有沒有漏掉什麼…",
     "clarify.title": "評審判決之前",
-    "clarify.lead": "這些細節可能會改變誰對誰錯。能回答的就回答，不想答可以跳過。",
+    "clarify.lead": "這些細節可能會改變誰對誰錯。",
     "clarify.answerAria": "第 {n} 題的回答：",
     "clarify.placeholder": "你的回答（選填）",
     "clarify.skip": "跳過，直接判決",

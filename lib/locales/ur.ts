@@ -392,7 +392,7 @@ const ur: Locale = {
     "tier.getPremium": "مزید فیصلے لیں",
     "tier.checking": "دیکھ رہے ہیں کہ کچھ رہ تو نہیں گیا…",
     "clarify.title": "ججوں کے فیصلے سے پہلے",
-    "clarify.lead": "یہ تفصیلات فیصلہ بدل سکتی ہیں۔ جتنا ہو سکے جواب دیں، یا چھوڑ دیں۔",
+    "clarify.lead": "یہ تفصیلات فیصلہ بدل سکتی ہیں۔",
     "clarify.answerAria": "سوال {n} کا جواب:",
     "clarify.placeholder": "آپ کا جواب (اختیاری)",
     "clarify.skip": "چھوڑ کر فیصلہ کروائیں",

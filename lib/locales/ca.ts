@@ -399,7 +399,7 @@ const ca: Locale = {
     "tier.getPremium": "Aconsegueix més veredictes",
     "tier.checking": "Comprovant si hi falta alguna cosa…",
     "clarify.title": "Abans que els jutges decideixin",
-    "clarify.lead": "Aquests detalls podrien canviar qui té raó. Respon el que puguis, o deixa-ho estar.",
+    "clarify.lead": "Aquests detalls podrien canviar qui té raó.",
     "clarify.answerAria": "Resposta a la pregunta {n}:",
     "clarify.placeholder": "La teva resposta (opcional)",
     "clarify.skip": "Omet i jutja",

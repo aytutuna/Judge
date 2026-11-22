@@ -398,7 +398,7 @@ const id: Locale = {
     "tier.getPremium": "Tambah putusan",
     "tier.checking": "Mengecek apakah ada yang kurang…",
     "clarify.title": "Sebelum hakim memutuskan",
-    "clarify.lead": "Detail ini bisa mengubah siapa yang benar. Jawab yang kamu tahu, atau lewati.",
+    "clarify.lead": "Detail ini bisa mengubah siapa yang benar.",
     "clarify.answerAria": "Jawaban untuk pertanyaan {n}:",
     "clarify.placeholder": "Jawabanmu (opsional)",
     "clarify.skip": "Lewati dan putuskan",

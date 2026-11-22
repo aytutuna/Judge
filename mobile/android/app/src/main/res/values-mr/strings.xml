@@ -170,7 +170,7 @@
     <string name="tier_get_premium">आणखी निकाल घ्या</string>
     <string name="tier_checking">काही राहिले आहे का ते पाहत आहोत…</string>
     <string name="clarify_title">परीक्षक निकाल देण्याआधी</string>
-    <string name="clarify_lead">या तपशिलांमुळे कोण बरोबर हे बदलू शकते. जमतील तेवढी उत्तरे द्या, किंवा सोडून द्या.</string>
+    <string name="clarify_lead">या तपशिलांमुळे कोण बरोबर हे बदलू शकते.</string>
     <string name="clarify_answer_aria">प्रश्न %1$s चे उत्तर:</string>
     <string name="clarify_placeholder">तुमचे उत्तर (ऐच्छिक)</string>
     <string name="clarify_skip">सोडा, निकाल द्या</string>

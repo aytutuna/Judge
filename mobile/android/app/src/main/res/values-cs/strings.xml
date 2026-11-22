@@ -176,7 +176,7 @@
     <string name="tier_get_premium">Získat další verdikty</string>
     <string name="tier_checking">Kontrolujeme, jestli něco nechybí…</string>
     <string name="clarify_title">Než soudci rozhodnou</string>
-    <string name="clarify_lead">Tyhle detaily můžou změnit, kdo má pravdu. Odpověz, na co můžeš, nebo přeskoč.</string>
+    <string name="clarify_lead">Tyhle detaily můžou změnit, kdo má pravdu.</string>
     <string name="clarify_answer_aria">Odpověď na otázku %1$s:</string>
     <string name="clarify_placeholder">Tvoje odpověď (nepovinné)</string>
     <string name="clarify_skip">Přeskočit a rozsoudit</string>

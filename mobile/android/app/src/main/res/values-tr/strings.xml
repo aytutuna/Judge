@@ -170,7 +170,7 @@
     <string name="tier_get_premium">Daha fazla karar al</string>
     <string name="tier_checking">Eksik bir şey var mı diye bakıyoruz…</string>
     <string name="clarify_title">Yargıçlar karar vermeden önce</string>
-    <string name="clarify_lead">Bu ayrıntılar kimin haklı olduğunu değiştirebilir. Bildiklerini yaz ya da geç.</string>
+    <string name="clarify_lead">Bu ayrıntılar kimin haklı olduğunu değiştirebilir.</string>
     <string name="clarify_answer_aria">%1$s. sorunun cevabı:</string>
     <string name="clarify_placeholder">Cevabın (isteğe bağlı)</string>
     <string name="clarify_skip">Geç, kararı ver</string>

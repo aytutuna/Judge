@@ -170,7 +170,7 @@
     <string name="tier_get_premium">और फ़ैसले पाएँ</string>
     <string name="tier_checking">देख रहे हैं कि कुछ छूटा तो नहीं…</string>
     <string name="clarify_title">जजों के फ़ैसले से पहले</string>
-    <string name="clarify_lead">इन बातों से बदल सकता है कि कौन सही है। जितना पता हो, उतना बताएँ, या छोड़ दें।</string>
+    <string name="clarify_lead">इन बातों से बदल सकता है कि कौन सही है।</string>
     <string name="clarify_answer_aria">सवाल %1$s का जवाब:</string>
     <string name="clarify_placeholder">आपका जवाब (ज़रूरी नहीं)</string>
     <string name="clarify_skip">छोड़ें और फ़ैसला करवाएँ</string>

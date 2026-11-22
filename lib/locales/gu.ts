@@ -381,7 +381,7 @@ const gu: Locale = {
     "tier.getPremium": "વધુ ચુકાદા લો",
     "tier.checking": "કંઈ ખૂટે છે કે નહીં, એ જોઈએ છીએ…",
     "clarify.title": "જજ ચુકાદો આપે એ પહેલાં",
-    "clarify.lead": "આ વિગતોથી કોણ સાચું એ બદલાઈ શકે. જેટલા જવાબ આપી શકો એટલા આપો, અથવા છોડી દો.",
+    "clarify.lead": "આ વિગતોથી કોણ સાચું એ બદલાઈ શકે.",
     "clarify.answerAria": "સવાલ {n}નો જવાબ:",
     "clarify.placeholder": "તમારો જવાબ (મરજિયાત)",
     "clarify.skip": "છોડો, ચુકાદો આપો",

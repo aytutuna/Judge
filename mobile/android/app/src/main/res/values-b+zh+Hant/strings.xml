@@ -167,7 +167,7 @@
     <string name="tier_get_premium">取得更多判決</string>
     <string name="tier_checking">檢查有沒有漏掉什麼…</string>
     <string name="clarify_title">評審判決之前</string>
-    <string name="clarify_lead">這些細節可能會改變誰對誰錯。能回答的就回答，不想答可以跳過。</string>
+    <string name="clarify_lead">這些細節可能會改變誰對誰錯。</string>
     <string name="clarify_answer_aria">第 %1$s 題的回答：</string>
     <string name="clarify_placeholder">你的回答（選填）</string>
     <string name="clarify_skip">跳過，直接判決</string>

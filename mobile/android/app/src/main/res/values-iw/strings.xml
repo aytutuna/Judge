@@ -173,7 +173,7 @@
     <string name="tier_get_premium">עוד פסקי דין</string>
     <string name="tier_checking">בודקים אם חסר משהו…</string>
     <string name="clarify_title">לפני שהשופטים מכריעים</string>
-    <string name="clarify_lead">הפרטים האלה יכולים לשנות מי צודק. אפשר לענות על מה שידוע לך, או לדלג.</string>
+    <string name="clarify_lead">הפרטים האלה יכולים לשנות מי צודק.</string>
     <string name="clarify_answer_aria">תשובה לשאלה %1$s:</string>
     <string name="clarify_placeholder">התשובה שלך (לא חובה)</string>
     <string name="clarify_skip">לדלג ולהכריע</string>

@@ -390,7 +390,7 @@ const ja: Locale = {
     "tier.checking": "足りない情報がないか確認しています…",
     "clarify.title": "判定の前に",
     "clarify.lead":
-      "次の点しだいで、どちらが正しいかが変わるかもしれません。わかる範囲で答えるか、スキップしてください。",
+      "次の点しだいで、どちらが正しいかが変わるかもしれません。",
     "clarify.answerAria": "質問{n}への回答：",
     "clarify.placeholder": "回答（任意）",
     "clarify.skip": "スキップして判定",

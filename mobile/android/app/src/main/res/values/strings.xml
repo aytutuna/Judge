@@ -170,7 +170,7 @@
     <string name="tier_get_premium">Get more verdicts</string>
     <string name="tier_checking">Checking if anything\'s missing…</string>
     <string name="clarify_title">Before the judges rule</string>
-    <string name="clarify_lead">These details could change who\'s right. Answer what you can, or skip.</string>
+    <string name="clarify_lead">These details could change who\'s right.</string>
     <string name="clarify_answer_aria">Answer to question %1$s:</string>
     <string name="clarify_placeholder">Your answer (optional)</string>
     <string name="clarify_skip">Skip and judge</string>

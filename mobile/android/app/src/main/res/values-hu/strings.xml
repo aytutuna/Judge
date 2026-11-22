@@ -170,7 +170,7 @@
     <string name="tier_get_premium">További ítéletek</string>
     <string name="tier_checking">Megnézzük, hiányzik-e valami…</string>
     <string name="clarify_title">Mielőtt a bírák döntenek</string>
-    <string name="clarify_lead">Ezek a részletek megváltoztathatják, kinek van igaza. Válaszolj, amire tudsz, vagy hagyd ki.</string>
+    <string name="clarify_lead">Ezek a részletek megváltoztathatják, kinek van igaza.</string>
     <string name="clarify_answer_aria">%1$s. kérdés, a válaszod:</string>
     <string name="clarify_placeholder">A válaszod (nem kötelező)</string>
     <string name="clarify_skip">Kihagyás és ítélet</string>

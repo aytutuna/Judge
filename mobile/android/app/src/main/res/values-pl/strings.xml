@@ -176,7 +176,7 @@
     <string name="tier_get_premium">Kup więcej werdyktów</string>
     <string name="tier_checking">Sprawdzamy, czy czegoś nie brakuje…</string>
     <string name="clarify_title">Zanim sędziowie zdecydują</string>
-    <string name="clarify_lead">Te szczegóły mogą zmienić to, kto ma rację. Odpowiedz, na co możesz, albo pomiń.</string>
+    <string name="clarify_lead">Te szczegóły mogą zmienić to, kto ma rację.</string>
     <string name="clarify_answer_aria">Odpowiedź na pytanie %1$s:</string>
     <string name="clarify_placeholder">Twoja odpowiedź (opcjonalnie)</string>
     <string name="clarify_skip">Pomiń i rozstrzygnij</string>

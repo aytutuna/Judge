@@ -173,7 +173,7 @@
     <string name="tier_get_premium">Aconsegueix més veredictes</string>
     <string name="tier_checking">Comprovant si hi falta alguna cosa…</string>
     <string name="clarify_title">Abans que els jutges decideixin</string>
-    <string name="clarify_lead">Aquests detalls podrien canviar qui té raó. Respon el que puguis, o deixa-ho estar.</string>
+    <string name="clarify_lead">Aquests detalls podrien canviar qui té raó.</string>
     <string name="clarify_answer_aria">Resposta a la pregunta %1$s:</string>
     <string name="clarify_placeholder">La teva resposta (opcional)</string>
     <string name="clarify_skip">Omet i jutja</string>

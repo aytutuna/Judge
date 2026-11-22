@@ -173,7 +173,7 @@
     <string name="tier_get_premium">Obter mais veredictos</string>
     <string name="tier_checking">A ver se falta alguma coisa…</string>
     <string name="clarify_title">Antes de os juízes decidirem</string>
-    <string name="clarify_lead">Estes detalhes podem mudar quem tem razão. Responde ao que souberes, ou salta.</string>
+    <string name="clarify_lead">Estes detalhes podem mudar quem tem razão.</string>
     <string name="clarify_answer_aria">Resposta à pergunta %1$s:</string>
     <string name="clarify_placeholder">A tua resposta (opcional)</string>
     <string name="clarify_skip">Saltar e julgar</string>

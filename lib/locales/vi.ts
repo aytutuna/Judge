@@ -395,7 +395,7 @@ const vi: Locale = {
     "tier.getPremium": "Thêm lượt phán quyết",
     "tier.checking": "Đang xem có thiếu gì không…",
     "clarify.title": "Trước khi giám khảo phân xử",
-    "clarify.lead": "Những chi tiết này có thể thay đổi ai đúng. Trả lời được câu nào thì trả lời, hoặc bỏ qua.",
+    "clarify.lead": "Những chi tiết này có thể thay đổi ai đúng.",
     "clarify.answerAria": "Câu trả lời cho câu hỏi {n}:",
     "clarify.placeholder": "Câu trả lời của bạn (không bắt buộc)",
     "clarify.skip": "Bỏ qua và phân xử",

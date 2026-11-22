@@ -167,7 +167,7 @@
     <string name="tier_get_premium">판결 더 받기</string>
     <string name="tier_checking">빠진 내용이 있는지 확인하는 중…</string>
     <string name="clarify_title">판결 전에 잠깐만요</string>
-    <string name="clarify_lead">이 내용에 따라 누가 맞는지가 달라질 수 있어요. 아는 만큼 답하거나 건너뛰세요.</string>
+    <string name="clarify_lead">이 내용에 따라 누가 맞는지가 달라질 수 있어요.</string>
     <string name="clarify_answer_aria">질문 %1$s에 대한 답:</string>
     <string name="clarify_placeholder">답변 (선택)</string>
     <string name="clarify_skip">건너뛰고 판결</string>

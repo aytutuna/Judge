@@ -170,7 +170,7 @@
     <string name="tier_get_premium">ଅଧିକ ରାୟ ନିଅନ୍ତୁ</string>
     <string name="tier_checking">କିଛି ବାକି ରହିଲା କି ଦେଖୁଛୁ…</string>
     <string name="clarify_title">ବିଚାରକମାନେ ରାୟ ଦେବା ଆଗରୁ</string>
-    <string name="clarify_lead">ଏହି ବିବରଣୀ କିଏ ଠିକ୍ ତାହା ବଦଳାଇପାରେ। ଯେତିକି ଜାଣନ୍ତି ଉତ୍ତର ଦିଅନ୍ତୁ, ନହେଲେ ଛାଡ଼ିଦିଅନ୍ତୁ।</string>
+    <string name="clarify_lead">ଏହି ବିବରଣୀ କିଏ ଠିକ୍ ତାହା ବଦଳାଇପାରେ।</string>
     <string name="clarify_answer_aria">ପ୍ରଶ୍ନ %1$sର ଉତ୍ତର:</string>
     <string name="clarify_placeholder">ଆପଣଙ୍କ ଉତ୍ତର (ଇଚ୍ଛାଧୀନ)</string>
     <string name="clarify_skip">ଛାଡ଼ି ରାୟ ଦିଅନ୍ତୁ</string>

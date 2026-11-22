@@ -167,7 +167,7 @@
     <string name="tier_get_premium">Dapatkan lebih banyak keputusan</string>
     <string name="tier_checking">Menyemak kalau ada yang tertinggal…</string>
     <string name="clarify_title">Sebelum hakim memutuskan</string>
-    <string name="clarify_lead">Butiran ini boleh mengubah siapa yang betul. Jawab mana yang boleh, atau langkau.</string>
+    <string name="clarify_lead">Butiran ini boleh mengubah siapa yang betul.</string>
     <string name="clarify_answer_aria">Jawapan kepada soalan %1$s:</string>
     <string name="clarify_placeholder">Jawapan anda (pilihan)</string>
     <string name="clarify_skip">Langkau dan nilai</string>

@@ -394,7 +394,7 @@ const es: Locale = {
     "tier.getPremium": "Consigue más veredictos",
     "tier.checking": "Comprobando si falta algo…",
     "clarify.title": "Antes de que decidan los jueces",
-    "clarify.lead": "Estos detalles podrían cambiar quién tiene razón. Responde lo que puedas o salta este paso.",
+    "clarify.lead": "Estos detalles podrían cambiar quién tiene razón.",
     "clarify.answerAria": "Respuesta a la pregunta {n}:",
     "clarify.placeholder": "Tu respuesta (opcional)",
     "clarify.skip": "Saltar y juzgar",

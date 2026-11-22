@@ -400,7 +400,7 @@ const fr: Locale = {
     "tier.getPremium": "Obtenir plus de verdicts",
     "tier.checking": "On vérifie s’il manque quelque chose…",
     "clarify.title": "Avant que les juges tranchent",
-    "clarify.lead": "Ces détails pourraient changer qui a raison. Réponds à ce que tu peux, ou passe.",
+    "clarify.lead": "Ces détails pourraient changer qui a raison.",
     "clarify.answerAria": "Réponse à la question {n} :",
     "clarify.placeholder": "Ta réponse (facultatif)",
     "clarify.skip": "Passer et juger",

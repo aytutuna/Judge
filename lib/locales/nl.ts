@@ -398,7 +398,7 @@ const nl: Locale = {
     "tier.getPremium": "Meer uitspraken",
     "tier.checking": "Even kijken of er iets ontbreekt…",
     "clarify.title": "Voordat de rechters oordelen",
-    "clarify.lead": "Deze details kunnen bepalen wie gelijk heeft. Beantwoord wat je kunt, of sla over.",
+    "clarify.lead": "Deze details kunnen bepalen wie gelijk heeft.",
     "clarify.answerAria": "Antwoord op vraag {n}:",
     "clarify.placeholder": "Je antwoord (optioneel)",
     "clarify.skip": "Overslaan en oordelen",

@@ -167,7 +167,7 @@
     <string name="tier_get_premium">Tambah putusan</string>
     <string name="tier_checking">Mengecek apakah ada yang kurang…</string>
     <string name="clarify_title">Sebelum hakim memutuskan</string>
-    <string name="clarify_lead">Detail ini bisa mengubah siapa yang benar. Jawab yang kamu tahu, atau lewati.</string>
+    <string name="clarify_lead">Detail ini bisa mengubah siapa yang benar.</string>
     <string name="clarify_answer_aria">Jawaban untuk pertanyaan %1$s:</string>
     <string name="clarify_placeholder">Jawabanmu (opsional)</string>
     <string name="clarify_skip">Lewati dan putuskan</string>

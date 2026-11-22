@@ -394,7 +394,7 @@ const ptPT: Locale = {
     "tier.getPremium": "Obter mais veredictos",
     "tier.checking": "A ver se falta alguma coisa…",
     "clarify.title": "Antes de os juízes decidirem",
-    "clarify.lead": "Estes detalhes podem mudar quem tem razão. Responde ao que souberes, ou salta.",
+    "clarify.lead": "Estes detalhes podem mudar quem tem razão.",
     "clarify.answerAria": "Resposta à pergunta {n}:",
     "clarify.placeholder": "A tua resposta (opcional)",
     "clarify.skip": "Saltar e julgar",

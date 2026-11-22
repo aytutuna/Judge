@@ -391,7 +391,7 @@ const sk: Locale = {
     "tier.getPremium": "Získať viac verdiktov",
     "tier.checking": "Kontrolujem, či niečo nechýba…",
     "clarify.title": "Kým sudcovia rozhodnú",
-    "clarify.lead": "Tieto detaily môžu zmeniť, kto má pravdu. Odpovedz, na čo vieš, alebo preskoč.",
+    "clarify.lead": "Tieto detaily môžu zmeniť, kto má pravdu.",
     "clarify.answerAria": "Odpoveď na otázku {n}:",
     "clarify.placeholder": "Tvoja odpoveď (nepovinné)",
     "clarify.skip": "Preskočiť a rozsúdiť",

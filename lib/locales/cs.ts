@@ -390,7 +390,7 @@ const cs: Locale = {
     "tier.getPremium": "Získat další verdikty",
     "tier.checking": "Kontrolujeme, jestli něco nechybí…",
     "clarify.title": "Než soudci rozhodnou",
-    "clarify.lead": "Tyhle detaily můžou změnit, kdo má pravdu. Odpověz, na co můžeš, nebo přeskoč.",
+    "clarify.lead": "Tyhle detaily můžou změnit, kdo má pravdu.",
     "clarify.answerAria": "Odpověď na otázku {n}:",
     "clarify.placeholder": "Tvoje odpověď (nepovinné)",
     "clarify.skip": "Přeskočit a rozsoudit",

@@ -170,7 +170,7 @@
     <string name="tier_get_premium">Få flere dommer</string>
     <string name="tier_checking">Sjekker om noe mangler…</string>
     <string name="clarify_title">Før dommerne avgjør</string>
-    <string name="clarify_lead">Disse detaljene kan endre hvem som har rett. Svar på det du kan, eller hopp over.</string>
+    <string name="clarify_lead">Disse detaljene kan endre hvem som har rett.</string>
     <string name="clarify_answer_aria">Svar på spørsmål %1$s:</string>
     <string name="clarify_placeholder">Svaret ditt (valgfritt)</string>
     <string name="clarify_skip">Hopp over og døm</string>

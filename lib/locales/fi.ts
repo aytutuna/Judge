@@ -399,7 +399,7 @@ const fi: Locale = {
     "tier.getPremium": "Hanki lisää tuomioita",
     "tier.checking": "Tarkistetaan, puuttuuko jotain…",
     "clarify.title": "Ennen kuin tuomarit ratkaisevat",
-    "clarify.lead": "Nämä yksityiskohdat voivat muuttaa sen, kuka on oikeassa. Vastaa, mihin pystyt, tai ohita.",
+    "clarify.lead": "Nämä yksityiskohdat voivat muuttaa sen, kuka on oikeassa.",
     "clarify.answerAria": "Vastaus kysymykseen {n}:",
     "clarify.placeholder": "Vastauksesi (vapaaehtoinen)",
     "clarify.skip": "Ohita ja ratkaise",

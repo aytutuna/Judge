@@ -170,7 +170,7 @@
     <string name="tier_get_premium">مزید فیصلے لیں</string>
     <string name="tier_checking">دیکھ رہے ہیں کہ کچھ رہ تو نہیں گیا…</string>
     <string name="clarify_title">ججوں کے فیصلے سے پہلے</string>
-    <string name="clarify_lead">یہ تفصیلات فیصلہ بدل سکتی ہیں۔ جتنا ہو سکے جواب دیں، یا چھوڑ دیں۔</string>
+    <string name="clarify_lead">یہ تفصیلات فیصلہ بدل سکتی ہیں۔</string>
     <string name="clarify_answer_aria">سوال %1$s کا جواب:</string>
     <string name="clarify_placeholder">آپ کا جواب (اختیاری)</string>
     <string name="clarify_skip">چھوڑ کر فیصلہ کروائیں</string>

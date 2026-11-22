@@ -391,7 +391,7 @@ const sl: Locale = {
     "tier.getPremium": "Več razsodb",
     "tier.checking": "Preverjamo, ali kaj manjka…",
     "clarify.title": "Preden sodniki razsodijo",
-    "clarify.lead": "Te podrobnosti lahko spremenijo, kdo ima prav. Odgovori na tisto, kar veš, ali preskoči.",
+    "clarify.lead": "Te podrobnosti lahko spremenijo, kdo ima prav.",
     "clarify.answerAria": "Odgovor na vprašanje {n}:",
     "clarify.placeholder": "Tvoj odgovor (neobvezno)",
     "clarify.skip": "Preskoči in razsodi",

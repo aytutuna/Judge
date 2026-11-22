@@ -170,7 +170,7 @@
     <string name="tier_get_premium">കൂടുതൽ വിധികൾ നേടൂ</string>
     <string name="tier_checking">എന്തെങ്കിലും വിട്ടുപോയോ എന്ന് നോക്കുന്നു…</string>
     <string name="clarify_title">വിധി പറയും മുമ്പ്</string>
-    <string name="clarify_lead">ഈ വിവരങ്ങൾ അനുസരിച്ച് ആരാണ് ശരി എന്നത് മാറിയേക്കാം. പറ്റുന്നവയ്ക്ക് ഉത്തരം നൽകൂ, അല്ലെങ്കിൽ ഒഴിവാക്കൂ.</string>
+    <string name="clarify_lead">ഈ വിവരങ്ങൾ അനുസരിച്ച് ആരാണ് ശരി എന്നത് മാറിയേക്കാം.</string>
     <string name="clarify_answer_aria">%1$s-ാം ചോദ്യത്തിനുള്ള ഉത്തരം:</string>
     <string name="clarify_placeholder">നിങ്ങളുടെ ഉത്തരം (നിർബന്ധമില്ല)</string>
     <string name="clarify_skip">ഒഴിവാക്കി വിധിക്കൂ</string>

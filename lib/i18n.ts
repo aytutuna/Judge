@@ -391,7 +391,7 @@ const en = {
   "tier.getPremium": "Get more verdicts",
   "tier.checking": "Checking if anything's missing…",
   "clarify.title": "Before the judges rule",
-  "clarify.lead": "These details could change who's right. Answer what you can, or skip.",
+  "clarify.lead": "These details could change who's right.",
   "clarify.answerAria": "Answer to question {n}:",
   "clarify.placeholder": "Your answer (optional)",
   "clarify.skip": "Skip and judge",

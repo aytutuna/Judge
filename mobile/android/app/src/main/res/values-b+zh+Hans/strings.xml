@@ -167,7 +167,7 @@
     <string name="tier_get_premium">获取更多裁决</string>
     <string name="tier_checking">正在检查有没有遗漏……</string>
     <string name="clarify_title">评委裁决之前</string>
-    <string name="clarify_lead">这些细节可能会改变谁对谁错。能答的就答，也可以跳过。</string>
+    <string name="clarify_lead">这些细节可能会改变谁对谁错。</string>
     <string name="clarify_answer_aria">问题 %1$s 的回答：</string>
     <string name="clarify_placeholder">你的回答（选填）</string>
     <string name="clarify_skip">跳过，直接裁决</string>

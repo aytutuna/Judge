@@ -390,7 +390,7 @@ const hr: Locale = {
     "tier.getPremium": "Nabavi još presuda",
     "tier.checking": "Provjeravamo nedostaje li nešto…",
     "clarify.title": "Prije nego što suci presude",
-    "clarify.lead": "Ovi detalji mogli bi promijeniti tko je u pravu. Odgovori na što možeš ili preskoči.",
+    "clarify.lead": "Ovi detalji mogli bi promijeniti tko je u pravu.",
     "clarify.answerAria": "Odgovor na {n}. pitanje:",
     "clarify.placeholder": "Tvoj odgovor (nije obavezno)",
     "clarify.skip": "Preskoči i presudi",

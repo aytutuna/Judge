@@ -173,7 +173,7 @@
     <string name="tier_get_premium">Ia mai multe verdicte</string>
     <string name="tier_checking">Verificăm dacă lipsește ceva…</string>
     <string name="clarify_title">Înainte să decidă judecătorii</string>
-    <string name="clarify_lead">Detaliile astea ar putea schimba cine are dreptate. Răspunde la ce poți sau sari peste.</string>
+    <string name="clarify_lead">Detaliile astea ar putea schimba cine are dreptate.</string>
     <string name="clarify_answer_aria">Răspuns la întrebarea %1$s:</string>
     <string name="clarify_placeholder">Răspunsul tău (opțional)</string>
     <string name="clarify_skip">Sari peste și judecă</string>

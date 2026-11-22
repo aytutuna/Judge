@@ -401,7 +401,7 @@ const ms: Locale = {
     "tier.getPremium": "Dapatkan lebih banyak keputusan",
     "tier.checking": "Menyemak kalau ada yang tertinggal…",
     "clarify.title": "Sebelum hakim memutuskan",
-    "clarify.lead": "Butiran ini boleh mengubah siapa yang betul. Jawab mana yang boleh, atau langkau.",
+    "clarify.lead": "Butiran ini boleh mengubah siapa yang betul.",
     "clarify.answerAria": "Jawapan kepada soalan {n}:",
     "clarify.placeholder": "Jawapan anda (pilihan)",
     "clarify.skip": "Langkau dan nilai",

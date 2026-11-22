@@ -383,7 +383,7 @@ const hi: Locale = {
     "tier.getPremium": "और फ़ैसले पाएँ",
     "tier.checking": "देख रहे हैं कि कुछ छूटा तो नहीं…",
     "clarify.title": "जजों के फ़ैसले से पहले",
-    "clarify.lead": "इन बातों से बदल सकता है कि कौन सही है। जितना पता हो, उतना बताएँ, या छोड़ दें।",
+    "clarify.lead": "इन बातों से बदल सकता है कि कौन सही है।",
     "clarify.answerAria": "सवाल {n} का जवाब:",
     "clarify.placeholder": "आपका जवाब (ज़रूरी नहीं)",
     "clarify.skip": "छोड़ें और फ़ैसला करवाएँ",

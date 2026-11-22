@@ -170,7 +170,7 @@
     <string name="tier_get_premium">Meer uitspraken</string>
     <string name="tier_checking">Even kijken of er iets ontbreekt…</string>
     <string name="clarify_title">Voordat de rechters oordelen</string>
-    <string name="clarify_lead">Deze details kunnen bepalen wie gelijk heeft. Beantwoord wat je kunt, of sla over.</string>
+    <string name="clarify_lead">Deze details kunnen bepalen wie gelijk heeft.</string>
     <string name="clarify_answer_aria">Antwoord op vraag %1$s:</string>
     <string name="clarify_placeholder">Je antwoord (optioneel)</string>
     <string name="clarify_skip">Overslaan en oordelen</string>

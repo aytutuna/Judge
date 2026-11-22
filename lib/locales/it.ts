@@ -400,7 +400,7 @@ const it: Locale = {
     "tier.getPremium": "Ottieni altri verdetti",
     "tier.checking": "Controlliamo se manca qualcosa…",
     "clarify.title": "Prima che i giudici decidano",
-    "clarify.lead": "Questi dettagli potrebbero cambiare chi ha ragione. Rispondi a quello che puoi, oppure salta.",
+    "clarify.lead": "Questi dettagli potrebbero cambiare chi ha ragione.",
     "clarify.answerAria": "Risposta alla domanda {n}:",
     "clarify.placeholder": "La tua risposta (facoltativa)",
     "clarify.skip": "Salta e giudica",

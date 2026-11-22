@@ -382,7 +382,7 @@ const ar: Locale = {
     "tier.getPremium": "المزيد من الأحكام",
     "tier.checking": "نتحقق إن كان ينقص شيء…",
     "clarify.title": "قبل أن يحكم القضاة",
-    "clarify.lead": "هذه التفاصيل قد تغيّر مَن على حق. أجب عمّا تستطيع، أو تخطَّ الأسئلة.",
+    "clarify.lead": "هذه التفاصيل قد تغيّر مَن على حق.",
     "clarify.answerAria": "الإجابة عن السؤال {n}:",
     "clarify.placeholder": "إجابتك (اختياري)",
     "clarify.skip": "تخطَّ إلى الحكم",

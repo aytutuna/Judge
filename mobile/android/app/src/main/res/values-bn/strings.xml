@@ -170,7 +170,7 @@
     <string name="tier_get_premium">আরও রায় নিন</string>
     <string name="tier_checking">কিছু বাদ পড়েছে কি না দেখছি…</string>
     <string name="clarify_title">বিচারকেরা রায় দেওয়ার আগে</string>
-    <string name="clarify_lead">এই খুঁটিনাটিগুলো বদলে দিতে পারে কে ঠিক। যতটা পারেন উত্তর দিন, নয়তো এড়িয়ে যান।</string>
+    <string name="clarify_lead">এই খুঁটিনাটিগুলো বদলে দিতে পারে কে ঠিক।</string>
     <string name="clarify_answer_aria">%1$s নম্বর প্রশ্নের উত্তর:</string>
     <string name="clarify_placeholder">আপনার উত্তর (ঐচ্ছিক)</string>
     <string name="clarify_skip">বাদ দিয়ে রায় দিন</string>

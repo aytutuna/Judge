@@ -397,7 +397,7 @@ const hu: Locale = {
     "tier.getPremium": "További ítéletek",
     "tier.checking": "Megnézzük, hiányzik-e valami…",
     "clarify.title": "Mielőtt a bírák döntenek",
-    "clarify.lead": "Ezek a részletek megváltoztathatják, kinek van igaza. Válaszolj, amire tudsz, vagy hagyd ki.",
+    "clarify.lead": "Ezek a részletek megváltoztathatják, kinek van igaza.",
     "clarify.answerAria": "{n}. kérdés, a válaszod:",
     "clarify.placeholder": "A válaszod (nem kötelező)",
     "clarify.skip": "Kihagyás és ítélet",

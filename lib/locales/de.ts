@@ -399,7 +399,7 @@ const de: Locale = {
     "tier.getPremium": "Mehr Urteile holen",
     "tier.checking": "Wir prüfen, ob etwas fehlt…",
     "clarify.title": "Bevor die Richter urteilen",
-    "clarify.lead": "Diese Details könnten ändern, wer recht hat. Beantworte, was du kannst, oder überspring sie.",
+    "clarify.lead": "Diese Details könnten ändern, wer recht hat.",
     "clarify.answerAria": "Antwort auf Frage {n}:",
     "clarify.placeholder": "Deine Antwort (optional)",
     "clarify.skip": "Überspringen und Urteil holen",

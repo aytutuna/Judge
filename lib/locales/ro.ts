@@ -393,7 +393,7 @@ const ro: Locale = {
     "tier.getPremium": "Ia mai multe verdicte",
     "tier.checking": "Verificăm dacă lipsește ceva…",
     "clarify.title": "Înainte să decidă judecătorii",
-    "clarify.lead": "Detaliile astea ar putea schimba cine are dreptate. Răspunde la ce poți sau sari peste.",
+    "clarify.lead": "Detaliile astea ar putea schimba cine are dreptate.",
     "clarify.answerAria": "Răspuns la întrebarea {n}:",
     "clarify.placeholder": "Răspunsul tău (opțional)",
     "clarify.skip": "Sari peste și judecă",

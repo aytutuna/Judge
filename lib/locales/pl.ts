@@ -394,7 +394,7 @@ const pl: Locale = {
     "tier.getPremium": "Kup więcej werdyktów",
     "tier.checking": "Sprawdzamy, czy czegoś nie brakuje…",
     "clarify.title": "Zanim sędziowie zdecydują",
-    "clarify.lead": "Te szczegóły mogą zmienić to, kto ma rację. Odpowiedz, na co możesz, albo pomiń.",
+    "clarify.lead": "Te szczegóły mogą zmienić to, kto ma rację.",
     "clarify.answerAria": "Odpowiedź na pytanie {n}:",
     "clarify.placeholder": "Twoja odpowiedź (opcjonalnie)",
     "clarify.skip": "Pomiń i rozstrzygnij",

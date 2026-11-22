@@ -170,7 +170,7 @@
     <string name="tier_get_premium">ਹੋਰ ਫ਼ੈਸਲੇ ਲਓ</string>
     <string name="tier_checking">ਦੇਖ ਰਹੇ ਹਾਂ ਕਿ ਕੁਝ ਰਹਿ ਤਾਂ ਨਹੀਂ ਗਿਆ…</string>
     <string name="clarify_title">ਜੱਜਾਂ ਦੇ ਫ਼ੈਸਲੇ ਤੋਂ ਪਹਿਲਾਂ</string>
-    <string name="clarify_lead">ਇਨ੍ਹਾਂ ਗੱਲਾਂ ਨਾਲ ਬਦਲ ਸਕਦਾ ਹੈ ਕਿ ਕੌਣ ਸਹੀ ਹੈ। ਜਿੰਨਾ ਜਵਾਬ ਦੇ ਸਕੋ ਦਿਓ, ਜਾਂ ਛੱਡ ਦਿਓ।</string>
+    <string name="clarify_lead">ਇਨ੍ਹਾਂ ਗੱਲਾਂ ਨਾਲ ਬਦਲ ਸਕਦਾ ਹੈ ਕਿ ਕੌਣ ਸਹੀ ਹੈ।</string>
     <string name="clarify_answer_aria">ਸਵਾਲ %1$s ਦਾ ਜਵਾਬ:</string>
     <string name="clarify_placeholder">ਤੁਹਾਡਾ ਜਵਾਬ (ਜੇ ਚਾਹੋ)</string>
     <string name="clarify_skip">ਛੱਡ ਕੇ ਫ਼ੈਸਲਾ ਲਓ</string>

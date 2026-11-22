@@ -182,7 +182,7 @@
     <string name="tier_get_premium">المزيد من الأحكام</string>
     <string name="tier_checking">نتحقق إن كان ينقص شيء…</string>
     <string name="clarify_title">قبل أن يحكم القضاة</string>
-    <string name="clarify_lead">هذه التفاصيل قد تغيّر مَن على حق. أجب عمّا تستطيع، أو تخطَّ الأسئلة.</string>
+    <string name="clarify_lead">هذه التفاصيل قد تغيّر مَن على حق.</string>
     <string name="clarify_answer_aria">الإجابة عن السؤال %1$s:</string>
     <string name="clarify_placeholder">إجابتك (اختياري)</string>
     <string name="clarify_skip">تخطَّ إلى الحكم</string>

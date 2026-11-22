@@ -384,7 +384,7 @@ const ko: Locale = {
     "tier.getPremium": "판결 더 받기",
     "tier.checking": "빠진 내용이 있는지 확인하는 중…",
     "clarify.title": "판결 전에 잠깐만요",
-    "clarify.lead": "이 내용에 따라 누가 맞는지가 달라질 수 있어요. 아는 만큼 답하거나 건너뛰세요.",
+    "clarify.lead": "이 내용에 따라 누가 맞는지가 달라질 수 있어요.",
     "clarify.answerAria": "질문 {n}에 대한 답:",
     "clarify.placeholder": "답변 (선택)",
     "clarify.skip": "건너뛰고 판결",

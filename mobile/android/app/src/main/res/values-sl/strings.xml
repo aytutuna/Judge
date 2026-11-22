@@ -176,7 +176,7 @@
     <string name="tier_get_premium">Več razsodb</string>
     <string name="tier_checking">Preverjamo, ali kaj manjka…</string>
     <string name="clarify_title">Preden sodniki razsodijo</string>
-    <string name="clarify_lead">Te podrobnosti lahko spremenijo, kdo ima prav. Odgovori na tisto, kar veš, ali preskoči.</string>
+    <string name="clarify_lead">Te podrobnosti lahko spremenijo, kdo ima prav.</string>
     <string name="clarify_answer_aria">Odgovor na vprašanje %1$s:</string>
     <string name="clarify_placeholder">Tvoj odgovor (neobvezno)</string>
     <string name="clarify_skip">Preskoči in razsodi</string>

@@ -176,7 +176,7 @@
     <string name="tier_get_premium">Більше вердиктів</string>
     <string name="tier_checking">Перевіряємо, чи нічого не бракує…</string>
     <string name="clarify_title">Перш ніж судді винесуть вердикт</string>
-    <string name="clarify_lead">Ці подробиці можуть змінити, хто правий. Відповідай, на що можеш, або пропусти.</string>
+    <string name="clarify_lead">Ці подробиці можуть змінити, хто правий.</string>
     <string name="clarify_answer_aria">Відповідь на запитання %1$s:</string>
     <string name="clarify_placeholder">Твоя відповідь (необов’язково)</string>
     <string name="clarify_skip">Пропустити й судити</string>

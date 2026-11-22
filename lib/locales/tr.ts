@@ -396,7 +396,7 @@ const tr: Locale = {
     "tier.getPremium": "Daha fazla karar al",
     "tier.checking": "Eksik bir şey var mı diye bakıyoruz…",
     "clarify.title": "Yargıçlar karar vermeden önce",
-    "clarify.lead": "Bu ayrıntılar kimin haklı olduğunu değiştirebilir. Bildiklerini yaz ya da geç.",
+    "clarify.lead": "Bu ayrıntılar kimin haklı olduğunu değiştirebilir.",
     "clarify.answerAria": "{n}. sorunun cevabı:",
     "clarify.placeholder": "Cevabın (isteğe bağlı)",
     "clarify.skip": "Geç, kararı ver",

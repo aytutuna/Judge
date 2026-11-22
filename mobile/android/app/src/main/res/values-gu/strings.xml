@@ -170,7 +170,7 @@
     <string name="tier_get_premium">વધુ ચુકાદા લો</string>
     <string name="tier_checking">કંઈ ખૂટે છે કે નહીં, એ જોઈએ છીએ…</string>
     <string name="clarify_title">જજ ચુકાદો આપે એ પહેલાં</string>
-    <string name="clarify_lead">આ વિગતોથી કોણ સાચું એ બદલાઈ શકે. જેટલા જવાબ આપી શકો એટલા આપો, અથવા છોડી દો.</string>
+    <string name="clarify_lead">આ વિગતોથી કોણ સાચું એ બદલાઈ શકે.</string>
     <string name="clarify_answer_aria">સવાલ %1$sનો જવાબ:</string>
     <string name="clarify_placeholder">તમારો જવાબ (મરજિયાત)</string>
     <string name="clarify_skip">છોડો, ચુકાદો આપો</string>

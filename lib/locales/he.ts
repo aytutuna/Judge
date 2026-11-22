@@ -382,7 +382,7 @@ const he: Locale = {
     "tier.getPremium": "עוד פסקי דין",
     "tier.checking": "בודקים אם חסר משהו…",
     "clarify.title": "לפני שהשופטים מכריעים",
-    "clarify.lead": "הפרטים האלה יכולים לשנות מי צודק. אפשר לענות על מה שידוע לך, או לדלג.",
+    "clarify.lead": "הפרטים האלה יכולים לשנות מי צודק.",
     "clarify.answerAria": "תשובה לשאלה {n}:",
     "clarify.placeholder": "התשובה שלך (לא חובה)",
     "clarify.skip": "לדלג ולהכריע",

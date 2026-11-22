@@ -170,7 +170,7 @@
     <string name="tier_get_premium">Mehr Urteile holen</string>
     <string name="tier_checking">Wir prüfen, ob etwas fehlt…</string>
     <string name="clarify_title">Bevor die Richter urteilen</string>
-    <string name="clarify_lead">Diese Details könnten ändern, wer recht hat. Beantworte, was du kannst, oder überspring sie.</string>
+    <string name="clarify_lead">Diese Details könnten ändern, wer recht hat.</string>
     <string name="clarify_answer_aria">Antwort auf Frage %1$s:</string>
     <string name="clarify_placeholder">Deine Antwort (optional)</string>
     <string name="clarify_skip">Überspringen und Urteil holen</string>

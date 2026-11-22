@@ -170,7 +170,7 @@
     <string name="tier_get_premium">Περισσότερες αποφάσεις</string>
     <string name="tier_checking">Ελέγχουμε αν λείπει κάτι…</string>
     <string name="clarify_title">Πριν αποφασίσουν οι κριτές</string>
-    <string name="clarify_lead">Αυτές οι λεπτομέρειες μπορεί να αλλάξουν το ποιος έχει δίκιο. Απάντησε σε ό,τι μπορείς ή προσπέρασέ το.</string>
+    <string name="clarify_lead">Αυτές οι λεπτομέρειες μπορεί να αλλάξουν το ποιος έχει δίκιο.</string>
     <string name="clarify_answer_aria">Απάντηση στην ερώτηση %1$s:</string>
     <string name="clarify_placeholder">Η απάντησή σου (προαιρετικά)</string>
     <string name="clarify_skip">Συνέχεια χωρίς απαντήσεις</string>

@@ -383,7 +383,7 @@ const pa: Locale = {
     "tier.getPremium": "ਹੋਰ ਫ਼ੈਸਲੇ ਲਓ",
     "tier.checking": "ਦੇਖ ਰਹੇ ਹਾਂ ਕਿ ਕੁਝ ਰਹਿ ਤਾਂ ਨਹੀਂ ਗਿਆ…",
     "clarify.title": "ਜੱਜਾਂ ਦੇ ਫ਼ੈਸਲੇ ਤੋਂ ਪਹਿਲਾਂ",
-    "clarify.lead": "ਇਨ੍ਹਾਂ ਗੱਲਾਂ ਨਾਲ ਬਦਲ ਸਕਦਾ ਹੈ ਕਿ ਕੌਣ ਸਹੀ ਹੈ। ਜਿੰਨਾ ਜਵਾਬ ਦੇ ਸਕੋ ਦਿਓ, ਜਾਂ ਛੱਡ ਦਿਓ।",
+    "clarify.lead": "ਇਨ੍ਹਾਂ ਗੱਲਾਂ ਨਾਲ ਬਦਲ ਸਕਦਾ ਹੈ ਕਿ ਕੌਣ ਸਹੀ ਹੈ।",
     "clarify.answerAria": "ਸਵਾਲ {n} ਦਾ ਜਵਾਬ:",
     "clarify.placeholder": "ਤੁਹਾਡਾ ਜਵਾਬ (ਜੇ ਚਾਹੋ)",
     "clarify.skip": "ਛੱਡ ਕੇ ਫ਼ੈਸਲਾ ਲਓ",

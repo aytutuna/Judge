@@ -391,7 +391,7 @@ const nb: Locale = {
     "tier.getPremium": "Få flere dommer",
     "tier.checking": "Sjekker om noe mangler…",
     "clarify.title": "Før dommerne avgjør",
-    "clarify.lead": "Disse detaljene kan endre hvem som har rett. Svar på det du kan, eller hopp over.",
+    "clarify.lead": "Disse detaljene kan endre hvem som har rett.",
     "clarify.answerAria": "Svar på spørsmål {n}:",
     "clarify.placeholder": "Svaret ditt (valgfritt)",
     "clarify.skip": "Hopp over og døm",

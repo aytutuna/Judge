@@ -173,7 +173,7 @@
     <string name="tier_get_premium">Nabavi još presuda</string>
     <string name="tier_checking">Provjeravamo nedostaje li nešto…</string>
     <string name="clarify_title">Prije nego što suci presude</string>
-    <string name="clarify_lead">Ovi detalji mogli bi promijeniti tko je u pravu. Odgovori na što možeš ili preskoči.</string>
+    <string name="clarify_lead">Ovi detalji mogli bi promijeniti tko je u pravu.</string>
     <string name="clarify_answer_aria">Odgovor na %1$s. pitanje:</string>
     <string name="clarify_placeholder">Tvoj odgovor (nije obavezno)</string>
     <string name="clarify_skip">Preskoči i presudi</string>

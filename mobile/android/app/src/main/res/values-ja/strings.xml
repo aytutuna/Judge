@@ -167,7 +167,7 @@
     <string name="tier_get_premium">判定回数を追加</string>
     <string name="tier_checking">足りない情報がないか確認しています…</string>
     <string name="clarify_title">判定の前に</string>
-    <string name="clarify_lead">次の点しだいで、どちらが正しいかが変わるかもしれません。わかる範囲で答えるか、スキップしてください。</string>
+    <string name="clarify_lead">次の点しだいで、どちらが正しいかが変わるかもしれません。</string>
     <string name="clarify_answer_aria">質問%1$sへの回答：</string>
     <string name="clarify_placeholder">回答（任意）</string>
     <string name="clarify_skip">スキップして判定</string>

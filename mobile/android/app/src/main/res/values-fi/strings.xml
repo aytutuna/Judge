@@ -170,7 +170,7 @@
     <string name="tier_get_premium">Hanki lisää tuomioita</string>
     <string name="tier_checking">Tarkistetaan, puuttuuko jotain…</string>
     <string name="clarify_title">Ennen kuin tuomarit ratkaisevat</string>
-    <string name="clarify_lead">Nämä yksityiskohdat voivat muuttaa sen, kuka on oikeassa. Vastaa, mihin pystyt, tai ohita.</string>
+    <string name="clarify_lead">Nämä yksityiskohdat voivat muuttaa sen, kuka on oikeassa.</string>
     <string name="clarify_answer_aria">Vastaus kysymykseen %1$s:</string>
     <string name="clarify_placeholder">Vastauksesi (vapaaehtoinen)</string>
     <string name="clarify_skip">Ohita ja ratkaise</string>

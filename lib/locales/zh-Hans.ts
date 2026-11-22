@@ -373,7 +373,7 @@ const zhHans: Locale = {
     "tier.getPremium": "获取更多裁决",
     "tier.checking": "正在检查有没有遗漏……",
     "clarify.title": "评委裁决之前",
-    "clarify.lead": "这些细节可能会改变谁对谁错。能答的就答，也可以跳过。",
+    "clarify.lead": "这些细节可能会改变谁对谁错。",
     "clarify.answerAria": "问题 {n} 的回答：",
     "clarify.placeholder": "你的回答（选填）",
     "clarify.skip": "跳过，直接裁决",
