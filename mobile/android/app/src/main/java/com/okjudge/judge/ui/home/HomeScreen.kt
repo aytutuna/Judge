@@ -880,7 +880,14 @@ private fun SendRow(count: Int, showClear: Boolean, clearEnabled: Boolean, onCle
 
 /** Still tappable when it looks dim: a send with too little written lights the boxes that need text. */
 @Composable
-private fun SendButton(description: String, looksReady: Boolean, waiting: Boolean, onClick: () -> Unit) {
+internal fun SendButton(
+    description: String,
+    looksReady: Boolean,
+    waiting: Boolean,
+    onClick: () -> Unit,
+    tag: String = HomeTags.SUBMIT,
+    enabled: Boolean = true,
+) {
     Box(
         Modifier
             .offset(x = 6.dp)
@@ -890,8 +897,8 @@ private fun SendButton(description: String, looksReady: Boolean, waiting: Boolea
                 role = Role.Button
                 contentDescription = description
             }
-            .clickable(enabled = !waiting, onClick = onClick)
-            .testTag(HomeTags.SUBMIT),
+            .clickable(enabled = enabled && !waiting, onClick = onClick)
+            .testTag(tag),
         contentAlignment = Alignment.Center,
     ) {
         Box(

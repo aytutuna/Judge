@@ -125,7 +125,7 @@ class HomeBoxesScreenTest {
     }
 
     @Test
-    fun theAppealCounter_sitsInsideTheTextBox_atTheBottomRight() {
+    fun theAppealCounterAndSend_sitInsideTheTextBox_atTheBottomRight() {
         compose.setContent {
             Themed(AppLang.EN) {
                 AppealPanel(
@@ -141,7 +141,8 @@ class HomeBoxesScreenTest {
         val box = compose.onNodeWithTag(CaseTags.APPEAL_TEXT).fetchSemanticsNode().boundsInRoot
         val counter = compose.onNodeWithTag(CaseTags.APPEAL_COUNTER).fetchSemanticsNode().boundsInRoot
         compose.onNodeWithTag(CaseTags.APPEAL_COUNTER).assertTextEquals("33 / ${CaseLogic.MAX_APPEAL_CHARS}")
-        assertTrue(counter.right >= box.right - 4f && counter.bottom >= box.bottom - 4f)
-        assertTrue(counter.top >= box.top)
+        val send = compose.onNodeWithTag(CaseTags.APPEAL_SUBMIT).fetchSemanticsNode().boundsInRoot
+        assertTrue(send.right >= box.right - 4f && send.bottom >= box.bottom - 4f)
+        assertTrue(counter.right <= send.left && counter.top >= box.top)
     }
 }

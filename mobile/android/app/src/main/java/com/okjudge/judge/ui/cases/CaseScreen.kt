@@ -99,6 +99,7 @@ import com.okjudge.judge.ui.components.TopBar
 import com.okjudge.judge.ui.components.clearFocusOnTap
 import com.okjudge.judge.ui.components.neonEdge
 import com.okjudge.judge.ui.components.rememberIcon
+import com.okjudge.judge.ui.home.SendButton
 import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.premium.AddContextButton
 import com.okjudge.judge.ui.premium.EvidencePicker
@@ -922,7 +923,7 @@ fun AppealPanel(
                         modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(min = 154.dp)
-                            .padding(start = 14.dp, top = 14.dp, end = 14.dp, bottom = 32.dp)
+                            .padding(start = 14.dp, top = 14.dp, end = 14.dp, bottom = 52.dp)
                             .semantics { contentDescription = s.appAppealPlaceholder }
                             .testTag(CaseTags.APPEAL_TEXT),
                         decorationBox = { inner ->
@@ -930,23 +931,31 @@ fun AppealPanel(
                             inner()
                         },
                     )
-                    Text(
-                        "${draft.text.length} / ${CaseLogic.MAX_APPEAL_CHARS}",
-                        style = JudgeType.footnote,
-                        modifier = Modifier.align(Alignment.BottomEnd).padding(end = 14.dp, bottom = 8.dp).testTag(CaseTags.APPEAL_COUNTER),
-                    )
+                    Row(
+                        Modifier.align(Alignment.BottomEnd).padding(end = 20.dp, bottom = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
+                        Text(
+                            "${draft.text.length} / ${CaseLogic.MAX_APPEAL_CHARS}",
+                            style = JudgeType.footnote,
+                            modifier = Modifier.testTag(CaseTags.APPEAL_COUNTER),
+                        )
+                        SendButton(
+                            description = if (draft.sending) s.appealSending else s.appAppealSubmit,
+                            looksReady = draft.canSubmit,
+                            waiting = draft.sending,
+                            onClick = actions.onSubmit,
+                            tag = CaseTags.APPEAL_SUBMIT,
+                            enabled = draft.canSubmit,
+                        )
+                    }
                 }
                 if (evidenceOn) {
                     val pick = rememberEvidencePicker(draft.evidence.room, actions.onAddEvidence)
                     EvidencePicker(draft.evidence, disabled = draft.sending, onAdd = pick, onRemove = actions.onRemoveEvidence)
                 }
                 ErrorLine(draft.error, actions.onPricing)
-                PrimaryButton(
-                    if (draft.sending) s.appealSending else s.appAppealSubmit,
-                    draft.canSubmit,
-                    actions.onSubmit,
-                    Modifier.fillMaxWidth().testTag(CaseTags.APPEAL_SUBMIT),
-                )
             }
             else -> Unit
         }
