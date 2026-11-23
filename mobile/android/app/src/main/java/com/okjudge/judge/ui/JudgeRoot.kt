@@ -80,6 +80,7 @@ import com.okjudge.judge.ui.history.HistoryEntry
 import com.okjudge.judge.ui.history.HistoryViewModel
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeViewModel
+import com.okjudge.judge.ui.home.SHORT_WINDOW
 import com.okjudge.judge.ui.home.Submitted
 import com.okjudge.judge.ui.cases.CaseActions
 import com.okjudge.judge.ui.cases.CaseLoadStatus
@@ -378,6 +379,7 @@ fun JudgeRoot(
                                 onMenu = { setMenu(true) },
                                 onNew = { backStack.resetTo(listOf(HomeKey)) },
                                 menuFocus = menuButton,
+                                showGamify = top is HomeKey && LocalConfiguration.current.screenHeightDp >= SHORT_WINDOW.value,
                                 gamify = gamify != false,
                                 onGamify = { on -> scope.launch { container.settings.setGamify(on) } },
                             )
