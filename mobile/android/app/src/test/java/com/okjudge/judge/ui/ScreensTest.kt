@@ -416,7 +416,7 @@ class ScreensTest {
     }
 
     @Test
-    fun home_noCourtWithGamifyOff() {
+    fun home_scaleReplacesTheCourtWithGamifyOff() {
         compose.setContent {
             Themed(AppLang.EN) {
                 CompositionLocalProvider(LocalGamify provides false) {
@@ -425,6 +425,7 @@ class ScreensTest {
             }
         }
         compose.onNodeWithTag(HomeTags.COURT).assertDoesNotExist()
+        compose.onNodeWithTag(HomeTags.SCALE).assertExists()
         compose.onNodeWithTag(HomeTags.OTHER).assertExists()
     }
 

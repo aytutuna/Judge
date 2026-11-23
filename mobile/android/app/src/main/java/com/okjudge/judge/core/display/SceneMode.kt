@@ -15,11 +15,13 @@ enum class SceneBeat {
 
 /** What the bundled balance scene shows (lib/scene-bridge.ts SceneMode). */
 sealed interface SceneMode {
+    data object Idle : SceneMode
     data class Judging(val beat: SceneBeat) : SceneMode
     data class Verdict(val tugA: Int, val votes: List<Vote>) : SceneMode
 
     /** The argument of `window.judgeScene.setMode`. */
     fun json(): String = when (this) {
+        Idle -> buildJsonObject { put("kind", "idle") }
         is Judging -> buildJsonObject {
             put("kind", "judging")
             put("beat", beat.wire)

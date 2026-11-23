@@ -181,7 +181,7 @@ fun RulingSummary(
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
             // Three or four sides have no balance and no lean bar.
-            if (scene && !result.isMany) SceneView(VerdictDisplay.sceneVerdict(result), reducedMotion, Modifier.fillMaxWidth().height(118.dp))
+            if (scene && !result.isMany) SceneView(VerdictDisplay.sceneVerdict(result), reducedMotion, Modifier.fillMaxWidth().height(172.dp), play = true)
             TranslationLine(view)
             Column(Modifier.alpha(if (view.status == TranslationStatus.LOADING) 0.55f else 1f), verticalArrangement = Arrangement.spacedBy(14.dp)) {
                 if (result.isMany) {

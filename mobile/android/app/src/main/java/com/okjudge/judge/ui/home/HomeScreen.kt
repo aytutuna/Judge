@@ -108,6 +108,7 @@ import com.okjudge.judge.core.display.ArgumentRules
 import com.okjudge.judge.core.display.CourtScene
 import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.display.PartyNames
+import com.okjudge.judge.core.display.SceneMode
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.display.Venues
 import com.okjudge.judge.core.evidence.EvidenceState
@@ -121,6 +122,7 @@ import com.okjudge.judge.ui.components.CourtView
 import com.okjudge.judge.ui.components.GhostButton
 import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.LocalGamify
+import com.okjudge.judge.ui.components.SceneView
 import com.okjudge.judge.ui.components.TintedIcon
 import com.okjudge.judge.ui.components.clearFocusOnTap
 import com.okjudge.judge.ui.components.dragDismissesKeyboard
@@ -171,6 +173,7 @@ object HomeTags {
     const val CLEAR = "home.clear"
     const val BALANCE = "home.balance"
     const val COURT = "home.court"
+    const val SCALE = "home.scale"
     const val LIFTED = "home.lifted"
     const val SCRIM = "home.scrim"
     const val CLOSE = "home.close"
@@ -489,9 +492,9 @@ fun HomeScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Bottom,
                     ) {
-                        if (LocalGamify.current && !shortWindow) {
+                        if (!shortWindow) {
                             // A fixed 16:9 frame, so more sides scroll the page instead of squeezing the court; it
-                            // gives way while writing.
+                            // gives way while writing. With the game off the same frame holds the balance, which can be played with.
                             // 16/9 inside the page width; wide screens let it grow with the width, phones stay at 480.
                             val width = minOf(pageWidth - 32.dp, if (pageWidth >= WIDE_SCREEN) pageWidth * 0.92f else 480.dp)
                             val frame by animateDpAsState(
@@ -500,7 +503,11 @@ fun HomeScreen(
                                 label = "court",
                             )
                             Box(Modifier.fillMaxWidth().height(frame).clipToBounds(), contentAlignment = Alignment.TopCenter) {
-                                CourtView(CourtScene.Home(busy = state.holding, venue = venue), reduced, Modifier.width(width).aspectRatio(16f / 9f).testTag(HomeTags.COURT))
+                                if (LocalGamify.current) {
+                                    CourtView(CourtScene.Home(busy = state.holding, venue = venue), reduced, Modifier.width(width).aspectRatio(16f / 9f).testTag(HomeTags.COURT))
+                                } else {
+                                    SceneView(SceneMode.Idle, reduced, Modifier.width(width).aspectRatio(16f / 9f).testTag(HomeTags.SCALE), play = true)
+                                }
                             }
                         }
                         Column(column.padding(top = 8.dp, bottom = 12.dp), verticalArrangement = Arrangement.spacedBy(12.dp), content = form)

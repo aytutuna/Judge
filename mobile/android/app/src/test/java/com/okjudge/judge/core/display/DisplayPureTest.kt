@@ -175,6 +175,7 @@ class DisplayPureTest {
         val refused = VerdictResult(verdict = "side_a", runs = listOf("side_a"), modelRefused = true)
         assertEquals(SceneMode.Verdict(50, emptyList()), VerdictDisplay.sceneVerdict(refused))
         assertEquals("""{"kind":"judging","beat":"deliberate"}""", SceneMode.Judging(SceneBeat.DELIBERATE).json())
+        assertEquals("""{"kind":"idle"}""", SceneMode.Idle.json())
         for (v in Fixtures.list("verdicts")) {
             val r = Fixtures.sample(v.str("sample")!!).result.result
             if (!r.refused) assertEquals(v.num("tugA")!!.toInt(), VerdictDisplay.sceneVerdict(r).tugA)

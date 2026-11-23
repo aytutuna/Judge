@@ -52,12 +52,14 @@ private const val SCENE_URL = "file:///android_asset/scene/index.html"
 /**
  * The web's three.js balance (assets/scene, built by mobile/shared/scene) in
  * a web view, driven through `window.judgeScene`. Decorative: the captions
- * around it carry the meaning. Touches go past it to the scrolling page.
+ * around it carry the meaning. Touches go past it to the scrolling page, unless
+ * [play] is on: then a touch that starts on a ball plays with it, and the page
+ * does not scroll while the ball is held.
  * The viewer's side is drawn green ([LocalSides]), and the page is told the
  * theme. The web view is clear, so the paper behind it shows until it paints.
  */
 @Composable
-fun SceneView(mode: SceneMode, reducedMotion: Boolean, modifier: Modifier = Modifier) {
+fun SceneView(mode: SceneMode, reducedMotion: Boolean, modifier: Modifier = Modifier, play: Boolean = false) {
     val live = LocalSceneLive.current && !LocalInspectionMode.current
     var gone by remember { mutableStateOf(false) }
     var ready by remember { mutableStateOf(false) }
@@ -69,9 +71,9 @@ fun SceneView(mode: SceneMode, reducedMotion: Boolean, modifier: Modifier = Modi
             Balance(angle, Modifier.fillMaxSize().padding(horizontal = 32.dp, vertical = 24.dp).alpha(1f - shown))
         }
         if (live && !gone) {
-            SceneWebView(mode, reducedMotion, onGone = { gone = true }, onReady = { ready = it }, Modifier.fillMaxSize().alpha(shown))
+            SceneWebView(mode, reducedMotion, play, onGone = { gone = true }, onReady = { ready = it }, Modifier.fillMaxSize().alpha(shown))
         }
-        Box(Modifier.matchParentSize().pointerInput(Unit) {})
+        if (!play) Box(Modifier.matchParentSize().pointerInput(Unit) {})
     }
 }
 
@@ -82,7 +84,7 @@ private class SceneEvents(private val handle: (String) -> Unit) {
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-private fun SceneWebView(mode: SceneMode, reducedMotion: Boolean, onGone: () -> Unit, onReady: (Boolean) -> Unit, modifier: Modifier) {
+private fun SceneWebView(mode: SceneMode, reducedMotion: Boolean, play: Boolean, onGone: () -> Unit, onReady: (Boolean) -> Unit, modifier: Modifier) {
     val context = LocalContext.current
     val gone by rememberUpdatedState(onGone)
     val report by rememberUpdatedState(onReady)
@@ -108,8 +110,14 @@ private fun SceneWebView(mode: SceneMode, reducedMotion: Boolean, onGone: () -> 
             settings.allowContentAccess = false
             addJavascriptInterface(SceneEvents { type ->
                 post {
-                    if (type == "lost") lost = true
-                    report(type == "ready")
+                    when (type) {
+                        // The page holds a ball: the scrolling page must not take the drag from it.
+                        "grab", "release" -> parent?.requestDisallowInterceptTouchEvent(type == "grab")
+                        else -> {
+                            if (type == "lost") lost = true
+                            report(type == "ready")
+                        }
+                    }
                 }
             }, "JudgeScene")
             webViewClient = object : WebViewClient() {
@@ -134,8 +142,9 @@ private fun SceneWebView(mode: SceneMode, reducedMotion: Boolean, onGone: () -> 
 
     val you = LocalSides.current.you
     val theme = if (Palette.dark) "dark" else "light"
-    LaunchedEffect(loaded, mode, reducedMotion, you, theme) {
+    LaunchedEffect(loaded, mode, reducedMotion, you, theme, play) {
         if (!loaded) return@LaunchedEffect
+        web.evaluateJavascript("window.judgeScene.setPlay($play)", null)
         if (reducedMotion) web.evaluateJavascript("window.judgeScene.setReduced(true)", null)
         web.evaluateJavascript("window.judgeScene.setTheme(\"$theme\")", null)
         web.evaluateJavascript("window.judgeScene.setYou(\"$you\")", null)
