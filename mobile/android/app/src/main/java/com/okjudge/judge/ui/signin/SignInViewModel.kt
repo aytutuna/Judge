@@ -172,10 +172,14 @@ class SignInViewModel(private val account: Account, private val last: LastSignIn
         viewModelScope.launch {
             val error = account.sendCode(email, lang)
             _state.update {
-                if (error == null) it.copy(busy = null, step = SignInStep.CODE, mode = mode, code = "", email = email)
-                else it.copy(busy = null, error = error)
+                // Create keeps the password typed for after the code; the others start the next one empty.
+                if (error == null) {
+                    it.copy(busy = null, step = SignInStep.CODE, mode = mode, code = "", email = email, password = if (mode == SignInMode.CREATE) it.password else "")
+                } else {
+                    it.copy(busy = null, error = error)
+                }
             }
-            if (error == null) startCountdown()
+            if (error == null) startCountdown() else account.setAgeTicked(false)
         }
     }
 
@@ -266,6 +270,7 @@ class SignInViewModel(private val account: Account, private val last: LastSignIn
 
     private fun finish(result: SignInResult, method: SignInMethod? = null, email: String? = null) {
         if (result == SignInResult.Success && method != null) rememberSignIn(method, email)
+        if (result == SignInResult.Cancelled || result is SignInResult.Error) account.setAgeTicked(false)
         _state.update {
             when (result) {
                 SignInResult.Success -> it.copy(busy = null, password = "", done = true)

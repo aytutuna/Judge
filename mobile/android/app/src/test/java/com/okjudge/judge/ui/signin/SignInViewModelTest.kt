@@ -347,6 +347,33 @@ class SignInViewModelTest {
     }
 
     @Test
+    fun forgot_startsTheNewPasswordEmpty() = runBlocking {
+        withPasswords()
+        routes.always(LOOKUP, json(200, """{"method":"password"}"""))
+        routes.always(SEND_CODE, json(200, """{"success":true}"""))
+        val vm = vm()
+        vm.await { it.passwordSignIn }
+        vm.onEmailChange("ada@example.com")
+        vm.continueWithEmail(AppLang.EN)
+        vm.await { it.step == SignInStep.PASSWORD }
+        vm.onPasswordChange("wrong-guess")
+        vm.forgotPassword(AppLang.EN)
+        val s = vm.await { it.step == SignInStep.CODE }
+        assertEquals("", s.password)
+    }
+
+    @Test
+    fun aFailedSend_takesTheConsentBack() = runBlocking {
+        routes.always(SEND_CODE, json(503, """{"code":"unavailable"}"""))
+        val vm = vm()
+        vm.await { it.providers is Account.Providers.Ready }
+        vm.onEmailChange("ada@example.com")
+        vm.continueWithEmail(AppLang.EN)
+        vm.await { it.busy == null && it.error != null }
+        assertFalse(account.ageTicked.value)
+    }
+
+    @Test
     fun skippingThePassword_staysSignedIn() = runBlocking {
         withPasswords()
         routes.always(SEND_CODE, json(200, """{"success":true}"""))
