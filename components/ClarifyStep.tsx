@@ -96,9 +96,7 @@ export function ClarifyStep({
   );
   const [focusId, setFocusId] = useState<string | null>(null);
   useEffect(() => {
-    if (!focusId) return;
-    document.getElementById(`clarify-${focusId}`)?.focus();
-    setFocusId(null);
+    if (focusId) document.getElementById(`clarify-${focusId}`)?.focus();
   }, [focusId]);
 
   function choose(q: ClarifyQuestion, pick: Pick) {
@@ -144,7 +142,7 @@ export function ClarifyStep({
                           onKeyDown={(e) => enterSelects(e, () => !checked && choose(q, value))}
                           onClick={(e) => {
                             if (checked) choose(q, null);
-                            else if (value === OTHER && focusesBox(e)) setFocusId(q.id);
+                            setFocusId(!checked && value === OTHER && focusesBox(e) ? q.id : null);
                           }}
                         />
                         <span className={styles.chip}>{text ?? t(lang, "clarify.other")}</span>
