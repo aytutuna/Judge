@@ -16,8 +16,8 @@
 
 .art {
   width: min(72vw, 320px);
-  height: auto;
   margin-bottom: 8px;
+  border-radius: var(--radius-field);
 }
 
 .title {
