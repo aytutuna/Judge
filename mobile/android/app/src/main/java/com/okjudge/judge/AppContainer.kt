@@ -38,8 +38,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import okhttp3.ConnectionPool
 import okhttp3.OkHttpClient
 import java.io.File
+import java.util.concurrent.TimeUnit
 
 /** Build-time configuration (BuildConfig, set from `judge.*` Gradle properties). */
 data class AppConfig(
@@ -81,7 +83,10 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
 
     val tokenStore: TokenStore by lazy { KeystoreTokenStore(appContext) }
 
-    val okHttp: OkHttpClient by lazy { OkHttpClient.Builder().build() }
+    // Idle connections go before a server's own keep-alive timeout (Node's is 5 s) can reset them under a request that must not be replayed.
+    val okHttp: OkHttpClient by lazy {
+        OkHttpClient.Builder().connectionPool(ConnectionPool(5, 4, TimeUnit.SECONDS)).build()
+    }
 
     private val identity by lazy { DeviceIdentity.prefs(appContext) }
 
