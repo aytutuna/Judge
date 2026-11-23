@@ -324,11 +324,14 @@ final class AccountAgeTests: XCTestCase {
             tokenStore: MemoryTokenStore(),
             session: JudgeAPI.makeSession(protocolClasses: [StubURLProtocol.self])
         )
-        let account = AccountModel(api: api, ageRange: FakeAgeRange(.unknown))
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: UUID().uuidString))
+        let account = AccountModel(api: api, ageRange: FakeAgeRange(.unknown), defaults: defaults)
         account.email = "ann@example.com"
         XCTAssertTrue(account.canSendCode, "no box stands in the way of signing in")
         XCTAssertFalse(account.ageTicked)
+        router.on("POST", "/api/auth/email-otp/send-verification-otp", try PremiumFixtures.json(200, ["success": true]))
         await account.sendCode(lang: .en)
+        XCTAssertEqual(router.count("POST", "/api/auth/email-otp/send-verification-otp"), 1)
         XCTAssertTrue(account.ageTicked)
     }
 }

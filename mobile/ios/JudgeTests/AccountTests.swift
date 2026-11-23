@@ -613,6 +613,53 @@ final class AccountTests: XCTestCase {
     }
 
     @MainActor
+    func testGoogleRemembersTheAccountEmail() async throws {
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: UUID().uuidString))
+        route([
+            "/api/auth/sign-in/social": try json(200, ["token": "sess-g", "user": Self.userJSON]),
+            "/api/v1/me": try json(200, Self.meJSON),
+        ])
+        let account = model(google: .success(GoogleIdentity(idToken: "g-token", rawNonce: nil)), defaults: defaults)
+        account.email = ""
+        await account.signInWithGoogle()
+        XCTAssertEqual(account.lastMethod, .google)
+        XCTAssertEqual(defaults.string(forKey: "lastSignInEmail"), "ann@example.com")
+    }
+
+    @MainActor
+    func testAFailedAttemptTakesTheTickBack() async throws {
+        route(["/api/auth/sign-in/email": try json(401, ["code": "INVALID_EMAIL_OR_PASSWORD"])])
+        let account = passwordModel()
+        account.setAgeTicked(false)
+        account.email = "ann@example.com"
+        account.password = "wrong"
+        await account.signInWithPassword()
+        XCTAssertFalse(account.ageTicked)
+    }
+
+    @MainActor
+    func testReopeningTheSheetStartsOverWithTheEmailKept() async throws {
+        let account = try await lookup(try json(200, ["method": "password"]))
+        XCTAssertEqual(account.step, .password)
+        account.signInDismissed()
+        XCTAssertEqual(account.step, .choose)
+        XCTAssertEqual(account.email, "Ann@Example.com")
+    }
+
+    @MainActor
+    func testDeletingTheAccountForgetsTheLastSignIn() async throws {
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: UUID().uuidString))
+        defaults.set("email", forKey: "lastSignInMethod")
+        defaults.set("ann@example.com", forKey: "lastSignInEmail")
+        route(["/api/v1/me": try json(200, ["deleted": true])])
+        let account = model(MemoryTokenStore(token: "t0k"), defaults: defaults)
+        await account.deleteAccount()
+        XCTAssertNil(account.lastMethod)
+        XCTAssertEqual(account.email, "")
+        XCTAssertNil(defaults.string(forKey: "lastSignInEmail"))
+    }
+
+    @MainActor
     func testASaveThatKeepsFailingCanBeSkipped() async throws {
         route([
             "/api/auth/email-otp/send-verification-otp": try json(200, ["success": true]),
