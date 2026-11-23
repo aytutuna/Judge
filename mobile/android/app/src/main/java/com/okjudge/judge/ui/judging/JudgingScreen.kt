@@ -226,12 +226,14 @@ fun JudgingScreen(
                     liveRegion = LiveRegionMode.Polite
                     contentDescription = texts.lastOrNull().orEmpty()
                 })
-                Text(
-                    if (premium) s.thinkingPremiumHelper else s.thinkingHelper,
-                    style = JudgeType.slotText,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(top = 16.dp).widthIn(max = 360.dp),
-                )
+                if (!premium) {
+                    Text(
+                        s.thinkingHelper,
+                        style = JudgeType.slotText,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(top = 16.dp).widthIn(max = 360.dp),
+                    )
+                }
             }
         }
         if (showCancel) TextAction(s.appCancel, onCancel, Modifier.padding(vertical = 12.dp), color = Palette.ink2)

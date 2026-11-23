@@ -391,7 +391,6 @@ const pa: Locale = {
     "clarify.back": "ਬਹਿਸ ਸੋਧੋ",
     "thinking.factcheck": "ਵੈੱਬ ’ਤੇ ਤੱਥ ਜਾਂਚ ਰਹੇ ਹਾਂ…",
     "thinking.factcheckDone": "ਵੈੱਬ ਜਾਂਚ ਪੂਰੀ ਹੋਈ।",
-    "thinking.premiumHelper": "ਵੈੱਬ ’ਤੇ ਤੱਥ ਜਾਂਚਣ ਨੂੰ ਥੋੜ੍ਹਾ ਹੋਰ ਸਮਾਂ ਲੱਗਦਾ ਹੈ। ਇੱਕ-ਦੋ ਮਿੰਟ ਦਿਓ।",
     "panel.premium": "ਵੈੱਬ ’ਤੇ ਤੱਥ ਜਾਂਚ ਕੇ ਫ਼ੈਸਲਾ ਕੀਤਾ।",
     "factcheck.title": "ਵੈੱਬ ’ਤੇ ਜਾਂਚਿਆ",
     "factcheck.lead": "ਫ਼ੈਸਲੇ ਤੋਂ ਪਹਿਲਾਂ ਜੱਜਾਂ ਨੇ ਇਹ ਸਰਚ ਨਤੀਜੇ ਦੇਖੇ। ਇਹ ਸਬੂਤ ਹਨ, ਫ਼ੈਸਲਾ ਨਹੀਂ।",

@@ -403,7 +403,6 @@ const vi: Locale = {
     "clarify.back": "Sửa nội dung",
     "thinking.factcheck": "Đang kiểm chứng sự thật trên mạng…",
     "thinking.factcheckDone": "Đã kiểm chứng xong trên mạng.",
-    "thinking.premiumHelper": "Kiểm chứng sự thật trên mạng mất thêm chút thời gian. Chờ một hai phút nhé.",
     "panel.premium": "Đã phân xử kèm kiểm chứng trên mạng.",
     "factcheck.title": "Đã kiểm chứng trên mạng",
     "factcheck.lead":

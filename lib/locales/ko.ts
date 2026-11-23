@@ -392,7 +392,6 @@ const ko: Locale = {
     "clarify.back": "논쟁 내용 고치기",
     "thinking.factcheck": "웹에서 사실 확인하는 중…",
     "thinking.factcheckDone": "웹 확인 완료.",
-    "thinking.premiumHelper": "웹에서 사실을 확인하느라 조금 더 걸려요. 1~2분만 기다려 주세요.",
     "panel.premium": "웹 사실 확인을 거친 판결이에요.",
     "factcheck.title": "웹에서 확인한 내용",
     "factcheck.lead": "판사들이 판결 전에 본 검색 결과예요. 판결 자체가 아니라 판결의 근거예요.",

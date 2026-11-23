@@ -405,7 +405,6 @@ const hu: Locale = {
     "clarify.back": "Vita szerkesztése",
     "thinking.factcheck": "Ellenőrizzük a tényeket a neten…",
     "thinking.factcheckDone": "Kész a netes ellenőrzés.",
-    "thinking.premiumHelper": "A netes tényellenőrzés kicsit tovább tart, akár egy-két percig is.",
     "panel.premium": "Netes tényellenőrzéssel ítélve.",
     "factcheck.title": "Ellenőrizve a neten",
     "factcheck.lead":

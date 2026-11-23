@@ -398,7 +398,6 @@ const ja: Locale = {
     "clarify.back": "内容を編集",
     "thinking.factcheck": "ネットで事実を確認しています…",
     "thinking.factcheckDone": "ネットでの確認が終わりました。",
-    "thinking.premiumHelper": "ネットで事実を確認するので、少し時間がかかります。1〜2分お待ちください。",
     "panel.premium": "ネットでのファクトチェック付きで判定しました。",
     "factcheck.title": "ネットで確認済み",
     "factcheck.lead":

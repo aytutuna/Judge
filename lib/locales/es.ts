@@ -402,7 +402,6 @@ const es: Locale = {
     "clarify.back": "Editar la discusión",
     "thinking.factcheck": "Comprobando los hechos en internet…",
     "thinking.factcheckDone": "Comprobación en internet terminada.",
-    "thinking.premiumHelper": "Comprobar los hechos en internet tarda un poco más. Puede llevar un minuto o dos.",
     "panel.premium": "Juzgado con verificación de hechos en internet.",
     "factcheck.title": "Comprobado en internet",
     "factcheck.lead":

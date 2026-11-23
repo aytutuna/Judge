@@ -401,7 +401,6 @@ const ro: Locale = {
     "clarify.back": "Editează disputa",
     "thinking.factcheck": "Verificăm faptele pe web…",
     "thinking.factcheckDone": "Verificarea pe web s-a încheiat.",
-    "thinking.premiumHelper": "Verificarea faptelor pe web durează un pic mai mult. Dă-i un minut sau două.",
     "panel.premium": "Judecat cu verificarea faptelor pe web.",
     "factcheck.title": "Verificat pe web",
     "factcheck.lead":

@@ -400,7 +400,6 @@ const sv: Locale = {
     "clarify.back": "Ändra beskrivningen",
     "thinking.factcheck": "Kollar fakta på webben…",
     "thinking.factcheckDone": "Webbkollen är klar.",
-    "thinking.premiumHelper": "Att kolla fakta på webben tar lite längre tid. Ge det en minut eller två.",
     "panel.premium": "Dömd med faktakoll på webben.",
     "factcheck.title": "Kollat på webben",
     "factcheck.lead": "Domarna såg de här sökresultaten innan de dömde. De är bevis, inte själva domen.",

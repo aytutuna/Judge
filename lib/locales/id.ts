@@ -406,7 +406,6 @@ const id: Locale = {
     "clarify.back": "Ubah perdebatannya",
     "thinking.factcheck": "Mengecek fakta di web…",
     "thinking.factcheckDone": "Pengecekan web selesai.",
-    "thinking.premiumHelper": "Mengecek fakta di web butuh waktu sedikit lebih lama. Tunggu satu-dua menit, ya.",
     "panel.premium": "Dinilai dengan cek fakta di web.",
     "factcheck.title": "Dicek di web",
     "factcheck.lead": "Para hakim melihat hasil pencarian ini sebelum memutuskan. Ini bukti, bukan putusannya.",

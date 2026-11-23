@@ -22,7 +22,7 @@ import styles from "./JudgingOverlay.module.css";
  * the premium web-check line below); the visible caption and fact-check row
  * are aria-hidden so nothing is read twice.
  *
- * `premium` adds the web fact-check row and swaps the helper text. The row
+ * `premium` adds the web fact-check row. The row
  * says "finished" only once `done`.
  */
 export function JudgingOverlay({
@@ -147,7 +147,7 @@ export function JudgingOverlay({
           </p>
         </>
       ) : null}
-      <p className={styles.helper}>{t(lang, premium ? "thinking.premiumHelper" : "thinking.helper")}</p>
+      {premium ? null : <p className={styles.helper}>{t(lang, "thinking.helper")}</p>}
     </div>
   );
 }

@@ -400,7 +400,6 @@ const ur: Locale = {
     "clarify.back": "بحث میں ترمیم کریں",
     "thinking.factcheck": "ویب پر حقائق جانچ رہے ہیں…",
     "thinking.factcheckDone": "ویب پر جانچ مکمل۔",
-    "thinking.premiumHelper": "ویب پر حقائق جانچنے میں تھوڑا زیادہ وقت لگتا ہے۔ ایک دو منٹ دیں۔",
     "panel.premium": "ویب پر حقائق کی جانچ کے ساتھ فیصلہ ہوا۔",
     "factcheck.title": "ویب پر جانچا گیا",
     "factcheck.lead": "ججوں نے فیصلے سے پہلے یہ سرچ نتائج دیکھے۔ یہ ثبوت ہیں، خود فیصلہ نہیں۔",

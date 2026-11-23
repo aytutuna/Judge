@@ -389,7 +389,6 @@ const gu: Locale = {
     "clarify.back": "વિવાદમાં ફેરફાર કરો",
     "thinking.factcheck": "વેબ પર હકીકતો ચકાસીએ છીએ…",
     "thinking.factcheckDone": "વેબ ચકાસણી પૂરી.",
-    "thinking.premiumHelper": "વેબ પર હકીકતો ચકાસવામાં થોડો વધુ સમય લાગે છે. એક-બે મિનિટ આપો.",
     "panel.premium": "વેબ પર હકીકતો ચકાસીને ચુકાદો અપાયો.",
     "factcheck.title": "વેબ પર ચકાસ્યું",
     "factcheck.lead": "ચુકાદો આપતાં પહેલાં જજોએ આ સર્ચ પરિણામ જોયાં. એ પુરાવા છે, ચુકાદો નહીં.",

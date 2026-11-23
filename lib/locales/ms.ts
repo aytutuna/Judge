@@ -409,7 +409,6 @@ const ms: Locale = {
     "clarify.back": "Sunting pertikaian",
     "thinking.factcheck": "Menyemak fakta di web…",
     "thinking.factcheckDone": "Semakan web selesai.",
-    "thinking.premiumHelper": "Semakan fakta di web ambil masa lebih sedikit. Tunggu seminit dua ya.",
     "panel.premium": "Dinilai dengan semakan fakta di web.",
     "factcheck.title": "Disemak di web",
     "factcheck.lead": "Hakim melihat hasil carian ini sebelum memutuskan. Ini bukti, bukan keputusan itu sendiri.",

@@ -394,7 +394,6 @@ const mr: Locale = {
     "clarify.back": "वादात बदल करा",
     "thinking.factcheck": "तथ्ये वेबवर तपासत आहोत…",
     "thinking.factcheckDone": "वेब तपासणी पूर्ण झाली.",
-    "thinking.premiumHelper": "तथ्ये वेबवर तपासायला जरा जास्त वेळ लागतो. एक-दोन मिनिटे थांबा.",
     "panel.premium": "वेबवरील तथ्य-तपासणीसह निकाल दिला.",
     "factcheck.title": "वेबवर तपासले",
     "factcheck.lead": "निकाल देण्याआधी परीक्षकांनी हे सर्च परिणाम पाहिले. हे पुरावे आहेत, निकाल नव्हे.",

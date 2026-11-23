@@ -407,7 +407,6 @@ const de: Locale = {
     "clarify.back": "Streit bearbeiten",
     "thinking.factcheck": "Wir prüfen die Fakten im Netz…",
     "thinking.factcheckDone": "Faktencheck im Netz abgeschlossen.",
-    "thinking.premiumHelper": "Die Faktenprüfung im Netz dauert etwas länger. Gib uns ein, zwei Minuten.",
     "panel.premium": "Mit Faktencheck im Netz beurteilt.",
     "factcheck.title": "Im Netz geprüft",
     "factcheck.lead":

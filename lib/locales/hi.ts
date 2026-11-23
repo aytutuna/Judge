@@ -391,7 +391,6 @@ const hi: Locale = {
     "clarify.back": "बहस में बदलाव करें",
     "thinking.factcheck": "वेब पर तथ्य जाँच रहे हैं…",
     "thinking.factcheckDone": "वेब पर जाँच पूरी हुई।",
-    "thinking.premiumHelper": "वेब पर तथ्य जाँचने में थोड़ा ज़्यादा समय लगता है। एक-दो मिनट दें।",
     "panel.premium": "वेब पर तथ्यों की जाँच के साथ फ़ैसला हुआ।",
     "factcheck.title": "वेब पर जाँचा गया",
     "factcheck.lead": "फ़ैसले से पहले जजों ने ये सर्च नतीजे देखे। ये सबूत हैं, ख़ुद फ़ैसला नहीं।",

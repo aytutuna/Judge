@@ -402,7 +402,6 @@ const pl: Locale = {
     "clarify.back": "Edytuj opis sporu",
     "thinking.factcheck": "Sprawdzamy fakty w sieci…",
     "thinking.factcheckDone": "Sprawdzanie w sieci zakończone.",
-    "thinking.premiumHelper": "Sprawdzanie faktów w sieci trwa trochę dłużej. Daj nam minutę lub dwie.",
     "panel.premium": "Ocenione z weryfikacją faktów w sieci.",
     "factcheck.title": "Sprawdzone w sieci",
     "factcheck.lead": "Sędziowie widzieli te wyniki wyszukiwania przed werdyktem. To dowody, a nie sam werdykt.",

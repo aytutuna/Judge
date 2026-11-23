@@ -408,7 +408,6 @@ const el: Locale = {
     "clarify.back": "Άλλαξε το κείμενο",
     "thinking.factcheck": "Ελέγχουμε τα γεγονότα στο ίντερνετ…",
     "thinking.factcheckDone": "Ο έλεγχος στο ίντερνετ ολοκληρώθηκε.",
-    "thinking.premiumHelper": "Ο έλεγχος των γεγονότων στο ίντερνετ θέλει λίγο παραπάνω. Δώσε μας ένα-δυο λεπτά.",
     "panel.premium": "Κρίθηκε με έλεγχο γεγονότων στο ίντερνετ.",
     "factcheck.title": "Ελέγχθηκε στο ίντερνετ",
     "factcheck.lead":

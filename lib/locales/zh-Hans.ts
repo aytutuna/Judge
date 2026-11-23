@@ -381,7 +381,6 @@ const zhHans: Locale = {
     "clarify.back": "修改争论内容",
     "thinking.factcheck": "正在联网核实事实……",
     "thinking.factcheckDone": "联网核实完成。",
-    "thinking.premiumHelper": "联网核实事实要多花点时间，等一两分钟。",
     "panel.premium": "本次裁决经过联网核实。",
     "factcheck.title": "联网核实",
     "factcheck.lead": "评委裁决前看过这些搜索结果。它们是证据，不是裁决本身。",

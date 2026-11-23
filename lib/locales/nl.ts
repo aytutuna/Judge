@@ -406,7 +406,6 @@ const nl: Locale = {
     "clarify.back": "Discussie aanpassen",
     "thinking.factcheck": "Feiten checken op het web…",
     "thinking.factcheckDone": "Webcheck klaar.",
-    "thinking.premiumHelper": "Feiten checken op het web duurt wat langer. Geef het een minuutje of twee.",
     "panel.premium": "Beoordeeld met een factcheck op het web.",
     "factcheck.title": "Gecheckt op het web",
     "factcheck.lead":

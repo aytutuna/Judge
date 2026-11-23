@@ -134,13 +134,13 @@ describe("VerdictView premium", () => {
 describe("JudgingOverlay premium line", () => {
   const props = { lang: "en" as const, done: false, result: null, onFinished: () => {} };
 
-  it("shows the web fact-check line and premium helper only when premium", () => {
+  it("shows the web fact-check line only when premium, and the helper only when not", () => {
     const plain = html(<JudgingOverlay {...props} />);
     expect(plain).not.toContain(t("en", "thinking.factcheck"));
     expect(plain).toContain(esc(t("en", "thinking.helper")));
     const premium = html(<JudgingOverlay {...props} premium />);
     expect(premium).toContain(t("en", "thinking.factcheck"));
-    expect(premium).toContain(esc(t("en", "thinking.premiumHelper")));
+    expect(premium).not.toContain(esc(t("en", "thinking.helper")));
   });
 
   it("announces the web check as finished only once the verdict is in, outside the aria-hidden list", () => {

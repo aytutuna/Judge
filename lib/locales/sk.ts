@@ -399,7 +399,6 @@ const sk: Locale = {
     "clarify.back": "Upraviť spor",
     "thinking.factcheck": "Overujú fakty na webe…",
     "thinking.factcheckDone": "Overovanie na webe je hotové.",
-    "thinking.premiumHelper": "Overovanie faktov na webe trvá o niečo dlhšie. Daj tomu minútu či dve.",
     "panel.premium": "Posúdené s overením faktov na webe.",
     "factcheck.title": "Overené na webe",
     "factcheck.lead":

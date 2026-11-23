@@ -246,7 +246,6 @@ class Strings(private val res: Resources) {
     val clarifyBack: String get() = res.getString(R.string.clarify_back)
     val thinkingFactcheck: String get() = res.getString(R.string.thinking_factcheck)
     val thinkingFactcheckDone: String get() = res.getString(R.string.thinking_factcheck_done)
-    val thinkingPremiumHelper: String get() = res.getString(R.string.thinking_premium_helper)
     val panelPremium: String get() = res.getString(R.string.panel_premium)
     val factcheckTitle: String get() = res.getString(R.string.factcheck_title)
     val factcheckLead: String get() = res.getString(R.string.factcheck_lead)
@@ -896,7 +895,6 @@ class Strings(private val res: Resources) {
             "clarify.back" -> R.string.clarify_back
             "thinking.factcheck" -> R.string.thinking_factcheck
             "thinking.factcheckDone" -> R.string.thinking_factcheck_done
-            "thinking.premiumHelper" -> R.string.thinking_premium_helper
             "panel.premium" -> R.string.panel_premium
             "factcheck.title" -> R.string.factcheck_title
             "factcheck.lead" -> R.string.factcheck_lead

@@ -407,7 +407,6 @@ const ca: Locale = {
     "clarify.back": "Edita la discussió",
     "thinking.factcheck": "Comprovant els fets a internet…",
     "thinking.factcheckDone": "Comprovació a internet acabada.",
-    "thinking.premiumHelper": "Comprovar els fets a internet triga una mica més. Pot ser qüestió d'un minut o dos.",
     "panel.premium": "Jutjat amb comprovació de fets a internet.",
     "factcheck.title": "Comprovat a internet",
     "factcheck.lead":

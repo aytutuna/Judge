@@ -390,7 +390,6 @@ const he: Locale = {
     "clarify.back": "לערוך את הוויכוח",
     "thinking.factcheck": "בודקים את העובדות ברשת…",
     "thinking.factcheckDone": "הבדיקה ברשת הסתיימה.",
-    "thinking.premiumHelper": "בדיקת העובדות ברשת לוקחת קצת יותר זמן. עוד דקה או שתיים.",
     "panel.premium": "נשפט עם בדיקת עובדות ברשת.",
     "factcheck.title": "נבדק ברשת",
     "factcheck.lead": "השופטים ראו את תוצאות החיפוש האלה לפני ההכרעה. הן ראיות, לא ההכרעה עצמה.",

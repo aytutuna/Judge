@@ -398,7 +398,6 @@ const hr: Locale = {
     "clarify.back": "Uredi raspravu",
     "thinking.factcheck": "Provjeravamo činjenice na internetu…",
     "thinking.factcheckDone": "Provjera na internetu je gotova.",
-    "thinking.premiumHelper": "Provjera činjenica na internetu traje malo dulje. Daj nam minutu-dvije.",
     "panel.premium": "Presuđeno uz provjeru činjenica na internetu.",
     "factcheck.title": "Provjereno na internetu",
     "factcheck.lead": "Suci su vidjeli ove rezultate pretraživanja prije presude. To su dokazi, a ne sama presuda.",

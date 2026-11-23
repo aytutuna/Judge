@@ -398,7 +398,6 @@ const cs: Locale = {
     "clarify.back": "Upravit spor",
     "thinking.factcheck": "Ověřujeme fakta na webu…",
     "thinking.factcheckDone": "Ověření na webu je hotové.",
-    "thinking.premiumHelper": "Ověřování faktů na webu chvilku trvá. Dej tomu minutu nebo dvě.",
     "panel.premium": "Souzeno s ověřením faktů na webu.",
     "factcheck.title": "Ověřeno na webu",
     "factcheck.lead": "Soudci tyto výsledky hledání viděli, než rozhodli. Jsou to podklady, ne samotný verdikt.",

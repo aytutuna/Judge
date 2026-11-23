@@ -404,7 +404,6 @@ const tr: Locale = {
     "clarify.back": "Tartışmayı düzenle",
     "thinking.factcheck": "Olguları internette kontrol ediyoruz…",
     "thinking.factcheckDone": "İnternet kontrolü bitti.",
-    "thinking.premiumHelper": "Olguları internette kontrol etmek biraz daha uzun sürer. Bir iki dakika verebilirsin.",
     "panel.premium": "İnternette olgu kontrolüyle yargılandı.",
     "factcheck.title": "İnternette kontrol edildi",
     "factcheck.lead": "Yargıçlar karar vermeden önce bu arama sonuçlarını gördü. Bunlar kanıt, kararın kendisi değil.",

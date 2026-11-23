@@ -491,10 +491,9 @@ class PremiumScreensTest {
             }
         }
         compose.onNodeWithText(en.thinkingHelper).assertExists()
-        compose.onNodeWithText(en.thinkingPremiumHelper).assertDoesNotExist()
         premium = true
         compose.waitForIdle()
-        compose.onNodeWithText(en.thinkingPremiumHelper).assertExists()
+        compose.onNodeWithText(en.thinkingHelper).assertDoesNotExist()
     }
 
     @Test

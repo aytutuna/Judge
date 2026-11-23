@@ -399,8 +399,6 @@ const en = {
   "clarify.back": "Edit the argument",
   "thinking.factcheck": "Checking the facts on the web…",
   "thinking.factcheckDone": "Web check finished.",
-  "thinking.premiumHelper":
-    "Checking the facts on the web takes a little longer. Give it a minute or two.",
   "panel.premium": "Judged with a web fact-check.",
   "factcheck.title": "Checked on the web",
   "factcheck.lead": "The judges saw these search results before ruling. They're evidence, not the ruling itself.",

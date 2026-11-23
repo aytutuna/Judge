@@ -407,7 +407,6 @@ const fi: Locale = {
     "clarify.back": "Muokkaa kiistaa",
     "thinking.factcheck": "Tarkistetaan faktoja verkosta…",
     "thinking.factcheckDone": "Verkkotarkistus valmis.",
-    "thinking.premiumHelper": "Faktojen tarkistaminen verkosta vie vähän pidempään. Anna sille minuutti tai kaksi.",
     "panel.premium": "Faktat tarkistettu verkosta ennen ratkaisua.",
     "factcheck.title": "Tarkistettu verkosta",
     "factcheck.lead": "Tuomarit näkivät nämä hakutulokset ennen ratkaisua. Ne ovat todisteita, eivät itse tuomio.",

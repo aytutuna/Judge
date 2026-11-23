@@ -402,7 +402,6 @@ const ptBR: Locale = {
     "clarify.back": "Editar a discussão",
     "thinking.factcheck": "Checando os fatos na web…",
     "thinking.factcheckDone": "Checagem na web concluída.",
-    "thinking.premiumHelper": "Checar os fatos na web demora um pouco mais. Pode levar um ou dois minutos.",
     "panel.premium": "Julgado com checagem de fatos na web.",
     "factcheck.title": "Checado na web",
     "factcheck.lead": "Os juízes viram estes resultados de busca antes de decidir. São provas, não o veredito em si.",

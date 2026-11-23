@@ -381,7 +381,6 @@ const zhHant: Locale = {
     "clarify.back": "修改爭論內容",
     "thinking.factcheck": "上網查證事實中…",
     "thinking.factcheckDone": "網路查證完成。",
-    "thinking.premiumHelper": "上網查證事實會多花一點時間，請稍等一兩分鐘。",
     "panel.premium": "已經過網路查證。",
     "factcheck.title": "網路查證",
     "factcheck.lead": "評審在判決前看過這些搜尋結果。這些是證據，不是判決本身。",

@@ -399,7 +399,6 @@ const sl: Locale = {
     "clarify.back": "Uredi prepir",
     "thinking.factcheck": "Preverjamo dejstva na spletu…",
     "thinking.factcheckDone": "Spletno preverjanje je končano.",
-    "thinking.premiumHelper": "Preverjanje dejstev na spletu traja malo dlje. Daj nam minuto ali dve.",
     "panel.premium": "Razsojeno s spletnim preverjanjem dejstev.",
     "factcheck.title": "Preverjeno na spletu",
     "factcheck.lead": "Sodniki so te zadetke iskanja videli pred razsodbo. So dokazi, ne razsodba sama.",

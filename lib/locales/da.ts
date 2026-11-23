@@ -400,7 +400,6 @@ const da: Locale = {
     "clarify.back": "Ret diskussionen",
     "thinking.factcheck": "Tjekker fakta på nettet…",
     "thinking.factcheckDone": "Faktatjekket på nettet er færdigt.",
-    "thinking.premiumHelper": "Det tager lidt længere at tjekke fakta på nettet. Giv det et minut eller to.",
     "panel.premium": "Dømt med faktatjek på nettet.",
     "factcheck.title": "Tjekket på nettet",
     "factcheck.lead": "Dommerne så disse søgeresultater, før de dømte. De er bevismateriale, ikke selve dommen.",

@@ -408,7 +408,6 @@ const fr: Locale = {
     "clarify.back": "Modifier le débat",
     "thinking.factcheck": "On vérifie les faits sur le web…",
     "thinking.factcheckDone": "Vérification sur le web terminée.",
-    "thinking.premiumHelper": "Vérifier les faits sur le web prend un peu plus de temps. Compte une minute ou deux.",
     "panel.premium": "Jugé avec une vérification des faits sur le web.",
     "factcheck.title": "Vérifié sur le web",
     "factcheck.lead":

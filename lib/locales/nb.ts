@@ -399,7 +399,6 @@ const nb: Locale = {
     "clarify.back": "Rediger diskusjonen",
     "thinking.factcheck": "Sjekker fakta på nettet…",
     "thinking.factcheckDone": "Nettsjekken er ferdig.",
-    "thinking.premiumHelper": "Det tar litt lenger tid å sjekke fakta på nettet. Gi det et minutt eller to.",
     "panel.premium": "Dømt med faktasjekk på nettet.",
     "factcheck.title": "Sjekket på nettet",
     "factcheck.lead": "Dommerne så disse søkeresultatene før de avgjorde. De er bevis, ikke selve dommen.",

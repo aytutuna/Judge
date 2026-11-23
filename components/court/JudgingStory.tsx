@@ -155,7 +155,6 @@ export function JudgingStory({
           );
         })}
       </ol>
-      <p className={styles.helper}>{t(lang, "thinking.premiumHelper")}</p>
     </div>
   );
 }
