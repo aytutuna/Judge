@@ -204,10 +204,10 @@ fun RulingSummary(
         }
         if (!result.refused) {
             val rows = buildList {
+                if (written != null && !written.isEmpty) add(writtenTitle(written, s) to VerdictTags.WRITTEN_ROW)
                 if (result.crux.isNotEmpty()) add(s.cruxShort to VerdictTags.CRUX_ROW)
                 if (VerdictDisplay.hasSides(result)) add(s.appVerdictSides to VerdictTags.SIDES_ROW)
                 if (result.losingSideBestPoint.isNotEmpty()) add(bestPointTitle(result, parties, s) to VerdictTags.BEST_ROW)
-                if (written != null && !written.isEmpty) add(writtenTitle(written, s) to VerdictTags.WRITTEN_ROW)
             }
             if (rows.isNotEmpty()) {
                 Column(Modifier.fillMaxWidth().clip(JudgeShapes.block).background(Palette.paper)) {
@@ -259,6 +259,7 @@ fun VerdictDetails(
             Branches(result, parties, restoredNames)
         }
         if (!result.refused) {
+            if (written != null && !written.isEmpty) WrittenSection(written, result.sideCount)
             if (result.crux.isNotEmpty()) {
                 DetailSection(s.cruxShort) {
                     Text(result.crux, style = JudgeType.caseTitle.copy(fontSize = 21.sp, lineHeight = (21 * 1.3).sp))
@@ -268,7 +269,6 @@ fun VerdictDetails(
             if (result.losingSideBestPoint.isNotEmpty()) {
                 DetailSection(bestPointTitle(result, parties, s)) { Text(result.losingSideBestPoint, style = SectionText) }
             }
-            if (written != null && !written.isEmpty) WrittenSection(written, result.sideCount)
             if (result.factsReliedOn.isNotEmpty()) FactsSection(result.factsReliedOn)
             if (result.isTwoSided || result.isMany) TwoSidedFacts(result, parties)
             result.factCheck?.let { FactCheckSection(it, result.dispute) }

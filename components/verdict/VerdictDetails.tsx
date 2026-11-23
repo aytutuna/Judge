@@ -192,10 +192,10 @@ export function VerdictDetails({
   const bestTitle = bestPointTitle(lang, result, parties);
   const writtenTitle = written && (written.own || written.others.length) ? t(lang, written.others.length ? "written.each" : "written.you") : null;
   const rows = [
+    writtenTitle,
     result.crux ? stripLeadingEmoji(t(lang, "cruxShort")) : null,
     hasSides ? t(lang, "card.sides") : null,
     result.losing_side_best_point ? bestTitle : null,
-    writtenTitle,
   ].filter((r): r is string => r !== null);
   const face = cruxStyle(result.crux) === "serif" ? styles.cruxSerif : styles.cruxSans;
 
@@ -259,6 +259,23 @@ export function VerdictDetails({
           {result.crux_trial ? <CruxTrialNote trial={result.crux_trial} mixed={result.dispute_type === "mixed"} lang={lang} /> : null}
           {result.demo ? <p className={styles.noteText}>{stripLeadingEmoji(t(lang, "demoNote"))}</p> : null}
         </Detail>
+
+        {written && writtenTitle ? (
+          <Detail title={writtenTitle}>
+            {written.own ? (
+              <>
+                {written.others.length ? <h4 className={styles.sectionTitle}>{t(lang, "written.yours")}</h4> : null}
+                <p className={styles.writtenText}>{written.own}</p>
+              </>
+            ) : null}
+            {written.others.map((o) => (
+              <Fragment key={o.party}>
+                <h4 className={styles.sectionTitle}>{partyLabel(lang, o.party)}</h4>
+                <p className={styles.writtenText}>{localizeLabelsAuto(o.text, result.parties?.length ?? 2)}</p>
+              </Fragment>
+            ))}
+          </Detail>
+        ) : null}
 
         {result.crux ? (
           <Detail title={stripLeadingEmoji(t(lang, "cruxShort"))}>
@@ -325,23 +342,6 @@ export function VerdictDetails({
         {result.losing_side_best_point ? (
           <Detail title={bestTitle}>
             <p className={styles.bestText}>{result.losing_side_best_point}</p>
-          </Detail>
-        ) : null}
-
-        {written && writtenTitle ? (
-          <Detail title={writtenTitle}>
-            {written.own ? (
-              <>
-                {written.others.length ? <h4 className={styles.sectionTitle}>{t(lang, "written.yours")}</h4> : null}
-                <p className={styles.writtenText}>{written.own}</p>
-              </>
-            ) : null}
-            {written.others.map((o) => (
-              <Fragment key={o.party}>
-                <h4 className={styles.sectionTitle}>{partyLabel(lang, o.party)}</h4>
-                <p className={styles.writtenText}>{localizeLabelsAuto(o.text, result.parties?.length ?? 2)}</p>
-              </Fragment>
-            ))}
           </Detail>
         ) : null}
 

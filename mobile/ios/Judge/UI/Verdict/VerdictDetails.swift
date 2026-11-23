@@ -13,10 +13,10 @@ struct VerdictReasons: View {
     var body: some View {
         let map = result.argumentMap
         let rows = [
+            written.flatMap { $0.isEmpty ? nil : ($0.others.isEmpty ? L10n.writtenYou(lang) : L10n.writtenEach(lang)) },
             result.crux.isEmpty ? nil : L10n.cruxShort(lang),
             VerdictDisplay.hasSides(result) ? L10n.appVerdictSides(lang) : nil,
             result.losingSideBestPoint.isEmpty ? nil : VerdictDisplay.bestPointTitle(result.verdict, parties: parties, lang: lang),
-            written.flatMap { $0.isEmpty ? nil : ($0.others.isEmpty ? L10n.writtenYou(lang) : L10n.writtenEach(lang)) },
         ].compactMap { $0 }
         if !rows.isEmpty {
             VStack(spacing: 0) {
@@ -189,6 +189,20 @@ struct VerdictDetails<Appeal: View>: View {
 
     @ViewBuilder
     private func sections(_ result: VerdictResult, parties: PartyNames) -> some View {
+        if let written, !written.isEmpty {
+            card {
+                SectionTitle(text: written.others.isEmpty ? L10n.writtenYou(lang) : L10n.writtenEach(lang))
+                if let own = written.own {
+                    writtenText(own, title: written.others.isEmpty ? nil : L10n.writtenYours(lang))
+                }
+                ForEach(Array(written.others.enumerated()), id: \.offset) { _, other in
+                    writtenText(
+                        CaseLogic.localizeLabels(other.text, lang: ContentLang.of(other.text), sides: result.sideCount),
+                        title: other.party.label(lang)
+                    )
+                }
+            }
+        }
         if !result.crux.isEmpty {
             card {
                 SectionTitle(text: L10n.cruxShort(lang))
@@ -242,20 +256,6 @@ struct VerdictDetails<Appeal: View>: View {
                     .brandText(TypeStyle(face: .inter, weight: 400, size: 15, lineHeight: 1.5))
                     .foregroundStyle(Brand.ink)
                     .fixedSize(horizontal: false, vertical: true)
-            }
-        }
-        if let written, !written.isEmpty {
-            card {
-                SectionTitle(text: written.others.isEmpty ? L10n.writtenYou(lang) : L10n.writtenEach(lang))
-                if let own = written.own {
-                    writtenText(own, title: written.others.isEmpty ? nil : L10n.writtenYours(lang))
-                }
-                ForEach(Array(written.others.enumerated()), id: \.offset) { _, other in
-                    writtenText(
-                        CaseLogic.localizeLabels(other.text, lang: ContentLang.of(other.text), sides: result.sideCount),
-                        title: other.party.label(lang)
-                    )
-                }
             }
         }
         if !result.factsReliedOn.isEmpty {
