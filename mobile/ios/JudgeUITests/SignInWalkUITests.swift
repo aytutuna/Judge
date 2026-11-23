@@ -56,12 +56,10 @@ final class SignInWalkUITests: UITestCase {
     }
 
     private func typeArgument() {
-        let box = app.buttons["Your side of the argument"]
-        guard wait(box) else { return }
-        press(box)
-        guard wait(app.textViews["Your side of the argument"]) else { return }
+        let editor = app.textViews["Your side of the argument"]
+        guard wait(editor) else { shot("FAIL no editor"); return }
+        press(editor)
         app.typeText("He ate my lunch again and I want a verdict about it")
-        press(app.buttons["Close"])
         _ = wait(app.buttons["Get the verdict"])
     }
 
