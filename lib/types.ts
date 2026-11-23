@@ -379,7 +379,9 @@ export const ClarifyRequest = z.object({
 export type ClarifyRequest = z.infer<typeof ClarifyRequest>;
 
 export const ClarifyResponse = z.object({
-  questions: z.array(z.object({ id: z.string(), text: z.string() })).max(2),
+  questions: z
+    .array(z.object({ id: z.string(), text: z.string(), options: z.array(z.string()).max(2).optional() }))
+    .max(2),
 });
 export type ClarifyResponse = z.infer<typeof ClarifyResponse>;
 

@@ -15,6 +15,7 @@ import type { ClarifyResponse } from "../types";
 export const CLARIFY_TIMEOUT_MS = 20_000;
 const MAX_QUESTIONS = 2;
 const MAX_QUESTION_CHARS = 140;
+const MAX_OPTION_CHARS = 80;
 
 export const CLARIFY_SYSTEM = `You help an impartial judge settle an argument between two parties. Before the judge rules, you may ask the person describing the argument a question, but only when the judge would otherwise have to guess who wins.
 
@@ -22,7 +23,7 @@ The default is no questions. Most arguments need none: the judge rules on what i
 
 For each question, give its two most likely answers and who wins with each: side_1 is the party the text mentions first, side_2 the other one, neither for a tie or a split. If both answers give the same winner, the question does not matter, so leave it out. One question is almost always enough; add a second only when it is about a different fact and just as decisive. Never more than 2.
 
-Each question is one short sentence, at most 20 words, addressed to the person asking ("you"), written in the language requested below.`;
+Each question is one short sentence, at most 20 words, addressed to the person asking ("you"), written in the language requested below. Each answer is a short reply the person could tap, a few words, in the same language, from their own point of view ("Yes, I paid in cash"), not a description of what happened.`;
 
 const LANGUAGE_LINE: Partial<Record<Lang, string>> = {
   en: "\n\nLANGUAGE: write the questions in English.",
@@ -55,19 +56,30 @@ const SCHEMA = {
 const WINNERS = new Set<unknown>(WINNER.enum);
 
 /** A question only counts when its two likely answers change the winner. */
-function decisive(q: unknown): q is { question: string } {
+function decisive(q: unknown): q is { question: string; answer_1?: unknown; answer_2?: unknown } {
   if (typeof q !== "object" || q === null) return false;
   const { question, winner_1, winner_2 } = q as Record<string, unknown>;
   return typeof question === "string" && WINNERS.has(winner_1) && WINNERS.has(winner_2) && winner_1 !== winner_2;
 }
 
 /** A question cut to the length cap at a word boundary. */
-function shorten(text: string): string {
+function shorten(text: string, max = MAX_QUESTION_CHARS): string {
   const t = text.trim().replace(/\s+/g, " ");
-  if (t.length <= MAX_QUESTION_CHARS) return t;
-  const cut = t.slice(0, MAX_QUESTION_CHARS - 1);
+  if (t.length <= max) return t;
+  const cut = t.slice(0, max - 1);
   const space = cut.lastIndexOf(" ");
-  return `${(space > 60 ? cut.slice(0, space) : cut).trimEnd()}…`;
+  return `${(space > max / 2.3 ? cut.slice(0, space) : cut).trimEnd()}…`;
+}
+
+/** The two likely answers as tappable options: capped, empties and repeats dropped. */
+function optionsOf(q: { answer_1?: unknown; answer_2?: unknown }): string[] {
+  const out: string[] = [];
+  for (const a of [q.answer_1, q.answer_2]) {
+    if (typeof a !== "string") continue;
+    const o = shorten(a, MAX_OPTION_CHARS);
+    if (/\p{L}|\p{N}/u.test(o) && !out.some((x) => x.toLowerCase() === o.toLowerCase())) out.push(o);
+  }
+  return out;
 }
 
 /** The model's decisive questions as the API shape: trimmed, capped,
@@ -77,12 +89,12 @@ export function toClarifyResponse(raw: unknown): ClarifyResponse {
     typeof raw === "object" && raw !== null && Array.isArray((raw as { questions?: unknown }).questions)
       ? ((raw as { questions: unknown[] }).questions)
       : [];
-  const texts = list
+  const questions = list
     .filter(decisive)
-    .map((q) => shorten(q.question))
-    .filter((q) => /\p{L}/u.test(q))
+    .map((q) => ({ text: shorten(q.question), options: optionsOf(q) }))
+    .filter((q) => /\p{L}/u.test(q.text))
     .slice(0, MAX_QUESTIONS);
-  return { questions: texts.map((text, i) => ({ id: `q${i + 1}`, text })) };
+  return { questions: questions.map((q, i) => ({ id: `q${i + 1}`, ...q })) };
 }
 
 function languageLine(lang: Lang): string {

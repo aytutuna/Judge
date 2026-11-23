@@ -108,7 +108,7 @@ describe("POST /api/v1/clarify", () => {
   it("checks session -> limit -> entitlement, then asks, without reserving a credit", async () => {
     const res = await POST(request({ argument: ARGUMENT, lang: "en" }));
     expect(res.status).toBe(200);
-    expect(await res.json()).toEqual({ questions: [{ id: "q1", text: "Did you agree to split before ordering?" }] });
+    expect(await res.json()).toEqual({ questions: [{ id: "q1", text: "Did you agree to split before ordering?", options: ["yes", "no"] }] });
     expect(m.calls).toEqual(["viewer", "userLimits", "entitlement", "model"]);
     expect(m.checkUserLimits).toHaveBeenCalledWith("u1", "clarify");
   });

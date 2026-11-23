@@ -29,8 +29,8 @@ describe("clarifyQuestions", () => {
     const res = await clarifyQuestions("Mark says I owe him; I say we split it.", "en");
     expect(res).toEqual({
       questions: [
-        { id: "q1", text: "Did B agree beforehand?" },
-        { id: "q2", text: "How much was it?" },
+        { id: "q1", text: "Did B agree beforehand?", options: ["yes", "no"] },
+        { id: "q2", text: "How much was it?", options: ["yes", "no"] },
       ],
     });
     const call = mockClaude.mock.calls[0][0] as ClaudeJsonCall;
@@ -75,8 +75,8 @@ describe("toClarifyResponse", () => {
       toClarifyResponse({ questions: [q("  "), 3, "Bare?", q(" First? "), q("Second?"), q("Third?")] }),
     ).toEqual({
       questions: [
-        { id: "q1", text: "First?" },
-        { id: "q2", text: "Second?" },
+        { id: "q1", text: "First?", options: ["yes", "no"] },
+        { id: "q2", text: "Second?", options: ["yes", "no"] },
       ],
     });
   });
@@ -94,7 +94,21 @@ describe("toClarifyResponse", () => {
       toClarifyResponse({
         questions: [q("Same either way?", "side_1", "side_1"), q("Was it agreed?"), q("Odd?", "side_1", "maybe")],
       }),
-    ).toEqual({ questions: [{ id: "q1", text: "Was it agreed?" }] });
+    ).toEqual({ questions: [{ id: "q1", text: "Was it agreed?", options: ["yes", "no"] }] });
+  });
+
+  it("turns the two answers into trimmed, capped, distinct options", () => {
+    const long = `${"word ".repeat(30)}end`;
+    const [a, b] = toClarifyResponse({
+      questions: [
+        { ...q("A?"), answer_1: "  Yes,   I paid ", answer_2: "yes, i paid" },
+        { ...q("B?"), answer_1: long, answer_2: "  " },
+      ],
+    }).questions;
+    expect(a.options).toEqual(["Yes, I paid"]);
+    expect(b.options).toHaveLength(1);
+    expect(b.options![0].length).toBeLessThanOrEqual(80);
+    expect(b.options![0].endsWith("…")).toBe(true);
   });
 
   it("reads a malformed payload as no questions", () => {
