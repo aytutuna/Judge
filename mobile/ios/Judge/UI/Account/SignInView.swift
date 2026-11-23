@@ -33,7 +33,7 @@ struct SignInView: View {
                     NoticeBanner(message: L10n.appAccountSessionExpired(lang))
                 }
                 card(lang, account: account)
-                legal(lang)
+                if account.step == .choose { legal(lang) }
             }
             .padding(.horizontal, 20)
             .padding(.top, 12)
