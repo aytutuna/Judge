@@ -619,7 +619,7 @@ final class AccountTests: XCTestCase {
             "/api/auth/sign-in/social": try json(200, ["token": "sess-g", "user": Self.userJSON]),
             "/api/v1/me": try json(200, Self.meJSON),
         ])
-        let account = model(google: .success(GoogleIdentity(idToken: "g-token", rawNonce: nil)), defaults: defaults)
+        let account = model(google: .success(GoogleIdentity(idToken: "g-token", rawNonce: "g00gle-n0nce")), defaults: defaults)
         account.email = ""
         await account.signInWithGoogle()
         XCTAssertEqual(account.lastMethod, .google)
