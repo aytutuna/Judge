@@ -1,5 +1,6 @@
 import { createBalanceEngine, type BalanceEngine } from "@/components/scene/engine";
 import { watchActivity } from "@/components/scene/engine/loop";
+import { watchPlay } from "@/components/scene/engine/play-input";
 import { greenParty, type Party } from "@/lib/palette";
 import {
   getSceneMode,
@@ -21,10 +22,12 @@ import { tiltDeg, tiltTransform } from "./fallback";
 /**
  * Entry of the page the native apps show in the judging card (bundled by
  * build-scene.ts). Native code drives it through window.judgeScene and gets
- * "ready", "fallback" and "lost" back through its message handler.
+ * "ready", "fallback" and "lost" back through its message handler, plus
+ * "grab" and "release" while a ball is held (setPlay), so it can keep its
+ * scroll view still.
  */
 
-type SceneEvent = "ready" | "fallback" | "lost";
+type SceneEvent = "ready" | "fallback" | "lost" | "grab" | "release";
 
 declare global {
   interface Window {
@@ -33,6 +36,7 @@ declare global {
       setYou(party: Party | null): void;
       setTheme(theme: SceneTheme): void;
       setReduced(on: boolean): void;
+      setPlay(on: boolean): void;
       setPointer(x: number, y: number): void;
       reset(): void;
     };
@@ -95,6 +99,7 @@ try {
     shadows: !small,
     reduced,
     frame: "card",
+    play: true,
     onReady: () => setStatus("ready"),
     onLost: () => {
       body.dataset.status = "fallback";
@@ -114,6 +119,8 @@ if (engine) {
   watchActivity(canvas, (active) => (active ? eng.start() : eng.stop()));
 }
 
+let stopPlay: (() => void) | null = null;
+
 window.judgeScene = {
   setMode: (mode) => setSceneMode(parseMode(mode)),
   setYou: (party) => setSceneYou(party === "a" || party === "b" ? party : null),
@@ -125,6 +132,14 @@ window.judgeScene = {
   setReduced(on) {
     body.dataset.reduced = String(on);
     engine?.setReduced(on);
+  },
+  setPlay(on) {
+    if (on === (stopPlay !== null)) return;
+    if (on && engine) stopPlay = watchPlay(canvas, engine, canvas, (held) => post(held ? "grab" : "release"));
+    else {
+      stopPlay?.();
+      stopPlay = null;
+    }
   },
   setPointer,
   reset() {
