@@ -28,10 +28,13 @@ export default function BalanceScene({
   reduced,
   className,
   frame = "stage",
+  play = false,
 }: {
   reduced: boolean;
   className?: string;
   frame?: "stage" | "card";
+  /** Balls can be grabbed and thrown with the pointer. */
+  play?: boolean;
 }) {
   const hostRef = useRef<HTMLSpanElement>(null);
   const engineRef = useRef<BalanceEngine | null>(null);
@@ -97,6 +100,7 @@ export default function BalanceScene({
         shadows: !small && desktop,
         reduced: startReduced,
         frame,
+        play,
         onReady: () => setSceneStatus("ready"),
         onLost: () => setSceneStatus("fallback"),
         onFrame: card ? undefined : fade,
@@ -114,6 +118,67 @@ export default function BalanceScene({
     const ro = new ResizeObserver(size);
     ro.observe(stage);
 
+    let stopPlay = () => {};
+    if (play) {
+      const at = (e: { clientX: number; clientY: number }) => {
+        const r = canvas.getBoundingClientRect();
+        return [e.clientX - r.left, e.clientY - r.top] as const;
+      };
+      let grabId: number | null = null;
+      const drop = () => {
+        grabId = null;
+        canvas.style.cursor = "";
+      };
+      const down = (e: PointerEvent) => {
+        if (grabId !== null) return;
+        if (e.pointerType === "mouse" && (e.button !== 0 || e.ctrlKey)) return;
+        if (!eng.pointerDown(...at(e))) return;
+        grabId = e.pointerId;
+        e.preventDefault();
+        canvas.setPointerCapture(e.pointerId);
+        canvas.style.cursor = "grabbing";
+      };
+      const move = (e: PointerEvent) => {
+        if (grabId === null) {
+          if (e.pointerType !== "touch") canvas.style.cursor = eng.hitBall(...at(e)) ? "grab" : "";
+        } else if (e.pointerId === grabId && !eng.pointerMove(...at(e))) drop();
+      };
+      const up = (e: PointerEvent) => {
+        if (e.pointerId !== grabId) return;
+        drop();
+        eng.pointerUp(...at(e));
+      };
+      const cancel = (e: PointerEvent) => {
+        if (e.pointerId !== grabId) return;
+        drop();
+        eng.pointerCancel();
+      };
+      // pointerdown runs before touchstart, so a grab is already on by then.
+      // A swipe that starts off the balls still scrolls the page.
+      const touch = (e: TouchEvent) => {
+        if (grabId !== null || (e.touches.length === 1 && eng.hitBall(...at(e.touches[0])))) e.preventDefault();
+      };
+      const touchMove = (e: TouchEvent) => {
+        if (grabId !== null) e.preventDefault();
+      };
+      canvas.addEventListener("pointerdown", down);
+      canvas.addEventListener("pointermove", move);
+      canvas.addEventListener("pointerup", up);
+      canvas.addEventListener("pointercancel", cancel);
+      canvas.addEventListener("lostpointercapture", cancel);
+      canvas.addEventListener("touchstart", touch, { passive: false });
+      canvas.addEventListener("touchmove", touchMove, { passive: false });
+      stopPlay = () => {
+        canvas.removeEventListener("pointerdown", down);
+        canvas.removeEventListener("pointermove", move);
+        canvas.removeEventListener("pointerup", up);
+        canvas.removeEventListener("pointercancel", cancel);
+        canvas.removeEventListener("lostpointercapture", cancel);
+        canvas.removeEventListener("touchstart", touch);
+        canvas.removeEventListener("touchmove", touchMove);
+      };
+    }
+
     const stopWatching = watchActivity(wrap, (active) => (active ? eng.start() : eng.stop()));
 
     // The fade also has to follow layout changes when no frames run
@@ -121,6 +186,7 @@ export default function BalanceScene({
     const stopAvoid = card ? () => {} : watchAvoidLayout(wrap, fade);
 
     return () => {
+      stopPlay();
       stopAvoid();
       stopWatching();
       ro.disconnect();
@@ -130,7 +196,7 @@ export default function BalanceScene({
       // A later mount must crossfade again from the SVG.
       if (getSceneStatus() === "ready") setSceneStatus("loading");
     };
-  }, [className, frame]);
+  }, [className, frame, play]);
 
   useEffect(() => {
     engineRef.current?.setReduced(reduced);

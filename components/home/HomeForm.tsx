@@ -9,6 +9,7 @@ import { langTag } from "@/lib/langs";
 import { MAX_ARGUMENT, type SideInput } from "@/lib/sides";
 import type { Venue } from "@/lib/venues";
 import { HomeCourt } from "@/components/court/HomeCourt";
+import { HomeScale } from "./HomeScale";
 import styles from "./HomeForm.module.css";
 
 const WARN_AT = 5700;
@@ -327,7 +328,8 @@ export function HomeForm(p: HomeFormProps) {
     >
       <fieldset className={styles.form} disabled={p.holding} data-blank={p.blank ? "" : undefined}>
         <div className={styles.stage} data-writing={writing ? "" : undefined}>
-          <HomeCourt className={styles.court} busy={p.holding} venue={p.venue} />
+          <HomeCourt className={`${styles.court} ${styles.art}`} busy={p.holding} venue={p.venue} />
+          <HomeScale className={styles.court} />
         </div>
 
         <div className={styles.mid}>

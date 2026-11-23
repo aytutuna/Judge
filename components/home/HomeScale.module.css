@@ -1,0 +1,6 @@
+.scale {
+  aspect-ratio: 16 / 9;
+  min-height: 0;
+  max-height: none;
+  border-radius: var(--radius-field);
+}

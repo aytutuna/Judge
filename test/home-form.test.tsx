@@ -1,9 +1,12 @@
 import { renderToStaticMarkup } from "react-dom/server";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import type { EvidenceController } from "../components/case/EvidencePicker";
 import { HomeForm, type HomeFormProps } from "../components/home/HomeForm";
 import { JudgingScreen } from "../components/JudgingScreen";
 import { t } from "../lib/i18n";
+
+const game = vi.hoisted(() => ({ on: true }));
+vi.mock("../lib/game", () => ({ useGame: () => game.on }));
 
 const noop = () => {};
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/'/g, "&#x27;");
@@ -51,6 +54,18 @@ const evidence: EvidenceController = {
 };
 
 describe("HomeForm", () => {
+  it("shows the court with the game on and the playable scale with it off", () => {
+    game.on = true;
+    const court = form();
+    expect(court).toContain("<canvas");
+    expect(court).not.toContain("data-scene-mode");
+    game.on = false;
+    const scale = form();
+    game.on = true;
+    expect(scale).not.toContain("<canvas");
+    expect(scale).toContain('data-scene-mode="idle"');
+  });
+
   it("blank: no title, one composer with a held send button, the example and the add-their-side chip", () => {
     const html = form();
     expect(html).not.toContain(">Judge<");
