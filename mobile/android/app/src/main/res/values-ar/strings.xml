@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">ثلاثة قضاة مستقلون · القضاة لا يرون الأسماء</string>
     <string name="hero_lead">احكِ لنا عن الخلاف. ثلاثة من قضاة الذكاء الاصطناعي يحكم كلٌّ منهم وحده، ودرجة الثقة تُظهر مدى اتفاقهم.</string>
     <string name="input_label">الخلاف</string>
-    <string name="placeholder">ماذا حدث؟ مَن يقول ماذا، ولماذا؟\n\nاكتب رواية الطرف الآخر كما كان سيرويها هو. وفي كل الأحوال، يبني القضاة أقوى حجة لكلا الطرفين.</string>
+    <string name="placeholder">ماذا حدث؟ مَن يقول ماذا، ولماذا؟</string>
     <string name="get_verdict">اعرف الحكم</string>
     <string name="thinking_eyebrow">ما يفعله القضاة الآن</string>
     <string name="thinking_read">نقرأ الروايتين ونمنح كلًّا منهما أفضل فرصة…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">نبحث عن لبّ الخلاف…</string>
     <string name="thinking_judges">ثلاثة قضاة يقررون، كلٌّ على حدة…</string>
     <string name="thinking_votes">نعدّ الأصوات…</string>
-    <string name="thinking_helper">ثلاثة من قضاة الذكاء الاصطناعي يحكمون كلٌّ على حدة، وإذا تقاربت الأصوات ينضم قضاة آخرون. امنحنا دقيقة.</string>
+    <string name="thinking_helper">امنحنا دقيقة.</string>
     <string name="thinking_finish">نقترب من لبّ الخلاف…</string>
-    <string name="thinking_still_judging">القضاة ما زالوا يفكرون. لحظات من فضلك…</string>
+    <string name="thinking_still_judging">ما زلنا نعمل…</string>
     <string name="thinking_ready">الحكم جاهز.</string>
     <string name="story_names">نحذف الأسماء حتى لا يُحكم على أحد بسبب هويته</string>
     <string name="story_facts">مدقّق منفصل يبحث عن الحقائق على الإنترنت</string>
@@ -38,7 +38,6 @@
     <string name="verdict_too_close">الفارق أضيق من أن يُحسم</string>
     <string name="lean_title">ترجيح إجباري: %1$s أقرب إلى الحق</string>
     <string name="lean_title_self">ترجيح إجباري: أنت أقرب إلى الحق</string>
-    <string name="lean_unanimous">كل القضاة مالوا إلى هذا الجانب.</string>
     <string name="lean_majority">مال القضاة إلى هذا الجانب بنتيجة %1$s–%2$s.</string>
     <string name="lean_tie">حتى حين طُلب منهم الاختيار، انقسم القضاة مناصفةً.</string>
     <string name="split_win">%1$s على حق في هذه النقطة:</string>
@@ -75,18 +74,17 @@
         <item quantity="many">صوّت %1$s من قضاة الذكاء الاصطناعي المستقلين:</item>
         <item quantity="other">صوّت %1$s من قضاة الذكاء الاصطناعي المستقلين:</item>
     </plurals>
-    <string name="escalated">كانت النتيجة متقاربة، فاستدعينا قضاة إضافيين.</string>
     <string name="translate_loading">جارٍ الترجمة…</string>
     <string name="translate_from_en">مترجَم من الإنجليزية</string>
     <string name="translate_from_tr">مترجَم من التركية</string>
-    <string name="translate_failed">تعذّرت الترجمة الآن، فإليك النص الأصلي.</string>
+    <string name="translate_failed">تعذّرت الترجمة.</string>
     <string name="translate_toggle">لغة الحكم</string>
     <string name="vote_split">منقسم</string>
     <string name="vote_conditional">حسب القيم</string>
     <string name="vote_dissolved">خلاف لفظي</string>
-    <string name="refused_note">امتنع الذكاء الاصطناعي عن الحكم هذه المرة. نفضّل ألّا نعرض شيئًا على أن نختلق حكمًا.</string>
+    <string name="refused_note">امتنع الذكاء الاصطناعي عن الحكم هذه المرة.</string>
     <string name="demo_note">وضع تجريبي: لا يوجد مفتاح ذكاء اصطناعي، لذا هذا حكم للعرض فقط</string>
-    <string name="trial_survived">رُفض الاعتراض: رفع محامي الطرف الآخر أقوى اعتراض لديه فصمد الحكم. درجة الثقة كما هي.</string>
+    <string name="trial_survived">رُفض الاعتراض: صمد الحكم.</string>
     <string name="trial_uncertain">اعترض محامي الطرف الآخر، وترك اعتراضه شكًّا حقيقيًا حول هذا الحكم</string>
     <string name="trial_overturned">قُبل الاعتراض: الحكم قائم، لكن أقوى اعتراض للطرف الآخر أضعفه ضعفًا كبيرًا</string>
     <string name="trial_minor">محامي الطرف الآخر أصاب في نقطة، لكن الحكم قائم</string>
@@ -131,7 +129,7 @@
         <item quantity="many">%1$s ساعة</item>
         <item quantity="other">%1$s ساعة</item>
     </plurals>
-    <string name="examples_label">محتار؟ جرّب واحدًا من هذه:</string>
+    <string name="examples_label">جرّب واحدًا:</string>
     <string name="example_hotdog_label">🌭 هل الهوت دوغ ساندويتش؟</string>
     <string name="example_hotdog_text">صديقي سامي يقول إن الهوت دوغ ساندويتش: حشوة داخل خبز مشقوق، وانتهى الأمر. وأنا أقول إنه شيء قائم بذاته. لا أحد يطلب ساندويتشًا ويتوقع أن يأتيه هوت دوغ، ولا توجد قائمة طعام تضعه بين الساندويتشات.</string>
     <string name="example_tomato_label">🍅 هل الطماطم فاكهة؟</string>
@@ -149,7 +147,6 @@
     <string name="footer_note">للتسلية والوضوح، لا للاستشارة القانونية.</string>
     <string name="footer_language">اللغة</string>
     <string name="not_found_title">هذا الحكم غادر قاعة المحكمة</string>
-    <string name="not_found_body">ربما في الرابط خطأ مطبعي، أو أن الحكم لم يعد موجودًا.</string>
     <string name="nav_sign_in">تسجيل الدخول</string>
     <string name="nav_account">الحساب</string>
     <string name="nav_pricing">الأسعار</string>
@@ -171,7 +168,6 @@
     <string name="consent_sensitive_continue">متابعة</string>
     <string name="respond_adult_confirm">عمري 18 عامًا أو أكثر</string>
     <string name="account_export">تنزيل بياناتي</string>
-    <string name="account_export_hint">احصل على ملف JSON يضم كل ما يحتفظ به Judge عنك.</string>
     <string name="account_export_busy">جارٍ تجهيز ملفك…</string>
     <string name="account_export_failed">تعذّر تجهيز بياناتك الآن. هل تحاول مرة أخرى؟</string>
     <string name="rating_prompt">هل الحكم عادل؟</string>
@@ -190,19 +186,18 @@
     <string name="clarify_back">تعديل الخلاف</string>
     <string name="thinking_factcheck">نتحقق من الحقائق على الويب…</string>
     <string name="thinking_factcheck_done">انتهى التحقق على الويب.</string>
-    <string name="panel_premium">صدر الحكم بعد تحقق من الحقائق على الويب.</string>
     <string name="factcheck_title">تم التحقق على الويب</string>
-    <string name="factcheck_lead">اطّلع القضاة على نتائج البحث هذه قبل الحكم. هي أدلة، وليست الحكم نفسه.</string>
+    <string name="factcheck_lead">اطّلع القضاة على نتائج البحث هذه قبل الحكم.</string>
     <string name="factcheck_status_supported">صحيح</string>
     <string name="factcheck_status_refuted">غير صحيح</string>
     <string name="factcheck_status_mixed">صحيح جزئيًا</string>
     <string name="factcheck_status_unverified">تعذّر التأكد</string>
     <string name="factcheck_sources">المصادر</string>
-    <string name="factcheck_none">لا شيء للبحث عنه على الويب: هذا الخلاف يدور حول القيم أو المعاني، لا الحقائق.</string>
-    <string name="factcheck_none_factual">لا شيء هنا يمكن التحقق منه على الويب: الحقائق في هذه المسألة يعرفها المعنيون بها وحدهم.</string>
+    <string name="factcheck_none">لا شيء للتحقق منه على الويب.</string>
+    <string name="factcheck_none_factual">لا شيء للتحقق منه على الويب.</string>
     <string name="factcheck_unavailable">لم يكتمل التحقق على الويب هذه المرة، فأصدر القضاة حكمهم دونه.</string>
     <string name="signin_title">تسجيل الدخول</string>
-    <string name="signin_lead">سجّل الدخول لتحصل على حكم. أول حكم مجاني لكل حساب جديد.</string>
+    <string name="signin_lead">أول حكم لك مجاني.</string>
     <string name="signin_apple">المتابعة باستخدام Apple</string>
     <string name="signin_google">المتابعة باستخدام Google</string>
     <string name="signin_email_toggle">المتابعة بالبريد الإلكتروني</string>
@@ -220,7 +215,7 @@
     <string name="signin_use_password">استخدم كلمة مرور بدلًا من ذلك</string>
     <string name="signin_password_wrong">البريد وكلمة المرور غير متطابقين.</string>
     <string name="signin_password_short">استخدم 8 أحرف على الأقل.</string>
-    <string name="signin_create_note">سنرسل لك رمزًا بالبريد لتأكيد هذا العنوان. تحتاج إلى ذلك مرة واحدة فقط.</string>
+    <string name="signin_create_note">سنرسل لك رمزًا بالبريد للتأكيد.</string>
     <string name="signin_password_choose">سجّلت الدخول. اختر كلمة مرور للمرة القادمة.</string>
     <string name="signin_password_save">حفظ كلمة المرور</string>
     <string name="signin_password_save_failed">تعذّر حفظ كلمة المرور. حاول مرة أخرى.</string>
@@ -249,13 +244,10 @@
     <string name="account_delete_yes">نعم، احذفه</string>
     <string name="account_delete_cancel">الإبقاء على حسابي</string>
     <string name="account_delete_failed">تعذّر حذف الحساب الآن. هلّا حاولت مرة أخرى؟</string>
-    <string name="account_sign_in_prompt">سجّل الدخول لترى خطتك ورصيدك.</string>
     <string name="account_load_failed">تعذّر تحميل حسابك. حاول مجددًا بعد قليل.</string>
     <string name="account_loading">جارٍ تحميل حسابك…</string>
     <string name="pricing_title">حكمك الأول على حسابنا.</string>
-    <string name="pricing_lead">أنشئ حسابًا واحصل على أول حكم مجانًا، بكل المزايا. بعد ذلك، اختر باقة أو اشترك شهريًا.</string>
     <string name="pricing_title_member">احصل على المزيد من الأحكام.</string>
-    <string name="pricing_lead_member">اختر باقة أو اشترك شهريًا. كل حكم يحصل على هيئة القضاة كاملة.</string>
     <string name="pricing_included_title">في كل حكم</string>
     <string name="pricing_buy_title">الباقات والخطة الشهرية</string>
     <string name="pricing_premium_f1">تحقق من الحقائق على الويب، مع المصادر في حكمك</string>
@@ -263,7 +255,7 @@
     <string name="pricing_premium_f3">سؤالان سريعان على الأكثر حين تنقص حقيقة أساسية</string>
     <string name="pricing_premium_f4">استبدال الأسماء قبل الحكم</string>
     <string name="pricing_packs_title">باقات الرصيد</string>
-    <string name="pricing_packs_lead">ادفع مرة واحدة واستخدم أحكامك متى شئت. كل حكم تحصل عليه يُخصم من رصيدك.</string>
+    <string name="pricing_packs_lead">كل حكم يستهلك رصيدًا واحدًا.</string>
     <plurals name="pricing_pack">
         <item quantity="zero">%1$s حكم</item>
         <item quantity="one">%1$s حكم</item>
@@ -357,8 +349,8 @@
     <string name="case_context_d">توضيح أضافه الطرف D</string>
     <string name="case_context_you">التوضيح الذي أضفته (%1$s)</string>
     <string name="case_evidence_item">الصورة %1$s، كما قرأها القضاة</string>
-    <string name="case_answered">وصل الرد. القضاة يعملون عليه.</string>
-    <string name="case_judging_alone">القضاة يعملون على روايتك.</string>
+    <string name="case_answered">القضاة يعملون عليه.</string>
+    <string name="case_judging_alone">القضاة يعملون عليه.</string>
     <string name="case_expired_body">لم يردّ أحد خلال 7 أيام، فعاد الحكم المحجوز إلى رصيدك. وما زال بإمكانك الحصول على حكم على روايتك وحدها.</string>
     <string name="case_expired_body_free">لم يردّ أحد خلال 7 أيام. وما زال بإمكانك الحصول على حكم على روايتك وحدها.</string>
     <string name="case_one_sided">صدر الحكم بناءً على روايتك فقط.</string>
@@ -375,12 +367,12 @@
     <string name="respond_submit">إرسال روايتي</string>
     <string name="case_write_title">روايتك</string>
     <string name="case_write_placeholder">ما المشكلة؟</string>
-    <string name="case_write_lead">اكتب روايتك متى شئت. يبدأ القضاة حين تكتبان معًا.</string>
+    <string name="case_write_lead">يبدأ القضاة حين تكتبان معًا.</string>
     <string name="case_write_lead_answered">كتب الطرف الآخر روايته. اكتب روايتك لتحصل على الحكم.</string>
     <string name="case_write_submit">أرسل روايتي</string>
     <string name="case_write_email_subject">كتب الطرف الآخر روايته</string>
-    <string name="respond_sent">شكرًا. وصلت روايتك، والقضاة يعملون عليها.</string>
-    <string name="respond_sent_waiting">شكرًا. وصلت روايتك. يبدأ القضاة حين يكتب الطرف الآخر روايته.</string>
+    <string name="respond_sent">وصلت روايتك.</string>
+    <string name="respond_sent_waiting">وصلت روايتك. بانتظار الطرف الآخر.</string>
     <string name="respond_own_invite">هذا رابط دعوتك أنت. أرسله إلى الشخص الآخر.</string>
     <string name="respond_expired">انتهت صلاحية هذه الدعوة.</string>
     <string name="respond_closed">هذه القضية لم تعد تقبل الردود.</string>
@@ -409,7 +401,6 @@
     <string name="evidence_remove">حذف الصورة %1$s</string>
     <string name="evidence_thumb">الصورة %1$s</string>
     <string name="evidence_preview">ما قرأناه</string>
-    <string name="evidence_preview_note">هذا يظهر لك وحدك. تُخفى الأسماء قبل أن يقرأه القضاة.</string>
     <string name="evidence_status_unreadable">لم نجد نصًا نقرؤه</string>
     <string name="evidence_status_refused">رفض القارئ هذه الصورة</string>
     <string name="evidence_status_unsupported">ليست PNG أو JPEG أو WebP أو GIF</string>
@@ -436,8 +427,6 @@
     <string name="home_remove_their_side">أزل رواية الطرف الآخر</string>
     <string name="home_send_link">أرسل له رابطًا</string>
     <string name="home_clear">مسح</string>
-    <string name="home_lead">اكتب رواية الطرفين، أو أرسل إلى الطرف الآخر رابطًا ليكتب روايته بنفسه.</string>
-    <string name="home_lead_solo">اكتب روايتك، ورواية الطرف الآخر إن كنت تعرفها.</string>
     <string name="home_their_side">رواية الطرف الآخر</string>
     <string name="home_their_name">اسم الطرف الآخر</string>
     <string name="home_their_placeholder">ماذا يقول الطرف الآخر؟ اكتب روايته كما يرويها هو.</string>
@@ -451,7 +440,7 @@
     <string name="appeal_submit">إعادة الحكم مع توضيحي</string>
     <string name="appeal_sending">نحذف الأسماء من توضيحك…</string>
     <string name="appeal_judging">القضاة يعيدون النظر في كل شيء…</string>
-    <string name="appeal_upsell">هل ينقص شيء؟ أضف توضيحًا ليُعاد الحكم مقابل حكم واحد.</string>
+    <string name="appeal_upsell">ينقص شيء؟ أضف توضيحًا مقابل حكم واحد.</string>
     <string name="appeal_sign_in">سجّل الدخول لإضافة توضيح</string>
     <string name="appeal_used">سبق أن أضفت توضيحًا إلى هذه القضية.</string>
     <string name="appeal_limit">أضفت توضيحًا مرتين، وهذا الحد الأقصى للحكم الواحد.</string>
@@ -495,7 +484,7 @@
     <string name="case_display_name">اسمك في الحكم المُشارَك</string>
     <string name="case_display_save">حفظ الاسم</string>
     <string name="respond_keep">حفظ هذه القضية في حسابك</string>
-    <string name="respond_kept">هذه القضية في حسابك الآن، وتظهر في صفحة «الأحكام» على أي جهاز.</string>
+    <string name="respond_kept">محفوظة في حسابك.</string>
     <string name="respond_remove">حذف روايتي</string>
     <string name="respond_remove_confirm">هل تريد حذف نصك الأصلي واسم العرض الخاص بك؟ ستتوقف روابط مشاركة القضية عن العمل (المعاينات المنشورة مسبقًا في المحادثات قد تظل ظاهرة حتى تحدّثها تلك التطبيقات). لا يمكن التراجع عن ذلك.</string>
     <string name="names_title">الأسماء في الصفحة المُشارَكة</string>
@@ -589,7 +578,7 @@
     <string name="app_tab_new">جديد</string>
     <string name="app_tab_settings">الإعدادات</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">لا أحكام بعد. احسم أول خلاف لك وسيظهر حكمه هنا.</string>
+    <string name="app_history_empty">لا أحكام بعد.</string>
     <string name="app_history_device_only">الأحكام محفوظة على هذا الهاتف فقط. حذف حكم من هنا لا يوقف رابط مشاركته.</string>
     <string name="app_history_delete">حذف</string>
     <string name="app_history_remove_all">إزالة الكل</string>
@@ -602,7 +591,7 @@
         <item quantity="other">هل تريد حذف %1$s حكم من هذا الهاتف؟ ستبقى روابط مشاركتها تعمل.</item>
     </plurals>
     <string name="app_history_phone_only">على هذا الهاتف فقط</string>
-    <string name="app_history_phone_only_note">ليست في حسابك: هذه الأحكام محفوظة على هذا الهاتف فقط. حذف حكم منها هنا لا يوقف رابط مشاركته.</string>
+    <string name="app_history_phone_only_note">حذف حكم لا يلغي رابط مشاركته.</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="zero">لا أحكام محددة للحذف.</item>
         <item quantity="one">هل تريد حذف هذا الحكم من حسابك؟ سيُمحى ما كتبته والأسماء من كل الأجهزة، وسيتوقف رابط مشاركته عن العمل. لا يمكن التراجع عن ذلك.</item>
@@ -639,9 +628,9 @@
     <string name="app_pricing_free_account">سجّل الدخول باستخدام Apple أو Google أو البريد الإلكتروني</string>
     <string name="app_pricing_context">صور التوضيح تُقرأ ثم تُحذف، دون أي تكلفة إضافية</string>
     <string name="app_pricing_headline">حكمك الأول على حسابنا.</string>
-    <string name="app_pricing_sub">أنشئ حسابًا واحصل على أول حكم مجانًا، بكل المزايا. بعد ذلك، اختر باقة أو اشترك شهريًا.</string>
+    <string name="app_pricing_sub">ثم اختر باقة أو اشتراكًا شهريًا.</string>
     <string name="app_pricing_headline_member">احصل على المزيد من الأحكام.</string>
-    <string name="app_pricing_sub_member">اختر باقة أو اشترك شهريًا. كل حكم يحصل على هيئة القضاة كاملة.</string>
+    <string name="app_pricing_sub_member">اختر باقة أو اشتراكًا شهريًا.</string>
     <plurals name="app_balance_left">
         <item quantity="zero">لم يبقَ لك أي حكم</item>
         <item quantity="one">بقي لك حكم واحد</item>
@@ -739,10 +728,9 @@
     <string name="app_appeal_used">سبق أن أضفت توضيحًا إلى هذه القضية.</string>
     <string name="app_appeal_limit">أضفت توضيحًا مرتين، وهذا الحد الأقصى للحكم الواحد.</string>
     <string name="app_purchase_buying">جارٍ الشراء…</string>
-    <string name="app_purchase_success">شكرًا! تمت عملية الشراء.</string>
-    <string name="app_purchase_pending">عملية الشراء قيد المعالجة. قد يستغرق ظهورها دقيقة.</string>
-    <string name="app_purchase_arriving">رصيدك في الطريق…</string>
-    <string name="app_purchase_slow">قد يستغرق ظهوره هنا دقيقة.</string>
+    <string name="app_purchase_success">تمت عملية الشراء.</string>
+    <string name="app_purchase_pending">عملية الشراء قيد المعالجة.</string>
+    <string name="app_purchase_slow">قد يستغرق الرصيد دقيقة.</string>
     <string name="app_purchase_failed">لم تكتمل عملية الشراء. حاول مجددًا بعد قليل.</string>
     <string name="app_purchase_restore">استعادة المشتريات</string>
     <string name="app_purchase_restore_done">تمت استعادة مشترياتك.</string>

@@ -53,7 +53,6 @@ export const WEB_KEYS: readonly string[] = [
   "copyPrompt",
   "judgeAnother",
   "judgesVoted.*",
-  "escalated",
   "translate.*",
   "vote.*",
   "refusedNote",
@@ -68,9 +67,7 @@ export const WEB_KEYS: readonly string[] = [
   "party.youLabel",
   "you",
   "notFound.title",
-  "notFound.body",
-  // Premium results can already be rendered (fact check, panel line).
-  "panel.premium",
+  // Premium results can already be rendered (fact check).
   "factcheck.*",
   // Errors and waits
   "errorFallback",

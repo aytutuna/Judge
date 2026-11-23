@@ -7,7 +7,7 @@ const ptBR: AppLocale = {
     "app.tab.new": "Novo",
     "app.tab.settings": "Ajustes",
     "app.input.counter": "{count} / {max}",
-    "app.history.empty": "Nenhum veredito ainda. Resolva sua primeira discussão e o veredito aparece aqui.",
+    "app.history.empty": "Nenhum veredito ainda.",
     "app.history.deviceOnly":
       "Ficam salvos só neste celular. Excluir um aqui não tira do ar o link de compartilhamento dele.",
     "app.history.delete": "Excluir",
@@ -15,8 +15,7 @@ const ptBR: AppLocale = {
     "app.history.deleteConfirm":
       "Excluir {n} vereditos deste celular? Os links de compartilhamento deles continuam funcionando.",
     "app.history.phoneOnly": "Só neste celular",
-    "app.history.phoneOnlyNote":
-      "Não estão na sua conta: ficam salvos só neste celular. Excluir um aqui não tira do ar o link de compartilhamento dele.",
+    "app.history.phoneOnlyNote": "Excluir um não tira do ar o link de compartilhamento.",
     "app.history.removeConfirm":
       "Remover {n} vereditos da sua conta? O que você escreveu e os nomes são apagados, e os links de compartilhamento deles param de funcionar, em todos os dispositivos. Não dá para desfazer.",
     "app.history.removeLinksConfirm":
@@ -28,10 +27,9 @@ const ptBR: AppLocale = {
     "app.pricing.free.account": "Entre com Apple, Google ou e-mail",
     "app.pricing.context": "Imagens de contexto são lidas e depois descartadas, sem custo extra",
     "app.pricing.headline": "Seu primeiro veredito é por nossa conta.",
-    "app.pricing.sub":
-      "Crie uma conta e seu primeiro veredito sai grátis, com todos os recursos. Depois, escolha um pacote ou vá de plano mensal.",
+    "app.pricing.sub": "Depois, escolha um pacote ou vá de plano mensal.",
     "app.pricing.headlineMember": "Garanta mais vereditos.",
-    "app.pricing.subMember": "Escolha um pacote ou vá de plano mensal. Todo veredito tem o painel completo.",
+    "app.pricing.subMember": "Escolha um pacote ou vá de plano mensal.",
     "app.balance.left": "Restam {n} vereditos",
     "app.balance.monthly": "Restam {left} de {cap} neste mês",
     "app.balance.none": "Nenhum veredito restante",
@@ -129,10 +127,9 @@ const ptBR: AppLocale = {
     "app.appeal.used": "Você já adicionou contexto a este caso.",
     "app.appeal.limit": "Você já adicionou contexto duas vezes. É o limite para um veredito.",
     "app.purchase.buying": "Comprando…",
-    "app.purchase.success": "Valeu! Sua compra deu certo.",
-    "app.purchase.pending": "Sua compra está sendo processada. Pode levar um minuto para aparecer.",
-    "app.purchase.arriving": "Seus créditos estão a caminho…",
-    "app.purchase.slow": "Pode levar um minuto para aparecer aqui.",
+    "app.purchase.success": "Compra concluída.",
+    "app.purchase.pending": "Sua compra está sendo processada.",
+    "app.purchase.slow": "Os créditos podem levar um minuto.",
     "app.purchase.failed": "A compra não foi concluída. Tente de novo daqui a pouco.",
     "app.purchase.restore": "Restaurar compras",
     "app.purchase.restoreDone": "Suas compras foram restauradas.",

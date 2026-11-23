@@ -35,7 +35,6 @@ describe("Faq", () => {
     expect(count(html, "<details")).toBe(FAQ_ITEMS.length);
     expect(html).toContain('id="faq"');
     expect(html).toContain('aria-labelledby="faq-title"');
-    expect(html).toContain(esc(t(lang, "faq.kicker")));
     for (const item of FAQ_ITEMS) expect(html).toContain(esc(t(lang, item.q)));
   });
 });

@@ -209,12 +209,6 @@ private fun AccountGroup(
     Group(s.accountTitle) {
         when (account) {
             Account.State.Loading, Account.State.SignedOut -> {
-                Text(
-                    s.accountSignInPrompt,
-                    style = JudgeType.body.copy(color = Palette.ink2),
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
-                )
-                HorizontalDivider(color = Palette.line)
                 ActionRow(s.signinTitle, Modifier.testTag(SettingsTags.SIGN_IN), trailing = "›", onClick = onSignIn)
             }
             is Account.State.SignedIn -> {
@@ -288,15 +282,13 @@ fun AccountScreen(
                 }
                 if (export != null) {
                     ActionRow(s.accountExport, Modifier.testTag(SettingsTags.EXPORT), enabled = !export.busy, onClick = export.onExport)
-                    Text(
-                        when {
-                            export.busy -> s.accountExportBusy
-                            export.failed -> s.accountExportFailed
-                            else -> s.accountExportHint
-                        },
-                        style = JudgeType.footnote.copy(color = if (export.failed && !export.busy) Palette.danger else Palette.ink2),
-                        modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 12.dp).testTag(SettingsTags.EXPORT_NOTE),
-                    )
+                    if (export.busy || export.failed) {
+                        Text(
+                            if (export.busy) s.accountExportBusy else s.accountExportFailed,
+                            style = JudgeType.footnote.copy(color = if (export.failed && !export.busy) Palette.danger else Palette.ink2),
+                            modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 12.dp).testTag(SettingsTags.EXPORT_NOTE),
+                        )
+                    }
                     HorizontalDivider(color = Palette.line)
                 }
                 ActionRow(s.accountDelete, Modifier.testTag(SettingsTags.DELETE), color = Palette.danger, enabled = !busy) {

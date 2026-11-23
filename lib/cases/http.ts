@@ -1113,8 +1113,17 @@ export function respondEvidenceHandler(req: Request, token: string): Promise<Nex
     const found = await caseByToken(token, req);
     if (!found) return fail("not_found", "No invite with that link.");
     const { row } = found;
-    const { viewer, refused } = await lookupViewer(req);
+    const { viewer, deadBearer, refused } = await lookupViewer(req);
+    if (deadBearer) return deadBearerResponse();
     if (refused) return refused;
+    if (viewer) {
+      const unagreed = await agreementRefusal(viewer.user.id);
+      if (unagreed) return unagreed;
+    } else {
+      // A multipart body can't carry the ticks, so they ride as headers.
+      if (req.headers.get("adult-confirmed") !== "true") return fail("age_unconfirmed");
+      if (req.headers.get("sensitive-agreed") !== "true") return agreementMissing();
+    }
     const status = effectiveStatus(row, new Date());
     if (status === "expired") return fail("case_expired");
     let party: "b" | "c" | "d" = found.party;

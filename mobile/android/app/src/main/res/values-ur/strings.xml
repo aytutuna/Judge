@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">تین آزاد جج · جج کبھی نام نہیں دیکھتے</string>
     <string name="hero_lead">بتائیں جھگڑا کس بات پر ہے۔ تین اے آئی جج الگ الگ فیصلہ کرتے ہیں، اور اعتماد کا اسکور بتاتا ہے کہ وہ آپس میں کتنے متفق ہیں۔</string>
     <string name="input_label">بحث</string>
-    <string name="placeholder">کیا ہوا؟ کون کیا کہتا ہے، اور کیوں؟\n\nدوسرے کی بات ویسے ہی لکھیں جیسے وہ خود کہتے۔ جج ہر حال میں دونوں طرف کی مضبوط ترین دلیل تیار کرتے ہیں۔</string>
+    <string name="placeholder">کیا ہوا؟ کون کیا کہتا ہے، اور کیوں؟</string>
     <string name="get_verdict">فیصلہ کروائیں</string>
     <string name="thinking_eyebrow">جج کیا کر رہے ہیں</string>
     <string name="thinking_read">دونوں طرف کی بات پڑھ رہے ہیں اور ہر ایک کو پورا موقع دے رہے ہیں…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">اصل نکتہ ڈھونڈ رہے ہیں…</string>
     <string name="thinking_judges">تین جج الگ الگ فیصلہ کر رہے ہیں…</string>
     <string name="thinking_votes">ووٹ گنے جا رہے ہیں…</string>
-    <string name="thinking_helper">تین اے آئی جج الگ الگ فیصلہ کرتے ہیں، اور مقابلہ کانٹے کا ہو تو مزید جج بلائے جاتے ہیں۔ بس ایک منٹ۔</string>
+    <string name="thinking_helper">بس ایک منٹ۔</string>
     <string name="thinking_finish">اصل نکتے کے قریب پہنچ رہے ہیں…</string>
-    <string name="thinking_still_judging">جج ابھی سوچ رہے ہیں۔ تھوڑا صبر…</string>
+    <string name="thinking_still_judging">ابھی کام جاری ہے…</string>
     <string name="thinking_ready">فیصلہ تیار ہے۔</string>
     <string name="story_names">نام ہٹا رہے ہیں تاکہ کسی کو اس بنیاد پر نہ پرکھا جائے کہ وہ کون ہے</string>
     <string name="story_facts">الگ جانچنے والا ویب پر حقائق تلاش کرتا ہے</string>
@@ -38,7 +38,6 @@
     <string name="verdict_too_close">کانٹے کا مقابلہ</string>
     <string name="lean_title">چننا ہی پڑے تو: %1$s زیادہ صحیح ہے</string>
     <string name="lean_title_self">چننا ہی پڑے تو: آپ زیادہ صحیح ہیں</string>
-    <string name="lean_unanimous">تمام جج اسی طرف جھکے۔</string>
     <string name="lean_majority">جج %1$s–%2$s سے اسی طرف جھکے۔</string>
     <string name="lean_tie">چننے پر مجبور کیا گیا، پھر بھی جج آدھے آدھے بٹ گئے۔</string>
     <string name="split_win">اس بات میں %1$s صحیح ہے:</string>
@@ -71,18 +70,17 @@
         <item quantity="one">%1$s آزاد اے آئی ججوں نے ووٹ دیا:</item>
         <item quantity="other">%1$s آزاد اے آئی ججوں نے ووٹ دیا:</item>
     </plurals>
-    <string name="escalated">مقابلہ کانٹے کا تھا، اس لیے مزید جج بلائے گئے۔</string>
     <string name="translate_loading">ترجمہ ہو رہا ہے…</string>
     <string name="translate_from_en">انگریزی سے ترجمہ</string>
     <string name="translate_from_tr">ترکی سے ترجمہ</string>
-    <string name="translate_failed">ابھی ترجمہ نہیں ہو سکا، اس لیے اصل متن حاضر ہے۔</string>
+    <string name="translate_failed">ترجمہ نہیں ہو سکا۔</string>
     <string name="translate_toggle">فیصلے کی زبان</string>
     <string name="vote_split">بٹا ہوا</string>
     <string name="vote_conditional">منحصر</string>
     <string name="vote_dissolved">لفظی الجھن</string>
-    <string name="refused_note">اس بار اے آئی نے فیصلہ دینے سے معذرت کر لی۔ جعلی فیصلہ دکھانے سے ہم کچھ نہ دکھانا بہتر سمجھتے ہیں۔</string>
+    <string name="refused_note">اس بار اے آئی نے معذرت کر لی۔</string>
     <string name="demo_note">ڈیمو موڈ: اے آئی سے رابطہ سیٹ نہیں، اس لیے یہ نمونے کا فیصلہ ہے</string>
-    <string name="trial_survived">اعتراض مسترد: دوسری طرف کے وکیل نے اپنا سب سے سخت اعتراض اٹھایا، اور فیصلہ قائم رہا۔ اعتماد اپنی جگہ برقرار ہے۔</string>
+    <string name="trial_survived">اعتراض مسترد: فیصلہ قائم رہا۔</string>
     <string name="trial_uncertain">دوسری طرف کے وکیل نے اعتراض کیا، اور اس اعتراض نے اس فیصلے پر حقیقی شک چھوڑا</string>
     <string name="trial_overturned">اعتراض منظور: فیصلہ برقرار ہے، مگر دوسری طرف کے سب سے سخت اعتراض نے اسے سنگین حد تک کمزور کر دیا</string>
     <string name="trial_minor">دوسری طرف کے وکیل نے ایک مناسب نکتہ اٹھایا، مگر فیصلہ برقرار ہے</string>
@@ -119,7 +117,7 @@
         <item quantity="one">%1$s گھنٹے</item>
         <item quantity="other">%1$s گھنٹے</item>
     </plurals>
-    <string name="examples_label">سمجھ نہیں آ رہا؟ ان میں سے کوئی آزمائیں:</string>
+    <string name="examples_label">ایک آزمائیں:</string>
     <string name="example_hotdog_label">🍛 کیا بریانی بس مصالحے دار پلاؤ ہے؟</string>
     <string name="example_hotdog_text">میرا دوست احمد کہتا ہے کہ بریانی بس مصالحے دار پلاؤ ہے: چاول اور گوشت ایک ساتھ پکے، بات ختم۔ میرا کہنا ہے کہ یہ بالکل الگ چیز ہے۔ کوئی پلاؤ منگوا کر بریانی کی توقع نہیں کرتا، اور شادیوں میں دونوں کی دیگیں الگ الگ چڑھتی ہیں۔</string>
     <string name="example_tomato_label">🍅 کیا ٹماٹر پھل ہے؟</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">تفریح اور وضاحت کے لیے، قانونی مشورہ نہیں۔</string>
     <string name="footer_language">زبان</string>
     <string name="not_found_title">یہ فیصلہ عدالت سے جا چکا ہے</string>
-    <string name="not_found_body">شاید لنک میں کوئی غلطی ہے، یا فیصلہ اب موجود نہیں۔</string>
     <string name="nav_sign_in">سائن ان</string>
     <string name="nav_account">اکاؤنٹ</string>
     <string name="nav_pricing">قیمتیں</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">جاری رکھیں</string>
     <string name="respond_adult_confirm">میری عمر 18 سال یا اس سے زیادہ ہے</string>
     <string name="account_export">میرا ڈیٹا ڈاؤن لوڈ کریں</string>
-    <string name="account_export_hint">Judge کے پاس آپ کے بارے میں جو کچھ ہے وہ سب ایک JSON فائل میں حاصل کریں۔</string>
     <string name="account_export_busy">آپ کی فائل تیار ہو رہی ہے…</string>
     <string name="account_export_failed">ابھی آپ کا ڈیٹا تیار نہیں ہو سکا۔ دوبارہ کوشش کریں گے؟</string>
     <string name="rating_prompt">کیا فیصلہ منصفانہ ہے؟</string>
@@ -170,7 +166,7 @@
     <string name="tier_get_premium">مزید فیصلے لیں</string>
     <string name="tier_checking">دیکھ رہے ہیں کہ کچھ رہ تو نہیں گیا…</string>
     <string name="clarify_title">ججوں کے فیصلے سے پہلے</string>
-    <string name="clarify_lead">یہ تفصیلات فیصلہ بدل سکتی ہیں۔</string>
+    <string name="clarify_lead">یہ تفصیلات بدل سکتی ہیں کہ کون صحیح ہے۔</string>
     <string name="clarify_answer_aria">سوال %1$s کا جواب:</string>
     <string name="clarify_placeholder">آپ کا جواب (اختیاری)</string>
     <string name="clarify_skip">چھوڑ کر فیصلہ کروائیں</string>
@@ -178,19 +174,18 @@
     <string name="clarify_back">بحث میں ترمیم کریں</string>
     <string name="thinking_factcheck">ویب پر حقائق جانچ رہے ہیں…</string>
     <string name="thinking_factcheck_done">ویب پر جانچ مکمل۔</string>
-    <string name="panel_premium">ویب پر حقائق کی جانچ کے ساتھ فیصلہ ہوا۔</string>
     <string name="factcheck_title">ویب پر جانچا گیا</string>
-    <string name="factcheck_lead">ججوں نے فیصلے سے پہلے یہ سرچ نتائج دیکھے۔ یہ ثبوت ہیں، خود فیصلہ نہیں۔</string>
+    <string name="factcheck_lead">ججوں نے فیصلے سے پہلے یہ سرچ نتائج دیکھے۔</string>
     <string name="factcheck_status_supported">درست نکلا</string>
     <string name="factcheck_status_refuted">غلط نکلا</string>
     <string name="factcheck_status_mixed">جزوی طور پر درست</string>
     <string name="factcheck_status_unverified">تصدیق نہیں ہو سکی</string>
     <string name="factcheck_sources">ذرائع</string>
-    <string name="factcheck_none">ویب پر دیکھنے کو کچھ نہیں: یہ معاملہ حقائق کا نہیں، اقدار یا معنی کا ہے۔</string>
-    <string name="factcheck_none_factual">یہاں کچھ بھی ویب پر جانچا نہیں جا سکا: اس معاملے کے حقائق صرف متعلقہ لوگوں کے بیچ کی بات ہیں۔</string>
+    <string name="factcheck_none">ویب پر جانچنے کو کچھ نہیں۔</string>
+    <string name="factcheck_none_factual">ویب پر جانچنے کو کچھ نہیں۔</string>
     <string name="factcheck_unavailable">اس بار ویب پر جانچ مکمل نہیں ہوئی، اس لیے ججوں نے اس کے بغیر فیصلہ کیا۔</string>
     <string name="signin_title">سائن ان</string>
-    <string name="signin_lead">فیصلہ لینے کے لیے سائن ان کریں۔ نئے اکاؤنٹ کا پہلا فیصلہ مفت ہے۔</string>
+    <string name="signin_lead">آپ کا پہلا فیصلہ مفت ہے۔</string>
     <string name="signin_apple">Apple کے ساتھ جاری رکھیں</string>
     <string name="signin_google">Google کے ساتھ جاری رکھیں</string>
     <string name="signin_email_toggle">اس کے بجائے ای میل استعمال کریں</string>
@@ -208,7 +203,7 @@
     <string name="signin_use_password">اس کے بجائے پاس ورڈ استعمال کریں</string>
     <string name="signin_password_wrong">یہ ای میل اور پاس ورڈ آپس میں میل نہیں کھاتے۔</string>
     <string name="signin_password_short">کم از کم 8 حروف استعمال کریں۔</string>
-    <string name="signin_create_note">اس پتے کی تصدیق کے لیے ہم آپ کو ای میل پر ایک کوڈ بھیجیں گے۔ یہ صرف ایک بار کرنا ہوگا۔</string>
+    <string name="signin_create_note">تصدیق کے لیے ہم آپ کو ای میل پر ایک کوڈ بھیجیں گے۔</string>
     <string name="signin_password_choose">آپ سائن اِن ہو گئے ہیں۔ اگلی بار کے لیے پاس ورڈ چنیں۔</string>
     <string name="signin_password_save">پاس ورڈ محفوظ کریں</string>
     <string name="signin_password_save_failed">پاس ورڈ محفوظ نہ ہو سکا۔ دوبارہ کوشش کریں۔</string>
@@ -237,13 +232,10 @@
     <string name="account_delete_yes">ہاں، حذف کر دیں</string>
     <string name="account_delete_cancel">اکاؤنٹ رہنے دیں</string>
     <string name="account_delete_failed">ابھی اکاؤنٹ حذف نہیں ہو سکا۔ ذرا دوبارہ کوشش کر کے دیکھیں۔</string>
-    <string name="account_sign_in_prompt">اپنا پلان اور کریڈٹس دیکھنے کے لیے سائن ان کریں۔</string>
     <string name="account_load_failed">آپ کا اکاؤنٹ لوڈ نہیں ہو سکا۔ تھوڑی دیر میں دوبارہ کوشش کریں۔</string>
     <string name="account_loading">آپ کا اکاؤنٹ لوڈ ہو رہا ہے…</string>
     <string name="pricing_title">پہلا فیصلہ ہماری طرف سے۔</string>
-    <string name="pricing_lead">اکاؤنٹ بنائیں اور پہلا فیصلہ مفت پائیں، تمام فیچرز کے ساتھ۔ اس کے بعد کوئی پیک لیں یا ماہانہ پلان۔</string>
     <string name="pricing_title_member">مزید فیصلے لیں۔</string>
-    <string name="pricing_lead_member">کوئی پیک لیں یا ماہانہ پلان۔ ہر فیصلے میں ججوں کا پورا پینل ملتا ہے۔</string>
     <string name="pricing_included_title">ہر فیصلے میں</string>
     <string name="pricing_buy_title">پیک اور ماہانہ پلان</string>
     <string name="pricing_premium_f1">ویب پر حقائق کی جانچ، اور ذرائع آپ کے فیصلے میں درج</string>
@@ -251,7 +243,7 @@
     <string name="pricing_premium_f3">کوئی اہم بات رہ جائے تو زیادہ سے زیادہ دو مختصر سوال</string>
     <string name="pricing_premium_f4">فیصلے سے پہلے نام ہٹا دیے جاتے ہیں</string>
     <string name="pricing_packs_title">کریڈٹ پیک</string>
-    <string name="pricing_packs_lead">ایک بار ادائیگی کریں اور جب چاہیں استعمال کریں۔ ہر فیصلے پر ایک کریڈٹ لگتا ہے۔</string>
+    <string name="pricing_packs_lead">ہر فیصلے پر ایک کریڈٹ لگتا ہے۔</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s فیصلے</item>
         <item quantity="other">%1$s فیصلے</item>
@@ -337,8 +329,8 @@
     <string name="case_context_d">فریق D نے مزید تفصیل دی</string>
     <string name="case_context_you">آپ کی دی ہوئی تفصیل (%1$s)</string>
     <string name="case_evidence_item">تصویر %1$s، جیسے ججوں نے پڑھی</string>
-    <string name="case_answered">انہوں نے جواب دے دیا۔ جج اس پر کام کر رہے ہیں۔</string>
-    <string name="case_judging_alone">جج آپ کی بات پر کام کر رہے ہیں۔</string>
+    <string name="case_answered">جج کام کر رہے ہیں۔</string>
+    <string name="case_judging_alone">جج کام کر رہے ہیں۔</string>
     <string name="case_expired_body">7 دن میں کسی نے جواب نہیں دیا، اس لیے آپ کا کریڈٹ واپس آ گیا ہے۔ آپ اب بھی صرف اپنی بات پر فیصلہ لے سکتے ہیں۔</string>
     <string name="case_expired_body_free">7 دن میں کسی نے جواب نہیں دیا۔ آپ اب بھی صرف اپنی بات پر فیصلہ لے سکتے ہیں۔</string>
     <string name="case_one_sided">فیصلہ صرف آپ کی بات پر ہوا۔</string>
@@ -355,12 +347,12 @@
     <string name="respond_submit">اپنی بات بھیجیں</string>
     <string name="case_write_title">آپ کی بات</string>
     <string name="case_write_placeholder">مسئلہ کیا ہے؟</string>
-    <string name="case_write_lead">جب تیار ہوں اپنی بات لکھیں۔ دونوں کے لکھنے پر جج شروع کریں گے۔</string>
+    <string name="case_write_lead">دونوں کے لکھنے پر جج شروع کریں گے۔</string>
     <string name="case_write_lead_answered">انہوں نے اپنی بات لکھ دی ہے۔ فیصلہ پانے کے لیے اپنی لکھیں۔</string>
     <string name="case_write_submit">میری بات بھیجیں</string>
     <string name="case_write_email_subject">دوسرے فریق نے اپنی بات لکھ دی ہے</string>
-    <string name="respond_sent">شکریہ۔ آپ کی بات پہنچ گئی اور جج کام پر لگ گئے ہیں۔</string>
-    <string name="respond_sent_waiting">شکریہ۔ آپ کی بات پہنچ گئی۔ دوسرے کے لکھتے ہی جج شروع کریں گے۔</string>
+    <string name="respond_sent">آپ کی بات پہنچ گئی۔</string>
+    <string name="respond_sent_waiting">آپ کی بات پہنچ گئی۔ دوسرے کا انتظار ہے۔</string>
     <string name="respond_own_invite">یہ آپ کا اپنا دعوتی لنک ہے۔ اسے دوسرے شخص کو بھیجیں۔</string>
     <string name="respond_expired">اس دعوتی لنک کی میعاد ختم ہو گئی ہے۔</string>
     <string name="respond_closed">یہ کیس اب جواب قبول نہیں کر رہا۔</string>
@@ -385,7 +377,6 @@
     <string name="evidence_remove">تصویر %1$s ہٹائیں</string>
     <string name="evidence_thumb">تصویر %1$s</string>
     <string name="evidence_preview">ہم نے کیا پڑھا</string>
-    <string name="evidence_preview_note">یہ صرف آپ کو نظر آتا ہے۔ ججوں کے پڑھنے سے پہلے نام چھپا دیے جاتے ہیں۔</string>
     <string name="evidence_status_unreadable">کوئی متن نہیں پڑھا جا سکا</string>
     <string name="evidence_status_refused">پڑھنے والے نے یہ تصویر پڑھنے سے انکار کیا</string>
     <string name="evidence_status_unsupported">PNG، JPEG، WebP یا GIF نہیں</string>
@@ -412,8 +403,6 @@
     <string name="home_remove_their_side">ان کی بات ہٹائیں</string>
     <string name="home_send_link">لنک بھیجیں</string>
     <string name="home_clear">صاف کریں</string>
-    <string name="home_lead">دونوں طرف کی بات لکھیں، یا دوسرے شخص کو لنک بھیجیں تاکہ وہ اپنی بات خود لکھیں۔</string>
-    <string name="home_lead_solo">اپنی بات لکھیں، اور معلوم ہو تو ان کی بھی۔</string>
     <string name="home_their_side">ان کی بات</string>
     <string name="home_their_name">ان کا نام</string>
     <string name="home_their_placeholder">وہ کیا کہتے ہیں؟ ویسے ہی لکھیں جیسے وہ خود کہتے۔</string>
@@ -427,7 +416,7 @@
     <string name="appeal_submit">میری تفصیل کے ساتھ دوبارہ فیصلہ</string>
     <string name="appeal_sending">آپ کی تفصیل سے نام ہٹا رہے ہیں…</string>
     <string name="appeal_judging">جج سب کچھ دوبارہ دیکھ رہے ہیں…</string>
-    <string name="appeal_upsell">کچھ رہ گیا؟ تفصیل شامل کریں اور 1 فیصلے میں دوبارہ فیصلہ کروائیں۔</string>
+    <string name="appeal_upsell">کچھ رہ گیا؟ 1 فیصلے میں تفصیل شامل کریں۔</string>
     <string name="appeal_sign_in">تفصیل شامل کرنے کے لیے سائن ان کریں</string>
     <string name="appeal_used">آپ اس کیس میں پہلے ہی تفصیل شامل کر چکے ہیں۔</string>
     <string name="appeal_limit">آپ دو بار تفصیل شامل کر چکے ہیں۔ ایک فیصلے میں بس اتنی ہی گنجائش ہے۔</string>
@@ -471,7 +460,7 @@
     <string name="case_display_name">شیئر کیے گئے فیصلے پر آپ کا نام</string>
     <string name="case_display_save">نام محفوظ کریں</string>
     <string name="respond_keep">یہ کیس اپنے اکاؤنٹ میں رکھیں</string>
-    <string name="respond_kept">یہ کیس اب آپ کے اکاؤنٹ میں ہے۔ یہ ہر ڈیوائس پر آپ کے “فیصلے” کے صفحے پر نظر آتا ہے۔</string>
+    <string name="respond_kept">آپ کے اکاؤنٹ میں محفوظ ہے۔</string>
     <string name="respond_remove">میری بات ہٹائیں</string>
     <string name="respond_remove_confirm">آپ کا اصل متن اور ڈسپلے نام ہٹا دیں؟ کیس کے شیئر لنکس کام کرنا بند کر دیں گے (چیٹس میں پہلے سے پوسٹ ہوئے پریویو تب تک دکھ سکتے ہیں جب تک وہ ایپس انہیں ریفریش نہ کریں)۔ یہ واپس نہیں ہو سکتا۔</string>
     <string name="names_title">شیئر صفحے پر نام</string>
@@ -553,7 +542,7 @@
     <string name="app_tab_new">نیا</string>
     <string name="app_tab_settings">سیٹنگز</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">ابھی کوئی فیصلہ نہیں۔ اپنی پہلی بحث کا فیصلہ کروائیں تو وہ یہاں نظر آئے گا۔</string>
+    <string name="app_history_empty">ابھی کوئی فیصلہ نہیں۔</string>
     <string name="app_history_device_only">یہ فیصلے صرف اسی فون پر محفوظ ہیں۔ یہاں سے کوئی فیصلہ حذف کرنے سے اس کا شیئر لنک بند نہیں ہوتا۔</string>
     <string name="app_history_delete">حذف کریں</string>
     <string name="app_history_remove_all">سب ہٹائیں</string>
@@ -562,7 +551,7 @@
         <item quantity="other">اس فون سے %1$s فیصلے حذف کریں؟ ان کے شیئر لنکس کام کرتے رہیں گے۔</item>
     </plurals>
     <string name="app_history_phone_only">صرف اسی فون پر</string>
-    <string name="app_history_phone_only_note">یہ فیصلے آپ کے اکاؤنٹ میں نہیں، صرف اسی فون پر محفوظ ہیں۔ یہاں سے کوئی فیصلہ حذف کرنے سے اس کا شیئر لنک بند نہیں ہوتا۔</string>
+    <string name="app_history_phone_only_note">فیصلہ حذف کرنے سے اس کا شیئر لنک بند نہیں ہوتا۔</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="one">یہ فیصلہ اپنے اکاؤنٹ سے ہٹائیں؟ ہر ڈیوائس پر آپ کا لکھا ہوا اور نام مٹا دیے جائیں گے اور اس کا شیئر لنک کام کرنا بند کر دے گا۔ یہ واپس نہیں ہو سکتا۔</item>
         <item quantity="other">%1$s فیصلے اپنے اکاؤنٹ سے ہٹائیں؟ ہر ڈیوائس پر آپ کا لکھا ہوا اور نام مٹا دیے جائیں گے اور ان کے شیئر لنکس کام کرنا بند کر دیں گے۔ یہ واپس نہیں ہو سکتا۔</item>
@@ -583,9 +572,9 @@
     <string name="app_pricing_free_account">Apple، Google یا ای میل سے سائن ان کریں</string>
     <string name="app_pricing_context">تفصیل کی تصویریں پڑھ کر پھینک دی جاتی ہیں، کوئی اضافی خرچ نہیں</string>
     <string name="app_pricing_headline">پہلا فیصلہ ہماری طرف سے۔</string>
-    <string name="app_pricing_sub">اکاؤنٹ بنائیں اور پہلا فیصلہ مفت پائیں، تمام فیچرز کے ساتھ۔ اس کے بعد کوئی پیک لیں یا ماہانہ پلان۔</string>
+    <string name="app_pricing_sub">اس کے بعد کوئی پیک لیں یا ماہانہ پلان۔</string>
     <string name="app_pricing_headline_member">مزید فیصلے لیں۔</string>
-    <string name="app_pricing_sub_member">کوئی پیک لیں یا ماہانہ پلان۔ ہر فیصلے میں ججوں کا پورا پینل ملتا ہے۔</string>
+    <string name="app_pricing_sub_member">کوئی پیک لیں یا ماہانہ پلان۔</string>
     <plurals name="app_balance_left">
         <item quantity="one">%1$s فیصلہ باقی</item>
         <item quantity="other">%1$s فیصلے باقی</item>
@@ -679,10 +668,9 @@
     <string name="app_appeal_used">آپ اس کیس میں پہلے ہی تفصیل شامل کر چکے ہیں۔</string>
     <string name="app_appeal_limit">آپ دو بار تفصیل شامل کر چکے ہیں۔ ایک فیصلے میں بس اتنی ہی گنجائش ہے۔</string>
     <string name="app_purchase_buying">خریداری ہو رہی ہے…</string>
-    <string name="app_purchase_success">شکریہ! آپ کی خریداری مکمل ہو گئی۔</string>
-    <string name="app_purchase_pending">آپ کی خریداری پراسیس ہو رہی ہے۔ نظر آنے میں ایک منٹ لگ سکتا ہے۔</string>
-    <string name="app_purchase_arriving">آپ کے کریڈٹس آ رہے ہیں…</string>
-    <string name="app_purchase_slow">یہاں نظر آنے میں ایک منٹ لگ سکتا ہے۔</string>
+    <string name="app_purchase_success">خریداری مکمل ہو گئی۔</string>
+    <string name="app_purchase_pending">آپ کی خریداری پراسیس ہو رہی ہے۔</string>
+    <string name="app_purchase_slow">کریڈٹ آنے میں ایک منٹ لگ سکتا ہے۔</string>
     <string name="app_purchase_failed">خریداری مکمل نہیں ہو سکی۔ تھوڑی دیر میں دوبارہ کوشش کریں۔</string>
     <string name="app_purchase_restore">خریداریاں بحال کریں</string>
     <string name="app_purchase_restore_done">آپ کی خریداریاں بحال ہو گئیں۔</string>

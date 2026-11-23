@@ -115,7 +115,6 @@ class Strings(private val res: Resources) {
     val verdictTooClose: String get() = res.getString(R.string.verdict_too_close)
     fun leanTitle(name: String): String = res.getString(R.string.lean_title, name)
     val leanTitleSelf: String get() = res.getString(R.string.lean_title_self)
-    val leanUnanimous: String get() = res.getString(R.string.lean_unanimous)
     fun leanMajority(forValue: String, against: String): String = res.getString(R.string.lean_majority, forValue, against)
     val leanTie: String get() = res.getString(R.string.lean_tie)
     fun splitWin(name: String): String = res.getString(R.string.split_win, name)
@@ -145,7 +144,6 @@ class Strings(private val res: Resources) {
     val judgeAnother: String get() = res.getString(R.string.judge_another)
     val judgesVotedOne: String get() = res.getString(R.string.judges_voted_one)
     fun judgesVoted(n: Int): String = if (n == 1) res.getString(R.string.judges_voted_one) else res.getQuantityString(R.plurals.judges_voted, n, n.toString())
-    val escalated: String get() = res.getString(R.string.escalated)
     val translateLoading: String get() = res.getString(R.string.translate_loading)
     val translateFromEn: String get() = res.getString(R.string.translate_from_en)
     val translateFromTr: String get() = res.getString(R.string.translate_from_tr)
@@ -205,7 +203,6 @@ class Strings(private val res: Resources) {
     val footerNote: String get() = res.getString(R.string.footer_note)
     val footerLanguage: String get() = res.getString(R.string.footer_language)
     val notFoundTitle: String get() = res.getString(R.string.not_found_title)
-    val notFoundBody: String get() = res.getString(R.string.not_found_body)
     val navSignIn: String get() = res.getString(R.string.nav_sign_in)
     val navAccount: String get() = res.getString(R.string.nav_account)
     val navPricing: String get() = res.getString(R.string.nav_pricing)
@@ -227,7 +224,6 @@ class Strings(private val res: Resources) {
     val consentSensitiveContinue: String get() = res.getString(R.string.consent_sensitive_continue)
     val respondAdultConfirm: String get() = res.getString(R.string.respond_adult_confirm)
     val accountExport: String get() = res.getString(R.string.account_export)
-    val accountExportHint: String get() = res.getString(R.string.account_export_hint)
     val accountExportBusy: String get() = res.getString(R.string.account_export_busy)
     val accountExportFailed: String get() = res.getString(R.string.account_export_failed)
     val ratingPrompt: String get() = res.getString(R.string.rating_prompt)
@@ -246,7 +242,6 @@ class Strings(private val res: Resources) {
     val clarifyBack: String get() = res.getString(R.string.clarify_back)
     val thinkingFactcheck: String get() = res.getString(R.string.thinking_factcheck)
     val thinkingFactcheckDone: String get() = res.getString(R.string.thinking_factcheck_done)
-    val panelPremium: String get() = res.getString(R.string.panel_premium)
     val factcheckTitle: String get() = res.getString(R.string.factcheck_title)
     val factcheckLead: String get() = res.getString(R.string.factcheck_lead)
     val factcheckStatusSupported: String get() = res.getString(R.string.factcheck_status_supported)
@@ -305,13 +300,10 @@ class Strings(private val res: Resources) {
     val accountDeleteYes: String get() = res.getString(R.string.account_delete_yes)
     val accountDeleteCancel: String get() = res.getString(R.string.account_delete_cancel)
     val accountDeleteFailed: String get() = res.getString(R.string.account_delete_failed)
-    val accountSignInPrompt: String get() = res.getString(R.string.account_sign_in_prompt)
     val accountLoadFailed: String get() = res.getString(R.string.account_load_failed)
     val accountLoading: String get() = res.getString(R.string.account_loading)
     val pricingTitle: String get() = res.getString(R.string.pricing_title)
-    val pricingLead: String get() = res.getString(R.string.pricing_lead)
     val pricingTitleMember: String get() = res.getString(R.string.pricing_title_member)
-    val pricingLeadMember: String get() = res.getString(R.string.pricing_lead_member)
     val pricingIncludedTitle: String get() = res.getString(R.string.pricing_included_title)
     val pricingBuyTitle: String get() = res.getString(R.string.pricing_buy_title)
     val pricingPremiumF1: String get() = res.getString(R.string.pricing_premium_f1)
@@ -444,7 +436,6 @@ class Strings(private val res: Resources) {
     fun evidenceRemove(n: String): String = res.getString(R.string.evidence_remove, n)
     fun evidenceThumb(n: String): String = res.getString(R.string.evidence_thumb, n)
     val evidencePreview: String get() = res.getString(R.string.evidence_preview)
-    val evidencePreviewNote: String get() = res.getString(R.string.evidence_preview_note)
     val evidenceStatusUnreadable: String get() = res.getString(R.string.evidence_status_unreadable)
     val evidenceStatusRefused: String get() = res.getString(R.string.evidence_status_refused)
     val evidenceStatusUnsupported: String get() = res.getString(R.string.evidence_status_unsupported)
@@ -471,8 +462,6 @@ class Strings(private val res: Resources) {
     val homeRemoveTheirSide: String get() = res.getString(R.string.home_remove_their_side)
     val homeSendLink: String get() = res.getString(R.string.home_send_link)
     val homeClear: String get() = res.getString(R.string.home_clear)
-    val homeLead: String get() = res.getString(R.string.home_lead)
-    val homeLeadSolo: String get() = res.getString(R.string.home_lead_solo)
     val homeTheirSide: String get() = res.getString(R.string.home_their_side)
     val homeTheirName: String get() = res.getString(R.string.home_their_name)
     val homeTheirPlaceholder: String get() = res.getString(R.string.home_their_placeholder)
@@ -713,7 +702,6 @@ class Strings(private val res: Resources) {
     val appPurchaseBuying: String get() = res.getString(R.string.app_purchase_buying)
     val appPurchaseSuccess: String get() = res.getString(R.string.app_purchase_success)
     val appPurchasePending: String get() = res.getString(R.string.app_purchase_pending)
-    val appPurchaseArriving: String get() = res.getString(R.string.app_purchase_arriving)
     val appPurchaseSlow: String get() = res.getString(R.string.app_purchase_slow)
     val appPurchaseFailed: String get() = res.getString(R.string.app_purchase_failed)
     val appPurchaseRestore: String get() = res.getString(R.string.app_purchase_restore)
@@ -775,7 +763,6 @@ class Strings(private val res: Resources) {
             "verdict.dissolved" -> R.string.verdict_dissolved
             "verdict.tooClose" -> R.string.verdict_too_close
             "lean.titleSelf" -> R.string.lean_title_self
-            "lean.unanimous" -> R.string.lean_unanimous
             "lean.tie" -> R.string.lean_tie
             "splitWinSelf" -> R.string.split_win_self
             "ifPrefix" -> R.string.if_prefix
@@ -802,7 +789,6 @@ class Strings(private val res: Resources) {
             "copyPrompt" -> R.string.copy_prompt
             "judgeAnother" -> R.string.judge_another
             "judgesVoted.one" -> R.string.judges_voted_one
-            "escalated" -> R.string.escalated
             "translate.loading" -> R.string.translate_loading
             "translate.from.en" -> R.string.translate_from_en
             "translate.from.tr" -> R.string.translate_from_tr
@@ -855,7 +841,6 @@ class Strings(private val res: Resources) {
             "footer.note" -> R.string.footer_note
             "footer.language" -> R.string.footer_language
             "notFound.title" -> R.string.not_found_title
-            "notFound.body" -> R.string.not_found_body
             "nav.signIn" -> R.string.nav_sign_in
             "nav.account" -> R.string.nav_account
             "nav.pricing" -> R.string.nav_pricing
@@ -877,7 +862,6 @@ class Strings(private val res: Resources) {
             "consent.sensitiveContinue" -> R.string.consent_sensitive_continue
             "respond.adultConfirm" -> R.string.respond_adult_confirm
             "account.export" -> R.string.account_export
-            "account.exportHint" -> R.string.account_export_hint
             "account.exportBusy" -> R.string.account_export_busy
             "account.exportFailed" -> R.string.account_export_failed
             "rating.prompt" -> R.string.rating_prompt
@@ -895,7 +879,6 @@ class Strings(private val res: Resources) {
             "clarify.back" -> R.string.clarify_back
             "thinking.factcheck" -> R.string.thinking_factcheck
             "thinking.factcheckDone" -> R.string.thinking_factcheck_done
-            "panel.premium" -> R.string.panel_premium
             "factcheck.title" -> R.string.factcheck_title
             "factcheck.lead" -> R.string.factcheck_lead
             "factcheck.status.supported" -> R.string.factcheck_status_supported
@@ -948,13 +931,10 @@ class Strings(private val res: Resources) {
             "account.deleteYes" -> R.string.account_delete_yes
             "account.deleteCancel" -> R.string.account_delete_cancel
             "account.deleteFailed" -> R.string.account_delete_failed
-            "account.signInPrompt" -> R.string.account_sign_in_prompt
             "account.loadFailed" -> R.string.account_load_failed
             "account.loading" -> R.string.account_loading
             "pricing.title" -> R.string.pricing_title
-            "pricing.lead" -> R.string.pricing_lead
             "pricing.titleMember" -> R.string.pricing_title_member
-            "pricing.leadMember" -> R.string.pricing_lead_member
             "pricing.included.title" -> R.string.pricing_included_title
             "pricing.buy.title" -> R.string.pricing_buy_title
             "pricing.premium.f1" -> R.string.pricing_premium_f1
@@ -1075,7 +1055,6 @@ class Strings(private val res: Resources) {
             "evidence.reading" -> R.string.evidence_reading
             "evidence.ok" -> R.string.evidence_ok
             "evidence.preview" -> R.string.evidence_preview
-            "evidence.previewNote" -> R.string.evidence_preview_note
             "evidence.status.unreadable" -> R.string.evidence_status_unreadable
             "evidence.status.refused" -> R.string.evidence_status_refused
             "evidence.status.unsupported" -> R.string.evidence_status_unsupported
@@ -1098,8 +1077,6 @@ class Strings(private val res: Resources) {
             "home.removeTheirSide" -> R.string.home_remove_their_side
             "home.sendLink" -> R.string.home_send_link
             "home.clear" -> R.string.home_clear
-            "home.lead" -> R.string.home_lead
-            "home.leadSolo" -> R.string.home_lead_solo
             "home.theirSide" -> R.string.home_their_side
             "home.theirName" -> R.string.home_their_name
             "home.theirPlaceholder" -> R.string.home_their_placeholder
@@ -1313,7 +1290,6 @@ class Strings(private val res: Resources) {
             "app.purchase.buying" -> R.string.app_purchase_buying
             "app.purchase.success" -> R.string.app_purchase_success
             "app.purchase.pending" -> R.string.app_purchase_pending
-            "app.purchase.arriving" -> R.string.app_purchase_arriving
             "app.purchase.slow" -> R.string.app_purchase_slow
             "app.purchase.failed" -> R.string.app_purchase_failed
             "app.purchase.restore" -> R.string.app_purchase_restore

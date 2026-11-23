@@ -133,7 +133,11 @@ function useRespondForm(
   const [error, setError] = useState<string | null>(null);
   const [adult, setAdult] = useState(false);
   const [agreed, setAgreed] = useState(false);
-  const evidence = useEvidence(`/api/v1/respond/${encodeURIComponent(token)}/evidence`, MAX_EVIDENCE_PER_SIDE);
+  const ticks = useMemo(
+    () => (signedOut ? { "Adult-Confirmed": String(adult), "Sensitive-Agreed": String(agreed) } : undefined),
+    [signedOut, adult, agreed],
+  );
+  const evidence = useEvidence(`/api/v1/respond/${encodeURIComponent(token)}/evidence`, MAX_EVIDENCE_PER_SIDE, ticks);
   const keyFor = useMemo(() => keyHolder(), []);
   const needsCheck = TURNSTILE_SITE_KEY !== "";
   const trimmed = text.trim();

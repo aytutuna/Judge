@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">Tri neovisna suca · Suci ne vide imena</string>
     <string name="hero_lead">Reci nam oko čega se svađate. Tri AI suca odlučuju svaki za sebe, a ocjena pouzdanosti pokazuje koliko se slažu.</string>
     <string name="input_label">Rasprava</string>
-    <string name="placeholder">Što se dogodilo? Tko što tvrdi i zašto?\n\nNapiši i stajalište druge osobe onako kako bi ga ona iznijela. Suci ionako za obje strane sastavljaju najjači mogući argument.</string>
+    <string name="placeholder">Što se dogodilo? Tko što tvrdi i zašto?</string>
     <string name="get_verdict">Saznaj presudu</string>
     <string name="thinking_eyebrow">Što suci rade</string>
     <string name="thinking_read">Čitamo obje strane i svaku gledamo u najboljem svjetlu…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">Tražimo srž…</string>
     <string name="thinking_judges">Tri suca odlučuju, svaki za sebe…</string>
     <string name="thinking_votes">Brojimo glasove…</string>
-    <string name="thinking_helper">Tri AI suca presuđuju odvojeno, a kad je tijesno, uključuju se dodatni suci. Daj nam minutu.</string>
+    <string name="thinking_helper">Daj nam minutu.</string>
     <string name="thinking_finish">Bližimo se srži…</string>
-    <string name="thinking_still_judging">Suci još razmišljaju. Strpi se malo…</string>
+    <string name="thinking_still_judging">Još radimo na tome…</string>
     <string name="thinking_ready">Presuda je gotova.</string>
     <string name="story_names">Uklanjamo imena da nikoga ne sudi tko je</string>
     <string name="story_facts">Zasebni provjeravatelj traži činjenice na webu</string>
@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Pretijesno za presudu</string>
     <string name="lean_title">Iznuđena odluka: %1$s je više u pravu</string>
     <string name="lean_title_self">Iznuđena odluka: ti si više u pravu</string>
-    <string name="lean_unanimous">Svi suci naginju ovoj strani.</string>
     <string name="lean_majority">Suci naginju ovoj strani rezultatom %1$s–%2$s.</string>
     <string name="lean_tie">Čak i kad moraju birati, suci se dijele točno na pola.</string>
     <string name="split_win">%1$s je u pravu u ovome:</string>
@@ -72,18 +71,17 @@
         <item quantity="few">%1$s neovisna AI suca glasala su:</item>
         <item quantity="other">%1$s neovisnih AI sudaca glasalo je:</item>
     </plurals>
-    <string name="escalated">Bilo je tijesno, pa smo pozvali dodatne suce.</string>
     <string name="translate_loading">Prevodimo…</string>
     <string name="translate_from_en">Prevedeno s engleskog</string>
     <string name="translate_from_tr">Prevedeno s turskog</string>
-    <string name="translate_failed">Trenutačno ne možemo prevesti, pa evo izvornika.</string>
+    <string name="translate_failed">Prijevod nije uspio.</string>
     <string name="translate_toggle">Jezik presude</string>
     <string name="vote_split">podijeljeno</string>
     <string name="vote_conditional">ovisi</string>
     <string name="vote_dissolved">zbrka pojmova</string>
-    <string name="refused_note">AI je ovaj put odustao. Radije nećemo pokazati ništa nego izmisliti presudu.</string>
+    <string name="refused_note">AI je ovaj put odustao.</string>
     <string name="demo_note">Demo način: AI ključ nije postavljen, pa je ovo primjer presude</string>
-    <string name="trial_survived">Prigovor odbijen: odvjetnik druge strane iznio je svoj najjači prigovor, a presuda je izdržala. Pouzdanost ostaje ista.</string>
+    <string name="trial_survived">Prigovor odbijen: presuda je izdržala.</string>
     <string name="trial_uncertain">Odvjetnik druge strane uložio je prigovor i on je ostavio ozbiljnu sumnju u ovu presudu</string>
     <string name="trial_overturned">Prigovor prihvaćen: presuda ostaje na snazi, ali ju je najjači prigovor druge strane ozbiljno oslabio</string>
     <string name="trial_minor">Odvjetnik druge strane iznio je opravdanu točku, ali presuda ostaje na snazi</string>
@@ -122,7 +120,7 @@
         <item quantity="few">%1$s sata</item>
         <item quantity="other">%1$s sati</item>
     </plurals>
-    <string name="examples_label">Nemaš ideju? Isprobaj nešto od ovoga:</string>
+    <string name="examples_label">Isprobaj jedan:</string>
     <string name="example_hotdog_label">🥧 Je li burek sa sirom burek?</string>
     <string name="example_hotdog_text">Moj prijatelj Luka kaže da je burek samo onaj s mesom, a sve ostalo je sirnica, krumpiruša ili zeljanica. Ja kažem da je burek sa sirom burek: isto tijesto, isti oblik, i svaka pekara ga tako zove.</string>
     <string name="example_tomato_label">🍅 Je li rajčica voće?</string>
@@ -140,7 +138,6 @@
     <string name="footer_note">Za zabavu i jasnoću, ne kao pravni savjet.</string>
     <string name="footer_language">Jezik</string>
     <string name="not_found_title">Ova je presuda napustila sudnicu</string>
-    <string name="not_found_body">Možda je poveznica krivo upisana ili presuda više ne postoji.</string>
     <string name="nav_sign_in">Prijava</string>
     <string name="nav_account">Račun</string>
     <string name="nav_pricing">Cijene</string>
@@ -162,7 +159,6 @@
     <string name="consent_sensitive_continue">Nastavi</string>
     <string name="respond_adult_confirm">Imam 18 ili više godina</string>
     <string name="account_export">Preuzmi moje podatke</string>
-    <string name="account_export_hint">Dobij JSON datoteku sa svime što Judge čuva o tebi.</string>
     <string name="account_export_busy">Pripremam datoteku…</string>
     <string name="account_export_failed">Trenutačno nismo mogli pripremiti tvoje podatke. Želiš li pokušati ponovno?</string>
     <string name="rating_prompt">Je li presuda pravedna?</string>
@@ -181,19 +177,18 @@
     <string name="clarify_back">Uredi raspravu</string>
     <string name="thinking_factcheck">Provjeravamo činjenice na internetu…</string>
     <string name="thinking_factcheck_done">Provjera na internetu je gotova.</string>
-    <string name="panel_premium">Presuđeno uz provjeru činjenica na internetu.</string>
     <string name="factcheck_title">Provjereno na internetu</string>
-    <string name="factcheck_lead">Suci su vidjeli ove rezultate pretraživanja prije presude. To su dokazi, a ne sama presuda.</string>
+    <string name="factcheck_lead">Suci su vidjeli ove rezultate pretraživanja prije presude.</string>
     <string name="factcheck_status_supported">Stoji</string>
     <string name="factcheck_status_refuted">Ne stoji</string>
     <string name="factcheck_status_mixed">Djelomično točno</string>
     <string name="factcheck_status_unverified">Nije potvrđeno</string>
     <string name="factcheck_sources">Izvori</string>
-    <string name="factcheck_none">Ovdje nema što tražiti na internetu: ova rasprava ovisi o vrijednostima ili značenjima, a ne o činjenicama.</string>
-    <string name="factcheck_none_factual">Ovdje se ništa ne može provjeriti na internetu: činjenice u ovom slučaju poznaju samo uključene osobe.</string>
+    <string name="factcheck_none">Nema što provjeriti na internetu.</string>
+    <string name="factcheck_none_factual">Nema što provjeriti na internetu.</string>
     <string name="factcheck_unavailable">Provjera na internetu ovaj put nije završila, pa su suci presudili bez nje.</string>
     <string name="signin_title">Prijava</string>
-    <string name="signin_lead">Prijavi se i dobij presudu. Novi račun prvu presudu dobiva besplatno.</string>
+    <string name="signin_lead">Prva presuda je besplatna.</string>
     <string name="signin_apple">Nastavi s Appleom</string>
     <string name="signin_google">Nastavi s Googleom</string>
     <string name="signin_email_toggle">Radije e-poštom</string>
@@ -211,7 +206,7 @@
     <string name="signin_use_password">Umjesto toga koristi lozinku</string>
     <string name="signin_password_wrong">Ta e-pošta i lozinka se ne podudaraju.</string>
     <string name="signin_password_short">Koristi najmanje 8 znakova.</string>
-    <string name="signin_create_note">Poslat ćemo ti kod e-poštom kako bismo potvrdili ovu adresu. To trebaš napraviti samo jednom.</string>
+    <string name="signin_create_note">Poslat ćemo ti kod e-poštom za potvrdu.</string>
     <string name="signin_password_choose">Prijavljen si. Odaberi lozinku za sljedeći put.</string>
     <string name="signin_password_save">Spremi lozinku</string>
     <string name="signin_password_save_failed">Lozinku nismo mogli spremiti. Pokušaj ponovno.</string>
@@ -240,13 +235,10 @@
     <string name="account_delete_yes">Da, izbriši</string>
     <string name="account_delete_cancel">Zadrži račun</string>
     <string name="account_delete_failed">Trenutačno ne možemo izbrisati račun. Možeš pokušati ponovno?</string>
-    <string name="account_sign_in_prompt">Prijavi se da vidiš svoj plan i kredite.</string>
     <string name="account_load_failed">Nismo uspjeli učitati tvoj račun. Pokušaj ponovno za trenutak.</string>
     <string name="account_loading">Učitavamo tvoj račun…</string>
     <string name="pricing_title">Prvu presudu častimo.</string>
-    <string name="pricing_lead">Otvori račun i prva presuda je besplatna, sa svim mogućnostima. Nakon toga odaberi paket ili prijeđi na mjesečni plan.</string>
     <string name="pricing_title_member">Nabavi još presuda.</string>
-    <string name="pricing_lead_member">Odaberi paket ili prijeđi na mjesečni plan. O svakoj presudi odlučuje puni sastav sudaca.</string>
     <string name="pricing_included_title">Svaka presuda</string>
     <string name="pricing_buy_title">Paketi i mjesečni plan</string>
     <string name="pricing_premium_f1">Činjenice provjerene na internetu, s izvorima u tvojoj presudi</string>
@@ -254,7 +246,7 @@
     <string name="pricing_premium_f3">Najviše dva kratka pitanja kad nedostaje ključna činjenica</string>
     <string name="pricing_premium_f4">Imena se uklanjaju prije presuđivanja</string>
     <string name="pricing_packs_title">Paketi kredita</string>
-    <string name="pricing_packs_lead">Platiš jednom, koristiš kad god želiš. Svaka presuda troši jedan kredit.</string>
+    <string name="pricing_packs_lead">Svaka presuda troši jedan kredit.</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s presuda</item>
         <item quantity="few">%1$s presude</item>
@@ -342,8 +334,8 @@
     <string name="case_context_d">Dodatni kontekst: Strana D</string>
     <string name="case_context_you">Tvoj dodatni kontekst (%1$s)</string>
     <string name="case_evidence_item">%1$s. slika, onako kako su je suci pročitali</string>
-    <string name="case_answered">Odgovor je stigao. Suci rade na tome.</string>
-    <string name="case_judging_alone">Suci rade na tvojoj strani.</string>
+    <string name="case_answered">Suci rade na tome.</string>
+    <string name="case_judging_alone">Suci rade na tome.</string>
     <string name="case_expired_body">Nitko nije odgovorio u roku od 7 dana, pa ti je kredit vraćen. I dalje možeš dobiti presudu samo na temelju svoje strane.</string>
     <string name="case_expired_body_free">Nitko nije odgovorio u roku od 7 dana. I dalje možeš dobiti presudu samo na temelju svoje strane.</string>
     <string name="case_one_sided">Presuđeno samo na temelju tvoje strane.</string>
@@ -360,12 +352,12 @@
     <string name="respond_submit">Pošalji svoju stranu</string>
     <string name="case_write_title">Tvoja strana</string>
     <string name="case_write_placeholder">Što je problem?</string>
-    <string name="case_write_lead">Napiši svoju stranu kad budeš spreman. Suci počinju kad oboje napišete.</string>
+    <string name="case_write_lead">Suci počinju kad oboje napišete.</string>
     <string name="case_write_lead_answered">Druga strana je napisala svoju. Napiši svoju da dobiješ presudu.</string>
     <string name="case_write_submit">Pošalji moju stranu</string>
     <string name="case_write_email_subject">Druga strana je napisala svoje</string>
-    <string name="respond_sent">Hvala. Tvoja strana je stigla i suci rade na tome.</string>
-    <string name="respond_sent_waiting">Hvala. Tvoja strana je stigla. Suci počinju kad druga osoba napiše svoju.</string>
+    <string name="respond_sent">Tvoja strana je stigla.</string>
+    <string name="respond_sent_waiting">Tvoja strana je stigla. Čekamo drugu osobu.</string>
     <string name="respond_own_invite">Ovo je tvoja vlastita poveznica poziva. Pošalji je drugoj osobi.</string>
     <string name="respond_expired">Ovaj je poziv istekao.</string>
     <string name="respond_closed">Ovaj slučaj više ne prima odgovore.</string>
@@ -391,7 +383,6 @@
     <string name="evidence_remove">Ukloni %1$s. sliku</string>
     <string name="evidence_thumb">%1$s. slika</string>
     <string name="evidence_preview">Što smo pročitali</string>
-    <string name="evidence_preview_note">Ovo vidiš samo ti. Imena se skrivaju prije nego što suci pročitaju tekst.</string>
     <string name="evidence_status_unreadable">Nismo pronašli nikakav tekst</string>
     <string name="evidence_status_refused">Čitač je odbio ovu sliku</string>
     <string name="evidence_status_unsupported">Nije PNG, JPEG, WebP ni GIF</string>
@@ -418,8 +409,6 @@
     <string name="home_remove_their_side">Ukloni drugu stranu</string>
     <string name="home_send_link">Pošalji poveznicu</string>
     <string name="home_clear">Očisti</string>
-    <string name="home_lead">Napiši obje strane ili pošalji poveznicu drugoj osobi da napiše svoju.</string>
-    <string name="home_lead_solo">Napiši svoju stranu, a ako je znaš, i drugu.</string>
     <string name="home_their_side">Druga strana</string>
     <string name="home_their_name">Ime druge osobe</string>
     <string name="home_their_placeholder">Što kaže druga osoba? Napiši to onako kako bi ona rekla.</string>
@@ -433,7 +422,7 @@
     <string name="appeal_submit">Presudi ponovno</string>
     <string name="appeal_sending">Anonimiziramo tvoj kontekst…</string>
     <string name="appeal_judging">Suci ponovno gledaju sve…</string>
-    <string name="appeal_upsell">Nešto nedostaje? Dodaj kontekst i neka suci ponovno presude. Troši 1 presudu.</string>
+    <string name="appeal_upsell">Nešto nedostaje? Dodaj kontekst za 1 presudu.</string>
     <string name="appeal_sign_in">Prijavi se da dodaš kontekst</string>
     <string name="appeal_used">Tvoj kontekst za ovaj slučaj već je dodan.</string>
     <string name="appeal_limit">Kontekst je dodan već dvaput. To je granica za jednu presudu.</string>
@@ -477,7 +466,7 @@
     <string name="case_display_name">Tvoje ime na podijeljenoj presudi</string>
     <string name="case_display_save">Spremi ime</string>
     <string name="respond_keep">Spremi ovaj slučaj na svoj račun</string>
-    <string name="respond_kept">Ovaj je slučaj sada na tvom računu. Vidiš ga na stranici „Presude“ na svakom uređaju.</string>
+    <string name="respond_kept">Spremljeno na tvom računu.</string>
     <string name="respond_remove">Ukloni svoju stranu</string>
     <string name="respond_remove_confirm">Želiš ukloniti svoj izvorni tekst i svoje prikazano ime? Poveznice za dijeljenje slučaja prestaju raditi (pregledi već objavljeni u razgovorima mogu se i dalje prikazivati dok ih te aplikacije ne osvježe). Ovo se ne može poništiti.</string>
     <string name="names_title">Imena na podijeljenoj stranici</string>
@@ -562,7 +551,7 @@
     <string name="app_tab_new">Novo</string>
     <string name="app_tab_settings">Postavke</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">Još nemaš presuda. Riješi prvu raspravu i presuda će se pojaviti ovdje.</string>
+    <string name="app_history_empty">Još nema presuda.</string>
     <string name="app_history_device_only">Spremljeno samo na ovom telefonu. Ako presudu izbrišeš ovdje, njezina poveznica za dijeljenje i dalje radi.</string>
     <string name="app_history_delete">Izbriši</string>
     <string name="app_history_remove_all">Ukloni sve</string>
@@ -572,7 +561,7 @@
         <item quantity="other">Izbrisati %1$s presuda s ovog telefona? Poveznice za dijeljenje i dalje rade.</item>
     </plurals>
     <string name="app_history_phone_only">Samo na ovom telefonu</string>
-    <string name="app_history_phone_only_note">Nisu na tvom računu: ove su presude spremljene samo na ovom telefonu. Ako neku od njih izbrišeš ovdje, njezina poveznica za dijeljenje i dalje radi.</string>
+    <string name="app_history_phone_only_note">Brisanje presude ne gasi njezinu poveznicu za dijeljenje.</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="one">Ukloniti %1$s presudu s tvog računa? Na svim uređajima brišu se tvoj tekst i imena, a poveznice za dijeljenje prestaju raditi. Ovo se ne može poništiti.</item>
         <item quantity="few">Ukloniti %1$s presude s tvog računa? Na svim uređajima brišu se tvoj tekst i imena, a poveznice za dijeljenje prestaju raditi. Ovo se ne može poništiti.</item>
@@ -597,9 +586,9 @@
     <string name="app_pricing_free_account">Prijavi se s Appleom, Googleom ili e-poštom</string>
     <string name="app_pricing_context">Slike konteksta se pročitaju pa odbace, bez dodatnog troška</string>
     <string name="app_pricing_headline">Prvu presudu častimo.</string>
-    <string name="app_pricing_sub">Otvori račun i prva presuda je besplatna, sa svim mogućnostima. Nakon toga odaberi paket ili prijeđi na mjesečni plan.</string>
+    <string name="app_pricing_sub">Nakon toga odaberi paket ili prijeđi na mjesečni plan.</string>
     <string name="app_pricing_headline_member">Nabavi još presuda.</string>
-    <string name="app_pricing_sub_member">Odaberi paket ili prijeđi na mjesečni plan. O svakoj presudi odlučuje puni sastav sudaca.</string>
+    <string name="app_pricing_sub_member">Odaberi paket ili prijeđi na mjesečni plan.</string>
     <plurals name="app_balance_left">
         <item quantity="one">Još %1$s presuda</item>
         <item quantity="few">Još %1$s presude</item>
@@ -694,10 +683,9 @@
     <string name="app_appeal_used">Tvoj kontekst za ovaj slučaj već je dodan.</string>
     <string name="app_appeal_limit">Kontekst je dodan već dvaput. To je granica za jednu presudu.</string>
     <string name="app_purchase_buying">Kupnja…</string>
-    <string name="app_purchase_success">Hvala! Kupnja je uspjela.</string>
-    <string name="app_purchase_pending">Kupnja se obrađuje. Može potrajati minutu dok se ne pojavi.</string>
-    <string name="app_purchase_arriving">Krediti su na putu…</string>
-    <string name="app_purchase_slow">Može potrajati minutu dok se ovdje ne pojavi.</string>
+    <string name="app_purchase_success">Kupnja je uspjela.</string>
+    <string name="app_purchase_pending">Kupnja se obrađuje.</string>
+    <string name="app_purchase_slow">Krediti se mogu pojaviti tek za minutu.</string>
     <string name="app_purchase_failed">Kupnja nije uspjela. Pokušaj ponovno za trenutak.</string>
     <string name="app_purchase_restore">Vrati kupnje</string>
     <string name="app_purchase_restore_done">Kupnje su vraćene.</string>

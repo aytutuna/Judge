@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">Ba giám khảo độc lập · Giám khảo không bao giờ thấy tên</string>
     <string name="hero_lead">Kể cho chúng tôi nghe hai bên đang cãi nhau chuyện gì. Ba giám khảo AI phân xử độc lập với nhau, và độ tin cậy cho thấy họ đồng thuận đến đâu.</string>
     <string name="input_label">Cuộc tranh cãi</string>
-    <string name="placeholder">Chuyện gì đã xảy ra? Ai nói gì, vì sao?\n\nHãy kể cả lý lẽ của bên kia, theo đúng cách họ sẽ nói. Dù thế nào, giám khảo cũng sẽ dựng lập luận mạnh nhất cho cả hai bên.</string>
+    <string name="placeholder">Chuyện gì đã xảy ra? Ai nói gì, vì sao?</string>
     <string name="get_verdict">Phân xử ngay</string>
     <string name="thinking_eyebrow">Ban giám khảo đang làm gì</string>
     <string name="thinking_read">Đang đọc cả hai bên, cho mỗi bên cơ hội tốt nhất…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">Đang truy tìm mấu chốt…</string>
     <string name="thinking_judges">Ba giám khảo đang cân nhắc, mỗi người tự quyết…</string>
     <string name="thinking_votes">Đang đếm phiếu…</string>
-    <string name="thinking_helper">Ba giám khảo AI phân xử riêng rẽ, nếu sát nút sẽ gọi thêm giám khảo. Chờ chừng một phút nhé.</string>
+    <string name="thinking_helper">Chờ chừng một phút nhé.</string>
     <string name="thinking_finish">Sắp chạm tới mấu chốt…</string>
-    <string name="thinking_still_judging">Ban giám khảo vẫn đang suy nghĩ. Chờ thêm chút nhé…</string>
+    <string name="thinking_still_judging">Vẫn đang xử lý…</string>
     <string name="thinking_ready">Đã có phán quyết.</string>
     <string name="story_names">Đang bỏ tên đi để không ai bị đánh giá theo con người họ</string>
     <string name="story_facts">Một bộ kiểm tra riêng tra cứu sự thật trên web</string>
@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Quá sát, khó phân định</string>
     <string name="lean_title">Buộc phải chọn: %1$s đúng hơn</string>
     <string name="lean_title_self">Buộc phải chọn: bạn đúng hơn</string>
-    <string name="lean_unanimous">Tất cả giám khảo đều nghiêng về phía này.</string>
     <string name="lean_majority">Ban giám khảo nghiêng về phía này với tỉ số %1$s–%2$s.</string>
     <string name="lean_tie">Dù bị ép phải chọn, ban giám khảo vẫn chia đều hai phe.</string>
     <string name="split_win">%1$s đúng ở điểm này:</string>
@@ -70,18 +69,17 @@
     <plurals name="judges_voted">
         <item quantity="other">%1$s giám khảo AI độc lập đã bỏ phiếu:</item>
     </plurals>
-    <string name="escalated">Kết quả sát nút nên chúng tôi đã gọi thêm giám khảo.</string>
     <string name="translate_loading">Đang dịch…</string>
     <string name="translate_from_en">Dịch từ tiếng Anh</string>
     <string name="translate_from_tr">Dịch từ tiếng Thổ Nhĩ Kỳ</string>
-    <string name="translate_failed">Chưa dịch được lúc này, đây là bản gốc.</string>
+    <string name="translate_failed">Không dịch được.</string>
     <string name="translate_toggle">Ngôn ngữ phán quyết</string>
     <string name="vote_split">chia đôi</string>
     <string name="vote_conditional">tùy</string>
     <string name="vote_dissolved">lệch nghĩa</string>
-    <string name="refused_note">AI đã từ chối vụ này. Chúng tôi thà không hiện gì còn hơn bịa ra một phán quyết.</string>
+    <string name="refused_note">AI đã bỏ qua vụ này.</string>
     <string name="demo_note">Chế độ demo: chưa thiết lập khóa AI nên đây là phán quyết mẫu</string>
-    <string name="trial_survived">Bác bỏ phản đối: luật sư phía bên kia đã nêu phản đối mạnh nhất của mình, và phán quyết vẫn đứng vững. Độ tin cậy giữ nguyên.</string>
+    <string name="trial_survived">Bác bỏ phản đối: phán quyết vẫn đứng vững.</string>
     <string name="trial_uncertain">Luật sư phía bên kia đã phản đối, và sự phản đối đó để lại nghi ngờ thật sự về phán quyết này</string>
     <string name="trial_overturned">Chấp nhận phản đối: phán quyết vẫn giữ nguyên, nhưng phản đối mạnh nhất của phía bên kia đã làm nó yếu đi nghiêm trọng</string>
     <string name="trial_minor">Luật sư phía bên kia nêu một điểm hợp lý, nhưng phán quyết vẫn giữ nguyên</string>
@@ -116,7 +114,7 @@
     <plurals name="wait_hours">
         <item quantity="other">%1$s giờ</item>
     </plurals>
-    <string name="examples_label">Bí ý tưởng? Thử một vụ dưới đây:</string>
+    <string name="examples_label">Thử một vụ:</string>
     <string name="example_hotdog_label">🥖 Bánh mì có phải là sandwich?</string>
     <string name="example_hotdog_text">Minh, bạn mình, bảo bánh mì cũng là sandwich: nhân kẹp trong ổ bánh xẻ đôi, hết chuyện. Mình thì nói bánh mì là bánh mì. Chẳng ai gọi sandwich mà mong được mang ra ổ bánh mì thịt, và cũng chẳng thực đơn nào xếp bánh mì vào mục sandwich.</string>
     <string name="example_tomato_label">🍅 Cà chua là rau hay quả?</string>
@@ -134,7 +132,6 @@
     <string name="footer_note">Để giải trí và cho rõ ràng, không phải tư vấn pháp lý.</string>
     <string name="footer_language">Ngôn ngữ</string>
     <string name="not_found_title">Phán quyết này đã rời phòng xử</string>
-    <string name="not_found_body">Có thể liên kết bị gõ sai, hoặc phán quyết không còn nữa.</string>
     <string name="nav_sign_in">Đăng nhập</string>
     <string name="nav_account">Tài khoản</string>
     <string name="nav_pricing">Bảng giá</string>
@@ -156,7 +153,6 @@
     <string name="consent_sensitive_continue">Tiếp tục</string>
     <string name="respond_adult_confirm">Tôi từ 18 tuổi trở lên</string>
     <string name="account_export">Tải dữ liệu của tôi</string>
-    <string name="account_export_hint">Nhận một tệp JSON chứa mọi thứ Judge lưu về bạn.</string>
     <string name="account_export_busy">Đang chuẩn bị tệp của bạn…</string>
     <string name="account_export_failed">Hiện chưa chuẩn bị được dữ liệu của bạn. Bạn thử lại nhé?</string>
     <string name="rating_prompt">Phán quyết có công bằng không?</string>
@@ -175,19 +171,18 @@
     <string name="clarify_back">Sửa nội dung</string>
     <string name="thinking_factcheck">Đang kiểm chứng sự thật trên mạng…</string>
     <string name="thinking_factcheck_done">Đã kiểm chứng xong trên mạng.</string>
-    <string name="panel_premium">Đã phân xử kèm kiểm chứng trên mạng.</string>
     <string name="factcheck_title">Đã kiểm chứng trên mạng</string>
-    <string name="factcheck_lead">Giám khảo đã xem các kết quả tìm kiếm này trước khi phân xử. Đây là bằng chứng, không phải bản thân phán quyết.</string>
+    <string name="factcheck_lead">Giám khảo đã xem các kết quả tìm kiếm này trước khi phân xử.</string>
     <string name="factcheck_status_supported">Đúng</string>
     <string name="factcheck_status_refuted">Không đúng</string>
     <string name="factcheck_status_mixed">Đúng một phần</string>
     <string name="factcheck_status_unverified">Chưa xác nhận được</string>
     <string name="factcheck_sources">Nguồn</string>
-    <string name="factcheck_none">Không có gì để tra trên mạng: vụ này xoay quanh giá trị hoặc cách hiểu từ ngữ, không phải sự thật.</string>
-    <string name="factcheck_none_factual">Không có gì ở đây kiểm chứng được trên mạng: các sự thật trong vụ này chỉ những người trong cuộc mới biết.</string>
+    <string name="factcheck_none">Không có gì để tra trên mạng.</string>
+    <string name="factcheck_none_factual">Không có gì để tra trên mạng.</string>
     <string name="factcheck_unavailable">Lần này việc kiểm chứng trên mạng chưa xong, nên giám khảo đã phân xử mà không có nó.</string>
     <string name="signin_title">Đăng nhập</string>
-    <string name="signin_lead">Đăng nhập để nhận phán quyết. Tài khoản mới được miễn phí phán quyết đầu tiên.</string>
+    <string name="signin_lead">Phán quyết đầu tiên của bạn miễn phí.</string>
     <string name="signin_apple">Tiếp tục với Apple</string>
     <string name="signin_google">Tiếp tục với Google</string>
     <string name="signin_email_toggle">Dùng email</string>
@@ -205,7 +200,7 @@
     <string name="signin_use_password">Dùng mật khẩu thay vào đó</string>
     <string name="signin_password_wrong">Email và mật khẩu này không khớp.</string>
     <string name="signin_password_short">Dùng ít nhất 8 ký tự.</string>
-    <string name="signin_create_note">Chúng tôi sẽ gửi cho bạn một mã qua email để xác nhận địa chỉ này. Bạn chỉ cần làm một lần.</string>
+    <string name="signin_create_note">Chúng tôi sẽ gửi cho bạn một mã qua email để xác nhận.</string>
     <string name="signin_password_choose">Bạn đã đăng nhập. Hãy chọn một mật khẩu cho lần sau.</string>
     <string name="signin_password_save">Lưu mật khẩu</string>
     <string name="signin_password_save_failed">Chúng tôi không lưu được mật khẩu. Hãy thử lại.</string>
@@ -234,13 +229,10 @@
     <string name="account_delete_yes">Có, xóa đi</string>
     <string name="account_delete_cancel">Giữ tài khoản</string>
     <string name="account_delete_failed">Chưa xóa được tài khoản lúc này. Bạn thử lại nhé?</string>
-    <string name="account_sign_in_prompt">Đăng nhập để xem gói và số lượt của bạn.</string>
     <string name="account_load_failed">Không tải được tài khoản. Thử lại sau giây lát nhé.</string>
     <string name="account_loading">Đang tải tài khoản…</string>
     <string name="pricing_title">Phán quyết đầu tiên, chúng tôi mời.</string>
-    <string name="pricing_lead">Tạo tài khoản là có ngay phán quyết đầu tiên miễn phí, đủ mọi tính năng. Sau đó, chọn một gói lượt hoặc dùng gói tháng.</string>
     <string name="pricing_title_member">Thêm lượt phán quyết.</string>
-    <string name="pricing_lead_member">Chọn một gói lượt hoặc dùng gói tháng. Phán quyết nào cũng có đủ ban giám khảo.</string>
     <string name="pricing_included_title">Mỗi phán quyết</string>
     <string name="pricing_buy_title">Gói lượt và gói tháng</string>
     <string name="pricing_premium_f1">Sự thật được kiểm chứng trên mạng, kèm nguồn ngay trên phán quyết</string>
@@ -248,7 +240,7 @@
     <string name="pricing_premium_f3">Tối đa hai câu hỏi nhanh khi thiếu một sự thật quan trọng</string>
     <string name="pricing_premium_f4">Tên được thay trước khi phân xử</string>
     <string name="pricing_packs_title">Gói lượt</string>
-    <string name="pricing_packs_lead">Trả một lần, dùng lúc nào cũng được. Mỗi phán quyết dùng một lượt.</string>
+    <string name="pricing_packs_lead">Mỗi phán quyết dùng một lượt.</string>
     <plurals name="pricing_pack">
         <item quantity="other">%1$s phán quyết</item>
     </plurals>
@@ -332,8 +324,8 @@
     <string name="case_context_d">Bên D đã bổ sung thông tin</string>
     <string name="case_context_you">Thông tin bạn bổ sung (%1$s)</string>
     <string name="case_evidence_item">Ảnh %1$s, như giám khảo đã đọc</string>
-    <string name="case_answered">Người kia đã trả lời. Ban giám khảo đang xử.</string>
-    <string name="case_judging_alone">Ban giám khảo đang xem lời kể của bạn.</string>
+    <string name="case_answered">Ban giám khảo đang xử.</string>
+    <string name="case_judging_alone">Ban giám khảo đang xử.</string>
     <string name="case_expired_body">Không ai trả lời trong 7 ngày nên lượt của bạn đã được hoàn lại. Bạn vẫn có thể nhận phán quyết chỉ dựa trên lời kể của bạn.</string>
     <string name="case_expired_body_free">Không ai trả lời trong 7 ngày. Bạn vẫn có thể nhận phán quyết chỉ dựa trên lời kể của bạn.</string>
     <string name="case_one_sided">Chỉ phân xử dựa trên lời kể của bạn.</string>
@@ -350,12 +342,12 @@
     <string name="respond_submit">Gửi lời kể</string>
     <string name="case_write_title">Phía bạn</string>
     <string name="case_write_placeholder">Có chuyện gì vậy?</string>
-    <string name="case_write_lead">Hãy viết phía của bạn khi sẵn sàng. Ban giám khảo bắt đầu khi cả hai đã viết.</string>
+    <string name="case_write_lead">Ban giám khảo bắt đầu khi cả hai đã viết.</string>
     <string name="case_write_lead_answered">Họ đã viết phía của họ. Viết phía của bạn để nhận phán quyết.</string>
     <string name="case_write_submit">Gửi phía của tôi</string>
     <string name="case_write_email_subject">Bên kia đã viết phần của họ</string>
-    <string name="respond_sent">Cảm ơn bạn. Lời kể của bạn đã được gửi và ban giám khảo đang xử.</string>
-    <string name="respond_sent_waiting">Cảm ơn bạn. Lời kể của bạn đã được gửi. Ban giám khảo bắt đầu khi người kia viết xong.</string>
+    <string name="respond_sent">Lời kể của bạn đã được gửi.</string>
+    <string name="respond_sent_waiting">Lời kể của bạn đã được gửi. Đang chờ người kia.</string>
     <string name="respond_own_invite">Đây là liên kết mời của chính bạn. Hãy gửi nó cho người kia.</string>
     <string name="respond_expired">Lời mời này đã hết hạn.</string>
     <string name="respond_closed">Vụ này không nhận câu trả lời nữa.</string>
@@ -379,7 +371,6 @@
     <string name="evidence_remove">Gỡ ảnh %1$s</string>
     <string name="evidence_thumb">Ảnh %1$s</string>
     <string name="evidence_preview">Những gì chúng tôi đọc được</string>
-    <string name="evidence_preview_note">Chỉ bạn thấy phần này. Tên sẽ được ẩn trước khi giám khảo đọc.</string>
     <string name="evidence_status_unreadable">Không đọc được chữ nào</string>
     <string name="evidence_status_refused">Trình đọc đã từ chối ảnh này</string>
     <string name="evidence_status_unsupported">Không phải PNG, JPEG, WebP hay GIF</string>
@@ -406,8 +397,6 @@
     <string name="home_remove_their_side">Bỏ phía bên kia</string>
     <string name="home_send_link">Gửi liên kết</string>
     <string name="home_clear">Xóa</string>
-    <string name="home_lead">Kể phần của cả hai bên, hoặc gửi liên kết để người kia tự kể phần của họ.</string>
-    <string name="home_lead_solo">Kể phần của bạn, và cả phần của người kia nếu bạn biết.</string>
     <string name="home_their_side">Phía bên kia</string>
     <string name="home_their_name">Tên người kia</string>
     <string name="home_their_placeholder">Người kia nói gì? Kể đúng như cách họ sẽ nói.</string>
@@ -421,7 +410,7 @@
     <string name="appeal_submit">Xét lại với thông tin của tôi</string>
     <string name="appeal_sending">Đang ẩn tên trong thông tin bổ sung…</string>
     <string name="appeal_judging">Ban giám khảo đang xem lại toàn bộ…</string>
-    <string name="appeal_upsell">Còn thiếu gì? Bổ sung thông tin để được xét lại, tốn 1 lượt.</string>
+    <string name="appeal_upsell">Còn thiếu gì? Bổ sung thông tin, tốn 1 lượt.</string>
     <string name="appeal_sign_in">Đăng nhập để bổ sung thông tin</string>
     <string name="appeal_used">Bạn đã bổ sung thông tin cho vụ này rồi.</string>
     <string name="appeal_limit">Bạn đã bổ sung thông tin hai lần. Đó là giới hạn cho một phán quyết.</string>
@@ -465,7 +454,7 @@
     <string name="case_display_name">Tên của bạn trên phán quyết được chia sẻ</string>
     <string name="case_display_save">Lưu tên</string>
     <string name="respond_keep">Lưu vụ này vào tài khoản</string>
-    <string name="respond_kept">Vụ này giờ đã nằm trong tài khoản của bạn và hiện ở mục Phán quyết trên mọi thiết bị của bạn.</string>
+    <string name="respond_kept">Đã lưu trong tài khoản của bạn.</string>
     <string name="respond_remove">Gỡ phần của tôi</string>
     <string name="respond_remove_confirm">Gỡ bản gốc và tên hiển thị của bạn? Các liên kết chia sẻ của vụ sẽ ngừng hoạt động (các bản xem trước đã đăng trong đoạn chat có thể vẫn hiện cho đến khi ứng dụng làm mới). Không thể hoàn tác.</string>
     <string name="names_title">Tên trên trang chia sẻ</string>
@@ -544,7 +533,7 @@
     <string name="app_tab_new">Mới</string>
     <string name="app_tab_settings">Cài đặt</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">Chưa có phán quyết nào. Phân xử cuộc tranh cãi đầu tiên của bạn, kết quả sẽ hiện ở đây.</string>
+    <string name="app_history_empty">Chưa có phán quyết nào.</string>
     <string name="app_history_device_only">Chỉ lưu trên điện thoại này. Xóa một phán quyết ở đây thì liên kết chia sẻ của nó vẫn hoạt động.</string>
     <string name="app_history_delete">Xóa</string>
     <string name="app_history_remove_all">Xóa tất cả</string>
@@ -552,7 +541,7 @@
         <item quantity="other">Xóa %1$s phán quyết khỏi điện thoại này? Liên kết chia sẻ vẫn hoạt động.</item>
     </plurals>
     <string name="app_history_phone_only">Chỉ có trên điện thoại này</string>
-    <string name="app_history_phone_only_note">Không có trong tài khoản của bạn: các phán quyết này chỉ lưu trên điện thoại này. Xóa một phán quyết ở đây thì liên kết chia sẻ của nó vẫn hoạt động.</string>
+    <string name="app_history_phone_only_note">Xóa một phán quyết thì liên kết chia sẻ của nó vẫn hoạt động.</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="other">Gỡ %1$s phán quyết khỏi tài khoản của bạn trên mọi thiết bị? Những gì bạn viết và các tên sẽ bị xóa, liên kết chia sẻ sẽ ngừng hoạt động. Không thể hoàn tác.</item>
     </plurals>
@@ -569,9 +558,9 @@
     <string name="app_pricing_free_account">Đăng nhập bằng Apple, Google hoặc email</string>
     <string name="app_pricing_context">Ảnh thông tin thêm được đọc rồi bỏ đi, không tốn thêm phí</string>
     <string name="app_pricing_headline">Phán quyết đầu tiên, chúng tôi mời.</string>
-    <string name="app_pricing_sub">Tạo tài khoản là có ngay phán quyết đầu tiên miễn phí, đủ mọi tính năng. Sau đó, chọn một gói lượt hoặc dùng gói tháng.</string>
+    <string name="app_pricing_sub">Sau đó, chọn một gói lượt hoặc dùng gói tháng.</string>
     <string name="app_pricing_headline_member">Thêm lượt phán quyết.</string>
-    <string name="app_pricing_sub_member">Chọn một gói lượt hoặc dùng gói tháng. Phán quyết nào cũng có đủ ban giám khảo.</string>
+    <string name="app_pricing_sub_member">Chọn một gói lượt hoặc dùng gói tháng.</string>
     <plurals name="app_balance_left">
         <item quantity="other">Còn %1$s lượt phán quyết</item>
     </plurals>
@@ -664,10 +653,9 @@
     <string name="app_appeal_used">Bạn đã bổ sung thông tin cho vụ này rồi.</string>
     <string name="app_appeal_limit">Bạn đã bổ sung thông tin hai lần. Đó là giới hạn cho một phán quyết.</string>
     <string name="app_purchase_buying">Đang mua…</string>
-    <string name="app_purchase_success">Cảm ơn bạn! Giao dịch đã thành công.</string>
-    <string name="app_purchase_pending">Giao dịch đang được xử lý. Có thể mất một phút để hiện ra.</string>
-    <string name="app_purchase_arriving">Lượt của bạn đang được cộng vào…</string>
-    <string name="app_purchase_slow">Có thể mất một phút để hiện ở đây.</string>
+    <string name="app_purchase_success">Giao dịch đã thành công.</string>
+    <string name="app_purchase_pending">Giao dịch đang được xử lý.</string>
+    <string name="app_purchase_slow">Lượt có thể mất một phút để hiện.</string>
     <string name="app_purchase_failed">Giao dịch chưa thành công. Thử lại sau giây lát nhé.</string>
     <string name="app_purchase_restore">Khôi phục giao dịch mua</string>
     <string name="app_purchase_restore_done">Đã khôi phục các giao dịch mua của bạn.</string>

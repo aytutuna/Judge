@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">三位獨立評審 · 評審看不到名字</string>
     <string name="hero_lead">說說你們在吵什麼。三位 AI 評審各自做出判斷，信心分數會告訴你他們的意見有多一致。</string>
     <string name="input_label">爭論內容</string>
-    <string name="placeholder">發生了什麼事？誰說了什麼、為什麼？\n\n把對方的說法照對方會講的方式寫出來。反正評審都會替雙方找出最有力的論點。</string>
+    <string name="placeholder">發生了什麼事？誰說了什麼、為什麼？</string>
     <string name="get_verdict">開始判決</string>
     <string name="thinking_eyebrow">評審正在做什麼</string>
     <string name="thinking_read">閱讀雙方說法，替兩邊找出最強論點…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">正在找癥結…</string>
     <string name="thinking_judges">三位評審各自判斷中…</string>
     <string name="thinking_votes">計票中…</string>
-    <string name="thinking_helper">三位 AI 評審分開判斷，票數接近時還會再找評審加入。請稍等一下。</string>
+    <string name="thinking_helper">請稍等一下。</string>
     <string name="thinking_finish">快找到癥結了…</string>
-    <string name="thinking_still_judging">評審還在想，再等一下下…</string>
+    <string name="thinking_still_judging">還在處理…</string>
     <string name="thinking_ready">判決出爐了。</string>
     <string name="story_names">先去掉名字，免得有人因為身分被評判</string>
     <string name="story_facts">另有查核員在網路上查證事實</string>
@@ -38,7 +38,6 @@
     <string name="verdict_too_close">勢均力敵，難分高下</string>
     <string name="lean_title">硬要選的話：%1$s比較有理</string>
     <string name="lean_title_self">硬要選的話：你比較有理</string>
-    <string name="lean_unanimous">所有評審都偏向這一方。</string>
     <string name="lean_majority">評審以 %1$s 比 %2$s 偏向這一方。</string>
     <string name="lean_tie">就算逼他們選，評審還是剛好一半一半。</string>
     <string name="split_win">%1$s在這點上是對的：</string>
@@ -70,18 +69,17 @@
     <plurals name="judges_voted">
         <item quantity="other">%1$s 位獨立 AI 評審的投票：</item>
     </plurals>
-    <string name="escalated">票數太接近，所以我們加派了評審。</string>
     <string name="translate_loading">翻譯中…</string>
     <string name="translate_from_en">翻譯自英文</string>
     <string name="translate_from_tr">翻譯自土耳其文</string>
-    <string name="translate_failed">現在沒辦法翻譯，先給你看原文。</string>
+    <string name="translate_failed">無法翻譯。</string>
     <string name="translate_toggle">判決語言</string>
     <string name="vote_split">分歧</string>
     <string name="vote_conditional">看情況</string>
     <string name="vote_dissolved">用詞誤會</string>
-    <string name="refused_note">AI 這次選擇不表態。與其給你假判決，我們寧可什麼都不顯示。</string>
+    <string name="refused_note">AI 這次選擇不表態。</string>
     <string name="demo_note">展示模式：還沒設定 AI 金鑰，這是範例判決</string>
-    <string name="trial_survived">異議駁回：對方律師提出了最有力的異議，判決依然成立。信心分數不變。</string>
+    <string name="trial_survived">異議駁回：判決依然成立。</string>
     <string name="trial_uncertain">對方律師提出異議，這項異議讓這個判決留下了實質的疑問</string>
     <string name="trial_overturned">異議成立：判決依然有效，但對方最有力的異議已將其嚴重削弱</string>
     <string name="trial_minor">對方律師提出了一個合理的觀點，但判決依然成立</string>
@@ -116,7 +114,7 @@
     <plurals name="wait_hours">
         <item quantity="other">%1$s 小時</item>
     </plurals>
-    <string name="examples_label">不知道寫什麼？試試這些：</string>
+    <string name="examples_label">試試這個：</string>
     <string name="example_hotdog_label">🍔 刈包算漢堡嗎？</string>
     <string name="example_hotdog_text">我朋友阿凱說刈包就是漢堡：麵皮夾餡料，沒什麼好爭的。我說刈包就是刈包。沒有人點漢堡會期待拿到刈包，也沒有菜單會把它放在漢堡那一欄。</string>
     <string name="example_tomato_label">🍅 番茄是水果嗎？</string>
@@ -134,7 +132,6 @@
     <string name="footer_note">好玩又能釐清想法，但不是法律建議。</string>
     <string name="footer_language">語言</string>
     <string name="not_found_title">這個判決已經退庭了</string>
-    <string name="not_found_body">可能是連結打錯了，或是判決已經不在了。</string>
     <string name="nav_sign_in">登入</string>
     <string name="nav_account">帳號</string>
     <string name="nav_pricing">價格</string>
@@ -156,7 +153,6 @@
     <string name="consent_sensitive_continue">繼續</string>
     <string name="respond_adult_confirm">我已年滿 18 歲</string>
     <string name="account_export">下載我的資料</string>
-    <string name="account_export_hint">取得一個 JSON 檔案，包含 Judge 保存的所有與你有關的資料。</string>
     <string name="account_export_busy">正在準備你的檔案…</string>
     <string name="account_export_failed">暫時無法準備你的資料。再試一次？</string>
     <string name="rating_prompt">判決公平嗎？</string>
@@ -175,19 +171,18 @@
     <string name="clarify_back">修改爭論內容</string>
     <string name="thinking_factcheck">上網查證事實中…</string>
     <string name="thinking_factcheck_done">網路查證完成。</string>
-    <string name="panel_premium">已經過網路查證。</string>
     <string name="factcheck_title">網路查證</string>
-    <string name="factcheck_lead">評審在判決前看過這些搜尋結果。這些是證據，不是判決本身。</string>
+    <string name="factcheck_lead">評審在判決前看過這些搜尋結果。</string>
     <string name="factcheck_status_supported">站得住</string>
     <string name="factcheck_status_refuted">站不住</string>
     <string name="factcheck_status_mixed">部分屬實</string>
     <string name="factcheck_status_unverified">無法證實</string>
     <string name="factcheck_sources">來源</string>
-    <string name="factcheck_none">沒有需要上網查的：這件事關乎價值或詞義，而不是事實。</string>
-    <string name="factcheck_none_factual">這裡沒有可以上網查證的內容：相關事實只有當事人自己知道。</string>
+    <string name="factcheck_none">沒有需要上網查的。</string>
+    <string name="factcheck_none_factual">沒有需要上網查的。</string>
     <string name="factcheck_unavailable">這次網路查證沒有完成，評審在沒有查證的情況下做出了判決。</string>
     <string name="signin_title">登入</string>
-    <string name="signin_lead">登入即可取得判決。新帳號的第一次判決免費。</string>
+    <string name="signin_lead">第一次判決免費。</string>
     <string name="signin_apple">透過 Apple 繼續</string>
     <string name="signin_google">透過 Google 繼續</string>
     <string name="signin_email_toggle">改用電子郵件</string>
@@ -205,7 +200,7 @@
     <string name="signin_use_password">改用密碼登入</string>
     <string name="signin_password_wrong">該電子郵件與密碼不相符。</string>
     <string name="signin_password_short">至少使用 8 個字元。</string>
-    <string name="signin_create_note">我們會用電子郵件寄送驗證碼來確認此地址，只需做這一次。</string>
+    <string name="signin_create_note">我們會用電子郵件寄送驗證碼來確認。</string>
     <string name="signin_password_choose">你已登入。請為下次選一個密碼。</string>
     <string name="signin_password_save">儲存密碼</string>
     <string name="signin_password_save_failed">密碼未能儲存。請重試。</string>
@@ -234,13 +229,10 @@
     <string name="account_delete_yes">是，刪除</string>
     <string name="account_delete_cancel">保留我的帳號</string>
     <string name="account_delete_failed">暫時無法刪除帳號，可以再試一次嗎？</string>
-    <string name="account_sign_in_prompt">登入即可查看你的方案和額度。</string>
     <string name="account_load_failed">無法載入你的帳號，請稍後再試。</string>
     <string name="account_loading">正在載入帳號…</string>
     <string name="pricing_title">第一次判決，我們請客。</string>
-    <string name="pricing_lead">建立帳號，第一次判決免費，所有功能都能用。之後可以買額度包，或改用月費方案。</string>
     <string name="pricing_title_member">取得更多判決。</string>
-    <string name="pricing_lead_member">買額度包或改用月費方案。每次判決都有完整的評審陣容。</string>
     <string name="pricing_included_title">每次判決都包含</string>
     <string name="pricing_buy_title">額度包與月費方案</string>
     <string name="pricing_premium_f1">上網查證事實，並在判決中附上來源</string>
@@ -248,7 +240,7 @@
     <string name="pricing_premium_f3">缺少關鍵事實時，最多問你兩個小問題</string>
     <string name="pricing_premium_f4">判決前先替換名字</string>
     <string name="pricing_packs_title">額度包</string>
-    <string name="pricing_packs_lead">一次付清，隨時使用。每次判決會用掉 1 點額度。</string>
+    <string name="pricing_packs_lead">每次判決會用掉 1 點額度。</string>
     <plurals name="pricing_pack">
         <item quantity="other">%1$s 次判決</item>
     </plurals>
@@ -332,8 +324,8 @@
     <string name="case_context_d">當事人D的補充說明</string>
     <string name="case_context_you">你的補充說明（%1$s）</string>
     <string name="case_evidence_item">圖片 %1$s（評審讀到的版本）</string>
-    <string name="case_answered">對方回覆了，評審正在處理。</string>
-    <string name="case_judging_alone">評審正在處理你的說法。</string>
+    <string name="case_answered">評審正在處理。</string>
+    <string name="case_judging_alone">評審正在處理。</string>
     <string name="case_expired_body">7 天內沒人回覆，額度已退還給你。你還是可以只用你的說法取得判決。</string>
     <string name="case_expired_body_free">7 天內沒人回覆。你還是可以只用你的說法取得判決。</string>
     <string name="case_one_sided">只根據你的說法判決。</string>
@@ -350,12 +342,12 @@
     <string name="respond_submit">送出我的說法</string>
     <string name="case_write_title">你的說法</string>
     <string name="case_write_placeholder">怎麼了？</string>
-    <string name="case_write_lead">準備好就寫下你的說法。你們兩邊都寫完，評審才會開始。</string>
+    <string name="case_write_lead">你們兩邊都寫完，評審才會開始。</string>
     <string name="case_write_lead_answered">對方已經寫好說法。寫下你的，就能拿到判決。</string>
     <string name="case_write_submit">送出我的說法</string>
     <string name="case_write_email_subject">對方已經寫好他們的說法</string>
-    <string name="respond_sent">謝謝！已收到你的說法，評審正在處理。</string>
-    <string name="respond_sent_waiting">謝謝！已收到你的說法。對方寫完後，評審才會開始。</string>
+    <string name="respond_sent">已收到你的說法。</string>
+    <string name="respond_sent_waiting">已收到你的說法，正在等對方。</string>
     <string name="respond_own_invite">這是你自己的邀請連結，請傳給對方。</string>
     <string name="respond_expired">這個邀請已經過期。</string>
     <string name="respond_closed">這個案子已不再接受回覆。</string>
@@ -379,7 +371,6 @@
     <string name="evidence_remove">移除圖片 %1$s</string>
     <string name="evidence_thumb">圖片 %1$s</string>
     <string name="evidence_preview">我們讀到的內容</string>
-    <string name="evidence_preview_note">只有你看得到這裡。評審讀取前，名字都會先隱藏。</string>
     <string name="evidence_status_unreadable">讀不到任何文字</string>
     <string name="evidence_status_refused">讀取工具拒絕了這張圖片</string>
     <string name="evidence_status_unsupported">不是 PNG、JPEG、WebP 或 GIF</string>
@@ -406,8 +397,6 @@
     <string name="home_remove_their_side">移除對方的說法</string>
     <string name="home_send_link">傳個連結</string>
     <string name="home_clear">清空</string>
-    <string name="home_lead">寫下雙方的說法，或傳連結給對方，讓對方自己寫。</string>
-    <string name="home_lead_solo">寫下你的說法，如果知道對方怎麼說，也一起寫上。</string>
     <string name="home_their_side">對方的說法</string>
     <string name="home_their_name">對方的名字</string>
     <string name="home_their_placeholder">對方怎麼說？用對方的口吻寫下來。</string>
@@ -421,7 +410,7 @@
     <string name="appeal_submit">加上補充重新判決</string>
     <string name="appeal_sending">正在匿名化你的補充…</string>
     <string name="appeal_judging">評審正在重新檢視全部內容…</string>
-    <string name="appeal_upsell">有遺漏嗎？補充說明，用 1 次判決重新判決。</string>
+    <string name="appeal_upsell">有遺漏嗎？補充說明，用 1 次判決。</string>
     <string name="appeal_sign_in">登入後即可補充說明</string>
     <string name="appeal_used">你已經為這個案子補充過說明了。</string>
     <string name="appeal_limit">你已經補充過兩次，這是一個判決的上限。</string>
@@ -465,7 +454,7 @@
     <string name="case_display_name">你在分享判決上的名字</string>
     <string name="case_display_save">儲存名字</string>
     <string name="respond_keep">把這個案子存進你的帳號</string>
-    <string name="respond_kept">這個案子已經存進你的帳號，在任何裝置的「判決」頁面上都看得到。</string>
+    <string name="respond_kept">已存進你的帳號。</string>
     <string name="respond_remove">移除我的說法</string>
     <string name="respond_remove_confirm">要移除你的原文和顯示名稱嗎？這個案子的分享連結會失效（已經貼在聊天裡的預覽，可能要等那些 App 更新後才會消失）。這個動作無法復原。</string>
     <string name="names_title">分享頁面上的名字</string>
@@ -544,7 +533,7 @@
     <string name="app_tab_new">新增</string>
     <string name="app_tab_settings">設定</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">還沒有判決。第一場爭論有了判決，就會出現在這裡。</string>
+    <string name="app_history_empty">還沒有判決。</string>
     <string name="app_history_device_only">只保存在這支手機上。在這裡刪除，分享連結不會跟著失效。</string>
     <string name="app_history_delete">刪除</string>
     <string name="app_history_remove_all">全部移除</string>
@@ -552,7 +541,7 @@
         <item quantity="other">要從這支手機刪除 %1$s 個判決嗎？分享連結不會跟著失效。</item>
     </plurals>
     <string name="app_history_phone_only">只在這支手機上</string>
-    <string name="app_history_phone_only_note">這些判決不在你的帳號中，只保存在這支手機上。在這裡刪除，分享連結不會跟著失效。</string>
+    <string name="app_history_phone_only_note">在這裡刪除，分享連結不會跟著失效。</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="other">要從你的帳號移除 %1$s 個判決嗎？所有裝置上都會跟著移除：你寫的內容和名字會被清除，分享連結也會對所有人失效。這個動作無法復原。</item>
     </plurals>
@@ -569,9 +558,9 @@
     <string name="app_pricing_free_account">用 Apple、Google 或電子郵件登入</string>
     <string name="app_pricing_context">補充說明的圖片讀完即丟，不另外收費</string>
     <string name="app_pricing_headline">第一次判決，我們請客。</string>
-    <string name="app_pricing_sub">建立帳號，第一次判決免費，所有功能都能用。之後可以買額度包，或改用月費方案。</string>
+    <string name="app_pricing_sub">之後可以買額度包，或改用月費方案。</string>
     <string name="app_pricing_headline_member">取得更多判決。</string>
-    <string name="app_pricing_sub_member">買額度包或改用月費方案。每次判決都有完整的評審陣容。</string>
+    <string name="app_pricing_sub_member">買額度包或改用月費方案。</string>
     <plurals name="app_balance_left">
         <item quantity="other">剩 %1$s 次判決</item>
     </plurals>
@@ -664,10 +653,9 @@
     <string name="app_appeal_used">你已經為這個案子補充過說明了。</string>
     <string name="app_appeal_limit">你已經補充過兩次，這是一個判決的上限。</string>
     <string name="app_purchase_buying">購買中…</string>
-    <string name="app_purchase_success">謝謝！購買完成。</string>
-    <string name="app_purchase_pending">正在處理你的購買，可能要等一下才會顯示。</string>
-    <string name="app_purchase_arriving">你的額度馬上就到…</string>
-    <string name="app_purchase_slow">可能要等一下才會顯示在這裡。</string>
+    <string name="app_purchase_success">購買完成。</string>
+    <string name="app_purchase_pending">正在處理你的購買。</string>
+    <string name="app_purchase_slow">額度可能要等一下才會到。</string>
     <string name="app_purchase_failed">購買沒有完成，請稍後再試。</string>
     <string name="app_purchase_restore">回復購買項目</string>
     <string name="app_purchase_restore_done">已回復你的購買項目。</string>

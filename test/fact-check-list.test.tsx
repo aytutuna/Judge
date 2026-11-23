@@ -108,19 +108,11 @@ describe("VerdictView premium", () => {
     panel: { models: ["claude-sonnet-5-5", "claude-sonnet-5-5", "claude-haiku-5-5"] },
   };
 
-  it("adds the panel line and the fact-check, after the facts", () => {
+  it("adds the fact-check after the facts", () => {
     const out = html(<VerdictView result={premium} lang="en" />);
     expect(out).not.toContain(">Premium<");
-    expect(out).toContain("Judged with a web fact-check.");
     expect(out).not.toContain("Judges:");
     expect(out.indexOf("The Wall is a few metres wide.")).toBeLessThan(out.indexOf(t("en", "factcheck.title")));
-  });
-
-  it("leaves the web fact-check line out when nothing was checked", () => {
-    for (const status of ["none", "unavailable"] as const) {
-      const out = html(<VerdictView result={{ ...premium, fact_check: { status, claims: [] } }} lang="en" />);
-      expect(out).not.toContain("Judged with a web fact-check.");
-    }
   });
 
   it("leaves free results exactly as they were", () => {
@@ -155,12 +147,11 @@ describe("JudgingOverlay premium line", () => {
 });
 
 describe("FactCheckList: the 'nothing looked up' line agrees with the dispute type", () => {
-  it("factual and mixed disputes never say 'values or meanings, not facts'", () => {
+  it("factual and mixed disputes use the factual line", () => {
     for (const lang of ["en", "tr"] as const) {
       for (const disputeType of ["factual", "mixed"] as const) {
         const out = html(<FactCheckList factCheck={{ status: "none", claims: [] }} lang={lang} disputeType={disputeType} />);
         expect(out).toContain(esc(t(lang, "factcheck.noneFactual")));
-        expect(out).not.toContain(esc(t(lang, "factcheck.none")));
       }
       for (const disputeType of ["values", "definitional", "logical", undefined] as const) {
         const out = html(<FactCheckList factCheck={{ status: "none", claims: [] }} lang={lang} disputeType={disputeType} />);

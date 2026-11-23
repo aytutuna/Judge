@@ -7,7 +7,7 @@ const it: AppLocale = {
     "app.tab.new": "Nuova",
     "app.tab.settings": "Impostazioni",
     "app.input.counter": "{count} / {max}",
-    "app.history.empty": "Ancora nessun verdetto. Risolvi la tua prima discussione e lo troverai qui.",
+    "app.history.empty": "Ancora nessun verdetto.",
     "app.history.deviceOnly":
       "Salvati solo su questo telefono. Se ne elimini uno qui, il suo link di condivisione continua a funzionare.",
     "app.history.delete": "Elimina",
@@ -16,7 +16,7 @@ const it: AppLocale = {
       "Eliminare {n} verdetti da questo telefono? I loro link di condivisione continuano a funzionare.",
     "app.history.phoneOnly": "Solo su questo telefono",
     "app.history.phoneOnlyNote":
-      "Non sono nel tuo account: sono salvati solo su questo telefono. Se ne elimini uno qui, il suo link di condivisione continua a funzionare.",
+      "Eliminarne uno non disattiva il suo link di condivisione.",
     "app.history.removeConfirm":
       "Rimuovere {n} verdetti dal tuo account? Quello che hai scritto e i nomi vengono cancellati e i loro link di condivisione smettono di funzionare, su tutti i dispositivi. Non si può annullare.",
     "app.history.removeLinksConfirm": "Rimuovere {n} link? Smetteranno di funzionare ovunque. Non si può annullare.",
@@ -29,10 +29,10 @@ const it: AppLocale = {
       "Le immagini di contesto vengono lette e poi buttate, senza costi in più",
     "app.pricing.headline": "Il primo verdetto lo offriamo noi.",
     "app.pricing.sub":
-      "Crea un account e il primo verdetto è gratis, con tutte le funzioni. Poi scegli un pacchetto o passa al piano mensile.",
+      "Poi scegli un pacchetto o passa al piano mensile.",
     "app.pricing.headlineMember": "Ottieni altri verdetti.",
     "app.pricing.subMember":
-      "Scegli un pacchetto o passa al piano mensile. Ogni verdetto passa davanti a tutti i giudici.",
+      "Scegli un pacchetto o passa al piano mensile.",
     "app.balance.left": "Ti restano {n} verdetti",
     "app.balance.monthly": "Verdetti rimasti questo mese: {left} su {cap}",
     "app.balance.none": "Verdetti esauriti",
@@ -130,10 +130,9 @@ const it: AppLocale = {
     "app.appeal.used": "Hai già aggiunto contesto a questo caso.",
     "app.appeal.limit": "Hai aggiunto contesto due volte. È il limite per un verdetto.",
     "app.purchase.buying": "Acquisto in corso…",
-    "app.purchase.success": "Grazie! Acquisto completato.",
-    "app.purchase.pending": "Stiamo elaborando l'acquisto. Potrebbe volerci un minuto prima che compaia.",
-    "app.purchase.arriving": "I tuoi crediti stanno arrivando…",
-    "app.purchase.slow": "Potrebbe volerci un minuto prima che i crediti compaiano qui.",
+    "app.purchase.success": "Acquisto completato.",
+    "app.purchase.pending": "Stiamo elaborando l'acquisto.",
+    "app.purchase.slow": "I crediti potrebbero impiegare un minuto.",
     "app.purchase.failed": "L'acquisto non è andato a buon fine. Riprova tra un attimo.",
     "app.purchase.restore": "Ripristina acquisti",
     "app.purchase.restoreDone": "Acquisti ripristinati.",

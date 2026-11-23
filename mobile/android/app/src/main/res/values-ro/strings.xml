@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">Trei judecători independenți · Judecătorii nu văd niciodată numele</string>
     <string name="hero_lead">Spune-ne despre ce e cearta. Trei judecători AI decid fiecare pe cont propriu, iar scorul de încredere arată cât de mult sunt de acord.</string>
     <string name="input_label">Disputa</string>
-    <string name="placeholder">Ce s-a întâmplat? Cine ce susține și de ce?\n\nScrie varianta celeilalte persoane așa cum ar spune-o ea. Judecătorii construiesc oricum cel mai puternic argument pentru ambele părți.</string>
+    <string name="placeholder">Ce s-a întâmplat? Cine ce susține și de ce?</string>
     <string name="get_verdict">Află verdictul</string>
     <string name="thinking_eyebrow">Ce fac judecătorii</string>
     <string name="thinking_read">Citim ambele părți și îi dăm fiecăreia cea mai bună șansă…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">Căutăm miezul problemei…</string>
     <string name="thinking_judges">Trei judecători decid, fiecare pe cont propriu…</string>
     <string name="thinking_votes">Numărăm voturile…</string>
-    <string name="thinking_helper">Trei judecători AI decid separat, iar când e la limită mai vin și alții. Durează cam un minut.</string>
+    <string name="thinking_helper">Durează cam un minut.</string>
     <string name="thinking_finish">Ne apropiem de miezul problemei…</string>
-    <string name="thinking_still_judging">Judecătorii încă se gândesc. Mai ai puțină răbdare…</string>
+    <string name="thinking_still_judging">Încă lucrăm…</string>
     <string name="thinking_ready">Verdictul e gata.</string>
     <string name="story_names">Scoatem numele, ca nimeni să nu fie judecat după cine este</string>
     <string name="story_facts">Un verificator separat caută faptele pe web</string>
@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Prea echilibrat ca să decidem</string>
     <string name="lean_title">Verdict forțat: %1$s are mai multă dreptate</string>
     <string name="lean_title_self">Verdict forțat: tu ai mai multă dreptate</string>
-    <string name="lean_unanimous">Toți judecătorii au înclinat în partea asta.</string>
     <string name="lean_majority">Judecătorii au înclinat în partea asta: %1$s–%2$s.</string>
     <string name="lean_tie">Chiar și puși să aleagă, judecătorii s-au împărțit exact la jumătate.</string>
     <string name="split_win">%1$s are dreptate aici:</string>
@@ -72,18 +71,17 @@
         <item quantity="few">%1$s judecători AI independenți au votat:</item>
         <item quantity="other">%1$s de judecători AI independenți au votat:</item>
     </plurals>
-    <string name="escalated">A fost la limită, așa că am chemat judecători în plus.</string>
     <string name="translate_loading">Traducem…</string>
     <string name="translate_from_en">Tradus din engleză</string>
     <string name="translate_from_tr">Tradus din turcă</string>
-    <string name="translate_failed">N-am putut traduce acum, așa că îți arătăm originalul.</string>
+    <string name="translate_failed">N-am putut traduce.</string>
     <string name="translate_toggle">Limba verdictului</string>
     <string name="vote_split">împărțit</string>
     <string name="vote_conditional">depinde</string>
     <string name="vote_dissolved">sensuri diferite</string>
-    <string name="refused_note">AI-ul a stat deoparte de data asta. Decât un verdict inventat, mai bine nimic.</string>
+    <string name="refused_note">AI-ul a stat deoparte de data asta.</string>
     <string name="demo_note">Mod demo: nu e configurată nicio cheie AI, deci ăsta e un verdict de exemplu</string>
-    <string name="trial_survived">Obiecție respinsă: avocatul celeilalte părți și-a ridicat cea mai puternică obiecție, iar verdictul a rezistat. Încrederea rămâne aceeași.</string>
+    <string name="trial_survived">Obiecție respinsă: verdictul a rezistat.</string>
     <string name="trial_uncertain">Avocatul celeilalte părți a ridicat o obiecție, iar obiecția a lăsat îndoieli reale despre acest verdict</string>
     <string name="trial_overturned">Obiecție admisă: verdictul rămâne în picioare, dar cea mai puternică obiecție a celeilalte părți îl slăbește serios</string>
     <string name="trial_minor">Avocatul celeilalte părți a adus un argument întemeiat, dar verdictul rămâne în picioare</string>
@@ -122,7 +120,7 @@
         <item quantity="few">%1$s ore</item>
         <item quantity="other">%1$s de ore</item>
     </plurals>
-    <string name="examples_label">Nu știi cu ce să începi? Încearcă una dintre astea:</string>
+    <string name="examples_label">Încearcă una:</string>
     <string name="example_hotdog_label">🌭 Hot-dogul e sandviș?</string>
     <string name="example_hotdog_text">Prietenul meu Andrei zice că hot-dogul e sandviș: e o umplutură într-o chiflă tăiată și gata. Eu zic că e o chestie aparte. Nimeni nu comandă un sandviș și se așteaptă la un hot-dog, și niciun meniu nu-l trece la sandvișuri.</string>
     <string name="example_tomato_label">🍅 Roșia e fruct?</string>
@@ -140,7 +138,6 @@
     <string name="footer_note">Pentru distracție și claritate, nu consultanță juridică.</string>
     <string name="footer_language">Limbă</string>
     <string name="not_found_title">Verdictul ăsta a părăsit sala</string>
-    <string name="not_found_body">Poate linkul are o greșeală de scriere sau verdictul nu mai există.</string>
     <string name="nav_sign_in">Conectează-te</string>
     <string name="nav_account">Cont</string>
     <string name="nav_pricing">Prețuri</string>
@@ -162,7 +159,6 @@
     <string name="consent_sensitive_continue">Continuă</string>
     <string name="respond_adult_confirm">Am 18 ani sau mai mult</string>
     <string name="account_export">Descarcă datele mele</string>
-    <string name="account_export_hint">Primește un fișier JSON cu tot ce păstrează Judge despre tine.</string>
     <string name="account_export_busy">Se pregătește fișierul…</string>
     <string name="account_export_failed">Nu ți-am putut pregăti datele acum. Încerci din nou?</string>
     <string name="rating_prompt">Verdict corect?</string>
@@ -181,19 +177,18 @@
     <string name="clarify_back">Editează disputa</string>
     <string name="thinking_factcheck">Verificăm faptele pe web…</string>
     <string name="thinking_factcheck_done">Verificarea pe web s-a încheiat.</string>
-    <string name="panel_premium">Judecat cu verificarea faptelor pe web.</string>
     <string name="factcheck_title">Verificat pe web</string>
-    <string name="factcheck_lead">Judecătorii au văzut aceste rezultate ale căutării înainte să decidă. Sunt dovezi, nu verdictul în sine.</string>
+    <string name="factcheck_lead">Judecătorii au văzut aceste rezultate ale căutării înainte să decidă.</string>
     <string name="factcheck_status_supported">Se confirmă</string>
     <string name="factcheck_status_refuted">Nu se confirmă</string>
     <string name="factcheck_status_mixed">Parțial adevărat</string>
     <string name="factcheck_status_unverified">Neconfirmat</string>
     <string name="factcheck_sources">Surse</string>
-    <string name="factcheck_none">Nimic de căutat pe web: aici contează valorile sau sensurile, nu faptele.</string>
-    <string name="factcheck_none_factual">Nimic de aici nu se putea verifica pe web: faptele din disputa asta îi privesc doar pe cei implicați.</string>
+    <string name="factcheck_none">Nimic de verificat pe web.</string>
+    <string name="factcheck_none_factual">Nimic de verificat pe web.</string>
     <string name="factcheck_unavailable">Verificarea pe web nu s-a încheiat de data asta, așa că judecătorii au decis fără ea.</string>
     <string name="signin_title">Conectare</string>
-    <string name="signin_lead">Conectează-te ca să primești un verdict. Un cont nou primește primul verdict gratuit.</string>
+    <string name="signin_lead">Primul tău verdict e gratuit.</string>
     <string name="signin_apple">Continuă cu Apple</string>
     <string name="signin_google">Continuă cu Google</string>
     <string name="signin_email_toggle">Folosește e-mailul</string>
@@ -211,7 +206,7 @@
     <string name="signin_use_password">Folosește în schimb o parolă</string>
     <string name="signin_password_wrong">Acest e-mail și această parolă nu se potrivesc.</string>
     <string name="signin_password_short">Folosește cel puțin 8 caractere.</string>
-    <string name="signin_create_note">Îți vom trimite un cod pe e-mail pentru a confirma această adresă. Trebuie să faci asta o singură dată.</string>
+    <string name="signin_create_note">Îți trimitem un cod pe e-mail pentru confirmare.</string>
     <string name="signin_password_choose">Ești conectat. Alege o parolă pentru data viitoare.</string>
     <string name="signin_password_save">Salvează parola</string>
     <string name="signin_password_save_failed">Nu am putut salva parola. Încearcă din nou.</string>
@@ -240,13 +235,10 @@
     <string name="account_delete_yes">Da, șterge-l</string>
     <string name="account_delete_cancel">Păstrez contul</string>
     <string name="account_delete_failed">N-am putut șterge contul acum. Mai încerci o dată?</string>
-    <string name="account_sign_in_prompt">Conectează-te ca să-ți vezi planul și creditele.</string>
     <string name="account_load_failed">N-am putut încărca contul tău. Încearcă din nou peste puțin timp.</string>
     <string name="account_loading">Se încarcă contul…</string>
     <string name="pricing_title">Primul verdict e din partea casei.</string>
-    <string name="pricing_lead">Fă-ți un cont și primul verdict e gratuit, cu toate funcțiile. După aceea, alege un pachet sau treci pe planul lunar.</string>
     <string name="pricing_title_member">Ia mai multe verdicte.</string>
-    <string name="pricing_lead_member">Alege un pachet sau treci pe planul lunar. Fiecare verdict primește echipa completă de judecători.</string>
     <string name="pricing_included_title">Fiecare verdict include</string>
     <string name="pricing_buy_title">Pachete și planul lunar</string>
     <string name="pricing_premium_f1">Faptele verificate pe web, cu sursele în verdict</string>
@@ -254,7 +246,7 @@
     <string name="pricing_premium_f3">Cel mult două întrebări rapide când lipsește un fapt-cheie</string>
     <string name="pricing_premium_f4">Numele înlocuite înainte de judecare</string>
     <string name="pricing_packs_title">Pachete de credite</string>
-    <string name="pricing_packs_lead">Plătești o dată și le folosești oricând. Fiecare verdict folosește un credit.</string>
+    <string name="pricing_packs_lead">Fiecare verdict folosește un credit.</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s de verdicte</item>
         <item quantity="few">%1$s verdicte</item>
@@ -342,8 +334,8 @@
     <string name="case_context_d">Context adăugat de Partea D</string>
     <string name="case_context_you">Context adăugat de tine (%1$s)</string>
     <string name="case_evidence_item">Imaginea %1$s, așa cum au citit-o judecătorii</string>
-    <string name="case_answered">A răspuns. Judecătorii lucrează la caz.</string>
-    <string name="case_judging_alone">Judecătorii lucrează la partea ta.</string>
+    <string name="case_answered">Judecătorii lucrează la caz.</string>
+    <string name="case_judging_alone">Judecătorii lucrează la caz.</string>
     <string name="case_expired_body">N-a răspuns nimeni în 7 zile, așa că ți-ai primit creditul înapoi. Poți primi totuși un verdict doar pe partea ta.</string>
     <string name="case_expired_body_free">N-a răspuns nimeni în 7 zile. Poți primi totuși un verdict doar pe partea ta.</string>
     <string name="case_one_sided">Judecat doar pe partea ta.</string>
@@ -360,12 +352,12 @@
     <string name="respond_submit">Trimite partea mea</string>
     <string name="case_write_title">Partea ta</string>
     <string name="case_write_placeholder">Care e problema?</string>
-    <string name="case_write_lead">Scrie-ți partea când ești gata. Judecătorii încep după ce ați scris amândoi.</string>
+    <string name="case_write_lead">Judecătorii încep după ce ați scris amândoi.</string>
     <string name="case_write_lead_answered">Cealaltă persoană și-a scris partea. Scrie-o pe a ta ca să primești verdictul.</string>
     <string name="case_write_submit">Trimite partea mea</string>
     <string name="case_write_email_subject">Cealaltă persoană și-a scris versiunea</string>
-    <string name="respond_sent">Mulțumim. Partea ta a ajuns, iar judecătorii lucrează la ea.</string>
-    <string name="respond_sent_waiting">Mulțumim. Partea ta a ajuns. Judecătorii încep după ce scrie și cealaltă persoană.</string>
+    <string name="respond_sent">Partea ta a ajuns.</string>
+    <string name="respond_sent_waiting">Partea ta a ajuns. Așteptăm cealaltă persoană.</string>
     <string name="respond_own_invite">Asta e propria ta invitație. Trimite-o celeilalte persoane.</string>
     <string name="respond_expired">Invitația a expirat.</string>
     <string name="respond_closed">Cazul ăsta nu mai acceptă răspunsuri.</string>
@@ -391,7 +383,6 @@
     <string name="evidence_remove">Elimină imaginea %1$s</string>
     <string name="evidence_thumb">Imaginea %1$s</string>
     <string name="evidence_preview">Ce am citit</string>
-    <string name="evidence_preview_note">Doar tu vezi asta. Numele sunt ascunse înainte să citească judecătorii.</string>
     <string name="evidence_status_unreadable">N-am găsit niciun text</string>
     <string name="evidence_status_refused">Cititorul a refuzat imaginea asta</string>
     <string name="evidence_status_unsupported">Nu e PNG, JPEG, WebP sau GIF</string>
@@ -418,8 +409,6 @@
     <string name="home_remove_their_side">Elimină cealaltă parte</string>
     <string name="home_send_link">Trimite un link</string>
     <string name="home_clear">Șterge</string>
-    <string name="home_lead">Scrie ambele părți sau trimite-i celeilalte persoane un link ca să-și scrie varianta.</string>
-    <string name="home_lead_solo">Scrie-ți partea și, dacă o știi, varianta celeilalte persoane.</string>
     <string name="home_their_side">Cealaltă parte</string>
     <string name="home_their_name">Numele celeilalte părți</string>
     <string name="home_their_placeholder">Ce zice cealaltă persoană? Scrie așa cum ar spune-o ea.</string>
@@ -433,7 +422,7 @@
     <string name="appeal_submit">Judecă din nou cu contextul meu</string>
     <string name="appeal_sending">Îți anonimizăm contextul…</string>
     <string name="appeal_judging">Judecătorii se uită din nou la tot…</string>
-    <string name="appeal_upsell">Lipsește ceva? Adaugă context și judecătorii se uită din nou la caz, pentru 1 verdict.</string>
+    <string name="appeal_upsell">Lipsește ceva? Adaugă context pentru 1 verdict.</string>
     <string name="appeal_sign_in">Conectează-te ca să adaugi context</string>
     <string name="appeal_used">Ai adăugat deja context la acest caz.</string>
     <string name="appeal_limit">Ai adăugat context de două ori. Asta e limita pentru un verdict.</string>
@@ -477,7 +466,7 @@
     <string name="case_display_name">Numele tău pe verdictul distribuit</string>
     <string name="case_display_save">Salvează numele</string>
     <string name="respond_keep">Păstrează cazul în contul tău</string>
-    <string name="respond_kept">Cazul e acum în contul tău. Apare în pagina Verdicte, pe toate dispozitivele tale.</string>
+    <string name="respond_kept">Păstrat în contul tău.</string>
     <string name="respond_remove">Elimină partea mea</string>
     <string name="respond_remove_confirm">Elimini textul tău original și numele tău afișat? Linkurile de distribuire ale cazului nu mai funcționează (previzualizările deja postate în conversații pot apărea în continuare până când acele aplicații le reîmprospătează). Acțiunea nu poate fi anulată.</string>
     <string name="names_title">Numele de pe pagina distribuită</string>
@@ -562,7 +551,7 @@
     <string name="app_tab_new">Nou</string>
     <string name="app_tab_settings">Setări</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">Încă nu ai verdicte. Lămurește-ți prima dispută și verdictul apare aici.</string>
+    <string name="app_history_empty">Încă nu ai verdicte.</string>
     <string name="app_history_device_only">Salvate doar pe acest telefon. Dacă ștergi unul de aici, linkul lui de distribuire rămâne activ.</string>
     <string name="app_history_delete">Șterge</string>
     <string name="app_history_remove_all">Elimină tot</string>
@@ -572,7 +561,7 @@
         <item quantity="other">Ștergi %1$s de verdicte de pe acest telefon? Linkurile lor de distribuire rămân active.</item>
     </plurals>
     <string name="app_history_phone_only">Doar pe acest telefon</string>
-    <string name="app_history_phone_only_note">Acestea nu sunt în contul tău, ci salvate doar pe acest telefon. Dacă ștergi unul de aici, linkul lui de distribuire rămâne activ.</string>
+    <string name="app_history_phone_only_note">Ștergerea unuia nu dezactivează linkul de distribuire.</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="one">Elimini verdictul din contul tău, de pe toate dispozitivele? Ce ai scris și numele sunt șterse, iar linkul lui de distribuire nu mai funcționează. Acțiunea nu poate fi anulată.</item>
         <item quantity="few">Elimini %1$s verdicte din contul tău, de pe toate dispozitivele? Ce ai scris și numele sunt șterse, iar linkurile lor de distribuire nu mai funcționează. Acțiunea nu poate fi anulată.</item>
@@ -597,9 +586,9 @@
     <string name="app_pricing_free_account">Conectează-te cu Apple, Google sau prin e-mail</string>
     <string name="app_pricing_context">Imaginile de context sunt citite și apoi aruncate, fără cost în plus</string>
     <string name="app_pricing_headline">Primul verdict e din partea casei.</string>
-    <string name="app_pricing_sub">Fă-ți un cont și primul verdict e gratuit, cu toate funcțiile. După aceea, alege un pachet sau treci pe planul lunar.</string>
+    <string name="app_pricing_sub">După aceea, alege un pachet sau treci pe planul lunar.</string>
     <string name="app_pricing_headline_member">Ia mai multe verdicte.</string>
-    <string name="app_pricing_sub_member">Alege un pachet sau treci pe planul lunar. Fiecare verdict primește echipa completă de judecători.</string>
+    <string name="app_pricing_sub_member">Alege un pachet sau treci pe planul lunar.</string>
     <plurals name="app_balance_left">
         <item quantity="one">Mai ai 1 verdict</item>
         <item quantity="few">Mai ai %1$s verdicte</item>
@@ -694,10 +683,9 @@
     <string name="app_appeal_used">Ai adăugat deja context la acest caz.</string>
     <string name="app_appeal_limit">Ai adăugat context de două ori. Asta e limita pentru un verdict.</string>
     <string name="app_purchase_buying">Achiziție în curs…</string>
-    <string name="app_purchase_success">Mulțumim! Achiziția a reușit.</string>
-    <string name="app_purchase_pending">Achiziția ta e în curs de procesare. Poate dura un minut până apare.</string>
-    <string name="app_purchase_arriving">Creditele tale sunt pe drum…</string>
-    <string name="app_purchase_slow">Poate dura un minut până apar aici.</string>
+    <string name="app_purchase_success">Achiziție finalizată.</string>
+    <string name="app_purchase_pending">Achiziția ta e în curs de procesare.</string>
+    <string name="app_purchase_slow">Creditele pot dura un minut.</string>
     <string name="app_purchase_failed">Achiziția n-a reușit. Încearcă din nou peste câteva clipe.</string>
     <string name="app_purchase_restore">Restaurează achizițiile</string>
     <string name="app_purchase_restore_done">Achizițiile tale au fost restaurate.</string>

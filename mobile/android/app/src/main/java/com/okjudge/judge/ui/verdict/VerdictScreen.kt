@@ -128,7 +128,7 @@ fun VerdictRoute(
                 if (state.loading) {
                     CircularProgressIndicator(color = Palette.ink)
                 } else {
-                    Text(s.notFoundBody, style = JudgeType.body, modifier = Modifier.padding(24.dp))
+                    Text(s.notFoundTitle, style = JudgeType.body, modifier = Modifier.padding(24.dp))
                 }
             }
             return@Column

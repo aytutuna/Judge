@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">Three independent judges · Judges never see names</string>
     <string name="hero_lead">Tell us what the fight is about. Three AI judges each make the call on their own, and the confidence score shows how much they agree.</string>
     <string name="input_label">The argument</string>
-    <string name="placeholder">What happened? Who says what, and why?\n\nPut the other person\'s side the way they\'d say it. The judges build the strongest case for both sides either way.</string>
+    <string name="placeholder">What happened? Who says what, and why?</string>
     <string name="get_verdict">Get the verdict</string>
     <string name="thinking_eyebrow">What the judges are doing</string>
     <string name="thinking_read">Reading both sides and giving each its best shot…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">Hunting for the crux…</string>
     <string name="thinking_judges">Three judges deciding, each on their own…</string>
     <string name="thinking_votes">Counting the votes…</string>
-    <string name="thinking_helper">Three AI judges rule separately, and a close call brings in more. Give it a minute.</string>
+    <string name="thinking_helper">Give it a minute.</string>
     <string name="thinking_finish">Closing in on the crux…</string>
-    <string name="thinking_still_judging">The judges are still thinking. Hang in there…</string>
+    <string name="thinking_still_judging">Still working…</string>
     <string name="thinking_ready">Verdict\'s ready.</string>
     <string name="story_names">Taking the names out, so nobody\'s judged by who they are</string>
     <string name="story_facts">A separate checker looks up the facts on the web</string>
@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Too close to call</string>
     <string name="lean_title">Forced ruling: %1$s is more right</string>
     <string name="lean_title_self">Forced ruling: you\'re more right</string>
-    <string name="lean_unanimous">All the judges leaned this way.</string>
     <string name="lean_majority">The judges leaned this way %1$s–%2$s.</string>
     <string name="lean_tie">Even when pushed to pick, the judges split down the middle.</string>
     <string name="split_win">%1$s is right:</string>
@@ -71,18 +70,17 @@
         <item quantity="one">%1$s independent AI judges voted:</item>
         <item quantity="other">%1$s independent AI judges voted:</item>
     </plurals>
-    <string name="escalated">It was close, so we called in extra judges.</string>
     <string name="translate_loading">Translating…</string>
     <string name="translate_from_en">Translated from English</string>
     <string name="translate_from_tr">Translated from Turkish</string>
-    <string name="translate_failed">Couldn\'t translate it just now, so here\'s the original.</string>
+    <string name="translate_failed">Couldn\'t translate.</string>
     <string name="translate_toggle">Verdict language</string>
     <string name="vote_split">split</string>
     <string name="vote_conditional">depends</string>
     <string name="vote_dissolved">word mix-up</string>
-    <string name="refused_note">The AI sat this one out. We\'d rather show nothing than fake a ruling.</string>
+    <string name="refused_note">The AI sat this one out.</string>
     <string name="demo_note">Demo mode: no AI key set up, so this is a sample verdict</string>
-    <string name="trial_survived">Objection overruled: the other side\'s lawyer raised their strongest objection, and the ruling held. Confidence stays put.</string>
+    <string name="trial_survived">Objection overruled: the ruling held.</string>
     <string name="trial_uncertain">The other side\'s lawyer objected, and the objection left real doubt about this ruling</string>
     <string name="trial_overturned">Objection sustained: the ruling stands, but the other side\'s strongest objection seriously weakens it</string>
     <string name="trial_minor">The other side\'s lawyer made a fair point, but the ruling holds</string>
@@ -119,7 +117,7 @@
         <item quantity="one">%1$s hours</item>
         <item quantity="other">%1$s hours</item>
     </plurals>
-    <string name="examples_label">Stuck? Try one of these:</string>
+    <string name="examples_label">Try one:</string>
     <string name="example_hotdog_label">🌭 Is a hot dog a sandwich?</string>
     <string name="example_hotdog_text">My friend Sam says a hot dog is a sandwich: it\'s a filling inside sliced bread, end of story. I say it\'s its own thing. Nobody orders a sandwich and expects a hot dog, and no menu lists it under sandwiches.</string>
     <string name="example_tomato_label">🍅 Is a tomato a fruit?</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">For fun and clarity, not legal advice.</string>
     <string name="footer_language">Language</string>
     <string name="not_found_title">This verdict has left the courtroom</string>
-    <string name="not_found_body">Maybe the link has a typo, or the verdict is gone.</string>
     <string name="nav_sign_in">Sign in</string>
     <string name="nav_account">Account</string>
     <string name="nav_pricing">Pricing</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">Continue</string>
     <string name="respond_adult_confirm">I am 18 or older</string>
     <string name="account_export">Download my data</string>
-    <string name="account_export_hint">Get a JSON file with everything Judge holds about you.</string>
     <string name="account_export_busy">Preparing your file…</string>
     <string name="account_export_failed">We couldn\'t prepare your data just now. Mind trying again?</string>
     <string name="rating_prompt">Fair verdict?</string>
@@ -170,7 +166,7 @@
     <string name="tier_get_premium">Get more verdicts</string>
     <string name="tier_checking">Checking if anything\'s missing…</string>
     <string name="clarify_title">Before the judges rule</string>
-    <string name="clarify_lead">These details could change who\'s right.</string>
+    <string name="clarify_lead">These could change who\'s right.</string>
     <string name="clarify_answer_aria">Answer to question %1$s:</string>
     <string name="clarify_placeholder">Your answer (optional)</string>
     <string name="clarify_skip">Skip and judge</string>
@@ -178,19 +174,18 @@
     <string name="clarify_back">Edit the argument</string>
     <string name="thinking_factcheck">Checking the facts on the web…</string>
     <string name="thinking_factcheck_done">Web check finished.</string>
-    <string name="panel_premium">Judged with a web fact-check.</string>
     <string name="factcheck_title">Checked on the web</string>
-    <string name="factcheck_lead">The judges saw these search results before ruling. They\'re evidence, not the ruling itself.</string>
+    <string name="factcheck_lead">The judges saw these search results before ruling.</string>
     <string name="factcheck_status_supported">Holds up</string>
     <string name="factcheck_status_refuted">Doesn\'t hold up</string>
     <string name="factcheck_status_mixed">Partly true</string>
     <string name="factcheck_status_unverified">Couldn\'t confirm</string>
     <string name="factcheck_sources">Sources</string>
-    <string name="factcheck_none">Nothing to look up on the web: this one turns on values or meanings, not facts.</string>
-    <string name="factcheck_none_factual">Nothing here could be checked on the web: the facts in this one are between the people involved.</string>
+    <string name="factcheck_none">Nothing to check on the web.</string>
+    <string name="factcheck_none_factual">Nothing to check on the web.</string>
     <string name="factcheck_unavailable">The web check didn\'t finish this time, so the judges ruled without it.</string>
     <string name="signin_title">Sign in</string>
-    <string name="signin_lead">Sign in to get a verdict. A new account gets its first verdict free.</string>
+    <string name="signin_lead">Your first verdict is free.</string>
     <string name="signin_apple">Continue with Apple</string>
     <string name="signin_google">Continue with Google</string>
     <string name="signin_email_toggle">Use email instead</string>
@@ -208,7 +203,7 @@
     <string name="signin_use_password">Use a password instead</string>
     <string name="signin_password_wrong">That email and password don\'t match.</string>
     <string name="signin_password_short">Use at least 8 characters.</string>
-    <string name="signin_create_note">We\'ll email you a code to confirm this address. You only need to do this once.</string>
+    <string name="signin_create_note">We\'ll email you a code to confirm.</string>
     <string name="signin_password_choose">You\'re signed in. Choose a password for next time.</string>
     <string name="signin_password_save">Save password</string>
     <string name="signin_password_save_failed">We couldn\'t save the password. Try again.</string>
@@ -237,13 +232,10 @@
     <string name="account_delete_yes">Yes, delete it</string>
     <string name="account_delete_cancel">Keep my account</string>
     <string name="account_delete_failed">We couldn\'t delete the account just now. Mind trying again?</string>
-    <string name="account_sign_in_prompt">Sign in to see your plan and credits.</string>
     <string name="account_load_failed">We couldn\'t load your account. Try again in a moment.</string>
     <string name="account_loading">Loading your account…</string>
     <string name="pricing_title">Your first verdict is on us.</string>
-    <string name="pricing_lead">Create an account and your first verdict is free, with every feature. After that, pick a pack or go monthly.</string>
     <string name="pricing_title_member">Get more verdicts.</string>
-    <string name="pricing_lead_member">Pick a pack or go monthly. Every verdict gets the full panel.</string>
     <string name="pricing_included_title">Every verdict</string>
     <string name="pricing_buy_title">Packs and the monthly plan</string>
     <string name="pricing_premium_f1">Facts checked on the web, with the sources on your verdict</string>
@@ -251,7 +243,7 @@
     <string name="pricing_premium_f3">Up to two quick questions when a key fact is missing</string>
     <string name="pricing_premium_f4">Names swapped out before judging</string>
     <string name="pricing_packs_title">Credit packs</string>
-    <string name="pricing_packs_lead">Pay once and use them whenever. Each verdict uses one credit.</string>
+    <string name="pricing_packs_lead">Each verdict uses one credit.</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s verdicts</item>
         <item quantity="other">%1$s verdicts</item>
@@ -337,8 +329,8 @@
     <string name="case_context_d">Party D added context</string>
     <string name="case_context_you">Context you added (%1$s)</string>
     <string name="case_evidence_item">Image %1$s, as the judges read it</string>
-    <string name="case_answered">They answered. The judges are working on it.</string>
-    <string name="case_judging_alone">The judges are working on your side.</string>
+    <string name="case_answered">The judges are on it.</string>
+    <string name="case_judging_alone">The judges are on it.</string>
     <string name="case_expired_body">Nobody answered in 7 days, so your credit is back. You can still get a verdict on your side alone.</string>
     <string name="case_expired_body_free">Nobody answered in 7 days. You can still get a verdict on your side alone.</string>
     <string name="case_one_sided">Judged on your side only.</string>
@@ -355,12 +347,12 @@
     <string name="respond_submit">Send my side</string>
     <string name="case_write_title">Your side</string>
     <string name="case_write_placeholder">What\'s the problem?</string>
-    <string name="case_write_lead">Write your side whenever you\'re ready. The judges start once you\'ve both written.</string>
+    <string name="case_write_lead">The judges start once you\'ve both written.</string>
     <string name="case_write_lead_answered">They\'ve written their side. Write yours to get the verdict.</string>
     <string name="case_write_submit">Send my side</string>
     <string name="case_write_email_subject">They\'ve written their side</string>
-    <string name="respond_sent">Thanks. Your side is in and the judges are on it.</string>
-    <string name="respond_sent_waiting">Thanks. Your side is in. The judges start once the other person has written theirs.</string>
+    <string name="respond_sent">Your side is in.</string>
+    <string name="respond_sent_waiting">Your side is in. Waiting for the other person.</string>
     <string name="respond_own_invite">This is your own invite link. Send it to the other person.</string>
     <string name="respond_expired">This invite has expired.</string>
     <string name="respond_closed">This case isn\'t taking answers anymore.</string>
@@ -385,7 +377,6 @@
     <string name="evidence_remove">Remove image %1$s</string>
     <string name="evidence_thumb">Image %1$s</string>
     <string name="evidence_preview">What we read</string>
-    <string name="evidence_preview_note">Only you see this. Names are hidden before the judges read it.</string>
     <string name="evidence_status_unreadable">Couldn\'t read any text</string>
     <string name="evidence_status_refused">The reader declined this image</string>
     <string name="evidence_status_unsupported">Not a PNG, JPEG, WebP or GIF</string>
@@ -412,8 +403,6 @@
     <string name="home_remove_their_side">Remove their side</string>
     <string name="home_send_link">Send link</string>
     <string name="home_clear">Clear</string>
-    <string name="home_lead">Write both sides, or send the other person a link to write theirs.</string>
-    <string name="home_lead_solo">Write your side, and theirs if you know it.</string>
     <string name="home_their_side">Their side</string>
     <string name="home_their_name">Their name</string>
     <string name="home_their_placeholder">What do they say? Write it the way they would.</string>
@@ -427,7 +416,7 @@
     <string name="appeal_submit">Re-judge with my context</string>
     <string name="appeal_sending">Anonymizing your context…</string>
     <string name="appeal_judging">The judges are looking at everything again…</string>
-    <string name="appeal_upsell">Something missing? Add context and have it re-judged for 1 verdict.</string>
+    <string name="appeal_upsell">Something missing? Add context for 1 verdict.</string>
     <string name="appeal_sign_in">Sign in to add context</string>
     <string name="appeal_used">You\'ve already added context to this case.</string>
     <string name="appeal_limit">You\'ve added context twice. That\'s the limit for one verdict.</string>
@@ -471,7 +460,7 @@
     <string name="case_display_name">Your name on the shared verdict</string>
     <string name="case_display_save">Save name</string>
     <string name="respond_keep">Keep this case in your account</string>
-    <string name="respond_kept">This case is in your account now. It shows on your Verdicts page on every device.</string>
+    <string name="respond_kept">Kept in your account.</string>
     <string name="respond_remove">Remove my side</string>
     <string name="respond_remove_confirm">Remove your original text and your display name? The case\'s share links stop working (previews already posted in chats may still show until those apps refresh them). This can\'t be undone.</string>
     <string name="names_title">Names on the shared page</string>
@@ -553,7 +542,7 @@
     <string name="app_tab_new">New</string>
     <string name="app_tab_settings">Settings</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">No verdicts yet. Settle your first argument and it shows up here.</string>
+    <string name="app_history_empty">No verdicts yet.</string>
     <string name="app_history_device_only">Saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
     <string name="app_history_delete">Delete</string>
     <string name="app_history_remove_all">Remove all</string>
@@ -562,7 +551,7 @@
         <item quantity="other">Delete %1$s verdicts from this phone? Their share links keep working.</item>
     </plurals>
     <string name="app_history_phone_only">Only on this phone</string>
-    <string name="app_history_phone_only_note">Not in your account: these are saved on this phone only. Deleting one here doesn\'t take down its share link.</string>
+    <string name="app_history_phone_only_note">Deleting one doesn\'t take down its share link.</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="one">Remove this verdict from your account? What you wrote and the names are erased and its share link stops working, on every device. This can\'t be undone.</item>
         <item quantity="other">Remove %1$s verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can\'t be undone.</item>
@@ -583,9 +572,9 @@
     <string name="app_pricing_free_account">Sign in with Apple, Google or email</string>
     <string name="app_pricing_context">Context images, read and then thrown away, at no extra cost</string>
     <string name="app_pricing_headline">Your first verdict is on us.</string>
-    <string name="app_pricing_sub">Create an account and your first verdict is free, with every feature. After that, pick a pack or go monthly.</string>
+    <string name="app_pricing_sub">Then pick a pack or go monthly.</string>
     <string name="app_pricing_headline_member">Get more verdicts.</string>
-    <string name="app_pricing_sub_member">Pick a pack or go monthly. Every verdict gets the full panel.</string>
+    <string name="app_pricing_sub_member">Pick a pack or go monthly.</string>
     <plurals name="app_balance_left">
         <item quantity="one">%1$s verdict left</item>
         <item quantity="other">%1$s verdicts left</item>
@@ -679,10 +668,9 @@
     <string name="app_appeal_used">You\'ve already added context to this case.</string>
     <string name="app_appeal_limit">You\'ve added context twice. That\'s the limit for one verdict.</string>
     <string name="app_purchase_buying">Buying…</string>
-    <string name="app_purchase_success">Thanks! Your purchase went through.</string>
-    <string name="app_purchase_pending">Your purchase is being processed. It may take a minute to show up.</string>
-    <string name="app_purchase_arriving">Your credits are on their way…</string>
-    <string name="app_purchase_slow">It may take a minute to show up here.</string>
+    <string name="app_purchase_success">Purchase complete.</string>
+    <string name="app_purchase_pending">Your purchase is processing.</string>
+    <string name="app_purchase_slow">Credits may take a minute.</string>
     <string name="app_purchase_failed">The purchase didn\'t go through. Try again in a moment.</string>
     <string name="app_purchase_restore">Restore purchases</string>
     <string name="app_purchase_restore_done">Your purchases were restored.</string>

@@ -182,7 +182,6 @@ enum L10n {
     static func verdictTooClose(_ lang: AppLang) -> String { string("verdict.tooClose", lang) }
     static func leanTitle(_ lang: AppLang, name: String) -> String { format("lean.title", lang, name) }
     static func leanTitleSelf(_ lang: AppLang) -> String { string("lean.titleSelf", lang) }
-    static func leanUnanimous(_ lang: AppLang) -> String { string("lean.unanimous", lang) }
     static func leanMajority(_ lang: AppLang, forValue: String, against: String) -> String { format("lean.majority", lang, forValue, against) }
     static func leanTie(_ lang: AppLang) -> String { string("lean.tie", lang) }
     static func splitWin(_ lang: AppLang, name: String) -> String { format("splitWin", lang, name) }
@@ -212,7 +211,6 @@ enum L10n {
     static func judgeAnother(_ lang: AppLang) -> String { string("judgeAnother", lang) }
     static func judgesVotedOne(_ lang: AppLang) -> String { string("judgesVoted.one", lang) }
     static func judgesVoted(_ lang: AppLang, n: Int) -> String { n == 1 ? string("judgesVoted.one", lang) : plural("judgesVoted", lang, n) }
-    static func escalated(_ lang: AppLang) -> String { string("escalated", lang) }
     static func translateLoading(_ lang: AppLang) -> String { string("translate.loading", lang) }
     static func translateFromEn(_ lang: AppLang) -> String { string("translate.from.en", lang) }
     static func translateFromTr(_ lang: AppLang) -> String { string("translate.from.tr", lang) }
@@ -272,7 +270,6 @@ enum L10n {
     static func footerNote(_ lang: AppLang) -> String { string("footer.note", lang) }
     static func footerLanguage(_ lang: AppLang) -> String { string("footer.language", lang) }
     static func notFoundTitle(_ lang: AppLang) -> String { string("notFound.title", lang) }
-    static func notFoundBody(_ lang: AppLang) -> String { string("notFound.body", lang) }
     static func navSignIn(_ lang: AppLang) -> String { string("nav.signIn", lang) }
     static func navAccount(_ lang: AppLang) -> String { string("nav.account", lang) }
     static func navPricing(_ lang: AppLang) -> String { string("nav.pricing", lang) }
@@ -294,7 +291,6 @@ enum L10n {
     static func consentSensitiveContinue(_ lang: AppLang) -> String { string("consent.sensitiveContinue", lang) }
     static func respondAdultConfirm(_ lang: AppLang) -> String { string("respond.adultConfirm", lang) }
     static func accountExport(_ lang: AppLang) -> String { string("account.export", lang) }
-    static func accountExportHint(_ lang: AppLang) -> String { string("account.exportHint", lang) }
     static func accountExportBusy(_ lang: AppLang) -> String { string("account.exportBusy", lang) }
     static func accountExportFailed(_ lang: AppLang) -> String { string("account.exportFailed", lang) }
     static func ratingPrompt(_ lang: AppLang) -> String { string("rating.prompt", lang) }
@@ -313,7 +309,6 @@ enum L10n {
     static func clarifyBack(_ lang: AppLang) -> String { string("clarify.back", lang) }
     static func thinkingFactcheck(_ lang: AppLang) -> String { string("thinking.factcheck", lang) }
     static func thinkingFactcheckDone(_ lang: AppLang) -> String { string("thinking.factcheckDone", lang) }
-    static func panelPremium(_ lang: AppLang) -> String { string("panel.premium", lang) }
     static func factcheckTitle(_ lang: AppLang) -> String { string("factcheck.title", lang) }
     static func factcheckLead(_ lang: AppLang) -> String { string("factcheck.lead", lang) }
     static func factcheckStatusSupported(_ lang: AppLang) -> String { string("factcheck.status.supported", lang) }
@@ -372,13 +367,10 @@ enum L10n {
     static func accountDeleteYes(_ lang: AppLang) -> String { string("account.deleteYes", lang) }
     static func accountDeleteCancel(_ lang: AppLang) -> String { string("account.deleteCancel", lang) }
     static func accountDeleteFailed(_ lang: AppLang) -> String { string("account.deleteFailed", lang) }
-    static func accountSignInPrompt(_ lang: AppLang) -> String { string("account.signInPrompt", lang) }
     static func accountLoadFailed(_ lang: AppLang) -> String { string("account.loadFailed", lang) }
     static func accountLoading(_ lang: AppLang) -> String { string("account.loading", lang) }
     static func pricingTitle(_ lang: AppLang) -> String { string("pricing.title", lang) }
-    static func pricingLead(_ lang: AppLang) -> String { string("pricing.lead", lang) }
     static func pricingTitleMember(_ lang: AppLang) -> String { string("pricing.titleMember", lang) }
-    static func pricingLeadMember(_ lang: AppLang) -> String { string("pricing.leadMember", lang) }
     static func pricingIncludedTitle(_ lang: AppLang) -> String { string("pricing.included.title", lang) }
     static func pricingBuyTitle(_ lang: AppLang) -> String { string("pricing.buy.title", lang) }
     static func pricingPremiumF1(_ lang: AppLang) -> String { string("pricing.premium.f1", lang) }
@@ -511,7 +503,6 @@ enum L10n {
     static func evidenceRemove(_ lang: AppLang, n: String) -> String { format("evidence.remove", lang, n) }
     static func evidenceThumb(_ lang: AppLang, n: String) -> String { format("evidence.thumb", lang, n) }
     static func evidencePreview(_ lang: AppLang) -> String { string("evidence.preview", lang) }
-    static func evidencePreviewNote(_ lang: AppLang) -> String { string("evidence.previewNote", lang) }
     static func evidenceStatusUnreadable(_ lang: AppLang) -> String { string("evidence.status.unreadable", lang) }
     static func evidenceStatusRefused(_ lang: AppLang) -> String { string("evidence.status.refused", lang) }
     static func evidenceStatusUnsupported(_ lang: AppLang) -> String { string("evidence.status.unsupported", lang) }
@@ -538,8 +529,6 @@ enum L10n {
     static func homeRemoveTheirSide(_ lang: AppLang) -> String { string("home.removeTheirSide", lang) }
     static func homeSendLink(_ lang: AppLang) -> String { string("home.sendLink", lang) }
     static func homeClear(_ lang: AppLang) -> String { string("home.clear", lang) }
-    static func homeLead(_ lang: AppLang) -> String { string("home.lead", lang) }
-    static func homeLeadSolo(_ lang: AppLang) -> String { string("home.leadSolo", lang) }
     static func homeTheirSide(_ lang: AppLang) -> String { string("home.theirSide", lang) }
     static func homeTheirName(_ lang: AppLang) -> String { string("home.theirName", lang) }
     static func homeTheirPlaceholder(_ lang: AppLang) -> String { string("home.theirPlaceholder", lang) }
@@ -780,7 +769,6 @@ enum L10n {
     static func appPurchaseBuying(_ lang: AppLang) -> String { string("app.purchase.buying", lang) }
     static func appPurchaseSuccess(_ lang: AppLang) -> String { string("app.purchase.success", lang) }
     static func appPurchasePending(_ lang: AppLang) -> String { string("app.purchase.pending", lang) }
-    static func appPurchaseArriving(_ lang: AppLang) -> String { string("app.purchase.arriving", lang) }
     static func appPurchaseSlow(_ lang: AppLang) -> String { string("app.purchase.slow", lang) }
     static func appPurchaseFailed(_ lang: AppLang) -> String { string("app.purchase.failed", lang) }
     static func appPurchaseRestore(_ lang: AppLang) -> String { string("app.purchase.restore", lang) }
@@ -843,7 +831,6 @@ enum L10n {
         "verdict.dissolved",
         "verdict.tooClose",
         "lean.titleSelf",
-        "lean.unanimous",
         "lean.tie",
         "splitWinSelf",
         "ifPrefix",
@@ -870,7 +857,6 @@ enum L10n {
         "copyPrompt",
         "judgeAnother",
         "judgesVoted.one",
-        "escalated",
         "translate.loading",
         "translate.from.en",
         "translate.from.tr",
@@ -923,7 +909,6 @@ enum L10n {
         "footer.note",
         "footer.language",
         "notFound.title",
-        "notFound.body",
         "nav.signIn",
         "nav.account",
         "nav.pricing",
@@ -945,7 +930,6 @@ enum L10n {
         "consent.sensitiveContinue",
         "respond.adultConfirm",
         "account.export",
-        "account.exportHint",
         "account.exportBusy",
         "account.exportFailed",
         "rating.prompt",
@@ -963,7 +947,6 @@ enum L10n {
         "clarify.back",
         "thinking.factcheck",
         "thinking.factcheckDone",
-        "panel.premium",
         "factcheck.title",
         "factcheck.lead",
         "factcheck.status.supported",
@@ -1016,13 +999,10 @@ enum L10n {
         "account.deleteYes",
         "account.deleteCancel",
         "account.deleteFailed",
-        "account.signInPrompt",
         "account.loadFailed",
         "account.loading",
         "pricing.title",
-        "pricing.lead",
         "pricing.titleMember",
-        "pricing.leadMember",
         "pricing.included.title",
         "pricing.buy.title",
         "pricing.premium.f1",
@@ -1143,7 +1123,6 @@ enum L10n {
         "evidence.reading",
         "evidence.ok",
         "evidence.preview",
-        "evidence.previewNote",
         "evidence.status.unreadable",
         "evidence.status.refused",
         "evidence.status.unsupported",
@@ -1166,8 +1145,6 @@ enum L10n {
         "home.removeTheirSide",
         "home.sendLink",
         "home.clear",
-        "home.lead",
-        "home.leadSolo",
         "home.theirSide",
         "home.theirName",
         "home.theirPlaceholder",
@@ -1381,7 +1358,6 @@ enum L10n {
         "app.purchase.buying",
         "app.purchase.success",
         "app.purchase.pending",
-        "app.purchase.arriving",
         "app.purchase.slow",
         "app.purchase.failed",
         "app.purchase.restore",

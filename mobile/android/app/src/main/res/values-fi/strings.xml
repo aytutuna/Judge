@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">Kolme riippumatonta tuomaria · Tuomarit eivät näe nimiä</string>
     <string name="hero_lead">Kerro, mistä kiistassa on kyse. Kolme tekoälytuomaria ratkaisee asian kukin omillaan, ja varmuusluku näyttää, kuinka yksimielisiä he ovat.</string>
     <string name="input_label">Kiista</string>
-    <string name="placeholder">Mitä tapahtui? Kuka sanoo mitä ja miksi?\n\nKirjoita toisen kanta niin kuin hän itse sen sanoisi. Tuomarit rakentavat joka tapauksessa kummallekin puolelle vahvimman mahdollisen perustelun.</string>
+    <string name="placeholder">Mitä tapahtui? Kuka sanoo mitä ja miksi?</string>
     <string name="get_verdict">Hae tuomio</string>
     <string name="thinking_eyebrow">Mitä tuomarit tekevät</string>
     <string name="thinking_read">Luetaan molemmat puolet ja esitetään kumpikin parhaassa valossaan…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">Jäljitetään kiistan ydintä…</string>
     <string name="thinking_judges">Kolme tuomaria ratkaisee, kukin omillaan…</string>
     <string name="thinking_votes">Lasketaan ääniä…</string>
-    <string name="thinking_helper">Kolme tekoälytuomaria ratkaisee erikseen, ja tiukassa tilanteessa mukaan tulee lisää. Tässä menee hetki.</string>
+    <string name="thinking_helper">Anna sille hetki.</string>
     <string name="thinking_finish">Ydin alkaa löytyä…</string>
-    <string name="thinking_still_judging">Tuomarit miettivät vielä. Pieni hetki…</string>
+    <string name="thinking_still_judging">Työ on vielä kesken…</string>
     <string name="thinking_ready">Tuomio on valmis.</string>
     <string name="story_names">Poistetaan nimet, ettei ketään tuomita sen mukaan, kuka hän on</string>
     <string name="story_facts">Erillinen tarkistaja hakee faktat netistä</string>
@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Liian tasaväkinen ratkaistavaksi</string>
     <string name="lean_title">Jos on pakko valita: %1$s on enemmän oikeassa</string>
     <string name="lean_title_self">Jos on pakko valita: sinä olet enemmän oikeassa</string>
-    <string name="lean_unanimous">Kaikki tuomarit kallistuivat tälle puolelle.</string>
     <string name="lean_majority">Tuomarit kallistuivat tälle puolelle äänin %1$s–%2$s.</string>
     <string name="lean_tie">Vaikka tuomarit pakotettiin valitsemaan, äänet menivät tasan.</string>
     <string name="split_win">%1$s on oikeassa tässä:</string>
@@ -71,18 +70,17 @@
         <item quantity="one">%1$s riippumatonta tekoälytuomaria äänesti:</item>
         <item quantity="other">%1$s riippumatonta tekoälytuomaria äänesti:</item>
     </plurals>
-    <string name="escalated">Oli tiukkaa, joten kutsuimme lisää tuomareita.</string>
     <string name="translate_loading">Käännetään…</string>
     <string name="translate_from_en">Käännetty englannista</string>
     <string name="translate_from_tr">Käännetty turkista</string>
-    <string name="translate_failed">Kääntäminen ei onnistunut juuri nyt, joten tässä alkuperäinen.</string>
+    <string name="translate_failed">Kääntäminen ei onnistunut.</string>
     <string name="translate_toggle">Tuomion kieli</string>
     <string name="vote_split">jaettu</string>
     <string name="vote_conditional">riippuu</string>
     <string name="vote_dissolved">sanasekaannus</string>
-    <string name="refused_note">Tekoäly jätti tämän väliin. Mieluummin ei mitään kuin keksitty tuomio.</string>
+    <string name="refused_note">Tekoäly jätti tämän väliin.</string>
     <string name="demo_note">Demotila: tekoälyavainta ei ole määritetty, joten tämä on esimerkkituomio</string>
-    <string name="trial_survived">Vastaväite hylättiin: vastapuolen asianajaja esitti vahvimman vastaväitteensä, ja tuomio kesti. Varmuus pysyy ennallaan.</string>
+    <string name="trial_survived">Vastaväite hylätty: tuomio piti.</string>
     <string name="trial_uncertain">Vastapuolen asianajaja esitti vastaväitteen, ja se jätti aiheellisen epäilyksen tästä tuomiosta</string>
     <string name="trial_overturned">Vastaväite hyväksyttiin: tuomio pysyy voimassa, mutta vastapuolen vahvin vastaväite heikentää sitä vakavasti</string>
     <string name="trial_minor">Vastapuolen asianajaja huomautti aiheellisesta asiasta, mutta tuomio pysyy voimassa</string>
@@ -119,7 +117,7 @@
         <item quantity="one">%1$s tunnin</item>
         <item quantity="other">%1$s tunnin</item>
     </plurals>
-    <string name="examples_label">Jumissa? Kokeile jotain näistä:</string>
+    <string name="examples_label">Kokeile yhtä:</string>
     <string name="example_hotdog_label">🌭 Onko hodari voileipä?</string>
     <string name="example_hotdog_text">Kaverini Ville väittää, että hodari on voileipä: täyte halkaistun leivän sisällä, ja sillä selvä. Minusta se on ihan oma juttunsa. Kukaan ei tilaa voileipää ja odota saavansa hodaria, eikä sitä löydy miltään ruokalistalta voileipien joukosta.</string>
     <string name="example_tomato_label">🍅 Onko tomaatti hedelmä?</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">Hauskanpitoon ja selkeyteen, ei oikeudellista neuvontaa.</string>
     <string name="footer_language">Kieli</string>
     <string name="not_found_title">Tämä tuomio on jo poistunut salista</string>
-    <string name="not_found_body">Linkissä voi olla kirjoitusvirhe, tai tuomiota ei enää ole.</string>
     <string name="nav_sign_in">Kirjaudu</string>
     <string name="nav_account">Tili</string>
     <string name="nav_pricing">Hinnat</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">Jatka</string>
     <string name="respond_adult_confirm">Olen 18-vuotias tai vanhempi</string>
     <string name="account_export">Lataa tietoni</string>
-    <string name="account_export_hint">Saat JSON-tiedoston, jossa on kaikki, mitä Judge säilyttää sinusta.</string>
     <string name="account_export_busy">Valmistellaan tiedostoa…</string>
     <string name="account_export_failed">Tietojasi ei voitu valmistella juuri nyt. Yritätkö uudelleen?</string>
     <string name="rating_prompt">Oikeudenmukainen tuomio?</string>
@@ -178,19 +174,18 @@
     <string name="clarify_back">Muokkaa kiistaa</string>
     <string name="thinking_factcheck">Tarkistetaan faktoja verkosta…</string>
     <string name="thinking_factcheck_done">Verkkotarkistus valmis.</string>
-    <string name="panel_premium">Faktat tarkistettu verkosta ennen ratkaisua.</string>
     <string name="factcheck_title">Tarkistettu verkosta</string>
-    <string name="factcheck_lead">Tuomarit näkivät nämä hakutulokset ennen ratkaisua. Ne ovat todisteita, eivät itse tuomio.</string>
+    <string name="factcheck_lead">Tuomarit näkivät nämä hakutulokset ennen ratkaisua.</string>
     <string name="factcheck_status_supported">Pitää paikkansa</string>
     <string name="factcheck_status_refuted">Ei pidä paikkaansa</string>
     <string name="factcheck_status_mixed">Osittain totta</string>
     <string name="factcheck_status_unverified">Ei voitu varmistaa</string>
     <string name="factcheck_sources">Lähteet</string>
-    <string name="factcheck_none">Verkosta ei ole mitään tarkistettavaa: tämä ratkeaa arvojen tai merkitysten, ei faktojen perusteella.</string>
-    <string name="factcheck_none_factual">Tästä ei löydy mitään verkosta tarkistettavaa: faktat ovat vain osapuolten tiedossa.</string>
+    <string name="factcheck_none">Verkosta ei ole mitään tarkistettavaa.</string>
+    <string name="factcheck_none_factual">Verkosta ei ole mitään tarkistettavaa.</string>
     <string name="factcheck_unavailable">Verkkotarkistus ei tällä kertaa valmistunut, joten tuomarit ratkaisivat ilman sitä.</string>
     <string name="signin_title">Kirjaudu sisään</string>
-    <string name="signin_lead">Kirjaudu, niin saat tuomion. Uusi tili saa ensimmäisen tuomionsa ilmaiseksi.</string>
+    <string name="signin_lead">Ensimmäinen tuomiosi on ilmainen.</string>
     <string name="signin_apple">Jatka Applella</string>
     <string name="signin_google">Jatka Googlella</string>
     <string name="signin_email_toggle">Kirjaudu sähköpostilla</string>
@@ -208,7 +203,7 @@
     <string name="signin_use_password">Käytä sen sijaan salasanaa</string>
     <string name="signin_password_wrong">Sähköposti ja salasana eivät täsmää.</string>
     <string name="signin_password_short">Käytä vähintään 8 merkkiä.</string>
-    <string name="signin_create_note">Lähetämme sinulle koodin sähköpostiin osoitteen vahvistamiseksi. Se tarvitsee tehdä vain kerran.</string>
+    <string name="signin_create_note">Lähetämme sinulle vahvistuskoodin sähköpostilla.</string>
     <string name="signin_password_choose">Olet kirjautunut sisään. Valitse salasana seuraavaa kertaa varten.</string>
     <string name="signin_password_save">Tallenna salasana</string>
     <string name="signin_password_save_failed">Salasanan tallennus epäonnistui. Yritä uudelleen.</string>
@@ -237,13 +232,10 @@
     <string name="account_delete_yes">Kyllä, poista</string>
     <string name="account_delete_cancel">Älä poista</string>
     <string name="account_delete_failed">Tilin poistaminen ei onnistunut juuri nyt. Yritä uudelleen.</string>
-    <string name="account_sign_in_prompt">Kirjaudu, niin näet tilauksesi ja saldosi.</string>
     <string name="account_load_failed">Tiliäsi ei saatu ladattua. Yritä hetken päästä uudelleen.</string>
     <string name="account_loading">Ladataan tiliäsi…</string>
     <string name="pricing_title">Ensimmäinen tuomio on meiltä.</string>
-    <string name="pricing_lead">Luo tili, niin ensimmäinen tuomiosi on ilmainen kaikkine ominaisuuksineen. Sen jälkeen voit valita paketin tai kuukausitilauksen.</string>
     <string name="pricing_title_member">Hanki lisää tuomioita.</string>
-    <string name="pricing_lead_member">Valitse paketti tai kuukausitilaus. Jokaisen tuomion ratkaisee koko tuomaristö.</string>
     <string name="pricing_included_title">Jokaisessa tuomiossa</string>
     <string name="pricing_buy_title">Paketit ja kuukausitilaus</string>
     <string name="pricing_premium_f1">Faktat tarkistetaan verkosta, ja lähteet näkyvät tuomiossasi</string>
@@ -251,7 +243,7 @@
     <string name="pricing_premium_f3">Enintään kaksi nopeaa kysymystä, jos tärkeä fakta puuttuu</string>
     <string name="pricing_premium_f4">Nimet vaihdetaan ennen ratkaisua</string>
     <string name="pricing_packs_title">Tuomiopaketit</string>
-    <string name="pricing_packs_lead">Maksa kerran ja käytä milloin vain. Jokainen tuomio vähentää saldoa yhdellä.</string>
+    <string name="pricing_packs_lead">Jokainen tuomio vähentää saldoa yhdellä.</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s tuomiota</item>
         <item quantity="other">%1$s tuomiota</item>
@@ -337,8 +329,8 @@
     <string name="case_context_d">Osapuoli D lisäsi tietoa</string>
     <string name="case_context_you">Lisäämäsi tieto (%1$s)</string>
     <string name="case_evidence_item">Kuva %1$s sellaisena kuin tuomarit sen lukivat</string>
-    <string name="case_answered">Vastaus tuli. Tuomarit ovat asian kimpussa.</string>
-    <string name="case_judging_alone">Tuomarit käyvät läpi kertomustasi.</string>
+    <string name="case_answered">Tuomarit ovat asian kimpussa.</string>
+    <string name="case_judging_alone">Tuomarit ovat asian kimpussa.</string>
     <string name="case_expired_body">Kukaan ei vastannut 7 päivässä, joten tuomio palautettiin saldoosi. Voit silti saada tuomion pelkän oman puolesi perusteella.</string>
     <string name="case_expired_body_free">Kukaan ei vastannut 7 päivässä. Voit silti saada tuomion pelkän oman puolesi perusteella.</string>
     <string name="case_one_sided">Ratkaistu vain sinun puolesi perusteella.</string>
@@ -355,12 +347,12 @@
     <string name="respond_submit">Lähetä kertomukseni</string>
     <string name="case_write_title">Sinun puolesi</string>
     <string name="case_write_placeholder">Mikä ongelma on?</string>
-    <string name="case_write_lead">Kirjoita puolesi, kun olet valmis. Tuomarit aloittavat, kun molemmat ovat kirjoittaneet.</string>
+    <string name="case_write_lead">Tuomarit aloittavat, kun molemmat ovat kirjoittaneet.</string>
     <string name="case_write_lead_answered">Toinen on kirjoittanut puolensa. Kirjoita omasi, niin saat tuomion.</string>
     <string name="case_write_submit">Lähetä puoleni</string>
     <string name="case_write_email_subject">Toinen osapuoli on kirjoittanut oman puolensa</string>
-    <string name="respond_sent">Kiitos. Kertomuksesi on perillä, ja tuomarit ovat asian kimpussa.</string>
-    <string name="respond_sent_waiting">Kiitos. Kertomuksesi on perillä. Tuomarit aloittavat, kun toinenkin on kirjoittanut omansa.</string>
+    <string name="respond_sent">Kertomuksesi on perillä.</string>
+    <string name="respond_sent_waiting">Kertomuksesi on perillä. Odotetaan toista.</string>
     <string name="respond_own_invite">Tämä on oma kutsulinkkisi. Lähetä se toiselle osapuolelle.</string>
     <string name="respond_expired">Tämä kutsu on vanhentunut.</string>
     <string name="respond_closed">Tähän juttuun ei voi enää vastata.</string>
@@ -385,7 +377,6 @@
     <string name="evidence_remove">Poista kuva %1$s</string>
     <string name="evidence_thumb">Kuva %1$s</string>
     <string name="evidence_preview">Mitä luimme</string>
-    <string name="evidence_preview_note">Vain sinä näet tämän. Nimet piilotetaan ennen kuin tuomarit lukevat sen.</string>
     <string name="evidence_status_unreadable">Tekstiä ei löytynyt</string>
     <string name="evidence_status_refused">Lukija ei suostunut käsittelemään tätä kuvaa</string>
     <string name="evidence_status_unsupported">Ei PNG, JPEG, WebP tai GIF</string>
@@ -412,8 +403,6 @@
     <string name="home_remove_their_side">Poista toisen puoli</string>
     <string name="home_send_link">Lähetä linkki</string>
     <string name="home_clear">Tyhjennä</string>
-    <string name="home_lead">Kirjoita molemmat puolet tai lähetä toiselle linkki, niin hän kirjoittaa omansa.</string>
-    <string name="home_lead_solo">Kirjoita oma puolesi ja toisen puoli, jos tiedät sen.</string>
     <string name="home_their_side">Toisen puoli</string>
     <string name="home_their_name">Toisen nimi</string>
     <string name="home_their_placeholder">Mitä toinen sanoo? Kirjoita se niin kuin hän itse sen sanoisi.</string>
@@ -427,7 +416,7 @@
     <string name="appeal_submit">Ratkaise uudelleen</string>
     <string name="appeal_sending">Anonymisoidaan lisätietojasi…</string>
     <string name="appeal_judging">Tuomarit käyvät kaiken läpi uudelleen…</string>
-    <string name="appeal_upsell">Puuttuuko jotain? Lisää tietoa, niin asia ratkaistaan uudelleen 1 tuomion hinnalla.</string>
+    <string name="appeal_upsell">Puuttuuko jotain? Lisää tietoa 1 tuomiolla.</string>
     <string name="appeal_sign_in">Kirjaudu, niin voit lisätä tietoa</string>
     <string name="appeal_used">Olet jo lisännyt tietoa tähän juttuun.</string>
     <string name="appeal_limit">Olet lisännyt tietoa kahdesti, eikä samaan tuomioon voi lisätä enempää.</string>
@@ -471,7 +460,7 @@
     <string name="case_display_name">Nimesi jaetussa tuomiossa</string>
     <string name="case_display_save">Tallenna nimi</string>
     <string name="respond_keep">Tallenna tämä juttu tilillesi</string>
-    <string name="respond_kept">Tämä juttu on nyt tililläsi. Se näkyy Tuomiot-sivullasi kaikilla laitteilla.</string>
+    <string name="respond_kept">Tallennettu tilillesi.</string>
     <string name="respond_remove">Poista kertomukseni</string>
     <string name="respond_remove_confirm">Poistetaanko alkuperäinen tekstisi ja näyttönimesi? Jutun jakolinkit lakkaavat toimimasta (keskusteluihin jo jaetut esikatselut voivat näkyä, kunnes sovellukset päivittävät ne). Tätä ei voi perua.</string>
     <string name="names_title">Nimet jaetulla sivulla</string>
@@ -553,7 +542,7 @@
     <string name="app_tab_new">Uusi</string>
     <string name="app_tab_settings">Asetukset</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">Ei vielä tuomioita. Ratkaise ensimmäinen kiistasi, niin tuomio näkyy täällä.</string>
+    <string name="app_history_empty">Ei vielä tuomioita.</string>
     <string name="app_history_device_only">Tallennettu vain tähän puhelimeen. Jos poistat tuomion täältä, sen jakolinkki toimii edelleen.</string>
     <string name="app_history_delete">Poista</string>
     <string name="app_history_remove_all">Poista kaikki</string>
@@ -562,7 +551,7 @@
         <item quantity="other">Poistetaanko %1$s tuomiota tästä puhelimesta? Niiden jakolinkit toimivat edelleen.</item>
     </plurals>
     <string name="app_history_phone_only">Vain tässä puhelimessa</string>
-    <string name="app_history_phone_only_note">Nämä eivät ole tililläsi, vaan ne on tallennettu vain tähän puhelimeen. Jos poistat tuomion täältä, sen jakolinkki toimii edelleen.</string>
+    <string name="app_history_phone_only_note">Poistaminen ei poista jakolinkkiä.</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="one">Poistetaanko tämä tuomio tililtäsi? Poisto koskee kaikkia laitteitasi: kirjoittamasi teksti ja nimet pyyhitään, ja sen jakolinkki lakkaa toimimasta. Tätä ei voi perua.</item>
         <item quantity="other">Poistetaanko %1$s tuomiota tililtäsi? Poisto koskee kaikkia laitteitasi: kirjoittamasi teksti ja nimet pyyhitään, ja niiden jakolinkit lakkaavat toimimasta. Tätä ei voi perua.</item>
@@ -583,9 +572,9 @@
     <string name="app_pricing_free_account">Kirjaudu Applella, Googlella tai sähköpostilla</string>
     <string name="app_pricing_context">Lisätietokuvat luetaan ja heitetään sitten pois, ilman lisämaksua</string>
     <string name="app_pricing_headline">Ensimmäinen tuomio on meiltä.</string>
-    <string name="app_pricing_sub">Luo tili, niin ensimmäinen tuomiosi on ilmainen kaikkine ominaisuuksineen. Sen jälkeen voit valita paketin tai kuukausitilauksen.</string>
+    <string name="app_pricing_sub">Valitse sitten paketti tai kuukausitilaus.</string>
     <string name="app_pricing_headline_member">Hanki lisää tuomioita.</string>
-    <string name="app_pricing_sub_member">Valitse paketti tai kuukausitilaus. Jokaisen tuomion ratkaisee koko tuomaristo.</string>
+    <string name="app_pricing_sub_member">Valitse paketti tai kuukausitilaus.</string>
     <plurals name="app_balance_left">
         <item quantity="one">%1$s tuomio jäljellä</item>
         <item quantity="other">%1$s tuomiota jäljellä</item>
@@ -679,10 +668,9 @@
     <string name="app_appeal_used">Olet jo lisännyt tietoa tähän juttuun.</string>
     <string name="app_appeal_limit">Olet lisännyt tietoa jo kahdesti, eikä samaan tuomioon voi lisätä enempää.</string>
     <string name="app_purchase_buying">Ostetaan…</string>
-    <string name="app_purchase_success">Kiitos! Ostos onnistui.</string>
-    <string name="app_purchase_pending">Ostostasi käsitellään. Voi kestää hetken, ennen kuin se näkyy.</string>
-    <string name="app_purchase_arriving">Tuomiosi ovat tulossa…</string>
-    <string name="app_purchase_slow">Voi kestää hetken, ennen kuin ne näkyvät täällä.</string>
+    <string name="app_purchase_success">Ostos onnistui.</string>
+    <string name="app_purchase_pending">Ostosta käsitellään.</string>
+    <string name="app_purchase_slow">Krediitit voivat viipyä hetken.</string>
     <string name="app_purchase_failed">Ostos ei onnistunut. Yritä hetken päästä uudelleen.</string>
     <string name="app_purchase_restore">Palauta ostokset</string>
     <string name="app_purchase_restore_done">Ostoksesi on palautettu.</string>

@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">ਤਿੰਨ ਆਜ਼ਾਦ ਜੱਜ · ਜੱਜ ਕਦੇ ਨਾਂ ਨਹੀਂ ਦੇਖਦੇ</string>
     <string name="hero_lead">ਦੱਸੋ ਝਗੜਾ ਕਿਸ ਗੱਲ ਦਾ ਹੈ। ਤਿੰਨ AI ਜੱਜ ਆਪੋ-ਆਪਣਾ ਫ਼ੈਸਲਾ ਕਰਦੇ ਹਨ, ਅਤੇ ਭਰੋਸੇ ਦਾ ਸਕੋਰ ਦੱਸਦਾ ਹੈ ਕਿ ਉਹ ਕਿੰਨੇ ਸਹਿਮਤ ਹਨ।</string>
     <string name="input_label">ਬਹਿਸ</string>
-    <string name="placeholder">ਕੀ ਹੋਇਆ? ਕੌਣ ਕੀ ਕਹਿੰਦਾ ਹੈ, ਅਤੇ ਕਿਉਂ?\n\nਦੂਜੀ ਧਿਰ ਦੀ ਗੱਲ ਉਵੇਂ ਹੀ ਲਿਖੋ ਜਿਵੇਂ ਉਹ ਆਪ ਕਹਿਣਗੇ। ਜੱਜ ਹਰ ਹਾਲ ਵਿੱਚ ਦੋਵਾਂ ਪੱਖਾਂ ਨੂੰ ਉਨ੍ਹਾਂ ਦੇ ਸਭ ਤੋਂ ਤਕੜੇ ਰੂਪ ਵਿੱਚ ਰੱਖਦੇ ਹਨ।</string>
+    <string name="placeholder">ਕੀ ਹੋਇਆ? ਕੌਣ ਕੀ ਕਹਿੰਦਾ ਹੈ, ਅਤੇ ਕਿਉਂ?</string>
     <string name="get_verdict">ਫ਼ੈਸਲਾ ਲਓ</string>
     <string name="thinking_eyebrow">ਜੱਜ ਕੀ ਕਰ ਰਹੇ ਹਨ</string>
     <string name="thinking_read">ਦੋਵੇਂ ਪੱਖ ਪੜ੍ਹ ਕੇ ਹਰ ਇੱਕ ਨੂੰ ਪੂਰਾ ਮੌਕਾ ਦੇ ਰਹੇ ਹਾਂ…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">ਅਸਲ ਮੁੱਦਾ ਲੱਭ ਰਹੇ ਹਾਂ…</string>
     <string name="thinking_judges">ਤਿੰਨ ਜੱਜ ਆਪੋ-ਆਪਣਾ ਫ਼ੈਸਲਾ ਕਰ ਰਹੇ ਹਨ…</string>
     <string name="thinking_votes">ਵੋਟਾਂ ਗਿਣ ਰਹੇ ਹਾਂ…</string>
-    <string name="thinking_helper">ਤਿੰਨ AI ਜੱਜ ਵੱਖੋ-ਵੱਖ ਫ਼ੈਸਲਾ ਕਰਦੇ ਹਨ, ਅਤੇ ਟੱਕਰ ਫਸਵੀਂ ਹੋਵੇ ਤਾਂ ਹੋਰ ਜੱਜ ਆ ਜਾਂਦੇ ਹਨ। ਇੱਕ ਮਿੰਟ ਲੱਗ ਸਕਦਾ ਹੈ।</string>
+    <string name="thinking_helper">ਇੱਕ ਮਿੰਟ ਦਿਓ।</string>
     <string name="thinking_finish">ਅਸਲ ਮੁੱਦੇ ਦੇ ਨੇੜੇ ਪਹੁੰਚ ਰਹੇ ਹਾਂ…</string>
-    <string name="thinking_still_judging">ਜੱਜ ਹਾਲੇ ਸੋਚ ਰਹੇ ਹਨ। ਥੋੜ੍ਹਾ ਸਬਰ ਕਰੋ…</string>
+    <string name="thinking_still_judging">ਹਾਲੇ ਕੰਮ ਚੱਲ ਰਿਹਾ ਹੈ…</string>
     <string name="thinking_ready">ਫ਼ੈਸਲਾ ਤਿਆਰ ਹੈ।</string>
     <string name="story_names">ਨਾਂ ਹਟਾ ਰਹੇ ਹਾਂ, ਤਾਂ ਜੋ ਕਿਸੇ ਦਾ ਨਿਆਂ ਇਸ ਤੋਂ ਨਾ ਹੋਵੇ ਕਿ ਉਹ ਕੌਣ ਹੈ</string>
     <string name="story_facts">ਵੱਖਰਾ ਜਾਂਚਕਰਤਾ ਵੈੱਬ ਤੇ ਤੱਥ ਲੱਭਦਾ ਹੈ</string>
@@ -38,7 +38,6 @@
     <string name="verdict_too_close">ਫਸਵੀਂ ਟੱਕਰ, ਫ਼ੈਸਲਾ ਨਹੀਂ ਹੋ ਸਕਿਆ</string>
     <string name="lean_title">ਮਜਬੂਰੀ ਦਾ ਫ਼ੈਸਲਾ: %1$s ਜ਼ਿਆਦਾ ਸਹੀ ਹੈ</string>
     <string name="lean_title_self">ਮਜਬੂਰੀ ਦਾ ਫ਼ੈਸਲਾ: ਤੁਸੀਂ ਜ਼ਿਆਦਾ ਸਹੀ ਹੋ</string>
-    <string name="lean_unanimous">ਸਾਰੇ ਜੱਜਾਂ ਦਾ ਝੁਕਾਅ ਇਸੇ ਪਾਸੇ ਸੀ।</string>
     <string name="lean_majority">ਜੱਜਾਂ ਦਾ ਝੁਕਾਅ %1$s–%2$s ਨਾਲ ਇਸ ਪਾਸੇ ਸੀ।</string>
     <string name="lean_tie">ਚੁਣਨ ਲਈ ਜ਼ੋਰ ਪਾਉਣ ’ਤੇ ਵੀ ਜੱਜ ਅੱਧੋ-ਅੱਧ ਵੰਡੇ ਰਹੇ।</string>
     <string name="split_win">%1$s ਇਸ ਗੱਲ ’ਤੇ ਸਹੀ ਹੈ:</string>
@@ -71,18 +70,17 @@
         <item quantity="one">%1$s ਆਜ਼ਾਦ AI ਜੱਜਾਂ ਨੇ ਵੋਟ ਪਾਈ:</item>
         <item quantity="other">%1$s ਆਜ਼ਾਦ AI ਜੱਜਾਂ ਨੇ ਵੋਟ ਪਾਈ:</item>
     </plurals>
-    <string name="escalated">ਟੱਕਰ ਫਸਵੀਂ ਸੀ, ਇਸ ਲਈ ਅਸੀਂ ਹੋਰ ਜੱਜ ਬੁਲਾ ਲਏ।</string>
     <string name="translate_loading">ਅਨੁਵਾਦ ਹੋ ਰਿਹਾ ਹੈ…</string>
     <string name="translate_from_en">ਅੰਗਰੇਜ਼ੀ ਤੋਂ ਅਨੁਵਾਦ</string>
     <string name="translate_from_tr">ਤੁਰਕੀ ਤੋਂ ਅਨੁਵਾਦ</string>
-    <string name="translate_failed">ਇਸ ਵੇਲੇ ਅਨੁਵਾਦ ਨਹੀਂ ਹੋ ਸਕਿਆ, ਇਸ ਲਈ ਅਸਲ ਲਿਖਤ ਦਿਖਾ ਰਹੇ ਹਾਂ।</string>
+    <string name="translate_failed">ਅਨੁਵਾਦ ਨਹੀਂ ਹੋ ਸਕਿਆ।</string>
     <string name="translate_toggle">ਫ਼ੈਸਲੇ ਦੀ ਭਾਸ਼ਾ</string>
     <string name="vote_split">ਵੰਡਿਆ</string>
     <string name="vote_conditional">ਨਿਰਭਰ</string>
     <string name="vote_dissolved">ਸ਼ਬਦਾਂ ਦਾ ਭੁਲੇਖਾ</string>
-    <string name="refused_note">ਇਸ ਵਾਰ AI ਨੇ ਹੱਥ ਖਿੱਚ ਲਿਆ। ਨਕਲੀ ਫ਼ੈਸਲਾ ਦਿਖਾਉਣ ਨਾਲੋਂ ਅਸੀਂ ਕੁਝ ਨਾ ਦਿਖਾਉਣਾ ਬਿਹਤਰ ਸਮਝਦੇ ਹਾਂ।</string>
+    <string name="refused_note">ਇਸ ਵਾਰ AI ਨੇ ਹੱਥ ਖਿੱਚ ਲਿਆ।</string>
     <string name="demo_note">ਡੈਮੋ ਮੋਡ: ਕੋਈ AI ਕੁੰਜੀ ਸੈੱਟ ਨਹੀਂ, ਇਸ ਲਈ ਇਹ ਨਮੂਨੇ ਦਾ ਫ਼ੈਸਲਾ ਹੈ</string>
-    <string name="trial_survived">ਇਤਰਾਜ਼ ਰੱਦ: ਦੂਜੇ ਪੱਖ ਦੇ ਵਕੀਲ ਨੇ ਆਪਣਾ ਸਭ ਤੋਂ ਸਖ਼ਤ ਇਤਰਾਜ਼ ਉਠਾਇਆ, ਅਤੇ ਫ਼ੈਸਲਾ ਟਿਕਿਆ ਰਿਹਾ। ਭਰੋਸੇ ਦਾ ਸਕੋਰ ਉਹੀ ਰਹਿੰਦਾ ਹੈ।</string>
+    <string name="trial_survived">ਇਤਰਾਜ਼ ਰੱਦ: ਫ਼ੈਸਲਾ ਟਿਕਿਆ ਰਿਹਾ।</string>
     <string name="trial_uncertain">ਦੂਜੇ ਪੱਖ ਦੇ ਵਕੀਲ ਨੇ ਇਤਰਾਜ਼ ਉਠਾਇਆ, ਅਤੇ ਉਸ ਇਤਰਾਜ਼ ਨੇ ਇਸ ਫ਼ੈਸਲੇ ’ਤੇ ਸੱਚਾ ਸ਼ੱਕ ਛੱਡਿਆ</string>
     <string name="trial_overturned">ਇਤਰਾਜ਼ ਮਨਜ਼ੂਰ: ਫ਼ੈਸਲਾ ਕਾਇਮ ਹੈ, ਪਰ ਦੂਜੇ ਪੱਖ ਦੇ ਸਭ ਤੋਂ ਸਖ਼ਤ ਇਤਰਾਜ਼ ਨੇ ਇਸ ਨੂੰ ਗੰਭੀਰ ਤੌਰ ’ਤੇ ਕਮਜ਼ੋਰ ਕਰ ਦਿੱਤਾ</string>
     <string name="trial_minor">ਦੂਜੇ ਪੱਖ ਦੇ ਵਕੀਲ ਨੇ ਇੱਕ ਜਾਇਜ਼ ਨੁਕਤਾ ਉਠਾਇਆ, ਪਰ ਫ਼ੈਸਲਾ ਕਾਇਮ ਹੈ</string>
@@ -119,7 +117,7 @@
         <item quantity="one">%1$s ਘੰਟੇ</item>
         <item quantity="other">%1$s ਘੰਟੇ</item>
     </plurals>
-    <string name="examples_label">ਕੁਝ ਸੁੱਝ ਨਹੀਂ ਰਿਹਾ? ਇਨ੍ਹਾਂ ਵਿੱਚੋਂ ਕੋਈ ਅਜ਼ਮਾਓ:</string>
+    <string name="examples_label">ਇੱਕ ਅਜ਼ਮਾਓ:</string>
     <string name="example_hotdog_label">🫓 ਕੀ ਆਲੂ ਪਰਾਂਠਾ ਵੀ ਰੋਟੀ ਹੈ?</string>
     <string name="example_hotdog_text">ਮੇਰਾ ਦੋਸਤ ਗੁਰਪ੍ਰੀਤ ਕਹਿੰਦਾ ਹੈ ਕਿ ਆਲੂ ਪਰਾਂਠਾ ਵੀ ਰੋਟੀ ਹੀ ਹੈ: ਆਟੇ ਵਿੱਚ ਆਲੂ ਭਰ ਕੇ ਵੇਲਿਆ ਤੇ ਤਵੇ ’ਤੇ ਪਕਾਇਆ, ਗੱਲ ਖ਼ਤਮ। ਮੈਂ ਕਹਿੰਦਾ ਹਾਂ ਕਿ ਇਹ ਆਪਣੇ ਆਪ ਵਿੱਚ ਵੱਖਰੀ ਚੀਜ਼ ਹੈ। ਕੋਈ ਰੋਟੀ ਮੰਗ ਕੇ ਆਲੂ ਪਰਾਂਠੇ ਦੀ ਆਸ ਨਹੀਂ ਰੱਖਦਾ, ਅਤੇ ਕਿਸੇ ਵੀ ਢਾਬੇ ਦੇ ਮੀਨੂ ਵਿੱਚ ਇਹ ਰੋਟੀਆਂ ਹੇਠ ਨਹੀਂ ਲਿਖਿਆ ਹੁੰਦਾ।</string>
     <string name="example_tomato_label">🍅 ਕੀ ਟਮਾਟਰ ਫਲ ਹੈ?</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">ਮਨੋਰੰਜਨ ਅਤੇ ਸਾਫ਼ ਸੋਚ ਲਈ, ਕਾਨੂੰਨੀ ਸਲਾਹ ਨਹੀਂ।</string>
     <string name="footer_language">ਭਾਸ਼ਾ</string>
     <string name="not_found_title">ਇਹ ਫ਼ੈਸਲਾ ਅਦਾਲਤ ’ਚੋਂ ਜਾ ਚੁੱਕਾ ਹੈ</string>
-    <string name="not_found_body">ਸ਼ਾਇਦ ਲਿੰਕ ਵਿੱਚ ਕੋਈ ਗ਼ਲਤੀ ਹੈ, ਜਾਂ ਫ਼ੈਸਲਾ ਹੁਣ ਮੌਜੂਦ ਨਹੀਂ।</string>
     <string name="nav_sign_in">ਸਾਈਨ ਇਨ</string>
     <string name="nav_account">ਖਾਤਾ</string>
     <string name="nav_pricing">ਕੀਮਤਾਂ</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">ਜਾਰੀ ਰੱਖੋ</string>
     <string name="respond_adult_confirm">ਮੇਰੀ ਉਮਰ 18 ਸਾਲ ਜਾਂ ਵੱਧ ਹੈ</string>
     <string name="account_export">ਮੇਰਾ ਡੇਟਾ ਡਾਊਨਲੋਡ ਕਰੋ</string>
-    <string name="account_export_hint">Judge ਕੋਲ ਤੁਹਾਡੇ ਬਾਰੇ ਜੋ ਕੁਝ ਹੈ, ਉਹ ਸਭ ਇੱਕ JSON ਫ਼ਾਈਲ ਵਿੱਚ ਲਓ।</string>
     <string name="account_export_busy">ਤੁਹਾਡੀ ਫ਼ਾਈਲ ਤਿਆਰ ਹੋ ਰਹੀ ਹੈ…</string>
     <string name="account_export_failed">ਹੁਣ ਤੁਹਾਡਾ ਡੇਟਾ ਤਿਆਰ ਨਹੀਂ ਹੋ ਸਕਿਆ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋਗੇ?</string>
     <string name="rating_prompt">ਕੀ ਫ਼ੈਸਲਾ ਨਿਆਂਪੂਰਨ ਹੈ?</string>
@@ -178,19 +174,18 @@
     <string name="clarify_back">ਬਹਿਸ ਸੋਧੋ</string>
     <string name="thinking_factcheck">ਵੈੱਬ ’ਤੇ ਤੱਥ ਜਾਂਚ ਰਹੇ ਹਾਂ…</string>
     <string name="thinking_factcheck_done">ਵੈੱਬ ਜਾਂਚ ਪੂਰੀ ਹੋਈ।</string>
-    <string name="panel_premium">ਵੈੱਬ ’ਤੇ ਤੱਥ ਜਾਂਚ ਕੇ ਫ਼ੈਸਲਾ ਕੀਤਾ।</string>
     <string name="factcheck_title">ਵੈੱਬ ’ਤੇ ਜਾਂਚਿਆ</string>
-    <string name="factcheck_lead">ਫ਼ੈਸਲੇ ਤੋਂ ਪਹਿਲਾਂ ਜੱਜਾਂ ਨੇ ਇਹ ਸਰਚ ਨਤੀਜੇ ਦੇਖੇ। ਇਹ ਸਬੂਤ ਹਨ, ਫ਼ੈਸਲਾ ਨਹੀਂ।</string>
+    <string name="factcheck_lead">ਫ਼ੈਸਲੇ ਤੋਂ ਪਹਿਲਾਂ ਜੱਜਾਂ ਨੇ ਇਹ ਸਰਚ ਨਤੀਜੇ ਦੇਖੇ।</string>
     <string name="factcheck_status_supported">ਸਹੀ ਨਿਕਲਿਆ</string>
     <string name="factcheck_status_refuted">ਸਹੀ ਨਹੀਂ ਨਿਕਲਿਆ</string>
     <string name="factcheck_status_mixed">ਅੱਧਾ ਸੱਚ</string>
     <string name="factcheck_status_unverified">ਪੱਕਾ ਨਹੀਂ ਹੋਇਆ</string>
     <string name="factcheck_sources">ਸਰੋਤ</string>
-    <string name="factcheck_none">ਵੈੱਬ ’ਤੇ ਲੱਭਣ ਲਈ ਕੁਝ ਨਹੀਂ: ਇਹ ਗੱਲ ਤੱਥਾਂ ’ਤੇ ਨਹੀਂ, ਕਦਰਾਂ ਜਾਂ ਮਤਲਬਾਂ ’ਤੇ ਟਿਕੀ ਹੈ।</string>
-    <string name="factcheck_none_factual">ਇੱਥੇ ਵੈੱਬ ’ਤੇ ਜਾਂਚਣ ਲਈ ਕੁਝ ਨਹੀਂ ਸੀ: ਇਸ ਦੇ ਤੱਥ ਉਨ੍ਹਾਂ ਲੋਕਾਂ ਵਿਚਾਲੇ ਦੀ ਗੱਲ ਹਨ ਜੋ ਇਸ ਵਿੱਚ ਸ਼ਾਮਲ ਹਨ।</string>
+    <string name="factcheck_none">ਵੈੱਬ ’ਤੇ ਜਾਂਚਣ ਲਈ ਕੁਝ ਨਹੀਂ।</string>
+    <string name="factcheck_none_factual">ਵੈੱਬ ’ਤੇ ਜਾਂਚਣ ਲਈ ਕੁਝ ਨਹੀਂ।</string>
     <string name="factcheck_unavailable">ਇਸ ਵਾਰ ਵੈੱਬ ਜਾਂਚ ਪੂਰੀ ਨਹੀਂ ਹੋਈ, ਇਸ ਲਈ ਜੱਜਾਂ ਨੇ ਉਸ ਤੋਂ ਬਿਨਾਂ ਫ਼ੈਸਲਾ ਕੀਤਾ।</string>
     <string name="signin_title">ਸਾਈਨ ਇਨ</string>
-    <string name="signin_lead">ਫ਼ੈਸਲਾ ਲੈਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ। ਨਵੇਂ ਖਾਤੇ ਨੂੰ ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਮੁਫ਼ਤ ਮਿਲਦਾ ਹੈ।</string>
+    <string name="signin_lead">ਤੁਹਾਡਾ ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਮੁਫ਼ਤ ਹੈ।</string>
     <string name="signin_apple">Apple ਨਾਲ ਜਾਰੀ ਰੱਖੋ</string>
     <string name="signin_google">Google ਨਾਲ ਜਾਰੀ ਰੱਖੋ</string>
     <string name="signin_email_toggle">ਈਮੇਲ ਨਾਲ ਜਾਰੀ ਰੱਖੋ</string>
@@ -208,7 +203,7 @@
     <string name="signin_use_password">ਇਸ ਦੀ ਬਜਾਏ ਪਾਸਵਰਡ ਵਰਤੋ</string>
     <string name="signin_password_wrong">ਇਹ ਈਮੇਲ ਅਤੇ ਪਾਸਵਰਡ ਮੇਲ ਨਹੀਂ ਖਾਂਦੇ।</string>
     <string name="signin_password_short">ਘੱਟੋ-ਘੱਟ 8 ਅੱਖਰ ਵਰਤੋ।</string>
-    <string name="signin_create_note">ਇਸ ਪਤੇ ਦੀ ਪੁਸ਼ਟੀ ਲਈ ਅਸੀਂ ਤੁਹਾਨੂੰ ਈਮੇਲ ਤੇ ਇੱਕ ਕੋਡ ਭੇਜਾਂਗੇ। ਇਹ ਸਿਰਫ਼ ਇੱਕ ਵਾਰ ਕਰਨਾ ਪਵੇਗਾ।</string>
+    <string name="signin_create_note">ਪੁਸ਼ਟੀ ਲਈ ਅਸੀਂ ਤੁਹਾਨੂੰ ਈਮੇਲ ਤੇ ਇੱਕ ਕੋਡ ਭੇਜਾਂਗੇ।</string>
     <string name="signin_password_choose">ਤੁਸੀਂ ਸਾਈਨ ਇਨ ਹੋ ਗਏ ਹੋ। ਅਗਲੀ ਵਾਰ ਲਈ ਇੱਕ ਪਾਸਵਰਡ ਚੁਣੋ।</string>
     <string name="signin_password_save">ਪਾਸਵਰਡ ਸੰਭਾਲੋ</string>
     <string name="signin_password_save_failed">ਪਾਸਵਰਡ ਸੰਭਾਲਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
@@ -237,13 +232,10 @@
     <string name="account_delete_yes">ਹਾਂ, ਮਿਟਾ ਦਿਓ</string>
     <string name="account_delete_cancel">ਖਾਤਾ ਰਹਿਣ ਦਿਓ</string>
     <string name="account_delete_failed">ਇਸ ਵੇਲੇ ਖਾਤਾ ਨਹੀਂ ਮਿਟ ਸਕਿਆ। ਇੱਕ ਵਾਰ ਫਿਰ ਕੋਸ਼ਿਸ਼ ਕਰੋਗੇ?</string>
-    <string name="account_sign_in_prompt">ਆਪਣਾ ਪਲਾਨ ਅਤੇ ਕ੍ਰੈਡਿਟ ਦੇਖਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ।</string>
     <string name="account_load_failed">ਤੁਹਾਡਾ ਖਾਤਾ ਲੋਡ ਨਹੀਂ ਹੋ ਸਕਿਆ। ਥੋੜ੍ਹੀ ਦੇਰ ਬਾਅਦ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
     <string name="account_loading">ਤੁਹਾਡਾ ਖਾਤਾ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ…</string>
     <string name="pricing_title">ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਸਾਡੇ ਵੱਲੋਂ।</string>
-    <string name="pricing_lead">ਖਾਤਾ ਬਣਾਓ ਅਤੇ ਤੁਹਾਡਾ ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਮੁਫ਼ਤ ਹੈ, ਸਾਰੀਆਂ ਸਹੂਲਤਾਂ ਨਾਲ। ਉਸ ਤੋਂ ਬਾਅਦ ਕੋਈ ਪੈਕ ਚੁਣੋ ਜਾਂ ਮਹੀਨਾਵਾਰ ਪਲਾਨ ਲਓ।</string>
     <string name="pricing_title_member">ਹੋਰ ਫ਼ੈਸਲੇ ਲਓ।</string>
-    <string name="pricing_lead_member">ਕੋਈ ਪੈਕ ਚੁਣੋ ਜਾਂ ਮਹੀਨਾਵਾਰ ਪਲਾਨ ਲਓ। ਹਰ ਫ਼ੈਸਲੇ ਨੂੰ ਜੱਜਾਂ ਦਾ ਪੂਰਾ ਪੈਨਲ ਮਿਲਦਾ ਹੈ।</string>
     <string name="pricing_included_title">ਹਰ ਫ਼ੈਸਲੇ ਵਿੱਚ</string>
     <string name="pricing_buy_title">ਪੈਕ ਅਤੇ ਮਹੀਨਾਵਾਰ ਪਲਾਨ</string>
     <string name="pricing_premium_f1">ਵੈੱਬ ’ਤੇ ਤੱਥਾਂ ਦੀ ਜਾਂਚ, ਸਰੋਤ ਤੁਹਾਡੇ ਫ਼ੈਸਲੇ ’ਤੇ</string>
@@ -251,7 +243,7 @@
     <string name="pricing_premium_f3">ਕੋਈ ਅਹਿਮ ਤੱਥ ਰਹਿ ਜਾਵੇ ਤਾਂ ਵੱਧ ਤੋਂ ਵੱਧ ਦੋ ਛੋਟੇ ਸਵਾਲ</string>
     <string name="pricing_premium_f4">ਫ਼ੈਸਲੇ ਤੋਂ ਪਹਿਲਾਂ ਨਾਂ ਬਦਲ ਦਿੱਤੇ ਜਾਂਦੇ ਹਨ</string>
     <string name="pricing_packs_title">ਕ੍ਰੈਡਿਟ ਪੈਕ</string>
-    <string name="pricing_packs_lead">ਇੱਕ ਵਾਰ ਪੈਸੇ ਦਿਓ ਅਤੇ ਜਦੋਂ ਮਰਜ਼ੀ ਵਰਤੋ। ਹਰ ਫ਼ੈਸਲੇ ’ਤੇ ਇੱਕ ਕ੍ਰੈਡਿਟ ਲੱਗਦਾ ਹੈ।</string>
+    <string name="pricing_packs_lead">ਹਰ ਫ਼ੈਸਲੇ ’ਤੇ ਇੱਕ ਕ੍ਰੈਡਿਟ ਲੱਗਦਾ ਹੈ।</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s ਫ਼ੈਸਲੇ</item>
         <item quantity="other">%1$s ਫ਼ੈਸਲੇ</item>
@@ -337,8 +329,8 @@
     <string name="case_context_d">ਧਿਰ D ਨੇ ਵੇਰਵਾ ਜੋੜਿਆ</string>
     <string name="case_context_you">ਤੁਹਾਡਾ ਜੋੜਿਆ ਵੇਰਵਾ (%1$s)</string>
     <string name="case_evidence_item">ਤਸਵੀਰ %1$s, ਜਿਵੇਂ ਜੱਜਾਂ ਨੇ ਪੜ੍ਹੀ</string>
-    <string name="case_answered">ਉਨ੍ਹਾਂ ਨੇ ਜਵਾਬ ਦੇ ਦਿੱਤਾ। ਜੱਜ ਕੰਮ ’ਤੇ ਲੱਗੇ ਹਨ।</string>
-    <string name="case_judging_alone">ਜੱਜ ਤੁਹਾਡੇ ਪੱਖ ’ਤੇ ਕੰਮ ਕਰ ਰਹੇ ਹਨ।</string>
+    <string name="case_answered">ਜੱਜ ਕੰਮ ’ਤੇ ਲੱਗੇ ਹਨ।</string>
+    <string name="case_judging_alone">ਜੱਜ ਕੰਮ ’ਤੇ ਲੱਗੇ ਹਨ।</string>
     <string name="case_expired_body">7 ਦਿਨਾਂ ਵਿੱਚ ਕੋਈ ਜਵਾਬ ਨਹੀਂ ਆਇਆ, ਇਸ ਲਈ ਤੁਹਾਡਾ ਕ੍ਰੈਡਿਟ ਵਾਪਸ ਆ ਗਿਆ ਹੈ। ਤੁਸੀਂ ਹਾਲੇ ਵੀ ਸਿਰਫ਼ ਆਪਣੇ ਪੱਖ ’ਤੇ ਫ਼ੈਸਲਾ ਲੈ ਸਕਦੇ ਹੋ।</string>
     <string name="case_expired_body_free">7 ਦਿਨਾਂ ਵਿੱਚ ਕੋਈ ਜਵਾਬ ਨਹੀਂ ਆਇਆ। ਤੁਸੀਂ ਹਾਲੇ ਵੀ ਸਿਰਫ਼ ਆਪਣੇ ਪੱਖ ’ਤੇ ਫ਼ੈਸਲਾ ਲੈ ਸਕਦੇ ਹੋ।</string>
     <string name="case_one_sided">ਸਿਰਫ਼ ਤੁਹਾਡੇ ਪੱਖ ’ਤੇ ਫ਼ੈਸਲਾ ਹੋਇਆ।</string>
@@ -355,12 +347,12 @@
     <string name="respond_submit">ਮੇਰਾ ਪੱਖ ਭੇਜੋ</string>
     <string name="case_write_title">ਤੁਹਾਡਾ ਪੱਖ</string>
     <string name="case_write_placeholder">ਸਮੱਸਿਆ ਕੀ ਹੈ?</string>
-    <string name="case_write_lead">ਜਦੋਂ ਤਿਆਰ ਹੋਵੋ ਆਪਣਾ ਪੱਖ ਲਿਖੋ। ਦੋਵੇਂ ਲਿਖ ਲੈਣ ਤਾਂ ਜੱਜ ਸ਼ੁਰੂ ਕਰਨਗੇ।</string>
+    <string name="case_write_lead">ਦੋਵੇਂ ਲਿਖ ਲੈਣ ਤਾਂ ਜੱਜ ਸ਼ੁਰੂ ਕਰਨਗੇ।</string>
     <string name="case_write_lead_answered">ਉਨ੍ਹਾਂ ਨੇ ਆਪਣਾ ਪੱਖ ਲਿਖ ਦਿੱਤਾ ਹੈ। ਫ਼ੈਸਲਾ ਲੈਣ ਲਈ ਆਪਣਾ ਲਿਖੋ।</string>
     <string name="case_write_submit">ਮੇਰਾ ਪੱਖ ਭੇਜੋ</string>
     <string name="case_write_email_subject">ਦੂਜੀ ਧਿਰ ਨੇ ਆਪਣਾ ਪੱਖ ਲਿਖ ਦਿੱਤਾ ਹੈ</string>
-    <string name="respond_sent">ਸ਼ੁਕਰੀਆ। ਤੁਹਾਡਾ ਪੱਖ ਪਹੁੰਚ ਗਿਆ ਹੈ ਅਤੇ ਜੱਜ ਕੰਮ ’ਤੇ ਲੱਗ ਗਏ ਹਨ।</string>
-    <string name="respond_sent_waiting">ਸ਼ੁਕਰੀਆ। ਤੁਹਾਡਾ ਪੱਖ ਪਹੁੰਚ ਗਿਆ ਹੈ। ਦੂਜੇ ਦੇ ਲਿਖਦਿਆਂ ਹੀ ਜੱਜ ਸ਼ੁਰੂ ਕਰਨਗੇ।</string>
+    <string name="respond_sent">ਤੁਹਾਡਾ ਪੱਖ ਪਹੁੰਚ ਗਿਆ ਹੈ।</string>
+    <string name="respond_sent_waiting">ਤੁਹਾਡਾ ਪੱਖ ਪਹੁੰਚ ਗਿਆ ਹੈ। ਦੂਜੇ ਦੀ ਉਡੀਕ ਹੈ।</string>
     <string name="respond_own_invite">ਇਹ ਤੁਹਾਡਾ ਆਪਣਾ ਸੱਦਾ ਲਿੰਕ ਹੈ। ਇਸ ਨੂੰ ਦੂਜੀ ਧਿਰ ਨੂੰ ਭੇਜੋ।</string>
     <string name="respond_expired">ਇਸ ਸੱਦੇ ਦੀ ਮਿਆਦ ਖ਼ਤਮ ਹੋ ਗਈ ਹੈ।</string>
     <string name="respond_closed">ਇਹ ਕੇਸ ਹੁਣ ਜਵਾਬ ਨਹੀਂ ਲੈ ਰਿਹਾ।</string>
@@ -385,7 +377,6 @@
     <string name="evidence_remove">ਤਸਵੀਰ %1$s ਹਟਾਓ</string>
     <string name="evidence_thumb">ਤਸਵੀਰ %1$s</string>
     <string name="evidence_preview">ਅਸੀਂ ਕੀ ਪੜ੍ਹਿਆ</string>
-    <string name="evidence_preview_note">ਇਹ ਸਿਰਫ਼ ਤੁਸੀਂ ਦੇਖ ਸਕਦੇ ਹੋ। ਜੱਜਾਂ ਦੇ ਪੜ੍ਹਨ ਤੋਂ ਪਹਿਲਾਂ ਨਾਂ ਲੁਕਾ ਦਿੱਤੇ ਜਾਂਦੇ ਹਨ।</string>
     <string name="evidence_status_unreadable">ਕੋਈ ਲਿਖਤ ਨਹੀਂ ਪੜ੍ਹੀ ਜਾ ਸਕੀ</string>
     <string name="evidence_status_refused">ਇਹ ਤਸਵੀਰ ਪੜ੍ਹਨ ਤੋਂ ਨਾਂਹ ਕਰ ਦਿੱਤੀ ਗਈ</string>
     <string name="evidence_status_unsupported">PNG, JPEG, WebP ਜਾਂ GIF ਨਹੀਂ</string>
@@ -412,8 +403,6 @@
     <string name="home_remove_their_side">ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ ਹਟਾਓ</string>
     <string name="home_send_link">ਲਿੰਕ ਭੇਜੋ</string>
     <string name="home_clear">ਸਾਫ਼ ਕਰੋ</string>
-    <string name="home_lead">ਦੋਵੇਂ ਪੱਖ ਲਿਖੋ, ਜਾਂ ਦੂਜੀ ਧਿਰ ਨੂੰ ਲਿੰਕ ਭੇਜੋ ਤਾਂ ਜੋ ਉਹ ਆਪਣਾ ਪੱਖ ਆਪ ਲਿਖਣ।</string>
-    <string name="home_lead_solo">ਆਪਣਾ ਪੱਖ ਲਿਖੋ, ਅਤੇ ਜੇ ਪਤਾ ਹੋਵੇ ਤਾਂ ਉਨ੍ਹਾਂ ਦਾ ਵੀ।</string>
     <string name="home_their_side">ਉਨ੍ਹਾਂ ਦਾ ਪੱਖ</string>
     <string name="home_their_name">ਉਨ੍ਹਾਂ ਦਾ ਨਾਂ</string>
     <string name="home_their_placeholder">ਉਹ ਕੀ ਕਹਿੰਦੇ ਹਨ? ਉਵੇਂ ਲਿਖੋ ਜਿਵੇਂ ਉਹ ਆਪ ਕਹਿਣਗੇ।</string>
@@ -427,7 +416,7 @@
     <string name="appeal_submit">ਮੇਰੇ ਵੇਰਵੇ ਨਾਲ ਦੁਬਾਰਾ ਫ਼ੈਸਲਾ ਕਰੋ</string>
     <string name="appeal_sending">ਤੁਹਾਡੇ ਵੇਰਵੇ ਵਿੱਚੋਂ ਨਾਂ ਕੱਢ ਰਹੇ ਹਾਂ…</string>
     <string name="appeal_judging">ਜੱਜ ਸਾਰਾ ਕੁਝ ਦੁਬਾਰਾ ਦੇਖ ਰਹੇ ਹਨ…</string>
-    <string name="appeal_upsell">ਕੁਝ ਰਹਿ ਗਿਆ? ਵੇਰਵਾ ਜੋੜ ਕੇ ਦੁਬਾਰਾ ਫ਼ੈਸਲਾ ਕਰਵਾਓ। ਇਸ ’ਤੇ 1 ਫ਼ੈਸਲਾ ਲੱਗਦਾ ਹੈ।</string>
+    <string name="appeal_upsell">ਕੁਝ ਰਹਿ ਗਿਆ? 1 ਫ਼ੈਸਲੇ ਲਈ ਵੇਰਵਾ ਜੋੜੋ।</string>
     <string name="appeal_sign_in">ਵੇਰਵਾ ਜੋੜਨ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ</string>
     <string name="appeal_used">ਤੁਸੀਂ ਇਸ ਕੇਸ ਵਿੱਚ ਪਹਿਲਾਂ ਹੀ ਵੇਰਵਾ ਜੋੜ ਚੁੱਕੇ ਹੋ।</string>
     <string name="appeal_limit">ਤੁਸੀਂ ਦੋ ਵਾਰ ਵੇਰਵਾ ਜੋੜ ਚੁੱਕੇ ਹੋ। ਇੱਕ ਫ਼ੈਸਲੇ ਲਈ ਇਹੀ ਹੱਦ ਹੈ।</string>
@@ -471,7 +460,7 @@
     <string name="case_display_name">ਸਾਂਝੇ ਫ਼ੈਸਲੇ ’ਤੇ ਤੁਹਾਡਾ ਨਾਂ</string>
     <string name="case_display_save">ਨਾਂ ਸੇਵ ਕਰੋ</string>
     <string name="respond_keep">ਇਹ ਕੇਸ ਆਪਣੇ ਖਾਤੇ ਵਿੱਚ ਰੱਖੋ</string>
-    <string name="respond_kept">ਇਹ ਕੇਸ ਹੁਣ ਤੁਹਾਡੇ ਖਾਤੇ ਵਿੱਚ ਹੈ। ਇਹ ਹਰ ਡਿਵਾਈਸ ’ਤੇ ਤੁਹਾਡੇ “ਫ਼ੈਸਲੇ” ਪੇਜ ’ਤੇ ਦਿਖਦਾ ਹੈ।</string>
+    <string name="respond_kept">ਤੁਹਾਡੇ ਖਾਤੇ ਵਿੱਚ ਸੰਭਾਲਿਆ ਗਿਆ।</string>
     <string name="respond_remove">ਮੇਰਾ ਪੱਖ ਹਟਾਓ</string>
     <string name="respond_remove_confirm">ਤੁਹਾਡੀ ਅਸਲ ਲਿਖਤ ਅਤੇ ਦਿਖਣ ਵਾਲਾ ਨਾਂ ਹਟਾਉਣਾ ਹੈ? ਕੇਸ ਦੇ ਸਾਂਝੇ ਲਿੰਕ ਕੰਮ ਕਰਨਾ ਬੰਦ ਕਰ ਦੇਣਗੇ (ਚੈਟਾਂ ਵਿੱਚ ਪਹਿਲਾਂ ਹੀ ਭੇਜੇ ਪ੍ਰੀਵਿਊ ਉਦੋਂ ਤੱਕ ਦਿਖ ਸਕਦੇ ਹਨ ਜਦੋਂ ਤੱਕ ਉਹ ਐਪਾਂ ਉਨ੍ਹਾਂ ਨੂੰ ਤਾਜ਼ਾ ਨਹੀਂ ਕਰਦੀਆਂ)। ਇਹ ਵਾਪਸ ਨਹੀਂ ਹੋ ਸਕਦਾ।</string>
     <string name="names_title">ਸਾਂਝੇ ਪੇਜ ’ਤੇ ਨਾਂ</string>
@@ -553,7 +542,7 @@
     <string name="app_tab_new">ਨਵਾਂ</string>
     <string name="app_tab_settings">ਸੈਟਿੰਗਾਂ</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">ਹਾਲੇ ਕੋਈ ਫ਼ੈਸਲਾ ਨਹੀਂ। ਆਪਣੀ ਪਹਿਲੀ ਬਹਿਸ ਦਾ ਨਿਬੇੜਾ ਕਰਾਓ, ਫ਼ੈਸਲਾ ਇੱਥੇ ਦਿਖੇਗਾ।</string>
+    <string name="app_history_empty">ਹਾਲੇ ਕੋਈ ਫ਼ੈਸਲਾ ਨਹੀਂ।</string>
     <string name="app_history_device_only">ਇਹ ਸਿਰਫ਼ ਇਸ ਫ਼ੋਨ ’ਤੇ ਸੇਵ ਹਨ। ਇੱਥੋਂ ਕੋਈ ਫ਼ੈਸਲਾ ਮਿਟਾਉਣ ਨਾਲ ਉਸ ਦਾ ਸਾਂਝਾ ਲਿੰਕ ਬੰਦ ਨਹੀਂ ਹੁੰਦਾ।</string>
     <string name="app_history_delete">ਮਿਟਾਓ</string>
     <string name="app_history_remove_all">ਸਭ ਹਟਾਓ</string>
@@ -562,7 +551,7 @@
         <item quantity="other">ਇਸ ਫ਼ੋਨ ਤੋਂ %1$s ਫ਼ੈਸਲੇ ਮਿਟਾਉਣੇ ਹਨ? ਉਨ੍ਹਾਂ ਦੇ ਸਾਂਝੇ ਲਿੰਕ ਕੰਮ ਕਰਦੇ ਰਹਿਣਗੇ।</item>
     </plurals>
     <string name="app_history_phone_only">ਸਿਰਫ਼ ਇਸ ਫ਼ੋਨ ’ਤੇ</string>
-    <string name="app_history_phone_only_note">ਤੁਹਾਡੇ ਖਾਤੇ ਵਿੱਚ ਨਹੀਂ: ਇਹ ਸਿਰਫ਼ ਇਸ ਫ਼ੋਨ ’ਤੇ ਸੇਵ ਹਨ। ਇੱਥੋਂ ਕੋਈ ਫ਼ੈਸਲਾ ਮਿਟਾਉਣ ਨਾਲ ਉਸ ਦਾ ਸਾਂਝਾ ਲਿੰਕ ਬੰਦ ਨਹੀਂ ਹੁੰਦਾ।</string>
+    <string name="app_history_phone_only_note">ਮਿਟਾਉਣ ਨਾਲ ਸਾਂਝਾ ਲਿੰਕ ਬੰਦ ਨਹੀਂ ਹੁੰਦਾ।</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="one">ਆਪਣੇ ਖਾਤੇ ਵਿੱਚੋਂ %1$s ਫ਼ੈਸਲਾ ਹਟਾਉਣਾ ਹੈ? ਇਹ ਹਰ ਡਿਵਾਈਸ ਤੋਂ ਹਟ ਜਾਵੇਗਾ: ਤੁਹਾਡੀ ਲਿਖਤ ਅਤੇ ਨਾਂ ਮਿਟ ਜਾਣਗੇ ਅਤੇ ਇਸ ਦਾ ਸਾਂਝਾ ਲਿੰਕ ਕੰਮ ਕਰਨਾ ਬੰਦ ਕਰ ਦੇਵੇਗਾ। ਇਹ ਵਾਪਸ ਨਹੀਂ ਹੋ ਸਕਦਾ।</item>
         <item quantity="other">ਆਪਣੇ ਖਾਤੇ ਵਿੱਚੋਂ %1$s ਫ਼ੈਸਲੇ ਹਟਾਉਣੇ ਹਨ? ਇਹ ਹਰ ਡਿਵਾਈਸ ਤੋਂ ਹਟ ਜਾਣਗੇ: ਤੁਹਾਡੀ ਲਿਖਤ ਅਤੇ ਨਾਂ ਮਿਟ ਜਾਣਗੇ ਅਤੇ ਉਨ੍ਹਾਂ ਦੇ ਸਾਂਝੇ ਲਿੰਕ ਕੰਮ ਕਰਨਾ ਬੰਦ ਕਰ ਦੇਣਗੇ। ਇਹ ਵਾਪਸ ਨਹੀਂ ਹੋ ਸਕਦਾ।</item>
@@ -583,9 +572,9 @@
     <string name="app_pricing_free_account">Apple, Google ਜਾਂ ਈਮੇਲ ਨਾਲ ਸਾਈਨ ਇਨ ਕਰੋ</string>
     <string name="app_pricing_context">ਵੇਰਵੇ ਦੀਆਂ ਤਸਵੀਰਾਂ ਪੜ੍ਹ ਕੇ ਸੁੱਟ ਦਿੱਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ, ਕੋਈ ਵਾਧੂ ਖ਼ਰਚਾ ਨਹੀਂ</string>
     <string name="app_pricing_headline">ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਸਾਡੇ ਵੱਲੋਂ।</string>
-    <string name="app_pricing_sub">ਖਾਤਾ ਬਣਾਓ ਅਤੇ ਪਹਿਲਾ ਫ਼ੈਸਲਾ ਮੁਫ਼ਤ ਪਾਓ, ਸਾਰੀਆਂ ਸਹੂਲਤਾਂ ਸਮੇਤ। ਉਸ ਤੋਂ ਬਾਅਦ ਕੋਈ ਪੈਕ ਚੁਣੋ ਜਾਂ ਮਹੀਨਾਵਾਰ ਪਲਾਨ ਲਓ।</string>
+    <string name="app_pricing_sub">ਉਸ ਤੋਂ ਬਾਅਦ ਕੋਈ ਪੈਕ ਚੁਣੋ ਜਾਂ ਮਹੀਨਾਵਾਰ ਪਲਾਨ ਲਓ।</string>
     <string name="app_pricing_headline_member">ਹੋਰ ਫ਼ੈਸਲੇ ਲਓ।</string>
-    <string name="app_pricing_sub_member">ਕੋਈ ਪੈਕ ਚੁਣੋ ਜਾਂ ਮਹੀਨਾਵਾਰ ਪਲਾਨ ਲਓ। ਹਰ ਫ਼ੈਸਲੇ ਨੂੰ ਜੱਜਾਂ ਦਾ ਪੂਰਾ ਪੈਨਲ ਮਿਲਦਾ ਹੈ।</string>
+    <string name="app_pricing_sub_member">ਕੋਈ ਪੈਕ ਚੁਣੋ ਜਾਂ ਮਹੀਨਾਵਾਰ ਪਲਾਨ ਲਓ।</string>
     <plurals name="app_balance_left">
         <item quantity="one">%1$s ਫ਼ੈਸਲਾ ਬਾਕੀ</item>
         <item quantity="other">%1$s ਫ਼ੈਸਲੇ ਬਾਕੀ</item>
@@ -679,10 +668,9 @@
     <string name="app_appeal_used">ਤੁਸੀਂ ਇਸ ਕੇਸ ਵਿੱਚ ਪਹਿਲਾਂ ਹੀ ਵੇਰਵਾ ਜੋੜ ਚੁੱਕੇ ਹੋ।</string>
     <string name="app_appeal_limit">ਤੁਸੀਂ ਦੋ ਵਾਰ ਵੇਰਵਾ ਜੋੜ ਚੁੱਕੇ ਹੋ। ਇੱਕ ਫ਼ੈਸਲੇ ਲਈ ਇਹੀ ਹੱਦ ਹੈ।</string>
     <string name="app_purchase_buying">ਖ਼ਰੀਦ ਹੋ ਰਹੀ ਹੈ…</string>
-    <string name="app_purchase_success">ਸ਼ੁਕਰੀਆ! ਤੁਹਾਡੀ ਖ਼ਰੀਦ ਪੂਰੀ ਹੋ ਗਈ।</string>
-    <string name="app_purchase_pending">ਤੁਹਾਡੀ ਖ਼ਰੀਦ ਪ੍ਰੋਸੈੱਸ ਹੋ ਰਹੀ ਹੈ। ਦਿਖਣ ਵਿੱਚ ਇੱਕ ਮਿੰਟ ਲੱਗ ਸਕਦਾ ਹੈ।</string>
-    <string name="app_purchase_arriving">ਤੁਹਾਡੇ ਕ੍ਰੈਡਿਟ ਆ ਰਹੇ ਹਨ…</string>
-    <string name="app_purchase_slow">ਇੱਥੇ ਦਿਖਣ ਵਿੱਚ ਇੱਕ ਮਿੰਟ ਲੱਗ ਸਕਦਾ ਹੈ।</string>
+    <string name="app_purchase_success">ਖ਼ਰੀਦ ਪੂਰੀ ਹੋ ਗਈ।</string>
+    <string name="app_purchase_pending">ਤੁਹਾਡੀ ਖ਼ਰੀਦ ਪ੍ਰੋਸੈੱਸ ਹੋ ਰਹੀ ਹੈ।</string>
+    <string name="app_purchase_slow">ਕ੍ਰੈਡਿਟ ਆਉਣ ਵਿੱਚ ਇੱਕ ਮਿੰਟ ਲੱਗ ਸਕਦਾ ਹੈ।</string>
     <string name="app_purchase_failed">ਖ਼ਰੀਦ ਪੂਰੀ ਨਹੀਂ ਹੋ ਸਕੀ। ਥੋੜ੍ਹੀ ਦੇਰ ਬਾਅਦ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
     <string name="app_purchase_restore">ਖ਼ਰੀਦਾਂ ਰੀਸਟੋਰ ਕਰੋ</string>
     <string name="app_purchase_restore_done">ਤੁਹਾਡੀਆਂ ਖ਼ਰੀਦਾਂ ਰੀਸਟੋਰ ਹੋ ਗਈਆਂ।</string>

@@ -261,7 +261,6 @@ struct MissingVerdictView: View {
     var body: some View {
         VStack(spacing: 10) {
             Text(L10n.notFoundTitle(app.lang)).brandText(.slotTitle).foregroundStyle(Brand.ink)
-            Text(L10n.notFoundBody(app.lang)).brandText(.slotText).foregroundStyle(Brand.muted)
         }
         .multilineTextAlignment(.center)
         .padding(32)

@@ -392,15 +392,10 @@ describe("vote-count copy", () => {
       for (const key of EN_KEYS as Key[]) {
         expect(STRINGS[lang][key], `${lang}.${key}`).not.toMatch(/\d–\d/);
       }
-      for (const key of ["thinking.stillJudging", "judgesVoted.other", "escalated"] as Key[]) {
+      for (const key of ["thinking.stillJudging", "judgesVoted.other"] as Key[]) {
         expect(STRINGS[lang][key], `${lang}.${key}`).not.toMatch(/three|üç/i);
       }
     }
-  });
-
-  it("has an escalation note in both languages", () => {
-    expect(t("en", "escalated")).toContain("extra judges");
-    expect(t("tr", "escalated")).toContain("ek yargıç");
   });
 
   it("how-it-works, FAQ and About mention that close calls bring in more judges", () => {

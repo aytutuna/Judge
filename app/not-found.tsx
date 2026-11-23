@@ -18,7 +18,6 @@ export default function NotFound() {
         <div className={`wrap ${styles.inner}`}>
           <BalanceFallback empty className={styles.art} />
           <h1 className={styles.title}>{t(lang, "notFound.title")}</h1>
-          <p className={styles.body}>{t(lang, "notFound.body")}</p>
           <Link href="/" className={styles.cta}>
             {t(lang, "shared.cta")}
           </Link>

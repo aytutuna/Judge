@@ -8,7 +8,7 @@ const ar: AppLocale = {
     "app.tab.new": "جديد",
     "app.tab.settings": "الإعدادات",
     "app.input.counter": "{count} / {max}",
-    "app.history.empty": "لا أحكام بعد. احسم أول خلاف لك وسيظهر حكمه هنا.",
+    "app.history.empty": "لا أحكام بعد.",
     "app.history.deviceOnly":
       "الأحكام محفوظة على هذا الهاتف فقط. حذف حكم من هنا لا يوقف رابط مشاركته.",
     "app.history.delete": "حذف",
@@ -17,7 +17,7 @@ const ar: AppLocale = {
       "هل تريد حذف {n} حكم من هذا الهاتف؟ ستبقى روابط مشاركتها تعمل.",
     "app.history.phoneOnly": "على هذا الهاتف فقط",
     "app.history.phoneOnlyNote":
-      "ليست في حسابك: هذه الأحكام محفوظة على هذا الهاتف فقط. حذف حكم منها هنا لا يوقف رابط مشاركته.",
+      "حذف حكم لا يلغي رابط مشاركته.",
     "app.history.removeConfirm":
       "هل تريد حذف {n} حكم من حسابك؟ سيُمحى ما كتبته والأسماء من كل الأجهزة، وستتوقف روابط مشاركتها عن العمل. لا يمكن التراجع عن ذلك.",
     "app.history.removeLinksConfirm": "هل تريد حذف {n} رابط؟ ستتوقف عن العمل في كل مكان. لا يمكن التراجع عن ذلك.",
@@ -30,10 +30,10 @@ const ar: AppLocale = {
     "app.pricing.context": "صور التوضيح تُقرأ ثم تُحذف، دون أي تكلفة إضافية",
     "app.pricing.headline": "حكمك الأول على حسابنا.",
     "app.pricing.sub":
-      "أنشئ حسابًا واحصل على أول حكم مجانًا، بكل المزايا. بعد ذلك، اختر باقة أو اشترك شهريًا.",
+      "ثم اختر باقة أو اشتراكًا شهريًا.",
     "app.pricing.headlineMember": "احصل على المزيد من الأحكام.",
     "app.pricing.subMember":
-      "اختر باقة أو اشترك شهريًا. كل حكم يحصل على هيئة القضاة كاملة.",
+      "اختر باقة أو اشتراكًا شهريًا.",
     "app.balance.left": "بقي لك {n} حكم",
     "app.balance.monthly": "المتبقي هذا الشهر: {left} من {cap}",
     "app.balance.none": "لم يبقَ لك أي حكم",
@@ -143,11 +143,10 @@ const ar: AppLocale = {
     "app.appeal.used": "سبق أن أضفت توضيحًا إلى هذه القضية.",
     "app.appeal.limit": "أضفت توضيحًا مرتين، وهذا الحد الأقصى للحكم الواحد.",
     "app.purchase.buying": "جارٍ الشراء…",
-    "app.purchase.success": "شكرًا! تمت عملية الشراء.",
+    "app.purchase.success": "تمت عملية الشراء.",
     "app.purchase.pending":
-      "عملية الشراء قيد المعالجة. قد يستغرق ظهورها دقيقة.",
-    "app.purchase.arriving": "رصيدك في الطريق…",
-    "app.purchase.slow": "قد يستغرق ظهوره هنا دقيقة.",
+      "عملية الشراء قيد المعالجة.",
+    "app.purchase.slow": "قد يستغرق الرصيد دقيقة.",
     "app.purchase.failed": "لم تكتمل عملية الشراء. حاول مجددًا بعد قليل.",
     "app.purchase.restore": "استعادة المشتريات",
     "app.purchase.restoreDone": "تمت استعادة مشترياتك.",

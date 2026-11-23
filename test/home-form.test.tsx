@@ -77,7 +77,6 @@ describe("HomeForm", () => {
     expect(html).toContain("0 / 6,000");
     expect(html).not.toContain(t("en", "home.clear"));
     expect(html).not.toContain(t("en", "home.addContext"));
-    expect(html).not.toContain(t("en", "home.leadSolo"));
   });
 
   it("offers the link chip only when there is a handler, and greys it out when it cannot be used", () => {

@@ -51,7 +51,6 @@ function noAccount(lang: Lang, viewer: ViewerState, next: string) {
   if (!viewer.me.user) {
     return (
       <div className={styles.card}>
-        <p className={styles.muted}>{t(lang, "account.signInPrompt")}</p>
         <Link href={`/signin?next=${encodeURIComponent(next)}`} className={`${styles.btn} ${styles.primary}`}>
           {t(lang, "nav.signIn")}
         </Link>
@@ -174,7 +173,6 @@ export function AccountDetailPanel({
 
       {onExport ? (
         <section className={styles.card}>
-          <p className={styles.muted}>{t(lang, "account.exportHint")}</p>
           {exportError ? (
             <p className={styles.error} role="alert">
               {t(lang, "account.exportFailed")}

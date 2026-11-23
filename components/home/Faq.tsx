@@ -47,7 +47,6 @@ export function Faq({
     <section id="faq" className={styles.faq} aria-labelledby="faq-title">
       <div className={`wrap ${styles.grid}`}>
         <div className={styles.head} data-reveal="">
-          <p className="kicker">{t(lang, "faq.kicker")}</p>
           <h2 id="faq-title" className={styles.title}>
             {noOrphan(t(lang, "faq.title"))}
           </h2>

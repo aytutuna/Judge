@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">Tiga hakim bebas · Hakim tidak pernah nampak nama</string>
     <string name="hero_lead">Ceritakan apa yang digaduhkan. Tiga hakim AI membuat keputusan masing-masing, dan skor keyakinan menunjukkan sejauh mana mereka sependapat.</string>
     <string name="input_label">Pertikaian</string>
-    <string name="placeholder">Apa yang berlaku? Siapa kata apa, dan kenapa?\n\nTulis pandangan pihak satu lagi seperti yang dia sendiri akan katakan. Walau apa pun, hakim akan membina hujah paling kuat untuk kedua-dua pihak.</string>
+    <string name="placeholder">Apa yang berlaku? Siapa kata apa, dan kenapa?</string>
     <string name="get_verdict">Dapatkan keputusan</string>
     <string name="thinking_eyebrow">Apa yang hakim sedang buat</string>
     <string name="thinking_read">Membaca kedua-dua pihak dan menguatkan hujah masing-masing…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">Memburu pokok persoalan…</string>
     <string name="thinking_judges">Tiga hakim membuat keputusan sendiri-sendiri…</string>
     <string name="thinking_votes">Mengira undi…</string>
-    <string name="thinking_helper">Tiga hakim AI memutuskan secara berasingan, dan kalau keputusannya rapat, lebih ramai hakim dipanggil. Tunggu lebih kurang seminit.</string>
+    <string name="thinking_helper">Tunggu seminit.</string>
     <string name="thinking_finish">Hampir menemui pokok persoalan…</string>
-    <string name="thinking_still_judging">Hakim masih berfikir. Sabar sekejap ya…</string>
+    <string name="thinking_still_judging">Masih bekerja…</string>
     <string name="thinking_ready">Keputusan sudah siap.</string>
     <string name="story_names">Nama dibuang supaya tiada sesiapa dinilai kerana siapa dia</string>
     <string name="story_facts">Penyemak berasingan mencari fakta di web</string>
@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Terlalu tipis untuk diputuskan</string>
     <string name="lean_title">Keputusan paksa: %1$s lebih betul</string>
     <string name="lean_title_self">Keputusan paksa: anda lebih betul</string>
-    <string name="lean_unanimous">Semua hakim condong ke arah ini.</string>
     <string name="lean_majority">Hakim condong ke arah ini %1$s–%2$s.</string>
     <string name="lean_tie">Walaupun dipaksa memilih, hakim tetap berbelah sama rata.</string>
     <string name="split_win">%1$s betul tentang ini:</string>
@@ -70,18 +69,17 @@
     <plurals name="judges_voted">
         <item quantity="other">%1$s hakim AI bebas mengundi:</item>
     </plurals>
-    <string name="escalated">Keputusannya rapat, jadi kami panggil hakim tambahan.</string>
     <string name="translate_loading">Menterjemah…</string>
     <string name="translate_from_en">Diterjemah daripada bahasa Inggeris</string>
     <string name="translate_from_tr">Diterjemah daripada bahasa Turki</string>
-    <string name="translate_failed">Tidak dapat menterjemah sekarang, jadi ini versi asalnya.</string>
+    <string name="translate_failed">Tidak dapat menterjemah.</string>
     <string name="translate_toggle">Bahasa keputusan</string>
     <string name="vote_split">berbelah</string>
     <string name="vote_conditional">bergantung</string>
     <string name="vote_dissolved">salah faham</string>
-    <string name="refused_note">AI tidak mahu masuk campur kali ini. Kami lebih rela tidak tunjuk apa-apa daripada mereka-reka keputusan.</string>
+    <string name="refused_note">AI tidak mahu masuk campur kali ini.</string>
     <string name="demo_note">Mod demo: tiada kunci AI ditetapkan, jadi ini contoh keputusan</string>
-    <string name="trial_survived">Bantahan ditolak: peguam pihak satu lagi mengemukakan bantahan paling kuatnya, dan keputusan ini tetap bertahan. Skor keyakinan tidak berubah.</string>
+    <string name="trial_survived">Bantahan ditolak: keputusan tetap bertahan.</string>
     <string name="trial_uncertain">Peguam pihak satu lagi membantah, dan bantahan itu meninggalkan keraguan sebenar tentang keputusan ini</string>
     <string name="trial_overturned">Bantahan diterima: keputusan kekal, tetapi bantahan paling kuat pihak satu lagi melemahkannya dengan serius</string>
     <string name="trial_minor">Peguam pihak satu lagi membangkitkan perkara yang wajar, tetapi keputusan kekal</string>
@@ -116,7 +114,7 @@
     <plurals name="wait_hours">
         <item quantity="other">%1$s jam</item>
     </plurals>
-    <string name="examples_label">Buntu? Cuba salah satu ini:</string>
+    <string name="examples_label">Cuba salah satu:</string>
     <string name="example_hotdog_label">🍔 Burger tu sandwic ke?</string>
     <string name="example_hotdog_text">Kawan saya Hafiz kata burger tu sandwic: inti dalam roti yang dibelah, habis cerita. Saya kata burger tu benda lain. Tak ada orang order sandwic tapi harap dapat burger, dan tak ada menu pun yang letak burger bawah bahagian sandwic.</string>
     <string name="example_tomato_label">🍅 Tomato tu buah ke?</string>
@@ -134,7 +132,6 @@
     <string name="footer_note">Untuk suka-suka dan kejelasan, bukan nasihat undang-undang.</string>
     <string name="footer_language">Bahasa</string>
     <string name="not_found_title">Keputusan ini sudah meninggalkan mahkamah</string>
-    <string name="not_found_body">Mungkin ada salah taip dalam pautan, atau keputusan itu sudah tiada.</string>
     <string name="nav_sign_in">Log masuk</string>
     <string name="nav_account">Akaun</string>
     <string name="nav_pricing">Harga</string>
@@ -156,7 +153,6 @@
     <string name="consent_sensitive_continue">Teruskan</string>
     <string name="respond_adult_confirm">Saya berumur 18 tahun atau lebih</string>
     <string name="account_export">Muat turun data saya</string>
-    <string name="account_export_hint">Dapatkan fail JSON dengan semua yang disimpan Judge tentang anda.</string>
     <string name="account_export_busy">Menyediakan fail anda…</string>
     <string name="account_export_failed">Data anda tidak dapat disediakan sekarang. Cuba lagi?</string>
     <string name="rating_prompt">Keputusan yang adil?</string>
@@ -175,19 +171,18 @@
     <string name="clarify_back">Sunting pertikaian</string>
     <string name="thinking_factcheck">Menyemak fakta di web…</string>
     <string name="thinking_factcheck_done">Semakan web selesai.</string>
-    <string name="panel_premium">Dinilai dengan semakan fakta di web.</string>
     <string name="factcheck_title">Disemak di web</string>
-    <string name="factcheck_lead">Hakim melihat hasil carian ini sebelum memutuskan. Ini bukti, bukan keputusan itu sendiri.</string>
+    <string name="factcheck_lead">Hakim melihat hasil carian ini sebelum memutuskan.</string>
     <string name="factcheck_status_supported">Benar</string>
     <string name="factcheck_status_refuted">Tidak benar</string>
     <string name="factcheck_status_mixed">Separa benar</string>
     <string name="factcheck_status_unverified">Tidak dapat disahkan</string>
     <string name="factcheck_sources">Sumber</string>
-    <string name="factcheck_none">Tiada apa untuk dicari di web: yang ini bergantung pada nilai atau makna, bukan fakta.</string>
-    <string name="factcheck_none_factual">Tiada apa di sini yang boleh disemak di web: fakta dalam kes ini hanya diketahui oleh orang yang terlibat.</string>
+    <string name="factcheck_none">Tiada apa untuk disemak di web.</string>
+    <string name="factcheck_none_factual">Tiada apa untuk disemak di web.</string>
     <string name="factcheck_unavailable">Semakan web tidak selesai kali ini, jadi hakim memutuskan tanpanya.</string>
     <string name="signin_title">Log masuk</string>
-    <string name="signin_lead">Log masuk untuk mendapatkan keputusan. Akaun baharu dapat keputusan pertama secara percuma.</string>
+    <string name="signin_lead">Keputusan pertama anda percuma.</string>
     <string name="signin_apple">Teruskan dengan Apple</string>
     <string name="signin_google">Teruskan dengan Google</string>
     <string name="signin_email_toggle">Guna e-mel</string>
@@ -205,7 +200,7 @@
     <string name="signin_use_password">Gunakan kata laluan sebaliknya</string>
     <string name="signin_password_wrong">E-mel dan kata laluan itu tidak sepadan.</string>
     <string name="signin_password_short">Gunakan sekurang-kurangnya 8 aksara.</string>
-    <string name="signin_create_note">Kami akan e-melkan kod kepada anda untuk mengesahkan alamat ini. Anda hanya perlu berbuat demikian sekali.</string>
+    <string name="signin_create_note">Kami akan e-melkan kod untuk mengesahkan.</string>
     <string name="signin_password_choose">Anda telah log masuk. Pilih kata laluan untuk kali seterusnya.</string>
     <string name="signin_password_save">Simpan kata laluan</string>
     <string name="signin_password_save_failed">Kami tidak dapat menyimpan kata laluan. Cuba lagi.</string>
@@ -234,13 +229,10 @@
     <string name="account_delete_yes">Ya, padam</string>
     <string name="account_delete_cancel">Kekalkan akaun saya</string>
     <string name="account_delete_failed">Kami tidak dapat memadam akaun sekarang. Boleh cuba lagi?</string>
-    <string name="account_sign_in_prompt">Log masuk untuk melihat pelan dan kredit anda.</string>
     <string name="account_load_failed">Kami tidak dapat memuatkan akaun anda. Cuba lagi sebentar nanti.</string>
     <string name="account_loading">Memuatkan akaun anda…</string>
     <string name="pricing_title">Keputusan pertama anda, kami belanja.</string>
-    <string name="pricing_lead">Buat akaun dan keputusan pertama anda percuma, lengkap dengan semua ciri. Selepas itu, pilih pek atau langgan bulanan.</string>
     <string name="pricing_title_member">Dapatkan lebih banyak keputusan.</string>
-    <string name="pricing_lead_member">Pilih pek atau langgan bulanan. Setiap keputusan dinilai oleh panel penuh.</string>
     <string name="pricing_included_title">Setiap keputusan</string>
     <string name="pricing_buy_title">Pek dan pelan bulanan</string>
     <string name="pricing_premium_f1">Fakta disemak di web, dengan sumbernya pada keputusan anda</string>
@@ -248,7 +240,7 @@
     <string name="pricing_premium_f3">Sehingga dua soalan ringkas apabila ada fakta penting yang tertinggal</string>
     <string name="pricing_premium_f4">Nama ditukar sebelum penilaian</string>
     <string name="pricing_packs_title">Pek kredit</string>
-    <string name="pricing_packs_lead">Bayar sekali dan guna bila-bila masa. Setiap keputusan menggunakan satu kredit.</string>
+    <string name="pricing_packs_lead">Setiap keputusan menggunakan satu kredit.</string>
     <plurals name="pricing_pack">
         <item quantity="other">%1$s keputusan</item>
     </plurals>
@@ -332,8 +324,8 @@
     <string name="case_context_d">Pihak D menambah konteks</string>
     <string name="case_context_you">Konteks yang anda tambah (%1$s)</string>
     <string name="case_evidence_item">Imej %1$s, seperti yang dibaca hakim</string>
-    <string name="case_answered">Dia sudah menjawab. Hakim sedang menilai.</string>
-    <string name="case_judging_alone">Hakim sedang menilai versi anda.</string>
+    <string name="case_answered">Hakim sedang menilai.</string>
+    <string name="case_judging_alone">Hakim sedang menilai.</string>
     <string name="case_expired_body">Tiada jawapan dalam 7 hari, jadi kredit anda sudah dikembalikan. Anda masih boleh dapatkan keputusan berdasarkan versi anda sahaja.</string>
     <string name="case_expired_body_free">Tiada jawapan dalam 7 hari. Anda masih boleh dapatkan keputusan berdasarkan versi anda sahaja.</string>
     <string name="case_one_sided">Dinilai berdasarkan versi anda sahaja.</string>
@@ -350,12 +342,12 @@
     <string name="respond_submit">Hantar versi saya</string>
     <string name="case_write_title">Versi anda</string>
     <string name="case_write_placeholder">Apa masalahnya?</string>
-    <string name="case_write_lead">Tulis versi anda bila-bila masa anda bersedia. Hakim bermula selepas kedua-duanya menulis.</string>
+    <string name="case_write_lead">Hakim bermula selepas kedua-duanya menulis.</string>
     <string name="case_write_lead_answered">Dia sudah menulis versinya. Tulis versi anda untuk mendapat keputusan.</string>
     <string name="case_write_submit">Hantar versi saya</string>
     <string name="case_write_email_subject">Pihak satu lagi sudah menulis versinya</string>
-    <string name="respond_sent">Terima kasih. Versi anda sudah diterima dan hakim sedang menilai.</string>
-    <string name="respond_sent_waiting">Terima kasih. Versi anda sudah diterima. Hakim bermula selepas pihak lagi satu menulis versinya.</string>
+    <string name="respond_sent">Versi anda sudah diterima.</string>
+    <string name="respond_sent_waiting">Versi anda sudah diterima. Menunggu pihak lagi satu.</string>
     <string name="respond_own_invite">Ini pautan jemputan anda sendiri. Hantar kepada pihak satu lagi.</string>
     <string name="respond_expired">Jemputan ini sudah tamat tempoh.</string>
     <string name="respond_closed">Kes ini tidak lagi menerima jawapan.</string>
@@ -379,7 +371,6 @@
     <string name="evidence_remove">Buang imej %1$s</string>
     <string name="evidence_thumb">Imej %1$s</string>
     <string name="evidence_preview">Apa yang kami baca</string>
-    <string name="evidence_preview_note">Hanya anda yang nampak ini. Nama disembunyikan sebelum hakim membacanya.</string>
     <string name="evidence_status_unreadable">Tiada teks yang dapat dibaca</string>
     <string name="evidence_status_refused">Pembaca menolak imej ini</string>
     <string name="evidence_status_unsupported">Bukan PNG, JPEG, WebP atau GIF</string>
@@ -406,8 +397,6 @@
     <string name="home_remove_their_side">Buang versi dia</string>
     <string name="home_send_link">Hantar pautan</string>
     <string name="home_clear">Kosongkan</string>
-    <string name="home_lead">Tulis kedua-dua versi, atau hantar pautan kepada pihak satu lagi supaya dia menulis versinya sendiri.</string>
-    <string name="home_lead_solo">Tulis versi anda, dan versi dia juga kalau anda tahu.</string>
     <string name="home_their_side">Versi dia</string>
     <string name="home_their_name">Nama dia</string>
     <string name="home_their_placeholder">Apa kata dia? Tulis seperti yang dia sendiri akan katakan.</string>
@@ -421,7 +410,7 @@
     <string name="appeal_submit">Nilai semula dengan konteks</string>
     <string name="appeal_sending">Mengeluarkan nama daripada konteks anda…</string>
     <string name="appeal_judging">Hakim sedang meneliti semuanya semula…</string>
-    <string name="appeal_upsell">Ada yang tertinggal? Tambah konteks dan minta ia dinilai semula dengan kos 1 keputusan.</string>
+    <string name="appeal_upsell">Ada yang tertinggal? Tambah konteks untuk 1 keputusan.</string>
     <string name="appeal_sign_in">Log masuk untuk menambah konteks</string>
     <string name="appeal_used">Anda sudah menambah konteks pada kes ini.</string>
     <string name="appeal_limit">Anda sudah menambah konteks dua kali. Itu had untuk satu keputusan.</string>
@@ -465,7 +454,7 @@
     <string name="case_display_name">Nama anda pada keputusan yang dikongsi</string>
     <string name="case_display_save">Simpan nama</string>
     <string name="respond_keep">Simpan kes ini dalam akaun anda</string>
-    <string name="respond_kept">Kes ini kini berada dalam akaun anda. Ia muncul di halaman Keputusan anda pada setiap peranti.</string>
+    <string name="respond_kept">Disimpan dalam akaun anda.</string>
     <string name="respond_remove">Buang versi saya</string>
     <string name="respond_remove_confirm">Buang teks asal dan nama paparan anda? Pautan kongsi kes ini akan berhenti berfungsi (pratonton yang sudah disiarkan dalam sembang mungkin masih kelihatan sehingga aplikasi itu menyegarkannya). Tindakan ini tidak boleh dibatalkan.</string>
     <string name="names_title">Nama di halaman kongsi</string>
@@ -544,7 +533,7 @@
     <string name="app_tab_new">Baharu</string>
     <string name="app_tab_settings">Tetapan</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">Belum ada keputusan. Selesaikan pertikaian pertama anda dan ia akan muncul di sini.</string>
+    <string name="app_history_empty">Belum ada keputusan.</string>
     <string name="app_history_device_only">Disimpan dalam telefon ini sahaja. Memadam satu keputusan di sini tidak mematikan pautan kongsinya.</string>
     <string name="app_history_delete">Padam</string>
     <string name="app_history_remove_all">Alih keluar semua</string>
@@ -552,7 +541,7 @@
         <item quantity="other">Padam %1$s keputusan daripada telefon ini? Pautan kongsinya akan terus berfungsi.</item>
     </plurals>
     <string name="app_history_phone_only">Dalam telefon ini sahaja</string>
-    <string name="app_history_phone_only_note">Tiada dalam akaun anda: keputusan ini disimpan dalam telefon ini sahaja. Memadam satu keputusan di sini tidak mematikan pautan kongsinya.</string>
+    <string name="app_history_phone_only_note">Memadam satu tidak mematikan pautan kongsinya.</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="other">Buang %1$s keputusan daripada akaun anda? Apa yang anda tulis dan nama-namanya akan dihapuskan, dan pautan kongsinya akan berhenti berfungsi pada setiap peranti. Tindakan ini tidak boleh dibatalkan.</item>
     </plurals>
@@ -569,9 +558,9 @@
     <string name="app_pricing_free_account">Log masuk dengan Apple, Google atau e-mel</string>
     <string name="app_pricing_context">Imej konteks dibaca kemudian dibuang, tanpa kos tambahan</string>
     <string name="app_pricing_headline">Keputusan pertama anda, kami belanja.</string>
-    <string name="app_pricing_sub">Buat akaun dan keputusan pertama anda percuma, lengkap dengan semua ciri. Selepas itu, pilih pek atau langgan bulanan.</string>
+    <string name="app_pricing_sub">Selepas itu, pilih pek atau langgan bulanan.</string>
     <string name="app_pricing_headline_member">Dapatkan lebih banyak keputusan.</string>
-    <string name="app_pricing_sub_member">Pilih pek atau langgan bulanan. Setiap keputusan dinilai oleh panel penuh.</string>
+    <string name="app_pricing_sub_member">Pilih pek atau langgan bulanan.</string>
     <plurals name="app_balance_left">
         <item quantity="other">Tinggal %1$s keputusan</item>
     </plurals>
@@ -664,10 +653,9 @@
     <string name="app_appeal_used">Anda sudah menambah konteks pada kes ini.</string>
     <string name="app_appeal_limit">Anda sudah menambah konteks dua kali. Itu had untuk satu keputusan.</string>
     <string name="app_purchase_buying">Membeli…</string>
-    <string name="app_purchase_success">Terima kasih! Pembelian anda berjaya.</string>
-    <string name="app_purchase_pending">Pembelian anda sedang diproses. Mungkin mengambil masa seminit untuk muncul.</string>
-    <string name="app_purchase_arriving">Kredit anda sedang dalam perjalanan…</string>
-    <string name="app_purchase_slow">Mungkin mengambil masa seminit untuk muncul di sini.</string>
+    <string name="app_purchase_success">Pembelian selesai.</string>
+    <string name="app_purchase_pending">Pembelian anda sedang diproses.</string>
+    <string name="app_purchase_slow">Kredit mungkin ambil masa seminit.</string>
     <string name="app_purchase_failed">Pembelian tidak berjaya. Cuba lagi sebentar nanti.</string>
     <string name="app_purchase_restore">Pulihkan pembelian</string>
     <string name="app_purchase_restore_done">Pembelian anda sudah dipulihkan.</string>

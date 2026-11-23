@@ -8,7 +8,7 @@ const hr: AppLocale = {
     "app.tab.new": "Novo",
     "app.tab.settings": "Postavke",
     "app.input.counter": "{count} / {max}",
-    "app.history.empty": "Još nemaš presuda. Riješi prvu raspravu i presuda će se pojaviti ovdje.",
+    "app.history.empty": "Još nema presuda.",
     "app.history.deviceOnly":
       "Spremljeno samo na ovom telefonu. Ako presudu izbrišeš ovdje, njezina poveznica za dijeljenje i dalje radi.",
     "app.history.delete": "Izbriši",
@@ -17,7 +17,7 @@ const hr: AppLocale = {
       "Izbrisati {n} presuda s ovog telefona? Poveznice za dijeljenje i dalje rade.",
     "app.history.phoneOnly": "Samo na ovom telefonu",
     "app.history.phoneOnlyNote":
-      "Nisu na tvom računu: ove su presude spremljene samo na ovom telefonu. Ako neku od njih izbrišeš ovdje, njezina poveznica za dijeljenje i dalje radi.",
+      "Brisanje presude ne gasi njezinu poveznicu za dijeljenje.",
     "app.history.removeConfirm":
       "Ukloniti {n} presuda s tvog računa? Na svim uređajima brišu se tvoj tekst i imena, a poveznice za dijeljenje prestaju raditi. Ovo se ne može poništiti.",
     "app.history.removeLinksConfirm": "Ukloniti {n} poveznica? Prestat će raditi posvuda. Ovo se ne može poništiti.",
@@ -29,10 +29,10 @@ const hr: AppLocale = {
     "app.pricing.context": "Slike konteksta se pročitaju pa odbace, bez dodatnog troška",
     "app.pricing.headline": "Prvu presudu častimo.",
     "app.pricing.sub":
-      "Otvori račun i prva presuda je besplatna, sa svim mogućnostima. Nakon toga odaberi paket ili prijeđi na mjesečni plan.",
+      "Nakon toga odaberi paket ili prijeđi na mjesečni plan.",
     "app.pricing.headlineMember": "Nabavi još presuda.",
     "app.pricing.subMember":
-      "Odaberi paket ili prijeđi na mjesečni plan. O svakoj presudi odlučuje puni sastav sudaca.",
+      "Odaberi paket ili prijeđi na mjesečni plan.",
     "app.balance.left": "Još {n} presuda",
     "app.balance.monthly": "Ovaj mjesec još {left} od {cap}",
     "app.balance.none": "Nemaš više presuda",
@@ -129,10 +129,9 @@ const hr: AppLocale = {
     "app.appeal.used": "Tvoj kontekst za ovaj slučaj već je dodan.",
     "app.appeal.limit": "Kontekst je dodan već dvaput. To je granica za jednu presudu.",
     "app.purchase.buying": "Kupnja…",
-    "app.purchase.success": "Hvala! Kupnja je uspjela.",
-    "app.purchase.pending": "Kupnja se obrađuje. Može potrajati minutu dok se ne pojavi.",
-    "app.purchase.arriving": "Krediti su na putu…",
-    "app.purchase.slow": "Može potrajati minutu dok se ovdje ne pojavi.",
+    "app.purchase.success": "Kupnja je uspjela.",
+    "app.purchase.pending": "Kupnja se obrađuje.",
+    "app.purchase.slow": "Krediti se mogu pojaviti tek za minutu.",
     "app.purchase.failed": "Kupnja nije uspjela. Pokušaj ponovno za trenutak.",
     "app.purchase.restore": "Vrati kupnje",
     "app.purchase.restoreDone": "Kupnje su vraćene.",

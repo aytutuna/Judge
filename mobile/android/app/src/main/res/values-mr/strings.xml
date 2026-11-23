@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">तीन स्वतंत्र परीक्षक · त्यांना नावे दिसत नाहीत</string>
     <string name="hero_lead">वाद कशावरून आहे ते सांगा. तीन AI परीक्षक आपापला निकाल स्वतंत्रपणे देतात, आणि ते किती सहमत आहेत ते खात्री गुणांवरून कळते.</string>
     <string name="input_label">वाद</string>
-    <string name="placeholder">काय घडले? कोण काय म्हणते, आणि का?\n\nसमोरच्याची बाजू ते जशी मांडतील तशीच लिहा. परीक्षक तसेही दोन्ही बाजूंची सर्वात भक्कम मांडणी करतात.</string>
+    <string name="placeholder">काय घडले? कोण काय म्हणते, आणि का?</string>
     <string name="get_verdict">निकाल मिळवा</string>
     <string name="thinking_eyebrow">परीक्षक काय करत आहेत</string>
     <string name="thinking_read">दोन्ही बाजू वाचून प्रत्येकीची सर्वात भक्कम मांडणी करत आहोत…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">कळीचा मुद्दा शोधत आहोत…</string>
     <string name="thinking_judges">तीन परीक्षक आपापला निर्णय घेत आहेत…</string>
     <string name="thinking_votes">मते मोजत आहोत…</string>
-    <string name="thinking_helper">तीन AI परीक्षक स्वतंत्रपणे निकाल देतात, आणि अटीतटी झाली तर आणखी परीक्षक येतात. एखादे मिनिट लागेल.</string>
+    <string name="thinking_helper">एखादे मिनिट लागेल.</string>
     <string name="thinking_finish">कळीच्या मुद्द्याजवळ पोहोचत आहोत…</string>
-    <string name="thinking_still_judging">परीक्षक अजून विचार करत आहेत. थोडा धीर धरा…</string>
+    <string name="thinking_still_judging">अजून काम सुरू आहे…</string>
     <string name="thinking_ready">निकाल तयार आहे.</string>
     <string name="story_names">कोणालाही तो कोण आहे यावरून न जोखण्यासाठी नावे काढत आहोत</string>
     <string name="story_facts">वेगळा तपासनीस वेबवर तथ्ये शोधतो</string>
@@ -38,7 +38,6 @@
     <string name="verdict_too_close">अगदी अटीतटीचे, निकाल लागेना</string>
     <string name="lean_title">सक्तीचा कौल: %1$s जास्त बरोबर</string>
     <string name="lean_title_self">सक्तीचा कौल: तुम्ही जास्त बरोबर</string>
-    <string name="lean_unanimous">सगळ्या परीक्षकांचा कल याच बाजूला होता.</string>
     <string name="lean_majority">परीक्षकांचा कल %1$s–%2$s असा याच बाजूला होता.</string>
     <string name="lean_tie">निवड करायला भाग पाडले तरी परीक्षकांची मते अगदी अर्धी-अर्धी पडली.</string>
     <string name="split_win">या मुद्द्यावर %1$s बरोबर आहे:</string>
@@ -71,18 +70,17 @@
         <item quantity="one">%1$s स्वतंत्र AI परीक्षकांनी मत दिले:</item>
         <item quantity="other">%1$s स्वतंत्र AI परीक्षकांनी मत दिले:</item>
     </plurals>
-    <string name="escalated">मते अटीतटीची होती, म्हणून आणखी परीक्षक बोलावले.</string>
     <string name="translate_loading">अनुवाद होत आहे…</string>
     <string name="translate_from_en">इंग्रजीतून अनुवादित</string>
     <string name="translate_from_tr">तुर्कीतून अनुवादित</string>
-    <string name="translate_failed">आत्ता अनुवाद करता आला नाही, म्हणून मूळ मजकूर दाखवत आहोत.</string>
+    <string name="translate_failed">अनुवाद करता आला नाही.</string>
     <string name="translate_toggle">निकालाची भाषा</string>
     <string name="vote_split">संमिश्र</string>
     <string name="vote_conditional">अवलंबून</string>
     <string name="vote_dissolved">अर्थभेद</string>
-    <string name="refused_note">या वेळी AI ने माघार घेतली. खोटा निकाल दाखवण्यापेक्षा काहीच न दाखवलेले बरे.</string>
+    <string name="refused_note">या वेळी AI ने माघार घेतली.</string>
     <string name="demo_note">डेमो मोड: AI साठी API की सेट केलेली नाही, म्हणून हा नमुना निकाल आहे</string>
-    <string name="trial_survived">आक्षेप फेटाळला: समोरच्या बाजूच्या वकिलाने आपला सर्वात कडक आक्षेप घेतला, आणि निकाल टिकला. खात्री गुण तसेच राहिले.</string>
+    <string name="trial_survived">आक्षेप फेटाळला: निकाल टिकला.</string>
     <string name="trial_uncertain">समोरच्या बाजूच्या वकिलाने आक्षेप घेतला, आणि त्या आक्षेपाने या निकालाबद्दल खरी शंका ठेवली</string>
     <string name="trial_overturned">आक्षेप मान्य: निकाल कायम आहे, पण समोरच्या बाजूच्या सर्वात कडक आक्षेपाने तो गंभीरपणे कमकुवत केला</string>
     <string name="trial_minor">समोरच्या बाजूच्या वकिलाने एक रास्त मुद्दा मांडला, पण निकाल कायम आहे</string>
@@ -119,7 +117,7 @@
         <item quantity="one">%1$s तास</item>
         <item quantity="other">%1$s तास</item>
     </plurals>
-    <string name="examples_label">काही सुचत नाही? यातले एखादे वापरून पाहा:</string>
+    <string name="examples_label">एखादे वापरून पाहा:</string>
     <string name="example_hotdog_label">🍔 वडापाव म्हणजे बर्गर का?</string>
     <string name="example_hotdog_text">माझा मित्र अमित म्हणतो की वडापाव म्हणजे बर्गरच: पावाच्या मध्ये काहीतरी भरलेले, विषय संपला. माझ्या मते वडापाव ही वेगळीच गोष्ट आहे. बर्गर मागवून वडापावची अपेक्षा कोणी करत नाही, आणि कोणत्याही मेन्यूमध्ये तो बर्गरच्या यादीत नसतो.</string>
     <string name="example_tomato_label">🍅 टोमॅटो फळ आहे का?</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">मजेसाठी आणि स्पष्टतेसाठी, कायदेशीर सल्ला नाही.</string>
     <string name="footer_language">भाषा</string>
     <string name="not_found_title">हा निकाल कोर्टातून निघून गेला आहे</string>
-    <string name="not_found_body">कदाचित लिंकमध्ये टायपो असेल, किंवा हा निकाल आता उपलब्ध नाही.</string>
     <string name="nav_sign_in">साइन इन</string>
     <string name="nav_account">खाते</string>
     <string name="nav_pricing">किंमत</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">पुढे जा</string>
     <string name="respond_adult_confirm">माझे वय 18 किंवा जास्त आहे</string>
     <string name="account_export">माझा डेटा डाउनलोड करा</string>
-    <string name="account_export_hint">Judge कडे तुमच्याबद्दल असलेले सर्व काही एका JSON फाइलमध्ये मिळवा.</string>
     <string name="account_export_busy">तुमची फाइल तयार होत आहे…</string>
     <string name="account_export_failed">आत्ता तुमचा डेटा तयार करता आला नाही. पुन्हा प्रयत्न करता का?</string>
     <string name="rating_prompt">निकाल न्याय्य आहे का?</string>
@@ -178,19 +174,18 @@
     <string name="clarify_back">वादात बदल करा</string>
     <string name="thinking_factcheck">तथ्ये वेबवर तपासत आहोत…</string>
     <string name="thinking_factcheck_done">वेब तपासणी पूर्ण झाली.</string>
-    <string name="panel_premium">वेबवरील तथ्य-तपासणीसह निकाल दिला.</string>
     <string name="factcheck_title">वेबवर तपासले</string>
-    <string name="factcheck_lead">निकाल देण्याआधी परीक्षकांनी हे सर्च परिणाम पाहिले. हे पुरावे आहेत, निकाल नव्हे.</string>
+    <string name="factcheck_lead">निकाल देण्याआधी परीक्षकांनी हे सर्च परिणाम पाहिले.</string>
     <string name="factcheck_status_supported">खरे ठरले</string>
     <string name="factcheck_status_refuted">खोटे ठरले</string>
     <string name="factcheck_status_mixed">अर्धवट खरे</string>
     <string name="factcheck_status_unverified">खात्री झाली नाही</string>
     <string name="factcheck_sources">स्रोत</string>
-    <string name="factcheck_none">वेबवर शोधण्यासारखे काही नाही: हा वाद तथ्यांवर नव्हे, मूल्यांवर किंवा अर्थांवर अवलंबून आहे.</string>
-    <string name="factcheck_none_factual">यातले काहीच वेबवर तपासता आले नाही: इथली तथ्ये फक्त संबंधित लोकांनाच माहीत आहेत.</string>
+    <string name="factcheck_none">वेबवर तपासण्यासारखे काही नाही.</string>
+    <string name="factcheck_none_factual">वेबवर तपासण्यासारखे काही नाही.</string>
     <string name="factcheck_unavailable">या वेळी वेब तपासणी पूर्ण झाली नाही, म्हणून परीक्षकांनी तिच्याशिवाय निकाल दिला.</string>
     <string name="signin_title">साइन इन</string>
-    <string name="signin_lead">निकाल मिळवण्यासाठी साइन इन करा. नव्या खात्याला पहिला निकाल मोफत.</string>
+    <string name="signin_lead">पहिला निकाल मोफत.</string>
     <string name="signin_apple">Apple वापरून पुढे जा</string>
     <string name="signin_google">Google वापरून पुढे जा</string>
     <string name="signin_email_toggle">त्याऐवजी ईमेल वापरा</string>
@@ -208,7 +203,7 @@
     <string name="signin_use_password">त्याऐवजी पासवर्ड वापरा</string>
     <string name="signin_password_wrong">हा ईमेल आणि पासवर्ड जुळत नाहीत.</string>
     <string name="signin_password_short">किमान 8 अक्षरे वापरा.</string>
-    <string name="signin_create_note">हा पत्ता पडताळण्यासाठी आम्ही तुम्हाला ईमेलवर एक कोड पाठवू. हे फक्त एकदाच करावे लागेल.</string>
+    <string name="signin_create_note">पडताळणीसाठी आम्ही तुम्हाला ईमेलवर एक कोड पाठवू.</string>
     <string name="signin_password_choose">तुम्ही साइन इन केले आहे. पुढच्या वेळेसाठी एक पासवर्ड निवडा.</string>
     <string name="signin_password_save">पासवर्ड जतन करा</string>
     <string name="signin_password_save_failed">पासवर्ड जतन करता आला नाही. पुन्हा प्रयत्न करा.</string>
@@ -237,13 +232,10 @@
     <string name="account_delete_yes">हो, डिलीट करा</string>
     <string name="account_delete_cancel">खाते राहू द्या</string>
     <string name="account_delete_failed">आत्ता खाते डिलीट करता आले नाही. पुन्हा प्रयत्न कराल का?</string>
-    <string name="account_sign_in_prompt">तुमचा प्लॅन आणि क्रेडिट पाहण्यासाठी साइन इन करा.</string>
     <string name="account_load_failed">तुमचे खाते लोड करता आले नाही. थोड्या वेळाने पुन्हा प्रयत्न करा.</string>
     <string name="account_loading">तुमचे खाते लोड होत आहे…</string>
     <string name="pricing_title">पहिला निकाल आमच्याकडून.</string>
-    <string name="pricing_lead">खाते उघडा, तुमचा पहिला निकाल सगळ्या सुविधांसह मोफत. त्यानंतर एखादा पॅक निवडा किंवा मासिक प्लॅन घ्या.</string>
     <string name="pricing_title_member">आणखी निकाल घ्या.</string>
-    <string name="pricing_lead_member">एखादा पॅक निवडा किंवा मासिक प्लॅन घ्या. प्रत्येक निकालाला परीक्षकांचे पूर्ण मंडळ मिळते.</string>
     <string name="pricing_included_title">प्रत्येक निकालात</string>
     <string name="pricing_buy_title">पॅक आणि मासिक प्लॅन</string>
     <string name="pricing_premium_f1">तथ्ये वेबवर तपासली जातात, स्रोत तुमच्या निकालावर दिसतात</string>
@@ -251,7 +243,7 @@
     <string name="pricing_premium_f3">महत्त्वाचे तथ्य राहिले असेल तर जास्तीत जास्त दोन छोटे प्रश्न</string>
     <string name="pricing_premium_f4">निकालाआधी नावे बदलली जातात</string>
     <string name="pricing_packs_title">क्रेडिट पॅक</string>
-    <string name="pricing_packs_lead">एकदाच पैसे भरा आणि हवे तेव्हा वापरा. प्रत्येक निकालाला एक क्रेडिट लागते.</string>
+    <string name="pricing_packs_lead">प्रत्येक निकालाला एक क्रेडिट लागते.</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s निकाल</item>
         <item quantity="other">%1$s निकाल</item>
@@ -337,8 +329,8 @@
     <string name="case_context_d">पक्ष Dने जोडलेली माहिती</string>
     <string name="case_context_you">तुम्ही जोडलेली माहिती (%1$s)</string>
     <string name="case_evidence_item">फोटो %1$s, परीक्षकांनी वाचला तसा</string>
-    <string name="case_answered">त्यांनी उत्तर दिले. परीक्षक काम करत आहेत.</string>
-    <string name="case_judging_alone">परीक्षक तुमच्या बाजूवर काम करत आहेत.</string>
+    <string name="case_answered">परीक्षक काम करत आहेत.</string>
+    <string name="case_judging_alone">परीक्षक काम करत आहेत.</string>
     <string name="case_expired_body">7 दिवसांत कोणी उत्तर दिले नाही, म्हणून तुमचे क्रेडिट परत आले. तरीही फक्त तुमच्या बाजूवर निकाल घेऊ शकता.</string>
     <string name="case_expired_body_free">7 दिवसांत कोणी उत्तर दिले नाही. तरीही फक्त तुमच्या बाजूवर निकाल घेऊ शकता.</string>
     <string name="case_one_sided">फक्त तुमच्या बाजूवर निकाल दिला.</string>
@@ -355,12 +347,12 @@
     <string name="respond_submit">माझी बाजू पाठवा</string>
     <string name="case_write_title">तुमची बाजू</string>
     <string name="case_write_placeholder">समस्या काय आहे?</string>
-    <string name="case_write_lead">तयार असाल तेव्हा तुमची बाजू लिहा. दोघांनी लिहिल्यावर परीक्षक सुरू करतील.</string>
+    <string name="case_write_lead">दोघांनी लिहिल्यावर परीक्षक सुरू करतील.</string>
     <string name="case_write_lead_answered">त्यांनी त्यांची बाजू लिहिली आहे. निकाल मिळवण्यासाठी तुमची लिहा.</string>
     <string name="case_write_submit">माझी बाजू पाठवा</string>
     <string name="case_write_email_subject">दुसऱ्या पक्षाने आपली बाजू लिहिली आहे</string>
-    <string name="respond_sent">धन्यवाद. तुमची बाजू पोहोचली आणि परीक्षक कामाला लागले आहेत.</string>
-    <string name="respond_sent_waiting">धन्यवाद. तुमची बाजू पोहोचली. समोरच्याने लिहिल्यावर परीक्षक सुरू करतील.</string>
+    <string name="respond_sent">तुमची बाजू पोहोचली.</string>
+    <string name="respond_sent_waiting">तुमची बाजू पोहोचली. समोरच्याची वाट पाहत आहोत.</string>
     <string name="respond_own_invite">ही तुमचीच निमंत्रण लिंक आहे. ती समोरच्या व्यक्तीला पाठवा.</string>
     <string name="respond_expired">या निमंत्रणाची मुदत संपली आहे.</string>
     <string name="respond_closed">हे प्रकरण आता उत्तरे स्वीकारत नाही.</string>
@@ -385,7 +377,6 @@
     <string name="evidence_remove">फोटो %1$s काढा</string>
     <string name="evidence_thumb">फोटो %1$s</string>
     <string name="evidence_preview">आम्ही काय वाचले</string>
-    <string name="evidence_preview_note">हे फक्त तुम्हाला दिसते. परीक्षक वाचण्याआधी नावे लपवली जातात.</string>
     <string name="evidence_status_unreadable">कोणताही मजकूर वाचता आला नाही</string>
     <string name="evidence_status_refused">AI ने हा फोटो वाचायला नकार दिला</string>
     <string name="evidence_status_unsupported">PNG, JPEG, WebP किंवा GIF नाही</string>
@@ -412,8 +403,6 @@
     <string name="home_remove_their_side">त्यांची बाजू काढा</string>
     <string name="home_send_link">लिंक पाठवा</string>
     <string name="home_clear">साफ करा</string>
-    <string name="home_lead">दोन्ही बाजू लिहा, किंवा लिंक पाठवा, म्हणजे समोरची व्यक्ती आपली बाजू स्वतः लिहील.</string>
-    <string name="home_lead_solo">तुमची बाजू लिहा, आणि माहीत असेल तर त्यांचीही.</string>
     <string name="home_their_side">त्यांची बाजू</string>
     <string name="home_their_name">त्यांचे नाव</string>
     <string name="home_their_placeholder">त्यांचे म्हणणे काय आहे? ते मांडतील तसेच लिहा.</string>
@@ -427,7 +416,7 @@
     <string name="appeal_submit">माझ्या माहितीसह पुन्हा निकाल द्या</string>
     <string name="appeal_sending">तुमची माहिती निनावी करत आहोत…</string>
     <string name="appeal_judging">परीक्षक सगळे पुन्हा पाहत आहेत…</string>
-    <string name="appeal_upsell">काही राहिले? माहिती जोडा आणि 1 निकाल वापरून पुन्हा निकाल मिळवा.</string>
+    <string name="appeal_upsell">काही राहिले? 1 निकालासाठी माहिती जोडा.</string>
     <string name="appeal_sign_in">माहिती जोडण्यासाठी साइन इन करा</string>
     <string name="appeal_used">तुम्ही या प्रकरणात आधीच माहिती जोडली आहे.</string>
     <string name="appeal_limit">तुम्ही दोनदा माहिती जोडली आहे. एका निकालासाठी एवढीच मर्यादा आहे.</string>
@@ -471,7 +460,7 @@
     <string name="case_display_name">शेअर केलेल्या निकालावर तुमचे नाव</string>
     <string name="case_display_save">नाव सेव्ह करा</string>
     <string name="respond_keep">हे प्रकरण तुमच्या खात्यात ठेवा</string>
-    <string name="respond_kept">हे प्रकरण आता तुमच्या खात्यात आहे. ते प्रत्येक डिव्हाइसवर तुमच्या ‘निकाल’ पानावर दिसते.</string>
+    <string name="respond_kept">तुमच्या खात्यात सेव्ह आहे.</string>
     <string name="respond_remove">माझी बाजू काढून टाका</string>
     <string name="respond_remove_confirm">तुमचा मूळ मजकूर आणि तुमचे दिसणारे नाव काढून टाकायचे? प्रकरणाच्या शेअर लिंक चालणे बंद होईल (चॅटमध्ये आधीच पोस्ट झालेले प्रिव्ह्यू ती ॲप्स रिफ्रेश करेपर्यंत दिसू शकतात). हे परत आणता येणार नाही.</string>
     <string name="names_title">शेअर पानावरची नावे</string>
@@ -553,7 +542,7 @@
     <string name="app_tab_new">नवा</string>
     <string name="app_tab_settings">सेटिंग्ज</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">अजून एकही निकाल नाही. तुमचा पहिला वाद सोडवा, त्याचा निकाल इथे दिसेल.</string>
+    <string name="app_history_empty">अजून एकही निकाल नाही.</string>
     <string name="app_history_device_only">हे निकाल फक्त या फोनवर सेव्ह होतात. इथून एखादा निकाल डिलीट केला तरी त्याची शेअर लिंक चालू राहते.</string>
     <string name="app_history_delete">डिलीट करा</string>
     <string name="app_history_remove_all">सर्व काढा</string>
@@ -562,7 +551,7 @@
         <item quantity="other">या फोनवरून %1$s निकाल डिलीट करायचे? त्यांच्या शेअर लिंक चालू राहतील.</item>
     </plurals>
     <string name="app_history_phone_only">फक्त या फोनवर</string>
-    <string name="app_history_phone_only_note">तुमच्या खात्यात नाहीत: हे निकाल फक्त या फोनवर सेव्ह आहेत. इथून एखादा डिलीट केला तरी त्याची शेअर लिंक चालू राहते.</string>
+    <string name="app_history_phone_only_note">एखादा डिलीट केला तरी त्याची शेअर लिंक चालू राहते.</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="one">हा निकाल तुमच्या खात्यातून काढून टाकायचा? तुम्ही लिहिलेला मजकूर आणि नावे पुसली जातील, आणि त्याची शेअर लिंक चालणे बंद होईल. हे सगळ्या डिव्हाइसवर लागू होते आणि परत आणता येणार नाही.</item>
         <item quantity="other">तुमच्या खात्यातून %1$s निकाल काढून टाकायचे? तुम्ही लिहिलेला मजकूर आणि नावे पुसली जातील, आणि त्यांच्या शेअर लिंक चालणे बंद होईल. हे सगळ्या डिव्हाइसवर लागू होते आणि परत आणता येणार नाही.</item>
@@ -583,9 +572,9 @@
     <string name="app_pricing_free_account">Apple, Google किंवा ईमेलने साइन इन करा</string>
     <string name="app_pricing_context">माहितीची चित्रे वाचून टाकून दिली जातात, कोणताही जादा खर्च नाही</string>
     <string name="app_pricing_headline">पहिला निकाल आमच्याकडून.</string>
-    <string name="app_pricing_sub">खाते उघडा, तुमचा पहिला निकाल सगळ्या सुविधांसह मोफत. त्यानंतर एखादा पॅक निवडा किंवा मासिक प्लॅन घ्या.</string>
+    <string name="app_pricing_sub">त्यानंतर एखादा पॅक निवडा किंवा मासिक प्लॅन घ्या.</string>
     <string name="app_pricing_headline_member">आणखी निकाल घ्या.</string>
-    <string name="app_pricing_sub_member">एखादा पॅक निवडा किंवा मासिक प्लॅन घ्या. प्रत्येक निकालाला परीक्षकांचे पूर्ण मंडळ मिळते.</string>
+    <string name="app_pricing_sub_member">एखादा पॅक निवडा किंवा मासिक प्लॅन घ्या.</string>
     <plurals name="app_balance_left">
         <item quantity="one">%1$s निकाल शिल्लक</item>
         <item quantity="other">%1$s निकाल शिल्लक</item>
@@ -679,10 +668,9 @@
     <string name="app_appeal_used">तुम्ही या प्रकरणात आधीच माहिती जोडली आहे.</string>
     <string name="app_appeal_limit">तुम्ही दोनदा माहिती जोडली आहे. एका निकालासाठी एवढीच मर्यादा आहे.</string>
     <string name="app_purchase_buying">खरेदी होत आहे…</string>
-    <string name="app_purchase_success">धन्यवाद! तुमची खरेदी पूर्ण झाली.</string>
-    <string name="app_purchase_pending">तुमच्या खरेदीवर प्रक्रिया सुरू आहे. ती दिसायला एखादे मिनिट लागू शकते.</string>
-    <string name="app_purchase_arriving">तुमचे क्रेडिट येत आहेत…</string>
-    <string name="app_purchase_slow">इथे दिसायला एखादे मिनिट लागू शकते.</string>
+    <string name="app_purchase_success">खरेदी पूर्ण झाली.</string>
+    <string name="app_purchase_pending">तुमच्या खरेदीवर प्रक्रिया सुरू आहे.</string>
+    <string name="app_purchase_slow">क्रेडिट दिसायला एखादे मिनिट लागू शकते.</string>
     <string name="app_purchase_failed">खरेदी पूर्ण झाली नाही. थोड्या वेळाने पुन्हा प्रयत्न करा.</string>
     <string name="app_purchase_restore">खरेदी रिस्टोअर करा</string>
     <string name="app_purchase_restore_done">तुमच्या खरेदी रिस्टोअर झाल्या.</string>

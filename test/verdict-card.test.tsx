@@ -182,14 +182,13 @@ describe("VerdictView", () => {
     expect(html(<VerdictView result={{ ...base, why: "" }} lang="en" />)).not.toContain(">Why</h3>");
   });
 
-  it("shows the escalation note and every extra judge", () => {
+  it("shows every extra judge", () => {
     const out = html(
       <VerdictView
         result={{ ...base, escalated: true, runs: ["side_b", "side_a", "split", "side_b", "side_b"] }}
         lang="en"
       />,
     );
-    expect(out).toContain("It was close, so we called in extra judges.");
     expect(out).toContain("5 independent AI judges voted: Party B · Party A · split · Party B · Party B");
     expect(out).toContain(">Confidence 3 of 5<");
   });

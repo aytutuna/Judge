@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">Drie onafhankelijke rechters · Rechters zien nooit namen</string>
     <string name="hero_lead">Vertel waar de ruzie over gaat. Drie AI-rechters oordelen elk voor zich, en de zekerheidsscore laat zien hoe eensgezind ze zijn.</string>
     <string name="input_label">De discussie</string>
-    <string name="placeholder">Wat is er gebeurd? Wie zegt wat, en waarom?\n\nBeschrijf de kant van de ander zoals die het zelf zou zeggen. De rechters zetten hoe dan ook beide kanten zo sterk mogelijk neer.</string>
+    <string name="placeholder">Wat is er gebeurd? Wie zegt wat, en waarom?</string>
     <string name="get_verdict">Naar de uitspraak</string>
     <string name="thinking_eyebrow">Waar de rechters mee bezig zijn</string>
     <string name="thinking_read">Beide kanten lezen en allebei zo sterk mogelijk neerzetten…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">Op zoek naar de kern…</string>
     <string name="thinking_judges">Drie rechters beslissen, elk voor zich…</string>
     <string name="thinking_votes">Stemmen tellen…</string>
-    <string name="thinking_helper">Drie AI-rechters oordelen los van elkaar, en bij een nipte uitslag komen er meer bij. Geef het een minuutje.</string>
+    <string name="thinking_helper">Geef het een minuutje.</string>
     <string name="thinking_finish">Bijna bij de kern…</string>
-    <string name="thinking_still_judging">De rechters denken nog na. Even volhouden…</string>
+    <string name="thinking_still_judging">Nog even bezig…</string>
     <string name="thinking_ready">De uitspraak is klaar.</string>
     <string name="story_names">We halen de namen eruit, zodat niemand wordt beoordeeld op wie hij is</string>
     <string name="story_facts">Een aparte controleur zoekt de feiten op het web op</string>
@@ -38,7 +38,6 @@
     <string name="verdict_too_close">Te nipt om te beslissen</string>
     <string name="lean_title">Gedwongen keuze: %1$s heeft meer gelijk</string>
     <string name="lean_title_self">Gedwongen keuze: jij hebt meer gelijk</string>
-    <string name="lean_unanimous">Alle rechters neigden deze kant op.</string>
     <string name="lean_majority">De rechters neigden %1$s–%2$s deze kant op.</string>
     <string name="lean_tie">Zelfs toen ze moesten kiezen, waren de rechters precies verdeeld.</string>
     <string name="split_win">%1$s heeft hierin gelijk:</string>
@@ -71,18 +70,17 @@
         <item quantity="one">%1$s onafhankelijke AI-rechters stemden:</item>
         <item quantity="other">%1$s onafhankelijke AI-rechters stemden:</item>
     </plurals>
-    <string name="escalated">Het was nipt, dus we hebben er extra rechters bij gehaald.</string>
     <string name="translate_loading">Vertalen…</string>
     <string name="translate_from_en">Vertaald uit het Engels</string>
     <string name="translate_from_tr">Vertaald uit het Turks</string>
-    <string name="translate_failed">Vertalen lukte nu even niet, dus hier is het origineel.</string>
+    <string name="translate_failed">Vertalen lukte niet.</string>
     <string name="translate_toggle">Taal van de uitspraak</string>
     <string name="vote_split">verdeeld</string>
     <string name="vote_conditional">hangt ervan af</string>
     <string name="vote_dissolved">misverstand</string>
-    <string name="refused_note">De AI heeft deze overgeslagen. We laten liever niets zien dan een nepuitspraak.</string>
+    <string name="refused_note">De AI heeft deze overgeslagen.</string>
     <string name="demo_note">Demomodus: er is geen AI-sleutel ingesteld, dus dit is een voorbeelduitspraak</string>
-    <string name="trial_survived">Bezwaar afgewezen: de advocaat van de andere kant bracht zijn sterkste bezwaar in, en de uitspraak hield stand. De zekerheid blijft gelijk.</string>
+    <string name="trial_survived">Bezwaar afgewezen: de uitspraak hield stand.</string>
     <string name="trial_uncertain">De advocaat van de andere kant maakte bezwaar, en dat bezwaar liet echte twijfel over deze uitspraak achter</string>
     <string name="trial_overturned">Bezwaar toegewezen: de uitspraak blijft staan, maar het sterkste bezwaar van de andere kant verzwakt haar ernstig</string>
     <string name="trial_minor">De advocaat van de andere kant had een terecht punt, maar de uitspraak blijft staan</string>
@@ -119,7 +117,7 @@
         <item quantity="one">%1$s uur</item>
         <item quantity="other">%1$s uur</item>
     </plurals>
-    <string name="examples_label">Geen idee? Probeer een van deze:</string>
+    <string name="examples_label">Probeer er een:</string>
     <string name="example_hotdog_label">🌭 Is een hotdog een sandwich?</string>
     <string name="example_hotdog_text">Mijn vriend Daan zegt dat een hotdog een sandwich is: beleg tussen opengesneden brood, punt uit. Ik zeg dat het een categorie apart is. Niemand bestelt een sandwich en verwacht een hotdog, en geen enkele menukaart zet hem bij de sandwiches.</string>
     <string name="example_tomato_label">🍅 Is een tomaat fruit?</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">Voor de lol en voor duidelijkheid, geen juridisch advies.</string>
     <string name="footer_language">Taal</string>
     <string name="not_found_title">Deze uitspraak heeft de rechtszaal al verlaten</string>
-    <string name="not_found_body">Misschien zit er een typfout in de link, of is de uitspraak weg.</string>
     <string name="nav_sign_in">Inloggen</string>
     <string name="nav_account">Account</string>
     <string name="nav_pricing">Prijzen</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">Verder</string>
     <string name="respond_adult_confirm">Ik ben 18 jaar of ouder</string>
     <string name="account_export">Mijn gegevens downloaden</string>
-    <string name="account_export_hint">Krijg een JSON-bestand met alles wat Judge over je bewaart.</string>
     <string name="account_export_busy">Je bestand wordt klaargemaakt…</string>
     <string name="account_export_failed">We konden je gegevens nu niet klaarmaken. Wil je het nog eens proberen?</string>
     <string name="rating_prompt">Eerlijke uitspraak?</string>
@@ -178,19 +174,18 @@
     <string name="clarify_back">Discussie aanpassen</string>
     <string name="thinking_factcheck">Feiten checken op het web…</string>
     <string name="thinking_factcheck_done">Webcheck klaar.</string>
-    <string name="panel_premium">Beoordeeld met een factcheck op het web.</string>
     <string name="factcheck_title">Gecheckt op het web</string>
-    <string name="factcheck_lead">De rechters zagen deze zoekresultaten voordat ze oordeelden. Het is bewijs, niet de uitspraak zelf.</string>
+    <string name="factcheck_lead">De rechters zagen deze zoekresultaten voordat ze oordeelden.</string>
     <string name="factcheck_status_supported">Klopt</string>
     <string name="factcheck_status_refuted">Klopt niet</string>
     <string name="factcheck_status_mixed">Deels waar</string>
     <string name="factcheck_status_unverified">Niet te bevestigen</string>
     <string name="factcheck_sources">Bronnen</string>
-    <string name="factcheck_none">Niets om op te zoeken: deze discussie draait om waarden of betekenissen, niet om feiten.</string>
-    <string name="factcheck_none_factual">Hier viel niets op het web te checken: de feiten spelen zich af tussen de mensen zelf.</string>
+    <string name="factcheck_none">Niets om op het web te checken.</string>
+    <string name="factcheck_none_factual">Niets om op het web te checken.</string>
     <string name="factcheck_unavailable">De webcheck is deze keer niet afgerond, dus de rechters oordeelden zonder.</string>
     <string name="signin_title">Inloggen</string>
-    <string name="signin_lead">Log in voor een uitspraak. Een nieuw account krijgt de eerste uitspraak gratis.</string>
+    <string name="signin_lead">Je eerste uitspraak is gratis.</string>
     <string name="signin_apple">Doorgaan met Apple</string>
     <string name="signin_google">Doorgaan met Google</string>
     <string name="signin_email_toggle">Liever met e-mail</string>
@@ -208,7 +203,7 @@
     <string name="signin_use_password">Gebruik in plaats daarvan een wachtwoord</string>
     <string name="signin_password_wrong">Dat e-mailadres en wachtwoord komen niet overeen.</string>
     <string name="signin_password_short">Gebruik minstens 8 tekens.</string>
-    <string name="signin_create_note">We mailen je een code om dit adres te bevestigen. Dat hoef je maar één keer te doen.</string>
+    <string name="signin_create_note">We mailen je een code ter bevestiging.</string>
     <string name="signin_password_choose">Je bent ingelogd. Kies een wachtwoord voor de volgende keer.</string>
     <string name="signin_password_save">Wachtwoord opslaan</string>
     <string name="signin_password_save_failed">We konden het wachtwoord niet opslaan. Probeer het opnieuw.</string>
@@ -237,13 +232,10 @@
     <string name="account_delete_yes">Ja, verwijderen</string>
     <string name="account_delete_cancel">Account houden</string>
     <string name="account_delete_failed">We konden het account nu niet verwijderen. Wil je het nog eens proberen?</string>
-    <string name="account_sign_in_prompt">Log in om je abonnement en credits te zien.</string>
     <string name="account_load_failed">We konden je account niet laden. Probeer het zo nog eens.</string>
     <string name="account_loading">Je account laden…</string>
     <string name="pricing_title">Je eerste uitspraak is van het huis.</string>
-    <string name="pricing_lead">Maak een account aan en je eerste uitspraak is gratis, met alles erop en eraan. Daarna kies je een bundel of neem je een maandabonnement.</string>
     <string name="pricing_title_member">Meer uitspraken.</string>
-    <string name="pricing_lead_member">Kies een bundel of neem een maandabonnement. Elke uitspraak krijgt het volledige panel.</string>
     <string name="pricing_included_title">Bij elke uitspraak</string>
     <string name="pricing_buy_title">Bundels en maandabonnement</string>
     <string name="pricing_premium_f1">Feiten gecheckt op het web, met de bronnen bij je uitspraak</string>
@@ -251,7 +243,7 @@
     <string name="pricing_premium_f3">Maximaal twee korte vragen als er een belangrijk feit ontbreekt</string>
     <string name="pricing_premium_f4">Namen vervangen voordat er geoordeeld wordt</string>
     <string name="pricing_packs_title">Bundels</string>
-    <string name="pricing_packs_lead">Eén keer betalen, gebruiken wanneer je wilt. Elke uitspraak kost één credit.</string>
+    <string name="pricing_packs_lead">Elke uitspraak kost één credit.</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s uitspraken</item>
         <item quantity="other">%1$s uitspraken</item>
@@ -337,8 +329,8 @@
     <string name="case_context_d">Aanvulling van Partij D</string>
     <string name="case_context_you">Jouw aanvulling (%1$s)</string>
     <string name="case_evidence_item">Afbeelding %1$s, zoals de rechters die lazen</string>
-    <string name="case_answered">De ander heeft geantwoord. De rechters zijn ermee bezig.</string>
-    <string name="case_judging_alone">De rechters buigen zich over jouw kant.</string>
+    <string name="case_answered">De rechters zijn ermee bezig.</string>
+    <string name="case_judging_alone">De rechters zijn ermee bezig.</string>
     <string name="case_expired_body">Niemand antwoordde binnen 7 dagen, dus je credit is terug. Je kunt nog steeds een uitspraak krijgen op alleen jouw kant.</string>
     <string name="case_expired_body_free">Niemand antwoordde binnen 7 dagen. Je kunt nog steeds een uitspraak krijgen op alleen jouw kant.</string>
     <string name="case_one_sided">Alleen op jouw kant beoordeeld.</string>
@@ -355,12 +347,12 @@
     <string name="respond_submit">Mijn kant versturen</string>
     <string name="case_write_title">Jouw kant</string>
     <string name="case_write_placeholder">Wat is het probleem?</string>
-    <string name="case_write_lead">Schrijf je kant op als je er klaar voor bent. De rechters beginnen zodra jullie allebei hebben geschreven.</string>
+    <string name="case_write_lead">De rechters beginnen zodra jullie allebei hebben geschreven.</string>
     <string name="case_write_lead_answered">De ander heeft zijn kant geschreven. Schrijf de jouwe om het vonnis te krijgen.</string>
     <string name="case_write_submit">Mijn kant versturen</string>
     <string name="case_write_email_subject">De ander heeft geschreven</string>
-    <string name="respond_sent">Bedankt. Je kant is binnen en de rechters zijn ermee bezig.</string>
-    <string name="respond_sent_waiting">Bedankt. Je kant is binnen. De rechters beginnen zodra de ander de zijne heeft geschreven.</string>
+    <string name="respond_sent">Je kant is binnen.</string>
+    <string name="respond_sent_waiting">Je kant is binnen. Wachten op de ander.</string>
     <string name="respond_own_invite">Dit is je eigen uitnodigingslink. Stuur hem naar de ander.</string>
     <string name="respond_expired">Deze uitnodiging is verlopen.</string>
     <string name="respond_closed">Deze zaak neemt geen antwoorden meer aan.</string>
@@ -385,7 +377,6 @@
     <string name="evidence_remove">Afbeelding %1$s verwijderen</string>
     <string name="evidence_thumb">Afbeelding %1$s</string>
     <string name="evidence_preview">Wat we lazen</string>
-    <string name="evidence_preview_note">Alleen jij ziet dit. Namen worden verborgen voordat de rechters het lezen.</string>
     <string name="evidence_status_unreadable">Geen tekst gevonden</string>
     <string name="evidence_status_refused">De lezer weigerde deze afbeelding</string>
     <string name="evidence_status_unsupported">Geen PNG, JPEG, WebP of GIF</string>
@@ -412,8 +403,6 @@
     <string name="home_remove_their_side">Kant van de ander verwijderen</string>
     <string name="home_send_link">Stuur een link</string>
     <string name="home_clear">Wissen</string>
-    <string name="home_lead">Schrijf beide kanten op, of stuur de ander een link om het zelf te doen.</string>
-    <string name="home_lead_solo">Schrijf jouw kant op en die van de ander als je die kent.</string>
     <string name="home_their_side">Kant van de ander</string>
     <string name="home_their_name">Naam van de ander</string>
     <string name="home_their_placeholder">Wat zegt de ander? Schrijf het zoals die het zelf zou zeggen.</string>
@@ -427,7 +416,7 @@
     <string name="appeal_submit">Opnieuw laten beoordelen</string>
     <string name="appeal_sending">Je aanvulling anonimiseren…</string>
     <string name="appeal_judging">De rechters kijken opnieuw naar alles…</string>
-    <string name="appeal_upsell">Mist er iets? Vul het aan en laat het opnieuw beoordelen voor 1 uitspraak.</string>
+    <string name="appeal_upsell">Mist er iets? Vul aan voor 1 uitspraak.</string>
     <string name="appeal_sign_in">Log in om iets aan te vullen</string>
     <string name="appeal_used">Je hebt bij deze zaak al iets aangevuld.</string>
     <string name="appeal_limit">Je hebt al twee keer iets aangevuld. Meer kan niet bij één uitspraak.</string>
@@ -471,7 +460,7 @@
     <string name="case_display_name">Je naam op de gedeelde uitspraak</string>
     <string name="case_display_save">Naam opslaan</string>
     <string name="respond_keep">Deze zaak in je account bewaren</string>
-    <string name="respond_kept">Deze zaak staat nu in je account. Je ziet hem op elk apparaat op de pagina Uitspraken.</string>
+    <string name="respond_kept">Bewaard in je account.</string>
     <string name="respond_remove">Mijn kant verwijderen</string>
     <string name="respond_remove_confirm">Je oorspronkelijke tekst en je weergavenaam verwijderen? De deellinks van de zaak werken niet meer (previews die al in chats zijn gedeeld, kunnen zichtbaar blijven tot die apps ze vernieuwen). Dit kan niet ongedaan worden gemaakt.</string>
     <string name="names_title">Namen op de gedeelde pagina</string>
@@ -553,7 +542,7 @@
     <string name="app_tab_new">Nieuw</string>
     <string name="app_tab_settings">Instellingen</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">Nog geen uitspraken. Leg je eerste discussie voor, dan verschijnt de uitspraak hier.</string>
+    <string name="app_history_empty">Nog geen uitspraken.</string>
     <string name="app_history_device_only">Alleen op deze telefoon bewaard. Verwijder je hier een uitspraak, dan blijft de deellink gewoon werken.</string>
     <string name="app_history_delete">Verwijderen</string>
     <string name="app_history_remove_all">Alles verwijderen</string>
@@ -562,7 +551,7 @@
         <item quantity="other">%1$s uitspraken van deze telefoon verwijderen? De deellinks blijven gewoon werken.</item>
     </plurals>
     <string name="app_history_phone_only">Alleen op deze telefoon</string>
-    <string name="app_history_phone_only_note">Niet in je account: deze staan alleen op deze telefoon. Verwijder je hier een uitspraak, dan blijft de deellink gewoon werken.</string>
+    <string name="app_history_phone_only_note">Een uitspraak verwijderen haalt de deellink niet offline.</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="one">Deze uitspraak uit je account verwijderen? Hij verdwijnt van al je apparaten: wat je schreef en de namen worden gewist en de deellink werkt niet meer. Dit kan niet ongedaan worden gemaakt.</item>
         <item quantity="other">%1$s uitspraken uit je account verwijderen? Ze verdwijnen van al je apparaten: wat je schreef en de namen worden gewist en de deellinks werken niet meer. Dit kan niet ongedaan worden gemaakt.</item>
@@ -583,9 +572,9 @@
     <string name="app_pricing_free_account">Log in met Apple, Google of e-mail</string>
     <string name="app_pricing_context">Afbeeldingen bij de aanvulling worden gelezen en daarna weggegooid, zonder extra kosten</string>
     <string name="app_pricing_headline">Je eerste uitspraak is van het huis.</string>
-    <string name="app_pricing_sub">Maak een account aan en je eerste uitspraak is gratis, met alles erop en eraan. Daarna kies je een bundel of neem je een maandabonnement.</string>
+    <string name="app_pricing_sub">Daarna kies je een bundel of neem je een maandabonnement.</string>
     <string name="app_pricing_headline_member">Meer uitspraken.</string>
-    <string name="app_pricing_sub_member">Kies een bundel of neem een maandabonnement. Elke uitspraak krijgt het volledige panel.</string>
+    <string name="app_pricing_sub_member">Kies een bundel of neem een maandabonnement.</string>
     <plurals name="app_balance_left">
         <item quantity="one">Nog %1$s uitspraak over</item>
         <item quantity="other">Nog %1$s uitspraken over</item>
@@ -679,10 +668,9 @@
     <string name="app_appeal_used">Je hebt bij deze zaak al iets aangevuld.</string>
     <string name="app_appeal_limit">Je hebt al twee keer iets aangevuld. Meer kan niet bij één uitspraak.</string>
     <string name="app_purchase_buying">Kopen…</string>
-    <string name="app_purchase_success">Bedankt! Je aankoop is gelukt.</string>
-    <string name="app_purchase_pending">Je aankoop wordt verwerkt. Het kan een minuutje duren voordat je hem ziet.</string>
-    <string name="app_purchase_arriving">Je credits komen eraan…</string>
-    <string name="app_purchase_slow">Het kan een minuutje duren voordat ze hier verschijnen.</string>
+    <string name="app_purchase_success">Aankoop gelukt.</string>
+    <string name="app_purchase_pending">Je aankoop wordt verwerkt.</string>
+    <string name="app_purchase_slow">Credits kunnen een minuutje duren.</string>
     <string name="app_purchase_failed">De aankoop is niet gelukt. Probeer het zo nog eens.</string>
     <string name="app_purchase_restore">Aankopen herstellen</string>
     <string name="app_purchase_restore_done">Je aankopen zijn hersteld.</string>

@@ -33,15 +33,6 @@
   gap: 18px;
   text-align: center;
 }
-.ctaTitle {
-  margin: 0;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(26px, 7vw, 34px);
-  line-height: 1.08;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-}
 .ctaLink {
   display: inline-flex;
   align-items: center;

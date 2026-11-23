@@ -7,7 +7,7 @@ const cs: AppLocale = {
     "app.tab.new": "Nový",
     "app.tab.settings": "Nastavení",
     "app.input.counter": "{count} / {max}",
-    "app.history.empty": "Zatím žádné verdikty. Nech rozsoudit svůj první spor a verdikt najdeš tady.",
+    "app.history.empty": "Zatím žádné verdikty.",
     "app.history.deviceOnly":
       "Uloženo jen v tomhle telefonu. Když tu verdikt smažeš, jeho sdílený odkaz bude fungovat dál.",
     "app.history.delete": "Smazat",
@@ -16,7 +16,7 @@ const cs: AppLocale = {
       "Smazat {n} verdiktů z tohohle telefonu? Jejich sdílené odkazy budou fungovat dál.",
     "app.history.phoneOnly": "Jen v tomhle telefonu",
     "app.history.phoneOnlyNote":
-      "Tyhle verdikty nejsou ve tvém účtu, jsou uložené jen v tomhle telefonu. Když tu některý smažeš, jeho sdílený odkaz bude fungovat dál.",
+      "Smazání neruší odkaz ke sdílení.",
     "app.history.removeConfirm":
       "Odstranit {n} verdiktů ze svého účtu? Tvůj text i jména se vymažou a jejich sdílené odkazy přestanou fungovat, a to na všech zařízeních. Tohle nejde vrátit.",
     "app.history.removeLinksConfirm": "Odstranit {n} odkazů? Přestanou všude fungovat. Tohle nejde vrátit.",
@@ -28,9 +28,9 @@ const cs: AppLocale = {
     "app.pricing.context": "Obrázky s kontextem se přečtou a pak zahodí, bez příplatku",
     "app.pricing.headline": "První verdikt máš od nás.",
     "app.pricing.sub":
-      "Založ si účet a první verdikt máš zdarma, se vším všudy. Potom si vyber balíček nebo měsíční plán.",
+      "Pak si vyber balíček nebo měsíční plán.",
     "app.pricing.headlineMember": "Získej další verdikty.",
-    "app.pricing.subMember": "Vyber si balíček nebo měsíční plán. Každý verdikt posoudí kompletní sestava soudců.",
+    "app.pricing.subMember": "Vyber si balíček nebo měsíční plán.",
     "app.balance.left": "Zbývá ti {n} verdiktů",
     "app.balance.monthly": "Tento měsíc ti zbývá {left} z {cap}",
     "app.balance.none": "Došly ti verdikty",
@@ -128,10 +128,9 @@ const cs: AppLocale = {
     "app.appeal.used": "K tomuto případu už máš kontext doplněný.",
     "app.appeal.limit": "Kontext máš doplněný už dvakrát. Víc to u jednoho verdiktu nejde.",
     "app.purchase.buying": "Nákup probíhá…",
-    "app.purchase.success": "Díky! Nákup proběhl.",
-    "app.purchase.pending": "Nákup se zpracovává. Může chvilku trvat, než se projeví.",
-    "app.purchase.arriving": "Kredity jsou na cestě…",
-    "app.purchase.slow": "Může chvilku trvat, než se tu objeví.",
+    "app.purchase.success": "Nákup proběhl.",
+    "app.purchase.pending": "Nákup se zpracovává.",
+    "app.purchase.slow": "Kredity můžou chvilku trvat.",
     "app.purchase.failed": "Nákup neproběhl. Zkus to za chvilku znovu.",
     "app.purchase.restore": "Obnovit nákupy",
     "app.purchase.restoreDone": "Nákupy jsou obnovené.",

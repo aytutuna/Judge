@@ -1078,7 +1078,7 @@ describe("keeping a seat alive", () => {
     const bob = await openLink(shared);
     await db.execute({ sql: "UPDATE case_seats SET opened_at = ?, seen_at = ? WHERE case_id = ?", args: [old, old, data.case.id] });
     const res = await http.respondEvidenceHandler(
-      req("POST", `/api/v1/respond/${shared}/evidence`, { headers: { ...SIDES, "respondent-claim": bob.claim! }, ip: ip() }),
+      req("POST", `/api/v1/respond/${shared}/evidence`, { headers: { ...SIDES, "respondent-claim": bob.claim!, "adult-confirmed": "true", "sensitive-agreed": "true" }, ip: ip() }),
       shared,
     );
     expect(res.status).toBe(200);

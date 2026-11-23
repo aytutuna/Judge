@@ -7,7 +7,7 @@ const ro: AppLocale = {
     "app.tab.new": "Nou",
     "app.tab.settings": "Setări",
     "app.input.counter": "{count} / {max}",
-    "app.history.empty": "Încă nu ai verdicte. Lămurește-ți prima dispută și verdictul apare aici.",
+    "app.history.empty": "Încă nu ai verdicte.",
     "app.history.deviceOnly":
       "Salvate doar pe acest telefon. Dacă ștergi unul de aici, linkul lui de distribuire rămâne activ.",
     "app.history.delete": "Șterge",
@@ -15,8 +15,7 @@ const ro: AppLocale = {
     "app.history.deleteConfirm":
       "Ștergi {n} de verdicte de pe acest telefon? Linkurile lor de distribuire rămân active.",
     "app.history.phoneOnly": "Doar pe acest telefon",
-    "app.history.phoneOnlyNote":
-      "Acestea nu sunt în contul tău, ci salvate doar pe acest telefon. Dacă ștergi unul de aici, linkul lui de distribuire rămâne activ.",
+    "app.history.phoneOnlyNote": "Ștergerea unuia nu dezactivează linkul de distribuire.",
     "app.history.removeConfirm":
       "Elimini {n} de verdicte din contul tău, de pe toate dispozitivele? Ce ai scris și numele sunt șterse, iar linkurile lor de distribuire nu mai funcționează. Acțiunea nu poate fi anulată.",
     "app.history.removeLinksConfirm":
@@ -28,11 +27,9 @@ const ro: AppLocale = {
     "app.pricing.free.account": "Conectează-te cu Apple, Google sau prin e-mail",
     "app.pricing.context": "Imaginile de context sunt citite și apoi aruncate, fără cost în plus",
     "app.pricing.headline": "Primul verdict e din partea casei.",
-    "app.pricing.sub":
-      "Fă-ți un cont și primul verdict e gratuit, cu toate funcțiile. După aceea, alege un pachet sau treci pe planul lunar.",
+    "app.pricing.sub": "După aceea, alege un pachet sau treci pe planul lunar.",
     "app.pricing.headlineMember": "Ia mai multe verdicte.",
-    "app.pricing.subMember":
-      "Alege un pachet sau treci pe planul lunar. Fiecare verdict primește echipa completă de judecători.",
+    "app.pricing.subMember": "Alege un pachet sau treci pe planul lunar.",
     "app.balance.left": "Mai ai {n} de verdicte",
     "app.balance.monthly": "Mai ai {left} din {cap} luna asta",
     "app.balance.none": "Nu mai ai verdicte",
@@ -130,10 +127,9 @@ const ro: AppLocale = {
     "app.appeal.used": "Ai adăugat deja context la acest caz.",
     "app.appeal.limit": "Ai adăugat context de două ori. Asta e limita pentru un verdict.",
     "app.purchase.buying": "Achiziție în curs…",
-    "app.purchase.success": "Mulțumim! Achiziția a reușit.",
-    "app.purchase.pending": "Achiziția ta e în curs de procesare. Poate dura un minut până apare.",
-    "app.purchase.arriving": "Creditele tale sunt pe drum…",
-    "app.purchase.slow": "Poate dura un minut până apar aici.",
+    "app.purchase.success": "Achiziție finalizată.",
+    "app.purchase.pending": "Achiziția ta e în curs de procesare.",
+    "app.purchase.slow": "Creditele pot dura un minut.",
     "app.purchase.failed": "Achiziția n-a reușit. Încearcă din nou peste câteva clipe.",
     "app.purchase.restore": "Restaurează achizițiile",
     "app.purchase.restoreDone": "Achizițiile tale au fost restaurate.",

@@ -42,15 +42,6 @@
   text-align: center;
 }
 
-.kicker {
-  margin: 0 0 12px;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--terra-ink);
-}
-
 .title {
   margin: 0;
   font-family: var(--font-display);
@@ -59,14 +50,6 @@
   line-height: 1.02;
   letter-spacing: -0.035em;
   color: var(--ink);
-}
-
-.lead {
-  margin: 14px auto 0;
-  max-width: 32ch;
-  font-size: 18px;
-  line-height: 1.5;
-  color: var(--ink-2);
 }
 
 /* ---------- steps ---------- */
@@ -199,10 +182,6 @@
 
   .title {
     max-inline-size: 14ch;
-  }
-
-  .lead {
-    margin-inline-start: 0;
   }
 
   .track {

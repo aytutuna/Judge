@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">שלושה שופטים עצמאיים · השופטים לא רואים שמות</string>
     <string name="hero_lead">על מה הוויכוח? שלושה שופטי AI מכריעים, כל אחד בנפרד, וציון הביטחון מראה עד כמה הם מסכימים.</string>
     <string name="input_label">הוויכוח</string>
-    <string name="placeholder">מה קרה? מי אומר מה, ולמה?\n\nכדאי לתאר את הצד השני במילים שלו. השופטים ממילא בונים את הטיעון הכי חזק לכל צד.</string>
+    <string name="placeholder">מה קרה? מי אומר מה, ולמה?</string>
     <string name="get_verdict">לקבל פסק דין</string>
     <string name="thinking_eyebrow">מה השופטים עושים עכשיו</string>
     <string name="thinking_read">קוראים את שני הצדדים ונותנים לכל אחד את הגרסה הכי חזקה שלו…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">מחפשים את לב העניין…</string>
     <string name="thinking_judges">שלושה שופטים מכריעים, כל אחד לבד…</string>
     <string name="thinking_votes">סופרים את הקולות…</string>
-    <string name="thinking_helper">שלושה שופטי AI מכריעים בנפרד, וכשזה צמוד מצטרפים עוד. זה לוקח דקה.</string>
+    <string name="thinking_helper">זה לוקח דקה.</string>
     <string name="thinking_finish">מתקרבים ללב העניין…</string>
-    <string name="thinking_still_judging">השופטים עוד חושבים. עוד קצת סבלנות…</string>
+    <string name="thinking_still_judging">עוד עובדים על זה…</string>
     <string name="thinking_ready">פסק הדין מוכן.</string>
     <string name="story_names">מסירים את השמות כדי שאף אחד לא יישפט לפי מי שהוא</string>
     <string name="story_facts">בודק נפרד מחפש את העובדות ברשת</string>
@@ -38,7 +38,6 @@
     <string name="verdict_too_close">צמוד מכדי להכריע</string>
     <string name="lean_title">הכרעה כפויה: הכף נוטה לטובת %1$s</string>
     <string name="lean_title_self">הכרעה כפויה: הכף נוטה לטובתך</string>
-    <string name="lean_unanimous">כל השופטים נטו לכיוון הזה.</string>
     <string name="lean_majority">השופטים נטו לכיוון הזה, %1$s מול %2$s.</string>
     <string name="lean_tie">גם כשנאלצו לבחור, השופטים התחלקו חצי-חצי.</string>
     <string name="split_win">בזה הצדק עם %1$s:</string>
@@ -72,18 +71,17 @@
         <item quantity="two">שני שופטי AI עצמאיים הצביעו:</item>
         <item quantity="other">%1$s שופטי AI עצמאיים הצביעו:</item>
     </plurals>
-    <string name="escalated">היה צמוד, אז הזמנו עוד שופטים.</string>
     <string name="translate_loading">מתרגמים…</string>
     <string name="translate_from_en">תורגם מאנגלית</string>
     <string name="translate_from_tr">תורגם מטורקית</string>
-    <string name="translate_failed">לא הצלחנו לתרגם כרגע, אז הנה המקור.</string>
+    <string name="translate_failed">לא הצלחנו לתרגם.</string>
     <string name="translate_toggle">שפת פסק הדין</string>
     <string name="vote_split">חלוק</string>
     <string name="vote_conditional">תלוי</string>
     <string name="vote_dissolved">בלבול מילים</string>
-    <string name="refused_note">ה-AI העדיף לא להכריע הפעם. עדיף לא להראות כלום מאשר לזייף פסק דין.</string>
+    <string name="refused_note">ה-AI העדיף לא להכריע הפעם.</string>
     <string name="demo_note">מצב הדגמה: לא הוגדר מפתח AI, אז זה פסק דין לדוגמה</string>
-    <string name="trial_survived">ההתנגדות נדחתה: עורך הדין של הצד השני העלה את ההתנגדות החזקה ביותר שלו, ופסק הדין החזיק. רמת הביטחון לא השתנתה.</string>
+    <string name="trial_survived">ההתנגדות נדחתה: פסק הדין החזיק.</string>
     <string name="trial_uncertain">עורך הדין של הצד השני התנגד, וההתנגדות השאירה ספק אמיתי לגבי פסק הדין</string>
     <string name="trial_overturned">ההתנגדות התקבלה: פסק הדין עומד, אבל ההתנגדות החזקה ביותר של הצד השני החלישה אותו קשות</string>
     <string name="trial_minor">עורך הדין של הצד השני העלה נקודה הוגנת, אבל פסק הדין עומד</string>
@@ -122,7 +120,7 @@
         <item quantity="two">שעתיים</item>
         <item quantity="other">%1$s שעות</item>
     </plurals>
-    <string name="examples_label">אין רעיון? אפשר לנסות אחד מאלה:</string>
+    <string name="examples_label">אפשר לנסות אחד:</string>
     <string name="example_hotdog_label">🌭 נקניקייה בלחמנייה זה סנדוויץ\'?</string>
     <string name="example_hotdog_text">החבר שלי נועם אומר שנקניקייה בלחמנייה היא סנדוויץ\': מילוי בתוך לחם פרוס, ונקודה. לדעתי זה דבר בפני עצמו. אף אחד לא מזמין סנדוויץ\' ומצפה לקבל נקניקייה, ואף תפריט לא מכניס אותה לרשימת הסנדוויצ\'ים.</string>
     <string name="example_tomato_label">🍅 עגבנייה היא פרי?</string>
@@ -140,7 +138,6 @@
     <string name="footer_note">בשביל הכיף והבהירות, לא ייעוץ משפטי.</string>
     <string name="footer_language">שפה</string>
     <string name="not_found_title">פסק הדין הזה כבר יצא מהאולם</string>
-    <string name="not_found_body">אולי יש טעות בקישור, או שפסק הדין כבר לא קיים.</string>
     <string name="nav_sign_in">התחברות</string>
     <string name="nav_account">חשבון</string>
     <string name="nav_pricing">מחירים</string>
@@ -162,7 +159,6 @@
     <string name="consent_sensitive_continue">המשך</string>
     <string name="respond_adult_confirm">אני בגיל 18 ומעלה</string>
     <string name="account_export">הורדת הנתונים שלי</string>
-    <string name="account_export_hint">קבל קובץ JSON עם כל מה ש-Judge שומר עליך.</string>
     <string name="account_export_busy">מכין את הקובץ…</string>
     <string name="account_export_failed">לא הצלחנו להכין את הנתונים שלך כרגע. אפשר לנסות שוב?</string>
     <string name="rating_prompt">פסק דין הוגן?</string>
@@ -181,19 +177,18 @@
     <string name="clarify_back">לערוך את הוויכוח</string>
     <string name="thinking_factcheck">בודקים את העובדות ברשת…</string>
     <string name="thinking_factcheck_done">הבדיקה ברשת הסתיימה.</string>
-    <string name="panel_premium">נשפט עם בדיקת עובדות ברשת.</string>
     <string name="factcheck_title">נבדק ברשת</string>
-    <string name="factcheck_lead">השופטים ראו את תוצאות החיפוש האלה לפני ההכרעה. הן ראיות, לא ההכרעה עצמה.</string>
+    <string name="factcheck_lead">השופטים ראו את תוצאות החיפוש האלה לפני ההכרעה.</string>
     <string name="factcheck_status_supported">מחזיק מים</string>
     <string name="factcheck_status_refuted">לא מחזיק מים</string>
     <string name="factcheck_status_mixed">נכון בחלקו</string>
     <string name="factcheck_status_unverified">לא הצלחנו לאמת</string>
     <string name="factcheck_sources">מקורות</string>
-    <string name="factcheck_none">אין כאן מה לחפש ברשת: הוויכוח הזה תלוי בערכים או במשמעויות, לא בעובדות.</string>
-    <string name="factcheck_none_factual">אין כאן שום דבר שאפשר לבדוק ברשת: העובדות כאן ידועות רק למעורבים.</string>
+    <string name="factcheck_none">אין מה לבדוק ברשת.</string>
+    <string name="factcheck_none_factual">אין מה לבדוק ברשת.</string>
     <string name="factcheck_unavailable">הבדיקה ברשת לא הסתיימה הפעם, אז השופטים הכריעו בלעדיה.</string>
     <string name="signin_title">התחברות</string>
-    <string name="signin_lead">צריך להתחבר כדי לקבל פסק דין. בחשבון חדש, פסק הדין הראשון עלינו.</string>
+    <string name="signin_lead">פסק הדין הראשון עלינו.</string>
     <string name="signin_apple">המשך עם Apple</string>
     <string name="signin_google">המשך עם Google</string>
     <string name="signin_email_toggle">התחברות באימייל</string>
@@ -211,7 +206,7 @@
     <string name="signin_use_password">להשתמש בסיסמה במקום זאת</string>
     <string name="signin_password_wrong">האימייל והסיסמה אינם תואמים.</string>
     <string name="signin_password_short">השתמש ב-8 תווים לפחות.</string>
-    <string name="signin_create_note">נשלח לך קוד במייל כדי לאמת את הכתובת הזו. צריך לעשות זאת פעם אחת בלבד.</string>
+    <string name="signin_create_note">נשלח לך קוד במייל לאימות.</string>
     <string name="signin_password_choose">התחברת. בחר סיסמה לפעם הבאה.</string>
     <string name="signin_password_save">שמירת הסיסמה</string>
     <string name="signin_password_save_failed">לא הצלחנו לשמור את הסיסמה. נסה שוב.</string>
@@ -240,13 +235,10 @@
     <string name="account_delete_yes">כן, למחוק</string>
     <string name="account_delete_cancel">להשאיר את החשבון</string>
     <string name="account_delete_failed">לא הצלחנו למחוק את החשבון כרגע. אפשר לנסות שוב?</string>
-    <string name="account_sign_in_prompt">צריך להתחבר כדי לראות את התוכנית והקרדיטים.</string>
     <string name="account_load_failed">לא הצלחנו לטעון את החשבון. אפשר לנסות שוב עוד רגע.</string>
     <string name="account_loading">טוענים את החשבון…</string>
     <string name="pricing_title">פסק הדין הראשון עלינו.</string>
-    <string name="pricing_lead">פותחים חשבון, ופסק הדין הראשון בחינם, עם כל האפשרויות. אחר כך אפשר לבחור חבילה או תוכנית חודשית.</string>
     <string name="pricing_title_member">עוד פסקי דין.</string>
-    <string name="pricing_lead_member">אפשר לבחור חבילה או תוכנית חודשית. כל פסק דין מקבל את ההרכב המלא.</string>
     <string name="pricing_included_title">בכל פסק דין</string>
     <string name="pricing_buy_title">חבילות ותוכנית חודשית</string>
     <string name="pricing_premium_f1">העובדות נבדקות ברשת, עם המקורות בפסק הדין</string>
@@ -254,7 +246,7 @@
     <string name="pricing_premium_f3">עד שתי שאלות קצרות כשחסרה עובדה חשובה</string>
     <string name="pricing_premium_f4">השמות מוחלפים לפני השיפוט</string>
     <string name="pricing_packs_title">חבילות קרדיטים</string>
-    <string name="pricing_packs_lead">משלמים פעם אחת ומשתמשים מתי שרוצים. כל פסק דין עולה קרדיט אחד.</string>
+    <string name="pricing_packs_lead">כל פסק דין עולה קרדיט אחד.</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s פסקי דין</item>
         <item quantity="two">%1$s פסקי דין</item>
@@ -342,8 +334,8 @@
     <string name="case_context_d">הקשר נוסף מצד D</string>
     <string name="case_context_you">ההקשר שהוספת (%1$s)</string>
     <string name="case_evidence_item">תמונה %1$s, כפי שהשופטים קראו אותה</string>
-    <string name="case_answered">התשובה התקבלה. השופטים על זה.</string>
-    <string name="case_judging_alone">השופטים עובדים על הצד שלך.</string>
+    <string name="case_answered">השופטים על זה.</string>
+    <string name="case_judging_alone">השופטים על זה.</string>
     <string name="case_expired_body">אף אחד לא ענה תוך 7 ימים, אז הקרדיט חזר לחשבון. עדיין אפשר לקבל פסק דין רק לפי הצד שלך.</string>
     <string name="case_expired_body_free">אף אחד לא ענה תוך 7 ימים. עדיין אפשר לקבל פסק דין רק לפי הצד שלך.</string>
     <string name="case_one_sided">נשפט רק לפי הצד שלך.</string>
@@ -360,12 +352,12 @@
     <string name="respond_submit">לשלוח את הצד שלי</string>
     <string name="case_write_title">הצד שלך</string>
     <string name="case_write_placeholder">מה הבעיה?</string>
-    <string name="case_write_lead">אפשר לכתוב את הצד שלך מתי שנוח. השופטים מתחילים כששניכם כתבתם.</string>
+    <string name="case_write_lead">השופטים מתחילים כששניכם כתבתם.</string>
     <string name="case_write_lead_answered">הצד השני כתב את הצד שלו. כתבו את שלכם כדי לקבל פסק דין.</string>
     <string name="case_write_submit">לשלוח את הצד שלי</string>
     <string name="case_write_email_subject">הצד השני כתב את שלו</string>
-    <string name="respond_sent">תודה. הצד שלך התקבל, והשופטים כבר על זה.</string>
-    <string name="respond_sent_waiting">תודה. הצד שלך התקבל. השופטים מתחילים כשהצד השני יכתוב את שלו.</string>
+    <string name="respond_sent">הצד שלך התקבל.</string>
+    <string name="respond_sent_waiting">הצד שלך התקבל. מחכים לצד השני.</string>
     <string name="respond_own_invite">זה קישור ההזמנה שלך. צריך לשלוח אותו לצד השני.</string>
     <string name="respond_expired">תוקף ההזמנה הזו פג.</string>
     <string name="respond_closed">התיק הזה כבר לא מקבל תשובות.</string>
@@ -391,7 +383,6 @@
     <string name="evidence_remove">הסרת תמונה %1$s</string>
     <string name="evidence_thumb">תמונה %1$s</string>
     <string name="evidence_preview">מה קראנו</string>
-    <string name="evidence_preview_note">זה מוצג רק לך. השמות מוסתרים לפני שהשופטים קוראים.</string>
     <string name="evidence_status_unreadable">לא נמצא טקסט לקריאה</string>
     <string name="evidence_status_refused">מערכת הקריאה סירבה לתמונה הזו</string>
     <string name="evidence_status_unsupported">לא PNG, JPEG, WebP או GIF</string>
@@ -418,8 +409,6 @@
     <string name="home_remove_their_side">להסיר את הצד השני</string>
     <string name="home_send_link">לשלוח קישור</string>
     <string name="home_clear">ניקוי</string>
-    <string name="home_lead">אפשר לכתוב את שני הצדדים, או לשלוח לצד השני קישור כדי שיכתוב את שלו.</string>
-    <string name="home_lead_solo">אפשר לכתוב את הצד שלך, וגם את הצד השני אם הוא ידוע לך.</string>
     <string name="home_their_side">הצד השני</string>
     <string name="home_their_name">השם של הצד השני</string>
     <string name="home_their_placeholder">מה הצד השני אומר? כדאי לכתוב את זה במילים שלו.</string>
@@ -433,7 +422,7 @@
     <string name="appeal_submit">לשפוט מחדש עם ההקשר שלי</string>
     <string name="appeal_sending">מסירים את השמות מההקשר שלך…</string>
     <string name="appeal_judging">השופטים בוחנים הכול מחדש…</string>
-    <string name="appeal_upsell">משהו חסר? אפשר להוסיף הקשר ולקבל שיפוט מחדש תמורת פסק דין אחד.</string>
+    <string name="appeal_upsell">משהו חסר? אפשר להוסיף הקשר תמורת פסק דין אחד.</string>
     <string name="appeal_sign_in">צריך להתחבר כדי להוסיף הקשר</string>
     <string name="appeal_used">כבר הוספת הקשר לתיק הזה.</string>
     <string name="appeal_limit">הוספת הקשר פעמיים. זה המקסימום לפסק דין אחד.</string>
@@ -477,7 +466,7 @@
     <string name="case_display_name">השם שלך בדף השיתוף</string>
     <string name="case_display_save">שמירת השם</string>
     <string name="respond_keep">לשמור את התיק הזה בחשבון</string>
-    <string name="respond_kept">התיק הזה נמצא עכשיו בחשבון שלך. הוא מופיע בדף \"פסקי דין\" בכל מכשיר.</string>
+    <string name="respond_kept">נשמר בחשבון שלך.</string>
     <string name="respond_remove">הסרת הצד שלי</string>
     <string name="respond_remove_confirm">להסיר את הטקסט המקורי שלך ואת שם התצוגה שלך? קישורי השיתוף של התיק יפסיקו לעבוד (תצוגות מקדימות שכבר פורסמו בצ\'אטים עשויות להמשיך להופיע עד שהאפליקציות האלה ירעננו אותן). אי אפשר לבטל את זה.</string>
     <string name="names_title">השמות בדף השיתוף</string>
@@ -562,7 +551,7 @@
     <string name="app_tab_new">חדש</string>
     <string name="app_tab_settings">הגדרות</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">עוד אין פסקי דין. כשהוויכוח הראשון שלך יוכרע, פסק הדין יופיע כאן.</string>
+    <string name="app_history_empty">עוד אין פסקי דין.</string>
     <string name="app_history_device_only">פסקי הדין שמורים רק בטלפון הזה. מחיקה של פסק דין כאן לא מבטלת את קישור השיתוף שלו.</string>
     <string name="app_history_delete">מחיקה</string>
     <string name="app_history_remove_all">הסרת הכול</string>
@@ -572,7 +561,7 @@
         <item quantity="other">למחוק %1$s פסקי דין מהטלפון הזה? קישורי השיתוף שלהם ימשיכו לעבוד.</item>
     </plurals>
     <string name="app_history_phone_only">רק בטלפון הזה</string>
-    <string name="app_history_phone_only_note">לא בחשבון שלך: אלה שמורים רק בטלפון הזה. מחיקה של פסק דין כאן לא מבטלת את קישור השיתוף שלו.</string>
+    <string name="app_history_phone_only_note">מחיקה של פסק דין לא מבטלת את קישור השיתוף שלו.</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="one">להסיר את פסק הדין הזה מהחשבון שלך? מה שכתבת והשמות יימחקו וקישור השיתוף שלו יפסיק לעבוד, בכל המכשירים. אי אפשר לבטל את זה.</item>
         <item quantity="two">להסיר את שני פסקי הדין מהחשבון שלך? מה שכתבת והשמות יימחקו וקישורי השיתוף שלהם יפסיקו לעבוד, בכל המכשירים. אי אפשר לבטל את זה.</item>
@@ -597,9 +586,9 @@
     <string name="app_pricing_free_account">התחברות עם Apple, Google או אימייל</string>
     <string name="app_pricing_context">תמונות הקשר נקראות ואז נזרקות, בלי תוספת תשלום</string>
     <string name="app_pricing_headline">פסק הדין הראשון עלינו.</string>
-    <string name="app_pricing_sub">פותחים חשבון, ופסק הדין הראשון בחינם, עם כל האפשרויות. אחר כך אפשר לבחור חבילה או תוכנית חודשית.</string>
+    <string name="app_pricing_sub">אחר כך אפשר לבחור חבילה או תוכנית חודשית.</string>
     <string name="app_pricing_headline_member">עוד פסקי דין.</string>
-    <string name="app_pricing_sub_member">אפשר לבחור חבילה או תוכנית חודשית. כל פסק דין מקבל את ההרכב המלא.</string>
+    <string name="app_pricing_sub_member">אפשר לבחור חבילה או תוכנית חודשית.</string>
     <plurals name="app_balance_left">
         <item quantity="one">נשאר פסק דין אחד</item>
         <item quantity="two">נשארו שני פסקי דין</item>
@@ -694,10 +683,9 @@
     <string name="app_appeal_used">כבר הוספת הקשר לתיק הזה.</string>
     <string name="app_appeal_limit">הוספת הקשר פעמיים. זה המקסימום לפסק דין אחד.</string>
     <string name="app_purchase_buying">הרכישה מתבצעת…</string>
-    <string name="app_purchase_success">תודה! הרכישה הושלמה.</string>
-    <string name="app_purchase_pending">הרכישה בטיפול. ייתכן שייקח רגע עד שהיא תופיע.</string>
-    <string name="app_purchase_arriving">הקרדיטים בדרך…</string>
-    <string name="app_purchase_slow">ייתכן שייקח רגע עד שזה יופיע כאן.</string>
+    <string name="app_purchase_success">הרכישה הושלמה.</string>
+    <string name="app_purchase_pending">הרכישה בטיפול.</string>
+    <string name="app_purchase_slow">הקרדיטים עשויים להופיע בעוד רגע.</string>
     <string name="app_purchase_failed">הרכישה לא הושלמה. אפשר לנסות שוב עוד רגע.</string>
     <string name="app_purchase_restore">שחזור רכישות</string>
     <string name="app_purchase_restore_done">הרכישות שלך שוחזרו.</string>

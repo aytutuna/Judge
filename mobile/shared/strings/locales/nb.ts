@@ -7,8 +7,7 @@ const nb: AppLocale = {
     "app.tab.new": "Ny",
     "app.tab.settings": "Innstillinger",
     "app.input.counter": "{count} / {max}",
-    "app.history.empty":
-      "Ingen dommer ennå. Få avgjort den første diskusjonen din, så dukker den opp her.",
+    "app.history.empty": "Ingen dommer ennå.",
     "app.history.deviceOnly":
       "Lagres bare på denne telefonen. Sletter du en dom her, fjernes ikke delingslenken.",
     "app.history.delete": "Slett",
@@ -16,8 +15,7 @@ const nb: AppLocale = {
     "app.history.deleteConfirm":
       "Vil du slette {n} dommer fra denne telefonen? Delingslenkene virker fortsatt.",
     "app.history.phoneOnly": "Bare på denne telefonen",
-    "app.history.phoneOnlyNote":
-      "Ikke i kontoen din: disse er bare lagret på denne telefonen. Sletter du en dom her, fjernes ikke delingslenken.",
+    "app.history.phoneOnlyNote": "Å slette en fjerner ikke delingslenken.",
     "app.history.removeConfirm":
       "Vil du fjerne {n} dommer fra kontoen din? Det du skrev og navnene slettes, og delingslenkene slutter å virke på alle enheter. Dette kan ikke angres.",
     "app.history.removeLinksConfirm": "Vil du fjerne {n} lenker? De slutter å virke overalt. Dette kan ikke angres.",
@@ -28,11 +26,9 @@ const nb: AppLocale = {
     "app.pricing.free.account": "Logg inn med Apple, Google eller e-post",
     "app.pricing.context": "Kontekstbilder blir lest og deretter kastet, uten ekstra kostnad",
     "app.pricing.headline": "Den første dommen spanderer vi.",
-    "app.pricing.sub":
-      "Opprett en konto, så er den første dommen gratis, med alle funksjoner. Etter det velger du en pakke eller går over til månedsabonnement.",
+    "app.pricing.sub": "Deretter velger du en pakke eller månedsabonnement.",
     "app.pricing.headlineMember": "Få flere dommer.",
-    "app.pricing.subMember":
-      "Velg en pakke eller et månedsabonnement. Hver dom får hele panelet.",
+    "app.pricing.subMember": "Velg en pakke eller månedsabonnement.",
     "app.balance.left": "{n} dommer igjen",
     "app.balance.monthly": "{left} av {cap} igjen denne måneden",
     "app.balance.none": "Ingen dommer igjen",
@@ -145,11 +141,9 @@ const nb: AppLocale = {
     "app.appeal.limit":
       "Du har lagt til kontekst to ganger. Det er grensen for én dom.",
     "app.purchase.buying": "Kjøper…",
-    "app.purchase.success": "Takk! Kjøpet er gjennomført.",
-    "app.purchase.pending":
-      "Kjøpet behandles. Det kan ta et minutt før det dukker opp.",
-    "app.purchase.arriving": "Kredittene dine er på vei…",
-    "app.purchase.slow": "Det kan ta et minutt før det dukker opp her.",
+    "app.purchase.success": "Kjøpet er gjennomført.",
+    "app.purchase.pending": "Kjøpet behandles.",
+    "app.purchase.slow": "Kreditter kan bruke et minutt.",
     "app.purchase.failed": "Kjøpet gikk ikke gjennom. Prøv igjen om litt.",
     "app.purchase.restore": "Gjenopprett kjøp",
     "app.purchase.restoreDone": "Kjøpene dine er gjenopprettet.",

@@ -86,11 +86,9 @@ export function ScrollStory({ lang }: { lang: Lang }) {
       <div className={styles.inner}>
         <div className={styles.intro}>
           <div className={styles.introText} data-scene-avoid="">
-            <p className={styles.kicker}>{t(lang, "how.kicker")}</p>
             <h2 id="how-title" className={styles.title}>
               {noOrphan(t(lang, "how.title"))}
             </h2>
-            <p className={styles.lead}>{t(lang, "how.lead")}</p>
           </div>
         </div>
 

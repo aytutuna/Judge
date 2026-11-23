@@ -6,7 +6,7 @@
     <string name="hero_eyebrow">മൂന്ന് സ്വതന്ത്ര ജഡ്ജിമാർ · പേരുകൾ ജഡ്ജിമാർ കാണില്ല</string>
     <string name="hero_lead">എന്തിനെച്ചൊല്ലിയാണ് തർക്കമെന്ന് പറയൂ. മൂന്ന് എഐ ജഡ്ജിമാർ ഓരോരുത്തരും സ്വന്തമായി തീരുമാനിക്കും; അവർ എത്രത്തോളം യോജിക്കുന്നുവെന്ന് ഉറപ്പ് സ്കോർ കാണിച്ചുതരും.</string>
     <string name="input_label">തർക്കം</string>
-    <string name="placeholder">എന്താണ് സംഭവിച്ചത്? ആര് എന്ത് പറയുന്നു, എന്തുകൊണ്ട്?\n\nമറ്റേയാളുടെ ഭാഗം അവർ പറയുന്നതുപോലെ തന്നെ എഴുതൂ. എന്തായാലും രണ്ടു ഭാഗത്തിനും വേണ്ടി ഏറ്റവും ശക്തമായ വാദം ജഡ്ജിമാർ തന്നെ ഒരുക്കും.</string>
+    <string name="placeholder">എന്താണ് സംഭവിച്ചത്? ആര് എന്ത് പറയുന്നു, എന്തുകൊണ്ട്?</string>
     <string name="get_verdict">വിധി അറിയാം</string>
     <string name="thinking_eyebrow">ജഡ്ജിമാർ ഇപ്പോൾ ചെയ്യുന്നത്</string>
     <string name="thinking_read">രണ്ടു ഭാഗവും വായിച്ച്, ഓരോന്നിനും ഏറ്റവും നല്ല അവസരം നൽകുന്നു…</string>
@@ -16,9 +16,9 @@
     <string name="thinking_crux">കാതൽ തിരയുന്നു…</string>
     <string name="thinking_judges">മൂന്ന് ജഡ്ജിമാർ, ഓരോരുത്തരും സ്വന്തമായി തീരുമാനിക്കുന്നു…</string>
     <string name="thinking_votes">വോട്ടുകൾ എണ്ണുന്നു…</string>
-    <string name="thinking_helper">മൂന്ന് എഐ ജഡ്ജിമാർ വെവ്വേറെ വിധി പറയും; ഒപ്പത്തിനൊപ്പമായാൽ കൂടുതൽ പേർ വരും. ഒരു മിനിറ്റ് തരൂ.</string>
+    <string name="thinking_helper">ഒരു മിനിറ്റ് തരൂ.</string>
     <string name="thinking_finish">കാതലിനോട് അടുക്കുന്നു…</string>
-    <string name="thinking_still_judging">ജഡ്ജിമാർ ഇപ്പോഴും ആലോചനയിലാണ്. അൽപം കാത്തിരിക്കൂ…</string>
+    <string name="thinking_still_judging">ഇപ്പോഴും പ്രവർത്തിക്കുന്നു…</string>
     <string name="thinking_ready">വിധി തയ്യാർ.</string>
     <string name="story_names">ആരെയും അവർ ആരെന്നതിന്റെ പേരിൽ വിധിക്കാതിരിക്കാൻ പേരുകൾ നീക്കുന്നു</string>
     <string name="story_facts">വേറെയൊരു പരിശോധകൻ വെബിൽ വസ്തുതകൾ തിരയുന്നു</string>
@@ -38,7 +38,6 @@
     <string name="verdict_too_close">ഒപ്പത്തിനൊപ്പം, വിധിയില്ല</string>
     <string name="lean_title">നിർബന്ധിത വിധി: %1$s ആണ് കൂടുതൽ ശരി</string>
     <string name="lean_title_self">നിർബന്ധിത വിധി: നിങ്ങളാണ് കൂടുതൽ ശരി</string>
-    <string name="lean_unanimous">എല്ലാ ജഡ്ജിമാരും ഈ ഭാഗത്തേക്കാണ് ചാഞ്ഞത്.</string>
     <string name="lean_majority">ജഡ്ജിമാർ %1$s–%2$s എന്ന നിലയിൽ ഈ ഭാഗത്തേക്ക് ചാഞ്ഞു.</string>
     <string name="lean_tie">ഒരു ഭാഗം തിരഞ്ഞെടുക്കാൻ നിർബന്ധിച്ചിട്ടും ജഡ്ജിമാർ തുല്യമായി രണ്ടു തട്ടിലായി.</string>
     <string name="split_win">ഇതിൽ %1$s ആണ് ശരി:</string>
@@ -71,18 +70,17 @@
         <item quantity="one">%1$s സ്വതന്ത്ര എഐ ജഡ്ജിമാർ വോട്ട് ചെയ്തു:</item>
         <item quantity="other">%1$s സ്വതന്ത്ര എഐ ജഡ്ജിമാർ വോട്ട് ചെയ്തു:</item>
     </plurals>
-    <string name="escalated">ഒപ്പത്തിനൊപ്പമായിരുന്നു, അതുകൊണ്ട് കൂടുതൽ ജഡ്ജിമാരെ വിളിച്ചു.</string>
     <string name="translate_loading">വിവർത്തനം ചെയ്യുന്നു…</string>
     <string name="translate_from_en">ഇംഗ്ലീഷിൽ നിന്ന് വിവർത്തനം ചെയ്തത്</string>
     <string name="translate_from_tr">ടർക്കിഷിൽ നിന്ന് വിവർത്തനം ചെയ്തത്</string>
-    <string name="translate_failed">ഇപ്പോൾ വിവർത്തനം ചെയ്യാനായില്ല, അതുകൊണ്ട് ഒറിജിനൽ കാണിക്കുന്നു.</string>
+    <string name="translate_failed">വിവർത്തനം ചെയ്യാനായില്ല.</string>
     <string name="translate_toggle">വിധിയുടെ ഭാഷ</string>
     <string name="vote_split">ഭിന്നം</string>
     <string name="vote_conditional">സാഹചര്യം പോലെ</string>
     <string name="vote_dissolved">അർത്ഥഭേദം</string>
-    <string name="refused_note">ഇത്തവണ എഐ മാറിനിന്നു. വ്യാജ വിധി കാണിക്കുന്നതിലും ഭേദം ഒന്നും കാണിക്കാതിരിക്കുന്നതാണ്.</string>
+    <string name="refused_note">ഇത്തവണ എഐ മാറിനിന്നു.</string>
     <string name="demo_note">ഡെമോ മോഡ്: എഐ കീ സെറ്റ് ചെയ്തിട്ടില്ല, ഇത് ഒരു സാമ്പിൾ വിധിയാണ്</string>
-    <string name="trial_survived">ആക്ഷേപം തള്ളി: മറുഭാഗത്തിന്റെ അഭിഭാഷകൻ തന്റെ ഏറ്റവും ശക്തമായ ആക്ഷേപം ഉന്നയിച്ചു, വിധി പിടിച്ചുനിന്നു. ഉറപ്പ് സ്കോർ മാറിയില്ല.</string>
+    <string name="trial_survived">ആക്ഷേപം തള്ളി: വിധി പിടിച്ചുനിന്നു.</string>
     <string name="trial_uncertain">മറുഭാഗത്തിന്റെ അഭിഭാഷകൻ ആക്ഷേപം ഉന്നയിച്ചു, ആ ആക്ഷേപം ഈ വിധിയിൽ യഥാർത്ഥ സംശയം ബാക്കിവെച്ചു</string>
     <string name="trial_overturned">ആക്ഷേപം അംഗീകരിച്ചു: വിധി നിലനിൽക്കുന്നു, പക്ഷേ മറുഭാഗത്തിന്റെ ഏറ്റവും ശക്തമായ ആക്ഷേപം അതിനെ ഗുരുതരമായി ദുർബലപ്പെടുത്തി</string>
     <string name="trial_minor">മറുഭാഗത്തിന്റെ അഭിഭാഷകൻ ന്യായമായ ഒരു കാര്യം ചൂണ്ടിക്കാട്ടി, പക്ഷേ വിധി നിലനിൽക്കുന്നു</string>
@@ -119,7 +117,7 @@
         <item quantity="one">%1$s മണിക്കൂർ</item>
         <item quantity="other">%1$s മണിക്കൂർ</item>
     </plurals>
-    <string name="examples_label">ഐഡിയ കിട്ടുന്നില്ലേ? ഇവയിലൊന്ന് നോക്കൂ:</string>
+    <string name="examples_label">ഒന്ന് നോക്കൂ:</string>
     <string name="example_hotdog_label">🍲 സാമ്പാർ ഒരു സൂപ്പാണോ?</string>
     <string name="example_hotdog_text">എന്റെ കൂട്ടുകാരൻ അനൂപ് പറയുന്നത് സാമ്പാർ ഒരു സൂപ്പാണെന്നാണ്: പരിപ്പും പച്ചക്കറികളും വെള്ളത്തിൽ വേവിച്ചത്, അത്രതന്നെ. സാമ്പാർ സാമ്പാർ തന്നെയാണ്, അതൊരു വേറിട്ട വിഭവമാണ് എന്നാണ് എന്റെ പക്ഷം. ആരും സൂപ്പ് ഓർഡർ ചെയ്ത് സാമ്പാർ പ്രതീക്ഷിക്കില്ല, ഒരു മെനുവിലും അത് സൂപ്പുകളുടെ കൂട്ടത്തിൽ ഇല്ല.</string>
     <string name="example_tomato_label">🍅 തക്കാളി പഴമാണോ?</string>
@@ -137,7 +135,6 @@
     <string name="footer_note">തമാശയ്ക്കും വ്യക്തതയ്ക്കും, നിയമോപദേശമല്ല.</string>
     <string name="footer_language">ഭാഷ</string>
     <string name="not_found_title">ഈ വിധി കോടതി വിട്ടുപോയി</string>
-    <string name="not_found_body">ലിങ്കിൽ ഒരു അക്ഷരത്തെറ്റ് ഉണ്ടാകാം, അല്ലെങ്കിൽ വിധി ഇപ്പോൾ ഇല്ല.</string>
     <string name="nav_sign_in">സൈൻ ഇൻ</string>
     <string name="nav_account">അക്കൗണ്ട്</string>
     <string name="nav_pricing">നിരക്കുകൾ</string>
@@ -159,7 +156,6 @@
     <string name="consent_sensitive_continue">തുടരുക</string>
     <string name="respond_adult_confirm">എനിക്ക് 18 വയസോ അതിൽ കൂടുതലോ ഉണ്ട്</string>
     <string name="account_export">എന്റെ ഡാറ്റ ഡൗൺലോഡ് ചെയ്യുക</string>
-    <string name="account_export_hint">Judge നിങ്ങളെക്കുറിച്ച് സൂക്ഷിക്കുന്നതെല്ലാം ഒരു JSON ഫയലായി നേടുക.</string>
     <string name="account_export_busy">നിങ്ങളുടെ ഫയൽ തയ്യാറാക്കുന്നു…</string>
     <string name="account_export_failed">ഇപ്പോൾ നിങ്ങളുടെ ഡാറ്റ തയ്യാറാക്കാനായില്ല. ഒന്നുകൂടി ശ്രമിക്കാമോ?</string>
     <string name="rating_prompt">വിധി നീതിയുക്തമാണോ?</string>
@@ -178,19 +174,18 @@
     <string name="clarify_back">തർക്കം തിരുത്തൂ</string>
     <string name="thinking_factcheck">വസ്തുതകൾ വെബിൽ പരിശോധിക്കുന്നു…</string>
     <string name="thinking_factcheck_done">വെബ് പരിശോധന കഴിഞ്ഞു.</string>
-    <string name="panel_premium">വെബിലെ വസ്തുതാ പരിശോധനയോടെയുള്ള വിധി.</string>
     <string name="factcheck_title">വെബിൽ പരിശോധിച്ചത്</string>
-    <string name="factcheck_lead">വിധി പറയും മുമ്പ് ജഡ്ജിമാർ ഈ സെർച്ച് ഫലങ്ങൾ കണ്ടിരുന്നു. ഇവ തെളിവുകളാണ്, വിധിയല്ല.</string>
+    <string name="factcheck_lead">വിധി പറയും മുമ്പ് ജഡ്ജിമാർ ഈ സെർച്ച് ഫലങ്ങൾ കണ്ടിരുന്നു.</string>
     <string name="factcheck_status_supported">ശരിയാണ്</string>
     <string name="factcheck_status_refuted">ശരിയല്ല</string>
     <string name="factcheck_status_mixed">ഭാഗികമായി ശരി</string>
     <string name="factcheck_status_unverified">ഉറപ്പിക്കാനായില്ല</string>
     <string name="factcheck_sources">ഉറവിടങ്ങൾ</string>
-    <string name="factcheck_none">വെബിൽ തിരയാൻ ഒന്നുമില്ല: ഇവിടെ തീരുമാനിക്കുന്നത് വസ്തുതകളല്ല, മൂല്യങ്ങളോ അർത്ഥങ്ങളോ ആണ്.</string>
-    <string name="factcheck_none_factual">ഇതിൽ വെബിൽ പരിശോധിക്കാവുന്നതായി ഒന്നുമില്ല: ഇതിലെ വസ്തുതകൾ ബന്ധപ്പെട്ട ആളുകൾക്കിടയിൽ മാത്രമുള്ളതാണ്.</string>
+    <string name="factcheck_none">വെബിൽ പരിശോധിക്കാൻ ഒന്നുമില്ല.</string>
+    <string name="factcheck_none_factual">വെബിൽ പരിശോധിക്കാൻ ഒന്നുമില്ല.</string>
     <string name="factcheck_unavailable">ഇത്തവണ വെബ് പരിശോധന പൂർത്തിയായില്ല, അതുകൊണ്ട് അതില്ലാതെയാണ് ജഡ്ജിമാർ വിധി പറഞ്ഞത്.</string>
     <string name="signin_title">സൈൻ ഇൻ</string>
-    <string name="signin_lead">വിധി കിട്ടാൻ സൈൻ ഇൻ ചെയ്യൂ. പുതിയ അക്കൗണ്ടിന് ആദ്യ വിധി സൗജന്യം.</string>
+    <string name="signin_lead">ആദ്യ വിധി സൗജന്യം.</string>
     <string name="signin_apple">Apple വഴി തുടരൂ</string>
     <string name="signin_google">Google വഴി തുടരൂ</string>
     <string name="signin_email_toggle">പകരം ഇമെയിൽ ഉപയോഗിക്കൂ</string>
@@ -208,7 +203,7 @@
     <string name="signin_use_password">പകരം പാസ്‌വേഡ് ഉപയോഗിക്കുക</string>
     <string name="signin_password_wrong">ഈ ഇമെയിലും പാസ്‌വേഡും പൊരുത്തപ്പെടുന്നില്ല.</string>
     <string name="signin_password_short">കുറഞ്ഞത് 8 അക്ഷരങ്ങൾ ഉപയോഗിക്കുക.</string>
-    <string name="signin_create_note">ഈ വിലാസം സ്ഥിരീകരിക്കാൻ ഞങ്ങൾ നിങ്ങൾക്ക് ഇമെയിലിൽ ഒരു കോഡ് അയയ്ക്കും. ഇത് ഒരു തവണ മാത്രം ചെയ്താൽ മതി.</string>
+    <string name="signin_create_note">സ്ഥിരീകരിക്കാൻ ഞങ്ങൾ ഇമെയിലിൽ ഒരു കോഡ് അയയ്ക്കും.</string>
     <string name="signin_password_choose">നിങ്ങൾ സൈൻ ഇൻ ചെയ്തു. അടുത്ത തവണയ്ക്കായി ഒരു പാസ്‌വേഡ് തിരഞ്ഞെടുക്കുക.</string>
     <string name="signin_password_save">പാസ്‌വേഡ് സേവ് ചെയ്യുക</string>
     <string name="signin_password_save_failed">പാസ്‌വേഡ് സേവ് ചെയ്യാനായില്ല. വീണ്ടും ശ്രമിക്കുക.</string>
@@ -237,13 +232,10 @@
     <string name="account_delete_yes">അതെ, ഡിലീറ്റ് ചെയ്യൂ</string>
     <string name="account_delete_cancel">അക്കൗണ്ട് നിലനിർത്തൂ</string>
     <string name="account_delete_failed">ഇപ്പോൾ അക്കൗണ്ട് ഡിലീറ്റ് ചെയ്യാനായില്ല. ഒന്നുകൂടി ശ്രമിക്കാമോ?</string>
-    <string name="account_sign_in_prompt">നിങ്ങളുടെ പ്ലാനും ക്രെഡിറ്റുകളും കാണാൻ സൈൻ ഇൻ ചെയ്യൂ.</string>
     <string name="account_load_failed">അക്കൗണ്ട് ലോഡ് ചെയ്യാനായില്ല. അൽപസമയം കഴിഞ്ഞ് ശ്രമിക്കൂ.</string>
     <string name="account_loading">അക്കൗണ്ട് ലോഡ് ചെയ്യുന്നു…</string>
     <string name="pricing_title">ആദ്യ വിധി ഞങ്ങളുടെ വക.</string>
-    <string name="pricing_lead">അക്കൗണ്ട് തുടങ്ങൂ, എല്ലാ ഫീച്ചറുകളോടും കൂടിയ ആദ്യ വിധി സൗജന്യം. അതിനുശേഷം ഒരു പായ്ക്ക് എടുക്കൂ, അല്ലെങ്കിൽ പ്രതിമാസ പ്ലാനിലേക്ക് മാറൂ.</string>
     <string name="pricing_title_member">കൂടുതൽ വിധികൾ നേടൂ.</string>
-    <string name="pricing_lead_member">ഒരു പായ്ക്ക് എടുക്കൂ, അല്ലെങ്കിൽ പ്രതിമാസ പ്ലാനിലേക്ക് മാറൂ. ഓരോ വിധിക്കും മുഴുവൻ ജഡ്ജി പാനലും.</string>
     <string name="pricing_included_title">ഓരോ വിധിയിലും</string>
     <string name="pricing_buy_title">പായ്ക്കുകളും പ്രതിമാസ പ്ലാനും</string>
     <string name="pricing_premium_f1">വസ്തുതകൾ വെബിൽ പരിശോധിക്കും, ഉറവിടങ്ങൾ വിധിയിൽ തന്നെ</string>
@@ -251,7 +243,7 @@
     <string name="pricing_premium_f3">പ്രധാന വിവരം വിട്ടുപോയാൽ രണ്ടു ചെറിയ ചോദ്യങ്ങൾ വരെ</string>
     <string name="pricing_premium_f4">വിധിക്കും മുമ്പ് പേരുകൾ മാറ്റും</string>
     <string name="pricing_packs_title">ക്രെഡിറ്റ് പായ്ക്കുകൾ</string>
-    <string name="pricing_packs_lead">ഒരിക്കൽ പണമടച്ചാൽ ഇഷ്ടമുള്ളപ്പോൾ ഉപയോഗിക്കാം. ഓരോ വിധിക്കും ഒരു ക്രെഡിറ്റ്.</string>
+    <string name="pricing_packs_lead">ഓരോ വിധിക്കും ഒരു ക്രെഡിറ്റ്.</string>
     <plurals name="pricing_pack">
         <item quantity="one">%1$s വിധികൾ</item>
         <item quantity="other">%1$s വിധികൾ</item>
@@ -337,8 +329,8 @@
     <string name="case_context_d">കക്ഷി D ചേർത്ത വിവരം</string>
     <string name="case_context_you">നിങ്ങൾ ചേർത്ത വിവരം (%1$s)</string>
     <string name="case_evidence_item">ചിത്രം %1$s, ജഡ്ജിമാർ വായിച്ച രൂപത്തിൽ</string>
-    <string name="case_answered">അവർ മറുപടി നൽകി. ജഡ്ജിമാർ പരിഗണിക്കുന്നു.</string>
-    <string name="case_judging_alone">ജഡ്ജിമാർ നിങ്ങളുടെ ഭാഗം പരിഗണിക്കുന്നു.</string>
+    <string name="case_answered">ജഡ്ജിമാർ പരിഗണിക്കുന്നു.</string>
+    <string name="case_judging_alone">ജഡ്ജിമാർ പരിഗണിക്കുന്നു.</string>
     <string name="case_expired_body">7 ദിവസത്തിനുള്ളിൽ ആരും മറുപടി നൽകിയില്ല, അതുകൊണ്ട് നിങ്ങളുടെ ക്രെഡിറ്റ് തിരികെ കിട്ടി. നിങ്ങളുടെ ഭാഗം മാത്രം വെച്ച് ഇപ്പോഴും വിധി നേടാം.</string>
     <string name="case_expired_body_free">7 ദിവസത്തിനുള്ളിൽ ആരും മറുപടി നൽകിയില്ല. നിങ്ങളുടെ ഭാഗം മാത്രം വെച്ച് ഇപ്പോഴും വിധി നേടാം.</string>
     <string name="case_one_sided">നിങ്ങളുടെ ഭാഗം മാത്രം കേട്ടുള്ള വിധി.</string>
@@ -355,12 +347,12 @@
     <string name="respond_submit">എന്റെ ഭാഗം അയയ്ക്കൂ</string>
     <string name="case_write_title">നിങ്ങളുടെ ഭാഗം</string>
     <string name="case_write_placeholder">എന്താണ് പ്രശ്നം?</string>
-    <string name="case_write_lead">തയ്യാറാകുമ്പോൾ നിങ്ങളുടെ ഭാഗം എഴുതൂ. രണ്ടുപേരും എഴുതിയാൽ ജഡ്ജിമാർ തുടങ്ങും.</string>
+    <string name="case_write_lead">രണ്ടുപേരും എഴുതിയാൽ ജഡ്ജിമാർ തുടങ്ങും.</string>
     <string name="case_write_lead_answered">അവർ അവരുടെ ഭാഗം എഴുതി. വിധി കിട്ടാൻ നിങ്ങളുടേതും എഴുതൂ.</string>
     <string name="case_write_submit">എന്റെ ഭാഗം അയയ്ക്കൂ</string>
     <string name="case_write_email_subject">മറ്റേയാൾ അവരുടെ ഭാഗം എഴുതി</string>
-    <string name="respond_sent">നന്ദി. നിങ്ങളുടെ ഭാഗം കിട്ടി, ജഡ്ജിമാർ പരിഗണിക്കുന്നു.</string>
-    <string name="respond_sent_waiting">നന്ദി. നിങ്ങളുടെ ഭാഗം കിട്ടി. മറ്റേയാൾ എഴുതിയാൽ ജഡ്ജിമാർ തുടങ്ങും.</string>
+    <string name="respond_sent">നിങ്ങളുടെ ഭാഗം കിട്ടി.</string>
+    <string name="respond_sent_waiting">നിങ്ങളുടെ ഭാഗം കിട്ടി. മറ്റേയാളെ കാത്തിരിക്കുന്നു.</string>
     <string name="respond_own_invite">ഇത് നിങ്ങളുടെ സ്വന്തം ക്ഷണ ലിങ്കാണ്. ഇത് മറ്റേയാൾക്ക് അയയ്ക്കൂ.</string>
     <string name="respond_expired">ഈ ക്ഷണത്തിന്റെ കാലാവധി കഴിഞ്ഞു.</string>
     <string name="respond_closed">ഈ കേസ് ഇനി മറുപടികൾ സ്വീകരിക്കുന്നില്ല.</string>
@@ -385,7 +377,6 @@
     <string name="evidence_remove">ചിത്രം %1$s നീക്കൂ</string>
     <string name="evidence_thumb">ചിത്രം %1$s</string>
     <string name="evidence_preview">ഞങ്ങൾ വായിച്ചത്</string>
-    <string name="evidence_preview_note">ഇത് നിങ്ങൾക്ക് മാത്രമേ കാണാനാകൂ. ജഡ്ജിമാർ വായിക്കും മുമ്പ് പേരുകൾ മറയ്ക്കും.</string>
     <string name="evidence_status_unreadable">ടെക്സ്റ്റ് ഒന്നും വായിക്കാനായില്ല</string>
     <string name="evidence_status_refused">ഈ ചിത്രം വായിക്കാൻ റീഡർ വിസമ്മതിച്ചു</string>
     <string name="evidence_status_unsupported">PNG, JPEG, WebP, GIF അല്ല</string>
@@ -412,8 +403,6 @@
     <string name="home_remove_their_side">അവരുടെ ഭാഗം നീക്കൂ</string>
     <string name="home_send_link">ലിങ്ക് അയയ്ക്കൂ</string>
     <string name="home_clear">മായ്ക്കൂ</string>
-    <string name="home_lead">രണ്ടു ഭാഗവും എഴുതൂ, അല്ലെങ്കിൽ മറ്റേയാൾക്ക് അവരുടെ ഭാഗം എഴുതാൻ ഒരു ലിങ്ക് അയയ്ക്കൂ.</string>
-    <string name="home_lead_solo">നിങ്ങളുടെ ഭാഗം എഴുതൂ, അറിയാമെങ്കിൽ അവരുടേതും.</string>
     <string name="home_their_side">അവരുടെ ഭാഗം</string>
     <string name="home_their_name">അവരുടെ പേര്</string>
     <string name="home_their_placeholder">അവർ എന്താണ് പറയുന്നത്? അവർ പറയുന്നതുപോലെ തന്നെ എഴുതൂ.</string>
@@ -427,7 +416,7 @@
     <string name="appeal_submit">ഈ വിവരം ചേർത്ത് വീണ്ടും വിധിക്കൂ</string>
     <string name="appeal_sending">നിങ്ങൾ ചേർത്തതിൽ നിന്ന് പേരുകൾ നീക്കുന്നു…</string>
     <string name="appeal_judging">ജഡ്ജിമാർ എല്ലാം വീണ്ടും പരിശോധിക്കുന്നു…</string>
-    <string name="appeal_upsell">എന്തെങ്കിലും വിട്ടുപോയോ? കൂടുതൽ വിവരം ചേർത്ത് വീണ്ടും വിധിപ്പിക്കാം, ചെലവ് 1 വിധി.</string>
+    <string name="appeal_upsell">എന്തെങ്കിലും വിട്ടുപോയോ? 1 വിധിക്ക് കൂടുതൽ വിവരം ചേർക്കാം.</string>
     <string name="appeal_sign_in">വിവരം ചേർക്കാൻ സൈൻ ഇൻ ചെയ്യൂ</string>
     <string name="appeal_used">ഈ കേസിൽ നിങ്ങൾ ഇതിനകം കൂടുതൽ വിവരം ചേർത്തിട്ടുണ്ട്.</string>
     <string name="appeal_limit">നിങ്ങൾ രണ്ടുതവണ വിവരം ചേർത്തു. ഒരു വിധിക്ക് അതാണ് പരിധി.</string>
@@ -471,7 +460,7 @@
     <string name="case_display_name">പങ്കിട്ട വിധിയിൽ നിങ്ങളുടെ പേര്</string>
     <string name="case_display_save">പേര് സേവ് ചെയ്യൂ</string>
     <string name="respond_keep">ഈ കേസ് നിങ്ങളുടെ അക്കൗണ്ടിൽ സൂക്ഷിക്കൂ</string>
-    <string name="respond_kept">ഈ കേസ് ഇപ്പോൾ നിങ്ങളുടെ അക്കൗണ്ടിലുണ്ട്. ഏത് ഉപകരണത്തിലും “വിധികൾ” പേജിൽ ഇത് കാണാം.</string>
+    <string name="respond_kept">നിങ്ങളുടെ അക്കൗണ്ടിൽ സൂക്ഷിച്ചിരിക്കുന്നു.</string>
     <string name="respond_remove">എന്റെ ഭാഗം നീക്കം ചെയ്യൂ</string>
     <string name="respond_remove_confirm">നിങ്ങളുടെ ഒറിജിനൽ ടെക്സ്റ്റും ഷെയർ പേജിൽ കാണിക്കുന്ന നിങ്ങളുടെ പേരും നീക്കം ചെയ്യണോ? കേസിന്റെ ഷെയർ ലിങ്കുകൾ പ്രവർത്തിക്കാതാകും (ചാറ്റുകളിൽ നേരത്തേ പോസ്റ്റ് ചെയ്ത പ്രിവ്യൂകൾ ആ ആപ്പുകൾ പുതുക്കുന്നതുവരെ കണ്ടേക്കാം). ഇത് തിരിച്ചെടുക്കാനാകില്ല.</string>
     <string name="names_title">ഷെയർ പേജിലെ പേരുകൾ</string>
@@ -553,7 +542,7 @@
     <string name="app_tab_new">പുതിയത്</string>
     <string name="app_tab_settings">ക്രമീകരണം</string>
     <string name="app_input_counter">%1$s / %2$s</string>
-    <string name="app_history_empty">ഇതുവരെ വിധികളൊന്നുമില്ല. ആദ്യത്തെ തർക്കം തീർക്കൂ, അത് ഇവിടെ കാണാം.</string>
+    <string name="app_history_empty">ഇതുവരെ വിധികളൊന്നുമില്ല.</string>
     <string name="app_history_device_only">ഈ ഫോണിൽ മാത്രമാണ് സേവ് ചെയ്തിരിക്കുന്നത്. ഇവിടെനിന്ന് ഒരു വിധി ഡിലീറ്റ് ചെയ്താലും അതിന്റെ ഷെയർ ലിങ്ക് തുടർന്നും പ്രവർത്തിക്കും.</string>
     <string name="app_history_delete">ഡിലീറ്റ്</string>
     <string name="app_history_remove_all">എല്ലാം നീക്കം ചെയ്യുക</string>
@@ -562,7 +551,7 @@
         <item quantity="other">ഈ ഫോണിൽനിന്ന് %1$s വിധികൾ ഡിലീറ്റ് ചെയ്യണോ? അവയുടെ ഷെയർ ലിങ്കുകൾ തുടർന്നും പ്രവർത്തിക്കും.</item>
     </plurals>
     <string name="app_history_phone_only">ഈ ഫോണിൽ മാത്രം</string>
-    <string name="app_history_phone_only_note">നിങ്ങളുടെ അക്കൗണ്ടിലില്ല: ഇവ ഈ ഫോണിൽ മാത്രമാണ് സേവ് ചെയ്തിരിക്കുന്നത്. ഇവിടെനിന്ന് ഒരു വിധി ഡിലീറ്റ് ചെയ്താലും അതിന്റെ ഷെയർ ലിങ്ക് തുടർന്നും പ്രവർത്തിക്കും.</string>
+    <string name="app_history_phone_only_note">ഒന്ന് ഡിലീറ്റ് ചെയ്താലും അതിന്റെ ഷെയർ ലിങ്ക് പ്രവർത്തിക്കും.</string>
     <plurals name="app_history_remove_confirm">
         <item quantity="one">ഈ വിധി നിങ്ങളുടെ അക്കൗണ്ടിൽനിന്നും എല്ലാ ഉപകരണങ്ങളിൽനിന്നും നീക്കം ചെയ്യണോ? നിങ്ങൾ എഴുതിയതും പേരുകളും മായ്ക്കും, അതിന്റെ ഷെയർ ലിങ്ക് പ്രവർത്തിക്കാതാകും. ഇത് തിരിച്ചെടുക്കാനാകില്ല.</item>
         <item quantity="other">%1$s വിധികൾ നിങ്ങളുടെ അക്കൗണ്ടിൽനിന്നും എല്ലാ ഉപകരണങ്ങളിൽനിന്നും നീക്കം ചെയ്യണോ? നിങ്ങൾ എഴുതിയതും പേരുകളും മായ്ക്കും, അവയുടെ ഷെയർ ലിങ്കുകൾ പ്രവർത്തിക്കാതാകും. ഇത് തിരിച്ചെടുക്കാനാകില്ല.</item>
@@ -583,9 +572,9 @@
     <string name="app_pricing_free_account">Apple, Google അല്ലെങ്കിൽ ഇമെയിൽ വഴി സൈൻ ഇൻ ചെയ്യൂ</string>
     <string name="app_pricing_context">വിവര ചിത്രങ്ങൾ വായിച്ച ശേഷം കളയും, അധിക ചെലവില്ല</string>
     <string name="app_pricing_headline">ആദ്യ വിധി ഞങ്ങളുടെ വക.</string>
-    <string name="app_pricing_sub">അക്കൗണ്ട് തുടങ്ങൂ, എല്ലാ ഫീച്ചറുകളോടും കൂടിയ ആദ്യ വിധി സൗജന്യം. അതിനുശേഷം ഒരു പായ്ക്ക് എടുക്കൂ, അല്ലെങ്കിൽ പ്രതിമാസ പ്ലാനിലേക്ക് മാറൂ.</string>
+    <string name="app_pricing_sub">അതിനുശേഷം ഒരു പായ്ക്ക് എടുക്കൂ, അല്ലെങ്കിൽ പ്രതിമാസ പ്ലാനിലേക്ക് മാറൂ.</string>
     <string name="app_pricing_headline_member">കൂടുതൽ വിധികൾ നേടൂ.</string>
-    <string name="app_pricing_sub_member">ഒരു പായ്ക്ക് എടുക്കൂ, അല്ലെങ്കിൽ പ്രതിമാസ പ്ലാനിലേക്ക് മാറൂ. ഓരോ വിധിക്കും മുഴുവൻ ജഡ്ജി പാനലും.</string>
+    <string name="app_pricing_sub_member">ഒരു പായ്ക്ക് എടുക്കൂ, അല്ലെങ്കിൽ പ്രതിമാസ പ്ലാനിലേക്ക് മാറൂ.</string>
     <plurals name="app_balance_left">
         <item quantity="one">%1$s വിധി ബാക്കി</item>
         <item quantity="other">%1$s വിധികൾ ബാക്കി</item>
@@ -679,10 +668,9 @@
     <string name="app_appeal_used">ഈ കേസിൽ നിങ്ങൾ ഇതിനകം കൂടുതൽ വിവരം ചേർത്തിട്ടുണ്ട്.</string>
     <string name="app_appeal_limit">നിങ്ങൾ രണ്ടുതവണ വിവരം ചേർത്തു. ഒരു വിധിക്ക് അതാണ് പരിധി.</string>
     <string name="app_purchase_buying">വാങ്ങുന്നു…</string>
-    <string name="app_purchase_success">നന്ദി! വാങ്ങൽ പൂർത്തിയായി.</string>
-    <string name="app_purchase_pending">നിങ്ങളുടെ വാങ്ങൽ പ്രോസസ്സ് ചെയ്യുന്നു. ഇവിടെ കാണാൻ ഒരു മിനിറ്റ് എടുത്തേക്കാം.</string>
-    <string name="app_purchase_arriving">നിങ്ങളുടെ ക്രെഡിറ്റുകൾ ഉടൻ എത്തും…</string>
-    <string name="app_purchase_slow">ഇവിടെ കാണാൻ ഒരു മിനിറ്റ് എടുത്തേക്കാം.</string>
+    <string name="app_purchase_success">വാങ്ങൽ പൂർത്തിയായി.</string>
+    <string name="app_purchase_pending">നിങ്ങളുടെ വാങ്ങൽ പ്രോസസ്സ് ചെയ്യുന്നു.</string>
+    <string name="app_purchase_slow">ക്രെഡിറ്റുകൾ കാണാൻ ഒരു മിനിറ്റ് എടുത്തേക്കാം.</string>
     <string name="app_purchase_failed">വാങ്ങൽ പൂർത്തിയായില്ല. അൽപം കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കൂ.</string>
     <string name="app_purchase_restore">വാങ്ങലുകൾ പുനഃസ്ഥാപിക്കൂ</string>
     <string name="app_purchase_restore_done">നിങ്ങളുടെ വാങ്ങലുകൾ പുനഃസ്ഥാപിച്ചു.</string>

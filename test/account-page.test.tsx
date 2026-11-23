@@ -76,7 +76,7 @@ describe("AccountPanel", () => {
 
   it("signed out: a sign-in prompt that comes back here", () => {
     const html = panel({ viewer: ready({ user: null, entitlement: null }) });
-    expect(html).toContain(t("en", "account.signInPrompt"));
+    expect(html).toContain(t("en", "nav.signIn"));
     expect(html).toContain('href="/signin?next=%2Fsettings"');
     expect(html).not.toContain("<dialog");
     expect(detail({ viewer: ready({ user: null, entitlement: null }) })).toContain(

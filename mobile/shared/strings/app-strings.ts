@@ -15,7 +15,7 @@ export const APP_EN = {
   "app.tab.new": "New",
   "app.tab.settings": "Settings",
   "app.input.counter": "{count} / {max}",
-  "app.history.empty": "No verdicts yet. Settle your first argument and it shows up here.",
+  "app.history.empty": "No verdicts yet.",
   // No longer shown; drop it from every locale in one go.
   "app.history.deviceOnly": "Saved on this phone only. Deleting one here doesn't take down its share link.",
   "app.history.delete": "Delete",
@@ -23,8 +23,7 @@ export const APP_EN = {
   "app.history.deleteConfirm": "Delete {n} verdicts from this phone? Their share links keep working.",
   // Verdicts kept on the phone by older versions that the account doesn't have.
   "app.history.phoneOnly": "Only on this phone",
-  "app.history.phoneOnlyNote":
-    "Not in your account: these are saved on this phone only. Deleting one here doesn't take down its share link.",
+  "app.history.phoneOnlyNote": "Deleting one doesn't take down its share link.",
   "app.history.removeConfirm":
     "Remove {n} verdicts from your account? What you wrote and the names are erased and their share links stop working, on every device. This can't be undone.",
   "app.history.removeLinksConfirm":
@@ -35,10 +34,9 @@ export const APP_EN = {
   "app.pricing.free.account": "Sign in with Apple, Google or email",
   "app.pricing.context": "Context images, read and then thrown away, at no extra cost",
   "app.pricing.headline": "Your first verdict is on us.",
-  "app.pricing.sub":
-    "Create an account and your first verdict is free, with every feature. After that, pick a pack or go monthly.",
+  "app.pricing.sub": "Then pick a pack or go monthly.",
   "app.pricing.headlineMember": "Get more verdicts.",
-  "app.pricing.subMember": "Pick a pack or go monthly. Every verdict gets the full panel.",
+  "app.pricing.subMember": "Pick a pack or go monthly.",
   // Every verdict, a case included, uses one credit or one of the monthly plan's.
   "app.balance.left": "{n} verdicts left",
   "app.balance.monthly": "{left} of {cap} left this month",
@@ -152,10 +150,9 @@ export const APP_EN = {
   // Store purchases. "arriving" and "slow" follow "success" on Android while
   // the credits are on their way.
   "app.purchase.buying": "Buying…",
-  "app.purchase.success": "Thanks! Your purchase went through.",
-  "app.purchase.pending": "Your purchase is being processed. It may take a minute to show up.",
-  "app.purchase.arriving": "Your credits are on their way…",
-  "app.purchase.slow": "It may take a minute to show up here.",
+  "app.purchase.success": "Purchase complete.",
+  "app.purchase.pending": "Your purchase is processing.",
+  "app.purchase.slow": "Credits may take a minute.",
   "app.purchase.failed": "The purchase didn't go through. Try again in a moment.",
   "app.purchase.restore": "Restore purchases",
   "app.purchase.restoreDone": "Your purchases were restored.",

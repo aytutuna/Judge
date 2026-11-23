@@ -7,7 +7,7 @@ const de: AppLocale = {
     "app.tab.new": "Neu",
     "app.tab.settings": "Einstellungen",
     "app.input.counter": "{count} / {max}",
-    "app.history.empty": "Noch keine Urteile. Kläre deinen ersten Streit, dann erscheint das Urteil hier.",
+    "app.history.empty": "Noch keine Urteile.",
     "app.history.deviceOnly":
       "Nur auf diesem Handy gespeichert. Wenn du hier ein Urteil löschst, funktioniert der geteilte Link weiter.",
     "app.history.delete": "Löschen",
@@ -15,7 +15,7 @@ const de: AppLocale = {
     "app.history.deleteConfirm": "{n} Urteile von diesem Handy löschen? Die geteilten Links funktionieren weiter.",
     "app.history.phoneOnly": "Nur auf diesem Handy",
     "app.history.phoneOnlyNote":
-      "Nicht in deinem Konto: Diese Urteile sind nur auf diesem Handy gespeichert. Wenn du hier eins löschst, funktioniert sein geteilter Link weiter.",
+      "Löschen deaktiviert den Teilen-Link nicht.",
     "app.history.removeConfirm":
       "{n} Urteile aus deinem Konto entfernen? Sie verschwinden von allen Geräten: Was du geschrieben hast und die Namen werden gelöscht, und die geteilten Links funktionieren nicht mehr. Das lässt sich nicht rückgängig machen.",
     "app.history.removeLinksConfirm":
@@ -27,9 +27,9 @@ const de: AppLocale = {
     "app.pricing.context": "Kontextbilder werden gelesen und dann verworfen, ohne Aufpreis",
     "app.pricing.headline": "Dein erstes Urteil geht auf uns.",
     "app.pricing.sub":
-      "Erstell ein Konto, und dein erstes Urteil ist gratis, mit allen Funktionen. Danach wählst du ein Paket oder das Monatsabo.",
+      "Dann wähl ein Paket oder das Monatsabo.",
     "app.pricing.headlineMember": "Hol dir mehr Urteile.",
-    "app.pricing.subMember": "Wähl ein Paket oder das Monatsabo. Jedes Urteil bekommt die volle Richterbank.",
+    "app.pricing.subMember": "Wähl ein Paket oder das Monatsabo.",
     "app.balance.left": "{n} Urteile übrig",
     "app.balance.monthly": "Noch {left} von {cap} diesen Monat",
     "app.balance.none": "Keine Urteile mehr übrig",
@@ -127,10 +127,9 @@ const de: AppLocale = {
     "app.appeal.used": "Du hast diesem Fall schon Kontext hinzugefügt.",
     "app.appeal.limit": "Du hast schon zweimal Kontext ergänzt. Mehr geht pro Urteil nicht.",
     "app.purchase.buying": "Wird gekauft…",
-    "app.purchase.success": "Danke! Dein Kauf hat geklappt.",
-    "app.purchase.pending": "Dein Kauf wird bearbeitet. Es kann eine Minute dauern, bis er angezeigt wird.",
-    "app.purchase.arriving": "Deine Credits sind unterwegs…",
-    "app.purchase.slow": "Bis alles hier angezeigt wird, kann es eine Minute dauern.",
+    "app.purchase.success": "Kauf abgeschlossen.",
+    "app.purchase.pending": "Dein Kauf wird bearbeitet.",
+    "app.purchase.slow": "Credits können eine Minute brauchen.",
     "app.purchase.failed": "Der Kauf hat nicht geklappt. Versuch es gleich noch mal.",
     "app.purchase.restore": "Käufe wiederherstellen",
     "app.purchase.restoreDone": "Deine Käufe wurden wiederhergestellt.",
