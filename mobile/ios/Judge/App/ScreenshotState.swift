@@ -399,7 +399,7 @@ enum ScreenshotFixtures {
     static func questions(lang: AppLang) -> [ClarifyQuestion] {
         if lang == .tr {
             return [
-                ClarifyQuestion(id: "q1", text: "Sam'le neyin sandviç sayılacağı konusunda hiç anlaştınız mı?"),
+                ClarifyQuestion(id: "q1", text: "Sam'le neyin sandviç sayılacağı konusunda hiç anlaştınız mı?", options: ["Evet, anlaştık", "Hayır, hiç netleşmedi"]),
                 ClarifyQuestion(id: "q2", text: "Mesele menüdeki ifade mi, yoksa önüne gelen yemek mi?"),
             ]
         }

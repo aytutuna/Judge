@@ -469,7 +469,7 @@ class ScreenshotsTest {
             Fixtures.verdicts["clarifyResponse"]!!.jsonObject["two_questions"].toString(),
         ).questions
         Themed(AppLang.EN) {
-            ClarifyScreen(questions, mapOf("q1" to "No, we never settled it."), { _, _ -> }, {}, {}, {})
+            ClarifyScreen(questions, mapOf("q1" to "No, never settled"), { _, _ -> }, {}, {}, {})
         }
     }
 
