@@ -181,7 +181,6 @@
     <string name="clarify_back">Editează disputa</string>
     <string name="thinking_factcheck">Verificăm faptele pe web…</string>
     <string name="thinking_factcheck_done">Verificarea pe web s-a încheiat.</string>
-    <string name="thinking_premium_helper">Verificarea faptelor pe web durează un pic mai mult. Dă-i un minut sau două.</string>
     <string name="panel_premium">Judecat cu verificarea faptelor pe web.</string>
     <string name="factcheck_title">Verificat pe web</string>
     <string name="factcheck_lead">Judecătorii au văzut aceste rezultate ale căutării înainte să decidă. Sunt dovezi, nu verdictul în sine.</string>

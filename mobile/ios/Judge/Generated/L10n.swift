@@ -313,7 +313,6 @@ enum L10n {
     static func clarifyBack(_ lang: AppLang) -> String { string("clarify.back", lang) }
     static func thinkingFactcheck(_ lang: AppLang) -> String { string("thinking.factcheck", lang) }
     static func thinkingFactcheckDone(_ lang: AppLang) -> String { string("thinking.factcheckDone", lang) }
-    static func thinkingPremiumHelper(_ lang: AppLang) -> String { string("thinking.premiumHelper", lang) }
     static func panelPremium(_ lang: AppLang) -> String { string("panel.premium", lang) }
     static func factcheckTitle(_ lang: AppLang) -> String { string("factcheck.title", lang) }
     static func factcheckLead(_ lang: AppLang) -> String { string("factcheck.lead", lang) }
@@ -964,7 +963,6 @@ enum L10n {
         "clarify.back",
         "thinking.factcheck",
         "thinking.factcheckDone",
-        "thinking.premiumHelper",
         "panel.premium",
         "factcheck.title",
         "factcheck.lead",

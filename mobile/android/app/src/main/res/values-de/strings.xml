@@ -178,7 +178,6 @@
     <string name="clarify_back">Streit bearbeiten</string>
     <string name="thinking_factcheck">Wir prüfen die Fakten im Netz…</string>
     <string name="thinking_factcheck_done">Faktencheck im Netz abgeschlossen.</string>
-    <string name="thinking_premium_helper">Die Faktenprüfung im Netz dauert etwas länger. Gib uns ein, zwei Minuten.</string>
     <string name="panel_premium">Mit Faktencheck im Netz beurteilt.</string>
     <string name="factcheck_title">Im Netz geprüft</string>
     <string name="factcheck_lead">Diese Suchergebnisse lagen den Richtern vor dem Urteil vor. Sie sind Belege, nicht das Urteil selbst.</string>

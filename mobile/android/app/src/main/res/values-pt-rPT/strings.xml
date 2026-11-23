@@ -181,7 +181,6 @@
     <string name="clarify_back">Editar a discussão</string>
     <string name="thinking_factcheck">A verificar os factos na web…</string>
     <string name="thinking_factcheck_done">Verificação na web concluída.</string>
-    <string name="thinking_premium_helper">Verificar os factos na web demora um pouco mais. Conta com um ou dois minutos.</string>
     <string name="panel_premium">Julgado com verificação de factos na web.</string>
     <string name="factcheck_title">Verificado na web</string>
     <string name="factcheck_lead">Os juízes viram estes resultados de pesquisa antes de decidir. São provas, não a decisão em si.</string>

@@ -181,7 +181,6 @@
     <string name="clarify_back">לערוך את הוויכוח</string>
     <string name="thinking_factcheck">בודקים את העובדות ברשת…</string>
     <string name="thinking_factcheck_done">הבדיקה ברשת הסתיימה.</string>
-    <string name="thinking_premium_helper">בדיקת העובדות ברשת לוקחת קצת יותר זמן. עוד דקה או שתיים.</string>
     <string name="panel_premium">נשפט עם בדיקת עובדות ברשת.</string>
     <string name="factcheck_title">נבדק ברשת</string>
     <string name="factcheck_lead">השופטים ראו את תוצאות החיפוש האלה לפני ההכרעה. הן ראיות, לא ההכרעה עצמה.</string>

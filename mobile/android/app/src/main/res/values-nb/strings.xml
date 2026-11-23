@@ -178,7 +178,6 @@
     <string name="clarify_back">Rediger diskusjonen</string>
     <string name="thinking_factcheck">Sjekker fakta på nettet…</string>
     <string name="thinking_factcheck_done">Nettsjekken er ferdig.</string>
-    <string name="thinking_premium_helper">Det tar litt lenger tid å sjekke fakta på nettet. Gi det et minutt eller to.</string>
     <string name="panel_premium">Dømt med faktasjekk på nettet.</string>
     <string name="factcheck_title">Sjekket på nettet</string>
     <string name="factcheck_lead">Dommerne så disse søkeresultatene før de avgjorde. De er bevis, ikke selve dommen.</string>

@@ -178,7 +178,6 @@
     <string name="clarify_back">बहस में बदलाव करें</string>
     <string name="thinking_factcheck">वेब पर तथ्य जाँच रहे हैं…</string>
     <string name="thinking_factcheck_done">वेब पर जाँच पूरी हुई।</string>
-    <string name="thinking_premium_helper">वेब पर तथ्य जाँचने में थोड़ा ज़्यादा समय लगता है। एक-दो मिनट दें।</string>
     <string name="panel_premium">वेब पर तथ्यों की जाँच के साथ फ़ैसला हुआ।</string>
     <string name="factcheck_title">वेब पर जाँचा गया</string>
     <string name="factcheck_lead">फ़ैसले से पहले जजों ने ये सर्च नतीजे देखे। ये सबूत हैं, ख़ुद फ़ैसला नहीं।</string>

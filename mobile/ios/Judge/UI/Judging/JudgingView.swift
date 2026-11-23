@@ -124,11 +124,6 @@ struct JudgingView: View {
             }
 
             log
-
-            Text(L10n.thinkingPremiumHelper(lang))
-                .brandText(.footnote)
-                .foregroundStyle(Brand.muted)
-                .frame(maxWidth: 360, alignment: .leading)
         }
         .padding(22)
         .frame(maxWidth: .infinity, alignment: .leading)

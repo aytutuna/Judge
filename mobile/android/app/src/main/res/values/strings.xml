@@ -178,7 +178,6 @@
     <string name="clarify_back">Edit the argument</string>
     <string name="thinking_factcheck">Checking the facts on the web…</string>
     <string name="thinking_factcheck_done">Web check finished.</string>
-    <string name="thinking_premium_helper">Checking the facts on the web takes a little longer. Give it a minute or two.</string>
     <string name="panel_premium">Judged with a web fact-check.</string>
     <string name="factcheck_title">Checked on the web</string>
     <string name="factcheck_lead">The judges saw these search results before ruling. They\'re evidence, not the ruling itself.</string>

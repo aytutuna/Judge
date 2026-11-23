@@ -178,7 +178,6 @@
     <string name="clarify_back">Muokkaa kiistaa</string>
     <string name="thinking_factcheck">Tarkistetaan faktoja verkosta…</string>
     <string name="thinking_factcheck_done">Verkkotarkistus valmis.</string>
-    <string name="thinking_premium_helper">Faktojen tarkistaminen verkosta vie vähän pidempään. Anna sille minuutti tai kaksi.</string>
     <string name="panel_premium">Faktat tarkistettu verkosta ennen ratkaisua.</string>
     <string name="factcheck_title">Tarkistettu verkosta</string>
     <string name="factcheck_lead">Tuomarit näkivät nämä hakutulokset ennen ratkaisua. Ne ovat todisteita, eivät itse tuomio.</string>

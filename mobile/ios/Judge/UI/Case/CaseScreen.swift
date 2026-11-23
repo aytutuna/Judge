@@ -533,11 +533,13 @@ private struct CaseJudgingCard: View {
                     .brandText(.slotTitle)
                     .foregroundStyle(Brand.ink)
             }
-            Text(premium ? L10n.thinkingPremiumHelper(lang) : L10n.thinkingHelper(lang))
-                .brandText(.slotText)
-                .foregroundStyle(Brand.muted)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
+            if !premium {
+                Text(L10n.thinkingHelper(lang))
+                    .brandText(.slotText)
+                    .foregroundStyle(Brand.muted)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
         .frame(maxWidth: .infinity)
         .padding(20)

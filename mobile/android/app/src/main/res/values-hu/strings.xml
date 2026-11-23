@@ -178,7 +178,6 @@
     <string name="clarify_back">Vita szerkesztése</string>
     <string name="thinking_factcheck">Ellenőrizzük a tényeket a neten…</string>
     <string name="thinking_factcheck_done">Kész a netes ellenőrzés.</string>
-    <string name="thinking_premium_helper">A netes tényellenőrzés kicsit tovább tart, akár egy-két percig is.</string>
     <string name="panel_premium">Netes tényellenőrzéssel ítélve.</string>
     <string name="factcheck_title">Ellenőrizve a neten</string>
     <string name="factcheck_lead">A bírák ezeket a keresési találatokat látták, mielőtt döntöttek. Ezek bizonyítékok, nem maga az ítélet.</string>

@@ -178,7 +178,6 @@
     <string name="clarify_back">Tartışmayı düzenle</string>
     <string name="thinking_factcheck">Olguları internette kontrol ediyoruz…</string>
     <string name="thinking_factcheck_done">İnternet kontrolü bitti.</string>
-    <string name="thinking_premium_helper">Olguları internette kontrol etmek biraz daha uzun sürer. Bir iki dakika verebilirsin.</string>
     <string name="panel_premium">İnternette olgu kontrolüyle yargılandı.</string>
     <string name="factcheck_title">İnternette kontrol edildi</string>
     <string name="factcheck_lead">Yargıçlar karar vermeden önce bu arama sonuçlarını gördü. Bunlar kanıt, kararın kendisi değil.</string>

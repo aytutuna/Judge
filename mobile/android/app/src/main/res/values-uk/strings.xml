@@ -184,7 +184,6 @@
     <string name="clarify_back">Редагувати суперечку</string>
     <string name="thinking_factcheck">Перевіряємо факти в інтернеті…</string>
     <string name="thinking_factcheck_done">Перевірку в інтернеті завершено.</string>
-    <string name="thinking_premium_helper">Перевірка фактів в інтернеті триває трохи довше. Дай їй хвилину-дві.</string>
     <string name="panel_premium">Вердикт із перевіркою фактів в інтернеті.</string>
     <string name="factcheck_title">Перевірено в інтернеті</string>
     <string name="factcheck_lead">Судді бачили ці результати пошуку перед вердиктом. Це докази, а не сам вердикт.</string>

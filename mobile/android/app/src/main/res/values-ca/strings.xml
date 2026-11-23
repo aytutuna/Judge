@@ -181,7 +181,6 @@
     <string name="clarify_back">Edita la discussió</string>
     <string name="thinking_factcheck">Comprovant els fets a internet…</string>
     <string name="thinking_factcheck_done">Comprovació a internet acabada.</string>
-    <string name="thinking_premium_helper">Comprovar els fets a internet triga una mica més. Pot ser qüestió d\'un minut o dos.</string>
     <string name="panel_premium">Jutjat amb comprovació de fets a internet.</string>
     <string name="factcheck_title">Comprovat a internet</string>
     <string name="factcheck_lead">Els jutges han vist aquests resultats de cerca abans de decidir. Són proves, no el veredicte en si.</string>

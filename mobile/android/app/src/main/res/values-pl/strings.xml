@@ -184,7 +184,6 @@
     <string name="clarify_back">Edytuj opis sporu</string>
     <string name="thinking_factcheck">Sprawdzamy fakty w sieci…</string>
     <string name="thinking_factcheck_done">Sprawdzanie w sieci zakończone.</string>
-    <string name="thinking_premium_helper">Sprawdzanie faktów w sieci trwa trochę dłużej. Daj nam minutę lub dwie.</string>
     <string name="panel_premium">Ocenione z weryfikacją faktów w sieci.</string>
     <string name="factcheck_title">Sprawdzone w sieci</string>
     <string name="factcheck_lead">Sędziowie widzieli te wyniki wyszukiwania przed werdyktem. To dowody, a nie sam werdykt.</string>

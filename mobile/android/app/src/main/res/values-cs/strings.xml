@@ -184,7 +184,6 @@
     <string name="clarify_back">Upravit spor</string>
     <string name="thinking_factcheck">Ověřujeme fakta na webu…</string>
     <string name="thinking_factcheck_done">Ověření na webu je hotové.</string>
-    <string name="thinking_premium_helper">Ověřování faktů na webu chvilku trvá. Dej tomu minutu nebo dvě.</string>
     <string name="panel_premium">Souzeno s ověřením faktů na webu.</string>
     <string name="factcheck_title">Ověřeno na webu</string>
     <string name="factcheck_lead">Soudci tyto výsledky hledání viděli, než rozhodli. Jsou to podklady, ne samotný verdikt.</string>

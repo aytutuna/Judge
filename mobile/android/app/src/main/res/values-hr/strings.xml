@@ -181,7 +181,6 @@
     <string name="clarify_back">Uredi raspravu</string>
     <string name="thinking_factcheck">Provjeravamo činjenice na internetu…</string>
     <string name="thinking_factcheck_done">Provjera na internetu je gotova.</string>
-    <string name="thinking_premium_helper">Provjera činjenica na internetu traje malo dulje. Daj nam minutu-dvije.</string>
     <string name="panel_premium">Presuđeno uz provjeru činjenica na internetu.</string>
     <string name="factcheck_title">Provjereno na internetu</string>
     <string name="factcheck_lead">Suci su vidjeli ove rezultate pretraživanja prije presude. To su dokazi, a ne sama presuda.</string>

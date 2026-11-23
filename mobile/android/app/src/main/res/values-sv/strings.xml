@@ -178,7 +178,6 @@
     <string name="clarify_back">Ändra beskrivningen</string>
     <string name="thinking_factcheck">Kollar fakta på webben…</string>
     <string name="thinking_factcheck_done">Webbkollen är klar.</string>
-    <string name="thinking_premium_helper">Att kolla fakta på webben tar lite längre tid. Ge det en minut eller två.</string>
     <string name="panel_premium">Dömd med faktakoll på webben.</string>
     <string name="factcheck_title">Kollat på webben</string>
     <string name="factcheck_lead">Domarna såg de här sökresultaten innan de dömde. De är bevis, inte själva domen.</string>

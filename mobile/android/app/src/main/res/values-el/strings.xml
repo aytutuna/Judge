@@ -178,7 +178,6 @@
     <string name="clarify_back">Άλλαξε το κείμενο</string>
     <string name="thinking_factcheck">Ελέγχουμε τα γεγονότα στο ίντερνετ…</string>
     <string name="thinking_factcheck_done">Ο έλεγχος στο ίντερνετ ολοκληρώθηκε.</string>
-    <string name="thinking_premium_helper">Ο έλεγχος των γεγονότων στο ίντερνετ θέλει λίγο παραπάνω. Δώσε μας ένα-δυο λεπτά.</string>
     <string name="panel_premium">Κρίθηκε με έλεγχο γεγονότων στο ίντερνετ.</string>
     <string name="factcheck_title">Ελέγχθηκε στο ίντερνετ</string>
     <string name="factcheck_lead">Οι κριτές είδαν αυτά τα αποτελέσματα αναζήτησης πριν αποφασίσουν. Είναι στοιχεία, όχι η ίδια η απόφαση.</string>

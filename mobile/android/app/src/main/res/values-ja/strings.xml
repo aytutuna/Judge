@@ -175,7 +175,6 @@
     <string name="clarify_back">内容を編集</string>
     <string name="thinking_factcheck">ネットで事実を確認しています…</string>
     <string name="thinking_factcheck_done">ネットでの確認が終わりました。</string>
-    <string name="thinking_premium_helper">ネットで事実を確認するので、少し時間がかかります。1〜2分お待ちください。</string>
     <string name="panel_premium">ネットでのファクトチェック付きで判定しました。</string>
     <string name="factcheck_title">ネットで確認済み</string>
     <string name="factcheck_lead">審査員は判定の前にこれらの検索結果を見ています。これは判定の材料で、判定そのものではありません。</string>

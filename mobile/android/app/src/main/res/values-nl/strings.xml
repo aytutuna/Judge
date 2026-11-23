@@ -178,7 +178,6 @@
     <string name="clarify_back">Discussie aanpassen</string>
     <string name="thinking_factcheck">Feiten checken op het web…</string>
     <string name="thinking_factcheck_done">Webcheck klaar.</string>
-    <string name="thinking_premium_helper">Feiten checken op het web duurt wat langer. Geef het een minuutje of twee.</string>
     <string name="panel_premium">Beoordeeld met een factcheck op het web.</string>
     <string name="factcheck_title">Gecheckt op het web</string>
     <string name="factcheck_lead">De rechters zagen deze zoekresultaten voordat ze oordeelden. Het is bewijs, niet de uitspraak zelf.</string>

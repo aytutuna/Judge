@@ -175,7 +175,6 @@
     <string name="clarify_back">논쟁 내용 고치기</string>
     <string name="thinking_factcheck">웹에서 사실 확인하는 중…</string>
     <string name="thinking_factcheck_done">웹 확인 완료.</string>
-    <string name="thinking_premium_helper">웹에서 사실을 확인하느라 조금 더 걸려요. 1~2분만 기다려 주세요.</string>
     <string name="panel_premium">웹 사실 확인을 거친 판결이에요.</string>
     <string name="factcheck_title">웹에서 확인한 내용</string>
     <string name="factcheck_lead">판사들이 판결 전에 본 검색 결과예요. 판결 자체가 아니라 판결의 근거예요.</string>
