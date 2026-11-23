@@ -550,6 +550,7 @@ final class PremiumFlowTests: XCTestCase {
         XCTAssertFalse(home.canSubmit(app), "no second submit while the questions are asked")
         try await PremiumFixtures.waitUntil("the questions") { home.clarify != nil }
         XCTAssertEqual(home.clarify?.questions.map(\.id), ["q1", "q2"])
+        XCTAssertEqual(home.clarify?.questions.map(\.options), [["Yes, we agreed", "No, never settled"], []], "a missing options list reads as none")
         XCTAssertFalse(home.isCheckingQuestions)
         XCTAssertFalse(home.isJudging)
         XCTAssertEqual(router.count("POST", Self.verdictPath), 0)

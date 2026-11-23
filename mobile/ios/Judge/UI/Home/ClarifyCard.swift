@@ -2,8 +2,9 @@ import SwiftUI
 import UIKit
 
 /// Premium's clarifying step (components/ClarifyStep.tsx), shown in place
-/// of the form: up to two short questions, each with an optional answer,
-/// then "Get the verdict" or "Skip and judge".
+/// of the form: up to two short questions, each answered by tapping a likely
+/// answer or Other (a text box), or left empty, then "Get the verdict" or
+/// "Skip and judge".
 struct ClarifyCard: View {
     @Environment(AppModel.self) private var app
     let home: HomeModel
@@ -29,10 +30,14 @@ struct ClarifyCard: View {
                         .brandText(.slotTitle)
                         .foregroundStyle(Brand.ink)
                         .fixedSize(horizontal: false, vertical: true)
-                        .accessibilityHidden(true)
-                    ClarifyAnswerField(home: home, id: question.id, placeholder: L10n.clarifyPlaceholder(lang))
-                        .paperSurface(radius: Radius.field, fill: Brand.paper, border: Brand.line2)
-                        .accessibilityLabel(L10n.clarifyAnswerAria(lang, n: String(index + 1)) + " " + question.text)
+                        .accessibilityHidden(question.options.isEmpty)
+                    if question.options.isEmpty {
+                        ClarifyAnswerField(home: home, id: question.id, placeholder: L10n.clarifyPlaceholder(lang))
+                            .paperSurface(radius: Radius.field, fill: Brand.paper, border: Brand.line2)
+                            .accessibilityLabel(L10n.clarifyAnswerAria(lang, n: String(index + 1)) + " " + question.text)
+                    } else {
+                        ClarifyChoices(home: home, question: question, lang: lang)
+                    }
                 }
             }
 
@@ -95,5 +100,93 @@ private struct ClarifyAnswerField: View {
                 if capped != value { text = capped }
                 home.setAnswer(capped, for: id)
             }
+    }
+}
+
+/// The likely answers as single-select chips plus Other, which reveals the
+/// text box. Nothing starts selected; tapping the selected chip clears it.
+private struct ClarifyChoices: View {
+    private enum Pick: Equatable {
+        case option(Int)
+        case other
+    }
+
+    let home: HomeModel
+    let question: ClarifyQuestion
+    let lang: AppLang
+    @State private var pick: Pick?
+    // Kept while an option is picked, so choosing Other again restores it.
+    @State private var typed: String
+    @FocusState private var otherFocused: Bool
+
+    @MainActor
+    init(home: HomeModel, question: ClarifyQuestion, lang: AppLang) {
+        self.home = home
+        self.question = question
+        self.lang = lang
+        let answer = home.clarify?.answers[question.id] ?? ""
+        if let i = question.options.firstIndex(of: answer) {
+            _pick = State(initialValue: .option(i))
+            _typed = State(initialValue: "")
+        } else if !answer.isEmpty {
+            _pick = State(initialValue: .other)
+            _typed = State(initialValue: answer)
+        } else {
+            _pick = State(initialValue: nil)
+            _typed = State(initialValue: "")
+        }
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            FlowLayout(spacing: 8, rowSpacing: 8) {
+                ForEach(Array(question.options.enumerated()), id: \.offset) { index, text in
+                    chip(text, .option(index))
+                }
+                chip(L10n.clarifyOther(lang), .other)
+            }
+            if pick == .other {
+                TextField(L10n.clarifyPlaceholder(lang), text: $typed, axis: .vertical)
+                    .lineLimit(2...5)
+                    .brandText(.body)
+                    .foregroundStyle(Brand.ink)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 12)
+                    .paperSurface(radius: Radius.field, fill: Brand.paper, border: Brand.line2)
+                    .focused($otherFocused)
+                    .accessibilityLabel(question.text + " " + L10n.clarifyOther(lang))
+                    .onChange(of: typed) { _, value in
+                        let capped = HomeModel.capUTF16(value, max: HomeModel.maxAnswer)
+                        if capped != value { typed = capped }
+                        home.setAnswer(capped, for: question.id)
+                    }
+            }
+        }
+    }
+
+    private func chip(_ text: String, _ value: Pick) -> some View {
+        let selected = pick == value
+        return Button {
+            pick = selected ? nil : value
+            switch pick {
+            case .none: home.setAnswer("", for: question.id)
+            case .other?:
+                home.setAnswer(typed, for: question.id)
+                otherFocused = true
+            case .option(let i)?: home.setAnswer(question.options[i], for: question.id)
+            }
+        } label: {
+            Text(text)
+                .brandText(.chip)
+                .foregroundStyle(selected ? Brand.ivory : Brand.ink)
+                .multilineTextAlignment(.leading)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 11)
+                .frame(minHeight: 44)
+                .background(Capsule().fill(selected ? Brand.ink : Brand.paper))
+                .overlay(Capsule().strokeBorder(selected ? Brand.ink : Brand.line2, lineWidth: 1))
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(selected ? .isSelected : [])
     }
 }

@@ -5,6 +5,23 @@ import Foundation
 struct ClarifyQuestion: Decodable, Sendable, Equatable, Identifiable {
     let id: String
     let text: String
+    /// The likely answers; older servers send none.
+    let options: [String]
+
+    init(id: String, text: String, options: [String] = []) {
+        self.id = id
+        self.text = text
+        self.options = options
+    }
+
+    private enum CodingKeys: String, CodingKey { case id, text, options }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(String.self, forKey: .id)
+        text = try c.decode(String.self, forKey: .text)
+        options = try c.decodeIfPresent([String].self, forKey: .options) ?? []
+    }
 }
 
 /// One image's result from POST /api/v1/evidence (lib/case-types.ts
