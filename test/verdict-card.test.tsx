@@ -9,6 +9,7 @@ import { BalanceFallback } from "../components/scene/BalanceFallback";
 import { OG_SIDES, OgCard } from "../components/OgCard";
 import { SampleVerdict, SAMPLE_TUG_A } from "../components/home/SampleVerdict";
 import { VoteDots, voteOf } from "../components/verdict/VoteDots";
+import { svgRotateDeg } from "../lib/balance";
 import { t } from "../lib/i18n";
 import { PALETTE, sideColors } from "../lib/palette";
 import { stripLeadingEmoji } from "../lib/text";
@@ -46,6 +47,13 @@ const count = (s: string, needle: string) => s.split(needle).length - 1;
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/'/g, "&#x27;");
 
 describe("VerdictView", () => {
+  it("gives the balance room for the 3D scale, drawn at the verdict's tilt until it loads", () => {
+    const live = html(<VerdictView result={base} shareId="abc123" lang="en" />);
+    expect(live).toContain("sceneLive");
+    expect(live).toContain(`data-tilt-deg="${svgRotateDeg(tugFinal(base)).toFixed(2)}"`);
+    expect(html(<SampleVerdict lang="en" />)).not.toContain("sceneLive");
+  });
+
   it("keeps the translation live region mounted (empty) on a shared verdict", () => {
     const out = html(<VerdictView result={base} shareId="abc123" lang="en" />);
     expect(out).toMatch(/<p class="sr-only" aria-live="polite"><\/p>/);

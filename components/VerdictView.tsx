@@ -211,6 +211,7 @@ export function VerdictView({
         busy={loading}
         highlight={fresh}
         animate
+        live
       />
       <VerdictDetails result={result} parties={parties} lang={lang} loading={loading} written={written} />
       {onAddContext ? (

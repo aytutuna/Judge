@@ -95,6 +95,26 @@
   height: 100%;
   width: auto;
 }
+/* Room for the playable 3D scale; the drawing keeps the size it had. */
+.sceneLive {
+  position: relative;
+  height: 172px;
+  padding-top: 0;
+}
+.sceneLive > svg {
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  height: 56%;
+  transform: translate(-50%, -50%);
+}
+.sceneLive .sceneFill {
+  height: 100%;
+  min-height: 0;
+  border-radius: 0;
+  background: none;
+  aspect-ratio: auto;
+}
 
 /* ---------- Names and lean bar ---------- */
 /* Party A is on the left and Party B on the right in every language, as in

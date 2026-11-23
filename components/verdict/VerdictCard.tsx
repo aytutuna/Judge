@@ -6,6 +6,7 @@ import type { Party } from "@/lib/palette";
 import { hyphenRuns } from "@/lib/text";
 import { confidenceLabel, leanShare, manyLabel, outcomeFor, tugFinal, verdictLabel } from "@/lib/verdict-display";
 import { BalanceFallback } from "../scene/BalanceFallback";
+import { VerdictScale } from "./VerdictScale";
 import { OtherLines, SideList, isMany, type SideNames } from "./ManySides";
 import { VoteDots, voteOf } from "./VoteDots";
 import { WhyBlock } from "./WhyBlock";
@@ -105,6 +106,7 @@ export function VerdictCard({
   highlight = false,
   busy = false,
   animate = false,
+  live = false,
   headingAs: Heading = "h2",
 }: {
   result: VerdictResult;
@@ -124,6 +126,8 @@ export function VerdictCard({
   highlight?: boolean;
   busy?: boolean;
   animate?: boolean;
+  /** The balance is the playable 3D scale where the browser can draw it. */
+  live?: boolean;
   headingAs?: "h2" | "h3";
 }) {
   const many = sideNames && isMany(result) ? result : null;
@@ -139,7 +143,9 @@ export function VerdictCard({
 
   return (
     <article className={cls} aria-labelledby={labelId}>
-      {many ? null : (
+      {many ? null : live ? (
+        <VerdictScale result={result} you={you} />
+      ) : (
         <div className={styles.scene}>
           <BalanceFallback tugA={refused ? 50 : tugFinal(result)} you={you} />
         </div>
