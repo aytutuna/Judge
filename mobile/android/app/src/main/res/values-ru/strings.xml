@@ -175,6 +175,7 @@
     <string name="clarify_lead">От этих деталей может зависеть, кто прав.</string>
     <string name="clarify_answer_aria">Ответ на вопрос %1$s:</string>
     <string name="clarify_placeholder">Ваш ответ (необязательно)</string>
+    <string name="clarify_other">Другое</string>
     <string name="clarify_skip">Пропустить и судить</string>
     <string name="clarify_submit">Узнать вердикт</string>
     <string name="clarify_back">Изменить описание</string>

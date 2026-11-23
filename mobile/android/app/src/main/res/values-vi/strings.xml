@@ -166,6 +166,7 @@
     <string name="clarify_lead">Những chi tiết này có thể thay đổi ai đúng.</string>
     <string name="clarify_answer_aria">Câu trả lời cho câu hỏi %1$s:</string>
     <string name="clarify_placeholder">Câu trả lời của bạn (không bắt buộc)</string>
+    <string name="clarify_other">Khác</string>
     <string name="clarify_skip">Bỏ qua và phân xử</string>
     <string name="clarify_submit">Phân xử ngay</string>
     <string name="clarify_back">Sửa nội dung</string>

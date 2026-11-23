@@ -175,6 +175,7 @@
     <string name="clarify_lead">Ці подробиці можуть змінити, хто правий.</string>
     <string name="clarify_answer_aria">Відповідь на запитання %1$s:</string>
     <string name="clarify_placeholder">Твоя відповідь (необов’язково)</string>
+    <string name="clarify_other">Інше</string>
     <string name="clarify_skip">Пропустити й судити</string>
     <string name="clarify_submit">Отримати вердикт</string>
     <string name="clarify_back">Редагувати суперечку</string>

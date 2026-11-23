@@ -166,6 +166,7 @@
     <string name="clarify_lead">Detail ini bisa mengubah siapa yang benar.</string>
     <string name="clarify_answer_aria">Jawaban untuk pertanyaan %1$s:</string>
     <string name="clarify_placeholder">Jawabanmu (opsional)</string>
+    <string name="clarify_other">Lainnya</string>
     <string name="clarify_skip">Lewati dan putuskan</string>
     <string name="clarify_submit">Minta putusan</string>
     <string name="clarify_back">Ubah perdebatannya</string>

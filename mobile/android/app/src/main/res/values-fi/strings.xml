@@ -169,6 +169,7 @@
     <string name="clarify_lead">Nämä yksityiskohdat voivat muuttaa sen, kuka on oikeassa.</string>
     <string name="clarify_answer_aria">Vastaus kysymykseen %1$s:</string>
     <string name="clarify_placeholder">Vastauksesi (vapaaehtoinen)</string>
+    <string name="clarify_other">Muu</string>
     <string name="clarify_skip">Ohita ja ratkaise</string>
     <string name="clarify_submit">Hae tuomio</string>
     <string name="clarify_back">Muokkaa kiistaa</string>

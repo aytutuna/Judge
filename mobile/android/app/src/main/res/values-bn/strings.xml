@@ -169,6 +169,7 @@
     <string name="clarify_lead">এই খুঁটিনাটিগুলো বদলে দিতে পারে কে ঠিক।</string>
     <string name="clarify_answer_aria">%1$s নম্বর প্রশ্নের উত্তর:</string>
     <string name="clarify_placeholder">আপনার উত্তর (ঐচ্ছিক)</string>
+    <string name="clarify_other">অন্যান্য</string>
     <string name="clarify_skip">বাদ দিয়ে রায় দিন</string>
     <string name="clarify_submit">রায় জানুন</string>
     <string name="clarify_back">তর্কটা এডিট করুন</string>

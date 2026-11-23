@@ -172,6 +172,7 @@
     <string name="clarify_lead">Ovi detalji mogli bi promijeniti tko je u pravu.</string>
     <string name="clarify_answer_aria">Odgovor na %1$s. pitanje:</string>
     <string name="clarify_placeholder">Tvoj odgovor (nije obavezno)</string>
+    <string name="clarify_other">Drugo</string>
     <string name="clarify_skip">Preskoči i presudi</string>
     <string name="clarify_submit">Saznaj presudu</string>
     <string name="clarify_back">Uredi raspravu</string>

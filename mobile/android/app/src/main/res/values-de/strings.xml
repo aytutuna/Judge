@@ -169,6 +169,7 @@
     <string name="clarify_lead">Diese Details könnten ändern, wer recht hat.</string>
     <string name="clarify_answer_aria">Antwort auf Frage %1$s:</string>
     <string name="clarify_placeholder">Deine Antwort (optional)</string>
+    <string name="clarify_other">Andere</string>
     <string name="clarify_skip">Überspringen und Urteil holen</string>
     <string name="clarify_submit">Urteil holen</string>
     <string name="clarify_back">Streit bearbeiten</string>

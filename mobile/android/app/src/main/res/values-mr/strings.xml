@@ -169,6 +169,7 @@
     <string name="clarify_lead">या तपशिलांमुळे कोण बरोबर हे बदलू शकते.</string>
     <string name="clarify_answer_aria">प्रश्न %1$s चे उत्तर:</string>
     <string name="clarify_placeholder">तुमचे उत्तर (ऐच्छिक)</string>
+    <string name="clarify_other">इतर</string>
     <string name="clarify_skip">सोडा, निकाल द्या</string>
     <string name="clarify_submit">निकाल मिळवा</string>
     <string name="clarify_back">वादात बदल करा</string>

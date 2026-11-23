@@ -172,6 +172,7 @@
     <string name="clarify_lead">Estes detalhes podem mudar quem tem razão.</string>
     <string name="clarify_answer_aria">Resposta à pergunta %1$s:</string>
     <string name="clarify_placeholder">A tua resposta (opcional)</string>
+    <string name="clarify_other">Outra</string>
     <string name="clarify_skip">Saltar e julgar</string>
     <string name="clarify_submit">Quero o veredicto</string>
     <string name="clarify_back">Editar a discussão</string>

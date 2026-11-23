@@ -169,6 +169,7 @@
     <string name="clarify_lead">Αυτές οι λεπτομέρειες μπορεί να αλλάξουν ποιος έχει δίκιο.</string>
     <string name="clarify_answer_aria">Απάντηση στην ερώτηση %1$s:</string>
     <string name="clarify_placeholder">Η απάντησή σου (προαιρετικά)</string>
+    <string name="clarify_other">Άλλο</string>
     <string name="clarify_skip">Συνέχεια χωρίς απαντήσεις</string>
     <string name="clarify_submit">Δες την απόφαση</string>
     <string name="clarify_back">Άλλαξε το κείμενο</string>

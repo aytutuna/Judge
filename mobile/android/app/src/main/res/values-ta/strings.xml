@@ -169,6 +169,7 @@
     <string name="clarify_lead">இந்த விவரங்கள் யார் சொல்வது சரி என்பதையே மாற்றலாம்.</string>
     <string name="clarify_answer_aria">கேள்வி %1$s-க்கான பதில்:</string>
     <string name="clarify_placeholder">உங்கள் பதில் (கட்டாயமில்லை)</string>
+    <string name="clarify_other">மற்றவை</string>
     <string name="clarify_skip">தவிர்த்துத் தீர்ப்பு பெறுக</string>
     <string name="clarify_submit">தீர்ப்பைப் பெறுக</string>
     <string name="clarify_back">வாக்குவாதத்தைத் திருத்து</string>

@@ -169,6 +169,7 @@
     <string name="clarify_lead">ఈ వివరాలతో ఎవరి మాట కరెక్టో మారిపోవచ్చు.</string>
     <string name="clarify_answer_aria">ప్రశ్న %1$sకి జవాబు:</string>
     <string name="clarify_placeholder">మీ జవాబు (ఐచ్ఛికం)</string>
+    <string name="clarify_other">ఇతర</string>
     <string name="clarify_skip">వదిలేసి జడ్జ్ చేయండి</string>
     <string name="clarify_submit">తీర్పు తెలుసుకోండి</string>
     <string name="clarify_back">వాదనను మార్చండి</string>

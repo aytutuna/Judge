@@ -175,6 +175,7 @@
     <string name="clarify_lead">Tyhle detaily můžou změnit, kdo má pravdu.</string>
     <string name="clarify_answer_aria">Odpověď na otázku %1$s:</string>
     <string name="clarify_placeholder">Tvoje odpověď (nepovinné)</string>
+    <string name="clarify_other">Jiná</string>
     <string name="clarify_skip">Přeskočit a rozsoudit</string>
     <string name="clarify_submit">Rozsoudit</string>
     <string name="clarify_back">Upravit spor</string>

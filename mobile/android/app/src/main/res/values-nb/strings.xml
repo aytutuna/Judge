@@ -169,6 +169,7 @@
     <string name="clarify_lead">Disse detaljene kan endre hvem som har rett.</string>
     <string name="clarify_answer_aria">Svar på spørsmål %1$s:</string>
     <string name="clarify_placeholder">Svaret ditt (valgfritt)</string>
+    <string name="clarify_other">Annet</string>
     <string name="clarify_skip">Hopp over og døm</string>
     <string name="clarify_submit">Få dommen</string>
     <string name="clarify_back">Rediger diskusjonen</string>

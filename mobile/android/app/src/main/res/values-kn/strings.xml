@@ -169,6 +169,7 @@
     <string name="clarify_lead">ಈ ವಿವರಗಳು ಯಾರು ಸರಿ ಎನ್ನುವುದನ್ನೇ ಬದಲಿಸಬಹುದು.</string>
     <string name="clarify_answer_aria">%1$sನೇ ಪ್ರಶ್ನೆಗೆ ಉತ್ತರ:</string>
     <string name="clarify_placeholder">ನಿಮ್ಮ ಉತ್ತರ (ಐಚ್ಛಿಕ)</string>
+    <string name="clarify_other">ಇತರೆ</string>
     <string name="clarify_skip">ಉತ್ತರಿಸದೆ ತೀರ್ಪು ಪಡೆಯಿರಿ</string>
     <string name="clarify_submit">ತೀರ್ಪು ಪಡೆಯಿರಿ</string>
     <string name="clarify_back">ವಾದ ತಿದ್ದಿ</string>

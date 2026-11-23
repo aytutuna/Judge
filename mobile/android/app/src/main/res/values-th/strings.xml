@@ -166,6 +166,7 @@
     <string name="clarify_lead">รายละเอียดเหล่านี้อาจเปลี่ยนว่าใครถูก</string>
     <string name="clarify_answer_aria">คำตอบข้อที่ %1$s:</string>
     <string name="clarify_placeholder">คำตอบของคุณ (ไม่บังคับ)</string>
+    <string name="clarify_other">อื่น ๆ</string>
     <string name="clarify_skip">ข้ามแล้วตัดสินเลย</string>
     <string name="clarify_submit">ตัดสินเลย</string>
     <string name="clarify_back">แก้ไขเรื่องที่เล่า</string>

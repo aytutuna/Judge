@@ -304,6 +304,7 @@ enum L10n {
     static func clarifyLead(_ lang: AppLang) -> String { string("clarify.lead", lang) }
     static func clarifyAnswerAria(_ lang: AppLang, n: String) -> String { format("clarify.answerAria", lang, n) }
     static func clarifyPlaceholder(_ lang: AppLang) -> String { string("clarify.placeholder", lang) }
+    static func clarifyOther(_ lang: AppLang) -> String { string("clarify.other", lang) }
     static func clarifySkip(_ lang: AppLang) -> String { string("clarify.skip", lang) }
     static func clarifySubmit(_ lang: AppLang) -> String { string("clarify.submit", lang) }
     static func clarifyBack(_ lang: AppLang) -> String { string("clarify.back", lang) }
@@ -942,6 +943,7 @@ enum L10n {
         "clarify.title",
         "clarify.lead",
         "clarify.placeholder",
+        "clarify.other",
         "clarify.skip",
         "clarify.submit",
         "clarify.back",

@@ -169,6 +169,7 @@
     <string name="clarify_lead">These could change who\'s right.</string>
     <string name="clarify_answer_aria">Answer to question %1$s:</string>
     <string name="clarify_placeholder">Your answer (optional)</string>
+    <string name="clarify_other">Other</string>
     <string name="clarify_skip">Skip and judge</string>
     <string name="clarify_submit">Get the verdict</string>
     <string name="clarify_back">Edit the argument</string>

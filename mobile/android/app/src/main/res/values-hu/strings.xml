@@ -169,6 +169,7 @@
     <string name="clarify_lead">Ezek a részletek megváltoztathatják, kinek van igaza.</string>
     <string name="clarify_answer_aria">%1$s. kérdés, a válaszod:</string>
     <string name="clarify_placeholder">A válaszod (nem kötelező)</string>
+    <string name="clarify_other">Más</string>
     <string name="clarify_skip">Kihagyás és ítélet</string>
     <string name="clarify_submit">Kérem az ítéletet</string>
     <string name="clarify_back">Vita szerkesztése</string>

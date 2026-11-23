@@ -166,6 +166,7 @@
     <string name="clarify_lead">이 내용에 따라 누가 맞는지가 달라질 수 있어요.</string>
     <string name="clarify_answer_aria">질문 %1$s에 대한 답:</string>
     <string name="clarify_placeholder">답변 (선택)</string>
+    <string name="clarify_other">기타</string>
     <string name="clarify_skip">건너뛰고 판결</string>
     <string name="clarify_submit">판결 받기</string>
     <string name="clarify_back">논쟁 내용 고치기</string>

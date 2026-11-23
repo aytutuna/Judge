@@ -169,6 +169,7 @@
     <string name="clarify_lead">આ વિગતોથી કોણ સાચું એ બદલાઈ શકે.</string>
     <string name="clarify_answer_aria">સવાલ %1$sનો જવાબ:</string>
     <string name="clarify_placeholder">તમારો જવાબ (મરજિયાત)</string>
+    <string name="clarify_other">અન્ય</string>
     <string name="clarify_skip">છોડો, ચુકાદો આપો</string>
     <string name="clarify_submit">ચુકાદો મેળવો</string>
     <string name="clarify_back">વિવાદમાં ફેરફાર કરો</string>

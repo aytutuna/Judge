@@ -166,6 +166,7 @@
     <string name="clarify_lead">Butiran ini boleh mengubah siapa yang betul.</string>
     <string name="clarify_answer_aria">Jawapan kepada soalan %1$s:</string>
     <string name="clarify_placeholder">Jawapan anda (pilihan)</string>
+    <string name="clarify_other">Lain-lain</string>
     <string name="clarify_skip">Langkau dan nilai</string>
     <string name="clarify_submit">Dapatkan keputusan</string>
     <string name="clarify_back">Sunting pertikaian</string>

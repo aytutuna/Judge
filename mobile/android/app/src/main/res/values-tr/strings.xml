@@ -169,6 +169,7 @@
     <string name="clarify_lead">Bu ayrıntılar kimin haklı olduğunu değiştirebilir.</string>
     <string name="clarify_answer_aria">%1$s. sorunun cevabı:</string>
     <string name="clarify_placeholder">Cevabın (isteğe bağlı)</string>
+    <string name="clarify_other">Diğer</string>
     <string name="clarify_skip">Geç, kararı ver</string>
     <string name="clarify_submit">Kararı öğren</string>
     <string name="clarify_back">Tartışmayı düzenle</string>

@@ -175,6 +175,7 @@
     <string name="clarify_lead">Te szczegóły mogą zmienić to, kto ma rację.</string>
     <string name="clarify_answer_aria">Odpowiedź na pytanie %1$s:</string>
     <string name="clarify_placeholder">Twoja odpowiedź (opcjonalnie)</string>
+    <string name="clarify_other">Inna</string>
     <string name="clarify_skip">Pomiń i rozstrzygnij</string>
     <string name="clarify_submit">Poznaj werdykt</string>
     <string name="clarify_back">Edytuj opis sporu</string>

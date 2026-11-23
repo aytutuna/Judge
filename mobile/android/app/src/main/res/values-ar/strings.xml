@@ -181,6 +181,7 @@
     <string name="clarify_lead">هذه التفاصيل قد تغيّر مَن على حق.</string>
     <string name="clarify_answer_aria">الإجابة عن السؤال %1$s:</string>
     <string name="clarify_placeholder">إجابتك (اختياري)</string>
+    <string name="clarify_other">أخرى</string>
     <string name="clarify_skip">تخطَّ إلى الحكم</string>
     <string name="clarify_submit">اعرف الحكم</string>
     <string name="clarify_back">تعديل الخلاف</string>

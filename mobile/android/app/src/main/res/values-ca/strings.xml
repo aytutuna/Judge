@@ -172,6 +172,7 @@
     <string name="clarify_lead">Aquests detalls podrien canviar qui té raó.</string>
     <string name="clarify_answer_aria">Resposta a la pregunta %1$s:</string>
     <string name="clarify_placeholder">La teva resposta (opcional)</string>
+    <string name="clarify_other">Altra</string>
     <string name="clarify_skip">Omet i jutja</string>
     <string name="clarify_submit">Demana el veredicte</string>
     <string name="clarify_back">Edita la discussió</string>

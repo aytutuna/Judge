@@ -169,6 +169,7 @@
     <string name="clarify_lead">یہ تفصیلات بدل سکتی ہیں کہ کون صحیح ہے۔</string>
     <string name="clarify_answer_aria">سوال %1$s کا جواب:</string>
     <string name="clarify_placeholder">آپ کا جواب (اختیاری)</string>
+    <string name="clarify_other">دیگر</string>
     <string name="clarify_skip">چھوڑ کر فیصلہ کروائیں</string>
     <string name="clarify_submit">فیصلہ کروائیں</string>
     <string name="clarify_back">بحث میں ترمیم کریں</string>

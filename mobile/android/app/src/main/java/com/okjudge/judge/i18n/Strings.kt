@@ -237,6 +237,7 @@ class Strings(private val res: Resources) {
     val clarifyLead: String get() = res.getString(R.string.clarify_lead)
     fun clarifyAnswerAria(n: String): String = res.getString(R.string.clarify_answer_aria, n)
     val clarifyPlaceholder: String get() = res.getString(R.string.clarify_placeholder)
+    val clarifyOther: String get() = res.getString(R.string.clarify_other)
     val clarifySkip: String get() = res.getString(R.string.clarify_skip)
     val clarifySubmit: String get() = res.getString(R.string.clarify_submit)
     val clarifyBack: String get() = res.getString(R.string.clarify_back)
@@ -874,6 +875,7 @@ class Strings(private val res: Resources) {
             "clarify.title" -> R.string.clarify_title
             "clarify.lead" -> R.string.clarify_lead
             "clarify.placeholder" -> R.string.clarify_placeholder
+            "clarify.other" -> R.string.clarify_other
             "clarify.skip" -> R.string.clarify_skip
             "clarify.submit" -> R.string.clarify_submit
             "clarify.back" -> R.string.clarify_back

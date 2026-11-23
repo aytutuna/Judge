@@ -169,6 +169,7 @@
     <string name="clarify_lead">ଏହି ବିବରଣୀ କିଏ ଠିକ୍ ତାହା ବଦଳାଇପାରେ।</string>
     <string name="clarify_answer_aria">ପ୍ରଶ୍ନ %1$sର ଉତ୍ତର:</string>
     <string name="clarify_placeholder">ଆପଣଙ୍କ ଉତ୍ତର (ଇଚ୍ଛାଧୀନ)</string>
+    <string name="clarify_other">ଅନ୍ୟ</string>
     <string name="clarify_skip">ଛାଡ଼ି ରାୟ ଦିଅନ୍ତୁ</string>
     <string name="clarify_submit">ରାୟ ଜାଣନ୍ତୁ</string>
     <string name="clarify_back">ବିବାଦ ବଦଳାନ୍ତୁ</string>

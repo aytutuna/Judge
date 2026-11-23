@@ -166,6 +166,7 @@
     <string name="clarify_lead">這些細節可能會改變誰對誰錯。</string>
     <string name="clarify_answer_aria">第 %1$s 題的回答：</string>
     <string name="clarify_placeholder">你的回答（選填）</string>
+    <string name="clarify_other">其他</string>
     <string name="clarify_skip">跳過，直接判決</string>
     <string name="clarify_submit">開始判決</string>
     <string name="clarify_back">修改爭論內容</string>

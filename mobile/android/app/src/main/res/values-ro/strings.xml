@@ -172,6 +172,7 @@
     <string name="clarify_lead">Detaliile astea ar putea schimba cine are dreptate.</string>
     <string name="clarify_answer_aria">Răspuns la întrebarea %1$s:</string>
     <string name="clarify_placeholder">Răspunsul tău (opțional)</string>
+    <string name="clarify_other">Altceva</string>
     <string name="clarify_skip">Sari peste și judecă</string>
     <string name="clarify_submit">Află verdictul</string>
     <string name="clarify_back">Editează disputa</string>

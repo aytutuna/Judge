@@ -166,6 +166,7 @@
     <string name="clarify_lead">次の点しだいで、どちらが正しいかが変わるかもしれません。</string>
     <string name="clarify_answer_aria">質問%1$sへの回答：</string>
     <string name="clarify_placeholder">回答（任意）</string>
+    <string name="clarify_other">その他</string>
     <string name="clarify_skip">スキップして判定</string>
     <string name="clarify_submit">判定する</string>
     <string name="clarify_back">内容を編集</string>
