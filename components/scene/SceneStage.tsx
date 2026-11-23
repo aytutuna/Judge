@@ -107,7 +107,7 @@ export function SceneStage({ lang, children }: { lang: Lang; children: ReactNode
     >
       <div ref={stageRef} className={styles.stage} aria-hidden="true">
         <BalanceFallback tugA={tugA} you={you} className={styles.fallback} />
-        {go && status !== "fallback" ? <BalanceScene reduced={reduced} className={styles.canvas} /> : null}
+        {go && status !== "fallback" ? <BalanceScene reduced={reduced} play className={styles.canvas} /> : null}
       </div>
       {children}
     </div>
