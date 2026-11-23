@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { ClarifyStep, MAX_ANSWER, buildClarifications } from "../components/ClarifyStep";
+import { ClarifyStep, MAX_ANSWER, buildClarifications, enterSelects, focusesBox } from "../components/ClarifyStep";
 import { t } from "../lib/i18n";
 import { Clarification } from "../lib/types";
 
@@ -125,5 +125,28 @@ describe("ClarifyStep options", () => {
   it("builds the request from the chosen option text", () => {
     const out = buildClarifications(WITH_OPTIONS, { q1: "Yes, by text" }, false);
     expect(out).toEqual([{ question: "Did B agree?", answer: "Yes, by text" }]);
+  });
+});
+
+describe("option keyboard handling", () => {
+  it("Enter selects the option and is kept from submitting the form", () => {
+    let prevented = false;
+    let picked = 0;
+    enterSelects({ key: "Enter", preventDefault: () => (prevented = true) }, () => picked++);
+    expect(prevented).toBe(true);
+    expect(picked).toBe(1);
+  });
+
+  it("other keys are left alone", () => {
+    let prevented = false;
+    let picked = 0;
+    enterSelects({ key: "ArrowDown", preventDefault: () => (prevented = true) }, () => picked++);
+    expect(prevented).toBe(false);
+    expect(picked).toBe(0);
+  });
+
+  it("only a pointer click moves focus into the Other box", () => {
+    expect(focusesBox({ detail: 1 })).toBe(true);
+    expect(focusesBox({ detail: 0 })).toBe(false);
   });
 });

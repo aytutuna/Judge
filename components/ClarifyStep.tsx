@@ -29,6 +29,19 @@ export function buildClarifications(
 
 const OTHER = "other";
 
+/** Enter on an option picks it; left alone it would submit the form. */
+export function enterSelects(e: { key: string; preventDefault: () => void }, select: () => void) {
+  if (e.key !== "Enter") return;
+  e.preventDefault();
+  select();
+}
+
+/** The box takes focus only for a pointer click; arrow keys also fire a
+ * click (detail 0) and must keep the focus in the group. */
+export function focusesBox(e: { detail: number }) {
+  return e.detail > 0;
+}
+
 function submitOnCtrlEnter(e: React.KeyboardEvent<HTMLTextAreaElement>) {
   if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
     e.preventDefault();
@@ -83,12 +96,13 @@ export function ClarifyStep({
   );
   const [focusId, setFocusId] = useState<string | null>(null);
   useEffect(() => {
-    if (focusId) document.getElementById(`clarify-${focusId}`)?.focus();
+    if (!focusId) return;
+    document.getElementById(`clarify-${focusId}`)?.focus();
+    setFocusId(null);
   }, [focusId]);
 
   function choose(q: ClarifyQuestion, pick: Pick) {
     setPicks((p) => ({ ...p, [q.id]: pick }));
-    setFocusId(pick === OTHER ? q.id : null);
     onAnswer(q.id, pick === OTHER ? (typed[q.id] ?? "") : pick === null ? "" : (q.options?.[pick] ?? ""));
   }
 
@@ -127,7 +141,11 @@ export function ClarifyStep({
                           className={styles.radio}
                           checked={checked}
                           onChange={() => choose(q, value)}
-                          onClick={() => checked && choose(q, null)}
+                          onKeyDown={(e) => enterSelects(e, () => !checked && choose(q, value))}
+                          onClick={(e) => {
+                            if (checked) choose(q, null);
+                            else if (value === OTHER && focusesBox(e)) setFocusId(q.id);
+                          }}
                         />
                         <span className={styles.chip}>{text ?? t(lang, "clarify.other")}</span>
                       </label>
