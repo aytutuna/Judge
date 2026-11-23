@@ -6,7 +6,8 @@ import Observation
 /// what plan. Getting a verdict needs an account, so Home asks here first.
 ///
 /// It also runs the 18+ check: the phone's age signal when there is one,
-/// else the checkbox, reported to the server once the account is known.
+/// else the consent line on the sign-in screen (or the age sheet's box),
+/// reported to the server once the account is known.
 /// `ageGate` is what the app shows for it.
 @MainActor
 @Observable
@@ -448,7 +449,7 @@ final class AccountModel {
         do {
             let identity = try await apple.authorize()
             let session = try await api.signInWithIDToken(provider: .apple, idToken: identity.identityToken, nonce: identity.rawNonce, apple: identity)
-            await finishSignIn(session, via: .apple, email: identity.email)
+            await finishSignIn(session, via: .apple)
             // Codes expire in minutes and work once: send it now. A failure
             // leaves the code kept for a retry; the sign-in stands.
             if let code = identity.authorizationCode, !code.isEmpty {
@@ -456,6 +457,7 @@ final class AccountModel {
                 await retryAppleCode()
             }
         } catch {
+            setAgeTicked(false)
             failure = Self.signInFailure(error)
         }
     }
@@ -499,6 +501,7 @@ final class AccountModel {
             let session = try await api.signInWithIDToken(provider: .google, idToken: identity.idToken, nonce: identity.rawNonce)
             await finishSignIn(session, via: .google)
         } catch {
+            setAgeTicked(false)
             failure = Self.signInFailure(error)
         }
     }
@@ -608,6 +611,7 @@ final class AccountModel {
             step = .code(email: address)
             startCountdown()
         } catch {
+            setAgeTicked(false)
             failure = Self.sendFailure(error)
         }
     }
@@ -629,6 +633,7 @@ final class AccountModel {
             let session = try await api.signInWithCode(email: address, code: entered)
             await finishSignIn(session, byCode: true, via: .email, email: address)
         } catch {
+            setAgeTicked(false)
             failure = Self.codeFailure(error)
             if failure == .codeInvalid { rejectedCode = entered }
         }
@@ -657,6 +662,7 @@ final class AccountModel {
             let session = try await api.signInWithPassword(email: address, password: password)
             await finishSignIn(session, via: .email, email: address)
         } catch {
+            setAgeTicked(false)
             failure = Self.passwordFailure(error)
         }
     }
@@ -731,6 +737,7 @@ final class AccountModel {
             rejectedCode = nil
             startCountdown()
         } catch {
+            setAgeTicked(false)
             failure = Self.sendFailure(error)
         }
     }
@@ -781,7 +788,7 @@ final class AccountModel {
     /// the account has none. If /me can't be read the sign-in just finishes.
     private func finishSignIn(_ session: AuthSession, byCode: Bool = false, via method: LastMethod, email: String? = nil) async {
         api.tokenStore.setToken(session.token)
-        remember(method, email: email)
+        remember(method, email: email ?? session.user?.email)
         isSignedIn = true
         info = session.user.map { AccountInfo(user: $0, entitlement: nil) }
         notice = nil

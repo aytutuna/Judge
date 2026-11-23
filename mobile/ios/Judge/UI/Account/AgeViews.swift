@@ -56,6 +56,10 @@ struct AgeGateView: View {
             .padding(.horizontal, 20)
             .padding(.top, 12)
             .padding(.bottom, 32)
+            .onAppear {
+                // The sign-in screen's consent is not this box: it starts empty.
+                if case .confirm = gate { account.setAgeTicked(false) }
+            }
         }
         .background(Brand.ivory.ignoresSafeArea())
         .accessibilityAddTraits(.isModal)
