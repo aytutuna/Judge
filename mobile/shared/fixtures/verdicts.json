@@ -1346,7 +1346,11 @@
       "questions": [
         {
           "id": "q1",
-          "text": "Did you and Sam ever agree on what counts as a sandwich?"
+          "text": "Did you and Sam ever agree on what counts as a sandwich?",
+          "options": [
+            "Yes, we agreed",
+            "No, never settled"
+          ]
         },
         {
           "id": "q2",

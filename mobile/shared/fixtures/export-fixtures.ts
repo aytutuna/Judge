@@ -638,7 +638,11 @@ const CONFIG_BODIES: Record<string, AppConfig> = {
 const CLARIFY_BODIES = {
   two_questions: ClarifyResponse.parse({
     questions: [
-      { id: "q1", text: "Did you and Sam ever agree on what counts as a sandwich?" },
+      {
+        id: "q1",
+        text: "Did you and Sam ever agree on what counts as a sandwich?",
+        options: ["Yes, we agreed", "No, never settled"],
+      },
       { id: "q2", text: "Is this about the menu wording or about what you were served?" },
     ],
   }),
