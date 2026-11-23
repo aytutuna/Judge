@@ -178,7 +178,7 @@ extension CaseModel: AppealDraft {}
 /// "add context" form, its upsell, or why not. Cases and the writer's
 /// one-sided verdicts share it. The form and its upsells live in
 /// `AppealSheet`; the judging, busy, used and limit lines sit under the
-/// verdict. `cost` is the note over the send button and `evidenceOn`
+/// verdict. `cost` is the note above the context box and `evidenceOn`
 /// offers the screenshot picker.
 struct AppealSection<Draft: AppealDraft>: View {
     @Environment(AppModel.self) private var app

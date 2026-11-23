@@ -28,8 +28,7 @@ struct JudgingCover: View {
 /// out and `onFinished` hands over.
 struct JudgingView: View {
     let lang: AppLang
-    /// The street court is drawn; off, the card is the eyebrow, the log and
-    /// the helper.
+    /// The street court is drawn; off, the card is the eyebrow and the log.
     var gamify = true
     /// What was sent, a tile per written side.
     var sides: [HomeModel.JudgedSide] = []

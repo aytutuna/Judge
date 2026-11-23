@@ -81,8 +81,8 @@ function Chevron() {
 /** Outcome of the stress test of a fact/logic winner ruling. Survived is
  * styled neutral, not green: green here means user-checkable verified facts,
  * and a green shield would read as an endorsement badge — exactly the
- * confidence-laundering this app forbids. Doubt always comes with its reason
- * (the referee's, else the objection itself).
+ * confidence-laundering this app forbids. Doubt shows the objection first,
+ * then the referee's reason when there is one.
  * The dictionary's leading emoji is swapped for a drawn icon. */
 function CruxTrialNote({ trial, mixed, lang }: { trial: CruxTrial; mixed: boolean; lang: Lang }) {
   if (trial.outcome === "survived") {

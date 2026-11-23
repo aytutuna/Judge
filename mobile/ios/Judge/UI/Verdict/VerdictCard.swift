@@ -539,7 +539,7 @@ private struct SlotText: View {
 }
 
 /// Outcome of the stress test: survived and minor are neutral (never green);
-/// minor, uncertain and overturned say why, with the objection tucked below.
+/// minor, uncertain and overturned show the objection, then the referee's reason.
 private struct CruxTrialNote: View {
     let trial: CruxTrial
     let mixed: Bool
