@@ -40,6 +40,7 @@ import {
   idleFactor,
   lerp,
   orbSlots,
+  playable,
   snapStoryQ,
   sphereCentre,
   sphereScale,
@@ -274,9 +275,8 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
     pys += (tpy - pys) * kp;
     const pointerMoving = Math.abs(tpx - pxs) > 1e-3 || Math.abs(tpy - pys) > 1e-3;
 
-    // Ball play needs a calm scene: the idle hero pose, nothing lifted.
-    const playNow =
-      play !== null && !reduced && mode.kind === "idle" && w < 0.01 && pose.lift < 0.01 && pose.split < 0.01;
+    // Ball play needs a calm scene: the idle pose or a settled verdict, nothing lifted.
+    const playNow = play !== null && !reduced && playable(mode, heroLive, pose, w);
     const entrance = 1.2 * (1 - settle(enter));
     if (play && playNow !== playing) {
       playing = playNow;

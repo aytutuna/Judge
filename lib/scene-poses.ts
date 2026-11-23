@@ -350,6 +350,13 @@ export function heroTargets(mode: SceneMode, live: Pose, out: Pose = zeroPose())
   return out;
 }
 
+/** Balls can be played with in the idle pose, and in a verdict once its
+ * beam has dropped; `pose` is the blended pose, `w` the story weight. */
+export function playable(mode: SceneMode, hero: Pose, pose: Pose, w: number): boolean {
+  const calm = w < 0.01 && pose.lift < 0.01 && pose.split < 0.01;
+  return calm && (mode.kind === "idle" || (mode.kind === "verdict" && hero.drop > 0.98));
+}
+
 /** out = a + (b - a) * w, per key. */
 export function blendPose(a: Pose, b: Pose, w: number, out: Pose = zeroPose()): Pose {
   for (const k of POSE_KEYS) out[k] = lerp(a[k], b[k], w);

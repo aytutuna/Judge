@@ -15,6 +15,7 @@ import {
   orbRadius,
   orbSlots,
   orbitPoint,
+  playable,
   snapStoryQ,
   sphereCentre,
   sphereScale,
@@ -224,6 +225,24 @@ describe("verdictWinner", () => {
     expect(verdictWinner({ tugA: 38, votes: ["other", "other", "other"] })).toBeNull();
     expect(verdictWinner({ tugA: 50, votes: ["a", "b", "other"] })).toBe(0);
     expect(verdictWinner({ tugA: 50, votes: [] })).toBeNull();
+  });
+});
+
+describe("playable", () => {
+  const verdict = { kind: "verdict", verdict: { tugA: 80, votes: ["a", "a", "b"] } } as const;
+  const calm = zeroPose();
+
+  it("is on when idle and calm, and off while the story or a lift is under way", () => {
+    expect(playable({ kind: "idle" }, calm, calm, 0)).toBe(true);
+    expect(playable({ kind: "idle" }, calm, calm, 0.5)).toBe(false);
+    expect(playable({ kind: "idle" }, calm, { ...calm, lift: 1 }, 0)).toBe(false);
+    expect(playable({ kind: "judging", beat: "lift" }, calm, calm, 0)).toBe(false);
+  });
+
+  it("waits for a verdict's beam to drop", () => {
+    expect(playable(verdict, { ...calm, drop: 0.5 }, calm, 0)).toBe(false);
+    expect(playable(verdict, { ...calm, drop: 1 }, calm, 0)).toBe(true);
+    expect(playable(verdict, { ...calm, drop: 1 }, { ...calm, split: 0.4 }, 0)).toBe(false);
   });
 });
 
