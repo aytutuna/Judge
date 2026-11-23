@@ -51,8 +51,8 @@ final class SignInWalkUITests: UITestCase {
                 return
             }
         }
-        let close = app.buttons["Close"]
-        if close.exists { press(close) }
+        app.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.5)).tap()
+        sleep(1)
     }
 
     private func typeArgument() {
