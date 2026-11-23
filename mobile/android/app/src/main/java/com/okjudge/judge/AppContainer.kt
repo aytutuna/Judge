@@ -175,6 +175,7 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
             drafts.save(null)
             accountEnded.tryEmit(Unit)
         }
+        account.onDeleted = { lastSignIn.clear() }
         account.onSignedIn = { analytics.track("sign_in_completed") }
         appScope.launch { settings.usageStats.collect { analytics.allowed = it } }
         appScope.launch {

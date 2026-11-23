@@ -254,7 +254,10 @@ class SignInViewModel(private val account: Account, private val last: LastSignIn
         if (!_state.value.canGoogle) return
         _state.update { it.copy(busy = SignInBusy.GOOGLE, error = null) }
         account.setAgeTicked(true)
-        viewModelScope.launch { finish(account.signInWithGoogle(host), SignInMethod.GOOGLE) }
+        viewModelScope.launch {
+            val result = account.signInWithGoogle(host)
+            finish(result, SignInMethod.GOOGLE, account.grantEmail)
+        }
     }
 
     fun signInDev() {

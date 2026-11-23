@@ -472,5 +472,6 @@ class SignInViewModelTest {
         vm.await { it.done }
         assertEquals("g-session", tokens.get())
         assertEquals(SignInMethod.GOOGLE, last.method)
+        assertEquals("ada@example.com", last.email)
     }
 }

@@ -16,6 +16,8 @@ class LastSignInStore(private val prefs: SharedPreferences) {
         prefs.edit().putString(METHOD, method.name).apply { if (email != null) putString(EMAIL, email) }.apply()
     }
 
+    fun clear() = prefs.edit().clear().apply()
+
     companion object {
         const val FILE = "last_signin"
         private const val METHOD = "method"

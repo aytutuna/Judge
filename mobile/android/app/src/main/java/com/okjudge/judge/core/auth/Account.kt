@@ -122,6 +122,13 @@ class Account(
     /** Runs when the user signed out or deleted the account (not when the session expired). */
     var onEndedByUser: suspend () -> Unit = {}
 
+    /** Runs after the account was deleted. */
+    var onDeleted: () -> Unit = {}
+
+    /** The address the last session grant named; Google gives none of its own. */
+    var grantEmail: String? = null
+        private set
+
     /** Runs after each successful sign-in. */
     var onSignedIn: () -> Unit = {}
 
@@ -380,6 +387,7 @@ class Account(
         // the box ticked (or the phone's 18+) is reported before "signed in".
         // A code sign-in reads /me too, for needsPassword.
         val reportsAge = byCode || _ageTicked.value || _platformAge.value == PlatformAge.ADULT
+        grantEmail = grant.user?.email?.takeIf { it.isNotBlank() }
         // Stored token and state change together, even if the screen goes away now.
         withContext(NonCancellable) {
             withContext(io) { tokens.set(grant.token) }
@@ -418,6 +426,7 @@ class Account(
             }
             if (deleted) {
                 withContext(NonCancellable) { endLocally(Notice.DELETED) }
+                onDeleted()
                 return true
             }
             // An expired session was already handled (and announced) by onSessionExpired.
