@@ -430,7 +430,14 @@ final class AccountModel {
         failure = nil
         if notice == .sessionExpired, isSignedIn { notice = nil }
         password = ""
-        guard isSignedIn else { return }
+        guard isSignedIn else {
+            // Reopening starts at the first screen, the address still filled in.
+            stopCountdown()
+            step = .choose
+            mode = .password
+            code = ""
+            return
+        }
         mode = .password
         if step == .choosePassword { step = .choose }
         // A report that failed leaves the age sheet up; the action waits for it.
@@ -770,8 +777,15 @@ final class AccountModel {
         resendIn = 0
     }
 
-    /// Google gives no address of its own, and Apple may hide it: the
-    /// email then stays what it was.
+    /// A deleted account leaves nothing to prefill or tag.
+    private func forgetLastSignIn() {
+        lastMethod = nil
+        email = ""
+        defaults.removeObject(forKey: Self.lastMethodKey)
+        defaults.removeObject(forKey: Self.lastEmailKey)
+    }
+
+    /// Apple may hide the address: the email then stays what it was.
     private func remember(_ method: LastMethod, email: String?) {
         lastMethod = method
         defaults.set(method.rawValue, forKey: Self.lastMethodKey)
@@ -850,6 +864,7 @@ final class AccountModel {
             try await api.deleteAccount()
             guard isSameSession(asked) else { return }
             clearSession(byUser: true)
+            forgetLastSignIn()
             notice = .deleted
         } catch let error as APIError where error.code == "signin_required" {
             guard isSameSession(asked) else { return }
@@ -859,6 +874,7 @@ final class AccountModel {
             guard isSameSession(asked) else { return }
             if let check, check.user == nil {
                 clearSession(byUser: true)
+                forgetLastSignIn()
                 notice = .deleted
             } else {
                 failure = .deleteFailed
@@ -1031,6 +1047,7 @@ extension AccountModel {
         config: ServerConfig? = nil
     ) {
         usesNetwork = false
+        lastMethod = nil
         self.providers = .loaded(providers)
         if let config { serverConfig = config }
         if let info {

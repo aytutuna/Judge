@@ -212,10 +212,12 @@ struct SignInView: View {
         @Bindable var account = account
         let creating = account.mode == .create
         return VStack(alignment: .leading, spacing: 12) {
-            Text(account.email)
+            // A read-only field, so AutoFill ties the password to the address.
+            TextField("", text: .constant(account.email))
+                .textContentType(.username)
                 .brandText(.slotTitle)
                 .foregroundStyle(Brand.ink)
-                .fixedSize(horizontal: false, vertical: true)
+                .allowsHitTesting(false)
             Text(creating ? L10n.signinPasswordNew(lang) : L10n.signinPassword(lang))
                 .brandText(.slotTitle)
                 .foregroundStyle(Brand.ink)
