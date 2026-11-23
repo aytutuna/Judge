@@ -153,7 +153,7 @@ internal fun initialOf(user: Viewer): String =
 
 /**
  * The bar of the three main pages: the menu button, the page's title (the New page has none), the
- * gamify button and the compose button, each on its own small round plate.
+ * gamify button (only where there is a court) and the compose button, each on its own small round plate.
  */
 @Composable
 internal fun PageBar(
@@ -161,6 +161,7 @@ internal fun PageBar(
     onMenu: () -> Unit,
     onNew: () -> Unit,
     menuFocus: FocusRequester,
+    showGamify: Boolean = true,
     gamify: Boolean = true,
     onGamify: (Boolean) -> Unit = {},
 ) {
@@ -185,7 +186,7 @@ internal fun PageBar(
         } else {
             Spacer(Modifier.weight(1f))
         }
-        GamifyButton(gamify, onGamify)
+        if (showGamify) GamifyButton(gamify, onGamify)
         BarButton(s.shellNew, JudgeIcons.plus(Palette.ink), onNew)
     }
 }

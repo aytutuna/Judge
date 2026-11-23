@@ -48,7 +48,8 @@ export function useBlurOnTapOutside(on = true) {
  * the desktop breakpoint), the page, the footer unless `footer` is off,
  * and below 960px a menu button at the start of the header. `toggle` shows the
  * language picker (pages whose chrome reads the client language store). The
- * home page hides the menu on the judging screen (`tabs`), and `onHome` lets
+ * home page hides the menu on the judging screen (`tabs`), `gamify` shows the
+ * court toggle on the pages that have a court, and `onHome` lets
  * it reset itself from the menu's first row.
  */
 export function AppShell({
@@ -56,6 +57,7 @@ export function AppShell({
   toggle = false,
   footer = true,
   tabs = true,
+  gamify = false,
   onHome,
   children,
 }: {
@@ -63,6 +65,7 @@ export function AppShell({
   toggle?: boolean;
   footer?: boolean;
   tabs?: boolean;
+  gamify?: boolean;
   onHome?: () => void;
   children: ReactNode;
 }) {
@@ -77,7 +80,7 @@ export function AppShell({
         toggle={toggle}
         lead={tabs ? <SideMenu lang={lang} pathname={pathname} onHome={onHome} /> : undefined}
       >
-        <GamifyButton lang={lang} />
+        {gamify ? <GamifyButton lang={lang} /> : null}
       </SiteHeader>
       {children}
       {footer ? <SiteFooter lang={lang} toggle={toggle} /> : null}

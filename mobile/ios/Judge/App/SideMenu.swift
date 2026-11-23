@@ -239,16 +239,17 @@ struct RootBarLeading: ToolbarContent {
     }
 }
 
-/// The trailing end of a root page's bar: the Gamify button and New, each on
-/// its own round plate. The profile is in the side menu.
+/// The trailing end of a root page's bar: the Gamify button (only where there
+/// is a court) and New, each on its own round plate. The profile is in the side menu.
 struct RootBarTrailing: ToolbarContent {
     var locked = false
+    var gamify = true
 
     var body: some ToolbarContent {
         // One item, because the bar spaces separate items too far apart.
         ToolbarItem(placement: .topBarTrailing) {
             HStack(spacing: 0) {
-                GamifyButton()
+                if gamify { GamifyButton() }
                 ComposeButton()
             }
             .disabled(locked)

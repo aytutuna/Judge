@@ -120,7 +120,7 @@ struct SettingsView: View {
             .clearBar()
             .toolbar {
                 RootBarLeading()
-                RootBarTrailing()
+                RootBarTrailing(gamify: false)
             }
             .sheet(item: $webLink) { link in
                 SafariView(url: link.url).ignoresSafeArea()

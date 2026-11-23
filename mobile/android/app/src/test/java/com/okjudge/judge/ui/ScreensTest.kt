@@ -710,6 +710,13 @@ class ScreensTest {
     }
 
     @Test
+    fun pageBar_hidesGamifyButtonOffTheCourtPages() {
+        compose.setContent { Themed(AppLang.EN) { PageBar("Settings", {}, {}, FocusRequester(), showGamify = false) } }
+        compose.onNodeWithTag(PageBarTags.GAMIFY).assertDoesNotExist()
+        compose.onNodeWithContentDescription(UiTestSupport.s(AppLang.EN).shellNew).assertExists()
+    }
+
+    @Test
     fun pageBar_initialFallsBackToEmail() {
         assertEquals("S", initialOf(Viewer("1", "a@b.c", " sam")))
         assertEquals("A", initialOf(Viewer("1", "a@b.c")))

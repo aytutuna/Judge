@@ -144,7 +144,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 
 /** Below this window height (a phone on its side) the court is dropped. */
-private val SHORT_WINDOW = 480.dp
+internal val SHORT_WINDOW = 480.dp
 
 /** From this width the court scales with the screen instead of stopping at phone size. */
 private val WIDE_SCREEN = 600.dp
