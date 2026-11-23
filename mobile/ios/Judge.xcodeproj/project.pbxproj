@@ -677,7 +677,7 @@
 			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm";
 			requirement = {
 				kind = exactVersion;
-				version = 5.96.1;
+				version = 5.103.2;
 			};
 		};
 		4A1D0000000000000000AC03 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
