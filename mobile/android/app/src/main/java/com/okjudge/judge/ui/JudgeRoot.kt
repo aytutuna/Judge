@@ -875,6 +875,8 @@ private fun AgeOverlay(
             val s = LocalStrings.current
             val lang = LocalLang.current
             val ticked by account.ageTicked.collectAsStateWithLifecycle()
+            // Signing in set the flag as consent; the sheet's box starts empty.
+            LaunchedEffect(Unit) { account.setAgeTicked(false) }
             val posting by account.agePosting.collectAsStateWithLifecycle()
             val error by account.ageError.collectAsStateWithLifecycle()
             val phone by account.platformAge.collectAsStateWithLifecycle()
