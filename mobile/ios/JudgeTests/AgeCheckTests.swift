@@ -317,7 +317,7 @@ final class AccountAgeTests: XCTestCase {
     }
 
     @MainActor
-    func testSignInWaitsForTheBox() async throws {
+    func testSigningInTicksTheBoxForTheReport() async throws {
         let api = JudgeAPI(
             baseURL: AppConfig.production,
             userAgent: "Judge-iOS/test",
@@ -326,11 +326,10 @@ final class AccountAgeTests: XCTestCase {
         )
         let account = AccountModel(api: api, ageRange: FakeAgeRange(.unknown))
         account.email = "ann@example.com"
-        XCTAssertFalse(account.canSendCode)
+        XCTAssertTrue(account.canSendCode, "no box stands in the way of signing in")
+        XCTAssertFalse(account.ageTicked)
         await account.sendCode(lang: .en)
-        XCTAssertEqual(router.count("POST", "/api/auth/email-otp/send-verification-otp"), 0)
-        account.setAgeTicked(true)
-        XCTAssertTrue(account.canSendCode)
+        XCTAssertTrue(account.ageTicked)
     }
 }
 
