@@ -7,12 +7,15 @@ enum SceneBeat: String, Sendable {
 
 /// What the bundled balance scene shows (lib/scene-bridge.ts SceneMode).
 enum SceneMode: Sendable, Equatable {
+    case idle
     case judging(SceneBeat)
     case verdict(tugA: Int, votes: [VerdictDisplay.Vote])
 
     /// The argument of `window.judgeScene.setMode`.
     var json: String {
         switch self {
+        case .idle:
+            return #"{"kind":"idle"}"#
         case .judging(let beat):
             return #"{"kind":"judging","beat":"\#(beat.rawValue)"}"#
         case .verdict(let tugA, let votes):
@@ -24,7 +27,7 @@ enum SceneMode: Sendable, Equatable {
     /// The flat balance's beam angle: level while judging, the verdict tilt after.
     var fallbackAngle: Double {
         switch self {
-        case .judging: return 0
+        case .idle, .judging: return 0
         case .verdict(let tugA, _): return VerdictDisplay.rotationDegrees(tugA: tugA)
         }
     }

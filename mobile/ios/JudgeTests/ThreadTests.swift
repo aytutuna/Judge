@@ -23,6 +23,7 @@ final class SceneModeTests: XCTestCase {
     }
 
     func testModeJSON() throws {
+        XCTAssertEqual(SceneMode.idle.json, #"{"kind":"idle"}"#)
         XCTAssertEqual(SceneMode.judging(.dig).json, #"{"kind":"judging","beat":"dig"}"#)
         XCTAssertEqual(SceneMode.judging(.deliberate).json, #"{"kind":"judging","beat":"deliberate"}"#)
         XCTAssertEqual(
@@ -43,6 +44,7 @@ final class SceneModeTests: XCTestCase {
 
     func testFallbackAngleIsTheVerdictTilt() {
         XCTAssertEqual(SceneMode.judging(.lift).fallbackAngle, 0)
+        XCTAssertEqual(SceneMode.idle.fallbackAngle, 0)
         XCTAssertEqual(SceneMode.verdict(tugA: 80, votes: []).fallbackAngle, VerdictDisplay.rotationDegrees(tugA: 80))
         XCTAssertEqual(SceneMode.verdict(tugA: 38, votes: []).fallbackAngle, 4.125, accuracy: 0.001)
     }

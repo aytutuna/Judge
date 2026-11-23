@@ -17,12 +17,15 @@ private struct SceneLiveKey: EnvironmentKey {
 
 /// The web's three.js balance (Resources/Scene, built by mobile/shared/scene)
 /// in a web view, driven through `window.judgeScene`. Decorative: the
-/// captions around it carry the meaning, and touches go to the page.
+/// captions around it carry the meaning, and touches go to the page. With
+/// `play` a touch that starts on a ball plays with it and the enclosing scroll
+/// view holds still until the ball is let go; any other touch scrolls as usual.
 /// `fallback` is drawn instead when the page reports it cannot render. The
 /// viewer's side is drawn green (`\.sides`), and the page takes the light or
 /// dark look from the colour scheme.
 struct SceneView<Fallback: View>: View {
     let mode: SceneMode
+    var play = false
     @ViewBuilder var fallback: Fallback
 
     @Environment(\.sceneLive) private var live
@@ -37,7 +40,7 @@ struct SceneView<Fallback: View>: View {
         ZStack {
             Brand.paper
             if live && !failed {
-                SceneWebView(mode: mode, you: sides.you == .b ? .b : .a, dark: colorScheme == .dark, active: visible && scenePhase == .active && tabShown) {
+                SceneWebView(mode: mode, play: play, you: sides.you == .b ? .b : .a, dark: colorScheme == .dark, active: visible && scenePhase == .active && tabShown) {
                     failed = true
                 }
             } else {
@@ -46,7 +49,7 @@ struct SceneView<Fallback: View>: View {
                     .padding(.vertical, 24)
             }
         }
-        .allowsHitTesting(false)
+        .allowsHitTesting(play)
         .accessibilityHidden(true)
         .onAppear { visible = true }
         .onDisappear { visible = false }
@@ -55,14 +58,16 @@ struct SceneView<Fallback: View>: View {
 
 extension SceneView where Fallback == BalanceCanvas {
     /// A still flat balance as the fallback, at the mode's tilt.
-    init(mode: SceneMode) {
+    init(mode: SceneMode, play: Bool = false) {
         self.mode = mode
+        self.play = play
         fallback = BalanceCanvas(angle: mode.fallbackAngle)
     }
 }
 
 private struct SceneWebView: UIViewRepresentable {
     let mode: SceneMode
+    let play: Bool
     let you: Party
     let dark: Bool
     /// On screen with the app in front.
@@ -76,7 +81,8 @@ private struct SceneWebView: UIViewRepresentable {
         let configuration = WKWebViewConfiguration()
         // The page posts "ready", "fallback" and "lost" from its first script.
         configuration.userContentController.add(bridge, name: SceneBridge.name)
-        let view = WKWebView(frame: .zero, configuration: configuration)
+        let view = PlayWebView(frame: .zero, configuration: configuration)
+        view.plays = play
         // Clear, so the paper behind shows until the page paints, in either
         // appearance.
         view.isOpaque = false
@@ -90,21 +96,43 @@ private struct SceneWebView: UIViewRepresentable {
         view.allowsLinkPreview = false
         view.accessibilityElementsHidden = true
         view.navigationDelegate = bridge
-        bridge.attach(view, mode: mode, you: you, dark: dark, onFallback: onFallback)
+        bridge.attach(view, mode: mode, play: play, you: you, dark: dark, onFallback: onFallback)
         return view
     }
 
     func updateUIView(_ view: WKWebView, context: Context) {
         let bridge = context.coordinator
         bridge.onFallback = onFallback
-        bridge.show(mode, you: you, dark: dark)
+        bridge.show(mode, play: play, you: you, dark: dark)
         bridge.setActive(active)
     }
 
     static func dismantleUIView(_ view: WKWebView, coordinator: SceneBridge) {
+        coordinator.letGo()
         view.stopLoading()
         view.navigationDelegate = nil
         view.configuration.userContentController.removeScriptMessageHandler(forName: SceneBridge.name)
+    }
+}
+
+/// Touches reach the page at once instead of after the scroll view's delay,
+/// so a quick throw is not taken for the start of a scroll.
+private final class PlayWebView: WKWebView {
+    var plays = false
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        guard plays else { return }
+        enclosingScrollView?.delaysContentTouches = window == nil
+    }
+}
+
+extension UIView {
+    /// The nearest scroll view above this view (not this view's own).
+    var enclosingScrollView: UIScrollView? {
+        var up = superview
+        while let view = up, !(view is UIScrollView) { up = view.superview }
+        return up as? UIScrollView
     }
 }
 
@@ -130,6 +158,9 @@ final class SceneBridge: NSObject, WKScriptMessageHandler, WKNavigationDelegate 
     var onFallback: () -> Void = {}
     private weak var webView: WKWebView?
     private var mode: SceneMode?
+    private var play = false
+    /// The scroll view whose pan is off while the page holds a ball.
+    private weak var held: UIScrollView?
     private var you = Party.a
     private var dark = false
     private var page = Page.idle
@@ -138,17 +169,19 @@ final class SceneBridge: NSObject, WKScriptMessageHandler, WKNavigationDelegate 
     /// its flat drawing until it is loaded again.
     private var lost = false
 
-    func attach(_ view: WKWebView, mode: SceneMode, you: Party, dark: Bool, onFallback: @escaping () -> Void) {
+    func attach(_ view: WKWebView, mode: SceneMode, play: Bool, you: Party, dark: Bool, onFallback: @escaping () -> Void) {
         webView = view
         self.mode = mode
+        self.play = play
         self.you = you
         self.dark = dark
         self.onFallback = onFallback
     }
 
-    func show(_ mode: SceneMode, you: Party, dark: Bool) {
-        guard mode != self.mode || you != self.you || dark != self.dark else { return }
+    func show(_ mode: SceneMode, play: Bool, you: Party, dark: Bool) {
+        guard mode != self.mode || play != self.play || you != self.you || dark != self.dark else { return }
         self.mode = mode
+        self.play = play
         self.you = you
         self.dark = dark
         send()
@@ -161,10 +194,26 @@ final class SceneBridge: NSObject, WKScriptMessageHandler, WKNavigationDelegate 
         active = value
         if value {
             if page == .idle || lost { load() }
-        } else if page == .loading {
-            webView?.stopLoading()
-            page = .idle
+        } else {
+            letGo()
+            if page == .loading {
+                webView?.stopLoading()
+                page = .idle
+            }
         }
+    }
+
+    /// Gives the enclosing scroll view its pan back.
+    func letGo() {
+        held?.panGestureRecognizer.isEnabled = true
+        held = nil
+    }
+
+    private func hold() {
+        guard held == nil, let scroll = webView?.enclosingScrollView else { return }
+        held = scroll
+        // Switching a pan off mid-touch cancels it, so the drag stays with the ball.
+        scroll.panGestureRecognizer.isEnabled = false
     }
 
     private func load() {
@@ -184,6 +233,7 @@ final class SceneBridge: NSObject, WKScriptMessageHandler, WKNavigationDelegate 
         let theme = dark ? "dark" : "light"
         webView.evaluateJavaScript("window.judgeScene.setTheme(\"\(theme)\")", completionHandler: nil)
         webView.evaluateJavaScript("window.judgeScene.setYou(\"\(you.rawValue)\")", completionHandler: nil)
+        webView.evaluateJavaScript("window.judgeScene.setPlay(\(play))", completionHandler: nil)
         webView.evaluateJavaScript("window.judgeScene.setMode(\(mode.json))", completionHandler: nil)
     }
 
@@ -223,6 +273,11 @@ final class SceneBridge: NSObject, WKScriptMessageHandler, WKNavigationDelegate 
             onFallback()
         case "lost":
             lost = true
+            letGo()
+        case "grab":
+            hold()
+        case "release":
+            letGo()
         default:
             // "ready": the mode already went with the load.
             break

@@ -189,23 +189,27 @@ struct HomeView: View {
     /// a two-sided case instead. Screenshots belong to the card they were added to.
     private func form(_ lang: AppLang, home: HomeModel) -> some View {
         VStack(alignment: .leading, spacing: 12) {
-            if app.gamify {
-                // A fixed 16:9 frame, so more sides scroll the page instead of
-                // squeezing the court. It gives way while writing, which
-                // takes the court off the page as the keyboard used to.
-                let writing = focused != nil || pinned
-                Color.clear
-                    .frame(maxWidth: .infinity)
-                    .aspectRatio(16.0 / 9.0, contentMode: .fit)
-                    .frame(maxHeight: writing ? 0 : nil)
-                    .frame(maxWidth: .infinity)
-                    .padding(.bottom, writing ? -12 : 0)
-                    .overlay {
+            // A fixed 16:9 frame, so more sides scroll the page instead of
+            // squeezing the court. It gives way while writing, which
+            // takes the court off the page as the keyboard used to. With
+            // the game off the same frame holds the balance to play with.
+            let writing = focused != nil || pinned
+            Color.clear
+                .frame(maxWidth: .infinity)
+                .aspectRatio(16.0 / 9.0, contentMode: .fit)
+                .frame(maxHeight: writing ? 0 : nil)
+                .frame(maxWidth: .infinity)
+                .padding(.bottom, writing ? -12 : 0)
+                .overlay {
+                    if app.gamify {
                         HomeCourt(busy: home.isBusy, covered: pageCovered || home.isJudging || !home.path.isEmpty, venue: home.homeVenue)
+                    } else {
+                        SceneView(mode: .idle, play: true)
+                            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
                     }
-                    .clipped()
-                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: writing)
-            }
+                }
+                .clipped()
+                .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: writing)
             ForEach(home.openSides, id: \.self) { side in
                 sideCard(lang, home: home, side: side, kind: .list)
             }

@@ -37,9 +37,9 @@ struct VerdictCard: View {
         VStack(alignment: .leading, spacing: 14) {
             // Three or four sides have no balance and no lean bar.
             if !result.isMany {
-                SceneView(mode: VerdictDisplay.sceneVerdict(result))
+                SceneView(mode: VerdictDisplay.sceneVerdict(result), play: true)
                     .frame(maxWidth: .infinity)
-                    .frame(height: 118)
+                    .frame(height: 172)
                     .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
             }
             if let note = status.note(lang) {
