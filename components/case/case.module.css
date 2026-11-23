@@ -221,19 +221,37 @@
 .tall {
   min-height: 220px;
 }
-/* The counter sits inside the box, bottom end; the text leaves room for it. */
+/* The counter and the send button sit inside the box, bottom end; the text leaves room for them. */
 .countBox {
   position: relative;
 }
 .countBox .textarea {
-  padding-bottom: 36px;
+  padding-bottom: 56px;
 }
-.countEnd {
+.boxFoot {
   position: absolute;
-  inset-inline-end: 16px;
-  bottom: 10px;
+  inset-inline: 16px;
+  bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.boxFoot .count {
   font-size: 13px;
-  pointer-events: none;
+}
+.send {
+  composes: send from "../home/HomeForm.module.css";
+  margin-inline-end: -6px;
+}
+.send:disabled > span {
+  opacity: 0.35;
+}
+.send[data-busy] > span {
+  opacity: 1;
+}
+.spinner {
+  composes: spinner from "../home/HomeForm.module.css";
 }
 .facts {
   display: flex;

@@ -274,9 +274,35 @@ export function AppealSection({
             readOnly={draft.sending}
             aria-describedby={draft.error ? "appeal-error" : undefined}
           />
-          <span className={`${styles.count} ${styles.countEnd}`} aria-hidden>
-            {count.toLocaleString(langTag(lang))} / {MAX_APPEAL_CHARS.toLocaleString(langTag(lang))}
-          </span>
+          <div className={styles.boxFoot}>
+            <span className={styles.count} aria-hidden>
+              {count.toLocaleString(langTag(lang))} / {MAX_APPEAL_CHARS.toLocaleString(langTag(lang))}
+            </span>
+            <button
+              type="submit"
+              className={styles.send}
+              data-busy={draft.sending ? "" : undefined}
+              disabled={!draft.canSubmit}
+              aria-label={draft.sending ? t(lang, "appeal.sending") : t(lang, "appeal.submit")}
+            >
+              <span>
+                {draft.sending ? (
+                  <span className={styles.spinner} aria-hidden />
+                ) : (
+                  <svg viewBox="0 0 20 20" aria-hidden>
+                    <path
+                      d="M10 16V4M4.5 9.5 10 4l5.5 5.5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                )}
+              </span>
+            </button>
+          </div>
         </div>
         {evidence ? (
           <EvidencePicker
@@ -296,9 +322,6 @@ export function AppealSection({
             {draft.error}
           </p>
         ) : null}
-        <button type="submit" className={`${account.btn} ${account.primary}`} disabled={!draft.canSubmit}>
-          {draft.sending ? t(lang, "appeal.sending") : t(lang, "appeal.submit")}
-        </button>
       </form>
     </section>
   );
