@@ -236,6 +236,11 @@
   align-items: center;
   justify-content: flex-end;
   gap: 12px;
+  /* Spans the box width; only the button should take clicks. */
+  pointer-events: none;
+}
+.boxFoot .send {
+  pointer-events: auto;
 }
 .boxFoot .count {
   font-size: 13px;
