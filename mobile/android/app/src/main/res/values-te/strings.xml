@@ -509,6 +509,9 @@
     <string name="history_answered">మీరు జవాబిచ్చారు</string>
     <string name="thread_label">ఈ వాదన</string>
     <string name="thread_you">మీరు రాసింది</string>
+    <string name="written_you">మీరు రాసింది</string>
+    <string name="written_each">ప్రతి పక్షం రాసింది</string>
+    <string name="written_yours">మీరు</string>
     <string name="thread_judges">జడ్జీలు</string>
     <string name="thread_placeholder">గొడవ ఏంటి? ఎవరు ఏమంటున్నారు, ఎందుకు?</string>
     <string name="thread_placeholder_two_sided">మీ వైపు నుంచి చూస్తే ఏం జరిగింది?</string>

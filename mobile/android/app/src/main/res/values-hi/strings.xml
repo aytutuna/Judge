@@ -509,6 +509,9 @@
     <string name="history_answered">आपने जवाब दिया</string>
     <string name="thread_label">यह बहस</string>
     <string name="thread_you">आपने लिखा</string>
+    <string name="written_you">आपने जो लिखा</string>
+    <string name="written_each">हर पक्ष ने जो लिखा</string>
+    <string name="written_yours">आप</string>
     <string name="thread_judges">जज</string>
     <string name="thread_placeholder">बहस किस बात पर है? कौन क्या कह रहा है, और क्यों?</string>
     <string name="thread_placeholder_two_sided">आपकी नज़र से क्या हुआ?</string>

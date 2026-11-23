@@ -509,6 +509,9 @@
     <string name="history_answered">Je hebt geantwoord</string>
     <string name="thread_label">Deze discussie</string>
     <string name="thread_you">Jij schreef</string>
+    <string name="written_you">Wat je schreef</string>
+    <string name="written_each">Wat elke kant schreef</string>
+    <string name="written_yours">Jij</string>
     <string name="thread_judges">De rechters</string>
     <string name="thread_placeholder">Waar gaat de discussie over? Wie zegt wat, en waarom?</string>
     <string name="thread_placeholder_two_sided">Wat is er gebeurd, vanuit jou gezien?</string>

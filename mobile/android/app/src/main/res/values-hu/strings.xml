@@ -509,6 +509,9 @@
     <string name="history_answered">Te válaszoltál</string>
     <string name="thread_label">Ez a vita</string>
     <string name="thread_you">Ezt írtad</string>
+    <string name="written_you">Amit írtál</string>
+    <string name="written_each">Amit az egyes felek írtak</string>
+    <string name="written_yours">Te</string>
     <string name="thread_judges">A bírák</string>
     <string name="thread_placeholder">Miről szól a vita? Ki mit mond, és miért?</string>
     <string name="thread_placeholder_two_sided">Mi történt a te szemszögedből?</string>

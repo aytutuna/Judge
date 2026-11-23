@@ -19,6 +19,7 @@ import { NextSteps } from "./shell/NextSteps";
 import { Thread } from "./thread/Thread";
 import { useVerdictAppeal, withRoundNames, type ShownVerdict } from "./VerdictAppeal";
 import { VerdictView } from "./VerdictView";
+import type { WrittenSides } from "./verdict/VerdictDetails";
 import { VerdictHistory } from "./case/VerdictHistory";
 import styles from "./verdict/verdict.module.css";
 
@@ -127,6 +128,9 @@ export function SharedVerdict({
     );
   }
 
+  const ownText = ownView?.originalStatus === "stored" ? (ownView.original?.text ?? null) : null;
+  // After a two-sided verdict the case party's own side moves into the details, next to the others.
+  const written: WrittenSides | null = ownView?.case && ownView.otherSides?.length ? { own: ownText, others: ownView.otherSides } : null;
   const selfParty = (ownView?.case?.party.toUpperCase() ?? "A") as SelfParty;
   // The writer's own display name, as the share page shows it (names on).
   const selfDisplayName = shownDisplay?.namesVisible ? (shownDisplay[selfParty.toLowerCase() as PartyId] ?? null) : null;
@@ -145,7 +149,8 @@ export function SharedVerdict({
         <h1 className={kickerClassName}>{t(initialLang, "shared.ownKicker")}</h1>
         <Thread
           lang={initialLang}
-          argument={ownView.originalStatus === "stored" ? (ownView.original?.text ?? null) : null}
+          argument={ownText}
+          unwritten={written !== null && ownText !== null}
           missing={ownView.originalStatus === "unreadable" ? "owner.unreadable" : "owner.notStored"}
           verdict={
             <div lang={lang} dir={langDir(lang)} className="flex flex-col gap-4 min-w-0">
@@ -163,6 +168,7 @@ export function SharedVerdict({
                 onAddContext={appeal.onAddContext}
                 focusAppeal={appeal.finished}
                 fresh={fresh}
+                written={written}
               />
             </div>
           }

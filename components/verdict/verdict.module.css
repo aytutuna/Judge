@@ -470,6 +470,15 @@
   line-height: 1.5;
 }
 
+.writtenText {
+  margin: 0;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
 .tiles {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -856,6 +865,27 @@
 }
 
 /* The ask-once "Help improve Judge?" card. */
+.collapse {
+  display: grid;
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transition:
+    grid-template-rows 280ms ease-out,
+    opacity 280ms ease-out;
+}
+.collapsed {
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
+.collapseClip {
+  overflow: hidden;
+  min-height: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .collapse {
+    transition: none;
+  }
+}
 .consent {
   padding: 14px 16px;
   border: 1px solid var(--line-2);

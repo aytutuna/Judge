@@ -12,14 +12,14 @@ struct ConsentCard: View {
                 Text(L10n.consentCardTitle(lang))
                     .brandText(.slotTitle)
                     .foregroundStyle(Brand.ink)
-                Text(L10n.consentCardBody(lang))
+                Text(bodyWithLink)
                     .brandText(.footnote)
                     .foregroundStyle(Brand.muted)
-                Button(L10n.consentCardLink(lang)) {
-                    webLink = WebLink(url: app.config.helpImproveURL)
-                }
-                .brandText(.footnote)
-                .foregroundStyle(Brand.terraInk)
+                    .tint(Brand.terraInk)
+                    .environment(\.openURL, OpenURLAction { _ in
+                        webLink = WebLink(url: app.config.helpImproveURL)
+                        return .handled
+                    })
                 HStack(spacing: 16) {
                     Button(L10n.consentCardYes(lang)) {
                         Task { await app.consent.answerCard(true, lang: lang) }
@@ -35,10 +35,20 @@ struct ConsentCard: View {
             .padding(14)
             .background(RoundedRectangle(cornerRadius: 14).fill(Brand.paper))
             .accessibilityElement(children: .contain)
+            .transition(.opacity.combined(with: .scale(scale: 0.96, anchor: .top)))
             .sheet(item: $webLink) { link in
                 SafariView(url: link.url).ignoresSafeArea()
             }
         }
+    }
+
+    /// The body with "How it works" as a tappable run at the end of the sentence.
+    private var bodyWithLink: AttributedString {
+        var link = AttributedString(L10n.consentCardLink(lang))
+        link.link = app.config.helpImproveURL
+        link.foregroundColor = Brand.terraInk
+        link.underlineStyle = Text.LineStyle(pattern: .solid)
+        return AttributedString(L10n.consentCardBody(lang) + " ") + link
     }
 }
 
@@ -50,16 +60,22 @@ struct RatingRow: View {
     @State private var rating: Rating?
 
     var body: some View {
-        HStack(spacing: 14) {
-            Spacer()
-            Text(L10n.ratingPrompt(lang))
-                .brandText(.footnote)
-                .foregroundStyle(Brand.muted)
-            thumb(.up, "hand.thumbsup", L10n.ratingFair(lang))
-            thumb(.down, "hand.thumbsdown", L10n.ratingNotFair(lang))
-            Spacer()
+        // The consent card goes first; the row takes its place once it is answered.
+        Group {
+            if !app.consent.showCard {
+                HStack(spacing: 14) {
+                    Spacer()
+                    Text(L10n.ratingPrompt(lang))
+                        .brandText(.footnote)
+                        .foregroundStyle(Brand.muted)
+                    thumb(.up, "hand.thumbsup", L10n.ratingFair(lang))
+                    thumb(.down, "hand.thumbsdown", L10n.ratingNotFair(lang))
+                    Spacer()
+                }
+                .padding(.top, 8)
+                .transition(.opacity.combined(with: .scale(scale: 0.96, anchor: .top)))
+            }
         }
-        .padding(.top, 8)
         .task(id: "\(id) \(app.account.isSignedIn)") {
             rating = nil
             guard app.account.isSignedIn else { return }

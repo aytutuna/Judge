@@ -503,6 +503,9 @@
     <string name="history_answered">คุณเป็นฝ่ายตอบ</string>
     <string name="thread_label">เรื่องนี้</string>
     <string name="thread_you">คุณเขียน</string>
+    <string name="written_you">สิ่งที่คุณเขียน</string>
+    <string name="written_each">สิ่งที่แต่ละฝ่ายเขียน</string>
+    <string name="written_yours">คุณ</string>
     <string name="thread_judges">กรรมการ</string>
     <string name="thread_placeholder">เถียงกันเรื่องอะไร? ใครพูดว่าอะไร และเพราะอะไร?</string>
     <string name="thread_placeholder_two_sided">จากมุมของคุณ เกิดอะไรขึ้น?</string>

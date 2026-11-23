@@ -635,6 +635,9 @@ enum L10n {
     static func historyAnswered(_ lang: AppLang) -> String { string("history.answered", lang) }
     static func threadLabel(_ lang: AppLang) -> String { string("thread.label", lang) }
     static func threadYou(_ lang: AppLang) -> String { string("thread.you", lang) }
+    static func writtenYou(_ lang: AppLang) -> String { string("written.you", lang) }
+    static func writtenEach(_ lang: AppLang) -> String { string("written.each", lang) }
+    static func writtenYours(_ lang: AppLang) -> String { string("written.yours", lang) }
     static func threadJudges(_ lang: AppLang) -> String { string("thread.judges", lang) }
     static func threadPlaceholder(_ lang: AppLang) -> String { string("thread.placeholder", lang) }
     static func threadPlaceholderTwoSided(_ lang: AppLang) -> String { string("thread.placeholderTwoSided", lang) }
@@ -1257,6 +1260,9 @@ enum L10n {
         "history.answered",
         "thread.label",
         "thread.you",
+        "written.you",
+        "written.each",
+        "written.yours",
         "thread.judges",
         "thread.placeholder",
         "thread.placeholderTwoSided",

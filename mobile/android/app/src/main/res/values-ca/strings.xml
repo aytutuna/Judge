@@ -515,6 +515,9 @@
     <string name="history_answered">Has respost</string>
     <string name="thread_label">Aquesta discussió</string>
     <string name="thread_you">Has escrit</string>
+    <string name="written_you">El que has escrit</string>
+    <string name="written_each">El que ha escrit cada part</string>
+    <string name="written_yours">Tu</string>
     <string name="thread_judges">Els jutges</string>
     <string name="thread_placeholder">De què va la discussió? Qui diu què, i per què?</string>
     <string name="thread_placeholder_two_sided">Què va passar, des del teu punt de vista?</string>

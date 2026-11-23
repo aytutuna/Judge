@@ -509,6 +509,9 @@
     <string name="history_answered">நீங்கள் பதில் அளித்தீர்கள்</string>
     <string name="thread_label">இந்த வாக்குவாதம்</string>
     <string name="thread_you">நீங்கள் எழுதியது</string>
+    <string name="written_you">நீங்கள் எழுதியது</string>
+    <string name="written_each">ஒவ்வொரு தரப்பும் எழுதியது</string>
+    <string name="written_yours">நீங்கள்</string>
     <string name="thread_judges">நடுவர்கள்</string>
     <string name="thread_placeholder">என்ன வாக்குவாதம்? யார் என்ன சொல்கிறார்கள், ஏன்?</string>
     <string name="thread_placeholder_two_sided">உங்கள் பார்வையில் என்ன நடந்தது?</string>

@@ -503,6 +503,9 @@
     <string name="history_answered">你已回覆</string>
     <string name="thread_label">這場爭論</string>
     <string name="thread_you">你寫的</string>
+    <string name="written_you">你寫的內容</string>
+    <string name="written_each">雙方各自寫的內容</string>
+    <string name="written_yours">你</string>
     <string name="thread_judges">評審</string>
     <string name="thread_placeholder">在吵什麼？誰說了什麼、為什麼？</string>
     <string name="thread_placeholder_two_sided">從你的角度看，發生了什麼事？</string>

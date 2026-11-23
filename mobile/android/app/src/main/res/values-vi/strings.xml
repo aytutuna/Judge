@@ -503,6 +503,9 @@
     <string name="history_answered">Bạn đã trả lời</string>
     <string name="thread_label">Cuộc tranh cãi này</string>
     <string name="thread_you">Bạn đã viết</string>
+    <string name="written_you">Điều bạn đã viết</string>
+    <string name="written_each">Điều mỗi bên đã viết</string>
+    <string name="written_yours">Bạn</string>
     <string name="thread_judges">Ban giám khảo</string>
     <string name="thread_placeholder">Tranh cãi chuyện gì? Ai nói gì, vì sao?</string>
     <string name="thread_placeholder_two_sided">Theo bạn, chuyện gì đã xảy ra?</string>

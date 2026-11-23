@@ -509,6 +509,9 @@
     <string name="history_answered">Sen cevapladın</string>
     <string name="thread_label">Bu tartışma</string>
     <string name="thread_you">Senin yazdığın</string>
+    <string name="written_you">Senin yazdığın</string>
+    <string name="written_each">Her tarafın yazdığı</string>
+    <string name="written_yours">Sen</string>
     <string name="thread_judges">Yargıçlar</string>
     <string name="thread_placeholder">Tartışma ne? Kim ne diyor, neden?</string>
     <string name="thread_placeholder_two_sided">Senin gözünden ne oldu?</string>

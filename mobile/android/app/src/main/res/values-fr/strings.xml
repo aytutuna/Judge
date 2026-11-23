@@ -515,6 +515,9 @@
     <string name="history_answered">Tu as répondu</string>
     <string name="thread_label">Ce débat</string>
     <string name="thread_you">Tu as écrit</string>
+    <string name="written_you">Ce que vous avez écrit</string>
+    <string name="written_each">Ce qu\'a écrit chaque partie</string>
+    <string name="written_yours">Vous</string>
     <string name="thread_judges">Les juges</string>
     <string name="thread_placeholder">C’est quoi, le débat ? Qui dit quoi, et pourquoi ?</string>
     <string name="thread_placeholder_two_sided">Qu’est-ce qui s’est passé, de ton point de vue ?</string>

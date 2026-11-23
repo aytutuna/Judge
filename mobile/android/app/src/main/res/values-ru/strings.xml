@@ -521,6 +521,9 @@
     <string name="history_answered">Вы ответили</string>
     <string name="thread_label">Этот спор</string>
     <string name="thread_you">Вы написали</string>
+    <string name="written_you">Что вы написали</string>
+    <string name="written_each">Что написала каждая сторона</string>
+    <string name="written_yours">Вы</string>
     <string name="thread_judges">Судьи</string>
     <string name="thread_placeholder">О чём спор? Кто что говорит и почему?</string>
     <string name="thread_placeholder_two_sided">Что произошло, на ваш взгляд?</string>

@@ -515,6 +515,9 @@
     <string name="history_answered">Respondiste</string>
     <string name="thread_label">Esta discusión</string>
     <string name="thread_you">Tú escribiste</string>
+    <string name="written_you">Lo que escribiste</string>
+    <string name="written_each">Lo que escribió cada parte</string>
+    <string name="written_yours">Tú</string>
     <string name="thread_judges">Los jueces</string>
     <string name="thread_placeholder">¿De qué trata la discusión? ¿Quién dice qué y por qué?</string>
     <string name="thread_placeholder_two_sided">¿Qué pasó, según tú?</string>

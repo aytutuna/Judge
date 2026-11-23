@@ -509,6 +509,9 @@
     <string name="history_answered">तुम्ही उत्तर दिले</string>
     <string name="thread_label">हा वाद</string>
     <string name="thread_you">तुम्ही लिहिले</string>
+    <string name="written_you">तुम्ही जे लिहिले</string>
+    <string name="written_each">प्रत्येक बाजूने जे लिहिले</string>
+    <string name="written_yours">तुम्ही</string>
     <string name="thread_judges">परीक्षक</string>
     <string name="thread_placeholder">वाद काय आहे? कोण काय म्हणते, आणि का?</string>
     <string name="thread_placeholder_two_sided">तुमच्या नजरेतून काय घडले?</string>

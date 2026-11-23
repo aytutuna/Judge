@@ -521,6 +521,9 @@
     <string name="history_answered">Odgovor na povabilo</string>
     <string name="thread_label">Ta prepir</string>
     <string name="thread_you">Tvoje besedilo</string>
+    <string name="written_you">Kar si napisal</string>
+    <string name="written_each">Kar je napisala vsaka stran</string>
+    <string name="written_yours">Ti</string>
     <string name="thread_judges">Sodniki</string>
     <string name="thread_placeholder">Za kaj se prepirate? Kdo kaj trdi in zakaj?</string>
     <string name="thread_placeholder_two_sided">Kaj se je po tvoje zgodilo?</string>

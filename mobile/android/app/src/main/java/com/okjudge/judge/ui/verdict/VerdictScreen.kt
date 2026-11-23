@@ -5,6 +5,13 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -79,6 +86,8 @@ fun VerdictRoute(
     LaunchedEffect(lang) { viewModel.onUiLang(lang) }
     val state by viewModel.state.collectAsStateWithLifecycle()
     val rating by viewModel.rating.collectAsStateWithLifecycle()
+    val written by viewModel.written.collectAsStateWithLifecycle()
+    LaunchedEffect(id, signedOut) { viewModel.loadWritten(signedOut) }
     val appealState = appeal?.let { it.state.collectAsStateWithLifecycle().value }
     val context = LocalContext.current
     val s = LocalStrings.current
@@ -163,19 +172,31 @@ fun VerdictRoute(
         ) {
             val restored = remember(saved.nameMap, selfLang) { PartyNames.restoredNames(saved.nameMap, selfLang, view.result.sideCount) }
             if (details) {
-                VerdictDetails(shown, parties, restored, actions, width.padding(bottom = 32.dp), showShare = false)
+                VerdictDetails(shown, parties, restored, actions, width.padding(bottom = 32.dp), showShare = false, written = written)
             } else {
                 RulingSummary(
                     shown, parties, actions, onDetails = { showDetails(true) }, reducedMotion = rememberReducedMotion(), modifier = width,
-                    restoredNames = restored, showShare = false,
+                    restoredNames = restored, showShare = false, written = written,
                 )
                 // The sheet takes the form; re-judging, or why no more context fits, shows here.
                 if (appealState?.panel == true) AppealNote(area, width.padding(top = 16.dp))
                 Spacer(Modifier.height(32.dp))
             }
             if (feedback) {
-                if (askConsent) ConsentCard(onConsent, onConsentInfo, width.padding(bottom = 16.dp))
-                RatingRow(rating, onRate = { if (signedOut) signInSheet = true else viewModel.rate(it) }, modifier = width.padding(bottom = 24.dp))
+                AnimatedVisibility(
+                    visible = askConsent,
+                    exit = fadeOut(tween(280, easing = FastOutSlowInEasing)) + shrinkVertically(tween(280, easing = FastOutSlowInEasing)),
+                ) {
+                    ConsentCard(onConsent, onConsentInfo, width.padding(bottom = 16.dp))
+                }
+                // The row waits for the consent card and takes its place once it is answered.
+                AnimatedVisibility(
+                    visible = !askConsent,
+                    enter = fadeIn(tween(280, easing = FastOutSlowInEasing)) + expandVertically(tween(280, easing = FastOutSlowInEasing)),
+                    exit = fadeOut(tween(280, easing = FastOutSlowInEasing)) + shrinkVertically(tween(280, easing = FastOutSlowInEasing)),
+                ) {
+                    RatingRow(rating, onRate = { if (signedOut) signInSheet = true else viewModel.rate(it) }, modifier = width.padding(bottom = 24.dp))
+                }
             }
         }
         if (appeal != null && appealState != null && appealState.open && area.opensSheet) {

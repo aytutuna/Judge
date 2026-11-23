@@ -533,6 +533,9 @@
     <string name="history_answered">قضية رددت فيها</string>
     <string name="thread_label">هذا الخلاف</string>
     <string name="thread_you">ما كتبته</string>
+    <string name="written_you">ما كتبتَه</string>
+    <string name="written_each">ما كتبه كل طرف</string>
+    <string name="written_yours">أنت</string>
     <string name="thread_judges">القضاة</string>
     <string name="thread_placeholder">ما الخلاف؟ مَن يقول ماذا، ولماذا؟</string>
     <string name="thread_placeholder_two_sided">ماذا حدث من وجهة نظرك؟</string>

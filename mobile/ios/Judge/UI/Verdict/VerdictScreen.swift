@@ -21,6 +21,8 @@ private struct VerdictScreenContent: View {
     @State private var appeal: VerdictAppealModel
     @State private var showPricing = false
     @State private var viewed = false
+    /// The signed-in writer's own text, from the server.
+    @State private var written: WrittenSides?
 
     private static let topID = "verdict.top"
     private static let appealID = "verdict.appeal"
@@ -64,7 +66,8 @@ private struct VerdictScreenContent: View {
                         shareInBar: true,
                         appealArea: area,
                         appealStartsOpen: appeal.open,
-                        onAppealOpen: { appeal.openForm() }
+                        onAppealOpen: { appeal.openForm() },
+                        written: written
                     ) {
                         AppealSheet(
                             model: appeal,
@@ -109,6 +112,13 @@ private struct VerdictScreenContent: View {
                 guard finished else { return }
                 withAnimation { proxy.scrollTo(Self.topID, anchor: .top) }
             }
+        }
+        .task(id: signedIn) {
+            guard signedIn, app.usesNetwork else {
+                written = nil
+                return
+            }
+            written = try? await app.api.writtenSides(id: model.session.id)
         }
         .task(id: signedIn) {
             if signedIn {
@@ -161,6 +171,8 @@ struct VerdictSections<Appeal: View>: View {
     /// Opens the sheet as the screen comes up (screenshot states).
     var appealStartsOpen = false
     var onAppealOpen: () -> Void = {}
+    /// What the writer wrote, shown in the details of their own screen only.
+    var written: WrittenSides?
     /// The sheet's content.
     @ViewBuilder var appeal: () -> Appeal
 
@@ -206,7 +218,7 @@ struct VerdictSections<Appeal: View>: View {
                 status: view.status
             )
             if !result.modelRefused {
-                VerdictReasons(result: result, parties: parties, lang: lang) { showDetails = true }
+                VerdictReasons(result: result, parties: parties, lang: lang, written: written) { showDetails = true }
             }
             if offered {
                 VerdictAppealButton(lang: lang) { openAppeal() }
@@ -222,6 +234,7 @@ struct VerdictSections<Appeal: View>: View {
                 lang: lang,
                 shareURL: shareURL,
                 onAddContext: offered ? { openAppeal() } : nil,
+                written: written,
                 appealShown: $detailsAppealShown,
                 appeal: appeal
             )

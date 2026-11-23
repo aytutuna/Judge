@@ -509,6 +509,9 @@
     <string name="history_answered">ನೀವು ಉತ್ತರಿಸಿದ್ದೀರಿ</string>
     <string name="thread_label">ಈ ವಾದ</string>
     <string name="thread_you">ನೀವು ಬರೆದದ್ದು</string>
+    <string name="written_you">ನೀವು ಬರೆದದ್ದು</string>
+    <string name="written_each">ಪ್ರತಿ ಕಡೆಯವರು ಬರೆದದ್ದು</string>
+    <string name="written_yours">ನೀವು</string>
     <string name="thread_judges">ತೀರ್ಪುಗಾರರು</string>
     <string name="thread_placeholder">ವಾದ ಏನು? ಯಾರು ಏನು ಹೇಳುತ್ತಾರೆ, ಯಾಕೆ?</string>
     <string name="thread_placeholder_two_sided">ನಿಮ್ಮ ದೃಷ್ಟಿಯಲ್ಲಿ ಏನಾಯಿತು?</string>

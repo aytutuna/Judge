@@ -509,6 +509,9 @@
     <string name="history_answered">Du har svaret</string>
     <string name="thread_label">Denne diskussion</string>
     <string name="thread_you">Du skrev</string>
+    <string name="written_you">Det du skrev</string>
+    <string name="written_each">Det hver side skrev</string>
+    <string name="written_yours">Dig</string>
     <string name="thread_judges">Dommerne</string>
     <string name="thread_placeholder">Hvad handler diskussionen om? Hvem siger hvad, og hvorfor?</string>
     <string name="thread_placeholder_two_sided">Hvad skete der set fra din side?</string>

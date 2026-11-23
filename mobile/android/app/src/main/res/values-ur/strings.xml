@@ -509,6 +509,9 @@
     <string name="history_answered">آپ نے جواب دیا</string>
     <string name="thread_label">یہ بحث</string>
     <string name="thread_you">آپ نے لکھا</string>
+    <string name="written_you">آپ نے جو لکھا</string>
+    <string name="written_each">ہر فریق نے جو لکھا</string>
+    <string name="written_yours">آپ</string>
     <string name="thread_judges">جج</string>
     <string name="thread_placeholder">بحث کس بات پر ہے؟ کون کیا کہتا ہے، اور کیوں؟</string>
     <string name="thread_placeholder_two_sided">آپ کی نظر میں کیا ہوا؟</string>

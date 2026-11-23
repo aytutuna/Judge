@@ -11,6 +11,7 @@ import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.model.ParsedResult
 import com.okjudge.judge.core.model.Rating
 import com.okjudge.judge.core.model.VerdictShape
+import com.okjudge.judge.core.model.WrittenSides
 import com.okjudge.judge.core.model.WireJson
 import com.okjudge.judge.i18n.AppLang
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -170,6 +171,28 @@ class VerdictViewModel(
         viewModelScope.launch {
             val res = api.rating(rulingId)
             if (res is ApiResult.Ok && ratedId == rulingId) _rating.value = res.value
+        }
+    }
+
+    private val _written = MutableStateFlow<WrittenSides?>(null)
+
+    /** The signed-in writer's own text; null when there is none to show. */
+    val written: StateFlow<WrittenSides?> = _written
+
+    private var writtenLoaded = false
+
+    /** Fetches once per sign-in; signing out drops it, and a failed fetch may be tried again. */
+    fun loadWritten(signedOut: Boolean) {
+        if (signedOut) {
+            writtenLoaded = false
+            _written.value = null
+            return
+        }
+        if (writtenLoaded) return
+        writtenLoaded = true
+        viewModelScope.launch {
+            val res = api.writtenSides(id)
+            if (res is ApiResult.Ok) _written.value = res.value.takeIf { !it.isEmpty } else writtenLoaded = false
         }
     }
 
