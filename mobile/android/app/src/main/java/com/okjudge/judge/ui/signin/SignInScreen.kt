@@ -194,7 +194,9 @@ fun SignInScreen(
                     GhostButton(s.signinDev, null, it, Modifier.padding(top = 16.dp).testTag(SignInTags.DEV), enabled = state.busy == null)
                 }
 
-                LegalLine(s, actions.onOpenTerms, actions.onOpenPrivacy, Modifier.padding(top = 32.dp))
+                if (state.step == SignInStep.EMAIL) {
+                    LegalLine(s, actions.onOpenTerms, actions.onOpenPrivacy, Modifier.padding(top = 32.dp))
+                }
             }
         }
     }
