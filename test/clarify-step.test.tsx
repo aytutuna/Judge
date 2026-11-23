@@ -74,3 +74,56 @@ describe("ClarifyStep", () => {
     expect(html).toContain('tabindex="-1"');
   });
 });
+
+describe("ClarifyStep options", () => {
+  const WITH_OPTIONS = [{ id: "q1", text: "Did B agree?", options: ["Yes, by text", "No, never"] }];
+  const render = (answers: Record<string, string>, lang: "en" | "ar" = "en") =>
+    renderToStaticMarkup(
+      <ClarifyStep
+        lang={lang}
+        questions={WITH_OPTIONS}
+        answers={answers}
+        onAnswer={noop}
+        onSubmit={noop}
+        onSkip={noop}
+        onBack={noop}
+      />,
+    );
+
+  it("shows a radio group of the options plus Other, nothing picked, no text box", () => {
+    const html = render({});
+    expect(html).toContain('role="radiogroup"');
+    expect(html).toContain('aria-labelledby="clarify-q1-q"');
+    expect(html.match(/type="radio"/g)).toHaveLength(3);
+    expect(html).not.toContain("checked");
+    expect(html).toContain("Yes, by text");
+    expect(html).toContain(`>${t("en", "clarify.other")}</span>`);
+    expect(html).not.toContain("<textarea");
+  });
+
+  it("checks the option that matches an earlier answer", () => {
+    const html = render({ q1: "No, never" });
+    expect(html.match(/checked=""/g)).toHaveLength(1);
+    expect(html).toMatch(/checked=""[^>]*\/><span[^>]*>No, never</);
+    expect(html).not.toContain("<textarea");
+  });
+
+  it("opens the Other box with an earlier typed answer", () => {
+    const html = render({ q1: "Only verbally" });
+    expect(html).toContain(">Only verbally</textarea>");
+    expect(html).toMatch(/checked=""[^>]*\/><span[^>]*>Other</);
+  });
+
+  it("keeps the text box alone for a question without options", () => {
+    const html = renderToStaticMarkup(
+      <ClarifyStep lang="en" questions={QUESTIONS} answers={{}} onAnswer={noop} onSubmit={noop} onSkip={noop} onBack={noop} />,
+    );
+    expect(html).not.toContain('type="radio"');
+    expect(html.match(/<textarea/g)).toHaveLength(2);
+  });
+
+  it("builds the request from the chosen option text", () => {
+    const out = buildClarifications(WITH_OPTIONS, { q1: "Yes, by text" }, false);
+    expect(out).toEqual([{ question: "Did B agree?", answer: "Yes, by text" }]);
+  });
+});
