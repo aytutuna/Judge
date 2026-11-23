@@ -114,12 +114,56 @@ class PremiumScreensTest {
         }
         compose.onNodeWithText(en.clarifyTitle).assertExists()
         compose.onNodeWithText(questions[1].text).assertExists()
-        compose.onNodeWithTag(ClarifyTags.answer(0)).performTextInput("x".repeat(520))
+        compose.onNodeWithTag(ClarifyTags.answer(1)).performTextInput("x".repeat(520))
         compose.onNodeWithTag(ClarifyTags.SUBMIT).performClick()
         compose.onNodeWithTag(ClarifyTags.SKIP).performClick()
         compose.onNodeWithTag(ClarifyTags.BACK).performClick()
-        assertEquals("answer:q1=" + "x".repeat(500), events.first())
+        assertEquals("answer:q2=" + "x".repeat(500), events.first())
         assertEquals(listOf("submit", "skip", "back"), events.drop(1))
+    }
+
+    @Test
+    fun clarify_optionsPickOtherAndUnpick() {
+        val questions = WireJson.json.decodeFromString(
+            ClarifyResponse.serializer(),
+            Fixtures.verdicts["clarifyResponse"]!!.jsonObject["two_questions"].toString(),
+        ).questions
+        assertEquals(2, questions[0].options.size)
+        assertTrue(questions[1].options.isEmpty())
+        val events = mutableListOf<String>()
+        compose.setContent {
+            Themed(AppLang.EN) {
+                var answers by remember { mutableStateOf(mapOf<String, String>()) }
+                ClarifyScreen(
+                    questions = questions,
+                    answers = answers,
+                    onAnswer = { id, v -> answers = answers + (id to v); events += "$id=$v" },
+                    onSubmit = {},
+                    onSkip = {},
+                    onBack = {},
+                )
+            }
+        }
+        compose.onNodeWithTag(ClarifyTags.answer(0)).assertDoesNotExist()
+        compose.onNodeWithTag(ClarifyTags.option(0, 1)).performClick()
+        compose.onNodeWithTag(ClarifyTags.other(0)).performClick()
+        compose.onNodeWithTag(ClarifyTags.answer(0)).performTextInput("Only verbally")
+        compose.onNodeWithTag(ClarifyTags.option(0, 0)).performClick()
+        compose.onNodeWithTag(ClarifyTags.answer(0)).assertDoesNotExist()
+        compose.onNodeWithTag(ClarifyTags.other(0)).performClick()
+        compose.onNodeWithTag(ClarifyTags.answer(0)).assertExists()
+        compose.onNodeWithTag(ClarifyTags.other(0)).performClick()
+        assertEquals(
+            listOf(
+                "q1=" + questions[0].options[1],
+                "q1=",
+                "q1=Only verbally",
+                "q1=" + questions[0].options[0],
+                "q1=Only verbally",
+                "q1=",
+            ),
+            events,
+        )
     }
 
     private fun premiumHome(evidence: EvidenceState) = HomeUiState(

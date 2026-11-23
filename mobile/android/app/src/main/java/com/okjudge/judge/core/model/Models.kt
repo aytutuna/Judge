@@ -283,7 +283,7 @@ data class VerdictSide(val text: String, val name: String? = null)
 data class ClarifyRequest(val argument: String, val lang: String = "en")
 
 @Serializable
-data class ClarifyQuestion(val id: String = "", val text: String = "")
+data class ClarifyQuestion(val id: String = "", val text: String = "", val options: List<String> = emptyList())
 
 @Serializable
 data class ClarifyResponse(val questions: List<ClarifyQuestion> = emptyList())
