@@ -3,9 +3,13 @@ import {
   HemisphereLight,
   NeutralToneMapping,
   PerspectiveCamera,
+  Plane,
   PMREMGenerator,
+  Raycaster,
   Scene,
   SRGBColorSpace,
+  Vector2,
+  Vector3,
   VSMShadowMap,
   WebGLRenderer,
 } from "three";
@@ -45,6 +49,7 @@ import {
   verdictWinner,
   zeroPose,
 } from "@/lib/scene-poses";
+import { createPlay, type Ball } from "@/lib/scene-play";
 import { createBalance, type Winner } from "./balance";
 import { mobileSceneBand } from "@/lib/scene-layout";
 import { frameCamera, frameCard, projectContent, type Band } from "./camera";
@@ -65,6 +70,8 @@ export type EngineOptions = {
   /** "stage": the page-wide hero/story layout. "card": centred in a small
    * box of its own (the judging card). */
   frame?: "stage" | "card";
+  /** Balls can be picked up, thrown and pulled back by a magnet. */
+  play?: boolean;
   /** After shaders are compiled and the first frame is on screen. */
   onReady?: () => void;
   /** WebGL context lost: the stage falls back to the SVG. */
@@ -83,6 +90,15 @@ export type BalanceEngine = {
   setReduced(reduced: boolean): void;
   /** Canvas faded out: skip rendering (unless judging, a loading indicator). */
   setHidden(hidden: boolean): void;
+  /** Pointer calls take CSS px from the canvas's top-left. They do nothing
+   * (false) unless play is on and active; true means a ball was grabbed. */
+  pointerDown(x: number, y: number): boolean;
+  /** True while the ball is still held (the engine may drop the grab). */
+  pointerMove(x: number, y: number): boolean;
+  pointerUp(x: number, y: number): void;
+  pointerCancel(): void;
+  /** A ball is under the pointer (for a grab cursor). */
+  hitBall(x: number, y: number): boolean;
 };
 
 /** Builds the scene on `canvas`. Throws if WebGL is unavailable. */
@@ -163,6 +179,14 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
   let time = 0; // ambient clock: slows to a stop when idle
   let pxs = 0;
   let pys = 0;
+  // What the camera sees of the pointer: frozen while a ball is held, so the
+  // ball's target is not computed against a moving view.
+  let camPx = 0;
+  let camPy = 0;
+  let camTime = 0;
+  let camIdle = 0;
+  let camHeld = false;
+  let camGap = 0;
   let lastQ = Number.NaN;
   let nextRock = 0;
   let rockSeed = 11;
@@ -190,6 +214,8 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
   // Critically damped (no bounce), normalised to 0 -> 1 over k = 0..1.
   const settle = (k: number) => 1 - (1 + 8 * k) * Math.exp(-8 * k);
   const rand = () => (rockSeed = (rockSeed * 16807) % 2147483647) / 2147483647;
+  const play = opts.play ? createPlay(rand) : null;
+  let playing = false;
 
   // setSize clears the drawing buffer, so every resize is followed by an
   // immediate frame (otherwise a blank canvas can be presented).
@@ -248,11 +274,22 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
     pys += (tpy - pys) * kp;
     const pointerMoving = Math.abs(tpx - pxs) > 1e-3 || Math.abs(tpy - pys) > 1e-3;
 
+    // Ball play needs a calm scene: the idle hero pose, nothing lifted.
+    const playNow =
+      play !== null && !reduced && mode.kind === "idle" && w < 0.01 && pose.lift < 0.01 && pose.split < 0.01;
+    const entrance = 1.2 * (1 - settle(enter));
+    if (play && playNow !== playing) {
+      playing = playNow;
+      play.reset({ theta, omega, rise: entrance });
+    }
+
     // Beam: a damped spring toward the pose tilt, the pointer and a little
-    // sway. Once a verdict shows, the pointer barely moves it.
+    // sway. Once a verdict shows, the pointer barely moves it. In play the
+    // balls' weights tilt it instead of the pointer.
     const verdictHold = mode.kind === "verdict" ? heroLive.drop * (1 - w) : 0;
-    const authority = lerp(0.13, VERDICT_POINTER_RAD, verdictHold);
+    const authority = playing ? 0 : lerp(0.13, VERDICT_POINTER_RAD, verdictHold);
     let tau = pose.tilt + pxs * authority;
+    if (play && playing) tau += play.tilt();
     tau += Math.sin(time * 0.55) * 0.025 * ambient * (1 - verdictHold);
     tau += Math.sin(time * 2.3) * 0.035 * pose.busy;
     if (!snap && !reduced && pose.rock > 0.05 && time >= nextRock) {
@@ -264,12 +301,17 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
       omega = 0;
     } else {
       omega += sceneInput.impulse;
-      // A verdict tips with a single small overshoot, not a seesaw.
-      const damping = mode.kind === "verdict" ? 6.5 : 5.2;
-      const acc = 38 * (tau - theta) - damping * omega;
+      // A verdict tips with a single small overshoot, not a seesaw. Anything
+      // else swings heavily and settles after a bounce or two: the damping
+      // rises as the beam nears its target.
+      const verdict = mode.kind === "verdict";
+      const near = Math.max(0, 1 - Math.abs(tau - theta) / 0.12);
+      const damping = verdict ? 6.5 : 1.6 + 8 * near * near;
+      const acc = (verdict ? 38 : 20) * (tau - theta) - damping * omega;
       omega += acc * dt;
       theta += omega * dt;
       theta = Math.max(-THETA_LIMIT, Math.min(THETA_LIMIT, theta));
+      if (!verdict && theta * omega > 0 && Math.abs(theta) === THETA_LIMIT) omega = 0;
     }
     sceneInput.impulse = 0;
     const energy = sceneInput.energy;
@@ -281,14 +323,31 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
     const bobA = Math.sin(time * 1.3) * 0.05 * lift;
     const bobB = Math.sin(time * 1.3 + 1.7) * 0.05 * lift;
     const pulse = 1 + 0.05 * energy + 0.025 * Math.sin(time * 4) * pose.busy;
-    const breathe = Math.sin(time * 1.1) * 0.02 * pose.busy * (1 - pose.sink);
-    const rise = 1.2 * (1 - settle(enter)) + breathe;
-    const a = sphereCentre(-1, theta, lift, bobA + rise);
-    const b = sphereCentre(1, theta, lift, bobB + rise);
+    // The beam stays put; spheres off their cups breathe, seated ones don't.
+    const breathe = Math.sin(time * 1.1) * 0.02 * pose.busy * (1 - pose.sink) * lift;
+    const a = sphereCentre(-1, theta, lift, bobA + entrance + breathe);
+    const b = sphereCentre(1, theta, lift, bobB + entrance + breathe);
     const base = sphereScale(lift, pulse) * (1 - pose.split * (1 - pose.reform));
     const scaleA = base * (1 + 0.04 * absorbA);
     const scaleB = base * (1 + 0.04 * absorbB);
-    balance.update(theta, a, b, scaleA, scaleB, dt * ambient, pose.camDown, rise);
+    let playMoving = false;
+    if (play) {
+      let ballA = a;
+      let ballB = b;
+      let sA = scaleA;
+      let sB = scaleB;
+      if (playing) {
+        play.step(dt, { theta, omega, rise: entrance });
+        const pa = play.current(-1);
+        const pb = play.current(1);
+        ballA = pa ?? a;
+        ballB = pb ?? b;
+        sA = pa ? scaleA * pa.k : 0;
+        sB = pb ? scaleB * pb.k : 0;
+      }
+      balance.update(theta, ballA, ballB, sA, sB, dt * ambient, pose.camDown, entrance);
+      playMoving = balance.playScene(playing ? play : null, dt, base) || (playing && play.busy);
+    } else balance.update(theta, a, b, scaleA, scaleB, dt * ambient, pose.camDown, entrance);
     crux.update(pose, time, dt * ambient, dt, snap);
     fragments.update(pose, time, a, b, crux.glowAt, small, ss(0, 1, enter));
 
@@ -306,10 +365,29 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
     const since = clock - settledAt;
     balance.emphasis(winner, since, theta, dt);
 
-    view.px = pxs;
-    view.py = pys;
-    view.time = time;
-    view.idle = ambient;
+    // Write-through, except while a ball is held (its target is computed
+    // against the view) and for a short catch-up after the release.
+    if (play?.grabbing) camHeld = true;
+    else if (camHeld) {
+      const kc = snap ? 1 : 1 - Math.exp(-dt * 8);
+      camPx += (pxs - camPx) * kc;
+      camPy += (pys - camPy) * kc;
+      camTime += (time - camTime) * kc;
+      camIdle += (ambient - camIdle) * kc;
+      camGap = Math.max(Math.abs(pxs - camPx), Math.abs(pys - camPy), Math.abs(time - camTime), Math.abs(ambient - camIdle));
+      if (camGap < 1e-3) camHeld = false;
+    }
+    if (!camHeld) {
+      camPx = pxs;
+      camPy = pys;
+      camTime = time;
+      camIdle = ambient;
+      camGap = 0;
+    }
+    view.px = camPx;
+    view.py = camPy;
+    view.time = camTime;
+    view.idle = camIdle;
     view.reduced = reduced;
     const yMin = lerp(0, BED_TOP - 0.4, pose.camDown);
     if (card) frameCard(camera, pose, W, H, view);
@@ -350,6 +428,8 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
         pointerMoving ||
         qMoved ||
         enter < 1 ||
+        playMoving ||
+        camGap > 1e-3 ||
         since < 1);
     sceneOutput.settled = !moving;
     return moving;
@@ -365,6 +445,38 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
       ready = true;
       opts.onReady?.();
     }
+  }
+
+  const ray = new Raycaster();
+  const ndc = new Vector2();
+  const plane = new Plane(new Vector3(0, 0, 1), 0);
+  const hit = new Vector3();
+  const centre = new Vector3();
+
+  function aim(x: number, y: number) {
+    ndc.set((x / W) * 2 - 1, -(y / H) * 2 + 1);
+    ray.setFromCamera(ndc, camera);
+  }
+
+  function onPlane() {
+    return ray.ray.intersectPlane(plane, hit);
+  }
+
+  function pick(): Ball | null {
+    if (!play || !playing) return null;
+    let best: Ball | null = null;
+    let bestD = Infinity;
+    for (const b of play.balls) {
+      if ((b.state === "free" && !b.armed) || b.k < 0.5) continue;
+      centre.set(b.x, b.y, b.z);
+      if (ray.ray.distanceToPoint(centre) >= SPHERE_R * b.k * 1.35) continue;
+      const d = centre.distanceTo(ray.ray.origin);
+      if (d < bestD) {
+        bestD = d;
+        best = b;
+      }
+    }
+    return best;
   }
 
   let dirty = true;
@@ -451,6 +563,7 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
 
   return {
     resize(w, h) {
+      if (w < 1 || h < 1) return;
       W = Math.max(1, Math.round(w));
       H = Math.max(1, Math.round(h));
       renderer.setSize(W, H, false);
@@ -482,6 +595,44 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
       dirty = true;
       hidden = h;
       wake();
+    },
+    pointerDown(x, y) {
+      if (!play || !playing || hidden || play.grabbing) return false;
+      aim(x, y);
+      const b = pick();
+      if (!b) return false;
+      // How far off centre the ray met the ball, in radii, as the camera sees it.
+      centre.set(b.x, b.y, b.z);
+      const n = ray.ray.closestPointToPoint(centre, new Vector3()).sub(centre).divideScalar(SPHERE_R * Math.max(b.k, 0.5));
+      if (n.length() > 1) n.normalize();
+      play.grab(b, n, { x, y }, onPlane(), performance.now() / 1000);
+      dirty = true;
+      wake();
+      return true;
+    },
+    pointerMove(x, y) {
+      if (!play || !playing || !play.grabbing) return false;
+      aim(x, y);
+      play.drag({ x, y }, onPlane(), performance.now() / 1000);
+      wake();
+      return play.grabbing;
+    },
+    pointerUp(x, y) {
+      if (!play || !playing || !play.grabbing) return;
+      aim(x, y);
+      play.drag({ x, y }, onPlane(), performance.now() / 1000);
+      play.release(true);
+      wake();
+    },
+    pointerCancel() {
+      if (!play || !play.grabbing) return;
+      play.release(false);
+      wake();
+    },
+    hitBall(x, y) {
+      if (!play || !playing || hidden || play.grabbing) return false;
+      aim(x, y);
+      return pick() !== null;
     },
     dispose() {
       if (disposed) return;

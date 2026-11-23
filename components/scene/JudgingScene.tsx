@@ -14,8 +14,8 @@ import styles from "./JudgingScene.module.css";
  * through `className`; the module only gives a default aspect. Shows the
  * SVG first (and for good when WebGL is off, data saver is on or the context
  * is lost), then crossfades to the 3D scene framed for a card. The scene
- * mode belongs to whoever drives the run (JudgingOverlay), so nothing here
- * resets it.
+ * mode belongs to whoever drives the run (JudgingOverlay) or hosts the scale
+ * (HomeScale resets it), so nothing here does.
  */
 
 const BalanceScene = dynamic(() => import("./BalanceScene"), { ssr: false, loading: () => null });
@@ -33,7 +33,7 @@ function onLeave(e: PointerEvent<HTMLDivElement>) {
   if (e.pointerType !== "touch") setPointer(0, 0);
 }
 
-export default function JudgingScene({ className }: { className?: string }) {
+export default function JudgingScene({ className, play = false }: { className?: string; play?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const mode = useSceneMode();
   const status = useSceneStatus();
@@ -53,7 +53,7 @@ export default function JudgingScene({ className }: { className?: string }) {
       onPointerLeave={onLeave}
     >
       <BalanceFallback tugA={tugA} you={you} className={styles.fallback} />
-      {go && status !== "fallback" ? <BalanceScene reduced={reduced} frame="card" className={styles.canvas} /> : null}
+      {go && status !== "fallback" ? <BalanceScene reduced={reduced} frame="card" play={play} className={styles.canvas} /> : null}
     </div>
   );
 }
