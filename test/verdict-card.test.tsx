@@ -132,6 +132,7 @@ describe("VerdictView", () => {
     expect(out).toContain(esc(t("en", "trial.mixedNote")));
     expect(out).toContain("Objection:");
     expect(out).toContain("Menus vary by country.");
+    expect(out.indexOf("Menus vary by country.")).toBeLessThan(out.indexOf("Only some menus list it."));
     const bare = html(<VerdictView result={{ ...base, dispute_type: "mixed", crux_trial: { ...trial, reasoning: "" } }} lang="en" />);
     expect(count(bare, "Menus vary by country.")).toBe(1);
     expect(bare).not.toContain("Strongest objection:");

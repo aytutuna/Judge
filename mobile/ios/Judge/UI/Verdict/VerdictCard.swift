@@ -582,10 +582,13 @@ private struct CruxTrialNote: View {
                 )
                     .brandText(.slotText)
                     .foregroundStyle(overturned ? Brand.danger : Brand.ink2)
-                let why = VerdictDisplay.trialWhy(trial)
+                let reasoning = trial.reasoning.trimmingCharacters(in: .whitespacesAndNewlines)
                 VStack(alignment: .leading, spacing: 4) {
-                    if !why.isEmpty {
-                        SlotText(L10n.trialRefereePrefix(lang) + " " + why)
+                    if !trial.attack.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        SlotText(L10n.trialAttackPrefix(lang) + " " + trial.attack)
+                    }
+                    if !reasoning.isEmpty {
+                        SlotText(L10n.trialRefereePrefix(lang) + " " + reasoning)
                     }
                     if mixed && !minor {
                         SlotText(L10n.trialMixedNote(lang))
@@ -593,19 +596,6 @@ private struct CruxTrialNote: View {
                 }
                 .multilineTextAlignment(.leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                if !trial.reasoning.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, !trial.attack.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    DisclosureGroup(isExpanded: $expanded) {
-                        SlotText(L10n.trialAttackPrefix(lang) + " " + trial.attack)
-                            .multilineTextAlignment(.leading)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.top, 6)
-                    } label: {
-                        Text(L10n.trialWhatWasTested(lang))
-                            .brandText(.slotTitle)
-                            .foregroundStyle(Brand.ink2)
-                    }
-                    .tint(Brand.ink2)
-                }
             }
         }
     }

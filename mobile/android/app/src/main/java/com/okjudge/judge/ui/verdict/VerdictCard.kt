@@ -782,14 +782,9 @@ private fun CruxTrialNote(trial: CruxTrial, mixed: Boolean) {
                 style = JudgeType.slotText.copy(color = color),
             )
         }
-        val why = VerdictDisplay.trialWhy(trial)
-        if (why.isNotEmpty()) SlotText("${s.trialRefereePrefix} $why")
+        if (trial.attack.isNotBlank()) SlotText("${s.trialAttackPrefix} ${trial.attack}")
+        if (trial.reasoning.isNotBlank()) SlotText("${s.trialRefereePrefix} ${trial.reasoning.trim()}")
         if (mixed && !minor) SlotText(s.trialMixedNote)
-        if (trial.reasoning.isNotBlank() && trial.attack.isNotBlank()) {
-            var open by rememberSaveable { mutableStateOf(false) }
-            ObjectionToggle(open) { open = !open }
-            if (open) SlotText("${s.trialAttackPrefix} ${trial.attack}")
-        }
     }
 }
 

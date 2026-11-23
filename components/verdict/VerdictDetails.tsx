@@ -109,7 +109,7 @@ function CruxTrialNote({ trial, mixed, lang }: { trial: CruxTrial; mixed: boolea
   }
   const minor = trial.outcome === "minor";
   const overturned = trial.outcome === "overturned";
-  const why = trial.reasoning.trim() || trial.attack.trim();
+  const reasoning = trial.reasoning.trim();
   return (
     <div className={styles.noteBlock}>
       <p
@@ -119,20 +119,17 @@ function CruxTrialNote({ trial, mixed, lang }: { trial: CruxTrial; mixed: boolea
         {minor ? <ShieldIcon /> : <AlertIcon />}{" "}
         {stripLeadingEmoji(t(lang, minor ? "trial.minor" : overturned ? "trial.overturned" : "trial.uncertain"))}
       </p>
-      {why ? (
+      {trial.attack.trim() ? (
         <p className={styles.noteText}>
-          {t(lang, "trial.refereePrefix")} {why}
+          {t(lang, "trial.attackPrefix")} {trial.attack}
+        </p>
+      ) : null}
+      {reasoning ? (
+        <p className={styles.noteText}>
+          {t(lang, "trial.refereePrefix")} {reasoning}
         </p>
       ) : null}
       {mixed && !minor ? <p className={styles.noteText}>{t(lang, "trial.mixedNote")}</p> : null}
-      {trial.reasoning.trim() && trial.attack.trim() ? (
-        <details className={styles.disclosure}>
-          <summary>{t(lang, "trial.whatWasTested")}</summary>
-          <p>
-            {t(lang, "trial.attackPrefix")} {trial.attack}
-          </p>
-        </details>
-      ) : null}
     </div>
   );
 }
