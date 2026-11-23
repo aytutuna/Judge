@@ -111,6 +111,7 @@ import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.theme.Sides
 import com.okjudge.judge.ui.verdict.CardActions
 import com.okjudge.judge.ui.verdict.RulingSummary
+import com.okjudge.judge.ui.verdict.ShareActions
 import com.okjudge.judge.ui.verdict.TranslationStatus
 import com.okjudge.judge.ui.verdict.TranslationView
 import com.okjudge.judge.ui.verdict.VerdictDetails
@@ -234,7 +235,11 @@ private fun CaseScreenBody(
     Column(modifier.fillMaxSize()) {
         if (details && current != null) {
             BackHandler { details = false }
-            TopBar(onBack = { details = false }, backLabel = s.appVerdictBack, backText = s.appVerdictBack)
+            val shareActions = caseCardActions(current, view.removed == null, actions, addContext)
+            TopBar(
+                onBack = { details = false }, backLabel = s.appVerdictBack, backText = s.appVerdictBack,
+                trailing = { ShareActions(shareActions) },
+            )
             Column(
                 Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -244,6 +249,7 @@ private fun CaseScreenBody(
                     details = true,
                     onDetails = {},
                     reducedMotion = reducedMotion,
+                    showShare = false,
                     modifier = Modifier.widthIn(max = 640.dp).fillMaxWidth().padding(top = 4.dp, bottom = 32.dp),
                 )
             }
@@ -687,6 +693,23 @@ private fun SideAvatar(side: Side) {
     }
 }
 
+@Composable
+private fun caseCardActions(verdict: CaseVerdictView, linked: Boolean, actions: CaseActions, onAddContext: (() -> Unit)?): CardActions {
+    var copied by remember { mutableStateOf(false) }
+    LaunchedEffect(copied) {
+        if (copied) {
+            delay(2000)
+            copied = false
+        }
+    }
+    return CardActions(
+        onShare = if (linked) actions.onShareVerdict?.let { share -> { share(verdict.id, verdict.result.headline) } } else null,
+        onCopy = if (linked) actions.onCopyVerdict?.let { copy -> { copy(verdict.id); copied = true } } else null,
+        copied = copied,
+        onAddContext = onAddContext,
+    )
+}
+
 /**
  * A case ruling with the owner's names restored: the summary, or its
  * details when [details]. Share and copy only while the case's links are open.
@@ -702,28 +725,17 @@ private fun CaseVerdict(
     onDetails: () -> Unit,
     reducedMotion: Boolean,
     modifier: Modifier = Modifier,
+    showShare: Boolean = true,
 ) {
     val s = LocalStrings.current
     val result = verdict.result
     val selfLang = ContentLang.verdictLang(result)
     val view = remember(result, names) { TranslationView(result, TranslationStatus.ORIGINAL, selfLang).personalized(names, selfLang) }
-    var copied by remember { mutableStateOf(false) }
-    LaunchedEffect(copied) {
-        if (copied) {
-            delay(2000)
-            copied = false
-        }
-    }
+    val cardActions = caseCardActions(verdict, linked, actions, onAddContext)
     val parties = PartyNames.partyNames(names, selfLang, s, result.sideCount)
-    val cardActions = CardActions(
-        onShare = if (linked) actions.onShareVerdict?.let { share -> { share(verdict.id, result.headline) } } else null,
-        onCopy = if (linked) actions.onCopyVerdict?.let { copy -> { copy(verdict.id); copied = true } } else null,
-        copied = copied,
-        onAddContext = onAddContext,
-    )
     val restored = PartyNames.restoredNames(names, selfLang, result.sideCount)
     if (details) {
-        VerdictDetails(view, parties, restored, cardActions, modifier)
+        VerdictDetails(view, parties, restored, cardActions, modifier, showShare = showShare)
     } else {
         RulingSummary(view, parties, cardActions, onDetails, reducedMotion, modifier, restoredNames = restored)
     }

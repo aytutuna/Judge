@@ -77,14 +77,6 @@ struct VerdictDetails<Appeal: View>: View {
         let result = Names.personalizeResult(view.result, nameMap: session.nameMap, selfLang: selfLang)
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
-                if shareURL != nil {
-                    VerdictShare(
-                        shareURL: shareURL,
-                        shareSubject: session.original.result.headline,
-                        lang: lang,
-                        writer: onAddContext != nil
-                    )
-                }
                 if let outcome = result.appeal {
                     AppealOutcomeBanner(
                         appeal: outcome,
@@ -135,6 +127,14 @@ struct VerdictDetails<Appeal: View>: View {
                         }
                     }
                 }
+            }
+            if let shareURL {
+                VerdictBarTrailing(
+                    shareURL: shareURL,
+                    shareSubject: session.original.result.headline,
+                    lang: lang,
+                    writer: onAddContext != nil
+                )
             }
         }
         .sheet(isPresented: $appealShown, content: appeal)
