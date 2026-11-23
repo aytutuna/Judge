@@ -58,8 +58,13 @@ final class SignInWalkUITests: UITestCase {
     private func typeArgument() {
         let editor = app.textViews["Your side of the argument"]
         guard wait(editor) else { shot("FAIL no editor"); return }
-        editor.tap()
-        _ = waitForFocus(editor)
+        sleep(2)
+        shot("0 before typing")
+        press(editor)
+        if !waitForFocus(editor) {
+            press(editor)
+            _ = waitForFocus(editor)
+        }
         app.typeText("He ate my lunch again and I want a verdict about it")
         _ = wait(app.buttons["Get the verdict"])
     }
