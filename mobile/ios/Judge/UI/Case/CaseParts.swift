@@ -269,8 +269,8 @@ struct AppealSection<Draft: AppealDraft>: View {
                     .frame(minHeight: 200)
                     .padding(.horizontal, 9)
                     .padding(.top, 6)
-                    // Room for the counter in the corner.
-                    .padding(.bottom, 26)
+                    // Room for the counter and send button in the corner.
+                    .padding(.bottom, 46)
                     .disabled(model.appealSending)
                     .accessibilityLabel(L10n.appAppealPlaceholder(lang))
                 if model.appealText.isEmpty {
@@ -284,14 +284,17 @@ struct AppealSection<Draft: AppealDraft>: View {
                 }
             }
             .overlay(alignment: .bottomTrailing) {
-                Text(verbatim: "\(model.appealText.utf16.count) / \(CaseLogic.maxAppeal)")
-                    .brandText(.footnote)
-                    .monospacedDigit()
-                    .foregroundStyle(Brand.muted)
-                    .padding(.horizontal, 14)
-                    .padding(.bottom, 8)
-                    .allowsHitTesting(false)
-                    .accessibilityHidden(true)
+                HStack(spacing: 12) {
+                    Text(verbatim: "\(model.appealText.utf16.count) / \(CaseLogic.maxAppeal)")
+                        .brandText(.footnote)
+                        .monospacedDigit()
+                        .foregroundStyle(Brand.muted)
+                        .allowsHitTesting(false)
+                        .accessibilityHidden(true)
+                    sendButton
+                }
+                .padding(.trailing, 8)
+                .padding(.bottom, 2)
             }
             .paperSurface(radius: Radius.field, fill: Brand.ivory, border: Brand.line2)
             .onChange(of: model.appealText) { _, value in
@@ -309,14 +312,32 @@ struct AppealSection<Draft: AppealDraft>: View {
                         .buttonStyle(GhostButtonStyle())
                 }
             }
-            Button {
-                Task { await model.submitAppeal() }
-            } label: {
-                Text(model.appealSending ? L10n.appealSending(lang) : L10n.appAppealSubmit(lang))
-            }
-            .buttonStyle(PrimaryButtonStyle())
-            .disabled(!model.appealCanSubmit)
         }
+    }
+
+    private var sendButton: some View {
+        Button {
+            Task { await model.submitAppeal() }
+        } label: {
+            ZStack {
+                Circle().fill(Brand.ink)
+                if model.appealSending {
+                    ProgressView()
+                        .tint(Brand.paper)
+                } else {
+                    Image(systemName: "arrow.up")
+                        .font(.system(size: 17, weight: .bold))
+                        .foregroundStyle(Brand.paper)
+                }
+            }
+            .frame(width: 38, height: 38)
+            .opacity(model.appealCanSubmit || model.appealSending ? 1 : 0.35)
+            .frame(width: 44, height: 44)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .disabled(!model.appealCanSubmit)
+        .accessibilityLabel(model.appealSending ? L10n.appealSending(lang) : L10n.appAppealSubmit(lang))
     }
 
     private func note(_ text: String) -> some View {
