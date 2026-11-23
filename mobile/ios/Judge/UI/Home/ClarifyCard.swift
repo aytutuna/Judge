@@ -118,6 +118,8 @@ private struct ClarifyChoices: View {
     // Kept while an option is picked, so choosing Other again restores it.
     @State private var typed: String
     @FocusState private var otherFocused: Bool
+    // The box does not exist yet when the chip is tapped, so focus waits for it.
+    @State private var focusWhenShown = false
 
     @MainActor
     init(home: HomeModel, question: ClarifyQuestion, lang: AppLang) {
@@ -154,6 +156,12 @@ private struct ClarifyChoices: View {
                     .padding(.vertical, 12)
                     .paperSurface(radius: Radius.field, fill: Brand.paper, border: Brand.line2)
                     .focused($otherFocused)
+                    .onAppear {
+                        if focusWhenShown {
+                            focusWhenShown = false
+                            otherFocused = true
+                        }
+                    }
                     .accessibilityLabel(question.text + " " + L10n.clarifyOther(lang))
                     .onChange(of: typed) { _, value in
                         let capped = HomeModel.capUTF16(value, max: HomeModel.maxAnswer)
@@ -172,7 +180,7 @@ private struct ClarifyChoices: View {
             case .none: home.setAnswer("", for: question.id)
             case .other?:
                 home.setAnswer(typed, for: question.id)
-                otherFocused = true
+                focusWhenShown = true
             case .option(let i)?: home.setAnswer(question.options[i], for: question.id)
             }
         } label: {
