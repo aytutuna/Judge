@@ -391,6 +391,7 @@ const el: Locale = {
       "Αυτές οι λεπτομέρειες μπορεί να αλλάξουν ποιος έχει δίκιο.",
     "clarify.answerAria": "Απάντηση στην ερώτηση {n}:",
     "clarify.placeholder": "Η απάντησή σου (προαιρετικά)",
+    "clarify.other": "Άλλο",
     "clarify.skip": "Συνέχεια χωρίς απαντήσεις",
     "clarify.submit": "Δες την απόφαση",
     "clarify.back": "Άλλαξε το κείμενο",

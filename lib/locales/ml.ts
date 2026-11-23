@@ -380,6 +380,7 @@ const ml: Locale = {
     "clarify.lead": "ഈ വിവരങ്ങൾ അനുസരിച്ച് ആരാണ് ശരി എന്നത് മാറിയേക്കാം.",
     "clarify.answerAria": "{n}-ാം ചോദ്യത്തിനുള്ള ഉത്തരം:",
     "clarify.placeholder": "നിങ്ങളുടെ ഉത്തരം (നിർബന്ധമില്ല)",
+    "clarify.other": "മറ്റുള്ളവ",
     "clarify.skip": "ഒഴിവാക്കി വിധിക്കൂ",
     "clarify.submit": "വിധി അറിയാം",
     "clarify.back": "തർക്കം തിരുത്തൂ",

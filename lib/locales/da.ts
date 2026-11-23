@@ -383,6 +383,7 @@ const da: Locale = {
     "clarify.lead": "De her detaljer kan ændre, hvem der har ret.",
     "clarify.answerAria": "Svar på spørgsmål {n}:",
     "clarify.placeholder": "Dit svar (valgfrit)",
+    "clarify.other": "Andet",
     "clarify.skip": "Spring over og døm",
     "clarify.submit": "Få dommen",
     "clarify.back": "Ret diskussionen",

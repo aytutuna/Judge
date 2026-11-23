@@ -382,6 +382,7 @@ const ptPT: Locale = {
     "clarify.lead": "Estes detalhes podem mudar quem tem razão.",
     "clarify.answerAria": "Resposta à pergunta {n}:",
     "clarify.placeholder": "A tua resposta (opcional)",
+    "clarify.other": "Outra",
     "clarify.skip": "Saltar e julgar",
     "clarify.submit": "Quero o veredicto",
     "clarify.back": "Editar a discussão",

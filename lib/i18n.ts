@@ -378,6 +378,7 @@ const en = {
   "clarify.lead": "These could change who's right.",
   "clarify.answerAria": "Answer to question {n}:",
   "clarify.placeholder": "Your answer (optional)",
+  "clarify.other": "Other",
   "clarify.skip": "Skip and judge",
   "clarify.submit": "Get the verdict",
   "clarify.back": "Edit the argument",

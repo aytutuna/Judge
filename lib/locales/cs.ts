@@ -381,6 +381,7 @@ const cs: Locale = {
     "clarify.lead": "Tyhle detaily můžou změnit, kdo má pravdu.",
     "clarify.answerAria": "Odpověď na otázku {n}:",
     "clarify.placeholder": "Tvoje odpověď (nepovinné)",
+    "clarify.other": "Jiná",
     "clarify.skip": "Přeskočit a rozsoudit",
     "clarify.submit": "Rozsoudit",
     "clarify.back": "Upravit spor",

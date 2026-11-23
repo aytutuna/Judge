@@ -383,6 +383,7 @@ const pl: Locale = {
     "clarify.lead": "Te szczegóły mogą zmienić to, kto ma rację.",
     "clarify.answerAria": "Odpowiedź na pytanie {n}:",
     "clarify.placeholder": "Twoja odpowiedź (opcjonalnie)",
+    "clarify.other": "Inna",
     "clarify.skip": "Pomiń i rozstrzygnij",
     "clarify.submit": "Poznaj werdykt",
     "clarify.back": "Edytuj opis sporu",

@@ -377,6 +377,7 @@ const bn: Locale = {
     "clarify.lead": "এই খুঁটিনাটিগুলো বদলে দিতে পারে কে ঠিক।",
     "clarify.answerAria": "{n} নম্বর প্রশ্নের উত্তর:",
     "clarify.placeholder": "আপনার উত্তর (ঐচ্ছিক)",
+    "clarify.other": "অন্যান্য",
     "clarify.skip": "বাদ দিয়ে রায় দিন",
     "clarify.submit": "রায় জানুন",
     "clarify.back": "তর্কটা এডিট করুন",

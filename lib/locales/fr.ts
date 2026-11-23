@@ -391,6 +391,7 @@ const fr: Locale = {
     "clarify.lead": "Ces détails pourraient changer qui a raison.",
     "clarify.answerAria": "Réponse à la question {n} :",
     "clarify.placeholder": "Ta réponse (facultatif)",
+    "clarify.other": "Autre",
     "clarify.skip": "Passer et juger",
     "clarify.submit": "Obtenir le verdict",
     "clarify.back": "Modifier le débat",

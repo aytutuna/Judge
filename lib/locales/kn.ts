@@ -379,6 +379,7 @@ const kn: Locale = {
     "clarify.lead": "ಈ ವಿವರಗಳು ಯಾರು ಸರಿ ಎನ್ನುವುದನ್ನೇ ಬದಲಿಸಬಹುದು.",
     "clarify.answerAria": "{n}ನೇ ಪ್ರಶ್ನೆಗೆ ಉತ್ತರ:",
     "clarify.placeholder": "ನಿಮ್ಮ ಉತ್ತರ (ಐಚ್ಛಿಕ)",
+    "clarify.other": "ಇತರೆ",
     "clarify.skip": "ಉತ್ತರಿಸದೆ ತೀರ್ಪು ಪಡೆಯಿರಿ",
     "clarify.submit": "ತೀರ್ಪು ಪಡೆಯಿರಿ",
     "clarify.back": "ವಾದ ತಿದ್ದಿ",

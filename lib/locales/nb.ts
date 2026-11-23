@@ -379,6 +379,7 @@ const nb: Locale = {
     "clarify.lead": "Disse detaljene kan endre hvem som har rett.",
     "clarify.answerAria": "Svar på spørsmål {n}:",
     "clarify.placeholder": "Svaret ditt (valgfritt)",
+    "clarify.other": "Annet",
     "clarify.skip": "Hopp over og døm",
     "clarify.submit": "Få dommen",
     "clarify.back": "Rediger diskusjonen",

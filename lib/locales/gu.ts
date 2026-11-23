@@ -372,6 +372,7 @@ const gu: Locale = {
     "clarify.lead": "આ વિગતોથી કોણ સાચું એ બદલાઈ શકે.",
     "clarify.answerAria": "સવાલ {n}નો જવાબ:",
     "clarify.placeholder": "તમારો જવાબ (મરજિયાત)",
+    "clarify.other": "અન્ય",
     "clarify.skip": "છોડો, ચુકાદો આપો",
     "clarify.submit": "ચુકાદો મેળવો",
     "clarify.back": "વિવાદમાં ફેરફાર કરો",

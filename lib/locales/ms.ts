@@ -386,6 +386,7 @@ const ms: Locale = {
     "clarify.lead": "Butiran ini boleh mengubah siapa yang betul.",
     "clarify.answerAria": "Jawapan kepada soalan {n}:",
     "clarify.placeholder": "Jawapan anda (pilihan)",
+    "clarify.other": "Lain-lain",
     "clarify.skip": "Langkau dan nilai",
     "clarify.submit": "Dapatkan keputusan",
     "clarify.back": "Sunting pertikaian",

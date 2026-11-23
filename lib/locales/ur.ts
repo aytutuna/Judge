@@ -383,6 +383,7 @@ const ur: Locale = {
     "clarify.lead": "یہ تفصیلات بدل سکتی ہیں کہ کون صحیح ہے۔",
     "clarify.answerAria": "سوال {n} کا جواب:",
     "clarify.placeholder": "آپ کا جواب (اختیاری)",
+    "clarify.other": "دیگر",
     "clarify.skip": "چھوڑ کر فیصلہ کروائیں",
     "clarify.submit": "فیصلہ کروائیں",
     "clarify.back": "بحث میں ترمیم کریں",

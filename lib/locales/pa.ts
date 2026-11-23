@@ -372,6 +372,7 @@ const pa: Locale = {
     "clarify.lead": "ਇਨ੍ਹਾਂ ਗੱਲਾਂ ਨਾਲ ਬਦਲ ਸਕਦਾ ਹੈ ਕਿ ਕੌਣ ਸਹੀ ਹੈ।",
     "clarify.answerAria": "ਸਵਾਲ {n} ਦਾ ਜਵਾਬ:",
     "clarify.placeholder": "ਤੁਹਾਡਾ ਜਵਾਬ (ਜੇ ਚਾਹੋ)",
+    "clarify.other": "ਹੋਰ",
     "clarify.skip": "ਛੱਡ ਕੇ ਫ਼ੈਸਲਾ ਲਓ",
     "clarify.submit": "ਫ਼ੈਸਲਾ ਲਓ",
     "clarify.back": "ਬਹਿਸ ਸੋਧੋ",

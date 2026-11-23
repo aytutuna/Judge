@@ -390,6 +390,7 @@ const fi: Locale = {
     "clarify.lead": "Nämä yksityiskohdat voivat muuttaa sen, kuka on oikeassa.",
     "clarify.answerAria": "Vastaus kysymykseen {n}:",
     "clarify.placeholder": "Vastauksesi (vapaaehtoinen)",
+    "clarify.other": "Muu",
     "clarify.skip": "Ohita ja ratkaise",
     "clarify.submit": "Hae tuomio",
     "clarify.back": "Muokkaa kiistaa",

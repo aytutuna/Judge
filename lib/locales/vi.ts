@@ -386,6 +386,7 @@ const vi: Locale = {
     "clarify.lead": "Những chi tiết này có thể thay đổi ai đúng.",
     "clarify.answerAria": "Câu trả lời cho câu hỏi {n}:",
     "clarify.placeholder": "Câu trả lời của bạn (không bắt buộc)",
+    "clarify.other": "Khác",
     "clarify.skip": "Bỏ qua và phân xử",
     "clarify.submit": "Phân xử ngay",
     "clarify.back": "Sửa nội dung",

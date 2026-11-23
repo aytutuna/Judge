@@ -365,6 +365,7 @@ const zhHans: Locale = {
     "clarify.lead": "这些细节可能会改变谁对谁错。",
     "clarify.answerAria": "问题 {n} 的回答：",
     "clarify.placeholder": "你的回答（选填）",
+    "clarify.other": "其他",
     "clarify.skip": "跳过，直接裁决",
     "clarify.submit": "立即裁决",
     "clarify.back": "修改争论内容",

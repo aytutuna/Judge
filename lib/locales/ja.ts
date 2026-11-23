@@ -381,6 +381,7 @@ const ja: Locale = {
       "次の点しだいで、どちらが正しいかが変わるかもしれません。",
     "clarify.answerAria": "質問{n}への回答：",
     "clarify.placeholder": "回答（任意）",
+    "clarify.other": "その他",
     "clarify.skip": "スキップして判定",
     "clarify.submit": "判定する",
     "clarify.back": "内容を編集",

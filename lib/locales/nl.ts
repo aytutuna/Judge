@@ -384,6 +384,7 @@ const nl: Locale = {
     "clarify.lead": "Deze details kunnen bepalen wie gelijk heeft.",
     "clarify.answerAria": "Antwoord op vraag {n}:",
     "clarify.placeholder": "Je antwoord (optioneel)",
+    "clarify.other": "Anders",
     "clarify.skip": "Overslaan en oordelen",
     "clarify.submit": "Naar de uitspraak",
     "clarify.back": "Discussie aanpassen",

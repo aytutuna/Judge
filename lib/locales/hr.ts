@@ -381,6 +381,7 @@ const hr: Locale = {
     "clarify.lead": "Ovi detalji mogli bi promijeniti tko je u pravu.",
     "clarify.answerAria": "Odgovor na {n}. pitanje:",
     "clarify.placeholder": "Tvoj odgovor (nije obavezno)",
+    "clarify.other": "Drugo",
     "clarify.skip": "Preskoči i presudi",
     "clarify.submit": "Saznaj presudu",
     "clarify.back": "Uredi raspravu",

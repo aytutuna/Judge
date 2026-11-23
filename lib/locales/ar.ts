@@ -374,6 +374,7 @@ const ar: Locale = {
     "clarify.lead": "هذه التفاصيل قد تغيّر مَن على حق.",
     "clarify.answerAria": "الإجابة عن السؤال {n}:",
     "clarify.placeholder": "إجابتك (اختياري)",
+    "clarify.other": "أخرى",
     "clarify.skip": "تخطَّ إلى الحكم",
     "clarify.submit": "اعرف الحكم",
     "clarify.back": "تعديل الخلاف",

@@ -385,6 +385,7 @@ const es: Locale = {
     "clarify.lead": "Estos detalles podrían cambiar quién tiene razón.",
     "clarify.answerAria": "Respuesta a la pregunta {n}:",
     "clarify.placeholder": "Tu respuesta (opcional)",
+    "clarify.other": "Otra",
     "clarify.skip": "Saltar y juzgar",
     "clarify.submit": "Ver el veredicto",
     "clarify.back": "Editar la discusión",

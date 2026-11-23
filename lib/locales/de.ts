@@ -390,6 +390,7 @@ const de: Locale = {
     "clarify.lead": "Diese Details könnten ändern, wer recht hat.",
     "clarify.answerAria": "Antwort auf Frage {n}:",
     "clarify.placeholder": "Deine Antwort (optional)",
+    "clarify.other": "Andere",
     "clarify.skip": "Überspringen und Urteil holen",
     "clarify.submit": "Urteil holen",
     "clarify.back": "Streit bearbeiten",

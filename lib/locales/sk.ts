@@ -380,6 +380,7 @@ const sk: Locale = {
     "clarify.lead": "Tieto detaily môžu zmeniť, kto má pravdu.",
     "clarify.answerAria": "Odpoveď na otázku {n}:",
     "clarify.placeholder": "Tvoja odpoveď (nepovinné)",
+    "clarify.other": "Iné",
     "clarify.skip": "Preskočiť a rozsúdiť",
     "clarify.submit": "Získať verdikt",
     "clarify.back": "Upraviť spor",

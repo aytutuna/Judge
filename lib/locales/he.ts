@@ -374,6 +374,7 @@ const he: Locale = {
     "clarify.lead": "הפרטים האלה יכולים לשנות מי צודק.",
     "clarify.answerAria": "תשובה לשאלה {n}:",
     "clarify.placeholder": "התשובה שלך (לא חובה)",
+    "clarify.other": "אחר",
     "clarify.skip": "לדלג ולהכריע",
     "clarify.submit": "לקבל פסק דין",
     "clarify.back": "לערוך את הוויכוח",

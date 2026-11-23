@@ -381,6 +381,7 @@ const ptBR: Locale = {
     "clarify.lead": "Estes detalhes podem mudar quem tem razão.",
     "clarify.answerAria": "Resposta à pergunta {n}:",
     "clarify.placeholder": "Sua resposta (opcional)",
+    "clarify.other": "Outra",
     "clarify.skip": "Pular e julgar",
     "clarify.submit": "Ver o veredito",
     "clarify.back": "Editar a discussão",

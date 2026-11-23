@@ -380,6 +380,7 @@ const ro: Locale = {
     "clarify.lead": "Detaliile astea ar putea schimba cine are dreptate.",
     "clarify.answerAria": "Răspuns la întrebarea {n}:",
     "clarify.placeholder": "Răspunsul tău (opțional)",
+    "clarify.other": "Altceva",
     "clarify.skip": "Sari peste și judecă",
     "clarify.submit": "Află verdictul",
     "clarify.back": "Editează disputa",

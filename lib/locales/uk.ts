@@ -384,6 +384,7 @@ const uk: Locale = {
     "clarify.lead": "Ці подробиці можуть змінити, хто правий.",
     "clarify.answerAria": "Відповідь на запитання {n}:",
     "clarify.placeholder": "Твоя відповідь (необов’язково)",
+    "clarify.other": "Інше",
     "clarify.skip": "Пропустити й судити",
     "clarify.submit": "Отримати вердикт",
     "clarify.back": "Редагувати суперечку",

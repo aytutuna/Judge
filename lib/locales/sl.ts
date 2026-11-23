@@ -382,6 +382,7 @@ const sl: Locale = {
     "clarify.lead": "Te podrobnosti lahko spremenijo, kdo ima prav.",
     "clarify.answerAria": "Odgovor na vprašanje {n}:",
     "clarify.placeholder": "Tvoj odgovor (neobvezno)",
+    "clarify.other": "Drugo",
     "clarify.skip": "Preskoči in razsodi",
     "clarify.submit": "Razsodi",
     "clarify.back": "Uredi prepir",

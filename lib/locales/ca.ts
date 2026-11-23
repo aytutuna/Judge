@@ -390,6 +390,7 @@ const ca: Locale = {
     "clarify.lead": "Aquests detalls podrien canviar qui té raó.",
     "clarify.answerAria": "Resposta a la pregunta {n}:",
     "clarify.placeholder": "La teva resposta (opcional)",
+    "clarify.other": "Altra",
     "clarify.skip": "Omet i jutja",
     "clarify.submit": "Demana el veredicte",
     "clarify.back": "Edita la discussió",
