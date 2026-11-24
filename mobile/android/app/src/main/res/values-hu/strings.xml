@@ -477,6 +477,8 @@
     <string name="shell_new">Új vita</string>
     <string name="shell_gamify">Játék</string>
     <string name="shell_today">Ma</string>
+    <string name="shell_search">Keresés</string>
+    <string name="shell_no_matches">Nincs találat.</string>
     <string name="shell_load_failed">Nem sikerült betölteni az előzményeidet.</string>
     <string name="shell_load_more">Továbbiak</string>
     <string name="shell_untitled">Cím nélküli ítélet</string>

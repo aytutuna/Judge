@@ -770,6 +770,8 @@ const nl: Locale = {
     "shell.week": "Deze week",
     "shell.earlier": "Eerder",
     "shell.empty": "Nog geen uitspraken.",
+    "shell.search": "Zoeken",
+    "shell.noMatches": "Geen resultaten.",
     "shell.loading": "Je geschiedenis laden…",
     "shell.loadFailed": "We konden je geschiedenis niet laden.",
     "shell.loadMore": "Meer tonen",

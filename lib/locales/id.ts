@@ -771,6 +771,8 @@ const id: Locale = {
     "shell.week": "Minggu ini",
     "shell.earlier": "Sebelumnya",
     "shell.empty": "Belum ada putusan.",
+    "shell.search": "Cari",
+    "shell.noMatches": "Tidak ada hasil.",
     "shell.loading": "Memuat riwayatmu…",
     "shell.loadFailed": "Riwayatmu gagal dimuat.",
     "shell.loadMore": "Tampilkan lagi",

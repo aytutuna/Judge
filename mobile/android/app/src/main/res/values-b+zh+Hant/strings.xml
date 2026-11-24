@@ -471,6 +471,8 @@
     <string name="shell_new">新爭論</string>
     <string name="shell_gamify">遊戲化</string>
     <string name="shell_today">今天</string>
+    <string name="shell_search">搜尋</string>
+    <string name="shell_no_matches">沒有結果。</string>
     <string name="shell_load_failed">無法載入你的紀錄。</string>
     <string name="shell_load_more">顯示更多</string>
     <string name="shell_untitled">未命名的判決</string>

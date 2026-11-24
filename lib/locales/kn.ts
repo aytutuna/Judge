@@ -754,6 +754,8 @@ const kn: Locale = {
     "shell.week": "ಈ ವಾರ",
     "shell.earlier": "ಹಿಂದಿನವು",
     "shell.empty": "ಇನ್ನೂ ಯಾವ ತೀರ್ಪೂ ಇಲ್ಲ.",
+    "shell.search": "ಹುಡುಕಿ",
+    "shell.noMatches": "ಏನೂ ಸಿಗಲಿಲ್ಲ.",
     "shell.loading": "ನಿಮ್ಮ ಇತಿಹಾಸ ಲೋಡ್ ಆಗುತ್ತಿದೆ…",
     "shell.loadFailed": "ನಿಮ್ಮ ಇತಿಹಾಸ ಲೋಡ್ ಆಗಲಿಲ್ಲ.",
     "shell.loadMore": "ಇನ್ನಷ್ಟು ತೋರಿಸಿ",

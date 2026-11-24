@@ -758,6 +758,8 @@ const en = {
   "shell.week": "This week",
   "shell.earlier": "Earlier",
   "shell.empty": "No verdicts yet.",
+  "shell.search": "Search",
+  "shell.noMatches": "No matches.",
   "shell.loading": "Loading your history…",
   "shell.loadFailed": "We couldn't load your history.",
   "shell.loadMore": "Show more",

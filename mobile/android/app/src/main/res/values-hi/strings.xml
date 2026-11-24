@@ -477,6 +477,8 @@
     <string name="shell_new">नई बहस</string>
     <string name="shell_gamify">गेमिफ़ाई</string>
     <string name="shell_today">आज</string>
+    <string name="shell_search">खोजें</string>
+    <string name="shell_no_matches">कुछ नहीं मिला।</string>
     <string name="shell_load_failed">आपका इतिहास लोड नहीं हो पाया।</string>
     <string name="shell_load_more">और दिखाएँ</string>
     <string name="shell_untitled">बिना शीर्षक का फ़ैसला</string>

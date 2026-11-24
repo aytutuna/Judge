@@ -477,6 +477,8 @@
     <string name="shell_new">Yeni tartışma</string>
     <string name="shell_gamify">Oyunlaştır</string>
     <string name="shell_today">Bugün</string>
+    <string name="shell_search">Ara</string>
+    <string name="shell_no_matches">Sonuç yok.</string>
     <string name="shell_load_failed">Geçmişini yükleyemedik.</string>
     <string name="shell_load_more">Daha fazla göster</string>
     <string name="shell_untitled">Başlıksız karar</string>

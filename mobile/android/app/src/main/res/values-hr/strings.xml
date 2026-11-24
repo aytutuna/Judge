@@ -483,6 +483,8 @@
     <string name="shell_new">Nova rasprava</string>
     <string name="shell_gamify">Igra</string>
     <string name="shell_today">Danas</string>
+    <string name="shell_search">Traži</string>
+    <string name="shell_no_matches">Nema rezultata.</string>
     <string name="shell_load_failed">Nismo uspjeli učitati tvoju povijest.</string>
     <string name="shell_load_more">Prikaži više</string>
     <string name="shell_untitled">Presuda bez naslova</string>

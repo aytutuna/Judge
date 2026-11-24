@@ -747,6 +747,8 @@ const ar: Locale = {
     "shell.week": "هذا الأسبوع",
     "shell.earlier": "أقدم",
     "shell.empty": "لا أحكام بعد.",
+    "shell.search": "بحث",
+    "shell.noMatches": "لا نتائج.",
     "shell.loading": "جارٍ تحميل سجلك…",
     "shell.loadFailed": "تعذّر تحميل سجلك.",
     "shell.loadMore": "عرض المزيد",

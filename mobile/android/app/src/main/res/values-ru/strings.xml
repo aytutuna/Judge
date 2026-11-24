@@ -489,6 +489,8 @@
     <string name="shell_new">Новый спор</string>
     <string name="shell_gamify">Игра</string>
     <string name="shell_today">Сегодня</string>
+    <string name="shell_search">Поиск</string>
+    <string name="shell_no_matches">Ничего не найдено.</string>
     <string name="shell_load_failed">Не удалось загрузить историю.</string>
     <string name="shell_load_more">Показать ещё</string>
     <string name="shell_untitled">Вердикт без названия</string>

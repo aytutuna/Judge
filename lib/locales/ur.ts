@@ -765,6 +765,8 @@ const ur: Locale = {
     "shell.week": "اس ہفتے",
     "shell.earlier": "پہلے",
     "shell.empty": "ابھی کوئی فیصلہ نہیں۔",
+    "shell.search": "تلاش",
+    "shell.noMatches": "کچھ نہیں ملا۔",
     "shell.loading": "آپ کی ہسٹری لوڈ ہو رہی ہے…",
     "shell.loadFailed": "آپ کی ہسٹری لوڈ نہیں ہو سکی۔",
     "shell.loadMore": "مزید دکھائیں",

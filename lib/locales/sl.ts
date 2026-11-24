@@ -762,6 +762,8 @@ const sl: Locale = {
     "shell.week": "Ta teden",
     "shell.earlier": "Prej",
     "shell.empty": "Razsodb še ni.",
+    "shell.search": "Iskanje",
+    "shell.noMatches": "Ni zadetkov.",
     "shell.loading": "Nalagamo zgodovino…",
     "shell.loadFailed": "Zgodovine nismo mogli naložiti.",
     "shell.loadMore": "Pokaži več",

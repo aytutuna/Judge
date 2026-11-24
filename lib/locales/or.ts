@@ -747,6 +747,8 @@ const or: Locale = {
     "shell.week": "ଏହି ସପ୍ତାହ",
     "shell.earlier": "ଆଗରୁ",
     "shell.empty": "ଏଯାଏଁ କୌଣସି ରାୟ ନାହିଁ।",
+    "shell.search": "ଖୋଜନ୍ତୁ",
+    "shell.noMatches": "କିଛି ମିଳିଲା ନାହିଁ।",
     "shell.loading": "ଆପଣଙ୍କ ଇତିହାସ ଲୋଡ୍ ହେଉଛି…",
     "shell.loadFailed": "ଆପଣଙ୍କ ଇତିହାସ ଲୋଡ୍ କରିପାରିଲୁ ନାହିଁ।",
     "shell.loadMore": "ଆହୁରି ଦେଖାନ୍ତୁ",

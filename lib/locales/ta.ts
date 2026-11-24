@@ -767,6 +767,8 @@ const ta: Locale = {
     "shell.week": "இந்த வாரம்",
     "shell.earlier": "முன்பு",
     "shell.empty": "இன்னும் தீர்ப்புகள் இல்லை.",
+    "shell.search": "தேடு",
+    "shell.noMatches": "எதுவும் இல்லை.",
     "shell.loading": "உங்கள் வரலாற்றை ஏற்றுகிறோம்…",
     "shell.loadFailed": "உங்கள் வரலாற்றை ஏற்ற முடியவில்லை.",
     "shell.loadMore": "மேலும் காட்டு",

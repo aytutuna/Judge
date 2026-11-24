@@ -477,6 +477,8 @@
     <string name="shell_new">નવો વિવાદ</string>
     <string name="shell_gamify">ગેમિફાઇ</string>
     <string name="shell_today">આજે</string>
+    <string name="shell_search">શોધો</string>
+    <string name="shell_no_matches">કંઈ મળ્યું નથી.</string>
     <string name="shell_load_failed">તમારો ઇતિહાસ લોડ ન થઈ શક્યો.</string>
     <string name="shell_load_more">વધુ બતાવો</string>
     <string name="shell_untitled">શીર્ષક વગરનો ચુકાદો</string>

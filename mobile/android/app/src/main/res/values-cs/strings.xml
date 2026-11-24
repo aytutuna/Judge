@@ -489,6 +489,8 @@
     <string name="shell_new">Nový spor</string>
     <string name="shell_gamify">Hra</string>
     <string name="shell_today">Dnes</string>
+    <string name="shell_search">Hledat</string>
+    <string name="shell_no_matches">Nic nenalezeno.</string>
     <string name="shell_load_failed">Historii se nepodařilo načíst.</string>
     <string name="shell_load_more">Zobrazit další</string>
     <string name="shell_untitled">Verdikt bez názvu</string>

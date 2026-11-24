@@ -783,6 +783,8 @@ const de: Locale = {
     "shell.week": "Diese Woche",
     "shell.earlier": "Früher",
     "shell.empty": "Noch keine Urteile.",
+    "shell.search": "Suchen",
+    "shell.noMatches": "Keine Treffer.",
     "shell.loading": "Dein Verlauf wird geladen…",
     "shell.loadFailed": "Wir konnten deinen Verlauf nicht laden.",
     "shell.loadMore": "Mehr anzeigen",

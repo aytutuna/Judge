@@ -761,6 +761,8 @@ const ja: Locale = {
     "shell.week": "今週",
     "shell.earlier": "それ以前",
     "shell.empty": "まだ判定はありません。",
+    "shell.search": "検索",
+    "shell.noMatches": "見つかりません。",
     "shell.loading": "履歴を読み込み中…",
     "shell.loadFailed": "履歴を読み込めませんでした。",
     "shell.loadMore": "もっと見る",

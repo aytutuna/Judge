@@ -477,6 +477,8 @@
     <string name="shell_new">புதிய வாக்குவாதம்</string>
     <string name="shell_gamify">கேமிஃபை</string>
     <string name="shell_today">இன்று</string>
+    <string name="shell_search">தேடு</string>
+    <string name="shell_no_matches">எதுவும் இல்லை.</string>
     <string name="shell_load_failed">உங்கள் வரலாற்றை ஏற்ற முடியவில்லை.</string>
     <string name="shell_load_more">மேலும் காட்டு</string>
     <string name="shell_untitled">தலைப்பில்லாத தீர்ப்பு</string>

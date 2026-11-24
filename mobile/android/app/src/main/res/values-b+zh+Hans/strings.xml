@@ -471,6 +471,8 @@
     <string name="shell_new">新的争论</string>
     <string name="shell_gamify">游戏化</string>
     <string name="shell_today">今天</string>
+    <string name="shell_search">搜索</string>
+    <string name="shell_no_matches">没有结果。</string>
     <string name="shell_load_failed">没能加载历史记录。</string>
     <string name="shell_load_more">显示更多</string>
     <string name="shell_untitled">未命名裁决</string>

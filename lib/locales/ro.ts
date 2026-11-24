@@ -764,6 +764,8 @@ const ro: Locale = {
     "shell.week": "Săptămâna asta",
     "shell.earlier": "Mai devreme",
     "shell.empty": "Încă nu sunt verdicte.",
+    "shell.search": "Caută",
+    "shell.noMatches": "Niciun rezultat.",
     "shell.loading": "Se încarcă istoricul…",
     "shell.loadFailed": "N-am putut încărca istoricul.",
     "shell.loadMore": "Arată mai multe",

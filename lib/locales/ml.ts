@@ -759,6 +759,8 @@ const ml: Locale = {
     "shell.week": "ഈ ആഴ്ച",
     "shell.earlier": "മുമ്പ്",
     "shell.empty": "ഇതുവരെ വിധികളൊന്നുമില്ല.",
+    "shell.search": "തിരയുക",
+    "shell.noMatches": "ഒന്നും കണ്ടില്ല.",
     "shell.loading": "ചരിത്രം ലോഡ് ചെയ്യുന്നു…",
     "shell.loadFailed": "ചരിത്രം ലോഡ് ചെയ്യാനായില്ല.",
     "shell.loadMore": "കൂടുതൽ കാണിക്കൂ",

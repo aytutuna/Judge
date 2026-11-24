@@ -477,6 +477,8 @@
     <string name="shell_new">కొత్త వాదన</string>
     <string name="shell_gamify">గేమిఫై</string>
     <string name="shell_today">ఈరోజు</string>
+    <string name="shell_search">వెతకండి</string>
+    <string name="shell_no_matches">ఏమీ దొరకలేదు.</string>
     <string name="shell_load_failed">మీ చరిత్ర లోడ్ కాలేదు.</string>
     <string name="shell_load_more">ఇంకా చూపించండి</string>
     <string name="shell_untitled">పేరు లేని తీర్పు</string>

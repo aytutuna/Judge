@@ -762,6 +762,8 @@ const sv: Locale = {
     "shell.week": "Den här veckan",
     "shell.earlier": "Tidigare",
     "shell.empty": "Inga domar än.",
+    "shell.search": "Sök",
+    "shell.noMatches": "Inga träffar.",
     "shell.loading": "Laddar din historik…",
     "shell.loadFailed": "Vi kunde inte ladda din historik.",
     "shell.loadMore": "Visa fler",

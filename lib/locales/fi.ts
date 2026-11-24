@@ -775,6 +775,8 @@ const fi: Locale = {
     "shell.week": "Tällä viikolla",
     "shell.earlier": "Aiemmin",
     "shell.empty": "Ei vielä tuomioita.",
+    "shell.search": "Haku",
+    "shell.noMatches": "Ei tuloksia.",
     "shell.loading": "Ladataan historiaa…",
     "shell.loadFailed": "Historiaa ei saatu ladattua.",
     "shell.loadMore": "Näytä lisää",

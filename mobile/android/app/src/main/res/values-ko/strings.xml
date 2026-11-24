@@ -471,6 +471,8 @@
     <string name="shell_new">새 논쟁</string>
     <string name="shell_gamify">게임 모드</string>
     <string name="shell_today">오늘</string>
+    <string name="shell_search">검색</string>
+    <string name="shell_no_matches">결과 없음.</string>
     <string name="shell_load_failed">기록을 불러오지 못했어요.</string>
     <string name="shell_load_more">더 보기</string>
     <string name="shell_untitled">제목 없는 판결</string>

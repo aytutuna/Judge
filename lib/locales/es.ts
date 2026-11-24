@@ -775,6 +775,8 @@ const es: Locale = {
     "shell.week": "Esta semana",
     "shell.earlier": "Antes",
     "shell.empty": "Aún no hay veredictos.",
+    "shell.search": "Buscar",
+    "shell.noMatches": "Sin resultados.",
     "shell.loading": "Cargando tu historial…",
     "shell.loadFailed": "No pudimos cargar tu historial.",
     "shell.loadMore": "Mostrar más",

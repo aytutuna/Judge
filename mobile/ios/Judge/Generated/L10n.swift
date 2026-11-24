@@ -603,6 +603,8 @@ enum L10n {
     static func shellNew(_ lang: AppLang) -> String { string("shell.new", lang) }
     static func shellGamify(_ lang: AppLang) -> String { string("shell.gamify", lang) }
     static func shellToday(_ lang: AppLang) -> String { string("shell.today", lang) }
+    static func shellSearch(_ lang: AppLang) -> String { string("shell.search", lang) }
+    static func shellNoMatches(_ lang: AppLang) -> String { string("shell.noMatches", lang) }
     static func shellLoadFailed(_ lang: AppLang) -> String { string("shell.loadFailed", lang) }
     static func shellLoadMore(_ lang: AppLang) -> String { string("shell.loadMore", lang) }
     static func shellUntitled(_ lang: AppLang) -> String { string("shell.untitled", lang) }
@@ -1218,6 +1220,8 @@ enum L10n {
         "shell.new",
         "shell.gamify",
         "shell.today",
+        "shell.search",
+        "shell.noMatches",
         "shell.loadFailed",
         "shell.loadMore",
         "shell.untitled",

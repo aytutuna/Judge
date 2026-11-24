@@ -477,6 +477,8 @@
     <string name="shell_new">Uusi kiista</string>
     <string name="shell_gamify">Pelitila</string>
     <string name="shell_today">Tänään</string>
+    <string name="shell_search">Haku</string>
+    <string name="shell_no_matches">Ei tuloksia.</string>
     <string name="shell_load_failed">Historiaa ei saatu ladattua.</string>
     <string name="shell_load_more">Näytä lisää</string>
     <string name="shell_untitled">Nimetön tuomio</string>

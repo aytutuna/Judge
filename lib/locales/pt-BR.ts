@@ -764,6 +764,8 @@ const ptBR: Locale = {
     "shell.week": "Esta semana",
     "shell.earlier": "Antes",
     "shell.empty": "Nenhum veredito ainda.",
+    "shell.search": "Buscar",
+    "shell.noMatches": "Nenhum resultado.",
     "shell.loading": "Carregando seu histórico…",
     "shell.loadFailed": "Não conseguimos carregar seu histórico.",
     "shell.loadMore": "Mostrar mais",

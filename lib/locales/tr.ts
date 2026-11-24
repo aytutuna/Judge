@@ -769,6 +769,8 @@ const tr: Locale = {
     "shell.week": "Bu hafta",
     "shell.earlier": "Daha önce",
     "shell.empty": "Henüz karar yok.",
+    "shell.search": "Ara",
+    "shell.noMatches": "Sonuç yok.",
     "shell.loading": "Geçmişin yükleniyor…",
     "shell.loadFailed": "Geçmişini yükleyemedik.",
     "shell.loadMore": "Daha fazla göster",

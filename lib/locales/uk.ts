@@ -765,6 +765,8 @@ const uk: Locale = {
     "shell.week": "Цього тижня",
     "shell.earlier": "Раніше",
     "shell.empty": "Вердиктів поки немає.",
+    "shell.search": "Пошук",
+    "shell.noMatches": "Нічого не знайдено.",
     "shell.loading": "Завантажуємо історію…",
     "shell.loadFailed": "Не вдалося завантажити історію.",
     "shell.loadMore": "Показати ще",

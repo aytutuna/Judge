@@ -735,6 +735,8 @@ const zhHant: Locale = {
     "shell.week": "本週",
     "shell.earlier": "更早",
     "shell.empty": "還沒有判決。",
+    "shell.search": "搜尋",
+    "shell.noMatches": "沒有結果。",
     "shell.loading": "正在載入紀錄…",
     "shell.loadFailed": "無法載入你的紀錄。",
     "shell.loadMore": "顯示更多",

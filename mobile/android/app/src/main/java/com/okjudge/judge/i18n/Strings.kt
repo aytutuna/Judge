@@ -536,6 +536,8 @@ class Strings(private val res: Resources) {
     val shellNew: String get() = res.getString(R.string.shell_new)
     val shellGamify: String get() = res.getString(R.string.shell_gamify)
     val shellToday: String get() = res.getString(R.string.shell_today)
+    val shellSearch: String get() = res.getString(R.string.shell_search)
+    val shellNoMatches: String get() = res.getString(R.string.shell_no_matches)
     val shellLoadFailed: String get() = res.getString(R.string.shell_load_failed)
     val shellLoadMore: String get() = res.getString(R.string.shell_load_more)
     val shellUntitled: String get() = res.getString(R.string.shell_untitled)
@@ -1150,6 +1152,8 @@ class Strings(private val res: Resources) {
             "shell.new" -> R.string.shell_new
             "shell.gamify" -> R.string.shell_gamify
             "shell.today" -> R.string.shell_today
+            "shell.search" -> R.string.shell_search
+            "shell.noMatches" -> R.string.shell_no_matches
             "shell.loadFailed" -> R.string.shell_load_failed
             "shell.loadMore" -> R.string.shell_load_more
             "shell.untitled" -> R.string.shell_untitled

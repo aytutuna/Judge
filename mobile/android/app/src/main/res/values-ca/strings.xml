@@ -483,6 +483,8 @@
     <string name="shell_new">Nova discussió</string>
     <string name="shell_gamify">Gamifica</string>
     <string name="shell_today">Avui</string>
+    <string name="shell_search">Cerca</string>
+    <string name="shell_no_matches">Cap resultat.</string>
     <string name="shell_load_failed">No hem pogut carregar l\'historial.</string>
     <string name="shell_load_more">Mostra\'n més</string>
     <string name="shell_untitled">Veredicte sense títol</string>

@@ -477,6 +477,8 @@
     <string name="shell_new">Νέα διαφωνία</string>
     <string name="shell_gamify">Παιχνίδι</string>
     <string name="shell_today">Σήμερα</string>
+    <string name="shell_search">Αναζήτηση</string>
+    <string name="shell_no_matches">Κανένα αποτέλεσμα.</string>
     <string name="shell_load_failed">Δεν μπορέσαμε να φορτώσουμε το ιστορικό σου.</string>
     <string name="shell_load_more">Περισσότερα</string>
     <string name="shell_untitled">Απόφαση χωρίς τίτλο</string>

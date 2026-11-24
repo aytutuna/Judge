@@ -783,6 +783,8 @@ const el: Locale = {
     "shell.week": "Αυτή την εβδομάδα",
     "shell.earlier": "Παλαιότερα",
     "shell.empty": "Δεν υπάρχουν αποφάσεις ακόμα.",
+    "shell.search": "Αναζήτηση",
+    "shell.noMatches": "Κανένα αποτέλεσμα.",
     "shell.loading": "Φόρτωση ιστορικού…",
     "shell.loadFailed": "Δεν μπορέσαμε να φορτώσουμε το ιστορικό σου.",
     "shell.loadMore": "Περισσότερα",

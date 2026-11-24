@@ -745,6 +745,8 @@ const pa: Locale = {
     "shell.week": "ਇਸ ਹਫ਼ਤੇ",
     "shell.earlier": "ਪਹਿਲਾਂ",
     "shell.empty": "ਹਾਲੇ ਕੋਈ ਫ਼ੈਸਲਾ ਨਹੀਂ।",
+    "shell.search": "ਖੋਜੋ",
+    "shell.noMatches": "ਕੁਝ ਨਹੀਂ ਮਿਲਿਆ।",
     "shell.loading": "ਤੁਹਾਡਾ ਇਤਿਹਾਸ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ…",
     "shell.loadFailed": "ਤੁਹਾਡਾ ਇਤਿਹਾਸ ਲੋਡ ਨਹੀਂ ਹੋ ਸਕਿਆ।",
     "shell.loadMore": "ਹੋਰ ਦਿਖਾਓ",
