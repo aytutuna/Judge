@@ -258,16 +258,6 @@ export function createPlay(rand: () => number) {
     tilt() {
       return Math.max(-0.4, Math.min(0.4, 0.35 * (weight(-1) - weight(1))));
     },
-    /** Target opacity of a side's zone ring. */
-    glow(side: Side) {
-      let want = 0;
-      for (const b of balls) {
-        if (b.side === side && (b.state === "held" || (b.state === "free" && b.armed))) {
-          want = Math.max(want, 0.22 + 0.4 * b.pull);
-        }
-      }
-      return want;
-    },
     /** `n`: where the pointer met the ball, in radii from its centre. `at`:
      * the pointer on the z = 0 plane. `css`: the pointer in screen pixels. */
     grab(ball: Ball, n: Pt, css: Pt, at: Pt | null, t = clock) {

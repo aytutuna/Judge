@@ -348,7 +348,8 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
         sB = pb ? scaleB * pb.k : 0;
       }
       balance.update(theta, ballA, ballB, sA, sB, dt * ambient, pose.camDown, entrance);
-      playMoving = balance.playScene(playing ? play : null, dt, base) || (playing && play.busy);
+      balance.playScene(playing ? play : null, base);
+      playMoving = playing && play.busy;
     } else balance.update(theta, a, b, scaleA, scaleB, dt * ambient, pose.camDown, entrance);
     crux.update(pose, time, dt * ambient, dt, snap);
     fragments.update(pose, time, a, b, crux.glowAt, small, ss(0, 1, enter));

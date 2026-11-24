@@ -5,15 +5,13 @@ import {
   CylinderGeometry,
   Group,
   Mesh,
-  MeshBasicMaterial,
   PlaneGeometry,
-  RingGeometry,
   SphereGeometry,
   type Scene,
 } from "three";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 import { PALETTE, sideColors, type Party } from "@/lib/palette";
-import { ZONE_R, type Play } from "@/lib/scene-play";
+import type { Play } from "@/lib/scene-play";
 import { BEAM_LEN, END, PIVOT_Y, PLINTH, SPHERE_R, bump, clamp01, lerp, ss, type Vec3 } from "@/lib/scene-poses";
 import type { Bin, Materials } from "./materials";
 import { LOOKS, type SceneLook } from "./theme";
@@ -143,15 +141,6 @@ export function createBalance(
   scene.add(ring);
   const ringA = new Color();
   const ringB = new Color();
-  const zoneGeo = bin.add(new RingGeometry(ZONE_R - 0.018, ZONE_R, 128));
-  const zones = [0, 1].map(() => {
-    const mat = bin.add(new MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false }));
-    const m = new Mesh(zoneGeo, mat);
-    m.renderOrder = 2;
-    m.visible = false;
-    scene.add(m);
-    return m;
-  });
   mats.partyA.emissiveIntensity = mats.partyB.emissiveIntensity = 0;
 
   let shade = 1;
@@ -159,15 +148,14 @@ export function createBalance(
   function paint(you: Party | null, look: SceneLook) {
     shade = look.shade;
     const c = sideColors(you, look.dark);
-    for (const [mat, side, ringColor, zone] of [
-      [mats.partyA, c.a, ringA, zones[0]],
-      [mats.partyB, c.b, ringB, zones[1]],
+    for (const [mat, side, ringColor] of [
+      [mats.partyA, c.a, ringA],
+      [mats.partyB, c.b, ringB],
     ] as const) {
       mat.color.set(side.fill);
       mat.sheenColor.set(side.tint);
       mat.emissive.set(side.fill);
       ringColor.set(side.strong);
-      (zone.material as MeshBasicMaterial).color.copy(ringColor);
     }
   }
   paint(null, LOOKS.light);
@@ -219,9 +207,9 @@ export function createBalance(
         m.visible = blobMat(m).opacity > 0.004;
       });
     },
-    /** Balls that are not a side's current one, and the zone rings; `scale`
-     * is the spheres' common scale. Returns whether a ring is still easing. */
-    playScene(play: Play | null, dt: number, scale: number) {
+    /** Balls that are not a side's current one; `scale` is the spheres'
+     * common scale. */
+    playScene(play: Play | null, scale: number) {
       const used = [0, 0];
       if (play) {
         for (const b of play.balls) {
@@ -237,17 +225,6 @@ export function createBalance(
       for (let i = 0; i < 2; i++) {
         for (let j = used[i]; j < extras[i].length; j++) extras[i][j].visible = false;
       }
-      let easing = false;
-      zones.forEach((z, i) => {
-        const side = i === 0 ? -1 : 1;
-        const want = play ? play.glow(side) : 0;
-        const mat = z.material as MeshBasicMaterial;
-        mat.opacity = dt > 0 ? mat.opacity + (want - mat.opacity) * (1 - Math.exp(-dt * 10)) : want;
-        z.visible = mat.opacity > 0.01;
-        if (play) z.position.set(play.seats[i].x, play.seats[i].y, 0);
-        if (Math.abs(want - mat.opacity) > 0.005) easing = true;
-      });
-      return easing;
     },
     /** `since`: seconds since the verdict's beam settled (large when the
      * verdict was snapped into place). */
