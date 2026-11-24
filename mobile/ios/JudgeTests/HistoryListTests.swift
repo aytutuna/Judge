@@ -304,6 +304,22 @@ final class HistoryListTests: XCTestCase {
     }
 
     @MainActor
+    func testSearchKeepsRowsByTitleOrOtherSideIgnoringCase() throws {
+        let entries = try fixturePage().items.map { HistoryEntry.account($0) }
+        XCTAssertEqual(HistoryEntry.filter(entries, query: "  ", lang: .en).count, entries.count)
+        let deposit = HistoryEntry.filter(entries, query: "ALEX OWES", lang: .en)
+        XCTAssertFalse(deposit.isEmpty)
+        XCTAssertLessThan(deposit.count, entries.count)
+        XCTAssertTrue(deposit.allSatisfy { $0.title(lang: .en).localizedCaseInsensitiveContains("alex owes") })
+        let sam = HistoryEntry.filter(entries, query: "sam", lang: .en)
+        XCTAssertTrue(sam.contains { entry in
+            if case .account(let item) = entry { return HistoryLabels.otherName(item) == "Sam" }
+            return false
+        })
+        XCTAssertTrue(HistoryEntry.filter(entries, query: "zzzz", lang: .en).isEmpty)
+    }
+
+    @MainActor
     func testRemovableRowsAndConfirmWording() throws {
         try withStore { store in
             try store.save(try session("win_b_named"))

@@ -60,6 +60,20 @@ enum HistoryEntry: Identifiable {
         }
     }
 
+    /// The rows whose title or other side's name contains `query`, ignoring
+    /// case; all of them for a blank query.
+    static func filter(_ entries: [HistoryEntry], query: String, lang: AppLang) -> [HistoryEntry] {
+        let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        if q.isEmpty { return entries }
+        return entries.filter { entry in
+            if entry.title(lang: lang).localizedCaseInsensitiveContains(q) { return true }
+            if case .account(let item) = entry, let other = HistoryLabels.otherName(item) {
+                return other.localizedCaseInsensitiveContains(q)
+            }
+            return false
+        }
+    }
+
     /// Where the row stands in a few words, from the viewer's side.
     func status(lang: AppLang, now: Date) -> String? {
         switch self {

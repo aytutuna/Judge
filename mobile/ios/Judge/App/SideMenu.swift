@@ -258,13 +258,77 @@ struct RootBarTrailing: ToolbarContent {
     }
 }
 
-/// The panel the menu button slides in: New, the Verdicts and the Links
-/// (cases sent and received) in one list that scrolls, and at the bottom
-/// the profile above Settings.
+/// What the controls floating over the menu's list measure, so the list's
+/// ends can scroll clear of them.
+private struct FloatSizes: Equatable, Sendable {
+    var top: CGFloat = 0
+    var bottom: CGFloat = 0
+}
+
+private struct FloatSizesKey: PreferenceKey {
+    static let defaultValue = FloatSizes()
+    static func reduce(value: inout FloatSizes, nextValue: () -> FloatSizes) {
+        let next = nextValue()
+        value.top = max(value.top, next.top)
+        value.bottom = max(value.bottom, next.bottom)
+    }
+}
+
+/// A frosted pill for the controls that float over the menu's list: glass on
+/// iOS 26, a blurred material before it, and a plain surface when Reduce
+/// Transparency is on.
+private struct FloatingPill<S: Shape>: ViewModifier {
+    let shape: S
+    let interactive: Bool
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if reduceTransparency {
+            content
+                .background(shape.fill(Brand.paper))
+                .overlay(shape.stroke(Brand.line2, lineWidth: 1))
+        } else if #available(iOS 26.0, *) {
+            content.glassEffect(interactive ? .regular.interactive() : .regular, in: shape)
+        } else {
+            content
+                .background(shape.fill(.regularMaterial))
+                .overlay(shape.stroke(Brand.line2, lineWidth: 1))
+                .shadow(color: Brand.shadow(0.12, dark: 0.35), radius: 8, y: 2)
+        }
+    }
+}
+
+private struct FloatingRow: ViewModifier {
+    let floating: Bool
+    let selected: Bool
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if floating {
+            content
+                .floatingPill(in: Capsule())
+                .overlay { if selected { Capsule().stroke(Brand.terraInk, lineWidth: 1.5) } }
+        } else {
+            content
+        }
+    }
+}
+
+private extension View {
+    func floatingPill<S: Shape>(in shape: S, interactive: Bool = true) -> some View {
+        modifier(FloatingPill(shape: shape, interactive: interactive))
+    }
+}
+
+/// The panel the menu button slides in: the Verdicts and the Links (cases
+/// sent and received) in one list that scrolls under New and a search field
+/// at the top and the profile and Settings at the bottom, which float over it.
 struct SideMenu: View {
     @Environment(AppModel.self) private var app
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.layoutDirection) private var layoutDirection
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Query(sort: \SavedVerdict.createdAt, order: .reverse) private var saved: [SavedVerdict]
     @Query private var cachedRows: [HistoryCacheRow]
     @State private var pull: CGFloat = 0
@@ -276,6 +340,11 @@ struct SideMenu: View {
     @State private var confirmingAll = false
     @State private var verdictsFolded = false
     @State private var linksFolded = false
+    @State private var query = ""
+    @FocusState private var searchFocused: Bool
+    /// Room the list leaves for the floating controls; measured, so large text and the open profile fit.
+    @State private var topInset: CGFloat = 72
+    @State private var bottomInset: CGFloat = 130
     /// Rows near the end that are on screen.
     @State private var tailShown: Set<String> = []
     /// Where the sides of the owner's waiting links stand, by case id, while the menu is open.
@@ -289,6 +358,8 @@ struct SideMenu: View {
     private static let recentType = TypeStyle(face: .inter, weight: 400, size: 14, lineHeight: 1.3, textStyle: .subheadline)
     private static let stateType = TypeStyle(face: .inter, weight: 600, size: 12.5, lineHeight: 1.3, textStyle: .footnote)
     private static let headingType = TypeStyle(face: .inter, weight: 700, size: 13, lineHeight: 1.3, tracking: 0.04, textStyle: .footnote, maxScale: 1.6)
+    /// While searching, pages are read until this many rows are in.
+    private static let searchCap = 500
 
     var body: some View {
         GeometryReader { geo in
@@ -310,7 +381,7 @@ struct SideMenu: View {
         .allowsHitTesting(app.menuOpen)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.24), value: app.menuOpen)
         .onChange(of: app.menuOpen) { _, open in
-            if open { pull = 0 } else { profileOpen = false; live = [:] }
+            if open { pull = 0 } else { profileOpen = false; live = [:]; query = ""; searchFocused = false }
         }
         .onChange(of: app.home.path.count) { close() }
         .onChange(of: app.home.isJudging) { _, judging in
@@ -341,6 +412,26 @@ struct SideMenu: View {
 
     private var currentEntries: [HistoryEntry] {
         HistoryEntry.current(app: app, rows: cachedRows, saved: saved)
+    }
+
+    private var searching: Bool {
+        !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    /// Reads pages while a search is on, since a match can sit on one not loaded yet.
+    private func readPagesForSearch() async {
+        guard searching else { return }
+        // A keystroke starts a new task, which cancels this wait.
+        try? await Task.sleep(for: .milliseconds(250))
+        let list = app.historyList
+        while !Task.isCancelled, let at = list.next, currentEntries.count < Self.searchCap {
+            if list.loadingMore {
+                try? await Task.sleep(for: .milliseconds(100))
+                continue
+            }
+            await list.loadMore(user: app.historyUser)
+            if list.next == at { break }
+        }
     }
 
     private func refresh(force: Bool = false) {
@@ -382,22 +473,26 @@ struct SideMenu: View {
     private func removeAll(links: Bool) {
         let list = app.historyList
         let user = app.historyUser
+        // A search has been reading pages already, and removes only what matches.
+        let matching = searching
         Task {
-            var cursor = list.next
+            var cursor = matching ? nil : list.next
             while let at = cursor {
                 await list.loadMore(user: user)
                 if list.next == at { break }
                 cursor = list.next
             }
             confirmingAll = true
-            confirming = currentEntries.filter { $0.isCase == links && $0.removable }.map(\.id)
+            confirming = HistoryEntry.filter(currentEntries, query: matching ? query : "", lang: app.lang)
+                .filter { $0.isCase == links && $0.removable }.map(\.id)
         }
     }
 
     private func panel(width: CGFloat, height: CGFloat) -> some View {
         let lang = app.lang
         let list = app.historyList
-        let entries = currentEntries
+        let everything = currentEntries
+        let entries = HistoryEntry.filter(everything, query: query, lang: lang)
         let verdicts = entries.filter { !$0.isCase }
         let links = entries.filter(\.isCase)
         let shown = verdicts + links
@@ -408,12 +503,10 @@ struct SideMenu: View {
             return false
         }
         let watching = app.menuOpen && scenePhase == .active && links.contains { isWaitingLink($0, now: now) }
-        return VStack(spacing: 0) {
+        return ZStack {
+            floatingTop(lang, width: width)
+                .zIndex(1)
             List {
-                row(.new, title: L10n.appTabNew(lang))
-                    .accessibilityFocused($focusFirst)
-                    .simultaneousGesture(closeDrag(width))
-                    .menuListRow()
                 if let notice = list.notice {
                     Text(noticeText(notice, lang: lang))
                         .brandText(.footnote)
@@ -444,7 +537,23 @@ struct SideMenu: View {
                         }
                     }
                 }
-                if entries.isEmpty {
+                if searching, !everything.isEmpty, entries.isEmpty {
+                    Group {
+                        if list.next != nil {
+                            ProgressView().tint(Brand.muted)
+                        } else {
+                            Text(L10n.shellNoMatches(lang))
+                                .brandText(.footnote)
+                                .foregroundStyle(Brand.muted)
+                                .padding(.horizontal, 12)
+                                .padding(.top, 8)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
+                    .simultaneousGesture(closeDrag(width))
+                    .menuListRow()
+                }
+                if everything.isEmpty {
                     if list.loading {
                         ProgressView().tint(Brand.muted)
                             .frame(maxWidth: .infinity)
@@ -475,7 +584,7 @@ struct SideMenu: View {
                 } else if list.failed {
                     loadFailed(lang).simultaneousGesture(closeDrag(width)).menuListRow()
                 }
-                if list.next != nil {
+                if list.next != nil, !searching {
                     Group {
                         if list.loadingMore {
                             ProgressView().tint(Brand.muted)
@@ -502,7 +611,7 @@ struct SideMenu: View {
                 // The list's own empty area takes the touch itself, so a plain row stands in
                 // for it. It only fills what the rows leave, or the list would always scroll.
                 Color.clear
-                    .frame(height: max(0, height - 242 - Self.rowsHeight(shownCount)))
+                    .frame(height: max(0, height - 42 - topInset - bottomInset - Self.rowsHeight(shownCount)))
                     .contentShape(Rectangle())
                     .simultaneousGesture(closeDrag(width))
                     .menuListRow()
@@ -511,6 +620,10 @@ struct SideMenu: View {
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
             .scrollBounceBehavior(.basedOnSize)
+            .scrollDismissesKeyboard(.interactively)
+            .contentMargins(.top, topInset, for: .scrollContent)
+            .contentMargins(.bottom, bottomInset, for: .scrollContent)
+            .task(id: query) { await readPagesForSearch() }
             // A page of rows the phone already had doesn't grow the list, so no
             // new row appears: keep going while the end is on screen.
             .onChange(of: list.next) { _, next in
@@ -518,14 +631,25 @@ struct SideMenu: View {
                 Task { await list.loadMore(user: app.historyUser) }
             }
             .refreshable { await list.refresh(user: app.historyUser, enabled: app.account.features.history, force: true) }
-            VStack(spacing: 4) {
+            VStack(spacing: 8) {
                 if profileOpen { profileItems(lang) }
                 profile(lang)
-                row(.settings, title: L10n.appTabSettings(lang), icon: "gearshape")
+                row(.settings, title: L10n.appTabSettings(lang), icon: "gearshape", floating: true)
             }
-            .padding(.top, 12)
+            .padding(.top, 8)
             .contentShape(Rectangle())
             .simultaneousGesture(closeDrag(width))
+            .background(GeometryReader { geo in
+                Color.clear.preference(key: FloatSizesKey.self, value: FloatSizes(bottom: geo.size.height))
+            })
+            .frame(maxHeight: .infinity, alignment: .bottom)
+            .zIndex(1)
+        }
+        .onPreferenceChange(FloatSizesKey.self) { sizes in
+            MainActor.assumeIsolated {
+                if sizes.top > 0 { topInset = sizes.top }
+                if sizes.bottom > 0 { bottomInset = sizes.bottom }
+            }
         }
         // While the judges work on a row, the list is read again now and then.
         .task(id: thinking) {
@@ -570,7 +694,61 @@ struct SideMenu: View {
         .onDisappear { focusFirst = false }
     }
 
-    private func row(_ tab: RootTab, title: String, icon: String? = nil) -> some View {
+    /// New and the search field, floating at the top; stacked once the text is very large.
+    private func floatingTop(_ lang: AppLang, width: CGFloat) -> some View {
+        let stacked = dynamicTypeSize.isAccessibilitySize
+        let layout = stacked ? AnyLayout(VStackLayout(spacing: 8)) : AnyLayout(HStackLayout(spacing: 8))
+        return layout {
+            row(.new, title: L10n.appTabNew(lang), floating: true, fill: stacked)
+                .accessibilityFocused($focusFirst)
+            searchField(lang)
+        }
+        .padding(.bottom, 8)
+        .contentShape(Rectangle())
+        .simultaneousGesture(closeDrag(width))
+        .background(GeometryReader { geo in
+            Color.clear.preference(key: FloatSizesKey.self, value: FloatSizes(top: geo.size.height))
+        })
+        .frame(maxHeight: .infinity, alignment: .top)
+    }
+
+    private func searchField(_ lang: AppLang) -> some View {
+        HStack(spacing: 8) {
+            Image(systemName: "magnifyingglass")
+                .font(.system(size: 15, weight: .medium))
+                .foregroundStyle(Brand.muted)
+                .accessibilityHidden(true)
+            TextField("", text: $query, prompt: Text(L10n.shellSearch(lang)).foregroundStyle(Brand.placeholder))
+                .focused($searchFocused)
+                .submitLabel(.search)
+                .onSubmit { searchFocused = false }
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+                .brandText(.body)
+                .foregroundStyle(Brand.ink)
+                .accessibilityLabel(L10n.shellSearch(lang))
+                .accessibilityIdentifier("menu.search")
+            if !query.isEmpty {
+                Button {
+                    query = ""
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.system(size: 17))
+                        .foregroundStyle(Brand.muted)
+                        .frame(width: 32, height: 44)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(L10n.appCancel(lang))
+            }
+        }
+        .padding(.leading, 14)
+        .padding(.trailing, query.isEmpty ? 14 : 4)
+        .frame(maxWidth: .infinity, minHeight: 48)
+        .floatingPill(in: Capsule(), interactive: false)
+    }
+
+    private func row(_ tab: RootTab, title: String, icon: String? = nil, floating: Bool = false, fill: Bool = true) -> some View {
         let selected = app.tab == tab
         return Button {
             app.menuOpen = false
@@ -588,16 +766,17 @@ struct SideMenu: View {
                     .multilineTextAlignment(.leading)
             }
             .foregroundStyle(Brand.ink)
-            .padding(.horizontal, 12)
+            .padding(.horizontal, floating ? 18 : 12)
             .padding(.vertical, 6)
-            .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
+            .frame(maxWidth: fill ? .infinity : nil, minHeight: 48, alignment: .leading)
             .background {
-                if selected {
+                if selected && !floating {
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
                         .fill(Brand.paper)
                         .shadow(color: Brand.shadow(0.1, dark: 0.3), radius: 1.5, y: 1)
                 }
             }
+            .modifier(FloatingRow(floating: floating, selected: selected))
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -775,14 +954,11 @@ struct SideMenu: View {
                     .foregroundStyle(Brand.muted)
                     .accessibilityHidden(true)
             }
-            .padding(.horizontal, 12)
+            .padding(.leading, 6)
+            .padding(.trailing, 18)
             .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
-            .background {
-                if profileOpen {
-                    RoundedRectangle(cornerRadius: 12, style: .continuous).fill(Brand.paper)
-                }
-            }
-            .contentShape(Rectangle())
+            .floatingPill(in: Capsule())
+            .contentShape(Capsule())
         }
         .buttonStyle(.plain)
         .accessibilityLabel(L10n.navAccount(lang))
@@ -805,6 +981,8 @@ struct SideMenu: View {
                 }
             }
         }
+        .padding(.vertical, 4)
+        .floatingPill(in: RoundedRectangle(cornerRadius: 24, style: .continuous), interactive: false)
     }
 
     private func profileItem(_ title: String, destructive: Bool = false, action: @escaping () -> Void) -> some View {
@@ -812,8 +990,7 @@ struct SideMenu: View {
             Text(title)
                 .brandText(Self.rowType)
                 .foregroundStyle(destructive ? Brand.danger : Brand.ink)
-                .padding(.leading, 60)
-                .padding(.trailing, 12)
+                .padding(.horizontal, 20)
                 .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
                 .contentShape(Rectangle())
         }
