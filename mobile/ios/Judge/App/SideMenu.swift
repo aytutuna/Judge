@@ -370,8 +370,12 @@ struct SideMenu: View {
                             .ignoresSafeArea()
                     }
                     .buttonStyle(.plain)
-                    .keyboardShortcut(.cancelAction)
                     .accessibilityLabel(L10n.appClose(app.lang))
+                    // Hardware Escape clears the search first and closes the menu on the next press.
+                    Button(action: escape) { EmptyView() }
+                        .keyboardShortcut(.cancelAction)
+                        .frame(width: 0, height: 0)
+                        .accessibilityHidden(true)
                     .transition(.opacity)
                     panel(width: min(300, geo.size.width * 0.85), height: geo.size.height)
                         .transition(.move(edge: .leading))
@@ -419,19 +423,24 @@ struct SideMenu: View {
     }
 
     /// Reads pages while a search is on, since a match can sit on one not loaded yet.
-    private func readPagesForSearch() async {
+    private func readPagesForSearch(debounce: Bool = true) async {
         guard searching else { return }
         // A keystroke starts a new task, which cancels this wait.
-        try? await Task.sleep(for: .milliseconds(250))
+        if debounce { try? await Task.sleep(for: .milliseconds(250)) }
         let list = app.historyList
         while !Task.isCancelled, let at = list.next, currentEntries.count < Self.searchCap {
-            if list.loadingMore {
+            // A refresh or another page is in flight: wait for it, then go on.
+            if list.loading || list.loadingMore {
                 try? await Task.sleep(for: .milliseconds(100))
                 continue
             }
             await list.loadMore(user: app.historyUser)
             if list.next == at { break }
         }
+    }
+
+    private func escape() {
+        if searching { query = "" } else { close() }
     }
 
     private func refresh(force: Bool = false) {
@@ -474,16 +483,18 @@ struct SideMenu: View {
         let list = app.historyList
         let user = app.historyUser
         // A search has been reading pages already, and removes only what matches.
-        let matching = searching
+        let asked = searching ? query : ""
         Task {
-            var cursor = matching ? nil : list.next
+            var cursor = asked.isEmpty ? list.next : nil
             while let at = cursor {
                 await list.loadMore(user: user)
                 if list.next == at { break }
                 cursor = list.next
             }
+            // The search changed while pages loaded: what was asked about is no longer on screen.
+            guard (searching ? query : "") == asked else { return }
             confirmingAll = true
-            confirming = HistoryEntry.filter(currentEntries, query: matching ? query : "", lang: app.lang)
+            confirming = HistoryEntry.filter(currentEntries, query: asked, lang: app.lang)
                 .filter { $0.isCase == links && $0.removable }.map(\.id)
         }
     }
@@ -539,7 +550,9 @@ struct SideMenu: View {
                 }
                 if searching, !everything.isEmpty, entries.isEmpty {
                     Group {
-                        if list.next != nil {
+                        if list.next != nil, list.notice == .loadMoreFailed {
+                            loadFailed(lang) { Task { await readPagesForSearch(debounce: false) } }
+                        } else if list.next != nil, everything.count < Self.searchCap {
                             ProgressView().tint(Brand.muted)
                         } else {
                             Text(L10n.shellNoMatches(lang))
@@ -624,6 +637,10 @@ struct SideMenu: View {
             .contentMargins(.top, topInset, for: .scrollContent)
             .contentMargins(.bottom, bottomInset, for: .scrollContent)
             .task(id: query) { await readPagesForSearch() }
+            .onChange(of: query) {
+                // A confirm names rows picked for one query.
+                if confirmingAll { confirming = nil; confirmingAll = false }
+            }
             // A page of rows the phone already had doesn't grow the list, so no
             // new row appears: keep going while the end is on screen.
             .onChange(of: list.next) { _, next in
@@ -701,11 +718,10 @@ struct SideMenu: View {
         return layout {
             row(.new, title: L10n.appTabNew(lang), floating: true, fill: stacked)
                 .accessibilityFocused($focusFirst)
+                .simultaneousGesture(closeDrag(width))
             searchField(lang)
         }
         .padding(.bottom, 8)
-        .contentShape(Rectangle())
-        .simultaneousGesture(closeDrag(width))
         .background(GeometryReader { geo in
             Color.clear.preference(key: FloatSizesKey.self, value: FloatSizes(top: geo.size.height))
         })
@@ -739,7 +755,7 @@ struct SideMenu: View {
                         .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel(L10n.appCancel(lang))
+                .accessibilityLabel(L10n.homeClear(lang))
             }
         }
         .padding(.leading, 14)
@@ -910,13 +926,13 @@ struct SideMenu: View {
         }
     }
 
-    private func loadFailed(_ lang: AppLang) -> some View {
+    private func loadFailed(_ lang: AppLang, retry: (() -> Void)? = nil) -> some View {
         VStack(spacing: 10) {
             Text(L10n.shellLoadFailed(lang))
                 .brandText(.footnote)
                 .foregroundStyle(Brand.danger)
                 .multilineTextAlignment(.center)
-            Button(L10n.caseRetry(lang)) { refresh(force: true) }
+            Button(L10n.caseRetry(lang)) { if let retry { retry() } else { refresh(force: true) } }
                 .buttonStyle(GhostButtonStyle())
         }
         .frame(maxWidth: .infinity)
