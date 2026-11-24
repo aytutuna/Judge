@@ -28,6 +28,7 @@ import com.okjudge.judge.ui.history.HistoryNotice
 import com.okjudge.judge.ui.history.HistoryPaging
 import com.okjudge.judge.ui.history.mergeHistory
 import java.time.Instant
+import kotlinx.coroutines.CompletableDeferred
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -58,13 +59,14 @@ class MenuHistoryTest {
         notice: HistoryNotice? = null,
         onLoadMore: () -> Unit = {},
         onRetry: () -> Unit = {},
+        onLoadAll: suspend () -> Unit = {},
         live: Map<String, LiveState> = emptyMap(),
         account: AccountActions = AccountActions(false, null, {}, {}, {}),
     ) = compose.setContent {
         Themed(AppLang.EN) {
             MenuPanel(
                 Tab.NEW, list, false, FocusRequester(), {}, onOpen, {},
-                account = account, paging = paging, notice = notice, onRemove = onRemove, onLoadMore = onLoadMore, onRetry = onRetry, live = live, now = now,
+                account = account, paging = paging, notice = notice, onRemove = onRemove, onLoadMore = onLoadMore, onRetry = onRetry, onLoadAll = onLoadAll, live = live, now = now,
             )
         }
     }
@@ -147,6 +149,22 @@ class MenuHistoryTest {
         compose.waitForIdle()
         compose.onNodeWithTag(PageBarTags.ERROR).assertExists()
         compose.onNodeWithTag(PageBarTags.NO_MATCHES).assertDoesNotExist()
+    }
+
+    @Test
+    fun removeAll_whileItReadsPages_leavesTheRowActionsOff_andKeepsItsOwnConfirm() {
+        val gate = CompletableDeferred<Unit>()
+        val removed = mutableListOf<List<String>>()
+        menu(onLoadAll = { gate.await() }, onRemove = { removed += it.map(HistoryEntry::key) })
+        compose.onAllNodes(hasText(en.appHistoryRemoveAll)).onFirst().performClick()
+        compose.waitForIdle()
+        compose.onNodeWithTag(PageBarTags.recent("v:verdict0021")).performTouchInput { longClick() }
+        compose.waitForIdle()
+        compose.onNodeWithTag(PageBarTags.CONFIRM_DELETE).assertDoesNotExist()
+        gate.complete(Unit)
+        compose.waitForIdle()
+        compose.onNodeWithTag(PageBarTags.CONFIRM_DELETE).performClick()
+        assertTrue(removed.single().size > 1)
     }
 
     @Test

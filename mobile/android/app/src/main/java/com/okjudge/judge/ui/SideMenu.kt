@@ -127,6 +127,7 @@ import com.okjudge.judge.ui.history.HistoryPaging
 import com.okjudge.judge.ui.judging.rememberReducedMotion
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 private const val SEARCH_CAP = 500
@@ -292,21 +293,19 @@ internal fun MenuPanel(
     val width = minOf(300.dp, (LocalConfiguration.current.screenWidthDp * 0.85f).dp)
     var profileOpen by remember { mutableStateOf(false) }
     var query by rememberSaveable { mutableStateOf("") }
-    var confirmKey by rememberSaveable { mutableStateOf<String?>(null) }
-    // Set while a Remove all waits for its confirm: false for the verdicts, true for the links.
-    var confirmAll by remember { mutableStateOf<Boolean?>(null) }
-    // The rows a search's Remove all was asked about; null for every row of the kind.
-    var allKeys by remember { mutableStateOf<Set<String>?>(null) }
+    // The one open confirm, with the rows it was opened for: it removes those, whatever else changes.
+    var confirm by remember { mutableStateOf<RemoveAsk?>(null) }
+    var loadJob by remember { mutableStateOf<Job?>(null) }
     LaunchedEffect(hidden) {
         if (hidden) {
             profileOpen = false
             query = ""
-            confirmKey = null
-            confirmAll = null
+            confirm = null
+            loadJob?.cancel()
         }
     }
-    // What a confirm names was picked from the rows shown for one query.
-    LaunchedEffect(query) { confirmAll = null }
+    // What a Remove all names was picked from the rows shown for one query.
+    LaunchedEffect(query) { if (confirm?.all == true) confirm = null }
     val searching = query.isNotBlank()
     val lang = LocalLang.current
     val shown = remember(entries, query, lang) { HistoryLabels.filter(entries, query, s, lang) }
@@ -316,27 +315,31 @@ internal fun MenuPanel(
     var linksFolded by rememberSaveable { mutableStateOf(false) }
     var loadingAll by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
+    val latestEntries by rememberUpdatedState(entries)
+    val menuHidden by rememberUpdatedState(hidden)
     val askAll: (Boolean) -> Unit = { links ->
-        // A search has been reading pages already, and removes only what matches.
-        if (searching) {
-            allKeys = shown.filter { it.isCase == links && it.removable }.map { it.key }.toSet()
-            confirmAll = links
-        } else if (!loadingAll) {
-            loadingAll = true
-            val asked = query
-            scope.launch {
-                try {
-                    onLoadAll()
-                } finally {
-                    loadingAll = false
-                }
-                if (query == asked) {
-                    allKeys = null
-                    confirmAll = links
+        if (!loadingAll && confirm == null) {
+            if (searching) {
+                // A search has been reading pages already, and removes only what matches.
+                confirm = RemoveAsk(shown.filter { it.isCase == links && it.removable }.map { it.key }.toSet(), all = true)
+            } else {
+                loadingAll = true
+                val asked = query
+                loadJob = scope.launch {
+                    try {
+                        onLoadAll()
+                    } finally {
+                        loadingAll = false
+                    }
+                    if (query == asked && !menuHidden && confirm == null) {
+                        confirm = RemoveAsk(latestEntries.filter { it.isCase == links && it.removable }.map { it.key }.toSet(), all = true)
+                    }
                 }
             }
         }
     }
+    // Rows can't be asked about while Remove all reads the pages, or while another confirm is open.
+    val askOne: (String) -> Unit = { key -> if (!loadingAll && confirm == null) confirm = RemoveAsk(setOf(key), all = false) }
     val listState = rememberLazyListState()
     val nearEnd by remember {
         derivedStateOf {
@@ -418,8 +421,8 @@ internal fun MenuPanel(
                             )
                         }
                     }
-                    cards(s.navVerdicts, PageBarTags.VERDICTS, verdicts, verdictsFolded, { verdictsFolded = !verdictsFolded }, { askAll(false) }, now, live, onOpen) { confirmKey = it }
-                    cards(s.navLinks, PageBarTags.LINKS, links, linksFolded, { linksFolded = !linksFolded }, { askAll(true) }, now, live, onOpen) { confirmKey = it }
+                    cards(s.navVerdicts, PageBarTags.VERDICTS, verdicts, verdictsFolded, { verdictsFolded = !verdictsFolded }, { askAll(false) }, now, live, onOpen, askOne)
+                    cards(s.navLinks, PageBarTags.LINKS, links, linksFolded, { linksFolded = !linksFolded }, { askAll(true) }, now, live, onOpen, askOne)
                     if (searching && entries.isNotEmpty() && shown.isEmpty()) {
                         item(key = "noMatches") {
                             if (paging.next != null && readFailed) {
@@ -516,14 +519,9 @@ internal fun MenuPanel(
             }
         }
     }
-    if (confirmKey != null || confirmAll != null) {
-        val all = confirmAll
-        val picked = if (all != null) {
-            entries.filter { it.isCase == all && it.removable && (allKeys?.contains(it.key) ?: true) }
-        } else {
-            entries.filter { it.key == confirmKey }
-        }
-        val close = { confirmKey = null; confirmAll = null }
+    confirm?.let { ask ->
+        val picked = entries.filter { it.key in ask.keys && (!ask.all || it.removable) }
+        val close = { confirm = null }
         AlertDialog(
             onDismissRequest = close,
             text = { Text(HistoryLabels.removeConfirm(picked, s), style = JudgeType.body) },
@@ -533,7 +531,7 @@ internal fun MenuPanel(
                     modifier = Modifier.testTag(PageBarTags.CONFIRM_DELETE),
                 ) {
                     val label = when {
-                        all != null -> s.appHistoryRemoveAll
+                        ask.all -> s.appHistoryRemoveAll
                         picked.any { it is HistoryEntry.Account } -> s.verdictRemoveYes
                         else -> s.appHistoryDelete
                     }
@@ -545,6 +543,8 @@ internal fun MenuPanel(
         )
     }
 }
+
+private class RemoveAsk(val keys: Set<String>, val all: Boolean)
 
 /** A heading and the cards under it; nothing at all when there are none. */
 private fun LazyListScope.cards(
