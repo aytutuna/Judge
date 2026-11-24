@@ -1,9 +1,11 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { t, type Lang } from "@/lib/i18n";
 import { partyLabel } from "@/lib/names";
 import type { VerdictResult } from "@/lib/types";
 import { JudgingStory } from "./court/JudgingStory";
+import { SideCard } from "./SideCard";
 import styles from "./JudgingScreen.module.css";
 
 export type JudgedSide = { name: string; text: string };
@@ -34,29 +36,38 @@ export function JudgingScreen({
   onFinished: () => void;
   onCancel: () => void;
 }) {
+  const [open, setOpen] = useState<{ party: string; name: string; text: string; tile: HTMLElement } | null>(null);
+  const shown = useRef<HTMLElement | null>(null);
+
+  // Back to the tile that opened the card once it is gone.
+  useEffect(() => {
+    if (open) shown.current = open.tile;
+    else shown.current?.focus({ preventScroll: true });
+  }, [open]);
+
+  const tile = (party: string, name: string, text: string) => (
+    <button
+      key={party}
+      type="button"
+      className={styles.tile}
+      data-side={party}
+      data-open={open?.party === party ? "" : undefined}
+      aria-haspopup="dialog"
+      onClick={(e) => setOpen({ party, name, text, tile: e.currentTarget })}
+    >
+      <span className={styles.name}>{name}</span>
+      <span className={styles.text}>{text}</span>
+    </button>
+  );
+
   return (
     <div className={styles.root}>
       <div className={styles.tiles}>
-        {mine ? (
-          <div className={styles.tile} data-side="A">
-            <p className={styles.name}>{mine.name.trim() || t(lang, "input.labelTwoSided")}</p>
-            <p className={styles.text}>{mine.text}</p>
-          </div>
-        ) : null}
-        {theirs ? (
-          <div className={styles.tile} data-side="B">
-            <p className={styles.name}>{theirs.name.trim() || t(lang, "home.theirSide")}</p>
-            <p className={styles.text}>{theirs.text}</p>
-          </div>
-        ) : null}
+        {mine ? tile("A", mine.name.trim() || t(lang, "input.labelTwoSided"), mine.text) : null}
+        {theirs ? tile("B", theirs.name.trim() || t(lang, "home.theirSide"), theirs.text) : null}
         {more.map((side, i) => {
           const party = i ? "d" : "c";
-          return (
-            <div key={party} className={styles.tile} data-side={party.toUpperCase()}>
-              <p className={styles.name}>{side.name.trim() || partyLabel(lang, party)}</p>
-              <p className={styles.text}>{side.text}</p>
-            </div>
-          );
+          return tile(party.toUpperCase(), side.name.trim() || partyLabel(lang, party), side.text);
         })}
       </div>
       <div className={styles.card}>
@@ -67,7 +78,10 @@ export function JudgingScreen({
           result={result}
           sides={2 + more.length}
           venue={venue}
-          onFinished={onFinished}
+          onFinished={() => {
+            setOpen(null);
+            onFinished();
+          }}
         />
       </div>
       {done ? null : (
@@ -75,6 +89,16 @@ export function JudgingScreen({
           {t(lang, "case.cancel")}
         </button>
       )}
+      {open ? (
+        <SideCard
+          lang={lang}
+          party={open.party}
+          name={open.name}
+          text={open.text}
+          tile={open.tile}
+          onClose={() => setOpen(null)}
+        />
+      ) : null}
     </div>
   );
 }

@@ -15,10 +15,19 @@
 .tile {
   --side-ink: var(--party-a-ink);
   --side-tint: var(--party-a-tint);
+  display: block;
   min-width: 0;
   padding: 12px 14px;
+  border: 0;
   border-radius: 18px;
   background: var(--side-tint);
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.tile[data-open] {
+  visibility: hidden;
 }
 .tile[data-side="B"] {
   --side-ink: var(--party-b-ink);
@@ -35,6 +44,7 @@
 }
 
 .name {
+  display: block;
   margin: 0 0 4px;
   color: var(--side-ink);
   font-size: 11px;
