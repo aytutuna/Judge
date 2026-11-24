@@ -381,6 +381,7 @@ const ro: Locale = {
     "clarify.answerAria": "Răspuns la întrebarea {n}:",
     "clarify.placeholder": "Răspunsul tău (opțional)",
     "clarify.other": "Altceva",
+    "judging.close": "Închide",
     "clarify.skip": "Sari peste și judecă",
     "clarify.submit": "Află verdictul",
     "clarify.back": "Editează disputa",

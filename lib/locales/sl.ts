@@ -383,6 +383,7 @@ const sl: Locale = {
     "clarify.answerAria": "Odgovor na vprašanje {n}:",
     "clarify.placeholder": "Tvoj odgovor (neobvezno)",
     "clarify.other": "Drugo",
+    "judging.close": "Zapri",
     "clarify.skip": "Preskoči in razsodi",
     "clarify.submit": "Razsodi",
     "clarify.back": "Uredi prepir",

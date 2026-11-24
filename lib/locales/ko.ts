@@ -376,6 +376,7 @@ const ko: Locale = {
     "clarify.answerAria": "질문 {n}에 대한 답:",
     "clarify.placeholder": "답변 (선택)",
     "clarify.other": "기타",
+    "judging.close": "닫기",
     "clarify.skip": "건너뛰고 판결",
     "clarify.submit": "판결 받기",
     "clarify.back": "논쟁 내용 고치기",

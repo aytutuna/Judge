@@ -387,6 +387,7 @@ const ta: Locale = {
     "clarify.answerAria": "கேள்வி {n}-க்கான பதில்:",
     "clarify.placeholder": "உங்கள் பதில் (கட்டாயமில்லை)",
     "clarify.other": "மற்றவை",
+    "judging.close": "மூடு",
     "clarify.skip": "தவிர்த்துத் தீர்ப்பு பெறுக",
     "clarify.submit": "தீர்ப்பைப் பெறுக",
     "clarify.back": "வாக்குவாதத்தைத் திருத்து",

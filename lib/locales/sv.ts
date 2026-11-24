@@ -384,6 +384,7 @@ const sv: Locale = {
     "clarify.answerAria": "Svar på fråga {n}:",
     "clarify.placeholder": "Ditt svar (valfritt)",
     "clarify.other": "Annat",
+    "judging.close": "Stäng",
     "clarify.skip": "Hoppa över och döm",
     "clarify.submit": "Få domen",
     "clarify.back": "Ändra beskrivningen",

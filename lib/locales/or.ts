@@ -376,6 +376,7 @@ const or: Locale = {
     "clarify.answerAria": "ପ୍ରଶ୍ନ {n}ର ଉତ୍ତର:",
     "clarify.placeholder": "ଆପଣଙ୍କ ଉତ୍ତର (ଇଚ୍ଛାଧୀନ)",
     "clarify.other": "ଅନ୍ୟ",
+    "judging.close": "ବନ୍ଦ କରନ୍ତୁ",
     "clarify.skip": "ଛାଡ଼ି ରାୟ ଦିଅନ୍ତୁ",
     "clarify.submit": "ରାୟ ଜାଣନ୍ତୁ",
     "clarify.back": "ବିବାଦ ବଦଳାନ୍ତୁ",

@@ -386,6 +386,7 @@ const es: Locale = {
     "clarify.answerAria": "Respuesta a la pregunta {n}:",
     "clarify.placeholder": "Tu respuesta (opcional)",
     "clarify.other": "Otra",
+    "judging.close": "Cerrar",
     "clarify.skip": "Saltar y juzgar",
     "clarify.submit": "Ver el veredicto",
     "clarify.back": "Editar la discusión",

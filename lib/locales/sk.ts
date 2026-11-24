@@ -381,6 +381,7 @@ const sk: Locale = {
     "clarify.answerAria": "Odpoveď na otázku {n}:",
     "clarify.placeholder": "Tvoja odpoveď (nepovinné)",
     "clarify.other": "Iné",
+    "judging.close": "Zavrieť",
     "clarify.skip": "Preskočiť a rozsúdiť",
     "clarify.submit": "Získať verdikt",
     "clarify.back": "Upraviť spor",

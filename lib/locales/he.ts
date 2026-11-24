@@ -375,6 +375,7 @@ const he: Locale = {
     "clarify.answerAria": "תשובה לשאלה {n}:",
     "clarify.placeholder": "התשובה שלך (לא חובה)",
     "clarify.other": "אחר",
+    "judging.close": "סגירה",
     "clarify.skip": "לדלג ולהכריע",
     "clarify.submit": "לקבל פסק דין",
     "clarify.back": "לערוך את הוויכוח",

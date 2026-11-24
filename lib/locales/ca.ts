@@ -391,6 +391,7 @@ const ca: Locale = {
     "clarify.answerAria": "Resposta a la pregunta {n}:",
     "clarify.placeholder": "La teva resposta (opcional)",
     "clarify.other": "Altra",
+    "judging.close": "Tanca",
     "clarify.skip": "Omet i jutja",
     "clarify.submit": "Demana el veredicte",
     "clarify.back": "Edita la discussió",

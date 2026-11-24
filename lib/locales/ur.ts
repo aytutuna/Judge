@@ -384,6 +384,7 @@ const ur: Locale = {
     "clarify.answerAria": "سوال {n} کا جواب:",
     "clarify.placeholder": "آپ کا جواب (اختیاری)",
     "clarify.other": "دیگر",
+    "judging.close": "بند کریں",
     "clarify.skip": "چھوڑ کر فیصلہ کروائیں",
     "clarify.submit": "فیصلہ کروائیں",
     "clarify.back": "بحث میں ترمیم کریں",

@@ -388,6 +388,7 @@ const tr: Locale = {
     "clarify.answerAria": "{n}. sorunun cevabı:",
     "clarify.placeholder": "Cevabın (isteğe bağlı)",
     "clarify.other": "Diğer",
+    "judging.close": "Kapat",
     "clarify.skip": "Geç, kararı ver",
     "clarify.submit": "Kararı öğren",
     "clarify.back": "Tartışmayı düzenle",

@@ -378,6 +378,7 @@ const mr: Locale = {
     "clarify.answerAria": "प्रश्न {n} चे उत्तर:",
     "clarify.placeholder": "तुमचे उत्तर (ऐच्छिक)",
     "clarify.other": "इतर",
+    "judging.close": "बंद करा",
     "clarify.skip": "सोडा, निकाल द्या",
     "clarify.submit": "निकाल मिळवा",
     "clarify.back": "वादात बदल करा",

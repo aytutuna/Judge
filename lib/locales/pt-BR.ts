@@ -382,6 +382,7 @@ const ptBR: Locale = {
     "clarify.answerAria": "Resposta à pergunta {n}:",
     "clarify.placeholder": "Sua resposta (opcional)",
     "clarify.other": "Outra",
+    "judging.close": "Fechar",
     "clarify.skip": "Pular e julgar",
     "clarify.submit": "Ver o veredito",
     "clarify.back": "Editar a discussão",

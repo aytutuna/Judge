@@ -390,6 +390,7 @@ const id: Locale = {
     "clarify.answerAria": "Jawaban untuk pertanyaan {n}:",
     "clarify.placeholder": "Jawabanmu (opsional)",
     "clarify.other": "Lainnya",
+    "judging.close": "Tutup",
     "clarify.skip": "Lewati dan putuskan",
     "clarify.submit": "Minta putusan",
     "clarify.back": "Ubah perdebatannya",

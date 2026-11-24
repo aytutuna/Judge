@@ -385,6 +385,7 @@ const nl: Locale = {
     "clarify.answerAria": "Antwoord op vraag {n}:",
     "clarify.placeholder": "Je antwoord (optioneel)",
     "clarify.other": "Anders",
+    "judging.close": "Sluiten",
     "clarify.skip": "Overslaan en oordelen",
     "clarify.submit": "Naar de uitspraak",
     "clarify.back": "Discussie aanpassen",

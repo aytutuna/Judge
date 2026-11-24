@@ -375,6 +375,7 @@ const hi: Locale = {
     "clarify.answerAria": "सवाल {n} का जवाब:",
     "clarify.placeholder": "आपका जवाब (ज़रूरी नहीं)",
     "clarify.other": "अन्य",
+    "judging.close": "बंद करें",
     "clarify.skip": "छोड़ें और फ़ैसला करवाएँ",
     "clarify.submit": "फ़ैसला करवाएँ",
     "clarify.back": "बहस में बदलाव करें",

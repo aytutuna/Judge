@@ -392,6 +392,7 @@ const fr: Locale = {
     "clarify.answerAria": "Réponse à la question {n} :",
     "clarify.placeholder": "Ta réponse (facultatif)",
     "clarify.other": "Autre",
+    "judging.close": "Fermer",
     "clarify.skip": "Passer et juger",
     "clarify.submit": "Obtenir le verdict",
     "clarify.back": "Modifier le débat",

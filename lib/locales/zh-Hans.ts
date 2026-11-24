@@ -366,6 +366,7 @@ const zhHans: Locale = {
     "clarify.answerAria": "问题 {n} 的回答：",
     "clarify.placeholder": "你的回答（选填）",
     "clarify.other": "其他",
+    "judging.close": "关闭",
     "clarify.skip": "跳过，直接裁决",
     "clarify.submit": "立即裁决",
     "clarify.back": "修改争论内容",

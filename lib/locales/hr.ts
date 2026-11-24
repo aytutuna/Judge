@@ -382,6 +382,7 @@ const hr: Locale = {
     "clarify.answerAria": "Odgovor na {n}. pitanje:",
     "clarify.placeholder": "Tvoj odgovor (nije obavezno)",
     "clarify.other": "Drugo",
+    "judging.close": "Zatvori",
     "clarify.skip": "Preskoči i presudi",
     "clarify.submit": "Saznaj presudu",
     "clarify.back": "Uredi raspravu",

@@ -391,6 +391,7 @@ const fi: Locale = {
     "clarify.answerAria": "Vastaus kysymykseen {n}:",
     "clarify.placeholder": "Vastauksesi (vapaaehtoinen)",
     "clarify.other": "Muu",
+    "judging.close": "Sulje",
     "clarify.skip": "Ohita ja ratkaise",
     "clarify.submit": "Hae tuomio",
     "clarify.back": "Muokkaa kiistaa",

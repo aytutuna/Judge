@@ -389,6 +389,7 @@ const hu: Locale = {
     "clarify.answerAria": "{n}. kérdés, a válaszod:",
     "clarify.placeholder": "A válaszod (nem kötelező)",
     "clarify.other": "Más",
+    "judging.close": "Bezárás",
     "clarify.skip": "Kihagyás és ítélet",
     "clarify.submit": "Kérem az ítéletet",
     "clarify.back": "Vita szerkesztése",

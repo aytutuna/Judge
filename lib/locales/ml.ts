@@ -381,6 +381,7 @@ const ml: Locale = {
     "clarify.answerAria": "{n}-ാം ചോദ്യത്തിനുള്ള ഉത്തരം:",
     "clarify.placeholder": "നിങ്ങളുടെ ഉത്തരം (നിർബന്ധമില്ല)",
     "clarify.other": "മറ്റുള്ളവ",
+    "judging.close": "അടയ്ക്കൂ",
     "clarify.skip": "ഒഴിവാക്കി വിധിക്കൂ",
     "clarify.submit": "വിധി അറിയാം",
     "clarify.back": "തർക്കം തിരുത്തൂ",

@@ -372,6 +372,7 @@ const te: Locale = {
     "clarify.answerAria": "ప్రశ్న {n}కి జవాబు:",
     "clarify.placeholder": "మీ జవాబు (ఐచ్ఛికం)",
     "clarify.other": "ఇతర",
+    "judging.close": "మూసేయండి",
     "clarify.skip": "వదిలేసి జడ్జ్ చేయండి",
     "clarify.submit": "తీర్పు తెలుసుకోండి",
     "clarify.back": "వాదనను మార్చండి",

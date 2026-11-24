@@ -392,6 +392,7 @@ const it: Locale = {
     "clarify.answerAria": "Risposta alla domanda {n}:",
     "clarify.placeholder": "La tua risposta (facoltativa)",
     "clarify.other": "Altro",
+    "judging.close": "Chiudi",
     "clarify.skip": "Salta e giudica",
     "clarify.submit": "Scopri il verdetto",
     "clarify.back": "Modifica la discussione",

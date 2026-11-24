@@ -382,6 +382,7 @@ const ru: Locale = {
     "clarify.answerAria": "Ответ на вопрос {n}:",
     "clarify.placeholder": "Ваш ответ (необязательно)",
     "clarify.other": "Другое",
+    "judging.close": "Закрыть",
     "clarify.skip": "Пропустить и судить",
     "clarify.submit": "Узнать вердикт",
     "clarify.back": "Изменить описание",

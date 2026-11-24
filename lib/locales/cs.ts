@@ -382,6 +382,7 @@ const cs: Locale = {
     "clarify.answerAria": "Odpověď na otázku {n}:",
     "clarify.placeholder": "Tvoje odpověď (nepovinné)",
     "clarify.other": "Jiná",
+    "judging.close": "Zavřít",
     "clarify.skip": "Přeskočit a rozsoudit",
     "clarify.submit": "Rozsoudit",
     "clarify.back": "Upravit spor",

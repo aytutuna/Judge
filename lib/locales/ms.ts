@@ -387,6 +387,7 @@ const ms: Locale = {
     "clarify.answerAria": "Jawapan kepada soalan {n}:",
     "clarify.placeholder": "Jawapan anda (pilihan)",
     "clarify.other": "Lain-lain",
+    "judging.close": "Tutup",
     "clarify.skip": "Langkau dan nilai",
     "clarify.submit": "Dapatkan keputusan",
     "clarify.back": "Sunting pertikaian",

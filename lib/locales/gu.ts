@@ -373,6 +373,7 @@ const gu: Locale = {
     "clarify.answerAria": "સવાલ {n}નો જવાબ:",
     "clarify.placeholder": "તમારો જવાબ (મરજિયાત)",
     "clarify.other": "અન્ય",
+    "judging.close": "બંધ કરો",
     "clarify.skip": "છોડો, ચુકાદો આપો",
     "clarify.submit": "ચુકાદો મેળવો",
     "clarify.back": "વિવાદમાં ફેરફાર કરો",

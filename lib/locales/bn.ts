@@ -378,6 +378,7 @@ const bn: Locale = {
     "clarify.answerAria": "{n} নম্বর প্রশ্নের উত্তর:",
     "clarify.placeholder": "আপনার উত্তর (ঐচ্ছিক)",
     "clarify.other": "অন্যান্য",
+    "judging.close": "বন্ধ করুন",
     "clarify.skip": "বাদ দিয়ে রায় দিন",
     "clarify.submit": "রায় জানুন",
     "clarify.back": "তর্কটা এডিট করুন",

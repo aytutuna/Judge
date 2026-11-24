@@ -373,6 +373,7 @@ const pa: Locale = {
     "clarify.answerAria": "ਸਵਾਲ {n} ਦਾ ਜਵਾਬ:",
     "clarify.placeholder": "ਤੁਹਾਡਾ ਜਵਾਬ (ਜੇ ਚਾਹੋ)",
     "clarify.other": "ਹੋਰ",
+    "judging.close": "ਬੰਦ ਕਰੋ",
     "clarify.skip": "ਛੱਡ ਕੇ ਫ਼ੈਸਲਾ ਲਓ",
     "clarify.submit": "ਫ਼ੈਸਲਾ ਲਓ",
     "clarify.back": "ਬਹਿਸ ਸੋਧੋ",

@@ -369,6 +369,7 @@ const th: Locale = {
     "clarify.answerAria": "คำตอบข้อที่ {n}:",
     "clarify.placeholder": "คำตอบของคุณ (ไม่บังคับ)",
     "clarify.other": "อื่น ๆ",
+    "judging.close": "ปิด",
     "clarify.skip": "ข้ามแล้วตัดสินเลย",
     "clarify.submit": "ตัดสินเลย",
     "clarify.back": "แก้ไขเรื่องที่เล่า",

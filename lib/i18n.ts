@@ -379,6 +379,7 @@ const en = {
   "clarify.answerAria": "Answer to question {n}:",
   "clarify.placeholder": "Your answer (optional)",
   "clarify.other": "Other",
+  "judging.close": "Close",
   "clarify.skip": "Skip and judge",
   "clarify.submit": "Get the verdict",
   "clarify.back": "Edit the argument",
