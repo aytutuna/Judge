@@ -102,7 +102,9 @@ struct JudgingView: View {
             }
         }
         .coordinateSpace(name: Self.space)
-        .onPreferenceChange(TileFrames.self) { tileFrames = $0 }
+        .onPreferenceChange(TileFrames.self) { value in
+            MainActor.assumeIsolated { tileFrames = value }
+        }
         .overlay {
             GeometryReader { geo in
                 if let side = open, let from = tileFrames[side.party] {
@@ -116,6 +118,7 @@ struct JudgingView: View {
                         open = nil
                         tileFocus = side.party
                     }
+                    .id(side.party)
                 }
             }
         }

@@ -103,7 +103,9 @@ struct SideCard: View {
             card
                 .frame(width: width)
                 .background(GeometryReader { Color.clear.preference(key: SizeKey.self, value: $0.size) })
-                .onPreferenceChange(SizeKey.self) { size = $0 }
+                .onPreferenceChange(SizeKey.self) { value in
+                    MainActor.assumeIsolated { size = value }
+                }
                 .scaleEffect(
                     x: shown || reduceMotion ? 1 : closedScale.width,
                     y: shown || reduceMotion ? 1 : closedScale.height
@@ -173,7 +175,9 @@ struct SideCard: View {
             .foregroundStyle(Brand.ink)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(GeometryReader { Color.clear.preference(key: TextHeightKey.self, value: $0.size.height) })
-            .onPreferenceChange(TextHeightKey.self) { textHeight = $0 }
+            .onPreferenceChange(TextHeightKey.self) { value in
+                MainActor.assumeIsolated { textHeight = value }
+            }
     }
 
     private var throwGesture: some Gesture {
