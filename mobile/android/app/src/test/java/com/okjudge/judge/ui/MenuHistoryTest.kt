@@ -13,6 +13,8 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
 import com.okjudge.judge.core.model.HistoryState
@@ -98,6 +100,55 @@ class MenuHistoryTest {
             listOf("c:case0000010", "v:verdict0020", "c:case0000011", "v:verdict0021", "v:${phone.id}", "c:case0000012", "c:case0000013", "c:case0000014"),
             entries.map { it.key },
         )
+    }
+
+    @Test
+    fun search_keepsTheMatchingCards_ignoringCase() {
+        menu()
+        compose.onNodeWithTag(PageBarTags.SEARCH).performTextInput("ALEX OWES")
+        compose.waitForIdle()
+        compose.onNodeWithText("Alex owes half the deposit").assertExists()
+        compose.onNodeWithText(en.shellUntitled).assertDoesNotExist()
+        compose.onNodeWithTag(PageBarTags.NO_MATCHES).assertDoesNotExist()
+    }
+
+    @Test
+    fun search_withNoMatch_saysSo_andClearingBringsTheListBack() {
+        menu()
+        compose.onNodeWithTag(PageBarTags.SEARCH).performTextInput("zzzz")
+        compose.waitForIdle()
+        compose.onNodeWithTag(PageBarTags.NO_MATCHES).assertTextEquals(en.shellNoMatches)
+        compose.onNodeWithTag(PageBarTags.VERDICTS).assertDoesNotExist()
+        compose.onNodeWithTag(PageBarTags.SEARCH).performTextReplacement("")
+        compose.waitForIdle()
+        compose.onNodeWithTag(PageBarTags.NO_MATCHES).assertDoesNotExist()
+        compose.onNodeWithTag(PageBarTags.VERDICTS).assertExists()
+        compose.onNodeWithText(en.shellUntitled).assertExists()
+    }
+
+    @Test
+    fun search_keepsReadingPages_whileAPageIsLeft() {
+        var reads = 0
+        menu(paging = HistoryPaging(next = "c1"), onLoadMore = { reads++ })
+        compose.waitForIdle()
+        val before = reads
+        compose.onNodeWithTag(PageBarTags.SEARCH).performTextInput("zzzz")
+        compose.waitForIdle()
+        assertTrue(reads > before)
+        compose.onNodeWithTag(PageBarTags.NO_MATCHES).assertDoesNotExist()
+    }
+
+    @Test
+    fun filter_matchesTitleOrOtherSideName_ignoringCase() {
+        val s = en
+        val lang = AppLang.EN
+        assertEquals(entries, HistoryLabels.filter(entries, "  ", s, lang))
+        val byTitle = HistoryLabels.filter(entries, "deposit", s, lang)
+        assertTrue(byTitle.isNotEmpty() && byTitle.size < entries.size)
+        assertTrue(byTitle.all { HistoryLabels.title(it, s, lang).contains("deposit", ignoreCase = true) })
+        val sam = HistoryLabels.filter(entries, "SAM", s, lang)
+        assertTrue(sam.any { it is HistoryEntry.Account && HistoryLabels.otherName(it.item) == "Sam" })
+        assertTrue(HistoryLabels.filter(entries, "zzzz", s, lang).isEmpty())
     }
 
     @Test

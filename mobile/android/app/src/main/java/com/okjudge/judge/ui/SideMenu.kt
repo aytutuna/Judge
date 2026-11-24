@@ -13,6 +13,7 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -34,6 +35,9 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
@@ -66,13 +70,18 @@ import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -89,10 +98,12 @@ import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import com.okjudge.judge.core.model.LiveState
 import com.okjudge.judge.core.model.Viewer
 import com.okjudge.judge.core.display.Errors
@@ -114,6 +125,8 @@ import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
 import kotlinx.coroutines.launch
 
+private const val SEARCH_CAP = 500
+
 internal val menuScrim: Color
     @Composable get() = if (Palette.dark) Color.Black.copy(alpha = 0.5f) else Color(0xFF1C1916).copy(alpha = 0.28f)
 
@@ -127,6 +140,8 @@ object PageBarTags {
     const val VERDICTS = "bar.menu.verdicts"
     const val LINKS = "bar.menu.links"
     const val LIST = "bar.menu.list"
+    const val SEARCH = "bar.menu.search"
+    const val NO_MATCHES = "bar.menu.noMatches"
     const val EMPTY = "bar.menu.empty"
     const val EMPTY_SIGN_IN = "bar.menu.empty.signIn"
     const val ERROR = "bar.menu.error"
@@ -243,9 +258,9 @@ private fun BarButton(label: String, icon: ImageVector, onClick: () -> Unit, mod
 }
 
 /**
- * The drawer's sheet: New, the Verdicts and the Links ([entries] split by kind) as separate cards in
- * one list that scrolls, and at the bottom the profile above Settings. A card is removed by a swipe
- * or a long press, after asking.
+ * The drawer's sheet: the Verdicts and the Links ([entries] split by kind) as separate cards in one
+ * list that scrolls under New and a search field at the top and the profile and Settings at the
+ * bottom, which float over it. A card is removed by a swipe or a long press, after asking.
  */
 @Composable
 internal fun MenuPanel(
@@ -272,9 +287,19 @@ internal fun MenuPanel(
     val s = LocalStrings.current
     val width = minOf(300.dp, (LocalConfiguration.current.screenWidthDp * 0.85f).dp)
     var profileOpen by remember { mutableStateOf(false) }
-    LaunchedEffect(hidden) { if (hidden) profileOpen = false }
-    val verdicts = remember(entries) { entries.filter { !it.isCase } }
-    val links = remember(entries) { entries.filter { it.isCase } }
+    var query by rememberSaveable { mutableStateOf("") }
+    val focus = LocalFocusManager.current
+    LaunchedEffect(hidden) {
+        if (hidden) {
+            profileOpen = false
+            query = ""
+        }
+    }
+    val searching = query.isNotBlank()
+    val lang = LocalLang.current
+    val shown = remember(entries, query, lang) { HistoryLabels.filter(entries, query, s, lang) }
+    val verdicts = remember(shown) { shown.filter { !it.isCase } }
+    val links = remember(shown) { shown.filter { it.isCase } }
     var confirmKey by rememberSaveable { mutableStateOf<String?>(null) }
     // Set while a Remove all waits for its confirm: false for the verdicts, true for the links.
     var confirmAll by rememberSaveable { mutableStateOf<Boolean?>(null) }
@@ -283,7 +308,10 @@ internal fun MenuPanel(
     var loadingAll by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val askAll: (Boolean) -> Unit = { links ->
-        if (!loadingAll) {
+        // A search has been reading pages already, and removes only what matches.
+        if (searching) {
+            confirmAll = links
+        } else if (!loadingAll) {
             loadingAll = true
             scope.launch {
                 try {
@@ -303,16 +331,24 @@ internal fun MenuPanel(
             last >= info.totalItemsCount - 3
         }
     }
-    LaunchedEffect(hidden, nearEnd, paging.next) {
-        if (!hidden && nearEnd && paging.next != null) onLoadMore()
+    // While searching, pages keep loading, since a match can be on one not read yet.
+    val reading = searching && entries.size < SEARCH_CAP
+    LaunchedEffect(hidden, nearEnd, reading, paging.next, paging.loadingMore) {
+        if (!hidden && (nearEnd || reading) && paging.next != null && !paging.loadingMore) onLoadMore()
     }
+    var topHeight by remember { mutableStateOf(0) }
+    var bottomHeight by remember { mutableStateOf(0) }
+    val density = LocalDensity.current
     ModalDrawerSheet(
         modifier = Modifier
             .width(width)
             .semantics { if (hidden) hideFromAccessibility() }
             .onKeyEvent {
                 val escape = it.key == Key.Escape && it.type == KeyEventType.KeyUp
-                if (escape) onClose()
+                if (escape) {
+                    // The first Escape clears the search, the next closes the menu.
+                    if (query.isNotEmpty()) query = "" else onClose()
+                }
                 escape
             },
         drawerShape = RoundedCornerShape(topEnd = 18.dp, bottomEnd = 18.dp),
@@ -320,7 +356,7 @@ internal fun MenuPanel(
         drawerContentColor = Palette.ink,
         drawerTonalElevation = 0.dp,
     ) {
-        Column(Modifier.fillMaxHeight().padding(horizontal = 12.dp, vertical = 24.dp)) {
+        Column(Modifier.fillMaxHeight().padding(start = 12.dp, end = 12.dp, top = 24.dp)) {
             Row(
                 Modifier.padding(start = 22.dp, bottom = 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -329,100 +365,141 @@ internal fun MenuPanel(
                 BrandLogo(32.dp)
                 Text(s.appName, style = JudgeType.sectionTitle)
             }
-            LazyColumn(
-                Modifier.weight(1f).testTag(PageBarTags.LIST),
-                state = listState,
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                item(key = "new") {
-                    MenuRow(s.appTabNew, selected == Tab.NEW, { onSelect(Tab.NEW) }, Modifier.focusRequester(firstRow))
+            Box(Modifier.weight(1f)) {
+                Row(
+                    Modifier
+                        .align(Alignment.TopCenter)
+                        .zIndex(1f)
+                        .fillMaxWidth()
+                        .onSizeChanged { topHeight = it.height }
+                        .padding(vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    MenuRow(
+                        s.appTabNew, selected == Tab.NEW, { onSelect(Tab.NEW) }, Modifier.focusRequester(firstRow),
+                        floating = true, fill = false,
+                    )
+                    SearchField(query, { query = it }, Modifier.weight(1f))
                 }
-                if (notice != null) {
-                    item(key = "notice") {
-                        Text(
-                            noticeText(notice, s, LocalLang.current),
-                            style = JudgeType.small.copy(color = Palette.danger),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 12.dp)
-                                .testTag(PageBarTags.NOTICE)
-                                .semantics { liveRegion = LiveRegionMode.Polite },
-                        )
-                    }
-                }
-                cards(s.navVerdicts, PageBarTags.VERDICTS, verdicts, verdictsFolded, { verdictsFolded = !verdictsFolded }, { askAll(false) }, now, live, onOpen) { confirmKey = it }
-                cards(s.navLinks, PageBarTags.LINKS, links, linksFolded, { linksFolded = !linksFolded }, { askAll(true) }, now, live, onOpen) { confirmKey = it }
-                if (entries.isEmpty()) {
-                    when {
-                        paging.loading -> item(key = "loading") {
-                            Box(Modifier.fillMaxWidth().padding(top = 16.dp), contentAlignment = Alignment.Center) {
-                                CircularProgressIndicator(Modifier.size(22.dp), color = Palette.muted, strokeWidth = 2.dp)
+                Column(
+                    Modifier
+                        .align(Alignment.BottomCenter)
+                        .zIndex(1f)
+                        .onSizeChanged { bottomHeight = it.height }
+                        .padding(vertical = 12.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    if (profileOpen) {
+                        Column(Modifier.fillMaxWidth().floating(RoundedCornerShape(20.dp)).padding(vertical = 4.dp)) {
+                            ProfileItem(s.navPricing, PageBarTags.PRICING) { onClose(); account.onPricing() }
+                            if (account.signedIn) {
+                                ProfileItem(s.navSignOut, PageBarTags.SIGN_OUT, Palette.danger) { onClose(); account.onSignOut() }
+                            } else {
+                                ProfileItem(s.navSignIn, PageBarTags.SIGN_IN) { onClose(); account.onSignIn() }
                             }
                         }
-                        paging.failed -> item(key = "error") { LoadFailed(onRetry) }
-                        else -> item(key = "empty") {
-                            Column {
+                    }
+                    ProfileRow(account, profileOpen) { profileOpen = !profileOpen }
+                    MenuRow(
+                        s.appTabSettings, selected == Tab.SETTINGS, { onSelect(Tab.SETTINGS) },
+                        Modifier.testTag(PageBarTags.SETTINGS),
+                        icon = JudgeIcons.settings(Palette.ink),
+                        floating = true,
+                    )
+                }
+                LazyColumn(
+                    Modifier.fillMaxSize().testTag(PageBarTags.LIST),
+                    state = listState,
+                    contentPadding = with(density) { PaddingValues(top = topHeight.toDp(), bottom = bottomHeight.toDp()) },
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    if (notice != null) {
+                        item(key = "notice") {
+                            Text(
+                                noticeText(notice, s, LocalLang.current),
+                                style = JudgeType.small.copy(color = Palette.danger),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 12.dp)
+                                    .testTag(PageBarTags.NOTICE)
+                                    .semantics { liveRegion = LiveRegionMode.Polite },
+                            )
+                        }
+                    }
+                    cards(s.navVerdicts, PageBarTags.VERDICTS, verdicts, verdictsFolded, { verdictsFolded = !verdictsFolded }, { askAll(false) }, now, live, onOpen) { confirmKey = it }
+                    cards(s.navLinks, PageBarTags.LINKS, links, linksFolded, { linksFolded = !linksFolded }, { askAll(true) }, now, live, onOpen) { confirmKey = it }
+                    if (searching && entries.isNotEmpty() && shown.isEmpty()) {
+                        item(key = "noMatches") {
+                            if (paging.next != null) {
+                                Box(Modifier.fillMaxWidth().padding(top = 16.dp), contentAlignment = Alignment.Center) {
+                                    CircularProgressIndicator(Modifier.size(22.dp), color = Palette.muted, strokeWidth = 2.dp)
+                                }
+                            } else {
                                 Text(
-                                    s.appHistoryEmpty,
+                                    s.shellNoMatches,
                                     style = JudgeType.footnote,
-                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp).testTag(PageBarTags.EMPTY),
+                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp).testTag(PageBarTags.NO_MATCHES),
                                 )
-                                if (!account.signedIn) {
-                                    Box(Modifier.fillMaxWidth().padding(top = 12.dp), contentAlignment = Alignment.Center) {
-                                        GhostButton(
-                                            s.shellLocalSignIn, null, { onClose(); account.onSignIn() },
-                                            Modifier.testTag(PageBarTags.EMPTY_SIGN_IN),
-                                        )
+                            }
+                        }
+                    }
+                    if (entries.isEmpty()) {
+                        when {
+                            paging.loading -> item(key = "loading") {
+                                Box(Modifier.fillMaxWidth().padding(top = 16.dp), contentAlignment = Alignment.Center) {
+                                    CircularProgressIndicator(Modifier.size(22.dp), color = Palette.muted, strokeWidth = 2.dp)
+                                }
+                            }
+                            paging.failed -> item(key = "error") { LoadFailed(onRetry) }
+                            else -> item(key = "empty") {
+                                Column {
+                                    Text(
+                                        s.appHistoryEmpty,
+                                        style = JudgeType.footnote,
+                                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp).testTag(PageBarTags.EMPTY),
+                                    )
+                                    if (!account.signedIn) {
+                                        Box(Modifier.fillMaxWidth().padding(top = 12.dp), contentAlignment = Alignment.Center) {
+                                            GhostButton(
+                                                s.shellLocalSignIn, null, { onClose(); account.onSignIn() },
+                                                Modifier.testTag(PageBarTags.EMPTY_SIGN_IN),
+                                            )
+                                        }
                                     }
                                 }
                             }
                         }
+                    } else if (paging.failed) {
+                        item(key = "error") { LoadFailed(onRetry) }
                     }
-                } else if (paging.failed) {
-                    item(key = "error") { LoadFailed(onRetry) }
-                }
-                if (paging.next != null) {
-                    item(key = "more") {
-                        Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                            if (paging.loadingMore) {
-                                CircularProgressIndicator(Modifier.size(22.dp), color = Palette.muted, strokeWidth = 2.dp)
-                            } else {
-                                GhostButton(s.shellLoadMore, null, onLoadMore, Modifier.testTag(PageBarTags.MORE))
+                    if (paging.next != null && !searching) {
+                        item(key = "more") {
+                            Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                                if (paging.loadingMore) {
+                                    CircularProgressIndicator(Modifier.size(22.dp), color = Palette.muted, strokeWidth = 2.dp)
+                                } else {
+                                    GhostButton(s.shellLoadMore, null, onLoadMore, Modifier.testTag(PageBarTags.MORE))
+                                }
                             }
                         }
                     }
-                }
-                if (entries.any { it is HistoryEntry.Phone }) {
-                    item(key = "phoneNote") {
-                        Text(
-                            s.appHistoryPhoneOnlyNote,
-                            style = JudgeType.footnote,
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp).testTag(PageBarTags.PHONE_NOTE),
-                        )
+                    if (entries.any { it is HistoryEntry.Phone }) {
+                        item(key = "phoneNote") {
+                            Text(
+                                s.appHistoryPhoneOnlyNote,
+                                style = JudgeType.footnote,
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp).testTag(PageBarTags.PHONE_NOTE),
+                            )
+                        }
                     }
                 }
-            }
-            Column(Modifier.padding(top = 12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                if (profileOpen) {
-                    ProfileItem(s.navPricing, PageBarTags.PRICING) { onClose(); account.onPricing() }
-                    if (account.signedIn) {
-                        ProfileItem(s.navSignOut, PageBarTags.SIGN_OUT, Palette.danger) { onClose(); account.onSignOut() }
-                    } else {
-                        ProfileItem(s.navSignIn, PageBarTags.SIGN_IN) { onClose(); account.onSignIn() }
-                    }
-                }
-                ProfileRow(account, profileOpen) { profileOpen = !profileOpen }
-                MenuRow(
-                    s.appTabSettings, selected == Tab.SETTINGS, { onSelect(Tab.SETTINGS) },
-                    Modifier.testTag(PageBarTags.SETTINGS),
-                    icon = JudgeIcons.settings(Palette.ink),
-                )
             }
         }
     }
     if (confirmKey != null || confirmAll != null) {
         val all = confirmAll
-        val picked = if (all != null) entries.filter { it.isCase == all && it.removable } else entries.filter { it.key == confirmKey }
+        val picked = if (all != null) (if (searching) shown else entries).filter { it.isCase == all && it.removable } else entries.filter { it.key == confirmKey }
         val close = { confirmKey = null; confirmAll = null }
         AlertDialog(
             onDismissRequest = close,
@@ -499,18 +576,77 @@ private fun LoadFailed(onRetry: () -> Unit) {
     }
 }
 
+/** A translucent plate with a soft shadow, for the controls that sit over the list. */
 @Composable
-private fun MenuRow(label: String, on: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier, icon: ImageVector? = null) {
+private fun Modifier.floating(shape: Shape = CircleShape): Modifier = this
+    .shadow(6.dp, shape, ambientColor = Color.Black.copy(alpha = 0.12f), spotColor = Color.Black.copy(alpha = 0.2f))
+    .background(Palette.paper.copy(alpha = 0.92f), shape)
+    .border(1.dp, Palette.line2, shape)
+
+@Composable
+private fun SearchField(query: String, onChange: (String) -> Unit, modifier: Modifier = Modifier) {
+    val s = LocalStrings.current
+    val focus = LocalFocusManager.current
+    val style = JudgeType.body.copy(color = Palette.ink)
+    Row(
+        modifier.heightIn(min = 56.dp).floating().padding(start = 18.dp, end = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        BasicTextField(
+            value = query,
+            onValueChange = onChange,
+            textStyle = style,
+            singleLine = true,
+            cursorBrush = SolidColor(Palette.terraInk),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+            keyboardActions = KeyboardActions(onSearch = { focus.clearFocus() }),
+            modifier = Modifier.weight(1f).testTag(PageBarTags.SEARCH),
+            decorationBox = { inner ->
+                Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterStart) {
+                    if (query.isEmpty()) Text(s.shellSearch, style = style.copy(color = Palette.placeholder), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    inner()
+                }
+            },
+        )
+        if (query.isNotEmpty()) {
+            Box(
+                Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .semantics {
+                        role = Role.Button
+                        contentDescription = s.appCancel
+                    }
+                    .clickable { onChange("") },
+                contentAlignment = Alignment.Center,
+            ) {
+                TintedIcon(JudgeIcons.close(Palette.muted), 16)
+            }
+        }
+    }
+}
+
+@Composable
+private fun MenuRow(
+    label: String,
+    on: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    icon: ImageVector? = null,
+    floating: Boolean = false,
+    fill: Boolean = true,
+) {
     Row(
         modifier
-            .fillMaxWidth()
+            .then(if (floating) Modifier.floating() else Modifier)
+            .then(if (fill) Modifier.fillMaxWidth() else Modifier)
             .heightIn(min = 56.dp)
             .clip(CircleShape)
             .background(if (on) Palette.sageTint else Color.Transparent)
             .semantics { selected = on }
             .focusProperties { canFocus = true }
             .clickable(role = Role.Button, onClick = onClick)
-            .padding(start = if (icon != null) 19.dp else 12.dp, end = 12.dp, top = 8.dp, bottom = 8.dp),
+            .padding(start = if (icon != null) 19.dp else 18.dp, end = 18.dp, top = 8.dp, bottom = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         // The gear centres under the profile picture (36dp at 12dp) and the label lines up with the name.
         horizontalArrangement = Arrangement.spacedBy(if (icon != null) 19.dp else 12.dp),
@@ -665,8 +801,9 @@ private fun ProfileRow(account: AccountActions, open: Boolean, onClick: () -> Un
     Row(
         Modifier
             .fillMaxWidth()
+            .floating()
             .heightIn(min = 56.dp)
-            .clip(RoundedCornerShape(12.dp))
+            .clip(CircleShape)
             .background(if (open) Palette.ivory2 else Color.Transparent)
             .semantics(mergeDescendants = true) {
                 role = Role.Button
@@ -676,7 +813,7 @@ private fun ProfileRow(account: AccountActions, open: Boolean, onClick: () -> Un
             }
             .focusProperties { canFocus = true }
             .clickable(onClick = onClick)
-            .padding(horizontal = 12.dp, vertical = 8.dp)
+            .padding(start = 8.dp, end = 18.dp, top = 4.dp, bottom = 4.dp)
             .testTag(PageBarTags.PROFILE),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -702,7 +839,7 @@ private fun ProfileItem(label: String, tag: String, color: Color = Palette.ink, 
             .heightIn(min = 44.dp)
             .clip(RoundedCornerShape(12.dp))
             .clickable(role = Role.Button, onClick = onClick)
-            .padding(start = 60.dp, end = 12.dp)
+            .padding(start = 18.dp, end = 12.dp)
             .testTag(tag),
         contentAlignment = Alignment.CenterStart,
     ) {
