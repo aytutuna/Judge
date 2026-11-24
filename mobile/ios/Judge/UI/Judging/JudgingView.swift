@@ -52,6 +52,12 @@ struct JudgingView: View {
     @State private var plan: Story.Ending?
     /// How many steps of the plan have played.
     @State private var reached = 0
+    /// The side whose card is open, and where the tiles sit to open it from.
+    @State private var open: HomeModel.JudgedSide?
+    @State private var tileFrames: [Party: CGRect] = [:]
+    @AccessibilityFocusState private var tileFocus: Party?
+
+    static let space = "judging"
 
     private var done: Bool { result != nil }
     private var summary: Story.Summary? { result.map(Story.summarize) }
@@ -76,7 +82,7 @@ struct JudgingView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 16) {
                         if !sides.isEmpty {
-                            SideTiles(sides: sides, lang: lang)
+                            SideTiles(sides: sides, lang: lang, hidden: open?.party, focus: $tileFocus) { open = $0 }
                         }
                         card(courtWidth: wide ? geo.size.height * 0.48 * 16 / 9 : 480)
                     }
@@ -93,6 +99,24 @@ struct JudgingView: View {
                     .contentShape(Rectangle())
                     .buttonStyle(.plain)
                     .padding(.bottom, 8)
+            }
+        }
+        .coordinateSpace(name: Self.space)
+        .onPreferenceChange(TileFrames.self) { tileFrames = $0 }
+        .overlay {
+            GeometryReader { geo in
+                if let side = open, let from = tileFrames[side.party] {
+                    SideCard(
+                        side: side,
+                        title: SideTiles.name(side, lang: lang),
+                        from: from,
+                        container: geo.size,
+                        lang: lang
+                    ) {
+                        open = nil
+                        tileFocus = side.party
+                    }
+                }
             }
         }
         .background(Brand.ivory.ignoresSafeArea())
@@ -191,6 +215,7 @@ struct JudgingView: View {
         } catch {
             return
         }
+        open = nil
         onFinished()
     }
 
@@ -220,10 +245,14 @@ private struct LiveDots: View {
 }
 
 /// What each side said, cut to three lines: yours in green, theirs in red.
-/// A verdict on one side has one tile.
+/// A verdict on one side has one tile. A tile opens as a card with the whole text.
 private struct SideTiles: View {
     let sides: [HomeModel.JudgedSide]
     let lang: AppLang
+    /// The tile whose card is open, left empty so the card seems to leave it.
+    let hidden: Party?
+    let focus: AccessibilityFocusState<Party?>.Binding
+    let onOpen: (HomeModel.JudgedSide) -> Void
 
     @Environment(\.sides) private var colors
 
@@ -234,6 +263,10 @@ private struct SideTiles: View {
         case .c, .d: return side.party.label(lang)
         case .b, .unknown: return L10n.appHomeTheirSide(lang)
         }
+    }
+
+    static func name(_ side: HomeModel.JudgedSide, lang: AppLang) -> String {
+        side.name.isEmpty ? title(side, lang: lang) : side.name
     }
 
     var body: some View {
@@ -249,24 +282,40 @@ private struct SideTiles: View {
     private func row(_ sides: [HomeModel.JudgedSide]) -> some View {
         HStack(alignment: .top, spacing: 8) {
             ForEach(sides, id: \.party) { side in
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(side.name.isEmpty ? Self.title(side, lang: lang) : side.name)
-                        .brandText(TypeStyle(face: .inter, weight: 700, size: 11, lineHeight: 1.2, tracking: 0.08, textStyle: .caption2, maxScale: 1.6, uppercase: true))
-                        .foregroundStyle(colors.of(side.party).ink)
-                        .lineLimit(1)
-                    Text(side.text)
-                        .brandText(TypeStyle(face: .inter, weight: 400, size: 13, lineHeight: 1.4, textStyle: .footnote))
-                        .foregroundStyle(Brand.ink)
-                        .lineLimit(3)
+                Button { onOpen(side) } label: {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(Self.name(side, lang: lang))
+                            .brandText(TypeStyle(face: .inter, weight: 700, size: 11, lineHeight: 1.2, tracking: 0.08, textStyle: .caption2, maxScale: 1.6, uppercase: true))
+                            .foregroundStyle(colors.of(side.party).ink)
+                            .lineLimit(1)
+                        Text(side.text)
+                            .brandText(TypeStyle(face: .inter, weight: 400, size: 13, lineHeight: 1.4, textStyle: .footnote))
+                            .foregroundStyle(Brand.ink)
+                            .lineLimit(3)
+                            .multilineTextAlignment(.leading)
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 10)
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                    .background(
+                        RoundedRectangle(cornerRadius: Radius.field, style: .continuous)
+                            .fill(colors.of(side.party).tint)
+                    )
+                    .contentShape(Rectangle())
                 }
-                .padding(.horizontal, 12)
-                .padding(.vertical, 10)
-                .frame(maxWidth: .infinity, alignment: .topLeading)
+                .buttonStyle(.plain)
+                .opacity(hidden == side.party ? 0 : 1)
                 .background(
-                    RoundedRectangle(cornerRadius: Radius.field, style: .continuous)
-                        .fill(colors.of(side.party).tint)
+                    GeometryReader { proxy in
+                        Color.clear.preference(
+                            key: TileFrames.self,
+                            value: [side.party: proxy.frame(in: .named(JudgingView.space))]
+                        )
+                    }
                 )
                 .accessibilityElement(children: .combine)
+                .accessibilityAddTraits(.isButton)
+                .accessibilityFocused(focus, equals: side.party)
             }
         }
     }
