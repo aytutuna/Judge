@@ -37,6 +37,7 @@ const WINNER = { type: "string", enum: ["side_1", "side_2", "neither"] } as cons
 const SCHEMA = {
   type: "object",
   properties: {
+    ask: { type: "boolean" },
     questions: {
       type: "array",
       items: {
@@ -48,12 +49,11 @@ const SCHEMA = {
           answer_2: { type: "string" },
           winner_2: WINNER,
           best_guess: { type: "integer", enum: [1, 2] },
-          confidence: { type: "integer", minimum: 0, maximum: 100 },
+          confidence: { type: "integer" },
         },
         required: ["question", "answer_1", "winner_1", "answer_2", "winner_2", "best_guess", "confidence"],
       },
     },
-    ask: { type: "boolean" },
   },
   required: ["ask", "questions"],
 } as const;
