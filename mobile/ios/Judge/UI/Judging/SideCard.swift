@@ -136,7 +136,7 @@ struct SideCard: View {
         return VStack(alignment: .leading, spacing: 8) {
             HStack(alignment: .center, spacing: 12) {
                 Text(title)
-                    .brandText(TypeStyle(face: .inter, weight: 700, size: 12, lineHeight: 1.2, tracking: 0.08, textStyle: .caption, maxScale: 1.6, uppercase: true))
+                    .brandText(TypeStyle(face: .inter, weight: 700, size: 12, lineHeight: 1.2, tracking: 0.08, textStyle: .caption2, maxScale: 1.6, uppercase: true))
                     .foregroundStyle(tone.ink)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .accessibilityAddTraits(.isHeader)
