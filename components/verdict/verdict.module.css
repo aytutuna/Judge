@@ -91,7 +91,7 @@
   border-radius: 18px;
   background: var(--paper);
 }
-.scene svg {
+.scene > svg {
   height: 100%;
   width: auto;
 }

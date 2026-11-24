@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type RefObject } from "react";
 import { sceneVerdictFrom } from "@/lib/balance";
 import type { Party } from "@/lib/palette";
 import { resetScene, setSceneMode, setSceneYou } from "@/lib/scene-bridge";
@@ -58,7 +58,8 @@ export function VerdictScale({ result, you }: { result: VerdictResult; you: Part
   const mine = useHolder(ref);
   const verdict = useMemo(() => sceneVerdictFrom(result), [result]);
 
-  useEffect(() => {
+  // Before paint, so the scale's first frame is already at the verdict's tilt.
+  useLayoutEffect(() => {
     if (!mine) return;
     setSceneYou(you);
     setSceneMode({ kind: "verdict", verdict });
