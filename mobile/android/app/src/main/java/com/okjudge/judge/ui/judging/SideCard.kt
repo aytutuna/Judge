@@ -184,6 +184,7 @@ internal fun SideCard(
                 .clip(RoundedCornerShape(24.dp))
                 .background(tint)
                 .pointerInput(Unit) {
+                    val density = this.density
                     var at = Offset.Zero
                     detectDragGestures(
                         onDragStart = {
@@ -193,13 +194,13 @@ internal fun SideCard(
                         onDrag = { change, amount ->
                             if (closing) return@detectDragGestures
                             at += amount
-                            samples += CardThrow.Sample(at.x, at.y, change.uptimeMillis)
+                            samples += CardThrow.Sample(at.x / density, at.y / density, change.uptimeMillis)
                             scope.launch { drag.snapTo(at) }
                         },
                         onDragEnd = {
                             if (closing) return@detectDragGestures
                             val (vx, vy) = CardThrow.velocity(samples)
-                            if (CardThrow.isThrow(at.x, at.y, vx, vy)) {
+                            if (CardThrow.isThrow(at.x / density, at.y / density, vx, vy)) {
                                 toss(at.x, at.y, vx, vy)
                             } else {
                                 scope.launch { drag.animateTo(Offset.Zero, spring(dampingRatio = 0.6f, stiffness = Spring.StiffnessLow)) }
@@ -233,7 +234,7 @@ internal fun SideCard(
             Text(
                 text,
                 style = JudgeType.body.copy(fontSize = 16.sp, lineHeight = (16 * 1.5).sp, fontWeight = FontWeight.Normal),
-                modifier = Modifier.weight(1f, fill = false).padding(end = 10.dp).verticalScroll(scroll),
+                modifier = Modifier.weight(1f, fill = false).padding(end = 10.dp).verticalScroll(scroll, enabled = scroll.maxValue > 0),
             )
         }
     }

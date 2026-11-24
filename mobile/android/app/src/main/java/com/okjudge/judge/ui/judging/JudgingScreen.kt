@@ -11,7 +11,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.unit.toSize
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.semantics.Role
@@ -372,7 +372,7 @@ private fun SideTileRow(
                     .weight(1f)
                     .fillMaxHeight()
                     .alpha(if (open == index) 0f else 1f)
-                    .onGloballyPositioned { bounds = it.boundsInWindow() }
+                    .onGloballyPositioned { bounds = Rect(it.positionInWindow(), it.size.toSize()) }
                     .clip(RoundedCornerShape(18.dp))
                     .background(colors.tint)
                     .focusRequester(focus[index])

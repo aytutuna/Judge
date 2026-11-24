@@ -2,7 +2,7 @@ package com.okjudge.judge.core.display
 
 import kotlin.math.hypot
 
-/** How a dragged card is let go; the same numbers as lib/card-throw.ts (px and ms). */
+/** How a dragged card is let go; the same numbers as lib/card-throw.ts. Distances are dp, speeds dp/ms; only [target]'s reach is in whatever unit the caller moves the card in. */
 object CardThrow {
     class Sample(val x: Float, val y: Float, val t: Long)
 
