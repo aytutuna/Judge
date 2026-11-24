@@ -8,9 +8,11 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.longClick
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTextInput
@@ -136,6 +138,28 @@ class MenuHistoryTest {
         compose.waitForIdle()
         assertTrue(reads > before)
         compose.onNodeWithTag(PageBarTags.NO_MATCHES).assertDoesNotExist()
+    }
+
+    @Test
+    fun search_afterAFailedPage_showsTheFailureNotASpinner() {
+        menu(paging = HistoryPaging(next = "c1"), notice = HistoryNotice.LoadMoreFailed)
+        compose.onNodeWithTag(PageBarTags.SEARCH).performTextInput("zzzz")
+        compose.waitForIdle()
+        compose.onNodeWithTag(PageBarTags.ERROR).assertExists()
+        compose.onNodeWithTag(PageBarTags.NO_MATCHES).assertDoesNotExist()
+    }
+
+    @Test
+    fun searchRemoveAll_closesWhenTheQueryChanges() {
+        menu()
+        compose.onNodeWithTag(PageBarTags.SEARCH).performTextInput("e")
+        compose.waitForIdle()
+        compose.onAllNodes(hasText(en.appHistoryRemoveAll)).onFirst().performClick()
+        compose.waitForIdle()
+        compose.onNodeWithTag(PageBarTags.CONFIRM_DELETE).assertExists()
+        compose.onNodeWithTag(PageBarTags.SEARCH).performTextInput("x")
+        compose.waitForIdle()
+        compose.onNodeWithTag(PageBarTags.CONFIRM_DELETE).assertDoesNotExist()
     }
 
     @Test

@@ -6,6 +6,8 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -78,6 +80,8 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
@@ -288,21 +292,26 @@ internal fun MenuPanel(
     val width = minOf(300.dp, (LocalConfiguration.current.screenWidthDp * 0.85f).dp)
     var profileOpen by remember { mutableStateOf(false) }
     var query by rememberSaveable { mutableStateOf("") }
-    val focus = LocalFocusManager.current
+    var confirmKey by rememberSaveable { mutableStateOf<String?>(null) }
+    // Set while a Remove all waits for its confirm: false for the verdicts, true for the links.
+    var confirmAll by remember { mutableStateOf<Boolean?>(null) }
+    // The rows a search's Remove all was asked about; null for every row of the kind.
+    var allKeys by remember { mutableStateOf<Set<String>?>(null) }
     LaunchedEffect(hidden) {
         if (hidden) {
             profileOpen = false
             query = ""
+            confirmKey = null
+            confirmAll = null
         }
     }
+    // What a confirm names was picked from the rows shown for one query.
+    LaunchedEffect(query) { confirmAll = null }
     val searching = query.isNotBlank()
     val lang = LocalLang.current
     val shown = remember(entries, query, lang) { HistoryLabels.filter(entries, query, s, lang) }
     val verdicts = remember(shown) { shown.filter { !it.isCase } }
     val links = remember(shown) { shown.filter { it.isCase } }
-    var confirmKey by rememberSaveable { mutableStateOf<String?>(null) }
-    // Set while a Remove all waits for its confirm: false for the verdicts, true for the links.
-    var confirmAll by rememberSaveable { mutableStateOf<Boolean?>(null) }
     var verdictsFolded by rememberSaveable { mutableStateOf(false) }
     var linksFolded by rememberSaveable { mutableStateOf(false) }
     var loadingAll by remember { mutableStateOf(false) }
@@ -310,16 +319,21 @@ internal fun MenuPanel(
     val askAll: (Boolean) -> Unit = { links ->
         // A search has been reading pages already, and removes only what matches.
         if (searching) {
+            allKeys = shown.filter { it.isCase == links && it.removable }.map { it.key }.toSet()
             confirmAll = links
         } else if (!loadingAll) {
             loadingAll = true
+            val asked = query
             scope.launch {
                 try {
                     onLoadAll()
                 } finally {
                     loadingAll = false
                 }
-                confirmAll = links
+                if (query == asked) {
+                    allKeys = null
+                    confirmAll = links
+                }
             }
         }
     }
@@ -332,9 +346,12 @@ internal fun MenuPanel(
         }
     }
     // While searching, pages keep loading, since a match can be on one not read yet.
-    val reading = searching && entries.size < SEARCH_CAP
-    LaunchedEffect(hidden, nearEnd, reading, paging.next, paging.loadingMore) {
-        if (!hidden && (nearEnd || reading) && paging.next != null && !paging.loadingMore) onLoadMore()
+    val readFailed = notice == HistoryNotice.LoadMoreFailed
+    val reading = searching && entries.size < SEARCH_CAP && !readFailed
+    // Not keyed on loadingMore: a page that failed would be asked for again at once. A new page, a
+    // refresh ending, typing or scrolling asks again.
+    LaunchedEffect(hidden, nearEnd, reading, query, paging.next, paging.loading) {
+        if (!hidden && (nearEnd || reading) && paging.next != null && !paging.loadingMore && !paging.loading) onLoadMore()
     }
     var topHeight by remember { mutableStateOf(0) }
     var bottomHeight by remember { mutableStateOf(0) }
@@ -382,32 +399,6 @@ internal fun MenuPanel(
                     )
                     SearchField(query, { query = it }, Modifier.weight(1f))
                 }
-                Column(
-                    Modifier
-                        .align(Alignment.BottomCenter)
-                        .zIndex(1f)
-                        .onSizeChanged { bottomHeight = it.height }
-                        .padding(vertical = 12.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    if (profileOpen) {
-                        Column(Modifier.fillMaxWidth().floating(RoundedCornerShape(20.dp)).padding(vertical = 4.dp)) {
-                            ProfileItem(s.navPricing, PageBarTags.PRICING) { onClose(); account.onPricing() }
-                            if (account.signedIn) {
-                                ProfileItem(s.navSignOut, PageBarTags.SIGN_OUT, Palette.danger) { onClose(); account.onSignOut() }
-                            } else {
-                                ProfileItem(s.navSignIn, PageBarTags.SIGN_IN) { onClose(); account.onSignIn() }
-                            }
-                        }
-                    }
-                    ProfileRow(account, profileOpen) { profileOpen = !profileOpen }
-                    MenuRow(
-                        s.appTabSettings, selected == Tab.SETTINGS, { onSelect(Tab.SETTINGS) },
-                        Modifier.testTag(PageBarTags.SETTINGS),
-                        icon = JudgeIcons.settings(Palette.ink),
-                        floating = true,
-                    )
-                }
                 LazyColumn(
                     Modifier.fillMaxSize().testTag(PageBarTags.LIST),
                     state = listState,
@@ -431,7 +422,9 @@ internal fun MenuPanel(
                     cards(s.navLinks, PageBarTags.LINKS, links, linksFolded, { linksFolded = !linksFolded }, { askAll(true) }, now, live, onOpen) { confirmKey = it }
                     if (searching && entries.isNotEmpty() && shown.isEmpty()) {
                         item(key = "noMatches") {
-                            if (paging.next != null) {
+                            if (paging.next != null && readFailed) {
+                                LoadFailed(onLoadMore)
+                            } else if (paging.next != null && reading) {
                                 Box(Modifier.fillMaxWidth().padding(top = 16.dp), contentAlignment = Alignment.Center) {
                                     CircularProgressIndicator(Modifier.size(22.dp), color = Palette.muted, strokeWidth = 2.dp)
                                 }
@@ -494,12 +487,42 @@ internal fun MenuPanel(
                         }
                     }
                 }
+                Column(
+                    Modifier
+                        .align(Alignment.BottomCenter)
+                        .zIndex(1f)
+                        .onSizeChanged { bottomHeight = it.height }
+                        .padding(vertical = 12.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    if (profileOpen) {
+                        Column(Modifier.fillMaxWidth().floating(RoundedCornerShape(20.dp)).padding(vertical = 4.dp)) {
+                            ProfileItem(s.navPricing, PageBarTags.PRICING) { onClose(); account.onPricing() }
+                            if (account.signedIn) {
+                                ProfileItem(s.navSignOut, PageBarTags.SIGN_OUT, Palette.danger) { onClose(); account.onSignOut() }
+                            } else {
+                                ProfileItem(s.navSignIn, PageBarTags.SIGN_IN) { onClose(); account.onSignIn() }
+                            }
+                        }
+                    }
+                    ProfileRow(account, profileOpen) { profileOpen = !profileOpen }
+                    MenuRow(
+                        s.appTabSettings, selected == Tab.SETTINGS, { onSelect(Tab.SETTINGS) },
+                        Modifier.testTag(PageBarTags.SETTINGS),
+                        icon = JudgeIcons.settings(Palette.ink),
+                        floating = true,
+                    )
+                }
             }
         }
     }
     if (confirmKey != null || confirmAll != null) {
         val all = confirmAll
-        val picked = if (all != null) (if (searching) shown else entries).filter { it.isCase == all && it.removable } else entries.filter { it.key == confirmKey }
+        val picked = if (all != null) {
+            entries.filter { it.isCase == all && it.removable && (allKeys?.contains(it.key) ?: true) }
+        } else {
+            entries.filter { it.key == confirmKey }
+        }
         val close = { confirmKey = null; confirmAll = null }
         AlertDialog(
             onDismissRequest = close,
@@ -589,7 +612,20 @@ private fun SearchField(query: String, onChange: (String) -> Unit, modifier: Mod
     val focus = LocalFocusManager.current
     val style = JudgeType.body.copy(color = Palette.ink)
     Row(
-        modifier.heightIn(min = 56.dp).floating().padding(start = 18.dp, end = 4.dp),
+        modifier
+            .heightIn(min = 56.dp)
+            .floating()
+            // The field takes horizontal drags itself; they must not slide the drawer shut.
+            .pointerInput(Unit) {
+                awaitEachGesture {
+                    awaitFirstDown(requireUnconsumed = false)
+                    do {
+                        val event = awaitPointerEvent()
+                        event.changes.forEach { if (it.positionChange().x != 0f) it.consume() }
+                    } while (event.changes.any { it.pressed })
+                }
+            }
+            .padding(start = 18.dp, end = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         BasicTextField(
@@ -615,7 +651,7 @@ private fun SearchField(query: String, onChange: (String) -> Unit, modifier: Mod
                     .clip(CircleShape)
                     .semantics {
                         role = Role.Button
-                        contentDescription = s.appCancel
+                        contentDescription = s.homeClear
                     }
                     .clickable { onChange("") },
                 contentAlignment = Alignment.Center,
