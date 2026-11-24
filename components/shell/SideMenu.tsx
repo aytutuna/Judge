@@ -292,21 +292,19 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
           ) : null}
           {section("nav.verdicts", "verdicts", verdicts)}
           {section("nav.links", "links", links)}
-          {searching && history.items.length > 0 && shown.length === 0 ? (
-            moreFailed && more ? (
-              <>
-                <p className={styles.note} role="alert">
-                  {t(lang, "shell.loadFailed")}
-                </p>
-                <button type="button" className={styles.more} onClick={loadMore}>
-                  {t(lang, "case.retry")}
-                </button>
-              </>
-            ) : (
-              <p className={styles.note} role="status">
-                {t(lang, reading ? "shell.loading" : "shell.noMatches")}
+          {searching && more && moreFailed ? (
+            <>
+              <p className={styles.note} role="alert">
+                {t(lang, "shell.loadFailed")}
               </p>
-            )
+              <button type="button" className={styles.more} onClick={loadMore}>
+                {t(lang, "case.retry")}
+              </button>
+            </>
+          ) : searching && history.items.length > 0 && shown.length === 0 ? (
+            <p className={styles.note} role="status">
+              {t(lang, reading ? "shell.loading" : "shell.noMatches")}
+            </p>
           ) : null}
           {history.items.length === 0 ? (
             history.status === "loading" ? (
