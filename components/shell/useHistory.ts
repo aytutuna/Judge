@@ -63,6 +63,7 @@ export type HistoryView = {
   status: "loading" | "ready" | "error";
   more: boolean;
   loadingMore: boolean;
+  moreFailed: boolean;
 };
 
 export type ServerHistory = { rows: HistoryRow[]; next: string | null };
@@ -204,6 +205,8 @@ type ServerState = {
   status: "loading" | "ready" | "error";
   data: ServerHistory | null;
   loadingMore: boolean;
+  /** The last page asked for did not load; nothing asks again by itself. */
+  moreFailed?: boolean;
 };
 
 let state: ServerState | null = null;
@@ -231,7 +234,7 @@ export async function refreshHistory(): Promise<void> {
   try {
     const page = await fetchPage(null);
     if (state?.user !== start.user) return;
-    emit({ ...state, status: "ready", data: mergeFirstPage({ rows: page.items, next: page.next }, state.data) });
+    emit({ ...state, status: "ready", moreFailed: false, data: mergeFirstPage({ rows: page.items, next: page.next }, state.data) });
   } catch {
     if (state?.user === start.user) emit({ ...state, status: "error" });
   }
@@ -252,7 +255,7 @@ export async function loadAllHistory(): Promise<void> {
 async function loadMore(): Promise<void> {
   const start = state;
   if (!start?.data?.next || start.loadingMore) return;
-  emit({ ...start, loadingMore: true });
+  emit({ ...start, loadingMore: true, moreFailed: false });
   try {
     const page = await fetchPage(start.data.next);
     if (state?.user !== start.user || !state.data) return;
@@ -263,7 +266,7 @@ async function loadMore(): Promise<void> {
       data: { rows: [...state.data.rows, ...page.items.filter((r) => !have.has(historyKey(r)))], next: page.next },
     });
   } catch {
-    if (state?.user === start.user) emit({ ...state, loadingMore: false });
+    if (state?.user === start.user) emit({ ...state, loadingMore: false, moreFailed: true });
   }
 }
 
@@ -491,6 +494,7 @@ export function useHistory(viewer: ViewerState, poll = false): HistoryView & { l
         : "ready",
     more: Boolean(mine?.data?.next),
     loadingMore: mine?.loadingMore ?? false,
+    moreFailed: mine?.moreFailed ?? false,
     loadMore: () => void loadMore(),
     refresh: () => void refreshHistory(),
   };

@@ -88,9 +88,9 @@ export function titleOf(lang: Lang, item: HistoryItem): string {
 
 const fold = (s: string) => s.normalize("NFC").toLocaleLowerCase();
 
-/** The rows whose title or a name on them contains the query, case-insensitive. */
+/** The rows whose title or other side's name contains the query, case-insensitive. */
 export function filterItems(lang: Lang, items: HistoryItem[], query: string): HistoryItem[] {
   const q = fold(query.trim());
   if (!q) return items;
-  return items.filter((i) => [titleOf(lang, i), i.other, i.self].some((s) => s && fold(s).includes(q)));
+  return items.filter((i) => [titleOf(lang, i), i.other].some((s) => s && fold(s).includes(q)));
 }

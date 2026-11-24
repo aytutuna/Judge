@@ -89,11 +89,15 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
   const [limited, setLimited] = useState<string | null>(null);
 
   // A match can sit on a page not loaded yet.
-  const { more, loadingMore, loadMore } = history;
+  const { more, loadingMore, moreFailed, loadMore } = history;
   const loaded = history.items.length;
+  const reading = more && !moreFailed && loaded < SEARCH_CAP;
   useEffect(() => {
-    if (searching && more && !loadingMore && loaded < SEARCH_CAP) loadMore();
-  }, [searching, more, loadingMore, loadMore, loaded]);
+    if (searching && reading && !loadingMore) loadMore();
+  }, [searching, reading, loadingMore, loadMore, loaded]);
+
+  // What a confirm names was picked from the rows shown for one query.
+  useEffect(() => setConfirm(null), [query]);
 
   const targets = confirm
     ? history.items.filter(
@@ -266,6 +270,7 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
             placeholder={t(lang, "shell.search")}
             aria-label={t(lang, "shell.search")}
             autoComplete="off"
+            disabled={busy || confirm !== null}
             enterKeyHint="search"
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -288,9 +293,20 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
           {section("nav.verdicts", "verdicts", verdicts)}
           {section("nav.links", "links", links)}
           {searching && history.items.length > 0 && shown.length === 0 ? (
-            <p className={styles.note} role="status">
-              {t(lang, more ? "shell.loading" : "shell.noMatches")}
-            </p>
+            moreFailed && more ? (
+              <>
+                <p className={styles.note} role="alert">
+                  {t(lang, "shell.loadFailed")}
+                </p>
+                <button type="button" className={styles.more} onClick={loadMore}>
+                  {t(lang, "case.retry")}
+                </button>
+              </>
+            ) : (
+              <p className={styles.note} role="status">
+                {t(lang, reading ? "shell.loading" : "shell.noMatches")}
+              </p>
+            )
           ) : null}
           {history.items.length === 0 ? (
             history.status === "loading" ? (

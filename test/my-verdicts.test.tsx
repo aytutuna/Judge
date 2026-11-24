@@ -134,6 +134,11 @@ describe("filterItems", () => {
     expect(ids("untitled")).toEqual(["old1"]);
   });
 
+  it("does not match the viewer's own name", () => {
+    const mine: HistoryItem = { ...ITEMS[0], title: "Bike", other: null, self: "Zed" };
+    expect(filterItems("en", [mine], "zed")).toEqual([]);
+  });
+
   it("returns everything for an empty query and nothing for a miss", () => {
     expect(filterItems("en", ITEMS, "  ")).toBe(ITEMS);
     expect(ids("zzzz")).toEqual([]);
