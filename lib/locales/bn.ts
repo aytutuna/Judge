@@ -754,6 +754,8 @@ const bn: Locale = {
     "shell.week": "এই সপ্তাহে",
     "shell.earlier": "আগে",
     "shell.empty": "এখনও কোনো রায় নেই।",
+    "shell.search": "খুঁজুন",
+    "shell.noMatches": "কিছু মেলেনি।",
     "shell.loading": "আপনার ইতিহাস লোড হচ্ছে…",
     "shell.loadFailed": "আপনার ইতিহাস লোড করা গেল না।",
     "shell.loadMore": "আরও দেখুন",

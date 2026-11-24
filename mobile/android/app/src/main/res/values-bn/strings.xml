@@ -477,6 +477,8 @@
     <string name="shell_new">নতুন তর্ক</string>
     <string name="shell_gamify">গেমিফাই</string>
     <string name="shell_today">আজ</string>
+    <string name="shell_search">খুঁজুন</string>
+    <string name="shell_no_matches">কিছু মেলেনি।</string>
     <string name="shell_load_failed">আপনার ইতিহাস লোড করা গেল না।</string>
     <string name="shell_load_more">আরও দেখুন</string>
     <string name="shell_untitled">শিরোনামহীন রায়</string>

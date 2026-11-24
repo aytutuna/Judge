@@ -483,6 +483,8 @@
     <string name="shell_new">ויכוח חדש</string>
     <string name="shell_gamify">משחק</string>
     <string name="shell_today">היום</string>
+    <string name="shell_search">חיפוש</string>
+    <string name="shell_no_matches">אין תוצאות.</string>
     <string name="shell_load_failed">לא הצלחנו לטעון את ההיסטוריה.</string>
     <string name="shell_load_more">להציג עוד</string>
     <string name="shell_untitled">פסק דין בלי כותרת</string>

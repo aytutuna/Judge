@@ -752,6 +752,8 @@ const mr: Locale = {
     "shell.week": "हा आठवडा",
     "shell.earlier": "आधीचे",
     "shell.empty": "अजून एकही निकाल नाही.",
+    "shell.search": "शोधा",
+    "shell.noMatches": "काही सापडले नाही.",
     "shell.loading": "तुमचा इतिहास लोड होत आहे…",
     "shell.loadFailed": "तुमचा इतिहास लोड करता आला नाही.",
     "shell.loadMore": "आणखी दाखवा",

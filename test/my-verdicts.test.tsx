@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
-import { stateLabel, titleOf } from "../components/shell/history-labels";
+import { filterItems, stateLabel, titleOf } from "../components/shell/history-labels";
 import { Panel, SideMenu } from "../components/shell/SideMenu";
 import { fromRow, mergeHistory, type HistoryItem } from "../components/shell/useHistory";
 import type { HistoryRow } from "../lib/history-types";
@@ -117,6 +117,34 @@ function listed(history: Record<string, unknown> = {}, over: Partial<ComponentPr
   }
 }
 
+describe("filterItems", () => {
+  const ids = (q: string) => filterItems("en", ITEMS, q).map((i) => i.id);
+
+  it("matches titles regardless of case, and ignores surrounding spaces", () => {
+    expect(ids("  TITLE today")).toEqual(["today1"]);
+    expect(ids("title week")).toEqual(["week1"]);
+  });
+
+  it("matches the names put back and the other side's first name", () => {
+    expect(ids("bike")).toEqual(["case1"]);
+    expect(ids("deniz")).toEqual(["case1", "gonecase"]);
+  });
+
+  it("searches an untitled row's stand-in title", () => {
+    expect(ids("untitled")).toEqual(["old1"]);
+  });
+
+  it("does not match the viewer's own name", () => {
+    const mine: HistoryItem = { ...ITEMS[0], title: "Bike", other: null, self: "Zed" };
+    expect(filterItems("en", [mine], "zed")).toEqual([]);
+  });
+
+  it("returns everything for an empty query and nothing for a miss", () => {
+    expect(filterItems("en", ITEMS, "  ")).toBe(ITEMS);
+    expect(ids("zzzz")).toEqual([]);
+  });
+});
+
 describe("the menu's lists", () => {
   it("splits verdicts and links under their headings, Verdicts first", () => {
     const html = listed();
@@ -145,6 +173,12 @@ describe("the menu's lists", () => {
     const linksOnly = listed({ items: ITEMS.filter((i) => i.kind === "case") });
     expect(linksOnly).not.toContain(`>${t("en", "nav.verdicts")}</button></h2>`);
     expect(linksOnly).toContain(`>${t("en", "nav.links")}</button></h2>`);
+  });
+
+  it("has a search field at the top, named for screen readers", () => {
+    const html = listed();
+    expect(html).toMatch(/<input type="search"[^>]*aria-label="Search"/);
+    expect(html.indexOf('type="search"')).toBeLessThan(html.indexOf(`>${t("en", "nav.verdicts")}</button></h2>`));
   });
 
   it("links verdicts and cases, each with its state, names put back", () => {
@@ -268,7 +302,7 @@ describe("SideMenu", () => {
 
   it("speaks Turkish", () => {
     const html = menu({ lang: "tr" });
-    for (const k of ["nav.new", "nav.settings"] as const) expect(html).toContain(`>${t("tr", k)}</a>`);
+    for (const k of ["nav.new", "nav.settings"] as const) expect(html).toMatch(new RegExp(`>${t("tr", k)}</(a|span)>`));
   });
 
   it("puts the profile above Settings, with Pricing and Sign in behind it", () => {

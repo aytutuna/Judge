@@ -748,6 +748,8 @@ const he: Locale = {
     "shell.week": "השבוע",
     "shell.earlier": "מוקדם יותר",
     "shell.empty": "עוד אין פסקי דין.",
+    "shell.search": "חיפוש",
+    "shell.noMatches": "אין תוצאות.",
     "shell.loading": "טוענים את ההיסטוריה…",
     "shell.loadFailed": "לא הצלחנו לטעון את ההיסטוריה.",
     "shell.loadMore": "להציג עוד",

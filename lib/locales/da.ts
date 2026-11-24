@@ -765,6 +765,8 @@ const da: Locale = {
     "shell.week": "Denne uge",
     "shell.earlier": "Tidligere",
     "shell.empty": "Ingen domme endnu.",
+    "shell.search": "Søg",
+    "shell.noMatches": "Ingen resultater.",
     "shell.loading": "Henter din historik…",
     "shell.loadFailed": "Vi kunne ikke hente din historik.",
     "shell.loadMore": "Vis flere",

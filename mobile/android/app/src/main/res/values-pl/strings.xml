@@ -489,6 +489,8 @@
     <string name="shell_new">Nowy spór</string>
     <string name="shell_gamify">Gra</string>
     <string name="shell_today">Dzisiaj</string>
+    <string name="shell_search">Szukaj</string>
+    <string name="shell_no_matches">Brak wyników.</string>
     <string name="shell_load_failed">Nie udało się wczytać historii.</string>
     <string name="shell_load_more">Pokaż więcej</string>
     <string name="shell_untitled">Werdykt bez tytułu</string>

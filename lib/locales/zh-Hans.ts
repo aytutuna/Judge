@@ -736,6 +736,8 @@ const zhHans: Locale = {
     "shell.week": "本周",
     "shell.earlier": "更早",
     "shell.empty": "还没有裁决。",
+    "shell.search": "搜索",
+    "shell.noMatches": "没有结果。",
     "shell.loading": "正在加载历史记录……",
     "shell.loadFailed": "没能加载历史记录。",
     "shell.loadMore": "显示更多",

@@ -60,6 +60,20 @@ enum HistoryEntry: Identifiable {
         }
     }
 
+    /// The rows whose title or other side's name contains `query`, ignoring
+    /// case; all of them for a blank query.
+    static func filter(_ entries: [HistoryEntry], query: String, lang: AppLang) -> [HistoryEntry] {
+        let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        if q.isEmpty { return entries }
+        return entries.filter { entry in
+            if entry.title(lang: lang).localizedCaseInsensitiveContains(q) { return true }
+            if case .account(let item) = entry, let other = HistoryLabels.otherName(item) {
+                return other.localizedCaseInsensitiveContains(q)
+            }
+            return false
+        }
+    }
+
     /// Where the row stands in a few words, from the viewer's side.
     func status(lang: AppLang, now: Date) -> String? {
         switch self {
@@ -107,6 +121,15 @@ enum HistoryEntry: Identifiable {
                 .sorted { HistoryOrder.before(($0.at, $0.key), ($1.at, $1.key)) }
         } ?? []
         return merge(cached: cached, saved: saved, user: user, cutoff: app.historyList.cutoff)
+    }
+
+    /// The same list read from the store itself, for a snapshot right after pages
+    /// were applied, when the views' own queries may not have caught up yet.
+    @MainActor
+    static func stored(history: HistoryStore, user: String?, cutoff: String?) -> [HistoryEntry] {
+        let cached = user.flatMap { try? history.cached(user: $0) } ?? []
+        let saved = (try? history.all()) ?? []
+        return merge(cached: cached, saved: saved, user: user, cutoff: cutoff)
     }
 
     /// The account's rows and the phone's own, newest first. A row the viewer

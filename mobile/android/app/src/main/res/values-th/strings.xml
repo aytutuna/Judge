@@ -471,6 +471,8 @@
     <string name="shell_new">เรื่องใหม่</string>
     <string name="shell_gamify">เกม</string>
     <string name="shell_today">วันนี้</string>
+    <string name="shell_search">ค้นหา</string>
+    <string name="shell_no_matches">ไม่พบผลลัพธ์</string>
     <string name="shell_load_failed">โหลดประวัติไม่ได้</string>
     <string name="shell_load_more">ดูเพิ่ม</string>
     <string name="shell_untitled">คำตัดสินไม่มีชื่อ</string>

@@ -477,6 +477,8 @@
     <string name="shell_new">नवा वाद</string>
     <string name="shell_gamify">गेमिफाय</string>
     <string name="shell_today">आज</string>
+    <string name="shell_search">शोधा</string>
+    <string name="shell_no_matches">काही सापडले नाही.</string>
     <string name="shell_load_failed">तुमचा इतिहास लोड करता आला नाही.</string>
     <string name="shell_load_more">आणखी दाखवा</string>
     <string name="shell_untitled">शीर्षक नसलेला निकाल</string>

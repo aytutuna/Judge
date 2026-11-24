@@ -762,6 +762,8 @@ const sk: Locale = {
     "shell.week": "Tento týždeň",
     "shell.earlier": "Skôr",
     "shell.empty": "Zatiaľ žiadne verdikty.",
+    "shell.search": "Hľadať",
+    "shell.noMatches": "Nič sa nenašlo.",
     "shell.loading": "Načítavam históriu…",
     "shell.loadFailed": "Históriu sa nepodarilo načítať.",
     "shell.loadMore": "Zobraziť viac",

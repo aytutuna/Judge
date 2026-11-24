@@ -758,6 +758,8 @@ const nb: Locale = {
     "shell.week": "Denne uken",
     "shell.earlier": "Tidligere",
     "shell.empty": "Ingen dommer ennå.",
+    "shell.search": "Søk",
+    "shell.noMatches": "Ingen treff.",
     "shell.loading": "Laster historikken din…",
     "shell.loadFailed": "Vi fikk ikke lastet historikken din.",
     "shell.loadMore": "Vis flere",

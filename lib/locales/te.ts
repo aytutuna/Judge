@@ -744,6 +744,8 @@ const te: Locale = {
     "shell.week": "ఈ వారం",
     "shell.earlier": "ఇంతకుముందు",
     "shell.empty": "ఇంకా తీర్పులేవీ లేవు.",
+    "shell.search": "వెతకండి",
+    "shell.noMatches": "ఏమీ దొరకలేదు.",
     "shell.loading": "మీ చరిత్ర లోడ్ అవుతోంది…",
     "shell.loadFailed": "మీ చరిత్ర లోడ్ కాలేదు.",
     "shell.loadMore": "ఇంకా చూపించండి",

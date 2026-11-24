@@ -788,6 +788,8 @@ const fr: Locale = {
     "shell.week": "Cette semaine",
     "shell.earlier": "Plus tôt",
     "shell.empty": "Aucun verdict pour l’instant.",
+    "shell.search": "Rechercher",
+    "shell.noMatches": "Aucun résultat.",
     "shell.loading": "Chargement de ton historique…",
     "shell.loadFailed": "Impossible de charger ton historique.",
     "shell.loadMore": "Afficher plus",

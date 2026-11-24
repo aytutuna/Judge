@@ -58,6 +58,16 @@ object HistoryLabels {
         is HistoryEntry.Phone -> title(entry.verdict, lang)
     }
 
+    /** The entries whose title or other side's name contains [query], ignoring case; all of them for a blank query. */
+    fun filter(entries: List<HistoryEntry>, query: String, s: Strings, lang: AppLang): List<HistoryEntry> {
+        val q = query.trim()
+        if (q.isEmpty()) return entries
+        return entries.filter { e ->
+            title(e, s, lang).contains(q, ignoreCase = true) ||
+                (e as? HistoryEntry.Account)?.let { otherName(it.item) }?.contains(q, ignoreCase = true) == true
+        }
+    }
+
     /** A verdict kept on the phone: its headline in the shown language. */
     fun title(verdict: SavedVerdict, lang: AppLang): String {
         val shown = verdict.translations[lang]?.result ?: verdict.original.result

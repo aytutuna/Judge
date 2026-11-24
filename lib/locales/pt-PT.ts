@@ -767,6 +767,8 @@ const ptPT: Locale = {
     "shell.week": "Esta semana",
     "shell.earlier": "Antes",
     "shell.empty": "Ainda não há veredictos.",
+    "shell.search": "Pesquisar",
+    "shell.noMatches": "Sem resultados.",
     "shell.loading": "A carregar o teu histórico…",
     "shell.loadFailed": "Não conseguimos carregar o teu histórico.",
     "shell.loadMore": "Mostrar mais",

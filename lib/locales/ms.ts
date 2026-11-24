@@ -774,6 +774,8 @@ const ms: Locale = {
     "shell.week": "Minggu ini",
     "shell.earlier": "Sebelum ini",
     "shell.empty": "Belum ada keputusan.",
+    "shell.search": "Cari",
+    "shell.noMatches": "Tiada hasil.",
     "shell.loading": "Memuatkan sejarah anda…",
     "shell.loadFailed": "Kami tidak dapat memuatkan sejarah anda.",
     "shell.loadMore": "Tunjuk lagi",

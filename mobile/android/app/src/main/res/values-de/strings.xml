@@ -477,6 +477,8 @@
     <string name="shell_new">Neuer Streit</string>
     <string name="shell_gamify">Spielmodus</string>
     <string name="shell_today">Heute</string>
+    <string name="shell_search">Suchen</string>
+    <string name="shell_no_matches">Keine Treffer.</string>
     <string name="shell_load_failed">Wir konnten deinen Verlauf nicht laden.</string>
     <string name="shell_load_more">Mehr anzeigen</string>
     <string name="shell_untitled">Urteil ohne Titel</string>

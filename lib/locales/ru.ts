@@ -764,6 +764,8 @@ const ru: Locale = {
     "shell.week": "На этой неделе",
     "shell.earlier": "Раньше",
     "shell.empty": "Вердиктов пока нет.",
+    "shell.search": "Поиск",
+    "shell.noMatches": "Ничего не найдено.",
     "shell.loading": "Загружаем историю…",
     "shell.loadFailed": "Не удалось загрузить историю.",
     "shell.loadMore": "Показать ещё",

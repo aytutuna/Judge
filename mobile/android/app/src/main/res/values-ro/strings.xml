@@ -483,6 +483,8 @@
     <string name="shell_new">Dispută nouă</string>
     <string name="shell_gamify">Joc</string>
     <string name="shell_today">Azi</string>
+    <string name="shell_search">Caută</string>
+    <string name="shell_no_matches">Niciun rezultat.</string>
     <string name="shell_load_failed">N-am putut încărca istoricul.</string>
     <string name="shell_load_more">Arată mai multe</string>
     <string name="shell_untitled">Verdict fără titlu</string>

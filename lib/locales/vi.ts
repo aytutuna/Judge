@@ -775,6 +775,8 @@ const vi: Locale = {
     "shell.week": "Tuần này",
     "shell.earlier": "Trước đó",
     "shell.empty": "Chưa có phán quyết nào.",
+    "shell.search": "Tìm kiếm",
+    "shell.noMatches": "Không có kết quả.",
     "shell.loading": "Đang tải lịch sử…",
     "shell.loadFailed": "Không tải được lịch sử.",
     "shell.loadMore": "Xem thêm",

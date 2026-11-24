@@ -477,6 +477,8 @@
     <string name="shell_new">Nytt bråk</string>
     <string name="shell_gamify">Spelläge</string>
     <string name="shell_today">I dag</string>
+    <string name="shell_search">Sök</string>
+    <string name="shell_no_matches">Inga träffar.</string>
     <string name="shell_load_failed">Vi kunde inte ladda din historik.</string>
     <string name="shell_load_more">Visa fler</string>
     <string name="shell_untitled">Dom utan titel</string>

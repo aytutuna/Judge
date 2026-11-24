@@ -767,6 +767,8 @@ const hr: Locale = {
     "shell.week": "Ovaj tjedan",
     "shell.earlier": "Ranije",
     "shell.empty": "Još nema presuda.",
+    "shell.search": "Traži",
+    "shell.noMatches": "Nema rezultata.",
     "shell.loading": "Učitavamo tvoju povijest…",
     "shell.loadFailed": "Nismo uspjeli učitati tvoju povijest.",
     "shell.loadMore": "Prikaži više",

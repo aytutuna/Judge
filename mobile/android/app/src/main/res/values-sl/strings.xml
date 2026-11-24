@@ -489,6 +489,8 @@
     <string name="shell_new">Nov prepir</string>
     <string name="shell_gamify">Igra</string>
     <string name="shell_today">Danes</string>
+    <string name="shell_search">Iskanje</string>
+    <string name="shell_no_matches">Ni zadetkov.</string>
     <string name="shell_load_failed">Zgodovine nismo mogli naložiti.</string>
     <string name="shell_load_more">Pokaži več</string>
     <string name="shell_untitled">Razsodba brez naslova</string>

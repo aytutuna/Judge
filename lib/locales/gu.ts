@@ -746,6 +746,8 @@ const gu: Locale = {
     "shell.week": "આ અઠવાડિયે",
     "shell.earlier": "અગાઉ",
     "shell.empty": "હજી કોઈ ચુકાદો નથી.",
+    "shell.search": "શોધો",
+    "shell.noMatches": "કંઈ મળ્યું નથી.",
     "shell.loading": "તમારો ઇતિહાસ લોડ થાય છે…",
     "shell.loadFailed": "તમારો ઇતિહાસ લોડ ન થઈ શક્યો.",
     "shell.loadMore": "વધુ બતાવો",

@@ -304,6 +304,29 @@ final class HistoryListTests: XCTestCase {
     }
 
     @MainActor
+    func testSearchKeepsRowsByTitleOrOtherSideIgnoringCase() throws {
+        let entries = try fixturePage().items.map { HistoryEntry.account($0) }
+        XCTAssertEqual(HistoryEntry.filter(entries, query: "  ", lang: .en).count, entries.count)
+        let deposit = HistoryEntry.filter(entries, query: "ALEX OWES", lang: .en)
+        XCTAssertFalse(deposit.isEmpty)
+        XCTAssertLessThan(deposit.count, entries.count)
+        XCTAssertTrue(deposit.allSatisfy { $0.title(lang: .en).localizedCaseInsensitiveContains("alex owes") })
+        let sam = HistoryEntry.filter(entries, query: "sam", lang: .en)
+        XCTAssertTrue(sam.contains { entry in
+            if case .account(let item) = entry { return HistoryLabels.otherName(item) == "Sam" }
+            return false
+        })
+        XCTAssertTrue(HistoryEntry.filter(entries, query: "zzzz", lang: .en).isEmpty)
+    }
+
+    func testARemoveAllOpensOnlyWhereItWasAsked() {
+        XCTAssertTrue(RemoveAsk.mayOpen(asked: "", now: "", menuOpen: true, alreadyOpen: false))
+        XCTAssertFalse(RemoveAsk.mayOpen(asked: "", now: "", menuOpen: false, alreadyOpen: false), "menu closed")
+        XCTAssertFalse(RemoveAsk.mayOpen(asked: "", now: "", menuOpen: true, alreadyOpen: true), "another question is open")
+        XCTAssertFalse(RemoveAsk.mayOpen(asked: "", now: "sam", menuOpen: true, alreadyOpen: false), "the search changed")
+    }
+
+    @MainActor
     func testRemovableRowsAndConfirmWording() throws {
         try withStore { store in
             try store.save(try session("win_b_named"))
@@ -380,6 +403,23 @@ final class HistoryListTests: XCTestCase {
 
         await list.refresh(user: "u1", enabled: false, force: true)
         XCTAssertEqual(router.count("GET", "/api/v1/me/history"), 2, "a server without the list is not asked")
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
+    func testTheStoredListHoldsEveryPageJustLoaded() async throws {
+        let container = HistoryContainer.inMemory()
+        let router = StubRouter()
+        router.on(
+            "GET", "/api/v1/me/history",
+            try PremiumFixtures.json(200, try pageBody([item("a", "2026-10-05T00:00:00.000Z"), item("b", "2026-10-04T00:00:00.000Z")], next: "cur1")),
+            try PremiumFixtures.json(200, try pageBody([item("c", "2026-10-01T00:00:00.000Z")], next: nil))
+        )
+        let (app, list) = try model(container, router: router)
+        await list.refresh(user: "u1", enabled: true)
+        XCTAssertEqual(HistoryEntry.stored(history: app.history, user: "u1", cutoff: list.cutoff).map(\.id), ["v:a", "v:b"])
+        await list.loadMore(user: "u1")
+        XCTAssertEqual(HistoryEntry.stored(history: app.history, user: "u1", cutoff: list.cutoff).map(\.id), ["v:a", "v:b", "v:c"])
         withExtendedLifetime(container) {}
     }
 

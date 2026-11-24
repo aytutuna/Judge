@@ -6,7 +6,7 @@ import { accountEntry, AccountPicture, returnPath, signOutNow } from "@/componen
 import { saveDraftForSignIn } from "@/lib/draft";
 import { t, type Key, type Lang } from "@/lib/i18n";
 import { useViewer } from "@/lib/use-viewer";
-import { liveLabel, stateLabel, titleOf, tone } from "./history-labels";
+import { filterItems, liveLabel, stateLabel, titleOf, tone } from "./history-labels";
 import { removeItems } from "./history-remove";
 import { loadAllHistory, useHistory, type HistoryItem } from "./useHistory";
 import { useLive } from "./useLive";
@@ -14,6 +14,9 @@ import styles from "./shell.module.css";
 
 /** Which headings are folded, kept for the session. */
 const folded = { verdicts: false, links: false };
+
+/** While a search is on, pages keep loading until this many rows are in. */
+const SEARCH_CAP = 500;
 
 type Confirm = { kind: HistoryItem["kind"]; ids: string[] | null };
 
@@ -24,9 +27,9 @@ type Props = {
 };
 
 /** The menu, as in the native app: a button in the header that opens a panel
- * with New, the Verdicts and the Links (cases sent and received) in two
- * lists that scroll, and at the bottom the profile (Pricing, Sign in or Sign
- * out) above Settings. `onHome` resets the home page instead of navigating
+ * with the Verdicts and the Links (cases sent and received) in two lists
+ * that scroll, and over them New and a search field at the top and the profile
+ * (Pricing, Sign in or Sign out) and Settings at the bottom. `onHome` resets the home page instead of navigating
  * to itself. */
 export function SideMenu(props: Props) {
   const [open, setOpen] = useState(false);
@@ -68,9 +71,12 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
   }, []);
 
   const close = () => dialogRef.current?.close();
-  const verdicts = history.items.filter((i) => i.kind === "verdict");
-  const links = history.items.filter((i) => i.kind === "case");
-  const waiting = links.some((i) => i.role === "owner" && i.state === "waiting");
+  const [query, setQuery] = useState("");
+  const searching = query.trim() !== "";
+  const shown = filterItems(lang, history.items, query);
+  const verdicts = shown.filter((i) => i.kind === "verdict");
+  const links = shown.filter((i) => i.kind === "case");
+  const waiting = history.items.some((i) => i.kind === "case" && i.role === "owner" && i.state === "waiting");
   const live = useLive(waiting);
   const user = viewer.me?.user ?? null;
   const showSignIn = accountEntry(viewer.config, viewer.me) === "signin" && !pathname?.startsWith("/signin");
@@ -81,6 +87,17 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(0);
   const [limited, setLimited] = useState<string | null>(null);
+
+  // A match can sit on a page not loaded yet.
+  const { more, loadingMore, moreFailed, loadMore } = history;
+  const loaded = history.items.length;
+  const reading = more && !moreFailed && loaded < SEARCH_CAP;
+  useEffect(() => {
+    if (searching && reading && !loadingMore) loadMore();
+  }, [searching, reading, loadingMore, loadMore, loaded]);
+
+  // What a confirm names was picked from the rows shown for one query.
+  useEffect(() => setConfirm(null), [query]);
 
   const targets = confirm
     ? history.items.filter(
@@ -96,6 +113,10 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
   async function removeAll(kind: HistoryItem["kind"]) {
     setFailed(0);
     setLimited(null);
+    if (searching) {
+      setConfirm({ kind, ids: shown.filter((i) => i.kind === kind && i.removable).map((i) => i.id) });
+      return;
+    }
     setBusy(true);
     await loadAllHistory();
     setBusy(false);
@@ -223,13 +244,37 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
   }
 
   return (
-    <dialog ref={dialogRef} className={styles.menu} aria-label={t(lang, "nav.tabs")} onClose={onClosed}>
+    <dialog
+      ref={dialogRef}
+      className={styles.menu}
+      aria-label={t(lang, "nav.tabs")}
+      onClose={onClosed}
+      onCancel={(e) => {
+        // Escape clears the search first and closes the menu on the next press.
+        if (!query) return;
+        e.preventDefault();
+        setQuery("");
+      }}
+    >
       <nav className={styles.panel} aria-label={t(lang, "nav.tabs")}>
-        {row("/", "nav.new", (e) => {
-          if (!onHome) return;
-          e.preventDefault();
-          onHome();
-        })}
+        <div className={styles.floatTop}>
+          {row("/", "nav.new", (e) => {
+            if (!onHome) return;
+            e.preventDefault();
+            onHome();
+          })}
+          <input
+            type="search"
+            className={styles.search}
+            value={query}
+            placeholder={t(lang, "shell.search")}
+            aria-label={t(lang, "shell.search")}
+            autoComplete="off"
+            disabled={busy || confirm !== null}
+            enterKeyHint="search"
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </div>
         <div className={styles.menuList}>
           {showSignIn ? (
             <p className={styles.local}>
@@ -247,6 +292,20 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
           ) : null}
           {section("nav.verdicts", "verdicts", verdicts)}
           {section("nav.links", "links", links)}
+          {searching && more && moreFailed ? (
+            <>
+              <p className={styles.note} role="alert">
+                {t(lang, "shell.loadFailed")}
+              </p>
+              <button type="button" className={styles.more} onClick={loadMore}>
+                {t(lang, "case.retry")}
+              </button>
+            </>
+          ) : searching && history.items.length > 0 && shown.length === 0 ? (
+            <p className={styles.note} role="status">
+              {t(lang, reading ? "shell.loading" : "shell.noMatches")}
+            </p>
+          ) : null}
           {history.items.length === 0 ? (
             history.status === "loading" ? (
               <p className={styles.note} role="status">
@@ -271,26 +330,26 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
               {limited ?? t(lang, "shell.removeFailed", { n: failed })}
             </p>
           ) : null}
-          {history.more ? (
+          {history.more && !searching ? (
             <button type="button" className={styles.more} disabled={history.loadingMore} onClick={history.loadMore}>
               {history.loadingMore ? t(lang, "shell.loading") : t(lang, "shell.loadMore")}
             </button>
           ) : null}
         </div>
-        {confirm && targets.length > 0 ? (
-          <div className={styles.confirm} role="alertdialog" aria-label={confirmText(confirm, targets.length)}>
-            <p>{confirmText(confirm, targets.length)}</p>
-            <div className={styles.confirmButtons}>
-              <button type="button" className={styles.more} disabled={busy} onClick={() => setConfirm(null)}>
-                {t(lang, "case.cancel")}
-              </button>
-              <button type="button" className={styles.confirmYes} disabled={busy} onClick={() => void run()}>
-                {t(lang, confirm.ids === null ? "shell.removeAll" : "verdict.remove.yes")}
-              </button>
+        <div className={styles.floatEnd}>
+          {confirm && targets.length > 0 ? (
+            <div className={styles.confirm} role="alertdialog" aria-label={confirmText(confirm, targets.length)}>
+              <p>{confirmText(confirm, targets.length)}</p>
+              <div className={styles.confirmButtons}>
+                <button type="button" className={styles.more} disabled={busy} onClick={() => setConfirm(null)}>
+                  {t(lang, "case.cancel")}
+                </button>
+                <button type="button" className={styles.confirmYes} disabled={busy} onClick={() => void run()}>
+                  {t(lang, confirm.ids === null || confirm.ids.length > 1 ? "shell.removeAll" : "verdict.remove.yes")}
+                </button>
+              </div>
             </div>
-          </div>
-        ) : null}
-        <div className={styles.menuEnd}>
+          ) : null}
           <div id={profileId} className={styles.profileItems} hidden={!profileOpen}>
             <Link href="/pricing" className={styles.menuRow} onClick={close}>
               {t(lang, "nav.pricing")}
@@ -319,39 +378,41 @@ export function Panel({ lang, pathname, onHome, onClosed }: Props & { onClosed: 
               </Link>
             ) : null}
           </div>
-          <button
-            type="button"
-            className={styles.profile}
-            aria-expanded={profileOpen}
-            aria-controls={profileId}
-            onClick={() => setProfileOpen((o) => !o)}
-          >
-            <span className={styles.profilePicture} data-signed-out={user ? undefined : ""}>
-              <AccountPicture user={user} />
-            </span>
-            <span className={styles.profileName}>{user ? user.name.trim() || user.email : t(lang, "nav.account")}</span>
-          </button>
-          <Link
-            href="/settings"
-            className={styles.menuRow}
-            aria-current={pathname === "/settings" ? "page" : undefined}
-            onClick={() => {
-              saveDraftForSignIn();
-              close();
-            }}
-          >
-            <svg viewBox="0 0 24 24" aria-hidden className={styles.menuIcon}>
-              <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth={1.8} />
-              <path
-                d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={1.8}
-                strokeLinecap="round"
-              />
-            </svg>
-            {t(lang, "nav.settings")}
-          </Link>
+          <div className={styles.endRow}>
+            <button
+              type="button"
+              className={styles.profile}
+              aria-expanded={profileOpen}
+              aria-controls={profileId}
+              onClick={() => setProfileOpen((o) => !o)}
+            >
+              <span className={styles.profilePicture} data-signed-out={user ? undefined : ""}>
+                <AccountPicture user={user} />
+              </span>
+              <span className={styles.profileName}>{user ? user.name.trim() || user.email : t(lang, "nav.account")}</span>
+            </button>
+            <Link
+              href="/settings"
+              className={styles.menuRow}
+              aria-current={pathname === "/settings" ? "page" : undefined}
+              onClick={() => {
+                saveDraftForSignIn();
+                close();
+              }}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden className={styles.menuIcon}>
+                <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth={1.8} />
+                <path
+                  d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={1.8}
+                  strokeLinecap="round"
+                />
+              </svg>
+              <span className={styles.settingsLabel}>{t(lang, "nav.settings")}</span>
+            </Link>
+          </div>
         </div>
       </nav>
       <button type="button" className={styles.scrim} tabIndex={-1} aria-label={t(lang, "case.cancel")} onClick={close} />

@@ -483,6 +483,8 @@
     <string name="shell_new">Nova discussão</string>
     <string name="shell_gamify">Gamificar</string>
     <string name="shell_today">Hoje</string>
+    <string name="shell_search">Buscar</string>
+    <string name="shell_no_matches">Nenhum resultado.</string>
     <string name="shell_load_failed">Não conseguimos carregar seu histórico.</string>
     <string name="shell_load_more">Mostrar mais</string>
     <string name="shell_untitled">Veredito sem título</string>

@@ -780,6 +780,8 @@ const it: Locale = {
     "shell.week": "Questa settimana",
     "shell.earlier": "Prima",
     "shell.empty": "Ancora nessun verdetto.",
+    "shell.search": "Cerca",
+    "shell.noMatches": "Nessun risultato.",
     "shell.loading": "Caricamento della cronologia…",
     "shell.loadFailed": "Non siamo riusciti a caricare la cronologia.",
     "shell.loadMore": "Mostra altri",

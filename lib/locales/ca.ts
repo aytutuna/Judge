@@ -782,6 +782,8 @@ const ca: Locale = {
     "shell.week": "Aquesta setmana",
     "shell.earlier": "Abans",
     "shell.empty": "Encara no hi ha veredictes.",
+    "shell.search": "Cerca",
+    "shell.noMatches": "Cap resultat.",
     "shell.loading": "Carregant l'historial…",
     "shell.loadFailed": "No hem pogut carregar l'historial.",
     "shell.loadMore": "Mostra'n més",

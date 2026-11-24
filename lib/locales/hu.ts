@@ -776,6 +776,8 @@ const hu: Locale = {
     "shell.week": "Ezen a héten",
     "shell.earlier": "Korábban",
     "shell.empty": "Még nincs ítélet.",
+    "shell.search": "Keresés",
+    "shell.noMatches": "Nincs találat.",
     "shell.loading": "Előzmények betöltése…",
     "shell.loadFailed": "Nem sikerült betölteni az előzményeidet.",
     "shell.loadMore": "Továbbiak",

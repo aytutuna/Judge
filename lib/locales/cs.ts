@@ -762,6 +762,8 @@ const cs: Locale = {
     "shell.week": "Tento týden",
     "shell.earlier": "Dříve",
     "shell.empty": "Zatím žádné verdikty.",
+    "shell.search": "Hledat",
+    "shell.noMatches": "Nic nenalezeno.",
     "shell.loading": "Načítáme historii…",
     "shell.loadFailed": "Historii se nepodařilo načíst.",
     "shell.loadMore": "Zobrazit další",

@@ -471,6 +471,8 @@
     <string name="shell_new">Tranh cãi mới</string>
     <string name="shell_gamify">Trò chơi</string>
     <string name="shell_today">Hôm nay</string>
+    <string name="shell_search">Tìm kiếm</string>
+    <string name="shell_no_matches">Không có kết quả.</string>
     <string name="shell_load_failed">Không tải được lịch sử.</string>
     <string name="shell_load_more">Xem thêm</string>
     <string name="shell_untitled">Phán quyết chưa có tiêu đề</string>

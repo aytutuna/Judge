@@ -8,11 +8,15 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.longClick
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
 import com.okjudge.judge.core.model.HistoryState
@@ -24,6 +28,7 @@ import com.okjudge.judge.ui.history.HistoryNotice
 import com.okjudge.judge.ui.history.HistoryPaging
 import com.okjudge.judge.ui.history.mergeHistory
 import java.time.Instant
+import kotlinx.coroutines.CompletableDeferred
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -54,13 +59,14 @@ class MenuHistoryTest {
         notice: HistoryNotice? = null,
         onLoadMore: () -> Unit = {},
         onRetry: () -> Unit = {},
+        onLoadAll: suspend () -> List<HistoryEntry>? = { null },
         live: Map<String, LiveState> = emptyMap(),
         account: AccountActions = AccountActions(false, null, {}, {}, {}),
     ) = compose.setContent {
         Themed(AppLang.EN) {
             MenuPanel(
                 Tab.NEW, list, false, FocusRequester(), {}, onOpen, {},
-                account = account, paging = paging, notice = notice, onRemove = onRemove, onLoadMore = onLoadMore, onRetry = onRetry, live = live, now = now,
+                account = account, paging = paging, notice = notice, onRemove = onRemove, onLoadMore = onLoadMore, onRetry = onRetry, onLoadAll = onLoadAll, live = live, now = now,
             )
         }
     }
@@ -98,6 +104,98 @@ class MenuHistoryTest {
             listOf("c:case0000010", "v:verdict0020", "c:case0000011", "v:verdict0021", "v:${phone.id}", "c:case0000012", "c:case0000013", "c:case0000014"),
             entries.map { it.key },
         )
+    }
+
+    @Test
+    fun search_keepsTheMatchingCards_ignoringCase() {
+        menu()
+        compose.onNodeWithTag(PageBarTags.SEARCH).performTextInput("ALEX OWES")
+        compose.waitForIdle()
+        compose.onNodeWithText("Alex owes half the deposit").assertExists()
+        compose.onNodeWithText(en.shellUntitled).assertDoesNotExist()
+        compose.onNodeWithTag(PageBarTags.NO_MATCHES).assertDoesNotExist()
+    }
+
+    @Test
+    fun search_withNoMatch_saysSo_andClearingBringsTheListBack() {
+        menu()
+        compose.onNodeWithTag(PageBarTags.SEARCH).performTextInput("zzzz")
+        compose.waitForIdle()
+        compose.onNodeWithTag(PageBarTags.NO_MATCHES).assertTextEquals(en.shellNoMatches)
+        compose.onNodeWithTag(PageBarTags.VERDICTS).assertDoesNotExist()
+        compose.onNodeWithTag(PageBarTags.SEARCH).performTextReplacement("")
+        compose.waitForIdle()
+        compose.onNodeWithTag(PageBarTags.NO_MATCHES).assertDoesNotExist()
+        compose.onNodeWithTag(PageBarTags.VERDICTS).assertExists()
+        compose.onNodeWithText(en.shellUntitled).assertExists()
+    }
+
+    @Test
+    fun search_keepsReadingPages_whileAPageIsLeft() {
+        var reads = 0
+        menu(paging = HistoryPaging(next = "c1"), onLoadMore = { reads++ })
+        compose.waitForIdle()
+        val before = reads
+        compose.onNodeWithTag(PageBarTags.SEARCH).performTextInput("zzzz")
+        compose.waitForIdle()
+        assertTrue(reads > before)
+        compose.onNodeWithTag(PageBarTags.NO_MATCHES).assertDoesNotExist()
+    }
+
+    @Test
+    fun search_afterAFailedPage_showsTheFailureNotASpinner() {
+        menu(paging = HistoryPaging(next = "c1"), notice = HistoryNotice.LoadMoreFailed)
+        compose.onNodeWithTag(PageBarTags.SEARCH).performTextInput("zzzz")
+        compose.waitForIdle()
+        compose.onNodeWithTag(PageBarTags.ERROR).assertExists()
+        compose.onNodeWithTag(PageBarTags.NO_MATCHES).assertDoesNotExist()
+    }
+
+    @Test
+    fun removeAll_whileItReadsPages_leavesTheRowActionsOff_andKeepsItsOwnConfirm() {
+        val gate = CompletableDeferred<Unit>()
+        val removed = mutableListOf<List<String>>()
+        // The last page brings one more verdict, and an older phone-only one the cutoff had held back.
+        val later = phoneRows("win_a_self", "lean_tie", newest = 1_700_000_000_000L)
+        val all = entries + later
+        menu(onLoadAll = { gate.await(); all }, onRemove = { removed += it.map(HistoryEntry::key) })
+        compose.onAllNodes(hasText(en.appHistoryRemoveAll)).onFirst().performClick()
+        compose.waitForIdle()
+        compose.onNodeWithTag(PageBarTags.recent("v:verdict0021")).performTouchInput { longClick() }
+        compose.waitForIdle()
+        compose.onNodeWithTag(PageBarTags.CONFIRM_DELETE).assertDoesNotExist()
+        gate.complete(Unit)
+        compose.waitForIdle()
+        compose.onNodeWithTag(PageBarTags.CONFIRM_DELETE).performClick()
+        val verdictKeys = all.filter { !it.isCase && it.removable }.map { it.key }
+        assertEquals(verdictKeys.toSet(), removed.single().toSet())
+        assertTrue(later.all { it.key in removed.single() })
+    }
+
+    @Test
+    fun searchRemoveAll_closesWhenTheQueryChanges() {
+        menu()
+        compose.onNodeWithTag(PageBarTags.SEARCH).performTextInput("e")
+        compose.waitForIdle()
+        compose.onAllNodes(hasText(en.appHistoryRemoveAll)).onFirst().performClick()
+        compose.waitForIdle()
+        compose.onNodeWithTag(PageBarTags.CONFIRM_DELETE).assertExists()
+        compose.onNodeWithTag(PageBarTags.SEARCH).performTextInput("x")
+        compose.waitForIdle()
+        compose.onNodeWithTag(PageBarTags.CONFIRM_DELETE).assertDoesNotExist()
+    }
+
+    @Test
+    fun filter_matchesTitleOrOtherSideName_ignoringCase() {
+        val s = en
+        val lang = AppLang.EN
+        assertEquals(entries, HistoryLabels.filter(entries, "  ", s, lang))
+        val byTitle = HistoryLabels.filter(entries, "deposit", s, lang)
+        assertTrue(byTitle.isNotEmpty() && byTitle.size < entries.size)
+        assertTrue(byTitle.all { HistoryLabels.title(it, s, lang).contains("deposit", ignoreCase = true) })
+        val sam = HistoryLabels.filter(entries, "SAM", s, lang)
+        assertTrue(sam.any { it is HistoryEntry.Account && HistoryLabels.otherName(it.item) == "Sam" })
+        assertTrue(HistoryLabels.filter(entries, "zzzz", s, lang).isEmpty())
     }
 
     @Test
@@ -182,7 +280,7 @@ class MenuHistoryTest {
             Themed(AppLang.EN) {
                 MenuPanel(
                     selected = Tab.NEW, entries = entries, hidden = false, firstRow = FocusRequester(), onSelect = {}, onOpen = {}, onClose = {},
-                    onRemove = { removed += it.map(HistoryEntry::key) }, onLoadAll = { loaded++ }, now = now,
+                    onRemove = { removed += it.map(HistoryEntry::key) }, onLoadAll = { loaded++; null }, now = now,
                 )
             }
         }

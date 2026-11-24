@@ -21,6 +21,8 @@ export const WEB_KEYS: readonly string[] = [
   "shell.today",
   "shell.loadFailed",
   "shell.loadMore",
+  "shell.search",
+  "shell.noMatches",
   "shell.localSignIn",
   "shell.untitled",
   "shell.case.waiting",

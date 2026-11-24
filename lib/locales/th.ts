@@ -740,6 +740,8 @@ const th: Locale = {
     "shell.week": "สัปดาห์นี้",
     "shell.earlier": "ก่อนหน้านี้",
     "shell.empty": "ยังไม่มีคำตัดสิน",
+    "shell.search": "ค้นหา",
+    "shell.noMatches": "ไม่พบผลลัพธ์",
     "shell.loading": "กำลังโหลดประวัติ…",
     "shell.loadFailed": "โหลดประวัติไม่ได้",
     "shell.loadMore": "ดูเพิ่ม",

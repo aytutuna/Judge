@@ -766,6 +766,8 @@ const pl: Locale = {
     "shell.week": "W tym tygodniu",
     "shell.earlier": "Wcześniej",
     "shell.empty": "Brak werdyktów.",
+    "shell.search": "Szukaj",
+    "shell.noMatches": "Brak wyników.",
     "shell.loading": "Wczytywanie historii…",
     "shell.loadFailed": "Nie udało się wczytać historii.",
     "shell.loadMore": "Pokaż więcej",

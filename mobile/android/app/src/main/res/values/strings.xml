@@ -477,6 +477,8 @@
     <string name="shell_new">New argument</string>
     <string name="shell_gamify">Gamify</string>
     <string name="shell_today">Today</string>
+    <string name="shell_search">Search</string>
+    <string name="shell_no_matches">No matches.</string>
     <string name="shell_load_failed">We couldn\'t load your history.</string>
     <string name="shell_load_more">Show more</string>
     <string name="shell_untitled">Untitled verdict</string>

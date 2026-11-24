@@ -471,6 +471,8 @@
     <string name="shell_new">Pertikaian baharu</string>
     <string name="shell_gamify">Gamifikasi</string>
     <string name="shell_today">Hari ini</string>
+    <string name="shell_search">Cari</string>
+    <string name="shell_no_matches">Tiada hasil.</string>
     <string name="shell_load_failed">Kami tidak dapat memuatkan sejarah anda.</string>
     <string name="shell_load_more">Tunjuk lagi</string>
     <string name="shell_untitled">Keputusan tanpa tajuk</string>

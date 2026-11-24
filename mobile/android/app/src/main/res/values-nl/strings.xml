@@ -477,6 +477,8 @@
     <string name="shell_new">Nieuwe discussie</string>
     <string name="shell_gamify">Spelmodus</string>
     <string name="shell_today">Vandaag</string>
+    <string name="shell_search">Zoeken</string>
+    <string name="shell_no_matches">Geen resultaten.</string>
     <string name="shell_load_failed">We konden je geschiedenis niet laden.</string>
     <string name="shell_load_more">Meer tonen</string>
     <string name="shell_untitled">Uitspraak zonder titel</string>

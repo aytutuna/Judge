@@ -753,6 +753,8 @@ const ko: Locale = {
     "shell.week": "이번 주",
     "shell.earlier": "이전",
     "shell.empty": "아직 판결이 없어요.",
+    "shell.search": "검색",
+    "shell.noMatches": "결과 없음.",
     "shell.loading": "기록을 불러오는 중…",
     "shell.loadFailed": "기록을 불러오지 못했어요.",
     "shell.loadMore": "더 보기",

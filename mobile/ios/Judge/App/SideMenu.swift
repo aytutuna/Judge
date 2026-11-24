@@ -258,13 +258,89 @@ struct RootBarTrailing: ToolbarContent {
     }
 }
 
-/// The panel the menu button slides in: New, the Verdicts and the Links
-/// (cases sent and received) in one list that scrolls, and at the bottom
-/// the profile above Settings.
+/// A remove question: the rows it was opened for, and whether it is a Remove all.
+struct RemoveAsk: Equatable {
+    var ids: [String]
+    var all: Bool
+
+    /// Whether a Remove all that read pages may open its question now: same
+    /// search as when it was asked, menu still open, nothing else asked.
+    static func mayOpen(asked: String, now: String, menuOpen: Bool, alreadyOpen: Bool) -> Bool {
+        menuOpen && !alreadyOpen && asked == now
+    }
+}
+
+/// What the controls floating over the menu's list measure, so the list's
+/// ends can scroll clear of them.
+private struct FloatSizes: Equatable, Sendable {
+    var top: CGFloat = 0
+    var bottom: CGFloat = 0
+}
+
+private struct FloatSizesKey: PreferenceKey {
+    static let defaultValue = FloatSizes()
+    static func reduce(value: inout FloatSizes, nextValue: () -> FloatSizes) {
+        let next = nextValue()
+        value.top = max(value.top, next.top)
+        value.bottom = max(value.bottom, next.bottom)
+    }
+}
+
+/// A frosted pill for the controls that float over the menu's list: glass on
+/// iOS 26, a blurred material before it, and a plain surface when Reduce
+/// Transparency is on.
+private struct FloatingPill<S: Shape>: ViewModifier {
+    let shape: S
+    let interactive: Bool
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if reduceTransparency {
+            content
+                .background(shape.fill(Brand.paper))
+                .overlay(shape.stroke(Brand.line2, lineWidth: 1))
+        } else if #available(iOS 26.0, *) {
+            content.glassEffect(interactive ? .regular.interactive() : .regular, in: shape)
+        } else {
+            content
+                .background(shape.fill(.regularMaterial))
+                .overlay(shape.stroke(Brand.line2, lineWidth: 1))
+                .shadow(color: Brand.shadow(0.12, dark: 0.35), radius: 8, y: 2)
+        }
+    }
+}
+
+private struct FloatingRow: ViewModifier {
+    let floating: Bool
+    let selected: Bool
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if floating {
+            content
+                .floatingPill(in: Capsule())
+                .overlay { if selected { Capsule().stroke(Brand.terraInk, lineWidth: 1.5) } }
+        } else {
+            content
+        }
+    }
+}
+
+private extension View {
+    func floatingPill<S: Shape>(in shape: S, interactive: Bool = true) -> some View {
+        modifier(FloatingPill(shape: shape, interactive: interactive))
+    }
+}
+
+/// The panel the menu button slides in: the Verdicts and the Links (cases
+/// sent and received) in one list that scrolls under New and a search field
+/// at the top and the profile and Settings at the bottom, which float over it.
 struct SideMenu: View {
     @Environment(AppModel.self) private var app
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.layoutDirection) private var layoutDirection
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Query(sort: \SavedVerdict.createdAt, order: .reverse) private var saved: [SavedVerdict]
     @Query private var cachedRows: [HistoryCacheRow]
     @State private var pull: CGFloat = 0
@@ -272,10 +348,20 @@ struct SideMenu: View {
     @State private var webLink: WebLink?
     @State private var profileOpen = false
     @State private var confirmSignOut = false
-    @State private var confirming: [String]?
-    @State private var confirmingAll = false
+    /// The one open remove question, with the rows it was opened for.
+    @State private var ask: RemoveAsk?
+    @State private var loadingAll = false
+    @State private var loadTask: Task<Void, Never>?
+    /// Search paging gave up (a page failed); the list says so with a Retry.
+    @State private var searchStopped = false
+    @State private var retryTask: Task<Void, Never>?
     @State private var verdictsFolded = false
     @State private var linksFolded = false
+    @State private var query = ""
+    @FocusState private var searchFocused: Bool
+    /// Room the list leaves for the floating controls; measured, so large text and the open profile fit.
+    @State private var topInset: CGFloat = 72
+    @State private var bottomInset: CGFloat = 130
     /// Rows near the end that are on screen.
     @State private var tailShown: Set<String> = []
     /// Where the sides of the owner's waiting links stand, by case id, while the menu is open.
@@ -289,6 +375,8 @@ struct SideMenu: View {
     private static let recentType = TypeStyle(face: .inter, weight: 400, size: 14, lineHeight: 1.3, textStyle: .subheadline)
     private static let stateType = TypeStyle(face: .inter, weight: 600, size: 12.5, lineHeight: 1.3, textStyle: .footnote)
     private static let headingType = TypeStyle(face: .inter, weight: 700, size: 13, lineHeight: 1.3, tracking: 0.04, textStyle: .footnote, maxScale: 1.6)
+    /// While searching, pages are read until this many rows are in.
+    private static let searchCap = 500
 
     var body: some View {
         GeometryReader { geo in
@@ -299,8 +387,12 @@ struct SideMenu: View {
                             .ignoresSafeArea()
                     }
                     .buttonStyle(.plain)
-                    .keyboardShortcut(.cancelAction)
                     .accessibilityLabel(L10n.appClose(app.lang))
+                    // Hardware Escape clears the search first and closes the menu on the next press.
+                    Button(action: escape) { EmptyView() }
+                        .keyboardShortcut(.cancelAction)
+                        .frame(width: 0, height: 0)
+                        .accessibilityHidden(true)
                     .transition(.opacity)
                     panel(width: min(300, geo.size.width * 0.85), height: geo.size.height)
                         .transition(.move(edge: .leading))
@@ -310,7 +402,12 @@ struct SideMenu: View {
         .allowsHitTesting(app.menuOpen)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.24), value: app.menuOpen)
         .onChange(of: app.menuOpen) { _, open in
-            if open { pull = 0 } else { profileOpen = false; live = [:] }
+            if open {
+                pull = 0
+            } else {
+                profileOpen = false; live = [:]; query = ""; searchFocused = false
+                loadTask?.cancel(); retryTask?.cancel(); ask = nil
+            }
         }
         .onChange(of: app.home.path.count) { close() }
         .onChange(of: app.home.isJudging) { _, judging in
@@ -330,17 +427,51 @@ struct SideMenu: View {
             Button(L10n.appCancel(app.lang), role: .cancel) {}
         }
         .confirmationDialog(
-            HistoryLabels.removeConfirm(currentEntries.filter { Set(confirming ?? []).contains($0.id) }, lang: app.lang),
-            isPresented: Binding(get: { confirming != nil }, set: { if !$0 { confirming = nil; confirmingAll = false } }),
+            HistoryLabels.removeConfirm(currentEntries.filter { Set(ask?.ids ?? []).contains($0.id) }, lang: app.lang),
+            isPresented: Binding(get: { ask != nil }, set: { if !$0 { ask = nil } }),
             titleVisibility: .visible
         ) {
-            Button(confirmingAll ? L10n.appHistoryRemoveAll(app.lang) : L10n.appHistoryDelete(app.lang), role: .destructive) { remove(confirming ?? []) }
+            Button(ask?.all == true ? L10n.appHistoryRemoveAll(app.lang) : L10n.appHistoryDelete(app.lang), role: .destructive) { remove(ask?.ids ?? []) }
             Button(L10n.appCancel(app.lang), role: .cancel) {}
         }
     }
 
     private var currentEntries: [HistoryEntry] {
         HistoryEntry.current(app: app, rows: cachedRows, saved: saved)
+    }
+
+    private var searching: Bool {
+        !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    /// Reads pages while a search is on, since a match can sit on one not loaded yet.
+    private func readPagesForSearch(debounce: Bool = true) async {
+        guard searching else { return }
+        searchStopped = false
+        // A keystroke starts a new task, which cancels this wait.
+        if debounce { try? await Task.sleep(for: .milliseconds(250)) }
+        let list = app.historyList
+        while !Task.isCancelled, let at = list.next, currentEntries.count < Self.searchCap {
+            // A refresh or another page is in flight: wait for it, then go on.
+            if list.loading || list.loadingMore {
+                try? await Task.sleep(for: .milliseconds(100))
+                continue
+            }
+            await list.loadMore(user: app.historyUser)
+            if list.next == at { break }
+        }
+        // Left with pages to read and not cancelled: a page failed.
+        if !Task.isCancelled { searchStopped = list.next != nil && currentEntries.count < Self.searchCap }
+    }
+
+    /// Opens a question about one row, unless Remove all is reading pages or another question is open.
+    private func askOne(_ id: String) {
+        guard !loadingAll, ask == nil else { return }
+        ask = RemoveAsk(ids: [id], all: false)
+    }
+
+    private func escape() {
+        if searching { query = "" } else { close() }
     }
 
     private func refresh(force: Bool = false) {
@@ -382,22 +513,35 @@ struct SideMenu: View {
     private func removeAll(links: Bool) {
         let list = app.historyList
         let user = app.historyUser
-        Task {
-            var cursor = list.next
-            while let at = cursor {
+        // A search has been reading pages already, and removes only what matches.
+        let asked = searching ? query : ""
+        guard !loadingAll, ask == nil else { return }
+        loadingAll = true
+        loadTask = Task {
+            defer { loadingAll = false }
+            var cursor = asked.isEmpty ? list.next : nil
+            while let at = cursor, !Task.isCancelled {
                 await list.loadMore(user: user)
                 if list.next == at { break }
                 cursor = list.next
             }
-            confirmingAll = true
-            confirming = currentEntries.filter { $0.isCase == links && $0.removable }.map(\.id)
+            // The menu closed or the search changed while pages loaded, or another question opened.
+            guard !Task.isCancelled,
+                  RemoveAsk.mayOpen(asked: asked, now: searching ? query : "", menuOpen: app.menuOpen, alreadyOpen: ask != nil)
+            else { return }
+            // From the store, not the @Query rows: those may not show the last page yet.
+            let stored = HistoryEntry.stored(history: app.history, user: app.historyUser, cutoff: list.cutoff)
+            let ids = HistoryEntry.filter(stored, query: asked, lang: app.lang)
+                .filter { $0.isCase == links && $0.removable }.map(\.id)
+            ask = RemoveAsk(ids: ids, all: true)
         }
     }
 
     private func panel(width: CGFloat, height: CGFloat) -> some View {
         let lang = app.lang
         let list = app.historyList
-        let entries = currentEntries
+        let everything = currentEntries
+        let entries = HistoryEntry.filter(everything, query: query, lang: lang)
         let verdicts = entries.filter { !$0.isCase }
         let links = entries.filter(\.isCase)
         let shown = verdicts + links
@@ -408,12 +552,10 @@ struct SideMenu: View {
             return false
         }
         let watching = app.menuOpen && scenePhase == .active && links.contains { isWaitingLink($0, now: now) }
-        return VStack(spacing: 0) {
+        return ZStack {
+            floatingTop(lang, width: width)
+                .zIndex(1)
             List {
-                row(.new, title: L10n.appTabNew(lang))
-                    .accessibilityFocused($focusFirst)
-                    .simultaneousGesture(closeDrag(width))
-                    .menuListRow()
                 if let notice = list.notice {
                     Text(noticeText(notice, lang: lang))
                         .brandText(.footnote)
@@ -444,7 +586,28 @@ struct SideMenu: View {
                         }
                     }
                 }
-                if entries.isEmpty {
+                if searching, !everything.isEmpty, entries.isEmpty {
+                    Group {
+                        if list.next != nil, searchStopped {
+                            loadFailed(lang) {
+                                retryTask?.cancel()
+                                retryTask = Task { await readPagesForSearch(debounce: false) }
+                            }
+                        } else if list.next != nil, everything.count < Self.searchCap {
+                            ProgressView().tint(Brand.muted)
+                        } else {
+                            Text(L10n.shellNoMatches(lang))
+                                .brandText(.footnote)
+                                .foregroundStyle(Brand.muted)
+                                .padding(.horizontal, 12)
+                                .padding(.top, 8)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
+                    .simultaneousGesture(closeDrag(width))
+                    .menuListRow()
+                }
+                if everything.isEmpty {
                     if list.loading {
                         ProgressView().tint(Brand.muted)
                             .frame(maxWidth: .infinity)
@@ -475,7 +638,7 @@ struct SideMenu: View {
                 } else if list.failed {
                     loadFailed(lang).simultaneousGesture(closeDrag(width)).menuListRow()
                 }
-                if list.next != nil {
+                if list.next != nil, !searching {
                     Group {
                         if list.loadingMore {
                             ProgressView().tint(Brand.muted)
@@ -502,7 +665,7 @@ struct SideMenu: View {
                 // The list's own empty area takes the touch itself, so a plain row stands in
                 // for it. It only fills what the rows leave, or the list would always scroll.
                 Color.clear
-                    .frame(height: max(0, height - 242 - Self.rowsHeight(shownCount)))
+                    .frame(height: max(0, height - 42 - topInset - bottomInset - Self.rowsHeight(shownCount)))
                     .contentShape(Rectangle())
                     .simultaneousGesture(closeDrag(width))
                     .menuListRow()
@@ -511,6 +674,15 @@ struct SideMenu: View {
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
             .scrollBounceBehavior(.basedOnSize)
+            .scrollDismissesKeyboard(.interactively)
+            .contentMargins(.top, topInset, for: .scrollContent)
+            .contentMargins(.bottom, bottomInset, for: .scrollContent)
+            .task(id: query) { await readPagesForSearch() }
+            .onChange(of: query) {
+                // A confirm names rows picked for one query.
+                if ask?.all == true { ask = nil }
+                retryTask?.cancel()
+            }
             // A page of rows the phone already had doesn't grow the list, so no
             // new row appears: keep going while the end is on screen.
             .onChange(of: list.next) { _, next in
@@ -518,14 +690,25 @@ struct SideMenu: View {
                 Task { await list.loadMore(user: app.historyUser) }
             }
             .refreshable { await list.refresh(user: app.historyUser, enabled: app.account.features.history, force: true) }
-            VStack(spacing: 4) {
+            VStack(spacing: 8) {
                 if profileOpen { profileItems(lang) }
                 profile(lang)
-                row(.settings, title: L10n.appTabSettings(lang), icon: "gearshape")
+                row(.settings, title: L10n.appTabSettings(lang), icon: "gearshape", floating: true)
             }
-            .padding(.top, 12)
+            .padding(.top, 8)
             .contentShape(Rectangle())
             .simultaneousGesture(closeDrag(width))
+            .background(GeometryReader { geo in
+                Color.clear.preference(key: FloatSizesKey.self, value: FloatSizes(bottom: geo.size.height))
+            })
+            .frame(maxHeight: .infinity, alignment: .bottom)
+            .zIndex(1)
+        }
+        .onPreferenceChange(FloatSizesKey.self) { sizes in
+            MainActor.assumeIsolated {
+                if sizes.top > 0 { topInset = sizes.top }
+                if sizes.bottom > 0 { bottomInset = sizes.bottom }
+            }
         }
         // While the judges work on a row, the list is read again now and then.
         .task(id: thinking) {
@@ -570,7 +753,60 @@ struct SideMenu: View {
         .onDisappear { focusFirst = false }
     }
 
-    private func row(_ tab: RootTab, title: String, icon: String? = nil) -> some View {
+    /// New and the search field, floating at the top; stacked once the text is very large.
+    private func floatingTop(_ lang: AppLang, width: CGFloat) -> some View {
+        let stacked = dynamicTypeSize.isAccessibilitySize
+        let layout = stacked ? AnyLayout(VStackLayout(spacing: 8)) : AnyLayout(HStackLayout(spacing: 8))
+        return layout {
+            row(.new, title: L10n.appTabNew(lang), floating: true, fill: stacked)
+                .accessibilityFocused($focusFirst)
+                .simultaneousGesture(closeDrag(width))
+            searchField(lang)
+        }
+        .padding(.bottom, 8)
+        .background(GeometryReader { geo in
+            Color.clear.preference(key: FloatSizesKey.self, value: FloatSizes(top: geo.size.height))
+        })
+        .frame(maxHeight: .infinity, alignment: .top)
+    }
+
+    private func searchField(_ lang: AppLang) -> some View {
+        HStack(spacing: 8) {
+            Image(systemName: "magnifyingglass")
+                .font(.system(size: 15, weight: .medium))
+                .foregroundStyle(Brand.muted)
+                .accessibilityHidden(true)
+            TextField("", text: $query, prompt: Text(L10n.shellSearch(lang)).foregroundStyle(Brand.placeholder))
+                .focused($searchFocused)
+                .submitLabel(.search)
+                .onSubmit { searchFocused = false }
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+                .brandText(.body)
+                .foregroundStyle(Brand.ink)
+                .accessibilityLabel(L10n.shellSearch(lang))
+                .accessibilityIdentifier("menu.search")
+            if !query.isEmpty {
+                Button {
+                    query = ""
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.system(size: 17))
+                        .foregroundStyle(Brand.muted)
+                        .frame(width: 32, height: 44)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(L10n.homeClear(lang))
+            }
+        }
+        .padding(.leading, 14)
+        .padding(.trailing, query.isEmpty ? 14 : 4)
+        .frame(maxWidth: .infinity, minHeight: 48)
+        .floatingPill(in: Capsule(), interactive: false)
+    }
+
+    private func row(_ tab: RootTab, title: String, icon: String? = nil, floating: Bool = false, fill: Bool = true) -> some View {
         let selected = app.tab == tab
         return Button {
             app.menuOpen = false
@@ -588,16 +824,17 @@ struct SideMenu: View {
                     .multilineTextAlignment(.leading)
             }
             .foregroundStyle(Brand.ink)
-            .padding(.horizontal, 12)
+            .padding(.horizontal, floating ? 18 : 12)
             .padding(.vertical, 6)
-            .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
+            .frame(maxWidth: fill ? .infinity : nil, minHeight: 48, alignment: .leading)
             .background {
-                if selected {
+                if selected && !floating {
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
                         .fill(Brand.paper)
                         .shadow(color: Brand.shadow(0.1, dark: 0.3), radius: 1.5, y: 1)
                 }
             }
+            .modifier(FloatingRow(floating: floating, selected: selected))
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -715,29 +952,31 @@ struct SideMenu: View {
             card
                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                     // No destructive role: that would take the row away before the question is answered.
-                    Button { confirming = [entry.id] } label: {
+                    Button { askOne(entry.id) } label: {
                         Image(systemName: "trash")
                     }
+                    .disabled(loadingAll)
                     .tint(Brand.danger)
                     .accessibilityLabel(L10n.appHistoryDelete(lang))
                 }
                 .contextMenu {
-                    Button(role: .destructive) { confirming = [entry.id] } label: {
+                    Button(role: .destructive) { askOne(entry.id) } label: {
                         Label(L10n.appHistoryDelete(lang), systemImage: "trash")
                     }
+                    .disabled(loadingAll)
                 }
         } else {
             card.simultaneousGesture(closeDrag(width))
         }
     }
 
-    private func loadFailed(_ lang: AppLang) -> some View {
+    private func loadFailed(_ lang: AppLang, retry: (() -> Void)? = nil) -> some View {
         VStack(spacing: 10) {
             Text(L10n.shellLoadFailed(lang))
                 .brandText(.footnote)
                 .foregroundStyle(Brand.danger)
                 .multilineTextAlignment(.center)
-            Button(L10n.caseRetry(lang)) { refresh(force: true) }
+            Button(L10n.caseRetry(lang)) { if let retry { retry() } else { refresh(force: true) } }
                 .buttonStyle(GhostButtonStyle())
         }
         .frame(maxWidth: .infinity)
@@ -775,14 +1014,11 @@ struct SideMenu: View {
                     .foregroundStyle(Brand.muted)
                     .accessibilityHidden(true)
             }
-            .padding(.horizontal, 12)
+            .padding(.leading, 6)
+            .padding(.trailing, 18)
             .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
-            .background {
-                if profileOpen {
-                    RoundedRectangle(cornerRadius: 12, style: .continuous).fill(Brand.paper)
-                }
-            }
-            .contentShape(Rectangle())
+            .floatingPill(in: Capsule())
+            .contentShape(Capsule())
         }
         .buttonStyle(.plain)
         .accessibilityLabel(L10n.navAccount(lang))
@@ -805,6 +1041,8 @@ struct SideMenu: View {
                 }
             }
         }
+        .padding(.vertical, 4)
+        .floatingPill(in: RoundedRectangle(cornerRadius: 24, style: .continuous), interactive: false)
     }
 
     private func profileItem(_ title: String, destructive: Bool = false, action: @escaping () -> Void) -> some View {
@@ -812,8 +1050,7 @@ struct SideMenu: View {
             Text(title)
                 .brandText(Self.rowType)
                 .foregroundStyle(destructive ? Brand.danger : Brand.ink)
-                .padding(.leading, 60)
-                .padding(.trailing, 12)
+                .padding(.horizontal, 20)
                 .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
                 .contentShape(Rectangle())
         }
