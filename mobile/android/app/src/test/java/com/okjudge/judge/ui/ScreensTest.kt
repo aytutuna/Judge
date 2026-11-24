@@ -49,6 +49,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.swipeRight
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
@@ -91,6 +92,7 @@ import com.okjudge.judge.ui.premium.EvidenceTags
 import com.okjudge.judge.ui.home.HomeUiState
 import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.judging.JudgingTags
+import com.okjudge.judge.ui.judging.SideCardTags
 import com.okjudge.judge.ui.settings.AccountScreen
 import com.okjudge.judge.ui.settings.SettingsScreen
 import com.okjudge.judge.ui.settings.SettingsTags
@@ -590,6 +592,62 @@ class ScreensTest {
         compose.onNodeWithText("SAM").assertExists()
         compose.onNodeWithTag(JudgingTags.COURT).assertExists()
         compose.onNodeWithTag(JudgingTags.CAPTION).assertExists()
+    }
+
+    private val sideCardSides = listOf(
+        VerdictFlow.Side(mine = true, name = "", text = "A hot dog is its own thing."),
+        VerdictFlow.Side(mine = false, name = "Sam", text = "Hot dogs are sandwiches."),
+    )
+
+    private fun judgingWithCard(done: () -> Boolean = { false }, onFinished: () -> Unit = {}) {
+        compose.mainClock.autoAdvance = false
+        compose.setContent {
+            Themed(AppLang.EN) {
+                JudgingScreen(done = done(), result = null, startedAt = 0, reducedMotion = true, onFinished = onFinished, onCancel = {}, sides = sideCardSides)
+            }
+        }
+        compose.onNodeWithTag(SideCardTags.CARD).assertDoesNotExist()
+        compose.onNodeWithText("Hot dogs are sandwiches.").performClick()
+        compose.mainClock.advanceTimeBy(500)
+        compose.onNodeWithTag(SideCardTags.CARD).assertExists()
+        compose.onNodeWithTag(SideCardTags.CARD).assertContentDescriptionEquals("Sam")
+    }
+
+    @Test
+    fun judging_tileOpensACardThatTheXCloses() {
+        judgingWithCard()
+        compose.onNodeWithTag(SideCardTags.CLOSE).assertContentDescriptionEquals(UiTestSupport.s(AppLang.EN).appClose)
+        compose.onNodeWithTag(SideCardTags.CLOSE).performClick()
+        compose.mainClock.advanceTimeBy(500)
+        compose.onNodeWithTag(SideCardTags.CARD).assertDoesNotExist()
+        compose.onNodeWithText("Hot dogs are sandwiches.").assertExists()
+    }
+
+    @Test
+    fun judging_aTapOnTheDimmedBackgroundClosesTheCard() {
+        judgingWithCard()
+        compose.onNodeWithTag(SideCardTags.SCRIM).performTouchInput { click(Offset(4f, 4f)) }
+        compose.mainClock.advanceTimeBy(500)
+        compose.onNodeWithTag(SideCardTags.CARD).assertDoesNotExist()
+    }
+
+    @Test
+    fun judging_aThrownCardCloses() {
+        judgingWithCard()
+        compose.onNodeWithTag(SideCardTags.CARD).performTouchInput { swipeRight(durationMillis = 120) }
+        compose.mainClock.advanceTimeBy(1_000)
+        compose.onNodeWithTag(SideCardTags.CARD).assertDoesNotExist()
+    }
+
+    @Test
+    fun judging_aVerdictClosesTheCardBeforeHandingOver() {
+        var done by mutableStateOf(false)
+        var finished = false
+        judgingWithCard({ done }) { finished = true }
+        compose.runOnIdle { done = true }
+        compose.mainClock.advanceTimeBy(3_000)
+        assertTrue(finished)
+        compose.onNodeWithTag(SideCardTags.CARD).assertDoesNotExist()
     }
 
     @Test

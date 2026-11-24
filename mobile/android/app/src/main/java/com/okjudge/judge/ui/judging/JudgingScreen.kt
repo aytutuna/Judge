@@ -4,6 +4,18 @@ import android.provider.Settings
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInWindow
+import androidx.compose.ui.semantics.Role
+import com.okjudge.judge.ui.theme.SideColors
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -139,6 +151,11 @@ fun JudgingScreen(
     val ending = remember(done) { if (done) Story.ending(waiting, summary, reducedMotion) else null }
 
     var reached by remember { mutableIntStateOf(0) }
+    // The side whose card is open, and where the root sits in the window to place it over its tile.
+    var openSide by remember { mutableStateOf<Int?>(null) }
+    var openFrom by remember { mutableStateOf(Rect.Zero) }
+    var rootAt by remember { mutableStateOf(Offset.Zero) }
+    val tileFocus = remember(sides.size) { List(sides.size) { FocusRequester() } }
     LaunchedEffect(ending) {
         val e = ending ?: return@LaunchedEffect
         var t = 0L
@@ -148,6 +165,7 @@ fun JudgingScreen(
             reached = i + 1
         }
         delay(e.finishAt - t)
+        openSide = null
         finishedCallback()
     }
 
@@ -164,7 +182,14 @@ fun JudgingScreen(
     val courtHeight = if (screen.screenWidthDp >= 600) (screen.screenHeightDp * 0.48f).dp else 360.dp
     val courtWidth = if (screen.screenWidthDp >= 600) courtHeight * 16f / 9f else 480.dp
 
-    Column(modifier.fillMaxSize().background(Palette.ivory), horizontalAlignment = Alignment.CenterHorizontally) {
+    Box(modifier.fillMaxSize().onGloballyPositioned { rootAt = it.positionInWindow() }) {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(Palette.ivory)
+            .then(if (openSide != null) Modifier.clearAndSetSemantics { } else Modifier),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
         Column(
             Modifier
                 .weight(1f)
@@ -174,7 +199,12 @@ fun JudgingScreen(
                 .padding(horizontal = 16.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            if (sides.isNotEmpty()) SideTiles(sides)
+            if (sides.isNotEmpty()) {
+                SideTiles(sides, openSide, tileFocus) { index, at ->
+                    openFrom = at.translate(-rootAt)
+                    openSide = index
+                }
+            }
             Column(
                 Modifier
                     .fillMaxWidth()
@@ -238,6 +268,23 @@ fun JudgingScreen(
         }
         if (showCancel) TextAction(s.appCancel, onCancel, Modifier.padding(vertical = 12.dp), color = Palette.ink2)
     }
+    openSide?.let { index ->
+        val side = sides[index]
+        val colors = sideColors(side)
+        SideCard(
+            title = sideName(side, s),
+            text = side.text,
+            ink = colors.ink,
+            tint = colors.tint,
+            from = openFrom,
+            reducedMotion = reducedMotion,
+            onClosed = {
+                openSide = null
+                tileFocus[index].requestFocus()
+            },
+        )
+    }
+    }
 }
 
 private val LEADING_SYMBOLS = Regex("^[\\p{So}\\p{Sk}\u200D\uFE0F\u20E3\u2713]+\\s*")
@@ -281,40 +328,62 @@ private fun TypeLine(text: String, reducedMotion: Boolean, style: TextStyle) {
     )
 }
 
-/** What each side wrote, three lines at most, yours first; two to a row, as four tiles side by side would be too narrow. */
+/** What each side wrote, three lines at most, yours first; two to a row, as four tiles side by side would be too narrow. A tile opens as a card with the whole text. */
 @Composable
-private fun SideTiles(sides: List<VerdictFlow.Side>) {
+private fun SideTiles(
+    sides: List<VerdictFlow.Side>,
+    open: Int?,
+    focus: List<FocusRequester>,
+    onOpen: (Int, Rect) -> Unit,
+) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        sides.chunked(2).forEach { row -> SideTileRow(row) }
+        sides.withIndex().chunked(2).forEach { row -> SideTileRow(row, open, focus, onOpen) }
     }
 }
 
 @Composable
-private fun SideTileRow(sides: List<VerdictFlow.Side>) {
-    val s = LocalStrings.current
+private fun sideColors(side: VerdictFlow.Side): SideColors {
     val colors = LocalSides.current
+    return if (side.mine) colors.mine else if (side.extra == null) colors.theirs else colors.of(side.party.raw)
+}
+
+private fun sideName(side: VerdictFlow.Side, s: Strings): String = side.name.ifEmpty {
+    when {
+        side.mine -> s.appHomeYourSide
+        side.extra != null -> PartyNames.label(side.party, s)
+        else -> s.appHomeTheirSide
+    }
+}
+
+@Composable
+private fun SideTileRow(
+    sides: List<IndexedValue<VerdictFlow.Side>>,
+    open: Int?,
+    focus: List<FocusRequester>,
+    onOpen: (Int, Rect) -> Unit,
+) {
+    val s = LocalStrings.current
     Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        sides.forEach { side ->
-            val (ink, tint) = (if (side.mine) colors.mine else if (side.extra == null) colors.theirs else colors.of(side.party.raw)).let { it.ink to it.tint }
+        sides.forEach { (index, side) ->
+            val colors = sideColors(side)
+            var bounds by remember { mutableStateOf(Rect.Zero) }
             Column(
                 Modifier
                     .weight(1f)
                     .fillMaxHeight()
+                    .alpha(if (open == index) 0f else 1f)
+                    .onGloballyPositioned { bounds = it.boundsInWindow() }
                     .clip(RoundedCornerShape(18.dp))
-                    .background(tint)
+                    .background(colors.tint)
+                    .focusRequester(focus[index])
+                    .clickable(role = Role.Button) { onOpen(index, bounds) }
                     .semantics(mergeDescendants = true) {}
                     .padding(horizontal = 12.dp, vertical = 10.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 Text(
-                    side.name.ifEmpty {
-                        when {
-                            side.mine -> s.appHomeYourSide
-                            side.extra != null -> PartyNames.label(side.party, s)
-                            else -> s.appHomeTheirSide
-                        }
-                    }.uppercaseForUi(),
-                    style = JudgeType.micro.copy(color = ink, letterSpacing = 0.08.em).forScript(),
+                    sideName(side, s).uppercaseForUi(),
+                    style = JudgeType.micro.copy(color = colors.ink, letterSpacing = 0.08.em).forScript(),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
