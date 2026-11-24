@@ -13,8 +13,8 @@ const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matc
 /** The transform that puts the centred card on top of its tile. */
 function onTile(card: HTMLElement, tile: HTMLElement): string {
   const r = tile.getBoundingClientRect();
-  const dx = r.left + r.width / 2 - window.innerWidth / 2;
-  const dy = r.top + r.height / 2 - window.innerHeight / 2;
+  const dx = r.left + r.width / 2 - document.documentElement.clientWidth / 2;
+  const dy = r.top + r.height / 2 - document.documentElement.clientHeight / 2;
   return `translate(${dx}px, ${dy}px) scale(${r.width / card.offsetWidth}, ${r.height / card.offsetHeight})`;
 }
 
@@ -49,6 +49,8 @@ export function SideCard({
   useLayoutEffect(() => {
     const dlg = dialog.current!;
     const el = card.current!;
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     dlg.showModal();
     el.focus({ preventScroll: true });
     setScrolls(body.current!.scrollHeight > body.current!.clientHeight);
@@ -59,6 +61,7 @@ export function SideCard({
       el.animate({ transform: [onTile(el, tile), "none"], opacity: [0.4, 1] }, { duration: 320, easing: EASE });
     }
     return () => {
+      document.body.style.overflow = overflow;
       if (dlg.open) dlg.close();
     };
   }, [tile]);
@@ -72,7 +75,9 @@ export function SideCard({
     if (closing.current) return;
     closing.current = true;
     const el = card.current!;
-    const here = el.style.transform || "none";
+    const here = getComputedStyle(el).transform;
+    el.getAnimations().forEach((a) => a.cancel());
+    el.style.transform = "";
     scrim.current!.animate({ opacity: [1, 0] }, { duration: 200, fill: "forwards" });
     if (reduced()) {
       finish(el.animate({ opacity: [1, 0] }, { duration: 150, fill: "forwards" }));
@@ -113,7 +118,7 @@ export function SideCard({
 
   function release(e: PointerEvent<HTMLDivElement>) {
     const d = drag.current;
-    if (!d || d.id !== e.pointerId) return;
+    if (!d || d.id !== e.pointerId || closing.current) return;
     drag.current = null;
     const { vx, vy } = e.type === "pointercancel" ? { vx: 0, vy: 0 } : releaseVelocity(d.samples);
     if (e.type !== "pointercancel" && isThrow(d.dx, d.dy, vx, vy)) {
