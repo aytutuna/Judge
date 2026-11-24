@@ -348,7 +348,7 @@ fun JudgeRoot(
                             live = live,
                             onRemove = { picked -> historyVm.remove(picked) {} },
                             onLoadMore = historyVm::loadMore,
-                            onLoadAll = historyVm::loadAll,
+                            onLoadAll = historyVm::loadAllEntries,
                             onRetry = { historyVm.refresh(force = true) },
                             account = AccountActions(
                                 signedIn = accountNow is Account.State.SignedIn,

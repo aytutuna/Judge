@@ -59,7 +59,7 @@ class MenuHistoryTest {
         notice: HistoryNotice? = null,
         onLoadMore: () -> Unit = {},
         onRetry: () -> Unit = {},
-        onLoadAll: suspend () -> Unit = {},
+        onLoadAll: suspend () -> List<HistoryEntry>? = { null },
         live: Map<String, LiveState> = emptyMap(),
         account: AccountActions = AccountActions(false, null, {}, {}, {}),
     ) = compose.setContent {
@@ -155,7 +155,10 @@ class MenuHistoryTest {
     fun removeAll_whileItReadsPages_leavesTheRowActionsOff_andKeepsItsOwnConfirm() {
         val gate = CompletableDeferred<Unit>()
         val removed = mutableListOf<List<String>>()
-        menu(onLoadAll = { gate.await() }, onRemove = { removed += it.map(HistoryEntry::key) })
+        // The last page brings one more verdict, and an older phone-only one the cutoff had held back.
+        val later = phoneRows("win_a_self", "lean_tie", newest = 1_700_000_000_000L)
+        val all = entries + later
+        menu(onLoadAll = { gate.await(); all }, onRemove = { removed += it.map(HistoryEntry::key) })
         compose.onAllNodes(hasText(en.appHistoryRemoveAll)).onFirst().performClick()
         compose.waitForIdle()
         compose.onNodeWithTag(PageBarTags.recent("v:verdict0021")).performTouchInput { longClick() }
@@ -164,7 +167,9 @@ class MenuHistoryTest {
         gate.complete(Unit)
         compose.waitForIdle()
         compose.onNodeWithTag(PageBarTags.CONFIRM_DELETE).performClick()
-        assertTrue(removed.single().size > 1)
+        val verdictKeys = all.filter { !it.isCase && it.removable }.map { it.key }
+        assertEquals(verdictKeys.toSet(), removed.single().toSet())
+        assertTrue(later.all { it.key in removed.single() })
     }
 
     @Test
@@ -275,7 +280,7 @@ class MenuHistoryTest {
             Themed(AppLang.EN) {
                 MenuPanel(
                     selected = Tab.NEW, entries = entries, hidden = false, firstRow = FocusRequester(), onSelect = {}, onOpen = {}, onClose = {},
-                    onRemove = { removed += it.map(HistoryEntry::key) }, onLoadAll = { loaded++ }, now = now,
+                    onRemove = { removed += it.map(HistoryEntry::key) }, onLoadAll = { loaded++; null }, now = now,
                 )
             }
         }

@@ -281,8 +281,8 @@ internal fun MenuPanel(
     notice: HistoryNotice? = null,
     onRemove: (List<HistoryEntry>) -> Unit = {},
     onLoadMore: () -> Unit = {},
-    /** Reads every page of the account's list, so Remove all covers rows not on screen yet. */
-    onLoadAll: suspend () -> Unit = {},
+    /** Reads every page of the account's list and returns the rows it then holds, so Remove all covers rows not on screen yet. */
+    onLoadAll: suspend () -> List<HistoryEntry>? = { null },
     onRetry: () -> Unit = {},
     /** Link rows that are being read live, by case id. */
     live: Map<String, LiveState> = emptyMap(),
@@ -321,25 +321,28 @@ internal fun MenuPanel(
         if (!loadingAll && confirm == null) {
             if (searching) {
                 // A search has been reading pages already, and removes only what matches.
-                confirm = RemoveAsk(shown.filter { it.isCase == links && it.removable }.map { it.key }.toSet(), all = true)
+                confirm = RemoveAsk(shown.filter { it.isCase == links && it.removable }, all = true)
             } else {
                 loadingAll = true
                 val asked = query
                 loadJob = scope.launch {
-                    try {
+                    val loaded = try {
                         onLoadAll()
                     } finally {
                         loadingAll = false
                     }
                     if (query == asked && !menuHidden && confirm == null) {
-                        confirm = RemoveAsk(latestEntries.filter { it.isCase == links && it.removable }.map { it.key }.toSet(), all = true)
+                        confirm = RemoveAsk((loaded ?: latestEntries).filter { it.isCase == links && it.removable }, all = true)
                     }
                 }
             }
         }
     }
     // Rows can't be asked about while Remove all reads the pages, or while another confirm is open.
-    val askOne: (String) -> Unit = { key -> if (!loadingAll && confirm == null) confirm = RemoveAsk(setOf(key), all = false) }
+    val askOne: (String) -> Unit = { key ->
+        val row = entries.firstOrNull { it.key == key }
+        if (row != null && !loadingAll && confirm == null) confirm = RemoveAsk(listOf(row), all = false)
+    }
     val listState = rememberLazyListState()
     val nearEnd by remember {
         derivedStateOf {
@@ -520,7 +523,7 @@ internal fun MenuPanel(
         }
     }
     confirm?.let { ask ->
-        val picked = entries.filter { it.key in ask.keys && (!ask.all || it.removable) }
+        val picked = ask.rows
         val close = { confirm = null }
         AlertDialog(
             onDismissRequest = close,
@@ -544,7 +547,7 @@ internal fun MenuPanel(
     }
 }
 
-private class RemoveAsk(val keys: Set<String>, val all: Boolean)
+private class RemoveAsk(val rows: List<HistoryEntry>, val all: Boolean)
 
 /** A heading and the cards under it; nothing at all when there are none. */
 private fun LazyListScope.cards(

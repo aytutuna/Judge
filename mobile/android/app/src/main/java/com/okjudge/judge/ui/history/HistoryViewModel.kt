@@ -187,6 +187,17 @@ class HistoryViewModel(
         while (loadNext()) Unit
     }
 
+    /**
+     * Every page, then the rows the list holds, read from the database and merged here, so the
+     * answer does not wait on [entries] catching up with the last page.
+     */
+    suspend fun loadAllEntries(): List<HistoryEntry> {
+        loadAll()
+        val id = user.value
+        val cached = if (id == null) emptyList() else history.observeCached(id).first()
+        return mergeHistory(cached, history.observeAll().first(), id, _paging.value.cutoff)
+    }
+
     /** One more page; false when there is none or it failed. */
     private suspend fun loadNext(): Boolean {
         val id = user.value ?: return false
