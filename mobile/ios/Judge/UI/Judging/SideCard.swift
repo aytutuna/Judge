@@ -40,14 +40,14 @@ enum CardThrow {
 
 /// Where each tile sits, in the judging screen's own space.
 struct TileFrames: PreferenceKey {
-    static var defaultValue: [Party: CGRect] = [:]
+    static let defaultValue: [Party: CGRect] = [:]
     static func reduce(value: inout [Party: CGRect], nextValue: () -> [Party: CGRect]) {
         value.merge(nextValue()) { $1 }
     }
 }
 
 private struct SizeKey: PreferenceKey {
-    static var defaultValue: CGSize = .zero
+    static let defaultValue: CGSize = .zero
     static func reduce(value: inout CGSize, nextValue: () -> CGSize) { value = nextValue() }
 }
 
@@ -223,6 +223,6 @@ struct SideCard: View {
 }
 
 private struct TextHeightKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
+    static let defaultValue: CGFloat = 0
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) { value = nextValue() }
 }
