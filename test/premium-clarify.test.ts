@@ -8,9 +8,11 @@ import { idempotencyKey, withClarifications } from "../lib/premium/context";
 
 const mockClaude = vi.mocked(claudeJson);
 
-function q(question: string, winner_1 = "side_1", winner_2 = "side_2") {
-  return { question, answer_1: "yes", winner_1, answer_2: "no", winner_2 };
+function q(question: string, winner_1 = "side_1", winner_2 = "side_2", confidence = 40) {
+  return { question, answer_1: "yes", winner_1, answer_2: "no", winner_2, best_guess: 1, confidence };
 }
+
+const asking = (...questions: unknown[]) => ({ ask: true, questions });
 
 beforeEach(() => {
   mockClaude.mockReset();
@@ -24,7 +26,7 @@ describe("clarifyQuestions", () => {
   it("asks Haiku at low effort within the clarify budget and returns ids q1/q2", async () => {
     mockClaude.mockResolvedValue({
       ok: true,
-      data: { questions: [q("Did B agree beforehand?"), q("How much was it?", "side_2", "neither")] },
+      data: asking(q("Did B agree beforehand?"), q("How much was it?", "side_2", "neither")),
     });
     const res = await clarifyQuestions("Mark says I owe him; I say we split it.", "en");
     expect(res).toEqual({
@@ -45,7 +47,7 @@ describe("clarifyQuestions", () => {
   });
 
   it("asks in Turkish with informal sen for tr", async () => {
-    mockClaude.mockResolvedValue({ ok: true, data: { questions: [] } });
+    mockClaude.mockResolvedValue({ ok: true, data: asking() });
     expect(await clarifyQuestions("text", "tr")).toEqual({ questions: [] });
     const call = mockClaude.mock.calls[0][0] as ClaudeJsonCall;
     expect(call.system).toContain("in Turkish");
@@ -57,6 +59,17 @@ describe("clarifyQuestions", () => {
     expect(CLARIFY_SYSTEM).toContain("never ask for names");
     expect(CLARIFY_SYSTEM).toContain("The default is no questions");
     expect(CLARIFY_SYSTEM).toContain("Never more than 2");
+  });
+
+  it("asks the model for ask, best_guess and confidence", async () => {
+    mockClaude.mockResolvedValue({ ok: true, data: asking() });
+    await clarifyQuestions("text", "en");
+    const { schema } = mockClaude.mock.calls[0][0] as ClaudeJsonCall;
+    const s = schema as { required: string[]; properties: { questions: { items: { required: string[] } } } };
+    expect(s.required).toEqual(["ask", "questions"]);
+    expect(s.properties.questions.items.required).toEqual(
+      expect.arrayContaining(["best_guess", "confidence"]),
+    );
   });
 
   it("fails open with no questions on errors, refusals, timeouts and throws", async () => {
@@ -72,7 +85,7 @@ describe("clarifyQuestions", () => {
 describe("toClarifyResponse", () => {
   it("trims, drops empties and malformed items, and keeps at most two", () => {
     expect(
-      toClarifyResponse({ questions: [q("  "), 3, "Bare?", q(" First? "), q("Second?"), q("Third?")] }),
+      toClarifyResponse(asking(q("  "), 3, "Bare?", q(" First? "), q("Second?"), q("Third?"))),
     ).toEqual({
       questions: [
         { id: "q1", text: "First?", options: ["yes", "no"] },
@@ -83,7 +96,7 @@ describe("toClarifyResponse", () => {
 
   it("cuts long questions to 140 characters at a word boundary", () => {
     const long = `${"word ".repeat(60)}end?`;
-    const [first] = toClarifyResponse({ questions: [q(long)] }).questions;
+    const [first] = toClarifyResponse(asking(q(long))).questions;
     expect(first.text.length).toBeLessThanOrEqual(140);
     expect(first.text.endsWith("…")).toBe(true);
     expect(first.text).not.toMatch(/wor…$/);
@@ -91,20 +104,59 @@ describe("toClarifyResponse", () => {
 
   it("drops questions whose answers don't change the winner", () => {
     expect(
-      toClarifyResponse({
-        questions: [q("Same either way?", "side_1", "side_1"), q("Was it agreed?"), q("Odd?", "side_1", "maybe")],
-      }),
+      toClarifyResponse(
+        asking(q("Same either way?", "side_1", "side_1"), q("Was it agreed?"), q("Odd?", "side_1", "maybe")),
+      ),
     ).toEqual({ questions: [{ id: "q1", text: "Was it agreed?", options: ["yes", "no"] }] });
+  });
+
+  it("drops questions the model is confident it can answer itself", () => {
+    expect(
+      toClarifyResponse(asking(q("Obvious?", "side_1", "side_2", 70), q("Sure?", "side_1", "side_2", 95))),
+    ).toEqual({ questions: [] });
+    expect(toClarifyResponse(asking(q("Edge?", "side_1", "side_2", 69))).questions).toHaveLength(1);
+  });
+
+  it("drops everything unless the model set ask", () => {
+    expect(toClarifyResponse({ ask: false, questions: [q("Was it agreed?")] })).toEqual({ questions: [] });
+    expect(toClarifyResponse({ questions: [q("Was it agreed?")] })).toEqual({ questions: [] });
+  });
+
+  it("drops questions without a usable guess or confidence", () => {
+    expect(
+      toClarifyResponse(
+        asking(
+          { ...q("No guess?"), best_guess: undefined },
+          { ...q("No confidence?"), confidence: undefined },
+          { ...q("Bad guess?"), best_guess: 3 },
+          q("Fine?"),
+        ),
+      ).questions,
+    ).toEqual([{ id: "q1", text: "Fine?", options: ["yes", "no"] }]);
+  });
+
+  it("keeps only the uncertain, decisive questions of a mixed answer", () => {
+    expect(
+      toClarifyResponse(
+        asking(
+          q("Guessable?", "side_1", "side_2", 90),
+          q("Same winner?", "side_1", "side_1", 20),
+          q("Was it agreed?", "side_1", "side_2", 35),
+          q("How much?", "side_2", "neither", 55),
+          q("Third?", "side_1", "side_2", 10),
+        ),
+      ).questions.map((x) => x.text),
+    ).toEqual(["Was it agreed?", "How much?"]);
   });
 
   it("turns the two answers into trimmed, capped, distinct options", () => {
     const long = `${"word ".repeat(30)}end`;
-    const [a, b] = toClarifyResponse({
-      questions: [
+    const [a, b] = toClarifyResponse(
+      asking(
         { ...q("A?"), answer_1: "  Yes,   I paid ", answer_2: "yes, i paid" },
         { ...q("B?"), answer_1: long, answer_2: "  " },
-      ],
-    }).questions;
+      ),
+    ).questions;
     expect(a.options).toEqual(["Yes, I paid"]);
     expect(b.options).toHaveLength(1);
     expect(b.options![0].length).toBeLessThanOrEqual(80);
@@ -113,7 +165,7 @@ describe("toClarifyResponse", () => {
 
   it("reads a malformed payload as no questions", () => {
     expect(toClarifyResponse(null)).toEqual({ questions: [] });
-    expect(toClarifyResponse({ questions: "x" })).toEqual({ questions: [] });
+    expect(toClarifyResponse({ ask: true, questions: "x" })).toEqual({ questions: [] });
   });
 });
 

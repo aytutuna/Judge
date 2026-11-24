@@ -72,6 +72,7 @@ beforeEach(() => {
   m.claudeJson.mockResolvedValue({
     ok: true,
     data: {
+      ask: true,
       questions: [
         {
           question: "Did you agree to split before ordering?",
@@ -79,6 +80,8 @@ beforeEach(() => {
           winner_1: "side_1",
           answer_2: "no",
           winner_2: "side_2",
+          best_guess: 1,
+          confidence: 40,
         },
       ],
     },

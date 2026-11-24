@@ -16,12 +16,14 @@ export const CLARIFY_TIMEOUT_MS = 20_000;
 const MAX_QUESTIONS = 2;
 const MAX_QUESTION_CHARS = 140;
 const MAX_OPTION_CHARS = 80;
+/** A question is only asked when the model is less sure than this of its own guess. */
+const CONFIDENCE_BELOW = 70;
 
 export const CLARIFY_SYSTEM = `You help an impartial judge settle an argument between two parties. Before the judge rules, you may ask the person describing the argument a question, but only when the judge would otherwise have to guess who wins.
 
-The default is no questions. Most arguments need none: the judge rules on what is written, and a detail left out is fine when it would not change the result. Ask only about a missing fact that decides who wins and that the text does not already answer: what was agreed, what actually happened, a number, a date or the exact claim one side made. Never ask about values, priorities or preferences (the judge has a value framework for those), never ask for names or personal details, and never ask something the text already answers.
+The default is no questions. Most arguments need none: the judge rules on what is written, and a detail left out is fine when the judge can reasonably assume it or when it would only change the margin and not the winner. Set ask to true only when a fact the text leaves open really decides who wins and the judge cannot reasonably infer it: what was agreed, what actually happened, a number, a date or the exact claim one side made. Otherwise set ask to false and return no questions. Never ask about something either side's text already states or implies. Never ask about values, priorities or preferences (the judge has a value framework for those), and never ask for names or personal details.
 
-For each question, give its two most likely answers and who wins with each: side_1 is the party the text mentions first, side_2 the other one, neither for a tie or a split. If both answers give the same winner, the question does not matter, so leave it out. One question is almost always enough; add a second only when it is about a different fact and just as decisive. Never more than 2.
+For each question, give its two most likely answers and who wins with each: side_1 is the party the text mentions first, side_2 the other one, neither for a tie or a split. If both answers give the same winner, the question does not matter, so leave it out. Also say which answer you think is more likely from the text alone (best_guess, 1 or 2) and how sure you are of that, 0 to 100 (confidence). If you can guess the answer, the judge would assume the same, so the question is not worth asking. One question is almost always enough; add a second only when it is about a different fact and just as decisive. Never more than 2.
 
 Each question is one short sentence, at most 20 words, addressed to the person asking ("you"), written in the language requested below. Each answer is a short reply the person could tap, a few words, in the same language, from their own point of view ("Yes, I paid in cash"), not a description of what happened.`;
 
@@ -45,21 +47,33 @@ const SCHEMA = {
           winner_1: WINNER,
           answer_2: { type: "string" },
           winner_2: WINNER,
+          best_guess: { type: "integer", enum: [1, 2] },
+          confidence: { type: "integer", minimum: 0, maximum: 100 },
         },
-        required: ["question", "answer_1", "winner_1", "answer_2", "winner_2"],
+        required: ["question", "answer_1", "winner_1", "answer_2", "winner_2", "best_guess", "confidence"],
       },
     },
+    ask: { type: "boolean" },
   },
-  required: ["questions"],
+  required: ["ask", "questions"],
 } as const;
 
 const WINNERS = new Set<unknown>(WINNER.enum);
 
-/** A question only counts when its two likely answers change the winner. */
-function decisive(q: unknown): q is { question: string; answer_1?: unknown; answer_2?: unknown } {
+/** A question only counts when its two likely answers change the winner and
+ * the model could not simply guess which one is true. */
+function worthAsking(q: unknown): q is { question: string; answer_1?: unknown; answer_2?: unknown } {
   if (typeof q !== "object" || q === null) return false;
-  const { question, winner_1, winner_2 } = q as Record<string, unknown>;
-  return typeof question === "string" && WINNERS.has(winner_1) && WINNERS.has(winner_2) && winner_1 !== winner_2;
+  const { question, winner_1, winner_2, best_guess, confidence } = q as Record<string, unknown>;
+  return (
+    typeof question === "string" &&
+    WINNERS.has(winner_1) &&
+    WINNERS.has(winner_2) &&
+    winner_1 !== winner_2 &&
+    (best_guess === 1 || best_guess === 2) &&
+    typeof confidence === "number" &&
+    confidence < CONFIDENCE_BELOW
+  );
 }
 
 /** A question cut to the length cap at a word boundary. */
@@ -82,15 +96,13 @@ function optionsOf(q: { answer_1?: unknown; answer_2?: unknown }): string[] {
   return out;
 }
 
-/** The model's decisive questions as the API shape: trimmed, capped,
- * empties dropped, ids q1/q2. Pure. */
+/** The model's questions worth asking as the API shape: trimmed, capped,
+ * empties dropped, ids q1/q2. No questions unless the model set `ask`. Pure. */
 export function toClarifyResponse(raw: unknown): ClarifyResponse {
-  const list =
-    typeof raw === "object" && raw !== null && Array.isArray((raw as { questions?: unknown }).questions)
-      ? ((raw as { questions: unknown[] }).questions)
-      : [];
+  const { ask, questions: asked } = (typeof raw === "object" && raw !== null ? raw : {}) as Record<string, unknown>;
+  const list = ask === true && Array.isArray(asked) ? asked : [];
   const questions = list
-    .filter(decisive)
+    .filter(worthAsking)
     .map((q) => ({ text: shorten(q.question), options: optionsOf(q) }))
     .filter((q) => /\p{L}/u.test(q.text))
     .slice(0, MAX_QUESTIONS);
