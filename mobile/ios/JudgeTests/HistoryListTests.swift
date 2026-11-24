@@ -407,6 +407,23 @@ final class HistoryListTests: XCTestCase {
     }
 
     @MainActor
+    func testTheStoredListHoldsEveryPageJustLoaded() async throws {
+        let container = HistoryContainer.inMemory()
+        let router = StubRouter()
+        router.on(
+            "GET", "/api/v1/me/history",
+            try PremiumFixtures.json(200, try pageBody([item("a", "2026-10-05T00:00:00.000Z"), item("b", "2026-10-04T00:00:00.000Z")], next: "cur1")),
+            try PremiumFixtures.json(200, try pageBody([item("c", "2026-10-01T00:00:00.000Z")], next: nil))
+        )
+        let (app, list) = try model(container, router: router)
+        await list.refresh(user: "u1", enabled: true)
+        XCTAssertEqual(HistoryEntry.stored(history: app.history, user: "u1", cutoff: list.cutoff).map(\.id), ["v:a", "v:b"])
+        await list.loadMore(user: "u1")
+        XCTAssertEqual(HistoryEntry.stored(history: app.history, user: "u1", cutoff: list.cutoff).map(\.id), ["v:a", "v:b", "v:c"])
+        withExtendedLifetime(container) {}
+    }
+
+    @MainActor
     func testAPageOneRefreshAfterEverythingLoadedKeepsLoadedAll() async throws {
         let container = HistoryContainer.inMemory()
         let router = StubRouter()

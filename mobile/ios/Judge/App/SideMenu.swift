@@ -529,7 +529,9 @@ struct SideMenu: View {
             guard !Task.isCancelled,
                   RemoveAsk.mayOpen(asked: asked, now: searching ? query : "", menuOpen: app.menuOpen, alreadyOpen: ask != nil)
             else { return }
-            let ids = HistoryEntry.filter(currentEntries, query: asked, lang: app.lang)
+            // From the store, not the @Query rows: those may not show the last page yet.
+            let stored = HistoryEntry.stored(history: app.history, user: app.historyUser, cutoff: list.cutoff)
+            let ids = HistoryEntry.filter(stored, query: asked, lang: app.lang)
                 .filter { $0.isCase == links && $0.removable }.map(\.id)
             ask = RemoveAsk(ids: ids, all: true)
         }

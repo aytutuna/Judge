@@ -123,6 +123,15 @@ enum HistoryEntry: Identifiable {
         return merge(cached: cached, saved: saved, user: user, cutoff: app.historyList.cutoff)
     }
 
+    /// The same list read from the store itself, for a snapshot right after pages
+    /// were applied, when the views' own queries may not have caught up yet.
+    @MainActor
+    static func stored(history: HistoryStore, user: String?, cutoff: String?) -> [HistoryEntry] {
+        let cached = user.flatMap { try? history.cached(user: $0) } ?? []
+        let saved = (try? history.all()) ?? []
+        return merge(cached: cached, saved: saved, user: user, cutoff: cutoff)
+    }
+
     /// The account's rows and the phone's own, newest first. A row the viewer
     /// removed is left out; one the other side removed stays, as it tells
     /// them something. A phone row older than `cutoff` (the last account row
