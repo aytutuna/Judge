@@ -112,9 +112,6 @@ html:not([data-game="off"]) .gamify {
   inset-block: 0;
   inset-inline-start: 0;
   width: min(300px, 85vw);
-  display: flex;
-  flex-direction: column;
-  padding: calc(20px + env(safe-area-inset-top)) 12px calc(22px + env(safe-area-inset-bottom));
   background: var(--ivory-2);
   overflow: hidden;
   animation: panel-in 0.24s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -130,12 +127,12 @@ html:not([data-game="off"]) .gamify {
   padding: 0;
   list-style: none;
 }
-/* The list scrolls on its own so New, the profile and Settings stay put. */
+/* The list fills the panel and scrolls under New, the search and the profile
+   and Settings, which float over it; the padding lets its ends clear them. */
 .menuList {
-  flex: 1;
-  min-height: 0;
-  margin: 0 -12px;
-  padding: 0 12px;
+  position: absolute;
+  inset: 0;
+  padding: calc(env(safe-area-inset-top) + 88px) 12px calc(env(safe-area-inset-bottom) + 96px);
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
@@ -267,11 +264,10 @@ html:not([data-game="off"]) .gamify {
   }
 }
 .confirm {
-  margin: 8px 0 0;
+  margin: 0 0 8px;
   padding: 12px;
-  border: 1px solid var(--danger);
-  border-radius: 12px;
-  background: var(--paper);
+  border-color: var(--danger);
+  border-radius: 20px;
   font-size: 14px;
   line-height: 1.4;
 }
@@ -294,19 +290,82 @@ html:not([data-game="off"]) .gamify {
   font-weight: 600;
   cursor: pointer;
 }
-.menuEnd {
-  padding-top: 12px;
+.floatTop,
+.floatEnd {
+  position: absolute;
+  z-index: 1;
+  inset-inline: 12px;
+}
+.floatTop {
+  top: calc(env(safe-area-inset-top) + 16px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.floatEnd {
+  bottom: calc(env(safe-area-inset-bottom) + 16px);
+}
+.endRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+/* Frosted pills: the page shows through, blurred. */
+.floatTop .menuRow,
+.search,
+.endRow > .profile,
+.endRow > .menuRow,
+.profileItems,
+.confirm {
+  border: 1px solid var(--line-2);
+  background: color-mix(in srgb, var(--paper) 72%, transparent);
+  box-shadow: var(--shadow-1);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  backdrop-filter: blur(16px) saturate(1.5);
+}
+.confirm {
+  border-color: var(--danger);
+}
+.floatTop .menuRow,
+.endRow > .menuRow {
+  width: auto;
+  flex: none;
+  min-height: 48px;
+  padding: 4px 16px;
+  border-radius: var(--radius-chip);
+}
+.endRow > .menuRow {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+.settingsLabel {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.search {
+  flex: 1;
+  min-width: 0;
+  height: 48px;
+  padding: 0 16px;
+  border-radius: var(--radius-chip);
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px;
+}
+.search::placeholder {
+  color: var(--placeholder);
 }
 .profile {
   display: flex;
   align-items: center;
   gap: 12px;
-  width: 100%;
-  min-height: 56px;
-  padding: 6px 12px;
-  border: 0;
-  border-radius: 12px;
-  background: none;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 48px;
+  padding: 6px 16px 6px 6px;
+  border-radius: var(--radius-chip);
   color: var(--ink);
   font: inherit;
   font-size: 15px;
@@ -314,8 +373,8 @@ html:not([data-game="off"]) .gamify {
   text-align: start;
   cursor: pointer;
 }
-.profile:hover,
-.profile[aria-expanded="true"] {
+.endRow > .profile:hover,
+.endRow > .profile[aria-expanded="true"] {
   background: var(--paper);
 }
 .profilePicture {
@@ -353,8 +412,9 @@ html:not([data-game="off"]) .gamify {
   white-space: nowrap;
 }
 .profileItems {
-  margin-bottom: 4px;
-  padding-inline-start: 48px;
+  margin-bottom: 8px;
+  padding: 6px;
+  border-radius: 20px;
 }
 .profileItems[hidden] {
   display: none;
@@ -422,6 +482,18 @@ html:not([data-game="off"]) .gamify {
 @keyframes panel-in {
   from {
     transform: translateX(var(--from));
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .floatTop .menuRow,
+  .search,
+  .endRow > .profile,
+  .endRow > .menuRow,
+  .profileItems,
+  .confirm {
+    background: var(--paper);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {
