@@ -834,7 +834,7 @@ export function createCourt(canvas: HTMLCanvasElement, opts: CourtOptions): Cour
     ctx.fillRect(x + w - 10, y + 1, 9, 9);
     drawLetter("b", x + w - 7, y + 3, C.paper);
     drawNum(score.a, x + 12, y + 3);
-    drawNum(score.b, x + w - 13 - (score.b > 9 ? 4 : 0), y + 3);
+    drawNum(score.b, x + w - 15 - (score.b > 9 ? 4 : 0), y + 3);
   }
 
   function drawBubble(x: number, top: number, b: Bubble) {

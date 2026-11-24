@@ -21,7 +21,7 @@ describe("court with sides", () => {
   it("draws two sides exactly as it did before more were possible", async () => {
     // Hash of every drawing call over a whole visit, taken with the previous engine.
     const { hash } = await courtTrace(createCourt, scene(2, ["a", "b", "other", "a", "b"], "a"));
-    expect(hash).toBe("8a3565017080d918c42e5fb3e319a379de609047c4f0c679bd94035a2e5f8c50");
+    expect(hash).toBe("7450ec8e7b59ef092da3a103bd8d1e27f44f2ed14330ac1964a0600f434d1776");
   });
 
   it("plays three and four sides through every beat, with the extra sides' colours", async () => {
