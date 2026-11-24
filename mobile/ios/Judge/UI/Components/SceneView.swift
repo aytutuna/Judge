@@ -108,6 +108,7 @@ private struct SceneWebView: UIViewRepresentable {
     }
 
     static func dismantleUIView(_ view: WKWebView, coordinator: SceneBridge) {
+        (view as? PlayWebView)?.delayAgain()
         coordinator.letGo()
         view.stopLoading()
         view.navigationDelegate = nil
@@ -115,15 +116,39 @@ private struct SceneWebView: UIViewRepresentable {
     }
 }
 
-/// Touches reach the page at once instead of after the scroll view's delay,
-/// so a quick throw is not taken for the start of a scroll.
+/// A touch that lands on the page reaches it at once instead of after the
+/// scroll view's delay, so a quick throw is not taken for the start of a
+/// scroll. The delay comes back shortly after, so the page's other buttons
+/// keep it.
 private final class PlayWebView: WKWebView {
     var plays = false
+    private weak var relaxed: UIScrollView?
+    private var restore: DispatchWorkItem?
+
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let hit = super.hitTest(point, with: event)
+        if plays, hit != nil, event?.type == .touches, let scroll = enclosingScrollView {
+            if relaxed == nil {
+                relaxed = scroll
+                scroll.delaysContentTouches = false
+            }
+            restore?.cancel()
+            let work = DispatchWorkItem { [weak self] in self?.delayAgain() }
+            restore = work
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: work)
+        }
+        return hit
+    }
+
+    func delayAgain() {
+        restore?.cancel()
+        relaxed?.delaysContentTouches = true
+        relaxed = nil
+    }
 
     override func didMoveToWindow() {
         super.didMoveToWindow()
-        guard plays else { return }
-        enclosingScrollView?.delaysContentTouches = window == nil
+        if window == nil { delayAgain() }
     }
 }
 
