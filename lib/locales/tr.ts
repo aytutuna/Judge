@@ -41,6 +41,7 @@ const tr: Locale = {
     placeholder:
       "Ne oldu? Kim ne diyor, neden?",
     getVerdict: "Kararı öğren",
+    "judging.close": "Kapat",
     "thinking.eyebrow": "Yargıçlar ne yapıyor",
     "thinking.read": "İki tarafı da okuyup en sağlam hâline getiriyoruz…",
     "thinking.label": "İddiaları ayırıyoruz: olgu mu, değer mi, tanım mı, mantık mı…",
@@ -388,7 +389,6 @@ const tr: Locale = {
     "clarify.answerAria": "{n}. sorunun cevabı:",
     "clarify.placeholder": "Cevabın (isteğe bağlı)",
     "clarify.other": "Diğer",
-    "judging.close": "Kapat",
     "clarify.skip": "Geç, kararı ver",
     "clarify.submit": "Kararı öğren",
     "clarify.back": "Tartışmayı düzenle",

@@ -37,6 +37,7 @@ const ko: Locale = {
     placeholder:
       "무슨 일이 있었나요? 누가 뭐라고 하는지, 왜 그렇게 생각하는지 써 주세요.",
     getVerdict: "판결 받기",
+    "judging.close": "닫기",
     "thinking.eyebrow": "판사들이 지금 하는 일",
     "thinking.read": "양쪽 이야기를 읽고 각자 가장 강한 논리로 다듬는 중…",
     "thinking.label": "주장을 사실, 가치, 말뜻, 논리로 분류하는 중…",
@@ -376,7 +377,6 @@ const ko: Locale = {
     "clarify.answerAria": "질문 {n}에 대한 답:",
     "clarify.placeholder": "답변 (선택)",
     "clarify.other": "기타",
-    "judging.close": "닫기",
     "clarify.skip": "건너뛰고 판결",
     "clarify.submit": "판결 받기",
     "clarify.back": "논쟁 내용 고치기",

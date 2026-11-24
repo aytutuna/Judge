@@ -37,6 +37,7 @@ const sv: Locale = {
     placeholder:
       "Vad hände? Vem säger vad, och varför?",
     getVerdict: "Få domen",
+    "judging.close": "Stäng",
     "thinking.eyebrow": "Det här gör domarna",
     "thinking.read": "Läser båda sidor och ger var och en sin bästa chans…",
     "thinking.label": "Sorterar varje påstående som fakta, värdering, definition eller logik…",
@@ -384,7 +385,6 @@ const sv: Locale = {
     "clarify.answerAria": "Svar på fråga {n}:",
     "clarify.placeholder": "Ditt svar (valfritt)",
     "clarify.other": "Annat",
-    "judging.close": "Stäng",
     "clarify.skip": "Hoppa över och döm",
     "clarify.submit": "Få domen",
     "clarify.back": "Ändra beskrivningen",

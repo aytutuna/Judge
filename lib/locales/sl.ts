@@ -37,6 +37,7 @@ const sl: Locale = {
     placeholder:
       "Kaj se je zgodilo? Kdo kaj trdi in zakaj?",
     getVerdict: "Razsodi",
+    "judging.close": "Zapri",
     "thinking.eyebrow": "Kaj počnejo sodniki",
     "thinking.read": "Beremo obe plati in vsako postavimo v najboljšo luč…",
     "thinking.label": "Vsako trditev razvrščamo: dejstvo, vrednota, definicija ali logika…",
@@ -383,7 +384,6 @@ const sl: Locale = {
     "clarify.answerAria": "Odgovor na vprašanje {n}:",
     "clarify.placeholder": "Tvoj odgovor (neobvezno)",
     "clarify.other": "Drugo",
-    "judging.close": "Zapri",
     "clarify.skip": "Preskoči in razsodi",
     "clarify.submit": "Razsodi",
     "clarify.back": "Uredi prepir",

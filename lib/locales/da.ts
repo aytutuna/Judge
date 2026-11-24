@@ -37,6 +37,7 @@ const da: Locale = {
     placeholder:
       "Hvad skete der? Hvem siger hvad, og hvorfor?",
     getVerdict: "Få dommen",
+    "judging.close": "Luk",
     "thinking.eyebrow": "Det laver dommerne",
     "thinking.read": "Læser begge sider og giver hver side sin bedste chance…",
     "thinking.label": "Sorterer hver påstand: fakta, værdi, definition eller logik…",
@@ -384,7 +385,6 @@ const da: Locale = {
     "clarify.answerAria": "Svar på spørgsmål {n}:",
     "clarify.placeholder": "Dit svar (valgfrit)",
     "clarify.other": "Andet",
-    "judging.close": "Luk",
     "clarify.skip": "Spring over og døm",
     "clarify.submit": "Få dommen",
     "clarify.back": "Ret diskussionen",

@@ -37,6 +37,7 @@ const ml: Locale = {
     placeholder:
       "എന്താണ് സംഭവിച്ചത്? ആര് എന്ത് പറയുന്നു, എന്തുകൊണ്ട്?",
     getVerdict: "വിധി അറിയാം",
+    "judging.close": "അടയ്ക്കൂ",
     "thinking.eyebrow": "ജഡ്ജിമാർ ഇപ്പോൾ ചെയ്യുന്നത്",
     "thinking.read": "രണ്ടു ഭാഗവും വായിച്ച്, ഓരോന്നിനും ഏറ്റവും നല്ല അവസരം നൽകുന്നു…",
     "thinking.label": "ഓരോ വാദവും വസ്തുതയോ മൂല്യമോ നിർവചനമോ യുക്തിയോ എന്ന് തരംതിരിക്കുന്നു…",
@@ -381,7 +382,6 @@ const ml: Locale = {
     "clarify.answerAria": "{n}-ാം ചോദ്യത്തിനുള്ള ഉത്തരം:",
     "clarify.placeholder": "നിങ്ങളുടെ ഉത്തരം (നിർബന്ധമില്ല)",
     "clarify.other": "മറ്റുള്ളവ",
-    "judging.close": "അടയ്ക്കൂ",
     "clarify.skip": "ഒഴിവാക്കി വിധിക്കൂ",
     "clarify.submit": "വിധി അറിയാം",
     "clarify.back": "തർക്കം തിരുത്തൂ",

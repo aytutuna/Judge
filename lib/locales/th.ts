@@ -36,6 +36,7 @@ const th: Locale = {
     placeholder:
       "เกิดอะไรขึ้น? ใครพูดว่าอะไร และเพราะอะไร?",
     getVerdict: "ตัดสินเลย",
+    "judging.close": "ปิด",
     "thinking.eyebrow": "กรรมการกำลังทำอะไรอยู่",
     "thinking.read": "กำลังอ่านทั้งสองฝั่ง และหาเหตุผลที่ดีที่สุดให้แต่ละฝั่ง…",
     "thinking.label": "กำลังแยกแต่ละข้ออ้างว่าเป็นข้อเท็จจริง คุณค่า นิยาม หรือตรรกะ…",
@@ -369,7 +370,6 @@ const th: Locale = {
     "clarify.answerAria": "คำตอบข้อที่ {n}:",
     "clarify.placeholder": "คำตอบของคุณ (ไม่บังคับ)",
     "clarify.other": "อื่น ๆ",
-    "judging.close": "ปิด",
     "clarify.skip": "ข้ามแล้วตัดสินเลย",
     "clarify.submit": "ตัดสินเลย",
     "clarify.back": "แก้ไขเรื่องที่เล่า",

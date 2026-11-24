@@ -37,6 +37,7 @@ const hr: Locale = {
     placeholder:
       "Što se dogodilo? Tko što tvrdi i zašto?",
     getVerdict: "Saznaj presudu",
+    "judging.close": "Zatvori",
     "thinking.eyebrow": "Što suci rade",
     "thinking.read": "Čitamo obje strane i svaku gledamo u najboljem svjetlu…",
     "thinking.label": "Svaku tvrdnju svrstavamo u činjenicu, vrijednost, definiciju ili logiku…",
@@ -382,7 +383,6 @@ const hr: Locale = {
     "clarify.answerAria": "Odgovor na {n}. pitanje:",
     "clarify.placeholder": "Tvoj odgovor (nije obavezno)",
     "clarify.other": "Drugo",
-    "judging.close": "Zatvori",
     "clarify.skip": "Preskoči i presudi",
     "clarify.submit": "Saznaj presudu",
     "clarify.back": "Uredi raspravu",

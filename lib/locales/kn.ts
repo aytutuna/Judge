@@ -37,6 +37,7 @@ const kn: Locale = {
     placeholder:
       "ಏನಾಯಿತು? ಯಾರು ಏನು ಹೇಳುತ್ತಾರೆ, ಯಾಕೆ?",
     getVerdict: "ತೀರ್ಪು ಪಡೆಯಿರಿ",
+    "judging.close": "ಮುಚ್ಚಿ",
     "thinking.eyebrow": "ತೀರ್ಪುಗಾರರು ಏನು ಮಾಡುತ್ತಿದ್ದಾರೆ",
     "thinking.read": "ಎರಡೂ ಕಡೆಯ ಮಾತು ಓದಿ, ಪ್ರತಿಯೊಂದಕ್ಕೂ ಪೂರ್ಣ ಅವಕಾಶ ಕೊಡುತ್ತಿದ್ದೇವೆ…",
     "thinking.label": "ಪ್ರತಿ ಹೇಳಿಕೆಯನ್ನು ಸಂಗತಿ, ಮೌಲ್ಯ, ವ್ಯಾಖ್ಯಾನ ಅಥವಾ ತರ್ಕ ಎಂದು ವಿಂಗಡಿಸುತ್ತಿದ್ದೇವೆ…",
@@ -380,7 +381,6 @@ const kn: Locale = {
     "clarify.answerAria": "{n}ನೇ ಪ್ರಶ್ನೆಗೆ ಉತ್ತರ:",
     "clarify.placeholder": "ನಿಮ್ಮ ಉತ್ತರ (ಐಚ್ಛಿಕ)",
     "clarify.other": "ಇತರೆ",
-    "judging.close": "ಮುಚ್ಚಿ",
     "clarify.skip": "ಉತ್ತರಿಸದೆ ತೀರ್ಪು ಪಡೆಯಿರಿ",
     "clarify.submit": "ತೀರ್ಪು ಪಡೆಯಿರಿ",
     "clarify.back": "ವಾದ ತಿದ್ದಿ",

@@ -37,6 +37,7 @@ const hi: Locale = {
     placeholder:
       "क्या हुआ? कौन क्या कह रहा है, और क्यों?",
     getVerdict: "फ़ैसला करवाएँ",
+    "judging.close": "बंद करें",
     "thinking.eyebrow": "जज क्या कर रहे हैं",
     "thinking.read": "दोनों पक्ष पढ़कर हर एक की सबसे मज़बूत दलील बना रहे हैं…",
     "thinking.label": "हर दावे को छाँट रहे हैं: तथ्य, मूल्य, परिभाषा या तर्क…",
@@ -375,7 +376,6 @@ const hi: Locale = {
     "clarify.answerAria": "सवाल {n} का जवाब:",
     "clarify.placeholder": "आपका जवाब (ज़रूरी नहीं)",
     "clarify.other": "अन्य",
-    "judging.close": "बंद करें",
     "clarify.skip": "छोड़ें और फ़ैसला करवाएँ",
     "clarify.submit": "फ़ैसला करवाएँ",
     "clarify.back": "बहस में बदलाव करें",

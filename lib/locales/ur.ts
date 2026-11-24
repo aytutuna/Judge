@@ -37,6 +37,7 @@ const ur: Locale = {
     placeholder:
       "کیا ہوا؟ کون کیا کہتا ہے، اور کیوں؟",
     getVerdict: "فیصلہ کروائیں",
+    "judging.close": "بند کریں",
     "thinking.eyebrow": "جج کیا کر رہے ہیں",
     "thinking.read": "دونوں طرف کی بات پڑھ رہے ہیں اور ہر ایک کو پورا موقع دے رہے ہیں…",
     "thinking.label": "ہر دعوے کو حقیقت، قدر، تعریف یا منطق میں چھانٹ رہے ہیں…",
@@ -384,7 +385,6 @@ const ur: Locale = {
     "clarify.answerAria": "سوال {n} کا جواب:",
     "clarify.placeholder": "آپ کا جواب (اختیاری)",
     "clarify.other": "دیگر",
-    "judging.close": "بند کریں",
     "clarify.skip": "چھوڑ کر فیصلہ کروائیں",
     "clarify.submit": "فیصلہ کروائیں",
     "clarify.back": "بحث میں ترمیم کریں",

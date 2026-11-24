@@ -38,6 +38,7 @@ const it: Locale = {
     placeholder:
       "Cos'è successo? Chi dice cosa, e perché?",
     getVerdict: "Scopri il verdetto",
+    "judging.close": "Chiudi",
     "thinking.eyebrow": "Cosa stanno facendo i giudici",
     "thinking.read": "Leggiamo le due versioni e diamo a ognuna la sua chance migliore…",
     "thinking.label": "Smistiamo le affermazioni: fatto, valore, definizione o logica…",
@@ -392,7 +393,6 @@ const it: Locale = {
     "clarify.answerAria": "Risposta alla domanda {n}:",
     "clarify.placeholder": "La tua risposta (facoltativa)",
     "clarify.other": "Altro",
-    "judging.close": "Chiudi",
     "clarify.skip": "Salta e giudica",
     "clarify.submit": "Scopri il verdetto",
     "clarify.back": "Modifica la discussione",

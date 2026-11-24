@@ -37,6 +37,7 @@ const cs: Locale = {
     placeholder:
       "Co se stalo? Kdo co tvrdí a proč?",
     getVerdict: "Rozsoudit",
+    "judging.close": "Zavřít",
     "thinking.eyebrow": "Co soudci právě dělají",
     "thinking.read": "Čteme obě strany a každou stavíme do nejlepšího světla…",
     "thinking.label": "Třídíme tvrzení na fakta, hodnoty, definice a logiku…",
@@ -382,7 +383,6 @@ const cs: Locale = {
     "clarify.answerAria": "Odpověď na otázku {n}:",
     "clarify.placeholder": "Tvoje odpověď (nepovinné)",
     "clarify.other": "Jiná",
-    "judging.close": "Zavřít",
     "clarify.skip": "Přeskočit a rozsoudit",
     "clarify.submit": "Rozsoudit",
     "clarify.back": "Upravit spor",

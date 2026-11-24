@@ -37,6 +37,7 @@ const vi: Locale = {
     placeholder:
       "Chuyện gì đã xảy ra? Ai nói gì, vì sao?",
     getVerdict: "Phân xử ngay",
+    "judging.close": "Đóng",
     "thinking.eyebrow": "Ban giám khảo đang làm gì",
     "thinking.read": "Đang đọc cả hai bên, cho mỗi bên cơ hội tốt nhất…",
     "thinking.label": "Đang phân loại từng lập luận: sự thật, giá trị, định nghĩa hay logic…",
@@ -387,7 +388,6 @@ const vi: Locale = {
     "clarify.answerAria": "Câu trả lời cho câu hỏi {n}:",
     "clarify.placeholder": "Câu trả lời của bạn (không bắt buộc)",
     "clarify.other": "Khác",
-    "judging.close": "Đóng",
     "clarify.skip": "Bỏ qua và phân xử",
     "clarify.submit": "Phân xử ngay",
     "clarify.back": "Sửa nội dung",

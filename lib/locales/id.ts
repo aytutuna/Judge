@@ -37,6 +37,7 @@ const id: Locale = {
     placeholder:
       "Apa yang terjadi? Siapa bilang apa, dan kenapa?",
     getVerdict: "Minta putusan",
+    "judging.close": "Tutup",
     "thinking.eyebrow": "Yang sedang dikerjakan hakim",
     "thinking.read": "Membaca kedua pihak dan menyusun versi terkuat masing-masing…",
     "thinking.label": "Memilah tiap klaim: fakta, nilai, definisi, atau logika…",
@@ -390,7 +391,6 @@ const id: Locale = {
     "clarify.answerAria": "Jawaban untuk pertanyaan {n}:",
     "clarify.placeholder": "Jawabanmu (opsional)",
     "clarify.other": "Lainnya",
-    "judging.close": "Tutup",
     "clarify.skip": "Lewati dan putuskan",
     "clarify.submit": "Minta putusan",
     "clarify.back": "Ubah perdebatannya",

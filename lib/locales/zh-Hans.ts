@@ -36,6 +36,7 @@ const zhHans: Locale = {
     placeholder:
       "发生了什么？谁怎么说，为什么？",
     getVerdict: "立即裁决",
+    "judging.close": "关闭",
     "thinking.eyebrow": "评委正在做什么",
     "thinking.read": "正在通读双方说法，把各自的理由摆到最强……",
     "thinking.label": "正在给每个论点归类：事实、价值、定义还是逻辑……",
@@ -366,7 +367,6 @@ const zhHans: Locale = {
     "clarify.answerAria": "问题 {n} 的回答：",
     "clarify.placeholder": "你的回答（选填）",
     "clarify.other": "其他",
-    "judging.close": "关闭",
     "clarify.skip": "跳过，直接裁决",
     "clarify.submit": "立即裁决",
     "clarify.back": "修改争论内容",

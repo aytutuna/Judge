@@ -36,6 +36,7 @@ const gu: Locale = {
     placeholder:
       "શું થયું? કોણ શું કહે છે, અને કેમ?",
     getVerdict: "ચુકાદો મેળવો",
+    "judging.close": "બંધ કરો",
     "thinking.eyebrow": "જજ શું કરી રહ્યા છે",
     "thinking.read": "બંને બાજુ વાંચીને દરેકને પૂરો મોકો આપીએ છીએ…",
     "thinking.label": "દરેક દાવાને હકીકત, મૂલ્ય, વ્યાખ્યા કે તર્કના ખાનામાં મૂકીએ છીએ…",
@@ -373,7 +374,6 @@ const gu: Locale = {
     "clarify.answerAria": "સવાલ {n}નો જવાબ:",
     "clarify.placeholder": "તમારો જવાબ (મરજિયાત)",
     "clarify.other": "અન્ય",
-    "judging.close": "બંધ કરો",
     "clarify.skip": "છોડો, ચુકાદો આપો",
     "clarify.submit": "ચુકાદો મેળવો",
     "clarify.back": "વિવાદમાં ફેરફાર કરો",

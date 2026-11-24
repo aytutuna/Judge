@@ -37,6 +37,7 @@ const hu: Locale = {
     placeholder:
       "Mi történt? Ki mit mond, és miért?",
     getVerdict: "Kérem az ítéletet",
+    "judging.close": "Bezárás",
     "thinking.eyebrow": "Mit csinálnak a bírák",
     "thinking.read": "Elolvassuk mindkét oldalt, és mindkettőt a legerősebb formájában fogalmazzuk meg…",
     "thinking.label": "Szétválogatjuk az állításokat: tény, érték, definíció vagy logika…",
@@ -389,7 +390,6 @@ const hu: Locale = {
     "clarify.answerAria": "{n}. kérdés, a válaszod:",
     "clarify.placeholder": "A válaszod (nem kötelező)",
     "clarify.other": "Más",
-    "judging.close": "Bezárás",
     "clarify.skip": "Kihagyás és ítélet",
     "clarify.submit": "Kérem az ítéletet",
     "clarify.back": "Vita szerkesztése",

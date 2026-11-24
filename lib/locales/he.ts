@@ -36,6 +36,7 @@ const he: Locale = {
     placeholder:
       "מה קרה? מי אומר מה, ולמה?",
     getVerdict: "לקבל פסק דין",
+    "judging.close": "סגירה",
     "thinking.eyebrow": "מה השופטים עושים עכשיו",
     "thinking.read": "קוראים את שני הצדדים ונותנים לכל אחד את הגרסה הכי חזקה שלו…",
     "thinking.label": "ממיינים כל טענה: עובדה, ערך, הגדרה או היגיון…",
@@ -375,7 +376,6 @@ const he: Locale = {
     "clarify.answerAria": "תשובה לשאלה {n}:",
     "clarify.placeholder": "התשובה שלך (לא חובה)",
     "clarify.other": "אחר",
-    "judging.close": "סגירה",
     "clarify.skip": "לדלג ולהכריע",
     "clarify.submit": "לקבל פסק דין",
     "clarify.back": "לערוך את הוויכוח",

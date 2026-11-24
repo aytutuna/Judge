@@ -37,6 +37,7 @@ const el: Locale = {
     placeholder:
       "Τι έγινε; Ποιος λέει τι και γιατί;",
     getVerdict: "Δες την απόφαση",
+    "judging.close": "Κλείσιμο",
     "thinking.eyebrow": "Τι κάνουν οι κριτές",
     "thinking.read": "Διαβάζουμε και τις δύο πλευρές στην πιο δυνατή τους εκδοχή…",
     "thinking.label": "Κατατάσσουμε κάθε ισχυρισμό σε γεγονός, αξία, ορισμό ή λογική…",
@@ -392,7 +393,6 @@ const el: Locale = {
     "clarify.answerAria": "Απάντηση στην ερώτηση {n}:",
     "clarify.placeholder": "Η απάντησή σου (προαιρετικά)",
     "clarify.other": "Άλλο",
-    "judging.close": "Κλείσιμο",
     "clarify.skip": "Συνέχεια χωρίς απαντήσεις",
     "clarify.submit": "Δες την απόφαση",
     "clarify.back": "Άλλαξε το κείμενο",

@@ -37,6 +37,7 @@ const ca: Locale = {
     placeholder:
       "Què va passar? Qui diu què, i per què?",
     getVerdict: "Demana el veredicte",
+    "judging.close": "Tanca",
     "thinking.eyebrow": "Què fan els jutges",
     "thinking.read": "Llegint les dues versions i presentant cadascuna en la seva millor forma…",
     "thinking.label": "Classificant cada afirmació: fet, valor, definició o lògica…",
@@ -391,7 +392,6 @@ const ca: Locale = {
     "clarify.answerAria": "Resposta a la pregunta {n}:",
     "clarify.placeholder": "La teva resposta (opcional)",
     "clarify.other": "Altra",
-    "judging.close": "Tanca",
     "clarify.skip": "Omet i jutja",
     "clarify.submit": "Demana el veredicte",
     "clarify.back": "Edita la discussió",

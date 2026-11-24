@@ -37,6 +37,7 @@ const fr: Locale = {
     placeholder:
       "Qu’est-ce qui s’est passé ? Qui dit quoi, et pourquoi ?",
     getVerdict: "Obtenir le verdict",
+    "judging.close": "Fermer",
     "thinking.eyebrow": "Ce que font les juges",
     "thinking.read": "On lit les deux versions et on présente chacune sous son meilleur jour…",
     "thinking.label": "On classe chaque affirmation : fait, valeur, définition ou logique…",
@@ -392,7 +393,6 @@ const fr: Locale = {
     "clarify.answerAria": "Réponse à la question {n} :",
     "clarify.placeholder": "Ta réponse (facultatif)",
     "clarify.other": "Autre",
-    "judging.close": "Fermer",
     "clarify.skip": "Passer et juger",
     "clarify.submit": "Obtenir le verdict",
     "clarify.back": "Modifier le débat",

@@ -36,6 +36,7 @@ const zhHant: Locale = {
     placeholder:
       "發生了什麼事？誰說了什麼、為什麼？",
     getVerdict: "開始判決",
+    "judging.close": "關閉",
     "thinking.eyebrow": "評審正在做什麼",
     "thinking.read": "閱讀雙方說法，替兩邊找出最強論點…",
     "thinking.label": "把每個論點分成事實、價值、定義或邏輯…",
@@ -366,7 +367,6 @@ const zhHant: Locale = {
     "clarify.answerAria": "第 {n} 題的回答：",
     "clarify.placeholder": "你的回答（選填）",
     "clarify.other": "其他",
-    "judging.close": "關閉",
     "clarify.skip": "跳過，直接判決",
     "clarify.submit": "開始判決",
     "clarify.back": "修改爭論內容",

@@ -36,6 +36,7 @@ const bn: Locale = {
     placeholder:
       "কী হয়েছিল? কে কী বলছে, আর কেন?",
     getVerdict: "রায় জানুন",
+    "judging.close": "বন্ধ করুন",
     "thinking.eyebrow": "বিচারকেরা কী করছেন",
     "thinking.read": "দুই পক্ষের কথা পড়ে প্রত্যেককে সবচেয়ে জোরালো রূপ দিচ্ছি…",
     "thinking.label": "প্রতিটি দাবি বাছাই করছি: তথ্য, মূল্যবোধ, সংজ্ঞা নাকি যুক্তি…",
@@ -378,7 +379,6 @@ const bn: Locale = {
     "clarify.answerAria": "{n} নম্বর প্রশ্নের উত্তর:",
     "clarify.placeholder": "আপনার উত্তর (ঐচ্ছিক)",
     "clarify.other": "অন্যান্য",
-    "judging.close": "বন্ধ করুন",
     "clarify.skip": "বাদ দিয়ে রায় দিন",
     "clarify.submit": "রায় জানুন",
     "clarify.back": "তর্কটা এডিট করুন",

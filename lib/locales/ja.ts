@@ -37,6 +37,7 @@ const ja: Locale = {
     placeholder:
       "何がありましたか？　誰が何を、なぜ言っていますか？",
     getVerdict: "判定する",
+    "judging.close": "閉じる",
     "thinking.eyebrow": "審査員がしていること",
     "thinking.read": "両方の言い分を読み、それぞれをいちばん強い形にしています…",
     "thinking.label": "主張を事実・価値観・定義・論理に分けています…",
@@ -382,7 +383,6 @@ const ja: Locale = {
     "clarify.answerAria": "質問{n}への回答：",
     "clarify.placeholder": "回答（任意）",
     "clarify.other": "その他",
-    "judging.close": "閉じる",
     "clarify.skip": "スキップして判定",
     "clarify.submit": "判定する",
     "clarify.back": "内容を編集",

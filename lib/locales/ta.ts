@@ -37,6 +37,7 @@ const ta: Locale = {
     placeholder:
       "என்ன நடந்தது? யார் என்ன சொல்கிறார்கள், ஏன்?",
     getVerdict: "தீர்ப்பைப் பெறுக",
+    "judging.close": "மூடு",
     "thinking.eyebrow": "நடுவர்கள் இப்போது செய்வது",
     "thinking.read": "இரு தரப்பையும் படித்து, ஒவ்வொன்றுக்கும் முழு வாய்ப்பு தருகிறோம்…",
     "thinking.label": "ஒவ்வொரு கூற்றையும் உண்மை, மதிப்பு, வரையறை, தர்க்கம் எனப் பிரிக்கிறோம்…",
@@ -387,7 +388,6 @@ const ta: Locale = {
     "clarify.answerAria": "கேள்வி {n}-க்கான பதில்:",
     "clarify.placeholder": "உங்கள் பதில் (கட்டாயமில்லை)",
     "clarify.other": "மற்றவை",
-    "judging.close": "மூடு",
     "clarify.skip": "தவிர்த்துத் தீர்ப்பு பெறுக",
     "clarify.submit": "தீர்ப்பைப் பெறுக",
     "clarify.back": "வாக்குவாதத்தைத் திருத்து",

@@ -36,6 +36,7 @@ const te: Locale = {
     placeholder:
       "ఏం జరిగింది? ఎవరు ఏమంటున్నారు, ఎందుకు?",
     getVerdict: "తీర్పు తెలుసుకోండి",
+    "judging.close": "మూసేయండి",
     "thinking.eyebrow": "జడ్జీలు ఏం చేస్తున్నారంటే",
     "thinking.read": "రెండు వైపులూ చదివి, ఒక్కోదాన్ని బలంగా నిలబెడుతున్నాం…",
     "thinking.label": "ప్రతి వాదననూ వాస్తవమా, విలువా, నిర్వచనమా, తర్కమా అని విడదీస్తున్నాం…",
@@ -372,7 +373,6 @@ const te: Locale = {
     "clarify.answerAria": "ప్రశ్న {n}కి జవాబు:",
     "clarify.placeholder": "మీ జవాబు (ఐచ్ఛికం)",
     "clarify.other": "ఇతర",
-    "judging.close": "మూసేయండి",
     "clarify.skip": "వదిలేసి జడ్జ్ చేయండి",
     "clarify.submit": "తీర్పు తెలుసుకోండి",
     "clarify.back": "వాదనను మార్చండి",

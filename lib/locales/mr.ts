@@ -37,6 +37,7 @@ const mr: Locale = {
     placeholder:
       "काय घडले? कोण काय म्हणते, आणि का?",
     getVerdict: "निकाल मिळवा",
+    "judging.close": "बंद करा",
     "thinking.eyebrow": "परीक्षक काय करत आहेत",
     "thinking.read": "दोन्ही बाजू वाचून प्रत्येकीची सर्वात भक्कम मांडणी करत आहोत…",
     "thinking.label": "प्रत्येक दावा तथ्य, मूल्य, व्याख्या की तर्क ते ठरवत आहोत…",
@@ -378,7 +379,6 @@ const mr: Locale = {
     "clarify.answerAria": "प्रश्न {n} चे उत्तर:",
     "clarify.placeholder": "तुमचे उत्तर (ऐच्छिक)",
     "clarify.other": "इतर",
-    "judging.close": "बंद करा",
     "clarify.skip": "सोडा, निकाल द्या",
     "clarify.submit": "निकाल मिळवा",
     "clarify.back": "वादात बदल करा",

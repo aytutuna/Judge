@@ -37,6 +37,7 @@ const fi: Locale = {
     placeholder:
       "Mitä tapahtui? Kuka sanoo mitä ja miksi?",
     getVerdict: "Hae tuomio",
+    "judging.close": "Sulje",
     "thinking.eyebrow": "Mitä tuomarit tekevät",
     "thinking.read": "Luetaan molemmat puolet ja esitetään kumpikin parhaassa valossaan…",
     "thinking.label": "Lajitellaan väitteet: fakta, arvo, määritelmä vai logiikka…",
@@ -391,7 +392,6 @@ const fi: Locale = {
     "clarify.answerAria": "Vastaus kysymykseen {n}:",
     "clarify.placeholder": "Vastauksesi (vapaaehtoinen)",
     "clarify.other": "Muu",
-    "judging.close": "Sulje",
     "clarify.skip": "Ohita ja ratkaise",
     "clarify.submit": "Hae tuomio",
     "clarify.back": "Muokkaa kiistaa",

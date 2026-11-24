@@ -37,6 +37,7 @@ const de: Locale = {
     placeholder:
       "Was ist passiert? Wer sagt was, und warum?",
     getVerdict: "Urteil holen",
+    "judging.close": "Schließen",
     "thinking.eyebrow": "Was die Richter gerade tun",
     "thinking.read": "Wir lesen beide Seiten und machen jede so stark wie möglich…",
     "thinking.label": "Wir sortieren jede Behauptung: Fakt, Wert, Definition oder Logik…",
@@ -391,7 +392,6 @@ const de: Locale = {
     "clarify.answerAria": "Antwort auf Frage {n}:",
     "clarify.placeholder": "Deine Antwort (optional)",
     "clarify.other": "Andere",
-    "judging.close": "Schließen",
     "clarify.skip": "Überspringen und Urteil holen",
     "clarify.submit": "Urteil holen",
     "clarify.back": "Streit bearbeiten",
