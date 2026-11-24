@@ -70,12 +70,14 @@ export default function BalanceScene({
 
     let opacity = -1;
     let engine: BalanceEngine | null = null;
+    let watch: { stop(): void; sync(): void } | null = null;
     const setOpacity = (op: number) => {
       if (Math.abs(op - opacity) < 0.004 && (op === 0) === (opacity === 0)) return;
       opacity = op;
       canvas.style.opacity = op >= 1 ? "" : op.toFixed(3);
       canvas.style.visibility = op <= 0 ? "hidden" : "";
       engine?.setHidden(op <= 0);
+      watch?.sync();
     };
 
     const fade = () => {
@@ -105,7 +107,12 @@ export default function BalanceScene({
         play,
         onReady: () => setSceneStatus("ready"),
         onLost: () => setSceneStatus("fallback"),
-        onFrame: card ? undefined : fade,
+        onFrame: card
+          ? undefined
+          : () => {
+              fade();
+              watch?.sync();
+            },
       });
     } catch {
       canvas.remove();
@@ -120,7 +127,8 @@ export default function BalanceScene({
     const ro = new ResizeObserver(size);
     ro.observe(stage);
 
-    const stopPlay = play ? watchPlay(canvas, eng, card ? canvas : document) : () => {};
+    // Behind text, a mostly faded balance is not a thing to grab.
+    if (play) watch = watchPlay(canvas, eng, card ? canvas : document, undefined, () => card || (opacity >= 0.5 && eng.canPlay()));
 
     const stopWatching = watchActivity(wrap, (active) => (active ? eng.start() : eng.stop()));
 
@@ -129,7 +137,7 @@ export default function BalanceScene({
     const stopAvoid = card ? () => {} : watchAvoidLayout(wrap, fade);
 
     return () => {
-      stopPlay();
+      watch?.stop();
       stopAvoid();
       stopWatching();
       ro.disconnect();

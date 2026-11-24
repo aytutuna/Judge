@@ -100,6 +100,8 @@ export type BalanceEngine = {
   pointerCancel(): void;
   /** A ball is under the pointer (for a grab cursor). */
   hitBall(x: number, y: number): boolean;
+  /** Play is on and the scene is calm enough for a grab. */
+  canPlay(): boolean;
 };
 
 /** Builds the scene on `canvas`. Throws if WebGL is unavailable. */
@@ -633,6 +635,9 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
       if (!play || !playing || hidden || play.grabbing) return false;
       aim(x, y);
       return pick() !== null;
+    },
+    canPlay() {
+      return play !== null && playing && !hidden;
     },
     dispose() {
       if (disposed) return;

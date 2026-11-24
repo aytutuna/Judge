@@ -119,7 +119,7 @@ if (engine) {
   watchActivity(canvas, (active) => (active ? eng.start() : eng.stop()));
 }
 
-let stopPlay: (() => void) | null = null;
+let playWatch: { stop(): void } | null = null;
 
 window.judgeScene = {
   setMode: (mode) => setSceneMode(parseMode(mode)),
@@ -134,11 +134,11 @@ window.judgeScene = {
     engine?.setReduced(on);
   },
   setPlay(on) {
-    if (on === (stopPlay !== null)) return;
-    if (on && engine) stopPlay = watchPlay(canvas, engine, canvas, (held) => post(held ? "grab" : "release"));
+    if (on === (playWatch !== null)) return;
+    if (on && engine) playWatch = watchPlay(canvas, engine, canvas, (held) => post(held ? "grab" : "release"));
     else {
-      stopPlay?.();
-      stopPlay = null;
+      playWatch?.stop();
+      playWatch = null;
     }
   },
   setPointer,
