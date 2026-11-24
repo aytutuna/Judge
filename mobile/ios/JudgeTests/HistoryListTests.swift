@@ -319,6 +319,13 @@ final class HistoryListTests: XCTestCase {
         XCTAssertTrue(HistoryEntry.filter(entries, query: "zzzz", lang: .en).isEmpty)
     }
 
+    func testARemoveAllOpensOnlyWhereItWasAsked() {
+        XCTAssertTrue(RemoveAsk.mayOpen(asked: "", now: "", menuOpen: true, alreadyOpen: false))
+        XCTAssertFalse(RemoveAsk.mayOpen(asked: "", now: "", menuOpen: false, alreadyOpen: false), "menu closed")
+        XCTAssertFalse(RemoveAsk.mayOpen(asked: "", now: "", menuOpen: true, alreadyOpen: true), "another question is open")
+        XCTAssertFalse(RemoveAsk.mayOpen(asked: "", now: "sam", menuOpen: true, alreadyOpen: false), "the search changed")
+    }
+
     @MainActor
     func testRemovableRowsAndConfirmWording() throws {
         try withStore { store in

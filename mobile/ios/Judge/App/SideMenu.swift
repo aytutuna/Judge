@@ -258,6 +258,18 @@ struct RootBarTrailing: ToolbarContent {
     }
 }
 
+/// A remove question: the rows it was opened for, and whether it is a Remove all.
+struct RemoveAsk: Equatable {
+    var ids: [String]
+    var all: Bool
+
+    /// Whether a Remove all that read pages may open its question now: same
+    /// search as when it was asked, menu still open, nothing else asked.
+    static func mayOpen(asked: String, now: String, menuOpen: Bool, alreadyOpen: Bool) -> Bool {
+        menuOpen && !alreadyOpen && asked == now
+    }
+}
+
 /// What the controls floating over the menu's list measure, so the list's
 /// ends can scroll clear of them.
 private struct FloatSizes: Equatable, Sendable {
@@ -336,8 +348,13 @@ struct SideMenu: View {
     @State private var webLink: WebLink?
     @State private var profileOpen = false
     @State private var confirmSignOut = false
-    @State private var confirming: [String]?
-    @State private var confirmingAll = false
+    /// The one open remove question, with the rows it was opened for.
+    @State private var ask: RemoveAsk?
+    @State private var loadingAll = false
+    @State private var loadTask: Task<Void, Never>?
+    /// Search paging gave up (a page failed); the list says so with a Retry.
+    @State private var searchStopped = false
+    @State private var retryTask: Task<Void, Never>?
     @State private var verdictsFolded = false
     @State private var linksFolded = false
     @State private var query = ""
@@ -385,7 +402,12 @@ struct SideMenu: View {
         .allowsHitTesting(app.menuOpen)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.24), value: app.menuOpen)
         .onChange(of: app.menuOpen) { _, open in
-            if open { pull = 0 } else { profileOpen = false; live = [:]; query = ""; searchFocused = false }
+            if open {
+                pull = 0
+            } else {
+                profileOpen = false; live = [:]; query = ""; searchFocused = false
+                loadTask?.cancel(); retryTask?.cancel(); ask = nil
+            }
         }
         .onChange(of: app.home.path.count) { close() }
         .onChange(of: app.home.isJudging) { _, judging in
@@ -405,11 +427,11 @@ struct SideMenu: View {
             Button(L10n.appCancel(app.lang), role: .cancel) {}
         }
         .confirmationDialog(
-            HistoryLabels.removeConfirm(currentEntries.filter { Set(confirming ?? []).contains($0.id) }, lang: app.lang),
-            isPresented: Binding(get: { confirming != nil }, set: { if !$0 { confirming = nil; confirmingAll = false } }),
+            HistoryLabels.removeConfirm(currentEntries.filter { Set(ask?.ids ?? []).contains($0.id) }, lang: app.lang),
+            isPresented: Binding(get: { ask != nil }, set: { if !$0 { ask = nil } }),
             titleVisibility: .visible
         ) {
-            Button(confirmingAll ? L10n.appHistoryRemoveAll(app.lang) : L10n.appHistoryDelete(app.lang), role: .destructive) { remove(confirming ?? []) }
+            Button(ask?.all == true ? L10n.appHistoryRemoveAll(app.lang) : L10n.appHistoryDelete(app.lang), role: .destructive) { remove(ask?.ids ?? []) }
             Button(L10n.appCancel(app.lang), role: .cancel) {}
         }
     }
@@ -425,6 +447,7 @@ struct SideMenu: View {
     /// Reads pages while a search is on, since a match can sit on one not loaded yet.
     private func readPagesForSearch(debounce: Bool = true) async {
         guard searching else { return }
+        searchStopped = false
         // A keystroke starts a new task, which cancels this wait.
         if debounce { try? await Task.sleep(for: .milliseconds(250)) }
         let list = app.historyList
@@ -437,6 +460,14 @@ struct SideMenu: View {
             await list.loadMore(user: app.historyUser)
             if list.next == at { break }
         }
+        // Left with pages to read and not cancelled: a page failed.
+        if !Task.isCancelled { searchStopped = list.next != nil && currentEntries.count < Self.searchCap }
+    }
+
+    /// Opens a question about one row, unless Remove all is reading pages or another question is open.
+    private func askOne(_ id: String) {
+        guard !loadingAll, ask == nil else { return }
+        ask = RemoveAsk(ids: [id], all: false)
     }
 
     private func escape() {
@@ -484,18 +515,23 @@ struct SideMenu: View {
         let user = app.historyUser
         // A search has been reading pages already, and removes only what matches.
         let asked = searching ? query : ""
-        Task {
+        guard !loadingAll, ask == nil else { return }
+        loadingAll = true
+        loadTask = Task {
+            defer { loadingAll = false }
             var cursor = asked.isEmpty ? list.next : nil
-            while let at = cursor {
+            while let at = cursor, !Task.isCancelled {
                 await list.loadMore(user: user)
                 if list.next == at { break }
                 cursor = list.next
             }
-            // The search changed while pages loaded: what was asked about is no longer on screen.
-            guard (searching ? query : "") == asked else { return }
-            confirmingAll = true
-            confirming = HistoryEntry.filter(currentEntries, query: asked, lang: app.lang)
+            // The menu closed or the search changed while pages loaded, or another question opened.
+            guard !Task.isCancelled,
+                  RemoveAsk.mayOpen(asked: asked, now: searching ? query : "", menuOpen: app.menuOpen, alreadyOpen: ask != nil)
+            else { return }
+            let ids = HistoryEntry.filter(currentEntries, query: asked, lang: app.lang)
                 .filter { $0.isCase == links && $0.removable }.map(\.id)
+            ask = RemoveAsk(ids: ids, all: true)
         }
     }
 
@@ -550,8 +586,11 @@ struct SideMenu: View {
                 }
                 if searching, !everything.isEmpty, entries.isEmpty {
                     Group {
-                        if list.next != nil, list.notice == .loadMoreFailed {
-                            loadFailed(lang) { Task { await readPagesForSearch(debounce: false) } }
+                        if list.next != nil, searchStopped {
+                            loadFailed(lang) {
+                                retryTask?.cancel()
+                                retryTask = Task { await readPagesForSearch(debounce: false) }
+                            }
                         } else if list.next != nil, everything.count < Self.searchCap {
                             ProgressView().tint(Brand.muted)
                         } else {
@@ -639,7 +678,8 @@ struct SideMenu: View {
             .task(id: query) { await readPagesForSearch() }
             .onChange(of: query) {
                 // A confirm names rows picked for one query.
-                if confirmingAll { confirming = nil; confirmingAll = false }
+                if ask?.all == true { ask = nil }
+                retryTask?.cancel()
             }
             // A page of rows the phone already had doesn't grow the list, so no
             // new row appears: keep going while the end is on screen.
@@ -910,16 +950,18 @@ struct SideMenu: View {
             card
                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                     // No destructive role: that would take the row away before the question is answered.
-                    Button { confirming = [entry.id] } label: {
+                    Button { askOne(entry.id) } label: {
                         Image(systemName: "trash")
                     }
+                    .disabled(loadingAll)
                     .tint(Brand.danger)
                     .accessibilityLabel(L10n.appHistoryDelete(lang))
                 }
                 .contextMenu {
-                    Button(role: .destructive) { confirming = [entry.id] } label: {
+                    Button(role: .destructive) { askOne(entry.id) } label: {
                         Label(L10n.appHistoryDelete(lang), systemImage: "trash")
                     }
+                    .disabled(loadingAll)
                 }
         } else {
             card.simultaneousGesture(closeDrag(width))
