@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { ZONE_R, createPlay, type Beam } from "../lib/scene-play";
 
-const level: Beam = { theta: 0, omega: 0, rise: 0 };
+const level: Beam = { theta: 0, omega: 0 };
 
 function setup() {
   let seed = 7;

@@ -36,7 +36,7 @@ export type Ball = {
   ty: number;
 };
 
-export type Beam = { theta: number; omega: number; rise: number };
+export type Beam = { theta: number; omega: number };
 type Pt = { x: number; y: number };
 type Seat = { x: number; y: number; vx: number; vy: number };
 type Sample = { t: number; x: number; y: number };
@@ -65,11 +65,11 @@ export function createPlay(rand: () => number) {
 
   function place(beam: Beam) {
     for (const side of [-1, 1] as const) {
-      const c = sphereCentre(side, beam.theta, 0, beam.rise);
+      const c = sphereCentre(side, beam.theta, 0);
       const s = seatOf(side);
       s.x = c.x;
       s.y = c.y;
-      s.vx = -beam.omega * (c.y - PIVOT_Y - beam.rise);
+      s.vx = -beam.omega * (c.y - PIVOT_Y);
       s.vy = beam.omega * c.x;
     }
   }

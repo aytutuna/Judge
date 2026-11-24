@@ -168,8 +168,7 @@ export function createBalance(
     sphereA,
     sphereB,
     paint,
-    /** `rise` lifts the beam and its cups (the entrance); the sphere
-     * centres already include it, plus their own breathing bob. */
+    /** The sphere centres already include their own breathing bob. */
     update(
       theta: number,
       a: Vec3,
@@ -178,10 +177,9 @@ export function createBalance(
       scaleB: number,
       spinDt: number,
       camDown: number,
-      rise: number,
     ) {
       beam.rotation.z = theta;
-      beam.position.y = PIVOT_Y + rise;
+      beam.position.y = PIVOT_Y;
       sphereA.position.set(a.x, a.y, a.z);
       sphereB.position.set(b.x, b.y, b.z);
       sphereA.scale.setScalar(Math.max(scaleA, 1e-4));

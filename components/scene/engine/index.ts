@@ -198,7 +198,6 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
   let lastVotes: readonly Vote[] | null = null;
   let lastRenderAt = 0;
   let clock = 0; // real seconds, for one-shot effects
-  let enter = 0; // entrance: the beam settles onto the pivot
   let settledFor: SceneMode | null = null;
   let settledAt = Number.NaN;
   const band: Band = { top: 0, bottom: 0, yMin: 0 };
@@ -214,8 +213,6 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
     votes: null,
     n: 3,
   };
-  // Critically damped (no bounce), normalised to 0 -> 1 over k = 0..1.
-  const settle = (k: number) => 1 - (1 + 8 * k) * Math.exp(-8 * k);
   const rand = () => (rockSeed = (rockSeed * 16807) % 2147483647) / 2147483647;
   const play = opts.play ? createPlay(rand) : null;
   let playing = false;
@@ -237,9 +234,6 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
     const nowMs = performance.now();
     const mode = getSceneMode();
     clock += dt;
-    // A verdict at first paint, or reduced motion, shows the settled pose.
-    if (reduced || (!ready && mode.kind === "verdict")) enter = 1;
-    else if (ready) enter = Math.min(1, enter + dt / 0.8);
     const judging = mode.kind === "judging";
     const desk = !card && W >= 960;
     const small = !desk;
@@ -279,10 +273,9 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
 
     // Ball play needs a calm scene: the idle pose or a settled verdict, nothing lifted.
     const playNow = play !== null && !reduced && playable(mode, heroLive, pose, w);
-    const entrance = 1.2 * (1 - settle(enter));
     if (play && playNow !== playing) {
       playing = playNow;
-      play.reset({ theta, omega, rise: entrance });
+      play.reset({ theta, omega });
     }
 
     // Beam: a damped spring toward the pose tilt, the pointer and a little
@@ -327,8 +320,8 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
     const pulse = 1 + 0.05 * energy + 0.025 * Math.sin(time * 4) * pose.busy;
     // The beam stays put; spheres off their cups breathe, seated ones don't.
     const breathe = Math.sin(time * 1.1) * 0.02 * pose.busy * (1 - pose.sink) * lift;
-    const a = sphereCentre(-1, theta, lift, bobA + entrance + breathe);
-    const b = sphereCentre(1, theta, lift, bobB + entrance + breathe);
+    const a = sphereCentre(-1, theta, lift, bobA + breathe);
+    const b = sphereCentre(1, theta, lift, bobB + breathe);
     const base = sphereScale(lift, pulse) * (1 - pose.split * (1 - pose.reform));
     const scaleA = base * (1 + 0.04 * absorbA);
     const scaleB = base * (1 + 0.04 * absorbB);
@@ -339,7 +332,7 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
       let sA = scaleA;
       let sB = scaleB;
       if (playing) {
-        play.step(dt, { theta, omega, rise: entrance });
+        play.step(dt, { theta, omega });
         const pa = play.current(-1);
         const pb = play.current(1);
         ballA = pa ?? a;
@@ -347,12 +340,12 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
         sA = pa ? scaleA * pa.k : 0;
         sB = pb ? scaleB * pb.k : 0;
       }
-      balance.update(theta, ballA, ballB, sA, sB, dt * ambient, pose.camDown, entrance);
+      balance.update(theta, ballA, ballB, sA, sB, dt * ambient, pose.camDown);
       balance.playScene(playing ? play : null, base);
       playMoving = playing && play.busy;
-    } else balance.update(theta, a, b, scaleA, scaleB, dt * ambient, pose.camDown, entrance);
+    } else balance.update(theta, a, b, scaleA, scaleB, dt * ambient, pose.camDown);
     crux.update(pose, time, dt * ambient, dt, snap);
-    fragments.update(pose, time, a, b, crux.glowAt, small, ss(0, 1, enter));
+    fragments.update(pose, time, a, b, crux.glowAt, small);
 
     // Verdict emphasis once the beam has come to rest.
     let winner: Winner = null;
@@ -430,7 +423,6 @@ export function createBalanceEngine(canvas: HTMLCanvasElement, opts: EngineOptio
         energy > 0 ||
         pointerMoving ||
         qMoved ||
-        enter < 1 ||
         playMoving ||
         camGap > 1e-3 ||
         since < 1);

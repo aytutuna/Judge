@@ -105,14 +105,13 @@ export function createFragments(
   const q4 = new Quaternion();
 
   return {
-    /** Visible while pieces are out of the spheres and not yet collapsed.
-     * `fade` scales them in on the entrance. */
-    update(pose: Pose, time: number, a: Vec3, b: Vec3, glowAt: Vec3, small: boolean, fade: number) {
-      const on = pose.split * (1 - pose.reform) * (1 - pose.collapse) * fade;
+    /** Visible while pieces are out of the spheres and not yet collapsed. */
+    update(pose: Pose, time: number, a: Vec3, b: Vec3, glowAt: Vec3, small: boolean) {
+      const on = pose.split * (1 - pose.reform) * (1 - pose.collapse);
       const show = on > 0.002;
       for (const m of meshes) m.visible = show;
       if (!show) return;
-      const base = (small ? 0.17 : 0.155) * fade;
+      const base = small ? 0.17 : 0.155;
       point.set(glowAt.x, glowAt.y, glowAt.z);
       for (const f of frags) {
         const d = f.delay * 0.35;
