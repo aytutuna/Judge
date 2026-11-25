@@ -51,8 +51,6 @@ export type ViewContext = {
   appealBlock: AppealBlock | null;
   /** Respondent role: side B is bound to the signed-in viewer. */
   inAccount?: boolean;
-  /** Respondent role, claim holder: side B is bound to some other account. */
-  inOtherAccount?: boolean;
   /** The signed-in viewer's ratings by verdict id; undefined when signed out. */
   ratings?: Record<string, "up" | "down">;
   /** Decrypted by the caller: the viewer's own name map (null when not
@@ -209,28 +207,26 @@ export function buildCaseView(bundle: CaseBundle, ctx: ViewContext): CaseView {
     },
     removed: row.removedAt ? { at: row.removedAt, parties: removedParties } : null,
     yourOriginal: ctx.originals?.yourOriginal ?? "not_stored",
-    ...(ctx.role === "respondent" ? { inAccount: ctx.inAccount === true, inOtherAccount: ctx.inOtherAccount === true } : {}),
+    ...(ctx.role === "respondent" ? { inAccount: ctx.inAccount === true } : {}),
   };
 }
 
 /** Why `party` cannot appeal, before the entitlement is consulted (null =
  * structurally allowed). `viewerId` is the signed-in account, if any;
- * `claimOk` says the request carries side B's claim secret. Party B is the
- * account bound to side B or, while none is, whoever holds the claim (they
- * still need to sign in). Anyone else holding the link is not a party. */
+ * Party B is the account bound to side B; anyone else holding the link is
+ * not a party. */
 export function structuralAppealBlock(
   bundle: CaseBundle,
   party: PartyLetter,
   viewerId: string | null,
   now: Date,
-  claimOk = false,
 ): AppealBlock | null {
   const { row } = bundle;
   if (effectiveStatus(row, now) !== "judged" || bundle.verdicts.length === 0) return "not_judged";
   if (party !== "a") {
     if (row.mode !== "two_sided") return "not_party";
     const bound = respondentOf(row, bundle.invites, party).userId;
-    if (!bound && !claimOk) return "not_party";
+    if (!bound) return "not_party";
     if (!viewerId) return "signin_required";
     if (viewerId === row.ownerId) return "not_party";
     if (bound && bound !== viewerId) return "not_party";

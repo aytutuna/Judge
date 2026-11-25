@@ -4,10 +4,9 @@
  * once land on different sides. The seat is bound to the account that opened
  * it, which finds it again; nobody else holds it.
  *
- * A seat that no request has touched for SEAT_IDLE_MS, with no account behind
- * it, can be taken over once no free side is left. Every seat is opened by an
- * account now, so only seats opened before that was required qualify. Any
- * request that proves the seat counts as a touch.
+ * A seat that no request has touched for SEAT_IDLE_MS can be taken over once
+ * no free side is left, unless its side was answered: that seat is its
+ * account's for good. Any request that proves the seat counts as a touch.
  */
 
 import type { CaseLiveSide } from "@/lib/case-types";
@@ -68,7 +67,7 @@ export function heldSide(
 }
 
 const idle = (seat: SeatRow, now: Date) =>
-  seat.userId === null && Date.parse(seat.seenAt ?? seat.openedAt) < now.getTime() - SEAT_IDLE_MS;
+  Date.parse(seat.seenAt ?? seat.openedAt) < now.getTime() - SEAT_IDLE_MS;
 
 /** The sides a new opener could take, best first: free ones, then idle
  * seats. `only` limits it to one side (an opener of that side's own link). */
@@ -119,8 +118,11 @@ export async function claimSeat(
       `EXISTS (SELECT 1 FROM cases WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL)
        AND NOT EXISTS (SELECT 1 FROM case_sides WHERE case_id = ? AND party = ?)`;
     const openArgs = [row.id, nowIso, row.id, party];
-    const bound = " AND NOT EXISTS (SELECT 1 FROM case_seats WHERE case_id = ? AND user_id = ?)";
-    const boundArgs = [row.id, viewerId];
+    // One account is one side: no second seat, and none for an account already linked to an answer.
+    const bound = ` AND NOT EXISTS (SELECT 1 FROM case_seats WHERE case_id = ? AND user_id = ?)
+      AND NOT EXISTS (SELECT 1 FROM cases WHERE id = ? AND respondent_user_id = ?)
+      AND NOT EXISTS (SELECT 1 FROM case_invites WHERE case_id = ? AND user_id = ?)`;
+    const boundArgs = [row.id, viewerId, row.id, viewerId, row.id, viewerId];
     let won = false;
     if (!seat) {
       const rs = await db.execute({
@@ -134,7 +136,7 @@ export async function claimSeat(
       // Idleness is checked again here: a heartbeat may have landed since the read.
       const rs = await db.execute({
         sql: `UPDATE case_seats SET nonce = ?, user_id = ?, opened_at = ?, seen_at = ?, typing_at = NULL
-              WHERE case_id = ? AND party = ? AND nonce = ? AND user_id IS NULL
+              WHERE case_id = ? AND party = ? AND nonce = ?
                 AND COALESCE(seen_at, opened_at) < ? AND ${open}${bound}`,
         args: [nonce, viewerId, nowIso, nowIso, row.id, party, seat.nonce, cutoff, ...openArgs, ...boundArgs],
       });

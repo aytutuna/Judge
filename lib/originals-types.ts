@@ -112,14 +112,12 @@ export const CaseDisplayPatch = z
   .object({
     namesVisible: z.boolean().optional(),
     displayName: DisplayNameInput.nullable().optional(),
-    /** Respondent only, signed out: the claim secret from answering. */
-    claim: z.string().max(64).optional(),
   })
   .strict();
 export type CaseDisplayPatch = z.infer<typeof CaseDisplayPatch>;
 
 /** POST .../removal body. */
-export const RemovalRequest = z.object({ confirm: z.literal("remove"), claim: z.string().max(64).optional() });
+export const RemovalRequest = z.object({ confirm: z.literal("remove") });
 
 /** First name for a default: the bare name's first word, capitalized,
  * letters (plus apostrophes and hyphens) only, 2 to 40 characters.

@@ -317,18 +317,14 @@ describe("structuralAppealBlock", () => {
     expect(structuralAppealBlock(two, "a", "owner", NOW)).toBeNull();
     expect(structuralAppealBlock(two, "a", null, NOW)).toBe("signin_required");
     expect(structuralAppealBlock(two, "a", "someone", NOW)).toBe("not_party");
-    // Unbound side B: only whoever holds the claim secret is Party B.
+    // Unbound side B: nobody is Party B yet.
     expect(structuralAppealBlock(two, "b", null, NOW)).toBe("not_party");
     expect(structuralAppealBlock(two, "b", "resp", NOW)).toBe("not_party");
-    expect(structuralAppealBlock(two, "b", null, NOW, true)).toBe("signin_required");
-    expect(structuralAppealBlock(two, "b", "owner", NOW, true)).toBe("not_party");
-    expect(structuralAppealBlock(two, "b", "resp", NOW, true)).toBeNull();
-    // Bound side B: that account only, claim or not.
+    // Bound side B: that account only.
     const bound = judged("two_sided", { row: row({ status: "judged", mode: "two_sided", respondentUserId: "resp" }) });
     expect(structuralAppealBlock(bound, "b", "resp", NOW)).toBeNull();
     expect(structuralAppealBlock(bound, "b", null, NOW)).toBe("signin_required");
     expect(structuralAppealBlock(bound, "b", "other", NOW)).toBe("not_party");
-    expect(structuralAppealBlock(bound, "b", "other", NOW, true)).toBe("not_party");
     expect(structuralAppealBlock(judged("one_sided"), "b", "resp", NOW)).toBe("not_party");
     expect(structuralAppealBlock(judged("two_sided", { appeals: [appeal({ status: "judging", party: "b" })] }), "a", "owner", NOW)).toBe("busy");
     expect(structuralAppealBlock(judged("two_sided", { appeals: [appeal()] }), "a", "owner", NOW)).toBe("appeal_used");

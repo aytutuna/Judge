@@ -266,17 +266,15 @@ export async function entitlementOrNull(userId: string): Promise<Entitlement | n
   }
 }
 
-/** Why this viewer cannot appeal as `party` right now (null = allowed).
- * `claimOk`: the request carries side B's claim secret. */
+/** Why this viewer cannot appeal as `party` right now (null = allowed). */
 async function appealBlockFor(
   row: CaseRow,
   bundle: Awaited<ReturnType<typeof loadCaseBundle>>,
   party: PartyLetter,
   viewerId: string | null,
   now: Date,
-  claimOk = false,
 ): Promise<AppealBlock | null> {
-  const structural = structuralAppealBlock(bundle, party, viewerId, now, claimOk);
+  const structural = structuralAppealBlock(bundle, party, viewerId, now);
   if (structural || !viewerId) return structural;
   return premiumAppealBlock(viewerId);
 }
@@ -735,7 +733,12 @@ export function respondGetHandler(req: Request, token: string): Promise<NextResp
         return fail("case_closed");
       }
     }
-    const body: CaseResponse = { case: await respondentView(found.row, party, viewerId) };
+    const view = await respondentView(found.row, party, viewerId);
+    // Signed out, nothing says who holds a side: while the case waits, the page speaks as no one.
+    const waiting = !viewerId && view.status === "awaiting_respondent";
+    const body: CaseResponse = {
+      case: waiting ? { ...view, respondentAnswered: false } : view,
+    };
     return json(body);
   });
 }
@@ -960,8 +963,14 @@ export function respondOpenHandler(req: Request, token: string): Promise<NextRes
       // An older per-side link takes its own side while it is free (or idle).
       if (status !== "awaiting_respondent") return fail("case_closed");
       const seat = await claimSeat(bundle, viewerId, now, found.shared ? undefined : found.party);
-      if (!seat) return fail("case_closed");
-      party = seat.party;
+      if (seat) party = seat.party;
+      else {
+        // A second tab of the same account may have taken the side meanwhile.
+        const again = await loadCaseBundle(row);
+        const mine = heldSide(row, again.invites, again.seats, viewerId, null);
+        if (!mine || !(found.shared || mine === found.party)) return fail("case_closed");
+        party = mine;
+      }
     }
     const fresh = (await getCase(row.id)) ?? row;
     const body: OpenResponse = { case: await respondentView(fresh, party, viewerId), respondent_claim: null };
@@ -1212,7 +1221,7 @@ export function caseDisplayHandler(req: Request, id: string): Promise<NextRespon
   });
 }
 
-/** PATCH /api/v1/respond/{token}/display { displayName?, claim? } */
+/** PATCH /api/v1/respond/{token}/display { displayName? } */
 export function respondDisplayHandler(req: Request, token: string): Promise<NextResponse> {
   return guarded("respond display", async () => {
     const read = await readJson(req);
@@ -1260,11 +1269,10 @@ export function caseRemovalHandler(req: Request, id: string): Promise<NextRespon
 }
 
 /** POST /api/v1/cases/{id}/claim { claim }: a signed-in respondent who
- * answered signed out links side B to their account, so the case is listed
- * there. It grants nothing the claim did not already allow (adding context
- * signed in binds the side the same way). Wrong claim, the owner, a
- * one-sided case or a side already bound to someone else all get the same
- * 404, checked before anything about the case is told. */
+ * answered signed out, before an account was needed, links that side to
+ * their account; it is the only use the claim has left. Wrong claim, the
+ * owner, a one-sided case or a side already bound to someone else all get
+ * the same 404, checked before anything about the case is told. */
 export function respondentClaimHandler(req: Request, id: string): Promise<NextResponse> {
   return guarded("claim", async () => {
     if (!casesEnabled()) return fail("not_configured");
