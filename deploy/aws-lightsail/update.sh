@@ -13,8 +13,9 @@
 #
 # Before anything is built, the commit must have a successful run of the Web
 # workflow on GitHub (.github/workflows/web.yml); if that cannot be checked,
-# the deploy stops. While the repository is private, put a GitHub token that
-# can read its Actions runs in /etc/verdict/verdict.env as GITHUB_TOKEN. Once
+# the deploy stops. While the repository is private, put a fine-grained token
+# with Actions: read on this repository only in /etc/verdict/verdict.env as
+# GITHUB_TOKEN. Once
 # the build has succeeded, and before the new release is switched in, the
 # database is backed up (verdict-backup.service).
 #
@@ -70,8 +71,8 @@ GITHUB_REPO=aytutuna/Judge
 CI_WORKFLOW=web.yml
 HEALTH_TIMEOUT_SEC=120
 KEEP_RELEASES=3
-# V8 heap for npm ci and next build. The instance has 512 MB of RAM, so this
-# relies on the swap file setup.sh creates.
+# V8 heap for npm ci and next build. On a 512 MB instance this relies on the
+# swap file setup.sh creates.
 BUILD_HEAP_MB=1536
 MIN_FREE_DISK_MB=1500
 
@@ -227,7 +228,7 @@ health_check() {
 # in verdict.env, if any, goes to curl on stdin, not on its command line.
 require_green_ci() {
   local commit=$1 url response count
-  url="https://api.github.com/repos/$GITHUB_REPO/actions/workflows/$CI_WORKFLOW/runs?head_sha=$commit&status=success&per_page=1"
+  url="https://api.github.com/repos/$GITHUB_REPO/actions/workflows/$CI_WORKFLOW/runs?head_sha=$commit&event=push&status=success&per_page=1"
   response=$(
     {
       printf 'header = "Accept: application/vnd.github+json"
@@ -500,11 +501,10 @@ main() {
     branch=$(git -C "$REPO_DIR" rev-parse --abbrev-ref HEAD)
   fi
   git -C "$REPO_DIR" fetch --prune origin "$branch"
-  git -C "$REPO_DIR" checkout --quiet --force -B "$branch" FETCH_HEAD
   local commit short
-  commit=$(git -C "$REPO_DIR" rev-parse HEAD)
+  commit=$(git -C "$REPO_DIR" rev-parse FETCH_HEAD)
   short=${commit:0:7}
-  info "Branch $branch at $short: $(git -C "$REPO_DIR" log -1 --format=%s)"
+  info "Branch $branch at $short: $(git -C "$REPO_DIR" log -1 --format=%s "$commit")"
   local file
   for file in app/api/health/route.ts lib/ratelimit.ts deploy/aws-lightsail/verdict.service; do
     git -C "$REPO_DIR" cat-file -e "$commit:$file" 2>/dev/null ||
@@ -528,6 +528,8 @@ main() {
     require_green_ci "$commit"
     info "OK"
   fi
+  # Only now: the checkout holds scripts that root's timers run.
+  git -C "$REPO_DIR" checkout --quiet --force -B "$branch" "$commit"
 
   log "Checking the web server config"
   if ! cloudflare_proxy && cloudflare_firewall_on; then
@@ -587,7 +589,10 @@ main() {
   # Skipped on the first deploy, when there is no database or backup unit yet.
   if [[ -n $previous ]] && systemctl cat verdict-backup.service >/dev/null 2>&1; then
     log "Backing up the database"
-    systemctl start verdict-backup.service || die "The backup failed (journalctl -u verdict-backup -n 20). Nothing was switched; the running site is unchanged."
+    if ! systemctl start verdict-backup.service; then
+      rm -rf -- "$release"
+      die "The backup failed (journalctl -u verdict-backup -n 20), so the new release was dropped. Nothing was switched; the running site is unchanged."
+    fi
   fi
   log "Installing service and web server config"
   save_config "$workdir"
