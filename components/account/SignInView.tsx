@@ -139,6 +139,8 @@ export type SignInPanelProps = {
   canSendEmail: boolean;
   /** The Turnstile token a code request needs is there (always, without the widget). */
   hasToken: boolean;
+  /** A code is wanted and only the Turnstile check is missing. */
+  waiting: boolean;
   mode: SignInMode;
   password: string;
   showPassword: boolean;
@@ -180,6 +182,7 @@ export function SignInPanel({
   captcha,
   canSendEmail,
   hasToken,
+  waiting,
   mode,
   password,
   showPassword,
@@ -416,6 +419,7 @@ export function SignInPanel({
         onChange={(e) => onEmail(e.target.value)}
       />
       {captcha}
+      {waiting ? <p className={styles.small}>{t(lang, "turnstile.label")}</p> : null}
       {formError}
       <button type="submit" className={`${styles.btn} ${styles.secondary}`} disabled={!canSendEmail || pending}>
         {t(lang, "signin.continue")}
@@ -589,6 +593,7 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
   }
 
   async function provider(p: "apple" | "google") {
+    setAwaitToken(false);
     setPending(true);
     setError(null);
     rememberAdultTick();
@@ -814,6 +819,7 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
   }
 
   function changeEmail() {
+    setAwaitToken(false);
     setSentTo(null);
     keepSentTo(null);
     setEmailStep(false);
@@ -830,6 +836,7 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
   }
 
   async function dev() {
+    setAwaitToken(false);
     setPending(true);
     setError(null);
     rememberAdultTick();
@@ -877,6 +884,7 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
         }
         canSendEmail={canSendEmail}
         hasToken={hasToken}
+        waiting={awaitToken}
         mode={mode}
         password={password}
         showPassword={showPassword}
@@ -895,6 +903,7 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
         onProvider={(p) => void provider(p)}
         onEmail={(v) => {
           setEmail(v);
+          setAwaitToken(false);
           setError(null);
         }}
         onContinue={() => void continueWithEmail()}

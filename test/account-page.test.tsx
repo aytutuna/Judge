@@ -170,6 +170,7 @@ function signin(over: Partial<SignInPanelProps>): string {
       captcha={null}
       canSendEmail={false}
       hasToken
+      waiting={false}
       mode="password"
       password=""
       showPassword={false}
@@ -199,6 +200,26 @@ function signin(over: Partial<SignInPanelProps>): string {
 }
 
 describe("SignInPanel", () => {
+  it("says a check is still pending while a code waits for its token", () => {
+    const html = signin({ email: "a@b.co", canSendEmail: true, waiting: true });
+    expect(html).toContain(esc(t("en", "turnstile.label")));
+    expect(signin({ email: "a@b.co", canSendEmail: true })).not.toContain(esc(t("en", "turnstile.label")));
+  });
+
+  it("the first screen's Continue does not wait for a token when the caller allows it", () => {
+    const html = signin({ email: "a@b.co", canSendEmail: true, hasToken: false });
+    const button = /<button[^>]*>(?=Continue<)/.exec(html)?.[0] ?? "";
+    expect(button).not.toContain('disabled=""');
+  });
+
+  it("a resend needs the token", () => {
+    const code = { sentTo: "a@b.co", providers: { apple: true, google: true, email: true, emailCode: true, password: true, dev: false } };
+    const resend = (hasToken: boolean) =>
+      (signin({ ...code, hasToken }).match(/<button[^>]*>(?=Send a new code)/g) ?? []).join("");
+    expect(resend(false)).toContain('disabled=""');
+    expect(resend(true)).not.toContain('disabled=""');
+  });
+
   it("Apple, Google, an or divider, then the email field and Continue, all usable at once", () => {
     const html = signin({ email: "a@b.co", canSendEmail: true });
     const order = ["Continue with Apple", "Continue with Google", ">or<", esc(t("en", "signin.emailLabel")), ">Continue<"].map((s) =>
