@@ -59,21 +59,18 @@ export type AppealDraft = {
  * /api/v1/respond/{token}/appeals; a one-sided verdict:
  * /api/v1/verdicts/{id}/appeals) with an Idempotency-Key, apply the new
  * balance and hand the answer to `onSent` (which keeps the names and swaps
- * in what is now re-judging). `claim` is the respondent's claim secret from
- * answering signed out, if this browser has it. `prepare` runs first and
- * throws to stop the request (keeping a verdict in the account).
+ * in what is now re-judging). `prepare` runs first and throws to stop the
+ * request (keeping a verdict in the account).
  */
 export function useAppealDraft<R extends { entitlement?: Entitlement }>({
   endpoint,
   lang,
   onSent,
-  claim = null,
   prepare,
 }: {
   endpoint: string;
   lang: Lang;
   onSent: (res: R) => void;
-  claim?: string | null;
   prepare?: () => Promise<void>;
 }): AppealDraft {
   const [text, setText] = useState("");
@@ -98,7 +95,7 @@ export function useAppealDraft<R extends { entitlement?: Entitlement }>({
       const res = await apiFetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json", "Idempotency-Key": keyFor(body) },
-        body: claim ? JSON.stringify({ ...(JSON.parse(body) as object), claim }) : body,
+        body,
       });
       const json: unknown = await res.json().catch(() => null);
       if (!res.ok || typeof json !== "object" || json === null) {

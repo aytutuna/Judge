@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { mergeFirstPage, mergeHistory, rememberAnswered, settleHistory, updateHistoryCase } from "../components/shell/useHistory";
+import { mergeFirstPage, mergeHistory, settleHistory, updateHistoryCase } from "../components/shell/useHistory";
 import {
   ANSWERED_KEY,
   HISTORY_KEY,
@@ -318,29 +318,11 @@ describe("cases answered signed out", () => {
     expect(parseAnswered("{")).toEqual([]);
   });
 
-  it("are listed from the page they were answered on, keeping when they were answered", () => {
+  it("are dropped once side B is in an account, the viewer's or another", () => {
     vi.stubGlobal("localStorage", fakeStorage());
-    const names = [{ original: "I", replacement: "Party B" }];
-    rememberAnswered(view({}), TOKEN, names);
-    const first = loadAnswered()[0];
-    expect(first).toMatchObject({ id: "c1", role: "respondent", party: "b", state: "judging", inviteToken: TOKEN, nameMap: names });
-    rememberAnswered(view({ status: "judged", verdicts: [verdictView("side_a", "Party A paid")] }), TOKEN, []);
-    expect(loadAnswered()).toHaveLength(1);
-    expect(loadAnswered()[0]).toMatchObject({ state: "ready", verdict: "side_a", at: first.at, nameMap: names });
-    // The owner's own invite, or an invite not answered, is not listed.
-    rememberAnswered(view({ id: "c2", ownInvite: true }), TOKEN, []);
-    rememberAnswered(view({ id: "c3", respondentAnswered: false }), TOKEN, []);
-    expect(loadAnswered().map((r) => r.id)).toEqual(["c1"]);
-  });
-
-  it("are not listed once side B is in an account, the viewer's or another", () => {
-    vi.stubGlobal("localStorage", fakeStorage());
-    rememberAnswered(view({ id: "c2", inAccount: true }), TOKEN, []);
-    rememberAnswered(view({ id: "c3", inOtherAccount: true }), TOKEN, []);
-    expect(loadAnswered()).toEqual([]);
-
-    rememberAnswered(view({}), TOKEN, []);
-    rememberAnswered(view({ id: "c4" }), TOKEN, []);
+    addAnswered(answeredRow("c1", "2026-10-20T10:00:00.000Z"));
+    addAnswered(answeredRow("c4", "2026-10-20T10:00:00.000Z"));
+    expect(loadAnswered()).toHaveLength(2);
     // Kept in the account, or seen bound to another: the browser forgets it.
     updateHistoryCase(view({ inAccount: true }));
     updateHistoryCase(view({ id: "c4", inOtherAccount: true }));

@@ -4,7 +4,7 @@ import { AccountsRead } from "../components/case/AccountsRead";
 import { AppealSection, appealArea, type AppealDraft } from "../components/case/AppealForm";
 import { CasePanel, type CasePanelProps } from "../components/case/CaseScreen";
 import type { EvidenceController } from "../components/case/EvidencePicker";
-import { RespondPanel, respondStage, type RespondForm, type RespondPanelProps } from "../components/case/RespondScreen";
+import { RESPOND_SIGNIN_HREF, RespondPanel, respondStage, type RespondForm, type RespondPanelProps } from "../components/case/RespondScreen";
 import { WriteSide, type SideDraft } from "../components/case/WriteSide";
 import type { CaseView, LiveState } from "../lib/case-types";
 import { t } from "../lib/i18n";
@@ -48,11 +48,6 @@ const form: RespondForm = {
   sending: false,
   error: null,
   canSubmit: false,
-  askTicks: false,
-  adult: false,
-  setAdult: noop,
-  agreed: false,
-  setAgreed: noop,
   submit: async () => {},
 };
 
@@ -327,12 +322,15 @@ describe("respondent page", () => {
     expect(html).not.toContain(esc(t("en", "case.accountA")));
   });
 
-  it("form: the 18+ and private-details ticks only when signed out", () => {
-    const signedIn = respondent(RESPONDENT.form);
-    expect(signedIn).not.toContain(esc(t("en", "respond.adultConfirm")));
-    const out = respondent(RESPONDENT.form, { form: { ...form, askTicks: true } });
-    expect(out).toContain(esc(t("en", "respond.adultConfirm")));
-    expect(out).toContain(esc(t("en", "consent.sensitiveBody")));
+  it("form signed out: the invite and a sign-in button, no form, no 18+ tick", () => {
+    const out = respondent(RESPONDENT.form, { signIn: true });
+    expect(out).toContain("The verdict will be written in English.");
+    expect(out).toContain(`href="${RESPOND_SIGNIN_HREF}"`);
+    expect(out).toContain(t("en", "nav.signIn"));
+    expect(out).not.toContain(t("en", "respond.submit"));
+    expect(out).not.toContain("<textarea");
+    expect(out).not.toContain(esc(t("en", "respond.closed")));
+    expect(respondent(RESPONDENT.form)).not.toContain(`href="${RESPOND_SIGNIN_HREF}"`);
   });
 
   it("form on an old free case: screenshots like any case", () => {

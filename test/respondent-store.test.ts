@@ -6,7 +6,6 @@ import {
   parseClaim,
   parsePendingInvite,
   rememberPendingInvite,
-  saveClaim,
   takePendingInvite,
 } from "../lib/respondent-store";
 
@@ -36,10 +35,9 @@ describe("respondent claim storage", () => {
     expect(parseClaim(null)).toBeNull();
     expect(parseClaim("short")).toBeNull();
     expect(parseClaim(TOKEN)).toBe(TOKEN);
-    saveClaim("case00000001", "not a claim");
+    localStorage.setItem(claimKey("case00000001"), "not a claim");
     expect(loadClaim("case00000001")).toBeNull();
-    saveClaim("case00000001", TOKEN);
-    expect(localStorage.getItem(claimKey("case00000001"))).toBe(TOKEN);
+    localStorage.setItem(claimKey("case00000001"), TOKEN);
     expect(loadClaim("case00000001")).toBe(TOKEN);
     expect(loadClaim("case00000002")).toBeNull();
   });

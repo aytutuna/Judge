@@ -128,14 +128,14 @@ Every verdict needs a signed-in account (`401 signin_required` otherwise)
 and one premium unit, so the account is the main gate. On top of that,
 `lib/ratelimit.ts` counts premium verdicts per account and the site-wide
 `PREMIUM_DAILY_CAP` (see *Accounts and Premium*), and the routes anyone can
-reach without an account (translations, the respondent's answer, polling)
+reach without an account (translations, polling, a respondent's answer)
 per visitor IP. An IPv6 visitor is counted per /64 prefix, since one client
 usually holds a whole /64. The store only sees a keyed hash (HMAC-SHA256
 with `RATE_LIMIT_SALT`) of the IPv4 address or IPv6 prefix. The store is Upstash Redis when configured, else the app's
 memory; entries last up to 24 hours in memory and up to 48 hours in Redis (the expiry of a one-day window). If Redis is down or slow, requests are refused (`503 unavailable`)
 rather than let through unmetered. The Cloudflare Turnstile check
-(`lib/turnstile.ts`) guards the steps that need no account: asking for a
-sign-in code from the website and the respondent's answer to a two-sided case.
+(`lib/turnstile.ts`) guards asking for a sign-in code from the website and
+the respondent's answer to a two-sided case from a browser session.
 
 The visitor IP comes from the first `X-Forwarded-For` entry, so it is only
 trustworthy behind a proxy that overwrites that header: Vercel does, and so
@@ -235,8 +235,8 @@ sign-in does not depend on it.
 
 - **Hear both sides.** Any signed-in user writes their side (`POST /api/v1/cases`)
   and gets a private invite link `/r/<token>` for the other person. That
-  person needs no account: they write their side privately (Turnstile when
-  configured, per-IP limits). Neither sees the other's text before the
+  person signs in first, then writes their side privately (Turnstile when
+  configured, per-IP limits). Signed out, the link only shows the invite. Neither sees the other's text before the
   verdict; afterwards both see the verdict and both anonymized accounts.
   The judges get both accounts labelled "Party A's account" / "Party B's
   account" and add what both agree on, what is disputed (with which side the
@@ -262,8 +262,7 @@ sign-in does not depend on it.
   verdicts too (`"evidence"` on `POST /api/v1/verdict`).
 - **Appeals.** After a verdict, each party may add context once (the owner;
   the other person only when signed in with Premium, and only the person who
-  wrote side B: the account they answered with, or whoever holds the claim
-  code their browser got when answering signed out). It costs one premium
+  wrote side B: the account they answered with). It costs one premium
   verdict; the whole case is judged again and the new verdict is labelled
   (verdict stands / flipped / changed) next to the earlier one, which stays.
 - **Names.** Each side is anonymized when it is submitted. The judges read
@@ -317,7 +316,7 @@ judge calls, whose measured output is 500 to 800 tokens; not done yet).
   keeps it in `localStorage` under `judge.owner.<verdictId>`, the app should
   use secure storage) and sent only as the `X-Owner-Token` header. The server
   keeps a SHA-256 of the token, never the token. Case parties use their
-  session, or Party B's claim code. The operator can decrypt with the key
+  session. The operator can decrypt with the key
   (`scripts/originals.ts`).
 - **Share pages show names.** Each one-sided verdict has display names: the
   other people default to the first names the writer used, the writer's own
@@ -436,12 +435,13 @@ The website and the future iOS/Android app share one JSON API. Base URL
 | `POST /api/v1/cases/{id}/judge` | Judge with only your side (`{ "mode": "only_mine" }`), or retry a failed case |
 | `POST /api/v1/cases/{id}/invite` | A new invite link (the old one stops working) |
 | `POST /api/v1/cases/{id}/appeals` | Add context once and get a re-judged verdict (1 premium verdict) |
-| `GET /api/v1/respond/{token}` / `POST` | The invite as the other person sees it / their side (no account) |
+| `GET /api/v1/respond/{token}` / `POST` | The invite as the other person sees it (no account) / their side (signed in) |
+| `POST /api/v1/respond/{token}/open` | Signed in: takes the next open side for the account (the owner takes none) |
 | `POST /api/v1/respond/{token}/evidence` | The other person's evidence images |
 | `POST /api/v1/respond/{token}/appeals` | The other person adds context (signed in, Premium) |
 | `POST /api/v1/events` | Usage events, `{ "context": { "platform", "app_version", "anon_id"?, "device_id"?, "os_version"?, "device_model"?, "locale"? }, "events": [{ "name", "at"?, "props"? }] }`, up to 50 per batch as `application/json` (at most 32 KB); signed in or with `anon_id` (the website needs neither). Only the event names and props listed in `lib/analytics/track.ts` are accepted; prop values are short tokens without spaces, integers or booleans, so no text anyone wrote fits. Anything else refuses the batch with `400 invalid`. Limits: 300 batches an hour per account, signed out 10 per 10 minutes and 60 an hour per address, and 200,000 events a day in all (`503` past that). `204` |
 | `POST /api/v1/webhooks/revenuecat` | RevenueCat only (`Authorization: Bearer ${REVENUECAT_WEBHOOK_SECRET}`): applies a purchase event once; see *Purchases* |
-| `GET /api/v1/respond/{token}/originals` / `PATCH .../display` / `POST .../removal` | Party B (bound account or `Respondent-Claim` / `claim`): their original, their display name, removing their side |
+| `GET /api/v1/respond/{token}/originals` / `PATCH .../display` / `POST .../removal` | Party B (the bound account): their original, their display name, removing their side |
 
 **Async verdicts (use these in the apps).** The site sits behind
 Cloudflare, which ends any request after 100 seconds (HTTP 524), and a
@@ -543,13 +543,12 @@ module the app can import); every case and respond response is
    `GET /api/v1/respond/{token}`), then `POST /api/v1/respond/{token}` with
    `{ "text": "...", "evidence": ["v1...."], "turnstileToken": "...", "displayName": "Deniz" }`
    (Turnstile is skipped for bearer sessions). `202 { "case": CaseView, "name_map": [...] }`;
-   store that `name_map` too. A signed-in answer binds side B to that
-   account. A signed-out answer also returns `"respondent_claim": "<22 chars>"`
-   (again on a replayed `Idempotency-Key`): keep it in secure storage with
-   the name map. It is the only proof of having written side B; send it as
-   the `Respondent-Claim` header on `GET /api/v1/respond/{token}` (so
-   `case.appeal` is right for this person) and as `"claim"` on the appeal.
-   Anyone else holding the link gets `not_party`. Their evidence goes to
+   store that `name_map` too. Everything but the `GET` needs a signed-in
+   account (`401 signin_required` otherwise): `POST .../open` takes the next
+   open side for that account, and the answer binds side B to it. Anyone
+   else holding the link gets `not_party`; the owner opening their own link
+   takes no side. Answers made signed out before this was required can still
+   be linked with `POST /api/v1/cases/{id}/claim`. Their evidence goes to
    `POST /api/v1/respond/{token}/evidence`.
 5. **Verdicts:** `case.verdicts` (oldest first; the last is current) carry
    the usual `VerdictResult` plus `two_sided`, `agreed_facts`,
@@ -564,9 +563,8 @@ module the app can import); every case and respond response is
    (`signin_required | premium_required | no_credits | fair_use | appeal_used | not_judged | busy | not_party`).
    `POST /api/v1/cases/{id}/appeals` (owner) or
    `POST /api/v1/respond/{token}/appeals` (signed-in respondent) with
-   `{ "text": "20 to 2000 characters", "evidence": ["v1...."], "claim": "..." }`
-   (at most 1 image; `claim` only for the respondent, until their account is
-   bound by the first accepted appeal) and an optional `Idempotency-Key`.
+   `{ "text": "20 to 2000 characters", "evidence": ["v1...."] }`
+   (at most 1 image) and an optional `Idempotency-Key`.
    `202`, then poll. The appeal outcome stays `upheld | overturned | changed`
    in the API; the website shows it as "Verdict stands / flipped / changed".
    On the web, "Sign in to add context" returns to `/r` (never `/r/<token>`):
@@ -653,8 +651,7 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
   email's `welcome_claims` row. The routes check
   the session they look up anyway (`lookupViewer` in
   `lib/bearer-guard.ts`); if that lookup fails on a route that needs a
-  confirmed age, the answer is `503 unavailable`. Signed-out answers to a
-  case are not affected.
+  confirmed age, the answer is `503 unavailable`.
 - **Email (apps): a 6-digit code**, offered when `signIn.emailCode` is true
   in `GET /api/v1/config` (false, and both endpoints `404`, without
   `RESEND_API_KEY`/`EMAIL_FROM`):

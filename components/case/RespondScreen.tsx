@@ -13,18 +13,12 @@ import { apiErrorMessage, languageName, t, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { langTag } from "@/lib/langs";
 import type { SelfParty } from "@/lib/names";
-import {
-  clearPendingInvite,
-  rememberPendingInvite,
-  saveClaim,
-  useClaim,
-  usePendingInvite,
-} from "@/lib/respondent-store";
+import { clearPendingInvite, rememberPendingInvite, usePendingInvite } from "@/lib/respondent-store";
 import type { NameMapping } from "@/lib/types";
 import { keyHolder, useCase } from "@/lib/use-case";
 import { useViewer } from "@/lib/use-viewer";
 import { JudgingOverlay } from "../JudgingOverlay";
-import { refreshHistory, rememberAnswered, updateHistoryCase } from "../shell/useHistory";
+import { updateHistoryCase } from "../shell/useHistory";
 import { Turnstile, TURNSTILE_SITE_KEY } from "../Turnstile";
 import { VerdictView } from "../VerdictView";
 import account from "../account/AccountPages.module.css";
@@ -41,9 +35,9 @@ import styles from "./case.module.css";
 export const MAX_SIDE = 6000;
 const MIN_SIDE = 20;
 
-/** Where the respondent's "Sign in to add context" goes. The token stays out
- * of it (sign-in e-mails and OAuth state carry `next`): the invite is kept in
- * this browser and /r picks it up again after sign-in. */
+/** Where the respondent's sign-in goes. The token stays out of it (sign-in
+ * e-mails and OAuth state carry `next`): the invite is kept in this browser
+ * and /r picks it up again after sign-in. */
 export const RESPOND_SIGNIN_HREF = `/signin?next=${encodeURIComponent("/r")}`;
 
 /** What the respondent's page shows for a case view, decided purely from it. */
@@ -92,12 +86,6 @@ export type RespondForm = {
   sending: boolean;
   error: string | null;
   canSubmit: boolean;
-  /** Signed out: the 18+ and private-details ticks are part of the form. */
-  askTicks: boolean;
-  adult: boolean;
-  setAdult: (v: boolean) => void;
-  agreed: boolean;
-  setAgreed: (v: boolean) => void;
   submit: () => Promise<void>;
 };
 
@@ -107,10 +95,9 @@ const TYPING_BEAT_MS = 3000;
 function useRespondForm(
   token: string,
   lang: Lang,
-  onDone: (view: CaseView, names: NameMapping[], claim: string | null) => void,
+  onDone: (view: CaseView, names: NameMapping[]) => void,
   suggestedName: string | null,
-  claim: string | null,
-  signedOut: boolean,
+  signedIn: boolean,
 ): RespondForm {
   const [text, setText] = useState("");
   const lastBeat = useRef(0);
@@ -118,12 +105,9 @@ function useRespondForm(
   function typed(value: string) {
     setText(value);
     const now = Date.now();
-    if (!claim || now - lastBeat.current < TYPING_BEAT_MS) return;
+    if (!signedIn || now - lastBeat.current < TYPING_BEAT_MS) return;
     lastBeat.current = now;
-    void apiFetch(`/api/v1/respond/${encodeURIComponent(token)}/typing`, {
-      method: "POST",
-      headers: { "Respondent-Claim": claim },
-    }).catch(() => undefined);
+    void apiFetch(`/api/v1/respond/${encodeURIComponent(token)}/typing`, { method: "POST" }).catch(() => undefined);
   }
   const [typedName, setName] = useState<string | null>(null);
   const name = typedName ?? suggestedName ?? "";
@@ -131,13 +115,7 @@ function useRespondForm(
   const [turnstileKey, setTurnstileKey] = useState(0);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [adult, setAdult] = useState(false);
-  const [agreed, setAgreed] = useState(false);
-  const ticks = useMemo(
-    () => (signedOut ? { "Adult-Confirmed": String(adult), "Sensitive-Agreed": String(agreed) } : undefined),
-    [signedOut, adult, agreed],
-  );
-  const evidence = useEvidence(`/api/v1/respond/${encodeURIComponent(token)}/evidence`, MAX_EVIDENCE_PER_SIDE, ticks);
+  const evidence = useEvidence(`/api/v1/respond/${encodeURIComponent(token)}/evidence`, MAX_EVIDENCE_PER_SIDE);
   const keyFor = useMemo(() => keyHolder(), []);
   const needsCheck = TURNSTILE_SITE_KEY !== "";
   const trimmed = text.trim();
@@ -145,8 +123,7 @@ function useRespondForm(
     trimmed.length >= MIN_SIDE &&
     !sending &&
     !evidence.busy &&
-    (!needsCheck || turnstile !== null) &&
-    (!signedOut || (adult && agreed));
+    (!needsCheck || turnstile !== null);
 
   async function submit() {
     if (!canSubmit) return;
@@ -167,13 +144,8 @@ function useRespondForm(
         headers: {
           "Content-Type": "application/json",
           "Idempotency-Key": keyFor(JSON.stringify(payload)),
-          ...(claim ? { "Respondent-Claim": claim } : {}),
         },
-        body: JSON.stringify({
-          ...payload,
-          ...(check ? { turnstileToken: check } : {}),
-          ...(signedOut ? { adultConfirmed: true, sensitiveAgreed: true, lang, platform: "web" } : {}),
-        }),
+        body: JSON.stringify({ ...payload, ...(check ? { turnstileToken: check } : {}) }),
       });
       const json: unknown = await res.json().catch(() => null);
       const ok = json as RespondResponse | null;
@@ -184,7 +156,7 @@ function useRespondForm(
         return;
       }
       evidence.clear();
-      onDone(ok.case, ok.name_map ?? [], ok.respondent_claim ?? null);
+      onDone(ok.case, ok.name_map ?? []);
     } catch {
       setError(t(lang, "errorFallback"));
       setTurnstileKey((k) => k + 1);
@@ -204,11 +176,6 @@ function useRespondForm(
     sending,
     error,
     canSubmit,
-    askTicks: signedOut,
-    adult,
-    setAdult,
-    agreed,
-    setAgreed,
     submit,
   };
 }
@@ -228,6 +195,8 @@ export type RespondPanelProps = {
   token: string;
   names: NameMapping[];
   form: RespondForm | null;
+  /** Signed out: the form gives way to a sign-in button that keeps the invite for the way back. */
+  signIn?: boolean;
   overlay: { done: boolean } | null;
   onOverlayFinished: () => void;
   fresh: boolean;
@@ -254,6 +223,7 @@ export function RespondPanel({
   token,
   names,
   form,
+  signIn = false,
   overlay,
   onOverlayFinished,
   fresh,
@@ -296,6 +266,23 @@ export function RespondPanel({
     );
   }
 
+  if (stage === "form" && signIn) {
+    return (
+      <>
+        <ul className={styles.facts}>
+          <li>{t(lang, "respond.lang", { lang: languageName(lang, view.lang) })}</li>
+        </ul>
+        <Link
+          href={RESPOND_SIGNIN_HREF}
+          onClick={() => rememberPendingInvite(token)}
+          className={`${account.btn} ${account.primary}`}
+        >
+          {t(lang, "nav.signIn")}
+        </Link>
+      </>
+    );
+  }
+
   if (stage === "form") {
     if (!form) return null;
     return (
@@ -331,18 +318,6 @@ export function RespondPanel({
               aria-describedby={form.error ? "respond-error" : undefined}
             />
           </div>
-          {form.askTicks ? (
-            <div className={styles.stack}>
-              <label className={account.check}>
-                <input type="checkbox" checked={form.adult} onChange={(e) => form.setAdult(e.target.checked)} />
-                <span>{t(lang, "respond.adultConfirm")}</span>
-              </label>
-              <label className={account.check}>
-                <input type="checkbox" checked={form.agreed} onChange={(e) => form.setAgreed(e.target.checked)} />
-                <span>{t(lang, "consent.sensitiveBody")}</span>
-              </label>
-            </div>
-          ) : null}
           {evidence ? (
             <EvidencePicker
               lang={lang}
@@ -351,7 +326,7 @@ export function RespondPanel({
               full={form.evidence.full}
               failure={form.evidence.failure}
               overLimit={form.evidence.overLimit}
-              disabled={form.sending || (form.askTicks && !(form.adult && form.agreed))}
+              disabled={form.sending}
               onAdd={form.evidence.add}
               onRemove={form.evidence.remove}
             />
@@ -531,59 +506,45 @@ export function RespondPanel({
   );
 }
 
-/** /r/[token]: the invited person's page. No account needed to answer. */
+/** /r/[token]: the invited person's page. Reading the invite needs no
+ * account; opening it, and answering, do. */
 export function RespondScreen({ token }: { token: string }) {
   const lang = useLang();
   const viewer = useViewer();
   const evidenceOn = viewer.config?.features?.evidence === true;
-  // The claim secret (kept per case id) goes with every GET so the view can
-  // say whether this person may add context. The id is only known once a
-  // view has loaded, hence the remembered id.
-  const [knownId, setKnownId] = useState<string | null>(null);
-  const claim = useClaim(knownId);
-  const { load, setView, reload } = useCase(
-    `/api/v1/respond/${encodeURIComponent(token)}`,
-    claim ? { "Respondent-Claim": claim } : null,
-  );
+  const signedIn = Boolean(viewer.me?.user);
+  const signedOut = viewer.status === "ready" && !signedIn;
+  const { load, setView, reload } = useCase(`/api/v1/respond/${encodeURIComponent(token)}`, null);
   const view = load.view;
   const caseId = view?.id ?? null;
-  if (caseId !== null && caseId !== knownId) setKnownId(caseId);
   const localNames = useCaseNames(caseId, view?.yourParty ?? "b");
-  // The server's encrypted copy when this browser proves it is Party B
-  // (claim or bound account); this browser's names for older cases.
+  // The server's encrypted copy for the bound account; this browser's names
+  // for older cases.
   const names = view?.names ?? localNames;
   const base = `/api/v1/respond/${encodeURIComponent(token)}`;
-  const claimHeaders = claim ? { "Respondent-Claim": claim } : null;
-  const originals = useCaseOriginals(base, claimHeaders, view?.yourOriginal === "stored");
+  const originals = useCaseOriginals(base, null, view?.yourOriginal === "stored");
   const [removedNow, setRemovedNow] = useState(false);
   const [removeError, setRemoveError] = useState<string | null>(null);
-  const [kept, setKept] = useState(false);
-  const [keepError, setKeepError] = useState<string | null>(null);
-  const canProve = Boolean(claim) || Boolean(viewer.me?.user);
-  // Answered signed out, now signed in: the case can join the account.
-  const canKeep =
-    Boolean(viewer.me?.user) && Boolean(claim) && view?.inAccount === false && !view.inOtherAccount && view.respondentAnswered && !view.removed;
+  const canProve = view?.inAccount === true;
   const { overlay, fresh, finish } = useJudgingOverlay(view?.status ?? null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const form = useRespondForm(
     token,
     lang,
-    (next, map, claimSecret) => {
+    (next, map) => {
       saveCaseNames(next.id, next.yourParty, map);
-      saveClaim(next.id, claimSecret);
       setView(next);
     },
     firstNameOf(viewer.me?.user?.name),
-    claim,
-    !viewer.me?.user,
+    signedIn,
   );
 
-  // The first visit takes the next open side, so the owner sees it opened and
-  // the side is kept for this browser (or this account) from then on.
+  // Once signed in, the first visit takes the next open side, so the owner
+  // sees it opened and the side is held by this account from then on.
   const opened = useRef(false);
   const [full, setFull] = useState(false);
   useEffect(() => {
-    if (!view || claim || opened.current) return;
+    if (!view || !signedIn || opened.current) return;
     if (view.ownInvite || view.status !== "awaiting_respondent" || view.respondentAnswered) return;
     opened.current = true;
     void (async () => {
@@ -591,7 +552,6 @@ export function RespondScreen({ token }: { token: string }) {
         const res = await apiFetch(`${base}/open`, { method: "POST" });
         const json = (await res.json().catch(() => null)) as OpenResponse | null;
         if (res.ok && json?.case) {
-          saveClaim(json.case.id, json.respondent_claim);
           setView(json.case);
         } else if (res.status === 409) {
           setFull(true);
@@ -600,15 +560,15 @@ export function RespondScreen({ token }: { token: string }) {
         opened.current = false;
       }
     })();
-  }, [view, claim, base, setView]);
+  }, [view, signedIn, base, setView]);
 
   async function removeSide() {
     setRemoveError(null);
     try {
       const res = await apiFetch(`${base}/removal`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", ...(claimHeaders ?? {}) },
-        body: JSON.stringify({ confirm: "remove", ...(claim ? { claim } : {}) }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ confirm: "remove" }),
       });
       const json: unknown = await res.json().catch(() => null);
       const ok = json as CaseRemovalResponse | null;
@@ -623,34 +583,10 @@ export function RespondScreen({ token }: { token: string }) {
       setRemoveError(t(lang, "errorFallback"));
     }
   }
-  async function keep() {
-    if (!caseId || !claim || !view) return;
-    setKeepError(null);
-    try {
-      const res = await apiFetch(`/api/v1/cases/${encodeURIComponent(caseId)}/claim`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ claim }),
-      });
-      if (!res.ok) {
-        setKeepError(apiErrorMessage(lang, await res.json().catch(() => null), res.status));
-        return;
-      }
-      setView({ ...view, inAccount: true });
-      setKept(true);
-      void refreshHistory();
-    } catch {
-      setKeepError(t(lang, "errorFallback"));
-    }
-  }
-
-  // The Verdicts list follows this page; a case answered signed out is
-  // listed in this browser until it joins an account.
+  // The Verdicts list follows this page.
   useEffect(() => {
-    if (!view) return;
-    updateHistoryCase(view);
-    if (claim) rememberAnswered(view, token, names);
-  }, [view, claim, token, names]);
+    if (view) updateHistoryCase(view);
+  }, [view]);
 
   const appeal = useAppealDraft<AppealResponse>({
     endpoint: `/api/v1/respond/${encodeURIComponent(token)}/appeals`,
@@ -659,7 +595,6 @@ export function RespondScreen({ token }: { token: string }) {
       saveCaseNames(caseId ?? "", view?.yourParty ?? "b", res.name_map ?? []);
       setView(res.case);
     },
-    claim,
   });
   const appealFinished = useAppealFinished(view);
 
@@ -718,6 +653,7 @@ export function RespondScreen({ token }: { token: string }) {
         token={token}
         names={names}
         form={form}
+        signIn={signedOut}
         overlay={overlay}
         onOverlayFinished={finish}
         fresh={fresh}
@@ -733,36 +669,19 @@ export function RespondScreen({ token }: { token: string }) {
                 {removeError}
               </p>
             ) : null}
-            {canKeep ? (
-              <button type="button" className={`${account.btn} ${account.secondary}`} onClick={() => void keep()}>
-                {t(lang, "respond.keep")}
-              </button>
-            ) : null}
-            {kept ? (
-              <p className={styles.note} role="status">
-                {t(lang, "respond.kept")}
-              </p>
-            ) : null}
-            {keepError ? (
-              <p className={styles.error} role="alert">
-                {keepError}
-              </p>
-            ) : null}
             <CaseOriginals lang={lang} data={view.removed ? null : originals} />
             {canProve && view.respondentAnswered && view.verdicts.length > 0 ? (
               <CaseNames
                 lang={lang}
                 view={view}
                 base={base}
-                headers={claimHeaders}
-                body={claim ? { claim } : {}}
                 onView={setView}
               />
             ) : null}
           </>
         }
         turnstile={
-          TURNSTILE_SITE_KEY !== "" && answering && !form.sending ? (
+          TURNSTILE_SITE_KEY !== "" && answering && signedIn && !form.sending ? (
             <Turnstile key={form.turnstileKey} siteKey={TURNSTILE_SITE_KEY} lang={lang} onToken={form.setTurnstile} />
           ) : null
         }

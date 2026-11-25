@@ -5,10 +5,9 @@ import { INVITE_TOKEN_PATTERN } from "./case-types";
  * What the invited person's browser keeps, website only (the mobile app
  * keeps the same in secure storage):
  *
- * - The respondent claim secret (`settle.claim.<caseId>`), returned once when
- *   they answer signed out. It proves they wrote side B, so a later signed-in
- *   "add context" from this browser is accepted, and nobody else holding the
- *   link can act as them.
+ * - The respondent claim secret (`settle.claim.<caseId>`) of an answer given
+ *   signed out, before an account was needed to answer. Nothing writes it any
+ *   more; the history list still reads one that is already here.
  * - The invite they were on when they went to sign in (`settle.invite`),
  *   so the sign-in redirect can be the token-free `/r` and the invite token
  *   never travels in a sign-in e-mail or an OAuth state. localStorage, not
@@ -41,46 +40,13 @@ function writeStorage(key: string, value: string | null): void {
   }
 }
 
-const memory = new Map<string, string>();
-const listeners = new Set<() => void>();
-
 /** A stored claim, if it looks like one. */
 export function parseClaim(raw: string | null): string | null {
   return raw && INVITE_TOKEN_PATTERN.test(raw) ? raw : null;
 }
 
 export function loadClaim(caseId: string): string | null {
-  return parseClaim(readStorage(claimKey(caseId)) ?? memory.get(caseId) ?? null);
-}
-
-export function saveClaim(caseId: string, claim: string | null | undefined): void {
-  const value = parseClaim(claim ?? null);
-  if (!value) return;
-  memory.set(caseId, value);
-  writeStorage(claimKey(caseId), value);
-  for (const fn of listeners) fn();
-}
-
-function subscribe(onChange: () => void): () => void {
-  listeners.add(onChange);
-  const onStorage = (e: StorageEvent) => {
-    if (e.key === null || e.key.startsWith(CLAIM_PREFIX)) onChange();
-  };
-  window.addEventListener("storage", onStorage);
-  return () => {
-    listeners.delete(onChange);
-    window.removeEventListener("storage", onStorage);
-  };
-}
-
-/** This browser's claim for a case. Null during server rendering and the
- * first client render, so hydration always matches. */
-export function useClaim(caseId: string | null): string | null {
-  return useSyncExternalStore(
-    subscribe,
-    () => (caseId ? loadClaim(caseId) : null),
-    () => null,
-  );
+  return parseClaim(readStorage(claimKey(caseId)));
 }
 
 // --- pending invite across sign-in ----------------------------------------------

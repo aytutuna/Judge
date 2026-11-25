@@ -330,20 +330,6 @@ export function updateHistoryCase(view: CaseView): void {
   if (local) addAnswered(historyRowFromView(view, now, { at: local.at, nameMap: view.names ?? local.nameMap, inviteToken: local.inviteToken }));
 }
 
-/** A case this browser answered signed out (it holds the claim), listed
- * here until it is in an account; refreshed whenever its page shows it. */
-export function rememberAnswered(view: CaseView, token: string, names: NameMapping[]): void {
-  if (view.role !== "respondent" || !view.respondentAnswered || view.ownInvite || !localOnly(view)) return;
-  const known = loadAnswered().find((r) => r.id === view.id);
-  addAnswered(
-    historyRowFromView(view, new Date(), {
-      at: known?.at ?? view.sides.find((s) => s.party === "b")?.submittedAt ?? new Date().toISOString(),
-      nameMap: names.length ? names : (known?.nameMap ?? []),
-      inviteToken: token,
-    }),
-  );
-}
-
 function forget(id: string): void {
   dropHistory(id);
   seeded(id);
