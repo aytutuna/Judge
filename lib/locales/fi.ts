@@ -502,6 +502,7 @@ const fi: Locale = {
     "error.bad_origin": "Pyyntö tuli paikasta, jota emme tunnista. Lataa sivu uudelleen ja yritä uudestaan.",
     "error.not_found": "Emme löytäneet sitä.",
     "error.case_closed": "Tähän juttuun ei voi enää lisätä tätä.",
+    "error.seat_moved": "Puolesi vapautui. Avaa linkki uudelleen.",
     "error.case_expired": "Tämä kutsu on vanhentunut.",
     "error.appeal_used": "Olet jo lisännyt tietoa tähän juttuun.",
     "error.appeal_limit": "Olet lisännyt tietoa tähän tuomioon jo kahdesti, eikä enempää voi.",

@@ -266,6 +266,7 @@
     <string name="error_in_progress">એ ચુકાદા પર હજી કામ ચાલે છે. થોડી વાર રાહ જુઓ.</string>
     <string name="error_not_found">એ મળ્યું નહીં.</string>
     <string name="error_case_closed">આ કેસમાં હવે એ થઈ શકતું નથી.</string>
+    <string name="error_seat_moved">તમારો પક્ષ મુક્ત થઈ ગયો છે. લિંક ફરીથી ખોલો.</string>
     <string name="error_case_expired">આ આમંત્રણની મુદત પૂરી થઈ ગઈ.</string>
     <string name="error_appeal_used">તમે આ કેસમાં પહેલેથી વિગત ઉમેરી દીધી છે.</string>
     <string name="error_appeal_limit">તમે આ ચુકાદામાં બે વાર વિગત ઉમેરી છે. એક ચુકાદામાં આટલી જ વાર ઉમેરી શકાય.</string>

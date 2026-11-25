@@ -271,6 +271,7 @@
     <string name="error_in_progress">Ese veredicto aún se está preparando. Espera un momento.</string>
     <string name="error_not_found">No encontramos eso.</string>
     <string name="error_case_closed">Este caso ya no acepta eso.</string>
+    <string name="error_seat_moved">Tu lado se liberó. Abre el enlace otra vez.</string>
     <string name="error_case_expired">Esta invitación ha expirado.</string>
     <string name="error_appeal_used">Ya has añadido contexto a este caso.</string>
     <string name="error_appeal_limit">Ya has añadido contexto a este veredicto dos veces. Es el máximo para un veredicto.</string>

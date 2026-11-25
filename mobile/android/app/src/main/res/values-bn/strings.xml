@@ -266,6 +266,7 @@
     <string name="error_in_progress">রায়টা এখনও তৈরি হচ্ছে। একটু অপেক্ষা করুন।</string>
     <string name="error_not_found">এটা খুঁজে পাওয়া গেল না।</string>
     <string name="error_case_closed">এই মামলায় এটা আর নেওয়া হচ্ছে না।</string>
+    <string name="error_seat_moved">আপনার পক্ষটি মুক্ত হয়ে গেছে। লিংকটি আবার খুলুন।</string>
     <string name="error_case_expired">এই আমন্ত্রণের মেয়াদ শেষ।</string>
     <string name="error_appeal_used">এই মামলায় আপনি আগেই নতুন তথ্য যোগ করেছেন।</string>
     <string name="error_appeal_limit">এই রায়ে আপনি দুবার নতুন তথ্য যোগ করেছেন। একটা রায়ে এর বেশি হয় না।</string>

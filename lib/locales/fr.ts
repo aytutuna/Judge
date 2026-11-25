@@ -506,6 +506,7 @@ const fr: Locale = {
     "error.bad_origin": "Cette demande vient d’un endroit qu’on ne reconnaît pas. Recharge la page et réessaie.",
     "error.not_found": "On n’a pas trouvé ce que tu cherches.",
     "error.case_closed": "Ce n’est plus possible sur ce dossier.",
+    "error.seat_moved": "Ta place a été libérée. Ouvre à nouveau le lien.",
     "error.case_expired": "Cette invitation a expiré.",
     "error.appeal_used": "Tu as déjà ajouté du contexte à ce dossier.",
     "error.appeal_limit": "Tu as déjà ajouté du contexte deux fois à ce verdict. C’est le maximum pour un verdict.",

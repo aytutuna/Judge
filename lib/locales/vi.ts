@@ -499,6 +499,7 @@ const vi: Locale = {
     "error.bad_origin": "Yêu cầu này đến từ một nơi chúng tôi không nhận ra. Hãy tải lại trang rồi thử lại.",
     "error.not_found": "Không tìm thấy.",
     "error.case_closed": "Vụ này không nhận thêm nữa.",
+    "error.seat_moved": "Phía của bạn đã được nhả ra. Hãy mở lại liên kết.",
     "error.case_expired": "Lời mời này đã hết hạn.",
     "error.appeal_used": "Bạn đã bổ sung thông tin cho vụ này rồi.",
     "error.appeal_limit":

@@ -490,6 +490,7 @@ const cs: Locale = {
     "error.bad_origin": "Tenhle požadavek přišel z neznámého zdroje. Obnov stránku a zkus to znovu.",
     "error.not_found": "Tohle jsme nenašli.",
     "error.case_closed": "Tenhle případ už nic dalšího nepřijímá.",
+    "error.seat_moved": "Tvoje strana se uvolnila. Otevři odkaz znovu.",
     "error.case_expired": "Platnost této pozvánky vypršela.",
     "error.appeal_used": "K tomuto případu už máš kontext doplněný.",
     "error.appeal_limit": "K tomuto verdiktu už máš kontext doplněný dvakrát. Víc to u jednoho verdiktu nejde.",

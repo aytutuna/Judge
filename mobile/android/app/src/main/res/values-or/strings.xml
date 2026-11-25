@@ -266,6 +266,7 @@
     <string name="error_in_progress">ସେହି ରାୟ ଉପରେ ଏବେ ବି କାମ ଚାଲିଛି। ଟିକେ ଅପେକ୍ଷା କରନ୍ତୁ।</string>
     <string name="error_not_found">ତାହା ମିଳିଲା ନାହିଁ।</string>
     <string name="error_case_closed">ଏହି ମାମଲାରେ ଏହା ଆଉ କରିହେବ ନାହିଁ।</string>
+    <string name="error_seat_moved">ଆପଣଙ୍କ ପକ୍ଷ ମୁକ୍ତ ହୋଇଯାଇଛି। ଲିଙ୍କ୍ ପୁଣି ଖୋଲନ୍ତୁ।</string>
     <string name="error_case_expired">ଏହି ନିମନ୍ତ୍ରଣର ମିଆଦ ସରିଗଲା।</string>
     <string name="error_appeal_used">ଆପଣ ଏହି ମାମଲାରେ ଆଗରୁ ବିବରଣୀ ଯୋଡ଼ିସାରିଛନ୍ତି।</string>
     <string name="error_appeal_limit">ଆପଣ ଏହି ରାୟରେ ଦୁଇ ଥର ବିବରଣୀ ଯୋଡ଼ିସାରିଲେଣି। ଗୋଟିଏ ରାୟରେ ଏତିକି ହିଁ ଯୋଡ଼ିହୁଏ।</string>

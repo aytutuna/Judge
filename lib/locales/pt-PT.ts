@@ -493,6 +493,7 @@ const ptPT: Locale = {
     "error.bad_origin": "Esse pedido veio de um sítio que não reconhecemos. Recarrega a página e tenta outra vez.",
     "error.not_found": "Não encontrámos isso.",
     "error.case_closed": "Este caso já não aceita isso.",
+    "error.seat_moved": "O teu lado foi libertado. Abre a ligação outra vez.",
     "error.case_expired": "Este convite expirou.",
     "error.appeal_used": "Já acrescentaste contexto a este caso.",
     "error.appeal_limit": "Já acrescentaste contexto a este veredicto duas vezes. É o máximo para um veredicto.",

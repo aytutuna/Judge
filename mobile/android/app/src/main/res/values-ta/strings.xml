@@ -266,6 +266,7 @@
     <string name="error_in_progress">அந்தத் தீர்ப்பு இன்னும் தயாராகிக்கொண்டிருக்கிறது. கொஞ்சம் பொறுங்கள்.</string>
     <string name="error_not_found">அதைக் கண்டுபிடிக்க முடியவில்லை.</string>
     <string name="error_case_closed">இந்த வழக்கு இனி இதை ஏற்காது.</string>
+    <string name="error_seat_moved">உங்கள் பக்கம் விடுவிக்கப்பட்டது. இணைப்பை மீண்டும் திறக்கவும்.</string>
     <string name="error_case_expired">இந்த அழைப்பு காலாவதியாகிவிட்டது.</string>
     <string name="error_appeal_used">இந்த வழக்கில் ஏற்கெனவே தகவல் சேர்த்துவிட்டீர்கள்.</string>
     <string name="error_appeal_limit">இந்தத் தீர்ப்பில் இரண்டு முறை தகவல் சேர்த்துவிட்டீர்கள். ஒரு தீர்ப்புக்கு அதுதான் அதிகபட்சம்.</string>

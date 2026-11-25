@@ -266,6 +266,7 @@
     <string name="error_in_progress">ആ വിധി ഇപ്പോഴും തയ്യാറായിക്കൊണ്ടിരിക്കുകയാണ്. അൽപം കാത്തിരിക്കൂ.</string>
     <string name="error_not_found">അത് കണ്ടെത്താനായില്ല.</string>
     <string name="error_case_closed">ഈ കേസിൽ ഇനി അത് ചെയ്യാനാകില്ല.</string>
+    <string name="error_seat_moved">നിങ്ങളുടെ വശം ഒഴിവായി. ലിങ്ക് വീണ്ടും തുറക്കൂ.</string>
     <string name="error_case_expired">ഈ ക്ഷണത്തിന്റെ കാലാവധി കഴിഞ്ഞു.</string>
     <string name="error_appeal_used">ഈ കേസിൽ നിങ്ങൾ ഇതിനകം കൂടുതൽ വിവരം ചേർത്തിട്ടുണ്ട്.</string>
     <string name="error_appeal_limit">ഈ വിധിയിൽ നിങ്ങൾ ഇതിനകം രണ്ടുതവണ വിവരം ചേർത്തുകഴിഞ്ഞു. ഒരു വിധിയിൽ അത്രയേ പറ്റൂ.</string>

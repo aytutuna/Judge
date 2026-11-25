@@ -266,6 +266,7 @@
     <string name="error_in_progress">Den domen håller fortfarande på att tas fram. Vänta en stund.</string>
     <string name="error_not_found">Vi hittade inte det.</string>
     <string name="error_case_closed">Det här fallet tar inte emot sådant längre.</string>
+    <string name="error_seat_moved">Din sida släpptes. Öppna länken igen.</string>
     <string name="error_case_expired">Inbjudan har gått ut.</string>
     <string name="error_appeal_used">Du har redan kompletterat det här fallet.</string>
     <string name="error_appeal_limit">Du har kompletterat den här domen två gånger. Fler gånger än så går inte.</string>

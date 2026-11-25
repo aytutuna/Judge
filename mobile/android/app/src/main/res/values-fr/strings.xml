@@ -271,6 +271,7 @@
     <string name="error_in_progress">Ce verdict est encore en préparation. Patiente un instant.</string>
     <string name="error_not_found">On n’a pas trouvé ce que tu cherches.</string>
     <string name="error_case_closed">Ce n’est plus possible sur ce dossier.</string>
+    <string name="error_seat_moved">Ta place a été libérée. Ouvre à nouveau le lien.</string>
     <string name="error_case_expired">Cette invitation a expiré.</string>
     <string name="error_appeal_used">Tu as déjà ajouté du contexte à ce dossier.</string>
     <string name="error_appeal_limit">Tu as déjà ajouté du contexte deux fois à ce verdict. C’est le maximum pour un verdict.</string>

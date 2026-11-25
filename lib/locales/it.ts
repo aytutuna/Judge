@@ -504,6 +504,7 @@ const it: Locale = {
     "error.bad_origin": "Questa richiesta arriva da un posto che non riconosciamo. Ricarica la pagina e riprova.",
     "error.not_found": "Non l'abbiamo trovato.",
     "error.case_closed": "Questo caso non lo accetta più.",
+    "error.seat_moved": "Il tuo lato è stato liberato. Apri di nuovo il link.",
     "error.case_expired": "Questo invito è scaduto.",
     "error.appeal_used": "Hai già aggiunto contesto a questo caso.",
     "error.appeal_limit": "Hai già aggiunto contesto a questo verdetto due volte. Più di così non si può.",

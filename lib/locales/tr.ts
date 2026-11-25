@@ -499,6 +499,7 @@ const tr: Locale = {
     "error.bad_origin": "Bu istek tanımadığımız bir yerden geldi. Sayfayı yenileyip tekrar dene.",
     "error.not_found": "Bunu bulamadık.",
     "error.case_closed": "Bu dava artık bunu kabul etmiyor.",
+    "error.seat_moved": "Tarafın serbest kaldı. Bağlantıyı yeniden aç.",
     "error.case_expired": "Bu davetin süresi doldu.",
     "error.appeal_used": "Bu davaya zaten ek bilgi ekledin.",
     "error.appeal_limit": "Bu karara iki kez bilgi ekledin. Bir karara en fazla bu kadar eklenebiliyor.",

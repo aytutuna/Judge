@@ -286,6 +286,7 @@
     <string name="error_in_progress">ما زال العمل جاريًا على هذا الحكم. انتظر قليلًا.</string>
     <string name="error_not_found">لم نجد ما تبحث عنه.</string>
     <string name="error_case_closed">هذه القضية لم تعد تقبل ذلك.</string>
+    <string name="error_seat_moved">تم تحرير مكانك. افتح الرابط مرة أخرى.</string>
     <string name="error_case_expired">انتهت صلاحية هذه الدعوة.</string>
     <string name="error_appeal_used">سبق أن أضفت توضيحًا إلى هذه القضية.</string>
     <string name="error_appeal_limit">أضفت توضيحًا إلى هذا الحكم مرتين، وهذا أقصى ما يقبله الحكم الواحد.</string>

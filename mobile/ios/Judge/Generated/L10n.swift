@@ -395,6 +395,7 @@ enum L10n {
     static func errorInProgress(_ lang: AppLang) -> String { string("error.in_progress", lang) }
     static func errorNotFound(_ lang: AppLang) -> String { string("error.not_found", lang) }
     static func errorCaseClosed(_ lang: AppLang) -> String { string("error.case_closed", lang) }
+    static func errorSeatMoved(_ lang: AppLang) -> String { string("error.seat_moved", lang) }
     static func errorCaseExpired(_ lang: AppLang) -> String { string("error.case_expired", lang) }
     static func errorAppealUsed(_ lang: AppLang) -> String { string("error.appeal_used", lang) }
     static func errorAppealLimit(_ lang: AppLang) -> String { string("error.appeal_limit", lang) }
@@ -1023,6 +1024,7 @@ enum L10n {
         "error.in_progress",
         "error.not_found",
         "error.case_closed",
+        "error.seat_moved",
         "error.case_expired",
         "error.appeal_used",
         "error.appeal_limit",

@@ -266,6 +266,7 @@
     <string name="error_in_progress">Ezen az ítéleten még dolgozunk. Várj még egy kicsit.</string>
     <string name="error_not_found">Ezt nem találtuk.</string>
     <string name="error_case_closed">Ebben az ügyben ez már nem lehetséges.</string>
+    <string name="error_seat_moved">A te oldalad felszabadult. Nyisd meg újra a linket.</string>
     <string name="error_case_expired">Ez a meghívó lejárt.</string>
     <string name="error_appeal_used">Ehhez az ügyhöz már adtál kiegészítést.</string>
     <string name="error_appeal_limit">Ehhez az ítélethez már kétszer adtál kiegészítést. Egy ítéletnél ennyi a maximum.</string>

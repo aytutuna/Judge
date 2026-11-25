@@ -276,6 +276,7 @@
     <string name="error_in_progress">Na tomto verdikte sa ešte pracuje. Daj tomu chvíľu.</string>
     <string name="error_not_found">Nepodarilo sa to nájsť.</string>
     <string name="error_case_closed">Do tohto prípadu sa to už nedá pridať.</string>
+    <string name="error_seat_moved">Tvoja strana sa uvoľnila. Otvor odkaz znova.</string>
     <string name="error_case_expired">Platnosť tejto pozvánky vypršala.</string>
     <string name="error_appeal_used">K tomuto prípadu už máš doplnený kontext.</string>
     <string name="error_appeal_limit">Kontext k tomuto verdiktu už máš doplnený dvakrát. Viac sa pri jednom verdikte nedá.</string>

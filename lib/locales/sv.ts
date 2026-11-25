@@ -492,6 +492,7 @@ const sv: Locale = {
     "error.bad_origin": "Förfrågan kom från ett ställe vi inte känner igen. Ladda om sidan och försök igen.",
     "error.not_found": "Vi hittade inte det.",
     "error.case_closed": "Det här fallet tar inte emot sådant längre.",
+    "error.seat_moved": "Din sida släpptes. Öppna länken igen.",
     "error.case_expired": "Inbjudan har gått ut.",
     "error.appeal_used": "Du har redan kompletterat det här fallet.",
     "error.appeal_limit": "Du har kompletterat den här domen två gånger. Fler gånger än så går inte.",

@@ -261,6 +261,7 @@
     <string name="error_in_progress">Phán quyết này vẫn đang được xử lý. Đợi chút nhé.</string>
     <string name="error_not_found">Không tìm thấy.</string>
     <string name="error_case_closed">Vụ này không nhận thêm nữa.</string>
+    <string name="error_seat_moved">Phía của bạn đã được nhả ra. Hãy mở lại liên kết.</string>
     <string name="error_case_expired">Lời mời này đã hết hạn.</string>
     <string name="error_appeal_used">Bạn đã bổ sung thông tin cho vụ này rồi.</string>
     <string name="error_appeal_limit">Bạn đã bổ sung thông tin cho phán quyết này hai lần. Mỗi phán quyết chỉ được bổ sung tối đa hai lần.</string>

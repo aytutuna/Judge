@@ -271,6 +271,7 @@
     <string name="error_in_progress">Verdictul ăsta e încă în lucru. Mai așteaptă puțin.</string>
     <string name="error_not_found">N-am găsit asta.</string>
     <string name="error_case_closed">Cazul ăsta nu mai permite asta.</string>
+    <string name="error_seat_moved">Partea ta a fost eliberată. Deschide din nou linkul.</string>
     <string name="error_case_expired">Invitația a expirat.</string>
     <string name="error_appeal_used">Ai adăugat deja context la acest caz.</string>
     <string name="error_appeal_limit">Ai adăugat deja de două ori context la acest verdict. Mai mult nu se poate pentru un verdict.</string>

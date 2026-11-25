@@ -492,6 +492,7 @@ const pl: Locale = {
     "error.bad_origin": "To żądanie przyszło z nieznanego miejsca. Odśwież stronę i spróbuj ponownie.",
     "error.not_found": "Nie udało się tego znaleźć.",
     "error.case_closed": "W tej sprawie nie da się już tego zrobić.",
+    "error.seat_moved": "Twoja strona została zwolniona. Otwórz link ponownie.",
     "error.case_expired": "To zaproszenie wygasło.",
     "error.appeal_used": "Twój kontekst do tej sprawy został już dodany.",
     "error.appeal_limit": "Kontekst do tego werdyktu dodano już dwa razy. To limit dla jednego werdyktu.",

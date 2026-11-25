@@ -261,6 +261,7 @@
     <string name="error_in_progress">Keputusan itu masih sedang disediakan. Tunggu sekejap.</string>
     <string name="error_not_found">Kami tidak menjumpainya.</string>
     <string name="error_case_closed">Kes ini tidak lagi menerimanya.</string>
+    <string name="error_seat_moved">Pihak anda telah dilepaskan. Buka pautan sekali lagi.</string>
     <string name="error_case_expired">Jemputan ini sudah tamat tempoh.</string>
     <string name="error_appeal_used">Anda sudah menambah konteks pada kes ini.</string>
     <string name="error_appeal_limit">Anda sudah menambah konteks pada keputusan ini dua kali. Itu had untuk satu keputusan.</string>

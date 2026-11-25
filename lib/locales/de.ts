@@ -504,6 +504,7 @@ const de: Locale = {
       "Diese Anfrage kam von einer Quelle, die wir nicht kennen. Lade die Seite neu und versuch es noch mal.",
     "error.not_found": "Das konnten wir nicht finden.",
     "error.case_closed": "Bei diesem Fall geht das nicht mehr.",
+    "error.seat_moved": "Deine Seite wurde freigegeben. Öffne den Link noch einmal.",
     "error.case_expired": "Diese Einladung ist abgelaufen.",
     "error.appeal_used": "Du hast diesem Fall schon Kontext hinzugefügt.",
     "error.appeal_limit": "Du hast diesem Urteil schon zweimal Kontext hinzugefügt. Mehr geht pro Urteil nicht.",

@@ -271,6 +271,7 @@
     <string name="error_in_progress">Na toj presudi još se radi. Pričekaj malo.</string>
     <string name="error_not_found">Nismo to pronašli.</string>
     <string name="error_case_closed">Ovaj slučaj to više ne prima.</string>
+    <string name="error_seat_moved">Tvoja strana je oslobođena. Ponovno otvori poveznicu.</string>
     <string name="error_case_expired">Ovaj je poziv istekao.</string>
     <string name="error_appeal_used">Tvoj kontekst za ovaj slučaj već je dodan.</string>
     <string name="error_appeal_limit">Ovoj je presudi kontekst dodan već dvaput. To je najviše što jedna presuda dopušta.</string>

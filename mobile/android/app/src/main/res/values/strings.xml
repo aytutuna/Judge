@@ -266,6 +266,7 @@
     <string name="error_in_progress">That verdict is still being worked on. Give it a moment.</string>
     <string name="error_not_found">We couldn\'t find that.</string>
     <string name="error_case_closed">This case isn\'t taking that anymore.</string>
+    <string name="error_seat_moved">Your side was freed. Open the link again.</string>
     <string name="error_case_expired">This invite has expired.</string>
     <string name="error_appeal_used">You\'ve already added context to this case.</string>
     <string name="error_appeal_limit">You\'ve added context to this verdict twice. That\'s as many times as one verdict takes.</string>

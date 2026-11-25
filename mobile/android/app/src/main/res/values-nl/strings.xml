@@ -266,6 +266,7 @@
     <string name="error_in_progress">Aan die uitspraak wordt nog gewerkt. Even geduld.</string>
     <string name="error_not_found">Dat konden we niet vinden.</string>
     <string name="error_case_closed">Deze zaak neemt dat niet meer aan.</string>
+    <string name="error_seat_moved">Jouw kant is vrijgegeven. Open de link opnieuw.</string>
     <string name="error_case_expired">Deze uitnodiging is verlopen.</string>
     <string name="error_appeal_used">Je hebt bij deze zaak al iets aangevuld.</string>
     <string name="error_appeal_limit">Je hebt deze uitspraak al twee keer aangevuld. Vaker kan niet bij één uitspraak.</string>

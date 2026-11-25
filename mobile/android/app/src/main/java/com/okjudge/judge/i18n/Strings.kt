@@ -328,6 +328,7 @@ class Strings(private val res: Resources) {
     val errorInProgress: String get() = res.getString(R.string.error_in_progress)
     val errorNotFound: String get() = res.getString(R.string.error_not_found)
     val errorCaseClosed: String get() = res.getString(R.string.error_case_closed)
+    val errorSeatMoved: String get() = res.getString(R.string.error_seat_moved)
     val errorCaseExpired: String get() = res.getString(R.string.error_case_expired)
     val errorAppealUsed: String get() = res.getString(R.string.error_appeal_used)
     val errorAppealLimit: String get() = res.getString(R.string.error_appeal_limit)
@@ -955,6 +956,7 @@ class Strings(private val res: Resources) {
             "error.in_progress" -> R.string.error_in_progress
             "error.not_found" -> R.string.error_not_found
             "error.case_closed" -> R.string.error_case_closed
+            "error.seat_moved" -> R.string.error_seat_moved
             "error.case_expired" -> R.string.error_case_expired
             "error.appeal_used" -> R.string.error_appeal_used
             "error.appeal_limit" -> R.string.error_appeal_limit
