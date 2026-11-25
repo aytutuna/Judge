@@ -175,6 +175,18 @@ describe("RespondScreen, taking a seat", () => {
     expect(screen.queryByRole("button", { name: answerLabel })).toBeNull();
   });
 
+  it("a 401 on the tap that the viewer lookup does not confirm shows the sign-in message", async () => {
+    route = (c) => {
+      if (c.path === BASE) return reply(200, { case: RESPONDENT.form });
+      if (c.path === `${BASE}/open`) return reply(401, { code: "signin_required" });
+      return null;
+    };
+    await open();
+    await tapAnswer();
+    expect((await screen.findByRole("alert")).textContent).toBe(t("en", "error.signin_required"));
+    expect(screen.getByRole("button", { name: answerLabel })).toBeTruthy();
+  });
+
   it("a full invite answers 409 on the tap and reads closed", async () => {
     route = (c) => {
       if (c.path === BASE) return reply(200, { case: RESPONDENT.form });
@@ -413,7 +425,9 @@ describe("RespondScreen, a lost seat that cannot be reopened", () => {
       fireEvent.click(send());
     });
     await waitFor(() => expect(opens).toBe(2));
-    expect(await screen.findByRole("alert")).toBeTruthy();
+    const alert = await screen.findByRole("alert");
+    expect(alert.textContent).toBe(t("en", "error.case_closed"));
+    expect(alert.textContent).not.toBe(t("en", "error.seat_moved"));
     expect((screen.getByPlaceholderText(t("en", "respond.placeholder")) as HTMLTextAreaElement).value).toBe(TYPED);
     expect(mainEl().textContent).not.toContain(t("en", "respond.closed"));
   });

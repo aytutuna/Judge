@@ -22,7 +22,7 @@ import {
 } from "@/lib/respondent-store";
 import type { NameMapping } from "@/lib/types";
 import { keyHolder, useCase } from "@/lib/use-case";
-import { refreshViewer, useViewer } from "@/lib/use-viewer";
+import { refreshViewer, useViewer, viewerSignedIn } from "@/lib/use-viewer";
 import { JudgingOverlay } from "../JudgingOverlay";
 import { loadAnswered } from "@/lib/history-store";
 import { updateHistoryCase } from "../shell/useHistory";
@@ -110,7 +110,8 @@ function useRespondForm(
   suggestedName: string | null,
   signedIn: boolean,
   shownParty: CaseView["yourParty"] | null,
-  onSeatMoved: () => Promise<boolean | null>,
+  /** True once a new seat is taken; else the reason it could not be. */
+  onSeatMoved: () => Promise<true | string>,
 ): RespondForm {
   const [text, setText] = useState("");
   const lastBeat = useRef(0);
@@ -167,12 +168,13 @@ function useRespondForm(
       if (!res.ok || !ok?.case) {
         // The side moved: take the page to the new one, keeping what was typed.
         const code = (json as { code?: unknown } | null)?.code;
-        if (code === "seat_moved" && (await onSeatMoved())) {
+        const reopened = code === "seat_moved" ? await onSeatMoved() : null;
+        if (reopened === true) {
           setMoved(true);
           return;
         }
         trackApiError(json, res.status);
-        setError(apiErrorMessage(lang, json, res.status));
+        setError(reopened ?? apiErrorMessage(lang, json, res.status));
         setTurnstileKey((k) => k + 1);
         return;
       }
@@ -598,7 +600,7 @@ export function RespondScreen({ token }: { token: string }) {
   const [opening, setOpening] = useState(false);
   const [openError, setOpenError] = useState<string | null>(null);
   // Takes the next open side for this account; the person is told when none is left.
-  async function open(keepForm = false): Promise<boolean | null> {
+  async function open(keepForm = false): Promise<true | string> {
     try {
       const res = await apiFetch(`${base}/open`, { method: "POST" });
       const json = (await res.json().catch(() => null)) as OpenResponse | null;
@@ -607,14 +609,18 @@ export function RespondScreen({ token }: { token: string }) {
         setSeated(true);
         return true;
       }
-      if (res.status === 401) void refreshViewer();
-      // After a lost seat the typed text stays on the form, which shows the error.
-      else if (res.status === 409 && !keepForm) setFull(true);
-      else setOpenError(apiErrorMessage(lang, json, res.status));
-      return false;
+      const message = apiErrorMessage(lang, json, res.status);
+      if (res.status === 401) {
+        await refreshViewer();
+        // Still signed in as far as the page can tell (the lookup failed): say so.
+        if (viewerSignedIn()) setOpenError(message);
+      } else if (res.status === 409 && !keepForm) setFull(true);
+      else setOpenError(message);
+      return message;
     } catch {
-      setOpenError(t(lang, "errorFallback"));
-      return null;
+      const message = t(lang, "errorFallback");
+      setOpenError(message);
+      return message;
     }
   }
   async function answer() {
