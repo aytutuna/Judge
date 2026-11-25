@@ -7,6 +7,8 @@
 # Options:
 #   --branch NAME    deploy another branch (default: main)
 #   --repo URL       clone another repository (default: the Judge repo)
+#   --skip-ci-check  deploy even if the commit has no green Web run on GitHub
+#                    (update.sh refuses it otherwise)
 #   --reconfigure    ask for the API key and site address again (e.g. to move
 #                    the site to your own domain, with or without Cloudflare)
 #
@@ -621,7 +623,7 @@ install_shortcuts() {
 }
 
 main() {
-  local repo_url=$REPO_URL_DEFAULT branch=$BRANCH_DEFAULT reconfigure=0
+  local repo_url=$REPO_URL_DEFAULT branch=$BRANCH_DEFAULT reconfigure=0 skip_ci=()
   while (($#)); do
     case $1 in
       --branch)
@@ -635,6 +637,7 @@ main() {
         shift
         ;;
       --reconfigure) reconfigure=1 ;;
+      --skip-ci-check) skip_ci=(--skip-ci-check) ;;
       -h | --help)
         awk 'NR > 1 && /^#/ { sub(/^# ?/, ""); print; next } NR > 1 { exit }' "${BASH_SOURCE[0]}"
         exit 0
@@ -666,7 +669,7 @@ main() {
   install_shortcuts
 
   log "First build and start (update.sh)"
-  bash "$REPO_DIR/deploy/aws-lightsail/update.sh" --force --branch "$branch"
+  bash "$REPO_DIR/deploy/aws-lightsail/update.sh" --force --branch "$branch" "${skip_ci[@]}"
 
   local url
   url=$(get_env NEXT_PUBLIC_SITE_URL)
