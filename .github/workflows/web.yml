@@ -1,19 +1,12 @@
 # Lint, types, tests, generated files and a production build of the website
 # and API server. deploy/aws-lightsail/update.sh refuses to deploy a commit
-# that has no successful run of this workflow.
+# that has no successful run of this workflow, so it runs on every push,
+# mobile-only ones included.
 name: Web
 
 on:
   push:
-    paths-ignore:
-      - "mobile/**"
-      - ".github/workflows/mobile.yml"
-      - ".github/workflows/testflight.yml"
   pull_request:
-    paths-ignore:
-      - "mobile/**"
-      - ".github/workflows/mobile.yml"
-      - ".github/workflows/testflight.yml"
 
 concurrency:
   group: web-${{ github.ref }}
