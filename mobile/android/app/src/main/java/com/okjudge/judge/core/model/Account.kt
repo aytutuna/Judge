@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 data class SignInProviders(
     val apple: Boolean = false,
     val google: Boolean = false,
-    /** Email magic link: the website's flow, not used by the app. */
+    /** Email sign-in is configured (the codes: see [emailCode]). */
     val email: Boolean = false,
     /** Email one-time code: the app's email flow. */
     val emailCode: Boolean = false,

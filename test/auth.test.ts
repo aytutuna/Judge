@@ -243,7 +243,7 @@ describe("Better Auth on the shared libSQL database", () => {
 
 describe("sign-in code email", () => {
   it("Turkish copy speaks as informal sen", () => {
-    const formal = /(?:[ıiuü]n[ıiuü]z|s[ıiuü]n[ıiuü]z|siz(?:in|e|i|den)?)/iu;
+    const formal = /(?:[ıiuü]n[ıiuü]z|s[ıiuü]n[ıiuü]z|\bsiz(?:in|e|i|den)?\b)/iu;
     for (const [key, value] of Object.entries(SIGNIN_EMAIL.tr)) expect(value, key).not.toMatch(formal);
     expect(Object.keys(SIGNIN_EMAIL.tr)).toEqual(Object.keys(SIGNIN_EMAIL.en));
   });

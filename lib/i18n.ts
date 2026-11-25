@@ -942,8 +942,8 @@ const EN_PLURALS: Partial<Record<CountKey, PluralForms>> = {
 
 export type PluralForms = Partial<Record<Exclude<Intl.LDMLPluralRule, "other">, string>>;
 
-/** Sign-in code and "the other side answered" email copy. The case notice names no one and quotes nothing
- * from the case. */
+/** Sign-in code and "the other side answered" email copy. The case notice
+ * names no one and quotes nothing from the case. */
 export type EmailCopy = {
   signInCode: { subject: string; intro: string; expiry: string; ignore: string };
   caseReady: { subject: string; intro: string; button: string; note: string };

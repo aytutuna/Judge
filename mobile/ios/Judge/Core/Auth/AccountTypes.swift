@@ -5,7 +5,7 @@ import Foundation
 struct SignInProviders: Decodable, Sendable, Equatable {
     var apple = false
     var google = false
-    /// Email magic link (website only).
+    /// Email sign-in is configured (the codes: see `emailCode`).
     var email = false
     /// Email one-time code (the apps).
     var emailCode = false
