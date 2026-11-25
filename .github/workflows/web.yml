@@ -50,5 +50,14 @@ jobs:
       - name: Example data is current
         run: npm run check:examples
 
+      - name: Fixtures are current
+        run: npx tsx mobile/shared/fixtures/export-fixtures.ts --check
+
+      - name: Venue list is current
+        run: npm run check:venues
+
+      - name: Scene bundle is current
+        run: npx tsx mobile/shared/scene/build-scene.ts --check
+
       - name: Build
         run: npm run build
