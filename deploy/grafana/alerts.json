@@ -1323,7 +1323,7 @@
           },
           "annotations": {
             "summary": "The kernel killed a process for lack of memory.",
-            "description": "Most likely the app at its 400 MB cap. On the server: journalctl -k --since -1h; systemctl status verdict. If it keeps happening, find what grows."
+            "description": "Most likely the app at its 2.5 GB cap. On the server: journalctl -k --since -1h; systemctl status verdict. If it keeps happening, find what grows."
           },
           "isPaused": false
         },

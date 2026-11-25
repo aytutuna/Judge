@@ -23,7 +23,7 @@ EnvironmentFile=/etc/verdict/verdict.env
 UnsetEnvironment=SENTRY_AUTH_TOKEN
 # V8 heap cap, well under MemoryMax so Node collects garbage before the
 # kernel steps in.
-Environment=NODE_OPTIONS=--max-old-space-size=256
+Environment=NODE_OPTIONS=--max-old-space-size=1536
 Environment=NEXT_TELEMETRY_DISABLED=1
 # Listen on loopback only: the internet reaches the app through Caddy, never
 # directly, so X-Forwarded-For is always Caddy's.
@@ -35,9 +35,9 @@ RestartSec=5
 # within about 5 minutes, so wait that long instead of killing it; a stop or
 # restart takes longer only while something is judging.
 TimeoutStopSec=320
-# 512 MB instance: leave room for Caddy and the OS.
-MemoryHigh=350M
-MemoryMax=400M
+# 7.6 GB server: leave room for Caddy, the build and the OS.
+MemoryHigh=2G
+MemoryMax=2500M
 
 # Hardening. The whole file system is read-only for the app except its
 # database directory and the active release's .next directory
