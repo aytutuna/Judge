@@ -584,6 +584,9 @@ const nl: Locale = {
     "respond.placeholder":
       "Wat is er gebeurd, vanuit jou gezien? Schrijf het zoals je het aan een vriend zou vertellen.",
     "respond.submit": "Mijn kant versturen",
+    "respond.answerAs": "Antwoorden als {name}",
+    "respond.switchAccount": "Ben jij het niet? Wissel van account",
+    "respond.moved": "Je plek is veranderd. Verstuur opnieuw.",
     "case.write.title": "Jouw kant",
     "case.write.placeholder": "Wat is het probleem?",
     "case.write.lead": "De rechters beginnen zodra jullie allebei hebben geschreven.",

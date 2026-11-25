@@ -341,6 +341,9 @@
     <string name="respond_label">Versimu</string>
     <string name="respond_placeholder">Apa yang terjadi, dari sudut pandangmu? Tulis seperti kamu cerita ke teman.</string>
     <string name="respond_submit">Kirim versiku</string>
+    <string name="respond_answer_as">Jawab sebagai %1$s</string>
+    <string name="respond_switch_account">Bukan kamu? Ganti akun</string>
+    <string name="respond_moved">Tempatmu berubah. Kirim lagi.</string>
     <string name="case_write_title">Versimu</string>
     <string name="case_write_placeholder">Apa masalahnya?</string>
     <string name="case_write_lead">Hakim mulai setelah kalian berdua menulis.</string>

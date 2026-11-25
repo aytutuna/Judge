@@ -351,6 +351,9 @@
     <string name="respond_label">Partea ta</string>
     <string name="respond_placeholder">Ce s-a întâmplat, din punctul tău de vedere? Scrie așa cum i-ai povesti unui prieten.</string>
     <string name="respond_submit">Trimite partea mea</string>
+    <string name="respond_answer_as">Răspunde ca %1$s</string>
+    <string name="respond_switch_account">Nu ești tu? Schimbă contul</string>
+    <string name="respond_moved">Locul tău s-a schimbat. Trimite din nou.</string>
     <string name="case_write_title">Partea ta</string>
     <string name="case_write_placeholder">Care e problema?</string>
     <string name="case_write_lead">Judecătorii încep după ce ați scris amândoi.</string>

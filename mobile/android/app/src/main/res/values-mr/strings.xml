@@ -346,6 +346,9 @@
     <string name="respond_label">तुमची बाजू</string>
     <string name="respond_placeholder">तुमच्या नजरेतून काय घडले? मित्राला सांगाल तसे लिहा.</string>
     <string name="respond_submit">माझी बाजू पाठवा</string>
+    <string name="respond_answer_as">%1$s म्हणून उत्तर द्या</string>
+    <string name="respond_switch_account">तुम्ही नाही? खाते बदला</string>
+    <string name="respond_moved">तुमची जागा बदलली. पुन्हा पाठवा.</string>
     <string name="case_write_title">तुमची बाजू</string>
     <string name="case_write_placeholder">समस्या काय आहे?</string>
     <string name="case_write_lead">दोघांनी लिहिल्यावर परीक्षक सुरू करतील.</string>

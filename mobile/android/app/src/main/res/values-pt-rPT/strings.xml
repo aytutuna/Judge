@@ -351,6 +351,9 @@
     <string name="respond_label">O teu lado</string>
     <string name="respond_placeholder">O que aconteceu, do teu ponto de vista? Escreve como contarias a um amigo.</string>
     <string name="respond_submit">Enviar o meu lado</string>
+    <string name="respond_answer_as">Responder como %1$s</string>
+    <string name="respond_switch_account">Não és tu? Mudar de conta</string>
+    <string name="respond_moved">O teu lugar mudou. Envia outra vez.</string>
     <string name="case_write_title">O teu lado</string>
     <string name="case_write_placeholder">Qual é o problema?</string>
     <string name="case_write_lead">Os juízes começam quando os dois tiverem escrito.</string>

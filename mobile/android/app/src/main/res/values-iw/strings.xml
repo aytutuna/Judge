@@ -351,6 +351,9 @@
     <string name="respond_label">הצד שלך</string>
     <string name="respond_placeholder">מה קרה, מנקודת המבט שלך? אפשר לכתוב כמו בהודעה לחבר.</string>
     <string name="respond_submit">לשלוח את הצד שלי</string>
+    <string name="respond_answer_as">לענות בתור %1$s</string>
+    <string name="respond_switch_account">זה לא החשבון שלך? להחליף חשבון</string>
+    <string name="respond_moved">המקום שלך השתנה. אפשר לשלוח שוב.</string>
     <string name="case_write_title">הצד שלך</string>
     <string name="case_write_placeholder">מה הבעיה?</string>
     <string name="case_write_lead">השופטים מתחילים כששניכם כתבתם.</string>

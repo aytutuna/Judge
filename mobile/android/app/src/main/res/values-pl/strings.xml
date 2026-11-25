@@ -356,6 +356,9 @@
     <string name="respond_label">Twoja wersja</string>
     <string name="respond_placeholder">Co się stało z twojej perspektywy? Napisz to tak, jak opowiadasz znajomym.</string>
     <string name="respond_submit">Wyślij moją wersję</string>
+    <string name="respond_answer_as">Odpowiedz jako %1$s</string>
+    <string name="respond_switch_account">To nie ty? Zmień konto</string>
+    <string name="respond_moved">Twoje miejsce się zmieniło. Wyślij jeszcze raz.</string>
     <string name="case_write_title">Twoja wersja</string>
     <string name="case_write_placeholder">O co chodzi?</string>
     <string name="case_write_lead">Sędziowie zaczną, gdy oboje napiszecie.</string>

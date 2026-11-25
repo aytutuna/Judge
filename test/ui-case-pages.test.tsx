@@ -47,6 +47,7 @@ const form: RespondForm = {
   turnstileKey: 0,
   sending: false,
   error: null,
+  moved: false,
   canSubmit: false,
   submit: async () => {},
 };
@@ -307,8 +308,8 @@ describe("respondent page", () => {
     const html = respondent(waiting);
     expect(html).toContain(esc(t("en", "respond.sentWaiting")));
     expect(html).not.toContain("<textarea");
-    // Once the owner has written, the answer is judging or closed as before.
-    expect(respondStage({ ...waiting, ownerSideMissing: false })).toBe("closed");
+    // Others may still be missing when the owner has written: the answerer keeps waiting.
+    expect(respondStage({ ...waiting, ownerSideMissing: false })).toBe("waiting");
   });
 
   it("an answer that expired unread keeps the expired note and the removal; a removed one says so", () => {

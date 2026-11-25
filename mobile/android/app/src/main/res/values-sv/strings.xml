@@ -346,6 +346,9 @@
     <string name="respond_label">Din sida</string>
     <string name="respond_placeholder">Vad hände, sett från ditt håll? Skriv som om du berättade för en kompis.</string>
     <string name="respond_submit">Skicka min sida</string>
+    <string name="respond_answer_as">Svara som %1$s</string>
+    <string name="respond_switch_account">Inte du? Byt konto</string>
+    <string name="respond_moved">Din plats har ändrats. Skicka igen.</string>
     <string name="case_write_title">Din sida</string>
     <string name="case_write_placeholder">Vad är problemet?</string>
     <string name="case_write_lead">Domarna börjar när ni båda har skrivit.</string>

@@ -346,6 +346,9 @@
     <string name="respond_label">Jouw kant</string>
     <string name="respond_placeholder">Wat is er gebeurd, vanuit jou gezien? Schrijf het zoals je het aan een vriend zou vertellen.</string>
     <string name="respond_submit">Mijn kant versturen</string>
+    <string name="respond_answer_as">Antwoorden als %1$s</string>
+    <string name="respond_switch_account">Ben jij het niet? Wissel van account</string>
+    <string name="respond_moved">Je plek is veranderd. Verstuur opnieuw.</string>
     <string name="case_write_title">Jouw kant</string>
     <string name="case_write_placeholder">Wat is het probleem?</string>
     <string name="case_write_lead">De rechters beginnen zodra jullie allebei hebben geschreven.</string>

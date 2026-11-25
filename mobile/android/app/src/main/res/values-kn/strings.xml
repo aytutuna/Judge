@@ -346,6 +346,9 @@
     <string name="respond_label">ನಿಮ್ಮ ಕಡೆಯ ಮಾತು</string>
     <string name="respond_placeholder">ನಿಮ್ಮ ದೃಷ್ಟಿಯಲ್ಲಿ ಏನಾಯಿತು? ಗೆಳೆಯರಿಗೆ ಹೇಳುವ ಹಾಗೆ ಬರೆಯಿರಿ.</string>
     <string name="respond_submit">ನನ್ನ ಮಾತು ಕಳುಹಿಸಿ</string>
+    <string name="respond_answer_as">%1$s ಆಗಿ ಉತ್ತರಿಸಿ</string>
+    <string name="respond_switch_account">ನೀವಲ್ಲವೇ? ಖಾತೆ ಬದಲಿಸಿ</string>
+    <string name="respond_moved">ನಿಮ್ಮ ಜಾಗ ಬದಲಾಗಿದೆ. ಮತ್ತೆ ಕಳುಹಿಸಿ.</string>
     <string name="case_write_title">ನಿಮ್ಮ ಕಡೆ</string>
     <string name="case_write_placeholder">ಸಮಸ್ಯೆ ಏನು?</string>
     <string name="case_write_lead">ಇಬ್ಬರೂ ಬರೆದ ಮೇಲೆ ತೀರ್ಪುಗಾರರು ಶುರು ಮಾಡುತ್ತಾರೆ.</string>

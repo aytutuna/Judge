@@ -346,6 +346,9 @@
     <string name="respond_label">તમારી વાત</string>
     <string name="respond_placeholder">તમારી નજરે શું થયું? કોઈ મિત્રને કહેતા હો એમ લખો.</string>
     <string name="respond_submit">મારી વાત મોકલો</string>
+    <string name="respond_answer_as">%1$s તરીકે જવાબ આપો</string>
+    <string name="respond_switch_account">તમે નથી? એકાઉન્ટ બદલો</string>
+    <string name="respond_moved">તમારી જગ્યા બદલાઈ ગઈ. ફરી મોકલો.</string>
     <string name="case_write_title">તમારી વાત</string>
     <string name="case_write_placeholder">સમસ્યા શું છે?</string>
     <string name="case_write_lead">બંને લખી લે પછી જજ શરૂ કરશે.</string>

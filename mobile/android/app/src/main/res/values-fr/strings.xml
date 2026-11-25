@@ -351,6 +351,9 @@
     <string name="respond_label">Ta version</string>
     <string name="respond_placeholder">Qu’est-ce qui s’est passé, de ton point de vue ? Écris-le comme si tu le racontais à un proche.</string>
     <string name="respond_submit">Envoyer ma version</string>
+    <string name="respond_answer_as">Répondre en tant que %1$s</string>
+    <string name="respond_switch_account">Ce n’est pas toi ? Changer de compte</string>
+    <string name="respond_moved">Ta place a changé. Envoie-le de nouveau.</string>
     <string name="case_write_title">Ta version</string>
     <string name="case_write_placeholder">C’est quoi, le problème ?</string>
     <string name="case_write_lead">Les juges démarrent dès que vous avez écrit tous les deux.</string>

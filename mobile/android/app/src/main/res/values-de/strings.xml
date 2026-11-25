@@ -346,6 +346,9 @@
     <string name="respond_label">Deine Seite</string>
     <string name="respond_placeholder">Was ist aus deiner Sicht passiert? Schreib es so, wie du es Freunden erzählen würdest.</string>
     <string name="respond_submit">Meine Seite abschicken</string>
+    <string name="respond_answer_as">Als %1$s antworten</string>
+    <string name="respond_switch_account">Nicht du? Konto wechseln</string>
+    <string name="respond_moved">Dein Platz hat sich geändert. Schick es noch einmal ab.</string>
     <string name="case_write_title">Deine Seite</string>
     <string name="case_write_placeholder">Was ist das Problem?</string>
     <string name="case_write_lead">Die Richter starten, sobald ihr beide geschrieben habt.</string>

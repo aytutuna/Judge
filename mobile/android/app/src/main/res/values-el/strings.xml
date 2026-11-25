@@ -346,6 +346,9 @@
     <string name="respond_label">Η πλευρά σου</string>
     <string name="respond_placeholder">Τι έγινε, από τη δική σου σκοπιά; Γράψ\' το όπως θα το έλεγες σε έναν φίλο.</string>
     <string name="respond_submit">Στείλε την πλευρά μου</string>
+    <string name="respond_answer_as">Απάντησε ως %1$s</string>
+    <string name="respond_switch_account">Δεν είσαι εσύ; Άλλαξε λογαριασμό</string>
+    <string name="respond_moved">Η θέση σου άλλαξε. Στείλε το ξανά.</string>
     <string name="case_write_title">Η πλευρά σου</string>
     <string name="case_write_placeholder">Ποιο είναι το πρόβλημα;</string>
     <string name="case_write_lead">Οι κριτές ξεκινούν όταν γράψετε και οι δύο.</string>

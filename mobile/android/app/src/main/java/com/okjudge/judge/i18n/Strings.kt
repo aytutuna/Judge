@@ -408,6 +408,9 @@ class Strings(private val res: Resources) {
     val respondLabel: String get() = res.getString(R.string.respond_label)
     val respondPlaceholder: String get() = res.getString(R.string.respond_placeholder)
     val respondSubmit: String get() = res.getString(R.string.respond_submit)
+    fun respondAnswerAs(name: String): String = res.getString(R.string.respond_answer_as, name)
+    val respondSwitchAccount: String get() = res.getString(R.string.respond_switch_account)
+    val respondMoved: String get() = res.getString(R.string.respond_moved)
     val caseWriteTitle: String get() = res.getString(R.string.case_write_title)
     val caseWritePlaceholder: String get() = res.getString(R.string.case_write_placeholder)
     val caseWriteLead: String get() = res.getString(R.string.case_write_lead)
@@ -1031,6 +1034,8 @@ class Strings(private val res: Resources) {
             "respond.label" -> R.string.respond_label
             "respond.placeholder" -> R.string.respond_placeholder
             "respond.submit" -> R.string.respond_submit
+            "respond.switchAccount" -> R.string.respond_switch_account
+            "respond.moved" -> R.string.respond_moved
             "case.write.title" -> R.string.case_write_title
             "case.write.placeholder" -> R.string.case_write_placeholder
             "case.write.lead" -> R.string.case_write_lead

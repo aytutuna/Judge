@@ -356,6 +356,9 @@
     <string name="respond_label">Ваша версия</string>
     <string name="respond_placeholder">Что произошло, на ваш взгляд? Пишите так, как рассказали бы другу.</string>
     <string name="respond_submit">Отправить мою версию</string>
+    <string name="respond_answer_as">Ответить как %1$s</string>
+    <string name="respond_switch_account">Это не вы? Сменить аккаунт</string>
+    <string name="respond_moved">Ваше место изменилось. Отправьте ещё раз.</string>
     <string name="case_write_title">Ваша версия</string>
     <string name="case_write_placeholder">В чём проблема?</string>
     <string name="case_write_lead">Судьи начнут, когда напишете оба.</string>

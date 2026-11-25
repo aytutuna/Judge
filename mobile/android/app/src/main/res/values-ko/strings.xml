@@ -341,6 +341,9 @@
     <string name="respond_label">내 입장</string>
     <string name="respond_placeholder">무슨 일이 있었는지 내 입장에서 써 주세요. 친구한테 털어놓듯이요.</string>
     <string name="respond_submit">내 입장 보내기</string>
+    <string name="respond_answer_as">%1$s(으)로 답하기</string>
+    <string name="respond_switch_account">본인이 아닌가요? 계정 바꾸기</string>
+    <string name="respond_moved">자리가 바뀌었어요. 다시 보내 주세요.</string>
     <string name="case_write_title">내 입장</string>
     <string name="case_write_placeholder">무슨 일이에요?</string>
     <string name="case_write_lead">두 사람 모두 쓰면 판사들이 시작해요.</string>

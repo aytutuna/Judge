@@ -346,6 +346,9 @@
     <string name="respond_label">ଆପଣଙ୍କ କଥା</string>
     <string name="respond_placeholder">ଆପଣଙ୍କ ନଜରରେ କ\'ଣ ହେଲା? ସାଙ୍ଗକୁ କହିଲା ପରି ଲେଖନ୍ତୁ।</string>
     <string name="respond_submit">ମୋ କଥା ପଠାନ୍ତୁ</string>
+    <string name="respond_answer_as">%1$s ଭାବେ ଉତ୍ତର ଦିଅନ୍ତୁ</string>
+    <string name="respond_switch_account">ଆପଣ ନୁହଁନ୍ତି? ଖାତା ବଦଳାନ୍ତୁ</string>
+    <string name="respond_moved">ଆପଣଙ୍କ ସ୍ଥାନ ବଦଳିଗଲା। ପୁଣି ପଠାନ୍ତୁ।</string>
     <string name="case_write_title">ଆପଣଙ୍କ କଥା</string>
     <string name="case_write_placeholder">ସମସ୍ୟା କ\'ଣ?</string>
     <string name="case_write_lead">ଦୁହେଁ ଲେଖିଲେ ବିଚାରକମାନେ ଆରମ୍ଭ କରିବେ।</string>

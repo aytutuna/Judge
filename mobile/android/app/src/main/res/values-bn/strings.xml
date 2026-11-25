@@ -346,6 +346,9 @@
     <string name="respond_label">আপনার বক্তব্য</string>
     <string name="respond_placeholder">আপনার চোখে কী ঘটেছে? বন্ধুকে যেভাবে বলতেন, সেভাবে লিখুন।</string>
     <string name="respond_submit">আমার বক্তব্য পাঠান</string>
+    <string name="respond_answer_as">%1$s হিসেবে উত্তর দিন</string>
+    <string name="respond_switch_account">আপনি নন? অ্যাকাউন্ট বদলান</string>
+    <string name="respond_moved">আপনার জায়গা বদলে গেছে। আবার পাঠান।</string>
     <string name="case_write_title">আপনার বক্তব্য</string>
     <string name="case_write_placeholder">সমস্যাটা কী?</string>
     <string name="case_write_lead">দুজনের লেখা হলে বিচারকেরা শুরু করবেন।</string>

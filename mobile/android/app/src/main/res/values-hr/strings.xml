@@ -351,6 +351,9 @@
     <string name="respond_label">Tvoja strana</string>
     <string name="respond_placeholder">Što se dogodilo, iz tvoje perspektive? Napiši to kao da pričaš prijatelju.</string>
     <string name="respond_submit">Pošalji svoju stranu</string>
+    <string name="respond_answer_as">Odgovori kao %1$s</string>
+    <string name="respond_switch_account">Nisi ti? Promijeni račun</string>
+    <string name="respond_moved">Tvoje se mjesto promijenilo. Pošalji ponovno.</string>
     <string name="case_write_title">Tvoja strana</string>
     <string name="case_write_placeholder">Što je problem?</string>
     <string name="case_write_lead">Suci počinju kad oboje napišete.</string>

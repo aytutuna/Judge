@@ -346,6 +346,9 @@
     <string name="respond_label">உங்கள் தரப்பு</string>
     <string name="respond_placeholder">உங்கள் பார்வையில் என்ன நடந்தது? ஒரு நண்பரிடம் சொல்வது போல் எழுதுங்கள்.</string>
     <string name="respond_submit">என் தரப்பை அனுப்பு</string>
+    <string name="respond_answer_as">%1$s ஆக பதிலளிக்கவும்</string>
+    <string name="respond_switch_account">நீங்கள் இல்லையா? கணக்கை மாற்றவும்</string>
+    <string name="respond_moved">உங்கள் இடம் மாறியது. மீண்டும் அனுப்பவும்.</string>
     <string name="case_write_title">உங்கள் தரப்பு</string>
     <string name="case_write_placeholder">என்ன பிரச்சினை?</string>
     <string name="case_write_lead">இருவரும் எழுதியதும் நடுவர்கள் தொடங்குவார்கள்.</string>

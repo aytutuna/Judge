@@ -341,6 +341,9 @@
     <string name="respond_label">Phía bạn</string>
     <string name="respond_placeholder">Theo bạn, chuyện gì đã xảy ra? Cứ viết như đang kể cho bạn bè nghe.</string>
     <string name="respond_submit">Gửi lời kể</string>
+    <string name="respond_answer_as">Trả lời với tên %1$s</string>
+    <string name="respond_switch_account">Không phải bạn? Đổi tài khoản</string>
+    <string name="respond_moved">Chỗ của bạn đã đổi. Hãy gửi lại.</string>
     <string name="case_write_title">Phía bạn</string>
     <string name="case_write_placeholder">Có chuyện gì vậy?</string>
     <string name="case_write_lead">Ban giám khảo bắt đầu khi cả hai đã viết.</string>

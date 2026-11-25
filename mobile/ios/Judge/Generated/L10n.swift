@@ -475,6 +475,9 @@ enum L10n {
     static func respondLabel(_ lang: AppLang) -> String { string("respond.label", lang) }
     static func respondPlaceholder(_ lang: AppLang) -> String { string("respond.placeholder", lang) }
     static func respondSubmit(_ lang: AppLang) -> String { string("respond.submit", lang) }
+    static func respondAnswerAs(_ lang: AppLang, name: String) -> String { format("respond.answerAs", lang, name) }
+    static func respondSwitchAccount(_ lang: AppLang) -> String { string("respond.switchAccount", lang) }
+    static func respondMoved(_ lang: AppLang) -> String { string("respond.moved", lang) }
     static func caseWriteTitle(_ lang: AppLang) -> String { string("case.write.title", lang) }
     static func caseWritePlaceholder(_ lang: AppLang) -> String { string("case.write.placeholder", lang) }
     static func caseWriteLead(_ lang: AppLang) -> String { string("case.write.lead", lang) }
@@ -1099,6 +1102,8 @@ enum L10n {
         "respond.label",
         "respond.placeholder",
         "respond.submit",
+        "respond.switchAccount",
+        "respond.moved",
         "case.write.title",
         "case.write.placeholder",
         "case.write.lead",

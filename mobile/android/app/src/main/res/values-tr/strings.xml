@@ -346,6 +346,9 @@
     <string name="respond_label">Senin tarafın</string>
     <string name="respond_placeholder">Senin gözünden ne oldu? Bir arkadaşına anlatır gibi yaz.</string>
     <string name="respond_submit">Tarafımı gönder</string>
+    <string name="respond_answer_as">%1$s olarak yanıtla</string>
+    <string name="respond_switch_account">Sen değil misin? Hesap değiştir</string>
+    <string name="respond_moved">Yerin değişti. Yeniden gönder.</string>
     <string name="case_write_title">Senin tarafın</string>
     <string name="case_write_placeholder">Sorun ne?</string>
     <string name="case_write_lead">Yargıçlar iki taraf da yazınca başlar.</string>

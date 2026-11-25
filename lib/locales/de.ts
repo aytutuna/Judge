@@ -594,6 +594,9 @@ const de: Locale = {
     "respond.label": "Deine Seite",
     "respond.placeholder": "Was ist aus deiner Sicht passiert? Schreib es so, wie du es Freunden erzählen würdest.",
     "respond.submit": "Meine Seite abschicken",
+    "respond.answerAs": "Als {name} antworten",
+    "respond.switchAccount": "Nicht du? Konto wechseln",
+    "respond.moved": "Dein Platz hat sich geändert. Schick es noch einmal ab.",
     "case.write.title": "Deine Seite",
     "case.write.placeholder": "Was ist das Problem?",
     "case.write.lead":

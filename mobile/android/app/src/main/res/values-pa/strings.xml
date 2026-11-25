@@ -346,6 +346,9 @@
     <string name="respond_label">ਤੁਹਾਡਾ ਪੱਖ</string>
     <string name="respond_placeholder">ਤੁਹਾਡੀ ਨਜ਼ਰ ਵਿੱਚ ਕੀ ਹੋਇਆ? ਉਵੇਂ ਲਿਖੋ ਜਿਵੇਂ ਕਿਸੇ ਦੋਸਤ ਨੂੰ ਦੱਸੋਗੇ।</string>
     <string name="respond_submit">ਮੇਰਾ ਪੱਖ ਭੇਜੋ</string>
+    <string name="respond_answer_as">%1$s ਵਜੋਂ ਜਵਾਬ ਦਿਓ</string>
+    <string name="respond_switch_account">ਤੁਸੀਂ ਨਹੀਂ ਹੋ? ਖਾਤਾ ਬਦਲੋ</string>
+    <string name="respond_moved">ਤੁਹਾਡੀ ਥਾਂ ਬਦਲ ਗਈ ਹੈ। ਦੁਬਾਰਾ ਭੇਜੋ।</string>
     <string name="case_write_title">ਤੁਹਾਡਾ ਪੱਖ</string>
     <string name="case_write_placeholder">ਸਮੱਸਿਆ ਕੀ ਹੈ?</string>
     <string name="case_write_lead">ਦੋਵੇਂ ਲਿਖ ਲੈਣ ਤਾਂ ਜੱਜ ਸ਼ੁਰੂ ਕਰਨਗੇ।</string>

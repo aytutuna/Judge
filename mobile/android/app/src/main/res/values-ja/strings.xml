@@ -341,6 +341,9 @@
     <string name="respond_label">あなたの言い分</string>
     <string name="respond_placeholder">あなたから見て、何がありましたか？　友だちに話すつもりで書いてください。</string>
     <string name="respond_submit">言い分を送る</string>
+    <string name="respond_answer_as">%1$sとして回答する</string>
+    <string name="respond_switch_account">違いますか？ アカウントを切り替える</string>
+    <string name="respond_moved">あなたの枠が変わりました。もう一度送ってください。</string>
     <string name="case_write_title">あなたの言い分</string>
     <string name="case_write_placeholder">何があったの？</string>
     <string name="case_write_lead">二人とも書き終えたら審査員が始めます。</string>

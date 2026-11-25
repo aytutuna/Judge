@@ -346,6 +346,9 @@
     <string name="respond_label">మీ వైపు కథ</string>
     <string name="respond_placeholder">మీ వైపు నుంచి చూస్తే ఏం జరిగింది? ఫ్రెండ్‌కి చెప్పినట్టే రాయండి.</string>
     <string name="respond_submit">నా వైపు కథ పంపండి</string>
+    <string name="respond_answer_as">%1$s గా సమాధానం ఇవ్వండి</string>
+    <string name="respond_switch_account">మీరు కాదా? ఖాతా మార్చండి</string>
+    <string name="respond_moved">మీ స్థానం మారింది. మళ్లీ పంపండి.</string>
     <string name="case_write_title">మీ వైపు</string>
     <string name="case_write_placeholder">సమస్య ఏంటి?</string>
     <string name="case_write_lead">ఇద్దరూ రాశాక జడ్జీలు మొదలుపెడతారు.</string>

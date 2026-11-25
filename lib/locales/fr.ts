@@ -597,6 +597,9 @@ const fr: Locale = {
     "respond.placeholder":
       "Qu’est-ce qui s’est passé, de ton point de vue ? Écris-le comme si tu le racontais à un proche.",
     "respond.submit": "Envoyer ma version",
+    "respond.answerAs": "Répondre en tant que {name}",
+    "respond.switchAccount": "Ce n’est pas toi ? Changer de compte",
+    "respond.moved": "Ta place a changé. Envoie-le de nouveau.",
     "case.write.title": "Ta version",
     "case.write.placeholder": "C’est quoi, le problème ?",
     "case.write.lead": "Les juges démarrent dès que vous avez écrit tous les deux.",

@@ -346,6 +346,9 @@
     <string name="respond_label">Kertomuksesi</string>
     <string name="respond_placeholder">Mitä tapahtui sinun näkökulmastasi? Kirjoita kuin kertoisit kaverille.</string>
     <string name="respond_submit">Lähetä kertomukseni</string>
+    <string name="respond_answer_as">Vastaa nimellä %1$s</string>
+    <string name="respond_switch_account">Etkö se ole sinä? Vaihda tiliä</string>
+    <string name="respond_moved">Paikkasi muuttui. Lähetä uudelleen.</string>
     <string name="case_write_title">Sinun puolesi</string>
     <string name="case_write_placeholder">Mikä ongelma on?</string>
     <string name="case_write_lead">Tuomarit aloittavat, kun molemmat ovat kirjoittaneet.</string>

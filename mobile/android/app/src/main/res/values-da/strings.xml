@@ -346,6 +346,9 @@
     <string name="respond_label">Din side</string>
     <string name="respond_placeholder">Hvad skete der set fra din side? Skriv det, som du ville fortælle det til en ven.</string>
     <string name="respond_submit">Send min side</string>
+    <string name="respond_answer_as">Svar som %1$s</string>
+    <string name="respond_switch_account">Er det ikke dig? Skift konto</string>
+    <string name="respond_moved">Din plads er ændret. Send igen.</string>
     <string name="case_write_title">Din side</string>
     <string name="case_write_placeholder">Hvad er problemet?</string>
     <string name="case_write_lead">Dommerne går i gang, når I begge har skrevet.</string>

@@ -356,6 +356,9 @@
     <string name="respond_label">Твоя версія</string>
     <string name="respond_placeholder">Як усе було з твого боку? Пиши так, ніби розповідаєш другові.</string>
     <string name="respond_submit">Надіслати мою версію</string>
+    <string name="respond_answer_as">Відповісти як %1$s</string>
+    <string name="respond_switch_account">Це не ти? Змінити обліковий запис</string>
+    <string name="respond_moved">Твоє місце змінилося. Надішли ще раз.</string>
     <string name="case_write_title">Твоя версія</string>
     <string name="case_write_placeholder">У чому проблема?</string>
     <string name="case_write_lead">Судді почнуть, коли напишете обоє.</string>

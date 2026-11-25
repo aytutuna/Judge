@@ -341,6 +341,9 @@
     <string name="respond_label">ฝั่งของคุณ</string>
     <string name="respond_placeholder">จากมุมของคุณ เกิดอะไรขึ้น? เขียนแบบที่เล่าให้เพื่อนฟัง</string>
     <string name="respond_submit">ส่งฝั่งของฉัน</string>
+    <string name="respond_answer_as">ตอบในนาม %1$s</string>
+    <string name="respond_switch_account">ไม่ใช่คุณ? สลับบัญชี</string>
+    <string name="respond_moved">ที่นั่งของคุณเปลี่ยนไป ส่งอีกครั้ง</string>
     <string name="case_write_title">ฝั่งของคุณ</string>
     <string name="case_write_placeholder">มีปัญหาอะไร?</string>
     <string name="case_write_lead">กรรมการจะเริ่มเมื่อเขียนครบทั้งสองฝ่าย</string>

@@ -351,6 +351,9 @@
     <string name="respond_label">La teva versió</string>
     <string name="respond_placeholder">Què va passar, des del teu punt de vista? Escriu-ho com si ho expliquessis a un amic.</string>
     <string name="respond_submit">Envia la meva versió</string>
+    <string name="respond_answer_as">Respon com a %1$s</string>
+    <string name="respond_switch_account">No ets tu? Canvia de compte</string>
+    <string name="respond_moved">El teu lloc ha canviat. Torna-ho a enviar.</string>
     <string name="case_write_title">La teva versió</string>
     <string name="case_write_placeholder">Quin és el problema?</string>
     <string name="case_write_lead">Els jutges comencen quan les dues parts hagin escrit.</string>

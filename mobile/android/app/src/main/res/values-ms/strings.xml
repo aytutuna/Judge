@@ -341,6 +341,9 @@
     <string name="respond_label">Versi anda</string>
     <string name="respond_placeholder">Apa yang berlaku, dari sudut anda? Tulis macam anda bercerita kepada kawan.</string>
     <string name="respond_submit">Hantar versi saya</string>
+    <string name="respond_answer_as">Jawab sebagai %1$s</string>
+    <string name="respond_switch_account">Bukan anda? Tukar akaun</string>
+    <string name="respond_moved">Tempat anda telah berubah. Hantar sekali lagi.</string>
     <string name="case_write_title">Versi anda</string>
     <string name="case_write_placeholder">Apa masalahnya?</string>
     <string name="case_write_lead">Hakim bermula selepas kedua-duanya menulis.</string>

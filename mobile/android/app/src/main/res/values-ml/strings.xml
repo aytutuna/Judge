@@ -346,6 +346,9 @@
     <string name="respond_label">നിങ്ങളുടെ ഭാഗം</string>
     <string name="respond_placeholder">നിങ്ങളുടെ ഭാഗത്തുനിന്ന് നോക്കുമ്പോൾ എന്താണ് സംഭവിച്ചത്? ഒരു സുഹൃത്തിനോട് പറയുന്നതുപോലെ എഴുതൂ.</string>
     <string name="respond_submit">എന്റെ ഭാഗം അയയ്ക്കൂ</string>
+    <string name="respond_answer_as">%1$s ആയി മറുപടി നൽകൂ</string>
+    <string name="respond_switch_account">നിങ്ങളല്ലേ? അക്കൗണ്ട് മാറ്റുക</string>
+    <string name="respond_moved">നിങ്ങളുടെ സ്ഥലം മാറി. വീണ്ടും അയയ്ക്കൂ.</string>
     <string name="case_write_title">നിങ്ങളുടെ ഭാഗം</string>
     <string name="case_write_placeholder">എന്താണ് പ്രശ്നം?</string>
     <string name="case_write_lead">രണ്ടുപേരും എഴുതിയാൽ ജഡ്ജിമാർ തുടങ്ങും.</string>

@@ -34,6 +34,7 @@ import { AppealSection, useAppealDraft, useAppealFinished, type AppealDraft } fr
 import { CaseShell, useJudgingOverlay } from "./CaseScreen";
 import { CaseNames, CaseOriginals, useCaseOriginals } from "./CaseOwnTools";
 import { openConfirm } from "../account/AccountView";
+import { signOutNow } from "../AccountMenu";
 import { EvidencePicker, type EvidenceController, useEvidence } from "./EvidencePicker";
 import { VerdictHistory } from "./VerdictHistory";
 import styles from "./case.module.css";
@@ -66,8 +67,7 @@ export function respondStage(view: CaseView): RespondStage {
   const answered = view.respondentAnswered && view.inAccount === true;
   switch (view.status) {
     case "awaiting_respondent":
-      if (!answered) return "form";
-      return view.ownerSideMissing ? "waiting" : "closed";
+      return answered ? "waiting" : "form";
     case "expired":
       return answered ? "expired_answered" : "expired";
     case "judging":
@@ -94,6 +94,8 @@ export type RespondForm = {
   turnstileKey: number;
   sending: boolean;
   error: string | null;
+  /** The seat was lost and a new one taken: the text is kept, to be sent again. */
+  moved: boolean;
   canSubmit: boolean;
   submit: () => Promise<void>;
 };
@@ -126,6 +128,7 @@ function useRespondForm(
   const [turnstileKey, setTurnstileKey] = useState(0);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [moved, setMoved] = useState(false);
   const evidence = useEvidence(`/api/v1/respond/${encodeURIComponent(token)}/evidence`, MAX_EVIDENCE_PER_SIDE);
   const keyFor = useMemo(() => keyHolder(), []);
   const needsCheck = TURNSTILE_SITE_KEY !== "";
@@ -143,6 +146,7 @@ function useRespondForm(
     setTurnstile(null);
     setSending(true);
     setError(null);
+    setMoved(false);
     const shownName = name.trim();
     const payload = {
       text: trimmed,
@@ -163,7 +167,10 @@ function useRespondForm(
       if (!res.ok || !ok?.case) {
         // The side moved: take the page to the new one, keeping what was typed.
         const code = (json as { code?: unknown } | null)?.code;
-        if (code === "seat_moved" && (await onSeatMoved())) return;
+        if (code === "seat_moved" && (await onSeatMoved())) {
+          setMoved(true);
+          return;
+        }
         trackApiError(json, res.status);
         setError(apiErrorMessage(lang, json, res.status));
         setTurnstileKey((k) => k + 1);
@@ -189,6 +196,7 @@ function useRespondForm(
     turnstileKey,
     sending,
     error,
+    moved,
     canSubmit,
     submit,
   };
@@ -211,6 +219,8 @@ export type RespondPanelProps = {
   form: RespondForm | null;
   /** Signed out: the form gives way to a sign-in button that keeps the invite for the way back. */
   signIn?: boolean;
+  /** Signed in, seat not taken yet: the invite's facts and a button that takes it. */
+  answerAs?: { name: string; busy: boolean; error: string | null; onAnswer: () => void; onSwitch: () => void };
   overlay: { done: boolean } | null;
   onOverlayFinished: () => void;
   fresh: boolean;
@@ -238,6 +248,7 @@ export function RespondPanel({
   names,
   form,
   signIn = false,
+  answerAs,
   overlay,
   onOverlayFinished,
   fresh,
@@ -299,6 +310,29 @@ export function RespondPanel({
     );
   }
 
+  if (stage === "form" && answerAs) {
+    return (
+      <>
+        <ul className={styles.facts}>
+          <li>{t(lang, "respond.lang", { lang: languageName(lang, view.lang) })}</li>
+        </ul>
+        <div className={styles.stack}>
+          <button type="button" className={`${account.btn} ${account.primary}`} disabled={answerAs.busy} onClick={answerAs.onAnswer}>
+            {t(lang, "respond.answerAs", { name: answerAs.name })}
+          </button>
+          {answerAs.error ? (
+            <p className={styles.error} role="alert">
+              {answerAs.error}
+            </p>
+          ) : null}
+          <button type="button" className={styles.textBtn} onClick={answerAs.onSwitch}>
+            {t(lang, "respond.switchAccount")}
+          </button>
+        </div>
+      </>
+    );
+  }
+
   if (stage === "form") {
     if (!form) return null;
     return (
@@ -313,6 +347,11 @@ export function RespondPanel({
             void form.submit();
           }}
         >
+          {form.moved ? (
+            <p className={styles.note} role="status">
+              {t(lang, "respond.moved")}
+            </p>
+          ) : null}
           <div className={styles.field}>
             <label htmlFor={fieldId} className={styles.fieldLabel}>
               <span className="sr-only">{t(lang, "respond.label")}</span>
@@ -554,6 +593,10 @@ export function RespondScreen({ token }: { token: string }) {
   const { overlay, fresh, finish } = useJudgingOverlay(view?.status ?? null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const [full, setFull] = useState(false);
+  // The seat is taken only when the person taps Answer, never by opening the link.
+  const [seated, setSeated] = useState(false);
+  const [opening, setOpening] = useState(false);
+  const [openError, setOpenError] = useState<string | null>(null);
   // Takes the next open side for this account; the person is told when none is left.
   async function open(): Promise<boolean | null> {
     try {
@@ -561,13 +604,22 @@ export function RespondScreen({ token }: { token: string }) {
       const json = (await res.json().catch(() => null)) as OpenResponse | null;
       if (res.ok && json?.case) {
         setView(json.case);
+        setSeated(true);
         return true;
       }
       if (res.status === 409) setFull(true);
+      else setOpenError(apiErrorMessage(lang, json, res.status));
       return false;
     } catch {
+      setOpenError(t(lang, "errorFallback"));
       return null;
     }
+  }
+  async function answer() {
+    setOpening(true);
+    setOpenError(null);
+    await open();
+    setOpening(false);
   }
   const form = useRespondForm(
     token,
@@ -586,7 +638,6 @@ export function RespondScreen({ token }: { token: string }) {
   // anything takes a seat, so the seat never becomes a second side. The case id
   // comes from this browser's record of the answer; the view's own id covers a
   // claim left without one.
-  const opened = useRef(false);
   const linking = useRef(false);
   const checking = useRef<string | null>(null);
   const [linkDone, setLinkDone] = useState(false);
@@ -646,15 +697,6 @@ export function RespondScreen({ token }: { token: string }) {
   const awaitingReload = reloadAt !== null && served < reloadAt;
   const linkBlocked = signedIn && linkFailed;
   const linkReady = linkDone && view !== null && claimChecked === view.id && !awaitingReload;
-  useEffect(() => {
-    if (!view || !signedIn || !linkReady || opened.current) return;
-    if (view.ownInvite || view.status !== "awaiting_respondent" || view.respondentAnswered) return;
-    opened.current = true;
-    void (async () => {
-      if ((await open()) === null) opened.current = false;
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [view, signedIn, linkReady]);
 
   async function removeSide() {
     setRemoveError(null);
@@ -758,6 +800,17 @@ export function RespondScreen({ token }: { token: string }) {
         names={names}
         form={form}
         signIn={signedOut}
+        answerAs={
+          signedIn && !seated
+            ? {
+                name: viewer.me?.user?.name?.trim() || viewer.me?.user?.email || "",
+                busy: opening,
+                error: openError,
+                onAnswer: () => void answer(),
+                onSwitch: () => void signOutNow(),
+              }
+            : undefined
+        }
         overlay={overlay}
         onOverlayFinished={finish}
         fresh={fresh}

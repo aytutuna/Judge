@@ -356,6 +356,9 @@
     <string name="respond_label">Tvůj pohled</string>
     <string name="respond_placeholder">Co se stalo, jak to vidíš ty? Napiš to tak, jak to vyprávíš kamarádům.</string>
     <string name="respond_submit">Odeslat můj pohled</string>
+    <string name="respond_answer_as">Odpovědět jako %1$s</string>
+    <string name="respond_switch_account">Nejsi to ty? Přepnout účet</string>
+    <string name="respond_moved">Tvoje místo se změnilo. Pošli to znovu.</string>
     <string name="case_write_title">Tvůj pohled</string>
     <string name="case_write_placeholder">Co je za problém?</string>
     <string name="case_write_lead">Soudci začnou, až napíšete oba.</string>

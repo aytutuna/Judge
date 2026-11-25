@@ -266,7 +266,7 @@
     <string name="error_in_progress">That verdict is still being worked on. Give it a moment.</string>
     <string name="error_not_found">We couldn\'t find that.</string>
     <string name="error_case_closed">This case isn\'t taking that anymore.</string>
-    <string name="error_seat_moved">Your side was freed. Open the link again.</string>
+    <string name="error_seat_moved">Your place was freed. Open the link again.</string>
     <string name="error_case_expired">This invite has expired.</string>
     <string name="error_appeal_used">You\'ve already added context to this case.</string>
     <string name="error_appeal_limit">You\'ve added context to this verdict twice. That\'s as many times as one verdict takes.</string>
@@ -346,6 +346,9 @@
     <string name="respond_label">Your side</string>
     <string name="respond_placeholder">What happened, from where you stand? Write it the way you\'d tell a friend.</string>
     <string name="respond_submit">Send my side</string>
+    <string name="respond_answer_as">Answer as %1$s</string>
+    <string name="respond_switch_account">Not you? Switch account</string>
+    <string name="respond_moved">Your place moved. Send again.</string>
     <string name="case_write_title">Your side</string>
     <string name="case_write_placeholder">What\'s the problem?</string>
     <string name="case_write_lead">The judges start once you\'ve both written.</string>

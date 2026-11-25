@@ -18,6 +18,12 @@ const TYPED = "I paid the April bill on the third by transfer.";
 type Call = { method: string; path: string; body: Record<string, unknown> | null };
 type Route = (call: Call) => Response | null | Promise<Response>;
 
+const signOut = vi.hoisted(() => ({ run: async () => {} }));
+vi.mock("../components/AccountMenu", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("../components/AccountMenu")>()),
+  signOutNow: () => signOut.run(),
+}));
+
 let calls: Call[] = [];
 let route: Route = () => null;
 let signedIn = true;
@@ -100,6 +106,14 @@ function signInLinks(): HTMLElement[] {
 }
 
 const retryLabel = t("en", "case.retry");
+const answerLabel = t("en", "respond.answerAs", { name: "Deniz Test" });
+
+async function tapAnswer(): Promise<void> {
+  const button = await screen.findByRole("button", { name: answerLabel });
+  await act(async () => {
+    fireEvent.click(button);
+  });
+}
 
 describe("RespondScreen, signed out", () => {
   it("shows the invite facts and Sign in, and takes no seat", async () => {
@@ -113,7 +127,66 @@ describe("RespondScreen, signed out", () => {
   });
 });
 
+describe("RespondScreen, taking a seat", () => {
+  it("opening the invite takes no seat; the tap on Answer sends /open once and shows the form", async () => {
+    route = (c) => {
+      if (c.path === BASE) return reply(200, { case: RESPONDENT.form });
+      if (c.path === `${BASE}/open`) return reply(200, { case: RESPONDENT.form, respondent_claim: null });
+      return null;
+    };
+    await open();
+    const button = await screen.findByRole("button", { name: answerLabel });
+    expect(screen.queryByRole("textbox")).toBeNull();
+    await new Promise((r) => setTimeout(r, 30));
+    expect(posts(`${BASE}/open`)).toHaveLength(0);
+    await act(async () => {
+      fireEvent.click(button);
+    });
+    expect(await screen.findByPlaceholderText(t("en", "respond.placeholder"))).toBeTruthy();
+    expect(posts(`${BASE}/open`)).toHaveLength(1);
+    expect(screen.queryByRole("button", { name: answerLabel })).toBeNull();
+  });
+
+  it("Switch account signs out and the same page asks for sign-in, without a seat", async () => {
+    route = (c) => (c.path === BASE ? reply(200, { case: RESPONDENT.form }) : null);
+    signOut.run = async () => {
+      signedIn = false;
+      await refreshViewer();
+    };
+    await open();
+    await screen.findByRole("button", { name: answerLabel });
+    fireEvent.click(screen.getByRole("button", { name: t("en", "respond.switchAccount") }));
+    await waitFor(() => expect(signInLinks()).toHaveLength(1));
+    expect(posts(`${BASE}/open`)).toHaveLength(0);
+  });
+
+  it("a full invite answers 409 on the tap and reads closed", async () => {
+    route = (c) => {
+      if (c.path === BASE) return reply(200, { case: RESPONDENT.form });
+      if (c.path === `${BASE}/open`) return reply(409, { code: "case_closed" });
+      return null;
+    };
+    await open();
+    await tapAnswer();
+    expect(await screen.findByText(t("en", "respond.closed"))).toBeTruthy();
+  });
+});
+
 describe("RespondScreen, linking an earlier answer", () => {
+  it("a refused claim drops its row in this browser as well", async () => {
+    storeClaim("case123");
+    storeAnsweredRow("case123");
+    route = (c) => {
+      if (c.path === BASE) return reply(200, { case: RESPONDENT.form });
+      if (c.path === CLAIM_PATH) return reply(404, { code: "not_found" });
+      return null;
+    };
+    await open();
+    await screen.findByRole("button", { name: answerLabel });
+    expect(localStorage.getItem("settle.claim.case123")).toBeNull();
+    expect(JSON.parse(localStorage.getItem(ANSWERED_KEY) ?? "[]")).toEqual([]);
+  });
+
   it("links a stored claim before any seat is taken, then reloads the view", async () => {
     storeClaim("case123");
     storeAnsweredRow("case123");
@@ -144,7 +217,7 @@ describe("RespondScreen, linking an earlier answer", () => {
     expect(localStorage.getItem("settle.claim.case123")).toBeNull();
   });
 
-  it("an immediate claim reply: no seat is taken until the load after the link has landed", async () => {
+  it("an immediate claim reply: the answer button waits for the load after the link, and the seat only for the tap", async () => {
     storeClaim("case123");
     storeAnsweredRow("case123");
     let reads = 0;
@@ -167,6 +240,11 @@ describe("RespondScreen, linking an earlier answer", () => {
     expect(posts(CLAIM_PATH)).toHaveLength(1);
     expect(posts(`${BASE}/open`)).toHaveLength(0);
     release();
+    const button = await screen.findByRole("button", { name: answerLabel });
+    expect(posts(`${BASE}/open`)).toHaveLength(0);
+    await act(async () => {
+      fireEvent.click(button);
+    });
     await waitFor(() => expect(posts(`${BASE}/open`)).toHaveLength(1));
     const last = calls.map((c) => `${c.method} ${c.path}`);
     expect(last.lastIndexOf(`GET ${BASE}`)).toBeLessThan(last.indexOf(`POST ${BASE}/open`));
@@ -188,6 +266,7 @@ describe("RespondScreen, linking an earlier answer", () => {
     expect(posts(`${BASE}/open`)).toHaveLength(0);
     fireEvent.click(retry);
     await waitFor(() => expect(posts(CLAIM_PATH)).toHaveLength(2));
+    await tapAnswer();
     await waitFor(() => expect(posts(`${BASE}/open`)).toHaveLength(1));
   });
 
@@ -264,8 +343,9 @@ describe("RespondScreen, answering", () => {
       return null;
     };
     await open();
+    await tapAnswer();
     const box = await screen.findByPlaceholderText(t("en", "respond.placeholder"));
-    await waitFor(() => expect(opens).toBe(1));
+    expect(opens).toBe(1);
     fireEvent.change(box, { target: { value: TYPED } });
     const send = () => screen.getByRole("button", { name: t("en", "respond.submit") }) as HTMLButtonElement;
     await waitFor(() => expect(send().disabled).toBe(false));
@@ -277,12 +357,23 @@ describe("RespondScreen, answering", () => {
     await waitFor(() => expect(send().disabled).toBe(false));
     expect((screen.getByPlaceholderText(t("en", "respond.placeholder")) as HTMLTextAreaElement).value).toBe(TYPED);
     expect(mainEl().textContent).not.toContain(t("en", "case.loadFailed"));
+    expect(mainEl().textContent).toContain(t("en", "respond.moved"));
     expect(gets(BASE)).toHaveLength(1);
     await act(async () => {
       fireEvent.click(send());
     });
     await waitFor(() => expect(posts(BASE)).toHaveLength(2));
     expect(posts(BASE)[1].body).toMatchObject({ party: "c", text: TYPED });
+  });
+});
+
+describe("RespondScreen, three or four sides", () => {
+  it("after answering while others are still missing the person reads their answer is in, not closed", async () => {
+    const answered = caseView({ ...RESPONDENT.form, respondentAnswered: true, inAccount: true, ownerSideMissing: false, mode: "two_sided" });
+    route = (c) => (c.path === BASE ? reply(200, { case: answered }) : null);
+    await open();
+    expect(await screen.findByText(t("en", "respond.sentWaiting"))).toBeTruthy();
+    expect(mainEl().textContent).not.toContain(t("en", "respond.closed"));
   });
 });
 

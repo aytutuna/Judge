@@ -356,6 +356,9 @@
     <string name="respond_label">Tvoja plat</string>
     <string name="respond_placeholder">Kaj se je po tvoje zgodilo? Napiši, kot da pripoveduješ prijatelju.</string>
     <string name="respond_submit">Pošlji mojo plat</string>
+    <string name="respond_answer_as">Odgovori kot %1$s</string>
+    <string name="respond_switch_account">Nisi ti? Zamenjaj račun</string>
+    <string name="respond_moved">Tvoje mesto se je spremenilo. Pošlji znova.</string>
     <string name="case_write_title">Tvoja plat</string>
     <string name="case_write_placeholder">Kaj je narobe?</string>
     <string name="case_write_lead">Sodniki začnejo, ko sta napisala oba.</string>

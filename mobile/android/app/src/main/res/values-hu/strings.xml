@@ -346,6 +346,9 @@
     <string name="respond_label">A te verziód</string>
     <string name="respond_placeholder">Mi történt a te szemszögedből? Írd le úgy, ahogy egy barátodnak mesélnéd.</string>
     <string name="respond_submit">Elküldöm a verziómat</string>
+    <string name="respond_answer_as">Válasz mint %1$s</string>
+    <string name="respond_switch_account">Nem te vagy? Fiókváltás</string>
+    <string name="respond_moved">A helyed megváltozott. Küldd el újra.</string>
     <string name="case_write_title">A te verziód</string>
     <string name="case_write_placeholder">Mi a gond?</string>
     <string name="case_write_lead">A bírák akkor kezdenek, ha mindketten megírtátok.</string>

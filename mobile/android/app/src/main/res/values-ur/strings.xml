@@ -346,6 +346,9 @@
     <string name="respond_label">آپ کی بات</string>
     <string name="respond_placeholder">آپ کی نظر میں کیا ہوا؟ ویسے لکھیں جیسے کسی دوست کو سنائیں۔</string>
     <string name="respond_submit">اپنی بات بھیجیں</string>
+    <string name="respond_answer_as">%1$s کے طور پر جواب دیں</string>
+    <string name="respond_switch_account">آپ نہیں ہیں؟ اکاؤنٹ بدلیں</string>
+    <string name="respond_moved">آپ کی جگہ بدل گئی۔ دوبارہ بھیجیں۔</string>
     <string name="case_write_title">آپ کی بات</string>
     <string name="case_write_placeholder">مسئلہ کیا ہے؟</string>
     <string name="case_write_lead">دونوں کے لکھنے پر جج شروع کریں گے۔</string>

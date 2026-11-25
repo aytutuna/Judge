@@ -356,6 +356,9 @@
     <string name="respond_label">Tvoja verzia</string>
     <string name="respond_placeholder">Čo sa stalo z tvojho pohľadu? Napíš to vlastnými slovami, ako keď to rozprávaš kamarátovi.</string>
     <string name="respond_submit">Odoslať moju verziu</string>
+    <string name="respond_answer_as">Odpovedať ako %1$s</string>
+    <string name="respond_switch_account">Nie si to ty? Prepnúť účet</string>
+    <string name="respond_moved">Tvoje miesto sa zmenilo. Odošli to znova.</string>
     <string name="case_write_title">Tvoja verzia</string>
     <string name="case_write_placeholder">V čom je problém?</string>
     <string name="case_write_lead">Sudcovia začnú, keď napíšete obaja.</string>

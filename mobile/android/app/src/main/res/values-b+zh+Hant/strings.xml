@@ -341,6 +341,9 @@
     <string name="respond_label">你的說法</string>
     <string name="respond_placeholder">從你的角度看，發生了什麼事？就像跟朋友講一樣寫下來。</string>
     <string name="respond_submit">送出我的說法</string>
+    <string name="respond_answer_as">以 %1$s 的身分回答</string>
+    <string name="respond_switch_account">不是你？切換帳號</string>
+    <string name="respond_moved">你的位置變了。請再送出一次。</string>
     <string name="case_write_title">你的說法</string>
     <string name="case_write_placeholder">怎麼了？</string>
     <string name="case_write_lead">你們兩邊都寫完，評審才會開始。</string>

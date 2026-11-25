@@ -366,6 +366,9 @@
     <string name="respond_label">روايتك</string>
     <string name="respond_placeholder">ماذا حدث من وجهة نظرك؟ اكتبه كما لو كنت تحكيه لصديق.</string>
     <string name="respond_submit">إرسال روايتي</string>
+    <string name="respond_answer_as">الرد باسم %1$s</string>
+    <string name="respond_switch_account">لست أنت؟ بدّل الحساب</string>
+    <string name="respond_moved">تغيّر مكانك. أرسل مرة أخرى.</string>
     <string name="case_write_title">روايتك</string>
     <string name="case_write_placeholder">ما المشكلة؟</string>
     <string name="case_write_lead">يبدأ القضاة حين تكتبان معًا.</string>
