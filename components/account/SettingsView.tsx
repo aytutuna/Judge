@@ -32,14 +32,12 @@ export function SettingsView() {
   const signedIn = Boolean(viewer.me?.user);
   const [training, setTraining] = useState(false);
   useEffect(() => {
-    if (!signedIn) {
-      setTraining(false);
-      return;
-    }
+    if (!signedIn) return;
     let live = true;
     void fetchConsent().then((s) => live && setTraining(s?.state === "on"));
     return () => {
       live = false;
+      setTraining(false);
     };
   }, [signedIn]);
   function changeTraining(on: boolean) {

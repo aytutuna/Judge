@@ -18,14 +18,12 @@ export function RatingRow({ id, lang, hidden = false }: { id: string; lang: Lang
   const [rating, setRating] = useState<Rating | null>(null);
 
   useEffect(() => {
-    if (!signedIn) {
-      setRating(null);
-      return;
-    }
+    if (!signedIn) return;
     let live = true;
     void fetchRating(id).then((r) => live && setRating(r));
     return () => {
       live = false;
+      setRating(null);
     };
   }, [id, signedIn]);
 
@@ -88,21 +86,20 @@ export function ConsentCard({ lang, onAsking }: { lang: Lang; onAsking?: (asking
   const signedIn = Boolean(viewer.me?.user);
   const [open, setOpen] = useState(false);
   const [leaving, setLeaving] = useState(false);
-  const [checked, setChecked] = useState(!signedIn);
+  const [fetched, setFetched] = useState(false);
+  const checked = fetched || !signedIn;
 
   useEffect(() => {
-    if (!signedIn) {
-      setChecked(true);
-      return;
-    }
+    if (!signedIn) return;
     let live = true;
     void fetchConsent().then((s) => {
       if (!live) return;
       setOpen(s?.ask === true);
-      setChecked(true);
+      setFetched(true);
     });
     return () => {
       live = false;
+      setFetched(false);
     };
   }, [signedIn]);
 
