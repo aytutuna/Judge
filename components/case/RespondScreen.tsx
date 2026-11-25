@@ -539,7 +539,7 @@ export function RespondScreen({ token }: { token: string }) {
   const evidenceOn = viewer.config?.features?.evidence === true;
   const signedIn = Boolean(viewer.me?.user);
   const signedOut = viewer.status === "ready" && !signedIn;
-  const { load, setView, reload } = useCase(`/api/v1/respond/${encodeURIComponent(token)}`, null);
+  const { load, setView, reload, served } = useCase(`/api/v1/respond/${encodeURIComponent(token)}`, null);
   const view = load.view;
   const caseId = view?.id ?? null;
   const localNames = useCaseNames(caseId, view?.yourParty ?? "b");
@@ -593,12 +593,8 @@ export function RespondScreen({ token }: { token: string }) {
   const [claimChecked, setClaimChecked] = useState<string | null>(null);
   const [linkFailed, setLinkFailed] = useState(false);
   const [linkTry, setLinkTry] = useState(0);
-  // The load as it was when a link succeeded: the page waits for the one after it.
-  const [reloadFrom, setReloadFrom] = useState<typeof load | null>(null);
-  const latestLoad = useRef(load);
-  useEffect(() => {
-    latestLoad.current = load;
-  }, [load]);
+  // The request made after a link succeeded: a view served before it is stale.
+  const [reloadAt, setReloadAt] = useState<number | null>(null);
   function afterLink(out: Awaited<ReturnType<typeof linkStoredClaim>>, done: () => void) {
     if (out === "signed_out") {
       void refreshViewer().finally(() => setLinkFailed(true));
@@ -610,9 +606,8 @@ export function RespondScreen({ token }: { token: string }) {
       return;
     }
     setLinkFailed(false);
-    if (out === "linked") setReloadFrom(latestLoad.current);
+    if (out === "linked") setReloadAt(reload());
     done();
-    if (out === "linked") reload();
   }
   useEffect(() => {
     if (!signedIn || linking.current) return;
@@ -648,7 +643,7 @@ export function RespondScreen({ token }: { token: string }) {
     setLinkFailed(false);
     setLinkTry((n) => n + 1);
   }
-  const awaitingReload = reloadFrom !== null && load === reloadFrom;
+  const awaitingReload = reloadAt !== null && served < reloadAt;
   const linkBlocked = signedIn && linkFailed;
   const linkReady = linkDone && view !== null && claimChecked === view.id && !awaitingReload;
   useEffect(() => {

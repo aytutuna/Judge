@@ -127,7 +127,7 @@ describe("RespondScreen, linking an earlier answer", () => {
         if (++reads === 1) return reply(200, { case: RESPONDENT.form });
         return gate.then(() => reply(200, { case: RESPONDENT.judgedPremium }));
       }
-      if (c.path === CLAIM_PATH) return new Promise((r) => setTimeout(() => r(reply(200, { ok: true })), 30));
+      if (c.path === CLAIM_PATH) return reply(200, { ok: true });
       if (c.path === `${BASE}/open`) return reply(200, { case: RESPONDENT.form, respondent_claim: null });
       return null;
     };
@@ -142,6 +142,34 @@ describe("RespondScreen, linking an earlier answer", () => {
     expect(posts(`${BASE}/open`)).toHaveLength(0);
     expect(gets(BASE).length).toBeGreaterThanOrEqual(2);
     expect(localStorage.getItem("settle.claim.case123")).toBeNull();
+  });
+
+  it("an immediate claim reply: no seat is taken until the load after the link has landed", async () => {
+    storeClaim("case123");
+    storeAnsweredRow("case123");
+    let reads = 0;
+    let release: () => void = () => {};
+    const gate = new Promise<void>((r) => {
+      release = r;
+    });
+    route = (c) => {
+      if (c.path === BASE) {
+        if (++reads === 1) return reply(200, { case: RESPONDENT.form });
+        return gate.then(() => reply(200, { case: RESPONDENT.form }));
+      }
+      if (c.path === CLAIM_PATH) return reply(200, { ok: true });
+      if (c.path === `${BASE}/open`) return reply(200, { case: RESPONDENT.form, respondent_claim: null });
+      return null;
+    };
+    await open();
+    await waitFor(() => expect(gets(BASE)).toHaveLength(2));
+    await new Promise((r) => setTimeout(r, 50));
+    expect(posts(CLAIM_PATH)).toHaveLength(1);
+    expect(posts(`${BASE}/open`)).toHaveLength(0);
+    release();
+    await waitFor(() => expect(posts(`${BASE}/open`)).toHaveLength(1));
+    const last = calls.map((c) => `${c.method} ${c.path}`);
+    expect(last.lastIndexOf(`GET ${BASE}`)).toBeLessThan(last.indexOf(`POST ${BASE}/open`));
   });
 
   it("claim answers 5xx: no seat is taken, Retry shows and runs the link again", async () => {

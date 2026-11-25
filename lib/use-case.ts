@@ -69,10 +69,19 @@ export function useCase(
 ): {
   load: CaseLoad;
   setView: (view: CaseView) => void;
-  reload: () => void;
+  reload: () => number;
+  /** The newest request number whose answer has arrived; `reload` returns the one it asked for. */
+  served: number;
 } {
   const [load, setLoad] = useState<CaseLoad>({ status: "loading", view: null, code: null });
   const [tick, setTick] = useState(0);
+  const [served, setServed] = useState(-1);
+  const asked = useRef(0);
+  const bump = useCallback(() => {
+    asked.current += 1;
+    setTick(asked.current);
+    return asked.current;
+  }, []);
   const failures = useRef(0);
   const headerKey = extraHeaders ? JSON.stringify(extraHeaders) : "";
 
@@ -87,6 +96,7 @@ export function useCase(
         if (ctrl.signal.aborted) return;
         failures.current += 1;
         setLoad((prev) => failedLoad(prev, null, null));
+        setServed(tick);
         return;
       }
       const json = (await res.json().catch(() => null)) as { case?: CaseView; code?: unknown } | null;
@@ -94,11 +104,13 @@ export function useCase(
       if (res.ok && json?.case) {
         failures.current = 0;
         setLoad({ status: "ready", view: json.case, code: null });
+        setServed(tick);
         return;
       }
       failures.current += 1;
       const code = typeof json?.code === "string" ? json.code : null;
       setLoad((prev) => failedLoad(prev, res.status, code));
+      setServed(tick);
     })();
     return () => ctrl.abort();
   }, [url, tick, headerKey]);
@@ -110,27 +122,27 @@ export function useCase(
     const arm = () => {
       timer = setTimeout(() => {
         if (document.hidden) document.addEventListener("visibilitychange", onVisible);
-        else setTick((n) => n + 1);
+        else bump();
       }, delay);
     };
     const onVisible = () => {
       if (document.hidden) return;
       document.removeEventListener("visibilitychange", onVisible);
-      setTick((n) => n + 1);
+      bump();
     };
     arm();
     return () => {
       if (timer !== null) clearTimeout(timer);
       document.removeEventListener("visibilitychange", onVisible);
     };
-  }, [load]);
+  }, [load, bump]);
 
   // A first load that fails gets one quiet retry, then waits for the button.
   useEffect(() => {
     if (load.status !== "error" || failures.current !== 1) return;
-    const timer = setTimeout(() => setTick((n) => n + 1), 2000);
+    const timer = setTimeout(() => bump(), 2000);
     return () => clearTimeout(timer);
-  }, [load]);
+  }, [load, bump]);
 
   const setView = useCallback((view: CaseView) => {
     failures.current = 0;
@@ -138,8 +150,8 @@ export function useCase(
   }, []);
   const reload = useCallback(() => {
     setLoad((prev) => (prev.view ? prev : { status: "loading", view: null, code: null }));
-    setTick((n) => n + 1);
-  }, []);
+    return bump();
+  }, [bump]);
 
-  return { load, setView, reload };
+  return { load, setView, reload, served };
 }
