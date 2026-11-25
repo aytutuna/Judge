@@ -1,0 +1,61 @@
+# Lint, types, tests, generated files and a production build of the website
+# and API server. deploy/aws-lightsail/update.sh refuses to deploy a commit
+# that has no successful run of this workflow.
+name: Web
+
+on:
+  push:
+    paths-ignore:
+      - "mobile/**"
+      - ".github/workflows/mobile.yml"
+      - ".github/workflows/testflight.yml"
+  pull_request:
+    paths-ignore:
+      - "mobile/**"
+      - ".github/workflows/mobile.yml"
+      - ".github/workflows/testflight.yml"
+
+concurrency:
+  group: web-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint
+        run: npx eslint app components lib
+
+      - name: Types
+        run: npm run typecheck
+
+      - name: Tests
+        run: npx vitest run
+
+      - name: Website locales
+        run: npm run check:locales
+
+      - name: App strings of every language
+        run: npm run check:app-locales
+
+      - name: Generated strings are current
+        run: npx tsx mobile/shared/strings/export-strings.ts --check
+
+      - name: Example data is current
+        run: npm run check:examples
+
+      - name: Build
+        run: npm run build
