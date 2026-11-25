@@ -126,6 +126,7 @@ const MESSAGES: Partial<Record<ApiErrorCode, string>> = {
   not_configured: "Two-sided cases are not available on this server right now.",
   unavailable: UNAVAILABLE_MESSAGE,
   case_closed: "This case is not taking that anymore.",
+  seat_moved: "Your side was freed. Open the link again.",
   case_expired: "This invite has expired.",
   appeal_used: "This party already added context to this case.",
   not_party: "Only the people in this case can do that.",
@@ -734,10 +735,10 @@ export function respondGetHandler(req: Request, token: string): Promise<NextResp
       }
     }
     const view = await respondentView(found.row, party, viewerId);
-    // Signed out, nothing says who holds a side: while the case waits, the page speaks as no one.
-    const waiting = !viewerId && view.status === "awaiting_respondent";
+    // Only the account that answered is addressed as that side, at every stage;
+    // anyone else sees the invite, or the verdict, as a bystander.
     const body: CaseResponse = {
-      case: waiting ? { ...view, respondentAnswered: false } : view,
+      case: view.inAccount === true ? view : { ...view, respondentAnswered: false },
     };
     return json(body);
   });
@@ -819,15 +820,27 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
     // next open side here, just before the answer is stored, and gives it back
     // if the answer fails: this person has no claim yet to come back with.
     let taken: SeatRow | null = null;
+    // The page showed one side; an answer must not land on another (its seat was freed meanwhile).
+    const shown = parsed.data.party;
+    let moved = false;
     const takeSeat = async (): Promise<boolean> => {
-      if (held !== null || retry) return true;
+      if (held !== null || retry) {
+        moved = shown !== undefined && party !== shown;
+        return !moved;
+      }
       // An older per-side link can only take its own side, and only while it is free.
       taken = await claimSeat(await loadCaseBundle(row), viewer.user.id, now, found.shared ? undefined : found.party);
       if (taken) party = taken.party;
+      if (taken && shown !== undefined && taken.party !== shown) {
+        moved = true;
+        await releaseSeat(taken);
+        taken = null;
+      }
       return taken !== null;
     };
     const giveBack = () => (taken ? releaseSeat(taken) : Promise.resolve());
     const noSeat = async () => {
+      if (moved || shown !== undefined) return fail("seat_moved");
       // A signed-in person who already holds another side has no second one.
       const uid = viewer.user.id;
       const mine = (await loadCaseBundle(row)).seats.some((x) => x.userId === uid);
@@ -1273,7 +1286,8 @@ export function caseRemovalHandler(req: Request, id: string): Promise<NextRespon
  * their account; it is the only use the claim has left. Wrong claim, the
  * owner, a one-sided case or a side already bound to someone else all get
  * the same 404, checked before anything about the case is told. An account
- * that already holds or answers for another side gets 409 case_closed. */
+ * that already answers for another side, or holds a seat on one that was
+ * answered, gets 409 case_closed; an unanswered seat is let go instead. */
 export function respondentClaimHandler(req: Request, id: string): Promise<NextResponse> {
   return guarded("claim", async () => {
     if (!casesEnabled()) return fail("not_configured");
@@ -1303,11 +1317,14 @@ export function respondentClaimHandler(req: Request, id: string): Promise<NextRe
     if (bound === userId) return json(claimed);
     if (bound) return fail("not_found");
     // One person is one side of a case: linked to another, or seated on another.
-    const seats = (await loadCaseBundle(row)).seats;
-    if (boundElsewhere(row, invites, party, userId) || seats.some((s) => s.userId === userId && s.party !== party)) {
-      return fail("case_closed");
-    }
-    await caseDb();
+    if (boundElsewhere(row, invites, party, userId)) return fail("case_closed");
+    const db = await caseDb();
+    // A seat opened on the way here, with nothing answered on it, gives way to the real answer.
+    await db.execute({
+      sql: `DELETE FROM case_seats WHERE case_id = ? AND user_id = ? AND party <> ?
+              AND NOT EXISTS (SELECT 1 FROM case_sides s WHERE s.case_id = case_seats.case_id AND s.party = case_seats.party)`,
+      args: [row.id, userId, party],
+    });
     const nowIso = new Date().toISOString();
     const rs = await entitlementWriteBatch([
       party === "b"
@@ -1315,23 +1332,27 @@ export function respondentClaimHandler(req: Request, id: string): Promise<NextRe
             sql: `UPDATE cases SET respondent_user_id = ?, updated_at = ?
                   WHERE id = ? AND respondent_user_id IS NULL AND respondent_claim_nonce = ? AND owner_id <> ?
                     AND removed_b_at IS NULL
-                    AND NOT EXISTS (SELECT 1 FROM case_invites WHERE case_id = cases.id AND user_id = ?)`,
-            args: [userId, nowIso, row.id, row.respondentClaimNonce, userId, userId],
+                    AND NOT EXISTS (SELECT 1 FROM case_invites WHERE case_id = cases.id AND user_id = ?)
+                    AND NOT EXISTS (SELECT 1 FROM case_seats WHERE case_id = cases.id AND user_id = ? AND party <> 'b')`,
+            args: [userId, nowIso, row.id, row.respondentClaimNonce, userId, userId, userId],
           }
         : {
             sql: `UPDATE case_invites SET user_id = ?, updated_at = ?
                   WHERE case_id = ? AND party = ? AND user_id IS NULL AND claim_nonce = ?
                     AND EXISTS (SELECT 1 FROM cases c WHERE c.id = case_invites.case_id AND c.owner_id <> ?
                                   AND c.removed_${party}_at IS NULL AND c.respondent_user_id IS NOT ?)
-                    AND NOT EXISTS (SELECT 1 FROM case_invites i WHERE i.case_id = case_invites.case_id AND i.user_id = ?)`,
-            args: [userId, nowIso, row.id, party, respondentOf(row, invites, party).claimNonce, userId, userId, userId],
+                    AND NOT EXISTS (SELECT 1 FROM case_invites i WHERE i.case_id = case_invites.case_id AND i.user_id = ?)
+                    AND NOT EXISTS (SELECT 1 FROM case_seats WHERE case_id = case_invites.case_id AND user_id = ? AND party <> ?)`,
+            args: [userId, nowIso, row.id, party, respondentOf(row, invites, party).claimNonce, userId, userId, userId, userId, party],
           },
     ]);
     if (rs[0].rowsAffected !== 1) {
       const fresh = await getCase(row.id);
       const freshBound = respondentOf(fresh ?? row, await getInvites(row.id), party).userId;
       if (fresh && { b: fresh.removedBAt, c: fresh.removedCAt, d: fresh.removedDAt }[party]) return fail("removed");
-      return freshBound === userId ? json(claimed) : fail("not_found");
+      if (freshBound === userId) return json(claimed);
+      const seated = (await loadCaseBundle(fresh ?? row)).seats.some((s) => s.userId === userId && s.party !== party);
+      return seated ? fail("case_closed") : fail("not_found");
     }
     void track("case_claimed", { userId });
     return json(claimed);

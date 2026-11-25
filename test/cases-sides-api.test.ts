@@ -900,6 +900,44 @@ describe("one link for every side", () => {
     expect(await count("SELECT count(*) AS n FROM case_seats WHERE case_id = ? AND user_id = ?", [data.case.id, dan])).toBe(0);
   });
 
+  it("refuses an answer written for a side the account no longer holds, and keeps the case open", async () => {
+    const o = await owner(2);
+    const { data, shared } = await createMany(o, 3);
+    const bob = await openLink(shared, uid("bob"));
+    await openLink(shared, uid("carol"));
+    await age(data.case.id, "b");
+    const eve = uid("eve");
+    expect((await openLink(shared, eve)).party).toBe("b");
+    const send = (user: string, party: string) =>
+      http.respondPostHandler(
+        req("POST", `/api/v1/respond/${shared}`, { user, ip: ip(), headers: SIDES, body: { text: BOB, turnstileToken: "t", party } }),
+        shared,
+      );
+    const lost = await send(bob.who!, "b");
+    expect(lost.status).toBe(409);
+    expect((await body(lost)).code).toBe("seat_moved");
+    expect(await count("SELECT count(*) AS n FROM case_sides WHERE case_id = ?", [data.case.id])).toBe(1);
+    // The holder of the side may still answer it.
+    expect((await send(eve, "b")).status).toBe(202);
+  });
+
+  it("does not move an answer to another side when the shown one is free again", async () => {
+    const o = await owner(2);
+    const { data, shared } = await createMany(o, 3);
+    const bob = await openLink(shared, uid("bob"));
+    await legacySeat(data.case.id, "c");
+    await age(data.case.id, "b");
+    const carol = uid("carol");
+    // Bob's seat on B is idle, then taken; C is free once the legacy seat is taken over.
+    expect((await openLink(shared, carol)).party).toBe("b");
+    const res = await http.respondPostHandler(
+      req("POST", `/api/v1/respond/${shared}`, { user: bob.who!, ip: ip(), headers: SIDES, body: { text: BOB, turnstileToken: "t", party: "b" } }),
+      shared,
+    );
+    expect((await body(res)).code).toBe("seat_moved");
+    expect(await count("SELECT count(*) AS n FROM case_seats WHERE case_id = ? AND user_id = ?", [data.case.id, bob.who!])).toBe(0);
+  });
+
   it("answers two tabs of one account with the same side", async () => {
     const o = await owner(2);
     const { shared } = await createMany(o, 3);
@@ -920,7 +958,7 @@ describe("one link for every side", () => {
     expect(out.view).toMatchObject({ status: "awaiting_respondent", respondentAnswered: false, sides: [] });
   });
 
-  it("refuses to link a legacy answer to an account that already has another side", async () => {
+  it("links a legacy answer over an unanswered seat, but not beside an answered side", async () => {
     const o = await owner(2);
     const { data, shared } = await createMany(o, 4);
     const bob = await openLink(shared, uid("bob"));
@@ -932,13 +970,22 @@ describe("one link for every side", () => {
     const secret = claimFor(row, await getInvites(row.id), "c")!;
     const claimAs = (user: string) =>
       http.respondentClaimHandler(req("POST", `/api/v1/cases/${data.case.id}/claim`, { user, body: { claim: secret }, ip: ip(), headers: SIDES }), data.case.id);
-    // Bob holds a seat on side B.
-    const refused = await claimAs(bob.who!);
+    // Bob only opened side B; the answered side C is his real one.
+    expect((await claimAs(bob.who!)).status).toBe(200);
+    expect(await count("SELECT count(*) AS n FROM case_seats WHERE case_id = ? AND user_id = ?", [data.case.id, bob.who!])).toBe(0);
+
+    // An account that answered side B cannot also take the legacy side D.
+    const dan = uid("dan");
+    expect((await respondAs(shared, dan, BOB)).status).toBe(202);
+    await db.execute({ sql: "UPDATE case_invites SET claim_nonce = 'dn' WHERE case_id = ? AND party = 'd'", args: [data.case.id] });
+    const dRow = (await getCase(data.case.id))!;
+    const dSecret = claimFor(dRow, await getInvites(dRow.id), "d")!;
+    const refused = await http.respondentClaimHandler(
+      req("POST", `/api/v1/cases/${data.case.id}/claim`, { user: dan, body: { claim: dSecret }, ip: ip(), headers: SIDES }),
+      data.case.id,
+    );
     expect(refused.status).toBe(409);
     expect((await body(refused)).code).toBe("case_closed");
-    const unbound = (await db.execute({ sql: "SELECT user_id FROM case_invites WHERE case_id = ? AND party = 'c'", args: [data.case.id] })).rows[0];
-    expect(unbound.user_id).toBeNull();
-    expect((await claimAs(uid("dan"))).status).toBe(200);
   });
 
   it("links a legacy answer for side C to the account, which then removes it", async () => {

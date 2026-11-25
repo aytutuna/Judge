@@ -24,6 +24,8 @@ export const API_ERROR_STATUS = {
   daily_cap: 503,
   not_configured: 503,
   case_closed: 409,
+  /** An answer sent from a page whose side the account no longer holds. */
+  seat_moved: 409,
   case_expired: 410,
   appeal_used: 409,
   /** A one-sided verdict already took its two rounds of added context. */

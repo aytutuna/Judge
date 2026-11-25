@@ -69,6 +69,8 @@ export type SideRequest = z.infer<typeof SideRequest>;
 export const RespondRequest = z.object({
   text: ArgumentText,
   evidence: EvidenceTokens.max(MAX_EVIDENCE_PER_SIDE).optional(),
+  /** The side the page showed; an answer for a side the account no longer holds is refused. */
+  party: z.enum(["b", "c", "d"]).optional(),
   turnstileToken: z.string().max(2048).optional(),
   /** How the respondent appears on the case's share pages; empty or null = "Party B". */
   displayName: z.union([z.literal(""), DisplayNameInput]).nullable().optional(),

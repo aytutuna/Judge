@@ -509,6 +509,38 @@ describe("respondent: GET and POST /api/v1/respond/{token}", () => {
     expect(stored.respondent_user_id).toBe(resp);
   });
 
+  it("addresses only the account that answered as that side, at every stage", async () => {
+    const o = await owner(3);
+    const resp = uid("resp");
+    const stranger = uid("stranger");
+    const { data } = await create(o);
+    const token = tokenOf(data.case);
+    await respond(token, { user: resp });
+    const looks = async () => {
+      const who = async (user?: string) => (await getRespondent(token, user)).view!;
+      return { out: await who(), other: await who(stranger), mine: await who(resp) };
+    };
+    const stage = async (status: string) => {
+      await setCase(data.case.id, "status = ?", [status]);
+      return looks();
+    };
+    for (const status of ["judging", "failed", "expired"]) {
+      const { out, other, mine } = await stage(status);
+      for (const v of [out, other]) expect([status, v.respondentAnswered, v.inAccount]).toEqual([status, false, false]);
+      expect([status, mine.respondentAnswered, mine.inAccount]).toEqual([status, true, true]);
+    }
+    await setCase(data.case.id, "status = 'judging'");
+    await drain();
+    const judged = await looks();
+    expect(judged.mine.status).toBe("judged");
+    for (const v of [judged.out, judged.other]) expect([v.respondentAnswered, v.inAccount]).toEqual([false, false]);
+    expect([judged.mine.respondentAnswered, judged.mine.inAccount]).toEqual([true, true]);
+    // The verdict is as visible to a bystander as before; nothing more.
+    expect(judged.out.verdicts.map((x) => x.id)).toEqual(judged.mine.verdicts.map((x) => x.id));
+    expect(judged.out.names).toBeNull();
+    expect(judged.out.yourOriginal).not.toBe("stored");
+  });
+
   it("a respondent whose names cannot be taken out gets 503 anonymize_failed and can answer again", async () => {
     const { AnonymizeError } = await import("../lib/anonymize");
     const o = await owner();
