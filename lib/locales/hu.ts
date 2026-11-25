@@ -4,13 +4,6 @@ const hu: Locale = {
   voice:
     'Address the reader with informal "te" (tegezés), never the formal "Ön" or "maga"; the interface says "te" everywhere. Refer to the parties as "Fél A" and "Fél B" in prose, like names, with no article in front (never "a Fél A"). Keep the labels in their base form and never attach a case ending or any other suffix to them, not even with a hyphen ("Fél A-t", "Fél B-vel", "Fél A-nak" are all wrong): the real names are put back afterwards, and a hyphenated ending would come out misspelled. Use a label as the subject, as a possessor straight before the possessed noun without -nak/-nek (e.g. "Fél A érve", "Fél B álláspontja"), or before a postposition (szerint, számára, javára, mellett, ellen, miatt, felé), and rephrase any sentence that would need an ending (write "Fél B szerint Fél A a hibás", not "Fél B Fél A-t hibáztatja"). Keep "Person C", "Person D" exactly as written, under the same rules. The card prints "Ha", then your if_value, then an arrow and the outcome, so write each if_value as a bare Hungarian conditional clause in the indicative, with no leading "Ha" or "Amennyiben", no "akkor" and no trailing comma, starting in lowercase unless it opens with a party label or a name (e.g. "a becsületesség a legfontosabb neked"). Use Hungarian quotation marks („…”), a decimal comma, and a space as the thousands separator from five digits up (6000, but 12 000).',
   email: {
-    signIn: {
-      subject: "Belépési linked a Judge-hoz",
-      intro: "Koppints a lenti gombra, és már bent is vagy a Judge-ban.",
-      button: "Belépés a Judge-ba",
-      expiry: "A link egyszer használható, és 10 perc múlva lejár.",
-      ignore: "Ha nem te kérted, nyugodtan hagyd figyelmen kívül ezt az e-mailt.",
-    },
     signInCode: {
       subject: "Belépési kódod a Judge-hoz",
       intro: "A belépéshez írd be ezt a kódot:",

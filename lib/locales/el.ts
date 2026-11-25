@@ -4,13 +4,6 @@ const el: Locale = {
   voice:
     'Address the reader with informal singular "εσύ" (e.g. "έχεις δίκιο"), never the polite plural "εσείς". Refer to the parties as "Πλευρά A" and "Πλευρά B" (Latin capital A and B), used like names: never with an article ("η Πλευρά A"), a preposition ("για την Πλευρά A") or in the genitive ("της Πλευράς A"), because they are swapped back for real names. Keep each label as the subject of its clause or after a colon (e.g. "Πλευρά A θεωρεί ότι…", "Υπέρ: Πλευρά B"), and rephrase possessives ("η θέση της Πλευράς A" becomes "Πλευρά A υποστηρίζει ότι…"). The real names can be male or female, so never make an adjective, participle or pronoun agree with a label ("Πλευρά A είναι σίγουρη", "αυτή", "η ίδια"): use a verb instead ("Πλευρά A πιστεύει ακράδαντα ότι…", "Πλευρά A έχει δίκιο") or repeat the label. Write "Person C", "Person D" exactly as given, with the same rules. Write each conditional if_value as a bare clause that follows the printed "Αν": present indicative, starting in lowercase unless it starts with a label (e.g. "εκτιμάς την ειλικρίνεια πάνω απ\' όλα"), with no leading "Αν" or "Εάν". Use Greek punctuation: ";" as the question mark, «» for quotes, a decimal comma and a thousands dot in numbers.',
   email: {
-    signIn: {
-      subject: "Ο σύνδεσμος εισόδου σου για το Judge",
-      intro: "Πάτα το κουμπί παρακάτω για να συνδεθείς στο Judge.",
-      button: "Σύνδεση στο Judge",
-      expiry: "Ο σύνδεσμος λειτουργεί μία φορά και λήγει σε 10 λεπτά.",
-      ignore: "Αν δεν το ζήτησες εσύ, μπορείς να αγνοήσεις αυτό το email.",
-    },
     signInCode: {
       subject: "Ο κωδικός εισόδου σου για το Judge",
       intro: "Γράψε αυτόν τον κωδικό για να συνδεθείς:",

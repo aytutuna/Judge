@@ -21,6 +21,7 @@ afterAll(() => {
 });
 
 afterEach(() => {
+  vi.useRealTimers();
   vi.unstubAllEnvs();
   vi.unstubAllGlobals();
 });
@@ -46,19 +47,19 @@ function emailOn(): Sent[] {
   return sent;
 }
 
-async function post(p: string, body: unknown, ip = "203.0.113.1"): Promise<Response> {
+async function post(p: string, body: unknown, ip = "203.0.113.1", headers: Record<string, string> = {}): Promise<Response> {
   const instance = await auth.getAuth();
   return instance.handler(
     new Request(`http://localhost:3601/api/auth${p}`, {
       method: "POST",
-      headers: { "content-type": "application/json", "x-forwarded-for": ip },
+      headers: { "content-type": "application/json", "x-forwarded-for": ip, ...headers },
       body: JSON.stringify(body),
     }),
   );
 }
 
-const sendCode = (email: string, ip?: string) =>
-  post("/email-otp/send-verification-otp", { email, type: "sign-in" }, ip);
+const sendCode = (email: string, ip?: string, headers?: Record<string, string>) =>
+  post("/email-otp/send-verification-otp", { email, type: "sign-in" }, ip, headers);
 const signIn = (email: string, otp: string, ip?: string) => post("/sign-in/email-otp", { email, otp }, ip);
 
 describe("sign-in code limits per address", () => {
@@ -101,7 +102,7 @@ describe("sign-in code limits per address", () => {
 
   it("keeps a looser ceiling on the address across IPs", async () => {
     emailOn();
-    // 5 per IP, 20 per address: the fifth IP's sends run into the ceiling.
+    // 5 per IP, 20 an hour and 10 a day per address: the day's ceiling comes first.
     let sent = 0;
     let last = 200;
     for (let ip = 1; ip <= 6 && last === 200; ip++) {
@@ -110,8 +111,148 @@ describe("sign-in code limits per address", () => {
         if (last === 200) sent++;
       }
     }
-    expect(sent).toBe(20);
+    expect(sent).toBe(10);
     expect(last).toBe(429);
     expect((await sendCode("many@example.com", "192.0.2.99")).status).toBe(429);
+  });
+
+  it("holds an address to ten codes a day, spread over any IPs, then frees it", async () => {
+    const sent = emailOn();
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(Date.now() + 3 * 86_400_000);
+    for (let i = 0; i < 10; i++) {
+      expect((await sendCode("Daily+x@example.com", `198.18.0.${i + 1}`)).status).toBe(200);
+      vi.setSystemTime(Date.now() + 10 * 60_000);
+    }
+    expect((await sendCode("daily@example.com", "198.18.0.99")).status).toBe(429);
+    expect(sent).toHaveLength(10);
+    vi.setSystemTime(Date.now() + 86_400_000);
+    expect((await sendCode("daily@example.com", "198.18.0.99")).status).toBe(200);
+  });
+});
+
+describe("site-wide code email cap", () => {
+  it("refuses sends past the hourly cap and raises the signal", async () => {
+    const sent = emailOn();
+    vi.stubEnv("CODE_EMAILS_PER_HOUR", "3");
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    for (let i = 0; i < 3; i++) expect((await sendCode(`cap${i}@example.com`, `198.19.0.${i}`)).status).toBe(200);
+    const res = await sendCode("cap9@example.com", "198.19.0.9");
+    expect(res.status).toBe(503);
+    expect(((await res.json()) as { code: string }).code).toBe("unavailable");
+    expect(sent).toHaveLength(3);
+    expect(warn.mock.calls.flat()).toContain("[signal:code_email_cap]");
+    warn.mockRestore();
+  });
+
+  it("does not count requests the address limits already refused", async () => {
+    const sent = emailOn();
+    vi.stubEnv("CODE_EMAILS_PER_HOUR", "6");
+    for (let i = 0; i < 5; i++) expect((await sendCode("same@example.org", "198.19.1.1")).status).toBe(200);
+    for (let i = 0; i < 5; i++) expect((await sendCode("same@example.org", "198.19.1.1")).status).toBe(429);
+    expect((await sendCode("next@example.org", "198.19.1.2")).status).toBe(200);
+    expect(sent).toHaveLength(6);
+  });
+});
+
+describe("Turnstile on code requests", () => {
+  const APP = { "device-id": "device-abcdef123456", "device-platform": "ios" };
+
+  function turnstileOn(): { siteverify: number } {
+    const seen = { siteverify: 0 };
+    const base = globalThis.fetch;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+        if (String(input).includes("/turnstile/v0/siteverify")) {
+          seen.siteverify++;
+          const token = new URLSearchParams(String(init?.body)).get("response");
+          return new Response(JSON.stringify({ success: token === "good" }), { status: 200 });
+        }
+        return base(input, init);
+      }),
+    );
+    vi.stubEnv("TURNSTILE_SECRET_KEY", "0x4AAAAAAAtest");
+    return seen;
+  }
+
+  it("is required from the website: no token or a bad one is refused without sending", async () => {
+    const sent = emailOn();
+    const seen = turnstileOn();
+    const none = await sendCode("web1@example.com", "198.51.100.30", { origin: "http://localhost:3601" });
+    expect(none.status).toBe(403);
+    expect(((await none.json()) as { code: string }).code).toBe("CAPTCHA_FAILED");
+    const bad = await sendCode("web1@example.com", "198.51.100.30", { "x-captcha-response": "nope" });
+    expect(bad.status).toBe(403);
+    expect(sent).toHaveLength(0);
+    expect(seen.siteverify).toBe(1);
+  });
+
+  it("lets a website request with a good token through", async () => {
+    const sent = emailOn();
+    turnstileOn();
+    const res = await sendCode("web2@example.com", "198.51.100.31", { "x-captcha-response": "good" });
+    expect(res.status).toBe(200);
+    expect(sent).toHaveLength(1);
+  });
+
+  it("is not asked of the apps, which send their device headers and no Origin", async () => {
+    const sent = emailOn();
+    const seen = turnstileOn();
+    expect((await sendCode("app1@example.com", "198.51.100.32", APP)).status).toBe(200);
+    expect((await sendCode("app2@example.com", "198.51.100.32", { ...APP, "device-platform": "android" })).status).toBe(200);
+    expect(sent).toHaveLength(2);
+    expect(seen.siteverify).toBe(0);
+  });
+
+  it("does not take the app headers from a browser, malformed ids or other platforms", async () => {
+    emailOn();
+    turnstileOn();
+    const bad: Record<string, string>[] = [
+      { ...APP, origin: "http://localhost:3601" },
+      { ...APP, "device-platform": "web" },
+      { ...APP, "device-id": "short" },
+      { "device-platform": "ios" },
+    ];
+    for (const [i, h] of bad.entries()) {
+      expect((await sendCode(`probe${i}@example.com`, "198.51.100.33", h)).status, String(i)).toBe(403);
+    }
+  });
+
+  it("an outage of the check refuses the send as unavailable", async () => {
+    const sent = emailOn();
+    turnstileOn();
+    expect((await sendCode("web3@example.com", "198.51.100.34", { "x-captcha-response": "good" })).status).toBe(200);
+    vi.stubGlobal("fetch", vi.fn(async () => new Response("", { status: 500 })));
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    const down = await sendCode("web4@example.com", "198.51.100.35", { "x-captcha-response": "good" });
+    expect(down.status).toBe(503);
+    expect(sent).toHaveLength(1);
+  });
+
+  it("never applies to the review address, which sends nothing", async () => {
+    const sent = emailOn();
+    turnstileOn();
+    vi.stubEnv("REVIEW_ACCOUNT_EMAIL", "tsreview@okjudge.test");
+    vi.stubEnv("REVIEW_ACCOUNT_CODE", "480213");
+    vi.stubEnv("CODE_EMAILS_PER_HOUR", "0");
+    const res = await sendCode("tsreview@okjudge.test", "198.51.100.36", { origin: "http://localhost:3601" });
+    expect(res.status).toBe(200);
+    expect(sent).toHaveLength(0);
+    expect((await signIn("tsreview@okjudge.test", "480213", "198.51.100.36")).status).toBe(200);
+  });
+});
+
+describe("default code email cap", () => {
+  it("is 100 an hour unless CODE_EMAILS_PER_HOUR says otherwise, and 0 stops code emails", async () => {
+    const { checkCodeEmailCap } = await import("../lib/ratelimit");
+    // Last in the file, in a month nobody else sent in, so the shared hour is empty.
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(Date.now() + 30 * 86_400_000);
+    vi.stubEnv("CODE_EMAILS_PER_HOUR", "0");
+    expect((await checkCodeEmailCap(process.env)).ok).toBe(false);
+    vi.stubEnv("CODE_EMAILS_PER_HOUR", "junk");
+    for (let i = 0; i < 100; i++) expect((await checkCodeEmailCap(process.env)).ok, String(i)).toBe(true);
+    expect((await checkCodeEmailCap(process.env)).ok).toBe(false);
   });
 });

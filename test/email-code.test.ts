@@ -188,21 +188,6 @@ describe("email sign-in by code (apps)", () => {
     expect(sent).toHaveLength(0);
   });
 
-  it("needs no captcha even when Turnstile guards the magic link", async () => {
-    const sent = emailOn();
-    vi.stubEnv("TURNSTILE_SECRET_KEY", "0x4AAAAAAAtest");
-    expect((await sendCode("nocaptcha@example.com")).status).toBe(200);
-    expect((await signIn("nocaptcha@example.com", codeFrom(sent[0]))).status).toBe(200);
-    // The magic link still requires the widget's token.
-    const magic = await post(
-      "/sign-in/magic-link",
-      { email: "nocaptcha@example.com", callbackURL: "/account" },
-      { origin: ORIGIN },
-    );
-    expect(magic.status).toBe(400);
-    expect(((await magic.json()) as { code: string }).code).toBe("MISSING_RESPONSE");
-  });
-
   it("the plugin's other endpoints stay closed", async () => {
     emailOn();
     for (const p of [

@@ -28,14 +28,14 @@ describe("server code loads the language it writes", () => {
     expect(json.mock.calls[0][0].system).toContain('Refer to the parties as "Taraf A" and "Taraf B" in prose.');
   });
 
-  it("sends the Turkish sign-in email", async () => {
+  it("sends the Turkish sign-in code email", async () => {
     vi.stubEnv("RESEND_API_KEY", "k");
     vi.stubEnv("EMAIL_FROM", "Judge <a@b.test>");
     const fetch = vi.fn(async () => new Response("{}"));
     vi.stubGlobal("fetch", fetch);
-    const { sendSignInEmail } = await import("../lib/email");
-    await sendSignInEmail({ to: "x@y.test", url: "https://x.test/l", lang: "tr" });
+    const { sendSignInCodeEmail } = await import("../lib/email");
+    await sendSignInCodeEmail({ to: "x@y.test", code: "482913", lang: "tr" });
     const body = JSON.parse(String((fetch.mock.calls[0] as unknown as [string, RequestInit])[1].body));
-    expect(body.subject).toBe("Judge giriş bağlantın");
+    expect(body.subject).toBe("Judge giriş kodun");
   });
 });

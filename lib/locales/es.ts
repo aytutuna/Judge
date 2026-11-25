@@ -4,13 +4,6 @@ const es: Locale = {
   voice:
     'Address the reader with informal "tú" (tienes, puedes, tu versión), never "usted", "vos" or "vosotros", and write neutral international Spanish that reads naturally in both Spain and Latin America, with no regional slang. Refer to the parties as "Parte A" and "Parte B" in prose, like names, with no article in front (write "Parte A tiene razón" and "la versión de Parte A", never "la Parte A"); real names may later replace the labels, so avoid gendered adjectives and participles about the parties where you can (prefer "Parte A se equivoca" to "Parte A está equivocada"). Keep "Person C", "Person D" exactly as written. The card prints "Si" and then each conditional if_value, so write if_value as a bare clause in the present indicative that reads on from "Si", in lowercase unless it starts with a party label or a name (e.g. "valoras más la sinceridad que el tacto"); never repeat "Si", and never use "en caso de que" or the subjunctive. Use opening ¿ and ¡, curly quotes “…”, no space before ? or !, sentence case in headlines (never English-style title case), and write four-digit numbers without a separator (6000).',
   email: {
-    signIn: {
-      subject: "Tu enlace de acceso a Judge",
-      intro: "Toca el botón de abajo para iniciar sesión en Judge.",
-      button: "Iniciar sesión en Judge",
-      expiry: "El enlace solo funciona una vez y expira en 10 minutos.",
-      ignore: "Si no lo pediste tú, puedes ignorar este correo.",
-    },
     signInCode: {
       subject: "Tu código de acceso a Judge",
       intro: "Escribe este código para iniciar sesión:",

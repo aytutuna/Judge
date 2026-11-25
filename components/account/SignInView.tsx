@@ -47,14 +47,6 @@ export function safeNext(raw: string | string[] | undefined, fallback = "/accoun
   return path;
 }
 
-/** `path` with `lang` in its query: the magic-link email is written in the
- * language the callback URL carries. */
-export function withLang(path: string, lang: Lang): string {
-  const u = new URL(path, "http://local");
-  u.searchParams.set("lang", lang);
-  return `${u.pathname}${u.search}${u.hash}`;
-}
-
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const CODE_LENGTH = 6;
@@ -145,6 +137,8 @@ export type SignInPanelProps = {
   code: string;
   captcha: React.ReactNode;
   canSendEmail: boolean;
+  /** The Turnstile token a code request needs is there (always, without the widget). */
+  hasToken: boolean;
   mode: SignInMode;
   password: string;
   showPassword: boolean;
@@ -185,6 +179,7 @@ export function SignInPanel({
   code,
   captcha,
   canSendEmail,
+  hasToken,
   mode,
   password,
   showPassword,
@@ -323,15 +318,20 @@ export function SignInPanel({
       {usernameField}
       {passwordField(mode === "create" ? "new" : "current")}
       {formError}
-      <button type="submit" className={`${styles.btn} ${styles.secondary}`} disabled={pending || password === ""}>
+      {captcha}
+      <button
+        type="submit"
+        className={`${styles.btn} ${styles.secondary}`}
+        disabled={pending || password === "" || (mode === "create" && !hasToken)}
+      >
         {t(lang, mode === "create" ? "signin.continue" : "signin.passwordSubmit")}
       </button>
       {mode === "password" ? (
         <>
-          <button type="button" className={styles.textBtn} disabled={pending} onClick={onForgot}>
+          <button type="button" className={styles.textBtn} disabled={pending || !hasToken} onClick={onForgot}>
             {t(lang, "signin.forgot")}
           </button>
-          <button type="button" className={styles.textBtn} disabled={pending} onClick={onUseCode}>
+          <button type="button" className={styles.textBtn} disabled={pending || !hasToken} onClick={onUseCode}>
             {t(lang, "signin.useCode")}
           </button>
         </>
@@ -377,7 +377,8 @@ export function SignInPanel({
           {t(lang, "signin.codeSubmit")}
         </button>
       </form>
-      <button type="button" className={styles.textBtn} disabled={pending || resendIn > 0} onClick={onResend}>
+      {captcha}
+      <button type="button" className={styles.textBtn} disabled={pending || resendIn > 0 || !hasToken} onClick={onResend}>
         {resendIn > 0 ? t(lang, "signin.codeResendIn", { n: resendIn }) : t(lang, "signin.codeResend")}
       </button>
       <button type="button" className={styles.textBtn} disabled={pending} onClick={onChangeEmail}>
@@ -414,7 +415,7 @@ export function SignInPanel({
         aria-describedby={formError ? `${formId}-error` : undefined}
         onChange={(e) => onEmail(e.target.value)}
       />
-      {!byCode ? captcha : null}
+      {captcha}
       {formError}
       <button type="submit" className={`${styles.btn} ${styles.secondary}`} disabled={!canSendEmail || pending}>
         {t(lang, "signin.continue")}
@@ -476,10 +477,6 @@ export function SignInPanel({
         </>
       ) : codeStep ? (
         codeForm
-      ) : sentTo ? (
-        <p className={styles.ok} role="status">
-          {t(lang, "signin.emailSent", { email: sentTo })}
-        </p>
       ) : (
         passwordStep
       )}
@@ -549,12 +546,13 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
     return () => clearTimeout(id);
   }, [resendIn]);
 
-  // The code endpoints are not behind the widget (see lib/auth.ts); only the
-  // magic link is.
   const byCode = config?.signIn.emailCode === true;
   const byPassword = byCode && config?.signIn.password === true;
-  const needsCaptcha = TURNSTILE_SITE_KEY !== "" && !byCode;
-  const canSendEmail = EMAIL_RE.test(email.trim()) && (!needsCaptcha || captchaToken !== null);
+  // Every code request carries a Turnstile token; the widget is shown on
+  // each screen that can send one.
+  const needsCaptcha = TURNSTILE_SITE_KEY !== "" && byCode;
+  const hasToken = !needsCaptcha || captchaToken !== null;
+  const canSendEmail = EMAIL_RE.test(email.trim()) && hasToken;
 
   // Back from Apple or Google through the browser's page cache: the page
   // comes back exactly as it was left, spinner included.
@@ -673,32 +671,21 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
     signInStarted("email");
     const client = await loadClient();
     if (!client) return;
-    if (byCode) {
-      const res = await client.sendSignInCode(to, lang);
-      setPending(false);
-      if (res.ok) {
-        setCode("");
-        setMode(sendMode);
-        if (sendMode !== "create") setPassword("");
-        setSentTo(to);
-        setResendIn(RESEND_SECONDS);
-        keepSentTo(to, sendMode);
-      } else {
-        forgetAdultTick();
-        trackError(res.code);
-        fail(t(lang, client.codeErrorKey(res, "send")));
-      }
-      return;
-    }
     const token = captchaToken ?? undefined;
     setCaptchaToken(null);
-    const res = await client.sendMagicLink(to, withLang(next, lang), token);
+    const res = await client.sendSignInCode(to, lang, token);
     setPending(false);
-    if (res.ok) setSentTo(to);
-    else {
+    if (res.ok) {
+      setCode("");
+      setMode(sendMode);
+      if (sendMode !== "create") setPassword("");
+      setSentTo(to);
+      setResendIn(RESEND_SECONDS);
+      keepSentTo(to, sendMode);
+    } else {
       forgetAdultTick();
       trackError(res.code);
-      fail(t(lang, "signin.failed"));
+      fail(t(lang, client.codeErrorKey(res, "send")));
     }
   }
 
@@ -796,7 +783,9 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
     setError(null);
     const client = await loadClient();
     if (!client) return;
-    const res = await client.sendSignInCode(sentTo, lang);
+    const token = captchaToken ?? undefined;
+    setCaptchaToken(null);
+    const res = await client.sendSignInCode(sentTo, lang, token);
     setPending(false);
     if (res.ok) {
       setCode("");
@@ -870,6 +859,7 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
           ) : null
         }
         canSendEmail={canSendEmail}
+        hasToken={hasToken}
         mode={mode}
         password={password}
         showPassword={showPassword}

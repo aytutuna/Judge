@@ -4,13 +4,6 @@ const hi: Locale = {
   voice:
     'Address the reader with "आप" and its polite verb forms ("आप सही हैं", "जाँच लें"), never "तुम" or "तू". Write everyday conversational Hindi in Devanagari, not Sanskritized or legal Hindi; common English loanwords (लिंक, ऐप, मैसेज) are fine. Refer to the parties as "पक्ष A" and "पक्ष B" in prose, like names, always with the Latin letters A and B and with no word such as "यह" or "वह" in front. Real names may later replace these labels, so avoid verb forms that mark a party\'s gender ("पक्ष A मानता है", "पक्ष B गई"); prefer "पक्ष A का कहना है कि", "पक्ष B के मुताबिक", "पक्ष A ने कहा", and do the same for the reader where it is easy ("आपने कहा" rather than "आप गए"). Other people stay "Person C", "Person D" exactly as written. Each conditional if_value is printed after "अगर" and followed by an arrow and the outcome, so write it as a bare condition clause with no leading "अगर" and no "तो" (e.g. "आपके लिए ईमानदारी सबसे ज़रूरी है"). End sentences with "।", use Western digits and curly quotes “ ”.',
   email: {
-    signIn: {
-      subject: "आपका Judge साइन इन लिंक",
-      intro: "Judge में साइन इन करने के लिए नीचे दिए बटन पर टैप करें।",
-      button: "Judge में साइन इन करें",
-      expiry: "यह लिंक सिर्फ़ एक बार काम करेगा और 10 मिनट बाद बंद हो जाएगा।",
-      ignore: "अगर आपने यह नहीं माँगा था, तो इस ईमेल को अनदेखा कर दें।",
-    },
     signInCode: {
       subject: "आपका Judge साइन इन कोड",
       intro: "साइन इन करने के लिए यह कोड डालें:",

@@ -12,9 +12,9 @@ process.env.BETTER_AUTH_URL = "http://localhost:3600";
 const auth = await import("../lib/auth");
 const { appleClientSecret, appleEnv } = await import("../lib/apple-secret");
 const { getDb } = await import("../lib/db");
-const { EMAIL_EN, langFromMagicLink, sendSignInEmail, signInEmailContent } = await import("../lib/email");
+const { EMAIL_EN, sendSignInCodeEmail, signInCodeEmailContent } = await import("../lib/email");
 const { default: tr } = await import("../lib/locales/tr");
-const SIGNIN_EMAIL = { en: EMAIL_EN.signIn, tr: tr.email.signIn };
+const SIGNIN_EMAIL = { en: EMAIL_EN.signInCode, tr: tr.email.signInCode };
 
 afterEach(() => {
   vi.unstubAllEnvs();
@@ -221,89 +221,46 @@ describe("Better Auth on the shared libSQL database", () => {
     expect(await auth.getViewer(req({ authorization: "Bearer x" }))).toBeNull();
   });
 
-  it("emails a magic link (language from callbackURL) whose link signs the user in", async () => {
+  it("has no magic-link endpoint, with or without email credentials", async () => {
+    const send = async () =>
+      (await auth.getAuth()).handler(
+        new Request("http://localhost:3600/api/auth/sign-in/magic-link", {
+          method: "POST",
+          headers: { "content-type": "application/json", origin: "http://localhost:3600" },
+          body: JSON.stringify({ email: "a@example.com", callbackURL: "/account" }),
+        }),
+      );
+    expect((await send()).status).toBe(404);
     vi.stubEnv("RESEND_API_KEY", "re_test");
     vi.stubEnv("EMAIL_FROM", "Judge <signin@verdict.example.org>");
-    const sent: { to: string[]; subject: string; text: string }[] = [];
-    const realFetch = globalThis.fetch;
-    vi.stubGlobal(
-      "fetch",
-      vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
-        if (String(input) === "https://api.resend.com/emails") {
-          sent.push(JSON.parse(String(init?.body)));
-          return new Response(JSON.stringify({ id: "x" }), { status: 200 });
-        }
-        return realFetch(input, init);
-      }),
+    const verify = await (await auth.getAuth()).handler(
+      new Request("http://localhost:3600/api/auth/magic-link/verify?token=x", { headers: { origin: "http://localhost:3600" } }),
     );
-    const log = vi.spyOn(console, "log");
-    const instance = await auth.getAuth();
-    const res = await instance.handler(
-      new Request("http://localhost:3600/api/auth/sign-in/magic-link", {
-        method: "POST",
-        headers: { "content-type": "application/json", origin: "http://localhost:3600" },
-        body: JSON.stringify({ email: "Reader@Example.com", callbackURL: "/account?lang=tr" }),
-      }),
-    );
-    expect(res.status).toBe(200);
-    expect(sent).toHaveLength(1);
-    expect(sent[0].to.map((a) => a.toLowerCase())).toEqual(["reader@example.com"]);
-    expect(sent[0].subject).toBe(SIGNIN_EMAIL.tr.subject);
-    const link = /https?:\/\/\S+/.exec(sent[0].text)![0];
-    expect(link.startsWith("http://localhost:3600/api/auth/magic-link/verify?")).toBe(true);
-    expect(log.mock.calls.flat().join(" ").toLowerCase()).not.toContain("reader@example.com");
-
-    const verify = await instance.handler(new Request(link, { headers: { origin: "http://localhost:3600" } }));
-    expect(verify.status).toBe(302);
-    expect(verify.headers.get("location")).toContain("/account?lang=tr");
-    const token = verify.headers.get("set-auth-token");
-    expect(token).toBeTruthy();
-    const viewer = await auth.getViewer(req({ authorization: `Bearer ${token}` }));
-    expect(viewer?.user.email.toLowerCase()).toBe("reader@example.com");
-  });
-
-  it("the magic-link endpoint does not exist without email credentials", async () => {
-    const instance = await auth.getAuth();
-    const res = await instance.handler(
-      new Request("http://localhost:3600/api/auth/sign-in/magic-link", {
-        method: "POST",
-        headers: { "content-type": "application/json", origin: "http://localhost:3600" },
-        body: JSON.stringify({ email: "a@example.com" }),
-      }),
-    );
-    expect(res.status).toBe(404);
+    expect((await send()).status).toBe(404);
+    expect(verify.status).toBe(404);
   });
 });
 
-describe("sign-in email", () => {
-  it("picks the language from the callbackURL's lang param", () => {
-    const link = (cb: string) =>
-      `https://v.example/api/auth/magic-link/verify?token=t&callbackURL=${encodeURIComponent(cb)}`;
-    expect(langFromMagicLink(link("/account?lang=tr"))).toBe("tr");
-    expect(langFromMagicLink(link("/account?lang=en"))).toBe("en");
-    expect(langFromMagicLink(link("/account"))).toBe("en");
-    expect(langFromMagicLink("not a url")).toBe("en");
-  });
-
+describe("sign-in code email", () => {
   it("Turkish copy speaks as informal sen", () => {
-    const formal = /(?:[ıiuü]n[ıiuü]z|s[ıiuü]n[ıiuü]z|\bsiz(?:in|e|i|den)?\b)/iu;
+    const formal = /(?:[ıiuü]n[ıiuü]z|s[ıiuü]n[ıiuü]z|siz(?:in|e|i|den)?)/iu;
     for (const [key, value] of Object.entries(SIGNIN_EMAIL.tr)) expect(value, key).not.toMatch(formal);
     expect(Object.keys(SIGNIN_EMAIL.tr)).toEqual(Object.keys(SIGNIN_EMAIL.en));
   });
 
-  it("escapes the link in HTML and keeps it intact in text", () => {
-    const url = 'https://v.example/verify?token=a&b="<x>"';
-    const { html, text } = signInEmailContent(url, "en");
-    expect(text).toContain(url);
-    expect(html).not.toContain('"<x>"');
+  it("escapes the code in HTML and keeps it intact in text", () => {
+    const code = '"<x>"';
+    const { html, text } = signInCodeEmailContent(code, "en");
+    expect(text).toContain(code);
+    expect(html).not.toContain(code);
     expect(html).toContain("&quot;&lt;x&gt;&quot;");
   });
 
-  it("send errors carry no address or link", async () => {
+  it("send errors carry no address or code", async () => {
     vi.stubEnv("RESEND_API_KEY", "re_test");
     vi.stubEnv("EMAIL_FROM", "Judge <a@b.c>");
     vi.stubGlobal("fetch", vi.fn(async () => new Response("bad", { status: 422 })));
-    const err = await sendSignInEmail({ to: "secret@person.com", url: "https://x/verify?token=SECRET", lang: "en" }).catch(
+    const err = await sendSignInCodeEmail({ to: "secret@person.com", code: "SECRET", lang: "en" }).catch(
       (e: unknown) => e,
     );
     expect(String(err)).toContain("HTTP 422");

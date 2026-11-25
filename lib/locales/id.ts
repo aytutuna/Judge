@@ -4,13 +4,6 @@ const id: Locale = {
   voice:
     'Address the reader with informal "kamu" (possessive suffix "-mu"), never "Anda", and refer to the service as "kami". Write plain, everyday Indonesian: warm and direct, not stiff formal prose, and no Jakarta slang such as "gue" or "lo". Refer to the parties as "Pihak A" and "Pihak B" in prose, like names, with no "si", "sang" or other word in front, and with possessives after the noun ("argumen Pihak A"). Other people stay "Person C", "Person D" exactly as written. The card prints "Kalau" before each conditional if_value, so write that clause as a bare condition with no leading "Kalau", "Jika", "Apabila" or "Bila" (e.g. "kamu lebih mementingkan kejujuran daripada perasaan orang"), with no trailing "maka", starting lowercase unless the first word is a name. Use curly double quotes “…”, no space before ? or !, a decimal comma and a period as thousands separator (6.000).',
   email: {
-    signIn: {
-      subject: "Tautan untuk masuk ke Judge",
-      intro: "Ketuk tombol di bawah untuk masuk ke Judge.",
-      button: "Masuk ke Judge",
-      expiry: "Tautan ini hanya bisa dipakai sekali dan berlaku 10 menit.",
-      ignore: "Kalau kamu tidak memintanya, abaikan saja email ini.",
-    },
     signInCode: {
       subject: "Kode untuk masuk ke Judge",
       intro: "Masukkan kode ini untuk masuk:",

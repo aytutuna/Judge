@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("../lib/claude", () => ({ claudeJson: vi.fn(), claudeSearchJson: vi.fn(), LITE_MODEL: "lite" }));
 
 import { claudeJson, claudeSearchJson, type ClaudeJsonCall } from "../lib/claude";
-import { EMAIL_EN, signInEmailContent } from "../lib/email";
+import { EMAIL_EN, signInCodeEmailContent } from "../lib/email";
 import { languageName } from "../lib/i18n";
 import { judgeOnce } from "../lib/judge";
 import { clarifyQuestions } from "../lib/premium/clarify";
@@ -81,8 +81,8 @@ describe("translating to and from a language added later", () => {
 
 describe("emails and language names", () => {
   it("uses a loaded language's email copy and English otherwise", () => {
-    expect(signInEmailContent("https://x.test/l", "de").subject).toBe(de.email.signIn.subject);
-    expect(signInEmailContent("https://x.test/l", "en").subject).toBe(EMAIL_EN.signIn.subject);
+    expect(signInCodeEmailContent("482913", "de").subject).toBe(de.email.signInCode.subject);
+    expect(signInCodeEmailContent("482913", "en").subject).toBe(EMAIL_EN.signInCode.subject);
   });
 
   it("names languages in the reader's language", () => {

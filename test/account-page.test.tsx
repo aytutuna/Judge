@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { AccountMenu, accountEntry, initialOf } from "../components/AccountMenu";
 import { AccountDetailPanel, AccountPanel, openConfirm, type AccountDetailProps } from "../components/account/AccountView";
-import { SignInPanel, digitsOnly, safeNext, withLang, type SignInPanelProps } from "../components/account/SignInView";
+import { SignInPanel, digitsOnly, safeNext, type SignInPanelProps } from "../components/account/SignInView";
 import { SiteFooter } from "../components/SiteChrome";
 import type { AppConfig, AuthProviders, Entitlement, MeResponse } from "../lib/account-types";
 import { t } from "../lib/i18n";
@@ -169,6 +169,7 @@ function signin(over: Partial<SignInPanelProps>): string {
       code=""
       captcha={null}
       canSendEmail={false}
+      hasToken
       mode="password"
       password=""
       showPassword={false}
@@ -249,15 +250,6 @@ describe("SignInPanel", () => {
 
   it("a provider that is not offered carries no tag", () => {
     expect(signin({ lastUsed: "apple", providers: { ...none, google: true } })).not.toContain("Last used");
-  });
-
-  it("sent state of the link flow replaces the form", () => {
-    const link = { apple: true, google: true, email: true, emailCode: false, password: false, dev: false };
-    const sent = signin({ sentTo: "a@b.co", lang: "tr", providers: link });
-    expect(sent).toContain("a@b.co adresine bir giriş bağlantısı gönderdik");
-    expect(sent).not.toContain('type="email"');
-    expect(sent).not.toContain("one-time-code");
-    expect(signin({ providers: link })).toContain(">Continue<");
   });
 
   it("the code step: numeric one-time-code field, sign in, resend, change email", () => {
@@ -421,7 +413,7 @@ describe("SignInPanel with passwords", () => {
   });
 });
 
-describe("safeNext / withLang", () => {
+describe("safeNext", () => {
   it("only keeps same-origin paths", () => {
     expect(safeNext("/")).toBe("/");
     expect(safeNext("/pricing")).toBe("/pricing");
@@ -454,11 +446,6 @@ describe("safeNext / withLang", () => {
     expect(safeNext("/pricing?x=1#plans")).toBe("/pricing?x=1#plans");
     expect(safeNext("/a/../pricing")).toBe("/pricing");
     expect(safeNext("/%2F/evil.com")).toBe("/%2F/evil.com");
-  });
-
-  it("adds the email language to the callback", () => {
-    expect(withLang("/account", "tr")).toBe("/account?lang=tr");
-    expect(withLang("/?a=1", "en")).toBe("/?a=1&lang=en");
   });
 });
 

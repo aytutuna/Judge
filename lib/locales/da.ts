@@ -4,13 +4,6 @@ const da: Locale = {
   voice:
     'Address the reader with informal "du", never "De". Refer to the parties as "Part A" and "Part B" in prose, like names: no article, no ending added (never "parten A" or "Part A\'en"); the genitive is "Part A\'s" and "Part B\'s" with an apostrophe. Keep "Person C", "Person D" exactly as written. Write each conditional if_value as a bare Danish subordinate clause that reads on after the card\'s "Hvis", starting in lower case unless it opens with a name or "Part A"/"Part B", with subordinate word order (subject first, "ikke" and similar adverbs before the verb, e.g. "du sætter ærlighed højest" or "I ikke har aftalt andet"), and never start it with "Hvis" or "Når". Use Danish conventions: decimal comma, a period for thousands (6.000), quotes as »…«, and a comma both before and after a subordinate clause (»Jeg synes, at …«, »Se, hvem der vandt.«), as in the app\'s own text. Refer to a single other person as "den anden", never singular "de".',
   email: {
-    signIn: {
-      subject: "Dit loginlink til Judge",
-      intro: "Tryk på knappen herunder for at logge ind på Judge.",
-      button: "Log ind på Judge",
-      expiry: "Linket kan kun bruges én gang og udløber om 10 minutter.",
-      ignore: "Hvis du ikke har bedt om det, kan du bare se bort fra denne e-mail.",
-    },
     signInCode: {
       subject: "Din loginkode til Judge",
       intro: "Skriv denne kode for at logge ind:",

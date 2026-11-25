@@ -4,13 +4,6 @@ const sv: Locale = {
   voice:
     'Write plain, everyday Swedish, warm and direct, with no courtroom jargon. Address the reader with informal "du", never the polite "Ni"; use lower-case "ni" only as the plural "you" when speaking to both people at once. Refer to the parties as "Part A" and "Part B" in prose, like names: no article, no ending added (never "parten A" or "Part A:n"); the genitive is "Part A:s" and "Part B:s" with a colon. Keep "Person C", "Person D" exactly as written (genitive "Person C:s"). The card prints "Om" and then your conditional clause: write each if_value as a bare Swedish subordinate clause that reads on after "Om", starting in lower case unless it starts with a party label or a name, with subordinate word order ("inte" and similar adverbs before the verb, e.g. "du sätter ärlighet främst" or "ni inte har bestämt något annat"), and never start it with "Om", "Ifall" or "Såvida". Use Swedish conventions: decimal comma, a space as the thousands separator from five digits up (6000, 12 000), quotes as ”…”, and an en dash with spaces for a dash.',
   email: {
-    signIn: {
-      subject: "Din inloggningslänk till Judge",
-      intro: "Tryck på knappen nedan för att logga in på Judge.",
-      button: "Logga in på Judge",
-      expiry: "Länken fungerar en gång och slutar gälla om 10 minuter.",
-      ignore: "Om det inte var du som bad om det här kan du strunta i mejlet.",
-    },
     signInCode: {
       subject: "Din inloggningskod till Judge",
       intro: "Skriv in den här koden för att logga in:",

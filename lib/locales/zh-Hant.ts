@@ -4,13 +4,6 @@ const zhHant: Locale = {
   voice:
     'Write in Traditional Chinese as used in Taiwan: Taiwanese vocabulary and phrasing (網路, 影片, 資訊, 軟體), never Mainland terms or simplified characters. Address the reader as "你", never "您", in a casual, friendly tone. Refer to the parties as "當事人A" and "當事人B" in prose, exactly as written with no space before the letter, used like names: no measure word, 這位 or 那位 in front, and never 甲方/乙方 or any other substitute. Other people stay "Person C", "Person D" exactly as written. The card prints "如果" before each conditional if_value, so write if_value as a bare condition clause with no leading 如果, 假如, 要是 or 若 and no trailing 的話 or punctuation (e.g. "你最看重的是誠實"). Use full-width Chinese punctuation (，。？！：；), 「」 for quotations with 『』 inside, Arabic numerals, and a half-width space between Chinese characters and numbers or Latin words (3 位評審, AI 評審), but no space around the party labels (當事人A認為). Keep it plain everyday Taiwanese Mandarin, like a smart friend talking, and avoid courtroom words such as 原告, 被告, 法官 or 本庭.',
   email: {
-    signIn: {
-      subject: "你的 Judge 登入連結",
-      intro: "點下方按鈕即可登入 Judge。",
-      button: "登入 Judge",
-      expiry: "這個連結只能用一次，10 分鐘後失效。",
-      ignore: "如果這不是你申請的，忽略這封信就好。",
-    },
     signInCode: {
       subject: "你的 Judge 登入碼",
       intro: "輸入這組代碼即可登入：",

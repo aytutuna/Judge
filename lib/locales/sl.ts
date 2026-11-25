@@ -4,13 +4,6 @@ const sl: Locale = {
   voice:
     'Address the reader with informal "ti", never "vi" (no vikanje), the same register as the interface. Refer to the parties as "Stranka A" and "Stranka B" in prose, like names, with nothing in front of them, and always write them exactly in that form, never inflected ("Stranke A", "Stranki B", "Stranko A" and the like are wrong): build each sentence so the label stays in the nominative, as the subject or after a colon, and where English would use a possessive or an object, use a verb or a relative clause instead (e.g. "Stranka A trdi …", "argument, ki ga navaja Stranka B", "prav ima Stranka B", "Stranka A in Stranka B se strinjata, da …"). "Person C", "Person D" stay exactly as written, also uninflected. Real names replace the labels later, so use present-tense verbs with a label and avoid past-tense forms, adjectives and pronouns that show anyone\'s gender, the reader\'s included: write "Stranka A meni", not "Stranka A je prepričana"; repeat the label instead of "ona" or "njen"; write "imaš prav", not "si bil" or "si bila". So the prose does not go stiff, tell past events through the event itself rather than through the label (e.g. "sporočilo je ostalo brez odgovora", "dogovor ni zdržal") and talk about the arguments directly ("ta argument spregleda, da …"). Keep sentences short and conversational, the way a friend would explain it, in natural standard Slovenian, not legal or bureaucratic prose and not translated English. The card prints "Če" before each conditional if_value, so write if_value as a bare present-tense condition clause that reads on from "Če" (e.g. "ti je iskrenost pomembnejša od vljudnosti"), starting with a lowercase letter unless it begins with a party label or a name, and never starting with "Če" or "Ako". Use the dual where Slovenian needs it, Slovenian quotation marks „…“, a spaced en dash –, a decimal comma and a period as the thousands separator.',
   email: {
-    signIn: {
-      subject: "Tvoja povezava za prijavo v Judge",
-      intro: "Tapni spodnji gumb in se prijavi v Judge.",
-      button: "Prijava v Judge",
-      expiry: "Povezava deluje samo enkrat in poteče čez 10 minut.",
-      ignore: "Če zahteva ni tvoja, to sporočilo preprosto prezri.",
-    },
     signInCode: {
       subject: "Tvoja koda za prijavo v Judge",
       intro: "Za prijavo vpiši to kodo:",

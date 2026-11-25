@@ -4,13 +4,6 @@ const ru: Locale = {
   voice:
     'Address the reader with lowercase "вы" and plural verb forms, never "ты"; keep the tone casual and friendly, not bureaucratic, and write the way a Russian speaker would say it, not word for word from English. Refer to the parties as "Сторона A" and "Сторона B" in prose, like names, always capitalized, with the Latin letters A and B, and never inflected ("Стороны A", "Стороне B", "Сторону A", "со Стороной B" are wrong): build each sentence so the label is the subject in the nominative, follows a colon or a dash, or stands in a nominative phrase (e.g. "Сторона A считает…", "довод, который приводит Сторона B"). When a sentence seems to need another case, rephrase it: "как считает Сторона A" rather than "по мнению Стороны A", "здесь Сторона B не ошибается" rather than "Сторона B права", "Сторона A ставит честность выше" rather than "для Стороны A важнее честность". Do not put the labels in quotation marks in your text. Real names replace the labels later, so use present-tense verbs with a label (retelling what happened in the present tense is natural in Russian), avoid past-tense verbs and short adjectives that show gender ("права", "сказала", "уверена"), and repeat the label instead of using "он", "она" or "её" for a party. Other people stay "Person C", "Person D" exactly as written, also uninflected. The card prints "Если" before each conditional if_value, so write that clause as a bare present-tense condition that reads on from "Если" (e.g. "вам честность важнее вежливости"), never starting with "Если", "Когда" or "При условии", and starting lowercase unless it begins with a party label or a name. Use Russian quotation marks «…», a spaced em dash (—), the letter ё where it belongs, no space before ? or !, a decimal comma and a space as the thousands separator.',
   email: {
-    signIn: {
-      subject: "Ссылка для входа в Judge",
-      intro: "Нажмите кнопку ниже, чтобы войти в Judge.",
-      button: "Войти в Judge",
-      expiry: "Ссылка одноразовая и действует 10 минут.",
-      ignore: "Если вы не запрашивали вход, просто не обращайте внимания на это письмо.",
-    },
     signInCode: {
       subject: "Код для входа в Judge",
       intro: "Введите этот код, чтобы войти:",

@@ -4,13 +4,6 @@ const ms: Locale = {
   voice:
     'Write in Malaysian Malay (Malaysian spelling and vocabulary, not Indonesian), casual and plain like a smart friend: standard, everyday Malay with short sentences, "tidak" rather than "tak", no slang and no stiff officialese. Address the reader as "anda", lowercase mid-sentence, as Malaysian consumer apps do; never "kamu", "awak", "kau" or "saudara". Refer to the parties as "Pihak A" and "Pihak B" in prose, like names: nothing in front of them ("Pihak A betul", never "si Pihak A"), and possession by putting the label after the noun ("hujah Pihak A"), never with an apostrophe. "Person C", "Person D" stay exactly as written. The card prints "Kalau" before each conditional if_value, so write if_value as a bare clause that reads naturally after it, with no leading "kalau", "jika", "sekiranya" or "andai", starting lowercase unless it opens with a party label or a name (e.g. "anda lebih mementingkan kejujuran daripada budi bahasa"). Nouns stay the same after numbers ("3 hakim", no reduplication). Use “…” for quotes, no space before ? or !, and a decimal point with commas for thousands.',
   email: {
-    signIn: {
-      subject: "Pautan log masuk Judge anda",
-      intro: "Ketik butang di bawah untuk log masuk ke Judge.",
-      button: "Log masuk ke Judge",
-      expiry: "Pautan ini boleh digunakan sekali sahaja dan tamat tempoh dalam 10 minit.",
-      ignore: "Jika anda tidak memintanya, abaikan sahaja e-mel ini.",
-    },
     signInCode: {
       subject: "Kod log masuk Judge anda",
       intro: "Masukkan kod ini untuk log masuk:",

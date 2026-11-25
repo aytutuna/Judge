@@ -4,13 +4,6 @@ const ja: Locale = {
   voice:
     'Write friendly, natural Japanese in the polite です/ます form for full sentences, the way popular consumer apps talk to their users; headlines and short labels may be plain noun phrases. Leave the reader unnamed where Japanese allows; when you must, use "あなた", never "君", "お前" or "貴方様". Refer to the parties as "当事者A" and "当事者B" in prose, exactly as written, like names: no さん or other honorific, no 「」 around them, no space before the letter and nothing in front of them (no "この"); particles attach directly ("当事者Aは", "当事者Bの"). Leave "Person C", "Person D" exactly as written. The card prints "もし" and then each conditional if_value, so write if_value as a bare conditional clause ending in "なら" (e.g. "何より正直さを大切にするなら"), with no leading "もし" and no trailing "、". Use Japanese full-width punctuation (、。？！：（）), 「」 for quotes, Arabic numerals with a comma thousands separator (6,000) and no spaces between Japanese text and Latin letters or numerals. Call the judges "審査員" and the ruling "判定", and avoid courtroom terms such as 判決, 原告 or 被告.',
   email: {
-    signIn: {
-      subject: "Judgeのログインリンク",
-      intro: "下のボタンをタップしてJudgeにログインしてください。",
-      button: "Judgeにログイン",
-      expiry: "リンクは1回限り有効で、10分で期限が切れます。",
-      ignore: "心当たりがない場合は、このメールを無視してください。",
-    },
     signInCode: {
       subject: "Judgeのログインコード",
       intro: "ログインするには、このコードを入力してください：",

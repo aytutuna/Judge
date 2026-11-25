@@ -4,13 +4,6 @@ const ptPT: Locale = {
   voice:
     'Write European Portuguese, never Brazilian: address the reader with informal "tu" (tens, podes, escreve), never "você", use European vocabulary and AO90 European spelling ("facto", "ecrã", "equipa", "contacto") and "estar a + infinitive" instead of the gerund ("está a mentir", not "está mentindo"). Refer to the parties as "Parte A" and "Parte B" in prose, like first names: no article in front and no contraction with a preposition (write "Parte A tem razão", "de Parte A", "para Parte B", never "a Parte A" or "da Parte A"); keep "Person C", "Person D" exactly as written. The card prints "Se" and then each conditional if_value, so write if_value as a bare clause that reads naturally after "Se", in the present indicative or the future subjunctive, in lower case unless it starts with a party label or a name (e.g. "dás mais valor à franqueza do que ao tato"); never repeat "Se" and never start the clause with the pronoun "se". Use «» for quotes, a decimal comma and a space between thousands.',
   email: {
-    signIn: {
-      subject: "O teu link de acesso ao Judge",
-      intro: "Toca no botão abaixo para entrares no Judge.",
-      button: "Entrar no Judge",
-      expiry: "O link só funciona uma vez e expira daqui a 10 minutos.",
-      ignore: "Se não foste tu a pedir isto, podes ignorar este e-mail.",
-    },
     signInCode: {
       subject: "O teu código de acesso ao Judge",
       intro: "Introduz este código para entrares:",

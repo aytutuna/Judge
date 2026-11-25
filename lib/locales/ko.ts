@@ -4,13 +4,6 @@ const ko: Locale = {
   voice:
     'Write natural, casual Korean in polite informal 해요체 (e.g. "맞아요", "중요하게 여겨요"), the same register as the interface; never use 반말, never formal 합니다체, and never address the reader as "당신" (just drop the pronoun, as Korean apps do). Refer to the parties as "당사자 A" and "당사자 B" in prose, exactly as written with one space before the Latin letter, used like names with nothing in front of them (no "이", "그", "저" or "측"); attach particles as for a word ending in a vowel ("당사자 A가", "당사자 B는", "당사자 A를", "당사자 B와"). Leave "Person C", "Person D" exactly as written. The card prints "만약" and then each conditional if_value, so write if_value as a bare conditional clause ending in -다면, -라면 or -면 (e.g. "정직을 가장 중요하게 여긴다면"), with no leading "만약", "혹시" or "만일" and no trailing comma. Call the judges "판사" and the ruling "판결". Use Arabic numerals with Korean counters attached (e.g. "판사 3명", "10분"), Korean spacing rules, commas in numbers of four or more digits (e.g. "6,000자"), and “ ” for quotes.',
   email: {
-    signIn: {
-      subject: "Judge 로그인 링크",
-      intro: "아래 버튼을 누르면 Judge에 로그인돼요.",
-      button: "Judge 로그인",
-      expiry: "링크는 한 번만 쓸 수 있고 10분 뒤에 만료돼요.",
-      ignore: "직접 요청하지 않았다면 이 메일은 무시해도 괜찮아요.",
-    },
     signInCode: {
       subject: "Judge 로그인 코드",
       intro: "이 코드를 입력하면 로그인돼요:",

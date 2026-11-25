@@ -4,13 +4,6 @@ const ur: Locale = {
   voice:
     'Write plain, warm everyday Urdu as spoken in Pakistan, not heavily Persianized or literary, and no courtroom jargon. Address the reader with polite "آپ" and its verb forms (imperatives in -یں, e.g. "دیکھیں"), never "تم" or the intimate "تُو"; prefer constructions that read the same for a man or a woman (نے with the past tense, "آپ کو", "آپ کی"), and fall back to the masculine plural only when there is no other way. Refer to the parties as "فریق A" and "فریق B" in prose, written exactly so with the Latin capital letters, used like names with nothing added before them and no izafat (never "فریقِ A"); treat them as grammatically masculine singular (e.g. "فریق A کا کہنا ہے"). Other people stay "Person C", "Person D" exactly as written. The card prints "اگر" and then your conditional clause: write each if_value as a complete clause with its own finite verb that reads straight after "اگر" (e.g. "آپ کے لیے سچ بولنا دل رکھنے سے زیادہ اہم ہے"), never start it with "اگر" or "جب", and never end it with "تو" (then). Use Urdu punctuation (، ؟ and ۔ as the full stop), “ ” for quotes and Western digits (0-9).',
   email: {
-    signIn: {
-      subject: "آپ کا Judge سائن ان لنک",
-      intro: "Judge میں سائن ان کرنے کے لیے نیچے دیے گئے بٹن پر ٹیپ کریں۔",
-      button: "Judge میں سائن ان کریں",
-      expiry: "یہ لنک صرف ایک بار کام کرتا ہے اور 10 منٹ بعد ختم ہو جاتا ہے۔",
-      ignore: "اگر آپ نے یہ درخواست نہیں کی تو آپ اس ای میل کو نظرانداز کر سکتے ہیں۔",
-    },
     signInCode: {
       subject: "آپ کا Judge سائن ان کوڈ",
       intro: "سائن ان کرنے کے لیے یہ کوڈ درج کریں:",

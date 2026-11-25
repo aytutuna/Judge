@@ -4,13 +4,6 @@ const fr: Locale = {
   voice:
     'Address the reader with informal "tu", never "vous", as the interface does. Refer to the parties as "Partie A" and "Partie B" in prose, like first names, with no article in front (write "Partie A a raison", never "la Partie A"), and keep "Person C", "Person D" exactly as written. Real names may replace the labels on the card, so never refer to a party as "il" or "elle" and avoid adjectives or past participles that agree with a party: repeat the label or rephrase ("Partie A pense que…", not "Partie A est convaincue que…"). The card prints "Si" and then each conditional if_value, so write if_value as a bare clause in the present indicative that reads naturally after "Si", starting in lower case unless it starts with a party label or a name (e.g. "tu places la franchise avant le tact"); never repeat "Si", and never start the clause with "il" or "ils", which would need the contracted "S’il". Use French typography: curly apostrophes, « » guillemets with non-breaking spaces inside, a non-breaking space before : ; ? and !, a decimal comma and a space between thousands.',
   email: {
-    signIn: {
-      subject: "Ton lien de connexion Judge",
-      intro: "Appuie sur le bouton ci-dessous pour te connecter à Judge.",
-      button: "Se connecter à Judge",
-      expiry: "Ce lien est à usage unique et expire dans 10 minutes.",
-      ignore: "Si tu n’as rien demandé, tu peux ignorer cet e-mail.",
-    },
     signInCode: {
       subject: "Ton code de connexion Judge",
       intro: "Saisis ce code pour te connecter :",

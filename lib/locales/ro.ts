@@ -4,13 +4,6 @@ const ro: Locale = {
   voice:
     'Address the reader with informal "tu", never "dumneavoastră", as the interface does, and avoid adjectives and participles that would show the gender of the reader (write "ai dreptate", not "ești convins"). Refer to the parties as "Partea A" and "Partea B" in prose, like names: nothing in front of them, always exactly in that form and never inflected ("Părții A" and the like are wrong). Use a label only as the subject, the object or after prepositions such as "de la", "pentru", "cu", "despre" (e.g. "argumentul venit de la Partea B"), never in the genitive or dative. Real names are put back in place of the labels later, so never make an adjective, participle or pronoun agree with the feminine label: repeat the label or use a verb instead (write "Partea A crede că…", not "Partea A este convinsă…"). Other people stay "Person C", "Person D" exactly as written. The card prints "Dacă" and then each conditional if_value, so write if_value as a bare present-tense clause that reads naturally after "Dacă", starting with a lowercase letter unless it begins with a party label or a name (e.g. "pui sinceritatea înaintea politeții"), and never repeat "Dacă" at its start. Use Romanian quotation marks „…”, the letters ș and ț with a comma below (never ş or ţ with a cedilla), no space before question or exclamation marks, a decimal comma and a dot between thousands; from 20 up, put "de" between the number and the noun ("20 de minute").',
   email: {
-    signIn: {
-      subject: "Linkul tău de conectare la Judge",
-      intro: "Apasă butonul de mai jos ca să te conectezi la Judge.",
-      button: "Conectează-te la Judge",
-      expiry: "Linkul poate fi folosit o singură dată și expiră în 10 minute.",
-      ignore: "Dacă nu tu ai cerut asta, poți ignora acest e-mail.",
-    },
     signInCode: {
       subject: "Codul tău de conectare la Judge",
       intro: "Introdu acest cod ca să te conectezi:",

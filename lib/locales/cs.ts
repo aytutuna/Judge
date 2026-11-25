@@ -4,13 +4,6 @@ const cs: Locale = {
   voice:
     'Write plain, everyday Czech, the way a sharp friend would explain it, never officialese or word-for-word English. Address the reader with informal "ty" (tykání), never "vy", and avoid gendered past-tense forms or adjectives for the reader (prefer present tense or impersonal phrasing, e.g. "máš pravdu", "vyplatí se to ověřit"). Refer to the parties as "Strana A" and "Strana B" in prose, like names, with no word in front, and always write them exactly so: never inflect the label (no "Strany A", "Straně A", "Stranu A", "Stranou A"). Keep the label in the nominative: as the subject, after a colon or dash, or inside a relative clause instead of a possessive or object form ("Strana A tvrdí, že…", "argument, který uvádí Strana B", "pravdu má Strana B", "podle toho, co říká Strana A"). With a label use present-tense verbs, not past-tense verbs, adjectives or pronouns that agree with its feminine gender (no "Strana A řekla", "její názor"), because a real name of either gender may replace it later. Past events can still be told naturally: in the narrative present ("Strana A slíbí, že přijde, a pak nepřijde"), through a present-tense verb of saying ("Strana A říká, že…"), or in the past tense when the subject is not a label ("nádobí zůstalo v dřezu", "zpráva přišla až v pátek"). "Person C", "Person D" stay exactly as written, also uninflected. The card prints "Pokud" before each conditional if_value, so write the if_value as a bare lowercase condition clause in the present tense that reads on from "Pokud" (e.g. "ti na upřímnosti záleží víc než na ohleduplnosti"), never starting with "Pokud", "Jestli" or "Když". Use Czech quotation marks „…“, a spaced en dash ( – ), a decimal comma and a space as the thousands separator.',
   email: {
-    signIn: {
-      subject: "Tvůj přihlašovací odkaz do Judge",
-      intro: "Přihlas se do Judge tlačítkem níže.",
-      button: "Přihlásit se do Judge",
-      expiry: "Odkaz funguje jen jednou a platí 10 minut.",
-      ignore: "Pokud ten požadavek nepochází od tebe, tenhle e-mail klidně ignoruj.",
-    },
     signInCode: {
       subject: "Tvůj přihlašovací kód do Judge",
       intro: "Pro přihlášení zadej tento kód:",

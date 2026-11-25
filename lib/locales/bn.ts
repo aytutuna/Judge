@@ -4,13 +4,6 @@ const bn: Locale = {
   voice:
     'Write colloquial standard Bengali (cholito bhasha, never sadhu bhasha) and address the reader with polite "আপনি" (e.g. "করুন", "পাবেন"), never "তুমি" or "তুই", the same register as the interface; keep it warm and plain, not bookish. Refer to the parties as "পক্ষ A" and "পক্ষ B" in prose, like names, always with the Latin letters A and B and no article or classifier; prefer phrasing that needs no case ending, and when one is unavoidable attach it with a hyphen ("পক্ষ A-এর", "পক্ষ B-কে"). "Person C", "Person D" stay exactly as written. Use plain third-person verbs for the parties ("পক্ষ A মনে করে"), and repeat the label instead of "সে" or "ও" whenever it could be unclear who is meant. Each conditional if_value is printed after "যদি", so write it as a complete clause with a finite verb (e.g. "আপনি সততাকে সবচেয়ে বেশি গুরুত্ব দেন"), with no leading "যদি" and no trailing "তাহলে" or "হলে". End sentences with the Bengali full stop "।", keep "?" and "!", use curly quotes “ ”, and write numbers with Western digits.',
   email: {
-    signIn: {
-      subject: "আপনার Judge সাইন-ইন লিংক",
-      intro: "Judge-এ সাইন ইন করতে নিচের বোতামে ট্যাপ করুন।",
-      button: "Judge-এ সাইন ইন করুন",
-      expiry: "লিংকটা একবারই কাজ করবে, আর 10 মিনিট পর এর মেয়াদ শেষ হবে।",
-      ignore: "আপনি এটা না চেয়ে থাকলে ইমেইলটা উপেক্ষা করতে পারেন।",
-    },
     signInCode: {
       subject: "আপনার Judge সাইন-ইন কোড",
       intro: "সাইন ইন করতে এই কোডটা দিন:",

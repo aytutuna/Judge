@@ -4,13 +4,6 @@ const de: Locale = {
   voice:
     'Address the reader with informal lowercase "du" ("du", "dein"), never "Sie". Refer to the parties as "Partei A" and "Partei B" in prose, like names, with no article in front and no genitive -s: write "das Argument von Partei A", never "die Partei A" or "Partei As Argument". Other people stay "Person C", "Person D" exactly as written. The card prints "Wenn" before each conditional if_value, so write that clause as a bare German subordinate clause with the verb at the end and no leading "Wenn" or "Falls" (e.g. "dir Ehrlichkeit wichtiger ist als Höflichkeit"), starting lowercase unless the first word is a noun or a name. Use German quotation marks „…“, no space before ? or !, a decimal comma and a period as thousands separator (6.000), and write "recht haben" in lowercase. Keep the German plain and casual, like a friend talking, with no legal jargon. Write it as German from the start, not as translated English: short active sentences, verbs instead of noun chains, and no calques such as "Sinn machen" (write "Sinn ergeben") or "am Ende des Tages".',
   email: {
-    signIn: {
-      subject: "Dein Anmeldelink für Judge",
-      intro: "Tippe auf den Button unten, um dich bei Judge anzumelden.",
-      button: "Bei Judge anmelden",
-      expiry: "Der Link funktioniert nur einmal und läuft nach 10 Minuten ab.",
-      ignore: "Falls du das nicht angefordert hast, kannst du diese E-Mail ignorieren.",
-    },
     signInCode: {
       subject: "Dein Anmeldecode für Judge",
       intro: "Gib diesen Code ein, um dich anzumelden:",

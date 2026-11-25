@@ -4,13 +4,6 @@ const kn: Locale = {
   voice:
     'Address the reader with the polite "ನೀವು" and its verb forms (e.g. "ನೀವು ಹೇಳಿದ್ದೇ ಸರಿ", "ಪರಿಶೀಲಿಸಿ"), never the intimate "ನೀನು"; write warm, plain, conversational written Kannada, not bookish or Sanskrit-heavy, with standard written verb forms ("ಹೇಳುತ್ತಾರೆ", "ಆಗುತ್ತದೆ"), not spoken contractions ("ಹೇಳ್ತಾರೆ", "ಆಗುತ್ತೆ"). If you name the crux, call it "ತಿರುಳು".Refer to the parties as "ಪಕ್ಷ A" and "ಪಕ್ಷ B" in prose, like names: no word in front, never transliterate the Latin letter, and keep the label itself unchanged. Prefer sentences where the label stands alone, as the subject or before a separate word such as "ಕಡೆ", "ಅವರ" or "ಹೇಳಿದ್ದು"; when a case ending is unavoidable, attach it directly to the letter with no space or hyphen ("ಪಕ್ಷ Aಗೆ", "ಪಕ್ಷ Bಯ"). Use the gender-neutral respectful plural for the parties ("ಅವರು", "ಪಕ್ಷ A ಹೇಳುತ್ತಾರೆ"), never gendered forms like "ಹೇಳಿದನು" or "ಹೇಳಿದಳು", because a real name of either gender may replace the label later. Other people stay "Person C", "Person D" exactly as written, treated the same way. The card prints "ಒಂದು ವೇಳೆ" before each conditional if_value, so write that clause as a bare Kannada conditional clause whose verb takes the conditional ending -ರೆ (e.g. "ನಿಮಗೆ ಸೌಜನ್ಯಕ್ಕಿಂತ ಪ್ರಾಮಾಣಿಕತೆಯೇ ಮುಖ್ಯವಾದರೆ", "ಅವರು ಮೊದಲೇ ಮಾತು ಕೊಟ್ಟಿದ್ದರೆ"), never starting with "ಒಂದು ವೇಳೆ" or "ಹಾಗಿದ್ದರೆ". Use Kannada script with Western digits, a full stop at the end of sentences, curly double quotes “…”, and everyday English loanwords the way Kannada speakers write them (AI, ಲಿಂಕ್, ಸ್ಕ್ರೀನ್‌ಶಾಟ್).',
   email: {
-    signIn: {
-      subject: "ನಿಮ್ಮ Judge ಸೈನ್ ಇನ್ ಲಿಂಕ್",
-      intro: "Judge ಖಾತೆಗೆ ಸೈನ್ ಇನ್ ಮಾಡಲು ಕೆಳಗಿನ ಬಟನ್ ಒತ್ತಿ.",
-      button: "Judge ಖಾತೆಗೆ ಸೈನ್ ಇನ್ ಮಾಡಿ",
-      expiry: "ಈ ಲಿಂಕ್ ಒಂದೇ ಸಲ ಕೆಲಸ ಮಾಡುತ್ತದೆ, 10 ನಿಮಿಷದಲ್ಲಿ ಅದರ ಅವಧಿ ಮುಗಿಯುತ್ತದೆ.",
-      ignore: "ನೀವು ಇದನ್ನು ಕೇಳಿಲ್ಲದಿದ್ದರೆ, ಈ ಇಮೇಲ್ ಅನ್ನು ನಿರ್ಲಕ್ಷಿಸಬಹುದು.",
-    },
     signInCode: {
       subject: "ನಿಮ್ಮ Judge ಸೈನ್ ಇನ್ ಕೋಡ್",
       intro: "ಸೈನ್ ಇನ್ ಮಾಡಲು ಈ ಕೋಡ್ ನಮೂದಿಸಿ:",

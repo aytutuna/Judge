@@ -209,22 +209,21 @@ describe("store-review sign-in", () => {
     expect(((await res.json()) as { code: string }).code).toBe("OTP_EXPIRED");
   });
 
-  it("at most ten code requests an hour get the fixed code", async () => {
+  it("any number of code requests still get the fixed code", async () => {
     emailOn();
-    reviewOn("cap-review@okjudge.test");
-    // Start a fresh hour: earlier tests also counted against the cap.
-    vi.useFakeTimers({ toFake: ["Date"] });
-    vi.setSystemTime(Date.now() + 2 * 3_600_000);
-    for (let i = 0; i < 10; i++) {
-      await sendCode("cap-review@okjudge.test");
-      expect((await signIn("cap-review@okjudge.test", REVIEW_CODE)).status, `request ${i + 1}`).toBe(200);
+    reviewOn("many-review@okjudge.test");
+    for (let i = 0; i < 15; i++) {
+      await sendCode("many-review@okjudge.test");
+      expect((await signIn("many-review@okjudge.test", REVIEW_CODE, `198.51.100.${i + 1}`)).status, `request ${i + 1}`).toBe(200);
     }
-    // The guess limit is per address and IP, so the eleventh request signs in from another.
-    await sendCode("cap-review@okjudge.test");
-    expect((await signIn("cap-review@okjudge.test", REVIEW_CODE, "198.51.100.7")).status).toBe(400);
-    vi.setSystemTime(Date.now() + 3_600_000 + 1_000);
-    await sendCode("cap-review@okjudge.test");
-    expect((await signIn("cap-review@okjudge.test", REVIEW_CODE, "198.51.100.7")).status).toBe(200);
+  });
+
+  it("strangers' wrong guesses from other addresses cannot lock it out", async () => {
+    emailOn();
+    reviewOn("shared-review@okjudge.test");
+    for (let i = 0; i < 40; i++) await signIn("shared-review@okjudge.test", "000000", "192.0.2.50");
+    await sendCode("shared-review@okjudge.test");
+    expect((await signIn("shared-review@okjudge.test", REVIEW_CODE, "192.0.2.51")).status).toBe(200);
   });
 
   it("a review address needs a code to be sent first", async () => {

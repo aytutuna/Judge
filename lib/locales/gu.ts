@@ -4,13 +4,6 @@ const gu: Locale = {
   voice:
     'Write natural, casual Gujarati with everyday spoken words rather than formal Sanskritized ones, and address the reader as "તમે", never "તું" and never the formal "આપ". Refer to the parties as "પક્ષ A" and "પક્ષ B" in prose, like names: nothing in front of them, the label itself never changed, and postpositions attached straight to it as to a name (e.g. "પક્ષ Aની વાત", "પક્ષ Bને"); for agreement treat each like a person of unknown gender (honorific plural such as "સાચા છે", or phrasing like "પક્ષ Aની વાત સાચી"). Other people stay "Person C", "Person D" exactly as written. Each conditional if_value is printed after "જો" and followed by an arrow, so write it as a bare conditional clause ending in a conditional verb form such as "હોય" (e.g. "તમને પ્રામાણિકતા સૌથી વધુ મહત્ત્વની લાગતી હોય"), with no leading "જો" and no trailing "તો". Use Western digits (1, 2, 3), a full stop rather than the danda, and curly double quotes.',
   email: {
-    signIn: {
-      subject: "તમારી Judge સાઇન-ઇન લિંક",
-      intro: "Judgeમાં સાઇન ઇન કરવા નીચેના બટન પર ટૅપ કરો.",
-      button: "Judgeમાં સાઇન ઇન કરો",
-      expiry: "લિંક એક જ વાર ચાલે છે અને 10 મિનિટમાં એની મુદત પૂરી થાય છે.",
-      ignore: "જો તમે આ માગ્યું ન હોય, તો આ ઈમેલ અવગણી શકો છો.",
-    },
     signInCode: {
       subject: "તમારો Judge સાઇન-ઇન કોડ",
       intro: "સાઇન ઇન કરવા આ કોડ દાખલ કરો:",

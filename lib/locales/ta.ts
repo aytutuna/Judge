@@ -4,13 +4,6 @@ const ta: Locale = {
   voice:
     'Address the reader with the respectful "நீங்கள்" and its polite verb forms ("நீங்கள் சொல்வது சரி", "சரிபாருங்கள்"), never "நீ". Write plain, conversational written Tamil with standard spelling (இருக்கிறது, not இருக்கு), not literary or legal Tamil; prefer everyday words over Sanskrit-heavy or coined ones, and keep sentences short. Common English loanwords such as லிங்க், ஆப், ஸ்கிரீன்ஷாட் are fine. Refer to the parties as "தரப்பு A" and "தரப்பு B" in prose, like names, always with the Latin letters A and B and with no word such as "இந்த" in front. Avoid case suffixes on a label; use a following word or postposition instead ("தரப்பு A சொல்வது", "தரப்பு B கருத்துப்படி", "தரப்பு A பக்கம்"), and only where no such phrasing works add the suffix after a hyphen ("தரப்பு B-க்கு"). Real names may later replace the labels, so give the parties the respectful gender-neutral -ஆர் verb endings ("சொல்கிறார்", "நினைக்கிறார்"), never -ஆன் or -ஆள். Other people stay "Person C", "Person D" exactly as written, also without suffixes. Each conditional if_value is printed after "ஒருவேளை" and followed by an arrow and the outcome, so write it as a bare condition clause ending in "என்றால்" or a verb in -ஆல் (e.g. "நேர்மைக்கு நீங்கள் அதிக மதிப்பு கொடுத்தால்"), with no leading "ஒருவேளை" and no "அப்போது" after it. End sentences with a full stop, use Western digits and curly quotes “ ”.',
   email: {
-    signIn: {
-      subject: "உங்கள் Judge உள்நுழைவு லிங்க்",
-      intro: "உங்கள் Judge கணக்கில் உள்நுழைய கீழே உள்ள பட்டனைத் தட்டுங்கள்.",
-      button: "Judge-இல் உள்நுழைக",
-      expiry: "இந்த லிங்க் ஒருமுறை மட்டுமே வேலை செய்யும், 10 நிமிடங்களில் காலாவதியாகிவிடும்.",
-      ignore: "இதை நீங்கள் கேட்கவில்லை என்றால், இந்த ஈமெயிலைப் பொருட்படுத்த வேண்டாம்.",
-    },
     signInCode: {
       subject: "உங்கள் Judge உள்நுழைவுக் குறியீடு",
       intro: "உள்நுழைய, இந்தக் குறியீட்டை உள்ளிடுங்கள்:",

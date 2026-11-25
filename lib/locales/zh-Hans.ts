@@ -4,13 +4,6 @@ const zhHans: Locale = {
   voice:
     'Write casual, warm Simplified Chinese for mainland readers and address the reader as "你", never "您". Refer to the parties as "当事人A" and "当事人B" in prose, exactly as written, like names: no space before the letter and nothing in front of them (no "这位", no measure word). Leave "Person C", "Person D" exactly as written. The card prints "如果" and then each conditional if_value, so write if_value as a bare condition clause (e.g. "你最看重的是诚实") with no leading "如果", "假如", "要是" or "若", and no trailing "的话", "时", comma or full stop. Use full-width Chinese punctuation (，。？！：；“”, and …… for an ellipsis) and Arabic numerals, with a space between Chinese characters and Latin letters or numerals (e.g. "3 位评委"), but no space inside or right after the party labels (e.g. "当事人A认为"). Call the judges "评委" and the ruling "裁决".',
   email: {
-    signIn: {
-      subject: "你的 Judge 登录链接",
-      intro: "点击下方按钮登录 Judge。",
-      button: "登录 Judge",
-      expiry: "链接只能使用一次，10 分钟后失效。",
-      ignore: "如果这不是你本人的操作，忽略这封邮件即可。",
-    },
     signInCode: {
       subject: "你的 Judge 登录验证码",
       intro: "输入以下验证码即可登录：",

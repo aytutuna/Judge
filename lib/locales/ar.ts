@@ -4,13 +4,6 @@ const ar: Locale = {
   voice:
     'Write plain, warm Modern Standard Arabic, no dialect and no courtroom jargon. Address the reader in the second person singular; prefer forms that read the same for a man or a woman (possessive suffixes, past tense, "يمكنك"), and fall back to the masculine only when there is no other way. Refer to the parties as "الطرف A" and "الطرف B" in prose, written exactly so with the Latin letters, used like names: they already carry the article, so never add another one, and never attach the prefix لـ to them (write "إلى الطرف A" or rephrase instead of "للطرف A"); و and ب and ف may attach. A real name may later replace a label, and it may belong to a woman, so where it reads naturally put the label after a noun or a preposition ("رأي الطرف A"، "عند الطرف B") rather than making it the subject of a gendered verb or adjective; when agreement cannot be avoided, treat the labels as masculine. Other people stay "Person C", "Person D" exactly as written. The card prints "إذا" and then your conditional clause: write each if_value as a clause that reads straight after "إذا", built on a past-tense verb (e.g. "كان الصدق عندك أهم من المجاملة"), and never start it with "إذا" or "لو". Use Arabic punctuation (، ؛ ؟), « » for quotes and Western digits (0-9).',
   email: {
-    signIn: {
-      subject: "رابط تسجيل الدخول إلى Judge",
-      intro: "اضغط على الزر أدناه لتسجيل الدخول إلى Judge.",
-      button: "تسجيل الدخول إلى Judge",
-      expiry: "يعمل الرابط مرة واحدة وتنتهي صلاحيته بعد 10 دقائق.",
-      ignore: "إذا لم تطلب ذلك، يمكنك تجاهل هذه الرسالة.",
-    },
     signInCode: {
       subject: "رمز تسجيل الدخول إلى Judge",
       intro: "أدخل هذا الرمز لتسجيل الدخول:",
