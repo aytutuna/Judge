@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from "react";
+import { apiFetch } from "./api-fetch";
 import { INVITE_TOKEN_PATTERN } from "./case-types";
 
 /**
@@ -7,7 +8,8 @@ import { INVITE_TOKEN_PATTERN } from "./case-types";
  *
  * - The respondent claim secret (`settle.claim.<caseId>`) of an answer given
  *   signed out, before an account was needed to answer. Nothing writes it any
- *   more; the history list still reads one that is already here.
+ *   more; once signed in, linkStoredClaim moves the answer into the account
+ *   and forgets the claim.
  * - The invite they were on when they went to sign in (`settle.invite`),
  *   so the sign-in redirect can be the token-free `/r` and the invite token
  *   never travels in a sign-in e-mail or an OAuth state. localStorage, not
@@ -47,6 +49,28 @@ export function parseClaim(raw: string | null): string | null {
 
 export function loadClaim(caseId: string): string | null {
   return parseClaim(readStorage(claimKey(caseId)));
+}
+
+/** Links the answer this browser gave signed out to the signed-in account
+ * (POST /api/v1/cases/{id}/claim). The claim is dropped once the server has
+ * answered for good: "linked", or "refused" (a wrong claim, an answer that
+ * belongs to another account, a case that is gone). "retry" keeps it for a
+ * later page load (signed out, offline, server trouble). */
+export async function linkStoredClaim(caseId: string): Promise<"none" | "linked" | "refused" | "retry"> {
+  const claim = loadClaim(caseId);
+  if (!claim) return "none";
+  try {
+    const res = await apiFetch(`/api/v1/cases/${encodeURIComponent(caseId)}/claim`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ claim }),
+    });
+    if (!res.ok && res.status !== 404 && res.status !== 410) return "retry";
+    writeStorage(claimKey(caseId), null);
+    return res.ok ? "linked" : "refused";
+  } catch {
+    return "retry";
+  }
 }
 
 // --- pending invite across sign-in ----------------------------------------------

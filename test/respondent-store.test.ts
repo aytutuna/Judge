@@ -4,6 +4,7 @@ import {
   claimKey,
   loadClaim,
   parseClaim,
+  linkStoredClaim,
   parsePendingInvite,
   rememberPendingInvite,
   takePendingInvite,
@@ -71,5 +72,44 @@ describe("pending invite across sign-in", () => {
     });
     rememberPendingInvite(TOKEN);
     expect(takePendingInvite()).toBeNull();
+  });
+});
+
+describe("linking an answer given signed out", () => {
+  const CASE = "case00000001";
+  const reply = (status: number) => vi.fn(async (_url: string, _init?: RequestInit) => new Response("{}", { status }));
+
+  it("does nothing without a stored claim", async () => {
+    vi.stubGlobal("localStorage", fakeStorage());
+    const fetch = reply(200);
+    vi.stubGlobal("fetch", fetch);
+    expect(await linkStoredClaim(CASE)).toBe("none");
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it("sends the claim and forgets it once linked or refused for good", async () => {
+    for (const [status, outcome] of [[200, "linked"], [404, "refused"]] as const) {
+      vi.stubGlobal("localStorage", fakeStorage());
+      localStorage.setItem(claimKey(CASE), TOKEN);
+      const fetch = reply(status);
+      vi.stubGlobal("fetch", fetch);
+      expect(await linkStoredClaim(CASE)).toBe(outcome);
+      expect(JSON.parse(String(fetch.mock.calls[0][1]?.body))).toEqual({ claim: TOKEN });
+      expect(loadClaim(CASE)).toBeNull();
+    }
+  });
+
+  it("keeps the claim when signed out or the server is down", async () => {
+    for (const status of [401, 500, 429]) {
+      vi.stubGlobal("localStorage", fakeStorage());
+      localStorage.setItem(claimKey(CASE), TOKEN);
+      vi.stubGlobal("fetch", reply(status));
+      expect(await linkStoredClaim(CASE)).toBe("retry");
+      expect(loadClaim(CASE)).toBe(TOKEN);
+    }
+    localStorage.setItem(claimKey(CASE), TOKEN);
+    vi.stubGlobal("fetch", vi.fn(async () => Promise.reject(new Error("offline"))));
+    expect(await linkStoredClaim(CASE)).toBe("retry");
+    expect(loadClaim(CASE)).toBe(TOKEN);
   });
 });

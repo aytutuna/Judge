@@ -25,6 +25,8 @@ import type { NameMapping } from "@/lib/types";
 import { shareLink } from "@/lib/share-link";
 import { useCase } from "@/lib/use-case";
 import { refreshViewer, useViewer } from "@/lib/use-viewer";
+import { AgeGate } from "../AgeGate";
+import { AgreementGate } from "../AgreementGate";
 import { JudgingOverlay } from "../JudgingOverlay";
 import { SiteFooter, SiteHeader, SkipLink } from "../SiteChrome";
 import { Toast, useToast } from "../Toast";
@@ -135,6 +137,8 @@ export function CaseShell({
       <SiteHeader lang={lang} toggle />
       {main}
       <SiteFooter lang={lang} toggle />
+      <AgeGate lang={lang} />
+      <AgreementGate lang={lang} />
     </div>
   );
 }

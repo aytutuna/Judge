@@ -23,7 +23,7 @@ import { historyRowFromView } from "@/lib/history-state";
 import { historyKey, type HistoryResponse, type HistoryRow, type HistoryState } from "@/lib/history-types";
 import { localizeLabelsAuto, resolveParties, restoreNames, textLang } from "@/lib/names";
 import { firstNameOf, type MineResponse } from "@/lib/originals-types";
-import { loadClaim } from "@/lib/respondent-store";
+import { linkStoredClaim } from "@/lib/respondent-store";
 import type { FinalVerdict, NameMapping, PartyId } from "@/lib/types";
 import type { VerdictPollResponse } from "@/lib/verdict-poll";
 import { loadOwnerToken, ownerHeaders, ownerTokenIds } from "@/lib/owner-store";
@@ -310,7 +310,7 @@ export function markCaseRemoved(id: string): void {
 // Side B is linked to no account: only this browser's claim keeps the case.
 // Once it is in one, the browser lists it no more, so whoever uses the
 // browser next does not see it.
-const localOnly = (view: CaseView) => view.inAccount === false && !view.inOtherAccount;
+const localOnly = (view: CaseView) => view.inAccount === false;
 
 /** A case page's latest state, put into its row: in the account's list and,
  * for a case this browser answered, in its own. */
@@ -328,6 +328,19 @@ export function updateHistoryCase(view: CaseView): void {
   }
   const local = loadAnswered().find((r) => r.id === view.id);
   if (local) addAnswered(historyRowFromView(view, now, { at: local.at, nameMap: view.names ?? local.nameMap, inviteToken: local.inviteToken }));
+}
+
+/** Answers this browser gave signed out join the account that signed in; a
+ * claim the server refuses belongs to someone else and its row goes. True
+ * when any joined, so the account's list should be read again. */
+async function linkAnsweredClaims(): Promise<boolean> {
+  let joined = false;
+  for (const row of loadAnswered()) {
+    const out = await linkStoredClaim(row.id);
+    if (out === "linked" || out === "refused") dropAnswered(row.id);
+    if (out === "linked") joined = true;
+  }
+  return joined;
 }
 
 function forget(id: string): void {
@@ -374,12 +387,13 @@ async function lookUp(id: string): Promise<boolean> {
 
 /** A case this browser answered, still being judged when last seen. */
 async function lookUpAnswered(row: HistoryRow): Promise<boolean> {
-  const claim = loadClaim(row.id);
   if (!row.inviteToken) return true;
-  const res = await apiFetch(`/api/v1/respond/${row.inviteToken}`, {
-    cache: "no-store",
-    headers: claim ? { "Respondent-Claim": claim } : {},
-  });
+  const link = await linkStoredClaim(row.id);
+  if (link === "refused") {
+    dropAnswered(row.id);
+    return true;
+  }
+  const res = await apiFetch(`/api/v1/respond/${row.inviteToken}`, { cache: "no-store" });
   if (res.status === 404) {
     // The link no longer opens (the case is gone or its secret changed).
     dropAnswered(row.id);
@@ -446,6 +460,13 @@ export function useHistory(viewer: ViewerState, poll = false): HistoryView & { l
   useEffect(() => {
     void settleHistory();
   }, []);
+
+  useEffect(() => {
+    if (!user) return;
+    void linkAnsweredClaims().then((joined) => {
+      if (joined) void refreshHistory();
+    });
+  }, [user]);
 
   useEffect(() => {
     if (!user) {

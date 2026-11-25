@@ -13,10 +13,10 @@ import { apiErrorMessage, languageName, t, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { langTag } from "@/lib/langs";
 import type { SelfParty } from "@/lib/names";
-import { clearPendingInvite, rememberPendingInvite, usePendingInvite } from "@/lib/respondent-store";
+import { clearPendingInvite, linkStoredClaim, rememberPendingInvite, usePendingInvite } from "@/lib/respondent-store";
 import type { NameMapping } from "@/lib/types";
 import { keyHolder, useCase } from "@/lib/use-case";
-import { useViewer } from "@/lib/use-viewer";
+import { refreshViewer, useViewer } from "@/lib/use-viewer";
 import { JudgingOverlay } from "../JudgingOverlay";
 import { updateHistoryCase } from "../shell/useHistory";
 import { Turnstile, TURNSTILE_SITE_KEY } from "../Turnstile";
@@ -541,10 +541,22 @@ export function RespondScreen({ token }: { token: string }) {
 
   // Once signed in, the first visit takes the next open side, so the owner
   // sees it opened and the side is held by this account from then on.
+  // An answer this browser gave signed out is linked to the account first, so
+  // the seat below never becomes a second side.
   const opened = useRef(false);
   const [full, setFull] = useState(false);
+  const linking = useRef<string | null>(null);
+  const [linked, setLinked] = useState<string | null>(null);
   useEffect(() => {
-    if (!view || !signedIn || opened.current) return;
+    if (!view || !signedIn || linking.current === view.id) return;
+    linking.current = view.id;
+    void linkStoredClaim(view.id).then((out) => {
+      setLinked(view.id);
+      if (out === "linked") reload();
+    });
+  }, [view, signedIn, reload]);
+  useEffect(() => {
+    if (!view || !signedIn || linked !== view.id || opened.current) return;
     if (view.ownInvite || view.status !== "awaiting_respondent" || view.respondentAnswered) return;
     opened.current = true;
     void (async () => {
@@ -560,7 +572,7 @@ export function RespondScreen({ token }: { token: string }) {
         opened.current = false;
       }
     })();
-  }, [view, signedIn, base, setView]);
+  }, [view, signedIn, linked, base, setView]);
 
   async function removeSide() {
     setRemoveError(null);
@@ -612,25 +624,33 @@ export function RespondScreen({ token }: { token: string }) {
   const shut = stage === "expired" || stage === "closed" || stage === "without_you";
   const title = t(lang, answering || !view ? "respond.title" : shut ? "respond.inviteTitle" : "case.title");
 
+  // Who is looking is not known yet, or could not be looked up: no form until it is.
+  const viewerFailed = !signedIn && !signedOut && viewer.status === "error";
+  const viewerPending = !signedIn && !signedOut;
+
   // Every side is taken: the link shows the case as full.
-  if (!view || full) {
+  if (!view || full || viewerPending) {
     const closed = full || load.code === "case_closed";
     const message =
-      load.status === "loading"
+      load.status === "loading" || (viewerPending && !viewerFailed)
         ? t(lang, "respond.loading")
         : closed
           ? t(lang, "respond.closed")
           : load.status === "missing"
             ? t(lang, "respond.notFound")
             : t(lang, "case.loadFailed");
-    const calm = load.status === "loading" || closed;
+    const calm = load.status === "loading" || closed || (viewerPending && !viewerFailed);
     return (
       <CaseShell lang={lang} title={closed ? t(lang, "respond.inviteTitle") : title} bare>
-        <p className={calm ? styles.note : styles.error} role={load.status === "loading" ? "status" : "alert"}>
+        <p className={calm ? styles.note : styles.error} role={calm && !closed ? "status" : "alert"}>
           {message}
         </p>
-        {load.status === "error" && !closed ? (
-          <button type="button" className={`${account.btn} ${account.primary}`} onClick={reload}>
+        {(load.status === "error" || viewerFailed) && !closed ? (
+          <button
+            type="button"
+            className={`${account.btn} ${account.primary}`}
+            onClick={() => (viewerFailed ? void refreshViewer() : reload())}
+          >
             {t(lang, "case.retry")}
           </button>
         ) : null}

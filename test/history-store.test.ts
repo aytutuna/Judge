@@ -220,20 +220,23 @@ describe("settleHistory", () => {
     storage.setItem(HISTORY_KEY, "[]");
     storage.setItem("settle.claim.c1", CLAIM);
     vi.stubGlobal("localStorage", storage);
-    const calls: { url: string; claim: string | null }[] = [];
+    const calls: { url: string; body: string | null }[] = [];
     vi.stubGlobal(
       "fetch",
       vi.fn(async (url: string, init?: RequestInit) => {
-        calls.push({ url, claim: new Headers(init?.headers).get("respondent-claim") });
+        calls.push({ url, body: typeof init?.body === "string" ? init.body : null });
+        if (url.endsWith("/claim")) return json(200, { claimed: true });
         if (url.endsWith(dead)) return json(404, { error: { code: "not_found" } });
         return json(200, { case: view({ id: "c1", status: "judged", verdicts: [verdictView("side_b", "Party B paid")] }) });
       }),
     );
     await settleHistory();
     expect(calls).toEqual([
-      { url: `/api/v1/respond/${TOKEN}`, claim: CLAIM },
-      { url: `/api/v1/respond/${dead}`, claim: null },
+      { url: "/api/v1/cases/c1/claim", body: JSON.stringify({ claim: CLAIM }) },
+      { url: `/api/v1/respond/${TOKEN}`, body: null },
+      { url: `/api/v1/respond/${dead}`, body: null },
     ]);
+    expect(localStorage.getItem("settle.claim.c1")).toBeNull();
     expect(loadAnswered()).toHaveLength(1);
     expect(loadAnswered()[0]).toMatchObject({ id: "c1", state: "ready", verdict: "side_b", headline: "Party B paid" });
   });
@@ -318,14 +321,11 @@ describe("cases answered signed out", () => {
     expect(parseAnswered("{")).toEqual([]);
   });
 
-  it("are dropped once side B is in an account, the viewer's or another", () => {
+  it("are dropped once side B is in the viewer's account", () => {
     vi.stubGlobal("localStorage", fakeStorage());
     addAnswered(answeredRow("c1", "2026-10-20T10:00:00.000Z"));
-    addAnswered(answeredRow("c4", "2026-10-20T10:00:00.000Z"));
-    expect(loadAnswered()).toHaveLength(2);
-    // Kept in the account, or seen bound to another: the browser forgets it.
+    expect(loadAnswered()).toHaveLength(1);
     updateHistoryCase(view({ inAccount: true }));
-    updateHistoryCase(view({ id: "c4", inOtherAccount: true }));
     expect(loadAnswered()).toEqual([]);
   });
 });

@@ -2,11 +2,12 @@ import { apiFetch } from "@/lib/api-fetch";
 import { apiErrorMessage, type Lang } from "@/lib/i18n";
 import { forgetCaseNames } from "@/lib/case-names-store";
 import { forgetOwnerToken, loadOwnerToken, ownerHeaders } from "@/lib/owner-store";
-import { loadClaim } from "@/lib/respondent-store";
+import { linkStoredClaim } from "@/lib/respondent-store";
+import { dropAnswered } from "@/lib/history-store";
 import { markCaseRemoved, markVerdictRemoved, refreshHistory, type HistoryItem } from "./useHistory";
 
 const JSON_HEADERS = { "Content-Type": "application/json" };
-const body = (extra: object = {}) => JSON.stringify({ confirm: "remove", ...extra });
+const body = () => JSON.stringify({ confirm: "remove" });
 
 /** The invite token of a case the viewer answered, from the row's link. */
 function inviteToken(item: HistoryItem): string | null {
@@ -32,13 +33,13 @@ async function attempt(item: HistoryItem): Promise<Outcome> {
   } else if (item.role === "respondent") {
     const token = inviteToken(item);
     if (!token) return "failed";
-    const claim = loadClaim(item.id);
+    // An answer given signed out joins the account first; one that belongs to another account is not this person's to remove.
+    if ((await linkStoredClaim(item.id)) === "refused") {
+      dropAnswered(item.id);
+      return "done";
+    }
     path = `/api/v1/respond/${token}/removal`;
-    init = {
-      method: "POST",
-      headers: { ...JSON_HEADERS, ...(claim ? { "Respondent-Claim": claim } : {}) },
-      body: body(claim ? { claim } : {}),
-    };
+    init = { method: "POST", headers: JSON_HEADERS, body: body() };
   } else {
     path = `/api/v1/cases/${id}/removal`;
     init = { method: "POST", headers: JSON_HEADERS, body: body() };

@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { AccountsRead } from "../components/case/AccountsRead";
 import { AppealSection, appealArea, type AppealDraft } from "../components/case/AppealForm";
-import { CasePanel, type CasePanelProps } from "../components/case/CaseScreen";
+import { CasePanel, CaseShell, type CasePanelProps } from "../components/case/CaseScreen";
 import type { EvidenceController } from "../components/case/EvidencePicker";
 import { RESPOND_SIGNIN_HREF, RespondPanel, respondStage, type RespondForm, type RespondPanelProps } from "../components/case/RespondScreen";
 import { WriteSide, type SideDraft } from "../components/case/WriteSide";
@@ -91,6 +91,17 @@ function respondent(view: CaseView, over: Partial<RespondPanelProps> = {}): stri
     />,
   );
 }
+
+describe("the invite page's shell", () => {
+  it("carries the agreement dialog, which an answer from a new account needs", () => {
+    const bare = renderToStaticMarkup(
+      <CaseShell lang="en" title="Tell your side" bare>
+        <p />
+      </CaseShell>,
+    );
+    expect(bare).toContain(esc(t("en", "consent.sensitiveTitle")));
+  });
+});
 
 describe("owner case page", () => {
   it("awaiting: a row per side, share link, judge-now and only the owner's side, with no explanation", () => {
