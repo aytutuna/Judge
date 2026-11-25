@@ -72,14 +72,6 @@ export const RespondRequest = z.object({
   turnstileToken: z.string().max(2048).optional(),
   /** How the respondent appears on the case's share pages; empty or null = "Party B". */
   displayName: z.union([z.literal(""), DisplayNameInput]).nullable().optional(),
-  /** Signed-out answers only (an account has both already): the person ticked
-   * "I am 18 or older" and the private-details agreement. Both must be true. */
-  adultConfirmed: z.boolean().optional(),
-  sensitiveAgreed: z.boolean().optional(),
-  /** The language the agreement was shown in (default: the case's) and the
-   * platform it was ticked on (default web). */
-  lang: z.string().max(16).optional(),
-  platform: z.enum(["ios", "android", "web"]).optional(),
 });
 export type RespondRequest = z.infer<typeof RespondRequest>;
 
@@ -95,8 +87,6 @@ export const AppealRequest = z.object({
     .min(MIN_APPEAL_CHARS, "Tell the judges a bit more.")
     .max(MAX_APPEAL_CHARS, `Keep it under ${MAX_APPEAL_CHARS} characters.`),
   evidence: EvidenceTokens.max(MAX_EVIDENCE_PER_APPEAL).optional(),
-  /** Respondent only: the `respondent_claim` from answering signed out. */
-  claim: z.string().max(64).optional(),
 });
 export type AppealRequest = z.infer<typeof AppealRequest>;
 
@@ -311,12 +301,6 @@ export type CaseListResponse = { cases: CaseSummary[]; next: string | null };
 export type RespondResponse = {
   case: CaseView;
   name_map: NameMapping[];
-  /** Present when the answer was sent signed out: proof of having written
-   * side B. Keep it with the name map; send it as `claim` on
-   * POST /respond/{token}/appeals and as the `Respondent-Claim` header on
-   * GET /respond/{token}. Without it (or the account that answered), nobody
-   * can add context as Party B. */
-  respondent_claim?: string;
   replayed?: boolean;
 };
 export type AppealResponse = {
@@ -325,9 +309,9 @@ export type AppealResponse = {
   entitlement?: Entitlement;
   replayed?: boolean;
 };
-/** POST /api/v1/respond/{token}/open: the opener takes the next open side.
- * The claim secret goes back as Respondent-Claim from then on. */
-export type OpenResponse = { case: CaseView; respondent_claim: string | null };
+/** POST /api/v1/respond/{token}/open: the signed-in opener takes the next open
+ * side. respondent_claim is always null now; older builds still read it. */
+export type OpenResponse = { case: CaseView; respondent_claim: null };
 /** GET /api/v1/cases/live: the owner's cases that wait on someone. */
 export type LiveCasesResponse = { cases: { id: string; sides: CaseLiveSide[] }[] };
 export type InviteResponse = { inviteUrl: string; party?: PartyLetter };

@@ -132,7 +132,6 @@ function okOutcome(r: VerdictResult = result(), extra: { refused?: boolean; degr
 
 type Opts = { user?: string; via?: "cookie" | "bearer"; body?: unknown; headers?: Record<string, string>; ip?: string };
 
-const TICKS = { "adult-confirmed": "true", "sensitive-agreed": "true" };
 
 function req(method: string, url: string, opts: Opts = {}): Request {
   const headers: Record<string, string> = { "content-type": "application/json", ...opts.headers };
@@ -199,6 +198,7 @@ function respond(token: string, opts: Opts & { text?: string; evidence?: string[
   return http.respondPostHandler(
     req("POST", `/api/v1/respond/${token}`, {
       ...opts,
+      user: opts.user ?? uid("resp"),
       ip: opts.ip ?? ip(),
       body: { text: opts.text ?? SIDE_B, ...(opts.evidence ? { evidence: opts.evidence } : {}), turnstileToken: "t", adultConfirmed: true, sensitiveAgreed: true },
     }),
@@ -454,10 +454,11 @@ describe("respondent: GET and POST /api/v1/respond/{token}", () => {
     const o = await owner(2);
     const { data } = await create(o);
     const token = tokenOf(data.case);
-    const res = await respond(token, { headers: { "idempotency-key": "ans-1" } });
+    const resp = uid("resp");
+    const res = await respond(token, { user: resp, headers: { "idempotency-key": "ans-1" } });
     expect(res.status).toBe(202);
     const answered = await body<{ case: CaseView; name_map: unknown[]; respondent_claim?: string }>(res);
-    expect(answered.respondent_claim).toMatch(/^[A-Za-z0-9_-]{22}$/);
+    expect(answered.respondent_claim).toBeUndefined();
     expect(answered.case.status).toBe("judging");
     expect(answered.case.pollAfterMs).toBe(3000);
     expect(answered.case.sides).toEqual([]);
@@ -490,26 +491,22 @@ describe("respondent: GET and POST /api/v1/respond/{token}", () => {
     const respView = (await getRespondent(token)).view!;
     expect(respView.verdicts.map((v) => v.id)).toEqual([ownerView.verdicts[0].id]);
     expect(respView.sides.map((s) => s.party)).toEqual(["a", "b"]);
-    // Holding the link is not enough to act as Party B; the claim is.
-    expect(respView.appeal.blockedBy).toBe("not_party");
-    expect((await getRespondent(token, undefined, answered.respondent_claim)).view!.appeal.blockedBy).toBe("signin_required");
+    // Holding the link is not enough to act as Party B; the account is.
+    expect(respView.appeal.blockedBy).toBe("signin_required");
+    expect((await getRespondent(token, uid("stranger"))).view!.appeal.blockedBy).toBe("not_party");
+    expect((await getRespondent(token, resp)).view!.appeal.blockedBy).toBe("no_credits");
 
     expect(await credits(o)).toBe(1);
     expect(await usage(o)).toEqual(["consumed"]);
 
     // A second answer is closed; the same Idempotency-Key replays.
     expect((await body(await respond(token))).code).toBe("case_closed");
-    const replay = await respond(token, { headers: { "idempotency-key": "ans-1" } });
+    const replay = await respond(token, { user: resp, headers: { "idempotency-key": "ans-1" } });
     expect(replay.status).toBe(202);
-    const replayed = await body<{ replayed?: boolean; respondent_claim?: string }>(replay);
-    expect(replayed.replayed).toBe(true);
-    // A lost response can be retried: the same claim comes back.
-    expect(replayed.respondent_claim).toBe(answered.respondent_claim);
-    // Only the claim's derivation nonce is stored, never the claim.
+    expect((await body<{ replayed?: boolean }>(replay)).replayed).toBe(true);
     const db = await getDb();
     const stored = (await db.execute({ sql: "SELECT * FROM cases WHERE id = ?", args: [data.case.id] })).rows[0];
-    expect(Object.values(stored)).not.toContain(answered.respondent_claim);
-    expect(stored.respondent_user_id).toBeNull();
+    expect(stored.respondent_user_id).toBe(resp);
   });
 
   it("a respondent whose names cannot be taken out gets 503 anonymize_failed and can answer again", async () => {
@@ -525,67 +522,54 @@ describe("respondent: GET and POST /api/v1/respond/{token}", () => {
     expect(again.status).toBe(202);
   });
 
-  describe("a signed-out answer confirms 18+ and the private-details agreement", () => {
-    const answer = (token: string, extra: Record<string, unknown>, user?: string) =>
-      http.respondPostHandler(
-        req("POST", `/api/v1/respond/${token}`, { user, ip: ip(), body: { text: SIDE_B, turnstileToken: "t", ...extra } }),
-        token,
-      );
-    const attestRows = (caseId: string) =>
-      count("SELECT count(*) AS n FROM case_side_attest WHERE case_id = ?", [caseId]);
-
-    it("is refused without either tick, and nothing is stored", async () => {
+  describe("answering needs an account", () => {
+    it("signed out, answering and uploading evidence get 401 signin_required and store nothing", async () => {
       const o = await owner(1);
       const c = (await create(o)).data.case;
       const token = tokenOf(c);
-      const noAge = await answer(token, { sensitiveAgreed: true });
-      expect(noAge.status).toBe(403);
-      expect((await body(noAge)).code).toBe("age_unconfirmed");
-      const falseAge = await answer(token, { adultConfirmed: false, sensitiveAgreed: true });
-      expect((await body(falseAge)).code).toBe("age_unconfirmed");
-      const noAgree = await answer(token, { adultConfirmed: true });
-      expect(noAgree.status).toBe(403);
-      expect((await body(noAgree)).code).toBe("agreement_required");
-      expect(await attestRows(c.id)).toBe(0);
+      const anonymized = m.anonymizeSubmission.mock.calls.length;
+      const anon = await respond(token, { user: "" });
+      expect(anon.status).toBe(401);
+      expect((await body(anon)).code).toBe("signin_required");
+      const uploads = m.handleEvidenceUpload.mock.calls.length;
+      const up = await http.respondEvidenceHandler(req("POST", `/api/v1/respond/${token}/evidence`, { body: { images: [] } }), token);
+      expect(up.status).toBe(401);
+      expect((await body(up)).code).toBe("signin_required");
+      expect(m.handleEvidenceUpload.mock.calls.length).toBe(uploads);
+      expect(m.anonymizeSubmission.mock.calls.length).toBe(anonymized);
+      expect(await count("SELECT count(*) AS n FROM case_sides WHERE case_id = ?", [c.id])).toBe(1);
       expect((await getRespondent(token)).view?.status).toBe("awaiting_respondent");
     });
 
-    it("stores both with the side, and the agreement in the ledger with its wording", async () => {
+    it("the other routes of a link need an account too", async () => {
       const o = await owner(1);
-      const c = (await create(o)).data.case;
-      const res = await answer(tokenOf(c), { adultConfirmed: true, sensitiveAgreed: true, lang: "tr", platform: "android" });
-      expect(res.status).toBe(202);
-      const db = await getDb();
-      const [side] = (await db.execute({ sql: "SELECT * FROM case_side_attest WHERE case_id = ?", args: [c.id] })).rows;
-      expect(side).toMatchObject({ party: "b" });
-      expect(side.adult_confirmed_at).toBe(side.sensitive_agreed_at);
-      const [row] = (
-        await db.execute({ sql: "SELECT * FROM consent_ledger WHERE user_id = ?", args: [`guest:${c.id}:b`] })
-      ).rows;
-      expect(row).toMatchObject({
-        kind: "sensitive",
-        choice: "on",
-        lang: "tr",
-        platform: "android",
-        wording_key: "consent.sensitiveBody",
-        at: side.sensitive_agreed_at,
-        unlinked_at: side.sensitive_agreed_at,
-      });
+      const token = tokenOf((await create(o)).data.case);
+      const codes = async (...rs: Promise<Response>[]) =>
+        Promise.all(rs.map(async (p) => {
+          const r = await p;
+          return [r.status, (await body(r)).code];
+        }));
+      const call = (h: (r: Request, t: string) => Promise<Response>, method: string, path: string, b?: unknown) =>
+        h(req(method, `/api/v1/respond/${token}${path}`, { body: b }), token);
+      expect(
+        await codes(
+          call(http.respondOpenHandler, "POST", "/open"),
+          call(http.respondTypingHandler, "POST", "/typing"),
+          call(http.respondAppealHandler, "POST", "/appeals", { text: "x".repeat(40) }),
+          call(http.respondOriginalsHandler, "GET", "/originals"),
+          call(http.respondDisplayHandler, "PATCH", "/display", { displayName: "D" }),
+          call(http.respondRemovalHandler, "POST", "/removal", { confirm: "remove" }),
+        ),
+      ).toEqual(Array(6).fill([401, "signin_required"]));
     });
 
-    it("defaults to the case's language and the web, and a signed-in answer sends neither tick", async () => {
-      const o = await owner(2);
-      const guest = (await create(o)).data.case;
-      expect((await answer(tokenOf(guest), { adultConfirmed: true, sensitiveAgreed: true })).status).toBe(202);
-      const db = await getDb();
-      const [row] = (
-        await db.execute({ sql: "SELECT lang, platform FROM consent_ledger WHERE user_id = ?", args: [`guest:${guest.id}:b`] })
-      ).rows;
-      expect(row).toMatchObject({ lang: "en", platform: "web" });
-
-      const member = (await create(o)).data.case;
-      expect((await answer(tokenOf(member), {}, uid("member"))).status).toBe(202);
-      expect(await attestRows(member.id)).toBe(0);
+    it("the private-details agreement is checked for the signed-in answerer", async () => {
+      const o = await owner(1);
+      const c = (await create(o)).data.case;
+      vi.mocked(agreementRefusal).mockResolvedValueOnce(agreementMissing());
+      const res = await respond(tokenOf(c));
+      expect(res.status).toBe(403);
+      expect((await body(res)).code).toBe("agreement_required");
     });
   });
 
@@ -595,13 +579,12 @@ describe("respondent: GET and POST /api/v1/respond/{token}", () => {
     const token = tokenOf(data.case);
     expect((await body(await respond(token, { user: o }))).code).toBe("own_case");
     m.verifyTurnstile.mockResolvedValue("invalid");
-    const bad = await respond(token);
+    const bad = await respond(token, { via: "cookie" });
     expect(bad.status).toBe(403);
     expect((await body(bad)).code).toBe("captcha_failed");
     const resp = uid("resp");
     const bearer = await respond(token, { user: resp, via: "bearer" });
     expect(bearer.status).toBe(202);
-    // A signed-in answer binds side B to that account; no claim is needed.
     expect((await body(bearer)).respondent_claim).toBeUndefined();
     const db = await getDb();
     expect((await db.execute({ sql: "SELECT respondent_user_id FROM cases WHERE id = ?", args: [data.case.id] })).rows[0].respondent_user_id).toBe(resp);
@@ -624,7 +607,9 @@ describe("respondent: GET and POST /api/v1/respond/{token}", () => {
     const o = await owner();
     const { data } = await create(o);
     const token = tokenOf(data.case);
-    const up = await http.respondEvidenceHandler(req("POST", `/api/v1/respond/${token}/evidence`, { headers: TICKS, body: { images: [] } }), token);
+    const evidence = (user: string) =>
+      http.respondEvidenceHandler(req("POST", `/api/v1/respond/${token}/evidence`, { user, body: { images: [] } }), token);
+    const up = await evidence(uid("ev"));
     expect(up.status).toBe(200);
     expect(m.handleEvidenceUpload.mock.calls[0][1]).toEqual({ type: "respondent", caseId: data.case.id });
     expect((await http.respondEvidenceHandler(req("POST", "/api/v1/respond/x/evidence"), "x")).status).toBe(404);
@@ -635,29 +620,18 @@ describe("respondent: GET and POST /api/v1/respond/{token}", () => {
     const view = await getOwner(o, data.case.id);
     expect(view.sides.find((s) => s.party === "b")!.evidence[0].transcript).toBe("21:02 Party B: did you pay?");
     expect(view.verdicts[0].result.evidence_used).toEqual({ a: 0, b: 1 });
-    const closed = await http.respondEvidenceHandler(req("POST", `/api/v1/respond/${token}/evidence`, { headers: TICKS }), token);
-    expect((await body(closed)).code).toBe("case_closed");
+    expect((await body(await evidence(uid("ev")))).code).toBe("case_closed");
   });
 
-  it("respondent evidence needs the agreement signed in, or both ticks signed out", async () => {
+  it("respondent evidence needs the private-details agreement", async () => {
     const o = await owner();
     const token = tokenOf((await create(o)).data.case);
-    const upload = (opts: Opts) => http.respondEvidenceHandler(req("POST", `/api/v1/respond/${token}/evidence`, opts), token);
-    const calls = () => m.handleEvidenceUpload.mock.calls.length;
-    const before = calls();
-    const none = await upload({});
-    expect(none.status).toBe(403);
-    expect((await body(none)).code).toBe("age_unconfirmed");
-    const onlyAge = await upload({ headers: { "adult-confirmed": "true" } });
-    expect((await body(onlyAge)).code).toBe("agreement_required");
-    expect((await body(await upload({ headers: { "sensitive-agreed": "true" } }))).code).toBe("age_unconfirmed");
+    const before = m.handleEvidenceUpload.mock.calls.length;
     vi.mocked(agreementRefusal).mockResolvedValueOnce(agreementMissing());
-    const signedIn = await upload({ user: uid("ev-agree") });
-    expect(signedIn.status).toBe(403);
-    expect((await body(signedIn)).code).toBe("agreement_required");
-    expect(calls()).toBe(before);
-    expect((await upload({ headers: TICKS })).status).toBe(200);
-    expect(calls()).toBe(before + 1);
+    const refused = await http.respondEvidenceHandler(req("POST", `/api/v1/respond/${token}/evidence`, { user: uid("ev-agree") }), token);
+    expect(refused.status).toBe(403);
+    expect((await body(refused)).code).toBe("agreement_required");
+    expect(m.handleEvidenceUpload.mock.calls.length).toBe(before);
   });
 });
 
@@ -989,23 +963,18 @@ describe("invite and removal", () => {
 });
 
 describe("appeals", () => {
-  async function judgedCase(ownerCredits = 3, respondAs?: string) {
+  async function judgedCase(ownerCredits = 3, respondAs = uid("resp")) {
     const o = await owner(ownerCredits);
     const { data } = await create(o);
     const token = tokenOf(data.case);
-    const answered = await body<{ respondent_claim?: string }>(
-      await respond(token, respondAs ? { user: respondAs, via: "bearer" } : {}),
-    );
+    await respond(token, { user: respondAs });
     await drain();
-    return { o, id: data.case.id, token, claim: answered.respondent_claim };
+    return { o, id: data.case.id, token, r: respondAs };
   }
 
   const TEXT_B = "Party A's receipt is from March, not April.";
-  function respondentAppeal(token: string, user: string | undefined, claim?: string) {
-    return http.respondAppealHandler(
-      req("POST", `/api/v1/respond/${token}/appeals`, { user, body: { text: TEXT_B, ...(claim ? { claim } : {}) } }),
-      token,
-    );
+  function respondentAppeal(token: string, user: string | undefined) {
+    return http.respondAppealHandler(req("POST", `/api/v1/respond/${token}/appeals`, { user, body: { text: TEXT_B } }), token);
   }
 
   it("the owner adds context: 1 unit, re-judged with the whole record, labelled and summarized", async () => {
@@ -1046,52 +1015,37 @@ describe("appeals", () => {
     const o = await owner(3);
     const { data } = await create(o);
     expect((await body(await ownerAppeal(o, data.case.id))).code).toBe("case_closed");
-    const { o: o2, id, token, claim } = await judgedCase();
-    await ownerAppeal(o2, id);
     const r = await owner(2);
-    const busy = await respondentAppeal(token, r, claim);
+    const { o: o2, id, token } = await judgedCase(3, r);
+    await ownerAppeal(o2, id);
+    const busy = await respondentAppeal(token, r);
     expect((await body(busy)).code).toBe("in_progress");
     expect(await credits(r)).toBe(2);
   });
 
-  it("an unrelated Premium account holding the link is not Party B, even before anyone is bound", async () => {
-    const { id, token, o, claim } = await judgedCase();
+  it("an unrelated Premium account holding the link is not Party B", async () => {
+    const { id, token, o, r } = await judgedCase();
     const stranger = await owner(2);
     expect((await getRespondent(token, stranger)).view!.appeal.blockedBy).toBe("not_party");
     const res = await respondentAppeal(token, stranger);
     expect(res.status).toBe(403);
     expect((await body(res)).code).toBe("not_party");
-    // A made-up claim does not help, and the owner's second account is just as much a stranger.
-    expect((await body(await respondentAppeal(token, stranger, "A".repeat(22)))).code).toBe("not_party");
-    expect((await body(await respondentAppeal(token, o, claim))).code).toBe("not_party");
+    expect((await body(await respondentAppeal(token, o))).code).toBe("not_party");
     expect(await credits(stranger)).toBe(2);
     const db = await getDb();
-    expect((await db.execute({ sql: "SELECT respondent_user_id FROM cases WHERE id = ?", args: [id] })).rows[0].respondent_user_id).toBeNull();
+    expect((await db.execute({ sql: "SELECT respondent_user_id FROM cases WHERE id = ?", args: [id] })).rows[0].respondent_user_id).toBe(r);
     expect(await count("SELECT COUNT(*) AS n FROM case_appeals WHERE case_id = ?", [id])).toBe(0);
   });
 
-  it("a respondent who answered signed in appeals with that account only, no claim needed", async () => {
+  it("the respondent appeals once as Party B with their account; signed out is 401", async () => {
     const r = await owner(1);
     const { id, token } = await judgedCase(3, r);
+    expect((await respondentAppeal(token, undefined)).status).toBe(401);
     const other = await owner(1);
     expect((await getRespondent(token, other)).view!.appeal.blockedBy).toBe("not_party");
     expect((await body(await respondentAppeal(token, other))).code).toBe("not_party");
     expect((await getRespondent(token, r)).view!.appeal).toEqual({ allowed: true, blockedBy: null });
-    expect((await respondentAppeal(token, r)).status).toBe(202);
-    await drain();
-    const db = await getDb();
-    expect((await db.execute({ sql: "SELECT respondent_user_id FROM cases WHERE id = ?", args: [id] })).rows[0].respondent_user_id).toBe(r);
-    expect(await usage(r)).toEqual(["consumed"]);
-  });
-
-  it("a signed-out respondent signs in later and appeals once as Party B with the claim, binding the case", async () => {
-    const { id, token, o, claim } = await judgedCase();
-    const appeal = (user: string | undefined) => respondentAppeal(token, user, claim);
-    expect((await appeal(undefined)).status).toBe(401);
-    expect((await body(await appeal(o))).code).toBe("not_party");
-    const r = await owner(1);
-    expect((await getRespondent(token, r, claim)).view!.appeal).toEqual({ allowed: true, blockedBy: null });
-    const res = await appeal(r);
+    const res = await respondentAppeal(token, r);
     expect(res.status).toBe(202);
     const accepted = await body<{ case: CaseView; name_map: unknown[] }>(res);
     expect(accepted.case.role).toBe("respondent");
@@ -1101,19 +1055,15 @@ describe("appeals", () => {
     const db = await getDb();
     expect((await db.execute({ sql: "SELECT respondent_user_id FROM cases WHERE id = ?", args: [id] })).rows[0].respondent_user_id).toBe(r);
     expect(await usage(r)).toEqual(["consumed"]);
-    // Once bound, the claim no longer lets anyone else in.
-    const stranger = await owner(1);
-    expect((await body(await appeal(stranger))).code).toBe("not_party");
-    expect((await body(await appeal(r))).code).toBe("appeal_used");
+    expect((await body(await respondentAppeal(token, r))).code).toBe("appeal_used");
     expect((await getRespondent(token, r)).view!.appeal.blockedBy).toBe("appeal_used");
-    expect((await getRespondent(token, stranger, claim)).view!.appeal.blockedBy).toBe("not_party");
   });
 
   it("a respondent without Premium sees the upsell reason and gets 402 when trying", async () => {
-    const { token, claim } = await judgedCase();
     const r = uid("free");
-    expect((await getRespondent(token, r, claim)).view!.appeal.blockedBy).toBe("no_credits");
-    const res = await respondentAppeal(token, r, claim);
+    const { token } = await judgedCase(3, r);
+    expect((await getRespondent(token, r)).view!.appeal.blockedBy).toBe("no_credits");
+    const res = await respondentAppeal(token, r);
     expect(res.status).toBe(402);
   });
 
@@ -1264,23 +1214,20 @@ describe("originals, display names and removal of a side", () => {
     );
     const c = (await body<{ case: CaseView }>(created)).case;
     const token = tokenOf(c);
-    const answered = await http.respondPostHandler(
-      req("POST", `/api/v1/respond/${token}`, {
-        ip: ip(),
-        body: { text: SIDE_B, displayName: "Deniz", turnstileToken: "t", adultConfirmed: true, sensitiveAgreed: true },
-      }),
+    const r = uid("resp");
+    await http.respondPostHandler(
+      req("POST", `/api/v1/respond/${token}`, { user: r, ip: ip(), body: { text: SIDE_B, displayName: "Deniz", turnstileToken: "t" } }),
       token,
     );
-    const claim = (await body<{ respondent_claim?: string }>(answered)).respondent_claim!;
     await drain();
-    return { o, id: c.id, token, claim, raw };
+    return { o, id: c.id, token, r, raw };
   }
 
   const ownerOriginals = async (o: string, id: string) =>
     body<CaseOriginalsResponse>(await http.caseOriginalsHandler(req("GET", `/api/v1/cases/${id}/originals`, { user: o }), id));
 
   it("seals each side exactly as sent; each party reads only their own original and names", async () => {
-    const { o, id, token, claim, raw } = await judged();
+    const { o, id, token, r, raw } = await judged();
     const own = await ownerOriginals(o, id);
     expect(own.party).toBe("a");
     expect(own.side.status).toBe("stored");
@@ -1289,7 +1236,7 @@ describe("originals, display names and removal of a side", () => {
     expect(own.side.original?.nameMap).toContainEqual({ original: "Deniz", replacement: "Party B" });
     expect(own.appeal).toBeNull();
     const theirsRes = await http.respondOriginalsHandler(
-      req("GET", `/api/v1/respond/${token}/originals`, { headers: { "respondent-claim": claim } }),
+      req("GET", `/api/v1/respond/${token}/originals`, { user: r }),
       token,
     );
     const theirs = await body<CaseOriginalsResponse>(theirsRes);
@@ -1297,20 +1244,21 @@ describe("originals, display names and removal of a side", () => {
     expect(theirs.side.original?.text).toBe(SIDE_B);
     // The owner holds the invite link too, but is not Party B; nor is a stranger.
     expect((await http.respondOriginalsHandler(req("GET", `/api/v1/respond/${token}/originals`, { user: o }), token)).status).toBe(403);
-    expect((await http.respondOriginalsHandler(req("GET", `/api/v1/respond/${token}/originals`), token)).status).toBe(403);
+    expect((await http.respondOriginalsHandler(req("GET", `/api/v1/respond/${token}/originals`), token)).status).toBe(401);
+    expect((await http.respondOriginalsHandler(req("GET", `/api/v1/respond/${token}/originals`, { user: uid("stranger") }), token)).status).toBe(403);
     expect((await http.caseOriginalsHandler(req("GET", `/api/v1/cases/${id}/originals`, { user: await owner(0) }), id)).status).toBe(404);
 
     const ov = await getOwner(o, id);
     expect(ov.names).toContainEqual({ original: "Deniz", replacement: "Party B" });
     expect(ov.display).toEqual({ namesVisible: true, a: "Aytu", b: "Deniz" });
     expect(ov.yourOriginal).toBe("stored");
-    expect((await getRespondent(token, undefined, claim)).view!.names).toEqual([{ original: "I", replacement: "Party B" }]);
+    expect((await getRespondent(token, r)).view!.names).toEqual([{ original: "I", replacement: "Party B" }]);
     expect((await getRespondent(token)).view!.names).toBeNull();
     expect((await getRespondent(token, o)).view!.names).toBeNull();
     // Holding the invite link proves nothing: no display names either.
     expect((await getRespondent(token)).view!.display).toEqual({ namesVisible: true, a: null, b: null });
     expect((await getRespondent(token, o)).view!.display).toEqual({ namesVisible: true, a: null, b: null });
-    expect((await getRespondent(token, undefined, claim)).view!.display).toEqual({ namesVisible: true, a: "Aytu", b: "Deniz" });
+    expect((await getRespondent(token, r)).view!.display).toEqual({ namesVisible: true, a: "Aytu", b: "Deniz" });
 
     const db = await getDb();
     const rows = (await db.execute({ sql: "SELECT subject, sealed FROM originals WHERE case_id = ?", args: [id] })).rows;
@@ -1345,7 +1293,7 @@ describe("originals, display names and removal of a side", () => {
   });
 
   it("display names: each party edits only their own; only the owner flips the switch", async () => {
-    const { o, id, token, claim } = await judged();
+    const { o, id, token, r } = await judged();
     const patchOwner = (b: unknown, extra: Opts = {}) =>
       http.caseDisplayHandler(req("PATCH", `/api/v1/cases/${id}/display`, { user: o, body: b, ...extra }), id);
     let v = (await body<{ case: CaseView }>(await patchOwner({ displayName: "Ayt" }))).case;
@@ -1361,24 +1309,28 @@ describe("originals, display names and removal of a side", () => {
     expect(pub.display).toBeNull();
     // Names off: each party sees only their own name; the invite link alone shows none.
     expect((await getOwner(o, id)).display).toEqual({ namesVisible: false, a: "Ayt", b: null });
-    expect((await getRespondent(token, undefined, claim)).view!.display).toEqual({ namesVisible: false, a: null, b: "Deniz" });
+    expect((await getRespondent(token, r)).view!.display).toEqual({ namesVisible: false, a: null, b: "Deniz" });
     expect((await getRespondent(token)).view!.display).toEqual({ namesVisible: false, a: null, b: null });
-    const patchB = (b: unknown) => http.respondDisplayHandler(req("PATCH", `/api/v1/respond/${token}/display`, { body: b }), token);
-    const okB = await patchB({ displayName: "D", claim });
+    const patchB = (b: unknown, user = r) =>
+      http.respondDisplayHandler(req("PATCH", `/api/v1/respond/${token}/display`, { user, body: b }), token);
+    const okB = await patchB({ displayName: "D" });
     expect(okB.status).toBe(200);
     expect((await body<{ case: CaseView }>(okB)).case.display.b).toBe("D");
-    expect((await patchB({ namesVisible: true, claim })).status).toBe(403);
-    expect((await patchB({ displayName: "X" })).status).toBe(403);
+    expect((await patchB({ namesVisible: true })).status).toBe(403);
+    expect((await patchB({ displayName: "X" }, uid("stranger"))).status).toBe(403);
+    expect((await patchB({ displayName: "X" }, "")).status).toBe(401);
   });
 
   it("the respondent removes their side: every link closes, the owner keeps their original, no row is deleted", async () => {
-    const { o, id, token, claim } = await judged();
+    const { o, id, token, r } = await judged();
     const vid = (await getOwner(o, id)).verdicts[0].id;
     const before = await count("SELECT count(*) AS n FROM verdicts", []);
-    const rm = (b: unknown) => http.respondRemovalHandler(req("POST", `/api/v1/respond/${token}/removal`, { body: b }), token);
-    expect((await rm({ confirm: "remove" })).status).toBe(403);
-    expect((await rm({ confirm: "nope", claim })).status).toBe(400);
-    const res = await rm({ confirm: "remove", claim });
+    const rm = (b: unknown, user = r) =>
+      http.respondRemovalHandler(req("POST", `/api/v1/respond/${token}/removal`, { user, body: b }), token);
+    expect((await rm({ confirm: "remove" }, uid("stranger"))).status).toBe(403);
+    expect((await rm({ confirm: "remove" }, "")).status).toBe(401);
+    expect((await rm({ confirm: "nope" })).status).toBe(400);
+    const res = await rm({ confirm: "remove" });
     expect(res.status).toBe(200);
     const out = await body<{ removed: boolean; removedAt: string; case: CaseView }>(res);
     expect(out.case.removed?.parties).toEqual(["b"]);
@@ -1395,7 +1347,7 @@ describe("originals, display names and removal of a side", () => {
     expect(view.appeal.allowed).toBe(false);
     expect((await ownerAppeal(o, id)).status).toBe(410);
     // Again: idempotent.
-    expect((await body(await rm({ confirm: "remove", claim }))).removedAt).toBe(out.removedAt);
+    expect((await body(await rm({ confirm: "remove" }))).removedAt).toBe(out.removedAt);
   });
 
   it("removal waits for the judges; a run that finishes after an account deletion is stored already removed", async () => {
@@ -1569,14 +1521,14 @@ describe("a case started before side A is written", () => {
     const id = data.case.id;
     const token = tokenOf(data.case);
 
-    const answered = await respond(token, { headers: { "idempotency-key": "ans-1" } });
+    const r = uid("resp");
+    const answered = await respond(token, { user: r, headers: { "idempotency-key": "ans-1" } });
     expect(answered.status).toBe(202);
-    const out = await body<{ case: CaseView; respondent_claim?: string }>(answered);
+    const out = await body<{ case: CaseView }>(answered);
     expect(out.case.status).toBe("awaiting_respondent");
     expect(out.case.respondentAnswered).toBe(true);
     expect(out.case.ownerSideMissing).toBe(true);
     expect(out.case.sides).toEqual([]);
-    expect(out.respondent_claim).toMatch(/^[A-Za-z0-9_-]{22}$/);
     await drain();
     expect(m.judgeAnonymized).not.toHaveBeenCalled();
     expect(await usage(o)).toEqual(["reserved"]);
@@ -1592,23 +1544,15 @@ describe("a case started before side A is written", () => {
     const rotate = await http.rotateInviteHandler(req("POST", `/api/v1/cases/${id}/invite`, { user: o }), id);
     expect(rotate.status).toBe(409);
 
-    // The respondent's claim, view and replay work; a second answer is closed.
-    const resp = (await getRespondent(token, undefined, out.respondent_claim)).view!;
+    // The respondent's view and replay work; a second answer is closed.
+    const resp = (await getRespondent(token, r)).view!;
     expect(resp.respondentAnswered).toBe(true);
     expect(resp.ownerSideMissing).toBe(true);
     expect(resp.sides).toEqual([]);
-    const replay = await respond(token, { headers: { "idempotency-key": "ans-1" } });
+    const replay = await respond(token, { user: r, headers: { "idempotency-key": "ans-1" } });
     expect(replay.status).toBe(202);
-    const again = await body<{ replayed?: boolean; respondent_claim?: string }>(replay);
-    expect(again.replayed).toBe(true);
-    expect(again.respondent_claim).toBe(out.respondent_claim);
+    expect((await body<{ replayed?: boolean }>(replay)).replayed).toBe(true);
     expect((await body(await respond(token))).code).toBe("case_closed");
-    const claimant = uid("claimant");
-    const claim = await http.respondentClaimHandler(
-      req("POST", `/api/v1/cases/${id}/claim`, { user: claimant, body: { claim: out.respondent_claim } }),
-      id,
-    );
-    expect(claim.status).toBe(200);
 
     // judge-now is refused while side A is missing.
     const refused = await judgeNow(o, id);
@@ -1635,7 +1579,7 @@ describe("a case started before side A is written", () => {
     expect(doc).toContain("PARTY B'S ACCOUNT");
     expect(await usage(o)).toEqual(["consumed"]);
     // After the verdict both views carry both sides, as before.
-    expect((await getRespondent(token, undefined, out.respondent_claim)).view!.sides.map((s) => s.party)).toEqual(["a", "b"]);
+    expect((await getRespondent(token, r)).view!.sides.map((s) => s.party)).toEqual(["a", "b"]);
   });
 
   it("writing side A without a name keeps the one given at create", async () => {
@@ -1783,11 +1727,12 @@ describe("a case started before side A is written", () => {
     const o = await owner(2);
     const { data } = await createBare(o);
     const token = tokenOf(data.case);
-    const out = await body<{ respondent_claim: string }>(await respond(token));
+    const r = uid("resp");
+    await respond(token, { user: r });
     expect(await credits(o)).toBe(1);
     const rm = () =>
       http.respondRemovalHandler(
-        req("POST", `/api/v1/respond/${token}/removal`, { body: { confirm: "remove", claim: out.respondent_claim } }),
+        req("POST", `/api/v1/respond/${token}/removal`, { user: r, body: { confirm: "remove" } }),
         token,
       );
     const res = await rm();

@@ -180,8 +180,9 @@ function respond(token: string, opts: Opts & { text?: string; evidence?: string[
   return http.respondPostHandler(
     req("POST", `/api/v1/respond/${token}`, {
       ...opts,
+      user: opts.user ?? uid("resp"),
       ip: opts.ip ?? ip(),
-      body: { text: opts.text ?? SIDE_B, ...(opts.evidence ? { evidence: opts.evidence } : {}), turnstileToken: "t", adultConfirmed: true, sensitiveAgreed: true },
+      body: { text: opts.text ?? SIDE_B, ...(opts.evidence ? { evidence: opts.evidence } : {}), turnstileToken: "t" },
     }),
     token,
   );

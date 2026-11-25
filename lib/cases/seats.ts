@@ -1,14 +1,13 @@
 /**
  * One link per case. Opening it takes the next open side, B then C then D, in
  * a row of case_seats; the insert is the atomic step, so two people opening at
- * once land on different sides. The seat's nonce becomes the claim secret
- * (the same value before and after the answer), so the person is found again
- * by that secret or by their account.
+ * once land on different sides. The seat is bound to the account that opened
+ * it, which finds it again; nobody else holds it.
  *
  * A seat that no request has touched for SEAT_IDLE_MS, with no account behind
- * it, can be taken over once no free side is left: a link opened in a chat
- * app's own browser and then again in the phone's browser must not lock the
- * person out. Any request carrying the seat's claim counts as a touch.
+ * it, can be taken over once no free side is left. Every seat is opened by an
+ * account now, so only seats opened before that was required qualify. Any
+ * request that proves the seat counts as a touch.
  */
 
 import type { CaseLiveSide } from "@/lib/case-types";
@@ -99,14 +98,14 @@ export function nextOpenSide(bundle: CaseBundle, now: Date): Invited | null {
 }
 
 /**
- * Takes the next open side for whoever holds `viewerId` (null when signed
- * out). Returns the seat, or null when every side is taken. The owner never
+ * Takes the next open side for the account `viewerId`. Returns the seat, or
+ * null when every side is taken. The owner never
  * takes one; callers check that first. `only` is the side of an older
  * per-side link, the one side that link may take.
  */
 export async function claimSeat(
   bundle: CaseBundle,
-  viewerId: string | null,
+  viewerId: string,
   now: Date,
   only?: Invited,
 ): Promise<SeatRow | null> {
@@ -120,8 +119,8 @@ export async function claimSeat(
       `EXISTS (SELECT 1 FROM cases WHERE id = ? AND status = 'awaiting_respondent' AND expires_at > ? AND removed_at IS NULL)
        AND NOT EXISTS (SELECT 1 FROM case_sides WHERE case_id = ? AND party = ?)`;
     const openArgs = [row.id, nowIso, row.id, party];
-    const bound = viewerId ? " AND NOT EXISTS (SELECT 1 FROM case_seats WHERE case_id = ? AND user_id = ?)" : "";
-    const boundArgs = viewerId ? [row.id, viewerId] : [];
+    const bound = " AND NOT EXISTS (SELECT 1 FROM case_seats WHERE case_id = ? AND user_id = ?)";
+    const boundArgs = [row.id, viewerId];
     let won = false;
     if (!seat) {
       const rs = await db.execute({

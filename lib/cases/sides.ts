@@ -175,7 +175,7 @@ export async function respondToSide(input: RespondSideInput): Promise<RespondSid
       const rs = await entitlementWriteBatch([
         store,
         ...bind,
-        ...submissionStatements(row.id, party, sub, guard, nowIso, null, input.attest ?? null),
+        ...submissionStatements(row.id, party, sub, guard, nowIso, null),
         ...(original ? [original] : []),
         ...(complete && row.reservationId ? [holdStatement(row.reservationId, nowIso, guard)] : []),
       ]);

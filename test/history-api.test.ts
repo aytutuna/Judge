@@ -66,6 +66,8 @@ const http = await import("../lib/cases/http");
 const { historyHandler, decodeCursor, encodeCursor } = await import("../lib/history/http");
 const ent = await import("../lib/entitlements");
 const { getDb } = await import("../lib/db");
+const { claimFor } = await import("../lib/cases/service");
+const { getCase } = await import("../lib/cases/db");
 const { saveVerdictWithOriginals } = await import("../lib/originals/save");
 const { getVerdictMeta } = await import("../lib/originals/db");
 const { removeVerdict } = await import("../lib/originals/removal");
@@ -155,17 +157,12 @@ async function startCase(ownerId: string): Promise<CaseView> {
 
 const tokenOf = (view: CaseView) => view.inviteUrl!.split("/r/")[1];
 
-async function answer(token: string, user?: string): Promise<string | undefined> {
+async function answer(token: string, user: string) {
   const res = await http.respondPostHandler(
-    req("POST", `/api/v1/respond/${token}`, {
-      ...(user ? { user, via: "bearer" as const } : {}),
-      ip: ip(),
-      body: { text: SIDE_B, turnstileToken: "t", adultConfirmed: true, sensitiveAgreed: true },
-    }),
+    req("POST", `/api/v1/respond/${token}`, { user, via: "bearer", ip: ip(), body: { text: SIDE_B, turnstileToken: "t" } }),
     token,
   );
   expect(res.status).toBe(202);
-  return (await body<{ respondent_claim?: string }>(res)).respondent_claim;
 }
 
 async function saveVerdict(userId: string, id = uid("v")) {
@@ -432,9 +429,8 @@ describe("GET /api/v1/me/history: one list", () => {
     await removeVerdict((await getVerdictMeta(v))!, "owner");
     const other = await owner(5);
     const c = await startCase(other);
-    const claimSecret = await answer(tokenOf(c), u);
+    await answer(tokenOf(c), u);
     await drain();
-    expect(claimSecret).toBeUndefined();
     const removal = await http.respondRemovalHandler(
       req("POST", `/api/v1/respond/${tokenOf(c)}/removal`, { user: u, body: { confirm: "remove" } }),
       tokenOf(c),
@@ -489,21 +485,24 @@ describe("GET /api/v1/me/history: one list", () => {
 });
 
 describe("POST /api/v1/cases/{id}/claim", () => {
+  /** A case answered before answering needed an account: side B holds only a claim secret. */
   async function answeredSignedOut() {
     const o = await owner();
     const c = await startCase(o);
-    const claimSecret = (await answer(tokenOf(c)))!;
+    await answer(tokenOf(c), uid("resp"));
     await drain();
+    await sql("UPDATE cases SET respondent_user_id = NULL WHERE id = ?", [c.id]);
+    await sql("UPDATE case_seats SET user_id = NULL WHERE case_id = ?", [c.id]);
+    const row = (await getCase(c.id))!;
+    const claimSecret = claimFor(row)!;
     expect(claimSecret).toMatch(/^[A-Za-z0-9_-]{22}$/);
     return { o, c, token: tokenOf(c), claimSecret };
   }
 
-  it("links side B to the signed-in account; again is fine; it then lists and acts without the claim", async () => {
+  it("links side B to the signed-in account; again is fine; it then lists and acts as that account", async () => {
     const { c, token, claimSecret } = await answeredSignedOut();
     const r = await owner(2);
     expect((await all(r)).length).toBe(0);
-    const before = await http.respondGetHandler(req("GET", `/api/v1/respond/${token}`, { user: r, headers: { "respondent-claim": claimSecret } }), token);
-    expect((await body<{ case: CaseView }>(before)).case).toMatchObject({ inAccount: false, inOtherAccount: false });
 
     const res = await claim(c.id, r, claimSecret);
     expect(res.status).toBe(200);
@@ -514,19 +513,8 @@ describe("POST /api/v1/cases/{id}/claim", () => {
     expect(rows).toHaveLength(1);
     expect(rows[0]).toMatchObject({ id: c.id, role: "respondent", state: "ready", inviteToken: token });
     const view = (await body<{ case: CaseView }>(await http.respondGetHandler(req("GET", `/api/v1/respond/${token}`, { user: r }), token))).case;
-    expect(view).toMatchObject({ inAccount: true, inOtherAccount: false });
+    expect(view).toMatchObject({ inAccount: true });
     expect(view.appeal).toEqual({ allowed: true, blockedBy: null });
-
-    // The same browser signed out, or signed in as someone else: the claim
-    // still opens the case, but it now belongs to r.
-    const someone = await owner(3);
-    for (const user of [undefined, someone]) {
-      const res = await http.respondGetHandler(req("GET", `/api/v1/respond/${token}`, { user, headers: { "respondent-claim": claimSecret } }), token);
-      expect((await body<{ case: CaseView }>(res)).case).toMatchObject({ inAccount: false, inOtherAccount: true });
-    }
-    // Without the claim the link says nothing about it.
-    const bare = await http.respondGetHandler(req("GET", `/api/v1/respond/${token}`, { user: someone }), token);
-    expect((await body<{ case: CaseView }>(bare)).case.inOtherAccount).toBe(false);
   });
 
   it("the same 404 for a wrong claim, the owner, a side bound to someone else or a one-sided case", async () => {
@@ -548,14 +536,16 @@ describe("POST /api/v1/cases/{id}/claim", () => {
 
   it("a removed side B answers removed, but only to the holder of its claim", async () => {
     const { c, token, claimSecret } = await answeredSignedOut();
+    const r = await owner();
+    expect((await claim(c.id, r, claimSecret)).status).toBe(200);
     const removal = await http.respondRemovalHandler(
-      req("POST", `/api/v1/respond/${token}/removal`, { body: { confirm: "remove", claim: claimSecret } }),
+      req("POST", `/api/v1/respond/${token}/removal`, { user: r, body: { confirm: "remove" } }),
       token,
     );
     expect(removal.status).toBe(200);
-    const r = await owner();
-    expect((await body(await claim(c.id, r, "B".repeat(22)))).code).toBe("not_found");
-    expect((await body(await claim(c.id, r, claimSecret))).code).toBe("removed");
+    const other = await owner();
+    expect((await body(await claim(c.id, other, "B".repeat(22)))).code).toBe("not_found");
+    expect((await body(await claim(c.id, other, claimSecret))).code).toBe("removed");
   });
 
   it("gates: signed out, a cross-site cookie, a bad body, cases switched off", async () => {
@@ -569,18 +559,14 @@ describe("POST /api/v1/cases/{id}/claim", () => {
   });
 
   it("no case has Party B context from an account while side B is unbound", async () => {
-    const { token, claimSecret } = await answeredSignedOut();
+    const { c, token } = await answeredSignedOut();
     const r = await owner(2);
     const appeal = await http.respondAppealHandler(
-      req("POST", `/api/v1/respond/${token}/appeals`, { user: r, body: { text: "Party A's receipt is from March, not April.", claim: claimSecret } }),
+      req("POST", `/api/v1/respond/${token}/appeals`, { user: r, body: { text: "Party A's receipt is from March, not April." } }),
       token,
     );
-    expect(appeal.status).toBe(202);
-    await drain();
-    const rs = await sql(
-      `SELECT COUNT(*) AS n FROM cases c WHERE c.respondent_user_id IS NULL
-         AND EXISTS (SELECT 1 FROM case_appeals a WHERE a.case_id = c.id AND a.party = 'b' AND a.user_id IS NOT NULL)`,
-    );
+    expect(appeal.status).toBe(403);
+    const rs = await sql("SELECT COUNT(*) AS n FROM case_appeals WHERE case_id = ?", [c.id]);
     expect(Number(rs.rows[0].n)).toBe(0);
   });
 });

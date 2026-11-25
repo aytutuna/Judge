@@ -7,19 +7,15 @@
  * switch and site cap where a unit is reserved (judge: after the lookup, for
  * premium cases only) -> case lookup (404 for missing or not yours) -> state
  * -> reserve. Every case holds one premium unit from its creation. The
- * respondent needs no account: the invite token is the
- * credential, checked by format before any database read; submits pass
+ * respondent must be signed in for everything but the GET preview: the invite
+ * token is checked by format before any database read; submits pass
  * Turnstile (when configured; skipped for bearer sessions) and per-IP limits.
- * Side B is bound to its author when it is submitted: the signed-in account,
- * or for a signed-out answer a claim secret returned in that response (sent
- * back as `claim` on an appeal, and as the Respondent-Claim header on GET so
- * the view can say whether this person may add context).
+ * A seat is bound to the account that opens it and only that account holds it.
  * The owner may start a case without side A (text left out of the create
  * body) and write it later with POST .../side; the answer of the other
  * person can arrive first, and judging starts when both are in.
  * Each party's own originals, name map and display name are readable and
- * editable only by that party: the owner by session, Party B by the bound
- * account or the claim secret (Respondent-Claim header or `claim`).
+ * editable only by that party: the owner or the respondent, by session.
  * Removal (DELETE /cases/{id}, POST .../removal) blanks that party's
  * personal data and closes every link of the case; no row is deleted.
  * Every response is `Cache-Control: no-store`. The request helpers are
@@ -62,8 +58,7 @@ import { clientIp } from "@/lib/client-ip";
 import { entitlementWriteBatch, getEntitlement } from "@/lib/entitlements";
 import { handleEvidenceUpload, verifyEvidenceTokens, type EvidenceAudience, type VerifiedEvidence } from "@/lib/evidence";
 import { casesEnabled, evidenceEnabled } from "@/lib/features";
-import { agreementMissing, agreementRefusal, sensitiveText } from "@/lib/feedback/agreement";
-import { isLang } from "@/lib/langs";
+import { agreementRefusal } from "@/lib/feedback/agreement";
 import { partiesFor } from "@/lib/multi";
 import { originalsKeyState } from "@/lib/originals/crypto";
 import { caseDisplayNames, partyOriginals } from "@/lib/originals/cases";
@@ -99,17 +94,15 @@ import {
 import { acceptsManySides } from "./capability";
 import { claimMatches, inviteHash, inviteUrl, isInviteToken, publicOrigin } from "./invite";
 import { provenParty } from "./party";
-import { claimSeat, heldSide, liveSides, nextOpenSide, recordTyping, releaseSeat, seatClaim, sideIsOpen, touchSeat } from "./seats";
+import { claimSeat, heldSide, liveSides, nextOpenSide, recordTyping, releaseSeat, sideIsOpen, touchSeat } from "./seats";
 import { respondToSide } from "./sides";
 import {
   boundElsewhere,
-  claimFor,
   createCase,
   currentInviteToken,
   judgeNow,
   respondToCase,
   rotateInvite,
-  type SideAttest,
   submitAppeal,
   writeOwnerSide,
 } from "./service";
@@ -341,30 +334,21 @@ async function respondentView(
   row: CaseRow,
   party: PartyLetter,
   viewerId: string | null,
-  claim: string | null = null,
   now = new Date(),
 ): Promise<CaseView> {
   const bundle = await loadCaseBundle(row);
   const who = respondentOf(row, bundle.invites, party);
-  const claimOk = claimMatches({ id: row.id, respondentClaimNonce: who.claimNonce }, claim);
   return buildCaseView(bundle, {
     role: "respondent",
     party,
     now,
     inviteUrl: null,
     ownInvite: viewerId !== null && viewerId === row.ownerId,
-    appealBlock: await appealBlockFor(row, bundle, party, viewerId, now, claimOk),
+    appealBlock: await appealBlockFor(row, bundle, party, viewerId, now),
     inAccount: viewerId !== null && row.mode === "two_sided" && who.userId === viewerId,
-    inOtherAccount: claimOk && who.userId !== null && who.userId !== viewerId,
     ratings: viewerId ? await viewerRatings(viewerId, bundle) : undefined,
-    originals: await viewOriginals(row, party, provenParty(row, bundle.invites, party, viewerId, claim)),
+    originals: await viewOriginals(row, party, provenParty(row, bundle.invites, party, viewerId, null)),
   });
-}
-
-/** The respondent claim secret a GET carries, if any. */
-function claimHeader(req: Request): string | null {
-  const v = req.headers.get("respondent-claim");
-  return v && v.length <= 64 ? v.trim() : null;
 }
 
 /** The owner's case, or null for a bad id, a missing case or someone else's. */
@@ -392,11 +376,10 @@ async function caseByToken(token: string, req: Request): Promise<Found | null> {
  * that proves a seat also keeps it from going idle. */
 async function heldProof(
   found: Found,
-  viewerId: string | null,
-  claim: string | null,
+  viewerId: string,
 ): Promise<{ party: "b" | "c" | "d"; nonce: string | null } | null> {
   const bundle = await loadCaseBundle(found.row);
-  const party = heldSide(found.row, bundle.invites, bundle.seats, viewerId, claim);
+  const party = heldSide(found.row, bundle.invites, bundle.seats, viewerId, null);
   if (!party || (!found.shared && party !== found.party)) return null;
   const seat = bundle.seats.find((s) => s.party === party);
   if (seat) await touchSeat(found.row.id, party, new Date());
@@ -404,8 +387,8 @@ async function heldProof(
 }
 
 /** The side the request proves on the link, or null. */
-async function heldOnLink(found: Found, viewerId: string | null, claim: string | null): Promise<"b" | "c" | "d" | null> {
-  return (await heldProof(found, viewerId, claim))?.party ?? null;
+async function heldOnLink(found: Found, viewerId: string): Promise<"b" | "c" | "d" | null> {
+  return (await heldProof(found, viewerId))?.party ?? null;
 }
 
 export function guarded(name: string, fn: () => Promise<NextResponse>): Promise<NextResponse> {
@@ -643,7 +626,7 @@ async function appealCommon(
   load: (userId: string) => Promise<{ row: CaseRow } | { response: NextResponse }>,
   party: PartyLetter,
   audiences: (userId: string, row: CaseRow) => EvidenceAudience[],
-  view: (row: CaseRow, userId: string, claim: string | null) => Promise<CaseView>,
+  view: (row: CaseRow, userId: string) => Promise<CaseView>,
 ): Promise<NextResponse> {
   if (!casesEnabled()) return fail("not_configured");
   const key = idempotencyKey(req.headers);
@@ -671,7 +654,6 @@ async function appealCommon(
     text: parsed.data.text,
     rawText: rawField(read.body, "text") ?? parsed.data.text,
     evidence: ev.items,
-    ...(party !== "a" && parsed.data.claim ? { claim: parsed.data.claim } : {}),
     ...(key ? { idempotencyKey: key } : {}),
   });
   if (!res.ok) {
@@ -688,7 +670,7 @@ async function appealCommon(
   }
   const entitlement = await entitlementOrNull(userId);
   const body: AppealResponse = {
-    case: await view(res.row, userId, parsed.data.claim ?? null),
+    case: await view(res.row, userId),
     name_map: res.nameMap,
     ...(entitlement ? { entitlement } : {}),
     ...(res.replayed ? { replayed: true } : {}),
@@ -714,7 +696,9 @@ export function ownerAppealHandler(req: Request, id: string): Promise<NextRespon
 
 // --- Respondent ---------------------------------------------------------------------
 
-/** GET /api/v1/respond/{token} */
+/** GET /api/v1/respond/{token}: what the invite shows. Signed out it is the
+ * form's case page for the next open side, with nothing taken; a seat is
+ * only taken by POST .../open, signed in. */
 export function respondGetHandler(req: Request, token: string): Promise<NextResponse> {
   return guarded("respond get", async () => {
     if (!casesEnabled()) return fail("not_configured");
@@ -727,24 +711,23 @@ export function respondGetHandler(req: Request, token: string): Promise<NextResp
     if (refused) return refused;
     if (await staleInvite(found.row, found.party)) return fail("case_closed");
     const viewerId = viewer?.user.id ?? null;
-    const claim = claimHeader(req);
     let party: PartyLetter = found.party;
     if (found.shared) {
       // Nobody is given a side by looking: a visitor sees the form of the
-      // next open one, and a full case is closed to them.
+      // next open one, and a full case is closed to a signed-in visitor.
       const now = new Date();
       const bundle = await loadCaseBundle(found.row);
-      const held = heldSide(found.row, bundle.invites, bundle.seats, viewerId, claim);
+      const held = viewerId ? heldSide(found.row, bundle.invites, bundle.seats, viewerId, null) : null;
       if (held) {
         party = held;
         await touchSeat(found.row.id, held, now);
       } else if (found.retired) return fail("not_found", "No invite with that link.");
       else if (viewerId !== found.row.ownerId && effectiveStatus(found.row, now) === "awaiting_respondent") {
         const open = nextOpenSide(bundle, now);
-        if (!open) return fail("case_closed");
-        party = open;
+        if (open) party = open;
+        else if (viewerId) return fail("case_closed");
       }
-    } else if (!(await heldOnLink(found, viewerId, claim)) && viewerId !== found.row.ownerId) {
+    } else if (viewerId && !(await heldOnLink(found, viewerId)) && viewerId !== found.row.ownerId) {
       // An older per-side link shows its side as taken once somebody holds it.
       const bundle = await loadCaseBundle(found.row);
       const now = new Date();
@@ -752,7 +735,7 @@ export function respondGetHandler(req: Request, token: string): Promise<NextResp
         return fail("case_closed");
       }
     }
-    const body: CaseResponse = { case: await respondentView(found.row, party, viewerId, claim) };
+    const body: CaseResponse = { case: await respondentView(found.row, party, viewerId) };
     return json(body);
   });
 }
@@ -788,21 +771,12 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
     const { row } = found;
     if (row.removedAt) return fail("removed");
 
-    const { viewer, deadBearer, refused } = await lookupViewer(req);
-    if (deadBearer) return deadBearerResponse();
-    if (refused) return refused;
-    let attest: SideAttest | null = null;
-    if (viewer) {
-      const unagreed = await agreementRefusal(viewer.user.id);
-      if (unagreed) return unagreed;
-    } else {
-      // No account to carry the 18+ check and the agreement: they come with the answer.
-      if (parsed.data.adultConfirmed !== true) return fail("age_unconfirmed");
-      if (parsed.data.sensitiveAgreed !== true) return agreementMissing();
-      const lang = parsed.data.lang && isLang(parsed.data.lang) ? parsed.data.lang : row.lang;
-      attest = { lang, platform: parsed.data.platform ?? "web", text: await sensitiveText(lang) };
-    }
-    const proof = await heldProof(found, viewer?.user.id ?? null, claimHeader(req));
+    const gate = await signedIn(req);
+    if ("response" in gate) return gate.response;
+    const { viewer } = gate;
+    const unagreed = await agreementRefusal(viewer.user.id);
+    if (unagreed) return unagreed;
+    const proof = await heldProof(found, viewer.user.id);
     const held = proof?.party ?? null;
     let party: "b" | "c" | "d" = held ?? found.party;
     let retry = false;
@@ -817,7 +791,7 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
     }
     if (found.retired && held === null && !retry) return fail("not_found", "No invite with that link.");
     const ip = clientIp(req.headers);
-    if (viewer?.via !== "bearer") {
+    if (viewer.via !== "bearer") {
       const captcha = await verifyTurnstile(parsed.data.turnstileToken, ip);
       if (captcha === "invalid") return fail("captcha_failed");
       if (captcha === "error") return fail("unavailable");
@@ -829,7 +803,7 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
       return fail("unavailable");
     }
     if (!limit.ok) return limitRefusal(limit);
-    if (viewer && viewer.user.id === row.ownerId) return fail("own_case");
+    if (viewer.user.id === row.ownerId) return fail("own_case");
 
     const now = new Date();
     const status = effectiveStatus(row, now);
@@ -845,15 +819,15 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
     const takeSeat = async (): Promise<boolean> => {
       if (held !== null || retry) return true;
       // An older per-side link can only take its own side, and only while it is free.
-      taken = await claimSeat(await loadCaseBundle(row), viewer?.user.id ?? null, now, found.shared ? undefined : found.party);
+      taken = await claimSeat(await loadCaseBundle(row), viewer.user.id, now, found.shared ? undefined : found.party);
       if (taken) party = taken.party;
       return taken !== null;
     };
     const giveBack = () => (taken ? releaseSeat(taken) : Promise.resolve());
     const noSeat = async () => {
       // A signed-in person who already holds another side has no second one.
-      const uid = viewer?.user.id;
-      const mine = uid ? (await loadCaseBundle(row)).seats.some((x) => x.userId === uid) : false;
+      const uid = viewer.user.id;
+      const mine = (await loadCaseBundle(row)).seats.some((x) => x.userId === uid);
       return mine ? fail("not_party", "You already answered for another side of this case.") : fail("case_closed");
     };
     const seatNonce = () => proof?.nonce ?? taken?.nonce ?? undefined;
@@ -864,11 +838,9 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
       if (status !== "awaiting_respondent") {
         const invites = await getInvites(row.id);
         if (key && respondentOf(row, invites, party).idem === key) {
-          const claim = claimFor(row, invites, party);
           const body: RespondResponse = {
-            case: await respondentView(row, party, viewer?.user.id ?? null, claim),
+            case: await respondentView(row, party, viewer.user.id),
             name_map: [],
-            ...(claim ? { respondent_claim: claim } : {}),
             replayed: true,
           };
           return json(body, 202);
@@ -883,8 +855,7 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
         row,
         party,
         ...(seatNonce() ? { seatNonce: seatNonce() } : {}),
-        userId: viewer?.user.id ?? null,
-        attest,
+        userId: viewer.user.id,
         text: parsed.data.text,
         rawText: rawField(read.body, "text") ?? parsed.data.text,
         displayName: parsed.data.displayName || null,
@@ -899,9 +870,8 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
         return fail(res.code);
       }
       const body: RespondResponse = {
-        case: await respondentView(res.row, party, viewer?.user.id ?? null, res.claim),
+        case: await respondentView(res.row, party, viewer.user.id),
         name_map: res.nameMap,
-        ...(res.claim ? { respondent_claim: res.claim } : {}),
         ...(res.replayed ? { replayed: true } : {}),
       };
       return json(body, 202);
@@ -910,11 +880,9 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
     // A case waiting for the owner's side already holds an answer: closed too.
     if (status !== "awaiting_respondent" || row.respondentClaimNonce) {
       if (key && row.respondentIdem === key) {
-        const claim = claimFor(row);
         const body: RespondResponse = {
-          case: await respondentView(row, "b", viewer?.user.id ?? null, claim),
+          case: await respondentView(row, "b", viewer.user.id),
           name_map: [],
-          ...(claim ? { respondent_claim: claim } : {}),
           replayed: true,
         };
         return json(body, 202);
@@ -929,8 +897,7 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
     const res = await respondToCase({
       row,
       ...(seatNonce() ? { seatNonce: seatNonce() } : {}),
-      userId: viewer?.user.id ?? null,
-      attest,
+      userId: viewer.user.id,
       text: parsed.data.text,
       rawText: rawField(read.body, "text") ?? parsed.data.text,
       displayName: parsed.data.displayName || null,
@@ -944,19 +911,18 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
       return fail(res.code);
     }
     const body: RespondResponse = {
-      case: await respondentView(res.row, "b", viewer?.user.id ?? null, res.claim),
+      case: await respondentView(res.row, "b", viewer.user.id),
       name_map: res.nameMap,
-      ...(res.claim ? { respondent_claim: res.claim } : {}),
       ...(res.replayed ? { replayed: true } : {}),
     };
     return json(body, 202);
   });
 }
 
-/** POST /api/v1/respond/{token}/open: the opener takes the next open side
- * (the first side they would get by answering) and gets the claim secret
- * that goes with it. Opening again, with the claim or the account, returns
- * the same side. The owner opening their own link takes nothing. */
+/** POST /api/v1/respond/{token}/open: the signed-in opener takes the next
+ * open side (the first side they would get by answering), bound to their
+ * account. Opening again returns the same side. The owner opening their own
+ * link takes nothing. */
 export function respondOpenHandler(req: Request, token: string): Promise<NextResponse> {
   return guarded("respond open", async () => {
     if (!casesEnabled()) return fail("not_configured");
@@ -964,10 +930,9 @@ export function respondOpenHandler(req: Request, token: string): Promise<NextRes
     const found = await caseByToken(token, req);
     if (!found) return fail("not_found", "No invite with that link.");
     const { row } = found;
-    const { viewer, deadBearer, refused } = await lookupViewer(req);
-    if (deadBearer) return deadBearerResponse();
-    if (refused) return refused;
-    const viewerId = viewer?.user.id ?? null;
+    const gate = await signedIn(req);
+    if ("response" in gate) return gate.response;
+    const viewerId = gate.viewer.user.id;
     if (row.removedAt) return fail("removed");
     if (viewerId === row.ownerId) {
       const body: OpenResponse = { case: await respondentView(row, "b", viewerId), respondent_claim: null };
@@ -985,34 +950,21 @@ export function respondOpenHandler(req: Request, token: string): Promise<NextRes
     }
     const bundle = await loadCaseBundle(row);
     let party: "b" | "c" | "d";
-    let claim: string | null;
-    // Opening never hands out a claim that already exists: that takes the
-    // claim itself or the account. A forwarded per-side link gets a claim
-    // only when its side is still unanswered and unseated.
-    const held = heldSide(row, bundle.invites, bundle.seats, viewerId, claimHeader(req));
+    const held = heldSide(row, bundle.invites, bundle.seats, viewerId, null);
     if (held && (found.shared || held === found.party)) {
       party = held;
-      const seat = bundle.seats.find((s) => s.party === party);
-      claim = seat ? seatClaim(row, seat) : claimFor(row, bundle.invites, party);
-      if (seat) await touchSeat(row.id, party, now);
+      if (bundle.seats.some((s) => s.party === party)) await touchSeat(row.id, party, now);
     } else if (found.retired) {
       return fail("not_found", "No invite with that link.");
-    } else if (!found.shared) {
+    } else {
       // An older per-side link takes its own side while it is free (or idle).
       if (status !== "awaiting_respondent") return fail("case_closed");
-      const seat = await claimSeat(bundle, viewerId, now, found.party);
+      const seat = await claimSeat(bundle, viewerId, now, found.shared ? undefined : found.party);
       if (!seat) return fail("case_closed");
       party = seat.party;
-      claim = seatClaim(row, seat);
-    } else {
-      if (status !== "awaiting_respondent") return fail("case_closed");
-      const seat = await claimSeat(bundle, viewerId, now);
-      if (!seat) return fail("case_closed");
-      party = seat.party;
-      claim = seatClaim(row, seat);
     }
     const fresh = (await getCase(row.id)) ?? row;
-    const body: OpenResponse = { case: await respondentView(fresh, party, viewerId, claim), respondent_claim: claim };
+    const body: OpenResponse = { case: await respondentView(fresh, party, viewerId), respondent_claim: null };
     return json(body);
   });
 }
@@ -1028,11 +980,10 @@ export function respondTypingHandler(req: Request, token: string): Promise<NextR
     const found = await caseByToken(token, req);
     if (!found) return fail("not_found", "No invite with that link.");
     const { row } = found;
-    const { viewer, deadBearer, refused } = await lookupViewer(req);
-    if (deadBearer) return deadBearerResponse();
-    if (refused) return refused;
+    const gate = await signedIn(req);
+    if ("response" in gate) return gate.response;
     const bundle = await loadCaseBundle(row);
-    const held = heldSide(row, bundle.invites, bundle.seats, viewer?.user.id ?? null, claimHeader(req));
+    const held = heldSide(row, bundle.invites, bundle.seats, gate.viewer.user.id, null);
     // An older per-side link only speaks for its own side.
     const party = held && (found.shared || held === found.party) ? held : null;
     const seat = party ? bundle.seats.find((s) => s.party === party) : undefined;
@@ -1067,26 +1018,17 @@ export function liveCasesHandler(req: Request): Promise<NextResponse> {
   });
 }
 
-/** The `claim` of a JSON body, read from a copy so the handler can read it again. */
-async function claimInBody(req: Request): Promise<string | null> {
-  const body: unknown = await req.clone().json().catch(() => null);
-  const claim = rawField(body, "claim");
-  return claim && claim.length <= 64 ? claim : null;
-}
-
 /** POST /api/v1/respond/{token}/appeals: a signed-in Premium respondent
- * (the side the link is for): the account bound to that side, or one
- * presenting its claim. */
+ * (the side the link is for): the account bound to that side. */
 export function respondAppealHandler(req: Request, token: string): Promise<NextResponse> {
   return guarded("respond appeal", async () => {
     if (!casesEnabled()) return fail("not_configured");
     if (isInviteToken(token)) await maybeSweepCases();
     const found = isInviteToken(token) ? await caseByToken(token, req) : null;
     if (!found) return fail("not_found", "No invite with that link.");
-    const { viewer } = await lookupViewer(req);
-    const party = found.shared
-      ? ((await heldOnLink(found, viewer?.user.id ?? null, claimHeader(req) ?? (await claimInBody(req)))) ?? "b")
-      : found.party;
+    const gate = await signedIn(req);
+    if ("response" in gate) return gate.response;
+    const party = found.shared ? ((await heldOnLink(found, gate.viewer.user.id)) ?? "b") : found.party;
     return appealCommon(
       req,
       async (userId) => {
@@ -1095,12 +1037,11 @@ export function respondAppealHandler(req: Request, token: string): Promise<NextR
         if (row.mode === "one_sided") return { response: fail("not_party") };
         const bound = respondentOf(row, await getInvites(row.id), party).userId;
         if (bound && bound !== userId) return { response: fail("not_party") };
-        // Unbound: submitAppeal checks the claim secret.
         return { row };
       },
       party,
       (userId, row) => [{ type: "user", userId }, respondentAudience(row, party)],
-      (row, userId, claim) => respondentView(row, party, userId, claim),
+      (row, userId) => respondentView(row, party, userId),
     );
   });
 }
@@ -1113,24 +1054,18 @@ export function respondEvidenceHandler(req: Request, token: string): Promise<Nex
     const found = await caseByToken(token, req);
     if (!found) return fail("not_found", "No invite with that link.");
     const { row } = found;
-    const { viewer, deadBearer, refused } = await lookupViewer(req);
-    if (deadBearer) return deadBearerResponse();
-    if (refused) return refused;
-    if (viewer) {
-      const unagreed = await agreementRefusal(viewer.user.id);
-      if (unagreed) return unagreed;
-    } else {
-      // A multipart body can't carry the ticks, so they ride as headers.
-      if (req.headers.get("adult-confirmed") !== "true") return fail("age_unconfirmed");
-      if (req.headers.get("sensitive-agreed") !== "true") return agreementMissing();
-    }
+    const gate = await signedIn(req);
+    if ("response" in gate) return gate.response;
+    const viewerId = gate.viewer.user.id;
+    const unagreed = await agreementRefusal(viewerId);
+    if (unagreed) return unagreed;
     const status = effectiveStatus(row, new Date());
     if (status === "expired") return fail("case_expired");
     let party: "b" | "c" | "d" = found.party;
-    if (!found.shared) await heldOnLink(found, viewer?.user.id ?? null, claimHeader(req));
+    if (!found.shared) await heldOnLink(found, viewerId);
     if (found.shared) {
       const bundle = await loadCaseBundle(row);
-      const held = await heldOnLink(found, viewer?.user.id ?? null, claimHeader(req));
+      const held = await heldOnLink(found, viewerId);
       if (!held && found.retired) return fail("not_found", "No invite with that link.");
       const side = held ?? nextOpenSide(bundle, new Date());
       if (!side) return fail("case_closed");
@@ -1155,19 +1090,17 @@ export function respondEvidenceHandler(req: Request, token: string): Promise<Nex
 
 // --- Originals, display names, removal --------------------------------------------
 
-/** Per-account limit for a session, else per-IP (claim holders). */
-async function ownerLimit(viewerId: string | null, req: Request): Promise<NextResponse | null> {
+/** Per-account limit for a session. */
+async function ownerLimit(viewerId: string): Promise<NextResponse | null> {
   try {
-    const decision = viewerId
-      ? await checkUserLimits(viewerId, "verdict_owner")
-      : await checkIpLimits(clientIp(req.headers), "verdict_owner");
+    const decision = await checkUserLimits(viewerId, "verdict_owner");
     return decision.ok ? null : limitRefusal(decision);
   } catch {
     return fail("unavailable");
   }
 }
 
-type Party = { row: CaseRow; viewer: ViewerSession | null; party: PartyLetter } | { response: NextResponse };
+type Party = { row: CaseRow; viewer: ViewerSession; party: PartyLetter } | { response: NextResponse };
 
 /** The owner of case `id` (session). Writes need the same origin for cookies. */
 async function ownerParty(req: Request, id: string, write: boolean): Promise<Party> {
@@ -1176,31 +1109,30 @@ async function ownerParty(req: Request, id: string, write: boolean): Promise<Par
   if (refused) return { response: refused };
   if (!viewer) return { response: fail("signin_required") };
   if (write && viewer.via === "cookie" && !isSameOrigin(req)) return { response: fail("bad_origin") };
-  const limited = await ownerLimit(viewer.user.id, req);
+  const limited = await ownerLimit(viewer.user.id);
   if (limited) return { response: limited };
   const row = await ownedCase(id, viewer.user.id, req);
   return row ? { row, viewer, party: "a" } : { response: fail("not_found") };
 }
 
-/** The side the link `token` is for: the bound account, or the claim secret
- * (header, or `claim` in a write body). */
-async function respondentParty(req: Request, token: string, write: boolean, bodyClaim?: string): Promise<Party> {
+/** The side the link `token` is for, held by the signed-in account. */
+async function respondentParty(req: Request, token: string, write: boolean): Promise<Party> {
   if (!casesEnabled()) return { response: fail("not_configured") };
   if (!isInviteToken(token)) return { response: fail("not_found", "No invite with that link.") };
   const { viewer, deadBearer, refused } = await lookupViewer(req);
   if (deadBearer) return { response: deadBearerResponse() };
   if (refused) return { response: refused };
-  if (write && viewer?.via === "cookie" && !isSameOrigin(req)) return { response: fail("bad_origin") };
-  const limited = await ownerLimit(viewer?.user.id ?? null, req);
+  if (!viewer) return { response: fail("signin_required") };
+  if (write && viewer.via === "cookie" && !isSameOrigin(req)) return { response: fail("bad_origin") };
+  const limited = await ownerLimit(viewer.user.id);
   if (limited) return { response: limited };
   const found = await caseByToken(token, req);
   if (!found) return { response: fail("not_found", "No invite with that link.") };
   const { row } = found;
   if (row.mode !== "two_sided") return { response: fail("case_closed") };
-  const claim = bodyClaim ?? claimHeader(req);
-  const viewerId = viewer?.user.id ?? null;
-  const party = (await heldOnLink(found, viewerId, claim)) ?? found.party;
-  if (!provenParty(row, await getInvites(row.id), party, viewerId, claim)) {
+  const viewerId = viewer.user.id;
+  const party = (await heldOnLink(found, viewerId)) ?? found.party;
+  if (!provenParty(row, await getInvites(row.id), party, viewerId, null)) {
     return { response: fail("not_party") };
   }
   return { row, viewer, party };
@@ -1275,7 +1207,7 @@ export function caseDisplayHandler(req: Request, id: string): Promise<NextRespon
     const refused = await updateCaseDisplay(p.row, "a", parsed.data);
     if (refused) return refused;
     const fresh = (await getCase(p.row.id)) ?? p.row;
-    const body: CaseResponse = { case: await ownerView(fresh, req, p.viewer!.user.id) };
+    const body: CaseResponse = { case: await ownerView(fresh, req, p.viewer.user.id) };
     return json(body);
   });
 }
@@ -1288,27 +1220,26 @@ export function respondDisplayHandler(req: Request, token: string): Promise<Next
     const parsed = CaseDisplayPatch.safeParse(read.body);
     if (!parsed.success) return fail("invalid", parsed.error.issues[0]?.message ?? "Invalid request");
     if (parsed.data.namesVisible !== undefined) return fail("not_party", "Only the person who started the case can switch names off.");
-    const p = await respondentParty(req, token, true, parsed.data.claim);
+    const p = await respondentParty(req, token, true);
     if ("response" in p) return p.response;
     const refused = await updateCaseDisplay(p.row, p.party, { displayName: parsed.data.displayName });
     if (refused) return refused;
     const fresh = (await getCase(p.row.id)) ?? p.row;
-    const claim = parsed.data.claim ?? claimHeader(req);
-    const body: CaseResponse = { case: await respondentView(fresh, p.party, p.viewer?.user.id ?? null, claim) };
+    const body: CaseResponse = { case: await respondentView(fresh, p.party, p.viewer.user.id) };
     return json(body);
   });
 }
 
 async function removal(
   req: Request,
-  load: (body: { claim?: string }) => Promise<Party>,
-  view: (row: CaseRow, party: PartyLetter, viewerId: string | null, claim: string | null) => Promise<CaseView>,
+  load: () => Promise<Party>,
+  view: (row: CaseRow, party: PartyLetter, viewerId: string) => Promise<CaseView>,
 ): Promise<NextResponse> {
   const read = await readJson(req);
   if (!read.ok) return fail("invalid", "Invalid JSON body");
   const parsed = RemovalRequest.safeParse(read.body);
   if (!parsed.success) return fail("invalid", 'Send { "confirm": "remove" } to remove it.');
-  const p = await load(parsed.data);
+  const p = await load();
   if ("response" in p) return p.response;
   const party = p.party;
   const res = await removeCaseSide(p.row, party, `party_${party}`);
@@ -1316,7 +1247,7 @@ async function removal(
   const body: CaseRemovalResponse = {
     removed: true,
     removedAt: res.removedAt,
-    case: await view(res.row, party, p.viewer?.user.id ?? null, parsed.data.claim ?? claimHeader(req)),
+    case: await view(res.row, party, p.viewer.user.id),
   };
   return json(body);
 }
@@ -1324,7 +1255,7 @@ async function removal(
 /** POST /api/v1/cases/{id}/removal { confirm: "remove" }: the owner's side. */
 export function caseRemovalHandler(req: Request, id: string): Promise<NextResponse> {
   return guarded("removal", () =>
-    removal(req, () => ownerParty(req, id, true), (row, _party, viewerId) => ownerView(row, req, viewerId ?? row.ownerId)),
+    removal(req, () => ownerParty(req, id, true), (row, _party, viewerId) => ownerView(row, req, viewerId)),
   );
 }
 
@@ -1344,7 +1275,7 @@ export function respondentClaimHandler(req: Request, id: string): Promise<NextRe
     const gate = await signedIn(req);
     if ("response" in gate) return gate.response;
     const userId = gate.viewer.user.id;
-    const limited = await ownerLimit(userId, req);
+    const limited = await ownerLimit(userId);
     if (limited) return limited;
     if (!CASE_ID.test(id)) return fail("not_found");
     const row = await getCase(id);
@@ -1395,11 +1326,11 @@ export function respondentClaimHandler(req: Request, id: string): Promise<NextRe
   });
 }
 
-/** POST /api/v1/respond/{token}/removal { confirm: "remove", claim? }: the link's side. */
+/** POST /api/v1/respond/{token}/removal { confirm: "remove" }: the link's side. */
 export function respondRemovalHandler(req: Request, token: string): Promise<NextResponse> {
   return guarded("respond removal", () =>
-    removal(req, (body) => respondentParty(req, token, true, body.claim), (row, party, viewerId, claim) =>
-      respondentView(row, party, viewerId, claim),
+    removal(req, () => respondentParty(req, token, true), (row, party, viewerId) =>
+      respondentView(row, party, viewerId),
     ),
   );
 }
