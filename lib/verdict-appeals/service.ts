@@ -48,6 +48,7 @@ import {
   judgingGuard,
   maybeSweepVerdictJobs,
 } from "@/lib/verdict-jobs";
+import { logId } from "@/lib/log-id";
 
 export type VerdictAppealRow = {
   id: string;
@@ -338,7 +339,7 @@ export async function runVerdictAppeal(p: VerdictAppealRun): Promise<void> {
   const stats: PremiumStats = { factCheck: "unavailable", claims: 0, escalated: false, trial: false, ms: 0 };
   let usage: UsageTotals = p.anonymizeUsage ?? { calls: 0, input: 0, output: 0, searches: 0, byModel: {} };
   const log = (id: string | null, outcome: string) =>
-    console.info(`${premiumLogLine(id, outcome, { usage, stats })} appeal_of=${p.verdictId}`);
+    console.info(`${premiumLogLine(id, outcome, { usage, stats })} appeal_of=${logId(p.verdictId)}`);
   const fail = (code: "quota" | "unavailable" | "refused") => failVerdictJob(p.id, code, p.reservationId);
   try {
     const appeals = await listVerdictAppeals(p.verdictId);
@@ -375,7 +376,7 @@ export async function runVerdictAppeal(p: VerdictAppealRun): Promise<void> {
     usage = mergeUsage(usage, run.usage);
     const outcome = run.value;
     if (outcome.status === "failed") {
-      console.error(`[verdict-appeals] ${p.id}: judging failed:`, outcome.error);
+      console.error(`[verdict-appeals] ${logId(p.id)}: judging failed:`, outcome.error);
       log(null, `appeal_${outcome.code}`);
       await fail(outcome.code);
       return;

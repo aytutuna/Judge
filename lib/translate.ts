@@ -22,6 +22,7 @@ import { contentLang, loadLocales, t, voiceNote, type Lang } from "./i18n";
 import { LANGS, PARTY_LABELS } from "./langs";
 import { z } from "zod";
 import type { VerdictResult } from "./types";
+import { logId } from "./log-id";
 
 /** Budget for one translation, retry included. A first attempt at low
  * effort takes seconds; the retry gets whatever is left. */
@@ -758,7 +759,7 @@ async function runJob(id: string, original: VerdictResult, target: Lang, deps: T
     if (cached) return cached;
     const res = await translateResult(original, target, deps);
     if (!res.ok) {
-      console.error(`[translate] ${id} -> ${target} failed:`, res.error);
+      console.error(`[translate] ${logId(id)} -> ${target} failed:`, res.error);
       noteFailure(key, now());
       return null;
     }
@@ -773,7 +774,7 @@ async function runJob(id: string, original: VerdictResult, target: Lang, deps: T
       return res.result;
     }
   } catch (e) {
-    console.error(`[translate] ${id} -> ${target} failed:`, e instanceof Error ? e.message : String(e));
+    console.error(`[translate] ${logId(id)} -> ${target} failed:`, e instanceof Error ? e.message : String(e));
     noteFailure(key, now());
     return null;
   }

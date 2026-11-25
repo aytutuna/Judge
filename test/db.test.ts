@@ -4,6 +4,7 @@ import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { createClient } from "@libsql/client";
 import type { VerdictResult } from "../lib/types";
+import { logId } from "../lib/log-id";
 
 const dir = mkdtempSync(path.join(tmpdir(), "verdict-db-"));
 const file = path.join(dir, "test.db").replace(/\\/g, "/");
@@ -105,7 +106,8 @@ describe("db (libSQL)", () => {
     expect(await getVerdict("drift00001")).toBeNull();
     expect(warn).toHaveBeenCalledTimes(1);
     const line = String(warn.mock.calls[0][0]);
-    expect(line).toContain("[signal:schema_drift] verdict=drift00001 paths=verdict");
+    expect(line).toContain(`[signal:schema_drift] verdict=${logId("drift00001")} paths=verdict`);
+    expect(line).not.toContain("drift00001");
     expect(line).not.toContain("private");
     warn.mockRestore();
   });
