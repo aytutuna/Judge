@@ -217,6 +217,19 @@ describe("Turnstile on code requests", () => {
     expect(sent).toHaveLength(1);
   });
 
+  it("counts the IP before the check: bad tokens use the IP's budget, and a full IP costs no verification", async () => {
+    emailOn();
+    const seen = turnstileOn();
+    for (let i = 0; i < 10; i++) {
+      const res = await sendCode(`bad${i}@example.com`, "198.51.100.40", { "x-captcha-response": "nope" });
+      expect(res.status).toBe(403);
+    }
+    expect(seen.siteverify).toBe(10);
+    const full = await sendCode("good@example.com", "198.51.100.40", { "x-captcha-response": "good" });
+    expect(full.status).toBe(429);
+    expect(seen.siteverify).toBe(10);
+  });
+
   it("is not asked of the apps, which send their device headers and no Origin", async () => {
     const sent = emailOn();
     const seen = turnstileOn();
@@ -275,10 +288,40 @@ describe("per-IP sends, malformed addresses, review guesses", () => {
   });
 
   it("keeps one IP from using up the site-wide cap", async () => {
-    emailOn();
-    vi.stubEnv("CODE_EMAILS_PER_HOUR", "50");
+    const sent = emailOn();
+    vi.stubEnv("CODE_EMAILS_PER_HOUR", "12");
     for (let i = 0; i < 15; i++) await sendCode(`flood${i}@example.net`, "198.18.9.3");
+    expect(sent).toHaveLength(10);
     expect((await sendCode("fine@example.net", "198.18.9.4")).status).toBe(200);
+    expect(sent).toHaveLength(11);
+  });
+
+  it("holds one IP to thirty a day even when each hour is free", async () => {
+    const sent = emailOn();
+    vi.stubEnv("CODE_EMAILS_PER_HOUR", "90");
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(Date.now() + 60 * 86_400_000);
+    for (let hour = 0; hour < 3; hour++) {
+      for (let i = 0; i < 10; i++) {
+        expect((await sendCode(`day${hour}-${i}@example.net`, "198.18.13.1")).status).toBe(200);
+        vi.setSystemTime(Date.now() + 1_000);
+      }
+      vi.setSystemTime(Date.now() + 3_600_000);
+    }
+    expect((await sendCode("day-more@example.net", "198.18.13.1")).status).toBe(429);
+    expect(sent).toHaveLength(30);
+    vi.setSystemTime(Date.now() + 86_400_000);
+    expect((await sendCode("day-next@example.net", "198.18.13.1")).status).toBe(200);
+  });
+
+  it("counts an IPv6 /64 as one visitor", async () => {
+    const sent = emailOn();
+    for (let i = 0; i < 10; i++) {
+      expect((await sendCode(`v6-${i}@example.net`, `2001:db8:1:2:${i}::${i + 1}`)).status).toBe(200);
+    }
+    expect((await sendCode("v6-more@example.net", "2001:db8:1:2:ffff::1")).status).toBe(429);
+    expect((await sendCode("v6-other@example.net", "2001:db8:1:3::1")).status).toBe(200);
+    expect(sent).toHaveLength(11);
   });
 
   it("refuses a malformed address before any limit or Turnstile check", async () => {

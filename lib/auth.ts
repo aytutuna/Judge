@@ -129,10 +129,10 @@ export function premiumEnabled(env: Env = process.env): boolean {
  * REVIEW_ACCOUNT_CODE, and to which no email is sent (App Review has no inbox
  * of ours). Needs REVIEW_ACCOUNT_EMAIL, a 6-digit code that is not a trivial
  * run of digits, and email sign-in configured (the code plugin is only loaded
- * then). It skips Turnstile, the daily and global send caps and the
- * per-address guess ceiling (so nobody can lock it out); guesses are still
- * limited per IP. Otherwise it is an ordinary account, with only the welcome
- * credit.
+ * then). Sends skip Turnstile and every send cap, and guesses skip the
+ * per-address ceiling, so nobody can lock it out; guesses are limited per IP
+ * and by one site-wide hourly bucket. Otherwise it is an ordinary account,
+ * with only the welcome credit.
  */
 export function reviewAccount(env: Env = process.env): { email: string; code: string } | null {
   const email = env.REVIEW_ACCOUNT_EMAIL?.trim().toLowerCase() ?? "";
