@@ -547,14 +547,27 @@ export function RespondScreen({ token }: { token: string }) {
   const [full, setFull] = useState(false);
   const linking = useRef<string | null>(null);
   const [linked, setLinked] = useState<string | null>(null);
+  const [linkFailed, setLinkFailed] = useState(false);
+  const [linkTry, setLinkTry] = useState(0);
   useEffect(() => {
     if (!view || !signedIn || linking.current === view.id) return;
     linking.current = view.id;
     void linkStoredClaim(view.id).then((out) => {
+      // Not settled (offline, server trouble): nothing opens until a retry settles it.
+      if (out === "retry") {
+        setLinkFailed(true);
+        return;
+      }
+      setLinkFailed(false);
       setLinked(view.id);
       if (out === "linked") reload();
     });
-  }, [view, signedIn, reload]);
+  }, [view, signedIn, reload, linkTry]);
+  function retryLink() {
+    linking.current = null;
+    setLinkFailed(false);
+    setLinkTry((n) => n + 1);
+  }
   useEffect(() => {
     if (!view || !signedIn || linked !== view.id || opened.current) return;
     if (view.ownInvite || view.status !== "awaiting_respondent" || view.respondentAnswered) return;
@@ -629,7 +642,7 @@ export function RespondScreen({ token }: { token: string }) {
   const viewerPending = !signedIn && !signedOut;
 
   // Every side is taken: the link shows the case as full.
-  if (!view || full || viewerPending) {
+  if (!view || full || viewerPending || linkFailed) {
     const closed = full || load.code === "case_closed";
     const message =
       load.status === "loading" || (viewerPending && !viewerFailed)
@@ -645,11 +658,11 @@ export function RespondScreen({ token }: { token: string }) {
         <p className={calm ? styles.note : styles.error} role={calm && !closed ? "status" : "alert"}>
           {message}
         </p>
-        {(load.status === "error" || viewerFailed) && !closed ? (
+        {(load.status === "error" || viewerFailed || linkFailed) && !closed ? (
           <button
             type="button"
             className={`${account.btn} ${account.primary}`}
-            onClick={() => (viewerFailed ? void refreshViewer() : reload())}
+            onClick={() => (linkFailed ? retryLink() : viewerFailed ? void refreshViewer() : reload())}
           >
             {t(lang, "case.retry")}
           </button>
