@@ -29,6 +29,9 @@ jobs:
 
       - run: npm ci
 
+      - name: Deploy scripts parse
+        run: for f in deploy/aws-lightsail/*.sh; do bash -n "$f"; done
+
       - name: Lint
         run: npx eslint app components lib
 
