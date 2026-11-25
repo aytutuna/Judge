@@ -1228,6 +1228,37 @@ describe("links that were sent before the one link", () => {
     expect((await respondAs(shared, carol, TEXT("Carol"))).status).toBe(202);
   });
 
+  it("frees a dead seat of no account before a quiet seat of an account", async () => {
+    const o = await owner(2);
+    const { data, shared } = await createMany(o, 3);
+    const bob = uid("bob");
+    expect((await openLink(shared, bob)).party).toBe("b");
+    await legacySeat(data.case.id, "c");
+    const old = new Date(Date.now() - 45 * 60_000).toISOString();
+    await (await getDb()).execute({
+      sql: "UPDATE case_seats SET opened_at = ?, seen_at = ? WHERE case_id = ? AND party = 'b'",
+      args: [old, old, data.case.id],
+    });
+    expect((await openLink(shared, uid("eve"))).party).toBe("c");
+    expect((await openLink(shared, bob)).party).toBe("b");
+  });
+
+  it("shows the owner a seat of no account as waiting, not opened", async () => {
+    const o = await owner(2);
+    const { data, shared } = await createMany(o, 3);
+    const db = await getDb();
+    const now = new Date().toISOString();
+    await db.execute({
+      sql: "INSERT INTO case_seats (case_id, party, nonce, user_id, opened_at, seen_at, typing_at) VALUES (?, 'b', ?, NULL, ?, ?, ?)",
+      args: [data.case.id, `legacy-b-${uid()}`, now, now, now],
+    });
+    expect((await ownerView(o, data.case.id)).live).toEqual([
+      { party: "b", state: "waiting" },
+      { party: "c", state: "waiting" },
+    ]);
+    expect((await openLink(shared, uid("bob"))).party).toBe("c");
+  });
+
   it("takes a heartbeat from the holder of its side, and from nobody else", async () => {
     const o = await owner(2);
     const { data, links, shared } = await createMany(o, 3);

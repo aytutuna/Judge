@@ -37,7 +37,8 @@ export function liveSides(
       return { party, state: "answered" as const, ...(name ? { name } : {}) };
     }
     const seat = c.seats.find((s) => s.party === party);
-    if (!seat) return { party, state: "waiting" as const };
+    // A seat without an account is dead (see idle): nobody holds it.
+    if (!seat || seat.userId === null) return { party, state: "waiting" as const };
     const typing = seat.typingAt !== null && now.getTime() - Date.parse(seat.typingAt) < TYPING_MS;
     return { party, state: typing ? ("typing" as const) : ("opened" as const) };
   });
@@ -84,6 +85,8 @@ function openSides(bundle: CaseBundle, now: Date, only?: Invited): { party: Invi
     if (!seat) free.push({ party });
     else if (idle(seat, now)) stale.push({ party, seat });
   }
+  // Dead seats of no account go before quiet ones of an account.
+  stale.sort((a, b) => Number(b.seat.userId === null) - Number(a.seat.userId === null));
   return [...free, ...stale];
 }
 
