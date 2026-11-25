@@ -352,6 +352,7 @@
     <string name="case_write_email_subject">Bên kia đã viết phần của họ</string>
     <string name="respond_sent">Lời kể của bạn đã được gửi.</string>
     <string name="respond_sent_waiting">Lời kể của bạn đã được gửi. Đang chờ người kia.</string>
+    <string name="respond_sent_waiting_many">Lời kể của bạn đã được gửi. Đang chờ những người còn lại.</string>
     <string name="respond_own_invite">Đây là liên kết mời của chính bạn. Hãy gửi nó cho người kia.</string>
     <string name="respond_expired">Lời mời này đã hết hạn.</string>
     <string name="respond_closed">Vụ này không nhận câu trả lời nữa.</string>

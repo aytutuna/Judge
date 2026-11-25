@@ -357,6 +357,7 @@
     <string name="case_write_email_subject">Toinen osapuoli on kirjoittanut oman puolensa</string>
     <string name="respond_sent">Kertomuksesi on perillä.</string>
     <string name="respond_sent_waiting">Kertomuksesi on perillä. Odotetaan toista.</string>
+    <string name="respond_sent_waiting_many">Kertomuksesi on perillä. Odotetaan muita.</string>
     <string name="respond_own_invite">Tämä on oma kutsulinkkisi. Lähetä se toiselle osapuolelle.</string>
     <string name="respond_expired">Tämä kutsu on vanhentunut.</string>
     <string name="respond_closed">Tähän juttuun ei voi enää vastata.</string>

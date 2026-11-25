@@ -569,6 +569,7 @@ const th: Locale = {
     "case.write.emailSubject": "อีกฝ่ายเขียนฝั่งของเขาแล้ว",
     "respond.sent": "ได้รับฝั่งของคุณแล้ว",
     "respond.sentWaiting": "ได้รับฝั่งของคุณแล้ว รออีกฝ่ายอยู่",
+    "respond.sentWaitingMany": "ได้รับฝั่งของคุณแล้ว รออีกหลายฝ่ายอยู่",
     "respond.ownInvite": "นี่คือลิงก์คำเชิญของคุณเอง ส่งให้อีกฝ่ายนะ",
     "respond.expired": "คำเชิญนี้หมดอายุแล้ว",
     "respond.closed": "เคสนี้ไม่รับคำตอบแล้ว",

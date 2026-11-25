@@ -573,6 +573,7 @@ const pa: Locale = {
     "case.write.emailSubject": "ਦੂਜੀ ਧਿਰ ਨੇ ਆਪਣਾ ਪੱਖ ਲਿਖ ਦਿੱਤਾ ਹੈ",
     "respond.sent": "ਤੁਹਾਡਾ ਪੱਖ ਪਹੁੰਚ ਗਿਆ ਹੈ।",
     "respond.sentWaiting": "ਤੁਹਾਡਾ ਪੱਖ ਪਹੁੰਚ ਗਿਆ ਹੈ। ਦੂਜੇ ਦੀ ਉਡੀਕ ਹੈ।",
+    "respond.sentWaitingMany": "ਤੁਹਾਡਾ ਪੱਖ ਪਹੁੰਚ ਗਿਆ ਹੈ। ਬਾਕੀਆਂ ਦੀ ਉਡੀਕ ਹੈ।",
     "respond.ownInvite": "ਇਹ ਤੁਹਾਡਾ ਆਪਣਾ ਸੱਦਾ ਲਿੰਕ ਹੈ। ਇਸ ਨੂੰ ਦੂਜੀ ਧਿਰ ਨੂੰ ਭੇਜੋ।",
     "respond.expired": "ਇਸ ਸੱਦੇ ਦੀ ਮਿਆਦ ਖ਼ਤਮ ਹੋ ਗਈ ਹੈ।",
     "respond.closed": "ਇਹ ਕੇਸ ਹੁਣ ਜਵਾਬ ਨਹੀਂ ਲੈ ਰਿਹਾ।",

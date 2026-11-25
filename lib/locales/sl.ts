@@ -588,6 +588,7 @@ const sl: Locale = {
     "case.write.emailSubject": "Druga stran je napisala svoje",
     "respond.sent": "Tvoja plat je oddana.",
     "respond.sentWaiting": "Tvoja plat je oddana. Čakamo drugo osebo.",
+    "respond.sentWaitingMany": "Tvoja plat je oddana. Čakamo druge.",
     "respond.ownInvite": "To je tvoja lastna povezava za povabilo. Pošlji jo drugi osebi.",
     "respond.expired": "To povabilo je poteklo.",
     "respond.closed": "Ta spor ne sprejema več odgovorov.",

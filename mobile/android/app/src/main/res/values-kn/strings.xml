@@ -357,6 +357,7 @@
     <string name="case_write_email_subject">ಇನ್ನೊಬ್ಬರು ತಮ್ಮ ಕಡೆ ಬರೆದಿದ್ದಾರೆ</string>
     <string name="respond_sent">ನಿಮ್ಮ ಮಾತು ತಲುಪಿದೆ.</string>
     <string name="respond_sent_waiting">ನಿಮ್ಮ ಮಾತು ತಲುಪಿದೆ. ಇನ್ನೊಬ್ಬರಿಗಾಗಿ ಕಾಯುತ್ತಿದ್ದೇವೆ.</string>
+    <string name="respond_sent_waiting_many">ನಿಮ್ಮ ಮಾತು ತಲುಪಿದೆ. ಇತರರಿಗಾಗಿ ಕಾಯುತ್ತಿದ್ದೇವೆ.</string>
     <string name="respond_own_invite">ಇದು ನಿಮ್ಮದೇ ಆಹ್ವಾನ ಲಿಂಕ್. ಇದನ್ನು ಎದುರಿನವರಿಗೆ ಕಳುಹಿಸಿ.</string>
     <string name="respond_expired">ಈ ಆಹ್ವಾನದ ಅವಧಿ ಮುಗಿದಿದೆ.</string>
     <string name="respond_closed">ಈ ಕೇಸ್ ಈಗ ಉತ್ತರಗಳನ್ನು ಸ್ವೀಕರಿಸುತ್ತಿಲ್ಲ.</string>

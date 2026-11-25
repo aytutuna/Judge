@@ -575,6 +575,7 @@ const or: Locale = {
     "case.write.emailSubject": "ଅନ୍ୟ ପକ୍ଷ ନିଜ କଥା ଲେଖିଛନ୍ତି",
     "respond.sent": "ଆପଣଙ୍କ କଥା ପହଞ୍ଚିଗଲା।",
     "respond.sentWaiting": "ଆପଣଙ୍କ କଥା ପହଞ୍ଚିଗଲା। ଅନ୍ୟ ଜଣକ ପାଇଁ ଅପେକ୍ଷା ଚାଲିଛି।",
+    "respond.sentWaitingMany": "ଆପଣଙ୍କ କଥା ପହଞ୍ଚିଗଲା। ଅନ୍ୟମାନଙ୍କ ପାଇଁ ଅପେକ୍ଷା ଚାଲିଛି।",
     "respond.ownInvite": "ଏହା ଆପଣଙ୍କ ନିଜ ନିମନ୍ତ୍ରଣ ଲିଙ୍କ୍। ଅନ୍ୟ ଜଣଙ୍କୁ ପଠାନ୍ତୁ।",
     "respond.expired": "ଏହି ନିମନ୍ତ୍ରଣର ମିଆଦ ସରିଗଲା।",
     "respond.closed": "ଏହି ମାମଲା ଆଉ ଉତ୍ତର ନେଉନାହିଁ।",

@@ -357,6 +357,7 @@
     <string name="case_write_email_subject">A másik fél megírta a maga verzióját</string>
     <string name="respond_sent">Megkaptuk a verziódat.</string>
     <string name="respond_sent_waiting">Megkaptuk a verziódat. A másik félre várunk.</string>
+    <string name="respond_sent_waiting_many">Megkaptuk a verziódat. A többiekre várunk.</string>
     <string name="respond_own_invite">Ez a saját meghívólinked. Küldd el a másik félnek.</string>
     <string name="respond_expired">Ez a meghívó lejárt.</string>
     <string name="respond_closed">Ez az ügy már nem fogad válaszokat.</string>

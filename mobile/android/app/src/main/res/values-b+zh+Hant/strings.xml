@@ -352,6 +352,7 @@
     <string name="case_write_email_subject">對方已經寫好他們的說法</string>
     <string name="respond_sent">已收到你的說法。</string>
     <string name="respond_sent_waiting">已收到你的說法，正在等對方。</string>
+    <string name="respond_sent_waiting_many">已收到你的說法，正在等其他人。</string>
     <string name="respond_own_invite">這是你自己的邀請連結，請傳給對方。</string>
     <string name="respond_expired">這個邀請已經過期。</string>
     <string name="respond_closed">這個案子已不再接受回覆。</string>

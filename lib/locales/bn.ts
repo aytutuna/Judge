@@ -581,6 +581,7 @@ const bn: Locale = {
     "case.write.emailSubject": "অন্যজন তাঁর বক্তব্য লিখেছেন",
     "respond.sent": "আপনার বক্তব্য পৌঁছেছে।",
     "respond.sentWaiting": "আপনার বক্তব্য পৌঁছেছে। অন্যজনের জন্য অপেক্ষা।",
+    "respond.sentWaitingMany": "আপনার বক্তব্য পৌঁছেছে। অন্যদের জন্য অপেক্ষা।",
     "respond.ownInvite": "এটা আপনার নিজেরই আমন্ত্রণ লিংক। অন্যজনকে পাঠান।",
     "respond.expired": "এই আমন্ত্রণের মেয়াদ শেষ।",
     "respond.closed": "এই মামলায় আর উত্তর নেওয়া হচ্ছে না।",

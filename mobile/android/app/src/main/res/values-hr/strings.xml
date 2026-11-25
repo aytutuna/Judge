@@ -362,6 +362,7 @@
     <string name="case_write_email_subject">Druga strana je napisala svoje</string>
     <string name="respond_sent">Tvoja strana je stigla.</string>
     <string name="respond_sent_waiting">Tvoja strana je stigla. Čekamo drugu osobu.</string>
+    <string name="respond_sent_waiting_many">Tvoja strana je stigla. Čekamo ostale.</string>
     <string name="respond_own_invite">Ovo je tvoja vlastita poveznica poziva. Pošalji je drugoj osobi.</string>
     <string name="respond_expired">Ovaj je poziv istekao.</string>
     <string name="respond_closed">Ovaj slučaj više ne prima odgovore.</string>

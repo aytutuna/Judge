@@ -357,6 +357,7 @@
     <string name="case_write_email_subject">అవతలి వారు తమ వైపు కథ రాశారు</string>
     <string name="respond_sent">మీ వైపు కథ అందింది.</string>
     <string name="respond_sent_waiting">మీ వైపు కథ అందింది. అవతలి వాళ్ల కోసం ఎదురుచూస్తున్నాం.</string>
+    <string name="respond_sent_waiting_many">మీ వైపు కథ అందింది. మిగతావాళ్ల కోసం ఎదురుచూస్తున్నాం.</string>
     <string name="respond_own_invite">ఇది మీ సొంత ఆహ్వాన లింక్. దీన్ని అవతలి వ్యక్తికి పంపండి.</string>
     <string name="respond_expired">ఈ ఆహ్వానం గడువు ముగిసింది.</string>
     <string name="respond_closed">ఈ కేసు ఇప్పుడు జవాబులు తీసుకోవడం లేదు.</string>

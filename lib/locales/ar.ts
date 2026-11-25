@@ -575,6 +575,7 @@ const ar: Locale = {
     "case.write.emailSubject": "كتب الطرف الآخر روايته",
     "respond.sent": "وصلت روايتك.",
     "respond.sentWaiting": "وصلت روايتك. بانتظار الطرف الآخر.",
+    "respond.sentWaitingMany": "وصلت روايتك. بانتظار الآخرين.",
     "respond.ownInvite": "هذا رابط دعوتك أنت. أرسله إلى الشخص الآخر.",
     "respond.expired": "انتهت صلاحية هذه الدعوة.",
     "respond.closed": "هذه القضية لم تعد تقبل الردود.",

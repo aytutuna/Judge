@@ -588,6 +588,7 @@ const en = {
   "case.write.emailSubject": "They've written their side",
   "respond.sent": "Your side is in.",
   "respond.sentWaiting": "Your side is in. Waiting for the other person.",
+  "respond.sentWaitingMany": "Your side is in. Waiting for the others.",
   "respond.ownInvite": "This is your own invite link. Send it to the other person.",
   "respond.expired": "This invite has expired.",
   "respond.closed": "This case isn't taking answers anymore.",

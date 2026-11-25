@@ -565,6 +565,7 @@ const zhHant: Locale = {
     "case.write.emailSubject": "對方已經寫好他們的說法",
     "respond.sent": "已收到你的說法。",
     "respond.sentWaiting": "已收到你的說法，正在等對方。",
+    "respond.sentWaitingMany": "已收到你的說法，正在等其他人。",
     "respond.ownInvite": "這是你自己的邀請連結，請傳給對方。",
     "respond.expired": "這個邀請已經過期。",
     "respond.closed": "這個案子已不再接受回覆。",

@@ -587,6 +587,7 @@ const sk: Locale = {
     "case.write.emailSubject": "Druhá strana napísala svoju verziu",
     "respond.sent": "Tvoja verzia dorazila.",
     "respond.sentWaiting": "Tvoja verzia dorazila. Čakáme na druhú osobu.",
+    "respond.sentWaitingMany": "Tvoja verzia dorazila. Čakáme na ostatných.",
     "respond.ownInvite": "Toto je tvoj vlastný odkaz s pozvánkou. Pošli ho druhej strane.",
     "respond.expired": "Platnosť tejto pozvánky vypršala.",
     "respond.closed": "Tento prípad už neprijíma odpovede.",

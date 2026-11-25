@@ -595,6 +595,7 @@ const tr: Locale = {
     "case.write.emailSubject": "Karşı taraf kendi tarafını yazdı",
     "respond.sent": "Tarafın ulaştı.",
     "respond.sentWaiting": "Tarafın ulaştı. Diğer kişi bekleniyor.",
+    "respond.sentWaitingMany": "Tarafın ulaştı. Diğerleri bekleniyor.",
     "respond.ownInvite": "Bu senin kendi davet bağlantın. Diğer kişiye gönder.",
     "respond.expired": "Bu davetin süresi doldu.",
     "respond.closed": "Bu dava artık cevap kabul etmiyor.",

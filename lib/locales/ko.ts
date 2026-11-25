@@ -579,6 +579,7 @@ const ko: Locale = {
     "case.write.emailSubject": "상대방이 입장을 작성했어요",
     "respond.sent": "입장이 전달됐어요.",
     "respond.sentWaiting": "입장이 전달됐어요. 상대방을 기다리고 있어요.",
+    "respond.sentWaitingMany": "입장이 전달됐어요. 다른 분들을 기다리고 있어요.",
     "respond.ownInvite": "내가 만든 초대 링크예요. 상대방에게 보내 주세요.",
     "respond.expired": "초대가 만료됐어요.",
     "respond.closed": "이 사건은 더 이상 답변을 받지 않아요.",

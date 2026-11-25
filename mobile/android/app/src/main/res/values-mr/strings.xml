@@ -357,6 +357,7 @@
     <string name="case_write_email_subject">दुसऱ्या पक्षाने आपली बाजू लिहिली आहे</string>
     <string name="respond_sent">तुमची बाजू पोहोचली.</string>
     <string name="respond_sent_waiting">तुमची बाजू पोहोचली. समोरच्याची वाट पाहत आहोत.</string>
+    <string name="respond_sent_waiting_many">तुमची बाजू पोहोचली. इतरांची वाट पाहत आहोत.</string>
     <string name="respond_own_invite">ही तुमचीच निमंत्रण लिंक आहे. ती समोरच्या व्यक्तीला पाठवा.</string>
     <string name="respond_expired">या निमंत्रणाची मुदत संपली आहे.</string>
     <string name="respond_closed">हे प्रकरण आता उत्तरे स्वीकारत नाही.</string>

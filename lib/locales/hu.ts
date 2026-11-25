@@ -599,6 +599,7 @@ const hu: Locale = {
     "case.write.emailSubject": "A másik fél megírta a maga verzióját",
     "respond.sent": "Megkaptuk a verziódat.",
     "respond.sentWaiting": "Megkaptuk a verziódat. A másik félre várunk.",
+    "respond.sentWaitingMany": "Megkaptuk a verziódat. A többiekre várunk.",
     "respond.ownInvite": "Ez a saját meghívólinked. Küldd el a másik félnek.",
     "respond.expired": "Ez a meghívó lejárt.",
     "respond.closed": "Ez az ügy már nem fogad válaszokat.",

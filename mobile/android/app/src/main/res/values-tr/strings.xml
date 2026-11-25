@@ -357,6 +357,7 @@
     <string name="case_write_email_subject">Karşı taraf kendi tarafını yazdı</string>
     <string name="respond_sent">Tarafın ulaştı.</string>
     <string name="respond_sent_waiting">Tarafın ulaştı. Diğer kişi bekleniyor.</string>
+    <string name="respond_sent_waiting_many">Tarafın ulaştı. Diğerleri bekleniyor.</string>
     <string name="respond_own_invite">Bu senin kendi davet bağlantın. Diğer kişiye gönder.</string>
     <string name="respond_expired">Bu davetin süresi doldu.</string>
     <string name="respond_closed">Bu dava artık cevap kabul etmiyor.</string>

@@ -377,6 +377,7 @@
     <string name="case_write_email_subject">كتب الطرف الآخر روايته</string>
     <string name="respond_sent">وصلت روايتك.</string>
     <string name="respond_sent_waiting">وصلت روايتك. بانتظار الطرف الآخر.</string>
+    <string name="respond_sent_waiting_many">وصلت روايتك. بانتظار الآخرين.</string>
     <string name="respond_own_invite">هذا رابط دعوتك أنت. أرسله إلى الشخص الآخر.</string>
     <string name="respond_expired">انتهت صلاحية هذه الدعوة.</string>
     <string name="respond_closed">هذه القضية لم تعد تقبل الردود.</string>

@@ -609,6 +609,7 @@ const fr: Locale = {
     "respond.sent": "Ta version est arrivée.",
     "respond.sentWaiting":
       "Ta version est arrivée. On attend l’autre personne.",
+    "respond.sentWaitingMany": "Ta version est arrivée. On attend les autres.",
     "respond.ownInvite": "C’est ton propre lien d’invitation. Envoie-le à l’autre personne.",
     "respond.expired": "Cette invitation a expiré.",
     "respond.closed": "Ce dossier n’accepte plus de réponses.",

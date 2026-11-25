@@ -357,6 +357,7 @@
     <string name="case_write_email_subject">Den andra har skrivit sin sida</string>
     <string name="respond_sent">Din sida är inskickad.</string>
     <string name="respond_sent_waiting">Din sida är inskickad. Väntar på den andra.</string>
+    <string name="respond_sent_waiting_many">Din sida är inskickad. Väntar på de andra.</string>
     <string name="respond_own_invite">Det här är din egen inbjudningslänk. Skicka den till den andra personen.</string>
     <string name="respond_expired">Inbjudan har gått ut.</string>
     <string name="respond_closed">Det här fallet tar inte emot svar längre.</string>

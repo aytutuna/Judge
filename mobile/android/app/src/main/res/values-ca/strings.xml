@@ -362,6 +362,7 @@
     <string name="case_write_email_subject">L\'altra persona ja ha escrit la seva versió</string>
     <string name="respond_sent">La teva versió ja hi és.</string>
     <string name="respond_sent_waiting">La teva versió ja hi és. Esperant l\'altra persona.</string>
+    <string name="respond_sent_waiting_many">La teva versió ja hi és. Esperant les altres persones.</string>
     <string name="respond_own_invite">Aquest és el teu propi enllaç d\'invitació. Envia\'l a l\'altra persona.</string>
     <string name="respond_expired">Aquesta invitació ha caducat.</string>
     <string name="respond_closed">Aquest cas ja no admet respostes.</string>

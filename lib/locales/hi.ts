@@ -577,6 +577,7 @@ const hi: Locale = {
     "case.write.emailSubject": "दूसरे पक्ष ने अपनी बात लिख दी है",
     "respond.sent": "आपकी बात पहुँच गई है।",
     "respond.sentWaiting": "आपकी बात पहुँच गई है। दूसरे व्यक्ति का इंतज़ार है।",
+    "respond.sentWaitingMany": "आपकी बात पहुँच गई है। बाकी लोगों का इंतज़ार है।",
     "respond.ownInvite": "यह आपका अपना न्योता लिंक है। इसे दूसरे व्यक्ति को भेजें।",
     "respond.expired": "इस न्योते की मियाद ख़त्म हो गई है।",
     "respond.closed": "यह केस अब जवाब नहीं ले रहा।",

@@ -362,6 +362,7 @@
     <string name="case_write_email_subject">Cealaltă persoană și-a scris versiunea</string>
     <string name="respond_sent">Partea ta a ajuns.</string>
     <string name="respond_sent_waiting">Partea ta a ajuns. Așteptăm cealaltă persoană.</string>
+    <string name="respond_sent_waiting_many">Partea ta a ajuns. Așteptăm celelalte persoane.</string>
     <string name="respond_own_invite">Asta e propria ta invitație. Trimite-o celeilalte persoane.</string>
     <string name="respond_expired">Invitația a expirat.</string>
     <string name="respond_closed">Cazul ăsta nu mai acceptă răspunsuri.</string>

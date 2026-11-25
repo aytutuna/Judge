@@ -590,6 +590,7 @@ const da: Locale = {
     "case.write.emailSubject": "Den anden har skrevet sin side",
     "respond.sent": "Din side er sendt.",
     "respond.sentWaiting": "Din side er sendt. Venter på den anden.",
+    "respond.sentWaitingMany": "Din side er sendt. Venter på de andre.",
     "respond.ownInvite": "Det er dit eget invitationslink. Send det til den anden person.",
     "respond.expired": "Invitationen er udløbet.",
     "respond.closed": "Sagen tager ikke imod svar længere.",

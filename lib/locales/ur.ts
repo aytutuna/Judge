@@ -591,6 +591,7 @@ const ur: Locale = {
     "case.write.emailSubject": "دوسرے فریق نے اپنی بات لکھ دی ہے",
     "respond.sent": "آپ کی بات پہنچ گئی۔",
     "respond.sentWaiting": "آپ کی بات پہنچ گئی۔ دوسرے کا انتظار ہے۔",
+    "respond.sentWaitingMany": "آپ کی بات پہنچ گئی۔ باقی لوگوں کا انتظار ہے۔",
     "respond.ownInvite": "یہ آپ کا اپنا دعوتی لنک ہے۔ اسے دوسرے شخص کو بھیجیں۔",
     "respond.expired": "اس دعوتی لنک کی میعاد ختم ہو گئی ہے۔",
     "respond.closed": "یہ کیس اب جواب قبول نہیں کر رہا۔",

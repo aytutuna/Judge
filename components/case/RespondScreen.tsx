@@ -489,7 +489,7 @@ export function RespondPanel({
       <>
         {removedBanner}
         <p className={styles.calm} role="status">
-          {t(lang, "respond.sentWaiting")}
+          {t(lang, view.parties && view.parties.length > 2 ? "respond.sentWaitingMany" : "respond.sentWaiting")}
         </p>
         {ownTools}
         {removal}
@@ -598,7 +598,7 @@ export function RespondScreen({ token }: { token: string }) {
   const [opening, setOpening] = useState(false);
   const [openError, setOpenError] = useState<string | null>(null);
   // Takes the next open side for this account; the person is told when none is left.
-  async function open(): Promise<boolean | null> {
+  async function open(keepForm = false): Promise<boolean | null> {
     try {
       const res = await apiFetch(`${base}/open`, { method: "POST" });
       const json = (await res.json().catch(() => null)) as OpenResponse | null;
@@ -607,7 +607,9 @@ export function RespondScreen({ token }: { token: string }) {
         setSeated(true);
         return true;
       }
-      if (res.status === 409) setFull(true);
+      if (res.status === 401) void refreshViewer();
+      // After a lost seat the typed text stays on the form, which shows the error.
+      else if (res.status === 409 && !keepForm) setFull(true);
       else setOpenError(apiErrorMessage(lang, json, res.status));
       return false;
     } catch {
@@ -631,7 +633,7 @@ export function RespondScreen({ token }: { token: string }) {
     firstNameOf(viewer.me?.user?.name),
     signedIn,
     view?.yourParty ?? null,
-    open,
+    () => open(true),
   );
 
   // An answer this browser gave signed out is linked to the account before

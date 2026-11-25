@@ -352,6 +352,7 @@
     <string name="case_write_email_subject">อีกฝ่ายเขียนฝั่งของเขาแล้ว</string>
     <string name="respond_sent">ได้รับฝั่งของคุณแล้ว</string>
     <string name="respond_sent_waiting">ได้รับฝั่งของคุณแล้ว รออีกฝ่ายอยู่</string>
+    <string name="respond_sent_waiting_many">ได้รับฝั่งของคุณแล้ว รออีกหลายฝ่ายอยู่</string>
     <string name="respond_own_invite">นี่คือลิงก์คำเชิญของคุณเอง ส่งให้อีกฝ่ายนะ</string>
     <string name="respond_expired">คำเชิญนี้หมดอายุแล้ว</string>
     <string name="respond_closed">เคสนี้ไม่รับคำตอบแล้ว</string>

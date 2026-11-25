@@ -590,6 +590,7 @@ const pl: Locale = {
     "case.write.emailSubject": "Druga strona napisała swoją wersję",
     "respond.sent": "Twoja wersja dotarła.",
     "respond.sentWaiting": "Twoja wersja dotarła. Czekamy na drugą osobę.",
+    "respond.sentWaitingMany": "Twoja wersja dotarła. Czekamy na pozostałych.",
     "respond.ownInvite": "To twój własny link z zaproszeniem. Wyślij go drugiej osobie.",
     "respond.expired": "To zaproszenie wygasło.",
     "respond.closed": "Ta sprawa nie przyjmuje już odpowiedzi.",

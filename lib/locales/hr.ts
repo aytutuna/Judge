@@ -592,6 +592,7 @@ const hr: Locale = {
     "case.write.emailSubject": "Druga strana je napisala svoje",
     "respond.sent": "Tvoja strana je stigla.",
     "respond.sentWaiting": "Tvoja strana je stigla. Čekamo drugu osobu.",
+    "respond.sentWaitingMany": "Tvoja strana je stigla. Čekamo ostale.",
     "respond.ownInvite": "Ovo je tvoja vlastita poveznica poziva. Pošalji je drugoj osobi.",
     "respond.expired": "Ovaj je poziv istekao.",
     "respond.closed": "Ovaj slučaj više ne prima odgovore.",

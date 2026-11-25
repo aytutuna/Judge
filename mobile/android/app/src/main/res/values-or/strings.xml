@@ -357,6 +357,7 @@
     <string name="case_write_email_subject">ଅନ୍ୟ ପକ୍ଷ ନିଜ କଥା ଲେଖିଛନ୍ତି</string>
     <string name="respond_sent">ଆପଣଙ୍କ କଥା ପହଞ୍ଚିଗଲା।</string>
     <string name="respond_sent_waiting">ଆପଣଙ୍କ କଥା ପହଞ୍ଚିଗଲା। ଅନ୍ୟ ଜଣକ ପାଇଁ ଅପେକ୍ଷା ଚାଲିଛି।</string>
+    <string name="respond_sent_waiting_many">ଆପଣଙ୍କ କଥା ପହଞ୍ଚିଗଲା। ଅନ୍ୟମାନଙ୍କ ପାଇଁ ଅପେକ୍ଷା ଚାଲିଛି।</string>
     <string name="respond_own_invite">ଏହା ଆପଣଙ୍କ ନିଜ ନିମନ୍ତ୍ରଣ ଲିଙ୍କ୍। ଅନ୍ୟ ଜଣଙ୍କୁ ପଠାନ୍ତୁ।</string>
     <string name="respond_expired">ଏହି ନିମନ୍ତ୍ରଣର ମିଆଦ ସରିଗଲା।</string>
     <string name="respond_closed">ଏହି ମାମଲା ଆଉ ଉତ୍ତର ନେଉନାହିଁ।</string>

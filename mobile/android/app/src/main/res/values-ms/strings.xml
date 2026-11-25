@@ -352,6 +352,7 @@
     <string name="case_write_email_subject">Pihak satu lagi sudah menulis versinya</string>
     <string name="respond_sent">Versi anda sudah diterima.</string>
     <string name="respond_sent_waiting">Versi anda sudah diterima. Menunggu pihak lagi satu.</string>
+    <string name="respond_sent_waiting_many">Versi anda sudah diterima. Menunggu pihak-pihak lain.</string>
     <string name="respond_own_invite">Ini pautan jemputan anda sendiri. Hantar kepada pihak satu lagi.</string>
     <string name="respond_expired">Jemputan ini sudah tamat tempoh.</string>
     <string name="respond_closed">Kes ini tidak lagi menerima jawapan.</string>

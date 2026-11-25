@@ -565,6 +565,7 @@ const zhHans: Locale = {
     "case.write.emailSubject": "对方已经写好了他们的说法",
     "respond.sent": "你的说法已提交。",
     "respond.sentWaiting": "你的说法已提交，正在等对方。",
+    "respond.sentWaitingMany": "你的说法已提交，正在等其他人。",
     "respond.ownInvite": "这是你自己的邀请链接，请发给对方。",
     "respond.expired": "这个邀请已过期。",
     "respond.closed": "这个案子已经不再接受回复了。",

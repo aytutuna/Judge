@@ -362,6 +362,7 @@
     <string name="case_write_email_subject">L\'altra persona ha scritto la sua versione</string>
     <string name="respond_sent">La tua versione è arrivata.</string>
     <string name="respond_sent_waiting">La tua versione è arrivata. In attesa dell\'altra persona.</string>
+    <string name="respond_sent_waiting_many">La tua versione è arrivata. In attesa degli altri.</string>
     <string name="respond_own_invite">Questo è il tuo link d\'invito. Mandalo all\'altra persona.</string>
     <string name="respond_expired">Questo invito è scaduto.</string>
     <string name="respond_closed">Questo caso non accetta più risposte.</string>

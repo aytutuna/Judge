@@ -587,6 +587,7 @@ const cs: Locale = {
     "case.write.emailSubject": "Druhá strana napsala svůj pohled",
     "respond.sent": "Tvůj pohled dorazil.",
     "respond.sentWaiting": "Tvůj pohled dorazil. Čekáme na druhou stranu.",
+    "respond.sentWaitingMany": "Tvůj pohled dorazil. Čekáme na ostatní.",
     "respond.ownInvite": "Tohle je tvůj vlastní odkaz na pozvánku. Pošli ho druhé straně.",
     "respond.expired": "Platnost této pozvánky vypršela.",
     "respond.closed": "Tenhle případ už odpovědi nepřijímá.",

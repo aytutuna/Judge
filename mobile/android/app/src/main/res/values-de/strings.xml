@@ -357,6 +357,7 @@
     <string name="case_write_email_subject">Die Gegenseite hat geschrieben</string>
     <string name="respond_sent">Deine Seite ist da.</string>
     <string name="respond_sent_waiting">Deine Seite ist da. Wir warten auf die andere Person.</string>
+    <string name="respond_sent_waiting_many">Deine Seite ist da. Wir warten auf die anderen.</string>
     <string name="respond_own_invite">Das ist dein eigener Einladungslink. Schick ihn an die andere Person.</string>
     <string name="respond_expired">Diese Einladung ist abgelaufen.</string>
     <string name="respond_closed">Dieser Fall nimmt keine Antworten mehr an.</string>

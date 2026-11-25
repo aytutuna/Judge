@@ -599,6 +599,7 @@ const es: Locale = {
     "case.write.emailSubject": "La otra persona ya ha escrito su versión",
     "respond.sent": "Tu versión ya llegó.",
     "respond.sentWaiting": "Tu versión ya llegó. Esperando a la otra persona.",
+    "respond.sentWaitingMany": "Tu versión ya llegó. Esperando a los demás.",
     "respond.ownInvite": "Este es tu propio enlace de invitación. Envíalo a la otra persona.",
     "respond.expired": "Esta invitación ha expirado.",
     "respond.closed": "Este caso ya no acepta respuestas.",

@@ -596,6 +596,7 @@ const id: Locale = {
     "case.write.emailSubject": "Pihak lain sudah menulis versinya",
     "respond.sent": "Versimu sudah masuk.",
     "respond.sentWaiting": "Versimu sudah masuk. Menunggu orang satunya.",
+    "respond.sentWaitingMany": "Versimu sudah masuk. Menunggu yang lain.",
     "respond.ownInvite": "Ini tautan undanganmu sendiri. Kirim ke lawan debatmu.",
     "respond.expired": "Undangan ini sudah kedaluwarsa.",
     "respond.closed": "Kasus ini sudah tidak menerima jawaban.",

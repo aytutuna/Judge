@@ -599,6 +599,7 @@ const vi: Locale = {
     "case.write.emailSubject": "Bên kia đã viết phần của họ",
     "respond.sent": "Lời kể của bạn đã được gửi.",
     "respond.sentWaiting": "Lời kể của bạn đã được gửi. Đang chờ người kia.",
+    "respond.sentWaitingMany": "Lời kể của bạn đã được gửi. Đang chờ những người còn lại.",
     "respond.ownInvite": "Đây là liên kết mời của chính bạn. Hãy gửi nó cho người kia.",
     "respond.expired": "Lời mời này đã hết hạn.",
     "respond.closed": "Vụ này không nhận câu trả lời nữa.",

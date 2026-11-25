@@ -357,6 +357,7 @@
     <string name="case_write_email_subject">They\'ve written their side</string>
     <string name="respond_sent">Your side is in.</string>
     <string name="respond_sent_waiting">Your side is in. Waiting for the other person.</string>
+    <string name="respond_sent_waiting_many">Your side is in. Waiting for the others.</string>
     <string name="respond_own_invite">This is your own invite link. Send it to the other person.</string>
     <string name="respond_expired">This invite has expired.</string>
     <string name="respond_closed">This case isn\'t taking answers anymore.</string>

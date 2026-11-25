@@ -362,6 +362,7 @@
     <string name="case_write_email_subject">A outra pessoa escreveu a versão dela</string>
     <string name="respond_sent">Valeu! Seu lado chegou.</string>
     <string name="respond_sent_waiting">Valeu! Seu lado chegou. Esperando a outra pessoa.</string>
+    <string name="respond_sent_waiting_many">Valeu! Seu lado chegou. Esperando as outras pessoas.</string>
     <string name="respond_own_invite">Este é o seu próprio link de convite. Mande para a outra pessoa.</string>
     <string name="respond_expired">Este convite expirou.</string>
     <string name="respond_closed">Este caso não aceita mais respostas.</string>

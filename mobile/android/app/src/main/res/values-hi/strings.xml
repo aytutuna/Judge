@@ -357,6 +357,7 @@
     <string name="case_write_email_subject">दूसरे पक्ष ने अपनी बात लिख दी है</string>
     <string name="respond_sent">आपकी बात पहुँच गई है।</string>
     <string name="respond_sent_waiting">आपकी बात पहुँच गई है। दूसरे व्यक्ति का इंतज़ार है।</string>
+    <string name="respond_sent_waiting_many">आपकी बात पहुँच गई है। बाकी लोगों का इंतज़ार है।</string>
     <string name="respond_own_invite">यह आपका अपना न्योता लिंक है। इसे दूसरे व्यक्ति को भेजें।</string>
     <string name="respond_expired">इस न्योते की मियाद ख़त्म हो गई है।</string>
     <string name="respond_closed">यह केस अब जवाब नहीं ले रहा।</string>

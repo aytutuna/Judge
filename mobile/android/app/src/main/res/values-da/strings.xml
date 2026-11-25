@@ -357,6 +357,7 @@
     <string name="case_write_email_subject">Den anden har skrevet sin side</string>
     <string name="respond_sent">Din side er sendt.</string>
     <string name="respond_sent_waiting">Din side er sendt. Venter på den anden.</string>
+    <string name="respond_sent_waiting_many">Din side er sendt. Venter på de andre.</string>
     <string name="respond_own_invite">Det er dit eget invitationslink. Send det til den anden person.</string>
     <string name="respond_expired">Invitationen er udløbet.</string>
     <string name="respond_closed">Sagen tager ikke imod svar længere.</string>

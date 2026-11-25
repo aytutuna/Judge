@@ -590,6 +590,7 @@ const ptBR: Locale = {
     "case.write.emailSubject": "A outra pessoa escreveu a versão dela",
     "respond.sent": "Valeu! Seu lado chegou.",
     "respond.sentWaiting": "Valeu! Seu lado chegou. Esperando a outra pessoa.",
+    "respond.sentWaitingMany": "Valeu! Seu lado chegou. Esperando as outras pessoas.",
     "respond.ownInvite": "Este é o seu próprio link de convite. Mande para a outra pessoa.",
     "respond.expired": "Este convite expirou.",
     "respond.closed": "Este caso não aceita mais respostas.",

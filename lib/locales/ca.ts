@@ -606,6 +606,7 @@ const ca: Locale = {
     "respond.sent": "La teva versió ja hi és.",
     "respond.sentWaiting":
       "La teva versió ja hi és. Esperant l'altra persona.",
+    "respond.sentWaitingMany": "La teva versió ja hi és. Esperant les altres persones.",
     "respond.ownInvite": "Aquest és el teu propi enllaç d'invitació. Envia'l a l'altra persona.",
     "respond.expired": "Aquesta invitació ha caducat.",
     "respond.closed": "Aquest cas ja no admet respostes.",

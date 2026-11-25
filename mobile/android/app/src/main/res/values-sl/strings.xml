@@ -367,6 +367,7 @@
     <string name="case_write_email_subject">Druga stran je napisala svoje</string>
     <string name="respond_sent">Tvoja plat je oddana.</string>
     <string name="respond_sent_waiting">Tvoja plat je oddana. Čakamo drugo osebo.</string>
+    <string name="respond_sent_waiting_many">Tvoja plat je oddana. Čakamo druge.</string>
     <string name="respond_own_invite">To je tvoja lastna povezava za povabilo. Pošlji jo drugi osebi.</string>
     <string name="respond_expired">To povabilo je poteklo.</string>
     <string name="respond_closed">Ta spor ne sprejema več odgovorov.</string>

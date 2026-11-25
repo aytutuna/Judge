@@ -573,6 +573,7 @@ const gu: Locale = {
     "case.write.emailSubject": "સામેની વ્યક્તિએ પોતાની વાત લખી છે",
     "respond.sent": "તમારી વાત પહોંચી ગઈ.",
     "respond.sentWaiting": "તમારી વાત પહોંચી ગઈ. બીજી વ્યક્તિની રાહ છે.",
+    "respond.sentWaitingMany": "તમારી વાત પહોંચી ગઈ. બીજાઓની રાહ છે.",
     "respond.ownInvite": "આ તમારી પોતાની આમંત્રણ લિંક છે. એ સામેની વ્યક્તિને મોકલો.",
     "respond.expired": "આ આમંત્રણની મુદત પૂરી થઈ ગઈ.",
     "respond.closed": "આ કેસમાં હવે જવાબ આપી શકાતો નથી.",

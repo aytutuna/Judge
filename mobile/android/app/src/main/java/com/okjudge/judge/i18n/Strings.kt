@@ -419,6 +419,7 @@ class Strings(private val res: Resources) {
     val caseWriteEmailSubject: String get() = res.getString(R.string.case_write_email_subject)
     val respondSent: String get() = res.getString(R.string.respond_sent)
     val respondSentWaiting: String get() = res.getString(R.string.respond_sent_waiting)
+    val respondSentWaitingMany: String get() = res.getString(R.string.respond_sent_waiting_many)
     val respondOwnInvite: String get() = res.getString(R.string.respond_own_invite)
     val respondExpired: String get() = res.getString(R.string.respond_expired)
     val respondClosed: String get() = res.getString(R.string.respond_closed)
@@ -1044,6 +1045,7 @@ class Strings(private val res: Resources) {
             "case.write.emailSubject" -> R.string.case_write_email_subject
             "respond.sent" -> R.string.respond_sent
             "respond.sentWaiting" -> R.string.respond_sent_waiting
+            "respond.sentWaitingMany" -> R.string.respond_sent_waiting_many
             "respond.ownInvite" -> R.string.respond_own_invite
             "respond.expired" -> R.string.respond_expired
             "respond.closed" -> R.string.respond_closed

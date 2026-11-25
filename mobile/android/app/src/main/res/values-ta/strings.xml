@@ -357,6 +357,7 @@
     <string name="case_write_email_subject">மறுதரப்பு தங்கள் பக்கத்தை எழுதியுள்ளது</string>
     <string name="respond_sent">உங்கள் தரப்பு வந்துசேர்ந்தது.</string>
     <string name="respond_sent_waiting">உங்கள் தரப்பு வந்துசேர்ந்தது. மற்றவருக்காகக் காத்திருக்கிறோம்.</string>
+    <string name="respond_sent_waiting_many">உங்கள் தரப்பு வந்துசேர்ந்தது. மற்றவர்களுக்காகக் காத்திருக்கிறோம்.</string>
     <string name="respond_own_invite">இது உங்கள் சொந்த அழைப்பு லிங்க். அதை மற்றவருக்கு அனுப்புங்கள்.</string>
     <string name="respond_expired">இந்த அழைப்பு காலாவதியாகிவிட்டது.</string>
     <string name="respond_closed">இந்த வழக்கு இனி பதில்களை ஏற்காது.</string>

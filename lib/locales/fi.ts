@@ -600,6 +600,7 @@ const fi: Locale = {
     "respond.sent": "Kertomuksesi on perillä.",
     "respond.sentWaiting":
       "Kertomuksesi on perillä. Odotetaan toista.",
+    "respond.sentWaitingMany": "Kertomuksesi on perillä. Odotetaan muita.",
     "respond.ownInvite": "Tämä on oma kutsulinkkisi. Lähetä se toiselle osapuolelle.",
     "respond.expired": "Tämä kutsu on vanhentunut.",
     "respond.closed": "Tähän juttuun ei voi enää vastata.",

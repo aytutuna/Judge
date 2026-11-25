@@ -357,6 +357,7 @@
     <string name="case_write_email_subject">Η άλλη πλευρά έγραψε την εκδοχή της</string>
     <string name="respond_sent">Η πλευρά σου στάλθηκε.</string>
     <string name="respond_sent_waiting">Η πλευρά σου στάλθηκε. Περιμένουμε τον άλλον.</string>
+    <string name="respond_sent_waiting_many">Η πλευρά σου στάλθηκε. Περιμένουμε τους άλλους.</string>
     <string name="respond_own_invite">Αυτός είναι ο δικός σου σύνδεσμος πρόσκλησης. Στείλ\' τον στο άλλο άτομο.</string>
     <string name="respond_expired">Αυτή η πρόσκληση έληξε.</string>
     <string name="respond_closed">Αυτή η υπόθεση δεν δέχεται πια απαντήσεις.</string>

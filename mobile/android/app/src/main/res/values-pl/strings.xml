@@ -367,6 +367,7 @@
     <string name="case_write_email_subject">Druga strona napisała swoją wersję</string>
     <string name="respond_sent">Twoja wersja dotarła.</string>
     <string name="respond_sent_waiting">Twoja wersja dotarła. Czekamy na drugą osobę.</string>
+    <string name="respond_sent_waiting_many">Twoja wersja dotarła. Czekamy na pozostałych.</string>
     <string name="respond_own_invite">To twój własny link z zaproszeniem. Wyślij go drugiej osobie.</string>
     <string name="respond_expired">To zaproszenie wygasło.</string>
     <string name="respond_closed">Ta sprawa nie przyjmuje już odpowiedzi.</string>

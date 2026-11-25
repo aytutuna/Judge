@@ -367,6 +367,7 @@
     <string name="case_write_email_subject">Druhá strana napsala svůj pohled</string>
     <string name="respond_sent">Tvůj pohled dorazil.</string>
     <string name="respond_sent_waiting">Tvůj pohled dorazil. Čekáme na druhou stranu.</string>
+    <string name="respond_sent_waiting_many">Tvůj pohled dorazil. Čekáme na ostatní.</string>
     <string name="respond_own_invite">Tohle je tvůj vlastní odkaz na pozvánku. Pošli ho druhé straně.</string>
     <string name="respond_expired">Platnost této pozvánky vypršela.</string>
     <string name="respond_closed">Tenhle případ už odpovědi nepřijímá.</string>

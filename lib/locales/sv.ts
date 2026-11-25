@@ -589,6 +589,7 @@ const sv: Locale = {
     "case.write.emailSubject": "Den andra har skrivit sin sida",
     "respond.sent": "Din sida är inskickad.",
     "respond.sentWaiting": "Din sida är inskickad. Väntar på den andra.",
+    "respond.sentWaitingMany": "Din sida är inskickad. Väntar på de andra.",
     "respond.ownInvite": "Det här är din egen inbjudningslänk. Skicka den till den andra personen.",
     "respond.expired": "Inbjudan har gått ut.",
     "respond.closed": "Det här fallet tar inte emot svar längre.",

@@ -587,6 +587,7 @@ const ja: Locale = {
     "case.write.emailSubject": "相手が言い分を書きました",
     "respond.sent": "言い分が届きました。",
     "respond.sentWaiting": "言い分が届きました。相手を待っています。",
+    "respond.sentWaitingMany": "言い分が届きました。ほかの人を待っています。",
     "respond.ownInvite": "これはあなた自身の招待リンクです。相手に送ってください。",
     "respond.expired": "この招待は期限切れです。",
     "respond.closed": "このケースはもう回答を受け付けていません。",

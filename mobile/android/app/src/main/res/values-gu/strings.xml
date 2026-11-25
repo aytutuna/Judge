@@ -357,6 +357,7 @@
     <string name="case_write_email_subject">સામેની વ્યક્તિએ પોતાની વાત લખી છે</string>
     <string name="respond_sent">તમારી વાત પહોંચી ગઈ.</string>
     <string name="respond_sent_waiting">તમારી વાત પહોંચી ગઈ. બીજી વ્યક્તિની રાહ છે.</string>
+    <string name="respond_sent_waiting_many">તમારી વાત પહોંચી ગઈ. બીજાઓની રાહ છે.</string>
     <string name="respond_own_invite">આ તમારી પોતાની આમંત્રણ લિંક છે. એ સામેની વ્યક્તિને મોકલો.</string>
     <string name="respond_expired">આ આમંત્રણની મુદત પૂરી થઈ ગઈ.</string>
     <string name="respond_closed">આ કેસમાં હવે જવાબ આપી શકાતો નથી.</string>

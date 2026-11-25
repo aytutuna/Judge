@@ -357,6 +357,7 @@
     <string name="case_write_email_subject">ਦੂਜੀ ਧਿਰ ਨੇ ਆਪਣਾ ਪੱਖ ਲਿਖ ਦਿੱਤਾ ਹੈ</string>
     <string name="respond_sent">ਤੁਹਾਡਾ ਪੱਖ ਪਹੁੰਚ ਗਿਆ ਹੈ।</string>
     <string name="respond_sent_waiting">ਤੁਹਾਡਾ ਪੱਖ ਪਹੁੰਚ ਗਿਆ ਹੈ। ਦੂਜੇ ਦੀ ਉਡੀਕ ਹੈ।</string>
+    <string name="respond_sent_waiting_many">ਤੁਹਾਡਾ ਪੱਖ ਪਹੁੰਚ ਗਿਆ ਹੈ। ਬਾਕੀਆਂ ਦੀ ਉਡੀਕ ਹੈ।</string>
     <string name="respond_own_invite">ਇਹ ਤੁਹਾਡਾ ਆਪਣਾ ਸੱਦਾ ਲਿੰਕ ਹੈ। ਇਸ ਨੂੰ ਦੂਜੀ ਧਿਰ ਨੂੰ ਭੇਜੋ।</string>
     <string name="respond_expired">ਇਸ ਸੱਦੇ ਦੀ ਮਿਆਦ ਖ਼ਤਮ ਹੋ ਗਈ ਹੈ।</string>
     <string name="respond_closed">ਇਹ ਕੇਸ ਹੁਣ ਜਵਾਬ ਨਹੀਂ ਲੈ ਰਿਹਾ।</string>

@@ -362,6 +362,7 @@
     <string name="case_write_email_subject">הצד השני כתב את שלו</string>
     <string name="respond_sent">הצד שלך התקבל.</string>
     <string name="respond_sent_waiting">הצד שלך התקבל. מחכים לצד השני.</string>
+    <string name="respond_sent_waiting_many">הצד שלך התקבל. מחכים לאחרים.</string>
     <string name="respond_own_invite">זה קישור ההזמנה שלך. צריך לשלוח אותו לצד השני.</string>
     <string name="respond_expired">תוקף ההזמנה הזו פג.</string>
     <string name="respond_closed">התיק הזה כבר לא מקבל תשובות.</string>

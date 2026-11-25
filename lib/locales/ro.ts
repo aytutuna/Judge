@@ -590,6 +590,7 @@ const ro: Locale = {
     "case.write.emailSubject": "Cealaltă persoană și-a scris versiunea",
     "respond.sent": "Partea ta a ajuns.",
     "respond.sentWaiting": "Partea ta a ajuns. Așteptăm cealaltă persoană.",
+    "respond.sentWaitingMany": "Partea ta a ajuns. Așteptăm celelalte persoane.",
     "respond.ownInvite": "Asta e propria ta invitație. Trimite-o celeilalte persoane.",
     "respond.expired": "Invitația a expirat.",
     "respond.closed": "Cazul ăsta nu mai acceptă răspunsuri.",

@@ -604,6 +604,7 @@ const it: Locale = {
     "respond.sent": "La tua versione è arrivata.",
     "respond.sentWaiting":
       "La tua versione è arrivata. In attesa dell'altra persona.",
+    "respond.sentWaitingMany": "La tua versione è arrivata. In attesa degli altri.",
     "respond.ownInvite": "Questo è il tuo link d'invito. Mandalo all'altra persona.",
     "respond.expired": "Questo invito è scaduto.",
     "respond.closed": "Questo caso non accetta più risposte.",

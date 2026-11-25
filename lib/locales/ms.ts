@@ -597,6 +597,7 @@ const ms: Locale = {
     "case.write.emailSubject": "Pihak satu lagi sudah menulis versinya",
     "respond.sent": "Versi anda sudah diterima.",
     "respond.sentWaiting": "Versi anda sudah diterima. Menunggu pihak lagi satu.",
+    "respond.sentWaitingMany": "Versi anda sudah diterima. Menunggu pihak-pihak lain.",
     "respond.ownInvite": "Ini pautan jemputan anda sendiri. Hantar kepada pihak satu lagi.",
     "respond.expired": "Jemputan ini sudah tamat tempoh.",
     "respond.closed": "Kes ini tidak lagi menerima jawapan.",

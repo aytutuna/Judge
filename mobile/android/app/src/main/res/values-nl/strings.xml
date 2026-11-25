@@ -357,6 +357,7 @@
     <string name="case_write_email_subject">De ander heeft geschreven</string>
     <string name="respond_sent">Je kant is binnen.</string>
     <string name="respond_sent_waiting">Je kant is binnen. Wachten op de ander.</string>
+    <string name="respond_sent_waiting_many">Je kant is binnen. Wachten op de anderen.</string>
     <string name="respond_own_invite">Dit is je eigen uitnodigingslink. Stuur hem naar de ander.</string>
     <string name="respond_expired">Deze uitnodiging is verlopen.</string>
     <string name="respond_closed">Deze zaak neemt geen antwoorden meer aan.</string>

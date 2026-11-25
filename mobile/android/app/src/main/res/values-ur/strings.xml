@@ -357,6 +357,7 @@
     <string name="case_write_email_subject">دوسرے فریق نے اپنی بات لکھ دی ہے</string>
     <string name="respond_sent">آپ کی بات پہنچ گئی۔</string>
     <string name="respond_sent_waiting">آپ کی بات پہنچ گئی۔ دوسرے کا انتظار ہے۔</string>
+    <string name="respond_sent_waiting_many">آپ کی بات پہنچ گئی۔ باقی لوگوں کا انتظار ہے۔</string>
     <string name="respond_own_invite">یہ آپ کا اپنا دعوتی لنک ہے۔ اسے دوسرے شخص کو بھیجیں۔</string>
     <string name="respond_expired">اس دعوتی لنک کی میعاد ختم ہو گئی ہے۔</string>
     <string name="respond_closed">یہ کیس اب جواب قبول نہیں کر رہا۔</string>

@@ -367,6 +367,7 @@
     <string name="case_write_email_subject">Інша сторона написала свою версію</string>
     <string name="respond_sent">Твою версію отримано.</string>
     <string name="respond_sent_waiting">Твою версію отримано. Чекаємо на іншу сторону.</string>
+    <string name="respond_sent_waiting_many">Твою версію отримано. Чекаємо на інших.</string>
     <string name="respond_own_invite">Це твоє власне посилання-запрошення. Надішли його іншій людині.</string>
     <string name="respond_expired">Термін дії цього запрошення минув.</string>
     <string name="respond_closed">Ця справа більше не приймає відповідей.</string>

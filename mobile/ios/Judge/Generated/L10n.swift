@@ -486,6 +486,7 @@ enum L10n {
     static func caseWriteEmailSubject(_ lang: AppLang) -> String { string("case.write.emailSubject", lang) }
     static func respondSent(_ lang: AppLang) -> String { string("respond.sent", lang) }
     static func respondSentWaiting(_ lang: AppLang) -> String { string("respond.sentWaiting", lang) }
+    static func respondSentWaitingMany(_ lang: AppLang) -> String { string("respond.sentWaitingMany", lang) }
     static func respondOwnInvite(_ lang: AppLang) -> String { string("respond.ownInvite", lang) }
     static func respondExpired(_ lang: AppLang) -> String { string("respond.expired", lang) }
     static func respondClosed(_ lang: AppLang) -> String { string("respond.closed", lang) }
@@ -1112,6 +1113,7 @@ enum L10n {
         "case.write.emailSubject",
         "respond.sent",
         "respond.sentWaiting",
+        "respond.sentWaitingMany",
         "respond.ownInvite",
         "respond.expired",
         "respond.closed",

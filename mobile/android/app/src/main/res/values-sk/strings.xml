@@ -367,6 +367,7 @@
     <string name="case_write_email_subject">Druhá strana napísala svoju verziu</string>
     <string name="respond_sent">Tvoja verzia dorazila.</string>
     <string name="respond_sent_waiting">Tvoja verzia dorazila. Čakáme na druhú osobu.</string>
+    <string name="respond_sent_waiting_many">Tvoja verzia dorazila. Čakáme na ostatných.</string>
     <string name="respond_own_invite">Toto je tvoj vlastný odkaz s pozvánkou. Pošli ho druhej strane.</string>
     <string name="respond_expired">Platnosť tejto pozvánky vypršala.</string>
     <string name="respond_closed">Tento prípad už neprijíma odpovede.</string>

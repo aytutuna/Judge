@@ -607,6 +607,7 @@ const de: Locale = {
     "respond.sent": "Deine Seite ist da.",
     "respond.sentWaiting":
       "Deine Seite ist da. Wir warten auf die andere Person.",
+    "respond.sentWaitingMany": "Deine Seite ist da. Wir warten auf die anderen.",
     "respond.ownInvite": "Das ist dein eigener Einladungslink. Schick ihn an die andere Person.",
     "respond.expired": "Diese Einladung ist abgelaufen.",
     "respond.closed": "Dieser Fall nimmt keine Antworten mehr an.",

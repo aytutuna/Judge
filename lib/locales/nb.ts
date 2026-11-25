@@ -584,6 +584,7 @@ const nb: Locale = {
     "case.write.emailSubject": "Den andre har skrevet sin side",
     "respond.sent": "Siden din er kommet inn.",
     "respond.sentWaiting": "Siden din er kommet inn. Venter på den andre.",
+    "respond.sentWaitingMany": "Siden din er kommet inn. Venter på de andre.",
     "respond.ownInvite": "Dette er din egen invitasjonslenke. Send den til den andre personen.",
     "respond.expired": "Denne invitasjonen har utløpt.",
     "respond.closed": "Denne saken tar ikke imot svar lenger.",

@@ -595,6 +595,7 @@ const nl: Locale = {
     "case.write.emailSubject": "De ander heeft geschreven",
     "respond.sent": "Je kant is binnen.",
     "respond.sentWaiting": "Je kant is binnen. Wachten op de ander.",
+    "respond.sentWaitingMany": "Je kant is binnen. Wachten op de anderen.",
     "respond.ownInvite": "Dit is je eigen uitnodigingslink. Stuur hem naar de ander.",
     "respond.expired": "Deze uitnodiging is verlopen.",
     "respond.closed": "Deze zaak neemt geen antwoorden meer aan.",

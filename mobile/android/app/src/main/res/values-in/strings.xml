@@ -352,6 +352,7 @@
     <string name="case_write_email_subject">Pihak lain sudah menulis versinya</string>
     <string name="respond_sent">Versimu sudah masuk.</string>
     <string name="respond_sent_waiting">Versimu sudah masuk. Menunggu orang satunya.</string>
+    <string name="respond_sent_waiting_many">Versimu sudah masuk. Menunggu yang lain.</string>
     <string name="respond_own_invite">Ini tautan undanganmu sendiri. Kirim ke lawan debatmu.</string>
     <string name="respond_expired">Undangan ini sudah kedaluwarsa.</string>
     <string name="respond_closed">Kasus ini sudah tidak menerima jawaban.</string>

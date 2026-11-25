@@ -160,6 +160,21 @@ describe("RespondScreen, taking a seat", () => {
     expect(posts(`${BASE}/open`)).toHaveLength(0);
   });
 
+  it("a 401 on the tap looks the viewer up again and the page asks for sign-in", async () => {
+    route = (c) => {
+      if (c.path === BASE) return reply(200, { case: RESPONDENT.form });
+      if (c.path === `${BASE}/open`) {
+        signedIn = false;
+        return reply(401, { code: "signin_required" });
+      }
+      return null;
+    };
+    await open();
+    await tapAnswer();
+    await waitFor(() => expect(signInLinks()).toHaveLength(1));
+    expect(screen.queryByRole("button", { name: answerLabel })).toBeNull();
+  });
+
   it("a full invite answers 409 on the tap and reads closed", async () => {
     route = (c) => {
       if (c.path === BASE) return reply(200, { case: RESPONDENT.form });
@@ -369,10 +384,37 @@ describe("RespondScreen, answering", () => {
 
 describe("RespondScreen, three or four sides", () => {
   it("after answering while others are still missing the person reads their answer is in, not closed", async () => {
-    const answered = caseView({ ...RESPONDENT.form, respondentAnswered: true, inAccount: true, ownerSideMissing: false, mode: "two_sided" });
+    const answered = caseView({ ...RESPONDENT.form, respondentAnswered: true, inAccount: true, ownerSideMissing: false, mode: "two_sided", parties: ["a", "b", "c"] });
     route = (c) => (c.path === BASE ? reply(200, { case: answered }) : null);
     await open();
-    expect(await screen.findByText(t("en", "respond.sentWaiting"))).toBeTruthy();
+    expect(await screen.findByText(t("en", "respond.sentWaitingMany"))).toBeTruthy();
+    expect(mainEl().textContent).not.toContain(t("en", "respond.closed"));
+  });
+});
+
+describe("RespondScreen, a lost seat that cannot be reopened", () => {
+  it("a 409 from the reopen keeps the form and the typed text, with the error shown", async () => {
+    let opens = 0;
+    route = (c) => {
+      if (c.method === "GET" && c.path === BASE) return reply(200, { case: RESPONDENT.form });
+      if (c.path === `${BASE}/open`) {
+        return ++opens === 1 ? reply(200, { case: RESPONDENT.form, respondent_claim: null }) : reply(409, { code: "case_closed" });
+      }
+      if (c.method === "POST" && c.path === BASE) return reply(409, { code: "seat_moved" });
+      return null;
+    };
+    await open();
+    await tapAnswer();
+    const box = await screen.findByPlaceholderText(t("en", "respond.placeholder"));
+    fireEvent.change(box, { target: { value: TYPED } });
+    const send = () => screen.getByRole("button", { name: t("en", "respond.submit") }) as HTMLButtonElement;
+    await waitFor(() => expect(send().disabled).toBe(false));
+    await act(async () => {
+      fireEvent.click(send());
+    });
+    await waitFor(() => expect(opens).toBe(2));
+    expect(await screen.findByRole("alert")).toBeTruthy();
+    expect((screen.getByPlaceholderText(t("en", "respond.placeholder")) as HTMLTextAreaElement).value).toBe(TYPED);
     expect(mainEl().textContent).not.toContain(t("en", "respond.closed"));
   });
 });

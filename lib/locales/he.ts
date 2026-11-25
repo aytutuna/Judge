@@ -574,6 +574,7 @@ const he: Locale = {
     "case.write.emailSubject": "הצד השני כתב את שלו",
     "respond.sent": "הצד שלך התקבל.",
     "respond.sentWaiting": "הצד שלך התקבל. מחכים לצד השני.",
+    "respond.sentWaitingMany": "הצד שלך התקבל. מחכים לאחרים.",
     "respond.ownInvite": "זה קישור ההזמנה שלך. צריך לשלוח אותו לצד השני.",
     "respond.expired": "תוקף ההזמנה הזו פג.",
     "respond.closed": "התיק הזה כבר לא מקבל תשובות.",
