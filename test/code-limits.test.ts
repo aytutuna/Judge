@@ -102,7 +102,7 @@ describe("sign-in code limits per address", () => {
 
   it("keeps a looser ceiling on the address across IPs", async () => {
     emailOn();
-    // 5 per IP, 20 an hour and 10 a day per address: the day's ceiling comes first.
+    // 5 per IP and 10 a day per address, from any IPs.
     let sent = 0;
     let last = 200;
     for (let ip = 1; ip <= 6 && last === 200; ip++) {
@@ -128,6 +128,27 @@ describe("sign-in code limits per address", () => {
     expect(sent).toHaveLength(10);
     vi.setSystemTime(Date.now() + 86_400_000);
     expect((await sendCode("daily@example.com", "198.18.0.99")).status).toBe(200);
+  });
+});
+
+describe("the daily send cap and codes already sent", () => {
+  it("never blocks signing in with the last unexpired code, and frees sending after 24 hours", async () => {
+    const sent = emailOn();
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(Date.now() + 40 * 86_400_000);
+    for (let i = 0; i < 10; i++) {
+      expect((await sendCode("cap-user@example.com", `198.18.20.${i}`)).status).toBe(200);
+      vi.setSystemTime(Date.now() + 1_000);
+    }
+    const refused = await sendCode("cap-user@example.com", "198.18.20.99");
+    expect(refused.status).toBe(429);
+    expect(sent).toHaveLength(10);
+    // The refused request must not have replaced the last code.
+    const code = /\b(\d{6})\b/.exec(sent[9].text)![1];
+    expect((await signIn("cap-user@example.com", code, "198.18.20.50")).status).toBe(200);
+
+    vi.setSystemTime(Date.now() + 86_400_000 + 1_000);
+    expect((await sendCode("cap-user@example.com", "198.18.20.51")).status).toBe(200);
   });
 });
 
@@ -243,12 +264,83 @@ describe("Turnstile on code requests", () => {
   });
 });
 
+describe("per-IP sends, malformed addresses, review guesses", () => {
+  it("holds one IP to ten code requests an hour across addresses", async () => {
+    const sent = emailOn();
+    for (let i = 0; i < 10; i++) expect((await sendCode(`ip${i}@example.net`, "198.18.9.1")).status).toBe(200);
+    const res = await sendCode("ip10@example.net", "198.18.9.1");
+    expect(res.status).toBe(429);
+    expect(sent).toHaveLength(10);
+    expect((await sendCode("ip11@example.net", "198.18.9.2")).status).toBe(200);
+  });
+
+  it("keeps one IP from using up the site-wide cap", async () => {
+    emailOn();
+    vi.stubEnv("CODE_EMAILS_PER_HOUR", "50");
+    for (let i = 0; i < 15; i++) await sendCode(`flood${i}@example.net`, "198.18.9.3");
+    expect((await sendCode("fine@example.net", "198.18.9.4")).status).toBe(200);
+  });
+
+  it("refuses a malformed address before any limit or Turnstile check", async () => {
+    emailOn();
+    vi.stubEnv("CODE_EMAILS_PER_HOUR", "2");
+    const siteverify = vi.fn(async () => new Response(JSON.stringify({ success: true })));
+    const base = globalThis.fetch;
+    vi.stubGlobal("fetch", (i: RequestInfo | URL, init?: RequestInit) =>
+      String(i).includes("siteverify") ? siteverify() : base(i, init),
+    );
+    vi.stubEnv("TURNSTILE_SECRET_KEY", "0x4AAAAAAAtest");
+    for (const bad of ["x", " a@b.com ", "a@b", "a b@c.de"]) {
+      const res = await sendCode(bad, "198.18.9.5", { "x-captcha-response": "good" });
+      expect(res.status, bad).toBe(400);
+    }
+    expect(siteverify).not.toHaveBeenCalled();
+    expect((await sendCode("ok1@example.net", "198.18.9.6", { "x-captcha-response": "good" })).status).toBe(200);
+    expect((await sendCode("ok2@example.net", "198.18.9.7", { "x-captcha-response": "good" })).status).toBe(200);
+    expect((await sendCode("ok3@example.net", "198.18.9.8", { "x-captcha-response": "good" })).status).toBe(503);
+  });
+
+  it("signals the site-wide cap once an hour, not on every refusal", async () => {
+    emailOn();
+    vi.stubEnv("CODE_EMAILS_PER_HOUR", "0");
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(Date.now() + 10 * 86_400_000);
+    for (let i = 0; i < 4; i++) expect((await sendCode(`once${i}@example.net`, `198.18.10.${i}`)).status).toBe(503);
+    const lines = () => warn.mock.calls.flat().filter((l) => l === "[signal:code_email_cap]").length;
+    expect(lines()).toBe(1);
+    vi.setSystemTime(Date.now() + 3_600_000 + 1_000);
+    await sendCode("once9@example.net", "198.18.10.9");
+    expect(lines()).toBe(2);
+  });
+
+  it("caps guesses at the review code site-wide, signals it, and still lets sends through", async () => {
+    emailOn();
+    vi.stubEnv("REVIEW_ACCOUNT_EMAIL", "spread@okjudge.test");
+    vi.stubEnv("REVIEW_ACCOUNT_CODE", "480213");
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(Date.now() + 20 * 86_400_000);
+    // Ten guesses from each of thirty IPs: the per-IP limit never trips.
+    let refused = 0;
+    for (let ip = 1; ip <= 31; ip++) {
+      for (let i = 0; i < 10; i++) {
+        const res = await signIn("spread@okjudge.test", "000000", `198.18.11.${ip}`);
+        if (res.status === 429) refused++;
+      }
+    }
+    expect(refused).toBeGreaterThan(0);
+    expect(warn.mock.calls.flat().filter((l) => l === "[signal:review_guess_cap]")).toHaveLength(1);
+    expect((await sendCode("spread@okjudge.test", "198.18.12.1")).status).toBe(200);
+  });
+});
+
 describe("default code email cap", () => {
   it("is 100 an hour unless CODE_EMAILS_PER_HOUR says otherwise, and 0 stops code emails", async () => {
     const { checkCodeEmailCap } = await import("../lib/ratelimit");
     // Last in the file, in a month nobody else sent in, so the shared hour is empty.
     vi.useFakeTimers({ toFake: ["Date"] });
-    vi.setSystemTime(Date.now() + 30 * 86_400_000);
+    vi.setSystemTime(Date.now() + 100 * 86_400_000);
     vi.stubEnv("CODE_EMAILS_PER_HOUR", "0");
     expect((await checkCodeEmailCap(process.env)).ok).toBe(false);
     vi.stubEnv("CODE_EMAILS_PER_HOUR", "junk");

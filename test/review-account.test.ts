@@ -218,7 +218,7 @@ describe("store-review sign-in", () => {
     }
   });
 
-  it("strangers' wrong guesses from other addresses cannot lock it out", async () => {
+  it("wrong guesses from one IP do not lock it out for another", async () => {
     emailOn();
     reviewOn("shared-review@okjudge.test");
     for (let i = 0; i < 40; i++) await signIn("shared-review@okjudge.test", "000000", "192.0.2.50");

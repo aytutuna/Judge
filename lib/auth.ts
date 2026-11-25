@@ -8,7 +8,8 @@
  * one-time email code (website and apps) through Resend, a password set after
  * the first emailed code, and a dev-only test login. A method without
  * credentials is simply not offered (authProviders). Without
- * BETTER_AUTH_SECRET in production, auth is off, and with it judging: every verdict needs an account.
+ * BETTER_AUTH_SECRET in production, auth is off, and with it judging: every
+ * verdict needs an account.
  */
 
 import { createHash, createHmac } from "node:crypto";
@@ -27,7 +28,7 @@ import { ensureEntitlementTables, grantMissedWelcomeCredit, grantWelcomeCredit }
 import { clientIp } from "./client-ip";
 import { checkCodeEmailCap, checkUserLimits, visitorKey, type UserBucket } from "./ratelimit";
 import { captureAppleRefreshToken, deleteSignInTokens, keepCapturedAppleRefreshToken } from "./signin-tokens";
-import { signal } from "./signals";
+import { signal, type Signal } from "./signals";
 import { isDeviceId } from "./analytics/validate";
 import { verifyTurnstile } from "./turnstile";
 
@@ -43,6 +44,7 @@ const EMAIL_SIGNIN_SECONDS = 600;
 const EMAIL_CODE_ATTEMPTS = 3;
 /** Code requests per IP and endpoint per minute (production only). */
 const EMAIL_SIGNIN_RATE = { window: 60, max: 3 };
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const SEND_CODE_PATH = "/email-otp/send-verification-otp";
 const CODE_SIGNIN_PATH = "/sign-in/email-otp";
 const PASSWORD_SIGNIN_PATH = "/sign-in/email";
@@ -231,9 +233,20 @@ async function keepPreviousCode(context: AuthContext, email: string): Promise<vo
   await context.internalAdapter.createVerificationValue({ identifier, ...previous });
 }
 
-async function limitOrThrow(subject: string, bucket: UserBucket): Promise<void> {
+/** One watcher signal per name and hour, so a flood of refused requests
+ * writes one line, not one each. */
+const signalled = new Map<Signal, number>();
+function signalHourly(name: Signal): void {
+  const now = Date.now();
+  if (now - (signalled.get(name) ?? 0) < 3_600_000) return;
+  signalled.set(name, now);
+  signal(name);
+}
+
+async function limitOrThrow(subject: string, bucket: UserBucket, onFull?: () => void): Promise<void> {
   const limit = await checkUserLimits(subject, bucket);
   if (limit.ok) return;
+  if (limit.code !== "unavailable") onFull?.();
   if (limit.code === "unavailable") {
     throw new APIError("SERVICE_UNAVAILABLE", { message: "Sign-in is unavailable right now.", code: "unavailable" });
   }
@@ -256,7 +269,8 @@ export function isAppRequest(headers: Headers): boolean {
 /** Code limits by canonical address, so aliases share one budget: a tight one
  * per address and IP (like password_signin, address alone would let anyone
  * lock a victim out) and a looser one per address. The review address has no
- * per-address guess limit, so only its guesses per IP are counted. */
+ * per-address guess limit (anyone could lock it out): its guesses are counted
+ * per IP and, against a spread-out search, in one site-wide bucket. */
 async function limitCodeAddress(
   email: unknown,
   kind: "send" | "attempt",
@@ -270,6 +284,7 @@ async function limitCodeAddress(
   const bucket = kind === "send" ? "code_send" : "code_attempt";
   await limitOrThrow(`${claim}:${visitorKey(clientIp(headers))}`, bucket);
   if (!review) await limitOrThrow(claim, `${bucket}_any`);
+  else if (kind === "attempt") await limitOrThrow("review", "code_attempt_review", () => signalHourly("review_guess_cap"));
 }
 
 /** The site-wide ceiling on code emails an hour, so a spread-out flood cannot
@@ -277,7 +292,7 @@ async function limitCodeAddress(
 async function limitCodeEmails(env: Env): Promise<void> {
   const limit = await checkCodeEmailCap(env);
   if (limit.ok) return;
-  if (limit.code !== "unavailable") signal("code_email_cap");
+  if (limit.code !== "unavailable") signalHourly("code_email_cap");
   throw new APIError("SERVICE_UNAVAILABLE", { message: "Sign-in is unavailable right now.", code: "unavailable" });
 }
 
@@ -458,7 +473,12 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
           if (body?.type !== "sign-in") throw new APIError("BAD_REQUEST", { message: "Only sign-in codes are supported" });
           const headers = ctx.headers ?? ctx.request?.headers ?? new Headers();
           const email = typeof body.email === "string" ? body.email : null;
+          // Before any limit, so a malformed address costs no cap or check.
+          if (email !== null && !EMAIL_RE.test(email)) {
+            throw new APIError("BAD_REQUEST", { message: "Invalid email", code: "INVALID_EMAIL" });
+          }
           if (email && reviewAccount(env)?.email !== email.trim().toLowerCase()) {
+            await limitOrThrow(visitorKey(clientIp(headers)), "code_send_ip");
             if (!isAppRequest(headers)) await requireHuman(headers);
             await limitCodeAddress(email, "send", headers, env);
             if (welcomeClaim(email)) await limitCodeEmails(env);
