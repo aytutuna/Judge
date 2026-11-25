@@ -126,7 +126,7 @@ const MESSAGES: Partial<Record<ApiErrorCode, string>> = {
   not_configured: "Two-sided cases are not available on this server right now.",
   unavailable: UNAVAILABLE_MESSAGE,
   case_closed: "This case is not taking that anymore.",
-  seat_moved: "Your side was freed. Open the link again.",
+  seat_moved: "Your place was freed. Open the link again.",
   case_expired: "This invite has expired.",
   appeal_used: "This party already added context to this case.",
   not_party: "Only the people in this case can do that.",
@@ -346,7 +346,7 @@ async function respondentView(
     appealBlock: await appealBlockFor(row, bundle, party, viewerId, now),
     inAccount: viewerId !== null && row.mode === "two_sided" && who.userId === viewerId,
     ratings: viewerId ? await viewerRatings(viewerId, bundle) : undefined,
-    originals: await viewOriginals(row, party, provenParty(row, bundle.invites, party, viewerId, null)),
+    originals: await viewOriginals(row, party, provenParty(row, bundle.invites, party, viewerId)),
   });
 }
 
@@ -831,7 +831,15 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
       // An older per-side link can only take its own side, and only while it is free.
       // An answer written for a side takes that side, not whichever is next.
       const bundle = await loadCaseBundle(row);
-      taken = await claimSeat(bundle, viewer.user.id, now, found.shared ? shown : found.party);
+      // On the shared link an idle seat is taken for the shown side only when it is next in line anyway:
+      // an account may not choose to push a quiet invitee off a seat while sides are free.
+      const pushing =
+        shown !== undefined &&
+        bundle.seats.some((s) => s.party === shown) &&
+        sideIsOpen(bundle, now, shown) &&
+        nextOpenSide(bundle, now) !== shown;
+      const wanted = pushing ? undefined : shown;
+      taken = await claimSeat(bundle, viewer.user.id, now, found.shared ? wanted : found.party);
       if (taken) {
         party = taken.party;
         return true;
@@ -1086,6 +1094,7 @@ export function respondEvidenceHandler(req: Request, token: string): Promise<Nex
     const gate = await signedIn(req);
     if ("response" in gate) return gate.response;
     const viewerId = gate.viewer.user.id;
+    if (viewerId === row.ownerId) return fail("own_case");
     const unagreed = await agreementRefusal(viewerId);
     if (unagreed) return unagreed;
     const status = effectiveStatus(row, new Date());
@@ -1106,7 +1115,7 @@ export function respondEvidenceHandler(req: Request, token: string): Promise<Nex
     try {
       const byIp = await checkIpLimits(ip, "respond_evidence");
       if (!byIp.ok) return limitRefusal(byIp);
-      const byCase = await checkUserLimits(`case:${row.id}:${party}`, "case_evidence");
+      const byCase = await checkUserLimits(`case:${row.id}:${party}:${viewerId}`, "case_evidence");
       if (!byCase.ok) return limitRefusal(byCase);
     } catch {
       return fail("unavailable");
@@ -1161,7 +1170,7 @@ async function respondentParty(req: Request, token: string, write: boolean): Pro
   if (row.mode !== "two_sided") return { response: fail("case_closed") };
   const viewerId = viewer.user.id;
   const party = (await heldOnLink(found, viewerId)) ?? found.party;
-  if (!provenParty(row, await getInvites(row.id), party, viewerId, null)) {
+  if (!provenParty(row, await getInvites(row.id), party, viewerId)) {
     return { response: fail("not_party") };
   }
   return { row, viewer, party };

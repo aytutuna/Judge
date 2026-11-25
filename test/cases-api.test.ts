@@ -188,9 +188,8 @@ async function getOwner(ownerId: string, id: string) {
   return (await body<{ case: CaseView }>(await http.getCaseHandler(req("GET", `/api/v1/cases/${id}`, { user: ownerId }), id))).case;
 }
 
-async function getRespondent(token: string, user?: string, claim?: string) {
-  const headers: Record<string, string> = claim ? { "respondent-claim": claim } : {};
-  const res = await http.respondGetHandler(req("GET", `/api/v1/respond/${token}`, { user, headers }), token);
+async function getRespondent(token: string, user?: string) {
+  const res = await http.respondGetHandler(req("GET", `/api/v1/respond/${token}`, { user }), token);
   return { res, view: res.ok ? (await body<{ case: CaseView }>(res)).case : null };
 }
 
@@ -653,6 +652,18 @@ describe("respondent: GET and POST /api/v1/respond/{token}", () => {
     expect(view.sides.find((s) => s.party === "b")!.evidence[0].transcript).toBe("21:02 Party B: did you pay?");
     expect(view.verdicts[0].result.evidence_used).toEqual({ a: 0, b: 1 });
     expect((await body(await evidence(uid("ev")))).code).toBe("case_closed");
+  });
+
+  it("respondent evidence is refused for the owner and counted per account", async () => {
+    const o = await owner();
+    const token = tokenOf((await create(o)).data.case);
+    const evidence = (user: string) =>
+      http.respondEvidenceHandler(req("POST", `/api/v1/respond/${token}/evidence`, { user, body: { images: [] } }), token);
+    expect((await body(await evidence(o))).code).toBe("own_case");
+    const heavy = uid("ev-heavy");
+    for (let i = 0; i < 12; i++) expect((await evidence(heavy)).status).toBe(200);
+    expect((await evidence(heavy)).status).toBe(429);
+    expect((await evidence(uid("ev-other"))).status).toBe(200);
   });
 
   it("respondent evidence needs the private-details agreement", async () => {

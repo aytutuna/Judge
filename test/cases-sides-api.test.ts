@@ -942,6 +942,25 @@ describe("one link for every side", () => {
     expect(await count("SELECT count(*) AS n FROM case_seats WHERE case_id = ? AND party = 'b'", [data.case.id])).toBe(0);
   });
 
+  it("does not let an account choose an idle seat while a side is still free", async () => {
+    const o = await owner(2);
+    const { data, shared } = await createMany(o, 4);
+    const bob = uid("bob");
+    expect((await openLink(shared, bob)).party).toBe("b");
+    await age(data.case.id, "b");
+    const eve = uid("eve");
+    const res = await http.respondPostHandler(
+      req("POST", `/api/v1/respond/${shared}`, { user: eve, ip: ip(), headers: SIDES, body: { text: BOB, turnstileToken: "t", party: "b" } }),
+      shared,
+    );
+    expect(res.status).toBe(202);
+    expect((await body<{ case: CaseView }>(res)).case.yourParty).toBe("c");
+    const holder = await getDb().then((db) =>
+      db.execute({ sql: "SELECT user_id FROM case_seats WHERE case_id = ? AND party = 'b'", args: [data.case.id] }),
+    );
+    expect(holder.rows[0].user_id).toBe(bob);
+  });
+
   it("keeps case_closed for a shown side that was answered by someone else", async () => {
     const o = await owner(2);
     const { shared } = await createMany(o, 3);
@@ -1194,6 +1213,21 @@ describe("links that were sent before the one link", () => {
     expect((await respondAs(links.c, taker, TEXT("Carol"))).status).toBe(202);
   });
 
+  it("takes a seat opened signed out at once, however recently it was touched", async () => {
+    const o = await owner(2);
+    const { data, shared } = await createMany(o, 3);
+    expect((await openLink(shared, uid("bob"))).party).toBe("b");
+    const db = await getDb();
+    const now = new Date().toISOString();
+    await db.execute({
+      sql: "INSERT INTO case_seats (case_id, party, nonce, user_id, opened_at, seen_at) VALUES (?, 'c', ?, NULL, ?, ?)",
+      args: [data.case.id, `legacy-c-${uid()}`, now, now],
+    });
+    const carol = uid("carol");
+    expect((await openLink(shared, carol)).party).toBe("c");
+    expect((await respondAs(shared, carol, TEXT("Carol"))).status).toBe(202);
+  });
+
   it("takes a heartbeat from the holder of its side, and from nobody else", async () => {
     const o = await owner(2);
     const { data, links, shared } = await createMany(o, 3);
@@ -1376,7 +1410,10 @@ describe("answering and seats", () => {
     await legacySeat(data.case.id, "b");
     await legacySeat(data.case.id, "c");
     const stale = await loadCaseBundle((await getCase(data.case.id))!);
-    await db.execute({ sql: "UPDATE case_seats SET seen_at = ? WHERE case_id = ?", args: [new Date().toISOString(), data.case.id] });
+    await db.execute({
+      sql: "UPDATE case_seats SET seen_at = ?, user_id = ? WHERE case_id = ?",
+      args: [new Date().toISOString(), uid("holder"), data.case.id],
+    });
     expect(await claimSeat(stale, uid("late"), new Date())).toBeNull();
   });
 });

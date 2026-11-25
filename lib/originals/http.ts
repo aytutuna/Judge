@@ -8,8 +8,8 @@
  *
  * The writer is the signed-in owner (cookie or bearer) or whoever presents
  * the owner token in the X-Owner-Token header (never a URL). A case verdict
- * is readable here by its parties (owner session, bound respondent, or the
- * Respondent-Claim header); its names and removal live on the case
+ * is readable here by its parties (owner session or bound respondent
+ * account); its names and removal live on the case
  * endpoints. Anyone else, a wrong or malformed token, or an unknown id gets
  * the same 404. Cookie writes need the same origin. Every response is
  * `Cache-Control: no-store`. Server only.
@@ -98,11 +98,6 @@ function ownerTokenHeader(req: Request): string | null {
   return v && v.length <= 64 ? v : null;
 }
 
-function claimHeader(req: Request): string | null {
-  const v = req.headers.get("respondent-claim")?.trim();
-  return v && v.length <= 64 ? v : null;
-}
-
 type Owner =
   | { meta: VerdictMeta; via: "session" | "token"; viewer: ViewerSession | null; caseParty: { row: CaseRow; party: CaseParty } | null }
   | { response: NextResponse };
@@ -114,7 +109,7 @@ async function ownerOf(req: Request, id: string, write: boolean): Promise<Owner>
   const { viewer, deadBearer, refused } = await lookupViewer(req);
   if (deadBearer) return { response: deadBearerResponse() };
   if (refused) return { response: refused };
-  if (!token && !viewer && !claimHeader(req)) return { response: fail("not_found") };
+  if (!token && !viewer) return { response: fail("not_found") };
   try {
     const limit = viewer && !token
       ? await checkUserLimits(viewer.user.id, "verdict_owner")
@@ -133,7 +128,7 @@ async function ownerOf(req: Request, id: string, write: boolean): Promise<Owner>
     const row = meta.caseId ? await getCase(meta.caseId) : null;
     if (!row) return { response: fail("not_found") };
     const viewerId = viewer?.user.id ?? null;
-    const party: CaseParty | null = partyOfViewer(row, await getInvites(row.id), viewerId, claimHeader(req));
+    const party: CaseParty | null = partyOfViewer(row, await getInvites(row.id), viewerId);
     if (!party) return { response: fail("not_found") };
     if (!sessionWriteOk()) return { response: fail("bad_origin") };
     return { meta, via: "session", viewer, caseParty: { row, party } };

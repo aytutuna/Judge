@@ -403,17 +403,16 @@ describe("a case party's view of the sides", () => {
     expect(body.otherSides).toEqual([{ party: "b", text: "Party B says Party A owes money." }]);
   });
 
-  it("gives side B, by account or by claim, their own original and side A as the judges read it", async () => {
+  it("gives side B, by account, their own original and side A as the judges read it, and the claim secret nothing", async () => {
     const { cid, vId, nonce, judge } = await caseVerdict();
     await judge();
     const { respondentClaim } = await import("../lib/cases/invite");
     const claim = respondentClaim(cid, nonce)!;
-    for (const who of [{ user: "u-b" }, { claim }]) {
-      const body = await json<MineResponse>(await mine(vId, who));
-      expect(body.case).toEqual({ id: cid, party: "b" });
-      expect(body.original?.text).toBe("I lent Sam twenty pounds");
-      expect(body.otherSides).toEqual([{ party: "a", text: "Party A paid. Party B keeps asking." }]);
-    }
+    const body = await json<MineResponse>(await mine(vId, { user: "u-b" }));
+    expect(body.case).toEqual({ id: cid, party: "b" });
+    expect(body.original?.text).toBe("I lent Sam twenty pounds");
+    expect(body.otherSides).toEqual([{ party: "a", text: "Party A paid. Party B keeps asking." }]);
+    expect((await mine(vId, { claim })).status).toBe(404);
   });
 
   it("gives nothing to a stranger, a signed-out caller or an owner-token holder of another verdict", async () => {

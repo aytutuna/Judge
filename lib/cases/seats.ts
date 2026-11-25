@@ -66,8 +66,9 @@ export function heldSide(
   return null;
 }
 
+// A seat without an account was opened before sign-in was required; no request can touch it now.
 const idle = (seat: SeatRow, now: Date) =>
-  Date.parse(seat.seenAt ?? seat.openedAt) < now.getTime() - SEAT_IDLE_MS;
+  seat.userId === null || Date.parse(seat.seenAt ?? seat.openedAt) < now.getTime() - SEAT_IDLE_MS;
 
 /** The sides a new opener could take, best first: free ones, then idle
  * seats. `only` limits it to one side (an opener of that side's own link). */
@@ -137,7 +138,7 @@ export async function claimSeat(
       const rs = await db.execute({
         sql: `UPDATE case_seats SET nonce = ?, user_id = ?, opened_at = ?, seen_at = ?, typing_at = NULL
               WHERE case_id = ? AND party = ? AND nonce = ?
-                AND COALESCE(seen_at, opened_at) < ? AND ${open}${bound}`,
+                AND (user_id IS NULL OR COALESCE(seen_at, opened_at) < ?) AND ${open}${bound}`,
         args: [nonce, viewerId, nowIso, nowIso, row.id, party, seat.nonce, cutoff, ...openArgs, ...boundArgs],
       });
       won = rs.rowsAffected === 1;

@@ -170,9 +170,8 @@ async function getOwner(ownerId: string, id: string) {
   return (await body<{ case: CaseView }>(await http.getCaseHandler(req("GET", `/api/v1/cases/${id}`, { user: ownerId }), id))).case;
 }
 
-async function getRespondent(token: string, user?: string, claim?: string) {
-  const headers: Record<string, string> = claim ? { "respondent-claim": claim } : {};
-  const res = await http.respondGetHandler(req("GET", `/api/v1/respond/${token}`, { user, headers }), token);
+async function getRespondent(token: string, user?: string) {
+  const res = await http.respondGetHandler(req("GET", `/api/v1/respond/${token}`, { user }), token);
   return { res, view: res.ok ? (await body<{ case: CaseView }>(res)).case : null };
 }
 
