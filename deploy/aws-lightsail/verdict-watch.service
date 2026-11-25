@@ -12,6 +12,7 @@ Description=Watch the Judge server
 [Service]
 Type=oneshot
 EnvironmentFile=/etc/verdict/verdict.env
+UnsetEnvironment=GITHUB_TOKEN
 ExecStart=/usr/bin/bash /opt/verdict/repo/deploy/aws-lightsail/watch.sh
 # Shared with verdict-errors; update.sh writes deploy-at in it.
 StateDirectory=verdict-alerts

@@ -18,9 +18,10 @@ Group=verdict
 # each time the service starts, so a restart picks up a new release.
 WorkingDirectory=/opt/verdict/current
 EnvironmentFile=/etc/verdict/verdict.env
-# Only the build needs it (update.sh reads it from the file); unsetting is
+# Only the build and the deploy check need these (update.sh reads them from the
+# file); unsetting is
 # applied after EnvironmentFile=.
-UnsetEnvironment=SENTRY_AUTH_TOKEN
+UnsetEnvironment=SENTRY_AUTH_TOKEN GITHUB_TOKEN
 # V8 heap cap, well under MemoryMax so Node collects garbage before the
 # kernel steps in.
 Environment=NODE_OPTIONS=--max-old-space-size=1536
@@ -35,7 +36,8 @@ RestartSec=5
 # within about 5 minutes, so wait that long instead of killing it; a stop or
 # restart takes longer only while something is judging.
 TimeoutStopSec=320
-# 7.6 GB server: leave room for Caddy, the build and the OS.
+# Sized for the 7.6 GB OVH server, not the 512 MB Lightsail one: leave room for
+# Caddy, the build and the OS.
 MemoryHigh=2G
 MemoryMax=2500M
 

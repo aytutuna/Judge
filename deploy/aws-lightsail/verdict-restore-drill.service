@@ -12,6 +12,7 @@ Type=oneshot
 User=verdict
 Group=verdict
 EnvironmentFile=/etc/verdict/verdict.env
+UnsetEnvironment=GITHUB_TOKEN
 ExecStart=/usr/bin/bash /opt/verdict/current/deploy/aws-lightsail/restore-drill.sh
 Nice=10
 IOSchedulingClass=idle

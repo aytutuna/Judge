@@ -11,6 +11,7 @@ Description=Check Judge for error spikes
 [Service]
 Type=oneshot
 EnvironmentFile=/etc/verdict/verdict.env
+UnsetEnvironment=GITHUB_TOKEN
 ExecStart=/usr/bin/bash /opt/verdict/repo/deploy/aws-lightsail/errors.sh
 StateDirectory=verdict-alerts
 StateDirectoryMode=0700

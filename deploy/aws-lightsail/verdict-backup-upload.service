@@ -12,6 +12,7 @@ Type=oneshot
 User=verdict
 Group=verdict
 EnvironmentFile=/etc/verdict/verdict.env
+UnsetEnvironment=GITHUB_TOKEN
 ExecStart=/usr/bin/bash /opt/verdict/current/deploy/aws-lightsail/backup-upload.sh
 TimeoutStartSec=30min
 Nice=10
