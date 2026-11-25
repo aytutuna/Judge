@@ -871,8 +871,12 @@ All commands run in the browser SSH window (**Connect using SSH**).
   back to the previous one, with its service and web server settings,
   automatically. It refuses a commit that has no passing run of the Web
   workflow on GitHub (`--skip-ci-check` overrides this in an emergency; while
-  the repository is private, set `GITHUB_TOKEN` in the env file so it can
-  read the runs), and backs up the database just before switching. A restart
+  the repository is private, set `GITHUB_TOKEN` in the env file to a
+  fine-grained token with Actions: read on this repository only), and backs
+  up the database just before switching. The first run of `setup.sh` needs
+  a green Web run for the commit too, or `--skip-ci-check`. The memory limits
+  in `verdict.service` assume the 7.6 GB OVH server, not the 512 MB Lightsail
+  plan described in the setup steps below. A restart
   first lets verdicts still being judged finish
   (up to about 5 minutes); new requests are refused until the new version
   is up.
