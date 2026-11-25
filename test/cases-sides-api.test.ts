@@ -920,6 +920,27 @@ describe("one link for every side", () => {
     expect(out.view).toMatchObject({ status: "awaiting_respondent", respondentAnswered: false, sides: [] });
   });
 
+  it("refuses to link a legacy answer to an account that already has another side", async () => {
+    const o = await owner(2);
+    const { data, shared } = await createMany(o, 4);
+    const bob = await openLink(shared, uid("bob"));
+    expect((await respondAs(shared, uid("carol"), TEXT_C)).status).toBe(202);
+    const db = await getDb();
+    await db.execute({ sql: "UPDATE case_invites SET user_id = NULL WHERE case_id = ? AND party = 'c'", args: [data.case.id] });
+    await db.execute({ sql: "UPDATE case_seats SET user_id = NULL WHERE case_id = ? AND party = 'c'", args: [data.case.id] });
+    const row = (await getCase(data.case.id))!;
+    const secret = claimFor(row, await getInvites(row.id), "c")!;
+    const claimAs = (user: string) =>
+      http.respondentClaimHandler(req("POST", `/api/v1/cases/${data.case.id}/claim`, { user, body: { claim: secret }, ip: ip(), headers: SIDES }), data.case.id);
+    // Bob holds a seat on side B.
+    const refused = await claimAs(bob.who!);
+    expect(refused.status).toBe(409);
+    expect((await body(refused)).code).toBe("case_closed");
+    const unbound = (await db.execute({ sql: "SELECT user_id FROM case_invites WHERE case_id = ? AND party = 'c'", args: [data.case.id] })).rows[0];
+    expect(unbound.user_id).toBeNull();
+    expect((await claimAs(uid("dan"))).status).toBe(200);
+  });
+
   it("links a legacy answer for side C to the account, which then removes it", async () => {
     const o = await owner(2);
     const { data, shared } = await createMany(o, 3);

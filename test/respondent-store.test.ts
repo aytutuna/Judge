@@ -88,7 +88,7 @@ describe("linking an answer given signed out", () => {
   });
 
   it("sends the claim and forgets it once linked or refused for good", async () => {
-    for (const [status, outcome] of [[200, "linked"], [404, "refused"]] as const) {
+    for (const [status, outcome] of [[200, "linked"], [404, "refused"], [409, "refused"]] as const) {
       vi.stubGlobal("localStorage", fakeStorage());
       localStorage.setItem(claimKey(CASE), TOKEN);
       const fetch = reply(status);

@@ -1272,7 +1272,8 @@ export function caseRemovalHandler(req: Request, id: string): Promise<NextRespon
  * answered signed out, before an account was needed, links that side to
  * their account; it is the only use the claim has left. Wrong claim, the
  * owner, a one-sided case or a side already bound to someone else all get
- * the same 404, checked before anything about the case is told. */
+ * the same 404, checked before anything about the case is told. An account
+ * that already holds or answers for another side gets 409 case_closed. */
 export function respondentClaimHandler(req: Request, id: string): Promise<NextResponse> {
   return guarded("claim", async () => {
     if (!casesEnabled()) return fail("not_configured");
@@ -1301,8 +1302,11 @@ export function respondentClaimHandler(req: Request, id: string): Promise<NextRe
     const bound = respondentOf(row, invites, party).userId;
     if (bound === userId) return json(claimed);
     if (bound) return fail("not_found");
-    // One person is one side of a case.
-    if (boundElsewhere(row, invites, party, userId)) return fail("not_found");
+    // One person is one side of a case: linked to another, or seated on another.
+    const seats = (await loadCaseBundle(row)).seats;
+    if (boundElsewhere(row, invites, party, userId) || seats.some((s) => s.userId === userId && s.party !== party)) {
+      return fail("case_closed");
+    }
     await caseDb();
     const nowIso = new Date().toISOString();
     const rs = await entitlementWriteBatch([
