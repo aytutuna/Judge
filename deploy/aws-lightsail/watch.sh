@@ -54,12 +54,12 @@ CERT_MIN_DAYS=10
 declare -A SIGNAL_LIMITS=(
   [rate_limited]=50 [turnstile_fail]=30 [bad_origin]=10 [bearer_401]=30
   [webhook_bad_secret]=10 [webhook_apply_failed]=1 [entitlement_refused]=3
-  [provider_rate]=10 [provider_down]=5 [many_accounts_per_device]=1 [events_cap]=1
+  [provider_rate]=10 [provider_down]=5 [many_accounts_per_device]=1 [events_cap]=1 [code_email_cap]=1
   [age_blocked]=1 [schema_drift]=1 [grant_skipped]=1 [ban]=20
 )
 # Strangers on the internet can set these off at will, and they are rarely
 # urgent.
-EMAIL_ONLY_SIGNALS=" rate_limited bad_origin bearer_401 webhook_bad_secret many_accounts_per_device events_cap age_blocked "
+EMAIL_ONLY_SIGNALS=" rate_limited bad_origin bearer_401 webhook_bad_secret many_accounts_per_device events_cap code_email_cap age_blocked "
 
 now=$(date +%s)
 
@@ -282,6 +282,7 @@ signal_meaning() {
     provider_down) echo "Calls to the AI service fail or time out; verdicts fail meanwhile." ;;
     many_accounts_per_device) echo "A device signed in to a third (or later) account: possibly someone collecting welcome credits. Sign-in was not refused." ;;
     events_cap) echo "Usage events hit the cap of 200,000 a day and new ones are refused: fake installs flooding POST /api/v1/events, or a client bug." ;;
+    code_email_cap) echo "Sign-in code emails hit the hourly site-wide cap and new codes are refused (503): someone may be flooding the sign-in form, or the cap is too low for real traffic. See CODE_EMAILS_PER_HOUR." ;;
     age_blocked) echo "The app store's age signal said an account belongs to someone under 18; the account is now blocked. Close it by hand if that is right; if it is wrong, clear age_blocked_at on the user and welcome_claims rows (README, Age check)." ;;
     schema_drift) echo "A stored verdict or translation no longer matches the result schema and reads as not found. Look at the [signal:schema_drift] lines for the id and the fields; do not delete the rows." ;;
     grant_skipped) echo "A paid grant was skipped because a refund covers it (a refund tombstone or a refunded subscription). If the user really paid, grant it by hand; the [signal:grant_skipped] lines have the source and transaction id." ;;
