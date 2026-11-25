@@ -89702,37 +89702,37 @@
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "আপনার পক্ষটি মুক্ত হয়ে গেছে। লিংকটি আবার খুলুন।"
+            "value" : "আপনার জায়গাটি ছেড়ে দেওয়া হয়েছে। লিংকটি আবার খুলুন।"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "El teu costat s'ha alliberat. Torna a obrir l'enllaç."
+            "value" : "El teu lloc s'ha alliberat. Torna a obrir l'enllaç."
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tvoje strana se uvolnila. Otevři odkaz znovu."
+            "value" : "Tvoje místo se uvolnilo. Otevři odkaz znovu."
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Din side blev givet fri. Åbn linket igen."
+            "value" : "Din plads blev frigivet. Åbn linket igen."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deine Seite wurde freigegeben. Öffne den Link noch einmal."
+            "value" : "Dein Platz wurde freigegeben. Öffne den Link noch einmal."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Η πλευρά σου ελευθερώθηκε. Άνοιξε ξανά τον σύνδεσμο."
+            "value" : "Η θέση σου ελευθερώθηκε. Άνοιξε ξανά τον σύνδεσμο."
           }
         },
         "en" : {
@@ -89744,13 +89744,13 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tu lado se liberó. Abre el enlace otra vez."
+            "value" : "Tu lugar se liberó. Abre el enlace otra vez."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Puolesi vapautui. Avaa linkki uudelleen."
+            "value" : "Paikkasi vapautui. Avaa linkki uudelleen."
           }
         },
         "fr" : {
@@ -89762,205 +89762,205 @@
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "તમારો પક્ષ મુક્ત થઈ ગયો છે. લિંક ફરીથી ખોલો."
+            "value" : "તમારી જગ્યા ખાલી થઈ ગઈ છે. લિંક ફરીથી ખોલો."
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "הצד שלך שוחרר. פתח את הקישור שוב."
+            "value" : "המקום שלך שוחרר. פתח את הקישור שוב."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "आपका पक्ष खाली हो गया। लिंक दोबारा खोलें।"
+            "value" : "आपकी जगह खाली हो गई। लिंक दोबारा खोलें।"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tvoja strana je oslobođena. Ponovno otvori poveznicu."
+            "value" : "Tvoje mjesto je oslobođeno. Ponovno otvori poveznicu."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A te oldalad felszabadult. Nyisd meg újra a linket."
+            "value" : "A helyed felszabadult. Nyisd meg újra a linket."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Posisimu sudah dilepas. Buka tautannya lagi."
+            "value" : "Tempatmu sudah dilepas. Buka tautannya lagi."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Il tuo lato è stato liberato. Apri di nuovo il link."
+            "value" : "Il tuo posto è stato liberato. Apri di nuovo il link."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "あなたの言い分の枠は解放されました。もう一度リンクを開いてください。"
+            "value" : "あなたの枠は解放されました。もう一度リンクを開いてください。"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ನಿಮ್ಮ ಪಕ್ಷ ಬಿಡುಗಡೆಯಾಗಿದೆ. ಲಿಂಕ್ ಅನ್ನು ಮತ್ತೆ ತೆರೆಯಿರಿ."
+            "value" : "ನಿಮ್ಮ ಜಾಗ ಖಾಲಿಯಾಗಿದೆ. ಲಿಂಕ್ ಅನ್ನು ಮತ್ತೆ ತೆರೆಯಿರಿ."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "내 입장 자리가 해제되었어요. 링크를 다시 열어 주세요."
+            "value" : "자리가 비워졌어요. 링크를 다시 열어 주세요."
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "നിങ്ങളുടെ വശം ഒഴിവായി. ലിങ്ക് വീണ്ടും തുറക്കൂ."
+            "value" : "നിങ്ങളുടെ സ്ഥലം ഒഴിവായി. ലിങ്ക് വീണ്ടും തുറക്കൂ."
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "तुमची बाजू मोकळी झाली. लिंक पुन्हा उघडा."
+            "value" : "तुमची जागा मोकळी झाली. लिंक पुन्हा उघडा."
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pihak anda telah dilepaskan. Buka pautan sekali lagi."
+            "value" : "Tempat anda telah dilepaskan. Buka pautan sekali lagi."
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Siden din ble frigitt. Åpne lenken på nytt."
+            "value" : "Plassen din ble frigitt. Åpne lenken på nytt."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jouw kant is vrijgegeven. Open de link opnieuw."
+            "value" : "Je plek is vrijgegeven. Open de link opnieuw."
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଆପଣଙ୍କ ପକ୍ଷ ମୁକ୍ତ ହୋଇଯାଇଛି। ଲିଙ୍କ୍ ପୁଣି ଖୋଲନ୍ତୁ।"
+            "value" : "ଆପଣଙ୍କ ସ୍ଥାନ ଖାଲି ହୋଇଯାଇଛି। ଲିଙ୍କ୍ ପୁଣି ଖୋଲନ୍ତୁ।"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਤੁਹਾਡਾ ਪੱਖ ਖਾਲੀ ਹੋ ਗਿਆ ਹੈ। ਲਿੰਕ ਦੁਬਾਰਾ ਖੋਲ੍ਹੋ।"
+            "value" : "ਤੁਹਾਡੀ ਥਾਂ ਖਾਲੀ ਹੋ ਗਈ ਹੈ। ਲਿੰਕ ਦੁਬਾਰਾ ਖੋਲ੍ਹੋ।"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Twoja strona została zwolniona. Otwórz link ponownie."
+            "value" : "Twoje miejsce zostało zwolnione. Otwórz link ponownie."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Seu lado foi liberado. Abra o link de novo."
+            "value" : "Seu lugar foi liberado. Abra o link de novo."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O teu lado foi libertado. Abre a ligação outra vez."
+            "value" : "O teu lugar foi libertado. Abre a ligação outra vez."
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Partea ta a fost eliberată. Deschide din nou linkul."
+            "value" : "Locul tău a fost eliberat. Deschide din nou linkul."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Твоя сторона освободилась. Открой ссылку ещё раз."
+            "value" : "Твоё место освободилось. Открой ссылку ещё раз."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tvoja strana sa uvoľnila. Otvor odkaz znova."
+            "value" : "Tvoje miesto sa uvoľnilo. Otvor odkaz znova."
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tvoja stran se je sprostila. Ponovno odpri povezavo."
+            "value" : "Tvoje mesto se je sprostilo. Ponovno odpri povezavo."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Din sida släpptes. Öppna länken igen."
+            "value" : "Din plats har frigjorts. Öppna länken igen."
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "உங்கள் பக்கம் விடுவிக்கப்பட்டது. இணைப்பை மீண்டும் திறக்கவும்."
+            "value" : "உங்கள் இடம் விடுவிக்கப்பட்டது. இணைப்பை மீண்டும் திறக்கவும்."
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "మీ వైపు ఖాళీ అయింది. లింక్‌ను మళ్లీ తెరవండి."
+            "value" : "మీ స్థానం ఖాళీ అయింది. లింక్‌ను మళ్లీ తెరవండి."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ฝั่งของคุณถูกปล่อยแล้ว เปิดลิงก์อีกครั้ง"
+            "value" : "ที่นั่งของคุณถูกปล่อยแล้ว เปิดลิงก์อีกครั้ง"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tarafın serbest kaldı. Bağlantıyı yeniden aç."
+            "value" : "Yerin serbest kaldı. Bağlantıyı yeniden aç."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Твоя сторона звільнилася. Відкрий посилання ще раз."
+            "value" : "Твоє місце звільнилося. Відкрий посилання ще раз."
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "آپ کا فریق خالی ہو گیا۔ لنک دوبارہ کھولیں۔"
+            "value" : "آپ کی جگہ خالی ہو گئی۔ لنک دوبارہ کھولیں۔"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Phần của bạn đã được giải phóng. Hãy mở lại liên kết."
+            "value" : "Chỗ của bạn đã bị bỏ trống. Hãy mở lại liên kết."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "你的一方已被释放。请重新打开链接。"
+            "value" : "你的位置已空出。请重新打开链接。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "你的一方已被釋放。請重新開啟連結。"
+            "value" : "你的位置已空出。請重新開啟連結。"
           }
         }
       }

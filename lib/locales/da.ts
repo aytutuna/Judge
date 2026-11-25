@@ -493,7 +493,7 @@ const da: Locale = {
     "error.bad_origin": "Den anmodning kom et sted fra, vi ikke kender. Genindlæs siden, og prøv igen.",
     "error.not_found": "Vi kunne ikke finde det.",
     "error.case_closed": "Sagen tager ikke imod mere.",
-    "error.seat_moved": "Din side blev givet fri. Åbn linket igen.",
+    "error.seat_moved": "Din plads blev frigivet. Åbn linket igen.",
     "error.case_expired": "Invitationen er udløbet.",
     "error.appeal_used": "Du har allerede tilføjet kontekst til denne sag.",
     "error.appeal_limit": "Du har tilføjet kontekst til denne dom to gange. Det er grænsen for én dom.",

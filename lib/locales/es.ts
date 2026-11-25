@@ -501,7 +501,7 @@ const es: Locale = {
       "Esa solicitud llegó desde un sitio que no reconocemos. Recarga la página y vuelve a intentarlo.",
     "error.not_found": "No encontramos eso.",
     "error.case_closed": "Este caso ya no acepta eso.",
-    "error.seat_moved": "Tu lado se liberó. Abre el enlace otra vez.",
+    "error.seat_moved": "Tu lugar se liberó. Abre el enlace otra vez.",
     "error.case_expired": "Esta invitación ha expirado.",
     "error.appeal_used": "Ya has añadido contexto a este caso.",
     "error.appeal_limit": "Ya has añadido contexto a este veredicto dos veces. Es el máximo para un veredicto.",

@@ -490,7 +490,7 @@ const ro: Locale = {
     "error.bad_origin": "Cererea a venit dintr-un loc pe care nu-l recunoaștem. Reîncarcă pagina și încearcă din nou.",
     "error.not_found": "N-am găsit asta.",
     "error.case_closed": "Cazul ăsta nu mai permite asta.",
-    "error.seat_moved": "Partea ta a fost eliberată. Deschide din nou linkul.",
+    "error.seat_moved": "Locul tău a fost eliberat. Deschide din nou linkul.",
     "error.case_expired": "Invitația a expirat.",
     "error.appeal_used": "Ai adăugat deja context la acest caz.",
     "error.appeal_limit":

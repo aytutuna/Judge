@@ -266,7 +266,7 @@
     <string name="error_in_progress">Det jobbes fortsatt med den dommen. Gi det et øyeblikk.</string>
     <string name="error_not_found">Vi fant det ikke.</string>
     <string name="error_case_closed">Denne saken tar ikke imot det lenger.</string>
-    <string name="error_seat_moved">Siden din ble frigitt. Åpne lenken på nytt.</string>
+    <string name="error_seat_moved">Plassen din ble frigitt. Åpne lenken på nytt.</string>
     <string name="error_case_expired">Denne invitasjonen har utløpt.</string>
     <string name="error_appeal_used">Du har allerede lagt til kontekst i denne saken.</string>
     <string name="error_appeal_limit">Du har lagt til kontekst i denne dommen to ganger. Det er grensen for én dom.</string>

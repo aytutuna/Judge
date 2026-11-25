@@ -497,7 +497,7 @@ const ms: Locale = {
     "error.bad_origin": "Permintaan itu datang dari tempat yang kami tidak kenali. Muat semula halaman dan cuba lagi.",
     "error.not_found": "Kami tidak menjumpainya.",
     "error.case_closed": "Kes ini tidak lagi menerimanya.",
-    "error.seat_moved": "Pihak anda telah dilepaskan. Buka pautan sekali lagi.",
+    "error.seat_moved": "Tempat anda telah dilepaskan. Buka pautan sekali lagi.",
     "error.case_expired": "Jemputan ini sudah tamat tempoh.",
     "error.appeal_used": "Anda sudah menambah konteks pada kes ini.",
     "error.appeal_limit": "Anda sudah menambah konteks pada keputusan ini dua kali. Itu had untuk satu keputusan.",

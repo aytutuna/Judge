@@ -276,7 +276,7 @@
     <string name="error_in_progress">Над цим вердиктом ще працюють. Зачекай трохи.</string>
     <string name="error_not_found">Не вдалося це знайти.</string>
     <string name="error_case_closed">Ця справа вже цього не приймає.</string>
-    <string name="error_seat_moved">Твоя сторона звільнилася. Відкрий посилання ще раз.</string>
+    <string name="error_seat_moved">Твоє місце звільнилося. Відкрий посилання ще раз.</string>
     <string name="error_case_expired">Термін дії цього запрошення минув.</string>
     <string name="error_appeal_used">До цієї справи контекст уже додано.</string>
     <string name="error_appeal_limit">До цього вердикту контекст уже додавали двічі. Більше для одного вердикту не можна.</string>

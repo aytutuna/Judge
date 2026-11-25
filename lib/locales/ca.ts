@@ -507,7 +507,7 @@ const ca: Locale = {
       "Aquesta sol·licitud ve d'un lloc que no reconeixem. Torna a carregar la pàgina i prova-ho de nou.",
     "error.not_found": "No ho hem trobat.",
     "error.case_closed": "Aquest cas ja no ho admet.",
-    "error.seat_moved": "El teu costat s'ha alliberat. Torna a obrir l'enllaç.",
+    "error.seat_moved": "El teu lloc s'ha alliberat. Torna a obrir l'enllaç.",
     "error.case_expired": "Aquesta invitació ha caducat.",
     "error.appeal_used": "Ja has afegit context a aquest cas.",
     "error.appeal_limit": "Ja has afegit context dues vegades a aquest veredicte. És el màxim per veredicte.",

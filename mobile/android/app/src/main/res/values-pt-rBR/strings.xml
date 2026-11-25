@@ -271,7 +271,7 @@
     <string name="error_in_progress">Esse veredito ainda está sendo preparado. Espere um pouquinho.</string>
     <string name="error_not_found">Não encontramos isso.</string>
     <string name="error_case_closed">Este caso não aceita mais isso.</string>
-    <string name="error_seat_moved">Seu lado foi liberado. Abra o link de novo.</string>
+    <string name="error_seat_moved">Seu lugar foi liberado. Abra o link de novo.</string>
     <string name="error_case_expired">Este convite expirou.</string>
     <string name="error_appeal_used">Você já adicionou contexto a este caso.</string>
     <string name="error_appeal_limit">Você já adicionou contexto a este veredito duas vezes. É o máximo para um veredito.</string>

@@ -261,7 +261,7 @@
     <string name="error_in_progress">คำตัดสินนี้ยังทำไม่เสร็จ รอสักครู่นะ</string>
     <string name="error_not_found">ไม่พบสิ่งที่คุณหา</string>
     <string name="error_case_closed">เคสนี้ปิดรับแล้ว</string>
-    <string name="error_seat_moved">ฝั่งของคุณถูกปล่อยแล้ว เปิดลิงก์อีกครั้ง</string>
+    <string name="error_seat_moved">ที่นั่งของคุณถูกปล่อยแล้ว เปิดลิงก์อีกครั้ง</string>
     <string name="error_case_expired">คำเชิญนี้หมดอายุแล้ว</string>
     <string name="error_appeal_used">คุณเพิ่มบริบทในเคสนี้ไปแล้ว</string>
     <string name="error_appeal_limit">คุณเพิ่มบริบทในคำตัดสินนี้ไปแล้ว 2 ครั้ง ซึ่งเป็นจำนวนสูงสุดต่อหนึ่งคำตัดสิน</string>

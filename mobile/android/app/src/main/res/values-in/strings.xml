@@ -261,7 +261,7 @@
     <string name="error_in_progress">Putusan itu masih diproses. Tunggu sebentar.</string>
     <string name="error_not_found">Kami tidak menemukannya.</string>
     <string name="error_case_closed">Kasus ini sudah tidak menerima itu lagi.</string>
-    <string name="error_seat_moved">Posisimu sudah dilepas. Buka tautannya lagi.</string>
+    <string name="error_seat_moved">Tempatmu sudah dilepas. Buka tautannya lagi.</string>
     <string name="error_case_expired">Undangan ini sudah kedaluwarsa.</string>
     <string name="error_appeal_used">Kamu sudah menambahkan konteks ke kasus ini.</string>
     <string name="error_appeal_limit">Kamu sudah dua kali menambahkan konteks ke putusan ini. Itu batas untuk satu putusan.</string>

@@ -491,7 +491,7 @@ const sl: Locale = {
     "error.bad_origin": "Ta zahteva je prišla iz neznanega vira. Znova naloži stran in poskusi še enkrat.",
     "error.not_found": "Tega nismo našli.",
     "error.case_closed": "Ta spor tega ne sprejema več.",
-    "error.seat_moved": "Tvoja stran se je sprostila. Ponovno odpri povezavo.",
+    "error.seat_moved": "Tvoje mesto se je sprostilo. Ponovno odpri povezavo.",
     "error.case_expired": "To povabilo je poteklo.",
     "error.appeal_used": "Pri tem sporu je tvoj kontekst že dodan.",
     "error.appeal_limit": "K tej razsodbi je tvoj kontekst dodan že dvakrat. Več kot dvakrat pri eni razsodbi ne gre.",

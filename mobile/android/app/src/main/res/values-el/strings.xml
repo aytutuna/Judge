@@ -266,7 +266,7 @@
     <string name="error_in_progress">Αυτή η απόφαση ετοιμάζεται ακόμα. Περίμενε λίγο.</string>
     <string name="error_not_found">Δεν το βρήκαμε.</string>
     <string name="error_case_closed">Αυτή η υπόθεση δεν δέχεται πια κάτι τέτοιο.</string>
-    <string name="error_seat_moved">Η πλευρά σου ελευθερώθηκε. Άνοιξε ξανά τον σύνδεσμο.</string>
+    <string name="error_seat_moved">Η θέση σου ελευθερώθηκε. Άνοιξε ξανά τον σύνδεσμο.</string>
     <string name="error_case_expired">Αυτή η πρόσκληση έληξε.</string>
     <string name="error_appeal_used">Έχεις ήδη προσθέσει πληροφορίες σε αυτή την υπόθεση.</string>
     <string name="error_appeal_limit">Έχεις προσθέσει πληροφορίες σε αυτή την απόφαση δύο φορές. Αυτό είναι το όριο για μία απόφαση.</string>

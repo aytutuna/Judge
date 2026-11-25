@@ -266,7 +266,7 @@
     <string name="error_in_progress">Der bliver stadig arbejdet på den dom. Giv det et øjeblik.</string>
     <string name="error_not_found">Vi kunne ikke finde det.</string>
     <string name="error_case_closed">Sagen tager ikke imod mere.</string>
-    <string name="error_seat_moved">Din side blev givet fri. Åbn linket igen.</string>
+    <string name="error_seat_moved">Din plads blev frigivet. Åbn linket igen.</string>
     <string name="error_case_expired">Invitationen er udløbet.</string>
     <string name="error_appeal_used">Du har allerede tilføjet kontekst til denne sag.</string>
     <string name="error_appeal_limit">Du har tilføjet kontekst til denne dom to gange. Det er grænsen for én dom.</string>

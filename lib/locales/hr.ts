@@ -493,7 +493,7 @@ const hr: Locale = {
     "error.bad_origin": "Taj je zahtjev stigao s mjesta koje ne prepoznajemo. Ponovno učitaj stranicu i pokušaj opet.",
     "error.not_found": "Nismo to pronašli.",
     "error.case_closed": "Ovaj slučaj to više ne prima.",
-    "error.seat_moved": "Tvoja strana je oslobođena. Ponovno otvori poveznicu.",
+    "error.seat_moved": "Tvoje mjesto je oslobođeno. Ponovno otvori poveznicu.",
     "error.case_expired": "Ovaj je poziv istekao.",
     "error.appeal_used": "Tvoj kontekst za ovaj slučaj već je dodan.",
     "error.appeal_limit": "Ovoj je presudi kontekst dodan već dvaput. To je najviše što jedna presuda dopušta.",

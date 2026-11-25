@@ -266,7 +266,7 @@
     <string name="error_in_progress">उस फ़ैसले पर अभी काम चल रहा है। थोड़ा रुकें।</string>
     <string name="error_not_found">वह हमें नहीं मिला।</string>
     <string name="error_case_closed">इस केस में अब यह नहीं हो सकता।</string>
-    <string name="error_seat_moved">आपका पक्ष खाली हो गया। लिंक दोबारा खोलें।</string>
+    <string name="error_seat_moved">आपकी जगह खाली हो गई। लिंक दोबारा खोलें।</string>
     <string name="error_case_expired">इस न्योते की मियाद ख़त्म हो गई है।</string>
     <string name="error_appeal_used">इस केस में आपकी ओर से जानकारी पहले ही जोड़ी जा चुकी है।</string>
     <string name="error_appeal_limit">आपने इस फ़ैसले में दो बार जानकारी जोड़ ली है। एक फ़ैसले में इससे ज़्यादा नहीं जोड़ी जा सकती।</string>

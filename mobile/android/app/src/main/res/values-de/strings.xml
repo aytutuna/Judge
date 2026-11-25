@@ -266,7 +266,7 @@
     <string name="error_in_progress">An diesem Urteil wird noch gearbeitet. Einen Moment noch.</string>
     <string name="error_not_found">Das konnten wir nicht finden.</string>
     <string name="error_case_closed">Bei diesem Fall geht das nicht mehr.</string>
-    <string name="error_seat_moved">Deine Seite wurde freigegeben. Öffne den Link noch einmal.</string>
+    <string name="error_seat_moved">Dein Platz wurde freigegeben. Öffne den Link noch einmal.</string>
     <string name="error_case_expired">Diese Einladung ist abgelaufen.</string>
     <string name="error_appeal_used">Du hast diesem Fall schon Kontext hinzugefügt.</string>
     <string name="error_appeal_limit">Du hast diesem Urteil schon zweimal Kontext hinzugefügt. Mehr geht pro Urteil nicht.</string>

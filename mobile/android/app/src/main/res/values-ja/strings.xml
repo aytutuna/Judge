@@ -261,7 +261,7 @@
     <string name="error_in_progress">その判定はまだ処理中です。少しお待ちください。</string>
     <string name="error_not_found">見つかりませんでした。</string>
     <string name="error_case_closed">このケースでは、もうその操作はできません。</string>
-    <string name="error_seat_moved">あなたの言い分の枠は解放されました。もう一度リンクを開いてください。</string>
+    <string name="error_seat_moved">あなたの枠は解放されました。もう一度リンクを開いてください。</string>
     <string name="error_case_expired">この招待は期限切れです。</string>
     <string name="error_appeal_used">このケースにはすでに補足を追加しています。</string>
     <string name="error_appeal_limit">この判定にはすでに2回補足しています。1つの判定で補足できるのは2回までです。</string>

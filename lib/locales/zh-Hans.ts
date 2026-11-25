@@ -474,7 +474,7 @@ const zhHans: Locale = {
     "error.bad_origin": "这个请求的来源我们无法识别。请刷新页面再试。",
     "error.not_found": "找不到这个内容。",
     "error.case_closed": "这个案子已经不接受这项操作了。",
-    "error.seat_moved": "你的一方已被释放。请重新打开链接。",
+    "error.seat_moved": "你的位置已空出。请重新打开链接。",
     "error.case_expired": "这个邀请已过期。",
     "error.appeal_used": "你已经给这个案子补充过说明了。",
     "error.appeal_limit": "你已经给这份裁决补充过两次说明了，一份裁决最多只能补充两次。",

@@ -261,7 +261,7 @@
     <string name="error_in_progress">這個判決還在處理中，請稍等。</string>
     <string name="error_not_found">找不到這個內容。</string>
     <string name="error_case_closed">這個案子已經不再接受這項操作。</string>
-    <string name="error_seat_moved">你的一方已被釋放。請重新開啟連結。</string>
+    <string name="error_seat_moved">你的位置已空出。請重新開啟連結。</string>
     <string name="error_case_expired">這個邀請已經過期。</string>
     <string name="error_appeal_used">你已經為這個案子補充過說明了。</string>
     <string name="error_appeal_limit">你已經為這個判決補充過兩次說明，一個判決最多就是兩次。</string>

@@ -494,7 +494,7 @@ const nl: Locale = {
       "Dat verzoek kwam van een plek die we niet kennen. Laad de pagina opnieuw en probeer het nog eens.",
     "error.not_found": "Dat konden we niet vinden.",
     "error.case_closed": "Deze zaak neemt dat niet meer aan.",
-    "error.seat_moved": "Jouw kant is vrijgegeven. Open de link opnieuw.",
+    "error.seat_moved": "Je plek is vrijgegeven. Open de link opnieuw.",
     "error.case_expired": "Deze uitnodiging is verlopen.",
     "error.appeal_used": "Je hebt bij deze zaak al iets aangevuld.",
     "error.appeal_limit": "Je hebt deze uitspraak al twee keer aangevuld. Vaker kan niet bij één uitspraak.",

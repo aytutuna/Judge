@@ -492,7 +492,7 @@ const ptBR: Locale = {
     "error.bad_origin": "Esse pedido veio de um lugar que não reconhecemos. Recarregue a página e tente de novo.",
     "error.not_found": "Não encontramos isso.",
     "error.case_closed": "Este caso não aceita mais isso.",
-    "error.seat_moved": "Seu lado foi liberado. Abra o link de novo.",
+    "error.seat_moved": "Seu lugar foi liberado. Abra o link de novo.",
     "error.case_expired": "Este convite expirou.",
     "error.appeal_used": "Você já adicionou contexto a este caso.",
     "error.appeal_limit": "Você já adicionou contexto a este veredito duas vezes. É o máximo para um veredito.",

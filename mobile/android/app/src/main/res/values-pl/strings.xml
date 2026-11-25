@@ -276,7 +276,7 @@
     <string name="error_in_progress">Ten werdykt wciąż powstaje. Daj mu chwilę.</string>
     <string name="error_not_found">Nie udało się tego znaleźć.</string>
     <string name="error_case_closed">W tej sprawie nie da się już tego zrobić.</string>
-    <string name="error_seat_moved">Twoja strona została zwolniona. Otwórz link ponownie.</string>
+    <string name="error_seat_moved">Twoje miejsce zostało zwolnione. Otwórz link ponownie.</string>
     <string name="error_case_expired">To zaproszenie wygasło.</string>
     <string name="error_appeal_used">Twój kontekst do tej sprawy został już dodany.</string>
     <string name="error_appeal_limit">Kontekst do tego werdyktu dodano już dwa razy. To limit dla jednego werdyktu.</string>

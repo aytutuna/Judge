@@ -266,7 +266,7 @@
     <string name="error_in_progress">Tuomiota työstetään vielä. Odota hetki.</string>
     <string name="error_not_found">Emme löytäneet sitä.</string>
     <string name="error_case_closed">Tähän juttuun ei voi enää lisätä tätä.</string>
-    <string name="error_seat_moved">Puolesi vapautui. Avaa linkki uudelleen.</string>
+    <string name="error_seat_moved">Paikkasi vapautui. Avaa linkki uudelleen.</string>
     <string name="error_case_expired">Tämä kutsu on vanhentunut.</string>
     <string name="error_appeal_used">Olet jo lisännyt tietoa tähän juttuun.</string>
     <string name="error_appeal_limit">Olet lisännyt tietoa tähän tuomioon jo kahdesti, eikä enempää voi.</string>

@@ -489,7 +489,7 @@ const sk: Locale = {
     "error.bad_origin": "Táto požiadavka prišla z neznámeho miesta. Obnov stránku a skús to znova.",
     "error.not_found": "Nepodarilo sa to nájsť.",
     "error.case_closed": "Do tohto prípadu sa to už nedá pridať.",
-    "error.seat_moved": "Tvoja strana sa uvoľnila. Otvor odkaz znova.",
+    "error.seat_moved": "Tvoje miesto sa uvoľnilo. Otvor odkaz znova.",
     "error.case_expired": "Platnosť tejto pozvánky vypršala.",
     "error.appeal_used": "K tomuto prípadu už máš doplnený kontext.",
     "error.appeal_limit": "Kontext k tomuto verdiktu už máš doplnený dvakrát. Viac sa pri jednom verdikte nedá.",

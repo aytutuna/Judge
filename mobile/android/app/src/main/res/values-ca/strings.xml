@@ -271,7 +271,7 @@
     <string name="error_in_progress">Encara s\'està preparant aquest veredicte. Espera un moment.</string>
     <string name="error_not_found">No ho hem trobat.</string>
     <string name="error_case_closed">Aquest cas ja no ho admet.</string>
-    <string name="error_seat_moved">El teu costat s\'ha alliberat. Torna a obrir l\'enllaç.</string>
+    <string name="error_seat_moved">El teu lloc s\'ha alliberat. Torna a obrir l\'enllaç.</string>
     <string name="error_case_expired">Aquesta invitació ha caducat.</string>
     <string name="error_appeal_used">Ja has afegit context a aquest cas.</string>
     <string name="error_appeal_limit">Ja has afegit context dues vegades a aquest veredicte. És el màxim per veredicte.</string>

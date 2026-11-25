@@ -266,7 +266,7 @@
     <string name="error_in_progress">اس فیصلے پر ابھی کام چل رہا ہے۔ ذرا انتظار کریں۔</string>
     <string name="error_not_found">ہمیں یہ نہیں ملا۔</string>
     <string name="error_case_closed">اس کیس میں اب یہ نہیں ہو سکتا۔</string>
-    <string name="error_seat_moved">آپ کا فریق خالی ہو گیا۔ لنک دوبارہ کھولیں۔</string>
+    <string name="error_seat_moved">آپ کی جگہ خالی ہو گئی۔ لنک دوبارہ کھولیں۔</string>
     <string name="error_case_expired">اس دعوتی لنک کی میعاد ختم ہو گئی ہے۔</string>
     <string name="error_appeal_used">آپ اس کیس میں پہلے ہی مزید تفصیل شامل کر چکے ہیں۔</string>
     <string name="error_appeal_limit">آپ اس فیصلے میں دو بار تفصیل شامل کر چکے ہیں۔ ایک فیصلے میں بس اتنی ہی گنجائش ہے۔</string>

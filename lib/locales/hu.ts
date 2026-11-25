@@ -501,7 +501,7 @@ const hu: Locale = {
     "error.bad_origin": "Ez a kérés számunkra ismeretlen helyről jött. Töltsd újra az oldalt, és próbáld újra.",
     "error.not_found": "Ezt nem találtuk.",
     "error.case_closed": "Ebben az ügyben ez már nem lehetséges.",
-    "error.seat_moved": "A te oldalad felszabadult. Nyisd meg újra a linket.",
+    "error.seat_moved": "A helyed felszabadult. Nyisd meg újra a linket.",
     "error.case_expired": "Ez a meghívó lejárt.",
     "error.appeal_used": "Ehhez az ügyhöz már adtál kiegészítést.",
     "error.appeal_limit": "Ehhez az ítélethez már kétszer adtál kiegészítést. Egy ítéletnél ennyi a maximum.",

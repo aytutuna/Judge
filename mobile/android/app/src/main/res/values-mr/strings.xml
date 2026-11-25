@@ -266,7 +266,7 @@
     <string name="error_in_progress">तो निकाल अजून तयार होत आहे. थोडा वेळ थांबा.</string>
     <string name="error_not_found">ते सापडले नाही.</string>
     <string name="error_case_closed">या प्रकरणात आता हे स्वीकारले जात नाही.</string>
-    <string name="error_seat_moved">तुमची बाजू मोकळी झाली. लिंक पुन्हा उघडा.</string>
+    <string name="error_seat_moved">तुमची जागा मोकळी झाली. लिंक पुन्हा उघडा.</string>
     <string name="error_case_expired">या निमंत्रणाची मुदत संपली आहे.</string>
     <string name="error_appeal_used">तुम्ही या प्रकरणात आधीच माहिती जोडली आहे.</string>
     <string name="error_appeal_limit">तुम्ही या निकालासाठी दोनदा माहिती जोडली आहे. एका निकालासाठी जास्तीत जास्त दोनदाच जोडता येते.</string>

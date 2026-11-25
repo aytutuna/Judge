@@ -266,7 +266,7 @@
     <string name="error_in_progress">Bu karar hâlâ hazırlanıyor. Biraz bekle.</string>
     <string name="error_not_found">Bunu bulamadık.</string>
     <string name="error_case_closed">Bu dava artık bunu kabul etmiyor.</string>
-    <string name="error_seat_moved">Tarafın serbest kaldı. Bağlantıyı yeniden aç.</string>
+    <string name="error_seat_moved">Yerin serbest kaldı. Bağlantıyı yeniden aç.</string>
     <string name="error_case_expired">Bu davetin süresi doldu.</string>
     <string name="error_appeal_used">Bu davaya zaten ek bilgi ekledin.</string>
     <string name="error_appeal_limit">Bu karara iki kez bilgi ekledin. Bir karara en fazla bu kadar eklenebiliyor.</string>

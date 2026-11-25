@@ -271,7 +271,7 @@
     <string name="error_in_progress">Quel verdetto è ancora in lavorazione. Dagli un attimo.</string>
     <string name="error_not_found">Non l\'abbiamo trovato.</string>
     <string name="error_case_closed">Questo caso non lo accetta più.</string>
-    <string name="error_seat_moved">Il tuo lato è stato liberato. Apri di nuovo il link.</string>
+    <string name="error_seat_moved">Il tuo posto è stato liberato. Apri di nuovo il link.</string>
     <string name="error_case_expired">Questo invito è scaduto.</string>
     <string name="error_appeal_used">Hai già aggiunto contesto a questo caso.</string>
     <string name="error_appeal_limit">Hai già aggiunto contesto a questo verdetto due volte. Più di così non si può.</string>

@@ -474,7 +474,7 @@ const zhHant: Locale = {
     "error.bad_origin": "這個請求來自我們不認得的地方。請重新載入頁面再試一次。",
     "error.not_found": "找不到這個內容。",
     "error.case_closed": "這個案子已經不再接受這項操作。",
-    "error.seat_moved": "你的一方已被釋放。請重新開啟連結。",
+    "error.seat_moved": "你的位置已空出。請重新開啟連結。",
     "error.case_expired": "這個邀請已經過期。",
     "error.appeal_used": "你已經為這個案子補充過說明了。",
     "error.appeal_limit": "你已經為這個判決補充過兩次說明，一個判決最多就是兩次。",

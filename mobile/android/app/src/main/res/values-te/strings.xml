@@ -266,7 +266,7 @@
     <string name="error_in_progress">ఆ తీర్పు మీద ఇంకా పని జరుగుతోంది. కాసేపు ఆగండి.</string>
     <string name="error_not_found">అది మాకు దొరకలేదు.</string>
     <string name="error_case_closed">ఈ కేసులో ఇక అది కుదరదు.</string>
-    <string name="error_seat_moved">మీ వైపు ఖాళీ అయింది. లింక్‌ను మళ్లీ తెరవండి.</string>
+    <string name="error_seat_moved">మీ స్థానం ఖాళీ అయింది. లింక్‌ను మళ్లీ తెరవండి.</string>
     <string name="error_case_expired">ఈ ఆహ్వానం గడువు ముగిసింది.</string>
     <string name="error_appeal_used">ఈ కేసుకు మీరు ఇప్పటికే వివరాలు జోడించారు.</string>
     <string name="error_appeal_limit">ఈ తీర్పుకు మీరు రెండుసార్లు వివరాలు జోడించారు. ఒక తీర్పుకు అంతే వీలవుతుంది.</string>

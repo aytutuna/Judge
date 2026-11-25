@@ -271,7 +271,7 @@
     <string name="error_in_progress">עוד עובדים על פסק הדין הזה. עוד רגע.</string>
     <string name="error_not_found">לא מצאנו את זה.</string>
     <string name="error_case_closed">בתיק הזה כבר אי אפשר לעשות את זה.</string>
-    <string name="error_seat_moved">הצד שלך שוחרר. פתח את הקישור שוב.</string>
+    <string name="error_seat_moved">המקום שלך שוחרר. פתח את הקישור שוב.</string>
     <string name="error_case_expired">תוקף ההזמנה הזו פג.</string>
     <string name="error_appeal_used">כבר הוספת הקשר לתיק הזה.</string>
     <string name="error_appeal_limit">כבר הוספת הקשר לפסק הדין הזה פעמיים. זה המקסימום לפסק דין אחד.</string>
