@@ -54,10 +54,12 @@ export function loadClaim(caseId: string): string | null {
 /** Links the answer this browser gave signed out to the signed-in account
  * (POST /api/v1/cases/{id}/claim). The claim is dropped once the server has
  * answered for good: "linked", or "refused" (a wrong claim, an answer that
- * belongs to another account, an account that already has another side, a
- * case that is gone). "retry" keeps it for a
- * later page load (signed out, offline, server trouble). */
-export async function linkStoredClaim(caseId: string): Promise<"none" | "linked" | "refused" | "retry"> {
+ * belongs to another account, a case that is gone). The rest keep it:
+ * "conflict" (the account already answers for another side), "signed_out"
+ * and "retry" (offline, server trouble). */
+export async function linkStoredClaim(
+  caseId: string,
+): Promise<"none" | "linked" | "refused" | "conflict" | "signed_out" | "retry"> {
   const claim = loadClaim(caseId);
   if (!claim) return "none";
   try {
@@ -66,7 +68,9 @@ export async function linkStoredClaim(caseId: string): Promise<"none" | "linked"
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ claim }),
     });
-    if (!res.ok && ![404, 409, 410].includes(res.status)) return "retry";
+    if (res.status === 409) return "conflict";
+    if (res.status === 401) return "signed_out";
+    if (!res.ok && res.status !== 404 && res.status !== 410) return "retry";
     writeStorage(claimKey(caseId), null);
     return res.ok ? "linked" : "refused";
   } catch {

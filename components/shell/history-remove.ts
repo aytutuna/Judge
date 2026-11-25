@@ -34,10 +34,13 @@ async function attempt(item: HistoryItem): Promise<Outcome> {
     const token = inviteToken(item);
     if (!token) return "failed";
     // An answer given signed out joins the account first; one that belongs to another account is not this person's to remove.
-    if ((await linkStoredClaim(item.id)) === "refused") {
+    const link = await linkStoredClaim(item.id);
+    if (link === "refused") {
       dropAnswered(item.id);
       return "done";
     }
+    // The answer is this person's but cannot join the account yet; nothing is removed or forgotten.
+    if (link === "conflict") return "failed";
     path = `/api/v1/respond/${token}/removal`;
     init = { method: "POST", headers: JSON_HEADERS, body: body() };
   } else {

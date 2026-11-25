@@ -88,7 +88,7 @@ describe("linking an answer given signed out", () => {
   });
 
   it("sends the claim and forgets it once linked or refused for good", async () => {
-    for (const [status, outcome] of [[200, "linked"], [404, "refused"], [409, "refused"]] as const) {
+    for (const [status, outcome] of [[200, "linked"], [404, "refused"]] as const) {
       vi.stubGlobal("localStorage", fakeStorage());
       localStorage.setItem(claimKey(CASE), TOKEN);
       const fetch = reply(status);
@@ -99,12 +99,12 @@ describe("linking an answer given signed out", () => {
     }
   });
 
-  it("keeps the claim when signed out or the server is down", async () => {
-    for (const status of [401, 500, 429]) {
+  it("keeps the claim when signed out, in conflict, or the server is down", async () => {
+    for (const [status, outcome] of [[401, "signed_out"], [409, "conflict"], [500, "retry"], [429, "retry"]] as const) {
       vi.stubGlobal("localStorage", fakeStorage());
       localStorage.setItem(claimKey(CASE), TOKEN);
       vi.stubGlobal("fetch", reply(status));
-      expect(await linkStoredClaim(CASE)).toBe("retry");
+      expect(await linkStoredClaim(CASE)).toBe(outcome);
       expect(loadClaim(CASE)).toBe(TOKEN);
     }
     localStorage.setItem(claimKey(CASE), TOKEN);

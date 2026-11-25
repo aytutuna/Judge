@@ -363,21 +363,20 @@ describe("respondent page", () => {
     expect(html).not.toContain(esc(t("en", "case.accountA")));
   });
 
-  it("verdict, signed out: the respondent is You, both accounts, and a sign-in upsell for appeals", () => {
+  it("verdict, bystander: the verdict and both accounts, but no side is theirs", () => {
     const html = respondent(RESPONDENT.judgedSignedOut);
-    expect(html).toContain(esc("You're right"));
-    expect(html).toContain("Leans your way");
     expect(html).toContain(esc(t("en", "case.accountA")));
-    expect(html).toContain(t("en", "appeal.upsell").slice(0, 20));
-    expect(html).toContain(t("en", "appeal.signIn"));
-    // The invite token never goes into the sign-in link.
-    expect(html).toContain('href="/signin?next=%2Fr"');
+    expect(html).not.toContain("(you)");
+    expect(html).not.toContain(esc("You're right"));
+    expect(html).not.toContain("Your account (Party B)");
+    expect(html).not.toContain(t("en", "appeal.signIn"));
+    expect(html).not.toContain(t("en", "appeal.submit"));
+    expect(html).not.toContain(esc(t("en", "respond.remove")));
     expect(html).not.toContain("AbCdEfGhIjKlMnOpQrStUv");
-    expect(html).toContain("Your account (Party B)");
   });
 
   it("verdict without names in this browser: the respondent is still told they are Party B", () => {
-    const html = respondent(RESPONDENT.judgedSignedOut, { names: [] });
+    const html = respondent(RESPONDENT.judgedPremium, { names: [] });
     expect(html).toContain("Party B (you)");
     expect(html).toContain(esc("You're right"));
   });

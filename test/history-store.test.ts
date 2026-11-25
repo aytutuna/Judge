@@ -232,11 +232,11 @@ describe("settleHistory", () => {
     );
     await settleHistory();
     expect(calls).toEqual([
-      { url: "/api/v1/cases/c1/claim", body: JSON.stringify({ claim: CLAIM }) },
       { url: `/api/v1/respond/${TOKEN}`, body: null },
       { url: `/api/v1/respond/${dead}`, body: null },
     ]);
-    expect(localStorage.getItem("settle.claim.c1")).toBeNull();
+    // Signed out nothing is linked, and the claim waits for a sign-in.
+    expect(localStorage.getItem("settle.claim.c1")).toBe(CLAIM);
     expect(loadAnswered()).toHaveLength(1);
     expect(loadAnswered()[0]).toMatchObject({ id: "c1", state: "ready", verdict: "side_b", headline: "Party B paid" });
   });

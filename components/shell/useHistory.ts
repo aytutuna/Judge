@@ -388,7 +388,8 @@ async function lookUp(id: string): Promise<boolean> {
 /** A case this browser answered, still being judged when last seen. */
 async function lookUpAnswered(row: HistoryRow): Promise<boolean> {
   if (!row.inviteToken) return true;
-  const link = await linkStoredClaim(row.id);
+  const signedIn = Boolean(state?.user);
+  const link = signedIn ? await linkStoredClaim(row.id) : "none";
   if (link === "refused") {
     dropAnswered(row.id);
     return true;
@@ -400,7 +401,9 @@ async function lookUpAnswered(row: HistoryRow): Promise<boolean> {
     return true;
   }
   if (!res.ok) return false;
-  updateHistoryCase(((await res.json()) as { case: CaseView }).case);
+  const seen = ((await res.json()) as { case: CaseView }).case;
+  // Signed out the link answers for whichever side is open, not for this row's.
+  if (seen.yourParty === row.party) updateHistoryCase(seen);
   return true;
 }
 

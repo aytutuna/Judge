@@ -18,6 +18,7 @@ import type { NameMapping } from "@/lib/types";
 import { keyHolder, useCase } from "@/lib/use-case";
 import { refreshViewer, useViewer } from "@/lib/use-viewer";
 import { JudgingOverlay } from "../JudgingOverlay";
+import { loadAnswered } from "@/lib/history-store";
 import { updateHistoryCase } from "../shell/useHistory";
 import { Turnstile, TURNSTILE_SITE_KEY } from "../Turnstile";
 import { VerdictView } from "../VerdictView";
@@ -98,6 +99,7 @@ function useRespondForm(
   onDone: (view: CaseView, names: NameMapping[]) => void,
   suggestedName: string | null,
   signedIn: boolean,
+  shownParty: CaseView["yourParty"] | null,
 ): RespondForm {
   const [text, setText] = useState("");
   const lastBeat = useRef(0);
@@ -145,7 +147,7 @@ function useRespondForm(
           "Content-Type": "application/json",
           "Idempotency-Key": keyFor(JSON.stringify(payload)),
         },
-        body: JSON.stringify({ ...payload, ...(check ? { turnstileToken: check } : {}) }),
+        body: JSON.stringify({ ...payload, ...(shownParty && shownParty !== "a" ? { party: shownParty } : {}), ...(check ? { turnstileToken: check } : {}) }),
       });
       const json: unknown = await res.json().catch(() => null);
       const ok = json as RespondResponse | null;
@@ -469,39 +471,42 @@ export function RespondPanel({
   }
 
   // stage === "verdict"
+  const isParty = view.inAccount === true;
   return (
     <>
       {removedBanner}
       {current ? (
         <VerdictView
           result={current.result}
-          nameMap={names}
+          nameMap={isParty ? names : []}
           shareId={view.removed ? undefined : current.id}
           lang={lang}
           fresh={fresh}
           selfParty={selfParty}
-          viewerIsSelfParty
+          viewerIsSelfParty={isParty}
           focusAppeal={focusAppeal}
         />
       ) : null}
-      <AppealSection
-        lang={lang}
-        view={view}
-        signInHref={RESPOND_SIGNIN_HREF}
-        onSignIn={() => rememberPendingInvite(token)}
-        draft={appeal}
-        evidence={evidence}
-      />
+      {isParty ? (
+        <AppealSection
+          lang={lang}
+          view={view}
+          signInHref={RESPOND_SIGNIN_HREF}
+          onSignIn={() => rememberPendingInvite(token)}
+          draft={appeal}
+          evidence={evidence}
+        />
+      ) : null}
       <VerdictHistory lang={lang} verdicts={view.verdicts} linked={!view.removed} names={names} selfParty={selfParty} />
-      {ownTools}
+      {isParty ? ownTools : null}
       <AccountsRead
         lang={lang}
         title={t(lang, "case.accounts")}
         sides={view.sides}
         appeals={view.appeals}
-        yourParty={view.yourParty}
+        yourParty={isParty ? view.yourParty : undefined}
       />
-      {removal}
+      {isParty ? removal : null}
     </>
   );
 }
@@ -537,6 +542,7 @@ export function RespondScreen({ token }: { token: string }) {
     },
     firstNameOf(viewer.me?.user?.name),
     signedIn,
+    view?.yourParty ?? null,
   );
 
   // Once signed in, the first visit takes the next open side, so the owner
@@ -545,31 +551,42 @@ export function RespondScreen({ token }: { token: string }) {
   // the seat below never becomes a second side.
   const opened = useRef(false);
   const [full, setFull] = useState(false);
-  const linking = useRef<string | null>(null);
-  const [linked, setLinked] = useState<string | null>(null);
+  const linking = useRef(false);
+  const [linkDone, setLinkDone] = useState(false);
   const [linkFailed, setLinkFailed] = useState(false);
   const [linkTry, setLinkTry] = useState(0);
   useEffect(() => {
-    if (!view || !signedIn || linking.current === view.id) return;
-    linking.current = view.id;
-    void linkStoredClaim(view.id).then((out) => {
+    if (!signedIn || linking.current) return;
+    linking.current = true;
+    // The case id is only known from this browser's own record of the answer;
+    // without one there is no claim to link, and the case view can load as it is.
+    const caseId = loadAnswered().find((r) => r.inviteToken === token)?.id;
+    if (!caseId) {
+      void Promise.resolve().then(() => setLinkDone(true));
+      return;
+    }
+    void linkStoredClaim(caseId).then((out) => {
+      if (out === "signed_out") {
+        void refreshViewer();
+        return;
+      }
       // Not settled (offline, server trouble): nothing opens until a retry settles it.
       if (out === "retry") {
         setLinkFailed(true);
         return;
       }
       setLinkFailed(false);
-      setLinked(view.id);
+      setLinkDone(true);
       if (out === "linked") reload();
     });
-  }, [view, signedIn, reload, linkTry]);
+  }, [signedIn, token, reload, linkTry]);
   function retryLink() {
-    linking.current = null;
+    linking.current = false;
     setLinkFailed(false);
     setLinkTry((n) => n + 1);
   }
   useEffect(() => {
-    if (!view || !signedIn || linked !== view.id || opened.current) return;
+    if (!view || !signedIn || !linkDone || opened.current) return;
     if (view.ownInvite || view.status !== "awaiting_respondent" || view.respondentAnswered) return;
     opened.current = true;
     void (async () => {
@@ -585,7 +602,7 @@ export function RespondScreen({ token }: { token: string }) {
         opened.current = false;
       }
     })();
-  }, [view, signedIn, linked, base, setView]);
+  }, [view, signedIn, linkDone, base, setView]);
 
   async function removeSide() {
     setRemoveError(null);
@@ -639,7 +656,7 @@ export function RespondScreen({ token }: { token: string }) {
 
   // Who is looking is not known yet, or could not be looked up: no form until it is.
   const viewerFailed = !signedIn && !signedOut && viewer.status === "error";
-  const viewerPending = !signedIn && !signedOut;
+  const viewerPending = (!signedIn && !signedOut) || (signedIn && !linkDone && !linkFailed);
 
   // Every side is taken: the link shows the case as full.
   if (!view || full || viewerPending || linkFailed) {
