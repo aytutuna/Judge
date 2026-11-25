@@ -902,9 +902,10 @@ describe("one link for every side", () => {
 
   it("refuses an answer written for a side the account no longer holds, and keeps the case open", async () => {
     const o = await owner(2);
-    const { data, shared } = await createMany(o, 3);
+    const { data, shared } = await createMany(o, 4);
     const bob = await openLink(shared, uid("bob"));
     await openLink(shared, uid("carol"));
+    await openLink(shared, uid("dan"));
     await age(data.case.id, "b");
     const eve = uid("eve");
     expect((await openLink(shared, eve)).party).toBe("b");
@@ -913,29 +914,18 @@ describe("one link for every side", () => {
         req("POST", `/api/v1/respond/${shared}`, { user, ip: ip(), headers: SIDES, body: { text: BOB, turnstileToken: "t", party } }),
         shared,
       );
-    const lost = await send(bob.who!, "b");
-    expect(lost.status).toBe(409);
-    expect((await body(lost)).code).toBe("seat_moved");
+    // Every side is taken: nothing to move to.
+    const full = await send(bob.who!, "b");
+    expect(full.status).toBe(409);
+    expect((await body(full)).code).toBe("case_closed");
     expect(await count("SELECT count(*) AS n FROM case_sides WHERE case_id = ?", [data.case.id])).toBe(1);
-    // The holder of the side may still answer it.
+    // Once a side is free the loser is sent back to open the link.
+    const db = await getDb();
+    await db.execute({ sql: "DELETE FROM case_seats WHERE case_id = ? AND party = 'c'", args: [data.case.id] });
+    expect((await body(await send(bob.who!, "b"))).code).toBe("seat_moved");
+    // The holder of the side may still answer it, and the loser is still sent back afterwards.
     expect((await send(eve, "b")).status).toBe(202);
-  });
-
-  it("does not move an answer to another side when the shown one is free again", async () => {
-    const o = await owner(2);
-    const { data, shared } = await createMany(o, 3);
-    const bob = await openLink(shared, uid("bob"));
-    await legacySeat(data.case.id, "c");
-    await age(data.case.id, "b");
-    const carol = uid("carol");
-    // Bob's seat on B is idle, then taken; C is free once the legacy seat is taken over.
-    expect((await openLink(shared, carol)).party).toBe("b");
-    const res = await http.respondPostHandler(
-      req("POST", `/api/v1/respond/${shared}`, { user: bob.who!, ip: ip(), headers: SIDES, body: { text: BOB, turnstileToken: "t", party: "b" } }),
-      shared,
-    );
-    expect((await body(res)).code).toBe("seat_moved");
-    expect(await count("SELECT count(*) AS n FROM case_seats WHERE case_id = ? AND user_id = ?", [data.case.id, bob.who!])).toBe(0);
+    expect((await body(await send(bob.who!, "b"))).code).toBe("seat_moved");
   });
 
   it("takes the side the page showed when it is free, not the next one", async () => {
@@ -1012,6 +1002,7 @@ describe("one link for every side", () => {
     );
     expect(refused.status).toBe(409);
     expect((await body(refused)).code).toBe("case_closed");
+    expect(await count("SELECT count(*) AS n FROM case_seats WHERE case_id = ? AND user_id = ?", [data.case.id, dan])).toBe(1);
   });
 
   it("links a legacy answer for side C to the account, which then removes it", async () => {

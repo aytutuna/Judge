@@ -836,12 +836,12 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
         party = taken.party;
         return true;
       }
-      // The page showed a side that someone else now holds: it was this account's and was freed.
+      // The page showed a side that someone else now holds (it was freed, and may
+      // have been answered since): the person can still be given another one.
       if (shown !== undefined) {
         const fresh = await loadCaseBundle(row);
         moved =
-          !fresh.sides.some((s) => s.party === shown) &&
-          fresh.seats.some((s) => s.party === shown && s.userId !== viewer.user.id);
+          fresh.seats.some((s) => s.party === shown && s.userId !== viewer.user.id) && nextOpenSide(fresh, now) !== null;
       }
       return false;
     };
@@ -1325,14 +1325,11 @@ export function respondentClaimHandler(req: Request, id: string): Promise<NextRe
     if (bound) return fail("not_found");
     // One person is one side of a case: linked to another, or seated on another.
     if (boundElsewhere(row, invites, party, userId)) return fail("case_closed");
-    const db = await caseDb();
-    // A seat opened on the way here, with nothing answered on it, gives way to the real answer.
-    await db.execute({
-      sql: `DELETE FROM case_seats WHERE case_id = ? AND user_id = ? AND party <> ?
-              AND NOT EXISTS (SELECT 1 FROM case_sides s WHERE s.case_id = case_seats.case_id AND s.party = case_seats.party)`,
-      args: [row.id, userId, party],
-    });
+    await caseDb();
     const nowIso = new Date().toISOString();
+    // A seat of this account with something answered on it blocks the link; one
+    // without gives way to it, in the same batch so a refused link costs nothing.
+    const answeredSeat = `EXISTS (SELECT 1 FROM case_sides s WHERE s.case_id = st.case_id AND s.party = st.party)`;
     const rs = await entitlementWriteBatch([
       party === "b"
         ? {
@@ -1340,7 +1337,7 @@ export function respondentClaimHandler(req: Request, id: string): Promise<NextRe
                   WHERE id = ? AND respondent_user_id IS NULL AND respondent_claim_nonce = ? AND owner_id <> ?
                     AND removed_b_at IS NULL
                     AND NOT EXISTS (SELECT 1 FROM case_invites WHERE case_id = cases.id AND user_id = ?)
-                    AND NOT EXISTS (SELECT 1 FROM case_seats WHERE case_id = cases.id AND user_id = ? AND party <> 'b')`,
+                    AND NOT EXISTS (SELECT 1 FROM case_seats st WHERE st.case_id = cases.id AND st.user_id = ? AND st.party <> 'b' AND ${answeredSeat})`,
             args: [userId, nowIso, row.id, row.respondentClaimNonce, userId, userId, userId],
           }
         : {
@@ -1349,16 +1346,25 @@ export function respondentClaimHandler(req: Request, id: string): Promise<NextRe
                     AND EXISTS (SELECT 1 FROM cases c WHERE c.id = case_invites.case_id AND c.owner_id <> ?
                                   AND c.removed_${party}_at IS NULL AND c.respondent_user_id IS NOT ?)
                     AND NOT EXISTS (SELECT 1 FROM case_invites i WHERE i.case_id = case_invites.case_id AND i.user_id = ?)
-                    AND NOT EXISTS (SELECT 1 FROM case_seats WHERE case_id = case_invites.case_id AND user_id = ? AND party <> ?)`,
+                    AND NOT EXISTS (SELECT 1 FROM case_seats st WHERE st.case_id = case_invites.case_id AND st.user_id = ? AND st.party <> ? AND ${answeredSeat})`,
             args: [userId, nowIso, row.id, party, respondentOf(row, invites, party).claimNonce, userId, userId, userId, userId, party],
           },
+      {
+        sql: `DELETE FROM case_seats AS st WHERE st.case_id = ? AND st.user_id = ? AND st.party <> ? AND NOT ${answeredSeat}
+                AND (EXISTS (SELECT 1 FROM cases c WHERE c.id = st.case_id AND c.respondent_user_id = ?)
+                  OR EXISTS (SELECT 1 FROM case_invites i WHERE i.case_id = st.case_id AND i.user_id = ?))`,
+        args: [row.id, userId, party, userId, userId],
+      },
     ]);
     if (rs[0].rowsAffected !== 1) {
       const fresh = await getCase(row.id);
       const freshBound = respondentOf(fresh ?? row, await getInvites(row.id), party).userId;
       if (fresh && { b: fresh.removedBAt, c: fresh.removedCAt, d: fresh.removedDAt }[party]) return fail("removed");
       if (freshBound === userId) return json(claimed);
-      const seated = (await loadCaseBundle(fresh ?? row)).seats.some((s) => s.userId === userId && s.party !== party);
+      const answered = await loadCaseBundle(fresh ?? row);
+      const seated = answered.seats.some(
+        (st) => st.userId === userId && st.party !== party && answered.sides.some((x) => x.party === st.party),
+      );
       return seated ? fail("case_closed") : fail("not_found");
     }
     void track("case_claimed", { userId });
