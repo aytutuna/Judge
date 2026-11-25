@@ -402,8 +402,10 @@ async function lookUpAnswered(row: HistoryRow): Promise<boolean> {
   }
   if (!res.ok) return false;
   const seen = ((await res.json()) as { case: CaseView }).case;
-  // Signed out the link answers for whichever side is open, not for this row's.
+  // Without this answer's account the link speaks for whichever side is open,
+  // not for this row's: leave the row as it is and stop looking it up.
   if (seen.yourParty === row.party) updateHistoryCase(seen);
+  else addAnswered({ ...row, state: "ready" });
   return true;
 }
 

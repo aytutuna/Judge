@@ -184,6 +184,7 @@ export const OWNER = {
     status: "failed",
     mode: "two_sided",
     respondentAnswered: true,
+    inAccount: true,
     inviteUrl: null,
     canJudgeNow: false,
     lastError: "unavailable",

@@ -56,21 +56,23 @@ export type RespondStage =
 
 export function respondStage(view: CaseView): RespondStage {
   if (view.ownInvite) return "own_invite";
+  // Only the account that answered is spoken to as that side.
+  const answered = view.respondentAnswered && view.inAccount === true;
   switch (view.status) {
     case "awaiting_respondent":
-      if (!view.respondentAnswered) return "form";
+      if (!answered) return "form";
       return view.ownerSideMissing ? "waiting" : "closed";
     case "expired":
-      return view.respondentAnswered ? "expired_answered" : "expired";
+      return answered ? "expired_answered" : "expired";
     case "judging":
       if (view.mode === "one_sided") return "without_you";
-      return view.respondentAnswered ? "judging" : "closed";
+      return answered ? "judging" : "closed";
     case "judged":
       if (view.mode === "one_sided") return "without_you";
       return view.verdicts.length > 0 ? "verdict" : "closed";
     case "failed":
       if (view.mode === "one_sided") return "without_you";
-      return view.respondentAnswered ? "failed" : "closed";
+      return answered ? "failed" : "closed";
   }
 }
 
@@ -100,6 +102,7 @@ function useRespondForm(
   suggestedName: string | null,
   signedIn: boolean,
   shownParty: CaseView["yourParty"] | null,
+  onSeatMoved: () => Promise<boolean | null>,
 ): RespondForm {
   const [text, setText] = useState("");
   const lastBeat = useRef(0);
@@ -152,6 +155,9 @@ function useRespondForm(
       const json: unknown = await res.json().catch(() => null);
       const ok = json as RespondResponse | null;
       if (!res.ok || !ok?.case) {
+        // The side moved: take the page to the new one, keeping what was typed.
+        const code = (json as { code?: unknown } | null)?.code;
+        if (code === "seat_moved" && (await onSeatMoved())) return;
         trackApiError(json, res.status);
         setError(apiErrorMessage(lang, json, res.status));
         setTurnstileKey((k) => k + 1);
@@ -242,8 +248,9 @@ export function RespondPanel({
   const removeRef = useRef<HTMLDialogElement>(null);
   const removeCancelRef = useRef<HTMLButtonElement>(null);
   const stage = respondStage(view);
+  const isParty = view.inAccount === true;
   const current = view.verdicts.at(-1) ?? null;
-  const ownSide = view.sides.filter((s) => s.party === view.yourParty);
+  const ownSide = isParty ? view.sides.filter((s) => s.party === view.yourParty) : [];
   const selfParty = view.yourParty.toUpperCase() as SelfParty;
 
   if (stage === "own_invite") {
@@ -367,7 +374,7 @@ export function RespondPanel({
     );
   }
 
-  if (stage === "judging" || (overlay && stage === "verdict")) {
+  if (stage === "judging" || (isParty && overlay && stage === "verdict")) {
     return (
       <>
         <p className={styles.calm} role="status">
@@ -471,7 +478,6 @@ export function RespondPanel({
   }
 
   // stage === "verdict"
-  const isParty = view.inAccount === true;
   return (
     <>
       {removedBanner}
@@ -497,7 +503,14 @@ export function RespondPanel({
           evidence={evidence}
         />
       ) : null}
-      <VerdictHistory lang={lang} verdicts={view.verdicts} linked={!view.removed} names={names} selfParty={selfParty} />
+      <VerdictHistory
+        lang={lang}
+        verdicts={view.verdicts}
+        linked={!view.removed}
+        names={isParty ? names : []}
+        selfParty={selfParty}
+        viewerIsSelfParty={isParty}
+      />
       {isParty ? ownTools : null}
       <AccountsRead
         lang={lang}
@@ -533,6 +546,22 @@ export function RespondScreen({ token }: { token: string }) {
   const canProve = view?.inAccount === true;
   const { overlay, fresh, finish } = useJudgingOverlay(view?.status ?? null);
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const [full, setFull] = useState(false);
+  // Takes the next open side for this account; the person is told when none is left.
+  async function open(): Promise<boolean | null> {
+    try {
+      const res = await apiFetch(`${base}/open`, { method: "POST" });
+      const json = (await res.json().catch(() => null)) as OpenResponse | null;
+      if (res.ok && json?.case) {
+        setView(json.case);
+        return true;
+      }
+      if (res.status === 409) setFull(true);
+      return false;
+    } catch {
+      return null;
+    }
+  }
   const form = useRespondForm(
     token,
     lang,
@@ -543,66 +572,77 @@ export function RespondScreen({ token }: { token: string }) {
     firstNameOf(viewer.me?.user?.name),
     signedIn,
     view?.yourParty ?? null,
+    open,
   );
 
-  // Once signed in, the first visit takes the next open side, so the owner
-  // sees it opened and the side is held by this account from then on.
-  // An answer this browser gave signed out is linked to the account first, so
-  // the seat below never becomes a second side.
+  // An answer this browser gave signed out is linked to the account before
+  // anything takes a seat, so the seat never becomes a second side. The case id
+  // comes from this browser's record of the answer; the view's own id covers a
+  // claim left without one.
   const opened = useRef(false);
-  const [full, setFull] = useState(false);
   const linking = useRef(false);
+  const checking = useRef<string | null>(null);
   const [linkDone, setLinkDone] = useState(false);
+  const [claimChecked, setClaimChecked] = useState<string | null>(null);
   const [linkFailed, setLinkFailed] = useState(false);
   const [linkTry, setLinkTry] = useState(0);
+  // The load as it was when a link succeeded: the page waits for the one after it.
+  const [reloadFrom, setReloadFrom] = useState<typeof load | null>(null);
+  const latestLoad = useRef(load);
+  useEffect(() => {
+    latestLoad.current = load;
+  }, [load]);
+  function afterLink(out: Awaited<ReturnType<typeof linkStoredClaim>>, done: () => void) {
+    if (out === "signed_out") {
+      void refreshViewer().finally(() => setLinkFailed(true));
+      return;
+    }
+    // Not settled (offline, server trouble): nothing opens until a retry settles it.
+    if (out === "retry") {
+      setLinkFailed(true);
+      return;
+    }
+    setLinkFailed(false);
+    if (out === "linked") setReloadFrom(latestLoad.current);
+    done();
+    if (out === "linked") reload();
+  }
   useEffect(() => {
     if (!signedIn || linking.current) return;
     linking.current = true;
-    // The case id is only known from this browser's own record of the answer;
-    // without one there is no claim to link, and the case view can load as it is.
-    const caseId = loadAnswered().find((r) => r.inviteToken === token)?.id;
-    if (!caseId) {
+    const rowId = loadAnswered().find((r) => r.inviteToken === token)?.id;
+    if (!rowId) {
       void Promise.resolve().then(() => setLinkDone(true));
       return;
     }
-    void linkStoredClaim(caseId).then((out) => {
-      if (out === "signed_out") {
-        void refreshViewer();
-        return;
-      }
-      // Not settled (offline, server trouble): nothing opens until a retry settles it.
-      if (out === "retry") {
-        setLinkFailed(true);
-        return;
-      }
-      setLinkFailed(false);
-      setLinkDone(true);
-      if (out === "linked") reload();
-    });
-  }, [signedIn, token, reload, linkTry]);
+    void linkStoredClaim(rowId).then((out) => afterLink(out, () => setLinkDone(true)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [signedIn, token, linkTry]);
+  useEffect(() => {
+    if (!view || !signedIn || !linkDone || checking.current === view.id) return;
+    checking.current = view.id;
+    const id = view.id;
+    void linkStoredClaim(id).then((out) => afterLink(out, () => setClaimChecked(id)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [view, signedIn, linkDone, linkTry]);
   function retryLink() {
     linking.current = false;
+    checking.current = null;
     setLinkFailed(false);
     setLinkTry((n) => n + 1);
   }
+  const awaitingReload = reloadFrom !== null && load === reloadFrom;
+  const linkBlocked = signedIn && linkFailed;
+  const linkReady = linkDone && view !== null && claimChecked === view.id && !awaitingReload;
   useEffect(() => {
-    if (!view || !signedIn || !linkDone || opened.current) return;
+    if (!view || !signedIn || !linkReady || opened.current) return;
     if (view.ownInvite || view.status !== "awaiting_respondent" || view.respondentAnswered) return;
     opened.current = true;
     void (async () => {
-      try {
-        const res = await apiFetch(`${base}/open`, { method: "POST" });
-        const json = (await res.json().catch(() => null)) as OpenResponse | null;
-        if (res.ok && json?.case) {
-          setView(json.case);
-        } else if (res.status === 409) {
-          setFull(true);
-        }
-      } catch {
-        opened.current = false;
-      }
+      if ((await open()) === null) opened.current = false;
     })();
-  }, [view, signedIn, linkDone, base, setView]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [view, signedIn, linkReady]);
 
   async function removeSide() {
     setRemoveError(null);
@@ -625,9 +665,9 @@ export function RespondScreen({ token }: { token: string }) {
       setRemoveError(t(lang, "errorFallback"));
     }
   }
-  // The Verdicts list follows this page.
+  // The Verdicts list follows this page, for the answer that is this account's.
   useEffect(() => {
-    if (view) updateHistoryCase(view);
+    if (view?.inAccount === true) updateHistoryCase(view);
   }, [view]);
 
   const appeal = useAppealDraft<AppealResponse>({
@@ -651,15 +691,16 @@ export function RespondScreen({ token }: { token: string }) {
   const answering = stage === "form";
   // "Your case" only once they took part; an invite that closed without
   // them stays neutral.
-  const shut = stage === "expired" || stage === "closed" || stage === "without_you";
+  const bystander = view !== null && view.inAccount !== true && stage !== "own_invite";
+  const shut = stage === "expired" || stage === "closed" || stage === "without_you" || bystander;
   const title = t(lang, answering || !view ? "respond.title" : shut ? "respond.inviteTitle" : "case.title");
 
   // Who is looking is not known yet, or could not be looked up: no form until it is.
   const viewerFailed = !signedIn && !signedOut && viewer.status === "error";
-  const viewerPending = (!signedIn && !signedOut) || (signedIn && !linkDone && !linkFailed);
+  const viewerPending = (!signedIn && !signedOut) || (signedIn && !linkBlocked && (!linkDone || (view !== null && !linkReady)));
 
   // Every side is taken: the link shows the case as full.
-  if (!view || full || viewerPending || linkFailed) {
+  if (!view || full || viewerPending || linkBlocked) {
     const closed = full || load.code === "case_closed";
     const message =
       load.status === "loading" || (viewerPending && !viewerFailed)
@@ -675,11 +716,11 @@ export function RespondScreen({ token }: { token: string }) {
         <p className={calm ? styles.note : styles.error} role={calm && !closed ? "status" : "alert"}>
           {message}
         </p>
-        {(load.status === "error" || viewerFailed || linkFailed) && !closed ? (
+        {(load.status === "error" || viewerFailed || linkBlocked) && !closed ? (
           <button
             type="button"
             className={`${account.btn} ${account.primary}`}
-            onClick={() => (linkFailed ? retryLink() : viewerFailed ? void refreshViewer() : reload())}
+            onClick={() => (linkBlocked ? retryLink() : viewerFailed ? void refreshViewer() : reload())}
           >
             {t(lang, "case.retry")}
           </button>

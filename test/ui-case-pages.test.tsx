@@ -290,7 +290,7 @@ describe("respondent page", () => {
     expect(respondStage(RESPONDENT.withoutYou)).toBe("without_you");
     expect(respondStage(RESPONDENT.expired)).toBe("expired");
     expect(respondStage(caseView({ ...RESPONDENT.form, status: "judging", mode: "two_sided" }))).toBe("closed");
-    expect(respondStage(caseView({ ...RESPONDENT.form, status: "failed", mode: "two_sided", respondentAnswered: true }))).toBe(
+    expect(respondStage(caseView({ ...RESPONDENT.form, status: "failed", mode: "two_sided", respondentAnswered: true, inAccount: true }))).toBe(
       "failed",
     );
   });
@@ -299,6 +299,7 @@ describe("respondent page", () => {
     const waiting = caseView({
       ...RESPONDENT.form,
       respondentAnswered: true,
+      inAccount: true,
       ownerSideMissing: true,
       mode: "two_sided",
     });
@@ -311,7 +312,7 @@ describe("respondent page", () => {
   });
 
   it("an answer that expired unread keeps the expired note and the removal; a removed one says so", () => {
-    const expired = caseView({ ...RESPONDENT.expired, respondentAnswered: true, ownerSideMissing: true });
+    const expired = caseView({ ...RESPONDENT.expired, respondentAnswered: true, ownerSideMissing: true, inAccount: true });
     expect(respondStage(expired)).toBe("expired_answered");
     const html = respondent(expired, { onRemove: () => {} });
     expect(html).toContain(esc(t("en", "respond.expired")));
@@ -373,6 +374,16 @@ describe("respondent page", () => {
     expect(html).not.toContain(t("en", "appeal.submit"));
     expect(html).not.toContain(esc(t("en", "respond.remove")));
     expect(html).not.toContain("AbCdEfGhIjKlMnOpQrStUv");
+  });
+
+  it("bystander at the judging stage and at the fresh verdict: no thanks, no overlay, no side of theirs", () => {
+    const judging = respondent(caseView({ ...RESPONDENT.judging, inAccount: false }));
+    expect(judging).not.toContain(t("en", "respond.sent"));
+    expect(judging).not.toContain("Your account (Party B)");
+    expect(judging).toContain(esc(t("en", "respond.closed")));
+    const fresh = respondent(RESPONDENT.judgedSignedOut, { overlay: { done: true }, fresh: true });
+    expect(fresh).not.toContain(t("en", "respond.sent"));
+    expect(fresh).not.toContain(esc("Your side, as the judges read it"));
   });
 
   it("verdict without names in this browser: the respondent is still told they are Party B", () => {
