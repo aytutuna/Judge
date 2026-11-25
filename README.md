@@ -128,7 +128,7 @@ Every verdict needs a signed-in account (`401 signin_required` otherwise)
 and one premium unit, so the account is the main gate. On top of that,
 `lib/ratelimit.ts` counts premium verdicts per account and the site-wide
 `PREMIUM_DAILY_CAP` (see *Accounts and Premium*), and the routes anyone can
-reach without an account (translations, polling, a respondent's answer)
+reach without an account (translations, polling, the invite preview)
 per visitor IP. An IPv6 visitor is counted per /64 prefix, since one client
 usually holds a whole /64. The store only sees a keyed hash (HMAC-SHA256
 with `RATE_LIMIT_SALT`) of the IPv4 address or IPv6 prefix. The store is Upstash Redis when configured, else the app's
@@ -236,7 +236,10 @@ sign-in does not depend on it.
 - **Hear both sides.** Any signed-in user writes their side (`POST /api/v1/cases`)
   and gets a private invite link `/r/<token>` for the other person. That
   person signs in first, then writes their side privately (Turnstile when
-  configured, per-IP limits). Signed out, the link only shows the invite. Neither sees the other's text before the
+  configured, per-IP limits). Signed out, the link shows the invite (and the
+  verdict once there is one) and takes no side. The website links an answer
+  its browser gave signed out, before this was required, to the account on
+  the first visit after sign-in. Neither sees the other's text before the
   verdict; afterwards both see the verdict and both anonymized accounts.
   The judges get both accounts labelled "Party A's account" / "Party B's
   account" and add what both agree on, what is disputed (with which side the
