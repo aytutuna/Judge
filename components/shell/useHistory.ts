@@ -330,13 +330,18 @@ export function updateHistoryCase(view: CaseView): void {
   if (local) addAnswered(historyRowFromView(view, now, { at: local.at, nameMap: view.names ?? local.nameMap, inviteToken: local.inviteToken }));
 }
 
+/** Claims that could not settle (another side held, server trouble); tried again after a reload, not on every mount. */
+const unsettled = new Set<string>();
+
 /** Answers this browser gave signed out join the account that signed in; a
  * claim the server refuses belongs to someone else and its row goes. True
  * when any joined, so the account's list should be read again. */
 async function linkAnsweredClaims(): Promise<boolean> {
   let joined = false;
   for (const row of loadAnswered()) {
+    if (unsettled.has(row.id)) continue;
     const out = await linkStoredClaim(row.id);
+    if (out === "conflict" || out === "retry") unsettled.add(row.id);
     if (out === "linked" || out === "refused") dropAnswered(row.id);
     if (out === "linked") joined = true;
   }
@@ -498,7 +503,11 @@ export function useHistory(viewer: ViewerState, poll = false): HistoryView & { l
     return () => clearInterval(timer);
   }, [thinking]);
 
-  const items = useMemo(() => visibleItems(mergeHistory(mine?.data ?? null, local, answered)), [mine?.data, local, answered]);
+  const items = useMemo(() => {
+    const all = visibleItems(mergeHistory(mine?.data ?? null, local, answered));
+    // An answer given signed out can only be removed once its account is signed in.
+    return user ? all : all.map((i) => (i.role === "respondent" && i.removable ? { ...i, removable: false } : i));
+  }, [mine?.data, local, answered, user]);
   return {
     items,
     status: mine

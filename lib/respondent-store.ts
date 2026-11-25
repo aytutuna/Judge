@@ -1,6 +1,7 @@
 import { useSyncExternalStore } from "react";
 import { apiFetch } from "./api-fetch";
 import { INVITE_TOKEN_PATTERN } from "./case-types";
+import { dropAnswered } from "./history-store";
 
 /**
  * What the invited person's browser keeps, website only (the mobile app
@@ -72,7 +73,10 @@ export async function linkStoredClaim(
     if (res.status === 401) return "signed_out";
     if (!res.ok && res.status !== 404 && res.status !== 410) return "retry";
     writeStorage(claimKey(caseId), null);
-    return res.ok ? "linked" : "refused";
+    if (res.ok) return "linked";
+    // The row listing that answer has nothing left to link to either.
+    dropAnswered(caseId);
+    return "refused";
   } catch {
     return "retry";
   }

@@ -4,8 +4,9 @@ import { fromRow, visibleItems } from "../components/shell/useHistory";
 import type { HistoryRow } from "../lib/history-types";
 import { t } from "../lib/i18n";
 
-const mocked = vi.hoisted(() => ({ fetch: vi.fn() }));
+const mocked = vi.hoisted(() => ({ fetch: vi.fn(), link: vi.fn() }));
 vi.mock("../lib/api-fetch", () => ({ apiFetch: mocked.fetch }));
+vi.mock("../lib/respondent-store", () => ({ linkStoredClaim: mocked.link }));
 
 const row = (over: Partial<HistoryRow> & { id: string }): HistoryRow => ({
   kind: "verdict",
@@ -31,6 +32,8 @@ const row = (over: Partial<HistoryRow> & { id: string }): HistoryRow => ({
 beforeEach(() => {
   mocked.fetch.mockReset();
   mocked.fetch.mockResolvedValue({ ok: true, status: 200 });
+  mocked.link.mockReset();
+  mocked.link.mockResolvedValue("none");
 });
 
 describe("hidden rows", () => {
@@ -58,6 +61,15 @@ describe("removing rows", () => {
     const token = "T".repeat(22);
     await removeItem(fromRow(row({ id: "c2", kind: "case", role: "respondent", party: "b", inviteToken: token })));
     expect(mocked.fetch.mock.calls[1][0]).toBe(`/api/v1/respond/${token}/removal`);
+  });
+
+  it("asks an old signed-out answer for sign-in instead of a removal that cannot work", async () => {
+    mocked.link.mockResolvedValue("signed_out");
+    const token = "T".repeat(22);
+    const items = ["c2", "c3"].map((id) => fromRow(row({ id, kind: "case", role: "respondent", party: "b", inviteToken: token })));
+    const res = await removeItems(items, "en");
+    expect(res).toEqual({ failed: 2, limited: t("en", "error.signin_required") });
+    expect(mocked.fetch).not.toHaveBeenCalled();
   });
 
   it("counts the failures when removing several, and carries on past them", async () => {

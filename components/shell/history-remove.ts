@@ -39,6 +39,8 @@ async function attempt(item: HistoryItem): Promise<Outcome> {
       dropAnswered(item.id);
       return "done";
     }
+    // Signed out, the claim cannot join the account and removal needs one: ask for sign-in, which ends the run.
+    if (link === "signed_out") return { limited: { code: "signin_required" } };
     // The answer is this person's but cannot join the account yet; nothing is removed or forgotten.
     if (link === "conflict") return "failed";
     path = `/api/v1/respond/${token}/removal`;
