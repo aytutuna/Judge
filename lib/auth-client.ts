@@ -6,7 +6,7 @@
  */
 
 import { createAuthClient } from "better-auth/react";
-import { emailOTPClient, magicLinkClient } from "better-auth/client/plugins";
+import { emailOTPClient } from "better-auth/client/plugins";
 import { isApiErrorCode, type ApiErrorCode } from "./api-errors";
 import type { AgeState, AppConfig, MeResponse } from "./account-types";
 import type { Key } from "./i18n";
@@ -14,7 +14,7 @@ import type { Key } from "./i18n";
 // No baseURL: the browser's own origin, so one build works on any domain.
 export const authClient = createAuthClient({
   basePath: "/api/auth",
-  plugins: [magicLinkClient(), emailOTPClient()],
+  plugins: [emailOTPClient()],
 });
 
 type Failed = { ok: false; code: string; status?: number };
@@ -63,33 +63,15 @@ export async function lookupEmail(
     : { ok: false, code: "failed" };
 }
 
-/** Emails a sign-in link. `captchaToken` is the Turnstile token when the
- * widget is configured. Put `?lang=tr` on callbackURL for a Turkish email. */
-export async function sendMagicLink(
-  email: string,
-  callbackURL: string,
-  captchaToken?: string,
-): Promise<Outcome> {
-  try {
-    const { error } = await authClient.signIn.magicLink({
-      email,
-      callbackURL,
-      fetchOptions: captchaToken ? { headers: { "x-captcha-response": captchaToken } } : undefined,
-    });
-    return error ? failure(error) : { ok: true };
-  } catch {
-    return { ok: false, code: "network" };
-  }
-}
-
 /** Emails a 6-digit sign-in code (the apps use the same endpoint). `lang`
- * picks the language of the email. */
-export async function sendSignInCode(email: string, lang: string): Promise<Outcome> {
+ * picks the language of the email; `captchaToken` is the Turnstile token when
+ * the widget is configured. */
+export async function sendSignInCode(email: string, lang: string, captchaToken?: string): Promise<Outcome> {
   try {
     const { error } = await authClient.emailOtp.sendVerificationOtp({
       email,
       type: "sign-in",
-      fetchOptions: { query: { lang } },
+      fetchOptions: { query: { lang }, headers: captchaToken ? { "x-captcha-response": captchaToken } : undefined },
     });
     return error ? failure(error) : { ok: true };
   } catch {

@@ -1,9 +1,8 @@
 /**
- * Sign-in emails (magic links and one-time codes) and "your case is ready"
- * notices through Resend's HTTP API, with plain fetch. Configured by
- * RESEND_API_KEY and EMAIL_FROM; without both, email sign-in is reported
- * unavailable and no notice is sent. Never logs addresses, links, codes or
- * case text.
+ * Sign-in code emails and "your case is ready" notices through Resend's HTTP
+ * API, with plain fetch. Configured by RESEND_API_KEY and EMAIL_FROM; without
+ * both, email sign-in is reported unavailable and no notice is sent. Never logs
+ * addresses, links, codes or case text.
  */
 
 import { emailCopy, loadLocales, t, type EmailCopy, type Lang } from "./i18n";
@@ -21,13 +20,6 @@ export function emailConfigured(env: Record<string, string | undefined> = proces
 
 /** English email copy; other languages carry theirs in lib/locales. */
 export const EMAIL_EN: EmailCopy = {
-  signIn: {
-    subject: "Your Judge sign-in link",
-    intro: "Tap the button below to sign in to Judge.",
-    button: "Sign in to Judge",
-    expiry: "The link works once and expires in 10 minutes.",
-    ignore: "If you didn't ask for this, you can ignore this email.",
-  },
   signInCode: {
     subject: "Your Judge sign-in code",
     intro: "Enter this code to sign in:",
@@ -47,19 +39,6 @@ function copy(lang: Lang): EmailCopy {
   return emailCopy(lang) ?? EMAIL_EN;
 }
 
-/** The email language: the `lang` query param of the magic link's
- * callbackURL (the website sends `/account?lang=tr`), default English. */
-export function langFromMagicLink(url: string): Lang {
-  try {
-    const callback = new URL(url).searchParams.get("callbackURL");
-    if (!callback) return "en";
-    const lang = new URL(callback, "http://localhost").searchParams.get("lang");
-    return isLang(lang) ? lang : "en";
-  } catch {
-    return "en";
-  }
-}
-
 /** The opening html tag; right-to-left languages say so. */
 function htmlTag(lang: Lang): string {
   return langDir(lang) === "rtl" ? `<html lang="${lang}" dir="rtl">` : `<html lang="${lang}">`;
@@ -72,20 +51,6 @@ function escapeHtml(s: string): string {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
-}
-
-export function signInEmailContent(url: string, lang: Lang): EmailContent {
-  const c = copy(lang).signIn;
-  const text = `${c.intro}\n\n${url}\n\n${c.expiry}\n${c.ignore}\n`;
-  // Ivory & Terracotta, inline styles only (email clients drop <style>).
-  const html = `<!doctype html>${htmlTag(lang)}<body style="margin:0;padding:32px 16px;background:${P.ivory};font-family:Georgia,'Times New Roman',serif;color:${P.ink}">
-<div style="max-width:480px;margin:0 auto;background:${P.paper};border:1px solid ${P.strata};border-radius:12px;padding:32px">
-<p style="font-size:22px;margin:0 0 16px">Judge</p>
-<p style="font-size:16px;line-height:1.5;margin:0 0 24px">${escapeHtml(c.intro)}</p>
-<p style="margin:0 0 24px"><a href="${escapeHtml(url)}" style="display:inline-block;background:${P.terraInk};color:${P.paper};text-decoration:none;padding:12px 20px;border-radius:8px;font-family:Arial,sans-serif;font-size:15px">${escapeHtml(c.button)}</a></p>
-<p style="font-size:13px;line-height:1.5;color:${P.muted};margin:0">${escapeHtml(c.expiry)}<br>${escapeHtml(c.ignore)}</p>
-</div></body></html>`;
-  return { subject: c.subject, text, html };
 }
 
 /** Posts one email to Resend. Throws on failure with `label` and the HTTP
@@ -106,13 +71,6 @@ async function deliver(to: string, content: EmailContent, label: string, unconfi
     throw new Error(`${label} request failed: ${e instanceof Error ? e.name : "error"}`);
   }
   if (!res.ok) throw new Error(`${label} rejected: HTTP ${res.status}`);
-}
-
-/** Sends the sign-in link. Throws on failure (Better Auth then answers the
- * request with an error); the message never contains the address or link. */
-export async function sendSignInEmail({ to, url, lang }: { to: string; url: string; lang: Lang }): Promise<void> {
-  await loadLocales();
-  await deliver(to, signInEmailContent(url, lang), "sign-in email", "email sign-in is not configured");
 }
 
 /** The code email's language: `lang=tr` in the request URL's query (the apps

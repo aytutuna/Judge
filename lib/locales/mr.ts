@@ -4,13 +4,6 @@ const mr: Locale = {
   voice:
     'Address the reader with plural "तुम्ही" and its verb forms (e.g. "तुम्ही बरोबर आहात"), never singular "तू" and never the formal "आपण" as a form of address, as the interface does (the reflexive "आपला/आपली" is fine). Refer to the parties as "पक्ष A" and "पक्ष B" in prose, like names: nothing in front of them, always the Latin capital letter, and attach Marathi case endings straight to the letter with no space or hyphen ("पक्ष Aचे म्हणणे", "पक्ष Bला वाटते", "पक्ष Aने सांगितले"), so a real name can later replace the label. A name of either gender may replace a label, so avoid gendered verb forms for the parties: prefer "पक्ष Aचे म्हणणे आहे की…", "पक्ष Aच्या मते…", "पक्ष Bला वाटते…" or the ergative "पक्ष Aने … केले" over "पक्ष A म्हणतो" or "पक्ष B म्हणाली". Other people stay "Person C", "Person D" exactly as written, with endings attached the same way. The card prints "जर" before each conditional if_value and an arrow after it, so write if_value as a bare Marathi condition clause with the verb at the end in the conditional form (e.g. "तुम्हाला प्रामाणिकपणा सर्वात महत्त्वाचा वाटत असेल"), never starting with "जर" and never ending with "तर". Write the way people actually write Marathi today, not bookish Sanskritized prose: short sentences, everyday words ("मुद्दा", "बाजू", "पुरावा", "कळीचा मुद्दा"), and English loanwords only where Marathi speakers really use them. Call the judges "परीक्षक". Use standard written Marathi with Western punctuation (a full stop, never the danda "।"), curly quotes “…” and Western digits (6000, 7).',
   email: {
-    signIn: {
-      subject: "तुमची Judge साइन-इन लिंक",
-      intro: "Judge मध्ये साइन इन करण्यासाठी खालच्या बटणावर टॅप करा.",
-      button: "Judge मध्ये साइन इन करा",
-      expiry: "ही लिंक एकदाच वापरता येते आणि 10 मिनिटांत बंद होते.",
-      ignore: "ही विनंती तुम्ही केली नसेल, तर या ईमेलकडे दुर्लक्ष केले तरी चालेल.",
-    },
     signInCode: {
       subject: "तुमचा Judge साइन-इन कोड",
       intro: "साइन इन करण्यासाठी हा कोड टाका:",

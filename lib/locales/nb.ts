@@ -4,13 +4,6 @@ const nb: Locale = {
   voice:
     'Address the reader with informal "du", never the formal "De". Refer to the parties as "Part A" and "Part B" in prose, like names: no article and no ending added (never "parten A" or "Part A-en"), and avoid the genitive by writing "til Part A" or "fra Part B" (e.g. "argumentet til Part A"). Keep "Person C", "Person D" exactly as written. Write each conditional if_value as a bare Norwegian subordinate clause that reads on after the card\'s "Hvis", starting in lower case unless it starts with a party label or a name, with subordinate word order (subject first, "ikke" and similar adverbs before the verb, e.g. "du setter ærlighet høyest" or "dere ikke har avtalt noe annet"), and never start it with "Hvis", "Om" or "Dersom". Use Norwegian Bokmål conventions: decimal comma, a space for thousands (10 000), quotes as «…», and a comma after a subordinate clause that opens the sentence.',
   email: {
-    signIn: {
-      subject: "Innloggingslenken din til Judge",
-      intro: "Trykk på knappen nedenfor for å logge inn på Judge.",
-      button: "Logg inn på Judge",
-      expiry: "Lenken kan brukes én gang og utløper om 10 minutter.",
-      ignore: "Hvis det ikke var du som ba om dette, kan du se bort fra denne e-posten.",
-    },
     signInCode: {
       subject: "Innloggingskoden din til Judge",
       intro: "Skriv inn denne koden for å logge inn:",

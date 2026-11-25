@@ -82,9 +82,15 @@ export function Turnstile({
           theme: "auto",
           size: "flexible",
           language: lang,
-          callback: (token) => emit(token),
+          callback: (token) => {
+            setFailed(false);
+            emit(token);
+          },
           "expired-callback": () => emit(null),
-          "error-callback": () => emit(null),
+          "error-callback": () => {
+            setFailed(true);
+            emit(null);
+          },
         });
       })
       .catch(() => {

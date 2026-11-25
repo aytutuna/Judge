@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { PageShell } from "../components/account/PageShell";
 import { ogCanDraw } from "../components/OgCard";
-import { caseReadyEmailContent, signInEmailContent } from "../lib/email";
+import { caseReadyEmailContent, signInCodeEmailContent } from "../lib/email";
 
 describe("right-to-left languages", () => {
   it("set dir on the page wrapper", () => {
@@ -17,9 +17,9 @@ describe("right-to-left languages", () => {
   });
 
   it("mark their emails right to left and leave the others as they were", () => {
-    expect(signInEmailContent("https://x.test/l", "he").html).toContain('<html lang="he" dir="rtl">');
+    expect(signInCodeEmailContent("482913", "he").html).toContain('<html lang="he" dir="rtl">');
     expect(caseReadyEmailContent("https://x.test/c", "ur").html).toContain('<html lang="ur" dir="rtl">');
-    expect(signInEmailContent("https://x.test/l", "tr").html).toContain('<html lang="tr"><body');
+    expect(signInCodeEmailContent("482913", "tr").html).toContain('<html lang="tr"><body');
   });
 });
 

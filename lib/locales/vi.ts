@@ -4,13 +4,6 @@ const vi: Locale = {
   voice:
     'Address the reader as "bạn", never "anh", "chị", "quý khách" or "mày", and refer to the service as "chúng tôi". Write plain, warm, everyday Vietnamese, short and direct, not stiff formal or legal prose. Refer to the parties as "Bên A" and "Bên B" in prose, like names, always capitalized, with no "phía", "người" or other word in front, and with possessives after the noun ("lập luận của Bên A"). Other people stay "Person C", "Person D" exactly as written. The card prints "Nếu" before each conditional if_value and an arrow after it, so write that clause as a bare condition with no leading "Nếu", "Giả sử" or "Khi" and no trailing "thì" (e.g. "bạn coi trọng sự thật hơn cảm xúc"), starting lowercase unless the first word is a name or a party label. Avoid courtroom jargon such as "thẩm phán", "tòa án" or "bị cáo". Use curly double quotes “…”, no space before ? ! : or ;, a decimal comma and a period as thousands separator (6.000).',
   email: {
-    signIn: {
-      subject: "Liên kết đăng nhập Judge của bạn",
-      intro: "Nhấn vào nút bên dưới để đăng nhập vào Judge.",
-      button: "Đăng nhập Judge",
-      expiry: "Liên kết chỉ dùng được một lần và hết hạn sau 10 phút.",
-      ignore: "Nếu bạn không yêu cầu, bạn có thể bỏ qua email này.",
-    },
     signInCode: {
       subject: "Mã đăng nhập Judge của bạn",
       intro: "Nhập mã này để đăng nhập:",

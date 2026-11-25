@@ -41,6 +41,7 @@ import {
 } from "./panel";
 import type { VerifiedEvidence } from "../evidence";
 import { sideEvidenceGroups } from "../evidence/groups";
+import { logId } from "@/lib/log-id";
 
 /** Escalation starts only before this much of the request has passed, the
  * crux trial only before the second mark, and (on case, evidence and appeal
@@ -428,7 +429,7 @@ export function premiumLogLine(
     .join(",");
   return [
     "[premium] verdict",
-    `id=${id ?? "-"}`,
+    `id=${id ? logId(id) : "-"}`,
     `outcome=${outcome}`,
     `fact_check=${stats.factCheck}`,
     `claims=${stats.claims}`,

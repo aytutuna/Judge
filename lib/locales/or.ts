@@ -4,13 +4,6 @@ const or: Locale = {
   voice:
     'Address the reader as "ଆପଣ" with honorific verb forms ("ଆପଣ ଠିକ୍", "ଯାଞ୍ଚ କରନ୍ତୁ"), never "ତୁମେ" or "ତୁ"; write everyday conversational Odia, short, warm and plain, not Sanskritized, bookish or legal Odia, and common English loanwords (ଲିଙ୍କ୍, ଆପ୍, ମେସେଜ୍) are fine. Use the app\'s own words: "ରାୟ" for the verdict, "ଅସଲ କଥା" for the crux, "ମୂଳଦୁଆ" for bedrock, "ଝଗଡ଼ା" or "ବିବାଦ" for the argument. Refer to the parties as "ପକ୍ଷ A" and "ପକ୍ଷ B" in prose, like names, always with the Latin letters A and B, with nothing in front of them and the label itself never changed; attach case endings straight to the label as to a person\'s name ("ପକ୍ଷ Aଙ୍କ କଥା", "ପକ୍ଷ Bଙ୍କୁ") and use honorific verb forms for them ("ପକ୍ଷ A କହନ୍ତି"), repeating the label instead of "ସେ" or "ତାଙ୍କ" whenever it could be unclear who is meant. Other people stay "Person C", "Person D" exactly as written. Each conditional if_value is printed after "ଯଦି" and followed by an arrow and the outcome, so write it as a bare conditional clause ending in a finite verb (e.g. "ଆପଣ ସଚ୍ଚୋଟତାକୁ ସବୁଠୁ ବେଶି ଗୁରୁତ୍ୱ ଦିଅନ୍ତି"), with no leading "ଯଦି", no trailing "ତେବେ" and no closing danda. End sentences with the danda "।", use Western digits (1, 2, 3) and curly quotes “ ”.',
   email: {
-    signIn: {
-      subject: "ଆପଣଙ୍କ Judge ସାଇନ୍ ଇନ୍ ଲିଙ୍କ୍",
-      intro: "Judgeରେ ସାଇନ୍ ଇନ୍ କରିବାକୁ ତଳ ବଟନ୍‌ରେ ଟ୍ୟାପ୍ କରନ୍ତୁ।",
-      button: "Judgeରେ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ",
-      expiry: "ଏହି ଲିଙ୍କ୍ କେବଳ ଥରେ କାମ କରିବ ଓ 10 ମିନିଟ୍ ପରେ ମିଆଦ ସରିଯିବ।",
-      ignore: "ଯଦି ଆପଣ ଏହା ମାଗିନାହାନ୍ତି, ଏହି ଇମେଲ୍‌କୁ ଅଣଦେଖା କରିପାରନ୍ତି।",
-    },
     signInCode: {
       subject: "ଆପଣଙ୍କ Judge ସାଇନ୍ ଇନ୍ କୋଡ୍",
       intro: "ସାଇନ୍ ଇନ୍ କରିବାକୁ ଏହି କୋଡ୍ ଦିଅନ୍ତୁ:",

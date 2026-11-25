@@ -4,13 +4,6 @@ const pa: Locale = {
   voice:
     'Write natural, casual Punjabi in Gurmukhi script and address the reader as "ਤੁਸੀਂ" with its verb forms ("ਤੁਸੀਂ ਸਹੀ ਹੋ", "ਜਾਂਚ ਲਓ"), never "ਤੂੰ" and never the stiff honorific "ਆਪ" as a pronoun for the reader (the reflexive "ਆਪ", "ਆਪਣਾ" is fine). Keep the words everyday, not Sanskritized or legal; common English loanwords (ਲਿੰਕ, ਐਪ, ਮੈਸੇਜ) are fine. Refer to the parties as "ਧਿਰ A" and "ਧਿਰ B" in prose, like names: always with the Latin letters A and B, nothing in front of them (no "ਇਹ" or "ਉਹ"), the label itself never changed, and postpositions written after it as after a name ("ਧਿਰ A ਦਾ", "ਧਿਰ B ਨੂੰ"). The noun "ਧਿਰ" is grammatically feminine, but inside a label it stands for a person, so never let it pull the verb into feminine agreement. Real names may later replace these labels, so avoid verb and adjective forms that mark a party\'s gender ("ਧਿਰ A ਮੰਨਦੀ ਹੈ", "ਧਿਰ B ਗਿਆ"); prefer "ਧਿਰ A ਦਾ ਕਹਿਣਾ ਹੈ ਕਿ", "ਧਿਰ B ਮੁਤਾਬਕ", "ਧਿਰ A ਨੇ ਕਿਹਾ"; where a verb form cannot be avoided, use the respectful plural that Punjabi uses for anyone ("ਧਿਰ A ਮੰਨਦੇ ਹਨ", "ਧਿਰ B ਚਲੇ ਗਏ"). Other people stay "Person C", "Person D" exactly as written. Each conditional if_value is printed after "ਜੇ" and followed by an arrow and the outcome, so write it as a bare condition clause with no leading "ਜੇ" or "ਜੇਕਰ" and no trailing "ਤਾਂ" (e.g. "ਤੁਹਾਡੇ ਲਈ ਇਮਾਨਦਾਰੀ ਸਭ ਤੋਂ ਅਹਿਮ ਹੈ"). End sentences with the danda "।", use Western digits (1, 2, 3) and curly double quotes “ ”.',
   email: {
-    signIn: {
-      subject: "ਤੁਹਾਡਾ Judge ਸਾਈਨ ਇਨ ਲਿੰਕ",
-      intro: "Judge ਵਿੱਚ ਸਾਈਨ ਇਨ ਕਰਨ ਲਈ ਹੇਠਾਂ ਦਿੱਤੇ ਬਟਨ ’ਤੇ ਟੈਪ ਕਰੋ।",
-      button: "Judge ਵਿੱਚ ਸਾਈਨ ਇਨ ਕਰੋ",
-      expiry: "ਇਹ ਲਿੰਕ ਸਿਰਫ਼ ਇੱਕ ਵਾਰ ਚੱਲੇਗਾ ਅਤੇ 10 ਮਿੰਟਾਂ ਬਾਅਦ ਕੰਮ ਕਰਨਾ ਬੰਦ ਕਰ ਦੇਵੇਗਾ।",
-      ignore: "ਜੇ ਤੁਸੀਂ ਇਹ ਨਹੀਂ ਮੰਗਿਆ ਸੀ, ਤਾਂ ਇਸ ਈਮੇਲ ਨੂੰ ਨਜ਼ਰਅੰਦਾਜ਼ ਕਰ ਸਕਦੇ ਹੋ।",
-    },
     signInCode: {
       subject: "ਤੁਹਾਡਾ Judge ਸਾਈਨ ਇਨ ਕੋਡ",
       intro: "ਸਾਈਨ ਇਨ ਕਰਨ ਲਈ ਇਹ ਕੋਡ ਭਰੋ:",

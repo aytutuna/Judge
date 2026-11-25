@@ -3,8 +3,9 @@ import { PHASE_PRODUCTION_SERVER } from "next/constants";
 import pkg from "./package.json";
 
 const nextConfig: NextConfig = {
-  // The account page now lives in Settings; magic links and the sign-in
-  // fallback still point at /account.
+  poweredByHeader: false,
+  // The account page now lives in Settings; the sign-in fallback still points
+  // at /account.
   redirects: async () => [
     { source: "/account", destination: "/settings", permanent: false },
     { source: "/verdicts", destination: "/", permanent: false },

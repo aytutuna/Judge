@@ -62,7 +62,10 @@ async function post(pathAndQuery: string, body: unknown, headers: Record<string,
 }
 
 const codeFrom = (mail: Sent) => /\b(\d{6})\b/.exec(mail.text)![1];
-const sendCode = (email: string) => post("/email-otp/send-verification-otp", { email, type: "sign-in" });
+// A different IP per request: the per-IP send limit is not what these tests are about.
+let sends = 0;
+const sendCode = (email: string) =>
+  post("/email-otp/send-verification-otp", { email, type: "sign-in" }, { "x-forwarded-for": `192.0.2.${++sends % 250}` });
 const signInPassword = (email: string, password: string, headers: Record<string, string> = {}) =>
   post("/sign-in/email", { email, password }, headers);
 

@@ -6,7 +6,7 @@ export const runtime = "nodejs";
 
 /**
  * Better Auth's own HTTP surface: social sign-in and callbacks, native ID-token
- * sign-in, magic links, get-session and sign-out. 404 while auth is off.
+ * sign-in, email codes, get-session and sign-out. 404 while auth is off.
  */
 async function handle(req: Request): Promise<Response> {
   if (!authConfigured()) {

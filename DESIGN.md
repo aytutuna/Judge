@@ -11,7 +11,7 @@ the admin script are in the README ("Accounts and Premium").
 | Product | The website and a later native app (iOS + Android, likely Expo / React Native) share one backend. The app will be the main product, so every capability is a versioned JSON HTTP API. No server actions, no cookie-only flows. |
 | Tiers | One tier: every verdict, two-sided case and appeal is **Premium** (clarifying questions, web fact-check with sources, the Sonnet/Haiku panel, evidence) and costs one premium unit. Getting a verdict needs an account on the website too; the site stays browsable signed out. A `tier` sent by older app builds is accepted and ignored. Every account created from then on gets 1 welcome credit (a `promo` grant keyed `welcome:<user id>`, from Better Auth's `user.create.after` hook); older accounts get nothing. `GET /api/v1/config` reports `freeTier: false` and `welcomeCredits`. |
 | Auth | [Better Auth](https://www.better-auth.com) 1.7 on the existing libSQL database (`@libsql/kysely-libsql`; an npm `overrides` entry keeps one `@libsql/client`). Browser: HttpOnly cookie `verdict.session_token` (`__Secure-` on https). App: the same session token as `Authorization: Bearer`. 30-day sliding sessions. |
-| Sign-in | Apple and Google (web redirect and native ID token), email magic link (website) or 6-digit email code (apps), both through Resend, and a dev-only test login. Methods without credentials are reported unavailable by `GET /api/v1/config` and shown disabled. |
+| Sign-in | Apple and Google (web redirect and native ID token), 6-digit email code (website and apps) through Resend, a password set after the first code, and a dev-only test login. Methods without credentials are reported unavailable by `GET /api/v1/config` and shown disabled. |
 | Dev login | Only when the code is not a production build (the `process.env.NODE_ENV` literal is inlined by `next build`, so starting a build with another `NODE_ENV` does not help) **and** `DEV_LOGIN=1` **and** the server listens on loopback only (`next dev -H 127.0.0.1`, read from Next's recorded listen origin) **and** the `Host` header is `localhost`/`127.0.0.1`/`[::1]` (`X-Forwarded-Host` ignored). Otherwise 404. |
 | Errors | `{ error, code, retryAfterSec?, resetsAt? }` with stable codes in `lib/api-errors.ts`. |
 | Entitlements | Credit balance + subscriptions + an append-only grant ledger with `UNIQUE(source, external_id)` + a `premium_usage` reservation table. A credit is reserved before any model call, then consumed or refunded. Writes are single conditional `batch()` statements under an in-process mutex with SQLITE_BUSY retry; interactive transactions are never used (they failed 7 of 8 under parallel load on one libSQL client). |
@@ -26,7 +26,7 @@ the admin script are in the README ("Accounts and Premium").
 Browser (cookie)            Native app (Bearer)
       │                            │
       ├── /api/auth/*  (Better Auth: social redirect + callback, ID-token sign-in,
-      │                 magic link, get-session, sign-out)
+      │                 get-session, sign-out)
       ├── /api/v1/config           GET   sign-in methods, premium on/off, pricing
       ├── /api/v1/me               GET   viewer + entitlement      DELETE  delete account
       ├── /api/v1/auth/dev-login   POST  dev only

@@ -4,13 +4,6 @@ const ptBR: Locale = {
   voice:
     'Write Brazilian Portuguese, not European, and address the reader as "você", never "tu", "o senhor" or "a senhora", as the interface does. Refer to the parties as "Parte A" and "Parte B" in prose, like first names: no article in front (write "Parte A tem razão", "o argumento de Parte A", "para Parte B", never "a Parte A", "da Parte A" or "pela Parte B", since the labels are later swapped back for real names of either gender), and keep "Person C", "Person D" exactly as written. The card prints "Se" and then each conditional if_value, so write if_value as a bare clause in the future subjunctive that reads naturally after "Se", in lower case unless it starts with a party label or a name (e.g. "você valorizar mais a sinceridade do que o tato"); never repeat "Se". Use curly double quotes “ ”, a decimal comma and a period between thousands (6.000).',
   email: {
-    signIn: {
-      subject: "Seu link de acesso ao Judge",
-      intro: "Toque no botão abaixo para entrar no Judge.",
-      button: "Entrar no Judge",
-      expiry: "O link só funciona uma vez e expira em 10 minutos.",
-      ignore: "Se você não pediu isso, pode ignorar este e-mail.",
-    },
     signInCode: {
       subject: "Seu código de acesso ao Judge",
       intro: "Digite este código para entrar:",

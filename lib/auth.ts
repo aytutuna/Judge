@@ -4,11 +4,12 @@
  * - browsers: the HttpOnly cookie `verdict.session_token` (`__Secure-` on https);
  * - the native app: the same session token as `Authorization: Bearer <token>`.
  *
- * Sign-in methods: Apple and Google (web redirect and native ID token), email
- * magic link or one-time email code (website and apps), both through Resend,
- * a password set after the first emailed code, and a dev-only test login. A method without credentials is simply not
- * offered (authProviders). Without BETTER_AUTH_SECRET in production, auth is
- * off, and with it judging: every verdict needs an account.
+ * Sign-in methods: Apple and Google (web redirect and native ID token), a
+ * one-time email code (website and apps) through Resend, a password set after
+ * the first emailed code, and a dev-only test login. A method without
+ * credentials is simply not offered (authProviders). Without
+ * BETTER_AUTH_SECRET in production, auth is off, and with it judging: every
+ * verdict needs an account.
  */
 
 import { createHash, createHmac } from "node:crypto";
@@ -17,23 +18,19 @@ import { betterAuth, type Auth, type AuthContext, type BetterAuthOptions, type B
 import { APIError, createAuthMiddleware } from "better-auth/api";
 import { makeSignature } from "better-auth/crypto";
 import { getMigrations } from "better-auth/db/migration";
-import { bearer, captcha, emailOTP, magicLink } from "better-auth/plugins";
+import { bearer, emailOTP } from "better-auth/plugins";
 import type { AgeState, AuthProviders, Viewer } from "./account-types";
 import { ageRefusal, keptBlock, needsConfirmed, requestPath, type AgeRefusal } from "./age";
 import { APPLE_SECRET_REFRESH_MS, appleClientSecret, appleEnv } from "./apple-secret";
 import { getDb } from "./db";
-import {
-  emailConfigured,
-  langFromMagicLink,
-  langFromRequestUrl,
-  sendSignInCodeEmail,
-  sendSignInEmail,
-} from "./email";
+import { emailConfigured, langFromRequestUrl, sendSignInCodeEmail } from "./email";
 import { ensureEntitlementTables, grantMissedWelcomeCredit, grantWelcomeCredit } from "./entitlements";
 import { clientIp } from "./client-ip";
-import { checkUserLimits, visitorKey, type UserBucket } from "./ratelimit";
+import { checkCodeEmailCap, checkUserLimits, visitorKey, type UserBucket } from "./ratelimit";
 import { captureAppleRefreshToken, deleteSignInTokens, keepCapturedAppleRefreshToken } from "./signin-tokens";
-import { signal } from "./signals";
+import { signal, type Signal } from "./signals";
+import { isDeviceId } from "./analytics/validate";
+import { verifyTurnstile } from "./turnstile";
 
 type Env = Record<string, string | undefined>;
 type AuthInstance = Auth<BetterAuthOptions>;
@@ -41,12 +38,13 @@ type AuthInstance = Auth<BetterAuthOptions>;
 export type ViewerSession = { user: Viewer; sessionId: string; via: "cookie" | "bearer"; age: AgeState };
 
 const SESSION_DAYS = 30;
-/** Email sign-in links and codes live this long. */
+/** Emailed sign-in codes live this long. */
 const EMAIL_SIGNIN_SECONDS = 600;
 /** Wrong guesses allowed per emailed code before it is burned. */
 const EMAIL_CODE_ATTEMPTS = 3;
-/** Sign-in requests per IP and endpoint per minute (production only). */
+/** Code requests per IP and endpoint per minute (production only). */
 const EMAIL_SIGNIN_RATE = { window: 60, max: 3 };
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const SEND_CODE_PATH = "/email-otp/send-verification-otp";
 const CODE_SIGNIN_PATH = "/sign-in/email-otp";
 const PASSWORD_SIGNIN_PATH = "/sign-in/email";
@@ -131,8 +129,10 @@ export function premiumEnabled(env: Env = process.env): boolean {
  * REVIEW_ACCOUNT_CODE, and to which no email is sent (App Review has no inbox
  * of ours). Needs REVIEW_ACCOUNT_EMAIL, a 6-digit code that is not a trivial
  * run of digits, and email sign-in configured (the code plugin is only loaded
- * then). It is an ordinary account otherwise: same limits, only the welcome
- * credit.
+ * then). Sends skip Turnstile and every send cap, and guesses skip the
+ * per-address ceiling, so nobody can lock it out; guesses are limited per IP
+ * and by one site-wide hourly bucket. Otherwise it is an ordinary account,
+ * with only the welcome credit.
  */
 export function reviewAccount(env: Env = process.env): { email: string; code: string } | null {
   const email = env.REVIEW_ACCOUNT_EMAIL?.trim().toLowerCase() ?? "";
@@ -142,21 +142,6 @@ export function reviewAccount(env: Env = process.env): { email: string; code: st
   if (!/^\d{6}$/.test(code)) return null;
   if (/^(\d)\1{5}$/.test(code) || code === "123456" || code === "654321") return null;
   return { email, code };
-}
-
-/** Code requests for the review address per hour, process-wide. Each request
- * resets the per-code guess count, so without this a guess-and-resend search
- * of the fixed code would be bounded only by the per-IP rate limit; with it,
- * REVIEW_SENDS_PER_HOUR * EMAIL_CODE_ATTEMPTS guesses an hour. Past the cap
- * the address gets a random code that is never sent: locked until the window
- * moves on. */
-const REVIEW_SENDS_PER_HOUR = 10;
-const reviewSends: number[] = [];
-function reviewSendAllowed(now = Date.now()): boolean {
-  while (reviewSends.length && now - reviewSends[0] > 3_600_000) reviewSends.shift();
-  if (reviewSends.length >= REVIEW_SENDS_PER_HOUR) return false;
-  reviewSends.push(now);
-  return true;
 }
 
 function originOf(raw: string | undefined): string | null {
@@ -248,20 +233,44 @@ async function keepPreviousCode(context: AuthContext, email: string): Promise<vo
   await context.internalAdapter.createVerificationValue({ identifier, ...previous });
 }
 
-async function limitOrThrow(subject: string, bucket: UserBucket): Promise<void> {
+/** One watcher signal per name and hour, so a flood of refused requests
+ * writes one line, not one each. */
+const signalled = new Map<Signal, number>();
+function signalHourly(name: Signal): void {
+  const now = Date.now();
+  if (now - (signalled.get(name) ?? 0) < 3_600_000) return;
+  signalled.set(name, now);
+  signal(name);
+}
+
+async function limitOrThrow(subject: string, bucket: UserBucket, onFull?: () => void): Promise<void> {
   const limit = await checkUserLimits(subject, bucket);
   if (limit.ok) return;
+  if (limit.code !== "unavailable") onFull?.();
   if (limit.code === "unavailable") {
     throw new APIError("SERVICE_UNAVAILABLE", { message: "Sign-in is unavailable right now.", code: "unavailable" });
   }
   throw new APIError("TOO_MANY_REQUESTS", { message: "Too many attempts", code: "RATE_LIMITED" });
 }
 
+/** App requests, as far as the server can tell: the apps send Device-Id and
+ * Device-Platform with every sign-in call and, not being browsers, no Origin.
+ * A script can send the same headers, so this only spares the apps the
+ * Turnstile widget they cannot show; the address and global caps still apply
+ * to them. */
+export function isAppRequest(headers: Headers): boolean {
+  return (
+    !headers.has("origin") &&
+    isDeviceId(headers.get("device-id")?.trim() ?? "") &&
+    ["ios", "android"].includes(headers.get("device-platform")?.trim().toLowerCase() ?? "")
+  );
+}
+
 /** Code limits by canonical address, so aliases share one budget: a tight one
  * per address and IP (like password_signin, address alone would let anyone
- * lock a victim out) and a looser one per address. The review address has its
- * own send cap (reviewSendAllowed), but its code never changes, so guesses
- * are still counted. */
+ * lock a victim out) and a looser one per address. The review address has no
+ * per-address guess limit (anyone could lock it out): its guesses are counted
+ * per IP and, against a spread-out search, in one site-wide bucket. */
 async function limitCodeAddress(
   email: unknown,
   kind: "send" | "attempt",
@@ -269,12 +278,33 @@ async function limitCodeAddress(
   env: Env,
 ): Promise<void> {
   if (typeof email !== "string") return;
-  if (kind === "send" && reviewAccount(env)?.email === email.trim().toLowerCase()) return;
+  const review = reviewAccount(env)?.email === email.trim().toLowerCase();
   const claim = welcomeClaim(email);
   if (!claim) return;
   const bucket = kind === "send" ? "code_send" : "code_attempt";
   await limitOrThrow(`${claim}:${visitorKey(clientIp(headers))}`, bucket);
-  await limitOrThrow(claim, `${bucket}_any`);
+  if (!review) await limitOrThrow(claim, `${bucket}_any`);
+  else if (kind === "attempt") await limitOrThrow("review", "code_attempt_review", () => signalHourly("review_guess_cap"));
+}
+
+/** The site-wide ceiling on code emails an hour, so a spread-out flood cannot
+ * burn the sender's reputation. Refused sends raise a watcher signal. */
+async function limitCodeEmails(env: Env): Promise<void> {
+  const limit = await checkCodeEmailCap(env);
+  if (limit.ok) return;
+  if (limit.code !== "unavailable") signalHourly("code_email_cap");
+  throw new APIError("SERVICE_UNAVAILABLE", { message: "Sign-in is unavailable right now.", code: "unavailable" });
+}
+
+/** Website code requests carry a Turnstile token in x-captcha-response.
+ * Without TURNSTILE_SECRET_KEY nothing is checked (local dev). */
+async function requireHuman(headers: Headers): Promise<void> {
+  const result = await verifyTurnstile(headers.get("x-captcha-response")?.trim() || undefined, clientIp(headers));
+  if (result === "ok") return;
+  if (result === "error") {
+    throw new APIError("SERVICE_UNAVAILABLE", { message: "Sign-in is unavailable right now.", code: "unavailable" });
+  }
+  throw new APIError("FORBIDDEN", { message: "Verification failed", code: "CAPTCHA_FAILED" });
 }
 
 function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeof getDb>>) {
@@ -288,13 +318,6 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
   const plugins: BetterAuthPlugin[] = [bearer()];
   if (emailConfigured(env)) {
     plugins.push(
-      magicLink({
-        expiresIn: EMAIL_SIGNIN_SECONDS,
-        storeToken: "hashed",
-        sendMagicLink: async ({ email, url }) => {
-          await sendSignInEmail({ to: email, url, lang: langFromMagicLink(url) });
-        },
-      }),
       // The email code: POST /email-otp/send-verification-otp?lang=tr
       // {email, type:"sign-in"}, then POST /sign-in/email-otp {email, otp}.
       emailOTP({
@@ -308,7 +331,7 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         generateOTP: ({ email, type }) => {
           const review = reviewAccount(env);
           if (type !== "sign-in" || !review || email.toLowerCase() !== review.email) return undefined;
-          return reviewSendAllowed() ? review.code : undefined;
+          return review.code;
         },
         sendVerificationOTP: async ({ email, otp, type }, ctx) => {
           if (type !== "sign-in") return; // refused earlier by hooks.before
@@ -322,17 +345,6 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         },
       }),
     );
-    if (env.TURNSTILE_SECRET_KEY?.trim()) {
-      plugins.push(
-        captcha({
-          provider: "cloudflare-turnstile",
-          secretKey: env.TURNSTILE_SECRET_KEY.trim(),
-          // Magic link only: the apps cannot show the widget, so the code
-          // endpoints rely on the rate limits and the per-code attempt cap.
-          endpoints: ["/sign-in/magic-link"],
-        }),
-      );
-    }
   }
 
   const options: BetterAuthOptions = {
@@ -446,7 +458,6 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
       enabled: production,
       storage: "memory",
       customRules: {
-        "/sign-in/magic-link": EMAIL_SIGNIN_RATE,
         [SEND_CODE_PATH]: EMAIL_SIGNIN_RATE,
         [CODE_SIGNIN_PATH]: EMAIL_SIGNIN_RATE,
         [PASSWORD_SIGNIN_PATH]: PASSWORD_SIGNIN_RATE,
@@ -460,7 +471,18 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         if (ctx.path === SEND_CODE_PATH) {
           const body = ctx.body as { type?: unknown; email?: unknown } | undefined;
           if (body?.type !== "sign-in") throw new APIError("BAD_REQUEST", { message: "Only sign-in codes are supported" });
-          await limitCodeAddress(body.email, "send", ctx.headers ?? ctx.request?.headers ?? new Headers(), env);
+          const headers = ctx.headers ?? ctx.request?.headers ?? new Headers();
+          const email = typeof body.email === "string" ? body.email : null;
+          // Before any limit, so a malformed address costs no cap or check.
+          if (email !== null && !EMAIL_RE.test(email)) {
+            throw new APIError("BAD_REQUEST", { message: "Invalid email", code: "INVALID_EMAIL" });
+          }
+          if (email && reviewAccount(env)?.email !== email.trim().toLowerCase()) {
+            await limitOrThrow(visitorKey(clientIp(headers)), "code_send_ip");
+            if (!isAppRequest(headers)) await requireHuman(headers);
+            await limitCodeAddress(email, "send", headers, env);
+            if (welcomeClaim(email)) await limitCodeEmails(env);
+          }
           if (typeof body.email === "string") {
             const row = await ctx.context.internalAdapter.findVerificationValue(codeIdentifier(body.email));
             if (row && row.expiresAt > new Date()) {

@@ -175,6 +175,8 @@ export type UserBucket =
   | "password_signin"
   | "code_send"
   | "code_send_any"
+  | "code_send_ip"
+  | "code_attempt_review"
   | "code_attempt"
   | "code_attempt_any"
   | "signin_lookup"
@@ -237,7 +239,15 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
   code_send: [{ limit: 5, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:cs1h" }],
   /** Sign-in code emails per canonical address from anywhere: a looser
    * ceiling, since a tight one by address alone would lock the owner out. */
-  code_send_any: [{ limit: 20, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:csa1h" }],
+  code_send_any: [{ limit: 10, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:csaday" }],
+  /** Sign-in code requests per visitor IP across all addresses, so one IP
+   * cannot use up the site-wide hourly cap. */
+  code_send_ip: [
+    { limit: 10, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:csip1h" },
+    { limit: 30, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:csipday" },
+  ],
+  /** Guesses at the review account's fixed code from anywhere (key "review"). */
+  code_attempt_review: [{ limit: 300, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:car1h" }],
   /** Sign-in code guesses, keyed canonical address and visitor IP. A resend
    * issues a new code and resets the per-code count, so this is the cap that
    * survives it. */
@@ -415,6 +425,20 @@ export async function checkUserLimits(userId: string, bucket: UserBucket): Promi
  * it is refused. Same stores and fail-closed behavior as checkUserLimits. */
 export async function checkIpLimits(ip: string, bucket: IpBucket): Promise<LimitDecision> {
   return noteLimited(`ip:${bucket}`, await checkWindows(`ip:${bucket}`, visitorKey(ip), IP_LIMITS[bucket]));
+}
+
+const DEFAULT_CODE_EMAILS_PER_HOUR = 100;
+
+/** Sign-in code emails the site may send an hour, from CODE_EMAILS_PER_HOUR
+ * (0 stops them). Counted across all addresses; Redis when configured, so it
+ * holds across instances. */
+export async function checkCodeEmailCap(env: Record<string, string | undefined> = process.env): Promise<LimitDecision> {
+  const limit = dailyCap(env.CODE_EMAILS_PER_HOUR, DEFAULT_CODE_EMAILS_PER_HOUR);
+  const full: LimitDecision = { ok: false, code: "rate_limited", retryAfterSec: 60 * 60 };
+  if (limit === 0) return full;
+  return checkWindows(`u:code_email_cap:${limit}`, "site", [
+    { limit, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:cecap1h" },
+  ]);
 }
 
 const DEFAULT_PREMIUM_DAILY_CAP = 500;

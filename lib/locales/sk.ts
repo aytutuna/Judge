@@ -4,13 +4,6 @@ const sk: Locale = {
   voice:
     'Address the reader with informal "ty" (tykanie), never "vy", and avoid gendered past-tense forms for the reader (prefer present tense or impersonal phrasing). Refer to the parties as "Strana A" and "Strana B" in prose, like names, and always write them exactly so: never inflect the label (no "Strany A", "Strane A", "Stranu A", "Stranou A"); build each sentence so the label is the subject, follows a colon or stands in a nominative phrase. Use present-tense verbs with a label rather than gendered past-tense forms, because a real name of either gender may replace it later. "Person C", "Person D" stay exactly as written, also uninflected. The card prints "Ak" before each conditional if_value, so write the if_value as a bare lowercase condition clause in the present tense that reads on from "Ak" (e.g. "ti na úprimnosti záleží viac než na ohľaduplnosti"), never starting with "Ak", "Keď" or "Pokiaľ". Write the way a Slovak speaker would put it, not word for word from English. Use Slovak quotation marks „…“, a spaced en dash, a decimal comma and a space as the thousands separator.',
   email: {
-    signIn: {
-      subject: "Tvoj prihlasovací odkaz do Judge",
-      intro: "Do Judge sa prihlásiš tlačidlom nižšie.",
-      button: "Prihlásiť sa do Judge",
-      expiry: "Odkaz funguje len raz a platí 10 minút.",
-      ignore: "Ak to nebola tvoja žiadosť, tento e-mail pokojne ignoruj.",
-    },
     signInCode: {
       subject: "Tvoj prihlasovací kód do Judge",
       intro: "Zadaj tento kód a prihlás sa:",

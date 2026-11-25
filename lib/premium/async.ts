@@ -14,6 +14,7 @@ import type { Lang } from "@/lib/i18n";
 import type { Venue } from "@/lib/venues";
 import { completeVerdictJob, failVerdictJob, maybeSweepVerdictJobs } from "@/lib/verdict-jobs";
 import { premiumLogLine, runPreparedPipeline, type PreparedPremium, type PremiumRun } from "./run";
+import { logId } from "@/lib/log-id";
 
 export type PremiumJobInput = {
   id: string;
@@ -40,7 +41,7 @@ export async function runPremiumJob(job: PremiumJobInput): Promise<void> {
     const outcome = run.outcome;
     if (outcome.status !== "ok") {
       const code = outcome.status === "failed" ? outcome.code : "unavailable";
-      console.error(`[premium] job ${job.id}: all judge runs failed:`, outcome.error);
+      console.error(`[premium] job ${logId(job.id)}: all judge runs failed:`, outcome.error);
       await failVerdictJob(job.id, code, job.reservationId);
       console.info(premiumLogLine(null, code, run));
       void track("verdict_failed", {
@@ -65,7 +66,7 @@ export async function runPremiumJob(job: PremiumJobInput): Promise<void> {
       { ownerToken: null, reservationId: job.reservationId, settle: free ? "refund" : "consume" },
     );
     if (!done.stored) {
-      console.warn(`[premium] job ${job.id} was no longer judging; nothing stored`);
+      console.warn(`[premium] job ${logId(job.id)} was no longer judging; nothing stored`);
       console.info(premiumLogLine(null, "superseded", run));
       return;
     }
@@ -75,10 +76,10 @@ export async function runPremiumJob(job: PremiumJobInput): Promise<void> {
       props: { kind: "verdict", ...(job.prepared.parties ? { mode: "many_sided" } : {}) },
     });
   } catch (e) {
-    console.error(`[premium] job ${job.id} failed:`, e instanceof Error ? e.message : String(e));
+    console.error(`[premium] job ${logId(job.id)} failed:`, e instanceof Error ? e.message : String(e));
     if (run) console.info(premiumLogLine(null, "error", run));
     await failVerdictJob(job.id, "unavailable", job.reservationId).catch((err: unknown) => {
-      console.error(`[premium] job ${job.id}: marking failed did not work:`, err instanceof Error ? err.message : String(err));
+      console.error(`[premium] job ${logId(job.id)}: marking failed did not work:`, err instanceof Error ? err.message : String(err));
     });
   } finally {
     await maybeSweepVerdictJobs();

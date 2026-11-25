@@ -4,13 +4,6 @@ const th: Locale = {
   voice:
     'Write friendly, casual Thai the way popular consumer apps talk to their users: address the reader as "คุณ", never "ท่าน", "เธอ" or "แก", and leave out gendered polite particles (ครับ, ค่ะ, คะ) so the text suits anyone. Refer to the parties as "ฝ่าย A" and "ฝ่าย B" exactly as written, like names: a space before the Latin letter, nothing in front of them (no "คน", "ทาง" or "ฝั่ง") and no honorific. Leave "Person C", "Person D" exactly as written. Call the judges "กรรมการ" and the ruling "คำตัดสิน", and avoid courtroom words such as ศาล, คดี, โจทก์, จำเลย or พิพากษา. The card prints "ถ้า" and then each conditional if_value, so write if_value as a bare condition with no leading "ถ้า", "หาก" or "ถ้าหาก" (e.g. "คุณให้ค่ากับความซื่อสัตย์มากที่สุด") and no trailing punctuation. Keep sentences short and conversational, with everyday words (เถียงกัน, ฝั่ง, เหตุผล) rather than formal ones (ข้อพิพาท, คู่กรณี, อนึ่ง). Follow Thai typography: no spaces between words, a space between sentences or clauses instead of a full stop, a space on both sides of Latin words and numerals, a space on both sides of ๆ, Arabic numerals with a comma thousands separator (6,000), and “ ” for quotes.',
   email: {
-    signIn: {
-      subject: "ลิงก์เข้าสู่ระบบ Judge ของคุณ",
-      intro: "แตะปุ่มด้านล่างเพื่อเข้าสู่ระบบ Judge",
-      button: "เข้าสู่ระบบ Judge",
-      expiry: "ลิงก์นี้ใช้ได้ครั้งเดียว และจะหมดอายุใน 10 นาที",
-      ignore: "ถ้าคุณไม่ได้ขอ ไม่ต้องสนใจอีเมลนี้ก็ได้",
-    },
     signInCode: {
       subject: "รหัสเข้าสู่ระบบ Judge ของคุณ",
       intro: "กรอกรหัสนี้เพื่อเข้าสู่ระบบ:",

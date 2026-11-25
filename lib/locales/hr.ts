@@ -4,13 +4,6 @@ const hr: Locale = {
   voice:
     'Address the reader with informal "ti", never "Vi". Refer to the parties as "Strana A" and "Strana B" in prose, like names, with nothing in front of them, and always write them exactly in that form, never inflected ("Strani A", "Stranu B", "Strane A" and the like are wrong): build the sentence so the label stays in the nominative, as the subject, after a colon or after a dash. Where English would use a possessive or an object, use a verb or a relative clause instead (e.g. "Strana A tvrdi…", "argument koji iznosi Strana B", "u pravu je Strana B", "Strana A i Strana B slažu se da…"). Other people stay "Person C", "Person D" exactly as written. Real names are put back in place of the labels later, so prefer the present tense for what the parties say and do, and avoid past-tense forms, adjectives and pronouns that show anyone\'s gender, the reader\'s included (write "Strana A smatra", not "Strana A je uvjerena"; repeat the label instead of "ona" or "njezin", since "Strana" is feminine but the person may not be). Keep sentences short and conversational, the way a friend would explain it, not legal or bureaucratic prose. Write each conditional if_value as a bare present-tense clause that reads after the card\'s "Ako" (e.g. "ti je iskrenost važnija od pristojnosti"), starting with a lowercase letter unless it begins with a party label or a name, and never repeat "Ako" at its start. Write standard Croatian (tisuća, točno, podrijetlo), never Serbian or Bosnian forms. Use Croatian quotation marks „…“, a spaced en dash ( – ), a decimal comma and a space as the thousands separator.',
   email: {
-    signIn: {
-      subject: "Tvoja poveznica za prijavu u Judge",
-      intro: "Dodirni gumb ispod i prijavi se u Judge.",
-      button: "Prijavi se u Judge",
-      expiry: "Poveznica radi samo jednom i istječe za 10 minuta.",
-      ignore: "Ako ovo nije tvoj zahtjev, slobodno zanemari ovu poruku.",
-    },
     signInCode: {
       subject: "Tvoj kod za prijavu u Judge",
       intro: "Za prijavu upiši ovaj kod:",

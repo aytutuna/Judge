@@ -4,13 +4,6 @@ const ml: Locale = {
   voice:
     'Write natural, everyday Malayalam in Malayalam script and address the reader as "നിങ്ങൾ", the register Malayalam apps use, never the formal "താങ്കൾ" or the intimate "നീ"; use the polite imperative in -ഊ (e.g. "പരിശോധിക്കൂ"). Common English loanwords (ലിങ്ക്, ആപ്പ്, ചാറ്റ്) are fine; avoid stiff, Sanskrit-heavy or legal Malayalam. Refer to the parties as "കക്ഷി A" and "കക്ഷി B" in prose, like names, always with the Latin capital letters A and B and never with a case ending or suffix attached (no "കക്ഷി A-യുടെ", "കക്ഷി A-ക്ക്", "കക്ഷി A-യെ"): build the sentence so the label is the subject, stands before a separate word (e.g. "കക്ഷി A പറയുന്നത്", "കക്ഷി A നൽകിയ തെളിവ്"), or comes after a colon; where a case ending seems unavoidable, rephrase (e.g. "കക്ഷി A പറഞ്ഞതാണ് ശരി" rather than a possessive or dative). A possessive becomes a relative clause ("കക്ഷി A ഉന്നയിച്ച വാദം", not "കക്ഷി A-യുടെ വാദം"); for feelings and knowledge, which Malayalam usually puts in the dative (ഇഷ്ടമാണ്, അറിയാം, തോന്നി, വേണം), use a verb that takes a plain subject instead ("കക്ഷി A ഇഷ്ടപ്പെടുന്നു", "കക്ഷി A അറിഞ്ഞിരുന്നു", "കക്ഷി A കരുതുന്നു", "കക്ഷി A ആഗ്രഹിക്കുന്നു"); for "A and B" write "കക്ഷി A, കക്ഷി B എന്നിവർ" or "രണ്ടുപേരും". Keep sentences short and conversational, the way a sensible friend would explain it, not the way a court order reads. Real names are put back in place of the labels later, so do not refer to a party with gendered pronouns such as "അവൻ" or "അവൾ"; repeat the label instead. Other people stay "Person C", "Person D" exactly as written, uninflected too. The card prints "അഥവാ" and then each conditional if_value, so write if_value as a Malayalam conditional clause ending in -എങ്കിൽ or -ആൽ (e.g. "നിങ്ങൾക്ക് സത്യസന്ധതയാണ് കൂടുതൽ പ്രധാനമെങ്കിൽ"), with no "അഥവാ" or other "if" word at its start. Use Western digits, a decimal point, curly double quotation marks “…” and modern Malayalam spelling with chillu letters.',
   email: {
-    signIn: {
-      subject: "നിങ്ങളുടെ Judge സൈൻ-ഇൻ ലിങ്ക്",
-      intro: "Judge-ൽ സൈൻ ഇൻ ചെയ്യാൻ താഴെയുള്ള ബട്ടണിൽ ടാപ്പ് ചെയ്യൂ.",
-      button: "Judge-ൽ സൈൻ ഇൻ ചെയ്യൂ",
-      expiry: "ലിങ്ക് ഒരു തവണ മാത്രമേ ഉപയോഗിക്കാനാകൂ, 10 മിനിറ്റ് കഴിഞ്ഞാൽ കാലാവധി തീരും.",
-      ignore: "നിങ്ങൾ ഇത് ആവശ്യപ്പെട്ടിട്ടില്ലെങ്കിൽ ഈ ഇമെയിൽ അവഗണിക്കാം.",
-    },
     signInCode: {
       subject: "നിങ്ങളുടെ Judge സൈൻ-ഇൻ കോഡ്",
       intro: "സൈൻ ഇൻ ചെയ്യാൻ ഈ കോഡ് നൽകൂ:",

@@ -18,7 +18,9 @@ export type Signal =
   | "events_cap"
   | "age_blocked"
   | "schema_drift"
-  | "grant_skipped";
+  | "grant_skipped"
+  | "code_email_cap"
+  | "review_guess_cap";
 
 export function signal(name: Signal, detail?: string): void {
   console.warn(detail ? `[signal:${name}] ${detail}` : `[signal:${name}]`);

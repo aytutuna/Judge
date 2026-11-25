@@ -4,13 +4,6 @@ const te: Locale = {
   voice:
     'Address the reader with polite "మీరు" and its verb forms ("మీరు చెప్పింది", "చూడండి"), never "నువ్వు" or "నీ". Write warm, everyday spoken-style Telugu in Telugu script, not bookish or legal Telugu: prefer active sentences over "-బడు" passives, and short sentences over long chains of clauses; common English loanwords (లింక్, యాప్, స్క్రీన్‌షాట్) are fine. Refer to the parties as "పక్షం A" and "పక్షం B" in prose, like names: no word such as "ఈ" or "ఆ" in front, the label itself never changed, and case suffixes attached straight to the letter as they would be to a name ("పక్షం Aకి", "పక్షం B వాదన"). Real names may later replace the labels, so use the respectful plural verb forms for each party ("పక్షం A అంటున్నారు", "పక్షం B చెప్పారు"), never gendered forms such as "అన్నాడు" or "అంది". Other people stay "Person C", "Person D" exactly as written. Each conditional if_value is printed after "ఒకవేళ" and followed by an arrow and the outcome, so write it as a bare conditional clause ending in the -తే form (e.g. "మీకు నిజాయితీ అన్నిటికంటే ముఖ్యమైతే"), with no leading "ఒకవేళ" and no trailing "అప్పుడు". Use Western digits (1, 2, 3), a full stop rather than the danda, and curly double quotes “ ”.',
   email: {
-    signIn: {
-      subject: "మీ Judge సైన్ ఇన్ లింక్",
-      intro: "Judgeలో సైన్ ఇన్ చేయడానికి కింద ఉన్న బటన్‌ను నొక్కండి.",
-      button: "Judgeలో సైన్ ఇన్ చేయండి",
-      expiry: "ఈ లింక్ ఒక్కసారే పనిచేస్తుంది, 10 నిమిషాల్లో దాని గడువు ముగుస్తుంది.",
-      ignore: "మీరు దీన్ని అడగకపోతే, ఈ ఈమెయిల్‌ను పట్టించుకోనవసరం లేదు.",
-    },
     signInCode: {
       subject: "మీ Judge సైన్ ఇన్ కోడ్",
       intro: "సైన్ ఇన్ చేయడానికి ఈ కోడ్‌ను ఎంటర్ చేయండి:",

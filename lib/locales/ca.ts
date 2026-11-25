@@ -4,13 +4,6 @@ const ca: Locale = {
   voice:
     'Address the reader with informal "tu" (tens, pots, la teva), never formal "vostè". Refer to the parties as "Part A" and "Part B" in prose, like names, with no article in front (write "Part A té raó", never "la Part A" or "en Part A"). Real names may later replace the labels, so avoid adjectives or participles that must agree with a label (if one is unavoidable, make it feminine) and prefer wordings that do not put "de" right before a label. Keep "Person C", "Person D" exactly as written. Each conditional if_value is printed after "Si", so write it as a bare clause in the present indicative that continues that word, starting in lowercase and never repeating "Si" (e.g. "valores més la sinceritat que la tranquil·litat"). Write natural, standard Catalan, not Spanish calques, with the ela geminada (l·l) and the usual elisions, angular quotes « », no inverted ¿ or ¡ and no space before ? or !, a decimal comma and a period as the thousands separator.',
   email: {
-    signIn: {
-      subject: "El teu enllaç per entrar a Judge",
-      intro: "Toca el botó de sota per iniciar sessió a Judge.",
-      button: "Entra a Judge",
-      expiry: "L'enllaç només funciona una vegada i caduca d'aquí a 10 minuts.",
-      ignore: "Si no ho has demanat tu, pots ignorar aquest correu.",
-    },
     signInCode: {
       subject: "El teu codi per entrar a Judge",
       intro: "Introdueix aquest codi per iniciar sessió:",

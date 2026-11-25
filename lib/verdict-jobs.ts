@@ -37,6 +37,7 @@ import {
 } from "@/lib/originals/save";
 import { signal } from "@/lib/signals";
 import type { VerdictJobErrorCode, VerdictJobStatus } from "@/lib/verdict-poll";
+import { logId } from "./log-id";
 
 /** A job still judging after this long is failed and refunded. The
  * pipelines' own deadline gates end a run well inside it (about 5 minutes). */
@@ -269,7 +270,7 @@ export async function sweepVerdictJobs(now: Date = new Date()): Promise<number> 
     const reservationId = row.reservation_id == null ? null : String(row.reservation_id);
     if (await failVerdictJob(id, "unavailable", reservationId, now)) {
       failed += 1;
-      console.warn(`[verdict-jobs] stale job failed id=${id}`);
+      console.warn(`[verdict-jobs] stale job failed id=${logId(id)}`);
     }
   }
   return failed;

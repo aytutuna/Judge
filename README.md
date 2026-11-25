@@ -135,7 +135,7 @@ with `RATE_LIMIT_SALT`) of the IPv4 address or IPv6 prefix. The store is Upstash
 memory; entries last up to 24 hours in memory and up to 48 hours in Redis (the expiry of a one-day window). If Redis is down or slow, requests are refused (`503 unavailable`)
 rather than let through unmetered. The Cloudflare Turnstile check
 (`lib/turnstile.ts`) guards the steps that need no account: asking for a
-sign-in email and the respondent's answer to a two-sided case.
+sign-in code from the website and the respondent's answer to a two-sided case.
 
 The visitor IP comes from the first `X-Forwarded-For` entry, so it is only
 trustworthy behind a proxy that overwrites that header: Vercel does, and so
@@ -177,8 +177,9 @@ after sign-in.
 | `APPLE_TEAM_ID`, `APPLE_KEY_ID` | *(empty)* | Your 10-character Apple team id, and the key id of the Sign in with Apple key |
 | `APPLE_PRIVATE_KEY_BASE64` | *(empty)* | The whole `AuthKey_<KEYID>.p8` file, base64-encoded on one line (`base64 -w0 AuthKey_XXXX.p8`). The app signs Apple's client secret from it and renews it on its own. All four Apple values set = the Apple button works |
 | `APPLE_APP_BUNDLE_ID` | *(empty)* | The iOS app's bundle id, accepted as an extra audience for native Sign in with Apple |
-| `RESEND_API_KEY`, `EMAIL_FROM` | *(empty)* | [Resend](https://resend.com) API key and sender, e.g. `Judge <signin@okjudge.com>` on a domain verified in Resend. Both set = email sign-in links (website) and email sign-in codes (apps) work. With `TURNSTILE_SECRET_KEY` set, the website's email form needs a Turnstile token too; the app code endpoints rely on rate limits instead |
-| `REVIEW_ACCOUNT_EMAIL`, `REVIEW_ACCOUNT_CODE` | *(empty)* | The store-review account (App Review, Play review): this address always gets this 6-digit sign-in code in the apps' email option, and no email is sent to it. Both set, plus email sign-in configured, turns it on; the code must not be a repeated digit or `123456`/`654321`. Put the same values in the review notes when submitting. Use a dedicated address on your own domain, never a real person's: that address stops receiving codes, and whoever owns the mailbox at Apple or Google could also sign into the account. At most 10 code requests an hour for this address (each allows 3 guesses); clear or change the code after each review. It is an ordinary account otherwise |
+| `RESEND_API_KEY`, `EMAIL_FROM` | *(empty)* | [Resend](https://resend.com) API key and sender, e.g. `Judge <signin@okjudge.com>` on a domain verified in Resend. Both set = email sign-in codes (website and apps) work. With `TURNSTILE_SECRET_KEY` set, a code request from the website needs a Turnstile token (`x-captcha-response`); app requests are told apart by their `Device-Id` and `Device-Platform` headers and no `Origin`, which a script can imitate, so they rely on the limits below |
+| `CODE_EMAILS_PER_HOUR` | `100` | Site-wide sign-in code emails per hour. Past it code requests answer `503 unavailable` and the server logs `[signal:code_email_cap]` (at most once an hour); `0` stops code emails. Each IP is held to 10 code requests an hour and 30 a day, and each address to 5 an hour per IP and 10 a day overall; a malformed address is refused first and counts for nothing. The store-review address is exempt from the send limits |
+| `REVIEW_ACCOUNT_EMAIL`, `REVIEW_ACCOUNT_CODE` | *(empty)* | The store-review account (App Review, Play review): this address always gets this 6-digit sign-in code in the apps' email option, and no email is sent to it. Both set, plus email sign-in configured, turns it on; the code must not be a repeated digit or `123456`/`654321`. Put the same values in the review notes when submitting. Use a dedicated address on your own domain, never a real person's: that address stops receiving codes, and whoever owns the mailbox at Apple or Google could also sign into the account. Its guesses are limited to 10 an hour per IP and about 300 an hour in all (`[signal:review_guess_cap]` when that is reached); code requests are not limited. Clear or change the code after each review. It is an ordinary account otherwise |
 | `DEV_LOGIN` | *(empty)* | `1` shows a "test sign-in" for local testing. It works only when **all** hold: not a production build (`next build` output is production whatever `NODE_ENV` it is started with), `DEV_LOGIN=1`, the server listens on `127.0.0.1` or `::1` only (`npm run dev:login`, i.e. `next dev -H 127.0.0.1`; plain `npm run dev` listens on every interface and is refused), and the request's `Host` is `localhost`, `127.0.0.1` or `[::1]`. Anywhere else the endpoint answers 404 |
 | `PREMIUM_ENABLED` | `1` | `0` turns Premium off (the switch disappears; premium requests get `503 not_configured`) |
 | `PREMIUM_DAILY_CAP` | `500` | Site-wide premium runs per UTC day, counted from the database, refunded ones included (a refused or failed run still costs its model calls). A cost circuit breaker; `0` pauses Premium. Clarifying questions are not counted; the per-account limit below bounds them |
@@ -667,7 +668,7 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
   Codes work once for 10 minutes. Wrong code: `400 { "code": "INVALID_OTP" }`;
   after 3 wrong codes the code is burned: `403 { "code": "TOO_MANY_ATTEMPTS" }`;
   late: `400 { "code": "OTP_EXPIRED" }`. Both endpoints allow 3 requests per
-  minute per IP (`429`). No Turnstile token is needed.
+  minute per IP (`429`). A code request needs a Turnstile token from the website (`403 CAPTCHA_FAILED` without one) but not from the apps, which send `Device-Id` and `Device-Platform` headers; it also answers `429` past 10 codes a day for the address and `503` when the site-wide hourly cap is used up.
 
 ### Purchases
 
@@ -1045,6 +1046,7 @@ limit within 5 minutes:
 | `events_cap` | 1 | a batch of usage events is refused because 200,000 were stored in the last 24 hours |
 | `age_blocked` | 1 | an app reports, from the store's age signal, that an account belongs to someone under 18; the account is blocked (nothing is deleted) |
 | `grant_skipped` | 1 | a paid grant was skipped because a refund covers it; the line has the source and transaction id |
+| `code_email_cap` | 1 | a sign-in code email was refused because `CODE_EMAILS_PER_HOUR` was used up |
 | `ban` | 20 | fail2ban bans an address (from fail2ban's journal) |
 
 Change a limit with `ALERT_SIGNAL_<NAME>=n` in the env file, e.g.

@@ -4,13 +4,6 @@ const fi: Locale = {
   voice:
     'Write plain, casual everyday Finnish, not legal or official language: short active sentences, everyday words over officialese (no "kyseinen", "suorittaa", "taholta"), and no word-for-word English phrasing (no "tehdä järkeä", "olla oikeassa siitä"). Address the reader with informal "sinä" (second person singular), never the formal "te"/"Te", the same register as the interface. Refer to the parties as "Osapuoli A" and "Osapuoli B" in prose, like names, with no pronoun or demonstrative in front, and never inflect them (no "Osapuoli A:n", "Osapuolen A", "Osapuoli A:lle"): phrase each sentence so the label stays in this basic form, for example as the subject ("Osapuoli A sanoo, että…", "Osapuoli A on oikeassa siinä, että…"), in a relative clause instead of a genitive ("kanta, jota Osapuoli A puolustaa", not "Osapuoli A:n kanta") or after a colon. "Person C", "Person D" stay exactly as written, uninflected too. The card prints "Jos" and then each conditional if_value, so write if_value as the rest of a Finnish "jos" clause without "Jos" itself, in the indicative, starting lowercase unless it starts with a party label or a name (e.g. "pidät rehellisyyttä tärkeimpänä"). Use Finnish punctuation and numbers: quotation marks ”like this”, a decimal comma, a space as the thousands separator.',
   email: {
-    signIn: {
-      subject: "Judge-kirjautumislinkkisi",
-      intro: "Kirjaudu Judgeen napauttamalla alla olevaa painiketta.",
-      button: "Kirjaudu Judgeen",
-      expiry: "Linkki toimii kerran ja vanhenee 10 minuutin kuluttua.",
-      ignore: "Jos et pyytänyt tätä, voit jättää viestin huomiotta.",
-    },
     signInCode: {
       subject: "Judge-kirjautumiskoodisi",
       intro: "Kirjaudu sisään syöttämällä tämä koodi:",

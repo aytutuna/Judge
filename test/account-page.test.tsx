@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { AccountMenu, accountEntry, initialOf } from "../components/AccountMenu";
 import { AccountDetailPanel, AccountPanel, openConfirm, type AccountDetailProps } from "../components/account/AccountView";
-import { SignInPanel, digitsOnly, safeNext, withLang, type SignInPanelProps } from "../components/account/SignInView";
+import { SignInPanel, digitsOnly, safeNext, type SignInPanelProps } from "../components/account/SignInView";
 import { SiteFooter } from "../components/SiteChrome";
 import type { AppConfig, AuthProviders, Entitlement, MeResponse } from "../lib/account-types";
 import { t } from "../lib/i18n";
@@ -169,6 +169,8 @@ function signin(over: Partial<SignInPanelProps>): string {
       code=""
       captcha={null}
       canSendEmail={false}
+      hasToken
+      waiting={false}
       mode="password"
       password=""
       showPassword={false}
@@ -198,6 +200,26 @@ function signin(over: Partial<SignInPanelProps>): string {
 }
 
 describe("SignInPanel", () => {
+  it("says a check is still pending while a code waits for its token", () => {
+    const html = signin({ email: "a@b.co", canSendEmail: true, waiting: true });
+    expect(html).toContain(esc(t("en", "turnstile.label")));
+    expect(signin({ email: "a@b.co", canSendEmail: true })).not.toContain(esc(t("en", "turnstile.label")));
+  });
+
+  it("the first screen's Continue does not wait for a token when the caller allows it", () => {
+    const html = signin({ email: "a@b.co", canSendEmail: true, hasToken: false });
+    const button = /<button[^>]*>(?=Continue<)/.exec(html)?.[0] ?? "";
+    expect(button).not.toContain('disabled=""');
+  });
+
+  it("a resend needs the token", () => {
+    const code = { sentTo: "a@b.co", providers: { apple: true, google: true, email: true, emailCode: true, password: true, dev: false } };
+    const resend = (hasToken: boolean) =>
+      (signin({ ...code, hasToken }).match(/<button[^>]*>(?=Send a new code)/g) ?? []).join("");
+    expect(resend(false)).toContain('disabled=""');
+    expect(resend(true)).not.toContain('disabled=""');
+  });
+
   it("Apple, Google, an or divider, then the email field and Continue, all usable at once", () => {
     const html = signin({ email: "a@b.co", canSendEmail: true });
     const order = ["Continue with Apple", "Continue with Google", ">or<", esc(t("en", "signin.emailLabel")), ">Continue<"].map((s) =>
@@ -249,15 +271,6 @@ describe("SignInPanel", () => {
 
   it("a provider that is not offered carries no tag", () => {
     expect(signin({ lastUsed: "apple", providers: { ...none, google: true } })).not.toContain("Last used");
-  });
-
-  it("sent state of the link flow replaces the form", () => {
-    const link = { apple: true, google: true, email: true, emailCode: false, password: false, dev: false };
-    const sent = signin({ sentTo: "a@b.co", lang: "tr", providers: link });
-    expect(sent).toContain("a@b.co adresine bir giriş bağlantısı gönderdik");
-    expect(sent).not.toContain('type="email"');
-    expect(sent).not.toContain("one-time-code");
-    expect(signin({ providers: link })).toContain(">Continue<");
   });
 
   it("the code step: numeric one-time-code field, sign in, resend, change email", () => {
@@ -421,7 +434,7 @@ describe("SignInPanel with passwords", () => {
   });
 });
 
-describe("safeNext / withLang", () => {
+describe("safeNext", () => {
   it("only keeps same-origin paths", () => {
     expect(safeNext("/")).toBe("/");
     expect(safeNext("/pricing")).toBe("/pricing");
@@ -454,11 +467,6 @@ describe("safeNext / withLang", () => {
     expect(safeNext("/pricing?x=1#plans")).toBe("/pricing?x=1#plans");
     expect(safeNext("/a/../pricing")).toBe("/pricing");
     expect(safeNext("/%2F/evil.com")).toBe("/%2F/evil.com");
-  });
-
-  it("adds the email language to the callback", () => {
-    expect(withLang("/account", "tr")).toBe("/account?lang=tr");
-    expect(withLang("/?a=1", "en")).toBe("/?a=1&lang=en");
   });
 });
 

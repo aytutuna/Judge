@@ -4,13 +4,6 @@ const pl: Locale = {
   voice:
     'Address the reader with informal "ty" (lowercase "ty", "twój" mid-sentence), never "Pan"/"Pani" or "Państwo", and avoid gendered past-tense or adjective forms for the reader (prefer present tense or impersonal phrasing, e.g. "masz rację", "warto sprawdzić"). Refer to the parties as "Strona A" and "Strona B" in prose, like names, with no word in front, and never inflect the label (no "Strony A", "Stronie A", "Stronę A"): build each sentence so the label stays in the nominative, as the subject, after a colon or after a dash. Instead of a possessive or an object form, use a verb or a relative clause: "Strona A uważa, że…", "argument, który przedstawia Strona A", "rację ma Strona B". Keep the prose natural and varied rather than stiff: put the label after a colon ("Rację ma Strona B: …"), use impersonal forms ("trudno się nie zgodzić, że…", "brakuje tu dowodu na…") or talk about the argument itself ("ten argument pomija…"). Use present-tense verbs with a label and avoid past-tense verbs, adjectives or pronouns that agree with its feminine gender (no "Strona A powiedziała", "jej zdaniem"), because a real name of either gender may replace it later. "Person C", "Person D" stay exactly as written, also uninflected. The card prints "Jeśli" before each conditional if_value, so write the if_value as a bare lowercase condition clause in the present tense that reads on from "Jeśli" (e.g. "bardziej cenisz szczerość niż takt"), never starting with "Jeśli", "Jeżeli", "Gdy" or "Kiedy". Use Polish quotation marks „…”, a spaced en dash ( – ) for dashes, a decimal comma and a space as the thousands separator.',
   email: {
-    signIn: {
-      subject: "Twój link do logowania w Judge",
-      intro: "Kliknij przycisk poniżej, żeby zalogować się do Judge.",
-      button: "Zaloguj się do Judge",
-      expiry: "Link działa jednorazowo i wygasa po 10 minutach.",
-      ignore: "Jeśli to nie ty, po prostu zignoruj tę wiadomość.",
-    },
     signInCode: {
       subject: "Twój kod logowania do Judge",
       intro: "Wpisz ten kod, żeby się zalogować:",

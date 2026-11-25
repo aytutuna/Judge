@@ -3,6 +3,7 @@ import type { Lang } from "./i18n";
 import { signal } from "./signals";
 import { VerdictResult } from "./types";
 import { parseVenue, type Venue } from "./venues";
+import { logId } from "./log-id";
 
 /** DATABASE_URL: `file:./dev.db` locally (relative to the working directory),
  * `libsql://<db>.turso.io` + DATABASE_AUTH_TOKEN in production. A bare path
@@ -132,7 +133,7 @@ export async function getVerdict(id: string): Promise<StoredVerdict | null> {
   if (!row) return null;
   const parsed = VerdictResult.safeParse(JSON.parse(String(row.result)));
   if (!parsed.success) {
-    signal("schema_drift", `verdict=${id} paths=${issuePaths(parsed.error)}`);
+    signal("schema_drift", `verdict=${logId(id)} paths=${issuePaths(parsed.error)}`);
     return null;
   }
   return {
@@ -155,7 +156,7 @@ export async function getTranslation(id: string, lang: Lang): Promise<VerdictRes
   if (!row) return null;
   const parsed = VerdictResult.safeParse(JSON.parse(String(row.result_json)));
   if (!parsed.success) {
-    signal("schema_drift", `translation=${id}/${lang} paths=${issuePaths(parsed.error)}`);
+    signal("schema_drift", `translation=${logId(id)}/${lang} paths=${issuePaths(parsed.error)}`);
     return null;
   }
   return parsed.data;

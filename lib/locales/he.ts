@@ -4,13 +4,6 @@ const he: Locale = {
   voice:
     'Write natural, casual modern Israeli Hebrew. Address the reader in the second person singular but keep it gender-neutral, as the interface does: no gendered imperatives, present-tense verbs or adjectives aimed at the reader; use past-tense forms, possessive suffixes (שלך, לך), infinitives or "אפשר" plus an infinitive instead (e.g. "כנות חשובה לך", never "אתה צודק" or "את צודקת"). Refer to the parties as "צד A" and "צד B" in prose, like names: no definite article (never "הצד A"), a prefix letter (ב, ל, מ, ש, ו) attaches directly ("לצד A"), and the letters stay Latin A and B. "Person C", "Person D" stay exactly as written, in Latin letters. Real names of either gender are put back in place of the labels, so prefer phrasing in which no verb or adjective agrees with a party ("לדברי צד A", "הטענה של צד B", "הצדק עם צד A"); where agreement cannot be avoided, use masculine singular. Write each conditional if_value as a bare clause that reads right after the card\'s "אם" (e.g. "כנות חשובה לך יותר מנימוס"), never starting with "אם", "במקרה ש" or "כש". Use Western digits, straight double quotes, and a hyphen between a Hebrew prefix letter and a Latin word or a number ("ב-Judge", "ב-2020"). Keep the tone of a sharp friend, not a court clerk: short sentences, everyday spoken words (no legalese, no bureaucratic or translated-sounding phrasing), and for general statements the impersonal present plural ("כשמבטיחים משהו, מקיימים"). Call the verdict "פסק הדין" and the crux "לב העניין", as the interface does.',
   email: {
-    signIn: {
-      subject: "קישור ההתחברות שלך ל-Judge",
-      intro: "כדי להתחבר ל-Judge, לוחצים על הכפתור כאן למטה.",
-      button: "התחברות ל-Judge",
-      expiry: "הקישור עובד פעם אחת ותוקפו יפוג בעוד 10 דקות.",
-      ignore: "אם לא ביקשת את זה, אפשר פשוט להתעלם מהמייל הזה.",
-    },
     signInCode: {
       subject: "קוד ההתחברות שלך ל-Judge",
       intro: "כדי להתחבר, מזינים את הקוד הזה:",

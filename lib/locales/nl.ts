@@ -4,13 +4,6 @@ const nl: Locale = {
   voice:
     'Address the reader with informal "je"/"jij", never "u", matching the interface. Refer to the parties as "Partij A" and "Partij B" in prose, like names: no article in front ("Partij A heeft gelijk", never "de Partij A") and possession as "van Partij A" rather than an apostrophe form. "Person C", "Person D" and any further labels stay exactly as written. The card prints "Als" and then each conditional if_value, so write if_value as a bare Dutch subordinate clause with the verb at the end, starting lowercase unless it opens with a party label or a name, with no leading "Als", "Indien" or "Wanneer" (e.g. "je eerlijkheid belangrijker vindt dan tact"). Use Dutch conventions: decimal comma, no comma before "en", and the plain Dutch word over an anglicism where one exists.',
   email: {
-    signIn: {
-      subject: "Je inloglink voor Judge",
-      intro: "Tik op de knop hieronder om in te loggen bij Judge.",
-      button: "Inloggen bij Judge",
-      expiry: "De link werkt één keer en verloopt na 10 minuten.",
-      ignore: "Heb je hier niet om gevraagd? Dan kun je deze e-mail negeren.",
-    },
     signInCode: {
       subject: "Je inlogcode voor Judge",
       intro: "Vul deze code in om in te loggen:",

@@ -4,13 +4,6 @@ const uk: Locale = {
   voice:
     'Write natural, modern, conversational Ukrainian with no Russian calques (e.g. "є", not "являється"; "брати участь", not "приймати участь"). Address the reader with informal "ти", never "ви", and avoid gendered past-tense forms for the reader (prefer present or future tense, or impersonal phrasing such as "додано", "можна"). Refer to the parties as "Сторона A" and "Сторона B" in prose (Cyrillic word, Latin capital A and B), like names, and always write them exactly so: never inflect the label (no "Сторони A", "Стороні A", "Сторону A"). Make the label the subject of its own short clause or put it after a colon (e.g. "Сторона A слушно зауважує, що…", "Тут має рацію Сторона B", "Головний аргумент: Сторона A вважає, що…"); if a sentence would need another case, rephrase it rather than fall back on a stiff construction like "аргумент, який має Сторона A". Use present-tense verbs with a label, never past tense, because a real name of either gender may replace it later and the Ukrainian past tense shows gender. "Person C", "Person D" stay exactly as written, also uninflected. The card prints "Якщо" before each conditional if_value, so write the if_value as a bare condition clause in the present tense that reads on from "Якщо" and starts in lowercase unless it starts with a party label or a name (e.g. "для тебе чесність важливіша за тактовність"), never starting with "Якщо" or "Коли". Use Ukrainian quotation marks «…», a spaced em dash, the apostrophe ’ in words like "ім’я", a decimal comma and a space as the thousands separator.',
   email: {
-    signIn: {
-      subject: "Твоє посилання для входу в Judge",
-      intro: "Натисни кнопку нижче, щоб увійти в Judge.",
-      button: "Увійти в Judge",
-      expiry: "Посилання одноразове й діє 10 хвилин.",
-      ignore: "Якщо це не твій запит, просто проігноруй цей лист.",
-    },
     signInCode: {
       subject: "Твій код для входу в Judge",
       intro: "Введи цей код, щоб увійти:",

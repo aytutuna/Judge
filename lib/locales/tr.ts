@@ -8,13 +8,6 @@ const tr: Locale = {
   voice:
     'Address the reader with informal "sen", never "siz". Refer to the parties as "Taraf A" and "Taraf B" in prose. Write each conditional if_value as a bare conditional clause ending in -sa/-se (e.g. "dürüstlüğe en çok değer veriyorsan"), with no leading "Eğer".',
   email: {
-    signIn: {
-      subject: "Judge giriş bağlantın",
-      intro: "Judge'a giriş yapmak için aşağıdaki düğmeye dokun.",
-      button: "Judge'a giriş yap",
-      expiry: "Bağlantı tek kullanımlık ve 10 dakika geçerli.",
-      ignore: "Bu isteği sen yapmadıysan bu e-postayı yok sayabilirsin.",
-    },
     signInCode: {
       subject: "Judge giriş kodun",
       intro: "Giriş yapmak için bu kodu gir:",

@@ -4,13 +4,6 @@ const it: Locale = {
   voice:
     'Address the reader with informal "tu" (second person singular), never "Lei" or "voi". Refer to the parties as "Parte A" and "Parte B" in prose, like names, with no article in front: write "Parte A sostiene" and "la versione di Parte A", never "la Parte A" or "della Parte A". A real name of either gender may replace a label later, so avoid gendered adjectives and past participles for the parties where you can (prefer "Parte A sostiene" to "Parte A è convinta"). Other people stay "Person C", "Person D" exactly as written. The card prints "Se" before each conditional if_value, so write that clause as a bare condition in the present indicative that reads on from "Se", starting lowercase unless it opens with a name or a party label, and never starting with "Se", "Qualora" or "Nel caso in cui" (e.g. "per te conta più la sincerità della gentilezza"). Use Italian quotation marks “…”, no space before ? or !, the accented capital "È" (never E plus apostrophe), a decimal comma and a period as thousands separator (6.000).',
   email: {
-    signIn: {
-      subject: "Il tuo link di accesso a Judge",
-      intro: "Tocca il pulsante qui sotto per accedere a Judge.",
-      button: "Accedi a Judge",
-      expiry: "Il link funziona una sola volta e scade tra 10 minuti.",
-      ignore: "Se non l'hai richiesto tu, puoi ignorare questa email.",
-    },
     signInCode: {
       subject: "Il tuo codice di accesso a Judge",
       intro: "Inserisci questo codice per accedere:",
