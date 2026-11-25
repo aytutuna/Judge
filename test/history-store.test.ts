@@ -240,6 +240,19 @@ describe("settleHistory", () => {
     expect(loadAnswered()).toHaveLength(1);
     expect(loadAnswered()[0]).toMatchObject({ id: "c1", state: "ready", verdict: "side_b", headline: "Party B paid" });
   });
+
+  it("leaves a row the link cannot speak for as it is and stops looking it up", async () => {
+    const storage = fakeStorage();
+    storage.setItem(ANSWERED_KEY, JSON.stringify([answeredRow("c7", "2026-10-21T10:00:00.000Z", { state: "judging", party: "c" })]));
+    storage.setItem(HISTORY_KEY, "[]");
+    vi.stubGlobal("localStorage", storage);
+    const fetch = vi.fn(async () => json(200, { case: view({ id: "c7", yourParty: "b" }) }));
+    vi.stubGlobal("fetch", fetch);
+    await settleHistory();
+    await settleHistory();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(loadAnswered()[0]).toMatchObject({ id: "c7", party: "c", state: "judging" });
+  });
 });
 
 const TOKEN = "T".repeat(22);

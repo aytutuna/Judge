@@ -78,6 +78,23 @@ export async function linkStoredClaim(
   }
 }
 
+/** Links every claim this browser still holds, for a case whose id is not
+ * known any other way. True when one joined the account. */
+export async function linkAllStoredClaims(): Promise<boolean> {
+  const ids: string[] = [];
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key?.startsWith(CLAIM_PREFIX)) ids.push(key.slice(CLAIM_PREFIX.length));
+    }
+  } catch {
+    return false;
+  }
+  let joined = false;
+  for (const id of ids) if ((await linkStoredClaim(id)) === "linked") joined = true;
+  return joined;
+}
+
 // --- pending invite across sign-in ----------------------------------------------
 
 export function rememberPendingInvite(token: string, now: number = Date.now()): void {

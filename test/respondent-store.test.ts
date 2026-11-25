@@ -4,6 +4,7 @@ import {
   claimKey,
   loadClaim,
   parseClaim,
+  linkAllStoredClaims,
   linkStoredClaim,
   parsePendingInvite,
   rememberPendingInvite,
@@ -111,5 +112,18 @@ describe("linking an answer given signed out", () => {
     vi.stubGlobal("fetch", vi.fn(async () => Promise.reject(new Error("offline"))));
     expect(await linkStoredClaim(CASE)).toBe("retry");
     expect(loadClaim(CASE)).toBe(TOKEN);
+  });
+
+  it("links every claim the browser holds when no case id is known", async () => {
+    vi.stubGlobal("localStorage", fakeStorage());
+    localStorage.setItem(claimKey("case00000001"), TOKEN);
+    localStorage.setItem(claimKey("case00000002"), TOKEN);
+    localStorage.setItem("unrelated", "x");
+    const fetch = reply(200);
+    vi.stubGlobal("fetch", fetch);
+    expect(await linkAllStoredClaims()).toBe(true);
+    expect(fetch.mock.calls.map((c) => c[0]).sort()).toEqual(["/api/v1/cases/case00000001/claim", "/api/v1/cases/case00000002/claim"]);
+    expect(loadClaim("case00000001")).toBeNull();
+    expect(await linkAllStoredClaims()).toBe(false);
   });
 });

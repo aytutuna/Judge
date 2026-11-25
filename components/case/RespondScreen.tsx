@@ -13,7 +13,13 @@ import { apiErrorMessage, languageName, t, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { langTag } from "@/lib/langs";
 import type { SelfParty } from "@/lib/names";
-import { clearPendingInvite, linkStoredClaim, rememberPendingInvite, usePendingInvite } from "@/lib/respondent-store";
+import {
+  clearPendingInvite,
+  linkAllStoredClaims,
+  linkStoredClaim,
+  rememberPendingInvite,
+  usePendingInvite,
+} from "@/lib/respondent-store";
 import type { NameMapping } from "@/lib/types";
 import { keyHolder, useCase } from "@/lib/use-case";
 import { refreshViewer, useViewer } from "@/lib/use-viewer";
@@ -251,7 +257,8 @@ export function RespondPanel({
   const isParty = view.inAccount === true;
   const current = view.verdicts.at(-1) ?? null;
   const ownSide = isParty ? view.sides.filter((s) => s.party === view.yourParty) : [];
-  const selfParty = view.yourParty.toUpperCase() as SelfParty;
+  // A bystander reads the verdict from the neutral side, as on a share page.
+  const selfParty = (isParty ? view.yourParty.toUpperCase() : "A") as SelfParty;
 
   if (stage === "own_invite") {
     return <p className={styles.banner}>{t(lang, "respond.ownInvite")}</p>;
@@ -625,6 +632,16 @@ export function RespondScreen({ token }: { token: string }) {
     void linkStoredClaim(id).then((out) => afterLink(out, () => setClaimChecked(id)));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [view, signedIn, linkDone, linkTry]);
+  // The invite answers "closed" to an old answerer whose record of the answer is gone:
+  // every claim this browser holds is tried once, since the case id cannot be told.
+  const swept = useRef(false);
+  useEffect(() => {
+    if (!signedIn || !linkDone || view || load.code !== "case_closed" || swept.current) return;
+    swept.current = true;
+    void linkAllStoredClaims().then((joined) => {
+      if (joined) reload();
+    });
+  }, [signedIn, linkDone, view, load.code, reload]);
   function retryLink() {
     linking.current = false;
     checking.current = null;
@@ -701,7 +718,8 @@ export function RespondScreen({ token }: { token: string }) {
 
   // Every side is taken: the link shows the case as full.
   if (!view || full || viewerPending || linkBlocked) {
-    const closed = full || load.code === "case_closed";
+    // A link that could not be settled is not a closed invite; the retry wins.
+    const closed = !linkBlocked && (full || load.code === "case_closed");
     const message =
       load.status === "loading" || (viewerPending && !viewerFailed)
         ? t(lang, "respond.loading")
@@ -735,7 +753,7 @@ export function RespondScreen({ token }: { token: string }) {
       title={title}
       bare
       status={stage === "judging" || stage === "verdict" || stage === "failed" ? view.status : null}
-      you={view.yourParty}
+      you={view.inAccount === true ? view.yourParty : undefined}
       headingRef={headingRef}
     >
       <RespondPanel

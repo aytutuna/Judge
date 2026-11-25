@@ -403,12 +403,14 @@ async function lookUpAnswered(row: HistoryRow): Promise<boolean> {
   if (!res.ok) return false;
   const seen = ((await res.json()) as { case: CaseView }).case;
   // Without this answer's account the link speaks for whichever side is open,
-  // not for this row's: leave the row as it is and stop looking it up.
-  if (seen.yourParty === row.party) updateHistoryCase(seen);
-  else addAnswered({ ...row, state: "ready" });
+  // not for this row's: leave the row as it is and stop looking it up this session.
+  if (seen.yourParty !== row.party) unmatched.add(row.id);
+  else if (loadAnswered().some((r) => r.id === row.id)) updateHistoryCase(seen);
   return true;
 }
 
+/** Answered rows the link cannot speak for; not looked up again until a reload. */
+const unmatched = new Set<string>();
 let lookups = 0;
 let settling = false;
 
@@ -422,7 +424,7 @@ export async function settleHistory(): Promise<void> {
   settling = true;
   try {
     startHistory(ownerTokenIds());
-    for (const row of loadAnswered().filter((r) => THINKING.has(r.state))) {
+    for (const row of loadAnswered().filter((r) => THINKING.has(r.state) && !unmatched.has(r.id))) {
       if (lookups >= LOOKUPS_PER_LOAD) return;
       lookups++;
       if (!(await lookUpAnswered(row).catch(() => false))) return;
