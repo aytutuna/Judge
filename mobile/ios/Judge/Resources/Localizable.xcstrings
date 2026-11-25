@@ -89768,7 +89768,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "המקום שלך שוחרר. פתח את הקישור שוב."
+            "value" : "המקום שלך שוחרר. אפשר לפתוח את הקישור שוב."
           }
         },
         "hi" : {
@@ -89792,7 +89792,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tempatmu sudah dilepas. Buka tautannya lagi."
+            "value" : "Tempatmu sudah dikosongkan. Buka tautannya lagi."
           }
         },
         "it" : {
@@ -89834,7 +89834,7 @@
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tempat anda telah dilepaskan. Buka pautan sekali lagi."
+            "value" : "Tempat anda telah dikosongkan. Buka pautan sekali lagi."
           }
         },
         "nb" : {
@@ -89888,7 +89888,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Твоё место освободилось. Открой ссылку ещё раз."
+            "value" : "Ваше место освободилось. Откройте ссылку ещё раз."
           }
         },
         "sk" : {
@@ -89912,7 +89912,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "உங்கள் இடம் விடுவிக்கப்பட்டது. இணைப்பை மீண்டும் திறக்கவும்."
+            "value" : "உங்கள் இடம் விடுவிக்கப்பட்டது. லிங்கை மீண்டும் திறவுங்கள்."
           }
         },
         "te" : {
@@ -89930,7 +89930,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yerin serbest kaldı. Bağlantıyı yeniden aç."
+            "value" : "Yerin boşaltıldı. Bağlantıyı yeniden aç."
           }
         },
         "uk" : {

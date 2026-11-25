@@ -276,7 +276,7 @@
     <string name="error_in_progress">Над этим вердиктом ещё работают. Подождите немного.</string>
     <string name="error_not_found">Ничего не нашли.</string>
     <string name="error_case_closed">В этом деле так уже нельзя.</string>
-    <string name="error_seat_moved">Твоё место освободилось. Открой ссылку ещё раз.</string>
+    <string name="error_seat_moved">Ваше место освободилось. Откройте ссылку ещё раз.</string>
     <string name="error_case_expired">Срок действия приглашения истёк.</string>
     <string name="error_appeal_used">Вы уже добавляли подробности к этому делу.</string>
     <string name="error_appeal_limit">Вы уже дважды добавляли подробности к этому вердикту. Больше для одного вердикта нельзя.</string>
