@@ -336,12 +336,12 @@ const unsettled = new Set<string>();
 /** Answers this browser gave signed out join the account that signed in; a
  * claim the server refuses belongs to someone else and its row goes. True
  * when any joined, so the account's list should be read again. */
-async function linkAnsweredClaims(): Promise<boolean> {
+async function linkAnsweredClaims(user: string): Promise<boolean> {
   let joined = false;
   for (const row of loadAnswered()) {
-    if (unsettled.has(row.id)) continue;
+    if (unsettled.has(`${user}:${row.id}`)) continue;
     const out = await linkStoredClaim(row.id);
-    if (out === "conflict" || out === "retry") unsettled.add(row.id);
+    if (out === "conflict" || out === "retry") unsettled.add(`${user}:${row.id}`);
     if (out === "linked" || out === "refused") dropAnswered(row.id);
     if (out === "linked") joined = true;
   }
@@ -475,7 +475,7 @@ export function useHistory(viewer: ViewerState, poll = false): HistoryView & { l
 
   useEffect(() => {
     if (!user) return;
-    void linkAnsweredClaims().then((joined) => {
+    void linkAnsweredClaims(user).then((joined) => {
       if (joined) void refreshHistory();
     });
   }, [user]);
