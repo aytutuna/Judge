@@ -503,6 +503,7 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
   const [sentTo, setSentTo] = useState<string | null>(null);
   const [code, setCode] = useState("");
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [awaitToken, setAwaitToken] = useState(false);
   const [mode, setMode] = useState<SignInMode>("password");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -552,7 +553,9 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
   // each screen that can send one.
   const needsCaptcha = TURNSTILE_SITE_KEY !== "" && byCode;
   const hasToken = !needsCaptcha || captchaToken !== null;
-  const canSendEmail = EMAIL_RE.test(email.trim()) && hasToken;
+  // A password account signs in without the widget; a code needs its token,
+  // which is waited for once the address turns out to take one.
+  const canSendEmail = EMAIL_RE.test(email.trim()) && (byPassword || hasToken);
 
   // Back from Apple or Google through the browser's page cache: the page
   // comes back exactly as it was left, spinner included.
@@ -646,13 +649,26 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
     const method = res.ok ? res.method : "password";
     if (!res.ok) trackError(res.code);
     if (method === "code") {
-      await sendEmail("code");
+      if (hasToken) {
+        await sendEmail("code");
+      } else {
+        // The widget is back as soon as pending clears; the code goes out
+        // when its token arrives.
+        setPending(false);
+        setAwaitToken(true);
+      }
       return;
     }
     setPending(false);
     changeMode(method === "password" ? "password" : "create");
     setEmailStep(true);
   }
+
+  useEffect(() => {
+    if (!awaitToken || captchaToken === null) return;
+    void sendEmail("code");
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- runs when the token arrives
+  }, [awaitToken, captchaToken]);
 
   async function sendEmail(sendMode: SignInMode) {
     const to = email.trim();
@@ -664,6 +680,7 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
       fail(t(lang, "signin.passwordShort"));
       return;
     }
+    setAwaitToken(false);
     setPending(true);
     setError(null);
     rememberAdultTick();
