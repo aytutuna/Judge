@@ -151,7 +151,6 @@
     <string name="consent_sensitive_title">Sebelum bermula</string>
     <string name="consent_sensitive_body">Teks saya mungkin mengandungi butiran peribadi, seperti kesihatan atau hubungan. Judge menghantarnya, tanpa nama, kepada penyedia perkhidmatan AI luar untuk menulis keputusan saya, dan menyimpannya sehingga saya mengalihkannya.</string>
     <string name="consent_sensitive_continue">Teruskan</string>
-    <string name="respond_adult_confirm">Saya berumur 18 tahun atau lebih</string>
     <string name="account_export">Muat turun data saya</string>
     <string name="account_export_busy">Menyediakan fail anda…</string>
     <string name="account_export_failed">Data anda tidak dapat disediakan sekarang. Cuba lagi?</string>
@@ -454,8 +453,6 @@
     <string name="case_appeal_original">Konteks tambahan anda seperti yang anda tulis</string>
     <string name="case_display_name">Nama anda pada keputusan yang dikongsi</string>
     <string name="case_display_save">Simpan nama</string>
-    <string name="respond_keep">Simpan kes ini dalam akaun anda</string>
-    <string name="respond_kept">Disimpan dalam akaun anda.</string>
     <string name="respond_remove">Buang versi saya</string>
     <string name="respond_remove_confirm">Buang teks asal dan nama paparan anda? Pautan kongsi kes ini akan berhenti berfungsi (pratonton yang sudah disiarkan dalam sembang mungkin masih kelihatan sehingga aplikasi itu menyegarkannya). Tindakan ini tidak boleh dibatalkan.</string>
     <string name="names_title">Nama di halaman kongsi</string>

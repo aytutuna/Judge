@@ -346,7 +346,6 @@ const pl: Locale = {
     "consent.sensitiveBody":
       "Mój tekst może zawierać prywatne szczegóły, na przykład o zdrowiu lub relacjach. Judge wysyła go bez imion do zewnętrznego dostawcy usług AI, który pisze mój werdykt, i przechowuje go, dopóki go nie usunę.",
     "consent.sensitiveContinue": "Dalej",
-    "respond.adultConfirm": "Mam 18 lat lub więcej",
     "account.export": "Pobierz moje dane",
     "account.exportBusy": "Przygotowuję plik…",
     "account.exportFailed": "Nie udało się teraz przygotować twoich danych. Spróbujesz jeszcze raz?",
@@ -724,8 +723,6 @@ const pl: Locale = {
     "case.appealOriginal": "Twój dodatkowy kontekst w oryginale",
     "case.displayName": "Twoje imię w udostępnionym werdykcie",
     "case.displaySave": "Zapisz imię",
-    "respond.keep": "Zachowaj tę sprawę na swoim koncie",
-    "respond.kept": "Zapisane na twoim koncie.",
     "respond.remove": "Usuń moją wersję",
     "respond.remove.confirm":
       "Usunąć twój oryginalny tekst i nazwę wyświetlaną? Linki do udostępniania tej sprawy przestaną działać (podglądy wysłane już na czatach mogą być widoczne, dopóki te aplikacje ich nie odświeżą). Tego nie da się cofnąć.",

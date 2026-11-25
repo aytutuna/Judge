@@ -154,7 +154,6 @@
     <string name="consent_sensitive_title">सुरू करण्यापूर्वी</string>
     <string name="consent_sensitive_body">माझ्या मजकुरात आरोग्य किंवा नातेसंबंधांसारखे खाजगी तपशील असू शकतात. Judge तो नावे काढून माझा निकाल लिहिण्यासाठी बाहेरच्या AI सेवा पुरवठादाराकडे पाठवतो आणि मी काढून टाकेपर्यंत ठेवतो.</string>
     <string name="consent_sensitive_continue">पुढे जा</string>
-    <string name="respond_adult_confirm">माझे वय 18 किंवा जास्त आहे</string>
     <string name="account_export">माझा डेटा डाउनलोड करा</string>
     <string name="account_export_busy">तुमची फाइल तयार होत आहे…</string>
     <string name="account_export_failed">आत्ता तुमचा डेटा तयार करता आला नाही. पुन्हा प्रयत्न करता का?</string>
@@ -460,8 +459,6 @@
     <string name="case_appeal_original">तुम्ही जोडलेली माहिती, तुम्ही लिहिली तशी</string>
     <string name="case_display_name">शेअर केलेल्या निकालावर तुमचे नाव</string>
     <string name="case_display_save">नाव सेव्ह करा</string>
-    <string name="respond_keep">हे प्रकरण तुमच्या खात्यात ठेवा</string>
-    <string name="respond_kept">तुमच्या खात्यात सेव्ह आहे.</string>
     <string name="respond_remove">माझी बाजू काढून टाका</string>
     <string name="respond_remove_confirm">तुमचा मूळ मजकूर आणि तुमचे दिसणारे नाव काढून टाकायचे? प्रकरणाच्या शेअर लिंक चालणे बंद होईल (चॅटमध्ये आधीच पोस्ट झालेले प्रिव्ह्यू ती ॲप्स रिफ्रेश करेपर्यंत दिसू शकतात). हे परत आणता येणार नाही.</string>
     <string name="names_title">शेअर पानावरची नावे</string>

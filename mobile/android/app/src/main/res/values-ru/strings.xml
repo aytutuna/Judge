@@ -160,7 +160,6 @@
     <string name="consent_sensitive_title">Прежде чем начать</string>
     <string name="consent_sensitive_body">Мой текст может содержать личные подробности, например о здоровье или отношениях. Judge отправляет его без имён внешнему поставщику ИИ-услуг, чтобы написать мой вердикт, и хранит, пока я его не удалю.</string>
     <string name="consent_sensitive_continue">Продолжить</string>
-    <string name="respond_adult_confirm">Мне 18 лет или больше</string>
     <string name="account_export">Скачать мои данные</string>
     <string name="account_export_busy">Готовим файл…</string>
     <string name="account_export_failed">Сейчас не удалось подготовить ваши данные. Попробуете ещё раз?</string>
@@ -472,8 +471,6 @@
     <string name="case_appeal_original">Ваши подробности в том виде, как вы их написали</string>
     <string name="case_display_name">Ваше имя в вердикте по ссылке</string>
     <string name="case_display_save">Сохранить имя</string>
-    <string name="respond_keep">Сохранить это дело в аккаунте</string>
-    <string name="respond_kept">Сохранено в вашем аккаунте.</string>
     <string name="respond_remove">Удалить мою версию</string>
     <string name="respond_remove_confirm">Удалить ваш исходный текст и отображаемое имя? Ссылки на дело перестанут работать (превью, уже отправленные в чаты, могут показываться, пока эти приложения их не обновят). Отменить это нельзя.</string>
     <string name="names_title">Имена на странице по ссылке</string>

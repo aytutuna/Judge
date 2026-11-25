@@ -348,7 +348,6 @@ const vi: Locale = {
     "consent.sensitiveBody":
       "Văn bản của tôi có thể chứa chi tiết riêng tư, như sức khỏe hay các mối quan hệ. Judge gửi nó, đã bỏ tên, tới một nhà cung cấp dịch vụ AI bên ngoài để viết phán quyết cho tôi, và giữ cho đến khi tôi xóa.",
     "consent.sensitiveContinue": "Tiếp tục",
-    "respond.adultConfirm": "Tôi từ 18 tuổi trở lên",
     "account.export": "Tải dữ liệu của tôi",
     "account.exportBusy": "Đang chuẩn bị tệp của bạn…",
     "account.exportFailed": "Hiện chưa chuẩn bị được dữ liệu của bạn. Bạn thử lại nhé?",
@@ -733,8 +732,6 @@ const vi: Locale = {
     "case.appealOriginal": "Thông tin bạn bổ sung, đúng như bạn viết",
     "case.displayName": "Tên của bạn trên phán quyết được chia sẻ",
     "case.displaySave": "Lưu tên",
-    "respond.keep": "Lưu vụ này vào tài khoản",
-    "respond.kept": "Đã lưu trong tài khoản của bạn.",
     "respond.remove": "Gỡ phần của tôi",
     "respond.remove.confirm":
       "Gỡ bản gốc và tên hiển thị của bạn? Các liên kết chia sẻ của vụ sẽ ngừng hoạt động (các bản xem trước đã đăng trong đoạn chat có thể vẫn hiện cho đến khi ứng dụng làm mới). Không thể hoàn tác.",

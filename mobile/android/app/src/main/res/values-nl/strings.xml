@@ -154,7 +154,6 @@
     <string name="consent_sensitive_title">Voor je begint</string>
     <string name="consent_sensitive_body">Mijn tekst kan privégegevens bevatten, zoals over gezondheid of relaties. Judge stuurt hem, zonder namen, naar een externe AI-dienstverlener om mijn uitspraak te schrijven en bewaart hem tot ik hem verwijder.</string>
     <string name="consent_sensitive_continue">Verder</string>
-    <string name="respond_adult_confirm">Ik ben 18 jaar of ouder</string>
     <string name="account_export">Mijn gegevens downloaden</string>
     <string name="account_export_busy">Je bestand wordt klaargemaakt…</string>
     <string name="account_export_failed">We konden je gegevens nu niet klaarmaken. Wil je het nog eens proberen?</string>
@@ -460,8 +459,6 @@
     <string name="case_appeal_original">Je aanvulling zoals je die schreef</string>
     <string name="case_display_name">Je naam op de gedeelde uitspraak</string>
     <string name="case_display_save">Naam opslaan</string>
-    <string name="respond_keep">Deze zaak in je account bewaren</string>
-    <string name="respond_kept">Bewaard in je account.</string>
     <string name="respond_remove">Mijn kant verwijderen</string>
     <string name="respond_remove_confirm">Je oorspronkelijke tekst en je weergavenaam verwijderen? De deellinks van de zaak werken niet meer (previews die al in chats zijn gedeeld, kunnen zichtbaar blijven tot die apps ze vernieuwen). Dit kan niet ongedaan worden gemaakt.</string>
     <string name="names_title">Namen op de gedeelde pagina</string>

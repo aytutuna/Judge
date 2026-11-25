@@ -344,7 +344,6 @@ const hr: Locale = {
     "consent.sensitiveBody":
       "Moj tekst može sadržavati privatne podatke, na primjer o zdravlju ili odnosima. Judge ga bez imena šalje vanjskom pružatelju AI usluge da napiše moju presudu i čuva ga dok ga ne uklonim.",
     "consent.sensitiveContinue": "Nastavi",
-    "respond.adultConfirm": "Imam 18 ili više godina",
     "account.export": "Preuzmi moje podatke",
     "account.exportBusy": "Pripremam datoteku…",
     "account.exportFailed": "Trenutačno nismo mogli pripremiti tvoje podatke. Želiš li pokušati ponovno?",
@@ -725,8 +724,6 @@ const hr: Locale = {
     "case.appealOriginal": "Tvoj dodatni kontekst u izvornom obliku",
     "case.displayName": "Tvoje ime na podijeljenoj presudi",
     "case.displaySave": "Spremi ime",
-    "respond.keep": "Spremi ovaj slučaj na svoj račun",
-    "respond.kept": "Spremljeno na tvom računu.",
     "respond.remove": "Ukloni svoju stranu",
     "respond.remove.confirm":
       "Želiš ukloniti svoj izvorni tekst i svoje prikazano ime? Poveznice za dijeljenje slučaja prestaju raditi (pregledi već objavljeni u razgovorima mogu se i dalje prikazivati dok ih te aplikacije ne osvježe). Ovo se ne može poništiti.",

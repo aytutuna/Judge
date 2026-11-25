@@ -353,7 +353,6 @@ const fr: Locale = {
     "consent.sensitiveBody":
       "Mon texte peut contenir des détails privés, comme la santé ou les relations. Judge l’envoie, sans les noms, à un fournisseur de services d’IA externe pour rédiger mon verdict, et le garde jusqu’à ce que je le retire.",
     "consent.sensitiveContinue": "Continuer",
-    "respond.adultConfirm": "J’ai 18 ans ou plus",
     "account.export": "Télécharger mes données",
     "account.exportBusy": "Préparation du fichier…",
     "account.exportFailed": "Impossible de préparer tes données pour l’instant. Tu veux bien réessayer ?",
@@ -745,9 +744,6 @@ const fr: Locale = {
     "case.appealOriginal": "Ton contexte ajouté, tel que tu l’as écrit",
     "case.displayName": "Ton nom sur le verdict partagé",
     "case.displaySave": "Enregistrer le nom",
-    "respond.keep": "Garder ce dossier dans ton compte",
-    "respond.kept":
-      "Conservé dans ton compte.",
     "respond.remove": "Supprimer ma version",
     "respond.remove.confirm":
       "Supprimer ton texte original et ton nom affiché ? Les liens de partage du dossier cesseront de fonctionner (les aperçus déjà publiés dans des conversations peuvent rester visibles jusqu’à ce que ces applis les actualisent). Cette action est irréversible.",

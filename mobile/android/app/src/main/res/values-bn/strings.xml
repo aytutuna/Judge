@@ -154,7 +154,6 @@
     <string name="consent_sensitive_title">শুরুর আগে</string>
     <string name="consent_sensitive_body">আমার লেখায় স্বাস্থ্য বা সম্পর্কের মতো ব্যক্তিগত বিষয় থাকতে পারে। Judge নাম সরিয়ে সেটি আমার রায় লেখার জন্য একটি বাইরের এআই পরিষেবা প্রদানকারীকে পাঠায়, এবং আমি না সরানো পর্যন্ত রেখে দেয়।</string>
     <string name="consent_sensitive_continue">চালিয়ে যান</string>
-    <string name="respond_adult_confirm">আমার বয়স ১৮ বা তার বেশি</string>
     <string name="account_export">আমার তথ্য ডাউনলোড করুন</string>
     <string name="account_export_busy">আপনার ফাইল তৈরি হচ্ছে…</string>
     <string name="account_export_failed">এখন আপনার তথ্য তৈরি করা গেল না। আবার চেষ্টা করবেন?</string>
@@ -460,8 +459,6 @@
     <string name="case_appeal_original">আপনার যোগ করা নতুন তথ্য, আপনি যেভাবে লিখেছিলেন</string>
     <string name="case_display_name">শেয়ার করা রায়ে আপনার নাম</string>
     <string name="case_display_save">নাম সেভ করুন</string>
-    <string name="respond_keep">এই মামলাটা আপনার অ্যাকাউন্টে রাখুন</string>
-    <string name="respond_kept">আপনার অ্যাকাউন্টে রাখা আছে।</string>
     <string name="respond_remove">আমার বক্তব্য সরিয়ে ফেলুন</string>
     <string name="respond_remove_confirm">আপনার মূল লেখা আর প্রদর্শিত নাম সরিয়ে ফেলবেন? মামলার শেয়ার লিংক কাজ করা বন্ধ করবে (চ্যাটে আগেই পোস্ট হওয়া প্রিভিউ সেই অ্যাপগুলো রিফ্রেশ না করা পর্যন্ত দেখা যেতে পারে)। এটা আর ফেরানো যাবে না।</string>
     <string name="names_title">শেয়ার করা পেজে নাম</string>

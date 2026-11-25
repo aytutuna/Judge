@@ -160,7 +160,6 @@
     <string name="consent_sensitive_title">Zanim zaczniesz</string>
     <string name="consent_sensitive_body">Mój tekst może zawierać prywatne szczegóły, na przykład o zdrowiu lub relacjach. Judge wysyła go bez imion do zewnętrznego dostawcy usług AI, który pisze mój werdykt, i przechowuje go, dopóki go nie usunę.</string>
     <string name="consent_sensitive_continue">Dalej</string>
-    <string name="respond_adult_confirm">Mam 18 lat lub więcej</string>
     <string name="account_export">Pobierz moje dane</string>
     <string name="account_export_busy">Przygotowuję plik…</string>
     <string name="account_export_failed">Nie udało się teraz przygotować twoich danych. Spróbujesz jeszcze raz?</string>
@@ -472,8 +471,6 @@
     <string name="case_appeal_original">Twój dodatkowy kontekst w oryginale</string>
     <string name="case_display_name">Twoje imię w udostępnionym werdykcie</string>
     <string name="case_display_save">Zapisz imię</string>
-    <string name="respond_keep">Zachowaj tę sprawę na swoim koncie</string>
-    <string name="respond_kept">Zapisane na twoim koncie.</string>
     <string name="respond_remove">Usuń moją wersję</string>
     <string name="respond_remove_confirm">Usunąć twój oryginalny tekst i nazwę wyświetlaną? Linki do udostępniania tej sprawy przestaną działać (podglądy wysłane już na czatach mogą być widoczne, dopóki te aplikacje ich nie odświeżą). Tego nie da się cofnąć.</string>
     <string name="names_title">Imiona na udostępnionej stronie</string>

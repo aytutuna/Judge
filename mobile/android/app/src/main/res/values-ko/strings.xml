@@ -151,7 +151,6 @@
     <string name="consent_sensitive_title">시작하기 전에</string>
     <string name="consent_sensitive_body">내 글에는 건강이나 인간관계처럼 사적인 내용이 있을 수 있어요. Judge는 이름을 뺀 글을 내 판결을 쓰기 위해 외부 AI 서비스 제공업체로 보내고, 내가 삭제할 때까지 보관해요.</string>
     <string name="consent_sensitive_continue">계속</string>
-    <string name="respond_adult_confirm">만 18세 이상이에요</string>
     <string name="account_export">내 데이터 내려받기</string>
     <string name="account_export_busy">파일을 준비하는 중이에요…</string>
     <string name="account_export_failed">지금은 데이터를 준비하지 못했어요. 다시 시도해 주시겠어요?</string>
@@ -454,8 +453,6 @@
     <string name="case_appeal_original">내가 쓴 그대로의 추가 맥락</string>
     <string name="case_display_name">공유된 판결에 보일 내 이름</string>
     <string name="case_display_save">이름 저장</string>
-    <string name="respond_keep">이 사건을 내 계정에 저장</string>
-    <string name="respond_kept">내 계정에 저장됐어요.</string>
     <string name="respond_remove">내 입장 삭제</string>
     <string name="respond_remove_confirm">내 원문과 표시 이름을 삭제할까요? 사건의 공유 링크가 열리지 않게 돼요(이미 대화방에 올라간 미리보기는 해당 앱이 새로 고칠 때까지 보일 수 있어요). 되돌릴 수 없어요.</string>
     <string name="names_title">공유 페이지에 보일 이름</string>

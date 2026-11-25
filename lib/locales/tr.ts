@@ -350,7 +350,6 @@ const tr: Locale = {
     "consent.sensitiveBody":
       "Yazdıklarım sağlık ya da ilişkiler gibi özel ayrıntılar içerebilir. Judge bunu, isimler çıkarılmış hâlde, kararımı yazması için dışarıdaki bir yapay zekâ hizmet sağlayıcısına gönderir ve ben kaldırana kadar saklar.",
     "consent.sensitiveContinue": "Devam et",
-    "respond.adultConfirm": "18 yaşında veya daha büyüğüm",
     "account.export": "Verilerimi indir",
     "account.exportBusy": "Dosyan hazırlanıyor…",
     "account.exportFailed": "Verilerini şu an hazırlayamadık. Bir daha dener misin?",
@@ -728,8 +727,6 @@ const tr: Locale = {
     "case.appealOriginal": "Eklediğin bilgi, senin yazdığın hâliyle",
     "case.displayName": "Paylaşılan kararda görünecek adın",
     "case.displaySave": "Adı kaydet",
-    "respond.keep": "Bu davayı hesabında tut",
-    "respond.kept": "Hesabında saklandı.",
     "respond.remove": "Tarafımı kaldır",
     "respond.remove.confirm":
       "Yazdığın asıl metin ve görünen adın kaldırılsın mı? Davanın paylaşım bağlantıları çalışmaz olur (sohbetlerde önceden paylaşılmış önizlemeler, o uygulamalar yenileyene kadar görünmeye devam edebilir). Bu geri alınamaz.",

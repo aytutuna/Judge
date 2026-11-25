@@ -154,7 +154,6 @@
     <string name="consent_sensitive_title">شروع کرنے سے پہلے</string>
     <string name="consent_sensitive_body">میری تحریر میں صحت یا رشتوں جیسی نجی تفصیلات ہو سکتی ہیں۔ Judge اسے نام ہٹا کر میرا فیصلہ لکھنے کے لیے ایک بیرونی AI سروس فراہم کنندہ کو بھیجتا ہے، اور میرے ہٹانے تک رکھتا ہے۔</string>
     <string name="consent_sensitive_continue">جاری رکھیں</string>
-    <string name="respond_adult_confirm">میری عمر 18 سال یا اس سے زیادہ ہے</string>
     <string name="account_export">میرا ڈیٹا ڈاؤن لوڈ کریں</string>
     <string name="account_export_busy">آپ کی فائل تیار ہو رہی ہے…</string>
     <string name="account_export_failed">ابھی آپ کا ڈیٹا تیار نہیں ہو سکا۔ دوبارہ کوشش کریں گے؟</string>
@@ -460,8 +459,6 @@
     <string name="case_appeal_original">آپ کی شامل کی گئی تفصیل، جیسے آپ نے لکھی</string>
     <string name="case_display_name">شیئر کیے گئے فیصلے پر آپ کا نام</string>
     <string name="case_display_save">نام محفوظ کریں</string>
-    <string name="respond_keep">یہ کیس اپنے اکاؤنٹ میں رکھیں</string>
-    <string name="respond_kept">آپ کے اکاؤنٹ میں محفوظ ہے۔</string>
     <string name="respond_remove">میری بات ہٹائیں</string>
     <string name="respond_remove_confirm">آپ کا اصل متن اور ڈسپلے نام ہٹا دیں؟ کیس کے شیئر لنکس کام کرنا بند کر دیں گے (چیٹس میں پہلے سے پوسٹ ہوئے پریویو تب تک دکھ سکتے ہیں جب تک وہ ایپس انہیں ریفریش نہ کریں)۔ یہ واپس نہیں ہو سکتا۔</string>
     <string name="names_title">شیئر صفحے پر نام</string>

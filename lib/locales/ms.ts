@@ -349,7 +349,6 @@ const ms: Locale = {
     "consent.sensitiveBody":
       "Teks saya mungkin mengandungi butiran peribadi, seperti kesihatan atau hubungan. Judge menghantarnya, tanpa nama, kepada penyedia perkhidmatan AI luar untuk menulis keputusan saya, dan menyimpannya sehingga saya mengalihkannya.",
     "consent.sensitiveContinue": "Teruskan",
-    "respond.adultConfirm": "Saya berumur 18 tahun atau lebih",
     "account.export": "Muat turun data saya",
     "account.exportBusy": "Menyediakan fail anda…",
     "account.exportFailed": "Data anda tidak dapat disediakan sekarang. Cuba lagi?",
@@ -732,8 +731,6 @@ const ms: Locale = {
     "case.appealOriginal": "Konteks tambahan anda seperti yang anda tulis",
     "case.displayName": "Nama anda pada keputusan yang dikongsi",
     "case.displaySave": "Simpan nama",
-    "respond.keep": "Simpan kes ini dalam akaun anda",
-    "respond.kept": "Disimpan dalam akaun anda.",
     "respond.remove": "Buang versi saya",
     "respond.remove.confirm":
       "Buang teks asal dan nama paparan anda? Pautan kongsi kes ini akan berhenti berfungsi (pratonton yang sudah disiarkan dalam sembang mungkin masih kelihatan sehingga aplikasi itu menyegarkannya). Tindakan ini tidak boleh dibatalkan.",

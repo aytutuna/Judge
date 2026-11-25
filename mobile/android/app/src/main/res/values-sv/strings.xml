@@ -154,7 +154,6 @@
     <string name="consent_sensitive_title">Innan du börjar</string>
     <string name="consent_sensitive_body">Min text kan innehålla privata uppgifter, till exempel om hälsa eller relationer. Judge skickar den, utan namn, till en extern AI-tjänsteleverantör som skriver min dom, och sparar den tills jag tar bort den.</string>
     <string name="consent_sensitive_continue">Fortsätt</string>
-    <string name="respond_adult_confirm">Jag är 18 år eller äldre</string>
     <string name="account_export">Ladda ner mina data</string>
     <string name="account_export_busy">Förbereder filen…</string>
     <string name="account_export_failed">Vi kunde inte förbereda dina data just nu. Vill du försöka igen?</string>
@@ -460,8 +459,6 @@
     <string name="case_appeal_original">Din komplettering som du skrev den</string>
     <string name="case_display_name">Ditt namn på den delade domen</string>
     <string name="case_display_save">Spara namn</string>
-    <string name="respond_keep">Spara fallet i ditt konto</string>
-    <string name="respond_kept">Sparat i ditt konto.</string>
     <string name="respond_remove">Ta bort min sida</string>
     <string name="respond_remove_confirm">Ta bort din originaltext och ditt visningsnamn? Fallets delningslänkar slutar fungera (förhandsvisningar som redan delats i chattar kan synas tills apparna uppdaterar dem). Det går inte att ångra.</string>
     <string name="names_title">Namn på den delade sidan</string>

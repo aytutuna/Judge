@@ -166,7 +166,6 @@
     <string name="consent_sensitive_title">قبل أن تبدأ</string>
     <string name="consent_sensitive_body">قد يتضمن نصي تفاصيل خاصة، مثل الصحة أو العلاقات. يرسله Judge بعد حذف الأسماء إلى مزوّد خدمة ذكاء اصطناعي خارجي لكتابة حكمي، ويحتفظ به إلى أن أزيله.</string>
     <string name="consent_sensitive_continue">متابعة</string>
-    <string name="respond_adult_confirm">عمري 18 عامًا أو أكثر</string>
     <string name="account_export">تنزيل بياناتي</string>
     <string name="account_export_busy">جارٍ تجهيز ملفك…</string>
     <string name="account_export_failed">تعذّر تجهيز بياناتك الآن. هل تحاول مرة أخرى؟</string>
@@ -484,8 +483,6 @@
     <string name="case_appeal_original">التوضيح الذي أضفته كما كتبته</string>
     <string name="case_display_name">اسمك في الحكم المُشارَك</string>
     <string name="case_display_save">حفظ الاسم</string>
-    <string name="respond_keep">حفظ هذه القضية في حسابك</string>
-    <string name="respond_kept">محفوظة في حسابك.</string>
     <string name="respond_remove">حذف روايتي</string>
     <string name="respond_remove_confirm">هل تريد حذف نصك الأصلي واسم العرض الخاص بك؟ ستتوقف روابط مشاركة القضية عن العمل (المعاينات المنشورة مسبقًا في المحادثات قد تظل ظاهرة حتى تحدّثها تلك التطبيقات). لا يمكن التراجع عن ذلك.</string>
     <string name="names_title">الأسماء في الصفحة المُشارَكة</string>

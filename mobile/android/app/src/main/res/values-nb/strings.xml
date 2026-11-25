@@ -154,7 +154,6 @@
     <string name="consent_sensitive_title">Før du starter</string>
     <string name="consent_sensitive_body">Teksten min kan inneholde private opplysninger, for eksempel om helse eller forhold. Judge sender den, uten navn, til en ekstern AI-tjenesteleverandør som skriver dommen min, og lagrer den til jeg fjerner den.</string>
     <string name="consent_sensitive_continue">Fortsett</string>
-    <string name="respond_adult_confirm">Jeg er 18 år eller eldre</string>
     <string name="account_export">Last ned dataene mine</string>
     <string name="account_export_busy">Gjør filen klar…</string>
     <string name="account_export_failed">Vi kunne ikke gjøre dataene dine klare akkurat nå. Vil du prøve igjen?</string>
@@ -460,8 +459,6 @@
     <string name="case_appeal_original">Konteksten du la til, slik du skrev den</string>
     <string name="case_display_name">Navnet ditt på den delte dommen</string>
     <string name="case_display_save">Lagre navn</string>
-    <string name="respond_keep">Lagre denne saken i kontoen din</string>
-    <string name="respond_kept">Lagret i kontoen din.</string>
     <string name="respond_remove">Fjern min side</string>
     <string name="respond_remove_confirm">Vil du fjerne originalteksten og visningsnavnet ditt? Delingslenkene til saken slutter å virke (forhåndsvisninger som allerede er lagt ut i chatter, kan fortsatt vises til appene oppdaterer dem). Dette kan ikke angres.</string>
     <string name="names_title">Navn på den delte siden</string>

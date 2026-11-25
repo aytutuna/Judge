@@ -352,7 +352,6 @@ const id: Locale = {
     "consent.sensitiveBody":
       "Teks saya mungkin berisi hal pribadi, seperti kesehatan atau hubungan. Judge mengirimkannya, tanpa nama, ke penyedia layanan AI pihak luar untuk menulis putusan saya, dan menyimpannya sampai saya menghapusnya.",
     "consent.sensitiveContinue": "Lanjut",
-    "respond.adultConfirm": "Saya berusia 18 tahun atau lebih",
     "account.export": "Unduh data saya",
     "account.exportBusy": "Menyiapkan berkasmu…",
     "account.exportFailed": "Datamu belum bisa disiapkan sekarang. Coba lagi?",
@@ -733,8 +732,6 @@ const id: Locale = {
     "respond.remove": "Hapus versiku",
     "respond.remove.confirm":
       "Hapus teks aslimu dan nama tampilanmu? Tautan berbagi kasus ini berhenti berfungsi (pratinjau yang sudah terkirim di chat mungkin masih terlihat sampai aplikasinya memperbaruinya). Ini tidak bisa dibatalkan.",
-    "respond.keep": "Simpan kasus ini di akunmu",
-    "respond.kept": "Tersimpan di akunmu.",
     "names.title": "Nama di halaman berbagi",
     "names.you": "Namamu",
     "names.show": "Tampilkan nama di halaman berbagi",

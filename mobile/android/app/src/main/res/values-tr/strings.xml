@@ -154,7 +154,6 @@
     <string name="consent_sensitive_title">Başlamadan önce</string>
     <string name="consent_sensitive_body">Yazdıklarım sağlık ya da ilişkiler gibi özel ayrıntılar içerebilir. Judge bunu, isimler çıkarılmış hâlde, kararımı yazması için dışarıdaki bir yapay zekâ hizmet sağlayıcısına gönderir ve ben kaldırana kadar saklar.</string>
     <string name="consent_sensitive_continue">Devam et</string>
-    <string name="respond_adult_confirm">18 yaşında veya daha büyüğüm</string>
     <string name="account_export">Verilerimi indir</string>
     <string name="account_export_busy">Dosyan hazırlanıyor…</string>
     <string name="account_export_failed">Verilerini şu an hazırlayamadık. Bir daha dener misin?</string>
@@ -460,8 +459,6 @@
     <string name="case_appeal_original">Eklediğin bilgi, senin yazdığın hâliyle</string>
     <string name="case_display_name">Paylaşılan kararda görünecek adın</string>
     <string name="case_display_save">Adı kaydet</string>
-    <string name="respond_keep">Bu davayı hesabında tut</string>
-    <string name="respond_kept">Hesabında saklandı.</string>
     <string name="respond_remove">Tarafımı kaldır</string>
     <string name="respond_remove_confirm">Yazdığın asıl metin ve görünen adın kaldırılsın mı? Davanın paylaşım bağlantıları çalışmaz olur (sohbetlerde önceden paylaşılmış önizlemeler, o uygulamalar yenileyene kadar görünmeye devam edebilir). Bu geri alınamaz.</string>
     <string name="names_title">Paylaşılan sayfadaki isimler</string>

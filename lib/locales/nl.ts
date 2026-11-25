@@ -346,7 +346,6 @@ const nl: Locale = {
     "consent.sensitiveBody":
       "Mijn tekst kan privégegevens bevatten, zoals over gezondheid of relaties. Judge stuurt hem, zonder namen, naar een externe AI-dienstverlener om mijn uitspraak te schrijven en bewaart hem tot ik hem verwijder.",
     "consent.sensitiveContinue": "Verder",
-    "respond.adultConfirm": "Ik ben 18 jaar of ouder",
     "account.export": "Mijn gegevens downloaden",
     "account.exportBusy": "Je bestand wordt klaargemaakt…",
     "account.exportFailed": "We konden je gegevens nu niet klaarmaken. Wil je het nog eens proberen?",
@@ -729,8 +728,6 @@ const nl: Locale = {
     "case.appealOriginal": "Je aanvulling zoals je die schreef",
     "case.displayName": "Je naam op de gedeelde uitspraak",
     "case.displaySave": "Naam opslaan",
-    "respond.keep": "Deze zaak in je account bewaren",
-    "respond.kept": "Bewaard in je account.",
     "respond.remove": "Mijn kant verwijderen",
     "respond.remove.confirm":
       "Je oorspronkelijke tekst en je weergavenaam verwijderen? De deellinks van de zaak werken niet meer (previews die al in chats zijn gedeeld, kunnen zichtbaar blijven tot die apps ze vernieuwen). Dit kan niet ongedaan worden gemaakt.",

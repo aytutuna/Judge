@@ -154,7 +154,6 @@
     <string name="consent_sensitive_title">Πριν ξεκινήσεις</string>
     <string name="consent_sensitive_body">Το κείμενό μου μπορεί να περιέχει ιδιωτικά στοιχεία, όπως για την υγεία ή τις σχέσεις. Το Judge το στέλνει, χωρίς ονόματα, σε εξωτερικό πάροχο υπηρεσίας τεχνητής νοημοσύνης για να γράψει την απόφασή μου και το κρατά μέχρι να το αφαιρέσω.</string>
     <string name="consent_sensitive_continue">Συνέχεια</string>
-    <string name="respond_adult_confirm">Είμαι 18 ετών ή μεγαλύτερος/η</string>
     <string name="account_export">Λήψη των δεδομένων μου</string>
     <string name="account_export_busy">Το αρχείο ετοιμάζεται…</string>
     <string name="account_export_failed">Δεν μπορέσαμε να ετοιμάσουμε τα δεδομένα σου τώρα. Θες να ξαναδοκιμάσεις;</string>
@@ -460,8 +459,6 @@
     <string name="case_appeal_original">Οι πληροφορίες που πρόσθεσες, όπως τις έγραψες</string>
     <string name="case_display_name">Το όνομά σου στην κοινοποιημένη απόφαση</string>
     <string name="case_display_save">Αποθήκευση ονόματος</string>
-    <string name="respond_keep">Κράτα αυτή την υπόθεση στον λογαριασμό σου</string>
-    <string name="respond_kept">Αποθηκεύτηκε στον λογαριασμό σου.</string>
     <string name="respond_remove">Αφαίρεση της πλευράς μου</string>
     <string name="respond_remove_confirm">Να αφαιρεθούν το αρχικό σου κείμενο και το εμφανιζόμενο όνομά σου; Οι σύνδεσμοι κοινοποίησης της υπόθεσης σταματούν να λειτουργούν (προεπισκοπήσεις που έχουν ήδη σταλεί σε συνομιλίες μπορεί να εμφανίζονται μέχρι να τις ανανεώσουν οι εφαρμογές). Αυτό δεν αναιρείται.</string>
     <string name="names_title">Ονόματα στην κοινοποιημένη σελίδα</string>

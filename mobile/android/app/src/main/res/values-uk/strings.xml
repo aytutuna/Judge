@@ -160,7 +160,6 @@
     <string name="consent_sensitive_title">Перш ніж почати</string>
     <string name="consent_sensitive_body">Мій текст може містити особисті подробиці, наприклад про здоров\'я чи стосунки. Judge надсилає його без імен зовнішньому постачальнику ШІ-послуг, щоб той написав мій вердикт, і зберігає, доки я його не видалю.</string>
     <string name="consent_sensitive_continue">Продовжити</string>
-    <string name="respond_adult_confirm">Мені 18 років або більше</string>
     <string name="account_export">Завантажити мої дані</string>
     <string name="account_export_busy">Готуємо файл…</string>
     <string name="account_export_failed">Зараз не вдалося підготувати твої дані. Спробуєш ще раз?</string>
@@ -472,8 +471,6 @@
     <string name="case_appeal_original">Твій доданий контекст без змін</string>
     <string name="case_display_name">Твоє ім’я у вердикті за посиланням</string>
     <string name="case_display_save">Зберегти ім’я</string>
-    <string name="respond_keep">Зберегти цю справу в акаунті</string>
-    <string name="respond_kept">Збережено в твоєму акаунті.</string>
     <string name="respond_remove">Видалити мою версію</string>
     <string name="respond_remove_confirm">Видалити твій оригінальний текст і відображуване ім’я? Посилання на справу перестануть працювати (прев’ю, які вже надіслали в чати, можуть показуватися, доки ці застосунки їх не оновлять). Цю дію не можна скасувати.</string>
     <string name="names_title">Імена на сторінці за посиланням</string>

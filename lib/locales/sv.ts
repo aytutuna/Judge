@@ -346,7 +346,6 @@ const sv: Locale = {
     "consent.sensitiveBody":
       "Min text kan innehålla privata uppgifter, till exempel om hälsa eller relationer. Judge skickar den, utan namn, till en extern AI-tjänsteleverantör som skriver min dom, och sparar den tills jag tar bort den.",
     "consent.sensitiveContinue": "Fortsätt",
-    "respond.adultConfirm": "Jag är 18 år eller äldre",
     "account.export": "Ladda ner mina data",
     "account.exportBusy": "Förbereder filen…",
     "account.exportFailed": "Vi kunde inte förbereda dina data just nu. Vill du försöka igen?",
@@ -721,8 +720,6 @@ const sv: Locale = {
     "case.appealOriginal": "Din komplettering som du skrev den",
     "case.displayName": "Ditt namn på den delade domen",
     "case.displaySave": "Spara namn",
-    "respond.keep": "Spara fallet i ditt konto",
-    "respond.kept": "Sparat i ditt konto.",
     "respond.remove": "Ta bort min sida",
     "respond.remove.confirm":
       "Ta bort din originaltext och ditt visningsnamn? Fallets delningslänkar slutar fungera (förhandsvisningar som redan delats i chattar kan synas tills apparna uppdaterar dem). Det går inte att ångra.",

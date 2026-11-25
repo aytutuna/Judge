@@ -352,7 +352,6 @@ const ca: Locale = {
     "consent.sensitiveBody":
       "El meu text pot incloure detalls privats, com ara salut o relacions. Judge l'envia, sense els noms, a un proveïdor de serveis d'IA extern per escriure el meu veredicte, i el guarda fins que l'elimini.",
     "consent.sensitiveContinue": "Continua",
-    "respond.adultConfirm": "Tinc 18 anys o més",
     "account.export": "Baixa les meves dades",
     "account.exportBusy": "Preparant el fitxer…",
     "account.exportFailed": "Ara no hem pogut preparar les teves dades. Ho tornes a provar?",
@@ -740,8 +739,6 @@ const ca: Locale = {
     "case.appealOriginal": "El context que vas afegir, tal com el vas escriure",
     "case.displayName": "El teu nom al veredicte compartit",
     "case.displaySave": "Desa el nom",
-    "respond.keep": "Guarda aquest cas al teu compte",
-    "respond.kept": "Guardat al teu compte.",
     "respond.remove": "Elimina la meva versió",
     "respond.remove.confirm":
       "Vols eliminar el teu text original i el teu nom visible? Els enllaços per compartir del cas deixaran de funcionar (les previsualitzacions ja publicades en xats poden continuar apareixent fins que aquestes apps les actualitzin). No es pot desfer.",

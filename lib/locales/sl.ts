@@ -344,7 +344,6 @@ const sl: Locale = {
     "consent.sensitiveBody":
       "Moje besedilo lahko vsebuje zasebne podrobnosti, na primer o zdravju ali odnosih. Judge ga brez imen pošlje zunanjemu ponudniku storitve umetne inteligence, da napiše mojo razsodbo, in ga hrani, dokler ga ne odstranim.",
     "consent.sensitiveContinue": "Naprej",
-    "respond.adultConfirm": "Star sem 18 let ali več",
     "account.export": "Prenesi moje podatke",
     "account.exportBusy": "Pripravljam datoteko…",
     "account.exportFailed": "Podatkov zdaj ni bilo mogoče pripraviti. Poskusiš znova?",
@@ -721,8 +720,6 @@ const sl: Locale = {
     "case.appealOriginal": "Tvoj dodani kontekst v izvirni obliki",
     "case.displayName": "Tvoje ime v deljeni razsodbi",
     "case.displaySave": "Shrani ime",
-    "respond.keep": "Shrani ta spor v svoj račun",
-    "respond.kept": "Shranjeno v tvojem računu.",
     "respond.remove": "Odstrani mojo plat",
     "respond.remove.confirm":
       "Želiš odstraniti svoje izvirno besedilo in prikazno ime? Povezave za deljenje tega spora prenehajo delovati (predogledi, ki so že objavljeni v klepetih, so lahko še vidni, dokler jih te aplikacije ne osvežijo). Tega ni mogoče razveljaviti.",

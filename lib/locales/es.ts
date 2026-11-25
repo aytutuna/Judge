@@ -347,7 +347,6 @@ const es: Locale = {
     "consent.sensitiveBody":
       "Mi texto puede incluir datos privados, como salud o relaciones. Judge lo envía, sin nombres, a un proveedor de servicios de IA externo para redactar mi veredicto, y lo conserva hasta que lo elimine.",
     "consent.sensitiveContinue": "Continuar",
-    "respond.adultConfirm": "Tengo 18 años o más",
     "account.export": "Descargar mis datos",
     "account.exportBusy": "Preparando tu archivo…",
     "account.exportFailed": "No pudimos preparar tus datos ahora mismo. ¿Lo intentas otra vez?",
@@ -734,8 +733,6 @@ const es: Locale = {
     "case.appealOriginal": "El contexto que añadiste, tal como lo escribiste",
     "case.displayName": "Tu nombre en el veredicto compartido",
     "case.displaySave": "Guardar nombre",
-    "respond.keep": "Guardar este caso en tu cuenta",
-    "respond.kept": "Guardado en tu cuenta.",
     "respond.remove": "Eliminar mi versión",
     "respond.remove.confirm":
       "¿Eliminar tu texto original y tu nombre visible? Los enlaces para compartir del caso dejarán de funcionar (las vistas previas ya publicadas en chats pueden seguir viéndose hasta que esas apps las actualicen). No se puede deshacer.",

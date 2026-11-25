@@ -157,7 +157,6 @@
     <string name="consent_sensitive_title">Abans de començar</string>
     <string name="consent_sensitive_body">El meu text pot incloure detalls privats, com ara salut o relacions. Judge l\'envia, sense els noms, a un proveïdor de serveis d\'IA extern per escriure el meu veredicte, i el guarda fins que l\'elimini.</string>
     <string name="consent_sensitive_continue">Continua</string>
-    <string name="respond_adult_confirm">Tinc 18 anys o més</string>
     <string name="account_export">Baixa les meves dades</string>
     <string name="account_export_busy">Preparant el fitxer…</string>
     <string name="account_export_failed">Ara no hem pogut preparar les teves dades. Ho tornes a provar?</string>
@@ -466,8 +465,6 @@
     <string name="case_appeal_original">El context que vas afegir, tal com el vas escriure</string>
     <string name="case_display_name">El teu nom al veredicte compartit</string>
     <string name="case_display_save">Desa el nom</string>
-    <string name="respond_keep">Guarda aquest cas al teu compte</string>
-    <string name="respond_kept">Guardat al teu compte.</string>
     <string name="respond_remove">Elimina la meva versió</string>
     <string name="respond_remove_confirm">Vols eliminar el teu text original i el teu nom visible? Els enllaços per compartir del cas deixaran de funcionar (les previsualitzacions ja publicades en xats poden continuar apareixent fins que aquestes apps les actualitzin). No es pot desfer.</string>
     <string name="names_title">Noms a la pàgina compartida</string>

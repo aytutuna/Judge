@@ -157,7 +157,6 @@
     <string name="consent_sensitive_title">Avant de commencer</string>
     <string name="consent_sensitive_body">Mon texte peut contenir des détails privés, comme la santé ou les relations. Judge l’envoie, sans les noms, à un fournisseur de services d’IA externe pour rédiger mon verdict, et le garde jusqu’à ce que je le retire.</string>
     <string name="consent_sensitive_continue">Continuer</string>
-    <string name="respond_adult_confirm">J’ai 18 ans ou plus</string>
     <string name="account_export">Télécharger mes données</string>
     <string name="account_export_busy">Préparation du fichier…</string>
     <string name="account_export_failed">Impossible de préparer tes données pour l’instant. Tu veux bien réessayer ?</string>
@@ -466,8 +465,6 @@
     <string name="case_appeal_original">Ton contexte ajouté, tel que tu l’as écrit</string>
     <string name="case_display_name">Ton nom sur le verdict partagé</string>
     <string name="case_display_save">Enregistrer le nom</string>
-    <string name="respond_keep">Garder ce dossier dans ton compte</string>
-    <string name="respond_kept">Conservé dans ton compte.</string>
     <string name="respond_remove">Supprimer ma version</string>
     <string name="respond_remove_confirm">Supprimer ton texte original et ton nom affiché ? Les liens de partage du dossier cesseront de fonctionner (les aperçus déjà publiés dans des conversations peuvent rester visibles jusqu’à ce que ces applis les actualisent). Cette action est irréversible.</string>
     <string name="names_title">Noms sur la page partagée</string>

@@ -344,7 +344,6 @@ const cs: Locale = {
     "consent.sensitiveBody":
       "Můj text může obsahovat soukromé údaje, třeba o zdraví nebo vztazích. Judge ho po odstranění jmen pošle externímu poskytovateli služby umělé inteligence, aby napsala můj verdikt, a uchová ho, dokud ho neodstraním.",
     "consent.sensitiveContinue": "Pokračovat",
-    "respond.adultConfirm": "Je mi 18 let nebo víc",
     "account.export": "Stáhnout moje data",
     "account.exportBusy": "Připravuji soubor…",
     "account.exportFailed": "Data se teď nepodařilo připravit. Zkusíš to znovu?",
@@ -720,8 +719,6 @@ const cs: Locale = {
     "case.appealOriginal": "Tvůj doplněný kontext v původním znění",
     "case.displayName": "Tvoje jméno ve sdíleném verdiktu",
     "case.displaySave": "Uložit jméno",
-    "respond.keep": "Uložit tento případ do účtu",
-    "respond.kept": "Uloženo ve tvém účtu.",
     "respond.remove": "Odstranit můj pohled",
     "respond.remove.confirm":
       "Odstranit tvůj původní text a zobrazované jméno? Sdílené odkazy případu přestanou fungovat (náhledy, které už byly vložené do chatů, se můžou zobrazovat dál, dokud je tyto aplikace neobnoví). Tohle nejde vrátit.",

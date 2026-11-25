@@ -157,7 +157,6 @@
     <string name="consent_sensitive_title">Prije početka</string>
     <string name="consent_sensitive_body">Moj tekst može sadržavati privatne podatke, na primjer o zdravlju ili odnosima. Judge ga bez imena šalje vanjskom pružatelju AI usluge da napiše moju presudu i čuva ga dok ga ne uklonim.</string>
     <string name="consent_sensitive_continue">Nastavi</string>
-    <string name="respond_adult_confirm">Imam 18 ili više godina</string>
     <string name="account_export">Preuzmi moje podatke</string>
     <string name="account_export_busy">Pripremam datoteku…</string>
     <string name="account_export_failed">Trenutačno nismo mogli pripremiti tvoje podatke. Želiš li pokušati ponovno?</string>
@@ -466,8 +465,6 @@
     <string name="case_appeal_original">Tvoj dodatni kontekst u izvornom obliku</string>
     <string name="case_display_name">Tvoje ime na podijeljenoj presudi</string>
     <string name="case_display_save">Spremi ime</string>
-    <string name="respond_keep">Spremi ovaj slučaj na svoj račun</string>
-    <string name="respond_kept">Spremljeno na tvom računu.</string>
     <string name="respond_remove">Ukloni svoju stranu</string>
     <string name="respond_remove_confirm">Želiš ukloniti svoj izvorni tekst i svoje prikazano ime? Poveznice za dijeljenje slučaja prestaju raditi (pregledi već objavljeni u razgovorima mogu se i dalje prikazivati dok ih te aplikacije ne osvježe). Ovo se ne može poništiti.</string>
     <string name="names_title">Imena na podijeljenoj stranici</string>

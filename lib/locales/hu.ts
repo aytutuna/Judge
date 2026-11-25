@@ -350,7 +350,6 @@ const hu: Locale = {
     "consent.sensitiveBody":
       "A szövegem tartalmazhat személyes részleteket, például egészségről vagy kapcsolatokról. A Judge a nevek nélkül elküldi egy külső MI-szolgáltatónak, hogy megírja az ítéletemet, és addig őrzi, amíg el nem távolítom.",
     "consent.sensitiveContinue": "Tovább",
-    "respond.adultConfirm": "Legalább 18 éves vagyok",
     "account.export": "Adataim letöltése",
     "account.exportBusy": "A fájl előkészítése…",
     "account.exportFailed": "Most nem tudtuk előkészíteni az adataidat. Megpróbálod újra?",
@@ -733,8 +732,6 @@ const hu: Locale = {
     "case.appealOriginal": "A kiegészítésed, ahogy megírtad",
     "case.displayName": "A neved a megosztott ítéleten",
     "case.displaySave": "Név mentése",
-    "respond.keep": "Ügy mentése a fiókodba",
-    "respond.kept": "Elmentve a fiókodban.",
     "respond.remove": "A verzióm eltávolítása",
     "respond.remove.confirm":
       "Eltávolítod az eredeti szövegedet és a megjelenített nevedet? Az ügy megosztási linkjei nem működnek tovább (a csetekben már kiküldött előnézetek még látszhatnak, amíg az adott app nem frissíti őket). Ez nem vonható vissza.",

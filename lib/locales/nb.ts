@@ -342,7 +342,6 @@ const nb: Locale = {
     "consent.sensitiveBody":
       "Teksten min kan inneholde private opplysninger, for eksempel om helse eller forhold. Judge sender den, uten navn, til en ekstern AI-tjenesteleverandør som skriver dommen min, og lagrer den til jeg fjerner den.",
     "consent.sensitiveContinue": "Fortsett",
-    "respond.adultConfirm": "Jeg er 18 år eller eldre",
     "account.export": "Last ned dataene mine",
     "account.exportBusy": "Gjør filen klar…",
     "account.exportFailed": "Vi kunne ikke gjøre dataene dine klare akkurat nå. Vil du prøve igjen?",
@@ -716,8 +715,6 @@ const nb: Locale = {
     "case.appealOriginal": "Konteksten du la til, slik du skrev den",
     "case.displayName": "Navnet ditt på den delte dommen",
     "case.displaySave": "Lagre navn",
-    "respond.keep": "Lagre denne saken i kontoen din",
-    "respond.kept": "Lagret i kontoen din.",
     "respond.remove": "Fjern min side",
     "respond.remove.confirm":
       "Vil du fjerne originalteksten og visningsnavnet ditt? Delingslenkene til saken slutter å virke (forhåndsvisninger som allerede er lagt ut i chatter, kan fortsatt vises til appene oppdaterer dem). Dette kan ikke angres.",

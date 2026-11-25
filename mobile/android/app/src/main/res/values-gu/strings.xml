@@ -154,7 +154,6 @@
     <string name="consent_sensitive_title">શરૂ કરતા પહેલાં</string>
     <string name="consent_sensitive_body">મારા લખાણમાં આરોગ્ય કે સંબંધો જેવી ખાનગી વિગતો હોઈ શકે છે. Judge નામ કાઢીને તેને મારો ચુકાદો લખવા માટે બહારના AI સેવા પ્રદાતાને મોકલે છે, અને હું દૂર ન કરું ત્યાં સુધી રાખે છે.</string>
     <string name="consent_sensitive_continue">આગળ વધો</string>
-    <string name="respond_adult_confirm">મારી ઉંમર 18 કે તેથી વધુ છે</string>
     <string name="account_export">મારો ડેટા ડાઉનલોડ કરો</string>
     <string name="account_export_busy">તમારી ફાઇલ તૈયાર થઈ રહી છે…</string>
     <string name="account_export_failed">હમણાં તમારો ડેટા તૈયાર થઈ શક્યો નહીં. ફરી પ્રયાસ કરશો?</string>
@@ -460,8 +459,6 @@
     <string name="case_appeal_original">તમે ઉમેરેલી વિગત, તમે લખી હતી એમ</string>
     <string name="case_display_name">શેર કરેલા ચુકાદા પર તમારું નામ</string>
     <string name="case_display_save">નામ સેવ કરો</string>
-    <string name="respond_keep">આ કેસ તમારા એકાઉન્ટમાં રાખો</string>
-    <string name="respond_kept">તમારા એકાઉન્ટમાં સચવાયું.</string>
     <string name="respond_remove">મારી વાત દૂર કરો</string>
     <string name="respond_remove_confirm">તમારું મૂળ લખાણ અને ડિસ્પ્લે નામ દૂર કરવાં છે? કેસની શેર લિંક કામ કરતી બંધ થઈ જશે (ચૅટમાં પહેલેથી મુકાયેલા પ્રીવ્યૂ, એ ઍપ રિફ્રેશ ન કરે ત્યાં સુધી દેખાઈ શકે). આ પાછું વાળી નહીં શકાય.</string>
     <string name="names_title">શેર કરેલા પેજ પરનાં નામ</string>

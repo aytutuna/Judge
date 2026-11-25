@@ -154,7 +154,6 @@
     <string name="consent_sensitive_title">தொடங்கும் முன்</string>
     <string name="consent_sensitive_body">என் எழுத்தில் உடல்நலம் அல்லது உறவுகள் போன்ற தனிப்பட்ட விவரங்கள் இருக்கலாம். Judge பெயர்களை நீக்கி அதை என் தீர்ப்பை எழுத வெளிப்புற AI சேவை வழங்குநருக்கு அனுப்பி, நான் நீக்கும் வரை வைத்திருக்கும்.</string>
     <string name="consent_sensitive_continue">தொடர்க</string>
-    <string name="respond_adult_confirm">எனக்கு 18 வயது அல்லது அதற்கு மேல்</string>
     <string name="account_export">என் தரவைப் பதிவிறக்கு</string>
     <string name="account_export_busy">உங்கள் கோப்பு தயாராகிறது…</string>
     <string name="account_export_failed">இப்போது உங்கள் தரவைத் தயாரிக்க முடியவில்லை. மீண்டும் முயல்வீர்களா?</string>
@@ -460,8 +459,6 @@
     <string name="case_appeal_original">நீங்கள் எழுதியபடி நீங்கள் சேர்த்த தகவல்</string>
     <string name="case_display_name">பகிரப்பட்ட தீர்ப்பில் உங்கள் பெயர்</string>
     <string name="case_display_save">பெயரைச் சேமி</string>
-    <string name="respond_keep">இந்த வழக்கை என் கணக்கில் சேமி</string>
-    <string name="respond_kept">உங்கள் கணக்கில் சேமிக்கப்பட்டது.</string>
     <string name="respond_remove">என் தரப்பை நீக்கு</string>
     <string name="respond_remove_confirm">உங்கள் மூல உரையையும் காட்சிப் பெயரையும் நீக்கவா? வழக்கின் பகிர்வு லிங்க்குகள் வேலை செய்யாது (சாட்களில் ஏற்கெனவே பகிரப்பட்ட முன்னோட்டங்கள், அந்த ஆப்கள் புதுப்பிக்கும் வரை தெரியக்கூடும்). இதைத் திரும்பப் பெற முடியாது.</string>
     <string name="names_title">பகிரப்பட்ட பக்கத்தில் பெயர்கள்</string>

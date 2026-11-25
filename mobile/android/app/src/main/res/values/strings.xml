@@ -154,7 +154,6 @@
     <string name="consent_sensitive_title">Before you start</string>
     <string name="consent_sensitive_body">My text may include private details, like health or relationships. Judge sends it, with names taken out, to an outside AI service provider to write my verdict, and keeps it until I remove it.</string>
     <string name="consent_sensitive_continue">Continue</string>
-    <string name="respond_adult_confirm">I am 18 or older</string>
     <string name="account_export">Download my data</string>
     <string name="account_export_busy">Preparing your file…</string>
     <string name="account_export_failed">We couldn\'t prepare your data just now. Mind trying again?</string>
@@ -460,8 +459,6 @@
     <string name="case_appeal_original">Your added context as you wrote it</string>
     <string name="case_display_name">Your name on the shared verdict</string>
     <string name="case_display_save">Save name</string>
-    <string name="respond_keep">Keep this case in your account</string>
-    <string name="respond_kept">Kept in your account.</string>
     <string name="respond_remove">Remove my side</string>
     <string name="respond_remove_confirm">Remove your original text and your display name? The case\'s share links stop working (previews already posted in chats may still show until those apps refresh them). This can\'t be undone.</string>
     <string name="names_title">Names on the shared page</string>

@@ -151,7 +151,6 @@
     <string name="consent_sensitive_title">はじめる前に</string>
     <string name="consent_sensitive_body">私のテキストには、健康や人間関係など、プライベートな内容が含まれることがあります。Judgeは名前を除いたうえで、判定を書くために外部のAIサービス提供事業者へ送信し、私が削除するまで保管します。</string>
     <string name="consent_sensitive_continue">続ける</string>
-    <string name="respond_adult_confirm">18歳以上です</string>
     <string name="account_export">データをダウンロード</string>
     <string name="account_export_busy">ファイルを準備しています…</string>
     <string name="account_export_failed">今はデータを準備できませんでした。もう一度お試しください。</string>
@@ -454,8 +453,6 @@
     <string name="case_appeal_original">あなたが書いたままの補足</string>
     <string name="case_display_name">シェアされる判定に表示する名前</string>
     <string name="case_display_save">名前を保存</string>
-    <string name="respond_keep">このケースをアカウントに保存</string>
-    <string name="respond_kept">アカウントに保存しました。</string>
     <string name="respond_remove">自分の言い分を削除</string>
     <string name="respond_remove_confirm">あなたの元の文章と表示名を削除しますか？　ケースのシェア用リンクは使えなくなります（チャットにすでに投稿されたプレビューは、そのアプリが更新するまで表示されることがあります）。この操作は取り消せません。</string>
     <string name="names_title">シェアページに表示する名前</string>

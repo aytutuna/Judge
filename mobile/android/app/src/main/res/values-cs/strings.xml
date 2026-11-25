@@ -160,7 +160,6 @@
     <string name="consent_sensitive_title">Než začneš</string>
     <string name="consent_sensitive_body">Můj text může obsahovat soukromé údaje, třeba o zdraví nebo vztazích. Judge ho po odstranění jmen pošle externímu poskytovateli služby umělé inteligence, aby napsala můj verdikt, a uchová ho, dokud ho neodstraním.</string>
     <string name="consent_sensitive_continue">Pokračovat</string>
-    <string name="respond_adult_confirm">Je mi 18 let nebo víc</string>
     <string name="account_export">Stáhnout moje data</string>
     <string name="account_export_busy">Připravuji soubor…</string>
     <string name="account_export_failed">Data se teď nepodařilo připravit. Zkusíš to znovu?</string>
@@ -472,8 +471,6 @@
     <string name="case_appeal_original">Tvůj doplněný kontext v původním znění</string>
     <string name="case_display_name">Tvoje jméno ve sdíleném verdiktu</string>
     <string name="case_display_save">Uložit jméno</string>
-    <string name="respond_keep">Uložit tento případ do účtu</string>
-    <string name="respond_kept">Uloženo ve tvém účtu.</string>
     <string name="respond_remove">Odstranit můj pohled</string>
     <string name="respond_remove_confirm">Odstranit tvůj původní text a zobrazované jméno? Sdílené odkazy případu přestanou fungovat (náhledy, které už byly vložené do chatů, se můžou zobrazovat dál, dokud je tyto aplikace neobnoví). Tohle nejde vrátit.</string>
     <string name="names_title">Jména na sdílené stránce</string>

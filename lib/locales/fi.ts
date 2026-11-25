@@ -352,7 +352,6 @@ const fi: Locale = {
     "consent.sensitiveBody":
       "Tekstini voi sisältää yksityisiä tietoja, kuten terveyteen tai ihmissuhteisiin liittyviä. Judge lähettää sen ilman nimiä ulkopuoliselle tekoälypalvelun tarjoajalle tuomioni kirjoittamista varten ja säilyttää sen, kunnes poistan sen.",
     "consent.sensitiveContinue": "Jatka",
-    "respond.adultConfirm": "Olen 18-vuotias tai vanhempi",
     "account.export": "Lataa tietoni",
     "account.exportBusy": "Valmistellaan tiedostoa…",
     "account.exportFailed": "Tietojasi ei voitu valmistella juuri nyt. Yritätkö uudelleen?",
@@ -734,8 +733,6 @@ const fi: Locale = {
     "case.appealOriginal": "Lisäämäsi tieto sellaisena kuin kirjoitit sen",
     "case.displayName": "Nimesi jaetussa tuomiossa",
     "case.displaySave": "Tallenna nimi",
-    "respond.keep": "Tallenna tämä juttu tilillesi",
-    "respond.kept": "Tallennettu tilillesi.",
     "respond.remove": "Poista kertomukseni",
     "respond.remove.confirm":
       "Poistetaanko alkuperäinen tekstisi ja näyttönimesi? Jutun jakolinkit lakkaavat toimimasta (keskusteluihin jo jaetut esikatselut voivat näkyä, kunnes sovellukset päivittävät ne). Tätä ei voi perua.",

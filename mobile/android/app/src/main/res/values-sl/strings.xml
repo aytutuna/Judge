@@ -160,7 +160,6 @@
     <string name="consent_sensitive_title">Preden začneš</string>
     <string name="consent_sensitive_body">Moje besedilo lahko vsebuje zasebne podrobnosti, na primer o zdravju ali odnosih. Judge ga brez imen pošlje zunanjemu ponudniku storitve umetne inteligence, da napiše mojo razsodbo, in ga hrani, dokler ga ne odstranim.</string>
     <string name="consent_sensitive_continue">Naprej</string>
-    <string name="respond_adult_confirm">Star sem 18 let ali več</string>
     <string name="account_export">Prenesi moje podatke</string>
     <string name="account_export_busy">Pripravljam datoteko…</string>
     <string name="account_export_failed">Podatkov zdaj ni bilo mogoče pripraviti. Poskusiš znova?</string>
@@ -472,8 +471,6 @@
     <string name="case_appeal_original">Tvoj dodani kontekst v izvirni obliki</string>
     <string name="case_display_name">Tvoje ime v deljeni razsodbi</string>
     <string name="case_display_save">Shrani ime</string>
-    <string name="respond_keep">Shrani ta spor v svoj račun</string>
-    <string name="respond_kept">Shranjeno v tvojem računu.</string>
     <string name="respond_remove">Odstrani mojo plat</string>
     <string name="respond_remove_confirm">Želiš odstraniti svoje izvirno besedilo in prikazno ime? Povezave za deljenje tega spora prenehajo delovati (predogledi, ki so že objavljeni v klepetih, so lahko še vidni, dokler jih te aplikacije ne osvežijo). Tega ni mogoče razveljaviti.</string>
     <string name="names_title">Imena na deljeni strani</string>

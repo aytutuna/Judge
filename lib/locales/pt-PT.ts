@@ -344,7 +344,6 @@ const ptPT: Locale = {
     "consent.sensitiveBody":
       "O meu texto pode incluir detalhes privados, como saúde ou relações. O Judge envia-o, sem os nomes, a um fornecedor de serviços de IA externo para escrever o meu veredicto e guarda-o até eu o remover.",
     "consent.sensitiveContinue": "Continuar",
-    "respond.adultConfirm": "Tenho 18 anos ou mais",
     "account.export": "Transferir os meus dados",
     "account.exportBusy": "A preparar o ficheiro…",
     "account.exportFailed": "Não foi possível preparar os teus dados agora. Queres tentar de novo?",
@@ -725,8 +724,6 @@ const ptPT: Locale = {
     "case.appealOriginal": "O contexto que acrescentaste, tal como o escreveste",
     "case.displayName": "O teu nome no veredicto partilhado",
     "case.displaySave": "Guardar nome",
-    "respond.keep": "Guardar este caso na tua conta",
-    "respond.kept": "Guardado na tua conta.",
     "respond.remove": "Remover o meu lado",
     "respond.remove.confirm":
       "Remover o teu texto original e o teu nome a mostrar? Os links de partilha do caso deixam de funcionar (as pré-visualizações já publicadas em conversas podem continuar a aparecer até essas apps as atualizarem). Isto não pode ser desfeito.",

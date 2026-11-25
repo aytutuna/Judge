@@ -343,7 +343,6 @@ const ja: Locale = {
     "consent.sensitiveBody":
       "私のテキストには、健康や人間関係など、プライベートな内容が含まれることがあります。Judgeは名前を除いたうえで、判定を書くために外部のAIサービス提供事業者へ送信し、私が削除するまで保管します。",
     "consent.sensitiveContinue": "続ける",
-    "respond.adultConfirm": "18歳以上です",
     "account.export": "データをダウンロード",
     "account.exportBusy": "ファイルを準備しています…",
     "account.exportFailed": "今はデータを準備できませんでした。もう一度お試しください。",
@@ -720,8 +719,6 @@ const ja: Locale = {
     "case.appealOriginal": "あなたが書いたままの補足",
     "case.displayName": "シェアされる判定に表示する名前",
     "case.displaySave": "名前を保存",
-    "respond.keep": "このケースをアカウントに保存",
-    "respond.kept": "アカウントに保存しました。",
     "respond.remove": "自分の言い分を削除",
     "respond.remove.confirm":
       "あなたの元の文章と表示名を削除しますか？　ケースのシェア用リンクは使えなくなります（チャットにすでに投稿されたプレビューは、そのアプリが更新するまで表示されることがあります）。この操作は取り消せません。",

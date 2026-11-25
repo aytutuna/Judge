@@ -154,7 +154,6 @@
     <string name="consent_sensitive_title">Bevor du startest</string>
     <string name="consent_sensitive_body">Mein Text kann private Angaben enthalten, etwa zu Gesundheit oder Beziehungen. Judge schickt ihn ohne Namen an einen externen KI-Dienstleister, der mein Urteil schreibt, und speichert ihn, bis ich ihn entferne.</string>
     <string name="consent_sensitive_continue">Weiter</string>
-    <string name="respond_adult_confirm">Ich bin 18 oder älter</string>
     <string name="account_export">Meine Daten herunterladen</string>
     <string name="account_export_busy">Datei wird vorbereitet…</string>
     <string name="account_export_failed">Wir konnten deine Daten gerade nicht bereitstellen. Magst du es noch einmal versuchen?</string>
@@ -460,8 +459,6 @@
     <string name="case_appeal_original">Dein ergänzter Kontext, so wie du ihn geschrieben hast</string>
     <string name="case_display_name">Dein Name im geteilten Urteil</string>
     <string name="case_display_save">Namen speichern</string>
-    <string name="respond_keep">Diesen Fall in deinem Konto speichern</string>
-    <string name="respond_kept">In deinem Konto gespeichert.</string>
     <string name="respond_remove">Meine Seite entfernen</string>
     <string name="respond_remove_confirm">Deinen Originaltext und deinen Anzeigenamen entfernen? Die geteilten Links des Falls funktionieren dann nicht mehr (Vorschauen, die schon in Chats gepostet wurden, können sichtbar bleiben, bis diese Apps sie aktualisieren). Das lässt sich nicht rückgängig machen.</string>
     <string name="names_title">Namen auf der geteilten Seite</string>

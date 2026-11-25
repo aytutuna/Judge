@@ -154,7 +154,6 @@
     <string name="consent_sensitive_title">ਸ਼ੁਰੂ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ</string>
     <string name="consent_sensitive_body">ਮੇਰੀ ਲਿਖਤ ਵਿੱਚ ਸਿਹਤ ਜਾਂ ਰਿਸ਼ਤਿਆਂ ਵਰਗੇ ਨਿੱਜੀ ਵੇਰਵੇ ਹੋ ਸਕਦੇ ਹਨ। Judge ਨਾਂ ਹਟਾ ਕੇ ਇਸ ਨੂੰ ਮੇਰਾ ਫ਼ੈਸਲਾ ਲਿਖਣ ਲਈ ਬਾਹਰੀ AI ਸੇਵਾ ਪ੍ਰਦਾਤਾ ਨੂੰ ਭੇਜਦਾ ਹੈ, ਅਤੇ ਮੇਰੇ ਹਟਾਉਣ ਤੱਕ ਰੱਖਦਾ ਹੈ।</string>
     <string name="consent_sensitive_continue">ਜਾਰੀ ਰੱਖੋ</string>
-    <string name="respond_adult_confirm">ਮੇਰੀ ਉਮਰ 18 ਸਾਲ ਜਾਂ ਵੱਧ ਹੈ</string>
     <string name="account_export">ਮੇਰਾ ਡੇਟਾ ਡਾਊਨਲੋਡ ਕਰੋ</string>
     <string name="account_export_busy">ਤੁਹਾਡੀ ਫ਼ਾਈਲ ਤਿਆਰ ਹੋ ਰਹੀ ਹੈ…</string>
     <string name="account_export_failed">ਹੁਣ ਤੁਹਾਡਾ ਡੇਟਾ ਤਿਆਰ ਨਹੀਂ ਹੋ ਸਕਿਆ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋਗੇ?</string>
@@ -460,8 +459,6 @@
     <string name="case_appeal_original">ਤੁਹਾਡਾ ਜੋੜਿਆ ਵੇਰਵਾ, ਜਿਵੇਂ ਤੁਸੀਂ ਲਿਖਿਆ</string>
     <string name="case_display_name">ਸਾਂਝੇ ਫ਼ੈਸਲੇ ’ਤੇ ਤੁਹਾਡਾ ਨਾਂ</string>
     <string name="case_display_save">ਨਾਂ ਸੇਵ ਕਰੋ</string>
-    <string name="respond_keep">ਇਹ ਕੇਸ ਆਪਣੇ ਖਾਤੇ ਵਿੱਚ ਰੱਖੋ</string>
-    <string name="respond_kept">ਤੁਹਾਡੇ ਖਾਤੇ ਵਿੱਚ ਸੰਭਾਲਿਆ ਗਿਆ।</string>
     <string name="respond_remove">ਮੇਰਾ ਪੱਖ ਹਟਾਓ</string>
     <string name="respond_remove_confirm">ਤੁਹਾਡੀ ਅਸਲ ਲਿਖਤ ਅਤੇ ਦਿਖਣ ਵਾਲਾ ਨਾਂ ਹਟਾਉਣਾ ਹੈ? ਕੇਸ ਦੇ ਸਾਂਝੇ ਲਿੰਕ ਕੰਮ ਕਰਨਾ ਬੰਦ ਕਰ ਦੇਣਗੇ (ਚੈਟਾਂ ਵਿੱਚ ਪਹਿਲਾਂ ਹੀ ਭੇਜੇ ਪ੍ਰੀਵਿਊ ਉਦੋਂ ਤੱਕ ਦਿਖ ਸਕਦੇ ਹਨ ਜਦੋਂ ਤੱਕ ਉਹ ਐਪਾਂ ਉਨ੍ਹਾਂ ਨੂੰ ਤਾਜ਼ਾ ਨਹੀਂ ਕਰਦੀਆਂ)। ਇਹ ਵਾਪਸ ਨਹੀਂ ਹੋ ਸਕਦਾ।</string>
     <string name="names_title">ਸਾਂਝੇ ਪੇਜ ’ਤੇ ਨਾਂ</string>

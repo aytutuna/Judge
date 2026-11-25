@@ -222,7 +222,6 @@ class Strings(private val res: Resources) {
     val consentSensitiveTitle: String get() = res.getString(R.string.consent_sensitive_title)
     val consentSensitiveBody: String get() = res.getString(R.string.consent_sensitive_body)
     val consentSensitiveContinue: String get() = res.getString(R.string.consent_sensitive_continue)
-    val respondAdultConfirm: String get() = res.getString(R.string.respond_adult_confirm)
     val accountExport: String get() = res.getString(R.string.account_export)
     val accountExportBusy: String get() = res.getString(R.string.account_export_busy)
     val accountExportFailed: String get() = res.getString(R.string.account_export_failed)
@@ -519,8 +518,6 @@ class Strings(private val res: Resources) {
     val caseAppealOriginal: String get() = res.getString(R.string.case_appeal_original)
     val caseDisplayName: String get() = res.getString(R.string.case_display_name)
     val caseDisplaySave: String get() = res.getString(R.string.case_display_save)
-    val respondKeep: String get() = res.getString(R.string.respond_keep)
-    val respondKept: String get() = res.getString(R.string.respond_kept)
     val respondRemove: String get() = res.getString(R.string.respond_remove)
     val respondRemoveConfirm: String get() = res.getString(R.string.respond_remove_confirm)
     val namesTitle: String get() = res.getString(R.string.names_title)
@@ -863,7 +860,6 @@ class Strings(private val res: Resources) {
             "consent.sensitiveTitle" -> R.string.consent_sensitive_title
             "consent.sensitiveBody" -> R.string.consent_sensitive_body
             "consent.sensitiveContinue" -> R.string.consent_sensitive_continue
-            "respond.adultConfirm" -> R.string.respond_adult_confirm
             "account.export" -> R.string.account_export
             "account.exportBusy" -> R.string.account_export_busy
             "account.exportFailed" -> R.string.account_export_failed
@@ -1135,8 +1131,6 @@ class Strings(private val res: Resources) {
             "case.appealOriginal" -> R.string.case_appeal_original
             "case.displayName" -> R.string.case_display_name
             "case.displaySave" -> R.string.case_display_save
-            "respond.keep" -> R.string.respond_keep
-            "respond.kept" -> R.string.respond_kept
             "respond.remove" -> R.string.respond_remove
             "respond.remove.confirm" -> R.string.respond_remove_confirm
             "names.title" -> R.string.names_title

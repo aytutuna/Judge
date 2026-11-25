@@ -344,7 +344,6 @@ const en = {
   "consent.sensitiveBody":
     "My text may include private details, like health or relationships. Judge sends it, with names taken out, to an outside AI service provider to write my verdict, and keeps it until I remove it.",
   "consent.sensitiveContinue": "Continue",
-  "respond.adultConfirm": "I am 18 or older",
   "account.export": "Download my data",
   "account.exportBusy": "Preparing your file…",
   "account.exportFailed":
@@ -724,8 +723,6 @@ const en = {
   "case.appealOriginal": "Your added context as you wrote it",
   "case.displayName": "Your name on the shared verdict",
   "case.displaySave": "Save name",
-  "respond.keep": "Keep this case in your account",
-  "respond.kept": "Kept in your account.",
   "respond.remove": "Remove my side",
   "respond.remove.confirm":
     "Remove your original text and your display name? The case's share links stop working (previews already posted in chats may still show until those apps refresh them). This can't be undone.",

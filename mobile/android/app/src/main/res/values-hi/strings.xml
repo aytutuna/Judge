@@ -154,7 +154,6 @@
     <string name="consent_sensitive_title">शुरू करने से पहले</string>
     <string name="consent_sensitive_body">मेरे टेक्स्ट में सेहत या रिश्तों जैसी निजी बातें हो सकती हैं। Judge उसे नाम हटाकर मेरा फ़ैसला लिखने के लिए एक बाहरी AI सेवा प्रदाता को भेजता है, और मेरे हटाने तक रखता है।</string>
     <string name="consent_sensitive_continue">आगे बढ़ें</string>
-    <string name="respond_adult_confirm">मेरी उम्र 18 साल या उससे ज़्यादा है</string>
     <string name="account_export">मेरा डेटा डाउनलोड करें</string>
     <string name="account_export_busy">आपकी फ़ाइल तैयार हो रही है…</string>
     <string name="account_export_failed">अभी आपका डेटा तैयार नहीं हो सका। फिर से कोशिश करेंगे?</string>
@@ -460,8 +459,6 @@
     <string name="case_appeal_original">आपकी जोड़ी गई जानकारी, जैसे आपने लिखी</string>
     <string name="case_display_name">शेयर किए गए फ़ैसले पर आपका नाम</string>
     <string name="case_display_save">नाम सेव करें</string>
-    <string name="respond_keep">यह केस अपने अकाउंट में रखें</string>
-    <string name="respond_kept">आपके अकाउंट में सेव है।</string>
     <string name="respond_remove">मेरी बात हटाएँ</string>
     <string name="respond_remove_confirm">आपका मूल टेक्स्ट और आपका दिखने वाला नाम हटा दें? केस के शेयर लिंक काम करना बंद कर देंगे (चैट में पहले से भेजे गए प्रीव्यू तब तक दिख सकते हैं जब तक वे ऐप उन्हें रीफ़्रेश न करें)। इसे पहले जैसा नहीं किया जा सकता।</string>
     <string name="names_title">शेयर पेज पर नाम</string>

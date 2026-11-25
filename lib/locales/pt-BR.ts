@@ -344,7 +344,6 @@ const ptBR: Locale = {
     "consent.sensitiveBody":
       "Meu texto pode incluir detalhes privados, como saúde ou relacionamentos. O Judge o envia, sem os nomes, a um provedor de serviços de IA externo para escrever meu veredicto e o guarda até eu removê-lo.",
     "consent.sensitiveContinue": "Continuar",
-    "respond.adultConfirm": "Tenho 18 anos ou mais",
     "account.export": "Baixar meus dados",
     "account.exportBusy": "Preparando seu arquivo…",
     "account.exportFailed": "Não deu para preparar seus dados agora. Tenta de novo?",
@@ -726,8 +725,6 @@ const ptBR: Locale = {
     "respond.remove": "Remover meu lado",
     "respond.remove.confirm":
       "Remover o seu texto original e o seu nome de exibição? Os links de compartilhamento do caso param de funcionar (prévias já postadas em conversas podem continuar aparecendo até esses apps atualizarem). Não dá para desfazer.",
-    "respond.keep": "Guardar este caso na sua conta",
-    "respond.kept": "Guardado na sua conta.",
     "names.title": "Nomes na página compartilhada",
     "names.you": "Seu nome",
     "names.show": "Mostrar nomes na página compartilhada",

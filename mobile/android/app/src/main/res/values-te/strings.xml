@@ -154,7 +154,6 @@
     <string name="consent_sensitive_title">ప్రారంభించే ముందు</string>
     <string name="consent_sensitive_body">నా రాతలో ఆరోగ్యం, సంబంధాలు వంటి వ్యక్తిగత వివరాలు ఉండవచ్చు. Judge పేర్లు తీసేసి, నా తీర్పు రాయడానికి దాన్ని బయటి AI సేవా ప్రదాతకు పంపి, నేను తొలగించే వరకు ఉంచుతుంది.</string>
     <string name="consent_sensitive_continue">కొనసాగండి</string>
-    <string name="respond_adult_confirm">నాకు 18 ఏళ్లు లేదా అంతకంటే ఎక్కువ</string>
     <string name="account_export">నా డేటాను డౌన్‌లోడ్ చేయండి</string>
     <string name="account_export_busy">మీ ఫైల్ సిద్ధమవుతోంది…</string>
     <string name="account_export_failed">ఇప్పుడు మీ డేటా సిద్ధం చేయలేకపోయాం. మళ్లీ ప్రయత్నిస్తారా?</string>
@@ -460,8 +459,6 @@
     <string name="case_appeal_original">మీరు జోడించిన వివరాలు, మీరు రాసినట్టు</string>
     <string name="case_display_name">షేర్ చేసిన తీర్పులో మీ పేరు</string>
     <string name="case_display_save">పేరు సేవ్ చేయండి</string>
-    <string name="respond_keep">ఈ కేసును మీ అకౌంట్‌లో ఉంచుకోండి</string>
-    <string name="respond_kept">మీ అకౌంట్‌లో సేవ్ అయింది.</string>
     <string name="respond_remove">నా వైపు కథ తీసేయండి</string>
     <string name="respond_remove_confirm">మీ అసలు టెక్స్ట్, మీ డిస్‌ప్లే పేరు తీసేయాలా? కేసు షేర్ లింక్‌లు పనిచేయడం ఆగిపోతాయి (చాట్‌లలో ఇప్పటికే పోస్ట్ అయిన ప్రివ్యూలు ఆ యాప్‌లు రిఫ్రెష్ చేసేవరకు కనిపించొచ్చు). దీన్ని వెనక్కి తీసుకోలేరు.</string>
     <string name="names_title">షేర్ పేజీలో పేర్లు</string>

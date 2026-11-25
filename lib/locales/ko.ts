@@ -338,7 +338,6 @@ const ko: Locale = {
     "consent.sensitiveBody":
       "내 글에는 건강이나 인간관계처럼 사적인 내용이 있을 수 있어요. Judge는 이름을 뺀 글을 내 판결을 쓰기 위해 외부 AI 서비스 제공업체로 보내고, 내가 삭제할 때까지 보관해요.",
     "consent.sensitiveContinue": "계속",
-    "respond.adultConfirm": "만 18세 이상이에요",
     "account.export": "내 데이터 내려받기",
     "account.exportBusy": "파일을 준비하는 중이에요…",
     "account.exportFailed": "지금은 데이터를 준비하지 못했어요. 다시 시도해 주시겠어요?",
@@ -711,8 +710,6 @@ const ko: Locale = {
     "case.appealOriginal": "내가 쓴 그대로의 추가 맥락",
     "case.displayName": "공유된 판결에 보일 내 이름",
     "case.displaySave": "이름 저장",
-    "respond.keep": "이 사건을 내 계정에 저장",
-    "respond.kept": "내 계정에 저장됐어요.",
     "respond.remove": "내 입장 삭제",
     "respond.remove.confirm":
       "내 원문과 표시 이름을 삭제할까요? 사건의 공유 링크가 열리지 않게 돼요(이미 대화방에 올라간 미리보기는 해당 앱이 새로 고칠 때까지 보일 수 있어요). 되돌릴 수 없어요.",

@@ -289,7 +289,6 @@ enum L10n {
     static func consentSensitiveTitle(_ lang: AppLang) -> String { string("consent.sensitiveTitle", lang) }
     static func consentSensitiveBody(_ lang: AppLang) -> String { string("consent.sensitiveBody", lang) }
     static func consentSensitiveContinue(_ lang: AppLang) -> String { string("consent.sensitiveContinue", lang) }
-    static func respondAdultConfirm(_ lang: AppLang) -> String { string("respond.adultConfirm", lang) }
     static func accountExport(_ lang: AppLang) -> String { string("account.export", lang) }
     static func accountExportBusy(_ lang: AppLang) -> String { string("account.exportBusy", lang) }
     static func accountExportFailed(_ lang: AppLang) -> String { string("account.exportFailed", lang) }
@@ -586,8 +585,6 @@ enum L10n {
     static func caseAppealOriginal(_ lang: AppLang) -> String { string("case.appealOriginal", lang) }
     static func caseDisplayName(_ lang: AppLang) -> String { string("case.displayName", lang) }
     static func caseDisplaySave(_ lang: AppLang) -> String { string("case.displaySave", lang) }
-    static func respondKeep(_ lang: AppLang) -> String { string("respond.keep", lang) }
-    static func respondKept(_ lang: AppLang) -> String { string("respond.kept", lang) }
     static func respondRemove(_ lang: AppLang) -> String { string("respond.remove", lang) }
     static func respondRemoveConfirm(_ lang: AppLang) -> String { string("respond.remove.confirm", lang) }
     static func namesTitle(_ lang: AppLang) -> String { string("names.title", lang) }
@@ -931,7 +928,6 @@ enum L10n {
         "consent.sensitiveTitle",
         "consent.sensitiveBody",
         "consent.sensitiveContinue",
-        "respond.adultConfirm",
         "account.export",
         "account.exportBusy",
         "account.exportFailed",
@@ -1203,8 +1199,6 @@ enum L10n {
         "case.appealOriginal",
         "case.displayName",
         "case.displaySave",
-        "respond.keep",
-        "respond.kept",
         "respond.remove",
         "respond.remove.confirm",
         "names.title",

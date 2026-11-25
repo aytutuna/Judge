@@ -154,7 +154,6 @@
     <string name="consent_sensitive_title">Mielőtt elkezdesz</string>
     <string name="consent_sensitive_body">A szövegem tartalmazhat személyes részleteket, például egészségről vagy kapcsolatokról. A Judge a nevek nélkül elküldi egy külső MI-szolgáltatónak, hogy megírja az ítéletemet, és addig őrzi, amíg el nem távolítom.</string>
     <string name="consent_sensitive_continue">Tovább</string>
-    <string name="respond_adult_confirm">Legalább 18 éves vagyok</string>
     <string name="account_export">Adataim letöltése</string>
     <string name="account_export_busy">A fájl előkészítése…</string>
     <string name="account_export_failed">Most nem tudtuk előkészíteni az adataidat. Megpróbálod újra?</string>
@@ -460,8 +459,6 @@
     <string name="case_appeal_original">A kiegészítésed, ahogy megírtad</string>
     <string name="case_display_name">A neved a megosztott ítéleten</string>
     <string name="case_display_save">Név mentése</string>
-    <string name="respond_keep">Ügy mentése a fiókodba</string>
-    <string name="respond_kept">Elmentve a fiókodban.</string>
     <string name="respond_remove">A verzióm eltávolítása</string>
     <string name="respond_remove_confirm">Eltávolítod az eredeti szövegedet és a megjelenített nevedet? Az ügy megosztási linkjei nem működnek tovább (a csetekben már kiküldött előnézetek még látszhatnak, amíg az adott app nem frissíti őket). Ez nem vonható vissza.</string>
     <string name="names_title">Nevek a megosztott oldalon</string>

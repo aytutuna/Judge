@@ -151,7 +151,6 @@
     <string name="consent_sensitive_title">Sebelum mulai</string>
     <string name="consent_sensitive_body">Teks saya mungkin berisi hal pribadi, seperti kesehatan atau hubungan. Judge mengirimkannya, tanpa nama, ke penyedia layanan AI pihak luar untuk menulis putusan saya, dan menyimpannya sampai saya menghapusnya.</string>
     <string name="consent_sensitive_continue">Lanjut</string>
-    <string name="respond_adult_confirm">Saya berusia 18 tahun atau lebih</string>
     <string name="account_export">Unduh data saya</string>
     <string name="account_export_busy">Menyiapkan berkasmu…</string>
     <string name="account_export_failed">Datamu belum bisa disiapkan sekarang. Coba lagi?</string>
@@ -454,8 +453,6 @@
     <string name="case_appeal_original">Konteks tambahanmu seperti yang kamu tulis</string>
     <string name="case_display_name">Namamu di putusan yang dibagikan</string>
     <string name="case_display_save">Simpan nama</string>
-    <string name="respond_keep">Simpan kasus ini di akunmu</string>
-    <string name="respond_kept">Tersimpan di akunmu.</string>
     <string name="respond_remove">Hapus versiku</string>
     <string name="respond_remove_confirm">Hapus teks aslimu dan nama tampilanmu? Tautan berbagi kasus ini berhenti berfungsi (pratinjau yang sudah terkirim di chat mungkin masih terlihat sampai aplikasinya memperbaruinya). Ini tidak bisa dibatalkan.</string>
     <string name="names_title">Nama di halaman berbagi</string>

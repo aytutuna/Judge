@@ -154,7 +154,6 @@
     <string name="consent_sensitive_title">Før du starter</string>
     <string name="consent_sensitive_body">Min tekst kan indeholde private oplysninger, for eksempel om helbred eller forhold. Judge sender den, uden navne, til en ekstern AI-tjenesteudbyder, som skriver min dom, og gemmer den, indtil jeg fjerner den.</string>
     <string name="consent_sensitive_continue">Fortsæt</string>
-    <string name="respond_adult_confirm">Jeg er 18 år eller ældre</string>
     <string name="account_export">Download mine data</string>
     <string name="account_export_busy">Gør filen klar…</string>
     <string name="account_export_failed">Vi kunne ikke gøre dine data klar lige nu. Prøv igen?</string>
@@ -460,8 +459,6 @@
     <string name="case_appeal_original">Din tilføjede kontekst, som du skrev den</string>
     <string name="case_display_name">Dit navn på den delte dom</string>
     <string name="case_display_save">Gem navn</string>
-    <string name="respond_keep">Gem sagen på din konto</string>
-    <string name="respond_kept">Gemt på din konto.</string>
     <string name="respond_remove">Fjern min side</string>
     <string name="respond_remove_confirm">Vil du fjerne din originale tekst og dit viste navn? Sagens delingslinks holder op med at virke (forhåndsvisninger, der allerede er sendt i chats, kan stadig blive vist, indtil de apps opdaterer dem). Det kan ikke fortrydes.</string>
     <string name="names_title">Navne på den delte side</string>

@@ -157,7 +157,6 @@
     <string name="consent_sensitive_title">Prima di iniziare</string>
     <string name="consent_sensitive_body">Il mio testo può contenere dettagli privati, come salute o relazioni. Judge lo invia, senza i nomi, a un fornitore di servizi di IA esterno per scrivere il mio verdetto, e lo conserva finché non lo rimuovo.</string>
     <string name="consent_sensitive_continue">Continua</string>
-    <string name="respond_adult_confirm">Ho 18 anni o più</string>
     <string name="account_export">Scarica i miei dati</string>
     <string name="account_export_busy">Preparo il file…</string>
     <string name="account_export_failed">Non siamo riusciti a preparare i tuoi dati. Riprovi?</string>
@@ -466,8 +465,6 @@
     <string name="case_appeal_original">Il contesto che hai aggiunto, come l\'hai scritto</string>
     <string name="case_display_name">Il tuo nome nel verdetto condiviso</string>
     <string name="case_display_save">Salva nome</string>
-    <string name="respond_keep">Salva questo caso nel tuo account</string>
-    <string name="respond_kept">Salvato nel tuo account.</string>
     <string name="respond_remove">Rimuovi la mia versione</string>
     <string name="respond_remove_confirm">Vuoi rimuovere il tuo testo originale e il tuo nome visualizzato? I link di condivisione del caso smetteranno di funzionare (le anteprime già pubblicate nelle chat potrebbero restare visibili finché quelle app non le aggiornano). Non si può annullare.</string>
     <string name="names_title">Nomi nella pagina condivisa</string>

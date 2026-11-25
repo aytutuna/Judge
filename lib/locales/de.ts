@@ -352,7 +352,6 @@ const de: Locale = {
     "consent.sensitiveBody":
       "Mein Text kann private Angaben enthalten, etwa zu Gesundheit oder Beziehungen. Judge schickt ihn ohne Namen an einen externen KI-Dienstleister, der mein Urteil schreibt, und speichert ihn, bis ich ihn entferne.",
     "consent.sensitiveContinue": "Weiter",
-    "respond.adultConfirm": "Ich bin 18 oder älter",
     "account.export": "Meine Daten herunterladen",
     "account.exportBusy": "Datei wird vorbereitet…",
     "account.exportFailed": "Wir konnten deine Daten gerade nicht bereitstellen. Magst du es noch einmal versuchen?",
@@ -742,8 +741,6 @@ const de: Locale = {
     "case.appealOriginal": "Dein ergänzter Kontext, so wie du ihn geschrieben hast",
     "case.displayName": "Dein Name im geteilten Urteil",
     "case.displaySave": "Namen speichern",
-    "respond.keep": "Diesen Fall in deinem Konto speichern",
-    "respond.kept": "In deinem Konto gespeichert.",
     "respond.remove": "Meine Seite entfernen",
     "respond.remove.confirm":
       "Deinen Originaltext und deinen Anzeigenamen entfernen? Die geteilten Links des Falls funktionieren dann nicht mehr (Vorschauen, die schon in Chats gepostet wurden, können sichtbar bleiben, bis diese Apps sie aktualisieren). Das lässt sich nicht rückgängig machen.",

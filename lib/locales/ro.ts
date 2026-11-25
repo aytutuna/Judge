@@ -343,7 +343,6 @@ const ro: Locale = {
     "consent.sensitiveBody":
       "Textul meu poate include detalii private, de exemplu despre sănătate sau relații. Judge îl trimite, fără nume, unui furnizor de servicii IA extern ca să scrie verdictul meu și îl păstrează până îl elimin.",
     "consent.sensitiveContinue": "Continuă",
-    "respond.adultConfirm": "Am 18 ani sau mai mult",
     "account.export": "Descarcă datele mele",
     "account.exportBusy": "Se pregătește fișierul…",
     "account.exportFailed": "Nu ți-am putut pregăti datele acum. Încerci din nou?",
@@ -723,8 +722,6 @@ const ro: Locale = {
     "case.appealOriginal": "Contextul adăugat de tine, așa cum l-ai scris",
     "case.displayName": "Numele tău pe verdictul distribuit",
     "case.displaySave": "Salvează numele",
-    "respond.keep": "Păstrează cazul în contul tău",
-    "respond.kept": "Păstrat în contul tău.",
     "respond.remove": "Elimină partea mea",
     "respond.remove.confirm":
       "Elimini textul tău original și numele tău afișat? Linkurile de distribuire ale cazului nu mai funcționează (previzualizările deja postate în conversații pot apărea în continuare până când acele aplicații le reîmprospătează). Acțiunea nu poate fi anulată.",

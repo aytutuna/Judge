@@ -151,7 +151,6 @@
     <string name="consent_sensitive_title">ก่อนเริ่มต้น</string>
     <string name="consent_sensitive_body">ข้อความของฉันอาจมีรายละเอียดส่วนตัว เช่น เรื่องสุขภาพหรือความสัมพันธ์ Judge จะนำชื่อออกแล้วส่งไปยังผู้ให้บริการ AI ภายนอกเพื่อเขียนคำตัดสินของฉัน และเก็บไว้จนกว่าฉันจะลบ</string>
     <string name="consent_sensitive_continue">ไปต่อ</string>
-    <string name="respond_adult_confirm">ฉันอายุ 18 ปีขึ้นไป</string>
     <string name="account_export">ดาวน์โหลดข้อมูลของฉัน</string>
     <string name="account_export_busy">กำลังเตรียมไฟล์ของคุณ…</string>
     <string name="account_export_failed">ตอนนี้เตรียมข้อมูลของคุณไม่ได้ ลองอีกครั้งไหม</string>
@@ -454,8 +453,6 @@
     <string name="case_appeal_original">บริบทที่คุณเพิ่มตามที่คุณเขียน</string>
     <string name="case_display_name">ชื่อของคุณในคำตัดสินที่แชร์</string>
     <string name="case_display_save">บันทึกชื่อ</string>
-    <string name="respond_keep">เก็บเคสนี้ไว้ในบัญชีของคุณ</string>
-    <string name="respond_kept">บันทึกไว้ในบัญชีของคุณแล้ว</string>
     <string name="respond_remove">ลบฝั่งของฉัน</string>
     <string name="respond_remove_confirm">ลบข้อความต้นฉบับและชื่อที่แสดงของคุณไหม? ลิงก์แชร์ของเคสจะใช้ไม่ได้ (ภาพตัวอย่างที่โพสต์ในแชตไปแล้วอาจยังแสดงอยู่จนกว่าแอปเหล่านั้นจะรีเฟรช) ย้อนกลับไม่ได้</string>
     <string name="names_title">ชื่อในหน้าที่แชร์</string>

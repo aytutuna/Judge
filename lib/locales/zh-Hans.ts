@@ -329,7 +329,6 @@ const zhHans: Locale = {
     "consent.sensitiveBody":
       "我的文字可能包含私人细节，比如健康或感情方面的内容。Judge 会去掉名字后，把它发送给外部的 AI 服务提供商来撰写我的裁决，并保存到我删除为止。",
     "consent.sensitiveContinue": "继续",
-    "respond.adultConfirm": "我已满 18 岁",
     "account.export": "下载我的数据",
     "account.exportBusy": "正在准备你的文件…",
     "account.exportFailed": "暂时无法准备你的数据。再试一次？",
@@ -695,8 +694,6 @@ const zhHans: Locale = {
     "case.appealOriginal": "你写的原始补充",
     "case.displayName": "你在分享页上显示的名字",
     "case.displaySave": "保存名字",
-    "respond.keep": "把这个案子保存到你的账号",
-    "respond.kept": "已保存到你的账号。",
     "respond.remove": "删除我的说法",
     "respond.remove.confirm":
       "删除你的原文和显示名称？案子的分享链接将会失效（已经发到聊天里的预览，在这些应用刷新前可能仍会显示）。此操作无法撤销。",
