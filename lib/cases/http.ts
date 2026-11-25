@@ -829,18 +829,25 @@ export function respondPostHandler(req: Request, token: string): Promise<NextRes
         return !moved;
       }
       // An older per-side link can only take its own side, and only while it is free.
-      taken = await claimSeat(await loadCaseBundle(row), viewer.user.id, now, found.shared ? undefined : found.party);
-      if (taken) party = taken.party;
-      if (taken && shown !== undefined && taken.party !== shown) {
-        moved = true;
-        await releaseSeat(taken);
-        taken = null;
+      // An answer written for a side takes that side, not whichever is next.
+      const bundle = await loadCaseBundle(row);
+      taken = await claimSeat(bundle, viewer.user.id, now, found.shared ? shown : found.party);
+      if (taken) {
+        party = taken.party;
+        return true;
       }
-      return taken !== null;
+      // The page showed a side that someone else now holds: it was this account's and was freed.
+      if (shown !== undefined) {
+        const fresh = await loadCaseBundle(row);
+        moved =
+          !fresh.sides.some((s) => s.party === shown) &&
+          fresh.seats.some((s) => s.party === shown && s.userId !== viewer.user.id);
+      }
+      return false;
     };
     const giveBack = () => (taken ? releaseSeat(taken) : Promise.resolve());
     const noSeat = async () => {
-      if (moved || shown !== undefined) return fail("seat_moved");
+      if (moved) return fail("seat_moved");
       // A signed-in person who already holds another side has no second one.
       const uid = viewer.user.id;
       const mine = (await loadCaseBundle(row)).seats.some((x) => x.userId === uid);

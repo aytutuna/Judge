@@ -938,6 +938,32 @@ describe("one link for every side", () => {
     expect(await count("SELECT count(*) AS n FROM case_seats WHERE case_id = ? AND user_id = ?", [data.case.id, bob.who!])).toBe(0);
   });
 
+  it("takes the side the page showed when it is free, not the next one", async () => {
+    const o = await owner(2);
+    const { data, shared } = await createMany(o, 3);
+    const post = (user: string, party: string) =>
+      http.respondPostHandler(
+        req("POST", `/api/v1/respond/${shared}`, { user, ip: ip(), headers: SIDES, body: { text: BOB, turnstileToken: "t", party } }),
+        shared,
+      );
+    const res = await post(uid("carol"), "c");
+    expect(res.status).toBe(202);
+    expect((await body<{ case: CaseView }>(res)).case.yourParty).toBe("c");
+    expect(await count("SELECT count(*) AS n FROM case_seats WHERE case_id = ? AND party = 'b'", [data.case.id])).toBe(0);
+  });
+
+  it("keeps case_closed for a shown side that was answered by someone else", async () => {
+    const o = await owner(2);
+    const { shared } = await createMany(o, 3);
+    expect((await respondAs(shared, uid("bob"), BOB)).status).toBe(202);
+    await openLink(shared, uid("carol"));
+    const res = await http.respondPostHandler(
+      req("POST", `/api/v1/respond/${shared}`, { user: uid("eve"), ip: ip(), headers: SIDES, body: { text: BOB, turnstileToken: "t", party: "b" } }),
+      shared,
+    );
+    expect((await body(res)).code).toBe("case_closed");
+  });
+
   it("answers two tabs of one account with the same side", async () => {
     const o = await owner(2);
     const { shared } = await createMany(o, 3);
