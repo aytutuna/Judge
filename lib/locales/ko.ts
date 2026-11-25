@@ -484,7 +484,7 @@ const ko: Locale = {
     "error.bad_origin": "알 수 없는 곳에서 온 요청이에요. 페이지를 새로고침하고 다시 시도해 주세요.",
     "error.not_found": "찾을 수 없어요.",
     "error.case_closed": "이 사건은 더 이상 이 요청을 받지 않아요.",
-    "error.seat_moved": "당신의 쪽이 해제되었어요. 링크를 다시 열어 주세요.",
+    "error.seat_moved": "내 입장 자리가 해제되었어요. 링크를 다시 열어 주세요.",
     "error.case_expired": "초대가 만료됐어요.",
     "error.appeal_used": "이 사건에는 이미 맥락을 추가했어요.",
     "error.appeal_limit": "이 판결에 맥락을 두 번 추가했어요. 판결 하나에 추가할 수 있는 최대 횟수예요.",

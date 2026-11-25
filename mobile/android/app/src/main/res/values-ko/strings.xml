@@ -261,7 +261,7 @@
     <string name="error_in_progress">아직 판결을 만들고 있어요. 잠시만 기다려 주세요.</string>
     <string name="error_not_found">찾을 수 없어요.</string>
     <string name="error_case_closed">이 사건은 더 이상 이 요청을 받지 않아요.</string>
-    <string name="error_seat_moved">당신의 쪽이 해제되었어요. 링크를 다시 열어 주세요.</string>
+    <string name="error_seat_moved">내 입장 자리가 해제되었어요. 링크를 다시 열어 주세요.</string>
     <string name="error_case_expired">초대가 만료됐어요.</string>
     <string name="error_appeal_used">이 사건에는 이미 맥락을 추가했어요.</string>
     <string name="error_appeal_limit">이 판결에 맥락을 두 번 추가했어요. 판결 하나에 추가할 수 있는 최대 횟수예요.</string>

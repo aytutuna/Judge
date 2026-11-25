@@ -492,7 +492,7 @@ const ja: Locale = {
     "error.bad_origin": "見覚えのない場所から送られたリクエストです。ページを再読み込みしてもう一度お試しください。",
     "error.not_found": "見つかりませんでした。",
     "error.case_closed": "このケースでは、もうその操作はできません。",
-    "error.seat_moved": "あなたの側は解除されました。もう一度リンクを開いてください。",
+    "error.seat_moved": "あなたの言い分の枠は解放されました。もう一度リンクを開いてください。",
     "error.case_expired": "この招待は期限切れです。",
     "error.appeal_used": "このケースにはすでに補足を追加しています。",
     "error.appeal_limit": "この判定にはすでに2回補足しています。1つの判定で補足できるのは2回までです。",

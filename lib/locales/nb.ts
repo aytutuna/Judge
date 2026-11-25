@@ -489,7 +489,7 @@ const nb: Locale = {
       "Den forespørselen kom fra et sted vi ikke kjenner igjen. Last inn siden på nytt og prøv igjen.",
     "error.not_found": "Vi fant det ikke.",
     "error.case_closed": "Denne saken tar ikke imot det lenger.",
-    "error.seat_moved": "Siden din ble frigjort. Åpne lenken på nytt.",
+    "error.seat_moved": "Siden din ble frigitt. Åpne lenken på nytt.",
     "error.case_expired": "Denne invitasjonen har utløpt.",
     "error.appeal_used": "Du har allerede lagt til kontekst i denne saken.",
     "error.appeal_limit": "Du har lagt til kontekst i denne dommen to ganger. Det er grensen for én dom.",

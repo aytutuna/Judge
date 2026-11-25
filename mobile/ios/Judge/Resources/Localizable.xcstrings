@@ -89792,7 +89792,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sisimu sudah dilepas. Buka tautannya lagi."
+            "value" : "Posisimu sudah dilepas. Buka tautannya lagi."
           }
         },
         "it" : {
@@ -89804,7 +89804,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "あなたの側は解除されました。もう一度リンクを開いてください。"
+            "value" : "あなたの言い分の枠は解放されました。もう一度リンクを開いてください。"
           }
         },
         "kn" : {
@@ -89816,7 +89816,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "당신의 쪽이 해제되었어요. 링크를 다시 열어 주세요."
+            "value" : "내 입장 자리가 해제되었어요. 링크를 다시 열어 주세요."
           }
         },
         "ml" : {
@@ -89840,7 +89840,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Siden din ble frigjort. Åpne lenken på nytt."
+            "value" : "Siden din ble frigitt. Åpne lenken på nytt."
           }
         },
         "nl" : {
@@ -89948,7 +89948,7 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Phía của bạn đã được nhả ra. Hãy mở lại liên kết."
+            "value" : "Phần của bạn đã được giải phóng. Hãy mở lại liên kết."
           }
         },
         "zh-Hans" : {

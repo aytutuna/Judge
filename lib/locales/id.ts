@@ -500,7 +500,7 @@ const id: Locale = {
     "error.bad_origin": "Permintaan itu datang dari tempat yang tidak kami kenali. Muat ulang halaman, lalu coba lagi.",
     "error.not_found": "Kami tidak menemukannya.",
     "error.case_closed": "Kasus ini sudah tidak menerima itu lagi.",
-    "error.seat_moved": "Sisimu sudah dilepas. Buka tautannya lagi.",
+    "error.seat_moved": "Posisimu sudah dilepas. Buka tautannya lagi.",
     "error.case_expired": "Undangan ini sudah kedaluwarsa.",
     "error.appeal_used": "Kamu sudah menambahkan konteks ke kasus ini.",
     "error.appeal_limit": "Kamu sudah dua kali menambahkan konteks ke putusan ini. Itu batas untuk satu putusan.",
