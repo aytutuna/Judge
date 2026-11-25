@@ -8,6 +8,15 @@
 #   --force          rebuild even if that commit is already running (needed
 #                    after editing NEXT_PUBLIC_* or CONTACT_EMAIL in the env file)
 #   --branch NAME    switch the server to another branch
+#   --skip-ci-check  deploy a commit without a green run of the Web workflow
+#                    (emergencies only)
+#
+# Before anything is built, the commit must have a successful run of the Web
+# workflow on GitHub (.github/workflows/web.yml); if that cannot be checked,
+# the deploy stops. While the repository is private, put a GitHub token that
+# can read its Actions runs in /etc/verdict/verdict.env as GITHUB_TOKEN. Once
+# the build has succeeded, and before the new release is switched in, the
+# database is backed up (verdict-backup.service).
 #
 # The new commit is built in a fresh directory under /opt/verdict/releases
 # while the running site keeps serving the old one. Only a successful build is
@@ -57,6 +66,8 @@ ALLOY_CONFIG=/etc/alloy/verdict.alloy
 ALLOY_DROPIN=/etc/systemd/system/alloy.service.d/verdict.conf
 ALLOY_ENV=/etc/alloy/grafana.env
 HEALTH_URL=http://127.0.0.1:3000/api/health?ready=1
+GITHUB_REPO=aytutuna/Judge
+CI_WORKFLOW=web.yml
 HEALTH_TIMEOUT_SEC=120
 KEEP_RELEASES=3
 # V8 heap for npm ci and next build. The instance has 512 MB of RAM, so this
@@ -210,6 +221,26 @@ health_check() {
     waited=$((waited + 2))
   done
   return 1
+}
+
+# Stops unless the Web workflow has a successful run for commit $1. The token
+# in verdict.env, if any, goes to curl on stdin, not on its command line.
+require_green_ci() {
+  local commit=$1 url response count
+  url="https://api.github.com/repos/$GITHUB_REPO/actions/workflows/$CI_WORKFLOW/runs?head_sha=$commit&status=success&per_page=1"
+  response=$(
+    {
+      printf 'header = "Accept: application/vnd.github+json"
+'
+      if [[ -n $(env_value GITHUB_TOKEN) ]]; then
+        printf 'header = "Authorization: Bearer %s"
+' "$(env_value GITHUB_TOKEN)"
+      fi
+    } | curl -fsS --max-time 20 -K - "$url"
+  ) || die "Could not ask GitHub whether commit ${commit:0:7} passed CI (see above). Nothing was changed. If the repository is private, set GITHUB_TOKEN in $ENV_FILE. In an emergency, add --skip-ci-check."
+  count=$(grep -o '"total_count": *[0-9]*' <<<"$response" | grep -o '[0-9]*$' || true)
+  [[ -n $count && $count -gt 0 ]] ||
+    die "Commit ${commit:0:7} has no successful run of the $CI_WORKFLOW workflow on GitHub (still running, failed, or never pushed). Nothing was changed. Wait for it to pass, or in an emergency add --skip-ci-check."
 }
 
 switch_to() {
@@ -424,10 +455,11 @@ prune_releases() {
 }
 
 main() {
-  local force=0 branch=""
+  local force=0 branch="" skip_ci=0
   while (($#)); do
     case $1 in
       --force) force=1 ;;
+      --skip-ci-check) skip_ci=1 ;;
       --branch)
         [[ $# -ge 2 ]] || die "--branch needs a branch name."
         branch=$2
@@ -489,6 +521,14 @@ main() {
     exit 0
   fi
 
+  log "Checking CI for $short"
+  if ((skip_ci)); then
+    info "Skipped (--skip-ci-check)."
+  else
+    require_green_ci "$commit"
+    info "OK"
+  fi
+
   log "Checking the web server config"
   if ! cloudflare_proxy && cloudflare_firewall_on; then
     die "CLOUDFLARE_PROXY is off in $ENV_FILE, but ufw is on and lets only Cloudflare reach ports 80 and 443, so without Cloudflare's proxy nobody could reach the site. Turn the firewall off first (sudo ufw disable, and set FIREWALL_CLOUDFLARE_ONLY= empty), or set CLOUDFLARE_PROXY=1 again. Nothing was changed."
@@ -544,6 +584,11 @@ main() {
 
   # Again: a slow build can use up most of the watcher's 30 minutes.
   touch "$ALERT_DIR/deploy-at"
+  # Skipped on the first deploy, when there is no database or backup unit yet.
+  if [[ -n $previous ]] && systemctl cat verdict-backup.service >/dev/null 2>&1; then
+    log "Backing up the database"
+    systemctl start verdict-backup.service || die "The backup failed (journalctl -u verdict-backup -n 20). Nothing was switched; the running site is unchanged."
+  fi
   log "Installing service and web server config"
   save_config "$workdir"
   CONFIG_SAVED=1

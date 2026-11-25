@@ -869,7 +869,11 @@ All commands run in the browser SSH window (**Connect using SSH**).
   code next to the running site, switches over only if the build succeeds,
   and checks `/api/health?ready=1` (which also runs a database query); if the new version does not answer, it switches
   back to the previous one, with its service and web server settings,
-  automatically. A restart first lets verdicts still being judged finish
+  automatically. It refuses a commit that has no passing run of the Web
+  workflow on GitHub (`--skip-ci-check` overrides this in an emergency; while
+  the repository is private, set `GITHUB_TOKEN` in the env file so it can
+  read the runs), and backs up the database just before switching. A restart
+  first lets verdicts still being judged finish
   (up to about 5 minutes); new requests are refused until the new version
   is up.
 - **Logs:** `sudo journalctl -u verdict -f` (Ctrl+C to stop). Caddy and
@@ -1014,7 +1018,7 @@ changed files counts as another kind). What the alerts mean:
 | *NAME xN in 5 minutes* | The app logged a `[signal:NAME]` line N times in 5 minutes (see below). | The alert says what it means and where to look. |
 | *the app restarted on its own* | The app crashed and systemd started it again. | `journalctl -u verdict -n 100` |
 | *UNIT failed* | A unit is in the failed state, e.g. a backup that did not finish. Each unit alerts on its own. | `systemctl status <unit>`, then `journalctl -u <unit> -n 50` |
-| *a process was killed for lack of memory* | The kernel's out-of-memory killer struck, most likely the app at its 400 MB cap. | `journalctl -k --since -1h`; if it keeps happening, find what grows. |
+| *a process was killed for lack of memory* | The kernel's out-of-memory killer struck, most likely the app at its 2.5 GB cap. | `journalctl -k --since -1h`; if it keeps happening, find what grows. |
 | *the disk at ... is N% full* | `/` or `/var/lib/verdict` is at 90% or more. A full disk stops the database and the backups. | `sudo du -xh --max-depth=2 / \| sort -h \| tail` |
 | *the certificate for ... expires in N days* | Fewer than 10 days left (checked hourly). Caddy renews 30 days ahead, so renewal has been failing. | `journalctl -u caddy -n 200`; often DNS or a firewall blocking port 80/443. |
 
