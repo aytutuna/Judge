@@ -60,26 +60,26 @@ describe("premium_usage.hold_until", () => {
     expect(await status("old")).toBe("consumed");
   });
 
-  it("the stale sweep leaves a held reservation alone until hold_until + 20 minutes", async () => {
+  it("the stale sweep leaves a held reservation alone until hold_until + 10 minutes", async () => {
     const u = await withCredits(1);
     const t0 = new Date("2026-10-20T10:00:00.000Z");
     const id = await reserve(u, t0);
     const until = new Date(t0.getTime() + 7 * 24 * 60 * MIN);
     await ent.entitlementWriteBatch([ent.holdStatement(id, until.toISOString())]);
-    await ent.sweepStaleReservations(new Date(t0.getTime() + 21 * MIN));
+    await ent.sweepStaleReservations(new Date(t0.getTime() + 11 * MIN));
     expect(await status(id)).toBe("reserved");
-    await ent.sweepStaleReservations(new Date(until.getTime() + 19 * MIN));
+    await ent.sweepStaleReservations(new Date(until.getTime() + 9 * MIN));
     expect(await status(id)).toBe("reserved");
-    await ent.sweepStaleReservations(new Date(until.getTime() + 21 * MIN));
+    await ent.sweepStaleReservations(new Date(until.getTime() + 11 * MIN));
     expect(await status(id)).toBe("refunded");
-    expect((await ent.getEntitlement(u, new Date(until.getTime() + 22 * MIN))).credits).toBe(1);
+    expect((await ent.getEntitlement(u, new Date(until.getTime() + 12 * MIN))).credits).toBe(1);
   });
 
-  it("rows without a hold keep the 20-minute rule", async () => {
+  it("rows without a hold keep the 10-minute rule", async () => {
     const u = await withCredits(1);
     const t0 = new Date("2026-10-21T10:00:00.000Z");
     const id = await reserve(u, t0);
-    await ent.sweepStaleReservations(new Date(t0.getTime() + 21 * MIN));
+    await ent.sweepStaleReservations(new Date(t0.getTime() + 11 * MIN));
     expect(await status(id)).toBe("refunded");
   });
 });

@@ -454,7 +454,7 @@ describe("POST /api/v1/webhooks/revenuecat: TRANSFER", () => {
     expect((await send(transfer(["x"], [anon]))).json).toEqual({ ok: true, ignored: true, reason: "transfer_to_anonymous" });
     const lost = await send(transfer(["x"], ["no-such-user"]));
     expect(lost.status).toBe(503);
-    expect(warn.mock.calls.some(([line]) => String(line).startsWith("[signal:webhook_apply_failed] unmatched"))).toBe(true);
+    expect(warn.mock.calls.some(([line]) => String(line).startsWith("[signal:purchase_unmatched] type=TRANSFER"))).toBe(true);
   });
 });
 
@@ -469,7 +469,7 @@ describe("POST /api/v1/webhooks/revenuecat: purchases that match no account", ()
     expect(first.status).toBe(503);
     expect(first.json).toMatchObject({ code: "unavailable" });
     expect(warn.mock.calls.map(([line]) => String(line))).toEqual([
-      expect.stringMatching(/^\[signal:webhook_apply_failed\] unmatched purchase type=NON_RENEWING_PURCHASE/),
+      expect.stringMatching(/^\[signal:purchase_unmatched\] type=NON_RENEWING_PURCHASE id=\S+ product=pack_10 store=APP_STORE$/),
     ]);
 
     // The retry carries the alias RevenueCat added when the app logged in.
@@ -479,10 +479,18 @@ describe("POST /api/v1/webhooks/revenuecat: purchases that match no account", ()
     expect((await ent.getEntitlement(user.id)).credits).toBe(10);
   });
 
-  it("a plan for an unknown id is not swallowed either", async () => {
+  it("a first plan for an unknown id is not swallowed either", async () => {
     vi.spyOn(console, "warn").mockImplementation(() => {});
     const res = await send(monthly("no-such-user", `otid-${uid()}`));
     expect(res.status).toBe(503);
+  });
+
+  it("a renewal for an account that is gone answers 200 with a reason and raises no alert", async () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const res = await send(monthly("deleted-user", `otid-${uid()}`, { type: "RENEWAL" }));
+    expect(res.status).toBe(200);
+    expect(res.json).toEqual({ ok: true, ignored: true, reason: "unknown_user_renewal" });
+    expect(warn).not.toHaveBeenCalled();
   });
 });
 
@@ -541,6 +549,22 @@ describe("POST /api/v1/webhooks/revenuecat: sandbox, grace and refunds", () => {
       args: [user.id],
     });
     expect(rs.rows.map((x) => Number(x.credits_delta))).toEqual([-6, 0]);
+  });
+});
+
+describe("POST /api/v1/webhooks/revenuecat: a refund and a unit still held", () => {
+  it("leaves no credit behind when the held unit is refunded afterwards", async () => {
+    const { user } = await newUser();
+    await send(rc({ ...userFields(user.id), product_id: "pack_10", transaction_id: "tx-held" }));
+    const held = await ent.reservePremiumVerdict(user.id);
+    if (!held.ok) throw new Error("expected a reservation");
+    expect((await ent.getEntitlement(user.id)).credits).toBe(9);
+    await send(
+      rc({ ...userFields(user.id), type: "CANCELLATION", cancel_reason: "CUSTOMER_SUPPORT", product_id: "pack_10", transaction_id: "tx-held" }),
+    );
+    expect((await ent.getEntitlement(user.id)).credits).toBe(0);
+    await ent.refundPremiumVerdict(held.reservation.id); // the waiting case expires
+    expect((await ent.getEntitlement(user.id)).credits).toBe(0);
   });
 });
 

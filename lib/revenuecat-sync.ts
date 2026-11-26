@@ -4,16 +4,18 @@
  * webhook (a TRANSFER we could not match, or an account made after the
  * purchase). Credit packs are consumables and are never restored.
  *
- * RevenueCat's REST API names a subscription's latest transaction, not the
- * original one the webhook keys by, so a plan found here is stored under a
- * synthetic original id (`rcsync:`). It is only added when the account has no
- * active plan from that store, and the first webhook event for the real plan
- * replaces it (grantSubscription).
+ * Neither REST API gives the store's original transaction id the webhook
+ * keys plans by (v1 has store_transaction_id with no stated meaning; v2's
+ * store_subscription_identifier is the latest App Store transaction or the
+ * last Google order id: https://www.revenuecat.com/docs/api-v2/subscription-data-model),
+ * so a plan found here is stored under a stand-in id `rcsync:<user>:...`.
+ * grantRestoredSubscription adds it only where the account holds no plan of
+ * that store; the first webhook for the real plan, a TRANSFER, a refund or
+ * an expiry retires it.
  */
 
-import { getDb } from "./db";
 import type { GrantSource } from "./account-types";
-import { applyStoreEvent } from "./entitlements";
+import { grantRestoredSubscription } from "./entitlements";
 import { STORE_PRODUCTS } from "./pricing";
 import { sandboxPurchasesAllowed } from "./revenuecat";
 
@@ -39,14 +41,6 @@ const time = (v: unknown): number | null => {
   const t = typeof v === "string" ? Date.parse(v) : NaN;
   return Number.isFinite(t) ? t : null;
 };
-
-async function hasActivePlan(userId: string, source: GrantSource, nowIso: string): Promise<boolean> {
-  const rs = await (await getDb()).execute({
-    sql: "SELECT 1 FROM subscriptions WHERE user_id = ? AND source = ? AND status = 'active' AND period_end > ? LIMIT 1",
-    args: [userId, source, nowIso],
-  });
-  return rs.rows.length > 0;
-}
 
 /** Applies the account's active RevenueCat subscriptions that we do not hold
  * yet. Returns how many it added. Throws when RevenueCat cannot be reached. */
@@ -76,21 +70,21 @@ export async function syncRevenueCat(
     const first = time(raw.original_purchase_date) ?? start;
     if (!source || end === null || start === null || first === null || end <= now.getTime() || end <= start) continue;
     if (raw.refunded_at) continue;
+    // No grace period: a plan whose renewal failed ends at its last paid period.
+    if (raw.billing_issues_detected_at || raw.grace_period_expires_date) continue;
     const sandbox = raw.is_sandbox === true;
     if (sandbox && !allowSandbox) continue;
-    if (await hasActivePlan(userId, source, now.toISOString())) continue;
-    const originalTransactionId = `rcsync:${source}:${productId}:${first}`;
-    const { applied } = await applyStoreEvent({
-      type: "subscription_active",
-      eventId: `${originalTransactionId}:${start}`,
-      source,
+    const originalTransactionId = `rcsync:${userId}:${source}:${productId}:${first}`;
+    const { applied } = await grantRestoredSubscription({
       userId,
+      source,
       productId,
       originalTransactionId,
+      externalId: `${originalTransactionId}:${start}`,
       periodStart: new Date(start).toISOString(),
       periodEnd: new Date(end).toISOString(),
       willRenew: !raw.unsubscribe_detected_at,
-      ...(sandbox ? { sandbox: true as const } : {}),
+      sandbox: sandbox || undefined,
     });
     if (applied) added += 1;
   }

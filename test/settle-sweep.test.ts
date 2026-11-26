@@ -84,12 +84,28 @@ describe("a stored verdict is always charged", () => {
     vi.restoreAllMocks();
   });
 
-  it("a run that is still going 15 minutes in keeps its unit; consuming it later charges it", async () => {
+  it("a run a job owns keeps its unit past 10 minutes (the job sweep settles it), and is swept after 20", async () => {
+    const { createVerdictJob } = await import("../lib/verdict-jobs");
     const u = newUser();
     const rid = await reserve(u);
+    await createVerdictJob({ id: `job-${u}`, kind: "premium", reservationId: rid, ownerUserId: u });
     expect(await ent.sweepStaleReservations(new Date(Date.now() + 15 * MIN))).toBe(0);
     await ent.consumePremiumVerdict(rid, "late-ok");
     await ent.sweepStaleReservations(new Date(Date.now() + 60 * MIN));
     expect((await ent.getEntitlement(u)).credits).toBe(0);
+
+    const v = newUser();
+    const rid2 = await reserve(v);
+    await createVerdictJob({ id: `job-${v}`, kind: "premium", reservationId: rid2, ownerUserId: v });
+    expect(await ent.sweepStaleReservations(new Date(Date.now() + 21 * MIN))).toBeGreaterThanOrEqual(1);
+    expect((await ent.getEntitlement(v)).credits).toBe(1);
+  });
+
+  it("a synchronous run nothing owns is stale after 10 minutes", async () => {
+    const u = newUser();
+    await reserve(u);
+    expect(await ent.sweepStaleReservations(new Date(Date.now() + 5 * MIN))).toBe(0);
+    expect(await ent.sweepStaleReservations(new Date(Date.now() + 11 * MIN))).toBeGreaterThanOrEqual(1);
+    expect((await ent.getEntitlement(u)).credits).toBe(1);
   });
 });

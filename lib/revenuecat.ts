@@ -67,6 +67,7 @@ export type IgnoreReason =
   | "billing_issue"
   | "subscription_paused"
   | "transfer_to_anonymous"
+  | "unknown_user_renewal"
   | "unhandled_type";
 
 type GrantEvent = Extract<StoreEvent, { userId: string }>;
@@ -77,7 +78,7 @@ export type RevenueCatOutcome =
   | { kind: "ignored"; reason: IgnoreReason }
   /** Grants to an account: the route picks the first of `userIds` that exists.
    * With none that does (or none at all), the event is unmatched. */
-  | { kind: "grant"; userIds: string[]; event: (userId: string) => GrantEvent }
+  | { kind: "grant"; userIds: string[]; renewal: boolean; event: (userId: string) => GrantEvent }
   /** A store purchase moved to another account: every plan of `from` goes to
    * the first of `to` that exists. */
   | { kind: "transfer"; eventId: string; source: GrantSource; from: string[]; to: string[] }
@@ -203,6 +204,7 @@ function mapEvent(body: unknown, opts: { allowSandbox: boolean }): RevenueCatOut
       return {
         kind: "grant",
         userIds,
+        renewal: false,
         event: (userId) => ({
           type: "credits_purchased",
           eventId,
@@ -228,7 +230,10 @@ function mapEvent(body: unknown, opts: { allowSandbox: boolean }): RevenueCatOut
 
   if (type === "CANCELLATION") {
     if (e.cancel_reason === "CUSTOMER_SUPPORT") {
-      return { kind: "apply", event: { type: "refund", eventId, source, transactionId: originalTransactionId } };
+      return {
+        kind: "apply",
+        event: { type: "refund", eventId, source, transactionId: originalTransactionId, userIds: userIdCandidates(e) },
+      };
     }
     return { kind: "apply", event: { type: "subscription_will_not_renew", eventId, source, originalTransactionId } };
   }
@@ -236,7 +241,10 @@ function mapEvent(body: unknown, opts: { allowSandbox: boolean }): RevenueCatOut
   if (type === "EXPIRATION") {
     const at = epochMs(e.expiration_at_ms) ?? epochMs(e.event_timestamp_ms);
     if (at === null) return ignored("missing_fields");
-    return { kind: "apply", event: { type: "subscription_expired", eventId, source, originalTransactionId, at: isoAt(at) } };
+    return {
+      kind: "apply",
+      event: { type: "subscription_expired", eventId, source, originalTransactionId, at: isoAt(at), userIds: userIdCandidates(e) },
+    };
   }
 
   // INITIAL_PURCHASE, RENEWAL, UNCANCELLATION, PRODUCT_CHANGE: the period
@@ -248,6 +256,8 @@ function mapEvent(body: unknown, opts: { allowSandbox: boolean }): RevenueCatOut
   return {
     kind: "grant",
     userIds,
+    // A renewal for an account that is gone is not an unmatched purchase.
+    renewal: type !== "INITIAL_PURCHASE",
     event: (userId) => ({
       type: "subscription_active",
       eventId,

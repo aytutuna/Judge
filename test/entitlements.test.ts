@@ -232,14 +232,13 @@ describe("entitlements: reservations", () => {
     expect((await ent.getEntitlement(u)).credits).toBe(4);
   });
 
-  it("sweeps reservations left reserved for over 20 minutes, after the job and case sweeps (10)", async () => {
+  it("sweeps reservations left reserved for over 10 minutes", async () => {
     const u = newUser();
     await credits(u, 1);
     const r = await ent.reservePremiumVerdict(u);
     if (!r.ok) throw new Error("expected a reservation");
     expect(await ent.sweepStaleReservations(new Date(Date.now() + 5 * 60_000))).toBe(0);
-    expect(await ent.sweepStaleReservations(new Date(Date.now() + 15 * 60_000))).toBe(0);
-    const swept = await ent.sweepStaleReservations(new Date(Date.now() + 21 * 60_000));
+    const swept = await ent.sweepStaleReservations(new Date(Date.now() + 11 * 60_000));
     expect(swept).toBeGreaterThanOrEqual(1);
     expect((await ent.getEntitlement(u)).credits).toBe(1);
     await ent.consumePremiumVerdict(r.reservation.id, "late"); // refunded: no-op

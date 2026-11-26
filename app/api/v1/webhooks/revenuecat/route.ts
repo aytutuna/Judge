@@ -53,10 +53,13 @@ function ignoredResponse(type: string, id: string, reason: IgnoreReason): NextRe
   return NextResponse.json({ ok: true, ignored: true, reason }, { headers: NO_STORE });
 }
 
-/** A purchase for no account we know: alerted, and answered with a 503 so
- * RevenueCat retries once the account exists. Retries grant at most once. */
-function unmatched(type: string, id: string): NextResponse {
-  signal("webhook_apply_failed", `unmatched purchase type=${type} id=${id}`);
+/** A purchase for no account we know: alerted with what is needed to grant
+ * it by hand, and answered with a 503 so RevenueCat retries (it gives up
+ * after about 2.5 hours). Retries grant at most once. */
+function unmatched(type: string, id: string, body: unknown): NextResponse {
+  const e = (body as { event?: { product_id?: unknown; store?: unknown } }).event;
+  const field = (v: unknown) => (typeof v === "string" ? logSafe(v) : "none");
+  signal("purchase_unmatched", `type=${type} id=${id} product=${field(e?.product_id)} store=${field(e?.store)}`);
   return fail("unavailable", "No account matches this purchase yet.", 503);
 }
 
@@ -123,7 +126,7 @@ export async function POST(req: Request): Promise<NextResponse> {
   try {
     if (outcome.kind === "transfer") {
       const toUserId = await findExistingUserId(outcome.to);
-      if (!toUserId) return unmatched(type, id);
+      if (!toUserId) return unmatched(type, id, body);
       const { applied, moved } = await transferSubscriptions({
         source: outcome.source,
         externalId: outcome.eventId,
@@ -136,7 +139,10 @@ export async function POST(req: Request): Promise<NextResponse> {
     }
     if (outcome.kind === "grant") {
       const userId = await findExistingUserId(outcome.userIds);
-      if (!userId) return unmatched(type, id);
+      if (!userId) {
+        // The plan of an account that was deleted keeps renewing at the store.
+        return outcome.renewal ? ignoredResponse(type, id, "unknown_user_renewal") : unmatched(type, id, body);
+      }
       event = outcome.event(userId);
     } else {
       event = outcome.event;

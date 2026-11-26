@@ -53,7 +53,7 @@ CERT_MIN_DAYS=10
 
 declare -A SIGNAL_LIMITS=(
   [rate_limited]=50 [turnstile_fail]=30 [bad_origin]=10 [bearer_401]=30
-  [webhook_bad_secret]=10 [webhook_apply_failed]=1 [entitlement_refused]=3
+  [webhook_bad_secret]=10 [webhook_apply_failed]=1 [purchase_unmatched]=1 [entitlement_refused]=3
   [provider_rate]=10 [provider_down]=5 [many_accounts_per_device]=1 [events_cap]=1 [code_email_cap]=1 [review_guess_cap]=1
   [age_blocked]=1 [schema_drift]=1 [grant_skipped]=1 [ban]=20
 )
@@ -277,6 +277,7 @@ signal_meaning() {
     bearer_401) echo "Requests came with dead sign-in tokens: an app bug, or someone guessing tokens." ;;
     webhook_bad_secret) echo "Purchase webhooks came with a wrong secret: someone may be forging purchases, or the secret in RevenueCat changed." ;;
     webhook_apply_failed) echo "A purchase could not be applied. RevenueCat retries, but check the database." ;;
+    purchase_unmatched) echo "A paid purchase matched no account (product and store are in the line). RevenueCat retries for about 2.5 hours, then drops it. If the buyer exists, grant it by hand with scripts/grant.ts." ;;
     entitlement_refused) echo "Finished verdicts were refused their credit settlement: a double-spend attempt, or a race with the sweep." ;;
     provider_rate) echo "The AI service is rate limiting the app; users get the quota message." ;;
     provider_down) echo "Calls to the AI service fail or time out; verdicts fail meanwhile." ;;

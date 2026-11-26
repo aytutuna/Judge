@@ -159,9 +159,13 @@ before this got nothing. A `tier` sent by older app builds is
 ignored. `GET /api/v1/config` reports `freeTier: false` and
 `welcomeCredits: 1`. A free verdict is one by an account that never had anything
 but its welcome credit. One device or browser gets one a day: the apps are told
-apart by the `Device-Id` recorded at sign-in, the website (which keeps no
-identifier) by the visitor's address; a second account on the same device is
-refused with `429 rate_limited` until the next UTC day. Prices live in `lib/pricing.ts`; until
+apart by the device recorded at sign-in (the `Device-Id` header when it is one
+of the account's, else its most recent device; an account with none, an old
+build, claims nothing), the website by a random id in the first-party cookie
+`verdict.browser` (HttpOnly, SameSite=Lax, two years, set the first time a free
+verdict is asked for). A second account on the same device or browser is
+refused with `429 rate_limited` until the next UTC day. The claim holds the
+device once the free credit is reserved, and for 15 minutes before that. Prices live in `lib/pricing.ts`; until
 `PURCHASES_ENABLED=1` the buy buttons read "Coming soon". Testers get premium
 from the admin script below.
 
@@ -448,7 +452,7 @@ The website and the future iOS/Android app share one JSON API. Base URL
 | `POST /api/v1/respond/{token}/evidence` | The other person's evidence images |
 | `POST /api/v1/respond/{token}/appeals` | The other person adds context (signed in, Premium) |
 | `POST /api/v1/events` | Usage events, `{ "context": { "platform", "app_version", "anon_id"?, "device_id"?, "os_version"?, "device_model"?, "locale"? }, "events": [{ "name", "at"?, "props"? }] }`, up to 50 per batch as `application/json` (at most 32 KB); signed in or with `anon_id` (the website needs neither). Only the event names and props listed in `lib/analytics/track.ts` are accepted; prop values are short tokens without spaces, integers or booleans, so no text anyone wrote fits. Anything else refuses the batch with `400 invalid`. Limits: 300 batches an hour per account, signed out 10 per 10 minutes and 60 an hour per address, and 200,000 events a day in all (`503` past that). `204` |
-| `POST /api/v1/me/purchases/sync` | Restore: after `Purchases.restorePurchases()` the apps call this; the server asks RevenueCat for the account's store plans and applies the active ones at once. `{ synced, entitlement }` |
+| `POST /api/v1/me/purchases/sync` | Restore: after `Purchases.restorePurchases()` the apps call this; the server asks RevenueCat for the account's store plans and applies the active ones at once. `{ synced, entitlement }`. RevenueCat's REST API does not give the store's original transaction id, so a plan found this way is stored under a stand-in id (`rcsync:`), only where the account has no plan of that store, none revoked or refunded, and no billing issue; the real webhook, a TRANSFER, a refund or an expiry retires it |
 | `POST /api/v1/webhooks/revenuecat` | RevenueCat only (`Authorization: Bearer ${REVENUECAT_WEBHOOK_SECRET}`): applies a purchase event once; see *Purchases* |
 | `GET /api/v1/respond/{token}/originals` / `PATCH .../display` / `POST .../removal` | Party B (the bound account): their original, their display name, removing their side |
 
@@ -738,10 +742,11 @@ Every event the server has decided about answers `200`: applied
 `applied: false` = already applied or nothing to apply it to), or ignored
 (`{ "ok": true, "ignored": true, "reason" }`, e.g. `unknown_product`,
 `sandbox`); the `TEST` event answers
-`{ "ok": true, "test": true }`. A purchase for an account we do not know
+`{ "ok": true, "test": true }`. A first purchase for an account we do not know
 (no `app_user_id` or alias matches) answers `503` and logs
-`[signal:webhook_apply_failed] unmatched purchase`, so RevenueCat retries once
-the app has logged in; the retry grants at most once. `401` wrong secret, `400`/`413` malformed or
+`[signal:purchase_unmatched]` with the product and store, so RevenueCat retries
+(for about 2.5 hours) and the retry grants at most once; a renewal for one is
+answered `200` (`unknown_user_renewal`), since the account was deleted. `401` wrong secret, `400`/`413` malformed or
 over 256 KB, `429` over 600 requests per 10 minutes per IP, `503` not
 configured or the database failing (RevenueCat retries for about 80
 minutes). Each purchase is granted at most once, whatever RevenueCat

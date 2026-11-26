@@ -10,12 +10,12 @@
  * "unavailable" rather than let through unmetered.
  */
 
-import { createHmac } from "node:crypto";
+import { createHmac, randomBytes } from "node:crypto";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { analyticsDb } from "./analytics/db";
 import { isDeviceId } from "./analytics/validate";
-import { clientIp, rateLimitSubject } from "./client-ip";
+import { rateLimitSubject } from "./client-ip";
 import { signal } from "./signals";
 
 const MINUTE_MS = 60_000;
@@ -469,18 +469,56 @@ export function welcomeDailyCap(env: Record<string, string | undefined> = proces
   return dailyCap(env.WELCOME_DAILY_CAP, DEFAULT_WELCOME_DAILY_CAP);
 }
 
-/** What a free verdict is claimed against for the day: the account's own
- * devices (the apps' Device-Id, recorded at sign-in) and, for a request
- * without a bearer token (the website, which keeps no identifier), the
- * visitor's address as a keyed hash. */
-async function freeDeviceKeys(userId: string, headers: Headers): Promise<string[]> {
-  const keys = new Set<string>();
-  const rs = await (await analyticsDb()).execute({ sql: "SELECT device_id FROM account_devices WHERE user_id = ?", args: [userId] });
-  for (const row of rs.rows) keys.add(`d:${String(row.device_id)}`);
+const BROWSER_COOKIE = "verdict.browser";
+const BROWSER_ID = /^[A-Za-z0-9_-]{22,64}$/;
+
+function cookieValue(headers: Headers, name: string): string | null {
+  for (const part of (headers.get("cookie") ?? "").split(";")) {
+    const [key, ...rest] = part.trim().split("=");
+    if (key === name) return rest.join("=");
+  }
+  return null;
+}
+
+/**
+ * What a free verdict is claimed against for the day. The website: a random
+ * id in a first-party cookie, set the first time it is needed (a request
+ * without it counts as a new browser). The apps (bearer requests): the device
+ * this request comes from, as recorded at sign-in: the Device-Id header when
+ * it is one of the account's, else the account's most recent device. An
+ * account with none (an old build) claims nothing and has its one welcome
+ * credit only.
+ */
+async function freeDeviceKeys(userId: string, headers: Headers): Promise<{ keys: string[]; newBrowser?: string }> {
+  if (!/^bearer\s/i.test(headers.get("authorization") ?? "")) {
+    const sent = cookieValue(headers, BROWSER_COOKIE);
+    if (sent && BROWSER_ID.test(sent)) return { keys: [`b:${sent}`] };
+    const fresh = randomBytes(18).toString("base64url");
+    return { keys: [`b:${fresh}`], newBrowser: fresh };
+  }
+  const rs = await (await analyticsDb()).execute({
+    sql: "SELECT device_id FROM account_devices WHERE user_id = ? ORDER BY last_seen DESC",
+    args: [userId],
+  });
+  const known = rs.rows.map((r) => String(r.device_id));
   const sent = headers.get("device-id")?.trim() ?? "";
-  if (isDeviceId(sent)) keys.add(`d:${sent}`);
-  if (!/^bearer\s/i.test(headers.get("authorization") ?? "")) keys.add(`ip:${visitorKey(clientIp(headers))}`);
-  return [...keys];
+  const device = isDeviceId(sent) && known.includes(sent) ? sent : known[0];
+  return { keys: device ? [`d:${device}`] : [] };
+}
+
+async function setBrowserCookie(id: string): Promise<void> {
+  try {
+    const { cookies } = await import("next/headers");
+    (await cookies()).set(BROWSER_COOKIE, id, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 2 * 365 * 24 * 60 * 60,
+    });
+  } catch {
+    // Not inside a Next request (a script or a test): nothing to set it on.
+  }
 }
 
 export const FREE_DEVICE_MESSAGE = "One free verdict per device a day. Try again tomorrow, or buy a verdict.";
@@ -492,8 +530,8 @@ export const FREE_DEVICE_MESSAGE = "One free verdict per device a day. Try again
  * the reservations in the main database, refunded ones included (a failed
  * run still cost its model calls), so it holds across restarts and
  * instances. Accounts with a bought credit or a plan are never held to it.
- * A free account is also held to one free verdict a day per device (see
- * freeDeviceKeys), when the request's headers are passed. Clarifying
+ * A free account is also held to one free verdict a day per device or browser
+ * (see freeDeviceKeys), when the request's headers are passed. Clarifying
  * questions are not counted here; the per-account clarify window bounds
  * them. Fails closed.
  */
@@ -511,10 +549,11 @@ export async function checkPremiumSiteCap(
       return { ok: false, code: "daily_cap", retryAfterSec: retryAfterSec(nextDayMs, now.getTime()) };
     }
     if (headers && (await ent.getEntitlement(userId, now)).credits > 0) {
-      const keys = await freeDeviceKeys(userId, headers);
+      const { keys, newBrowser } = await freeDeviceKeys(userId, headers);
       if (!(await ent.claimFreeVerdictDay(userId, keys, now))) {
         return { ok: false, code: "free_device", retryAfterSec: retryAfterSec(nextDayMs, now.getTime()) };
       }
+      if (newBrowser) await setBrowserCookie(newBrowser);
     }
     return { ok: true };
   } catch (e) {

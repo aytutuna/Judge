@@ -32,6 +32,42 @@ async function newUser() {
   return session;
 }
 
+const hook = (body: unknown) =>
+  webhook(
+    new Request("http://localhost:3600/api/v1/webhooks/revenuecat", {
+      method: "POST",
+      headers: { "content-type": "application/json", authorization: "Bearer hook-secret", "x-forwarded-for": "203.0.113.9" },
+      body: JSON.stringify(body),
+    }),
+  );
+
+const realEvent = (userId: string, type: string, otid: string, over: Record<string, unknown> = {}) => ({
+  api_version: "1.0",
+  event: {
+    id: `evt-${otid}-${type}-${Date.now()}`,
+    type,
+    app_user_id: userId,
+    original_app_user_id: userId,
+    product_id: "monthly",
+    store: "APP_STORE",
+    environment: "PRODUCTION",
+    original_transaction_id: otid,
+    transaction_id: `${otid}-t`,
+    purchased_at_ms: Date.now() - DAY,
+    expiration_at_ms: Date.now() + 29 * DAY,
+    ...over,
+  },
+});
+
+async function activePlans(userId: string): Promise<{ id: string; used: number }[]> {
+  const { getDb } = await import("../lib/db");
+  const rs = await (await getDb()).execute({
+    sql: "SELECT original_transaction_id, used_in_period FROM subscriptions WHERE user_id = ? AND status = 'active' ORDER BY rowid",
+    args: [userId],
+  });
+  return rs.rows.map((r) => ({ id: String(r.original_transaction_id).replace(/^rcsync:.*/, "rcsync"), used: Number(r.used_in_period) }));
+}
+
 const call = (token: string) =>
   POST(new Request("http://localhost:3600/api/v1/me/purchases/sync", { method: "POST", headers: { authorization: `Bearer ${token}` } }));
 
@@ -119,39 +155,104 @@ describe("POST /api/v1/me/purchases/sync (restore)", () => {
     expect((await (await call(token)).json()).synced).toBe(0);
   });
 
-  it("the real plan replaces the synced one when its first webhook arrives, so the cap is not doubled", async () => {
+  it("the real plan replaces the synced one when its first webhook arrives, carrying the usage", async () => {
     const { token, user } = await newUser();
     revenueCat({ monthly: active() });
     await call(token);
-    const hook = await webhook(
-      new Request("http://localhost:3600/api/v1/webhooks/revenuecat", {
-        method: "POST",
-        headers: { "content-type": "application/json", authorization: "Bearer hook-secret", "x-forwarded-for": "203.0.113.9" },
-        body: JSON.stringify({
-          api_version: "1.0",
-          event: {
-            id: `evt-${Date.now()}`,
-            type: "RENEWAL",
-            app_user_id: user.id,
-            original_app_user_id: user.id,
-            product_id: "monthly",
-            store: "APP_STORE",
-            environment: "PRODUCTION",
-            original_transaction_id: "otid-real-1",
-            transaction_id: "tx-real-1",
-            purchased_at_ms: Date.now() - DAY,
-            expiration_at_ms: Date.now() + 29 * DAY,
-          },
-        }),
-      }),
-    );
-    expect(hook.status).toBe(200);
-    const { getDb } = await import("../lib/db");
-    const rs = await (await getDb()).execute({
-      sql: "SELECT original_transaction_id FROM subscriptions WHERE user_id = ? AND status = 'active'",
-      args: [user.id],
+    for (let i = 0; i < 3; i++) {
+      const r = await ent.reservePremiumVerdict(user.id);
+      if (r.ok) await ent.consumePremiumVerdict(r.reservation.id, `v-carry-${i}`);
+    }
+    expect((await hook(realEvent(user.id, "RENEWAL", "otid-real-1"))).status).toBe(200);
+    expect(await activePlans(user.id)).toEqual([{ id: "otid-real-1", used: 3 }]);
+  });
+
+  it("a second account restoring the same store subscription gets its own plan", async () => {
+    const a = await newUser();
+    const b = await newUser();
+    revenueCat({ monthly: active() });
+    expect((await (await call(a.token)).json()).synced).toBe(1);
+    expect((await (await call(b.token)).json()).synced).toBe(1);
+  });
+
+  it("TRANSFER after a restore leaves one plan, with the usage of the real one", async () => {
+    const a = await newUser();
+    const b = await newUser();
+    await ent.grantSubscription({
+      userId: a.user.id,
+      source: "app_store",
+      externalId: "evt-tr-real",
+      originalTransactionId: "otid-tr-real",
+      productId: "monthly",
+      periodStart: new Date(Date.now() - DAY).toISOString(),
+      periodEnd: new Date(Date.now() + 29 * DAY).toISOString(),
+      willRenew: true,
     });
-    expect(rs.rows.map((r) => String(r.original_transaction_id))).toEqual(["otid-real-1"]);
+    for (let i = 0; i < 4; i++) {
+      const r = await ent.reservePremiumVerdict(a.user.id);
+      if (r.ok) await ent.consumePremiumVerdict(r.reservation.id, `v-tr-${i}`);
+    }
+    revenueCat({ monthly: active() });
+    await call(b.token);
+    const moved = await hook({
+      api_version: "1.0",
+      event: { id: `evt-tr-${Date.now()}`, type: "TRANSFER", store: "APP_STORE", environment: "PRODUCTION", transferred_from: [a.user.id], transferred_to: [b.user.id] },
+    });
+    expect(await moved.json()).toMatchObject({ applied: true, moved: 1 });
+    expect(await activePlans(b.user.id)).toEqual([{ id: "otid-tr-real", used: 4 }]);
+    expect(await activePlans(a.user.id)).toEqual([]);
+  });
+
+  it("a transfer away retires the old account's stand-in", async () => {
+    const a = await newUser();
+    const b = await newUser();
+    revenueCat({ monthly: active() });
+    await call(a.token);
+    await hook({
+      api_version: "1.0",
+      event: { id: `evt-away-${Date.now()}`, type: "TRANSFER", store: "APP_STORE", environment: "PRODUCTION", transferred_from: [a.user.id], transferred_to: [b.user.id] },
+    });
+    expect(await activePlans(a.user.id)).toEqual([]);
+  });
+
+  it("refuses while a revoked or refunded plan of that store still covers today", async () => {
+    const { token, user } = await newUser();
+    await ent.grantSubscription({
+      userId: user.id,
+      source: "app_store",
+      externalId: "evt-rv",
+      originalTransactionId: "otid-rv",
+      productId: "monthly",
+      periodStart: new Date(Date.now() - DAY).toISOString(),
+      periodEnd: new Date(Date.now() + 29 * DAY).toISOString(),
+      willRenew: true,
+    });
+    await ent.revokeAll(user.id, { externalId: `rv:${user.id}` });
+    revenueCat({ monthly: active() });
+    expect((await (await call(token)).json()).synced).toBe(0);
+    expect((await ent.getEntitlement(user.id)).canUsePremium).toBe(false);
+  });
+
+  it("a refund or an expiry of the real plan ends the stand-in too", async () => {
+    const a = await newUser();
+    const b = await newUser();
+    revenueCat({ monthly: active() });
+    await call(a.token);
+    await call(b.token);
+    const refund = realEvent(a.user.id, "CANCELLATION", "otid-gone", { cancel_reason: "CUSTOMER_SUPPORT" });
+    await hook(refund);
+    expect((await ent.getEntitlement(a.user.id)).canUsePremium).toBe(false);
+    await hook(realEvent(b.user.id, "EXPIRATION", "otid-gone-2", { expiration_at_ms: Date.now() - 1000 }));
+    expect((await ent.getEntitlement(b.user.id)).canUsePremium).toBe(false);
+  });
+
+  it("skips a plan with a billing issue or a grace period: access ends at the paid period", async () => {
+    const { token } = await newUser();
+    revenueCat({
+      monthly: active({ billing_issues_detected_at: new Date().toISOString() }),
+      "monthly:p1m": active({ grace_period_expires_date: new Date(Date.now() + 5 * DAY).toISOString() }),
+    });
+    expect((await (await call(token)).json()).synced).toBe(0);
   });
 
   it("503 when RevenueCat fails, and nothing is granted", async () => {
