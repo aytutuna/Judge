@@ -1,5 +1,6 @@
 import { apiFetch } from "@/lib/api-fetch";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useViewer } from "@/lib/use-viewer";
 import type { CaseView } from "./case-types";
 
 /**
@@ -83,6 +84,13 @@ export function useCase(
     return asked.current;
   }, []);
   const failures = useRef(0);
+  // A block lifted by a date of birth: what failed while blocked loads again.
+  const blocked = useViewer().me?.age?.blocked === true;
+  const wasBlocked = useRef(blocked);
+  useEffect(() => {
+    if (wasBlocked.current && !blocked) bump();
+    wasBlocked.current = blocked;
+  }, [blocked, bump]);
   const headerKey = extraHeaders ? JSON.stringify(extraHeaders) : "";
 
   useEffect(() => {

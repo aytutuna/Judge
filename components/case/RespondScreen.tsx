@@ -702,6 +702,14 @@ export function RespondScreen({ token }: { token: string }) {
     setLinkFailed(false);
     setLinkTry((n) => n + 1);
   }
+  // A block lifted by a date of birth: a link that failed while blocked is tried once more.
+  const blockedNow = viewer.me?.age?.blocked === true;
+  const wasBlocked = useRef(blockedNow);
+  useEffect(() => {
+    if (wasBlocked.current && !blockedNow && linkFailed) retryLink();
+    wasBlocked.current = blockedNow;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [blockedNow]);
   const awaitingReload = reloadAt !== null && served < reloadAt;
   const linkBlocked = signedIn && linkFailed;
   const linkReady = linkDone && view !== null && claimChecked === view.id && !awaitingReload;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useSyncExternalStore } from "react";
 import { apiFetch } from "@/lib/api-fetch";
 import type { CaseView } from "@/lib/case-types";
 import {
@@ -473,6 +473,13 @@ export function useHistory(viewer: ViewerState, poll = false): HistoryView & { l
   useEffect(() => {
     void settleHistory();
   }, []);
+
+  // A block lifted by a date of birth: claims that failed while blocked may settle now.
+  const wasBlocked = useRef(blocked);
+  useEffect(() => {
+    if (wasBlocked.current && !blocked) unsettled.clear();
+    wasBlocked.current = blocked;
+  }, [blocked]);
 
   useEffect(() => {
     if (!user) return;

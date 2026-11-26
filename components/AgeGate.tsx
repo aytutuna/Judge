@@ -11,6 +11,11 @@ import { langTag } from "@/lib/langs";
 import { applyAge, currentAge, markSignedOut, refreshViewer, useViewer } from "@/lib/use-viewer";
 import styles from "./account/AccountPages.module.css";
 
+/** A stable ref callback: focus once, when the element appears. */
+function focusEl(el: HTMLElement | null): void {
+  el?.focus();
+}
+
 /** Pages a gated account can still open: its account (to delete it) and
  * the two legal pages. */
 const OPEN_PAGES = new Set(["/account", "/settings", "/settings/account", "/privacy", "/terms"]);
@@ -48,7 +53,7 @@ export function AgeDialogBody({ lang, age, dob, max, confirming, saving, failed,
     const [before, after = ""] = t(lang, "age.blockedContact").split("{email}");
     return (
       <>
-        <h2 id="age-title" className={styles.dialogTitle} tabIndex={-1} ref={(el) => el?.focus()}>
+        <h2 id="age-title" className={styles.dialogTitle} tabIndex={-1} ref={focusEl}>
           {t(lang, "age.blockedTitle")}
         </h2>
         <p className={styles.dialogText}>{t(lang, "age.blocked")}</p>
@@ -76,7 +81,7 @@ export function AgeDialogBody({ lang, age, dob, max, confirming, saving, failed,
         <h2 id="age-title" className={styles.dialogTitle}>
           {t(lang, "age.title")}
         </h2>
-        <p className={styles.dialogText} role="status" tabIndex={-1} ref={(el) => el?.focus()}>
+        <p className={styles.dialogText} tabIndex={-1} ref={focusEl}>
           {t(lang, "age.confirmDate", { date: longDate(lang, dob) })}
         </p>
         {failed ? (

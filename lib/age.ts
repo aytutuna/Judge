@@ -202,15 +202,25 @@ export async function blockMinor(userId: string, now = new Date()): Promise<AgeS
   const before = await readAge(userId, now);
   const { ensureAnalyticsTables } = await import("./analytics/db");
   await ensureAnalyticsTables();
+  // Callers have seen needsDob, so a date that landed in between wins.
   await entitlementWriteBatch([
     {
-      sql: `UPDATE "user" SET age_blocked_at = COALESCE(age_blocked_at, ?), age_block_final = '1' WHERE id = ?`,
+      sql: `UPDATE "user" SET age_blocked_at = COALESCE(age_blocked_at, ?), age_block_final = '1'
+            WHERE id = ? AND age_dob_at IS NULL`,
       args: [now.toISOString(), userId],
     },
-    ...eventDeletes(userId),
+    ...withGuard(eventDeletes(userId), { sql: `EXISTS (SELECT 1 FROM "user" WHERE id = ? AND age_block_final = '1')`, args: [userId] }),
   ]);
   if (!before.blocked) signal("age_blocked");
   return readAge(userId, now);
+}
+
+/** Each statement ANDed with a condition, so it only runs when it holds. */
+function withGuard(statements: InStatement[], guard: { sql: string; args: InValue[] }): InStatement[] {
+  return statements.map((st) => {
+    const { sql, args = [] } = typeof st === "string" ? { sql: st } : st;
+    return { sql: `${sql} AND ${guard.sql}`, args: [...(args as InValue[]), ...guard.args] };
+  });
 }
 
 /** Their stored usage events, and the signed-out ones from devices linked to them. */
@@ -280,10 +290,7 @@ async function teenStatements(userId: string, nowIso: string, guard: { sql: stri
     ...eventDeletes(userId),
   ];
   // Only when this request's own write to the account row took effect.
-  return statements.map((st) => {
-    const { sql, args = [] } = typeof st === "string" ? { sql: st } : st;
-    return { sql: `${sql} AND ${guard.sql}`, args: [...(args as InValue[]), ...guard.args] };
-  });
+  return withGuard(statements, guard);
 }
 
 /**
@@ -301,11 +308,11 @@ export async function recordMinorSignal(userId: string, under13: boolean | undef
   await entitlementWriteBatch([
     {
       sql: `UPDATE "user" SET age_confirmed_at = COALESCE(age_confirmed_at, ?), age_source = 'platform', age_signal = 'minor'
-            WHERE id = ? AND age_dob IS NULL AND age_dob_at IS NULL AND age_blocked_at IS NULL`,
+            WHERE id = ? AND age_dob_at IS NULL AND age_blocked_at IS NULL`,
       args: [nowIso, userId],
     },
     ...(await teenStatements(userId, nowIso, {
-      sql: `EXISTS (SELECT 1 FROM "user" WHERE id = ? AND age_signal = 'minor' AND age_dob_at IS NULL AND age_blocked_at IS NULL)`,
+      sql: `EXISTS (SELECT 1 FROM "user" WHERE id = ? AND age_dob_at IS NULL AND age_blocked_at IS NULL)`,
       args: [userId],
     })),
   ]);
@@ -343,7 +350,7 @@ export async function submitDob(userId: string, dob: string, now = new Date(), c
 
 async function sameWrite(userId: string, nowIso: string, dob: string, teen: boolean, claims: string[]): Promise<InStatement[]> {
   const guard = {
-    sql: `EXISTS (SELECT 1 FROM "user" WHERE id = ? AND age_dob_at = ? AND age_source = 'dob' AND age_dob IS ?)`,
+    sql: `EXISTS (SELECT 1 FROM "user" WHERE id = ? AND age_dob_at = ? AND age_dob IS ?)`,
     args: [userId, nowIso, teen ? dob : null] as InValue[],
   };
   const lift: InStatement[] = claims.length

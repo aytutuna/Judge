@@ -393,7 +393,8 @@ export async function runVerdictAppeal(p: VerdictAppealRun): Promise<void> {
     const images = used.a + [...earlier, current].reduce((n, a) => n + a.evidence.length, 0);
     const next = normalizeCaseResult(outcome.result, { twoSided: false, evidenceUsed: { ...used, a: images } });
     const label = appealOutcome(base.result, next);
-    const summary = await withChildSafety(teen, () =>
+    const teenNowFlag = await teenNow(p.userId, teen);
+    const summary = await withChildSafety(teenNowFlag, () =>
       withUsageMeter(() => appealSummary(base.result, next, { party: "a", text: current.text }, lang, label)),
     );
     usage = mergeUsage(usage, summary.usage);
@@ -416,7 +417,7 @@ export async function runVerdictAppeal(p: VerdictAppealRun): Promise<void> {
         result: { ...next, appeal: info },
         kind: "premium",
         ownerUserId: p.userId,
-        teen: await teenNow(p.userId, teen),
+        teen: teenNowFlag,
         original: p.original,
       },
       {
