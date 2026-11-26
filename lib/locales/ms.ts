@@ -340,6 +340,7 @@ const ms: Locale = {
     "settings.usageStatsHint":
       "Kiraan skrin dan ciri yang digunakan, dipautkan kepada akaun anda semasa log masuk. Teks kes tidak pernah dihantar.",
     "settings.usageStatsTeen": "Dimatikan untuk akaun di bawah 18 tahun.",
+    "settings.usageStatsBrowser": "Dimatikan kerana pelayar anda meminta tapak web tidak menjejaki anda.",
     "consent.cardTitle": "Mahu bantu tambah baik Judge?",
     "consent.cardYes": "Boleh",
     "consent.cardNo": "Tidak, terima kasih",
@@ -839,6 +840,9 @@ const ms: Locale = {
     "age.lead":
       "Judge hanya untuk mereka yang berumur 13 tahun ke atas, dan beberapa tetapan bergantung pada umur. Anda hanya perlu mengisinya sekali.",
     "age.continue": "Teruskan",
+    "age.confirmDate": "Anda memasukkan {date}. Betulkah?",
+    "age.confirmYes": "Sahkan",
+    "age.change": "Ubah",
     "age.failed": "Kami tidak dapat menyimpannya. Boleh cuba lagi?",
     "age.blockedTitle": "Judge untuk umur 13 tahun ke atas sahaja",
     "age.blocked":

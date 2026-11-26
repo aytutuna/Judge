@@ -335,6 +335,7 @@ const en = {
   "settings.usageStatsHint":
     "Counts of which screens and features are used, tied to your account when signed in. No case text is ever sent.",
   "settings.usageStatsTeen": "Off for accounts under 18.",
+  "settings.usageStatsBrowser": "Off because your browser asks sites not to track you.",
   "consent.cardTitle": "Help improve Judge?",
   "consent.cardYes": "Sure",
   "consent.cardNo": "No thanks",
@@ -831,6 +832,9 @@ const en = {
   "age.title": "Your date of birth",
   "age.lead": "Judge is for ages 13 and up, and a few settings depend on age. You only enter this once.",
   "age.continue": "Continue",
+  "age.confirmDate": "You entered {date}. Is that right?",
+  "age.confirmYes": "Confirm",
+  "age.change": "Change",
   "age.failed": "We couldn't save that. Mind trying again?",
   "age.blockedTitle": "Judge is for ages 13 and up",
   "age.blocked": "This account can't use Judge, because Judge is only for people 13 and older.",

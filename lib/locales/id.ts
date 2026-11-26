@@ -343,6 +343,7 @@ const id: Locale = {
     "settings.usageStatsHint":
       "Hitungan layar dan fitur yang dipakai, terhubung ke akunmu saat kamu masuk. Teks kasus tidak pernah dikirim.",
     "settings.usageStatsTeen": "Nonaktif untuk akun di bawah 18 tahun.",
+    "settings.usageStatsBrowser": "Nonaktif karena browsermu meminta situs untuk tidak melacakmu.",
     "consent.cardTitle": "Mau bantu tingkatkan Judge?",
     "consent.cardYes": "Boleh",
     "consent.cardNo": "Tidak, terima kasih",
@@ -837,6 +838,9 @@ const id: Locale = {
     "age.lead":
       "Judge untuk usia 13 tahun ke atas, dan beberapa pengaturan bergantung pada usia. Kamu hanya mengisinya sekali.",
     "age.continue": "Lanjut",
+    "age.confirmDate": "Kamu memasukkan {date}. Sudah benar?",
+    "age.confirmYes": "Konfirmasi",
+    "age.change": "Ubah",
     "age.failed": "Kami tidak bisa menyimpannya. Mau coba lagi?",
     "age.blockedTitle": "Judge untuk usia 13 tahun ke atas",
     "age.blocked":

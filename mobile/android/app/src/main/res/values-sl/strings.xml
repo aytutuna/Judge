@@ -558,7 +558,7 @@
     <string name="best_point_self">Tvoj najboljši argument</string>
     <string name="error_password_wrong">To geslo ni pravilno.</string>
     <string name="error_password_required">Vnesite svoje trenutno geslo.</string>
-    <string name="error_age_blocked">Judge je samo za osebe, starejše od 13 let.</string>
+    <string name="error_age_blocked">Judge je samo za osebe, stare 13 let ali več.</string>
     <string name="error_age_unconfirmed">Za nadaljevanje potrdi svojo starost.</string>
     <string name="error_age_set">Tvoj datum rojstva je že shranjen.</string>
     <string name="error_not_for_teens">Za ta račun ni na voljo.</string>

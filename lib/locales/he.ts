@@ -328,6 +328,7 @@ const he: Locale = {
     "settings.usageStatsHint":
       "ספירות של המסכים והתכונות שבשימוש, מקושרות לחשבון שלך כשנכנסת אליו. טקסט מתיקים לא נשלח אף פעם.",
     "settings.usageStatsTeen": "כבוי בחשבונות מתחת לגיל 18.",
+    "settings.usageStatsBrowser": "כבוי כי הדפדפן שלך מבקש מאתרים לא לעקוב אחריך.",
     "consent.cardTitle": "רוצה לעזור לשפר את Judge?",
     "consent.cardYes": "בטח",
     "consent.cardNo": "לא, תודה",
@@ -812,6 +813,9 @@ const he: Locale = {
     "age.title": "תאריך הלידה שלך",
     "age.lead": "Judge מיועד לגילאי 13 ומעלה, וכמה הגדרות תלויות בגיל. את זה מזינים רק פעם אחת.",
     "age.continue": "המשך",
+    "age.confirmDate": "הזנת {date}. זה נכון?",
+    "age.confirmYes": "אישור",
+    "age.change": "שינוי",
     "age.failed": "לא הצלחנו לשמור את זה. אפשר לנסות שוב?",
     "age.blockedTitle": "Judge מיועד לגילאי 13 ומעלה",
     "age.blocked": "החשבון הזה לא יכול להשתמש ב-Judge, כי Judge מיועד לגילאי 13 ומעלה בלבד.",

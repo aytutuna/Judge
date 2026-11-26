@@ -335,6 +335,7 @@ const cs: Locale = {
     "settings.usageStatsHint":
       "Počty toho, které obrazovky a funkce se používají, po přihlášení spojené s tvým účtem. Text případů se nikdy neodesílá.",
     "settings.usageStatsTeen": "Vypnuto pro účty do 18 let.",
+    "settings.usageStatsBrowser": "Vypnuto, protože tvůj prohlížeč žádá weby, aby tě nesledovaly.",
     "consent.cardTitle": "Pomůžeš zlepšit Judge?",
     "consent.cardYes": "Jasně",
     "consent.cardNo": "Ne, díky",
@@ -827,6 +828,9 @@ const cs: Locale = {
     "age.lead":
       "Judge je pro lidi od 13 let a některá nastavení závisí na věku. Zadáváš to jen jednou.",
     "age.continue": "Pokračovat",
+    "age.confirmDate": "Zadané datum: {date}. Je to správně?",
+    "age.confirmYes": "Potvrdit",
+    "age.change": "Změnit",
     "age.failed": "Nepodařilo se to uložit. Zkusíš to znovu?",
     "age.blockedTitle": "Judge je pro lidi od 13 let",
     "age.blocked": "Tento účet nemůže Judge používat, protože Judge je jen pro lidi od 13 let.",

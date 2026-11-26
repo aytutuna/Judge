@@ -331,6 +331,7 @@ const bn: Locale = {
     "settings.usageStatsHint":
       "কোন স্ক্রিন আর ফিচার ব্যবহার হয় তার গণনা, সাইন ইন থাকলে আপনার অ্যাকাউন্টের সঙ্গে যুক্ত। মামলার কোনো লেখা কখনও পাঠানো হয় না।",
     "settings.usageStatsTeen": "১৮ বছরের কম বয়সী অ্যাকাউন্টে বন্ধ।",
+    "settings.usageStatsBrowser": "বন্ধ আছে, কারণ আপনার ব্রাউজার সাইটগুলোকে ট্র্যাক না করতে বলছে।",
     "consent.cardTitle": "Judge-কে আরও ভালো করতে সাহায্য করবেন?",
     "consent.cardYes": "ঠিক আছে",
     "consent.cardNo": "না, ধন্যবাদ",
@@ -819,6 +820,9 @@ const bn: Locale = {
     "age.lead":
       "Judge ১৩ বছর বা তার বেশি বয়সীদের জন্য, আর কিছু সেটিং বয়সের ওপর নির্ভর করে। এটা শুধু একবারই দিতে হবে।",
     "age.continue": "চালিয়ে যান",
+    "age.confirmDate": "আপনি {date} দিয়েছেন। এটা কি ঠিক?",
+    "age.confirmYes": "নিশ্চিত করুন",
+    "age.change": "বদলান",
     "age.failed": "এটা সেভ করা গেল না। আরেকবার চেষ্টা করবেন?",
     "age.blockedTitle": "Judge ১৩ বছর বা তার বেশি বয়সীদের জন্য",
     "age.blocked":

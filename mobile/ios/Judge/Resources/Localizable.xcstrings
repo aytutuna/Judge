@@ -82400,7 +82400,7 @@
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge କେବଳ 13 ବର୍ଷ ଓ ତା'ଠାରୁ ଅଧିକ ବୟସ୍କଙ୍କ ପାଇଁ।"
+            "value" : "Judge କେବଳ 13 ବର୍ଷ ଓ ତା'ଠାରୁ ଅଧିକ ବୟସର ଲୋକଙ୍କ ପାଇଁ।"
           }
         },
         "pa" : {
@@ -82448,7 +82448,7 @@
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge je samo za osebe, starejše od 13 let."
+            "value" : "Judge je samo za osebe, stare 13 let ali več."
           }
         },
         "sv" : {
@@ -87578,7 +87578,7 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ez a fiók számára nem elérhető."
+            "value" : "Ennél a fióknál nem érhető el."
           }
         },
         "id" : {

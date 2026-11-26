@@ -343,6 +343,8 @@ const fi: Locale = {
     "settings.usageStatsHint":
       "Määriä siitä, mitä näkymiä ja toimintoja käytetään, kirjautuneena tiliisi liitettyinä. Juttujen tekstiä ei lähetetä koskaan.",
     "settings.usageStatsTeen": "Pois päältä alle 18-vuotiaiden tileillä.",
+    "settings.usageStatsBrowser":
+      "Pois päältä, koska selaimesi pyytää sivustoja olemaan seuraamatta sinua.",
     "consent.cardTitle": "Autatko parantamaan Judgea?",
     "consent.cardYes": "Kyllä",
     "consent.cardNo": "Ei kiitos",
@@ -841,6 +843,9 @@ const fi: Locale = {
     "age.lead":
       "Judge on tarkoitettu 13 vuotta täyttäneille, ja jotkin asetukset riippuvat iästä. Tämä annetaan vain kerran.",
     "age.continue": "Jatka",
+    "age.confirmDate": "Syötit {date}. Onko se oikein?",
+    "age.confirmYes": "Vahvista",
+    "age.change": "Muuta",
     "age.failed": "Tallennus ei onnistunut. Yritätkö uudelleen?",
     "age.blockedTitle": "Judge on tarkoitettu 13 vuotta täyttäneille",
     "age.blocked":

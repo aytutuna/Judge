@@ -336,8 +336,9 @@ const sv: Locale = {
     "settings.darkMode": "Mörkt läge",
     "settings.usageStats": "Användningsstatistik",
     "settings.usageStatsHint":
-      "Räkningar av vilka skärmar och funktioner som används, kopplade till ditt konto när du är inloggad. Text från fall skickas aldrig.",
+      "Uppgifter om vilka skärmar och funktioner som används, kopplade till ditt konto när du är inloggad. Text från fall skickas aldrig.",
     "settings.usageStatsTeen": "Av för konton under 18 år.",
+    "settings.usageStatsBrowser": "Av eftersom din webbläsare ber webbplatser att inte spåra dig.",
     "consent.cardTitle": "Vill du hjälpa till att göra Judge bättre?",
     "consent.cardYes": "Gärna",
     "consent.cardNo": "Nej tack",
@@ -828,6 +829,9 @@ const sv: Locale = {
     "age.lead":
       "Judge är bara för personer som är 13 år eller äldre, och några inställningar beror på ålder. Du anger det bara en gång.",
     "age.continue": "Fortsätt",
+    "age.confirmDate": "Du angav {date}. Stämmer det?",
+    "age.confirmYes": "Bekräfta",
+    "age.change": "Ändra",
     "age.failed": "Vi kunde inte spara det. Vill du försöka igen?",
     "age.blockedTitle": "Judge är bara för personer som är 13 år eller äldre",
     "age.blocked":

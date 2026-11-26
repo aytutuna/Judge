@@ -335,6 +335,7 @@ const ru: Locale = {
     "settings.usageStatsHint":
       "Подсчёт того, какие экраны и функции используются, — после входа он привязан к вашему аккаунту. Текст дел никогда не отправляется.",
     "settings.usageStatsTeen": "Для аккаунтов младше 18 лет отключено.",
+    "settings.usageStatsBrowser": "Отключено, потому что ваш браузер просит сайты не отслеживать вас.",
     "consent.cardTitle": "Поможете улучшить Judge?",
     "consent.cardYes": "Конечно",
     "consent.cardNo": "Нет, спасибо",
@@ -828,6 +829,9 @@ const ru: Locale = {
     "age.lead":
       "Judge только для людей от 13 лет, а некоторые настройки зависят от возраста. Дату нужно ввести один раз.",
     "age.continue": "Продолжить",
+    "age.confirmDate": "Вы указали {date}. Всё верно?",
+    "age.confirmYes": "Подтвердить",
+    "age.change": "Изменить",
     "age.failed": "Не удалось это сохранить. Попробуете ещё раз?",
     "age.blockedTitle": "Judge только для людей от 13 лет",
     "age.blocked":

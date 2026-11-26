@@ -335,6 +335,7 @@ const hr: Locale = {
     "settings.usageStatsHint":
       "Brojevi o tome koji se zasloni i značajke koriste, povezani s tvojim računom kad si prijavljen. Tekst slučajeva nikad se ne šalje.",
     "settings.usageStatsTeen": "Isključeno za račune mlađih od 18 godina.",
+    "settings.usageStatsBrowser": "Isključeno jer tvoj preglednik traži od stranica da te ne prate.",
     "consent.cardTitle": "Želiš li pomoći poboljšati Judge?",
     "consent.cardYes": "Naravno",
     "consent.cardNo": "Ne, hvala",
@@ -832,6 +833,9 @@ const hr: Locale = {
     "age.lead":
       "Judge je za osobe od 13 godina nadalje, a neke postavke ovise o dobi. Ovo upisuješ samo jednom.",
     "age.continue": "Nastavi",
+    "age.confirmDate": "Uneseni datum: {date}. Je li točan?",
+    "age.confirmYes": "Potvrdi",
+    "age.change": "Promijeni",
     "age.failed": "Nismo to uspjeli spremiti. Pokušaš li ponovno?",
     "age.blockedTitle": "Judge je za osobe od 13 godina nadalje",
     "age.blocked":

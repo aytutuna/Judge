@@ -339,6 +339,7 @@ const vi: Locale = {
     "settings.usageStatsHint":
       "Đếm những màn hình và tính năng được dùng, gắn với tài khoản của bạn khi đã đăng nhập. Nội dung các vụ không bao giờ được gửi đi.",
     "settings.usageStatsTeen": "Tắt với tài khoản dưới 18 tuổi.",
+    "settings.usageStatsBrowser": "Tắt vì trình duyệt của bạn yêu cầu các trang web không theo dõi bạn.",
     "consent.cardTitle": "Giúp cải thiện Judge nhé?",
     "consent.cardYes": "Được",
     "consent.cardNo": "Không, cảm ơn",
@@ -840,6 +841,9 @@ const vi: Locale = {
     "age.lead":
       "Judge chỉ dành cho người từ 13 tuổi trở lên, và một vài cài đặt phụ thuộc vào độ tuổi. Bạn chỉ cần nhập một lần.",
     "age.continue": "Tiếp tục",
+    "age.confirmDate": "Bạn đã nhập {date}. Đúng chưa?",
+    "age.confirmYes": "Xác nhận",
+    "age.change": "Đổi",
     "age.failed": "Chúng tôi không lưu được. Bạn thử lại nhé?",
     "age.blockedTitle": "Judge chỉ dành cho người từ 13 tuổi trở lên",
     "age.blocked":

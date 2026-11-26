@@ -334,6 +334,7 @@ const ro: Locale = {
     "settings.usageStatsHint":
       "Numărători ale ecranelor și funcțiilor folosite, legate de contul tău când ești conectat. Textul cazurilor nu este trimis niciodată.",
     "settings.usageStatsTeen": "Dezactivat pentru conturile sub 18 ani.",
+    "settings.usageStatsBrowser": "Dezactivat, pentru că browserul tău cere site-urilor să nu te urmărească.",
     "consent.cardTitle": "Vrei să ajuți la îmbunătățirea Judge?",
     "consent.cardYes": "Sigur",
     "consent.cardNo": "Nu, mulțumesc",
@@ -830,6 +831,9 @@ const ro: Locale = {
     "age.lead":
       "Judge e doar pentru persoane de 13 ani sau mai mari, iar câteva setări depind de vârstă. Completezi asta o singură dată.",
     "age.continue": "Continuă",
+    "age.confirmDate": "Ai introdus {date}. Este corect?",
+    "age.confirmYes": "Confirmă",
+    "age.change": "Schimbă",
     "age.failed": "Nu am putut salva asta. Mai încerci o dată?",
     "age.blockedTitle": "Judge e doar pentru persoane de 13 ani sau mai mari",
     "age.blocked":

@@ -341,6 +341,7 @@ const tr: Locale = {
     "settings.usageStatsHint":
       "Hangi ekranların ve özelliklerin kullanıldığına dair sayımlar; giriş yaptıysan hesabına bağlı. Davaların metni asla gönderilmez.",
     "settings.usageStatsTeen": "18 yaş altı hesaplarda kapalı.",
+    "settings.usageStatsBrowser": "Kapalı, çünkü tarayıcın sitelerden seni izlememesini istiyor.",
     "consent.cardTitle": "Judge'ı geliştirmeye yardım eder misin?",
     "consent.cardYes": "Olur",
     "consent.cardNo": "Hayır, teşekkürler",
@@ -835,6 +836,9 @@ const tr: Locale = {
     "age.lead":
       "Judge yalnızca 13 yaş ve üzeri kişiler içindir ve bazı ayarlar yaşa göre değişir. Bunu yalnızca bir kez girersin.",
     "age.continue": "Devam et",
+    "age.confirmDate": "{date} girdin. Doğru mu?",
+    "age.confirmYes": "Onayla",
+    "age.change": "Değiştir",
     "age.failed": "Bunu kaydedemedik. Tekrar dener misin?",
     "age.blockedTitle": "Judge 13 yaş ve üzeri içindir",
     "age.blocked":

@@ -335,6 +335,7 @@ const ptBR: Locale = {
     "settings.usageStatsHint":
       "Contagens de quais telas e recursos são usados, ligadas à sua conta quando você está conectado. O texto dos casos nunca é enviado.",
     "settings.usageStatsTeen": "Desativado para contas de menores de 18 anos.",
+    "settings.usageStatsBrowser": "Desativado porque seu navegador pede aos sites que não rastreiem você.",
     "consent.cardTitle": "Quer ajudar a melhorar o Judge?",
     "consent.cardYes": "Claro",
     "consent.cardNo": "Não, obrigado",
@@ -830,6 +831,9 @@ const ptBR: Locale = {
     "age.lead":
       "O Judge é só para quem tem 13 anos ou mais, e algumas configurações dependem da idade. Você informa isso só uma vez.",
     "age.continue": "Continuar",
+    "age.confirmDate": "Você informou {date}. Está certo?",
+    "age.confirmYes": "Confirmar",
+    "age.change": "Alterar",
     "age.failed": "Não conseguimos salvar isso. Pode tentar de novo?",
     "age.blockedTitle": "O Judge é só para quem tem 13 anos ou mais",
     "age.blocked":

@@ -334,6 +334,7 @@ const sk: Locale = {
     "settings.usageStatsHint":
       "Počty toho, ktoré obrazovky a funkcie sa používajú, po prihlásení spojené s tvojím účtom. Text prípadov sa nikdy neodosiela.",
     "settings.usageStatsTeen": "Pre účty mladšie ako 18 rokov je vypnuté.",
+    "settings.usageStatsBrowser": "Vypnuté, pretože tvoj prehliadač žiada weby, aby ťa nesledovali.",
     "consent.cardTitle": "Pomôžeš zlepšiť Judge?",
     "consent.cardYes": "Jasné",
     "consent.cardNo": "Nie, vďaka",
@@ -826,6 +827,9 @@ const sk: Locale = {
     "age.lead":
       "Judge je len pre ľudí od 13 rokov a niektoré nastavenia závisia od veku. Zadáš to iba raz.",
     "age.continue": "Pokračovať",
+    "age.confirmDate": "Zadaný dátum: {date}. Je to správne?",
+    "age.confirmYes": "Potvrdiť",
+    "age.change": "Zmeniť",
     "age.failed": "Nepodarilo sa nám to uložiť. Skúsiš to znova?",
     "age.blockedTitle": "Judge je len pre ľudí od 13 rokov",
     "age.blocked": "Tento účet nemôže používať Judge, pretože Judge je len pre ľudí od 13 rokov.",

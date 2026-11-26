@@ -343,6 +343,7 @@ const de: Locale = {
     "settings.usageStatsHint":
       "Zählungen, welche Bildschirme und Funktionen genutzt werden, mit deinem Konto verknüpft, wenn du angemeldet bist. Text aus Fällen wird nie gesendet.",
     "settings.usageStatsTeen": "Aus für Konten unter 18.",
+    "settings.usageStatsBrowser": "Aus, weil dein Browser Websites bittet, dich nicht zu tracken.",
     "consent.cardTitle": "Hilfst du mit, Judge zu verbessern?",
     "consent.cardYes": "Gern",
     "consent.cardNo": "Nein danke",
@@ -849,6 +850,9 @@ const de: Locale = {
     "age.lead":
       "Judge ist für Menschen ab 13, und einige Einstellungen hängen vom Alter ab. Das gibst du nur einmal an.",
     "age.continue": "Weiter",
+    "age.confirmDate": "Du hast {date} eingegeben. Stimmt das?",
+    "age.confirmYes": "Bestätigen",
+    "age.change": "Ändern",
     "age.failed": "Das konnten wir nicht speichern. Versuchst du es noch mal?",
     "age.blockedTitle": "Judge ist für Menschen ab 13",
     "age.blocked": "Dieses Konto kann Judge nicht nutzen, weil Judge nur für Menschen ab 13 ist.",

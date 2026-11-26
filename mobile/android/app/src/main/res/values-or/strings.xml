@@ -540,7 +540,7 @@
     <string name="best_point_self">ଆପଣଙ୍କ ସବୁଠୁ ଜୋରଦାର କଥା</string>
     <string name="error_password_wrong">ଏହି ପାସୱାର୍ଡ ଠିକ୍ ନୁହେଁ।</string>
     <string name="error_password_required">ଆପଣଙ୍କ ବର୍ତ୍ତମାନର ପାସୱାର୍ଡ ଲେଖନ୍ତୁ।</string>
-    <string name="error_age_blocked">Judge କେବଳ 13 ବର୍ଷ ଓ ତା\'ଠାରୁ ଅଧିକ ବୟସ୍କଙ୍କ ପାଇଁ।</string>
+    <string name="error_age_blocked">Judge କେବଳ 13 ବର୍ଷ ଓ ତା\'ଠାରୁ ଅଧିକ ବୟସର ଲୋକଙ୍କ ପାଇଁ।</string>
     <string name="error_age_unconfirmed">ଜାରି ରଖିବାକୁ ଆପଣଙ୍କ ବୟସ ନିଶ୍ଚିତ କରନ୍ତୁ।</string>
     <string name="error_age_set">ଆପଣଙ୍କ ଜନ୍ମ ତାରିଖ ପୂର୍ବରୁ ସେଭ୍ ହୋଇଛି।</string>
     <string name="error_not_for_teens">ଏହି ଆକାଉଣ୍ଟ ପାଇଁ ଉପଲବ୍ଧ ନୁହେଁ।</string>

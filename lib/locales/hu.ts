@@ -341,6 +341,8 @@ const hu: Locale = {
     "settings.usageStatsHint":
       "Számlálás arról, mely képernyőket és funkciókat használják, bejelentkezve a fiókodhoz kötve. Az ügyek szövege soha nem kerül elküldésre.",
     "settings.usageStatsTeen": "18 év alatti fiókoknál kikapcsolva.",
+    "settings.usageStatsBrowser":
+      "Kikapcsolva, mert a böngésződ kéri az oldalakat, hogy ne kövessenek.",
     "consent.cardTitle": "Segítesz jobbá tenni a Judge-ot?",
     "consent.cardYes": "Persze",
     "consent.cardNo": "Köszönöm, nem",
@@ -841,6 +843,9 @@ const hu: Locale = {
     "age.lead":
       "A Judge 13 éves kortól használható, és néhány beállítás a kortól függ. Ezt csak egyszer kell megadnod.",
     "age.continue": "Tovább",
+    "age.confirmDate": "Ezt adtad meg: {date}. Jó így?",
+    "age.confirmYes": "Megerősítés",
+    "age.change": "Módosítás",
     "age.failed": "Ezt nem sikerült elmenteni. Megpróbálod újra?",
     "age.blockedTitle": "A Judge 13 éves kortól használható",
     "age.blocked":
@@ -851,7 +856,7 @@ const hu: Locale = {
     "error.age_blocked": "A Judge csak 13 éves vagy idősebb embereknek szól.",
     "error.age_unconfirmed": "A folytatáshoz erősítsd meg a korodat.",
     "error.age_set": "A születési dátumod már el van mentve.",
-    "error.not_for_teens": "Ez a fiók számára nem elérhető.",
+    "error.not_for_teens": "Ennél a fióknál nem érhető el.",
     "error.agreement_required": "A folytatáshoz fogadd el a privát adatokra vonatkozó tájékoztatót.",
     "terms.title": "Felhasználási feltételek",
     "terms.kicker": "A szabályok",

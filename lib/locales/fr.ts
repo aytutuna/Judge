@@ -344,6 +344,8 @@ const fr: Locale = {
     "settings.usageStatsHint":
       "Des comptages des écrans et fonctions utilisés, liés à ton compte si tu es connecté. Le texte des dossiers n’est jamais envoyé.",
     "settings.usageStatsTeen": "Désactivé pour les comptes de moins de 18 ans.",
+    "settings.usageStatsBrowser":
+      "Désactivé, car ton navigateur demande aux sites de ne pas te suivre.",
     "consent.cardTitle": "Tu veux aider à améliorer Judge ?",
     "consent.cardYes": "Avec plaisir",
     "consent.cardNo": "Non merci",
@@ -852,6 +854,9 @@ const fr: Locale = {
     "age.lead":
       "Judge est réservé aux personnes de 13 ans et plus, et certains réglages dépendent de l’âge. Tu ne l’indiques qu’une seule fois.",
     "age.continue": "Continuer",
+    "age.confirmDate": "Tu as saisi {date}. C’est bien ça ?",
+    "age.confirmYes": "Confirmer",
+    "age.change": "Modifier",
     "age.failed": "On n’a pas pu enregistrer ça. Tu veux bien réessayer ?",
     "age.blockedTitle": "Judge est réservé aux personnes de 13 ans et plus",
     "age.blocked":

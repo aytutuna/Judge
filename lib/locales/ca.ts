@@ -343,6 +343,8 @@ const ca: Locale = {
     "settings.usageStatsHint":
       "Recomptes de les pantalles i funcions que es fan servir, vinculats al teu compte si has iniciat la sessió. No s’envia mai cap text dels casos.",
     "settings.usageStatsTeen": "Desactivat per als comptes de menors de 18 anys.",
+    "settings.usageStatsBrowser":
+      "Desactivat perquè el teu navegador demana als llocs que no et segueixin.",
     "consent.cardTitle": "Vols ajudar a millorar Judge?",
     "consent.cardYes": "És clar",
     "consent.cardNo": "No, gràcies",
@@ -847,6 +849,9 @@ const ca: Locale = {
     "age.lead":
       "Judge és per a persones de 13 anys o més, i algunes opcions depenen de l’edat. Ho has d’indicar només una vegada.",
     "age.continue": "Continua",
+    "age.confirmDate": "Has posat {date}. És correcte?",
+    "age.confirmYes": "Confirma",
+    "age.change": "Canvia",
     "age.failed": "No ho hem pogut desar. Ho tornes a provar?",
     "age.blockedTitle": "Judge és per a persones de 13 anys o més",
     "age.blocked":

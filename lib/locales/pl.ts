@@ -337,6 +337,7 @@ const pl: Locale = {
     "settings.usageStatsHint":
       "Liczniki tego, które ekrany i funkcje są używane, po zalogowaniu powiązane z twoim kontem. Tekst spraw nigdy nie jest wysyłany.",
     "settings.usageStatsTeen": "Wyłączone dla kont osób poniżej 18 lat.",
+    "settings.usageStatsBrowser": "Wyłączone, bo Twoja przeglądarka prosi strony, by Cię nie śledziły.",
     "consent.cardTitle": "Pomożesz ulepszyć Judge?",
     "consent.cardYes": "Jasne",
     "consent.cardNo": "Nie, dziękuję",
@@ -831,6 +832,9 @@ const pl: Locale = {
     "age.lead":
       "Judge jest dla osób od 13 lat, a kilka ustawień zależy od wieku. Podajesz to tylko raz.",
     "age.continue": "Dalej",
+    "age.confirmDate": "Podana data to {date}. Zgadza się?",
+    "age.confirmYes": "Potwierdź",
+    "age.change": "Zmień",
     "age.failed": "Nie udało się tego zapisać. Spróbujesz jeszcze raz?",
     "age.blockedTitle": "Judge jest dla osób od 13 lat",
     "age.blocked": "To konto nie może korzystać z Judge, bo Judge jest tylko dla osób od 13 lat.",

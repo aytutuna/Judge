@@ -333,6 +333,7 @@ const nb: Locale = {
     "settings.usageStatsHint":
       "Tellinger av hvilke skjermer og funksjoner som brukes, knyttet til kontoen din når du er logget inn. Tekst fra saker sendes aldri.",
     "settings.usageStatsTeen": "Av for kontoer under 18 år.",
+    "settings.usageStatsBrowser": "Av fordi nettleseren din ber nettsteder om ikke å spore deg.",
     "consent.cardTitle": "Vil du hjelpe til med å gjøre Judge bedre?",
     "consent.cardYes": "Gjerne",
     "consent.cardNo": "Nei takk",
@@ -823,6 +824,9 @@ const nb: Locale = {
     "age.lead":
       "Judge er for deg som er 13 år eller eldre, og noen innstillinger avhenger av alder. Du legger inn dette bare én gang.",
     "age.continue": "Fortsett",
+    "age.confirmDate": "Du skrev inn {date}. Stemmer det?",
+    "age.confirmYes": "Bekreft",
+    "age.change": "Endre",
     "age.failed": "Vi fikk ikke lagret det. Vil du prøve igjen?",
     "age.blockedTitle": "Judge er for deg som er 13 år eller eldre",
     "age.blocked":

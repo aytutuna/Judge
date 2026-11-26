@@ -337,6 +337,7 @@ const nl: Locale = {
     "settings.usageStatsHint":
       "Tellingen van welke schermen en functies worden gebruikt, gekoppeld aan je account als je bent ingelogd. Tekst uit zaken wordt nooit verstuurd.",
     "settings.usageStatsTeen": "Uit voor accounts onder de 18.",
+    "settings.usageStatsBrowser": "Uit omdat je browser sites vraagt je niet te volgen.",
     "consent.cardTitle": "Help je Judge te verbeteren?",
     "consent.cardYes": "Graag",
     "consent.cardNo": "Nee, bedankt",
@@ -836,6 +837,9 @@ const nl: Locale = {
     "age.lead":
       "Judge is voor mensen van 13 jaar en ouder, en een paar instellingen hangen af van je leeftijd. Je vult dit maar één keer in.",
     "age.continue": "Verder",
+    "age.confirmDate": "Je hebt {date} ingevuld. Klopt dat?",
+    "age.confirmYes": "Bevestigen",
+    "age.change": "Wijzigen",
     "age.failed": "Dat is niet gelukt. Wil je het nog eens proberen?",
     "age.blockedTitle": "Judge is voor mensen van 13 jaar en ouder",
     "age.blocked":

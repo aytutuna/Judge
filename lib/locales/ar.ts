@@ -327,7 +327,8 @@ const ar: Locale = {
     "settings.usageStats": "إحصاءات الاستخدام",
     "settings.usageStatsHint":
       "أعداد للشاشات والميزات المستخدمة، مرتبطة بحسابك عند تسجيل الدخول. لا يُرسَل أي نص من القضايا أبدًا.",
-    "settings.usageStatsTeen": "متوقف للحسابات التي أعمار أصحابها دون 18 عامًا.",
+    "settings.usageStatsTeen": "متوقفة للحسابات التي يقل عمر أصحابها عن 18 عامًا.",
+    "settings.usageStatsBrowser": "متوقفة لأن متصفحك يطلب من المواقع عدم تتبعك.",
     "consent.cardTitle": "هل تساعد في تحسين Judge؟",
     "consent.cardYes": "بكل سرور",
     "consent.cardNo": "لا، شكرًا",
@@ -813,6 +814,9 @@ const ar: Locale = {
     "age.lead":
       "Judge مخصص لمن بلغوا 13 عامًا فأكثر، وبعض الإعدادات تعتمد على العمر. تُدخل هذا مرة واحدة فقط.",
     "age.continue": "متابعة",
+    "age.confirmDate": "أدخلتَ {date}. هل هذا صحيح؟",
+    "age.confirmYes": "تأكيد",
+    "age.change": "تغيير",
     "age.failed": "تعذّر حفظ ذلك. هلّا حاولت مرة أخرى؟",
     "age.blockedTitle": "Judge مخصص لمن بلغوا 13 عامًا فأكثر",
     "age.blocked":

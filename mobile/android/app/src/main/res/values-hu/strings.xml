@@ -543,7 +543,7 @@
     <string name="error_age_blocked">A Judge csak 13 éves vagy idősebb embereknek szól.</string>
     <string name="error_age_unconfirmed">A folytatáshoz erősítsd meg a korodat.</string>
     <string name="error_age_set">A születési dátumod már el van mentve.</string>
-    <string name="error_not_for_teens">Ez a fiók számára nem elérhető.</string>
+    <string name="error_not_for_teens">Ennél a fióknál nem érhető el.</string>
     <string name="error_agreement_required">A folytatáshoz fogadd el a privát adatokra vonatkozó tájékoztatót.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Új</string>
