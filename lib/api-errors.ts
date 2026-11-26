@@ -46,10 +46,15 @@ export const API_ERROR_STATUS = {
   /** A case with three or four sides, opened by an app that does not send
    * the Judge-Sides header (older builds): it would label the sides wrongly. */
   update_required: 426,
-  /** The account belongs to someone under 18 (POST /api/v1/me/age). */
+  /** The account belongs to someone under 13 (POST /api/v1/me/age). */
   age_blocked: 403,
-  /** Starting a verdict or case before confirming the account holder is 18+. */
+  /** Starting a verdict or case before the age check is done (a date of birth,
+   * or an older build's 18+ tick). */
   age_unconfirmed: 403,
+  /** The date of birth was already given (POST /api/v1/me/age). */
+  age_set: 409,
+  /** Training consent or another choice an account under 18 may not make. */
+  not_for_teens: 403,
   /** Starting a verdict, case, side or answer before agreeing that the text
    * may hold private details (POST /api/v1/me/agreement; a signed-out answer
    * sends `sensitiveAgreed`). */

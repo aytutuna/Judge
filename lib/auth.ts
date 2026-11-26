@@ -20,7 +20,7 @@ import { makeSignature } from "better-auth/crypto";
 import { getMigrations } from "better-auth/db/migration";
 import { bearer, emailOTP } from "better-auth/plugins";
 import type { AgeState, AuthProviders, Viewer } from "./account-types";
-import { ageRefusal, keptBlock, needsConfirmed, requestPath, type AgeRefusal } from "./age";
+import { ageRefusal, ageStateOf, keptBlock, needsConfirmed, requestPath, type AgeRefusal } from "./age";
 import { APPLE_SECRET_REFRESH_MS, appleClientSecret, appleEnv } from "./apple-secret";
 import { getDb } from "./db";
 import { emailConfigured, langFromRequestUrl, sendSignInCodeEmail } from "./email";
@@ -379,6 +379,9 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         ageConfirmedAt: { type: "date", required: false, input: false, fieldName: "age_confirmed_at" },
         ageSource: { type: "string", required: false, input: false, fieldName: "age_source" },
         ageBlockedAt: { type: "date", required: false, input: false, fieldName: "age_blocked_at" },
+        ageDob: { type: "string", required: false, input: false, fieldName: "age_dob" },
+        ageDobAt: { type: "date", required: false, input: false, fieldName: "age_dob_at" },
+        ageSignal: { type: "string", required: false, input: false, fieldName: "age_signal" },
       },
     },
     account: {
@@ -711,8 +714,20 @@ export async function resolveViewer(req: Request): Promise<ViewerLookup> {
     const res = await auth.api.getSession({ headers: req.headers });
     if (bearer !== null && res?.session.token !== bearer) return { viewer: null, deadBearer: true };
     if (!res) return { viewer: null, deadBearer: false };
-    const user = res.user as typeof res.user & { ageConfirmedAt?: unknown; ageBlockedAt?: unknown };
-    const age = { confirmed: user.ageConfirmedAt != null, blocked: user.ageBlockedAt != null };
+    const user = res.user as typeof res.user & {
+      ageConfirmedAt?: unknown;
+      ageBlockedAt?: unknown;
+      ageDob?: unknown;
+      ageDobAt?: unknown;
+      ageSignal?: unknown;
+    };
+    const age = ageStateOf({
+      confirmedAt: user.ageConfirmedAt,
+      blockedAt: user.ageBlockedAt,
+      dob: user.ageDob,
+      dobAt: user.ageDobAt,
+      signal: user.ageSignal,
+    });
     const gate = ageRefusal(req.method, requestPath(req), age);
     return {
       viewer: { user: toViewer(res.user), sessionId: res.session.id, via: bearer !== null ? "bearer" : "cookie", age },

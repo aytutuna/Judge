@@ -37,9 +37,11 @@ export type Viewer = {
   image: string | null;
 };
 
-/** The account's age check (POST /api/v1/me/age). `blocked` never goes back
- * to false. */
-export type AgeState = { confirmed: boolean; blocked: boolean };
+/** The account's age check (POST /api/v1/me/age). `blocked` (under 13) never
+ * goes back to false. `teen` is 13 to 17 as of this request. `needsDob`: no
+ * date of birth given yet, so the client asks for it (old builds ignore both
+ * new fields). */
+export type AgeState = { confirmed: boolean; blocked: boolean; teen: boolean; needsDob: boolean };
 
 /** GET /api/v1/me. Signed out: { user: null, entitlement: null, age: null }.
  * A bearer token with no live session: 401 signin_required instead. */

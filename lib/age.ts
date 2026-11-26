@@ -1,8 +1,16 @@
 /**
- * The 18+ check. An account is confirmed once the user ticks "I'm 18 or
- * older" (website, apps) or the app store's age signal says so, and blocked
- * when that signal says the user is a minor. A block is never lifted here:
+ * The age check. Judge is for 13 and up. An account is confirmed once it has
+ * a date of birth of 13 or more, an app-store age signal that allows it, or
+ * (old app builds only) the "I'm 18 or older" tick. It is blocked when the
+ * date or the store's signal says under 13. A block is never lifted here:
  * only the owner can clear it, by hand. Nothing is deleted on a block.
+ *
+ * The date of birth is kept (age_dob) only for someone under 18 when they
+ * give it, since it is what tells us the day they turn 18. For an adult only
+ * the fact that a date was given is kept (age_dob_at); an under-13 date is
+ * not kept at all, just the block. The teen flag is worked out from the date
+ * on every read, so it ends on the 18th birthday. Without a date it follows
+ * the store's last signal (age_signal).
  *
  * resolveViewer (lib/auth.ts) applies the rules below to every request it
  * looks up; routes answer with ageGateResponse before doing anything else.
@@ -15,7 +23,7 @@ import { getDb } from "./db";
 import { ensureEntitlementTables } from "./entitlements";
 import { signal } from "./signals";
 
-export type AgeSource = "checkbox" | "platform";
+export type AgeSource = "checkbox" | "platform" | "dob";
 
 export type AgeRefusal = "age_blocked" | "age_unconfirmed";
 
@@ -77,24 +85,93 @@ export function ageGateResponse(lookup: { gate?: AgeRefusal | "unavailable" }): 
   return NextResponse.json({ error: lookup.gate, code: lookup.gate }, { status: 403, headers });
 }
 
-async function readAge(userId: string): Promise<AgeState> {
+export type AgeFields = {
+  confirmedAt?: unknown;
+  blockedAt?: unknown;
+  dob?: unknown;
+  dobAt?: unknown;
+  signal?: unknown;
+};
+
+const DAY = /^(\d{4})-(\d{2})-(\d{2})$/;
+
+/** The calendar date `years` before `now` (UTC), as YYYY-MM-DD. A 29 February
+ * lands on 1 March, as SQLite's date() does. */
+function yearsBefore(now: Date, years: number): string {
+  return new Date(Date.UTC(now.getUTCFullYear() - years, now.getUTCMonth(), now.getUTCDate())).toISOString().slice(0, 10);
+}
+
+/** A real calendar date as YYYY-MM-DD, not in the future, not before 1900. */
+export function validDob(value: unknown, now = new Date()): value is string {
+  const m = typeof value === "string" ? DAY.exec(value) : null;
+  if (!m) return false;
+  const d = new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])));
+  return d.toISOString().slice(0, 10) === value && value >= "1900-01-01" && value <= now.toISOString().slice(0, 10);
+}
+
+export function underThirteen(dob: string, now = new Date()): boolean {
+  return dob > yearsBefore(now, 13);
+}
+
+export function underEighteen(dob: string, now = new Date()): boolean {
+  return dob > yearsBefore(now, 18);
+}
+
+/** SQL for "this user row is a teen", for an alias of the user table. Same
+ * rule as ageStateOf, in UTC. */
+export function teenSql(alias: string): string {
+  return `((${alias}.age_dob IS NOT NULL AND ${alias}.age_dob > date('now', '-18 years'))
+    OR (${alias}.age_dob IS NULL AND ${alias}.age_signal = 'minor'))`;
+}
+
+/** The account's state from its stored fields, as of `now`. */
+export function ageStateOf(f: AgeFields, now = new Date()): AgeState {
+  const blocked = f.blockedAt != null;
+  const dob = typeof f.dob === "string" ? f.dob : null;
+  const teen = !blocked && (dob !== null ? underEighteen(dob, now) : f.signal === "minor");
+  return { confirmed: f.confirmedAt != null, blocked, teen, needsDob: !blocked && f.dobAt == null };
+}
+
+async function readAge(userId: string, now = new Date()): Promise<AgeState> {
   const db = await getDb();
   const rs = await db.execute({
-    sql: 'SELECT age_confirmed_at, age_blocked_at FROM "user" WHERE id = ?',
+    sql: 'SELECT age_confirmed_at, age_blocked_at, age_dob, age_dob_at, age_signal FROM "user" WHERE id = ?',
     args: [userId],
   });
   const row = rs.rows[0];
-  return { confirmed: row?.age_confirmed_at != null, blocked: row?.age_blocked_at != null };
+  return ageStateOf(
+    {
+      confirmedAt: row?.age_confirmed_at,
+      blockedAt: row?.age_blocked_at,
+      dob: row?.age_dob,
+      dobAt: row?.age_dob_at,
+      signal: row?.age_signal,
+    },
+    now,
+  );
 }
 
-/** Keeps the first confirmation time; the source is the latest one. */
-export async function confirmAdult(userId: string, source: AgeSource, now = new Date()): Promise<AgeState> {
+/** True when the account is a teen right now (false for an unknown id). */
+export async function isTeen(userId: string, now = new Date()): Promise<boolean> {
+  return (await readAge(userId, now)).teen;
+}
+
+/**
+ * An adult confirmation: the old builds' tick, or a store signal saying 18+.
+ * Keeps the first confirmation time; the source is the latest one. A tick
+ * never changes a teen (a date or a store signal under 18 wins over it); a
+ * store signal also replaces an earlier "minor" one.
+ */
+export async function confirmAdult(userId: string, source: "checkbox" | "platform", now = new Date()): Promise<AgeState> {
+  const before = await readAge(userId, now);
+  if (before.blocked || (source === "checkbox" && before.teen)) return before;
   const db = await getDb();
   await db.execute({
-    sql: 'UPDATE "user" SET age_confirmed_at = COALESCE(age_confirmed_at, ?), age_source = ? WHERE id = ?',
-    args: [now.toISOString(), source, userId],
+    sql: `UPDATE "user" SET age_confirmed_at = COALESCE(age_confirmed_at, ?), age_source = ?,
+            age_signal = CASE WHEN ? = 'platform' THEN 'adult' ELSE age_signal END WHERE id = ?`,
+    args: [now.toISOString(), source, source, userId],
   });
-  return readAge(userId);
+  return readAge(userId, now);
 }
 
 /** Blocks the account for good. Signals only the first time. */
@@ -105,7 +182,62 @@ export async function blockMinor(userId: string, now = new Date()): Promise<AgeS
     args: [now.toISOString(), userId],
   });
   if (rs.rowsAffected > 0) signal("age_blocked");
-  return readAge(userId);
+  return readAge(userId, now);
+}
+
+/** A store signal that says under 18. Under 13 (or no bracket sent) blocks;
+ * otherwise the account is a teen, and any training consent is withdrawn. */
+export async function recordMinorSignal(userId: string, under13: boolean, now = new Date()): Promise<AgeState> {
+  if (under13) return blockMinor(userId, now);
+  const before = await readAge(userId, now);
+  if (before.blocked) return before;
+  const db = await getDb();
+  await db.execute({
+    sql: `UPDATE "user" SET age_confirmed_at = COALESCE(age_confirmed_at, ?), age_source = 'platform', age_signal = 'minor'
+          WHERE id = ?`,
+    args: [now.toISOString(), userId],
+  });
+  const after = await readAge(userId, now);
+  if (after.teen) await withdrawTeenConsent(userId);
+  return after;
+}
+
+/**
+ * The date of birth, once. Null when one was already given: only the owner
+ * changes it, by clearing age_dob and age_dob_at by hand. Under 13 blocks the
+ * account and keeps no date; 13 to 17 keeps it; 18 and over keeps only that a
+ * date was given.
+ */
+export async function submitDob(userId: string, dob: string, now = new Date()): Promise<AgeState | null> {
+  const before = await readAge(userId, now);
+  if (before.blocked) return before;
+  if (!before.needsDob) return null;
+  if (underThirteen(dob, now)) return blockMinor(userId, now);
+  const db = await getDb();
+  const rs = await db.execute({
+    sql: `UPDATE "user" SET age_dob = ?, age_dob_at = ?, age_confirmed_at = COALESCE(age_confirmed_at, ?), age_source = 'dob'
+          WHERE id = ? AND age_dob_at IS NULL`,
+    args: [underEighteen(dob, now) ? dob : null, now.toISOString(), now.toISOString(), userId],
+  });
+  if (rs.rowsAffected === 0) return null;
+  const after = await readAge(userId, now);
+  if (after.teen) await withdrawTeenConsent(userId);
+  return after;
+}
+
+async function withdrawTeenConsent(userId: string): Promise<void> {
+  const { ensureOriginalsTables } = await import("./originals/db");
+  const { getConsent, recordConsent } = await import("./feedback/db");
+  await ensureOriginalsTables();
+  if ((await getConsent(userId)).state !== "on") return;
+  await recordConsent(userId, {
+    choice: "off",
+    source: "switch",
+    wordingKey: "age.teenWithdrawn",
+    wordingText: "Withdrawn because the account is under 18.",
+    lang: "en",
+    platform: "web",
+  });
 }
 
 /** A blocked account deleting itself: the block stays with the scrambled
