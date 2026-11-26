@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from "react";
 import type { AgeState, AppConfig, Entitlement, MeResponse } from "./account-types";
+import { forgetBrowserData } from "./browser-data";
 import { commitSignIn } from "./last-signin";
 
 /**
@@ -100,8 +101,10 @@ export function applyEntitlement(entitlement: Entitlement): void {
   emit({ ...state, me: { ...state.me, entitlement } });
 }
 
-/** After sign-out or account deletion: signed out, config unchanged. */
+/** After sign-out or account deletion: signed out, config unchanged, and
+ * what the account left in this browser is forgotten. */
 export function markSignedOut(): void {
+  forgetBrowserData();
   emit({ ...state, status: "ready", me: SIGNED_OUT });
 }
 

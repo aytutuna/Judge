@@ -59,7 +59,7 @@ export function parseHistory(raw: string | null): HistoryEntry[] {
   }
 }
 
-type Stored<T> = { load: () => T[]; save: (entries: T[]) => void; subscribe: (onChange: () => void) => () => void };
+type Stored<T> = { load: () => T[]; save: (entries: T[]) => void; clear: () => void; subscribe: (onChange: () => void) => () => void };
 
 function storedList<T>(key: string, parse: (raw: string | null) => T[]): Stored<T> {
   const none: T[] = [];
@@ -89,6 +89,15 @@ function storedList<T>(key: string, parse: (raw: string | null) => T[]): Stored<
         raw = cache?.raw ?? null;
       }
       cache = { raw, value: entries };
+      for (const fn of listeners) fn();
+    },
+    clear() {
+      cache = null;
+      try {
+        localStorage.removeItem(key);
+      } catch {
+        // Nothing to remove.
+      }
       for (const fn of listeners) fn();
     },
     subscribe(onChange) {
@@ -230,6 +239,18 @@ export function addAnswered(row: HistoryRow): void {
 export function dropAnswered(id: string): void {
   const rows = answered.load();
   if (rows.some((r) => r.id === id)) answered.save(rows.filter((r) => r.id !== id));
+}
+
+/** After sign-out or account deletion: both lists and the lookup queue go. */
+export function forgetLocalHistory(): void {
+  verdicts.clear();
+  answered.clear();
+  try {
+    localStorage.removeItem(SEED_KEY);
+    localStorage.removeItem(SEED_TURN_KEY);
+  } catch {
+    // Nothing to remove.
+  }
 }
 
 export function useLocalAnswered(): HistoryRow[] {

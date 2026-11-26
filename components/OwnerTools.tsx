@@ -21,7 +21,11 @@ export function useMine(id: string, token: string | null | undefined, signedIn: 
   const [mine, setMine] = useState<MineResponse | null>(null);
   useEffect(() => {
     if (token === undefined || signedIn === null) return;
-    if (!token && !signedIn) return;
+    if (!token && !signedIn) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- the writer view goes with the sign-in
+      setMine(null);
+      return;
+    }
     const ctrl = new AbortController();
     void (async () => {
       try {

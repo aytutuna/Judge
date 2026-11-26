@@ -86,6 +86,17 @@ export function forgetCaseNames(caseId: string): void {
   for (const fn of listeners) fn();
 }
 
+/** After sign-out or account deletion: every case's names go. */
+export function forgetAllCaseNames(): void {
+  cache.clear();
+  try {
+    for (const key of Object.keys(localStorage)) if (key.startsWith(PREFIX)) localStorage.removeItem(key);
+  } catch {
+    // Nothing to remove.
+  }
+  for (const fn of listeners) fn();
+}
+
 function subscribe(onChange: () => void): () => void {
   listeners.add(onChange);
   const onStorage = (e: StorageEvent) => {

@@ -55,6 +55,18 @@ export function forgetOwnerToken(verdictId: string): void {
   for (const fn of listeners) fn();
 }
 
+/** After sign-out or account deletion: no token stays in this browser. */
+export function forgetAllOwnerTokens(): void {
+  for (const id of ownerTokenIds()) {
+    try {
+      localStorage.removeItem(ownerTokenKey(id));
+    } catch {
+      // Nothing to remove.
+    }
+  }
+  for (const fn of listeners) fn();
+}
+
 /** Headers for a writer's request: the token when this browser has one
  * (otherwise the session cookie is the credential). */
 export function ownerHeaders(token: string | null): Record<string, string> {

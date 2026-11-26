@@ -91,6 +91,13 @@ export function useCase(
     if (wasBlocked.current && !blocked) bump();
     wasBlocked.current = blocked;
   }, [blocked, bump]);
+  // Signing out asks again, so the page shows the sign-in answer, not the old view.
+  const signedIn = Boolean(useViewer().me?.user);
+  const wasSignedIn = useRef(signedIn);
+  useEffect(() => {
+    if (wasSignedIn.current && !signedIn) bump();
+    wasSignedIn.current = signedIn;
+  }, [signedIn, bump]);
   const headerKey = extraHeaders ? JSON.stringify(extraHeaders) : "";
 
   useEffect(() => {
