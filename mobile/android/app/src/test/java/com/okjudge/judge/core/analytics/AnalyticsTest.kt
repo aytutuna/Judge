@@ -207,6 +207,31 @@ class AnalyticsTest {
     }
 
     @Test
+    fun heldEvents_areDroppedWhenTheAccountLeaves_savedOnesStay() = runTest {
+        val file = File(tmp.root, "queue.json")
+        analytics(Stub(), file).track("app_open")
+        val stub = Stub()
+        val a = analytics(stub, file, allowed = null)
+        a.setServerOn(true)
+        a.track("screen_view", mapOf("screen" to "home"))
+        a.dropHeld()
+        assertTrue(a.queue.isEmpty())
+        // Signed out: the setting reads true, the saved run's events join and go.
+        a.allowed = true
+        a.flush()
+        assertEquals(listOf(1), stub.sizes)
+        assertEquals("app_open", stub.bodies[0]["events"]!!.jsonArray[0].jsonObject["name"]!!.jsonPrimitive.content)
+    }
+
+    @Test
+    fun dropHeld_afterAnAnswer_changesNothing() = runTest {
+        val a = analytics(Stub())
+        a.track("app_open")
+        a.dropHeld()
+        assertEquals(listOf("app_open"), a.queue.map { it.name })
+    }
+
+    @Test
     fun aTeensEvents_areDroppedOnceTheAgeIsKnown() = runTest {
         val file = File(tmp.root, "queue.json")
         analytics(Stub(), file).track("app_open")

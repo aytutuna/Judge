@@ -123,6 +123,9 @@ class Account(
     /** Runs when the user signed out or deleted the account (not when the session expired). */
     var onEndedByUser: suspend () -> Unit = {}
 
+    /** Runs just before the account leaves SignedIn (sign-out, deletion, expiry). */
+    var onLeaving: () -> Unit = {}
+
     /** Runs after the account was deleted. */
     var onDeleted: () -> Unit = {}
 
@@ -505,6 +508,7 @@ class Account(
         val wasSignedIn = _state.value is State.SignedIn
         tokens.clear()
         forgetAgeAnswers()
+        if (wasSignedIn) onLeaving()
         _state.value = State.SignedOut
         if (wasSignedIn) _notices.trySend(Notice.SESSION_EXPIRED)
     }
@@ -512,6 +516,7 @@ class Account(
     private suspend fun endLocally(notice: Notice) {
         withContext(io) { tokens.clear() }
         forgetAgeAnswers()
+        onLeaving()
         _state.value = State.SignedOut
         onEndedByUser()
         _notices.trySend(notice)
