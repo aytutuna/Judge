@@ -523,6 +523,59 @@ class AccountAgeTest {
         assertEquals(AgeGate.NONE, account.ageGate.value)
     }
 
+    @Test
+    fun signOut_deletion_andExpiry_callOnLeavingWhileTheAgeIsUnknown() = runBlocking {
+        val seen = mutableListOf<String>()
+        suspend fun leave(name: String, route: String?, response: mockwebserver3.MockResponse?, act: suspend (Account, JudgeApi) -> Unit) {
+            routes.always(ME, needsDate)
+            if (route != null) routes.on(route, response!!)
+            val (account, api) = account()
+            account.onLeaving = { seen += "$name:${account.statsLocked.value}:${account.state.value::class.simpleName}" }
+            account.refresh()
+            act(account, api)
+        }
+        leave("signOut", SIGN_OUT, json(200, """{"success":true}""")) { a, _ -> a.signOut() }
+        leave("delete", Routes.DELETE_ME, json(200, """{"success":true}""")) { a, _ -> a.deleteAccount() }
+        leave("expiry", null, null) { a, _ -> a.onSessionExpired() }
+        // Called before the state flips, and with the account still signed in (age needs a date: locked).
+        assertEquals(listOf("signOut:true:SignedIn", "delete:true:SignedIn", "expiry:true:SignedIn"), seen)
+    }
+
+    @Test
+    fun signOut_dropsTheHeldEvent_throughTheRealWiring() = runBlocking {
+        val sent = mutableListOf<String>()
+        val transport = object : AnalyticsTransport {
+            override suspend fun send(body: String): Delivery {
+                sent += body
+                return Delivery.SENT
+            }
+        }
+        val file = java.io.File.createTempFile("queue", ".json").also { it.delete() }
+        val ctx = AnalyticsContext("0.1.0_1", "anon", "dev", "15", "Pixel_8", "en-US")
+        // An earlier run, known adult, left one event in the saved file.
+        Analytics(transport, ctx, file, scope, io = Dispatchers.Unconfined, now = { 1_800_000_000_000L }, log = {}).also {
+            it.allowed = true
+            it.track("app_open")
+        }
+        val analytics = Analytics(transport, ctx, file, scope, io = Dispatchers.Unconfined, now = { 1_800_000_000_000L }, log = {})
+        analytics.setServerOn(true)
+        routes.always(ME, needsDate)
+        routes.on(SIGN_OUT, json(200, """{"success":true}"""))
+        val (account, _) = account()
+        // As AppContainer wires it.
+        account.onLeaving = { analytics.dropHeld() }
+        scope.launch { combine(flowOf(true), account.statsLocked, AgeCheck::usageStatsOn).collect { analytics.allowed = it } }
+        // /me has not answered: the age is unknown, so the event is only held.
+        withTimeout(10_000) { account.state.first { it is Account.State.SignedIn } }
+        analytics.track("screen_view", mapOf("screen" to "home"))
+        account.signOut()
+        analytics.flush()
+        val names = sent.flatMap { Regex("\"name\":\"([a-z_]+)\"").findAll(it).map { m -> m.groupValues[1] }.toList() }
+        assertEquals("only the saved run's event goes, not the held one", listOf("app_open"), names)
+        file.delete()
+        Unit
+    }
+
     private companion object {
         const val AGE = "POST /api/v1/me/age"
     }
