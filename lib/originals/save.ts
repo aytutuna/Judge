@@ -10,6 +10,7 @@
 
 import type { PartyLetter as CaseParty } from "@/lib/case-types";
 import type { InStatement, InValue } from "@libsql/client";
+import { teenSql } from "@/lib/age";
 import { saveVerdict, STORED_FRAMEWORK } from "@/lib/db";
 import { entitlementWriteBatch, type StatementGuard } from "@/lib/entitlements";
 import { oneSidedStampStatement } from "@/lib/feedback/db";
@@ -94,12 +95,28 @@ export type SaveVerdictOutcome = {
 
 const LABELS_ONLY: DisplayState = { ...EMPTY_DISPLAY, others: {}, namesVisible: true };
 
+/** A value computed by the statement itself. */
+type Expr = { sql: string; args: InValue[] };
+
 /** INSERT ... VALUES, or INSERT ... SELECT ... WHERE <guard> when guarded. */
-function insert(head: string, values: InValue[], guard?: StatementGuard): InStatement {
-  const marks = values.map(() => "?").join(", ");
+function insert(head: string, values: (InValue | Expr)[], guard?: StatementGuard): InStatement {
+  const isExpr = (v: InValue | Expr): v is Expr => typeof v === "object" && v !== null && "sql" in v;
+  const marks = values.map((v) => (isExpr(v) ? v.sql : "?")).join(", ");
+  const args = values.flatMap((v) => (isExpr(v) ? v.args : [v]));
   return guard
-    ? { sql: `${head} SELECT ${marks} WHERE ${guard.sql}`, args: [...values, ...guard.args] }
-    : { sql: `${head} VALUES (${marks})`, args: values };
+    ? { sql: `${head} SELECT ${marks} WHERE ${guard.sql}`, args: [...args, ...guard.args] }
+    : { sql: `${head} VALUES (${marks})`, args };
+}
+
+/** 0 when the writer is a teen, decided in the statement itself so a teen
+ * recorded while the verdict was judging still gets names off. */
+function namesDefault(v: Pick<SaveVerdictInput, "teen" | "ownerUserId">): InValue | Expr {
+  if (v.teen) return 0;
+  if (!v.ownerUserId) return 1;
+  return {
+    sql: `CASE WHEN EXISTS (SELECT 1 FROM "user" tu WHERE tu.id = ? AND ${teenSql("tu")}) THEN 0 ELSE 1 END`,
+    args: [v.ownerUserId],
+  };
 }
 
 /** The verdict row alone (the fallback when the full batch fails). */
@@ -146,7 +163,7 @@ export function verdictWriteStatements(
         v.ownerUserId,
         token ? ownerTokenHash(token) : null,
         null,
-        v.teen ? 0 : 1,
+        namesDefault(v),
         sealedDisplay?.sealed ?? null,
         sealedDisplay?.kid ?? null,
         null,

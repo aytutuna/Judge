@@ -482,11 +482,12 @@ export function useHistory(viewer: ViewerState, poll = false): HistoryView & { l
   }, [blocked]);
 
   useEffect(() => {
-    if (!user) return;
+    // Not while blocked: the claims are tried when the block lifts.
+    if (!user || blocked) return;
     void linkAnsweredClaims(user).then((joined) => {
       if (joined) void refreshHistory();
     });
-  }, [user]);
+  }, [user, blocked]);
 
   useEffect(() => {
     if (!user) {

@@ -197,13 +197,13 @@ export async function confirmAdult(userId: string, source: "checkbox" | "platfor
 }
 
 /** Blocks the account for good, which also makes an old block final.
- * Signals only the first time. */
-export async function blockMinor(userId: string, now = new Date()): Promise<AgeState> {
+ * Signals only the first time. Null when a date landed first and nothing changed. */
+export async function blockMinor(userId: string, now = new Date()): Promise<AgeState | null> {
   const before = await readAge(userId, now);
   const { ensureAnalyticsTables } = await import("./analytics/db");
   await ensureAnalyticsTables();
   // Callers have seen needsDob, so a date that landed in between wins.
-  await entitlementWriteBatch([
+  const [done] = await entitlementWriteBatch([
     {
       sql: `UPDATE "user" SET age_blocked_at = COALESCE(age_blocked_at, ?), age_block_final = '1'
             WHERE id = ? AND age_dob_at IS NULL`,
@@ -211,6 +211,7 @@ export async function blockMinor(userId: string, now = new Date()): Promise<AgeS
     },
     ...withGuard(eventDeletes(userId), { sql: `EXISTS (SELECT 1 FROM "user" WHERE id = ? AND age_block_final = '1')`, args: [userId] }),
   ]);
+  if (done.rowsAffected === 0) return null;
   if (!before.blocked) signal("age_blocked");
   return readAge(userId, now);
 }
@@ -302,7 +303,7 @@ export async function recordMinorSignal(userId: string, under13: boolean | undef
   const before = await readAge(userId, now);
   if (!before.needsDob) return before;
   // Explicit, so it also makes an old block final.
-  if (under13 === true) return blockMinor(userId, now);
+  if (under13 === true) return (await blockMinor(userId, now)) ?? readAge(userId, now);
   if (before.blocked || before.teen) return before;
   const nowIso = now.toISOString();
   await entitlementWriteBatch([
