@@ -193,7 +193,7 @@ after sign-in.
 | `EVIDENCE_MODEL` | `claude-haiku-5-5` | Vision model that transcribes evidence images |
 | `PURCHASES_ENABLED` | *(empty)* | `1` = `GET /api/v1/config` reports `pricing.purchasesEnabled: true`, so the apps offer their in-app purchases. Anything else = false ("Coming soon") |
 | `REVENUECAT_WEBHOOK_SECRET` | *(empty)* | Shared secret for `POST /api/v1/webhooks/revenuecat`; set RevenueCat's webhook Authorization header to `Bearer <secret>`. Unset = the webhook answers `503 not_configured` |
-| `ANALYTICS_ENABLED` | `1` | `0` = `GET /api/v1/config` reports `features.analytics: false`, so the apps stop sending usage events, and `POST /api/v1/events` stores nothing. The sign-in device check (`many_accounts_per_device`) is a separate anti-abuse feature and keeps running with the switch off |
+| `ANALYTICS_ENABLED` | `1` | `0` = `GET /api/v1/config` reports `features.analytics: false`, so the apps stop sending usage events, and `POST /api/v1/events` stores nothing (it also stores nothing for an account under 18). The sign-in device check (`many_accounts_per_device`) is a separate anti-abuse feature and keeps running with the switch off |
 | `ALLOW_SANDBOX_PURCHASES` | *(empty)* | `1` = also apply RevenueCat events with `environment: SANDBOX` (TestFlight, Play test tracks). Leave unset on the live server: sandbox purchases are free |
 
 Sign-in providers without credentials are reported as unavailable by
@@ -413,8 +413,8 @@ The website and the future iOS/Android app share one JSON API. Base URL
 | Call | Purpose |
 |---|---|
 | `GET /api/v1/config` | Startup: which sign-in methods work, whether Premium is on, prices, `freeTier: false` and `welcomeCredits` (`AppConfig`) |
-| `GET /api/v1/me` | The account, its entitlement and its age check (`MeResponse`, `"age": { "confirmed": bool, "blocked": bool }`); signed out = `{ "user": null, "entitlement": null, "age": null }`; a dead bearer token = `401 signin_required` |
-| `POST /api/v1/me/age` `{ "adult": true, "source": "checkbox" \| "platform" }` or `{ "adult": false, "source": "platform" }` | Records the 18+ check (see *Age check* below). `200 { "confirmed": bool, "blocked": bool }`; any other body = `400 invalid` |
+| `GET /api/v1/me` | The account, its entitlement and its age check (`MeResponse`, `"age": { "confirmed": bool, "blocked": bool, "teen": bool, "needsDob": bool }`); signed out = `{ "user": null, "entitlement": null, "age": null }`; a dead bearer token = `401 signin_required` |
+| `POST /api/v1/me/age` `{ "dob": "YYYY-MM-DD" }`, `{ "adult": true, "source": "checkbox" \| "platform" }` or `{ "adult": false, "source": "platform", "under13"?: bool }` | Records the age check (see *Age check* below). `200` with the account's age state; `409 age_set` for a second date of birth; any other body = `400 invalid` |
 | `DELETE /api/v1/me` `{ "confirm": "delete" }` | Removes every verdict the account owns and its side of every case (originals and names blanked, links closed; no verdict row is deleted), then deletes the account, sessions, sign-ins, entitlements and usage events, and unlinks its devices (both stores require in-app deletion). Stored Sign in with Apple tokens are revoked at Apple first; an Apple failure is logged and does not stop the deletion |
 | `POST /api/v1/auth/apple/code` `{ "code": "<authorizationCode>" }` | iOS, right after a native Sign in with Apple: lets the server keep the Apple refresh token so account deletion can revoke it. `200 { "stored": true }` |
 | `GET /api/v1/me/verdicts` | Your one-sided verdicts, newest first (`?limit=1-50&before=<createdAt>`), each with its anonymized `headline` and your `nameMap` to restore names |
@@ -628,21 +628,36 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
   needs an account. Drop the token and sign in again. Requests without an
   `Authorization` header (the website, share viewers) are unaffected; an
   expired cookie still counts as signed out.
-- **Age check:** Judge is for adults only. Until an account confirms it,
-  `GET /api/v1/me` has `"age": { "confirmed": false, "blocked": false }` and
-  every request that starts AI work answers
+- **Age check:** Judge is for 13 and up. Until an account is confirmed,
+  `GET /api/v1/me` has `"age": { "confirmed": false, "blocked": false, ... }`
+  and every request that starts AI work answers
   `403 { "error": "age_unconfirmed", "code": "age_unconfirmed" }`:
   `POST` to `/api/v1/verdict`, `/api/v1/clarify`, `/api/v1/evidence`,
   `/api/v1/cases`, `/api/v1/cases/{id}/judge`, `/api/v1/cases/{id}/appeals`,
   `/api/v1/verdicts/{id}/appeals`, `/api/v1/respond/{token}` and its
   `/appeals` and `/evidence`. Reading history, `/api/v1/me`, sign-out and
-  deletion stay open. Confirm with `POST /api/v1/me/age`
-  `{ "adult": true, "source": "checkbox" }` (the "I'm 18 or older" box) or
-  `"source": "platform"` (the store's age signal says adult). When the
-  store's signal says the user is under 18, send
-  `{ "adult": false, "source": "platform" }`: the account is blocked for
-  good (a later `adult: true` does not lift it; nothing is deleted) and the
-  server logs `[signal:age_blocked]`. A blocked account gets
+  deletion stay open. The client asks for the date of birth once
+  (`needsDob` is true until it is given) and sends
+  `POST /api/v1/me/age { "dob": "YYYY-MM-DD" }`. 13 to 17 confirms the
+  account as a teen (`teen: true`, recomputed on every read, so it ends on
+  the 18th birthday); 18 and over confirms it and keeps only that a date was
+  given; under 13 blocks the account for good, keeping no date, and the
+  server logs `[signal:age_blocked]`. A second date answers `409 age_set`;
+  to correct one, clear `age_dob` and `age_dob_at` on the `user` row.
+  `{ "adult": true, "source": "platform" }` (the store's age signal says
+  adult) confirms an account; `{ "adult": false, "source": "platform",
+  "under13": false }` (the store says 13 to 17) makes it a teen, and
+  without `under13: false` the account is blocked like an under-13 one. Older
+  builds' `{ "adult": true, "source": "checkbox" }` still confirms an account
+  as an adult without a date (it cannot change a teen), so those users are
+  not locked out; they keep `needsDob: true` and the website and new builds
+  ask on the next visit. A teen gets no usage events stored
+  (`POST /api/v1/events` answers `204`), cannot turn training consent on
+  (`403 not_for_teens`), has no consent card (`ask: false`), starts with
+  names off on the share page, and has every judging call (clarify, all
+  seats, appeals, cases with a teen on them) sent with a child-safety
+  addition to the system prompt (`CHILD_SAFETY_PROMPT` in `lib/claude.ts`).
+  A blocked account gets
   `403 { "error": "age_blocked", "code": "age_blocked" }` from every
   `/api/v1` route that reads the session, `POST /api/v1/me/age` included,
   except `GET` and `DELETE /api/v1/me` and `/api/v1/auth/*`;
@@ -1044,7 +1059,7 @@ limit within 5 minutes:
 | `provider_down` | 5 | the AI service answers 5xx, cannot be reached or times out |
 | `many_accounts_per_device` | 1 | a device (the app's `Device-Id` header at sign-in) signs in to its third or later account; sign-in goes ahead |
 | `events_cap` | 1 | a batch of usage events is refused because 200,000 were stored in the last 24 hours |
-| `age_blocked` | 1 | an app reports, from the store's age signal, that an account belongs to someone under 18; the account is blocked (nothing is deleted) |
+| `age_blocked` | 1 | an app reports, from the store's age signal, or a date of birth says, that an account belongs to someone under 13; the account is blocked (nothing is deleted) |
 | `grant_skipped` | 1 | a paid grant was skipped because a refund covers it; the line has the source and transaction id |
 | `code_email_cap` | 1 | a sign-in code email was refused because `CODE_EMAILS_PER_HOUR` was used up |
 | `ban` | 20 | fail2ban bans an address (from fail2ban's journal) |
