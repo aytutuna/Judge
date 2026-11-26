@@ -93,6 +93,21 @@ final class AgeCheckTests: XCTestCase {
         XCTAssertEqual(AgeCheck.dobString(from: range.upperBound, calendar: calendar), "2026-11-26")
     }
 
+    func testDatesStayGregorianOnOtherCalendars() throws {
+        let range = AgeCheck.dobRange(now: utc(2026, 11, 25, 12))
+        XCTAssertEqual(AgeCheck.dobString(from: range.lowerBound, calendar: AgeCheck.gregorian), "1900-01-01")
+        XCTAssertEqual(AgeCheck.dobString(from: range.upperBound, calendar: AgeCheck.gregorian), "2026-11-26")
+        // The same day on a Buddhist or a Persian phone reads as other years.
+        let buddhist = Calendar(identifier: .buddhist)
+        XCTAssertEqual(buddhist.component(.year, from: range.lowerBound), 2443)
+        let persian = Calendar(identifier: .persian)
+        XCTAssertEqual(persian.component(.year, from: range.upperBound), 1405)
+        let picked = try XCTUnwrap(AgeCheck.gregorian.date(from: DateComponents(year: 1990, month: 3, day: 9, hour: 12)))
+        XCTAssertEqual(AgeCheck.dobString(from: picked, calendar: AgeCheck.gregorian), "1990-03-09")
+        XCTAssertNotEqual(AgeCheck.dobString(from: picked, calendar: buddhist), "1990-03-09")
+        XCTAssertNotEqual(AgeCheck.dobString(from: picked, calendar: persian), "1990-03-09")
+    }
+
     func testLongDateFollowsTheLanguage() {
         XCTAssertEqual(AgeCheck.longDate("2013-11-26", lang: .en), "November 26, 2013")
         XCTAssertNotEqual(AgeCheck.longDate("2013-11-26", lang: .tr), AgeCheck.longDate("2013-11-26", lang: .en))
@@ -198,7 +213,7 @@ final class AccountAgeTests: XCTestCase {
     }
 
     private func day(_ year: Int, _ month: Int, _ day: Int) throws -> Date {
-        try XCTUnwrap(Calendar.current.date(from: DateComponents(year: year, month: month, day: day, hour: 12)))
+        try XCTUnwrap(AgeCheck.gregorian.date(from: DateComponents(year: year, month: month, day: day, hour: 12)))
     }
 
     @MainActor
@@ -326,7 +341,7 @@ final class AccountAgeTests: XCTestCase {
         await account.refresh()
         var reported: [Bool] = []
         account.onUnderEighteen = { reported.append($0) }
-        account.pickDob(Calendar.current.date(byAdding: .year, value: -15, to: Date())!)
+        account.pickDob(AgeCheck.gregorian.date(byAdding: .year, value: -15, to: Date())!)
         await account.submitDob()
         XCTAssertEqual(account.ageGate, .none)
         XCTAssertTrue(account.underEighteen)
@@ -339,7 +354,7 @@ final class AccountAgeTests: XCTestCase {
         router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, state(blocked: true)))
         let (account, _, _) = makeAccount(.unknown)
         await account.refresh()
-        account.pickDob(Calendar.current.date(byAdding: .year, value: -8, to: Date())!)
+        account.pickDob(AgeCheck.gregorian.date(byAdding: .year, value: -8, to: Date())!)
         let picked = account.dob
         await account.submitDob()
         XCTAssertTrue(account.dobConfirming)
@@ -491,6 +506,55 @@ final class AccountAgeTests: XCTestCase {
         await signIn(account)
         XCTAssertEqual(try sent()["adult"] as? Bool, true)
         XCTAssertEqual(account.ageGate, .date, "a store signal never replaces the date")
+    }
+
+    @MainActor
+    func testVerdictsWaitWhileThePhoneIsBeingAsked() async throws {
+        router.on("GET", "/api/v1/me", try me(state(confirmed: true)))
+        let (account, _, fake) = makeAccount(.minor)
+        fake.hangs = true
+        account.platformTimeout = .milliseconds(200)
+        await account.refresh()
+        XCTAssertTrue(account.ageCleared)
+        Task { await account.checkPlatformAge() }
+        try await PremiumFixtures.waitUntil("the prompt") { account.platformPrompting }
+        XCTAssertEqual(account.ageRefusal, AgeCheck.unconfirmedCode)
+        try await PremiumFixtures.waitUntil("the timeout") { account.platformAge == .unknown }
+        XCTAssertFalse(account.platformPrompting, "a prompt that never answers lets go")
+        XCTAssertTrue(account.ageCleared)
+    }
+
+    @MainActor
+    func testAPhoneSignalIsSentAgainOnceADateLiftsTheBlock() async throws {
+        router.on("GET", "/api/v1/me", try me(state(blocked: true, needsDob: true)))
+        router.on("POST", "/api/v1/me/age",
+            try PremiumFixtures.json(200, state(blocked: true, needsDob: true)),
+            try PremiumFixtures.json(200, state(confirmed: true)),
+            try PremiumFixtures.json(200, state(confirmed: true, teen: true)))
+        let (account, _, _) = makeAccount(.minor)
+        await account.refresh()
+        await account.checkPlatformAge()
+        XCTAssertEqual(router.count("POST", "/api/v1/me/age"), 1)
+        account.pickDob(try day(1990, 3, 9))
+        await account.submitDob()
+        XCTAssertEqual(try sent(1)["dob"] as? String, "1990-03-09")
+        XCTAssertEqual(try sent(2)["adult"] as? Bool, false)
+        XCTAssertTrue(account.underEighteen)
+    }
+
+    @MainActor
+    func testNoUsageEventsWhileTheAgeIsUnknownOrHeldFromTheLastLaunch() async throws {
+        router.on("GET", "/api/v1/me", try me(state(needsDob: true)))
+        let (api, stream) = makeAPI(token: "t0k")
+        let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, version: "1", build: "1")
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: "judge.tests.\(UUID().uuidString)"))
+        defaults.set(true, forKey: AccountModel.statsLockedKey)
+        let app = AppModel(config: config, container: HistoryContainer.inMemory(), defaults: defaults, persistsDraft: false, api: api, caseNames: MemoryCaseNamesStore())
+        app.account.listen(toAgeGates: stream)
+        XCTAssertFalse(app.analytics.allowed, "held until /me has answered")
+        await app.account.refresh()
+        XCTAssertFalse(app.analytics.allowed, "and while the date is owed")
+        XCTAssertTrue(app.usageStats)
     }
 
     @MainActor

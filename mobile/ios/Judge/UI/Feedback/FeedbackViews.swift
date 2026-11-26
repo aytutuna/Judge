@@ -62,7 +62,7 @@ struct RatingRow: View {
     var body: some View {
         // The consent card goes first; the row takes its place once it is answered.
         Group {
-            if !app.consent.showCard {
+            if !app.consent.shows(underEighteen: app.account.underEighteen) {
                 HStack(spacing: 14) {
                     Spacer()
                     Text(L10n.ratingPrompt(lang))

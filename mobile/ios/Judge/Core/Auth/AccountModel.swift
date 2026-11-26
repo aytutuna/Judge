@@ -266,8 +266,19 @@ final class AccountModel {
         return age.teen || age.blocked
     }
 
+    /// No usage events while the account is under 18 or its age is unknown,
+    /// as on the website.
+    var statsLocked: Bool {
+        guard isSignedIn, let age = info?.age else { return false }
+        return age.teen || age.blocked || age.needsDob
+    }
+
+    static let statsLockedKey = "age.statsLocked"
+
     private func ageChanged() {
-        onUnderEighteen?(underEighteen)
+        // Kept so the next launch holds events until /me has answered.
+        defaults.set(statsLocked, forKey: Self.statsLockedKey)
+        onUnderEighteen?(statsLocked)
     }
 
     /// Why a verdict or a purchase has to wait, or nil when nothing about
@@ -276,6 +287,9 @@ final class AccountModel {
     var ageRefusal: String? {
         guard let age = info?.age else { return nil }
         if age.blocked { return AgeCheck.blockedCode }
+        // The phone's check and its report hold things back too; nothing is
+        // decided from the signal itself.
+        if askingPlatform || reportingPlatform || agePosting { return AgeCheck.unconfirmedCode }
         return age.confirmed ? nil : AgeCheck.unconfirmedCode
     }
 
@@ -310,6 +324,7 @@ final class AccountModel {
     private func platformAnswered(_ answer: PlatformAge, timedOut: Bool) async {
         if let current = platformAge, !(platformTimedOut && current == .unknown && answer != .unknown) { return }
         askingPlatform = false
+        if timedOut { platformPrompting = false }
         platformTimedOut = timedOut
         platformAge = answer
         await settleAge()
@@ -354,7 +369,6 @@ final class AccountModel {
             return
         }
         reportingPlatform = true
-        defer { reportingPlatform = false }
         repeat {
             ageResettle = false
             guard let report = AgeCheck.report(platform: platformAge, age: info?.age), report != lastReport else { continue }
@@ -374,6 +388,7 @@ final class AccountModel {
                 lastReport = nil
             }
         } while ageResettle
+        reportingPlatform = false
         runAfterAgeIfCleared()
     }
 
@@ -385,7 +400,7 @@ final class AccountModel {
     }
 
     /// The picked day as `YYYY-MM-DD`.
-    var dob: String { AgeCheck.dobString(from: dobDate, calendar: .current) }
+    var dob: String { AgeCheck.dobString(from: dobDate, calendar: AgeCheck.gregorian) }
 
     /// "Continue": an under-13 date waits for a second look first.
     func submitDob() async {
@@ -411,10 +426,18 @@ final class AccountModel {
         do {
             let age = try await api.reportDob(dob)
             guard isSignedIn, api.tokenStore.token() == asked, var current = info else { return }
+            let wasBlocked = current.age?.blocked == true
             current.age = age
             info = current
             ageChanged()
             dobConfirming = false
+            agePosting = false
+            // The server ignored the phone's signal while the account was
+            // blocked: tell it again now that the date lifted the block.
+            if wasBlocked, !age.blocked {
+                lastReport = nil
+                await settleAge()
+            }
             runAfterAgeIfCleared()
         } catch let error as APIError {
             guard isSignedIn else { return }

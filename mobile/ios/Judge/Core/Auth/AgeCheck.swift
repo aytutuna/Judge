@@ -74,6 +74,14 @@ enum AgeCheck {
         return calendar
     }()
 
+    /// The server's dates are Gregorian whatever calendar the phone shows
+    /// (Buddhist in Thailand, Persian in Iran), in the phone's time zone.
+    static var gregorian: Calendar {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = .current
+        return calendar
+    }
+
     /// A calendar date as `YYYY-MM-DD`.
     static func dobString(year: Int, month: Int, day: Int) -> String {
         String(format: "%04d-%02d-%02d", year, month, day)
@@ -106,13 +114,13 @@ enum AgeCheck {
     }
 
     /// What the picker starts on.
-    static func defaultDobDate(now: Date = Date(), calendar: Calendar = .current) -> Date {
+    static func defaultDobDate(now: Date = Date(), calendar: Calendar = gregorian) -> Date {
         calendar.date(byAdding: .year, value: -18, to: now) ?? now
     }
 
     /// What the picker takes: 1900-01-01 to today in UTC+14, read as days in
-    /// the picker's own calendar.
-    static func dobRange(now: Date = Date(), calendar: Calendar = .current) -> ClosedRange<Date> {
+    /// the Gregorian calendar.
+    static func dobRange(now: Date = Date(), calendar: Calendar = gregorian) -> ClosedRange<Date> {
         func day(_ dob: String, hour: Int, minute: Int = 0, second: Int = 0) -> Date? {
             let parts = dob.split(separator: "-").compactMap { Int($0) }
             guard parts.count == 3 else { return nil }
@@ -155,9 +163,12 @@ protocol AgeRangeAsking: AnyObject {
 final class DeclaredAgeRangeAsker: AgeRangeAsking {
     func ask() async -> PlatformAge {
         #if DECLARED_AGE_RANGE
-        guard #available(iOS 26.0, *), var controller = PresentationAnchor.current().rootViewController else {
-            return .unknown
-        }
+        // Below the age window, which would take the sheet down with it.
+        let scenes = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
+        let below = scenes.flatMap(\.windows).filter { !$0.isHidden && $0.windowLevel < .alert + 1 }
+        guard #available(iOS 26.0, *),
+              var controller = (below.first(where: \.isKeyWindow) ?? below.first)?.rootViewController
+        else { return .unknown }
         // Over the sign-in sheet when it is up.
         while let presented = controller.presentedViewController { controller = presented }
         do {
