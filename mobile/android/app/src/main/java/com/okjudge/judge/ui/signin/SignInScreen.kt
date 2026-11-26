@@ -536,12 +536,12 @@ private fun ErrorNote(text: String) {
     )
 }
 
-/** "By continuing, you confirm you're 18 or older and agree to the Terms and the Privacy Policy. An outside AI reads your arguments." with both links tappable. */
+/** "By continuing, you agree to the Terms and the Privacy Policy. An outside AI reads your arguments." with both links tappable. */
 @Composable
 private fun LegalLine(s: Strings, onOpenTerms: () -> Unit, onOpenPrivacy: () -> Unit, modifier: Modifier = Modifier) {
     val linkStyle = TextLinkStyles(SpanStyle(color = Palette.terraInk, textDecoration = TextDecoration.Underline))
     val text = buildAnnotatedString {
-        append(s.appSigninLegal)
+        append(s.appSigninLegalAgree)
         withLink(LinkAnnotation.Clickable(tag = "terms", styles = linkStyle) { onOpenTerms() }) {
             append(s.appSigninLegalTerms)
         }

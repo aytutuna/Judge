@@ -36,6 +36,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import okhttp3.ConnectionPool
@@ -182,7 +183,7 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
         }
         account.onDeleted = { lastSignIn.clear() }
         account.onSignedIn = { analytics.track("sign_in_completed") }
-        appScope.launch { settings.usageStats.collect { analytics.allowed = it } }
+        appScope.launch { combine(settings.usageStats, account.statsLocked) { on, locked -> on && !locked }.collect { analytics.allowed = it } }
         appScope.launch {
             // A verdict accepted before the app was killed shows up on the judging screen.
             account.state.first { it is Account.State.SignedIn }

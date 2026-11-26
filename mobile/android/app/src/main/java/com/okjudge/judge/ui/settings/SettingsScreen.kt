@@ -99,6 +99,8 @@ fun SettingsScreen(
     onHelpImprove: (Boolean) -> Unit = {},
     usageStats: Boolean = true,
     onUsageStats: (Boolean) -> Unit = {},
+    /** 13 to 17: usage statistics stay off and the training switch is not offered. */
+    teen: Boolean = false,
 ) {
     val s = LocalStrings.current
     val base = siteBaseUrl.trimEnd('/')
@@ -145,9 +147,11 @@ fun SettingsScreen(
 
             Column {
                 Group(s.footerPrivacy) {
-                    SwitchRow(s.consentSwitchTitle, helpImprove, SettingsTags.HELP_IMPROVE, onHelpImprove)
-                    HorizontalDivider(color = Palette.line)
-                    SwitchRow(s.appSettingsUsageStats, usageStats, SettingsTags.USAGE_STATS, onUsageStats)
+                    if (!teen) {
+                        SwitchRow(s.consentSwitchTitle, helpImprove, SettingsTags.HELP_IMPROVE, onChange = onHelpImprove)
+                        HorizontalDivider(color = Palette.line)
+                    }
+                    SwitchRow(s.appSettingsUsageStats, usageStats && !teen, SettingsTags.USAGE_STATS, enabled = !teen, onChange = onUsageStats)
                     HorizontalDivider(color = Palette.line)
                     LinkRow(s.appSettingsAbout) { onOpenLink("$base/about") }
                     HorizontalDivider(color = Palette.line)
@@ -157,8 +161,8 @@ fun SettingsScreen(
                     HorizontalDivider(color = Palette.line)
                     LinkRow(s.appLegalTerms) { onOpenLink("$base/terms") }
                 }
-                Text(s.consentSwitchDetail, style = JudgeType.footnote, modifier = Modifier.padding(start = 4.dp, top = 8.dp, end = 4.dp))
-                Text(s.appSettingsUsageStatsHint, style = JudgeType.footnote, modifier = Modifier.padding(start = 4.dp, top = 8.dp, end = 4.dp))
+                if (!teen) Text(s.consentSwitchDetail, style = JudgeType.footnote, modifier = Modifier.padding(start = 4.dp, top = 8.dp, end = 4.dp))
+                Text(if (teen) s.settingsUsageStatsTeen else s.appSettingsUsageStatsHint, style = JudgeType.footnote, modifier = Modifier.padding(start = 4.dp, top = 8.dp, end = 4.dp))
             }
 
             if (signedIn) {
@@ -176,12 +180,12 @@ fun SettingsScreen(
 }
 
 @Composable
-private fun SwitchRow(label: String, checked: Boolean, tag: String, onChange: (Boolean) -> Unit) {
+private fun SwitchRow(label: String, checked: Boolean, tag: String, enabled: Boolean = true, onChange: (Boolean) -> Unit) {
     Row(
         Modifier
             .fillMaxWidth()
             .testTag(tag)
-            .toggleable(value = checked, role = Role.Switch, onValueChange = onChange)
+            .toggleable(value = checked, enabled = enabled, role = Role.Switch, onValueChange = onChange)
             .padding(horizontal = 16.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -189,6 +193,7 @@ private fun SwitchRow(label: String, checked: Boolean, tag: String, onChange: (B
         Switch(
             checked = checked,
             onCheckedChange = null,
+            enabled = enabled,
             colors = SwitchDefaults.colors(checkedTrackColor = Palette.terraInk, checkedThumbColor = Palette.paper),
         )
     }

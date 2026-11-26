@@ -17,7 +17,7 @@ import kotlin.coroutines.resumeWithException
  * Google Play Age Signals: the sharing check first (Play may show its own
  * prompt over [host]), then the age range when the user shares it. Not
  * installed from Play, no Play Store, not shared, or any error: unknown,
- * and the sign-in checkbox takes over.
+ * which is reported as nothing.
  */
 class PlayAgeSignals(context: Context) : AgeSignalSource {
     private val appContext = context.applicationContext

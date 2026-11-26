@@ -155,7 +155,6 @@ class SignInViewModel(private val account: Account, private val last: LastSignIn
             return
         }
         _state.update { it.copy(busy = SignInBusy.PASSWORD, error = null) }
-        account.setAgeTicked(true)
         viewModelScope.launch { finish(account.signInWithPassword(s.email, s.password), SignInMethod.EMAIL, s.email.trim()) }
     }
 
@@ -167,8 +166,6 @@ class SignInViewModel(private val account: Account, private val last: LastSignIn
     private fun send(lang: AppLang, mode: SignInMode) {
         val email = _state.value.email.trim()
         _state.update { it.copy(busy = SignInBusy.SEND, error = null) }
-        // Continuing is the consent the screen's last line states.
-        account.setAgeTicked(true)
         viewModelScope.launch {
             val error = account.sendCode(email, lang)
             _state.update {
@@ -179,7 +176,7 @@ class SignInViewModel(private val account: Account, private val last: LastSignIn
                     it.copy(busy = null, error = error)
                 }
             }
-            if (error == null) startCountdown() else account.setAgeTicked(false)
+            if (error == null) startCountdown()
         }
     }
 
@@ -200,7 +197,6 @@ class SignInViewModel(private val account: Account, private val last: LastSignIn
         val s = _state.value
         if (!s.canSubmitCode) return
         _state.update { it.copy(busy = SignInBusy.VERIFY, error = null) }
-        account.setAgeTicked(true)
         val setsPassword = s.flow == SignInMode.CREATE || s.flow == SignInMode.FORGOT
         viewModelScope.launch {
             val result = account.verifyCode(s.email, s.code)
@@ -253,7 +249,6 @@ class SignInViewModel(private val account: Account, private val last: LastSignIn
     fun google(host: Context) {
         if (!_state.value.canGoogle) return
         _state.update { it.copy(busy = SignInBusy.GOOGLE, error = null) }
-        account.setAgeTicked(true)
         viewModelScope.launch {
             val result = account.signInWithGoogle(host)
             finish(result, SignInMethod.GOOGLE, account.grantEmail)
@@ -273,7 +268,6 @@ class SignInViewModel(private val account: Account, private val last: LastSignIn
 
     private fun finish(result: SignInResult, method: SignInMethod? = null, email: String? = null) {
         if (result == SignInResult.Success && method != null) rememberSignIn(method, email)
-        if (result == SignInResult.Cancelled || result is SignInResult.Error) account.setAgeTicked(false)
         _state.update {
             when (result) {
                 SignInResult.Success -> it.copy(busy = null, password = "", done = true)
