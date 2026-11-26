@@ -575,6 +575,7 @@ final class AccountAgeTests: XCTestCase {
         XCTAssertFalse(account.ageHolding)
     }
 
+    @MainActor
     func testAnUnconfirmedAccountStillHearsToConfirm() {
         XCTAssertEqual(PurchaseModel.refusal(AgeCheck.unconfirmedCode, holding: false), .ageRequired)
         XCTAssertEqual(PurchaseModel.refusal(AgeCheck.blockedCode, holding: true), .ageBlocked)
