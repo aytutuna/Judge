@@ -51,6 +51,7 @@ const SCHEMA = [
     ref_external_id TEXT,
     note            TEXT,
     created_at      TEXT NOT NULL,
+    environment     TEXT,
     UNIQUE (source, external_id)
   )`,
   "CREATE INDEX IF NOT EXISTS entitlement_grants_user ON entitlement_grants (user_id, created_at)",
@@ -120,6 +121,7 @@ export async function ensureEntitlementTables(): Promise<void> {
     .then(async () => {
       await addColumn(client, "premium_usage", "hold_until");
       await addColumn(client, "premium_usage", "body_hash");
+      await addColumn(client, "entitlement_grants", "environment");
       await addColumn(client, "welcome_claims", "age_blocked_at");
       await addColumn(client, "welcome_claims", "age_block_final");
     })
@@ -268,6 +270,9 @@ function assertId(value: string, field: string): void {
     throw new Error(`${field} must be a non-empty string of at most 200 characters`);
   }
 }
+
+/** Sandbox purchases are marked in the ledger so they can be told apart later. */
+const envOf = (g: { sandbox?: boolean }) => (g.sandbox ? "sandbox" : null);
 
 const grantExists = (id: string) => ({
   sql: "EXISTS (SELECT 1 FROM entitlement_grants WHERE id = ?)",
@@ -577,6 +582,7 @@ export async function grantCredits(g: {
   externalId: string;
   productId?: string;
   note?: string;
+  sandbox?: boolean;
 }): Promise<GrantResult> {
   assertSource(g.source);
   assertId(g.userId, "userId");
@@ -590,11 +596,11 @@ export async function grantCredits(g: {
   const results = await writeBatch([
     {
       sql: `INSERT INTO entitlement_grants
-              (id, user_id, source, external_id, kind, product_id, credits_delta, note, created_at)
-            SELECT ?, ?, ?, ?, 'credits', ?, ?, ?, ?
+              (id, user_id, source, external_id, kind, product_id, credits_delta, note, created_at, environment)
+            SELECT ?, ?, ?, ?, 'credits', ?, ?, ?, ?, ?
             WHERE NOT EXISTS (SELECT 1 FROM refund_tombstones WHERE source = ? AND transaction_id = ?)
             ON CONFLICT (source, external_id) DO NOTHING`,
-      args: [id, g.userId, g.source, g.externalId, g.productId ?? null, g.credits, g.note ?? null, nowIso, g.source, g.externalId],
+      args: [id, g.userId, g.source, g.externalId, g.productId ?? null, g.credits, g.note ?? null, nowIso, envOf(g), g.source, g.externalId],
     },
     {
       sql: `INSERT INTO entitlement_accounts (user_id, credits, updated_at)
@@ -681,6 +687,7 @@ export async function grantSubscription(g: {
   periodEnd: string;
   willRenew: boolean;
   cap?: number;
+  sandbox?: boolean;
 }): Promise<GrantResult> {
   assertSource(g.source);
   assertId(g.userId, "userId");
@@ -699,11 +706,11 @@ export async function grantSubscription(g: {
   const guard = grantExists(id);
   const results = await writeBatch([
     {
-      sql: `INSERT INTO entitlement_grants (id, user_id, source, external_id, kind, product_id, created_at)
-            SELECT ?, ?, ?, ?, 'subscription_active', ?, ?
+      sql: `INSERT INTO entitlement_grants (id, user_id, source, external_id, kind, product_id, created_at, environment)
+            SELECT ?, ?, ?, ?, 'subscription_active', ?, ?, ?
             WHERE NOT EXISTS (SELECT 1 FROM refund_tombstones WHERE source = ? AND transaction_id = ? AND created_at > ?)
             ON CONFLICT (source, external_id) DO NOTHING`,
-      args: [id, g.userId, g.source, g.externalId, g.productId, nowIso, g.source, g.originalTransactionId, periodStart],
+      args: [id, g.userId, g.source, g.externalId, g.productId, nowIso, envOf(g), g.source, g.originalTransactionId, periodStart],
     },
     {
       sql: `INSERT INTO subscriptions
@@ -782,16 +789,16 @@ function skipped(source: string, transactionId: string): void {
 function subscriptionEventGrant(
   id: string,
   kind: string,
-  g: { source: GrantSource; externalId: string; originalTransactionId: string },
+  g: { source: GrantSource; externalId: string; originalTransactionId: string; sandbox?: boolean },
   nowIso: string,
 ): InStatement {
   return {
     sql: `INSERT INTO entitlement_grants
-            (id, user_id, source, external_id, kind, product_id, subscription_id, created_at)
-          SELECT ?, user_id, ?, ?, ?, product_id, id, ?
+            (id, user_id, source, external_id, kind, product_id, subscription_id, created_at, environment)
+          SELECT ?, user_id, ?, ?, ?, product_id, id, ?, ?
           FROM subscriptions WHERE source = ? AND original_transaction_id = ?
           ON CONFLICT (source, external_id) DO NOTHING`,
-    args: [id, g.source, g.externalId, kind, nowIso, g.source, g.originalTransactionId],
+    args: [id, g.source, g.externalId, kind, nowIso, envOf(g), g.source, g.originalTransactionId],
   };
 }
 
@@ -801,6 +808,7 @@ export async function setSubscriptionWillRenew(g: {
   externalId: string;
   originalTransactionId: string;
   willRenew: boolean;
+  sandbox?: boolean;
 }): Promise<GrantResult> {
   assertSource(g.source);
   assertId(g.externalId, "externalId");
@@ -827,6 +835,7 @@ export async function expireSubscription(g: {
   externalId: string;
   originalTransactionId: string;
   at: string;
+  sandbox?: boolean;
 }): Promise<GrantResult> {
   assertSource(g.source);
   assertId(g.externalId, "externalId");
@@ -849,6 +858,43 @@ export async function expireSubscription(g: {
 }
 
 /**
+ * A store purchase now belongs to another account (RevenueCat TRANSFER, after
+ * a restore on a new account): every active plan of `source` held by one of
+ * `from` goes to `toUserId`, with its period and usage. Credits stay where
+ * they were granted. Keyed by the event id, so a repeat moves nothing.
+ */
+export async function transferSubscriptions(g: {
+  source: GrantSource;
+  externalId: string;
+  from: string[];
+  toUserId: string;
+  sandbox?: boolean;
+}): Promise<GrantResult & { moved: number }> {
+  assertSource(g.source);
+  assertId(g.externalId, "externalId");
+  assertId(g.toUserId, "toUserId");
+  const from = g.from.filter((id) => id !== g.toUserId);
+  const id = nanoid();
+  const nowIso = iso(new Date());
+  const guard = grantExists(id);
+  const results = await writeBatch([
+    {
+      sql: `INSERT INTO entitlement_grants (id, user_id, source, external_id, kind, note, created_at, environment)
+            VALUES (?, ?, ?, ?, 'subscription_transfer', ?, ?, ?)
+            ON CONFLICT (source, external_id) DO NOTHING`,
+      args: [id, g.toUserId, g.source, g.externalId, `from ${from.length}`, nowIso, envOf(g)],
+    },
+    {
+      sql: `UPDATE subscriptions SET user_id = ?, updated_at = ?
+            WHERE source = ? AND status = 'active' AND user_id IN (${from.map(() => "?").join(", ") || "NULL"})
+              AND ${guard.sql}`,
+      args: [g.toUserId, nowIso, g.source, ...from, ...guard.args],
+    },
+  ]);
+  return { applied: results[0].rowsAffected === 1, moved: results[1].rowsAffected };
+}
+
+/**
  * A store or provider refunded a purchase. `transactionId` is the credit
  * purchase's transaction id (the externalId it was granted with) or a
  * subscription's original transaction id. Credits: deducts what was granted,
@@ -859,6 +905,7 @@ export async function refundPurchase(g: {
   source: GrantSource;
   externalId: string;
   transactionId: string;
+  sandbox?: boolean;
 }): Promise<GrantResult> {
   assertSource(g.source);
   assertId(g.externalId, "externalId");
@@ -869,15 +916,15 @@ export async function refundPurchase(g: {
   const results = await writeBatch([
     {
       sql: `INSERT INTO entitlement_grants
-              (id, user_id, source, external_id, kind, product_id, credits_delta, ref_external_id, created_at)
+              (id, user_id, source, external_id, kind, product_id, credits_delta, ref_external_id, created_at, environment)
             SELECT ?, g.user_id, g.source, ?, 'refund', g.product_id,
-                   -MIN(g.credits_delta, COALESCE(a.credits, 0)), g.external_id, ?
+                   -MIN(g.credits_delta, COALESCE(a.credits, 0)), g.external_id, ?, ?
             FROM entitlement_grants g LEFT JOIN entitlement_accounts a ON a.user_id = g.user_id
             WHERE g.source = ? AND g.external_id = ? AND g.kind = 'credits'
               AND NOT EXISTS (SELECT 1 FROM entitlement_grants r
                               WHERE r.kind = 'refund' AND r.source = g.source AND r.ref_external_id = g.external_id)
             ON CONFLICT (source, external_id) DO NOTHING`,
-      args: [creditId, g.externalId, nowIso, g.source, g.transactionId],
+      args: [creditId, g.externalId, nowIso, envOf(g), g.source, g.transactionId],
     },
     {
       sql: `UPDATE entitlement_accounts
@@ -888,12 +935,12 @@ export async function refundPurchase(g: {
     },
     {
       sql: `INSERT INTO entitlement_grants
-              (id, user_id, source, external_id, kind, product_id, subscription_id, ref_external_id, created_at)
-            SELECT ?, s.user_id, s.source, ?, 'refund', s.product_id, s.id, s.original_transaction_id, ?
+              (id, user_id, source, external_id, kind, product_id, subscription_id, ref_external_id, created_at, environment)
+            SELECT ?, s.user_id, s.source, ?, 'refund', s.product_id, s.id, s.original_transaction_id, ?, ?
             FROM subscriptions s
             WHERE s.source = ? AND s.original_transaction_id = ? AND s.status <> 'refunded'
             ON CONFLICT (source, external_id) DO NOTHING`,
-      args: [subGrantId, g.externalId, nowIso, g.source, g.transactionId],
+      args: [subGrantId, g.externalId, nowIso, envOf(g), g.source, g.transactionId],
     },
     {
       sql: `UPDATE subscriptions SET status = 'refunded', will_renew = 0, updated_at = ?
@@ -965,8 +1012,9 @@ export async function deleteUserEntitlements(userId: string): Promise<void> {
 // --- Normalized purchase events ---------------------------------------------
 
 /** Normalized purchase event: the single entry point for purchase webhooks
- * (RevenueCat in app/api/v1/webhooks/revenuecat, a future web provider). */
-export type StoreEvent =
+ * (RevenueCat in app/api/v1/webhooks/revenuecat, a future web provider).
+ * `sandbox` marks a test purchase; its ledger rows say so. */
+export type StoreEvent = { sandbox?: true } & (
   | {
       type: "credits_purchased";
       eventId: string;
@@ -989,7 +1037,8 @@ export type StoreEvent =
     }
   | { type: "subscription_will_not_renew"; eventId: string; source: GrantSource; originalTransactionId: string }
   | { type: "subscription_expired"; eventId: string; source: GrantSource; originalTransactionId: string; at: string }
-  | { type: "refund"; eventId: string; source: GrantSource; transactionId: string };
+  | { type: "refund"; eventId: string; source: GrantSource; transactionId: string }
+);
 
 /**
  * Applies one purchase event exactly once. Credit purchases are keyed by
@@ -1006,6 +1055,7 @@ export async function applyStoreEvent(e: StoreEvent): Promise<GrantResult> {
         externalId: e.transactionId,
         productId: e.productId,
         note: `event ${e.eventId}`,
+        sandbox: e.sandbox,
       });
     case "subscription_active":
       return grantSubscription({
@@ -1017,6 +1067,7 @@ export async function applyStoreEvent(e: StoreEvent): Promise<GrantResult> {
         periodStart: e.periodStart,
         periodEnd: e.periodEnd,
         willRenew: e.willRenew,
+        sandbox: e.sandbox,
       });
     case "subscription_will_not_renew":
       return setSubscriptionWillRenew({
@@ -1024,6 +1075,7 @@ export async function applyStoreEvent(e: StoreEvent): Promise<GrantResult> {
         externalId: e.eventId,
         originalTransactionId: e.originalTransactionId,
         willRenew: false,
+        sandbox: e.sandbox,
       });
     case "subscription_expired":
       return expireSubscription({
@@ -1031,8 +1083,9 @@ export async function applyStoreEvent(e: StoreEvent): Promise<GrantResult> {
         externalId: e.eventId,
         originalTransactionId: e.originalTransactionId,
         at: e.at,
+        sandbox: e.sandbox,
       });
     case "refund":
-      return refundPurchase({ source: e.source, externalId: e.eventId, transactionId: e.transactionId });
+      return refundPurchase({ source: e.source, externalId: e.eventId, transactionId: e.transactionId, sandbox: e.sandbox });
   }
 }

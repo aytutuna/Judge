@@ -3,7 +3,7 @@ import { track } from "@/lib/analytics/track";
 import { apiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
 import { authConfigured, findExistingUserId } from "@/lib/auth";
 import { clientIp } from "@/lib/client-ip";
-import { applyStoreEvent, type StoreEvent } from "@/lib/entitlements";
+import { applyStoreEvent, transferSubscriptions, type StoreEvent } from "@/lib/entitlements";
 import { checkIpLimits } from "@/lib/ratelimit";
 import { signal } from "@/lib/signals";
 import {
@@ -53,6 +53,16 @@ function ignoredResponse(type: string, id: string, reason: IgnoreReason): NextRe
   return NextResponse.json({ ok: true, ignored: true, reason }, { headers: NO_STORE });
 }
 
+/** A purchase for no account we know: alerted, and answered with a 503 so
+ * RevenueCat retries once the account exists. Retries grant at most once. */
+function unmatched(type: string, id: string): NextResponse {
+  signal("webhook_apply_failed", `unmatched purchase type=${type} id=${id}`);
+  return fail("unavailable", "No account matches this purchase yet.", 503);
+}
+
+const sandboxOf = (body: unknown): boolean | undefined =>
+  (body as { event?: { environment?: unknown } }).event?.environment === "SANDBOX" ? true : undefined;
+
 /**
  * POST /api/v1/webhooks/revenuecat: RevenueCat purchase events. Checked
  * against REVENUECAT_WEBHOOK_SECRET (the dashboard's Authorization header
@@ -61,7 +71,7 @@ function ignoredResponse(type: string, id: string, reason: IgnoreReason): NextRe
  * replays change nothing).
  *
  * 200 for every event it has decided about, applied or ignored, so RevenueCat
- * stops retrying; 401 bad secret (checked before the per-IP limit, so forged
+ * stops retrying (a purchase that matches no account is not decided: 503); 401 bad secret (checked before the per-IP limit, so forged
  * requests cannot use up RevenueCat's allowance); 429 over the limit; 503 not
  * configured or the database/limit store failing (RevenueCat retries for
  * about 80 minutes); 400/413 malformed.
@@ -111,9 +121,22 @@ export async function POST(req: Request): Promise<NextResponse> {
 
   let event: StoreEvent;
   try {
+    if (outcome.kind === "transfer") {
+      const toUserId = await findExistingUserId(outcome.to);
+      if (!toUserId) return unmatched(type, id);
+      const { applied, moved } = await transferSubscriptions({
+        source: outcome.source,
+        externalId: outcome.eventId,
+        from: outcome.from,
+        toUserId,
+        sandbox: sandboxOf(body),
+      });
+      console.info(`[revenuecat] type=${type} id=${id} action=transfer source=${outcome.source} applied=${applied} moved=${moved}`);
+      return NextResponse.json({ ok: true, applied, action: "transfer", moved }, { headers: NO_STORE });
+    }
     if (outcome.kind === "grant") {
       const userId = await findExistingUserId(outcome.userIds);
-      if (!userId) return ignoredResponse(type, id, "unknown_user");
+      if (!userId) return unmatched(type, id);
       event = outcome.event(userId);
     } else {
       event = outcome.event;
