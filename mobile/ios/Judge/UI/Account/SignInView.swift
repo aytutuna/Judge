@@ -390,7 +390,7 @@ struct SignInView: View {
             part.underlineStyle = Text.LineStyle(pattern: .solid)
             return part
         }
-        var sentence = AttributedString(L10n.appSigninLegal(lang))
+        var sentence = AttributedString(L10n.appSigninLegalAgree(lang))
         sentence += link(L10n.appSigninLegalTerms(lang), app.config.termsURL)
         sentence += AttributedString(L10n.appSigninLegalAnd(lang))
         sentence += link(L10n.appSigninLegalPrivacy(lang), app.config.privacyURL)

@@ -44,7 +44,8 @@ final class AppModel {
     private(set) var langPreference: LangPreference
     /// Light, dark or the phone's, per device like the language.
     private(set) var appearance: Appearance
-    /// The "Usage statistics" setting, on unless turned off.
+    /// The "Usage statistics" setting, on unless turned off. It is kept as
+    /// the person set it; `usageStatsOn` is what applies.
     private(set) var usageStats: Bool
     /// The street court on Home and in the judging card, per device, on
     /// unless turned off.
@@ -174,6 +175,7 @@ final class AppModel {
         let consent = self.consent
         let analytics = self.analytics
         account.listen(toAgeGates: ageGates)
+        account.onUnderEighteen = { [weak self] _ in self?.syncUsageStats() }
         account.onConfig = { [weak analytics] config in
             analytics?.setServerOn(config.features.analytics)
         }
@@ -261,7 +263,14 @@ final class AppModel {
     func setUsageStats(_ on: Bool) {
         usageStats = on
         defaults.set(on, forKey: Self.usageStatsKey)
-        analytics.allowed = on && sendsUsageEvents
+        syncUsageStats()
+    }
+
+    /// Off for teens whatever the setting says; it comes back at 18.
+    var usageStatsOn: Bool { usageStats && !account.underEighteen }
+
+    private func syncUsageStats() {
+        analytics.allowed = usageStatsOn && sendsUsageEvents
     }
 
     /// Screenshot evidence on Home: uploading needs an account.

@@ -97,7 +97,7 @@ enum ErrorText {
         "daily_cap", "captcha_failed", "signin_required", "premium_required", "no_credits", "fair_use",
         "in_progress", "bad_origin", "not_found", "password_wrong", "password_required",
         "case_closed", "case_expired", "appeal_used", "appeal_limit", "not_party", "own_case", "too_large", "unsupported_media",
-        "too_many_files", "agreement_required", "evidence_invalid", "anonymize_failed", "removed", "names_unavailable",
+        "too_many_files", "agreement_required", "evidence_invalid", "anonymize_failed", "removed", "names_unavailable", "not_for_teens", "age_set",
     ]
 
     /// A wait in seconds as a whole phrase: minutes below 90, hours beyond,
@@ -139,8 +139,8 @@ enum ErrorText {
         // An async verdict that failed with `refused` reads like a refused verdict.
         if code == "refused" { return L10n.refusedNote(lang) }
         // The age gate opens over the screen; the box under it says why.
-        if code == AgeCheck.blockedCode { return L10n.appAgeBlockedTitle(lang) }
-        if code == AgeCheck.unconfirmedCode { return L10n.appAgeRequired(lang) }
+        if code == AgeCheck.blockedCode { return L10n.errorAgeBlocked(lang) }
+        if code == AgeCheck.unconfirmedCode { return L10n.errorAgeUnconfirmed(lang) }
         if let code, knownCodes.contains(code) {
             switch code {
             case "fair_use":

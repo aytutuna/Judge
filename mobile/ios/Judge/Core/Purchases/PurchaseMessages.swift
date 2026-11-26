@@ -6,8 +6,8 @@ extension PurchaseModel.Message {
         case .success: return L10n.appPurchaseSuccess(lang)
         case .pending: return L10n.appPurchasePending(lang)
         case .failed: return L10n.appPurchaseFailed(lang)
-        case .ageRequired: return L10n.appAgeRequired(lang)
-        case .ageBlocked: return L10n.appAgeBlockedTitle(lang)
+        case .ageRequired: return L10n.errorAgeUnconfirmed(lang)
+        case .ageBlocked: return L10n.errorAgeBlocked(lang)
         }
     }
 

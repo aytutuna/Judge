@@ -5,15 +5,15 @@ import UIKit
 
 /// What the phone's own age signal says about the user.
 enum PlatformAge: Sendable, Equatable {
-    case adult, minor, unknown
+    case adult, minor, under13, unknown
 }
 
 /// What the app shows over everything else for the age check.
 enum AgeGate: Equatable {
     case none
-    /// The account hasn't confirmed 18+ yet: the sheet with the checkbox.
-    case confirm
-    /// Under 18, or the account is blocked: Judge can't be used.
+    /// The account has no date of birth yet.
+    case date
+    /// Closed for age for good: Judge can't be used.
     case blocked
 }
 
@@ -22,54 +22,121 @@ enum AgeCheck {
     static let supportEmail = "support@okjudge.com"
     static let blockedCode = "age_blocked"
     static let unconfirmedCode = "age_unconfirmed"
+    static let setCode = "age_set"
+    static let earliestDob = "1900-01-01"
 
-    /// POST /api/v1/me/age.
+    /// POST /api/v1/me/age with the phone's answer.
     struct Report: Equatable, Sendable {
         var adult: Bool
-        var source: String
+        var under13 = false
     }
 
-    /// An age range the platform shared. An upper bound below 18 is a minor;
-    /// a lower bound of 18 or more is an adult. No range says nothing.
+    /// An age range the platform shared. An upper bound below 13 is under 13,
+    /// below 18 a minor; a lower bound of 18 or more is an adult. A range
+    /// across 18, or no range, says nothing.
     static func fromRange(lower: Int?, upper: Int?) -> PlatformAge {
+        if let upper, upper < 13 { return .under13 }
         if let upper, upper < 18 { return .minor }
         if let lower, lower >= 18 { return .adult }
         return .unknown
     }
 
-    /// What to tell the server about this account now, or nil. A minor is
-    /// reported even after a confirmation.
-    static func report(platform: PlatformAge?, age: AgeStatus?, ticked: Bool) -> Report? {
-        guard let age, !age.blocked else { return nil }
-        if platform == .minor { return Report(adult: false, source: "platform") }
-        if age.confirmed { return nil }
-        if platform == .adult { return Report(adult: true, source: "platform") }
-        if ticked { return Report(adult: true, source: "checkbox") }
-        return nil
+    /// What to tell the server about this account now, or nil. Sent on every
+    /// launch, since only a later "adult" can clear an earlier "minor".
+    static func report(platform: PlatformAge?, age: AgeStatus?) -> Report? {
+        guard let age, !(age.blocked && !age.needsDob) else { return nil }
+        switch platform {
+        case .adult: return Report(adult: true)
+        case .minor: return Report(adult: false)
+        case .under13: return Report(adult: false, under13: true)
+        case .unknown, nil: return nil
+        }
     }
 
-    /// The sheet's confirmation: the platform's when it already said 18+.
-    static func confirmation(platform: PlatformAge?) -> Report {
-        Report(adult: true, source: platform == .adult ? "platform" : "checkbox")
-    }
-
-    /// The sheet waits for the platform's answer and for a report in flight,
-    /// so it never flashes up.
-    static func gate(platform: PlatformAge?, signedIn: Bool, age: AgeStatus?, posting: Bool) -> AgeGate {
-        if platform == .minor { return .blocked }
+    /// What the server's age state asks the app to show.
+    static func gate(signedIn: Bool, age: AgeStatus?) -> AgeGate {
         guard signedIn, let age else { return .none }
-        if age.blocked { return .blocked }
-        if !age.confirmed, platform != nil, !posting { return .confirm }
-        return .none
+        if age.blocked && !age.needsDob { return .blocked }
+        return age.needsDob ? .date : .none
     }
-
-    /// The sign-in checkbox shows unless the platform already said 18+.
-    static func needsCheckbox(platform: PlatformAge?) -> Bool { platform != .adult }
 
     /// The age error of a 403, sent as `code` or as a bare `error`.
     static func errorCode(status: Int, body: ApiErrorBody?) -> String? {
         guard status == 403 else { return nil }
         return [body?.code, body?.error].compactMap { $0 }.first { $0 == blockedCode || $0 == unconfirmedCode }
+    }
+
+    // MARK: - Dates
+
+    private static let utc: Calendar = {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "UTC")!
+        return calendar
+    }()
+
+    /// A calendar date as `YYYY-MM-DD`.
+    static func dobString(year: Int, month: Int, day: Int) -> String {
+        String(format: "%04d-%02d-%02d", year, month, day)
+    }
+
+    /// The picked day as the plain date the server takes, in the calendar the
+    /// picker showed it in.
+    static func dobString(from date: Date, calendar: Calendar) -> String {
+        let parts = calendar.dateComponents([.year, .month, .day], from: date)
+        return dobString(year: parts.year ?? 1900, month: parts.month ?? 1, day: parts.day ?? 1)
+    }
+
+    /// Today anywhere on Earth: the date in UTC+14.
+    static func latestDob(now: Date) -> String {
+        let parts = utc.dateComponents([.year, .month, .day], from: now.addingTimeInterval(14 * 3600))
+        return dobString(year: parts.year!, month: parts.month!, day: parts.day!)
+    }
+
+    /// The date `years` before `now` in UTC; 29 February becomes the 28th.
+    static func yearsBefore(_ now: Date, years: Int) -> String {
+        let parts = utc.dateComponents([.year, .month, .day], from: now)
+        let leapDay = parts.month == 2 && parts.day == 29
+        return dobString(year: parts.year! - years, month: parts.month!, day: leapDay ? 28 : parts.day!)
+    }
+
+    /// Under 13 on the latest date anywhere on Earth, so nobody is closed out
+    /// on a birthday in their own time zone (same rule as the website).
+    static func underThirteen(dob: String, now: Date = Date()) -> Bool {
+        dob > yearsBefore(now.addingTimeInterval(14 * 3600), years: 13)
+    }
+
+    /// What the picker starts on.
+    static func defaultDobDate(now: Date = Date(), calendar: Calendar = .current) -> Date {
+        calendar.date(byAdding: .year, value: -18, to: now) ?? now
+    }
+
+    /// What the picker takes: 1900-01-01 to today in UTC+14, read as days in
+    /// the picker's own calendar.
+    static func dobRange(now: Date = Date(), calendar: Calendar = .current) -> ClosedRange<Date> {
+        func day(_ dob: String, hour: Int, minute: Int = 0, second: Int = 0) -> Date? {
+            let parts = dob.split(separator: "-").compactMap { Int($0) }
+            guard parts.count == 3 else { return nil }
+            return calendar.date(from: DateComponents(year: parts[0], month: parts[1], day: parts[2], hour: hour, minute: minute, second: second))
+        }
+        let first = day(earliestDob, hour: 0) ?? .distantPast
+        let last = day(latestDob(now: now), hour: 23, minute: 59, second: 59) ?? now
+        return first...max(first, last)
+    }
+
+    /// The date written out for the confirm step, in the app's language.
+    static func longDate(_ dob: String, lang: AppLang) -> String {
+        let parts = dob.split(separator: "-").compactMap { Int($0) }
+        guard parts.count == 3 else { return dob }
+        var calendar = utc
+        calendar.locale = lang.locale
+        guard let date = calendar.date(from: DateComponents(year: parts[0], month: parts[1], day: parts[2], hour: 12)) else { return dob }
+        let formatter = DateFormatter()
+        formatter.locale = lang.locale
+        formatter.calendar = calendar
+        formatter.timeZone = utc.timeZone
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+        return formatter.string(from: date)
     }
 }
 
@@ -80,7 +147,8 @@ protocol AgeRangeAsking: AnyObject {
     func ask() async -> PlatformAge
 }
 
-/// Declared Age Range (iOS 26) with one gate at 18. Compiled in only when
+/// Declared Age Range (iOS 26) with gates at 13 and 18, which is what lets
+/// it tell under 13 from 13 to 17. Compiled in only when
 /// the build carries the entitlement (DECLARED_AGE_RANGE in
 /// Config/Shared.xcconfig); otherwise, and below iOS 26, always unknown.
 @MainActor
@@ -93,7 +161,7 @@ final class DeclaredAgeRangeAsker: AgeRangeAsking {
         // Over the sign-in sheet when it is up.
         while let presented = controller.presentedViewController { controller = presented }
         do {
-            switch try await AgeRangeService.shared.requestAgeRange(ageGates: 18, in: controller) {
+            switch try await AgeRangeService.shared.requestAgeRange(ageGates: 13, 18, in: controller) {
             case .sharing(let range):
                 return AgeCheck.fromRange(lower: range.lowerBound, upper: range.upperBound)
             case .declinedSharing:

@@ -211,23 +211,29 @@ struct Entitlement: Decodable, Sendable, Equatable {
     var isPremium: Bool { credits > 0 || subscription != nil }
 }
 
-/// `age` of GET /api/v1/me and the answer of POST /api/v1/me/age. A block
-/// never lifts.
+/// `age` of GET /api/v1/me and the answer of POST /api/v1/me/age. `teen`
+/// and `needsDob` are false from a server that doesn't send them.
 struct AgeStatus: Decodable, Sendable, Equatable {
     var confirmed = false
     var blocked = false
+    var teen = false
+    var needsDob = false
 
-    init(confirmed: Bool = false, blocked: Bool = false) {
+    init(confirmed: Bool = false, blocked: Bool = false, teen: Bool = false, needsDob: Bool = false) {
         self.confirmed = confirmed
         self.blocked = blocked
+        self.teen = teen
+        self.needsDob = needsDob
     }
 
-    private enum CodingKeys: String, CodingKey { case confirmed, blocked }
+    private enum CodingKeys: String, CodingKey { case confirmed, blocked, teen, needsDob }
 
     init(from decoder: any Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         confirmed = (try? c.decodeIfPresent(Bool.self, forKey: .confirmed)) == true
         blocked = (try? c.decodeIfPresent(Bool.self, forKey: .blocked)) == true
+        teen = (try? c.decodeIfPresent(Bool.self, forKey: .teen)) == true
+        needsDob = (try? c.decodeIfPresent(Bool.self, forKey: .needsDob)) == true
     }
 }
 
