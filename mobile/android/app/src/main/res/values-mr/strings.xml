@@ -551,6 +551,7 @@
     <string name="age_blocked_contact">हे चुकीचे वाटते का? %1$s वर ईमेल करा.</string>
     <string name="error_password_wrong">हा पासवर्ड बरोबर नाही.</string>
     <string name="error_password_required">तुमचा सध्याचा पासवर्ड टाका.</string>
+    <string name="error_reauth_required">साइन आउट करून पुन्हा साइन इन करा, मग खाते हटवा.</string>
     <string name="error_age_blocked">Judge फक्त 13 वर्षे आणि त्याहून मोठ्यांसाठी आहे.</string>
     <string name="error_age_unconfirmed">पुढे जाण्यासाठी तुमचे वय निश्चित करा.</string>
     <string name="error_age_set">तुमची जन्मतारीख आधीच सेव्ह केली आहे.</string>

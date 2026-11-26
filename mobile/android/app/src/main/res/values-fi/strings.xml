@@ -551,6 +551,7 @@
     <string name="age_blocked_contact">Onko tämä mielestäsi virhe? Kirjoita osoitteeseen %1$s.</string>
     <string name="error_password_wrong">Salasana ei ole oikea.</string>
     <string name="error_password_required">Anna nykyinen salasanasi.</string>
+    <string name="error_reauth_required">Kirjaudu ulos ja takaisin sisään ja poista sitten tilisi.</string>
     <string name="error_age_blocked">Judge on tarkoitettu vain 13 vuotta täyttäneille.</string>
     <string name="error_age_unconfirmed">Vahvista ikäsi jatkaaksesi.</string>
     <string name="error_age_set">Syntymäaikasi on jo tallennettu.</string>

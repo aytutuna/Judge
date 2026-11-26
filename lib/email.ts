@@ -6,11 +6,13 @@
  */
 
 import { emailCopy, loadLocales, t, type EmailCopy, type Lang } from "./i18n";
-import { isLang, langDir } from "./langs";
+import { contactEmail } from "../app/site";
+import { isLang, langDir, langTag } from "./langs";
 import { PALETTE as P } from "./palette";
 
 const RESEND_URL = "https://api.resend.com/emails";
 const SEND_TIMEOUT_MS = 10_000;
+const SUPPORT_EMAIL = "support@okjudge.com";
 
 type EmailContent = { subject: string; text: string; html: string };
 
@@ -31,6 +33,11 @@ export const EMAIL_EN: EmailCopy = {
     intro: "The other person told their side, and the judges have ruled on both accounts.",
     button: "See the verdict",
     note: "You're getting this because you started this case on Judge.",
+  },
+  passwordChanged: {
+    subject: "Your Judge password was changed",
+    intro: "Your Judge password was changed on {time}.",
+    contact: "If that wasn't you, contact {email} right away.",
   },
 };
 
@@ -109,6 +116,32 @@ ${c.ignore}
 export async function sendSignInCodeEmail({ to, code, lang }: { to: string; code: string; lang: Lang }): Promise<void> {
   await loadLocales();
   await deliver(to, signInCodeEmailContent(code, lang), "sign-in code email", "email sign-in is not configured");
+}
+
+/** The email after a password change. `at` is shown in UTC, in the reader's
+ * language. */
+export function passwordChangedEmailContent(lang: Lang, at: Date): EmailContent {
+  const c = copy(lang).passwordChanged;
+  const time = `${new Intl.DateTimeFormat(langTag(lang), { dateStyle: "long", timeStyle: "short", timeZone: "UTC" }).format(at)} UTC`;
+  const intro = c.intro.replace("{time}", time);
+  const contact = c.contact.replace("{email}", contactEmail() ?? SUPPORT_EMAIL);
+  const text = `${intro}
+${contact}
+`;
+  const html = `<!doctype html>${htmlTag(lang)}<body style="margin:0;padding:32px 16px;background:${P.ivory};font-family:Georgia,'Times New Roman',serif;color:${P.ink}">
+<div style="max-width:480px;margin:0 auto;background:${P.paper};border:1px solid ${P.strata};border-radius:12px;padding:32px">
+<p style="font-size:22px;margin:0 0 16px">Judge</p>
+<p style="font-size:16px;line-height:1.5;margin:0 0 16px">${escapeHtml(intro)}</p>
+<p style="font-size:13px;line-height:1.5;color:${P.muted};margin:0">${escapeHtml(contact)}</p>
+</div></body></html>`;
+  return { subject: c.subject, text, html };
+}
+
+/** Tells the owner of an address that its password changed. Throws on
+ * failure; the message never contains the address. */
+export async function sendPasswordChangedEmail({ to, lang }: { to: string; lang: Lang }): Promise<void> {
+  await loadLocales();
+  await deliver(to, passwordChangedEmailContent(lang, new Date()), "password email", "email is not configured");
 }
 
 type Notice = { subject: string; intro: string; button: string; note: string };

@@ -560,6 +560,7 @@
     <string name="age_blocked_contact">Misliš da je greška? Pošalji e-poštu na %1$s.</string>
     <string name="error_password_wrong">Ta lozinka nije točna.</string>
     <string name="error_password_required">Unesi svoju trenutnu lozinku.</string>
+    <string name="error_reauth_required">Odjavi se i ponovno prijavi, pa onda izbriši račun.</string>
     <string name="error_age_blocked">Judge je samo za osobe od 13 godina nadalje.</string>
     <string name="error_age_unconfirmed">Potvrdi svoju dob da nastaviš.</string>
     <string name="error_age_set">Tvoj datum rođenja već je spremljen.</string>

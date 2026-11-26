@@ -560,6 +560,7 @@
     <string name="age_blocked_contact">Achas que isto é um engano? Escreve para %1$s.</string>
     <string name="error_password_wrong">Essa palavra-passe não está correta.</string>
     <string name="error_password_required">Introduz a tua palavra-passe atual.</string>
+    <string name="error_reauth_required">Sai e entra de novo, depois elimina a tua conta.</string>
     <string name="error_age_blocked">O Judge é só para quem tem 13 anos ou mais.</string>
     <string name="error_age_unconfirmed">Confirma a tua idade para continuares.</string>
     <string name="error_age_set">A tua data de nascimento já está guardada.</string>

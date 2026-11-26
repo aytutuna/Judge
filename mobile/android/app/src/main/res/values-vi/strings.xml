@@ -542,6 +542,7 @@
     <string name="age_blocked_contact">Nghĩ đây là nhầm lẫn? Hãy gửi email tới %1$s.</string>
     <string name="error_password_wrong">Mật khẩu này không đúng.</string>
     <string name="error_password_required">Nhập mật khẩu hiện tại của bạn.</string>
+    <string name="error_reauth_required">Hãy đăng xuất, đăng nhập lại rồi xóa tài khoản.</string>
     <string name="error_age_blocked">Judge chỉ dành cho người từ 13 tuổi trở lên.</string>
     <string name="error_age_unconfirmed">Hãy xác nhận tuổi của bạn để tiếp tục.</string>
     <string name="error_age_set">Ngày sinh của bạn đã được lưu.</string>

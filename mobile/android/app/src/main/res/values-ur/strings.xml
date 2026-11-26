@@ -551,6 +551,7 @@
     <string name="age_blocked_contact">کیا آپ کو لگتا ہے یہ غلطی ہے؟ %1$s پر ای میل کریں۔</string>
     <string name="error_password_wrong">یہ پاس ورڈ درست نہیں ہے۔</string>
     <string name="error_password_required">اپنا موجودہ پاس ورڈ درج کریں۔</string>
+    <string name="error_reauth_required">سائن آؤٹ کریں اور دوبارہ سائن ان کریں، پھر اپنا اکاؤنٹ حذف کریں۔</string>
     <string name="error_age_blocked">Judge صرف 13 سال یا اس سے زیادہ عمر کے لوگوں کے لیے ہے۔</string>
     <string name="error_age_unconfirmed">آگے بڑھنے کے لیے اپنی عمر کی تصدیق کریں۔</string>
     <string name="error_age_set">آپ کی تاریخ پیدائش پہلے سے محفوظ ہے۔</string>

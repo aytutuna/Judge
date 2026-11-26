@@ -551,6 +551,7 @@
     <string name="age_blocked_contact">ਲੱਗਦਾ ਹੈ ਇਹ ਗ਼ਲਤੀ ਹੈ? %1$s ’ਤੇ ਈਮੇਲ ਕਰੋ।</string>
     <string name="error_password_wrong">ਇਹ ਪਾਸਵਰਡ ਸਹੀ ਨਹੀਂ ਹੈ।</string>
     <string name="error_password_required">ਆਪਣਾ ਮੌਜੂਦਾ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ।</string>
+    <string name="error_reauth_required">ਸਾਈਨ ਆਊਟ ਕਰਕੇ ਦੁਬਾਰਾ ਸਾਈਨ ਇਨ ਕਰੋ, ਫਿਰ ਖਾਤਾ ਮਿਟਾਓ।</string>
     <string name="error_age_blocked">Judge ਸਿਰਫ਼ 13 ਸਾਲ ਜਾਂ ਵੱਧ ਉਮਰ ਦੇ ਲੋਕਾਂ ਲਈ ਹੈ।</string>
     <string name="error_age_unconfirmed">ਜਾਰੀ ਰੱਖਣ ਲਈ ਆਪਣੀ ਉਮਰ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ।</string>
     <string name="error_age_set">ਤੁਹਾਡੀ ਜਨਮ ਤਾਰੀਖ਼ ਪਹਿਲਾਂ ਹੀ ਸੁਰੱਖਿਅਤ ਹੈ।</string>

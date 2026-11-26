@@ -551,6 +551,7 @@
     <string name="age_blocked_contact">Tror du att det är ett misstag? Mejla %1$s.</string>
     <string name="error_password_wrong">Lösenordet stämmer inte.</string>
     <string name="error_password_required">Ange ditt nuvarande lösenord.</string>
+    <string name="error_reauth_required">Logga ut och in igen och radera sedan kontot.</string>
     <string name="error_age_blocked">Judge är bara för personer som är 13 år eller äldre.</string>
     <string name="error_age_unconfirmed">Bekräfta din ålder för att fortsätta.</string>
     <string name="error_age_set">Ditt födelsedatum är redan sparat.</string>

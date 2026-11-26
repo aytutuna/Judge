@@ -551,6 +551,7 @@
     <string name="age_blocked_contact">Szerinted tévedés? Írj e-mailt ide: %1$s.</string>
     <string name="error_password_wrong">Ez a jelszó nem helyes.</string>
     <string name="error_password_required">Add meg a jelenlegi jelszavad.</string>
+    <string name="error_reauth_required">Jelentkezz ki, jelentkezz be újra, és utána töröld a fiókod.</string>
     <string name="error_age_blocked">A Judge csak 13 éves vagy idősebb embereknek szól.</string>
     <string name="error_age_unconfirmed">A folytatáshoz erősítsd meg a korodat.</string>
     <string name="error_age_set">A születési dátumod már el van mentve.</string>

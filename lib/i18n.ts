@@ -362,6 +362,9 @@ const en = {
   "deletePage.webTitle": "On the website",
   "deletePage.web":
     "Sign in at okjudge.com, open Account, choose Delete account and confirm.",
+  "deletePage.billingTitle": "If you have a plan",
+  "deletePage.billing":
+    "Deleting your account doesn't cancel a plan bought in the App Store or Google Play, and the store keeps charging you. Cancel it first in the App Store's or Google Play's subscription settings.",
   "deletePage.removedTitle": "What is deleted",
   "deletePage.removed":
     "Your account, sign-in records, credits, plan and usage events are deleted. Your verdicts and your sides of cases are removed: your original text and names are erased at once, and the anonymized text and verdict 30 days later (for a case, 30 days after everyone in it has removed it).",
@@ -463,6 +466,15 @@ const en = {
   "account.delete": "Delete account",
   "account.deleteConfirm":
     "Delete your account? Your credits, plan and sign-in details are deleted. Your verdicts and your sides of cases are removed: what you wrote and the names are erased, and their share links stop working.",
+  "settings.passwordChange": "Change password",
+  "settings.passwordCurrent": "Current password",
+  "settings.passwordChanged": "Password changed. Your other devices are signed out.",
+  "settings.deleteBillingApple":
+    "Your plan is billed by the App Store. Deleting your account doesn't cancel it, so cancel it there first.",
+  "settings.deleteBillingGoogle":
+    "Your plan is billed by Google Play. Deleting your account doesn't cancel it, so cancel it there first.",
+  "settings.manageSubscription": "Manage subscription",
+  "settings.deletePassword": "Your password",
   "account.deleteYes": "Yes, delete it",
   "account.deleteCancel": "Keep my account",
   "account.deleted": "Account deleted.",
@@ -841,6 +853,7 @@ const en = {
   "age.blockedContact": "Think this is a mistake? Email {email}.",
   "error.password_wrong": "That password isn't right.",
   "error.password_required": "Enter your current password.",
+  "error.reauth_required": "Sign out and sign in again, then delete your account.",
   "error.age_blocked": "Judge is only for people 13 and older.",
   "error.age_unconfirmed": "Confirm your age to continue.",
   "error.age_set": "Your date of birth is already saved.",
@@ -958,6 +971,8 @@ export type PluralForms = Partial<Record<Exclude<Intl.LDMLPluralRule, "other">, 
 export type EmailCopy = {
   signInCode: { subject: string; intro: string; expiry: string; ignore: string };
   caseReady: { subject: string; intro: string; button: string; note: string };
+  /** `{time}` is the moment of the change, `{email}` the support address. */
+  passwordChanged: { subject: string; intro: string; contact: string };
 };
 
 /** The English table, the source every locale is checked against. */
@@ -1137,6 +1152,7 @@ export const ERROR_KEY_BY_CODE: Partial<Record<string, Key>> = {
   agreement_required: "error.agreement_required",
   password_wrong: "error.password_wrong",
   password_required: "error.password_required",
+  reauth_required: "error.reauth_required",
 };
 
 /** Keys whose `{date}` slot has a whole-sentence fallback for when the

@@ -551,6 +551,7 @@
     <string name="age_blocked_contact">Du denkst, das ist ein Irrtum? Schreib an %1$s.</string>
     <string name="error_password_wrong">Dieses Passwort stimmt nicht.</string>
     <string name="error_password_required">Gib dein aktuelles Passwort ein.</string>
+    <string name="error_reauth_required">Melde dich ab und wieder an, dann lösche dein Konto.</string>
     <string name="error_age_blocked">Judge ist nur für Menschen ab 13.</string>
     <string name="error_age_unconfirmed">Bestätige dein Alter, um fortzufahren.</string>
     <string name="error_age_set">Dein Geburtsdatum ist schon gespeichert.</string>

@@ -551,6 +551,7 @@
     <string name="age_blocked_contact">Bunun bir hata olduğunu mu düşünüyorsun? %1$s adresine yaz.</string>
     <string name="error_password_wrong">Bu parola doğru değil.</string>
     <string name="error_password_required">Şu anki parolanı gir.</string>
+    <string name="error_reauth_required">Çıkış yap, tekrar giriş yap, sonra hesabını sil.</string>
     <string name="error_age_blocked">Judge yalnızca 13 yaş ve üzeri kişiler içindir.</string>
     <string name="error_age_unconfirmed">Devam etmek için yaşını onayla.</string>
     <string name="error_age_set">Doğum tarihin zaten kayıtlı.</string>

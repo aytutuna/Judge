@@ -551,6 +551,7 @@
     <string name="age_blocked_contact">মনে করছেন এটা ভুল? %1$s ঠিকানায় ইমেইল করুন।</string>
     <string name="error_password_wrong">এই পাসওয়ার্ড ঠিক নয়।</string>
     <string name="error_password_required">আপনার বর্তমান পাসওয়ার্ড লিখুন।</string>
+    <string name="error_reauth_required">সাইন আউট করে আবার সাইন ইন করুন, তারপর অ্যাকাউন্ট ডিলিট করুন।</string>
     <string name="error_age_blocked">Judge শুধু ১৩ বছর বা তার বেশি বয়সীদের জন্য।</string>
     <string name="error_age_unconfirmed">চালিয়ে যেতে আপনার বয়স নিশ্চিত করুন।</string>
     <string name="error_age_set">আপনার জন্মতারিখ আগেই সেভ করা আছে।</string>

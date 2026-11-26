@@ -551,6 +551,7 @@
     <string name="age_blocked_contact">ಇದು ತಪ್ಪು ಎನಿಸುತ್ತದೆಯೇ? %1$s ಗೆ ಇಮೇಲ್ ಮಾಡಿ.</string>
     <string name="error_password_wrong">ಈ ಪಾಸ್‌ವರ್ಡ್ ಸರಿಯಿಲ್ಲ.</string>
     <string name="error_password_required">ನಿಮ್ಮ ಪ್ರಸ್ತುತ ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ.</string>
+    <string name="error_reauth_required">ಸೈನ್ ಔಟ್ ಮಾಡಿ ಮತ್ತೆ ಸೈನ್ ಇನ್ ಆಗಿ, ನಂತರ ಖಾತೆ ಅಳಿಸಿ.</string>
     <string name="error_age_blocked">Judge 13 ವರ್ಷ ಮತ್ತು ಮೇಲ್ಪಟ್ಟವರಿಗೆ ಮಾತ್ರ.</string>
     <string name="error_age_unconfirmed">ಮುಂದುವರಿಯಲು ನಿಮ್ಮ ವಯಸ್ಸನ್ನು ದೃಢಪಡಿಸಿ.</string>
     <string name="error_age_set">ನಿಮ್ಮ ಜನ್ಮ ದಿನಾಂಕ ಈಗಾಗಲೇ ಉಳಿಸಲಾಗಿದೆ.</string>

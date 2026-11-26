@@ -569,6 +569,7 @@
     <string name="age_blocked_contact">Misliš, da gre za napako? Piši na %1$s.</string>
     <string name="error_password_wrong">To geslo ni pravilno.</string>
     <string name="error_password_required">Vnesite svoje trenutno geslo.</string>
+    <string name="error_reauth_required">Odjavite se, se znova prijavite in nato izbrišite račun.</string>
     <string name="error_age_blocked">Judge je samo za osebe, stare 13 let ali več.</string>
     <string name="error_age_unconfirmed">Za nadaljevanje potrdi svojo starost.</string>
     <string name="error_age_set">Tvoj datum rojstva je že shranjen.</string>

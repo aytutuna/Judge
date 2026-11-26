@@ -542,6 +542,7 @@
     <string name="age_blocked_contact">잘못된 것 같나요? %1$s 주소로 메일을 보내 주세요.</string>
     <string name="error_password_wrong">비밀번호가 맞지 않아요.</string>
     <string name="error_password_required">현재 비밀번호를 입력해 주세요.</string>
+    <string name="error_reauth_required">로그아웃했다가 다시 로그인한 뒤 계정을 삭제해 주세요.</string>
     <string name="error_age_blocked">Judge는 만 13세 이상만 이용할 수 있어요.</string>
     <string name="error_age_unconfirmed">계속하려면 나이를 확인해 주세요.</string>
     <string name="error_age_set">생년월일이 이미 저장되어 있어요.</string>

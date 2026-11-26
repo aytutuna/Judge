@@ -551,6 +551,7 @@
     <string name="age_blocked_contact">இது தவறு என்று நினைக்கிறீர்களா? %1$s முகவரிக்கு ஈமெயில் அனுப்புங்கள்.</string>
     <string name="error_password_wrong">இந்தக் கடவுச்சொல் சரியில்லை.</string>
     <string name="error_password_required">உங்கள் தற்போதைய கடவுச்சொல்லை உள்ளிடுங்கள்.</string>
+    <string name="error_reauth_required">வெளியேறி மீண்டும் உள்நுழைந்து, பிறகு கணக்கை நீக்குங்கள்.</string>
     <string name="error_age_blocked">Judge 13 வயது மற்றும் அதற்கு மேற்பட்டவர்களுக்கு மட்டுமே.</string>
     <string name="error_age_unconfirmed">தொடர உங்கள் வயதை உறுதிசெய்யுங்கள்.</string>
     <string name="error_age_set">உங்கள் பிறந்த தேதி ஏற்கெனவே சேமிக்கப்பட்டுள்ளது.</string>

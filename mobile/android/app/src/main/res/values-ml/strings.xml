@@ -551,6 +551,7 @@
     <string name="age_blocked_contact">ഇത് തെറ്റാണെന്ന് തോന്നുന്നുണ്ടോ? %1$s എന്ന വിലാസത്തിൽ ഇമെയിൽ ചെയ്യൂ.</string>
     <string name="error_password_wrong">ഈ പാസ്‌വേഡ് ശരിയല്ല.</string>
     <string name="error_password_required">നിങ്ങളുടെ നിലവിലെ പാസ്‌വേഡ് നൽകുക.</string>
+    <string name="error_reauth_required">സൈൻ ഔട്ട് ചെയ്ത് വീണ്ടും സൈൻ ഇൻ ചെയ്യുക, എന്നിട്ട് അക്കൗണ്ട് ഇല്ലാതാക്കുക.</string>
     <string name="error_age_blocked">Judge 13 വയസ്സും അതിനു മുകളിലും ഉള്ളവർക്ക് മാത്രമുള്ളതാണ്.</string>
     <string name="error_age_unconfirmed">തുടരാൻ നിങ്ങളുടെ പ്രായം സ്ഥിരീകരിക്കുക.</string>
     <string name="error_age_set">നിങ്ങളുടെ ജനനത്തീയതി ഇതിനകം സേവ് ചെയ്തിട്ടുണ്ട്.</string>

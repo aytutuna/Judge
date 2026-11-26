@@ -560,6 +560,7 @@
     <string name="age_blocked_contact">Crezi că e o greșeală? Scrie-ne la %1$s.</string>
     <string name="error_password_wrong">Parola nu este corectă.</string>
     <string name="error_password_required">Introdu parola actuală.</string>
+    <string name="error_reauth_required">Deconectează-te și conectează-te din nou, apoi șterge contul.</string>
     <string name="error_age_blocked">Judge e doar pentru persoane de 13 ani sau mai mari.</string>
     <string name="error_age_unconfirmed">Confirmă-ți vârsta ca să continui.</string>
     <string name="error_age_set">Data ta de naștere este deja salvată.</string>

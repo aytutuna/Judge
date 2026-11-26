@@ -542,6 +542,7 @@
     <string name="age_blocked_contact">間違いだと思われる場合は、%1$sまでメールしてください。</string>
     <string name="error_password_wrong">パスワードが正しくありません。</string>
     <string name="error_password_required">現在のパスワードを入力してください。</string>
+    <string name="error_reauth_required">一度ログアウトして、もう一度ログインしてからアカウントを削除してください。</string>
     <string name="error_age_blocked">Judgeは13歳以上の方のみ利用できます。</string>
     <string name="error_age_unconfirmed">続けるには、年齢を確認してください。</string>
     <string name="error_age_set">生年月日はすでに保存されています。</string>

@@ -542,6 +542,7 @@
     <string name="age_blocked_contact">Merasa ini keliru? Kirim email ke %1$s.</string>
     <string name="error_password_wrong">Kata sandi itu tidak benar.</string>
     <string name="error_password_required">Masukkan kata sandimu saat ini.</string>
+    <string name="error_reauth_required">Keluar dan masuk lagi, lalu hapus akunmu.</string>
     <string name="error_age_blocked">Judge hanya untuk orang berusia 13 tahun ke atas.</string>
     <string name="error_age_unconfirmed">Konfirmasi usiamu untuk melanjutkan.</string>
     <string name="error_age_set">Tanggal lahirmu sudah tersimpan.</string>

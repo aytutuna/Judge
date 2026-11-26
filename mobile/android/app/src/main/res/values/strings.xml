@@ -551,6 +551,7 @@
     <string name="age_blocked_contact">Think this is a mistake? Email %1$s.</string>
     <string name="error_password_wrong">That password isn\'t right.</string>
     <string name="error_password_required">Enter your current password.</string>
+    <string name="error_reauth_required">Sign out and sign in again, then delete your account.</string>
     <string name="error_age_blocked">Judge is only for people 13 and older.</string>
     <string name="error_age_unconfirmed">Confirm your age to continue.</string>
     <string name="error_age_set">Your date of birth is already saved.</string>

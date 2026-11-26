@@ -569,6 +569,7 @@
     <string name="age_blocked_contact">Myslíš, že je to chyba? Napiš na %1$s.</string>
     <string name="error_password_wrong">Toto heslo není správné.</string>
     <string name="error_password_required">Zadej své současné heslo.</string>
+    <string name="error_reauth_required">Odhlas se, přihlas se znovu a pak účet smaž.</string>
     <string name="error_age_blocked">Judge je jen pro lidi od 13 let.</string>
     <string name="error_age_unconfirmed">Pro pokračování potvrď svůj věk.</string>
     <string name="error_age_set">Tvé datum narození už je uložené.</string>

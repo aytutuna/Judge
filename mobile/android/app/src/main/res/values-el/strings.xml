@@ -551,6 +551,7 @@
     <string name="age_blocked_contact">Νομίζεις ότι είναι λάθος; Στείλε email στο %1$s.</string>
     <string name="error_password_wrong">Αυτός ο κωδικός δεν είναι σωστός.</string>
     <string name="error_password_required">Εισήγαγε τον τρέχοντα κωδικό σου.</string>
+    <string name="error_reauth_required">Αποσυνδέσου και συνδέσου ξανά, και μετά διέγραψε τον λογαριασμό σου.</string>
     <string name="error_age_blocked">Το Judge είναι μόνο για άτομα 13 ετών και άνω.</string>
     <string name="error_age_unconfirmed">Επιβεβαίωσε την ηλικία σου για να συνεχίσεις.</string>
     <string name="error_age_set">Η ημερομηνία γέννησής σου έχει ήδη αποθηκευτεί.</string>

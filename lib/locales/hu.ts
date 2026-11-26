@@ -16,6 +16,11 @@ const hu: Locale = {
       button: "Megnézem az ítéletet",
       note: "Azért kapod ezt az e-mailt, mert ezt az ügyet te indítottad a Judge-ban.",
     },
+    passwordChanged: {
+      subject: "Megváltozott a Judge-jelszavad",
+      intro: "A Judge-jelszavadat ekkor módosították: {time}.",
+      contact: "Ha nem te voltál, azonnal írj a(z) {email} címre.",
+    },
   },
   strings: {
     "hero.title": "Kinek van igaza? Döntsük el.",
@@ -367,6 +372,8 @@ const hu: Locale = {
     "deletePage.webTitle": "A weboldalon",
     "deletePage.web":
       "Jelentkezz be az okjudge.com oldalon, nyisd meg a Fiókot, válaszd a Fiók törlése lehetőséget, és erősítsd meg.",
+    "deletePage.billingTitle": "Ha van csomagod",
+    "deletePage.billing": "A fiók törlése nem szünteti meg az App Store-ban vagy a Google Play-en vásárolt csomagot, és az áruház tovább terhel. Előbb mondd le az App Store vagy a Google Play előfizetési beállításaiban.",
     "deletePage.removedTitle": "Mi törlődik",
     "deletePage.removed":
       "A fiókod, a bejelentkezési nyilvántartás, a kreditek, a csomag és a használati események törlődnek. Az ítéleteid és az ügyekben szereplő oldalaid eltűnnek: az eredeti szöveg és a nevek azonnal törlődnek, az anonimizált szöveg és az ítélet 30 nappal később (egy ügynél 30 nappal azután, hogy mindenki eltávolította).",
@@ -472,6 +479,14 @@ const hu: Locale = {
       "Törlöd a fiókodat? A kreditjeid, az előfizetésed és a belépési adataid törlődnek. Az ítéleteidet és az ügyekben beküldött verzióidat eltávolítjuk: amit írtál, azt a nevekkel együtt töröljük, a megosztási linkjeik pedig megszűnnek működni.",
     "account.deleteYes": "Igen, törlöm",
     "account.deleteCancel": "Megtartom a fiókot",
+    "settings.passwordChange": "Jelszó módosítása",
+    "settings.passwordCurrent": "Jelenlegi jelszó",
+    "settings.passwordChanged": "A jelszó megváltozott. A többi eszközödről kijelentkeztettünk.",
+    "settings.deleteBillingApple": "A csomagod számlázása az App Store-on keresztül történik. A fiók törlése nem szünteti meg, ezért előbb ott mondd le.",
+    "settings.deleteBillingGoogle": "A csomagod számlázása a Google Play-en keresztül történik. A fiók törlése nem szünteti meg, ezért előbb ott mondd le.",
+    "settings.manageSubscription": "Előfizetés kezelése",
+    "settings.deletePassword": "A jelszavad",
+    "error.reauth_required": "Jelentkezz ki, jelentkezz be újra, és utána töröld a fiókod.",
     "account.deleted": "A fiók törölve.",
     "account.deleteFailed": "Most nem sikerült törölni a fiókot. Megpróbálod újra?",
     "account.loadFailed": "Nem sikerült betölteni a fiókodat. Próbáld újra egy kicsit később.",

@@ -560,6 +560,7 @@
     <string name="age_blocked_contact">Creus que és un error? Escriu a %1$s.</string>
     <string name="error_password_wrong">Aquesta contrasenya no és correcta.</string>
     <string name="error_password_required">Escriu la teva contrasenya actual.</string>
+    <string name="error_reauth_required">Tanca la sessió, torna a iniciar-la i elimina el compte.</string>
     <string name="error_age_blocked">Judge és només per a persones de 13 anys o més.</string>
     <string name="error_age_unconfirmed">Confirma la teva edat per continuar.</string>
     <string name="error_age_set">La teva data de naixement ja està desada.</string>

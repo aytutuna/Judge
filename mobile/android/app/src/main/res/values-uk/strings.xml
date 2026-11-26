@@ -569,6 +569,7 @@
     <string name="age_blocked_contact">Думаєш, це помилка? Напиши на %1$s.</string>
     <string name="error_password_wrong">Цей пароль неправильний.</string>
     <string name="error_password_required">Введіть поточний пароль.</string>
+    <string name="error_reauth_required">Вийди, увійди знову і тоді видали акаунт.</string>
     <string name="error_age_blocked">Judge лише для людей від 13 років.</string>
     <string name="error_age_unconfirmed">Підтверди свій вік, щоб продовжити.</string>
     <string name="error_age_set">Твою дату народження вже збережено.</string>

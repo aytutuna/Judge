@@ -542,6 +542,7 @@
     <string name="age_blocked_contact">觉得这是个误会？请发邮件到 %1$s。</string>
     <string name="error_password_wrong">密码不正确。</string>
     <string name="error_password_required">请输入当前密码。</string>
+    <string name="error_reauth_required">请先退出登录，重新登录后再删除账号。</string>
     <string name="error_age_blocked">Judge 仅限 13 岁及以上的人使用。</string>
     <string name="error_age_unconfirmed">请确认你的年龄后继续。</string>
     <string name="error_age_set">你的出生日期已保存。</string>

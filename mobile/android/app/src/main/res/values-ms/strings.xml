@@ -542,6 +542,7 @@
     <string name="age_blocked_contact">Rasa ini satu kesilapan? E-mel %1$s.</string>
     <string name="error_password_wrong">Kata laluan itu tidak betul.</string>
     <string name="error_password_required">Masukkan kata laluan semasa anda.</string>
+    <string name="error_reauth_required">Log keluar dan log masuk semula, kemudian padam akaun anda.</string>
     <string name="error_age_blocked">Judge hanya untuk mereka yang berumur 13 tahun ke atas.</string>
     <string name="error_age_unconfirmed">Sahkan umur anda untuk meneruskan.</string>
     <string name="error_age_set">Tarikh lahir anda sudah disimpan.</string>
