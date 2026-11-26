@@ -157,6 +157,7 @@ fun PricingScreen(
                         PurchaseController.Notice.SLOW -> "${s.appPurchaseSuccess} ${s.appPurchaseSlow}"
                         PurchaseController.Notice.FAILED -> s.appPurchaseFailed
                         PurchaseController.Notice.AGE_UNCONFIRMED -> s.errorAgeUnconfirmed
+                        PurchaseController.Notice.AGE_CHECKING -> s.appPurchaseFailed
                         PurchaseController.Notice.AGE_BLOCKED -> s.errorAgeBlocked
                         null -> if (store.subscriptionPending && signedIn) s.appPurchasePending else null
                     }

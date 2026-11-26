@@ -236,7 +236,7 @@ class AccountAgeTest {
         account.refresh()
         assertNull(account.ageRefusal())
         account.checkPlatformAge(context)
-        assertEquals(AgeCheck.UNCONFIRMED, account.ageRefusal())
+        assertEquals(AgeCheck.CHECKING, account.ageRefusal())
         account.awaitPhone()
         assertNull(account.ageRefusal())
     }
@@ -250,7 +250,7 @@ class AccountAgeTest {
         account.refresh()
         account.checkPlatformAge(context)
         withTimeout(10_000) { account.agePosting.first { it } }
-        assertEquals(AgeCheck.UNCONFIRMED, account.ageRefusal())
+        assertEquals(AgeCheck.CHECKING, account.ageRefusal())
         account.awaitAge { it.teen }
         withTimeout(10_000) { account.agePosting.first { !it } }
         assertNull(account.ageRefusal())
@@ -275,6 +275,33 @@ class AccountAgeTest {
         assertEquals("1990-05-17", ageBody(1)["dob"]!!.jsonPrimitive.content)
         assertEquals("false", ageBody(2)["adult"]!!.jsonPrimitive.content)
         assertTrue(account.teen.value)
+    }
+
+    @Test
+    fun aSignedInAccountWhoseMeHasNotAnswered_countsAsLocked() = runBlocking {
+        routes.on(ME, json(503, """{"error":"down","code":"unavailable"}"""))
+        routes.on(ME, finished)
+        val (account, _) = account()
+        withTimeout(10_000) { account.state.first { it is Account.State.SignedIn } }
+        assertTrue(account.statsLocked.value)
+        account.refresh()
+        assertTrue("a failed lookup keeps it locked", account.statsLocked.value)
+        account.refresh()
+        assertFalse(account.statsLocked.value)
+    }
+
+    @Test
+    fun ageChecking_followsTheStoreCheckAndTheReport() = runBlocking {
+        phoneHangs = true
+        routes.always(ME, finished)
+        val (account, _) = account(platformTimeoutMs = 300)
+        account.refresh()
+        assertFalse(account.ageChecking.value)
+        account.checkPlatformAge(context)
+        assertTrue(account.ageChecking.value)
+        account.awaitPhone()
+        withTimeout(10_000) { account.ageChecking.first { !it } }
+        Unit
     }
 
     @Test

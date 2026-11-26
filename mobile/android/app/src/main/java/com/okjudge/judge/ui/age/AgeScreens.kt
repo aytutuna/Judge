@@ -135,22 +135,32 @@ private fun AgeDateBody(
     val lang = LocalLang.current
     val latest = remember { AgeCheck.latestDate(nowMillis()) }
     // Typing a birth year is quicker than paging back through months; the calendar stays one tap away on the toggle.
-    // The state is built with the app's locale (Material would take the phone's) and its date kept by hand across recreation.
+    // The state is built with the app's locale (Material would take the phone's), so its Saver is not usable:
+    // the picked day, the shown month and the mode are kept by hand across recreation.
     var savedMillis by rememberSaveable { mutableStateOf<Long?>(null) }
+    var savedMonth by rememberSaveable { mutableStateOf<Long?>(null) }
+    var savedCalendar by rememberSaveable { mutableStateOf(false) }
     val picker = remember(lang) {
         DatePickerState(
             locale = lang.locale,
             initialSelectedDateMillis = savedMillis,
-            initialDisplayedMonthMillis = null,
+            initialDisplayedMonthMillis = savedMonth ?: savedMillis,
             yearRange = 1900..latest.year,
-            initialDisplayMode = DisplayMode.Input,
+            initialDisplayMode = if (savedCalendar) DisplayMode.Picker else DisplayMode.Input,
             selectableDates = object : SelectableDates {
                 override fun isSelectableDate(utcTimeMillis: Long) = utcTimeMillis <= latest.utcMillis()
                 override fun isSelectableYear(year: Int) = year <= latest.year
             },
         )
     }
-    LaunchedEffect(picker) { snapshotFlow { picker.selectedDateMillis }.collect { savedMillis = it } }
+    LaunchedEffect(picker) {
+        snapshotFlow { Triple(picker.selectedDateMillis, picker.displayedMonthMillis, picker.displayMode == DisplayMode.Picker) }
+            .collect { (day, month, calendar) ->
+                savedMillis = day
+                savedMonth = month
+                savedCalendar = calendar
+            }
+    }
     var confirming by rememberSaveable { mutableStateOf(false) }
     val date = picker.selectedDateMillis?.utcDate()
     val asking = confirming && date != null

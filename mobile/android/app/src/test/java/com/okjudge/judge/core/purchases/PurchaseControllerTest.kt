@@ -136,6 +136,21 @@ class PurchaseControllerTest {
     }
 
     @Test
+    fun buying_duringTheLaunchCheck_asksToWaitAndClearsWhenItEnds() = runTest {
+        val c = ready()
+        ageRefusal = AgeCheck.CHECKING
+        assertNull(c.buy(context, "pack_10"))
+        assertEquals(Notice.AGE_CHECKING, c.state.value.notice)
+        assertTrue(gateway.calls.none { it.startsWith("purchase") })
+        c.ageHoldEnded()
+        assertNull(c.state.value.notice)
+        ageRefusal = AgeCheck.UNCONFIRMED
+        assertNull(c.buy(context, "pack_10"))
+        c.ageHoldEnded()
+        assertEquals("a real refusal stays", Notice.AGE_UNCONFIRMED, c.state.value.notice)
+    }
+
+    @Test
     fun noSdkKey_everythingStaysOff() = runTest {
         account.value = signedIn()
         val c = controller(gateway = null)
