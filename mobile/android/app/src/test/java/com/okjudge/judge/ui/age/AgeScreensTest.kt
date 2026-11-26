@@ -13,6 +13,7 @@ import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.assertContentDescriptionEquals
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.performTextInput
 import com.okjudge.judge.i18n.AppLang
@@ -152,6 +153,16 @@ class AgeScreensTest {
         compose.onNodeWithTag(AgeTags.CONTINUE).assertIsEnabled()
         restore.emulateSavedInstanceStateRestore()
         compose.onNodeWithTag(AgeTags.CONTINUE).assertIsEnabled()
+    }
+
+    @Test
+    fun dateStep_keepsTheCalendarMode_acrossRecreation() {
+        val restore = StateRestorationTester(compose)
+        restore.setContent(screen())
+        compose.onNode(hasContentDescription("Switch to calendar", substring = true)).performClick()
+        compose.onNode(hasContentDescription("Switch to text input", substring = true)).assertExists()
+        restore.emulateSavedInstanceStateRestore()
+        compose.onNode(hasContentDescription("Switch to text input", substring = true)).assertExists()
     }
 
     @Test

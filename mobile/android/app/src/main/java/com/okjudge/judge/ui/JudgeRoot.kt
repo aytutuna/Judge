@@ -230,6 +230,7 @@ fun JudgeRoot(
                 val accountNow by account.state.collectAsStateWithLifecycle()
                 val phoneAge by account.platformAge.collectAsStateWithLifecycle()
                 val agePosting by account.agePosting.collectAsStateWithLifecycle()
+                val ageChecking by account.ageChecking.collectAsStateWithLifecycle()
                 val onSignInScreen = top is SignInKey
                 LaunchedEffect(onSignInScreen, accountNow) {
                     // The phone is asked when sign-in opens, or for a signed-in account that still has to confirm.
@@ -429,7 +430,7 @@ fun JudgeRoot(
                                             clearDraft = false
                                         }
                                     }
-                                    LaunchedEffect(submitAfterSignIn, linkAfterSignIn, accountNow, ageGate, phoneAge, agePosting) {
+                                    LaunchedEffect(submitAfterSignIn, linkAfterSignIn, accountNow, ageGate, phoneAge, agePosting, ageChecking) {
                                         if (!submitAfterSignIn && !linkAfterSignIn) return@LaunchedEffect
                                         if (accountNow is Account.State.SignedOut) {
                                             submitAfterSignIn = false
@@ -455,7 +456,12 @@ fun JudgeRoot(
                                         onOtherName = vm::onOtherName,
                                         onSubmit = submit@{
                                             // The phone's check or an age report is still running.
-                                            if (account.ageRefusal() != null) return@submit
+                                            when (account.ageRefusal()) {
+                                                null -> Unit
+                                                // The launch check is still running: the tap goes through by itself when it ends.
+                                                AgeCheck.CHECKING -> { submitAfterSignIn = true; return@submit }
+                                                else -> return@submit
+                                            }
                                             when (counted(vm.submit(lang, strings))) {
                                                 // Every verdict needs an account: sign in first, then go on.
                                                 Submitted.SIGN_IN -> if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = true))
@@ -464,7 +470,11 @@ fun JudgeRoot(
                                             }
                                         },
                                         onSendLink = link@{
-                                            if (account.ageRefusal() != null) return@link
+                                            when (account.ageRefusal()) {
+                                                null -> Unit
+                                                AgeCheck.CHECKING -> { linkAfterSignIn = true; return@link }
+                                                else -> return@link
+                                            }
                                             when (counted(vm.sendLink(lang))) {
                                                 Submitted.SIGN_IN -> if (backStack.lastOrNull() !is SignInKey) backStack.add(SignInKey(thenVerdict = false, thenLink = true))
                                                 Submitted.PRICING -> openPricing()

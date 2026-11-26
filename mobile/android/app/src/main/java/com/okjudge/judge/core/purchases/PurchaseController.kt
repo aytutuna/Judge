@@ -49,6 +49,9 @@ class PurchaseController(
         FAILED,
         /** Refused before the store: the account hasn't confirmed 18+ yet. */
         AGE_UNCONFIRMED,
+
+        /** The phone's age check is still running: try again in a moment. */
+        AGE_CHECKING,
         /** Refused before the store: under 18, or the account is blocked. */
         AGE_BLOCKED,
     }
@@ -151,6 +154,11 @@ class PurchaseController(
     /** The store is logged in as the signed-in account. */
     fun isReady(state: State = _state.value): Boolean = state.storeUserId != null && state.storeUserId == currentUserId
 
+    /** The age hold ended: its "try again in a moment" notice goes with it. */
+    fun ageHoldEnded() {
+        _state.update { if (it.notice == Notice.AGE_CHECKING) it.copy(notice = null) else it }
+    }
+
     /** Buys [productId]; null when nothing started (no store, not ready, another purchase running). */
     fun buy(host: Context, productId: String): Job? {
         val gateway = gateway ?: return null
@@ -159,6 +167,7 @@ class PurchaseController(
         val refused = when (ageRefusal()) {
             AgeCheck.BLOCKED -> Notice.AGE_BLOCKED
             AgeCheck.UNCONFIRMED -> Notice.AGE_UNCONFIRMED
+            AgeCheck.CHECKING -> Notice.AGE_CHECKING
             else -> null
         }
         if (refused != null) {

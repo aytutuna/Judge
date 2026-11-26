@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -143,7 +144,12 @@ class Account(
     /** The phone's answer, asked at most once per run; null until it answered. */
     private val _platformAge = MutableStateFlow<PlatformAge?>(null)
     val platformAge: StateFlow<PlatformAge?> = _platformAge.asStateFlow()
-    private var askingPlatform = false
+    private val _askingPlatform = MutableStateFlow(false)
+    private var askingPlatform: Boolean
+        get() = _askingPlatform.value
+        set(value) {
+            _askingPlatform.value = value
+        }
 
     /** A POST /api/v1/me/age is in flight. */
     private val _agePosting = MutableStateFlow(false)
@@ -162,13 +168,18 @@ class Account(
         AgeCheck.gate(state is State.SignedIn, (state as? State.SignedIn)?.me?.age)
     }.stateIn(scope, SharingStarted.Eagerly, AgeGate.NONE)
 
+    /** The phone's check or a report is running: actions wait a moment, with no change to the account. */
+    val ageChecking: StateFlow<Boolean> = combine(_askingPlatform, _agePosting) { asking, posting -> asking || posting }
+        .stateIn(scope, SharingStarted.Eagerly, false)
+
     /** The signed-in account is 13 to 17: usage statistics and the training card stay off. */
     val teen: StateFlow<Boolean> = _state.map { ((it as? State.SignedIn)?.me?.age)?.teen == true }
         .stateIn(scope, SharingStarted.Eagerly, false)
 
     /** Usage statistics are off whatever the setting says: a teen, a blocked account or one whose age is not known yet. */
     val statsLocked: StateFlow<Boolean> = _state.map { state ->
-        AgeCheck.usageStatsLocked((state as? State.SignedIn)?.me?.age)
+        // A signed-in account whose /me has not answered yet is not known to be an adult either.
+        state is State.SignedIn && (state.me == null || AgeCheck.usageStatsLocked(state.me.age))
     }.stateIn(scope, SharingStarted.Eagerly, false)
 
     /** Loads /api/v1/config unless it is already known (or [force]). */
@@ -254,8 +265,8 @@ class Account(
     /**
      * Why a verdict or a purchase has to wait, or null when nothing about age
      * stands in the way: [AgeCheck.BLOCKED] for a blocked account,
-     * [AgeCheck.UNCONFIRMED] until the server has confirmed it, and while the
-     * phone's check or a report is still running. A server without the age
+     * [AgeCheck.UNCONFIRMED] until the server has confirmed it, and
+     * [AgeCheck.CHECKING] while the phone's check or a report is still running. A server without the age
      * check sends no age. Only the server's word counts; the phone's signal is
      * reported, never used here.
      */
@@ -263,7 +274,8 @@ class Account(
         val age = (_state.value as? State.SignedIn)?.me?.age ?: return null
         return when {
             age.blocked -> AgeCheck.BLOCKED
-            askingPlatform || _agePosting.value || !age.confirmed -> AgeCheck.UNCONFIRMED
+            !age.confirmed -> AgeCheck.UNCONFIRMED
+            askingPlatform || _agePosting.value -> AgeCheck.CHECKING
             else -> null
         }
     }

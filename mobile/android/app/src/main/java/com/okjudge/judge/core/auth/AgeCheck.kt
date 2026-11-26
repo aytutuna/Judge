@@ -37,6 +37,9 @@ object AgeCheck {
 
     const val BLOCKED = "age_blocked"
     const val UNCONFIRMED = "age_unconfirmed"
+
+    /** Not a refusal of the account: the phone check or a report is still running, so wait a moment. */
+    const val CHECKING = "age_checking"
     const val AGE_SET = "age_set"
 
     private const val AHEAD_HOURS = 14L
