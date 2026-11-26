@@ -79,6 +79,18 @@ class Analytics(
     /** An answer, true or false, has been given once: the saved queue is read only the first time. */
     private var decided = false
 
+    /** While the age is unknown ([allowed] null): events from this number on are held, and may be dropped. */
+    private var heldFromSeq: Long? = null
+
+    /**
+     * The account left while its age was still unknown: what was queued since then has no known owner, so it
+     * goes. Events saved by earlier runs stay.
+     */
+    fun dropHeld() {
+        val from = heldFromSeq ?: return
+        events.removeAll { it.seq >= from }
+    }
+
     /** While the last send failed: when to try again. */
     var retryAt: Long? = null
         private set
@@ -93,6 +105,7 @@ class Analytics(
         set(value) {
             val first = !decided
             field = value
+            heldFromSeq = if (value == null) nextSeq else null
             if (value != null) decided = true
             if (value == false || (value == true && first && serverOn == false)) {
                 clear()
