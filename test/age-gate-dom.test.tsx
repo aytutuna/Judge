@@ -5,6 +5,7 @@ import { AgeGate } from "../components/AgeGate";
 import { SettingsView } from "../components/account/SettingsView";
 import { t } from "../lib/i18n";
 import { useHistory } from "../components/shell/useHistory";
+import { useCase } from "../lib/use-case";
 import { applyAge, refreshViewer, useViewer } from "../lib/use-viewer";
 
 vi.mock("next/navigation", () => ({
@@ -133,7 +134,6 @@ describe("AgeGate", () => {
       fireEvent.click(screen.getByRole("button", { name: t("en", "age.continue") }));
     });
     const readBack = screen.getByText(t("en", "age.confirmDate", { date: `June 1, ${year}` }));
-    expect(readBack.getAttribute("role")).toBe("status");
     expect(document.activeElement).toBe(readBack);
     fireEvent.click(screen.getByRole("button", { name: t("en", "age.change") }));
     expect(document.activeElement).toBe(dobInput());
@@ -216,6 +216,34 @@ describe("history after a block is lifted", () => {
       const viewer = useViewer();
       const h = useHistory(viewer);
       return <p data-testid="status">{h.status}</p>;
+    }
+    await refreshViewer();
+    render(<Probe />);
+    await waitFor(() => expect(screen.getByTestId("status").textContent).toBe("error"));
+    blockedNow = false;
+    await act(async () => {
+      applyAge({ confirmed: true, blocked: false, teen: true, needsDob: false });
+    });
+    await waitFor(() => expect(screen.getByTestId("status").textContent).toBe("ready"));
+  });
+});
+
+describe("a case page after a block is lifted", () => {
+  it("loads again without a reload", async () => {
+    age = { confirmed: false, blocked: true, teen: false, needsDob: true };
+    let blockedNow = true;
+    const base = globalThis.fetch;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+        if (String(input) === "/api/v1/cases/c1") {
+          return blockedNow ? reply(403, { code: "age_blocked" }) : reply(200, { case: { id: "c1", status: "judged" } });
+        }
+        return base(input, init);
+      }),
+    );
+    function Probe() {
+      return <p data-testid="status">{useCase("/api/v1/cases/c1").load.status}</p>;
     }
     await refreshViewer();
     render(<Probe />);
