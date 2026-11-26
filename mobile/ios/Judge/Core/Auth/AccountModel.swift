@@ -232,6 +232,8 @@ final class AccountModel {
             if fresh.user == nil {
                 sessionExpired()
             } else {
+                // The server ignored the phone's signal while blocked.
+                if info?.age?.blocked == true, fresh.age?.blocked != true { lastReport = nil }
                 info = fresh
                 ageChanged()
                 if failure == .loadFailed { failure = nil }
@@ -294,6 +296,18 @@ final class AccountModel {
     }
 
     var ageCleared: Bool { ageRefusal == nil }
+
+    /// Only the phone's check, its report or the date post is in the way, for
+    /// an account /me already says is confirmed: it passes by itself.
+    var ageHolding: Bool {
+        guard let age = info?.age, age.confirmed, !age.blocked else { return false }
+        return askingPlatform || reportingPlatform || agePosting
+    }
+
+    /// Runs `action` once nothing about age stands in the way.
+    func afterAgeClears(_ action: @escaping () -> Void) {
+        afterAge = action
+    }
 
     /// Whether the phone should be asked now: not asked yet, and either the
     /// sign-in sheet is up or the signed-in account is not closed for good.
@@ -407,6 +421,7 @@ final class AccountModel {
         guard dobPicked, !agePosting else { return }
         if !dobConfirming, AgeCheck.underThirteen(dob: dob) {
             dobConfirming = true
+            ageError = nil
             return
         }
         await sendDob()
@@ -445,6 +460,7 @@ final class AccountModel {
             let code = Self.body(error).flatMap { $0.code ?? $0.error }
             if status == 409 || (status == 403 && (code == AgeCheck.blockedCode || code == AgeCheck.setCode)) {
                 // Given elsewhere, or closed there: show what the server holds.
+                agePosting = false
                 await refresh()
                 dobConfirming = false
                 if info?.age?.needsDob != false { ageError = error }

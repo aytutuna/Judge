@@ -558,6 +558,73 @@ final class AccountAgeTests: XCTestCase {
     }
 
     @MainActor
+    func testATapDuringTheHoldRunsByItselfWhenItEnds() async throws {
+        router.on("GET", "/api/v1/me", try me(state(confirmed: true)))
+        let (account, _, fake) = makeAccount(.adult)
+        fake.hangs = true
+        account.platformTimeout = .milliseconds(200)
+        await account.refresh()
+        Task { await account.checkPlatformAge() }
+        try await PremiumFixtures.waitUntil("the prompt") { account.platformPrompting }
+        XCTAssertTrue(account.ageHolding)
+        XCTAssertEqual(PurchaseModel.refusal(account.ageRefusal, holding: account.ageHolding), .failed)
+        var ran = 0
+        account.afterAgeClears { ran += 1 }
+        XCTAssertEqual(ran, 0)
+        try await PremiumFixtures.waitUntil("the hold to end") { ran == 1 }
+        XCTAssertFalse(account.ageHolding)
+    }
+
+    @MainActor
+    func testAnUnconfirmedAccountStillHearsToConfirm() {
+        XCTAssertEqual(PurchaseModel.refusal(AgeCheck.unconfirmedCode, holding: false), .ageRequired)
+        XCTAssertEqual(PurchaseModel.refusal(AgeCheck.blockedCode, holding: true), .ageBlocked)
+    }
+
+    @MainActor
+    func testTheSignalIsSentAgainWhenARefreshFindsTheBlockLifted() async throws {
+        router.on("GET", "/api/v1/me", try me(state(blocked: true, needsDob: true)))
+        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, state(blocked: true, needsDob: true)))
+        let (account, _, _) = makeAccount(.minor)
+        await account.refresh()
+        await account.checkPlatformAge()
+        XCTAssertEqual(router.count("POST", "/api/v1/me/age"), 1)
+        // Lifted from another device.
+        router.on("GET", "/api/v1/me", try me(state(confirmed: true)))
+        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, state(confirmed: true, teen: true)))
+        await account.refresh()
+        XCTAssertEqual(router.count("POST", "/api/v1/me/age"), 2)
+        XCTAssertTrue(account.underEighteen)
+    }
+
+    @MainActor
+    func testTheDateAlreadySetElsewhereReleasesAHeldAction() async throws {
+        router.on("GET", "/api/v1/me", try me(state(needsDob: true)), try me(state(confirmed: true)))
+        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(409, ["error": "set", "code": "age_set"]))
+        let (account, _, _) = makeAccount(.unknown)
+        await account.refresh()
+        var ran = 0
+        account.afterAgeClears { ran += 1 }
+        account.pickDob(try day(1990, 3, 9))
+        await account.submitDob()
+        XCTAssertEqual(ran, 1)
+    }
+
+    @MainActor
+    func testTheConfirmStepStartsWithoutTheOldFailureNote() async throws {
+        router.on("GET", "/api/v1/me", try me(state(needsDob: true)))
+        let (account, _, _) = makeAccount(.unknown)
+        await account.refresh()
+        account.pickDob(try day(1990, 3, 9))
+        await account.submitDob()
+        XCTAssertNotNil(account.ageError)
+        account.pickDob(AgeCheck.gregorian.date(byAdding: .year, value: -8, to: Date())!)
+        await account.submitDob()
+        XCTAssertTrue(account.dobConfirming)
+        XCTAssertNil(account.ageError)
+    }
+
+    @MainActor
     func testTheUsageSettingIsKeptButOffForATeen() async throws {
         router.on("GET", "/api/v1/me", try me(state(confirmed: true, teen: true)), try me(state(confirmed: true)))
         let (api, stream) = makeAPI(token: "t0k")

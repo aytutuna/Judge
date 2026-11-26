@@ -446,9 +446,17 @@ final class HomeModel {
             }
             return
         }
-        // The phone's check or an age report is still running; the age sheet
-        // follows if the account turns out unconfirmed.
-        guard app.account.ageCleared else { return }
+        // The phone's check or an age report is still running: the tap waits
+        // for it. The age step follows if the account turns out unconfirmed.
+        guard app.account.ageCleared else {
+            if app.account.ageHolding {
+                app.account.afterAgeClears { [weak self, weak app] in
+                    guard let self, let app else { return }
+                    self.submit(app: app)
+                }
+            }
+            return
+        }
         if isTwoSided(app) {
             createCase(app: app)
         } else {
