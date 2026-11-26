@@ -144,6 +144,7 @@
     <string name="nav_links">Links</string>
     <string name="nav_tabs">Onderdelen</string>
     <string name="settings_dark_mode">Donkere modus</string>
+    <string name="settings_usage_stats_teen">Uit voor accounts onder de 18.</string>
     <string name="consent_card_title">Help je Judge te verbeteren?</string>
     <string name="consent_card_yes">Graag</string>
     <string name="consent_card_no">Nee, bedankt</string>
@@ -538,6 +539,16 @@
     <string name="stamp_dissolved">Misverstand</string>
     <string name="best_point_of">Sterkste punt van %1$s</string>
     <string name="best_point_self">Jouw sterkste punt</string>
+    <string name="age_title">Je geboortedatum</string>
+    <string name="age_lead">Judge is voor mensen van 13 jaar en ouder, en een paar instellingen hangen af van je leeftijd. Je vult dit maar één keer in.</string>
+    <string name="age_continue">Verder</string>
+    <string name="age_confirm_date">Je hebt %1$s ingevuld. Klopt dat?</string>
+    <string name="age_confirm_yes">Bevestigen</string>
+    <string name="age_change">Wijzigen</string>
+    <string name="age_failed">Dat is niet gelukt. Wil je het nog eens proberen?</string>
+    <string name="age_blocked_title">Judge is voor mensen van 13 jaar en ouder</string>
+    <string name="age_blocked">Dit account kan Judge niet gebruiken, omdat Judge alleen voor mensen van 13 jaar en ouder is.</string>
+    <string name="age_blocked_contact">Denk je dat dit een vergissing is? Mail naar %1$s.</string>
     <string name="error_password_wrong">Dat wachtwoord klopt niet.</string>
     <string name="error_password_required">Vul je huidige wachtwoord in.</string>
     <string name="error_age_blocked">Judge is alleen voor mensen van 13 jaar en ouder.</string>
@@ -683,6 +694,7 @@
     <string name="app_purchase_restore_done">Je aankopen zijn hersteld.</string>
     <string name="app_purchase_restore_none">Geen aankopen om te herstellen.</string>
     <string name="app_signin_legal">Door verder te gaan, bevestig je dat je 18 of ouder bent en ga je akkoord met de\u0020</string>
+    <string name="app_signin_legal_agree">Door verder te gaan, ga je akkoord met de\u0020</string>
     <string name="app_signin_legal_terms">gebruiksvoorwaarden</string>
     <string name="app_signin_legal_and">\u0020en het\u0020</string>
     <string name="app_signin_legal_privacy">privacybeleid</string>

@@ -130,6 +130,7 @@ const ko: AppLocale = {
     "app.purchase.restoreDone": "구매 내역을 복원했어요.",
     "app.purchase.restoreNone": "복원할 구매 내역이 없어요.",
     "app.signin.legal": "계속하면 만 18세 이상이며 ",
+    "app.signin.legalAgree": "계속하면 ",
     "app.signin.legalTerms": "이용약관",
     "app.signin.legalAnd": "과 ",
     "app.signin.legalPrivacy": "개인정보 처리방침",

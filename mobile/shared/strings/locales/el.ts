@@ -139,6 +139,7 @@ const el: AppLocale = {
     "app.purchase.restoreDone": "Οι αγορές σου επαναφέρθηκαν.",
     "app.purchase.restoreNone": "Δεν βρέθηκαν αγορές για επαναφορά.",
     "app.signin.legal": "Αν συνεχίσεις, επιβεβαιώνεις ότι είσαι τουλάχιστον 18 ετών και αποδέχεσαι τους ",
+    "app.signin.legalAgree": "Αν συνεχίσεις, αποδέχεσαι τους ",
     "app.signin.legalTerms": "Όρους Χρήσης",
     "app.signin.legalAnd": " και την ",
     "app.signin.legalPrivacy": "Πολιτική Απορρήτου",

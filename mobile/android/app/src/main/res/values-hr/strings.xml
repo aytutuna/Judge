@@ -147,6 +147,7 @@
     <string name="nav_links">Poveznice</string>
     <string name="nav_tabs">Odjeljci</string>
     <string name="settings_dark_mode">Tamni način rada</string>
+    <string name="settings_usage_stats_teen">Isključeno za račune mlađih od 18 godina.</string>
     <string name="consent_card_title">Želiš li pomoći poboljšati Judge?</string>
     <string name="consent_card_yes">Naravno</string>
     <string name="consent_card_no">Ne, hvala</string>
@@ -547,6 +548,16 @@
     <string name="stamp_dissolved">Nesporazum</string>
     <string name="best_point_of">Najjači argument koji iznosi %1$s</string>
     <string name="best_point_self">Tvoj najjači argument</string>
+    <string name="age_title">Tvoj datum rođenja</string>
+    <string name="age_lead">Judge je za osobe od 13 godina nadalje, a neke postavke ovise o dobi. Ovo upisuješ samo jednom.</string>
+    <string name="age_continue">Nastavi</string>
+    <string name="age_confirm_date">Uneseni datum: %1$s. Je li točan?</string>
+    <string name="age_confirm_yes">Potvrdi</string>
+    <string name="age_change">Promijeni</string>
+    <string name="age_failed">Nismo to uspjeli spremiti. Pokušaš li ponovno?</string>
+    <string name="age_blocked_title">Judge je za osobe od 13 godina nadalje</string>
+    <string name="age_blocked">Ovaj račun ne može koristiti Judge jer je Judge samo za osobe od 13 godina nadalje.</string>
+    <string name="age_blocked_contact">Misliš da je greška? Pošalji e-poštu na %1$s.</string>
     <string name="error_password_wrong">Ta lozinka nije točna.</string>
     <string name="error_password_required">Unesi svoju trenutnu lozinku.</string>
     <string name="error_age_blocked">Judge je samo za osobe od 13 godina nadalje.</string>
@@ -698,6 +709,7 @@
     <string name="app_purchase_restore_done">Kupnje su vraćene.</string>
     <string name="app_purchase_restore_none">Nema kupnji za vraćanje.</string>
     <string name="app_signin_legal">Nastavkom potvrđuješ da imaš 18 ili više godina i prihvaćaš\u0020</string>
+    <string name="app_signin_legal_agree">Nastavkom prihvaćaš\u0020</string>
     <string name="app_signin_legal_terms">Uvjete korištenja</string>
     <string name="app_signin_legal_and">\u0020i\u0020</string>
     <string name="app_signin_legal_privacy">Pravila privatnosti</string>

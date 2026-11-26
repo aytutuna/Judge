@@ -134,6 +134,7 @@ const hi: AppLocale = {
     "app.purchase.restoreDone": "आपकी ख़रीदारी रीस्टोर हो गई।",
     "app.purchase.restoreNone": "रीस्टोर करने के लिए कोई ख़रीदारी नहीं मिली।",
     "app.signin.legal": "आगे बढ़ने का मतलब है कि आप पुष्टि करते हैं कि आपकी उम्र 18 या उससे ज़्यादा है और आप हमारी ",
+    "app.signin.legalAgree": "आगे बढ़ने का मतलब है कि आप हमारी ",
     "app.signin.legalTerms": "इस्तेमाल की शर्तें",
     "app.signin.legalAnd": " और ",
     "app.signin.legalPrivacy": "प्राइवेसी पॉलिसी",

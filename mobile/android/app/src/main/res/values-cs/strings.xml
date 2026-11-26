@@ -150,6 +150,7 @@
     <string name="nav_links">Odkazy</string>
     <string name="nav_tabs">Sekce</string>
     <string name="settings_dark_mode">Tmavý režim</string>
+    <string name="settings_usage_stats_teen">Vypnuto pro účty do 18 let.</string>
     <string name="consent_card_title">Pomůžeš zlepšit Judge?</string>
     <string name="consent_card_yes">Jasně</string>
     <string name="consent_card_no">Ne, díky</string>
@@ -556,6 +557,16 @@
     <string name="stamp_dissolved">Nedorozumění</string>
     <string name="best_point_of">Nejsilnější argument: %1$s</string>
     <string name="best_point_self">Tvůj nejsilnější argument</string>
+    <string name="age_title">Tvé datum narození</string>
+    <string name="age_lead">Judge je pro lidi od 13 let a některá nastavení závisí na věku. Zadáváš to jen jednou.</string>
+    <string name="age_continue">Pokračovat</string>
+    <string name="age_confirm_date">Zadané datum: %1$s. Je to správně?</string>
+    <string name="age_confirm_yes">Potvrdit</string>
+    <string name="age_change">Změnit</string>
+    <string name="age_failed">Nepodařilo se to uložit. Zkusíš to znovu?</string>
+    <string name="age_blocked_title">Judge je pro lidi od 13 let</string>
+    <string name="age_blocked">Tento účet nemůže Judge používat, protože Judge je jen pro lidi od 13 let.</string>
+    <string name="age_blocked_contact">Myslíš, že je to chyba? Napiš na %1$s.</string>
     <string name="error_password_wrong">Toto heslo není správné.</string>
     <string name="error_password_required">Zadej své současné heslo.</string>
     <string name="error_age_blocked">Judge je jen pro lidi od 13 let.</string>
@@ -713,6 +724,7 @@
     <string name="app_purchase_restore_done">Nákupy jsou obnovené.</string>
     <string name="app_purchase_restore_none">Nenašli jsme žádné nákupy k obnovení.</string>
     <string name="app_signin_legal">Pokračováním potvrzuješ, že ti je 18 let nebo víc, a souhlasíš s\u0020</string>
+    <string name="app_signin_legal_agree">Pokračováním souhlasíš s\u0020</string>
     <string name="app_signin_legal_terms">podmínkami použití</string>
     <string name="app_signin_legal_and">\u0020a se\u0020</string>
     <string name="app_signin_legal_privacy">zásadami ochrany soukromí</string>

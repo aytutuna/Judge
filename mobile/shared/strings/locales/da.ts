@@ -135,6 +135,7 @@ const da: AppLocale = {
     "app.purchase.restoreDone": "Dine køb er gendannet.",
     "app.purchase.restoreNone": "Der er ingen køb at gendanne.",
     "app.signin.legal": "Ved at fortsætte bekræfter du, at du er 18 år eller ældre, og accepterer ",
+    "app.signin.legalAgree": "Ved at fortsætte accepterer du ",
     "app.signin.legalTerms": "brugsvilkårene",
     "app.signin.legalAnd": " og ",
     "app.signin.legalPrivacy": "privatlivspolitikken",

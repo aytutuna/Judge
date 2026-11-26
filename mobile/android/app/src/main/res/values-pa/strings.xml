@@ -144,6 +144,7 @@
     <string name="nav_links">ਲਿੰਕ</string>
     <string name="nav_tabs">ਹਿੱਸੇ</string>
     <string name="settings_dark_mode">ਡਾਰਕ ਮੋਡ</string>
+    <string name="settings_usage_stats_teen">18 ਸਾਲ ਤੋਂ ਘੱਟ ਉਮਰ ਦੇ ਖਾਤਿਆਂ ਲਈ ਬੰਦ ਹੈ।</string>
     <string name="consent_card_title">Judge ਨੂੰ ਬਿਹਤਰ ਬਣਾਉਣ ਵਿੱਚ ਮਦਦ ਕਰੋਗੇ?</string>
     <string name="consent_card_yes">ਹਾਂ, ਜ਼ਰੂਰ</string>
     <string name="consent_card_no">ਨਹੀਂ, ਧੰਨਵਾਦ</string>
@@ -538,6 +539,16 @@
     <string name="stamp_dissolved">ਸ਼ਬਦਾਂ ਦਾ ਭੁਲੇਖਾ</string>
     <string name="best_point_of">%1$s ਦੀ ਸਭ ਤੋਂ ਵਧੀਆ ਦਲੀਲ</string>
     <string name="best_point_self">ਤੁਹਾਡੀ ਸਭ ਤੋਂ ਵਧੀਆ ਦਲੀਲ</string>
+    <string name="age_title">ਤੁਹਾਡੀ ਜਨਮ ਤਾਰੀਖ਼</string>
+    <string name="age_lead">Judge 13 ਸਾਲ ਜਾਂ ਵੱਧ ਉਮਰ ਦੇ ਲੋਕਾਂ ਲਈ ਹੈ, ਅਤੇ ਕੁਝ ਸੈਟਿੰਗਾਂ ਉਮਰ ਉੱਤੇ ਨਿਰਭਰ ਕਰਦੀਆਂ ਹਨ। ਇਹ ਤੁਸੀਂ ਸਿਰਫ਼ ਇੱਕ ਵਾਰ ਭਰਨੀ ਹੈ।</string>
+    <string name="age_continue">ਜਾਰੀ ਰੱਖੋ</string>
+    <string name="age_confirm_date">ਤੁਸੀਂ %1$s ਦਰਜ ਕੀਤੀ ਹੈ। ਕੀ ਇਹ ਸਹੀ ਹੈ?</string>
+    <string name="age_confirm_yes">ਪੁਸ਼ਟੀ ਕਰੋ</string>
+    <string name="age_change">ਬਦਲੋ</string>
+    <string name="age_failed">ਅਸੀਂ ਇਹ ਸੰਭਾਲ ਨਹੀਂ ਸਕੇ। ਕੀ ਤੁਸੀਂ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋਗੇ?</string>
+    <string name="age_blocked_title">Judge 13 ਸਾਲ ਜਾਂ ਵੱਧ ਉਮਰ ਦੇ ਲੋਕਾਂ ਲਈ ਹੈ</string>
+    <string name="age_blocked">ਇਹ ਖਾਤਾ Judge ਨਹੀਂ ਵਰਤ ਸਕਦਾ, ਕਿਉਂਕਿ Judge ਸਿਰਫ਼ 13 ਸਾਲ ਜਾਂ ਵੱਧ ਉਮਰ ਦੇ ਲੋਕਾਂ ਲਈ ਹੈ।</string>
+    <string name="age_blocked_contact">ਲੱਗਦਾ ਹੈ ਇਹ ਗ਼ਲਤੀ ਹੈ? %1$s ’ਤੇ ਈਮੇਲ ਕਰੋ।</string>
     <string name="error_password_wrong">ਇਹ ਪਾਸਵਰਡ ਸਹੀ ਨਹੀਂ ਹੈ।</string>
     <string name="error_password_required">ਆਪਣਾ ਮੌਜੂਦਾ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ।</string>
     <string name="error_age_blocked">Judge ਸਿਰਫ਼ 13 ਸਾਲ ਜਾਂ ਵੱਧ ਉਮਰ ਦੇ ਲੋਕਾਂ ਲਈ ਹੈ।</string>
@@ -683,6 +694,7 @@
     <string name="app_purchase_restore_done">ਤੁਹਾਡੀਆਂ ਖ਼ਰੀਦਾਂ ਰੀਸਟੋਰ ਹੋ ਗਈਆਂ।</string>
     <string name="app_purchase_restore_none">ਰੀਸਟੋਰ ਕਰਨ ਲਈ ਕੋਈ ਖ਼ਰੀਦ ਨਹੀਂ ਮਿਲੀ।</string>
     <string name="app_signin_legal">ਜਾਰੀ ਰੱਖ ਕੇ ਤੁਸੀਂ ਪੁਸ਼ਟੀ ਕਰਦੇ ਹੋ ਕਿ ਤੁਹਾਡੀ ਉਮਰ 18 ਸਾਲ ਜਾਂ ਵੱਧ ਹੈ ਅਤੇ ਸਾਡੀਆਂ\u0020</string>
+    <string name="app_signin_legal_agree">ਜਾਰੀ ਰੱਖ ਕੇ ਤੁਸੀਂ ਸਾਡੀਆਂ\u0020</string>
     <string name="app_signin_legal_terms">ਵਰਤੋਂ ਦੀਆਂ ਸ਼ਰਤਾਂ</string>
     <string name="app_signin_legal_and">\u0020ਅਤੇ ਸਾਡੀ\u0020</string>
     <string name="app_signin_legal_privacy">ਪਰਦੇਦਾਰੀ ਨੀਤੀ</string>

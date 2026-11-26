@@ -134,6 +134,7 @@ const ru: AppLocale = {
     "app.purchase.restoreDone": "Покупки восстановлены.",
     "app.purchase.restoreNone": "Покупок для восстановления нет.",
     "app.signin.legal": "Продолжая, вы подтверждаете, что вам есть 18 лет, и принимаете ",
+    "app.signin.legalAgree": "Продолжая, вы принимаете ",
     "app.signin.legalTerms": "Условия использования",
     "app.signin.legalAnd": " и ",
     "app.signin.legalPrivacy": "Политику конфиденциальности",

@@ -147,6 +147,7 @@
     <string name="nav_links">Liens</string>
     <string name="nav_tabs">Sections</string>
     <string name="settings_dark_mode">Mode sombre</string>
+    <string name="settings_usage_stats_teen">Désactivé pour les comptes de moins de 18 ans.</string>
     <string name="consent_card_title">Tu veux aider à améliorer Judge ?</string>
     <string name="consent_card_yes">Avec plaisir</string>
     <string name="consent_card_no">Non merci</string>
@@ -547,6 +548,16 @@
     <string name="stamp_dissolved">Quiproquo</string>
     <string name="best_point_of">Meilleur argument côté %1$s</string>
     <string name="best_point_self">Ton meilleur argument</string>
+    <string name="age_title">Ta date de naissance</string>
+    <string name="age_lead">Judge est réservé aux personnes de 13 ans et plus, et certains réglages dépendent de l’âge. Tu ne l’indiques qu’une seule fois.</string>
+    <string name="age_continue">Continuer</string>
+    <string name="age_confirm_date">Tu as saisi %1$s. C’est bien ça ?</string>
+    <string name="age_confirm_yes">Confirmer</string>
+    <string name="age_change">Modifier</string>
+    <string name="age_failed">On n’a pas pu enregistrer ça. Tu veux bien réessayer ?</string>
+    <string name="age_blocked_title">Judge est réservé aux personnes de 13 ans et plus</string>
+    <string name="age_blocked">Ce compte ne peut pas utiliser Judge, car Judge est réservé aux personnes de 13 ans et plus.</string>
+    <string name="age_blocked_contact">Tu penses que c’est une erreur ? Écris à %1$s.</string>
     <string name="error_password_wrong">Ce mot de passe n\'est pas le bon.</string>
     <string name="error_password_required">Saisis ton mot de passe actuel.</string>
     <string name="error_age_blocked">Judge est réservé aux personnes de 13 ans et plus.</string>
@@ -698,6 +709,7 @@
     <string name="app_purchase_restore_done">Tes achats ont été restaurés.</string>
     <string name="app_purchase_restore_none">Aucun achat à restaurer.</string>
     <string name="app_signin_legal">En continuant, tu confirmes avoir 18 ans ou plus et tu acceptes les\u0020</string>
+    <string name="app_signin_legal_agree">En continuant, tu acceptes les\u0020</string>
     <string name="app_signin_legal_terms">Conditions d’utilisation</string>
     <string name="app_signin_legal_and">\u0020et la\u0020</string>
     <string name="app_signin_legal_privacy">Politique de confidentialité</string>

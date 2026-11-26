@@ -212,6 +212,7 @@ class Strings(private val res: Resources) {
     val navLinks: String get() = res.getString(R.string.nav_links)
     val navTabs: String get() = res.getString(R.string.nav_tabs)
     val settingsDarkMode: String get() = res.getString(R.string.settings_dark_mode)
+    val settingsUsageStatsTeen: String get() = res.getString(R.string.settings_usage_stats_teen)
     val consentCardTitle: String get() = res.getString(R.string.consent_card_title)
     val consentCardYes: String get() = res.getString(R.string.consent_card_yes)
     val consentCardNo: String get() = res.getString(R.string.consent_card_no)
@@ -588,6 +589,16 @@ class Strings(private val res: Resources) {
     val stampDissolved: String get() = res.getString(R.string.stamp_dissolved)
     fun bestPointOf(name: String): String = res.getString(R.string.best_point_of, name)
     val bestPointSelf: String get() = res.getString(R.string.best_point_self)
+    val ageTitle: String get() = res.getString(R.string.age_title)
+    val ageLead: String get() = res.getString(R.string.age_lead)
+    val ageContinue: String get() = res.getString(R.string.age_continue)
+    fun ageConfirmDate(date: String): String = res.getString(R.string.age_confirm_date, date)
+    val ageConfirmYes: String get() = res.getString(R.string.age_confirm_yes)
+    val ageChange: String get() = res.getString(R.string.age_change)
+    val ageFailed: String get() = res.getString(R.string.age_failed)
+    val ageBlockedTitle: String get() = res.getString(R.string.age_blocked_title)
+    val ageBlocked: String get() = res.getString(R.string.age_blocked)
+    fun ageBlockedContact(email: String): String = res.getString(R.string.age_blocked_contact, email)
     val errorPasswordWrong: String get() = res.getString(R.string.error_password_wrong)
     val errorPasswordRequired: String get() = res.getString(R.string.error_password_required)
     val errorAgeBlocked: String get() = res.getString(R.string.error_age_blocked)
@@ -715,6 +726,7 @@ class Strings(private val res: Resources) {
     val appPurchaseRestoreDone: String get() = res.getString(R.string.app_purchase_restore_done)
     val appPurchaseRestoreNone: String get() = res.getString(R.string.app_purchase_restore_none)
     val appSigninLegal: String get() = res.getString(R.string.app_signin_legal)
+    val appSigninLegalAgree: String get() = res.getString(R.string.app_signin_legal_agree)
     val appSigninLegalTerms: String get() = res.getString(R.string.app_signin_legal_terms)
     val appSigninLegalAnd: String get() = res.getString(R.string.app_signin_legal_and)
     val appSigninLegalPrivacy: String get() = res.getString(R.string.app_signin_legal_privacy)
@@ -857,6 +869,7 @@ class Strings(private val res: Resources) {
             "nav.links" -> R.string.nav_links
             "nav.tabs" -> R.string.nav_tabs
             "settings.darkMode" -> R.string.settings_dark_mode
+            "settings.usageStatsTeen" -> R.string.settings_usage_stats_teen
             "consent.cardTitle" -> R.string.consent_card_title
             "consent.cardYes" -> R.string.consent_card_yes
             "consent.cardNo" -> R.string.consent_card_no
@@ -1201,6 +1214,14 @@ class Strings(private val res: Resources) {
             "stamp.tooClose" -> R.string.stamp_too_close
             "stamp.dissolved" -> R.string.stamp_dissolved
             "bestPoint.self" -> R.string.best_point_self
+            "age.title" -> R.string.age_title
+            "age.lead" -> R.string.age_lead
+            "age.continue" -> R.string.age_continue
+            "age.confirmYes" -> R.string.age_confirm_yes
+            "age.change" -> R.string.age_change
+            "age.failed" -> R.string.age_failed
+            "age.blockedTitle" -> R.string.age_blocked_title
+            "age.blocked" -> R.string.age_blocked
             "error.password_wrong" -> R.string.error_password_wrong
             "error.password_required" -> R.string.error_password_required
             "error.age_blocked" -> R.string.error_age_blocked
@@ -1309,6 +1330,7 @@ class Strings(private val res: Resources) {
             "app.purchase.restoreDone" -> R.string.app_purchase_restore_done
             "app.purchase.restoreNone" -> R.string.app_purchase_restore_none
             "app.signin.legal" -> R.string.app_signin_legal
+            "app.signin.legalAgree" -> R.string.app_signin_legal_agree
             "app.signin.legalTerms" -> R.string.app_signin_legal_terms
             "app.signin.legalAnd" -> R.string.app_signin_legal_and
             "app.signin.legalPrivacy" -> R.string.app_signin_legal_privacy

@@ -125,6 +125,7 @@ const zhHant: AppLocale = {
     "app.purchase.restoreDone": "已回復你的購買項目。",
     "app.purchase.restoreNone": "沒有可以回復的購買項目。",
     "app.signin.legal": "繼續即表示你確認已年滿 18 歲，並同意",
+    "app.signin.legalAgree": "繼續即表示你同意",
     "app.signin.legalTerms": "使用條款",
     "app.signin.legalAnd": "和",
     "app.signin.legalPrivacy": "隱私權政策",

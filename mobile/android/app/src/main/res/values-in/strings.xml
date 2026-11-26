@@ -141,6 +141,7 @@
     <string name="nav_links">Tautan</string>
     <string name="nav_tabs">Bagian</string>
     <string name="settings_dark_mode">Mode gelap</string>
+    <string name="settings_usage_stats_teen">Nonaktif untuk akun di bawah 18 tahun.</string>
     <string name="consent_card_title">Mau bantu tingkatkan Judge?</string>
     <string name="consent_card_yes">Boleh</string>
     <string name="consent_card_no">Tidak, terima kasih</string>
@@ -529,6 +530,16 @@
     <string name="stamp_dissolved">Beda makna</string>
     <string name="best_point_of">Poin terkuat %1$s</string>
     <string name="best_point_self">Poin terkuatmu</string>
+    <string name="age_title">Tanggal lahirmu</string>
+    <string name="age_lead">Judge untuk usia 13 tahun ke atas, dan beberapa pengaturan bergantung pada usia. Kamu hanya mengisinya sekali.</string>
+    <string name="age_continue">Lanjut</string>
+    <string name="age_confirm_date">Kamu memasukkan %1$s. Sudah benar?</string>
+    <string name="age_confirm_yes">Konfirmasi</string>
+    <string name="age_change">Ubah</string>
+    <string name="age_failed">Kami tidak bisa menyimpannya. Mau coba lagi?</string>
+    <string name="age_blocked_title">Judge untuk usia 13 tahun ke atas</string>
+    <string name="age_blocked">Akun ini tidak bisa memakai Judge, karena Judge hanya untuk orang berusia 13 tahun ke atas.</string>
+    <string name="age_blocked_contact">Merasa ini keliru? Kirim email ke %1$s.</string>
     <string name="error_password_wrong">Kata sandi itu tidak benar.</string>
     <string name="error_password_required">Masukkan kata sandimu saat ini.</string>
     <string name="error_age_blocked">Judge hanya untuk orang berusia 13 tahun ke atas.</string>
@@ -668,6 +679,7 @@
     <string name="app_purchase_restore_done">Pembelianmu sudah dipulihkan.</string>
     <string name="app_purchase_restore_none">Tidak ada pembelian untuk dipulihkan.</string>
     <string name="app_signin_legal">Dengan melanjutkan, kamu menyatakan berusia 18 tahun atau lebih dan menyetujui\u0020</string>
+    <string name="app_signin_legal_agree">Dengan melanjutkan, kamu menyetujui\u0020</string>
     <string name="app_signin_legal_terms">Ketentuan Penggunaan</string>
     <string name="app_signin_legal_and">\u0020dan\u0020</string>
     <string name="app_signin_legal_privacy">Kebijakan Privasi</string>

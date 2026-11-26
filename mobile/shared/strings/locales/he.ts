@@ -134,6 +134,7 @@ const he: AppLocale = {
     "app.purchase.restoreDone": "הרכישות שלך שוחזרו.",
     "app.purchase.restoreNone": "אין רכישות לשחזור.",
     "app.signin.legal": "המשך מהווה אישור שגילך 18 ומעלה והסכמה ל",
+    "app.signin.legalAgree": "המשך מהווה הסכמה ל",
     "app.signin.legalTerms": "תנאי השימוש",
     "app.signin.legalAnd": " ול",
     "app.signin.legalPrivacy": "מדיניות הפרטיות",

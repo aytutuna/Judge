@@ -144,6 +144,7 @@
     <string name="nav_links">Bağlantılar</string>
     <string name="nav_tabs">Bölümler</string>
     <string name="settings_dark_mode">Koyu mod</string>
+    <string name="settings_usage_stats_teen">18 yaş altı hesaplarda kapalı.</string>
     <string name="consent_card_title">Judge\'ı geliştirmeye yardım eder misin?</string>
     <string name="consent_card_yes">Olur</string>
     <string name="consent_card_no">Hayır, teşekkürler</string>
@@ -538,6 +539,16 @@
     <string name="stamp_dissolved">Anlam farkı</string>
     <string name="best_point_of">%1$s adına en güçlü nokta</string>
     <string name="best_point_self">Senin en güçlü noktan</string>
+    <string name="age_title">Doğum tarihin</string>
+    <string name="age_lead">Judge yalnızca 13 yaş ve üzeri kişiler içindir ve bazı ayarlar yaşa göre değişir. Bunu yalnızca bir kez girersin.</string>
+    <string name="age_continue">Devam et</string>
+    <string name="age_confirm_date">%1$s girdin. Doğru mu?</string>
+    <string name="age_confirm_yes">Onayla</string>
+    <string name="age_change">Değiştir</string>
+    <string name="age_failed">Bunu kaydedemedik. Tekrar dener misin?</string>
+    <string name="age_blocked_title">Judge 13 yaş ve üzeri içindir</string>
+    <string name="age_blocked">Bu hesap Judge\'ı kullanamaz, çünkü Judge yalnızca 13 yaş ve üzeri kişiler içindir.</string>
+    <string name="age_blocked_contact">Bunun bir hata olduğunu mu düşünüyorsun? %1$s adresine yaz.</string>
     <string name="error_password_wrong">Bu parola doğru değil.</string>
     <string name="error_password_required">Şu anki parolanı gir.</string>
     <string name="error_age_blocked">Judge yalnızca 13 yaş ve üzeri kişiler içindir.</string>
@@ -683,6 +694,7 @@
     <string name="app_purchase_restore_done">Satın alımların geri yüklendi.</string>
     <string name="app_purchase_restore_none">Geri yüklenecek bir satın alım bulunamadı.</string>
     <string name="app_signin_legal">Devam ederek 18 yaşında veya daha büyük olduğunu doğrulamış,\u0020</string>
+    <string name="app_signin_legal_agree">Devam ederek\u0020</string>
     <string name="app_signin_legal_terms">Kullanım Koşulları</string>
     <string name="app_signin_legal_and">\'nı ve\u0020</string>
     <string name="app_signin_legal_privacy">Gizlilik Politikası</string>

@@ -147,6 +147,7 @@
     <string name="nav_links">קישורים</string>
     <string name="nav_tabs">אזורים</string>
     <string name="settings_dark_mode">מצב כהה</string>
+    <string name="settings_usage_stats_teen">כבוי בחשבונות מתחת לגיל 18.</string>
     <string name="consent_card_title">רוצה לעזור לשפר את Judge?</string>
     <string name="consent_card_yes">בטח</string>
     <string name="consent_card_no">לא, תודה</string>
@@ -547,6 +548,16 @@
     <string name="stamp_dissolved">סמנטיקה</string>
     <string name="best_point_of">הטיעון הכי חזק של %1$s</string>
     <string name="best_point_self">הטיעון הכי חזק שלך</string>
+    <string name="age_title">תאריך הלידה שלך</string>
+    <string name="age_lead">Judge מיועד לגילאי 13 ומעלה, וכמה הגדרות תלויות בגיל. את זה מזינים רק פעם אחת.</string>
+    <string name="age_continue">המשך</string>
+    <string name="age_confirm_date">הזנת %1$s. זה נכון?</string>
+    <string name="age_confirm_yes">אישור</string>
+    <string name="age_change">שינוי</string>
+    <string name="age_failed">לא הצלחנו לשמור את זה. אפשר לנסות שוב?</string>
+    <string name="age_blocked_title">Judge מיועד לגילאי 13 ומעלה</string>
+    <string name="age_blocked">החשבון הזה לא יכול להשתמש ב-Judge, כי Judge מיועד לגילאי 13 ומעלה בלבד.</string>
+    <string name="age_blocked_contact">חושבים שזו טעות? אפשר לכתוב ל-%1$s.</string>
     <string name="error_password_wrong">הסיסמה הזו אינה נכונה.</string>
     <string name="error_password_required">הזן את הסיסמה הנוכחית.</string>
     <string name="error_age_blocked">Judge מיועד לגילאי 13 ומעלה בלבד.</string>
@@ -698,6 +709,7 @@
     <string name="app_purchase_restore_done">הרכישות שלך שוחזרו.</string>
     <string name="app_purchase_restore_none">אין רכישות לשחזור.</string>
     <string name="app_signin_legal">המשך מהווה אישור שגילך 18 ומעלה והסכמה ל</string>
+    <string name="app_signin_legal_agree">המשך מהווה הסכמה ל</string>
     <string name="app_signin_legal_terms">תנאי השימוש</string>
     <string name="app_signin_legal_and">\u0020ול</string>
     <string name="app_signin_legal_privacy">מדיניות הפרטיות</string>

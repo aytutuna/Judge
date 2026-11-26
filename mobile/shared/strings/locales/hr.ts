@@ -137,6 +137,7 @@ const hr: AppLocale = {
     "app.purchase.restoreDone": "Kupnje su vraćene.",
     "app.purchase.restoreNone": "Nema kupnji za vraćanje.",
     "app.signin.legal": "Nastavkom potvrđuješ da imaš 18 ili više godina i prihvaćaš ",
+    "app.signin.legalAgree": "Nastavkom prihvaćaš ",
     "app.signin.legalTerms": "Uvjete korištenja",
     "app.signin.legalAnd": " i ",
     "app.signin.legalPrivacy": "Pravila privatnosti",

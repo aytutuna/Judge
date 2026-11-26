@@ -134,6 +134,7 @@ const th: AppLocale = {
     "app.purchase.restoreDone": "กู้คืนการซื้อแล้ว",
     "app.purchase.restoreNone": "ไม่พบรายการซื้อที่จะกู้คืน",
     "app.signin.legal": "การดำเนินการต่อถือว่าคุณยืนยันว่าอายุ 18 ปีขึ้นไปและยอมรับ",
+    "app.signin.legalAgree": "การดำเนินการต่อถือว่าคุณยอมรับ",
     "app.signin.legalTerms": "ข้อกำหนดการใช้งาน",
     "app.signin.legalAnd": "และ",
     "app.signin.legalPrivacy": "นโยบายความเป็นส่วนตัว",

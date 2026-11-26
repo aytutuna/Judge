@@ -133,6 +133,7 @@ const sk: AppLocale = {
     "app.purchase.restoreDone": "Nákupy sú obnovené.",
     "app.purchase.restoreNone": "Nenašli sa žiadne nákupy na obnovenie.",
     "app.signin.legal": "Pokračovaním potvrdzuješ, že máš 18 rokov alebo viac, a súhlasíš s ",
+    "app.signin.legalAgree": "Pokračovaním súhlasíš s ",
     "app.signin.legalTerms": "podmienkami používania",
     "app.signin.legalAnd": " a so ",
     "app.signin.legalPrivacy": "zásadami ochrany súkromia",

@@ -141,6 +141,7 @@
     <string name="nav_links">連結</string>
     <string name="nav_tabs">區塊</string>
     <string name="settings_dark_mode">深色模式</string>
+    <string name="settings_usage_stats_teen">未滿 18 歲的帳號已關閉。</string>
     <string name="consent_card_title">願意協助改進 Judge 嗎？</string>
     <string name="consent_card_yes">好的</string>
     <string name="consent_card_no">不用了</string>
@@ -529,6 +530,16 @@
     <string name="stamp_dissolved">各說各話</string>
     <string name="best_point_of">%1$s最有力的一點</string>
     <string name="best_point_self">你最有力的一點</string>
+    <string name="age_title">你的出生日期</string>
+    <string name="age_lead">Judge 僅限 13 歲以上的人使用，部分設定會依年齡而不同。只需填寫一次。</string>
+    <string name="age_continue">繼續</string>
+    <string name="age_confirm_date">你填的是 %1$s，對嗎？</string>
+    <string name="age_confirm_yes">確認</string>
+    <string name="age_change">修改</string>
+    <string name="age_failed">沒能儲存成功，再試一次好嗎？</string>
+    <string name="age_blocked_title">Judge 僅限 13 歲以上</string>
+    <string name="age_blocked">這個帳號不能使用 Judge，因為 Judge 僅限 13 歲以上的人使用。</string>
+    <string name="age_blocked_contact">覺得這是誤會嗎？請寄信到 %1$s。</string>
     <string name="error_password_wrong">密碼不正確。</string>
     <string name="error_password_required">請輸入目前的密碼。</string>
     <string name="error_age_blocked">Judge 僅限 13 歲以上的人使用。</string>
@@ -668,6 +679,7 @@
     <string name="app_purchase_restore_done">已回復你的購買項目。</string>
     <string name="app_purchase_restore_none">沒有可以回復的購買項目。</string>
     <string name="app_signin_legal">繼續即表示你確認已年滿 18 歲，並同意</string>
+    <string name="app_signin_legal_agree">繼續即表示你同意</string>
     <string name="app_signin_legal_terms">使用條款</string>
     <string name="app_signin_legal_and">和</string>
     <string name="app_signin_legal_privacy">隱私權政策</string>

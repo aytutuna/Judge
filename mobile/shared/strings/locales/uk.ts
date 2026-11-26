@@ -137,6 +137,7 @@ const uk: AppLocale = {
     "app.purchase.restoreDone": "Покупки відновлено.",
     "app.purchase.restoreNone": "Покупок для відновлення немає.",
     "app.signin.legal": "Продовжуючи, ти підтверджуєш, що тобі 18 або більше, і погоджуєшся з ",
+    "app.signin.legalAgree": "Продовжуючи, ти погоджуєшся з ",
     "app.signin.legalTerms": "Умовами використання",
     "app.signin.legalAnd": " та ",
     "app.signin.legalPrivacy": "Політикою конфіденційності",

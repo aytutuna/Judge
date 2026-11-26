@@ -149,6 +149,7 @@ const nb: AppLocale = {
     "app.purchase.restoreDone": "Kjøpene dine er gjenopprettet.",
     "app.purchase.restoreNone": "Fant ingen kjøp å gjenopprette.",
     "app.signin.legal": "Ved å fortsette bekrefter du at du er 18 år eller eldre og godtar ",
+    "app.signin.legalAgree": "Ved å fortsette godtar du ",
     "app.signin.legalTerms": "vilkårene",
     "app.signin.legalAnd": " og ",
     "app.signin.legalPrivacy": "personvernerklæringen",

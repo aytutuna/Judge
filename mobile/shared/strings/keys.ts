@@ -114,6 +114,8 @@ export const WEB_KEYS: readonly string[] = [
   "nav.verdicts",
   "nav.links",
   "settings.darkMode",
+  "settings.usageStatsTeen",
+  "age.*",
   "consent.*",
   "rating.*",
   "nav.tabs",

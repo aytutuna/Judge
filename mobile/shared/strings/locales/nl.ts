@@ -134,6 +134,7 @@ const nl: AppLocale = {
     "app.purchase.restoreDone": "Je aankopen zijn hersteld.",
     "app.purchase.restoreNone": "Geen aankopen om te herstellen.",
     "app.signin.legal": "Door verder te gaan, bevestig je dat je 18 of ouder bent en ga je akkoord met de ",
+    "app.signin.legalAgree": "Door verder te gaan, ga je akkoord met de ",
     "app.signin.legalTerms": "gebruiksvoorwaarden",
     "app.signin.legalAnd": " en het ",
     "app.signin.legalPrivacy": "privacybeleid",

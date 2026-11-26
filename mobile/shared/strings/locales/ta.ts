@@ -139,6 +139,7 @@ const ta: AppLocale = {
     "app.purchase.restoreDone": "நீங்கள் வாங்கியவை மீட்டெடுக்கப்பட்டன.",
     "app.purchase.restoreNone": "மீட்டெடுக்க எதுவும் இல்லை.",
     "app.signin.legal": "தொடர்வதன் மூலம் உங்களுக்கு 18 வயது அல்லது அதற்கு மேல் என்பதை உறுதிசெய்கிறீர்கள்; ",
+    "app.signin.legalAgree": "தொடர்வதன் மூலம் ",
     "app.signin.legalTerms": "பயன்பாட்டு விதிமுறைகளை",
     "app.signin.legalAnd": " மற்றும் ",
     "app.signin.legalPrivacy": "தனியுரிமைக் கொள்கையை",

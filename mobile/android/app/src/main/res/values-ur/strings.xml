@@ -144,6 +144,7 @@
     <string name="nav_links">لنکس</string>
     <string name="nav_tabs">حصے</string>
     <string name="settings_dark_mode">ڈارک موڈ</string>
+    <string name="settings_usage_stats_teen">18 سال سے کم عمر کے اکاؤنٹس کے لیے بند ہے۔</string>
     <string name="consent_card_title">کیا آپ Judge کو بہتر بنانے میں مدد کریں گے؟</string>
     <string name="consent_card_yes">جی ضرور</string>
     <string name="consent_card_no">نہیں، شکریہ</string>
@@ -538,6 +539,16 @@
     <string name="stamp_dissolved">لفظی فرق</string>
     <string name="best_point_of">%1$s کی سب سے مضبوط دلیل</string>
     <string name="best_point_self">آپ کی سب سے مضبوط دلیل</string>
+    <string name="age_title">آپ کی تاریخ پیدائش</string>
+    <string name="age_lead">Judge صرف 13 سال یا اس سے زیادہ عمر کے لوگوں کے لیے ہے، اور کچھ سیٹنگز عمر پر منحصر ہیں۔ یہ آپ کو صرف ایک بار درج کرنا ہے۔</string>
+    <string name="age_continue">جاری رکھیں</string>
+    <string name="age_confirm_date">آپ نے %1$s درج کی ہے۔ کیا یہ درست ہے؟</string>
+    <string name="age_confirm_yes">تصدیق کریں</string>
+    <string name="age_change">تبدیل کریں</string>
+    <string name="age_failed">ہم اسے محفوظ نہیں کر سکے۔ دوبارہ کوشش کریں گے؟</string>
+    <string name="age_blocked_title">Judge صرف 13 سال یا اس سے زیادہ عمر کے لوگوں کے لیے ہے</string>
+    <string name="age_blocked">یہ اکاؤنٹ Judge استعمال نہیں کر سکتا، کیونکہ Judge صرف 13 سال یا اس سے زیادہ عمر کے لوگوں کے لیے ہے۔</string>
+    <string name="age_blocked_contact">کیا آپ کو لگتا ہے یہ غلطی ہے؟ %1$s پر ای میل کریں۔</string>
     <string name="error_password_wrong">یہ پاس ورڈ درست نہیں ہے۔</string>
     <string name="error_password_required">اپنا موجودہ پاس ورڈ درج کریں۔</string>
     <string name="error_age_blocked">Judge صرف 13 سال یا اس سے زیادہ عمر کے لوگوں کے لیے ہے۔</string>
@@ -683,6 +694,7 @@
     <string name="app_purchase_restore_done">آپ کی خریداریاں بحال ہو گئیں۔</string>
     <string name="app_purchase_restore_none">بحال کرنے کے لیے کوئی خریداری نہیں ملی۔</string>
     <string name="app_signin_legal">جاری رکھنے کا مطلب ہے کہ آپ تصدیق کرتے ہیں کہ آپ کی عمر 18 سال یا زیادہ ہے اور ہماری\u0020</string>
+    <string name="app_signin_legal_agree">جاری رکھنے کا مطلب ہے کہ آپ ہماری\u0020</string>
     <string name="app_signin_legal_terms">استعمال کی شرائط</string>
     <string name="app_signin_legal_and">\u0020اور\u0020</string>
     <string name="app_signin_legal_privacy">رازداری کی پالیسی</string>

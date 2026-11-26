@@ -144,6 +144,7 @@
     <string name="nav_links">લિંક્સ</string>
     <string name="nav_tabs">વિભાગો</string>
     <string name="settings_dark_mode">ડાર્ક મોડ</string>
+    <string name="settings_usage_stats_teen">18 વર્ષથી નાની ઉંમરના એકાઉન્ટ માટે બંધ.</string>
     <string name="consent_card_title">Judge ને વધુ સારું બનાવવામાં મદદ કરશો?</string>
     <string name="consent_card_yes">હા, ચોક્કસ</string>
     <string name="consent_card_no">ના, આભાર</string>
@@ -538,6 +539,16 @@
     <string name="stamp_dissolved">અર્થનો ફરક</string>
     <string name="best_point_of">%1$sનો સૌથી મજબૂત મુદ્દો</string>
     <string name="best_point_self">તમારો સૌથી મજબૂત મુદ્દો</string>
+    <string name="age_title">તમારી જન્મતારીખ</string>
+    <string name="age_lead">Judge 13 કે તેથી વધુ ઉંમરના લોકો માટે છે, અને કેટલીક સેટિંગ ઉંમર પર આધારિત છે. આ તમારે ફક્ત એક જ વાર દાખલ કરવાનું છે.</string>
+    <string name="age_continue">આગળ વધો</string>
+    <string name="age_confirm_date">તમે %1$s દાખલ કરી છે. શું એ સાચી છે?</string>
+    <string name="age_confirm_yes">પુષ્ટિ કરો</string>
+    <string name="age_change">બદલો</string>
+    <string name="age_failed">એ સાચવી ન શક્યા. ફરી પ્રયાસ કરશો?</string>
+    <string name="age_blocked_title">Judge 13 કે તેથી વધુ ઉંમરના લોકો માટે છે</string>
+    <string name="age_blocked">આ એકાઉન્ટ Judge વાપરી શકતું નથી, કારણ કે Judge ફક્ત 13 કે તેથી વધુ ઉંમરના લોકો માટે છે.</string>
+    <string name="age_blocked_contact">તમને લાગે છે કે આ ભૂલ છે? %1$s પર ઈમેલ કરો.</string>
     <string name="error_password_wrong">આ પાસવર્ડ સાચો નથી.</string>
     <string name="error_password_required">તમારો હાલનો પાસવર્ડ દાખલ કરો.</string>
     <string name="error_age_blocked">Judge ફક્ત 13 કે તેથી વધુ ઉંમરના લોકો માટે છે.</string>
@@ -683,6 +694,7 @@
     <string name="app_purchase_restore_done">તમારી ખરીદી રિસ્ટોર થઈ ગઈ.</string>
     <string name="app_purchase_restore_none">રિસ્ટોર કરવા જેવી કોઈ ખરીદી નથી.</string>
     <string name="app_signin_legal">આગળ વધીને તમે પુષ્ટિ કરો છો કે તમારી ઉંમર 18 કે તેથી વધુ છે અને તમે અમારી\u0020</string>
+    <string name="app_signin_legal_agree">આગળ વધીને તમે અમારી\u0020</string>
     <string name="app_signin_legal_terms">ઉપયોગની શરતો</string>
     <string name="app_signin_legal_and">\u0020અને\u0020</string>
     <string name="app_signin_legal_privacy">ગોપનીયતા નીતિ</string>

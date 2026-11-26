@@ -136,6 +136,7 @@ const sv: AppLocale = {
     "app.purchase.restoreDone": "Dina köp har återställts.",
     "app.purchase.restoreNone": "Det finns inga köp att återställa.",
     "app.signin.legal": "Genom att fortsätta bekräftar du att du är 18 år eller äldre och godkänner våra ",
+    "app.signin.legalAgree": "Genom att fortsätta godkänner du våra ",
     "app.signin.legalTerms": "användarvillkor",
     "app.signin.legalAnd": " och vår ",
     "app.signin.legalPrivacy": "integritetspolicy",

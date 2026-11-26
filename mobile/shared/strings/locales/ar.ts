@@ -152,6 +152,7 @@ const ar: AppLocale = {
     "app.purchase.restoreDone": "تمت استعادة مشترياتك.",
     "app.purchase.restoreNone": "لا توجد مشتريات لاستعادتها.",
     "app.signin.legal": "بالمتابعة، تؤكد أن عمرك 18 عامًا أو أكثر وتوافق على ",
+    "app.signin.legalAgree": "بالمتابعة، توافق على ",
     "app.signin.legalTerms": "شروط الاستخدام",
     "app.signin.legalAnd": " و",
     "app.signin.legalPrivacy": "سياسة الخصوصية",

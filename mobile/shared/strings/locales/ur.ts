@@ -134,6 +134,7 @@ const ur: AppLocale = {
     "app.purchase.restoreDone": "آپ کی خریداریاں بحال ہو گئیں۔",
     "app.purchase.restoreNone": "بحال کرنے کے لیے کوئی خریداری نہیں ملی۔",
     "app.signin.legal": "جاری رکھنے کا مطلب ہے کہ آپ تصدیق کرتے ہیں کہ آپ کی عمر 18 سال یا زیادہ ہے اور ہماری ",
+    "app.signin.legalAgree": "جاری رکھنے کا مطلب ہے کہ آپ ہماری ",
     "app.signin.legalTerms": "استعمال کی شرائط",
     "app.signin.legalAnd": " اور ",
     "app.signin.legalPrivacy": "رازداری کی پالیسی",

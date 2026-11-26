@@ -136,6 +136,7 @@ const cs: AppLocale = {
     "app.purchase.restoreDone": "Nákupy jsou obnovené.",
     "app.purchase.restoreNone": "Nenašli jsme žádné nákupy k obnovení.",
     "app.signin.legal": "Pokračováním potvrzuješ, že ti je 18 let nebo víc, a souhlasíš s ",
+    "app.signin.legalAgree": "Pokračováním souhlasíš s ",
     "app.signin.legalTerms": "podmínkami použití",
     "app.signin.legalAnd": " a se ",
     "app.signin.legalPrivacy": "zásadami ochrany soukromí",

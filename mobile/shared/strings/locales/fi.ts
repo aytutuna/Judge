@@ -135,6 +135,7 @@ const fi: AppLocale = {
     "app.purchase.restoreDone": "Ostoksesi on palautettu.",
     "app.purchase.restoreNone": "Palautettavia ostoksia ei ole.",
     "app.signin.legal": "Jatkamalla vahvistat olevasi vähintään 18-vuotias ja hyväksyt ",
+    "app.signin.legalAgree": "Jatkamalla hyväksyt ",
     "app.signin.legalTerms": "käyttöehdot",
     "app.signin.legalAnd": " ja ",
     "app.signin.legalPrivacy": "tietosuojakäytännön",

@@ -135,6 +135,7 @@ const te: AppLocale = {
     "app.purchase.restoreDone": "మీ కొనుగోళ్లు రీస్టోర్ అయ్యాయి.",
     "app.purchase.restoreNone": "రీస్టోర్ చేయడానికి కొనుగోళ్లేవీ లేవు.",
     "app.signin.legal": "కొనసాగితే మీకు 18 ఏళ్లు లేదా అంతకంటే ఎక్కువ అని నిర్ధారిస్తూ, మా ",
+    "app.signin.legalAgree": "కొనసాగితే మా ",
     "app.signin.legalTerms": "వినియోగ నిబంధనలకు",
     "app.signin.legalAnd": ", ",
     "app.signin.legalPrivacy": "గోప్యతా విధానానికి",

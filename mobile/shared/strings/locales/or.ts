@@ -133,6 +133,7 @@ const or: AppLocale = {
     "app.purchase.restoreDone": "ଆପଣଙ୍କ ପୂର୍ବ କିଣା ପୁନଃସ୍ଥାପିତ ହେଲା।",
     "app.purchase.restoreNone": "ପୁନଃସ୍ଥାପନ କରିବାକୁ କୌଣସି ପୂର୍ବ କିଣା ନାହିଁ।",
     "app.signin.legal": "ଆଗକୁ ବଢ଼ିଲେ ଆପଣ ନିଶ୍ଚିତ କରୁଛନ୍ତି ଯେ ଆପଣଙ୍କ ବୟସ 18 କିମ୍ବା ତାଠାରୁ ଅଧିକ ଏବଂ ଆମ ",
+    "app.signin.legalAgree": "ଆଗକୁ ବଢ଼ିଲେ ଆପଣ ଆମ ",
     "app.signin.legalTerms": "ବ୍ୟବହାର ସର୍ତ୍ତ",
     "app.signin.legalAnd": " ଓ ",
     "app.signin.legalPrivacy": "ଗୋପନୀୟତା ନୀତି",

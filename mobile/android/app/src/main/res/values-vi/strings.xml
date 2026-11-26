@@ -141,6 +141,7 @@
     <string name="nav_links">Liên kết</string>
     <string name="nav_tabs">Mục</string>
     <string name="settings_dark_mode">Chế độ tối</string>
+    <string name="settings_usage_stats_teen">Tắt với tài khoản dưới 18 tuổi.</string>
     <string name="consent_card_title">Giúp cải thiện Judge nhé?</string>
     <string name="consent_card_yes">Được</string>
     <string name="consent_card_no">Không, cảm ơn</string>
@@ -529,6 +530,16 @@
     <string name="stamp_dissolved">Lệch nghĩa</string>
     <string name="best_point_of">Điểm mạnh nhất của %1$s</string>
     <string name="best_point_self">Điểm mạnh nhất của bạn</string>
+    <string name="age_title">Ngày sinh của bạn</string>
+    <string name="age_lead">Judge chỉ dành cho người từ 13 tuổi trở lên, và một vài cài đặt phụ thuộc vào độ tuổi. Bạn chỉ cần nhập một lần.</string>
+    <string name="age_continue">Tiếp tục</string>
+    <string name="age_confirm_date">Bạn đã nhập %1$s. Đúng chưa?</string>
+    <string name="age_confirm_yes">Xác nhận</string>
+    <string name="age_change">Đổi</string>
+    <string name="age_failed">Chúng tôi không lưu được. Bạn thử lại nhé?</string>
+    <string name="age_blocked_title">Judge chỉ dành cho người từ 13 tuổi trở lên</string>
+    <string name="age_blocked">Tài khoản này không thể dùng Judge, vì Judge chỉ dành cho người từ 13 tuổi trở lên.</string>
+    <string name="age_blocked_contact">Nghĩ đây là nhầm lẫn? Hãy gửi email tới %1$s.</string>
     <string name="error_password_wrong">Mật khẩu này không đúng.</string>
     <string name="error_password_required">Nhập mật khẩu hiện tại của bạn.</string>
     <string name="error_age_blocked">Judge chỉ dành cho người từ 13 tuổi trở lên.</string>
@@ -668,6 +679,7 @@
     <string name="app_purchase_restore_done">Đã khôi phục các giao dịch mua của bạn.</string>
     <string name="app_purchase_restore_none">Không có giao dịch mua nào để khôi phục.</string>
     <string name="app_signin_legal">Tiếp tục nghĩa là bạn xác nhận mình từ 18 tuổi trở lên và đồng ý với\u0020</string>
+    <string name="app_signin_legal_agree">Tiếp tục nghĩa là bạn đồng ý với\u0020</string>
     <string name="app_signin_legal_terms">Điều khoản sử dụng</string>
     <string name="app_signin_legal_and">\u0020và\u0020</string>
     <string name="app_signin_legal_privacy">Chính sách quyền riêng tư</string>

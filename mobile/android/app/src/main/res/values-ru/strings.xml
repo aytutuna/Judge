@@ -150,6 +150,7 @@
     <string name="nav_links">Ссылки</string>
     <string name="nav_tabs">Разделы</string>
     <string name="settings_dark_mode">Тёмная тема</string>
+    <string name="settings_usage_stats_teen">Для аккаунтов младше 18 лет отключено.</string>
     <string name="consent_card_title">Поможете улучшить Judge?</string>
     <string name="consent_card_yes">Конечно</string>
     <string name="consent_card_no">Нет, спасибо</string>
@@ -556,6 +557,16 @@
     <string name="stamp_dissolved">Спор о словах</string>
     <string name="best_point_of">Самый сильный довод, который приводит %1$s</string>
     <string name="best_point_self">Ваш самый сильный довод</string>
+    <string name="age_title">Ваша дата рождения</string>
+    <string name="age_lead">Judge только для людей от 13 лет, а некоторые настройки зависят от возраста. Дату нужно ввести один раз.</string>
+    <string name="age_continue">Продолжить</string>
+    <string name="age_confirm_date">Вы указали %1$s. Всё верно?</string>
+    <string name="age_confirm_yes">Подтвердить</string>
+    <string name="age_change">Изменить</string>
+    <string name="age_failed">Не удалось это сохранить. Попробуете ещё раз?</string>
+    <string name="age_blocked_title">Judge только для людей от 13 лет</string>
+    <string name="age_blocked">Этот аккаунт не может пользоваться Judge, потому что Judge только для людей от 13 лет.</string>
+    <string name="age_blocked_contact">Думаете, это ошибка? Напишите на %1$s.</string>
     <string name="error_password_wrong">Этот пароль неверный.</string>
     <string name="error_password_required">Введите текущий пароль.</string>
     <string name="error_age_blocked">Judge только для людей от 13 лет.</string>
@@ -713,6 +724,7 @@
     <string name="app_purchase_restore_done">Покупки восстановлены.</string>
     <string name="app_purchase_restore_none">Покупок для восстановления нет.</string>
     <string name="app_signin_legal">Продолжая, вы подтверждаете, что вам есть 18 лет, и принимаете\u0020</string>
+    <string name="app_signin_legal_agree">Продолжая, вы принимаете\u0020</string>
     <string name="app_signin_legal_terms">Условия использования</string>
     <string name="app_signin_legal_and">\u0020и\u0020</string>
     <string name="app_signin_legal_privacy">Политику конфиденциальности</string>

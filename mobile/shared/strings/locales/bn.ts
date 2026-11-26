@@ -135,6 +135,7 @@ const bn: AppLocale = {
     "app.purchase.restoreDone": "আপনার কেনাকাটা ফিরিয়ে আনা হয়েছে।",
     "app.purchase.restoreNone": "ফিরিয়ে আনার মতো কোনো কেনাকাটা নেই।",
     "app.signin.legal": "চালিয়ে গেলে আপনি নিশ্চিত করছেন যে আপনার বয়স ১৮ বা তার বেশি এবং আপনি আমাদের ",
+    "app.signin.legalAgree": "চালিয়ে গেলে আপনি আমাদের ",
     "app.signin.legalTerms": "ব্যবহারের শর্তাবলি",
     "app.signin.legalAnd": " আর ",
     "app.signin.legalPrivacy": "গোপনীয়তা নীতি",

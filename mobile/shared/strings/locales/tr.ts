@@ -134,6 +134,7 @@ const tr: AppLocale = {
     "app.purchase.restoreDone": "Satın alımların geri yüklendi.",
     "app.purchase.restoreNone": "Geri yüklenecek bir satın alım bulunamadı.",
     "app.signin.legal": "Devam ederek 18 yaşında veya daha büyük olduğunu doğrulamış, ",
+    "app.signin.legalAgree": "Devam ederek ",
     "app.signin.legalTerms": "Kullanım Koşulları",
     "app.signin.legalAnd": "'nı ve ",
     "app.signin.legalPrivacy": "Gizlilik Politikası",

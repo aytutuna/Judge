@@ -141,6 +141,7 @@
     <string name="nav_links">링크</string>
     <string name="nav_tabs">섹션</string>
     <string name="settings_dark_mode">다크 모드</string>
+    <string name="settings_usage_stats_teen">18세 미만 계정은 꺼져 있어요.</string>
     <string name="consent_card_title">Judge 개선에 도움을 줄래요?</string>
     <string name="consent_card_yes">좋아요</string>
     <string name="consent_card_no">아니요</string>
@@ -529,6 +530,16 @@
     <string name="stamp_dissolved">말뜻 차이</string>
     <string name="best_point_of">%1$s의 가장 강한 논거</string>
     <string name="best_point_self">내 가장 강한 논거</string>
+    <string name="age_title">생년월일</string>
+    <string name="age_lead">Judge는 만 13세 이상만 쓸 수 있고, 나이에 따라 달라지는 설정이 몇 가지 있어요. 한 번만 입력하면 돼요.</string>
+    <string name="age_continue">계속</string>
+    <string name="age_confirm_date">입력한 날짜: %1$s. 맞나요?</string>
+    <string name="age_confirm_yes">확인</string>
+    <string name="age_change">변경</string>
+    <string name="age_failed">저장하지 못했어요. 다시 시도해 주세요.</string>
+    <string name="age_blocked_title">Judge는 만 13세 이상을 위한 서비스예요</string>
+    <string name="age_blocked">Judge는 만 13세 이상만 이용할 수 있어서 이 계정은 Judge를 쓸 수 없어요.</string>
+    <string name="age_blocked_contact">잘못된 것 같나요? %1$s 주소로 메일을 보내 주세요.</string>
     <string name="error_password_wrong">비밀번호가 맞지 않아요.</string>
     <string name="error_password_required">현재 비밀번호를 입력해 주세요.</string>
     <string name="error_age_blocked">Judge는 만 13세 이상만 이용할 수 있어요.</string>
@@ -668,6 +679,7 @@
     <string name="app_purchase_restore_done">구매 내역을 복원했어요.</string>
     <string name="app_purchase_restore_none">복원할 구매 내역이 없어요.</string>
     <string name="app_signin_legal">계속하면 만 18세 이상이며\u0020</string>
+    <string name="app_signin_legal_agree">계속하면\u0020</string>
     <string name="app_signin_legal_terms">이용약관</string>
     <string name="app_signin_legal_and">과\u0020</string>
     <string name="app_signin_legal_privacy">개인정보 처리방침</string>

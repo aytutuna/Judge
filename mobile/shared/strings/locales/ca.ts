@@ -138,6 +138,7 @@ const ca: AppLocale = {
     "app.purchase.restoreDone": "S'han restaurat les compres.",
     "app.purchase.restoreNone": "No hi ha cap compra per restaurar.",
     "app.signin.legal": "Si continues, confirmes que tens 18 anys o més i acceptes les ",
+    "app.signin.legalAgree": "Si continues, acceptes les ",
     "app.signin.legalTerms": "Condicions d'ús",
     "app.signin.legalAnd": " i la ",
     "app.signin.legalPrivacy": "Política de privadesa",

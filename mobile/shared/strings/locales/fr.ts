@@ -137,6 +137,7 @@ const fr: AppLocale = {
     "app.purchase.restoreDone": "Tes achats ont été restaurés.",
     "app.purchase.restoreNone": "Aucun achat à restaurer.",
     "app.signin.legal": "En continuant, tu confirmes avoir 18 ans ou plus et tu acceptes les ",
+    "app.signin.legalAgree": "En continuant, tu acceptes les ",
     "app.signin.legalTerms": "Conditions d’utilisation",
     "app.signin.legalAnd": " et la ",
     "app.signin.legalPrivacy": "Politique de confidentialité",

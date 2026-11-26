@@ -141,6 +141,7 @@
     <string name="nav_links">ลิงก์</string>
     <string name="nav_tabs">ส่วนต่าง ๆ</string>
     <string name="settings_dark_mode">โหมดมืด</string>
+    <string name="settings_usage_stats_teen">ปิดไว้สำหรับบัญชีที่อายุต่ำกว่า 18 ปี</string>
     <string name="consent_card_title">ช่วยพัฒนา Judge ไหม</string>
     <string name="consent_card_yes">ได้เลย</string>
     <string name="consent_card_no">ไม่ล่ะ ขอบคุณ</string>
@@ -529,6 +530,16 @@
     <string name="stamp_dissolved">คนละความหมาย</string>
     <string name="best_point_of">เหตุผลที่ดีที่สุดของ %1$s</string>
     <string name="best_point_self">เหตุผลที่ดีที่สุดของคุณ</string>
+    <string name="age_title">วันเกิดของคุณ</string>
+    <string name="age_lead">Judge ให้บริการเฉพาะผู้ที่อายุ 13 ปีขึ้นไป และการตั้งค่าบางอย่างขึ้นอยู่กับอายุ คุณกรอกแค่ครั้งเดียว</string>
+    <string name="age_continue">ไปต่อ</string>
+    <string name="age_confirm_date">คุณกรอก %1$s ใช่ไหม</string>
+    <string name="age_confirm_yes">ยืนยัน</string>
+    <string name="age_change">เปลี่ยน</string>
+    <string name="age_failed">เราบันทึกไม่ได้ ลองอีกครั้งไหม</string>
+    <string name="age_blocked_title">Judge สำหรับผู้ที่อายุ 13 ปีขึ้นไป</string>
+    <string name="age_blocked">บัญชีนี้ใช้ Judge ไม่ได้ เพราะ Judge ให้บริการเฉพาะผู้ที่อายุ 13 ปีขึ้นไป</string>
+    <string name="age_blocked_contact">คิดว่าเป็นความผิดพลาดใช่ไหม ส่งอีเมลมาที่ %1$s</string>
     <string name="error_password_wrong">รหัสผ่านนี้ไม่ถูกต้อง</string>
     <string name="error_password_required">กรอกรหัสผ่านปัจจุบันของคุณ</string>
     <string name="error_age_blocked">Judge ให้บริการเฉพาะผู้ที่อายุ 13 ปีขึ้นไป</string>
@@ -668,6 +679,7 @@
     <string name="app_purchase_restore_done">กู้คืนการซื้อแล้ว</string>
     <string name="app_purchase_restore_none">ไม่พบรายการซื้อที่จะกู้คืน</string>
     <string name="app_signin_legal">การดำเนินการต่อถือว่าคุณยืนยันว่าอายุ 18 ปีขึ้นไปและยอมรับ</string>
+    <string name="app_signin_legal_agree">การดำเนินการต่อถือว่าคุณยอมรับ</string>
     <string name="app_signin_legal_terms">ข้อกำหนดการใช้งาน</string>
     <string name="app_signin_legal_and">และ</string>
     <string name="app_signin_legal_privacy">นโยบายความเป็นส่วนตัว</string>

@@ -133,6 +133,7 @@ const vi: AppLocale = {
     "app.purchase.restoreDone": "Đã khôi phục các giao dịch mua của bạn.",
     "app.purchase.restoreNone": "Không có giao dịch mua nào để khôi phục.",
     "app.signin.legal": "Tiếp tục nghĩa là bạn xác nhận mình từ 18 tuổi trở lên và đồng ý với ",
+    "app.signin.legalAgree": "Tiếp tục nghĩa là bạn đồng ý với ",
     "app.signin.legalTerms": "Điều khoản sử dụng",
     "app.signin.legalAnd": " và ",
     "app.signin.legalPrivacy": "Chính sách quyền riêng tư",

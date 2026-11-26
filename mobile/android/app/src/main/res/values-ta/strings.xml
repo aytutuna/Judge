@@ -144,6 +144,7 @@
     <string name="nav_links">இணைப்புகள்</string>
     <string name="nav_tabs">பிரிவுகள்</string>
     <string name="settings_dark_mode">டார்க் மோடு</string>
+    <string name="settings_usage_stats_teen">18 வயதுக்குட்பட்ட கணக்குகளுக்கு அணைக்கப்பட்டுள்ளது.</string>
     <string name="consent_card_title">Judge-ஐ மேம்படுத்த உதவுவீர்களா?</string>
     <string name="consent_card_yes">சரி</string>
     <string name="consent_card_no">வேண்டாம், நன்றி</string>
@@ -538,6 +539,16 @@
     <string name="stamp_dissolved">சொல் குழப்பம்</string>
     <string name="best_point_of">%1$s வைத்த வலுவான வாதம்</string>
     <string name="best_point_self">நீங்கள் வைத்த வலுவான வாதம்</string>
+    <string name="age_title">உங்கள் பிறந்த தேதி</string>
+    <string name="age_lead">Judge 13 வயது மற்றும் அதற்கு மேற்பட்டவர்களுக்கானது, சில அமைப்புகள் வயதைப் பொறுத்தவை. இதை ஒருமுறை மட்டும் உள்ளிட்டால் போதும்.</string>
+    <string name="age_continue">தொடர்க</string>
+    <string name="age_confirm_date">நீங்கள் %1$s என உள்ளிட்டுள்ளீர்கள். இது சரியா?</string>
+    <string name="age_confirm_yes">உறுதிசெய்க</string>
+    <string name="age_change">மாற்றுக</string>
+    <string name="age_failed">அதைச் சேமிக்க முடியவில்லை. மீண்டும் முயற்சிக்கிறீர்களா?</string>
+    <string name="age_blocked_title">Judge 13 வயதும் அதற்கு மேலும் உள்ளவர்களுக்கானது</string>
+    <string name="age_blocked">இந்தக் கணக்கு Judge-ஐப் பயன்படுத்த முடியாது, ஏனெனில் Judge 13 வயது மற்றும் அதற்கு மேற்பட்டவர்களுக்கு மட்டுமே.</string>
+    <string name="age_blocked_contact">இது தவறு என்று நினைக்கிறீர்களா? %1$s முகவரிக்கு ஈமெயில் அனுப்புங்கள்.</string>
     <string name="error_password_wrong">இந்தக் கடவுச்சொல் சரியில்லை.</string>
     <string name="error_password_required">உங்கள் தற்போதைய கடவுச்சொல்லை உள்ளிடுங்கள்.</string>
     <string name="error_age_blocked">Judge 13 வயது மற்றும் அதற்கு மேற்பட்டவர்களுக்கு மட்டுமே.</string>
@@ -683,6 +694,7 @@
     <string name="app_purchase_restore_done">நீங்கள் வாங்கியவை மீட்டெடுக்கப்பட்டன.</string>
     <string name="app_purchase_restore_none">மீட்டெடுக்க எதுவும் இல்லை.</string>
     <string name="app_signin_legal">தொடர்வதன் மூலம் உங்களுக்கு 18 வயது அல்லது அதற்கு மேல் என்பதை உறுதிசெய்கிறீர்கள்;\u0020</string>
+    <string name="app_signin_legal_agree">தொடர்வதன் மூலம்\u0020</string>
     <string name="app_signin_legal_terms">பயன்பாட்டு விதிமுறைகளை</string>
     <string name="app_signin_legal_and">\u0020மற்றும்\u0020</string>
     <string name="app_signin_legal_privacy">தனியுரிமைக் கொள்கையை</string>

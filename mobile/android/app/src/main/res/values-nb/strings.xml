@@ -144,6 +144,7 @@
     <string name="nav_links">Lenker</string>
     <string name="nav_tabs">Seksjoner</string>
     <string name="settings_dark_mode">Mørk modus</string>
+    <string name="settings_usage_stats_teen">Av for kontoer under 18 år.</string>
     <string name="consent_card_title">Vil du hjelpe til med å gjøre Judge bedre?</string>
     <string name="consent_card_yes">Gjerne</string>
     <string name="consent_card_no">Nei takk</string>
@@ -538,6 +539,16 @@
     <string name="stamp_dissolved">Ordstrid</string>
     <string name="best_point_of">Det beste poenget til %1$s</string>
     <string name="best_point_self">Ditt beste poeng</string>
+    <string name="age_title">Fødselsdatoen din</string>
+    <string name="age_lead">Judge er for deg som er 13 år eller eldre, og noen innstillinger avhenger av alder. Du legger inn dette bare én gang.</string>
+    <string name="age_continue">Fortsett</string>
+    <string name="age_confirm_date">Du skrev inn %1$s. Stemmer det?</string>
+    <string name="age_confirm_yes">Bekreft</string>
+    <string name="age_change">Endre</string>
+    <string name="age_failed">Vi fikk ikke lagret det. Vil du prøve igjen?</string>
+    <string name="age_blocked_title">Judge er for deg som er 13 år eller eldre</string>
+    <string name="age_blocked">Denne kontoen kan ikke bruke Judge, fordi Judge bare er for personer på 13 år eller eldre.</string>
+    <string name="age_blocked_contact">Tror du dette er en feil? Send e-post til %1$s.</string>
     <string name="error_password_wrong">Det passordet stemmer ikke.</string>
     <string name="error_password_required">Skriv inn det nåværende passordet.</string>
     <string name="error_age_blocked">Judge er bare for personer på 13 år eller eldre.</string>
@@ -683,6 +694,7 @@
     <string name="app_purchase_restore_done">Kjøpene dine er gjenopprettet.</string>
     <string name="app_purchase_restore_none">Fant ingen kjøp å gjenopprette.</string>
     <string name="app_signin_legal">Ved å fortsette bekrefter du at du er 18 år eller eldre og godtar\u0020</string>
+    <string name="app_signin_legal_agree">Ved å fortsette godtar du\u0020</string>
     <string name="app_signin_legal_terms">vilkårene</string>
     <string name="app_signin_legal_and">\u0020og\u0020</string>
     <string name="app_signin_legal_privacy">personvernerklæringen</string>

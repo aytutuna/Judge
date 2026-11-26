@@ -135,6 +135,7 @@ const pl: AppLocale = {
     "app.purchase.restoreDone": "Zakupy zostały przywrócone.",
     "app.purchase.restoreNone": "Brak zakupów do przywrócenia.",
     "app.signin.legal": "Kontynuując, potwierdzasz, że masz co najmniej 18 lat, i akceptujesz ",
+    "app.signin.legalAgree": "Kontynuując, akceptujesz ",
     "app.signin.legalTerms": "Warunki korzystania",
     "app.signin.legalAnd": " i ",
     "app.signin.legalPrivacy": "Politykę prywatności",

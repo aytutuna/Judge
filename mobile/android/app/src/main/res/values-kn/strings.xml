@@ -144,6 +144,7 @@
     <string name="nav_links">ಲಿಂಕ್‌ಗಳು</string>
     <string name="nav_tabs">ವಿಭಾಗಗಳು</string>
     <string name="settings_dark_mode">ಡಾರ್ಕ್ ಮೋಡ್</string>
+    <string name="settings_usage_stats_teen">18 ವರ್ಷದೊಳಗಿನ ಖಾತೆಗಳಿಗೆ ಆಫ್ ಆಗಿದೆ.</string>
     <string name="consent_card_title">Judge ಅನ್ನು ಉತ್ತಮಗೊಳಿಸಲು ಸಹಾಯ ಮಾಡುವಿರಾ?</string>
     <string name="consent_card_yes">ಸರಿ</string>
     <string name="consent_card_no">ಬೇಡ, ಧನ್ಯವಾದ</string>
@@ -538,6 +539,16 @@
     <string name="stamp_dissolved">ಪದದ ಗೊಂದಲ</string>
     <string name="best_point_of">%1$s ಅವರ ಅತ್ಯುತ್ತಮ ಅಂಶ</string>
     <string name="best_point_self">ನಿಮ್ಮ ಅತ್ಯುತ್ತಮ ಅಂಶ</string>
+    <string name="age_title">ನಿಮ್ಮ ಜನ್ಮ ದಿನಾಂಕ</string>
+    <string name="age_lead">Judge 13 ವರ್ಷ ಮತ್ತು ಮೇಲ್ಪಟ್ಟವರಿಗಾಗಿ, ಮತ್ತು ಕೆಲವು ಸೆಟ್ಟಿಂಗ್‌ಗಳು ವಯಸ್ಸನ್ನು ಅವಲಂಬಿಸಿರುತ್ತವೆ. ಇದನ್ನು ಒಮ್ಮೆ ಮಾತ್ರ ನಮೂದಿಸಿದರೆ ಸಾಕು.</string>
+    <string name="age_continue">ಮುಂದುವರಿಸಿ</string>
+    <string name="age_confirm_date">ನೀವು %1$s ಎಂದು ನಮೂದಿಸಿದ್ದೀರಿ. ಇದು ಸರಿಯೇ?</string>
+    <string name="age_confirm_yes">ಖಚಿತಪಡಿಸಿ</string>
+    <string name="age_change">ಬದಲಿಸಿ</string>
+    <string name="age_failed">ಅದನ್ನು ಉಳಿಸಲು ಆಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸುವಿರಾ?</string>
+    <string name="age_blocked_title">Judge 13 ವರ್ಷ ಮತ್ತು ಮೇಲ್ಪಟ್ಟವರಿಗಾಗಿ</string>
+    <string name="age_blocked">ಈ ಖಾತೆ Judge ಬಳಸಲು ಸಾಧ್ಯವಿಲ್ಲ, ಏಕೆಂದರೆ Judge 13 ವರ್ಷ ಮತ್ತು ಮೇಲ್ಪಟ್ಟವರಿಗೆ ಮಾತ್ರ.</string>
+    <string name="age_blocked_contact">ಇದು ತಪ್ಪು ಎನಿಸುತ್ತದೆಯೇ? %1$s ಗೆ ಇಮೇಲ್ ಮಾಡಿ.</string>
     <string name="error_password_wrong">ಈ ಪಾಸ್‌ವರ್ಡ್ ಸರಿಯಿಲ್ಲ.</string>
     <string name="error_password_required">ನಿಮ್ಮ ಪ್ರಸ್ತುತ ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ.</string>
     <string name="error_age_blocked">Judge 13 ವರ್ಷ ಮತ್ತು ಮೇಲ್ಪಟ್ಟವರಿಗೆ ಮಾತ್ರ.</string>
@@ -683,6 +694,7 @@
     <string name="app_purchase_restore_done">ನಿಮ್ಮ ಖರೀದಿಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ.</string>
     <string name="app_purchase_restore_none">ಮರುಸ್ಥಾಪಿಸಲು ಯಾವ ಖರೀದಿಯೂ ಇಲ್ಲ.</string>
     <string name="app_signin_legal">ಮುಂದುವರಿಯುವ ಮೂಲಕ ನಿಮಗೆ 18 ವರ್ಷ ಅಥವಾ ಹೆಚ್ಚು ಎಂದು ದೃಢಪಡಿಸಿ, ನಮ್ಮ\u0020</string>
+    <string name="app_signin_legal_agree">ಮುಂದುವರಿಯುವ ಮೂಲಕ ನಮ್ಮ\u0020</string>
     <string name="app_signin_legal_terms">ಬಳಕೆಯ ನಿಯಮಗಳು</string>
     <string name="app_signin_legal_and">\u0020ಮತ್ತು\u0020</string>
     <string name="app_signin_legal_privacy">ಗೌಪ್ಯತಾ ನೀತಿ</string>

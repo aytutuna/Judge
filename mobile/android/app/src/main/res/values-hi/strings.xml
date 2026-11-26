@@ -144,6 +144,7 @@
     <string name="nav_links">लिंक</string>
     <string name="nav_tabs">सेक्शन</string>
     <string name="settings_dark_mode">डार्क मोड</string>
+    <string name="settings_usage_stats_teen">18 साल से कम उम्र के अकाउंट के लिए बंद।</string>
     <string name="consent_card_title">Judge को बेहतर बनाने में मदद करेंगे?</string>
     <string name="consent_card_yes">ज़रूर</string>
     <string name="consent_card_no">नहीं, धन्यवाद</string>
@@ -538,6 +539,16 @@
     <string name="stamp_dissolved">शब्दों का फेर</string>
     <string name="best_point_of">%1$s की सबसे मज़बूत बात</string>
     <string name="best_point_self">आपकी सबसे मज़बूत बात</string>
+    <string name="age_title">आपकी जन्मतिथि</string>
+    <string name="age_lead">Judge 13 साल और उससे ज़्यादा उम्र के लोगों के लिए है, और कुछ सेटिंग उम्र पर निर्भर करती हैं। यह आपको सिर्फ़ एक बार भरना है।</string>
+    <string name="age_continue">आगे बढ़ें</string>
+    <string name="age_confirm_date">आपने %1$s दर्ज की है। क्या यह सही है?</string>
+    <string name="age_confirm_yes">पुष्टि करें</string>
+    <string name="age_change">बदलें</string>
+    <string name="age_failed">हम इसे सेव नहीं कर पाए। क्या आप फिर से कोशिश करेंगे?</string>
+    <string name="age_blocked_title">Judge 13 साल और उससे ज़्यादा उम्र के लोगों के लिए है</string>
+    <string name="age_blocked">यह अकाउंट Judge इस्तेमाल नहीं कर सकता, क्योंकि Judge सिर्फ़ 13 साल और उससे ज़्यादा उम्र के लोगों के लिए है।</string>
+    <string name="age_blocked_contact">लगता है कि यह ग़लती है? %1$s पर ईमेल करें।</string>
     <string name="error_password_wrong">यह पासवर्ड सही नहीं है।</string>
     <string name="error_password_required">अपना मौजूदा पासवर्ड डालें।</string>
     <string name="error_age_blocked">Judge सिर्फ़ 13 साल और उससे ज़्यादा उम्र के लोगों के लिए है।</string>
@@ -683,6 +694,7 @@
     <string name="app_purchase_restore_done">आपकी ख़रीदारी रीस्टोर हो गई।</string>
     <string name="app_purchase_restore_none">रीस्टोर करने के लिए कोई ख़रीदारी नहीं मिली।</string>
     <string name="app_signin_legal">आगे बढ़ने का मतलब है कि आप पुष्टि करते हैं कि आपकी उम्र 18 या उससे ज़्यादा है और आप हमारी\u0020</string>
+    <string name="app_signin_legal_agree">आगे बढ़ने का मतलब है कि आप हमारी\u0020</string>
     <string name="app_signin_legal_terms">इस्तेमाल की शर्तें</string>
     <string name="app_signin_legal_and">\u0020और\u0020</string>
     <string name="app_signin_legal_privacy">प्राइवेसी पॉलिसी</string>

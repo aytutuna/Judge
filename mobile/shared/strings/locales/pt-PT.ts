@@ -133,6 +133,7 @@ const ptPT: AppLocale = {
     "app.purchase.restoreDone": "As tuas compras foram restauradas.",
     "app.purchase.restoreNone": "Não há compras para restaurar.",
     "app.signin.legal": "Ao continuar, confirmas que tens 18 anos ou mais e aceitas os ",
+    "app.signin.legalAgree": "Ao continuar, aceitas os ",
     "app.signin.legalTerms": "Termos de Utilização",
     "app.signin.legalAnd": " e a ",
     "app.signin.legalPrivacy": "Política de Privacidade",

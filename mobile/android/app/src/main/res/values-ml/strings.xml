@@ -144,6 +144,7 @@
     <string name="nav_links">ലിങ്കുകൾ</string>
     <string name="nav_tabs">വിഭാഗങ്ങൾ</string>
     <string name="settings_dark_mode">ഡാർക്ക് മോഡ്</string>
+    <string name="settings_usage_stats_teen">18 വയസ്സിൽ താഴെയുള്ള അക്കൗണ്ടുകൾക്ക് ഓഫാണ്.</string>
     <string name="consent_card_title">Judge മെച്ചപ്പെടുത്താൻ സഹായിക്കാമോ?</string>
     <string name="consent_card_yes">ശരി</string>
     <string name="consent_card_no">വേണ്ട, നന്ദി</string>
@@ -538,6 +539,16 @@
     <string name="stamp_dissolved">അർത്ഥഭേദം</string>
     <string name="best_point_of">ഏറ്റവും നല്ല പോയിന്റ്: %1$s</string>
     <string name="best_point_self">നിങ്ങളുടെ ഏറ്റവും നല്ല പോയിന്റ്</string>
+    <string name="age_title">നിങ്ങളുടെ ജനനത്തീയതി</string>
+    <string name="age_lead">Judge 13 വയസ്സും അതിനു മുകളിലും ഉള്ളവർക്കുള്ളതാണ്, ചില ക്രമീകരണങ്ങൾ പ്രായത്തെ ആശ്രയിച്ചിരിക്കും. ഇത് ഒരു തവണ മാത്രം നൽകിയാൽ മതി.</string>
+    <string name="age_continue">തുടരുക</string>
+    <string name="age_confirm_date">നിങ്ങൾ %1$s എന്നാണ് നൽകിയത്. ശരിയാണോ?</string>
+    <string name="age_confirm_yes">സ്ഥിരീകരിക്കുക</string>
+    <string name="age_change">മാറ്റുക</string>
+    <string name="age_failed">അത് സേവ് ചെയ്യാൻ കഴിഞ്ഞില്ല. ഒന്നുകൂടി ശ്രമിക്കാമോ?</string>
+    <string name="age_blocked_title">Judge 13 വയസ്സും അതിനു മുകളിലും ഉള്ളവർക്കുള്ളതാണ്</string>
+    <string name="age_blocked">ഈ അക്കൗണ്ടിന് Judge ഉപയോഗിക്കാനാകില്ല, കാരണം Judge 13 വയസ്സും അതിനു മുകളിലും ഉള്ളവർക്ക് മാത്രമുള്ളതാണ്.</string>
+    <string name="age_blocked_contact">ഇത് തെറ്റാണെന്ന് തോന്നുന്നുണ്ടോ? %1$s എന്ന വിലാസത്തിൽ ഇമെയിൽ ചെയ്യൂ.</string>
     <string name="error_password_wrong">ഈ പാസ്‌വേഡ് ശരിയല്ല.</string>
     <string name="error_password_required">നിങ്ങളുടെ നിലവിലെ പാസ്‌വേഡ് നൽകുക.</string>
     <string name="error_age_blocked">Judge 13 വയസ്സും അതിനു മുകളിലും ഉള്ളവർക്ക് മാത്രമുള്ളതാണ്.</string>
@@ -683,6 +694,7 @@
     <string name="app_purchase_restore_done">നിങ്ങളുടെ വാങ്ങലുകൾ പുനഃസ്ഥാപിച്ചു.</string>
     <string name="app_purchase_restore_none">പുനഃസ്ഥാപിക്കാൻ വാങ്ങലുകളൊന്നുമില്ല.</string>
     <string name="app_signin_legal">തുടരുന്നതിലൂടെ നിങ്ങൾക്ക് 18 വയസ്സോ അതിൽ കൂടുതലോ ഉണ്ടെന്ന് സ്ഥിരീകരിക്കുകയും ഞങ്ങളുടെ\u0020</string>
+    <string name="app_signin_legal_agree">തുടരുന്നതിലൂടെ ഞങ്ങളുടെ\u0020</string>
     <string name="app_signin_legal_terms">ഉപയോഗ നിബന്ധനകൾ</string>
     <string name="app_signin_legal_and">,\u0020</string>
     <string name="app_signin_legal_privacy">സ്വകാര്യതാ നയം</string>

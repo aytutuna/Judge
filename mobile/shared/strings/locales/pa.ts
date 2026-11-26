@@ -132,6 +132,7 @@ const pa: AppLocale = {
     "app.purchase.restoreDone": "ਤੁਹਾਡੀਆਂ ਖ਼ਰੀਦਾਂ ਰੀਸਟੋਰ ਹੋ ਗਈਆਂ।",
     "app.purchase.restoreNone": "ਰੀਸਟੋਰ ਕਰਨ ਲਈ ਕੋਈ ਖ਼ਰੀਦ ਨਹੀਂ ਮਿਲੀ।",
     "app.signin.legal": "ਜਾਰੀ ਰੱਖ ਕੇ ਤੁਸੀਂ ਪੁਸ਼ਟੀ ਕਰਦੇ ਹੋ ਕਿ ਤੁਹਾਡੀ ਉਮਰ 18 ਸਾਲ ਜਾਂ ਵੱਧ ਹੈ ਅਤੇ ਸਾਡੀਆਂ ",
+    "app.signin.legalAgree": "ਜਾਰੀ ਰੱਖ ਕੇ ਤੁਸੀਂ ਸਾਡੀਆਂ ",
     "app.signin.legalTerms": "ਵਰਤੋਂ ਦੀਆਂ ਸ਼ਰਤਾਂ",
     "app.signin.legalAnd": " ਅਤੇ ਸਾਡੀ ",
     "app.signin.legalPrivacy": "ਪਰਦੇਦਾਰੀ ਨੀਤੀ",

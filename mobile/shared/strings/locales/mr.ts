@@ -135,6 +135,7 @@ const mr: AppLocale = {
     "app.purchase.restoreDone": "तुमच्या खरेदी रिस्टोअर झाल्या.",
     "app.purchase.restoreNone": "रिस्टोअर करण्यासारखी कोणतीही खरेदी नाही.",
     "app.signin.legal": "पुढे गेल्यास तुम्ही 18 वर्षांचे किंवा त्याहून मोठे असल्याची पुष्टी करता आणि ",
+    "app.signin.legalAgree": "पुढे गेल्यास तुम्ही ",
     "app.signin.legalTerms": "वापराच्या अटी",
     "app.signin.legalAnd": " व ",
     "app.signin.legalPrivacy": "गोपनीयता धोरण",

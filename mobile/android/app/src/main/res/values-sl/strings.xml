@@ -150,6 +150,7 @@
     <string name="nav_links">Povezave</string>
     <string name="nav_tabs">Razdelki</string>
     <string name="settings_dark_mode">Temni način</string>
+    <string name="settings_usage_stats_teen">Za račune oseb, mlajših od 18 let, je izklopljeno.</string>
     <string name="consent_card_title">Ali želiš pomagati izboljšati Judge?</string>
     <string name="consent_card_yes">Seveda</string>
     <string name="consent_card_no">Ne, hvala</string>
@@ -556,6 +557,16 @@
     <string name="stamp_dissolved">Nesporazum</string>
     <string name="best_point_of">Najboljši argument: %1$s</string>
     <string name="best_point_self">Tvoj najboljši argument</string>
+    <string name="age_title">Tvoj datum rojstva</string>
+    <string name="age_lead">Judge je samo za osebe, stare 13 let ali več, nekatere nastavitve pa so odvisne od starosti. To vneseš samo enkrat.</string>
+    <string name="age_continue">Naprej</string>
+    <string name="age_confirm_date">Vneseni datum: %1$s. Je prav?</string>
+    <string name="age_confirm_yes">Potrdi</string>
+    <string name="age_change">Spremeni</string>
+    <string name="age_failed">Tega nam ni uspelo shraniti. Poskusiš znova?</string>
+    <string name="age_blocked_title">Judge je samo za osebe, stare 13 let ali več</string>
+    <string name="age_blocked">S tem računom ne moreš uporabljati Judgea, ker je Judge samo za osebe, stare 13 let ali več.</string>
+    <string name="age_blocked_contact">Misliš, da gre za napako? Piši na %1$s.</string>
     <string name="error_password_wrong">To geslo ni pravilno.</string>
     <string name="error_password_required">Vnesite svoje trenutno geslo.</string>
     <string name="error_age_blocked">Judge je samo za osebe, stare 13 let ali več.</string>
@@ -713,6 +724,7 @@
     <string name="app_purchase_restore_done">Nakupi so obnovljeni.</string>
     <string name="app_purchase_restore_none">Ni nakupov za obnovitev.</string>
     <string name="app_signin_legal">Z nadaljevanjem potrjuješ, da imaš 18 let ali več, in se strinjaš s\u0020</string>
+    <string name="app_signin_legal_agree">Z nadaljevanjem se strinjaš s\u0020</string>
     <string name="app_signin_legal_terms">pogoji uporabe</string>
     <string name="app_signin_legal_and">\u0020in\u0020</string>
     <string name="app_signin_legal_privacy">politiko zasebnosti</string>

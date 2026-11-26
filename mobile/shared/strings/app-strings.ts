@@ -162,6 +162,8 @@ export const APP_EN = {
   // [legalPrivacy] + legalAfter. Every piece carries its own spaces, so
   // languages written without them (ja, zh, th) join up.
   "app.signin.legal": "By continuing, you confirm you're 18 or older and agree to the ",
+  // Same line without the 18+ confirmation, for the build that asks for a date of birth.
+  "app.signin.legalAgree": "By continuing, you agree to the ",
   "app.signin.legalTerms": "Terms",
   "app.signin.legalAnd": " and the ",
   "app.signin.legalPrivacy": "Privacy Policy",

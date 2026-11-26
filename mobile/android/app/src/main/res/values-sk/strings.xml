@@ -150,6 +150,7 @@
     <string name="nav_links">Odkazy</string>
     <string name="nav_tabs">Sekcie</string>
     <string name="settings_dark_mode">Tmavý režim</string>
+    <string name="settings_usage_stats_teen">Pre účty mladšie ako 18 rokov je vypnuté.</string>
     <string name="consent_card_title">Pomôžeš zlepšiť Judge?</string>
     <string name="consent_card_yes">Jasné</string>
     <string name="consent_card_no">Nie, vďaka</string>
@@ -556,6 +557,16 @@
     <string name="stamp_dissolved">Nedorozumenie</string>
     <string name="best_point_of">Najsilnejší argument: %1$s</string>
     <string name="best_point_self">Tvoj najsilnejší argument</string>
+    <string name="age_title">Tvoj dátum narodenia</string>
+    <string name="age_lead">Judge je len pre ľudí od 13 rokov a niektoré nastavenia závisia od veku. Zadáš to iba raz.</string>
+    <string name="age_continue">Pokračovať</string>
+    <string name="age_confirm_date">Zadaný dátum: %1$s. Je to správne?</string>
+    <string name="age_confirm_yes">Potvrdiť</string>
+    <string name="age_change">Zmeniť</string>
+    <string name="age_failed">Nepodarilo sa nám to uložiť. Skúsiš to znova?</string>
+    <string name="age_blocked_title">Judge je len pre ľudí od 13 rokov</string>
+    <string name="age_blocked">Tento účet nemôže používať Judge, pretože Judge je len pre ľudí od 13 rokov.</string>
+    <string name="age_blocked_contact">Myslíš si, že ide o chybu? Napíš na %1$s.</string>
     <string name="error_password_wrong">Toto heslo nie je správne.</string>
     <string name="error_password_required">Zadajte svoje súčasné heslo.</string>
     <string name="error_age_blocked">Judge je len pre ľudí od 13 rokov.</string>
@@ -713,6 +724,7 @@
     <string name="app_purchase_restore_done">Nákupy sú obnovené.</string>
     <string name="app_purchase_restore_none">Nenašli sa žiadne nákupy na obnovenie.</string>
     <string name="app_signin_legal">Pokračovaním potvrdzuješ, že máš 18 rokov alebo viac, a súhlasíš s\u0020</string>
+    <string name="app_signin_legal_agree">Pokračovaním súhlasíš s\u0020</string>
     <string name="app_signin_legal_terms">podmienkami používania</string>
     <string name="app_signin_legal_and">\u0020a so\u0020</string>
     <string name="app_signin_legal_privacy">zásadami ochrany súkromia</string>

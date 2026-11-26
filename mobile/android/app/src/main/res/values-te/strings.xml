@@ -144,6 +144,7 @@
     <string name="nav_links">లింక్‌లు</string>
     <string name="nav_tabs">విభాగాలు</string>
     <string name="settings_dark_mode">డార్క్ మోడ్</string>
+    <string name="settings_usage_stats_teen">18 ఏళ్లలోపు అకౌంట్లకు ఆఫ్‌లో ఉంది.</string>
     <string name="consent_card_title">Judgeను మెరుగుపరచడంలో సహాయం చేస్తారా?</string>
     <string name="consent_card_yes">సరే</string>
     <string name="consent_card_no">వద్దు, ధన్యవాదాలు</string>
@@ -538,6 +539,16 @@
     <string name="stamp_dissolved">అర్థభేదం</string>
     <string name="best_point_of">%1$s వాదనలో బలమైన పాయింట్</string>
     <string name="best_point_self">మీ వాదనలో బలమైన పాయింట్</string>
+    <string name="age_title">మీ పుట్టిన తేదీ</string>
+    <string name="age_lead">Judge 13 ఏళ్లు, ఆపై వయసు వారికోసం, కొన్ని సెట్టింగ్‌లు వయసుపై ఆధారపడతాయి. దీన్ని ఒక్కసారి మాత్రమే ఇవ్వాలి.</string>
+    <string name="age_continue">కొనసాగండి</string>
+    <string name="age_confirm_date">మీరు %1$s ఇచ్చారు. ఇది సరైనదేనా?</string>
+    <string name="age_confirm_yes">నిర్ధారించండి</string>
+    <string name="age_change">మార్చండి</string>
+    <string name="age_failed">అది సేవ్ చేయలేకపోయాం. మళ్లీ ప్రయత్నిస్తారా?</string>
+    <string name="age_blocked_title">Judge 13 ఏళ్లు, ఆపై వయసు వారికోసం</string>
+    <string name="age_blocked">ఈ అకౌంట్ Judge ని ఉపయోగించలేదు, ఎందుకంటే Judge 13 ఏళ్లు, ఆపై వయసు వారికి మాత్రమే.</string>
+    <string name="age_blocked_contact">ఇది పొరపాటు అనిపిస్తోందా? %1$sకు ఈమెయిల్ చేయండి.</string>
     <string name="error_password_wrong">ఈ పాస్‌వర్డ్ సరిగ్గా లేదు.</string>
     <string name="error_password_required">మీ ప్రస్తుత పాస్‌వర్డ్ నమోదు చేయండి.</string>
     <string name="error_age_blocked">Judge 13 ఏళ్లు, ఆపై వయసు వారికి మాత్రమే.</string>
@@ -683,6 +694,7 @@
     <string name="app_purchase_restore_done">మీ కొనుగోళ్లు రీస్టోర్ అయ్యాయి.</string>
     <string name="app_purchase_restore_none">రీస్టోర్ చేయడానికి కొనుగోళ్లేవీ లేవు.</string>
     <string name="app_signin_legal">కొనసాగితే మీకు 18 ఏళ్లు లేదా అంతకంటే ఎక్కువ అని నిర్ధారిస్తూ, మా\u0020</string>
+    <string name="app_signin_legal_agree">కొనసాగితే మా\u0020</string>
     <string name="app_signin_legal_terms">వినియోగ నిబంధనలకు</string>
     <string name="app_signin_legal_and">,\u0020</string>
     <string name="app_signin_legal_privacy">గోప్యతా విధానానికి</string>

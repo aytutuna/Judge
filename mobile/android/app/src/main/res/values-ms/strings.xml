@@ -141,6 +141,7 @@
     <string name="nav_links">Pautan</string>
     <string name="nav_tabs">Bahagian</string>
     <string name="settings_dark_mode">Mod gelap</string>
+    <string name="settings_usage_stats_teen">Dimatikan untuk akaun di bawah 18 tahun.</string>
     <string name="consent_card_title">Mahu bantu tambah baik Judge?</string>
     <string name="consent_card_yes">Boleh</string>
     <string name="consent_card_no">Tidak, terima kasih</string>
@@ -529,6 +530,16 @@
     <string name="stamp_dissolved">Salah faham</string>
     <string name="best_point_of">Hujah terbaik %1$s</string>
     <string name="best_point_self">Hujah terbaik anda</string>
+    <string name="age_title">Tarikh lahir anda</string>
+    <string name="age_lead">Judge hanya untuk mereka yang berumur 13 tahun ke atas, dan beberapa tetapan bergantung pada umur. Anda hanya perlu mengisinya sekali.</string>
+    <string name="age_continue">Teruskan</string>
+    <string name="age_confirm_date">Anda memasukkan %1$s. Betulkah?</string>
+    <string name="age_confirm_yes">Sahkan</string>
+    <string name="age_change">Ubah</string>
+    <string name="age_failed">Kami tidak dapat menyimpannya. Boleh cuba lagi?</string>
+    <string name="age_blocked_title">Judge untuk umur 13 tahun ke atas sahaja</string>
+    <string name="age_blocked">Akaun ini tidak boleh menggunakan Judge, kerana Judge hanya untuk mereka yang berumur 13 tahun ke atas.</string>
+    <string name="age_blocked_contact">Rasa ini satu kesilapan? E-mel %1$s.</string>
     <string name="error_password_wrong">Kata laluan itu tidak betul.</string>
     <string name="error_password_required">Masukkan kata laluan semasa anda.</string>
     <string name="error_age_blocked">Judge hanya untuk mereka yang berumur 13 tahun ke atas.</string>
@@ -668,6 +679,7 @@
     <string name="app_purchase_restore_done">Pembelian anda sudah dipulihkan.</string>
     <string name="app_purchase_restore_none">Tiada pembelian untuk dipulihkan.</string>
     <string name="app_signin_legal">Dengan meneruskan, anda mengesahkan bahawa anda berumur 18 tahun atau lebih dan bersetuju dengan\u0020</string>
+    <string name="app_signin_legal_agree">Dengan meneruskan, anda bersetuju dengan\u0020</string>
     <string name="app_signin_legal_terms">Syarat Penggunaan</string>
     <string name="app_signin_legal_and">\u0020dan\u0020</string>
     <string name="app_signin_legal_privacy">Dasar Privasi</string>

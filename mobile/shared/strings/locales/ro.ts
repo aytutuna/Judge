@@ -135,6 +135,7 @@ const ro: AppLocale = {
     "app.purchase.restoreDone": "Achizițiile tale au fost restaurate.",
     "app.purchase.restoreNone": "Nu ai achiziții de restaurat.",
     "app.signin.legal": "Dacă continui, confirmi că ai 18 ani sau mai mult și ești de acord cu ",
+    "app.signin.legalAgree": "Dacă continui, ești de acord cu ",
     "app.signin.legalTerms": "Termenii de utilizare",
     "app.signin.legalAnd": " și cu ",
     "app.signin.legalPrivacy": "Politica de confidențialitate",

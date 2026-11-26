@@ -135,6 +135,7 @@ const de: AppLocale = {
     "app.purchase.restoreDone": "Deine Käufe wurden wiederhergestellt.",
     "app.purchase.restoreNone": "Keine Käufe zum Wiederherstellen gefunden.",
     "app.signin.legal": "Wenn du fortfährst, bestätigst du, dass du mindestens 18 bist, und stimmst den ",
+    "app.signin.legalAgree": "Wenn du fortfährst, stimmst du den ",
     "app.signin.legalTerms": "Nutzungsbedingungen",
     "app.signin.legalAnd": " und der ",
     "app.signin.legalPrivacy": "Datenschutzerklärung",

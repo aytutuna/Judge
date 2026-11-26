@@ -154,6 +154,7 @@ const sl: AppLocale = {
     "app.purchase.restoreDone": "Nakupi so obnovljeni.",
     "app.purchase.restoreNone": "Ni nakupov za obnovitev.",
     "app.signin.legal": "Z nadaljevanjem potrjuješ, da imaš 18 let ali več, in se strinjaš s ",
+    "app.signin.legalAgree": "Z nadaljevanjem se strinjaš s ",
     "app.signin.legalTerms": "pogoji uporabe",
     "app.signin.legalAnd": " in ",
     "app.signin.legalPrivacy": "politiko zasebnosti",

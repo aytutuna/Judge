@@ -138,6 +138,7 @@ const es: AppLocale = {
     "app.purchase.restoreDone": "Se restauraron tus compras.",
     "app.purchase.restoreNone": "No hay compras para restaurar.",
     "app.signin.legal": "Al continuar, confirmas que tienes 18 años o más y aceptas las ",
+    "app.signin.legalAgree": "Al continuar, aceptas las ",
     "app.signin.legalTerms": "Condiciones de uso",
     "app.signin.legalAnd": " y la ",
     "app.signin.legalPrivacy": "Política de privacidad",

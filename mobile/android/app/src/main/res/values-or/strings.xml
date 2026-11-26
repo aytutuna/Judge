@@ -144,6 +144,7 @@
     <string name="nav_links">ଲିଙ୍କ</string>
     <string name="nav_tabs">ବିଭାଗ</string>
     <string name="settings_dark_mode">ଡାର୍କ ମୋଡ୍</string>
+    <string name="settings_usage_stats_teen">18 ବର୍ଷରୁ କମ୍ ଆକାଉଣ୍ଟ ପାଇଁ ବନ୍ଦ।</string>
     <string name="consent_card_title">Judge କୁ ଭଲ କରିବାରେ ସାହାଯ୍ୟ କରିବେ?</string>
     <string name="consent_card_yes">ହଁ, ନିଶ୍ଚୟ</string>
     <string name="consent_card_no">ନା, ଧନ୍ୟବାଦ</string>
@@ -538,6 +539,16 @@
     <string name="stamp_dissolved">ଅର୍ଥଭେଦ</string>
     <string name="best_point_of">%1$sଙ୍କ ସବୁଠୁ ଜୋରଦାର କଥା</string>
     <string name="best_point_self">ଆପଣଙ୍କ ସବୁଠୁ ଜୋରଦାର କଥା</string>
+    <string name="age_title">ଆପଣଙ୍କ ଜନ୍ମ ତାରିଖ</string>
+    <string name="age_lead">Judge 13 ବର୍ଷ ଓ ତା\'ଠାରୁ ଅଧିକ ବୟସର ଲୋକଙ୍କ ପାଇଁ, ଏବଂ କିଛି ସେଟିଂସ୍ ବୟସ ଉପରେ ନିର୍ଭର କରେ। ଏହା କେବଳ ଥରେ ଦିଅନ୍ତୁ।</string>
+    <string name="age_continue">ଜାରି ରଖନ୍ତୁ</string>
+    <string name="age_confirm_date">ଆପଣ %1$s ଲେଖିଛନ୍ତି। ଏହା ଠିକ୍ ଅଛି କି?</string>
+    <string name="age_confirm_yes">ନିଶ୍ଚିତ କରନ୍ତୁ</string>
+    <string name="age_change">ବଦଳାନ୍ତୁ</string>
+    <string name="age_failed">ଆମେ ତାହା ସେଭ୍ କରିପାରିଲୁ ନାହିଁ। ଆଉ ଥରେ ଚେଷ୍ଟା କରିବେ କି?</string>
+    <string name="age_blocked_title">Judge 13 ବର୍ଷ ଓ ତା\'ଠାରୁ ଅଧିକ ବୟସର ଲୋକଙ୍କ ପାଇଁ</string>
+    <string name="age_blocked">ଏହି ଆକାଉଣ୍ଟ Judge ବ୍ୟବହାର କରିପାରିବ ନାହିଁ, କାରଣ Judge କେବଳ 13 ବର୍ଷ ଓ ତା\'ଠାରୁ ଅଧିକ ବୟସର ଲୋକଙ୍କ ପାଇଁ।</string>
+    <string name="age_blocked_contact">ଏହା ଭୁଲ ବୋଲି ଭାବୁଛନ୍ତି? %1$s କୁ ଇମେଲ୍ କରନ୍ତୁ।</string>
     <string name="error_password_wrong">ଏହି ପାସୱାର୍ଡ ଠିକ୍ ନୁହେଁ।</string>
     <string name="error_password_required">ଆପଣଙ୍କ ବର୍ତ୍ତମାନର ପାସୱାର୍ଡ ଲେଖନ୍ତୁ।</string>
     <string name="error_age_blocked">Judge କେବଳ 13 ବର୍ଷ ଓ ତା\'ଠାରୁ ଅଧିକ ବୟସର ଲୋକଙ୍କ ପାଇଁ।</string>
@@ -683,6 +694,7 @@
     <string name="app_purchase_restore_done">ଆପଣଙ୍କ ପୂର୍ବ କିଣା ପୁନଃସ୍ଥାପିତ ହେଲା।</string>
     <string name="app_purchase_restore_none">ପୁନଃସ୍ଥାପନ କରିବାକୁ କୌଣସି ପୂର୍ବ କିଣା ନାହିଁ।</string>
     <string name="app_signin_legal">ଆଗକୁ ବଢ଼ିଲେ ଆପଣ ନିଶ୍ଚିତ କରୁଛନ୍ତି ଯେ ଆପଣଙ୍କ ବୟସ 18 କିମ୍ବା ତାଠାରୁ ଅଧିକ ଏବଂ ଆମ\u0020</string>
+    <string name="app_signin_legal_agree">ଆଗକୁ ବଢ଼ିଲେ ଆପଣ ଆମ\u0020</string>
     <string name="app_signin_legal_terms">ବ୍ୟବହାର ସର୍ତ୍ତ</string>
     <string name="app_signin_legal_and">\u0020ଓ\u0020</string>
     <string name="app_signin_legal_privacy">ଗୋପନୀୟତା ନୀତି</string>

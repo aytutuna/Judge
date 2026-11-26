@@ -279,6 +279,7 @@ enum L10n {
     static func navLinks(_ lang: AppLang) -> String { string("nav.links", lang) }
     static func navTabs(_ lang: AppLang) -> String { string("nav.tabs", lang) }
     static func settingsDarkMode(_ lang: AppLang) -> String { string("settings.darkMode", lang) }
+    static func settingsUsageStatsTeen(_ lang: AppLang) -> String { string("settings.usageStatsTeen", lang) }
     static func consentCardTitle(_ lang: AppLang) -> String { string("consent.cardTitle", lang) }
     static func consentCardYes(_ lang: AppLang) -> String { string("consent.cardYes", lang) }
     static func consentCardNo(_ lang: AppLang) -> String { string("consent.cardNo", lang) }
@@ -655,6 +656,16 @@ enum L10n {
     static func stampDissolved(_ lang: AppLang) -> String { string("stamp.dissolved", lang) }
     static func bestPointOf(_ lang: AppLang, name: String) -> String { format("bestPoint.of", lang, name) }
     static func bestPointSelf(_ lang: AppLang) -> String { string("bestPoint.self", lang) }
+    static func ageTitle(_ lang: AppLang) -> String { string("age.title", lang) }
+    static func ageLead(_ lang: AppLang) -> String { string("age.lead", lang) }
+    static func ageContinue(_ lang: AppLang) -> String { string("age.continue", lang) }
+    static func ageConfirmDate(_ lang: AppLang, date: String) -> String { format("age.confirmDate", lang, date) }
+    static func ageConfirmYes(_ lang: AppLang) -> String { string("age.confirmYes", lang) }
+    static func ageChange(_ lang: AppLang) -> String { string("age.change", lang) }
+    static func ageFailed(_ lang: AppLang) -> String { string("age.failed", lang) }
+    static func ageBlockedTitle(_ lang: AppLang) -> String { string("age.blockedTitle", lang) }
+    static func ageBlocked(_ lang: AppLang) -> String { string("age.blocked", lang) }
+    static func ageBlockedContact(_ lang: AppLang, email: String) -> String { format("age.blockedContact", lang, email) }
     static func errorPasswordWrong(_ lang: AppLang) -> String { string("error.password_wrong", lang) }
     static func errorPasswordRequired(_ lang: AppLang) -> String { string("error.password_required", lang) }
     static func errorAgeBlocked(_ lang: AppLang) -> String { string("error.age_blocked", lang) }
@@ -782,6 +793,7 @@ enum L10n {
     static func appPurchaseRestoreDone(_ lang: AppLang) -> String { string("app.purchase.restoreDone", lang) }
     static func appPurchaseRestoreNone(_ lang: AppLang) -> String { string("app.purchase.restoreNone", lang) }
     static func appSigninLegal(_ lang: AppLang) -> String { string("app.signin.legal", lang) }
+    static func appSigninLegalAgree(_ lang: AppLang) -> String { string("app.signin.legalAgree", lang) }
     static func appSigninLegalTerms(_ lang: AppLang) -> String { string("app.signin.legalTerms", lang) }
     static func appSigninLegalAnd(_ lang: AppLang) -> String { string("app.signin.legalAnd", lang) }
     static func appSigninLegalPrivacy(_ lang: AppLang) -> String { string("app.signin.legalPrivacy", lang) }
@@ -925,6 +937,7 @@ enum L10n {
         "nav.links",
         "nav.tabs",
         "settings.darkMode",
+        "settings.usageStatsTeen",
         "consent.cardTitle",
         "consent.cardYes",
         "consent.cardNo",
@@ -1269,6 +1282,14 @@ enum L10n {
         "stamp.tooClose",
         "stamp.dissolved",
         "bestPoint.self",
+        "age.title",
+        "age.lead",
+        "age.continue",
+        "age.confirmYes",
+        "age.change",
+        "age.failed",
+        "age.blockedTitle",
+        "age.blocked",
         "error.password_wrong",
         "error.password_required",
         "error.age_blocked",
@@ -1377,6 +1398,7 @@ enum L10n {
         "app.purchase.restoreDone",
         "app.purchase.restoreNone",
         "app.signin.legal",
+        "app.signin.legalAgree",
         "app.signin.legalTerms",
         "app.signin.legalAnd",
         "app.signin.legalPrivacy",

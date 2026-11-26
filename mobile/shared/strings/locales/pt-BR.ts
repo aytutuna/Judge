@@ -135,6 +135,7 @@ const ptBR: AppLocale = {
     "app.purchase.restoreDone": "Suas compras foram restauradas.",
     "app.purchase.restoreNone": "Nenhuma compra para restaurar.",
     "app.signin.legal": "Ao continuar, você confirma ter 18 anos ou mais e concorda com os ",
+    "app.signin.legalAgree": "Ao continuar, você concorda com os ",
     "app.signin.legalTerms": "Termos de Uso",
     "app.signin.legalAnd": " e com a ",
     "app.signin.legalPrivacy": "Política de Privacidade",

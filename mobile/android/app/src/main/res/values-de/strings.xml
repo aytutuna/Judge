@@ -144,6 +144,7 @@
     <string name="nav_links">Links</string>
     <string name="nav_tabs">Bereiche</string>
     <string name="settings_dark_mode">Dunkelmodus</string>
+    <string name="settings_usage_stats_teen">Aus für Konten unter 18.</string>
     <string name="consent_card_title">Hilfst du mit, Judge zu verbessern?</string>
     <string name="consent_card_yes">Gern</string>
     <string name="consent_card_no">Nein danke</string>
@@ -538,6 +539,16 @@
     <string name="stamp_dissolved">Missverständnis</string>
     <string name="best_point_of">Stärkstes Argument von %1$s</string>
     <string name="best_point_self">Dein stärkstes Argument</string>
+    <string name="age_title">Dein Geburtsdatum</string>
+    <string name="age_lead">Judge ist für Menschen ab 13, und einige Einstellungen hängen vom Alter ab. Das gibst du nur einmal an.</string>
+    <string name="age_continue">Weiter</string>
+    <string name="age_confirm_date">Du hast %1$s eingegeben. Stimmt das?</string>
+    <string name="age_confirm_yes">Bestätigen</string>
+    <string name="age_change">Ändern</string>
+    <string name="age_failed">Das konnten wir nicht speichern. Versuchst du es noch mal?</string>
+    <string name="age_blocked_title">Judge ist für Menschen ab 13</string>
+    <string name="age_blocked">Dieses Konto kann Judge nicht nutzen, weil Judge nur für Menschen ab 13 ist.</string>
+    <string name="age_blocked_contact">Du denkst, das ist ein Irrtum? Schreib an %1$s.</string>
     <string name="error_password_wrong">Dieses Passwort stimmt nicht.</string>
     <string name="error_password_required">Gib dein aktuelles Passwort ein.</string>
     <string name="error_age_blocked">Judge ist nur für Menschen ab 13.</string>
@@ -683,6 +694,7 @@
     <string name="app_purchase_restore_done">Deine Käufe wurden wiederhergestellt.</string>
     <string name="app_purchase_restore_none">Keine Käufe zum Wiederherstellen gefunden.</string>
     <string name="app_signin_legal">Wenn du fortfährst, bestätigst du, dass du mindestens 18 bist, und stimmst den\u0020</string>
+    <string name="app_signin_legal_agree">Wenn du fortfährst, stimmst du den\u0020</string>
     <string name="app_signin_legal_terms">Nutzungsbedingungen</string>
     <string name="app_signin_legal_and">\u0020und der\u0020</string>
     <string name="app_signin_legal_privacy">Datenschutzerklärung</string>

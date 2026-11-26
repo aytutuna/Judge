@@ -144,6 +144,7 @@
     <string name="nav_links">लिंक</string>
     <string name="nav_tabs">विभाग</string>
     <string name="settings_dark_mode">डार्क मोड</string>
+    <string name="settings_usage_stats_teen">18 वर्षांखालील खात्यांसाठी बंद.</string>
     <string name="consent_card_title">Judge अधिक चांगले करण्यात मदत कराल?</string>
     <string name="consent_card_yes">हो, नक्की</string>
     <string name="consent_card_no">नको, धन्यवाद</string>
@@ -538,6 +539,16 @@
     <string name="stamp_dissolved">अर्थभेद</string>
     <string name="best_point_of">%1$sचा सर्वात भक्कम मुद्दा</string>
     <string name="best_point_self">तुमचा सर्वात भक्कम मुद्दा</string>
+    <string name="age_title">तुमची जन्मतारीख</string>
+    <string name="age_lead">Judge 13 वर्षे आणि त्याहून मोठ्यांसाठी आहे, आणि काही सेटिंग्ज वयावर अवलंबून असतात. ही माहिती फक्त एकदाच द्यावी लागते.</string>
+    <string name="age_continue">पुढे जा</string>
+    <string name="age_confirm_date">तुम्ही %1$s टाकले आहे. हे बरोबर आहे का?</string>
+    <string name="age_confirm_yes">निश्चित करा</string>
+    <string name="age_change">बदला</string>
+    <string name="age_failed">हे सेव्ह करता आले नाही. पुन्हा प्रयत्न कराल का?</string>
+    <string name="age_blocked_title">Judge 13 वर्षे आणि त्याहून मोठ्यांसाठी आहे</string>
+    <string name="age_blocked">हे खाते Judge वापरू शकत नाही, कारण Judge फक्त 13 वर्षे आणि त्याहून मोठ्यांसाठी आहे.</string>
+    <string name="age_blocked_contact">हे चुकीचे वाटते का? %1$s वर ईमेल करा.</string>
     <string name="error_password_wrong">हा पासवर्ड बरोबर नाही.</string>
     <string name="error_password_required">तुमचा सध्याचा पासवर्ड टाका.</string>
     <string name="error_age_blocked">Judge फक्त 13 वर्षे आणि त्याहून मोठ्यांसाठी आहे.</string>
@@ -683,6 +694,7 @@
     <string name="app_purchase_restore_done">तुमच्या खरेदी रिस्टोअर झाल्या.</string>
     <string name="app_purchase_restore_none">रिस्टोअर करण्यासारखी कोणतीही खरेदी नाही.</string>
     <string name="app_signin_legal">पुढे गेल्यास तुम्ही 18 वर्षांचे किंवा त्याहून मोठे असल्याची पुष्टी करता आणि\u0020</string>
+    <string name="app_signin_legal_agree">पुढे गेल्यास तुम्ही\u0020</string>
     <string name="app_signin_legal_terms">वापराच्या अटी</string>
     <string name="app_signin_legal_and">\u0020व\u0020</string>
     <string name="app_signin_legal_privacy">गोपनीयता धोरण</string>

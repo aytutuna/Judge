@@ -134,6 +134,7 @@ const hu: AppLocale = {
     "app.purchase.restoreDone": "Visszaállítottuk a vásárlásaidat.",
     "app.purchase.restoreNone": "Nincs visszaállítható vásárlás.",
     "app.signin.legal": "A folytatással megerősíted, hogy elmúltál 18 éves, és elfogadod a ",
+    "app.signin.legalAgree": "A folytatással elfogadod a ",
     "app.signin.legalTerms": "Felhasználási feltételeket",
     "app.signin.legalAnd": " és az ",
     "app.signin.legalPrivacy": "Adatvédelmi tájékoztatót",

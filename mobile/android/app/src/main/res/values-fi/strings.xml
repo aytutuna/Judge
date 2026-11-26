@@ -144,6 +144,7 @@
     <string name="nav_links">Linkit</string>
     <string name="nav_tabs">Osiot</string>
     <string name="settings_dark_mode">Tumma tila</string>
+    <string name="settings_usage_stats_teen">Pois päältä alle 18-vuotiaiden tileillä.</string>
     <string name="consent_card_title">Autatko parantamaan Judgea?</string>
     <string name="consent_card_yes">Kyllä</string>
     <string name="consent_card_no">Ei kiitos</string>
@@ -538,6 +539,16 @@
     <string name="stamp_dissolved">Merkitysero</string>
     <string name="best_point_of">%1$s: paras pointti</string>
     <string name="best_point_self">Sinun paras pointtisi</string>
+    <string name="age_title">Syntymäaikasi</string>
+    <string name="age_lead">Judge on tarkoitettu 13 vuotta täyttäneille, ja jotkin asetukset riippuvat iästä. Tämä annetaan vain kerran.</string>
+    <string name="age_continue">Jatka</string>
+    <string name="age_confirm_date">Syötit %1$s. Onko se oikein?</string>
+    <string name="age_confirm_yes">Vahvista</string>
+    <string name="age_change">Muuta</string>
+    <string name="age_failed">Tallennus ei onnistunut. Yritätkö uudelleen?</string>
+    <string name="age_blocked_title">Judge on tarkoitettu 13 vuotta täyttäneille</string>
+    <string name="age_blocked">Tämä tili ei voi käyttää Judgea, koska Judge on tarkoitettu vain 13 vuotta täyttäneille.</string>
+    <string name="age_blocked_contact">Onko tämä mielestäsi virhe? Kirjoita osoitteeseen %1$s.</string>
     <string name="error_password_wrong">Salasana ei ole oikea.</string>
     <string name="error_password_required">Anna nykyinen salasanasi.</string>
     <string name="error_age_blocked">Judge on tarkoitettu vain 13 vuotta täyttäneille.</string>
@@ -683,6 +694,7 @@
     <string name="app_purchase_restore_done">Ostoksesi on palautettu.</string>
     <string name="app_purchase_restore_none">Palautettavia ostoksia ei ole.</string>
     <string name="app_signin_legal">Jatkamalla vahvistat olevasi vähintään 18-vuotias ja hyväksyt\u0020</string>
+    <string name="app_signin_legal_agree">Jatkamalla hyväksyt\u0020</string>
     <string name="app_signin_legal_terms">käyttöehdot</string>
     <string name="app_signin_legal_and">\u0020ja\u0020</string>
     <string name="app_signin_legal_privacy">tietosuojakäytännön</string>

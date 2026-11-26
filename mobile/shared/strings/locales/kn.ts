@@ -138,6 +138,7 @@ const kn: AppLocale = {
     "app.purchase.restoreDone": "ನಿಮ್ಮ ಖರೀದಿಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ.",
     "app.purchase.restoreNone": "ಮರುಸ್ಥಾಪಿಸಲು ಯಾವ ಖರೀದಿಯೂ ಇಲ್ಲ.",
     "app.signin.legal": "ಮುಂದುವರಿಯುವ ಮೂಲಕ ನಿಮಗೆ 18 ವರ್ಷ ಅಥವಾ ಹೆಚ್ಚು ಎಂದು ದೃಢಪಡಿಸಿ, ನಮ್ಮ ",
+    "app.signin.legalAgree": "ಮುಂದುವರಿಯುವ ಮೂಲಕ ನಮ್ಮ ",
     "app.signin.legalTerms": "ಬಳಕೆಯ ನಿಯಮಗಳು",
     "app.signin.legalAnd": " ಮತ್ತು ",
     "app.signin.legalPrivacy": "ಗೌಪ್ಯತಾ ನೀತಿ",
