@@ -285,6 +285,11 @@ function assertId(value: string, field: string): void {
 /** Sandbox purchases are marked in the ledger so they can be told apart later. */
 const envOf = (g: { sandbox?: boolean }) => (g.sandbox ? "sandbox" : null);
 
+/** The stand-in `s` has a period that overlaps the one the real plan
+ * (source and original id given as the next two arguments) ended up with. */
+const overlapsReal = `EXISTS (SELECT 1 FROM subscriptions r WHERE r.source = ? AND r.original_transaction_id = ?
+                              AND s.period_end > r.period_start AND s.period_start < r.period_end)`;
+
 const grantExists = (id: string) => ({
   sql: "EXISTS (SELECT 1 FROM entitlement_grants WHERE id = ?)",
   args: [id],
@@ -797,7 +802,7 @@ export async function grantSubscription(g: {
             SELECT ?, ?, ?, ?, ?, 'active', ?, ?, ?, ?,
                    COALESCE((SELECT max(used_in_period) FROM subscriptions
                              WHERE user_id = ? AND source = ? AND status = 'active'
-                               AND original_transaction_id LIKE 'rcsync:%' AND period_end > ?), 0),
+                               AND original_transaction_id LIKE 'rcsync:%' AND period_end > ? AND period_start < ?), 0),
                    ? WHERE ${guard.sql}
             ON CONFLICT (source, original_transaction_id) DO UPDATE SET
               user_id = excluded.user_id,
@@ -831,6 +836,7 @@ export async function grantSubscription(g: {
         g.userId,
         g.source,
         periodStart,
+        periodEnd,
         nowIso,
         ...guard.args,
       ],
@@ -849,18 +855,26 @@ export async function grantSubscription(g: {
             SET subscription_id = (SELECT id FROM subscriptions WHERE source = ? AND original_transaction_id = ?),
                 sub_period_end = (SELECT period_end FROM subscriptions WHERE source = ? AND original_transaction_id = ?)
             WHERE status = 'reserved' AND funded_by = 'subscription'
-              AND subscription_id IN (SELECT id FROM subscriptions
-                                      WHERE user_id = ? AND source = ? AND status = 'active'
-                                        AND original_transaction_id LIKE 'rcsync:%'
-                                        AND original_transaction_id <> ?)
+              AND subscription_id IN (SELECT s.id FROM subscriptions s
+                                      WHERE s.user_id = ? AND s.source = ? AND s.status = 'active'
+                                        AND s.original_transaction_id LIKE 'rcsync:%'
+                                        AND s.original_transaction_id <> ?
+                                        AND ${overlapsReal})
               AND ${guard.sql}`,
-      args: [g.source, g.originalTransactionId, g.source, g.originalTransactionId, g.userId, g.source, g.originalTransactionId, ...guard.args],
+      args: [
+        g.source, g.originalTransactionId, g.source, g.originalTransactionId,
+        g.userId, g.source, g.originalTransactionId, g.source, g.originalTransactionId,
+        ...guard.args,
+      ],
     },
     {
       sql: `UPDATE subscriptions SET status = 'expired', will_renew = 0, updated_at = ?
             WHERE user_id = ? AND source = ? AND status = 'active' AND original_transaction_id LIKE 'rcsync:%'
-              AND original_transaction_id <> ? AND ${guard.sql}`,
-      args: [nowIso, g.userId, g.source, g.originalTransactionId, ...guard.args],
+              AND original_transaction_id <> ?
+              AND EXISTS (SELECT 1 FROM subscriptions r WHERE r.source = ? AND r.original_transaction_id = ?
+                          AND subscriptions.period_end > r.period_start AND subscriptions.period_start < r.period_end)
+              AND ${guard.sql}`,
+      args: [nowIso, g.userId, g.source, g.originalTransactionId, g.source, g.originalTransactionId, ...guard.args],
     },
   ]);
   const applied = results[0].rowsAffected === 1;
@@ -1016,6 +1030,12 @@ export async function grantRestoredSubscription(g: {
   const guard = grantExists(id);
   const results = await writeBatch([
     {
+      sql: `UPDATE subscriptions SET status = 'expired', will_renew = 0, updated_at = ?
+            WHERE user_id = ? AND source = ? AND status = 'active'
+              AND original_transaction_id LIKE 'rcsync:%' AND period_end <= ?`,
+      args: [nowIso, g.userId, g.source, nowIso],
+    },
+    {
       sql: `INSERT INTO entitlement_grants (id, user_id, source, external_id, kind, product_id, created_at, environment)
             SELECT ?, ?, ?, ?, 'subscription_active', ?, ?, ?
             WHERE NOT EXISTS (SELECT 1 FROM subscriptions
@@ -1051,7 +1071,7 @@ export async function grantRestoredSubscription(g: {
       args: [g.source, g.originalTransactionId, id],
     },
   ]);
-  return { applied: results[0].rowsAffected === 1 && results[1].rowsAffected === 1 };
+  return { applied: results[1].rowsAffected === 1 && results[2].rowsAffected === 1 };
 }
 
 /**
@@ -1090,22 +1110,30 @@ export async function transferSubscriptions(g: {
                 used_in_period = MAX(used_in_period,
                   COALESCE((SELECT max(s.used_in_period) FROM subscriptions s
                             WHERE s.user_id = ? AND s.source = ? AND s.status = 'active'
-                              AND s.original_transaction_id LIKE 'rcsync:%'), 0))
+                              AND s.original_transaction_id LIKE 'rcsync:%'
+                              AND s.period_end > subscriptions.period_start
+                              AND s.period_start < subscriptions.period_end), 0))
             WHERE source = ? AND status = 'active' AND original_transaction_id NOT LIKE 'rcsync:%'
               AND user_id IN (${marks}) AND ${guard.sql}`,
       args: [g.toUserId, nowIso, g.toUserId, g.source, g.source, ...from, ...guard.args],
     },
     {
       sql: `UPDATE premium_usage
-            SET subscription_id = (SELECT r.id FROM subscriptions r WHERE r.user_id = ? AND r.source = ?
-                                   AND r.status = 'active' AND r.original_transaction_id NOT LIKE 'rcsync:%' LIMIT 1),
-                sub_period_end = (SELECT r.period_end FROM subscriptions r WHERE r.user_id = ? AND r.source = ?
-                                  AND r.status = 'active' AND r.original_transaction_id NOT LIKE 'rcsync:%' LIMIT 1)
+            SET subscription_id = (SELECT r.id FROM subscriptions r, subscriptions s
+                                   WHERE s.id = premium_usage.subscription_id AND r.user_id = ? AND r.source = ?
+                                     AND r.status = 'active' AND r.original_transaction_id NOT LIKE 'rcsync:%'
+                                     AND s.period_end > r.period_start AND s.period_start < r.period_end LIMIT 1),
+                sub_period_end = (SELECT r.period_end FROM subscriptions r, subscriptions s
+                                   WHERE s.id = premium_usage.subscription_id AND r.user_id = ? AND r.source = ?
+                                     AND r.status = 'active' AND r.original_transaction_id NOT LIKE 'rcsync:%'
+                                     AND s.period_end > r.period_start AND s.period_start < r.period_end LIMIT 1)
             WHERE status = 'reserved' AND funded_by = 'subscription'
               AND subscription_id IN (SELECT id FROM subscriptions WHERE user_id = ? AND source = ?
                                       AND status = 'active' AND original_transaction_id LIKE 'rcsync:%')
-              AND EXISTS (SELECT 1 FROM subscriptions r WHERE r.user_id = ? AND r.source = ?
-                          AND r.status = 'active' AND r.original_transaction_id NOT LIKE 'rcsync:%')
+              AND EXISTS (SELECT 1 FROM subscriptions r, subscriptions s
+                          WHERE s.id = premium_usage.subscription_id AND r.user_id = ? AND r.source = ?
+                            AND r.status = 'active' AND r.original_transaction_id NOT LIKE 'rcsync:%'
+                            AND s.period_end > r.period_start AND s.period_start < r.period_end)
               AND ${guard.sql}`,
       args: [
         g.toUserId, g.source, g.toUserId, g.source, g.toUserId, g.source, g.toUserId, g.source,
@@ -1117,7 +1145,9 @@ export async function transferSubscriptions(g: {
             WHERE source = ? AND status = 'active' AND original_transaction_id LIKE 'rcsync:%'
               AND ((user_id = ? AND EXISTS (SELECT 1 FROM subscriptions r
                                             WHERE r.user_id = ? AND r.source = ? AND r.status = 'active'
-                                              AND r.original_transaction_id NOT LIKE 'rcsync:%'))
+                                              AND r.original_transaction_id NOT LIKE 'rcsync:%'
+                                              AND subscriptions.period_end > r.period_start
+                                              AND subscriptions.period_start < r.period_end))
                    OR user_id IN (${marks}))
               AND ${guard.sql}`,
       args: [nowIso, g.source, g.toUserId, g.toUserId, g.source, ...from, ...guard.args],

@@ -301,6 +301,89 @@ describe("POST /api/v1/me/purchases/sync (restore)", () => {
     expect(await activePlans(user.id)).toEqual([{ id: "otid-inflight", used: 0 }]);
   });
 
+  // A stand-in whose period ended 10 days ago, with a unit reserved on it back when it ran.
+  async function endedStandIn(userId: string): Promise<{ standIn: string; reservation: string }> {
+    const r = await ent.grantRestoredSubscription({
+      userId,
+      source: "app_store",
+      originalTransactionId: `rcsync:${userId}:app_store:monthly:old`,
+      externalId: `rcsync:${userId}:app_store:monthly:old`,
+      productId: "monthly",
+      periodStart: new Date(Date.now() - 40 * DAY).toISOString(),
+      periodEnd: new Date(Date.now() - 10 * DAY).toISOString(),
+      willRenew: false,
+    });
+    expect(r.applied).toBe(true);
+    const held = await ent.reservePremiumVerdict(userId, { now: new Date(Date.now() - 20 * DAY) });
+    if (!held.ok) throw new Error("expected a reservation");
+    return { standIn: `rcsync:${userId}:app_store:monthly:old`, reservation: held.reservation.id };
+  }
+
+  async function heldOn(reservationId: string): Promise<string> {
+    const { getDb } = await import("../lib/db");
+    const rs = await (await getDb()).execute({
+      sql: "SELECT s.original_transaction_id AS otid FROM premium_usage p JOIN subscriptions s ON s.id = p.subscription_id WHERE p.id = ?",
+      args: [reservationId],
+    });
+    return String(rs.rows[0].otid);
+  }
+
+  it("a unit held from an earlier period is not moved onto the next period's plan", async () => {
+    const { user } = await newUser();
+    const old = await endedStandIn(user.id);
+    await hook(realEvent(user.id, "RENEWAL", "otid-next-period"));
+    expect(await heldOn(old.reservation)).toBe(old.standIn);
+    await ent.refundPremiumVerdict(old.reservation);
+    expect(await activePlans(user.id)).toEqual([{ id: "rcsync", used: 0 }, { id: "otid-next-period", used: 0 }]);
+  });
+
+  it("the same on a transfer", async () => {
+    const a = await newUser();
+    const b = await newUser();
+    const old = await endedStandIn(b.user.id);
+    await ent.grantSubscription({
+      userId: a.user.id,
+      source: "app_store",
+      externalId: "evt-tr-next",
+      originalTransactionId: "otid-tr-next",
+      productId: "monthly",
+      periodStart: new Date(Date.now() - DAY).toISOString(),
+      periodEnd: new Date(Date.now() + 29 * DAY).toISOString(),
+      willRenew: true,
+    });
+    await hook({
+      api_version: "1.0",
+      event: { id: `evt-trn-${Date.now()}`, type: "TRANSFER", store: "APP_STORE", environment: "PRODUCTION", transferred_from: [a.user.id], transferred_to: [b.user.id] },
+    });
+    expect(await heldOn(old.reservation)).toBe(old.standIn);
+  });
+
+  it("a late event for an old period neither retires nor takes the usage of the current stand-in", async () => {
+    const { token, user } = await newUser();
+    revenueCat({ monthly: active() });
+    await call(token);
+    for (let i = 0; i < 2; i++) {
+      const r = await ent.reservePremiumVerdict(user.id);
+      if (r.ok) await ent.consumePremiumVerdict(r.reservation.id, `v-late-${i}`);
+    }
+    await hook(
+      realEvent(user.id, "RENEWAL", "otid-late", { purchased_at_ms: Date.now() - 60 * DAY, expiration_at_ms: Date.now() - 30 * DAY }),
+    );
+    expect(await activePlans(user.id)).toEqual([
+      { id: "rcsync", used: 2 },
+      { id: "otid-late", used: 0 },
+    ]);
+    expect((await ent.getEntitlement(user.id)).canUsePremium).toBe(true);
+  });
+
+  it("restore retires the account's stand-ins whose period has ended", async () => {
+    const { token, user } = await newUser();
+    await endedStandIn(user.id);
+    revenueCat({ monthly: active() });
+    expect((await (await call(token)).json()).synced).toBe(1);
+    expect(await activePlans(user.id)).toEqual([{ id: "rcsync", used: 0 }]);
+  });
+
   it("503 when RevenueCat fails, and nothing is granted", async () => {
     vi.spyOn(console, "error").mockImplementation(() => {});
     const { token, user } = await newUser();
