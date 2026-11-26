@@ -159,7 +159,7 @@ final class PurchaseModel {
     func buy(_ planId: String) async {
         guard let gateway, buying == nil, account.isSignedIn else { return }
         if let refusal = account.ageRefusal {
-            message = refusal == AgeCheck.blockedCode ? .ageBlocked : .ageRequired
+            message = Self.refusal(refusal, holding: account.ageHolding)
             return
         }
         generation += 1
@@ -178,7 +178,7 @@ final class PurchaseModel {
             // that hasn't confirmed 18+, never reaches the store.
             if before == nil || account.ageRefusal != nil {
                 buying = nil
-                if mine == generation { message = Self.refusal(account.ageRefusal) }
+                if mine == generation { message = Self.refusal(account.ageRefusal, holding: account.ageHolding) }
                 return
             }
             try checkStoreUser(generation: mine)
@@ -317,9 +317,11 @@ final class PurchaseModel {
 
     /// Purchases always go to the signed-in account: the store logs in as
     /// it first (a no-op when it already is).
-    private static func refusal(_ age: String?) -> Message {
+    /// A confirmed account held back by the phone's check only hears to try
+    /// again in a moment.
+    static func refusal(_ age: String?, holding: Bool = false) -> Message {
         if age == AgeCheck.blockedCode { return .ageBlocked }
-        if age == AgeCheck.unconfirmedCode { return .ageRequired }
+        if age == AgeCheck.unconfirmedCode { return holding ? .failed : .ageRequired }
         return .failed
     }
 
