@@ -15,7 +15,7 @@
 
 import type { Row } from "@libsql/client";
 import { nanoid } from "nanoid";
-import { isTeen } from "@/lib/age";
+import { isTeen, teenNow } from "@/lib/age";
 import { MAX_VERDICT_APPEALS, type AppealStatus } from "@/lib/case-types";
 import { composeForJudging, evidenceGroups } from "@/lib/cases/compose";
 import { appealSummary, normalizeCaseResult } from "@/lib/cases/judging";
@@ -416,7 +416,7 @@ export async function runVerdictAppeal(p: VerdictAppealRun): Promise<void> {
         result: { ...next, appeal: info },
         kind: "premium",
         ownerUserId: p.userId,
-        teen,
+        teen: await teenNow(p.userId, teen),
         original: p.original,
       },
       {

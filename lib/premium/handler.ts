@@ -44,6 +44,7 @@ import { checkPremiumSiteCap, checkUserLimits, type UserBucket } from "@/lib/rat
 import { ClarifyRequest, withPublicPanel, type VerdictApiResponse, type VerdictRequest } from "@/lib/types";
 import { parseVenue } from "@/lib/venues";
 import { acceptedHeaders, POLL_AFTER_MS, pollPath, wantsAsync, type VerdictAcceptedResponse } from "@/lib/verdict-poll";
+import { teenNow } from "@/lib/age";
 import { withChildSafety } from "@/lib/claude";
 import { clarifyQuestions } from "./clarify";
 import { idempotencyKey } from "./context";
@@ -387,7 +388,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
         result: outcome.result,
         kind: "premium",
         ownerUserId: userId,
-        teen: gate.teen,
+        teen: await teenNow(userId, gate.teen),
         venue: parseVenue(data.venue),
         original: {
           v: 1,

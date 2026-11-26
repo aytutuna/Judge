@@ -4,7 +4,7 @@ import type { AgeState } from "@/lib/account-types";
 import { confirmAdult, recordMinorSignal, submitDob } from "@/lib/age";
 import { validDob } from "@/lib/age-date";
 import { apiErrorBody } from "@/lib/api-errors";
-import { isSameOrigin } from "@/lib/auth";
+import { isSameOrigin, legacyWelcomeClaim, welcomeClaim } from "@/lib/auth";
 import { deadBearerResponse, lookupViewer } from "@/lib/bearer-guard";
 
 export const runtime = "nodejs";
@@ -64,7 +64,8 @@ export async function POST(req: Request): Promise<NextResponse> {
     let age: AgeState | null;
     if ("dob" in data) {
       if (!validDob(data.dob)) return NextResponse.json(apiErrorBody("invalid", "Send a real date as YYYY-MM-DD."), { status: 400, headers: NO_STORE });
-      age = await submitDob(viewer.user.id, data.dob);
+      const claims = [welcomeClaim(viewer.user.email), legacyWelcomeClaim(viewer.user.email)].filter((c): c is string => Boolean(c));
+      age = await submitDob(viewer.user.id, data.dob, new Date(), claims);
       if (!age) {
         return NextResponse.json(apiErrorBody("age_set", "The date of birth was already given."), { status: 409, headers: NO_STORE });
       }

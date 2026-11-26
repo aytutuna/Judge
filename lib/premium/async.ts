@@ -8,6 +8,7 @@
  */
 
 import { track } from "@/lib/analytics/track";
+import { teenNow } from "@/lib/age";
 import { withChildSafety, type UsageTotals } from "@/lib/claude";
 import type { OriginalPayload } from "@/lib/originals-types";
 import type { Lang } from "@/lib/i18n";
@@ -34,7 +35,8 @@ export type PremiumJobInput = {
 export async function runPremiumJob(job: PremiumJobInput): Promise<void> {
   let run: PremiumRun | undefined;
   try {
-    run = await withChildSafety(job.teen, () =>
+    const teen = await teenNow(job.userId, job.teen);
+    run = await withChildSafety(teen, () =>
       runPreparedPipeline(
         job.prepared,
         { lang: job.lang },
@@ -63,7 +65,7 @@ export async function runPremiumJob(job: PremiumJobInput): Promise<void> {
         result: outcome.result,
         kind: "premium",
         ownerUserId: job.userId,
-        teen: job.teen,
+        teen: await teenNow(job.userId, teen),
         venue: job.venue,
         original: job.original,
       },

@@ -21,7 +21,7 @@
  * looks up; routes answer with ageGateResponse before doing anything else.
  */
 
-import type { InStatement } from "@libsql/client";
+import type { InStatement, InValue } from "@libsql/client";
 import { NextResponse } from "next/server";
 import type { AgeState } from "./account-types";
 import { apiErrorBody } from "./api-errors";
@@ -200,13 +200,39 @@ export async function confirmAdult(userId: string, source: "checkbox" | "platfor
  * Signals only the first time. */
 export async function blockMinor(userId: string, now = new Date()): Promise<AgeState> {
   const before = await readAge(userId, now);
-  const db = await getDb();
-  await db.execute({
-    sql: `UPDATE "user" SET age_blocked_at = COALESCE(age_blocked_at, ?), age_block_final = '1' WHERE id = ?`,
-    args: [now.toISOString(), userId],
-  });
+  const { ensureAnalyticsTables } = await import("./analytics/db");
+  await ensureAnalyticsTables();
+  await entitlementWriteBatch([
+    {
+      sql: `UPDATE "user" SET age_blocked_at = COALESCE(age_blocked_at, ?), age_block_final = '1' WHERE id = ?`,
+      args: [now.toISOString(), userId],
+    },
+    ...eventDeletes(userId),
+  ]);
   if (!before.blocked) signal("age_blocked");
   return readAge(userId, now);
+}
+
+/** Their stored usage events, and the signed-out ones from devices linked to them. */
+function eventDeletes(userId: string): InStatement[] {
+  return [
+    { sql: "DELETE FROM events WHERE user_id = ?", args: [userId] },
+    {
+      sql: "DELETE FROM events WHERE user_id IS NULL AND device_id IN (SELECT device_id FROM account_devices WHERE user_id = ?)",
+      args: [userId],
+    },
+  ];
+}
+
+/** True when usage events must not be kept for the account: a teen, or blocked. */
+export async function eventsOff(userId: string): Promise<boolean> {
+  const age = await readAge(userId);
+  return age.teen || age.blocked;
+}
+
+/** The teen flag as of now, for work that started when it may have been false. */
+export async function teenNow(userId: string, wasTeen: boolean): Promise<boolean> {
+  return wasTeen || (await isTeen(userId).catch(() => false));
 }
 
 /**
@@ -215,7 +241,7 @@ export async function blockMinor(userId: string, now = new Date()): Promise<AgeS
  * ledger row saying it was automatic), their earlier verdicts and cases stop
  * showing names, and the usage events already stored for them go.
  */
-async function teenStatements(userId: string, nowIso: string): Promise<InStatement[]> {
+async function teenStatements(userId: string, nowIso: string, guard: { sql: string; args: InValue[] }): Promise<InStatement[]> {
   const [{ ensureOriginalsTables }, { ensureFeedbackTables, withdrawStatements }, { ensureAnalyticsTables }] = await Promise.all([
     import("./originals/db"),
     import("./feedback/db"),
@@ -226,7 +252,7 @@ async function teenStatements(userId: string, nowIso: string): Promise<InStateme
   await ensureAnalyticsTables();
   const onCase = `SELECT id FROM cases WHERE owner_id = ? OR respondent_user_id = ?
     UNION SELECT case_id FROM case_invites WHERE user_id = ? UNION SELECT case_id FROM case_seats WHERE user_id = ?`;
-  return [
+  const statements: InStatement[] = [
     {
       sql: `INSERT INTO consent_ledger (user_id, choice, source, at, policy_version, wording_key, wording_text, lang, platform)
             SELECT ?, 'off', 'switch', ?, ?, 'age.teenWithdrawn', ?, 'en', 'web'
@@ -251,8 +277,13 @@ async function teenStatements(userId: string, nowIso: string): Promise<InStateme
       sql: `UPDATE cases SET names_visible = 0 WHERE names_visible = 1 AND id IN (${onCase})`,
       args: [userId, userId, userId, userId],
     },
-    { sql: "DELETE FROM events WHERE user_id = ?", args: [userId] },
+    ...eventDeletes(userId),
   ];
+  // Only when this request's own write to the account row took effect.
+  return statements.map((st) => {
+    const { sql, args = [] } = typeof st === "string" ? { sql: st } : st;
+    return { sql: `${sql} AND ${guard.sql}`, args: [...(args as InValue[]), ...guard.args] };
+  });
 }
 
 /**
@@ -262,17 +293,21 @@ async function teenStatements(userId: string, nowIso: string): Promise<InStateme
  */
 export async function recordMinorSignal(userId: string, under13: boolean | undefined, now = new Date()): Promise<AgeState> {
   const before = await readAge(userId, now);
-  if (before.blocked || !before.needsDob) return before;
+  if (!before.needsDob) return before;
+  // Explicit, so it also makes an old block final.
   if (under13 === true) return blockMinor(userId, now);
-  if (before.teen) return before;
+  if (before.blocked || before.teen) return before;
   const nowIso = now.toISOString();
   await entitlementWriteBatch([
     {
       sql: `UPDATE "user" SET age_confirmed_at = COALESCE(age_confirmed_at, ?), age_source = 'platform', age_signal = 'minor'
-            WHERE id = ?`,
+            WHERE id = ? AND age_dob IS NULL AND age_dob_at IS NULL AND age_blocked_at IS NULL`,
       args: [nowIso, userId],
     },
-    ...(await teenStatements(userId, nowIso)),
+    ...(await teenStatements(userId, nowIso, {
+      sql: `EXISTS (SELECT 1 FROM "user" WHERE id = ? AND age_signal = 'minor' AND age_dob_at IS NULL AND age_blocked_at IS NULL)`,
+      args: [userId],
+    })),
   ]);
   return readAge(userId, now);
 }
@@ -285,7 +320,7 @@ export async function recordMinorSignal(userId: string, under13: boolean | undef
  * account blocked under the old rule gets its one date here too: 13 or more
  * lifts the block.
  */
-export async function submitDob(userId: string, dob: string, now = new Date()): Promise<AgeState | null> {
+export async function submitDob(userId: string, dob: string, now = new Date(), claims: string[] = []): Promise<AgeState | null> {
   const before = await readAge(userId, now);
   if (before.blocked && !before.needsDob) return before;
   if (!before.needsDob) return null;
@@ -296,21 +331,45 @@ export async function submitDob(userId: string, dob: string, now = new Date()): 
     {
       sql: `UPDATE "user" SET age_dob = ?, age_dob_at = ?, age_confirmed_at = COALESCE(age_confirmed_at, ?), age_source = 'dob',
               age_blocked_at = NULL, age_block_final = NULL
-            WHERE id = ? AND age_dob_at IS NULL`,
+            WHERE id = ? AND age_dob_at IS NULL AND age_block_final IS NULL`,
       args: [teen ? dob : null, nowIso, nowIso, userId],
     },
-    ...(teen ? await teenStatements(userId, nowIso) : []),
+    // Only after this request's own write took effect.
+    ...(await sameWrite(userId, nowIso, dob, teen, claims)),
   ]);
   if (done.rowsAffected === 0) return null;
   return readAge(userId, now);
+}
+
+async function sameWrite(userId: string, nowIso: string, dob: string, teen: boolean, claims: string[]): Promise<InStatement[]> {
+  const guard = {
+    sql: `EXISTS (SELECT 1 FROM "user" WHERE id = ? AND age_dob_at = ? AND age_source = 'dob' AND age_dob IS ?)`,
+    args: [userId, nowIso, teen ? dob : null] as InValue[],
+  };
+  const lift: InStatement[] = claims.length
+    ? [
+        {
+          sql: `UPDATE welcome_claims SET age_blocked_at = NULL WHERE claim IN (${claims.map(() => "?").join(", ")})
+                AND age_block_final IS NULL AND ${guard.sql}`,
+          args: [...claims, ...guard.args],
+        },
+      ]
+    : [];
+  return [...lift, ...(teen ? await teenStatements(userId, nowIso, guard) : [])];
 }
 
 /** Clears the date of birth of everyone who has turned 18. The teen flag does
  * not depend on it: age_dob_at stays and says a date was given. */
 export async function clearAdultDobs(): Promise<number> {
   const db = await getDb();
-  const rs = await db.execute(`UPDATE "user" SET age_dob = NULL WHERE age_dob IS NOT NULL AND age_dob <= (${ADULT_CUTOFF_SQL})`);
-  return rs.rowsAffected;
+  try {
+    const rs = await db.execute(`UPDATE "user" SET age_dob = NULL WHERE age_dob IS NOT NULL AND age_dob <= (${ADULT_CUTOFF_SQL})`);
+    return rs.rowsAffected;
+  } catch (e) {
+    // Startup cleanup can run before the sign-in migration added the column.
+    if (/no such (column|table)/i.test(e instanceof Error ? e.message : String(e))) return 0;
+    throw e;
+  }
 }
 
 /** A blocked account deleting itself: the block stays with the scrambled

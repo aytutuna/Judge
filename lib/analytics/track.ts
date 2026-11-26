@@ -29,7 +29,7 @@
  * cannot send those names.
  */
 
-import { isTeen } from "@/lib/age";
+import { eventsOff } from "@/lib/age";
 import { analyticsEnabled } from "@/lib/features";
 import { insertEvents, type Platform } from "./db";
 import { propsProblem, type Props, type ServerEvent } from "./validate";
@@ -47,7 +47,7 @@ type TrackOptions = {
 export async function track(name: ServerEvent, opts: TrackOptions): Promise<void> {
   if (!analyticsEnabled()) return;
   try {
-    if (opts.userId && (await isTeen(opts.userId))) return;
+    if (opts.userId && (await eventsOff(opts.userId))) return;
     const problem = opts.props ? propsProblem(name, opts.props) : null;
     if (problem) throw new Error(problem);
     await insertEvents([
