@@ -68,11 +68,14 @@ process.env.DATABASE_URL = `file:${path.join(dir, "test.db").replace(/\\/g, "/")
 const http = await import("../lib/cases/http");
 const ent = await import("../lib/entitlements");
 const { getDb, saveTranslation } = await import("../lib/db");
+// The real table comes from Better Auth, which these tests do not load.
+await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT)');
 const { sweepCases } = await import("../lib/cases");
 const { removeUserData } = await import("../lib/originals/removal");
 const publicVerdict = await import("../app/api/v1/verdicts/[id]/route");
 const { inviteHash } = await import("../lib/cases/invite");
 const { agreementMissing, agreementRefusal } = await import("../lib/feedback/agreement");
+import { childSafetyOn } from "../lib/claude";
 import type { CaseView } from "../lib/case-types";
 import type { CaseOriginalsResponse } from "../lib/originals-types";
 import type { VerdictResult } from "../lib/types";
@@ -447,6 +450,31 @@ describe("respondent: GET and POST /api/v1/respond/{token}", () => {
     await expectDead(await http.respondEvidenceHandler(req("POST", `/api/v1/respond/${token}/evidence`, { headers: dead }), token));
     expect(m.anonymizeSubmission.mock.calls.length).toBe(anonymizedBefore);
     expect((await getRespondent(token)).res.status).toBe(200);
+  });
+
+  it("a teen on the case brings the child-safety prompt into judging and keeps names off by default", async () => {
+    const seen: boolean[] = [];
+    m.judgeAnonymized.mockImplementation(async () => {
+      seen.push(childSafetyOn());
+      return okOutcome();
+    });
+    const db = await getDb();
+    const run = async (teenRole: "owner" | "respondent" | null) => {
+      const o = await owner(2);
+      const { data } = await create(o);
+      const resp = uid("resp");
+      const teen = teenRole === "owner" ? o : resp;
+      if (teenRole) await db.execute({ sql: 'INSERT OR REPLACE INTO "user" (id, age_dob) VALUES (?, ?)', args: [teen, "2030-01-01"] });
+      expect((await respond(tokenOf(data.case), { user: resp })).status).toBe(202);
+      await drain();
+      const names = await db.execute({ sql: "SELECT names_visible FROM verdict_meta WHERE case_id = ?", args: [data.case.id] });
+      const row = await db.execute({ sql: "SELECT names_visible FROM cases WHERE id = ?", args: [data.case.id] });
+      return [Number(names.rows[0].names_visible), Number(row.rows[0].names_visible)];
+    };
+    expect(await run("owner")).toEqual([0, 0]);
+    expect(await run("respondent")).toEqual([0, 0]);
+    expect(await run(null)).toEqual([1, 1]);
+    expect(seen).toEqual([true, true, false]);
   });
 
   it("the answer starts judging; nobody sees the other side until the verdict; both see it after", async () => {

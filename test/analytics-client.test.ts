@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { flush, resetAnalytics, setAnalytics, signInCompleted, signInStarted, track } from "@/lib/analytics/client";
+import { flush, resetAnalytics, setAnalytics, setUsageStats, signInCompleted, signInStarted, track } from "@/lib/analytics/client";
 
 const beacon = vi.fn<(url: string, body: Blob) => boolean>(() => true);
 
@@ -66,6 +66,25 @@ describe("web usage events", () => {
     expect(body.context).toEqual({ platform: "web", app_version: expect.any(String), locale: "tr" });
     expect(body.events[0]).toMatchObject({ name: "screen_view", props: { screen: "home" } });
     expect(store.size).toBe(0);
+  });
+
+  it("the Usage statistics switch drops what is queued and stops tracking, until it is switched on", () => {
+    const local = new Map<string, string>();
+    vi.stubGlobal("localStorage", {
+      getItem: (k: string) => local.get(k) ?? null,
+      setItem: (k: string, v: string) => void local.set(k, v),
+      removeItem: (k: string) => void local.delete(k),
+    });
+    setAnalytics(true);
+    track("app_open");
+    setUsageStats(false);
+    track("screen_view", { screen: "home" });
+    flush();
+    expect(beacon).not.toHaveBeenCalled();
+    setUsageStats(true);
+    track("app_open");
+    flush();
+    expect(beacon).toHaveBeenCalledTimes(1);
   });
 
   it("flushes every 30 seconds", () => {

@@ -142,18 +142,18 @@ describe("POST /api/v1/me/age", () => {
 
   it("a new account starts unconfirmed; adult:true confirms it once", async () => {
     const { token, user } = await createDevSession("age-adult@verdict.local");
-    expect((await me(token)).age).toEqual({ confirmed: false, blocked: false });
+    expect((await me(token)).age).toEqual({ confirmed: false, blocked: false, teen: false, needsDob: true });
 
     const res = await postAge(token, { adult: true, source: "checkbox" });
     expect(res.status).toBe(200);
     expect(res.headers.get("cache-control")).toBe("no-store");
-    expect(await res.json()).toEqual({ confirmed: true, blocked: false });
-    expect((await me(token)).age).toEqual({ confirmed: true, blocked: false });
+    expect(await res.json()).toEqual({ confirmed: true, blocked: false, teen: false, needsDob: true });
+    expect((await me(token)).age).toEqual({ confirmed: true, blocked: false, teen: false, needsDob: true });
     const first = await ageRow(user.id);
     expect(first.age_source).toBe("checkbox");
 
     const again = await postAge(token, { adult: true, source: "platform" });
-    expect(await again.json()).toEqual({ confirmed: true, blocked: false });
+    expect(await again.json()).toEqual({ confirmed: true, blocked: false, teen: false, needsDob: true });
     const second = await ageRow(user.id);
     expect(second.age_confirmed_at).toBe(first.age_confirmed_at);
     expect(second.age_source).toBe("platform");
@@ -163,7 +163,7 @@ describe("POST /api/v1/me/age", () => {
     const { token, user } = await createDevSession("age-minor@verdict.local");
     const res = await postAge(token, { adult: false, source: "platform" });
     expect(res.status).toBe(200);
-    expect(await res.json()).toEqual({ confirmed: false, blocked: true });
+    expect(await res.json()).toEqual({ confirmed: false, blocked: true, teen: false, needsDob: false });
     const blockedAt = (await ageRow(user.id)).age_blocked_at;
     expect(blockedAt).toEqual(expect.any(String));
 
@@ -171,17 +171,17 @@ describe("POST /api/v1/me/age", () => {
     await expectRefused(await postAge(token, { adult: true, source: "platform" }), "age_blocked", "adult:true");
     await expectRefused(await postAge(token, { adult: false, source: "platform" }), "age_blocked", "adult:false");
     expect(signalLines()).toEqual(["[signal:age_blocked]"]);
-    // ...and a confirmation written anyway does not lift the block.
+    // ...and a confirmation attempted anyway changes nothing.
     await confirmAdult(user.id, "platform");
     expect((await ageRow(user.id)).age_blocked_at).toBe(blockedAt);
-    expect((await me(token)).age).toEqual({ confirmed: true, blocked: true });
+    expect((await me(token)).age).toEqual({ confirmed: false, blocked: true, teen: false, needsDob: false });
   });
 
   it("a confirmed account can still be blocked", async () => {
     const { token } = await createDevSession("age-flip@verdict.local");
     await postAge(token, { adult: true, source: "checkbox" });
     const res = await postAge(token, { adult: false, source: "platform" });
-    expect(await res.json()).toEqual({ confirmed: true, blocked: true });
+    expect(await res.json()).toEqual({ confirmed: true, blocked: true, teen: false, needsDob: false });
   });
 
   it("refuses a cookie request from another site", async () => {
@@ -254,8 +254,8 @@ describe("age gate in the routes", () => {
   });
 
   it("decides by method and the decoded path", () => {
-    const fresh = { confirmed: false, blocked: false };
-    const blocked = { confirmed: true, blocked: true };
+    const fresh = { confirmed: false, blocked: false, teen: false, needsDob: true };
+    const blocked = { confirmed: true, blocked: true, teen: false, needsDob: false };
     for (const p of [
       "/api/verdict",
       "/api/v1/verdict",
@@ -271,7 +271,7 @@ describe("age gate in the routes", () => {
     ]) {
       expect(ageRefusal("POST", p, fresh), p).toBe("age_unconfirmed");
       expect(ageRefusal("GET", p, fresh), p).toBeNull();
-      expect(ageRefusal("POST", p, { confirmed: true, blocked: false }), p).toBeNull();
+      expect(ageRefusal("POST", p, { confirmed: true, blocked: false, teen: false, needsDob: true }), p).toBeNull();
     }
     expect(ageRefusal("POST", "/api/v1/cases/c1/invite", fresh)).toBeNull();
     expect(ageRefusal("POST", "/api/v1/verdicts/v1/translate", fresh)).toBeNull();
@@ -304,7 +304,7 @@ describe("deleting a blocked account", () => {
 
     const second = await createDevSession("again-minor@verdict.local");
     expect(second.user.id).not.toBe(first.user.id);
-    expect((await me(second.token)).age).toEqual({ confirmed: false, blocked: true });
+    expect((await me(second.token)).age).toEqual({ confirmed: false, blocked: true, teen: false, needsDob: false });
     await expectRefused(await postAge(second.token, { adult: true, source: "checkbox" }), "age_blocked", "new account");
     expect(await verdictCount()).toBe(before);
   });
@@ -315,6 +315,6 @@ describe("deleting a blocked account", () => {
     expect((await del(adult.token)).status).toBe(200);
     expect(await keptBlock(welcomeClaim("again-adult@verdict.local")!)).toBeNull();
     const back = await createDevSession("again-adult@verdict.local");
-    expect((await me(back.token)).age).toEqual({ confirmed: false, blocked: false });
+    expect((await me(back.token)).age).toEqual({ confirmed: false, blocked: false, teen: false, needsDob: true });
   });
 });

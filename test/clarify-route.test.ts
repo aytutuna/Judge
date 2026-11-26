@@ -46,6 +46,7 @@ vi.mock("@/lib/claude", async (importOriginal) => ({
 
 import { maxDuration, POST } from "../app/api/v1/clarify/route";
 import type { Entitlement } from "../lib/account-types";
+import { childSafetyOn } from "../lib/claude";
 import { agreementMissing, agreementRefusal } from "../lib/feedback/agreement";
 
 const ARGUMENT = "Mark says I owe him for dinner; I say we agreed to split it.";
@@ -124,6 +125,26 @@ describe("POST /api/v1/clarify", () => {
     expect(m.claudeJson.mock.calls[1][0].system).toContain("in English");
     await POST(request({ argument: "ok ok ok ok ok ok ok ok", lang: "tr" }));
     expect(m.claudeJson.mock.calls[2][0].system).toContain("in Turkish");
+  });
+
+  it("asks under the child-safety prompt for a teen only", async () => {
+    const seen: boolean[] = [];
+    m.claudeJson.mockImplementation(async () => {
+      seen.push(childSafetyOn());
+      return { ok: true, data: { questions: [] } };
+    });
+    const as = (teen: boolean) =>
+      m.getViewer.mockResolvedValue({
+        user: { id: "u1", email: "", name: "", image: null },
+        sessionId: "s",
+        via: "bearer",
+        age: { confirmed: true, blocked: false, needsDob: false, teen },
+      });
+    as(true);
+    await POST(request({ argument: ARGUMENT, lang: "en" }));
+    as(false);
+    await POST(request({ argument: ARGUMENT, lang: "en" }));
+    expect(seen).toEqual([true, false]);
   });
 
   it("an account on its welcome credit alone gets the smaller welcome bucket", async () => {

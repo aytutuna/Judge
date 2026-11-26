@@ -62,6 +62,8 @@ const { verdictAppealHandler } = await import("../lib/verdict-appeals/http");
 const { appealVerdicts, roundsBlock, splitStoredInput } = await import("../lib/verdict-appeals/service");
 const ent = await import("../lib/entitlements");
 const { getDb } = await import("../lib/db");
+// The real table comes from Better Auth, which these tests do not load.
+await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT)');
 const { plainVerdictStatement, saveVerdictWithOriginals } = await import("../lib/originals/save");
 const { getVerdictMeta, listOwnerVerdicts } = await import("../lib/originals/db");
 const { operatorRemoveVerdict, removeVerdict } = await import("../lib/originals/removal");
@@ -71,6 +73,7 @@ const { ensureVerdictJobTables } = await import("../lib/verdict-jobs");
 const route = await import("../app/api/v1/verdicts/[id]/route");
 import { APPEAL_ONE_SIDED_JUDGE_NOTE } from "../lib/judge";
 import { multiAppealNote } from "../lib/judge-multi";
+import { childSafetyOn } from "../lib/claude";
 import type { VerdictAppealView, VerdictResult } from "../lib/types";
 import type { VerdictAppealResponse, VerdictOwnerState } from "../lib/verdict-poll";
 
@@ -302,6 +305,34 @@ describe("POST /api/v1/verdicts/{id}/appeals", () => {
     // The round's verdict is not a verdict of its own to add context to.
     expect((await get(body.appeal.id, { user: o })).body.owner?.appeal).toBeUndefined();
     expect((await post(body.appeal.id, { user: o })).status).toBe(404);
+  });
+
+  it("a teen's added context is judged and summarized under the child-safety prompt, with names off the share page", async () => {
+    const o = await owner(3);
+    const db = await getDb();
+    await db.execute({ sql: 'INSERT OR REPLACE INTO "user" (id, age_dob) VALUES (?, ?)', args: [o, "2030-01-01"] });
+    const seen: boolean[] = [];
+    m.judgeAnonymized.mockImplementation(async () => {
+      seen.push(childSafetyOn());
+      return okOutcome();
+    });
+    m.claudeJson.mockImplementation(async () => {
+      seen.push(childSafetyOn());
+      return { ok: true, data: { summary: "Fine." } };
+    });
+    const { id } = await verdict(o);
+    const body = (await (await post(id, { user: o })).json()) as VerdictAppealResponse;
+    await drain();
+    expect(seen).toEqual([true, true]);
+    const meta = await db.execute({ sql: "SELECT names_visible FROM verdict_meta WHERE verdict_id = ?", args: [body.appeal.id] });
+    expect(Number(meta.rows[0].names_visible)).toBe(0);
+
+    await db.execute({ sql: "UPDATE \"user\" SET age_dob = NULL WHERE id = ?", args: [o] });
+    seen.length = 0;
+    const second = (await (await post(id, { user: o })).json()) as VerdictAppealResponse;
+    await drain();
+    expect(second.appeal.id).toBeDefined();
+    expect(seen).toEqual([false, false]);
   });
 
   it("keeps why on the new verdict and shows it to the summary, where the older verdict has none", async () => {

@@ -333,14 +333,14 @@ describe("SignInPanel", () => {
   it("consent is one short line with the terms and privacy links, in both languages", () => {
     const en = signin({});
     expect(en).toMatch(
-      /<p[^>]*>By continuing, you confirm you(?:&#x27;|')re 18 or older and agree to the <a [^>]*href="\/terms"[^>]*>Terms<\/a> and the <a [^>]*href="\/privacy"[^>]*>Privacy Policy<\/a>\. An outside AI reads your arguments\.<\/p>/,
+      /<p[^>]*>By continuing, you agree to the <a [^>]*href="\/terms"[^>]*>Terms<\/a> and the <a [^>]*href="\/privacy"[^>]*>Privacy Policy<\/a>\. An outside AI reads your arguments\.<\/p>/,
     );
     const tr = signin({ lang: "tr" });
     expect(tr).toMatch(
-      /<p[^>]*>Devam ederek 18 yaşında veya daha büyük olduğunu doğrulamış, <a [^>]*href="\/terms"[^>]*>Kullanım Koşulları<\/a>&#x27;nı ve <a [^>]*href="\/privacy"[^>]*>Gizlilik Politikası<\/a>&#x27;nı kabul etmiş olursun\. Tartışmalarını harici bir yapay zekâ okur\.<\/p>/,
+      /<p[^>]*>Devam ederek <a [^>]*href="\/terms"[^>]*>Kullanım Koşulları<\/a>&#x27;nı ve <a [^>]*href="\/privacy"[^>]*>Gizlilik Politikası<\/a>&#x27;nı kabul etmiş olursun\. Tartışmalarını harici bir yapay zekâ okur\.<\/p>/,
     );
     // Only the first screen carries it.
-    expect(signin({ sentTo: "a@b.co" })).not.toContain("18 or older");
+    expect(signin({ sentTo: "a@b.co" })).not.toContain("agree to the");
   });
 });
 

@@ -68,6 +68,7 @@ const ent = await import("../lib/entitlements");
 const jobs = await import("../lib/verdict-jobs");
 const { removeUserData } = await import("../lib/originals/removal");
 const { getDb } = await import("../lib/db");
+import { childSafetyOn } from "../lib/claude";
 import type { JudgeRunOutput } from "../lib/types";
 import type { VerdictAcceptedResponse } from "../lib/verdict-poll";
 
@@ -180,6 +181,30 @@ describe("async verdicts", () => {
     signedIn(id);
     return id;
   }
+
+  it("a teen's background run carries the child-safety prompt, and the stored verdict keeps names off the share page", async () => {
+    const seen: boolean[] = [];
+    m.judgePremiumPanel.mockImplementation(async () => {
+      seen.push(childSafetyOn());
+      return { runs: [ok(RUN), ok(RUN), ok(RUN)], models: PANEL_MODELS };
+    });
+    const ids: string[] = [];
+    for (const teen of [true, false]) {
+      const id = await user();
+      m.getViewer.mockResolvedValue({
+        user: { id, email: `${id}@x.y`, name: "Aytu Tuna", image: null },
+        sessionId: "s",
+        via: "bearer",
+        age: { confirmed: true, blocked: false, needsDob: false, teen },
+      });
+      const accepted = (await (await post({}, { prefer: "respond-async" })).json()) as VerdictAcceptedResponse;
+      await drain();
+      ids.push(accepted.id);
+    }
+    expect(seen).toEqual([true, false]);
+    const visible = async (id: string) => (await row<{ names_visible: number }>("SELECT names_visible FROM verdict_meta WHERE verdict_id = ?", [id]))?.names_visible;
+    expect([await visible(ids[0]), await visible(ids[1])]).toEqual([0, 1]);
+  });
 
   it("202 with Prefer: respond-async and the poll headers; judging until the background run ends", async () => {
     await user();

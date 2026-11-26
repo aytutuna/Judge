@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { childSafetyOn } from "../lib/claude";
 
 const m = vi.hoisted(() => ({
   calls: [] as string[],
@@ -266,6 +267,26 @@ describe("every verdict is premium", () => {
       expect((await res.json()).venue).toBeNull();
       expect(m.saved[0].venue).toBeNull();
     }
+  });
+
+  it("carries the child-safety prompt into the panel and keeps names off the share page for a teen, and not otherwise", async () => {
+    const seen: boolean[] = [];
+    m.judgePremiumPanel.mockImplementation(async () => {
+      seen.push(childSafetyOn());
+      return { runs: [ok(RUN), ok(RUN), ok(RUN)], models: PANEL_MODELS };
+    });
+    const viewer = (age?: { teen: boolean }) => ({
+      user: { id: "u1", email: "a@b.c", name: "A", image: null },
+      sessionId: "s1",
+      via: "bearer",
+      ...(age ? { age: { confirmed: true, blocked: false, needsDob: false, ...age } } : {}),
+    });
+    m.getViewer.mockResolvedValue(viewer({ teen: true }));
+    expect((await POST_V1(request(premium(), {}, "http://localhost/api/v1/verdict"))).status).toBe(200);
+    m.getViewer.mockResolvedValue(viewer({ teen: false }));
+    expect((await POST_V1(request(premium(), {}, "http://localhost/api/v1/verdict"))).status).toBe(200);
+    expect(seen).toEqual([true, false]);
+    expect(m.saved.map((v) => (v as { teen?: boolean }).teen)).toEqual([true, false]);
   });
 
   it("tier free signed out is 401 signin_required, never an anonymous verdict", async () => {

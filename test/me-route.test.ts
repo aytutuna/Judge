@@ -55,7 +55,7 @@ describe("GET /api/v1/me", () => {
       user: { id: user.id, email: "me1@verdict.local", name: "Test user", image: null },
       // 5 granted plus the welcome credit.
       entitlement: { canUsePremium: true, blockedReason: null, credits: 6, subscription: null, resetsAt: null },
-      age: { confirmed: false, blocked: false },
+      age: { confirmed: false, blocked: false, teen: false, needsDob: true },
       hasPassword: false,
       needsPassword: false,
     });

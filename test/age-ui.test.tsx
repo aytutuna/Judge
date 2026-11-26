@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
-import { describe, expect, it, vi } from "vitest";
-import { AgeDialogBody, forgetAdultTick, rememberAdultTick, type AgeDialogProps } from "../components/AgeGate";
+import { describe, expect, it } from "vitest";
+import { AgeDialogBody, type AgeDialogProps } from "../components/AgeGate";
 import { PricingTable } from "../components/account/PricingView";
 import { SiteFooter } from "../components/SiteChrome";
 import { API_ERROR_STATUS } from "../lib/api-errors";
@@ -9,18 +9,19 @@ import { PRICING } from "../lib/pricing";
 import { STRINGS } from "./strings";
 
 const noop = () => {};
+const FRESH = { confirmed: false, blocked: false, teen: false, needsDob: true };
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/'/g, "&#x27;");
 
 function dialog(over: Partial<AgeDialogProps>): string {
   return renderToStaticMarkup(
     <AgeDialogBody
       lang="en"
-      age={{ confirmed: false, blocked: false }}
-      ticked={false}
+      age={FRESH}
+      dob=""
       saving={false}
       failed={false}
       contactEmail="support@okjudge.com"
-      onTick={noop}
+      onDob={noop}
       onConfirm={noop}
       onSignOut={noop}
       {...over}
@@ -29,44 +30,30 @@ function dialog(over: Partial<AgeDialogProps>): string {
 }
 
 describe("age dialog", () => {
-  it("asks an unconfirmed account to tick the box first", () => {
+  it("asks for a date of birth, and only offers Continue once there is one", () => {
     const html = dialog({});
-    expect(html).toContain('type="checkbox"');
-    expect(html).toContain(esc(t("en", "age.confirm")));
+    expect(html).toContain('type="date"');
+    expect(html).toContain(esc(t("en", "age.lead")));
+    expect(html).not.toContain('type="checkbox"');
     expect(html).toMatch(/<button[^>]*disabled=""[^>]*>Continue<\/button>/);
     expect(html).toContain(t("en", "nav.signOut"));
-    expect(dialog({ ticked: true })).not.toMatch(/<button[^>]*disabled=""[^>]*>Continue/);
+    expect(dialog({ dob: "2010-05-01" })).not.toMatch(/<button[^>]*disabled=""[^>]*>Continue/);
     expect(dialog({ failed: true })).toContain(esc(t("en", "age.failed")));
   });
 
-  it("tells a blocked account Judge is for adults, with the contact address and sign-out", () => {
-    const html = dialog({ age: { confirmed: true, blocked: true } });
+  it("tells a blocked account Judge is for ages 13 and up, with the contact address and sign-out", () => {
+    const html = dialog({ age: { ...FRESH, confirmed: true, blocked: true, needsDob: false } });
     expect(html).toContain(t("en", "age.blockedTitle"));
+    expect(html).toContain("13");
     expect(html).toContain('href="mailto:support@okjudge.com"');
     expect(html).toContain(t("en", "nav.signOut"));
-    expect(html).not.toContain('type="checkbox"');
-    expect(dialog({ age: { confirmed: false, blocked: true }, contactEmail: null })).not.toContain("mailto:");
+    expect(html).not.toContain('type="date"');
+    expect(dialog({ age: { ...FRESH, blocked: true, needsDob: false }, contactEmail: null })).not.toContain("mailto:");
   });
 
   it("speaks the reader's language", () => {
-    const html = dialog({ lang: "tr", age: { confirmed: false, blocked: true } });
+    const html = dialog({ lang: "tr", age: { ...FRESH, blocked: true, needsDob: false } });
     expect(html).toContain(STRINGS.tr["age.blockedTitle"]);
-  });
-});
-
-describe("the sign-in page's tick", () => {
-  it("is dropped when the sign-in fails or is given up on", () => {
-    const store = new Map<string, string>();
-    vi.stubGlobal("localStorage", {
-      getItem: (k: string) => store.get(k) ?? null,
-      setItem: (k: string, v: string) => store.set(k, v),
-      removeItem: (k: string) => store.delete(k),
-    });
-    rememberAdultTick();
-    expect(store.get("judge.adultTicked")).toMatch(/^\d+$/);
-    forgetAdultTick();
-    expect(store.has("judge.adultTicked")).toBe(false);
-    vi.unstubAllGlobals();
   });
 });
 
@@ -74,7 +61,7 @@ describe("age error codes", () => {
   it("are 403s the website localizes", () => {
     expect(API_ERROR_STATUS.age_blocked).toBe(403);
     expect(API_ERROR_STATUS.age_unconfirmed).toBe(403);
-    for (const code of ["age_blocked", "age_unconfirmed"]) expect(ERROR_KEY_BY_CODE[code]).toBeDefined();
+    for (const code of ["age_blocked", "age_unconfirmed", "age_set", "not_for_teens"]) expect(ERROR_KEY_BY_CODE[code]).toBeDefined();
     expect(apiErrorMessage("en", { error: "age_unconfirmed", code: "age_unconfirmed" }, 403)).toBe(
       t("en", "error.age_unconfirmed"),
     );

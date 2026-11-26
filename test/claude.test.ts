@@ -15,7 +15,16 @@ vi.mock("@anthropic-ai/sdk", async (importOriginal) => {
 });
 
 import Anthropic from "@anthropic-ai/sdk";
-import { claudeJson, claudeSearchJson, providerFailure, toClaudeSchema, withUsageMeter } from "../lib/claude";
+import {
+  CHILD_SAFETY_PROMPT,
+  childSafetyOn,
+  claudeJson,
+  claudeSearchJson,
+  providerFailure,
+  toClaudeSchema,
+  withChildSafety,
+  withUsageMeter,
+} from "../lib/claude";
 import { JUDGE_SCHEMA } from "../lib/judge";
 
 type Schema = Record<string, unknown>;
@@ -505,5 +514,32 @@ describe("provider failure log lines", () => {
     const lines = vi.mocked(console.warn).mock.calls.map((c) => String(c[0]).split(" ")[0]);
     expect(lines).toEqual(["[signal:provider_rate]", "[signal:provider_down]", "[signal:provider_rate]"]);
     expect(console.error).not.toHaveBeenCalled();
+  });
+});
+
+describe("withChildSafety", () => {
+  const systemOf = (n = 0) => (create.mock.calls[n][0] as { system: string }).system;
+
+  it("adds the child-safety prompt to every call inside it, and to nothing outside", async () => {
+    create.mockResolvedValue(message());
+    await claudeJson(CALL);
+    expect(systemOf(0)).toBe("sys");
+    await withChildSafety(true, async () => {
+      await Promise.all([claudeJson(CALL), claudeJson(CALL)]);
+      await new Promise((r) => setTimeout(r, 1));
+      await claudeJson(CALL);
+    });
+    for (const n of [1, 2, 3]) expect(systemOf(n)).toBe(`sys
+
+${CHILD_SAFETY_PROMPT}`);
+    await withChildSafety(false, () => claudeJson(CALL));
+    expect(systemOf(4)).toBe("sys");
+    expect(childSafetyOn()).toBe(false);
+  });
+
+  it("covers the web-search call too, and nests under a usage meter", async () => {
+    create.mockResolvedValue(message());
+    await withChildSafety(true, () => withUsageMeter(() => claudeSearchJson({ ...CALL, maxSearches: 1 })));
+    expect(systemOf(0)).toContain(CHILD_SAFETY_PROMPT);
   });
 });
