@@ -96,7 +96,7 @@ async function signedInGate(req: Request): Promise<Gate> {
   if (!premiumEnabled()) {
     return { response: fail("not_configured", "Verdicts are not available on this server right now.") };
   }
-  return { userId: viewer.user.id, name: viewer.user.name, teen: viewer.age.teen };
+  return { userId: viewer.user.id, name: viewer.user.name, teen: viewer.age?.teen === true };
 }
 
 /** The per-user limit for `bucket`, plus the site-wide daily cap for
