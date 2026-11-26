@@ -294,12 +294,23 @@ final class AccountAgeTests: XCTestCase {
     }
 
     @MainActor
+    func testContinueWaitsUntilADayIsPicked() async throws {
+        router.on("GET", "/api/v1/me", try me(state(needsDob: true)))
+        let (account, _, _) = makeAccount(.unknown)
+        await account.refresh()
+        XCTAssertFalse(account.dobPicked)
+        await account.submitDob()
+        XCTAssertEqual(router.count("POST", "/api/v1/me/age"), 0)
+        XCTAssertFalse(account.dobConfirming)
+    }
+
+    @MainActor
     func testAnAdultDateIsSentAsAPlainDate() async throws {
         router.on("GET", "/api/v1/me", try me(state(needsDob: true)))
         router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, state(confirmed: true)))
         let (account, _, _) = makeAccount(.unknown)
         await account.refresh()
-        account.dobDate = try day(1990, 3, 9)
+        account.pickDob(try day(1990, 3, 9))
         await account.submitDob()
         XCTAssertEqual(try sent()["dob"] as? String, "1990-03-09")
         XCTAssertEqual(try sent().count, 1)
@@ -315,7 +326,7 @@ final class AccountAgeTests: XCTestCase {
         await account.refresh()
         var reported: [Bool] = []
         account.onUnderEighteen = { reported.append($0) }
-        account.dobDate = Calendar.current.date(byAdding: .year, value: -15, to: Date())!
+        account.pickDob(Calendar.current.date(byAdding: .year, value: -15, to: Date())!)
         await account.submitDob()
         XCTAssertEqual(account.ageGate, .none)
         XCTAssertTrue(account.underEighteen)
@@ -328,7 +339,7 @@ final class AccountAgeTests: XCTestCase {
         router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, state(blocked: true)))
         let (account, _, _) = makeAccount(.unknown)
         await account.refresh()
-        account.dobDate = Calendar.current.date(byAdding: .year, value: -8, to: Date())!
+        account.pickDob(Calendar.current.date(byAdding: .year, value: -8, to: Date())!)
         let picked = account.dob
         await account.submitDob()
         XCTAssertTrue(account.dobConfirming)
@@ -353,7 +364,7 @@ final class AccountAgeTests: XCTestCase {
         let (account, _, _) = makeAccount(.unknown)
         await account.refresh()
         XCTAssertEqual(account.ageGate, .date)
-        account.dobDate = try day(1985, 6, 1)
+        account.pickDob(try day(1985, 6, 1))
         await account.submitDob()
         XCTAssertEqual(account.ageGate, .none)
         XCTAssertTrue(account.ageCleared)
@@ -365,7 +376,7 @@ final class AccountAgeTests: XCTestCase {
         router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(409, ["error": "set", "code": "age_set"]))
         let (account, _, _) = makeAccount(.unknown)
         await account.refresh()
-        account.dobDate = try day(1990, 3, 9)
+        account.pickDob(try day(1990, 3, 9))
         await account.submitDob()
         XCTAssertEqual(router.count("GET", "/api/v1/me"), 2)
         XCTAssertEqual(account.ageGate, .none)
@@ -378,7 +389,7 @@ final class AccountAgeTests: XCTestCase {
         router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(403, ["error": "closed", "code": "age_blocked"]))
         let (account, _, _) = makeAccount(.unknown)
         await account.refresh()
-        account.dobDate = try day(1990, 3, 9)
+        account.pickDob(try day(1990, 3, 9))
         await account.submitDob()
         try await PremiumFixtures.waitUntil("the refusal") { account.ageGate == .blocked }
     }
@@ -388,7 +399,7 @@ final class AccountAgeTests: XCTestCase {
         router.on("GET", "/api/v1/me", try me(state(needsDob: true)))
         let (account, _, _) = makeAccount(.unknown)
         await account.refresh()
-        account.dobDate = try day(1990, 3, 9)
+        account.pickDob(try day(1990, 3, 9))
         await account.submitDob()
         XCTAssertEqual(account.ageError, .offline)
         XCTAssertEqual(account.ageGate, .date)
@@ -465,7 +476,7 @@ final class AccountAgeTests: XCTestCase {
         XCTAssertEqual(ran, 0, "the verdict would be refused as unconfirmed")
         XCTAssertEqual(account.ageGate, .date)
 
-        account.dobDate = try day(1990, 3, 9)
+        account.pickDob(try day(1990, 3, 9))
         await account.submitDob()
         XCTAssertEqual(account.ageGate, .none)
         XCTAssertEqual(ran, 1, "the date lets it go")

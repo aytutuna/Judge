@@ -86,8 +86,9 @@ final class AccountModel {
 
     /// The phone's answer, asked at most once per run; nil until it answered.
     private(set) var platformAge: PlatformAge?
-    /// The day picked on the date step.
-    var dobDate = AgeCheck.defaultDobDate()
+    /// The day on the date step's wheels; Continue waits until one is picked.
+    private(set) var dobDate = AgeCheck.defaultDobDate()
+    private(set) var dobPicked = false
     /// An under-13 date waits for a second look before it is sent.
     private(set) var dobConfirming = false
     /// The date is being sent.
@@ -378,12 +379,17 @@ final class AccountModel {
 
     // MARK: - The date step
 
+    func pickDob(_ date: Date) {
+        dobDate = date
+        dobPicked = true
+    }
+
     /// The picked day as `YYYY-MM-DD`.
     var dob: String { AgeCheck.dobString(from: dobDate, calendar: .current) }
 
     /// "Continue": an under-13 date waits for a second look first.
     func submitDob() async {
-        guard !agePosting else { return }
+        guard dobPicked, !agePosting else { return }
         if !dobConfirming, AgeCheck.underThirteen(dob: dob) {
             dobConfirming = true
             return
@@ -947,6 +953,7 @@ final class AccountModel {
         ageError = nil
         dobConfirming = false
         dobDate = AgeCheck.defaultDobDate()
+        dobPicked = false
         afterAge = nil
         failure = nil
         step = .choose

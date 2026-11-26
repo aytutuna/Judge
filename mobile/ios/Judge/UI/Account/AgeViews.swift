@@ -51,7 +51,7 @@ struct AgeGateView: View {
         VStack(alignment: .leading, spacing: 16) {
             DatePicker(
                 L10n.ageTitle(lang),
-                selection: Binding(get: { account.dobDate }, set: { account.dobDate = $0 }),
+                selection: Binding(get: { account.dobDate }, set: { account.pickDob($0) }),
                 in: AgeCheck.dobRange(),
                 displayedComponents: .date
             )
@@ -70,7 +70,7 @@ struct AgeGateView: View {
                 Text(L10n.ageContinue(lang))
             }
             .buttonStyle(PrimaryButtonStyle())
-            .disabled(busy)
+            .disabled(busy || !account.dobPicked)
         }
         .padding(20)
         .paperSurface(radius: Radius.card)

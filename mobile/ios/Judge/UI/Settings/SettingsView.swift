@@ -51,6 +51,11 @@ struct SettingsView: View {
                     }
                     .tint(Brand.terraInk)
                     .disabled(app.account.underEighteen)
+                    if app.account.underEighteen {
+                        Text(L10n.settingsUsageStatsTeen(lang))
+                            .brandText(.footnote)
+                            .foregroundStyle(Brand.muted)
+                    }
                     if !app.account.underEighteen {
                         Toggle(isOn: Binding(get: { app.consent.on }, set: { on in
                             guard app.account.isSignedIn else {
@@ -77,9 +82,11 @@ struct SettingsView: View {
                 } header: {
                     Kicker(text: L10n.footerPrivacy(lang))
                 } footer: {
-                    Text(app.account.underEighteen ? L10n.settingsUsageStatsTeen(lang) : L10n.appSettingsUsageStatsHint(lang))
-                        .brandText(.footnote)
-                        .foregroundStyle(Brand.muted)
+                    if !app.account.underEighteen {
+                        Text(L10n.appSettingsUsageStatsHint(lang))
+                            .brandText(.footnote)
+                            .foregroundStyle(Brand.muted)
+                    }
                 }
                 .listRowBackground(Brand.paper)
 
