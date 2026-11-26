@@ -31,14 +31,16 @@ function fail(code: ApiErrorCode, error: string, status: number): NextResponse {
  * except from the website, which keeps no identifier and sends none.
  * Unknown names, fields or prop keys refuse the whole batch with 400; a body
  * that is not application/json, 415. No IP address or user agent is kept.
- * 204 when stored, and at once while analytics is switched off
- * (ANALYTICS_ENABLED=0). 503 once DAILY_EVENT_CAP is reached.
+ * 204 when stored, and at once, storing nothing, while analytics is switched
+ * off (ANALYTICS_ENABLED=0) or the signed-in account is under 18. 503 once DAILY_EVENT_CAP is reached.
  */
 export async function POST(req: Request): Promise<NextResponse> {
   if (!analyticsEnabled()) return new NextResponse(null, { status: 204, headers: NO_STORE });
   const { viewer, deadBearer, refused } = await lookupViewer(req);
   if (deadBearer) return deadBearerResponse();
   if (refused) return refused;
+  // Usage statistics are off for accounts under 18, whatever the client's switch says.
+  if (viewer?.age.teen) return new NextResponse(null, { status: 204, headers: NO_STORE });
   if (viewer?.via === "cookie" && !isSameOrigin(req)) return fail("bad_origin", "Cross-site request refused.", 403);
 
   const type = req.headers.get("content-type")?.split(";")[0].trim().toLowerCase();

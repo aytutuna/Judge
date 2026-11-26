@@ -53,6 +53,7 @@ const MESSAGES: Partial<Record<ApiErrorCode, string>> = {
   bad_origin: "Cross-site request refused.",
   unavailable: "Try again in a minute.",
   removed: "This verdict was removed. Its link no longer works.",
+  not_for_teens: "Not available for this account.",
 };
 
 function fail(code: ApiErrorCode, error?: string, retryAfterSec?: number): NextResponse {
@@ -102,20 +103,22 @@ async function underLimit(userId: string): Promise<NextResponse | null> {
 
 /** GET /api/v1/me/consent -> { state: "not_asked" | "on" | "off", updatedAt, policyVersion, ask, sensitiveAgreed }.
  * `ask` is true only while state is not_asked and the account has at least
- * two finished verdicts: the only time a client shows the card.
+ * two finished verdicts and is not under 18: the only time a client shows the card.
  * `sensitiveAgreed`: the account has made the one-time agreement. */
 export function consentGetHandler(req: Request): Promise<NextResponse> {
   return guarded("consent read", async () => {
     const who = await signedIn(req, false);
     if ("response" in who) return who.response;
-    return json(await consentStatus(who.viewer.user.id));
+    const status = await consentStatus(who.viewer.user.id);
+    return json(who.viewer.age.teen ? { ...status, ask: false } : status);
   });
 }
 
 /** POST /api/v1/me/consent { choice, source, wordingKey, lang, platform } -> the new state (ask: false).
  * `wordingKey` is the key of the text the person saw (the card's body or the
  * switch's detail) and `lang` the language they saw it in; the ledger keeps
- * that text as it reads now. */
+ * that text as it reads now. An account under 18 may switch it off, never on
+ * (403 not_for_teens). */
 export function consentPostHandler(req: Request): Promise<NextResponse> {
   return guarded("consent write", async () => {
     const who = await signedIn(req, true);
@@ -127,6 +130,7 @@ export function consentPostHandler(req: Request): Promise<NextResponse> {
         'Send { "choice": "on" | "off", "source": "card" | "switch", "wordingKey": "consent.cardBody" | "consent.switchDetail", "lang": <a language code>, "platform": "ios" | "android" | "web" }.',
       );
     }
+    if (who.viewer.age.teen && parsed.data.choice === "on") return fail("not_for_teens");
     const refused = await underLimit(who.viewer.user.id);
     if (refused) return refused;
     await ensureOriginalsTables();

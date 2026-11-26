@@ -76,6 +76,8 @@ export type SaveVerdictInput = {
   kind: "free" | "premium";
   /** Signed-in writer; null -> an owner token is issued. */
   ownerUserId: string | null;
+  /** The writer is under 18: names stay off the share page until they say otherwise. */
+  teen?: boolean;
   /** Always built; sealed only when a key exists. */
   original: OriginalPayload;
   /** The scene the court is set in. */
@@ -144,7 +146,7 @@ export function verdictWriteStatements(
         v.ownerUserId,
         token ? ownerTokenHash(token) : null,
         null,
-        1,
+        v.teen ? 0 : 1,
         sealedDisplay?.sealed ?? null,
         sealedDisplay?.kid ?? null,
         null,
@@ -173,7 +175,7 @@ export function verdictWriteStatements(
     outcome: {
       ownerToken: token,
       originalsStored: Boolean(original),
-      display: sealedDisplay ? { ...display, namesVisible: true } : LABELS_ONLY,
+      display: sealedDisplay ? { ...display, namesVisible: !v.teen } : { ...LABELS_ONLY, namesVisible: !v.teen },
       metaWritten: true,
     },
   };
