@@ -508,9 +508,10 @@ describe("the date of birth after the 18th birthday", () => {
 
   it("goes into the data export with the age signal", async () => {
     const { token, user } = await teenAccount("dob-export@verdict.local");
+    await postAge(token, { adult: false, source: "platform" });
     const res = await exportRoute.GET(request("GET", "/api/v1/me/export", bearer(token)));
     const data = await res.json();
-    expect(data.account).toMatchObject({ dateOfBirth: ago(15), dateOfBirthGivenAt: expect.any(String), id: user.id });
+    expect(data.account).toMatchObject({ dateOfBirth: ago(15), dateOfBirthGivenAt: expect.any(String), storeAgeSignal: "minor", storeAgeSignalAt: expect.any(String), id: user.id });
   });
 });
 

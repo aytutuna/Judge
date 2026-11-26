@@ -336,13 +336,15 @@ export async function recordMinorSignal(userId: string, under13: boolean | undef
   if (before.blocked) return before;
   const nowIso = now.toISOString();
   if (before.teen) {
-    await entitlementWriteBatch([
+    // An adult signal that landed after the read is not overwritten here; the full write below takes over.
+    const [done] = await entitlementWriteBatch([
       {
-        sql: `UPDATE "user" SET age_signal = 'minor', age_signal_at = ? WHERE id = ? AND age_blocked_at IS NULL`,
+        sql: `UPDATE "user" SET age_signal = 'minor', age_signal_at = ?
+              WHERE id = ? AND age_blocked_at IS NULL AND (age_signal IS NULL OR age_signal = 'minor')`,
         args: [nowIso, userId],
       },
     ]);
-    return readAge(userId, now);
+    if (done.rowsAffected > 0) return readAge(userId, now);
   }
   await entitlementWriteBatch([
     {

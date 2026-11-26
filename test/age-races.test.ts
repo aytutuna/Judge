@@ -121,6 +121,19 @@ describe("recordMinorSignal after a date", () => {
   });
 });
 
+describe("recordMinorSignal on a teen", () => {
+  it("does not overwrite an adult signal that landed after the read, and records the minor one instead", async () => {
+    const id = await account("race-teen-adult-signal@verdict.local");
+    await setRow(id, "age_dob = ?, age_dob_at = ?, age_confirmed_at = ?", [ago(15), "2026-11-20T00:00:00.000Z", "2026-11-20T00:00:00.000Z"]);
+    interleave(() => setRow(id, "age_signal = 'adult'"));
+    await recordMinorSignal(id, undefined);
+    // The fast path wrote nothing, so the full write ran: consent and events went with it.
+    expect((await row(id)).age_signal).toBe("minor");
+    expect(await consentOn(id)).toBe(false);
+    expect(await events(id)).toBe(0);
+  });
+});
+
 describe("submitDob", () => {
   it("a date that lost to the same teen date written at another time runs no teen statements", async () => {
     const id = await account("race-same-dob@verdict.local");
