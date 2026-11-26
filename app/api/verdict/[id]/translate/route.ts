@@ -66,7 +66,7 @@ export async function POST(req: Request, ctx: RouteContext<"/api/verdict/[id]/tr
   const ip = clientIp(req.headers);
   let outcome;
   try {
-    const teen = await verdictHasTeen(id).catch(() => false);
+    const teen = await verdictHasTeen(id);
     outcome = await withChildSafety(teen, () =>
       translatedVerdict<Refusal>(id, lang, async () => {
         const limit = await checkTranslateLimits(ip);

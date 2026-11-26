@@ -8,7 +8,7 @@ import type { AgeState } from "@/lib/account-types";
 import { underThirteen } from "@/lib/age-date";
 import { t, type Lang } from "@/lib/i18n";
 import { langTag } from "@/lib/langs";
-import { applyAge, markSignedOut, refreshViewer, useViewer } from "@/lib/use-viewer";
+import { applyAge, currentAge, markSignedOut, refreshViewer, useViewer } from "@/lib/use-viewer";
 import styles from "./account/AccountPages.module.css";
 
 /** Pages a gated account can still open: its account (to delete it) and
@@ -76,7 +76,9 @@ export function AgeDialogBody({ lang, age, dob, max, confirming, saving, failed,
         <h2 id="age-title" className={styles.dialogTitle}>
           {t(lang, "age.title")}
         </h2>
-        <p className={styles.dialogText}>{t(lang, "age.confirmDate", { date: longDate(lang, dob) })}</p>
+        <p className={styles.dialogText} role="status" tabIndex={-1} ref={(el) => el?.focus()}>
+          {t(lang, "age.confirmDate", { date: longDate(lang, dob) })}
+        </p>
         {failed ? (
           <p className={styles.error} role="alert">
             {t(lang, "age.failed")}
@@ -110,6 +112,7 @@ export function AgeDialogBody({ lang, age, dob, max, confirming, saving, failed,
           className={styles.input}
           aria-labelledby="age-title"
           required
+          autoFocus
           min="1900-01-01"
           max={max}
           value={dob}
@@ -160,6 +163,8 @@ export function AgeGate({ lang }: { lang: Lang }) {
       } else if (res.status === 409 || res.status === 403) {
         // Given elsewhere, or the account was closed there: show what the server holds.
         await refreshViewer();
+        // Still asking: the refusal was not about the date (e.g. a blocked origin), or the refresh failed.
+        if (currentAge()?.needsDob !== false) setFailed(true);
       } else {
         setFailed(true);
       }

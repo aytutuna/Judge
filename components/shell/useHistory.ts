@@ -468,6 +468,7 @@ export function useHistory(viewer: ViewerState, poll = false): HistoryView & { l
     () => null,
   );
   const user = viewer.me?.user?.id ?? null;
+  const blocked = viewer.me?.age?.blocked === true;
 
   useEffect(() => {
     void settleHistory();
@@ -491,7 +492,8 @@ export function useHistory(viewer: ViewerState, poll = false): HistoryView & { l
       return;
     }
     void refreshHistory();
-  }, [user]);
+    // A block lifted by a date of birth: what failed while blocked loads again.
+  }, [user, blocked]);
 
   const mine = server && server.user === user ? server : null;
   const thinking = poll && Boolean(mine?.data?.rows.some((r) => THINKING.has(r.state)));

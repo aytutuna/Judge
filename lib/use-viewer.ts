@@ -83,6 +83,11 @@ export function viewerSignedIn(): boolean {
   return Boolean(state.me?.user);
 }
 
+/** The age state the store holds right now. */
+export function currentAge(): AgeState | null {
+  return state.me?.age ?? null;
+}
+
 /** Swap in the age check POST /api/v1/me/age answered with. */
 export function applyAge(age: AgeState): void {
   if (!state.me?.user) return;
