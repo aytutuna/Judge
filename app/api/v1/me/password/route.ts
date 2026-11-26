@@ -3,7 +3,8 @@ import { z } from "zod";
 import { apiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
 import { isSameOrigin, reviewAccount } from "@/lib/auth";
 import { deadBearerResponse, lookupViewer } from "@/lib/bearer-guard";
-import { setPassword } from "@/lib/password";
+import { emailConfigured, langFromRequestUrl, sendPasswordChangedEmail } from "@/lib/email";
+import { hasPassword, setPassword } from "@/lib/password";
 import { checkUserLimits } from "@/lib/ratelimit";
 
 export const runtime = "nodejs";
@@ -56,10 +57,18 @@ export async function POST(req: Request): Promise<NextResponse> {
         "Retry-After": String("retryAfterSec" in limit ? limit.retryAfterSec : 60),
       });
     }
+    const replacing = await hasPassword(viewer.user.id);
     const result = await setPassword(viewer.user.id, viewer.sessionId, parsed.data.password, parsed.data.current);
     if (result === "current_required") return fail("password_required", 403, "Enter your current password.");
     if (result === "current_wrong") return fail("password_wrong", 403, "That password is not right.");
     if (result === "unverified") return fail("invalid", 403, "Sign in with an emailed code first.");
+    if (replacing && emailConfigured()) {
+      try {
+        await sendPasswordChangedEmail({ to: viewer.user.email, lang: langFromRequestUrl(req.url) });
+      } catch (e) {
+        console.error("[me] password notice failed:", e instanceof Error ? e.message : String(e));
+      }
+    }
     return NextResponse.json({ ok: true }, { headers: NO_STORE });
   } catch (e) {
     console.error("[me] password update failed:", e instanceof Error ? e.message : String(e));

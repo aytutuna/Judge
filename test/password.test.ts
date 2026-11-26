@@ -354,6 +354,46 @@ describe("POST /api/v1/me/password", () => {
     expect((await me(phone)).status).toBe(401);
   });
 
+  it("emails the address when a password is replaced, in the asked language", async () => {
+    const sent = emailOn();
+    const token = await codeSignIn(sent, "notice@example.com");
+    const first = await setPassword(token, { password: "first password" });
+    expect(first.status).toBe(200);
+    expect(sent).toHaveLength(1); // the sign-in code only
+
+    const res = await postPassword(
+      new Request(`${ORIGIN}/api/v1/me/password?lang=tr`, {
+        method: "POST",
+        headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
+        body: JSON.stringify({ password: "second password" }),
+      }),
+    );
+    expect(res.status).toBe(200);
+    expect(sent).toHaveLength(2);
+    const mail = sent[1] as Sent & { subject: string };
+    expect(mail.to).toEqual(["notice@example.com"]);
+    expect(mail.subject).toBe("Judge parolan değiştirildi");
+    expect(mail.text).toMatch(/UTC/);
+    expect(mail.text).toContain("support@okjudge.com");
+
+    expect((await setPassword(token, { password: "third password" })).status).toBe(200);
+    expect((sent[2] as Sent & { subject: string }).subject).toBe("Your Judge password was changed");
+  });
+
+  it("sends no notice for a refused change, and a failed notice does not undo the change", async () => {
+    const sent = emailOn();
+    const token = await codeSignIn(sent, "notice2@example.com");
+    await setPassword(token, { password: "first password" });
+    await age(token, 30);
+    expect((await setPassword(token, { password: "second password" })).status).toBe(403);
+    expect(sent).toHaveLength(1);
+
+    resendStatus = 500;
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    expect((await setPassword(token, { password: "second password", current: "first password" })).status).toBe(200);
+    expect((await signInPassword("notice2@example.com", "second password")).status).toBe(200);
+  });
+
   it("refuses to set a password on the review account", async () => {
     emailOn();
     vi.stubEnv("REVIEW_ACCOUNT_EMAIL", "review3@example.com");
