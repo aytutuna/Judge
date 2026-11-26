@@ -166,9 +166,9 @@ class Account(
     val teen: StateFlow<Boolean> = _state.map { ((it as? State.SignedIn)?.me?.age)?.teen == true }
         .stateIn(scope, SharingStarted.Eagerly, false)
 
-    /** Usage statistics are off whatever the setting says: a teen or a blocked account. */
+    /** Usage statistics are off whatever the setting says: a teen, a blocked account or one whose age is not known yet. */
     val statsLocked: StateFlow<Boolean> = _state.map { state ->
-        ((state as? State.SignedIn)?.me?.age)?.let { it.teen || it.blocked } == true
+        AgeCheck.usageStatsLocked((state as? State.SignedIn)?.me?.age)
     }.stateIn(scope, SharingStarted.Eagerly, false)
 
     /** Loads /api/v1/config unless it is already known (or [force]). */
@@ -254,15 +254,16 @@ class Account(
     /**
      * Why a verdict or a purchase has to wait, or null when nothing about age
      * stands in the way: [AgeCheck.BLOCKED] for a blocked account,
-     * [AgeCheck.UNCONFIRMED] until the server has confirmed it. A server
-     * without the age check sends no age. Only the server's word counts; the
-     * phone's signal is reported, never used here.
+     * [AgeCheck.UNCONFIRMED] until the server has confirmed it, and while the
+     * phone's check or a report is still running. A server without the age
+     * check sends no age. Only the server's word counts; the phone's signal is
+     * reported, never used here.
      */
     fun ageRefusal(): String? {
         val age = (_state.value as? State.SignedIn)?.me?.age ?: return null
         return when {
             age.blocked -> AgeCheck.BLOCKED
-            !age.confirmed -> AgeCheck.UNCONFIRMED
+            askingPlatform || _agePosting.value || !age.confirmed -> AgeCheck.UNCONFIRMED
             else -> null
         }
     }
@@ -272,6 +273,7 @@ class Account(
         if (!_agePosting.compareAndSet(expect = false, update = true)) return
         val asked = tokens.get()
         var refetch = false
+        var liftedBlock = false
         try {
             _ageFailed.value = false
             val res = api.submitDob(dob.toString())
@@ -279,7 +281,10 @@ class Account(
             val current = _state.value as? State.SignedIn ?: return
             val me = current.me ?: return
             when (res) {
-                is ApiResult.Ok -> _state.value = current.copy(me = me.copy(age = res.value))
+                is ApiResult.Ok -> {
+                    liftedBlock = me.age?.blocked == true && !res.value.blocked
+                    _state.value = current.copy(me = me.copy(age = res.value))
+                }
                 is ApiResult.Err -> {
                     val e = res.error
                     // The account moved on (another device, a retry that landed): see what the server says now.
@@ -293,7 +298,18 @@ class Account(
             refresh()
             if ((_state.value as? State.SignedIn)?.me?.age?.needsDob == true) _ageFailed.value = true
         }
-        settleLater()
+        if (liftedBlock) {
+            // The server ignored the store signal while the account was blocked: send it again now.
+            signalSentFor = null
+            settleAge()
+        } else {
+            settleLater()
+        }
+    }
+
+    /** The date step went back to the picker: the old failure no longer applies. */
+    fun clearAgeFailed() {
+        _ageFailed.value = false
     }
 
     /** JudgeApi saw a 403 age error: the account on screen is behind, so read what the server says now. */
@@ -321,7 +337,8 @@ class Account(
             val current = _state.value as? State.SignedIn ?: return
             val me = current.me ?: return
             if (res is ApiResult.Ok) {
-                signalSentFor = asked
+                // A blocked account's signal is dropped by the server, so it does not count as sent.
+                if (me.age?.blocked != true) signalSentFor = asked
                 _state.value = current.copy(me = me.copy(age = res.value))
             }
         } finally {

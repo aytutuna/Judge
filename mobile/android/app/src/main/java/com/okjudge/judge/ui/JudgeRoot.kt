@@ -589,7 +589,7 @@ fun JudgeRoot(
                                         null
                                     }
                                     val teen by account.teen.collectAsStateWithLifecycle()
-                                    val askConsent = container.consent.ask.collectAsStateWithLifecycle().value && !teen
+                                    val askConsent = AgeCheck.showsConsentCard(container.consent.ask.collectAsStateWithLifecycle().value, teen)
                                     LaunchedEffect(accountState is Account.State.SignedIn) {
                                         if (accountState is Account.State.SignedIn) container.consent.refresh() else container.consent.clear()
                                     }
@@ -724,7 +724,7 @@ fun JudgeRoot(
                                                 backStack.add(SignInKey(thenVerdict = false))
                                             }
                                         },
-                                        usageStats = usageStats && !statsLocked,
+                                        usageStats = AgeCheck.usageStatsOn(usageStats, statsLocked),
                                         teen = teen,
                                         onUsageStats = { on -> scope.launch { container.settings.setUsageStats(on) } },
                                         onOpenLink = { openLink(context, it) },
@@ -885,6 +885,7 @@ private fun AgeOverlay(
                 busy = busy || posting,
                 failed = failed,
                 onSubmit = onSubmitDob,
+                onEdit = account::clearAgeFailed,
                 onSignOut = onSignOut,
                 onDelete = onDelete,
                 deleteFailed = deleteFailed,

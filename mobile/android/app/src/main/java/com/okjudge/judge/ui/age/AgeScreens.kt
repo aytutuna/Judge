@@ -16,17 +16,18 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDefaults
+import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -100,7 +101,6 @@ private fun Long.utcDate(): LocalDate = Instant.ofEpochMilli(this).atOffset(Zone
  * date and the step live in saved state, so rotation and a killed process
  * keep them. The only ways past it are a date, signing out or deleting the account.
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AgeDateScreen(
     busy: Boolean,
@@ -109,22 +109,48 @@ fun AgeDateScreen(
     onSignOut: () -> Unit,
     onDelete: () -> Unit,
     deleteFailed: Boolean = false,
+    /** The person went back to the picker or is about to confirm: the last failure no longer applies. */
+    onEdit: () -> Unit = {},
     nowMillis: () -> Long = System::currentTimeMillis,
+) {
+    // The input pattern, the first weekday and Material's texts come from the app's language, not the phone's.
+    InAppLanguage(LocalLang.current) {
+        AgeDateBody(busy, failed, onSubmit, onSignOut, onDelete, deleteFailed, onEdit, nowMillis)
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AgeDateBody(
+    busy: Boolean,
+    failed: Boolean,
+    onSubmit: (LocalDate) -> Unit,
+    onSignOut: () -> Unit,
+    onDelete: () -> Unit,
+    deleteFailed: Boolean,
+    onEdit: () -> Unit,
+    nowMillis: () -> Long,
 ) {
     val s = LocalStrings.current
     val lang = LocalLang.current
     val latest = remember { AgeCheck.latestDate(nowMillis()) }
     // Typing a birth year is quicker than paging back through months; the calendar stays one tap away on the toggle.
-    val picker = rememberDatePickerState(
-        initialDisplayMode = DisplayMode.Input,
-        yearRange = 1900..latest.year,
-        selectableDates = remember(latest) {
-            object : SelectableDates {
+    // The state is built with the app's locale (Material would take the phone's) and its date kept by hand across recreation.
+    var savedMillis by rememberSaveable { mutableStateOf<Long?>(null) }
+    val picker = remember(lang) {
+        DatePickerState(
+            locale = lang.locale,
+            initialSelectedDateMillis = savedMillis,
+            initialDisplayedMonthMillis = null,
+            yearRange = 1900..latest.year,
+            initialDisplayMode = DisplayMode.Input,
+            selectableDates = object : SelectableDates {
                 override fun isSelectableDate(utcTimeMillis: Long) = utcTimeMillis <= latest.utcMillis()
                 override fun isSelectableYear(year: Int) = year <= latest.year
-            }
-        },
-    )
+            },
+        )
+    }
+    LaunchedEffect(picker) { snapshotFlow { picker.selectedDateMillis }.collect { savedMillis = it } }
     var confirming by rememberSaveable { mutableStateOf(false) }
     val date = picker.selectedDateMillis?.utcDate()
     val asking = confirming && date != null
@@ -132,8 +158,8 @@ fun AgeDateScreen(
     LaunchedEffect(asking) { if (asking) focus.requestFocus() }
 
     Cover(Modifier.testTag(if (asking) AgeTags.CONFIRM else AgeTags.DATE)) {
-        Text(s.ageTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
         if (asking && date != null) {
+            Text(s.ageTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
             val written = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(lang.locale).format(date)
             Text(
                 s.ageConfirmDate(written),
@@ -154,29 +180,35 @@ fun AgeDateScreen(
             )
             TextAction(
                 s.ageChange,
-                onClick = { confirming = false },
+                onClick = { onEdit(); confirming = false },
                 color = Palette.ink2,
                 enabled = !busy,
                 modifier = Modifier.padding(top = 14.dp).align(Alignment.CenterHorizontally).testTag(AgeTags.CHANGE),
             )
         } else {
-            Text(s.ageLead, style = JudgeType.lead, modifier = Modifier.padding(top = 10.dp, bottom = 12.dp))
-            InAppLanguage(lang) {
-                DatePicker(
-                    state = picker,
-                    title = null,
-                    headline = null,
-                    modifier = Modifier.fillMaxWidth().semantics { contentDescription = s.ageTitle }.testTag(AgeTags.PICKER),
-                    colors = DatePickerDefaults.colors(containerColor = Palette.ivory),
-                )
-            }
+            // Our title takes the headline slot beside the calendar toggle, so no empty header strip is left.
+            DatePicker(
+                state = picker,
+                title = null,
+                headline = {
+                    Text(s.ageTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
+                },
+                modifier = Modifier.fillMaxWidth().semantics { contentDescription = s.ageTitle }.testTag(AgeTags.PICKER),
+                colors = DatePickerDefaults.colors(containerColor = Palette.ivory),
+            )
+            Text(s.ageLead, style = JudgeType.lead, modifier = Modifier.padding(top = 12.dp))
             if (failed) ErrorNote(s.ageFailed)
             PrimaryButton(
                 text = s.ageContinue,
                 enabled = date != null && !busy,
                 onClick = {
                     val picked = date ?: return@PrimaryButton
-                    if (AgeCheck.underThirteen(picked, nowMillis())) confirming = true else onSubmit(picked)
+                    if (AgeCheck.underThirteen(picked, nowMillis())) {
+                        onEdit()
+                        confirming = true
+                    } else {
+                        onSubmit(picked)
+                    }
                 },
                 modifier = Modifier.fillMaxWidth().padding(top = 20.dp).testTag(AgeTags.CONTINUE),
             )

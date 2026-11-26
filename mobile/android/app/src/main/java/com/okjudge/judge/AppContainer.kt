@@ -9,6 +9,7 @@ import com.okjudge.judge.core.feedback.Agreement
 import com.okjudge.judge.core.feedback.Consent
 import com.okjudge.judge.core.feedback.DataExport
 import com.okjudge.judge.core.auth.Account
+import com.okjudge.judge.core.auth.AgeCheck
 import com.okjudge.judge.core.cases.CaseNamesStore
 import com.okjudge.judge.core.cases.PrefsCaseNames
 import com.okjudge.judge.core.auth.CredentialManagerGoogle
@@ -183,7 +184,7 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
         }
         account.onDeleted = { lastSignIn.clear() }
         account.onSignedIn = { analytics.track("sign_in_completed") }
-        appScope.launch { combine(settings.usageStats, account.statsLocked) { on, locked -> on && !locked }.collect { analytics.allowed = it } }
+        appScope.launch { combine(settings.usageStats, account.statsLocked, AgeCheck::usageStatsOn).collect { analytics.allowed = it } }
         appScope.launch {
             // A verdict accepted before the app was killed shows up on the judging screen.
             account.state.first { it is Account.State.SignedIn }

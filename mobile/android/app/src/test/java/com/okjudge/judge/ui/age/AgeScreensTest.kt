@@ -66,15 +66,34 @@ class AgeScreensTest {
     }
 
     @Test
-    fun dateStep_pickerTextsFollowTheAppLanguage() {
+    fun dateStep_pickerTextsAndPatternFollowTheAppLanguage() {
         compose.setContent {
             Themed(AppLang.TR) {
                 AgeDateScreen(busy = false, failed = false, onSubmit = {}, onSignOut = {}, onDelete = {})
             }
         }
-        // Material's own field label comes in the app's language, not the phone's.
+        // Material's own label and the day-first pattern come from the app's language, not the phone's.
         compose.onNodeWithText("Tarih").assertExists()
         compose.onAllNodesWithText("Date").assertCountEquals(0)
+        // 13.05.2000 only reads as a date when the day comes first, as in Turkish.
+        compose.onNodeWithTag(AgeTags.CONTINUE).assertIsNotEnabled()
+        compose.onNode(hasSetTextAction()).performTextInput("13052000")
+        compose.onNodeWithTag(AgeTags.CONTINUE).assertIsEnabled()
+    }
+
+    @Test
+    fun dateStep_goingToTheConfirmStep_andBack_clearsTheFailure() {
+        var edits = 0
+        compose.setContent {
+            Themed(AppLang.EN) {
+                AgeDateScreen(false, true, {}, {}, {}, onEdit = { edits++ }, nowMillis = System::currentTimeMillis)
+            }
+        }
+        enterBirthDate(compose, CHILD)
+        compose.onNodeWithTag(AgeTags.CONTINUE).performClick()
+        assertEquals(1, edits)
+        compose.onNodeWithTag(AgeTags.CHANGE).performClick()
+        assertEquals(2, edits)
     }
 
     @Test

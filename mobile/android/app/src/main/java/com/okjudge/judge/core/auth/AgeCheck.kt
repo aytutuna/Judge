@@ -84,6 +84,14 @@ object AgeCheck {
      */
     fun underThirteen(dob: LocalDate, nowMillis: Long): Boolean = dob.isAfter(latestDate(nowMillis).minusYears(13))
 
+    /** Usage events go out only for an account whose age is known and 18 or more (as on the website). */
+    fun usageStatsLocked(age: AgeStatus?): Boolean = age != null && (age.teen || age.blocked || age.needsDob)
+
+    fun usageStatsOn(preference: Boolean, locked: Boolean): Boolean = preference && !locked
+
+    /** The "Help improve Judge" card is never shown to a teen, whatever a cached answer says. */
+    fun showsConsentCard(ask: Boolean, teen: Boolean): Boolean = ask && !teen
+
     fun isAgeError(error: UiError?): Boolean =
         error is UiError.Api && error.status == 403 && (error.code == BLOCKED || error.code == UNCONFIRMED)
 
