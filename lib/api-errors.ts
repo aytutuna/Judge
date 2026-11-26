@@ -64,6 +64,9 @@ export const API_ERROR_STATUS = {
   password_required: 403,
   /** The current password sent to POST /api/v1/me/password is wrong. */
   password_wrong: 403,
+  /** Deleting the account with no recent sign-in and no password
+   * (DELETE /api/v1/me): sign in again first. */
+  reauth_required: 403,
 } as const;
 
 export type ApiErrorCode = keyof typeof API_ERROR_STATUS;

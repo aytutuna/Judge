@@ -12,6 +12,9 @@ import { getAuth } from "./auth";
  * code sign-in, then a new password). */
 export const FRESH_SIGNIN_MS = 5 * 60_000;
 
+/** Deleting the account needs a sign-in this young, or the password. */
+export const DELETE_FRESH_MS = 10 * 60_000;
+
 export async function hasPassword(userId: string): Promise<boolean> {
   const ctx = await (await getAuth()).$context;
   return Boolean((await ctx.internalAdapter.findCredentialAccount(userId))?.password);
@@ -77,4 +80,24 @@ export function setPassword(
     else await ctx.internalAdapter.linkAccount({ userId, providerId: "credential", accountId: userId, password: hash });
     return "ok";
   });
+}
+
+export type ReauthResult = "ok" | "reauth_required" | "password_wrong";
+
+/** Whether the person at this session may delete the account: they gave the
+ * password, or the session itself was created within DELETE_FRESH_MS. A
+ * password is only checked when the account has one. */
+export async function reauthForDelete(
+  userId: string,
+  sessionId: string,
+  password: string | undefined,
+  now = Date.now(),
+): Promise<ReauthResult> {
+  const ctx = await (await getAuth()).$context;
+  const account = await ctx.internalAdapter.findCredentialAccount(userId);
+  if (password !== undefined && account?.password) {
+    return (await ctx.password.verify({ hash: account.password, password })) ? "ok" : "password_wrong";
+  }
+  const mine = (await ctx.internalAdapter.listSessions(userId)).find((s) => s.id === sessionId);
+  return mine && now - new Date(mine.createdAt).getTime() <= DELETE_FRESH_MS ? "ok" : "reauth_required";
 }

@@ -17,7 +17,8 @@ import {
 import { deadBearerResponse } from "@/lib/bearer-guard";
 import { deleteUserEntitlements, getEntitlement } from "@/lib/entitlements";
 import { removeUserData } from "@/lib/originals/removal";
-import { hasPassword } from "@/lib/password";
+import { hasPassword, reauthForDelete } from "@/lib/password";
+import { checkUserLimits } from "@/lib/ratelimit";
 import { revokeSignInTokens } from "@/lib/signin-tokens";
 
 export const runtime = "nodejs";
@@ -69,8 +70,10 @@ async function missedWelcome(userId: string): Promise<boolean> {
   }
 }
 
-/** DELETE /api/v1/me { confirm: "delete" }: revokes the account's stored
- * Sign in with Apple tokens at Apple (a failure there is logged and recorded,
+/** DELETE /api/v1/me { confirm: "delete", password? }: needs a sign-in from
+ * the last 10 minutes, or the account's password (403 reauth_required, or
+ * password_wrong), and counts against 5 tries per 10 minutes (429). Revokes
+ * the account's stored Sign in with Apple tokens at Apple (a failure there is logged and recorded,
  * and does not stop the deletion), removes every verdict the account owns and
  * its side of every case (originals, name maps and display names blanked,
  * share links closed; no verdict row is deleted), then deletes its
@@ -100,7 +103,33 @@ export async function DELETE(req: Request): Promise<NextResponse> {
       headers: NO_STORE,
     });
   }
+  const password = (body as { password?: unknown }).password;
+  if (password !== undefined && (typeof password !== "string" || password.length > 128)) {
+    return NextResponse.json(apiErrorBody("invalid", "Send the password as a string."), {
+      status: 400,
+      headers: NO_STORE,
+    });
+  }
   try {
+    const limit = await checkUserLimits(viewer.user.id, "account_delete");
+    if (!limit.ok) {
+      if (limit.code === "unavailable") {
+        return NextResponse.json(apiErrorBody("unavailable", "Your account is unavailable right now."), {
+          status: 503,
+          headers: NO_STORE,
+        });
+      }
+      return NextResponse.json(apiErrorBody("rate_limited", "Too many attempts. Try again later."), {
+        status: 429,
+        headers: { ...NO_STORE, "Retry-After": String("retryAfterSec" in limit ? limit.retryAfterSec : 60) },
+      });
+    }
+    const reauth = await reauthForDelete(viewer.user.id, viewer.sessionId, password);
+    if (reauth !== "ok") {
+      const message = reauth === "password_wrong" ? "That password is not right." : "Sign in again to delete the account.";
+      return NextResponse.json(apiErrorBody(reauth, message), { status: 403, headers: NO_STORE });
+    }
+    // TODO: cancel a Stripe plan here once web payments exist; store plans are cancelled by the person.
     const claim = viewer.age.blocked ? welcomeClaim(viewer.user.email) : null;
     if (claim) await keepBlock(claim, !viewer.age.needsDob);
     const signInTokens = await revokeSignInTokens(viewer.user.id);
