@@ -3,6 +3,10 @@ package com.okjudge.judge.core.auth
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.okjudge.judge.core.api.JudgeApi
+import com.okjudge.judge.core.analytics.Analytics
+import com.okjudge.judge.core.analytics.AnalyticsContext
+import com.okjudge.judge.core.analytics.AnalyticsTransport
+import com.okjudge.judge.core.analytics.Delivery
 import com.okjudge.judge.core.api.MemoryTokenStore
 import com.okjudge.judge.core.auth.Routes.Companion.ME
 import com.okjudge.judge.core.auth.Routes.Companion.SIGN_OUT
@@ -15,7 +19,10 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import kotlinx.serialization.json.Json
@@ -34,6 +41,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import java.time.LocalDate
+import java.util.concurrent.TimeUnit
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [36])
@@ -138,6 +146,7 @@ class AccountAgeTest {
         assertNull(ageBody()["under13"])
         assertTrue(account.teen.value)
         assertTrue(account.statsLocked.value)
+        withTimeout(10_000) { account.agePosting.first { !it } }
         // Never closed by the phone's word: the date step is what shows.
         assertEquals(AgeGate.DATE, account.ageGate.value)
         assertNull(account.ageRefusal())
@@ -152,6 +161,7 @@ class AccountAgeTest {
         account.refresh()
         account.checkPlatformAge(context)
         account.awaitPhone()
+        withTimeout(10_000) { account.agePosting.first { !it } }
         assertNull(account.ageRefusal())
         assertEquals(AgeGate.NONE, account.ageGate.value)
     }
@@ -216,6 +226,112 @@ class AccountAgeTest {
         account.checkPlatformAge(context)
         assertEquals(PlatformAge.UNKNOWN, account.awaitPhone())
         assertTrue(routes.requestsTo(AGE).isEmpty())
+    }
+
+    @Test
+    fun verdictsAndPurchasesWait_whileThePhoneIsAsked() = runBlocking {
+        phoneHangs = true
+        routes.always(ME, finished)
+        val (account, _) = account(platformTimeoutMs = 300)
+        account.refresh()
+        assertNull(account.ageRefusal())
+        account.checkPlatformAge(context)
+        assertEquals(AgeCheck.UNCONFIRMED, account.ageRefusal())
+        account.awaitPhone()
+        assertNull(account.ageRefusal())
+    }
+
+    @Test
+    fun verdictsAndPurchasesWait_whileTheSignalIsReported() = runBlocking {
+        phone = PlatformAge.MINOR
+        routes.always(ME, finished)
+        routes.on(AGE, json(200, age(confirmed = true, teen = true)).newBuilder().headersDelay(500, TimeUnit.MILLISECONDS).build())
+        val (account, _) = account()
+        account.refresh()
+        account.checkPlatformAge(context)
+        withTimeout(10_000) { account.agePosting.first { it } }
+        assertEquals(AgeCheck.UNCONFIRMED, account.ageRefusal())
+        account.awaitAge { it.teen }
+        withTimeout(10_000) { account.agePosting.first { !it } }
+        assertNull(account.ageRefusal())
+    }
+
+    @Test
+    fun aBlockedAccountsSignal_isNotCountedAsSent_andGoesAgainOnceTheBlockLifts() = runBlocking {
+        phone = PlatformAge.MINOR
+        routes.always(ME, me(age(blocked = true, needsDob = true)))
+        // The server answers 200 but ignores the signal while the block stands.
+        routes.on(AGE, json(200, age(blocked = true, needsDob = true)))
+        routes.on(AGE, json(200, age(confirmed = true)))
+        routes.on(AGE, json(200, age(confirmed = true, teen = true)))
+        val (account, _) = account()
+        account.refresh()
+        account.checkPlatformAge(context)
+        awaitSignal()
+        withTimeout(10_000) { account.agePosting.first { !it } }
+        account.submitDob(LocalDate.of(1990, 5, 17))
+        account.awaitAge { it.teen }
+        assertEquals(3, routes.requestsTo(AGE).size)
+        assertEquals("1990-05-17", ageBody(1)["dob"]!!.jsonPrimitive.content)
+        assertEquals("false", ageBody(2)["adult"]!!.jsonPrimitive.content)
+        assertTrue(account.teen.value)
+    }
+
+    @Test
+    fun usageStatsStayLocked_untilTheAgeIsKnownAndAdult() = runBlocking {
+        routes.on(ME, needsDate)
+        routes.on(ME, finished)
+        val (account, _) = account()
+        account.refresh()
+        assertTrue(account.statsLocked.value)
+        account.refresh()
+        assertFalse(account.statsLocked.value)
+    }
+
+    @Test
+    fun analytics_sendsNothingForATeen_orForAnUnknownAge() = runBlocking {
+        val sent = mutableListOf<String>()
+        val transport = object : AnalyticsTransport {
+            override suspend fun send(body: String): Delivery {
+                sent += body
+                return Delivery.SENT
+            }
+        }
+        val analytics = Analytics(
+            transport, AnalyticsContext("0.1.0_1", "anon", "dev", "15", "Pixel_8", "en-US"), null, scope,
+            io = Dispatchers.Unconfined, now = { 1_800_000_000_000L }, log = {},
+        )
+        analytics.setServerOn(true)
+        routes.on(ME, needsDate)
+        routes.on(ME, me(age(confirmed = true, teen = true)))
+        routes.on(ME, finished)
+        val (account, _) = account()
+        scope.launch { combine(flowOf(true), account.statsLocked, AgeCheck::usageStatsOn).collect { analytics.allowed = it } }
+
+        account.refresh()
+        analytics.track("app_open")
+        analytics.flush()
+        account.refresh()
+        analytics.track("screen_view", mapOf("screen" to "home"))
+        analytics.flush()
+        assertTrue("a teen and an unknown age send nothing", sent.isEmpty())
+
+        account.refresh()
+        analytics.track("app_open")
+        analytics.flush()
+        assertEquals(1, sent.size)
+    }
+
+    @Test
+    fun clearingTheFailure_dropsTheNote() = runBlocking {
+        routes.always(ME, needsDate)
+        routes.on(AGE, Routes.dropped())
+        val (account, _) = account()
+        account.refresh()
+        account.submitDob(LocalDate.of(1990, 5, 17))
+        assertTrue(account.ageFailed.value)
+        account.clearAgeFailed()
+        assertFalse(account.ageFailed.value)
     }
 
     @Test

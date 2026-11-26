@@ -68,6 +68,25 @@ class AgeCheckTest {
     }
 
     @Test
+    fun usageStats_lockedForTeensBlockedAndUnknownAges() {
+        assertFalse(AgeCheck.usageStatsLocked(null))
+        assertFalse(AgeCheck.usageStatsLocked(done))
+        assertTrue(AgeCheck.usageStatsLocked(done.copy(teen = true)))
+        assertTrue(AgeCheck.usageStatsLocked(needsDate))
+        assertTrue(AgeCheck.usageStatsLocked(finalBlock))
+        assertTrue(AgeCheck.usageStatsOn(preference = true, locked = false))
+        assertFalse(AgeCheck.usageStatsOn(preference = true, locked = true))
+        assertFalse(AgeCheck.usageStatsOn(preference = false, locked = false))
+    }
+
+    @Test
+    fun consentCard_neverForATeen_evenWhenTheServerSaidAsk() {
+        assertTrue(AgeCheck.showsConsentCard(ask = true, teen = false))
+        assertFalse(AgeCheck.showsConsentCard(ask = true, teen = true))
+        assertFalse(AgeCheck.showsConsentCard(ask = false, teen = false))
+    }
+
+    @Test
     fun ageState_decodesNewAndOldServers() {
         val full = WireJson.json.decodeFromString(
             MeResponse.serializer(),
