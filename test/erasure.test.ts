@@ -18,6 +18,8 @@ const { removeVerdict, removeCaseSide } = await import("../lib/originals/removal
 const { getCase } = await import("../lib/cases/db");
 const { blankResult, sweepErasures, ERASE_AFTER_MS } = await import("../lib/erasure");
 const { getDb, getVerdict, saveTranslation, getTranslation } = await import("../lib/db");
+// The real table comes from Better Auth, which these tests do not load.
+await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT)');
 const { getPublicVerdict } = await import("../lib/originals/display");
 import { VerdictResult } from "../lib/types";
 

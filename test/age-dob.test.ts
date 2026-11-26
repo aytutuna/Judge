@@ -570,21 +570,27 @@ describe("what a teen gets by default", () => {
     expect(plainSaveOutcome({}).display.namesVisible).toBe(true);
   });
 
-  it("their verdict's names stay off the share page", () => {
-    const input = {
-      id: "v1",
-      input: "doc",
-      result: { verdict: "side_a", parties: undefined },
-      kind: "premium",
-      ownerUserId: "u1",
-      original: { v: 1, text: "t", clarifications: [], nameMap: [] },
-    } as never as Parameters<typeof verdictWriteStatements>[0];
-    const namesVisible = (teen: boolean) => {
-      const { stmts, outcome } = verdictWriteStatements({ ...input, teen });
-      const meta = stmts.find((s) => typeof s !== "string" && s.sql.includes("INSERT INTO verdict_meta"))!;
-      return { column: (meta as { args: unknown[] }).args[5], reported: outcome.display.namesVisible };
+  it("their verdict's names stay off the share page, even when they became a teen after the read", async () => {
+    const { user } = await createDevSession("def-names@verdict.local");
+    await ensureOriginalsTables();
+    const write = async (id: string, teen: boolean) => {
+      const { stmts, outcome } = verdictWriteStatements({
+        id,
+        input: "doc",
+        result: { verdict: "side_a" } as never,
+        kind: "premium",
+        ownerUserId: user.id,
+        original: { v: 1, text: "t", clarifications: [], nameMap: [] },
+        teen,
+      });
+      await (await getDb()).batch(stmts, "write");
+      const meta = await (await getDb()).execute({ sql: "SELECT names_visible FROM verdict_meta WHERE verdict_id = ?", args: [id] });
+      return { column: Number(meta.rows[0].names_visible), reported: outcome.display.namesVisible };
     };
-    expect(namesVisible(false)).toEqual({ column: 1, reported: true });
-    expect(namesVisible(true)).toEqual({ column: 0, reported: false });
+    expect(await write("names-adult", false)).toEqual({ column: 1, reported: true });
+    expect(await write("names-teen-flag", true)).toEqual({ column: 0, reported: false });
+    // The writer is recorded as a teen after the flag was read as false.
+    await postAge((await createDevSession("def-names@verdict.local")).token, { dob: ago(15) });
+    expect((await write("names-teen-late", false)).column).toBe(0);
   });
 });

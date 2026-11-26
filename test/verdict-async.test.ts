@@ -68,6 +68,8 @@ const ent = await import("../lib/entitlements");
 const jobs = await import("../lib/verdict-jobs");
 const { removeUserData } = await import("../lib/originals/removal");
 const { getDb } = await import("../lib/db");
+// The real table comes from Better Auth, which these tests do not load.
+await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT)');
 import { childSafetyOn } from "../lib/claude";
 import type { JudgeRunOutput } from "../lib/types";
 import type { VerdictAcceptedResponse } from "../lib/verdict-poll";

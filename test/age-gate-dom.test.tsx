@@ -228,6 +228,44 @@ describe("history after a block is lifted", () => {
   });
 });
 
+describe("answers given signed out, after a block is lifted", () => {
+  it("links the stored claim once the block is gone, with the side menu still mounted", async () => {
+    age = { confirmed: false, blocked: true, teen: false, needsDob: true };
+    localStorage.setItem(
+      "judge.history.cases",
+      JSON.stringify([{ kind: "case", id: "case123", role: "respondent", party: "b", at: "2026-10-20T09:00:00.000Z", state: "awaiting", inviteToken: "AbCdEfGhIjKlMnOpQrStUv", nameMap: [] }]),
+    );
+    localStorage.setItem("settle.claim.case123", "ZyXwVuTsRqPoNmLkJiHgFe");
+    const base = globalThis.fetch;
+    const claims: string[] = [];
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+        const path = String(input);
+        if (path === "/api/v1/cases/case123/claim") {
+          claims.push(path);
+          return reply(200, {});
+        }
+        if (path.startsWith("/api/v1/me/history")) return reply(200, { items: [], next: null });
+        return base(input, init);
+      }),
+    );
+    function Probe() {
+      const viewer = useViewer();
+      useHistory(viewer);
+      return null;
+    }
+    await refreshViewer();
+    render(<Probe />);
+    await new Promise((r) => setTimeout(r, 50));
+    expect(claims).toEqual([]);
+    await act(async () => {
+      applyAge({ confirmed: true, blocked: false, teen: true, needsDob: false });
+    });
+    await waitFor(() => expect(claims).toEqual(["/api/v1/cases/case123/claim"]));
+  });
+});
+
 describe("a case page after a block is lifted", () => {
   it("loads again without a reload", async () => {
     age = { confirmed: false, blocked: true, teen: false, needsDob: true };

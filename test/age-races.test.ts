@@ -88,8 +88,8 @@ describe("blockMinor", () => {
   it("does not close an account whose date landed first, nor delete its events", async () => {
     const id = await account("race-block@verdict.local");
     interleave(() => setRow(id, "age_dob_at = ?, age_confirmed_at = ?", ["2026-11-26T00:00:00.000Z", "2026-11-26T00:00:00.000Z"]));
-    const state = await blockMinor(id);
-    expect(state.blocked).toBe(false);
+    expect(await blockMinor(id)).toBeNull();
+    expect(vi.mocked(console.warn).mock.calls.some((c) => String(c[0]).startsWith("[signal:age_blocked]"))).toBe(false);
     expect((await row(id)).age_blocked_at).toBeNull();
     expect(await events(id)).toBe(1);
   });
@@ -128,6 +128,14 @@ describe("submitDob", () => {
     expect(await submitDob(id, ago(15), now)).toBeNull();
     expect(await consentOn(id)).toBe(true);
     expect(await events(id)).toBe(1);
+  });
+
+  it("an under-13 date that lost to a date answers null, so the route says 409, and signals nothing", async () => {
+    const id = await account("race-child-lost@verdict.local");
+    interleave(() => setRow(id, "age_dob_at = ?, age_confirmed_at = ?", ["2026-11-26T00:00:00.000Z", "2026-11-26T00:00:00.000Z"]));
+    expect(await submitDob(id, ago(10))).toBeNull();
+    expect((await row(id)).age_blocked_at).toBeNull();
+    expect(vi.mocked(console.warn).mock.calls.some((c) => String(c[0]).startsWith("[signal:age_blocked]"))).toBe(false);
   });
 
   it("reports a final block as it is, not as a second date", async () => {
