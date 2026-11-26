@@ -44,29 +44,32 @@ struct SettingsView: View {
                 .listRowBackground(Brand.paper)
 
                 Section {
-                    Toggle(isOn: Binding(get: { app.usageStats }, set: { app.setUsageStats($0) })) {
+                    Toggle(isOn: Binding(get: { app.usageStatsOn }, set: { app.setUsageStats($0) })) {
                         Text(L10n.appSettingsUsageStats(lang))
                             .brandText(.body)
                             .foregroundStyle(Brand.ink)
                     }
                     .tint(Brand.terraInk)
-                    Toggle(isOn: Binding(get: { app.consent.on }, set: { on in
-                        guard app.account.isSignedIn else {
-                            app.account.presentSignIn()
-                            return
+                    .disabled(app.account.underEighteen)
+                    if !app.account.underEighteen {
+                        Toggle(isOn: Binding(get: { app.consent.on }, set: { on in
+                            guard app.account.isSignedIn else {
+                                app.account.presentSignIn()
+                                return
+                            }
+                            Task { await app.consent.setSwitch(on, lang: lang) }
+                        })) {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(L10n.consentSwitchTitle(lang))
+                                    .brandText(.body)
+                                    .foregroundStyle(Brand.ink)
+                                Text(L10n.consentSwitchDetail(lang))
+                                    .brandText(.footnote)
+                                    .foregroundStyle(Brand.muted)
+                            }
                         }
-                        Task { await app.consent.setSwitch(on, lang: lang) }
-                    })) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(L10n.consentSwitchTitle(lang))
-                                .brandText(.body)
-                                .foregroundStyle(Brand.ink)
-                            Text(L10n.consentSwitchDetail(lang))
-                                .brandText(.footnote)
-                                .foregroundStyle(Brand.muted)
-                        }
+                        .tint(Brand.terraInk)
                     }
-                    .tint(Brand.terraInk)
                     linkRow(L10n.appSettingsAbout(lang), path: "about")
                     linkRow(L10n.howTitle(lang), path: "#how")
                     linkRow(L10n.footerPrivacy(lang), path: "privacy")
@@ -74,7 +77,7 @@ struct SettingsView: View {
                 } header: {
                     Kicker(text: L10n.footerPrivacy(lang))
                 } footer: {
-                    Text(L10n.appSettingsUsageStatsHint(lang))
+                    Text(app.account.underEighteen ? L10n.settingsUsageStatsTeen(lang) : L10n.appSettingsUsageStatsHint(lang))
                         .brandText(.footnote)
                         .foregroundStyle(Brand.muted)
                 }

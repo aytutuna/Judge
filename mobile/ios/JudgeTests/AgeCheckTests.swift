@@ -3,44 +3,99 @@ import XCTest
 
 /// The age rules alone.
 final class AgeCheckTests: XCTestCase {
-    private let unconfirmed = AgeStatus(confirmed: false, blocked: false)
-    private let confirmed = AgeStatus(confirmed: true, blocked: false)
-    private let blocked = AgeStatus(confirmed: false, blocked: true)
+    private let none = AgeStatus()
+    private let needsDob = AgeStatus(needsDob: true)
+    private let done = AgeStatus(confirmed: true)
+    private let oldBlock = AgeStatus(blocked: true, needsDob: true)
+    private let finalBlock = AgeStatus(blocked: true)
+
+    private func utc(_ y: Int, _ m: Int, _ d: Int, _ h: Int = 0, _ min: Int = 0) -> Date {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "UTC")!
+        return calendar.date(from: DateComponents(year: y, month: m, day: d, hour: h, minute: min))!
+    }
 
     func testDeclaredRanges() {
-        // One gate at 18: the range below it, or 18 and up.
+        XCTAssertEqual(AgeCheck.fromRange(lower: nil, upper: 12), .under13)
         XCTAssertEqual(AgeCheck.fromRange(lower: nil, upper: 17), .minor)
         XCTAssertEqual(AgeCheck.fromRange(lower: 13, upper: 17), .minor)
         XCTAssertEqual(AgeCheck.fromRange(lower: 18, upper: nil), .adult)
         XCTAssertEqual(AgeCheck.fromRange(lower: nil, upper: nil), .unknown)
-        // The system may move the gates for local rules.
+        // A range across 18 says nothing, and so does a moved gate.
+        XCTAssertEqual(AgeCheck.fromRange(lower: 13, upper: nil), .unknown)
         XCTAssertEqual(AgeCheck.fromRange(lower: 16, upper: nil), .unknown)
     }
 
     func testReports() {
-        XCTAssertEqual(AgeCheck.report(platform: .minor, age: unconfirmed, ticked: true), AgeCheck.Report(adult: false, source: "platform"))
-        XCTAssertEqual(AgeCheck.report(platform: .minor, age: confirmed, ticked: false), AgeCheck.Report(adult: false, source: "platform"))
-        XCTAssertNil(AgeCheck.report(platform: .minor, age: blocked, ticked: false))
-        XCTAssertEqual(AgeCheck.report(platform: .adult, age: unconfirmed, ticked: true), AgeCheck.Report(adult: true, source: "platform"))
-        XCTAssertNil(AgeCheck.report(platform: .adult, age: confirmed, ticked: false))
-        XCTAssertEqual(AgeCheck.report(platform: .unknown, age: unconfirmed, ticked: true), AgeCheck.Report(adult: true, source: "checkbox"))
-        XCTAssertEqual(AgeCheck.report(platform: nil, age: unconfirmed, ticked: true), AgeCheck.Report(adult: true, source: "checkbox"))
-        XCTAssertNil(AgeCheck.report(platform: .unknown, age: unconfirmed, ticked: false))
+        XCTAssertEqual(AgeCheck.report(platform: .adult, age: done), AgeCheck.Report(adult: true))
+        XCTAssertEqual(AgeCheck.report(platform: .minor, age: done), AgeCheck.Report(adult: false))
+        XCTAssertEqual(AgeCheck.report(platform: .under13, age: done), AgeCheck.Report(adult: false, under13: true))
+        XCTAssertEqual(AgeCheck.report(platform: .adult, age: needsDob), AgeCheck.Report(adult: true))
+        XCTAssertEqual(AgeCheck.report(platform: .minor, age: oldBlock), AgeCheck.Report(adult: false))
+        XCTAssertNil(AgeCheck.report(platform: .unknown, age: done))
+        XCTAssertNil(AgeCheck.report(platform: nil, age: done))
+        XCTAssertNil(AgeCheck.report(platform: .minor, age: finalBlock))
         // A server without the age check never hears about it.
-        XCTAssertNil(AgeCheck.report(platform: .minor, age: nil, ticked: true))
+        XCTAssertNil(AgeCheck.report(platform: .minor, age: nil))
     }
 
     func testGate() {
-        XCTAssertEqual(AgeCheck.gate(platform: .minor, signedIn: false, age: nil, posting: false), .blocked)
-        XCTAssertEqual(AgeCheck.gate(platform: .adult, signedIn: true, age: blocked, posting: false), .blocked)
-        XCTAssertEqual(AgeCheck.gate(platform: .unknown, signedIn: true, age: unconfirmed, posting: false), .confirm)
-        XCTAssertEqual(AgeCheck.gate(platform: nil, signedIn: true, age: unconfirmed, posting: false), .none)
-        XCTAssertEqual(AgeCheck.gate(platform: .adult, signedIn: true, age: unconfirmed, posting: true), .none)
-        XCTAssertEqual(AgeCheck.gate(platform: .unknown, signedIn: true, age: confirmed, posting: false), .none)
-        XCTAssertEqual(AgeCheck.gate(platform: .unknown, signedIn: true, age: nil, posting: false), .none)
-        XCTAssertFalse(AgeCheck.needsCheckbox(platform: .adult))
-        XCTAssertTrue(AgeCheck.needsCheckbox(platform: .unknown))
-        XCTAssertTrue(AgeCheck.needsCheckbox(platform: nil))
+        XCTAssertEqual(AgeCheck.gate(signedIn: true, age: finalBlock), .blocked)
+        XCTAssertEqual(AgeCheck.gate(signedIn: true, age: oldBlock), .date)
+        XCTAssertEqual(AgeCheck.gate(signedIn: true, age: needsDob), .date)
+        XCTAssertEqual(AgeCheck.gate(signedIn: true, age: done), .none)
+        XCTAssertEqual(AgeCheck.gate(signedIn: true, age: none), .none)
+        XCTAssertEqual(AgeCheck.gate(signedIn: true, age: nil), .none)
+        XCTAssertEqual(AgeCheck.gate(signedIn: false, age: needsDob), .none)
+    }
+
+    func testStatusDecoding() throws {
+        let full = try JSONDecoder().decode(AgeStatus.self, from: Data(#"{"confirmed":true,"blocked":false,"teen":true,"needsDob":true}"#.utf8))
+        XCTAssertEqual(full, AgeStatus(confirmed: true, blocked: false, teen: true, needsDob: true))
+        let old = try JSONDecoder().decode(AgeStatus.self, from: Data(#"{"confirmed":true,"blocked":false}"#.utf8))
+        XCTAssertEqual(old, AgeStatus(confirmed: true))
+        let info = try JSONDecoder().decode(AccountInfo.self, from: Data(#"{"user":null,"entitlement":null,"age":{"confirmed":false,"blocked":true,"teen":false,"needsDob":false}}"#.utf8))
+        XCTAssertEqual(info.age, finalBlock)
+    }
+
+    func testUnderThirteenRule() {
+        let now = utc(2026, 11, 25, 12)
+        // UTC+14 is already the 26th, so a 13th birthday on the 26th counts.
+        XCTAssertFalse(AgeCheck.underThirteen(dob: "2013-11-26", now: now))
+        XCTAssertTrue(AgeCheck.underThirteen(dob: "2013-11-27", now: now))
+        XCTAssertFalse(AgeCheck.underThirteen(dob: "2000-01-01", now: now))
+        // Ten o'clock UTC is midnight in UTC+14: the cut-off moves one day.
+        XCTAssertTrue(AgeCheck.underThirteen(dob: "2013-11-26", now: utc(2026, 11, 25, 9, 59)))
+        XCTAssertFalse(AgeCheck.underThirteen(dob: "2013-11-26", now: utc(2026, 11, 25, 10, 0)))
+    }
+
+    func testUnderThirteenOnLeapDay() {
+        let leap = utc(2028, 2, 29, 0)
+        XCTAssertEqual(AgeCheck.yearsBefore(leap, years: 13), "2015-02-28")
+        XCTAssertFalse(AgeCheck.underThirteen(dob: "2015-02-28", now: leap))
+        XCTAssertTrue(AgeCheck.underThirteen(dob: "2015-03-01", now: leap))
+        XCTAssertEqual(AgeCheck.yearsBefore(utc(2029, 2, 28, 0), years: 13), "2016-02-28")
+    }
+
+    func testLatestDateIsTodayInTheFirstTimeZone() {
+        XCTAssertEqual(AgeCheck.latestDob(now: utc(2026, 11, 25, 9, 59)), "2026-11-25")
+        XCTAssertEqual(AgeCheck.latestDob(now: utc(2026, 11, 25, 10, 0)), "2026-11-26")
+        XCTAssertEqual(AgeCheck.latestDob(now: utc(2026, 12, 31, 12)), "2027-01-01")
+    }
+
+    func testPickedDayIsSentAsAPlainDate() throws {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = try XCTUnwrap(TimeZone(identifier: "America/Toronto"))
+        let late = try XCTUnwrap(calendar.date(from: DateComponents(year: 2000, month: 2, day: 29, hour: 23, minute: 30)))
+        XCTAssertEqual(AgeCheck.dobString(from: late, calendar: calendar), "2000-02-29")
+        let range = AgeCheck.dobRange(now: utc(2026, 11, 25, 12), calendar: calendar)
+        XCTAssertEqual(AgeCheck.dobString(from: range.lowerBound, calendar: calendar), "1900-01-01")
+        XCTAssertEqual(AgeCheck.dobString(from: range.upperBound, calendar: calendar), "2026-11-26")
+    }
+
+    func testLongDateFollowsTheLanguage() {
+        XCTAssertEqual(AgeCheck.longDate("2013-11-26", lang: .en), "November 26, 2013")
+        XCTAssertNotEqual(AgeCheck.longDate("2013-11-26", lang: .tr), AgeCheck.longDate("2013-11-26", lang: .en))
     }
 
     func testServerErrorsAsCodeOrBareError() {
@@ -50,8 +105,21 @@ final class AgeCheckTests: XCTestCase {
         XCTAssertEqual(coded.code, "age_unconfirmed")
         let other = APIError.from(status: 403, body: Data(#"{"error":"No","code":"not_party"}"#.utf8), retryAfterHeader: nil)
         XCTAssertEqual(other.code, "not_party")
-        XCTAssertEqual(ErrorText.message(bare, lang: .en), L10n.appAgeBlockedTitle(.en))
-        XCTAssertEqual(ErrorText.message(coded, lang: .en), L10n.appAgeRequired(.en))
+        XCTAssertEqual(ErrorText.message(bare, lang: .en), L10n.errorAgeBlocked(.en))
+        XCTAssertEqual(ErrorText.message(coded, lang: .en), L10n.errorAgeUnconfirmed(.en))
+        let teens = APIError.from(status: 403, body: Data(#"{"error":"x","code":"not_for_teens"}"#.utf8), retryAfterHeader: nil)
+        XCTAssertEqual(ErrorText.message(teens, lang: .en), L10n.errorNotForTeens(.en))
+    }
+
+    @MainActor
+    func testTheConsentCardNeverShowsForAnAccountUnder18() async throws {
+        StubURLProtocol.handler = { _ in StubURLProtocol.Reply(status: 200, body: Data(#"{"state":"not_asked","updatedAt":null,"policyVersion":"2026-11-14","ask":true,"sensitiveAgreed":true}"#.utf8)) }
+        defer { StubURLProtocol.handler = nil }
+        let api = JudgeAPI(baseURL: AppConfig.production, userAgent: "Judge-iOS/test", session: JudgeAPI.makeSession(protocolClasses: [StubURLProtocol.self]))
+        let model = ConsentModel(api: api)
+        await model.load()
+        XCTAssertTrue(model.shows(underEighteen: false))
+        XCTAssertFalse(model.shows(underEighteen: true))
     }
 }
 
@@ -73,7 +141,7 @@ private final class FakeAgeRange: AgeRangeAsking {
     }
 }
 
-/// The account's side: what it reports, and the gate it shows.
+/// The account's side: what it reports, and the step it shows.
 final class AccountAgeTests: XCTestCase {
     private var router: StubRouter!
 
@@ -98,9 +166,11 @@ final class AccountAgeTests: XCTestCase {
         return try PremiumFixtures.json(200, body)
     }
 
-    /// Signed in from the start, wired as in AppModel.
-    @MainActor
-    private func makeAccount(_ phone: PlatformAge, token: String? = "t0k") -> (AccountModel, JudgeAPI, FakeAgeRange) {
+    private func state(confirmed: Bool = false, blocked: Bool = false, teen: Bool = false, needsDob: Bool = false) -> [String: Any] {
+        ["confirmed": confirmed, "blocked": blocked, "teen": teen, "needsDob": needsDob]
+    }
+
+    private func makeAPI(token: String?) -> (JudgeAPI, AsyncStream<String>) {
         let (stream, sink) = AsyncStream.makeStream(of: String.self)
         let api = JudgeAPI(
             baseURL: AppConfig.production,
@@ -109,6 +179,13 @@ final class AccountAgeTests: XCTestCase {
             session: JudgeAPI.makeSession(protocolClasses: [StubURLProtocol.self]),
             ageGate: sink
         )
+        return (api, stream)
+    }
+
+    /// Signed in from the start, wired as in AppModel.
+    @MainActor
+    private func makeAccount(_ phone: PlatformAge, token: String? = "t0k") -> (AccountModel, JudgeAPI, FakeAgeRange) {
+        let (api, stream) = makeAPI(token: token)
         let fake = FakeAgeRange(phone)
         let account = AccountModel(api: api, ageRange: fake)
         account.listen(toAgeGates: stream)
@@ -120,71 +197,96 @@ final class AccountAgeTests: XCTestCase {
         return try XCTUnwrap(JSONSerialization.jsonObject(with: body) as? [String: Any])
     }
 
-    @MainActor
-    func testUnder18OnThePhoneIsReportedAndBlocks() async throws {
-        router.on("GET", "/api/v1/me", try me(["confirmed": true, "blocked": false]))
-        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, ["confirmed": false, "blocked": true]))
-        let (account, _, _) = makeAccount(.minor)
-        await account.refresh()
-        // Confirmed accounts are not asked; the sign-in sheet would ask.
-        XCTAssertFalse(account.needsPlatformAge(onSignIn: false))
-        await account.checkPlatformAge()
-        XCTAssertEqual(try sent()["adult"] as? Bool, false)
-        XCTAssertEqual(try sent()["source"] as? String, "platform")
-        XCTAssertEqual(account.info?.age?.blocked, true)
-        XCTAssertEqual(account.ageGate, .blocked)
+    private func day(_ year: Int, _ month: Int, _ day: Int) throws -> Date {
+        try XCTUnwrap(Calendar.current.date(from: DateComponents(year: year, month: month, day: day, hour: 12)))
     }
 
     @MainActor
-    func test18PlusOnThePhoneConfirmsWithoutTheCheckbox() async throws {
-        router.on("GET", "/api/v1/me", try me(["confirmed": false, "blocked": false]))
-        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, ["age": ["confirmed": true, "blocked": false]]))
-        let (account, _, _) = makeAccount(.adult)
+    func testTheDateStepFollowsTheServersState() async throws {
+        router.on("GET", "/api/v1/me", try me(state(needsDob: true)))
+        let (account, _, _) = makeAccount(.unknown)
+        await account.refresh()
+        XCTAssertEqual(account.ageGate, .date)
+        XCTAssertEqual(account.ageRefusal, AgeCheck.unconfirmedCode)
+
+        router.on("GET", "/api/v1/me", try me(state(blocked: true, needsDob: true)))
+        await account.refresh()
+        XCTAssertEqual(account.ageGate, .date, "an old 18+ block asks for a date")
+
+        router.on("GET", "/api/v1/me", try me(state(blocked: true)))
+        await account.refresh()
+        XCTAssertEqual(account.ageGate, .blocked)
+
+        router.on("GET", "/api/v1/me", try me(state(confirmed: true)))
+        await account.refresh()
+        XCTAssertEqual(account.ageGate, .none)
+    }
+
+    @MainActor
+    func testAConfirmedAccountStillReportsAnAdultPhone() async throws {
+        router.on("GET", "/api/v1/me", try me(state(confirmed: true, teen: true)))
+        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, state(confirmed: true)))
+        let (account, _, fake) = makeAccount(.adult)
         await account.refresh()
         XCTAssertTrue(account.needsPlatformAge(onSignIn: false))
         await account.checkPlatformAge()
-        XCTAssertFalse(account.needsAgeCheckbox)
         XCTAssertEqual(try sent()["adult"] as? Bool, true)
         XCTAssertEqual(try sent()["source"] as? String, "platform")
+        XCTAssertNil(try sent()["under13"])
+        XCTAssertEqual(account.info?.age?.teen, false)
         XCTAssertEqual(account.ageGate, .none)
-    }
-
-    @MainActor
-    func testUnknownPhoneShowsTheSheetUntilTheBoxIsTicked() async throws {
-        router.on("GET", "/api/v1/me", try me(["confirmed": false, "blocked": false]))
-        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, ["confirmed": true, "blocked": false]))
-        let (account, _, fake) = makeAccount(.unknown)
         await account.refresh()
-        await account.checkPlatformAge()
-        XCTAssertEqual(account.ageGate, .confirm)
-        XCTAssertEqual(router.count("POST", "/api/v1/me/age"), 0)
-
-        await account.confirmAge()
-        XCTAssertEqual(router.count("POST", "/api/v1/me/age"), 0, "nothing is sent before the box is ticked")
-        account.setAgeTicked(true)
-        await account.confirmAge()
-        XCTAssertEqual(try sent()["source"] as? String, "checkbox")
-        XCTAssertEqual(account.ageGate, .none)
         await account.checkPlatformAge()
         XCTAssertEqual(fake.calls, 1, "the phone is asked once per run")
+        XCTAssertEqual(router.count("POST", "/api/v1/me/age"), 1, "and told once")
     }
 
     @MainActor
-    func testTickedBeforeSignInIsSentOnceTheAccountIsKnown() async throws {
-        router.on("GET", "/api/v1/me", try me(["confirmed": false, "blocked": false]))
-        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, ["confirmed": true, "blocked": false]))
-        let (account, _, _) = makeAccount(.unknown)
-        account.setAgeTicked(true)
+    func testAMinorPhoneIsOnlyReportedNeverBlockedLocally() async throws {
+        router.on("GET", "/api/v1/me", try me(state(confirmed: true)))
+        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, state(confirmed: true, teen: true)))
+        let (account, _, _) = makeAccount(.minor)
         await account.refresh()
-        XCTAssertEqual(try sent()["source"] as? String, "checkbox")
-        XCTAssertEqual(account.info?.age?.confirmed, true)
+        await account.checkPlatformAge()
+        XCTAssertEqual(try sent()["adult"] as? Bool, false)
+        XCTAssertNil(try sent()["under13"])
+        XCTAssertEqual(account.platformAge, .minor)
+        XCTAssertEqual(account.ageGate, .none)
+        XCTAssertTrue(account.ageCleared)
+        XCTAssertTrue(account.underEighteen)
+    }
+
+    @MainActor
+    func testUnder13OnThePhoneIsReportedAsSuch() async throws {
+        router.on("GET", "/api/v1/me", try me(state(confirmed: true)))
+        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, state(blocked: true)))
+        let (account, _, _) = makeAccount(.under13)
+        await account.refresh()
+        await account.checkPlatformAge()
+        XCTAssertEqual(try sent()["adult"] as? Bool, false)
+        XCTAssertEqual(try sent()["under13"] as? Bool, true)
+        XCTAssertEqual(account.ageGate, .blocked, "the server's answer decides")
+    }
+
+    @MainActor
+    func testNothingIsSentForAnUnknownPhoneOrAFinalBlock() async throws {
+        router.on("GET", "/api/v1/me", try me(state(confirmed: true)))
+        let (unknown, _, _) = makeAccount(.unknown)
+        await unknown.refresh()
+        await unknown.checkPlatformAge()
+        XCTAssertEqual(router.count("POST", "/api/v1/me/age"), 0)
+
+        router.on("GET", "/api/v1/me", try me(state(blocked: true)))
+        let (blocked, _, _) = makeAccount(.adult)
+        await blocked.refresh()
+        XCTAssertFalse(blocked.needsPlatformAge(onSignIn: false))
+        XCTAssertEqual(router.count("POST", "/api/v1/me/age"), 0)
     }
 
     @MainActor
     func testAServerWithoutTheAgeCheckChangesNothing() async throws {
         router.on("GET", "/api/v1/me", try me(nil))
         let (account, _, _) = makeAccount(.minor)
-        account.setAgeTicked(true)
         await account.refresh()
         XCTAssertEqual(router.count("POST", "/api/v1/me/age"), 0)
         XCTAssertFalse(account.needsPlatformAge(onSignIn: false))
@@ -192,20 +294,121 @@ final class AccountAgeTests: XCTestCase {
     }
 
     @MainActor
-    func testAFailedReportShowsWhyOnTheSheet() async throws {
-        router.on("GET", "/api/v1/me", try me(["confirmed": false, "blocked": false]))
+    func testAnAdultDateIsSentAsAPlainDate() async throws {
+        router.on("GET", "/api/v1/me", try me(state(needsDob: true)))
+        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, state(confirmed: true)))
         let (account, _, _) = makeAccount(.unknown)
         await account.refresh()
-        await account.checkPlatformAge()
-        account.setAgeTicked(true)
-        await account.confirmAge()
-        XCTAssertEqual(account.ageError, .offline)
-        XCTAssertEqual(account.ageGate, .confirm)
+        account.dobDate = try day(1990, 3, 9)
+        await account.submitDob()
+        XCTAssertEqual(try sent()["dob"] as? String, "1990-03-09")
+        XCTAssertEqual(try sent().count, 1)
+        XCTAssertEqual(account.ageGate, .none)
+        XCTAssertFalse(account.dobConfirming)
     }
 
     @MainActor
-    func testABlocked403FromAnyCallOpensTheBlockedPage() async throws {
-        router.on("GET", "/api/v1/me", try me(["confirmed": true, "blocked": false]))
+    func testATeenDateMakesATeen() async throws {
+        router.on("GET", "/api/v1/me", try me(state(needsDob: true)))
+        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, state(confirmed: true, teen: true)))
+        let (account, _, _) = makeAccount(.unknown)
+        await account.refresh()
+        var reported: [Bool] = []
+        account.onUnderEighteen = { reported.append($0) }
+        account.dobDate = Calendar.current.date(byAdding: .year, value: -15, to: Date())!
+        await account.submitDob()
+        XCTAssertEqual(account.ageGate, .none)
+        XCTAssertTrue(account.underEighteen)
+        XCTAssertEqual(reported, [true])
+    }
+
+    @MainActor
+    func testAnUnder13DateWaitsForASecondLook() async throws {
+        router.on("GET", "/api/v1/me", try me(state(needsDob: true)))
+        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, state(blocked: true)))
+        let (account, _, _) = makeAccount(.unknown)
+        await account.refresh()
+        account.dobDate = Calendar.current.date(byAdding: .year, value: -8, to: Date())!
+        let picked = account.dob
+        await account.submitDob()
+        XCTAssertTrue(account.dobConfirming)
+        XCTAssertEqual(router.count("POST", "/api/v1/me/age"), 0)
+        XCTAssertEqual(account.ageGate, .date)
+
+        account.changeDob()
+        XCTAssertFalse(account.dobConfirming)
+        XCTAssertEqual(account.dob, picked, "the date is kept")
+        await account.submitDob()
+        XCTAssertTrue(account.dobConfirming)
+        await account.submitDob()
+        XCTAssertEqual(try sent()["dob"] as? String, picked)
+        XCTAssertEqual(account.ageGate, .blocked)
+        XCTAssertFalse(account.dobConfirming)
+    }
+
+    @MainActor
+    func testAnOldBlockIsLiftedByADateOf13OrMore() async throws {
+        router.on("GET", "/api/v1/me", try me(state(blocked: true, needsDob: true)))
+        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, state(confirmed: true)))
+        let (account, _, _) = makeAccount(.unknown)
+        await account.refresh()
+        XCTAssertEqual(account.ageGate, .date)
+        account.dobDate = try day(1985, 6, 1)
+        await account.submitDob()
+        XCTAssertEqual(account.ageGate, .none)
+        XCTAssertTrue(account.ageCleared)
+    }
+
+    @MainActor
+    func testADateGivenElsewhereRefetchesTheAccount() async throws {
+        router.on("GET", "/api/v1/me", try me(state(needsDob: true)), try me(state(confirmed: true)))
+        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(409, ["error": "set", "code": "age_set"]))
+        let (account, _, _) = makeAccount(.unknown)
+        await account.refresh()
+        account.dobDate = try day(1990, 3, 9)
+        await account.submitDob()
+        XCTAssertEqual(router.count("GET", "/api/v1/me"), 2)
+        XCTAssertEqual(account.ageGate, .none)
+        XCTAssertNil(account.ageError)
+    }
+
+    @MainActor
+    func testABlockedAnswerToTheDateShowsTheRefusal() async throws {
+        router.on("GET", "/api/v1/me", try me(state(needsDob: true)), try me(state(blocked: true)))
+        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(403, ["error": "closed", "code": "age_blocked"]))
+        let (account, _, _) = makeAccount(.unknown)
+        await account.refresh()
+        account.dobDate = try day(1990, 3, 9)
+        await account.submitDob()
+        try await PremiumFixtures.waitUntil("the refusal") { account.ageGate == .blocked }
+    }
+
+    @MainActor
+    func testAFailedDateStaysOnTheStepWithTheDateKept() async throws {
+        router.on("GET", "/api/v1/me", try me(state(needsDob: true)))
+        let (account, _, _) = makeAccount(.unknown)
+        await account.refresh()
+        account.dobDate = try day(1990, 3, 9)
+        await account.submitDob()
+        XCTAssertEqual(account.ageError, .offline)
+        XCTAssertEqual(account.ageGate, .date)
+        XCTAssertEqual(account.dob, "1990-03-09")
+        XCTAssertFalse(account.agePosting)
+    }
+
+    @MainActor
+    func testAnUnconfirmed403OpensTheDateStep() async throws {
+        router.on("GET", "/api/v1/me", try me(state(confirmed: true)), try me(state(needsDob: true)))
+        router.on("GET", "/api/v1/verdicts/abc", try PremiumFixtures.json(403, ["error": "Confirm first", "code": "age_unconfirmed"]))
+        let (account, api, _) = makeAccount(.unknown)
+        await account.refresh()
+        _ = try? await api.storedVerdict(id: "abc")
+        try await PremiumFixtures.waitUntil("the date step") { account.ageGate == .date }
+    }
+
+    @MainActor
+    func testABlocked403FromAnyCallOpensTheRefusal() async throws {
+        router.on("GET", "/api/v1/me", try me(state(confirmed: true)), try me(state(blocked: true)))
         router.on("GET", "/api/v1/verdicts/abc", try PremiumFixtures.json(403, ["error": "age_blocked"]))
         let (account, api, _) = makeAccount(.unknown)
         await account.refresh()
@@ -213,126 +416,88 @@ final class AccountAgeTests: XCTestCase {
             _ = try await api.storedVerdict(id: "abc")
             XCTFail("expected a 403")
         } catch let error as APIError {
-            XCTAssertEqual(ErrorText.message(error, lang: .en), L10n.appAgeBlockedTitle(.en))
+            XCTAssertEqual(ErrorText.message(error, lang: .en), L10n.errorAgeBlocked(.en))
         }
-        try await PremiumFixtures.waitUntil("the blocked page") { account.ageGate == .blocked }
+        try await PremiumFixtures.waitUntil("the refusal") { account.ageGate == .blocked }
     }
 
     @MainActor
-    func testAnUnconfirmed403OpensTheSheet() async throws {
-        router.on("GET", "/api/v1/me", try me(["confirmed": true, "blocked": false]))
-        router.on("GET", "/api/v1/verdicts/abc", try PremiumFixtures.json(403, ["error": "Confirm first", "code": "age_unconfirmed"]))
-        let (account, api, _) = makeAccount(.unknown)
+    func testAPhoneThatNeverAnswersTimesOutAndChangesNothing() async throws {
+        router.on("GET", "/api/v1/me", try me(state(confirmed: true)))
+        let (account, _, fake) = makeAccount(.adult)
+        fake.hangs = true
+        account.platformTimeout = .milliseconds(50)
         await account.refresh()
-        await account.checkPlatformAge()
-        _ = try? await api.storedVerdict(id: "abc")
-        try await PremiumFixtures.waitUntil("the age sheet") { account.ageGate == .confirm }
+        XCTAssertTrue(account.ageCleared, "a waiting phone prompt holds nothing back")
+        Task { await account.checkPlatformAge() }
+        try await PremiumFixtures.waitUntil("the timeout") { account.platformAge == .unknown }
+        XCTAssertEqual(account.ageGate, .none)
     }
 
-    /// Email-code sign-in answering for an account that hasn't confirmed yet.
-    private func signInRoutes(age: StubURLProtocol.Reply) throws {
+    /// Email-code sign-in answering for an account that hasn't given a date.
+    private func signInRoutes(me reply: StubURLProtocol.Reply) throws {
         router.on("POST", "/api/auth/email-otp/send-verification-otp", try PremiumFixtures.json(200, ["success": true]))
         router.on("POST", "/api/auth/sign-in/email-otp", try PremiumFixtures.json(200, [
             "token": "fr3sh",
             "user": ["id": "u1", "email": "ann@example.com", "name": "Ann", "image": NSNull()] as [String: Any],
         ]))
-        router.on("GET", "/api/v1/me", try me(["confirmed": false, "blocked": false]))
-        router.on("POST", "/api/v1/me/age", age)
+        router.on("GET", "/api/v1/me", reply)
     }
 
     @MainActor
     private func signIn(_ account: AccountModel) async {
         account.email = "ann@example.com"
-        account.setAgeTicked(true)
         await account.sendCode(lang: .en)
         account.code = "123456"
         await account.verifyCode()
     }
 
     @MainActor
-    func testTickSignInThenThePendingVerdictRunsAfterTheAgeIsOnRecord() async throws {
-        try signInRoutes(age: try PremiumFixtures.json(200, ["confirmed": true, "blocked": false]))
+    func testThePendingVerdictWaitsForTheDate() async throws {
+        try signInRoutes(me: try me(state(needsDob: true)))
+        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, state(confirmed: true)))
         let (account, _, _) = makeAccount(.unknown, token: nil)
-        await account.checkPlatformAge()
         var ran = 0
         account.requireSignIn { ran += 1 }
-        XCTAssertTrue(account.isSignInPresented)
         await signIn(account)
         XCTAssertTrue(account.isSignedIn)
-        XCTAssertFalse(account.isSignInPresented)
-        XCTAssertEqual(router.count("POST", "/api/v1/me/age"), 1, "reported before the sheet closed")
-        XCTAssertEqual(try sent()["source"] as? String, "checkbox")
-        XCTAssertTrue(account.ageCleared)
-        account.signInDismissed()
-        XCTAssertEqual(ran, 1)
-    }
-
-    @MainActor
-    func testTickSignInWithAFailedReportHoldsThePendingVerdictForTheSheet() async throws {
-        try signInRoutes(age: try PremiumFixtures.json(503, ["error": "down", "code": "unavailable"]))
-        let (account, _, _) = makeAccount(.unknown, token: nil)
-        await account.checkPlatformAge()
-        var ran = 0
-        account.requireSignIn { ran += 1 }
-        await signIn(account)
         account.signInDismissed()
         XCTAssertEqual(ran, 0, "the verdict would be refused as unconfirmed")
-        XCTAssertEqual(account.ageGate, .confirm)
-        XCTAssertNotNil(account.ageError)
+        XCTAssertEqual(account.ageGate, .date)
 
-        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, ["confirmed": true, "blocked": false]))
-        await account.confirmAge()
+        account.dobDate = try day(1990, 3, 9)
+        await account.submitDob()
         XCTAssertEqual(account.ageGate, .none)
-        XCTAssertEqual(ran, 1, "confirming lets it go")
+        XCTAssertEqual(ran, 1, "the date lets it go")
     }
 
     @MainActor
-    func testAHeldActionRunsWhenARefreshFindsTheAgeConfirmed() async throws {
-        try signInRoutes(age: try PremiumFixtures.json(503, ["error": "down", "code": "unavailable"]))
-        let (account, _, _) = makeAccount(.unknown, token: nil)
+    func testAnAdultPhoneIsReportedRightAfterSignIn() async throws {
+        try signInRoutes(me: try me(state(needsDob: true)))
+        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, state(needsDob: true)))
+        let (account, _, _) = makeAccount(.adult, token: nil)
         await account.checkPlatformAge()
-        var ran = 0
-        account.requireSignIn { ran += 1 }
         await signIn(account)
-        account.signInDismissed()
-        XCTAssertEqual(ran, 0)
-        // Confirmed meanwhile on another device.
-        router.on("GET", "/api/v1/me", try me(["confirmed": true, "blocked": false]))
-        await account.refresh()
-        XCTAssertEqual(ran, 1)
+        XCTAssertEqual(try sent()["adult"] as? Bool, true)
+        XCTAssertEqual(account.ageGate, .date, "a store signal never replaces the date")
     }
 
     @MainActor
-    func testAPhoneThatNeverAnswersTimesOutIntoTheSheet() async throws {
-        router.on("GET", "/api/v1/me", try me(["confirmed": false, "blocked": false]))
-        // A late "unknown" changes nothing once the wait gave up.
-        let (account, _, fake) = makeAccount(.unknown)
-        fake.hangs = true
-        account.platformTimeout = .milliseconds(50)
-        await account.refresh()
-        XCTAssertEqual(account.ageRefusal, AgeCheck.unconfirmedCode)
-        Task { await account.checkPlatformAge() }
-        try await PremiumFixtures.waitUntil("the timeout") { account.platformAge == .unknown }
-        XCTAssertEqual(account.ageGate, .confirm)
-    }
+    func testTheUsageSettingIsKeptButOffForATeen() async throws {
+        router.on("GET", "/api/v1/me", try me(state(confirmed: true, teen: true)), try me(state(confirmed: true)))
+        let (api, stream) = makeAPI(token: "t0k")
+        let config = AppConfig(apiBaseURL: AppConfig.production, shareBaseURL: AppConfig.production, version: "1", build: "1")
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: "judge.tests.\(UUID().uuidString)"))
+        let app = AppModel(config: config, container: HistoryContainer.inMemory(), defaults: defaults, persistsDraft: false, api: api, caseNames: MemoryCaseNamesStore())
+        app.account.listen(toAgeGates: stream)
+        XCTAssertTrue(app.usageStatsOn)
+        await app.account.refresh()
+        XCTAssertTrue(app.usageStats, "the stored choice stays")
+        XCTAssertFalse(app.usageStatsOn)
+        XCTAssertFalse(app.analytics.allowed)
 
-    @MainActor
-    func testSigningInTicksTheBoxForTheReport() async throws {
-        let api = JudgeAPI(
-            baseURL: AppConfig.production,
-            userAgent: "Judge-iOS/test",
-            tokenStore: MemoryTokenStore(),
-            session: JudgeAPI.makeSession(protocolClasses: [StubURLProtocol.self])
-        )
-        let defaults = try XCTUnwrap(UserDefaults(suiteName: UUID().uuidString))
-        let account = AccountModel(api: api, ageRange: FakeAgeRange(.unknown), defaults: defaults)
-        account.email = "ann@example.com"
-        XCTAssertTrue(account.canSendCode, "no box stands in the way of signing in")
-        XCTAssertFalse(account.ageTicked)
-        router.on("POST", "/api/auth/email-otp/send-verification-otp", try PremiumFixtures.json(200, ["success": true]))
-        await account.sendCode(lang: .en)
-        XCTAssertEqual(router.count("POST", "/api/auth/email-otp/send-verification-otp"), 1)
-        XCTAssertTrue(account.ageTicked)
+        await app.account.refresh()
+        XCTAssertTrue(app.usageStatsOn, "it comes back at 18")
     }
 }
 

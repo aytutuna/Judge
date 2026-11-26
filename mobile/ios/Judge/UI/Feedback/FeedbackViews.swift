@@ -7,7 +7,7 @@ struct ConsentCard: View {
     let lang: AppLang
 
     var body: some View {
-        if app.consent.showCard {
+        if app.consent.shows(underEighteen: app.account.underEighteen) {
             VStack(alignment: .leading, spacing: 10) {
                 Text(L10n.consentCardTitle(lang))
                     .brandText(.slotTitle)

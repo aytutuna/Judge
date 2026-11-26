@@ -25,6 +25,9 @@ final class ConsentModel {
     /// The server decides, so it is never asked again once answered, on any device.
     var showCard: Bool { state == .notAsked && ask && !leaving }
 
+    /// Never for an account under 18, whatever a cached answer says.
+    func shows(underEighteen: Bool) -> Bool { !underEighteen && showCard }
+
     func load() async {
         guard usesNetwork, let loaded = try? await api.consent() else { return }
         withAnimation(.easeOut(duration: 0.28)) {
