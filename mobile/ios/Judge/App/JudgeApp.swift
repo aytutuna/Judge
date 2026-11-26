@@ -108,7 +108,7 @@ struct RootView: View {
             ageWindow.show(covered, app: app)
         }
         .onChange(of: app.account.needsPlatformAge(onSignIn: false), initial: true) { _, needed in
-            // A signed-in account that still has to confirm asks the phone first.
+            // A signed-in account asks the phone once per launch.
             if needed { Task { await app.account.checkPlatformAge() } }
         }
         .overlay {

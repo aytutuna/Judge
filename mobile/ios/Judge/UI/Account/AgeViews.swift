@@ -1,42 +1,12 @@
 import SwiftUI
 import UIKit
 
-/// "I'm 18 or older", the whole row tappable.
-struct AgeCheckbox: View {
-    let lang: AppLang
-    let ticked: Bool
-    let onToggle: (Bool) -> Void
-    @Environment(\.isEnabled) private var isEnabled
-
-    var body: some View {
-        Button {
-            onToggle(!ticked)
-        } label: {
-            HStack(spacing: 12) {
-                Image(systemName: ticked ? "checkmark.square.fill" : "square")
-                    .font(.system(size: 22))
-                    .foregroundStyle(ticked ? Brand.ink : Brand.muted)
-                    .accessibilityHidden(true)
-                Text(L10n.appAgeCheckbox(lang))
-                    .brandText(.bodyMedium)
-                    .foregroundStyle(Brand.ink)
-                    .fixedSize(horizontal: false, vertical: true)
-                Spacer(minLength: 0)
-            }
-            .frame(minHeight: 44)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .opacity(isEnabled ? 1 : 0.5)
-        .accessibilityAddTraits(ticked ? [.isToggle, .isSelected] : .isToggle)
-    }
-}
-
-/// Over the whole app for the age check: the confirmation for an account
-/// that hasn't confirmed 18+ yet, or the adults-only page.
+/// Over the whole app for the age check: the date of birth step, or the
+/// refusal for an account closed for good.
 struct AgeGateView: View {
     @Environment(AppModel.self) private var app
     @State private var confirmDelete = false
+    @AccessibilityFocusState private var confirmFocused: Bool
     let gate: AgeGate
 
     var body: some View {
@@ -45,8 +15,12 @@ struct AgeGateView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
                 switch gate {
-                case .confirm:
-                    confirm(lang, account: account)
+                case .date:
+                    if account.dobConfirming {
+                        confirm(lang, account: account)
+                    } else {
+                        date(lang, account: account)
+                    }
                 case .blocked:
                     blocked(lang, account: account)
                 case .none:
@@ -56,10 +30,6 @@ struct AgeGateView: View {
             .padding(.horizontal, 20)
             .padding(.top, 12)
             .padding(.bottom, 32)
-            .onAppear {
-                // The sign-in screen's consent is not this box: it starts empty.
-                if case .confirm = gate { account.setAgeTicked(false) }
-            }
         }
         .background(Brand.ivory.ignoresSafeArea())
         .accessibilityAddTraits(.isModal)
@@ -75,33 +45,81 @@ struct AgeGateView: View {
     }
 
     @ViewBuilder
-    private func confirm(_ lang: AppLang, account: AccountModel) -> some View {
+    private func date(_ lang: AppLang, account: AccountModel) -> some View {
         let busy = account.agePosting || account.busy != nil
-        header(L10n.appAgeTitle(lang), lead: Text(L10n.appAgeLead(lang)))
+        header(L10n.ageTitle(lang), lead: Text(L10n.ageLead(lang)))
         VStack(alignment: .leading, spacing: 16) {
-            // The phone already said 18+ and only its report failed: no box to tick.
-            if account.needsAgeCheckbox {
-                AgeCheckbox(lang: lang, ticked: account.ageTicked) { account.setAgeTicked($0) }
-                    .disabled(busy)
-            }
-            if let error = account.ageError {
-                ErrorBanner(message: ErrorText.message(error, lang: lang))
+            DatePicker(
+                L10n.ageTitle(lang),
+                selection: Binding(get: { account.dobDate }, set: { account.dobDate = $0 }),
+                in: AgeCheck.dobRange(),
+                displayedComponents: .date
+            )
+            .datePickerStyle(.wheel)
+            .labelsHidden()
+            .frame(maxWidth: .infinity)
+            .accessibilityLabel(L10n.ageTitle(lang))
+            .accessibilityHint(L10n.ageLead(lang))
+            .disabled(busy)
+            if account.ageError != nil {
+                ErrorBanner(message: L10n.ageFailed(lang))
             }
             Button {
-                Task { await account.confirmAge() }
+                Task { await account.submitDob() }
             } label: {
-                if account.agePosting {
-                    ProgressView().tint(Brand.ivory)
-                } else {
-                    Text(L10n.appAgeContinue(lang))
-                }
+                Text(L10n.ageContinue(lang))
             }
             .buttonStyle(PrimaryButtonStyle())
-            .disabled(!account.ageAllowsSignIn || busy)
+            .disabled(busy)
         }
         .padding(20)
         .paperSurface(radius: Radius.card)
         .cardShadow()
+        signOutAndDelete(lang, account: account)
+    }
+
+    @ViewBuilder
+    private func confirm(_ lang: AppLang, account: AccountModel) -> some View {
+        let busy = account.agePosting || account.busy != nil
+        Text(L10n.ageTitle(lang))
+            .brandText(.display1)
+            .foregroundStyle(Brand.ink)
+            .accessibilityAddTraits(.isHeader)
+        VStack(alignment: .leading, spacing: 16) {
+            Text(L10n.ageConfirmDate(lang, date: AgeCheck.longDate(account.dob, lang: lang)))
+                .brandText(.lead)
+                .foregroundStyle(Brand.ink2)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityFocused($confirmFocused)
+            if account.ageError != nil {
+                ErrorBanner(message: L10n.ageFailed(lang))
+            }
+            Button {
+                Task { await account.submitDob() }
+            } label: {
+                if account.agePosting {
+                    ProgressView().tint(Brand.ivory)
+                } else {
+                    Text(L10n.ageConfirmYes(lang))
+                }
+            }
+            .buttonStyle(PrimaryButtonStyle())
+            .disabled(busy)
+            Button(L10n.ageChange(lang)) {
+                account.changeDob()
+            }
+            .buttonStyle(LinkButtonStyle())
+            .frame(maxWidth: .infinity)
+            .disabled(busy)
+        }
+        .padding(20)
+        .paperSurface(radius: Radius.card)
+        .cardShadow()
+        .onAppear { confirmFocused = true }
+        signOutAndDelete(lang, account: account)
+    }
+
+    private func signOutAndDelete(_ lang: AppLang, account: AccountModel) -> some View {
         VStack(spacing: 4) {
             Button(L10n.accountSignOut(lang)) {
                 Task { await account.signOut() }
@@ -109,7 +127,7 @@ struct AgeGateView: View {
             .buttonStyle(LinkButtonStyle())
             deleteButton(lang, account: account)
         }
-        .disabled(busy)
+        .disabled(account.agePosting || account.busy != nil)
         .frame(maxWidth: .infinity)
     }
 
@@ -134,7 +152,7 @@ struct AgeGateView: View {
 
     @ViewBuilder
     private func blocked(_ lang: AppLang, account: AccountModel) -> some View {
-        header(L10n.appAgeBlockedTitle(lang), lead: Text(Self.contactLine(lang)))
+        header(L10n.ageBlockedTitle(lang), lead: Text(Self.contactLine(lang)))
         if account.isSignedIn {
             Button {
                 Task { await account.signOut() }
@@ -169,7 +187,7 @@ struct AgeGateView: View {
 
     /// The support address as a mail link wherever the language put it.
     static func contactLine(_ lang: AppLang) -> AttributedString {
-        var text = AttributedString(L10n.appAgeBlockedBody(lang, email: AgeCheck.supportEmail))
+        var text = AttributedString(L10n.ageBlocked(lang) + " " + L10n.ageBlockedContact(lang, email: AgeCheck.supportEmail))
         if let range = text.range(of: AgeCheck.supportEmail) {
             text[range].link = URL(string: "mailto:\(AgeCheck.supportEmail)")
             text[range].foregroundColor = Brand.terraInk

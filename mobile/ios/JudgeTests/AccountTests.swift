@@ -95,8 +95,6 @@ final class AccountTests: XCTestCase {
     ) -> AccountModel {
         let defaults = defaults ?? UserDefaults(suiteName: UUID().uuidString) ?? .standard
         let account = AccountModel(api: api(store), apple: FakeApple(apple), google: FakeGoogle(google), appleCodes: MemoryTokenStore(), defaults: defaults)
-        // The 18+ box is ticked unless a test is about it (AgeCheckTests).
-        account.setAgeTicked(true)
         return account
     }
 
@@ -624,17 +622,6 @@ final class AccountTests: XCTestCase {
         await account.signInWithGoogle()
         XCTAssertEqual(account.lastMethod, .google)
         XCTAssertEqual(defaults.string(forKey: "lastSignInEmail"), "ann@example.com")
-    }
-
-    @MainActor
-    func testAFailedAttemptTakesTheTickBack() async throws {
-        route(["/api/auth/sign-in/email": try json(401, ["code": "INVALID_EMAIL_OR_PASSWORD"])])
-        let account = passwordModel()
-        account.setAgeTicked(false)
-        account.email = "ann@example.com"
-        account.password = "wrong"
-        await account.signInWithPassword()
-        XCTAssertFalse(account.ageTicked)
     }
 
     @MainActor

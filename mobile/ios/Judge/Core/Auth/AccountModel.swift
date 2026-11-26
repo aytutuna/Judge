@@ -5,10 +5,9 @@ import Observation
 /// the API's token store means signed in; `/api/v1/me` fills in who and
 /// what plan. Getting a verdict needs an account, so Home asks here first.
 ///
-/// It also runs the 18+ check: the phone's age signal when there is one,
-/// else the consent line on the sign-in screen (or the age sheet's box),
-/// reported to the server once the account is known.
-/// `ageGate` is what the app shows for it.
+/// It also runs the age check: the date of birth the account still owes,
+/// and the phone's age signal, reported to the server once the account is
+/// known. The server decides; `ageGate` is what the app shows for it.
 @MainActor
 @Observable
 final class AccountModel {
@@ -87,11 +86,13 @@ final class AccountModel {
 
     /// The phone's answer, asked at most once per run; nil until it answered.
     private(set) var platformAge: PlatformAge?
-    /// The "I'm 18 or older" checkbox, on the sign-in sheet and the age sheet alike.
-    private(set) var ageTicked = false
-    /// A POST /api/v1/me/age is in flight.
+    /// The day picked on the date step.
+    var dobDate = AgeCheck.defaultDobDate()
+    /// An under-13 date waits for a second look before it is sent.
+    private(set) var dobConfirming = false
+    /// The date is being sent.
     private(set) var agePosting = false
-    /// Why the last report failed; the age sheet shows it.
+    /// Why the date didn't go through; the date step shows it.
     private(set) var ageError: APIError?
     /// The phone's own prompt may be on screen: the age window waits for it.
     private(set) var platformPrompting = false
@@ -109,10 +110,14 @@ final class AccountModel {
     @ObservationIgnored private var ageListener: Task<Void, Never>?
     /// A report came up while another was in flight: settle again after it.
     @ObservationIgnored private var ageResettle = false
+    @ObservationIgnored private var reportingPlatform = false
+    /// The phone's answer last sent, so a refresh doesn't send it again.
+    @ObservationIgnored private var lastReport: AgeCheck.Report?
+    /// Told when the account turns into (or stops being) one under 18.
+    @ObservationIgnored var onUnderEighteen: (@MainActor (Bool) -> Void)?
     /// The action sign-in was for, held until the age is on record.
     @ObservationIgnored private var afterAge: (() -> Void)?
-    /// A phone that hasn't answered by then counts as unknown, so the
-    /// checkbox can take over.
+    /// A phone that hasn't answered by then counts as unknown.
     @ObservationIgnored var platformTimeout: Duration = .seconds(10)
     /// Off for screenshot states: no config or account fetches.
     @ObservationIgnored var usesNetwork = true
@@ -227,6 +232,7 @@ final class AccountModel {
                 sessionExpired()
             } else {
                 info = fresh
+                ageChanged()
                 if failure == .loadFailed { failure = nil }
                 if let id = fresh.user?.id { onUserKnown?(id) }
                 await settleAge()
@@ -250,41 +256,37 @@ final class AccountModel {
     // MARK: - Age
 
     var ageGate: AgeGate {
-        AgeCheck.gate(platform: platformAge, signedIn: isSignedIn, age: info?.age, posting: agePosting)
+        AgeCheck.gate(signedIn: isSignedIn, age: info?.age)
     }
 
-    var needsAgeCheckbox: Bool { AgeCheck.needsCheckbox(platform: platformAge) }
+    /// Teen accounts, and blocked ones, get the under-18 defaults.
+    var underEighteen: Bool {
+        guard isSignedIn, let age = info?.age else { return false }
+        return age.teen || age.blocked
+    }
 
-    /// Sign-in waits for the checkbox unless the phone already said 18+.
-    var ageAllowsSignIn: Bool { !needsAgeCheckbox || ageTicked }
+    private func ageChanged() {
+        onUnderEighteen?(underEighteen)
+    }
 
     /// Why a verdict or a purchase has to wait, or nil when nothing about
-    /// age stands in the way: blocked for under 18 or a blocked account,
-    /// unconfirmed while unconfirmed or while the phone's check or a report
-    /// is still running. A server without the age check sends no age.
+    /// age stands in the way. Only the server's state counts, never the
+    /// phone's signal. A server without the age check sends no age.
     var ageRefusal: String? {
-        let age = info?.age
-        if platformAge == .minor || age?.blocked == true { return AgeCheck.blockedCode }
-        guard let age else { return nil }
-        if askingPlatform || agePosting || !age.confirmed { return AgeCheck.unconfirmedCode }
-        return nil
+        guard let age = info?.age else { return nil }
+        if age.blocked { return AgeCheck.blockedCode }
+        return age.confirmed ? nil : AgeCheck.unconfirmedCode
     }
 
     var ageCleared: Bool { ageRefusal == nil }
 
-    func setAgeTicked(_ ticked: Bool) {
-        ageTicked = ticked
-        ageError = nil
-    }
-
     /// Whether the phone should be asked now: not asked yet, and either the
-    /// sign-in sheet is up or the signed-in account still has to confirm.
-    /// A confirmed account is not asked again.
+    /// sign-in sheet is up or the signed-in account is not closed for good.
     func needsPlatformAge(onSignIn: Bool) -> Bool {
         guard platformAge == nil, !askingPlatform, usesNetwork else { return false }
         guard isSignedIn else { return onSignIn }
         guard let age = info?.age else { return false }
-        return !age.confirmed && !age.blocked
+        return !(age.blocked && !age.needsDob)
     }
 
     func checkPlatformAge() async {
@@ -321,12 +323,6 @@ final class AccountModel {
         action()
     }
 
-    /// The age sheet's "Continue": confirms 18+ for the signed-in account.
-    func confirmAge() async {
-        guard ageTicked || platformAge == .adult else { return }
-        await postAge(AgeCheck.confirmation(platform: platformAge))
-    }
-
     /// Hears the API's 403 age errors for as long as the model lives.
     func listen(toAgeGates stream: AsyncStream<String>) {
         ageListener?.cancel()
@@ -338,53 +334,94 @@ final class AccountModel {
     }
 
     /// A call was refused for the age check: the account on screen is
-    /// behind, so show what the server asks for.
+    /// behind, so show it as refused now and ask the server what it holds.
     func ageGateHit(_ code: String) async {
         guard isSignedIn, var current = info, current.user != nil else { return }
         var age = current.age ?? AgeStatus()
         if code == AgeCheck.blockedCode { age.blocked = true } else { age.confirmed = false }
         current.age = age
         info = current
-        await settleAge()
+        ageChanged()
+        await refresh()
     }
 
-    /// Tells the server what is known: the phone's answer, or the box
-    /// ticked before signing in.
+    /// Tells the server what the phone said, once per launch and sign-in.
     private func settleAge() async {
-        guard isSignedIn, let age = info?.age,
-              let report = AgeCheck.report(platform: platformAge, age: age, ticked: ageTicked)
-        else { return }
-        await postAge(report)
-    }
-
-    private func postAge(_ report: AgeCheck.Report) async {
         guard isSignedIn, usesNetwork else { return }
-        guard !agePosting else {
+        guard !reportingPlatform else {
             ageResettle = true
             return
         }
-        await sendAge(report)
-        runAfterAgeIfCleared()
-        if ageResettle {
+        reportingPlatform = true
+        defer { reportingPlatform = false }
+        repeat {
             ageResettle = false
-            await settleAge()
-        }
+            guard let report = AgeCheck.report(platform: platformAge, age: info?.age), report != lastReport else { continue }
+            // Set before the call, so a refusal doesn't send it again in a loop.
+            lastReport = report
+            let asked = api.tokenStore.token()
+            do {
+                let age = try await api.reportAge(adult: report.adult, under13: report.under13)
+                guard isSignedIn, api.tokenStore.token() == asked, var current = info else { continue }
+                current.age = age
+                info = current
+                ageChanged()
+            } catch let error as APIError {
+                // A 403 age error already reached ageGateHit through the API.
+                if AgeCheck.errorCode(status: Self.status(error), body: Self.body(error)) == nil { lastReport = nil }
+            } catch {
+                lastReport = nil
+            }
+        } while ageResettle
+        runAfterAgeIfCleared()
     }
 
-    private func sendAge(_ report: AgeCheck.Report) async {
+    // MARK: - The date step
+
+    /// The picked day as `YYYY-MM-DD`.
+    var dob: String { AgeCheck.dobString(from: dobDate, calendar: .current) }
+
+    /// "Continue": an under-13 date waits for a second look first.
+    func submitDob() async {
+        guard !agePosting else { return }
+        if !dobConfirming, AgeCheck.underThirteen(dob: dob) {
+            dobConfirming = true
+            return
+        }
+        await sendDob()
+    }
+
+    /// Back from the confirm step to the picker, the date kept.
+    func changeDob() {
+        dobConfirming = false
+        ageError = nil
+    }
+
+    private func sendDob() async {
         agePosting = true
         ageError = nil
         defer { agePosting = false }
         let asked = api.tokenStore.token()
         do {
-            let age = try await api.reportAge(adult: report.adult, source: report.source)
+            let age = try await api.reportDob(dob)
             guard isSignedIn, api.tokenStore.token() == asked, var current = info else { return }
             current.age = age
             info = current
+            ageChanged()
+            dobConfirming = false
+            runAfterAgeIfCleared()
         } catch let error as APIError {
-            // A 403 age error already reached ageGateHit through the API.
-            guard isSignedIn, AgeCheck.errorCode(status: Self.status(error), body: Self.body(error)) == nil else { return }
-            ageError = error
+            guard isSignedIn else { return }
+            let status = Self.status(error)
+            let code = Self.body(error).flatMap { $0.code ?? $0.error }
+            if status == 409 || (status == 403 && (code == AgeCheck.blockedCode || code == AgeCheck.setCode)) {
+                // Given elsewhere, or closed there: show what the server holds.
+                await refresh()
+                dobConfirming = false
+                if info?.age?.needsDob != false { ageError = error }
+            } else {
+                ageError = error
+            }
         } catch {
             return
         }
@@ -448,8 +485,6 @@ final class AccountModel {
 
     func signInWithApple() async {
         guard busy == nil else { return }
-        // Continuing is the consent the sign-in screen's last line states.
-        setAgeTicked(true)
         busy = .apple
         failure = nil
         defer { busy = nil }
@@ -464,7 +499,6 @@ final class AccountModel {
                 await retryAppleCode()
             }
         } catch {
-            setAgeTicked(false)
             failure = Self.signInFailure(error)
         }
     }
@@ -499,7 +533,6 @@ final class AccountModel {
 
     func signInWithGoogle() async {
         guard busy == nil else { return }
-        setAgeTicked(true)
         busy = .google
         failure = nil
         defer { busy = nil }
@@ -508,7 +541,6 @@ final class AccountModel {
             let session = try await api.signInWithIDToken(provider: .google, idToken: identity.idToken, nonce: identity.rawNonce)
             await finishSignIn(session, via: .google)
         } catch {
-            setAgeTicked(false)
             failure = Self.signInFailure(error)
         }
     }
@@ -605,7 +637,6 @@ final class AccountModel {
             failure = .passwordShort
             return
         }
-        setAgeTicked(true)
         busy = .sendCode
         failure = nil
         defer { busy = nil }
@@ -618,7 +649,6 @@ final class AccountModel {
             step = .code(email: address)
             startCountdown()
         } catch {
-            setAgeTicked(false)
             failure = Self.sendFailure(error)
         }
     }
@@ -633,14 +663,12 @@ final class AccountModel {
             failure = .codeInvalid
             return
         }
-        setAgeTicked(true)
         busy = .verifyCode
         failure = nil
         do {
             let session = try await api.signInWithCode(email: address, code: entered)
             await finishSignIn(session, byCode: true, via: .email, email: address)
         } catch {
-            setAgeTicked(false)
             failure = Self.codeFailure(error)
             if failure == .codeInvalid { rejectedCode = entered }
         }
@@ -661,7 +689,6 @@ final class AccountModel {
             failure = .emailInvalid
             return
         }
-        setAgeTicked(true)
         busy = .password
         failure = nil
         defer { busy = nil }
@@ -669,7 +696,6 @@ final class AccountModel {
             let session = try await api.signInWithPassword(email: address, password: password)
             await finishSignIn(session, via: .email, email: address)
         } catch {
-            setAgeTicked(false)
             failure = Self.passwordFailure(error)
         }
     }
@@ -744,7 +770,6 @@ final class AccountModel {
             rejectedCode = nil
             startCountdown()
         } catch {
-            setAgeTicked(false)
             failure = Self.sendFailure(error)
         }
     }
@@ -815,12 +840,12 @@ final class AccountModel {
             step = .choose
         }
         // The verdict waiting behind sign-in needs the age on record first:
-        // read the account and report the box (or the phone's 18+) before
-        // the sheet closes.
+        // read the account and report the phone's answer before the sheet closes.
         var known = false
-        if usesNetwork, byCode || ageTicked || platformAge == .adult,
+        if usesNetwork,
            let fresh = try? await api.me(), fresh.user != nil, isSignedIn {
             info = fresh
+            ageChanged()
             known = true
             await settleAge()
             if byCode, passwordSignIn, fresh.needsPassword { choosePassword = true }
@@ -916,10 +941,12 @@ final class AccountModel {
         appleCodes.clear()
         isSignedIn = false
         info = nil
-        // The next person to sign in ticks the box for themselves; the
-        // phone's own answer stays.
-        ageTicked = false
+        ageChanged()
+        // The phone's own answer stays; what was sent for this account doesn't.
+        lastReport = nil
         ageError = nil
+        dobConfirming = false
+        dobDate = AgeCheck.defaultDobDate()
         afterAge = nil
         failure = nil
         step = .choose
