@@ -567,11 +567,15 @@ final class AccountAgeTests: XCTestCase {
         Task { await account.checkPlatformAge() }
         try await PremiumFixtures.waitUntil("the prompt") { account.platformPrompting }
         XCTAssertTrue(account.ageHolding)
-        XCTAssertEqual(PurchaseModel.refusal(account.ageRefusal, holding: account.ageHolding), .failed)
+        XCTAssertEqual(PurchaseModel.refusal(account.ageRefusal, holding: account.ageHolding), .checking)
+        let purchases = PurchaseModel(gateway: FakePurchaseGateway(), account: account)
+        await purchases.buy("pack_10")
+        XCTAssertEqual(purchases.message, .checking)
         var ran = 0
         account.afterAgeClears { ran += 1 }
         XCTAssertEqual(ran, 0)
         try await PremiumFixtures.waitUntil("the hold to end") { ran == 1 }
+        XCTAssertNil(purchases.message, "the note goes with the hold")
         XCTAssertFalse(account.ageHolding)
     }
 

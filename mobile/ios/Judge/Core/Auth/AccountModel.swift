@@ -116,6 +116,8 @@ final class AccountModel {
     @ObservationIgnored private var lastReport: AgeCheck.Report?
     /// Told when the account turns into (or stops being) one under 18.
     @ObservationIgnored var onUnderEighteen: (@MainActor (Bool) -> Void)?
+    /// Told when nothing about age holds things back any more.
+    @ObservationIgnored var onHoldEnded: (@MainActor () -> Void)?
     /// The action sign-in was for, held until the age is on record.
     @ObservationIgnored private var afterAge: (() -> Void)?
     /// A phone that hasn't answered by then counts as unknown.
@@ -348,6 +350,7 @@ final class AccountModel {
     /// Lets go of the action sign-in was for once nothing about age stands
     /// in its way.
     private func runAfterAgeIfCleared() {
+        if !askingPlatform, !reportingPlatform, !agePosting { onHoldEnded?() }
         guard ageCleared, let action = afterAge else { return }
         afterAge = nil
         action()
