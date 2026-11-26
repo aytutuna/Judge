@@ -755,6 +755,14 @@ export async function grantSubscription(g: {
             WHERE id = ?`,
       args: [g.source, g.originalTransactionId, id],
     },
+    // A plan found by the restore sync (lib/revenuecat-sync.ts) is replaced
+    // by the real one the first webhook event brings.
+    {
+      sql: `UPDATE subscriptions SET status = 'expired', will_renew = 0, updated_at = ?
+            WHERE user_id = ? AND source = ? AND status = 'active' AND original_transaction_id LIKE 'rcsync:%'
+              AND original_transaction_id <> ? AND ${guard.sql}`,
+      args: [nowIso, g.userId, g.source, g.originalTransactionId, ...guard.args],
+    },
   ]);
   const applied = results[0].rowsAffected === 1;
   if (!applied) {

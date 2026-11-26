@@ -182,6 +182,7 @@ export type UserBucket =
   | "signin_lookup"
   | "signin_lookup_any"
   | "password_set"
+  | "purchase_sync"
   | "events"
   | "data_export";
 
@@ -262,6 +263,11 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
   password_set: [
     { limit: 5, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:pw10m" },
     { limit: 20, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:pwday" },
+  ],
+  /** Restore (POST /api/v1/me/purchases/sync): one RevenueCat call each. */
+  purchase_sync: [
+    { limit: 10, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:psy10m" },
+    { limit: 30, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:psyday" },
   ],
   /** Usage event batches (POST /api/v1/events). */
   events: [{ limit: 300, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:evt1h" }],
