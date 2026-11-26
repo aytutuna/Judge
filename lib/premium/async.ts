@@ -8,7 +8,7 @@
  */
 
 import { track } from "@/lib/analytics/track";
-import type { UsageTotals } from "@/lib/claude";
+import { withChildSafety, type UsageTotals } from "@/lib/claude";
 import type { OriginalPayload } from "@/lib/originals-types";
 import type { Lang } from "@/lib/i18n";
 import type { Venue } from "@/lib/venues";
@@ -20,6 +20,7 @@ export type PremiumJobInput = {
   id: string;
   userId: string;
   reservationId: string;
+  teen: boolean;
   prepared: PreparedPremium;
   lang: Lang;
   venue?: Venue | null;
@@ -33,10 +34,12 @@ export type PremiumJobInput = {
 export async function runPremiumJob(job: PremiumJobInput): Promise<void> {
   let run: PremiumRun | undefined;
   try {
-    run = await runPreparedPipeline(
-      job.prepared,
-      { lang: job.lang },
-      { startedAt: job.startedAt, ...(job.anonymizeUsage ? { anonymizeUsage: job.anonymizeUsage } : {}) },
+    run = await withChildSafety(job.teen, () =>
+      runPreparedPipeline(
+        job.prepared,
+        { lang: job.lang },
+        { startedAt: job.startedAt, ...(job.anonymizeUsage ? { anonymizeUsage: job.anonymizeUsage } : {}) },
+      ),
     );
     const outcome = run.outcome;
     if (outcome.status !== "ok") {
@@ -60,6 +63,7 @@ export async function runPremiumJob(job: PremiumJobInput): Promise<void> {
         result: outcome.result,
         kind: "premium",
         ownerUserId: job.userId,
+        teen: job.teen,
         venue: job.venue,
         original: job.original,
       },

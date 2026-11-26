@@ -56,6 +56,24 @@ export type UsageTotals = {
 
 const usageMeter = new AsyncLocalStorage<UsageTotals>();
 
+/** Added to the system prompt of every call made inside withChildSafety(true).
+ * The provider's own child-safety prompt is not published, so this is ours:
+ * change it here if they hand one out. */
+export const CHILD_SAFETY_PROMPT = `One or more of the people in this dispute may be a teenager aged 13 to 17. Keep everything you write suitable for a teenager. Never include sexual content, graphic violence, or encouragement of self-harm, drugs, alcohol or dangerous acts. Do not ask for or repeat personal details such as an address, school, phone number or full name. Stay kind and measured, never mocking, and do not treat anyone as an adult. If the text describes abuse, self-harm, danger, or anything much bigger than an ordinary argument, do not pick a winner over it: say plainly that this is bigger than a verdict and that talking to a trusted adult or a local helpline would help.`;
+
+const childSafety = new AsyncLocalStorage<boolean>();
+
+/** Runs `fn` so that every model call inside it (parallel branches and
+ * background work started from it too) carries CHILD_SAFETY_PROMPT when
+ * `on`. */
+export function withChildSafety<T>(on: boolean, fn: () => Promise<T>): Promise<T> {
+  return childSafety.run(on, fn);
+}
+
+function systemPrompt(system: string): string {
+  return childSafety.getStore() ? `${system}\n\n${CHILD_SAFETY_PROMPT}` : system;
+}
+
 function emptyUsage(): UsageTotals {
   return { calls: 0, input: 0, output: 0, searches: 0, byModel: {} };
 }
@@ -265,7 +283,7 @@ export async function claudeJson<T>(
       {
         model: call.model ?? JUDGE_MODEL,
         max_tokens: MAX_TOKENS,
-        system: call.system,
+        system: systemPrompt(call.system),
         messages: [{ role: "user", content: userContent(call) }],
         output_config: {
           format: { type: "json_schema", schema: toClaudeSchema(call.schema) },
@@ -350,7 +368,7 @@ export async function claudeSearchJson<T>(
       {
         model,
         max_tokens: MAX_TOKENS,
-        system: call.system,
+        system: systemPrompt(call.system),
         messages: [{ role: "user", content: call.user }],
         tools: [{ type: WEB_SEARCH_TOOL, name: "web_search", max_uses: call.maxSearches }],
         output_config: {

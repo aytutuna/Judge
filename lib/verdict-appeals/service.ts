@@ -15,6 +15,7 @@
 
 import type { Row } from "@libsql/client";
 import { nanoid } from "nanoid";
+import { isTeen } from "@/lib/age";
 import { MAX_VERDICT_APPEALS, type AppealStatus } from "@/lib/case-types";
 import { composeForJudging, evidenceGroups } from "@/lib/cases/compose";
 import { appealSummary, normalizeCaseResult } from "@/lib/cases/judging";
@@ -29,7 +30,7 @@ import {
   type Blocked,
   type Failure,
 } from "@/lib/cases/service";
-import { withUsageMeter, type UsageTotals } from "@/lib/claude";
+import { withChildSafety, withUsageMeter, type UsageTotals } from "@/lib/claude";
 import { verdictLang } from "@/lib/content-lang";
 import { getDb, getVerdict, type StoredVerdict } from "@/lib/db";
 import { entitlementWriteBatch } from "@/lib/entitlements";
@@ -358,8 +359,9 @@ export async function runVerdictAppeal(p: VerdictAppealRun): Promise<void> {
     const evText = [baseEvidence, added].filter(Boolean).join("\n\n") || null;
     const lang = verdictLang(root.result);
 
+    const teen = await isTeen(p.userId);
     const judgingFrom = Date.now();
-    const run = await withUsageMeter(() =>
+    const run = await withChildSafety(teen, () => withUsageMeter(() =>
       judgeAnonymized(
         {
           text: document,
@@ -371,7 +373,7 @@ export async function runVerdictAppeal(p: VerdictAppealRun): Promise<void> {
         },
         { startedAt: p.startedAt, stats },
       ),
-    );
+    ));
     stats.ms = Date.now() - judgingFrom;
     usage = mergeUsage(usage, run.usage);
     const outcome = run.value;
@@ -391,7 +393,9 @@ export async function runVerdictAppeal(p: VerdictAppealRun): Promise<void> {
     const images = used.a + [...earlier, current].reduce((n, a) => n + a.evidence.length, 0);
     const next = normalizeCaseResult(outcome.result, { twoSided: false, evidenceUsed: { ...used, a: images } });
     const label = appealOutcome(base.result, next);
-    const summary = await withUsageMeter(() => appealSummary(base.result, next, { party: "a", text: current.text }, lang, label));
+    const summary = await withChildSafety(teen, () =>
+      withUsageMeter(() => appealSummary(base.result, next, { party: "a", text: current.text }, lang, label)),
+    );
     usage = mergeUsage(usage, summary.usage);
     const info: AppealInfo = {
       by: "a",
@@ -412,6 +416,7 @@ export async function runVerdictAppeal(p: VerdictAppealRun): Promise<void> {
         result: { ...next, appeal: info },
         kind: "premium",
         ownerUserId: p.userId,
+        teen,
         original: p.original,
       },
       {

@@ -44,6 +44,7 @@ import { checkPremiumSiteCap, checkUserLimits, type UserBucket } from "@/lib/rat
 import { ClarifyRequest, withPublicPanel, type VerdictApiResponse, type VerdictRequest } from "@/lib/types";
 import { parseVenue } from "@/lib/venues";
 import { acceptedHeaders, POLL_AFTER_MS, pollPath, wantsAsync, type VerdictAcceptedResponse } from "@/lib/verdict-poll";
+import { withChildSafety } from "@/lib/claude";
 import { clarifyQuestions } from "./clarify";
 import { idempotencyKey } from "./context";
 import { premiumLogLine, runPremiumPipeline, type PremiumRun } from "./run";
@@ -79,7 +80,7 @@ function unavailable(status = 503): NextResponse {
   return fail("unavailable", UNAVAILABLE_MESSAGE, { status });
 }
 
-type Gate = { userId: string; name: string } | { response: NextResponse };
+type Gate = { userId: string; name: string; teen: boolean } | { response: NextResponse };
 
 /** Session, origin and configuration checks shared by both handlers. A
  * failed session lookup is a 503, not signin_required: the apps drop their
@@ -95,7 +96,7 @@ async function signedInGate(req: Request): Promise<Gate> {
   if (!premiumEnabled()) {
     return { response: fail("not_configured", "Verdicts are not available on this server right now.") };
   }
-  return { userId: viewer.user.id, name: viewer.user.name };
+  return { userId: viewer.user.id, name: viewer.user.name, teen: viewer.age.teen };
 }
 
 /** The per-user limit for `bucket`, plus the site-wide daily cap for
@@ -343,21 +344,23 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
   };
 
   if (asyncMode) {
-    return startPremiumJob({ data, rawBody, userId, name: gate.name, reservationId, evidence, otherEvidence, startedAt, refund });
+    return startPremiumJob({ data, rawBody, userId, name: gate.name, teen: gate.teen, reservationId, evidence, otherEvidence, startedAt, refund });
   }
 
   let run: PremiumRun | undefined;
   try {
-    run = await runPremiumPipeline(
-      {
-        argument: data.argument,
-        clarifications: data.clarifications,
-        lang: data.lang,
-        ...(evidence ? { evidence } : {}),
-        ...(otherEvidence ? { otherEvidence } : {}),
-        ...(data.sides ? { sides: data.sides } : {}),
-      },
-      { startedAt },
+    run = await withChildSafety(gate.teen, () =>
+      runPremiumPipeline(
+        {
+          argument: data.argument,
+          clarifications: data.clarifications,
+          lang: data.lang,
+          ...(evidence ? { evidence } : {}),
+          ...(otherEvidence ? { otherEvidence } : {}),
+          ...(data.sides ? { sides: data.sides } : {}),
+        },
+        { startedAt },
+      ),
     );
     const outcome = run.outcome;
     if (outcome.status === "anonymize_failed") {
@@ -385,6 +388,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
         result: outcome.result,
         kind: "premium",
         ownerUserId: userId,
+        teen: gate.teen,
         venue: parseVenue(data.venue),
         original: {
           v: 1,
@@ -474,6 +478,7 @@ async function startPremiumJob(p: {
   rawBody: unknown;
   userId: string;
   name: string;
+  teen: boolean;
   reservationId: string;
   evidence: VerifiedEvidence[] | undefined;
   otherEvidence: VerifiedEvidence[][] | undefined;
@@ -523,6 +528,7 @@ async function startPremiumJob(p: {
       id,
       userId,
       reservationId: p.reservationId,
+      teen: p.teen,
       prepared: prepared.prepared,
       lang: data.lang,
       venue: parseVenue(data.venue),
@@ -591,5 +597,5 @@ export async function clarifyHandler(req: Request): Promise<NextResponse> {
   }
 
   const lang = answerLang(parsed.data.argument, parsed.data.lang);
-  return NextResponse.json(await clarifyQuestions(parsed.data.argument, lang));
+  return NextResponse.json(await withChildSafety(gate.teen, () => clarifyQuestions(parsed.data.argument, lang)));
 }

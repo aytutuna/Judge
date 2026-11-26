@@ -16,9 +16,10 @@
 import { nanoid } from "nanoid";
 import { track } from "@/lib/analytics/track";
 import type { CaseMode, PartyLetter } from "@/lib/case-types";
-import { claudeJson, LITE_MODEL, withUsageMeter, type UsageTotals } from "@/lib/claude";
+import { teenSql } from "@/lib/age";
+import { claudeJson, LITE_MODEL, withChildSafety, withUsageMeter, type UsageTotals } from "@/lib/claude";
 import type { InStatement } from "@libsql/client";
-import { STORED_FRAMEWORK } from "@/lib/db";
+import { getDb, STORED_FRAMEWORK } from "@/lib/db";
 import { consumeStatement, entitlementWriteBatch, refundStatements, type StatementGuard } from "@/lib/entitlements";
 import { caseStampStatement } from "@/lib/feedback/db";
 import { CASE_REMOVAL_REASON_SQL, ensureOriginalsTables } from "@/lib/originals/db";
@@ -239,6 +240,18 @@ function emptyStats(): PremiumStats {
 
 type Judged = { outcome: JudgedOutcome | null; error: string | null; log: (id: string | null, o: string) => void };
 
+/** SQL: some account on the case (owner, respondent, a seat or an invite)
+ * is under 18. `id` is the SQL for the case id. */
+const caseTeenExists = (id: string) => `EXISTS (SELECT 1 FROM "user" tu WHERE ${teenSql("tu")} AND tu.id IN (
+    SELECT owner_id FROM cases WHERE id = ${id} UNION SELECT respondent_user_id FROM cases WHERE id = ${id}
+    UNION SELECT user_id FROM case_seats WHERE case_id = ${id} UNION SELECT user_id FROM case_invites WHERE case_id = ${id}))`;
+
+async function caseHasTeen(caseId: string): Promise<boolean> {
+  const db = await getDb();
+  const rs = await db.execute({ sql: `SELECT ${caseTeenExists("?")} AS teen`, args: [caseId, caseId, caseId, caseId] });
+  return Number(rs.rows[0]?.teen) === 1;
+}
+
 /** judgeAnonymized under a usage meter; an unexpected throw becomes a failure.
  * The `[premium]` line carries the case id at its end. `startedAt` is when
  * the request that scheduled the run began: anonymizing that request's
@@ -254,7 +267,8 @@ async function judge(
   let outcome: JudgedOutcome | null = null;
   let error: string | null = null;
   try {
-    const metered = await withUsageMeter(() => judgeAnonymized(input, { startedAt, stats }));
+    const teen = await caseHasTeen(caseId);
+    const metered = await withChildSafety(teen, () => withUsageMeter(() => judgeAnonymized(input, { startedAt, stats })));
     outcome = metered.value;
     usage = metered.usage;
   } catch (e) {
@@ -289,9 +303,17 @@ function verdictRowStatements(
     {
       sql: `INSERT INTO verdict_meta (verdict_id, kind, case_id, names_visible, removed_at, removal_reason, created_at, updated_at,
               policy_version, lang, sides)
-            SELECT ?, 'case', ?, 1, c.removed_at, ${CASE_REMOVAL_REASON_SQL}, ?, ?, ?, c.lang, c.sides
+            SELECT ?, 'case', ?, CASE WHEN ${caseTeenExists("c.id")} THEN 0 ELSE 1 END, c.removed_at, ${CASE_REMOVAL_REASON_SQL}, ?, ?, ?, c.lang, c.sides
             FROM cases c WHERE c.id = ? AND EXISTS (SELECT 1 FROM verdicts WHERE id = ?)`,
       args: [verdictId, caseId, nowIso, nowIso, POLICY_VERSION, caseId, verdictId],
+    },
+    {
+      // The names default is off while a teen is on the case; the first verdict
+      // sets it, so a later choice of the owner is not undone by an appeal.
+      sql: `UPDATE cases SET names_visible = 0
+            WHERE id = ? AND ${caseTeenExists("?")} AND ${VERDICT_EXISTS}
+              AND NOT EXISTS (SELECT 1 FROM case_verdicts WHERE case_id = ? AND verdict_id <> ?)`,
+      args: [caseId, caseId, caseId, caseId, caseId, verdictId, caseId, verdictId],
     },
     caseStampStatement(verdictId, caseId, nowIso),
   ];
@@ -489,8 +511,10 @@ export async function runAppealJudging(
   const prev = previous.result;
   const label = appealOutcome(prev, next);
   // appealSummary never throws (it fails open to ""), so this always logs.
-  const summary = await meteredStep(caseId, "appeal_summary", () =>
-    appealSummary(prev, next, { party: appeal.party, text: appeal.text }, row.lang, label),
+  const summary = await meteredStep(caseId, "appeal_summary", async () =>
+    withChildSafety(await caseHasTeen(caseId), () =>
+      appealSummary(prev, next, { party: appeal.party, text: appeal.text }, row.lang, label),
+    ),
   );
   const info: AppealInfo = {
     by: appeal.party,
