@@ -91,11 +91,13 @@ const SCHEMA = [
   )`,
   // Kept when an account is deleted: one welcome credit per email, ever.
   // age_blocked_at: that email's account was blocked by the age check
-  // (lib/age.ts), so a new one starts blocked.
+  // (lib/age.ts), so a new one starts blocked. age_block_final: the block was
+  // made under the 13+ rule; an older one can be lifted by a date of birth.
   `CREATE TABLE IF NOT EXISTS welcome_claims (
     claim           TEXT PRIMARY KEY,
     created_at      TEXT NOT NULL,
-    age_blocked_at  TEXT
+    age_blocked_at  TEXT,
+    age_block_final TEXT
   )`,
 ];
 
@@ -115,6 +117,7 @@ export async function ensureEntitlementTables(): Promise<void> {
       await addColumn(client, "premium_usage", "hold_until");
       await addColumn(client, "premium_usage", "body_hash");
       await addColumn(client, "welcome_claims", "age_blocked_at");
+      await addColumn(client, "welcome_claims", "age_block_final");
     })
     .catch((e: unknown) => {
       globalForEntitlements.__verdictEntitlementsReady = undefined;

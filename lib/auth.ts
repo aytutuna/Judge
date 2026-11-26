@@ -379,6 +379,7 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         ageConfirmedAt: { type: "date", required: false, input: false, fieldName: "age_confirmed_at" },
         ageSource: { type: "string", required: false, input: false, fieldName: "age_source" },
         ageBlockedAt: { type: "date", required: false, input: false, fieldName: "age_blocked_at" },
+        ageBlockFinal: { type: "string", required: false, input: false, fieldName: "age_block_final" },
         ageDob: { type: "string", required: false, input: false, fieldName: "age_dob" },
         ageDobAt: { type: "date", required: false, input: false, fieldName: "age_dob_at" },
         ageSignal: { type: "string", required: false, input: false, fieldName: "age_signal" },
@@ -528,8 +529,10 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         create: {
           before: async (user) => {
             const claim = welcomeClaim(user.email);
-            const blockedAt = claim && (await keptBlock(claim, legacyWelcomeClaim(user.email)));
-            return blockedAt ? { data: { ...user, ageBlockedAt: new Date(blockedAt) } } : undefined;
+            const kept = claim && (await keptBlock(claim, legacyWelcomeClaim(user.email)));
+            return kept
+              ? { data: { ...user, ageBlockedAt: new Date(kept.at), ...(kept.final && { ageBlockFinal: "1" }) } }
+              : undefined;
           },
           after: async (user) => {
             const claim = welcomeClaim(user.email);
@@ -717,6 +720,7 @@ export async function resolveViewer(req: Request): Promise<ViewerLookup> {
     const user = res.user as typeof res.user & {
       ageConfirmedAt?: unknown;
       ageBlockedAt?: unknown;
+      ageBlockFinal?: unknown;
       ageDob?: unknown;
       ageDobAt?: unknown;
       ageSignal?: unknown;
@@ -724,6 +728,7 @@ export async function resolveViewer(req: Request): Promise<ViewerLookup> {
     const age = ageStateOf({
       confirmedAt: user.ageConfirmedAt,
       blockedAt: user.ageBlockedAt,
+      blockFinal: user.ageBlockFinal,
       dob: user.ageDob,
       dobAt: user.ageDobAt,
       signal: user.ageSignal,

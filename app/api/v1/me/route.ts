@@ -102,7 +102,7 @@ export async function DELETE(req: Request): Promise<NextResponse> {
   }
   try {
     const claim = viewer.age.blocked ? welcomeClaim(viewer.user.email) : null;
-    if (claim) await keepBlock(claim);
+    if (claim) await keepBlock(claim, !viewer.age.needsDob);
     const signInTokens = await revokeSignInTokens(viewer.user.id);
     await removeUserData(viewer.user.id, new Date(), { signInTokens });
     await deleteUserEntitlements(viewer.user.id);

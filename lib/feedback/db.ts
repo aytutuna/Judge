@@ -195,7 +195,7 @@ export async function recordConsent(userId: string, rec: ConsentRecord, now: Dat
   };
 }
 
-function withdrawStatements(userId: string, nowIso: string): InStatement[] {
+export function withdrawStatements(userId: string, nowIso: string): InStatement[] {
   const open = "training_ok_at IS NOT NULL AND training_withdrawn_at IS NULL";
   return [
     {

@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import type { AgeState } from "@/lib/account-types";
-import { blockMinor, confirmAdult, recordMinorSignal, submitDob, validDob } from "@/lib/age";
+import { confirmAdult, recordMinorSignal, submitDob } from "@/lib/age";
+import { validDob } from "@/lib/age-date";
 import { apiErrorBody } from "@/lib/api-errors";
 import { isSameOrigin } from "@/lib/auth";
 import { deadBearerResponse, lookupViewer } from "@/lib/bearer-guard";
@@ -11,9 +12,9 @@ export const dynamic = "force-dynamic";
 
 const NO_STORE = { "Cache-Control": "no-store" } as const;
 
-// "Under 18" only ever comes from the store's age signal. `under13: false`
-// says the store put the person at 13 to 17; without it (older builds) the
-// bracket is unknown and the account is closed, as before.
+// "Under 18" only ever comes from the store's age signal. Without `under13`
+// (every shipped build) it makes the account a teen and the date of birth
+// decides; only `under13: true` blocks.
 const AgeRequest = z.union([
   z.strictObject({ adult: z.literal(true), source: z.enum(["checkbox", "platform"]) }),
   z.strictObject({ adult: z.literal(false), source: z.literal("platform"), under13: z.boolean().optional() }),
@@ -24,7 +25,8 @@ const AgeRequest = z.union([
  * AgeState:
  * - {dob: "YYYY-MM-DD"}: the date of birth, accepted once (409 age_set after
  *   that; support clears age_dob and age_dob_at to allow a correction). Under
- *   13 closes the account.
+ *   13 closes the account for good. An account blocked under the old 18+
+ *   rule may send one date: 13 or more lifts the block.
  * - {adult: true, source: "checkbox" | "platform"}: older builds' tick, or the
  *   store saying 18+. A tick without a date is an adult self-declaration; the
  *   account then reports needsDob.
@@ -69,7 +71,7 @@ export async function POST(req: Request): Promise<NextResponse> {
     } else if (data.adult) {
       age = await confirmAdult(viewer.user.id, data.source);
     } else {
-      age = data.under13 === false ? await recordMinorSignal(viewer.user.id, false) : await blockMinor(viewer.user.id);
+      age = await recordMinorSignal(viewer.user.id, data.under13);
     }
     return NextResponse.json(age, { headers: NO_STORE });
   } catch (e) {

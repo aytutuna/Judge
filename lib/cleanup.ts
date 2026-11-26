@@ -7,6 +7,7 @@
  * old device links in lib/analytics/db.) Server only.
  */
 
+import { clearAdultDobs } from "@/lib/age";
 import { getDb } from "@/lib/db";
 import { ensureFeedbackTables } from "@/lib/feedback/db";
 import { pruneRemovalLog } from "@/lib/originals/removal-log";
@@ -44,14 +45,15 @@ async function pruneLedger(): Promise<number> {
   return rs.rowsAffected;
 }
 
-export type CleanupCounts = { verification: number; ledger: number; removalLog: number };
+export type CleanupCounts = { verification: number; ledger: number; removalLog: number; adultDobs: number };
 
 export async function runCleanup(now: Date = new Date()): Promise<CleanupCounts> {
-  const counts: CleanupCounts = { verification: 0, ledger: 0, removalLog: 0 };
+  const counts: CleanupCounts = { verification: 0, ledger: 0, removalLog: 0, adultDobs: 0 };
   const steps: [keyof CleanupCounts, () => Promise<number>][] = [
     ["verification", () => purgeVerification(now.toISOString())],
     ["ledger", () => pruneLedger()],
     ["removalLog", () => pruneRemovalLog(now)],
+    ["adultDobs", () => clearAdultDobs()],
   ];
   for (const [name, step] of steps) {
     try {
@@ -67,9 +69,9 @@ const globalForCleanup = globalThis as unknown as { __judgeCleanup?: boolean };
 
 async function cleanQuietly(): Promise<void> {
   const n = await runCleanup();
-  if (n.verification || n.ledger || n.removalLog) {
+  if (n.verification || n.ledger || n.removalLog || n.adultDobs) {
     console.info(
-      `[cleanup] dropped ${n.verification} expired sign-in codes, ${n.ledger} old consent records and ${n.removalLog} old removal-log entries`,
+      `[cleanup] dropped ${n.verification} expired sign-in codes, ${n.ledger} old consent records and ${n.removalLog} old removal-log entries and ${n.adultDobs} dates of birth of people who turned 18`,
     );
   }
 }

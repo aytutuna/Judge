@@ -2,25 +2,33 @@
  * The age check. Judge is for 13 and up. An account is confirmed once it has
  * a date of birth of 13 or more, an app-store age signal that allows it, or
  * (old app builds only) the "I'm 18 or older" tick. It is blocked when the
- * date or the store's signal says under 13. A block is never lifted here:
- * only the owner can clear it, by hand. Nothing is deleted on a block.
+ * date says under 13, or the store says so outright (under13: true). Such a
+ * block is final: only the owner can clear it, by hand. Nothing is deleted
+ * on a block.
  *
- * The date of birth is kept (age_dob) only for someone under 18 when they
- * give it, since it is what tells us the day they turn 18. For an adult only
- * the fact that a date was given is kept (age_dob_at); an under-13 date is
- * not kept at all, just the block. The teen flag is worked out from the date
- * on every read, so it ends on the 18th birthday. Without a date it follows
- * the store's last signal (age_signal).
+ * Blocks made before the 13+ rule (age_blocked_at without age_block_final)
+ * were made by the old under-18 rule, so the person may give a date once:
+ * 13 and over lifts the block, under 13 makes it final.
+ *
+ * The date of birth is kept (age_dob) only while the person is under 18,
+ * since it is what tells us the day they turn 18; the daily cleanup clears
+ * it after that. Whoever gave a date keeps only age_dob_at, and a date on
+ * file always wins over the store's signal (age_signal): teen means under 18
+ * by the date, and only without a date does the signal's "minor" count.
+ * An under-13 date is not kept at all, just the block.
  *
  * resolveViewer (lib/auth.ts) applies the rules below to every request it
  * looks up; routes answer with ageGateResponse before doing anything else.
  */
 
+import type { InStatement } from "@libsql/client";
 import { NextResponse } from "next/server";
 import type { AgeState } from "./account-types";
 import { apiErrorBody } from "./api-errors";
+import { underEighteen, underThirteen } from "./age-date";
 import { getDb } from "./db";
-import { ensureEntitlementTables } from "./entitlements";
+import { ensureEntitlementTables, entitlementWriteBatch } from "./entitlements";
+import { POLICY_VERSION } from "./policy";
 import { signal } from "./signals";
 
 export type AgeSource = "checkbox" | "platform" | "dob";
@@ -54,18 +62,20 @@ export function needsConfirmed(method: string, path: string): boolean {
 
 /** What a blocked account may still do: see its state, download its data, delete itself, and
  * finish a sign-in (the Apple code is kept so deletion can revoke it).
+ * One blocked under the old rule (needsDob) may also give its date of birth.
  * Sign-out is under /api/auth, which never asks for this. */
-function openWhenBlocked(method: string, path: string): boolean {
+function openWhenBlocked(method: string, path: string, age: AgeState): boolean {
   return (
     (path === "/api/v1/me" && (method === "GET" || method === "DELETE")) ||
     (path === "/api/v1/me/export" && method === "GET") ||
+    (path === "/api/v1/me/age" && method === "POST" && age.needsDob) ||
     path.startsWith("/api/v1/auth/")
   );
 }
 
 /** Why a signed-in request must be refused, or null. */
 export function ageRefusal(method: string, path: string, age: AgeState): AgeRefusal | null {
-  if (age.blocked) return openWhenBlocked(method, path) ? null : "age_blocked";
+  if (age.blocked) return openWhenBlocked(method, path, age) ? null : "age_blocked";
   if (!age.confirmed && needsConfirmed(method, path)) return "age_unconfirmed";
   return null;
 }
@@ -85,57 +95,69 @@ export function ageGateResponse(lookup: { gate?: AgeRefusal | "unavailable" }): 
   return NextResponse.json({ error: lookup.gate, code: lookup.gate }, { status: 403, headers });
 }
 
+
 export type AgeFields = {
   confirmedAt?: unknown;
   blockedAt?: unknown;
+  blockFinal?: unknown;
   dob?: unknown;
   dobAt?: unknown;
   signal?: unknown;
 };
 
-const DAY = /^(\d{4})-(\d{2})-(\d{2})$/;
-
-/** The calendar date `years` before `now` (UTC), as YYYY-MM-DD. A 29 February
- * lands on 1 March, as SQLite's date() does. */
-function yearsBefore(now: Date, years: number): string {
-  return new Date(Date.UTC(now.getUTCFullYear() - years, now.getUTCMonth(), now.getUTCDate())).toISOString().slice(0, 10);
-}
-
-/** A real calendar date as YYYY-MM-DD, not in the future, not before 1900. */
-export function validDob(value: unknown, now = new Date()): value is string {
-  const m = typeof value === "string" ? DAY.exec(value) : null;
-  if (!m) return false;
-  const d = new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])));
-  return d.toISOString().slice(0, 10) === value && value >= "1900-01-01" && value <= now.toISOString().slice(0, 10);
-}
-
-export function underThirteen(dob: string, now = new Date()): boolean {
-  return dob > yearsBefore(now, 13);
-}
-
-export function underEighteen(dob: string, now = new Date()): boolean {
-  return dob > yearsBefore(now, 18);
-}
+/** The 18th-birthday cut-off in SQL: dates after it are under 18. On 29
+ * February it is the 28th, as in yearsBefore (lib/age-date.ts). */
+export const ADULT_CUTOFF_SQL = `CASE WHEN strftime('%m-%d', 'now') = '02-29'
+  THEN date('now', '-18 years', '-1 day') ELSE date('now', '-18 years') END`;
 
 /** SQL for "this user row is a teen", for an alias of the user table. Same
  * rule as ageStateOf, in UTC. */
 export function teenSql(alias: string): string {
-  return `((${alias}.age_dob IS NOT NULL AND ${alias}.age_dob > date('now', '-18 years'))
-    OR (${alias}.age_dob IS NULL AND ${alias}.age_signal = 'minor'))`;
+  return `((${alias}.age_dob IS NOT NULL AND ${alias}.age_dob > (${ADULT_CUTOFF_SQL}))
+    OR (${alias}.age_dob IS NULL AND ${alias}.age_dob_at IS NULL AND ${alias}.age_signal = 'minor'))`;
+}
+
+/** SQL: some account on the case (owner, respondent, a seat or an invite)
+ * is under 18. `id` is the SQL for the case id and appears four times. */
+export const caseTeenExists = (id: string) => `EXISTS (SELECT 1 FROM "user" tu WHERE ${teenSql("tu")} AND tu.id IN (
+    SELECT owner_id FROM cases WHERE id = ${id} UNION SELECT respondent_user_id FROM cases WHERE id = ${id}
+    UNION SELECT user_id FROM case_seats WHERE case_id = ${id} UNION SELECT user_id FROM case_invites WHERE case_id = ${id}))`;
+
+export async function caseHasTeen(caseId: string): Promise<boolean> {
+  const db = await getDb();
+  const rs = await db.execute({ sql: `SELECT ${caseTeenExists("?")} AS teen`, args: [caseId, caseId, caseId, caseId] });
+  return Number(rs.rows[0]?.teen) === 1;
+}
+
+/** A verdict its writer, or someone on its case, is a teen for. */
+export async function verdictHasTeen(verdictId: string): Promise<boolean> {
+  const { ensureOriginalsTables } = await import("./originals/db");
+  await ensureOriginalsTables();
+  const db = await getDb();
+  const rs = await db.execute({
+    sql: `SELECT EXISTS (SELECT 1 FROM verdict_meta m JOIN "user" u ON u.id = m.owner_user_id
+                         WHERE m.verdict_id = ? AND ${teenSql("u")})
+               OR EXISTS (SELECT 1 FROM verdict_meta m WHERE m.verdict_id = ? AND m.case_id IS NOT NULL
+                          AND ${caseTeenExists("m.case_id")}) AS teen`,
+    args: [verdictId, verdictId],
+  });
+  return Number(rs.rows[0]?.teen) === 1;
 }
 
 /** The account's state from its stored fields, as of `now`. */
 export function ageStateOf(f: AgeFields, now = new Date()): AgeState {
   const blocked = f.blockedAt != null;
   const dob = typeof f.dob === "string" ? f.dob : null;
-  const teen = !blocked && (dob !== null ? underEighteen(dob, now) : f.signal === "minor");
-  return { confirmed: f.confirmedAt != null, blocked, teen, needsDob: !blocked && f.dobAt == null };
+  const dated = f.dobAt != null || dob !== null;
+  const teen = !blocked && (dated ? dob !== null && underEighteen(dob, now) : f.signal === "minor");
+  return { confirmed: f.confirmedAt != null, blocked, teen, needsDob: !dated && (!blocked || f.blockFinal == null) };
 }
 
 async function readAge(userId: string, now = new Date()): Promise<AgeState> {
   const db = await getDb();
   const rs = await db.execute({
-    sql: 'SELECT age_confirmed_at, age_blocked_at, age_dob, age_dob_at, age_signal FROM "user" WHERE id = ?',
+    sql: `SELECT age_confirmed_at, age_blocked_at, age_block_final, age_dob, age_dob_at, age_signal
+          FROM "user" WHERE id = ?`,
     args: [userId],
   });
   const row = rs.rows[0];
@@ -143,6 +165,7 @@ async function readAge(userId: string, now = new Date()): Promise<AgeState> {
     {
       confirmedAt: row?.age_confirmed_at,
       blockedAt: row?.age_blocked_at,
+      blockFinal: row?.age_block_final,
       dob: row?.age_dob,
       dobAt: row?.age_dob_at,
       signal: row?.age_signal,
@@ -159,8 +182,7 @@ export async function isTeen(userId: string, now = new Date()): Promise<boolean>
 /**
  * An adult confirmation: the old builds' tick, or a store signal saying 18+.
  * Keeps the first confirmation time; the source is the latest one. A tick
- * never changes a teen (a date or a store signal under 18 wins over it); a
- * store signal also replaces an earlier "minor" one.
+ * never changes a teen, and a store signal never overrides a date on file.
  */
 export async function confirmAdult(userId: string, source: "checkbox" | "platform", now = new Date()): Promise<AgeState> {
   const before = await readAge(userId, now);
@@ -174,94 +196,148 @@ export async function confirmAdult(userId: string, source: "checkbox" | "platfor
   return readAge(userId, now);
 }
 
-/** Blocks the account for good. Signals only the first time. */
+/** Blocks the account for good, which also makes an old block final.
+ * Signals only the first time. */
 export async function blockMinor(userId: string, now = new Date()): Promise<AgeState> {
+  const before = await readAge(userId, now);
   const db = await getDb();
-  const rs = await db.execute({
-    sql: 'UPDATE "user" SET age_blocked_at = ? WHERE id = ? AND age_blocked_at IS NULL',
+  await db.execute({
+    sql: `UPDATE "user" SET age_blocked_at = COALESCE(age_blocked_at, ?), age_block_final = '1' WHERE id = ?`,
     args: [now.toISOString(), userId],
   });
-  if (rs.rowsAffected > 0) signal("age_blocked");
+  if (!before.blocked) signal("age_blocked");
   return readAge(userId, now);
 }
 
-/** A store signal that says under 18. Under 13 (or no bracket sent) blocks;
- * otherwise the account is a teen, and any training consent is withdrawn. */
-export async function recordMinorSignal(userId: string, under13: boolean, now = new Date()): Promise<AgeState> {
-  if (under13) return blockMinor(userId, now);
+/**
+ * What recording a teen changes besides the account row, so that it commits
+ * in the same batch: a training consent that is on is turned off (with a
+ * ledger row saying it was automatic), their earlier verdicts and cases stop
+ * showing names, and the usage events already stored for them go.
+ */
+async function teenStatements(userId: string, nowIso: string): Promise<InStatement[]> {
+  const [{ ensureOriginalsTables }, { ensureFeedbackTables, withdrawStatements }, { ensureAnalyticsTables }] = await Promise.all([
+    import("./originals/db"),
+    import("./feedback/db"),
+    import("./analytics/db"),
+  ]);
+  await ensureOriginalsTables();
+  await ensureFeedbackTables();
+  await ensureAnalyticsTables();
+  const onCase = `SELECT id FROM cases WHERE owner_id = ? OR respondent_user_id = ?
+    UNION SELECT case_id FROM case_invites WHERE user_id = ? UNION SELECT case_id FROM case_seats WHERE user_id = ?`;
+  return [
+    {
+      sql: `INSERT INTO consent_ledger (user_id, choice, source, at, policy_version, wording_key, wording_text, lang, platform)
+            SELECT ?, 'off', 'switch', ?, ?, 'age.teenWithdrawn', ?, 'en', 'web'
+            WHERE EXISTS (SELECT 1 FROM consent_state WHERE user_id = ? AND choice = 'on')`,
+      args: [userId, nowIso, POLICY_VERSION, "Turned off automatically because the account is under 18.", userId],
+    },
+    {
+      sql: "UPDATE consent_state SET choice = 'off', updated_at = ?, policy_version = ? WHERE user_id = ? AND choice = 'on'",
+      args: [nowIso, POLICY_VERSION, userId],
+    },
+    ...withdrawStatements(userId, nowIso),
+    {
+      sql: "UPDATE verdict_meta SET names_visible = 0, updated_at = ? WHERE owner_user_id = ? AND names_visible = 1",
+      args: [nowIso, userId],
+    },
+    {
+      sql: `UPDATE verdict_meta SET names_visible = 0, updated_at = ?
+            WHERE kind = 'case' AND names_visible = 1 AND case_id IN (${onCase})`,
+      args: [nowIso, userId, userId, userId, userId],
+    },
+    {
+      sql: `UPDATE cases SET names_visible = 0 WHERE names_visible = 1 AND id IN (${onCase})`,
+      args: [userId, userId, userId, userId],
+    },
+    { sql: "DELETE FROM events WHERE user_id = ?", args: [userId] },
+  ];
+}
+
+/**
+ * A store signal that says under 18. It makes the account a teen at once and
+ * leaves needsDob up, so the date decides; only an explicit `under13: true`
+ * blocks. A date on file wins over the signal, so then nothing changes.
+ */
+export async function recordMinorSignal(userId: string, under13: boolean | undefined, now = new Date()): Promise<AgeState> {
   const before = await readAge(userId, now);
-  if (before.blocked) return before;
-  const db = await getDb();
-  await db.execute({
-    sql: `UPDATE "user" SET age_confirmed_at = COALESCE(age_confirmed_at, ?), age_source = 'platform', age_signal = 'minor'
-          WHERE id = ?`,
-    args: [now.toISOString(), userId],
-  });
-  const after = await readAge(userId, now);
-  if (after.teen) await withdrawTeenConsent(userId);
-  return after;
+  if (before.blocked || !before.needsDob) return before;
+  if (under13 === true) return blockMinor(userId, now);
+  if (before.teen) return before;
+  const nowIso = now.toISOString();
+  await entitlementWriteBatch([
+    {
+      sql: `UPDATE "user" SET age_confirmed_at = COALESCE(age_confirmed_at, ?), age_source = 'platform', age_signal = 'minor'
+            WHERE id = ?`,
+      args: [nowIso, userId],
+    },
+    ...(await teenStatements(userId, nowIso)),
+  ]);
+  return readAge(userId, now);
 }
 
 /**
  * The date of birth, once. Null when one was already given: only the owner
  * changes it, by clearing age_dob and age_dob_at by hand. Under 13 blocks the
- * account and keeps no date; 13 to 17 keeps it; 18 and over keeps only that a
- * date was given.
+ * account for good and keeps no date; 13 to 17 keeps it and writes the teen
+ * changes in the same batch; 18 and over keeps only that a date was given. An
+ * account blocked under the old rule gets its one date here too: 13 or more
+ * lifts the block.
  */
 export async function submitDob(userId: string, dob: string, now = new Date()): Promise<AgeState | null> {
   const before = await readAge(userId, now);
-  if (before.blocked) return before;
+  if (before.blocked && !before.needsDob) return before;
   if (!before.needsDob) return null;
   if (underThirteen(dob, now)) return blockMinor(userId, now);
-  const db = await getDb();
-  const rs = await db.execute({
-    sql: `UPDATE "user" SET age_dob = ?, age_dob_at = ?, age_confirmed_at = COALESCE(age_confirmed_at, ?), age_source = 'dob'
-          WHERE id = ? AND age_dob_at IS NULL`,
-    args: [underEighteen(dob, now) ? dob : null, now.toISOString(), now.toISOString(), userId],
-  });
-  if (rs.rowsAffected === 0) return null;
-  const after = await readAge(userId, now);
-  if (after.teen) await withdrawTeenConsent(userId);
-  return after;
+  const nowIso = now.toISOString();
+  const teen = underEighteen(dob, now);
+  const [done] = await entitlementWriteBatch([
+    {
+      sql: `UPDATE "user" SET age_dob = ?, age_dob_at = ?, age_confirmed_at = COALESCE(age_confirmed_at, ?), age_source = 'dob',
+              age_blocked_at = NULL, age_block_final = NULL
+            WHERE id = ? AND age_dob_at IS NULL`,
+      args: [teen ? dob : null, nowIso, nowIso, userId],
+    },
+    ...(teen ? await teenStatements(userId, nowIso) : []),
+  ]);
+  if (done.rowsAffected === 0) return null;
+  return readAge(userId, now);
 }
 
-async function withdrawTeenConsent(userId: string): Promise<void> {
-  const { ensureOriginalsTables } = await import("./originals/db");
-  const { getConsent, recordConsent } = await import("./feedback/db");
-  await ensureOriginalsTables();
-  if ((await getConsent(userId)).state !== "on") return;
-  await recordConsent(userId, {
-    choice: "off",
-    source: "switch",
-    wordingKey: "age.teenWithdrawn",
-    wordingText: "Withdrawn because the account is under 18.",
-    lang: "en",
-    platform: "web",
-  });
+/** Clears the date of birth of everyone who has turned 18. The teen flag does
+ * not depend on it: age_dob_at stays and says a date was given. */
+export async function clearAdultDobs(): Promise<number> {
+  const db = await getDb();
+  const rs = await db.execute(`UPDATE "user" SET age_dob = NULL WHERE age_dob IS NOT NULL AND age_dob <= (${ADULT_CUTOFF_SQL})`);
+  return rs.rowsAffected;
 }
 
 /** A blocked account deleting itself: the block stays with the scrambled
  * email kept for the welcome credit (lib/auth.ts welcomeClaim), so a new
- * account with that email starts blocked. */
-export async function keepBlock(claim: string, now = new Date()): Promise<void> {
+ * account with that email starts blocked. A block made under the old rule
+ * (`final` false) stays one that a date of birth can lift. */
+export async function keepBlock(claim: string, final: boolean, now = new Date()): Promise<void> {
   await ensureEntitlementTables();
   const db = await getDb();
   await db.execute({
-    sql: `INSERT INTO welcome_claims (claim, created_at, age_blocked_at) VALUES (?, ?, ?)
-          ON CONFLICT (claim) DO UPDATE SET age_blocked_at = COALESCE(age_blocked_at, excluded.age_blocked_at)`,
-    args: [claim, now.toISOString(), now.toISOString()],
+    sql: `INSERT INTO welcome_claims (claim, created_at, age_blocked_at, age_block_final) VALUES (?, ?, ?, ?)
+          ON CONFLICT (claim) DO UPDATE SET age_blocked_at = COALESCE(age_blocked_at, excluded.age_blocked_at),
+            age_block_final = COALESCE(excluded.age_block_final, age_block_final)`,
+    args: [claim, now.toISOString(), now.toISOString(), final ? "1" : null],
   });
 }
 
-/** When that email's earlier account was blocked, else null. `legacy` is the
- * claim stored before aliases were folded together. */
-export async function keptBlock(claim: string, legacy?: string | null): Promise<string | null> {
+/** When that email's earlier account was blocked, and whether the block is
+ * final, else null. `legacy` is the claim stored before aliases were folded
+ * together. */
+export async function keptBlock(claim: string, legacy?: string | null): Promise<{ at: string; final: boolean } | null> {
   await ensureEntitlementTables();
   const db = await getDb();
   const rs = await db.execute({
-    sql: "SELECT min(age_blocked_at) AS at FROM welcome_claims WHERE claim IN (?, ?)",
+    sql: "SELECT min(age_blocked_at) AS at, max(age_block_final) AS final FROM welcome_claims WHERE claim IN (?, ?)",
     args: [claim, legacy ?? claim],
   });
   const at = rs.rows[0]?.at;
-  return at == null ? null : String(at);
+  return at == null ? null : { at: String(at), final: rs.rows[0].final != null };
 }
