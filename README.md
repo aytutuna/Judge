@@ -126,8 +126,8 @@ error.
 
 Every verdict needs a signed-in account (`401 signin_required` otherwise)
 and one premium unit, so the account is the main gate. On top of that,
-`lib/ratelimit.ts` counts premium verdicts per account and the site-wide
-`PREMIUM_DAILY_CAP` (see *Accounts and Premium*), and the routes anyone can
+`lib/ratelimit.ts` counts premium verdicts per account and, for free verdicts,
+`PREMIUM_DAILY_CAP` and one a day per device (see *Accounts and Premium*), and the routes anyone can
 reach without an account (translations, polling, the invite preview)
 per visitor IP. An IPv6 visitor is counted per /64 prefix, since one client
 usually holds a whole /64. The store only sees a keyed hash (HMAC-SHA256
@@ -157,7 +157,11 @@ account deletion leaves alone. A grant lost at sign-up (a failed write or a
 restart) is given on the account's next `GET /api/v1/me`. Accounts from
 before this got nothing. A `tier` sent by older app builds is
 ignored. `GET /api/v1/config` reports `freeTier: false` and
-`welcomeCredits: 1`. Prices live in `lib/pricing.ts`; until
+`welcomeCredits: 1`. A free verdict is one by an account that never had anything
+but its welcome credit. One device or browser gets one a day: the apps are told
+apart by the `Device-Id` recorded at sign-in, the website (which keeps no
+identifier) by the visitor's address; a second account on the same device is
+refused with `429 rate_limited` until the next UTC day. Prices live in `lib/pricing.ts`; until
 `PURCHASES_ENABLED=1` the buy buttons read "Coming soon". Testers get premium
 from the admin script below.
 
@@ -182,8 +186,8 @@ after sign-in.
 | `REVIEW_ACCOUNT_EMAIL`, `REVIEW_ACCOUNT_CODE` | *(empty)* | The store-review account (App Review, Play review): this address always gets this 6-digit sign-in code in the apps' email option, and no email is sent to it. Both set, plus email sign-in configured, turns it on; the code must not be a repeated digit or `123456`/`654321`. Put the same values in the review notes when submitting. Use a dedicated address on your own domain, never a real person's: that address stops receiving codes, and whoever owns the mailbox at Apple or Google could also sign into the account. Its guesses are limited to 10 an hour per IP and about 300 an hour in all (`[signal:review_guess_cap]` when that is reached); code requests are not limited. Clear or change the code after each review. It is an ordinary account otherwise |
 | `DEV_LOGIN` | *(empty)* | `1` shows a "test sign-in" for local testing. It works only when **all** hold: not a production build (`next build` output is production whatever `NODE_ENV` it is started with), `DEV_LOGIN=1`, the server listens on `127.0.0.1` or `::1` only (`npm run dev:login`, i.e. `next dev -H 127.0.0.1`; plain `npm run dev` listens on every interface and is refused), and the request's `Host` is `localhost`, `127.0.0.1` or `[::1]`. Anywhere else the endpoint answers 404 |
 | `PREMIUM_ENABLED` | `1` | `0` turns Premium off (the switch disappears; premium requests get `503 not_configured`) |
-| `PREMIUM_DAILY_CAP` | `500` | Site-wide premium runs per UTC day, counted from the database, refunded ones included (a refused or failed run still costs its model calls). A cost circuit breaker; `0` pauses Premium. Clarifying questions are not counted; the per-account limit below bounds them |
-| `WELCOME_DAILY_CAP` | `100` | The part of `PREMIUM_DAILY_CAP` that accounts which never had anything but their welcome credit may use per UTC day, so sign-ups made for the free verdict cannot use up the runs paying accounts rely on |
+| `PREMIUM_DAILY_CAP` | `500` | Site-wide free verdicts per UTC day (runs by accounts that never had anything but their welcome credit), counted from the database, refunded ones included (a failed run still costs its model calls). A cost circuit breaker; `0` pauses free verdicts. Bought credits and the monthly plan are never held to it. Clarifying questions are not counted; the per-account limit below bounds them |
+| `WELCOME_DAILY_CAP` | `100` | The same count, with its own number: the lower of the two applies, so sign-ups made for the free verdict cannot run up the bill |
 | `PREMIUM_JUDGE_MODELS` | `claude-sonnet-5-5,claude-sonnet-5-5,claude-haiku-5-5` | Premium panel seats, in order (1 to 5) |
 | `PREMIUM_SONNET_EFFORT` | `medium` | Thinking depth for non-Haiku premium judges: `low`, `medium` or `high` |
 | `PREMIUM_FACTCHECK_MODEL` | `claude-haiku-5-5` | Model for the web fact-check |
@@ -193,15 +197,16 @@ after sign-in.
 | `EVIDENCE_MODEL` | `claude-haiku-5-5` | Vision model that transcribes evidence images |
 | `PURCHASES_ENABLED` | *(empty)* | `1` = `GET /api/v1/config` reports `pricing.purchasesEnabled: true`, so the apps offer their in-app purchases. Anything else = false ("Coming soon") |
 | `REVENUECAT_WEBHOOK_SECRET` | *(empty)* | Shared secret for `POST /api/v1/webhooks/revenuecat`; set RevenueCat's webhook Authorization header to `Bearer <secret>`. Unset = the webhook answers `503 not_configured` |
+| `REVENUECAT_API_KEY` | *(empty)* | A secret API key of the RevenueCat project, for Restore (`POST /api/v1/me/purchases/sync`). Unset = restore answers `503 not_configured` |
 | `ANALYTICS_ENABLED` | `1` | `0` = `GET /api/v1/config` reports `features.analytics: false`, so the apps stop sending usage events, and `POST /api/v1/events` stores nothing (it also stores nothing for an account under 18). The sign-in device check (`many_accounts_per_device`) is a separate anti-abuse feature and keeps running with the switch off |
-| `ALLOW_SANDBOX_PURCHASES` | *(empty)* | `1` = also apply RevenueCat events with `environment: SANDBOX` (TestFlight, Play test tracks). Leave unset on the live server: sandbox purchases are free |
+| `ALLOW_SANDBOX_PURCHASES` | *(empty)* | `1` = also apply RevenueCat events with `environment: SANDBOX` (TestFlight, Play test tracks, App Review). They count like real ones, with `environment = 'sandbox'` on their ledger rows. On until App Review approves the app, then unset |
 
 Sign-in providers without credentials are reported as unavailable by
 `GET /api/v1/config`, and the sign-in page shows them disabled.
 
 **Limits for Premium:** per account 10 premium verdicts per 10 minutes and
 60 per 24 hours, 20 clarifying-question requests per 10 minutes and 100 per
-24 hours (`429 rate_limited`), plus `PREMIUM_DAILY_CAP` (`503 daily_cap`).
+24 hours (`429 rate_limited`), plus, for free verdicts only, `PREMIUM_DAILY_CAP` (`503 daily_cap`).
 An account that never had anything but its welcome credit gets 5
 clarifying-question requests and 5 evidence uploads per 24 hours instead,
 since it can hold that credit unspent indefinitely. Verdicts skip Turnstile: the signed-in account and these limits are the gate. A
@@ -249,7 +254,7 @@ sign-in does not depend on it.
 - **One premium verdict per case.** A `"tier"` on create is ignored. The
   case gets the fact-check and the panel for one premium verdict, held when
   the case is created
-  (it counts towards the monthly cap and `PREMIUM_DAILY_CAP` then), spent
+  (it counts towards the monthly cap and, for a free one, `PREMIUM_DAILY_CAP` then), spent
   when it is judged, and returned if judging fails, the judges decline, or
   nobody answers in 7 days. Judging runs after the response (Next's
   `after()`, so it needs `next start` or a platform that supports it);
@@ -443,6 +448,7 @@ The website and the future iOS/Android app share one JSON API. Base URL
 | `POST /api/v1/respond/{token}/evidence` | The other person's evidence images |
 | `POST /api/v1/respond/{token}/appeals` | The other person adds context (signed in, Premium) |
 | `POST /api/v1/events` | Usage events, `{ "context": { "platform", "app_version", "anon_id"?, "device_id"?, "os_version"?, "device_model"?, "locale"? }, "events": [{ "name", "at"?, "props"? }] }`, up to 50 per batch as `application/json` (at most 32 KB); signed in or with `anon_id` (the website needs neither). Only the event names and props listed in `lib/analytics/track.ts` are accepted; prop values are short tokens without spaces, integers or booleans, so no text anyone wrote fits. Anything else refuses the batch with `400 invalid`. Limits: 300 batches an hour per account, signed out 10 per 10 minutes and 60 an hour per address, and 200,000 events a day in all (`503` past that). `204` |
+| `POST /api/v1/me/purchases/sync` | Restore: after `Purchases.restorePurchases()` the apps call this; the server asks RevenueCat for the account's store plans and applies the active ones at once. `{ synced, entitlement }` |
 | `POST /api/v1/webhooks/revenuecat` | RevenueCat only (`Authorization: Bearer ${REVENUECAT_WEBHOOK_SECRET}`): applies a purchase event once; see *Purchases* |
 | `GET /api/v1/respond/{token}/originals` / `PATCH .../display` / `POST .../removal` | Party B (the bound account): their original, their display name, removing their side |
 
@@ -721,8 +727,8 @@ entitlement has to be set up (products only).
    the ids in `STORE_PRODUCTS` (`lib/pricing.ts`).
 2. **Webhook** (RevenueCat → Integrations → Webhooks): URL
    `https://okjudge.com/api/v1/webhooks/revenuecat`, Authorization header
-   `Bearer <REVENUECAT_WEBHOOK_SECRET>`, production events (sandbox events
-   are ignored unless `ALLOW_SANDBOX_PURCHASES=1`).
+   `Bearer <REVENUECAT_WEBHOOK_SECRET>`, production and sandbox events
+   (sandbox ones are ignored unless `ALLOW_SANDBOX_PURCHASES=1`).
 3. **App:** `Purchases.logIn(user.id)` with our account id before buying,
    then refresh `GET /api/v1/me` after a purchase.
 4. Set `PURCHASES_ENABLED=1` when the products are live.
@@ -731,8 +737,11 @@ Every event the server has decided about answers `200`: applied
 (`{ "ok": true, "applied": true|false, "action": "<StoreEvent type>" }`,
 `applied: false` = already applied or nothing to apply it to), or ignored
 (`{ "ok": true, "ignored": true, "reason" }`, e.g. `unknown_product`,
-`unknown_user`, `sandbox`); the `TEST` event answers
-`{ "ok": true, "test": true }`. `401` wrong secret, `400`/`413` malformed or
+`sandbox`); the `TEST` event answers
+`{ "ok": true, "test": true }`. A purchase for an account we do not know
+(no `app_user_id` or alias matches) answers `503` and logs
+`[signal:webhook_apply_failed] unmatched purchase`, so RevenueCat retries once
+the app has logged in; the retry grants at most once. `401` wrong secret, `400`/`413` malformed or
 over 256 KB, `429` over 600 requests per 10 minutes per IP, `503` not
 configured or the database failing (RevenueCat retries for about 80
 minutes). Each purchase is granted at most once, whatever RevenueCat
@@ -743,10 +752,11 @@ retries or replays:
 | `NON_RENEWING_PURCHASE` (or `INITIAL_PURCHASE`) of a pack | `credits_purchased`: the pack's credits, once per `transaction_id` |
 | `INITIAL_PURCHASE`, `RENEWAL`, `UNCANCELLATION`, `PRODUCT_CHANGE` of the plan | `subscription_active`: period `purchased_at_ms` to `expiration_at_ms`, renewing; a new period resets the fair-use count |
 | `CANCELLATION` of the plan, any reason but `CUSTOMER_SUPPORT` | `subscription_will_not_renew`: access stays until the period ends |
-| `CANCELLATION` with `cancel_reason: CUSTOMER_SUPPORT` (a refund) | `refund`: a pack's credits are taken back (never below 0); the plan ends at once |
+| `CANCELLATION` with `cancel_reason: CUSTOMER_SUPPORT` (a refund) | `refund`: a pack's credits still unused are taken back (never below 0; used verdicts stay used); the plan ends at once |
 | `EXPIRATION` of the plan | `subscription_expired` at `expiration_at_ms` (ignored after a later renewal) |
 | `TEST` | `{ ok, test }`, nothing changes |
-| `BILLING_ISSUE`, `SUBSCRIPTION_PAUSED`, `TRANSFER`, a pack `CANCELLATION` that is not a refund, any other type | ignored |
+| `TRANSFER` | the active plans of the `store` held by `transferred_from` move to the first account of `transferred_to` that exists, with their period and usage (credits stay); once per event id. A transfer to anonymous ids only is ignored; to an unknown account it is unmatched (503) |
+| `BILLING_ISSUE`, `SUBSCRIPTION_PAUSED`, a pack `CANCELLATION` that is not a refund, any other type | ignored: no grace period, access ends at the stored period end |
 
 Stores: `APP_STORE`/`MAC_APP_STORE` → `app_store`, `PLAY_STORE` →
 `play_store`, `STRIPE`/`RC_BILLING`/`PADDLE` → `web`; others are ignored.
