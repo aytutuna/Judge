@@ -531,8 +531,10 @@
     <string name="best_point_self">Điểm mạnh nhất của bạn</string>
     <string name="error_password_wrong">Mật khẩu này không đúng.</string>
     <string name="error_password_required">Nhập mật khẩu hiện tại của bạn.</string>
-    <string name="error_age_blocked">Judge chỉ dành cho người từ 18 tuổi trở lên.</string>
-    <string name="error_age_unconfirmed">Hãy xác nhận bạn từ 18 tuổi trở lên để tiếp tục.</string>
+    <string name="error_age_blocked">Judge chỉ dành cho người từ 13 tuổi trở lên.</string>
+    <string name="error_age_unconfirmed">Hãy xác nhận tuổi của bạn để tiếp tục.</string>
+    <string name="error_age_set">Ngày sinh của bạn đã được lưu.</string>
+    <string name="error_not_for_teens">Không dùng được với tài khoản này.</string>
     <string name="error_agreement_required">Hãy đồng ý với thông báo về chi tiết riêng tư để tiếp tục.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Mới</string>

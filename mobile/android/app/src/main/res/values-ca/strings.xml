@@ -549,8 +549,10 @@
     <string name="best_point_self">El teu millor argument</string>
     <string name="error_password_wrong">Aquesta contrasenya no és correcta.</string>
     <string name="error_password_required">Escriu la teva contrasenya actual.</string>
-    <string name="error_age_blocked">Judge és només per a majors de 18 anys.</string>
-    <string name="error_age_unconfirmed">Confirma que tens 18 anys o més per continuar.</string>
+    <string name="error_age_blocked">Judge és només per a persones de 13 anys o més.</string>
+    <string name="error_age_unconfirmed">Confirma la teva edat per continuar.</string>
+    <string name="error_age_set">La teva data de naixement ja està desada.</string>
+    <string name="error_not_for_teens">No disponible per a aquest compte.</string>
     <string name="error_agreement_required">Accepta l\'avís sobre dades privades per continuar.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nou</string>

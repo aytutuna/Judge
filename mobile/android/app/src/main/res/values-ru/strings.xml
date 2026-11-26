@@ -558,8 +558,10 @@
     <string name="best_point_self">Ваш самый сильный довод</string>
     <string name="error_password_wrong">Этот пароль неверный.</string>
     <string name="error_password_required">Введите текущий пароль.</string>
-    <string name="error_age_blocked">Judge только для людей от 18 лет.</string>
-    <string name="error_age_unconfirmed">Подтвердите, что вам 18 лет или больше, чтобы продолжить.</string>
+    <string name="error_age_blocked">Judge только для людей от 13 лет.</string>
+    <string name="error_age_unconfirmed">Подтвердите свой возраст, чтобы продолжить.</string>
+    <string name="error_age_set">Ваша дата рождения уже сохранена.</string>
+    <string name="error_not_for_teens">Недоступно для этого аккаунта.</string>
     <string name="error_agreement_required">Чтобы продолжить, согласитесь с уведомлением о личных данных.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Новый спор</string>

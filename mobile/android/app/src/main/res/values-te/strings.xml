@@ -540,8 +540,10 @@
     <string name="best_point_self">మీ వాదనలో బలమైన పాయింట్</string>
     <string name="error_password_wrong">ఈ పాస్‌వర్డ్ సరిగ్గా లేదు.</string>
     <string name="error_password_required">మీ ప్రస్తుత పాస్‌వర్డ్ నమోదు చేయండి.</string>
-    <string name="error_age_blocked">Judge 18 ఏళ్లు, అంతకంటే ఎక్కువ వయసు ఉన్నవాళ్లకు మాత్రమే.</string>
-    <string name="error_age_unconfirmed">కొనసాగడానికి మీకు 18 ఏళ్లు లేదా అంతకంటే ఎక్కువ అని నిర్ధారించండి.</string>
+    <string name="error_age_blocked">Judge 13 ఏళ్లు, ఆపై వయసు వారికి మాత్రమే.</string>
+    <string name="error_age_unconfirmed">కొనసాగడానికి మీ వయసును నిర్ధారించండి.</string>
+    <string name="error_age_set">మీ పుట్టిన తేదీ ఇప్పటికే సేవ్ అయింది.</string>
+    <string name="error_not_for_teens">ఈ అకౌంట్‌కు అందుబాటులో లేదు.</string>
     <string name="error_agreement_required">కొనసాగడానికి ప్రైవేట్ వివరాల నోటీసుకు అంగీకరించండి.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">కొత్తది</string>

@@ -558,8 +558,10 @@
     <string name="best_point_self">Twój najmocniejszy argument</string>
     <string name="error_password_wrong">To hasło jest nieprawidłowe.</string>
     <string name="error_password_required">Wpisz obecne hasło.</string>
-    <string name="error_age_blocked">Judge jest tylko dla osób w wieku 18 lat i więcej.</string>
-    <string name="error_age_unconfirmed">Potwierdź, że masz 18 lat lub więcej, żeby przejść dalej.</string>
+    <string name="error_age_blocked">Judge jest tylko dla osób od 13 lat.</string>
+    <string name="error_age_unconfirmed">Potwierdź swój wiek, żeby kontynuować.</string>
+    <string name="error_age_set">Twoja data urodzenia jest już zapisana.</string>
+    <string name="error_not_for_teens">Niedostępne dla tego konta.</string>
     <string name="error_agreement_required">Zaakceptuj informację o prywatnych szczegółach, aby kontynuować.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nowy</string>

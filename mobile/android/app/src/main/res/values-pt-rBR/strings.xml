@@ -549,8 +549,10 @@
     <string name="best_point_self">Seu melhor argumento</string>
     <string name="error_password_wrong">Essa senha não está correta.</string>
     <string name="error_password_required">Digite sua senha atual.</string>
-    <string name="error_age_blocked">O Judge é só para quem tem 18 anos ou mais.</string>
-    <string name="error_age_unconfirmed">Confirme que você tem 18 anos ou mais para continuar.</string>
+    <string name="error_age_blocked">O Judge é só para quem tem 13 anos ou mais.</string>
+    <string name="error_age_unconfirmed">Confirme sua idade para continuar.</string>
+    <string name="error_age_set">Sua data de nascimento já está salva.</string>
+    <string name="error_not_for_teens">Não disponível para esta conta.</string>
     <string name="error_agreement_required">Concorde com o aviso sobre detalhes privados para continuar.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Novo</string>

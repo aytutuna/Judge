@@ -82244,271 +82244,547 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge مخصص لمن بلغوا 18 عامًا فأكثر فقط."
+            "value" : "Judge مخصص لمن بلغوا 13 عامًا فأكثر فقط."
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge শুধু ১৮ বছর বা তার বেশি বয়সীদের জন্য।"
+            "value" : "Judge শুধু ১৩ বছর বা তার বেশি বয়সীদের জন্য।"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge és només per a majors de 18 anys."
+            "value" : "Judge és només per a persones de 13 anys o més."
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge je jen pro lidi od 18 let."
+            "value" : "Judge je jen pro lidi od 13 let."
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge er kun for personer på 18 år og derover."
+            "value" : "Judge er kun for personer på 13 år og derover."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge ist nur für Menschen ab 18."
+            "value" : "Judge ist nur für Menschen ab 13."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Το Judge είναι μόνο για άτομα 18 ετών και άνω."
+            "value" : "Το Judge είναι μόνο για άτομα 13 ετών και άνω."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge is only for people 18 and older."
+            "value" : "Judge is only for people 13 and older."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge es solo para personas de 18 años o más."
+            "value" : "Judge es solo para personas de 13 años o más."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge on tarkoitettu vain 18 vuotta täyttäneille."
+            "value" : "Judge on tarkoitettu vain 13 vuotta täyttäneille."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge est réservé aux personnes de 18 ans et plus."
+            "value" : "Judge est réservé aux personnes de 13 ans et plus."
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge ફક્ત 18 કે તેથી વધુ ઉંમરના લોકો માટે છે."
+            "value" : "Judge ફક્ત 13 કે તેથી વધુ ઉંમરના લોકો માટે છે."
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge מיועד לגילאי 18 ומעלה בלבד."
+            "value" : "Judge מיועד לגילאי 13 ומעלה בלבד."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge सिर्फ़ 18 साल और उससे ज़्यादा उम्र के लोगों के लिए है।"
+            "value" : "Judge सिर्फ़ 13 साल और उससे ज़्यादा उम्र के लोगों के लिए है।"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge je samo za osobe od 18 godina nadalje."
+            "value" : "Judge je samo za osobe od 13 godina nadalje."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A Judge csak 18 éves vagy idősebb embereknek szól."
+            "value" : "A Judge csak 13 éves vagy idősebb embereknek szól."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge hanya untuk orang berusia 18 tahun ke atas."
+            "value" : "Judge hanya untuk orang berusia 13 tahun ke atas."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge è solo per chi ha almeno 18 anni."
+            "value" : "Judge è solo per chi ha almeno 13 anni."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judgeは18歳以上の方のみ利用できます。"
+            "value" : "Judgeは13歳以上の方のみ利用できます。"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge 18 ವರ್ಷ ಮತ್ತು ಮೇಲ್ಪಟ್ಟವರಿಗೆ ಮಾತ್ರ."
+            "value" : "Judge 13 ವರ್ಷ ಮತ್ತು ಮೇಲ್ಪಟ್ಟವರಿಗೆ ಮಾತ್ರ."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge는 18세 이상만 이용할 수 있어요."
+            "value" : "Judge는 만 13세 이상만 이용할 수 있어요."
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge 18 വയസും അതിൽ കൂടുതലും ഉള്ളവർക്ക് മാത്രമുള്ളതാണ്."
+            "value" : "Judge 13 വയസ്സും അതിനു മുകളിലും ഉള്ളവർക്ക് മാത്രമുള്ളതാണ്."
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge फक्त 18 वर्षे आणि त्यापेक्षा जास्त वयाच्या लोकांसाठी आहे."
+            "value" : "Judge फक्त 13 वर्षे आणि त्याहून मोठ्यांसाठी आहे."
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge hanya untuk mereka yang berumur 18 tahun ke atas."
+            "value" : "Judge hanya untuk mereka yang berumur 13 tahun ke atas."
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge er bare for folk som er 18 år eller eldre."
+            "value" : "Judge er bare for personer på 13 år eller eldre."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge is alleen voor mensen van 18 jaar en ouder."
+            "value" : "Judge is alleen voor mensen van 13 jaar en ouder."
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge କେବଳ 18 ବା ତା'ଠାରୁ ଅଧିକ ବୟସର ଲୋକଙ୍କ ପାଇଁ।"
+            "value" : "Judge କେବଳ 13 ବର୍ଷ ଓ ତା'ଠାରୁ ଅଧିକ ବୟସ୍କଙ୍କ ପାଇଁ।"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge ਸਿਰਫ਼ 18 ਸਾਲ ਜਾਂ ਵੱਧ ਉਮਰ ਦੇ ਲੋਕਾਂ ਲਈ ਹੈ।"
+            "value" : "Judge ਸਿਰਫ਼ 13 ਸਾਲ ਜਾਂ ਵੱਧ ਉਮਰ ਦੇ ਲੋਕਾਂ ਲਈ ਹੈ।"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge jest tylko dla osób w wieku 18 lat i więcej."
+            "value" : "Judge jest tylko dla osób od 13 lat."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O Judge é só para quem tem 18 anos ou mais."
+            "value" : "O Judge é só para quem tem 13 anos ou mais."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O Judge é só para quem tem 18 anos ou mais."
+            "value" : "O Judge é só para quem tem 13 anos ou mais."
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge e doar pentru persoane de 18 ani sau mai mari."
+            "value" : "Judge e doar pentru persoane de 13 ani sau mai mari."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge только для людей от 18 лет."
+            "value" : "Judge только для людей от 13 лет."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge je len pre ľudí od 18 rokov."
+            "value" : "Judge je len pre ľudí od 13 rokov."
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge je samo za osebe, starejše od 18 let."
+            "value" : "Judge je samo za osebe, starejše od 13 let."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge är bara för personer som är 18 år eller äldre."
+            "value" : "Judge är bara för personer som är 13 år eller äldre."
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge 18 வயது மற்றும் அதற்கு மேற்பட்டவர்களுக்கு மட்டுமே."
+            "value" : "Judge 13 வயது மற்றும் அதற்கு மேற்பட்டவர்களுக்கு மட்டுமே."
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge 18 ఏళ్లు, అంతకంటే ఎక్కువ వయసు ఉన్నవాళ్లకు మాత్రమే."
+            "value" : "Judge 13 ఏళ్లు, ఆపై వయసు వారికి మాత్రమే."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge ให้บริการเฉพาะผู้ที่อายุ 18 ปีขึ้นไป"
+            "value" : "Judge ให้บริการเฉพาะผู้ที่อายุ 13 ปีขึ้นไป"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge yalnızca 18 yaş ve üzeri kişiler içindir."
+            "value" : "Judge yalnızca 13 yaş ve üzeri kişiler içindir."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge лише для людей від 18 років."
+            "value" : "Judge лише для людей від 13 років."
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge صرف 18 سال یا اس سے زیادہ عمر کے لوگوں کے لیے ہے۔"
+            "value" : "Judge صرف 13 سال یا اس سے زیادہ عمر کے لوگوں کے لیے ہے۔"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge chỉ dành cho người từ 18 tuổi trở lên."
+            "value" : "Judge chỉ dành cho người từ 13 tuổi trở lên."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge 仅限 18 岁及以上的人使用。"
+            "value" : "Judge 仅限 13 岁及以上的人使用。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge 僅限 18 歲以上的人使用。"
+            "value" : "Judge 僅限 13 歲以上的人使用。"
+          }
+        }
+      }
+    },
+    "error.age_set" : {
+      "comment" : "Generated by mobile/shared/strings/export-strings.ts from lib/i18n.ts. Do not edit.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تاريخ ميلادك محفوظ بالفعل."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "আপনার জন্মতারিখ আগেই সেভ করা আছে।"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La teva data de naixement ja està desada."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tvé datum narození už je uložené."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din fødselsdato er allerede gemt."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Geburtsdatum ist schon gespeichert."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η ημερομηνία γέννησής σου έχει ήδη αποθηκευτεί."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your date of birth is already saved."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu fecha de nacimiento ya está guardada."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Syntymäaikasi on jo tallennettu."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta date de naissance est déjà enregistrée."
+          }
+        },
+        "gu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "તમારી જન્મતારીખ પહેલેથી સાચવેલી છે."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "תאריך הלידה שלך כבר נשמר."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपकी जन्मतिथि पहले से सेव है।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tvoj datum rođenja već je spremljen."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A születési dátumod már el van mentve."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tanggal lahirmu sudah tersimpan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La tua data di nascita è già salvata."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生年月日はすでに保存されています。"
+          }
+        },
+        "kn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ನಿಮ್ಮ ಜನ್ಮ ದಿನಾಂಕ ಈಗಾಗಲೇ ಉಳಿಸಲಾಗಿದೆ."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "생년월일이 이미 저장되어 있어요."
+          }
+        },
+        "ml" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "നിങ്ങളുടെ ജനനത്തീയതി ഇതിനകം സേവ് ചെയ്തിട്ടുണ്ട്."
+          }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "तुमची जन्मतारीख आधीच सेव्ह केली आहे."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarikh lahir anda sudah disimpan."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fødselsdatoen din er allerede lagret."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je geboortedatum is al opgeslagen."
+          }
+        },
+        "or" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ଆପଣଙ୍କ ଜନ୍ମ ତାରିଖ ପୂର୍ବରୁ ସେଭ୍ ହୋଇଛି।"
+          }
+        },
+        "pa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ਤੁਹਾਡੀ ਜਨਮ ਤਾਰੀਖ਼ ਪਹਿਲਾਂ ਹੀ ਸੁਰੱਖਿਅਤ ਹੈ।"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twoja data urodzenia jest już zapisana."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sua data de nascimento já está salva."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A tua data de nascimento já está guardada."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data ta de naștere este deja salvată."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваша дата рождения уже сохранена."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tvoj dátum narodenia je už uložený."
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tvoj datum rojstva je že shranjen."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ditt födelsedatum är redan sparat."
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "உங்கள் பிறந்த தேதி ஏற்கெனவே சேமிக்கப்பட்டுள்ளது."
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "మీ పుట్టిన తేదీ ఇప్పటికే సేవ్ అయింది."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "บันทึกวันเกิดของคุณไว้แล้ว"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doğum tarihin zaten kayıtlı."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Твою дату народження вже збережено."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "آپ کی تاریخ پیدائش پہلے سے محفوظ ہے۔"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ngày sinh của bạn đã được lưu."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的出生日期已保存。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的出生日期已儲存。"
           }
         }
       }
@@ -82520,271 +82796,271 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "أكّد أن عمرك 18 عامًا أو أكثر للمتابعة."
+            "value" : "أكّد عمرك للمتابعة."
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "চালিয়ে যেতে নিশ্চিত করুন যে আপনার বয়স ১৮ বা তার বেশি।"
+            "value" : "চালিয়ে যেতে আপনার বয়স নিশ্চিত করুন।"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Confirma que tens 18 anys o més per continuar."
+            "value" : "Confirma la teva edat per continuar."
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pro pokračování potvrď, že je ti 18 let nebo víc."
+            "value" : "Pro pokračování potvrď svůj věk."
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bekræft, at du er 18 år eller ældre, for at fortsætte."
+            "value" : "Bekræft din alder for at fortsætte."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bestätige, dass du 18 oder älter bist, um fortzufahren."
+            "value" : "Bestätige dein Alter, um fortzufahren."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Επιβεβαίωσε ότι είσαι 18 ετών ή μεγαλύτερος/η για να συνεχίσεις."
+            "value" : "Επιβεβαίωσε την ηλικία σου για να συνεχίσεις."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Confirm that you're 18 or older to continue."
+            "value" : "Confirm your age to continue."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Confirma que tienes 18 años o más para continuar."
+            "value" : "Confirma tu edad para continuar."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vahvista, että olet 18-vuotias tai vanhempi, jatkaaksesi."
+            "value" : "Vahvista ikäsi jatkaaksesi."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Confirme que tu as 18 ans ou plus pour continuer."
+            "value" : "Confirme ton âge pour continuer."
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "આગળ વધવા માટે પુષ્ટિ કરો કે તમારી ઉંમર 18 કે તેથી વધુ છે."
+            "value" : "આગળ વધવા માટે તમારી ઉંમરની પુષ્ટિ કરો."
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "כדי להמשיך צריך לאשר שגילך 18 ומעלה."
+            "value" : "כדי להמשיך צריך לאשר את הגיל שלך."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "आगे बढ़ने के लिए पुष्टि करें कि आपकी उम्र 18 साल या उससे ज़्यादा है।"
+            "value" : "आगे बढ़ने के लिए अपनी उम्र की पुष्टि करें।"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Potvrdi da imaš 18 ili više godina da nastaviš."
+            "value" : "Potvrdi svoju dob da nastaviš."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A folytatáshoz erősítsd meg, hogy legalább 18 éves vagy."
+            "value" : "A folytatáshoz erősítsd meg a korodat."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Konfirmasi bahwa kamu berusia 18 tahun atau lebih untuk melanjutkan."
+            "value" : "Konfirmasi usiamu untuk melanjutkan."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Conferma di avere almeno 18 anni per continuare."
+            "value" : "Conferma la tua età per continuare."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "続けるには、18歳以上であることを確認してください。"
+            "value" : "続けるには、年齢を確認してください。"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಮುಂದುವರಿಯಲು ನಿಮಗೆ 18 ವರ್ಷ ಅಥವಾ ಹೆಚ್ಚು ವಯಸ್ಸಾಗಿದೆ ಎಂದು ದೃಢೀಕರಿಸಿ."
+            "value" : "ಮುಂದುವರಿಯಲು ನಿಮ್ಮ ವಯಸ್ಸನ್ನು ದೃಢಪಡಿಸಿ."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "계속하려면 18세 이상인지 확인해 주세요."
+            "value" : "계속하려면 나이를 확인해 주세요."
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "തുടരാൻ നിങ്ങൾക്ക് 18 വയസോ അതിൽ കൂടുതലോ ഉണ്ടെന്ന് സ്ഥിരീകരിക്കൂ."
+            "value" : "തുടരാൻ നിങ്ങളുടെ പ്രായം സ്ഥിരീകരിക്കുക."
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "पुढे जाण्यासाठी तुमचे वय 18 किंवा जास्त असल्याची खात्री करा."
+            "value" : "पुढे जाण्यासाठी तुमचे वय निश्चित करा."
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sahkan bahawa anda berumur 18 tahun atau lebih untuk meneruskan."
+            "value" : "Sahkan umur anda untuk meneruskan."
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bekreft at du er 18 år eller eldre for å fortsette."
+            "value" : "Bekreft alderen din for å fortsette."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bevestig dat je 18 jaar of ouder bent om verder te gaan."
+            "value" : "Bevestig je leeftijd om verder te gaan."
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଆଗକୁ ବଢ଼ିବା ପାଇଁ ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣଙ୍କ ବୟସ 18 ବା ତା'ଠାରୁ ଅଧିକ।"
+            "value" : "ଜାରି ରଖିବାକୁ ଆପଣଙ୍କ ବୟସ ନିଶ୍ଚିତ କରନ୍ତୁ।"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਅੱਗੇ ਵਧਣ ਲਈ ਪੁਸ਼ਟੀ ਕਰੋ ਕਿ ਤੁਹਾਡੀ ਉਮਰ 18 ਸਾਲ ਜਾਂ ਵੱਧ ਹੈ।"
+            "value" : "ਜਾਰੀ ਰੱਖਣ ਲਈ ਆਪਣੀ ਉਮਰ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ।"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Potwierdź, że masz 18 lat lub więcej, żeby przejść dalej."
+            "value" : "Potwierdź swój wiek, żeby kontynuować."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Confirme que você tem 18 anos ou mais para continuar."
+            "value" : "Confirme sua idade para continuar."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Confirma que tens 18 anos ou mais para continuares."
+            "value" : "Confirma a tua idade para continuares."
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Confirmă că ai 18 ani sau mai mult ca să continui."
+            "value" : "Confirmă-ți vârsta ca să continui."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Подтвердите, что вам 18 лет или больше, чтобы продолжить."
+            "value" : "Подтвердите свой возраст, чтобы продолжить."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Potvrď, že máš 18 rokov alebo viac, a pokračuj."
+            "value" : "Potvrď svoj vek a pokračuj."
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Za nadaljevanje potrdi, da si star 18 let ali več."
+            "value" : "Za nadaljevanje potrdi svojo starost."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bekräfta att du är 18 år eller äldre för att fortsätta."
+            "value" : "Bekräfta din ålder för att fortsätta."
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "தொடர, உங்களுக்கு 18 வயது அல்லது அதற்கு மேல் என்று உறுதிசெய்யுங்கள்."
+            "value" : "தொடர உங்கள் வயதை உறுதிசெய்யுங்கள்."
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "కొనసాగడానికి మీకు 18 ఏళ్లు లేదా అంతకంటే ఎక్కువ అని నిర్ధారించండి."
+            "value" : "కొనసాగడానికి మీ వయసును నిర్ధారించండి."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ยืนยันว่าคุณอายุ 18 ปีขึ้นไปเพื่อไปต่อ"
+            "value" : "ยืนยันอายุของคุณเพื่อไปต่อ"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Devam etmek için 18 yaşında veya daha büyük olduğunu onayla."
+            "value" : "Devam etmek için yaşını onayla."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Підтверди, що тобі 18 років або більше, щоб продовжити."
+            "value" : "Підтверди свій вік, щоб продовжити."
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "آگے بڑھنے کے لیے تصدیق کریں کہ آپ کی عمر 18 سال یا اس سے زیادہ ہے۔"
+            "value" : "آگے بڑھنے کے لیے اپنی عمر کی تصدیق کریں۔"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hãy xác nhận bạn từ 18 tuổi trở lên để tiếp tục."
+            "value" : "Hãy xác nhận tuổi của bạn để tiếp tục."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "请确认你已满 18 岁后继续。"
+            "value" : "请确认你的年龄后继续。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "請確認你已年滿 18 歲後繼續。"
+            "value" : "請確認你的年齡後繼續。"
           }
         }
       }
@@ -87201,6 +87477,282 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "評審還沒準備好，請稍後再試。"
+          }
+        }
+      }
+    },
+    "error.not_for_teens" : {
+      "comment" : "Generated by mobile/shared/strings/export-strings.ts from lib/i18n.ts. Do not edit.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غير متاح لهذا الحساب."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "এই অ্যাকাউন্টের জন্য উপলব্ধ নয়।"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No disponible per a aquest compte."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro tento účet není k dispozici."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikke tilgængeligt for denne konto."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für dieses Konto nicht verfügbar."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν είναι διαθέσιμο για αυτόν τον λογαριασμό."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not available for this account."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No disponible para esta cuenta."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ei käytettävissä tälle tilille."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non disponible pour ce compte."
+          }
+        },
+        "gu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "આ એકાઉન્ટ માટે ઉપલબ્ધ નથી."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לא זמין לחשבון הזה."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस अकाउंट के लिए उपलब्ध नहीं है।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nije dostupno za ovaj račun."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ez a fiók számára nem elérhető."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidak tersedia untuk akun ini."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non disponibile per questo account."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このアカウントでは利用できません。"
+          }
+        },
+        "kn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ಈ ಖಾತೆಗೆ ಲಭ್ಯವಿಲ್ಲ."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 계정에서는 쓸 수 없어요."
+          }
+        },
+        "ml" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ഈ അക്കൗണ്ടിന് ലഭ്യമല്ല."
+          }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "या खात्यासाठी उपलब्ध नाही."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidak tersedia untuk akaun ini."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikke tilgjengelig for denne kontoen."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niet beschikbaar voor dit account."
+          }
+        },
+        "or" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ଏହି ଆକାଉଣ୍ଟ ପାଇଁ ଉପଲବ୍ଧ ନୁହେଁ।"
+          }
+        },
+        "pa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ਇਸ ਖਾਤੇ ਲਈ ਉਪਲਬਧ ਨਹੀਂ।"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niedostępne dla tego konta."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não disponível para esta conta."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não disponível para esta conta."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indisponibil pentru acest cont."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Недоступно для этого аккаунта."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pre tento účet nie je dostupné."
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Za ta račun ni na voljo."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inte tillgängligt för det här kontot."
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "இந்தக் கணக்கிற்குக் கிடைக்காது."
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ఈ అకౌంట్‌కు అందుబాటులో లేదు."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "บัญชีนี้ใช้ไม่ได้"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu hesap için kullanılamaz."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Недоступно для цього акаунта."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اس اکاؤنٹ کے لیے دستیاب نہیں۔"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Không dùng được với tài khoản này."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此账号不可用。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此帳號無法使用。"
           }
         }
       }

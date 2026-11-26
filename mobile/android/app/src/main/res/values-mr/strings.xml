@@ -540,8 +540,10 @@
     <string name="best_point_self">तुमचा सर्वात भक्कम मुद्दा</string>
     <string name="error_password_wrong">हा पासवर्ड बरोबर नाही.</string>
     <string name="error_password_required">तुमचा सध्याचा पासवर्ड टाका.</string>
-    <string name="error_age_blocked">Judge फक्त 18 वर्षे आणि त्यापेक्षा जास्त वयाच्या लोकांसाठी आहे.</string>
-    <string name="error_age_unconfirmed">पुढे जाण्यासाठी तुमचे वय 18 किंवा जास्त असल्याची खात्री करा.</string>
+    <string name="error_age_blocked">Judge फक्त 13 वर्षे आणि त्याहून मोठ्यांसाठी आहे.</string>
+    <string name="error_age_unconfirmed">पुढे जाण्यासाठी तुमचे वय निश्चित करा.</string>
+    <string name="error_age_set">तुमची जन्मतारीख आधीच सेव्ह केली आहे.</string>
+    <string name="error_not_for_teens">या खात्यासाठी उपलब्ध नाही.</string>
     <string name="error_agreement_required">पुढे जाण्यासाठी खाजगी तपशिलांच्या सूचनेला संमती द्या.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">नवा</string>

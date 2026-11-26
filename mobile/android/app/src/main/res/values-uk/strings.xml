@@ -558,8 +558,10 @@
     <string name="best_point_self">Твій найсильніший аргумент</string>
     <string name="error_password_wrong">Цей пароль неправильний.</string>
     <string name="error_password_required">Введіть поточний пароль.</string>
-    <string name="error_age_blocked">Judge лише для людей від 18 років.</string>
-    <string name="error_age_unconfirmed">Підтверди, що тобі 18 років або більше, щоб продовжити.</string>
+    <string name="error_age_blocked">Judge лише для людей від 13 років.</string>
+    <string name="error_age_unconfirmed">Підтверди свій вік, щоб продовжити.</string>
+    <string name="error_age_set">Твою дату народження вже збережено.</string>
+    <string name="error_not_for_teens">Недоступно для цього акаунта.</string>
     <string name="error_agreement_required">Щоб продовжити, погодьтеся зі повідомленням про приватні дані.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Нова справа</string>

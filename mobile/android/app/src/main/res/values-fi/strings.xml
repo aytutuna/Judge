@@ -540,8 +540,10 @@
     <string name="best_point_self">Sinun paras pointtisi</string>
     <string name="error_password_wrong">Salasana ei ole oikea.</string>
     <string name="error_password_required">Anna nykyinen salasanasi.</string>
-    <string name="error_age_blocked">Judge on tarkoitettu vain 18 vuotta täyttäneille.</string>
-    <string name="error_age_unconfirmed">Vahvista, että olet 18-vuotias tai vanhempi, jatkaaksesi.</string>
+    <string name="error_age_blocked">Judge on tarkoitettu vain 13 vuotta täyttäneille.</string>
+    <string name="error_age_unconfirmed">Vahvista ikäsi jatkaaksesi.</string>
+    <string name="error_age_set">Syntymäaikasi on jo tallennettu.</string>
+    <string name="error_not_for_teens">Ei käytettävissä tälle tilille.</string>
     <string name="error_agreement_required">Hyväksy yksityisiä tietoja koskeva ilmoitus jatkaaksesi.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Uusi</string>

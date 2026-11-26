@@ -540,8 +540,10 @@
     <string name="best_point_self">Your best point</string>
     <string name="error_password_wrong">That password isn\'t right.</string>
     <string name="error_password_required">Enter your current password.</string>
-    <string name="error_age_blocked">Judge is only for people 18 and older.</string>
-    <string name="error_age_unconfirmed">Confirm that you\'re 18 or older to continue.</string>
+    <string name="error_age_blocked">Judge is only for people 13 and older.</string>
+    <string name="error_age_unconfirmed">Confirm your age to continue.</string>
+    <string name="error_age_set">Your date of birth is already saved.</string>
+    <string name="error_not_for_teens">Not available for this account.</string>
     <string name="error_agreement_required">Agree to the private details notice to continue.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">New</string>

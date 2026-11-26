@@ -531,8 +531,10 @@
     <string name="best_point_self">เหตุผลที่ดีที่สุดของคุณ</string>
     <string name="error_password_wrong">รหัสผ่านนี้ไม่ถูกต้อง</string>
     <string name="error_password_required">กรอกรหัสผ่านปัจจุบันของคุณ</string>
-    <string name="error_age_blocked">Judge ให้บริการเฉพาะผู้ที่อายุ 18 ปีขึ้นไป</string>
-    <string name="error_age_unconfirmed">ยืนยันว่าคุณอายุ 18 ปีขึ้นไปเพื่อไปต่อ</string>
+    <string name="error_age_blocked">Judge ให้บริการเฉพาะผู้ที่อายุ 13 ปีขึ้นไป</string>
+    <string name="error_age_unconfirmed">ยืนยันอายุของคุณเพื่อไปต่อ</string>
+    <string name="error_age_set">บันทึกวันเกิดของคุณไว้แล้ว</string>
+    <string name="error_not_for_teens">บัญชีนี้ใช้ไม่ได้</string>
     <string name="error_agreement_required">ยอมรับประกาศเกี่ยวกับรายละเอียดส่วนตัวเพื่อดำเนินการต่อ</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">ใหม่</string>

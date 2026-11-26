@@ -531,8 +531,10 @@
     <string name="best_point_self">Poin terkuatmu</string>
     <string name="error_password_wrong">Kata sandi itu tidak benar.</string>
     <string name="error_password_required">Masukkan kata sandimu saat ini.</string>
-    <string name="error_age_blocked">Judge hanya untuk orang berusia 18 tahun ke atas.</string>
-    <string name="error_age_unconfirmed">Konfirmasi bahwa kamu berusia 18 tahun atau lebih untuk melanjutkan.</string>
+    <string name="error_age_blocked">Judge hanya untuk orang berusia 13 tahun ke atas.</string>
+    <string name="error_age_unconfirmed">Konfirmasi usiamu untuk melanjutkan.</string>
+    <string name="error_age_set">Tanggal lahirmu sudah tersimpan.</string>
+    <string name="error_not_for_teens">Tidak tersedia untuk akun ini.</string>
     <string name="error_agreement_required">Setujui pemberitahuan tentang detail pribadi untuk melanjutkan.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Baru</string>

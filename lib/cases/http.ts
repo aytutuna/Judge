@@ -139,7 +139,7 @@ const MESSAGES: Partial<Record<ApiErrorCode, string>> = {
   removed: "This case was removed. Its links no longer work.",
   names_unavailable: "Names can't be saved on this server right now.",
   update_required: "This case has more than two sides. Update the app to open it.",
-  age_unconfirmed: "Confirm that you're 18 or older to continue.",
+  age_unconfirmed: "Confirm your age to continue.",
 };
 
 /** A case with three or four sides, asked by an app that does not send

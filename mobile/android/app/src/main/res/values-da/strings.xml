@@ -540,8 +540,10 @@
     <string name="best_point_self">Din bedste pointe</string>
     <string name="error_password_wrong">Den adgangskode er ikke rigtig.</string>
     <string name="error_password_required">Skriv din nuværende adgangskode.</string>
-    <string name="error_age_blocked">Judge er kun for personer på 18 år og derover.</string>
-    <string name="error_age_unconfirmed">Bekræft, at du er 18 år eller ældre, for at fortsætte.</string>
+    <string name="error_age_blocked">Judge er kun for personer på 13 år og derover.</string>
+    <string name="error_age_unconfirmed">Bekræft din alder for at fortsætte.</string>
+    <string name="error_age_set">Din fødselsdato er allerede gemt.</string>
+    <string name="error_not_for_teens">Ikke tilgængeligt for denne konto.</string>
     <string name="error_agreement_required">Accepter beskeden om private oplysninger for at fortsætte.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Ny</string>

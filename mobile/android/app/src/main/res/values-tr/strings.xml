@@ -540,8 +540,10 @@
     <string name="best_point_self">Senin en güçlü noktan</string>
     <string name="error_password_wrong">Bu parola doğru değil.</string>
     <string name="error_password_required">Şu anki parolanı gir.</string>
-    <string name="error_age_blocked">Judge yalnızca 18 yaş ve üzeri kişiler içindir.</string>
-    <string name="error_age_unconfirmed">Devam etmek için 18 yaşında veya daha büyük olduğunu onayla.</string>
+    <string name="error_age_blocked">Judge yalnızca 13 yaş ve üzeri kişiler içindir.</string>
+    <string name="error_age_unconfirmed">Devam etmek için yaşını onayla.</string>
+    <string name="error_age_set">Doğum tarihin zaten kayıtlı.</string>
+    <string name="error_not_for_teens">Bu hesap için kullanılamaz.</string>
     <string name="error_agreement_required">Devam etmek için özel ayrıntılar bildirimini kabul et.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Yeni</string>

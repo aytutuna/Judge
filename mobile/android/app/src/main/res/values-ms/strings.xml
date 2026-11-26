@@ -531,8 +531,10 @@
     <string name="best_point_self">Hujah terbaik anda</string>
     <string name="error_password_wrong">Kata laluan itu tidak betul.</string>
     <string name="error_password_required">Masukkan kata laluan semasa anda.</string>
-    <string name="error_age_blocked">Judge hanya untuk mereka yang berumur 18 tahun ke atas.</string>
-    <string name="error_age_unconfirmed">Sahkan bahawa anda berumur 18 tahun atau lebih untuk meneruskan.</string>
+    <string name="error_age_blocked">Judge hanya untuk mereka yang berumur 13 tahun ke atas.</string>
+    <string name="error_age_unconfirmed">Sahkan umur anda untuk meneruskan.</string>
+    <string name="error_age_set">Tarikh lahir anda sudah disimpan.</string>
+    <string name="error_not_for_teens">Tidak tersedia untuk akaun ini.</string>
     <string name="error_agreement_required">Setuju dengan notis butiran peribadi untuk meneruskan.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Baharu</string>

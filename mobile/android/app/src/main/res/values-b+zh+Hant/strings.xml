@@ -531,8 +531,10 @@
     <string name="best_point_self">你最有力的一點</string>
     <string name="error_password_wrong">密碼不正確。</string>
     <string name="error_password_required">請輸入目前的密碼。</string>
-    <string name="error_age_blocked">Judge 僅限 18 歲以上的人使用。</string>
-    <string name="error_age_unconfirmed">請確認你已年滿 18 歲後繼續。</string>
+    <string name="error_age_blocked">Judge 僅限 13 歲以上的人使用。</string>
+    <string name="error_age_unconfirmed">請確認你的年齡後繼續。</string>
+    <string name="error_age_set">你的出生日期已儲存。</string>
+    <string name="error_not_for_teens">此帳號無法使用。</string>
     <string name="error_agreement_required">請同意關於私密內容的說明後繼續。</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">新增</string>

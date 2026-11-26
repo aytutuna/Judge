@@ -549,8 +549,10 @@
     <string name="best_point_self">Cel mai bun argument al tău</string>
     <string name="error_password_wrong">Parola nu este corectă.</string>
     <string name="error_password_required">Introdu parola actuală.</string>
-    <string name="error_age_blocked">Judge e doar pentru persoane de 18 ani sau mai mari.</string>
-    <string name="error_age_unconfirmed">Confirmă că ai 18 ani sau mai mult ca să continui.</string>
+    <string name="error_age_blocked">Judge e doar pentru persoane de 13 ani sau mai mari.</string>
+    <string name="error_age_unconfirmed">Confirmă-ți vârsta ca să continui.</string>
+    <string name="error_age_set">Data ta de naștere este deja salvată.</string>
+    <string name="error_not_for_teens">Indisponibil pentru acest cont.</string>
     <string name="error_agreement_required">Acceptă notificarea despre detaliile private pentru a continua.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nou</string>

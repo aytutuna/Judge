@@ -576,8 +576,10 @@
     <string name="best_point_self">أقوى نقطة لديك</string>
     <string name="error_password_wrong">كلمة المرور هذه غير صحيحة.</string>
     <string name="error_password_required">أدخل كلمة المرور الحالية.</string>
-    <string name="error_age_blocked">Judge مخصص لمن بلغوا 18 عامًا فأكثر فقط.</string>
-    <string name="error_age_unconfirmed">أكّد أن عمرك 18 عامًا أو أكثر للمتابعة.</string>
+    <string name="error_age_blocked">Judge مخصص لمن بلغوا 13 عامًا فأكثر فقط.</string>
+    <string name="error_age_unconfirmed">أكّد عمرك للمتابعة.</string>
+    <string name="error_age_set">تاريخ ميلادك محفوظ بالفعل.</string>
+    <string name="error_not_for_teens">غير متاح لهذا الحساب.</string>
     <string name="error_agreement_required">وافق على إشعار التفاصيل الخاصة للمتابعة.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">جديد</string>

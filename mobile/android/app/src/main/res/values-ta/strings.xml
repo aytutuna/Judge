@@ -540,8 +540,10 @@
     <string name="best_point_self">நீங்கள் வைத்த வலுவான வாதம்</string>
     <string name="error_password_wrong">இந்தக் கடவுச்சொல் சரியில்லை.</string>
     <string name="error_password_required">உங்கள் தற்போதைய கடவுச்சொல்லை உள்ளிடுங்கள்.</string>
-    <string name="error_age_blocked">Judge 18 வயது மற்றும் அதற்கு மேற்பட்டவர்களுக்கு மட்டுமே.</string>
-    <string name="error_age_unconfirmed">தொடர, உங்களுக்கு 18 வயது அல்லது அதற்கு மேல் என்று உறுதிசெய்யுங்கள்.</string>
+    <string name="error_age_blocked">Judge 13 வயது மற்றும் அதற்கு மேற்பட்டவர்களுக்கு மட்டுமே.</string>
+    <string name="error_age_unconfirmed">தொடர உங்கள் வயதை உறுதிசெய்யுங்கள்.</string>
+    <string name="error_age_set">உங்கள் பிறந்த தேதி ஏற்கெனவே சேமிக்கப்பட்டுள்ளது.</string>
+    <string name="error_not_for_teens">இந்தக் கணக்கிற்குக் கிடைக்காது.</string>
     <string name="error_agreement_required">தொடர தனிப்பட்ட விவரங்கள் குறித்த அறிவிப்புக்கு ஒப்புக்கொள்ளுங்கள்.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">புதியது</string>

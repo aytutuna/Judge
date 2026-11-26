@@ -540,8 +540,10 @@
     <string name="best_point_self">Jouw sterkste punt</string>
     <string name="error_password_wrong">Dat wachtwoord klopt niet.</string>
     <string name="error_password_required">Vul je huidige wachtwoord in.</string>
-    <string name="error_age_blocked">Judge is alleen voor mensen van 18 jaar en ouder.</string>
-    <string name="error_age_unconfirmed">Bevestig dat je 18 jaar of ouder bent om verder te gaan.</string>
+    <string name="error_age_blocked">Judge is alleen voor mensen van 13 jaar en ouder.</string>
+    <string name="error_age_unconfirmed">Bevestig je leeftijd om verder te gaan.</string>
+    <string name="error_age_set">Je geboortedatum is al opgeslagen.</string>
+    <string name="error_not_for_teens">Niet beschikbaar voor dit account.</string>
     <string name="error_agreement_required">Ga akkoord met de melding over privégegevens om door te gaan.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Nieuw</string>

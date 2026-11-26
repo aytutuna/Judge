@@ -531,8 +531,10 @@
     <string name="best_point_self">あなたのいちばん強い主張</string>
     <string name="error_password_wrong">パスワードが正しくありません。</string>
     <string name="error_password_required">現在のパスワードを入力してください。</string>
-    <string name="error_age_blocked">Judgeは18歳以上の方のみ利用できます。</string>
-    <string name="error_age_unconfirmed">続けるには、18歳以上であることを確認してください。</string>
+    <string name="error_age_blocked">Judgeは13歳以上の方のみ利用できます。</string>
+    <string name="error_age_unconfirmed">続けるには、年齢を確認してください。</string>
+    <string name="error_age_set">生年月日はすでに保存されています。</string>
+    <string name="error_not_for_teens">このアカウントでは利用できません。</string>
     <string name="error_agreement_required">続けるには、個人的な内容についての案内に同意してください。</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">新規</string>

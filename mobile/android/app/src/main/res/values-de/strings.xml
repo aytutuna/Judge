@@ -540,8 +540,10 @@
     <string name="best_point_self">Dein stärkstes Argument</string>
     <string name="error_password_wrong">Dieses Passwort stimmt nicht.</string>
     <string name="error_password_required">Gib dein aktuelles Passwort ein.</string>
-    <string name="error_age_blocked">Judge ist nur für Menschen ab 18.</string>
-    <string name="error_age_unconfirmed">Bestätige, dass du 18 oder älter bist, um fortzufahren.</string>
+    <string name="error_age_blocked">Judge ist nur für Menschen ab 13.</string>
+    <string name="error_age_unconfirmed">Bestätige dein Alter, um fortzufahren.</string>
+    <string name="error_age_set">Dein Geburtsdatum ist schon gespeichert.</string>
+    <string name="error_not_for_teens">Für dieses Konto nicht verfügbar.</string>
     <string name="error_agreement_required">Stimme dem Hinweis zu privaten Angaben zu, um fortzufahren.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">Neu</string>

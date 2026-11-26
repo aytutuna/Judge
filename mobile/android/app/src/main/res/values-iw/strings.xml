@@ -549,8 +549,10 @@
     <string name="best_point_self">הטיעון הכי חזק שלך</string>
     <string name="error_password_wrong">הסיסמה הזו אינה נכונה.</string>
     <string name="error_password_required">הזן את הסיסמה הנוכחית.</string>
-    <string name="error_age_blocked">Judge מיועד לגילאי 18 ומעלה בלבד.</string>
-    <string name="error_age_unconfirmed">כדי להמשיך צריך לאשר שגילך 18 ומעלה.</string>
+    <string name="error_age_blocked">Judge מיועד לגילאי 13 ומעלה בלבד.</string>
+    <string name="error_age_unconfirmed">כדי להמשיך צריך לאשר את הגיל שלך.</string>
+    <string name="error_age_set">תאריך הלידה שלך כבר נשמר.</string>
+    <string name="error_not_for_teens">לא זמין לחשבון הזה.</string>
     <string name="error_agreement_required">אשר את ההודעה על פרטים פרטיים כדי להמשיך.</string>
     <string name="app_name">Judge</string>
     <string name="app_tab_new">חדש</string>
