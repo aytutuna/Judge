@@ -70,8 +70,13 @@ export function withChildSafety<T>(on: boolean, fn: () => Promise<T>): Promise<T
   return childSafety.run(on, fn);
 }
 
+/** Whether the current call chain runs inside withChildSafety(true). */
+export function childSafetyOn(): boolean {
+  return childSafety.getStore() === true;
+}
+
 function systemPrompt(system: string): string {
-  return childSafety.getStore() ? `${system}\n\n${CHILD_SAFETY_PROMPT}` : system;
+  return childSafetyOn() ? `${system}\n\n${CHILD_SAFETY_PROMPT}` : system;
 }
 
 function emptyUsage(): UsageTotals {
