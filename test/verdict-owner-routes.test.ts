@@ -39,7 +39,7 @@ const publicRoute = await import("../app/api/v1/verdicts/[id]/route");
 const translateRoute = await import("../app/api/verdict/[id]/translate/route");
 const { getDb } = await import("../lib/db");
 // The real table comes from Better Auth, which these tests do not load.
-await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT)');
+await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT)');
 const { aad, sealJson } = await import("../lib/originals/crypto");
 import type { DisplayState, MineResponse, OwnerVerdictListResponse } from "../lib/originals-types";
 import type { VerdictResult } from "../lib/types";

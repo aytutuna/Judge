@@ -651,7 +651,13 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
   the store's signal: a store "under 18" makes a teen whatever the date says
   (an adult date does not clear it; only a later store "adult" does), a
   store "under 13" blocks for good even with a date of 13 or more on file,
-  and a teen date stays a teen whatever the store says. Blocks made under the old 18+ rule have no `age_block_final`
+  and a teen date stays a teen whatever the store says. The
+  apps send the signal on every launch; for an account that is already a teen
+  that only refreshes `age_signal_at`, the time it was last reported, and
+  runs none of the teen changes again. A minor signal reported before the
+  date's 18th birthday ends on that birthday (the cleanup that clears
+  `age_dob` clears it too, and the age state ignores it earlier); one
+  reported after it keeps the account a teen. Blocks made under the old 18+ rule have no `age_block_final`
   (`user`, and `welcome_claims` for a deleted account's email): such an
   account reports `blocked: true, needsDob: true`, may send one date, and a
   date of 13 or more lifts the block while under 13 makes it final. Every

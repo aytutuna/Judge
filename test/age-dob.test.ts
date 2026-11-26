@@ -78,7 +78,7 @@ function ago(years: number, days = 0): string {
 async function row(userId: string) {
   const db = await getDb();
   const rs = await db.execute({
-    sql: 'SELECT age_confirmed_at, age_source, age_blocked_at, age_block_final, age_dob, age_dob_at, age_signal FROM "user" WHERE id = ?',
+    sql: 'SELECT age_confirmed_at, age_source, age_blocked_at, age_block_final, age_dob, age_dob_at, age_signal, age_signal_at FROM "user" WHERE id = ?',
     args: [userId],
   });
   return rs.rows[0];
@@ -281,6 +281,62 @@ describe("the store's age signal", () => {
     await postAge(token, { adult: false, source: "platform" });
     expect((await (await postAge(token, { adult: true, source: "checkbox" })).json()).teen).toBe(true);
     expect((await (await postAge(token, { adult: true, source: "platform" })).json()).teen).toBe(false);
+  });
+});
+
+describe("a minor signal and the 18th birthday", () => {
+  const sqlTeen = async (id: string) => {
+    const rs = await (await getDb()).execute({ sql: `SELECT ${teenSql("u")} AS t FROM "user" u WHERE u.id = ?`, args: [id] });
+    return Number(rs.rows[0].t) === 1;
+  };
+  const agree = async (token: string, id: string, expected: boolean) => {
+    expect((await me(token)).age.teen).toBe(expected);
+    expect(await sqlTeen(id)).toBe(expected);
+  };
+  const turn18 = async (id: string, signalAgo: string) => {
+    await setRow(id, "age_dob = ?, age_signal_at = ?", [ago(18, 1), signalAgo]);
+  };
+
+  it("one reported while under 18 ends on the birthday, in code and in SQL, and the cleanup clears it", async () => {
+    const { token, user } = await createDevSession("bday-before@verdict.local");
+    await postAge(token, { dob: ago(17, 10) });
+    await postAge(token, { adult: false, source: "platform" });
+    await agree(token, user.id, true);
+    // Born 18 years and a day ago, signal reported 10 days ago: before the birthday.
+    await turn18(user.id, new Date(Date.now() - 10 * 86_400_000).toISOString());
+    await agree(token, user.id, false);
+    expect(await clearAdultDobs()).toBeGreaterThanOrEqual(1);
+    expect(await row(user.id)).toMatchObject({ age_dob: null, age_signal: null, age_signal_at: null });
+    await agree(token, user.id, false);
+  });
+
+  it("one reported after the birthday keeps the account a teen, and the cleanup leaves it", async () => {
+    const { token, user } = await createDevSession("bday-after@verdict.local");
+    await postAge(token, { dob: ago(17, 10) });
+    await postAge(token, { adult: false, source: "platform" });
+    await turn18(user.id, new Date().toISOString());
+    await agree(token, user.id, true);
+    await clearAdultDobs();
+    expect(await row(user.id)).toMatchObject({ age_dob: null, age_signal: "minor" });
+    await agree(token, user.id, true);
+  });
+
+  it("an adult store signal clears an earlier minor one", async () => {
+    const { token, user } = await createDevSession("bday-adult@verdict.local");
+    await postAge(token, { adult: false, source: "platform" });
+    await postAge(token, { dob: ago(30) });
+    await agree(token, user.id, true);
+    await postAge(token, { adult: true, source: "platform" });
+    await agree(token, user.id, false);
+  });
+
+  it("a signal from before the update, with no time, ends with the date", async () => {
+    const { token, user } = await createDevSession("bday-legacy@verdict.local");
+    await postAge(token, { dob: ago(15) });
+    await setRow(user.id, "age_signal = 'minor', age_signal_at = NULL");
+    await agree(token, user.id, true);
+    await setRow(user.id, "age_dob = ?", [ago(18, 1)]);
+    await agree(token, user.id, false);
   });
 });
 
@@ -567,6 +623,34 @@ describe("what a teen gets by default", () => {
       ["consent.switchDetail", "on"],
       ["age.teenWithdrawn", "off"],
     ]);
+  });
+
+  it("the minor signal on every launch changes nothing for a teen: names switched on stay on, the source stays", async () => {
+    for (const [email, setup] of [
+      ["idem-signal@verdict.local", async (t: string) => { await postAge(t, { adult: false, source: "platform" }); }],
+      ["idem-dob@verdict.local", async (t: string) => { await postAge(t, { dob: ago(15) }); }],
+    ] as const) {
+      const { token, user } = await createDevSession(email);
+      await ensureOriginalsTables();
+      await saveVerdictWithOriginals({
+        id: `idem-${email}`,
+        input: "doc",
+        result: { verdict: "side_a" } as never,
+        kind: "premium",
+        ownerUserId: user.id,
+        original: { v: 1, text: "t", clarifications: [], nameMap: [] },
+      });
+      await setup(token);
+      const db = await getDb();
+      const q = { sql: "SELECT names_visible FROM verdict_meta WHERE verdict_id = ?", args: [`idem-${email}`] };
+      expect(Number((await db.execute(q)).rows[0].names_visible)).toBe(0);
+      await db.execute({ sql: "UPDATE verdict_meta SET names_visible = 1 WHERE verdict_id = ?", args: [`idem-${email}`] });
+      const source = (await row(user.id)).age_source;
+      expect((await (await postAge(token, { adult: false, source: "platform" })).json()).teen).toBe(true);
+      expect(Number((await db.execute(q)).rows[0].names_visible)).toBe(1);
+      expect((await row(user.id)).age_source).toBe(source);
+      expect(await row(user.id)).toMatchObject({ age_signal: "minor", age_signal_at: expect.any(String) });
+    }
   });
 
   it("server-side events skip a teen, and so do signed-out events from their device", async () => {

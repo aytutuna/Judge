@@ -105,18 +105,30 @@ export type AgeFields = {
   dob?: unknown;
   dobAt?: unknown;
   signal?: unknown;
+  signalAt?: unknown;
 };
 
 /** The 18th-birthday cut-off in SQL: dates after it are under 18. On 29
  * February it is the 28th, as in yearsBefore (lib/age-date.ts). */
-export const ADULT_CUTOFF_SQL = `CASE WHEN strftime('%m-%d', 'now') = '02-29'
-  THEN date('now', '-18 years', '-1 day') ELSE date('now', '-18 years') END`;
+const adultCutoff = (at: string) => `CASE WHEN strftime('%m-%d', ${at}) = '02-29'
+  THEN date(${at}, '-18 years', '-1 day') ELSE date(${at}, '-18 years') END`;
+export const ADULT_CUTOFF_SQL = adultCutoff("'now'");
+
+/** SQL: the store's "minor" signal still counts. It does not once the date
+ * of birth (kept only until the cleanup after the 18th birthday) says 18 and
+ * the signal was reported before that birthday; a signal reported after it
+ * counts, as the store still says under 18. */
+const minorSignalSql = (alias: string) => `(${alias}.age_signal = 'minor' AND NOT (${alias}.age_dob IS NOT NULL
+    AND ${alias}.age_dob <= (${ADULT_CUTOFF_SQL})
+    AND (${alias}.age_signal_at IS NULL OR ${alias}.age_dob > (${adultCutoff(`${alias}.age_signal_at`)}))))`;
 
 /** SQL for "this user row is a teen", for an alias of the user table. Same
- * rule as ageStateOf, in UTC. */
+ * rule as ageStateOf, in UTC, except that a blocked row is not excluded: for
+ * names and the child-safety prompt a blocked account stays on the careful
+ * side, and its own state never reaches those paths as a teen anyway. */
 export function teenSql(alias: string): string {
   return `((${alias}.age_dob IS NOT NULL AND ${alias}.age_dob > (${ADULT_CUTOFF_SQL}))
-    OR ${alias}.age_signal = 'minor')`;
+    OR ${minorSignalSql(alias)})`;
 }
 
 /** SQL: some account on the case (owner, respondent, a seat or an invite)
@@ -146,19 +158,28 @@ export async function verdictHasTeen(verdictId: string): Promise<boolean> {
   return Number(rs.rows[0]?.teen) === 1;
 }
 
+function minorSignalCounts(f: AgeFields, dob: string | null, now: Date): boolean {
+  if (f.signal !== "minor") return false;
+  if (dob === null || underEighteen(dob, now)) return true;
+  // Adult by the date: only a signal reported after the 18th birthday counts.
+  const raw = f.signalAt;
+  const at = raw instanceof Date ? raw : typeof raw === "string" ? new Date(raw) : null;
+  return at !== null && !Number.isNaN(at.getTime()) && !underEighteen(dob, at);
+}
+
 /** The account's state from its stored fields, as of `now`. */
 export function ageStateOf(f: AgeFields, now = new Date()): AgeState {
   const blocked = f.blockedAt != null;
   const dob = typeof f.dob === "string" ? f.dob : null;
   const dated = f.dobAt != null || dob !== null;
-  const teen = !blocked && (f.signal === "minor" || (dob !== null && underEighteen(dob, now)));
+  const teen = !blocked && ((dob !== null && underEighteen(dob, now)) || minorSignalCounts(f, dob, now));
   return { confirmed: f.confirmedAt != null, blocked, teen, needsDob: !dated && (!blocked || f.blockFinal == null) };
 }
 
 async function readAge(userId: string, now = new Date()): Promise<AgeState> {
   const db = await getDb();
   const rs = await db.execute({
-    sql: `SELECT age_confirmed_at, age_blocked_at, age_block_final, age_dob, age_dob_at, age_signal
+    sql: `SELECT age_confirmed_at, age_blocked_at, age_block_final, age_dob, age_dob_at, age_signal, age_signal_at
           FROM "user" WHERE id = ?`,
     args: [userId],
   });
@@ -171,6 +192,7 @@ async function readAge(userId: string, now = new Date()): Promise<AgeState> {
       dob: row?.age_dob,
       dobAt: row?.age_dob_at,
       signal: row?.age_signal,
+      signalAt: row?.age_signal_at,
     },
     now,
   );
@@ -206,7 +228,7 @@ export async function blockMinor(userId: string, now = new Date(), overDate = fa
   const before = await readAge(userId, now);
   const { ensureAnalyticsTables } = await import("./analytics/db");
   await ensureAnalyticsTables();
-  // Callers have seen needsDob, so a date that landed in between wins.
+  // A date that landed after the caller read the state wins, unless overDate.
   const [done] = await entitlementWriteBatch([
     {
       sql: `UPDATE "user" SET age_blocked_at = COALESCE(age_blocked_at, ?), age_block_final = '1'
@@ -302,7 +324,10 @@ async function teenStatements(userId: string, nowIso: string, guard: { sql: stri
  * A store signal that says under 18. It makes the account a teen at once,
  * whatever date is on file, and leaves needsDob as it was, so the date still
  * decides for an account without one. Only an explicit `under13: true`
- * blocks, and it does so even over a date of 13 or more.
+ * blocks, and it does so even over a date of 13 or more. The apps send it on
+ * every launch, so for an account that is already a teen it only refreshes
+ * the signal and its time (the time is what lets it expire on the 18th
+ * birthday) and runs none of the teen changes again.
  */
 export async function recordMinorSignal(userId: string, under13: boolean | undefined, now = new Date()): Promise<AgeState> {
   const before = await readAge(userId, now);
@@ -310,11 +335,21 @@ export async function recordMinorSignal(userId: string, under13: boolean | undef
   if (under13 === true) return (await blockMinor(userId, now, true)) ?? readAge(userId, now);
   if (before.blocked) return before;
   const nowIso = now.toISOString();
+  if (before.teen) {
+    await entitlementWriteBatch([
+      {
+        sql: `UPDATE "user" SET age_signal = 'minor', age_signal_at = ? WHERE id = ? AND age_blocked_at IS NULL`,
+        args: [nowIso, userId],
+      },
+    ]);
+    return readAge(userId, now);
+  }
   await entitlementWriteBatch([
     {
-      sql: `UPDATE "user" SET age_confirmed_at = COALESCE(age_confirmed_at, ?), age_source = 'platform', age_signal = 'minor'
+      sql: `UPDATE "user" SET age_confirmed_at = COALESCE(age_confirmed_at, ?), age_source = COALESCE(age_source, 'platform'),
+              age_signal = 'minor', age_signal_at = ?
             WHERE id = ? AND age_blocked_at IS NULL`,
-      args: [nowIso, userId],
+      args: [nowIso, nowIso, userId],
     },
     ...(await teenStatements(userId, nowIso, {
       sql: `EXISTS (SELECT 1 FROM "user" WHERE id = ? AND age_blocked_at IS NULL)`,
@@ -370,11 +405,16 @@ async function sameWrite(userId: string, nowIso: string, dob: string, teen: bool
   return [...lift, ...(teen ? await teenStatements(userId, nowIso, guard) : [])];
 }
 
-/** Clears the date of birth of everyone who has turned 18. The teen flag does
- * not depend on it: age_dob_at stays and says a date was given. */
+/** Clears the date of birth of everyone who has turned 18, and with it a
+ * minor signal reported before that birthday. age_dob_at stays and says a
+ * date was given. */
 export async function clearAdultDobs(): Promise<number> {
   const db = await getDb();
   try {
+    // A minor signal reported before the 18th birthday ends with the date.
+    await db.execute(`UPDATE "user" SET age_signal = NULL, age_signal_at = NULL
+      WHERE age_signal = 'minor' AND age_dob IS NOT NULL AND age_dob <= (${ADULT_CUTOFF_SQL})
+        AND (age_signal_at IS NULL OR age_dob > (${adultCutoff("age_signal_at")}))`);
     const rs = await db.execute(`UPDATE "user" SET age_dob = NULL WHERE age_dob IS NOT NULL AND age_dob <= (${ADULT_CUTOFF_SQL})`);
     return rs.rowsAffected;
   } catch (e) {

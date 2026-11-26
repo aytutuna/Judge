@@ -10,7 +10,7 @@ const { analyticsDb } = await import("../lib/analytics/db");
 const { track } = await import("../lib/analytics/track");
 const { getDb } = await import("../lib/db");
 // The real table comes from Better Auth, which this test does not load.
-await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT)');
+await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT)');
 
 afterAll(() => {
   const g = globalThis as unknown as { __verdictLibsql?: { close(): void } };

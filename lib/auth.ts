@@ -383,6 +383,7 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         ageDob: { type: "string", required: false, input: false, fieldName: "age_dob" },
         ageDobAt: { type: "date", required: false, input: false, fieldName: "age_dob_at" },
         ageSignal: { type: "string", required: false, input: false, fieldName: "age_signal" },
+        ageSignalAt: { type: "date", required: false, input: false, fieldName: "age_signal_at" },
       },
     },
     account: {
@@ -724,6 +725,7 @@ export async function resolveViewer(req: Request): Promise<ViewerLookup> {
       ageDob?: unknown;
       ageDobAt?: unknown;
       ageSignal?: unknown;
+      ageSignalAt?: unknown;
     };
     const age = ageStateOf({
       confirmedAt: user.ageConfirmedAt,
@@ -732,6 +734,7 @@ export async function resolveViewer(req: Request): Promise<ViewerLookup> {
       dob: user.ageDob,
       dobAt: user.ageDobAt,
       signal: user.ageSignal,
+      signalAt: user.ageSignalAt,
     });
     const gate = ageRefusal(req.method, requestPath(req), age);
     return {
