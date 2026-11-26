@@ -42,6 +42,10 @@ import com.okjudge.judge.ui.history.mergeHistory
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeUiState
 import com.okjudge.judge.ui.judging.JudgingScreen
+import com.okjudge.judge.ui.age.AgeBlockedScreen
+import com.okjudge.judge.ui.age.AgeDateScreen
+import com.okjudge.judge.ui.age.AgeTags
+import com.okjudge.judge.ui.age.pickFirstOfMonth
 import com.okjudge.judge.ui.settings.SettingsScreen
 import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.signin.SignInActions
@@ -328,6 +332,71 @@ class ScreenshotsTest {
         Themed(AppLang.EN, dark = true) {
             SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com")
         }
+    }
+
+    private fun ageDate(dark: Boolean, confirm: Boolean = false) = @androidx.compose.runtime.Composable {
+        Themed(AppLang.EN, dark = dark) {
+            AgeDateScreen(busy = false, failed = false, onSubmit = {}, onSignOut = {}, onDelete = {}, nowMillis = System::currentTimeMillis)
+        }
+    }
+
+    @Test
+    fun age_date_en() = capture("age_date_en", content = ageDate(dark = false))
+
+    @Test
+    fun age_date_en_dark() = capture("age_date_en_dark", content = ageDate(dark = true))
+
+    @Test
+    fun age_date_en_tablet() = capture("age_date_en_tablet", tablet = true, content = ageDate(dark = false))
+
+    @Test
+    fun age_date_en_dark_tablet() = capture("age_date_en_dark_tablet", tablet = true, content = ageDate(dark = true))
+
+    private fun ageConfirm(dark: Boolean, tablet: Boolean, name: String) {
+        if (tablet) RuntimeEnvironment.setQualifiers("+w800dp-h1280dp")
+        compose.mainClock.autoAdvance = false
+        compose.setContent(ageDate(dark))
+        pickFirstOfMonth(compose)
+        compose.onNodeWithTag(AgeTags.CONTINUE).performClick()
+        compose.mainClock.advanceTimeBy(5_000)
+        compose.onRoot().captureRoboImage(UiTestSupport.shot(name))
+    }
+
+    @Test
+    fun age_confirm_en() = ageConfirm(dark = false, tablet = false, name = "age_confirm_en")
+
+    @Test
+    fun age_confirm_en_dark() = ageConfirm(dark = true, tablet = false, name = "age_confirm_en_dark")
+
+    @Test
+    fun age_confirm_en_tablet() = ageConfirm(dark = false, tablet = true, name = "age_confirm_en_tablet")
+
+    @Test
+    fun age_confirm_en_dark_tablet() = ageConfirm(dark = true, tablet = true, name = "age_confirm_en_dark_tablet")
+
+    @Test
+    fun age_blocked_en() = capture("age_blocked_en") {
+        Themed(AppLang.EN) { AgeBlockedScreen(signedIn = true, busy = false, onSignOut = {}, onDelete = {}, onContact = {}) }
+    }
+
+    @Test
+    fun age_blocked_en_dark() = capture("age_blocked_en_dark") {
+        Themed(AppLang.EN, dark = true) { AgeBlockedScreen(signedIn = true, busy = false, onSignOut = {}, onDelete = {}, onContact = {}) }
+    }
+
+    @Test
+    fun age_blocked_en_tablet() = capture("age_blocked_en_tablet", tablet = true) {
+        Themed(AppLang.EN) { AgeBlockedScreen(signedIn = true, busy = false, onSignOut = {}, onDelete = {}, onContact = {}) }
+    }
+
+    @Test
+    fun settings_teen_en() = capture("settings_teen_en") {
+        Themed(AppLang.EN) { SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com", teen = true) }
+    }
+
+    @Test
+    fun settings_teen_en_dark() = capture("settings_teen_en_dark") {
+        Themed(AppLang.EN, dark = true) { SettingsScreen(LangPref.SYSTEM, "0.1.0", {}, {}, "https://okjudge.com", teen = true) }
     }
 
     @Test

@@ -1,9 +1,8 @@
 package com.okjudge.judge.ui.age
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
-import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -34,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.contentDescription
@@ -249,14 +249,14 @@ private fun ErrorNote(text: String) {
     )
 }
 
-/** An ivory page over everything, taking every touch so nothing underneath reacts. */
+/** An ivory page over everything, taking every touch so nothing underneath reacts (no clickable: that would merge the whole page into one TalkBack item). */
 @Composable
 private fun Cover(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
     Box(
         modifier
             .fillMaxSize()
             .background(Palette.ivory)
-            .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null, onClick = {})
+            .pointerInput(Unit) { detectTapGestures { } }
             .safeDrawingPadding()
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 20.dp),
