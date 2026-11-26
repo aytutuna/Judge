@@ -15,7 +15,7 @@ process.env.BETTER_AUTH_URL = "http://localhost:3600";
 
 const { createDevSession } = await import("../lib/auth");
 const { getDb } = await import("../lib/db");
-const { ADULT_CUTOFF_SQL, ageStateOf, clearAdultDobs, isTeen, submitDob } = await import("../lib/age");
+const { ADULT_CUTOFF_SQL, teenSql, ageStateOf, clearAdultDobs, isTeen, submitDob } = await import("../lib/age");
 const { underEighteen, underThirteen, yearsBefore } = await import("../lib/age-date");
 const { runCleanup } = await import("../lib/cleanup");
 const { ensureOriginalsTables } = await import("../lib/originals/db");
@@ -224,21 +224,54 @@ describe("the store's age signal", () => {
     expect((await (await postAge(token, { adult: false, source: "platform", under13: true })).json()).blocked).toBe(true);
   });
 
-  it("a date on file wins over the signal, in both directions", async () => {
-    const adult = await createDevSession("signal-adult-date@verdict.local");
-    await postAge(adult.token, { dob: ago(30) });
-    const a = await postAge(adult.token, { adult: false, source: "platform" });
-    expect((await a.json()).teen).toBe(false);
-    expect((await postAge(adult.token, { adult: false, source: "platform", under13: true })).status).toBe(200);
-    expect((await me(adult.token)).age.blocked).toBe(false);
+  it("a store under-18 signal makes a teen whatever the date says, and an adult date does not clear it", async () => {
+    const { token, user } = await createDevSession("signal-adult-date@verdict.local");
+    await postAge(token, { dob: ago(30) });
+    expect((await me(token)).age.teen).toBe(false);
+    const res = await postAge(token, { adult: false, source: "platform" });
+    expect(await res.json()).toEqual({ confirmed: true, blocked: false, teen: true, needsDob: false });
+    expect((await row(user.id)).age_signal).toBe("minor");
+    // An adult date given after the signal does not clear it either.
+    const later = await createDevSession("signal-then-adult-date@verdict.local");
+    await postAge(later.token, { adult: false, source: "platform" });
+    expect((await (await postAge(later.token, { dob: ago(30) })).json()).teen).toBe(true);
+    // Only the store saying adult does.
+    expect((await (await postAge(later.token, { adult: true, source: "platform" })).json()).teen).toBe(false);
+  });
 
+  it("the SQL teen test follows the same rule", async () => {
+    const { token, user } = await createDevSession("signal-sql@verdict.local");
+    const isTeenSql = async () => {
+      const rs = await (await getDb()).execute({ sql: `SELECT ${teenSql("u")} AS t FROM "user" u WHERE u.id = ?`, args: [user.id] });
+      return Number(rs.rows[0].t) === 1;
+    };
+    await postAge(token, { dob: ago(30) });
+    expect(await isTeenSql()).toBe(false);
+    await postAge(token, { adult: false, source: "platform" });
+    expect(await isTeenSql()).toBe(true);
+  });
+
+  it("an under-13 store signal blocks for good even with a date of 13 or more on file", async () => {
+    for (const [email, years] of [["signal13-adult@verdict.local", 30], ["signal13-teen@verdict.local", 15]] as const) {
+      const { token, user } = await createDevSession(email);
+      await postAge(token, { dob: ago(years) });
+      const res = await postAge(token, { adult: false, source: "platform", under13: true });
+      expect((await res.json()).blocked).toBe(true);
+      expect(await row(user.id)).toMatchObject({ age_block_final: "1" });
+      expect((await me(token)).age).toMatchObject({ blocked: true, teen: false });
+      expect((await postAge(token, { dob: ago(30) })).status).toBe(403);
+    }
+  });
+
+  it("an adult store signal never overrides a teen date, and a teen date outlasts the store turning adult", async () => {
     const teen = await createDevSession("signal-teen-date@verdict.local");
     await postAge(teen.token, { dob: ago(15) });
     expect((await (await postAge(teen.token, { adult: true, source: "platform" })).json()).teen).toBe(true);
-
+    expect((await me(teen.token)).age.teen).toBe(true);
     const grown = await createDevSession("signal-grown@verdict.local");
     await postAge(grown.token, { adult: false, source: "platform" });
     await postAge(grown.token, { dob: ago(17, 30) });
+    await postAge(grown.token, { adult: true, source: "platform" });
     await setRow(grown.user.id, "age_dob = ?", [ago(18)]);
     expect((await me(grown.token)).age.teen).toBe(false);
   });
@@ -403,14 +436,15 @@ describe("events of a blocked or teen account and its devices", () => {
 });
 
 describe("the date of birth after the 18th birthday", () => {
-  it("is cleared by the daily cleanup, and the old signal does not make the adult a teen again", async () => {
+  it("is cleared by the daily cleanup, and an adult signal from the store leaves the adult not a teen", async () => {
     const { token, user } = await createDevSession("dob-clear@verdict.local");
     await postAge(token, { adult: false, source: "platform" });
     await postAge(token, { dob: ago(17, 30) });
+    await postAge(token, { adult: true, source: "platform" });
     await setRow(user.id, "age_dob = ?", [ago(18)]);
     const counts = await runCleanup();
     expect(counts.adultDobs).toBeGreaterThanOrEqual(1);
-    expect(await row(user.id)).toMatchObject({ age_dob: null, age_dob_at: expect.any(String), age_signal: "minor" });
+    expect(await row(user.id)).toMatchObject({ age_dob: null, age_dob_at: expect.any(String), age_signal: "adult" });
     expect((await me(token)).age).toEqual({ confirmed: true, blocked: false, teen: false, needsDob: false });
     await setRow(user.id, "age_dob = ?", [ago(18, -1)]);
     expect(await clearAdultDobs()).toBe(0);

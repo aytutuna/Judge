@@ -98,7 +98,6 @@ describe("blockMinor", () => {
 describe("recordMinorSignal", () => {
   for (const [name, change] of [
     ["a block", (id: string) => setRow(id, "age_blocked_at = ?, age_block_final = '1'", ["2026-11-26T00:00:00.000Z"])],
-    ["a date", (id: string) => setRow(id, "age_dob_at = ?", ["2026-11-26T00:00:00.000Z"])],
   ] as const) {
     it(`writes nothing, and leaves consent and events, when ${name} landed first`, async () => {
       const id = await account(`race-signal-${name.split(" ")[1]}@verdict.local`);
@@ -109,6 +108,17 @@ describe("recordMinorSignal", () => {
       expect(await events(id)).toBe(1);
     });
   }
+});
+
+describe("recordMinorSignal after a date", () => {
+  it("still records the signal when an adult date landed first", async () => {
+    const id = await account("race-signal-adult-date@verdict.local");
+    interleave(() => setRow(id, "age_dob_at = ?", ["2026-11-26T00:00:00.000Z"]));
+    await recordMinorSignal(id, undefined);
+    expect((await row(id)).age_signal).toBe("minor");
+    expect(await consentOn(id)).toBe(false);
+    expect(await events(id)).toBe(0);
+  });
 });
 
 describe("submitDob", () => {

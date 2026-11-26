@@ -14,7 +14,8 @@ const NO_STORE = { "Cache-Control": "no-store" } as const;
 
 // "Under 18" only ever comes from the store's age signal. Without `under13`
 // (every shipped build) it makes the account a teen and the date of birth
-// decides; only `under13: true` blocks.
+// still decides for an account without one; only `under13: true` blocks, even
+// over a date of 13 or more.
 const AgeRequest = z.union([
   z.strictObject({ adult: z.literal(true), source: z.enum(["checkbox", "platform"]) }),
   z.strictObject({ adult: z.literal(false), source: z.literal("platform"), under13: z.boolean().optional() }),
@@ -31,7 +32,7 @@ const AgeRequest = z.union([
  *   store saying 18+. A tick without a date is an adult self-declaration; the
  *   account then reports needsDob.
  * - {adult: false, source: "platform", under13?: boolean}: the store saying
- *   under 18.
+ *   under 18 (a teen whatever date is on file) or, with under13, under 13.
  * A blocked account gets 403 age_blocked here like everywhere else. */
 export async function POST(req: Request): Promise<NextResponse> {
   const { viewer, deadBearer, refused } = await lookupViewer(req);

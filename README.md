@@ -645,10 +645,13 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
   server logs `[signal:age_blocked]`. The 13th birthday is judged on the
   latest calendar date anywhere (UTC+14), so nobody is closed out on the day.
   The daily cleanup clears a teen's `age_dob` once they are 18; `age_dob_at`
-  stays, which keeps an old store signal from making them a teen again. A
+  stays and says a date was given. A
   second date answers `409 age_set`; to correct one, clear `age_dob` and
-  `age_dob_at` on the `user` row. A date on file always wins over the store's
-  signal. Blocks made under the old 18+ rule have no `age_block_final`
+  `age_dob_at` on the `user` row. The younger answer wins between the date and
+  the store's signal: a store "under 18" makes a teen whatever the date says
+  (an adult date does not clear it; only a later store "adult" does), a
+  store "under 13" blocks for good even with a date of 13 or more on file,
+  and a teen date stays a teen whatever the store says. Blocks made under the old 18+ rule have no `age_block_final`
   (`user`, and `welcome_claims` for a deleted account's email): such an
   account reports `blocked: true, needsDob: true`, may send one date, and a
   date of 13 or more lifts the block while under 13 makes it final. Every
@@ -656,8 +659,8 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
   `{ "adult": true, "source": "platform" }` (the store's age signal says
   adult) confirms an account. `{ "adult": false, "source": "platform" }` (the
   store says under 18, which is all the shipped builds send) makes the account
-  a teen at once and leaves `needsDob: true`, so the date decides; only
-  `"under13": true` blocks directly. Older builds'
+  a teen at once, with or without a date on file (`needsDob` stays as it was,
+  so the date is still asked for); only `"under13": true` blocks directly. Older builds'
   `{ "adult": true, "source": "checkbox" }` still confirms an account as an
   adult without a date (it cannot change a teen), so those users are not
   locked out; they keep `needsDob: true` and the website and new builds ask
