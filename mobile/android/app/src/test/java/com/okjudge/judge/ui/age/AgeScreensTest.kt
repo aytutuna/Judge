@@ -11,8 +11,10 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.onAllNodesWithTag
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.assertContentDescriptionEquals
-import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.hasSetTextAction
+import androidx.compose.ui.test.performTextInput
 import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.ui.Themed
 import com.okjudge.judge.ui.UiTestSupport
@@ -36,9 +38,10 @@ class AgeScreensTest {
     val compose = createComposeRule()
 
     private val s = UiTestSupport.s(AppLang.EN)
+    private val ADULT = LocalDate.of(1990, 5, 17)
+    private val CHILD = LocalDate.now().minusYears(5)
 
-    // Far in the future, so day 1 of the current month is an adult's date; the real clock decides the month shown.
-    private val farFuture = { java.time.Instant.parse("2060-01-01T00:00:00Z").toEpochMilli() }
+    private val farFuture = { System.currentTimeMillis() }
 
     private fun screen(
         submitted: MutableList<LocalDate> = mutableListOf(),
@@ -58,27 +61,39 @@ class AgeScreensTest {
         compose.onNodeWithText(s.ageLead).assertExists()
         compose.onNodeWithTag(AgeTags.PICKER).assertContentDescriptionEquals(s.ageTitle)
         compose.onNodeWithTag(AgeTags.CONTINUE).assertIsNotEnabled()
-        pickFirstOfMonth(compose)
+        enterBirthDate(compose, ADULT)
         compose.onNodeWithTag(AgeTags.CONTINUE).assertIsEnabled()
+    }
+
+    @Test
+    fun dateStep_pickerTextsFollowTheAppLanguage() {
+        compose.setContent {
+            Themed(AppLang.TR) {
+                AgeDateScreen(busy = false, failed = false, onSubmit = {}, onSignOut = {}, onDelete = {})
+            }
+        }
+        // Material's own field label comes in the app's language, not the phone's.
+        compose.onNodeWithText("Tarih").assertExists()
+        compose.onAllNodesWithText("Date").assertCountEquals(0)
     }
 
     @Test
     fun dateStep_anAdultDateIsSentWithoutAConfirmStep() {
         val submitted = mutableListOf<LocalDate>()
         compose.setContent(screen(submitted))
-        pickFirstOfMonth(compose)
+        enterBirthDate(compose, ADULT)
         compose.onNodeWithTag(AgeTags.CONTINUE).performClick()
         assertEquals(1, submitted.size)
-        assertEquals(1, submitted[0].dayOfMonth)
+        assertEquals(ADULT, submitted[0])
         compose.onAllNodesWithTag(AgeTags.CONFIRM).assertCountEquals(0)
     }
 
     @Test
     fun dateStep_anUnder13Date_asksOnceFirst_andChangeKeepsTheDate() {
         val submitted = mutableListOf<LocalDate>()
-        // "Now" is the real clock, so day 1 of this month is a child's date.
+        // "Now" is the real clock, so a date five years back is a child's.
         compose.setContent(screen(submitted, now = System::currentTimeMillis))
-        pickFirstOfMonth(compose)
+        enterBirthDate(compose, CHILD)
         compose.onNodeWithTag(AgeTags.CONTINUE).performClick()
         assertEquals(0, submitted.size)
         compose.onNodeWithTag(AgeTags.CONFIRM).assertExists()
@@ -99,7 +114,7 @@ class AgeScreensTest {
         val restore = StateRestorationTester(compose)
         val submitted = mutableListOf<LocalDate>()
         restore.setContent(screen(submitted, now = System::currentTimeMillis))
-        pickFirstOfMonth(compose)
+        enterBirthDate(compose, CHILD)
         compose.onNodeWithTag(AgeTags.CONTINUE).performClick()
         compose.onNodeWithTag(AgeTags.CONFIRM).assertExists()
 
@@ -107,14 +122,14 @@ class AgeScreensTest {
         compose.onNodeWithTag(AgeTags.CONFIRM).assertExists()
         compose.onNodeWithTag(AgeTags.CONFIRM_YES).performClick()
         assertEquals(1, submitted.size)
-        assertEquals(1, submitted[0].dayOfMonth)
+        assertEquals(CHILD, submitted[0])
     }
 
     @Test
     fun dateStep_keepsThePickedDate_acrossRecreation() {
         val restore = StateRestorationTester(compose)
         restore.setContent(screen())
-        pickFirstOfMonth(compose)
+        enterBirthDate(compose, ADULT)
         compose.onNodeWithTag(AgeTags.CONTINUE).assertIsEnabled()
         restore.emulateSavedInstanceStateRestore()
         compose.onNodeWithTag(AgeTags.CONTINUE).assertIsEnabled()
@@ -170,8 +185,8 @@ class AgeScreensTest {
     }
 }
 
-/** Taps the 1st of the month the picker opens on (this month by the real clock): a day cell reads as its whole date. */
-fun pickFirstOfMonth(compose: androidx.compose.ui.test.junit4.ComposeContentTestRule) {
-    val month = LocalDate.now().month.getDisplayName(java.time.format.TextStyle.FULL, java.util.Locale.US)
-    compose.onNode(hasText("$month 1,", substring = true)).performClick()
+/** Types [date] into the picker's input field (the en-US order, month first). */
+fun enterBirthDate(compose: androidx.compose.ui.test.junit4.ComposeContentTestRule, date: LocalDate) {
+    val typed = "%02d%02d%04d".format(date.monthValue, date.dayOfMonth, date.year)
+    compose.onNode(hasSetTextAction()).performTextInput(typed)
 }

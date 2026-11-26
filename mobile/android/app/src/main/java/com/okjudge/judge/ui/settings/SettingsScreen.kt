@@ -152,6 +152,9 @@ fun SettingsScreen(
                         HorizontalDivider(color = Palette.line)
                     }
                     SwitchRow(s.appSettingsUsageStats, usageStats && !teen, SettingsTags.USAGE_STATS, enabled = !teen, onChange = onUsageStats)
+                    if (teen) {
+                        Text(s.settingsUsageStatsTeen, style = JudgeType.footnote, modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 10.dp))
+                    }
                     HorizontalDivider(color = Palette.line)
                     LinkRow(s.appSettingsAbout) { onOpenLink("$base/about") }
                     HorizontalDivider(color = Palette.line)
@@ -162,7 +165,7 @@ fun SettingsScreen(
                     LinkRow(s.appLegalTerms) { onOpenLink("$base/terms") }
                 }
                 if (!teen) Text(s.consentSwitchDetail, style = JudgeType.footnote, modifier = Modifier.padding(start = 4.dp, top = 8.dp, end = 4.dp))
-                Text(if (teen) s.settingsUsageStatsTeen else s.appSettingsUsageStatsHint, style = JudgeType.footnote, modifier = Modifier.padding(start = 4.dp, top = 8.dp, end = 4.dp))
+                if (!teen) Text(s.appSettingsUsageStatsHint, style = JudgeType.footnote, modifier = Modifier.padding(start = 4.dp, top = 8.dp, end = 4.dp))
             }
 
             if (signedIn) {

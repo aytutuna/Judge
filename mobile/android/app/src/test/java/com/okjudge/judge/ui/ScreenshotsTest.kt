@@ -45,7 +45,7 @@ import com.okjudge.judge.ui.judging.JudgingScreen
 import com.okjudge.judge.ui.age.AgeBlockedScreen
 import com.okjudge.judge.ui.age.AgeDateScreen
 import com.okjudge.judge.ui.age.AgeTags
-import com.okjudge.judge.ui.age.pickFirstOfMonth
+import com.okjudge.judge.ui.age.enterBirthDate
 import com.okjudge.judge.ui.settings.SettingsScreen
 import com.okjudge.judge.ui.theme.Palette
 import com.okjudge.judge.ui.signin.SignInActions
@@ -347,6 +347,13 @@ class ScreenshotsTest {
     fun age_date_en_dark() = capture("age_date_en_dark", content = ageDate(dark = true))
 
     @Test
+    fun age_date_tr() = capture("age_date_tr") {
+        Themed(AppLang.TR) {
+            AgeDateScreen(busy = false, failed = false, onSubmit = {}, onSignOut = {}, onDelete = {}, nowMillis = System::currentTimeMillis)
+        }
+    }
+
+    @Test
     fun age_date_en_tablet() = capture("age_date_en_tablet", tablet = true, content = ageDate(dark = false))
 
     @Test
@@ -356,7 +363,7 @@ class ScreenshotsTest {
         if (tablet) RuntimeEnvironment.setQualifiers("+w800dp-h1280dp")
         compose.mainClock.autoAdvance = false
         compose.setContent(ageDate(dark))
-        pickFirstOfMonth(compose)
+        enterBirthDate(compose, java.time.LocalDate.now().minusYears(5))
         compose.onNodeWithTag(AgeTags.CONTINUE).performClick()
         compose.mainClock.advanceTimeBy(5_000)
         compose.onRoot().captureRoboImage(UiTestSupport.shot(name))

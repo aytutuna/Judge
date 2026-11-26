@@ -16,12 +16,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDefaults
+import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,6 +36,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.contentDescription
@@ -47,7 +51,9 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
+import android.content.res.Configuration
 import com.okjudge.judge.core.auth.AgeCheck
+import com.okjudge.judge.i18n.AppLang
 import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.ui.components.PrimaryButton
@@ -75,6 +81,15 @@ object AgeTags {
     const val ERROR = "age.error"
 }
 
+/** Material's own picker texts and date format follow the system locale; this makes them follow the app's language. */
+@Composable
+private fun InAppLanguage(lang: AppLang, content: @Composable () -> Unit) {
+    val base = LocalContext.current
+    val config = remember(base, lang) { Configuration(base.resources.configuration).apply { setLocale(lang.locale) } }
+    val context = remember(base, config) { base.createConfigurationContext(config) }
+    CompositionLocalProvider(LocalContext provides context, LocalConfiguration provides config, content = content)
+}
+
 private fun LocalDate.utcMillis(): Long = atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
 
 private fun Long.utcDate(): LocalDate = Instant.ofEpochMilli(this).atOffset(ZoneOffset.UTC).toLocalDate()
@@ -99,7 +114,9 @@ fun AgeDateScreen(
     val s = LocalStrings.current
     val lang = LocalLang.current
     val latest = remember { AgeCheck.latestDate(nowMillis()) }
+    // Typing a birth year is quicker than paging back through months; the calendar stays one tap away on the toggle.
     val picker = rememberDatePickerState(
+        initialDisplayMode = DisplayMode.Input,
         yearRange = 1900..latest.year,
         selectableDates = remember(latest) {
             object : SelectableDates {
@@ -144,12 +161,15 @@ fun AgeDateScreen(
             )
         } else {
             Text(s.ageLead, style = JudgeType.lead, modifier = Modifier.padding(top = 10.dp, bottom = 12.dp))
-            DatePicker(
-                state = picker,
-                title = null,
-                modifier = Modifier.fillMaxWidth().semantics { contentDescription = s.ageTitle }.testTag(AgeTags.PICKER),
-                colors = DatePickerDefaults.colors(containerColor = Palette.ivory),
-            )
+            InAppLanguage(lang) {
+                DatePicker(
+                    state = picker,
+                    title = null,
+                    headline = null,
+                    modifier = Modifier.fillMaxWidth().semantics { contentDescription = s.ageTitle }.testTag(AgeTags.PICKER),
+                    colors = DatePickerDefaults.colors(containerColor = Palette.ivory),
+                )
+            }
             if (failed) ErrorNote(s.ageFailed)
             PrimaryButton(
                 text = s.ageContinue,
