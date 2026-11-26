@@ -10,6 +10,7 @@ import { AppShell } from "./shell/AppShell";
 const SECTIONS: [Key, Key][] = [
   ["deletePage.appTitle", "deletePage.app"],
   ["deletePage.webTitle", "deletePage.web"],
+  ["deletePage.billingTitle", "deletePage.billing"],
   ["deletePage.removedTitle", "deletePage.removed"],
   ["deletePage.keptTitle", "deletePage.kept"],
 ];

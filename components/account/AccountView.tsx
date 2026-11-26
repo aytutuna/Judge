@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { deleteErrorKey } from "@/lib/auth-client";
 import { downloadMyData } from "@/lib/feedback-client";
 import { t, tWithDate, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { langTag } from "@/lib/langs";
+import { storeBilling } from "@/lib/plan-billing";
 import { markSignedOut, useViewer, type ViewerState } from "@/lib/use-viewer";
 import styles from "./AccountPages.module.css";
 
@@ -130,7 +132,7 @@ export type AccountDetailProps = {
   deleting: boolean;
   deleted: boolean;
   deleteError: string | null;
-  onDelete: () => void;
+  onDelete: (password?: string) => void;
   exporting?: boolean;
   exportError?: boolean;
   onExport?: () => void;
@@ -150,6 +152,7 @@ export function AccountDetailPanel({
 }: AccountDetailProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const cancelRef = useRef<HTMLButtonElement>(null);
+  const [password, setPassword] = useState("");
 
   if (deleted) {
     return (
@@ -164,6 +167,7 @@ export function AccountDetailPanel({
   if (missing) return missing;
   const user = viewer.me?.user;
   if (!user) return null;
+  const billing = storeBilling(viewer.me?.entitlement?.subscription);
 
   return (
     <>
@@ -205,6 +209,30 @@ export function AccountDetailPanel({
           {t(lang, "account.delete")}
         </h2>
         <p className={styles.dialogText}>{t(lang, "account.deleteConfirm")}</p>
+        {billing ? (
+          <p className={styles.dialogText}>
+            {t(lang, billing.store === "apple" ? "settings.deleteBillingApple" : "settings.deleteBillingGoogle")}{" "}
+            <a href={billing.manageUrl} className={styles.link} target="_blank" rel="noopener noreferrer">
+              {t(lang, "settings.manageSubscription")}
+            </a>
+          </p>
+        ) : null}
+        {viewer.me?.hasPassword ? (
+          <>
+            <label className={styles.label} htmlFor="delete-password">
+              {t(lang, "settings.deletePassword")}
+            </label>
+            <input
+              id="delete-password"
+              className={styles.input}
+              type="password"
+              autoComplete="current-password"
+              maxLength={128}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </>
+        ) : null}
         <div className={styles.row}>
           <button
             type="button"
@@ -212,7 +240,8 @@ export function AccountDetailPanel({
             disabled={deleting}
             onClick={() => {
               dialogRef.current?.close();
-              onDelete();
+              onDelete(password || undefined);
+              setPassword("");
             }}
           >
             {t(lang, "account.deleteYes")}
@@ -284,11 +313,11 @@ export function AccountDetailSection() {
     setExporting(false);
   }
 
-  async function remove() {
+  async function remove(password?: string) {
     setDeleting(true);
     setDeleteError(null);
     const { deleteAccount } = await import("@/lib/auth-client");
-    const res = await deleteAccount();
+    const res = await deleteAccount(password);
     setDeleting(false);
     if (res.ok) {
       setDeleted(true);
@@ -297,7 +326,7 @@ export function AccountDetailSection() {
     }
     // Signed out meanwhile: the panel itself switches to the sign-in prompt.
     if (res.code === "signin_required") markSignedOut();
-    else setDeleteError(t(lang, "account.deleteFailed"));
+    else setDeleteError(t(lang, deleteErrorKey(res.code)));
   }
 
   return (
@@ -307,7 +336,7 @@ export function AccountDetailSection() {
       deleting={deleting}
       deleted={deleted}
       deleteError={deleteError}
-      onDelete={() => void remove()}
+      onDelete={(password) => void remove(password)}
       exporting={exporting}
       exportError={exportError}
       onExport={() => void exportData()}

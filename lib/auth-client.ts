@@ -104,10 +104,11 @@ export async function signInWithPassword(email: string, password: string): Promi
 export async function savePassword(
   password: string,
   current?: string,
+  lang?: string,
 ): Promise<{ ok: true } | { ok: false; code: ApiErrorCode | "network" }> {
   let res: Response;
   try {
-    res = await fetch("/api/v1/me/password", {
+    res = await fetch(lang ? `/api/v1/me/password?lang=${encodeURIComponent(lang)}` : "/api/v1/me/password", {
       method: "POST",
       headers: { "content-type": "application/json" },
       credentials: "same-origin",
@@ -140,6 +141,15 @@ export function passwordSaveErrorKey(code: ApiErrorCode | "network"): Key {
   if (code === "password_required") return "error.password_required";
   if (code === "rate_limited") return "signin.rateLimited";
   return "signin.passwordSaveFailed";
+}
+
+/** The message for a failed account deletion, from the route's error code. */
+export function deleteErrorKey(code: ApiErrorCode | "network"): Key {
+  if (code === "reauth_required") return "error.reauth_required";
+  if (code === "password_wrong") return "error.password_wrong";
+  if (code === "rate_limited") return "signin.rateLimited";
+  if (code === "network") return "signin.offline";
+  return "account.deleteFailed";
 }
 
 /** The message for a failed code call. Same mapping as the apps: the status
@@ -214,8 +224,9 @@ export async function submitDob(dob: string): Promise<{ age: AgeState } | { stat
   }
 }
 
-/** DELETE /api/v1/me: removes the account, its sign-ins and entitlements. */
-export async function deleteAccount(): Promise<
+/** DELETE /api/v1/me: removes the account, its sign-ins and entitlements.
+ * `password` stands in for a recent sign-in. */
+export async function deleteAccount(password?: string): Promise<
   { ok: true } | { ok: false; code: ApiErrorCode | "network" }
 > {
   let res: Response;
@@ -224,7 +235,7 @@ export async function deleteAccount(): Promise<
       method: "DELETE",
       headers: { "content-type": "application/json" },
       credentials: "same-origin",
-      body: JSON.stringify({ confirm: "delete" }),
+      body: JSON.stringify(password ? { confirm: "delete", password } : { confirm: "delete" }),
     });
   } catch {
     return { ok: false, code: "network" };

@@ -10,6 +10,7 @@ import { setTheme, useDark } from "@/lib/theme";
 import { signInOffered, useViewer } from "@/lib/use-viewer";
 import { LangPicker } from "../LangPicker";
 import { AccountSection, SignOutRow } from "./AccountView";
+import { PasswordForm } from "./PasswordForm";
 import styles from "./AccountPages.module.css";
 import { PageShell } from "./PageShell";
 
@@ -68,6 +69,7 @@ export function SettingsView() {
         <div className={styles.group}>
           <p className={styles.groupTitle}>{t(lang, "account.title")}</p>
           <AccountSection />
+          {viewer.me?.hasPassword ? <PasswordForm lang={lang} /> : null}
         </div>
       )}
 
