@@ -232,6 +232,7 @@
     <string name="account_delete_confirm">Hesabın silinsin mi? Kredilerin, planın ve giriş bilgilerin silinir. Kararların ve davalardaki tarafların kaldırılır: yazdıkların ve isimler silinir, paylaşım bağlantıları da çalışmaz olur.</string>
     <string name="account_delete_yes">Evet, sil</string>
     <string name="account_delete_cancel">Hesabım kalsın</string>
+    <string name="account_delete_limited">Çok fazla deneme oldu. Daha sonra tekrar dene.</string>
     <string name="account_delete_failed">Hesabı şu an silemedik. Bir daha dener misin?</string>
     <string name="account_load_failed">Hesabını yükleyemedik. Birazdan tekrar dene.</string>
     <string name="account_loading">Hesabın yükleniyor…</string>

@@ -232,6 +232,7 @@
     <string name="account_delete_confirm">অ্যাকাউন্ট মুছে ফেলবেন? আপনার ক্রেডিট, প্ল্যান আর সাইন-ইনের তথ্য মুছে যাবে। আপনার রায় আর মামলায় আপনার বক্তব্য সরিয়ে ফেলা হবে: আপনার লেখা আর নামগুলো মুছে যাবে, আর সেগুলোর শেয়ার লিংক কাজ করা বন্ধ করবে।</string>
     <string name="account_delete_yes">হ্যাঁ, মুছে ফেলুন</string>
     <string name="account_delete_cancel">অ্যাকাউন্ট থাকুক</string>
+    <string name="account_delete_limited">অনেকবার চেষ্টা হয়ে গেছে। পরে আবার চেষ্টা করুন।</string>
     <string name="account_delete_failed">এই মুহূর্তে অ্যাকাউন্টটা মোছা গেল না। আরেকবার চেষ্টা করবেন?</string>
     <string name="account_load_failed">আপনার অ্যাকাউন্ট লোড করা গেল না। একটু পরে আবার চেষ্টা করুন।</string>
     <string name="account_loading">আপনার অ্যাকাউন্ট লোড হচ্ছে…</string>

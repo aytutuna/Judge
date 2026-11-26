@@ -238,6 +238,7 @@
     <string name="account_delete_confirm">Želiš izbrisati račun? Krediti, naročnina in podatki za prijavo se izbrišejo. Tvoje razsodbe in tvoje plati v sporih se odstranijo: napisano besedilo in imena se izbrišejo, njihove povezave za deljenje pa prenehajo delovati.</string>
     <string name="account_delete_yes">Da, izbriši</string>
     <string name="account_delete_cancel">Obdrži račun</string>
+    <string name="account_delete_limited">Preveč poskusov. Poskusi znova pozneje.</string>
     <string name="account_delete_failed">Računa trenutno nismo mogli izbrisati. Poskusiš znova?</string>
     <string name="account_load_failed">Računa nismo mogli naložiti. Poskusi znova čez trenutek.</string>
     <string name="account_loading">Nalagamo tvoj račun…</string>
@@ -569,7 +570,7 @@
     <string name="age_blocked_contact">Misliš, da gre za napako? Piši na %1$s.</string>
     <string name="error_password_wrong">To geslo ni pravilno.</string>
     <string name="error_password_required">Vnesite svoje trenutno geslo.</string>
-    <string name="error_reauth_required">Odjavite se, se znova prijavite in nato izbrišite račun.</string>
+    <string name="error_reauth_required">Odjavi se, se znova prijavi in nato izbriši račun.</string>
     <string name="error_age_blocked">Judge je samo za osebe, stare 13 let ali več.</string>
     <string name="error_age_unconfirmed">Za nadaljevanje potrdi svojo starost.</string>
     <string name="error_age_set">Tvoj datum rojstva je že shranjen.</string>

@@ -229,6 +229,7 @@
     <string name="account_delete_confirm">ลบบัญชีของคุณไหม? เครดิต แพ็กเกจ และข้อมูลการเข้าสู่ระบบจะถูกลบทั้งหมด คำตัดสินและฝั่งของคุณในเคสต่าง ๆ ก็จะถูกลบด้วย สิ่งที่คุณเขียนและชื่อจะหายไป และลิงก์แชร์ของรายการเหล่านั้นจะใช้ไม่ได้อีก</string>
     <string name="account_delete_yes">ใช่ ลบเลย</string>
     <string name="account_delete_cancel">เก็บบัญชีไว้</string>
+    <string name="account_delete_limited">ลองหลายครั้งเกินไป โปรดลองใหม่ภายหลัง</string>
     <string name="account_delete_failed">ตอนนี้ลบบัญชีไม่ได้ ลองอีกครั้งนะ</string>
     <string name="account_load_failed">โหลดบัญชีไม่ได้ ลองใหม่อีกสักครู่</string>
     <string name="account_loading">กำลังโหลดบัญชีของคุณ…</string>

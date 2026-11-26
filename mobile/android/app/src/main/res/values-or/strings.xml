@@ -232,6 +232,7 @@
     <string name="account_delete_confirm">ଆକାଉଣ୍ଟ ଡିଲିଟ୍ କରିବେ? ଆପଣଙ୍କ କ୍ରେଡିଟ୍, ପ୍ଲାନ୍ ଓ ସାଇନ୍ ଇନ୍ ବିବରଣୀ ଡିଲିଟ୍ ହେବ। ଆପଣଙ୍କ ରାୟ ଓ ମାମଲାରେ ଆପଣଙ୍କ କଥା ହଟିଯିବ: ଆପଣ ଯାହା ଲେଖିଥିଲେ ଓ ନାମଗୁଡ଼ିକ ଲିଭିଯିବ, ଆଉ ସେଗୁଡ଼ିକର ସେୟାର୍ ଲିଙ୍କ୍ କାମ କରିବ ନାହିଁ।</string>
     <string name="account_delete_yes">ହଁ, ଡିଲିଟ୍ କରନ୍ତୁ</string>
     <string name="account_delete_cancel">ଆକାଉଣ୍ଟ ରହୁ</string>
+    <string name="account_delete_limited">ବହୁତ ଥର ଚେଷ୍ଟା ହେଲା। ପରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="account_delete_failed">ଏବେ ଆକାଉଣ୍ଟ ଡିଲିଟ୍ କରିପାରିଲୁ ନାହିଁ। ପୁଣି ଥରେ ଚେଷ୍ଟା କରିବେ?</string>
     <string name="account_load_failed">ଆପଣଙ୍କ ଆକାଉଣ୍ଟ ଲୋଡ୍ କରିପାରିଲୁ ନାହିଁ। ଟିକେ ପରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="account_loading">ଆପଣଙ୍କ ଆକାଉଣ୍ଟ ଲୋଡ୍ ହେଉଛି…</string>

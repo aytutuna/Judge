@@ -232,6 +232,7 @@
     <string name="account_delete_confirm">Konto löschen? Deine Credits, dein Tarif und deine Anmeldedaten werden gelöscht. Deine Urteile und deine Beiträge zu Fällen werden entfernt: Was du geschrieben hast und die Namen werden gelöscht, und die geteilten Links funktionieren nicht mehr.</string>
     <string name="account_delete_yes">Ja, löschen</string>
     <string name="account_delete_cancel">Konto behalten</string>
+    <string name="account_delete_limited">Zu viele Versuche. Versuch es später noch mal.</string>
     <string name="account_delete_failed">Wir konnten das Konto gerade nicht löschen. Versuchst du es noch mal?</string>
     <string name="account_load_failed">Wir konnten dein Konto nicht laden. Versuch es gleich noch mal.</string>
     <string name="account_loading">Dein Konto wird geladen…</string>

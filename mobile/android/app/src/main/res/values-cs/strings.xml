@@ -238,6 +238,7 @@
     <string name="account_delete_confirm">Smazat účet? Tvoje kredity, plán a přihlašovací údaje se smažou. Tvoje verdikty a tvoje pohledy v případech se odstraní: tvoje texty i jména se vymažou a sdílené odkazy přestanou fungovat.</string>
     <string name="account_delete_yes">Ano, smazat</string>
     <string name="account_delete_cancel">Ponechat účet</string>
+    <string name="account_delete_limited">Příliš mnoho pokusů. Zkus to znovu později.</string>
     <string name="account_delete_failed">Účet se teď nepodařilo smazat. Zkusíš to znovu?</string>
     <string name="account_load_failed">Účet se nepodařilo načíst. Zkus to za chvilku.</string>
     <string name="account_loading">Načítáme tvůj účet…</string>

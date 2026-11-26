@@ -232,6 +232,7 @@
     <string name="account_delete_confirm">Να διαγραφεί ο λογαριασμός σου; Το υπόλοιπο αποφάσεων, το πρόγραμμα και τα στοιχεία σύνδεσης διαγράφονται. Οι αποφάσεις σου και οι πλευρές σου στις υποθέσεις αφαιρούνται: ό,τι έγραψες και τα ονόματα σβήνονται και οι σύνδεσμοι κοινοποίησης σταματούν να λειτουργούν.</string>
     <string name="account_delete_yes">Ναι, διάγραψέ τον</string>
     <string name="account_delete_cancel">Κράτα τον λογαριασμό μου</string>
+    <string name="account_delete_limited">Πάρα πολλές προσπάθειες. Δοκίμασε ξανά αργότερα.</string>
     <string name="account_delete_failed">Δεν μπορέσαμε να διαγράψουμε τον λογαριασμό τώρα. Δοκιμάζεις ξανά;</string>
     <string name="account_load_failed">Δεν μπορέσαμε να φορτώσουμε τον λογαριασμό σου. Δοκίμασε ξανά σε λίγο.</string>
     <string name="account_loading">Φόρτωση λογαριασμού…</string>

@@ -72,8 +72,8 @@ async function missedWelcome(userId: string): Promise<boolean> {
 
 /** DELETE /api/v1/me { confirm: "delete", password? }: needs a sign-in from
  * the last 10 minutes, or the account's password (403 reauth_required, or
- * password_wrong), from website sessions and from apps that send
- * "Judge-Reauth: 1" (older app builds are exempt), and counts against 5 tries per 10 minutes (429). Revokes
+ * password_wrong), unless the session was opened by an app sign-in and
+ * the request lacks "Judge-Reauth: 1" (older app builds, until REAUTH_EXEMPT_UNTIL), and counts against 5 tries per 10 minutes (429). Revokes
  * the account's stored Sign in with Apple tokens at Apple (a failure there is logged and recorded,
  * and does not stop the deletion), removes every verdict the account owns and
  * its side of every case (originals, name maps and display names blanked,
@@ -125,8 +125,12 @@ export async function DELETE(req: Request): Promise<NextResponse> {
         headers: { ...NO_STORE, "Retry-After": String("retryAfterSec" in limit ? limit.retryAfterSec : 60) },
       });
     }
-    const holdsToRule = viewer.via === "cookie" || req.headers.get(REAUTH_HEADER) === "1";
-    const reauth = holdsToRule ? await reauthForDelete(viewer.user.id, viewer.sessionId, password) : "ok";
+    const reauth = await reauthForDelete(
+      viewer.user.id,
+      viewer.sessionId,
+      password,
+      req.headers.get(REAUTH_HEADER) === "1",
+    );
     if (reauth !== "ok") {
       const message = reauth === "password_wrong" ? "That password is not right." : "Sign in again to delete the account.";
       return NextResponse.json(apiErrorBody(reauth, message), { status: 403, headers: NO_STORE });

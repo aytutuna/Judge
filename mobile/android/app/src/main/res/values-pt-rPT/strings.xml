@@ -235,6 +235,7 @@
     <string name="account_delete_confirm">Apagar a tua conta? Os teus créditos, o plano e os dados de acesso são apagados. Os teus veredictos e os teus lados dos casos são removidos: o que escreveste e os nomes são apagados, e os links de partilha deixam de funcionar.</string>
     <string name="account_delete_yes">Sim, apagar</string>
     <string name="account_delete_cancel">Manter a conta</string>
+    <string name="account_delete_limited">Demasiadas tentativas. Tenta outra vez mais tarde.</string>
     <string name="account_delete_failed">Não conseguimos apagar a conta agora. Tentas outra vez?</string>
     <string name="account_load_failed">Não conseguimos carregar a tua conta. Tenta outra vez daqui a pouco.</string>
     <string name="account_loading">A carregar a tua conta…</string>
@@ -560,7 +561,7 @@
     <string name="age_blocked_contact">Achas que isto é um engano? Escreve para %1$s.</string>
     <string name="error_password_wrong">Essa palavra-passe não está correta.</string>
     <string name="error_password_required">Introduz a tua palavra-passe atual.</string>
-    <string name="error_reauth_required">Sai e entra de novo, depois elimina a tua conta.</string>
+    <string name="error_reauth_required">Sai e entra de novo, depois apaga a tua conta.</string>
     <string name="error_age_blocked">O Judge é só para quem tem 13 anos ou mais.</string>
     <string name="error_age_unconfirmed">Confirma a tua idade para continuares.</string>
     <string name="error_age_set">A tua data de nascimento já está guardada.</string>

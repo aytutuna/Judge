@@ -235,6 +235,7 @@
     <string name="account_delete_confirm">¿Eliminar tu cuenta? Se borran tus créditos, tu plan y tus datos de inicio de sesión. Se eliminan tus veredictos y tus versiones de los casos: se borran lo que escribiste y los nombres, y sus enlaces para compartir dejan de funcionar.</string>
     <string name="account_delete_yes">Sí, eliminarla</string>
     <string name="account_delete_cancel">Conservar mi cuenta</string>
+    <string name="account_delete_limited">Demasiados intentos. Vuelve a intentarlo más tarde.</string>
     <string name="account_delete_failed">No pudimos eliminar la cuenta en este momento. ¿Lo intentas de nuevo?</string>
     <string name="account_load_failed">No pudimos cargar tu cuenta. Inténtalo de nuevo en un momento.</string>
     <string name="account_loading">Cargando tu cuenta…</string>

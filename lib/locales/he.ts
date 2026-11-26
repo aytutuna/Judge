@@ -19,7 +19,7 @@ const he: Locale = {
     passwordChanged: {
       subject: "סיסמת Judge שלך שונתה",
       intro: "סיסמת Judge שלך שונתה ב-{time}.",
-      contact: "אם זה לא היית אתה, פנה מיד אל {email}.",
+      contact: "אם לא ביצעת את השינוי, אפשר לפנות מיד אל {email}.",
     },
   },
   strings: {
@@ -358,7 +358,7 @@ const he: Locale = {
     "deletePage.webTitle": "באתר",
     "deletePage.web": "היכנס ל-okjudge.com, פתח את חשבון, בחר מחיקת החשבון ואשר.",
     "deletePage.billingTitle": "אם יש לך תוכנית",
-    "deletePage.billing": "מחיקת החשבון לא מבטלת תוכנית שנרכשה ב-App Store או ב-Google Play, והחנות תמשיך לחייב אותך. בטל אותה קודם בהגדרות המנויים של App Store או של Google Play.",
+    "deletePage.billing": "מחיקת החשבון לא מבטלת תוכנית שנרכשה ב-App Store או ב-Google Play, והחנות תמשיך לחייב אותך. קודם צריך לבטל אותה בהגדרות המנויים של App Store או של Google Play.",
     "deletePage.removedTitle": "מה נמחק",
     "deletePage.removed":
       "החשבון שלך, רשומות הכניסה, הקרדיטים, התוכנית ואירועי השימוש נמחקים. פסקי הדין שלך והצדדים שלך בתיקים מוסרים: הטקסט המקורי והשמות נמחקים מיד, והטקסט האנונימי ופסק הדין 30 יום אחר כך (בתיק, 30 יום אחרי שכל מי שבו הסיר אותו).",
@@ -462,14 +462,16 @@ const he: Locale = {
       "למחוק את החשבון? הקרדיטים, התוכנית ופרטי ההתחברות יימחקו. פסקי הדין שלך והצדדים שלך בתיקים יוסרו: מה שכתבת והשמות יימחקו, וקישורי השיתוף שלהם יפסיקו לעבוד.",
     "account.deleteYes": "כן, למחוק",
     "account.deleteCancel": "להשאיר את החשבון",
+
+    "account.deleteLimited": "יותר מדי ניסיונות. אפשר לנסות שוב מאוחר יותר.",
     "settings.passwordChange": "שינוי סיסמה",
     "settings.passwordCurrent": "הסיסמה הנוכחית",
-    "settings.passwordChanged": "הסיסמה שונתה. התנתקת ממכשירים האחרים שלך.",
-    "settings.deleteBillingApple": "החיוב על התוכנית שלך נעשה דרך App Store. מחיקת החשבון לא מבטלת אותה, אז בטל אותה שם קודם.",
-    "settings.deleteBillingGoogle": "החיוב על התוכנית שלך נעשה דרך Google Play. מחיקת החשבון לא מבטלת אותה, אז בטל אותה שם קודם.",
+    "settings.passwordChanged": "הסיסמה שונתה. המכשירים האחרים שלך נותקו מהחשבון.",
+    "settings.deleteBillingApple": "החיוב על התוכנית שלך נעשה דרך App Store. מחיקת החשבון לא מבטלת אותה, אז קודם צריך לבטל אותה שם.",
+    "settings.deleteBillingGoogle": "החיוב על התוכנית שלך נעשה דרך Google Play. מחיקת החשבון לא מבטלת אותה, אז קודם צריך לבטל אותה שם.",
     "settings.manageSubscription": "ניהול מנוי",
     "settings.deletePassword": "הסיסמה שלך",
-    "error.reauth_required": "התנתק, התחבר שוב ואז מחק את החשבון.",
+    "error.reauth_required": "צריך להתנתק, להתחבר שוב ורק אז למחוק את החשבון.",
     "account.deleted": "החשבון נמחק.",
     "account.deleteFailed": "לא הצלחנו למחוק את החשבון כרגע. אפשר לנסות שוב?",
     "account.loadFailed": "לא הצלחנו לטעון את החשבון. אפשר לנסות שוב עוד רגע.",

@@ -467,6 +467,8 @@ const nb: Locale = {
       "Vil du slette kontoen din? Kredittene, abonnementet og innloggingsdetaljene dine slettes. Dommene dine og sidene dine i saker fjernes: det du skrev og navnene slettes, og delingslenkene slutter å virke.",
     "account.deleteYes": "Ja, slett den",
     "account.deleteCancel": "Behold kontoen",
+
+    "account.deleteLimited": "For mange forsøk. Prøv igjen senere.",
     "settings.passwordChange": "Endre passord",
     "settings.passwordCurrent": "Nåværende passord",
     "settings.passwordChanged": "Passordet er endret. Du er logget ut på de andre enhetene dine.",

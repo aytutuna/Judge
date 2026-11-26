@@ -229,6 +229,7 @@
     <string name="account_delete_confirm">Padam akaun anda? Kredit, pelan dan butiran log masuk anda akan dipadam. Keputusan anda dan versi anda dalam kes akan dibuang: apa yang anda tulis dan nama-nama akan dihapuskan, dan pautan kongsinya tidak lagi berfungsi.</string>
     <string name="account_delete_yes">Ya, padam</string>
     <string name="account_delete_cancel">Kekalkan akaun saya</string>
+    <string name="account_delete_limited">Terlalu banyak cubaan. Cuba lagi nanti.</string>
     <string name="account_delete_failed">Kami tidak dapat memadam akaun sekarang. Boleh cuba lagi?</string>
     <string name="account_load_failed">Kami tidak dapat memuatkan akaun anda. Cuba lagi sebentar nanti.</string>
     <string name="account_loading">Memuatkan akaun anda…</string>

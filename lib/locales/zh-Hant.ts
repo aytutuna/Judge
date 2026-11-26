@@ -451,6 +451,8 @@ const zhHant: Locale = {
       "要刪除帳號嗎？你的額度、方案和登入資料都會刪除。你的判決和你在案子中的說法也會移除：你寫的內容和名字都會清除，分享連結也會失效。",
     "account.deleteYes": "是，刪除",
     "account.deleteCancel": "保留我的帳號",
+
+    "account.deleteLimited": "嘗試太多次了，請稍後再試。",
     "settings.passwordChange": "變更密碼",
     "settings.passwordCurrent": "目前的密碼",
     "settings.passwordChanged": "密碼已變更，其他裝置已登出。",

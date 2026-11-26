@@ -229,6 +229,7 @@
     <string name="account_delete_confirm">要刪除帳號嗎？你的額度、方案和登入資料都會刪除。你的判決和你在案子中的說法也會移除：你寫的內容和名字都會清除，分享連結也會失效。</string>
     <string name="account_delete_yes">是，刪除</string>
     <string name="account_delete_cancel">保留我的帳號</string>
+    <string name="account_delete_limited">嘗試太多次了，請稍後再試。</string>
     <string name="account_delete_failed">暫時無法刪除帳號，可以再試一次嗎？</string>
     <string name="account_load_failed">無法載入你的帳號，請稍後再試。</string>
     <string name="account_loading">正在載入帳號…</string>

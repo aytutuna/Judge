@@ -479,6 +479,8 @@ const id: Locale = {
       "Hapus akunmu? Kredit, langganan, dan data masukmu akan dihapus. Putusan dan versimu dalam kasus juga ikut hilang: tulisanmu beserta nama-namanya dihapus, dan tautan berbaginya tidak berfungsi lagi.",
     "account.deleteYes": "Ya, hapus",
     "account.deleteCancel": "Tetap simpan akunku",
+
+    "account.deleteLimited": "Terlalu banyak percobaan. Coba lagi nanti.",
     "settings.passwordChange": "Ubah kata sandi",
     "settings.passwordCurrent": "Kata sandi saat ini",
     "settings.passwordChanged": "Kata sandi diubah. Kamu sudah keluar dari perangkat lainnya.",

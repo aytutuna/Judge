@@ -461,9 +461,11 @@ const ko: Locale = {
       "계정을 삭제할까요? 크레딧, 요금제, 로그인 정보가 삭제돼요. 내 판결과 사건 속 내 입장도 지워져요. 쓴 글과 이름이 삭제되고, 공유 링크도 더 이상 열리지 않아요.",
     "account.deleteYes": "네, 삭제할게요",
     "account.deleteCancel": "계정 유지",
+
+    "account.deleteLimited": "시도 횟수가 너무 많아요. 나중에 다시 시도해 주세요.",
     "settings.passwordChange": "비밀번호 변경",
     "settings.passwordCurrent": "현재 비밀번호",
-    "settings.passwordChanged": "비밀번호를 변경했어요. 다른 기기에서는 로그아웃됩니다.",
+    "settings.passwordChanged": "비밀번호를 변경했어요. 다른 기기에서는 로그아웃돼요.",
     "settings.deleteBillingApple": "요금제는 App Store에서 결제돼요. 계정을 삭제해도 구독은 해지되지 않으니 먼저 App Store에서 해지해 주세요.",
     "settings.deleteBillingGoogle": "요금제는 Google Play에서 결제돼요. 계정을 삭제해도 구독은 해지되지 않으니 먼저 Google Play에서 해지해 주세요.",
     "settings.manageSubscription": "구독 관리",

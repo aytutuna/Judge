@@ -232,6 +232,7 @@
     <string name="account_delete_confirm">એકાઉન્ટ ડિલીટ કરવું છે? તમારી ક્રેડિટ, પ્લાન અને સાઇન ઇનની વિગતો ડિલીટ થશે. તમારા ચુકાદા અને કેસમાંની તમારી બાજુ દૂર થશે: તમે જે લખ્યું એ અને નામ ભૂંસાઈ જશે, અને એમની શેર લિંક કામ કરતી બંધ થઈ જશે.</string>
     <string name="account_delete_yes">હા, ડિલીટ કરો</string>
     <string name="account_delete_cancel">એકાઉન્ટ રહેવા દો</string>
+    <string name="account_delete_limited">ઘણા બધા પ્રયાસ થયા. થોડી વાર પછી ફરી પ્રયાસ કરો.</string>
     <string name="account_delete_failed">અત્યારે એકાઉન્ટ ડિલીટ ન થઈ શક્યું. ફરી પ્રયાસ કરશો?</string>
     <string name="account_load_failed">તમારું એકાઉન્ટ લોડ ન થઈ શક્યું. થોડી વારમાં ફરી પ્રયાસ કરો.</string>
     <string name="account_loading">તમારું એકાઉન્ટ લોડ થાય છે…</string>

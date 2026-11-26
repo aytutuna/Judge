@@ -470,9 +470,11 @@ const ptBR: Locale = {
       "Excluir sua conta? Seus créditos, seu plano e seus dados de acesso são apagados. Seus vereditos e o seu lado em cada caso são removidos: o que você escreveu e os nomes são apagados, e os links de compartilhamento param de funcionar.",
     "account.deleteYes": "Sim, excluir",
     "account.deleteCancel": "Manter minha conta",
+
+    "account.deleteLimited": "Muitas tentativas. Tente de novo mais tarde.",
     "settings.passwordChange": "Alterar senha",
     "settings.passwordCurrent": "Senha atual",
-    "settings.passwordChanged": "Senha alterada. Você saiu dos seus outros dispositivos.",
+    "settings.passwordChanged": "Senha alterada. Sua sessão foi encerrada nos outros dispositivos.",
     "settings.deleteBillingApple": "Seu plano é cobrado pela App Store. Excluir a conta não cancela o plano, então cancele lá primeiro.",
     "settings.deleteBillingGoogle": "Seu plano é cobrado pelo Google Play. Excluir a conta não cancela o plano, então cancele lá primeiro.",
     "settings.manageSubscription": "Gerenciar assinatura",

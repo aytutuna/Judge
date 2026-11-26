@@ -472,6 +472,8 @@ const nl: Locale = {
       "Je account verwijderen? Je credits, abonnement en inloggegevens worden gewist. Je uitspraken en jouw kant in zaken worden verwijderd: wat je schreef en de namen worden gewist, en de deellinks werken niet meer.",
     "account.deleteYes": "Ja, verwijderen",
     "account.deleteCancel": "Account houden",
+
+    "account.deleteLimited": "Te veel pogingen. Probeer het later opnieuw.",
     "settings.passwordChange": "Wachtwoord wijzigen",
     "settings.passwordCurrent": "Huidig wachtwoord",
     "settings.passwordChanged": "Wachtwoord gewijzigd. Op je andere apparaten ben je uitgelogd.",

@@ -367,6 +367,7 @@ enum L10n {
     static func accountDeleteConfirm(_ lang: AppLang) -> String { string("account.deleteConfirm", lang) }
     static func accountDeleteYes(_ lang: AppLang) -> String { string("account.deleteYes", lang) }
     static func accountDeleteCancel(_ lang: AppLang) -> String { string("account.deleteCancel", lang) }
+    static func accountDeleteLimited(_ lang: AppLang) -> String { string("account.deleteLimited", lang) }
     static func accountDeleteFailed(_ lang: AppLang) -> String { string("account.deleteFailed", lang) }
     static func accountLoadFailed(_ lang: AppLang) -> String { string("account.loadFailed", lang) }
     static func accountLoading(_ lang: AppLang) -> String { string("account.loading", lang) }
@@ -1019,6 +1020,7 @@ enum L10n {
         "account.deleteConfirm",
         "account.deleteYes",
         "account.deleteCancel",
+        "account.deleteLimited",
         "account.deleteFailed",
         "account.loadFailed",
         "account.loading",

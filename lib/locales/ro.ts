@@ -468,9 +468,11 @@ const ro: Locale = {
       "Îți ștergi contul? Creditele, planul și datele de conectare vor fi șterse. Verdictele tale și părțile tale din cazuri vor fi eliminate: ce ai scris și numele se șterg, iar linkurile lor de distribuire nu vor mai funcționa.",
     "account.deleteYes": "Da, șterge-l",
     "account.deleteCancel": "Păstrez contul",
+
+    "account.deleteLimited": "Prea multe încercări. Încearcă din nou mai târziu.",
     "settings.passwordChange": "Schimbă parola",
     "settings.passwordCurrent": "Parola actuală",
-    "settings.passwordChanged": "Parola a fost schimbată. Ai fost deconectat de pe celelalte dispozitive.",
+    "settings.passwordChanged": "Parola a fost schimbată. Celelalte dispozitive au fost deconectate.",
     "settings.deleteBillingApple": "Planul tău este facturat prin App Store. Ștergerea contului nu îl anulează, așa că anulează-l mai întâi acolo.",
     "settings.deleteBillingGoogle": "Planul tău este facturat prin Google Play. Ștergerea contului nu îl anulează, așa că anulează-l mai întâi acolo.",
     "settings.manageSubscription": "Gestionează abonamentul",

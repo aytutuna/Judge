@@ -232,6 +232,7 @@
     <string name="account_delete_confirm">Törlöd a fiókodat? A kreditjeid, az előfizetésed és a belépési adataid törlődnek. Az ítéleteidet és az ügyekben beküldött verzióidat eltávolítjuk: amit írtál, azt a nevekkel együtt töröljük, a megosztási linkjeik pedig megszűnnek működni.</string>
     <string name="account_delete_yes">Igen, törlöm</string>
     <string name="account_delete_cancel">Megtartom a fiókot</string>
+    <string name="account_delete_limited">Túl sok próbálkozás. Próbáld újra később.</string>
     <string name="account_delete_failed">Most nem sikerült törölni a fiókot. Megpróbálod újra?</string>
     <string name="account_load_failed">Nem sikerült betölteni a fiókodat. Próbáld újra egy kicsit később.</string>
     <string name="account_loading">Fiók betöltése…</string>

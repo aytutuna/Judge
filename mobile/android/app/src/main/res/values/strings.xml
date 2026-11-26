@@ -232,6 +232,7 @@
     <string name="account_delete_confirm">Delete your account? Your credits, plan and sign-in details are deleted. Your verdicts and your sides of cases are removed: what you wrote and the names are erased, and their share links stop working.</string>
     <string name="account_delete_yes">Yes, delete it</string>
     <string name="account_delete_cancel">Keep my account</string>
+    <string name="account_delete_limited">Too many tries. Try again later.</string>
     <string name="account_delete_failed">We couldn\'t delete the account just now. Mind trying again?</string>
     <string name="account_load_failed">We couldn\'t load your account. Try again in a moment.</string>
     <string name="account_loading">Loading your account…</string>

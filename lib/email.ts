@@ -7,7 +7,7 @@
 
 import { emailCopy, loadLocales, t, type EmailCopy, type Lang } from "./i18n";
 import { contactEmail } from "../app/site";
-import { isLang, langDir, langTag } from "./langs";
+import { acceptLanguageTags, isLang, langDir, langTag, matchLang } from "./langs";
 import { PALETTE as P } from "./palette";
 
 const RESEND_URL = "https://api.resend.com/emails";
@@ -90,6 +90,20 @@ export function langFromRequestUrl(url: string | undefined): Lang {
   } catch {
     return "en";
   }
+}
+
+/** The language of an email sent from a request: `lang` in the query, else
+ * the first language of Accept-Language that the app is in (the apps send
+ * no `lang` to routes other than sign-in), else English. */
+export function langFromRequest(req: Request): Lang {
+  const asked = langFromRequestUrl(req.url);
+  if (asked !== "en") return asked;
+  try {
+    if (new URL(req.url, "http://localhost").searchParams.has("lang")) return "en";
+  } catch {
+    // fall through to the header
+  }
+  return matchLang(acceptLanguageTags(req.headers.get("accept-language") ?? ""));
 }
 
 export function signInCodeEmailContent(code: string, lang: Lang): EmailContent {

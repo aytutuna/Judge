@@ -229,6 +229,7 @@
     <string name="account_delete_confirm">Hapus akunmu? Kredit, langganan, dan data masukmu akan dihapus. Putusan dan versimu dalam kasus juga ikut hilang: tulisanmu beserta nama-namanya dihapus, dan tautan berbaginya tidak berfungsi lagi.</string>
     <string name="account_delete_yes">Ya, hapus</string>
     <string name="account_delete_cancel">Tetap simpan akunku</string>
+    <string name="account_delete_limited">Terlalu banyak percobaan. Coba lagi nanti.</string>
     <string name="account_delete_failed">Akun belum bisa dihapus sekarang. Coba lagi, ya?</string>
     <string name="account_load_failed">Akunmu gagal dimuat. Coba lagi sebentar lagi.</string>
     <string name="account_loading">Memuat akunmu…</string>

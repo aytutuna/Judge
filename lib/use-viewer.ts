@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from "react";
 import type { AgeState, AppConfig, Entitlement, MeResponse } from "./account-types";
 import { forgetBrowserData } from "./browser-data";
-import { commitSignIn } from "./last-signin";
+import { commitSignIn, lastSignIn } from "./last-signin";
 
 /**
  * Client store for "who is signed in, what can they use, and what does this
@@ -64,6 +64,10 @@ export function refreshViewer(): Promise<void> {
       const failed = me.status === "rejected" && !unauthorized;
       retryOnFocus = (failed || config.status === "rejected") && !retrying;
       if (me.status === "fulfilled" && me.value.user) commitSignIn(me.value.user.email);
+      // Signed out elsewhere (another device changed the password, the account was deleted):
+      // what this browser kept for the account goes too. Not for a visitor who never signed in.
+      const signedOutNow = (me.status === "fulfilled" && !me.value.user) || unauthorized;
+      if (signedOutNow && (state.me?.user || lastSignIn())) forgetBrowserData();
       emit({
         status: failed && !state.me ? "error" : "ready",
         me: me.status === "fulfilled" ? me.value : unauthorized ? SIGNED_OUT : state.me,

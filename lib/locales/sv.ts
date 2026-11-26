@@ -471,6 +471,8 @@ const sv: Locale = {
       "Radera ditt konto? Dina krediter, ditt abonnemang och dina inloggningsuppgifter raderas. Dina domar och dina sidor i tvåsidiga fall tas bort: det du skrev och namnen raderas, och deras delningslänkar slutar fungera.",
     "account.deleteYes": "Ja, radera det",
     "account.deleteCancel": "Behåll mitt konto",
+
+    "account.deleteLimited": "För många försök. Försök igen senare.",
     "settings.passwordChange": "Byt lösenord",
     "settings.passwordCurrent": "Nuvarande lösenord",
     "settings.passwordChanged": "Lösenordet är bytt. Du har loggats ut från dina andra enheter.",

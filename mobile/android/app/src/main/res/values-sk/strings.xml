@@ -238,6 +238,7 @@
     <string name="account_delete_confirm">Zrušiť účet? Tvoje kredity, plán a prihlasovacie údaje sa vymažú. Tvoje verdikty a tvoje verzie v prípadoch sa odstránia: tvoje texty a mená sa vymažú a ich odkazy na zdieľanie prestanú fungovať.</string>
     <string name="account_delete_yes">Áno, zrušiť</string>
     <string name="account_delete_cancel">Ponechať účet</string>
+    <string name="account_delete_limited">Priveľa pokusov. Skús to znova neskôr.</string>
     <string name="account_delete_failed">Účet sa teraz nepodarilo zrušiť. Skúsiš to znova?</string>
     <string name="account_load_failed">Tvoj účet sa nepodarilo načítať. Skús to o chvíľu.</string>
     <string name="account_loading">Načítavam tvoj účet…</string>
@@ -569,7 +570,7 @@
     <string name="age_blocked_contact">Myslíš si, že ide o chybu? Napíš na %1$s.</string>
     <string name="error_password_wrong">Toto heslo nie je správne.</string>
     <string name="error_password_required">Zadajte svoje súčasné heslo.</string>
-    <string name="error_reauth_required">Odhlás sa, znova sa prihlás a potom zmaž účet.</string>
+    <string name="error_reauth_required">Odhlás sa, znova sa prihlás a potom zruš účet.</string>
     <string name="error_age_blocked">Judge je len pre ľudí od 13 rokov.</string>
     <string name="error_age_unconfirmed">Potvrď svoj vek a pokračuj.</string>
     <string name="error_age_set">Tvoj dátum narodenia je už uložený.</string>

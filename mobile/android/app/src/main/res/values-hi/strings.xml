@@ -232,6 +232,7 @@
     <string name="account_delete_confirm">अपना अकाउंट डिलीट करें? आपके क्रेडिट, प्लान और साइन इन की जानकारी मिट जाएगी। आपके फ़ैसले और केस में आपकी बातें हटा दी जाएँगी: आपका लिखा हुआ और नाम मिट जाएँगे, और उनके शेयर लिंक काम करना बंद कर देंगे।</string>
     <string name="account_delete_yes">हाँ, डिलीट करें</string>
     <string name="account_delete_cancel">अकाउंट रहने दें</string>
+    <string name="account_delete_limited">बहुत ज़्यादा कोशिशें हो गईं। कुछ देर बाद फिर कोशिश करें।</string>
     <string name="account_delete_failed">अभी अकाउंट डिलीट नहीं हो पाया। एक बार फिर कोशिश करें?</string>
     <string name="account_load_failed">आपका अकाउंट लोड नहीं हो पाया। थोड़ी देर में फिर कोशिश करें।</string>
     <string name="account_loading">आपका अकाउंट लोड हो रहा है…</string>

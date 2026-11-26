@@ -471,6 +471,8 @@ const da: Locale = {
       "Vil du slette din konto? Dine kreditter, din plan og dine loginoplysninger bliver slettet. Dine domme og dine sider i sager bliver fjernet: det, du skrev, og navnene bliver slettet, og deres delingslinks holder op med at virke.",
     "account.deleteYes": "Ja, slet den",
     "account.deleteCancel": "Behold min konto",
+
+    "account.deleteLimited": "For mange forsøg. Prøv igen senere.",
     "settings.passwordChange": "Skift adgangskode",
     "settings.passwordCurrent": "Nuværende adgangskode",
     "settings.passwordChanged": "Adgangskoden er skiftet. Du er logget ud på dine andre enheder.",

@@ -484,6 +484,8 @@ const ca: Locale = {
       "Vols eliminar el compte? S'esborraran els teus crèdits, el pla i les dades d'inici de sessió. Els teus veredictes i les teves versions dels casos s'eliminaran: s'esborrarà tot el que vas escriure, noms inclosos, i els seus enllaços per compartir deixaran de funcionar.",
     "account.deleteYes": "Sí, elimina'l",
     "account.deleteCancel": "Em quedo el compte",
+
+    "account.deleteLimited": "Massa intents. Torna-ho a provar més tard.",
     "settings.passwordChange": "Canvia la contrasenya",
     "settings.passwordCurrent": "Contrasenya actual",
     "settings.passwordChanged": "S'ha canviat la contrasenya. S'ha tancat la sessió als altres dispositius.",

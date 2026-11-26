@@ -232,6 +232,7 @@
     <string name="account_delete_confirm">तुमचे खाते डिलीट करायचे? तुमचे क्रेडिट, प्लॅन आणि साइन-इनची माहिती डिलीट होईल. तुमचे निकाल आणि प्रकरणांतल्या तुमच्या बाजू काढून टाकल्या जातील: तुम्ही लिहिलेले आणि नावे पुसली जातील, आणि त्यांच्या शेअर लिंक चालणे बंद होईल.</string>
     <string name="account_delete_yes">हो, डिलीट करा</string>
     <string name="account_delete_cancel">खाते राहू द्या</string>
+    <string name="account_delete_limited">खूप प्रयत्न झाले. थोड्या वेळाने पुन्हा प्रयत्न करा.</string>
     <string name="account_delete_failed">आत्ता खाते डिलीट करता आले नाही. पुन्हा प्रयत्न कराल का?</string>
     <string name="account_load_failed">तुमचे खाते लोड करता आले नाही. थोड्या वेळाने पुन्हा प्रयत्न करा.</string>
     <string name="account_loading">तुमचे खाते लोड होत आहे…</string>

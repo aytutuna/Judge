@@ -229,6 +229,7 @@
     <string name="account_delete_confirm">Xóa tài khoản của bạn? Lượt, gói và thông tin đăng nhập sẽ bị xóa. Các phán quyết và phần của bạn trong các vụ sẽ bị gỡ: nội dung bạn viết và các tên bị xóa, liên kết chia sẻ cũng ngừng hoạt động.</string>
     <string name="account_delete_yes">Có, xóa đi</string>
     <string name="account_delete_cancel">Giữ tài khoản</string>
+    <string name="account_delete_limited">Bạn thử quá nhiều lần rồi. Hãy thử lại sau nhé.</string>
     <string name="account_delete_failed">Chưa xóa được tài khoản lúc này. Bạn thử lại nhé?</string>
     <string name="account_load_failed">Không tải được tài khoản. Thử lại sau giây lát nhé.</string>
     <string name="account_loading">Đang tải tài khoản…</string>

@@ -300,6 +300,7 @@ class Strings(private val res: Resources) {
     val accountDeleteConfirm: String get() = res.getString(R.string.account_delete_confirm)
     val accountDeleteYes: String get() = res.getString(R.string.account_delete_yes)
     val accountDeleteCancel: String get() = res.getString(R.string.account_delete_cancel)
+    val accountDeleteLimited: String get() = res.getString(R.string.account_delete_limited)
     val accountDeleteFailed: String get() = res.getString(R.string.account_delete_failed)
     val accountLoadFailed: String get() = res.getString(R.string.account_load_failed)
     val accountLoading: String get() = res.getString(R.string.account_loading)
@@ -951,6 +952,7 @@ class Strings(private val res: Resources) {
             "account.deleteConfirm" -> R.string.account_delete_confirm
             "account.deleteYes" -> R.string.account_delete_yes
             "account.deleteCancel" -> R.string.account_delete_cancel
+            "account.deleteLimited" -> R.string.account_delete_limited
             "account.deleteFailed" -> R.string.account_delete_failed
             "account.loadFailed" -> R.string.account_load_failed
             "account.loading" -> R.string.account_loading

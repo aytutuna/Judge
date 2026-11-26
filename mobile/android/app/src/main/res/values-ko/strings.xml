@@ -229,6 +229,7 @@
     <string name="account_delete_confirm">계정을 삭제할까요? 크레딧, 요금제, 로그인 정보가 삭제돼요. 내 판결과 사건 속 내 입장도 지워져요. 쓴 글과 이름이 삭제되고, 공유 링크도 더 이상 열리지 않아요.</string>
     <string name="account_delete_yes">네, 삭제할게요</string>
     <string name="account_delete_cancel">계정 유지</string>
+    <string name="account_delete_limited">시도 횟수가 너무 많아요. 나중에 다시 시도해 주세요.</string>
     <string name="account_delete_failed">지금은 계정을 삭제하지 못했어요. 다시 한번 해 볼까요?</string>
     <string name="account_load_failed">계정 정보를 불러오지 못했어요. 잠시 후 다시 시도해 주세요.</string>
     <string name="account_loading">계정 정보를 불러오는 중…</string>

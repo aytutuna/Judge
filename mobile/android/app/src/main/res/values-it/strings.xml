@@ -235,6 +235,7 @@
     <string name="account_delete_confirm">Vuoi eliminare il tuo account? Crediti, piano e dati di accesso vengono cancellati. I tuoi verdetti e le tue versioni nei casi vengono rimossi: quello che hai scritto e i nomi vengono cancellati, e i link di condivisione smettono di funzionare.</string>
     <string name="account_delete_yes">Sì, eliminalo</string>
     <string name="account_delete_cancel">Tieni l\'account</string>
+    <string name="account_delete_limited">Troppi tentativi. Riprova più tardi.</string>
     <string name="account_delete_failed">Al momento non siamo riusciti a eliminare l\'account. Riprovi?</string>
     <string name="account_load_failed">Non siamo riusciti a caricare il tuo account. Riprova tra un attimo.</string>
     <string name="account_loading">Caricamento dell\'account…</string>

@@ -482,9 +482,11 @@ const it: Locale = {
       "Vuoi eliminare il tuo account? Crediti, piano e dati di accesso vengono cancellati. I tuoi verdetti e le tue versioni nei casi vengono rimossi: quello che hai scritto e i nomi vengono cancellati, e i link di condivisione smettono di funzionare.",
     "account.deleteYes": "Sì, eliminalo",
     "account.deleteCancel": "Tieni l'account",
+
+    "account.deleteLimited": "Troppi tentativi. Riprova più tardi.",
     "settings.passwordChange": "Cambia password",
     "settings.passwordCurrent": "Password attuale",
-    "settings.passwordChanged": "Password cambiata. Sugli altri dispositivi hai effettuato l'uscita.",
+    "settings.passwordChanged": "Password cambiata. Gli altri dispositivi sono stati disconnessi.",
     "settings.deleteBillingApple": "Il tuo piano viene fatturato tramite l'App Store. Eliminare l'account non lo annulla, quindi annullalo prima lì.",
     "settings.deleteBillingGoogle": "Il tuo piano viene fatturato tramite Google Play. Eliminare l'account non lo annulla, quindi annullalo prima lì.",
     "settings.manageSubscription": "Gestisci abbonamento",

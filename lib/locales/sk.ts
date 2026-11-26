@@ -19,7 +19,7 @@ const sk: Locale = {
     passwordChanged: {
       subject: "Tvoje heslo do Judge bolo zmenené",
       intro: "Tvoje heslo do Judge bolo zmenené {time}.",
-      contact: "Ak si to nebol ty, okamžite kontaktuj {email}.",
+      contact: "Ak za touto zmenou nestojíš ty, okamžite kontaktuj {email}.",
     },
   },
   strings: {
@@ -364,7 +364,7 @@ const sk: Locale = {
     "deletePage.webTitle": "Na webe",
     "deletePage.web": "Prihlás sa na okjudge.com, otvor Účet, vyber Zrušiť účet a potvrď.",
     "deletePage.billingTitle": "Ak máš plán",
-    "deletePage.billing": "Zmazanie účtu nezruší plán kúpený v App Store alebo Google Play a obchod ti bude ďalej strhávať platby. Najprv ho zruš v nastaveniach predplatného v App Store alebo Google Play.",
+    "deletePage.billing": "Zrušenie účtu neukončí plán kúpený v App Store alebo Google Play a obchod ti bude ďalej strhávať platby. Najprv ho ukonči v nastaveniach predplatného v App Store alebo Google Play.",
     "deletePage.removedTitle": "Čo sa zmaže",
     "deletePage.removed":
       "Zmaže sa tvoj účet, záznamy o prihlásení, kredity, plán a udalosti používania. Tvoje verdikty a tvoje strany v prípadoch sa odstránia: pôvodný text a mená sa vymažú hneď, anonymizovaný text a verdikt o 30 dní neskôr (pri prípade 30 dní po tom, ako ho odstránia všetci v ňom).",
@@ -467,14 +467,16 @@ const sk: Locale = {
       "Zrušiť účet? Tvoje kredity, plán a prihlasovacie údaje sa vymažú. Tvoje verdikty a tvoje verzie v prípadoch sa odstránia: tvoje texty a mená sa vymažú a ich odkazy na zdieľanie prestanú fungovať.",
     "account.deleteYes": "Áno, zrušiť",
     "account.deleteCancel": "Ponechať účet",
+
+    "account.deleteLimited": "Priveľa pokusov. Skús to znova neskôr.",
     "settings.passwordChange": "Zmeniť heslo",
     "settings.passwordCurrent": "Súčasné heslo",
-    "settings.passwordChanged": "Heslo bolo zmenené. Na ostatných zariadeniach si odhlásený.",
-    "settings.deleteBillingApple": "Tvoj plán sa účtuje cez App Store. Zmazanie účtu ho nezruší, takže ho najprv zruš tam.",
-    "settings.deleteBillingGoogle": "Tvoj plán sa účtuje cez Google Play. Zmazanie účtu ho nezruší, takže ho najprv zruš tam.",
+    "settings.passwordChanged": "Heslo bolo zmenené. Ostatné zariadenia boli odhlásené.",
+    "settings.deleteBillingApple": "Tvoj plán sa účtuje cez App Store. Zrušenie účtu ho neukončí, takže ho najprv ukonči tam.",
+    "settings.deleteBillingGoogle": "Tvoj plán sa účtuje cez Google Play. Zrušenie účtu ho neukončí, takže ho najprv ukonči tam.",
     "settings.manageSubscription": "Spravovať predplatné",
     "settings.deletePassword": "Tvoje heslo",
-    "error.reauth_required": "Odhlás sa, znova sa prihlás a potom zmaž účet.",
+    "error.reauth_required": "Odhlás sa, znova sa prihlás a potom zruš účet.",
     "account.deleted": "Účet je zrušený.",
     "account.deleteFailed": "Účet sa teraz nepodarilo zrušiť. Skúsiš to znova?",
     "account.loadFailed": "Tvoj účet sa nepodarilo načítať. Skús to o chvíľu.",

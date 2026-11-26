@@ -229,6 +229,7 @@
     <string name="account_delete_confirm">アカウントを削除しますか？　クレジット、プラン、ログイン情報は削除されます。あなたの判定と、ケースでのあなたの言い分も削除され、書いた内容と名前は消去されて、シェア用リンクも使えなくなります。</string>
     <string name="account_delete_yes">削除する</string>
     <string name="account_delete_cancel">アカウントを残す</string>
+    <string name="account_delete_limited">試行回数が多すぎます。しばらくしてから、もう一度お試しください。</string>
     <string name="account_delete_failed">いまはアカウントを削除できませんでした。もう一度お試しください。</string>
     <string name="account_load_failed">アカウントを読み込めませんでした。少ししてからもう一度お試しください。</string>
     <string name="account_loading">アカウントを読み込み中…</string>

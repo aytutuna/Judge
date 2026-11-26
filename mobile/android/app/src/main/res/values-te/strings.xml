@@ -232,6 +232,7 @@
     <string name="account_delete_confirm">మీ అకౌంట్‌ను డిలీట్ చేయాలా? మీ క్రెడిట్లు, ప్లాన్, సైన్ ఇన్ వివరాలు డిలీట్ అవుతాయి. మీ తీర్పులు, కేసుల్లో మీ వైపు కథలు తీసేస్తాం: మీరు రాసినది, పేర్లు చెరిగిపోతాయి, వాటి షేర్ లింక్‌లు పనిచేయవు.</string>
     <string name="account_delete_yes">అవును, డిలీట్ చేయండి</string>
     <string name="account_delete_cancel">నా అకౌంట్ ఉంచండి</string>
+    <string name="account_delete_limited">చాలాసార్లు ప్రయత్నించారు. కొంత సేపటి తర్వాత మళ్లీ ప్రయత్నించండి.</string>
     <string name="account_delete_failed">ఇప్పుడు అకౌంట్ డిలీట్ చేయలేకపోయాం. ఇంకోసారి ప్రయత్నిస్తారా?</string>
     <string name="account_load_failed">మీ అకౌంట్ లోడ్ కాలేదు. కాసేపాగి మళ్లీ ప్రయత్నించండి.</string>
     <string name="account_loading">మీ అకౌంట్ లోడ్ అవుతోంది…</string>

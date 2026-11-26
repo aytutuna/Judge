@@ -469,6 +469,8 @@ const ja: Locale = {
       "アカウントを削除しますか？　クレジット、プラン、ログイン情報は削除されます。あなたの判定と、ケースでのあなたの言い分も削除され、書いた内容と名前は消去されて、シェア用リンクも使えなくなります。",
     "account.deleteYes": "削除する",
     "account.deleteCancel": "アカウントを残す",
+
+    "account.deleteLimited": "試行回数が多すぎます。しばらくしてから、もう一度お試しください。",
     "settings.passwordChange": "パスワードを変更",
     "settings.passwordCurrent": "現在のパスワード",
     "settings.passwordChanged": "パスワードを変更しました。ほかの端末からはログアウトされます。",

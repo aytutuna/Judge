@@ -232,6 +232,7 @@
     <string name="account_delete_confirm">Radera ditt konto? Dina krediter, ditt abonnemang och dina inloggningsuppgifter raderas. Dina domar och dina sidor i tvåsidiga fall tas bort: det du skrev och namnen raderas, och deras delningslänkar slutar fungera.</string>
     <string name="account_delete_yes">Ja, radera det</string>
     <string name="account_delete_cancel">Behåll mitt konto</string>
+    <string name="account_delete_limited">För många försök. Försök igen senare.</string>
     <string name="account_delete_failed">Vi kunde inte radera kontot just nu. Vill du försöka igen?</string>
     <string name="account_load_failed">Vi kunde inte ladda ditt konto. Försök igen om en stund.</string>
     <string name="account_loading">Laddar ditt konto…</string>

@@ -235,6 +235,7 @@
     <string name="account_delete_confirm">למחוק את החשבון? הקרדיטים, התוכנית ופרטי ההתחברות יימחקו. פסקי הדין שלך והצדדים שלך בתיקים יוסרו: מה שכתבת והשמות יימחקו, וקישורי השיתוף שלהם יפסיקו לעבוד.</string>
     <string name="account_delete_yes">כן, למחוק</string>
     <string name="account_delete_cancel">להשאיר את החשבון</string>
+    <string name="account_delete_limited">יותר מדי ניסיונות. אפשר לנסות שוב מאוחר יותר.</string>
     <string name="account_delete_failed">לא הצלחנו למחוק את החשבון כרגע. אפשר לנסות שוב?</string>
     <string name="account_load_failed">לא הצלחנו לטעון את החשבון. אפשר לנסות שוב עוד רגע.</string>
     <string name="account_loading">טוענים את החשבון…</string>
@@ -560,7 +561,7 @@
     <string name="age_blocked_contact">חושבים שזו טעות? אפשר לכתוב ל-%1$s.</string>
     <string name="error_password_wrong">הסיסמה הזו אינה נכונה.</string>
     <string name="error_password_required">הזן את הסיסמה הנוכחית.</string>
-    <string name="error_reauth_required">התנתק, התחבר שוב ואז מחק את החשבון.</string>
+    <string name="error_reauth_required">צריך להתנתק, להתחבר שוב ורק אז למחוק את החשבון.</string>
     <string name="error_age_blocked">Judge מיועד לגילאי 13 ומעלה בלבד.</string>
     <string name="error_age_unconfirmed">כדי להמשיך צריך לאשר את הגיל שלך.</string>
     <string name="error_age_set">תאריך הלידה שלך כבר נשמר.</string>

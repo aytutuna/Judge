@@ -478,6 +478,8 @@ const es: Locale = {
       "¿Eliminar tu cuenta? Se borran tus créditos, tu plan y tus datos de inicio de sesión. Se eliminan tus veredictos y tus versiones de los casos: se borran lo que escribiste y los nombres, y sus enlaces para compartir dejan de funcionar.",
     "account.deleteYes": "Sí, eliminarla",
     "account.deleteCancel": "Conservar mi cuenta",
+
+    "account.deleteLimited": "Demasiados intentos. Vuelve a intentarlo más tarde.",
     "settings.passwordChange": "Cambiar contraseña",
     "settings.passwordCurrent": "Contraseña actual",
     "settings.passwordChanged": "Contraseña cambiada. Se cerró la sesión en tus otros dispositivos.",

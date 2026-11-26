@@ -235,6 +235,7 @@
     <string name="account_delete_confirm">Želiš izbrisati račun? Brišu se tvoji krediti, plan i podaci za prijavu. Tvoje presude i tvoje strane u slučajevima uklanjaju se: tvoji tekstovi i imena brišu se, a njihove poveznice za dijeljenje prestaju raditi.</string>
     <string name="account_delete_yes">Da, izbriši</string>
     <string name="account_delete_cancel">Zadrži račun</string>
+    <string name="account_delete_limited">Previše pokušaja. Pokušaj ponovno kasnije.</string>
     <string name="account_delete_failed">Trenutačno ne možemo izbrisati račun. Možeš pokušati ponovno?</string>
     <string name="account_load_failed">Nismo uspjeli učitati tvoj račun. Pokušaj ponovno za trenutak.</string>
     <string name="account_loading">Učitavamo tvoj račun…</string>

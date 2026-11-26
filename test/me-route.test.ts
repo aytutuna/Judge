@@ -12,7 +12,7 @@ const { createDevSession, sessionCookieHeader, welcomeClaim } = await import("..
 const ent = await import("../lib/entitlements");
 const { getDb } = await import("../lib/db");
 const { GET, DELETE } = await import("../app/api/v1/me/route");
-const { setPassword } = await import("../lib/password");
+const { setPassword, reauthForDelete, REAUTH_EXEMPT_UNTIL } = await import("../lib/password");
 
 afterAll(() => {
   const g = globalThis as unknown as { __verdictLibsql?: { close(): void } };
@@ -223,13 +223,49 @@ async function withPassword(token: string, userId: string, password: string) {
   expect(await setPassword(userId, id, password, undefined)).toBe("ok");
 }
 
+/** Marks a session as opened by an app sign-in, as the session hook does. */
+async function markApp(token: string) {
+  const db = await getDb();
+  await db.execute({ sql: "UPDATE session SET userAgent = 'app' WHERE token = ?", args: [token] });
+}
+
 describe("DELETE /api/v1/me needs a recent sign-in or the password", () => {
-  it("a build that does not send Judge-Reauth deletes an old session with only the confirmation", async () => {
+  it("an app session on a build without Judge-Reauth deletes with only the confirmation", async () => {
     const { token, user } = await createDevSession("reauth0@verdict.local");
+    await markApp(token);
     await ageSession(token, 600);
     const res = await del({ authorization: `Bearer ${token}` });
     expect(res.status).toBe(200);
     expect(await rows('SELECT count(*) AS n FROM "user" WHERE id = ?', [user.id])).toBe(0);
+  });
+
+  it("an app session on a build that sends Judge-Reauth is held to the rule", async () => {
+    const { token, user } = await createDevSession("reauth7@verdict.local");
+    await markApp(token);
+    await ageSession(token, 600);
+    const res = await del({ authorization: `Bearer ${token}`, "judge-reauth": "1" });
+    expect(res.status).toBe(403);
+    expect(await res.json()).toMatchObject({ code: "reauth_required" });
+    expect(await rows('SELECT count(*) AS n FROM "user" WHERE id = ?', [user.id])).toBe(1);
+  });
+
+  it("a website session cannot pass as an old app by sending its own token as a bearer", async () => {
+    const { token, user } = await createDevSession("reauth8@verdict.local");
+    await ageSession(token, 600);
+    const res = await del({ authorization: `Bearer ${token}` });
+    expect(res.status).toBe(403);
+    expect(await res.json()).toMatchObject({ code: "reauth_required" });
+    expect(await rows('SELECT count(*) AS n FROM "user" WHERE id = ?', [user.id])).toBe(1);
+  });
+
+  it("the exemption of old app builds ends on its date", async () => {
+    const { token, user } = await createDevSession("reauth9@verdict.local");
+    await markApp(token);
+    await ageSession(token, 600);
+    const db = await getDb();
+    const id = String((await db.execute({ sql: "SELECT id FROM session WHERE token = ?", args: [token] })).rows[0].id);
+    expect(await reauthForDelete(user.id, id, undefined, false, REAUTH_EXEMPT_UNTIL - 1)).toBe("ok");
+    expect(await reauthForDelete(user.id, id, undefined, false, REAUTH_EXEMPT_UNTIL + 1)).toBe("reauth_required");
   });
 
   it("a website session older than 10 minutes gets reauth_required", async () => {

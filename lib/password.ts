@@ -14,9 +14,15 @@ export const FRESH_SIGNIN_MS = 5 * 60_000;
 
 /** Request header of an app build that can ask for the password or a fresh
  * sign-in ("Judge-Reauth: 1"). Builds shipped before it cannot, and Apple and
- * Google require deletion to keep working in them, so only website sessions
- * and builds that send it are held to the re-auth rule. */
+ * Google require deletion to keep working in them, so a session opened by an
+ * app sign-in is spared the rule while its requests lack the header. */
 export const REAUTH_HEADER = "Judge-Reauth";
+
+/** The exemption ends on this date, once the builds that send the header have shipped. */
+export const REAUTH_EXEMPT_UNTIL = Date.parse("2027-03-01T00:00:00Z");
+
+/** What the server writes to a session's userAgent when an app sign-in opened it. */
+export const APP_SESSION = "app";
 
 /** Deleting the account needs a sign-in this young, or the password. */
 export const DELETE_FRESH_MS = 10 * 60_000;
@@ -37,7 +43,8 @@ export async function signInMethod(email: string): Promise<SignInMethod> {
   return (await hasPassword(found.user.id)) ? "password" : "code";
 }
 
-export type PasswordResult = "ok" | "current_required" | "current_wrong" | "unverified";
+/** "replaced" is "ok" for an account that already had a password. */
+export type PasswordResult = "ok" | "replaced" | "current_required" | "current_wrong" | "unverified";
 
 /** Writes for one account run one at a time, so two first-password requests
  * cannot both create a credential row. */
@@ -84,7 +91,7 @@ export function setPassword(
     if (others.length) await ctx.internalAdapter.deleteSessions(others);
     if (account) await ctx.internalAdapter.updateAccount(account.id, { password: hash });
     else await ctx.internalAdapter.linkAccount({ userId, providerId: "credential", accountId: userId, password: hash });
-    return "ok";
+    return account?.password ? "replaced" : "ok";
   });
 }
 
@@ -97,13 +104,17 @@ export async function reauthForDelete(
   userId: string,
   sessionId: string,
   password: string | undefined,
+  sendsReauth: boolean,
   now = Date.now(),
 ): Promise<ReauthResult> {
   const ctx = await (await getAuth()).$context;
   const account = await ctx.internalAdapter.findCredentialAccount(userId);
+  const sessions = await ctx.internalAdapter.listSessions(userId);
+  const mine = sessions.find((s) => s.id === sessionId);
+  // Decided by how the server saw the session open, not by anything the caller sends now.
+  if (!sendsReauth && mine?.userAgent === APP_SESSION && now < REAUTH_EXEMPT_UNTIL) return "ok";
   if (password !== undefined && account?.password) {
     return (await ctx.password.verify({ hash: account.password, password })) ? "ok" : "password_wrong";
   }
-  const mine = (await ctx.internalAdapter.listSessions(userId)).find((s) => s.id === sessionId);
   return mine && now - new Date(mine.createdAt).getTime() <= DELETE_FRESH_MS ? "ok" : "reauth_required";
 }

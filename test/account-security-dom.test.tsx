@@ -7,6 +7,7 @@ import { PasswordForm } from "../components/account/PasswordForm";
 import { SettingsView } from "../components/account/SettingsView";
 import { DeleteAccountPage } from "../components/DeleteAccountPage";
 import { useMine } from "../components/OwnerTools";
+import { useCase } from "../lib/use-case";
 import type { Entitlement, GrantSource, MeResponse } from "../lib/account-types";
 import { ANSWERED_KEY, HISTORY_KEY } from "../lib/history-store";
 import { t } from "../lib/i18n";
@@ -238,6 +239,7 @@ describe("what the account leaves in the browser", () => {
   });
 
   it("deleting without a recent sign-in says so and keeps the browser data", async () => {
+    me = { user, entitlement: entitlement(null), hasPassword: false };
     await refreshViewer();
     answer = (c) => (c.method === "DELETE" ? reply(403, { code: "reauth_required", error: "x" }) : null);
     fillBrowser();
@@ -245,6 +247,53 @@ describe("what the account leaves in the browser", () => {
     fireEvent.click(await screen.findByRole("button", { name: t("en", "account.deleteYes"), hidden: true }));
     expect((await screen.findByRole("alert")).textContent).toBe(t("en", "error.reauth_required"));
     expect(localStorage.getItem("judge.lastSignin")).not.toBeNull();
+  });
+
+  it("a viewer that was signed in here and now answers signed out forgets the data; a stranger's tokens stay", async () => {
+    me = { user: null, entitlement: null, age: null };
+    markSignedOut();
+    localStorage.setItem("judge.owner.v9", "B".repeat(32));
+    await refreshViewer();
+    expect(localStorage.getItem("judge.owner.v9")).not.toBeNull();
+    fillBrowser();
+    await refreshViewer();
+    expectBrowserClean();
+  });
+
+  it("an account with a password that leaves the field empty is told to type it", async () => {
+    await refreshViewer();
+    answer = (c) => (c.method === "DELETE" ? reply(403, { code: "reauth_required", error: "x" }) : null);
+    render(<AccountDetailSection />);
+    fireEvent.click(await screen.findByRole("button", { name: t("en", "account.deleteYes"), hidden: true }));
+    expect((await screen.findByRole("alert")).textContent).toBe(t("en", "error.password_required"));
+  });
+
+  it("a rate-limited deletion does not promise a wait of a minute", async () => {
+    await refreshViewer();
+    answer = (c) => (c.method === "DELETE" ? reply(429, { code: "rate_limited", error: "x" }) : null);
+    render(<AccountDetailSection />);
+    fireEvent.click(await screen.findByRole("button", { name: t("en", "account.deleteYes"), hidden: true }));
+    expect((await screen.findByRole("alert")).textContent).toBe(t("en", "account.deleteLimited"));
+  });
+
+  it("closing the delete dialog forgets the typed password", async () => {
+    await refreshViewer();
+    render(<AccountDetailSection />);
+    const input = (await screen.findByLabelText(t("en", "settings.deletePassword"))) as HTMLInputElement;
+    fireEvent.change(input, { target: { value: "typed" } });
+    expect(input.value).toBe("typed");
+    fireEvent(input.closest("dialog")!, new Event("close"));
+    await waitFor(() => expect(input.value).toBe(""));
+  });
+
+  it("an open case view goes with the sign-in even when the refetch fails", async () => {
+    await refreshViewer();
+    answer = (c) => (c.path === "/api/v1/cases/c1" ? reply(200, { case: { id: "c1", status: "open", pollAfterMs: null } }) : null);
+    const { result } = renderHook(() => useCase("/api/v1/cases/c1"));
+    await waitFor(() => expect(result.current.load.view?.id).toBe("c1"));
+    vi.stubGlobal("fetch", vi.fn(async () => Promise.reject(new TypeError("offline"))));
+    await act(async () => markSignedOut());
+    await waitFor(() => expect(result.current.load.view).toBeNull());
   });
 
   it("the writer view goes when the sign-in does", async () => {

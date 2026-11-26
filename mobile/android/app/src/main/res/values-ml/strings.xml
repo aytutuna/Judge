@@ -232,6 +232,7 @@
     <string name="account_delete_confirm">അക്കൗണ്ട് ഡിലീറ്റ് ചെയ്യണോ? നിങ്ങളുടെ ക്രെഡിറ്റുകളും പ്ലാനും സൈൻ-ഇൻ വിവരങ്ങളും ഡിലീറ്റ് ആകും. നിങ്ങളുടെ വിധികളും കേസുകളിലെ നിങ്ങളുടെ ഭാഗങ്ങളും നീക്കം ചെയ്യും: നിങ്ങൾ എഴുതിയതും പേരുകളും മായ്ക്കും, അവയുടെ ഷെയർ ലിങ്കുകൾ പ്രവർത്തിക്കാതാകും.</string>
     <string name="account_delete_yes">അതെ, ഡിലീറ്റ് ചെയ്യൂ</string>
     <string name="account_delete_cancel">അക്കൗണ്ട് നിലനിർത്തൂ</string>
+    <string name="account_delete_limited">ഒരുപാട് തവണ ശ്രമിച്ചു. കുറച്ച് കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കൂ.</string>
     <string name="account_delete_failed">ഇപ്പോൾ അക്കൗണ്ട് ഡിലീറ്റ് ചെയ്യാനായില്ല. ഒന്നുകൂടി ശ്രമിക്കാമോ?</string>
     <string name="account_load_failed">അക്കൗണ്ട് ലോഡ് ചെയ്യാനായില്ല. അൽപസമയം കഴിഞ്ഞ് ശ്രമിക്കൂ.</string>
     <string name="account_loading">അക്കൗണ്ട് ലോഡ് ചെയ്യുന്നു…</string>

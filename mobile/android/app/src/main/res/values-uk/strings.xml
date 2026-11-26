@@ -238,6 +238,7 @@
     <string name="account_delete_confirm">Видалити акаунт? Твій баланс вердиктів, тариф і дані для входу буде видалено. Твої вердикти й твої версії у справах буде прибрано: написане тобою та імена зітруться, а посилання для поширення перестануть працювати.</string>
     <string name="account_delete_yes">Так, видалити</string>
     <string name="account_delete_cancel">Залишити акаунт</string>
+    <string name="account_delete_limited">Забагато спроб. Спробуй пізніше.</string>
     <string name="account_delete_failed">Зараз не вдалося видалити акаунт. Спробуєш ще раз?</string>
     <string name="account_load_failed">Не вдалося завантажити акаунт. Спробуй ще раз за хвилину.</string>
     <string name="account_loading">Завантажуємо акаунт…</string>

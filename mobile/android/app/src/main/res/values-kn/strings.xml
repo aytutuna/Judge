@@ -232,6 +232,7 @@
     <string name="account_delete_confirm">ನಿಮ್ಮ ಖಾತೆ ಅಳಿಸಬೇಕೇ? ನಿಮ್ಮ ಕ್ರೆಡಿಟ್‌ಗಳು, ಪ್ಲಾನ್ ಮತ್ತು ಸೈನ್ ಇನ್ ವಿವರಗಳು ಅಳಿಸಿಹೋಗುತ್ತವೆ. ನಿಮ್ಮ ತೀರ್ಪುಗಳು ಮತ್ತು ಕೇಸ್‌ಗಳಲ್ಲಿನ ನಿಮ್ಮ ಕಡೆಯ ಮಾತುಗಳನ್ನು ತೆಗೆದುಹಾಕಲಾಗುತ್ತದೆ: ನೀವು ಬರೆದದ್ದು ಮತ್ತು ಹೆಸರುಗಳು ಅಳಿಸಿಹೋಗುತ್ತವೆ, ಅವುಗಳ ಹಂಚಿಕೆ ಲಿಂಕ್‌ಗಳು ಕೆಲಸ ಮಾಡುವುದನ್ನು ನಿಲ್ಲಿಸುತ್ತವೆ.</string>
     <string name="account_delete_yes">ಹೌದು, ಅಳಿಸಿ</string>
     <string name="account_delete_cancel">ಖಾತೆ ಇರಲಿ</string>
+    <string name="account_delete_limited">ತುಂಬಾ ಸಲ ಪ್ರಯತ್ನಿಸಿದ್ದೀರಿ. ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
     <string name="account_delete_failed">ಈಗ ಖಾತೆ ಅಳಿಸಲು ಆಗಲಿಲ್ಲ. ಇನ್ನೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸುತ್ತೀರಾ?</string>
     <string name="account_load_failed">ನಿಮ್ಮ ಖಾತೆ ಲೋಡ್ ಆಗಲಿಲ್ಲ. ಸ್ವಲ್ಪ ಹೊತ್ತಿನ ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
     <string name="account_loading">ನಿಮ್ಮ ಖಾತೆ ಲೋಡ್ ಆಗುತ್ತಿದೆ…</string>

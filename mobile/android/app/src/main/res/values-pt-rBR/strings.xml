@@ -235,6 +235,7 @@
     <string name="account_delete_confirm">Excluir sua conta? Seus créditos, seu plano e seus dados de acesso são apagados. Seus vereditos e o seu lado em cada caso são removidos: o que você escreveu e os nomes são apagados, e os links de compartilhamento param de funcionar.</string>
     <string name="account_delete_yes">Sim, excluir</string>
     <string name="account_delete_cancel">Manter minha conta</string>
+    <string name="account_delete_limited">Muitas tentativas. Tente de novo mais tarde.</string>
     <string name="account_delete_failed">Não conseguimos excluir a conta agora. Pode tentar de novo?</string>
     <string name="account_load_failed">Não conseguimos carregar sua conta. Tente de novo daqui a pouco.</string>
     <string name="account_loading">Carregando sua conta…</string>

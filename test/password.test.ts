@@ -380,6 +380,38 @@ describe("POST /api/v1/me/password", () => {
     expect((sent[2] as Sent & { subject: string }).subject).toBe("Your Judge password was changed");
   });
 
+  it("falls back to Accept-Language when the app sends no lang", async () => {
+    const sent = emailOn();
+    const token = await codeSignIn(sent, "notice3@example.com");
+    await setPassword(token, { password: "first password" });
+    const res = await postPassword(
+      new Request(`${ORIGIN}/api/v1/me/password`, {
+        method: "POST",
+        headers: { authorization: `Bearer ${token}`, "content-type": "application/json", "accept-language": "tr-TR,tr;q=0.9,en;q=0.8" },
+        body: JSON.stringify({ password: "second password" }),
+      }),
+    );
+    expect(res.status).toBe(200);
+    expect((sent[1] as Sent & { subject: string }).subject).toBe("Judge parolan değiştirildi");
+  });
+
+  it("only a session opened by an app sign-in is marked as an app session", async () => {
+    const sent = emailOn();
+    const db = await getDb();
+    const marker = async (token: string) =>
+      (await db.execute({ sql: "SELECT userAgent FROM session WHERE token = ?", args: [token] })).rows[0].userAgent;
+    async function signIn(email: string, headers: Record<string, string>) {
+      const before = sent.length;
+      await post("/email-otp/send-verification-otp", { email, type: "sign-in" }, { "x-forwarded-for": `198.51.100.${++sends % 250}`, ...headers });
+      const res = await post("/sign-in/email-otp", { email, otp: codeFrom(sent[before]) }, headers);
+      return ((await res.json()) as { token: string }).token;
+    }
+    const app = await signIn("marked@example.com", { "device-id": "device-marker-0001", "device-platform": "ios" });
+    expect(await marker(app)).toBe("app");
+    const web = await signIn("marked@example.com", { origin: ORIGIN });
+    expect(await marker(web)).toBeNull();
+  });
+
   it("sends no notice for a refused change, and a failed notice does not undo the change", async () => {
     const sent = emailOn();
     const token = await codeSignIn(sent, "notice2@example.com");

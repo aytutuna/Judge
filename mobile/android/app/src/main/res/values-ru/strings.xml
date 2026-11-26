@@ -238,6 +238,7 @@
     <string name="account_delete_confirm">Удалить аккаунт? Баланс вердиктов, тариф и данные для входа будут удалены. Ваши вердикты и ваши версии в делах тоже удалятся: написанное вами и имена сотрутся, а ссылки на них перестанут работать.</string>
     <string name="account_delete_yes">Да, удалить</string>
     <string name="account_delete_cancel">Оставить аккаунт</string>
+    <string name="account_delete_limited">Слишком много попыток. Попробуйте позже.</string>
     <string name="account_delete_failed">Сейчас не получилось удалить аккаунт. Попробуете ещё раз?</string>
     <string name="account_load_failed">Не удалось загрузить аккаунт. Попробуйте чуть позже.</string>
     <string name="account_loading">Загружаем аккаунт…</string>

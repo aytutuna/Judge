@@ -23,7 +23,7 @@ import { historyRowFromView } from "@/lib/history-state";
 import { historyKey, type HistoryResponse, type HistoryRow, type HistoryState } from "@/lib/history-types";
 import { localizeLabelsAuto, resolveParties, restoreNames, textLang } from "@/lib/names";
 import { firstNameOf, type MineResponse } from "@/lib/originals-types";
-import { linkStoredClaim } from "@/lib/respondent-store";
+import { linkAllStoredClaims, linkStoredClaim } from "@/lib/respondent-store";
 import type { FinalVerdict, NameMapping, PartyId } from "@/lib/types";
 import type { VerdictPollResponse } from "@/lib/verdict-poll";
 import { loadOwnerToken, ownerHeaders, ownerTokenIds } from "@/lib/owner-store";
@@ -344,6 +344,11 @@ async function linkAnsweredClaims(user: string): Promise<boolean> {
     if (out === "conflict" || out === "retry") unsettled.add(`${user}:${row.id}`);
     if (out === "linked" || out === "refused") dropAnswered(row.id);
     if (out === "linked") joined = true;
+  }
+  // Claims whose row is gone (a sign-out clears the rows, not the claims) are tried once too.
+  if (!unsettled.has(`${user}:*`)) {
+    unsettled.add(`${user}:*`);
+    if (await linkAllStoredClaims()) joined = true;
   }
   return joined;
 }

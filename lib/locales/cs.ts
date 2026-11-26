@@ -19,7 +19,7 @@ const cs: Locale = {
     passwordChanged: {
       subject: "Tvé heslo k Judge bylo změněno",
       intro: "Tvé heslo k Judge bylo změněno {time}.",
-      contact: "Pokud jsi to nebyl ty, ihned kontaktuj {email}.",
+      contact: "Pokud za touto změnou nestojíš ty, ihned kontaktuj {email}.",
     },
   },
   strings: {
@@ -364,8 +364,8 @@ const cs: Locale = {
     "deletePage.app": "Otevři Judge, přejdi na Účet, klepni na Smazat účet a potvrď.",
     "deletePage.webTitle": "Na webu",
     "deletePage.web": "Přihlas se na okjudge.com, otevři Účet, zvol Smazat účet a potvrď.",
-    "deletePage.billingTitle": "Pokud máš tarif",
-    "deletePage.billing": "Smazání účtu neruší tarif koupený přes App Store nebo Google Play a obchod ti bude dál strhávat platby. Nejdřív ho zruš v nastavení předplatného v App Store nebo Google Play.",
+    "deletePage.billingTitle": "Pokud máš plán",
+    "deletePage.billing": "Smazání účtu neruší plán koupený přes App Store nebo Google Play a obchod ti bude dál strhávat platby. Nejdřív ho zruš v nastavení předplatného v App Store nebo Google Play.",
     "deletePage.removedTitle": "Co se smaže",
     "deletePage.removed":
       "Smaže se tvůj účet, záznamy o přihlášení, kredity, tarif a události používání. Tvoje verdikty a tvé strany případů se odstraní: původní text a jména se vymažou ihned, anonymizovaný text a verdikt o 30 dní později (u případu 30 dní poté, co jej odstranili všichni zúčastnění).",
@@ -469,11 +469,13 @@ const cs: Locale = {
       "Smazat účet? Tvoje kredity, plán a přihlašovací údaje se smažou. Tvoje verdikty a tvoje pohledy v případech se odstraní: tvoje texty i jména se vymažou a sdílené odkazy přestanou fungovat.",
     "account.deleteYes": "Ano, smazat",
     "account.deleteCancel": "Ponechat účet",
+
+    "account.deleteLimited": "Příliš mnoho pokusů. Zkus to znovu později.",
     "settings.passwordChange": "Změnit heslo",
     "settings.passwordCurrent": "Současné heslo",
-    "settings.passwordChanged": "Heslo bylo změněno. Na ostatních zařízeních jsi odhlášen.",
-    "settings.deleteBillingApple": "Tvůj tarif se účtuje přes App Store. Smazání účtu ho nezruší, tak ho nejdřív zruš tam.",
-    "settings.deleteBillingGoogle": "Tvůj tarif se účtuje přes Google Play. Smazání účtu ho nezruší, tak ho nejdřív zruš tam.",
+    "settings.passwordChanged": "Heslo bylo změněno. Ostatní zařízení byla odhlášena.",
+    "settings.deleteBillingApple": "Tvůj plán se účtuje přes App Store. Smazání účtu ho nezruší, tak ho nejdřív zruš tam.",
+    "settings.deleteBillingGoogle": "Tvůj plán se účtuje přes Google Play. Smazání účtu ho nezruší, tak ho nejdřív zruš tam.",
     "settings.manageSubscription": "Spravovat předplatné",
     "settings.deletePassword": "Tvé heslo",
     "error.reauth_required": "Odhlas se, přihlas se znovu a pak účet smaž.",

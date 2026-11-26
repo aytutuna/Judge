@@ -232,6 +232,7 @@
     <string name="account_delete_confirm">உங்கள் கணக்கை நீக்கவா? உங்கள் கிரெடிட்கள், பிளான், உள்நுழைவு விவரங்கள் நீக்கப்படும். உங்கள் தீர்ப்புகளும் வழக்குகளில் உங்கள் தரப்புகளும் அகற்றப்படும்: நீங்கள் எழுதியவையும் பெயர்களும் அழிக்கப்படும், அவற்றின் பகிர்வு லிங்க்குகள் வேலை செய்யாது.</string>
     <string name="account_delete_yes">ஆம், நீக்கு</string>
     <string name="account_delete_cancel">கணக்கு இருக்கட்டும்</string>
+    <string name="account_delete_limited">பலமுறை முயன்றுவிட்டீர்கள். சிறிது நேரம் கழித்து மீண்டும் முயலுங்கள்.</string>
     <string name="account_delete_failed">இப்போது கணக்கை நீக்க முடியவில்லை. மீண்டும் முயல்கிறீர்களா?</string>
     <string name="account_load_failed">உங்கள் கணக்கை ஏற்ற முடியவில்லை. சிறிது நேரத்தில் மீண்டும் முயலுங்கள்.</string>
     <string name="account_loading">உங்கள் கணக்கை ஏற்றுகிறோம்…</string>

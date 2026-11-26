@@ -232,6 +232,7 @@
     <string name="account_delete_confirm">Je account verwijderen? Je credits, abonnement en inloggegevens worden gewist. Je uitspraken en jouw kant in zaken worden verwijderd: wat je schreef en de namen worden gewist, en de deellinks werken niet meer.</string>
     <string name="account_delete_yes">Ja, verwijderen</string>
     <string name="account_delete_cancel">Account houden</string>
+    <string name="account_delete_limited">Te veel pogingen. Probeer het later opnieuw.</string>
     <string name="account_delete_failed">We konden het account nu niet verwijderen. Wil je het nog eens proberen?</string>
     <string name="account_load_failed">We konden je account niet laden. Probeer het zo nog eens.</string>
     <string name="account_loading">Je account laden…</string>

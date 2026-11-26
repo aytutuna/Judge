@@ -478,6 +478,7 @@ const en = {
   "account.deleteYes": "Yes, delete it",
   "account.deleteCancel": "Keep my account",
   "account.deleted": "Account deleted.",
+  "account.deleteLimited": "Too many tries. Try again later.",
   "account.deleteFailed": "We couldn't delete the account just now. Mind trying again?",
   "account.loadFailed": "We couldn't load your account. Try again in a moment.",
   "account.loading": "Loading your account…",

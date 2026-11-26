@@ -229,6 +229,7 @@
     <string name="account_delete_confirm">确定删除账号吗？你的次数、套餐和登录信息都会被删除。你的裁决和你在案子中的说法也会被删除：你写的内容和名字都会被抹去，分享链接也会失效。</string>
     <string name="account_delete_yes">是的，删除</string>
     <string name="account_delete_cancel">保留我的账号</string>
+    <string name="account_delete_limited">尝试次数太多了，请稍后再试。</string>
     <string name="account_delete_failed">暂时没能删除账号，再试一次吧？</string>
     <string name="account_load_failed">没能加载你的账号，请稍后再试。</string>
     <string name="account_loading">正在加载你的账号……</string>

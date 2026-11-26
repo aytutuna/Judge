@@ -471,9 +471,11 @@ const pl: Locale = {
       "Usunąć konto? Usuniemy twoją pulę werdyktów, plan i dane logowania. Twoje werdykty i twoje wersje w sprawach też znikną: wymażemy twoje teksty i imiona, a linki do udostępniania przestaną działać.",
     "account.deleteYes": "Tak, usuń",
     "account.deleteCancel": "Zostaw moje konto",
+
+    "account.deleteLimited": "Za dużo prób. Spróbuj ponownie później.",
     "settings.passwordChange": "Zmień hasło",
     "settings.passwordCurrent": "Obecne hasło",
-    "settings.passwordChanged": "Hasło zmienione. Na innych urządzeniach zostałeś wylogowany.",
+    "settings.passwordChanged": "Hasło zmienione. Inne urządzenia zostały wylogowane.",
     "settings.deleteBillingApple": "Twój plan jest rozliczany przez App Store. Usunięcie konta go nie anuluje, więc najpierw anuluj go tam.",
     "settings.deleteBillingGoogle": "Twój plan jest rozliczany przez Google Play. Usunięcie konta go nie anuluje, więc najpierw anuluj go tam.",
     "settings.manageSubscription": "Zarządzaj subskrypcją",

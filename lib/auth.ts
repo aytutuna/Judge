@@ -547,7 +547,12 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
       // Privacy: no IP address or device string is stored with a session.
       session: {
         create: {
-          before: async (session) => ({ data: { ...session, ipAddress: null, userAgent: null } }),
+          // userAgent only says whether an app sign-in opened the session (the delete re-auth exemption).
+          before: async (session, context) => {
+            const headers = context?.headers ?? context?.request?.headers;
+            const fromApp = headers ? isAppRequest(headers) : false;
+            return { data: { ...session, ipAddress: null, userAgent: fromApp ? "app" : null } };
+          },
           after: async (session, context) => {
             const { noteSignIn } = await import("./analytics/devices");
             await noteSignIn(session.userId, context?.headers ?? context?.request?.headers);

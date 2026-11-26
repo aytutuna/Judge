@@ -481,6 +481,8 @@ const de: Locale = {
       "Konto löschen? Deine Credits, dein Tarif und deine Anmeldedaten werden gelöscht. Deine Urteile und deine Beiträge zu Fällen werden entfernt: Was du geschrieben hast und die Namen werden gelöscht, und die geteilten Links funktionieren nicht mehr.",
     "account.deleteYes": "Ja, löschen",
     "account.deleteCancel": "Konto behalten",
+
+    "account.deleteLimited": "Zu viele Versuche. Versuch es später noch mal.",
     "settings.passwordChange": "Passwort ändern",
     "settings.passwordCurrent": "Aktuelles Passwort",
     "settings.passwordChanged": "Passwort geändert. Auf deinen anderen Geräten wurdest du abgemeldet.",

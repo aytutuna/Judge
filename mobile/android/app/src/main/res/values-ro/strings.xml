@@ -235,6 +235,7 @@
     <string name="account_delete_confirm">Îți ștergi contul? Creditele, planul și datele de conectare vor fi șterse. Verdictele tale și părțile tale din cazuri vor fi eliminate: ce ai scris și numele se șterg, iar linkurile lor de distribuire nu vor mai funcționa.</string>
     <string name="account_delete_yes">Da, șterge-l</string>
     <string name="account_delete_cancel">Păstrez contul</string>
+    <string name="account_delete_limited">Prea multe încercări. Încearcă din nou mai târziu.</string>
     <string name="account_delete_failed">N-am putut șterge contul acum. Mai încerci o dată?</string>
     <string name="account_load_failed">N-am putut încărca contul tău. Încearcă din nou peste puțin timp.</string>
     <string name="account_loading">Se încarcă contul…</string>

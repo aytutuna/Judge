@@ -719,7 +719,7 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
     setError(null);
     const client = await loadClient();
     if (!client) return;
-    const res = await client.savePassword(password);
+    const res = await client.savePassword(password, undefined, lang);
     if (!res.ok && res.code === "password_required") {
       // The code sign-in is too old to replace a password: back to the code
       // step for a fresh one.

@@ -244,6 +244,7 @@
     <string name="account_delete_confirm">هل تريد حذف حسابك؟ سيُحذف رصيدك وخطتك وبيانات تسجيل الدخول. وستُزال أحكامك ورواياتك في القضايا: يُمحى ما كتبته والأسماء، وتتوقف روابط مشاركتها عن العمل.</string>
     <string name="account_delete_yes">نعم، احذفه</string>
     <string name="account_delete_cancel">الإبقاء على حسابي</string>
+    <string name="account_delete_limited">محاولات كثيرة جدًا. حاول مجددًا لاحقًا.</string>
     <string name="account_delete_failed">تعذّر حذف الحساب الآن. هلّا حاولت مرة أخرى؟</string>
     <string name="account_load_failed">تعذّر تحميل حسابك. حاول مجددًا بعد قليل.</string>
     <string name="account_loading">جارٍ تحميل حسابك…</string>

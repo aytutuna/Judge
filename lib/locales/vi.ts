@@ -478,6 +478,8 @@ const vi: Locale = {
       "Xóa tài khoản của bạn? Lượt, gói và thông tin đăng nhập sẽ bị xóa. Các phán quyết và phần của bạn trong các vụ sẽ bị gỡ: nội dung bạn viết và các tên bị xóa, liên kết chia sẻ cũng ngừng hoạt động.",
     "account.deleteYes": "Có, xóa đi",
     "account.deleteCancel": "Giữ tài khoản",
+
+    "account.deleteLimited": "Bạn thử quá nhiều lần rồi. Hãy thử lại sau nhé.",
     "settings.passwordChange": "Đổi mật khẩu",
     "settings.passwordCurrent": "Mật khẩu hiện tại",
     "settings.passwordChanged": "Đã đổi mật khẩu. Bạn đã được đăng xuất khỏi các thiết bị khác.",

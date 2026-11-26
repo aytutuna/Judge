@@ -204,7 +204,7 @@ export function AccountDetailPanel({
         </button>
       </section>
 
-      <dialog ref={dialogRef} className={styles.dialog} aria-labelledby="delete-title">
+      <dialog ref={dialogRef} className={styles.dialog} aria-labelledby="delete-title" onClose={() => setPassword("")}>
         <h2 id="delete-title" className={styles.dialogTitle}>
           {t(lang, "account.delete")}
         </h2>
@@ -326,7 +326,7 @@ export function AccountDetailSection() {
     }
     // Signed out meanwhile: the panel itself switches to the sign-in prompt.
     if (res.code === "signin_required") markSignedOut();
-    else setDeleteError(t(lang, deleteErrorKey(res.code)));
+    else setDeleteError(t(lang, deleteErrorKey(res.code, viewer.me?.hasPassword === true)));
   }
 
   return (

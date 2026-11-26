@@ -451,6 +451,8 @@ const zhHans: Locale = {
       "确定删除账号吗？你的次数、套餐和登录信息都会被删除。你的裁决和你在案子中的说法也会被删除：你写的内容和名字都会被抹去，分享链接也会失效。",
     "account.deleteYes": "是的，删除",
     "account.deleteCancel": "保留我的账号",
+
+    "account.deleteLimited": "尝试次数太多了，请稍后再试。",
     "settings.passwordChange": "修改密码",
     "settings.passwordCurrent": "当前密码",
     "settings.passwordChanged": "密码已修改，其他设备已退出登录。",

@@ -232,6 +232,7 @@
     <string name="account_delete_confirm">اپنا اکاؤنٹ حذف کریں؟ آپ کے کریڈٹس، پلان اور سائن ان کی تفصیلات حذف ہو جائیں گی۔ آپ کے فیصلے اور کیسوں میں آپ کی باتیں ہٹا دی جائیں گی: آپ کا لکھا ہوا اور نام مٹا دیے جائیں گے، اور ان کے شیئر لنکس کام کرنا بند کر دیں گے۔</string>
     <string name="account_delete_yes">ہاں، حذف کر دیں</string>
     <string name="account_delete_cancel">اکاؤنٹ رہنے دیں</string>
+    <string name="account_delete_limited">بہت زیادہ کوششیں ہو گئیں۔ بعد میں دوبارہ کوشش کریں۔</string>
     <string name="account_delete_failed">ابھی اکاؤنٹ حذف نہیں ہو سکا۔ ذرا دوبارہ کوشش کر کے دیکھیں۔</string>
     <string name="account_load_failed">آپ کا اکاؤنٹ لوڈ نہیں ہو سکا۔ تھوڑی دیر میں دوبارہ کوشش کریں۔</string>
     <string name="account_loading">آپ کا اکاؤنٹ لوڈ ہو رہا ہے…</string>

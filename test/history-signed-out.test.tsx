@@ -5,8 +5,8 @@ import { useHistory } from "../components/shell/useHistory";
 import { ANSWERED_KEY } from "../lib/history-store";
 import type { ViewerState } from "../lib/use-viewer";
 
-const mocked = vi.hoisted(() => ({ link: vi.fn() }));
-vi.mock("../lib/respondent-store", () => ({ linkStoredClaim: mocked.link }));
+const mocked = vi.hoisted(() => ({ link: vi.fn(), linkAll: vi.fn() }));
+vi.mock("../lib/respondent-store", () => ({ linkStoredClaim: mocked.link, linkAllStoredClaims: mocked.linkAll }));
 
 const row = {
   kind: "case",
@@ -36,6 +36,7 @@ beforeEach(() => {
   localStorage.clear();
   localStorage.setItem(ANSWERED_KEY, JSON.stringify([row]));
   mocked.link.mockReset();
+  mocked.linkAll.mockReset().mockResolvedValue(false);
   vi.stubGlobal(
     "fetch",
     vi.fn(async () => new Response(JSON.stringify({ rows: [], next: null }), { status: 200, headers: { "Content-Type": "application/json" } })),
@@ -52,6 +53,16 @@ describe("answers given signed out in the Verdicts list", () => {
     const { result } = renderHook(() => useHistory(signedOut));
     await waitFor(() => expect(result.current.items.some((i) => i.id === "case123")).toBe(true));
     expect(result.current.items.find((i) => i.id === "case123")?.removable).toBe(false);
+  });
+
+  it("claims whose row is gone are tried once after sign-in", async () => {
+    localStorage.removeItem(ANSWERED_KEY);
+    for (let mount = 0; mount < 2; mount++) {
+      const { unmount } = renderHook(() => useHistory(signedInAs("u2")));
+      await waitFor(() => expect(mocked.linkAll).toHaveBeenCalled());
+      unmount();
+    }
+    expect(mocked.linkAll).toHaveBeenCalledTimes(1);
   });
 
   it("an unsettled claim is posted once per page load, however often the list mounts", async () => {

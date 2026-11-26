@@ -3,8 +3,8 @@ import { z } from "zod";
 import { apiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
 import { isSameOrigin, reviewAccount } from "@/lib/auth";
 import { deadBearerResponse, lookupViewer } from "@/lib/bearer-guard";
-import { emailConfigured, langFromRequestUrl, sendPasswordChangedEmail } from "@/lib/email";
-import { hasPassword, setPassword } from "@/lib/password";
+import { emailConfigured, langFromRequest, sendPasswordChangedEmail } from "@/lib/email";
+import { setPassword } from "@/lib/password";
 import { checkUserLimits } from "@/lib/ratelimit";
 
 export const runtime = "nodejs";
@@ -27,7 +27,9 @@ const fail = (code: ApiErrorCode, status: number, message: string, headers: Reco
  * give `current` instead (password_wrong when it does not match). Otherwise
  * 403 password_required, and the app asks for the current password. The new
  * password is 8 to 128 characters (400 too_short, too_long). Other sessions
- * of the account are signed out; setting the first password signs out none.
+ * of the account are signed out and an email about it goes to the address, in
+ * the `lang` of the query, else the Accept-Language header; setting the first
+ * password signs out none and sends none.
  * The review account gets 403 invalid. Answers {ok: true}. */
 export async function POST(req: Request): Promise<NextResponse> {
   const { viewer, deadBearer, refused } = await lookupViewer(req);
@@ -57,14 +59,13 @@ export async function POST(req: Request): Promise<NextResponse> {
         "Retry-After": String("retryAfterSec" in limit ? limit.retryAfterSec : 60),
       });
     }
-    const replacing = await hasPassword(viewer.user.id);
     const result = await setPassword(viewer.user.id, viewer.sessionId, parsed.data.password, parsed.data.current);
     if (result === "current_required") return fail("password_required", 403, "Enter your current password.");
     if (result === "current_wrong") return fail("password_wrong", 403, "That password is not right.");
     if (result === "unverified") return fail("invalid", 403, "Sign in with an emailed code first.");
-    if (replacing && emailConfigured()) {
+    if (result === "replaced" && emailConfigured()) {
       try {
-        await sendPasswordChangedEmail({ to: viewer.user.email, lang: langFromRequestUrl(req.url) });
+        await sendPasswordChangedEmail({ to: viewer.user.email, lang: langFromRequest(req) });
       } catch (e) {
         console.error("[me] password notice failed:", e instanceof Error ? e.message : String(e));
       }

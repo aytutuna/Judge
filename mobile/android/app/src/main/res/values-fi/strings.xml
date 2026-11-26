@@ -232,6 +232,7 @@
     <string name="account_delete_confirm">Poistetaanko tilisi? Tuomiosaldosi, tilauksesi ja kirjautumistietosi poistetaan. Tuomiosi ja osuutesi jutuista poistetaan: kirjoittamasi teksti ja nimet pyyhitään, ja niiden jakolinkit lakkaavat toimimasta.</string>
     <string name="account_delete_yes">Kyllä, poista</string>
     <string name="account_delete_cancel">Älä poista</string>
+    <string name="account_delete_limited">Liian monta yritystä. Yritä uudelleen myöhemmin.</string>
     <string name="account_delete_failed">Tilin poistaminen ei onnistunut juuri nyt. Yritä uudelleen.</string>
     <string name="account_load_failed">Tiliäsi ei saatu ladattua. Yritä hetken päästä uudelleen.</string>
     <string name="account_loading">Ladataan tiliäsi…</string>

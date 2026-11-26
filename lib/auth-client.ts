@@ -144,10 +144,10 @@ export function passwordSaveErrorKey(code: ApiErrorCode | "network"): Key {
 }
 
 /** The message for a failed account deletion, from the route's error code. */
-export function deleteErrorKey(code: ApiErrorCode | "network"): Key {
-  if (code === "reauth_required") return "error.reauth_required";
+export function deleteErrorKey(code: ApiErrorCode | "network", hasPassword = false): Key {
+  if (code === "reauth_required") return hasPassword ? "error.password_required" : "error.reauth_required";
   if (code === "password_wrong") return "error.password_wrong";
-  if (code === "rate_limited") return "signin.rateLimited";
+  if (code === "rate_limited") return "account.deleteLimited";
   if (code === "network") return "signin.offline";
   return "account.deleteFailed";
 }

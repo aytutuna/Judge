@@ -95,7 +95,11 @@ export function useCase(
   const signedIn = Boolean(useViewer().me?.user);
   const wasSignedIn = useRef(signedIn);
   useEffect(() => {
-    if (wasSignedIn.current && !signedIn) bump();
+    if (wasSignedIn.current && !signedIn) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- the old view must not outlive the sign-in, even if the refetch fails
+      setLoad({ status: "loading", view: null, code: null });
+      bump();
+    }
     wasSignedIn.current = signedIn;
   }, [signedIn, bump]);
   const headerKey = extraHeaders ? JSON.stringify(extraHeaders) : "";

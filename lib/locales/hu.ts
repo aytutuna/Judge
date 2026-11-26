@@ -18,7 +18,7 @@ const hu: Locale = {
     },
     passwordChanged: {
       subject: "Megváltozott a Judge-jelszavad",
-      intro: "A Judge-jelszavadat ekkor módosították: {time}.",
+      intro: "A Judge-jelszavad ekkor változott meg: {time}.",
       contact: "Ha nem te voltál, azonnal írj a(z) {email} címre.",
     },
   },
@@ -479,6 +479,8 @@ const hu: Locale = {
       "Törlöd a fiókodat? A kreditjeid, az előfizetésed és a belépési adataid törlődnek. Az ítéleteidet és az ügyekben beküldött verzióidat eltávolítjuk: amit írtál, azt a nevekkel együtt töröljük, a megosztási linkjeik pedig megszűnnek működni.",
     "account.deleteYes": "Igen, törlöm",
     "account.deleteCancel": "Megtartom a fiókot",
+
+    "account.deleteLimited": "Túl sok próbálkozás. Próbáld újra később.",
     "settings.passwordChange": "Jelszó módosítása",
     "settings.passwordCurrent": "Jelenlegi jelszó",
     "settings.passwordChanged": "A jelszó megváltozott. A többi eszközödről kijelentkeztettünk.",

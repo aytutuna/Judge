@@ -472,9 +472,11 @@ const hr: Locale = {
       "Želiš izbrisati račun? Brišu se tvoji krediti, plan i podaci za prijavu. Tvoje presude i tvoje strane u slučajevima uklanjaju se: tvoji tekstovi i imena brišu se, a njihove poveznice za dijeljenje prestaju raditi.",
     "account.deleteYes": "Da, izbriši",
     "account.deleteCancel": "Zadrži račun",
+
+    "account.deleteLimited": "Previše pokušaja. Pokušaj ponovno kasnije.",
     "settings.passwordChange": "Promijeni lozinku",
     "settings.passwordCurrent": "Trenutna lozinka",
-    "settings.passwordChanged": "Lozinka je promijenjena. Odjavljen si s ostalih uređaja.",
+    "settings.passwordChanged": "Lozinka je promijenjena. Ostali uređaji su odjavljeni.",
     "settings.deleteBillingApple": "Tvoj paket naplaćuje se preko App Store. Brisanje računa ga ne otkazuje, pa ga prvo otkaži tamo.",
     "settings.deleteBillingGoogle": "Tvoj paket naplaćuje se preko Google Play. Brisanje računa ga ne otkazuje, pa ga prvo otkaži tamo.",
     "settings.manageSubscription": "Upravljaj pretplatom",

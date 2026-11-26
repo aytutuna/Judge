@@ -232,6 +232,7 @@
     <string name="account_delete_confirm">Vil du slette kontoen din? Kredittene, abonnementet og innloggingsdetaljene dine slettes. Dommene dine og sidene dine i saker fjernes: det du skrev og navnene slettes, og delingslenkene slutter å virke.</string>
     <string name="account_delete_yes">Ja, slett den</string>
     <string name="account_delete_cancel">Behold kontoen</string>
+    <string name="account_delete_limited">For mange forsøk. Prøv igjen senere.</string>
     <string name="account_delete_failed">Vi fikk ikke slettet kontoen akkurat nå. Vil du prøve igjen?</string>
     <string name="account_load_failed">Vi fikk ikke lastet kontoen din. Prøv igjen om litt.</string>
     <string name="account_loading">Laster kontoen din…</string>

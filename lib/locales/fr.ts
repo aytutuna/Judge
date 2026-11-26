@@ -485,6 +485,8 @@ const fr: Locale = {
       "Supprimer ton compte ? Tes crédits, ton offre et tes informations de connexion seront effacés. Tes verdicts et tes versions dans les dossiers seront supprimés : ce que tu as écrit et les noms seront effacés, et leurs liens de partage cesseront de fonctionner.",
     "account.deleteYes": "Oui, supprimer",
     "account.deleteCancel": "Garder mon compte",
+
+    "account.deleteLimited": "Trop de tentatives. Réessaie plus tard.",
     "settings.passwordChange": "Changer le mot de passe",
     "settings.passwordCurrent": "Mot de passe actuel",
     "settings.passwordChanged": "Mot de passe modifié. Tes autres appareils sont déconnectés.",

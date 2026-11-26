@@ -238,6 +238,7 @@
     <string name="account_delete_confirm">Usunąć konto? Usuniemy twoją pulę werdyktów, plan i dane logowania. Twoje werdykty i twoje wersje w sprawach też znikną: wymażemy twoje teksty i imiona, a linki do udostępniania przestaną działać.</string>
     <string name="account_delete_yes">Tak, usuń</string>
     <string name="account_delete_cancel">Zostaw moje konto</string>
+    <string name="account_delete_limited">Za dużo prób. Spróbuj ponownie później.</string>
     <string name="account_delete_failed">Nie udało się teraz usunąć konta. Spróbujesz jeszcze raz?</string>
     <string name="account_load_failed">Nie udało się wczytać konta. Spróbuj za chwilę.</string>
     <string name="account_loading">Wczytywanie konta…</string>

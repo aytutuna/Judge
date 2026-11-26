@@ -19,7 +19,7 @@ const fi: Locale = {
     passwordChanged: {
       subject: "Judge-salasanasi vaihdettiin",
       intro: "Judge-salasanasi vaihdettiin {time}.",
-      contact: "Jos se et ollut sinä, ota heti yhteyttä osoitteeseen {email}.",
+      contact: "Jos et tehnyt muutosta itse, ota heti yhteyttä osoitteeseen {email}.",
     },
   },
   strings: {
@@ -374,7 +374,7 @@ const fi: Locale = {
     "deletePage.webTitle": "Verkkosivulla",
     "deletePage.web": "Kirjaudu osoitteessa okjudge.com, avaa Tili, valitse Poista tili ja vahvista.",
     "deletePage.billingTitle": "Jos sinulla on tilaus",
-    "deletePage.billing": "Tilin poistaminen ei peru App Store- tai Google Play-kaupasta ostettua tilausta, ja kauppa veloittaa sinua edelleen. Peru se ensin App Store-kaupan tai Google Play-kaupan tilausasetuksista.",
+    "deletePage.billing": "Tilin poistaminen ei peru App Storesta tai Google Playstä ostettua tilausta, ja kauppa veloittaa sinua edelleen. Peru se ensin App Storen tai Google Playn tilausasetuksista.",
     "deletePage.removedTitle": "Mitä poistetaan",
     "deletePage.removed":
       "Tilisi, kirjautumistiedot, hyvitykset, tilaus ja käyttötapahtumat poistetaan. Tuomiosi ja puolesi jutuissa poistetaan: alkuperäinen teksti ja nimet pyyhitään heti, anonymisoitu teksti ja tuomio 30 päivää myöhemmin (jutussa 30 päivää siitä, kun kaikki siinä mukana olevat ovat poistaneet sen).",
@@ -481,11 +481,13 @@ const fi: Locale = {
       "Poistetaanko tilisi? Tuomiosaldosi, tilauksesi ja kirjautumistietosi poistetaan. Tuomiosi ja osuutesi jutuista poistetaan: kirjoittamasi teksti ja nimet pyyhitään, ja niiden jakolinkit lakkaavat toimimasta.",
     "account.deleteYes": "Kyllä, poista",
     "account.deleteCancel": "Älä poista",
+
+    "account.deleteLimited": "Liian monta yritystä. Yritä uudelleen myöhemmin.",
     "settings.passwordChange": "Vaihda salasana",
     "settings.passwordCurrent": "Nykyinen salasana",
-    "settings.passwordChanged": "Salasana vaihdettu. Muilta laitteiltasi on kirjauduttu ulos.",
-    "settings.deleteBillingApple": "Tilauksesi laskutetaan App Store-kaupan kautta. Tilin poistaminen ei peru sitä, joten peru se ensin siellä.",
-    "settings.deleteBillingGoogle": "Tilauksesi laskutetaan Google Play-kaupan kautta. Tilin poistaminen ei peru sitä, joten peru se ensin siellä.",
+    "settings.passwordChanged": "Salasana vaihdettu. Muut laitteesi on kirjattu ulos.",
+    "settings.deleteBillingApple": "Tilauksesi laskutetaan App Storen kautta. Tilin poistaminen ei peru sitä, joten peru se ensin siellä.",
+    "settings.deleteBillingGoogle": "Tilauksesi laskutetaan Google Playn kautta. Tilin poistaminen ei peru sitä, joten peru se ensin siellä.",
     "settings.manageSubscription": "Hallitse tilausta",
     "settings.deletePassword": "Salasanasi",
     "error.reauth_required": "Kirjaudu ulos ja takaisin sisään ja poista sitten tilisi.",

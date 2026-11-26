@@ -478,6 +478,8 @@ const tr: Locale = {
       "Hesabın silinsin mi? Kredilerin, planın ve giriş bilgilerin silinir. Kararların ve davalardaki tarafların kaldırılır: yazdıkların ve isimler silinir, paylaşım bağlantıları da çalışmaz olur.",
     "account.deleteYes": "Evet, sil",
     "account.deleteCancel": "Hesabım kalsın",
+
+    "account.deleteLimited": "Çok fazla deneme oldu. Daha sonra tekrar dene.",
     "settings.passwordChange": "Parolayı değiştir",
     "settings.passwordCurrent": "Şu anki parola",
     "settings.passwordChanged": "Parola değişti. Diğer cihazlarındaki oturumların kapatıldı.",
