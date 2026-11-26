@@ -12,6 +12,12 @@ import { getAuth } from "./auth";
  * code sign-in, then a new password). */
 export const FRESH_SIGNIN_MS = 5 * 60_000;
 
+/** Request header of an app build that can ask for the password or a fresh
+ * sign-in ("Judge-Reauth: 1"). Builds shipped before it cannot, and Apple and
+ * Google require deletion to keep working in them, so only website sessions
+ * and builds that send it are held to the re-auth rule. */
+export const REAUTH_HEADER = "Judge-Reauth";
+
 /** Deleting the account needs a sign-in this young, or the password. */
 export const DELETE_FRESH_MS = 10 * 60_000;
 

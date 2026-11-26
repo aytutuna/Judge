@@ -224,23 +224,41 @@ async function withPassword(token: string, userId: string, password: string) {
 }
 
 describe("DELETE /api/v1/me needs a recent sign-in or the password", () => {
+  it("a build that does not send Judge-Reauth deletes an old session with only the confirmation", async () => {
+    const { token, user } = await createDevSession("reauth0@verdict.local");
+    await ageSession(token, 600);
+    const res = await del({ authorization: `Bearer ${token}` });
+    expect(res.status).toBe(200);
+    expect(await rows('SELECT count(*) AS n FROM "user" WHERE id = ?', [user.id])).toBe(0);
+  });
+
+  it("a website session older than 10 minutes gets reauth_required", async () => {
+    const { token, user } = await createDevSession("reauth5@verdict.local");
+    await ageSession(token, 11);
+    const cookie = (await sessionCookieHeader(token)).split(";")[0];
+    const res = await del({ cookie, origin: "http://localhost:3600" });
+    expect(res.status).toBe(403);
+    expect(await res.json()).toMatchObject({ code: "reauth_required" });
+    expect(await rows('SELECT count(*) AS n FROM "user" WHERE id = ?', [user.id])).toBe(1);
+  });
+
   it("a session older than 10 minutes and no password: 403 reauth_required, nothing deleted", async () => {
     const { token, user } = await createDevSession("reauth1@verdict.local");
     await ageSession(token, 11);
-    const res = await del({ authorization: `Bearer ${token}` });
+    const res = await del({ authorization: `Bearer ${token}`, "judge-reauth": "1" });
     expect(res.status).toBe(403);
     expect(await res.json()).toMatchObject({ code: "reauth_required" });
     expect(await rows('SELECT count(*) AS n FROM "user" WHERE id = ?', [user.id])).toBe(1);
     // A session 9 minutes old still counts.
     await ageSession(token, 9);
-    expect((await del({ authorization: `Bearer ${token}` })).status).toBe(200);
+    expect((await del({ authorization: `Bearer ${token}`, "judge-reauth": "1" })).status).toBe(200);
   });
 
   it("an old session with the password: a wrong one is refused, the right one deletes", async () => {
     const { token, user } = await createDevSession("reauth2@verdict.local");
     await withPassword(token, user.id, "right password");
     await ageSession(token, 60);
-    const headers = { authorization: `Bearer ${token}` };
+    const headers = { authorization: `Bearer ${token}`, "judge-reauth": "1" };
     const wrong = await del(headers, { confirm: "delete", password: "wrong password" });
     expect(wrong.status).toBe(403);
     expect(await wrong.json()).toMatchObject({ code: "password_wrong" });
@@ -253,7 +271,7 @@ describe("DELETE /api/v1/me needs a recent sign-in or the password", () => {
   it("a password sent for an account without one does not stand in for a recent sign-in", async () => {
     const { token } = await createDevSession("reauth3@verdict.local");
     await ageSession(token, 60);
-    const res = await del({ authorization: `Bearer ${token}` }, { confirm: "delete", password: "anything" });
+    const res = await del({ authorization: `Bearer ${token}`, "judge-reauth": "1" }, { confirm: "delete", password: "anything" });
     expect(res.status).toBe(403);
     expect(await res.json()).toMatchObject({ code: "reauth_required" });
   });
@@ -262,7 +280,7 @@ describe("DELETE /api/v1/me needs a recent sign-in or the password", () => {
     const { token, user } = await createDevSession("reauth4@verdict.local");
     await withPassword(token, user.id, "right password");
     await ageSession(token, 60);
-    const headers = { authorization: `Bearer ${token}` };
+    const headers = { authorization: `Bearer ${token}`, "judge-reauth": "1" };
     for (let i = 0; i < 5; i++) {
       expect((await del(headers, { confirm: "delete", password: "wrong password" })).status).toBe(403);
     }
