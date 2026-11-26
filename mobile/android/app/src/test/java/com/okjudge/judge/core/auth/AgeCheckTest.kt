@@ -3,82 +3,106 @@ package com.okjudge.judge.core.auth
 import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.model.AgeStatus
+import com.okjudge.judge.core.model.MeResponse
+import com.okjudge.judge.core.model.WireJson
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.time.Instant
+import java.time.LocalDate
 
 class AgeCheckTest {
-    private val unconfirmed = AgeStatus(confirmed = false, blocked = false)
-    private val confirmed = AgeStatus(confirmed = true, blocked = false)
-    private val blocked = AgeStatus(confirmed = false, blocked = true)
+    private val needsDate = AgeStatus(confirmed = false, blocked = false, needsDob = true)
+    private val done = AgeStatus(confirmed = true)
+    private val finalBlock = AgeStatus(blocked = true)
+    private val oldBlock = AgeStatus(blocked = true, needsDob = true)
+
+    private fun at(iso: String) = Instant.parse(iso).toEpochMilli()
 
     @Test
-    fun playRanges_minorAdultOrUnknown() {
-        // Supervised and declared bands below 18 (Play's defaults: 0-12, 13-15, 16-17).
-        assertEquals(PlatformAge.MINOR, AgeCheck.fromRange(0, 12))
+    fun playRanges_underThirteenMinorAdultOrUnknown() {
+        assertEquals(PlatformAge.UNDER13, AgeCheck.fromRange(0, 12))
         assertEquals(PlatformAge.MINOR, AgeCheck.fromRange(13, 15))
         assertEquals(PlatformAge.MINOR, AgeCheck.fromRange(16, 17))
-        // 18+ is the top band: no upper bound.
         assertEquals(PlatformAge.ADULT, AgeCheck.fromRange(18, null))
         assertEquals(PlatformAge.ADULT, AgeCheck.fromRange(21, null))
-        // Not shared, or a custom band that straddles 18.
         assertEquals(PlatformAge.UNKNOWN, AgeCheck.fromRange(null, null))
         assertEquals(PlatformAge.UNKNOWN, AgeCheck.fromRange(16, null))
         assertEquals(PlatformAge.UNKNOWN, AgeCheck.fromRange(15, 20))
     }
 
     @Test
-    fun report_platformUnder18_isSentEvenForAConfirmedAccount() {
-        assertEquals(AgeCheck.Report(adult = false, source = "platform"), AgeCheck.report(PlatformAge.MINOR, unconfirmed, ticked = true))
-        assertEquals(AgeCheck.Report(adult = false, source = "platform"), AgeCheck.report(PlatformAge.MINOR, confirmed, ticked = false))
-        // Already blocked: nothing more to say.
-        assertNull(AgeCheck.report(PlatformAge.MINOR, blocked, ticked = false))
+    fun report_mapsTheStoreAnswer() {
+        assertEquals(AgeCheck.Report(adult = true), AgeCheck.report(PlatformAge.ADULT, needsDate))
+        assertEquals(AgeCheck.Report(adult = false), AgeCheck.report(PlatformAge.MINOR, needsDate))
+        assertEquals(AgeCheck.Report(adult = false, under13 = true), AgeCheck.report(PlatformAge.UNDER13, needsDate))
+        assertNull(AgeCheck.report(PlatformAge.UNKNOWN, needsDate))
+        assertNull(AgeCheck.report(null, needsDate))
     }
 
     @Test
-    fun report_platformAdult_beatsTheCheckbox() {
-        assertEquals(AgeCheck.Report(adult = true, source = "platform"), AgeCheck.report(PlatformAge.ADULT, unconfirmed, ticked = true))
-        assertEquals(AgeCheck.Report(adult = true, source = "platform"), AgeCheck.report(PlatformAge.ADULT, unconfirmed, ticked = false))
-        assertNull(AgeCheck.report(PlatformAge.ADULT, confirmed, ticked = false))
+    fun report_isSentForAConfirmedAccountToo() {
+        assertEquals(AgeCheck.Report(adult = true), AgeCheck.report(PlatformAge.ADULT, done))
+        assertEquals(AgeCheck.Report(adult = false), AgeCheck.report(PlatformAge.MINOR, done.copy(teen = true)))
     }
 
     @Test
-    fun report_unknownPlatform_fallsBackToTheCheckbox() {
-        assertEquals(AgeCheck.Report(adult = true, source = "checkbox"), AgeCheck.report(PlatformAge.UNKNOWN, unconfirmed, ticked = true))
-        assertEquals(AgeCheck.Report(adult = true, source = "checkbox"), AgeCheck.report(null, unconfirmed, ticked = true))
-        assertNull(AgeCheck.report(PlatformAge.UNKNOWN, unconfirmed, ticked = false))
-        assertNull(AgeCheck.report(PlatformAge.UNKNOWN, confirmed, ticked = true))
+    fun report_notAfterAFinalBlock_orForAServerWithoutTheCheck() {
+        assertNull(AgeCheck.report(PlatformAge.ADULT, finalBlock))
+        assertNull(AgeCheck.report(PlatformAge.MINOR, null))
+        // An old 18+ block still takes a date, so it still takes the signal.
+        assertEquals(AgeCheck.Report(adult = true), AgeCheck.report(PlatformAge.ADULT, oldBlock))
     }
 
     @Test
-    fun report_serverWithoutTheAgeCheck_isNeverSent() {
-        assertNull(AgeCheck.report(PlatformAge.MINOR, null, ticked = true))
-        assertNull(AgeCheck.report(PlatformAge.ADULT, null, ticked = true))
+    fun gate_followsTheServerState() {
+        assertEquals(AgeGate.NONE, AgeCheck.gate(signedIn = false, age = needsDate))
+        assertEquals(AgeGate.NONE, AgeCheck.gate(signedIn = true, age = null))
+        assertEquals(AgeGate.DATE, AgeCheck.gate(signedIn = true, age = needsDate))
+        assertEquals(AgeGate.DATE, AgeCheck.gate(signedIn = true, age = oldBlock))
+        assertEquals(AgeGate.BLOCKED, AgeCheck.gate(signedIn = true, age = finalBlock))
+        assertEquals(AgeGate.NONE, AgeCheck.gate(signedIn = true, age = done))
+        assertEquals(AgeGate.NONE, AgeCheck.gate(signedIn = true, age = done.copy(teen = true)))
     }
 
     @Test
-    fun gate() {
-        assertEquals(AgeGate.BLOCKED, AgeCheck.gate(PlatformAge.MINOR, signedIn = false, age = null, posting = false))
-        assertEquals(AgeGate.BLOCKED, AgeCheck.gate(PlatformAge.MINOR, signedIn = true, age = confirmed, posting = false))
-        assertEquals(AgeGate.BLOCKED, AgeCheck.gate(PlatformAge.ADULT, signedIn = true, age = blocked, posting = false))
-        assertEquals(AgeGate.CONFIRM, AgeCheck.gate(PlatformAge.UNKNOWN, signedIn = true, age = unconfirmed, posting = false))
-        // Waits for the phone and for a report in flight.
-        assertEquals(AgeGate.NONE, AgeCheck.gate(null, signedIn = true, age = unconfirmed, posting = false))
-        assertEquals(AgeGate.NONE, AgeCheck.gate(PlatformAge.ADULT, signedIn = true, age = unconfirmed, posting = true))
-        assertEquals(AgeGate.NONE, AgeCheck.gate(PlatformAge.UNKNOWN, signedIn = true, age = confirmed, posting = false))
-        assertEquals(AgeGate.NONE, AgeCheck.gate(PlatformAge.UNKNOWN, signedIn = true, age = null, posting = false))
-        assertEquals(AgeGate.NONE, AgeCheck.gate(PlatformAge.UNKNOWN, signedIn = false, age = null, posting = false))
+    fun ageState_decodesNewAndOldServers() {
+        val full = WireJson.json.decodeFromString(
+            MeResponse.serializer(),
+            """{"user":null,"entitlement":null,"age":{"confirmed":true,"blocked":false,"teen":true,"needsDob":false}}""",
+        )
+        assertEquals(AgeStatus(confirmed = true, teen = true), full.age)
+        val old = WireJson.json.decodeFromString(MeResponse.serializer(), """{"user":null,"age":{"confirmed":false,"blocked":true}}""")
+        assertEquals(AgeStatus(blocked = true), old.age)
     }
 
     @Test
-    fun checkbox_hiddenOnlyWhenThePhoneSaid18Plus() {
-        assertFalse(AgeCheck.needsCheckbox(PlatformAge.ADULT))
-        assertTrue(AgeCheck.needsCheckbox(PlatformAge.UNKNOWN))
-        assertTrue(AgeCheck.needsCheckbox(null))
-        assertEquals("platform", AgeCheck.confirmation(PlatformAge.ADULT).source)
-        assertEquals("checkbox", AgeCheck.confirmation(PlatformAge.UNKNOWN).source)
+    fun underThirteen_boundary() {
+        // 10:00 UTC is already the 26th at UTC+14.
+        val now = at("2026-11-25T10:00:00Z")
+        assertEquals(LocalDate.of(2026, 11, 26), AgeCheck.latestDate(now))
+        assertFalse(AgeCheck.underThirteen(LocalDate.of(2013, 11, 26), now))
+        assertTrue(AgeCheck.underThirteen(LocalDate.of(2013, 11, 27), now))
+        // One second before, the latest date is still the 25th.
+        val before = at("2026-11-25T09:59:59Z")
+        assertEquals(LocalDate.of(2026, 11, 25), AgeCheck.latestDate(before))
+        assertTrue(AgeCheck.underThirteen(LocalDate.of(2013, 11, 26), before))
+        assertFalse(AgeCheck.underThirteen(LocalDate.of(2013, 11, 25), before))
+    }
+
+    @Test
+    fun underThirteen_onTheLeapDay() {
+        val now = at("2028-02-29T00:00:00Z")
+        assertFalse(AgeCheck.underThirteen(LocalDate.of(2015, 2, 28), now))
+        assertTrue(AgeCheck.underThirteen(LocalDate.of(2015, 3, 1), now))
+        // Born on a leap day: still under on 28 February of a common year, 13 on 1 March (the web's rule).
+        val common = at("2029-02-28T00:00:00Z")
+        assertTrue(AgeCheck.underThirteen(LocalDate.of(2016, 2, 29), common))
+        assertFalse(AgeCheck.underThirteen(LocalDate.of(2016, 2, 28), common))
+        assertFalse(AgeCheck.underThirteen(LocalDate.of(2016, 2, 29), at("2029-03-01T00:00:00Z")))
+        assertFalse(AgeCheck.underThirteen(LocalDate.of(1990, 1, 1), now))
     }
 
     @Test

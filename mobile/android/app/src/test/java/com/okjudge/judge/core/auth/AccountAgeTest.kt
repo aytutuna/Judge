@@ -2,23 +2,19 @@ package com.okjudge.judge.core.auth
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
-import com.okjudge.judge.core.api.ApiResult
 import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.api.MemoryTokenStore
 import com.okjudge.judge.core.auth.Routes.Companion.ME
 import com.okjudge.judge.core.auth.Routes.Companion.SIGN_OUT
 import com.okjudge.judge.core.auth.Routes.Companion.VERIFY_CODE
 import com.okjudge.judge.core.auth.Routes.Companion.json
-import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.core.model.AgeStatus
-import com.okjudge.judge.i18n.AppLang
-import com.okjudge.judge.i18n.LocalizedStrings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
@@ -37,7 +33,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import java.util.concurrent.TimeUnit
+import java.time.LocalDate
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [36])
@@ -93,6 +89,9 @@ class AccountAgeTest {
         )
     }
 
+    private fun age(confirmed: Boolean = false, blocked: Boolean = false, teen: Boolean = false, needsDob: Boolean = false) =
+        """{"confirmed":$confirmed,"blocked":$blocked,"teen":$teen,"needsDob":$needsDob}"""
+
     private fun ageBody(index: Int = 0) =
         Json.parseToJsonElement(routes.requestsTo(AGE)[index].body!!.utf8()).jsonObject
 
@@ -104,77 +103,95 @@ class AccountAgeTest {
 
     private suspend fun Account.awaitPhone() = withTimeout(10_000) { platformAge.first { it != null } }
 
+    private suspend fun awaitSignal() = withTimeout(10_000) { while (routes.requestsTo(AGE).isEmpty()) delay(20) }
+
+    private val needsDate get() = me(age(needsDob = true))
+    private val finished get() = me(age(confirmed = true))
+    private val finalBlock get() = me(age(blocked = true))
+
     @Test
-    fun phoneSaysUnder18_reportsIt_andBlocks() = runBlocking {
-        phone = PlatformAge.MINOR
-        routes.always(ME, me("""{"confirmed":false,"blocked":false}"""))
-        routes.on(AGE, json(200, """{"confirmed":false,"blocked":true}"""))
+    fun adultSignal_isSentEvenForAConfirmedAccount() = runBlocking {
+        phone = PlatformAge.ADULT
+        routes.always(ME, finished)
+        routes.on(AGE, json(200, age(confirmed = true)))
         val (account, _) = account()
         account.refresh()
         assertTrue(account.needsPlatformAge(onSignIn = false))
         account.checkPlatformAge(context)
-        account.awaitAge { it.blocked }
-        assertEquals(false, ageBody()["adult"]!!.jsonPrimitive.content.toBoolean())
-        assertEquals("platform", ageBody()["source"]!!.jsonPrimitive.content)
-        account.awaitGate(AgeGate.BLOCKED)
-        Unit
-    }
-
-    @Test
-    fun phoneSays18Plus_confirmsWithoutTheCheckbox() = runBlocking {
-        phone = PlatformAge.ADULT
-        routes.always(ME, me("""{"confirmed":false,"blocked":false}"""))
-        routes.on(AGE, json(200, """{"age":{"confirmed":true,"blocked":false}}"""))
-        val (account, _) = account()
-        account.refresh()
-        account.checkPlatformAge(context)
-        account.awaitAge { it.confirmed }
+        awaitSignal()
         assertEquals("true", ageBody()["adult"]!!.jsonPrimitive.content)
         assertEquals("platform", ageBody()["source"]!!.jsonPrimitive.content)
+        assertNull(ageBody()["under13"])
         assertEquals(AgeGate.NONE, account.ageGate.value)
     }
 
     @Test
-    fun unknownPhone_tickedBeforeSignIn_sendsTheCheckbox() = runBlocking {
-        routes.always(ME, me("""{"confirmed":false,"blocked":false}"""))
-        routes.on(AGE, json(200, """{"confirmed":true,"blocked":false}"""))
+    fun minorSignal_isOnlyReported_theServerDecides() = runBlocking {
+        phone = PlatformAge.MINOR
+        routes.always(ME, needsDate)
+        routes.on(AGE, json(200, age(confirmed = true, teen = true, needsDob = true)))
         val (account, _) = account()
-        account.setAgeTicked(true)
+        account.refresh()
+        account.checkPlatformAge(context)
+        account.awaitAge { it.teen }
+        assertEquals("false", ageBody()["adult"]!!.jsonPrimitive.content)
+        assertNull(ageBody()["under13"])
+        assertTrue(account.teen.value)
+        assertTrue(account.statsLocked.value)
+        // Never closed by the phone's word: the date step is what shows.
+        assertEquals(AgeGate.DATE, account.ageGate.value)
+        assertNull(account.ageRefusal())
+    }
+
+    @Test
+    fun minorSignal_whenTheReportFails_blocksNothing() = runBlocking {
+        phone = PlatformAge.MINOR
+        routes.always(ME, finished)
+        routes.on(AGE, Routes.dropped())
+        val (account, _) = account()
+        account.refresh()
         account.checkPlatformAge(context)
         account.awaitPhone()
-        account.refresh()
-        account.awaitAge { it.confirmed }
-        assertEquals("checkbox", ageBody()["source"]!!.jsonPrimitive.content)
+        assertNull(account.ageRefusal())
         assertEquals(AgeGate.NONE, account.ageGate.value)
     }
 
     @Test
-    fun unknownPhone_unconfirmedAccount_getsTheSheet_untilItConfirms() = runBlocking {
-        routes.always(ME, me("""{"confirmed":false,"blocked":false}"""))
-        routes.on(AGE, json(200, """{"confirmed":true,"blocked":false}"""))
+    fun under13Signal_isSentWithTheFlag() = runBlocking {
+        phone = PlatformAge.UNDER13
+        routes.always(ME, needsDate)
+        routes.on(AGE, json(200, age(blocked = true)))
         val (account, _) = account()
         account.refresh()
         account.checkPlatformAge(context)
-        account.awaitGate(AgeGate.CONFIRM)
-        assertTrue(routes.requestsTo(AGE).isEmpty())
-
-        account.confirmAge()
-        assertTrue("nothing is sent before the box is ticked", routes.requestsTo(AGE).isEmpty())
-        account.setAgeTicked(true)
-        account.confirmAge()
-        account.awaitGate(AgeGate.NONE)
-        assertEquals("checkbox", ageBody()["source"]!!.jsonPrimitive.content)
-        // A confirmed account never asks the phone again.
-        assertFalse(account.needsPlatformAge(onSignIn = true))
+        account.awaitGate(AgeGate.BLOCKED)
+        assertEquals("false", ageBody()["adult"]!!.jsonPrimitive.content)
+        assertEquals("true", ageBody()["under13"]!!.jsonPrimitive.content)
     }
 
     @Test
-    fun confirmedAccount_neverAsksThePhone() = runBlocking {
-        routes.always(ME, me("""{"confirmed":true,"blocked":false}"""))
+    fun signal_isSentOncePerLaunch() = runBlocking {
+        phone = PlatformAge.ADULT
+        routes.always(ME, finished)
+        routes.always(AGE, json(200, age(confirmed = true)))
+        val (account, _) = account()
+        account.refresh()
+        account.checkPlatformAge(context)
+        awaitSignal()
+        account.refresh()
+        account.refresh()
+        assertEquals(1, routes.requestsTo(AGE).size)
+    }
+
+    @Test
+    fun finalBlock_isNeitherAskedNorReported() = runBlocking {
+        phone = PlatformAge.ADULT
+        routes.always(ME, finalBlock)
         val (account, _) = account()
         account.refresh()
         assertFalse(account.needsPlatformAge(onSignIn = false))
-        assertEquals(AgeGate.NONE, account.ageGate.value)
+        assertEquals(AgeGate.BLOCKED, account.ageGate.value)
+        assertTrue(routes.requestsTo(AGE).isEmpty())
         assertEquals(0, phoneAsked)
     }
 
@@ -182,132 +199,165 @@ class AccountAgeTest {
     fun serverWithoutTheAgeCheck_changesNothing() = runBlocking {
         routes.always(ME, me(null))
         val (account, _) = account()
-        account.setAgeTicked(true)
         account.refresh()
         account.checkPlatformAge(context)
         account.awaitPhone()
         assertTrue(routes.requestsTo(AGE).isEmpty())
         assertEquals(AgeGate.NONE, account.ageGate.value)
-    }
-
-    @Test
-    fun reportFailsOffline_theSheetShowsWhy() = runBlocking {
-        routes.always(ME, me("""{"confirmed":false,"blocked":false}"""))
-        routes.on(AGE, Routes.dropped())
-        val (account, _) = account()
-        account.setAgeTicked(true)
-        account.refresh()
-        account.checkPlatformAge(context)
-        account.awaitGate(AgeGate.CONFIRM)
-        withTimeout(10_000) { account.ageError.first { it != null } }
-        Unit
-    }
-
-    @Test
-    fun blocked403_fromAnyCall_opensTheBlockedScreen() = runBlocking {
-        routes.always(ME, me("""{"confirmed":true,"blocked":false}"""))
-        routes.on("GET /api/v1/me/history", json(403, """{"error":"age_blocked"}"""))
-        val (account, api) = account()
-        account.refresh()
-        val res = api.history()
-        account.awaitGate(AgeGate.BLOCKED)
-        val s = LocalizedStrings(context).of(AppLang.EN)
-        val message = Errors.message((res as ApiResult.Err).error, s, AppLang.EN)
-        assertEquals(s.appAgeBlockedTitle, message)
-    }
-
-    @Test
-    fun unconfirmed403_opensTheSheet_withItsOwnMessage() = runBlocking {
-        routes.always(ME, me("""{"confirmed":true,"blocked":false}"""))
-        routes.on("POST /api/v1/verdict", json(403, """{"error":"Confirm your age first","code":"age_unconfirmed"}"""))
-        val (account, api) = account()
-        account.refresh()
-        account.checkPlatformAge(context)
-        account.awaitPhone()
-        val res = api.startVerdictBody("{}")
-        account.awaitGate(AgeGate.CONFIRM)
-        val s = LocalizedStrings(context).of(AppLang.EN)
-        assertEquals(s.appAgeRequired, Errors.message((res as ApiResult.Err).error, s, AppLang.EN))
-    }
-
-    @Test
-    fun tickedSignIn_reportsTheAgeBeforeThePendingVerdictRuns() = runBlocking {
-        routes.on(VERIFY_CODE, Routes.grant("session-2"))
-        routes.always(ME, me("""{"confirmed":false,"blocked":false}"""))
-        routes.on(AGE, json(200, """{"confirmed":true,"blocked":false}"""))
-        val (account, _) = account(token = null)
-        account.checkPlatformAge(context)
-        account.awaitPhone()
-        account.setAgeTicked(true)
-        // What a verdict waiting behind sign-in would see when it is let go.
-        var refusalAtSignIn: String? = "not signed in"
-        account.onSignedIn = { refusalAtSignIn = account.ageRefusal() }
-        assertEquals(SignInResult.Success, account.verifyCode("ada@example.com", "123456"))
-        assertNull(refusalAtSignIn)
-        assertEquals("checkbox", ageBody()["source"]!!.jsonPrimitive.content)
         assertNull(account.ageRefusal())
-        assertEquals(AgeGate.NONE, account.ageGate.value)
     }
 
     @Test
-    fun tickedSignIn_reportFails_holdsThePendingVerdict_andShowsTheSheet() = runBlocking {
-        routes.on(VERIFY_CODE, Routes.grant("session-2"))
-        routes.always(ME, me("""{"confirmed":false,"blocked":false}"""))
-        routes.on(AGE, json(503, """{"error":"down","code":"unavailable"}"""))
-        val (account, _) = account(token = null)
-        account.checkPlatformAge(context)
-        account.awaitPhone()
-        account.setAgeTicked(true)
-        assertEquals(SignInResult.Success, account.verifyCode("ada@example.com", "123456"))
-        assertEquals(AgeCheck.UNCONFIRMED, account.ageRefusal())
-        account.awaitGate(AgeGate.CONFIRM)
-        assertTrue(account.ageError.value != null)
-    }
-
-    @Test
-    fun aPhoneThatNeverAnswers_timesOut_andTheSheetShows() = runBlocking {
+    fun aPhoneThatNeverAnswers_timesOut_andNothingIsSent() = runBlocking {
         phoneHangs = true
-        routes.always(ME, me("""{"confirmed":false,"blocked":false}"""))
+        routes.always(ME, finished)
         val (account, _) = account(platformTimeoutMs = 200)
         account.refresh()
-        assertEquals(AgeCheck.UNCONFIRMED, account.ageRefusal())
         account.checkPlatformAge(context)
         assertEquals(PlatformAge.UNKNOWN, account.awaitPhone())
-        account.awaitGate(AgeGate.CONFIRM)
-        Unit
+        assertTrue(routes.requestsTo(AGE).isEmpty())
     }
 
     @Test
-    fun under18WhileACheckboxReportIsInFlight_isSentAfterIt() = runBlocking {
-        phone = PlatformAge.MINOR
-        routes.always(ME, me("""{"confirmed":false,"blocked":false}"""))
-        routes.on(AGE, json(200, """{"confirmed":true,"blocked":false}""").newBuilder().headersDelay(500, TimeUnit.MILLISECONDS).build())
-        routes.on(AGE, json(200, """{"confirmed":true,"blocked":true}"""))
-        val (account, _) = account()
-        account.setAgeTicked(true)
-        scope.launch { account.refresh() }
-        withTimeout(10_000) { account.agePosting.first { it } }
-        account.checkPlatformAge(context)
-        account.awaitAge { it.blocked }
-        assertEquals("checkbox", ageBody(0)["source"]!!.jsonPrimitive.content)
-        assertEquals("false", ageBody(1)["adult"]!!.jsonPrimitive.content)
-        account.awaitGate(AgeGate.BLOCKED)
-        Unit
-    }
-
-    @Test
-    fun purchasesAndVerdictsWait_untilTheAccountIsConfirmed() = runBlocking {
-        routes.always(ME, me("""{"confirmed":false,"blocked":false}"""))
+    fun noDateYet_showsTheDateStep_untilItIsAccepted() = runBlocking {
+        routes.always(ME, needsDate)
+        routes.on(AGE, json(200, age(confirmed = true)))
         val (account, _) = account()
         account.refresh()
+        assertEquals(AgeGate.DATE, account.ageGate.value)
         assertEquals(AgeCheck.UNCONFIRMED, account.ageRefusal())
-        account.onAgeGate(AgeCheck.BLOCKED)
+        account.submitDob(LocalDate.of(1990, 5, 17))
+        account.awaitGate(AgeGate.NONE)
+        assertEquals(setOf("dob"), ageBody().keys)
+        assertEquals("1990-05-17", ageBody()["dob"]!!.jsonPrimitive.content)
+        assertNull(account.ageRefusal())
+        assertFalse(account.ageFailed.value)
+    }
+
+    @Test
+    fun anUnder13Date_endsInTheFinalRefusal() = runBlocking {
+        routes.always(ME, needsDate)
+        routes.on(AGE, json(200, age(blocked = true)))
+        val (account, _) = account()
+        account.refresh()
+        account.submitDob(LocalDate.now().minusYears(10))
+        account.awaitGate(AgeGate.BLOCKED)
         assertEquals(AgeCheck.BLOCKED, account.ageRefusal())
     }
 
     @Test
+    fun aTeenDate_unlocksTheAccount_asATeen() = runBlocking {
+        routes.always(ME, needsDate)
+        routes.on(AGE, json(200, age(confirmed = true, teen = true)))
+        val (account, _) = account()
+        account.refresh()
+        account.submitDob(LocalDate.now().minusYears(15))
+        account.awaitGate(AgeGate.NONE)
+        assertTrue(account.teen.value)
+    }
+
+    @Test
+    fun anOldAdultsOnlyBlock_takesADate_andLifts() = runBlocking {
+        routes.always(ME, me(age(blocked = true, needsDob = true)))
+        routes.on(AGE, json(200, age(confirmed = true)))
+        val (account, _) = account()
+        account.refresh()
+        assertEquals(AgeGate.DATE, account.ageGate.value)
+        account.submitDob(LocalDate.of(1985, 1, 1))
+        account.awaitGate(AgeGate.NONE)
+        assertNull(account.ageRefusal())
+    }
+
+    @Test
+    fun dateAlreadySet_409_refetchesAndMovesOn() = runBlocking {
+        routes.on(ME, needsDate)
+        routes.on(ME, finished)
+        routes.on(AGE, json(409, """{"error":"set","code":"age_set"}"""))
+        val (account, _) = account()
+        account.refresh()
+        account.submitDob(LocalDate.of(1990, 5, 17))
+        account.awaitGate(AgeGate.NONE)
+        assertFalse(account.ageFailed.value)
+    }
+
+    @Test
+    fun dateAlreadySet_butStillAsked_saysItFailed() = runBlocking {
+        routes.always(ME, needsDate)
+        routes.on(AGE, json(409, """{"error":"set","code":"age_set"}"""))
+        val (account, _) = account()
+        account.refresh()
+        account.submitDob(LocalDate.of(1990, 5, 17))
+        assertEquals(AgeGate.DATE, account.ageGate.value)
+        assertTrue(account.ageFailed.value)
+    }
+
+    @Test
+    fun blocked403_onTheDate_refetchesIntoTheRefusal() = runBlocking {
+        routes.on(ME, needsDate)
+        routes.always(ME, finalBlock)
+        routes.on(AGE, json(403, """{"error":"blocked","code":"age_blocked"}"""))
+        val (account, _) = account()
+        account.refresh()
+        account.submitDob(LocalDate.of(1990, 5, 17))
+        account.awaitGate(AgeGate.BLOCKED)
+        assertFalse(account.ageFailed.value)
+    }
+
+    @Test
+    fun otherFailures_keepTheStep() = runBlocking {
+        routes.always(ME, needsDate)
+        routes.on(AGE, json(503, """{"error":"down","code":"unavailable"}"""))
+        routes.on(AGE, Routes.dropped())
+        routes.on(AGE, json(400, """{"error":"bad","code":"invalid"}"""))
+        val (account, _) = account()
+        account.refresh()
+        repeat(3) {
+            account.submitDob(LocalDate.of(1990, 5, 17))
+            assertTrue(account.ageFailed.value)
+            assertEquals(AgeGate.DATE, account.ageGate.value)
+        }
+        assertEquals(3, routes.requestsTo(AGE).size)
+    }
+
+    @Test
+    fun blocked403_fromAnyCall_refetchesIntoTheRefusal() = runBlocking {
+        routes.on(ME, finished)
+        routes.always(ME, finalBlock)
+        routes.on("GET /api/v1/me/history", json(403, """{"error":"age_blocked"}"""))
+        val (account, api) = account()
+        account.refresh()
+        api.history()
+        account.awaitGate(AgeGate.BLOCKED)
+        Unit
+    }
+
+    @Test
+    fun unconfirmed403_refetchesIntoTheDateStep() = runBlocking {
+        routes.on(ME, finished)
+        routes.always(ME, needsDate)
+        routes.on("POST /api/v1/verdict", json(403, """{"error":"Confirm your age first","code":"age_unconfirmed"}"""))
+        val (account, api) = account()
+        account.refresh()
+        api.startVerdictBody("{}")
+        account.awaitGate(AgeGate.DATE)
+        Unit
+    }
+
+    @Test
+    fun signingIn_readsTheAgeBeforeThePendingVerdictRuns() = runBlocking {
+        routes.on(VERIFY_CODE, Routes.grant("session-2"))
+        routes.always(ME, needsDate)
+        val (account, _) = account(token = null)
+        var refusalAtSignIn: String? = "not signed in"
+        account.onSignedIn = { refusalAtSignIn = account.ageRefusal() }
+        assertEquals(SignInResult.Success, account.verifyCode("ada@example.com", "123456"))
+        assertEquals(AgeCheck.UNCONFIRMED, refusalAtSignIn)
+        assertEquals(AgeGate.DATE, account.ageGate.value)
+    }
+
+    @Test
     fun aFailedDeletion_isKeptForTheAgeCover() = runBlocking {
-        routes.always(ME, me("""{"confirmed":false,"blocked":true}"""))
+        routes.always(ME, finalBlock)
         routes.on(Routes.DELETE_ME, json(503, """{"error":"down","code":"unavailable"}"""))
         val (account, _) = account()
         account.refresh()
@@ -317,13 +367,17 @@ class AccountAgeTest {
     }
 
     @Test
-    fun signingOut_clearsTheTick() = runBlocking {
-        routes.always(ME, me("""{"confirmed":true,"blocked":false}"""))
+    fun signingOut_clearsTheCoverAndTheFailure() = runBlocking {
+        routes.always(ME, needsDate)
+        routes.on(AGE, Routes.dropped())
         routes.on(SIGN_OUT, json(200, """{"success":true}"""))
         val (account, _) = account()
-        account.setAgeTicked(true)
+        account.refresh()
+        account.submitDob(LocalDate.of(1990, 5, 17))
+        assertTrue(account.ageFailed.value)
         account.signOut()
-        assertFalse(account.ageTicked.value)
+        assertFalse(account.ageFailed.value)
+        assertEquals(AgeGate.NONE, account.ageGate.value)
     }
 
     private companion object {
