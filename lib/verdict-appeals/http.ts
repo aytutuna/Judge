@@ -56,7 +56,7 @@ export function verdictAppealHandler(req: Request, id: string): Promise<NextResp
     const gate = await signedIn(req);
     if ("response" in gate) return gate.response;
     const userId = gate.viewer.user.id;
-    const limited = await limitGate(userId, "premium_verdict", true);
+    const limited = await limitGate(userId, "premium_verdict", true, req.headers);
     if (limited) return limited;
     const owned = await ownedVerdict(id, userId);
     if (owned === "not_found") return fail("not_found", NOT_FOUND);

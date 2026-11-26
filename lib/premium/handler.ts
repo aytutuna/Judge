@@ -40,7 +40,7 @@ import { evidenceEnabled } from "@/lib/features";
 import { agreementRefusal } from "@/lib/feedback/agreement";
 import { firstNameOf, type OriginalPayload } from "@/lib/originals-types";
 import { saveVerdictWithOriginals } from "@/lib/originals/save";
-import { checkPremiumSiteCap, checkUserLimits, type UserBucket } from "@/lib/ratelimit";
+import { checkPremiumSiteCap, checkUserLimits, FREE_DEVICE_MESSAGE, type UserBucket } from "@/lib/ratelimit";
 import { ClarifyRequest, withPublicPanel, type VerdictApiResponse, type VerdictRequest } from "@/lib/types";
 import { parseVenue } from "@/lib/venues";
 import { acceptedHeaders, POLL_AFTER_MS, pollPath, wantsAsync, type VerdictAcceptedResponse } from "@/lib/verdict-poll";
@@ -102,7 +102,7 @@ async function signedInGate(req: Request): Promise<Gate> {
 
 /** The per-user limit for `bucket`, plus the site-wide daily cap for
  * verdicts. Null when the request may go on. Fails closed. */
-async function limitGate(userId: string, bucket: UserBucket): Promise<NextResponse | null> {
+async function limitGate(userId: string, bucket: UserBucket, headers?: Headers): Promise<NextResponse | null> {
   try {
     const user = await checkUserLimits(userId, bucket);
     if (!user.ok) {
@@ -114,9 +114,10 @@ async function limitGate(userId: string, bucket: UserBucket): Promise<NextRespon
           });
     }
     if (bucket !== "premium_verdict") return null;
-    const site = await checkPremiumSiteCap(userId);
+    const site = await checkPremiumSiteCap(userId, new Date(), headers);
     if (!site.ok) {
       if (site.code === "unavailable") return unavailable();
+      if (site.code === "free_device") return fail("rate_limited", FREE_DEVICE_MESSAGE, { retryAfterSec: site.retryAfterSec });
       return fail("daily_cap", "Judging has reached today's capacity — try again tomorrow.", {
         retryAfterSec: site.retryAfterSec,
       });
@@ -278,7 +279,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
     }
     if (prior.status === "consumed" && prior.verdictId) return replay(userId, prior.verdictId);
   } else {
-    const limited = await limitGate(userId, "premium_verdict");
+    const limited = await limitGate(userId, "premium_verdict", req.headers);
     if (limited) return limited;
   }
 

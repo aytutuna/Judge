@@ -56,6 +56,7 @@ vi.mock("@/lib/entitlements", () => ({
 vi.mock("@/lib/ratelimit", () => ({
   checkUserLimits: track("userLimits", m.checkUserLimits),
   checkPremiumSiteCap: track("siteCap", m.checkPremiumSiteCap),
+  FREE_DEVICE_MESSAGE: "One free verdict per device a day.",
 }));
 vi.mock("@/lib/claude", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/claude")>()),
@@ -489,6 +490,13 @@ describe("premium verdict: gates and error codes", () => {
   it("503 daily_cap from the site-wide premium cap", async () => {
     m.checkPremiumSiteCap.mockResolvedValue({ ok: false, code: "daily_cap", retryAfterSec: 3600 });
     expect(await expectError(await POST(request(premium())), 503, "daily_cap")).toMatchObject({ retryAfterSec: 3600 });
+    expect(m.reservePremiumVerdict).not.toHaveBeenCalled();
+  });
+
+  it("429 rate_limited with the device message when the device already had its free verdict today", async () => {
+    m.checkPremiumSiteCap.mockResolvedValue({ ok: false, code: "free_device", retryAfterSec: 7200 });
+    const body = await expectError(await POST(request(premium())), 429, "rate_limited");
+    expect(body).toMatchObject({ retryAfterSec: 7200, error: expect.stringContaining("free verdict per device") });
     expect(m.reservePremiumVerdict).not.toHaveBeenCalled();
   });
 

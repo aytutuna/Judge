@@ -75,6 +75,7 @@ import {
   checkIpLimits,
   checkPremiumSiteCap,
   checkUserLimits,
+  FREE_DEVICE_MESSAGE,
   type LimitDecision,
   type UserBucket,
 } from "@/lib/ratelimit";
@@ -197,6 +198,7 @@ export function invalidBody(issue: { message?: string; path: PropertyKey[]; code
 
 function limitRefusal(decision: Exclude<LimitDecision, { ok: true }>): NextResponse {
   if (decision.code === "unavailable") return fail("unavailable");
+  if (decision.code === "free_device") return fail("rate_limited", FREE_DEVICE_MESSAGE, { retryAfterSec: decision.retryAfterSec });
   return decision.code === "daily_cap"
     ? fail("daily_cap", "Judging has reached today's capacity — try again tomorrow.", { retryAfterSec: decision.retryAfterSec })
     : fail("rate_limited", "Too many requests — take a breather and try again later.", {
@@ -205,7 +207,12 @@ function limitRefusal(decision: Exclude<LimitDecision, { ok: true }>): NextRespo
 }
 
 /** Per-user limit, then (when a unit may be reserved) the site-wide cap. */
-export async function limitGate(userId: string, bucket: UserBucket, siteCap: boolean): Promise<NextResponse | null> {
+export async function limitGate(
+  userId: string,
+  bucket: UserBucket,
+  siteCap: boolean,
+  headers?: Headers,
+): Promise<NextResponse | null> {
   try {
     const user = await checkUserLimits(userId, bucket);
     if (!user.ok) return limitRefusal(user);
@@ -213,17 +220,17 @@ export async function limitGate(userId: string, bucket: UserBucket, siteCap: boo
     console.error("[cases] limit check failed:", e instanceof Error ? e.message : String(e));
     return fail("unavailable");
   }
-  return siteCap ? premiumGate(userId) : null;
+  return siteCap ? premiumGate(userId, headers) : null;
 }
 
 const PREMIUM_OFF = "Verdicts are not available on this server right now.";
 
 /** What a premium run needs on top of the per-user limit: Premium switched
  * on, and the site-wide cap. */
-async function premiumGate(userId: string): Promise<NextResponse | null> {
+async function premiumGate(userId: string, headers?: Headers): Promise<NextResponse | null> {
   if (!premiumEnabled()) return fail("not_configured", PREMIUM_OFF);
   try {
-    const site = await checkPremiumSiteCap(userId);
+    const site = await checkPremiumSiteCap(userId, new Date(), headers);
     return site.ok ? null : limitRefusal(site);
   } catch (e) {
     console.error("[cases] limit check failed:", e instanceof Error ? e.message : String(e));
@@ -418,7 +425,7 @@ export function createCaseHandler(req: Request): Promise<NextResponse> {
     const userId = gate.viewer.user.id;
     const unagreed = await agreementRefusal(userId);
     if (unagreed) return unagreed;
-    const limited = await limitGate(userId, "case_create", true);
+    const limited = await limitGate(userId, "case_create", true, req.headers);
     if (limited) return limited;
     await maybeSweepCases();
 
@@ -468,7 +475,7 @@ export function writeSideHandler(req: Request, id: string): Promise<NextResponse
     const userId = gate.viewer.user.id;
     const unagreed = await agreementRefusal(userId);
     if (unagreed) return unagreed;
-    const limited = await limitGate(userId, "premium_verdict", true);
+    const limited = await limitGate(userId, "premium_verdict", true, req.headers);
     if (limited) return limited;
     await maybeSweepCases();
     const row = await ownedCase(id, userId, req);
@@ -569,7 +576,7 @@ export function judgeCaseHandler(req: Request, id: string): Promise<NextResponse
     const gate = await signedIn(req);
     if ("response" in gate) return gate.response;
     const userId = gate.viewer.user.id;
-    const limited = await limitGate(userId, "premium_verdict", true);
+    const limited = await limitGate(userId, "premium_verdict", true, req.headers);
     if (limited) return limited;
     await maybeSweepCases();
     const row = await ownedCase(id, userId, req);
@@ -637,7 +644,7 @@ async function appealCommon(
   const gate = await signedIn(req);
   if ("response" in gate) return gate.response;
   const userId = gate.viewer.user.id;
-  const limited = await limitGate(userId, "premium_verdict", true);
+  const limited = await limitGate(userId, "premium_verdict", true, req.headers);
   if (limited) return limited;
   await maybeSweepCases();
   const loaded = await load(userId);

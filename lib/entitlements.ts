@@ -94,6 +94,14 @@ const SCHEMA = [
     created_at      TEXT NOT NULL,
     PRIMARY KEY (source, transaction_id)
   )`,
+  // One free verdict a day per device or browser: who holds the day.
+  `CREATE TABLE IF NOT EXISTS free_device_claims (
+    device_key  TEXT NOT NULL,
+    day         TEXT NOT NULL,
+    user_id     TEXT NOT NULL,
+    created_at  TEXT NOT NULL,
+    PRIMARY KEY (device_key, day)
+  )`,
   // Kept when an account is deleted: one welcome credit per email, ever.
   // age_blocked_at: that email's account was blocked by the age check
   // (lib/age.ts), so a new one starts blocked. age_block_final: the block was
@@ -543,6 +551,37 @@ export async function countPremiumToday(now: Date = new Date()): Promise<number>
     args: [iso(dayStart)],
   });
   return Number(rs.rows[0]?.n ?? 0);
+}
+
+/**
+ * One free verdict a day per device or browser: claims today (UTC) for every
+ * key of `keys` on behalf of `userId`, unless another account already holds
+ * one of them (the same account may claim again). All or none, so a refusal
+ * leaves nothing claimed. Returns whether the verdict may go ahead.
+ */
+export async function claimFreeVerdictDay(userId: string, keys: string[], now: Date = new Date()): Promise<boolean> {
+  if (keys.length === 0) return true;
+  const nowIso = iso(now);
+  const day = nowIso.slice(0, 10);
+  const marks = keys.map(() => "?").join(", ");
+  const claims = keys.map(
+    (key): InStatement => ({
+      sql: `INSERT INTO free_device_claims (device_key, day, user_id, created_at)
+            SELECT ?, ?, ?, ?
+            WHERE NOT EXISTS (SELECT 1 FROM free_device_claims WHERE day = ? AND user_id <> ? AND device_key IN (${marks}))
+            ON CONFLICT (device_key, day) DO NOTHING`,
+      args: [key, day, userId, nowIso, day, userId, ...keys],
+    }),
+  );
+  const results = await writeBatch([
+    { sql: "DELETE FROM free_device_claims WHERE day < ?", args: [day] },
+    ...claims,
+    {
+      sql: `SELECT count(*) AS n FROM free_device_claims WHERE day = ? AND user_id = ? AND device_key IN (${marks})`,
+      args: [day, userId, ...keys],
+    },
+  ]);
+  return Number(results[results.length - 1].rows[0].n) === keys.length;
 }
 
 /** No grant on the account but its welcome credit, for a user id column. */
@@ -1014,6 +1053,8 @@ export async function deleteUserEntitlements(userId: string): Promise<void> {
     { sql: "DELETE FROM subscriptions WHERE user_id = ?", args: [userId] },
     { sql: "DELETE FROM entitlement_grants WHERE user_id = ?", args: [userId] },
     { sql: "DELETE FROM entitlement_accounts WHERE user_id = ?", args: [userId] },
+    // A deleted account does not hand its device's day back.
+    { sql: "UPDATE free_device_claims SET user_id = '' WHERE user_id = ?", args: [userId] },
   ]);
 }
 

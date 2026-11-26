@@ -13,7 +13,9 @@
 import { createHmac } from "node:crypto";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
-import { rateLimitSubject } from "./client-ip";
+import { analyticsDb } from "./analytics/db";
+import { isDeviceId } from "./analytics/validate";
+import { clientIp, rateLimitSubject } from "./client-ip";
 import { signal } from "./signals";
 
 const MINUTE_MS = 60_000;
@@ -26,7 +28,7 @@ const REDIS_TOTAL_TIMEOUT_MS = 3_000;
 
 export type LimitDecision =
   | { ok: true }
-  | { ok: false; code: "rate_limited" | "daily_cap"; retryAfterSec: number }
+  | { ok: false; code: "rate_limited" | "daily_cap" | "free_device"; retryAfterSec: number }
   | { ok: false; code: "unavailable"; error: string };
 
 export function redisConfigured(): boolean {
@@ -456,38 +458,63 @@ function dailyCap(value: string | undefined, fallback: number): number {
   return raw && Number.isInteger(n) && n >= 0 ? n : fallback;
 }
 
-/** PREMIUM_DAILY_CAP as a non-negative integer (0 pauses premium). */
+/** PREMIUM_DAILY_CAP as a non-negative integer (0 pauses free verdicts). */
 export function premiumDailyCap(env: Record<string, string | undefined> = process.env): number {
   return dailyCap(env.PREMIUM_DAILY_CAP, DEFAULT_PREMIUM_DAILY_CAP);
 }
 
-/** WELCOME_DAILY_CAP: the share of the daily cap that accounts on their
- * welcome credit alone may use. */
+/** WELCOME_DAILY_CAP: how many runs accounts on their welcome credit alone
+ * may start per UTC day (with PREMIUM_DAILY_CAP, the lower one counts). */
 export function welcomeDailyCap(env: Record<string, string | undefined> = process.env): number {
   return dailyCap(env.WELCOME_DAILY_CAP, DEFAULT_WELCOME_DAILY_CAP);
 }
 
+/** What a free verdict is claimed against for the day: the account's own
+ * devices (the apps' Device-Id, recorded at sign-in) and, for a request
+ * without a bearer token (the website, which keeps no identifier), the
+ * visitor's address as a keyed hash. */
+async function freeDeviceKeys(userId: string, headers: Headers): Promise<string[]> {
+  const keys = new Set<string>();
+  const rs = await (await analyticsDb()).execute({ sql: "SELECT device_id FROM account_devices WHERE user_id = ?", args: [userId] });
+  for (const row of rs.rows) keys.add(`d:${String(row.device_id)}`);
+  const sent = headers.get("device-id")?.trim() ?? "";
+  if (isDeviceId(sent)) keys.add(`d:${sent}`);
+  if (!/^bearer\s/i.test(headers.get("authorization") ?? "")) keys.add(`ip:${visitorKey(clientIp(headers))}`);
+  return [...keys];
+}
+
+export const FREE_DEVICE_MESSAGE = "One free verdict per device a day. Try again tomorrow, or buy a verdict.";
+
 /**
- * Site-wide premium cost breaker: refuses once PREMIUM_DAILY_CAP premium
- * pipeline runs have started this UTC day. Counted from the reservations in
- * the main database, refunded ones included (a refused or failed run still
- * cost its model calls), so it holds across restarts and instances without
- * extra state. Clarifying questions are not counted here; the per-account
- * daily clarify window bounds them. An account that never had anything but
- * its welcome credit is also held to WELCOME_DAILY_CAP, so throwaway
- * sign-ups cannot use up the runs paying accounts rely on. Fails closed.
+ * The cost breaker for free verdicts: refuses once PREMIUM_DAILY_CAP (or
+ * WELCOME_DAILY_CAP, whichever is lower) runs by accounts that never had
+ * anything but their welcome credit have started this UTC day. Counted from
+ * the reservations in the main database, refunded ones included (a failed
+ * run still cost its model calls), so it holds across restarts and
+ * instances. Accounts with a bought credit or a plan are never held to it.
+ * A free account is also held to one free verdict a day per device (see
+ * freeDeviceKeys), when the request's headers are passed. Clarifying
+ * questions are not counted here; the per-account clarify window bounds
+ * them. Fails closed.
  */
-export async function checkPremiumSiteCap(userId: string, now: Date = new Date()): Promise<LimitDecision> {
+export async function checkPremiumSiteCap(
+  userId: string,
+  now: Date = new Date(),
+  headers?: Headers,
+): Promise<LimitDecision> {
   const cap = premiumDailyCap();
   const nextDayMs = (Math.floor(now.getTime() / DAY_MS) + 1) * DAY_MS;
   try {
     const ent = await import("./entitlements");
-    const full =
-      cap === 0 ||
-      (await ent.countPremiumToday(now)) >= cap ||
-      ((await ent.hasWelcomeCreditOnly(userId)) && (await ent.countWelcomeToday(now)) >= welcomeDailyCap());
-    if (full) {
+    if (!(await ent.hasWelcomeCreditOnly(userId))) return { ok: true };
+    if (cap === 0 || (await ent.countWelcomeToday(now)) >= Math.min(cap, welcomeDailyCap())) {
       return { ok: false, code: "daily_cap", retryAfterSec: retryAfterSec(nextDayMs, now.getTime()) };
+    }
+    if (headers && (await ent.getEntitlement(userId, now)).credits > 0) {
+      const keys = await freeDeviceKeys(userId, headers);
+      if (!(await ent.claimFreeVerdictDay(userId, keys, now))) {
+        return { ok: false, code: "free_device", retryAfterSec: retryAfterSec(nextDayMs, now.getTime()) };
+      }
     }
     return { ok: true };
   } catch (e) {
