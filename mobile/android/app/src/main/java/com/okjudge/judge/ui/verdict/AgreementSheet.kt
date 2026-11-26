@@ -27,7 +27,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.okjudge.judge.core.feedback.Agreement
 import com.okjudge.judge.i18n.LocalStrings
-import com.okjudge.judge.ui.age.AgeCheckbox
+import com.okjudge.judge.ui.components.LabeledCheckbox
 import com.okjudge.judge.ui.components.PrimaryButton
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
@@ -61,7 +61,7 @@ fun AgreementSheet(state: Agreement.State, onContinue: () -> Unit, onDismiss: ()
                 .padding(start = 20.dp, top = 8.dp, end = 20.dp, bottom = 24.dp),
         ) {
             Text(s.consentSensitiveTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
-            AgeCheckbox(ticked, { ticked = it }, Modifier.padding(top = 16.dp), enabled = !state.busy, label = s.consentSensitiveBody)
+            LabeledCheckbox(ticked, { ticked = it }, s.consentSensitiveBody, Modifier.padding(top = 16.dp), enabled = !state.busy)
             if (state.failed) {
                 Text(
                     s.errorFallback,

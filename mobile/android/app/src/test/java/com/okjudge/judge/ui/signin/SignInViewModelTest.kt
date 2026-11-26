@@ -82,16 +82,15 @@ class SignInViewModelTest {
         withTimeout(10_000) { state.first(predicate) }
 
     @Test
-    fun continuing_countsAsTheConsent() = runBlocking {
+    fun continuing_movesToTheCodeStep() = runBlocking {
         routes.always(SEND_CODE, json(200, """{"success":true}"""))
         val vm = vm()
         vm.await { it.providers is Account.Providers.Ready }
-        assertFalse(account.ageTicked.value)
         assertTrue(vm.state.value.canGoogle)
         vm.onEmailChange("ada@example.com")
         vm.continueWithEmail(AppLang.EN)
         vm.await { it.step == SignInStep.CODE }
-        assertTrue(account.ageTicked.value)
+        Unit
     }
 
     @Test
@@ -360,17 +359,6 @@ class SignInViewModelTest {
         vm.forgotPassword(AppLang.EN)
         val s = vm.await { it.step == SignInStep.CODE }
         assertEquals("", s.password)
-    }
-
-    @Test
-    fun aFailedSend_takesTheConsentBack() = runBlocking {
-        routes.always(SEND_CODE, json(503, """{"code":"unavailable"}"""))
-        val vm = vm()
-        vm.await { it.providers is Account.Providers.Ready }
-        vm.onEmailChange("ada@example.com")
-        vm.continueWithEmail(AppLang.EN)
-        vm.await { it.busy == null && it.error != null }
-        assertFalse(account.ageTicked.value)
     }
 
     @Test

@@ -962,7 +962,7 @@ class ScreensTest {
     }
 
     @Test
-    fun signIn_emailScreen_hasNoAgeBox_andTagsTheLastMethod() {
+    fun signIn_emailScreen_tagsTheLastMethod() {
         var continued = 0
         val providers = Account.Providers.Ready(ServerConfig(SignInProviders(google = true, emailCode = true, password = true)))
         compose.setContent {
@@ -975,7 +975,6 @@ class ScreensTest {
             }
         }
         val s = UiTestSupport.s(AppLang.EN)
-        compose.onNodeWithText(s.appAgeCheckbox).assertDoesNotExist()
         compose.onNodeWithTag(SignInTags.GOOGLE).assertIsEnabled()
         compose.onAllNodesWithTag(SignInTags.LAST_USED).assertCountEquals(1)
         compose.onNodeWithTag(SignInTags.CONTINUE).assertIsEnabled().performClick()

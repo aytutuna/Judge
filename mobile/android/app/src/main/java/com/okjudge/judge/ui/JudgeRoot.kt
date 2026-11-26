@@ -66,7 +66,7 @@ import com.okjudge.judge.core.auth.AgeCheck
 import com.okjudge.judge.core.auth.AgeGate
 import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.ui.age.AgeBlockedScreen
-import com.okjudge.judge.ui.age.AgeConfirmScreen
+import com.okjudge.judge.ui.age.AgeDateScreen
 import com.okjudge.judge.core.data.Appearance
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.LangPref
@@ -123,6 +123,7 @@ import com.okjudge.judge.core.display.Venues
 import com.okjudge.judge.core.display.eventCode
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
+import java.time.LocalDate
 
 @Serializable data object HomeKey : NavKey
 @Serializable data object JudgingKey : NavKey
@@ -587,7 +588,8 @@ fun JudgeRoot(
                                     } else {
                                         null
                                     }
-                                    val askConsent by container.consent.ask.collectAsStateWithLifecycle()
+                                    val teen by account.teen.collectAsStateWithLifecycle()
+                                    val askConsent = container.consent.ask.collectAsStateWithLifecycle().value && !teen
                                     LaunchedEffect(accountState is Account.State.SignedIn) {
                                         if (accountState is Account.State.SignedIn) container.consent.refresh() else container.consent.clear()
                                     }
@@ -692,6 +694,8 @@ fun JudgeRoot(
                                     val store by purchases.state.collectAsStateWithLifecycle()
                                     val purchasesOn = (providers as? Account.Providers.Ready)?.config?.pricing?.purchasesEnabled == true
                                     val usageStats by container.settings.usageStats.collectAsStateWithLifecycle(initialValue = true)
+                                    val teen by account.teen.collectAsStateWithLifecycle()
+                                    val statsLocked by account.statsLocked.collectAsStateWithLifecycle()
                                     LaunchedEffect(Unit) {
                                         purchases.refresh()
                                         account.refresh()
@@ -720,7 +724,8 @@ fun JudgeRoot(
                                                 backStack.add(SignInKey(thenVerdict = false))
                                             }
                                         },
-                                        usageStats = usageStats,
+                                        usageStats = usageStats && !statsLocked,
+                                        teen = teen,
                                         onUsageStats = { on -> scope.launch { container.settings.setUsageStats(on) } },
                                         onOpenLink = { openLink(context, it) },
                                         siteBaseUrl = container.config.shareBaseUrl,
@@ -847,7 +852,7 @@ fun JudgeRoot(
                     signedIn = accountNow is Account.State.SignedIn,
                     onSignOut = { container.appScope.launch { account.signOut() } },
                     onDelete = { container.appScope.launch { account.deleteAccount() } },
-                    onConfirm = { container.appScope.launch { account.confirmAge() } },
+                    onSubmitDob = { container.appScope.launch { account.submitDob(it) } },
                     onContact = { sendEmail(context, AgeCheck.SUPPORT_EMAIL) },
                 )
                 }
@@ -856,7 +861,7 @@ fun JudgeRoot(
     }
 }
 
-/** The age check over the whole app: the confirmation sheet or the adults-only screen. Back leaves the app. */
+/** The age check over the whole app: the date step or the final refusal. Back leaves the app. */
 @Composable
 private fun AgeOverlay(
     gate: AgeGate,
@@ -864,7 +869,7 @@ private fun AgeOverlay(
     signedIn: Boolean,
     onSignOut: () -> Unit,
     onDelete: () -> Unit,
-    onConfirm: () -> Unit,
+    onSubmitDob: (LocalDate) -> Unit,
     onContact: () -> Unit,
 ) {
     if (gate == AgeGate.NONE) return
@@ -873,23 +878,13 @@ private fun AgeOverlay(
     val busy by account.working.collectAsStateWithLifecycle()
     val deleteFailed by account.deleteFailed.collectAsStateWithLifecycle()
     when (gate) {
-        AgeGate.CONFIRM -> {
-            val s = LocalStrings.current
-            val lang = LocalLang.current
-            val ticked by account.ageTicked.collectAsStateWithLifecycle()
-            // Signing in set the flag as consent; the sheet's box starts empty.
-            LaunchedEffect(Unit) { account.setAgeTicked(false) }
+        AgeGate.DATE -> {
             val posting by account.agePosting.collectAsStateWithLifecycle()
-            val error by account.ageError.collectAsStateWithLifecycle()
-            val phone by account.platformAge.collectAsStateWithLifecycle()
-            AgeConfirmScreen(
-                ticked = ticked,
-                // The phone already said 18+ and only its report failed: no box to tick.
-                needsCheckbox = AgeCheck.needsCheckbox(phone),
+            val failed by account.ageFailed.collectAsStateWithLifecycle()
+            AgeDateScreen(
                 busy = busy || posting,
-                error = error?.let { Errors.message(it, s, lang) },
-                onTicked = account::setAgeTicked,
-                onContinue = onConfirm,
+                failed = failed,
+                onSubmit = onSubmitDob,
                 onSignOut = onSignOut,
                 onDelete = onDelete,
                 deleteFailed = deleteFailed,

@@ -53,7 +53,7 @@ object Errors {
         "no_credits", "fair_use", "in_progress", "bad_origin", "not_found",
         "case_closed", "case_expired", "appeal_used", "appeal_limit", "not_party", "own_case", "too_large",
         "unsupported_media", "too_many_files", "evidence_invalid", "anonymize_failed", "removed",
-        "names_unavailable", "agreement_required",
+        "names_unavailable", "agreement_required", "age_set", "not_for_teens",
     )
 
     /** A server wait as a whole phrase, rounding up: minutes below 90, hours beyond. */
@@ -92,8 +92,8 @@ object Errors {
         // An async verdict that failed with `refused` reads like a refused verdict.
         if (effective == "refused") return s.refusedNote
         // The age gate opens over the screen; the box under it says why.
-        if (effective == "age_blocked") return s.appAgeBlockedTitle
-        if (effective == "age_unconfirmed") return s.appAgeRequired
+        if (effective == "age_blocked") return s.errorAgeBlocked
+        if (effective == "age_unconfirmed") return s.errorAgeUnconfirmed
         if (effective != null && effective in KNOWN_CODES) {
             return when (effective) {
                 "rate_limited" -> s.errorRateLimited(formatWait(s, retryAfterSec))

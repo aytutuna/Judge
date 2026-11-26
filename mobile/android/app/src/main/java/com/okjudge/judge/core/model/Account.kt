@@ -90,9 +90,17 @@ data class Entitlement(
     val isPremium: Boolean get() = subscription != null || credits > 0
 }
 
-/** `age` of GET /api/v1/me and the answer of POST /api/v1/me/age. A block never lifts. */
+/**
+ * `age` of GET /api/v1/me and the answer of POST /api/v1/me/age. [needsDob] alone
+ * decides whether the date step shows; an old server sends neither [teen] nor it.
+ */
 @Serializable
-data class AgeStatus(val confirmed: Boolean = false, val blocked: Boolean = false)
+data class AgeStatus(
+    val confirmed: Boolean = false,
+    val blocked: Boolean = false,
+    val teen: Boolean = false,
+    val needsDob: Boolean = false,
+)
 
 /**
  * GET /api/v1/me. Both null when the request carried no valid session; [age]

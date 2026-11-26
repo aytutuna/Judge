@@ -470,13 +470,20 @@ class JudgeApi(
         return execute(getClient, req) { _, text -> WireJson.json.decodeFromString(MeResponse.serializer(), text) }
     }
 
-    /** POST /api/v1/me/age: the account is 18+ ([adult]) or not, by the checkbox or the platform's signal. */
-    suspend fun reportAge(adult: Boolean, source: String): ApiResult<AgeStatus> {
-        val body = buildJsonObject {
+    /** POST /api/v1/me/age with the store's answer ([under13] only with `adult = false`). */
+    suspend fun reportAge(adult: Boolean, under13: Boolean = false): ApiResult<AgeStatus> = postAge(
+        buildJsonObject {
             put("adult", adult)
-            put("source", source)
-        }.toString()
-        val req = request(url("api", "v1", "me", "age")).post(body.toRequestBody(JSON)).build()
+            put("source", "platform")
+            if (under13) put("under13", true)
+        },
+    )
+
+    /** POST /api/v1/me/age with the date of birth, `YYYY-MM-DD`, accepted once. */
+    suspend fun submitDob(dob: String): ApiResult<AgeStatus> = postAge(buildJsonObject { put("dob", dob) })
+
+    private suspend fun postAge(body: JsonObject): ApiResult<AgeStatus> {
+        val req = request(url("api", "v1", "me", "age")).post(body.toString().toRequestBody(JSON)).build()
         return execute(accountClient, req) { _, text ->
             // The age object itself, or wrapped as on /me.
             val obj = WireJson.json.parseToJsonElement(text) as? JsonObject ?: throw SerializationException("not an object")

@@ -1,28 +1,30 @@
 package com.okjudge.judge.ui.age
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.selection.toggleable
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDefaults
+import androidx.compose.material3.DisplayMode
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,9 +33,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.LiveRegionMode
-import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
@@ -44,81 +51,136 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
+import android.content.res.Configuration
 import com.okjudge.judge.core.auth.AgeCheck
+import com.okjudge.judge.i18n.AppLang
+import com.okjudge.judge.i18n.LocalLang
 import com.okjudge.judge.i18n.LocalStrings
-import com.okjudge.judge.ui.components.JudgeIcons
 import com.okjudge.judge.ui.components.PrimaryButton
 import com.okjudge.judge.ui.components.TextAction
-import com.okjudge.judge.ui.components.TintedIcon
-import com.okjudge.judge.ui.components.rememberIcon
 import com.okjudge.judge.ui.theme.JudgeShapes
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 object AgeTags {
-    const val CHECKBOX = "age.checkbox"
+    const val PICKER = "age.picker"
     const val CONTINUE = "age.continue"
+    const val DATE = "age.date"
     const val CONFIRM = "age.confirm"
+    const val CONFIRM_TEXT = "age.confirmText"
+    const val CONFIRM_YES = "age.confirmYes"
+    const val CHANGE = "age.change"
     const val BLOCKED = "age.blocked"
     const val SIGN_OUT = "age.signOut"
     const val DELETE = "age.delete"
     const val ERROR = "age.error"
 }
 
-/** "I'm 18 or older" (or another [label]), the whole row tappable. */
+/** Material's own picker texts and date format follow the system locale; this makes them follow the app's language. */
 @Composable
-fun AgeCheckbox(ticked: Boolean, onTicked: (Boolean) -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true, label: String? = null) {
-    val s = LocalStrings.current
-    Row(
-        modifier
-            .fillMaxWidth()
-            .clip(JudgeShapes.field)
-            .toggleable(value = ticked, enabled = enabled, role = Role.Checkbox, onValueChange = onTicked)
-            .testTag(AgeTags.CHECKBOX)
-            .padding(vertical = 10.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
-        val box = RoundedCornerShape(6.dp)
-        Box(
-            Modifier
-                .size(24.dp)
-                .clip(box)
-                .background(if (ticked) Palette.ink else Palette.paper)
-                .border(1.5.dp, if (ticked) Palette.ink else Palette.line2, box),
-            contentAlignment = Alignment.Center,
-        ) {
-            if (ticked) TintedIcon(rememberIcon(Palette.ivory) { JudgeIcons.check(it) }, 16)
-        }
-        Text(label ?: s.appAgeCheckbox, style = JudgeType.bodyStrong)
-    }
+private fun InAppLanguage(lang: AppLang, content: @Composable () -> Unit) {
+    val base = LocalContext.current
+    val config = remember(base, lang) { Configuration(base.resources.configuration).apply { setLocale(lang.locale) } }
+    val context = remember(base, config) { base.createConfigurationContext(config) }
+    CompositionLocalProvider(LocalContext provides context, LocalConfiguration provides config, content = content)
 }
 
-/** Over the whole app until the signed-in account confirms 18+. */
+private fun LocalDate.utcMillis(): Long = atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
+
+private fun Long.utcDate(): LocalDate = Instant.ofEpochMilli(this).atOffset(ZoneOffset.UTC).toLocalDate()
+
+/**
+ * Over the whole app while the account has no date of birth: the picker, then
+ * for an under-13 date one confirm step before anything is sent. The picked
+ * date and the step live in saved state, so rotation and a killed process
+ * keep them. The only ways past it are a date, signing out or deleting the account.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AgeConfirmScreen(
-    ticked: Boolean,
-    needsCheckbox: Boolean,
+fun AgeDateScreen(
     busy: Boolean,
-    error: String?,
-    onTicked: (Boolean) -> Unit,
-    onContinue: () -> Unit,
+    failed: Boolean,
+    onSubmit: (LocalDate) -> Unit,
     onSignOut: () -> Unit,
     onDelete: () -> Unit,
     deleteFailed: Boolean = false,
+    nowMillis: () -> Long = System::currentTimeMillis,
 ) {
     val s = LocalStrings.current
-    Cover(Modifier.testTag(AgeTags.CONFIRM)) {
-        Text(s.appAgeTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
-        Text(s.appAgeLead, style = JudgeType.lead, modifier = Modifier.padding(top = 10.dp, bottom = 20.dp))
-        if (needsCheckbox) AgeCheckbox(ticked, onTicked, enabled = !busy)
-        error?.let { ErrorNote(it) }
-        PrimaryButton(
-            text = s.appAgeContinue,
-            enabled = (ticked || !needsCheckbox) && !busy,
-            onClick = onContinue,
-            modifier = Modifier.fillMaxWidth().padding(top = 20.dp).testTag(AgeTags.CONTINUE),
-        )
+    val lang = LocalLang.current
+    val latest = remember { AgeCheck.latestDate(nowMillis()) }
+    // Typing a birth year is quicker than paging back through months; the calendar stays one tap away on the toggle.
+    val picker = rememberDatePickerState(
+        initialDisplayMode = DisplayMode.Input,
+        yearRange = 1900..latest.year,
+        selectableDates = remember(latest) {
+            object : SelectableDates {
+                override fun isSelectableDate(utcTimeMillis: Long) = utcTimeMillis <= latest.utcMillis()
+                override fun isSelectableYear(year: Int) = year <= latest.year
+            }
+        },
+    )
+    var confirming by rememberSaveable { mutableStateOf(false) }
+    val date = picker.selectedDateMillis?.utcDate()
+    val asking = confirming && date != null
+    val focus = remember { FocusRequester() }
+    LaunchedEffect(asking) { if (asking) focus.requestFocus() }
+
+    Cover(Modifier.testTag(if (asking) AgeTags.CONFIRM else AgeTags.DATE)) {
+        Text(s.ageTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
+        if (asking && date != null) {
+            val written = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(lang.locale).format(date)
+            Text(
+                s.ageConfirmDate(written),
+                style = JudgeType.lead,
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 8.dp)
+                    .focusRequester(focus)
+                    .focusable()
+                    .semantics { liveRegion = LiveRegionMode.Polite }
+                    .testTag(AgeTags.CONFIRM_TEXT),
+            )
+            if (failed) ErrorNote(s.ageFailed)
+            PrimaryButton(
+                text = s.ageConfirmYes,
+                enabled = !busy,
+                onClick = { onSubmit(date) },
+                modifier = Modifier.fillMaxWidth().padding(top = 20.dp).testTag(AgeTags.CONFIRM_YES),
+            )
+            TextAction(
+                s.ageChange,
+                onClick = { confirming = false },
+                color = Palette.ink2,
+                enabled = !busy,
+                modifier = Modifier.padding(top = 14.dp).align(Alignment.CenterHorizontally).testTag(AgeTags.CHANGE),
+            )
+        } else {
+            Text(s.ageLead, style = JudgeType.lead, modifier = Modifier.padding(top = 10.dp, bottom = 12.dp))
+            InAppLanguage(lang) {
+                DatePicker(
+                    state = picker,
+                    title = null,
+                    headline = null,
+                    modifier = Modifier.fillMaxWidth().semantics { contentDescription = s.ageTitle }.testTag(AgeTags.PICKER),
+                    colors = DatePickerDefaults.colors(containerColor = Palette.ivory),
+                )
+            }
+            if (failed) ErrorNote(s.ageFailed)
+            PrimaryButton(
+                text = s.ageContinue,
+                enabled = date != null && !busy,
+                onClick = {
+                    val picked = date ?: return@PrimaryButton
+                    if (AgeCheck.underThirteen(picked, nowMillis())) confirming = true else onSubmit(picked)
+                },
+                modifier = Modifier.fillMaxWidth().padding(top = 20.dp).testTag(AgeTags.CONTINUE),
+            )
+        }
         TextAction(
             s.accountSignOut,
             onClick = onSignOut,
@@ -130,7 +192,7 @@ fun AgeConfirmScreen(
     }
 }
 
-/** Judge is for adults only: shown for under-18s and blocked accounts, with a way to sign out. */
+/** The final block, for under-13s: no date field and no retry, only a way to sign out or delete. */
 @Composable
 fun AgeBlockedScreen(
     signedIn: Boolean,
@@ -143,19 +205,20 @@ fun AgeBlockedScreen(
     val s = LocalStrings.current
     val linkStyle = TextLinkStyles(SpanStyle(color = Palette.terraInk, textDecoration = TextDecoration.Underline))
     // The address is a link inside the sentence wherever the language put it.
-    val body = s.appAgeBlockedBody(AgeCheck.SUPPORT_EMAIL)
-    val at = body.indexOf(AgeCheck.SUPPORT_EMAIL)
+    val contact = s.ageBlockedContact(AgeCheck.SUPPORT_EMAIL)
+    val at = contact.indexOf(AgeCheck.SUPPORT_EMAIL)
     val text = buildAnnotatedString {
         if (at < 0) {
-            append(body)
+            append(contact)
         } else {
-            append(body.substring(0, at))
+            append(contact.substring(0, at))
             withLink(LinkAnnotation.Clickable(tag = "support", styles = linkStyle) { onContact() }) { append(AgeCheck.SUPPORT_EMAIL) }
-            append(body.substring(at + AgeCheck.SUPPORT_EMAIL.length))
+            append(contact.substring(at + AgeCheck.SUPPORT_EMAIL.length))
         }
     }
     Cover(Modifier.testTag(AgeTags.BLOCKED)) {
-        Text(s.appAgeBlockedTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
+        Text(s.ageBlockedTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
+        Text(s.ageBlocked, style = JudgeType.lead, modifier = Modifier.padding(top = 10.dp))
         Text(text, style = JudgeType.lead, modifier = Modifier.padding(top = 10.dp))
         if (signedIn) {
             PrimaryButton(
@@ -206,14 +269,14 @@ private fun ErrorNote(text: String) {
     )
 }
 
-/** An ivory page over everything, taking every touch so nothing underneath reacts. */
+/** An ivory page over everything, taking every touch so nothing underneath reacts (no clickable: that would merge the whole page into one TalkBack item). */
 @Composable
 private fun Cover(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
     Box(
         modifier
             .fillMaxSize()
             .background(Palette.ivory)
-            .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null, onClick = {})
+            .pointerInput(Unit) { detectTapGestures { } }
             .safeDrawingPadding()
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 20.dp),
