@@ -98,6 +98,11 @@ export function setAnalytics(on: boolean): void {
   if (queue.length >= FLUSH_AT) flush();
 }
 
+/** The browser asks not to be tracked (Do Not Track or Global Privacy Control). */
+export function browserOptedOut(): boolean {
+  return optedOut();
+}
+
 /** False once analytics is known to be off or the visitor opted out. */
 export function isTracking(): boolean {
   return enabled !== false && !optedOut() && usageStatsOn();

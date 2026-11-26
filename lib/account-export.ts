@@ -65,7 +65,8 @@ async function original(subject: string) {
 
 async function account(userId: string) {
   const [user] = await query(
-    `SELECT id, email, name, image, emailVerified, createdAt, age_confirmed_at, age_source, age_blocked_at
+    `SELECT id, email, name, image, emailVerified, createdAt, age_confirmed_at, age_source, age_blocked_at,
+            age_dob, age_dob_at, age_signal
      FROM "user" WHERE id = ?`,
     [userId],
   );
@@ -80,6 +81,9 @@ async function account(userId: string) {
     ageConfirmedAt: text(user?.age_confirmed_at),
     ageConfirmedBy: text(user?.age_source),
     ageBlockedAt: text(user?.age_blocked_at),
+    dateOfBirth: text(user?.age_dob),
+    dateOfBirthGivenAt: text(user?.age_dob_at),
+    storeAgeSignal: text(user?.age_signal),
     signInMethods: methods.map((m) => ({ provider: String(m.providerId), addedAt: text(m.createdAt) })),
     hasPassword: await hasPassword(userId),
   };

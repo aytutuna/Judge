@@ -5,6 +5,7 @@
  * welcome credits; it is only signalled, never refused. Server only.
  */
 
+import { teenSql } from "@/lib/age";
 import { signal } from "@/lib/signals";
 import { analyticsDb } from "./db";
 import { track } from "./track";
@@ -21,6 +22,16 @@ export async function accountsOnDevice(deviceId: string): Promise<number> {
     args: [deviceId],
   });
   return Number(rs.rows[0]?.n ?? 0);
+}
+
+/** The device has been signed in to by an account under 18. */
+export async function deviceOfTeen(deviceId: string): Promise<boolean> {
+  const db = await analyticsDb();
+  const rs = await db.execute({
+    sql: `SELECT 1 FROM account_devices d JOIN "user" u ON u.id = d.user_id WHERE d.device_id = ? AND ${teenSql("u")} LIMIT 1`,
+    args: [deviceId],
+  });
+  return rs.rows.length > 0;
 }
 
 /** Records the device a session was opened on, and the sign_in event. Never

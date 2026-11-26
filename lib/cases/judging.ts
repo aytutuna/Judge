@@ -16,10 +16,10 @@
 import { nanoid } from "nanoid";
 import { track } from "@/lib/analytics/track";
 import type { CaseMode, PartyLetter } from "@/lib/case-types";
-import { teenSql } from "@/lib/age";
+import { caseHasTeen, caseTeenExists } from "@/lib/age";
 import { claudeJson, LITE_MODEL, withChildSafety, withUsageMeter, type UsageTotals } from "@/lib/claude";
 import type { InStatement } from "@libsql/client";
-import { getDb, STORED_FRAMEWORK } from "@/lib/db";
+import { STORED_FRAMEWORK } from "@/lib/db";
 import { consumeStatement, entitlementWriteBatch, refundStatements, type StatementGuard } from "@/lib/entitlements";
 import { caseStampStatement } from "@/lib/feedback/db";
 import { CASE_REMOVAL_REASON_SQL, ensureOriginalsTables } from "@/lib/originals/db";
@@ -239,18 +239,6 @@ function emptyStats(): PremiumStats {
 }
 
 type Judged = { outcome: JudgedOutcome | null; error: string | null; log: (id: string | null, o: string) => void };
-
-/** SQL: some account on the case (owner, respondent, a seat or an invite)
- * is under 18. `id` is the SQL for the case id. */
-const caseTeenExists = (id: string) => `EXISTS (SELECT 1 FROM "user" tu WHERE ${teenSql("tu")} AND tu.id IN (
-    SELECT owner_id FROM cases WHERE id = ${id} UNION SELECT respondent_user_id FROM cases WHERE id = ${id}
-    UNION SELECT user_id FROM case_seats WHERE case_id = ${id} UNION SELECT user_id FROM case_invites WHERE case_id = ${id}))`;
-
-async function caseHasTeen(caseId: string): Promise<boolean> {
-  const db = await getDb();
-  const rs = await db.execute({ sql: `SELECT ${caseTeenExists("?")} AS teen`, args: [caseId, caseId, caseId, caseId] });
-  return Number(rs.rows[0]?.teen) === 1;
-}
 
 /** judgeAnonymized under a usage meter; an unexpected throw becomes a failure.
  * The `[premium]` line carries the case id at its end. `startedAt` is when

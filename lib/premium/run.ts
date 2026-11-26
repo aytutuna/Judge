@@ -13,7 +13,7 @@ import { aggregate } from "../aggregate";
 import { aggregateMulti } from "../aggregate-multi";
 import type { MultiRunOutput } from "../judge-multi";
 import { anonymize } from "../anonymize";
-import { providerFailure, withUsageMeter, type UsageTotals } from "../claude";
+import { providerFailure, withChildSafety, withUsageMeter, type UsageTotals } from "../claude";
 import { loadLocales, t, type Lang } from "../i18n";
 import { judgeExtra, type JudgeOptions, type JudgeRun } from "../judge";
 import { applyCruxTrial, runCruxTrial, shouldTryCrux } from "../trial";
@@ -69,6 +69,8 @@ export type PremiumInput = {
   /** Three or four typed sides (VerdictRequest.sides); `argument` is then
    * not read. Absent: today's path. */
   sides?: TypedSide[];
+  /** The writer is under 18: the judges get the child-safety prompt, the anonymizer does not. */
+  teen?: boolean;
 };
 
 /** An already anonymized document to judge (premium argument, two-sided
@@ -182,7 +184,7 @@ export async function runPremiumPipeline(
 async function pipeline(input: PremiumInput, startedAt: number, now: () => number, stats: PremiumStats): Promise<PremiumOutcome> {
   const prepared = await preparePremium(input);
   if (!prepared.ok) return { status: "anonymize_failed", error: prepared.error };
-  return judgePrepared(prepared.prepared, input, startedAt, now, stats);
+  return withChildSafety(input.teen === true, () => judgePrepared(prepared.prepared, input, startedAt, now, stats));
 }
 
 /** A premium submission after anonymization: what the judges may see. */

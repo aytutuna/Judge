@@ -349,18 +349,17 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
 
   let run: PremiumRun | undefined;
   try {
-    run = await withChildSafety(gate.teen, () =>
-      runPremiumPipeline(
-        {
-          argument: data.argument,
-          clarifications: data.clarifications,
-          lang: data.lang,
-          ...(evidence ? { evidence } : {}),
-          ...(otherEvidence ? { otherEvidence } : {}),
-          ...(data.sides ? { sides: data.sides } : {}),
-        },
-        { startedAt },
-      ),
+    run = await runPremiumPipeline(
+      {
+        argument: data.argument,
+        clarifications: data.clarifications,
+        lang: data.lang,
+        teen: gate.teen,
+        ...(evidence ? { evidence } : {}),
+        ...(otherEvidence ? { otherEvidence } : {}),
+        ...(data.sides ? { sides: data.sides } : {}),
+      },
+      { startedAt },
     );
     const outcome = run.outcome;
     if (outcome.status === "anonymize_failed") {

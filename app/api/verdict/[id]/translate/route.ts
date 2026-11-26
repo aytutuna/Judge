@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { verdictHasTeen } from "@/lib/age";
+import { withChildSafety } from "@/lib/claude";
 import { hidesFrom, VERDICT_UPDATE } from "@/lib/cases/capability";
 import { clientIp } from "@/lib/client-ip";
 import { getVerdict } from "@/lib/db";
@@ -64,10 +66,13 @@ export async function POST(req: Request, ctx: RouteContext<"/api/verdict/[id]/tr
   const ip = clientIp(req.headers);
   let outcome;
   try {
-    outcome = await translatedVerdict<Refusal>(id, lang, async () => {
-      const limit = await checkTranslateLimits(ip);
-      return limit.ok ? null : limit;
-    });
+    const teen = await verdictHasTeen(id).catch(() => false);
+    outcome = await withChildSafety(teen, () =>
+      translatedVerdict<Refusal>(id, lang, async () => {
+        const limit = await checkTranslateLimits(ip);
+        return limit.ok ? null : limit;
+      }),
+    );
   } catch (e) {
     console.error("[translate] failed:", e instanceof Error ? e.message : String(e));
     return unavailable();

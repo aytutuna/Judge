@@ -3,6 +3,7 @@ import { apiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
 import { isSameOrigin } from "@/lib/auth";
 import { deadBearerResponse, lookupViewer } from "@/lib/bearer-guard";
 import { EventsCapError, insertEvents } from "@/lib/analytics/db";
+import { deviceOfTeen } from "@/lib/analytics/devices";
 import { countryOf, EventBatch } from "@/lib/analytics/validate";
 import { clientIp } from "@/lib/client-ip";
 import { analyticsEnabled } from "@/lib/features";
@@ -68,6 +69,10 @@ export async function POST(req: Request): Promise<NextResponse> {
   const { context, events } = parsed.data;
   const userId = viewer?.user.id ?? null;
   if (!userId && !context.anon_id && context.platform !== "web") return fail("invalid", "Send context.anon_id when signed out.", 400);
+  // A signed-out batch from a device a teen signs in on would link back to them.
+  if (!userId && context.device_id && (await deviceOfTeen(context.device_id).catch(() => false))) {
+    return new NextResponse(null, { status: 204, headers: NO_STORE });
+  }
 
   const limit = userId ? await checkUserLimits(userId, "events") : await checkIpLimits(clientIp(req.headers), "events");
   if (!limit.ok) {

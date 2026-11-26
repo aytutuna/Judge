@@ -189,6 +189,11 @@ export const PLAIN_SAVE_OUTCOME: SaveVerdictOutcome = {
   metaWritten: false,
 };
 
+/** PLAIN_SAVE_OUTCOME for this verdict: a teen's names stay off. */
+export function plainSaveOutcome(v: Pick<SaveVerdictInput, "teen">): SaveVerdictOutcome {
+  return { ...PLAIN_SAVE_OUTCOME, display: { ...PLAIN_SAVE_OUTCOME.display, namesVisible: !v.teen } };
+}
+
 /**
  * One batch: the verdict row, its ownership row and (with a key) its sealed
  * original and default display names. If that batch fails, the verdict is
@@ -205,5 +210,5 @@ export async function saveVerdictWithOriginals(v: SaveVerdictInput): Promise<Sav
     console.error("[originals] meta write failed:", e instanceof Error ? e.message : String(e));
   }
   await saveVerdict({ id: v.id, input: v.input, result: v.result, venue: v.venue });
-  return { ...PLAIN_SAVE_OUTCOME };
+  return plainSaveOutcome(v);
 }

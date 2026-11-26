@@ -21,6 +21,7 @@
 
 import type { PartyLetter as CaseParty } from "@/lib/case-types";
 import type { Client, Row } from "@libsql/client";
+import { teenSql } from "@/lib/age";
 import { ensureCaseTables } from "@/lib/cases/db";
 import { getDb } from "@/lib/db";
 import { ensureFeedbackTables } from "@/lib/feedback/db";
@@ -168,6 +169,15 @@ export async function ensureOriginalsTables(): Promise<void> {
     .then(() => addMetaColumns(client))
     .then(() => widenChecks(client))
     .then(() => client.batch(backfillStatements(new Date().toISOString()), "write"))
+    // Rows the backfill (or a fallback save) made for a teen start with names off.
+    .then(() =>
+      client
+        .execute(
+          `UPDATE verdict_meta SET names_visible = 0 WHERE names_visible = 1 AND names_confirmed_at IS NULL
+           AND owner_user_id IN (SELECT u.id FROM "user" u WHERE ${teenSql("u")})`,
+        )
+        .catch(() => undefined),
+    )
     .then(
       () => undefined,
       (e: unknown) => {

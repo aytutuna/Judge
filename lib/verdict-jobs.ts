@@ -29,7 +29,7 @@ import {
 } from "@/lib/entitlements";
 import { ensureOriginalsTables } from "@/lib/originals/db";
 import {
-  PLAIN_SAVE_OUTCOME,
+  plainSaveOutcome,
   plainVerdictStatement,
   verdictWriteStatements,
   type SaveVerdictInput,
@@ -251,7 +251,7 @@ export async function completeVerdictJob(
     console.error("[verdict-jobs] meta write failed:", e instanceof Error ? e.message : String(e));
   }
   const rs = await entitlementWriteBatch([plainVerdictStatement(v, guard), ...(opts.extra ?? []), ...settle, ready]);
-  return { stored: storedFor(rs), outcome: { ...PLAIN_SAVE_OUTCOME } };
+  return { stored: storedFor(rs), outcome: plainSaveOutcome(v) };
 }
 
 /** Fails (and refunds) every job judging for over STALE_JOB_MS. Returns how
