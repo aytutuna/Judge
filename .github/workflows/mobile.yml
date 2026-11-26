@@ -85,6 +85,18 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             build test 2>&1 | tee build/xcodebuild.log
 
+      - name: Build with the age range framework
+        run: |
+          set -o pipefail
+          xcodebuild -quiet \
+            -project Judge.xcodeproj \
+            -scheme Judge \
+            -destination "id=${{ steps.sim.outputs.udid }}" \
+            -derivedDataPath build/DerivedDataAge \
+            CODE_SIGNING_ALLOWED=NO \
+            DECLARED_AGE_RANGE=YES \
+            build 2>&1 | tee build/xcodebuild-age.log
+
       - name: Screenshots
         run: |
           UDID="${{ steps.sim.outputs.udid }}"

@@ -50,7 +50,7 @@ struct SettingsView: View {
                             .foregroundStyle(Brand.ink)
                     }
                     .tint(Brand.terraInk)
-                    .disabled(app.account.underEighteen)
+                    .disabled(app.account.statsLocked)
                     if app.account.underEighteen {
                         Text(L10n.settingsUsageStatsTeen(lang))
                             .brandText(.footnote)

@@ -143,6 +143,7 @@ struct RootView: View {
     /// screen (the gate would cover it).
     private var ageCovered: Bool {
         app.account.ageGate != .none && !app.account.platformPrompting
+            && !app.account.needsPlatformAge(onSignIn: false)
     }
 
     /// An okjudge.com link: an invite opens in Safari (answering happens on

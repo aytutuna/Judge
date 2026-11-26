@@ -146,15 +146,18 @@ final class AppModel {
             askAgreement: { await agreement.ask() }
         )
         self.api = judgeAPI
+        // A signed-in account that was under 18 (or unknown) last time sends
+        // nothing until /me has answered.
+        let heldForAge = judgeAPI.tokenStore.token()?.isEmpty == false && defaults.bool(forKey: AccountModel.statsLockedKey)
         analytics = Analytics(
             transport: judgeAPI,
             context: DeviceIdentity.context(config: config, defaults: defaults, deviceID: deviceID),
             file: sendsUsageEvents ? analyticsFile : nil,
-            allowed: usageStats && sendsUsageEvents
+            allowed: usageStats && sendsUsageEvents && !heldForAge
         )
         history = HistoryStore(container: container)
         home = HomeModel(defaults: defaults)
-        account = AccountModel(api: self.api, ageRange: DeclaredAgeRangeAsker())
+        account = AccountModel(api: self.api, ageRange: DeclaredAgeRangeAsker(), defaults: defaults)
         consent = ConsentModel(api: self.api)
         let agreeAPI = self.api
         agreement.send = { lang in try await agreeAPI.agreeToSensitive(lang: lang) }
@@ -267,7 +270,7 @@ final class AppModel {
     }
 
     /// Off for teens whatever the setting says; it comes back at 18.
-    var usageStatsOn: Bool { usageStats && !account.underEighteen }
+    var usageStatsOn: Bool { usageStats && !account.statsLocked }
 
     private func syncUsageStats() {
         analytics.allowed = usageStatsOn && sendsUsageEvents
