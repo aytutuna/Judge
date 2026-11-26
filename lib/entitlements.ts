@@ -23,7 +23,11 @@ import { getDb } from "./db";
 import { PRICING } from "./pricing";
 import { signal } from "./signals";
 
-const STALE_RESERVATION_MS = 10 * 60_000;
+// Longer than the 10 minutes after which the job and case sweeps fail their
+// own runs, so those settle their reservations first: a run that outlives
+// its sweep writes nothing (its job or case is no longer judging), and this
+// sweep only catches what nothing else owns.
+const STALE_RESERVATION_MS = 20 * 60_000;
 const SWEEP_EVERY_MS = 60_000;
 const BUSY_RETRIES = 12;
 
@@ -199,7 +203,7 @@ export type StatementGuard = { sql: string; args: InValue[] };
 const guardSql = (guard?: StatementGuard) => (guard ? ` AND ${guard.sql}` : "");
 const guardArgs = (guard?: StatementGuard) => (guard ? guard.args : []);
 
-/** Keeps a reservation open until `untilIso` (the stale sweep refunds it 10
+/** Keeps a reservation open until `untilIso` (the stale sweep refunds it 20
  * minutes after that). No-op unless still reserved. */
 export function holdStatement(reservationId: string, untilIso: string, guard?: StatementGuard): InStatement {
   return {
@@ -497,7 +501,7 @@ export async function refundPremiumVerdict(reservationId: string): Promise<void>
   await refund(reservationId, new Date());
 }
 
-/** Refunds reservations left `reserved` for over 10 minutes (a crashed or
+/** Refunds reservations left `reserved` for over 20 minutes (a crashed or
  * killed request) after their creation, or after `hold_until` when one is
  * set (a case waiting for its answer). Returns how many were refunded. */
 export async function sweepStaleReservations(now: Date = new Date()): Promise<number> {

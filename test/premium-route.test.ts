@@ -49,7 +49,7 @@ vi.mock("@/lib/auth", () => ({
 vi.mock("@/lib/entitlements", () => ({
   reservePremiumVerdict: track("reserve", m.reservePremiumVerdict),
   reservationByKey: m.reservationByKey,
-  consumePremiumVerdict: track("consume", m.consumePremiumVerdict),
+  consumeStatement: (reservationId: string, verdictId: string) => ({ sql: "consume", args: [reservationId, verdictId] }),
   refundPremiumVerdict: track("refund", m.refundPremiumVerdict),
   getEntitlement: track("entitlement", m.getEntitlement),
 }));
@@ -83,9 +83,10 @@ vi.mock("@/lib/originals/save", () => ({
     ownerUserId: string | null;
     original: unknown;
     venue?: string | null;
-  }) => {
+  }, settle: { args: [string, string] }[] = []) => {
     await track("save", m.saveVerdict)({ id: v.id, input: v.input, result: v.result });
     m.saved.push(v);
+    for (const s of settle) await track("consume", m.consumePremiumVerdict)(...s.args);
     return {
       ownerToken: v.ownerUserId ? null : "o".repeat(43),
       originalsStored: true,
@@ -696,11 +697,11 @@ describe("premium verdict: refunds", () => {
     expect(m.refundPremiumVerdict).not.toHaveBeenCalled();
   });
 
-  it("still answers 200 when consume fails (the stale sweep settles it)", async () => {
+  it("settles the unit in the save's own write: if that write fails nothing is stored and the unit goes back", async () => {
     m.consumePremiumVerdict.mockRejectedValue(new Error("SQLITE_BUSY"));
     const res = await POST(request(premium()));
-    expect(res.status).toBe(200);
-    expect(m.refundPremiumVerdict).not.toHaveBeenCalled();
+    expect(res.status).toBe(503);
+    expect(m.refundPremiumVerdict).toHaveBeenCalledTimes(1);
   });
 });
 

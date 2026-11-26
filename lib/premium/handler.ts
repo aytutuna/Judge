@@ -26,7 +26,7 @@ import { lookupViewer } from "@/lib/bearer-guard";
 import { getVerdict } from "@/lib/db";
 import { answerLang } from "@/lib/detect-lang";
 import {
-  consumePremiumVerdict,
+  consumeStatement,
   getEntitlement,
   hasWelcomeCreditOnly,
   refundPremiumVerdict,
@@ -380,24 +380,30 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
     }
 
     const id = nanoid(10);
+    // The verdict and its unit's consume are one write: a stored verdict can
+    // never be left reserved for the sweep to hand back.
+    const giveBack = outcome.refused || outcome.degraded;
     let saved;
     try {
-      saved = await saveVerdictWithOriginals({
-        id,
-        input: outcome.input,
-        result: outcome.result,
-        kind: "premium",
-        ownerUserId: userId,
-        teen: await teenNow(userId, gate.teen),
-        venue: parseVenue(data.venue),
-        original: {
-          v: 1,
-          text: rawArgumentOf(rawBody, data.argument),
-          clarifications: rawClarificationsOf(rawBody, data.clarifications),
-          ...sealedEvidence(evidence, otherEvidence),
-          nameMap: outcome.nameMap,
-        },
-      });
+      saved = await saveVerdictWithOriginals(
+        {
+          id,
+          input: outcome.input,
+          result: outcome.result,
+          kind: "premium",
+          ownerUserId: userId,
+          teen: await teenNow(userId, gate.teen),
+          venue: parseVenue(data.venue),
+          original: {
+            v: 1,
+            text: rawArgumentOf(rawBody, data.argument),
+            clarifications: rawClarificationsOf(rawBody, data.clarifications),
+            ...sealedEvidence(evidence, otherEvidence),
+            nameMap: outcome.nameMap,
+          },
+          },
+        giveBack ? [] : [consumeStatement(reservationId, id, new Date().toISOString())],
+      );
     } catch (e) {
       await refund();
       console.error("[premium] saving failed:", e instanceof Error ? e.message : String(e));
@@ -405,19 +411,12 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
       return unavailable();
     }
 
-    if (outcome.refused || outcome.degraded) {
+    if (giveBack) {
       // The model declined, or every strong seat failed and the verdict
       // rests on Haiku alone: the user gets the result, not a charge.
       await refund();
     } else {
       settled = true;
-      try {
-        await consumePremiumVerdict(reservationId, id);
-      } catch (e) {
-        // The verdict exists; a reservation left open is refunded by the
-        // stale sweep, so the user is never charged twice.
-        console.error("[premium] consume failed:", e instanceof Error ? e.message : String(e));
-      }
     }
 
     const entitlement = await entitlementOrNull(userId);

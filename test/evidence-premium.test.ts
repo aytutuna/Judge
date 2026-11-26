@@ -30,7 +30,7 @@ vi.mock("@/lib/auth", async (importOriginal) => ({
 vi.mock("@/lib/entitlements", () => ({
   reservePremiumVerdict: m.reservePremiumVerdict,
   reservationByKey: async () => null,
-  consumePremiumVerdict: m.consumePremiumVerdict,
+  consumeStatement: (reservationId: string, verdictId: string) => ({ sql: "consume", args: [reservationId, verdictId] }),
   refundPremiumVerdict: m.refundPremiumVerdict,
   getEntitlement: m.getEntitlement,
 }));
@@ -39,6 +39,16 @@ vi.mock("@/lib/ratelimit", () => ({
   checkPremiumSiteCap: async () => ({ ok: true }),
 }));
 vi.mock("@/lib/db", () => ({ saveVerdict: m.saveVerdict, getVerdict: async () => null }));
+vi.mock("@/lib/originals/save", () => ({
+  saveVerdictWithOriginals: async (
+    v: { id: string; input: string; result: unknown; teen?: boolean },
+    settle: { args: [string, string] }[] = [],
+  ) => {
+    await m.saveVerdict({ id: v.id, input: v.input, result: v.result });
+    for (const s of settle) await m.consumePremiumVerdict(...s.args);
+    return { ownerToken: null, originalsStored: false, display: { namesVisible: !v.teen, a: null, b: null, others: {} }, metaWritten: false };
+  },
+}));
 vi.mock("@/lib/premium/factcheck", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/premium/factcheck")>()),
   runFactCheck: m.runFactCheck,

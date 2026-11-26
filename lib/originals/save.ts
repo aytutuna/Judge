@@ -216,16 +216,19 @@ export function plainSaveOutcome(v: Pick<SaveVerdictInput, "teen">): SaveVerdict
  * original and default display names. If that batch fails, the verdict is
  * saved alone (logged) and the outcome says nothing else was. Throws only
  * when the plain save fails too (the caller answers 503 as before).
+ * `settle` (the reservation's consume) goes in the same batch, so a stored
+ * verdict is never left with its unit unspent.
  */
-export async function saveVerdictWithOriginals(v: SaveVerdictInput): Promise<SaveVerdictOutcome> {
+export async function saveVerdictWithOriginals(v: SaveVerdictInput, settle: InStatement[] = []): Promise<SaveVerdictOutcome> {
   try {
     await ensureOriginalsTables();
     const { stmts, outcome } = verdictWriteStatements(v);
-    await entitlementWriteBatch(stmts);
+    await entitlementWriteBatch([...stmts, ...settle]);
     return outcome;
   } catch (e) {
     console.error("[originals] meta write failed:", e instanceof Error ? e.message : String(e));
   }
-  await saveVerdict({ id: v.id, input: v.input, result: v.result, venue: v.venue });
+  if (settle.length > 0) await entitlementWriteBatch([plainVerdictStatement(v), ...settle]);
+  else await saveVerdict({ id: v.id, input: v.input, result: v.result, venue: v.venue });
   return plainSaveOutcome(v);
 }
