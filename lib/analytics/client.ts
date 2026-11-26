@@ -1,7 +1,7 @@
 /**
  * Browser side of the usage events (POST /api/v1/events, see ./track.ts).
- * The website keeps no identifier: no anon_id, no device_id, nothing in
- * storage. Events are linked to an account only through the session cookie
+ * The website keeps no identifier: no anon_id, no device_id, and nothing in
+ * storage but the Usage statistics switch. Events are linked to an account only through the session cookie
  * the browser sends anyway. The only thing kept in sessionStorage is a
  * couple of per-tab flags.
  */
@@ -55,6 +55,30 @@ function optedOut(): boolean {
   return nav.doNotTrack === "1" || nav.globalPrivacyControl === true;
 }
 
+const OFF_KEY = "judge.usageStatsOff";
+
+/** The Usage statistics switch in Settings: on unless this browser says off. */
+export function usageStatsOn(): boolean {
+  try {
+    return localStorage.getItem(OFF_KEY) === null;
+  } catch {
+    return true;
+  }
+}
+
+export function setUsageStats(on: boolean): void {
+  try {
+    if (on) localStorage.removeItem(OFF_KEY);
+    else localStorage.setItem(OFF_KEY, "1");
+  } catch {
+    // Storage blocked: the switch lasts until the page is closed.
+  }
+  if (!on) {
+    queue = [];
+    stop();
+  }
+}
+
 function propsOk(name: string, props: EventProps): boolean {
   return Object.entries(props).every(([key, value]) => {
     if (PROP_KEYS[name] !== key) return false;
@@ -76,7 +100,7 @@ export function setAnalytics(on: boolean): void {
 
 /** False once analytics is known to be off or the visitor opted out. */
 export function isTracking(): boolean {
-  return enabled !== false && !optedOut();
+  return enabled !== false && !optedOut() && usageStatsOn();
 }
 
 export function track(name: string, props?: EventProps): void {

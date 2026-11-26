@@ -21,13 +21,14 @@ export function Analytics() {
   const pathname = usePathname();
   const { status, config, me } = useViewer();
   const signedIn = Boolean(me?.user);
+  const teen = me?.age?.teen === true;
   const on = config?.features?.analytics === true;
   const known = status === "ready" || status === "error";
   const lastPath = useRef<string | null>(null);
 
   useEffect(() => {
-    if (known) setAnalytics(on);
-  }, [known, on]);
+    if (known) setAnalytics(on && !teen);
+  }, [known, on, teen]);
 
   useEffect(() => {
     if (signedIn) signInCompleted();

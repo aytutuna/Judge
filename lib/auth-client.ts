@@ -197,15 +197,15 @@ export function fetchConfig(): Promise<AppConfig> {
   return getJson<AppConfig>("/api/v1/config");
 }
 
-/** POST /api/v1/me/age after the "I'm 18 or older" box was ticked. Null on
- * any failure. */
-export async function confirmAdult(): Promise<AgeState | null> {
+/** POST /api/v1/me/age with the date of birth (YYYY-MM-DD). The account's age
+ * state (blocked when it is under 13), or null on any failure. */
+export async function submitDob(dob: string): Promise<AgeState | null> {
   try {
     const res = await fetch("/api/v1/me/age", {
       method: "POST",
       headers: { "content-type": "application/json" },
       credentials: "same-origin",
-      body: JSON.stringify({ adult: true, source: "checkbox" }),
+      body: JSON.stringify({ dob }),
     });
     return res.ok ? ((await res.json()) as AgeState) : null;
   } catch {

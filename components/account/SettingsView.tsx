@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { track } from "@/lib/analytics/client";
+import { setUsageStats, track, usageStatsOn } from "@/lib/analytics/client";
 import { askSignIn, fetchConsent, saveConsent } from "@/lib/feedback-client";
 import { t, type Key } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
@@ -47,6 +47,16 @@ export function SettingsView() {
       if (s === null) setTraining(!on);
     });
   }
+  const teen = viewer.me?.age?.teen === true;
+  const [stats, setStats] = useState(true);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- the switch lives in localStorage, read after mount
+    setStats(usageStatsOn());
+  }, []);
+  function changeStats(on: boolean) {
+    setStats(on);
+    setUsageStats(on);
+  }
   const nothingToShow = viewer.status === "ready" && !viewer.me?.user && !signInOffered(viewer.config);
 
   return (
@@ -86,17 +96,33 @@ export function SettingsView() {
 
       <div className={styles.group}>
         <section className={styles.card}>
+          {teen ? null : (
+            <>
+              <label className={`${styles.option} ${styles.switchRow}`}>
+                <span>{t(lang, "consent.switchTitle")}</span>
+                <input
+                  type="checkbox"
+                  role="switch"
+                  className={styles.switch}
+                  checked={training}
+                  onChange={(e) => changeTraining(e.target.checked)}
+                />
+              </label>
+              <p className={styles.detail}>{t(lang, "consent.switchDetail")}</p>
+            </>
+          )}
           <label className={`${styles.option} ${styles.switchRow}`}>
-            <span>{t(lang, "consent.switchTitle")}</span>
+            <span>{t(lang, "settings.usageStats")}</span>
             <input
               type="checkbox"
               role="switch"
               className={styles.switch}
-              checked={training}
-              onChange={(e) => changeTraining(e.target.checked)}
+              checked={stats && !teen}
+              disabled={teen}
+              onChange={(e) => changeStats(e.target.checked)}
             />
           </label>
-          <p className={styles.detail}>{t(lang, "consent.switchDetail")}</p>
+          <p className={styles.detail}>{t(lang, teen ? "settings.usageStatsTeen" : "settings.usageStatsHint")}</p>
         </section>
       </div>
 

@@ -9,7 +9,6 @@ import { t, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
 import { refreshViewer, useViewer, viewerSignedIn } from "@/lib/use-viewer";
 import { lastSignIn, startSignIn, type SignInMethodUsed } from "@/lib/last-signin";
-import { forgetAdultTick, rememberAdultTick } from "../AgeGate";
 import { Turnstile, TURNSTILE_SITE_KEY } from "../Turnstile";
 import styles from "./AccountPages.module.css";
 import { PageShell } from "./PageShell";
@@ -532,9 +531,6 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
     if (last) setLastUsed(last.method);
     /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
-  // Back here from Apple or Google without signing in, or a fresh visit:
-  // whatever was ticked before no longer counts.
-  useEffect(() => forgetAdultTick(), []);
   useEffect(() => {
     if (!failed) return;
     /* eslint-disable react-hooks/set-state-in-effect -- the provider redirected back with an error */
@@ -566,7 +562,6 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
   useEffect(() => {
     function restored(e: PageTransitionEvent) {
       if (!e.persisted) return;
-      forgetAdultTick();
       setPending(false);
       setError(null);
     }
@@ -585,7 +580,6 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
     try {
       return await import("@/lib/auth-client");
     } catch {
-      forgetAdultTick();
       fail(t(lang, "signin.failed"));
       setPending(false);
       return null;
@@ -596,7 +590,6 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
     setAwaitToken(false);
     setPending(true);
     setError(null);
-    rememberAdultTick();
     startSignIn(p);
     signInStarted(p);
     const client = await loadClient();
@@ -604,7 +597,6 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
     const res = await client.signInWithProvider(p, next, `/signin?next=${encodeURIComponent(next)}`);
     // Success leaves the page for Apple or Google; only failure lands here.
     if (!res.ok) {
-      forgetAdultTick();
       trackError(res.code);
       fail(t(lang, "signin.failed"), false);
       setPending(false);
@@ -615,14 +607,12 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
     const to = email.trim();
     setPending(true);
     setError(null);
-    rememberAdultTick();
     startSignIn("email", to);
     signInStarted("password");
     const client = await loadClient();
     if (!client) return;
     const res = await client.signInWithPassword(to, password);
     if (!res.ok) {
-      forgetAdultTick();
       trackError(res.code);
       fail(t(lang, client.passwordSignInErrorKey(res)));
       setPending(false);
@@ -688,7 +678,6 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
     setAwaitToken(false);
     setPending(true);
     setError(null);
-    rememberAdultTick();
     startSignIn("email", to);
     signInStarted("email");
     const client = await loadClient();
@@ -705,7 +694,6 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
       setResendIn(RESEND_SECONDS);
       keepSentTo(to, sendMode);
     } else {
-      forgetAdultTick();
       trackError(res.code);
       fail(t(lang, client.codeErrorKey(res, "send")));
     }
@@ -716,7 +704,6 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
     setPassword("");
     await refreshViewer();
     if (!viewerSignedIn()) {
-      forgetAdultTick();
       fail(t(lang, "signin.failed"));
       setPending(false);
     }
@@ -763,13 +750,11 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
     if (!sentTo || entered.length !== CODE_LENGTH) return;
     setPending(true);
     setError(null);
-    rememberAdultTick();
     startSignIn("email", sentTo);
     const client = await loadClient();
     if (!client) return;
     const res = await client.signInWithCode(sentTo, entered);
     if (!res.ok) {
-      forgetAdultTick();
       trackError(res.code);
       fail(t(lang, client.codeErrorKey(res, "verify")));
       setPending(false);
@@ -839,13 +824,11 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
     setAwaitToken(false);
     setPending(true);
     setError(null);
-    rememberAdultTick();
     signInStarted("dev");
     const client = await loadClient();
     if (!client) return;
     const res = await client.devLogin();
     if (!res.ok) {
-      forgetAdultTick();
       trackError("dev_login_failed");
       fail(t(lang, "signin.failed"), false);
       setPending(false);
@@ -854,7 +837,6 @@ export function SignInView({ next: rawNext, failed }: { next?: string | string[]
     // The store now has a user, and the effect above takes it to `next`.
     await refreshViewer();
     if (!viewerSignedIn()) {
-      forgetAdultTick();
       fail(t(lang, "signin.failed"), false);
       setPending(false);
     }
