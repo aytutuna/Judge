@@ -825,7 +825,7 @@ const ja: Locale = {
     "age.title": "生年月日",
     "age.lead": "Judgeは13歳以上の方のためのサービスで、年齢によって変わる設定がいくつかあります。入力は一度だけです。",
     "age.continue": "続ける",
-    "age.confirmDate": "{date}と入力されています。これで合っていますか？",
+    "age.confirmDate": "{date}と入力しました。よろしいですか？",
     "age.confirmYes": "確認",
     "age.change": "変更",
     "age.failed": "保存できませんでした。もう一度お試しください。",

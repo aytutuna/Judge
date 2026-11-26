@@ -818,7 +818,7 @@ const ko: Locale = {
     "age.continue": "계속",
     "age.confirmDate": "입력한 날짜: {date}. 맞나요?",
     "age.confirmYes": "확인",
-    "age.change": "수정",
+    "age.change": "변경",
     "age.failed": "저장하지 못했어요. 다시 시도해 주세요.",
     "age.blockedTitle": "Judge는 만 13세 이상을 위한 서비스예요",
     "age.blocked": "Judge는 만 13세 이상만 이용할 수 있어서 이 계정은 Judge를 쓸 수 없어요.",

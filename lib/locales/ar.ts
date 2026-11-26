@@ -814,7 +814,7 @@ const ar: Locale = {
     "age.lead":
       "Judge مخصص لمن بلغوا 13 عامًا فأكثر، وبعض الإعدادات تعتمد على العمر. تُدخل هذا مرة واحدة فقط.",
     "age.continue": "متابعة",
-    "age.confirmDate": "أدخلتَ {date}. هل هذا صحيح؟",
+    "age.confirmDate": "التاريخ المُدخل: {date}. هل هو صحيح؟",
     "age.confirmYes": "تأكيد",
     "age.change": "تغيير",
     "age.failed": "تعذّر حفظ ذلك. هلّا حاولت مرة أخرى؟",
