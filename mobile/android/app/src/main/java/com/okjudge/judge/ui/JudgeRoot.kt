@@ -22,8 +22,10 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -430,16 +432,23 @@ fun JudgeRoot(
                                             clearDraft = false
                                         }
                                     }
-                                    LaunchedEffect(submitAfterSignIn, linkAfterSignIn, accountNow, ageGate, phoneAge, agePosting, ageChecking) {
-                                        if (!submitAfterSignIn && !linkAfterSignIn) return@LaunchedEffect
+                                    // A tap made during the launch age check: kept only while Home is on screen, never saved.
+                                    var heldTap by remember { mutableIntStateOf(HELD_NONE) }
+                                    DisposableEffect(Unit) { onDispose { heldTap = HELD_NONE } }
+                                    LaunchedEffect(submitAfterSignIn, linkAfterSignIn, heldTap, accountNow, ageGate, phoneAge, agePosting, ageChecking) {
+                                        if (!submitAfterSignIn && !linkAfterSignIn && heldTap == HELD_NONE) return@LaunchedEffect
+                                        val refusal = account.ageRefusal()
+                                        if (refusal != null && refusal != AgeCheck.CHECKING) heldTap = HELD_NONE
                                         if (accountNow is Account.State.SignedOut) {
                                             submitAfterSignIn = false
                                             linkAfterSignIn = false
-                                        } else if (account.ageRefusal() == null) {
+                                            heldTap = HELD_NONE
+                                        } else if (refusal == null) {
                                             // Waits for the age to be on record (the sheet, if it failed).
-                                            val link = linkAfterSignIn
+                                            val link = linkAfterSignIn || heldTap == HELD_LINK
                                             submitAfterSignIn = false
                                             linkAfterSignIn = false
+                                            heldTap = HELD_NONE
                                             val started = if (link) vm.sendLink(lang) else vm.submit(lang, strings)
                                             if (counted(started) == Submitted.PRICING) openPricing()
                                         }
@@ -459,7 +468,7 @@ fun JudgeRoot(
                                             when (account.ageRefusal()) {
                                                 null -> Unit
                                                 // The launch check is still running: the tap goes through by itself when it ends.
-                                                AgeCheck.CHECKING -> { submitAfterSignIn = true; return@submit }
+                                                AgeCheck.CHECKING -> { heldTap = HELD_SUBMIT; return@submit }
                                                 else -> return@submit
                                             }
                                             when (counted(vm.submit(lang, strings))) {
@@ -472,7 +481,7 @@ fun JudgeRoot(
                                         onSendLink = link@{
                                             when (account.ageRefusal()) {
                                                 null -> Unit
-                                                AgeCheck.CHECKING -> { linkAfterSignIn = true; return@link }
+                                                AgeCheck.CHECKING -> { heldTap = HELD_LINK; return@link }
                                                 else -> return@link
                                             }
                                             when (counted(vm.sendLink(lang))) {
@@ -734,7 +743,7 @@ fun JudgeRoot(
                                                 backStack.add(SignInKey(thenVerdict = false))
                                             }
                                         },
-                                        usageStats = AgeCheck.usageStatsOn(usageStats, statsLocked),
+                                        usageStats = usageStats && statsLocked != true,
                                         teen = teen,
                                         onUsageStats = { on -> scope.launch { container.settings.setUsageStats(on) } },
                                         onOpenLink = { openLink(context, it) },
@@ -870,6 +879,10 @@ fun JudgeRoot(
         }
     }
 }
+
+private const val HELD_NONE = 0
+private const val HELD_SUBMIT = 1
+private const val HELD_LINK = 2
 
 /** The age check over the whole app: the date step or the final refusal. Back leaves the app. */
 @Composable
