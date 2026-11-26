@@ -15,8 +15,15 @@ process.env.BETTER_AUTH_URL = "http://localhost:3600";
 
 const { createDevSession } = await import("../lib/auth");
 const { getDb } = await import("../lib/db");
-const { ageStateOf, isTeen, submitDob } = await import("../lib/age");
-const { analyticsDb } = await import("../lib/analytics/db");
+const { ADULT_CUTOFF_SQL, ageStateOf, clearAdultDobs, isTeen, submitDob } = await import("../lib/age");
+const { underEighteen, underThirteen, yearsBefore } = await import("../lib/age-date");
+const { runCleanup } = await import("../lib/cleanup");
+const { ensureOriginalsTables } = await import("../lib/originals/db");
+const { saveVerdictWithOriginals, plainSaveOutcome } = await import("../lib/originals/save");
+const { track } = await import("../lib/analytics/track");
+const { noteSignIn } = await import("../lib/analytics/devices");
+const exportRoute = await import("../app/api/v1/me/export/route");
+const { analyticsDb, insertEvents } = await import("../lib/analytics/db");
 const { verdictWriteStatements } = await import("../lib/originals/save");
 const { POST: postAgeRoute } = await import("../app/api/v1/me/age/route");
 const meRoute = await import("../app/api/v1/me/route");
@@ -145,17 +152,32 @@ describe("POST /api/v1/me/age with a date of birth", () => {
     expect(await row(user.id)).toMatchObject({ age_dob: null, age_dob_at: null, age_blocked_at: null });
   });
 
-  it("the 13th and 18th birthdays count from that day", async () => {
+  it("the 13th birthday is judged on the latest date anywhere, so nobody is closed out on the day", async () => {
     const now = new Date();
-    const one = (dob: string, id: string) => ageStateOf({ dob, dobAt: "x", confirmedAt: "x" }, now).teen && id;
-    expect(one(ago(18), "turns 18 today")).toBe(false);
-    expect(one(ago(18, -1), "turns 18 tomorrow")).toBe("turns 18 tomorrow");
-    expect(one(ago(17, -300), "17")).toBe("17");
+    expect(ageStateOf({ dob: ago(18), dobAt: "x", confirmedAt: "x" }, now).teen).toBe(false);
+    expect(ageStateOf({ dob: ago(18, -1), dobAt: "x", confirmedAt: "x" }, now).teen).toBe(true);
 
     const a = await createDevSession("dob-13-today@verdict.local");
     expect((await submitDob(a.user.id, ago(13)))?.blocked).toBe(false);
-    const b = await createDevSession("dob-13-tomorrow@verdict.local");
-    expect((await submitDob(b.user.id, ago(13, -1)))?.blocked).toBe(true);
+    // The date it is now in UTC+14 is the last one anywhere: turning 13 on it is allowed, a day later is not.
+    const ahead = new Date(Date.now() + 14 * 3_600_000);
+    const born = (extraDays: number) =>
+      new Date(Date.UTC(ahead.getUTCFullYear() - 13, ahead.getUTCMonth(), ahead.getUTCDate() + extraDays)).toISOString().slice(0, 10);
+    const b = await createDevSession("dob-13-ahead@verdict.local");
+    expect((await submitDob(b.user.id, born(0)))?.blocked).toBe(false);
+    const c = await createDevSession("dob-13-next-day@verdict.local");
+    expect((await submitDob(c.user.id, born(1)))?.blocked).toBe(true);
+  });
+
+  it("counts 1 March as the day after 29 February, in code and in SQL", async () => {
+    const leap = new Date("2028-02-29T12:00:00Z");
+    expect(yearsBefore(leap, 13)).toBe("2015-02-28");
+    expect(underThirteen("2015-03-01", new Date("2028-02-28T00:00:00Z"))).toBe(true);
+    expect(underEighteen("2010-03-01", leap)).toBe(true);
+    expect(underEighteen("2010-02-28", leap)).toBe(false);
+    const db = await getDb();
+    const rs = await db.execute(`SELECT ${ADULT_CUTOFF_SQL.replaceAll("'now'", "'2028-02-29'")} AS cutoff`);
+    expect(rs.rows[0].cutoff).toBe("2010-02-28");
   });
 
   it("is an adult again on the 18th birthday, without a write", async () => {
@@ -172,38 +194,120 @@ describe("POST /api/v1/me/age with a date of birth", () => {
 });
 
 describe("the store's age signal", () => {
-  it("under 18 with under13 false makes a teen who may use Judge", async () => {
+  it("under 18 without a bracket (every shipped build) makes a teen at once and asks for the date", async () => {
     const { token, user } = await createDevSession("signal-teen@verdict.local");
-    const res = await postAge(token, { adult: false, source: "platform", under13: false });
+    const res = await postAge(token, { adult: false, source: "platform" });
     expect(await res.json()).toEqual({ confirmed: true, blocked: false, teen: true, needsDob: true });
     expect(await row(user.id)).toMatchObject({ age_signal: "minor", age_source: "platform", age_blocked_at: null });
+    // The same signal on every launch changes nothing more.
+    expect((await (await postAge(token, { adult: false, source: "platform" })).json()).teen).toBe(true);
+    // The date then decides: under 13 closes it for good.
+    const dob = await postAge(token, { dob: ago(11) });
+    expect((await dob.json()).blocked).toBe(true);
   });
 
-  it("under13 true, or no bracket at all (older builds), still closes the account", async () => {
-    const a = await createDevSession("signal-13@verdict.local");
-    expect((await (await postAge(a.token, { adult: false, source: "platform", under13: true })).json()).blocked).toBe(true);
-    const b = await createDevSession("signal-nobracket@verdict.local");
-    expect((await (await postAge(b.token, { adult: false, source: "platform" })).json()).blocked).toBe(true);
+  it("only an explicit under13: true blocks directly", async () => {
+    const { token } = await createDevSession("signal-13@verdict.local");
+    expect((await (await postAge(token, { adult: false, source: "platform", under13: true })).json()).blocked).toBe(true);
   });
 
-  it("a later adult signal ends it; a tick never does", async () => {
+  it("a date on file wins over the signal, in both directions", async () => {
+    const adult = await createDevSession("signal-adult-date@verdict.local");
+    await postAge(adult.token, { dob: ago(30) });
+    const a = await postAge(adult.token, { adult: false, source: "platform" });
+    expect((await a.json()).teen).toBe(false);
+    expect((await postAge(adult.token, { adult: false, source: "platform", under13: true })).status).toBe(200);
+    expect((await me(adult.token)).age.blocked).toBe(false);
+
+    const teen = await createDevSession("signal-teen-date@verdict.local");
+    await postAge(teen.token, { dob: ago(15) });
+    expect((await (await postAge(teen.token, { adult: true, source: "platform" })).json()).teen).toBe(true);
+
+    const grown = await createDevSession("signal-grown@verdict.local");
+    await postAge(grown.token, { adult: false, source: "platform" });
+    await postAge(grown.token, { dob: ago(17, 30) });
+    await setRow(grown.user.id, "age_dob = ?", [ago(18)]);
+    expect((await me(grown.token)).age.teen).toBe(false);
+  });
+
+  it("a later adult signal ends a signal-only teen; a tick never does", async () => {
     const { token } = await createDevSession("signal-flip@verdict.local");
-    await postAge(token, { adult: false, source: "platform", under13: false });
-    const ticked = await postAge(token, { adult: true, source: "checkbox" });
-    expect((await ticked.json()).teen).toBe(true);
-    const adult = await postAge(token, { adult: true, source: "platform" });
-    expect((await adult.json()).teen).toBe(false);
+    await postAge(token, { adult: false, source: "platform" });
+    expect((await (await postAge(token, { adult: true, source: "checkbox" })).json()).teen).toBe(true);
+    expect((await (await postAge(token, { adult: true, source: "platform" })).json()).teen).toBe(false);
+  });
+});
+
+describe("blocks made under the old 18+ rule", () => {
+  const legacyBlock = (userId: string) => setRow(userId, "age_blocked_at = ?, age_block_final = NULL", ["2026-11-01T00:00:00.000Z"]);
+
+  it("show the date step, not the refusal, and a 13 to 17 date lifts the block", async () => {
+    const { token, user } = await createDevSession("legacy-teen@verdict.local");
+    await legacyBlock(user.id);
+    expect((await me(token)).age).toEqual({ confirmed: false, blocked: true, teen: false, needsDob: true });
+    const res = await postAge(token, { dob: ago(16) });
+    expect(await res.json()).toEqual({ confirmed: true, blocked: false, teen: true, needsDob: false });
+    expect(await row(user.id)).toMatchObject({ age_blocked_at: null, age_dob: ago(16) });
   });
 
-  it("with no date on file the signal decides; a teen date decides over it", async () => {
-    const { token } = await createDevSession("signal-dob@verdict.local");
-    await postAge(token, { adult: false, source: "platform", under13: false });
-    // An adult date keeps no date, so the store's word still counts.
-    expect((await (await postAge(token, { dob: ago(30) })).json()).teen).toBe(true);
-    const old = await createDevSession("signal-dob-old@verdict.local");
-    await postAge(old.token, { dob: ago(18, 1) });
-    await postAge(old.token, { adult: false, source: "platform", under13: false });
-    expect((await me(old.token)).age.teen).toBe(true);
+  it("an adult date lifts it too; under 13 makes it final", async () => {
+    const adult = await createDevSession("legacy-adult@verdict.local");
+    await legacyBlock(adult.user.id);
+    expect((await (await postAge(adult.token, { dob: ago(30) })).json()).blocked).toBe(false);
+
+    const child = await createDevSession("legacy-child@verdict.local");
+    await legacyBlock(child.user.id);
+    expect(await (await postAge(child.token, { dob: ago(10) })).json()).toEqual({
+      confirmed: false,
+      blocked: true,
+      teen: false,
+      needsDob: false,
+    });
+    const again = await postAge(child.token, { dob: ago(30) });
+    expect(again.status).toBe(403);
+    expect((await again.json()).code).toBe("age_blocked");
+  });
+
+  it("stay refused everywhere else, and a block made now is final from the start", async () => {
+    const { token, user } = await createDevSession("legacy-closed@verdict.local");
+    await legacyBlock(user.id);
+    const res = await verdictRoute.POST(request("POST", "/api/v1/verdict", bearer(token), { argument: "x".repeat(80) }));
+    expect(res.status).toBe(403);
+    const fresh = await createDevSession("legacy-fresh@verdict.local");
+    await postAge(fresh.token, { adult: false, source: "platform", under13: true });
+    expect((await me(fresh.token)).age.needsDob).toBe(false);
+    expect((await postAge(fresh.token, { dob: ago(16) })).status).toBe(403);
+  });
+
+  it("keep their kind across a deletion: an old block can still be lifted at the next sign-up", async () => {
+    const { token, user } = await createDevSession("legacy-delete@verdict.local");
+    await legacyBlock(user.id);
+    expect((await meRoute.DELETE(request("DELETE", "/api/v1/me", bearer(token), { confirm: "delete" }))).status).toBe(200);
+    const back = await createDevSession("legacy-delete@verdict.local");
+    expect((await me(back.token)).age).toEqual({ confirmed: false, blocked: true, teen: false, needsDob: true });
+    expect((await (await postAge(back.token, { dob: ago(15) })).json()).blocked).toBe(false);
+  });
+});
+
+describe("the date of birth after the 18th birthday", () => {
+  it("is cleared by the daily cleanup, and the old signal does not make the adult a teen again", async () => {
+    const { token, user } = await createDevSession("dob-clear@verdict.local");
+    await postAge(token, { adult: false, source: "platform" });
+    await postAge(token, { dob: ago(17, 30) });
+    await setRow(user.id, "age_dob = ?", [ago(18)]);
+    const counts = await runCleanup();
+    expect(counts.adultDobs).toBeGreaterThanOrEqual(1);
+    expect(await row(user.id)).toMatchObject({ age_dob: null, age_dob_at: expect.any(String), age_signal: "minor" });
+    expect((await me(token)).age).toEqual({ confirmed: true, blocked: false, teen: false, needsDob: false });
+    await setRow(user.id, "age_dob = ?", [ago(18, -1)]);
+    expect(await clearAdultDobs()).toBe(0);
+  });
+
+  it("goes into the data export with the age signal", async () => {
+    const { token, user } = await teenAccount("dob-export@verdict.local");
+    const res = await exportRoute.GET(request("GET", "/api/v1/me/export", bearer(token)));
+    const data = await res.json();
+    expect(data.account).toMatchObject({ dateOfBirth: ago(15), dateOfBirthGivenAt: expect.any(String), id: user.id });
   });
 });
 
@@ -291,6 +395,76 @@ describe("what a teen gets by default", () => {
     await postAge(token, { adult: false, source: "platform", under13: false });
     const state = await (await consentRoute.GET(request("GET", "/api/v1/me/consent", bearer(token)))).json();
     expect(state.state).toBe("off");
+  });
+
+  it("recording a teen turns off consent and earlier names in one write, and drops stored events", async () => {
+    const { token, user } = await createDevSession("def-batch@verdict.local");
+    await postAge(token, { adult: true, source: "checkbox" });
+    await consent(token, "on");
+    await ensureOriginalsTables();
+    await saveVerdictWithOriginals({
+      id: "earlier-1",
+      input: "doc",
+      result: { verdict: "side_a" } as never,
+      kind: "premium",
+      ownerUserId: user.id,
+      original: { v: 1, text: "t", clarifications: [], nameMap: [] },
+    });
+    await insertEvents([
+      { at: Date.now(), userId: user.id, anonId: null, deviceId: null, platform: "web", appVersion: null, osVersion: null, deviceModel: null, country: null, locale: null, name: "app_open", props: null },
+    ]);
+    const db = await getDb();
+    const visible = async () => Number((await db.execute("SELECT names_visible FROM verdict_meta WHERE verdict_id = 'earlier-1'")).rows[0].names_visible);
+    const eventRows = async () =>
+      (await db.execute({ sql: "SELECT id FROM events WHERE user_id = ?", args: [user.id] })).rows.length;
+    expect(await visible()).toBe(1);
+    expect(await eventRows()).toBeGreaterThan(0);
+
+    await postAge(token, { dob: ago(15) });
+    expect(await visible()).toBe(0);
+    expect(await eventRows()).toBe(0);
+    const state = await (await consentRoute.GET(request("GET", "/api/v1/me/consent", bearer(token)))).json();
+    expect(state.state).toBe("off");
+    const ledger = await db.execute({ sql: "SELECT wording_key, choice FROM consent_ledger WHERE user_id = ? ORDER BY id", args: [user.id] });
+    expect(ledger.rows.map((r) => [r.wording_key, r.choice])).toEqual([
+      ["consent.switchDetail", "on"],
+      ["age.teenWithdrawn", "off"],
+    ]);
+  });
+
+  it("server-side events skip a teen, and so do signed-out events from their device", async () => {
+    const teen = await teenAccount("def-track@verdict.local");
+    const adult = await createDevSession("def-track-adult@verdict.local");
+    await postAge(adult.token, { dob: ago(30) });
+    await track("case_created", { userId: teen.user.id, props: { mode: "one_sided" } });
+    await track("case_created", { userId: adult.user.id, props: { mode: "one_sided" } });
+    const count = async (id: string) =>
+      (await (await analyticsDb()).execute({ sql: "SELECT id FROM events WHERE user_id = ? AND name = 'case_created'", args: [id] })).rows.length;
+    expect([await count(teen.user.id), await count(adult.user.id)]).toEqual([0, 1]);
+
+    await noteSignIn(teen.user.id, new Headers({ "device-id": "teen-device-0001", "device-platform": "ios" }));
+    const signedOut = (device: string) =>
+      eventsRoute.POST(
+        request(
+          "POST",
+          "/api/v1/events",
+          {},
+          {
+            context: { platform: "ios", app_version: "2.0.0", anon_id: "0b5a3a3e-7c1f-4d47-8f0e-6a3c1d2e9f00", device_id: device },
+            events: [{ name: "sign_in_started", props: { provider: "apple" } }],
+          },
+        ),
+      );
+    const byDevice = async (device: string) =>
+      (await (await analyticsDb()).execute({ sql: "SELECT id FROM events WHERE device_id = ? AND user_id IS NULL", args: [device] })).rows.length;
+    expect((await signedOut("teen-device-0001")).status).toBe(204);
+    expect((await signedOut("other-device-0002")).status).toBe(204);
+    expect([await byDevice("teen-device-0001"), await byDevice("other-device-0002")]).toEqual([0, 1]);
+  });
+
+  it("a teen's verdict saved by the fallback path still reports names off", () => {
+    expect(plainSaveOutcome({ teen: true }).display.namesVisible).toBe(false);
+    expect(plainSaveOutcome({}).display.namesVisible).toBe(true);
   });
 
   it("their verdict's names stay off the share page", () => {

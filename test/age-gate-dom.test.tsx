@@ -81,31 +81,83 @@ describe("AgeGate", () => {
     await waitFor(() => expect(dobInput()).toBeNull());
   });
 
-  it("shows the refusal when the date is under 13", async () => {
+  it("asks to confirm an under-13 date before sending, and Change goes back", async () => {
     answer = () => reply(200, { confirmed: false, blocked: true, teen: false, needsDob: false });
     await refreshViewer();
     render(<AgeGate lang="en" />);
     await waitFor(() => expect(dobInput()).not.toBeNull());
-    fireEvent.change(dobInput()!, { target: { value: new Date().getFullYear() - 10 + "-06-01" } });
+    const year = new Date().getFullYear() - 10;
+    fireEvent.change(dobInput()!, { target: { value: `${year}-06-01` } });
     await act(async () => {
       fireEvent.click(screen.getByRole("button", { name: t("en", "age.continue") }));
     });
+    expect(posts).toEqual([]);
+    expect(screen.getByText(t("en", "age.confirmDate", { date: `June 1, ${year}` }))).toBeTruthy();
+
+    fireEvent.click(screen.getByRole("button", { name: t("en", "age.change") }));
+    expect(dobInput()).not.toBeNull();
+    expect((dobInput() as HTMLInputElement).value).toBe(`${year}-06-01`);
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: t("en", "age.continue") }));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: t("en", "age.confirmYes") }));
+    });
+    expect(posts).toEqual([{ path: "/api/v1/me/age", body: { dob: `${year}-06-01` } }]);
     expect(await screen.findByText(t("en", "age.blockedTitle"))).toBeTruthy();
     expect(screen.getByText(t("en", "age.blocked"))).toBeTruthy();
     expect(dobInput()).toBeNull();
   });
 
-  it("says so and stays when the date could not be saved", async () => {
-    answer = () => reply(503, { code: "unavailable" });
+  it("a teen date is sent at once, and Enter in the field submits", async () => {
+    answer = () => reply(200, TEEN);
     await refreshViewer();
     render(<AgeGate lang="en" />);
+    await waitFor(() => expect(dobInput()).not.toBeNull());
+    fireEvent.change(dobInput()!, { target: { value: `${new Date().getFullYear() - 15}-06-01` } });
+    await act(async () => {
+      fireEvent.submit(dobInput()!.closest("form")!);
+    });
+    expect(posts).toHaveLength(1);
+    await waitFor(() => expect(dobInput()).toBeNull());
+  });
+
+  it("a block from the old rule gets the date step", async () => {
+    age = { confirmed: false, blocked: true, teen: false, needsDob: true };
+    await refreshViewer();
+    render(<AgeGate lang="en" />);
+    await waitFor(() => expect(dobInput()).not.toBeNull());
+  });
+
+  it("reloads the account when the server says the date is already there, instead of failing", async () => {
+    answer = () => {
+      age = ADULT;
+      return reply(409, { code: "age_set" });
+    };
+    await refreshViewer();
+    const { container } = render(<AgeGate lang="en" />);
     await waitFor(() => expect(dobInput()).not.toBeNull());
     fireEvent.change(dobInput()!, { target: { value: "1990-04-02" } });
     await act(async () => {
       fireEvent.click(screen.getByRole("button", { name: t("en", "age.continue") }));
     });
+    await waitFor(() => expect(container.querySelector("dialog")).toBeNull());
+    expect(screen.queryByRole("alert")).toBeNull();
+  });
+
+  it("does not stay stuck when the request itself fails", async () => {
+    await refreshViewer();
+    render(<AgeGate lang="en" />);
+    await waitFor(() => expect(dobInput()).not.toBeNull());
+    fireEvent.change(dobInput()!, { target: { value: "1990-04-02" } });
+    answer = () => {
+      throw new Error("offline");
+    };
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: t("en", "age.continue") }));
+    });
     expect(await screen.findByRole("alert")).toBeTruthy();
-    expect(dobInput()).not.toBeNull();
+    expect((screen.getByRole("button", { name: t("en", "age.continue") }) as HTMLButtonElement).disabled).toBe(false);
   });
 
   it("stays out of the way once a date is on file", async () => {
@@ -128,6 +180,18 @@ describe("Settings for a teen", () => {
     expect(stats().disabled).toBe(true);
     expect(screen.getByText(t("en", "settings.usageStatsTeen"))).toBeTruthy();
     expect(screen.queryByRole("switch", { name: t("en", "consent.switchTitle") })).toBeNull();
+  });
+
+  it("shows the statistics switch off when the browser asks not to be tracked", async () => {
+    age = ADULT;
+    Object.defineProperty(navigator, "doNotTrack", { value: "1", configurable: true });
+    await refreshViewer();
+    render(<SettingsView />);
+    await waitFor(() => expect(stats()).toBeTruthy());
+    await waitFor(() => expect(stats().disabled).toBe(true));
+    expect(stats().checked).toBe(false);
+    expect(screen.getByText(t("en", "settings.usageStatsBrowser"))).toBeTruthy();
+    Object.defineProperty(navigator, "doNotTrack", { value: null, configurable: true });
   });
 
   it("an adult has both switches, and the statistics one is on until switched off", async () => {

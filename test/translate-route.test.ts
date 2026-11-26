@@ -8,6 +8,8 @@ const m = vi.hoisted(() => ({
   checkTranslateLimits: vi.fn(),
   claudeJson: vi.fn(),
   verdictRemoved: vi.fn(),
+  verdictHasTeen: vi.fn(),
+  childSafety: vi.fn(),
 }));
 
 vi.mock("@/lib/db", () => ({
@@ -18,7 +20,15 @@ vi.mock("@/lib/db", () => ({
 vi.mock("@/lib/ratelimit", () => ({ checkTranslateLimits: m.checkTranslateLimits }));
 vi.mock("@/lib/originals/removed", () => ({ verdictRemoved: m.verdictRemoved }));
 // Only the model call is mocked: the translation logic stays real.
-vi.mock("@/lib/claude", () => ({ claudeJson: m.claudeJson, LITE_MODEL: "lite-model" }));
+vi.mock("@/lib/claude", () => ({
+  claudeJson: m.claudeJson,
+  LITE_MODEL: "lite-model",
+  withChildSafety: (on: boolean, fn: () => Promise<unknown>) => {
+    m.childSafety(on);
+    return fn();
+  },
+}));
+vi.mock("@/lib/age", () => ({ verdictHasTeen: m.verdictHasTeen }));
 
 import { maxDuration, POST } from "../app/api/verdict/[id]/translate/route";
 import { applyText, clearTranslationFailures } from "../lib/translate";
@@ -39,6 +49,7 @@ const STORED = {
 beforeEach(() => {
   vi.clearAllMocks();
   m.verdictRemoved.mockResolvedValue(false);
+  m.verdictHasTeen.mockResolvedValue(false);
   clearTranslationFailures();
   vi.spyOn(console, "error").mockImplementation(() => {});
   m.getVerdict.mockResolvedValue(STORED);
@@ -49,6 +60,15 @@ beforeEach(() => {
 });
 
 describe("POST /api/verdict/[id]/translate", () => {
+  it("translates a teen's verdict under the child-safety prompt, and others without it", async () => {
+    m.verdictHasTeen.mockResolvedValue(true);
+    expect((await post("abc123defg", "en")).status).toBe(200);
+    expect(m.childSafety).toHaveBeenLastCalledWith(true);
+    m.verdictHasTeen.mockResolvedValue(false);
+    await post("abc123defg", "en");
+    expect(m.childSafety).toHaveBeenLastCalledWith(false);
+  });
+
   it("rejects a missing or unknown lang with 400", async () => {
     for (const lang of [null, "xx"]) {
       const res = await post("abc123defg", lang);

@@ -9,6 +9,9 @@ process.env.DATABASE_URL = `file:${path.join(dir, "test.db").replace(/\\/g, "/")
 const { analyticsDb, DAILY_EVENT_CAP } = await import("../lib/analytics/db");
 const { track } = await import("../lib/analytics/track");
 const { POST } = await import("../app/api/v1/events/route");
+const { getDb } = await import("../lib/db");
+// The real table comes from Better Auth, which this test does not load.
+await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT)');
 
 afterAll(() => {
   const g = globalThis as unknown as { __verdictLibsql?: { close(): void } };

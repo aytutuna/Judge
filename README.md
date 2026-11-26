@@ -642,20 +642,34 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
   account as a teen (`teen: true`, recomputed on every read, so it ends on
   the 18th birthday); 18 and over confirms it and keeps only that a date was
   given; under 13 blocks the account for good, keeping no date, and the
-  server logs `[signal:age_blocked]`. A second date answers `409 age_set`;
-  to correct one, clear `age_dob` and `age_dob_at` on the `user` row.
+  server logs `[signal:age_blocked]`. The 13th birthday is judged on the
+  latest calendar date anywhere (UTC+14), so nobody is closed out on the day.
+  The daily cleanup clears a teen's `age_dob` once they are 18; `age_dob_at`
+  stays, which keeps an old store signal from making them a teen again. A
+  second date answers `409 age_set`; to correct one, clear `age_dob` and
+  `age_dob_at` on the `user` row. A date on file always wins over the store's
+  signal. Blocks made under the old 18+ rule have no `age_block_final`
+  (`user`, and `welcome_claims` for a deleted account's email): such an
+  account reports `blocked: true, needsDob: true`, may send one date, and a
+  date of 13 or more lifts the block while under 13 makes it final. Every
+  block made now is final.
   `{ "adult": true, "source": "platform" }` (the store's age signal says
-  adult) confirms an account; `{ "adult": false, "source": "platform",
-  "under13": false }` (the store says 13 to 17) makes it a teen, and
-  without `under13: false` the account is blocked like an under-13 one. Older
-  builds' `{ "adult": true, "source": "checkbox" }` still confirms an account
-  as an adult without a date (it cannot change a teen), so those users are
-  not locked out; they keep `needsDob: true` and the website and new builds
-  ask on the next visit. A teen gets no usage events stored
-  (`POST /api/v1/events` answers `204`), cannot turn training consent on
-  (`403 not_for_teens`), has no consent card (`ask: false`), starts with
-  names off on the share page, and has every judging call (clarify, all
-  seats, appeals, cases with a teen on them) sent with a child-safety
+  adult) confirms an account. `{ "adult": false, "source": "platform" }` (the
+  store says under 18, which is all the shipped builds send) makes the account
+  a teen at once and leaves `needsDob: true`, so the date decides; only
+  `"under13": true` blocks directly. Older builds'
+  `{ "adult": true, "source": "checkbox" }` still confirms an account as an
+  adult without a date (it cannot change a teen), so those users are not
+  locked out; they keep `needsDob: true` and the website and new builds ask
+  on the next visit. Recording a teen writes, in the same batch as the date,
+  the withdrawal of any training consent, names off on their earlier
+  verdicts and cases, and the deletion of their stored usage events. A teen
+  gets no usage events stored (`POST /api/v1/events` answers `204`, also for
+  a signed-out batch from a device a teen signed in on, and the server's own
+  events skip them), cannot turn training consent on (`403 not_for_teens`),
+  has no consent card (`ask: false`), starts with names off on the share
+  page, and has every judging call (clarify, all seats, appeals, cases with a
+  teen on them, and translations of their verdicts) sent with a child-safety
   addition to the system prompt (`CHILD_SAFETY_PROMPT` in `lib/claude.ts`).
   A blocked account gets
   `403 { "error": "age_blocked", "code": "age_blocked" }` from every
@@ -1059,7 +1073,7 @@ limit within 5 minutes:
 | `provider_down` | 5 | the AI service answers 5xx, cannot be reached or times out |
 | `many_accounts_per_device` | 1 | a device (the app's `Device-Id` header at sign-in) signs in to its third or later account; sign-in goes ahead |
 | `events_cap` | 1 | a batch of usage events is refused because 200,000 were stored in the last 24 hours |
-| `age_blocked` | 1 | an app reports, from the store's age signal, or a date of birth says, that an account belongs to someone under 13; the account is blocked (nothing is deleted) |
+| `age_blocked` | 1 | a date of birth, or a store signal with `under13: true`, says an account belongs to someone under 13; the account is blocked for good (nothing is deleted) |
 | `grant_skipped` | 1 | a paid grant was skipped because a refund covers it; the line has the source and transaction id |
 | `code_email_cap` | 1 | a sign-in code email was refused because `CODE_EMAILS_PER_HOUR` was used up |
 | `ban` | 20 | fail2ban bans an address (from fail2ban's journal) |

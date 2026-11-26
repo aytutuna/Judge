@@ -284,7 +284,7 @@ signal_meaning() {
     events_cap) echo "Usage events hit the cap of 200,000 a day and new ones are refused: fake installs flooding POST /api/v1/events, or a client bug." ;;
     code_email_cap) echo "Sign-in code emails hit the hourly site-wide cap and new codes are refused (503): someone may be flooding the sign-in form, or the cap is too low for real traffic. See CODE_EMAILS_PER_HOUR." ;;
     review_guess_cap) echo "The App Review sign-in code is being guessed: the site-wide guess limit for that account filled up. Change REVIEW_ACCOUNT_CODE in the env file and restart." ;;
-    age_blocked) echo "The app store's age signal said an account belongs to someone under 18; the account is now blocked. Close it by hand if that is right; if it is wrong, clear age_blocked_at on the user and welcome_claims rows (README, Age check)." ;;
+    age_blocked) echo "An account was blocked as under 13: a date of birth, or a store signal that said so outright. The block is final. If it is wrong, clear age_blocked_at and age_block_final on the user row and age_blocked_at on the welcome_claims row (README, Age check)." ;;
     schema_drift) echo "A stored verdict or translation no longer matches the result schema and reads as not found. Look at the [signal:schema_drift] lines for the id and the fields; do not delete the rows." ;;
     grant_skipped) echo "A paid grant was skipped because a refund covers it (a refund tombstone or a refunded subscription). If the user really paid, grant it by hand; the [signal:grant_skipped] lines have the source and transaction id." ;;
     ban)

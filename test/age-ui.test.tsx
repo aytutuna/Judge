@@ -18,11 +18,14 @@ function dialog(over: Partial<AgeDialogProps>): string {
       lang="en"
       age={FRESH}
       dob=""
+      max="2030-01-01"
+      confirming={false}
       saving={false}
       failed={false}
       contactEmail="support@okjudge.com"
       onDob={noop}
-      onConfirm={noop}
+      onSubmit={noop}
+      onChange={noop}
       onSignOut={noop}
       {...over}
     />,
@@ -49,6 +52,20 @@ describe("age dialog", () => {
     expect(html).toContain(t("en", "nav.signOut"));
     expect(html).not.toContain('type="date"');
     expect(dialog({ age: { ...FRESH, blocked: true, needsDob: false }, contactEmail: null })).not.toContain("mailto:");
+  });
+
+  it("shows the date step, not the refusal, for a block from the old rule", () => {
+    const html = dialog({ age: { ...FRESH, blocked: true, needsDob: true } });
+    expect(html).toContain('type="date"');
+    expect(html).not.toContain(esc(t("en", "age.blocked")));
+  });
+
+  it("asks for a second look at the date before it is sent", () => {
+    const html = dialog({ confirming: true, dob: "2016-03-04" });
+    expect(html).toContain(esc(t("en", "age.confirmDate", { date: "March 4, 2016" })));
+    expect(html).toContain(t("en", "age.confirmYes"));
+    expect(html).toContain(t("en", "age.change"));
+    expect(html).not.toContain('type="date"');
   });
 
   it("speaks the reader's language", () => {

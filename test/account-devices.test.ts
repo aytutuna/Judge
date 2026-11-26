@@ -10,6 +10,8 @@ process.env.BETTER_AUTH_URL = "http://localhost:3600";
 
 const auth = await import("../lib/auth");
 const { createDevSession } = auth;
+// Sets up the user table, which noteSignIn reads.
+await auth.getAuth();
 const { DELETE: deleteMe } = await import("../app/api/v1/me/route");
 const { analyticsDb } = await import("../lib/analytics/db");
 const { accountsOnDevice, noteSignIn } = await import("../lib/analytics/devices");
