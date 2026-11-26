@@ -1,7 +1,7 @@
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it, vi } from "vitest";
 
 /** The daily clean-up: expired sign-in code rows, old consent records, old removal-log entries. */
 
@@ -110,5 +110,16 @@ describe("the removal log", () => {
     expect(ids).not.toContain("old");
     expect(ids).toContain("keep");
     expect(ids.filter((i) => i.startsWith("late"))).toHaveLength(20);
+  });
+});
+
+describe("clearing dates of birth before the sign-in migration", () => {
+  it("skips quietly when the user table has no such column yet", async () => {
+    const db = await getDb();
+    await db.execute('DROP TABLE "user"');
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    expect((await runCleanup(NOW)).adultDobs).toBe(0);
+    expect(error).not.toHaveBeenCalled();
+    error.mockRestore();
   });
 });

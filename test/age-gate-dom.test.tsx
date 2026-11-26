@@ -4,7 +4,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AgeGate } from "../components/AgeGate";
 import { SettingsView } from "../components/account/SettingsView";
 import { t } from "../lib/i18n";
-import { refreshViewer } from "../lib/use-viewer";
+import { useHistory } from "../components/shell/useHistory";
+import { applyAge, refreshViewer, useViewer } from "../lib/use-viewer";
 
 vi.mock("next/navigation", () => ({
   usePathname: () => "/",
@@ -122,6 +123,35 @@ describe("AgeGate", () => {
     await waitFor(() => expect(dobInput()).toBeNull());
   });
 
+  it("moves focus to the read-back of an under-13 date, and back to the field on Change", async () => {
+    await refreshViewer();
+    render(<AgeGate lang="en" />);
+    await waitFor(() => expect(dobInput()).not.toBeNull());
+    const year = new Date().getFullYear() - 10;
+    fireEvent.change(dobInput()!, { target: { value: `${year}-06-01` } });
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: t("en", "age.continue") }));
+    });
+    const readBack = screen.getByText(t("en", "age.confirmDate", { date: `June 1, ${year}` }));
+    expect(readBack.getAttribute("role")).toBe("status");
+    expect(document.activeElement).toBe(readBack);
+    fireEvent.click(screen.getByRole("button", { name: t("en", "age.change") }));
+    expect(document.activeElement).toBe(dobInput());
+  });
+
+  it("says it could not save when a 403 is not about the account being closed", async () => {
+    answer = () => reply(403, { code: "bad_origin" });
+    await refreshViewer();
+    render(<AgeGate lang="en" />);
+    await waitFor(() => expect(dobInput()).not.toBeNull());
+    fireEvent.change(dobInput()!, { target: { value: "1990-04-02" } });
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: t("en", "age.continue") }));
+    });
+    expect(await screen.findByRole("alert")).toBeTruthy();
+    expect(dobInput()).not.toBeNull();
+  });
+
   it("a block from the old rule gets the date step", async () => {
     age = { confirmed: false, blocked: true, teen: false, needsDob: true };
     await refreshViewer();
@@ -165,6 +195,36 @@ describe("AgeGate", () => {
     await refreshViewer();
     const { container } = render(<AgeGate lang="en" />);
     expect(container.querySelector("dialog")).toBeNull();
+  });
+});
+
+describe("history after a block is lifted", () => {
+  it("loads again without a reload", async () => {
+    age = { confirmed: false, blocked: true, teen: false, needsDob: true };
+    let blockedNow = true;
+    const base = globalThis.fetch;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+        if (String(input).startsWith("/api/v1/me/history")) {
+          return blockedNow ? reply(403, { code: "age_blocked" }) : reply(200, { items: [], next: null });
+        }
+        return base(input, init);
+      }),
+    );
+    function Probe() {
+      const viewer = useViewer();
+      const h = useHistory(viewer);
+      return <p data-testid="status">{h.status}</p>;
+    }
+    await refreshViewer();
+    render(<Probe />);
+    await waitFor(() => expect(screen.getByTestId("status").textContent).toBe("error"));
+    blockedNow = false;
+    await act(async () => {
+      applyAge({ confirmed: true, blocked: false, teen: true, needsDob: false });
+    });
+    await waitFor(() => expect(screen.getByTestId("status").textContent).toBe("ready"));
   });
 });
 

@@ -23,6 +23,8 @@ const { saveVerdictWithOriginals, plainSaveOutcome } = await import("../lib/orig
 const { track } = await import("../lib/analytics/track");
 const { noteSignIn } = await import("../lib/analytics/devices");
 const exportRoute = await import("../app/api/v1/me/export/route");
+const { keptBlock } = await import("../lib/age");
+const { welcomeClaim } = await import("../lib/auth");
 const { analyticsDb, insertEvents } = await import("../lib/analytics/db");
 const { verdictWriteStatements } = await import("../lib/originals/save");
 const { POST: postAgeRoute } = await import("../app/api/v1/me/age/route");
@@ -76,7 +78,7 @@ function ago(years: number, days = 0): string {
 async function row(userId: string) {
   const db = await getDb();
   const rs = await db.execute({
-    sql: 'SELECT age_confirmed_at, age_source, age_blocked_at, age_dob, age_dob_at, age_signal FROM "user" WHERE id = ?',
+    sql: 'SELECT age_confirmed_at, age_source, age_blocked_at, age_block_final, age_dob, age_dob_at, age_signal FROM "user" WHERE id = ?',
     args: [userId],
   });
   return rs.rows[0];
@@ -86,6 +88,17 @@ async function setRow(userId: string, sets: string, args: (string | null)[] = []
   const db = await getDb();
   await db.execute({ sql: `UPDATE "user" SET ${sets} WHERE id = ?`, args: [...args, userId] });
 }
+
+const consent = (token: string, choice: "on" | "off") =>
+  consentRoute.POST(
+    request("POST", "/api/v1/me/consent", bearer(token), {
+      choice,
+      source: "switch",
+      wordingKey: "consent.switchDetail",
+      lang: "en",
+      platform: "ios",
+    }),
+  );
 
 async function teenAccount(email: string) {
   const s = await createDevSession(email);
@@ -289,6 +302,106 @@ describe("blocks made under the old 18+ rule", () => {
   });
 });
 
+describe("races and old blocks", () => {
+  const legacyBlock = (userId: string) => setRow(userId, "age_blocked_at = ?, age_block_final = NULL", ["2026-11-01T00:00:00.000Z"]);
+
+  it("a date cannot lift a block that became final in the meantime", async () => {
+    const { token, user } = await createDevSession("race-final@verdict.local");
+    await legacyBlock(user.id);
+    const [a, b] = await Promise.all([submitDob(user.id, ago(10)), submitDob(user.id, ago(15))]);
+    expect([a?.blocked, b === null || b.blocked]).toEqual([true, true]);
+    expect((await me(token)).age.blocked).toBe(true);
+    expect((await row(user.id)).age_block_final).toBe("1");
+  });
+
+  it("an explicit under-13 signal makes an old block final, so no date lifts it", async () => {
+    const { token, user } = await createDevSession("legacy-signal@verdict.local");
+    await legacyBlock(user.id);
+    const res = await postAge(token, { adult: false, source: "platform", under13: true });
+    expect(await res.json()).toEqual({ confirmed: false, blocked: true, teen: false, needsDob: false });
+    expect((await postAge(token, { dob: ago(15) })).status).toBe(403);
+    // A bracketless signal leaves an old block alone.
+    const other = await createDevSession("legacy-signal-plain@verdict.local");
+    await legacyBlock(other.user.id);
+    expect((await (await postAge(other.token, { adult: false, source: "platform" })).json()).needsDob).toBe(true);
+  });
+
+  it("lifting an old block also clears the kept block on that email", async () => {
+    const first = await createDevSession("legacy-claim@verdict.local");
+    await legacyBlock(first.user.id);
+    await meRoute.DELETE(request("DELETE", "/api/v1/me", bearer(first.token), { confirm: "delete" }));
+    const claim = welcomeClaim("legacy-claim@verdict.local")!;
+    expect(await keptBlock(claim)).toMatchObject({ final: false });
+
+    const second = await createDevSession("legacy-claim@verdict.local");
+    expect((await (await postAge(second.token, { dob: ago(15) })).json()).blocked).toBe(false);
+    expect(await keptBlock(claim)).toBeNull();
+    await meRoute.DELETE(request("DELETE", "/api/v1/me", bearer(second.token), { confirm: "delete" }));
+    const third = await createDevSession("legacy-claim@verdict.local");
+    expect((await me(third.token)).age).toMatchObject({ blocked: false, needsDob: true });
+  });
+
+  it("a date that loses a race leaves the winner's consent and events alone", async () => {
+    const { token, user } = await createDevSession("race-dates@verdict.local");
+    await postAge(token, { adult: true, source: "checkbox" });
+    await consent(token, "on");
+    await ensureOriginalsTables();
+    await insertEvents([
+      { at: Date.now(), userId: user.id, anonId: null, deviceId: null, platform: "web", appVersion: null, osVersion: null, deviceModel: null, country: null, locale: null, name: "app_open", props: null },
+    ]);
+    await Promise.all([submitDob(user.id, ago(30)), submitDob(user.id, ago(15))]);
+    const state = await me(token);
+    const consentNow = (await (await consentRoute.GET(request("GET", "/api/v1/me/consent", bearer(token)))).json()).state;
+    const eventRows = (await (await analyticsDb()).execute({ sql: "SELECT id FROM events WHERE user_id = ?", args: [user.id] })).rows.length;
+    if (state.age.teen) {
+      expect([consentNow, eventRows]).toEqual(["off", 0]);
+    } else {
+      expect([consentNow, eventRows > 0]).toEqual(["on", true]);
+    }
+  });
+});
+
+describe("events of a blocked or teen account and its devices", () => {
+  const headers = (device: string) => new Headers({ "device-id": device, "device-platform": "ios" });
+  const anonEvent = async (device: string) =>
+    insertEvents([
+      { at: Date.now(), userId: null, anonId: "anon-1", deviceId: device, platform: "ios", appVersion: "1", osVersion: null, deviceModel: null, country: null, locale: null, name: "app_open", props: null },
+    ]);
+  const byDevice = async (device: string) =>
+    (await (await analyticsDb()).execute({ sql: "SELECT id FROM events WHERE device_id = ? AND user_id IS NULL", args: [device] })).rows.length;
+
+  it("a teen's earlier signed-out events from their device go with the date", async () => {
+    const { token, user } = await createDevSession("dev-teen@verdict.local");
+    await noteSignIn(user.id, headers("teen-dev-0001"));
+    await anonEvent("teen-dev-0001");
+    expect(await byDevice("teen-dev-0001")).toBe(1);
+    await postAge(token, { dob: ago(15) });
+    expect(await byDevice("teen-dev-0001")).toBe(0);
+  });
+
+  it("a blocked account is treated like a teen: stored events deleted, no new ones", async () => {
+    const { token, user } = await createDevSession("dev-blocked@verdict.local");
+    await noteSignIn(user.id, headers("blocked-dev-0001"));
+    await track("case_created", { userId: user.id, props: { mode: "one_sided" } });
+    await anonEvent("blocked-dev-0001");
+    await postAge(token, { dob: ago(10) });
+    const mine = async () =>
+      (await (await analyticsDb()).execute({ sql: "SELECT id FROM events WHERE user_id = ?", args: [user.id] })).rows.length;
+    expect(await mine()).toBe(0);
+    expect(await byDevice("blocked-dev-0001")).toBe(0);
+    await track("case_created", { userId: user.id, props: { mode: "one_sided" } });
+    expect(await mine()).toBe(0);
+    const res = await eventsRoute.POST(
+      request("POST", "/api/v1/events", {}, {
+        context: { platform: "ios", app_version: "2.0.0", anon_id: "0b5a3a3e-7c1f-4d47-8f0e-6a3c1d2e9f00", device_id: "blocked-dev-0001" },
+        events: [{ name: "app_open" }],
+      }),
+    );
+    expect(res.status).toBe(204);
+    expect(await byDevice("blocked-dev-0001")).toBe(0);
+  });
+});
+
 describe("the date of birth after the 18th birthday", () => {
   it("is cleared by the daily cleanup, and the old signal does not make the adult a teen again", async () => {
     const { token, user } = await createDevSession("dob-clear@verdict.local");
@@ -343,16 +456,6 @@ describe("what a teen gets by default", () => {
     );
   const stored = async (userId: string) =>
     (await (await analyticsDb()).execute({ sql: "SELECT id FROM events WHERE user_id = ? AND name = 'case_started'", args: [userId] })).rows.length;
-  const consent = (token: string, choice: "on" | "off") =>
-    consentRoute.POST(
-      request("POST", "/api/v1/me/consent", bearer(token), {
-        choice,
-        source: "switch",
-        wordingKey: "consent.switchDetail",
-        lang: "en",
-        platform: "ios",
-      }),
-    );
 
   it("usage events are dropped, an adult's are kept", async () => {
     const adult = await createDevSession("def-events-adult@verdict.local");

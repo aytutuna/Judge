@@ -60,6 +60,13 @@ beforeEach(() => {
 });
 
 describe("POST /api/verdict/[id]/translate", () => {
+  it("fails closed when the teen lookup fails: nothing is translated", async () => {
+    m.verdictHasTeen.mockRejectedValue(new Error("database is busy"));
+    const res = await post("abc123defg", "en");
+    expect(res.status).toBe(503);
+    expect(m.claudeJson).not.toHaveBeenCalled();
+  });
+
   it("translates a teen's verdict under the child-safety prompt, and others without it", async () => {
     m.verdictHasTeen.mockResolvedValue(true);
     expect((await post("abc123defg", "en")).status).toBe(200);

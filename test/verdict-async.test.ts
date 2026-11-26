@@ -206,6 +206,29 @@ describe("async verdicts", () => {
     expect([await visible(ids[0]), await visible(ids[1])]).toEqual([0, 1]);
   });
 
+  it("a writer who becomes a teen while the verdict is judging gets the prompt and names off", async () => {
+    const seen: boolean[] = [];
+    m.judgePremiumPanel.mockImplementation(async () => {
+      seen.push(childSafetyOn());
+      return { runs: [ok(RUN), ok(RUN), ok(RUN)], models: PANEL_MODELS };
+    });
+    const id = await user();
+    m.getViewer.mockResolvedValue({
+      user: { id, email: `${id}@x.y`, name: "Aytu Tuna", image: null },
+      sessionId: "s",
+      via: "bearer",
+      age: { confirmed: true, blocked: false, needsDob: true, teen: false },
+    });
+    const db = await getDb();
+    await db.execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT)');
+    const accepted = (await (await post({}, { prefer: "respond-async" })).json()) as VerdictAcceptedResponse;
+    await db.execute({ sql: 'INSERT OR REPLACE INTO "user" (id, age_dob, age_dob_at) VALUES (?, ?, ?)', args: [id, "2030-01-01", "2026-11-26T00:00:00Z"] });
+    await drain();
+    expect(seen).toEqual([true]);
+    const meta = await row<{ names_visible: number }>("SELECT names_visible FROM verdict_meta WHERE verdict_id = ?", [accepted.id]);
+    expect(Number(meta?.names_visible)).toBe(0);
+  });
+
   it("202 with Prefer: respond-async and the poll headers; judging until the background run ends", async () => {
     await user();
     const res = await post({}, { prefer: "respond-async, wait=5" });
