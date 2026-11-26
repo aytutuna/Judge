@@ -805,8 +805,9 @@ export async function grantSubscription(g: {
               status = 'active',
               will_renew = excluded.will_renew,
               cap = excluded.cap,
-              used_in_period = CASE WHEN subscriptions.period_start = excluded.period_start
-                                    THEN subscriptions.used_in_period ELSE 0 END,
+              used_in_period = MAX(CASE WHEN subscriptions.period_start = excluded.period_start
+                                        THEN subscriptions.used_in_period ELSE 0 END,
+                                   excluded.used_in_period),
               period_start = excluded.period_start,
               period_end = excluded.period_end,
               updated_at = excluded.updated_at
@@ -841,7 +842,20 @@ export async function grantSubscription(g: {
       args: [g.source, g.originalTransactionId, id],
     },
     // A plan found by the restore sync (lib/revenuecat-sync.ts) is replaced
-    // by the real one the first webhook event brings.
+    // by the real one the first webhook event brings; units still reserved on
+    // it go with their usage to the real row, so a failed run refunds there.
+    {
+      sql: `UPDATE premium_usage
+            SET subscription_id = (SELECT id FROM subscriptions WHERE source = ? AND original_transaction_id = ?),
+                sub_period_end = (SELECT period_end FROM subscriptions WHERE source = ? AND original_transaction_id = ?)
+            WHERE status = 'reserved' AND funded_by = 'subscription'
+              AND subscription_id IN (SELECT id FROM subscriptions
+                                      WHERE user_id = ? AND source = ? AND status = 'active'
+                                        AND original_transaction_id LIKE 'rcsync:%'
+                                        AND original_transaction_id <> ?)
+              AND ${guard.sql}`,
+      args: [g.source, g.originalTransactionId, g.source, g.originalTransactionId, g.userId, g.source, g.originalTransactionId, ...guard.args],
+    },
     {
       sql: `UPDATE subscriptions SET status = 'expired', will_renew = 0, updated_at = ?
             WHERE user_id = ? AND source = ? AND status = 'active' AND original_transaction_id LIKE 'rcsync:%'
@@ -1080,6 +1094,23 @@ export async function transferSubscriptions(g: {
             WHERE source = ? AND status = 'active' AND original_transaction_id NOT LIKE 'rcsync:%'
               AND user_id IN (${marks}) AND ${guard.sql}`,
       args: [g.toUserId, nowIso, g.toUserId, g.source, g.source, ...from, ...guard.args],
+    },
+    {
+      sql: `UPDATE premium_usage
+            SET subscription_id = (SELECT r.id FROM subscriptions r WHERE r.user_id = ? AND r.source = ?
+                                   AND r.status = 'active' AND r.original_transaction_id NOT LIKE 'rcsync:%' LIMIT 1),
+                sub_period_end = (SELECT r.period_end FROM subscriptions r WHERE r.user_id = ? AND r.source = ?
+                                  AND r.status = 'active' AND r.original_transaction_id NOT LIKE 'rcsync:%' LIMIT 1)
+            WHERE status = 'reserved' AND funded_by = 'subscription'
+              AND subscription_id IN (SELECT id FROM subscriptions WHERE user_id = ? AND source = ?
+                                      AND status = 'active' AND original_transaction_id LIKE 'rcsync:%')
+              AND EXISTS (SELECT 1 FROM subscriptions r WHERE r.user_id = ? AND r.source = ?
+                          AND r.status = 'active' AND r.original_transaction_id NOT LIKE 'rcsync:%')
+              AND ${guard.sql}`,
+      args: [
+        g.toUserId, g.source, g.toUserId, g.source, g.toUserId, g.source, g.toUserId, g.source,
+        ...guard.args,
+      ],
     },
     {
       sql: `UPDATE subscriptions SET status = 'expired', will_renew = 0, updated_at = ?

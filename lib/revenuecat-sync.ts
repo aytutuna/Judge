@@ -74,13 +74,14 @@ export async function syncRevenueCat(
     if (raw.billing_issues_detected_at || raw.grace_period_expires_date) continue;
     const sandbox = raw.is_sandbox === true;
     if (sandbox && !allowSandbox) continue;
-    const originalTransactionId = `rcsync:${userId}:${source}:${productId}:${first}`;
+    // Per period: a stand-in retired earlier does not block a new subscription.
+    const originalTransactionId = `rcsync:${userId}:${source}:${productId}:${first}:${start}`;
     const { applied } = await grantRestoredSubscription({
       userId,
       source,
       productId,
       originalTransactionId,
-      externalId: `${originalTransactionId}:${start}`,
+      externalId: originalTransactionId,
       periodStart: new Date(start).toISOString(),
       periodEnd: new Date(end).toISOString(),
       willRenew: !raw.unsubscribe_detected_at,

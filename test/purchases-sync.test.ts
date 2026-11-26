@@ -255,6 +255,52 @@ describe("POST /api/v1/me/purchases/sync (restore)", () => {
     expect((await (await call(token)).json()).synced).toBe(0);
   });
 
+  it("carries the stand-in's usage when the real plan lands on an existing row (a resubscriber)", async () => {
+    const { token, user } = await newUser();
+    await ent.grantSubscription({
+      userId: user.id,
+      source: "app_store",
+      externalId: "evt-old-period",
+      originalTransactionId: "otid-resub",
+      productId: "monthly",
+      periodStart: new Date(Date.now() - 40 * DAY).toISOString(),
+      periodEnd: new Date(Date.now() - 10 * DAY).toISOString(),
+      willRenew: true,
+    });
+    revenueCat({ monthly: active() });
+    expect((await (await call(token)).json()).synced).toBe(1);
+    for (let i = 0; i < 3; i++) {
+      const r = await ent.reservePremiumVerdict(user.id);
+      if (r.ok) await ent.consumePremiumVerdict(r.reservation.id, `v-resub-${i}`);
+    }
+    expect((await hook(realEvent(user.id, "RENEWAL", "otid-resub"))).status).toBe(200);
+    expect(await activePlans(user.id)).toEqual([{ id: "otid-resub", used: 3 }]);
+  });
+
+  it("restore works again for a resubscriber whose earlier stand-in was retired", async () => {
+    const { token, user } = await newUser();
+    const first = new Date(Date.now() - 65 * DAY).toISOString();
+    revenueCat({ monthly: active({ original_purchase_date: first }) });
+    expect((await (await call(token)).json()).synced).toBe(1);
+    await hook(realEvent(user.id, "EXPIRATION", "otid-first", { expiration_at_ms: Date.now() - 1000 }));
+    expect((await ent.getEntitlement(user.id)).canUsePremium).toBe(false);
+    revenueCat({ monthly: active({ original_purchase_date: first, purchase_date: new Date(Date.now() - DAY).toISOString() }) });
+    expect((await (await call(token)).json()).synced).toBe(1);
+    expect((await ent.getEntitlement(user.id)).canUsePremium).toBe(true);
+  });
+
+  it("a unit reserved on the stand-in is refunded to the real plan that replaces it", async () => {
+    const { token, user } = await newUser();
+    revenueCat({ monthly: active() });
+    await call(token);
+    const held = await ent.reservePremiumVerdict(user.id);
+    if (!held.ok) throw new Error("expected a reservation");
+    await hook(realEvent(user.id, "RENEWAL", "otid-inflight"));
+    expect(await activePlans(user.id)).toEqual([{ id: "otid-inflight", used: 1 }]);
+    await ent.refundPremiumVerdict(held.reservation.id); // the run failed
+    expect(await activePlans(user.id)).toEqual([{ id: "otid-inflight", used: 0 }]);
+  });
+
   it("503 when RevenueCat fails, and nothing is granted", async () => {
     vi.spyOn(console, "error").mockImplementation(() => {});
     const { token, user } = await newUser();

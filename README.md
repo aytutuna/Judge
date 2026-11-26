@@ -161,7 +161,9 @@ ignored. `GET /api/v1/config` reports `freeTier: false` and
 but its welcome credit. One device or browser gets one a day: the apps are told
 apart by the device recorded at sign-in (the `Device-Id` header when it is one
 of the account's, else its most recent device; an account with none, an old
-build, claims nothing), the website by a random id in the first-party cookie
+build, claims nothing. Today's apps send `Device-Id` only on sign-in calls, so
+until they send it on verdict, case and appeal requests too, the most recent
+sign-in device is the one claimed), the website by a random id in the first-party cookie
 `verdict.browser` (HttpOnly, SameSite=Lax, two years, set the first time a free
 verdict is asked for). A second account on the same device or browser is
 refused with `429 rate_limited` until the next UTC day. The claim holds the
@@ -1092,6 +1094,7 @@ limit within 5 minutes:
 | `bearer_401` | 30 | a request comes with a sign-in token that no longer works |
 | `webhook_bad_secret` | 10 | a purchase webhook has the wrong secret |
 | `webhook_apply_failed` | 1 | a purchase webhook could not be applied |
+| `purchase_unmatched` | 1 | a paid purchase matched no account (the line has the product and store) |
 | `entitlement_refused` | 3 | a finished verdict's save and credit settlement was refused because the job was no longer judging |
 | `provider_rate` | 10 | the AI service answers 429 |
 | `provider_down` | 5 | the AI service answers 5xx, cannot be reached or times out |

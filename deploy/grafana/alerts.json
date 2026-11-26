@@ -701,6 +701,63 @@
           "isPaused": false
         },
         {
+          "uid": "judge-signal-purchase-unmatched",
+          "title": "Signal purchase_unmatched",
+          "folderUID": "judge",
+          "ruleGroup": "warning",
+          "condition": "C",
+          "data": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "relativeTimeRange": {
+                "from": 300,
+                "to": 0
+              },
+              "datasourceUid": "${LOKI_UID}",
+              "model": {
+                "refId": "A",
+                "expr": "sum(count_over_time({app=\"judge\", unit=\"verdict.service\"} |= \"[signal:purchase_unmatched]\" [5m]))",
+                "queryType": "instant"
+              }
+            },
+            {
+              "refId": "C",
+              "datasourceUid": "__expr__",
+              "model": {
+                "refId": "C",
+                "type": "threshold",
+                "expression": "A",
+                "datasource": {
+                  "type": "__expr__",
+                  "uid": "__expr__"
+                },
+                "conditions": [
+                  {
+                    "evaluator": {
+                      "type": "gte",
+                      "params": [
+                        1
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "for": "0s",
+          "noDataState": "OK",
+          "execErrState": "Error",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "purchase_unmatched x{{ $values.A.Value }} in 5 minutes (limit 1).",
+            "description": "A paid purchase matched no account (product and store are in the line). RevenueCat retries for about 2.5 hours, then drops it. If the buyer exists, grant it by hand with scripts/grant.ts. On the server: journalctl -u verdict --since -15min | grep 'signal:purchase_unmatched'"
+          },
+          "isPaused": false
+        },
+        {
           "uid": "judge-signal-entitlement-refused",
           "title": "Signal entitlement_refused",
           "folderUID": "judge",
