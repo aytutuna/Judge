@@ -76,6 +76,9 @@ class Analytics(
     var serverOn: Boolean? = null
         private set
 
+    /** An answer, true or false, has been given once: the saved queue is read only the first time. */
+    private var decided = false
+
     /** While the last send failed: when to try again. */
     var retryAt: Long? = null
         private set
@@ -88,8 +91,9 @@ class Analytics(
      */
     var allowed: Boolean? = null
         set(value) {
-            val first = field == null
+            val first = !decided
             field = value
+            if (value != null) decided = true
             if (value == false || (value == true && first && serverOn == false)) {
                 clear()
             } else if (value == true && first) {

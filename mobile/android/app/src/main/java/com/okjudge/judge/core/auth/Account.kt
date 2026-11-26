@@ -176,11 +176,17 @@ class Account(
     val teen: StateFlow<Boolean> = _state.map { ((it as? State.SignedIn)?.me?.age)?.teen == true }
         .stateIn(scope, SharingStarted.Eagerly, false)
 
-    /** Usage statistics are off whatever the setting says: a teen, a blocked account or one whose age is not known yet. */
-    val statsLocked: StateFlow<Boolean> = _state.map { state ->
-        // A signed-in account whose /me has not answered yet is not known to be an adult either.
-        state is State.SignedIn && (state.me == null || AgeCheck.usageStatsLocked(state.me.age))
-    }.stateIn(scope, SharingStarted.Eagerly, false)
+    /**
+     * Usage statistics are off whatever the setting says: true for a teen, a blocked account or one that
+     * needs a date; null while a signed-in account's /me has not answered (nothing is known, nothing is lost).
+     */
+    val statsLocked: StateFlow<Boolean?> = _state.map { state ->
+        when (state) {
+            State.Loading -> null
+            State.SignedOut -> false
+            is State.SignedIn -> state.me?.let { AgeCheck.usageStatsLocked(it.age) }
+        }
+    }.stateIn(scope, SharingStarted.Eagerly, null)
 
     /** Loads /api/v1/config unless it is already known (or [force]). */
     fun loadProviders(force: Boolean = false) {

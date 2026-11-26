@@ -90,7 +90,15 @@ object AgeCheck {
     /** Usage events go out only for an account whose age is known and 18 or more (as on the website). */
     fun usageStatsLocked(age: AgeStatus?): Boolean = age != null && (age.teen || age.blocked || age.needsDob)
 
-    fun usageStatsOn(preference: Boolean, locked: Boolean): Boolean = preference && !locked
+    /**
+     * What analytics may do: false (drop everything) when the setting is off or the account is locked,
+     * true once the age is known to be fine, null while it is not known yet (events wait in memory).
+     */
+    fun usageStatsOn(preference: Boolean, locked: Boolean?): Boolean? = when {
+        !preference || locked == true -> false
+        locked == null -> null
+        else -> true
+    }
 
     /** The "Help improve Judge" card is never shown to a teen, whatever a cached answer says. */
     fun showsConsentCard(ask: Boolean, teen: Boolean): Boolean = ask && !teen

@@ -74,9 +74,11 @@ class AgeCheckTest {
         assertTrue(AgeCheck.usageStatsLocked(done.copy(teen = true)))
         assertTrue(AgeCheck.usageStatsLocked(needsDate))
         assertTrue(AgeCheck.usageStatsLocked(finalBlock))
-        assertTrue(AgeCheck.usageStatsOn(preference = true, locked = false))
-        assertFalse(AgeCheck.usageStatsOn(preference = true, locked = true))
-        assertFalse(AgeCheck.usageStatsOn(preference = false, locked = false))
+        assertEquals(true, AgeCheck.usageStatsOn(preference = true, locked = false))
+        assertEquals(false, AgeCheck.usageStatsOn(preference = true, locked = true))
+        assertEquals(false, AgeCheck.usageStatsOn(preference = false, locked = false))
+        assertNull(AgeCheck.usageStatsOn(preference = true, locked = null))
+        assertEquals(false, AgeCheck.usageStatsOn(preference = false, locked = null))
     }
 
     @Test

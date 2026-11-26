@@ -186,6 +186,52 @@ class AnalyticsTest {
     }
 
     @Test
+    fun anAdultsEvents_surviveTheWaitForTheAge_andAreSentAfter() = runTest {
+        val file = File(tmp.root, "queue.json")
+        analytics(Stub(), file).track("app_open")
+        val stub = Stub()
+        val a = analytics(stub, file, allowed = null)
+        a.setServerOn(true)
+        a.track("screen_view", mapOf("screen" to "home"))
+        // /me has not answered: waiting is not an opt-out, so nothing is deleted or sent.
+        a.allowed = null
+        a.flush()
+        assertTrue(file.exists())
+        assertTrue(stub.bodies.isEmpty())
+        assertEquals(listOf("screen_view"), a.queue.map { it.name })
+
+        a.allowed = true
+        assertEquals(listOf("app_open", "screen_view"), a.queue.map { it.name })
+        a.flush()
+        assertEquals(listOf(2), stub.sizes)
+    }
+
+    @Test
+    fun aTeensEvents_areDroppedOnceTheAgeIsKnown() = runTest {
+        val file = File(tmp.root, "queue.json")
+        analytics(Stub(), file).track("app_open")
+        val stub = Stub()
+        val a = analytics(stub, file, allowed = null)
+        a.setServerOn(true)
+        a.track("screen_view", mapOf("screen" to "home"))
+        a.allowed = false
+        a.flush()
+        assertTrue(a.queue.isEmpty())
+        assertFalse(file.exists())
+        assertTrue(stub.bodies.isEmpty())
+    }
+
+    @Test
+    fun goingBackToUnknown_doesNotReadTheSavedQueueTwice() = runTest {
+        val file = File(tmp.root, "queue.json")
+        val a = analytics(Stub(), file)
+        a.track("app_open")
+        a.allowed = null
+        a.allowed = true
+        assertEquals(listOf("app_open"), a.queue.map { it.name })
+    }
+
+    @Test
     fun unreadSetting_neverWritesOrSends() = runTest {
         val file = File(tmp.root, "queue.json")
         val stub = Stub()

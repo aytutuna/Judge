@@ -145,7 +145,7 @@ class AccountAgeTest {
         assertEquals("false", ageBody()["adult"]!!.jsonPrimitive.content)
         assertNull(ageBody()["under13"])
         assertTrue(account.teen.value)
-        assertTrue(account.statsLocked.value)
+        assertEquals(true, account.statsLocked.value)
         withTimeout(10_000) { account.agePosting.first { !it } }
         // Never closed by the phone's word: the date step is what shows.
         assertEquals(AgeGate.DATE, account.ageGate.value)
@@ -278,16 +278,16 @@ class AccountAgeTest {
     }
 
     @Test
-    fun aSignedInAccountWhoseMeHasNotAnswered_countsAsLocked() = runBlocking {
+    fun aSignedInAccountWhoseMeHasNotAnswered_isNeitherLockedNorOpen() = runBlocking {
         routes.on(ME, json(503, """{"error":"down","code":"unavailable"}"""))
         routes.on(ME, finished)
         val (account, _) = account()
         withTimeout(10_000) { account.state.first { it is Account.State.SignedIn } }
-        assertTrue(account.statsLocked.value)
+        assertNull(account.statsLocked.value)
         account.refresh()
-        assertTrue("a failed lookup keeps it locked", account.statsLocked.value)
+        assertNull("a failed lookup is still unknown", account.statsLocked.value)
         account.refresh()
-        assertFalse(account.statsLocked.value)
+        assertEquals(false, account.statsLocked.value)
     }
 
     @Test
@@ -310,9 +310,9 @@ class AccountAgeTest {
         routes.on(ME, finished)
         val (account, _) = account()
         account.refresh()
-        assertTrue(account.statsLocked.value)
+        assertEquals(true, account.statsLocked.value)
         account.refresh()
-        assertFalse(account.statsLocked.value)
+        assertEquals(false, account.statsLocked.value)
     }
 
     @Test
