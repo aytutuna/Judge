@@ -22,6 +22,8 @@ final class PurchaseModel {
         case ageRequired
         /// Refused before the store: under 18, or the account is blocked.
         case ageBlocked
+        /// The phone's age check is still running; clears when it ends.
+        case checking
     }
 
     enum RestoreResult: Equatable {
@@ -62,6 +64,9 @@ final class PurchaseModel {
     init(gateway: (any PurchaseGateway)?, account: AccountModel) {
         self.gateway = gateway
         self.account = account
+        account.onHoldEnded = { [weak self] in
+            if self?.message == .checking { self?.message = nil }
+        }
     }
 
     /// A RevenueCat key is configured.
@@ -321,7 +326,7 @@ final class PurchaseModel {
     /// again in a moment.
     static func refusal(_ age: String?, holding: Bool = false) -> Message {
         if age == AgeCheck.blockedCode { return .ageBlocked }
-        if age == AgeCheck.unconfirmedCode { return holding ? .failed : .ageRequired }
+        if age == AgeCheck.unconfirmedCode { return holding ? .checking : .ageRequired }
         return .failed
     }
 

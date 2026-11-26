@@ -5,13 +5,13 @@ extension PurchaseModel.Message {
         switch self {
         case .success: return L10n.appPurchaseSuccess(lang)
         case .pending: return L10n.appPurchasePending(lang)
-        case .failed: return L10n.appPurchaseFailed(lang)
+        case .failed, .checking: return L10n.appPurchaseFailed(lang)
         case .ageRequired: return L10n.errorAgeUnconfirmed(lang)
         case .ageBlocked: return L10n.errorAgeBlocked(lang)
         }
     }
 
-    var isProblem: Bool { self == .failed || self == .ageRequired || self == .ageBlocked }
+    var isProblem: Bool { self == .failed || self == .checking || self == .ageRequired || self == .ageBlocked }
 }
 
 extension PurchaseModel.RestoreResult {
