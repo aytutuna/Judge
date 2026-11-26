@@ -21,7 +21,9 @@ export function Analytics() {
   const pathname = usePathname();
   const { status, config, me } = useViewer();
   const signedIn = Boolean(me?.user);
-  const teen = me?.age?.teen === true;
+  // No events while the account's age is unknown or under 18.
+  const ageUnknown = Boolean(me?.user) && me?.age?.needsDob === true;
+  const teen = me?.age?.teen === true || ageUnknown;
   const on = config?.features?.analytics === true;
   const known = status === "ready" || status === "error";
   const lastPath = useRef<string | null>(null);

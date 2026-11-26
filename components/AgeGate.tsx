@@ -5,8 +5,10 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { CONTACT_EMAIL } from "@/app/site";
 import type { AgeState } from "@/lib/account-types";
+import { underThirteen } from "@/lib/age-date";
 import { t, type Lang } from "@/lib/i18n";
-import { applyAge, markSignedOut, useViewer } from "@/lib/use-viewer";
+import { langTag } from "@/lib/langs";
+import { applyAge, markSignedOut, refreshViewer, useViewer } from "@/lib/use-viewer";
 import styles from "./account/AccountPages.module.css";
 
 /** Pages a gated account can still open: its account (to delete it) and
@@ -17,26 +19,36 @@ export type AgeDialogProps = {
   lang: Lang;
   age: AgeState;
   dob: string;
+  /** The latest date the field takes: today anywhere on Earth. */
+  max: string;
+  /** An under-13 date waits for a second look before it is sent. */
+  confirming: boolean;
   saving: boolean;
   failed: boolean;
   contactEmail: string | null;
   onDob: (v: string) => void;
-  onConfirm: () => void;
+  onSubmit: () => void;
+  onChange: () => void;
   onSignOut: () => void;
 };
 
+function longDate(lang: Lang, dob: string): string {
+  const d = new Date(`${dob}T00:00:00Z`);
+  return Number.isNaN(d.getTime()) ? dob : new Intl.DateTimeFormat(langTag(lang), { dateStyle: "long", timeZone: "UTC" }).format(d);
+}
+
 /** The dialog's content, stateless so tests can render both states. */
-export function AgeDialogBody({ lang, age, dob, saving, failed, contactEmail, onDob, onConfirm, onSignOut }: AgeDialogProps) {
+export function AgeDialogBody({ lang, age, dob, max, confirming, saving, failed, contactEmail, onDob, onSubmit, onChange, onSignOut }: AgeDialogProps) {
   const signOut = (
     <button type="button" className={`${styles.btn} ${styles.secondary}`} onClick={onSignOut}>
       {t(lang, "nav.signOut")}
     </button>
   );
-  if (age.blocked) {
+  if (age.blocked && !age.needsDob) {
     const [before, after = ""] = t(lang, "age.blockedContact").split("{email}");
     return (
       <>
-        <h2 id="age-title" className={styles.dialogTitle}>
+        <h2 id="age-title" className={styles.dialogTitle} tabIndex={-1} ref={(el) => el?.focus()}>
           {t(lang, "age.blockedTitle")}
         </h2>
         <p className={styles.dialogText}>{t(lang, "age.blocked")}</p>
@@ -58,8 +70,36 @@ export function AgeDialogBody({ lang, age, dob, saving, failed, contactEmail, on
       </>
     );
   }
+  if (confirming) {
+    return (
+      <>
+        <h2 id="age-title" className={styles.dialogTitle}>
+          {t(lang, "age.title")}
+        </h2>
+        <p className={styles.dialogText}>{t(lang, "age.confirmDate", { date: longDate(lang, dob) })}</p>
+        {failed ? (
+          <p className={styles.error} role="alert">
+            {t(lang, "age.failed")}
+          </p>
+        ) : null}
+        <div className={styles.row}>
+          <button type="button" className={`${styles.btn} ${styles.primary}`} disabled={saving} onClick={onSubmit}>
+            {t(lang, "age.confirmYes")}
+          </button>
+          <button type="button" className={`${styles.btn} ${styles.secondary}`} disabled={saving} onClick={onChange}>
+            {t(lang, "age.change")}
+          </button>
+        </div>
+      </>
+    );
+  }
   return (
-    <>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (dob && !saving) onSubmit();
+      }}
+    >
       <h2 id="age-title" className={styles.dialogTitle}>
         {t(lang, "age.title")}
       </h2>
@@ -71,7 +111,7 @@ export function AgeDialogBody({ lang, age, dob, saving, failed, contactEmail, on
           aria-labelledby="age-title"
           required
           min="1900-01-01"
-          max={new Date().toISOString().slice(0, 10)}
+          max={max}
           value={dob}
           onChange={(e) => onDob(e.target.value)}
         />
@@ -82,38 +122,60 @@ export function AgeDialogBody({ lang, age, dob, saving, failed, contactEmail, on
         </p>
       ) : null}
       <div className={styles.row}>
-        <button type="button" className={`${styles.btn} ${styles.primary}`} disabled={!dob || saving} onClick={onConfirm}>
+        <button type="submit" className={`${styles.btn} ${styles.primary}`} disabled={!dob || saving}>
           {t(lang, "age.continue")}
         </button>
         {signOut}
       </div>
-    </>
+    </form>
   );
 }
 
 /**
  * For signed-in accounts that have not given a date of birth, or that are
- * blocked (under 13): a dialog that cannot be dismissed. An under-13 date is
- * answered with a blocked state, which turns the same dialog into the refusal.
+ * blocked for good (under 13): a dialog that cannot be dismissed. A block
+ * from the old 18+ rule shows the date step too. An under-13 date waits for a
+ * second look; the answer to it turns the same dialog into the refusal.
  */
 export function AgeGate({ lang }: { lang: Lang }) {
   const pathname = usePathname();
   const { me } = useViewer();
   const age = me?.user ? (me.age ?? null) : null;
-  const asking = Boolean(age && !age.blocked && age.needsDob);
+  const asking = Boolean(age && age.needsDob);
   const [dob, setDob] = useState("");
+  const [max] = useState(() => new Date(Date.now() + 14 * 3_600_000).toISOString().slice(0, 10));
+  const [confirming, setConfirming] = useState(false);
   const [saving, setSaving] = useState(false);
   const [failed, setFailed] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  async function confirm() {
+  async function send() {
     setSaving(true);
     setFailed(false);
-    const { submitDob } = await import("@/lib/auth-client");
-    const next = await submitDob(dob);
-    if (next) applyAge(next);
-    setSaving(false);
-    setFailed(next === null);
+    try {
+      const { submitDob } = await import("@/lib/auth-client");
+      const res = await submitDob(dob);
+      if ("age" in res) {
+        applyAge(res.age);
+      } else if (res.status === 409 || res.status === 403) {
+        // Given elsewhere, or the account was closed there: show what the server holds.
+        await refreshViewer();
+      } else {
+        setFailed(true);
+      }
+    } catch {
+      setFailed(true);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  function submit() {
+    if (!confirming && underThirteen(dob)) {
+      setConfirming(true);
+      return;
+    }
+    void send();
   }
 
   const open = Boolean(age) && (age!.blocked || asking) && !OPEN_PAGES.has(pathname);
@@ -150,11 +212,17 @@ export function AgeGate({ lang }: { lang: Lang }) {
         lang={lang}
         age={age}
         dob={dob}
+        max={max}
+        confirming={confirming}
         saving={saving}
         failed={failed}
         contactEmail={CONTACT_EMAIL}
         onDob={setDob}
-        onConfirm={() => void confirm()}
+        onSubmit={submit}
+        onChange={() => {
+          setConfirming(false);
+          setFailed(false);
+        }}
         onSignOut={() => void signOut()}
       />
     </dialog>

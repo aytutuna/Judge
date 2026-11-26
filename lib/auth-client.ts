@@ -198,8 +198,9 @@ export function fetchConfig(): Promise<AppConfig> {
 }
 
 /** POST /api/v1/me/age with the date of birth (YYYY-MM-DD). The account's age
- * state (blocked when it is under 13), or null on any failure. */
-export async function submitDob(dob: string): Promise<AgeState | null> {
+ * state (blocked when it is under 13), or the HTTP status that refused it
+ * (0 when the request itself failed). */
+export async function submitDob(dob: string): Promise<{ age: AgeState } | { status: number }> {
   try {
     const res = await fetch("/api/v1/me/age", {
       method: "POST",
@@ -207,9 +208,9 @@ export async function submitDob(dob: string): Promise<AgeState | null> {
       credentials: "same-origin",
       body: JSON.stringify({ dob }),
     });
-    return res.ok ? ((await res.json()) as AgeState) : null;
+    return res.ok ? { age: (await res.json()) as AgeState } : { status: res.status };
   } catch {
-    return null;
+    return { status: 0 };
   }
 }
 

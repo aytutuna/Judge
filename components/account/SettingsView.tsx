@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { setUsageStats, track, usageStatsOn } from "@/lib/analytics/client";
+import { browserOptedOut, setUsageStats, track, usageStatsOn } from "@/lib/analytics/client";
 import { askSignIn, fetchConsent, saveConsent } from "@/lib/feedback-client";
 import { t, type Key } from "@/lib/i18n";
 import { useLang } from "@/lib/lang";
@@ -49,9 +49,12 @@ export function SettingsView() {
   }
   const teen = viewer.me?.age?.teen === true;
   const [stats, setStats] = useState(true);
+  const [browserOff, setBrowserOff] = useState(false);
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- the switch lives in localStorage, read after mount
+    /* eslint-disable react-hooks/set-state-in-effect -- the switch lives in localStorage and navigator, read after mount */
     setStats(usageStatsOn());
+    setBrowserOff(browserOptedOut());
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
   function changeStats(on: boolean) {
     setStats(on);
@@ -117,12 +120,14 @@ export function SettingsView() {
               type="checkbox"
               role="switch"
               className={styles.switch}
-              checked={stats && !teen}
-              disabled={teen}
+              checked={stats && !teen && !browserOff}
+              disabled={teen || browserOff}
               onChange={(e) => changeStats(e.target.checked)}
             />
           </label>
-          <p className={styles.detail}>{t(lang, teen ? "settings.usageStatsTeen" : "settings.usageStatsHint")}</p>
+          <p className={styles.detail}>
+            {t(lang, teen ? "settings.usageStatsTeen" : browserOff ? "settings.usageStatsBrowser" : "settings.usageStatsHint")}
+          </p>
         </section>
       </div>
 
