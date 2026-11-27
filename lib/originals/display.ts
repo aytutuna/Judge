@@ -8,6 +8,7 @@
 
 import type { PartyLetter as CaseParty } from "@/lib/case-types";
 import { cache } from "react";
+import { caseHasTeen } from "@/lib/age";
 import { getCase, type CaseRow } from "@/lib/cases/db";
 import { getVerdict, type StoredVerdict } from "@/lib/db";
 import { EMPTY_DISPLAY, normalizeDisplay, type DisplayNames, type DisplayState } from "@/lib/originals-types";
@@ -80,7 +81,8 @@ async function loadPublicVerdict(id: string): Promise<PublicVerdict | null> {
   if (meta.kind === "case" && meta.caseId) {
     const row = await getCase(meta.caseId);
     const removed = Boolean(meta.removedAt || row?.removedAt);
-    if (!row || removed || !row.namesVisible) return { stored, meta, display: null, removed };
+    // Real names never show while anyone on the case is under 18.
+    if (!row || removed || !row.namesVisible || (await caseHasTeen(row.id))) return { stored, meta, display: null, removed };
     const display: DisplayNames = {
       a: openCaseDisplayName(row, "a"),
       b: openCaseDisplayName(row, "b"),
