@@ -77,7 +77,7 @@ export function blankResult(json: string): string {
 }
 
 /** The statements that erase these verdicts' text (and their translations). */
-async function eraseVerdictStatements(ids: string[], nowIso: string): Promise<InStatement[]> {
+export async function eraseVerdictStatements(ids: string[], nowIso: string): Promise<InStatement[]> {
   const db = await getDb();
   const marks = ids.map(() => "?").join(", ");
   const [verdicts, translations] = await Promise.all([
@@ -118,18 +118,20 @@ async function eraseVerdicts(cutoff: string, nowIso: string): Promise<number> {
   });
   const ids = rs.rows.map((r) => String(r.id));
   if (ids.length === 0) return 0;
-  const marks = ids.map(() => "?").join(", ");
-  await entitlementWriteBatch([
-    ...(await eraseVerdictStatements(ids, nowIso)),
-    {
-      // A failed round has no verdict row of its own, so it is found through its root.
-      sql: `UPDATE verdict_appeals SET text = '', evidence = '[]', updated_at = ?
-            WHERE id IN (${marks})
-               OR (verdict_id IN (${marks}) AND NOT EXISTS (SELECT 1 FROM verdicts WHERE id = verdict_appeals.id))`,
-      args: [nowIso, ...ids, ...ids],
-    },
-  ]);
+  await entitlementWriteBatch([...(await eraseVerdictStatements(ids, nowIso)), blankRoundsStatement(ids, nowIso)]);
   return ids.length;
+}
+
+/** The text of these verdicts' rounds of added context. */
+export function blankRoundsStatement(ids: string[], nowIso: string): InStatement {
+  const marks = ids.map(() => "?").join(", ");
+  return {
+    // A failed round has no verdict row of its own, so it is found through its root.
+    sql: `UPDATE verdict_appeals SET text = '', evidence = '[]', updated_at = ?
+          WHERE id IN (${marks})
+             OR (verdict_id IN (${marks}) AND NOT EXISTS (SELECT 1 FROM verdicts WHERE id = verdict_appeals.id))`,
+    args: [nowIso, ...ids, ...ids],
+  };
 }
 
 /** Cases every party removed, the last of them before `cutoff`. */

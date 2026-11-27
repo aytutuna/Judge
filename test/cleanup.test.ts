@@ -41,7 +41,7 @@ async function all(sql: string, args: string[] = []) {
 
 describe("expired sign-in codes", () => {
   it("does nothing, and does not fail, before any sign-in created the table", async () => {
-    expect(await runCleanup(NOW)).toEqual({ verification: 0, ledger: 0, removalLog: 0, adultDobs: 0, attests: 0 });
+    expect(await runCleanup(NOW)).toEqual({ verification: 0, ledger: 0, removalLog: 0, adultDobs: 0, attests: 0, blocked: 0 });
   });
 
   it("deletes the rows past their expiry and keeps the live ones", async () => {

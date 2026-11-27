@@ -3,8 +3,9 @@
  * a date of birth of 13 or more, an app-store age signal that allows it, or
  * (old app builds only) the "I'm 18 or older" tick. It is blocked when the
  * date says under 13, or the store says so outright (under13: true). Such a
- * block is final: only the owner can clear it, by hand. Nothing is deleted
- * on a block.
+ * block is final: only the owner can clear it, by hand. Its share pages
+ * close at once and the account's data is deleted 7 days later
+ * (lib/minor-deletion.ts).
  *
  * Blocks made before the 13+ rule (age_blocked_at without age_block_final)
  * were made by the old under-18 rule, so the person may give a date once:
@@ -220,7 +221,9 @@ export async function confirmAdult(userId: string, source: "checkbox" | "platfor
   return readAge(userId, now);
 }
 
-/** Blocks the account for good, which also makes an old block final.
+/** Blocks the account for good, which also makes an old block final; the
+ * time of the block then restarts, since the 7 days before the account's
+ * data goes (lib/minor-deletion.ts) count from when it became final.
  * Signals only the first time. Null when a date landed first and nothing
  * changed, unless `overDate`: the store's under-13 signal blocks whatever
  * date is on file. */
@@ -231,7 +234,7 @@ export async function blockMinor(userId: string, now = new Date(), overDate = fa
   // A date that landed after the caller read the state wins, unless overDate.
   const [done] = await entitlementWriteBatch([
     {
-      sql: `UPDATE "user" SET age_blocked_at = COALESCE(age_blocked_at, ?), age_block_final = '1'
+      sql: `UPDATE "user" SET age_blocked_at = CASE WHEN age_block_final IS NULL THEN ? ELSE age_blocked_at END, age_block_final = '1'
             WHERE id = ?${overDate ? "" : " AND age_dob_at IS NULL"}`,
       args: [now.toISOString(), userId],
     },
