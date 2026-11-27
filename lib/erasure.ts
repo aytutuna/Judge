@@ -3,7 +3,8 @@
  * later this also blanks the anonymized text the judges read and the verdict
  * text, keeping the outcome (verdict, confidence, winner, votes, evidence
  * counts and the other numbers and enums) and the dates, and stamps
- * `erased_at`. No row is deleted.
+ * `erased_at`. No row is deleted, except a case's signed-out answer ticks
+ * (case_side_attest), which go with it.
  *
  * - A one-sided verdict (and the verdicts of its rounds of added context):
  *   30 days after it was removed.
@@ -159,6 +160,7 @@ async function eraseCases(cutoff: string, nowIso: string): Promise<number> {
         sql: "UPDATE case_people SET name_key = 'erased:' || lower(hex(randomblob(8))), label = '' WHERE case_id = ?",
         args: [id],
       },
+      { sql: "DELETE FROM case_side_attest WHERE case_id = ?", args: [id] },
       { sql: "UPDATE cases SET erased_at = ? WHERE id = ? AND erased_at IS NULL", args: [nowIso, id] },
     ]);
   }

@@ -1,7 +1,8 @@
 /**
  * Daily clean-up beside the erasure sweep (lib/erasure): expired sign-in
  * code rows, consent ledger rows six years after their account was deleted,
- * and removal-log entries older than 90 days. Runs at startup and then
+ * signed-out answer ticks (case_side_attest) after six years, and
+ * removal-log entries older than 90 days. Runs at startup and then
  * daily; a step that fails is logged and the others still run. (Name
  * fingerprints are blanked with the case in lib/erasure, usage events and
  * old device links in lib/analytics/db.) Server only.
@@ -9,6 +10,7 @@
 
 import { clearAdultDobs } from "@/lib/age";
 import { getDb } from "@/lib/db";
+import { ensureCaseTables } from "@/lib/cases/db";
 import { ensureFeedbackTables } from "@/lib/feedback/db";
 import { pruneRemovalLog } from "@/lib/originals/removal-log";
 
@@ -45,15 +47,30 @@ async function pruneLedger(): Promise<number> {
   return rs.rowsAffected;
 }
 
-export type CleanupCounts = { verification: number; ledger: number; removalLog: number; adultDobs: number };
+/** The ticks a signed-out writer gave with their answer, six years after they were given.
+ * They are also deleted with their case (lib/erasure). */
+async function pruneAttests(now: Date): Promise<number> {
+  await ensureCaseTables();
+  const db = await getDb();
+  const cutoff = new Date(now);
+  cutoff.setUTCFullYear(cutoff.getUTCFullYear() - 6);
+  const rs = await db.execute({
+    sql: "DELETE FROM case_side_attest WHERE MAX(adult_confirmed_at, sensitive_agreed_at) < ?",
+    args: [cutoff.toISOString()],
+  });
+  return rs.rowsAffected;
+}
+
+export type CleanupCounts = { verification: number; ledger: number; removalLog: number; adultDobs: number; attests: number };
 
 export async function runCleanup(now: Date = new Date()): Promise<CleanupCounts> {
-  const counts: CleanupCounts = { verification: 0, ledger: 0, removalLog: 0, adultDobs: 0 };
+  const counts: CleanupCounts = { verification: 0, ledger: 0, removalLog: 0, adultDobs: 0, attests: 0 };
   const steps: [keyof CleanupCounts, () => Promise<number>][] = [
     ["verification", () => purgeVerification(now.toISOString())],
     ["ledger", () => pruneLedger()],
     ["removalLog", () => pruneRemovalLog(now)],
     ["adultDobs", () => clearAdultDobs()],
+    ["attests", () => pruneAttests(now)],
   ];
   for (const [name, step] of steps) {
     try {
@@ -69,9 +86,9 @@ const globalForCleanup = globalThis as unknown as { __judgeCleanup?: boolean };
 
 async function cleanQuietly(): Promise<void> {
   const n = await runCleanup();
-  if (n.verification || n.ledger || n.removalLog || n.adultDobs) {
+  if (n.verification || n.ledger || n.removalLog || n.adultDobs || n.attests) {
     console.info(
-      `[cleanup] dropped ${n.verification} expired sign-in codes, ${n.ledger} old consent records and ${n.removalLog} old removal-log entries and ${n.adultDobs} dates of birth of people who turned 18`,
+      `[cleanup] dropped ${n.verification} expired sign-in codes, ${n.ledger} old consent records, ${n.removalLog} old removal-log entries, ${n.attests} old answer ticks and ${n.adultDobs} dates of birth of people who turned 18`,
     );
   }
 }

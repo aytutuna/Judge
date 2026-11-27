@@ -41,7 +41,7 @@ async function all(sql: string, args: string[] = []) {
 
 describe("expired sign-in codes", () => {
   it("does nothing, and does not fail, before any sign-in created the table", async () => {
-    expect(await runCleanup(NOW)).toEqual({ verification: 0, ledger: 0, removalLog: 0, adultDobs: 0 });
+    expect(await runCleanup(NOW)).toEqual({ verification: 0, ledger: 0, removalLog: 0, adultDobs: 0, attests: 0 });
   });
 
   it("deletes the rows past their expiry and keeps the live ones", async () => {
@@ -110,6 +110,27 @@ describe("the removal log", () => {
     expect(ids).not.toContain("old");
     expect(ids).toContain("keep");
     expect(ids.filter((i) => i.startsWith("late"))).toHaveLength(20);
+  });
+});
+
+describe("answer ticks of signed-out writers", () => {
+  const tick = async (caseId: string, party: string, years: number) => {
+    const at = new Date(NOW);
+    at.setUTCFullYear(at.getUTCFullYear() - years);
+    await (await getDb()).execute({
+      sql: "INSERT INTO case_side_attest (case_id, party, adult_confirmed_at, sensitive_agreed_at) VALUES (?, ?, ?, ?)",
+      args: [caseId, party, at.toISOString(), at.toISOString()],
+    });
+  };
+
+  it("are deleted six years after they were given, not before", async () => {
+    await runCleanup(NOW);
+    await tick("t-old", "b", 7);
+    await tick("t-edge", "b", 5.9);
+    await tick("t-new", "b", 0);
+    expect((await runCleanup(NOW)).attests).toBe(1);
+    expect((await all("SELECT case_id FROM case_side_attest ORDER BY case_id")).map((r) => r.case_id)).toEqual(["t-edge", "t-new"]);
+    expect((await runCleanup(NOW)).attests).toBe(0);
   });
 });
 

@@ -344,6 +344,22 @@ describe("cases", () => {
     expect(await getPublicVerdict(`${id}-v`)).toMatchObject({ removed: true });
   });
 
+  it("deletes the answer ticks of a signed-out writer with the case, and only then", async () => {
+    const id = "case-ticks";
+    await makeCase(id, ["a", "b"]);
+    const d = await db();
+    for (const p of ["a", "b"]) {
+      await d.execute({ sql: "INSERT INTO case_side_attest (case_id, party, adult_confirmed_at, sensitive_agreed_at) VALUES (?, ?, ?, ?)", args: [id, p, ago(90), ago(90)] });
+    }
+    const ticks = async () => Number((await one("SELECT count(*) AS n FROM case_side_attest WHERE case_id = ?", [id])).n);
+    await removeParty(id, "a", 80);
+    await removeParty(id, "b", 20);
+    await sweepErasures(NOW);
+    expect(await ticks()).toBe(2);
+    await sweepErasures(new Date(NOW.getTime() + 11 * DAY));
+    expect(await ticks()).toBe(0);
+  });
+
   it("a party that never wrote a side does not hold the wipe back", async () => {
     const id = "case-two-parties";
     await makeCase(id, ["a", "b"]);
