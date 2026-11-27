@@ -17,7 +17,7 @@ import {
 import { deadBearerResponse } from "@/lib/bearer-guard";
 import { deleteUserEntitlements, getEntitlement } from "@/lib/entitlements";
 import { removeUserData } from "@/lib/originals/removal";
-import { hasPassword, REAUTH_HEADER, reauthForDelete } from "@/lib/password";
+import { hasPassword, looksLikeApp, REAUTH_HEADER, reauthForDelete } from "@/lib/password";
 import { checkUserLimits } from "@/lib/ratelimit";
 import { revokeSignInTokens } from "@/lib/signin-tokens";
 
@@ -130,7 +130,7 @@ export async function DELETE(req: Request): Promise<NextResponse> {
       viewer.sessionId,
       password,
       req.headers.get(REAUTH_HEADER) === "1",
-      viewer.via === "bearer" && !req.headers.has("origin"),
+      looksLikeApp(req, viewer.via === "bearer"),
     );
     if (reauth !== "ok") {
       const message = reauth === "password_wrong" ? "That password is not right." : "Sign in again to delete the account.";

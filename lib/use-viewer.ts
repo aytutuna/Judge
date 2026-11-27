@@ -64,9 +64,9 @@ export function refreshViewer(): Promise<void> {
       const failed = me.status === "rejected" && !unauthorized;
       retryOnFocus = (failed || config.status === "rejected") && !retrying;
       if (me.status === "fulfilled" && me.value.user) commitSignIn(me.value.user.email);
-      // Signed out elsewhere (another device changed the password, the account was deleted):
-      // what this browser kept for the account goes too. Not for a page that held no signed-in user
-      // (an idle-expired session keeps "Last used" and the like).
+      // Signed out elsewhere while this page held a signed-in user: what the browser kept goes too.
+      // A page that held none (a fresh load after an idle expiry or a remote deletion) keeps it,
+      // which is the price of keeping "Last used".
       const signedOutNow = (me.status === "fulfilled" && !me.value.user) || unauthorized;
       if (signedOutNow && state.me?.user) forgetBrowserData();
       emit({

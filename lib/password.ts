@@ -5,6 +5,7 @@
  * a provider or an emailed code.
  */
 
+import { analyticsDb } from "./analytics/db";
 import { getAuth } from "./auth";
 
 /** A session this young counts as proof of the inbox or provider account, so
@@ -21,9 +22,13 @@ export const REAUTH_HEADER = "Judge-Reauth";
 /** The exemption ends on this date, once the builds that send the header have shipped. */
 export const REAUTH_EXEMPT_UNTIL = Date.parse("2027-03-01T00:00:00Z");
 
-/** App sessions opened before the marker existed have none: a bearer request without an
- * Origin (a browser always sends one) on a session older than this counts as an old app. */
-export const APP_MARKER_SINCE = Date.parse("2026-11-27T20:00:00Z");
+/** The User-Agent both apps send on every request ("Judge-iOS/1.0.0 (1)", "Judge-Android/1.0 (1)"). */
+export const APP_USER_AGENT = /^Judge-(iOS|Android)\//;
+
+/** A bearer request that looks like an app: no Origin (a browser always sends one) and the app's User-Agent. */
+export function looksLikeApp(req: Request, viaBearer: boolean): boolean {
+  return viaBearer && !req.headers.has("origin") && APP_USER_AGENT.test(req.headers.get("user-agent") ?? "");
+}
 
 /** What the server writes to a session's userAgent when an app sign-in opened it. */
 export const APP_SESSION = "app";
@@ -99,6 +104,11 @@ export function setPassword(
   });
 }
 
+async function hasDevice(userId: string): Promise<boolean> {
+  const rs = await (await analyticsDb()).execute({ sql: "SELECT 1 FROM account_devices WHERE user_id = ? LIMIT 1", args: [userId] });
+  return rs.rows.length > 0;
+}
+
 export type ReauthResult = "ok" | "reauth_required" | "password_wrong";
 
 /** Whether the person at this session may delete the account: they gave the
@@ -116,10 +126,14 @@ export async function reauthForDelete(
   const account = await ctx.internalAdapter.findCredentialAccount(userId);
   const sessions = await ctx.internalAdapter.listSessions(userId);
   const mine = sessions.find((s) => s.id === sessionId);
-  // Decided by how the server saw the session open, not by anything the caller sends now.
-  const oldApp =
-    mine?.userAgent === APP_SESSION || (fromApp && !mine?.userAgent && new Date(mine?.createdAt ?? now).getTime() < APP_MARKER_SINCE);
-  if (!sendsReauth && oldApp && mine && now < REAUTH_EXEMPT_UNTIL) return "ok";
+  // Old app builds cannot ask for a password, so until REAUTH_EXEMPT_UNTIL they are let through: sessions
+  // an app sign-in marked, and older unmarked ones when the request looks like the app and the account
+  // has a device row. Remaining risk: a caller outside a browser holding a stolen session token can
+  // imitate an old app build (headers, no Origin) until that date.
+  if (!sendsReauth && mine && now < REAUTH_EXEMPT_UNTIL) {
+    if (mine.userAgent === APP_SESSION) return "ok";
+    if (!mine.userAgent && fromApp && (await hasDevice(userId))) return "ok";
+  }
   if (password !== undefined && account?.password) {
     return (await ctx.password.verify({ hash: account.password, password })) ? "ok" : "password_wrong";
   }

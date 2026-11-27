@@ -12,7 +12,7 @@ const { createDevSession, sessionCookieHeader, welcomeClaim } = await import("..
 const ent = await import("../lib/entitlements");
 const { getDb } = await import("../lib/db");
 const { GET, DELETE } = await import("../app/api/v1/me/route");
-const { setPassword, reauthForDelete, REAUTH_EXEMPT_UNTIL, APP_MARKER_SINCE } = await import("../lib/password");
+const { setPassword, reauthForDelete, REAUTH_EXEMPT_UNTIL } = await import("../lib/password");
 
 afterAll(() => {
   const g = globalThis as unknown as { __verdictLibsql?: { close(): void } };
@@ -258,37 +258,54 @@ describe("DELETE /api/v1/me needs a recent sign-in or the password", () => {
     expect(await rows('SELECT count(*) AS n FROM "user" WHERE id = ?', [user.id])).toBe(1);
   });
 
-  async function setCreated(token: string, ms: number) {
-    const db = await getDb();
-    await db.execute({ sql: "UPDATE session SET createdAt = ? WHERE token = ?", args: [new Date(ms).toISOString(), token] });
+  const APP_UA = "Judge-iOS/1.0.0 (1)";
+
+  async function addDevice(userId: string) {
+    const { analyticsDb } = await import("../lib/analytics/db");
+    await (await analyticsDb()).execute({
+      sql: "INSERT INTO account_devices (user_id, device_id, platform, first_seen, last_seen) VALUES (?, ?, 'ios', 1, 1)",
+      args: [userId, "device-" + userId.slice(0, 12)],
+    });
   }
 
-  it("an app session from before the marker, with no marker, deletes as a bearer request without Origin", async () => {
-    const { token, user } = await createDevSession("legacy1@verdict.local");
-    await setCreated(token, APP_MARKER_SINCE - 3_600_000);
-    const res = await del({ authorization: `Bearer ${token}` });
+  async function legacyApp(email: string, device = true) {
+    const made = await createDevSession(email);
+    await ageSession(made.token, 600);
+    if (device) await addDevice(made.user.id);
+    return made;
+  }
+
+  it("an unmarked session with the app User-Agent and a device row deletes as a bearer request without Origin", async () => {
+    const { token, user } = await legacyApp("legacy1@verdict.local");
+    const res = await del({ authorization: `Bearer ${token}`, "user-agent": APP_UA });
     expect(res.status).toBe(200);
     expect(await rows('SELECT count(*) AS n FROM "user" WHERE id = ?', [user.id])).toBe(0);
   });
 
-  it("the same old session is refused when the request carries an Origin header", async () => {
-    const { token, user } = await createDevSession("legacy2@verdict.local");
-    await setCreated(token, APP_MARKER_SINCE - 3_600_000);
-    const res = await del({ authorization: `Bearer ${token}`, origin: "http://localhost:3600" });
+  it("an unmarked session without the app User-Agent is refused", async () => {
+    const { token, user } = await legacyApp("legacy2@verdict.local");
+    for (const headers of [{}, { "user-agent": "Mozilla/5.0" }] as Record<string, string>[]) {
+      const res = await del({ authorization: `Bearer ${token}`, ...headers });
+      expect(res.status).toBe(403);
+      expect(await res.json()).toMatchObject({ code: "reauth_required" });
+    }
+    expect(await rows('SELECT count(*) AS n FROM "user" WHERE id = ?', [user.id])).toBe(1);
+  });
+
+  it("an unmarked session on an account with no device row is refused", async () => {
+    const { token, user } = await legacyApp("legacy3@verdict.local", false);
+    const res = await del({ authorization: `Bearer ${token}`, "user-agent": APP_UA });
     expect(res.status).toBe(403);
     expect(await res.json()).toMatchObject({ code: "reauth_required" });
     expect(await rows('SELECT count(*) AS n FROM "user" WHERE id = ?', [user.id])).toBe(1);
   });
 
-  it("an unmarked session created after the marker existed is never exempt", async () => {
-    const { token, user } = await createDevSession("legacy3@verdict.local");
-    await setCreated(token, APP_MARKER_SINCE + 1000);
-    const db = await getDb();
-    const id = String((await db.execute({ sql: "SELECT id FROM session WHERE token = ?", args: [token] })).rows[0].id);
-    expect(await reauthForDelete(user.id, id, undefined, false, true, APP_MARKER_SINCE + 3_600_000)).toBe("reauth_required");
-    // and the session before the cut-off is exempt through the same call
-    await setCreated(token, APP_MARKER_SINCE - 1000);
-    expect(await reauthForDelete(user.id, id, undefined, false, true, APP_MARKER_SINCE + 3_600_000)).toBe("ok");
+  it("an unmarked session is refused when the request carries an Origin header", async () => {
+    const { token, user } = await legacyApp("legacy4@verdict.local");
+    const res = await del({ authorization: `Bearer ${token}`, "user-agent": APP_UA, origin: "http://localhost:3600" });
+    expect(res.status).toBe(403);
+    expect(await res.json()).toMatchObject({ code: "reauth_required" });
+    expect(await rows('SELECT count(*) AS n FROM "user" WHERE id = ?', [user.id])).toBe(1);
   });
 
   it("the exemption of old app builds ends on its date", async () => {
