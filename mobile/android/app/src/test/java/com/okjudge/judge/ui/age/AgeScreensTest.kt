@@ -194,6 +194,19 @@ class AgeScreensTest {
     }
 
     @Test
+    fun approvalCover_offersCheckAgain_signOutAndDelete_only() {
+        var checks = 0
+        compose.setContent {
+            Themed(AppLang.EN) { AgeApprovalScreen(busy = false, onCheckAgain = { checks++ }, onSignOut = {}, onDelete = {}) }
+        }
+        compose.onAllNodesWithTag(AgeTags.PICKER).assertCountEquals(0)
+        compose.onNodeWithTag(AgeTags.SIGN_OUT).assertIsEnabled()
+        compose.onNodeWithTag(AgeTags.DELETE).assertIsEnabled()
+        compose.onNodeWithTag(AgeTags.CHECK_AGAIN).performClick()
+        assertEquals(1, checks)
+    }
+
+    @Test
     fun settings_forATeen_locksStatistics_andOffersNoTrainingSwitch() {
         compose.setContent {
             Themed(AppLang.EN) {

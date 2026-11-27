@@ -182,8 +182,8 @@ class Account(
     /** The session whose store signal the server already has, so it is sent once per launch. */
     private var signalSentFor: String? = null
 
-    val ageGate: StateFlow<AgeGate> = _state.map { state ->
-        AgeCheck.gate(state is State.SignedIn, (state as? State.SignedIn)?.me?.age)
+    val ageGate: StateFlow<AgeGate> = combine(_state, _platformAge) { state, platform ->
+        AgeCheck.gate(state is State.SignedIn, (state as? State.SignedIn)?.me?.age, platform)
     }.stateIn(scope, SharingStarted.Eagerly, AgeGate.NONE)
 
     /** The phone's check or a report is running: actions wait a moment, with no change to the account. */
@@ -273,7 +273,17 @@ class Account(
 
     /** Asks the phone's age signal; [host] is the Activity its prompt may attach to. */
     fun checkPlatformAge(host: Context) {
-        if (_platformAge.value != null || askingPlatform) return
+        if (_platformAge.value != null) return
+        askPlatformAge(host)
+    }
+
+    /** Asks again while the approval cover is up; the old answer holds until the new one comes. */
+    fun recheckPlatformAge(host: Context) {
+        if (_platformAge.value == PlatformAge.MINOR_UNAPPROVED) askPlatformAge(host)
+    }
+
+    private fun askPlatformAge(host: Context) {
+        if (askingPlatform) return
         askingPlatform = true
         scope.launch {
             val answer = try {
@@ -297,7 +307,7 @@ class Account(
     fun ageRefusal(): String? {
         val age = (_state.value as? State.SignedIn)?.me?.age ?: return null
         return when {
-            age.blocked -> AgeCheck.BLOCKED
+            age.blocked || _platformAge.value == PlatformAge.MINOR_UNAPPROVED -> AgeCheck.BLOCKED
             !age.confirmed -> AgeCheck.UNCONFIRMED
             askingPlatform || _agePosting.value -> AgeCheck.CHECKING
             else -> null
@@ -474,6 +484,18 @@ class Account(
         return SignInResult.Success
     }
 
+    /**
+     * After the store's restore: asks the server to read the account's store plans and shows the balance
+     * it answers with. Any failure (503 not_configured, a rate limit, offline) is left alone: /me is read
+     * again by the caller.
+     */
+    suspend fun syncPurchases() {
+        val asked = tokens.get() ?: return
+        val res = api.syncPurchases()
+        if (tokens.get() != asked) return
+        (res as? ApiResult.Ok)?.value?.entitlement?.let(::applyEntitlement)
+    }
+
     /** Ends the session on the server when it can, and on the phone always. */
     suspend fun signOut() {
         if (!_working.compareAndSet(expect = false, update = true)) return
@@ -492,6 +514,7 @@ class Account(
     suspend fun deleteAccount(password: String? = null): Boolean {
         if (!_working.compareAndSet(expect = false, update = true)) return false
         _deleteFailed.value = false
+        _deleteProblem.value = null
         try {
             val res = api.deleteAccount(password)
             val deleted = when {
@@ -502,19 +525,6 @@ class Account(
                     (api.me() as? ApiResult.Ok)?.value?.let { it.user == null } == true
                 else -> false
             }
-    /**
-     * After the store's restore: asks the server to read the account's store plans and shows the balance
-     * it answers with. Any failure (503 not_configured, a rate limit, offline) is left alone: /me is read
-     * again by the caller.
-     */
-    suspend fun syncPurchases() {
-        val asked = tokens.get() ?: return
-        val res = api.syncPurchases()
-        if (tokens.get() != asked) return
-        (res as? ApiResult.Ok)?.value?.entitlement?.let(::applyEntitlement)
-    }
-
-        _deleteProblem.value = null
             if (deleted) {
                 withContext(NonCancellable) { endLocally(Notice.DELETED) }
                 onDeleted()
@@ -567,16 +577,6 @@ class Account(
 
         fun looksLikeEmail(email: String): Boolean = EMAIL.matches(email.trim())
 
-        private fun UiError.isSigninRequired() = this is UiError.Api && status == 401 && code == "signin_required"
-
-        private fun common(e: UiError): SignInError? = when (e) {
-            UiError.Offline -> SignInError.OFFLINE
-            UiError.Timeout, UiError.Unknown -> SignInError.FAILED
-            is UiError.Api -> when {
-                e.status == 429 -> SignInError.RATE_LIMITED
-                e.status >= 500 -> SignInError.UNAVAILABLE
-                else -> null
-            }
         fun deleteProblemOf(e: UiError): DeleteProblem? {
             if (e !is UiError.Api) return null
             return when {
@@ -587,6 +587,16 @@ class Account(
             }
         }
 
+        private fun UiError.isSigninRequired() = this is UiError.Api && status == 401 && code == "signin_required"
+
+        private fun common(e: UiError): SignInError? = when (e) {
+            UiError.Offline -> SignInError.OFFLINE
+            UiError.Timeout, UiError.Unknown -> SignInError.FAILED
+            is UiError.Api -> when {
+                e.status == 429 -> SignInError.RATE_LIMITED
+                e.status >= 500 -> SignInError.UNAVAILABLE
+                else -> null
+            }
         }
 
         fun codeSendError(e: UiError): SignInError = common(e) ?: when ((e as UiError.Api).status) {

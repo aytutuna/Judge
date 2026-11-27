@@ -67,6 +67,7 @@ import com.okjudge.judge.core.model.ConsentState
 import com.okjudge.judge.core.auth.AgeCheck
 import com.okjudge.judge.core.auth.AgeGate
 import com.okjudge.judge.core.display.Errors
+import com.okjudge.judge.ui.age.AgeApprovalScreen
 import com.okjudge.judge.ui.age.AgeBlockedScreen
 import com.okjudge.judge.ui.age.AgeDateScreen
 import com.okjudge.judge.core.data.Appearance
@@ -79,8 +80,8 @@ import com.okjudge.judge.i18n.Strings
 import com.okjudge.judge.i18n.deviceLanguageTags
 import com.okjudge.judge.ui.components.LocalGamify
 import com.okjudge.judge.ui.history.HistoryEntry
-import com.okjudge.judge.ui.history.HistoryViewModel
 import com.okjudge.judge.ui.settings.DeleteUi
+import com.okjudge.judge.ui.history.HistoryViewModel
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeViewModel
 import com.okjudge.judge.ui.home.SHORT_WINDOW
@@ -887,7 +888,6 @@ private const val HELD_NONE = 0
 private const val HELD_SUBMIT = 1
 private const val HELD_LINK = 2
 
-/** The age check over the whole app: the date step or the final refusal. Back leaves the app. */
 @Composable
 private fun deleteUi(account: Account, state: Account.State, signInAgain: () -> Unit): DeleteUi {
     val problem by account.deleteProblem.collectAsStateWithLifecycle()
@@ -901,6 +901,7 @@ private fun deleteUi(account: Account, state: Account.State, signInAgain: () -> 
     )
 }
 
+/** The age check over the whole app: the date step or the final refusal. Back leaves the app. */
 @Composable
 private fun AgeOverlay(
     gate: AgeGate,
@@ -937,6 +938,13 @@ private fun AgeOverlay(
             onDelete = onDelete,
             delete = delete,
             onContact = onContact,
+        )
+        AgeGate.APPROVAL -> AgeApprovalScreen(
+            busy = busy,
+            onCheckAgain = { account.recheckPlatformAge(context) },
+            onSignOut = onSignOut,
+            onDelete = onDelete,
+            delete = delete,
         )
         AgeGate.NONE -> Unit
     }

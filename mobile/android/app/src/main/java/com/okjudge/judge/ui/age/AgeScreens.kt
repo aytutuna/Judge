@@ -79,6 +79,8 @@ object AgeTags {
     const val CONFIRM_YES = "age.confirmYes"
     const val CHANGE = "age.change"
     const val BLOCKED = "age.blocked"
+    const val APPROVAL = "age.approval"
+    const val CHECK_AGAIN = "age.checkAgain"
     const val SIGN_OUT = "age.signOut"
     const val DELETE = "age.delete"
     const val ERROR = "age.error"
@@ -273,6 +275,44 @@ fun AgeBlockedScreen(
             )
             DeleteAccount(busy, delete, onDelete, Modifier.padding(top = 8.dp).align(Alignment.CenterHorizontally))
         }
+    }
+}
+
+/**
+ * The store has not shown a parent's approval of a change yet (pending or declined): nothing past this
+ * until Play says approved. Asking again is the only way forward besides signing out or deleting.
+ */
+@Composable
+fun AgeApprovalScreen(
+    busy: Boolean,
+    onCheckAgain: () -> Unit,
+    onSignOut: () -> Unit,
+    onDelete: (String?) -> Unit,
+    delete: DeleteUi = DeleteUi(),
+) {
+    val s = LocalStrings.current
+    Cover(Modifier.testTag(AgeTags.APPROVAL)) {
+        // TODO: move to lib/i18n.ts as age.approvalTitle and age.approval once the keys exist.
+        Text("A parent has to approve this", style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
+        Text(
+            "Google Play is waiting for a parent or guardian to approve a change to Judge. Once they have, check again.",
+            style = JudgeType.lead,
+            modifier = Modifier.padding(top = 10.dp),
+        )
+        PrimaryButton(
+            text = s.caseRetry,
+            enabled = !busy,
+            onClick = onCheckAgain,
+            modifier = Modifier.fillMaxWidth().padding(top = 28.dp).testTag(AgeTags.CHECK_AGAIN),
+        )
+        TextAction(
+            s.accountSignOut,
+            onClick = onSignOut,
+            color = Palette.ink2,
+            enabled = !busy,
+            modifier = Modifier.padding(top = 14.dp).align(Alignment.CenterHorizontally).testTag(AgeTags.SIGN_OUT),
+        )
+        DeleteAccount(busy, delete, onDelete, Modifier.align(Alignment.CenterHorizontally))
     }
 }
 
