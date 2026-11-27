@@ -2,7 +2,7 @@
  * Expiry and crash recovery for cases. Correctness never depends on the
  * sweep: every read reports an unanswered case past expires_at as expired,
  * and the first write materializes it. The sweep only tidies up (and the
- * entitlements sweep refunds any held unit 10 minutes after hold_until as a
+ * entitlements sweep refunds any held unit 20 minutes after hold_until as a
  * last backstop).
  */
 

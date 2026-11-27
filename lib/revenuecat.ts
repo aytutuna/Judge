@@ -25,7 +25,9 @@ export function revenueCatWebhookSecret(env: Env = process.env): string | null {
 }
 
 /** Sandbox (TestFlight, Play test tracks, Stripe test mode) purchases are
- * applied only with ALLOW_SANDBOX_PURCHASES=1. */
+ * applied only with ALLOW_SANDBOX_PURCHASES=1: on until App Review has
+ * approved the app, then off. They count like real ones but their ledger
+ * rows are marked sandbox. */
 export function sandboxPurchasesAllowed(env: Env = process.env): boolean {
   return env.ALLOW_SANDBOX_PURCHASES?.trim() === "1";
 }
@@ -64,9 +66,9 @@ export type IgnoreReason =
   | "cancellation_not_refund"
   | "billing_issue"
   | "subscription_paused"
-  | "transfer_not_supported"
-  | "unhandled_type"
-  | "unknown_user";
+  | "transfer_to_anonymous"
+  | "unknown_user_renewal"
+  | "unhandled_type";
 
 type GrantEvent = Extract<StoreEvent, { userId: string }>;
 
@@ -74,8 +76,12 @@ export type RevenueCatOutcome =
   | { kind: "invalid" }
   | { kind: "test" }
   | { kind: "ignored"; reason: IgnoreReason }
-  /** Grants to an account: the route picks the first of `userIds` that exists. */
-  | { kind: "grant"; userIds: string[]; event: (userId: string) => GrantEvent }
+  /** Grants to an account: the route picks the first of `userIds` that exists.
+   * With none that does (or none at all), the event is unmatched. */
+  | { kind: "grant"; userIds: string[]; renewal: boolean; event: (userId: string) => GrantEvent }
+  /** A store purchase moved to another account: every plan of `from` goes to
+   * the first of `to` that exists. */
+  | { kind: "transfer"; eventId: string; source: GrantSource; from: string[]; to: string[] }
   /** Keyed by the store transaction alone (no account needed). */
   | { kind: "apply"; event: StoreEvent };
 
@@ -120,6 +126,26 @@ const ignored = (reason: IgnoreReason): RevenueCatOutcome => ({ kind: "ignored",
 
 /** The webhook body mapped to what the server should do with it. */
 export function mapRevenueCatEvent(body: unknown, opts: { allowSandbox: boolean }): RevenueCatOutcome {
+  const outcome = mapEvent(body, opts);
+  if (!isObject(body) || !isObject(body.event) || body.event.environment !== "SANDBOX") return outcome;
+  if (outcome.kind === "grant") {
+    const make = outcome.event;
+    return { ...outcome, event: (userId) => ({ ...make(userId), sandbox: true }) };
+  }
+  if (outcome.kind === "apply") return { ...outcome, event: { ...outcome.event, sandbox: true } };
+  return outcome;
+}
+
+function idList(v: unknown): string[] {
+  const out: string[] = [];
+  for (const x of Array.isArray(v) ? v.slice(0, 20) : []) {
+    const id = str(x);
+    if (id && !id.startsWith(ANONYMOUS) && !out.includes(id)) out.push(id);
+  }
+  return out;
+}
+
+function mapEvent(body: unknown, opts: { allowSandbox: boolean }): RevenueCatOutcome {
   if (!isObject(body) || !isObject(body.event)) return { kind: "invalid" };
   const e = body.event;
   const type = str(e.type);
@@ -139,13 +165,20 @@ export function mapRevenueCatEvent(body: unknown, opts: { allowSandbox: boolean 
     case "EXPIRATION":
       break;
     case "BILLING_ISSUE":
-      // Access continues through any grace period; EXPIRATION ends it.
+      // No grace period: a failed renewal changes nothing, and access ends
+      // at the stored period end.
       return ignored("billing_issue");
     case "SUBSCRIPTION_PAUSED":
       // Takes effect at period end; EXPIRATION (reason SUBSCRIPTION_PAUSED) ends access.
       return ignored("subscription_paused");
-    case "TRANSFER":
-      return ignored("transfer_not_supported");
+    case "TRANSFER": {
+      const to = idList(e.transferred_to);
+      if (to.length === 0) return ignored("transfer_to_anonymous");
+      const from = idList(e.transferred_from);
+      const store = typeof e.store === "string" && Object.hasOwn(STORES, e.store) ? STORES[e.store] : null;
+      if (!store) return ignored("unsupported_store");
+      return { kind: "transfer", eventId, source: store, from, to };
+    }
     default:
       return ignored("unhandled_type");
   }
@@ -168,10 +201,10 @@ export function mapRevenueCatEvent(body: unknown, opts: { allowSandbox: boolean 
         ? (e.quantity as number)
         : 1;
       const userIds = userIdCandidates(e);
-      if (userIds.length === 0) return ignored("unknown_user");
       return {
         kind: "grant",
         userIds,
+        renewal: false,
         event: (userId) => ({
           type: "credits_purchased",
           eventId,
@@ -197,7 +230,10 @@ export function mapRevenueCatEvent(body: unknown, opts: { allowSandbox: boolean 
 
   if (type === "CANCELLATION") {
     if (e.cancel_reason === "CUSTOMER_SUPPORT") {
-      return { kind: "apply", event: { type: "refund", eventId, source, transactionId: originalTransactionId } };
+      return {
+        kind: "apply",
+        event: { type: "refund", eventId, source, transactionId: originalTransactionId, userIds: userIdCandidates(e) },
+      };
     }
     return { kind: "apply", event: { type: "subscription_will_not_renew", eventId, source, originalTransactionId } };
   }
@@ -205,7 +241,10 @@ export function mapRevenueCatEvent(body: unknown, opts: { allowSandbox: boolean 
   if (type === "EXPIRATION") {
     const at = epochMs(e.expiration_at_ms) ?? epochMs(e.event_timestamp_ms);
     if (at === null) return ignored("missing_fields");
-    return { kind: "apply", event: { type: "subscription_expired", eventId, source, originalTransactionId, at: isoAt(at) } };
+    return {
+      kind: "apply",
+      event: { type: "subscription_expired", eventId, source, originalTransactionId, at: isoAt(at), userIds: userIdCandidates(e) },
+    };
   }
 
   // INITIAL_PURCHASE, RENEWAL, UNCANCELLATION, PRODUCT_CHANGE: the period
@@ -214,10 +253,11 @@ export function mapRevenueCatEvent(body: unknown, opts: { allowSandbox: boolean 
   const end = epochMs(e.expiration_at_ms);
   if (start === null || end === null || end <= start) return ignored("missing_fields");
   const userIds = userIdCandidates(e);
-  if (userIds.length === 0) return ignored("unknown_user");
   return {
     kind: "grant",
     userIds,
+    // A renewal for an account that is gone is not an unmatched purchase.
+    renewal: type !== "INITIAL_PURCHASE",
     event: (userId) => ({
       type: "subscription_active",
       eventId,

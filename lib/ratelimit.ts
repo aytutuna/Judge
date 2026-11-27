@@ -10,9 +10,11 @@
  * "unavailable" rather than let through unmetered.
  */
 
-import { createHmac } from "node:crypto";
+import { createHmac, randomBytes } from "node:crypto";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
+import { analyticsDb } from "./analytics/db";
+import { isDeviceId } from "./analytics/validate";
 import { rateLimitSubject } from "./client-ip";
 import { signal } from "./signals";
 
@@ -26,7 +28,7 @@ const REDIS_TOTAL_TIMEOUT_MS = 3_000;
 
 export type LimitDecision =
   | { ok: true }
-  | { ok: false; code: "rate_limited" | "daily_cap"; retryAfterSec: number }
+  | { ok: false; code: "rate_limited" | "daily_cap" | "free_device"; retryAfterSec: number }
   | { ok: false; code: "unavailable"; error: string };
 
 export function redisConfigured(): boolean {
@@ -183,6 +185,7 @@ export type UserBucket =
   | "signin_lookup_any"
   | "password_set"
   | "account_delete"
+  | "purchase_sync"
   | "events"
   | "data_export";
 
@@ -268,6 +271,11 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
   account_delete: [
     { limit: 5, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:ad10m" },
     { limit: 10, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:adday" },
+  ],
+  /** Restore (POST /api/v1/me/purchases/sync): one RevenueCat call each. */
+  purchase_sync: [
+    { limit: 10, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:u:psy10m" },
+    { limit: 30, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:psyday" },
   ],
   /** Usage event batches (POST /api/v1/events). */
   events: [{ limit: 300, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:evt1h" }],
@@ -456,38 +464,102 @@ function dailyCap(value: string | undefined, fallback: number): number {
   return raw && Number.isInteger(n) && n >= 0 ? n : fallback;
 }
 
-/** PREMIUM_DAILY_CAP as a non-negative integer (0 pauses premium). */
+/** PREMIUM_DAILY_CAP as a non-negative integer (0 pauses free verdicts). */
 export function premiumDailyCap(env: Record<string, string | undefined> = process.env): number {
   return dailyCap(env.PREMIUM_DAILY_CAP, DEFAULT_PREMIUM_DAILY_CAP);
 }
 
-/** WELCOME_DAILY_CAP: the share of the daily cap that accounts on their
- * welcome credit alone may use. */
+/** WELCOME_DAILY_CAP: how many runs accounts on their welcome credit alone
+ * may start per UTC day (with PREMIUM_DAILY_CAP, the lower one counts). */
 export function welcomeDailyCap(env: Record<string, string | undefined> = process.env): number {
   return dailyCap(env.WELCOME_DAILY_CAP, DEFAULT_WELCOME_DAILY_CAP);
 }
 
+const BROWSER_COOKIE = "verdict.browser";
+const BROWSER_ID = /^[A-Za-z0-9_-]{22,64}$/;
+
+function cookieValue(headers: Headers, name: string): string | null {
+  for (const part of (headers.get("cookie") ?? "").split(";")) {
+    const [key, ...rest] = part.trim().split("=");
+    if (key === name) return rest.join("=");
+  }
+  return null;
+}
+
 /**
- * Site-wide premium cost breaker: refuses once PREMIUM_DAILY_CAP premium
- * pipeline runs have started this UTC day. Counted from the reservations in
- * the main database, refunded ones included (a refused or failed run still
- * cost its model calls), so it holds across restarts and instances without
- * extra state. Clarifying questions are not counted here; the per-account
- * daily clarify window bounds them. An account that never had anything but
- * its welcome credit is also held to WELCOME_DAILY_CAP, so throwaway
- * sign-ups cannot use up the runs paying accounts rely on. Fails closed.
+ * What a free verdict is claimed against for the day. The website: a random
+ * id in a first-party cookie, set the first time it is needed (a request
+ * without it counts as a new browser). The apps (bearer requests): the device
+ * this request comes from, as recorded at sign-in: the Device-Id header when
+ * it is one of the account's, else the account's most recent device. An
+ * account with none (an old build) claims nothing and has its one welcome
+ * credit only.
  */
-export async function checkPremiumSiteCap(userId: string, now: Date = new Date()): Promise<LimitDecision> {
+async function freeDeviceKeys(userId: string, headers: Headers): Promise<{ keys: string[]; newBrowser?: string }> {
+  if (!/^bearer\s/i.test(headers.get("authorization") ?? "")) {
+    const sent = cookieValue(headers, BROWSER_COOKIE);
+    if (sent && BROWSER_ID.test(sent)) return { keys: [`b:${sent}`] };
+    const fresh = randomBytes(18).toString("base64url");
+    return { keys: [`b:${fresh}`], newBrowser: fresh };
+  }
+  const rs = await (await analyticsDb()).execute({
+    sql: "SELECT device_id FROM account_devices WHERE user_id = ? ORDER BY last_seen DESC",
+    args: [userId],
+  });
+  const known = rs.rows.map((r) => String(r.device_id));
+  const sent = headers.get("device-id")?.trim() ?? "";
+  const device = isDeviceId(sent) && known.includes(sent) ? sent : known[0];
+  return { keys: device ? [`d:${device}`] : [] };
+}
+
+async function setBrowserCookie(id: string): Promise<void> {
+  try {
+    const { cookies } = await import("next/headers");
+    (await cookies()).set(BROWSER_COOKIE, id, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 2 * 365 * 24 * 60 * 60,
+    });
+  } catch {
+    // Not inside a Next request (a script or a test): nothing to set it on.
+  }
+}
+
+export const FREE_DEVICE_MESSAGE = "One free verdict per device a day. Try again tomorrow, or buy a verdict.";
+
+/**
+ * The cost breaker for free verdicts: refuses once PREMIUM_DAILY_CAP (or
+ * WELCOME_DAILY_CAP, whichever is lower) runs by accounts that never had
+ * anything but their welcome credit have started this UTC day. Counted from
+ * the reservations in the main database, refunded ones included (a failed
+ * run still cost its model calls), so it holds across restarts and
+ * instances. Accounts with a bought credit or a plan are never held to it.
+ * A free account is also held to one free verdict a day per device or browser
+ * (see freeDeviceKeys), when the request's headers are passed. Clarifying
+ * questions are not counted here; the per-account clarify window bounds
+ * them. Fails closed.
+ */
+export async function checkPremiumSiteCap(
+  userId: string,
+  now: Date = new Date(),
+  headers?: Headers,
+): Promise<LimitDecision> {
   const cap = premiumDailyCap();
   const nextDayMs = (Math.floor(now.getTime() / DAY_MS) + 1) * DAY_MS;
   try {
     const ent = await import("./entitlements");
-    const full =
-      cap === 0 ||
-      (await ent.countPremiumToday(now)) >= cap ||
-      ((await ent.hasWelcomeCreditOnly(userId)) && (await ent.countWelcomeToday(now)) >= welcomeDailyCap());
-    if (full) {
+    if (!(await ent.hasWelcomeCreditOnly(userId))) return { ok: true };
+    if (cap === 0 || (await ent.countWelcomeToday(now)) >= Math.min(cap, welcomeDailyCap())) {
       return { ok: false, code: "daily_cap", retryAfterSec: retryAfterSec(nextDayMs, now.getTime()) };
+    }
+    if (headers && (await ent.getEntitlement(userId, now)).credits > 0) {
+      const { keys, newBrowser } = await freeDeviceKeys(userId, headers);
+      if (!(await ent.claimFreeVerdictDay(userId, keys, now))) {
+        return { ok: false, code: "free_device", retryAfterSec: retryAfterSec(nextDayMs, now.getTime()) };
+      }
+      if (newBrowser) await setBrowserCookie(newBrowser);
     }
     return { ok: true };
   } catch (e) {

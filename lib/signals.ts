@@ -11,6 +11,7 @@ export type Signal =
   | "bearer_401"
   | "webhook_bad_secret"
   | "webhook_apply_failed"
+  | "purchase_unmatched"
   | "entitlement_refused"
   | "provider_rate"
   | "provider_down"

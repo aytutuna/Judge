@@ -23,7 +23,7 @@ vi.mock("@/lib/auth", () => ({
 vi.mock("@/lib/entitlements", () => ({
   reservePremiumVerdict: m.reserve,
   reservationByKey: async () => null,
-  consumePremiumVerdict: m.consume,
+  consumeStatement: (reservationId: string, verdictId: string) => ({ sql: "consume", args: [reservationId, verdictId] }),
   refundPremiumVerdict: m.refund,
   getEntitlement: async () => ({ canUsePremium: true, blockedReason: null, credits: 4, subscription: null, resetsAt: null }),
 }));
@@ -38,8 +38,9 @@ vi.mock("@/lib/claude", async (orig) => ({
 vi.mock("@/lib/db", () => ({ getVerdict: async () => null }));
 vi.mock("@/lib/analytics/track", () => ({ track: m.track }));
 vi.mock("@/lib/originals/save", () => ({
-  saveVerdictWithOriginals: async (v: (typeof m.saved)[number]) => {
+  saveVerdictWithOriginals: async (v: (typeof m.saved)[number], settle: { args: [string, string] }[] = []) => {
     m.saved.push(v);
+    for (const s of settle) await m.consume(...s.args);
     return { ownerToken: null, originalsStored: true, display: { namesVisible: true, a: null, b: null, others: {} }, metaWritten: true };
   },
 }));

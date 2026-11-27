@@ -335,30 +335,13 @@ describe("POST /api/v1/webhooks/revenuecat: monthly plan", () => {
 });
 
 describe("POST /api/v1/webhooks/revenuecat: ignored events", () => {
-  it("unknown product, unknown or anonymous user, unsupported store", async () => {
+  it("unknown product and unsupported store", async () => {
     const { user } = await newUser();
     expect((await send(rc({ ...userFields(user.id), product_id: "lifetime_unlock" }))).json).toEqual({
       ok: true,
       ignored: true,
       reason: "unknown_product",
     });
-    expect((await send(rc({ ...userFields("no-such-user"), product_id: "pack_10" }))).json).toEqual({
-      ok: true,
-      ignored: true,
-      reason: "unknown_user",
-    });
-    const anon = "$RCAnonymousID:abc123";
-    expect((await send(rc({ app_user_id: anon, original_app_user_id: anon, aliases: [anon] }))).json).toMatchObject({
-      ignored: true,
-      reason: "unknown_user",
-    });
-    const subForNobody = rc({
-      ...userFields("no-such-user"),
-      type: "INITIAL_PURCHASE",
-      product_id: "monthly",
-      expiration_at_ms: Date.now() + 30 * DAY,
-    });
-    expect((await send(subForNobody)).json).toEqual({ ok: true, ignored: true, reason: "unknown_user" });
     expect((await send(rc({ ...userFields(user.id), store: "AMAZON" }))).json).toMatchObject({
       ignored: true,
       reason: "unsupported_store",
@@ -383,12 +366,11 @@ describe("POST /api/v1/webhooks/revenuecat: ignored events", () => {
     expect((await ent.getEntitlement(user.id)).credits).toBe(10);
   });
 
-  it("BILLING_ISSUE, SUBSCRIPTION_PAUSED, TRANSFER and other types change nothing", async () => {
+  it("BILLING_ISSUE, SUBSCRIPTION_PAUSED and other types change nothing", async () => {
     const cases: [string, string][] = [
       ["BILLING_ISSUE", "billing_issue"],
       ["SUBSCRIPTION_PAUSED", "subscription_paused"],
-      ["TRANSFER", "transfer_not_supported"],
-      ["REFUND_REVERSED", "unhandled_type"],
+            ["REFUND_REVERSED", "unhandled_type"],
       ["SUBSCRIPTION_EXTENDED", "unhandled_type"],
     ];
     for (const [type, reason] of cases) {
@@ -406,6 +388,183 @@ describe("POST /api/v1/webhooks/revenuecat: ignored events", () => {
     expect(failed.json).toMatchObject({ code: "unavailable" });
     expect((await send(purchase)).json).toMatchObject({ applied: true });
     expect((await ent.getEntitlement(user.id)).credits).toBe(10);
+  });
+});
+
+const monthly = (userId: string, otid: string, over: Body = {}) =>
+  rc({
+    ...userFields(userId),
+    type: "INITIAL_PURCHASE",
+    product_id: "monthly",
+    original_transaction_id: otid,
+    purchased_at_ms: Date.now() - 5 * DAY,
+    expiration_at_ms: Date.now() + 25 * DAY,
+    ...over,
+  });
+
+const transfer = (from: string[], to: string[], over: Body = {}) =>
+  rc({ type: "TRANSFER", app_user_id: undefined, transferred_from: from, transferred_to: to, product_id: undefined, ...over });
+
+async function ledger(userId: string): Promise<{ kind: string; environment: string | null }[]> {
+  const { getDb } = await import("../lib/db");
+  const rs = await (await getDb()).execute({
+    sql: "SELECT kind, environment FROM entitlement_grants WHERE user_id = ? AND source <> 'promo' ORDER BY created_at, rowid",
+    args: [userId],
+  });
+  return rs.rows.map((r) => ({ kind: String(r.kind), environment: r.environment == null ? null : String(r.environment) }));
+}
+
+describe("POST /api/v1/webhooks/revenuecat: TRANSFER", () => {
+  it("moves the plan to the new account and back, once per event, keeping its usage", async () => {
+    const a = (await newUser()).user.id;
+    const b = (await newUser()).user.id;
+    await send(monthly(a, `otid-${uid()}`));
+    const used = await ent.reservePremiumVerdict(a);
+    if (used.ok) await ent.consumePremiumVerdict(used.reservation.id, "v-transfer");
+    expect((await ent.getEntitlement(a)).subscription?.used).toBe(1);
+
+    const there = transfer([a], [b]);
+    expect((await send(there)).json).toMatchObject({ ok: true, applied: true, action: "transfer", moved: 1 });
+    expect((await ent.getEntitlement(a)).subscription).toBeNull();
+    expect((await ent.getEntitlement(b)).subscription).toMatchObject({ productId: "monthly", used: 1 });
+
+    // The same delivery again moves nothing.
+    expect((await send(there)).json).toMatchObject({ applied: false, moved: 0 });
+    expect((await ent.getEntitlement(b)).subscription).toMatchObject({ used: 1 });
+
+    expect((await send(transfer([b], [a]))).json).toMatchObject({ applied: true, moved: 1 });
+    expect((await ent.getEntitlement(a)).subscription).toMatchObject({ productId: "monthly", used: 1 });
+    expect((await ent.getEntitlement(b)).subscription).toBeNull();
+  });
+
+  it("leaves credits where they were granted and other stores' plans alone", async () => {
+    const a = (await newUser()).user.id;
+    const b = (await newUser()).user.id;
+    await send(rc({ ...userFields(a), transaction_id: `tx-${uid()}` }));
+    await send(monthly(a, `otid-${uid()}`, { store: "PLAY_STORE" }));
+    await send(transfer([a], [b], { store: "APP_STORE" }));
+    expect((await ent.getEntitlement(a)).credits).toBe(10);
+    expect((await ent.getEntitlement(a)).subscription).not.toBeNull();
+    expect((await ent.getEntitlement(b)).canUsePremium).toBe(false);
+  });
+
+  it("answers 200 for a transfer to an anonymous id only, and 503 plus an alert for an unknown account", async () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const anon = "$RCAnonymousID:zzz";
+    expect((await send(transfer(["x"], [anon]))).json).toEqual({ ok: true, ignored: true, reason: "transfer_to_anonymous" });
+    const lost = await send(transfer(["x"], ["no-such-user"]));
+    expect(lost.status).toBe(503);
+    expect(warn.mock.calls.some(([line]) => String(line).startsWith("[signal:purchase_unmatched] type=TRANSFER"))).toBe(true);
+  });
+});
+
+describe("POST /api/v1/webhooks/revenuecat: purchases that match no account", () => {
+  it("alerts and answers 503 so RevenueCat retries; the retry grants once", async () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const { user } = await newUser();
+    const anon = "$RCAnonymousID:late1";
+    const purchase = rc({ app_user_id: anon, original_app_user_id: anon, aliases: [anon], transaction_id: `tx-late-${uid()}` });
+
+    const first = await send(purchase);
+    expect(first.status).toBe(503);
+    expect(first.json).toMatchObject({ code: "unavailable" });
+    expect(warn.mock.calls.map(([line]) => String(line))).toEqual([
+      expect.stringMatching(/^\[signal:purchase_unmatched\] type=NON_RENEWING_PURCHASE id=\S+ product=pack_10 store=APP_STORE$/),
+    ]);
+
+    // The retry carries the alias RevenueCat added when the app logged in.
+    const retry = { ...purchase, event: { ...purchase.event, aliases: [anon, user.id] } };
+    expect((await send(retry)).json).toMatchObject({ applied: true });
+    expect((await send(retry)).json).toMatchObject({ applied: false });
+    expect((await ent.getEntitlement(user.id)).credits).toBe(10);
+  });
+
+  it("a first plan for an unknown id is not swallowed either", async () => {
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+    const res = await send(monthly("no-such-user", `otid-${uid()}`));
+    expect(res.status).toBe(503);
+  });
+
+  it("a renewal for an account that is gone answers 200 with a reason and raises no alert", async () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const res = await send(monthly("deleted-user", `otid-${uid()}`, { type: "RENEWAL" }));
+    expect(res.status).toBe(200);
+    expect(res.json).toEqual({ ok: true, ignored: true, reason: "unknown_user_renewal" });
+    expect(warn).not.toHaveBeenCalled();
+  });
+});
+
+describe("POST /api/v1/webhooks/revenuecat: sandbox, grace and refunds", () => {
+  it("marks every sandbox grant in the ledger and leaves production ones unmarked", async () => {
+    vi.stubEnv("ALLOW_SANDBOX_PURCHASES", "1");
+    const { user } = await newUser();
+    await send(rc({ ...userFields(user.id), environment: "SANDBOX", transaction_id: `tx-sb-${uid()}` }));
+    await send(monthly(user.id, `otid-${uid()}`, { environment: "SANDBOX" }));
+    await send(rc({ ...userFields(user.id), transaction_id: `tx-live-${uid()}` }));
+    const rows = (await ledger(user.id)).filter((r) => r.kind !== "revoke");
+    expect(rows).toEqual([
+      { kind: "credits", environment: "sandbox" },
+      { kind: "subscription_active", environment: "sandbox" },
+      { kind: "credits", environment: null },
+    ]);
+  });
+
+  it("a failed renewal gives no grace: access ends at the period end whatever BILLING_ISSUE says", async () => {
+    const { user } = await newUser();
+    const end = Date.now() + 2 * DAY;
+    await send(monthly(user.id, `otid-${uid()}`, { purchased_at_ms: end - 30 * DAY, expiration_at_ms: end }));
+    const issue = rc({
+      ...userFields(user.id),
+      type: "BILLING_ISSUE",
+      product_id: "monthly",
+      grace_period_expires_at_ms: end + 16 * DAY,
+    });
+    expect((await send(issue)).json).toEqual({ ok: true, ignored: true, reason: "billing_issue" });
+    expect((await ent.getEntitlement(user.id, new Date(end - 1000))).canUsePremium).toBe(true);
+    const after = await ent.getEntitlement(user.id, new Date(end + 1000));
+    expect(after).toMatchObject({ canUsePremium: false, subscription: null });
+  });
+
+  it("a refund takes back only the credits still unused, never below 0, and used verdicts stay used", async () => {
+    const { user } = await newUser();
+    await send(rc({ ...userFields(user.id), product_id: "pack_10", transaction_id: "tx-floor-a" }));
+    for (let i = 0; i < 4; i++) {
+      const r = await ent.reservePremiumVerdict(user.id);
+      if (r.ok) await ent.consumePremiumVerdict(r.reservation.id, `v-floor-${i}`);
+    }
+    const refund = (tx: string) =>
+      rc({ ...userFields(user.id), type: "CANCELLATION", cancel_reason: "CUSTOMER_SUPPORT", product_id: "pack_10", transaction_id: tx });
+    expect((await send(refund("tx-floor-a"))).json).toMatchObject({ applied: true, action: "refund" });
+    expect((await ent.getEntitlement(user.id)).credits).toBe(0);
+
+    // A pack spent in full: the refund finds nothing to take back and the balance stays 0.
+    await send(rc({ ...userFields(user.id), product_id: "pack_1", transaction_id: "tx-floor-b" }));
+    const r = await ent.reservePremiumVerdict(user.id);
+    if (r.ok) await ent.consumePremiumVerdict(r.reservation.id, "v-floor-9");
+    await send(refund("tx-floor-b"));
+    expect((await ent.getEntitlement(user.id)).credits).toBe(0);
+    const { getDb } = await import("../lib/db");
+    const rs = await (await getDb()).execute({
+      sql: "SELECT credits_delta FROM entitlement_grants WHERE user_id = ? AND kind = 'refund' ORDER BY rowid",
+      args: [user.id],
+    });
+    expect(rs.rows.map((x) => Number(x.credits_delta))).toEqual([-6, 0]);
+  });
+});
+
+describe("POST /api/v1/webhooks/revenuecat: a refund and a unit still held", () => {
+  it("leaves no credit behind when the held unit is refunded afterwards", async () => {
+    const { user } = await newUser();
+    await send(rc({ ...userFields(user.id), product_id: "pack_10", transaction_id: "tx-held" }));
+    const held = await ent.reservePremiumVerdict(user.id);
+    if (!held.ok) throw new Error("expected a reservation");
+    expect((await ent.getEntitlement(user.id)).credits).toBe(9);
+    await send(
+      rc({ ...userFields(user.id), type: "CANCELLATION", cancel_reason: "CUSTOMER_SUPPORT", product_id: "pack_10", transaction_id: "tx-held" }),
+    );
+    expect((await ent.getEntitlement(user.id)).credits).toBe(0);
+    await ent.refundPremiumVerdict(held.reservation.id); // the waiting case expires
+    expect((await ent.getEntitlement(user.id)).credits).toBe(0);
   });
 });
 

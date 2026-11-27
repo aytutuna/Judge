@@ -23,7 +23,11 @@ import { getDb } from "./db";
 import { PRICING } from "./pricing";
 import { signal } from "./signals";
 
-const STALE_RESERVATION_MS = 10 * 60_000;
+// A reservation nothing else owns (a synchronous run) is stale after 10
+// minutes; one a job, case or appeal owns waits for their own 10-minute
+// sweeps to settle it first (see sweepStaleReservations).
+const UNOWNED_STALE_MS = 10 * 60_000;
+const STALE_RESERVATION_MS = 20 * 60_000;
 const SWEEP_EVERY_MS = 60_000;
 const BUSY_RETRIES = 12;
 
@@ -47,6 +51,7 @@ const SCHEMA = [
     ref_external_id TEXT,
     note            TEXT,
     created_at      TEXT NOT NULL,
+    environment     TEXT,
     UNIQUE (source, external_id)
   )`,
   "CREATE INDEX IF NOT EXISTS entitlement_grants_user ON entitlement_grants (user_id, created_at)",
@@ -89,6 +94,17 @@ const SCHEMA = [
     created_at      TEXT NOT NULL,
     PRIMARY KEY (source, transaction_id)
   )`,
+  // One free verdict a day per device or browser: who holds the day. A claim
+  // is pending until the account's free credit is reserved (confirmed); a
+  // pending one stops holding other accounts back after FREE_CLAIM_HOLD_MS.
+  `CREATE TABLE IF NOT EXISTS free_device_claims (
+    device_key  TEXT NOT NULL,
+    day         TEXT NOT NULL,
+    user_id     TEXT NOT NULL,
+    created_at  TEXT NOT NULL,
+    confirmed   INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (device_key, day)
+  )`,
   // Kept when an account is deleted: one welcome credit per email, ever.
   // age_blocked_at: that email's account was blocked by the age check
   // (lib/age.ts), so a new one starts blocked. age_block_final: the block was
@@ -116,6 +132,7 @@ export async function ensureEntitlementTables(): Promise<void> {
     .then(async () => {
       await addColumn(client, "premium_usage", "hold_until");
       await addColumn(client, "premium_usage", "body_hash");
+      await addColumn(client, "entitlement_grants", "environment");
       await addColumn(client, "welcome_claims", "age_blocked_at");
       await addColumn(client, "welcome_claims", "age_block_final");
     })
@@ -199,7 +216,7 @@ export type StatementGuard = { sql: string; args: InValue[] };
 const guardSql = (guard?: StatementGuard) => (guard ? ` AND ${guard.sql}` : "");
 const guardArgs = (guard?: StatementGuard) => (guard ? guard.args : []);
 
-/** Keeps a reservation open until `untilIso` (the stale sweep refunds it 10
+/** Keeps a reservation open until `untilIso` (the stale sweep refunds it 20
  * minutes after that). No-op unless still reserved. */
 export function holdStatement(reservationId: string, untilIso: string, guard?: StatementGuard): InStatement {
   return {
@@ -264,6 +281,14 @@ function assertId(value: string, field: string): void {
     throw new Error(`${field} must be a non-empty string of at most 200 characters`);
   }
 }
+
+/** Sandbox purchases are marked in the ledger so they can be told apart later. */
+const envOf = (g: { sandbox?: boolean }) => (g.sandbox ? "sandbox" : null);
+
+/** The stand-in `s` has a period that overlaps the one the real plan
+ * (source and original id given as the next two arguments) ended up with. */
+const overlapsReal = `EXISTS (SELECT 1 FROM subscriptions r WHERE r.source = ? AND r.original_transaction_id = ?
+                              AND s.period_end > r.period_start AND s.period_start < r.period_end)`;
 
 const grantExists = (id: string) => ({
   sql: "EXISTS (SELECT 1 FROM entitlement_grants WHERE id = ?)",
@@ -451,6 +476,14 @@ export async function reservePremiumVerdict(
     args: [id, userId, key, nowIso, nowIso, opts.bodyHash ?? null],
   });
 
+  // The account's free credit is spent: its device claim now holds the day.
+  stmts.push({
+    sql: `UPDATE free_device_claims SET confirmed = 1
+          WHERE user_id = ? AND day = ? AND confirmed = 0
+            AND EXISTS (SELECT 1 FROM premium_usage WHERE id = ? AND funded_by = 'credits')`,
+    args: [userId, nowIso.slice(0, 10), id],
+  });
+
   let results: ResultSet[];
   try {
     results = await writeBatch(stmts);
@@ -497,15 +530,30 @@ export async function refundPremiumVerdict(reservationId: string): Promise<void>
   await refund(reservationId, new Date());
 }
 
-/** Refunds reservations left `reserved` for over 10 minutes (a crashed or
- * killed request) after their creation, or after `hold_until` when one is
- * set (a case waiting for its answer). Returns how many were refunded. */
+/**
+ * Refunds reservations left `reserved` past their crash window (a crashed or
+ * killed request), counted from creation or from `hold_until` when one is
+ * set (a case waiting for its answer). A synchronous run has no other owner
+ * and settles its unit in the same write as its verdict, so 10 minutes past
+ * is a dead one. A run that a job, case or appeal row owns gets 20: their
+ * own sweeps (10) settle it first, and a run that outlives them writes
+ * nothing. Returns how many were refunded.
+ */
 export async function sweepStaleReservations(now: Date = new Date()): Promise<number> {
   globalForEntitlements.__verdictEntitlementsLastSweep = now.getTime();
   const db = await client();
+  const tables = await db.execute(
+    "SELECT name FROM sqlite_master WHERE type = 'table' AND name IN ('verdict_jobs', 'cases', 'case_appeals')",
+  );
+  const owned = tables.rows
+    .map((r) => String(r.name))
+    .map((t) => `EXISTS (SELECT 1 FROM ${t} o WHERE o.reservation_id = premium_usage.id)`);
   const rs = await db.execute({
-    sql: "SELECT id FROM premium_usage WHERE status = 'reserved' AND COALESCE(hold_until, created_at) < ? LIMIT 200",
-    args: [iso(new Date(now.getTime() - STALE_RESERVATION_MS))],
+    sql: `SELECT id FROM premium_usage
+          WHERE status = 'reserved' AND COALESCE(hold_until, created_at) < ?
+            AND (COALESCE(hold_until, created_at) < ? OR NOT (${owned.length ? owned.join(" OR ") : "0"}))
+          LIMIT 200`,
+    args: [iso(new Date(now.getTime() - UNOWNED_STALE_MS)), iso(new Date(now.getTime() - STALE_RESERVATION_MS))],
   });
   let refunded = 0;
   for (const row of rs.rows) {
@@ -534,6 +582,50 @@ export async function countPremiumToday(now: Date = new Date()): Promise<number>
     args: [iso(dayStart)],
   });
   return Number(rs.rows[0]?.n ?? 0);
+}
+
+const FREE_CLAIM_HOLD_MS = 15 * 60_000;
+
+/**
+ * One free verdict a day per device or browser: claims today (UTC) for every
+ * key of `keys` on behalf of `userId`, unless another account holds one of
+ * them. A claim holds others back once the account's free credit has been
+ * reserved (reservePremiumVerdict confirms it in the same write), or for 15
+ * minutes while the request is still on its way to that; a request that
+ * fails before reserving leaves nothing behind. The same account may claim
+ * again. All or none. Returns whether the verdict may go ahead.
+ */
+export async function claimFreeVerdictDay(userId: string, keys: string[], now: Date = new Date()): Promise<boolean> {
+  if (keys.length === 0) return true;
+  const nowIso = iso(now);
+  const day = nowIso.slice(0, 10);
+  const cutoff = iso(new Date(now.getTime() - FREE_CLAIM_HOLD_MS));
+  const marks = keys.map(() => "?").join(", ");
+  const claims = keys.map(
+    (key): InStatement => ({
+      sql: `INSERT INTO free_device_claims (device_key, day, user_id, created_at, confirmed)
+            SELECT ?, ?, ?, ?, 0
+            WHERE NOT EXISTS (SELECT 1 FROM free_device_claims
+                              WHERE day = ? AND user_id <> ? AND device_key IN (${marks})
+                                AND (confirmed = 1 OR created_at > ?))
+            ON CONFLICT (device_key, day) DO UPDATE SET
+              user_id = excluded.user_id,
+              created_at = CASE WHEN free_device_claims.user_id = excluded.user_id
+                                THEN free_device_claims.created_at ELSE excluded.created_at END,
+              confirmed = CASE WHEN free_device_claims.user_id = excluded.user_id
+                               THEN free_device_claims.confirmed ELSE 0 END`,
+      args: [key, day, userId, nowIso, day, userId, ...keys, cutoff],
+    }),
+  );
+  const results = await writeBatch([
+    { sql: "DELETE FROM free_device_claims WHERE day < ?", args: [day] },
+    ...claims,
+    {
+      sql: `SELECT count(*) AS n FROM free_device_claims WHERE day = ? AND user_id = ? AND device_key IN (${marks})`,
+      args: [day, userId, ...keys],
+    },
+  ]);
+  return Number(results[results.length - 1].rows[0].n) === keys.length;
 }
 
 /** No grant on the account but its welcome credit, for a user id column. */
@@ -573,6 +665,7 @@ export async function grantCredits(g: {
   externalId: string;
   productId?: string;
   note?: string;
+  sandbox?: boolean;
 }): Promise<GrantResult> {
   assertSource(g.source);
   assertId(g.userId, "userId");
@@ -586,11 +679,11 @@ export async function grantCredits(g: {
   const results = await writeBatch([
     {
       sql: `INSERT INTO entitlement_grants
-              (id, user_id, source, external_id, kind, product_id, credits_delta, note, created_at)
-            SELECT ?, ?, ?, ?, 'credits', ?, ?, ?, ?
+              (id, user_id, source, external_id, kind, product_id, credits_delta, note, created_at, environment)
+            SELECT ?, ?, ?, ?, 'credits', ?, ?, ?, ?, ?
             WHERE NOT EXISTS (SELECT 1 FROM refund_tombstones WHERE source = ? AND transaction_id = ?)
             ON CONFLICT (source, external_id) DO NOTHING`,
-      args: [id, g.userId, g.source, g.externalId, g.productId ?? null, g.credits, g.note ?? null, nowIso, g.source, g.externalId],
+      args: [id, g.userId, g.source, g.externalId, g.productId ?? null, g.credits, g.note ?? null, nowIso, envOf(g), g.source, g.externalId],
     },
     {
       sql: `INSERT INTO entitlement_accounts (user_id, credits, updated_at)
@@ -677,6 +770,7 @@ export async function grantSubscription(g: {
   periodEnd: string;
   willRenew: boolean;
   cap?: number;
+  sandbox?: boolean;
 }): Promise<GrantResult> {
   assertSource(g.source);
   assertId(g.userId, "userId");
@@ -695,25 +789,30 @@ export async function grantSubscription(g: {
   const guard = grantExists(id);
   const results = await writeBatch([
     {
-      sql: `INSERT INTO entitlement_grants (id, user_id, source, external_id, kind, product_id, created_at)
-            SELECT ?, ?, ?, ?, 'subscription_active', ?, ?
+      sql: `INSERT INTO entitlement_grants (id, user_id, source, external_id, kind, product_id, created_at, environment)
+            SELECT ?, ?, ?, ?, 'subscription_active', ?, ?, ?
             WHERE NOT EXISTS (SELECT 1 FROM refund_tombstones WHERE source = ? AND transaction_id = ? AND created_at > ?)
             ON CONFLICT (source, external_id) DO NOTHING`,
-      args: [id, g.userId, g.source, g.externalId, g.productId, nowIso, g.source, g.originalTransactionId, periodStart],
+      args: [id, g.userId, g.source, g.externalId, g.productId, nowIso, envOf(g), g.source, g.originalTransactionId, periodStart],
     },
     {
       sql: `INSERT INTO subscriptions
               (id, user_id, source, original_transaction_id, product_id, status, period_start, period_end,
                will_renew, cap, used_in_period, updated_at)
-            SELECT ?, ?, ?, ?, ?, 'active', ?, ?, ?, ?, 0, ? WHERE ${guard.sql}
+            SELECT ?, ?, ?, ?, ?, 'active', ?, ?, ?, ?,
+                   COALESCE((SELECT max(used_in_period) FROM subscriptions
+                             WHERE user_id = ? AND source = ? AND status = 'active'
+                               AND original_transaction_id LIKE 'rcsync:%' AND period_end > ? AND period_start < ?), 0),
+                   ? WHERE ${guard.sql}
             ON CONFLICT (source, original_transaction_id) DO UPDATE SET
               user_id = excluded.user_id,
               product_id = excluded.product_id,
               status = 'active',
               will_renew = excluded.will_renew,
               cap = excluded.cap,
-              used_in_period = CASE WHEN subscriptions.period_start = excluded.period_start
-                                    THEN subscriptions.used_in_period ELSE 0 END,
+              used_in_period = MAX(CASE WHEN subscriptions.period_start = excluded.period_start
+                                        THEN subscriptions.used_in_period ELSE 0 END,
+                                   excluded.used_in_period),
               period_start = excluded.period_start,
               period_end = excluded.period_end,
               updated_at = excluded.updated_at
@@ -734,6 +833,10 @@ export async function grantSubscription(g: {
         periodEnd,
         g.willRenew ? 1 : 0,
         cap,
+        g.userId,
+        g.source,
+        periodStart,
+        periodEnd,
         nowIso,
         ...guard.args,
       ],
@@ -743,6 +846,35 @@ export async function grantSubscription(g: {
               (SELECT id FROM subscriptions WHERE source = ? AND original_transaction_id = ?)
             WHERE id = ?`,
       args: [g.source, g.originalTransactionId, id],
+    },
+    // A plan found by the restore sync (lib/revenuecat-sync.ts) is replaced
+    // by the real one the first webhook event brings; units still reserved on
+    // it go with their usage to the real row, so a failed run refunds there.
+    {
+      sql: `UPDATE premium_usage
+            SET subscription_id = (SELECT id FROM subscriptions WHERE source = ? AND original_transaction_id = ?),
+                sub_period_end = (SELECT period_end FROM subscriptions WHERE source = ? AND original_transaction_id = ?)
+            WHERE status = 'reserved' AND funded_by = 'subscription'
+              AND subscription_id IN (SELECT s.id FROM subscriptions s
+                                      WHERE s.user_id = ? AND s.source = ? AND s.status = 'active'
+                                        AND s.original_transaction_id LIKE 'rcsync:%'
+                                        AND s.original_transaction_id <> ?
+                                        AND ${overlapsReal})
+              AND ${guard.sql}`,
+      args: [
+        g.source, g.originalTransactionId, g.source, g.originalTransactionId,
+        g.userId, g.source, g.originalTransactionId, g.source, g.originalTransactionId,
+        ...guard.args,
+      ],
+    },
+    {
+      sql: `UPDATE subscriptions SET status = 'expired', will_renew = 0, updated_at = ?
+            WHERE user_id = ? AND source = ? AND status = 'active' AND original_transaction_id LIKE 'rcsync:%'
+              AND original_transaction_id <> ?
+              AND EXISTS (SELECT 1 FROM subscriptions r WHERE r.source = ? AND r.original_transaction_id = ?
+                          AND subscriptions.period_end > r.period_start AND subscriptions.period_start < r.period_end)
+              AND ${guard.sql}`,
+      args: [nowIso, g.userId, g.source, g.originalTransactionId, g.source, g.originalTransactionId, ...guard.args],
     },
   ]);
   const applied = results[0].rowsAffected === 1;
@@ -778,16 +910,16 @@ function skipped(source: string, transactionId: string): void {
 function subscriptionEventGrant(
   id: string,
   kind: string,
-  g: { source: GrantSource; externalId: string; originalTransactionId: string },
+  g: { source: GrantSource; externalId: string; originalTransactionId: string; sandbox?: boolean },
   nowIso: string,
 ): InStatement {
   return {
     sql: `INSERT INTO entitlement_grants
-            (id, user_id, source, external_id, kind, product_id, subscription_id, created_at)
-          SELECT ?, user_id, ?, ?, ?, product_id, id, ?
+            (id, user_id, source, external_id, kind, product_id, subscription_id, created_at, environment)
+          SELECT ?, user_id, ?, ?, ?, product_id, id, ?, ?
           FROM subscriptions WHERE source = ? AND original_transaction_id = ?
           ON CONFLICT (source, external_id) DO NOTHING`,
-    args: [id, g.source, g.externalId, kind, nowIso, g.source, g.originalTransactionId],
+    args: [id, g.source, g.externalId, kind, nowIso, envOf(g), g.source, g.originalTransactionId],
   };
 }
 
@@ -797,6 +929,7 @@ export async function setSubscriptionWillRenew(g: {
   externalId: string;
   originalTransactionId: string;
   willRenew: boolean;
+  sandbox?: boolean;
 }): Promise<GrantResult> {
   assertSource(g.source);
   assertId(g.externalId, "externalId");
@@ -816,6 +949,25 @@ export async function setSubscriptionWillRenew(g: {
   return { applied: results[0].rowsAffected === 1 };
 }
 
+/** Retires the restore stand-ins (original id `rcsync:...`) of these
+ * accounts for a store: the store ended or refunded the plan they stood for.
+ * The event names the real plan, which the stand-in is not keyed by. */
+function retireStandIns(
+  status: "expired" | "refunded",
+  source: GrantSource,
+  userIds: string[] | undefined,
+  nowIso: string,
+  at?: string,
+): InStatement {
+  const ids = userIds ?? [];
+  return {
+    sql: `UPDATE subscriptions SET status = ?, will_renew = 0, updated_at = ?${at ? ", period_end = MIN(period_end, ?)" : ""}
+          WHERE source = ? AND status = 'active' AND original_transaction_id LIKE 'rcsync:%'
+            ${at ? "AND period_start <= ?" : ""} AND user_id IN (${ids.map(() => "?").join(", ") || "NULL"})`,
+    args: [status, nowIso, ...(at ? [at] : []), source, ...(at ? [at] : []), ...ids],
+  };
+}
+
 /** The subscription ended at `at`. Ignored when a renewal for a later period
  * was already applied (out-of-order webhooks). */
 export async function expireSubscription(g: {
@@ -823,6 +975,8 @@ export async function expireSubscription(g: {
   externalId: string;
   originalTransactionId: string;
   at: string;
+  userIds?: string[];
+  sandbox?: boolean;
 }): Promise<GrantResult> {
   assertSource(g.source);
   assertId(g.externalId, "externalId");
@@ -840,8 +994,166 @@ export async function expireSubscription(g: {
               AND ${guard.sql}`,
       args: [at, nowIso, g.source, g.originalTransactionId, at, ...guard.args],
     },
+    retireStandIns("expired", g.source, g.userIds, nowIso, at),
   ]);
   return { applied: results[0].rowsAffected === 1 };
+}
+
+/**
+ * A plan found by the restore sync (lib/revenuecat-sync.ts), stored under a
+ * stand-in original id because RevenueCat's REST API does not give the
+ * store's original transaction id. One write, and only if the account has no
+ * active plan from that store and no revoked or refunded one that still
+ * covers today. The first webhook for the real plan, a TRANSFER, or a refund
+ * or expiry retires the stand-in.
+ */
+export async function grantRestoredSubscription(g: {
+  userId: string;
+  source: GrantSource;
+  originalTransactionId: string;
+  externalId: string;
+  productId: string;
+  periodStart: string;
+  periodEnd: string;
+  willRenew: boolean;
+  sandbox?: boolean;
+}): Promise<GrantResult> {
+  assertSource(g.source);
+  assertId(g.userId, "userId");
+  assertId(g.externalId, "externalId");
+  const periodStart = normalizeIso(g.periodStart, "periodStart");
+  const periodEnd = normalizeIso(g.periodEnd, "periodEnd");
+  if (periodEnd <= periodStart) throw new Error("periodEnd must be after periodStart");
+  const id = nanoid();
+  const subId = nanoid();
+  const nowIso = iso(new Date());
+  const guard = grantExists(id);
+  const results = await writeBatch([
+    {
+      sql: `UPDATE subscriptions SET status = 'expired', will_renew = 0, updated_at = ?
+            WHERE user_id = ? AND source = ? AND status = 'active'
+              AND original_transaction_id LIKE 'rcsync:%' AND period_end <= ?`,
+      args: [nowIso, g.userId, g.source, nowIso],
+    },
+    {
+      sql: `INSERT INTO entitlement_grants (id, user_id, source, external_id, kind, product_id, created_at, environment)
+            SELECT ?, ?, ?, ?, 'subscription_active', ?, ?, ?
+            WHERE NOT EXISTS (SELECT 1 FROM subscriptions
+                              WHERE user_id = ? AND source = ? AND period_end > ?
+                                AND status IN ('active', 'revoked', 'refunded'))
+            ON CONFLICT (source, external_id) DO NOTHING`,
+      args: [id, g.userId, g.source, g.externalId, g.productId, nowIso, envOf(g), g.userId, g.source, nowIso],
+    },
+    {
+      sql: `INSERT INTO subscriptions
+              (id, user_id, source, original_transaction_id, product_id, status, period_start, period_end,
+               will_renew, cap, used_in_period, updated_at)
+            SELECT ?, ?, ?, ?, ?, 'active', ?, ?, ?, ?, 0, ? WHERE ${guard.sql}
+            ON CONFLICT (source, original_transaction_id) DO NOTHING`,
+      args: [
+        subId,
+        g.userId,
+        g.source,
+        g.originalTransactionId,
+        g.productId,
+        periodStart,
+        periodEnd,
+        g.willRenew ? 1 : 0,
+        PRICING.monthly.fairUseCap,
+        nowIso,
+        ...guard.args,
+      ],
+    },
+    {
+      sql: `UPDATE entitlement_grants SET subscription_id =
+              (SELECT id FROM subscriptions WHERE source = ? AND original_transaction_id = ?)
+            WHERE id = ?`,
+      args: [g.source, g.originalTransactionId, id],
+    },
+  ]);
+  return { applied: results[1].rowsAffected === 1 && results[2].rowsAffected === 1 };
+}
+
+/**
+ * A store purchase now belongs to another account (RevenueCat TRANSFER, after
+ * a restore on a new account): every active plan of `source` held by one of
+ * `from` goes to `toUserId`, with its period and usage (at least what a
+ * restore stand-in of `toUserId` had used). Stand-ins of `from` are retired,
+ * and so are the ones of `toUserId` once it holds the real plan. Credits stay
+ * where they were granted. Keyed by the event id, so a repeat moves nothing.
+ */
+export async function transferSubscriptions(g: {
+  source: GrantSource;
+  externalId: string;
+  from: string[];
+  toUserId: string;
+  sandbox?: boolean;
+}): Promise<GrantResult & { moved: number }> {
+  assertSource(g.source);
+  assertId(g.externalId, "externalId");
+  assertId(g.toUserId, "toUserId");
+  const from = g.from.filter((id) => id !== g.toUserId);
+  const marks = from.map(() => "?").join(", ") || "NULL";
+  const id = nanoid();
+  const nowIso = iso(new Date());
+  const guard = grantExists(id);
+  const results = await writeBatch([
+    {
+      sql: `INSERT INTO entitlement_grants (id, user_id, source, external_id, kind, note, created_at, environment)
+            VALUES (?, ?, ?, ?, 'subscription_transfer', ?, ?, ?)
+            ON CONFLICT (source, external_id) DO NOTHING`,
+      args: [id, g.toUserId, g.source, g.externalId, `from ${from.length}`, nowIso, envOf(g)],
+    },
+    {
+      sql: `UPDATE subscriptions
+            SET user_id = ?, updated_at = ?,
+                used_in_period = MAX(used_in_period,
+                  COALESCE((SELECT max(s.used_in_period) FROM subscriptions s
+                            WHERE s.user_id = ? AND s.source = ? AND s.status = 'active'
+                              AND s.original_transaction_id LIKE 'rcsync:%'
+                              AND s.period_end > subscriptions.period_start
+                              AND s.period_start < subscriptions.period_end), 0))
+            WHERE source = ? AND status = 'active' AND original_transaction_id NOT LIKE 'rcsync:%'
+              AND user_id IN (${marks}) AND ${guard.sql}`,
+      args: [g.toUserId, nowIso, g.toUserId, g.source, g.source, ...from, ...guard.args],
+    },
+    {
+      sql: `UPDATE premium_usage
+            SET subscription_id = (SELECT r.id FROM subscriptions r, subscriptions s
+                                   WHERE s.id = premium_usage.subscription_id AND r.user_id = ? AND r.source = ?
+                                     AND r.status = 'active' AND r.original_transaction_id NOT LIKE 'rcsync:%'
+                                     AND s.period_end > r.period_start AND s.period_start < r.period_end LIMIT 1),
+                sub_period_end = (SELECT r.period_end FROM subscriptions r, subscriptions s
+                                   WHERE s.id = premium_usage.subscription_id AND r.user_id = ? AND r.source = ?
+                                     AND r.status = 'active' AND r.original_transaction_id NOT LIKE 'rcsync:%'
+                                     AND s.period_end > r.period_start AND s.period_start < r.period_end LIMIT 1)
+            WHERE status = 'reserved' AND funded_by = 'subscription'
+              AND subscription_id IN (SELECT id FROM subscriptions WHERE user_id = ? AND source = ?
+                                      AND status = 'active' AND original_transaction_id LIKE 'rcsync:%')
+              AND EXISTS (SELECT 1 FROM subscriptions r, subscriptions s
+                          WHERE s.id = premium_usage.subscription_id AND r.user_id = ? AND r.source = ?
+                            AND r.status = 'active' AND r.original_transaction_id NOT LIKE 'rcsync:%'
+                            AND s.period_end > r.period_start AND s.period_start < r.period_end)
+              AND ${guard.sql}`,
+      args: [
+        g.toUserId, g.source, g.toUserId, g.source, g.toUserId, g.source, g.toUserId, g.source,
+        ...guard.args,
+      ],
+    },
+    {
+      sql: `UPDATE subscriptions SET status = 'expired', will_renew = 0, updated_at = ?
+            WHERE source = ? AND status = 'active' AND original_transaction_id LIKE 'rcsync:%'
+              AND ((user_id = ? AND EXISTS (SELECT 1 FROM subscriptions r
+                                            WHERE r.user_id = ? AND r.source = ? AND r.status = 'active'
+                                              AND r.original_transaction_id NOT LIKE 'rcsync:%'
+                                              AND subscriptions.period_end > r.period_start
+                                              AND subscriptions.period_start < r.period_end))
+                   OR user_id IN (${marks}))
+              AND ${guard.sql}`,
+      args: [nowIso, g.source, g.toUserId, g.toUserId, g.source, ...from, ...guard.args],
+    },
+  ]);
+  return { applied: results[0].rowsAffected === 1, moved: results[1].rowsAffected };
 }
 
 /**
@@ -855,6 +1167,8 @@ export async function refundPurchase(g: {
   source: GrantSource;
   externalId: string;
   transactionId: string;
+  userIds?: string[];
+  sandbox?: boolean;
 }): Promise<GrantResult> {
   assertSource(g.source);
   assertId(g.externalId, "externalId");
@@ -865,15 +1179,15 @@ export async function refundPurchase(g: {
   const results = await writeBatch([
     {
       sql: `INSERT INTO entitlement_grants
-              (id, user_id, source, external_id, kind, product_id, credits_delta, ref_external_id, created_at)
+              (id, user_id, source, external_id, kind, product_id, credits_delta, ref_external_id, created_at, environment)
             SELECT ?, g.user_id, g.source, ?, 'refund', g.product_id,
-                   -MIN(g.credits_delta, COALESCE(a.credits, 0)), g.external_id, ?
+                   -MIN(g.credits_delta, COALESCE(a.credits, 0)), g.external_id, ?, ?
             FROM entitlement_grants g LEFT JOIN entitlement_accounts a ON a.user_id = g.user_id
             WHERE g.source = ? AND g.external_id = ? AND g.kind = 'credits'
               AND NOT EXISTS (SELECT 1 FROM entitlement_grants r
                               WHERE r.kind = 'refund' AND r.source = g.source AND r.ref_external_id = g.external_id)
             ON CONFLICT (source, external_id) DO NOTHING`,
-      args: [creditId, g.externalId, nowIso, g.source, g.transactionId],
+      args: [creditId, g.externalId, nowIso, envOf(g), g.source, g.transactionId],
     },
     {
       sql: `UPDATE entitlement_accounts
@@ -884,12 +1198,12 @@ export async function refundPurchase(g: {
     },
     {
       sql: `INSERT INTO entitlement_grants
-              (id, user_id, source, external_id, kind, product_id, subscription_id, ref_external_id, created_at)
-            SELECT ?, s.user_id, s.source, ?, 'refund', s.product_id, s.id, s.original_transaction_id, ?
+              (id, user_id, source, external_id, kind, product_id, subscription_id, ref_external_id, created_at, environment)
+            SELECT ?, s.user_id, s.source, ?, 'refund', s.product_id, s.id, s.original_transaction_id, ?, ?
             FROM subscriptions s
             WHERE s.source = ? AND s.original_transaction_id = ? AND s.status <> 'refunded'
             ON CONFLICT (source, external_id) DO NOTHING`,
-      args: [subGrantId, g.externalId, nowIso, g.source, g.transactionId],
+      args: [subGrantId, g.externalId, nowIso, envOf(g), g.source, g.transactionId],
     },
     {
       sql: `UPDATE subscriptions SET status = 'refunded', will_renew = 0, updated_at = ?
@@ -903,6 +1217,21 @@ export async function refundPurchase(g: {
               AND NOT EXISTS (SELECT 1 FROM subscriptions WHERE source = ? AND original_transaction_id = ?)
             ON CONFLICT (source, transaction_id) DO NOTHING`,
       args: [g.source, g.transactionId, nowIso, g.source, g.transactionId, g.source, g.transactionId],
+    },
+    retireStandIns("refunded", g.source, g.userIds, nowIso),
+    // Units of the pack still held by a waiting case or a running verdict
+    // were not in the balance the refund took from: they come back to
+    // nobody, so the refund leaves no credit behind.
+    {
+      sql: `UPDATE premium_usage SET funded_by = 'refunded_pack', updated_at = ?
+            WHERE id IN (SELECT id FROM premium_usage
+                         WHERE user_id = (SELECT user_id FROM entitlement_grants WHERE id = ?)
+                           AND funded_by = 'credits' AND status = 'reserved'
+                         ORDER BY created_at
+                         LIMIT MAX(0, COALESCE((SELECT credits_delta FROM entitlement_grants
+                                                WHERE source = ? AND external_id = ? AND kind = 'credits'), 0)
+                                      + COALESCE((SELECT credits_delta FROM entitlement_grants WHERE id = ?), 0)))`,
+      args: [nowIso, creditId, g.source, g.transactionId, creditId],
     },
   ]);
   // A refund that matched nothing is kept as a tombstone, but is not "applied".
@@ -955,14 +1284,17 @@ export async function deleteUserEntitlements(userId: string): Promise<void> {
     { sql: "DELETE FROM subscriptions WHERE user_id = ?", args: [userId] },
     { sql: "DELETE FROM entitlement_grants WHERE user_id = ?", args: [userId] },
     { sql: "DELETE FROM entitlement_accounts WHERE user_id = ?", args: [userId] },
+    // A deleted account does not hand its device's day back.
+    { sql: "UPDATE free_device_claims SET user_id = '' WHERE user_id = ?", args: [userId] },
   ]);
 }
 
 // --- Normalized purchase events ---------------------------------------------
 
 /** Normalized purchase event: the single entry point for purchase webhooks
- * (RevenueCat in app/api/v1/webhooks/revenuecat, a future web provider). */
-export type StoreEvent =
+ * (RevenueCat in app/api/v1/webhooks/revenuecat, a future web provider).
+ * `sandbox` marks a test purchase; its ledger rows say so. */
+export type StoreEvent = { sandbox?: true } & (
   | {
       type: "credits_purchased";
       eventId: string;
@@ -984,8 +1316,16 @@ export type StoreEvent =
       willRenew: boolean;
     }
   | { type: "subscription_will_not_renew"; eventId: string; source: GrantSource; originalTransactionId: string }
-  | { type: "subscription_expired"; eventId: string; source: GrantSource; originalTransactionId: string; at: string }
-  | { type: "refund"; eventId: string; source: GrantSource; transactionId: string };
+  | {
+      type: "subscription_expired";
+      eventId: string;
+      source: GrantSource;
+      originalTransactionId: string;
+      at: string;
+      userIds?: string[];
+    }
+  | { type: "refund"; eventId: string; source: GrantSource; transactionId: string; userIds?: string[] }
+);
 
 /**
  * Applies one purchase event exactly once. Credit purchases are keyed by
@@ -1002,6 +1342,7 @@ export async function applyStoreEvent(e: StoreEvent): Promise<GrantResult> {
         externalId: e.transactionId,
         productId: e.productId,
         note: `event ${e.eventId}`,
+        sandbox: e.sandbox,
       });
     case "subscription_active":
       return grantSubscription({
@@ -1013,6 +1354,7 @@ export async function applyStoreEvent(e: StoreEvent): Promise<GrantResult> {
         periodStart: e.periodStart,
         periodEnd: e.periodEnd,
         willRenew: e.willRenew,
+        sandbox: e.sandbox,
       });
     case "subscription_will_not_renew":
       return setSubscriptionWillRenew({
@@ -1020,6 +1362,7 @@ export async function applyStoreEvent(e: StoreEvent): Promise<GrantResult> {
         externalId: e.eventId,
         originalTransactionId: e.originalTransactionId,
         willRenew: false,
+        sandbox: e.sandbox,
       });
     case "subscription_expired":
       return expireSubscription({
@@ -1027,8 +1370,10 @@ export async function applyStoreEvent(e: StoreEvent): Promise<GrantResult> {
         externalId: e.eventId,
         originalTransactionId: e.originalTransactionId,
         at: e.at,
+        userIds: e.userIds,
+        sandbox: e.sandbox,
       });
     case "refund":
-      return refundPurchase({ source: e.source, externalId: e.eventId, transactionId: e.transactionId });
+      return refundPurchase({ source: e.source, externalId: e.eventId, transactionId: e.transactionId, userIds: e.userIds, sandbox: e.sandbox });
   }
 }

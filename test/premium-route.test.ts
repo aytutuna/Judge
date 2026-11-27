@@ -49,13 +49,14 @@ vi.mock("@/lib/auth", () => ({
 vi.mock("@/lib/entitlements", () => ({
   reservePremiumVerdict: track("reserve", m.reservePremiumVerdict),
   reservationByKey: m.reservationByKey,
-  consumePremiumVerdict: track("consume", m.consumePremiumVerdict),
+  consumeStatement: (reservationId: string, verdictId: string) => ({ sql: "consume", args: [reservationId, verdictId] }),
   refundPremiumVerdict: track("refund", m.refundPremiumVerdict),
   getEntitlement: track("entitlement", m.getEntitlement),
 }));
 vi.mock("@/lib/ratelimit", () => ({
   checkUserLimits: track("userLimits", m.checkUserLimits),
   checkPremiumSiteCap: track("siteCap", m.checkPremiumSiteCap),
+  FREE_DEVICE_MESSAGE: "One free verdict per device a day.",
 }));
 vi.mock("@/lib/claude", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/claude")>()),
@@ -83,9 +84,10 @@ vi.mock("@/lib/originals/save", () => ({
     ownerUserId: string | null;
     original: unknown;
     venue?: string | null;
-  }) => {
+  }, settle: { args: [string, string] }[] = []) => {
     await track("save", m.saveVerdict)({ id: v.id, input: v.input, result: v.result });
     m.saved.push(v);
+    for (const s of settle) await track("consume", m.consumePremiumVerdict)(...s.args);
     return {
       ownerToken: v.ownerUserId ? null : "o".repeat(43),
       originalsStored: true,
@@ -491,6 +493,13 @@ describe("premium verdict: gates and error codes", () => {
     expect(m.reservePremiumVerdict).not.toHaveBeenCalled();
   });
 
+  it("429 rate_limited with the device message when the device already had its free verdict today", async () => {
+    m.checkPremiumSiteCap.mockResolvedValue({ ok: false, code: "free_device", retryAfterSec: 7200 });
+    const body = await expectError(await POST(request(premium())), 429, "rate_limited");
+    expect(body).toMatchObject({ retryAfterSec: 7200, error: expect.stringContaining("free verdict per device") });
+    expect(m.reservePremiumVerdict).not.toHaveBeenCalled();
+  });
+
   it("503 unavailable when the limiter fails (closed)", async () => {
     m.checkUserLimits.mockResolvedValue({ ok: false, code: "unavailable", error: "redis down" });
     await expectError(await POST(request(premium())), 503, "unavailable");
@@ -696,11 +705,11 @@ describe("premium verdict: refunds", () => {
     expect(m.refundPremiumVerdict).not.toHaveBeenCalled();
   });
 
-  it("still answers 200 when consume fails (the stale sweep settles it)", async () => {
+  it("settles the unit in the save's own write: if that write fails nothing is stored and the unit goes back", async () => {
     m.consumePremiumVerdict.mockRejectedValue(new Error("SQLITE_BUSY"));
     const res = await POST(request(premium()));
-    expect(res.status).toBe(200);
-    expect(m.refundPremiumVerdict).not.toHaveBeenCalled();
+    expect(res.status).toBe(503);
+    expect(m.refundPremiumVerdict).toHaveBeenCalledTimes(1);
   });
 });
 

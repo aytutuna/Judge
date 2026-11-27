@@ -26,7 +26,7 @@ import { lookupViewer } from "@/lib/bearer-guard";
 import { getVerdict } from "@/lib/db";
 import { answerLang } from "@/lib/detect-lang";
 import {
-  consumePremiumVerdict,
+  consumeStatement,
   getEntitlement,
   hasWelcomeCreditOnly,
   refundPremiumVerdict,
@@ -40,7 +40,7 @@ import { evidenceEnabled } from "@/lib/features";
 import { agreementRefusal } from "@/lib/feedback/agreement";
 import { firstNameOf, type OriginalPayload } from "@/lib/originals-types";
 import { saveVerdictWithOriginals } from "@/lib/originals/save";
-import { checkPremiumSiteCap, checkUserLimits, type UserBucket } from "@/lib/ratelimit";
+import { checkPremiumSiteCap, checkUserLimits, FREE_DEVICE_MESSAGE, type UserBucket } from "@/lib/ratelimit";
 import { ClarifyRequest, withPublicPanel, type VerdictApiResponse, type VerdictRequest } from "@/lib/types";
 import { parseVenue } from "@/lib/venues";
 import { acceptedHeaders, POLL_AFTER_MS, pollPath, wantsAsync, type VerdictAcceptedResponse } from "@/lib/verdict-poll";
@@ -102,7 +102,7 @@ async function signedInGate(req: Request): Promise<Gate> {
 
 /** The per-user limit for `bucket`, plus the site-wide daily cap for
  * verdicts. Null when the request may go on. Fails closed. */
-async function limitGate(userId: string, bucket: UserBucket): Promise<NextResponse | null> {
+async function limitGate(userId: string, bucket: UserBucket, headers?: Headers): Promise<NextResponse | null> {
   try {
     const user = await checkUserLimits(userId, bucket);
     if (!user.ok) {
@@ -114,9 +114,10 @@ async function limitGate(userId: string, bucket: UserBucket): Promise<NextRespon
           });
     }
     if (bucket !== "premium_verdict") return null;
-    const site = await checkPremiumSiteCap(userId);
+    const site = await checkPremiumSiteCap(userId, new Date(), headers);
     if (!site.ok) {
       if (site.code === "unavailable") return unavailable();
+      if (site.code === "free_device") return fail("rate_limited", FREE_DEVICE_MESSAGE, { retryAfterSec: site.retryAfterSec });
       return fail("daily_cap", "Judging has reached today's capacity — try again tomorrow.", {
         retryAfterSec: site.retryAfterSec,
       });
@@ -278,7 +279,7 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
     }
     if (prior.status === "consumed" && prior.verdictId) return replay(userId, prior.verdictId);
   } else {
-    const limited = await limitGate(userId, "premium_verdict");
+    const limited = await limitGate(userId, "premium_verdict", req.headers);
     if (limited) return limited;
   }
 
@@ -380,24 +381,30 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
     }
 
     const id = nanoid(10);
+    // The verdict and its unit's consume are one write: a stored verdict can
+    // never be left reserved for the sweep to hand back.
+    const giveBack = outcome.refused || outcome.degraded;
     let saved;
     try {
-      saved = await saveVerdictWithOriginals({
-        id,
-        input: outcome.input,
-        result: outcome.result,
-        kind: "premium",
-        ownerUserId: userId,
-        teen: await teenNow(userId, gate.teen),
-        venue: parseVenue(data.venue),
-        original: {
-          v: 1,
-          text: rawArgumentOf(rawBody, data.argument),
-          clarifications: rawClarificationsOf(rawBody, data.clarifications),
-          ...sealedEvidence(evidence, otherEvidence),
-          nameMap: outcome.nameMap,
-        },
-      });
+      saved = await saveVerdictWithOriginals(
+        {
+          id,
+          input: outcome.input,
+          result: outcome.result,
+          kind: "premium",
+          ownerUserId: userId,
+          teen: await teenNow(userId, gate.teen),
+          venue: parseVenue(data.venue),
+          original: {
+            v: 1,
+            text: rawArgumentOf(rawBody, data.argument),
+            clarifications: rawClarificationsOf(rawBody, data.clarifications),
+            ...sealedEvidence(evidence, otherEvidence),
+            nameMap: outcome.nameMap,
+          },
+          },
+        giveBack ? [] : [consumeStatement(reservationId, id, new Date().toISOString())],
+      );
     } catch (e) {
       await refund();
       console.error("[premium] saving failed:", e instanceof Error ? e.message : String(e));
@@ -405,19 +412,12 @@ export async function premiumVerdict(req: Request, data: VerdictRequest, rawBody
       return unavailable();
     }
 
-    if (outcome.refused || outcome.degraded) {
+    if (giveBack) {
       // The model declined, or every strong seat failed and the verdict
       // rests on Haiku alone: the user gets the result, not a charge.
       await refund();
     } else {
       settled = true;
-      try {
-        await consumePremiumVerdict(reservationId, id);
-      } catch (e) {
-        // The verdict exists; a reservation left open is refunded by the
-        // stale sweep, so the user is never charged twice.
-        console.error("[premium] consume failed:", e instanceof Error ? e.message : String(e));
-      }
     }
 
     const entitlement = await entitlementOrNull(userId);

@@ -11,7 +11,11 @@ process.env.UPSTASH_REDIS_REST_TOKEN = "";
 const rl = await import("../lib/ratelimit");
 const ent = await import("../lib/entitlements");
 
+const { cookieSet } = vi.hoisted(() => ({ cookieSet: vi.fn() }));
+vi.mock("next/headers", () => ({ cookies: async () => ({ set: cookieSet }) }));
+
 afterEach(() => {
+  cookieSet.mockClear();
   vi.unstubAllEnvs();
   vi.restoreAllMocks();
 });
@@ -124,36 +128,198 @@ describe("checkPremiumSiteCap", () => {
     expect(await rl.checkPremiumSiteCap("cap-user", now)).toEqual({ ok: false, code: "daily_cap", retryAfterSec: 3600 });
   });
 
-  it("counts today's started premium runs from the database; a refund does not free a slot", async () => {
+  it("counts today's free runs from the database; a refund does not free a slot", async () => {
     vi.stubEnv("PREMIUM_DAILY_CAP", "2");
-    expect((await rl.checkPremiumSiteCap("cap-user")).ok).toBe(true);
-    await ent.grantCredits({ userId: "cap-user", credits: 5, source: "admin", externalId: "admin:cap" });
-    const a = await ent.reservePremiumVerdict("cap-user");
-    const b = await ent.reservePremiumVerdict("cap-user");
+    for (const u of ["free-a", "free-b"]) await ent.grantWelcomeCredit(u, `claim-${u}`);
+    expect((await rl.checkPremiumSiteCap("free-a")).ok).toBe(true);
+    const a = await ent.reservePremiumVerdict("free-a");
+    const b = await ent.reservePremiumVerdict("free-b");
     if (!a.ok || !b.ok) throw new Error("expected reservations");
-    expect(await rl.checkPremiumSiteCap("cap-user")).toMatchObject({ ok: false, code: "daily_cap" });
-    // A refused or failed run still paid for its model calls.
+    await ent.grantWelcomeCredit("free-c", "claim-free-c");
+    expect(await rl.checkPremiumSiteCap("free-c")).toMatchObject({ ok: false, code: "daily_cap" });
+    // A failed run still paid for its model calls.
     await ent.refundPremiumVerdict(b.reservation.id);
-    expect(await rl.checkPremiumSiteCap("cap-user")).toMatchObject({ ok: false, code: "daily_cap" });
+    expect(await rl.checkPremiumSiteCap("free-c")).toMatchObject({ ok: false, code: "daily_cap" });
   });
 
-  it("holds welcome-credit-only accounts to WELCOME_DAILY_CAP, not paying ones", async () => {
-    vi.stubEnv("PREMIUM_DAILY_CAP", "100");
-    vi.stubEnv("WELCOME_DAILY_CAP", "1");
-    await ent.grantWelcomeCredit("new-1", "claim-new-1");
-    await ent.grantWelcomeCredit("new-2", "claim-new-2");
-    await ent.grantCredits({ userId: "paid-1", credits: 1, source: "admin", externalId: "admin:paid-1" });
-    expect((await rl.checkPremiumSiteCap("new-2")).ok).toBe(true);
-    const run = await ent.reservePremiumVerdict("new-1");
-    if (!run.ok) throw new Error("expected a reservation");
-    expect(await rl.checkPremiumSiteCap("new-2")).toMatchObject({ ok: false, code: "daily_cap" });
-    expect((await rl.checkPremiumSiteCap("paid-1")).ok).toBe(true);
+  it("never holds back a paid credit or a plan, whatever the cap says", async () => {
+    vi.stubEnv("PREMIUM_DAILY_CAP", "0");
+    await ent.grantCredits({ userId: "paid-pack", credits: 1, source: "app_store", externalId: "tx-paid-pack" });
+    await ent.grantSubscription({
+      userId: "paid-plan",
+      source: "app_store",
+      externalId: "evt-paid-plan",
+      originalTransactionId: "otid-paid-plan",
+      productId: "monthly",
+      periodStart: new Date(Date.now() - 1000).toISOString(),
+      periodEnd: new Date(Date.now() + 86_400_000).toISOString(),
+      willRenew: true,
+    });
+    await ent.grantWelcomeCredit("free-paused", "claim-free-paused");
+    expect(await rl.checkPremiumSiteCap("paid-pack")).toEqual({ ok: true });
+    expect(await rl.checkPremiumSiteCap("paid-plan")).toEqual({ ok: true });
+    expect(await rl.checkPremiumSiteCap("free-paused")).toMatchObject({ ok: false, code: "daily_cap" });
   });
 
   it("fails closed when the count fails", async () => {
     vi.stubEnv("PREMIUM_DAILY_CAP", "5");
     vi.spyOn(console, "error").mockImplementation(() => {});
-    vi.spyOn(ent, "countPremiumToday").mockRejectedValueOnce(new Error("db down"));
+    vi.spyOn(ent, "countWelcomeToday").mockRejectedValueOnce(new Error("db down"));
     expect(await rl.checkPremiumSiteCap("cap-user")).toMatchObject({ ok: false, code: "unavailable" });
+  });
+});
+
+describe("one free verdict a day per device", () => {
+  const web = (cookie?: string) => new Headers(cookie ? { cookie: `theme=dark; verdict.browser=${cookie}` } : {});
+  const app = (deviceId?: string) =>
+    new Headers({ authorization: "Bearer t", "x-forwarded-for": "198.51.100.1", ...(deviceId ? { "device-id": deviceId } : {}) });
+  const BROWSER_A = "A".repeat(22);
+  const BROWSER_B = "B".repeat(22);
+
+  async function signedInOn(userId: string, deviceId: string) {
+    const { noteSignIn } = await import("../lib/analytics/devices");
+    await noteSignIn(userId, new Headers({ "device-id": deviceId, "device-platform": "ios" }));
+  }
+  const fresh = async (u: string) => ent.grantWelcomeCredit(u, `claim-${u}`);
+
+  it("two accounts on one phone: the second is refused until tomorrow", async () => {
+    await fresh("phone-a");
+    await fresh("phone-b");
+    await signedInOn("phone-a", "device-shared-1");
+    await signedInOn("phone-b", "device-shared-1");
+    const now = new Date("2026-11-26T10:00:00Z");
+    expect(await rl.checkPremiumSiteCap("phone-a", now, app())).toEqual({ ok: true });
+    expect(await rl.checkPremiumSiteCap("phone-b", now, app())).toMatchObject({ ok: false, code: "free_device" });
+    expect(await rl.checkPremiumSiteCap("phone-a", now, app())).toEqual({ ok: true });
+    const next = new Date("2026-11-27T00:00:01Z");
+    expect(await rl.checkPremiumSiteCap("phone-b", next, app())).toEqual({ ok: true });
+  });
+
+  it("only the device this request comes from is claimed, not every device the account used", async () => {
+    await fresh("many-dev");
+    await fresh("on-old");
+    await fresh("on-new");
+    await signedInOn("many-dev", "device-many-old");
+    await signedInOn("on-old", "device-many-old");
+    await new Promise((r) => setTimeout(r, 5));
+    await signedInOn("many-dev", "device-many-new");
+    await signedInOn("on-new", "device-many-new");
+    const now = new Date("2026-11-26T11:00:00Z");
+    // The sent id when it is one of the account's, else its most recent device.
+    expect(await rl.checkPremiumSiteCap("many-dev", now, app("device-many-old"))).toEqual({ ok: true });
+    expect(await rl.checkPremiumSiteCap("on-old", now, app())).toMatchObject({ ok: false, code: "free_device" });
+    expect(await rl.checkPremiumSiteCap("on-new", now, app())).toEqual({ ok: true });
+  });
+
+  it("an id the account never signed in with is ignored", async () => {
+    await fresh("liar-a");
+    await fresh("liar-b");
+    await signedInOn("liar-a", "device-liar-real");
+    await signedInOn("liar-b", "device-liar-real");
+    const now = new Date("2026-11-26T11:30:00Z");
+    expect(await rl.checkPremiumSiteCap("liar-a", now, app("device-made-up-1"))).toEqual({ ok: true });
+    expect(await rl.checkPremiumSiteCap("liar-b", now, app("device-made-up-2"))).toMatchObject({ ok: false, code: "free_device" });
+  });
+
+  it("the website is told apart by a cookie id; a request without one is a new browser and gets one set", async () => {
+    for (const u of ["web-a", "web-b", "web-c", "web-d"]) await fresh(u);
+    const now = new Date("2026-11-26T12:00:00Z");
+    expect(await rl.checkPremiumSiteCap("web-a", now, web(BROWSER_A))).toEqual({ ok: true });
+    expect(cookieSet).not.toHaveBeenCalled();
+    expect(await rl.checkPremiumSiteCap("web-b", now, web(BROWSER_A))).toMatchObject({ ok: false, code: "free_device" });
+    expect(await rl.checkPremiumSiteCap("web-c", now, web(BROWSER_B))).toEqual({ ok: true });
+    expect(await rl.checkPremiumSiteCap("web-d", now, web())).toEqual({ ok: true });
+    expect(cookieSet).toHaveBeenCalledTimes(1);
+    expect(cookieSet.mock.calls[0][0]).toBe("verdict.browser");
+    expect(cookieSet.mock.calls[0][1]).toMatch(/^[A-Za-z0-9_-]{22,64}$/);
+    expect(cookieSet.mock.calls[0][2]).toMatchObject({ httpOnly: true, sameSite: "lax", path: "/" });
+    expect(cookieSet.mock.calls[0][2].maxAge).toBeGreaterThan(365 * 24 * 3600);
+  });
+
+  it("the address plays no part: two browsers on one address are two browsers", async () => {
+    await fresh("addr-a");
+    await fresh("addr-b");
+    const now = new Date("2026-11-26T12:30:00Z");
+    const same = (cookie: string) => new Headers({ cookie: `verdict.browser=${cookie}`, "x-forwarded-for": "203.0.113.50" });
+    expect(await rl.checkPremiumSiteCap("addr-a", now, same("C".repeat(22)))).toEqual({ ok: true });
+    expect(await rl.checkPremiumSiteCap("addr-b", now, same("D".repeat(22)))).toEqual({ ok: true });
+  });
+
+  it("an app account with no recorded device claims nothing and keeps its one welcome credit", async () => {
+    await fresh("nodev-a");
+    await fresh("nodev-b");
+    const now = new Date("2026-11-26T13:00:00Z");
+    expect(await rl.checkPremiumSiteCap("nodev-a", now, app())).toEqual({ ok: true });
+    expect(await rl.checkPremiumSiteCap("nodev-b", now, app())).toEqual({ ok: true });
+  });
+
+  it("paid accounts are never held by a device", async () => {
+    await fresh("bought-after");
+    await fresh("held-by");
+    await signedInOn("bought-after", "device-bought");
+    await signedInOn("held-by", "device-bought");
+    const now = new Date("2026-11-26T13:30:00Z");
+    expect(await rl.checkPremiumSiteCap("held-by", now, app())).toEqual({ ok: true });
+    await ent.grantCredits({ userId: "bought-after", credits: 1, source: "app_store", externalId: "tx-bought-after" });
+    expect(await rl.checkPremiumSiteCap("bought-after", now, app())).toEqual({ ok: true });
+  });
+
+  it("a request that fails before the credit is spent does not keep the device for the day", async () => {
+    await fresh("abandon-a");
+    await fresh("abandon-b");
+    await signedInOn("abandon-a", "device-abandon");
+    await signedInOn("abandon-b", "device-abandon");
+    const t0 = new Date("2026-11-26T14:00:00Z");
+    expect(await rl.checkPremiumSiteCap("abandon-a", t0, app())).toEqual({ ok: true });
+    // Still on its way: holds the device for a while.
+    expect(await rl.checkPremiumSiteCap("abandon-b", new Date(t0.getTime() + 5 * MIN), app())).toMatchObject({
+      ok: false,
+      code: "free_device",
+    });
+    // Never reserved: the other account may go ahead after 15 minutes.
+    expect(await rl.checkPremiumSiteCap("abandon-b", new Date(t0.getTime() + 16 * MIN), app())).toEqual({ ok: true });
+  });
+
+  it("once the free credit is reserved the device is held for the rest of the day, even if the run fails", async () => {
+    await fresh("spent-a");
+    await fresh("spent-b");
+    await signedInOn("spent-a", "device-spent");
+    await signedInOn("spent-b", "device-spent");
+    const t0 = new Date("2026-11-26T15:00:00Z");
+    expect(await rl.checkPremiumSiteCap("spent-a", t0, app())).toEqual({ ok: true });
+    const r = await ent.reservePremiumVerdict("spent-a", { now: t0 });
+    if (!r.ok) throw new Error("expected a reservation");
+    await ent.refundPremiumVerdict(r.reservation.id);
+    expect(await rl.checkPremiumSiteCap("spent-b", new Date(t0.getTime() + 5 * 3600_000), app())).toMatchObject({
+      ok: false,
+      code: "free_device",
+    });
+  });
+
+  it("a deleted account does not give its device's day back", async () => {
+    await fresh("gone-a");
+    await fresh("gone-b");
+    await signedInOn("gone-a", "device-gone");
+    await signedInOn("gone-b", "device-gone");
+    const now = new Date("2026-11-26T16:00:00Z");
+    expect(await rl.checkPremiumSiteCap("gone-a", now, app())).toEqual({ ok: true });
+    await ent.reservePremiumVerdict("gone-a", { now });
+    await ent.deleteUserEntitlements("gone-a");
+    expect(await rl.checkPremiumSiteCap("gone-b", new Date(now.getTime() + 3600_000), app())).toMatchObject({
+      ok: false,
+      code: "free_device",
+    });
+  });
+
+  it("a claim over several keys is all or none", async () => {
+    const now = new Date("2026-11-26T17:00:00Z");
+    expect(await ent.claimFreeVerdictDay("aon-p", ["k-aon-2"], now)).toBe(true);
+    expect(await ent.claimFreeVerdictDay("aon-q", ["k-aon-1", "k-aon-2"], now)).toBe(false);
+    expect(await ent.claimFreeVerdictDay("aon-r", ["k-aon-1"], now)).toBe(true);
+  });
+
+  it("without headers (callers that have no request) nothing is claimed", async () => {
+    await fresh("nohead");
+    expect(await rl.checkPremiumSiteCap("nohead", new Date("2026-11-26T18:00:00Z"))).toEqual({ ok: true });
   });
 });

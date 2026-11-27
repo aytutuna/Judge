@@ -309,7 +309,7 @@ export async function createCase(input: CreateCaseInput): Promise<CreateCaseResu
       ...(sub ? submissionStatements(caseId, "a", sub, guard, nowIso, null) : []),
       ...(original ? [original] : []),
       // The unit stays held until the invite expires (then the usual
-      // 10-minute stale rule applies).
+      // 20-minute stale rule applies).
       ...(reservationId ? [holdStatement(reservationId, expiresAt, guard)] : []),
     ]);
     inserted = rs[0].rowsAffected === 1;
@@ -437,7 +437,7 @@ export async function respondToCase(input: RespondInput): Promise<RespondResult>
     );
     const bindings = [key, input.userId, claimNonce, nowIso, display?.sealed ?? null, display?.kid ?? null, row.id, nowIso];
     // With side A in, judging starts and the held unit gets the usual
-    // 10-minute crash clock. Without it the answer is only stored: the case
+    // 20-minute crash clock. Without it the answer is only stored: the case
     // keeps waiting, the unit stays held until the invite expires, and the
     // token only guards this batch's rows.
     const held = seatGuard("b", input.seatNonce);
