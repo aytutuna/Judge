@@ -262,8 +262,12 @@ final class PurchaseModel {
             try await logInCurrentUser(generation: mine)
             try checkStoreUser(generation: mine)
             let found = try await gateway.restore()
+            // The server checks the store's billing service itself. Where it
+            // is not set up (503) or busy, the restore still stands.
+            let synced = try? await account.api.syncPurchases()
+            if let synced { account.applyEntitlement(synced.entitlement) }
             await account.refresh()
-            restoreResult = found ? .done : .nothing
+            restoreResult = found || (synced?.synced ?? 0) > 0 ? .done : .nothing
         } catch {
             restoreResult = .failed
         }

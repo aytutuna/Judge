@@ -8,6 +8,12 @@ enum EmailMethod: String, Decodable {
     case password, code, new
 }
 
+/// The answer to a restore sync: how many plans were added and the balance.
+struct PurchaseSync: Decodable, Sendable, Equatable {
+    var synced: Int
+    var entitlement: Entitlement
+}
+
 extension JudgeAPI {
     enum AuthTimeout {
         static let call: TimeInterval = 20
@@ -131,10 +137,12 @@ extension JudgeAPI {
         try await authPost("sign-in/email", body: ["email": email, "password": password])
     }
 
-    /// POST /api/v1/me/password: sets the account's password, or replaces it
-    /// (`current` is the old one).
-    func setPassword(_ password: String, current: String?) async throws {
-        var request = makeRequest(url: endpoint("me/password"), method: "POST", timeout: AuthTimeout.call)
+    /// POST /api/v1/me/password?lang=…: sets the account's password, or
+    /// replaces it (`current` is the old one). The language is the one the
+    /// "password changed" email is written in.
+    func setPassword(_ password: String, current: String?, lang: AppLang) async throws {
+        let url = endpoint("me/password").appending(queryItems: [URLQueryItem(name: "lang", value: lang.rawValue)])
+        var request = makeRequest(url: url, method: "POST", timeout: AuthTimeout.call)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         var body = ["password": password]
         if let current { body["current"] = current }
@@ -150,14 +158,29 @@ extension JudgeAPI {
         _ = try await send(request)
     }
 
-    /// DELETE /api/v1/me { confirm: "delete" }.
-    func deleteAccount() async throws {
+    /// DELETE /api/v1/me { confirm: "delete", password? }. The re-auth header
+    /// tells the server this build asks for the password or a fresh sign-in.
+    func deleteAccount(password: String? = nil) async throws {
         var request = makeRequest(url: endpoint("me"), method: "DELETE", timeout: AuthTimeout.call)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try JSONSerialization.data(withJSONObject: ["confirm": "delete"])
+        request.setValue("1", forHTTPHeaderField: "Judge-Reauth")
+        var body = ["confirm": "delete"]
+        if let password, !password.isEmpty { body["password"] = password }
+        request.httpBody = try JSONSerialization.data(withJSONObject: body)
         let data = try await send(request)
         let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
         guard object?["deleted"] as? Bool == true else { throw APIError.malformed }
+    }
+
+    /// POST /api/v1/me/purchases/sync: the server asks the store's billing
+    /// service for the account's plans after a restore.
+    func syncPurchases() async throws -> PurchaseSync {
+        var request = makeRequest(url: endpoint("me/purchases/sync"), method: "POST", timeout: AuthTimeout.call)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = Data("{}".utf8)
+        let data = try await send(request)
+        guard let sync = try? JSONDecoder().decode(PurchaseSync.self, from: data) else { throw APIError.malformed }
+        return sync
     }
 
     /// A sign-in POST answered `{ token, user }`. The `set-auth-token`

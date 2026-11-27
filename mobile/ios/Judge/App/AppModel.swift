@@ -158,6 +158,7 @@ final class AppModel {
         history = HistoryStore(container: container)
         home = HomeModel(defaults: defaults)
         account = AccountModel(api: self.api, ageRange: DeclaredAgeRangeAsker(), defaults: defaults)
+        account.language = { [weak self] in self?.lang ?? .en }
         consent = ConsentModel(api: self.api)
         let agreeAPI = self.api
         agreement.send = { lang in try await agreeAPI.agreeToSensitive(lang: lang) }

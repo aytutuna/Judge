@@ -138,10 +138,60 @@ private struct ExportedFile: Identifiable {
     var id: URL { url }
 }
 
+/// The delete confirmation: the account's password when it has one, or a
+/// way to sign in again when the session is too old to delete with.
+private struct DeleteAccountAlert: ViewModifier {
+    @Binding var isPresented: Bool
+    let app: AppModel
+    let billing: Bool
+    @Environment(\.openURL) private var openURL
+
+    func body(content: Content) -> some View {
+        let lang = app.lang
+        let account = app.account
+        content.alert(L10n.appAccountDeleteTitle(lang), isPresented: $isPresented) {
+            if account.deleteNeedsSignIn {
+                Button(L10n.signinTitle(lang)) {
+                    Task { await account.signInAgainToDelete() }
+                }
+            } else {
+                if account.deleteNeedsPassword {
+                    SecureField(L10n.signinPassword(lang), text: Binding(
+                        get: { account.deletePassword },
+                        set: { account.deletePassword = $0 }
+                    ))
+                }
+                Button(L10n.appAccountDeleteConfirm(lang), role: .destructive) {
+                    Task { await account.deleteAccount() }
+                }
+            }
+            if billing {
+                Button(L10n.appAccountManageSubscription(lang)) {
+                    if let url = URL(string: "https://apps.apple.com/account/subscriptions") { openURL(url) }
+                }
+            }
+            Button(L10n.accountDeleteCancel(lang), role: .cancel) { account.deletePassword = "" }
+        } message: {
+            if account.deleteNeedsSignIn {
+                Text(L10n.errorReauthRequired(lang))
+            } else if billing {
+                Text(L10n.appAccountDeleteBody(lang) + "\n\n" + L10n.appAccountDeleteSubscription(lang))
+            } else {
+                Text(L10n.appAccountDeleteBody(lang))
+            }
+        }
+    }
+}
+
+extension View {
+    func deleteAccountAlert(isPresented: Binding<Bool>, app: AppModel, billing: Bool = false) -> some View {
+        modifier(DeleteAccountAlert(isPresented: isPresented, app: app, billing: billing))
+    }
+}
+
 struct AccountView: View {
     @Environment(AppModel.self) private var app
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.openURL) private var openURL
     @State private var confirmDelete = false
     @State private var exporting = false
     @State private var exportFailed = false
@@ -176,8 +226,8 @@ struct AccountView: View {
                 .buttonStyle(.plain)
                 .disabled(account.busy != nil)
             } footer: {
-                if account.failure == .deleteFailed {
-                    Text(AccountModel.Failure.deleteFailed.message(lang))
+                if let failure = account.failure, AccountModel.deleteFailures.contains(failure) {
+                    Text(failure.message(lang))
                         .brandText(.footnote)
                         .foregroundStyle(Brand.danger)
                 }
@@ -218,23 +268,7 @@ struct AccountView: View {
         .navigationTitle(L10n.accountTitle(lang))
         .navigationBarTitleDisplayMode(.inline)
         .clearBar()
-        .alert(L10n.appAccountDeleteTitle(lang), isPresented: $confirmDelete) {
-            Button(L10n.appAccountDeleteConfirm(lang), role: .destructive) {
-                Task { await app.account.deleteAccount() }
-            }
-            if billing {
-                Button(L10n.appAccountManageSubscription(lang)) {
-                    if let url = URL(string: "https://apps.apple.com/account/subscriptions") { openURL(url) }
-                }
-            }
-            Button(L10n.accountDeleteCancel(lang), role: .cancel) {}
-        } message: {
-            if billing {
-                Text(L10n.appAccountDeleteBody(lang) + "\n\n" + L10n.appAccountDeleteSubscription(lang))
-            } else {
-                Text(L10n.appAccountDeleteBody(lang))
-            }
-        }
+        .deleteAccountAlert(isPresented: $confirmDelete, app: app, billing: billing)
         .onChange(of: account.isSignedIn) { _, signedIn in
             if !signedIn { dismiss() }
         }

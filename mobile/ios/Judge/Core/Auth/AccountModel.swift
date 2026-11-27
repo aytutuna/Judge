@@ -64,6 +64,9 @@ final class AccountModel {
         case currentPasswordWrong
         case currentPasswordRequired
         case deleteFailed
+        case deleteLimited
+        /// The session is too old to delete with: sign in again first.
+        case deleteReauth
         case loadFailed
     }
 
@@ -79,6 +82,8 @@ final class AccountModel {
     var mode: Mode = .password
     /// Kept in memory only, until the account has it or the sheet is left.
     var password = ""
+    /// The password typed for deleting the account; memory only.
+    var deletePassword = ""
     var isSignInPresented = false
     /// Seconds until another code may be asked for.
     private(set) var resendIn = 0
@@ -114,6 +119,8 @@ final class AccountModel {
     @ObservationIgnored private var reportingPlatform = false
     /// The phone's answer last sent, so a refresh doesn't send it again.
     @ObservationIgnored private var lastReport: AgeCheck.Report?
+    /// The language of the app, for what the server writes in it.
+    @ObservationIgnored var language: () -> AppLang = { .en }
     /// Told when the account turns into (or stops being) one under 18.
     @ObservationIgnored var onUnderEighteen: (@MainActor (Bool) -> Void)?
     /// Told when nothing about age holds things back any more.
@@ -137,6 +144,10 @@ final class AccountModel {
     static let resendSeconds = 30
     private static let lastMethodKey = "lastSignInMethod"
     private static let lastEmailKey = "lastSignInEmail"
+    private static let signedInAtKey = "session.signedInAt"
+    /// The server accepts a delete without a password for 10 minutes after
+    /// the sign-in; a minute less covers the clocks.
+    static let freshSignIn: TimeInterval = 9 * 60
 
     init(
         api: JudgeAPI,
@@ -778,7 +789,7 @@ final class AccountModel {
         defer { busy = nil }
         let asked = api.tokenStore.token()
         do {
-            try await api.setPassword(new, current: nil)
+            try await api.setPassword(new, current: nil, lang: language())
             guard isSameSession(asked) else { return false }
             info?.hasPassword = true
             info?.needsPassword = false
@@ -875,6 +886,7 @@ final class AccountModel {
     /// the account has none. If /me can't be read the sign-in just finishes.
     private func finishSignIn(_ session: AuthSession, byCode: Bool = false, via method: LastMethod, email: String? = nil) async {
         api.tokenStore.setToken(session.token)
+        defaults.set(Date().timeIntervalSince1970, forKey: Self.signedInAtKey)
         remember(method, email: email ?? session.user?.email)
         isSignedIn = true
         info = session.user.map { AccountInfo(user: $0, entitlement: nil) }
@@ -922,6 +934,30 @@ final class AccountModel {
         notice = .signedOut
     }
 
+    /// Deleting needs the account's password, or a sign-in from the last
+    /// few minutes when it has none. Without either the delete sheet asks
+    /// for a new sign-in instead of sending a call that would be refused.
+    var deleteNeedsSignIn: Bool {
+        if isSignedIn, failure == .deleteReauth { return true }
+        guard isSignedIn, let info, info.user != nil, info.hasPassword == false else { return false }
+        let at = defaults.double(forKey: Self.signedInAtKey)
+        return at == 0 || Date().timeIntervalSince1970 - at > Self.freshSignIn
+    }
+
+    /// The account has a password the delete sheet must ask for.
+    var deleteNeedsPassword: Bool { info?.hasPassword == true }
+
+    /// Ends this session and opens sign-in, so the next delete is fresh.
+    /// Nothing is wiped from the phone: the same account comes back.
+    func signInAgainToDelete() async {
+        guard isSignedIn, busy == nil else { return }
+        busy = .signOut
+        try? await api.signOut()
+        busy = nil
+        clearSession()
+        isSignInPresented = true
+    }
+
     /// Deletes the account on the server. The token goes only once the
     /// server confirms; its verdicts leave the phone as on sign-out.
     ///
@@ -929,12 +965,18 @@ final class AccountModel {
     /// server may have finished: /me without a user means it did.
     func deleteAccount() async {
         guard isSignedIn, busy == nil else { return }
+        if deleteNeedsPassword, deletePassword.isEmpty {
+            failure = .currentPasswordRequired
+            return
+        }
         busy = .delete
         failure = nil
         defer { busy = nil }
         let asked = api.tokenStore.token()
+        let typed = deleteNeedsPassword ? deletePassword : nil
+        deletePassword = ""
         do {
-            try await api.deleteAccount()
+            try await api.deleteAccount(password: typed)
             guard isSameSession(asked) else { return }
             clearSession(byUser: true)
             forgetLastSignIn()
@@ -952,9 +994,30 @@ final class AccountModel {
             } else {
                 failure = .deleteFailed
             }
+        } catch let error as APIError {
+            guard isSameSession(asked) else { return }
+            failure = Self.deleteFailure(error)
         } catch {
             failure = .deleteFailed
         }
+    }
+
+    /// What the delete screens show under the button.
+    static let deleteFailures: [Failure] = [
+        .deleteFailed, .deleteLimited, .deleteReauth, .currentPasswordWrong, .currentPasswordRequired,
+    ]
+
+    static func deleteFailure(_ error: APIError) -> Failure {
+        if case .server(let status, _) = error {
+            if status == 429 || error.code == "rate_limited" { return .deleteLimited }
+            switch error.code {
+            case "reauth_required": return .deleteReauth
+            case "password_wrong": return .currentPasswordWrong
+            case "password_required": return .currentPasswordRequired
+            default: break
+            }
+        }
+        return .deleteFailed
     }
 
     /// Whether the session a call was made with is still the current one:
@@ -986,6 +1049,8 @@ final class AccountModel {
 
     private func clearSession(byUser: Bool = false) {
         api.tokenStore.clear()
+        defaults.removeObject(forKey: Self.signedInAtKey)
+        deletePassword = ""
         appleCodes.clear()
         isSignedIn = false
         info = nil
@@ -1096,6 +1161,8 @@ extension AccountModel.Failure {
         case .currentPasswordWrong: return L10n.errorPasswordWrong(lang)
         case .currentPasswordRequired: return L10n.errorPasswordRequired(lang)
         case .deleteFailed: return L10n.accountDeleteFailed(lang)
+        case .deleteLimited: return L10n.accountDeleteLimited(lang)
+        case .deleteReauth: return L10n.errorReauthRequired(lang)
         case .loadFailed: return L10n.accountLoadFailed(lang)
         }
     }

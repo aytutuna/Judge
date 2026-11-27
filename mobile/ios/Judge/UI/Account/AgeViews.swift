@@ -34,14 +34,7 @@ struct AgeGateView: View {
         .background(Brand.ivory.ignoresSafeArea())
         .accessibilityAddTraits(.isModal)
         .environment(\.locale, lang.locale)
-        .alert(L10n.appAccountDeleteTitle(lang), isPresented: $confirmDelete) {
-            Button(L10n.appAccountDeleteConfirm(lang), role: .destructive) {
-                Task { await account.deleteAccount() }
-            }
-            Button(L10n.accountDeleteCancel(lang), role: .cancel) {}
-        } message: {
-            Text(L10n.appAccountDeleteBody(lang))
-        }
+        .deleteAccountAlert(isPresented: $confirmDelete, app: app)
     }
 
     @ViewBuilder
@@ -135,8 +128,8 @@ struct AgeGateView: View {
     /// account can still reach.
     @ViewBuilder
     private func deleteButton(_ lang: AppLang, account: AccountModel) -> some View {
-        if account.failure == .deleteFailed {
-            ErrorBanner(message: L10n.accountDeleteFailed(lang))
+        if let failure = account.failure, AccountModel.deleteFailures.contains(failure) {
+            ErrorBanner(message: failure.message(lang))
         }
         Button {
             confirmDelete = true
