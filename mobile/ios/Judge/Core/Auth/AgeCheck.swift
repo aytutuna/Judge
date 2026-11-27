@@ -53,6 +53,22 @@ enum AgeCheck {
         }
     }
 
+    /// What the phone's answer comes to: the derived age and whether the law
+    /// asks a parent to consent to significant changes for this person.
+    struct StoreAnswer: Sendable, Equatable {
+        var age: PlatformAge
+        var parentalConsentRequired = false
+    }
+
+    /// The phone's whole answer reduced to what the app acts on. The range
+    /// itself goes no further than this: only the derived age is sent to the
+    /// server. Consent is asked only for a minor, and only where the system
+    /// lists it among the required regulatory features.
+    static func fromStore(lower: Int?, upper: Int?, parentalConsentFeature: Bool) -> StoreAnswer {
+        let age = fromRange(lower: lower, upper: upper)
+        return StoreAnswer(age: age, parentalConsentRequired: parentalConsentFeature && age == .minor)
+    }
+
     /// What the server's age state asks the app to show.
     static func gate(signedIn: Bool, age: AgeStatus?) -> AgeGate {
         guard signedIn, let age else { return .none }
@@ -153,6 +169,12 @@ enum AgeCheck {
 protocol AgeRangeAsking: AnyObject {
     /// Never throws: declined, unsupported or failed reads as `.unknown`.
     func ask() async -> PlatformAge
+    /// Set by the last `ask()`: a parent must consent to significant changes.
+    var needsParentalConsent: Bool { get }
+}
+
+extension AgeRangeAsking {
+    var needsParentalConsent: Bool { false }
 }
 
 /// Declared Age Range (iOS 26) with gates at 13 and 18, which is what lets
@@ -161,7 +183,10 @@ protocol AgeRangeAsking: AnyObject {
 /// Config/Shared.xcconfig); otherwise, and below iOS 26, always unknown.
 @MainActor
 final class DeclaredAgeRangeAsker: AgeRangeAsking {
+    private(set) var needsParentalConsent = false
+
     func ask() async -> PlatformAge {
+        needsParentalConsent = false
         #if DECLARED_AGE_RANGE
         // Below the age window, which would take the sheet down with it.
         let scenes = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
@@ -174,7 +199,12 @@ final class DeclaredAgeRangeAsker: AgeRangeAsking {
         do {
             switch try await AgeRangeService.shared.requestAgeRange(ageGates: 13, 18, in: controller) {
             case .sharing(let range):
-                return AgeCheck.fromRange(lower: range.lowerBound, upper: range.upperBound)
+                let answer = AgeCheck.fromStore(
+                    lower: range.lowerBound, upper: range.upperBound,
+                    parentalConsentFeature: await Self.parentalConsentRequired()
+                )
+                needsParentalConsent = answer.parentalConsentRequired
+                return answer.age
             case .declinedSharing:
                 return .unknown
             @unknown default:
@@ -187,6 +217,16 @@ final class DeclaredAgeRangeAsker: AgeRangeAsking {
         return .unknown
         #endif
     }
+
+    #if DECLARED_AGE_RANGE
+    /// Whether the system lists parental consent for significant changes
+    /// among this person's regulatory features (iOS 26.4).
+    private static func parentalConsentRequired() async -> Bool {
+        guard #available(iOS 26.4, *) else { return false }
+        let features = (try? await AgeRangeService.shared.requiredRegulatoryFeatures) ?? []
+        return features.contains(.significantAppChangeRequiresParentalConsent)
+    }
+    #endif
 }
 
 /// Tests and screenshot states: no platform signal.

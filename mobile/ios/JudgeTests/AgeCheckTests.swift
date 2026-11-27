@@ -26,6 +26,34 @@ final class AgeCheckTests: XCTestCase {
         XCTAssertEqual(AgeCheck.fromRange(lower: 16, upper: nil), .unknown)
     }
 
+    func testTheStoreAnswerKeepsOnlyTheDerivedAgeAndTheConsentFlag() {
+        // A minor where the system lists parental consent: the account is held for it.
+        XCTAssertEqual(
+            AgeCheck.fromStore(lower: 13, upper: 17, parentalConsentFeature: true),
+            AgeCheck.StoreAnswer(age: .minor, parentalConsentRequired: true)
+        )
+        // The same minor where the system lists nothing.
+        XCTAssertEqual(
+            AgeCheck.fromStore(lower: 13, upper: 17, parentalConsentFeature: false),
+            AgeCheck.StoreAnswer(age: .minor, parentalConsentRequired: false)
+        )
+        // An adult is never asked for a parent, whatever the system lists.
+        XCTAssertEqual(
+            AgeCheck.fromStore(lower: 18, upper: nil, parentalConsentFeature: true),
+            AgeCheck.StoreAnswer(age: .adult, parentalConsentRequired: false)
+        )
+        // Under 13 is closed for good; consent does not reopen it.
+        XCTAssertEqual(
+            AgeCheck.fromStore(lower: nil, upper: 12, parentalConsentFeature: true),
+            AgeCheck.StoreAnswer(age: .under13, parentalConsentRequired: false)
+        )
+        // A range across a gate says nothing, so nothing is asked either.
+        XCTAssertEqual(
+            AgeCheck.fromStore(lower: 13, upper: nil, parentalConsentFeature: true),
+            AgeCheck.StoreAnswer(age: .unknown, parentalConsentRequired: false)
+        )
+    }
+
     func testReports() {
         XCTAssertEqual(AgeCheck.report(platform: .adult, age: done), AgeCheck.Report(adult: true))
         XCTAssertEqual(AgeCheck.report(platform: .minor, age: done), AgeCheck.Report(adult: false))
@@ -143,6 +171,7 @@ private final class FakeAgeRange: AgeRangeAsking {
     var answer: PlatformAge
     /// Never answers in time, like a prompt left open.
     var hangs = false
+    var needsParentalConsent = false
     private(set) var calls = 0
 
     init(_ answer: PlatformAge) {
@@ -254,6 +283,38 @@ final class AccountAgeTests: XCTestCase {
         await account.checkPlatformAge()
         XCTAssertEqual(fake.calls, 1, "the phone is asked once per run")
         XCTAssertEqual(router.count("POST", "/api/v1/me/age"), 1, "and told once")
+    }
+
+    @MainActor
+    func testAParentManagedMinorIsReportedAsAMinorAndFlagged() async throws {
+        router.on("GET", "/api/v1/me", try me(state(confirmed: true)))
+        router.on("POST", "/api/v1/me/age", try PremiumFixtures.json(200, state(confirmed: true, teen: true)))
+        let (account, _, fake) = makeAccount(.minor)
+        fake.needsParentalConsent = true
+        await account.refresh()
+        XCTAssertFalse(account.parentalConsentRequired)
+        await account.checkPlatformAge()
+        XCTAssertTrue(account.parentalConsentRequired)
+        // Only the derived answer reaches the server.
+        XCTAssertEqual(Set(try sent().keys), ["adult", "source"])
+        XCTAssertEqual(try sent()["adult"] as? Bool, false)
+    }
+
+    @MainActor
+    func testTheSignalIsAskedOnTheFirstLaunchOfAnInstallEvenSignedOut() async throws {
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: UUID().uuidString))
+        let (api, _) = makeAPI(token: nil)
+        let fake = FakeAgeRange(.adult)
+        let first = AccountModel(api: api, ageRange: fake, defaults: defaults)
+        XCTAssertTrue(first.needsPlatformAge(onSignIn: false))
+        await first.checkPlatformAge()
+        XCTAssertEqual(fake.calls, 1)
+        XCTAssertEqual(first.platformAge, .adult)
+
+        // The next launch of the same install does not ask a signed-out person again.
+        let second = AccountModel(api: api, ageRange: FakeAgeRange(.adult), defaults: defaults)
+        XCTAssertFalse(second.needsPlatformAge(onSignIn: false))
+        XCTAssertTrue(second.needsPlatformAge(onSignIn: true))
     }
 
     @MainActor

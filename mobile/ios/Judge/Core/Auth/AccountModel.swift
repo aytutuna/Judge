@@ -91,6 +91,10 @@ final class AccountModel {
 
     /// The phone's answer, asked at most once per run; nil until it answered.
     private(set) var platformAge: PlatformAge?
+    /// The store says a parent must consent to a significant change for this
+    /// minor. TODO: show PermissionKit's significant-update question and hold
+    /// the account until it is answered, once an update has such a change.
+    private(set) var parentalConsentRequired = false
     /// The day on the date step's wheels; Continue waits until one is picked.
     private(set) var dobDate = AgeCheck.defaultDobDate()
     private(set) var dobPicked = false
@@ -145,6 +149,7 @@ final class AccountModel {
     private static let lastMethodKey = "lastSignInMethod"
     private static let lastEmailKey = "lastSignInEmail"
     private static let signedInAtKey = "session.signedInAt"
+    private static let askedKey = "age.askedOnInstall"
     /// The server accepts a delete without a password for 10 minutes after
     /// the sign-in; a minute less covers the clocks.
     static let freshSignIn: TimeInterval = 9 * 60
@@ -326,7 +331,7 @@ final class AccountModel {
     /// sign-in sheet is up or the signed-in account is not closed for good.
     func needsPlatformAge(onSignIn: Bool) -> Bool {
         guard platformAge == nil, !askingPlatform, usesNetwork else { return false }
-        guard isSignedIn else { return onSignIn }
+        guard isSignedIn else { return onSignIn || !defaults.bool(forKey: Self.askedKey) }
         guard let age = info?.age else { return false }
         return !(age.blocked && !age.needsDob)
     }
@@ -342,6 +347,8 @@ final class AccountModel {
         }
         platformPrompting = true
         let answer = await ageRange.ask()
+        parentalConsentRequired = ageRange.needsParentalConsent
+        defaults.set(true, forKey: Self.askedKey)
         platformPrompting = false
         timeout.cancel()
         await platformAnswered(answer, timedOut: false)
