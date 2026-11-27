@@ -545,13 +545,17 @@ class JudgeApi(
         signIn = true,
     ) { _, text -> decodeGrant(text) }
 
-    /** POST /api/v1/me/password: sets the password, or replaces it ([current] unless the sign-in is fresh). */
-    suspend fun setPassword(password: String, current: String?): ApiResult<Unit> {
+    /**
+     * POST /api/v1/me/password: sets the password, or replaces it ([current] unless the sign-in is fresh).
+     * The server writes the "password changed" email in `lang`; OkHttp sends no Accept-Language.
+     */
+    suspend fun setPassword(password: String, current: String?, lang: AppLang): ApiResult<Unit> {
         val body = buildJsonObject {
             put("password", password)
             if (current != null) put("current", current)
         }.toString()
-        val req = request(url("api", "v1", "me", "password")).post(body.toRequestBody(JSON)).build()
+        val url = url("api", "v1", "me", "password").newBuilder().addQueryParameter("lang", lang.tag).build()
+        val req = request(url).post(body.toRequestBody(JSON)).build()
         return execute(accountClient, req) { _, _ -> }
     }
 

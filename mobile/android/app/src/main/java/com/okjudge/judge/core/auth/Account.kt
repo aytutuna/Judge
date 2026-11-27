@@ -430,9 +430,9 @@ class Account(
      * Sets or replaces the password of the signed-in account; null when saved.
      * [current] replaces a password on a session that is not a fresh code sign-in.
      */
-    suspend fun setPassword(password: String, current: String?): SignInError? {
+    suspend fun setPassword(password: String, current: String?, lang: AppLang): SignInError? {
         val asked = tokens.get()
-        return when (val res = api.setPassword(password, current)) {
+        return when (val res = api.setPassword(password, current, lang)) {
             is ApiResult.Ok -> {
                 if (tokens.get() == asked) {
                     val signedIn = _state.value as? State.SignedIn

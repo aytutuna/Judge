@@ -322,12 +322,13 @@ class AccountTest {
         routes.on(Routes.SET_PASSWORD, json(200, """{"ok":true}"""))
         val account = account(store().apply { set("session-p") })
         account.refresh()
-        assertNull(account.setPassword("made-up-pass", "old-made-up"))
+        assertNull(account.setPassword("made-up-pass", "old-made-up", AppLang.TR))
         val request = routes.requestsTo(Routes.SET_PASSWORD).single()
         assertEquals("Bearer session-p", request.headers["Authorization"])
         val body = Json.parseToJsonElement(request.body!!.utf8()).jsonObject
         assertEquals("made-up-pass", body["password"]!!.jsonPrimitive.content)
         assertEquals("old-made-up", body["current"]!!.jsonPrimitive.content)
+        assertEquals("tr", request.url.queryParameter("lang"))
         assertEquals(true, (account.state.value as Account.State.SignedIn).me!!.hasPassword)
     }
 
@@ -336,7 +337,7 @@ class AccountTest {
         val account = account(store().apply { set("session-p") })
         suspend fun answer(status: Int, code: String): SignInError? {
             routes.on(Routes.SET_PASSWORD, json(status, """{"code":"$code"}"""))
-            return account.setPassword("made-up-pass", null)
+            return account.setPassword("made-up-pass", null, AppLang.EN)
         }
         assertEquals(SignInError.PASSWORD_SHORT, answer(400, "too_short"))
         assertEquals(SignInError.PASSWORD_SHORT, answer(400, "too_long"))

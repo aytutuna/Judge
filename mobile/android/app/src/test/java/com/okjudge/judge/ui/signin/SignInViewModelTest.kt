@@ -304,6 +304,7 @@ class SignInViewModelTest {
         assertTrue(save.body!!.utf8().contains("made-up-pass"))
         assertFalse(save.body!!.utf8().contains("current"))
         assertEquals("Bearer new-session", save.headers["Authorization"])
+        assertEquals("en", save.url.queryParameter("lang"))
     }
 
     @Test
