@@ -23,6 +23,9 @@ import androidx.compose.ui.unit.dp
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.okjudge.judge.Fixtures
 import com.okjudge.judge.core.auth.Account
+import com.okjudge.judge.core.auth.DeleteProblem
+import com.okjudge.judge.ui.settings.DeleteAccountForm
+import com.okjudge.judge.ui.settings.DeleteUi
 import com.okjudge.judge.core.auth.SignInError
 import com.okjudge.judge.core.auth.SignInMethod
 import com.okjudge.judge.core.data.Appearance
@@ -321,6 +324,27 @@ class ScreenshotsTest {
             com.okjudge.judge.ui.settings.AccountScreen(Account.State.SignedIn(me), busy = false, onDelete = {}, onBack = {}, onManageSubscription = {})
         }
     }
+
+    /** The sheet's content on its paper surface; the dialog window itself is not drawn by the screenshot rule. */
+    private fun deleteSheet(name: String, dark: Boolean, ui: DeleteUi) = capture(name) {
+        Themed(AppLang.EN, dark = dark) {
+            androidx.compose.material3.Surface(color = Palette.paper) {
+                DeleteAccountForm(ui, busy = false, billing = false, onDelete = {}, onManageSubscription = null, onDismiss = {}, modifier = Modifier.padding(24.dp))
+            }
+        }
+    }
+
+    @Test
+    fun account_delete_password_en() = deleteSheet("account_delete_password_en", false, DeleteUi(hasPassword = true, problem = DeleteProblem.PASSWORD_WRONG))
+
+    @Test
+    fun account_delete_password_en_dark() = deleteSheet("account_delete_password_en_dark", true, DeleteUi(hasPassword = true, problem = DeleteProblem.PASSWORD_WRONG))
+
+    @Test
+    fun account_delete_reauth_en() = deleteSheet("account_delete_reauth_en", false, DeleteUi(problem = DeleteProblem.REAUTH_REQUIRED))
+
+    @Test
+    fun account_delete_reauth_en_dark() = deleteSheet("account_delete_reauth_en_dark", true, DeleteUi(problem = DeleteProblem.REAUTH_REQUIRED))
 
     @Test
     fun settings_tr() = capture("settings_tr") {

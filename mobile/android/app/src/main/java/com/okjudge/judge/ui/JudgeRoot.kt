@@ -80,6 +80,7 @@ import com.okjudge.judge.i18n.deviceLanguageTags
 import com.okjudge.judge.ui.components.LocalGamify
 import com.okjudge.judge.ui.history.HistoryEntry
 import com.okjudge.judge.ui.history.HistoryViewModel
+import com.okjudge.judge.ui.settings.DeleteUi
 import com.okjudge.judge.ui.home.HomeScreen
 import com.okjudge.judge.ui.home.HomeViewModel
 import com.okjudge.judge.ui.home.SHORT_WINDOW
@@ -794,7 +795,8 @@ fun JudgeRoot(
                                             onExport = container.dataExport::start,
                                         ),
                                         // App scope: leaving the screen must not stop a deletion halfway.
-                                        onDelete = { container.appScope.launch { account.deleteAccount() } },
+                                        onDelete = { password -> container.appScope.launch { account.deleteAccount(password) } },
+                                        delete = deleteUi(account, accountState) { container.appScope.launch { account.signOut() } },
                                         onBack = { backStack.removeAll { it is AccountKey } },
                                         onManageSubscription = {
                                             openLink(context, "https://play.google.com/store/account/subscriptions?package=${context.packageName}")
@@ -870,7 +872,8 @@ fun JudgeRoot(
                     account = account,
                     signedIn = accountNow is Account.State.SignedIn,
                     onSignOut = { container.appScope.launch { account.signOut() } },
-                    onDelete = { container.appScope.launch { account.deleteAccount() } },
+                    onDelete = { password -> container.appScope.launch { account.deleteAccount(password) } },
+                    delete = deleteUi(account, accountNow) { container.appScope.launch { account.signOut() } },
                     onSubmitDob = { container.appScope.launch { account.submitDob(it) } },
                     onContact = { sendEmail(context, AgeCheck.SUPPORT_EMAIL) },
                 )
@@ -886,12 +889,26 @@ private const val HELD_LINK = 2
 
 /** The age check over the whole app: the date step or the final refusal. Back leaves the app. */
 @Composable
+private fun deleteUi(account: Account, state: Account.State, signInAgain: () -> Unit): DeleteUi {
+    val problem by account.deleteProblem.collectAsStateWithLifecycle()
+    val failed by account.deleteFailed.collectAsStateWithLifecycle()
+    return DeleteUi(
+        hasPassword = (state as? Account.State.SignedIn)?.me?.hasPassword == true,
+        problem = problem,
+        failed = failed,
+        onClearProblem = account::clearDeleteProblem,
+        onSignInAgain = signInAgain,
+    )
+}
+
+@Composable
 private fun AgeOverlay(
     gate: AgeGate,
     account: Account,
     signedIn: Boolean,
     onSignOut: () -> Unit,
-    onDelete: () -> Unit,
+    onDelete: (String?) -> Unit,
+    delete: DeleteUi,
     onSubmitDob: (LocalDate) -> Unit,
     onContact: () -> Unit,
 ) {
@@ -899,7 +916,6 @@ private fun AgeOverlay(
     val context = LocalContext.current
     BackHandler { (context as? Activity)?.moveTaskToBack(true) }
     val busy by account.working.collectAsStateWithLifecycle()
-    val deleteFailed by account.deleteFailed.collectAsStateWithLifecycle()
     when (gate) {
         AgeGate.DATE -> {
             val posting by account.agePosting.collectAsStateWithLifecycle()
@@ -911,7 +927,7 @@ private fun AgeOverlay(
                 onEdit = account::clearAgeFailed,
                 onSignOut = onSignOut,
                 onDelete = onDelete,
-                deleteFailed = deleteFailed,
+                delete = delete,
             )
         }
         AgeGate.BLOCKED -> AgeBlockedScreen(
@@ -919,7 +935,7 @@ private fun AgeOverlay(
             busy = busy,
             onSignOut = onSignOut,
             onDelete = onDelete,
-            deleteFailed = deleteFailed,
+            delete = delete,
             onContact = onContact,
         )
         AgeGate.NONE -> Unit

@@ -440,6 +440,54 @@ class AccountTest {
     }
 
     @Test
+    fun deleteAccount_sendsTheReauthHeader_andThePasswordWhenGiven() = runBlocking {
+        routes.on(DELETE_ME, json(200, """{"deleted":true}"""))
+        routes.on(DELETE_ME, json(200, """{"deleted":true}"""))
+        val account = account(store().apply { set("session-d") })
+        assertTrue(account.deleteAccount("made-up-pass"))
+        val withPassword = routes.requestsTo(DELETE_ME).single()
+        assertEquals("1", withPassword.headers["Judge-Reauth"])
+        assertEquals("made-up-pass", Json.parseToJsonElement(withPassword.body!!.utf8()).jsonObject["password"]!!.jsonPrimitive.content)
+
+        val second = account(store().apply { set("session-e") })
+        assertTrue(second.deleteAccount())
+        val without = routes.requestsTo(DELETE_ME).last()
+        assertEquals("1", without.headers["Judge-Reauth"])
+        assertNull(Json.parseToJsonElement(without.body!!.utf8()).jsonObject["password"])
+    }
+
+    @Test
+    fun deleteAccount_refusalsThePersonCanFix_landInDeleteProblem() = runBlocking {
+        val tokens = store().apply { set("session-d") }
+        val account = account(tokens)
+        suspend fun answer(status: Int, code: String): DeleteProblem? {
+            routes.on(DELETE_ME, json(status, """{"error":"x","code":"$code"}"""))
+            assertFalse(account.deleteAccount())
+            return account.deleteProblem.value
+        }
+        assertEquals(DeleteProblem.REAUTH_REQUIRED, answer(403, "reauth_required"))
+        assertEquals(DeleteProblem.PASSWORD_WRONG, answer(403, "password_wrong"))
+        assertEquals(DeleteProblem.RATE_LIMITED, answer(429, "rate_limited"))
+        assertEquals("the session stays", "session-d", tokens.get())
+        assertFalse("not the generic failure", account.deleteFailed.value)
+        assertNull("another failure clears it", answer(503, "unavailable"))
+        assertTrue(account.deleteFailed.value)
+        account.clearDeleteProblem()
+        assertNull(account.deleteProblem.value)
+    }
+
+    @Test
+    fun deleteAccount_afterAFreshSignIn_deletes() = runBlocking {
+        routes.on(DELETE_ME, json(403, """{"error":"x","code":"reauth_required"}"""))
+        routes.on(DELETE_ME, json(200, """{"deleted":true}"""))
+        val account = account(store().apply { set("session-d") })
+        assertFalse(account.deleteAccount())
+        assertEquals(DeleteProblem.REAUTH_REQUIRED, account.deleteProblem.value)
+        assertTrue(account.deleteAccount())
+        assertNull(account.deleteProblem.value)
+    }
+
+    @Test
     fun deleteAccount_failure_keepsTheSession() = runBlocking {
         routes.on(DELETE_ME, json(503, """{"error":"Deleting the account failed. Try again.","code":"unavailable"}"""))
         val tokens = store().apply { set("session-d") }
@@ -498,23 +546,6 @@ class AccountTest {
         assertTrue(account.isSignedIn)
     }
 
-    // --- 401 ---
-
-    @Test
-    fun signinRequired401_signsOut_andAnnouncesIt() = runBlocking {
-        routes.on(DELETE_ME, json(401, """{"error":"Sign in first.","code":"signin_required"}"""))
-        val tokens = store().apply { set("expired") }
-        val account = account(tokens)
-        assertFalse(account.deleteAccount())
-        assertEquals(Account.State.SignedOut, account.state.value)
-        assertNull(tokens.get())
-        assertNull(store().get())
-        assertEquals("only the expiry is announced", Account.Notice.SESSION_EXPIRED, account.nextNotice())
-        assertNull(account.nextNoticeQuick())
-    }
-
-    private suspend fun Account.nextNoticeQuick(): Account.Notice? = withTimeoutOrNull(300) { notices.first() }
-}
     // --- restore sync ---
 
     @Test
@@ -544,3 +575,20 @@ class AccountTest {
         assertNull(account.nextNoticeQuick())
     }
 
+    // --- 401 ---
+
+    @Test
+    fun signinRequired401_signsOut_andAnnouncesIt() = runBlocking {
+        routes.on(DELETE_ME, json(401, """{"error":"Sign in first.","code":"signin_required"}"""))
+        val tokens = store().apply { set("expired") }
+        val account = account(tokens)
+        assertFalse(account.deleteAccount())
+        assertEquals(Account.State.SignedOut, account.state.value)
+        assertNull(tokens.get())
+        assertNull(store().get())
+        assertEquals("only the expiry is announced", Account.Notice.SESSION_EXPIRED, account.nextNotice())
+        assertNull(account.nextNoticeQuick())
+    }
+
+    private suspend fun Account.nextNoticeQuick(): Account.Notice? = withTimeoutOrNull(300) { notices.first() }
+}

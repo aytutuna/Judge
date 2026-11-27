@@ -585,10 +585,16 @@ class JudgeApi(
         return execute(exportClient, req) { _, text -> text }
     }
 
-    /** DELETE /api/v1/me: deletes the account (the server keeps verdict rows, anonymized). */
-    suspend fun deleteAccount(): ApiResult<Unit> {
-        val body = buildJsonObject { put("confirm", "delete") }.toString()
-        val req = request(url("api", "v1", "me")).delete(body.toRequestBody(JSON)).build()
+    /**
+     * DELETE /api/v1/me: deletes the account (the server keeps verdict rows, anonymized). Judge-Reauth
+     * tells the server this build can ask for a password; [password] goes along for an account that has one.
+     */
+    suspend fun deleteAccount(password: String? = null): ApiResult<Unit> {
+        val body = buildJsonObject {
+            put("confirm", "delete")
+            if (password != null) put("password", password)
+        }.toString()
+        val req = request(url("api", "v1", "me")).header("Judge-Reauth", "1").delete(body.toRequestBody(JSON)).build()
         return execute(deleteClient, req) { _, _ -> }
     }
 

@@ -54,6 +54,14 @@ enum class SignInError {
     FAILED,
 }
 
+/** Why a deletion needs another step; the delete sheet shows it. Other failures are [Account.Notice.DELETE_FAILED]. */
+enum class DeleteProblem {
+    /** No password to check and the sign-in is too old: sign in again first. */
+    REAUTH_REQUIRED,
+    PASSWORD_WRONG,
+    RATE_LIMITED,
+}
+
 sealed interface SignInResult {
     data object Success : SignInResult
     data object Cancelled : SignInResult
@@ -143,6 +151,13 @@ class Account(
     /** The last deletion failed; the age cover shows it, since the snackbar sits under it. */
     private val _deleteFailed = MutableStateFlow(false)
     val deleteFailed: StateFlow<Boolean> = _deleteFailed.asStateFlow()
+
+    private val _deleteProblem = MutableStateFlow<DeleteProblem?>(null)
+    val deleteProblem: StateFlow<DeleteProblem?> = _deleteProblem.asStateFlow()
+
+    fun clearDeleteProblem() {
+        _deleteProblem.value = null
+    }
 
     /** The phone's answer, asked at most once per run; null until it answered. */
     private val _platformAge = MutableStateFlow<PlatformAge?>(null)
@@ -470,12 +485,15 @@ class Account(
         }
     }
 
-    /** Deletes the account; true when the server confirmed. */
-    suspend fun deleteAccount(): Boolean {
+    /**
+     * Deletes the account; true when the server confirmed. [password] goes along for an account that has
+     * one. A refusal that the person can fix lands in [deleteProblem] instead of the failure notice.
+     */
+    suspend fun deleteAccount(password: String? = null): Boolean {
         if (!_working.compareAndSet(expect = false, update = true)) return false
         _deleteFailed.value = false
         try {
-            val res = api.deleteAccount()
+            val res = api.deleteAccount(password)
             val deleted = when {
                 res is ApiResult.Ok -> true
                 // No answer in time: the server may have finished anyway. A session
@@ -496,6 +514,7 @@ class Account(
         (res as? ApiResult.Ok)?.value?.entitlement?.let(::applyEntitlement)
     }
 
+        _deleteProblem.value = null
             if (deleted) {
                 withContext(NonCancellable) { endLocally(Notice.DELETED) }
                 onDeleted()
@@ -503,7 +522,10 @@ class Account(
             }
             // An expired session was already handled (and announced) by onSessionExpired.
             val error = (res as? ApiResult.Err)?.error
-            if (error == null || !error.isSigninRequired()) {
+            val problem = error?.let(::deleteProblemOf)
+            if (problem != null) {
+                _deleteProblem.value = problem
+            } else if (error == null || !error.isSigninRequired()) {
                 _deleteFailed.value = true
                 _notices.trySend(Notice.DELETE_FAILED)
             }
@@ -555,6 +577,16 @@ class Account(
                 e.status >= 500 -> SignInError.UNAVAILABLE
                 else -> null
             }
+        fun deleteProblemOf(e: UiError): DeleteProblem? {
+            if (e !is UiError.Api) return null
+            return when {
+                e.status == 429 -> DeleteProblem.RATE_LIMITED
+                e.status == 403 && e.code == "reauth_required" -> DeleteProblem.REAUTH_REQUIRED
+                e.status == 403 && e.code == "password_wrong" -> DeleteProblem.PASSWORD_WRONG
+                else -> null
+            }
+        }
+
         }
 
         fun codeSendError(e: UiError): SignInError = common(e) ?: when ((e as UiError.Api).status) {
