@@ -484,6 +484,18 @@ class Account(
                     (api.me() as? ApiResult.Ok)?.value?.let { it.user == null } == true
                 else -> false
             }
+    /**
+     * After the store's restore: asks the server to read the account's store plans and shows the balance
+     * it answers with. Any failure (503 not_configured, a rate limit, offline) is left alone: /me is read
+     * again by the caller.
+     */
+    suspend fun syncPurchases() {
+        val asked = tokens.get() ?: return
+        val res = api.syncPurchases()
+        if (tokens.get() != asked) return
+        (res as? ApiResult.Ok)?.value?.entitlement?.let(::applyEntitlement)
+    }
+
             if (deleted) {
                 withContext(NonCancellable) { endLocally(Notice.DELETED) }
                 onDeleted()

@@ -27,6 +27,7 @@ import com.okjudge.judge.core.model.MineVerdict
 import com.okjudge.judge.core.model.WrittenSides
 import com.okjudge.judge.core.model.decodeWrittenSides
 import com.okjudge.judge.core.model.NameMapping
+import com.okjudge.judge.core.model.PurchaseSyncResponse
 import com.okjudge.judge.core.model.ServerConfig
 import com.okjudge.judge.core.model.SessionGrant
 import com.okjudge.judge.core.model.StoredVerdict
@@ -468,6 +469,12 @@ class JudgeApi(
     suspend fun me(): ApiResult<MeResponse> {
         val req = request(url("api", "v1", "me")).cacheControl(CacheControl.FORCE_NETWORK).get().build()
         return execute(getClient, req) { _, text -> WireJson.json.decodeFromString(MeResponse.serializer(), text) }
+    }
+
+    /** POST /api/v1/me/purchases/sync: the server asks RevenueCat for the account's plans and answers with its balance. */
+    suspend fun syncPurchases(): ApiResult<PurchaseSyncResponse> {
+        val req = request(url("api", "v1", "me", "purchases", "sync")).post(EMPTY).build()
+        return execute(accountClient, req) { _, text -> WireJson.json.decodeFromString(PurchaseSyncResponse.serializer(), text) }
     }
 
     /** POST /api/v1/me/age with the store's answer ([under13] only with `adult = false`). */

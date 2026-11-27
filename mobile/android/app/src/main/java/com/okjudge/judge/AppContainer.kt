@@ -171,6 +171,7 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
             purchaseGateway, account.state, refreshAccount = { account.refresh() }, scope = appScope,
             onBought = { analytics.track("purchase_completed") },
             ageRefusal = { account.ageRefusal() },
+            syncRestored = { account.syncPurchases() },
         )
     }
 

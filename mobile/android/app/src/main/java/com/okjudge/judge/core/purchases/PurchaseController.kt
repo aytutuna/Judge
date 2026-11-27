@@ -37,6 +37,8 @@ class PurchaseController(
     private val onBought: () -> Unit = {},
     /** Why the age check holds purchases back (Account.ageRefusal), or null. */
     private val ageRefusal: () -> String? = { null },
+    /** Asks the server to read the store's plans after a restore (Account.syncPurchases). */
+    private val syncRestored: suspend () -> Unit = {},
 ) {
     /** The purchase message on the pricing screen. */
     enum class Notice {
@@ -212,7 +214,7 @@ class PurchaseController(
         _state.update { it.copy(restoring = true, restoreNotice = null) }
         return scope.launch {
             val outcome = try {
-                gateway.restore()
+                gateway.restore().also { syncRestored() }
             } finally {
                 _state.update { it.copy(restoring = false) }
             }

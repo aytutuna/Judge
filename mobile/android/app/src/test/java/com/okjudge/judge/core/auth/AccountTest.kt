@@ -515,3 +515,32 @@ class AccountTest {
 
     private suspend fun Account.nextNoticeQuick(): Account.Notice? = withTimeoutOrNull(300) { notices.first() }
 }
+    // --- restore sync ---
+
+    @Test
+    fun syncPurchases_showsTheBalanceTheServerAnswers() = runBlocking {
+        routes.on(ME, Routes.me(credits = 0))
+        routes.on(
+            "POST /api/v1/me/purchases/sync",
+            json(200, """{"synced":1,"entitlement":{"canUsePremium":true,"blockedReason":null,"credits":7,"subscription":null,"resetsAt":null}}"""),
+        )
+        val account = account(store().apply { set("session-s") })
+        account.refresh()
+        account.syncPurchases()
+        assertEquals(7, (account.state.value as Account.State.SignedIn).me!!.entitlement!!.credits)
+        assertEquals("Bearer session-s", routes.requestsTo("POST /api/v1/me/purchases/sync").single().headers["Authorization"])
+    }
+
+    @Test
+    fun syncPurchases_notConfigured_isSilent() = runBlocking {
+        routes.on(ME, Routes.me(credits = 3))
+        routes.on("POST /api/v1/me/purchases/sync", json(503, """{"error":"x","code":"not_configured"}"""))
+        val account = account(store().apply { set("session-s") })
+        account.refresh()
+        account.syncPurchases()
+        val state = account.state.value as Account.State.SignedIn
+        assertEquals(3, state.me!!.entitlement!!.credits)
+        assertFalse(state.loadFailed)
+        assertNull(account.nextNoticeQuick())
+    }
+
