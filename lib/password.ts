@@ -21,6 +21,10 @@ export const REAUTH_HEADER = "Judge-Reauth";
 /** The exemption ends on this date, once the builds that send the header have shipped. */
 export const REAUTH_EXEMPT_UNTIL = Date.parse("2027-03-01T00:00:00Z");
 
+/** App sessions opened before the marker existed have none: a bearer request without an
+ * Origin (a browser always sends one) on a session older than this counts as an old app. */
+export const APP_MARKER_SINCE = Date.parse("2026-11-27T20:00:00Z");
+
 /** What the server writes to a session's userAgent when an app sign-in opened it. */
 export const APP_SESSION = "app";
 
@@ -105,6 +109,7 @@ export async function reauthForDelete(
   sessionId: string,
   password: string | undefined,
   sendsReauth: boolean,
+  fromApp: boolean,
   now = Date.now(),
 ): Promise<ReauthResult> {
   const ctx = await (await getAuth()).$context;
@@ -112,7 +117,9 @@ export async function reauthForDelete(
   const sessions = await ctx.internalAdapter.listSessions(userId);
   const mine = sessions.find((s) => s.id === sessionId);
   // Decided by how the server saw the session open, not by anything the caller sends now.
-  if (!sendsReauth && mine?.userAgent === APP_SESSION && now < REAUTH_EXEMPT_UNTIL) return "ok";
+  const oldApp =
+    mine?.userAgent === APP_SESSION || (fromApp && !mine?.userAgent && new Date(mine?.createdAt ?? now).getTime() < APP_MARKER_SINCE);
+  if (!sendsReauth && oldApp && mine && now < REAUTH_EXEMPT_UNTIL) return "ok";
   if (password !== undefined && account?.password) {
     return (await ctx.password.verify({ hash: account.password, password })) ? "ok" : "password_wrong";
   }

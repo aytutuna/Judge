@@ -58,7 +58,6 @@ export function lastSignIn(): LastSignIn | null {
 /** After sign-out or account deletion: the address is not offered again. */
 export function forgetLastSignIn(): void {
   try {
-    localStorage.removeItem(PENDING_KEY);
     localStorage.removeItem(LAST_KEY);
   } catch {
     // Nothing to remove.

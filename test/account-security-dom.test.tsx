@@ -195,7 +195,7 @@ describe("Settings", () => {
 function fillBrowser(): void {
   localStorage.setItem("settle.names.case1.a", JSON.stringify([{ real: "Ada Lovelace", alias: "Person A" }]));
   localStorage.setItem("judge.lastSignin", JSON.stringify({ method: "email", email: "ada@example.org" }));
-  localStorage.setItem("judge.signinPending", JSON.stringify({ method: "email", email: "ada@example.org" }));
+  localStorage.setItem("settle.claim.case1", "C".repeat(22));
   localStorage.setItem(HISTORY_KEY, JSON.stringify([{ id: "v1", createdAt: "2026-10-20T09:00:00.000Z", headline: "Rent" }]));
   localStorage.setItem(ANSWERED_KEY, "[]");
   localStorage.setItem("judge.owner.v1", "A".repeat(32));
@@ -204,7 +204,7 @@ function fillBrowser(): void {
 
 function expectBrowserClean(): void {
   const keys = Object.keys(localStorage);
-  expect(keys.filter((k) => /^(settle\.names\.|judge\.(lastSignin|signinPending|history|owner\.))/.test(k))).toEqual([]);
+  expect(keys.filter((k) => /^(settle\.(names|claim)\.|judge\.(lastSignin|history|owner\.))/.test(k))).toEqual([]);
   expect(JSON.stringify(Object.values(localStorage))).not.toContain("ada@example.org");
   expect(JSON.stringify(Object.values(localStorage))).not.toContain("Ada Lovelace");
   expect(localStorage.getItem(KEPT_KEY)).toBe("dark");
@@ -249,15 +249,29 @@ describe("what the account leaves in the browser", () => {
     expect(localStorage.getItem("judge.lastSignin")).not.toBeNull();
   });
 
-  it("a viewer that was signed in here and now answers signed out forgets the data; a stranger's tokens stay", async () => {
-    me = { user: null, entitlement: null, age: null };
-    markSignedOut();
-    localStorage.setItem("judge.owner.v9", "B".repeat(32));
+  it("a page that held a signed-in user and now hears signed out forgets the data", async () => {
     await refreshViewer();
-    expect(localStorage.getItem("judge.owner.v9")).not.toBeNull();
     fillBrowser();
+    me = { user: null, entitlement: null, age: null };
     await refreshViewer();
     expectBrowserClean();
+  });
+
+  it("an idle-expired session keeps Last used and a stranger's tokens", async () => {
+    me = { user: null, entitlement: null, age: null };
+    markSignedOut();
+    fillBrowser();
+    await refreshViewer();
+    expect(localStorage.getItem("judge.lastSignin")).not.toBeNull();
+    expect(localStorage.getItem("judge.owner.v1")).not.toBeNull();
+  });
+
+  it("sign-out leaves a pending sign-in attempt alone and drops answer claims", () => {
+    localStorage.setItem("judge.signinPending", JSON.stringify({ method: "email", email: "x@example.org" }));
+    localStorage.setItem("settle.claim.case2", "D".repeat(22));
+    markSignedOut();
+    expect(localStorage.getItem("settle.claim.case2")).toBeNull();
+    expect(localStorage.getItem("judge.signinPending")).not.toBeNull();
   });
 
   it("an account with a password that leaves the field empty is told to type it", async () => {

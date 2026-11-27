@@ -130,6 +130,7 @@ export async function DELETE(req: Request): Promise<NextResponse> {
       viewer.sessionId,
       password,
       req.headers.get(REAUTH_HEADER) === "1",
+      viewer.via === "bearer" && !req.headers.has("origin"),
     );
     if (reauth !== "ok") {
       const message = reauth === "password_wrong" ? "That password is not right." : "Sign in again to delete the account.";

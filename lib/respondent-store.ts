@@ -82,6 +82,15 @@ export async function linkStoredClaim(
   }
 }
 
+/** After sign-out or account deletion: no claim is left to link to the next account. */
+export function forgetAllClaims(): void {
+  try {
+    for (const key of Object.keys(localStorage)) if (key.startsWith(CLAIM_PREFIX)) localStorage.removeItem(key);
+  } catch {
+    // Nothing to remove.
+  }
+}
+
 /** Links every claim this browser still holds, for a case whose id is not
  * known any other way. True when one joined the account. */
 export async function linkAllStoredClaims(): Promise<boolean> {

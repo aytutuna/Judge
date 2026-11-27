@@ -12,7 +12,7 @@ const { createDevSession, sessionCookieHeader, welcomeClaim } = await import("..
 const ent = await import("../lib/entitlements");
 const { getDb } = await import("../lib/db");
 const { GET, DELETE } = await import("../app/api/v1/me/route");
-const { setPassword, reauthForDelete, REAUTH_EXEMPT_UNTIL } = await import("../lib/password");
+const { setPassword, reauthForDelete, REAUTH_EXEMPT_UNTIL, APP_MARKER_SINCE } = await import("../lib/password");
 
 afterAll(() => {
   const g = globalThis as unknown as { __verdictLibsql?: { close(): void } };
@@ -249,13 +249,46 @@ describe("DELETE /api/v1/me needs a recent sign-in or the password", () => {
     expect(await rows('SELECT count(*) AS n FROM "user" WHERE id = ?', [user.id])).toBe(1);
   });
 
-  it("a website session cannot pass as an old app by sending its own token as a bearer", async () => {
+  it("a website session cannot pass as an old app by sending its own token as a bearer (a browser always adds Origin)", async () => {
     const { token, user } = await createDevSession("reauth8@verdict.local");
     await ageSession(token, 600);
-    const res = await del({ authorization: `Bearer ${token}` });
+    const res = await del({ authorization: `Bearer ${token}`, origin: "http://localhost:3600" });
     expect(res.status).toBe(403);
     expect(await res.json()).toMatchObject({ code: "reauth_required" });
     expect(await rows('SELECT count(*) AS n FROM "user" WHERE id = ?', [user.id])).toBe(1);
+  });
+
+  async function setCreated(token: string, ms: number) {
+    const db = await getDb();
+    await db.execute({ sql: "UPDATE session SET createdAt = ? WHERE token = ?", args: [new Date(ms).toISOString(), token] });
+  }
+
+  it("an app session from before the marker, with no marker, deletes as a bearer request without Origin", async () => {
+    const { token, user } = await createDevSession("legacy1@verdict.local");
+    await setCreated(token, APP_MARKER_SINCE - 3_600_000);
+    const res = await del({ authorization: `Bearer ${token}` });
+    expect(res.status).toBe(200);
+    expect(await rows('SELECT count(*) AS n FROM "user" WHERE id = ?', [user.id])).toBe(0);
+  });
+
+  it("the same old session is refused when the request carries an Origin header", async () => {
+    const { token, user } = await createDevSession("legacy2@verdict.local");
+    await setCreated(token, APP_MARKER_SINCE - 3_600_000);
+    const res = await del({ authorization: `Bearer ${token}`, origin: "http://localhost:3600" });
+    expect(res.status).toBe(403);
+    expect(await res.json()).toMatchObject({ code: "reauth_required" });
+    expect(await rows('SELECT count(*) AS n FROM "user" WHERE id = ?', [user.id])).toBe(1);
+  });
+
+  it("an unmarked session created after the marker existed is never exempt", async () => {
+    const { token, user } = await createDevSession("legacy3@verdict.local");
+    await setCreated(token, APP_MARKER_SINCE + 1000);
+    const db = await getDb();
+    const id = String((await db.execute({ sql: "SELECT id FROM session WHERE token = ?", args: [token] })).rows[0].id);
+    expect(await reauthForDelete(user.id, id, undefined, false, true, APP_MARKER_SINCE + 3_600_000)).toBe("reauth_required");
+    // and the session before the cut-off is exempt through the same call
+    await setCreated(token, APP_MARKER_SINCE - 1000);
+    expect(await reauthForDelete(user.id, id, undefined, false, true, APP_MARKER_SINCE + 3_600_000)).toBe("ok");
   });
 
   it("the exemption of old app builds ends on its date", async () => {
@@ -264,8 +297,8 @@ describe("DELETE /api/v1/me needs a recent sign-in or the password", () => {
     await ageSession(token, 600);
     const db = await getDb();
     const id = String((await db.execute({ sql: "SELECT id FROM session WHERE token = ?", args: [token] })).rows[0].id);
-    expect(await reauthForDelete(user.id, id, undefined, false, REAUTH_EXEMPT_UNTIL - 1)).toBe("ok");
-    expect(await reauthForDelete(user.id, id, undefined, false, REAUTH_EXEMPT_UNTIL + 1)).toBe("reauth_required");
+    expect(await reauthForDelete(user.id, id, undefined, false, false, REAUTH_EXEMPT_UNTIL - 1)).toBe("ok");
+    expect(await reauthForDelete(user.id, id, undefined, false, false, REAUTH_EXEMPT_UNTIL + 1)).toBe("reauth_required");
   });
 
   it("a website session older than 10 minutes gets reauth_required", async () => {
