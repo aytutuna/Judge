@@ -338,13 +338,18 @@ judge calls, whose measured output is 500 to 800 tokens; not done yet).
   account's first name). The writer can edit them or switch names off at any
   time (then the page shows Party A / Party B). Share pages and their OG
   images use only these display names, never the raw map, and stay
-  `noindex`.
+  `noindex`. A case with anyone on it under 18 always shows Party A / Party B:
+  `PATCH /api/v1/cases/{id}/display` refuses `namesVisible: true`
+  (`403 not_for_teens`), and the share page and its image ignore the stored
+  switch until the teen turns 18.
 - **Removal.** The writer (or a case party for their side, or account
   deletion for everything of an account) can remove a verdict: the original,
   name map and display names become NULL, and the share page (via
   `proxy.ts`), its preview image and `GET /api/v1/verdicts/{id}` answer
   **410**. No row is ever deleted; the anonymized text and the verdict stay
-  in the database, unreachable through public routes.
+  in the database, unreachable through public routes. The same 410 answers for
+  every verdict and case of an account with a final under-13 block (see *Age
+  check*), from the moment of the block.
 - **Key rotation.** Put the new key in `ORIGINALS_KEY` and move the old one
   to `ORIGINALS_KEY_PREVIOUS` (comma-separated); new data is sealed with the
   new key, old data stays readable through the previous ones. Nothing is
@@ -364,7 +369,13 @@ sudo -u verdict npx tsx --env-file=/etc/verdict/verdict.env scripts/originals.ts
 sudo -u verdict npx tsx --env-file=/etc/verdict/verdict.env scripts/originals.ts show-case <caseId> [a|b]
 sudo -u verdict npx tsx --env-file=/etc/verdict/verdict.env scripts/originals.ts remove <verdictId>
 sudo -u verdict npx tsx --env-file=/etc/verdict/verdict.env scripts/originals.ts remove-case <caseId> <a|b>
+sudo -u verdict npx tsx --env-file=/etc/verdict/verdict.env scripts/originals.ts export-account <userId>
 ```
+
+`export-account` prints what Download my data gives the account's owner, so
+support can send a parent that copy during the 7 days before a blocked
+under-13 account is deleted (find the id with
+`SELECT id FROM user WHERE email = '...'`; the key must be set).
 
 `remove` also works for verdicts stored before this feature (it adds a
 removed ownership row). Every removal (by a writer, a party, an account
@@ -654,7 +665,14 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
   account as a teen (`teen: true`, recomputed on every read, so it ends on
   the 18th birthday); 18 and over confirms it and keeps only that a date was
   given; under 13 blocks the account for good, keeping no date, and the
-  server logs `[signal:age_blocked]`. The 13th birthday is judged on the
+  server logs `[signal:age_blocked]`. The block is final: the account's share
+  pages and previews answer 410 at once, and 7 days later the daily cleanup
+  deletes the account like `DELETE /api/v1/me` does, after wiping the text of
+  its one-sided verdicts, its sides in cases and the case verdicts nobody
+  else wrote in (rows stay; other people's sides stay theirs). Only the
+  scrambled email that keeps the block and the consent ledger rows the law
+  needs remain. A block of the old 18+ rule that a date of birth under 13
+  makes final starts its 7 days then. The 13th birthday is judged on the
   latest calendar date anywhere (UTC+14), so nobody is closed out on the day.
   The daily cleanup clears a teen's `age_dob` once they are 18; `age_dob_at`
   stays and says a date was given. A
@@ -1100,7 +1118,7 @@ limit within 5 minutes:
 | `provider_down` | 5 | the AI service answers 5xx, cannot be reached or times out |
 | `many_accounts_per_device` | 1 | a device (the app's `Device-Id` header at sign-in) signs in to its third or later account; sign-in goes ahead |
 | `events_cap` | 1 | a batch of usage events is refused because 200,000 were stored in the last 24 hours |
-| `age_blocked` | 1 | a date of birth, or a store signal with `under13: true`, says an account belongs to someone under 13; the account is blocked for good (nothing is deleted) |
+| `age_blocked` | 1 | a date of birth, or a store signal with `under13: true`, says an account belongs to someone under 13; the account is blocked for good (share pages close at once, its data goes after 7 days) |
 | `grant_skipped` | 1 | a paid grant was skipped because a refund covers it; the line has the source and transaction id |
 | `code_email_cap` | 1 | a sign-in code email was refused because `CODE_EMAILS_PER_HOUR` was used up |
 | `ban` | 20 | fail2ban bans an address (from fail2ban's journal) |
