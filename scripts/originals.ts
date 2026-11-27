@@ -7,6 +7,11 @@
  *   npx tsx --env-file=.env scripts/originals.ts remove <verdictId>
  *   npx tsx --env-file=.env scripts/originals.ts remove-case <caseId> <a|b>
  *   npx tsx --env-file=.env scripts/originals.ts replay-removals [logFile]
+ *   npx tsx --env-file=.env scripts/originals.ts export-account <userId>
+ *
+ * `export-account` prints what Download my data gives the account's owner
+ * (GET /api/v1/me/export), for support to send a parent the copy of a
+ * blocked under-13 account in the 7 days before its data is deleted.
  *
  * `replay-removals` applies every removal in the removal log again (default:
  * removals.log beside the database, or REMOVAL_LOG): run it right after
@@ -33,14 +38,15 @@ import { operatorRemoveVerdict, removeCaseSide, replayRemoval } from "../lib/ori
 import { readRemovalLog, removalLogPath } from "../lib/originals/removal-log";
 
 export const USAGE =
-  "Usage: npx tsx --env-file=.env scripts/originals.ts (show <verdictId> | show-case <caseId> [a|b] | remove <verdictId> | remove-case <caseId> <a|b> | replay-removals [logFile])";
+  "Usage: npx tsx --env-file=.env scripts/originals.ts (show <verdictId> | show-case <caseId> [a|b] | remove <verdictId> | remove-case <caseId> <a|b> | replay-removals [logFile] | export-account <userId>)";
 
 export type OriginalsCommand =
   | { kind: "show"; id: string }
   | { kind: "show-case"; id: string; party: "a" | "b" | null }
   | { kind: "remove"; id: string }
   | { kind: "remove-case"; id: string; party: "a" | "b" }
-  | { kind: "replay-removals"; file: string | null };
+  | { kind: "replay-removals"; file: string | null }
+  | { kind: "export-account"; id: string };
 
 const ID = /^[A-Za-z0-9_-]{1,64}$/;
 const isParty = (v: string | undefined): v is "a" | "b" => v === "a" || v === "b";
@@ -61,6 +67,8 @@ export function parseOriginalsArgs(argv: readonly string[]): OriginalsCommand | 
       return isParty(party) && rest.length === 0 ? { kind: "show-case", id, party } : { error: USAGE };
     case "remove-case":
       return isParty(party) && rest.length === 0 ? { kind: "remove-case", id, party } : { error: USAGE };
+    case "export-account":
+      return party === undefined ? { kind: "export-account", id } : { error: USAGE };
     default:
       return { error: USAGE };
   }
@@ -158,6 +166,10 @@ export async function run(cmd: OriginalsCommand): Promise<number> {
     }
     case "replay-removals":
       return replayRemovals(cmd.file);
+    case "export-account":
+      if (!needKey()) return 1;
+      print(await (await import("../lib/account-export")).buildAccountExport(cmd.id));
+      return 0;
   }
 }
 
