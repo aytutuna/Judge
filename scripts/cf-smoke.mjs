@@ -9,7 +9,7 @@
 // Set SMOKE_BASE to use a wrangler dev that is already running (its
 // .dev.vars must point RESEND_API_URL and ANTHROPIC_BASE_URL at SMOKE_FAKE_PORT).
 import { spawn, spawnSync } from "node:child_process";
-import { randomBytes } from "node:crypto";
+import { generateKeyPairSync, randomBytes } from "node:crypto";
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
@@ -135,6 +135,12 @@ async function run() {
   const health = await api("GET", "/api/health");
   check("health answers", health.status === 200 && health.json?.ok === true);
   check("security headers are set", health.headers.get("x-frame-options") === "DENY");
+  for (const page of ["/", "/pricing", "/signin", "/terms", "/privacy"]) {
+    const r = await api("GET", page);
+    check(`${page} renders`, r.status === 200 && r.text.includes("</html>"), `${r.status}`);
+  }
+  const card = await fetch(`${BASE}/opengraph-image`);
+  check("the link-preview card is drawn", card.status === 200 && card.headers.get("content-type") === "image/png", `${card.status} ${card.headers.get("content-type")}`);
 
   // The cutover copy: an old SQLite file, one row over D1's 100 KB statement limit, posted through the import route.
   const { createClient } = await import("@libsql/client");
@@ -157,6 +163,13 @@ async function run() {
   try {
     rmSync(copyDir, { recursive: true, force: true });
   } catch {}
+
+  const config = await api("GET", "/api/v1/config");
+  check(
+    "Apple and Google sign-in are offered (the Apple secret was signed)",
+    config.status === 200 && JSON.stringify(config.json).includes("apple") && JSON.stringify(config.json).includes("google"),
+    config.text.slice(0, 300),
+  );
 
   // Sign in with an emailed code.
   const email = `smoke-${hex(4)}@example.test`;
@@ -280,6 +293,16 @@ try {
       RATE_LIMIT_SALT: hex(24),
       ALLOW_SANDBOX_PURCHASES: "1",
       IMPORT_ENABLED: "1",
+      // Sign in with Apple and Google, so the Apple client secret (an ES256 token) is signed at startup.
+      APPLE_CLIENT_ID: "test.judge.web",
+      APPLE_TEAM_ID: "TEAM123456",
+      APPLE_KEY_ID: "KEY1234567",
+      APPLE_APP_BUNDLE_ID: "test.judge",
+      APPLE_PRIVATE_KEY_BASE64: Buffer.from(
+        generateKeyPairSync("ec", { namedCurve: "P-256" }).privateKey.export({ type: "pkcs8", format: "pem" }),
+      ).toString("base64"),
+      GOOGLE_CLIENT_ID: "google-client.apps.googleusercontent.com",
+      GOOGLE_CLIENT_SECRET: "google-secret",
       ...secrets,
     };
     const varsFile = path.join(dir, "dev.vars");
