@@ -6,10 +6,12 @@
   "main": "cloudflare/worker.ts",
   "compatibility_date": "2026-11-01",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  // The source map is over the 60 MiB upload limit; Sentry gets its own maps if needed.
+  "upload_source_maps": false,
   "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
   "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "judge" }],
   "d1_databases": [{ "binding": "DB", "database_name": "judge", "migrations_dir": "migrations" }],
-  "r2_buckets": [{ "binding": "BACKUPS", "bucket_name": "judge-backups" }],
+  "r2_buckets": [{ "binding": "BACKUPS", "bucket_name": "judge-backups", "jurisdiction": "eu" }],
   "durable_objects": {
     "bindings": [
       { "name": "RATE_LIMITER", "class_name": "RateLimiter" },
@@ -22,14 +24,33 @@
   // only counts while code runs, not while it waits for the AI service.
   "limits": { "cpu_ms": 300000 },
   "observability": { "enabled": true, "logs": { "invocation_logs": false } },
-  "vars": { "CLOUDFLARE_PROXY": "1", "DO_JURISDICTION": "eu" },
+  "vars": {
+    "CLOUDFLARE_PROXY": "1",
+    "DO_JURISDICTION": "eu",
+    "CONTACT_EMAIL": "support@okjudge.com",
+    "EMAIL_FROM": "Judge <sign-in@okjudge.com>",
+    "GOOGLE_CLIENT_ID": "173777773521-gumchqdjf6oud3gp4cb27jeqsmf157fd.apps.googleusercontent.com",
+    "GOOGLE_IOS_CLIENT_ID": "173777773521-rh4lbrotjdeufmq3rd50r924b7nn0l1r.apps.googleusercontent.com",
+    "GOOGLE_ANDROID_CLIENT_ID": "173777773521-72onglauts2d8h6jdoa393mtrmbr160j.apps.googleusercontent.com",
+    "APPLE_CLIENT_ID": "com.okjudge.web",
+    "APPLE_TEAM_ID": "8XT2U634Z4",
+    "APPLE_KEY_ID": "25V7XNSWG7",
+    "APPLE_APP_BUNDLE_ID": "com.okjudge.judge",
+    "REVIEW_ACCOUNT_EMAIL": "review@okjudge.com",
+    "PURCHASES_ENABLED": "1",
+    "ALLOW_SANDBOX_PURCHASES": "1",
+    "SENTRY_ORG": "aytu",
+    "SENTRY_PROJECT": "judge-web",
+    "BETTER_AUTH_URL": "https://okjudge.com",
+    "NEXT_PUBLIC_SITE_URL": "https://okjudge.com"
+  },
 
   "env": {
     "staging": {
       "name": "judge-staging",
       "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "judge-staging" }],
-      "d1_databases": [{ "binding": "DB", "database_name": "judge-staging", "migrations_dir": "migrations" }],
-      "r2_buckets": [{ "binding": "BACKUPS", "bucket_name": "judge-staging-backups" }],
+      "d1_databases": [{ "binding": "DB", "database_name": "judge-staging", "database_id": "23d84374-59d3-427a-88e3-809ab6ff16d1", "migrations_dir": "migrations" }],
+      "r2_buckets": [{ "binding": "BACKUPS", "bucket_name": "judge-staging-backups", "jurisdiction": "eu" }],
       "durable_objects": {
         "bindings": [
           { "name": "RATE_LIMITER", "class_name": "RateLimiter" },
@@ -39,7 +60,26 @@
       "triggers": { "crons": ["*/5 * * * *", "17 3 * * *", "22 3 * * *", "27 3 * * *", "32 3 * * *", "30 5 * * *"] },
       "limits": { "cpu_ms": 300000 },
       "observability": { "enabled": true, "logs": { "invocation_logs": false } },
-      "vars": { "CLOUDFLARE_PROXY": "1", "DO_JURISDICTION": "eu" }
+      "vars": {
+        "CLOUDFLARE_PROXY": "1",
+        "DO_JURISDICTION": "eu",
+        "CONTACT_EMAIL": "support@okjudge.com",
+        "EMAIL_FROM": "Judge <sign-in@okjudge.com>",
+        "GOOGLE_CLIENT_ID": "173777773521-gumchqdjf6oud3gp4cb27jeqsmf157fd.apps.googleusercontent.com",
+        "GOOGLE_IOS_CLIENT_ID": "173777773521-rh4lbrotjdeufmq3rd50r924b7nn0l1r.apps.googleusercontent.com",
+        "GOOGLE_ANDROID_CLIENT_ID": "173777773521-72onglauts2d8h6jdoa393mtrmbr160j.apps.googleusercontent.com",
+        "APPLE_CLIENT_ID": "com.okjudge.web",
+        "APPLE_TEAM_ID": "8XT2U634Z4",
+        "APPLE_KEY_ID": "25V7XNSWG7",
+        "APPLE_APP_BUNDLE_ID": "com.okjudge.judge",
+        "REVIEW_ACCOUNT_EMAIL": "review@okjudge.com",
+        "PURCHASES_ENABLED": "1",
+        "ALLOW_SANDBOX_PURCHASES": "1",
+        "SENTRY_ORG": "aytu",
+        "SENTRY_PROJECT": "judge-web",
+        "BETTER_AUTH_URL": "https://judge-staging.aytu-tuna.workers.dev",
+        "NEXT_PUBLIC_SITE_URL": "https://judge-staging.aytu-tuna.workers.dev"
+      }
     },
     // Only for scripts/cf-smoke.mjs on this machine: local workerd cannot place
     // Durable Objects in a jurisdiction. Never deployed.

@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { createClient } from "@libsql/client";
-import { backupConfigured, pruneBackups, runBackup, type BackupEnv } from "../lib/backup";
+import { backupConfigured, PBKDF2_ROUNDS, pruneBackups, runBackup, type BackupEnv } from "../lib/backup";
 import { literal } from "../lib/backup-dump";
 import { openBackup } from "../scripts/backup-open";
 
@@ -106,6 +106,10 @@ describe("backups", { timeout: 60_000 }, () => {
     const firstFrame = 4 + 16 + 4 + view.getUint32(20);
     expect(firstFrame).toBeLessThan(stored.length);
     await expect(openBackup(stored.subarray(0, firstFrame), PASS)).rejects.toThrow();
+  });
+
+  it("keeps the key derivation within what Workers run (an earlier 310,000 failed on the first deploy)", () => {
+    expect(PBKDF2_ROUNDS).toBeLessThanOrEqual(100_000);
   });
 
   it("deletes copies older than the keep period and no others", async () => {

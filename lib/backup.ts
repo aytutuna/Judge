@@ -16,7 +16,8 @@ export const BACKUP_PREFIX = "db/";
 export const MAGIC = "JBK1";
 const FRAME_BYTES = 1024 * 1024;
 const PART_BYTES = 8 * 1024 * 1024;
-const PBKDF2_ROUNDS = 310_000;
+/** The most Workers allow; the passphrase is a long random string, so the count matters little. */
+export const PBKDF2_ROUNDS = 100_000;
 const KEEP_DAYS = 14;
 
 export async function backupKey(passphrase: string, salt: Uint8Array): Promise<CryptoKey> {
