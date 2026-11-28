@@ -64,7 +64,7 @@ async function drill(sql: string): Promise<void> {
 }
 
 async function main(): Promise<void> {
-  const [file, second] = process.argv.slice(2);
+  const [file, second, third] = process.argv.slice(2);
   const passphrase = process.env.BACKUP_PASSPHRASE;
   if (!file || !passphrase) {
     console.error("Usage: BACKUP_PASSPHRASE=... npx tsx scripts/backup-open.ts <file> [out.sql | --drill]");
@@ -73,7 +73,7 @@ async function main(): Promise<void> {
   const sql = await openBackup(readFileSync(file), passphrase);
   if (second === "--drill") await drill(sql);
   else if (second === "--sqlite") {
-    const out = process.argv[5];
+    const out = third;
     if (!out) throw new Error("--sqlite needs an output path");
     const db = createClient({ url: `file:${out.replaceAll("\\", "/")}` });
     await db.executeMultiple(sql.replace(/^\s*(BEGIN TRANSACTION;|COMMIT;)\s*$/gm, ""));
