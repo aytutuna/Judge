@@ -40,6 +40,11 @@ final class ParentModel {
     /// Told after a call went through, so the account reads /me again (a
     /// revoked account that asked again is waiting again).
     @ObservationIgnored var onChanged: (() async -> Void)?
+    /// The app's language, for the mail the server sends the parent.
+    @ObservationIgnored var language: () -> AppLang = { .en }
+    /// Bumped when the account changes and when a call lands, so an older
+    /// reply never overwrites a newer state.
+    @ObservationIgnored private var version = 0
 
     init(api: JudgeAPI) {
         self.api = api
@@ -56,8 +61,21 @@ final class ParentModel {
         }
     }
 
+    /// Whether the last read failed (the declined page offers a retry).
+    private(set) var loadFailed = false
+
     func load() async {
-        if let fresh = try? await api.parentView() { view = fresh }
+        let started = version
+        do {
+            let fresh = try await api.parentView()
+            guard started == version else { return }
+            view = fresh
+            error = nil
+            loadFailed = false
+        } catch {
+            guard started == version else { return }
+            loadFailed = view == nil
+        }
     }
 
     func startChange() {
@@ -74,14 +92,19 @@ final class ParentModel {
     func send() async {
         let address = email.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !address.isEmpty else { return }
-        await run { try await $0.sendParent(email: address) }
+        let lang = language()
+        await run { try await $0.sendParent(email: address, lang: lang) }
     }
 
     func resend() async {
-        await run { try await $0.resendParent() }
+        let lang = language()
+        await run { try await $0.resendParent(lang: lang) }
     }
 
     func reset() {
+        version += 1
+        posting = false
+        loadFailed = false
         view = nil
         error = nil
         email = ""
@@ -92,16 +115,22 @@ final class ParentModel {
         guard !posting else { return }
         posting = true
         error = nil
-        defer { posting = false }
+        let started = version
+        defer { if started == version { posting = false } }
         do {
-            view = try await call(api)
+            let fresh = try await call(api)
+            guard started == version else { return }
+            version += 1
+            posting = false
+            view = fresh
             email = ""
             changing = false
             await onChanged?()
         } catch let failure as APIError {
+            guard started == version else { return }
             error = failure
             // The request moved on under us: show where it stands now.
-            if failure.code == "parent_conflict" || failure.code == "parent_declined" {
+            if ["parent_conflict", "parent_declined", "parent_limit"].contains(failure.code) {
                 await load()
                 await onChanged?()
             }

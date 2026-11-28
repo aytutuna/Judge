@@ -23,6 +23,11 @@ extension AgeGateView {
         case .declined:
             header(L10n.ageParentDeclinedTitle(lang), lead: Text(deleteDate.map { L10n.ageParentDeclined(lang, date: $0) } ?? ""))
             problem(lang, parent: parent)
+            if parent.loadFailed {
+                ErrorBanner(message: L10n.errorFallback(lang), retryTitle: L10n.appRetry(lang)) {
+                    Task { await parent.load() }
+                }
+            }
             signOutAndDelete(lang, account: account)
         case .revoked:
             header(

@@ -85,16 +85,18 @@ extension JudgeAPI {
     }
 
     /// POST /api/v1/me/parent: gives, changes or resends to the address.
-    func sendParent(email: String) async throws -> ParentView {
-        var request = makeRequest(url: endpoint("me/parent"), method: "POST", timeout: AuthTimeout.call)
+    func sendParent(email: String, lang: AppLang) async throws -> ParentView {
+        let url = endpoint("me/parent").appending(queryItems: [URLQueryItem(name: "lang", value: lang.rawValue)])
+        var request = makeRequest(url: url, method: "POST", timeout: AuthTimeout.call)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try JSONSerialization.data(withJSONObject: ["email": email])
         return try await parentAnswer(request)
     }
 
     /// POST /api/v1/me/parent/resend: mails the current address again.
-    func resendParent() async throws -> ParentView {
-        var request = makeRequest(url: endpoint("me/parent/resend"), method: "POST", timeout: AuthTimeout.call)
+    func resendParent(lang: AppLang) async throws -> ParentView {
+        let url = endpoint("me/parent/resend").appending(queryItems: [URLQueryItem(name: "lang", value: lang.rawValue)])
+        var request = makeRequest(url: url, method: "POST", timeout: AuthTimeout.call)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = Data("{}".utf8)
         return try await parentAnswer(request)

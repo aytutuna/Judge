@@ -185,6 +185,7 @@ final class AccountModel {
         self.appleCodes = appleCodes ?? KeychainTokenStore(service: "com.okjudge.judge.apple-code", account: "pending")
         isSignedIn = api.tokenStore.token()?.isEmpty == false
         parent.onChanged = { [weak self] in await self?.refresh() }
+        parent.language = { [weak self] in self?.language() ?? .en }
     }
 
     var user: Viewer? { info?.user }

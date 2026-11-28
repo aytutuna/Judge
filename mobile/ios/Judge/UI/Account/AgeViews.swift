@@ -108,6 +108,7 @@ struct AgeGateView: View {
                 }
                 .pickerStyle(.menu)
                 .tint(Brand.terraInk)
+                .accessibilityLabel(L10n.ageWhere(lang))
             }
         }
     }

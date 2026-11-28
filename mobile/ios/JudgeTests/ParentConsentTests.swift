@@ -196,7 +196,6 @@ final class ParentConsentTests: XCTestCase {
         await account.refresh()
         let cases: [(Int, String, String)] = [
             (400, "parent_email", L10n.errorParentEmail(.en)),
-            (409, "parent_limit", L10n.errorParentLimit(.en)),
             (429, "parent_wait", L10n.errorParentWait(.en)),
         ]
         for (status, code, text) in cases {
@@ -207,12 +206,57 @@ final class ParentConsentTests: XCTestCase {
             XCTAssertEqual(ErrorText.message(error, lang: .en), text, code)
         }
         XCTAssertEqual(router.count("GET", "/api/v1/me/parent"), 0)
-        router.on("POST", "/api/v1/me/parent", try PremiumFixtures.json(409, ["error": "x", "code": "parent_conflict"]))
-        await account.parent.send()
-        XCTAssertEqual(ErrorText.message(try XCTUnwrap(account.parent.error), lang: .en), L10n.errorParentConflict(.en))
-        XCTAssertEqual(router.count("GET", "/api/v1/me/parent"), 1, "the request is read again")
-        XCTAssertEqual(account.parent.view?.changesLeft, 1)
+        XCTAssertEqual(ErrorText.message(.server(status: 409, body: ApiErrorBody(code: "parent_limit")), lang: .en), L10n.errorParentLimit(.en))
+        XCTAssertEqual(ErrorText.message(.server(status: 409, body: ApiErrorBody(code: "parent_conflict")), lang: .en), L10n.errorParentConflict(.en))
         XCTAssertEqual(ErrorText.message(.server(status: 409, body: ApiErrorBody(code: "parent_declined")), lang: .en), L10n.errorParentDeclined(.en))
+    }
+
+    @MainActor
+    func testAMovedRequestReadsTheRequestAndTheAccountAgain() async throws {
+        router.on("GET", "/api/v1/me", try me(state(parent: "pending")))
+        router.on("GET", "/api/v1/me/parent", try PremiumFixtures.json(200, parentJSON(changes: 1)))
+        let (account, _) = makeAccount()
+        await account.refresh()
+        for code in ["parent_conflict", "parent_limit", "parent_declined"] {
+            let meBefore = router.count("GET", "/api/v1/me")
+            let parentBefore = router.count("GET", "/api/v1/me/parent")
+            router.on("POST", "/api/v1/me/parent", try PremiumFixtures.json(409, ["error": "x", "code": code]))
+            account.parent.email = "mum@example.com"
+            await account.parent.send()
+            XCTAssertEqual(router.count("GET", "/api/v1/me/parent"), parentBefore + 1, code)
+            XCTAssertEqual(router.count("GET", "/api/v1/me"), meBefore + 1, code)
+            XCTAssertEqual(account.parent.view?.changesLeft, 1)
+        }
+    }
+
+    @MainActor
+    func testTheParentMailGoesOutInTheAppLanguage() async throws {
+        router.on("GET", "/api/v1/me", try me(state(parent: "pending")))
+        router.on("POST", "/api/v1/me/parent", try PremiumFixtures.json(200, parentJSON()))
+        router.on("POST", "/api/v1/me/parent/resend", try PremiumFixtures.json(200, parentJSON()))
+        let (account, _) = makeAccount()
+        account.language = { .tr }
+        await account.refresh()
+        account.parent.email = "mum@example.com"
+        await account.parent.send()
+        await account.parent.resend()
+        let queries = StubURLProtocol.requests.filter { $0.httpMethod == "POST" }.compactMap { $0.url?.query }
+        XCTAssertEqual(queries, ["lang=tr", "lang=tr"])
+    }
+
+    @MainActor
+    func testAnAnswerThatLandsAfterTheAccountChangedIsDropped() async throws {
+        router.on("GET", "/api/v1/me", try me(state(parent: "pending")))
+        router.on("POST", "/api/v1/me/parent", try PremiumFixtures.json(200, parentJSON()))
+        let (account, _) = makeAccount()
+        await account.refresh()
+        account.parent.email = "mum@example.com"
+        let sending = Task { await account.parent.send() }
+        await Task.yield()
+        account.parent.reset()
+        await sending.value
+        XCTAssertNil(account.parent.view)
+        XCTAssertFalse(account.parent.posting)
     }
 
     @MainActor
