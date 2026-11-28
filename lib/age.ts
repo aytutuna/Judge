@@ -24,6 +24,7 @@
  * looks up; routes answer with ageGateResponse before doing anything else.
  */
 
+import { IN_LIST, jsonList } from "@/lib/d1";
 import type { InStatement, InValue } from "@libsql/client";
 import { NextResponse } from "next/server";
 import type { AgeState } from "./account-types";
@@ -402,9 +403,9 @@ async function sameWrite(userId: string, nowIso: string, dob: string, teen: bool
   const lift: InStatement[] = claims.length
     ? [
         {
-          sql: `UPDATE welcome_claims SET age_blocked_at = NULL WHERE claim IN (${claims.map(() => "?").join(", ")})
+          sql: `UPDATE welcome_claims SET age_blocked_at = NULL WHERE claim IN ${IN_LIST}
                 AND age_block_final IS NULL AND ${guard.sql}`,
-          args: [...claims, ...guard.args],
+          args: [jsonList(claims), ...guard.args],
         },
       ]
     : [];

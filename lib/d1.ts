@@ -7,6 +7,11 @@ export type Db = Pick<Client, "execute" | "batch">;
 
 type Stmt = InStatement | string;
 
+/** `x IN ${IN_LIST}` with one JSON array argument (jsonList). D1 allows 100
+ * bound parameters per statement, so lists of ids go in as a single one. */
+export const IN_LIST = "(SELECT value FROM json_each(?))";
+export const jsonList = (values: readonly string[]): string => JSON.stringify(values);
+
 function value(v: InValue): string | number | null {
   if (typeof v === "boolean") return v ? 1 : 0;
   if (typeof v === "bigint") return Number(v);

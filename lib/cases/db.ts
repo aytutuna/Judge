@@ -15,7 +15,7 @@
  */
 
 import type { Row } from "@libsql/client";
-import type { Db } from "@/lib/d1";
+import { IN_LIST, jsonList, type Db } from "@/lib/d1";
 import type { CaseMode, CaseStatus, PartyLetter, AppealStatus } from "@/lib/case-types";
 import { getDb, schemaManaged } from "@/lib/db";
 import { PARTY_CHECK, PARTY_CHECK_WIDE, rebuildTable } from "@/lib/db-rebuild";
@@ -654,11 +654,10 @@ export async function listWaitingCases(
   });
   const rows = rs.rows.map(mapCase);
   if (rows.length === 0) return [];
-  const marks = rows.map(() => "?").join(",");
-  const ids = rows.map((r) => r.id);
+  const ids = [jsonList(rows.map((r) => r.id))];
   const [sides, seats] = await Promise.all([
-    db.execute({ sql: `SELECT case_id, party FROM case_sides WHERE case_id IN (${marks})`, args: ids }),
-    db.execute({ sql: `SELECT * FROM case_seats WHERE case_id IN (${marks})`, args: ids }),
+    db.execute({ sql: `SELECT case_id, party FROM case_sides WHERE case_id IN ${IN_LIST}`, args: ids }),
+    db.execute({ sql: `SELECT * FROM case_seats WHERE case_id IN ${IN_LIST}`, args: ids }),
   ]);
   return rows.map((row) => ({
     row,

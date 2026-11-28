@@ -22,6 +22,7 @@
  * Runs at startup and then daily. Server only.
  */
 
+import { IN_LIST, jsonList } from "@/lib/d1";
 import type { InStatement } from "@libsql/client";
 import { getDb } from "@/lib/db";
 import { entitlementWriteBatch } from "@/lib/entitlements";
@@ -79,10 +80,10 @@ export function blankResult(json: string): string {
 /** The statements that erase these verdicts' text (and their translations). */
 export async function eraseVerdictStatements(ids: string[], nowIso: string): Promise<InStatement[]> {
   const db = await getDb();
-  const marks = ids.map(() => "?").join(", ");
+  const list = jsonList(ids);
   const [verdicts, translations] = await Promise.all([
-    db.execute({ sql: `SELECT id, result FROM verdicts WHERE id IN (${marks}) AND erased_at IS NULL AND legal_hold = 0`, args: ids }),
-    db.execute({ sql: `SELECT id, lang, result_json FROM verdict_translations WHERE id IN (${marks})`, args: ids }),
+    db.execute({ sql: `SELECT id, result FROM verdicts WHERE id IN ${IN_LIST} AND erased_at IS NULL AND legal_hold = 0`, args: [list] }),
+    db.execute({ sql: `SELECT id, lang, result_json FROM verdict_translations WHERE id IN ${IN_LIST}`, args: [list] }),
   ]);
   const erasable = new Set(verdicts.rows.map((r) => String(r.id)));
   return [
@@ -124,13 +125,13 @@ async function eraseVerdicts(cutoff: string, nowIso: string): Promise<number> {
 
 /** The text of these verdicts' rounds of added context. */
 export function blankRoundsStatement(ids: string[], nowIso: string): InStatement {
-  const marks = ids.map(() => "?").join(", ");
+  const list = jsonList(ids);
   return {
     // A failed round has no verdict row of its own, so it is found through its root.
     sql: `UPDATE verdict_appeals SET text = '', evidence = '[]', updated_at = ?
-          WHERE id IN (${marks})
-             OR (verdict_id IN (${marks}) AND NOT EXISTS (SELECT 1 FROM verdicts WHERE id = verdict_appeals.id))`,
-    args: [nowIso, ...ids, ...ids],
+          WHERE id IN ${IN_LIST}
+             OR (verdict_id IN ${IN_LIST} AND NOT EXISTS (SELECT 1 FROM verdicts WHERE id = verdict_appeals.id))`,
+    args: [nowIso, list, list],
   };
 }
 

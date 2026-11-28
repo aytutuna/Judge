@@ -23,7 +23,7 @@
  */
 
 import type { InStatement } from "@libsql/client";
-import type { Db } from "@/lib/d1";
+import { IN_LIST, jsonList, type Db } from "@/lib/d1";
 import { getDb, schemaManaged } from "@/lib/db";
 import { entitlementWriteBatch } from "@/lib/entitlements";
 import type { Lang } from "@/lib/langs";
@@ -280,8 +280,8 @@ export async function ratingsFor(userId: string, verdictIds: string[]): Promise<
   const db = await getDb();
   const rs = await db.execute({
     sql: `SELECT verdict_id, rating FROM verdict_ratings
-          WHERE user_id = ? AND rating IS NOT NULL AND verdict_id IN (${verdictIds.map(() => "?").join(", ")})`,
-    args: [userId, ...verdictIds],
+          WHERE user_id = ? AND rating IS NOT NULL AND verdict_id IN ${IN_LIST}`,
+    args: [userId, jsonList(verdictIds)],
   });
   return Object.fromEntries(rs.rows.map((r) => [String(r.verdict_id), String(r.rating) as Rating]));
 }

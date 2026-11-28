@@ -12,6 +12,7 @@
  * Server only.
  */
 
+import { IN_LIST, jsonList } from "@/lib/d1";
 import type { InStatement } from "@libsql/client";
 import { keepBlock } from "@/lib/age";
 import { forgetUser } from "@/lib/analytics/db";
@@ -54,8 +55,8 @@ async function wipeText(userId: string, nowIso: string): Promise<void> {
   const rounds = roots.length
     ? await db.execute({
         sql: `SELECT a.id FROM verdict_appeals a LEFT JOIN verdicts v ON v.id = a.id
-              WHERE a.verdict_id IN (${roots.map(() => "?").join(", ")}) AND COALESCE(v.legal_hold, 0) = 0`,
-        args: roots,
+              WHERE a.verdict_id IN ${IN_LIST} AND COALESCE(v.legal_hold, 0) = 0`,
+        args: [jsonList(roots)],
       })
     : { rows: [] };
   const verdicts = [...roots, ...rounds.rows.map((r) => String(r.id)), ...alone.rows.map((r) => String(r.verdict_id))];

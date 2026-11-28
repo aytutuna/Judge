@@ -18,7 +18,7 @@
 
 import { nanoid } from "nanoid";
 import type { InStatement, InValue, ResultSet } from "@libsql/client";
-import type { Db } from "@/lib/d1";
+import { IN_LIST, jsonList, type Db } from "@/lib/d1";
 import type { Entitlement, GrantSource, PremiumBlock, SubscriptionView } from "./account-types";
 import { getDb, schemaManaged } from "./db";
 import { PRICING } from "./pricing";
@@ -965,8 +965,8 @@ function retireStandIns(
   return {
     sql: `UPDATE subscriptions SET status = ?, will_renew = 0, updated_at = ?${at ? ", period_end = MIN(period_end, ?)" : ""}
           WHERE source = ? AND status = 'active' AND original_transaction_id LIKE 'rcsync:%'
-            ${at ? "AND period_start <= ?" : ""} AND user_id IN (${ids.map(() => "?").join(", ") || "NULL"})`,
-    args: [status, nowIso, ...(at ? [at] : []), source, ...(at ? [at] : []), ...ids],
+            ${at ? "AND period_start <= ?" : ""} AND user_id IN ${IN_LIST}`,
+    args: [status, nowIso, ...(at ? [at] : []), source, ...(at ? [at] : []), jsonList(ids)],
   };
 }
 
@@ -1095,7 +1095,7 @@ export async function transferSubscriptions(g: {
   assertId(g.externalId, "externalId");
   assertId(g.toUserId, "toUserId");
   const from = g.from.filter((id) => id !== g.toUserId);
-  const marks = from.map(() => "?").join(", ") || "NULL";
+  const fromList = jsonList(from);
   const id = nanoid();
   const nowIso = iso(new Date());
   const guard = grantExists(id);
@@ -1116,8 +1116,8 @@ export async function transferSubscriptions(g: {
                               AND s.period_end > subscriptions.period_start
                               AND s.period_start < subscriptions.period_end), 0))
             WHERE source = ? AND status = 'active' AND original_transaction_id NOT LIKE 'rcsync:%'
-              AND user_id IN (${marks}) AND ${guard.sql}`,
-      args: [g.toUserId, nowIso, g.toUserId, g.source, g.source, ...from, ...guard.args],
+              AND user_id IN ${IN_LIST} AND ${guard.sql}`,
+      args: [g.toUserId, nowIso, g.toUserId, g.source, g.source, fromList, ...guard.args],
     },
     {
       sql: `UPDATE premium_usage
@@ -1150,9 +1150,9 @@ export async function transferSubscriptions(g: {
                                               AND r.original_transaction_id NOT LIKE 'rcsync:%'
                                               AND subscriptions.period_end > r.period_start
                                               AND subscriptions.period_start < r.period_end))
-                   OR user_id IN (${marks}))
+                   OR user_id IN ${IN_LIST})
               AND ${guard.sql}`,
-      args: [nowIso, g.source, g.toUserId, g.toUserId, g.source, ...from, ...guard.args],
+      args: [nowIso, g.source, g.toUserId, g.toUserId, g.source, fromList, ...guard.args],
     },
   ]);
   return { applied: results[0].rowsAffected === 1, moved: results[1].rowsAffected };
