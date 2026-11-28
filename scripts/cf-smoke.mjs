@@ -167,7 +167,7 @@ async function run() {
   const config = await api("GET", "/api/v1/config");
   check(
     "Apple and Google sign-in are offered (the Apple secret was signed)",
-    config.status === 200 && JSON.stringify(config.json).includes("apple") && JSON.stringify(config.json).includes("google"),
+    config.status === 200 && config.json?.signIn?.apple === true && config.json?.signIn?.google === true,
     config.text.slice(0, 300),
   );
 
@@ -269,6 +269,15 @@ async function run() {
     if (r.status === 429) limited = i + 1;
   }
   check("the Durable Object rate limiter refuses after the limit", limited > 0, "no 429 in 40 tries");
+
+  if (devLog.length) {
+    const errors = devLog
+      .join("")
+      .split("\n")
+      .map((l) => l.replace(new RegExp(String.fromCharCode(27) + "[[][0-9;]*m", "g"), ""))
+      .filter((l) => l.includes("[ERROR]") && !/\[alert:|\[premium\] anonymize failed/.test(l));
+    check("the worker logged no errors", errors.length === 0, errors.slice(0, 3).join(" | "));
+  }
 
   const cronEntry = await fetch(`${BASE}/cdn-cgi/handler/scheduled?cron=${encodeURIComponent("*/5 * * * *")}`);
   check("the scheduled handler runs", cronEntry.status === 200, `${cronEntry.status}`);
