@@ -187,7 +187,9 @@ export type UserBucket =
   | "account_delete"
   | "purchase_sync"
   | "events"
-  | "data_export";
+  | "data_export"
+  | "parent_request"
+  | "parent_address";
 
 type UserWindow = { limit: number; windowMs: number; redisWindow: `${number} ${"m" | "h" | "d"}`; prefix: string };
 
@@ -284,6 +286,13 @@ export const USER_LIMITS: Record<UserBucket, readonly UserWindow[]> = {
     { limit: 3, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:dx1h" },
     { limit: 10, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:dxday" },
   ],
+  /** Mails to a parent (set, change, resend) per account. */
+  parent_request: [
+    { limit: 4, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:u:pr1h" },
+    { limit: 10, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:prday" },
+  ],
+  /** Requests to one parent address, keyed by its keyed hash: the same address cannot be mailed more than 5 times a day by anyone. */
+  parent_address: [{ limit: 5, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:u:paday" }],
 };
 
 /** Per-IP buckets for the no-account endpoints (keyed by visitorKey):
@@ -299,7 +308,10 @@ export type IpBucket =
   | "verdict_poll"
   | "revenuecat_webhook"
   | "signin_lookup"
-  | "events";
+  | "events"
+  | "parent_request"
+  | "parent_link"
+  | "parent_decide";
 
 export const IP_LIMITS: Record<IpBucket, readonly UserWindow[]> = {
   respond_submit: [
@@ -333,6 +345,21 @@ export const IP_LIMITS: Record<IpBucket, readonly UserWindow[]> = {
   events: [
     { limit: 10, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:evt10m" },
     { limit: 60, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:ip:evt1h" },
+  ],
+  /** Parent mails from one address, whichever accounts ask. */
+  parent_request: [
+    { limit: 10, windowMs: 60 * MINUTE_MS, redisWindow: "1 h", prefix: "verdict:ip:pr1h" },
+    { limit: 30, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:ip:prday" },
+  ],
+  /** Opening a parent link (the approve and withdraw pages). */
+  parent_link: [
+    { limit: 30, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:pl10m" },
+    { limit: 150, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:ip:plday" },
+  ],
+  /** Approving, declining or withdrawing through a parent link. */
+  parent_decide: [
+    { limit: 10, windowMs: 10 * MINUTE_MS, redisWindow: "10 m", prefix: "verdict:ip:pd10m" },
+    { limit: 30, windowMs: DAY_MS, redisWindow: "1 d", prefix: "verdict:ip:pdday" },
   ],
 };
 

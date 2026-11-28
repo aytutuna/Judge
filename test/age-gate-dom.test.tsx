@@ -111,12 +111,12 @@ describe("AgeGate", () => {
     expect(dobInput()).toBeNull();
   });
 
-  it("a teen date is sent at once, and Enter in the field submits", async () => {
+  it("a teen date with no question is sent at once, and Enter in the field submits", async () => {
     answer = () => reply(200, TEEN);
     await refreshViewer();
     render(<AgeGate lang="en" />);
     await waitFor(() => expect(dobInput()).not.toBeNull());
-    fireEvent.change(dobInput()!, { target: { value: `${new Date().getFullYear() - 15}-06-01` } });
+    fireEvent.change(dobInput()!, { target: { value: `${new Date().getFullYear() - 17}-06-01` } });
     await act(async () => {
       fireEvent.submit(dobInput()!.closest("form")!);
     });

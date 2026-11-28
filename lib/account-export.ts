@@ -63,10 +63,32 @@ async function original(subject: string) {
   return payload ? { status: "stored" as const, original: payload } : { status: "unreadable" as const, original: null };
 }
 
+/** What was asked of a parent and decided, never the address. */
+async function parentRecord(userId: string) {
+  const { ensureParentTables } = await import("./parent-consent");
+  await ensureParentTables();
+  const [r] = await query(
+    `SELECT status, created_at, requested_at, expires_at, decided_at, policy_version, wording_key, country
+     FROM parent_consent WHERE user_id = ?`,
+    [userId],
+  );
+  if (!r) return null;
+  return {
+    status: text(r.status),
+    startedAt: text(r.created_at),
+    lastRequestAt: text(r.requested_at),
+    linkExpiresAt: text(r.expires_at),
+    decidedAt: text(r.decided_at),
+    policyVersion: text(r.policy_version),
+    wordingKey: text(r.wording_key),
+    country: text(r.country),
+  };
+}
+
 async function account(userId: string) {
   const [user] = await query(
     `SELECT id, email, name, image, emailVerified, createdAt, age_confirmed_at, age_source, age_blocked_at,
-            age_dob, age_dob_at, age_signal, age_signal_at
+            age_dob, age_dob_at, age_signal, age_signal_at, age_country, age_quebec
      FROM "user" WHERE id = ?`,
     [userId],
   );
@@ -85,6 +107,9 @@ async function account(userId: string) {
     dateOfBirthGivenAt: text(user?.age_dob_at),
     storeAgeSignal: text(user?.age_signal),
     storeAgeSignalAt: text(user?.age_signal_at),
+    ageCountries: text(user?.age_country),
+    ageInQuebec: user?.age_quebec != null,
+    parentConsent: await parentRecord(userId),
     signInMethods: methods.map((m) => ({ provider: String(m.providerId), addedAt: text(m.createdAt) })),
     hasPassword: await hasPassword(userId),
   };

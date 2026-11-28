@@ -9,14 +9,16 @@ import type { BrowserOptions, Breadcrumb, ErrorEvent, NodeOptions } from "@sentr
  */
 
 // The app's routes with a [param] folder (test/sentry.test.ts checks this
-// against app/). A /r/<token> link alone opens a case.
+// against app/). A /r/<token> link alone opens a case, a /parent/<token> link answers for a teen.
 export const DYNAMIC_ROUTES = [
   "/api/auth/[...all]",
   "/api/v1/cases/[id]",
+  "/api/v1/parent/[token]",
   "/api/v1/respond/[token]",
   "/api/v1/verdicts/[id]",
   "/api/verdict/[id]",
   "/c/[id]",
+  "/parent/[token]",
   "/r/[token]",
   "/v/[id]",
 ];

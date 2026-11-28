@@ -51,6 +51,23 @@ export const API_ERROR_STATUS = {
   /** Starting a verdict or case before the age check is done (a date of birth,
    * or an older build's 18+ tick). */
   age_unconfirmed: 403,
+  /** Judge refuses the account where the person lives (Brazil under 18). Not
+   * final: support can lift it, and it lifts itself at 18. */
+  age_region: 403,
+  /** A parent has to say yes first; see AgeState.parent. */
+  age_parent_pending: 403,
+  /** The parent's address is empty, the account's own, or another Judge account's. */
+  parent_email: 400,
+  /** The parent declined: no new request. */
+  parent_declined: 409,
+  /** A resend within an hour of the last mail (retryAfterSec). */
+  parent_wait: 429,
+  /** The 3 resends or 3 address changes are used up. */
+  parent_limit: 409,
+  /** The request changed under this one; reload and try again. */
+  parent_conflict: 409,
+  /** A parent link that is unknown, expired or used. */
+  parent_link: 404,
   /** The date of birth was already given (POST /api/v1/me/age). */
   age_set: 409,
   /** Training consent or another choice an account under 18 may not make. */

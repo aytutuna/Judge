@@ -76,7 +76,13 @@ function authSecret(env: Env): string | null {
   return DEV_SECRET;
 }
 
-export type SecretPurpose = "evidence-token" | "case-invite" | "case-names" | "respondent-claim" | "welcome-claim";
+export type SecretPurpose =
+  | "evidence-token"
+  | "case-invite"
+  | "case-names"
+  | "respondent-claim"
+  | "welcome-claim"
+  | "parent-email";
 
 /** A 32-byte key for one purpose, derived from the auth secret, or null when
  * accounts are not configured. Rotating BETTER_AUTH_SECRET rotates every key. */
@@ -107,6 +113,12 @@ function emailHash(email: string): string | null {
  * alias of it, gets no second one. */
 export function welcomeClaim(email: string): string | null {
   return emailHash(canonicalEmail(email));
+}
+
+/** A keyed hash of a parent's canonical address (lib/parent-consent.ts). */
+export function parentEmailHash(email: string): string | null {
+  const key = derivedSecret("parent-email");
+  return key && createHmac("sha256", key).update(canonicalEmail(email)).digest("hex");
 }
 
 /** The claim as it was stored before aliases were folded together. */
@@ -385,6 +397,11 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         ageDobAt: { type: "date", required: false, input: false, fieldName: "age_dob_at" },
         ageSignal: { type: "string", required: false, input: false, fieldName: "age_signal" },
         ageSignalAt: { type: "date", required: false, input: false, fieldName: "age_signal_at" },
+        // Where the person lives and the parent step (lib/age-region.ts, lib/parent-consent.ts).
+        ageCountry: { type: "string", required: false, input: false, fieldName: "age_country" },
+        ageQuebec: { type: "string", required: false, input: false, fieldName: "age_quebec" },
+        ageRegionLiftedAt: { type: "date", required: false, input: false, fieldName: "age_region_lifted_at" },
+        ageParent: { type: "string", required: false, input: false, fieldName: "age_parent" },
       },
     },
     account: {
@@ -732,6 +749,10 @@ export async function resolveViewer(req: Request): Promise<ViewerLookup> {
       ageDobAt?: unknown;
       ageSignal?: unknown;
       ageSignalAt?: unknown;
+      ageCountry?: unknown;
+      ageQuebec?: unknown;
+      ageRegionLiftedAt?: unknown;
+      ageParent?: unknown;
     };
     const age = ageStateOf({
       confirmedAt: user.ageConfirmedAt,
@@ -741,6 +762,10 @@ export async function resolveViewer(req: Request): Promise<ViewerLookup> {
       dobAt: user.ageDobAt,
       signal: user.ageSignal,
       signalAt: user.ageSignalAt,
+      country: user.ageCountry,
+      quebec: user.ageQuebec,
+      regionLiftedAt: user.ageRegionLiftedAt,
+      parent: user.ageParent,
     });
     const gate = ageRefusal(req.method, requestPath(req), age);
     return {
@@ -885,6 +910,7 @@ export async function clearSessionCookieHeaders(): Promise<string[]> {
  * deletes the entitlements first). */
 export async function deleteAuthUser(userId: string): Promise<void> {
   const ctx = await (await getAuth()).$context;
+  await (await import("./parent-consent")).closeParentRecord(userId);
   await deleteSignInTokens(userId);
   await ctx.internalAdapter.deleteUserSessions(userId);
   await ctx.internalAdapter.deleteAccounts(userId);

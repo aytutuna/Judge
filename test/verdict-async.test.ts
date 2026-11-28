@@ -69,7 +69,7 @@ const jobs = await import("../lib/verdict-jobs");
 const { removeUserData } = await import("../lib/originals/removal");
 const { getDb } = await import("../lib/db");
 // The real table comes from Better Auth, which these tests do not load.
-await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_block_final_at TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT)');
+await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_block_final_at TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT, age_country TEXT, age_quebec TEXT, age_region_lifted_at TEXT, age_parent TEXT)');
 import { childSafetyOn } from "../lib/claude";
 import type { JudgeRunOutput } from "../lib/types";
 import type { VerdictAcceptedResponse } from "../lib/verdict-poll";
@@ -222,7 +222,7 @@ describe("async verdicts", () => {
       age: { confirmed: true, blocked: false, needsDob: true, teen: false },
     });
     const db = await getDb();
-    await db.execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_block_final_at TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT)');
+    await db.execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_block_final_at TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT, age_country TEXT, age_quebec TEXT, age_region_lifted_at TEXT, age_parent TEXT)');
     const accepted = (await (await post({}, { prefer: "respond-async" })).json()) as VerdictAcceptedResponse;
     await db.execute({ sql: 'INSERT OR REPLACE INTO "user" (id, age_dob, age_dob_at) VALUES (?, ?, ?)', args: [id, "2030-01-01", "2026-11-26T00:00:00Z"] });
     await drain();

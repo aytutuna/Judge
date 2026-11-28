@@ -602,11 +602,43 @@ class Strings(private val res: Resources) {
     fun ageBlockedContact(email: String): String = res.getString(R.string.age_blocked_contact, email)
     val ageApprovalTitle: String get() = res.getString(R.string.age_approval_title)
     val ageApproval: String get() = res.getString(R.string.age_approval)
+    val ageWhere: String get() = res.getString(R.string.age_where)
+    val ageWhereWhy: String get() = res.getString(R.string.age_where_why)
+    val ageQuebec: String get() = res.getString(R.string.age_quebec)
+    val ageYes: String get() = res.getString(R.string.age_yes)
+    val ageNo: String get() = res.getString(R.string.age_no)
+    val ageParentTitle: String get() = res.getString(R.string.age_parent_title)
+    val ageParentLead: String get() = res.getString(R.string.age_parent_lead)
+    val ageParentEmail: String get() = res.getString(R.string.age_parent_email)
+    val ageParentSend: String get() = res.getString(R.string.age_parent_send)
+    val ageParentWaitTitle: String get() = res.getString(R.string.age_parent_wait_title)
+    fun ageParentSentTo(email: String): String = res.getString(R.string.age_parent_sent_to, email)
+    val ageParentExpired: String get() = res.getString(R.string.age_parent_expired)
+    fun ageParentResendAt(time: String): String = res.getString(R.string.age_parent_resend_at, time)
+    val ageParentResend: String get() = res.getString(R.string.age_parent_resend)
+    val ageParentChange: String get() = res.getString(R.string.age_parent_change)
+    val ageParentCancel: String get() = res.getString(R.string.age_parent_cancel)
+    fun ageParentDelete(date: String): String = res.getString(R.string.age_parent_delete, date)
+    val ageParentDeclinedTitle: String get() = res.getString(R.string.age_parent_declined_title)
+    fun ageParentDeclined(date: String): String = res.getString(R.string.age_parent_declined, date)
+    val ageParentRevokedTitle: String get() = res.getString(R.string.age_parent_revoked_title)
+    fun ageParentRevoked(date: String): String = res.getString(R.string.age_parent_revoked, date)
+    val ageRegionTitle: String get() = res.getString(R.string.age_region_title)
+    val ageRegion: String get() = res.getString(R.string.age_region)
+    fun ageRegionContact(email: String): String = res.getString(R.string.age_region_contact, email)
     val errorPasswordWrong: String get() = res.getString(R.string.error_password_wrong)
     val errorPasswordRequired: String get() = res.getString(R.string.error_password_required)
     val errorReauthRequired: String get() = res.getString(R.string.error_reauth_required)
     val errorAgeBlocked: String get() = res.getString(R.string.error_age_blocked)
     val errorAgeUnconfirmed: String get() = res.getString(R.string.error_age_unconfirmed)
+    val errorAgeRegion: String get() = res.getString(R.string.error_age_region)
+    val errorAgeParentPending: String get() = res.getString(R.string.error_age_parent_pending)
+    val errorParentEmail: String get() = res.getString(R.string.error_parent_email)
+    val errorParentDeclined: String get() = res.getString(R.string.error_parent_declined)
+    val errorParentWait: String get() = res.getString(R.string.error_parent_wait)
+    val errorParentLimit: String get() = res.getString(R.string.error_parent_limit)
+    val errorParentConflict: String get() = res.getString(R.string.error_parent_conflict)
+    val errorParentLink: String get() = res.getString(R.string.error_parent_link)
     val errorAgeSet: String get() = res.getString(R.string.error_age_set)
     val errorNotForTeens: String get() = res.getString(R.string.error_not_for_teens)
     val errorAgreementRequired: String get() = res.getString(R.string.error_agreement_required)
@@ -1229,11 +1261,37 @@ class Strings(private val res: Resources) {
             "age.blocked" -> R.string.age_blocked
             "age.approvalTitle" -> R.string.age_approval_title
             "age.approval" -> R.string.age_approval
+            "age.where" -> R.string.age_where
+            "age.whereWhy" -> R.string.age_where_why
+            "age.quebec" -> R.string.age_quebec
+            "age.yes" -> R.string.age_yes
+            "age.no" -> R.string.age_no
+            "age.parentTitle" -> R.string.age_parent_title
+            "age.parentLead" -> R.string.age_parent_lead
+            "age.parentEmail" -> R.string.age_parent_email
+            "age.parentSend" -> R.string.age_parent_send
+            "age.parentWaitTitle" -> R.string.age_parent_wait_title
+            "age.parentExpired" -> R.string.age_parent_expired
+            "age.parentResend" -> R.string.age_parent_resend
+            "age.parentChange" -> R.string.age_parent_change
+            "age.parentCancel" -> R.string.age_parent_cancel
+            "age.parentDeclinedTitle" -> R.string.age_parent_declined_title
+            "age.parentRevokedTitle" -> R.string.age_parent_revoked_title
+            "age.regionTitle" -> R.string.age_region_title
+            "age.region" -> R.string.age_region
             "error.password_wrong" -> R.string.error_password_wrong
             "error.password_required" -> R.string.error_password_required
             "error.reauth_required" -> R.string.error_reauth_required
             "error.age_blocked" -> R.string.error_age_blocked
             "error.age_unconfirmed" -> R.string.error_age_unconfirmed
+            "error.age_region" -> R.string.error_age_region
+            "error.age_parent_pending" -> R.string.error_age_parent_pending
+            "error.parent_email" -> R.string.error_parent_email
+            "error.parent_declined" -> R.string.error_parent_declined
+            "error.parent_wait" -> R.string.error_parent_wait
+            "error.parent_limit" -> R.string.error_parent_limit
+            "error.parent_conflict" -> R.string.error_parent_conflict
+            "error.parent_link" -> R.string.error_parent_link
             "error.age_set" -> R.string.error_age_set
             "error.not_for_teens" -> R.string.error_not_for_teens
             "error.agreement_required" -> R.string.error_agreement_required

@@ -39,6 +39,19 @@ export const EMAIL_EN: EmailCopy = {
     intro: "Your Judge password was changed on {time}.",
     contact: "If that wasn't you, contact {email} right away.",
   },
+  parentRequest: {
+    subject: "{name} wants to use Judge",
+    hi: "Hi,",
+    intro:
+      "{name} wants to use Judge and gave this address for a parent or guardian. Where they live, we need a parent's yes before their account can do anything.",
+    note: "The links work for 14 days. If this wasn't meant for you, ignore it: the account is deleted after 30 days.",
+  },
+  parentApproved: {
+    subject: "You approved {name}'s Judge account",
+    intro: "{name} can now use Judge. You can withdraw your consent at any time:",
+    button: "Withdraw",
+    note: "Withdrawing locks the account, and it is deleted after 30 days unless you approve again.",
+  },
 };
 
 /** The copy for `lang` once its locale is loaded, else English. */
@@ -156,6 +169,95 @@ ${contact}
 export async function sendPasswordChangedEmail({ to, lang }: { to: string; lang: Lang }): Promise<void> {
   await loadLocales();
   await deliver(to, passwordChangedEmailContent(lang, new Date()), "password email", "email is not configured");
+}
+
+const NL = "\n";
+const COMPANY_LINE ="Alazy Inc., 99 Earl St, Kingston, ON K7L 2G8";
+
+const fill = (s: string, name: string) => s.replaceAll("{name}", name);
+
+/** The parent's request: what Judge is, what it does for under 18s, and the
+ * two links. The shared lines come from the page's strings (parent.*). */
+export function parentRequestEmailContent(
+  { name, approveUrl, declineUrl }: { name: string; approveUrl: string; declineUrl: string },
+  lang: Lang,
+): EmailContent {
+  const c = copy(lang).parentRequest;
+  name = name.trim() || t(lang, "parent.someone");
+  const rules = (["parent.rule1", "parent.rule2", "parent.rule3", "parent.rule4"] as const).map((k) => t(lang, k));
+  const support = contactEmail() ?? SUPPORT_EMAIL;
+  const text = `${c.hi}
+
+${fill(c.intro, name)}
+
+${t(lang, "parent.what")}
+
+${t(lang, "parent.rulesTitle")}
+${rules.map((r) => `- ${r}`).join(NL)}
+
+${t(lang, "parent.approve")}: ${approveUrl}
+${t(lang, "parent.decline")}: ${declineUrl}
+
+${c.note}
+
+${support}
+${COMPANY_LINE}
+`;
+  const button = (url: string, label: string, bg: string, fg: string) =>
+    `<a href="${escapeHtml(url)}" style="display:inline-block;background:${bg};color:${fg};text-decoration:none;padding:12px 20px;border-radius:8px;font-family:Arial,sans-serif;font-size:15px;margin:0 8px 8px 0">${escapeHtml(label)}</a>`;
+  const html = `<!doctype html>${htmlTag(lang)}<body style="margin:0;padding:32px 16px;background:${P.ivory};font-family:Georgia,'Times New Roman',serif;color:${P.ink}">
+<div style="max-width:480px;margin:0 auto;background:${P.paper};border:1px solid ${P.strata};border-radius:12px;padding:32px">
+<p style="font-size:22px;margin:0 0 16px">Judge</p>
+<p style="font-size:16px;line-height:1.5;margin:0 0 16px">${escapeHtml(c.hi)}</p>
+<p style="font-size:16px;line-height:1.5;margin:0 0 16px">${escapeHtml(fill(c.intro, name))}</p>
+<p style="font-size:16px;line-height:1.5;margin:0 0 16px">${escapeHtml(t(lang, "parent.what"))}</p>
+<p style="font-size:16px;line-height:1.5;margin:0 0 8px">${escapeHtml(t(lang, "parent.rulesTitle"))}</p>
+<ul style="font-size:16px;line-height:1.5;margin:0 0 24px;padding-inline-start:20px">${rules.map((r) => `<li>${escapeHtml(r)}</li>`).join("")}</ul>
+<p style="margin:0 0 24px">${button(approveUrl, t(lang, "parent.approve"), P.terraInk, P.paper)}${button(declineUrl, t(lang, "parent.decline"), P.strata, P.ink)}</p>
+<p style="font-size:13px;line-height:1.5;color:${P.muted};margin:0 0 12px">${escapeHtml(c.note)}</p>
+<p style="font-size:13px;line-height:1.5;color:${P.muted};margin:0">${escapeHtml(support)}<br>${escapeHtml(COMPANY_LINE)}</p>
+</div></body></html>`;
+  return { subject: fill(c.subject, name), text, html };
+}
+
+/** The confirmation to the parent after approving, with the withdraw link. */
+export function parentApprovedEmailContent({ name, withdrawUrl }: { name: string; withdrawUrl: string }, lang: Lang): EmailContent {
+  const c = copy(lang).parentApproved;
+  name = name.trim() || t(lang, "parent.someone");
+  const support = contactEmail() ?? SUPPORT_EMAIL;
+  const text = `${fill(c.intro, name)}
+${c.button}: ${withdrawUrl}
+
+${c.note}
+
+${support}
+`;
+  const html = `<!doctype html>${htmlTag(lang)}<body style="margin:0;padding:32px 16px;background:${P.ivory};font-family:Georgia,'Times New Roman',serif;color:${P.ink}">
+<div style="max-width:480px;margin:0 auto;background:${P.paper};border:1px solid ${P.strata};border-radius:12px;padding:32px">
+<p style="font-size:22px;margin:0 0 16px">Judge</p>
+<p style="font-size:16px;line-height:1.5;margin:0 0 24px">${escapeHtml(fill(c.intro, name))}</p>
+<p style="margin:0 0 24px"><a href="${escapeHtml(withdrawUrl)}" style="display:inline-block;background:${P.terraInk};color:${P.paper};text-decoration:none;padding:12px 20px;border-radius:8px;font-family:Arial,sans-serif;font-size:15px">${escapeHtml(c.button)}</a></p>
+<p style="font-size:13px;line-height:1.5;color:${P.muted};margin:0 0 12px">${escapeHtml(c.note)}</p>
+<p style="font-size:13px;line-height:1.5;color:${P.muted};margin:0">${escapeHtml(support)}</p>
+</div></body></html>`;
+  return { subject: fill(c.subject, name), text, html };
+}
+
+/** Sends the parent's request. Throws on failure; the message never
+ * contains the address or links. */
+export async function sendParentRequestEmail(
+  { to, name, approveUrl, declineUrl, lang }: { to: string; name: string; approveUrl: string; declineUrl: string; lang: Lang },
+): Promise<void> {
+  await loadLocales();
+  await deliver(to, parentRequestEmailContent({ name, approveUrl, declineUrl }, lang), "parent email", "email is not configured");
+}
+
+/** Sends the confirmation to a parent who approved. Same rules as above. */
+export async function sendParentApprovedEmail(
+  { to, name, withdrawUrl, lang }: { to: string; name: string; withdrawUrl: string; lang: Lang },
+): Promise<void> {
+  await loadLocales();
+  await deliver(to, parentApprovedEmailContent({ name, withdrawUrl }, lang), "parent email", "email is not configured");
 }
 
 type Notice = { subject: string; intro: string; button: string; note: string };

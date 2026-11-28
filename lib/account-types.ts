@@ -40,8 +40,42 @@ export type Viewer = {
 /** The account's age check (POST /api/v1/me/age). `blocked` (under 13) never
  * goes back to false. `teen` is 13 to 17 as of this request. `needsDob`: no
  * date of birth given yet, so the client asks for it (old builds ignore both
- * new fields). */
-export type AgeState = { confirmed: boolean; blocked: boolean; teen: boolean; needsDob: boolean };
+ * new fields). `restricted` is only there when true: Judge refuses the
+ * account where the person lives (Brazil under 18; 403 age_region on every
+ * route but the open ones). `parent` is only there while a parent has to say
+ * yes (403 age_parent_pending): "pending" (also when the link expired or no
+ * address was given yet), "declined" or "revoked". Absent means false and null. */
+export type AgeState = {
+  confirmed: boolean;
+  blocked: boolean;
+  teen: boolean;
+  needsDob: boolean;
+  restricted?: boolean;
+  parent?: "pending" | "declined" | "revoked";
+};
+
+/** GET /api/v1/me/parent and the answer to the requests that change it:
+ * where the parent step stands for a teen. Never carries the address. */
+export type ParentView = {
+  /** "none": no request exists yet (the account may not need one). */
+  status: "none" | "pending" | "approved" | "declined" | "revoked";
+  /** An address was given and a mail went out. */
+  sent: boolean;
+  /** The address as j***@example.com. */
+  emailHint: string | null;
+  /** When the current link stops working, ISO. */
+  expiresAt: string | null;
+  expired: boolean;
+  resendsLeft: number;
+  changesLeft: number;
+  /** The earliest ISO time a resend is accepted; null when it is allowed now. */
+  resendAt: string | null;
+  /** When the account is deleted if nothing changes, ISO. */
+  deleteAt: string | null;
+};
+
+/** GET /api/v1/parent/<token>: what a parent's link is for. */
+export type ParentLink = { kind: "request" | "withdraw"; name: string; usable: boolean };
 
 /** GET /api/v1/me. Signed out: { user: null, entitlement: null, age: null }.
  * A bearer token with no live session: 401 signin_required instead. */

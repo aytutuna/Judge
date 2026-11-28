@@ -669,11 +669,43 @@ enum L10n {
     static func ageBlockedContact(_ lang: AppLang, email: String) -> String { format("age.blockedContact", lang, email) }
     static func ageApprovalTitle(_ lang: AppLang) -> String { string("age.approvalTitle", lang) }
     static func ageApproval(_ lang: AppLang) -> String { string("age.approval", lang) }
+    static func ageWhere(_ lang: AppLang) -> String { string("age.where", lang) }
+    static func ageWhereWhy(_ lang: AppLang) -> String { string("age.whereWhy", lang) }
+    static func ageQuebec(_ lang: AppLang) -> String { string("age.quebec", lang) }
+    static func ageYes(_ lang: AppLang) -> String { string("age.yes", lang) }
+    static func ageNo(_ lang: AppLang) -> String { string("age.no", lang) }
+    static func ageParentTitle(_ lang: AppLang) -> String { string("age.parentTitle", lang) }
+    static func ageParentLead(_ lang: AppLang) -> String { string("age.parentLead", lang) }
+    static func ageParentEmail(_ lang: AppLang) -> String { string("age.parentEmail", lang) }
+    static func ageParentSend(_ lang: AppLang) -> String { string("age.parentSend", lang) }
+    static func ageParentWaitTitle(_ lang: AppLang) -> String { string("age.parentWaitTitle", lang) }
+    static func ageParentSentTo(_ lang: AppLang, email: String) -> String { format("age.parentSentTo", lang, email) }
+    static func ageParentExpired(_ lang: AppLang) -> String { string("age.parentExpired", lang) }
+    static func ageParentResendAt(_ lang: AppLang, time: String) -> String { format("age.parentResendAt", lang, time) }
+    static func ageParentResend(_ lang: AppLang) -> String { string("age.parentResend", lang) }
+    static func ageParentChange(_ lang: AppLang) -> String { string("age.parentChange", lang) }
+    static func ageParentCancel(_ lang: AppLang) -> String { string("age.parentCancel", lang) }
+    static func ageParentDelete(_ lang: AppLang, date: String) -> String { format("age.parentDelete", lang, date) }
+    static func ageParentDeclinedTitle(_ lang: AppLang) -> String { string("age.parentDeclinedTitle", lang) }
+    static func ageParentDeclined(_ lang: AppLang, date: String) -> String { format("age.parentDeclined", lang, date) }
+    static func ageParentRevokedTitle(_ lang: AppLang) -> String { string("age.parentRevokedTitle", lang) }
+    static func ageParentRevoked(_ lang: AppLang, date: String) -> String { format("age.parentRevoked", lang, date) }
+    static func ageRegionTitle(_ lang: AppLang) -> String { string("age.regionTitle", lang) }
+    static func ageRegion(_ lang: AppLang) -> String { string("age.region", lang) }
+    static func ageRegionContact(_ lang: AppLang, email: String) -> String { format("age.regionContact", lang, email) }
     static func errorPasswordWrong(_ lang: AppLang) -> String { string("error.password_wrong", lang) }
     static func errorPasswordRequired(_ lang: AppLang) -> String { string("error.password_required", lang) }
     static func errorReauthRequired(_ lang: AppLang) -> String { string("error.reauth_required", lang) }
     static func errorAgeBlocked(_ lang: AppLang) -> String { string("error.age_blocked", lang) }
     static func errorAgeUnconfirmed(_ lang: AppLang) -> String { string("error.age_unconfirmed", lang) }
+    static func errorAgeRegion(_ lang: AppLang) -> String { string("error.age_region", lang) }
+    static func errorAgeParentPending(_ lang: AppLang) -> String { string("error.age_parent_pending", lang) }
+    static func errorParentEmail(_ lang: AppLang) -> String { string("error.parent_email", lang) }
+    static func errorParentDeclined(_ lang: AppLang) -> String { string("error.parent_declined", lang) }
+    static func errorParentWait(_ lang: AppLang) -> String { string("error.parent_wait", lang) }
+    static func errorParentLimit(_ lang: AppLang) -> String { string("error.parent_limit", lang) }
+    static func errorParentConflict(_ lang: AppLang) -> String { string("error.parent_conflict", lang) }
+    static func errorParentLink(_ lang: AppLang) -> String { string("error.parent_link", lang) }
     static func errorAgeSet(_ lang: AppLang) -> String { string("error.age_set", lang) }
     static func errorNotForTeens(_ lang: AppLang) -> String { string("error.not_for_teens", lang) }
     static func errorAgreementRequired(_ lang: AppLang) -> String { string("error.agreement_required", lang) }
@@ -1297,11 +1329,37 @@ enum L10n {
         "age.blocked",
         "age.approvalTitle",
         "age.approval",
+        "age.where",
+        "age.whereWhy",
+        "age.quebec",
+        "age.yes",
+        "age.no",
+        "age.parentTitle",
+        "age.parentLead",
+        "age.parentEmail",
+        "age.parentSend",
+        "age.parentWaitTitle",
+        "age.parentExpired",
+        "age.parentResend",
+        "age.parentChange",
+        "age.parentCancel",
+        "age.parentDeclinedTitle",
+        "age.parentRevokedTitle",
+        "age.regionTitle",
+        "age.region",
         "error.password_wrong",
         "error.password_required",
         "error.reauth_required",
         "error.age_blocked",
         "error.age_unconfirmed",
+        "error.age_region",
+        "error.age_parent_pending",
+        "error.parent_email",
+        "error.parent_declined",
+        "error.parent_wait",
+        "error.parent_limit",
+        "error.parent_conflict",
+        "error.parent_link",
         "error.age_set",
         "error.not_for_teens",
         "error.agreement_required",

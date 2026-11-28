@@ -9,6 +9,8 @@
  * shared case are theirs and are not touched. The scrambled email that keeps
  * the block (welcome_claims) and the consent ledger rows the law needs stay.
  * Anything under a legal hold stays whole, as in lib/erasure.
+ * An account that waited 30 days for a parent, or was declined or withdrawn
+ * 30 days ago (lib/parent-consent.ts), goes the same way without the block.
  * Server only.
  */
 
@@ -72,11 +74,12 @@ async function wipeText(userId: string, nowIso: string): Promise<void> {
   ]);
 }
 
-async function deleteOne(userId: string, email: string, now: Date): Promise<void> {
+/** `keepClaim`: the scrambled email stays as a final block (under 13). */
+async function deleteOne(userId: string, email: string, now: Date, keepClaim = true): Promise<void> {
   const { deleteAuthUser, welcomeClaim } = await import("@/lib/auth");
   // Text first: removeUserData cuts the account's ownership of it loose.
   await wipeText(userId, now.toISOString());
-  const claim = welcomeClaim(email);
+  const claim = keepClaim ? welcomeClaim(email) : null;
   if (claim) await keepBlock(claim, true, now);
   const signInTokens = await revokeSignInTokens(userId);
   await removeUserData(userId, now, { signInTokens });
@@ -116,6 +119,25 @@ export async function deleteBlockedAccounts(now: Date = new Date()): Promise<num
       deleted += 1;
     } catch (e) {
       console.error("[cleanup] deleting a blocked account failed:", e instanceof Error ? e.message : String(e));
+    }
+  }
+  return deleted;
+}
+
+/** Deletes the accounts whose parent never said yes, or said no or withdrew,
+ * 30 days ago. A person who signs up again starts fresh. */
+export async function deleteParentAccounts(now: Date = new Date()): Promise<number> {
+  await ensureOriginalsTables();
+  await ensureCaseTables();
+  const { dueParentAccounts, healApprovals } = await import("@/lib/parent-consent");
+  await healApprovals(now);
+  let deleted = 0;
+  for (const { id, email } of await dueParentAccounts(now)) {
+    try {
+      await deleteOne(id, email, now, false);
+      deleted += 1;
+    } catch (e) {
+      console.error("[cleanup] deleting a parentless account failed:", e instanceof Error ? e.message : String(e));
     }
   }
   return deleted;

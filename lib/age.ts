@@ -29,6 +29,7 @@ import { NextResponse } from "next/server";
 import type { AgeState } from "./account-types";
 import { apiErrorBody } from "./api-errors";
 import { underEighteen, underThirteen } from "./age-date";
+import { brazilRefusal, geoToStored, needsParent, parseCountries, tightens, type Geo } from "./age-region";
 import { getDb } from "./db";
 import { ensureEntitlementTables, entitlementWriteBatch } from "./entitlements";
 import { POLICY_VERSION } from "./policy";
@@ -36,7 +37,7 @@ import { signal } from "./signals";
 
 export type AgeSource = "checkbox" | "platform" | "dob";
 
-export type AgeRefusal = "age_blocked" | "age_unconfirmed";
+export type AgeRefusal = "age_blocked" | "age_unconfirmed" | "age_region" | "age_parent_pending";
 
 /** Starting AI work or spending a credit: POST only. */
 const NEEDS_CONFIRMED = [
@@ -76,9 +77,23 @@ function openWhenBlocked(method: string, path: string, age: AgeState): boolean {
   );
 }
 
+/** What an account refused for its region, or waiting for a parent, may still
+ * do: the same as a blocked one, plus the parent request routes for the
+ * latter. The age route stays open so the store country the apps send on
+ * every launch can still tighten the rules. */
+function openWhenHeld(method: string, path: string, age: AgeState): boolean {
+  return (
+    openWhenBlocked(method, path, age) ||
+    (path === "/api/v1/me/age" && method === "POST") ||
+    (age.parent !== undefined && (path === "/api/v1/me/parent" || path === "/api/v1/me/parent/resend"))
+  );
+}
+
 /** Why a signed-in request must be refused, or null. */
 export function ageRefusal(method: string, path: string, age: AgeState): AgeRefusal | null {
   if (age.blocked) return openWhenBlocked(method, path, age) ? null : "age_blocked";
+  if (age.restricted) return openWhenHeld(method, path, age) ? null : "age_region";
+  if (age.parent) return openWhenHeld(method, path, age) ? null : "age_parent_pending";
   if (!age.confirmed && needsConfirmed(method, path)) return "age_unconfirmed";
   return null;
 }
@@ -107,6 +122,13 @@ export type AgeFields = {
   dobAt?: unknown;
   signal?: unknown;
   signalAt?: unknown;
+  /** The countries the date step stored, comma separated. */
+  country?: unknown;
+  quebec?: unknown;
+  /** Support lifted the Brazil refusal for this account. */
+  regionLiftedAt?: unknown;
+  /** The parent_consent status mirrored on the account. */
+  parent?: unknown;
 };
 
 /** The 18th-birthday cut-off in SQL: dates after it are under 18. On 29
@@ -174,13 +196,25 @@ export function ageStateOf(f: AgeFields, now = new Date()): AgeState {
   const dob = typeof f.dob === "string" ? f.dob : null;
   const dated = f.dobAt != null || dob !== null;
   const teen = !blocked && ((dob !== null && underEighteen(dob, now)) || minorSignalCounts(f, dob, now));
-  return { confirmed: f.confirmedAt != null, blocked, teen, needsDob: !dated && (!blocked || f.blockFinal == null) };
+  const countries = parseCountries(f.country);
+  const restricted = !blocked && f.regionLiftedAt == null && brazilRefusal(teen, countries);
+  const held = !blocked && !restricted && f.parent !== "approved" && needsParent(dob, countries, f.quebec != null, now);
+  const parent = held ? (f.parent === "declined" || f.parent === "revoked" ? f.parent : "pending") : null;
+  return {
+    confirmed: f.confirmedAt != null,
+    blocked,
+    teen,
+    needsDob: !dated && (!blocked || f.blockFinal == null),
+    ...(restricted && { restricted: true }),
+    ...(parent && { parent }),
+  };
 }
 
 async function readAge(userId: string, now = new Date()): Promise<AgeState> {
   const db = await getDb();
   const rs = await db.execute({
-    sql: `SELECT age_confirmed_at, age_blocked_at, age_block_final, age_dob, age_dob_at, age_signal, age_signal_at
+    sql: `SELECT age_confirmed_at, age_blocked_at, age_block_final, age_dob, age_dob_at, age_signal, age_signal_at,
+            age_country, age_quebec, age_region_lifted_at, age_parent
           FROM "user" WHERE id = ?`,
     args: [userId],
   });
@@ -194,6 +228,10 @@ async function readAge(userId: string, now = new Date()): Promise<AgeState> {
       dobAt: row?.age_dob_at,
       signal: row?.age_signal,
       signalAt: row?.age_signal_at,
+      country: row?.age_country,
+      quebec: row?.age_quebec,
+      regionLiftedAt: row?.age_region_lifted_at,
+      parent: row?.age_parent,
     },
     now,
   );
@@ -371,27 +409,69 @@ export async function recordMinorSignal(userId: string, under13: boolean | undef
  * account for good and keeps no date; 13 to 17 keeps it and writes the teen
  * changes in the same batch; 18 and over keeps only that a date was given. An
  * account blocked under the old rule gets its one date here too: 13 or more
- * lifts the block.
+ * lifts the block. A teen's places (lib/age-region.ts) are stored with the
+ * date, once; the parent step and the Brazil refusal follow from them.
  */
-export async function submitDob(userId: string, dob: string, now = new Date(), claims: string[] = []): Promise<AgeState | null> {
+export async function submitDob(
+  userId: string,
+  dob: string,
+  now = new Date(),
+  claims: string[] = [],
+  geo: Geo = {},
+): Promise<AgeState | null> {
   const before = await readAge(userId, now);
   if (before.blocked && !before.needsDob) return before;
   if (!before.needsDob) return null;
   if (underThirteen(dob, now)) return blockMinor(userId, now);
   const nowIso = now.toISOString();
   const teen = underEighteen(dob, now);
+  // The places are kept for a teen by any signal: a store minor signal makes a
+  // teen of someone who typed an adult date, and Brazil still applies to them.
+  const keepPlaces = teen || before.teen;
+  const places = geoToStored(geo);
   const [done] = await entitlementWriteBatch([
     {
       sql: `UPDATE "user" SET age_dob = ?, age_dob_at = ?, age_confirmed_at = COALESCE(age_confirmed_at, ?), age_source = 'dob',
-              age_blocked_at = NULL, age_block_final = NULL
+              age_blocked_at = NULL, age_block_final = NULL, age_country = ?, age_quebec = ?
             WHERE id = ? AND age_dob_at IS NULL AND age_block_final IS NULL`,
-      args: [teen ? dob : null, nowIso, nowIso, userId],
+      args: [teen ? dob : null, nowIso, nowIso, keepPlaces && places.countries.length ? places.countries.join(",") : null, keepPlaces && places.quebec ? "1" : null, userId],
     },
     // Only after this request's own write took effect.
     ...(await sameWrite(userId, nowIso, dob, teen, claims)),
   ]);
   if (done.rowsAffected === 0) return null;
-  return readAge(userId, now);
+  const age = await readAge(userId, now);
+  if (age.parent) await (await import("./parent-consent")).ensureParentRow(userId, now, true);
+  return age;
+}
+
+/**
+ * The store's country, which the apps send on every launch. It can only
+ * tighten what the date step stored: it is added when it brings Brazil's
+ * rule or a higher parent age, and ignored otherwise (moving to a looser
+ * country is a request to support, which clears the stored places).
+ */
+export async function recordStoreCountry(userId: string, country: string, now = new Date()): Promise<AgeState> {
+  const held = (await readAge(userId, now)).parent !== undefined;
+  const db = await getDb();
+  for (let tries = 0; tries < 3; tries++) {
+    const rs = await db.execute({ sql: `SELECT age_country, age_quebec FROM "user" WHERE id = ?`, args: [userId] });
+    const row = rs.rows[0];
+    const stored = typeof row?.age_country === "string" ? row.age_country : null;
+    const countries = parseCountries(stored);
+    // A teen by any signal, the store's minor signal included.
+    if (!row || !(await readAge(userId, now)).teen || !tightens(country, countries, row.age_quebec != null)) break;
+    const next = [...countries, country].sort().join(",");
+    const done = await db.execute({
+      sql: `UPDATE "user" SET age_country = ? WHERE id = ? AND age_country IS ?`,
+      args: [next, userId, stored],
+    });
+    if (done.rowsAffected > 0) break;
+  }
+  const age = await readAge(userId, now);
+  // A hold that begins now starts its 30 days now.
+  if (age.parent) await (await import("./parent-consent")).ensureParentRow(userId, now, !held);
+  return age;
 }
 
 async function sameWrite(userId: string, nowIso: string, dob: string, teen: boolean, claims: string[]): Promise<InStatement[]> {
