@@ -103,12 +103,25 @@ class ParentConsentTest {
     }
 
     @Test
-    fun aSuccessfulLoad_clearsAStaleError() = runBlocking {
-        routes.on("POST /api/v1/me/parent", json(429, """{"error":"x","code":"parent_wait","retryAfterSec":600}"""))
+    fun aPollWithTheSameView_keepsTheError() = runBlocking {
         routes.on("GET /api/v1/me/parent", json(200, view()))
+        routes.on("POST /api/v1/me/parent", json(400, """{"error":"x","code":"parent_email"}"""))
         val c = consent()
+        c.load()
+        c.send("me@example.com", AppLang.EN)
+        c.load()
+        assertEquals("parent_email", (c.state.value.error as UiError.Api).code)
+    }
+
+    @Test
+    fun aLoadWithAChangedView_clearsTheOldError() = runBlocking {
+        routes.on("GET /api/v1/me/parent", json(200, view()))
+        routes.on("POST /api/v1/me/parent", json(429, """{"error":"x","code":"parent_wait","retryAfterSec":600}"""))
+        val c = consent()
+        c.load()
         c.send("mum@example.com", AppLang.EN)
         assertEquals("parent_wait", (c.state.value.error as UiError.Api).code)
+        routes.on("GET /api/v1/me/parent", json(200, view(resends = 2)))
         c.load()
         assertNull(c.state.value.error)
     }

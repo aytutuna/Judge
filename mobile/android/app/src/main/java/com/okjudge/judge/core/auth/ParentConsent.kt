@@ -25,7 +25,10 @@ class ParentConsent(private val api: JudgeApi, private val refreshAccount: suspe
         val before = changes
         val res = api.parent()
         if (asked != epoch || before != changes || _state.value.busy) return
-        if (res is ApiResult.Ok) _state.value = _state.value.copy(view = res.value, error = null)
+        if (res !is ApiResult.Ok) return
+        // The 30-second poll must not hide a send error; it only goes once the request itself changed.
+        val now = _state.value
+        _state.value = now.copy(view = res.value, error = if (res.value == now.view) now.error else null)
     }
 
     /** Gives the parent's address, changes it, or (the same address) sends the link again, in [lang]. */
