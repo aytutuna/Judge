@@ -15,8 +15,10 @@ const MAX_API_BODY = 17 * 1024 * 1024;
 /** Cron expression -> /api/internal/cron task (wrangler.jsonc triggers.crons). */
 const CRON_TASKS: Record<string, string> = {
   "*/5 * * * *": "sweep",
-  "17 3 * * *": "daily",
-  "30 3 * * *": "backup",
+  "17 3 * * *": "events",
+  "22 3 * * *": "erasure",
+  "27 3 * * *": "cleanup",
+  "30 5 * * *": "backup",
 };
 
 const SHARE_PAGE = /^\/v\/[A-Za-z0-9_-]{1,64}$/;

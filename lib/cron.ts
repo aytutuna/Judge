@@ -1,8 +1,10 @@
 /**
  * The work the Node server does from timers in instrumentation.ts, as named
  * tasks for Cron Triggers (cloudflare/worker.ts calls POST
- * /api/internal/cron?task=<name>). A failing step is logged and does not hold
- * back the others.
+ * /api/internal/cron?task=<name>). Each task is its own invocation: a Worker
+ * invocation may make 1,000 D1 queries, so work that can be long is split
+ * across tasks (and replay-removals pages). A failing step is logged and does
+ * not hold back the others.
  */
 
 import { pruneEvents } from "@/lib/analytics/db";
@@ -16,6 +18,10 @@ import { replayEntries } from "@/lib/originals/removal-replay";
 import { sweepVerdictJobs } from "@/lib/verdict-jobs";
 import { workerEnv } from "@/lib/worker-env";
 
+export const REPLAY_PAGE = 50;
+/** Erasure passes per run; each handles up to 100 verdicts and 100 cases. */
+const ERASURE_PASSES = 10;
+
 async function each(steps: Record<string, () => Promise<unknown>>): Promise<void> {
   for (const [name, step] of Object.entries(steps)) {
     try {
@@ -26,10 +32,27 @@ async function each(steps: Record<string, () => Promise<unknown>>): Promise<void
   }
 }
 
+/** What a task answers: `next` is set when it stopped early and a rerun with `cursor=<next>` continues. */
+export type CronResult = { next?: string | null } | void;
+type Task = (params: URLSearchParams) => Promise<CronResult>;
+
 export const CRON_TASKS = {
   /** Every 5 minutes: jobs, cases and credit reservations left behind by a lost run. */
   sweep: () => each({ jobs: sweepVerdictJobs, cases: sweepCases, reservations: sweepStaleReservations }),
-  /** Once a day: retention (events, removed text, sign-in codes, consent and removal logs). */
+  /** Daily: usage events and device links past their retention. */
+  events: () => each({ events: pruneEvents }),
+  /** Daily: the text of verdicts and cases removed over 30 days ago. */
+  erasure: () =>
+    each({
+      erasure: async () => {
+        for (let pass = 0; pass < ERASURE_PASSES; pass++) {
+          const n = await sweepErasures();
+          if (!n.verdicts && !n.cases) return;
+        }
+      },
+    }),
+  /** Daily: expired sign-in codes, old consent and removal-log records, blocked accounts. */
+  cleanup: () => each({ cleanup: runCleanup }),
   /** Nightly: the encrypted copy of the database in R2. Unset settings skip it, loudly. */
   backup: async () => {
     const env: Partial<BackupEnv> = { ...workerEnv(), ...process.env };
@@ -40,18 +63,20 @@ export const CRON_TASKS = {
     const done = await runBackup(env);
     console.info(`[backup] wrote ${done.key} (${done.bytes} bytes), deleted ${done.deleted} old`);
   },
-  /** By hand after a restore (not in the crons): applies every removal in the R2 log again. */
-  "replay-removals": async () => {
-    const log = await readRemovalBucket();
-    console.info(`[cron] replay-removals ${JSON.stringify(await replayEntries(log.entries))} skipped=${log.skipped}`);
+  /** By hand after a restore (not in the crons): applies the removals in the R2 log again,
+   * REPLAY_PAGE at a time; rerun with the answer's `next` as `cursor` until it is null. */
+  "replay-removals": async (params) => {
+    const log = await readRemovalBucket({ after: params.get("cursor") ?? undefined, limit: REPLAY_PAGE });
+    const report = await replayEntries(log.entries);
+    console.info(`[cron] replay-removals ${JSON.stringify(report)} skipped=${log.skipped} next=${log.next}`);
+    return { next: log.next };
   },
-  daily: () => each({ events: pruneEvents, erasure: sweepErasures, cleanup: runCleanup }),
-} satisfies Record<string, () => Promise<void>>;
+} satisfies Record<string, Task>;
 
 export type CronTask = keyof typeof CRON_TASKS;
 
 export const isCronTask = (name: unknown): name is CronTask => typeof name === "string" && Object.hasOwn(CRON_TASKS, name);
 
-export function runCronTask(task: CronTask): Promise<void> {
-  return CRON_TASKS[task]();
+export async function runCronTask(task: CronTask, params: URLSearchParams = new URLSearchParams()): Promise<CronResult> {
+  return (CRON_TASKS[task] as Task)(params);
 }

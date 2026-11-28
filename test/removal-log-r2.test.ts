@@ -11,10 +11,12 @@ function fakeBucket() {
     put: async (key: string, value: string) => void objects.set(key, value),
     get: async (key: string) => (objects.has(key) ? { text: async () => objects.get(key)! } : null),
     delete: async (keys: string | string[]) => void [keys].flat().forEach((k) => objects.delete(k)),
-    list: async ({ prefix }: { prefix: string }) => ({
-      objects: [...objects.keys()].filter((k) => k.startsWith(prefix)).sort().map((key) => ({ key })),
-      truncated: false,
-    }),
+    list: async ({ prefix, cursor, startAfter }: { prefix: string; cursor?: string; startAfter?: string }) => {
+      const keys = [...objects.keys()].filter((k) => k.startsWith(prefix) && (!startAfter || k > startAfter)).sort();
+      const from = cursor ? keys.findIndex((k) => k > cursor) : 0;
+      const page = from < 0 ? [] : keys.slice(from, from + 100);
+      return { objects: page.map((key) => ({ key })), truncated: from >= 0 && from + 100 < keys.length, cursor: page[page.length - 1] };
+    },
   };
 }
 
@@ -42,5 +44,25 @@ describe("removal log in R2", () => {
     await appendRemovalLog({ v: 1, at: fresh, kind: "verdict", id: "fresh", reason: "owner" });
     expect(await pruneRemovalLog(now)).toBe(1);
     expect((await readRemovalBucket()).entries.map((e) => e.id)).toEqual(["fresh"]);
+  });
+
+  it("reads 250 entries in pages of 60, each page continuing where the last stopped", async () => {
+    const bucket = fakeBucket();
+    setWorkerEnv({ BACKUPS: bucket } as unknown as WorkerEnv);
+    const day = (i: number) => new Date(Date.UTC(2026, 0, 1, 0, 0, i)).toISOString();
+    for (let i = 0; i < 250; i++) await appendRemovalLog({ v: 1, at: day(i), kind: "verdict", id: `id${String(i).padStart(3, "0")}`, reason: "owner" });
+    const seen: string[] = [];
+    let after: string | undefined;
+    let calls = 0;
+    do {
+      const page = await readRemovalBucket({ after, limit: 60 });
+      seen.push(...page.entries.map((e) => e.id));
+      after = page.next ?? undefined;
+      calls += 1;
+    } while (after);
+    expect(calls).toBe(5);
+    expect(seen).toHaveLength(250);
+    expect(seen).toEqual([...seen].sort());
+    expect(new Set(seen).size).toBe(250);
   });
 });

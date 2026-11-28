@@ -118,24 +118,33 @@ export function parseRemovalLogLine(line: string): RemovalLogEntry | null {
   }
 }
 
-/** Every valid entry in time order from the R2 log, plus the count skipped. */
-export async function readRemovalBucket(): Promise<{ entries: RemovalLogEntry[]; skipped: number }> {
+/** Up to `limit` valid entries of the R2 log in time order, after the key
+ * `after` (none: from the start). `next` is the key to continue from, or null
+ * when the log is read to its end. */
+export async function readRemovalBucket(
+  opts: { after?: string; limit?: number } = {},
+): Promise<{ entries: RemovalLogEntry[]; skipped: number; next: string | null }> {
   const bucket = workerEnv()?.BACKUPS;
   const entries: RemovalLogEntry[] = [];
   let skipped = 0;
-  if (!bucket) return { entries, skipped };
+  if (!bucket) return { entries, skipped, next: null };
+  const limit = opts.limit ?? Infinity;
+  let keys: string[] = [];
+  let more = false;
   let cursor: string | undefined;
   do {
-    const page = await bucket.list({ prefix: BUCKET_PREFIX, cursor });
-    const bodies = await Promise.all(page.objects.map(async (o) => (await bucket.get(o.key))?.text() ?? ""));
-    for (const line of bodies) {
-      const entry = parseRemovalLogLine(line);
-      if (entry) entries.push(entry);
-      else skipped += 1;
-    }
+    const page = await bucket.list({ prefix: BUCKET_PREFIX, cursor, startAfter: opts.after });
+    keys = keys.concat(page.objects.map((o) => o.key));
+    more = page.truncated;
     cursor = page.truncated ? page.cursor : undefined;
-  } while (cursor);
-  return { entries, skipped };
+  } while (cursor && keys.length < limit);
+  const taken = keys.slice(0, limit);
+  for (const line of await Promise.all(taken.map(async (k) => (await bucket.get(k))?.text() ?? ""))) {
+    const entry = parseRemovalLogLine(line);
+    if (entry) entries.push(entry);
+    else skipped += 1;
+  }
+  return { entries, skipped, next: taken.length < keys.length || more ? taken[taken.length - 1] : null };
 }
 
 /** Every valid entry in file order, plus the count of lines skipped. A

@@ -60,5 +60,6 @@ The smoke test needs no Cloudflare account. `cloudflare.yml` runs both.
 `npx wrangler d1 time-travel restore judge --timestamp <iso> --remote` for the
 last 30 days. For an off-platform copy: download from R2, then
 `BACKUP_PASSPHRASE=... npx tsx scripts/backup-open.ts <file> --drill`.
-After any restore, replay the removal log:
-`curl -X POST -H "x-internal-secret: $JOB_SECRET" https://<host>/api/internal/cron?task=replay-removals`.
+After any restore, replay the removal log, 50 entries a call; repeat with
+`&cursor=<next>` from the answer until `next` is null:
+`curl -X POST -H "x-internal-secret: $JOB_SECRET" "https://<host>/api/internal/cron?task=replay-removals"`.

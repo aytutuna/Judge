@@ -17,7 +17,7 @@
     ]
   },
   "migrations": [{ "tag": "v1", "new_sqlite_classes": ["RateLimiter", "JobRunner"] }],
-  "triggers": { "crons": ["*/5 * * * *", "17 3 * * *", "30 3 * * *"] },
+  "triggers": { "crons": ["*/5 * * * *", "17 3 * * *", "22 3 * * *", "27 3 * * *", "30 5 * * *"] },
   // Judging runs for minutes inside a request made by a JobRunner; CPU time
   // only counts while code runs, not while it waits for the AI service.
   "limits": { "cpu_ms": 300000 },
@@ -36,7 +36,7 @@
           { "name": "JOBS", "class_name": "JobRunner" }
         ]
       },
-      "triggers": { "crons": ["*/5 * * * *", "17 3 * * *", "30 3 * * *"] },
+      "triggers": { "crons": ["*/5 * * * *", "17 3 * * *", "22 3 * * *", "27 3 * * *", "30 5 * * *"] },
       "limits": { "cpu_ms": 300000 },
       "observability": { "enabled": true, "logs": { "invocation_logs": false } },
       "vars": { "CLOUDFLARE_PROXY": "1" }
