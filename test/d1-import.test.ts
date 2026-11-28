@@ -49,9 +49,12 @@ describe("importBatch", () => {
     const db = scratchDb();
     await db.execute("CREATE TABLE a (id TEXT PRIMARY KEY)");
     await db.execute("CREATE TABLE b (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id))");
+    await db.execute("CREATE TRIGGER keep BEFORE DELETE ON a BEGIN SELECT RAISE(ABORT, 'append-only'); END");
     await db.execute("INSERT INTO a VALUES ('1')");
     await db.execute("INSERT INTO b VALUES ('x', '1')");
     expect(await wipeAll(db)).toBe(2);
     expect(await tableCounts(db)).toEqual({ a: 0, b: 0 });
+    await db.execute("INSERT INTO a VALUES ('2')");
+    await expect(db.execute("DELETE FROM a")).rejects.toThrow(/append-only/);
   });
 });

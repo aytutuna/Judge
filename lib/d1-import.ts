@@ -44,7 +44,7 @@ export async function importBatch(db: Db, batch: ImportBatch): Promise<number> {
 /** Row counts of every table, to compare with the source after a copy. */
 export async function tableCounts(db: Db): Promise<Record<string, number>> {
   const tables = await db.execute(
-    "SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite!_%' ESCAPE '!' AND name NOT LIKE '!_cf!_%' ESCAPE '!' ORDER BY name",
+    "SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite!_%' ESCAPE '!' AND name NOT LIKE '!_cf!_%' ESCAPE '!' AND name <> 'd1_migrations' ORDER BY name",
   );
   const counts: Record<string, number> = {};
   for (const row of tables.rows) {
@@ -55,9 +55,20 @@ export async function tableCounts(db: Db): Promise<Record<string, number>> {
 }
 
 /** Empties every table (a rehearsal copy starts clean). Foreign keys are
- * checked at the end of the batch, so the order does not matter. */
+ * checked at the end of the batch, so the order does not matter; the triggers
+ * that keep the consent ledger append-only are dropped for the deletes and put
+ * back in the same batch. */
 export async function wipeAll(db: Db): Promise<number> {
   const names = Object.keys(await tableCounts(db));
-  await db.batch(["PRAGMA defer_foreign_keys = on", ...names.map((n) => `DELETE FROM "${n}"`)], "write");
+  const triggers = (await db.execute("SELECT name, sql FROM sqlite_master WHERE type = 'trigger' AND sql IS NOT NULL")).rows;
+  await db.batch(
+    [
+      "PRAGMA defer_foreign_keys = on",
+      ...triggers.map((t) => `DROP TRIGGER "${String(t.name)}"`),
+      ...names.map((n) => `DELETE FROM "${n}"`),
+      ...triggers.map((t) => String(t.sql)),
+    ],
+    "write",
+  );
   return names.length;
 }
