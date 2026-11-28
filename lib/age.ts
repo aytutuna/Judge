@@ -66,13 +66,13 @@ export function needsConfirmed(method: string, path: string): boolean {
 
 /** What a blocked account may still do: see its state, download its data, delete itself, and
  * finish a sign-in (the Apple code is kept so deletion can revoke it).
- * One blocked under the old rule (needsDob) may also give its date of birth.
+ * One blocked under the old rule (needsDob) may also give its date of birth and read the country hint for it.
  * Sign-out is under /api/auth, which never asks for this. */
 function openWhenBlocked(method: string, path: string, age: AgeState): boolean {
   return (
     (path === "/api/v1/me" && (method === "GET" || method === "DELETE")) ||
     (path === "/api/v1/me/export" && method === "GET") ||
-    (path === "/api/v1/me/age" && method === "POST" && age.needsDob) ||
+    (path === "/api/v1/me/age" && (method === "POST" || method === "GET") && age.needsDob) ||
     path.startsWith("/api/v1/auth/")
   );
 }
