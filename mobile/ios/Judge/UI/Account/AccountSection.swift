@@ -193,7 +193,11 @@ extension View {
 struct AccountView: View {
     @Environment(AppModel.self) private var app
     @Environment(\.dismiss) private var dismiss
+    #if DEBUG
+    @State private var confirmDelete = ScreenshotState.deleteAlertOpen
+    #else
     @State private var confirmDelete = false
+    #endif
     @State private var exporting = false
     @State private var exportFailed = false
     @State private var exported: ExportedFile?

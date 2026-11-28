@@ -62,7 +62,15 @@ struct ScreenshotState {
         case caseWrite(answered: Bool)
         case menu
         case caseDetail(view: String)
+        case ageDate
+        case ageConfirm
+        case ageBlocked
+        case deleteAlert(reauth: Bool)
+        case settingsTeen
     }
+
+    /// AccountView opens its delete alert at once (screenshots only).
+    nonisolated(unsafe) static var deleteAlertOpen = false
 
     static let argument = "-JudgeScreenshotState"
 
@@ -73,9 +81,9 @@ struct ScreenshotState {
     var tab: RootTab {
         switch screen {
         case .home, .homeExample, .homeError, .judging, .judgingPlain, .verdict, .verdictThread, .verdictContext, .signIn, .signInCode,
-             .balanceWelcome, .balanceNone, .pricing, .pricingStore, .pricingBuy, .clarify, .evidence, .modeBoth, .caseWrite, .caseDetail, .menu:
+             .balanceWelcome, .balanceNone, .pricing, .pricingStore, .pricingBuy, .clarify, .evidence, .modeBoth, .caseWrite, .caseDetail, .menu, .ageDate, .ageConfirm, .ageBlocked:
             return .new
-        case .settings, .account: return .settings
+        case .settings, .account, .deleteAlert, .settingsTeen: return .settings
         }
     }
 
@@ -115,6 +123,12 @@ struct ScreenshotState {
         case "case-write": screen = .caseWrite(answered: false)
         case "case-write-answered": screen = .caseWrite(answered: true)
         case "menu": screen = .menu
+        case "age-date": screen = .ageDate
+        case "age-confirm": screen = .ageConfirm
+        case "age-blocked": screen = .ageBlocked
+        case "delete-alert": screen = .deleteAlert(reauth: false)
+        case "delete-alert-reauth": screen = .deleteAlert(reauth: true)
+        case "settings-teen": screen = .settingsTeen
         default:
             if name.hasPrefix("case/") {
                 let view = String(name.dropFirst("case/".count))
@@ -263,6 +277,39 @@ struct ScreenshotState {
             premium(app, me: "credits7")
             accountList(app)
             app.menuOpen = true
+        case .ageDate, .ageConfirm, .ageBlocked:
+            let age = AgeStatus(confirmed: false, blocked: screen == .ageBlocked, teen: false, needsDob: screen != .ageBlocked)
+            app.account.showForScreenshot(
+                providers: Self.allProviders,
+                info: AccountInfo(user: Viewer(id: "user000001", email: Self.email, name: "Sam"), entitlement: Entitlement(canUsePremium: true, credits: 1), age: age),
+                config: ScreenshotFixtures.config("full")
+            )
+            if screen == .ageConfirm {
+                app.account.pickDob(Calendar.current.date(byAdding: .year, value: -10, to: Date()) ?? Date())
+                Task { await app.account.submitDob() }
+            }
+        case .deleteAlert(let reauth):
+            app.account.showForScreenshot(
+                providers: Self.allProviders,
+                info: AccountInfo(
+                    user: Viewer(id: "user000001", email: Self.email, name: "Sam"),
+                    entitlement: Entitlement(canUsePremium: false, blockedReason: "premium_required", credits: 0),
+                    age: AgeStatus(confirmed: true),
+                    hasPassword: !reauth
+                )
+            )
+            Self.deleteAlertOpen = true
+            app.settingsPath = [.account]
+        case .settingsTeen:
+            app.account.showForScreenshot(
+                providers: Self.allProviders,
+                info: AccountInfo(
+                    user: Viewer(id: "user000001", email: Self.email, name: "Sam"),
+                    entitlement: Entitlement(canUsePremium: true, credits: 1),
+                    age: AgeStatus(confirmed: true, teen: true)
+                ),
+                config: ScreenshotFixtures.config("full")
+            )
         case .caseDetail(let name):
             premium(app, me: "credits7")
             let localized = lang == .tr ? ScreenshotFixtures.caseView(name + "_tr") : nil

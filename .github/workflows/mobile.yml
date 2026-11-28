@@ -127,6 +127,17 @@ jobs:
               xcrun simctl io "$UDID" screenshot "$OUT/${state}_$lang.png" > /dev/null
             done
           done
+          # Age and delete screens, English, light and dark.
+          for mode in light dark; do
+            for state in age-date age-confirm age-blocked delete-alert delete-alert-reauth settings-teen; do
+              arg="$state:en"
+              [ "$mode" = dark ] && arg="$arg:dark"
+              xcrun simctl terminate "$UDID" com.okjudge.judge 2>/dev/null || true
+              xcrun simctl launch "$UDID" com.okjudge.judge -JudgeScreenshotState "$arg" > /dev/null
+              sleep 4
+              xcrun simctl io "$UDID" screenshot "$OUT/${state}_en_$mode.png" > /dev/null
+            done
+          done
           ls "$OUT"
 
       - uses: actions/upload-artifact@v7
