@@ -52,7 +52,11 @@ async function wipeText(userId: string, nowIso: string): Promise<void> {
   ]);
   const roots = own.rows.map((r) => String(r.verdict_id));
   const rounds = roots.length
-    ? await db.execute({ sql: `SELECT id FROM verdict_appeals WHERE verdict_id IN (${roots.map(() => "?").join(", ")})`, args: roots })
+    ? await db.execute({
+        sql: `SELECT a.id FROM verdict_appeals a LEFT JOIN verdicts v ON v.id = a.id
+              WHERE a.verdict_id IN (${roots.map(() => "?").join(", ")}) AND COALESCE(v.legal_hold, 0) = 0`,
+        args: roots,
+      })
     : { rows: [] };
   const verdicts = [...roots, ...rounds.rows.map((r) => String(r.id)), ...alone.rows.map((r) => String(r.verdict_id))];
   const mine = (table: string, column: string): InStatement => ({
@@ -61,7 +65,7 @@ async function wipeText(userId: string, nowIso: string): Promise<void> {
   });
   await entitlementWriteBatch([
     ...(verdicts.length ? await eraseVerdictStatements(verdicts, nowIso) : []),
-    ...(roots.length ? [blankRoundsStatement(roots, nowIso)] : []),
+    ...(roots.length ? [blankRoundsStatement([...roots, ...rounds.rows.map((r) => String(r.id))], nowIso)] : []),
     mine("case_sides", "text"),
     mine("case_appeals", "text"),
     mine("case_evidence", "transcript"),

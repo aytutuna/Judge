@@ -26,7 +26,7 @@ const { getDb } = await import("../lib/db");
 await (await getDb()).execute(
   'CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, email TEXT, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_block_final_at TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT)',
 );
-const { blockMinor, keptBlock, caseHasTeen } = await import("../lib/age");
+const { blockMinor, keptBlock, caseHasTeen, verdictHasTeen } = await import("../lib/age");
 const { runCleanup } = await import("../lib/cleanup");
 const { saveVerdictWithOriginals } = await import("../lib/originals/save");
 const { getPublicVerdict } = await import("../lib/originals/display");
@@ -280,6 +280,16 @@ describe("legal hold", () => {
       sql: "INSERT INTO verdict_appeals (id, verdict_id, text, base_id, created_at, updated_at) VALUES ('held-r1', ?, 'round text', ?, ?, ?)",
       args: [heldVerdict, heldVerdict, ago(1), ago(1)],
     });
+    for (const [id, hold] of [["held-j1", 0], ["held-j2", 1]] as const) {
+      await d.execute({
+        sql: "INSERT INTO verdicts (id, input, framework, result, legal_hold) VALUES (?, ?, '{}', ?, ?)",
+        args: [id, `${id} round input`, JSON.stringify(RESULT), hold],
+      });
+      await d.execute({
+        sql: "INSERT INTO verdict_appeals (id, verdict_id, text, evidence, base_id, created_at, updated_at) VALUES (?, ?, ?, '[\"proof\"]', ?, ?, ?)",
+        args: [id, freeVerdict, `${id} words`, freeVerdict, ago(1), ago(1)],
+      });
+    }
     const caseHeld = await makeCase("case-held", "held", "pal");
     await d.execute("UPDATE cases SET legal_hold = 1 WHERE id = 'case-held'");
     const caseVerdictHeld = await makeCase("case-vheld", "held", "pal");
@@ -291,6 +301,9 @@ describe("legal hold", () => {
     expect((await one("SELECT input FROM verdicts WHERE id = ?", [heldVerdict])).input).toBe("held-v1 says Party A owes him");
     expect((await one("SELECT text FROM verdict_appeals WHERE id = 'held-r1'")).text).toBe("round text");
     expect((await one("SELECT input FROM verdicts WHERE id = ?", [freeVerdict])).input).toBe("");
+    expect(await one("SELECT text, evidence FROM verdict_appeals WHERE id = 'held-j1'")).toEqual({ text: "", evidence: "[]" });
+    expect(await one("SELECT text, evidence FROM verdict_appeals WHERE id = 'held-j2'")).toEqual({ text: "held-j2 words", evidence: '["proof"]' });
+    expect((await one("SELECT input FROM verdicts WHERE id = 'held-j2'")).input).toBe("held-j2 round input");
     for (const id of ["case-held", "case-vheld"]) {
       expect(await one("SELECT text FROM case_sides WHERE case_id = ? AND party = 'a'", [id])).toEqual({ text: `${id} side a` });
       expect(await one("SELECT transcript FROM case_evidence WHERE case_id = ? AND party = 'a'", [id])).toEqual({ transcript: `${id} proof a` });
@@ -316,5 +329,14 @@ describe("a block made final before age_block_final_at existed", () => {
     expect(await one('SELECT id FROM "user" WHERE id = ?', ["legacy"])).toEqual({ id: "legacy" });
     expect((await runCleanup(at(8))).blocked).toBe(1);
     expect(await one('SELECT id FROM "user" WHERE id = ?', ["legacy"])).toBeUndefined();
+  });
+});
+
+describe("verdictHasTeen", () => {
+  it("counts a verdict written by a blocked account, whichever rule blocked it", async () => {
+    await user("vt-old", 30, false);
+    await user("vt-ok", null);
+    expect(await verdictHasTeen(await verdict("vt-v1", "vt-old"))).toBe(true);
+    expect(await verdictHasTeen(await verdict("vt-v2", "vt-ok"))).toBe(false);
   });
 });

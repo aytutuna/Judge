@@ -151,7 +151,7 @@ export async function verdictHasTeen(verdictId: string): Promise<boolean> {
   const db = await getDb();
   const rs = await db.execute({
     sql: `SELECT EXISTS (SELECT 1 FROM verdict_meta m JOIN "user" u ON u.id = m.owner_user_id
-                         WHERE m.verdict_id = ? AND ${teenSql("u")})
+                         WHERE m.verdict_id = ? AND (${teenSql("u")} OR u.age_blocked_at IS NOT NULL))
                OR EXISTS (SELECT 1 FROM verdict_meta m WHERE m.verdict_id = ? AND m.case_id IS NOT NULL
                           AND ${caseTeenExists("m.case_id")}) AS teen`,
     args: [verdictId, verdictId],
