@@ -1,0 +1,51 @@
+# The Workers build of the website and API (OpenNext on Cloudflare), checked
+# without deploying anything: the bundle builds and fits, the worker config is
+# valid, and a local wrangler dev serves a sign-in, a verdict and a webhook.
+name: Cloudflare
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: cloudflare-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  WRANGLER_SEND_METRICS: "false"
+
+jobs:
+  workers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Worker types
+        run: npx tsc -p cloudflare/tsconfig.json
+
+      - name: D1 schema matches the ensure code
+        run: npx tsx scripts/d1-schema.ts --check
+
+      - name: Build
+        run: npm run cf:build
+
+      - name: Bundle fits (dry run, nothing is deployed)
+        run: |
+          npx wrangler deploy --dry-run -e staging --outdir .wrangler/bundle
+          size=$(stat -c %s .wrangler/bundle/worker.js)
+          echo "worker.js is $size bytes"
+          test "$size" -lt $((60 * 1024 * 1024))
+
+      - name: Smoke test under wrangler dev
+        run: node scripts/cf-smoke.mjs
