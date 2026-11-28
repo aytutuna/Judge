@@ -38,7 +38,13 @@ extension AgeGateView {
             signOutAndDelete(lang, account: account)
         case .loading:
             header(L10n.ageParentTitle(lang), lead: Text(L10n.ageParentLead(lang)))
-            ProgressView().frame(maxWidth: .infinity)
+            if let failure = parent.loadError {
+                ErrorBanner(message: ErrorText.message(failure, lang: lang), retryTitle: L10n.appRetry(lang)) {
+                    Task { await parent.load() }
+                }
+            } else {
+                ProgressView().frame(maxWidth: .infinity)
+            }
             signOutAndDelete(lang, account: account)
         case .waiting:
             if let view { waiting(lang, parent: parent, view: view, deleteDate: deleteDate) }

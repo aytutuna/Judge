@@ -42,9 +42,13 @@ final class ParentModel {
     @ObservationIgnored var onChanged: (() async -> Void)?
     /// The app's language, for the mail the server sends the parent.
     @ObservationIgnored var language: () -> AppLang = { .en }
-    /// Bumped when the account changes and when a call lands, so an older
-    /// reply never overwrites a newer state.
+    /// The session ended: the account signs out.
+    @ObservationIgnored var onSessionExpired: (() -> Void)?
+    /// Bumped when the account changes, so no reply lands in the next one.
     @ObservationIgnored private var version = 0
+    /// Bumped before and after every send or resend, so a read that began
+    /// earlier never overwrites what the action showed.
+    @ObservationIgnored private var changes = 0
 
     init(api: JudgeAPI) {
         self.api = api
@@ -61,20 +65,31 @@ final class ParentModel {
         }
     }
 
-    /// Whether the last read failed (the declined page offers a retry).
-    private(set) var loadFailed = false
+    /// Why the first read failed, while there is no view to show.
+    private(set) var loadError: APIError?
+    var loadFailed: Bool { loadError != nil }
 
     func load() async {
         let started = version
+        let mark = changes
         do {
             let fresh = try await api.parentView()
-            guard started == version else { return }
+            guard started == version, mark == changes, !posting else { return }
+            loadError = nil
+            // An action's error stays while the request is as it was shown.
+            if view != fresh { error = nil }
             view = fresh
-            error = nil
-            loadFailed = false
+            // No changes left: the form would only meet a refusal.
+            if !fresh.canChange { changing = false }
+        } catch let failure as APIError {
+            guard started == version, mark == changes, !posting else { return }
+            if failure.code == "signin_required" {
+                onSessionExpired?()
+            } else if view == nil {
+                loadError = failure
+            }
         } catch {
-            guard started == version else { return }
-            loadFailed = view == nil
+            return
         }
     }
 
@@ -104,7 +119,7 @@ final class ParentModel {
     func reset() {
         version += 1
         posting = false
-        loadFailed = false
+        loadError = nil
         view = nil
         error = nil
         email = ""
@@ -115,12 +130,13 @@ final class ParentModel {
         guard !posting else { return }
         posting = true
         error = nil
+        changes += 1
         let started = version
         defer { if started == version { posting = false } }
         do {
             let fresh = try await call(api)
             guard started == version else { return }
-            version += 1
+            changes += 1
             posting = false
             view = fresh
             email = ""
@@ -128,10 +144,18 @@ final class ParentModel {
             await onChanged?()
         } catch let failure as APIError {
             guard started == version else { return }
+            if failure.code == "signin_required" {
+                onSessionExpired?()
+                return
+            }
             error = failure
-            // The request moved on under us: show where it stands now.
+            // The request moved on under us: show where it stands now, with
+            // the reason kept unless something newer happened meanwhile.
             if ["parent_conflict", "parent_declined", "parent_limit"].contains(failure.code) {
+                posting = false
+                let mark = changes
                 await load()
+                if started == version, mark == changes { error = failure }
                 await onChanged?()
             }
         } catch {

@@ -186,6 +186,7 @@ final class AccountModel {
         isSignedIn = api.tokenStore.token()?.isEmpty == false
         parent.onChanged = { [weak self] in await self?.refresh() }
         parent.language = { [weak self] in self?.language() ?? .en }
+        parent.onSessionExpired = { [weak self] in self?.sessionExpired() }
     }
 
     var user: Viewer? { info?.user }
