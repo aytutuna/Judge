@@ -62,12 +62,12 @@ export const CRON_TASKS = {
   backup: async () => {
     const env: Partial<BackupEnv> = { ...workerEnv(), ...process.env };
     if (!backupConfigured(env)) {
-      const why = "no off-platform copy: BACKUPS, CLOUDFLARE_ACCOUNT_ID, D1_DATABASE_ID, CLOUDFLARE_API_TOKEN or BACKUP_PASSPHRASE is not set";
+      const why = "no off-platform copy: BACKUPS or BACKUP_PASSPHRASE is not set";
       console.error(`[alert:backup] ${why}`);
       alertSentry("alert", "backup", why);
       return;
     }
-    const done = await runBackup(env);
+    const done = await runBackup(env, await getDb());
     console.info(`[backup] wrote ${done.key} (${done.bytes} bytes), deleted ${done.deleted} old`);
   },
   /** By hand after a restore (not in the crons): applies the removals in the R2 log again,

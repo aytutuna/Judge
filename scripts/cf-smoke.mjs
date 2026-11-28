@@ -258,6 +258,9 @@ async function run() {
   check("cron route runs a task with the secret", cron.status === 200, `${cron.status} ${cron.text.slice(0, 100)}`);
   const replay = await api("POST", "/api/internal/cron?task=replay-removals", { headers: { "x-internal-secret": secrets.JOB_SECRET } });
   check("the removal log replays after a restore", replay.status === 200, `${replay.status} ${replay.text.slice(0, 100)}`);
+  const backup = await api("POST", "/api/internal/cron?task=backup", { headers: { "x-internal-secret": secrets.JOB_SECRET } });
+  check("the backup task dumps the database into R2", backup.status === 200, `${backup.status}`);
+  check("the backup wrote an object", Boolean(process.env.SMOKE_BASE) || devLog.join("").includes("[backup] wrote db/judge-"));
   const noMetrics = await api("GET", "/api/internal/metrics");
   check("metrics are closed without the token", noMetrics.status === 404, `${noMetrics.status}`);
   const metrics = await api("GET", "/api/internal/metrics", { headers: { authorization: `Bearer ${secrets.METRICS_TOKEN}` } });
@@ -304,6 +307,7 @@ try {
       RATE_LIMIT_SALT: hex(24),
       ALLOW_SANDBOX_PURCHASES: "1",
       IMPORT_ENABLED: "1",
+      BACKUP_PASSPHRASE: hex(16),
       // Sign in with Apple and Google, so the Apple client secret (an ES256 token) is signed at startup.
       APPLE_CLIENT_ID: "test.judge.web",
       APPLE_TEAM_ID: "TEAM123456",

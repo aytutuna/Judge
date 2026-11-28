@@ -1,5 +1,10 @@
+import { mkdtempSync, readFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
+import { createClient } from "@libsql/client";
 import { backupConfigured, pruneBackups, runBackup, type BackupEnv } from "../lib/backup";
+import { literal } from "../lib/backup-dump";
 import { openBackup } from "../scripts/backup-open";
 
 /** An R2 bucket in memory, with multipart uploads. */
@@ -28,53 +33,79 @@ function fakeBucket() {
   };
 }
 
-const SQL = `CREATE TABLE t (id TEXT PRIMARY KEY, v TEXT);\n${Array.from({ length: 200 }, (_, i) => `INSERT INTO t VALUES ('${i}', 'row ${i}');`).join("\n")}\n`;
-
-function fakeFetch() {
-  return (async (url: string | URL | Request) => {
-    const u = String(url);
-    if (u.includes("/export")) {
-      return new Response(JSON.stringify({ success: true, result: { status: "complete", result: { signed_url: "https://dump.test/d.sql" } } }), { status: 200 });
-    }
-    return new Response(SQL, { status: 200 });
-  }) as typeof fetch;
+function scratch() {
+  const dir = mkdtempSync(path.join(tmpdir(), "judge-bk-"));
+  return createClient({ url: `file:${path.join(dir, "b.db").replaceAll("\\", "/")}` });
 }
 
-function env(bucket: ReturnType<typeof fakeBucket>): BackupEnv {
-  return {
-    BACKUPS: bucket as never,
-    CLOUDFLARE_ACCOUNT_ID: "acct",
-    D1_DATABASE_ID: "db",
-    CLOUDFLARE_API_TOKEN: "token",
-    BACKUP_PASSPHRASE: "correct horse battery staple",
-  };
+/** A database with the real schema and rows that are awkward to write as SQL. */
+async function filled() {
+  const db = scratch();
+  await db.executeMultiple(readFileSync(new URL("../migrations/0001_schema.sql", import.meta.url), "utf8"));
+  const odd = ["plain", "it's \"quoted\"", "line\nbreak\r\nand tab\t", "emoji \u{1F600} and é", "nul\u0000inside", "", "-- not a comment; DROP TABLE x;"];
+  await db.batch(
+    odd.map((text, i) => ({ sql: "INSERT INTO verdicts (id, input, framework, result) VALUES (?, ?, '{}', ?)", args: [`v${i}`, text, JSON.stringify({ text })] })),
+    "write",
+  );
+  await db.execute({ sql: "INSERT INTO verdicts (id, input, framework, result) VALUES ('big', ?, '{}', '{}')", args: ["x".repeat(500_000)] });
+  await db.execute({ sql: "INSERT INTO user (id, name, email, emailVerified, createdAt, updatedAt) VALUES ('u1', 'N', 'n@example.test', 1, 1700000000000, 1700000000000)", args: [] });
+  await db.execute({ sql: "INSERT INTO account (id, accountId, providerId, userId, createdAt, updatedAt) VALUES ('a1', 'x', 'email', 'u1', 1700000000000, 1700000000000)", args: [] });
+  return db;
 }
 
-describe("backups", () => {
-  it("stores an encrypted copy that opens with the passphrase and not without it", async () => {
+async function rowsOf(db: ReturnType<typeof scratch>, table: string) {
+  return (await db.execute(`SELECT * FROM "${table}" ORDER BY 1`)).rows.map((r) => ({ ...r }));
+}
+
+const PASS = "correct horse battery staple";
+const env = (bucket: ReturnType<typeof fakeBucket>): BackupEnv => ({ BACKUPS: bucket as never, BACKUP_PASSPHRASE: PASS });
+
+describe("backups", { timeout: 60_000 }, () => {
+  it("restore drill: a sealed copy opens with the passphrase and loads into an empty database with every row", async () => {
+    const source = await filled();
     const bucket = fakeBucket();
-    const done = await runBackup(env(bucket), new Date("2026-12-01T03:30:00Z"), fakeFetch());
+    const done = await runBackup(env(bucket), source, new Date("2026-12-01T03:30:00Z"));
     expect(done.key).toBe("db/judge-2026-12-01T03-30-00-000Z.sql.gz.jbk");
     const stored = bucket.objects.get(done.key)!;
     expect(stored.length).toBe(done.bytes);
     expect(Buffer.from(stored).includes("INSERT INTO")).toBe(false);
-    expect(await openBackup(stored, "correct horse battery staple")).toBe(SQL);
+
+    const sql = await openBackup(stored, PASS);
+    const restored = scratch();
+    await restored.executeMultiple(sql);
+    expect((await restored.execute("PRAGMA integrity_check")).rows[0].integrity_check).toBe("ok");
+    for (const table of ["verdicts", "user", "account", "entitlement_accounts"]) {
+      expect(await rowsOf(restored, table), table).toEqual(await rowsOf(source, table));
+    }
+    const tables = async (d: ReturnType<typeof scratch>) =>
+      (await d.execute("SELECT type, name FROM sqlite_master WHERE name NOT LIKE 'sqlite!_%' ESCAPE '!' ORDER BY type, name")).rows.map((r) => `${r.type}:${r.name}`);
+    expect(await tables(restored)).toEqual(await tables(source));
     await expect(openBackup(stored, "wrong")).rejects.toThrow();
   });
 
-  it("notices a copy that was cut short", async () => {
+  it("pages through a table of more rows than one page holds", async () => {
+    const source = scratch();
+    await source.execute("CREATE TABLE t (id TEXT PRIMARY KEY, v TEXT)");
+    await source.batch(Array.from({ length: 1234 }, (_, i) => ({ sql: "INSERT INTO t VALUES (?, ?)", args: [`k${i}`, `value ${i}`] })), "write");
     const bucket = fakeBucket();
-    const big = new Uint8Array(3 * 1024 * 1024);
-    for (let at = 0; at < big.length; at += 65_536) crypto.getRandomValues(big.subarray(at, at + 65_536));
-    const fetcher = (async (url: string | URL | Request) =>
-      String(url).includes("/export")
-        ? new Response(JSON.stringify({ success: true, result: { status: "complete", result: { signed_url: "https://dump.test/d.sql" } } }))
-        : new Response(big)) as typeof fetch;
-    const done = await runBackup(env(bucket), new Date("2026-12-01T03:30:00Z"), fetcher);
+    const done = await runBackup(env(bucket), source, new Date("2026-12-01T03:30:00Z"));
+    const restored = scratch();
+    await restored.executeMultiple(await openBackup(bucket.objects.get(done.key)!, PASS));
+    expect(await rowsOf(restored, "t")).toEqual(await rowsOf(source, "t"));
+  });
+
+  it("notices a copy that was cut short", async () => {
+    const source = scratch();
+    await source.execute("CREATE TABLE t (id INTEGER PRIMARY KEY, v TEXT)");
+    const noise = () => Buffer.from(crypto.getRandomValues(new Uint8Array(30_000))).toString("hex");
+    await source.batch(Array.from({ length: 150 }, (_, i) => ({ sql: "INSERT INTO t VALUES (?, ?)", args: [i, noise()] })), "write");
+    const bucket = fakeBucket();
+    const done = await runBackup(env(bucket), source, new Date("2026-12-01T03:30:00Z"));
     const stored = bucket.objects.get(done.key)!;
     const view = new DataView(stored.buffer, stored.byteOffset);
     const firstFrame = 4 + 16 + 4 + view.getUint32(20);
-    await expect(openBackup(stored.subarray(0, firstFrame), "correct horse battery staple")).rejects.toThrow();
+    expect(firstFrame).toBeLessThan(stored.length);
+    await expect(openBackup(stored.subarray(0, firstFrame), PASS)).rejects.toThrow();
   });
 
   it("deletes copies older than the keep period and no others", async () => {
@@ -84,8 +115,11 @@ describe("backups", () => {
     expect([...bucket.objects.keys()]).toEqual(["db/judge-2026-11-20T03-30-00-000Z.sql.gz.jbk", "db/judge-2026-11-30T03-30-00-000Z.sql.gz.jbk"]);
   });
 
-  it("is only configured with every setting", () => {
-    expect(backupConfigured({ BACKUPS: {} as never, CLOUDFLARE_ACCOUNT_ID: "a" })).toBe(false);
+  it("is only configured with the bucket and the passphrase, and writes literals SQLite reads back", () => {
+    expect(backupConfigured({ BACKUPS: {} as never })).toBe(false);
     expect(backupConfigured(env(fakeBucket()))).toBe(true);
+    expect(literal("a'b")).toBe("'a''b'");
+    expect(literal(null)).toBe("NULL");
+    expect(literal(5)).toBe("5");
   });
 });

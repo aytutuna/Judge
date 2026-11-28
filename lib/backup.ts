@@ -1,7 +1,7 @@
 /**
  * Nightly encrypted copy of the D1 database in R2, next to D1's own 30-day
- * Time Travel. The database is exported through Cloudflare's export API (a
- * consistent snapshot as SQL), gzipped, and sealed with a key made from
+ * Time Travel. The database is dumped as SQL through the D1 binding (no API
+ * token in the Worker), gzipped, and sealed with a key made from
  * BACKUP_PASSPHRASE. File format: "JBK1", a 16-byte salt, then frames of
  * [4-byte length][12-byte iv][AES-256-GCM ciphertext and tag], each frame
  * bound to its position and to whether it is the last. scripts/backup-open.ts
@@ -9,6 +9,8 @@
  */
 
 import type { R2Bucket } from "@cloudflare/workers-types/index";
+import { dumpStream } from "./backup-dump";
+import type { Db } from "./d1";
 
 export const BACKUP_PREFIX = "db/";
 export const MAGIC = "JBK1";
@@ -110,62 +112,30 @@ async function putStream(bucket: R2Bucket, key: string, body: ReadableStream<Uin
   return total;
 }
 
-type ExportReply = {
-  success: boolean;
-  result?: { status?: string; at_bookmark?: string; error?: string; result?: { signed_url?: string } };
-};
-
-/** Asks D1 for an export and waits for its download link. */
-async function exportUrl(env: BackupEnv, fetcher: typeof fetch): Promise<string> {
-  const url = `https://api.cloudflare.com/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/d1/database/${env.D1_DATABASE_ID}/export`;
-  let bookmark: string | undefined;
-  for (let i = 0; i < 60; i++) {
-    const res = await fetcher(url, {
-      method: "POST",
-      headers: { authorization: `Bearer ${env.CLOUDFLARE_API_TOKEN}`, "content-type": "application/json" },
-      body: JSON.stringify({ output_format: "polling", ...(bookmark ? { current_bookmark: bookmark } : {}) }),
-    });
-    const reply = (await res.json()) as ExportReply;
-    if (!res.ok || !reply.success) throw new Error(`export API answered HTTP ${res.status}`);
-    if (reply.result?.status === "error") throw new Error(`export failed: ${reply.result.error ?? "unknown"}`);
-    const link = reply.result?.result?.signed_url;
-    if (reply.result?.status === "complete" && link) return link;
-    bookmark = reply.result?.at_bookmark ?? bookmark;
-    await new Promise((r) => setTimeout(r, 2000));
-  }
-  throw new Error("the export did not finish in 2 minutes");
-}
-
 export type BackupEnv = {
   BACKUPS: R2Bucket;
-  CLOUDFLARE_ACCOUNT_ID: string;
-  D1_DATABASE_ID: string;
-  CLOUDFLARE_API_TOKEN: string;
   BACKUP_PASSPHRASE: string;
   BACKUP_KEEP_DAYS?: string;
 };
 
 export function backupConfigured(env: Partial<BackupEnv>): env is BackupEnv {
-  return Boolean(env.BACKUPS && env.CLOUDFLARE_ACCOUNT_ID && env.D1_DATABASE_ID && env.CLOUDFLARE_API_TOKEN && env.BACKUP_PASSPHRASE);
+  return Boolean(env.BACKUPS && env.BACKUP_PASSPHRASE);
 }
 
 const stamp = (d: Date) => d.toISOString().replace(/[:.]/g, "-");
 
-/** Exports, compresses, seals and stores one copy; then drops the old ones.
- * Returns the object's key and size. Throws when any step fails. */
+/** Dumps (lib/backup-dump.ts), compresses, seals and stores one copy; then
+ * drops the old ones. Returns the object's key and size. Throws when any step fails. */
 export async function runBackup(
   env: BackupEnv,
+  db: Db,
   now: Date = new Date(),
-  fetcher: typeof fetch = fetch,
 ): Promise<{ key: string; bytes: number; deleted: number }> {
-  const link = await exportUrl(env, fetcher);
-  const dump = await fetcher(link);
-  if (!dump.ok || !dump.body) throw new Error(`download answered HTTP ${dump.status}`);
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const key = await backupKey(env.BACKUP_PASSPHRASE, salt);
-  const sealed = sealStream(dump.body.pipeThrough(new CompressionStream("gzip")) as ReadableStream<Uint8Array>, key, salt);
+  const gzipped = dumpStream(db).pipeThrough(new CompressionStream("gzip") as unknown as ReadableWritablePair<Uint8Array, Uint8Array>);
   const name = `${BACKUP_PREFIX}judge-${stamp(now)}.sql.gz.jbk`;
-  const bytes = await putStream(env.BACKUPS, name, sealed);
+  const bytes = await putStream(env.BACKUPS, name, sealStream(gzipped, key, salt));
   return { key: name, bytes, deleted: await pruneBackups(env.BACKUPS, now, Number(env.BACKUP_KEEP_DAYS) || KEEP_DAYS) };
 }
 
